@@ -76,7 +76,34 @@
 			} catch (e) {
 				/* language stays as authored */
 			}
+			// Boot gate: hide the instrument until we know whether the
+			// full-screen boot sequence should run. Without this the
+			// server-rendered UI (booted=true) paints for one frame before
+			// the client's onMount flips it to false and the boot overlay
+			// appears — the flash testers reported.
+			try {
+				var _b = sessionStorage.getItem('deeptunisia:booted');
+				document.documentElement.dataset.boot = _b === '1' ? 'ready' : 'pending';
+			} catch (e) {
+				document.documentElement.dataset.boot = 'pending';
+			}
 		</script>
+		<style>
+			html[data-boot='pending'] .os {
+				visibility: hidden;
+			}
+			#static-boot {
+				position: fixed;
+				inset: 0;
+				z-index: 500;
+				display: none;
+				place-items: center;
+				background: var(--surface-base);
+			}
+			html[data-boot='pending'] #static-boot {
+				display: grid;
+			}
+		</style>
 		<meta
 			name="description"
 			content="A source-backed interactive atlas of political, military, security and economic power in Tunisia, 1956-2026."
@@ -91,5 +118,6 @@
 	</head>
 	<body data-sveltekit-preload-data="hover">
 		<div style="display: contents">%sveltekit.body%</div>
+		<div id="static-boot" aria-hidden="true"><div style="text-align:center"><div style="font-family:var(--font-strong);font-weight:600;letter-spacing:-0.02em;color:var(--text-primary)">DeepTunisia</div><div style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-faint);margin-top:6px">Loading</div></div></div>
 	</body>
 </html>

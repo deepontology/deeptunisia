@@ -39,6 +39,7 @@
 	import { moneyM } from '$lib/world/format';
 	import Content from '$lib/ui/Content.svelte';
 	import Tooltip from '$lib/ui/Tooltip.svelte';
+	import Popover from '$lib/ui/Popover.svelte';
 
 	const year = $derived(new Date(app.t).getUTCFullYear());
 
@@ -81,7 +82,9 @@
 		sub?: string;
 	}
 
-	const figures = $derived.by<Figure[]>(() => {
+	let openExplain = $state<string | null>(null);
+
+const figures = $derived.by<Figure[]>(() => {
 		const tOfficial = tt;
 		const dOfficial = dt;
 		const tSum = tOfficial ? null : sumTrade;
@@ -172,10 +175,16 @@
 					<span class="unit">{f.value !== null ? t('world.usd') : ''}</span>
 				</dd>
 				{#if f.sub}<dd class="sub">{f.sub}</dd>{/if}
-				<details class="why">
-					<summary>{t('world.strip.explain')}</summary>
-					<Content view="world" section={f.explain} compact />
-				</details>
+				<div class="why">
+					<button class="why-btn" onclick={() => (openExplain = openExplain === f.key ? null : f.key)} aria-expanded={openExplain === f.key} aria-controls={"explain-" + f.key}>
+						{t('world.strip.explain')}
+					</button>
+					<Popover open={openExplain === f.key} onclose={() => (openExplain = null)} align="start" label={f.label}>
+						<div id={"explain-" + f.key} class="why-pop">
+							<Content view="world" section={f.explain} compact />
+						</div>
+					</Popover>
+				</div>
 			</div>
 		{/each}
 	</dl>
@@ -209,6 +218,7 @@
 		-webkit-mask-image: linear-gradient(to right, black calc(100% - 28px), transparent 100%);
 	}
 	.fig {
+		position: relative;
 		flex: 1 0 160px;
 		min-width: 160px;
 		scroll-snap-align: start;
@@ -259,29 +269,34 @@
 		padding: 0 4px;
 	}
 	.why {
+		position: relative;
 		margin-top: var(--s-2);
 		font-size: var(--t-2xs);
 	}
-	.why summary {
+	.why-btn {
 		color: var(--text-faint);
 		cursor: pointer;
 		list-style: none;
 		display: inline-flex;
 		align-items: center;
 		gap: var(--s-1);
+		background: none;
+		border: none;
+		padding: 0;
+		font: inherit;
 	}
-	.why summary::-webkit-details-marker {
-		display: none;
-	}
-	.why summary::after {
+	.why-btn::after {
 		content: '+';
 		margin-inline-start: 2px;
 	}
-	.why[open] summary::after {
+	.why-btn[aria-expanded='true']::after {
 		content: '−';
 	}
-	.why :global(.content) {
-		margin-top: var(--s-2);
+	.why-pop {
 		max-width: 42ch;
+		max-height: 50vh;
+		overflow-y: auto;
+		padding: var(--s-2) var(--s-1);
 	}
+
 </style>
