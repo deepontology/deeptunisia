@@ -10,7 +10,7 @@
 	import MenuBar from '$lib/shell/MenuBar.svelte';
 	import SubNav from '$lib/shell/SubNav.svelte';
 	import { rememberPath } from '$lib/shell/nav.svelte';
-import { tour } from '$lib/shell/tour.svelte';
+import { tour, tourSeen } from '$lib/shell/tour.svelte';
 	import TimeDock from '$lib/shell/TimeDock.svelte';
 	import Viewport from '$lib/shell/Viewport.svelte';
 	import Inspector from '$lib/shell/Inspector.svelte';
@@ -56,12 +56,12 @@ import { tour } from '$lib/shell/tour.svelte';
 				const iv = setInterval(() => {
 					try {
 						if (document.documentElement.dataset.boot === 'ready') {
-							clearInterval(iv);
 							startTour(force);
+							if (tour.open || tourSeen()) clearInterval(iv);
 						}
 					} catch {}
 				}, 120);
-				setTimeout(() => clearInterval(iv), 4000);
+				setTimeout(() => clearInterval(iv), 6000);
 			}
 		}
 	});
