@@ -214,9 +214,26 @@
 		// Trade, energy and debt partners: every country Tunisia has a flow with
 		// gets a dot so arcs never terminate in empty ocean. No snapshot (flows is
 		// null) means no dots — the same degradation every other consumer here uses.
+		// Filtered to the top 30 by max yearly total so the globe does not drown
+		// in 211 teal dots for micro-flows that have no other role in the graph.
 		if (flows) {
+			const topFlows = new Set(
+				Object.entries(flows.partners)
+					.map(([iso2, row]) => {
+						let max = 0;
+						for (let i = 0; i < row.out.length; i++) {
+							const v = (row.out[i] ?? 0) + (row.in[i] ?? 0);
+							if (v > max) max = v;
+						}
+						return { iso2, max };
+					})
+					.sort((a, b) => b.max - a.max)
+					.slice(0, 30)
+					.map((d) => d.iso2)
+			);
 			for (const iso2 of Object.keys(flows.partners)) {
 				if (byIso.has(iso2)) continue;
+				if (!topFlows.has(iso2)) continue;
 				const c = countryOf(iso2);
 				if (!c) continue;
 				byIso.set(iso2, {
@@ -227,6 +244,24 @@
 					name: c.names[app.locale] ?? c.names.en,
 					hasRecord: false
 				});
+			}
+			// Debt-only creditors that never appear in trade (rare, but arcs would
+			// otherwise end in ocean). Keep all 39 — they are already filtered by
+			// the debt snapshot and are never the source of the 211-dot clutter.
+			if (debt) {
+				for (const iso2 of Object.keys(debt.creditors)) {
+					if (byIso.has(iso2)) continue;
+					const c = countryOf(iso2);
+					if (!c) continue;
+					byIso.set(iso2, {
+						id: iso2,
+						iso2,
+						lon: c.anchor[0],
+						lat: c.anchor[1],
+						name: c.names[app.locale] ?? c.names.en,
+						hasRecord: false
+					});
+				}
 			}
 		}
 

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import '../app.css';
 	import { onMount } from 'svelte';
+	import { browser } from '$app/environment';
 	import { page } from '$app/state';
 	import { app, startPlayback } from '$lib/state.svelte';
 	import { syncSelectionUrl } from '$lib/deeplink.svelte';
@@ -26,9 +27,22 @@ import { tour } from '$lib/shell/tour.svelte';
 	 * reappears when you click a tab stops being an entrance and becomes an
 	 * obstruction.
 	 */
-	let booted = $state(true);
+	let booted = $state(browser ? document.documentElement.dataset.boot === 'ready' : true);
 	onMount(() => {
-		booted = sessionStorage.getItem('deeptunisia:booted') === '1';
+		// The inline script in app.html already set data-boot before first paint;
+		// keep .os hidden until we decide, then mirror the decision in Svelte
+		// so the CSS gate and the component stay in sync.
+		const already = (() => {
+			try {
+				return sessionStorage.getItem('deeptunisia:booted') === '1';
+			} catch {
+				return false;
+			}
+		})();
+		booted = already;
+		try {
+			document.documentElement.dataset.boot = already ? 'ready' : 'pending';
+		} catch {}
 		if (isDoc) finishBoot();
 		// Start the guided tour on first visit, or if ?tour=1 is present.
 		const force = page.url.searchParams.get('tour') === '1';
@@ -36,7 +50,10 @@ import { tour } from '$lib/shell/tour.svelte';
 	});
 	function finishBoot() {
 		booted = true;
-		sessionStorage.setItem('deeptunisia:booted', '1');
+		try {
+			sessionStorage.setItem('deeptunisia:booted', '1');
+			document.documentElement.dataset.boot = 'ready';
+		} catch {}
 	}
 
 	/** Reference pages are documents: no time controls, and they scroll normally. */
