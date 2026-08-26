@@ -1,0 +1,125 @@
+<!doctype html>
+<!--
+  Served by the platform for anything that matches no file — see
+  `not_found_handling = "404-page"` in wrangler.toml.
+
+  Standalone and inline for one reason: this page has to render when something is
+  already wrong. A 404 that depends on the app bundle is a 404 that fails during
+  exactly the incident it exists for. It reaches nothing but its own fonts, and it
+  works with JavaScript off.
+-->
+<html lang="en" dir="ltr" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Not found · Deep Tunisia</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="/favicon.svg">
+<link rel="stylesheet" href="/fonts/fonts.css">
+<style>
+  :root {
+    --bg: oklch(9% 0.008 60);
+    --raised: oklch(15.5% 0.008 60);
+    --text: oklch(95% 0.004 60);
+    --muted: oklch(60% 0.008 60);
+    --faint: oklch(50% 0.008 60);
+    --line: oklch(100% 0 0 / 0.11);
+    --accent: oklch(78% 0.13 85);
+    color-scheme: dark;
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: oklch(99% 0.002 60);
+      --raised: oklch(97.5% 0.003 60);
+      --text: oklch(15.5% 0.008 60);
+      --muted: oklch(50% 0.008 60);
+      --faint: oklch(60% 0.008 60);
+      --line: oklch(0% 0 0 / 0.12);
+      --accent: oklch(55% 0.13 70);
+      color-scheme: light;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100svh;
+    display: grid;
+    place-items: center;
+    padding: 2rem;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', 'IBM Plex Sans Arabic', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  main { max-width: 34rem; }
+  .code {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 1.4rem;
+  }
+  h1 {
+    font-family: 'Newsreader', Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(2rem, 6vw, 3.4rem);
+    line-height: 1.06;
+    letter-spacing: -0.028em;
+    margin: 0 0 1.2rem;
+  }
+  p {
+    margin: 0 0 1.8rem;
+    font-size: 1.02rem;
+    line-height: 1.68;
+    color: var(--muted);
+  }
+  nav { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+  a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0.6rem 1.1rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 0.92rem;
+    transition: border-color 180ms, background 180ms;
+  }
+  a:hover { border-color: var(--accent); background: oklch(78% 0.13 85 / 0.1); }
+  a.primary { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+  .note {
+    margin: 2.4rem 0 0;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--line);
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 10.5px;
+    line-height: 1.7;
+    letter-spacing: 0.02em;
+    color: var(--faint);
+  }
+</style>
+</head>
+<body>
+<main>
+  <p class="code">404 · Not found</p>
+  <h1>There is no record at this address.</h1>
+  <p>
+    Either the link is wrong, or it pointed at something this project has since
+    renamed. Nothing has been deleted to hide it — every change to the dataset is
+    published, with its date and its author, on the corrections page.
+  </p>
+  <nav>
+    <a class="primary" href="/chronicle">Go to the atlas</a>
+    <a href="/">The project</a>
+    <a href="/corrections">Every correction</a>
+  </nav>
+  <p class="note">
+    If you followed a link from somewhere else and it should work, the address is
+    worth reporting — a broken permalink into a public record is a defect in the
+    record, not in your browser.
+  </p>
+</main>
+</body>
+</html>

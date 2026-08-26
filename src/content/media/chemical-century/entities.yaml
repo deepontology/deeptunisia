@@ -1,0 +1,337 @@
+entities:
+  - id: gct-groupe-chimique-tunisien
+    name:
+      en: Groupe Chimique Tunisien
+    role: primary_subject
+    mention_count: 3
+    graph_link: /network?entity=gct
+    description.en: State-owned chemical group formed 1992 from the SIAPE-SAEPA
+      merger; operates the Gabès phosphate complex
+    graph_id: gct
+  - id: cpgcfg-compagnie-des-phosphates-et-des-chemins-de-fer-de-gafsa
+    name:
+      en: CPGCFG
+    role: historical
+    mention_count: 2
+    graph_link: /network?entity=cpgcfg-compagnie-des-phosphates-et-des-chemins-de-fer-de-gafsa
+    description.en: Original French concession company (1897) granted exclusive
+      phosphate extraction and railway rights in the Gafsa basin
+  - id: thomas-philippe
+    name:
+      en: Philippe Thomas
+    role: historical
+    mention_count: 2
+    graph_link: /network?entity=thomas-philippe
+    description.en: French geologist who discovered phosphate deposits at Jebel
+      Thelja near Metlaoui in April 1885
+  - id: breynert-francois
+    name:
+      en: François Breynert
+    role: historical
+    mention_count: 2
+    graph_link: /network?entity=breynert-francois
+    description.en: French industrialist and first president of SIAPE (1947-1953);
+      oversaw the founding of Tunisia's first phosphoric acid plant at Sfax
+  - id: le-danois
+    name:
+      en: Le Danois
+    role: historical
+    mention_count: 2
+    graph_link: /network?entity=le-danois
+    description.en: Marine scientist who conducted the first survey of the Gulf of
+      Gabès in 1925
+  - id: siape-societe-industrielle-dacide-phosphorique-et-dengrais
+    name:
+      en: SIAPE
+    role: institutional
+    mention_count: 2
+    graph_link: /network?entity=siape-societe-industrielle-dacide-phosphorique-et-dengrais
+    description.en: Tunisian state company (est. 1947) for phosphoric acid and
+      fertiliser production at Sfax; merged into GCT in 1992
+  - id: saepa-societe-arabe-des-engrais-phosphates-et-azotes
+    name:
+      en: SAEPA
+    role: institutional
+    mention_count: 3
+    graph_link: /network?entity=saepa-societe-arabe-des-engrais-phosphates-et-azotes
+    description.en: Arab-Tunisian fertiliser company (est. 1975) operating DAP and
+      ammonium nitrate lines at Gabès; merged into GCT in 1992
+  - id: icm-industries-chimiques-maghrebines
+    name:
+      en: ICM
+    role: institutional
+    mention_count: 2
+    graph_link: /network?entity=icm-industries-chimiques-maghrebines
+    description.en: First phosphoric acid plant at Gabès (1972), 470,000 t/yr
+      capacity; absorbed into SIAPE then GCT
+  - id: eg-engrais-de-gabes
+    name:
+      en: EG
+    role: institutional
+    mention_count: 2
+    graph_link: /network?entity=eg-engrais-de-gabes
+    description.en: DAP production line at Gabès (first PDG Gérard Valier); absorbed
+      into SIAPE then GCT
+  - id: icg-industries-chimiques-de-gafsa
+    name:
+      en: ICG
+    role: institutional
+    mention_count: 2
+    graph_link: /network?entity=icg-industries-chimiques-de-gafsa
+    description.en: TSP plant at M'dhilla (est. 1981, 465,000 t/yr); first PDG
+      Mohamed Mghaieth; absorbed into SIAPE then GCT
+  - id: cpg-compagnie-des-phosphates-de-gafsa
+    name:
+      en: CPG
+    role: institutional
+    mention_count: 2
+    graph_link: /network?entity=cpg
+    description.en: Consolidated state phosphate company formed January 1976 from
+      the nationalised concession assets; state-owned
+    graph_id: cpg
+  - id: sncft-societe-nationale-des-chemins-de-fer-tunisiens
+    name:
+      en: SNCFT
+    role: institutional
+    mention_count: 2
+    graph_link: /network?entity=sncft
+    description.en: Tunisian national railway; absorbed the old CPGCFG concession
+      railway in 1967
+    graph_id: sncft
+  - id: instop-instm-institut-national-scientifique-et-technique-de-la-mer
+    name:
+      en: INSTM
+    role: institutional
+    mention_count: 1
+    graph_link: /network?entity=instop-instm-institut-national-scientifique-et-technique-de-la-mer
+    description.en: Tunisian marine science institute at Salammbô; conducted
+      six-year marine surveillance of Gabès discharges from 1976
+  - id: spie-batignolles
+    name:
+      en: SPIE Batignolles
+    role: institutional
+    mention_count: 2
+    graph_link: /network?entity=spie-batignolles
+    description.en: French engineering group that built the first Gabès phosphoric
+      acid plant; its own environmental director later stated the sea discharges
+      were programmed from the start
+  - id: comete-snc-lavalin-ihe
+    name:
+      en: COMETE-SNC-LAVALIN-IHE
+    role: institutional
+    mention_count: 2
+    graph_link: /network?entity=comete-snc-lavalin-ihe
+    description.en: Engineering consortium that ran the sole atmospheric emission
+      measurement campaign at Gabès (March 2010); results relayed by the 2025
+      audit
+  - id: ugtt-union-generale-tunisienne-du-travail
+    name:
+      en: UGTT
+    role: institutional
+    mention_count: 1
+    graph_link: /network?entity=ugtt
+    description.en: Tunisian general labour union; called a general strike on 21
+      October 2025 over the Gabès pollution crisis
+    graph_id: ugtt
+  - id: college-chatt-essalem
+    name:
+      en: Collège Chatt Essalem
+    role: institutional
+    mention_count: 2
+    graph_link: /network?entity=college-chatt-essalem
+    description.en: School in Gabès near the GCT complex; site of repeated gas-leak
+      asphyxiation incidents in October 2025
+  - id: afdb-african-development-bank
+    name:
+      en: African Development Bank
+    role: institutional
+    mention_count: 0
+    graph_link: /network?entity=afdb-african-development-bank
+    description.en: Multilateral development bank that required the 2025
+      environmental audit as a condition of the PAER-GCT financing (project
+      P-TN-BB0-010)
+  - id: darmoul
+    name:
+      en: Darmoul
+    role: scientific
+    mention_count: 5
+    graph_link: /network?entity=darmoul
+    description.en: Tunisian marine biologist (INSTOP/INSTM); led the 1976-88
+      surveillance that documented lethal concentrations and 230 ha of dead
+      seabed; recommended land storage in 1988
+  - id: ktari-chakroun-azouz
+    name:
+      en: Ktari, Chakroun & Azouz
+    role: scientific
+    mention_count: 2
+    graph_link: /network?entity=ktari-chakroun-azouz
+    description.en: Tunisian scientists of the Salammbô institute; published the
+      last major survey of the Gulf of Gabès before the factory in 1971
+  - id: zaouali
+    name:
+      en: Zaouali
+    role: scientific
+    mention_count: 1
+    graph_link: /network?entity=zaouali
+    description.en: Author of the 1990 survey that found no living plants on the
+      Gulf floor; cited in El Kateb et al. 2018
+  - id: medhioub
+    name:
+      en: Medhioub
+    role: scientific
+    mention_count: 2
+    graph_link: /network?entity=medhioub
+    description.en: Author of the 2003 court expertise that originated the '95% of
+      atmospheric pollution from GCT' claim; never re-measured
+  - id: kwas
+    name:
+      en: Kwas
+    role: scientific
+    mention_count: 3
+    graph_link: /network?entity=kwas
+    description.en: Pulmonologist at Gabès University Hospital; lead author of Kwas
+      et al. 2024 pneumonia cohort linking SO₂ to ventilator use and PM₁₀ to
+      lung abscess
+  - id: ahbil-sellami-azri
+    name:
+      en: Ahbil, Sellami & Azri
+    role: scientific
+    mention_count: 2
+    graph_link: /network?entity=ahbil-sellami-azri
+    description.en: Research team that measured suburban Gabès air quality 2017-19,
+      finding >20% days unhealthy for sensitive groups
+  - id: el-zrelli-rabaoui
+    name:
+      en: El Zrelli & Rabaoui
+    role: scientific
+    mention_count: 2
+    graph_link: /network?entity=el-zrelli-rabaoui
+    description.en: Marine/ecosystem research team; authored the 2023 study
+      quantifying €105M/yr in Posidonia ecosystem losses and ~90% seagrass
+      decline in the Gulf
+  - id: boukhris-ali
+    name:
+      en: Ali Boukhris
+    role: industrial
+    mention_count: 2
+    graph_link: /network?entity=boukhris-ali
+    description.en: PDG who simultaneously led ICM (1970-81), SIAPE (1970-76, 79-81)
+      and SAEPA (1975-81) during the expansion era
+  - id: dekhil-rafaa
+    name:
+      en: Rafaâ Dekhil
+    role: industrial
+    mention_count: 2
+    graph_link: /network?entity=dekhil-rafaa
+    description.en: Unified PDG of GCT 1994-2001; oversaw the peak production years
+      (8.3 Mt in 2000)
+  - id: youssef-hedi
+    name:
+      en: Hédi Youssef
+    role: industrial
+    mention_count: 2
+    graph_link: /network?entity=hedi-youssef
+    description.en: Director-General of GCT; stated in March 2026 that the Gabès
+      complex was running at ≤40% activity
+    graph_id: hedi-youssef
+  - id: rhili-houcine
+    name:
+      en: Houcine Rhili
+    role: industrial
+    mention_count: 2
+    graph_link: /network?entity=rhili-houcine
+    description.en: Engineer and former GCT environmental director; stated some
+      units at ~20% capacity and 150 years to rehabilitate the Gulf
+  - id: trabelsi-noureddine
+    name:
+      en: Noureddine Trabelsi
+    role: industrial
+    mention_count: 1
+    graph_link: /network?entity=trabelsi-noureddine
+    description.en: GCT environmental director who told investigators in 2015 that
+      SPIE Batignolles 'programmed' the sea discharges from the start
+  - id: mechri-hedi
+    name:
+      en: Hédi Mechri
+    role: industrial
+    mention_count: 1
+    graph_link: /network?entity=mechri-hedi
+    description.en: "Editor of L'Économiste Maghrébin; wrote in the 2026 ranking
+      editorial: 'The black-out resurfaces. Move along — there is nothing to
+      see.'"
+  - id: maddouri-kamel
+    name:
+      en: Kamel Maddouri
+    role: political
+    mention_count: 2
+    graph_link: /network?entity=maddouri-kamel
+    description.en: Tunisian Prime Minister who chaired the 05-03-2025 CMR that
+      multiplied the production target by five and reclassified phosphogypsum
+  - id: chiboub-fatma-thabet
+    name:
+      en: Fatma Thabet Chiboub
+    role: political
+    mention_count: 2
+    graph_link: /network?entity=chiboub-fatma-thabet
+    description.en: Minister of Industry who presented the 05-03-2025 production
+      target and reclassification; dismissed 27-04-2026
+  - id: zouari-slah
+    name:
+      en: Slah Zouari
+    role: political
+    mention_count: 2
+    graph_link: /network?entity=zouari-slah
+    description.en: Minister who told parliament on 20-10-2025 that six unfinished
+      environmental projects (~200 MDT) were 'directly linked to toxic gas
+      emissions'
+  - id: saied-kais
+    name:
+      en: Kaïs Saïed
+    role: political
+    mention_count: 1
+    graph_link: /network?entity=kais-saied
+    description.en: President of Tunisia; announced a cancer-treatment centre after
+      the March 2021 fire and spoke of selective dismantling of the Gabès
+      complex
+    graph_id: kais-saied
+  - id: ferjani-mustapha
+    name:
+      en: Mustapha Ferjani
+    role: political
+    mention_count: 2
+    graph_link: /network?entity=mustapha-ferjani
+    description.en: Health Minister who announced a cancer pole at Gabès on
+      21-10-2025 at the ARP plenary
+    graph_id: mustapha-ferjani
+  - id: bouzouada-omar
+    name:
+      en: Omar Bouzouada
+    role: political
+    mention_count: 1
+    graph_link: /network?entity=omar-bouzouada
+    description.en: Appointed PDG of both GCT and CPG by décret n°79 (01-06-2026)
+    graph_id: omar-bouzouada
+  - id: hammoud-ali-ben
+    name:
+      en: Ali Ben Hammoud
+    role: political
+    mention_count: 1
+    graph_link: /network?entity=hammoud-ali-ben
+    description.en: Led a task force that received the government's plan for Gabès
+      in January 2026; the plan was never published
+  - id: nt-106-002
+    name:
+      en: NT 106.002
+    role: regulatory
+    mention_count: 2
+    graph_link: /network?entity=nt-106-002
+    description.en: Tunisian water discharge standard (arrêté 20-07-1989, JORT
+      n°59); adopted 17 years after the Gabès discharges began
+  - id: decret-2010-2519
+    name:
+      en: Décret 2010-2519
+    role: regulatory
+    mention_count: 2
+    graph_link: /network?entity=decret-2010-2519
+    description.en: Tunisian source-emission standard (28-09-2010) setting limits
+      for SO₂, NOx, HF, PM and other pollutants at the stack

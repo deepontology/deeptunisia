@@ -1,0 +1,300 @@
+# -----------------------------------------------------------------------------
+# ERAS
+#
+# Each era carries an explicit thesis about how power was distributed. These are
+# analytical claims, not neutral facts, and the site labels them as such.
+# -----------------------------------------------------------------------------
+
+- id: bourguiba
+  label_en: Bourguiba
+  label_fr: Bourguiba
+  label_ar: بورقيبة
+  start: "1956-03-20"
+  end: "1987-11-07"
+  formula: "Presidency + party-state > military"
+  thesis: >-
+    A presidential party-state built on the Neo-Destour movement, with a small
+    armed forces deliberately kept out of politics. Bourguiba was acutely wary of
+    military intervention, and that founding choice shaped everything after it:
+    Tunisia never developed the military-economic complex found elsewhere in the
+    region.
+  thesis_fr: >-
+    Un État-parti présidentiel bâti sur le mouvement néo-destourien, avec une armée réduite
+    délibérément tenue à l'écart de la politique. Bourguiba se méfiait vivement de toute
+    intervention militaire, et ce choix fondateur a façonné tout ce qui a suivi : la Tunisie
+    n'a jamais développé le complexe militaro-économique que l'on trouve ailleurs dans la
+    région.
+  thesis_fr_by: model-reviewed
+  thesis_ar: >-
+    دولة حزب رئاسية قامت على الحركة الدستورية الجديدة، بجيش صغير أُبقي عمدًا خارج السياسة.
+    كان بورقيبة شديد الحذر من التدخل العسكري، وهذا الخيار التأسيسي صاغ كل ما تلاه: لم تُطوّر
+    تونس قط المركّب العسكري الاقتصادي الموجود في أماكن أخرى من المنطقة.
+  thesis_ar_by: model-reviewed
+  accent: "#c9a227"
+  sources: [carnegie-quiet-revolution, oup-grewal-marginalizing, frwiki-gouvernement-sfar]
+
+- id: ben-ali-consolidation
+  label_en: Ben Ali consolidation
+  label_fr: Consolidation de Ben Ali
+  label_ar: تثبيت حكم بن علي
+  start: "1987-11-07"
+  end: "1991-12-31"
+  formula: "Military + intelligence + Interior -> Presidency"
+  thesis: >-
+    A president drawn from military security and the Interior Ministry, initially
+    willing to place military officers in civilian and security posts. This is the
+    only period in which the armed forces sat close to the centre of the Tunisian
+    state.
+  thesis_fr: >-
+    Un président issu de la sécurité militaire et du ministère de l'Intérieur, disposé au
+    départ à placer des officiers dans des postes civils et sécuritaires. C'est la seule
+    période où l'armée s'est trouvée proche du centre de l'État tunisien.
+  thesis_fr_by: model-reviewed
+  thesis_ar: >-
+    رئيس جاء من الأمن العسكري ووزارة الداخلية، أبدى في البداية استعدادًا لتعيين ضباط في
+    مناصب مدنية وأمنية. هذه هي الفترة الوحيدة التي اقترب فيها الجيش من مركز الدولة التونسية.
+  thesis_ar_by: model-reviewed
+  confidence: B
+  attributed_to: >-
+    Carnegie Endowment for International Peace (2016); Sharan Grewal, Soldiers of
+    Democracy? (Oxford University Press, 2023) — the literature the thesis rests
+    on
+  reasoning: >-
+    The thesis is an analytical framing over the documented history of the early
+    Ben Ali years. The two existing tier-2 sources jointly support its
+    components: carnegie-quiet-revolution documents Ben Ali's origins in
+    military security and the interior apparatus and his later (post-1991)
+    deliberate marginalisation of the armed forces — the turn that implies the
+    pre-1991 arrangement; oup-grewal-marginalizing (already cited on the
+    bourguiba era) is Grewal's account of the military's structural position
+    across the Ben Ali years. Neither source states the thesis verbatim — the
+    framing (and the "only period" claim) is the dataset's synthesis, hence
+    confidence B with attributed_to naming the two works rather than A.
+  reasoning_fr: >-
+    La thèse est un cadrage analytique sur l'histoire documentée des premières années de
+    Ben Ali. Les deux sources existantes de niveau 2 appuient conjointement ses composantes :
+    carnegie-quiet-revolution documente les origines de Ben Ali dans la sécurité militaire et
+    l'appareil intérieur ainsi que sa marginalisation délibérée (post-1991) des forces armées —
+    le tournant qui implique l'arrangement antérieur à 1991 ; oup-grewal-marginalizing (déjà
+    cité sur l'époque bourguibienne) est le récit de Grewal sur la position structurelle de
+    l'armée durant les années Ben Ali. Aucune des deux sources n'énonce la thèse verbatim — le
+    cadrage (et l'affirmation « seule période ») est la synthèse du jeu de données, d'où une
+    confiance B avec attributed_to nommant les deux ouvrages plutôt que A.
+  reasoning_fr_by: model-reviewed
+  reasoning_ar: >-
+    الأطروحة إطار تحليلي فوق التاريخ الموثّق للسنوات الأولى من حكم بن علي. يدعم المصدران
+    الموجودان من المستوى 2 مكوّنيها معًا: يوثّق carnegie-quiet-revolution أصول بن علي في
+    الأمن العسكري والجهاز الداخلي وإقصاءه المتعمّد (بعد 1991) للقوات المسلحة — وهو المنعطف
+    الذي يستلزم الترتيب السابق لـ1991؛ أما oup-grewal-marginalizing (المستشهد به سابقًا على
+    عصر بورقيبة) فهو رواية غريوال عن الموقع البنيوي للجيش عبر سنوات بن علي. لا ينص أي من
+    المصدرين على الأطروحة حرفيًا — فالإطار (وادعاء «الفترة الوحيدة») هو تركيب قاعدة البيانات،
+    ومن ثمّ درجة ثقة B مع attributed_to يسمّي العملين لا A.
+  reasoning_ar_by: model-reviewed
+  falsifiable_by: >-
+    A documented appointment record showing no military officers held civilian or
+    security posts between 7 November 1987 and 31 December 1991; or a scholarly
+    account showing the armed forces sat equally close to power in a later period
+    of the Ben Ali era.
+  falsifiable_by_fr: >-
+    Un acte de nomination documenté montrant qu'aucun officier n'a occupé de poste civil ou
+    sécuritaire entre le 7 novembre 1987 et le 31 décembre 1991 ; ou un récit savant montrant
+    que les forces armées ont été également proches du pouvoir à une période ultérieure de
+    l'ère Ben Ali.
+  falsifiable_by_fr_by: model-reviewed
+  falsifiable_by_ar: >-
+    وثيقة تعيين موثّقة تُظهر عدم تولي أي ضابط مناصب مدنية أو أمنية بين 7 نوفمبر 1987 و31
+    ديسمبر 1991؛ أو رواية علمية تُظهر أن القوات المسلحة كانت قريبة من السلطة بالقدر نفسه في
+    فترة لاحقة من عهد بن علي.
+  falsifiable_by_ar_by: model-reviewed
+  accent: "#b5651d"
+  sources: [carnegie-quiet-revolution, oup-grewal-marginalizing]
+
+- id: police-state
+  label_en: The mature police state
+  label_fr: L'État policier
+  label_ar: دولة البوليس
+  start: "1992-01-01"
+  end: "2011-01-14"
+  formula: "Presidency + Interior + police > military"
+  thesis: >-
+    After the 1991 Barraket Essahel affair, Ben Ali turned against the armed forces.
+    Officers were removed from civilian posts, the Interior Ministry's resources
+    dwarfed Defence's, and the post of Chief of Staff of the Armed Forces was left
+    unfilled with the president coordinating the services himself. The regime's
+    coercive core was the police, not the army.
+  thesis_fr: >-
+    Après l'affaire Barraket Essahel de 1991, Ben Ali se retourne contre l'armée. Les
+    officiers sont écartés des postes civils, les moyens du ministère de l'Intérieur
+    éclipsent ceux de la Défense, et le poste de chef d'état-major des armées reste vacant,
+    le président coordonnant lui-même les services. Le cœur coercitif du régime était la
+    police, non l'armée.
+  thesis_fr_by: model-reviewed
+  thesis_ar: >-
+    بعد قضية براكة الساحل سنة 1991، انقلب بن علي على المؤسسة العسكرية. أُبعد الضباط عن
+    المناصب المدنية، وتجاوزت موارد وزارة الداخلية موارد الدفاع، وتُرك منصب رئيس أركان الجيوش
+    شاغرًا فيما تولّى الرئيس تنسيق الأجهزة بنفسه. كان القلب القمعي للنظام هو الشرطة لا
+    الجيش.
+  thesis_ar_by: model-reviewed
+  accent: "#8b2635"
+  sources: [carnegie-quiet-revolution, tandf-police-benali]
+
+- id: transition
+  label_en: Revolution and transition
+  label_fr: Révolution et transition
+  label_ar: الثورة والانتقال
+  start: "2011-01-14"
+  end: "2014-12-31"
+  formula: "Military legitimacy up, Interior legitimacy collapses"
+  thesis: >-
+    The internal security forces lost public legitimacy while the army, which had
+    not been the regime's instrument of repression, gained it. The tri-service
+    Chief of Staff post was revived for Rachid Ammar, briefly concentrating more
+    military authority in one officer than at any point since independence.
+  thesis_fr: >-
+    Les forces de sécurité intérieure perdent leur légitimité publique tandis que l'armée,
+    qui n'avait pas été l'instrument de répression du régime, la gagne. Le poste de chef
+    d'état-major interarmées est rétabli pour Rachid Ammar, concentrant brièvement entre les
+    mains d'un seul officier plus d'autorité militaire qu'à aucun moment depuis
+    l'indépendance.
+  thesis_fr_by: model-reviewed
+  thesis_ar: >-
+    فقدت قوات الأمن الداخلي شرعيتها لدى الرأي العام، بينما اكتسبها الجيش الذي لم يكن أداة
+    القمع لدى النظام. أُعيد إحياء منصب رئيس أركان الجيوش الثلاثة لفائدة رشيد عمار، فتركّزت
+    لوقت قصير في يد ضابط واحد سلطة عسكرية أكبر من أي وقت منذ الاستقلال.
+  thesis_ar_by: model-reviewed
+  accent: "#2f6f6f"
+  sources: [carnegie-quiet-revolution, carnegie-back-to-barracks]
+
+- id: pluralism
+  label_en: Competitive elite pluralism
+  label_fr: Pluralisme concurrentiel des élites
+  label_ar: تعدد النخب المتنافسة
+  start: "2015-01-01"
+  end: "2019-10-13"
+  formula: "Parties + business groups + security institutions compete"
+  thesis: >-
+    Several elite networks competed openly: Ennahda, the Nidaa Tounes coalition of
+    Bourguibists and former state officials, established business families, the
+    UGTT, and media owners. The World Bank characterises the political economy of
+    this period as competitive clientelism rather than a single ruling coalition.
+  thesis_fr: >-
+    Plusieurs réseaux d'élites se sont affrontés ouvertement : Ennahdha, la coalition Nidaa
+    Tounes de bourguibistes et d'anciens hauts fonctionnaires, les familles d'affaires
+    établies, l'UGTT et les propriétaires de médias. La Banque mondiale qualifie l'économie
+    politique de cette période de clientélisme concurrentiel plutôt que de coalition
+    dirigeante unique.
+  thesis_fr_by: model-reviewed
+  thesis_ar: >-
+    تنافست عدة شبكات نخبوية علنًا: حركة النهضة، وائتلاف نداء تونس الجامع للبورقيبيين وكبار
+    موظفي الدولة السابقين، والعائلات التجارية المستقرة، والاتحاد العام التونسي للشغل، وأصحاب
+    وسائل الإعلام. يصف البنك الدولي الاقتصاد السياسي لهذه الفترة بأنه محسوبية تنافسية لا
+    ائتلاف حاكم واحد.
+  thesis_ar_by: model-reviewed
+  accent: "#3d6b9e"
+  sources: [wb-political-economy]
+
+- id: fragmentation
+  label_en: Fragmentation
+  label_fr: Fragmentation
+  label_ar: التفتت
+  start: "2019-10-13"
+  end: "2021-07-25"
+  formula: "Party system collapses; outsider presidency"
+  thesis: >-
+    Nidaa Tounes broke apart, its former prime minister founded a rival party, a
+    media owner reached the presidential runoff from a prison cell, and the
+    election was won by a candidate with no party machine at all.
+  thesis_fr: >-
+    Nidaa Tounes se disloque, son ancien chef du gouvernement fonde un parti rival, un
+    propriétaire de médias atteint le second tour de la présidentielle depuis sa cellule, et
+    l'élection est remportée par un candidat sans aucun appareil partisan.
+  thesis_fr_by: model-reviewed
+  thesis_ar: >-
+    تفكّك نداء تونس، وأسّس رئيس حكومته السابق حزبًا منافسًا، وبلغ صاحب قناة تلفزية الدور
+    الثاني من الرئاسية وهو في السجن، وفاز بالانتخابات مرشّح بلا جهاز حزبي البتة.
+  thesis_ar_by: model-reviewed
+  confidence: B
+  attributed_to: >-
+    Dataset editorial thesis (2026); components per Business News (14 May 2019),
+    Axios (10 October 2019), AP (13 September 2019), TIME (14 October 2019),
+    pm.gov.tn (Chahed bio), Wikipedia FR (Kais Saied)
+  reasoning: >-
+    The thesis is an analytical label over four documented events, each already
+    covered by sources in the registry: the Nidaa Tounes breakup
+    (businessnews-nidaa-2019); Chahed founding Tahya Tounes (pm-gov-chahed,
+    already used for the Chahed party relationship); Karoui campaigning from
+    prison (axios-karoui-2019, ap-karoui); Saied's win and the 2019 election
+    (time-tunisia-2019, wikipedia-kais-saied). No single source asserts the
+    unifying "party system collapses; outsider presidency" framing — it is the
+    dataset's synthesis over documented events, so confidence B with the
+    attributed_to note. Graded B (not C) because every factual component is
+    carried by multiple credible sources; only the framing is editorial.
+  reasoning_fr: >-
+    La thèse est une étiquette analytique posée sur quatre événements documentés, chacun déjà
+    couvert par des sources du registre : l'éclatement de Nidaa Tounes
+    (businessnews-nidaa-2019) ; Chahed fondant Tahya Tounes (pm-gov-chahed, déjà utilisé pour
+    la relation partisane de Chahed) ; Karoui faisant campagne depuis sa prison
+    (axios-karoui-2019, ap-karoui) ; la victoire de Saïed et l'élection de 2019
+    (time-tunisia-2019, wikipedia-kais-saied). Aucune source unique n'affirme le cadrage
+    unifiant « le système de partis s'effondre ; présidence extérieure » — c'est la synthèse du
+    jeu de données sur des événements documentés, d'où la confiance B avec la note
+    attributed_to. Classé B (et non C) parce que chaque composante factuelle est portée par
+    plusieurs sources crédibles ; seul le cadrage est éditorial.
+  reasoning_fr_by: model-reviewed
+  reasoning_ar: >-
+    الأطروحة وسم تحليلي فوق أربعة أحداث موثّقة، كلٌّ منها مغطّى أصلًا بمصادر في السجل: تفكّك
+    نداء تونس (businessnews-nidaa-2019)؛ وتأسيس الشاهد لتحيا تونس (pm-gov-chahed، المستخدم
+    سابقًا لعلاقة الشاهد الحزبية)؛ وترشّح قروي من سجنه (axios-karoui-2019، ap-karoui)؛ وفوز
+    سعيّد وانتخابات 2019 (time-tunisia-2019، wikipedia-kais-saied). لا ينص أي مصدر واحد على
+    الإطار الجامع «انهيار المنظومة الحزبية؛ رئاسة من خارجها» — فهو تركيب قاعدة البيانات فوق
+    أحداث موثّقة، ومن ثمّ درجة ثقة B مع ملاحظة attributed_to. صُنّف B (لا C) لأن كل مكوّن
+    واقعي تحمله مصادر متعددة موثوقة؛ والتحريري هو الإطار وحده.
+  reasoning_ar_by: model-reviewed
+  falsifiable_by: >-
+    A documented counter-example within 13 October 2019 – 25 July 2021 (e.g. a
+    party machine that demonstrably drove Saied's election, or a presidential
+    election outcome inconsistent with the runoff narrative), or an authoritative
+    account showing the party system did not fragment in that window.
+  falsifiable_by_fr: >-
+    Un contre-exemple documenté entre le 13 octobre 2019 et le 25 juillet 2021 (par exemple un
+    appareil partisan ayant manifestement porté l'élection de Saïed, ou un résultat
+    présidentiel incompatible avec le récit du second tour), ou un récit faisant autorité
+    montrant que le système de partis ne s'est pas fragmenté dans cette fenêtre.
+  falsifiable_by_fr_by: model-reviewed
+  falsifiable_by_ar: >-
+    مثال مضاد موثّق ضمن الفترة من 13 أكتوبر 2019 إلى 25 جويلية 2021 (مثل جهاز حزبي قاد فعلًا
+    انتخاب سعيّد، أو نتيجة رئاسية لا تتوافق مع سردية الدور الثاني)، أو رواية موثوقة تُظهر أن
+    المنظومة الحزبية لم تتفتّت في تلك النافذة.
+  falsifiable_by_ar_by: model-reviewed
+  accent: "#6b4c9a"
+  sources: [businessnews-nidaa-2019, pm-gov-chahed, axios-karoui-2019, ap-karoui, time-tunisia-2019, wikipedia-kais-saied]
+
+- id: recentralisation
+  label_en: Presidential re-centralisation
+  label_fr: Recentralisation présidentielle
+  label_ar: إعادة تمركز السلطة الرئاسية
+  start: "2021-07-25"
+  end: "2026-07-26"
+  formula: "Presidency + security apparatus > all other institutions"
+  thesis: >-
+    Parliament was frozen and executive authority concentrated in the presidency.
+    Security institutions became more central to the political system while
+    successive rival elite networks, including the post-2011 political class and
+    major business figures, were prosecuted. This is a reconfiguration of elite
+    power rather than a straightforward restoration of the old order.
+  thesis_fr: >-
+    Le Parlement est gelé et l'autorité exécutive concentrée à la présidence. Les
+    institutions sécuritaires deviennent plus centrales dans le système politique, tandis
+    que des réseaux d'élites rivaux successifs — dont la classe politique issue de 2011 et
+    de grandes figures des affaires — sont poursuivis en justice. Il s'agit d'une
+    reconfiguration du pouvoir des élites plutôt que d'une simple restauration de l'ordre
+    ancien.
+  thesis_fr_by: model-reviewed
+  thesis_ar: >-
+    جُمّد البرلمان وتركّزت السلطة التنفيذية في رئاسة الجمهورية. صارت المؤسسات الأمنية أكثر
+    مركزية في النظام السياسي، فيما لوحقت قضائيًا شبكات نخبوية منافسة متعاقبة، من بينها
+    الطبقة السياسية لما بعد 2011 وكبار رجال الأعمال. هذه إعادة تشكيل لسلطة النخب أكثر منها
+    استعادة بسيطة للنظام القديم.
+  thesis_ar_by: model-reviewed
+  accent: "#a03e3e"
+  sources: [axios-saied-2021, reuters-conspiracy-2025, reuters-mabrouk-chahed-2026]

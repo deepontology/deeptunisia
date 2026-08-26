@@ -1,0 +1,42 @@
+components:
+  - type: article
+    required: true
+
+  - type: evidence-ledger
+    required: false
+    config:
+      show_orphaned: true
+
+  - type: timeline
+    required: true
+    config:
+      range: [1885, 2026]
+      style: sidebar
+      events_source: timeline.yaml
+
+  - type: source-registry
+    required: true
+
+  - type: data-tables
+    required: false
+    config:
+      tables:
+        - file: data/production.csv
+          title:
+            en: "Phosphate production, 1900–2025"
+            fr: "Production de phosphate, 1900–2025"
+            ar: "إنتاج الفوسفات، ١٩٠٠–٢٠٢٥"
+          description:
+            en: "Official production series in million tonnes"
+        - file: data/emissions.csv
+          title:
+            en: "Stack emission measurements, March 2010"
+            fr: "Mesures d'émissions de cheminées, mars 2010"
+            ar: "قياسات الانبعاثات من المداخن، مارس ٢٠١٠"
+          description:
+            en: "COMETE-SNC-LAVALIN-IHE campaign results vs regulatory limits"
+
+  - type: exclusions
+    required: false
+    description:
+      en: "Claims considered and deliberately excluded, with reasons"

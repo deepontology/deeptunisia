@@ -1,0 +1,26 @@
+id,legal_name_fr,legal_name_ar,legal_form,cin,status,founded,capital_tnd,capital_date,state_owned,basis,confidence
+biat,Banque Internationale Arabe de Tunisie (BIAT),بنك تونس العربي الدولي,SA (société anonyme),,active,1976-03-29,204000000,2024-12-31,false,reported,B
+poulina,Poulina Group Holding (PGH),مجمع بولينا القابض,SA (société anonyme),,active,1967-07-14,189000000,2026-04-16,false,reported,B
+mabrouk-group,Groupe Mabrouk (famille Mabrouk),مجموعة المبروك,?,,active,~1945,,,false,reported,C
+elloumi-group,Groupe Elloumi / COFICAB,مجموعة اللومي,?,,active,1946,,,false,reported,C
+gct,Groupe Chimique Tunisien (GCT),المجمع الكيميائي التونسي,Établissement public (EPIC) à caractère industriel et commercial,,active,1992,,,true,reported,B
+steg,Société Tunisienne de l'Électricité et du Gaz (STEG),الشركة التونسية للكهرباء والغاز,Établissement public à caractère non administratif (entreprise publique),,active,1962-04-03,,,true,documented,A
+tunisair,Société Tunisienne de l'Air (Tunisair),الخطوط التونسية,SA (société anonyme),,active,1948-10-21,106199280,2017-12-31,true,documented,A
+tunisie-telecom,Tunisie Télécom (SA),اتصالات تونس,SA (société anonyme) depuis 2004,,active,1995-04-17,1400000000,2023-02-19,true,reported,C
+investec,Investec (holding de Marwan Mabrouk),,,,confiscated,~2008,,,false,reported,C
+tunisie-valeurs,Tunisie Valeurs,,,,active,,,,false,reported,C
+founders-capital-partners,Founders Capital Partners,,,,active,,,,false,reported,B
+sonibank,Société Nigérienne de Banque (Sonibank),,,,active,,,,false,reported,C
+bhci,Banque de l'Habitat de Côte d'Ivoire (BHCI),,,,active,,,,false,reported,C
+steg-energies-renouvelables,STEG Énergies Renouvelables (STEG-ER),,,,active,2010,,,false,reported,C
+steg-international-services,STEG International Services (SIS),,,,active,2006-10,,,false,reported,C
+airbus,,,"SE (Societas Europaea) — registered in the Netherlands, main offices in Toulouse/Blagnac, France",,active,~1970,,,false,documented,B
+eni,,,S.p.A. (listed on Euronext Milan),,active,1953-02-10,,,false,documented,B
+alstom,,,SA (listed on Euronext Paris),,active,1928,,,false,documented,B
+caf,,,"S.A. (listed on the Madrid stock exchange, BME: CAF)",,active,1917-03-04,,,false,documented,B
+badc,,,autonomous government body under the Ministry of Agriculture (Bangladesh),,active,1961-10-16,,,true,reported,B
+jica,,,Incorporated Administrative Agency (Japan),,active,1974-08,,,true,documented,B
+terna,,,S.p.A. (listed on Euronext Milan since June 2004),,active,,,,false,documented,B
+solar-water-plc,,,Public limited company (United Kingdom),,active,2000-10-23,,,false,documented,A
+tunisie-autoroutes,Tunisie Autoroutes,,société publique,,active,,,,true,reported,C
+atb,,,société anonyme cotée,,active,,,,false,reported,C

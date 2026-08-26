@@ -1,0 +1,20 @@
+author: "DeepTunisia"
+reviewer: null
+status: published
+published_date: 2026-08-14
+revisions:
+  - version: "1.0"
+    date: 2026-08-14
+    notes: "Initial publication, air-layer edition. Supersedes v5 (sea-layer cut)."
+    supersedes: null
+    claims_added: 65
+    claims_changed: 0
+    claims_removed: 0
+  - version: "1.1"
+    date: 2026-08-26
+    notes: "Epistemic revision after hostile audit. Legend reconciled with the actual schema (documented/reported/unsubstantiated grades; disputed and negative flags; layer tag). Interpretive layer added (interpretations.yaml): the asymmetry reading and the incentive hypothesis now render as marked panels with attributed_to and falsifier, never as fact prose. 'Programmed by the builder' demoted to interpretation. 'The state as one actor' narrowed to documented ownership concentration. Documented negatives reworded as statements about searches. 115% damage figure attributed to its single study. Added C066 (state share 99.998%, MoF LF2021 Annexe 9). Build now fails on unknown grades, unresolved [I#] references, and unreferenced paragraphs containing absolutes or numerals."
+    supersedes: "1.0"
+    claims_added: 1
+    claims_changed: 1
+    claims_removed: 0
+license: CC-BY-4.0

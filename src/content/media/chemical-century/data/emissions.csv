@@ -1,0 +1,13 @@
+pollutant,measured_value_mg_Nm3,limit_mg_Nm3,ratio,unit_source,limit_source,notes
+SO2,7805,300,26.0,COMETE-SNC-LAVALIN-IHE (via audit S6.3),Décret 2010-2519 (via audit S4.2),highest measured value
+SO2,2008,300,6.7,COMETE-SNC-LAVALIN-IHE (via audit S6.3),Décret 2010-2519 (via audit S4.2),second measurement point
+SO2,1235,300,4.1,COMETE-SNC-LAVALIN-IHE (via audit S6.3),Décret 2010-2519 (via audit S4.2),third measurement point
+NO2,924,500,1.8,COMETE-SNC-LAVALIN-IHE (via audit S6.3),Décret 2010-2519 (via audit S4.2),
+HF,20,5,4.0,COMETE-SNC-LAVALIN-IHE (via audit S6.3),Décret 2010-2519 (via audit S4.2),
+HF,15,5,3.0,COMETE-SNC-LAVALIN-IHE (via audit S6.3),Décret 2010-2519 (via audit S4.2),
+HF,13,5,2.6,COMETE-SNC-LAVALIN-IHE (via audit S6.3),Décret 2010-2519 (via audit S4.2),
+PM10,352,5,70.4,COMETE-SNC-LAVALIN-IHE (via audit S6.3),Décret 2010-2519 (via audit S4.2),70 times the limit
+dust,248,50,5.0,COMETE-SNC-LAVALIN-IHE (via audit S6.3),Décret 2010-2519 (via audit S4.2),
+dust,123,50,2.5,COMETE-SNC-LAVALIN-IHE (via audit S6.3),Décret 2010-2519 (via audit S4.2),
+CO,248,10,24.8,COMETE-SNC-LAVALIN-IHE (via audit S6.3),Décret 2010-2519 (via audit S4.2),
+CO,96,10,9.6,COMETE-SNC-LAVALIN-IHE (via audit S6.3),Décret 2010-2519 (via audit S4.2),

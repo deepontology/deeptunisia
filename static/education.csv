@@ -1,0 +1,22 @@
+id,person,institution,degree_en,kind,start,end,basis,confidence
+edu-essebsi-paris-law,beji-caid-essebsi,,Licence in law (licence en droit),licence,1950,1952,reported,B
+edu-essebsi-sadiki,beji-caid-essebsi,,Secondary studies (Collège Sadiki),other,?,?,reported,B
+edu-saied-law-tunis,kais-saied,,Degree in law (jurist by training),other,?,?,reported,B
+edu-saied-doctorate-claim,kais-saied,,"Doctorate in constitutional law (circulating claim, refuted by fr.wiki)",phd,?,?,unsubstantiated,D
+edu-saied-ihl-sanremo,kais-saied,,"Diploma/attendance, International Institute of Humanitarian Law",certificate,?,?,reported,C
+edu-saied-sadiki,kais-saied,,Secondary studies (Collège Sadiki),other,?,?,reported,B
+edu-marzouki-sadiki,moncef-marzouki,,Secondary studies (Collège Sadiki),other,1957,1961,reported,B
+edu-marzouki-bac-regnault,moncef-marzouki,,"Baccalauréat, Lycée Regnault (Tangier, Morocco)",baccalaureate,1964,1964,reported,B
+edu-marzouki-strasbourg-md,moncef-marzouki,,Doctorate in medicine (docteur en médecine),phd,1964,1973,reported,B
+edu-ghannouchi-zitouna,rached-ghannouchi,,Tahsil certificate in theology (Zitouna University),certificate,1956,1962,reported,B
+edu-ghannouchi-damas,rached-ghannouchi,,Degree in philosophy (diplôme de philosophie),licence,1965,~1967,reported,B
+edu-essid-tunis-econ,habib-essid,,Maîtrise in economics,masters,?,1971,reported,B
+edu-essid-minnesota,habib-essid,,Master in agricultural economics,masters,1971,~1974,reported,B
+edu-chahed-inat,youssef-chahed,,Agricultural engineering degree (ingénieur agronome),other,?,1998,reported,B
+edu-chahed-dea,youssef-chahed,,DEA (post-graduate diploma) in environmental economics and natural resources,masters,1998,1999,reported,B
+edu-chahed-phd,youssef-chahed,,Doctorate in agricultural economics (doctorat en agroéconomie),phd,1999,2003,reported,B
+edu-mechichi-tunis-law,hichem-mechichi,,Maîtrise in law,masters,?,?,reported,B
+edu-mechichi-ena-tunis,hichem-mechichi,,"Master in law, political science and public administration",masters,?,?,reported,B
+edu-mechichi-ena-france,hichem-mechichi,,"École Nationale d'Administration (France), promotion 'République'",other,2005,2007,reported,B
+edu-bouden-estp,najla-bouden,,Engineering degree (diplôme d'ingénieur),other,?,1983,reported,B
+edu-bouden-ensmp-phd,najla-bouden,,Doctorate in geology,phd,?,1987,reported,B

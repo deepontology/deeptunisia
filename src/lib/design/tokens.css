@@ -1,0 +1,508 @@
+/* ===========================================================================
+   DeepTunisia — design tokens
+   ===========================================================================
+
+   THREE LAYERS. Never skip one.
+
+     1. PRIMITIVES   raw values. No component may reference these directly.
+     2. SEMANTIC     meaning ("surface-raised", "text-muted"). Components use
+                     ONLY these. Theming happens here and nowhere else.
+     3. COMPONENT    per-component knobs, defined next to the component.
+
+   Adding a colour? Add a primitive, then map it to a semantic token in BOTH
+   themes. If a component has a raw hex or rgb() in it, that is a bug.
+
+   WHY OKLCH: the seven analytical layer colours must be distinguishable but
+   equally weighted — no layer may look more important than another because its
+   hue happens to be brighter. OKLCH is perceptually uniform, so fixing L and C
+   and rotating H gives seven hues of genuinely equal visual weight. That is the
+   real fix for "the colours should be more uniform"; it cannot be done reliably
+   by hand-picking hex values.
+
+   Light mode is not a filter over dark mode. Surfaces invert, but chroma is
+   raised and lightness lowered for the layer hues, because saturated mid-tones
+   that read as calm on black read as washed out on white.
+   =========================================================================== */
+
+:root {
+	/* ---------------------------------------------------------------------
+	   1. PRIMITIVES
+	   --------------------------------------------------------------------- */
+
+	/* Neutral ramp. Used for every surface, border and text colour.
+	   Two numbers drive the whole ramp:
+	     --n-hue     the ramp's hue angle
+	     --n-chroma  a multiplier on each step's chroma
+	   A THEME sets these (and may pin individual steps where a look needs more
+	   than the multiplier can express — see the palette blocks after the theme
+	   blocks). The :root defaults are Ember's values, so a document with no
+	   attributes at all renders as the warm dark theme. */
+	--n-hue: 55;
+	--n-chroma: 1.9;
+	--n-0: oklch(99% calc(0.002 * var(--n-chroma)) var(--n-hue));
+	--n-25: oklch(97.5% calc(0.003 * var(--n-chroma)) var(--n-hue));
+	--n-50: oklch(95% calc(0.004 * var(--n-chroma)) var(--n-hue));
+	--n-100: oklch(91% calc(0.005 * var(--n-chroma)) var(--n-hue));
+	--n-200: oklch(84% calc(0.006 * var(--n-chroma)) var(--n-hue));
+	--n-300: oklch(72% calc(0.007 * var(--n-chroma)) var(--n-hue));
+	--n-400: oklch(60% calc(0.008 * var(--n-chroma)) var(--n-hue));
+	--n-500: oklch(50% calc(0.008 * var(--n-chroma)) var(--n-hue));
+	--n-600: oklch(41% calc(0.008 * var(--n-chroma)) var(--n-hue));
+	--n-700: oklch(32% calc(0.008 * var(--n-chroma)) var(--n-hue));
+	--n-750: oklch(27% calc(0.008 * var(--n-chroma)) var(--n-hue));
+	--n-800: oklch(22% calc(0.008 * var(--n-chroma)) var(--n-hue));
+	--n-850: oklch(18.5% calc(0.008 * var(--n-chroma)) var(--n-hue));
+	--n-900: oklch(15.5% calc(0.008 * var(--n-chroma)) var(--n-hue));
+	--n-950: oklch(12.5% calc(0.008 * var(--n-chroma)) var(--n-hue));
+	--n-1000: oklch(9% calc(0.008 * var(--n-chroma)) var(--n-hue));
+
+	/* Layer hues. Identical lightness and chroma, rotated hue only.
+	   Order follows the analytical layers and is deliberately spread around the
+	   wheel so adjacent lanes in the network view never look similar. */
+	--hue-security: 32; /* rust      */
+	--hue-political: 85; /* ochre     */
+	--hue-economic: 155; /* green     */
+	--hue-media: 300; /* violet    */
+	--hue-judicial: 245; /* blue      */
+	--hue-civil: 55; /* tan       */
+	--hue-foreign: 205; /* teal      */
+
+	/* Epistemic basis hues. Deliberately a traffic ramp — this is the one place
+	   where "better" and "worse" is a real ordering, so the colour should say so. */
+	--hue-documented: 150;
+	--hue-reported: 95;
+	--hue-inferred: 55;
+	--hue-unsubstantiated: 20;
+
+	/* ---------------------------------------------------------------------
+	   The one colour the reader owns.
+
+	   Accent HUE is adjustable; its lightness and chroma are not, and neither is
+	   anything else. That asymmetry is the whole design of this feature: the layer
+	   and basis hues encode what a claim IS and what it RESTS ON, so letting a
+	   reader rotate them would let them recolour the argument. The accent encodes
+	   nothing — it is chrome, focus and selection — so it is safe to hand over.
+
+	   Fixing L and C also means no choice can produce an accent that fails contrast
+	   against --accent-text or that shouts louder than the data behind it.
+
+	   Set at runtime as an inline custom property on <html>. See theme.svelte.ts.
+	   --------------------------------------------------------------------- */
+	--accent-hue: 85;
+
+	/* ---------------------------------------------------------------------
+	   2. SEMANTIC — dark theme (default)
+	   --------------------------------------------------------------------- */
+
+	--layer-l: 68%;
+	--layer-c: 0.105;
+
+	--basis-l: 72%;
+	--basis-c: 0.115;
+
+	/* Surfaces, in stacking order. `sunken` is for insets and wells,
+	   `raised`/`overlay` for panels and floating chrome. */
+	--surface-sunken: var(--n-1000);
+	--surface-base: var(--n-950);
+	--surface-raised: var(--n-900);
+	--surface-panel: var(--n-850);
+	--surface-overlay: var(--n-800);
+	--surface-hover: oklch(100% 0 0 / 0.045);
+	--surface-active: oklch(100% 0 0 / 0.075);
+
+	/* Borders */
+	--border-subtle: oklch(100% 0 0 / 0.07);
+	--border-default: oklch(100% 0 0 / 0.11);
+	--border-strong: oklch(100% 0 0 / 0.18);
+
+	/* Text */
+	--text-primary: var(--n-50);
+	--text-secondary: var(--n-300);
+	--text-muted: var(--n-400);
+	--text-faint: var(--n-500);
+	--text-inverted: var(--n-950);
+
+	/* Accent — the single brand colour. Ochre by default, matching the political
+	   layer, because the project's spine is institutional history. The reader may
+	   rotate --accent-hue; everything below follows from it. */
+	--accent-h: var(--accent-hue);
+	--accent: oklch(78% 0.13 var(--accent-h));
+	--accent-hover: oklch(84% 0.14 var(--accent-h));
+	--accent-muted: oklch(78% 0.13 var(--accent-h) / 0.16);
+	--accent-border: oklch(78% 0.13 var(--accent-h) / 0.42);
+	--accent-text: var(--n-1000);
+
+	/* The accent hue ramp, for the picker that sets --accent-hue.
+
+	   A hue control has to show hues, so this is the one place literal colour is
+	   unavoidable. It lives here rather than in the component so the rule "no raw
+	   colour in components" survives intact, and so the ramp is guaranteed to be
+	   drawn at the same lightness and chroma the accent will actually use. */
+	--accent-scale: linear-gradient(
+		to right,
+		oklch(78% 0.13 0),
+		oklch(78% 0.13 45),
+		oklch(78% 0.13 90),
+		oklch(78% 0.13 135),
+		oklch(78% 0.13 180),
+		oklch(78% 0.13 225),
+		oklch(78% 0.13 270),
+		oklch(78% 0.13 315),
+		oklch(78% 0.13 360)
+	);
+
+	/* Cross-layer bridges in the network.
+
+	   Deliberately NOT var(--accent). Bridges are a finding — the edges that join
+	   otherwise separate networks — so their colour is data and must not move when
+	   the reader restyles the chrome. Pinned to the default ochre: if accent were
+	   used here, choosing a green accent would make every bridge look like an
+	   economic-layer edge. */
+	--bridge: oklch(80% 0.14 85);
+	--bridge-soft: oklch(80% 0.14 85 / 0.35);
+
+	/* Ruptures — moments that reorganised the power structure. */
+	--rupture: oklch(62% 0.14 22);
+	--rupture-soft: oklch(62% 0.14 22 / 0.4);
+
+	/* Elevation. Dark mode leans on borders more than shadow, because shadow on
+	   near-black is nearly invisible. */
+	--elev-1: 0 1px 2px oklch(0% 0 0 / 0.4);
+	--elev-2: 0 4px 12px -2px oklch(0% 0 0 / 0.5);
+	--elev-3: 0 12px 32px -8px oklch(0% 0 0 / 0.6);
+	--elev-4: 0 24px 56px -12px oklch(0% 0 0 / 0.7);
+
+	--ring: 0 0 0 2px var(--surface-base), 0 0 0 4px var(--accent);
+
+	color-scheme: dark;
+}
+
+/* ---------------------------------------------------------------------------
+   2b. SEMANTIC — light theme
+
+   Scoped to the attribute alone rather than :root[data-theme], so an element
+   can carry data-theme into a subtree and resolve the whole semantic layer
+   there — the theme picker's preview chips do exactly that.
+   --------------------------------------------------------------------------- */
+
+[data-theme='light'] {
+	/* Darker and more chromatic: mid-tones that read calm on black wash out on
+	   white, so the layer hues need real saturation here. */
+	--layer-l: 52%;
+	--layer-c: 0.135;
+
+	--basis-l: 52%;
+	--basis-c: 0.14;
+
+	--surface-sunken: var(--n-50);
+	--surface-base: var(--n-0);
+	--surface-raised: var(--n-25);
+	--surface-panel: var(--n-0);
+	--surface-overlay: var(--n-0);
+	--surface-hover: oklch(0% 0 0 / 0.035);
+	--surface-active: oklch(0% 0 0 / 0.06);
+
+	--border-subtle: oklch(0% 0 0 / 0.07);
+	--border-default: oklch(0% 0 0 / 0.12);
+	--border-strong: oklch(0% 0 0 / 0.2);
+
+	--text-primary: var(--n-900);
+	--text-secondary: var(--n-600);
+	--text-muted: var(--n-500);
+	--text-faint: var(--n-400);
+	--text-inverted: var(--n-0);
+
+	/* The light theme sits 15° warmer than the dark one at every hue — the same
+	   relationship the hand-picked pair (85 dark / 70 light) always had. Expressing
+	   it as an offset means one reader-facing number still drives both themes. */
+	--accent-h: calc(var(--accent-hue) - 15);
+	--accent: oklch(55% 0.13 var(--accent-h));
+	--accent-hover: oklch(48% 0.14 var(--accent-h));
+	--accent-muted: oklch(55% 0.13 var(--accent-h) / 0.12);
+	--accent-border: oklch(55% 0.13 var(--accent-h) / 0.4);
+	--accent-text: var(--n-0);
+
+	--accent-scale: linear-gradient(
+		to right,
+		oklch(55% 0.13 -15),
+		oklch(55% 0.13 30),
+		oklch(55% 0.13 75),
+		oklch(55% 0.13 120),
+		oklch(55% 0.13 165),
+		oklch(55% 0.13 210),
+		oklch(55% 0.13 255),
+		oklch(55% 0.13 300),
+		oklch(55% 0.13 345)
+	);
+
+	--bridge: oklch(52% 0.14 70);
+	--bridge-soft: oklch(52% 0.14 70 / 0.3);
+
+	--rupture: oklch(52% 0.17 25);
+	--rupture-soft: oklch(52% 0.17 25 / 0.3);
+
+	/* Light mode carries hierarchy in shadow rather than in border contrast. */
+	--elev-1: 0 1px 2px oklch(30% 0.02 60 / 0.08);
+	--elev-2: 0 4px 12px -2px oklch(30% 0.02 60 / 0.12);
+	--elev-3: 0 12px 28px -8px oklch(30% 0.02 60 / 0.16);
+	--elev-4: 0 24px 52px -12px oklch(30% 0.02 60 / 0.2);
+
+	color-scheme: light;
+}
+
+/* ---------------------------------------------------------------------------
+   2c. PALETTES — each theme is one complete look.
+
+   A palette carries its own mode: Paper, Porcelain and Daylight are light;
+   Midnight, Ember and Eclipse are dark. theme.svelte.ts always sets
+   data-palette together with data-theme, so a palette never appears in the
+   wrong mode and these blocks may rely on the matching theme block above.
+
+   Each palette sets the two neutral-ramp knobs (--n-hue / --n-chroma) and may
+   pin individual ramp steps where a look needs more than the multiplier can
+   express. Where a look is DEFINED by its contrast (Daylight, Eclipse), it also
+   retunes semantic tokens for its own mode — placed here so they win the tie
+   against the theme blocks at equal specificity.
+
+   What no palette may touch: --layer-* / --basis-* hues and L/C (they say what
+   a claim belongs to and what it rests on), --bridge (a finding, pinned to its
+   ochre), accent geometry (the reader owns the hue; fixed L/C guarantee
+   contrast in every palette). See DESIGN.md §Customisation.
+
+   Plain attribute selectors on purpose: any element may carry data-theme +
+   data-palette and scope this whole cascade into its subtree — which is how
+   the picker's previews paint themselves from the real tokens.
+   --------------------------------------------------------------------------- */
+
+/* --- light --- */
+
+/* Paper — warm cream, soft borders. The system-light default. */
+[data-palette='paper'] {
+	--n-hue: 80;
+	--n-chroma: 1.5;
+	--n-0: oklch(98.6% 0.0045 85);
+	--n-25: oklch(96.8% 0.0055 85);
+}
+
+/* Porcelain — cool blue-white, airy. */
+[data-palette='porcelain'] {
+	--n-hue: 255;
+	--n-chroma: 1.25;
+	--n-0: oklch(99% 0.0035 250);
+}
+
+/* Daylight — near-pure white, near-black text, firm borders. High contrast. */
+[data-palette='daylight'] {
+	--n-hue: 60;
+	--n-chroma: 0.35;
+	--n-0: oklch(100% 0 0);
+	--n-25: oklch(99.2% 0.001 60);
+
+	--text-primary: var(--n-1000);
+	--text-secondary: var(--n-700);
+	--text-muted: var(--n-600);
+	--text-faint: var(--n-500);
+
+	--border-subtle: oklch(0% 0 0 / 0.12);
+	--border-default: oklch(0% 0 0 / 0.22);
+	--border-strong: oklch(0% 0 0 / 0.34);
+}
+
+/* --- dark --- */
+
+/* Midnight — deep desaturated navy. The system-dark default. */
+[data-palette='midnight'] {
+	--n-hue: 255;
+	--n-chroma: 1.3;
+	--n-900: oklch(16% 0.014 255);
+	--n-950: oklch(13% 0.013 255);
+	--n-1000: oklch(10% 0.011 255);
+}
+
+/* Ember — warm walnut-black. The long-standing shipped dark. */
+[data-palette='ember'] {
+	--n-hue: 55;
+	--n-chroma: 1.9;
+}
+
+/* Eclipse — true black under bright text, firm borders. High contrast, OLED. */
+[data-palette='eclipse'] {
+	--n-hue: 260;
+	--n-chroma: 0.3;
+	--n-800: oklch(17% 0.004 260);
+	--n-850: oklch(13.5% 0.004 260);
+	--n-900: oklch(9% 0.004 260);
+	--n-950: oklch(5% 0.002 260);
+	--n-1000: oklch(0% 0 0);
+
+	--text-primary: var(--n-25);
+	--text-secondary: var(--n-200);
+	--text-muted: var(--n-300);
+
+	--border-subtle: oklch(100% 0 0 / 0.1);
+	--border-default: oklch(100% 0 0 / 0.17);
+	--border-strong: oklch(100% 0 0 / 0.26);
+}
+
+/* ---------------------------------------------------------------------------
+   Derived layer + basis colours.
+   Defined once, after the theme blocks, so both themes get them automatically.
+   --------------------------------------------------------------------------- */
+
+:root {
+	--layer-security: oklch(var(--layer-l) var(--layer-c) var(--hue-security));
+	--layer-political: oklch(var(--layer-l) var(--layer-c) var(--hue-political));
+	--layer-economic: oklch(var(--layer-l) var(--layer-c) var(--hue-economic));
+	--layer-media: oklch(var(--layer-l) var(--layer-c) var(--hue-media));
+	--layer-judicial: oklch(var(--layer-l) var(--layer-c) var(--hue-judicial));
+	--layer-civil: oklch(var(--layer-l) var(--layer-c) var(--hue-civil));
+	--layer-foreign: oklch(var(--layer-l) var(--layer-c) var(--hue-foreign));
+
+	--basis-documented: oklch(var(--basis-l) var(--basis-c) var(--hue-documented));
+	--basis-reported: oklch(var(--basis-l) var(--basis-c) var(--hue-reported));
+	--basis-inferred: oklch(var(--basis-l) var(--basis-c) var(--hue-inferred));
+	--basis-unsubstantiated: oklch(var(--basis-l) var(--basis-c) var(--hue-unsubstantiated));
+}
+
+/* ---------------------------------------------------------------------------
+   Relationship type palette — theme-independent
+   Used when a node is selected: connecting edges recolour by type.
+   Chosen so the palette is distinguishable and equally weighted.
+   --------------------------------------------------------------------------- */
+
+:root {
+	--rel-institutional: oklch(65% 0.12 250);
+	--rel-appointment: oklch(70% 0.14 30);
+	--rel-succession: oklch(65% 0.12 180);
+	--rel-family: oklch(72% 0.16 350);
+	--rel-business: oklch(65% 0.12 60);
+	--rel-party: oklch(68% 0.14 300);
+	--rel-security: oklch(58% 0.12 200);
+	--rel-funding: oklch(70% 0.14 120);
+	--rel-diplomatic: oklch(72% 0.10 260);
+	--rel-alliance: oklch(68% 0.14 150);
+	--rel-conflict: oklch(62% 0.16 25);
+	--rel-prosecution: oklch(60% 0.14 10);
+	--rel-reported: oklch(70% 0.10 80);
+	--rel-allegation: oklch(68% 0.12 340);
+}
+
+/* ---------------------------------------------------------------------------
+   Type, space, radius, motion — theme-independent
+   --------------------------------------------------------------------------- */
+
+:root {
+	--font-sans: 'Inter', 'IBM Plex Sans Arabic', system-ui, -apple-system, sans-serif;
+	--font-serif: 'Newsreader', 'IBM Plex Serif', Georgia, serif;
+	--font-mono: 'JetBrains Mono', 'IBM Plex Mono', ui-monospace, monospace;
+
+	/* Type scale, 1.2 ratio from 11px. Deliberately tight: this is an instrument
+	   panel, not a landing page. */
+	--t-2xs: 9.5px;
+	--t-xs: 10.5px;
+	--t-sm: 11.5px;
+	--t-base: 12.5px;
+	--t-md: 13.5px;
+	--t-lg: 15px;
+	--t-xl: 18px;
+	--t-2xl: 22px;
+	--t-3xl: 28px;
+	--t-4xl: 36px;
+
+	--lh-tight: 1.25;
+	--lh-snug: 1.45;
+	--lh-normal: 1.6;
+	--lh-relaxed: 1.7;
+
+	--track-tight: -0.011em;
+	--track-normal: 0;
+	--track-wide: 0.04em;
+	--track-caps: 0.11em;
+
+	/* 4px base spacing scale */
+	--s-1: 2px;
+	--s-2: 4px;
+	--s-3: 6px;
+	--s-4: 8px;
+	--s-5: 12px;
+	--s-6: 16px;
+	--s-7: 20px;
+	--s-8: 24px;
+	--s-9: 32px;
+	--s-10: 40px;
+	--s-11: 56px;
+	--s-12: 72px;
+
+	--r-xs: 3px;
+	--r-sm: 5px;
+	--r-md: 7px;
+	--r-lg: 10px;
+	--r-xl: 14px;
+	--r-full: 999px;
+
+	/* Motion. One easing per intent, so timing feels like one system.
+	   `out` for things entering, `in-out` for things moving, `spring` for things
+	   the user is dragging. */
+	--ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+	--ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+	--ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+	--dur-instant: 90ms;
+	--dur-fast: 150ms;
+	--dur-normal: 240ms;
+	--dur-slow: 380ms;
+	--dur-slower: 560ms;
+
+	/* OS chrome dimensions. Referenced by the shell layout AND by view components
+	   that need to reserve space, so they can never drift apart. */
+	--menubar-h: 44px;
+	--subnav-h: 38px;
+	--chrome-h: calc(var(--menubar-h) + var(--subnav-h));
+	--dock-h: 92px;
+	--inspector-w: 400px;
+
+	/* Minimum comfortable touch target. Pointer-precision controls may be smaller;
+	   anything a thumb is expected to hit on a phone may not. */
+	--tap: 44px;
+
+	/* Notch and home-indicator insets, zero on hardware that has none. Every piece
+	   of fixed chrome adds these rather than hard-coding a phone-shaped guess. */
+	--safe-t: env(safe-area-inset-top, 0px);
+	--safe-b: env(safe-area-inset-bottom, 0px);
+	--safe-l: env(safe-area-inset-left, 0px);
+	--safe-r: env(safe-area-inset-right, 0px);
+}
+
+/* ---------------------------------------------------------------------------
+   Compact chrome.
+
+   One breakpoint, declared once, so the shell and every view that reserves space
+   change together. Views must read the tokens rather than repeating this query —
+   that is the entire reason the dimensions are tokens.
+   --------------------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+	:root {
+		--menubar-h: 52px;
+		--subnav-h: 42px;
+		/* Two rows of 32 + 40. Must match TimeDock's compact block exactly: the
+		   inspector sheet and every view that reserves bottom space position against
+		   this number, so a dock taller than its token silently covers them. */
+		--dock-h: 72px;
+		--inspector-w: 100vw;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	:root {
+		--dur-instant: 1ms;
+		--dur-fast: 1ms;
+		--dur-normal: 1ms;
+		--dur-slow: 1ms;
+		--dur-slower: 1ms;
+	}
+}
+
+/* The compatibility bridge that used to live here has been removed. Every view now
+   references semantic tokens directly. If you reintroduce a flat alias like `--fg`
+   or `--line`, you are undoing that work. */

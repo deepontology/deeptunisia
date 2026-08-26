@@ -1,0 +1,58 @@
+Creative Commons Attribution 4.0 International
+
+This is a human-readable summary of (and not a substitute for) the license.
+The full legal text is at: https://creativecommons.org/licenses/by/4.0/legalcode
+
+You are free to:
+
+  Share   — copy and redistribute the material in any medium or format
+  Adapt   — remix, transform, and build upon the material
+           for any purpose, even commercially.
+
+Under the following terms:
+
+  Attribution — You must give appropriate credit, provide a link to the
+                 license, and indicate if changes were made. You may do so
+                 in any reasonable manner, but not in any way that suggests
+                 the licensor endorses you or your use.
+
+  No additional restrictions — You may not apply legal terms or
+                 technological measures that legally restrict others from
+                 doing anything the license permits.
+
+Notices:
+
+  You do not have to comply with the license for elements of the material in
+  the public domain or where your use is permitted by an applicable
+  exception or limitation.
+
+  No warranties are given. The license may not give you all of the
+  permissions necessary for your intended use. For example, other rights
+  such as publicity, privacy, or moral rights may limit how you use the
+  material.
+
+---
+
+What this license covers: the knowledge graph — `data/*.yaml` (the source of
+truth), the generated bundle, and the public exports (`static/dataset.json`,
+`static/positions.csv`, `static/relationships.csv`, `static/sources.csv`, the
+geographic layers and the changelog).
+
+What it does not cover:
+
+  - The code that builds and displays the graph — licensed under MIT, see
+    `../LICENSE`.
+  - The underlying cited sources (gazette entries, articles, archives), which
+    remain under their own terms. This license covers DeepTunisia's selection,
+    arrangement, translations and original prose — not the third-party
+    material the citations point to.
+  - Facts. Facts are not copyrightable; what is licensed here is the curated
+    compilation and its analytical framing.
+
+Attribution practice:
+
+  DeepTunisia's own citation model is stronger than any license requires:
+  every claim in the dataset names the sources it rests on, in `data/sources.yaml`
+  and in the published exports. If you reuse the graph, attribute it to
+  deeptunisia.org and link to the /data page — and when you redistribute,
+  keep the per-claim citations attached so the record stays verifiable.

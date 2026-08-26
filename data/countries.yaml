@@ -1,0 +1,127 @@
+# Country identity — a gazetteer, not a set of claims.
+#
+# WHY THIS FILE CARRIES NO BASIS, CONFIDENCE OR SOURCES
+#
+# Every other file in data/ records assertions about Tunisian power, and each one
+# is graded: what kind of claim it is, how strongly it is held, who is making it,
+# and what would refute it. "MM is the ISO 3166-1 code for Myanmar" is not that
+# kind of statement. It is a lookup, it is not contested by anybody, and dressing
+# it in the apparatus of a graded claim would cheapen the apparatus everywhere
+# else it appears.
+#
+# WHAT IS AND IS NOT STORED HERE
+#
+# Country NAMES are deliberately absent. They come from Unicode CLDR at build
+# time, through Intl.DisplayNames, in all three languages. Storing them would
+# mean storing a French and Arabic translation for ~175 countries, which the
+# translation-provenance system would then require a tier for — and the honest
+# tier would have to be invented, because nobody on this project translated
+# "Kyrgyzstan" into Arabic. CLDR did, and CLDR is a better source than we are.
+#
+# Geometry is absent for the same reason: `scripts/build-world.ts` computes every
+# country's anchor from the Natural Earth topology. A coordinate typed by hand is
+# a coordinate nobody can check.
+#
+# So this file holds exactly the one thing that can be neither derived nor
+# looked up: the identifications a human had to make.
+#
+# HOW THE CROSSWALK IS BUILT
+#
+# The topology keys countries by UN M49 numeric code. CLDR keys them by ISO 3166-1
+# alpha-2. Nothing links the two, so the build matches them by English name after
+# normalising typography (curly apostrophes to straight, "&" to "and") — that
+# resolves 157 of 172 mechanically, and those rows are derived, not asserted.
+#
+# The remainder are below. Natural Earth abbreviates ("S. Sudan", "Eq. Guinea")
+# and occasionally uses an older or different name than CLDR ("Turkey" against
+# CLDR's "Türkiye", "Macedonia" against "North Macedonia"). Each line is a human
+# saying "this Natural Earth feature and this ISO country are the same place".
+#
+# The build fails if any topology feature is left unresolved, if two features
+# claim the same alpha-2, or if an alias names a country CLDR does not know. It
+# also prints the CLDR name beside each alias, so the identification can be
+# checked rather than trusted.
+
+# Natural Earth's name  ->  ISO 3166-1 alpha-2
+# The comment on each line is the CLDR name that code resolves to, which is what
+# makes these reviewable: if the two do not describe the same country, it is wrong.
+aliases:
+  Myanmar: MM # Myanmar (Burma)
+  'Central African Rep.': CF # Central African Republic
+  Congo: CG # Congo - Brazzaville, i.e. the Republic of the Congo
+  'Dem. Rep. Congo': CD # Congo - Kinshasa, i.e. the Democratic Republic
+  'Dominican Rep.': DO # Dominican Republic
+  'Eq. Guinea': GQ # Equatorial Guinea
+  'Falkland Is.': FK # Falkland Islands
+  Palestine: PS # Palestinian Territories
+  'S. Sudan': SS # South Sudan
+  'W. Sahara': EH # Western Sahara
+  Turkey: TR # Türkiye
+  Macedonia: MK # North Macedonia
+  'United States of America': US # United States
+  'Solomon Is.': SB # Solomon Islands
+  'Bosnia and Herz.': BA # Bosnia & Herzegovina
+
+# Creditor names, as the World Bank writes them, to ISO 3166-1 alpha-2.
+#
+# International Debt Statistics names its counterparts in its own house style —
+# "Germany, Fed. Rep. of", "Korea, Republic of", "Turkiye", "Russian Federation" —
+# and none of those is what CLDR calls the same country. Thirty-four match on name
+# alone; these are the rest, and they are identifications a human made, exactly like
+# the topology aliases above.
+#
+# Two are states that no longer exist. Both already have anchors, because Comtrade
+# reports Tunisia's trade with them too: see HISTORICAL in scripts/build-world.ts.
+creditor_aliases:
+  'Germany, Fed. Rep. of': DE
+  'Korea, Republic of': KR
+  'Russian Federation': RU
+  Turkiye: TR
+  USSR: SU # the Soviet Union; drawn on Russia's anchor
+  'German Dem. Rep.': DD # East Germany; drawn on Germany's anchor
+
+# Multilateral creditors that already exist in the graph, by the World Bank's name
+# for them.
+#
+# These are the lenders that dominate Tunisia's modern debt — the World Bank at
+# 4.3bn dollars, the African Development Bank at 2.6bn, against roughly 1.1bn each
+# for France and Germany. Matching them to an institution record means the globe can
+# place them at that body's seat, and the reader can open the same entry the network
+# opens.
+#
+# IBRD and IDA are two windows of one institution and deliberately map to the same
+# record; the build sums them.
+creditor_institutions:
+  'African Dev. Bank': afdb
+  'European Investment Bank': eib
+  'World Bank-IBRD': world-bank
+  'World Bank-IDA': world-bank
+  'European Union': european-union
+
+# Creditors that are not places at all, and must never become a dot.
+#
+# "Bondholders" is the largest single line in Tunisia's modern debt — 7.4bn dollars
+# at peak — and it is a market, not a country. "Multiple Lenders" is a syndicate.
+# Both are real and both are unmappable, so they are excluded by name here rather
+# than left to fall through whatever the matcher happens to do with them.
+creditor_not_places:
+  - Bondholders
+  - Multiple Lenders
+
+# Anchor overrides for countries the 1:110m topology does not draw.
+#
+# Natural Earth at this resolution omits states too small to render — among them
+# Malta, Singapore, Bahrain, Hong Kong and Mauritius, every one of which is a real
+# Tunisian trade counterparty and at least two of which matter specifically
+# because they are small. A flow to a country with no polygon still needs a point
+# to leave from.
+#
+# Empty until a dataset needs one: the build fails with the country named rather
+# than dropping the flow, so this list grows only in response to real data, and
+# every entry will arrive with a reason. Do not pre-populate it.
+points:
+  # Liechtenstein is a party to the sourced EFTA–Tunisia agreement but has no
+  # polygon in the 1:110m topology. This is the World Bank capital-point value
+  # already carried in flows/comtrade/partners.json (retrieved 2026-08-16), not
+  # a hand-estimated coordinate.
+  LI: [9.5215, 47.1411]

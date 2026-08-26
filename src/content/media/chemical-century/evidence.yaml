@@ -1,0 +1,728 @@
+# The Chemical Century — evidence layer
+# Extracted from video script v6 fact-check table (§5) + per-scene tables (§4).
+# Rows 1–47: sea layer (from v5 §5, 49 rows — rows 48-49 are v5-only bottom-line/reclassification)
+# Rows 48–65: air layer (v6 §5)
+# Source IDs: S-series from §7 source list; A-series for air-specific sources.
+# claim IDs: C001–C065 match the script's numbered fact-check rows.
+
+claims:
+
+  # ── SEA LAYER: C001–C047 ──────────────────────────────────────────────
+
+  - id: C001
+    text:
+      en: "1885 — Philippe Thomas discovers Metlaoui phosphate (April, Jebel Thelja)"
+    grade: documented
+    sources: [S41]
+    entities: [philippe-thomas, metlaoui-phosphate]
+    sections: [S2]
+    disputed: false
+
+  - id: C002
+    text:
+      en: "1897 — CPGCFG founded (convention 1896; décret 22-05-1897); Mirabaud-Hottinger / Mokta-el-Hadid / Nervo"
+    grade: documented
+    sources: [S41]
+    entities: [cpgcfg, mirabaud-bank, hottinger-bank, mokta-el-hadid]
+    sections: [S2]
+    disputed: true
+    dispute:
+      description: "Convention 1896 vs decree 1897 — founding date ambiguity"
+      positions:
+        - claim: "Convention 1896"
+          source: S41
+          holder: "Wikipedia FR"
+        - claim: "Decree 22-05-1897"
+          source: S41
+          holder: "Wikipedia FR"
+      adopted: "Both dates noted; convention 1896, decree 1897"
+
+  - id: C003
+    text:
+      en: "1899 — Sfax–Gafsa–Métlaoui rail, 242.2 km"
+    grade: documented
+    sources: [S41]
+    entities: [sncft, cpgcfg]
+    sections: [S2]
+    disputed: false
+
+  - id: C004
+    text:
+      en: "1916 — Graïba–Gabès rail, 83.1 km"
+    grade: documented
+    sources: [S41]
+    entities: [sncft, cpgcfg]
+    sections: [S2]
+    disputed: false
+
+  - id: C005
+    text:
+      en: "1925 Le Danois; 1965 Calypso (De Gaillande 1970); 1971 Ktari-Chakroun & Azouz (INSTM Bull. 2(1):5-27)"
+    grade: documented
+    sources: [S26, S37]
+    entities: [gulf-of-gabes]
+    sections: [S2]
+    disputed: false
+
+  - id: C006
+    text:
+      en: "Output series 1900–2011 (0.2 → 8.3 → 8.131 → 2.28)"
+    grade: documented
+    sources: [S14]
+    entities: [gct, cpg]
+    sections: [S2, S3, S4, S5, S6]
+    disputed: false
+
+  - id: C007
+    text:
+      en: "'8.2 Mt (2010)' = rounding of 8.131; 2000 (8.3) is the record"
+    grade: documented
+    sources: [S14, S51]
+    entities: [gct]
+    sections: [S6]
+    disputed: true
+    dispute:
+      description: "8.2 Mt popular figure vs 8.131 official; 2000 (8.3) is the actual record"
+      positions:
+        - claim: "8.2 Mt (2010)"
+          source: S51
+          holder: "Reuters (popular figure)"
+        - claim: "8.131 Mt (2010); record is 8.3 (2000)"
+          source: S14
+          holder: "Official open-data series"
+      adopted: "8.131 corrected; 2000 is the record at 8.3"
+
+  - id: C008
+    text:
+      en: "SIAPE 1947 (vs 1948)"
+    grade: documented
+    sources: [S41]
+    entities: [siape]
+    sections: [S3]
+    disputed: true
+    dispute:
+      description: "SIAPE founding date: official site says 1947, archived site says 1948"
+      positions:
+        - claim: "1947"
+          source: S41
+          holder: "GCT official site"
+        - claim: "1948"
+          source: S41
+          holder: "GCT archived site (2012)"
+      adopted: "Official site 1947 noted; archive 1948 noted"
+
+  - id: C009
+    text:
+      en: "François Breynert — first PDG SIAPE (1947–1953)"
+    grade: documented
+    sources: [S41]
+    entities: [breynert-francois, siape]
+    sections: [S3]
+    disputed: false
+
+  - id: C010
+    text:
+      en: "TSP 1952, 330,000 t/yr"
+    grade: documented
+    sources: [S41]
+    entities: [siape]
+    sections: [S3]
+    disputed: false
+
+  - id: C011
+    text:
+      en: "Nationalisations 1956 → 1962 (CIPHOS) → 1967 (SNCFT) → 1969 (merger)"
+    grade: documented
+    sources: [S41]
+    entities: [ciphos, sncft, cpg]
+    sections: [S3]
+    disputed: false
+
+  - id: C012
+    text:
+      en: "CPG formed 01-1976; instrument not found"
+    grade: documented
+    sources: [S41]
+    entities: [cpg]
+    sections: [S3]
+    disputed: false
+
+  - id: C013
+    text:
+      en: "Complexes with names + capacities: ICM MGA 470k (1972) · SAEPA I DAP 650k (1979) · SAEPA II ammonitrate 330k (1983) · EG DAP (1985) · ICG M'dhilla TSP 465k (1985) · Skhira PA 375k (1988)"
+    grade: documented
+    sources: [S41, S8]
+    entities: [icm, saepa, eg-gabes, icg, skhira]
+    sections: [S4]
+    disputed: false
+
+  - id: C014
+    text:
+      en: "SPIE Batignolles built the first plant — per GCT env. director Noureddine Trabelsi (2015)"
+    grade: reported
+    sources: [S81]
+    entities: [spie-batignolles, trabelsi-noureddine, icm]
+    sections: [S4]
+    disputed: false
+    text_note: "C confidence, attributed to Trabelsi via multinationales.org 2015"
+
+  - id: C015
+    text:
+      en: "Ali Boukhris — PDG ICM (70–81) + SIAPE (70–76, 79–81) + SAEPA (75–81), parallel"
+    grade: documented
+    sources: [S41]
+    entities: [boukhris-ali, icm, siape, saepa]
+    sections: [S4]
+    disputed: false
+
+  - id: C016
+    text:
+      en: "Gérard Valier — first PDG EG (73–77); Mohamed Mghaieth — first PDG ICG (81–85)"
+    grade: documented
+    sources: [S41]
+    entities: [valier-gerard, mghaieth-mohamed, eg-gabes, icg]
+    sections: [S4]
+    disputed: false
+
+  - id: C017
+    text:
+      en: "Discharge to sea since 1972"
+    grade: documented
+    sources: [S8, S25]
+    entities: [gct]
+    sections: [S4]
+    disputed: false
+
+  - id: C018
+    text:
+      en: "1976 — six-year surveillance (INSTOP/INSTM); siltation first described"
+    grade: documented
+    sources: [S37, S35]
+    entities: [instm, gulf-of-gabes]
+    sections: [S5]
+    disputed: false
+
+  - id: C019
+    text:
+      en: "~1977–78 — lethal PG concentrations in situ (Darmoul & Vitiello)"
+    grade: documented
+    sources: [S37]
+    entities: [gulf-of-gabes]
+    sections: [S5]
+    disputed: false
+
+  - id: C020
+    text:
+      en: "1980 — 230 ha benthos destroyed (Darmoul, Hadj Ali Salem & Vitiello)"
+    grade: documented
+    sources: [S37]
+    entities: [gulf-of-gabes]
+    sections: [S5]
+    disputed: false
+
+  - id: C021
+    text:
+      en: "1988 — red tide (Hamza & Ben Maiz 1990); 1988 — land storage recommended (Darmoul 1988)"
+    grade: documented
+    sources: [S37]
+    entities: [gulf-of-gabes]
+    sections: [S5]
+    disputed: false
+
+  - id: C022
+    text:
+      en: "1989 — NT 106.002 adopted (arrêté 20-07-1989, JORT n°59, effect 01-10-1989)"
+    grade: documented
+    sources: [S37]
+    entities: [nt-106-002]
+    sections: [S5]
+    disputed: false
+
+  - id: C023
+    text:
+      en: "1990 — no living plants (Zaouali 1993, via El Kateb 2018)"
+    grade: reported
+    sources: [S35]
+    entities: [gulf-of-gabes, zaouali]
+    sections: [S5]
+    disputed: false
+
+  - id: C024
+    text:
+      en: "1992 — GCT formed (SIAPE+SAEPA); absorption 1988/89 dispute"
+    grade: documented
+    sources: [S41]
+    entities: [gct, siape, saepa]
+    sections: [S6]
+    disputed: true
+    dispute:
+      description: "GCT founding year: 1988/89 absorption vs 1992 merger"
+      positions:
+        - claim: "GCT formed 1992 (SIAPE+SAEPA merger)"
+          source: S41
+          holder: "Wikipedia FR / GCT official"
+      adopted: "1992 noted as official formation date"
+
+  - id: C025
+    text:
+      en: "1994 — single PDG CPG+GCT: Rafaâ Dekhil (1994–2001)"
+    grade: documented
+    sources: [S41]
+    entities: [dekhil-rafaa, gct, cpg]
+    sections: [S6]
+    disputed: false
+
+  - id: C026
+    text:
+      en: "2014 — ~90% Posidonia loss; ~1,300→<150 km² (El Zrelli et al. 2023)"
+    grade: documented
+    sources: [S26]
+    entities: [el-zrelli]
+    sections: [S6]
+    disputed: false
+
+  - id: C027
+    text:
+      en: "2008 Gafsa revolt (context beat; output 7.6 Mt)"
+    grade: documented
+    sources: [S41]
+    entities: [gafsa-mining-basin]
+    sections: [S6]
+    disputed: false
+
+  - id: C028
+    text:
+      en: "Activity ≤40% (Hédi Youssef, 03-2026); ~20% units (Houcine Rhili, 02-2026)"
+    grade: reported
+    sources: [S20, S21]
+    entities: [youssef-hedi, rhili-houcine, gct]
+    sections: [S7]
+    disputed: false
+
+  - id: C029
+    text:
+      en: "M'dhilla 2 created 2010; idle since 2020"
+    grade: documented
+    sources: [S41, S22]
+    entities: [mdhilla-2, gct]
+    sections: [S7]
+    disputed: false
+
+  - id: C030
+    text:
+      en: "14–15k t/day (2025) = 5.1–5.5 Mt/yr"
+    grade: documented
+    sources: [S8]
+    entities: [gct]
+    sections: [S7]
+    disputed: false
+    text_note: "Derived (annualised: 14–15k × 365)"
+
+  - id: C031
+    text:
+      en: "Cumulative ~200 Mt (Samir Kazbar, via TAP) vs >500 Mt wet (El Zrelli 2023)"
+    grade: reported
+    sources: [S27, S26]
+    entities: [kazbar-samir, el-zrelli, gulf-of-gabes]
+    sections: [S7]
+    disputed: true
+    dispute:
+      description: "Cumulative phosphogypsum: ~200 Mt dry vs >500 Mt wet; basis (dry/wet; period) differs"
+      positions:
+        - claim: "~200 Mt (dry, cumulative)"
+          source: S27
+          holder: "Samir Kazbar (expert, via TAP)"
+        - claim: ">500 Mt wet"
+          source: S26
+          holder: "El Zrelli et al. 2023 (peer-reviewed)"
+      adopted: "Both noted; basis differs (dry vs wet)"
+
+  - id: C032
+    text:
+      en: "2003 — Medhioub expertise (tribunal de Gabès); orchards halved, date palms −80%; origin of '95%'"
+    grade: reported
+    sources: [S8, S25]
+    entities: [medhioub, gulf-of-gabes]
+    sections: [S7]
+    disputed: false
+    text_note: "Attributed; source inside audit bibliography p.105 (Medhioub 2003)"
+
+  - id: C033
+    text:
+      en: "2017 — EU study (PARTICIP GmbH & ETI Consulting) ≈76m TND/yr (2015), 47/33/7 — floor"
+    grade: reported
+    sources: [S32, S33]
+    entities: [particip-gmbh, eti-consulting, gulf-of-gabes]
+    sections: [S7]
+    disputed: true
+    dispute:
+      description: "EU study 2015 cost 76m TND: primary report not online; only agriculture >5 MDT verified"
+      positions:
+        - claim: "76m TND/yr total (2015)"
+          source: S32
+          holder: "PARTICIP/ETI (via audit biblio)"
+        - claim: "Agriculture >5 MDT verified"
+          source: S33
+          holder: "Amri et al. 2023 + PGE-Gabès newsletter"
+      adopted: "76m circulates; only agriculture component verified"
+
+  - id: C034
+    text:
+      en: "2017-06-29 — relocation decision under PM Youssef Chahed, never implemented (2030)"
+    grade: documented
+    sources: [S8, S37]
+    entities: [chahed-youssef, gct]
+    sections: [S7]
+    disputed: false
+
+  - id: C035
+    text:
+      en: "Fisheries ≈€60M/yr; >€750M cumulative (El Zrelli 2020); 65% of landings"
+    grade: documented
+    sources: [S34, S35]
+    entities: [el-zrelli, gulf-of-gabes]
+    sections: [S7]
+    disputed: false
+
+  - id: C036
+    text:
+      en: "€105M (2014) ≈ 115% of factories' added value (El Zrelli 2023)"
+    grade: documented
+    sources: [S26]
+    entities: [el-zrelli, gct, gulf-of-gabes]
+    sections: [S7, S10]
+    disputed: false
+    text_note: "Single-study estimate: damage total against the factories' value added, both 2014, as computed by El Zrelli et al.; components and geographic boundary are the authors', not independently re-derived here"
+
+  - id: C037
+    text:
+      en: "CMR 05-03-2025 (PM Kamel Maddouri; Min. Industrie Fatma Thabet Chiboub): ×5 + reclassification + VAT + new units + M'dhilla 2 support"
+    grade: documented
+    sources: [S51, S52, S85]
+    entities: [maddouri-kamel, chiboub-fatma-thabet, gct]
+    sections: [S8]
+    disputed: false
+
+  - id: C038
+    text:
+      en: "Audit 24-07-2025 (I2E/IHE; AfDB P-TN-BB0-010), 160 pp, bank-required"
+    grade: documented
+    sources: [S8, S47]
+    entities: [gct, afdb]
+    sections: [S8, S9]
+    disputed: false
+    text_note: "Partly inferred: bank-required is an inference from AfDB project page"
+
+  - id: C039
+    text:
+      en: "Protests/storming/strike/Tunis march Oct 2025; >20 schoolchildren (Collège Chatt Essalem)"
+    grade: reported
+    sources: [S54, S55, S77, S80]
+    entities: [gct, ugtt, chat-essalem]
+    sections: [S1, S8]
+    disputed: false
+
+  - id: C040
+    text:
+      en: "Référé 26-02-2026 (Me Mehdi Talmoudi; 300 certificates, 30 filed): 'préjudice non établi'"
+    grade: reported
+    sources: [S78, S44]
+    entities: [talmoudi-mehdi, gct]
+    sections: [S8]
+    disputed: false
+
+  - id: C041
+    text:
+      en: "Target walk-backs: 13.6 (Youssef, 03-2026) → ~11.4 (Plan, 06-2026) → 9.4 by 2035 (CNRD)"
+    grade: reported
+    sources: [S20, S62, S19]
+    entities: [youssef-hedi, gct]
+    sections: [S8]
+    disputed: true
+    dispute:
+      description: "Production targets revised downwards three times in six months"
+      positions:
+        - claim: "13.6 Mt by 2030"
+          source: S20
+          holder: "Hédi Youssef (GCT DG)"
+        - claim: "~11.4 Mt by 2030"
+          source: S62
+          holder: "Plan de développement 2026-2030"
+        - claim: "9.4 Mt by 2035"
+          source: S19
+          holder: "CNRD Finance Commission"
+      adopted: "Three successive targets noted; each revision documented"
+
+  - id: C042
+    text:
+      en: "27-04-2026 — Chiboub dismissed (no reason published); interim Slah Zouari"
+    grade: documented
+    sources: [S61]
+    entities: [chiboub-fatma-thabet, zouari-slah]
+    sections: [S8]
+    disputed: false
+
+  - id: C043
+    text:
+      en: "01-06-2026 — décret n°79: Omar Bouzouada PDG of CPG and GCT"
+    grade: documented
+    sources: [S30, S83]
+    entities: [bouzouada-omar, cpg, gct]
+    sections: [S8]
+    disputed: false
+
+  - id: C044
+    text:
+      en: "Guarantees 2026 ≈ $120M ITFC + €110M+€7M EBRD + $110M AfDB (lois 49/50/51/2026)"
+    grade: documented
+    sources: [S69, S70, S71, S47]
+    entities: [gct, cpg, itfc, ebrd, afdb]
+    sections: [S8]
+    disputed: false
+
+  - id: C045
+    text:
+      en: "Reports stop 2014; 2023 blank; task-force (Ben Hammoud team) unpublished; transfer price/health/LF2026/envelope not published"
+    grade: documented
+    sources: [S86, S10, S75, S88, S94, S79]
+    entities: [gct, mof]
+    sections: [S9]
+    disputed: false
+    negative: true
+    text_note: "Documented negative — absence of records across multiple categories"
+
+  - id: C046
+    text:
+      en: "Editor quote — Hédi Mechri, edito #937: 'move along — there is nothing to see'"
+    grade: documented
+    sources: [S64]
+    entities: [mechri-hedi]
+    sections: [S9]
+    disputed: false
+
+  - id: C047
+    text:
+      en: "Revenue series 2019–2022: 1,275 / 936 (−608 net) / 1,979 / 3,179 m TND; 3,400m (2024) '+247%' single outlet"
+    grade: documented
+    sources: [S9, S10, S1]
+    entities: [gct]
+    sections: [S10]
+    disputed: true
+    dispute:
+      description: "2024 '3,400m +247%' is single-outlet, self-declared; 2023 baseline disputed (980m vs 2,075m)"
+      positions:
+        - claim: "3,400m (2024), +247% vs 980m (2023)"
+          source: S1
+          holder: "L'Économiste Maghrébin"
+        - claim: "2023 turnover 2,075m"
+          source: S11
+          holder: "AfDB SGES appraisal"
+        - claim: "2023 MoF row empty"
+          source: S10
+          holder: "MoF LF2025"
+      adopted: "Reported as single-outlet; audited confirmation absent"
+
+  # ── AIR LAYER: C048–C065 ──────────────────────────────────────────────
+
+  - id: C048
+    text:
+      en: "Plume composition: SO₂, NOx, HF, NH₃, dust from acid/DAP/ammonitrate/prilling units"
+    grade: documented
+    sources: [S8]
+    entities: [gct]
+    sections: [S1, S4]
+    disputed: false
+    layer: air
+
+  - id: C049
+    text:
+      en: "2010 campaign (COMETE-SNC-LAVALIN-IHE, March 2010): SO₂ 7,805/2,008/1,235 vs 300 · NO₂ 924 vs 500 · HF 20/15/13 vs 5 · PM₁₀ 352 vs 5 · dust 123–248 vs 50 · CO 96/248 vs 10 — start-up framing is the audit's own"
+    grade: documented
+    sources: [S8]
+    entities: [gct, comete-snc-lavalin]
+    sections: [S1, S5]
+    disputed: false
+    layer: air
+    text_note: "Audit relay of 2010 campaign data; start-up framing noted as audit's own"
+
+  - id: C050
+    text:
+      en: "No campaign since March 2010; no continuous monitoring — audit major non-conformity §6.3.4"
+    grade: documented
+    sources: [S8]
+    entities: [gct]
+    sections: [S5, S9]
+    disputed: false
+    layer: air
+    negative: true
+
+  - id: C051
+    text:
+      en: "Décret 2010-2519 (28-09-2010) — source-emission limits"
+    grade: documented
+    sources: [S8]
+    entities: [decret-2010-2519]
+    sections: [S5]
+    disputed: false
+    layer: air
+
+  - id: C052
+    text:
+      en: "Décret 2018-447 (18-05-2018) — ambient-air limits"
+    grade: documented
+    sources: [S8]
+    entities: [decret-2018-447]
+    sections: [S5]
+    disputed: false
+    layer: air
+
+  - id: C053
+    text:
+      en: "'95%' chain: Medhioub 2003 (court) → EU study 2017/18 → audit 2025 'd'après une étude' — never re-measured"
+    grade: reported
+    sources: [S8, S25]
+    entities: [medhioub, gct]
+    sections: [S5]
+    disputed: false
+    layer: air
+    text_note: "D5 confidence — attributed chain; never re-measured"
+
+  - id: C054
+    text:
+      en: "Kwas et al. 2024 (Cureus 16(8):e66578, open access): Gabès hospital pneumonia cohort Jan–Oct 2022 — SO₂ ↔ NIV/CURB65/PSI; PM₁₀ ↔ lung abscess/pleural effusion"
+    grade: documented
+    sources: [S39]
+    entities: [kwas-h, gulf-of-gabes]
+    sections: [S7]
+    disputed: false
+    layer: air
+
+  - id: C055
+    text:
+      en: "Ahbil, Sellami & Azri (Environmental Forensics 27(1):90-108): suburban Gabès 2017–19 — >53% moderate (PM₁₀), >20% unhealthy sensitive, ~3% very unhealthy-to-hazardous"
+    grade: documented
+    sources: [S40]
+    entities: [ahbil-k, sellami-f, azri-c, gulf-of-gabes]
+    sections: [S7]
+    disputed: false
+    layer: air
+
+  - id: C056
+    text:
+      en: "Sellami, Gautam & Azri 2026 — Ghannouch (GCT fence-line) air + health study"
+    grade: reported
+    sources: [S39]
+    entities: [sellami-f, gautam-s, azri-c, ghannouch]
+    sections: [S7]
+    disputed: false
+    layer: air
+    text_note: "C confidence — metadata only; full text unread (publisher bot-block)"
+
+  - id: C057
+    text:
+      en: "Audit resident surveys: 66 questionnaires (§3.4.4); §6.8 — unanimous 'very grave', asphyxiation, respiratory/eye/skin irritation, sulphur smell; workers name SOx + fluorinated gases"
+    grade: documented
+    sources: [S8]
+    entities: [gct, gabes-population]
+    sections: [S7]
+    disputed: false
+    layer: air
+    text_note: "Qualitative, audit-flagged; perceptions not yet measured"
+
+  - id: C058
+    text:
+      en: "14-10 / 22-10-2025 school asphyxiations (Collège Chatt Essalem); 18-11 wave — gas unnamed"
+    grade: reported
+    sources: [S77]
+    entities: [chat-essalem, gct]
+    sections: [S1, S8]
+    disputed: false
+    layer: air
+    text_note: "B confidence — multiple outlets; gas unidentified in all reports"
+
+  - id: C059
+    text:
+      en: "20-10-2025 — Min. Slah Zouari: six unfinished projects ≈200 MDT 'directly linked to toxic gas emissions'; NOx 98%, SO₂ 75%, NH₃ 84%"
+    grade: reported
+    sources: [S36]
+    entities: [zouari-slah, gct]
+    sections: [S8]
+    disputed: false
+    layer: air
+    text_note: "Attributed to minister's ARP statement"
+
+  - id: C060
+    text:
+      en: "GCT 2009–2020 plan: same 10 Gabès projects, declared 1,323 MDT, unfinished; 'surveillance continue' claim contradicted by its own audit"
+    grade: documented
+    sources: [S8]
+    entities: [gct]
+    sections: [S8]
+    disputed: false
+    layer: air
+
+  - id: C061
+    text:
+      en: "Cancer-pole chain: 2013–14 'cancéropôle offshore' collapse · 13-03-2021 fire (5 dead) + Saïed centre · 21-10-2025 Ferjani pole (2 yrs)"
+    grade: reported
+    sources: [S77]
+    entities: [saied-kais, ferjani-mustapha, gulf-of-gabes]
+    sections: [S7]
+    disputed: false
+    layer: air
+    text_note: "B/C confidence — multiple events, different outlets"
+
+  - id: C062
+    text:
+      en: "'10% lung cancer' — Rousselin 2018, source inside unread paper — circulating"
+    grade: unsubstantiated
+    sources: [S77]
+    entities: [rousselin-m]
+    sections: [S7]
+    disputed: false
+    layer: air
+
+  - id: C063
+    text:
+      en: "Gabès cancer-incidence statistics: none found; air-quality series: none found"
+    grade: documented
+    sources: [S8]
+    entities: [gulf-of-gabes]
+    sections: [S9]
+    disputed: false
+    layer: air
+    negative: true
+    text_note: "Documented negative — searched for and not found"
+
+  - id: C064
+    text:
+      en: "Air corrective plan ≈159.3 MDT (DAP NH₃ 24 · DENOX 6.2 · prilling 93 · SOx 4 · odour 20 · N₂O 6.1 · CO₂ 5 · stations 1)"
+    grade: documented
+    sources: [S8]
+    entities: [gct]
+    sections: [S4, S8]
+    disputed: false
+    layer: air
+    text_note: "Derived total from audit §7.7 line items"
+
+  - id: C065
+    text:
+      en: "Ahbil 2024 STOTEN (dry-deposited particles — air→ground channel); Bouajila 2022 (phthalates in Gabès soils); Mokadem 2012 (Gafsa-basin analogue)"
+    grade: documented
+    sources: [S40]
+    entities: [ahbil-k, bouajila-a, mokadem-n, gulf-of-gabes]
+    sections: [S7]
+    disputed: false
+    layer: air
+    text_note: "C confidence — metadata only for some; Mokadem is a Gafsa-basin analogue"
+
+  # ── GOVERNANCE ────────────────────────────────────────────────────────
+
+  - id: C066
+    text:
+      en: "GCT state share 99.998% of capital (MoF LF2021 Annexe 9; capital 476.084m TND)"
+    grade: documented
+    sources: [S67]
+    entities: [gct]
+    sections: [S1]
+    disputed: false

@@ -1,0 +1,791 @@
+# -----------------------------------------------------------------------------
+# HYPOTHESES
+#
+# The site's analytical spine. Each is stated so it could in principle be
+# falsified, and each carries an honest verdict on how well the current dataset
+# supports it. Two of the six come out badly, which is how you can tell the
+# exercise is doing something.
+#
+# `falsifiable_by` states what would OVERTURN THE VERDICT, not merely what would
+# contradict the statement. For a hypothesis rated `strong` those are the same
+# thing. For one rated `insufficient` or `contradicted` they are not: the useful
+# commitment there is naming the evidence that would move the project to the
+# opposite finding. Every entry must be specific to its own hypothesis and name
+# evidence someone could actually go and look for — a falsifier shared between
+# two hypotheses is a falsifier for neither, and `npm run test` now rejects it.
+# -----------------------------------------------------------------------------
+
+- id: h1-continuous-deep-state
+  label: H1 — A continuous deep state
+  label_fr: >-
+    H1 — Un État profond continu
+  label_fr_by: model-reviewed
+  label_ar: >-
+    الفرضية 1 — دولة عميقة متواصلة
+  label_ar_by: model-reviewed
+  statement: >-
+    A relatively stable group of security and economic elites has controlled Tunisia
+    through every change of regime.
+  statement_fr: >-
+    Un groupe relativement stable d'élites sécuritaires et économiques a contrôlé la Tunisie
+    à travers chaque changement de régime.
+  statement_fr_by: model-reviewed
+  statement_ar: >-
+    مجموعة مستقرّة نسبيًا من النخب الأمنية والاقتصادية سيطرت على تونس عبر كل تغيير في
+    النظام.
+  statement_ar_by: model-reviewed
+  support: insufficient
+  reasoning: >-
+    The dataset does not support this in its strong form. The Trabelsi network was
+    dismantled, the RCD dissolved, Ben Ali died in exile, and the state has since
+    prosecuted a former national police and intelligence chief, a former prime
+    minister, the country's richest businessman and the leader of its largest party.
+    A single continuous ruling group cannot be reconciled with a state that keeps
+    imprisoning its own former security leadership.
+  reasoning_fr: >-
+    Les données ne soutiennent pas cette thèse dans sa forme forte. Le réseau Trabelsi a été
+    démantelé, le RCD dissous, Ben Ali est mort en exil, et l'État a depuis poursuivi un
+    ancien chef de la police nationale et du renseignement, un ancien chef du gouvernement,
+    l'homme d'affaires le plus riche du pays et le dirigeant de son plus grand parti. Un
+    groupe dirigeant unique et continu est irréconciliable avec un État qui ne cesse
+    d'emprisonner ses propres anciens responsables sécuritaires.
+  reasoning_fr_by: model-reviewed
+  reasoning_ar: >-
+    لا تدعم البيانات هذه الفرضية في صيغتها القوية. فُكّكت شبكة الطرابلسي، وحُلّ التجمّع
+    الدستوري الديمقراطي، ومات بن علي في المنفى، ولاحقت الدولة منذئذٍ مديرًا عامًا سابقًا
+    للأمن الوطني والاستخبارات، ورئيس حكومة سابقًا، وأثرى رجال أعمال البلاد، وزعيم أكبر
+    أحزابها. يستحيل التوفيق بين وجود مجموعة حاكمة واحدة متواصلة ودولةٍ لا تكفّ عن سجن
+    قياداتها الأمنية السابقة.
+  reasoning_ar_by: model-reviewed
+  falsifiable_by: >-
+    A prosopography of senior security personnel showing that the same individuals,
+    or a stable cohort of them, occupied the commanding posts continuously across
+    1987, 2011 and 2021. Alternatively: evidence that the post-2021 prosecutions
+    spared a definable inner group while eliminating only its rivals.
+  falsifiable_by_fr: >-
+    Une prosopographie du personnel sécuritaire de haut rang montrant que les mêmes
+    individus, ou une cohorte stable d'entre eux, ont occupé les postes de commandement de
+    façon continue à travers 1987, 2011 et 2021. Ou bien : la preuve que les poursuites
+    engagées après 2021 ont épargné un noyau identifiable tout en éliminant seulement ses
+    rivaux.
+  falsifiable_by_fr_by: model-reviewed
+  falsifiable_by_ar: >-
+    دراسة بروسوبوغرافية لكبار العاملين في الأمن تُظهر أن الأفراد أنفسهم، أو مجموعة ثابتة
+    منهم، شغلوا مواقع القيادة دون انقطاع عبر 1987 و2011 و2021. أو بديلًا: دليل على أن
+    ملاحقات ما بعد 2021 استثنت نواةً محدّدة واكتفت بإزاحة منافسيها.
+  falsifiable_by_ar_by: model-reviewed
+  sources: [reuters-sentences-2025, reuters-mabrouk-chahed-2026, wb-wps6810]
+  evidence:
+    - falsifier_part: "a — prosopography across 1987/2011/2021"
+      finding: contradicts
+      evidence: >-
+        Computed from the built graph (417 positions; security command roles =
+        interior/defence ministers, DGSN, DGSR, ANRSD, National Guard, service and
+        joint chiefs, presidential security, national security adviser). At
+        1987-11-07 the security command was Habib Ammar (Interior Minister,
+        appointed that day) and Slaheddine Baly (Defence). At 2011-01-14 it was the
+        military service chiefs Rachid Ammar (Land), Taieb Laajimi (Air), Mohamed
+        Khamassi (Navy). At 2021-07-25 it was the DGSN chiefs Guizani/Seddik, NG
+        commander Ben Khaled, USGN commander Gharbi, service chiefs El Ghoul /
+        Hajem / Jehane, DGSR chief Ben Taous, ANRSD chief Dhif and NSA Hamdi.
+        ZERO individuals appear at more than one of the three dates. The strongest
+        cross-rupture cases are Bennour (DGSN 2006-2008 and DGSN 2011-2012),
+        Seriati (DGSN 1991-2002 then DG presidential security 2002-2011),
+        Belhaj Ali (presidential security 1987-2001 then DGSN 2015-2016) and
+        Akrout (DGSR chief into 2013, NSA 2015-2019) — each with a gap, none
+        spanning all three. A stable cohort exists only across the 2021 rupture,
+        in the military/defence-security domain: El Ghoul (Land Army chief since
+        2018-06-01), Hajem (Air since 2017-08-01), Jehane (Navy since 2020-05-13),
+        Ben Taous (DGSR since 2013-08-22), Dhif (ANRSD since ~2018), Harroum (DG
+        Public Security since 2019-02-20) and Hamdi (NSA since 2019-10-01) all held
+        command on 25 July 2021 and remained in post into 2025-2026 — but that
+        cohort was installed between 2013 and 2020, does not reach back to 2011,
+        and certainly not to 1987. The falsifier's requirement — the same
+        individuals, or a stable cohort, continuously across 1987, 2011 AND 2021 —
+        is not met in the graph.
+      evidence_fr: >-
+        Calculé à partir du graphe construit (417 postes ; rôles de commandement sécuritaire =
+        ministres de l'Intérieur/la Défense, DGSN, DGSR, ANRSD, Garde nationale, chefs d'armée
+        et interarmées, sécurité présidentielle, conseiller à la sécurité nationale). Au
+        1987-11-07, le commandement sécuritaire était Habib Ammar (ministre de l'Intérieur,
+        nommé ce jour-là) et Slaheddine Baly (Défense). Au 2011-01-14, c'étaient les chefs
+        militaires Rachid Ammar (Terre), Taieb Laajimi (Air), Mohamed Khamassi (Marine). Au
+        2021-07-25, c'étaient les chefs de la DGSN Guizani/Seddik, le commandant de la Garde
+        nationale Ben Khaled, le commandant de l'USGN Gharbi, les chefs d'armée El Ghoul /
+        Hajem / Jehane, le chef de la DGSR Ben Taous, le chef de l'ANRSD Dhif et le conseiller
+        Hamdi. ZÉRO individu n'apparaît à plus d'une des trois dates. Les cas de franchissement
+        de rupture les plus forts sont Bennour (DGSN 2006-2008 puis DGSN 2011-2012), Seriati
+        (DGSN 1991-2002 puis sécurité présidentielle 2002-2011), Belhaj Ali (sécurité
+        présidentielle 1987-2001 puis DGSN 2015-2016) et Akrout (chef de la DGSR jusqu'en 2013,
+        conseiller 2015-2019) — chacun avec une interruption, aucun ne couvrant les trois. Une
+        cohorte stable n'existe qu'à travers la rupture de 2021, dans le domaine militaire/
+        défense-sécurité : El Ghoul (chef de l'armée de terre depuis 2018-06-01), Hajem (Air
+        depuis 2017-08-01), Jehane (Marine depuis 2020-05-13), Ben Taous (DGSR depuis
+        2013-08-22), Dhif (ANRSD depuis ~2018), Harroum (DG Sécurité publique depuis
+        2019-02-20) et Hamdi (conseiller depuis 2019-10-01) commandaient tous le 25 juillet
+        2021 et sont restés en poste jusqu'en 2025-2026 — mais cette cohorte a été installée
+        entre 2013 et 2020, ne remonte pas à 2011, et encore moins à 1987. L'exigence du
+        falsifieur — les mêmes individus, ou une cohorte stable, en continu à travers 1987,
+        2011 ET 2021 — n'est pas satisfaite dans le graphe.
+      evidence_fr_by: model-reviewed
+      evidence_ar: >-
+        محسوب من الرسم البياني المبني (417 منصبًا؛ أدوار القيادة الأمنية = وزيرا الداخلية
+        والدفاع، المديرية العامة للأمن الوطني، المديرية العامة للأمن الرئاسي، الوكالة
+        الوطنية للاستخبارات الأمنية والدفاعية، الحرس الوطني، رؤساء الأسلحة وهيئة الأركان
+        المشتركة، الأمن الرئاسي، مستشار الأمن القومي). في 1987-11-07 كانت القيادة الأمنية
+        للحبيب عمار (وزير الداخلية، عُيّن ذلك اليوم) وصلاح الدين بالي (الدفاع). وفي
+        2011-01-14 كان رؤساء الأسلحة رشيد عمار (البري) والطيب العجيلي (الجوي) ومحمد الخماسي
+        (البحري). وفي 2021-07-25 كان مديرا الأمن الوطني القيزاني/الصدّيق، وقائد الحرس الوطني
+        بن خالد، وقائد الوحدة الخاصة غربي، ورؤساء الأسلحة الغول/الهاجم/جهان، ورئيس المديرية
+        العامة للأمن الرئاسي بن تاوُس، ورئيس الوكالة ضيف، والمستشار الحامدي. صفر أفراد يظهرون
+        في أكثر من تاريخ واحد من التواريخ الثلاثة. أقوى حالات عبور القطيعة هي بنّور (مديرًا
+        عامًا للأمن الوطني 2006-2008 ثم 2011-2012)، والسرياطي (مديرًا عامًا للأمن الوطني
+        1991-2002 ثم مديرًا للأمن الرئاسي 2002-2011)، وبالحاج علي (الأمن الرئاسي 1987-2001
+        ثم مديرًا عامًا للأمن الوطني 2015-2016)، وعكروت (رئيس المديرية العامة للأمن الرئاسي
+        حتى 2013، ومستشارًا 2015-2019) — كلٌّ منها بفجوة، ولا يمتد أيٌّ منها عبر التواريخ
+        الثلاثة. وتوجد مجموعة ثابتة فقط عبر قطيعة 2021، في المجال العسكري/الأمني-الدفاعي:
+        الغول (رئيس أركان الجيش البري منذ 2018-06-01)، والهاجم (الجوي منذ 2017-08-01)، وجهان
+        (البحري منذ 2020-05-13)، وبن تاوُس (منذ 2013-08-22)، وضيف (الوكالة منذ ~2018)،
+        وحرّوم (الأمن العمومي منذ 2019-02-20)، والحامدي (مستشارًا منذ 2019-10-01) — جميعهم
+        تولّوا القيادة في 25 جويلية 2021 وبقوا في المنصب حتى 2025-2026 — لكن هذه المجموعة
+        رُكّبت بين 2013 و2020، ولا تبلغ 2011، فضلًا عن 1987. وشرط الدحض — الأفراد أنفسهم، أو
+        مجموعة ثابتة، بلا انقطاع عبر 1987 و2011 و2021 معًا — غير متحقق في الرسم البياني.
+      evidence_ar_by: model-reviewed
+      confidence: B
+      basis: inferred
+      reasoning: >-
+        The interval data are A/B-grade positions from the graph; the finding is a
+        set-theoretic reading of those intervals at the three regime-change dates.
+        Because the graph's senior-security coverage is densest after 2011 and
+        thinner in the Ben Ali era (several 1987-era entries are B-grade with
+        year-only dates), absence in the graph is evidence about the dataset first.
+      falsifiable_by: >-
+        A primary-source position record (JORT decree) placing any individual in a
+        senior security command post at two or more of 1987-11-07, 2011-01-14 and
+        2021-07-25, or a complete JORT-based officeholder list for the DGSN/DGSR/
+        service commands covering 1987-2021 that shows a cohort spanning all three.
+      falsifier_progress: >-
+        Moves AWAY from falsifier (a): the strict continuity test fails on the
+        graph's own positions. It does, however, sharpen where a weaker version
+        could bite — the 2021-2026 military/DGSR cohort (El Ghoul, Hajem, Jehane,
+        Ben Taous, Dhif) is real and JORT-adjacent, so a reviewer should test
+        whether that counts as a "stable cohort" under the falsifier's wording.
+      falsifier_progress_fr: >-
+        Éloigne du falsifieur (a) : le test strict de continuité échoue sur les positions
+        mêmes du graphe. Il précise néanmoins où une version plus faible pourrait mordre — la
+        cohorte militaire/DGSR 2021-2026 (El Ghoul, Hajem, Jehane, Ben Taous, Dhif) est réelle
+        et adjacente au JORT, aussi un relecteur devrait-il tester si elle compte comme
+        « cohorte stable » au sens du falsifieur.
+      falsifier_progress_fr_by: model-reviewed
+      falsifier_progress_ar: >-
+        يبتعد عن شرط الدحض (أ): يفشل اختبار الاستمرارية الصارم على مواقف الرسم البياني نفسها.
+        لكنه يحدّد مع ذلك أين يمكن لنسخة أضعف أن تنال — فمجموعة العسكريين/المديرية العامة
+        للأمن الرئاسي 2021-2026 (الغول، الهاجم، جهان، بن تاوُس، ضيف) حقيقية ومجاورة للرائد
+        الرسمي، لذا ينبغي لمراجع أن يختبر ما إذا كانت تعدّ «مجموعة ثابتة» بمقتضى صياغة شرط
+        الدحض.
+      falsifier_progress_ar_by: model-reviewed
+      note: >-
+        The person-continuity records below carry the full prosopography with
+        years. No individual spans all three regime changes; the two-rupture
+        crossings (Bennour, Seriati, Belhaj Ali, Akrout, the 2011 service chiefs)
+        are all gapped and terminal.
+      note_fr: >-
+        Les fiches de continuité des personnes ci-dessous portent la prosopographie complète
+        avec les années. Aucun individu ne traverse les trois changements de régime ; les
+        franchissements à deux ruptures (Bennour, Seriati, Belhaj Ali, Akrout, les chefs
+        d'armée de 2011) sont tous interrompus et terminaux.
+      note_fr_by: model-reviewed
+      note_ar: >-
+        تحمل سجلات استمرارية الأشخاص أدناه الدراسة الجماعية الكاملة بالسنوات. لا يمتد أي فرد
+        عبر تغييرات النظام الثلاثة؛ والعبورات ذات القطيعتين (بنّور، السرياطي، بالحاج علي،
+        عكروت، رؤساء أسلحة 2011) كلها مفصولة ونهاية.
+      note_ar_by: model-reviewed
+      sources: [carnegie-quiet-revolution, jort-2021-123, jort-2021-124, jort-2022-546, tandf-police-benali, leaders-ammar-2011, webdo-bennour-2011, leaders-belhajali-2015, kapitalis-akrout-2019]
+    - falsifier_part: "b — post-2021 prosecutions spared an inner group, eliminated only rivals"
+      finding: contradicts
+      evidence: >-
+        The post-2021 prosecutions are real, broad and politically selective — but
+        they fail the falsifier's second clause ("while eliminating only its
+        rivals"). Documented targets include political leaders (Ghannouchi, Karoui,
+        Chahed, Laarayedh, Moussi, Bhiri), the richest businessman (Mabrouk,
+        20 years, March 2026), the former anti-corruption chief (Tabib, 10 years,
+        May 2026), journalists and lawyers (29 journalists under Decree-Law
+        2022-54, per Amnesty), human rights figures (Bensedrine 25 years, June
+        2026; Chebbi, Hammami), NGO workers, and judges dismissed by presidential
+        decree in June 2022 — and, decisively for H1, the former Director-General
+        of National Security (2019-2021) Kamel Guizani was sentenced in absentia
+        in July 2025 (Reuters; graph event sentences-july-2025). Mondafrique's
+        "war of clans" reporting (6 Aug 2026) shows the prosecutorial machine
+        serves the presidential entourage, not a stable security elite: the
+        "règlement pénal" operates as state extraction from businessmen (olive-oil
+        exporter Makhloufi freed against a TND 50m bail in Nov 2025; dozens of
+        parallel cases), and files are frozen and unfrozen as leverage in the
+        family struggle between Naoufel Saied and Atika Chebil (the S17 file
+        against Atika Chebil was frozen after being opened). The definable inner
+        group that prosecutions spare is the president's own family and its current
+        appointees (Justice Minister Leila Jaffel, in post since Oct 2021), plus
+        the serving military/defence-security leadership — while the DGSN/NG
+        commands were rotated by presidential decree within three weeks of 25 July
+        2021 (JORT 2021-123/124) and the displaced DGSN chief was himself
+        prosecuted. Selectivity is real; "sparing a definable inner group while
+        eliminating only its rivals" is not what the record shows.
+      evidence_fr: >-
+        Les poursuites post-2021 sont réelles, vastes et politiquement sélectives — mais elles
+        échouent sur la seconde clause du falsifieur (« tout en n'éliminant que ses rivaux »).
+        Les cibles documentées incluent des dirigeants politiques (Ghannouchi, Karoui, Chahed,
+        Laarayedh, Moussi, Bhiri), l'homme d'affaires le plus riche (Mabrouk, 20 ans, mars
+        2026), l'ancien chef de la lutte anticorruption (Tabib, 10 ans, mai 2026), journalistes
+        et avocats (29 journalistes sous le décret-loi 2022-54, selon Amnesty), des figures des
+        droits humains (Bensedrine 25 ans, juin 2026 ; Chebbi, Hammami), des travailleurs d'ONG
+        et des juges révoqués par décret présidentiel en juin 2022 — et, décisif pour H1,
+        l'ancien Directeur général de la Sûreté nationale (2019-2021) Kamel Guizani a été
+        condamné par contumace en juillet 2025 (Reuters ; événement sentences-july-2025 du
+        graphe). L'enquête de Mondafrique sur la « guerre des clans » (6 août 2026) montre que
+        la machine répressive sert l'entourage présidentiel, non une élite sécuritaire stable :
+        le « règlement pénal » opère comme une extraction d'État sur les hommes d'affaires
+        (l'exportateur d'huile d'olive Makhloufi libéré contre une caution de 50 M TND en nov
+        2025 ; des dizaines de dossiers parallèles), et les dossiers sont gelés et dégelés
+        comme levier dans la lutte familiale entre Naoufel Saied et Atika Chebil (le dossier
+        S17 contre Atika Chebil a été gelé après son ouverture). Le noyau interne identifiable
+        que les poursuites épargnent est la propre famille du président et ses nominations
+        actuelles (la ministre de la Justice Leila Jaffel, en poste depuis oct 2021), plus la
+        direction militaire/sécurité-défense en fonction — tandis que les commandements DGSN/GN
+        ont été remplacés par décret présidentiel dans les trois semaines suivant le 25 juillet
+        2021 (JORT 2021-123/124) et que le chef de la DGSN déplacé a lui-même été poursuivi. La
+        sélectivité est réelle ; « épargner un noyau interne identifiable tout en n'éliminant
+        que ses rivaux » n'est pas ce que montre la fiche.
+      evidence_fr_by: model-reviewed
+      evidence_ar: >-
+        الملاحقات بعد 2021 حقيقية وواسعة وانتقائية سياسيًا — لكنها تفشل في الشرط الثاني
+        للدحض («مع إزاحة منافسيه فقط»). تشمل الأهداف الموثّقة قادة سياسيين (الغنوشي، قروي،
+        الشاهد، العريض، موسي، بحيري)، وأغنى رجل أعمال (مبروك، 20 سنة، مارس 2026)، ورئيس
+        الهيئة السابقة لمكافحة الفساد (طابيب، 10 سنوات، ماي 2026)، وصحفيين ومحامين (29
+        صحفيًا بموجب المرسوم-القانون 2022-54، حسب منظمة العفو)، وشخصيات حقوقية (بن سدرين 25
+        سنة، جوان 2026؛ الشبّي، الهمامي)، وعاملين في المنظمات، وقضاة أقيلوا بأمر رئاسي في
+        جوان 2022 — وبشكل حاسم لفرضية H1، حُكم على المدير العام السابق للأمن الوطني
+        (2019-2021) كمال القيزاني غيابيًا في جويلية 2025 (رويترز؛ حدث sentences-july-2025 في
+        الرسم البياني). ويُظهر تحقيق موندافريك عن «حرب العشائر» (6 أوت 2026) أن آلة الملاحقة
+        تخدم الدائرة الرئاسية لا نخبة أمنية مستقرة: فـ«التسوية الجزائية» تعمل كاستخراج دولي
+        من رجال الأعمال (مصدّر زيت الزيتون مخلوفي أُفرج عنه بكفالة 50 مليون دينار في نوفمبر
+        2025؛ وعشرات الملفات الموازية)، وتُجمَّد الملفات وتُرفع عنها التجميد كأداة ضغط في
+        الصراع العائلي بين نوفل سعيّد وعتيقة شبيل (جُمّد الملف S17 ضد عتيقة شبيل بعد فتحه).
+        والنواة الداخلية المحددة التي تستثنيها الملاحقات هي عائلة الرئيس نفسها وتعييناته
+        الحالية (وزيرة العدل ليلى جفال، في المنصب منذ أكتوبر 2021)، إضافة إلى القيادة
+        العسكرية/الأمنية-الدفاعية القائمة — بينما استُبدلت قيادتا الأمن الوطني والحرس
+        الوطني بأمر رئاسي في غضون ثلاثة أسابيع من 25 جويلية 2021 (الرائد 2021-123/124)
+        ولُوحق مدير الأمن الوطني المُزاح نفسه. الانتقائية حقيقية؛ أما «استثناء نواة داخلية
+        محددة مع إزاحة منافسيها فقط» فليس ما يُظهره السجل.
+      evidence_ar_by: model-reviewed
+      confidence: B
+      attributed_to: >-
+        Mondafrique (family/clan reading of the prosecutions, règlement pénal
+        extraction, the frozen/unfrozen files); Amnesty International (breadth of
+        the crackdown, Decree-Law 2022-54 figures); Reuters and the graph's own
+        events (individual convictions, Guizani in absentia).
+      basis: reported
+      reasoning: >-
+        The breadth items rest on Reuters (A/B) and Amnesty (tier 2); the
+        selectivity interpretation rests on a single established outlet
+        (Mondafrique, tier 3) and is therefore flagged below B on its own.
+      falsifiable_by: >-
+        A primary record (judgement or JORT instrument) showing a coherent,
+        definable group — pre-2021 or continuous since 1987 — that was exempted
+        from prosecution while every figure outside it was pursued, with the
+        exemptions unexplained by current office-holding.
+      falsifier_progress: >-
+        Moves AWAY from falsifier (b) as written: prosecutions eliminated a former
+        security chief and hit a broad critic set, and the spared inner group is
+        the president's family and current staff — a post-2021 clan, not a
+        continuous elite. It does move the story toward H5 (re-centralisation) and
+        H4 (elite competition inside the regime), which the reviewer should weigh.
+      falsifier_progress_fr: >-
+        Éloigne du falsifieur (b) tel qu'écrit : les poursuites ont éliminé un ancien chef
+        sécuritaire et frappé un large ensemble de critiques, et le noyau interne épargné est
+        la famille du président et son personnel actuel — un clan post-2021, non une élite
+        continue. Cela rapproche néanmoins le récit de H5 (recentralisation) et de H4
+        (compétition d'élites à l'intérieur du régime), ce que le relecteur devrait peser.
+      falsifier_progress_fr_by: model-reviewed
+      falsifier_progress_ar: >-
+        يبتعد عن شرط الدحض (ب) كما هو مكتوب: أزالت الملاحقات رئيسًا أمنيًا سابقًا وضربت
+        مجموعة واسعة من النقاد، والنواة الداخلية المستثناة هي عائلة الرئيس وطاقمه الحالي —
+        عشيرة ما بعد 2021، لا نخبة متواصلة. لكنه يقرب السرد من H5 (إعادة التمركز) وH4
+        (تنافس النخب داخل النظام)، وهو ما ينبغي للمراجع أن يزنَه.
+      falsifier_progress_ar_by: model-reviewed
+      note: >-
+        "Not prosecuted" for the serving military chiefs is absence of documented
+        prosecution, not documented immunity — the falsifier would need the latter.
+      note_fr: >-
+        « Non poursuivi » pour les chefs militaires en fonction est une absence de poursuite
+        documentée, non une immunité documentée — le falsifieur exigerait cette dernière.
+      note_fr_by: model-reviewed
+      note_ar: >-
+        «عدم الملاحقة» لرؤساء العسكريين القائمين هو غياب ملاحقة موثّقة، لا حصانة موثّقة —
+        وسيتطلب شرط الدحض الأخيرة.
+      note_ar_by: model-reviewed
+      sources: [reuters-sentences-2025, reuters-mabrouk-chahed-2026, amnesty-tunisia-report-2025, mondafrique-saied-clans-2026, jort-2021-123, jort-2021-124]
+
+- id: h2-institutional-continuity
+  label: H2 — Institutional continuity
+  label_fr: >-
+    H2 — Continuité institutionnelle
+  label_fr_by: model-reviewed
+  label_ar: >-
+    الفرضية 2 — استمرارية مؤسسية
+  label_ar_by: model-reviewed
+  statement: >-
+    The individuals changed considerably, but the security institutions and
+    administrative mechanisms survived the regime changes largely intact.
+  statement_fr: >-
+    Les individus ont considérablement changé, mais les institutions sécuritaires et les
+    mécanismes administratifs ont survécu aux changements de régime largement intacts.
+  statement_fr_by: model-reviewed
+  statement_ar: >-
+    تغيّر الأفراد تغيّرًا كبيرًا، لكن المؤسسات الأمنية والآليات الإدارية نجت من تغيّرات
+    النظام سليمةً إلى حد بعيد.
+  statement_ar_by: model-reviewed
+  support: strong
+  reasoning: >-
+    The Interior Ministry, the national police, the National Guard and the armed
+    forces all persisted through 2011 and 2021 without structural reform comparable to
+    the political rupture. Carnegie's research records the internal security apparatus
+    remaining substantially unreformed while the military's position shifted. The
+    clearest personnel instance is a Director-General of National Security who held the
+    post in 2006 under Ben Ali and again in 2018, seven years after the revolution.
+  reasoning_fr: >-
+    Le ministère de l'Intérieur, la police nationale, la Garde nationale et l'armée ont tous
+    traversé 2011 et 2021 sans réforme structurelle comparable à la rupture politique. Les
+    travaux de Carnegie constatent que l'appareil de sécurité intérieure est resté largement
+    non réformé tandis que la position de l'armée évoluait. Le cas personnel le plus net est
+    celui d'un directeur général de la Sûreté nationale qui occupait le poste en 2006 sous
+    Ben Ali et de nouveau en 2018, sept ans après la révolution.
+  reasoning_fr_by: model-reviewed
+  reasoning_ar: >-
+    استمرّت وزارة الداخلية والأمن الوطني والحرس الوطني والقوات المسلّحة جميعها عبر 2011
+    و2021 دون إصلاح هيكلي يوازي حجم القطيعة السياسية. توثّق أبحاث كارنيغي بقاء جهاز الأمن
+    الداخلي دون إصلاح يُذكر بينما تبدّل موقع المؤسسة العسكرية. وأوضح مثال شخصي هو مدير عام
+    للأمن الوطني شغل المنصب سنة 2006 في عهد بن علي ثم عاد إليه سنة 2018، بعد سبع سنوات من
+    الثورة.
+  reasoning_ar_by: model-reviewed
+  falsifiable_by: >-
+    Documentation of structural reform after 2011 or 2021 comparable in scale to the
+    political rupture: a JORT instrument dissolving or reorganising the
+    Directorate-General of National Security, the National Guard or the Interior
+    Ministry's operational directorates; a vetting programme that removed a substantial
+    share of the senior officer corps; or a complete officeholder list establishing that
+    Bennour's return to the DGSN in 2018 is an isolated case rather than an indicative
+    one.
+  falsifiable_by_fr: >-
+    La documentation d'une réforme structurelle après 2011 ou 2021 d'une ampleur comparable
+    à la rupture politique : un texte au JORT dissolvant ou réorganisant la Direction
+    générale de la Sûreté nationale, la Garde nationale ou les directions opérationnelles du
+    ministère de l'Intérieur ; un programme d'assainissement ayant écarté une part
+    substantielle de l'encadrement supérieur ; ou une liste complète des titulaires
+    établissant que le retour de Bennour à la DGSN en 2018 est un cas isolé plutôt
+    qu'indicatif.
+  falsifiable_by_fr_by: model-reviewed
+  falsifiable_by_ar: >-
+    توثيق إصلاح هيكلي بعد 2011 أو 2021 يوازي في حجمه القطيعة السياسية: نصّ في الرائد الرسمي
+    يحلّ أو يعيد تنظيم الإدارة العامة للأمن الوطني أو الحرس الوطني أو الإدارات العملياتية
+    بوزارة الداخلية؛ أو برنامج تطهير أزاح نسبة معتبرة من كبار الضباط؛ أو قائمة كاملة بشاغلي
+    المناصب تُثبت أن عودة بنّور إلى الإدارة العامة للأمن الوطني سنة 2018 حالة معزولة لا
+    دالّة.
+  falsifiable_by_ar_by: model-reviewed
+  sources: [carnegie-quiet-revolution, tuniscope-bennour-2018]
+
+- id: h3-structural-continuity
+  label: H3 — Structural economic continuity
+  label_fr: >-
+    H3 — Continuité économique structurelle
+  label_fr_by: model-reviewed
+  label_ar: >-
+    الفرضية 3 — استمرارية اقتصادية بنيوية
+  label_ar_by: model-reviewed
+  statement: >-
+    Post-2011 Tunisia retained the rent-seeking mechanisms and barriers to entry that
+    benefited established economic elites, even as the individuals changed.
+  statement_fr: >-
+    La Tunisie post-2011 a conservé les mécanismes de rente et les barrières à l'entrée qui
+    profitaient aux élites économiques établies, même si les individus ont changé.
+  statement_fr_by: model-reviewed
+  statement_ar: >-
+    احتفظت تونس بعد 2011 بآليات الرّيع وحواجز الدخول التي أفادت النخب الاقتصادية المستقرّة،
+    وإن تغيّر الأفراد.
+  statement_ar_by: model-reviewed
+  support: strong
+  reasoning: >-
+    The World Bank's assessment describes a shift from authoritarian clientelism to
+    competitive clientelism, with patterns of capture and rent-seeking proving
+    resilient: privileged access, authorisations, licensing, sectoral specifications
+    and self-regulation by incumbents. The political layer changed; the political
+    economy of privilege was not dismantled.
+  reasoning_fr: >-
+    L'évaluation de la Banque mondiale décrit un passage d'un clientélisme autoritaire à un
+    clientélisme concurrentiel, où les schémas de capture et de recherche de rente se
+    révèlent résilients : accès privilégié, autorisations, licences, cahiers des charges
+    sectoriels et autorégulation par les acteurs en place. La couche politique a changé ;
+    l'économie politique du privilège n'a pas été démantelée.
+  reasoning_fr_by: model-reviewed
+  reasoning_ar: >-
+    يصف تقييم البنك الدولي انتقالًا من محسوبية سلطوية إلى محسوبية تنافسية، مع صمود أنماط
+    الاستحواذ والبحث عن الرّيع: النفاذ التفضيلي، والتراخيص، والإجازات، وكرّاسات الشروط
+    القطاعية، والتنظيم الذاتي من قِبل المتموقعين أصلًا. تغيّرت الطبقة السياسية؛ أما اقتصاد
+    الامتياز السياسي فلم يُفكَّك.
+  reasoning_ar_by: model-reviewed
+  falsifiable_by: >-
+    Evidence that the authorisation regime was dismantled rather than reallocated:
+    repeal of the sectoral authorisation and licensing lists, a measurable fall in the
+    share of economic activity requiring prior administrative approval, entry and
+    concentration statistics showing barriers fell after 2011, or firm-level records
+    showing confiscated companies passed into competitive ownership rather than to
+    incumbents.
+  falsifiable_by_fr: >-
+    La preuve que le régime d'autorisations a été démantelé plutôt que redistribué :
+    abrogation des listes sectorielles d'autorisations et de licences, baisse mesurable de
+    la part de l'activité économique soumise à approbation administrative préalable,
+    statistiques d'entrée et de concentration montrant un recul des barrières après 2011, ou
+    registres d'entreprises montrant que les sociétés confisquées sont passées à une
+    propriété concurrentielle plutôt qu'aux acteurs déjà en place.
+  falsifiable_by_fr_by: model-reviewed
+  falsifiable_by_ar: >-
+    دليل على أن نظام التراخيص فُكّك لا أُعيد توزيعه: إلغاء القوائم القطاعية للتراخيص
+    والإجازات، أو انخفاض قابل للقياس في حصة النشاط الاقتصادي الخاضع لموافقة إدارية مسبقة، أو
+    إحصاءات دخول وتركّز تُظهر تراجع الحواجز بعد 2011، أو سجلات شركات تُظهر أن المؤسسات
+    المصادَرة انتقلت إلى ملكية تنافسية لا إلى المتموقعين أصلًا.
+  falsifiable_by_ar_by: model-reviewed
+  sources: [wb-political-economy, wb-all-in-family-qa]
+
+- id: h4-elite-competition
+  label: H4 — Competition, not a single coalition
+  label_fr: >-
+    H4 — Une compétition, non une coalition unique
+  label_fr_by: model-reviewed
+  label_ar: >-
+    الفرضية 4 — تنافس لا ائتلاف واحد
+  label_ar_by: model-reviewed
+  statement: >-
+    Post-2011 Tunisia was a competition between several elite networks rather than a
+    single ruling coalition.
+  statement_fr: >-
+    La Tunisie post-2011 était une compétition entre plusieurs réseaux d'élites plutôt
+    qu'une coalition dirigeante unique.
+  statement_fr_by: model-reviewed
+  statement_ar: >-
+    كانت تونس بعد 2011 تنافسًا بين شبكات نخبوية متعددة لا ائتلافًا حاكمًا واحدًا.
+  statement_ar_by: model-reviewed
+  support: strong
+  reasoning: >-
+    Nidaa Tounes fractured, its prime minister founded a rival party and fought the
+    president's son, a media owner built a party from a television station, siblings
+    from the same business family sat in opposing parties, and Ennahda operated as a
+    parallel network throughout. Fragmentation of that kind is difficult to reconcile
+    with a unified elite.
+  reasoning_fr: >-
+    Nidaa Tounes s'est fracturé, son chef du gouvernement a fondé un parti rival et affronté
+    le fils du président, un propriétaire de médias a bâti un parti à partir d'une chaîne de
+    télévision, des frères et sœurs d'une même famille d'affaires siégeaient dans des partis
+    opposés, et Ennahdha a fonctionné tout du long comme un réseau parallèle. Une
+    fragmentation de cette nature se concilie mal avec une élite unifiée.
+  reasoning_fr_by: model-reviewed
+  reasoning_ar: >-
+    تصدّع نداء تونس، وأسّس رئيس حكومته حزبًا منافسًا وخاض صراعًا مع نجل الرئيس، وبنى صاحب
+    قناة تلفزية حزبًا انطلاقًا من محطته، وجلس إخوة من العائلة التجارية نفسها في أحزاب
+    متعارضة، وعملت النهضة طوال تلك المدة كشبكة موازية. يصعب التوفيق بين تفتّت بهذا الشكل
+    ونخبةٍ موحّدة.
+  reasoning_ar_by: model-reviewed
+  falsifiable_by: >-
+    Evidence that the fragmentation was surface-level: party financing, candidate
+    selection or senior appointment records tracing the ostensibly rival networks back
+    to a common set of actors, or a crossing analysis showing that the same brokers
+    staffed security and economic posts irrespective of which faction held office.
+    Visible competition between organisations is not competition if the same people are
+    placed either way.
+  falsifiable_by_fr: >-
+    La preuve que cette fragmentation était de surface : des registres de financement des
+    partis, de sélection des candidats ou de nominations de haut niveau ramenant les réseaux
+    prétendument rivaux à un même ensemble d'acteurs, ou une analyse des croisements
+    montrant que les mêmes intermédiaires pourvoyaient les postes sécuritaires et
+    économiques quelle que soit la faction au pouvoir. Une concurrence visible entre
+    organisations n'est pas une concurrence si les mêmes personnes sont placées dans un cas
+    comme dans l'autre.
+  falsifiable_by_fr_by: model-reviewed
+  falsifiable_by_ar: >-
+    دليل على أن التفتّت كان سطحيًا: سجلات تمويل الأحزاب أو اختيار المرشّحين أو التعيينات
+    العليا تُعيد الشبكات المتنافسة ظاهريًا إلى مجموعة واحدة من الفاعلين، أو تحليل تقاطعات
+    يُظهر أن الوسطاء أنفسهم كانوا يملؤون المناصب الأمنية والاقتصادية أيًّا كان الفصيل
+    الحاكم. التنافس الظاهر بين التنظيمات ليس تنافسًا إذا كان الأشخاص أنفسهم يُعيَّنون في
+    الحالتين.
+  falsifiable_by_ar_by: model-reviewed
+  sources: [businessnews-nidaa-2019, tunisie14-faouzi-elloumi-2019, wb-political-economy]
+
+- id: h5-recentralisation
+  label: H5 — Presidential re-centralisation
+  label_fr: >-
+    H5 — Recentralisation présidentielle
+  label_fr_by: model-reviewed
+  label_ar: >-
+    الفرضية 5 — إعادة تمركز رئاسي
+  label_ar_by: model-reviewed
+  statement: >-
+    After July 2021 the autonomy of the post-2011 institutions was substantially
+    reduced and power moved toward the presidency and the security apparatus.
+  statement_fr: >-
+    Après juillet 2021, l'autonomie des institutions issues de 2011 a été substantiellement
+    réduite et le pouvoir s'est déplacé vers la présidence et l'appareil sécuritaire.
+  statement_fr_by: model-reviewed
+  statement_ar: >-
+    بعد جويلية 2021، تقلّص استقلال مؤسسات ما بعد 2011 تقلّصًا كبيرًا وانتقلت السلطة نحو
+    الرئاسة والجهاز الأمني.
+  statement_ar_by: model-reviewed
+  support: strong
+  reasoning: >-
+    Parliament was frozen and its immunity lifted, the head of government dismissed,
+    the police and National Guard commands replaced by decree within three weeks, a new
+    strongly presidential constitution adopted by referendum a year later, and
+    successive rival elite networks prosecuted. Each step is individually documented.
+  reasoning_fr: >-
+    Le Parlement a été gelé et son immunité levée, le chef du gouvernement démis, les
+    commandements de la police et de la Garde nationale remplacés par décret en trois
+    semaines, une nouvelle constitution fortement présidentielle adoptée par référendum un
+    an plus tard, et des réseaux d'élites rivaux successifs poursuivis en justice. Chaque
+    étape est documentée individuellement.
+  reasoning_fr_by: model-reviewed
+  reasoning_ar: >-
+    جُمّد البرلمان ورُفعت الحصانة عن نوابه، وأُقيل رئيس الحكومة، واستُبدلت قيادتا الأمن
+    الوطني والحرس الوطني بمرسوم في غضون ثلاثة أسابيع، واعتُمد بعد عام دستور جديد شديد
+    الرئاسوية عبر استفتاء، ولوحقت قضائيًا شبكات نخبوية منافسة متعاقبة. وكل خطوة من هذه
+    موثّقة على حدة.
+  reasoning_ar_by: model-reviewed
+  falsifiable_by: >-
+    Evidence that the post-2011 institutions retained effective autonomy after July
+    2021: rulings against the executive that were implemented rather than ignored, a
+    judicial or electoral body acting against presidential preference without its
+    membership being replaced, or appointment records showing that senior security and
+    judicial posts continued to be filled through the pre-2021 procedures rather than by
+    presidential decree.
+  falsifiable_by_fr: >-
+    La preuve que les institutions issues de 2011 ont conservé une autonomie effective après
+    juillet 2021 : des décisions rendues contre l'exécutif et effectivement appliquées, un
+    organe judiciaire ou électoral agissant contre la préférence présidentielle sans que sa
+    composition soit remplacée, ou des actes de nomination montrant que les hauts postes
+    sécuritaires et judiciaires ont continué à être pourvus selon les procédures antérieures
+    à 2021 plutôt que par décret présidentiel.
+  falsifiable_by_fr_by: model-reviewed
+  falsifiable_by_ar: >-
+    دليل على أن مؤسسات ما بعد 2011 حافظت على استقلال فعلي بعد جويلية 2021: أحكام صدرت ضد
+    السلطة التنفيذية ونُفّذت فعلًا، أو هيئة قضائية أو انتخابية تصرّفت خلافًا لرغبة الرئاسة
+    دون أن يُستبدَل أعضاؤها، أو وثائق تعيين تُظهر أن المناصب الأمنية والقضائية العليا ظلّت
+    تُملأ بالإجراءات السابقة لسنة 2021 لا بمرسوم رئاسي.
+  falsifiable_by_ar_by: model-reviewed
+  sources: [axios-saied-2021, jort-2021-123, jort-2021-124, reuters-conspiracy-2025]
+
+- id: h6-military-dominance
+  label: H6 — Military dominance
+  label_fr: >-
+    H6 — Domination militaire
+  label_fr_by: model-reviewed
+  label_ar: >-
+    الفرضية 6 — هيمنة عسكرية
+  label_ar_by: model-reviewed
+  statement: The military is the single dominant political institution in Tunisia.
+  statement_fr: >-
+    L'armée est la principale institution politique dominante en Tunisie.
+  statement_fr_by: model-reviewed
+  statement_ar: >-
+    المؤسسة العسكرية هي المؤسسة السياسية المهيمنة الأولى في تونس.
+  statement_ar_by: model-reviewed
+  support: contradicted
+  reasoning: >-
+    The Ben Ali period contradicts this directly. After 1991 officers were removed from
+    civilian posts, the Interior Ministry's resources came to dwarf Defence's, and the
+    tri-service command post was left unfilled for two decades. The army did not take
+    power in 2011 when it plainly could have. The one period of concentrated military
+    authority, 2011 to 2013, lasted twenty-six months and was not renewed. If Tunisia
+    has a coercive centre of gravity it is the Interior Ministry, not the general staff.
+  reasoning_fr: >-
+    La période Ben Ali contredit directement cette thèse. Après 1991, les officiers ont été
+    écartés des postes civils, les moyens du ministère de l'Intérieur ont éclipsé ceux de la
+    Défense, et le poste de chef d'état-major interarmées est resté vacant pendant deux
+    décennies. L'armée n'a pas pris le pouvoir en 2011 alors qu'elle le pouvait
+    manifestement. L'unique période d'autorité militaire concentrée, de 2011 à 2013, a duré
+    vingt-six mois et n'a pas été reconduite. Si la Tunisie a un centre de gravité
+    coercitif, c'est le ministère de l'Intérieur, non l'état-major.
+  reasoning_fr_by: model-reviewed
+  reasoning_ar: >-
+    تناقض فترة بن علي هذه الفرضية مناقضةً مباشرة. بعد 1991 أُبعد الضباط عن المناصب المدنية،
+    وتجاوزت موارد وزارة الداخلية موارد الدفاع، وظلّ منصب رئيس أركان الجيوش الثلاثة شاغرًا
+    عقدين. ولم يستولِ الجيش على السلطة سنة 2011 وقد كان بوسعه ذلك بوضوح. أما الفترة الوحيدة
+    التي تركّزت فيها السلطة العسكرية، من 2011 إلى 2013، فدامت ستة وعشرين شهرًا ولم تُجدَّد.
+    وإن كان لتونس مركز ثقل قسري فهو وزارة الداخلية لا أركان الجيوش.
+  reasoning_ar_by: model-reviewed
+  falsifiable_by: >-
+    Evidence that formal marginalisation concealed real authority: records showing that
+    officers held decisive influence over civilian appointments or budgets during the
+    two decades the tri-service command sat vacant, that the Interior Ministry's
+    operational chain ran through military intelligence, or that post-2021 security
+    decisions originated with the general staff rather than the presidency. A complete
+    officeholder list for the Ministry of Defence and the service commands showing
+    sustained military presence in civilian decision-making posts would also count.
+  falsifiable_by_fr: >-
+    La preuve qu'une marginalisation formelle dissimulait une autorité réelle : des
+    documents montrant que des officiers exerçaient une influence décisive sur les
+    nominations civiles ou les budgets pendant les deux décennies de vacance du commandement
+    interarmées, que la chaîne opérationnelle du ministère de l'Intérieur passait par le
+    renseignement militaire, ou que les décisions sécuritaires postérieures à 2021 émanaient
+    de l'état-major plutôt que de la présidence. Une liste complète des titulaires au
+    ministère de la Défense et aux commandements d'armée montrant une présence militaire
+    soutenue dans les postes de décision civils vaudrait également.
+  falsifiable_by_fr_by: model-reviewed
+  falsifiable_by_ar: >-
+    دليل على أن التهميش الشكلي كان يخفي سلطة فعلية: وثائق تُظهر أن ضباطًا مارسوا نفوذًا
+    حاسمًا على التعيينات المدنية أو الميزانيات خلال العقدين اللذين ظلّ فيهما منصب رئاسة
+    الأركان المشتركة شاغرًا، أو أن السلسلة العملياتية لوزارة الداخلية كانت تمرّ عبر
+    الاستخبارات العسكرية، أو أن القرارات الأمنية بعد 2021 كانت تصدر عن أركان الجيوش لا عن
+    رئاسة الجمهورية. كما تفي بالغرض قائمة كاملة بشاغلي المناصب في وزارة الدفاع وقيادات
+    الأسلحة تُظهر حضورًا عسكريًا مستمرًا في مواقع القرار المدني.
+  falsifiable_by_ar_by: model-reviewed
+  sources: [carnegie-quiet-revolution, oup-grewal-marginalizing, tandf-police-benali]
+  evidence:
+    - falsifier_part: "2022-2026 balance — governors, joint command, military courts, political role"
+      finding: contradicts
+      evidence: >-
+        The 2022-2026 record does not show military dominance; it shows a powerful
+        but subordinate institution. (1) Civilian control of Defence: the ministry
+        has been headed since 25 Aug 2024 by Khaled Sehili, a civilian ex-diplomat
+        (Mosaïque FM bio). (2) The defence ministry publicly affirmed the army's
+        republican neutrality and refused to be drawn into political disputes
+        (communiqué of 21 May 2025; Mondafrique). (3) The joint Chief of Staff of
+        the Armed Forces post remains unfilled — Rachid Ammar is the only holder in
+        the entire graph (2011-04-12 to 2013-06-25); the Land Army chief remains
+        primus. (4) Senior security appointments are made by presidential decree
+        (JORT 2021-123, 2021-124, 2022-546) — security decisions originate with
+        the presidency, the exact opposite of the falsifier's "originated with the
+        general staff". (5) Only two retired officers hold cabinet posts (Ferjani,
+        Health, Aug 2024-; Belaâti, Agriculture, Jan 2023-Aug 2024), and
+        Mondafrique reports the hierarchy views such exposure with disfavour — no
+        sustained military presence in civilian decision posts. (6) The army has no
+        economic interests of its own, unlike Egypt/Algeria (Mondafrique; Carnegie
+        "Back to the Barracks"). No Saied-era appointment of military governors is
+        documented in this run — the 2011 case of seven military governors was a
+        26-month transitional exception, not renewed. Partial pro-falsifier signals
+        exist and are worth recording: the army's enabling role in the 25 July 2021
+        power grab (armoured vehicle before parliament; a soldier barring Speaker
+        Ghannouchi — Mondafrique), civilians referred to military courts (Al Karama
+        ex-MPs after the April 2023 airport incident — a procedure inherited from
+        before Saied, never repealed by the 2014-2019 legislature), military
+        intelligence feeding civilian cases (basis for Victor Dupont's arrest,
+        autumn 2024; the Makram Jelassi corruption case, July 2024), military
+        protection for the administrative court's plenary during the 2024 election,
+        and the 2026 succession battle explicitly courting the army (Ferjani as the
+        family's "pont" to the institution; Mondafrique clans). These show the army
+        as guarantor and enabler — the last institution standing — not as the
+        originator of decisions.
+      evidence_fr: >-
+        Le bilan 2022-2026 ne montre pas une domination militaire ; il montre une institution
+        puissante mais subordonnée. (1) Contrôle civil de la Défense : le ministère est dirigé
+        depuis le 25 août 2024 par Khaled Sehili, un civil ex-diplomate (bio Mosaïque FM). (2)
+        Le ministère de la Défense a publiquement affirmé la neutralité républicaine de l'armée
+        et refusé d'être entraîné dans les disputes politiques (communiqué du 21 mai 2025 ;
+        Mondafrique). (3) Le poste de chef d'état-major interarmées reste vacant — Rachid Ammar
+        est le seul titulaire de tout le graphe (2011-04-12 à 2013-06-25) ; le chef de l'armée
+        de terre reste primus. (4) Les nominations sécuritaires de haut rang se font par décret
+        présidentiel (JORT 2021-123, 2021-124, 2022-546) — les décisions sécuritaires émanent
+        de la présidence, l'exact opposé du « émanaient de l'état-major » du falsifieur. (5)
+        Seuls deux officiers retraités occupent des postes ministériels (Ferjani, Santé, août
+        2024- ; Belaâti, Agriculture, janv 2023-août 2024), et Mondafrique rapporte que la
+        hiérarchie voit cette exposition d'un mauvais œil — pas de présence militaire soutenue
+        dans les postes de décision civils. (6) L'armée n'a pas d'intérêts économiques propres,
+        à la différence de l'Égypte/l'Algérie (Mondafrique ; Carnegie « Back to the Barracks »).
+        Aucune nomination de gouverneurs militaires à l'ère Saïed n'est documentée lors de ce
+        passage — le cas de 2011 des sept gouverneurs militaires fut une exception transitoire
+        de 26 mois, non renouvelée. Des signaux partiellement favorables au falsifieur existent
+        et méritent d'être enregistrés : le rôle facilitateur de l'armée dans la prise de
+        pouvoir du 25 juillet 2021 (véhicule blindé devant le Parlement ; un soldat barrant la
+        route au président Ghannouchi — Mondafrique), des civils déférés aux tribunaux militaires
+        (ex-députés d'Al Karama après l'incident de l'aéroport d'avril 2023 — une procédure
+        héritée d'avant Saïed, jamais abrogée par la législature 2014-2019), le renseignement
+        militaire alimentant des dossiers civils (base de l'arrestation de Victor Dupont,
+        automne 2024 ; l'affaire de corruption de Makram Jelassi, juillet 2024), la protection
+        militaire de la séance plénière du tribunal administratif durant l'élection de 2024, et
+        la bataille de succession de 2026 courtisant explicitement l'armée (Ferjani comme
+        « pont » de la famille vers l'institution ; clans Mondafrique). Cela montre l'armée
+        comme garante et facilitatrice — la dernière institution debout — non comme l'origine
+        des décisions.
+      evidence_fr_by: model-reviewed
+      evidence_ar: >-
+        لا يُظهر سجل 2022-2026 هيمنة عسكرية؛ بل يُظهر مؤسسة قوية لكنها تابعة. (1) السيطرة
+        المدنية على الدفاع: تتولى الوزارة منذ 25 أوت 2024 خالد السهيلي، مدني دبلوماسي سابق
+        (سيرة موزاييك إف إم). (2) أكدت وزارة الدفاع علنًا حياد الجيش الجمهوري ورفضت الانجرار
+        إلى النزاعات السياسية (بيان 21 ماي 2025؛ موندافريك). (3) منصب رئيس أركان الجيوش
+        المشترك ما زال شاغرًا — رشيد عمار هو الشاغل الوحيد في الرسم البياني كله (2011-04-12
+        إلى 2013-06-25)؛ ويبقى رئيس الجيش البري الأول. (4) تُتخذ التعيينات الأمنية العليا
+        بأمر رئاسي (الرائد 2021-123 و2021-124 و2022-546) — أي أن القرارات الأمنية تنطلق من
+        الرئاسة، وهو عكس ما يشترطه الدحض «كانت تصدر عن أركان الجيوش» تمامًا. (5) لا يشغل
+        مناصب وزارية سوى ضابطين متقاعدين (الفرجاني، الصحة، أوت 2024-؛ بلعاتي، الفلاحة، جانفي
+        2023-أوت 2024)، وتفيد موندافريك أن القيادة تنظر إلى هذا التعرض بعين الرفض — لا حضور
+        عسكري مستدام في مواقع القرار المدني. (6) لا مصالح اقتصادية خاصة للجيش، خلافًا لمصر
+        والجزائر (موندافريك؛ كارنيجي «العودة إلى الثكنات»). ولم يُوثَّق في هذه الجولة أي
+        تعيين لحكام عسكريين في عهد سعيّد — فحالة 2011 مع الحكام العسكريين السبعة كانت
+        استثناء انتقاليًا مدته 26 شهرًا لم يُجدَّد. توجد إشارات جزئية لصالح الدحض تستحق
+        التسجيل: الدور التمكيني للجيش في الاستيلاء على السلطة في 25 جويلية 2021 (مدرعة أمام
+        البرلمان؛ وجندي يصد رئيس المجلس الغنوشي — موندافريك)، وإحالة مدنيين إلى المحاكم
+        العسكرية (نواب الكرامة السابقون بعد حادثة المطار في أفريل 2023 — إجراء موروث من ما
+        قبل سعيّد لم تلغه تشريعية 2014-2019)، وتغذية الاستخبارات العسكرية لملفات مدنية (أساس
+        اعتقال فيكتور دوبون، خريف 2024؛ وقضية فساد مكرم الجلاصي، جويلية 2024)، والحماية
+        العسكرية لجلسة المحكمة الإدارية العامة خلال انتخابات 2024، ومعركة الخلافة 2026 التي
+        تتودد صراحة إلى الجيش (الفرجاني «جسر» العائلة إلى المؤسسة؛ عشائر موندافريك). يُظهر
+        هذا الجيش ضامنًا وممكّنًا — آخر مؤسسة قائمة — لا مصدرًا للقرارات.
+      evidence_ar_by: model-reviewed
+      confidence: B
+      basis: inferred
+      reasoning: >-
+        The negative findings (no governors, no revived joint command, decree-based
+        appointments) rest on the graph's positions/events plus the two Mondafrique
+        pieces; the pro-falsifier signals rest on Mondafrique (tier 3) alone for
+        the coup role and military-intelligence cases, so those specific claims
+        should not be rated above C without a second outlet.
+      falsifiable_by: >-
+        A JORT instrument or presidential decree creating the joint command or
+        placing serving officers in governorates/civilian ministries on a
+        systematic basis; an ISIE/court record showing the general staff or a
+        military council issuing security decisions independently of the
+        presidency; or an officeholder list showing sustained military occupation
+        of civilian decision posts beyond the two documented ministers.
+      falsifier_progress: >-
+        Moves AWAY from the falsifier overall: civilian control formally holds and
+        decisions demonstrably originate with the presidency. The 25 July 2021 role
+        and the 2026 succession courtship are genuine near-miss items that a
+        reviewer should keep — they explain why "military dominance" circulates as
+        an account even though the falsifier's specific tests fail.
+      falsifier_progress_fr: >-
+        Éloigne globalement du falsifieur : le contrôle civil tient formellement et les
+        décisions émanent manifestement de la présidence. Le rôle du 25 juillet 2021 et la
+        cour de la succession 2026 sont de véritables quasi-occasions qu'un relecteur devrait
+        conserver — elles expliquent pourquoi la « domination militaire » circule comme récit
+        alors même que les tests précis du falsifieur échouent.
+      falsifier_progress_fr_by: model-reviewed
+      falsifier_progress_ar: >-
+        يبتعد إجمالًا عن شرط الدحض: السيطرة المدنية قائمة شكليًا والقرارات تنطلق بوضوح من
+        الرئاسة. دور 25 جويلية 2021 وتودد خلافة 2026 قريبان من الإصابة فعليًا وينبغي لمراجع
+        أن يحتفظ بهما — فهما يفسران لماذا تتداول «الهيمنة العسكرية» كرواية رغم فشل اختبارات
+        الدحض المحددة.
+      falsifier_progress_ar_by: model-reviewed
+      note: >-
+        The `contradicted` verdict in data/hypotheses.yaml is reinforced, not
+        overturned. The most valuable follow-up is a complete post-2011 officeholder
+        list for the DGSR/ANRSD and service commands — the graph shows Ben Taous
+        (DGSR since 2013-08-22) and Dhif (ANRSD since ~2018) with decade-plus
+        tenures that no current record explains.
+      note_fr: >-
+        Le verdict `contradicted` de data/hypotheses.yaml est renforcé, non renversé. Le suivi
+        le plus précieux est une liste complète des titulaires post-2011 pour la DGSR/ANRSD et
+        les commandements d'armée — le graphe montre Ben Taous (DGSR depuis 2013-08-22) et Dhif
+        (ANRSD depuis ~2018) avec des mandats de plus d'une décennie qu'aucune fiche actuelle
+        n'explique.
+      note_fr_by: model-reviewed
+      note_ar: >-
+        إن حكم `contradicted` في data/hypotheses.yaml معزَّز لا منقوض. والمتابعة الأثمن قائمة
+        كاملة بشاغلي المناصب بعد 2011 للمديرية العامة للأمن الرئاسي والوكالة وقيادات الأسلحة —
+        إذ يُظهر الرسم البياني بن تاوُس (منذ 2013-08-22) وضيف (الوكالة منذ ~2018) بولايَتين
+        تتجاوزان العقد لا يفسرهما أي سجل حالي.
+      note_ar_by: model-reviewed
+      sources: [mondafrique-armee-legitimite-2026, mondafrique-saied-clans-2026, mosaiquefm-shili-bio, jort-2021-123, jort-2021-124, jort-2022-546, carnegie-back-to-barracks, carnegie-quiet-revolution, amnesty-tunisia-report-2025]

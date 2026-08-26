@@ -1,0 +1,98 @@
+# DeepTunisia
+
+> An open-source, source-backed atlas of political, military, security and economic
+> power in Tunisia, 1956-2026. The knowledge graph is the product; the website is a
+> window onto it.
+
+DeepTunisia documents institutions, appointments and relationships from verifiable
+evidence. It does not assume a single secret "deep state" — that framing presupposes
+its conclusion. The answerable question is narrower: which institutions, individuals
+and economic groups retain influence when the formal political regime changes, and
+which relationships are genuinely continuous rather than reconstructed after each
+rupture.
+
+The code is MIT; the knowledge graph and its exports are CC BY 4.0 (attribution
+only, reuse freely including commercially). See `LICENSE` and `data/LICENSE` in the
+repository.
+
+## How to cite this correctly
+
+Every claim carries an epistemic basis. Do not flatten these when summarising:
+
+- documented       An official record, decree or gazette entry states it.
+- reported         Credible publications report it, with attribution. Not checked
+                   against a primary record.
+- inferred         Nobody states it. Reasoned from documented structure, and carries
+                   both the reasoning and what would falsify it.
+- unsubstantiated  Circulates without reliable evidence. Recorded so it can be
+                   examined and tested, NEVER as evidence. Several of these are
+                   contradicted by the project's own data.
+
+If you repeat a claim from this dataset, repeat its basis. Presenting an inferred
+span as a date, or an unsubstantiated claim as a finding, misrepresents the source.
+
+## Known limits, stated by the project
+
+- Only <!--stat:reviewed-->27<!--/stat--> of <!--stat:reviewable-->884<!--/stat-->
+  records have had independent human review — and almost all of it landed on the
+  best-evidenced claims, not the ones that need it.
+- <!--stat:needsPrimarySource-->229<!--/stat--> records await a primary source.
+- Defence intelligence (ANRSD) has no primary sourcing at all: statute, appointment
+  date and current status are unestablished.
+- The pre-2011 police chronology rests largely on secondary sources.
+- The 2014-2019 police succession does not fit its dated endpoints; recorded as an
+  unresolved contradiction rather than smoothed over.
+- <!--stat:successionGaps-->43<!--/stat--> succession gaps and
+  <!--stat:successionOverlaps-->2<!--/stat--> overlapping tenures are detected and
+  published; <!--stat:contradictions-->62<!--/stat--> source contradictions are
+  recorded unresolved.
+
+## Common factual traps
+
+- The National Guard is NOT part of the armed forces. It sits under the Interior
+  Ministry while performing gendarmerie functions.
+- Chief of Staff of the Land Army is NOT Chief of Staff of the Armed Forces. The
+  joint tri-service post has existed for roughly two years since 1991.
+- Chokri Rahali (National Guard 2017-2019) and Chokri Riahi (2021-2022) are different
+  people, one letter apart in Latin script. Arabic spellings disambiguate.
+- Marouane Mabrouk received sentences in two separate proceedings in 2026. Coverage
+  routinely conflates them; a third reported figure is unreconciled.
+
+## Open data (CC BY 4.0)
+
+- /dataset.json        complete graph: entities, positions, relationships, sources
+- /positions.csv       every officeholding as a flat row
+- /relationships.csv   every edge with type, basis, attribution, source ids
+- /sources.csv         every citation with tier and archive lookup
+- /companies.csv       corporate records
+- /contracts.csv       procurement records
+- /licences.csv        licences and permissions
+- /declarations.csv    asset declarations
+- /education.csv       education records
+
+## Pages
+
+- /              Chronicle — officeholding across time, drawn to scale
+- /now           who holds which office today, against each office's median tenure
+- /network       who connects to whom, layers in fixed lanes
+- /atlas         structure per era, survival matrix, institutional crossings
+- /rankings      five separate structural indices, no single power score
+- /map           governorates and strategic assets
+- /world         Tunisia among states and international organisations
+- /investigate   structured queries computed from the graph, not generated
+- /evidence      hypotheses with falsifiers, open questions, contradictions, sources
+- /methodology   how the dataset is built and what it refuses to assert
+- /data          the open knowledge graph
+- /about         governance, funding transparency, honest project status
+
+## Editorial position
+
+A high brokerage score means the dataset records someone connecting otherwise
+separate networks. It is not evidence of wrongdoing, coordination or hidden control.
+
+A prison sentence is a documented fact. The allegations behind it and the criticism
+of the proceedings are contested; both framings are stored with attribution rather
+than adjudicated.
+
+Wealth is not corruption. The dataset distinguishes established business families
+from politically created ones.

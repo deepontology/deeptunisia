@@ -1,0 +1,11 @@
+<svg width="1600" height="320" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 64" role="img" aria-label="Deep Tunisia wordmark">
+  <!-- Wordmark lockup: circle-and-dot glyph + "Deep Tunisia", as in the landing
+       header. Font intended: IBM Plex Sans / Inter, weight 600, the site's
+       font-strong. Text is rendered as paths here only if you convert with a
+       font tool; as a live SVG it uses the declared family and falls back
+       gracefully. Dark-theme colours (accent #ddb049, text-primary #f0eeec). -->
+  <circle cx="32" cy="32" r="29" fill="none" stroke="#ddb049" stroke-opacity="0.42" stroke-width="3"/>
+  <circle cx="32" cy="32" r="10" fill="#ddb049"/>
+  <text x="76" y="42" font-family="'IBM Plex Sans Arabic', 'Inter', system-ui, sans-serif"
+        font-size="30" font-weight="600" fill="#f0eeec">Deep Tunisia</text>
+</svg>

@@ -1,0 +1,77 @@
+# Response headers for the static site.
+#
+# Cloudflare Workers Assets reads this file from the root of the uploaded
+# directory. `static/` is copied to the build root verbatim, so this lands where
+# the platform looks for it. Netlify reads the same format, which is the reason
+# for choosing it over a Worker that sets headers in code: it keeps working if
+# the hosting changes, and it costs no CPU because the Worker is never invoked
+# for an asset.
+#
+# ---------------------------------------------------------------------------
+# THE CONTENT SECURITY POLICY IS THE POINT
+# ---------------------------------------------------------------------------
+#
+# This project asserts, in its README, in docs/anonymity-audit.md and in a smoke
+# test, that a reader's browser contacts no third party. That assertion was
+# false once: the fonts came from Google, which disclosed every reader's IP,
+# User-Agent and — through Referer — the page they were reading. Opening a named
+# official's entry told a third party you had.
+#
+# The tests catch a regression on the routes they visit. The CSP catches it
+# everywhere, in the browser, at the moment it happens, including on a page
+# nobody wrote a test for and including a URL injected into a community post.
+# It turns "we checked and there are none" into "the browser will refuse".
+#
+# 'unsafe-inline' for scripts and styles is not laziness and cannot currently be
+# removed: SvelteKit inlines its hydration bootstrap, app.html inlines the
+# theme/locale resolver that has to run before first paint, and the landing page
+# is one self-contained file by design. Nonces would require a Worker on the
+# asset path, which is exactly the cost this architecture avoids. Note what the
+# policy still buys with them in place: connect-src, img-src, font-src and
+# frame-ancestors are all locked to self, so an injected script cannot exfiltrate
+# to another origin, load a tracking pixel, or frame the site for clickjacking.
+#
+# If SvelteKit's CSP nonce support is ever wired up, tighten script-src first.
+
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; media-src 'none'; object-src 'none'; frame-src 'none'; worker-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: same-origin
+  # Every one of these is off. The atlas needs none of them, and a permissions
+  # policy that lists what a page may do is a shorter document than the list of
+  # what it may not.
+  Permissions-Policy: accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=(), interest-cohort=()
+  # Two years, and the apex is submitted for preload only once the operator is
+  # certain every subdomain is HTTPS — preload is effectively irreversible.
+  Strict-Transport-Security: max-age=63072000; includeSubDomains
+
+# Fonts and the generated data exports are content-addressed by nothing, but they
+# change only when the build changes, and the build changes their bytes rather
+# than their names. A day is the compromise: long enough that a reader browsing
+# the atlas re-fetches nothing, short enough that a correction published this
+# morning is visible this afternoon.
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/_app/immutable/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/dataset.json
+  Cache-Control: public, max-age=3600
+  Access-Control-Allow-Origin: *
+
+# The published exports are meant to be taken and reused — that is the whole
+# claim of /data — so these three carry CORS deliberately. Nothing else does.
+/positions.csv
+  Cache-Control: public, max-age=3600
+  Access-Control-Allow-Origin: *
+
+/relationships.csv
+  Cache-Control: public, max-age=3600
+  Access-Control-Allow-Origin: *
+
+/sources.csv
+  Cache-Control: public, max-age=3600
+  Access-Control-Allow-Origin: *

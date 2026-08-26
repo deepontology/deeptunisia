@@ -1,0 +1,1723 @@
+# Places — point features with coordinates (spec §8.2).
+#
+# Kinds: port, airport, military-base, power-plant, pipeline, water,
+# desalination, road, rail, industrial-zone, free-zone, resource-field,
+# embassy, palace, town, quarter.
+#
+# Every point-class place must carry WGS84 [lon, lat] coordinates and a
+# `parent` region/governorate (V10), each with its own source. Coordinates
+# are claims like any other number — they are authored only from a cited
+# source, never estimated to fill a row. The governorate polygons for the
+# map view ship separately in static/tn-adm.geojson (geoboundaries-tun-adm1).
+#
+# Merged 2026-08-08 from data/contrib/places-2026-08-08.yaml (roadmap P1 #11):
+# 12 strategic assets. Coordinates are verbatim from the cited registry records
+# (Wikidata P625 / OSM); place-gafsa-basin is the one reasoned proxy (C) — the
+# basin has no registry record as a single feature, so the point of Métlaoui
+# town anchors it, with reasoning + falsifier (see the record).
+
+# --- Ports -------------------------------------------------------------------
+
+- kind: port
+  id: place-rades-port
+  name_en: "Port of Radès"
+  name_fr: "port de Radès"
+  name_ar: "ميناء رادس"
+  parent: gov-ben-arous
+  coordinates: [10.287201, 36.805401]
+  asset: true
+  confidence: A
+  basis: documented
+  sources: [wikidata-q11942395, osm-rades-port-railway, wikidata-q3417180]
+  notes:
+    - "Container/ro-ro port on the south shore of the Lake of Tunis. Coordinate = Wikidata Q11942395 P625 (precision 0.000001 deg). Parent chain per the item: P131 = Radès municipality (Q27062) -> delegation of Radès (Q3417180) -> Ben Arous governorate (gov-ben-arous)."
+    - "Cross-check: OSM railway node 6314863752 'محطة الميناء حلق الوادي - جنوب' (Halq al-Wadi south port station, at 10.2880360, 36.8047518) sits inside the port precinct, ~200 m NE of the Wikidata point."
+  notes_fr:
+    - >-
+      Port à conteneurs et à rouliers sur la rive sud du lac de Tunis. Coordonnée = P625 de
+      l'item Wikidata Q11942395 (précision 0.000001 deg). Chaîne parentale selon l'item :
+      P131 = municipalité de Radès (Q27062) -> délégation de Radès (Q3417180) -> gouvernorat
+      de Ben Arous (gov-ben-arous).
+    - >-
+      Contre-vérification : le nœud ferroviaire OSM 6314863752 « محطة الميناء حلق الوادي -
+      جنوب » (gare du port sud de Halq al-Wadi, à 10.2880360, 36.8047518) se trouve dans
+      l'enceinte du port, à ~200 m au NE du point Wikidata.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      ميناء حاويات وسيارات (ro-ro) على الضفة الجنوبية لبحيرة تونس. الإحداثي = P625 لعنصر
+      ويكيبيديا Q11942395 (الدقة 0.000001 درجة). السلسلة الأم حسب العنصر: P131 = بلدية رادس
+      (Q27062) -> معتمدية رادس (Q3417180) -> ولاية بن عروس (gov-ben-arous).
+    - >-
+      تدقيق متقاطع: العقدة السككية OSM 6314863752 «محطة الميناء حلق الوادي - جنوب» (محطة
+      ميناء حلق الوادي الجنوبي، عند 10.2880360، 36.8047518) تقع داخل حرم الميناء، على بُعد
+      نحو 200 متر شمال شرق نقطة ويكيبيديا.
+  notes_ar_by: model-reviewed
+
+- kind: port
+  id: place-bizerte-port
+  name_en: "Port of Bizerte"
+  name_fr: "port de Bizerte"
+  name_ar: "ميناء بنزرت - منزل بورقيبة"
+  parent: gov-bizerte
+  coordinates: [9.838439, 37.24966]
+  asset: true
+  confidence: A
+  basis: documented
+  reasoning: >-
+    Wikidata item Q11942390 (Port of Bizerte) carries TWO P625 points: (9.838439,
+    37.24966), in the Lake of Bizerte, and (9.883333, 37.283333), at Bizerte
+    town's old port. The first is adopted here: the item's own Arabic label is
+    "ميناء بنزرت - منزل بورقيبة" (Bizerte-Menzel Bourguiba port), and Menzel
+    Bourguiba is where the governorate's commercial port operates.
+  falsifiable_by: >-
+    A port-registry (OMMP) or gazette reference fixing the Port of Bizerte at
+    Bizerte town rather than the Menzel Bourguiba complex, or a single official
+    coordinate for the port, would overturn the adopted point.
+  sources: [wikidata-q11942390, osm-port-menzel-bourguiba]
+  notes:
+    - "Coordinate = first P625 value of Wikidata Q11942390 (precision 0.000001 deg); the item's second point (9.883333, 37.283333) marks Bizerte town old port. Both lie in Bizerte governorate, so parent is unaffected by the choice."
+    - "Cross-check: OSM way 671241054 'Port De Menzel Bourguiba' (harbour, centroid 9.8118676, 37.1559519) marks the physical commercial basin at the lake's SW shore; the Wikidata lake points sit offshore. Human should decide which point best represents the port complex."
+  notes_fr:
+    - >-
+      Coordonnée = première valeur P625 de l'item Wikidata Q11942390 (précision 0.000001
+      deg) ; le second point de l'item (9.883333, 37.283333) marque le vieux port de la
+      ville de Bizerte. Les deux se trouvent dans le gouvernorat de Bizerte, le parent n'est
+      donc pas affecté par ce choix.
+    - >-
+      Contre-vérification : le chemin OSM 671241054 « Port De Menzel Bourguiba » (harbour,
+      centroïde 9.8118676, 37.1559519) marque le bassin commercial physique sur la rive
+      sud-ouest du lac ; les points Wikidata dans le lac sont au large. Un humain devrait
+      décider quel point représente le mieux le complexe portuaire.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      الإحداثي = القيمة الأولى P625 لعنصر ويكيبيديا Q11942390 (الدقة 0.000001 درجة)؛ أما
+      النقطة الثانية للعنصر (9.883333، 37.283333) فتمثّل الميناء القديم لمدينة بنزرت. تقع
+      النقطتان في ولاية بنزرت، فلا يتأثر حقل parent بهذا الاختيار.
+    - >-
+      تدقيق متقاطع: المسار OSM 671241054 «Port De Menzel Bourguiba» (مرفأ، مركز الثقل
+      9.8118676، 37.1559519) يمثّل الحوض التجاري الفعلي على الشاطئ الجنوبي الغربي للبحيرة؛
+      أما نقطتا ويكيبيديا داخل البحيرة فهما في عرض البحر. ينبغي لإنسان أن يقرر أي نقطة تمثّل
+      مجمع الميناء على أفضل وجه.
+  notes_ar_by: model-reviewed
+
+- kind: port
+  id: place-sfax-port
+  name_en: "Port of Sfax"
+  name_fr: "port de Sfax"
+  name_ar: "ميناء صفاقس"
+  parent: gov-sfax
+  coordinates: [10.769189, 34.724016]
+  asset: true
+  confidence: A
+  basis: documented
+  sources: [wikidata-q20432097, osm-port-sfax]
+  notes:
+    - "Export port on Sfax's north-east coast (phosphates, olive oil). Coordinate = Wikidata Q20432097 P625 (precision 0.000001 deg). Parent chain: P131 = Sfax municipality (Q46325) -> Sfax governorate (gov-sfax)."
+    - "Cross-check: OSM relation 16134930 'ميناء صفاقس' (landuse=industrial, centroid 10.7806035, 34.7270788) — ~1.1 km apart, same harbour area."
+  notes_fr:
+    - >-
+      Port d'exportation sur la côte nord-est de Sfax (phosphates, huile d'olive).
+      Coordonnée = P625 de l'item Wikidata Q20432097 (précision 0.000001 deg). Chaîne
+      parentale : P131 = municipalité de Sfax (Q46325) -> gouvernorat de Sfax (gov-sfax).
+    - >-
+      Contre-vérification : la relation OSM 16134930 « ميناء صفاقس » (landuse=industrial,
+      centroïde 10.7806035, 34.7270788) — à ~1,1 km, même zone portuaire.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      ميناء تصدير على الساحل الشمالي الشرقي لصفاقس (الفوسفات، زيت الزيتون). الإحداثي = P625
+      لعنصر ويكيبيديا Q20432097 (الدقة 0.000001 درجة). السلسلة الأم: P131 = بلدية صفاقس
+      (Q46325) -> ولاية صفاقس (gov-sfax).
+    - >-
+      تدقيق متقاطع: العلاقة OSM 16134930 «ميناء صفاقس» (landuse=industrial، مركز الثقل
+      10.7806035، 34.7270788) — على بُعد نحو 1.1 كم، في منطقة الميناء نفسها.
+  notes_ar_by: model-reviewed
+
+- kind: port
+  id: place-gabes-port
+  name_en: "Port of Gabès"
+  name_fr: "Port de Gabès"
+  name_ar: "ميناء قابس"
+  parent: gov-gabes
+  coordinates: [10.116333, 33.895889]
+  asset: true
+  confidence: A
+  basis: documented
+  sources: [wikidata-q124620842, osm-port-gabes]
+  notes:
+    - "Commercial port of Gabès at the head of the Gulf of Gabès (GCT chemical complex loading). Coordinate = Wikidata Q124620842 P625 (precision 0.000027 deg). Parent chain: P131 = Gabès municipality (Q215661) -> Gabès governorate (gov-gabes)."
+    - "Cross-check: OSM way 293835892 'ميناء قابس' (harbour, centroid 10.1159657, 33.8958045) agrees within ~40 m. The separate fishing port item (Q20432075) sits ~120 m away; this record is the commercial port."
+  notes_fr:
+    - >-
+      Port commercial de Gabès au fond du golfe de Gabès (chargement du complexe chimique
+      GCT). Coordonnée = P625 de l'item Wikidata Q124620842 (précision 0.000027 deg). Chaîne
+      parentale : P131 = municipalité de Gabès (Q215661) -> gouvernorat de Gabès
+      (gov-gabes).
+    - >-
+      Contre-vérification : le chemin OSM 293835892 « ميناء قابس » (harbour, centroïde
+      10.1159657, 33.8958045) concorde à ~40 m près. L'item du port de pêche distinct
+      (Q20432075) se trouve à ~120 m ; le présent enregistrement est le port commercial.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      الميناء التجاري لقابس في رأس خليج قابس (شحن مجمع GCT الكيميائي). الإحداثي = P625 لعنصر
+      ويكيبيديا Q124620842 (الدقة 0.000027 درجة). السلسلة الأم: P131 = بلدية قابس (Q215661)
+      -> ولاية قابس (gov-gabes).
+    - >-
+      تدقيق متقاطع: المسار OSM 293835892 «ميناء قابس» (مرفأ، مركز الثقل 10.1159657،
+      33.8958045) متطابق ضمن نحو 40 مترًا. أما عنصر ميناء الصيد المنفصل (Q20432075) فيبعد
+      نحو 120 مترًا؛ وهذا السجل هو الميناء التجاري.
+  notes_ar_by: model-reviewed
+
+- kind: port
+  id: place-zarzis-port
+  name_en: "Port of Zarzis"
+  name_fr: "port de Zarzis"
+  name_ar: "ميناء جرجيس"
+  parent: gov-medenine
+  coordinates: [11.118591, 33.493588]
+  asset: true
+  confidence: A
+  basis: documented
+  sources: [wikidata-q11942402, osm-port-zarzis]
+  notes:
+    - "Fishing and commercial port on the south-east coast. Coordinate = Wikidata Q11942402 P625 (precision 0.000001 deg). Parent chain: P131 = Zarzis municipality (Q148142) -> Médenine governorate (gov-medenine)."
+    - "Cross-check: OSM way 302558500 ('Port', جرجيس, landuse=industrial, centroid 11.1152217, 33.4944184) — ~330 m apart, same port area."
+  notes_fr:
+    - >-
+      Port de pêche et de commerce sur la côte sud-est. Coordonnée = P625 de l'item Wikidata
+      Q11942402 (précision 0.000001 deg). Chaîne parentale : P131 = municipalité de Zarzis
+      (Q148142) -> gouvernorat de Médenine (gov-medenine).
+    - >-
+      Contre-vérification : le chemin OSM 302558500 (« Port », جرجيس, landuse=industrial,
+      centroïde 11.1152217, 33.4944184) — à ~330 m, même zone portuaire.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      ميناء صيد وتجارة على الساحل الجنوبي الشرقي. الإحداثي = P625 لعنصر ويكيبيديا Q11942402
+      (الدقة 0.000001 درجة). السلسلة الأم: P131 = بلدية جرجيس (Q148142) -> ولاية مدنين
+      (gov-medenine).
+    - >-
+      تدقيق متقاطع: المسار OSM 302558500 («Port»، جرجيس، landuse=industrial، مركز الثقل
+      11.1152217، 33.4944184) — على بُعد نحو 330 مترًا، في منطقة الميناء نفسها.
+  notes_ar_by: model-reviewed
+
+# --- Airports ----------------------------------------------------------------
+
+- kind: airport
+  id: place-tunis-carthage-airport
+  name_en: "Tunis–Carthage International Airport"
+  name_fr: "aéroport international de Tunis-Carthage"
+  name_ar: "مطار تونس قرطاج الدولي"
+  parent: gov-tunis
+  coordinates: [10.227222, 36.851111]
+  asset: true
+  confidence: A
+  basis: documented
+  sources: [wikidata-q1141214, osm-airport-tunis-carthage]
+  notes:
+    - "Tunisia's main international airport (TUN/DTTA). Coordinate = Wikidata Q1141214 P625 (precision 0.000277 deg, ~30 m)."
+    - "Parent: Wikidata P131 = Tunis (Q3572) -> gov-tunis, adopted per the registry statement. NOTE: OSM/Nominatim places the aerodrome polygon (way 94666415) in the delegation of La Soukra, Ariana governorate (ولاية أريانة); the airport straddles the Tunis-Ariana boundary. The Ariana placement is recorded here for human adjudication."
+    - "Cross-check: OSM aerodrome way 94666415 centroid (10.2295044, 36.8518485) agrees within ~210 m."
+  notes_fr:
+    - >-
+      Principal aéroport international de Tunisie (TUN/DTTA). Coordonnée = P625 de l'item
+      Wikidata Q1141214 (précision 0.000277 deg, ~30 m).
+    - >-
+      Parent : P131 de Wikidata = Tunis (Q3572) -> gov-tunis, retenu conformément à la
+      déclaration du registre. NOTE : OSM/Nominatim place le polygone de l'aérodrome (chemin
+      94666415) dans la délégation de La Soukra, gouvernorat de l'Ariana (ولاية أريانة) ;
+      l'aéroport chevauche la limite Tunis-Ariana. Le placement arianéen est consigné ici
+      pour arbitrage humain.
+    - >-
+      Contre-vérification : le centroïde du chemin OSM 94666415 de l'aérodrome (10.2295044,
+      36.8518485) concorde à ~210 m près.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      المطار الدولي الرئيسي لتونس (TUN/DTTA). الإحداثي = P625 لعنصر ويكيبيديا Q1141214
+      (الدقة 0.000277 درجة، نحو 30 مترًا).
+    - >-
+      السلسلة الأم: P131 في ويكيبيديا = تونس (Q3572) -> gov-tunis، اعتُمد وفق بيان السجل.
+      ملاحظة: يضع OSM/Nominatim مضلع المطار (المسار 94666415) في معتمدية سكرة بولاية أريانة
+      (ولاية أريانة)؛ إذ يقع المطار على الحدود بين تونس وأريانة. ويُسجَّل هنا الموضع
+      الأرياني ليتولى إنسان البتّ فيه.
+    - >-
+      تدقيق متقاطع: مركز ثقل مضلع المطار OSM 94666415 (10.2295044، 36.8518485) متطابق ضمن
+      نحو 210 أمتار.
+  notes_ar_by: model-reviewed
+
+- kind: airport
+  id: place-enfidha-airport
+  name_en: "Enfidha–Hammamet International Airport"
+  name_fr: "aéroport international d'Enfidha-Hammamet"
+  name_ar: "مطار النفيضة الحمامات الدولي"
+  parent: gov-sousse
+  coordinates: [10.438611, 36.075833]
+  asset: true
+  confidence: A
+  basis: documented
+  sources: [wikidata-q1431260, wikidata-q3054189]
+  notes:
+    - "Newer international airport (NBE/DTNH), ~40 km SW of Hammamet. Coordinate = Wikidata Q1431260 P625 (precision 0.000277 deg). Parent chain: P131 = Enfidha (Q1025361) -> delegation of Enfida (Q3054189) -> Sousse governorate (gov-sousse)."
+  notes_fr:
+    - >-
+      Aéroport international récent (NBE/DTNH), à ~40 km au SO de Hammamet. Coordonnée =
+      P625 de l'item Wikidata Q1431260 (précision 0.000277 deg). Chaîne parentale : P131 =
+      Enfidha (Q1025361) -> délégation d'Enfida (Q3054189) -> gouvernorat de Sousse
+      (gov-sousse).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      مطار دولي أحدث (NBE/DTNH)، على بُعد نحو 40 كم جنوب غرب الحمامات. الإحداثي = P625 لعنصر
+      ويكيبيديا Q1431260 (الدقة 0.000277 درجة). السلسلة الأم: P131 = النفيضة (Q1025361) ->
+      معتمدية النفيضة (Q3054189) -> ولاية سوسة (gov-sousse).
+  notes_ar_by: model-reviewed
+
+- kind: airport
+  id: place-djerba-zarzis-airport
+  name_en: "Djerba–Zarzis International Airport"
+  name_fr: "aéroport international de Djerba-Zarzis"
+  name_ar: "مطار جربة جرجيس الدولي"
+  parent: gov-medenine
+  coordinates: [10.775278, 33.875]
+  asset: true
+  confidence: A
+  basis: documented
+  sources: [wikidata-q1425537, wikidata-q327087]
+  notes:
+    - "Airport on Djerba island serving Djerba and Zarzis (DJE/DTTJ). Coordinate = Wikidata Q1425537 P625 (precision 0.000277 deg). Parent chain: P131 = delegation of Djerba-Houmt Souk (Q3032897) -> Médenine Governorate (Q327087, ISO TN-82) -> gov-medenine."
+  notes_fr:
+    - >-
+      Aéroport de l'île de Djerba desservant Djerba et Zarzis (DJE/DTTJ). Coordonnée = P625
+      de l'item Wikidata Q1425537 (précision 0.000277 deg). Chaîne parentale : P131 =
+      délégation de Djerba-Houmt Souk (Q3032897) -> gouvernorat de Médenine (Q327087, ISO
+      TN-82) -> gov-medenine.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      مطار في جزيرة جربة يخدم جربة وجرجيس (DJE/DTTJ). الإحداثي = P625 لعنصر ويكيبيديا
+      Q1425537 (الدقة 0.000277 درجة). السلسلة الأم: P131 = معتمدية جربة حومة السوق
+      (Q3032897) -> ولاية مدنين (Q327087، ISO TN-82) -> gov-medenine.
+  notes_ar_by: model-reviewed
+
+- kind: airport
+  id: place-monastir-airport
+  name_en: "Monastir Habib Bourguiba International Airport"
+  name_fr: "aéroport international de Monastir Habib-Bourguiba"
+  name_ar: "مطار الحبيب بورقيبة الدولي"
+  parent: gov-monastir
+  coordinates: [10.754722, 35.758056]
+  asset: true
+  confidence: A
+  basis: documented
+  sources: [wikidata-q666704, wikidata-q318102]
+  notes:
+    - "Major charter airport of the Sahel coast (MIR/DTMB). Coordinate = Wikidata Q666704 P625 (precision 0.000277 deg). Parent chain: P131 = Monastir (Q208715) -> Monastir Governorate (Q318102, ISO TN-52) -> gov-monastir."
+  notes_fr:
+    - >-
+      Grand aéroport charter de la côte du Sahel (MIR/DTMB). Coordonnée = P625 de l'item
+      Wikidata Q666704 (précision 0.000277 deg). Chaîne parentale : P131 = Monastir
+      (Q208715) -> gouvernorat de Monastir (Q318102, ISO TN-52) -> gov-monastir.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      المطار الرئيسي لرحلات الشارتر على ساحل الساحل (MIR/DTMB). الإحداثي = P625 لعنصر
+      ويكيبيديا Q666704 (الدقة 0.000277 درجة). السلسلة الأم: P131 = المنستير (Q208715) ->
+      ولاية المنستير (Q318102، ISO TN-52) -> gov-monastir.
+  notes_ar_by: model-reviewed
+
+- kind: airport
+  id: place-tabarka-airport
+  name_en: "Tabarka-Aïn Draham International Airport"
+  name_fr: "aéroport international de Tabarka-Aïn Draham"
+  name_ar: "مطار طبرقة عين دراهم الدولي"
+  parent: gov-jendouba
+  coordinates: [8.876944, 36.98]
+  asset: true
+  confidence: A
+  basis: documented
+  sources: [wikidata-q1432975, wikidata-q3512715]
+  notes:
+    - "North-west international airport (TBJ/DTKA) serving Tabarka and the Aïn Draham resorts. Coordinate = Wikidata Q1432975 P625 (precision 0.000277 deg). Parent chain: P131 = Tabarka (Q986213) -> delegation of Tabarka (Q3512715) -> Jendouba governorate (gov-jendouba)."
+  notes_fr:
+    - >-
+      Aéroport international du nord-ouest (TBJ/DTKA) desservant Tabarka et les stations
+      d'Aïn Draham. Coordonnée = P625 de l'item Wikidata Q1432975 (précision 0.000277 deg).
+      Chaîne parentale : P131 = Tabarka (Q986213) -> délégation de Tabarka (Q3512715) ->
+      gouvernorat de Jendouba (gov-jendouba).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      مطار دولي في الشمال الغربي (TBJ/DTKA) يخدم طبرقة ومصايف عين دراهم. الإحداثي = P625
+      لعنصر ويكيبيديا Q1432975 (الدقة 0.000277 درجة). السلسلة الأم: P131 = طبرقة (Q986213)
+      -> معتمدية طبرقة (Q3512715) -> ولاية جندوبة (gov-jendouba).
+  notes_ar_by: model-reviewed
+
+# --- Resource field ----------------------------------------------------------
+
+- kind: resource-field
+  id: place-gafsa-basin
+  name_en: "Gafsa phosphate basin"
+  name_fr: "bassin minier de Gafsa"
+  name_ar: "الحوض المنجمي"
+  parent: gov-gafsa
+  coordinates: [8.401389, 34.319444]
+  asset: true
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "DeepTunisia dt-research agent (proxy point; no registry record of the basin as a feature — see reasoning)"
+  reasoning: >-
+    No registry record exists for the Gafsa phosphate basin as a single feature.
+    Wikidata has no item (searches for "bassin minier de Gafsa" and "Gafsa
+    phosphate" return nothing); fr/en/ar Wikipedia have no article on the basin
+    as a geographic feature (only on the 2008 strikes inside it); GeoNames was
+    unreachable from this environment; and OSM carries only individual mining
+    installations (Mdhilla washing plant, Métlaoui and Redeyef stockage
+    quarries). The basin is conventionally anchored on Métlaoui, the historic
+    centre of Compagnie des phosphates de Gafsa mining and the rail head of the
+    Gafsa-Sfax line; the adopted point is the registry coordinate of Métlaoui
+    town (Wikidata Q983673, P625 (8.401389, 34.319444), precision 0.000277
+    deg). The Gafsa Governorate item (Q269968, P625 (8.783333, 34.416667))
+    brackets the basin's spread, which runs from Redeyef (~8.15 E) through
+    Métlaoui (~8.40 E) to Mdhilla (~8.75 E).
+  falsifiable_by: >-
+    A registry record of the basin itself (a Wikidata item, a georeferenced
+    geological map, or an official CPG/ONM boundary) placing its representative
+    point elsewhere — in particular east of 8.6 E toward Mdhilla or west toward
+    Redeyef — would overturn the Métlaoui anchor.
+  sources: [wikidata-q983673, wikidata-q269968, osm-gafsa-phosphate-mines]
+  notes:
+    - "Candidate point for a regional resource-field. The basin spans the mining towns of Métlaoui, Redeyef, Mdhilla and Moulares in the Gafsa governorate; no single registry point exists, so the point of Métlaoui town is proposed as anchor with the reasoning above. Phosphate mined here feeds the Sfax and Gabès export chain."
+  notes_fr:
+    - >-
+      Point candidat pour un champ de ressources régional. Le bassin s'étend sur les villes
+      minières de Métlaoui, Redeyef, Mdhilla et Moulares dans le gouvernorat de Gafsa ;
+      aucun point de registre unique n'existe, aussi le point de la ville de Métlaoui est-il
+      proposé comme ancre, avec le raisonnement ci-dessus. Le phosphate extrait ici alimente
+      la chaîne d'exportation de Sfax et de Gabès.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      نقطة مرشحة لحقل موارد إقليمي. يمتد الحوض على المدن المنجمية متلاوي والرديف ومضيلة وأم
+      العرائس في ولاية قفصة؛ ولا توجد أي نقطة سجل واحدة، لذا تُقترح نقطة مدينة متلاوي كمرساة
+      مع الاستدلال أعلاه. الفوسفات المستخرج هنا يغذي سلسلة تصدير صفاقس وقابس.
+  notes_ar_by: model-reviewed
+
+# --- Power -------------------------------------------------------------------
+
+- kind: power-plant
+  id: place-rades-power
+  name_en: "Radès Power Plant"
+  name_fr: "centrale électrique de Radès"
+  name_ar: "محطة كهرباء رادس"
+  parent: gov-ben-arous
+  coordinates: [10.282723, 36.796403]
+  asset: true
+  confidence: A
+  basis: documented
+  sources: [wikidata-q11996807, wikidata-q56371829, wikidata-q3417180]
+  notes:
+    - "STEG thermal power station on the south shore of the Lake of Tunis. Coordinate = Wikidata Q11996807 (Radès Power Plant) P625 (precision 0.000001 deg). No OSM feature found for the plant."
+    - "The adjacent Radès II unit is a separate Wikidata item (Q56371829, P625 (10.2865, 36.799), precision 0.001 deg); both are part of the same complex. Parent chain: P131 = Radès (Q27062) -> delegation of Radès (Q3417180) -> Ben Arous governorate (gov-ben-arous)."
+  notes_fr:
+    - >-
+      Centrale thermique de la STEG sur la rive sud du lac de Tunis. Coordonnée = P625 de
+      l'item Wikidata Q11996807 (Radès Power Plant) (précision 0.000001 deg). Aucun élément
+      OSM n'a été trouvé pour cette centrale.
+    - >-
+      L'unité voisine Radès II est un item Wikidata distinct (Q56371829, P625 (10.2865,
+      36.799), précision 0.001 deg) ; les deux font partie du même complexe. Chaîne
+      parentale : P131 = Radès (Q27062) -> délégation de Radès (Q3417180) -> gouvernorat de
+      Ben Arous (gov-ben-arous).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      محطة حرارية تابعة للشركة التونسية للكهرباء والغاز (STEG) على الضفة الجنوبية لبحيرة
+      تونس. الإحداثي = P625 لعنصر ويكيبيديا Q11996807 (Radès Power Plant) (الدقة 0.000001
+      درجة). لم يُعثر على أي عنصر OSM للمحطة.
+    - >-
+      وحدة رادس II المجاورة عنصر ويكيبيديا منفصل (Q56371829، P625 (10.2865، 36.799)، الدقة
+      0.001 درجة)؛ وكلاهما جزء من المجمع نفسه. السلسلة الأم: P131 = رادس (Q27062) -> معتمدية
+      رادس (Q3417180) -> ولاية بن عروس (gov-ben-arous).
+  notes_ar_by: model-reviewed
+- kind: port
+  id: place-la-goulette-port
+  name_en: "Port of La Goulette"
+  name_fr: "port de La Goulette"
+  name_ar: "ميناء حلق الوادي"
+  parent: gov-tunis
+  coordinates: [10.306775, 36.809869]
+  asset: true
+  confidence: A
+  basis: documented
+  sources: [wikidata-q11942408, osm-lagoulette-port-attraction]
+  notes:
+    - "Passenger and commercial harbour of Tunis at La Goulette (Halq al-Wadi) on the Goulette channel of the Lake of Tunis. Coordinate = Wikidata Q11942408 P625 (precision 0.000001 deg). Parent chain per the item: P131 = La Goulette (Q798445) -> delegation of La Goulette (Q3209432) -> Tunis governorate (gov-tunis)."
+    - "Cross-check: OSM node 283684315 'ميناء حلق الوادي' (tourism=attraction, 10.3009616, 36.8146356) marks the harbour promenade ~600 m NW of the Wikidata point; both lie in the same harbour complex."
+  notes_fr:
+    - >-
+      Port de passagers et de commerce de Tunis à La Goulette (Halq al-Wadi), sur le canal de
+      La Goulette du lac de Tunis. Coordonnée = P625 de l'item Wikidata Q11942408 (précision
+      0.000001 deg). Chaîne parentale selon l'item : P131 = La Goulette (Q798445) -> délégation
+      de La Goulette (Q3209432) -> gouvernorat de Tunis (gov-tunis).
+    - >-
+      Contre-vérification : le nœud OSM 283684315 « ميناء حلق الوادي » (tourism=attraction,
+      10.3009616, 36.8146356) marque la promenade du port à ~600 m au NO du point Wikidata ;
+      les deux se trouvent dans le même complexe portuaire.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      ميناء تونس للركاب والتجارة في حلق الوادي (Halq al-Wadi) على قناة حلق الوادي ببحيرة تونس.
+      الإحداثي = P625 لعنصر ويكيبيديا Q11942408 (الدقة 0.000001 درجة). السلسلة الأم حسب
+      العنصر: P131 = حلق الوادي (Q798445) -> معتمدية حلق الوادي (Q3209432) -> ولاية تونس
+      (gov-tunis).
+    - >-
+      تدقيق متقاطع: العقدة OSM 283684315 «ميناء حلق الوادي» (tourism=attraction،
+      10.3009616، 36.8146356) تمثّل ممشى الميناء على بُعد نحو 600 متر شمال غرب نقطة
+      ويكيبيديا؛ وتقع كلتاهما في مجمع الميناء نفسه.
+  notes_ar_by: model-reviewed
+- kind: port
+  id: place-sousse-port
+  name_en: "Port of Sousse"
+  name_fr: "port de Sousse"
+  name_ar: "ميناء سوسة"
+  parent: gov-sousse
+  coordinates: [10.642604, 35.824265]
+  asset: true
+  confidence: A
+  basis: documented
+  sources: [wikidata-q11942400, osm-sousse-fishing-port]
+  notes:
+    - "Commercial and fishing port on Sousse's north shore, at the city edge. Coordinate = Wikidata Q11942400 P625 (precision 0.000001 deg). Parent chain per the item: P131 = Sousse (Q180717) -> Sousse governorate (gov-sousse)."
+    - "Cross-check: OSM node 2095449276 'Port de Pêche de Sousse' / ميناء الصيد البحري بسوسة (leisure=marina, 10.6432791, 35.8248714) sits ~70 m from the Wikidata point, same harbour. OSM has no separately named commercial-port feature."
+  notes_fr:
+    - >-
+      Port de commerce et de pêche sur la côte nord de Sousse, en bordure de la ville.
+      Coordonnée = P625 de l'item Wikidata Q11942400 (précision 0.000001 deg). Chaîne parentale
+      selon l'item : P131 = Sousse (Q180717) -> gouvernorat de Sousse (gov-sousse).
+    - >-
+      Contre-vérification : le nœud OSM 2095449276 « Port de Pêche de Sousse » / ميناء الصيد
+      البحري بسوسة (leisure=marina, 10.6432791, 35.8248714) se trouve à ~70 m du point Wikidata,
+      dans le même port. OSM ne comporte aucun élément distinct nommé port de commerce.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      ميناء تجاري وميناء صيد على الشاطئ الشمالي لسوسة، على أطراف المدينة. الإحداثي = P625
+      لعنصر ويكيبيديا Q11942400 (الدقة 0.000001 درجة). السلسلة الأم حسب العنصر: P131 = سوسة
+      (Q180717) -> ولاية سوسة (gov-sousse).
+    - >-
+      تدقيق متقاطع: العقدة OSM 2095449276 «Port de Pêche de Sousse» / ميناء الصيد البحري
+      بسوسة (leisure=marina، 10.6432791، 35.8248714) تقع على بُعد نحو 70 مترًا من نقطة
+      ويكيبيديا، في الميناء نفسه. لا يوجد في OSM أي عنصر مستقل باسم ميناء تجاري.
+  notes_ar_by: model-reviewed
+- kind: port
+  id: place-mahdia-port
+  name_en: "Port of Mahdia"
+  name_fr: "port de Mahdia"
+  name_ar: "ميناء المهدية"
+  parent: gov-mahdia
+  coordinates: [11.06739, 35.49988]
+  asset: true
+  confidence: A
+  basis: documented
+  sources: [wikidata-q34964436, osm-mahdia-bouni-dock]
+  notes:
+    - "Fishing port of Mahdia at the headland of the old city. Coordinate = Wikidata Q34964436 P625 (precision 0.00001 deg). Parent chain per the item: P131 = Mahdia (Q466054) -> delegation of Mahdia (Q12243859) -> Mahdia governorate (gov-mahdia)."
+    - "Cross-check: OSM node 4011000707 'ميناء البوني' (waterway=dock, 11.0793363, 35.5057993) lies ~1.4 km NE in the harbour basin. NOTE: a separate Wikidata item Q34953501 'Fatimid port of Mahdia' (11.07935, 35.50565) records the historic harbour basin; the modern fishing port sits at the southern tip. Human should adjudicate which point best represents the port."
+  notes_fr:
+    - >-
+      Port de pêche de Mahdia au cap de la ville ancienne. Coordonnée = P625 de l'item Wikidata
+      Q34964436 (précision 0.00001 deg). Chaîne parentale selon l'item : P131 = Mahdia
+      (Q466054) -> délégation de Mahdia (Q12243859) -> gouvernorat de Mahdia (gov-mahdia).
+    - >-
+      Contre-vérification : le nœud OSM 4011000707 « ميناء البوني » (waterway=dock, 11.0793363,
+      35.5057993) se trouve à ~1,4 km au NE, dans le bassin du port. NOTE : un item Wikidata
+      distinct, Q34953501 « Fatimid port of Mahdia » (11.07935, 35.50565), consigne le bassin
+      portuaire historique ; le port de pêche moderne se trouve à la pointe sud. Un humain
+      devrait arbitrer quel point représente le mieux le port.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      ميناء صيد المهدية عند رأس المدينة العتيقة. الإحداثي = P625 لعنصر ويكيبيديا Q34964436
+      (الدقة 0.00001 درجة). السلسلة الأم حسب العنصر: P131 = المهدية (Q466054) -> معتمدية
+      المهدية (Q12243859) -> ولاية المهدية (gov-mahdia).
+    - >-
+      تدقيق متقاطع: العقدة OSM 4011000707 «ميناء البوني» (waterway=dock، 11.0793363،
+      35.5057993) تقع على بُعد نحو 1.4 كم شمال شرق في حوض الميناء. ملاحظة: عنصر ويكيبيديا
+      منفصل Q34953501 «Fatimid port of Mahdia» (11.07935، 35.50565) يوثّق الحوض المينائي
+      التاريخي؛ أما ميناء الصيد الحديث فيقع عند الطرف الجنوبي. ينبغي لإنسان أن يبتّ في أي نقطة
+      تمثّل الميناء على أفضل وجه.
+  notes_ar_by: model-reviewed
+- kind: port
+  id: place-kelibia-port
+  name_en: "Port of Kélibia"
+  name_fr: "port de Kélibia"
+  name_ar: "ميناء قليبية"
+  parent: gov-nabeul
+  coordinates: [11.11146, 36.83409]
+  asset: true
+  confidence: A
+  basis: documented
+  sources: [wikidata-q34964414, osm-kelibia-port]
+  notes:
+    - "Fishing port of Kélibia on the Cap Bon peninsula. Coordinate = Wikidata Q34964414 P625 (precision 0.00001 deg). Parent chain per the item: P131 = Kélibia (Q27241) -> delegation of Kélibia (Q3201100) -> Nabeul governorate (gov-nabeul)."
+    - "Cross-check: OSM way 675044318 'ميناء قليبية' (landuse=harbour, centroid 11.1114925, 36.8338380) agrees within ~30 m."
+  notes_fr:
+    - >-
+      Port de pêche de Kélibia dans la péninsule du Cap Bon. Coordonnée = P625 de l'item
+      Wikidata Q34964414 (précision 0.00001 deg). Chaîne parentale selon l'item : P131 =
+      Kélibia (Q27241) -> délégation de Kélibia (Q3201100) -> gouvernorat de Nabeul
+      (gov-nabeul).
+    - >-
+      Contre-vérification : le chemin OSM 675044318 « ميناء قليبية » (landuse=harbour,
+      centroïde 11.1114925, 36.8338380) concorde à ~30 m près.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      ميناء صيد قليبية في شبه جزيرة الوطن القبلي. الإحداثي = P625 لعنصر ويكيبيديا Q34964414
+      (الدقة 0.00001 درجة). السلسلة الأم حسب العنصر: P131 = قليبية (Q27241) -> معتمدية
+      قليبية (Q3201100) -> ولاية نابل (gov-nabeul).
+    - >-
+      تدقيق متقاطع: المسار OSM 675044318 «ميناء قليبية» (landuse=harbour، مركز الثقل
+      11.1114925، 36.8338380) متطابق ضمن نحو 30 مترًا.
+  notes_ar_by: model-reviewed
+- kind: port
+  id: place-tabarka-port
+  name_en: "Port of Tabarka"
+  name_fr: "port de Tabarka"
+  name_ar: "ميناء طبرقة"
+  parent: gov-jendouba
+  coordinates: [8.7608492, 36.9593191]
+  asset: true
+  confidence: A
+  basis: documented
+  reasoning: >-
+    Wikidata item Q111386773 (Port of Tabarka) exists but its P625
+    (8.766666666666667, 36.96666666666667) carries precision 0.016667 deg
+    (~1.8 km) — too coarse to place the harbour. The adopted coordinate is the
+    centroid of OSM way 252885708 'Port of Tabarka' (leisure=marina,
+    seamark:type=harbour, seamark:harbour:category=marina), the only named
+    registry feature of the harbour. The way is ~1.2 km ENE of the Tabarka town
+    centre point (Wikidata Q986213, P625 (8.749747, 36.956779), precision
+    0.000001 deg), on the coast at the town's port quarter.
+  falsifiable_by: >-
+    A port registry (OMMP) or gazette reference giving a single official
+    coordinate for the Port of Tabarka would overturn the OSM way centroid.
+  sources: [osm-tabarka-port, wikidata-q111386773, wikidata-q986213]
+  notes:
+    - "Fishing port of Tabarka, north-west coast. Coordinate = OSM way 252885708 centroid (8.7608492, 36.9593191), not the coarse Wikidata P625 — see reasoning."
+    - "Parent chain per Wikidata: Tabarka (Q986213) -> delegation of Tabarka (Q3512715) -> Jendouba governorate (gov-jendouba)."
+  notes_fr:
+    - >-
+      Port de pêche de Tabarka, côte nord-ouest. Coordonnée = centroïde du chemin OSM
+      252885708 (8.7608492, 36.9593191), et non le P625 Wikidata trop grossier — voir le
+      raisonnement.
+    - >-
+      Chaîne parentale selon Wikidata : Tabarka (Q986213) -> délégation de Tabarka
+      (Q3512715) -> gouvernorat de Jendouba (gov-jendouba).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      ميناء صيد طبرقة، على الساحل الشمالي الغربي. الإحداثي = مركز ثقل المسار OSM 252885708
+      (8.7608492، 36.9593191)، وليس P625 في ويكيبيديا الخشن جدًا — انظر الاستدلال.
+    - >-
+      السلسلة الأم حسب ويكيبيديا: طبرقة (Q986213) -> معتمدية طبرقة (Q3512715) -> ولاية
+      جندوبة (gov-jendouba).
+  notes_ar_by: model-reviewed
+- kind: port
+  id: place-chebba-port
+  name_en: "Port of Chebba"
+  name_fr: "port de Chebba"
+  name_ar: "ميناء الشابة"
+  parent: gov-mahdia
+  coordinates: [11.16302, 35.23256]
+  asset: true
+  confidence: A
+  basis: documented
+  sources: [wikidata-q34964512, osm-chebba-fishing-port]
+  notes:
+    - "Fishing port of Chebba on the Mahdia coast. Coordinate = Wikidata Q34964512 P625 (precision 0.00001 deg). Parent chain per the item: P131 = Chebba (Q516356) -> delegation of Chebba (Q12243820) -> Mahdia governorate (gov-mahdia)."
+    - "Cross-check: OSM node 5992332847 'ميناء الصيد البحري بالشابة' (leisure=marina, 11.1600977, 35.2327553) agrees within ~280 m; OSM relation 8824055 'ميناء الشابة' (landuse=industrial, 11.1564403, 35.2312913) marks the port's industrial area."
+  notes_fr:
+    - >-
+      Port de pêche de Chebba sur la côte de Mahdia. Coordonnée = P625 de l'item Wikidata
+      Q34964512 (précision 0.00001 deg). Chaîne parentale selon l'item : P131 = Chebba
+      (Q516356) -> délégation de Chebba (Q12243820) -> gouvernorat de Mahdia (gov-mahdia).
+    - >-
+      Contre-vérification : le nœud OSM 5992332847 « ميناء الصيد البحري بالشابة »
+      (leisure=marina, 11.1600977, 35.2327553) concorde à ~280 m près ; la relation OSM
+      8824055 « ميناء الشابة » (landuse=industrial, 11.1564403, 35.2312913) marque la zone
+      industrielle du port.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      ميناء صيد الشابة على ساحل المهدية. الإحداثي = P625 لعنصر ويكيبيديا Q34964512
+      (الدقة 0.00001 درجة). السلسلة الأم حسب العنصر: P131 = الشابة (Q516356) -> معتمدية
+      الشابة (Q12243820) -> ولاية المهدية (gov-mahdia).
+    - >-
+      تدقيق متقاطع: العقدة OSM 5992332847 «ميناء الصيد البحري بالشابة» (leisure=marina،
+      11.1600977، 35.2327553) متطابقة ضمن نحو 280 مترًا؛ أما العلاقة OSM 8824055 «ميناء
+      الشابة» (landuse=industrial، 11.1564403، 35.2312913) فتمثّل المنطقة الصناعية للميناء.
+  notes_ar_by: model-reviewed
+- kind: port
+  id: place-houmt-souk-port
+  name_en: "Port of Houmt Souk"
+  name_fr: "port de Houmt Souk"
+  name_ar: "ميناء حومة السوق"
+  parent: gov-medenine
+  coordinates: [10.85741, 33.8888]
+  asset: true
+  confidence: A
+  basis: documented
+  sources: [wikidata-q34954264, osm-houmt-souk-fishing-port]
+  notes:
+    - "Fishing port of Houmt Souk, the main port of Djerba island. Coordinate = Wikidata Q34954264 P625 (precision 0.00001 deg). Parent chain per the item: P131 = Houmt Souk (Q995360) -> delegation of Djerba-Houmt Souk (Q3032897) -> Médenine governorate (gov-medenine)."
+    - "Cross-check: OSM node 2974174942 'ميناء الصيد البحري بحومة السوق' (leisure=marina, 10.8572501, 33.8878768) agrees within ~100 m."
+  notes_fr:
+    - >-
+      Port de pêche de Houmt Souk, principal port de l'île de Djerba. Coordonnée = P625 de
+      l'item Wikidata Q34954264 (précision 0.00001 deg). Chaîne parentale selon l'item :
+      P131 = Houmt Souk (Q995360) -> délégation de Djerba-Houmt Souk (Q3032897) ->
+      gouvernorat de Médenine (gov-medenine).
+    - >-
+      Contre-vérification : le nœud OSM 2974174942 « ميناء الصيد البحري بحومة السوق »
+      (leisure=marina, 10.8572501, 33.8878768) concorde à ~100 m près.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      ميناء صيد حومة السوق، الميناء الرئيسي لجزيرة جربة. الإحداثي = P625 لعنصر ويكيبيديا
+      Q34954264 (الدقة 0.00001 درجة). السلسلة الأم حسب العنصر: P131 = حومة السوق
+      (Q995360) -> معتمدية جربة حومة السوق (Q3032897) -> ولاية مدنين (gov-medenine).
+    - >-
+      تدقيق متقاطع: العقدة OSM 2974174942 «ميناء الصيد البحري بحومة السوق» (leisure=marina،
+      10.8572501، 33.8878768) متطابقة ضمن نحو 100 متر.
+  notes_ar_by: model-reviewed
+- kind: airport
+  id: place-tozeur-airport
+  name_en: "Tozeur–Nefta International Airport"
+  name_fr: "aéroport international de Tozeur-Nefta"
+  name_ar: "مطار توزر نفطة الدولي"
+  parent: gov-tozeur
+  coordinates: [8.110556, 33.939722]
+  asset: true
+  confidence: A
+  basis: documented
+  sources: [wikidata-q656500, osm-airport-tozeur]
+  notes:
+    - "Desert-region international airport (TOE/DTTZ), ~8 km east of Tozeur on the Nefta road. Coordinate = Wikidata Q656500 P625 (precision 0.000277 deg). Parent chain per the item: P131 = Tozeur (Q504661) -> delegation of Tozeur (Q3536092) -> Tozeur governorate (gov-tozeur)."
+    - "Cross-check: OSM aerodrome way 79642875 'Tozeur Nefta Airport' (centroid 8.0982740, 33.9372906) — ~1.1 km apart, same aerodrome."
+  notes_fr:
+    - >-
+      Aéroport international de la région désertique (TOE/DTTZ), à ~8 km à l'est de Tozeur
+      sur la route de Nefta. Coordonnée = P625 de l'item Wikidata Q656500 (précision
+      0.000277 deg). Chaîne parentale selon l'item : P131 = Tozeur (Q504661) -> délégation
+      de Tozeur (Q3536092) -> gouvernorat de Tozeur (gov-tozeur).
+    - >-
+      Contre-vérification : le chemin OSM 79642875 de l'aérodrome « Tozeur Nefta Airport »
+      (centroïde 8.0982740, 33.9372906) — à ~1,1 km, même aérodrome.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      مطار دولي في المنطقة الصحراوية (TOE/DTTZ)، على بُعد نحو 8 كم شرق توزر على طريق
+      نفطة. الإحداثي = P625 لعنصر ويكيبيديا Q656500 (الدقة 0.000277 درجة). السلسلة الأم
+      حسب العنصر: P131 = توزر (Q504661) -> معتمدية توزر (Q3536092) -> ولاية توزر
+      (gov-tozeur).
+    - >-
+      تدقيق متقاطع: مسار المطار OSM 79642875 «Tozeur Nefta Airport» (مركز الثقل 8.0982740،
+      33.9372906) — على بُعد نحو 1.1 كم، المطار نفسه.
+  notes_ar_by: model-reviewed
+- kind: airport
+  id: place-gafsa-airport
+  name_en: "Gafsa–Ksar International Airport"
+  name_fr: "aéroport international de Gafsa-Ksar"
+  name_ar: "مطار قفصة قصر الدولي"
+  parent: gov-gafsa
+  coordinates: [8.8225, 34.421944]
+  asset: true
+  confidence: A
+  basis: documented
+  sources: [wikidata-q2876067, osm-airport-gafsa]
+  notes:
+    - "Airport of the phosphate-mining governorate (GAF/DTTG), at Ksar Gafsa. Coordinate = Wikidata Q2876067 P625 (precision 0.000277 deg). Parent chain per the item: P131 = Gafsa (Q466006) -> delegation of Gafsa Sud (Q3094306) -> Gafsa governorate (gov-gafsa)."
+    - "Cross-check: OSM aerodrome relation 10719042 'Gafsa Ksar Airport' (centroid 8.8217032, 34.4223516) agrees within ~90 m."
+  notes_fr:
+    - >-
+      Aéroport du gouvernorat minier de phosphate (GAF/DTTG), à Ksar Gafsa. Coordonnée =
+      P625 de l'item Wikidata Q2876067 (précision 0.000277 deg). Chaîne parentale selon
+      l'item : P131 = Gafsa (Q466006) -> délégation de Gafsa Sud (Q3094306) -> gouvernorat
+      de Gafsa (gov-gafsa).
+    - >-
+      Contre-vérification : la relation OSM 10719042 de l'aérodrome « Gafsa Ksar Airport »
+      (centroïde 8.8217032, 34.4223516) concorde à ~90 m près.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      مطار ولاية الفوسفاط المنجمية (GAF/DTTG)، في قصر قفصة. الإحداثي = P625 لعنصر
+      ويكيبيديا Q2876067 (الدقة 0.000277 درجة). السلسلة الأم حسب العنصر: P131 = قفصة
+      (Q466006) -> معتمدية قفصة الجنوبية (Q3094306) -> ولاية قفصة (gov-gafsa).
+    - >-
+      تدقيق متقاطع: علاقة المطار OSM 10719042 «Gafsa Ksar Airport» (مركز الثقل 8.8217032،
+      34.4223516) متطابقة ضمن نحو 90 مترًا.
+  notes_ar_by: model-reviewed
+- kind: airport
+  id: place-sfax-thyna-airport
+  name_en: "Sfax–Thyna International Airport"
+  name_fr: "aéroport international de Sfax-Thyna"
+  name_ar: "مطار صفاقس طينة الدولي"
+  parent: gov-sfax
+  coordinates: [10.690833, 34.717778]
+  asset: true
+  confidence: A
+  basis: documented
+  sources: [wikidata-q2876084, osm-airport-sfax-thyna]
+  notes:
+    - "Airport of Sfax (SFA/DTSX), in the Thyna district south-west of the city. Coordinate = Wikidata Q2876084 P625 (precision 0.000277 deg). Parent chain per the item: P131 = Sfax (Q46325) -> Sfax governorate (gov-sfax)."
+    - "Cross-check: OSM aerodrome way 97284445 'Sfax Thyna Airport' (centroid 10.6886240, 34.7168219) — ~210 m apart, same aerodrome."
+  notes_fr:
+    - >-
+      Aéroport de Sfax (SFA/DTSX), dans le quartier de Thyna au sud-ouest de la ville.
+      Coordonnée = P625 de l'item Wikidata Q2876084 (précision 0.000277 deg). Chaîne
+      parentale selon l'item : P131 = Sfax (Q46325) -> gouvernorat de Sfax (gov-sfax).
+    - >-
+      Contre-vérification : le chemin OSM 97284445 de l'aérodrome « Sfax Thyna Airport »
+      (centroïde 10.6886240, 34.7168219) — à ~210 m, même aérodrome.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      مطار صفاقس (SFA/DTSX)، في حي طينة جنوب غرب المدينة. الإحداثي = P625 لعنصر ويكيبيديا
+      Q2876084 (الدقة 0.000277 درجة). السلسلة الأم حسب العنصر: P131 = صفاقس (Q46325) ->
+      ولاية صفاقس (gov-sfax).
+    - >-
+      تدقيق متقاطع: مسار المطار OSM 97284445 «Sfax Thyna Airport» (مركز الثقل 10.6886240،
+      34.7168219) — على بُعد نحو 210 أمتار، المطار نفسه.
+  notes_ar_by: model-reviewed
+- kind: resource-field
+  id: place-redeyef-mine
+  name_en: "Redeyef phosphate mine"
+  name_fr: "mine de phosphate de Redeyef"
+  name_ar: "منجم الرديف للفوسفاط"
+  parent: gov-gafsa
+  coordinates: [8.15, 34.383]
+  asset: true
+  confidence: A
+  basis: documented
+  reasoning: >-
+    No registry record exists for the Redeyef mine complex as a feature; the
+    record stands for the phosphate mining centre at Redeyef, western end of
+    the Gafsa basin. The adopted point is the registry coordinate of Redeyef
+    town (Wikidata Q2734177, P625 (8.15, 34.383), precision 0.0000277 deg).
+  falsifiable_by: >-
+    An official CPG/ONM point for the Redeyef mining complex that differs from
+    the town point by more than the complex's own extent would overturn the
+    anchor.
+  sources: [wikidata-q2734177, osm-town-redeyef, osm-gafsa-phosphate-mines]
+  notes:
+    - "Coordinate = Wikidata Q2734177 P625 (Redeyef town, precision 0.0000277 deg). Parent chain per the item: P131 = delegation of Redeyef (Q3422864) -> Gafsa governorate (gov-gafsa)."
+    - "Cross-checks: OSM town way 206512070 'Redeyef' (centroid 8.1538874, 34.3843201, ~430 m); the Redeyef stockage quarry from the 08-08 registry run (OSM way 189221482, 8.1497141, 34.3864628)."
+  notes_fr:
+    - >-
+      Coordonnée = P625 de l'item Wikidata Q2734177 (ville de Redeyef, précision 0.0000277
+      deg). Chaîne parentale selon l'item : P131 = délégation de Redeyef (Q3422864) ->
+      gouvernorat de Gafsa (gov-gafsa).
+    - >-
+      Contre-vérifications : le chemin OSM 206512070 de la ville « Redeyef » (centroïde
+      8.1538874, 34.3843201, ~430 m) ; la carrière de stockage de Redeyef relevée lors du
+      passage registres du 08-08 (chemin OSM 189221482, 8.1497141, 34.3864628).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      الإحداثي = P625 لعنصر ويكيبيديا Q2734177 (مدينة الرديف، الدقة 0.0000277 درجة).
+      السلسلة الأم حسب العنصر: P131 = معتمدية الرديف (Q3422864) -> ولاية قفصة
+      (gov-gafsa).
+    - >-
+      تدقيقات متقاطعة: المسار OSM 206512070 لمدينة «Redeyef» (مركز الثقل 8.1538874،
+      34.3843201، نحو 430 مترًا)؛ ومقالع تخزين الرديف التي رُصدت في جولة السجلات بتاريخ
+      08-08 (المسار OSM 189221482، 8.1497141، 34.3864628).
+  notes_ar_by: model-reviewed
+- kind: resource-field
+  id: place-moulares-mine
+  name_en: "Moularès phosphate mine"
+  name_fr: "mine de phosphate de Moularès"
+  name_ar: "منجم مولاريس للفوسفاط"
+  parent: gov-gafsa
+  coordinates: [8.273384, 34.485737]
+  asset: true
+  confidence: A
+  basis: documented
+  reasoning: >-
+    No registry record exists for the Moularès mine complex as a feature; the
+    record stands for the phosphate mining centre at Moularès (Moulares),
+    centre-west of the Gafsa basin. Wikidata item Q642846 (Moularès town)
+    exists but its P625 (8.267, 34.483) carries precision 0.1 deg (~11 km) —
+    too coarse to place the town. The adopted coordinate is the centroid of the
+    OSM town way 189337619 'Moularès' (place=town, 8.2733836, 34.4857370).
+  falsifiable_by: >-
+    An official CPG/ONM point for the Moularès mining complex, or a higher-
+    precision registry coordinate for Moularès town, would overturn the OSM way
+    centroid.
+  sources: [osm-town-moulares, wikidata-q642846]
+  notes:
+    - "Coordinate = OSM way 189337619 centroid (8.2733836, 34.4857370); Wikidata's town point (8.267, 34.483) is registered but too coarse to adopt — see reasoning."
+    - "Parent: Gafsa governorate (gov-gafsa). DELEGATION DISCREPANCY: Wikidata item 'delegation of Moularès' (Q3325517, P131 = Gafsa governorate) exists, but OSM's administrative placement puts Moularès town inside the delegation of Oum El Araies (معتمدية أم العرائس). Parent governorate unaffected; human to adjudicate the delegation-level placement."
+  notes_fr:
+    - >-
+      Coordonnée = centroïde du chemin OSM 189337619 (8.2733836, 34.4857370) ; le point de
+      la ville sur Wikidata (8.267, 34.483) est enregistré mais trop grossier pour être
+      retenu — voir le raisonnement.
+    - >-
+      Parent : gouvernorat de Gafsa (gov-gafsa). DIVERGENCE DE DÉLÉGATION : l'item Wikidata
+      « délégation de Moularès » (Q3325517, P131 = gouvernorat de Gafsa) existe, mais le
+      découpage administratif d'OSM place la ville de Moularès dans la délégation d'Oum El
+      Araies (معتمدية أم العرائس). Le gouvernorat parent n'est pas affecté ; un humain doit
+      arbitrer le niveau délégation.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      الإحداثي = مركز ثقل المسار OSM 189337619 (8.2733836، 34.4857370)؛ أما نقطة المدينة
+      في ويكيبيديا (8.267، 34.483) فمسجلة لكنها خشنة جدًا للاعتماد — انظر الاستدلال.
+    - >-
+      السلسلة الأم: ولاية قفصة (gov-gafsa). تباين على مستوى المعتمدية: يوجد عنصر ويكيبيديا
+      «معتمدية مولاريس» (Q3325517، P131 = ولاية قفصة)، لكن التقسيم الإداري في OSM يضع
+      مدينة مولاريس داخل معتمدية أم العرائس (معتمدية أم العرائس). ولاية السلسلة الأم غير
+      متأثرة؛ وينبغي لإنسان أن يبتّ في الموضع على مستوى المعتمدية.
+  notes_ar_by: model-reviewed
+- kind: resource-field
+  id: place-metlaoui-mine
+  name_en: "Métlaoui phosphate mine"
+  name_fr: "mine de phosphate de Métlaoui"
+  name_ar: "منجم المتلوي للفوسفاط"
+  parent: gov-gafsa
+  coordinates: [8.401389, 34.319444]
+  asset: true
+  confidence: A
+  basis: documented
+  reasoning: >-
+    No registry record exists for the Métlaoui mine complex as a feature; the
+    record stands for the phosphate mining centre at Métlaoui, historic centre
+    of the Compagnie des phosphates de Gafsa mining and rail head of the
+    Gafsa-Sfax line (same anchor used by the 08-08 place-gafsa-basin record).
+    The adopted point is the registry coordinate of Métlaoui town (Wikidata
+    Q983673, P625 (8.401389, 34.319444), precision 0.000277 deg).
+  falsifiable_by: >-
+    An official CPG/ONM point for the Métlaoui mining complex that differs from
+    the town point by more than the complex's own extent would overturn the
+    anchor.
+  sources: [wikidata-q983673, osm-town-metlaoui, osm-gafsa-phosphate-mines]
+  notes:
+    - "Coordinate = Wikidata Q983673 P625 (Métlaoui town, precision 0.000277 deg). Parent chain per the item: P131 = delegation of Métlaoui (Q3333748) -> Gafsa governorate (gov-gafsa)."
+    - "Cross-checks: OSM town node 694068983 'Metlaoui' (8.4018294, 34.3157230, ~420 m); the Métlaoui stockage quarry from the 08-08 registry run (OSM way 613422413, 8.4054597, 34.3202601); the STEG Métlaoui power plant (way 833217488) is recorded separately this run."
+  notes_fr:
+    - >-
+      Coordonnée = P625 de l'item Wikidata Q983673 (ville de Métlaoui, précision 0.000277
+      deg). Chaîne parentale selon l'item : P131 = délégation de Métlaoui (Q3333748) ->
+      gouvernorat de Gafsa (gov-gafsa).
+    - >-
+      Contre-vérifications : le nœud OSM 694068983 de la ville « Metlaoui » (8.4018294,
+      34.3157230, ~420 m) ; la carrière de stockage de Métlaoui relevée lors du passage
+      registres du 08-08 (chemin OSM 613422413, 8.4054597, 34.3202601) ; la centrale
+      électrique STEG de Métlaoui (chemin 833217488) est enregistrée séparément lors de ce
+      passage.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      الإحداثي = P625 لعنصر ويكيبيديا Q983673 (مدينة المتلوي، الدقة 0.000277 درجة).
+      السلسلة الأم حسب العنصر: P131 = معتمدية المتلوي (Q3333748) -> ولاية قفصة
+      (gov-gafsa).
+    - >-
+      تدقيقات متقاطعة: العقدة OSM 694068983 لمدينة «Metlaoui» (8.4018294، 34.3157230،
+      نحو 420 مترًا)؛ ومقالع تخزين المتلوي التي رُصدت في جولة السجلات بتاريخ 08-08
+      (المسار OSM 613422413، 8.4054597، 34.3202601)؛ أما محطة كهرباء المتلوي التابعة
+      لـSTEG (المسار 833217488) فتُسجَّل على حدة في هذه الجولة.
+  notes_ar_by: model-reviewed
+- kind: resource-field
+  id: place-mdhilla-mine
+  name_en: "Mdhilla phosphate mine"
+  name_fr: "mine de phosphate de Mdhilla"
+  name_ar: "منجم المضيلة للفوسفاط"
+  parent: gov-gafsa
+  coordinates: [8.752624, 34.290955]
+  asset: true
+  confidence: A
+  basis: documented
+  reasoning: >-
+    No registry record exists for the Mdhilla mine complex as a feature; the
+    record stands for the phosphate mining centre at Mdhilla (Mdhila), eastern
+    end of the Gafsa basin and site of the CPG washing plant. The adopted point
+    is the registry coordinate of Mdhilla town (Wikidata Q303935, P625
+    (8.752624, 34.290955), precision 0.000001 deg).
+  falsifiable_by: >-
+    An official CPG/ONM point for the Mdhilla mining complex that differs from
+    the town point by more than the complex's own extent would overturn the
+    anchor.
+  sources: [wikidata-q303935, osm-town-mdhilla, osm-gafsa-phosphate-mines]
+  notes:
+    - "Coordinate = Wikidata Q303935 P625 (Mdhila/Mdhilla town, precision 0.000001 deg). Parent chain per the item: P131 = delegation of Mdhilla (Q3303728) -> Gafsa governorate (gov-gafsa)."
+    - "Cross-checks: OSM town node 2177279829 'Mdhila' (8.7480284, 34.2868790, ~450 m); the Mdhilla washing plant from the 08-08 registry run (OSM way 189221482, 8.7450487, 34.2908733)."
+  notes_fr:
+    - >-
+      Coordonnée = P625 de l'item Wikidata Q303935 (ville de Mdhila/Mdhilla, précision
+      0.000001 deg). Chaîne parentale selon l'item : P131 = délégation de Mdhilla
+      (Q3303728) -> gouvernorat de Gafsa (gov-gafsa).
+    - >-
+      Contre-vérifications : le nœud OSM 2177279829 de la ville « Mdhila » (8.7480284,
+      34.2868790, ~450 m) ; l'usine de lavage de Mdhilla relevée lors du passage registres
+      du 08-08 (chemin OSM 189221482, 8.7450487, 34.2908733).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      الإحداثي = P625 لعنصر ويكيبيديا Q303935 (مدينة المضيلة Mdhila/Mdhilla، الدقة
+      0.000001 درجة). السلسلة الأم حسب العنصر: P131 = معتمدية المضيلة (Q3303728) ->
+      ولاية قفصة (gov-gafsa).
+    - >-
+      تدقيقات متقاطعة: العقدة OSM 2177279829 لمدينة «Mdhila» (8.7480284، 34.2868790،
+      نحو 450 مترًا)؛ ومصنع غسيل المضيلة الذي رُصد في جولة السجلات بتاريخ 08-08 (المسار
+      OSM 189221482، 8.7450487، 34.2908733).
+  notes_ar_by: model-reviewed
+- kind: power-plant
+  id: place-la-goulette-power
+  name_en: "La Goulette Power Plant"
+  name_fr: "centrale électrique de La Goulette"
+  name_ar: "محطة حلق الوادي الكهربائية"
+  parent: gov-tunis
+  coordinates: [10.289694, 36.814778]
+  asset: true
+  confidence: A
+  basis: documented
+  sources: [wikidata-q11982878, osm-power-lagoulette]
+  notes:
+    - "STEG gas power station (120 MW per the OSM tags) on the Goulette channel of the Lake of Tunis. Coordinate = Wikidata Q11982878 P625 (precision 0.001 deg). Parent chain per the item: P131 = La Goulette (Q798445) -> delegation of La Goulette (Q3209432) -> Tunis governorate (gov-tunis)."
+    - "Cross-check: OSM way 93164455 'محطة حلق الوادي الكهربائية' / 'La Goulette Power Plant' (power=plant, gas, 120 MW, operator=STEG, wikidata=Q11982878; centroid 10.2885711, 36.8156514) — ~130 m from the Wikidata point."
+  notes_fr:
+    - >-
+      Centrale électrique à gaz de la STEG (120 MW selon les tags OSM) sur le canal de La
+      Goulette du lac de Tunis. Coordonnée = P625 de l'item Wikidata Q11982878 (précision
+      0.001 deg). Chaîne parentale selon l'item : P131 = La Goulette (Q798445) ->
+      délégation de La Goulette (Q3209432) -> gouvernorat de Tunis (gov-tunis).
+    - >-
+      Contre-vérification : le chemin OSM 93164455 « محطة حلق الوادي الكهربائية » /
+      « La Goulette Power Plant » (power=plant, gas, 120 MW, operator=STEG,
+      wikidata=Q11982878 ; centroïde 10.2885711, 36.8156514) — à ~130 m du point Wikidata.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      محطة كهرباء غازية تابعة للشركة التونسية للكهرباء والغاز (STEG) (120 ميغاواط حسب
+      وسوم OSM) على قناة حلق الوادي ببحيرة تونس. الإحداثي = P625 لعنصر ويكيبيديا
+      Q11982878 (الدقة 0.001 درجة). السلسلة الأم حسب العنصر: P131 = حلق الوادي (Q798445)
+      -> معتمدية حلق الوادي (Q3209432) -> ولاية تونس (gov-tunis).
+    - >-
+      تدقيق متقاطع: المسار OSM 93164455 «محطة حلق الوادي الكهربائية» / «La Goulette Power
+      Plant» (power=plant، gas، 120 MW، operator=STEG، wikidata=Q11982878؛ مركز الثقل
+      10.2885711، 36.8156514) — على بُعد نحو 130 مترًا من نقطة ويكيبيديا.
+  notes_ar_by: model-reviewed
+- kind: power-plant
+  id: place-sousse-power
+  name_en: "Sousse Thermal Power Plant"
+  name_fr: "centrale thermique de Sousse"
+  name_ar: "محطة سوسة الحرارية"
+  parent: gov-sousse
+  coordinates: [10.679111, 35.784806]
+  asset: true
+  confidence: A
+  basis: documented
+  sources: [wikidata-q12002134, osm-power-sousse]
+  notes:
+    - "STEG thermal power station (1208 MW per the OSM tags) south of Sousse city. Coordinate = Wikidata Q12002134 P625 (precision 0.001 deg). Parent chain per the item: P131 = delegation of Sousse Sidi Abdelhamid (Q3492197) -> Sousse governorate (gov-sousse)."
+    - "Cross-check: OSM way 111375425 'Centrale Thermique de Sousse' (power=plant, gas, 1208 MW, operator=STEG, wikidata=Q12002134; centroid 10.6774826, 35.7858890) — ~160 m from the Wikidata point."
+  notes_fr:
+    - >-
+      Centrale thermique de la STEG (1208 MW selon les tags OSM) au sud de la ville de
+      Sousse. Coordonnée = P625 de l'item Wikidata Q12002134 (précision 0.001 deg).
+      Chaîne parentale selon l'item : P131 = délégation de Sousse Sidi Abdelhamid
+      (Q3492197) -> gouvernorat de Sousse (gov-sousse).
+    - >-
+      Contre-vérification : le chemin OSM 111375425 « Centrale Thermique de Sousse »
+      (power=plant, gas, 1208 MW, operator=STEG, wikidata=Q12002134 ; centroïde
+      10.6774826, 35.7858890) — à ~160 m du point Wikidata.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      محطة حرارية تابعة للشركة التونسية للكهرباء والغاز (STEG) (1208 ميغاواط حسب وسوم
+      OSM) جنوب مدينة سوسة. الإحداثي = P625 لعنصر ويكيبيديا Q12002134 (الدقة 0.001
+      درجة). السلسلة الأم حسب العنصر: P131 = معتمدية سوسة سيدي عبد الحميد (Q3492197)
+      -> ولاية سوسة (gov-sousse).
+    - >-
+      تدقيق متقاطع: المسار OSM 111375425 «Centrale Thermique de Sousse» (power=plant،
+      gas، 1208 MW، operator=STEG، wikidata=Q12002134؛ مركز الثقل 10.6774826،
+      35.7858890) — على بُعد نحو 160 مترًا من نقطة ويكيبيديا.
+  notes_ar_by: model-reviewed
+- kind: power-plant
+  id: place-sfax-power
+  name_en: "Sfax Power Plant"
+  name_fr: "centrale électrique de Sfax"
+  name_ar: "محطة صفاقس الكهربائية"
+  parent: gov-sfax
+  coordinates: [10.703092, 34.807269]
+  asset: true
+  confidence: A
+  basis: documented
+  sources: [osm-power-sfax]
+  notes:
+    - "STEG gas power station (44 MW per the OSM tags) in Sfax's northern industrial zone. No Wikidata item exists for the Sfax plant; the coordinate is the OSM way 833217490 'Centrale électrique de Sfax' (power=plant, gas, 44 MW, operator=STEG) centroid (10.7030922, 34.8072693), fetched from the OSM API."
+    - "Parent: Sfax governorate (gov-sfax)."
+  notes_fr:
+    - >-
+      Centrale électrique à gaz de la STEG (44 MW selon les tags OSM) dans la zone
+      industrielle nord de Sfax. Aucun item Wikidata n'existe pour la centrale de Sfax ; la
+      coordonnée est le centroïde du chemin OSM 833217490 « Centrale électrique de Sfax »
+      (power=plant, gas, 44 MW, operator=STEG), soit (10.7030922, 34.8072693), récupéré
+      depuis l'API OSM.
+    - >-
+      Parent : gouvernorat de Sfax (gov-sfax).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      محطة كهرباء غازية تابعة للشركة التونسية للكهرباء والغاز (STEG) (44 ميغاواط حسب
+      وسوم OSM) في المنطقة الصناعية الشمالية لصفاقس. لا يوجد عنصر ويكيبيديا لمحطة
+      صفاقس؛ الإحداثي هو مركز ثقل المسار OSM 833217490 «Centrale électrique de Sfax»
+      (power=plant، gas، 44 MW، operator=STEG)، أي (10.7030922، 34.8072693)، جُلب من
+      واجهة OSM API.
+    - >-
+      السلسلة الأم: ولاية صفاقس (gov-sfax).
+  notes_ar_by: model-reviewed
+- kind: power-plant
+  id: place-gabes-power
+  name_en: "Ghannouch (Gabès) Power Plant"
+  name_fr: "centrale électrique de Ghannouch (Gabès)"
+  name_ar: "محطة قنوش الكهربائية"
+  parent: gov-gabes
+  coordinates: [10.093194, 33.926306]
+  asset: true
+  confidence: A
+  basis: documented
+  sources: [wikidata-q56371854, osm-power-ghannouch]
+  notes:
+    - "STEG gas power station (44 MW per the OSM tags) at Ghannouch, the industrial suburb of Gabès (GCT chemical complex zone). Coordinate = Wikidata Q56371854 P625 (precision 0.001 deg). Parent chain per the item: P131 = delegation of Gabès Médina (Q3094200) -> Gabès governorate (gov-gabes)."
+    - "Cross-check: OSM way 833217486 'Centrale électrique de Ghannouch' (power=plant, gas, 44 MW, operator=STEG; centroid 10.0807515, 33.9235838) — ~1.2 km west of the Wikidata point, both in the Ghannouch industrial zone. Human to adjudicate the discrepancy."
+  notes_fr:
+    - >-
+      Centrale électrique à gaz de la STEG (44 MW selon les tags OSM) à Ghannouch,
+      banlieue industrielle de Gabès (zone du complexe chimique GCT). Coordonnée = P625 de
+      l'item Wikidata Q56371854 (précision 0.001 deg). Chaîne parentale selon l'item :
+      P131 = délégation de Gabès Médina (Q3094200) -> gouvernorat de Gabès (gov-gabes).
+    - >-
+      Contre-vérification : le chemin OSM 833217486 « Centrale électrique de Ghannouch »
+      (power=plant, gas, 44 MW, operator=STEG ; centroïde 10.0807515, 33.9235838) — à
+      ~1,2 km à l'ouest du point Wikidata, les deux dans la zone industrielle de Ghannouch.
+      Un humain doit arbitrer la divergence.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      محطة كهرباء غازية تابعة للشركة التونسية للكهرباء والغاز (STEG) (44 ميغاواط حسب
+      وسوم OSM) في قنوش، الضاحية الصناعية لقابس (منطقة مجمع GCT الكيميائي). الإحداثي =
+      P625 لعنصر ويكيبيديا Q56371854 (الدقة 0.001 درجة). السلسلة الأم حسب العنصر: P131
+      = معتمدية قابس المدينة (Q3094200) -> ولاية قابس (gov-gabes).
+    - >-
+      تدقيق متقاطع: المسار OSM 833217486 «Centrale électrique de Ghannouch» (power=plant،
+      gas، 44 MW، operator=STEG؛ مركز الثقل 10.0807515، 33.9235838) — على بُعد نحو 1.2 كم
+      غرب نقطة ويكيبيديا، وكلاهما في المنطقة الصناعية بقنوش. ينبغي لإنسان أن يبتّ في هذا
+      التباين.
+  notes_ar_by: model-reviewed
+- kind: power-plant
+  id: place-zarzis-power
+  name_en: "Zarzis Power Plant"
+  name_fr: "centrale électrique de Zarzis"
+  name_ar: "محطة جرجيس الكهربائية"
+  parent: gov-medenine
+  coordinates: [11.01153, 33.470031]
+  asset: true
+  confidence: A
+  basis: documented
+  sources: [osm-power-zarzis]
+  notes:
+    - "STEG gas power station (34 MW per the OSM tags) serving Zarzis and Djerba, on regional road 118 ~10 km SW of Zarzis town. No Wikidata item; coordinate = OSM way 833217489 'Centrale électrique de Zarzis' (power=plant, gas, 34 MW, operator=STEG) centroid (11.0115295, 33.4700306). Reverse-geocodes to delegation of Zarzis, Médenine governorate (gov-medenine)."
+  notes_fr:
+    - >-
+      Centrale électrique à gaz de la STEG (34 MW selon les tags OSM) desservant Zarzis et
+      Djerba, sur la route régionale 118 à ~10 km au SO de la ville de Zarzis. Aucun item
+      Wikidata ; coordonnée = centroïde du chemin OSM 833217489 « Centrale électrique de
+      Zarzis » (power=plant, gas, 34 MW, operator=STEG), soit (11.0115295, 33.4700306). Le
+      géocodage inverse la situe dans la délégation de Zarzis, gouvernorat de Médenine
+      (gov-medenine).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      محطة كهرباء غازية تابعة للشركة التونسية للكهرباء والغاز (STEG) (34 ميغاواط حسب
+      وسوم OSM) تخدم جرجيس وجربة، على الطريق الجهوية 118 على بُعد نحو 10 كم جنوب غرب
+      مدينة جرجيس. لا يوجد عنصر ويكيبيديا؛ الإحداثي = مركز ثقل المسار OSM 833217489
+      «Centrale électrique de Zarzis» (power=plant، gas، 34 MW، operator=STEG)، أي
+      (11.0115295، 33.4700306). يُحدد الترميز الجغرافي العكسي موقعها في معتمدية جرجيس،
+      ولاية مدنين (gov-medenine).
+  notes_ar_by: model-reviewed
+- kind: power-plant
+  id: place-korba-power
+  name_en: "Korba Power Plant"
+  name_fr: "centrale électrique de Korba"
+  name_ar: "محطة قربة الكهربائية"
+  parent: gov-nabeul
+  coordinates: [10.829422, 36.580905]
+  asset: true
+  confidence: A
+  basis: documented
+  sources: [osm-power-korba]
+  notes:
+    - "STEG gas power station (56 MW per the OSM tags) on the Cap Bon coast north of Korba. No Wikidata item; coordinate = OSM way 208448967 'Centrale électrique de Korba 1' (power=plant, gas, 56 MW, operator=STEG) centroid (10.8294218, 36.5809045). Parent: Nabeul governorate (gov-nabeul)."
+  notes_fr:
+    - >-
+      Centrale électrique à gaz de la STEG (56 MW selon les tags OSM) sur la côte du Cap
+      Bon, au nord de Korba. Aucun item Wikidata ; coordonnée = centroïde du chemin OSM
+      208448967 « Centrale électrique de Korba 1 » (power=plant, gas, 56 MW,
+      operator=STEG), soit (10.8294218, 36.5809045). Parent : gouvernorat de Nabeul
+      (gov-nabeul).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      محطة كهرباء غازية تابعة للشركة التونسية للكهرباء والغاز (STEG) (56 ميغاواط حسب
+      وسوم OSM) على ساحل الوطن القبلي شمال قربة. لا يوجد عنصر ويكيبيديا؛ الإحداثي =
+      مركز ثقل المسار OSM 208448967 «Centrale électrique de Korba 1» (power=plant، gas،
+      56 MW، operator=STEG)، أي (10.8294218، 36.5809045). السلسلة الأم: ولاية نابل
+      (gov-nabeul).
+  notes_ar_by: model-reviewed
+- kind: power-plant
+  id: place-tunis-sud-power
+  name_en: "Tunis South Power Plant"
+  name_fr: "centrale électrique de Tunis Sud"
+  name_ar: "محطة تونس الجنوبية الكهربائية"
+  parent: gov-tunis
+  coordinates: [10.201409, 36.765954]
+  asset: true
+  confidence: A
+  basis: documented
+  sources: [osm-power-tunis-sud]
+  notes:
+    - "STEG gas power station (67 MW per the OSM tags) on the Tunis-Sousse-Sfax motorway at the south-west corner of the Lake of Tunis. No Wikidata item; coordinate = OSM way 833217491 'Centrale électrique de Tunis Sud' (power=plant, gas, 67 MW, operator=STEG) centroid (10.2014086, 36.7659542). Reverse-geocodes to the Qarjouma imada, delegation of Djebel Jelloud, Tunis governorate (gov-tunis)."
+  notes_fr:
+    - >-
+      Centrale électrique à gaz de la STEG (67 MW selon les tags OSM) le long de
+      l'autoroute Tunis-Sousse-Sfax, à l'angle sud-ouest du lac de Tunis. Aucun item
+      Wikidata ; coordonnée = centroïde du chemin OSM 833217491 « Centrale électrique de
+      Tunis Sud » (power=plant, gas, 67 MW, operator=STEG), soit (10.2014086, 36.7659542).
+      Le géocodage inverse la situe dans l'imada de Qarjouma, délégation de Djebel
+      Jelloud, gouvernorat de Tunis (gov-tunis).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      محطة كهرباء غازية تابعة للشركة التونسية للكهرباء والغاز (STEG) (67 ميغاواط حسب
+      وسوم OSM) على الطريق السيارة تونس-سوسة-صفاقس، عند الزاوية الجنوبية الغربية لبحيرة
+      تونس. لا يوجد عنصر ويكيبيديا؛ الإحداثي = مركز ثقل المسار OSM 833217491 «Centrale
+      électrique de Tunis Sud» (power=plant، gas، 67 MW، operator=STEG)، أي
+      (10.2014086، 36.7659542). يُحدد الترميز الجغرافي العكسي موقعها في عمادة القرجومة،
+      معتمدية جبل الجلود، ولاية تونس (gov-tunis).
+  notes_ar_by: model-reviewed
+- kind: power-plant
+  id: place-borj-el-amri-power
+  name_en: "Borj El Amri (Mornaguia) Power Plant"
+  name_fr: "centrale de Borj El Amri"
+  name_ar: "محطة برج العامري الكهربائية"
+  parent: gov-manouba
+  coordinates: [9.920563, 36.677112]
+  asset: true
+  confidence: A
+  basis: documented
+  sources: [osm-power-borj-el-amri]
+  notes:
+    - "STEG gas power station (624 MW per the OSM tags, start_date 2019 per the same tags), one of the country's largest single sites. Coordinate = OSM way 833217492 'Centrale de Borj El Amri' (aka 'Mornaguia Power Plant') centroid (9.9205630, 36.6771123). Reverse-geocodes to delegation of Mornaguia, Manouba governorate (gov-manouba); the OSM name 'Borj El Amri' follows the town ~5 km SW."
+  notes_fr:
+    - >-
+      Centrale électrique à gaz de la STEG (624 MW selon les tags OSM, start_date 2019
+      d'après les mêmes tags), l'un des plus grands sites uniques du pays. Coordonnée =
+      centroïde du chemin OSM 833217492 « Centrale de Borj El Amri » (alias « Mornaguia
+      Power Plant »), soit (9.9205630, 36.6771123). Le géocodage inverse la situe dans la
+      délégation de Mornaguia, gouvernorat de la Manouba (gov-manouba) ; le nom OSM « Borj
+      El Amri » suit la ville située à ~5 km au SO.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      محطة كهرباء غازية تابعة للشركة التونسية للكهرباء والغاز (STEG) (624 ميغاواط حسب
+      وسوم OSM، وstart_date 2019 وفق الوسوم نفسها)، من أكبر المواقع المفردة في البلاد.
+      الإحداثي = مركز ثقل المسار OSM 833217492 «Centrale de Borj El Amri» (المعروفة أيضًا
+      باسم «Mornaguia Power Plant»)، أي (9.9205630، 36.6771123). يُحدد الترميز الجغرافي
+      العكسي موقعها في معتمدية المرناقية، ولاية منوبة (gov-manouba)؛ أما اسم OSM «Borj El
+      Amri» فيتبع المدينة الواقعة على بُعد نحو 5 كم جنوب غرب.
+  notes_ar_by: model-reviewed
+- kind: power-plant
+  id: place-metlaoui-power
+  name_en: "Métlaoui Power Plant"
+  name_fr: "centrale électrique de Métlaoui"
+  name_ar: "محطة المتلوي الكهربائية"
+  parent: gov-gafsa
+  coordinates: [8.424569, 34.313718]
+  asset: true
+  confidence: A
+  basis: documented
+  sources: [osm-power-metlaoui]
+  notes:
+    - "STEG gas power station (22 MW per the OSM tags) serving the Gafsa mining basin. No Wikidata item; coordinate = OSM way 833217488 'Centrale électrique de Metlaoui' (power=plant, gas, 22 MW, operator=STEG) centroid (8.4245690, 34.3137177). Parent: Gafsa governorate (gov-gafsa)."
+  notes_fr:
+    - >-
+      Centrale électrique à gaz de la STEG (22 MW selon les tags OSM) desservant le bassin
+      minier de Gafsa. Aucun item Wikidata ; coordonnée = centroïde du chemin OSM
+      833217488 « Centrale électrique de Metlaoui » (power=plant, gas, 22 MW,
+      operator=STEG), soit (8.4245690, 34.3137177). Parent : gouvernorat de Gafsa
+      (gov-gafsa).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      محطة كهرباء غازية تابعة للشركة التونسية للكهرباء والغاز (STEG) (22 ميغاواط حسب
+      وسوم OSM) تخدم الحوض المنجمي بقفصة. لا يوجد عنصر ويكيبيديا؛ الإحداثي = مركز ثقل
+      المسار OSM 833217488 «Centrale électrique de Metlaoui» (power=plant، gas، 22 MW،
+      operator=STEG)، أي (8.4245690، 34.3137177). السلسلة الأم: ولاية قفصة (gov-gafsa).
+  notes_ar_by: model-reviewed
+- kind: desalination
+  id: place-sfax-desalination
+  name_en: "Sfax Desalination Plant"
+  name_fr: "usine de dessalement de Sfax"
+  name_ar: "محطة تحلية مياه البحر بصفاقس"
+  parent: gov-sfax
+  coordinates: [10.599167, 34.575278]
+  asset: true
+  confidence: A
+  basis: documented
+  sources: [wikidata-q108403355]
+  notes:
+    - "Seawater desalination plant of Sfax (Wikidata item backed by the en.wikipedia 'Sfax Desalination Plant' article). Coordinate = Wikidata Q108403355 P625 (precision 0.000277 deg). Parent chain per the item: P131 = Sfax governorate (Q241145) directly -> gov-sfax. The point lies ~18 km south of Sfax city centre; whether the item refers to the operating SONEDE plant or the announced large-capacity project should be human-verified."
+    - "No OSM desalination feature found for Sfax."
+  notes_fr:
+    - >-
+      Usine de dessalement d'eau de mer de Sfax (item Wikidata adossé à l'article
+      en.wikipedia « Sfax Desalination Plant »). Coordonnée = P625 de l'item Wikidata
+      Q108403355 (précision 0.000277 deg). Chaîne parentale selon l'item : P131 =
+      gouvernorat de Sfax (Q241145) directement -> gov-sfax. Le point se trouve à ~18 km au
+      sud du centre-ville de Sfax ; la question de savoir si l'item désigne l'usine SONEDE
+      en exploitation ou le projet annoncé de grande capacité doit être vérifiée par un
+      humain.
+    - >-
+      Aucun élément OSM de dessalement n'a été trouvé pour Sfax.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      محطة تحلية مياه البحر بصفاقس (عنصر ويكيبيديا مدعوم بمقال ويكيبيديا الإنجليزية
+      «Sfax Desalination Plant»). الإحداثي = P625 لعنصر ويكيبيديا Q108403355 (الدقة
+      0.000277 درجة). السلسلة الأم حسب العنصر: P131 = ولاية صفاقس (Q241145) مباشرة ->
+      gov-sfax. تقع النقطة على بُعد نحو 18 كم جنوب وسط مدينة صفاقس؛ وما إذا كان العنصر
+      يشير إلى محطة سوناد (SONEDE) قيد التشغيل أو المشروع المعلن عنه بقدرة كبيرة يجب أن
+      يتحقق منه إنسان.
+    - >-
+      لم يُعثر على أي عنصر OSM للتحلية في صفاقس.
+  notes_ar_by: model-reviewed
+- kind: desalination
+  id: place-zarat-desalination
+  name_en: "Zarat Desalination Plant"
+  name_fr: "station de dessalement de Zarat"
+  name_ar: "محطة تحلية المياه بالزارات"
+  parent: gov-gabes
+  coordinates: [10.380932, 33.678046]
+  asset: true
+  confidence: A
+  basis: documented
+  sources: [osm-zarat-desalination]
+  notes:
+    - "Seawater desalination station on the coast south of Gabès (man_made=desalination_plant). Coordinate = OSM way 1236107683 (10.3809315, 33.6780456). Reverse-geocodes to Zarat (الزارات), delegation of Mareth, Gabès governorate (gov-gabes, TN-81)."
+    - "NAME CAVEAT: the way's name tag is stored corrupted ('?') in the OSM API response; the Arabic name 'محطة تحلية المياه بالزارات' (desalination station at al-Zarat) was recovered from the Overpass copy of the same element and needs human verification before being quoted as fact."
+  notes_fr:
+    - >-
+      Station de dessalement d'eau de mer sur la côte au sud de Gabès
+      (man_made=desalination_plant). Coordonnée = chemin OSM 1236107683 (10.3809315,
+      33.6780456). Le géocodage inverse la situe à Zarat (الزارات), délégation de Mareth,
+      gouvernorat de Gabès (gov-gabes, TN-81).
+    - >-
+      MISE EN GARDE SUR LE NOM : le tag name du chemin est stocké corrompu ('?') dans
+      la réponse de l'API OSM ; le nom arabe « محطة تحلية المياه بالزارات » (station de
+      dessalement à al-Zarat) a été récupéré depuis la copie Overpass du même élément et
+      doit être vérifié par un humain avant d'être cité comme un fait.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      محطة تحلية مياه البحر على الساحل جنوب قابس (man_made=desalination_plant).
+      الإحداثي = المسار OSM 1236107683 (10.3809315، 33.6780456). يُحدد الترميز الجغرافي
+      العكسي موقعها في الزارات، معتمدية مارث، ولاية قابس (gov-gabes، TN-81).
+    - >-
+      تحفظ على الاسم: يُخزَّن وسم name للمسار بشكل تالف ('?') في استجابة واجهة OSM API؛
+      وقد استُعيد الاسم العربي «محطة تحلية المياه بالزارات» (محطة التحلية في الزارات) من
+      نسخة Overpass للعنصر نفسه، ويجب أن يتحقق منه إنسان قبل الاستشهاد به كحقيقة.
+  notes_ar_by: model-reviewed
+- kind: free-zone
+  id: place-bizerte-free-zone
+  name_en: "Bizerte Free Zone"
+  name_fr: "zone franche de Bizerte"
+  name_ar: "المنطقة الحرة ببنزرت"
+  parent: gov-bizerte
+  coordinates: [9.861336, 37.26653]
+  asset: true
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "DeepTunisia dt-research agent (proxy anchor — the only registry feature naming the zone is its post office node; the zone boundary itself is not mapped)"
+  reasoning: >-
+    No registry record exists for the Bizerte free zone as a feature (no
+    Wikidata item, no OSM boundary/landuse). The adopted point is the OSM node
+    12455861301 'Poste De La Zone Franche Bizerte' (amenity=post_office,
+    9.8613362, 37.2665299), the only registry feature carrying the zone's name;
+    Nominatim places it on the Tarek Ben Ziad quay, delegation of Bizerte North,
+    Bizerte governorate, inside the port district where the zone operates.
+  falsifiable_by: >-
+    A gazette/decree or registry record giving the zone's official perimeter or
+    a different anchorage (e.g. the Menzel Bourguiba port complex, which hosts
+    the governorate's main commercial basin) would overturn the post-office
+    anchor.
+  sources: [osm-bizerte-free-zone-post]
+  notes:
+    - "Created by the 1992 free-zone legislation (law n° 92-81/92-82 era per the historical record — date NOT verified this run). The record only asserts the zone's location as anchored by its post office node; the zone's legal status and perimeter need a primary source."
+    - "Zarzis and Médenine free zones could not be sourced (see failure vocabulary) and are deliberately absent."
+  notes_fr:
+    - >-
+      Créée par la législation de 1992 sur les zones franches (ère des lois n° 92-81/92-82
+      selon le registre historique — date NON vérifiée lors de ce passage). Le présent
+      enregistrement n'affirme la localisation de la zone que telle qu'ancrée par son
+      nœud de bureau de poste ; le statut juridique et le périmètre de la zone
+      nécessitent une source primaire.
+    - >-
+      Les zones franches de Zarzis et de Médenine n'ont pas pu être sourcées (voir le
+      vocabulaire d'échec) et sont volontairement absentes.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      أُنشئت بموجب تشريع 1992 الخاص بالمناطق الحرة (عهد القانونين رقم 92-81/92-82 حسب
+      السجل التاريخي — التاريخ غير مُتحقَّق منه في هذه الجولة). لا يؤكد هذا السجل موقع
+      المنطقة إلا بوصفه مرساةً عند عقدة مكتب البريد التابعة لها؛ أما الوضع القانوني
+      للمنطقة ومحيطها فيحتاجان إلى مصدر أولي.
+    - >-
+      لم يتسنَّ الحصول على مصادر لمنطقتي جرجيس ومدنين الحرة (انظر مفردات الفشل) وقد
+      أُغفلتا عمدًا.
+  notes_ar_by: model-reviewed
+# Merged 2026-08-13 from data/contrib/places-2026-08-13.yaml (roadmap P1 #11,
+# tranche 3): 6 more strategic assets. Coordinates verbatim from the cited registry
+# records (Wikidata P625 / OSM API); place-sehib-mine is the one C-grade reasoned
+# proxy of this tranche (railway-station anchor, reasoning + falsifier on the record).
+
+# --- Power: wind -------------------------------------------------------------
+
+- kind: power-plant
+  id: place-sidi-daoud-wind
+  name_en: "Sidi Daoud Wind Farm"
+  name_fr: "parc éolien de Sidi Daoud"
+  name_ar: "مزرعة رياح سيدي داود"
+  parent: gov-nabeul
+  coordinates: [10.928, 37.0315]
+  asset: true
+  owner: steg
+  confidence: A
+  basis: documented
+  sources: [wikidata-q3364825, wikipedia-fr-parc-eolien-sidi-daoud]
+  notes:
+    - "STEG's first wind farm, on the north tip of Cap Bon (El Haouaria delegation area; the roadmap's 'El Haouaria wind' designation corresponds to this farm). Coordinate = Wikidata Q3364825 (Sidi Daoud Wind Farm) P625, precision 0.01 deg (~1.1 km) — coarse but verbatim from the registry; no OSM generator feature exists for it (Overpass finds no wind generators in Tunisia). Human should verify against a finer source (turbine field positions)."
+    - "Parent chain: P131 = Nabeul Governorate (Q328145) directly -> gov-nabeul. Operator per Wikidata P137 = STEG (Q3488699) -> graph id steg."
+    - "fr.wikipedia corroboration: commissioned 2000 (~40 turbines), extensions 2003 (8,720 kW) and 2009 (34,320 kW); 53.6 MW total installed; 2026 rehabilitation works (32 old turbines near housing to be removed, replaced by five new ones)."
+  notes_fr:
+    - >-
+      Premier parc éolien de la STEG, à la pointe nord du Cap Bon (zone de la délégation
+      d'El Haouaria ; la mention « El Haouaria wind » de la feuille de route correspond à ce
+      parc). Coordonnée = P625 de l'item Wikidata Q3364825 (Sidi Daoud Wind Farm), précision
+      0,01 deg (~1,1 km) — grossière mais verbatim du registre ; aucun élément OSM de
+      générateur n'existe pour lui (Overpass ne trouve aucun générateur éolien en Tunisie).
+      Un humain devrait vérifier contre une source plus fine (positions des turbines).
+    - >-
+      Chaîne parentale : P131 = gouvernorat de Nabeul (Q328145) directement -> gov-nabeul.
+      Opérateur selon le P137 de Wikidata = STEG (Q3488699) -> id de graphe steg.
+    - >-
+      Corroboration fr.wikipedia : mise en service 2000 (~40 turbines), extensions 2003
+      (8 720 kW) et 2009 (34 320 kW) ; 53,6 MW installés au total ; travaux de réhabilitation
+      2026 (32 anciennes turbines près des habitations à déposer, remplacées par cinq
+      nouvelles).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      أول مزرعة رياح للشركة التونسية للكهرباء والغاز (STEG)، في أقصى شمال الوطن القبلي
+      (منطقة معتمدية الهوارية؛ وتسمية «El Haouaria wind» في خارطة الطريق تقابل هذه
+      المزرعة). الإحداثي = P625 لعنصر ويكيبيديا Q3364825 (Sidi Daoud Wind Farm)، الدقة
+      0.01 درجة (نحو 1.1 كم) — خشنة لكنها حرفية من السجل؛ ولا يوجد أي عنصر OSM لمولّد
+      لها (لا يجد Overpass أي مولدات رياح في تونس). ينبغي لإنسان أن يتحقق من مصدر أدق
+      (مواقع التوربينات).
+    - >-
+      السلسلة الأم: P131 = ولاية نابل (Q328145) مباشرة -> gov-nabeul. المشغّل حسب P137 في
+      ويكيبيديا = STEG (Q3488699) -> المعرف في الرسم البياني steg.
+    - >-
+      تأكيد من ويكيبيديا الفرنسية: التشغيل سنة 2000 (نحو 40 توربينًا)، والتوسعتان 2003
+      (8,720 كيلوواط) و2009 (34,320 كيلوواط)؛ 53.6 ميغاواط إجمالي مركّب؛ أشغال إعادة تأهيل
+      2026 (إزالة 32 توربينًا قديمًا قرب المساكن وتعويضها بخمسة جديدة).
+  notes_ar_by: model-reviewed
+
+# --- Refineries (kind flag: no 'refinery' kind in PlaceKind — see contrib header) ----
+
+- kind: industrial-zone
+  id: place-skhira-refinery
+  name_en: "La Skhira Oil Refinery"
+  name_fr: "raffinerie de Skhira"
+  parent: gov-sfax
+  coordinates: [10.1281707, 34.3314177]
+  asset: true
+  confidence: A
+  basis: documented
+  sources: [osm-skhira-refinery, wikipedia-fr-skhira, wikipedia-fr-energie-tunisie]
+  notes:
+    - "Industrial complex at the Skhira oil terminal on the Gulf of Gabès coast. Coordinate = centroid of OSM relation 2104344 'La Skhira Oil Refinery' (landuse=industrial multipolygon) via Overpass out center; Nominatim representative point (10.1235561, 34.3331977) agrees within ~450 m. OSM operator tag = TRAPSA (the Sahara pipeline transport company that runs the oil terminal — NOT in the graph; no owner field set)."
+    - "STATUS DISCREPANCY (recorded, not resolved): the roadmap brief's claim that Skhira is 'the only operating refinery' is contradicted by fr.wikipedia 'Énergie en Tunisie' (June 2026), which describes the STIR Bizerte refinery as the country's only refinery; fr.wikipedia 'Skhira' documents the May 2007 award to Qatar Petroleum of a 120,000 bbl/day second refinery ('après celle de Bizerte'), and the March 2021 ministerial statement that TRAPSA lacked the regulatory papers to operate the Skhira oil port. The name 'STAR' from the roadmap appears in none of this run's sources. This record asserts the mapped location of the complex, not its operating status — a primary source is required before any 'operating' claim."
+    - "Parent: Skhira delegation (del-sfax-skhira) -> Sfax governorate (gov-sfax). No name:ar tag on the OSM element; Arabic name omitted."
+  notes_fr:
+    - >-
+      Complexe industriel au terminal pétrolier de Skhira, sur la côte du golfe de Gabès.
+      Coordonnée = centroïde de la relation OSM 2104344 « La Skhira Oil Refinery »
+      (multipolygone landuse=industrial) via Overpass out center ; le point représentatif
+      Nominatim (10.1235561, 34.3331977) concorde à ~450 m près. Tag opérateur OSM = TRAPSA
+      (la société de transport par oléoduc du Sahara qui exploite le terminal — absente du
+      graphe ; aucun champ owner défini).
+    - >-
+      DIVERGENCE DE STATUT (enregistrée, non résolue) : l'affirmation de la feuille de route
+      selon laquelle Skhira serait « la seule raffinerie en activité » est contredite par
+      « Énergie en Tunisie » de fr.wikipedia (juin 2026), qui décrit la raffinerie STIR de
+      Bizerte comme l'unique raffinerie du pays ; l'article « Skhira » documente l'attribution
+      en mai 2007 à Qatar Petroleum d'une seconde raffinerie de 120 000 barils/jour (« après
+      celle de Bizerte »), et la déclaration ministérielle de mars 2021 selon laquelle TRAPSA
+      ne disposait pas des papiers réglementaires pour exploiter le port pétrolier de Skhira.
+      Le nom « STAR » de la feuille de route n'apparaît dans aucune source de ce passage. Le
+      présent enregistrement n'affirme que la localisation cartographiée du complexe, pas son
+      statut opérationnel — une source primaire est requise avant toute affirmation
+      « en activité ».
+    - >-
+      Parent : délégation de Skhira (del-sfax-skhira) -> gouvernorat de Sfax (gov-sfax).
+      Aucun tag name:ar sur l'élément OSM ; nom arabe omis.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      مجمع صناعي في المحطة النفطية بالصخيرة، على ساحل خليج قابس. الإحداثي = مركز ثقل العلاقة
+      OSM 2104344 «La Skhira Oil Refinery» (مضلع landuse=industrial) عبر Overpass out
+      center؛ وتتفق النقطة التمثيلية في Nominatim (10.1235561، 34.3331977) ضمن نحو 450
+      مترًا. وسم المشغّل في OSM = TRAPSA (شركة نقل النفط عبر خط الصحراء التي تدير المحطة —
+      غير موجودة في الرسم البياني؛ لم يُضبط أي حقل owner).
+    - >-
+      تباين في الوضع (مُسجَّل، غير مُحسوم): ادعاء خارطة الطريق أن الصخيرة «المصفاة الوحيدة
+      العاملة» تناقضه مقالة «Énergie en Tunisie» في ويكيبيديا الفرنسية (جوان 2026) التي تصف
+      مصفاة STIR بنزرت بأنها المصفاة الوحيدة في البلاد؛ ويوثّق مقال «Skhira» إسناد مشروع
+      مصفاة ثانية بقدرة 120,000 برميل يوميًا إلى قطر للبترول في ماي 2007 («بعد مصفاة بنزرت»)،
+      والتصريح الوزاري لشهر مارس 2021 بأن TRAPSA لم تكن تملك الأوراق التنظيمية لتشغيل ميناء
+      الصخيرة النفطي. ولا يظهر اسم «STAR» الوارد في خارطة الطريق في أي مصدر من هذه الجولة.
+      يؤكد هذا السجل الموقع المرسوم للمجمع فقط، لا وضعه التشغيلي — إذ يلزم مصدر أولي قبل أي
+      ادعاء «بالعمل».
+    - >-
+      السلسلة الأم: معتمدية الصخيرة (del-sfax-skhira) -> ولاية صفاقس (gov-sfax). لا يوجد وسم
+      name:ar على عنصر OSM؛ أُغفل الاسم العربي.
+  notes_ar_by: model-reviewed
+
+- kind: industrial-zone
+  id: place-bizerte-refinery
+  name_en: "Bizerte Refinery"
+  name_fr: "raffinerie de Bizerte (Zarzouna)"
+  name_ar: "مصفاة جرزونة"
+  parent: gov-bizerte
+  coordinates: [9.8874421, 37.2564461]
+  asset: true
+  confidence: A
+  basis: documented
+  sources: [osm-bizerte-refinery, wikipedia-fr-stir, wikipedia-fr-energie-tunisie]
+  notes:
+    - "The STIR refinery complex in the Bizerte industrial-port zone at Zarzouna (the 'Raffinerie nationale de Tunisie'). Coordinate = centroid of OSM way 256386110 'مصفاة جرزونة / Raffinerie Zarzouna' (industrial=refinery, landuse=industrial) via Overpass out center; Nominatim representative point (9.8876074, 37.2554910) agrees within ~100 m."
+    - "OSM operator/brand tag = الشركة التونسية لصناعات التكرير (STIR — Société tunisienne des industries de raffinage, the state refining company, created 1961 with Eni, nationalized 1975). STIR is NOT in the institutions graph — flagged here as a candidate institution for a later run; no owner field set."
+    - "STATUS NOTE: fr.wikipedia 'Énergie en Tunisie' (June 2026) calls this the country's only refinery (34,000 bbl/day); the STIR article (July 2024) describes two-thirds of the site as oil storage (~60 tanks, 1 million m3) and records a Feb 2020 staff strike. The roadmap brief's 'closed/converted' status is not confirmed by these sources — status needs a primary source."
+    - "Parent: delegation of Jarzouna (per OSM/Nominatim) -> Bizerte governorate (gov-bizerte)."
+  notes_fr:
+    - >-
+      Le complexe de la raffinerie STIR dans la zone industrielle-portuaire de Bizerte à
+      Zarzouna (la « Raffinerie nationale de Tunisie »). Coordonnée = centroïde du chemin OSM
+      256386110 « مصفاة جرزونة / Raffinerie Zarzouna » (industrial=refinery,
+      landuse=industrial) via Overpass out center ; le point représentatif Nominatim
+      (9.8876074, 37.2554910) concorde à ~100 m près.
+    - >-
+      Tag opérateur/marque OSM = الشركة التونسية لصناعات التكرير (STIR — Société tunisienne
+      des industries de raffinage, la compagnie de raffinage d'État, créée en 1961 avec Eni,
+      nationalisée en 1975). STIR n'est PAS dans le graphe des institutions — signalée ici
+      comme institution candidate pour un passage ultérieur ; aucun champ owner défini.
+    - >-
+      NOTE DE STATUT : « Énergie en Tunisie » de fr.wikipedia (juin 2026) la présente comme
+      l'unique raffinerie du pays (34 000 barils/jour) ; l'article STIR (juillet 2024) décrit
+      les deux tiers du site comme du stockage pétrolier (~60 réservoirs, 1 million de m3) et
+      enregistre une grève du personnel en février 2020. Le statut « fermée / reconvertie » de
+      la feuille de route n'est pas confirmé par ces sources — le statut nécessite une source
+      primaire.
+    - >-
+      Parent : délégation de Jarzouna (selon OSM/Nominatim) -> gouvernorat de Bizerte
+      (gov-bizerte).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      مجمع مصفاة STIR في المنطقة الصناعية-المينائية ببنزرت في جرزونة («المصفاة الوطنية
+      التونسية»). الإحداثي = مركز ثقل المسار OSM 256386110 «مصفاة جرزونة / Raffinerie
+      Zarzouna» (industrial=refinery، landuse=industrial) عبر Overpass out center؛ وتتفق
+      النقطة التمثيلية في Nominatim (9.8876074، 37.2554910) ضمن نحو 100 متر.
+    - >-
+      وسم المشغّل/العلامة في OSM = الشركة التونسية لصناعات التكرير (STIR — الشركة الحكومية
+      للتكرير، أُنشئت سنة 1961 مع إيني وأُمِّمت سنة 1975). STIR ليست في الرسم البياني
+      للمؤسسات — وُسمت هنا كمؤسسة مرشحة لجولة لاحقة؛ لم يُضبط أي حقل owner.
+    - >-
+      ملاحظة الوضع: تصف مقالة «Énergie en Tunisie» في ويكيبيديا الفرنسية (جوان 2026) هذه
+      المصفاة بأنها الوحيدة في البلاد (34,000 برميل يوميًا)؛ وتصف مقالة STIR (جويلية 2024)
+      ثلثي الموقع بأنها مخزون نفطي (نحو 60 خزانًا، مليون م3) وتسجّل إضراب عمال في فيفري
+      2020. وضع «مغلقة/محوَّلة» في خارطة الطريق غير مؤكد من هذه المصادر — الوضع يحتاج مصدرًا
+      أوليًا.
+    - >-
+      السلسلة الأم: معتمدية جرزونة (حسب OSM/Nominatim) -> ولاية بنزرت (gov-bizerte).
+  notes_ar_by: model-reviewed
+
+# --- Airport (9th aerodrome) --------------------------------------------------
+
+- kind: airport
+  id: place-gabes-matmata-airport
+  name_en: "Gabès–Matmata International Airport"
+  name_fr: "aéroport de Gabès-Matmata"
+  name_ar: "مطار قابس مطماطة الدولي"
+  parent: gov-gabes
+  coordinates: [9.92005, 33.73426]
+  asset: true
+  confidence: A
+  basis: documented
+  sources: [wikidata-q732214, osm-gabes-matmata-airport]
+  notes:
+    - "Southern Tunisia's aerodrome (IATA GAE, ICAO DTTG), ~10 km north of the Matmata foothills. Coordinate = Wikidata Q732214 (Gabès – Matmata International Airport) P625 (precision 1.0e-5 deg). Parent chain per the item: P131 = Gabès (Q215661) -> Gabès governorate (gov-gabes)."
+    - "Cross-check: OSM relation 10719206 (aeroway=aerodrome, ele 125, iata GAE, icao DTTG) centroid (9.9201138, 33.7304833) via Overpass out center — ~400 m apart, same aerodrome. Nominatim display hierarchy places it in delegation of El Hamma (Chanchou); Wikidata P131 is Gabès city — parent governorate unaffected, delegation-level placement for human adjudication."
+    - "Operator per Wikidata P137 = OACA — Office de l'aviation civile et des aéroports (Q3349581), not in the graph; no owner field set. Service status (irregular/charter) not asserted here."
+  notes_fr:
+    - >-
+      L'aérodrome du sud de la Tunisie (IATA GAE, ICAO DTTG), à ~10 km au nord des contreforts
+      de Matmata. Coordonnée = P625 de l'item Wikidata Q732214 (aéroport international de
+      Gabès – Matmata) (précision 1.0e-5 deg). Chaîne parentale selon l'item : P131 = Gabès
+      (Q215661) -> gouvernorat de Gabès (gov-gabes).
+    - >-
+      Contre-vérification : relation OSM 10719206 (aeroway=aerodrome, ele 125, iata GAE, icao
+      DTTG), centroïde (9.9201138, 33.7304833) via Overpass out center — à ~400 m, même
+      aérodrome. La hiérarchie d'affichage Nominatim le situe dans la délégation d'El Hamma
+      (Chanchou) ; le P131 Wikidata est la ville de Gabès — le gouvernorat parent n'est pas
+      affecté, le placement au niveau délégation est laissé à l'arbitrage humain.
+    - >-
+      Opérateur selon le P137 Wikidata = OACA — Office de l'aviation civile et des aéroports
+      (Q3349581), absent du graphe ; aucun champ owner défini. Le statut de service
+      (irrégulier/charter) n'est pas affirmé ici.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      مطار الجنوب التونسي (IATA GAE، ICAO DTTG)، على بُعد نحو 10 كم شمال سفوح مطماطة. الإحداثي
+      = P625 لعنصر ويكيبيديا Q732214 (مطار قابس مطماطة الدولي) (الدقة 1.0e-5 درجة). السلسلة
+      الأم حسب العنصر: P131 = قابس (Q215661) -> ولاية قابس (gov-gabes).
+    - >-
+      تدقيق متقاطع: العلاقة OSM 10719206 (aeroway=aerodrome، ele 125، iata GAE، icao DTTG)
+      مركز ثقلها (9.9201138، 33.7304833) عبر Overpass out center — على بُعد نحو 400 متر،
+      المطار نفسه. يضع التسلسل الهرمي في Nominatim المطار في معتمدية الحامة (شنشو)؛ أما P131
+      في ويكيبيديا فهو مدينة قابس — ولاية السلسلة الأم غير متأثرة، ويُترك تحديد مستوى المعتمدية
+      للبتّ البشري.
+    - >-
+      المشغّل حسب P137 في ويكيبيديا = OACA — ديوان الطيران المدني والمطارات (Q3349581)، غير
+      موجود في الرسم البياني؛ لم يُضبط أي حقل owner. لا يُؤكَّد هنا الوضع التشغيلي
+      (غير منتظم/مستأجر).
+  notes_ar_by: model-reviewed
+
+# --- Port: marina ------------------------------------------------------------
+
+- kind: port
+  id: place-yasmine-hammamet-marina
+  name_en: "Yasmine-Hammamet Marina"
+  name_fr: "port de plaisance Yasmine Hammamet"
+  parent: gov-nabeul
+  coordinates: [10.5459205, 36.3736095]
+  asset: true
+  confidence: A
+  basis: documented
+  sources: [osm-yasmine-hammamet-marina]
+  notes:
+    - "Pleasure port of the Yasmine Hammamet tourist complex on the Cap Bon coast (roadmap's 'Yasmine-Hammamet' port). Coordinate = centroid of OSM way 519760233 'Port de Plaisance Yasmine Hammamet' (leisure=marina, seamark:type=harbour, seamark:harbour:category=marina) via Overpass out center; Nominatim representative point (10.5475260, 36.3735907) agrees within ~140 m."
+    - "OSM tags: capacity 704 berths, VHF channel 9, fee=yes, website https://www.portyasmine.com.tn/. No name:ar on the element; Arabic name omitted. Parent: delegation of Hammamet (del-nabeul-hammamet) -> Nabeul governorate (gov-nabeul)."
+  notes_fr:
+    - >-
+      Port de plaisance du complexe touristique de Yasmine Hammamet, sur la côte du Cap Bon
+      (le port « Yasmine-Hammamet » de la feuille de route). Coordonnée = centroïde du chemin
+      OSM 519760233 « Port de Plaisance Yasmine Hammamet » (leisure=marina,
+      seamark:type=harbour, seamark:harbour:category=marina) via Overpass out center ; le
+      point représentatif Nominatim (10.5475260, 36.3735907) concorde à ~140 m près.
+    - >-
+      Tags OSM : capacité 704 anneaux, canal VHF 9, fee=yes, site web
+      https://www.portyasmine.com.tn/. Pas de name:ar sur l'élément ; nom arabe omis. Parent :
+      délégation de Hammamet (del-nabeul-hammamet) -> gouvernorat de Nabeul (gov-nabeul).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      ميناء ترفيهي للمجمع السياحي ياسمين الحمامات على ساحل الوطن القبلي (ميناء
+      «Yasmine-Hammamet» في خارطة الطريق). الإحداثي = مركز ثقل المسار OSM 519760233 «Port de
+      Plaisance Yasmine Hammamet» (leisure=marina، seamark:type=harbour،
+      seamark:harbour:category=marina) عبر Overpass out center؛ وتتفق النقطة التمثيلية في
+      Nominatim (10.5475260، 36.3735907) ضمن نحو 140 مترًا.
+    - >-
+      وسوم OSM: السعة 704 أرصفة، قناة VHF 9، fee=yes، الموقع
+      https://www.portyasmine.com.tn/. لا يوجد name:ar على العنصر؛ أُغفل الاسم العربي.
+      السلسلة الأم: معتمدية الحمامات (del-nabeul-hammamet) -> ولاية نابل (gov-nabeul).
+  notes_ar_by: model-reviewed
+
+# --- Mine: beyond the four named basin records -------------------------------
+
+- kind: resource-field
+  id: place-sehib-mine
+  name_en: "Sehib phosphate mine"
+  name_fr: "mine de phosphate de Sehib"
+  parent: gov-gafsa
+  coordinates: [8.6467126, 34.2370276]
+  asset: true
+  owner: cpg
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "DeepTunisia dt-research agent (proxy anchor — no registry record of the Sehib mine as a feature; the point of the OSM railway station 'Sehib' anchors it — see reasoning)"
+  reasoning: >-
+    No registry record exists for the Sehib mine complex as a feature (no
+    Wikidata item for the mine or the town, no OSM quarry/mine feature in the
+    Mdhilla delegation area), and no Wikidata item exists for Sehib town. The
+    record stands for the phosphate mining centre at Sehib, one of the CPG
+    mining settlements east of Métlaoui in the Gafsa basin: en.wikipedia
+    "Geology of Tunisia" confirms CPG "runs all phosphate mining and
+    processing for Tunisia, out of eight open-pit mines near Sehib and Gafsa".
+    The adopted point is the only registry feature carrying the name: the OSM
+    railway station node 8231384457 'Sehib' (railway=station, stop_id 137,
+    position 8.6467126, 34.2370276), on the Gafsa mining-basin rail line that
+    serves the CPG washing plants — the same class of transport-registry anchor
+    the 08-11 run used for the Bizerte free zone (post-office node).
+  falsifiable_by: >-
+    An official CPG/ONM point for the Sehib mining complex, or a Wikidata item
+    for Sehib town with a P625 statement, placing the representative point
+    elsewhere, would overturn the railway-station anchor. So would a
+    demonstration that the station belongs to a different settlement.
+  sources: [osm-sehib-station, wikipedia-en-geology-tunisia]
+  notes:
+    - "Anchor = OSM node 8231384457 (railway=station, name=Sehib, stop_id=137) at 8.6467126, 34.2370276, fetched from the OSM API 0.6 and cross-checked via Nominatim (same position). The station sits in the mining area east of Métlaoui between Métlaoui and Mdhilla, delegation of Mdhilla per Nominatim, Gafsa governorate (gov-gafsa)."
+    - "Arabic name السحاب is NOT registry-documented this run (Wikidata search for السحاب returns unrelated items; ar.wikipedia has no article); name_ar omitted per the no-machine-guess rule. Owner cpg per en.wikipedia Geology of Tunisia (CPG operates the mines)."
+  notes_fr:
+    - >-
+      Ancre = nœud OSM 8231384457 (railway=station, name=Sehib, stop_id=137) à 8.6467126,
+      34.2370276, récupéré depuis l'API OSM 0.6 et contre-vérifié via Nominatim (même
+      position). La gare se trouve dans la zone minière à l'est de Métlaoui, entre Métlaoui et
+      Mdhilla, délégation de Mdhilla selon Nominatim, gouvernorat de Gafsa (gov-gafsa).
+    - >-
+      Le nom arabe السحاب n'est PAS documenté dans les registres lors de ce passage (la
+      recherche Wikidata pour السحاب renvoie des éléments sans rapport ; ar.wikipedia n'a pas
+      d'article) ; name_ar omis selon la règle de non-devinette automatique. Owner cpg selon
+      « Geology of Tunisia » de en.wikipedia (la CPG exploite les mines).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      المرساة = العقدة OSM 8231384457 (railway=station، name=Sehib، stop_id=137) عند
+      8.6467126، 34.2370276، جُلبت من واجهة OSM API 0.6 وتدقيقها عبر Nominatim (الموضع نفسه).
+      تقع المحطة في المنطقة المنجمية شرق المتلوي بين المتلوي والمضيلة، معتمدية المضيلة حسب
+      Nominatim، ولاية قفصة (gov-gafsa).
+    - >-
+      الاسم العربي السحاب غير موثَّق في السجلات خلال هذه الجولة (بحث ويكيبيديا عن السحاب
+      يُرجع عناصر لا صلة لها؛ ولا مقال في ويكيبيديا العربية)؛ أُغفل name_ar عملاً بقاعدة عدم
+      التخمين الآلي. المشغّل cpg حسب «Geology of Tunisia» في ويكيبيديا الإنجليزية (شركة
+      فسفاط قفصة تدير المناجم).
+  notes_ar_by: model-reviewed
