@@ -1,0 +1,636 @@
+[
+  {
+    "kind": "position",
+    "id": "p-dgsn-bennour-2",
+    "start": "2011-03-02",
+    "end": "~2012",
+    "interval": {
+      "startEarliest": 1299024000000,
+      "startLatest": 1299024000000,
+      "endEarliest": 1299024000000,
+      "endLatest": 1388534399000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "trimmed": true,
+      "raw": {
+        "start": "2011-03-02",
+        "end": "~2012"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-milsec-akrout",
+    "start": "<=2013",
+    "end": "2013-08-22",
+    "interval": {
+      "startEarliest": 1136078783000,
+      "startLatest": 1377129600000,
+      "endEarliest": 1377129600000,
+      "endLatest": 1377129600000,
+      "startPrecision": "before",
+      "endPrecision": "day",
+      "status": "ended",
+      "startClamped": true,
+      "raw": {
+        "start": "<=2013",
+        "end": "2013-08-22"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-justice-advisor-jelassi",
+    "start": "~2023",
+    "end": "2024-07",
+    "interval": {
+      "startEarliest": 1640995200000,
+      "startLatest": 1722470399000,
+      "endEarliest": 1722470399000,
+      "endLatest": 1722470399000,
+      "startPrecision": "approx",
+      "endPrecision": "month",
+      "status": "ended",
+      "trimmed": true,
+      "startClamped": true,
+      "raw": {
+        "start": "~2023",
+        "end": "2024-07"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-finance-jaidane",
+    "start": "2004",
+    "end": "2004",
+    "interval": {
+      "startEarliest": 1072915200000,
+      "startLatest": 1104537599000,
+      "endEarliest": 1104537599000,
+      "endLatest": 1104537599000,
+      "startPrecision": "year",
+      "endPrecision": "year",
+      "status": "ended",
+      "trimmed": true,
+      "raw": {
+        "start": "2004",
+        "end": "2004"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-gv-mohamed-chenik",
+    "start": "1943",
+    "end": "1943-05",
+    "interval": {
+      "startEarliest": -852076800000,
+      "startLatest": -839030401000,
+      "endEarliest": -839030401000,
+      "endLatest": -839030401000,
+      "startPrecision": "year",
+      "endPrecision": "month",
+      "status": "ended",
+      "trimmed": true,
+      "startClamped": true,
+      "raw": {
+        "start": "1943",
+        "end": "1943-05"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-gv-mohamed-chenik-2",
+    "start": "1954",
+    "end": "1954",
+    "interval": {
+      "startEarliest": -504921600000,
+      "startLatest": -473385601000,
+      "endEarliest": -473385601000,
+      "endLatest": -473385601000,
+      "startPrecision": "year",
+      "endPrecision": "year",
+      "status": "ended",
+      "trimmed": true,
+      "raw": {
+        "start": "1954",
+        "end": "1954"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-poulina-benayed",
+    "end": "2019-04-04",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1554336000000,
+      "endEarliest": 1554336000000,
+      "endLatest": 1554336000000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "startClamped": true,
+      "raw": {
+        "start": null,
+        "end": "2019-04-04"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-youssef-chahed-lotfi-brahem-political-conflict",
+    "start": "2018",
+    "end": "2018-06-06",
+    "interval": {
+      "startEarliest": 1514764800000,
+      "startLatest": 1528243200000,
+      "endEarliest": 1528243200000,
+      "endLatest": 1528243200000,
+      "startPrecision": "year",
+      "endPrecision": "day",
+      "status": "ended",
+      "startClamped": true,
+      "raw": {
+        "start": "2018",
+        "end": "2018-06-06"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-hassine-gharbi-usgn-security",
+    "end": "2023-05-24",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1684886400000,
+      "endEarliest": 1684886400000,
+      "endLatest": 1684886400000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "startClamped": true,
+      "raw": {
+        "start": null,
+        "end": "2023-05-24"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-chokri-rahali-national-guard-security",
+    "end": "2019-02-20",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1550620800000,
+      "endEarliest": 1550620800000,
+      "endLatest": 1550620800000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "startClamped": true,
+      "raw": {
+        "start": null,
+        "end": "2019-02-20"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-fouad-mebazaa-rcd-party",
+    "end": "2011-01-18",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1295308800000,
+      "endEarliest": 1295308800000,
+      "endLatest": 1295308800000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "startClamped": true,
+      "raw": {
+        "start": null,
+        "end": "2011-01-18"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-abdelwahab-ben-ayed-poulina-business",
+    "end": "2019-04-04",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1554336000000,
+      "endEarliest": 1554336000000,
+      "endLatest": 1554336000000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "startClamped": true,
+      "raw": {
+        "start": null,
+        "end": "2019-04-04"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-najet-jaouadi-ministry-interior-institutional",
+    "end": "2021-12-24",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1640304000000,
+      "endEarliest": 1640304000000,
+      "endLatest": 1640304000000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "startClamped": true,
+      "raw": {
+        "start": null,
+        "end": "2021-12-24"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "board-poulina-ben-ayed",
+    "start": "?",
+    "end": "2019-04-04",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1554336000000,
+      "endEarliest": 1554336000000,
+      "endLatest": 1554336000000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-04-04"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "board-poulina-bouricha",
+    "start": "?",
+    "end": "2023-06-14",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1686700800000,
+      "endEarliest": 1686700800000,
+      "endLatest": 1686700800000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2023-06-14"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-slim-ennaceur-mohamed-ennaceur-family",
+    "end": "2013-07-21",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1374364800000,
+      "endEarliest": 1374364800000,
+      "endLatest": 1374364800000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "startClamped": true,
+      "raw": {
+        "start": null,
+        "end": "2013-07-21"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "board-steg-anane",
+    "start": "?",
+    "end": "2023-09-22",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1695340800000,
+      "endEarliest": 1695340800000,
+      "endLatest": 1695340800000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2023-09-22"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "board-gct-hedi-youssef",
+    "start": "?",
+    "end": "2026-06-01",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1780272000000,
+      "endEarliest": 1780272000000,
+      "endLatest": 1780272000000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2026-06-01"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-judiciary-abdessalem-bouchlaka-prosecution",
+    "start": "2026-08",
+    "interval": {
+      "startEarliest": 1785542400000,
+      "startLatest": 1787616000000,
+      "endEarliest": null,
+      "endLatest": 1787616000000,
+      "startPrecision": "month",
+      "endPrecision": "unknown",
+      "status": "unknown",
+      "startClamped": true,
+      "raw": {
+        "start": "2026-08",
+        "end": null
+      }
+    }
+  },
+  {
+    "kind": "event",
+    "id": "military-security-created",
+    "start": "1964",
+    "end": "1964",
+    "interval": {
+      "startEarliest": -189388800000,
+      "startLatest": -157766401000,
+      "endEarliest": -157766401000,
+      "endLatest": -157766401000,
+      "startPrecision": "year",
+      "endPrecision": "year",
+      "status": "ended",
+      "trimmed": true,
+      "raw": {
+        "start": "1964",
+        "end": "1964"
+      }
+    }
+  },
+  {
+    "kind": "event",
+    "id": "barraket-essahel",
+    "start": "1991-05",
+    "end": "1991-05",
+    "interval": {
+      "startEarliest": 673056000000,
+      "startLatest": 675734399000,
+      "endEarliest": 675734399000,
+      "endLatest": 675734399000,
+      "startPrecision": "month",
+      "endPrecision": "month",
+      "status": "ended",
+      "trimmed": true,
+      "raw": {
+        "start": "1991-05",
+        "end": "1991-05"
+      }
+    }
+  },
+  {
+    "kind": "event",
+    "id": "governors-military-2011",
+    "start": "2011",
+    "end": "2011",
+    "interval": {
+      "startEarliest": 1293840000000,
+      "startLatest": 1325375999000,
+      "endEarliest": 1325375999000,
+      "endLatest": 1325375999000,
+      "startPrecision": "year",
+      "endPrecision": "year",
+      "status": "ended",
+      "trimmed": true,
+      "raw": {
+        "start": "2011",
+        "end": "2011"
+      }
+    }
+  },
+  {
+    "kind": "event",
+    "id": "assets-confiscated",
+    "start": "2011-06",
+    "end": "2011-06",
+    "interval": {
+      "startEarliest": 1306886400000,
+      "startLatest": 1309478399000,
+      "endEarliest": 1309478399000,
+      "endLatest": 1309478399000,
+      "startPrecision": "month",
+      "endPrecision": "month",
+      "status": "ended",
+      "trimmed": true,
+      "raw": {
+        "start": "2011-06",
+        "end": "2011-06"
+      }
+    }
+  },
+  {
+    "kind": "event",
+    "id": "nawaat-founded",
+    "start": "2004",
+    "end": "2004",
+    "interval": {
+      "startEarliest": 1072915200000,
+      "startLatest": 1104537599000,
+      "endEarliest": 1104537599000,
+      "endLatest": 1104537599000,
+      "startPrecision": "year",
+      "endPrecision": "year",
+      "status": "ended",
+      "trimmed": true,
+      "raw": {
+        "start": "2004",
+        "end": "2004"
+      }
+    }
+  },
+  {
+    "kind": "event",
+    "id": "saadia-mosbah-arrested",
+    "start": "2024-05",
+    "end": "2024-05",
+    "interval": {
+      "startEarliest": 1714521600000,
+      "startLatest": 1717199999000,
+      "endEarliest": 1717199999000,
+      "endLatest": 1717199999000,
+      "startPrecision": "month",
+      "endPrecision": "month",
+      "status": "ended",
+      "trimmed": true,
+      "raw": {
+        "start": "2024-05",
+        "end": "2024-05"
+      }
+    }
+  },
+  {
+    "kind": "event",
+    "id": "mosaique-fm-founded",
+    "start": "2003",
+    "end": "2003",
+    "interval": {
+      "startEarliest": 1041379200000,
+      "startLatest": 1072915199000,
+      "endEarliest": 1072915199000,
+      "endLatest": 1072915199000,
+      "startPrecision": "year",
+      "endPrecision": "year",
+      "status": "ended",
+      "trimmed": true,
+      "raw": {
+        "start": "2003",
+        "end": "2003"
+      }
+    }
+  },
+  {
+    "kind": "event",
+    "id": "hmaidi-convicted-2026",
+    "start": "2026-07",
+    "end": "2026-07",
+    "interval": {
+      "startEarliest": 1782864000000,
+      "startLatest": 1785542399000,
+      "endEarliest": 1785542399000,
+      "endLatest": 1785542399000,
+      "startPrecision": "month",
+      "endPrecision": "month",
+      "status": "ended",
+      "trimmed": true,
+      "raw": {
+        "start": "2026-07",
+        "end": "2026-07"
+      }
+    }
+  },
+  {
+    "kind": "event",
+    "id": "hammami-hunger-strike-2026",
+    "start": "2026",
+    "end": "2026",
+    "interval": {
+      "startEarliest": 1767225600000,
+      "startLatest": 1798761599000,
+      "endEarliest": 1798761599000,
+      "endLatest": 1798761599000,
+      "startPrecision": "year",
+      "endPrecision": "year",
+      "status": "ended",
+      "trimmed": true,
+      "raw": {
+        "start": "2026",
+        "end": "2026"
+      }
+    }
+  },
+  {
+    "kind": "event",
+    "id": "dridi-prison-death-2026",
+    "start": "~2026-07-31",
+    "end": "~2026-07-31",
+    "interval": {
+      "startEarliest": 1777507200000,
+      "startLatest": 1793404800000,
+      "endEarliest": 1793404800000,
+      "endLatest": 1793404800000,
+      "startPrecision": "approx",
+      "endPrecision": "approx",
+      "status": "ended",
+      "trimmed": true,
+      "raw": {
+        "start": "~2026-07-31",
+        "end": "~2026-07-31"
+      }
+    }
+  },
+  {
+    "kind": "event",
+    "id": "migrants-african-court-petitions-2026",
+    "start": "~2026-06-30",
+    "end": "~2026-06-30",
+    "interval": {
+      "startEarliest": 1774828800000,
+      "startLatest": 1790726400000,
+      "endEarliest": 1790726400000,
+      "endLatest": 1790726400000,
+      "startPrecision": "approx",
+      "endPrecision": "approx",
+      "status": "ended",
+      "trimmed": true,
+      "raw": {
+        "start": "~2026-06-30",
+        "end": "~2026-06-30"
+      }
+    }
+  },
+  {
+    "kind": "event",
+    "id": "ev-ben-guerdane-protests-2026",
+    "start": "~2026-08-22",
+    "end": "~2026-08-25",
+    "interval": {
+      "startEarliest": 1779408000000,
+      "startLatest": 1795305600000,
+      "endEarliest": 1795305600000,
+      "endLatest": 1795564800000,
+      "startPrecision": "approx",
+      "endPrecision": "approx",
+      "status": "ended",
+      "trimmed": true,
+      "raw": {
+        "start": "~2026-08-22",
+        "end": "~2026-08-25"
+      }
+    }
+  },
+  {
+    "kind": "event",
+    "id": "ev-libya-dbeibah-talks-tunis-2026",
+    "start": "~2026-08-18",
+    "end": "~2026-08-18",
+    "interval": {
+      "startEarliest": 1779062400000,
+      "startLatest": 1794960000000,
+      "endEarliest": 1794960000000,
+      "endLatest": 1794960000000,
+      "startPrecision": "approx",
+      "endPrecision": "approx",
+      "status": "ended",
+      "trimmed": true,
+      "raw": {
+        "start": "~2026-08-18",
+        "end": "~2026-08-18"
+      }
+    }
+  }
+]

@@ -1,0 +1,315 @@
+/* ===========================================================================
+   Labels over visualisations.
+
+   WHY THESE ARE HTML AND NOT SVG TEXT
+
+   Every label in this project used to be an <svg:text> with a painted halo. That
+   works until it has to be good: SVG text cannot ellipsize, cannot wrap, has no
+   usable box model, and gives no way to bound a name's width — which is why the
+   network's lane header ran into its neighbour and why long Arabic names could not
+   be truncated without measuring glyphs by hand.
+
+   So labels are HTML positioned over the canvas in screen space. That buys real
+   text layout: `text-overflow: ellipsis`, logical properties for RTL, subpixel
+   antialiasing, and font-feature settings. It also means a label is the same size
+   at every zoom level for free, because it never enters the camera's transform.
+
+   They are `aria-hidden` wherever they are used. The graph nodes underneath carry
+   their own accessible names and every view owes a table alternative, so exposing
+   these too would make a screen reader announce every entity twice.
+
+   TIERS
+
+   A label's tier is what the reader is being told about it, not how big it is:
+
+     t-focus   this is the thing you selected or are pointing at
+     t-major   this held real authority; worth naming at a glance
+     t-minor   named because there is room, not because it is important
+
+   The tiers must stay visually ordered. If a redesign makes minor labels as loud as
+   focused ones, the map stops guiding and starts shouting.
+   =========================================================================== */
+
+.vlayer {
+	position: absolute;
+	inset: 0;
+	overflow: hidden;
+	/* The layer is a pass-through: the canvas underneath owns every gesture. Labels
+	   that want a pointer opt back in individually. */
+	pointer-events: none;
+	z-index: 1;
+}
+
+.vlabel {
+	position: absolute;
+	top: 0;
+	/*
+	   PHYSICAL, not logical.
+
+	   These coordinates come out of the camera as screen pixels, so `left` is the
+	   anchor the transform below is measured from. `inset-inline-start` flips to
+	   `right` in Arabic while `translate()` does not flip at all, so the two would
+	   invert against each other and throw every label off the side of the map.
+	   Screen-space geometry is physical; text flow inside the label is still logical.
+	*/
+	left: 0;
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	max-width: 170px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-family: var(--font-sans);
+	font-size: var(--t-sm);
+	line-height: 1.35;
+	letter-spacing: var(--track-tight);
+	color: var(--text-primary);
+
+	/* The halo. Four offset shadows in the surface colour read as a cut-out around
+	   the glyphs, so a name stays legible over a dense edge bundle without a filled
+	   box hiding the map behind it. Cheaper and crisper than a blur, and unlike an
+	   SVG paint-order stroke it does not thicken the letterforms. */
+	text-shadow:
+		0 0 3px var(--surface-base),
+		0 0 3px var(--surface-base),
+		1px 1px 0 var(--surface-base),
+		-1px -1px 0 var(--surface-base);
+
+	/* Positioned by transform rather than left/top: a transform is composited, so
+	   panning several hundred labels does not relayout the document every frame. */
+	will-change: transform;
+}
+
+/* A leading dot in the entity's own layer colour. This is the label's link back to
+   the lane it belongs to — without it, a name floating over a bundle of crossing
+   edges gives no clue which network it is part of. */
+.vlabel::before {
+	content: '';
+	flex-shrink: 0;
+	width: 5px;
+	height: 5px;
+	border-radius: 50%;
+	background: var(--c, var(--text-muted));
+}
+/* Institutions are square everywhere in this app, including here. */
+.vlabel.is-institution::before {
+	border-radius: 1px;
+}
+
+/* Anchor direction. The dot must sit on the side facing the node so the eye
+   connects label to owner: a left-anchored label (rightmost lane) reads with
+   the dot at its trailing end, which row-reverse provides — the dot is still
+   the first child in the DOM, so a11y order is unchanged. */
+.vlabel.l-left {
+	flex-direction: row-reverse;
+}
+.vlabel.l-above,
+.vlabel.l-below {
+	justify-content: center;
+}
+/* The hop tick tracks the dot: on a left-anchored label the tick sits at the
+   node side too. */
+.vlabel.l-left.hop-one::after {
+	order: -1;
+}
+
+.vlabel.t-minor {
+	font-size: var(--t-xs);
+	color: var(--text-faint);
+	max-width: 140px;
+	opacity: 0.65;
+}
+
+.vlabel.t-major {
+	font-weight: 520;
+}
+
+/* A label in the focused node's one-ring.
+
+   The whole point of focusing is to name who surrounds the subject, so a
+   neighbour's label gets a tick in the layer colour and a slightly stronger
+   weight — visibly a step above a plain major label, still a step below the
+   focus plate. The tier machine in place.ts stays untouched: this is a
+   modifier the view attaches, not a new tier the pass has to reason about. */
+.vlabel.hop-one {
+	font-weight: 560;
+}
+.vlabel.hop-one::after {
+	content: '';
+	flex-shrink: 0;
+	width: 14px;
+	height: 1.5px;
+	border-radius: 1px;
+	background: var(--c, var(--text-muted));
+	opacity: 0.85;
+}
+
+/*
+	The focused label is the one case that gets a plate rather than a halo.
+
+	It is allowed to occlude the map because the reader has asked for it, and a plate
+	is what lets a long name overflow its lane without becoming unreadable — the
+	suppression pass deliberately never hides this one, so it has to be able to sit
+	on top of whatever it lands on.
+*/
+.vlabel.t-focus {
+	max-width: 260px;
+	padding: 3px 8px;
+	font-size: var(--t-base);
+	font-weight: 560;
+	color: var(--text-primary);
+	background: color-mix(in oklch, var(--surface-overlay) 94%, transparent);
+	border: 1px solid var(--border-strong);
+	border-inline-start: 2px solid var(--c, var(--accent));
+	border-radius: var(--r-sm);
+	box-shadow: var(--elev-2);
+	backdrop-filter: blur(4px);
+	text-shadow: none;
+	z-index: 3;
+}
+.vlabel.t-focus::before {
+	display: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Group (subsection) headers.
+
+   These name the subsection a lane splits into — "Finance & Economy Ministers",
+   "Business Families", "National Guard" and so on. They are the structure the
+   whole redesign exists to make readable, so they sit in the overlay above edges
+   and nodes with a halo strong enough that a node landing on the text never wins.
+   --------------------------------------------------------------------------- */
+
+.vgroup {
+	position: absolute;
+	top: 0;
+	/* Physical, for the same reason as .vlabel. */
+	left: 0;
+	display: flex;
+	align-items: baseline;
+	gap: 6px;
+	max-width: 220px;
+	/* The chip: a faint plate in the zone's own hue, so a section header reads
+	   as a label on the lane rather than text floating over it. The hairline
+	   under the plate (band-line in NetworkView) is the zone's rule.
+	   At overview density, subsections fade slightly so entity names read first;
+	   on zoom-in the opacity climbs — the zone reveals its detail when you're
+	   close enough to read it. */
+	padding: 2px 8px 3px 5px;
+	border-radius: var(--r-xs);
+	background: color-mix(in oklch, var(--c) 8%, transparent);
+	opacity: 0.8;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-family: var(--font-mono);
+	font-size: var(--t-2xs);
+	font-weight: 560;
+	letter-spacing: var(--track-caps);
+	text-transform: uppercase;
+	color: color-mix(in oklch, var(--c) 74%, var(--text-primary));
+	/* The same cut-out halo as entity labels, plus a soft under-canvas tint so the
+	   header still separates from a node or arc passing directly beneath it. */
+	text-shadow:
+		0 0 3px var(--surface-base),
+		0 0 3px var(--surface-base),
+		1px 1px 0 var(--surface-base),
+		-1px -1px 0 var(--surface-base);
+	line-height: 1.5;
+	will-change: transform;
+	pointer-events: none;
+}
+.vgroup::before {
+	content: '';
+	align-self: center;
+	flex-shrink: 0;
+	width: 3px;
+	height: 11px;
+	border-radius: 1px;
+	background: var(--c);
+	opacity: 0.85;
+}
+.vgroup i {
+	font-style: normal;
+	font-weight: 400;
+	color: var(--text-faint);
+	font-variant-numeric: tabular-nums;
+}
+
+/* ---------------------------------------------------------------------------
+   Lane headers.
+
+   Pinned in screen space, so they stay at the top of the viewport while the reader
+   pans down through a lane. A header that scrolls away is the fastest way to lose
+   track of which of seven near-identically-shaped columns you are looking at, and
+   the lanes are the one piece of structure in this view that never moves.
+   --------------------------------------------------------------------------- */
+
+.vlane {
+	position: absolute;
+	top: 0;
+	display: flex;
+	align-items: center;
+	gap: var(--s-3);
+	max-width: 100%;
+	padding: 3px var(--s-4) 3px var(--s-3);
+	white-space: nowrap;
+	overflow: hidden;
+	font-family: var(--font-mono);
+	font-size: var(--t-2xs);
+	font-weight: 500;
+	letter-spacing: var(--track-caps);
+	text-transform: uppercase;
+	color: color-mix(in oklch, var(--c) 30%, var(--text-primary));
+	background: color-mix(in oklch, var(--surface-base) 78%, transparent);
+	border: 1px solid color-mix(in oklch, var(--c) 26%, transparent);
+	border-radius: var(--r-full);
+	backdrop-filter: blur(6px);
+	pointer-events: auto;
+	cursor: pointer;
+	transition:
+		background var(--dur-fast) var(--ease-out),
+		border-color var(--dur-fast) var(--ease-out),
+		color var(--dur-fast) var(--ease-out);
+}
+.vlane::before {
+	content: '';
+	flex-shrink: 0;
+	width: 6px;
+	height: 6px;
+	border-radius: 2px;
+	background: var(--c);
+}
+.vlane:hover {
+	background: color-mix(in oklch, var(--c) 16%, var(--surface-base));
+	border-color: color-mix(in oklch, var(--c) 55%, transparent);
+	color: var(--text-primary);
+}
+/* The count, so a lane says how much is in it at this instant rather than only
+   what it is called. Muted: it is context, not the name. */
+.vlane b {
+	font-weight: 500;
+	color: var(--text-faint);
+	font-variant-numeric: tabular-nums;
+}
+.vlane.solo {
+	border-color: color-mix(in oklch, var(--c) 70%, transparent);
+	background: color-mix(in oklch, var(--c) 20%, var(--surface-base));
+	color: var(--text-primary);
+}
+@media (max-width: 900px) {
+	.vlabel {
+		max-width: 128px;
+		font-size: var(--t-xs);
+	}
+	.vlabel.t-minor {
+		/* On a phone there is no room for labels that exist only because there was
+		   room. The map keeps the names that mean something. */
+		display: none;
+	}
+	.vlabel.t-focus {
+		max-width: 200px;
+		font-size: var(--t-sm);
+	}
+}

@@ -1,0 +1,781 @@
+# -----------------------------------------------------------------------------
+# CONTRACTS — procurement / PPP / concession records (spec §4.4)
+#
+# First-class records for the flows that show who gets paid by the state and on
+# what terms. `winner`, `losers` and `institution` resolve to graph entities
+# (person or institution). `award.value` is attributed — there is no "value
+# filled from memory"; a record with an `award` must name who reports the figure
+# or draw on a primary source (V4/V5).
+#
+# Records landed 2026-08-08 from data/contrib/contracts-2026-08-08.yaml
+# (roadmap P1 #7). Failure vocabulary preserved from that run:
+#   - "announced vs awarded": several records are announcements/loans/proposals,
+#     not final awards — each is flagged in `status` and `notes`; no announced
+#     value was promoted to an award value.
+#   - "unlocatable award": ctr-sncft-alstom-caf-2017 and ctr-steg-eni-gas-2015-2017
+#     are D-grade leads KEPT per rule 6 (the popular account claims these
+#     contracts; the record documents that no source was found). They carry
+#     status `unknown` and a negative-finding note — the contract status enum
+#     gained `unknown` for them (additive, documented in spec §4.4).
+#   - Counterparties that are not yet graph entities (Airbus, ENI, Alstom, CAF,
+#     BADC, EBRD, JICA, Terna, Solar Water PLC, the ministry) are named in the
+#     notes, not fabricated as `winner` anchors.
+# -----------------------------------------------------------------------------
+
+- id: ctr-tunisair-airbus-a320neo-2016
+  title_en: Tunisair – Airbus A320neo order and 2019 sale-and-leaseback
+  title_fr: Tunisair – commande d'Airbus A320neo et cession-bail de 2019
+  title_ar: تونساير – طلبية إيرباص A320neo وعملية بيع وإيجار لسنة 2019
+  institution: tunisair
+  kind: procurement
+  procurement: { mechanism: negotiated-direct, advertised: "~2016" }
+  award: { value: "900000000", currency: TND, year: 2019 }
+  status: signed
+  start: "2016-09"
+  confidence: B
+  basis: reported
+  attributed_to: >-
+    Ali Miaoui, Tunisair Deputy General Manager and head of the negotiating
+    committee with Airbus — cost of the 5-aircraft sale-and-leaseback
+    operation, reported by African Manager (2019-09-06). Tunisair had paid
+    200 million dinars and was to secure the rest over two years.
+  falsifiable_by: >-
+    The Airbus/Tunisair purchase agreement or JORT decree ratifying the
+    financing would supersede the reported 900 MDT figure.
+  sources: [africanmanager-tunisair-airbus-2019, wikipedia-tunisair, forbes-tunisair-2017]
+  notes:
+    - >-
+      Counterparty Airbus is not yet a graph entity; the winner field is left
+      unset rather than fabricating an anchor. The A320neo order dates from
+      September 2016: Tunisair rejigged its 2008 Airbus backlog (10 A320,
+      3 A330-200, 3 A350-800; A350 cancelled 2013) into five A320neo
+      (Wikipedia citing Flightglobal, 2016-09-06; Airfinance Global dates it
+      August 2016).
+    - >-
+      The roadmap's "2017" framing reflects the order being outstanding through
+      2017 (Forbes, 2017-11-24: five A320neos expected 2019/20). Deliveries
+      slipped: the sale-and-leaseback was finalised 2019-09-04 for delivery of
+      3 aircraft in early 2021 and 2 in early 2022; the fifth A320neo was
+      received in August 2023 (Tunisian Transport Ministry). The 900 MDT figure
+      is a company-official estimate reported by one outlet — a primary
+      contract value (Airbus purchase agreement) was not retrievable this run.
+  notes_fr:
+    - >-
+      La contrepartie Airbus n'est pas encore une entité du graphe ; le champ winner est
+      laissé non défini plutôt que de fabriquer un ancrage. La commande A320neo date de
+      septembre 2016 : Tunisair a réorganisé son carnet de commandes Airbus de 2008 (10
+      A320, 3 A330-200, 3 A350-800 ; A350 annulé en 2013) en cinq A320neo (Wikipédia citant
+      Flightglobal, 2016-09-06 ; Airfinance Global la date en août 2016).
+    - >-
+      Le cadrage « 2017 » de la feuille de route reflète la commande en attente tout au long
+      de 2017 (Forbes, 2017-11-24 : cinq A320neos attendus en 2019/20). Les livraisons ont
+      glissé : la cession-bail a été finalisée le 2019-09-04 pour la livraison de 3 aéronefs
+      début 2021 et 2 début 2022 ; le cinquième A320neo a été reçu en août 2023 (ministère
+      tunisien des Transports). Le chiffre de 900 MDT est une estimation officielle de la
+      société rapportée par un seul média — une valeur contractuelle primaire (accord
+      d'achat Airbus) n'a pas pu être récupérée lors de cette passe.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      الطرف المقابل إيرباص ليس بعد كياناً في الرسم البياني؛ يُترك حقل الفائز غير محدد بدلاً
+      من صنع مرساة. تعود طلبية A320neo إلى سبتمبر 2016: أعاد تونساير تنظيم طلبيات إيرباص
+      المتأخرة لعام 2008 (10 A320، 3 A330-200، 3 A350-800؛ تم إلغاء A350 في 2013) إلى خمسة
+      A320neo (ويكيبيديا ناقلاً Flightglobal، 2016-09-06؛ تُاريخها Airfinance Global في
+      أغسطس 2016).
+    - >-
+      يعكس إطار خارطة الطريق «2017» أن الطلبية معلقة طوال عام 2017 (فوربس، 2017-11-24: خمسة
+      A320neos متوقعة في 2019/20). تأخرت التسليمات: تم الانتهاء من عملية البيع والإيجار في
+      2019-09-04 لتسليم 3 طائرات في أوائل 2021 و2 في أوائل 2022؛ استُلمت الطائرة A320neo
+      الخامسة في أغسطس 2023 (وزارة النقل التونسية). رقم 900 مليون دينار تونسي هو تقدير رسمي
+      من الشركة أبلغت عنه وسيلة إعلام واحدة — لم يمكن استرجاع قيمة عقد أولية (اتفاقية شراء
+      إيرباص) أثناء هذه الجولة.
+  notes_ar_by: model-reviewed
+
+- id: ctr-gct-gabes-dessalement-2016
+  title_en: GCT seawater desalination station at Gabès (announced)
+  title_fr: Station de dessalement d'eau de mer du GCT à Gabès (annoncée)
+  title_ar: محطة تحلية مياه البحر للمجمع الكيميائي التونسي بقابس (معلن عنها)
+  institution: gct
+  kind: ppp
+  procurement: { mechanism: ppp, advertised: "~2016" }
+  award: { value: "150000000", currency: TND, year: 2016 }
+  status: advertised
+  start: "~2016-09"
+  confidence: C
+  basis: reported
+  attributed_to: >-
+    TAP news agency statement by Romdhane Souid (CPG PDG), carried by
+    Webmanagercenter (2016-09-28).
+  falsifiable_by: >-
+    A JORT PPP award decree or the signed concession agreement would confirm
+    or refute the 150 MDT figure and the 2019 start.
+  sources: [wmc-gct-gabes-dessalement-2016]
+  notes:
+    - >-
+      Announced as a GCT project under the PPP framework, works then scheduled
+      to start in 2019, part of a ~600 MDT CPG/GCT environmental programme.
+      No award record (winning concessionaire, signed contract) was found this
+      run — this is an announced project, not an awarded contract (announced
+      vs awarded failure vocabulary). The concessionaire is not yet a graph
+      entity; the winner field is left unset.
+  notes_fr:
+    - >-
+      Annoncé comme un projet GCT dans le cadre des PPP, les travaux alors prévus pour
+      démarrer en 2019, dans le cadre d'un programme environnemental CPG/GCT d'environ 600
+      MDT. Aucun record d'attribution (concessionnaire gagnant, contrat signé) n'a été
+      trouvé lors de cette passe — il s'agit d'un projet annoncé, pas d'un contrat attribué
+      (vocabulaire d'échec annoncé vs attribué). Le concessionnaire n'est pas encore une
+      entité du graphe ; le champ winner est laissé non défini.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      أُعلن كمشروع للمجمع الكيميائي التونسي في إطار شراكات القطاع العام-الخاص، وكان من
+      المقرر بدء الأعمال في 2019، كجزء من برنامج بيئي مشترك بين CPG/GCT بقيمة حوالي 600
+      مليون دينار تونسي. لم يتم العثور على سجل منح (مُconcessionnaire فائز، عقد موقّع) أثناء
+      هذه الجولة — هذا مشروع مُعلن، وليس عقداً ممنوحاً (مصطلح الإخفاق المُعلن مقابل
+      الممنوح). المُconcessionnaire ليس بعد كياناً في الرسم البياني؛ يُترك حقل الفائز غير
+      محدد.
+  notes_ar_by: model-reviewed
+
+- id: ctr-gct-bangladesh-2024
+  title_en: GCT – BADC annual fertiliser export contract (2024)
+  title_fr: GCT – contrat annuel d'exportation d'engrais avec la BADC (2024)
+  title_ar: المجمع الكيميائي التونسي – عقد تصدير الأسمدة السنوي مع هيئة BADC (2024)
+  institution: gct
+  kind: service
+  status: signed
+  start: "2024-04-29"
+  confidence: B
+  basis: documented
+  sources: [wmc-gct-bangladesh-2024]
+  notes:
+    - >-
+      Memorandum of understanding plus annual contract signed 29 April 2024 for
+      the export of ~150,000 tonnes of fertiliser to Bangladesh for 2024, signed
+      by GCT (DG Hédi Youssef) and BADC (president Abdullah Sazzad) in the
+      presence of Wael Chouchane (state secretary, energy transition) and
+      Bangladesh agriculture state secretary Wahida Aktar. Counterparty BADC is
+      not yet a graph entity; the winner field is left unset.
+    - >-
+      No contract value was published in the ministry communiqué — the figure
+      is a volume, not a value; a per-tonne price would be needed to convert
+      it. The GCT 2024 annual report or customs export data would state the
+      realised value.
+  notes_fr:
+    - >-
+      Protocole d'accord plus contrat annuel signé le 29 avril 2024 pour l'exportation
+      d'environ 150 000 tonnes d'engrais vers le Bangladesh pour 2024, signé par le GCT (DG
+      Hédi Youssef) et la BADC (président Abdullah Sazzad) en présence de Wael Chouchane
+      (secrétaire d'État, transition énergétique) et de la secrétaire d'État agricole
+      bangladaise Wahida Aktar. La contrepartie BADC n'est pas encore une entité du graphe ;
+      le champ winner est laissé non défini.
+    - >-
+      Aucune valeur contractuelle n'a été publiée dans le communiqué du ministère — le
+      chiffre est un volume, pas une valeur ; un prix par tonne serait nécessaire pour la
+      convertir. Le rapport annuel GCT 2024 ou les données douanières d'exportation
+      indiqueraient la valeur réalisée.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      بروتوكول اتفاقية وعقد سنوي وُقّع في 29 أبريل 2024 لتصدير ما يقرب من 150,000 طن من
+      الأسمدة إلى بنغلاديش لعام 2024، وقّعه المجمع الكيميائي التونسي (المدير العام هادي
+      يوسف) وهيئة BADC (الرئيس عبد الله سزّاد) بحضور وايل شوشان (سكرتير دولة، الانتقال
+      الطاقي) وسكرتيرة الدولة الزراعية البنغلادية واكدة أكتار. هيئة BADC ليست بعد كياناً في
+      الرسم البياني؛ يُترك حقل الفائز غير محدد.
+    - >-
+      لم تُنشر قيمة العقد في البيان الوزاري — الرقم هو حجم، وليس قيمة؛ سعر الطن مطلوب
+      لتحويله. سيذكر التقرير السنوي للمجمع الكيميائي التونسي لعام 2024 أو بيانات التصدير
+      الجمركية القيمة المحققة.
+  notes_ar_by: model-reviewed
+
+- id: ctr-sncft-ebrd-2017
+  title_en: EBRD loan financing SNCFT line works and six electric trains
+  title_fr: Prêt de la BERD finançant les travaux de lignes de la SNCFT et six trains électriques
+  title_ar: قرض البنك الأوروبي للإعمار والتنمية لتمويل أشغال الخطوط للشركة الوطنية للسكك الحديدية التونسية وستة قطارات كهربائية
+  institution: sncft
+  kind: procurement
+  procurement: { mechanism: bilateral-loan, advertised: "~2017-12" }
+  award: { value: "480000000", currency: TND, year: 2017 }
+  financing: { type: bilateral-loan, lender: null }
+  status: signed
+  start: "2017-12-21"
+  confidence: B
+  basis: documented
+  attributed_to: >-
+    Webmanagercenter (2017-12-21): 480 million dinars / 160 million euros,
+    signed by Minister of Development Zied Laâdhari, EBRD transport director
+    Sue Barrett and SNCFT PDG Anis Oueslati; 18-year maturity at 1% interest.
+    Kapitalis the same day reports 464 MDT.
+  disputes:
+    - claim: "Montant du prêt BERD à la SNCFT : 480 vs 464 MDT"
+      held_by: "Kapitalis (2017-12-21) : 464 MDT"
+      source: kapitalis-sncft-ebrd-2017
+      assessment: >-
+        Dispute of degree, not of kind: WMC reports 480 MDT (~160 MEUR), Kapitalis
+        464 MDT. The 480 MDT figure is adopted here (WMC cites the signing
+        parties); the difference is recorded, not silently resolved.
+      status: open
+  falsifiable_by: >-
+    EBRD project page for the SNCFT loan (project number/date) and the signed
+    loan agreement would fix the exact amount.
+  sources: [wmc-sncft-ebrd-2017, kapitalis-sncft-ebrd-2017]
+  notes:
+    - >-
+      Financing contract, not a supply award. The lender EBRD is not yet a
+      graph entity (lender field null rather than a fabricated anchor). Splits:
+      265 MDT (~88 MEUR) for the doubling and electrification of the
+      Moknine–Mahdia line (25 km) including the acquisition of six modern
+      electric trains; 215 MDT (~72 MEUR) for the upgrade of line 6
+      Tunis–Kasserine (316 km). A separate 2 MEUR grant covered technical
+      assistance. The works contractors were tendered in 2018 and are unnamed
+      here.
+  notes_fr:
+    - >-
+      Contrat de financement, pas une attribution de fourniture. Le prêteur BERD n'est pas
+      encore une entité du graphe (champ lender nul plutôt qu'un ancrage fabriqué).
+      Décompositions : 265 MDT (~88 MEUR) pour le doublement et l'électrification de la
+      ligne Moknine–Mahdia (25 km) y compris l'acquisition de six trains électriques
+      modernes ; 215 MDT (~72 MEUR) pour la mise à niveau de la ligne 6 Tunis–Kasserine (316
+      km). Une subvention séparée de 2 MEUR a couvert l'assistance technique. Les
+      entrepreneurs des travaux ont été appelés à l'offre en 2018 et ne sont pas nommés ici.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      عقد تمويل، وليس منحة توريد. المُقرض بنك الإعمار الأوروبي للتنمية ليس بعد كياناً في
+      الرسم البياني (حقل المُقرض فارغ بدلاً من مرساة مُصنّعة). التفكيك: 265 مليون دينار
+      تونسي (~88 مليون يورو) لتوسيع وتوهيج خط موكنين-المهدية (25 كم) بما في ذلك اقتناء ست
+      قطارات كهربائية حديثة؛ 215 مليون دينار تونسي (~72 مليون يورو) لترقية الخط 6
+      تونس-القصرين (316 كم). غطت منحة منفصلة بقيمة 2 مليون يورو المساعدة الفنية. أُجريت
+      مناقشات مقاولي الأعمال في 2018 ولم يتم تسميتهم هنا.
+  notes_ar_by: model-reviewed
+
+- id: ctr-sncft-alstom-caf-2017
+  title_en: SNCFT rolling-stock orders with Alstom and CAF (unverified lead)
+  title_fr: Commandes de matériel roulant SNCFT auprès d'Alstom et CAF (piste non vérifiée)
+  title_ar: طلبيات الشركة الوطنية للسكك الحديدية التونسية للعربات من ألستوم وCAF (خيط غير متحقق)
+  institution: sncft
+  kind: procurement
+  status: unknown
+  start: "~2017"
+  confidence: D
+  basis: unsubstantiated
+  attributed_to: >-
+    Research roadmap P1 #7 scope statement ("SNCFT rolling stock — the 2017
+    Alstom/CAF orders"). No award record, contract value, unit count or signing
+    date could be retrieved this run: Tunisian outlets' own archives
+    (Webmanagercenter, Kapitalis, Tunisie Numerique, L'Economiste Maghrébin)
+    carry no Alstom/CAF SNCFT story for 2017-2018, Alstom's press archive
+    redirects, and the Wayback CDX shows nothing under alstom.com for Tunisia
+    in that window.
+  falsifiable_by: >-
+    An Alstom or CAF press release, a JORT contract decree, or an SNCFT annual
+    report naming the rolling-stock suppliers for 2017-2019.
+  sources: [wikipedia-sncft, docs-research-roadmap-p1-7]
+  notes:
+    - >-
+      NEGATIVE FINDING, kept per rule 6: the popular account claims Alstom/CAF
+      rolling-stock orders for 2017; no citable award record was found this
+      run. Counterparties Alstom and CAF are not yet graph entities. The
+      general fleet-modernisation context is documented — the EBRD loan
+      (ctr-sncft-ebrd-2017) finances six electric trains and the 2020 SNCFT
+      fleet table (French Wikipedia) lists 12 RFR electric trainsets under
+      trials plus 30 electric multiple units — but the specific Alstom/CAF
+      award claimed by the roadmap remains unsourced. Value unknown; unit
+      counts and dates unknown.
+  notes_fr:
+    - >-
+      CONSTAT NÉGATIF, conservé selon la règle 6 : le récit populaire affirme des commandes
+      de matériel roulant Alstom/CAF pour 2017 ; aucun record d'attribution citable n'a été
+      trouvé lors de cette passe. Les contreparties Alstom et CAF ne sont pas encore des
+      entités du graphe. Le contexte général de modernisation de la flotte est documenté —
+      le prêt BERD (ctr-sncft-ebrd-2017) finance six trains électriques et le tableau de
+      flotte SNCFT 2020 (Wikipédia française) liste 12 rames électriques RFR en cours
+      d'essai plus 30 rames multiples électriques — mais la commande spécifique Alstom/CAF
+      revendiquée par la feuille de route reste sans source. Valeur inconnue ; nombres
+      d'unités et dates inconnus.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      نتيجة سلبية، محفوظة وفقاً للقاعدة 6: يزعم الرواية الشائعة طلبيات عربات ألستوم/CAF لعام
+      2017؛ لم يتم العثور على سجل منح يمكن الاستشهاد به أثناء هذه الجولة. الطرفان المقابلان
+      ألستوم وCAF ليسا بعد كيانين في الرسم البياني. يتم توثيق سياق تحديث الأسطول العام —
+      يمول قرض بنك الإعمار الأوروبي للتنمية (ctr-sncft-ebrd-2017) ست قطارات كهربائية وجدول
+      أسطول SNCFT لعام 2020 (ويكيبيديا الفرنسية) يسرد 12 ركاب كهربائي RFR قيد التجربة
+      بالإضافة إلى 30 وحدة كهربائية متعددة — لكن طلبية ألستوم/CAF المحددة التي تدعيها خارطة
+      الطريق لا تزال بلا مصدر. قيمة غير معروفة؛ أعداد الوحدات والتواريخ غير معروفة.
+  notes_ar_by: model-reviewed
+
+- id: ctr-sncft-attijari-locomotives-2017
+  title_en: Attijari Bank co-financing of 20 SNCFT locomotives
+  title_fr: Co-financement par Attijari Bank de 20 locomotives SNCFT
+  title_ar: مساهمة بنك التجاري في تمويل 20 قاطرة للشركة الوطنية للسكك الحديدية التونسية
+  institution: sncft
+  kind: procurement
+  financing: { type: bank-loan, lender: attijari-bank }
+  status: signed
+  start: "~2017-02"
+  confidence: C
+  basis: reported
+  attributed_to: >-
+    Kapitalis and L'Economiste Maghrébin (2017-02-20), reporting the signature
+    of a convention between Attijari Bank and SNCFT.
+  falsifiable_by: >-
+    The signed Attijari Bank–SNCFT convention or a JORT decree ratifying the
+    guarantee would fix value and locomotive supplier.
+  sources: [kapitalis-sncft-attijari-2017]
+  notes:
+    - >-
+      A financing convention for the acquisition of 20 locomotives, signed
+      February 2017. No value retrieved this run (headline-only coverage in
+      reachable archives); the supplier of the locomotives is not named in the
+      headline record. Included as the second documented piece of the SNCFT
+      rolling-stock programme alongside the EBRD loan.
+  notes_fr:
+    - >-
+      Une convention de financement pour l'acquisition de 20 locomotives, signée en février
+      2017. Aucune valeur récupérée lors de cette passe (couverture uniquement à la une dans
+      les archives accessibles) ; le fournisseur des locomotives n'est pas nommé dans
+      l'article à la une. Inclus en tant que deuxième pièce documentée du programme de
+      matériel roulant SNCFT aux côtés du prêt BERD.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      اتفاقية تمويل لاقتناء 20 قاطرة، وُقّعت في فبراير 2017. لم يتم استرجاع أي قيمة أثناء
+      هذه الجولة (تغطية عناوين فقط في الأرشيف المتاح)؛ لم يتم تسمية مورد القاطرات في العنوان
+      الرئيسي. مشمول كثاني قطعة موثقة لبرنامج عربات SNCFT إلى جانب قرض بنك الإعمار الأوروبي
+      للتنمية.
+  notes_ar_by: model-reviewed
+
+- id: ctr-steg-eni-gas-2015-2017
+  title_en: STEG – ENI gas supply / exploration deal (unverified lead)
+  title_fr: STEG – accord d'approvisionnement / d'exploration gazier avec ENI (piste non vérifiée)
+  title_ar: الشركة التونسية للكهرباء والغاز – صفقة توريد / استكشاف الغاز مع إني (خيط غير متحقق)
+  institution: steg
+  kind: service
+  status: unknown
+  confidence: D
+  basis: unsubstantiated
+  attributed_to: >-
+    Research roadmap P1 #7 scope statement ("STEG/ENI gas — the 2015/2017 ENI
+    gas supply or exploration deals"). No 2015 or 2017 contract record could
+    be retrieved this run from the outlets searched (Webmanagercenter,
+    Kapitalis, L'Economiste Maghrébin, Tunisie Numerique) or the Wayback CDX.
+  falsifiable_by: >-
+    A JORT decree approving an ENI–STEG convention, an ENI press release, or
+    the Tunisian Ministry of Industry's hydrocarbon contracts page for 2015-2017.
+  sources: [lecm-eni-2025, docs-research-roadmap-p1-7]
+  notes:
+    - >-
+      NEGATIVE FINDING, kept per rule 6: whether a specific 2015/2017 STEG–ENI
+      gas supply or exploration contract exists, and its terms, remains
+      unverified. No award date, value or counterparty anchor is fabricated.
+      The documented ENI–Tunisia relationship (L'Economiste Maghrébin,
+      2025-06-19) is a hydrocarbons partnership running since the 1960s, with
+      current ENI-linked Tunisian concession output around 7,884 bbl/day of oil
+      and 467,000 m3/day of gas; a partnership renewal meeting was held on
+      18 June 2025. ENI is not yet a graph entity.
+  notes_fr:
+    - >-
+      CONSTAT NÉGATIF, conservé selon la règle 6 : qu'il existe un contrat spécifique
+      d'approvisionnement ou d'exploration gazier STEG–ENI de 2015/2017, et ses conditions,
+      reste non vérifié. Aucune date d'attribution, valeur ou ancrage de contrepartie n'est
+      fabriqué. La relation documentée ENI–Tunisie (L'Economiste Maghrébin, 2025-06-19) est
+      un partenariat hydrocarbures en cours depuis les années 1960, avec une production de
+      concessions tunisiennes liées à ENI d'environ 7 884 barils/jour de pétrole et 467 000
+      m3/jour de gaz ; une réunion de renouvellement du partenariat a eu lieu le 18 juin
+      2025. ENI n'est pas encore une entité du graphe.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      نتيجة سلبية، محفوظة وفقاً للقاعدة 6: ما إذا كان هناك عقد محدد لتوريد أو استكشاف الغاز
+      بين STEG وENI لعام 2015/2017، وشروطه، لا يزال غير متحقق. لا يتم اختلاق أي تاريخ منح أو
+      قيمة أو مرساة طرف مقابل. العلاقة الموثقة بين ENI وتونس (L'Economiste Maghrébin،
+      2025-06-19) هي شراكة هيدروكربونات مستمرة منذ الستينيات، مع إنتاج تونسي مرتبط بـ ENI
+      يبلغ حوالي 7,884 برميل/يوم من النفط و467,000 متر مكعب/يوم من الغاز؛ عُقد اجتماع تجديد
+      الشراكة في 18 يونيو 2025. ENI ليست بعد كياناً في الرسم البياني.
+  notes_ar_by: model-reviewed
+
+- id: ctr-sonede-djerba-dessalement-2018
+  title_en: Djerba seawater desalination station (first in Tunisia)
+  title_fr: Station de dessalement d'eau de mer de Djerba (première en Tunisie)
+  title_ar: محطة تحلية مياه البحر بجربة (الأولى في تونس)
+  institution: sonede
+  kind: construction
+  procurement: { mechanism: state-contract, advertised: "~2014" }
+  award: { value: "180000000", currency: TND, year: 2018 }
+  status: finished
+  start: "2018-05-02"
+  confidence: B
+  basis: documented
+  attributed_to: >-
+    Youssef Chahed, then head of government, at the kick-off ceremony on
+    2 May 2018 (Webmanagercenter/TAP): "méga-projet réalisé par des compétences
+    tunisiennes moyennant des investissements d'environ 180 millions de dinars".
+    An earlier SONEDE loan-guarantee law of March 2014 covered 120 MDT.
+  falsifiable_by: >-
+    JORT decrees ratifying the SONEDE loan guarantee (2014) and the station's
+    acceptance report; the contractor names would appear in the works contracts.
+  sources: [wmc-djerba-dessalement-2018, wmc-djerba-sonede-2014]
+  notes:
+    - >-
+      First seawater desalination station in Tunisia; capacity 50,000 m3/day
+      (extensible to 75,000); operational from mid-2018 (Webmanagercenter,
+      2018-06-22). This is a SONEDE state project under the 2015 PPP-era legal
+      framework, NOT a private PPP concession: the loan-guarantee law ratified
+      by the ANC in March 2014 (120 MDT) covered the financing. The contractors
+      are unnamed in the source; the winner field is left unset.
+    - >-
+      The roadmap's "Djerba/Zarzis desalination PPP" framing does not match
+      this record — see ctr-solar-water-south-2022 for the PPP-shaped proposal.
+      A separate PPP tender for a Djerba-Zarzis station is reported in the
+      wider press (2019-2023) but could not be sourced this run; flagged for
+      verification.
+  notes_fr:
+    - >-
+      Première station de dessalement d'eau de mer en Tunisie ; capacité de 50 000 m3/jour
+      (extensible à 75 000) ; opérationnelle depuis mi-2018 (Webmanagercenter, 2018-06-22).
+      Il s'agit d'un projet étatique SONEDE dans le cadre du régime juridique des PPP de
+      2015, PAS une concession PPP privée : la loi de garantie de prêt ratifiée par l'ANC en
+      mars 2014 (120 MDT) couvrait le financement. Les entrepreneurs ne sont pas nommés dans
+      la source ; le champ winner est laissé non défini.
+    - >-
+      Le cadrage « PPP de dessalement Djerba/Zarzis » de la feuille de route ne correspond
+      pas à cet enregistrement — voir ctr-solar-water-south-2022 pour la proposition PPP. Un
+      appel d'offres PPP séparé pour une station Djerba-Zarzis est rapporté dans la presse
+      généraliste (2019-2023) mais n'a pas pu être sourcé lors de cette passe ; signalé pour
+      vérification.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      أول محطة تحلية مياه البحر في تونس؛ السعة 50,000 متر مكعب/يوم (قابلة للتوسيع إلى
+      75,000)؛ تشغيلية منذ منتصف 2018 (Webmanagercenter، 2018-06-22). هذا مشروع حكومي لشركة
+      SONEDE في إطار نظام قوانين شراكات القطاع العام-الخاص لعام 2015، وليس تخصيصاً خاصاً:
+      غطت قانون ضمان القرض الذي صادق عليه البرلمان في مارس 2014 (120 مليون دينار تونسي)
+      التمويل. المقاولون غير مسميون في المصدر؛ يُترك حقل الفائز غير محدد.
+    - >-
+      لا يتطابق إطار خارطة الطريق «شراكة تحلية جربة/جرجيس» مع هذا السجل — راجع
+      ctr-solar-water-south-2022 للمقترح الخاص بالشراكة. أُبلغ عن مناقضة شراكة منفصلة لمحطة
+      جربة-جرجيس في الصحافة الأوسع (2019-2023) لكن لم يمكن مصدرتها أثناء هذه الجولة؛ تم
+      الإشارة إليها للتحقق.
+  notes_ar_by: model-reviewed
+
+- id: ctr-sonede-sfax-dessalement-2022
+  title_en: Sfax seawater desalination station (JICA-financed)
+  title_fr: Station de dessalement d'eau de mer de Sfax (financée par la JICA)
+  title_ar: محطة تحلية مياه البحر بصفاقس (بتمويل من الوكالة اليابانية للتعاون الدولي JICA)
+  institution: sonede
+  kind: construction
+  procurement: { mechanism: bilateral-loan, advertised: "~2017-09" }
+  award: { value: "800000000", currency: TND, year: 2022 }
+  financing: { type: bilateral-loan, lender: null }
+  status: signed
+  start: "2022-04-01"
+  confidence: B
+  basis: documented
+  attributed_to: >-
+    L'Economiste Maghrébin (2022-04-01), reporting the kick-off ceremony:
+    JICA loan of 36.676 billion yen (~800 million dinars), 25-year maturity,
+    7-year grace, 1.7% interest.
+  falsifiable_by: >-
+    JICA project record for the Sfax desalination loan and the signed EPC
+    contracts would fix the exact amounts and the contractor.
+  sources: [lecm-sfax-dessalement-2022]
+  notes:
+    - >-
+      Works started 1 April 2022 with PM Najla Bouden, Agriculture Minister
+      Mahmoud Elyes Hamza and Japanese ambassador Shimizu Shinsuke. Capacity
+      100,000 m3/day rising to 200,000, serving ~600,000 residents of Grand-Sfax.
+      The Sfax station was first announced in 2017 (Webmanagercenter, 2017-09-22)
+      and was scheduled for completion in 2024 (L'Economiste Maghrébin,
+      2023-04-03).
+    - >-
+      Contract regime: state project financed by a concessional bilateral loan
+      — not a private PPP; the JICA loan value is the documented number, the
+      EPC contract value is not disclosed in the source. The lender JICA is not
+      yet a graph entity (lender field null rather than a fabricated anchor);
+      the EPC contractor is unnamed in the source.
+  notes_fr:
+    - >-
+      Les travaux ont commencé le 1er avril 2022 en présence de la Première ministre Najla
+      Bouden, du ministre de l'Agriculture Mahmoud Elyes Hamza et de l'ambassadeur japonais
+      Shimizu Shinsuke. Capacité de 100 000 m3/jour portée à 200 000, servant environ 600
+      000 habitants du Grand-Sfax. La station de Sfax a d'abord été annoncée en 2017
+      (Webmanagercenter, 2017-09-22) et devait être achevée en 2024 (L'Economiste Maghrébin,
+      2023-04-03).
+    - >-
+      Régime contractuel : projet étatique financé par un prêt bilatéral concessionnel — pas
+      un PPP privé ; la valeur du prêt JICA est le chiffre documenté, la valeur du contrat
+      EPC n'est pas divulguée dans la source. Le prêteur JICA n'est pas encore une entité du
+      graphe (champ lender nul plutôt qu'un ancrage fabriqué) ; l'entrepreneur EPC n'est pas
+      nommé dans la source.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      بدأت الأعمال في 1 أبريل 2022 بحضور رئيسة الحكومة نجلاء بودن و وزير الزراعة محمود إلياس
+      حمزة والسفير الياباني شيميزو شينسكي. السعة 100,000 متر مكعب/يوم ترتفع إلى 200,000،
+      وتخدم حوالي 600,000 من سكان صفاقس الكبرى. أُعلنت محطة صفاقس لأول مرة في 2017
+      (Webmanagercenter، 2017-09-22) وكان من المقرر الانتهاء منها في 2024 (L'Economiste
+      Maghrébin، 2023-04-03).
+    - >-
+      النظام التعاوني: مشروع حكومي ممول بقرض اتفاقي ثنائي — وليس شراكة خاصة؛ قيمة قرض JICA
+      هي الرقم الموثق، قيمة عقد EPC غير مكتوبة في المصدر. المُقرض JICA ليس بعد كياناً في
+      الرسم البياني (حقل المُقرض فارغ بدلاً من مرساة مُصنّعة)؛ مقاول EPC غير مسمى في المصدر.
+  notes_ar_by: model-reviewed
+
+- id: ctr-sonede-zarat-dessalement-2023
+  title_en: Zarat seawater desalination station completed
+  title_fr: >-
+    Achèvement de la station de dessalement d'eau de mer de Zarat
+  title_ar: استكمال محطة تحلية مياه البحر بزارات
+  institution: sonede
+  kind: construction
+  status: finished
+  end: "2023-12"
+  confidence: C
+  basis: reported
+  attributed_to: >-
+    L'Economiste Maghrébin/TAP (02/11/2023), quoting the project's reported
+    completion date (end December 2023)
+  reasoning: >-
+    The flagged source reports the completion of the Zarat (Gabès) seawater
+    desalination station at end December 2023. The contracts layer carries the
+    Djerba (ctr-sonede-djerba-dessalement-2018) and Sfax
+    (ctr-sonede-sfax-dessalement-2022) stations but no Zarat record; the
+    source documents the project's completion honestly fillable as a finished
+    construction contract. Value, contractor and capacity are NOT given in the
+    source excerpt and are left unset.
+  falsifiable_by: >-
+    SONEDE's or the CMF/procurement records dating the station's acceptance to
+    a different date, or showing a different operator than the SONEDE series.
+  notes:
+    - >-
+      Parallels the existing SONEDE desalination records; value (`?`),
+      contractor (`?`) and capacity (`?`) unknown from the flagged source —
+      left unset rather than guessed. Add when a contract document is found.
+  notes_fr:
+    - >-
+      Parallèle aux enregistrements SONEDE existants ; la valeur (`?`),
+      l'entrepreneur (`?`) et la capacité (`?`) ne sont pas connus de la
+      source signalée — laissés non définis plutôt que devinés. À ajouter
+      lorsqu'un document contractuel sera trouvé.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      يوازي السجلات القائمة لتحلية المياه لدى SONEDE؛ القيمة (`؟`) والمقاول
+      (`؟`) والسعة (`؟`) غير معروفة من المصدر المُشار إليه — تُركت غير محددة
+      بدل التخمين. تُضاف عند العثور على وثيقة تعاقدية.
+  notes_ar_by: model-reviewed
+  sources: [lecm-zarat-2023]
+
+- id: ctr-solar-water-south-2022
+  title_en: Solar Water PLC southern-Tunisia solar desalination proposal
+  title_fr: Proposition de Solar Water PLC pour une station solaire de dessalement dans le sud de la Tunisie
+  title_ar: مقترح شركة سولار ووتر لمحطة تحلية بالطاقة الشمسية في جنوب تونس
+  institution: sonede
+  kind: ppp
+  award: { value: "600000000", currency: EUR, year: 2022 }
+  status: advertised
+  start: "~2022-12-01"
+  confidence: C
+  basis: reported
+  attributed_to: >-
+    Tunisian Ministry of Economy and Planning communiqué (via L'Economiste
+    Maghrébin, 2022-12-01): estimated investment cost of 600 million euros for
+    a 200,000 m3/day solar-powered desalination station in the Tunisian south,
+    presented by Solar Water PLC to minister Samir Saied with UK ambassador
+    Helen Winterton.
+  falsifiable_by: >-
+    The signed PPP concession decree (JORT) for the southern desalination
+    project, or the ANME/UGO PPP pipeline listing, would confirm winner and value.
+  sources: [lecm-solar-water-2022]
+  notes:
+    - >-
+      A company presentation to the ministry — an announced project, not an
+      awarded contract (announced vs awarded). No signed concession, guarantee
+      or award decree was found this run. The proposed counterparty Solar Water
+      PLC and the ministry are not yet graph entities; the winner field is left
+      unset and institution is anchored on sonede (the state water entity).
+      This is the closest sourced record to the roadmap's "Djerba/Zarzis
+      desalination PPP" framing; a distinct Djerba-Zarzis PPP tender is
+      referenced in the press but could not be located this run.
+  notes_fr:
+    - >-
+      Une présentation de l'entreprise au ministère — un projet annoncé, pas un contrat
+      attribué (annoncé vs attribué). Aucune concession signée, garantie ou décret
+      d'attribution n'a été trouvé lors de cette passe. La contrepartie proposée Solar Water
+      PLC et le ministère ne sont pas encore des entités du graphe ; le champ winner est
+      laissé non défini et l'institution est ancrée sur sonede (l'entité étatique de l'eau).
+      C'est l'enregistrement sourcé le plus proche du cadrage « PPP de dessalement
+      Djerba/Zarzis » de la feuille de route ; un appel d'offres PPP distinct Djerba-Zarzis
+      est référencé dans la presse mais n'a pas pu être localisé lors de cette passe.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      عرض شركة للوزارة — مشروع مُعلن، وليس عقداً ممنوحاً (مُعلن مقابل ممنوح). لم يتم العثور
+      على تخصيص موقّع أو ضمان أو قرار منح أثناء هذه الجولة. الطرف المقابل المقترح Solar
+      Water PLC والوزارة ليسا بعد كيانين في الرسم البياني؛ يُترك حقل الفائز غير محدد وتُرسّخ
+      المؤسسة على sonede (الكيان المائي الحكومي). هذا هو السجل المصدّر الأقرب لإطار خارطة
+      الطريق «شراكة تحلية جربة/جرجيس»؛ أُشير إلى مناقضة شراكة منفصلة لمحطة جربة-جرجيس في
+      الصحافة لكن لم يمكن تحديدها أثناء هذه الجولة.
+  notes_ar_by: model-reviewed
+
+- id: ctr-elmed-financing-2023-2024
+  title_en: Elmed interconnector financing package (EU/Team Europe)
+  title_fr: Montage de financement de l'interconnexion Elmed (UE/Équipe Europe)
+  title_ar: حزمة تمويل الرابط الكهربائي إلمد (الاتحاد الأوروبي/فريق أوروبا)
+  institution: steg
+  kind: procurement
+  award: { value: "472600000", currency: EUR, year: 2024 }
+  financing: { type: multi-donor-financing, lender: null }
+  status: signed
+  start: "2023-08-07"
+  confidence: B
+  basis: documented
+  attributed_to: >-
+    L'Economiste Maghrébin (N. Dejoui, 2024-06-13) reporting the Tunisia
+    Investment Forum: Team Europe committed a total of 472.6 million euros to
+    ELMED and its ecosystem. Components: EU Connecting Europe Facility grant
+    307.6 MEUR approved December 2022, grant agreement signed 7 August 2023 by
+    CINEA, TERNA and STEG; EBRD/EIB/KfW loan of 125 MEUR signed December 2023
+    (submarine cable, EIB-led); EU top-up grant 27 MEUR (December 2023);
+    World Bank credit of 270 MUSD under board examination 21 June 2023
+    (L'Economiste Maghrébin, H. Marzouk, 2023-06-19).
+  falsifiable_by: >-
+    CINEA grant decision CEF and the EBRD/EIB/KfW loan agreements for ELMED;
+    the World Bank board approval of the 270 MUSD credit.
+  sources: [lecm-elmed-472m-2024, lecm-elmed-wb-2023]
+  notes:
+    - >-
+      Financing contracts, not construction awards. The counterparties (Terna,
+      EBRD, EIB, KfW, CINEA) are not yet graph entities; the lender field is
+      null rather than a fabricated anchor. The interconnector itself
+      (phase-1 capacity 600 MW, Tunisia–Italy) is under implementation with
+      construction supervised by STEG and Terna; the Tunisian parliament
+      adopted the loan law for STEG on 30 January 2024 (L'Economiste
+      Maghrébin). No EPC award record (converter stations, submarine cable,
+      tunnel) was retrieved this run — see ctr-elmed-interconnector-2022.
+  notes_fr:
+    - >-
+      Contrats de financement, pas des attributions de construction. Les contreparties
+      (Terna, BERD, BEI, KfW, CINEA) ne sont pas encore des entités du graphe ; le champ
+      lender est nul plutôt qu'un ancrage fabriqué. L'interconnexion elle-même (capacité de
+      phase 1 de 600 MW, Tunisie–Italie) est en cours de réalisation avec la construction
+      supervisée par STEG et Terna ; le parlement tunisien a adopté la loi de prêt pour STEG
+      le 30 janvier 2024 (L'Economiste Maghrébin). Aucun record d'attribution EPC (stations
+      de conversion, câble sous-marin, tunnel) n'a été récupéré lors de cette passe — voir
+      ctr-elmed-interconnector-2022.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      عقود تمويل، وليس منح بناء. الأطراف المقابلة (Terna، بنك الإعمار الأوروبي للتنمية،
+      البنك الأوروبي للاستثمار، KfW، CINEA) ليست بعد كيانات في الرسم البياني؛ حقل المُقرض
+      فارغ بدلاً من مرساة مُصنّعة. الرابط الكهربائي نفسه (سعة المرحلة الأولى 600 ميجاوات،
+      تونس-إيطاليا) قيد التنفيذ مع الإشراف على البناء من قبل STEG وTerna؛ صادق البرلمان
+      التونسي على قانون القرض لـ STEG في 30 يناير 2024 (L'Economiste Maghrébin). لم يتم
+      استرجاع أي سجل منح EPC (محولات، كابل بحري، نفق) أثناء هذه الجولة — راجع
+      ctr-elmed-interconnector-2022.
+  notes_ar_by: model-reviewed
+
+- id: ctr-elmed-interconnector-2022
+  title_en: Elmed Tunisia–Italy power interconnector (project record)
+  title_fr: Interconnexion électrique Elmed Tunisie–Italie (fiche projet)
+  title_ar: الرابط الكهربائي إلمد بين تونس وإيطاليا (سجل مشروع)
+  institution: steg
+  kind: construction
+  status: unknown
+  start: "~2022"
+  confidence: C
+  basis: reported
+  attributed_to: >-
+    Tunisian Ministry of Industry communiqué via L'Economiste Maghrébin
+    (2026-01-24): capacity of 600 MW, ongoing coordination with Italy; project
+    placed under specific government follow-up (2026-01-27).
+  falsifiable_by: >-
+    The signed EPC contracts for cable and converter stations (JORT award
+    decrees or Terna/STEG announcements) would supply winner and value.
+  sources: [lecm-elmed-italie-2026, lecm-elmed-472m-2024]
+  notes:
+    - >-
+      First HVDC interconnector between Africa and Europe; project promoted
+      since the 2019-2022 period with total investment reported in the press
+      around 850-900 MEUR, but no citable award value or EPC contract was
+      retrieved this run. The 600 MW phase-1 capacity and the January 2026
+      status (works under way, coordination with Italian embassy) are the
+      documented anchors. Terna and the EPC contractors are not yet graph
+      entities; the winner field is left unset.
+  notes_fr:
+    - >-
+      Première interconnexion HTDC entre l'Afrique et l'Europe ; projet promu depuis la
+      période 2019-2022 avec un investissement total rapporté dans la presse autour de
+      850-900 MEUR, mais aucune valeur d'attribution citable ou contrat EPC n'a été récupéré
+      lors de cette passe. La capacité de phase 1 de 600 MW et le statut de janvier 2026
+      (travaux en cours, coordination avec l'ambassade italienne) sont les ancrages
+      documentés. Terna et les entrepreneurs EPC ne sont pas encore des entités du graphe ;
+      le champ winner est laissé non défini.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      أول رابط كهربائي عالي الجهد بين أفريقيا وأوروبا؛ مشروع رُوج منذ الفترة 2019-2022
+      باستثمار إجمالي أبلغت عنه الصحافة حوالي 850-900 مليون يورو، لكن لم يتم استرجاع أي قيمة
+      منح يمكن الاستشهاد بها أو عقد EPC أثناء هذه الجولة. سعة المرحلة الأولى البالغة 600
+      ميجاوات وحالة يناير 2026 (أعمال جارية، تنسيق مع السفارة الإيطالية) هما المرساتان
+      الموثقتان. Terna ومقاولو EPC ليسا بعد كيانين في الرسم البياني؛ يُترك حقل الفائز غير
+      محدد.
+  notes_ar_by: model-reviewed
+
+# --- merged 2026-08-26 (ministry/ATB/contracts pass)
+- id: ctr-tunisie-autoroutes-a1-reconcession-2026
+  title_en: A1 Hammam Lif-Sousse concession renewal to Tunisie Autoroutes
+  title_fr: "Renouvellement de la concession A1 Hammam Lif-Sousse à Tunisie Autoroutes"
+  institution: ministry-equipment-housing
+  kind: concession
+  winner: tunisie-autoroutes
+  status: awarded
+  location: []
+  notes:
+    - >-
+      Decided at the restricted ministerial council of 12 August 2026 chaired
+      by PM Sara Zaafarani. The 141.5 km section's current concession — held by
+      Tunisie Autoroutes itself — expires end-2028; the renewal avoids any
+      operator change at term. Contract text not yet published; award value not
+      stated in the source.
+    - >-
+      Recorded as awarded on the council decision; no contract document is
+      public yet, so signature and terms remain open.
+  confidence: C
+  basis: reported
+  verification: needs-primary-source
+  attributed_to: Kapitalis
+  falsifiable_by: The published concession contract or its JORT notice
+  disputes:
+    - claim: >-
+        Section endpoint: Mosaique FM reports the conceded A1 section as Hammam Lif-M'saken; Kapitalis (the source of record here) writes Hammam Lif-Sousse (141.5 km).
+      held_by: Mosaique FM versus Kapitalis
+      assessment: >-
+        Both are secondary reporting of the same council decision; the contract
+        text will settle it. Recorded open rather than silently picked.
+      status: open
+  sources:
+    - kapitalis-autoroutes-a1-a2-2026
+- id: ctr-tunisie-autoroutes-a2-concession-2026
+  title_en: A2 Tunis-Jelma concession to Tunisie Autoroutes
+  title_fr: "Concession de l'autoroute A2 Tunis-Jelma à Tunisie Autoroutes"
+  institution: ministry-equipment-housing
+  kind: concession
+  winner: tunisie-autoroutes
+  status: awarded
+  location: [gov-ben-arous, gov-zaghouan, gov-kairouan, gov-sidi-bouzid]
+  notes:
+    - >-
+      Same council decision of 12 August 2026: the new 186 km A2 Tunis-Jelma
+      motorway (under construction, delivery planned 2027, eight lots, ~1.7bn
+      dinars construction cost — a works figure, not a concession value) goes
+      to Tunisie Autoroutes so tolling starts at completion without an operator
+      change.
+  confidence: C
+  basis: reported
+  verification: needs-primary-source
+  attributed_to: Kapitalis
+  falsifiable_by: The published concession contract or its JORT notice
+  sources:
+    - kapitalis-autoroutes-a1-a2-2026

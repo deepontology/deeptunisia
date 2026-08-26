@@ -1,0 +1,129 @@
+# =============================================================================
+# "The Chemical Century" — Exclusions
+# Claims deliberately not included in the article, with reasons.
+# This is the "Deliberately not used" section (§6 in the script v6).
+#
+# DeepTunisia rule 6: unsubstantiated claims are kept, never deleted.
+# A publication's exclusions must be as transparent as its inclusions.
+#
+# Categories: weak-evidence | off-thread | headline-only | unread
+#             | single-source | scope-confusion | bibliographic
+#
+# Items 15–18 are air-layer exclusions (tagged layer: air in the script).
+# =============================================================================
+
+exclusions:
+
+  - claim: "Fisherman income collapse: ≈700 → ≈20 TND/day"
+    reason: "Reported-only, single outlet; the primary Reuters text could not be re-fetched in phase 2 (D12)."
+    grade: reported
+    sources: [S7]
+    category: single-source
+
+  - claim: "Alkimia (39.55% GCT, listed) among ten companies silent on 2025 accounts; negative equity −190 MDT"
+    reason: "Reported, and a different thread (governance secrecy of a listed subsidiary, not the timeline)."
+    grade: reported
+    sources: [S73]
+    category: off-thread
+
+  - claim: "\"150 years to rehabilitate the Gulf\" (Houcine Rhili); one-unit dismantling ≈5 bn TND"
+    reason: "Single-expert claims, no corroboration."
+    grade: reported
+    sources: [S81]
+    category: single-source
+
+  - claim: "2012 consolidated \"groupe\" revenue (2,511 m TND)"
+    reason: "Scope confusion at this length."
+    grade: reported
+    sources: [S3]
+    category: scope-confusion
+
+  - claim: "2018 — Cour des comptes intervention on Gabès pollution"
+    reason: "Headline-level only (D); underlying report not identified."
+    grade: unsubstantiated
+    sources: ["Webmanagercenter 28-03-2018"]
+    category: headline-only
+
+  - claim: "2019 — \"80 MD\" integrated development package for Gabès"
+    reason: "Headline-level only (Nessma TV); content unread."
+    grade: unsubstantiated
+    sources: ["Nessma TV 08-05-2019"]
+    category: headline-only
+
+  - claim: "2019 — Sfax (SIAPE) plant production stopped"
+    reason: "Off the Gulf thread — a Sfax film."
+    grade: documented
+    sources: ["GCT official history (2019)"]
+    category: off-thread
+
+  - claim: "2008 — Gafsa mining-basin revolt (7-01-2008: CPG hiring contest, 1,000 candidates / 81 posts)"
+    reason: "A rupture event in its own right — the mining basin's story, not the Gulf's (context beat only)."
+    grade: documented
+    sources: ["Wikipedia FR (Grèves de Gafsa)"]
+    category: off-thread
+
+  - claim: "TIFERT joint venture (2006; in force 2011; 70% CPG-GCT / 30% Coromandel+GSFC); ~900 MDT owed to CPG"
+    reason: "Skhira-side corporate detail, off the three-state chain."
+    grade: documented
+    sources: ["GCT official history", S72]
+    category: off-thread
+
+  - claim: "1995 — first remote-sensing quantification (Guillaumont et al.)"
+    reason: "Bibliographic-level; the clock already establishes the point."
+    grade: reported
+    sources: ["Guillaumont et al. 1995 (via El Zrelli refs)"]
+    category: bibliographic
+
+  - claim: "2016 — GCT seawater desalination station at Gabès (announced)"
+    reason: "An announced project, never confirmed built."
+    grade: reported
+    sources: ["WMC (via graph contract record)"]
+    category: weak-evidence
+
+  - claim: "Post-2011 mobilisation wave in Gabès (2011–2019, Robert 2023/2026)"
+    reason: "Peer-reviewed but full texts unread; exact chronology not extracted."
+    grade: reported
+    sources: [S37, "Robert 2026 (RIED)"]
+    category: unread
+
+  - claim: "2019 — radionuclide hazard (El Zrelli 2019); 2013 — cadmium/bladder-cancer case-control (Feki-Tounsi)"
+    reason: "Metadata-only this run."
+    grade: documented
+    sources: ["El Zrelli 2019 (MPB)", "Feki-Tounsi 2013"]
+    category: unread
+
+  - claim: "FIDH statement (23-10-2025)"
+    reason: "Title/date verified; full text not fetched; an NGO reaction, not a timeline fact."
+    grade: reported
+    sources: [S57]
+    category: unread
+
+  # --- Air-layer exclusions (V6 addition) ---
+
+  - claim: "Sellami/Ghannouch 2026 measured values"
+    reason: "Full text unread (publisher bot-block); metadata only — the values would be the GCT fence-line dataset, the film keeps it as a footnote until readable."
+    grade: reported
+    sources: [A-6]
+    category: unread
+    layer: air
+
+  - claim: "Mokadem et al. 2012 (Gafsa-basin atmospheric pollution) and Fayech 2022 (SO₂ Gulf)"
+    reason: "Bibliographic records; the Gafsa-basin analogue is a different geography; the Fayech outlet is predatory-listed."
+    grade: documented
+    sources: [A-17, "Fayech 2022"]
+    category: bibliographic
+    layer: air
+
+  - claim: "El Zrelli 2019 J. Hazard. Mater. (phosphogypsum foam transport of metals/radionuclides)"
+    reason: "Marine-transport paper; the health-disease attribution circulates in its intro as context, not measurement — off the air thread."
+    grade: documented
+    sources: ["El Zrelli 2019 (JHM)"]
+    category: off-thread
+    layer: air
+
+  - claim: "The 2021 fire's internal details (13-03-2021, 5 dead)"
+    reason: "Beyond the toll and the Saïed visit, the fire is an accident record, not a routine-emission fact; the film uses it only as the cancer-centre trigger."
+    grade: reported
+    sources: [A-13]
+    category: off-thread
+    layer: air

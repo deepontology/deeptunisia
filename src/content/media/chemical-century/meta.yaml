@@ -1,0 +1,24 @@
+slug: chemical-century
+version: "1.0"
+title:
+  en: "The Chemical Century"
+  fr: "Le Siècle Chimique"
+  ar: "القرن الكيميائي"
+subtitle:
+  en: "How Tunisia's phosphate coast was built, measured, and not saved — 1885 to 2026"
+  fr: "Comment la côte phosphate de la Tunisie a été construite, mesurée et pas sauvée — 1885 à 2026"
+  ar: "كيف بُنيت وقُيست ولم تُنقَذ ساحل الفوسفات في تونس — ١٨٨٥ إلى ٢٠٢٦"
+series:
+  id: chemical-ledger
+  title:
+    en: "The Chemical Ledger"
+    fr: "Le Registre Chimique"
+    ar: "السجل الكيميائي"
+  position: 1
+published: 2026-08-14
+status: published
+reading_time_minutes: 18
+overall_confidence: B
+overall_confidence_reasoning: "Major claims documented; 2 disputed, 5 unresolved, 8 documented negatives"
+tags: [industry, environment, pollution, state-ownership, health, gabes, phosphate]
+cover_image: null

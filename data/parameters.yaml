@@ -1,0 +1,50 @@
+# Jurisdiction parameters — the only file a fork must edit to retarget Layer 1.
+#
+# Parameters are configuration, not claims: no basis, no sources, no confidence.
+# The build validates this file against a strict schema (an undocumented key is
+# a build failure) and emits it into dataset.json meta.parameters, so every
+# number derived from it is recomputable from the published artifact.
+#
+# The shipped values are the Tunisia defaults, identical to the literals these
+# replaced. A fork (DeepMorocco, DeepCalifornia, ...) changes this one file —
+# not the validators, not the date resolver, not the index layer.
+
+jurisdiction:
+  name: Tunisia
+  bbox: { lonMin: 8, lonMax: 12, latMin: 30, latMax: 38 }
+  # What counts as "the gazette" for the review-overclaim guard (V23): the
+  # vocabulary a review note may not claim without a gazette source, and the
+  # source-id prefixes that do count as gazette citations.
+  gazette:
+    vocabulary: [jort, gazette, "decree text", décret]
+    sourcePrefixes: ["jort-", "9anoun", "legislation-securite", "iort-"]
+  registry:
+    label: "Registre de commerce"
+    idLabel: CIN
+    # Allowed registry slugs for `registration.registry`. A fork lists its own.
+    registries: ["registre-de-commerce"]
+
+time:
+  # The dataset floor and research cutoff. Floor = Tunisian independence;
+  # nothing is asserted after the cutoff. The cutoff tracks the feed's last
+  # verified coverage (advanced 2026-08-14 with the daily-sweep merges; the
+  # sweep had merged events through 2026-08-09 under a cutoff that predated
+  # them, which open-ended intervals could not represent). Advanced again
+  # 2026-08-25 when the Aug-13/25 sweep + wire backfill merged records
+  # through 2026-08-25 (Nafas march, Zarzis sinking, CSEE appointment),
+  # whose open-ended positions could not sit inside the old horizon.
+  floor: "1956-03-20"
+  cutoff: "2026-08-25"
+  # How far back an open-ended "in post by X" bound may reach. A plausible
+  # ceiling for a senior command tenure; the longest documented run in the
+  # dataset is about seven and a half years.
+  beforeWindowYears: 8
+  # Widen "approximately" tokens: a year-precision guess gets this much slack
+  # either side, a month-precision guess the month value.
+  approxSlackDays: { year: 365, month: 92 }
+
+index:
+  # Basis-discount weights for the evidenced-influence index. Unsubstantiated
+  # evidence weighs nothing in a published score — a score built from evidence
+  # that cannot be checked would contradict the index's own definition.
+  discount: { documented: 1, reported: 0.55, inferred: 0.2, unsubstantiated: 0 }

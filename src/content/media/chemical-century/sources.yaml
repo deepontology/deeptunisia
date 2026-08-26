@@ -1,0 +1,1258 @@
+# =============================================================================
+# "The Chemical Century" — Source Registry
+# All accessed 11–14 August 2026.
+#
+# Tiers: 1 = primary document (audit, JORT, peer-reviewed, official series)
+#        2 = institutional/official site/registry
+#        3 = established press
+#        4 = single outlet/contested
+#        5 = lead
+#
+# S-series IDs resolve in research/findings/gct-gabes.md.
+# "Via outbox" = registered in data/contrib/ (gct-industrial-timeline-2026-08-14.yaml,
+#   gabes-pollution-history-2026-08-14.yaml, gabes-air-pollution-2026-08-14.yaml
+#   — all 0-rejection at the gate).
+# =============================================================================
+
+sources:
+
+  # --------------------------------------------------------------------------
+  # S-series — main sources (S1–S112)
+  # --------------------------------------------------------------------------
+
+  - id: S1
+    citation:
+      en: "Hamza Marzouk, L'Éco Maghrébin 09-02-2026 — 3,400m (2024), \"+247%\""
+    url: "https://leconomistemaghrebin.com/2026/02/09/top-10-entreprises-classement-economiste-maghrebin/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S2
+    citation:
+      en: "Scope note only — see S3"
+    url: null
+    tier: null
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S3
+    citation:
+      en: "L'Éco Maghrébin 2014 classement; Jeune Afrique 2015 — 2012 revenue (§6)"
+    url: null
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S4
+    citation:
+      en: "Kapitalis, 29-07-2026 — GCT–CPG fusion conceivable; EBRD €110M"
+    url: "https://www.kapitalis.com/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S5
+    citation:
+      en: "Ministère des Finances, \"Rapport sur les entreprises publiques\" LF2021, Annexe 9 (French transl.), gbo.tn, Dec 2020"
+    url: "https://gbo.tn/"
+    tier: 2
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S6
+    citation:
+      en: "Merged into S7"
+    url: null
+    tier: null
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S7
+    citation:
+      en: "Reuters feature, 20-10-2025 — \"environmental nightmare\""
+    url: "https://www.reuters.com/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S8
+    citation:
+      en: "I2E/IHE groupement, \"Audit environnemental et social des sites du GCT — Rapport définitif : Site de Gabès\", v3.0, 24-07-2025, 160 pp, AfDB project P-TN-BB0-010"
+    url: "http://www.gct.com.tn/fileadmin/user_upload/audit/Rapport_Audit_E_S-GCT-Gab.pdf"
+    tier: 1
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+    sections_referenced:
+      - "§3.4.4"
+      - "§4.2"
+      - "§5.2"
+      - "§6.1"
+      - "§6.2.1"
+      - "§6.3"
+      - "§6.3.4"
+      - "§6.8"
+      - "§7.5"
+      - "§7.7"
+
+  - id: S9
+    citation:
+      en: "Ilboursa, 10-01-2023 — MoF: 2019 CA 1,275m; 2020 935.6m; net −608m"
+    url: "https://ilboursa.com/marches/le-groupe-chimique-tunisien-accuse-une-perte-nette-de-600-millions-de-dinars-en-2020_38680"
+    tier: 2
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S10
+    citation:
+      en: "MoF, \"Rapport sur les entreprises publiques\" LF2025 — 2021: 1,978.6m; 2022: 3,179.3m; 2023 row empty"
+    url: "https://gbo.tn/"
+    tier: 2
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S11
+    citation:
+      en: "AfDB, SGES appraisal P-TN-BB0-010, 18-07-2025 — 2023 turnover 2,075m (D1)"
+    url: "https://www.afdb.org/"
+    tier: 2
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S12
+    citation:
+      en: "GCT, Comité directeur, 28-08-2025"
+    url: null
+    tier: 1
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S13
+    citation:
+      en: "Tunisie Numerique, 07-08-2026 — H1-2026 1.7 Mt"
+    url: "https://www.tunisienumerique.com/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S14
+    citation:
+      en: "World Bank Pink Sheet, Aug 2026"
+    url: null
+    tier: 2
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S15
+    citation:
+      en: "Challenges.tn, 11-06-2024 — Q1-2024 −27.2% (D7)"
+    url: "https://www.challenges.tn/"
+    tier: 4
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S16
+    citation:
+      en: "Hédi Mechri, edito #937 — black-out note"
+    url: null
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S17
+    citation:
+      en: "Challenges.tn, 17-02-2026 — INS exports; 2010 baseline"
+    url: "https://www.challenges.tn/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S18
+    citation:
+      en: "Kapitalis, 20-06-2026 — 2025 production ≈3 Mt"
+    url: "https://www.kapitalis.com/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S19
+    citation:
+      en: "Tunisie Numerique / Webdo / African Manager / Managers, 18–19-06-2026 — CNRD: 9.4 Mt by 2035; decade average"
+    url: null
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S20
+    citation:
+      en: "La Presse, 28-03-2026 — Hédi Youssef: activity ≤40%; 13.6 Mt"
+    url: "https://www.lapresse.tn/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S21
+    citation:
+      en: "Business News, 05-02-2026 — Rhili: ~20% units"
+    url: "https://www.businessnews.com.tn/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S22
+    citation:
+      en: "African Manager, 01-10-2024 — M'dhilla-2 idle since 2020"
+    url: "https://africanmanager.com/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S23
+    citation:
+      en: "El Ayeb et al. — ≈1.4 t/t"
+    url: null
+    tier: 2
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S24
+    citation:
+      en: "GCT site, phosphogypsum page — >5 t/t H₃PO₄"
+    url: "http://www.gct.com.tn/performances-environnementales/"
+    tier: 1
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S25
+    citation:
+      en: "Ben Amor, R., Abidi, M., Gueddari, M., 2018, Arabian Journal of Geosciences 11:341 (discharge since 1972)"
+    url: "https://doi.org/10.1007/s12517-018-3521-7"
+    tier: 1
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S26
+    citation:
+      en: "El Zrelli, R., et al., 2023, \"Economic losses related to the reduction of Posidonia ecosystem services in the Gulf of Gabes\", Marine Pollution Bulletin 186:114418, DOI 10.1016/j.marpolbul.2022.114418"
+    url: "https://www.academia.edu/92056018/Economic_losses_related_to_the_reduction_of_Posidonia_ecosystem_services_in_the_Gulf_of_Gabes_Southern_Mediterranean_Sea"
+    tier: 1
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S27
+    citation:
+      en: "Samir Kazbar via TAP, webdo 22-10-2025 — ~200 Mt (D4)"
+    url: "https://www.webdo.tn/fr/actualite/national/gabes-lexpert-revele-comment-la-mer-pourrait-guerir-en-un-an/386093/"
+    tier: 4
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S28
+    citation:
+      en: "El Zrelli et al., 2026, J. Hazard. Mater. 508:141753 — bentogypsum"
+    url: "https://doi.org/10.1016/j.jhazmat.2026.141753"
+    tier: 1
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S29
+    citation:
+      en: "El Zrelli et al., 2025, Sustainability 17(3):1283 — U/Th flux"
+    url: "https://www.mdpi.com/2071-1050/17/3/1283"
+    tier: 1
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S30
+    citation:
+      en: "Webdo, 29-07-2026 — décret n°79: Bouzouada"
+    url: "https://www.webdo.tn/fr/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S31
+    citation:
+      en: "Kapitalis, 29-07-2026 — EBRD €110M to CPG"
+    url: "https://www.kapitalis.com/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S32
+    citation:
+      en: "PARTICIP GmbH & ETI Consulting, 2017, EU study — not online; via audit bibliography + El Zrelli 2023 (D3)"
+    url: null
+    tier: null
+    date_consulted: 2026-08-11
+    access: not-online
+    archive_url: null
+
+  - id: S33
+    citation:
+      en: "Amri et al., 2023, ESPR"
+    url: "https://doi.org/10.1007/s11356-023-27518-9"
+    tier: 1
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S34
+    citation:
+      en: "El Zrelli, R., et al., 2020, Marine Pollution Bulletin 155:111124"
+    url: "https://doi.org/10.1016/j.marpolbul.2020.111124"
+    tier: 1
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S35
+    citation:
+      en: "El Kateb, A., et al., 2018, PLoS ONE 13(5):e0197731"
+    url: "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0197731"
+    tier: 1
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S36
+    citation:
+      en: "Webdo, 20-10-2025 — Zouari at the ARP: six unfinished projects ≈200 MDT (NOx 98%, SO₂ 75%, ammonia 84%)"
+    url: "https://www.webdo.tn/fr/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S37
+    citation:
+      en: "Robert, D., 2025, Les Cahiers d'EMAM 37 — 2017 relocation decision"
+    url: "https://journals.openedition.org/emam/7099"
+    tier: 1
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S38
+    citation:
+      en: "Hamed et al., 2022/23, Environ. Dev. Sustain. 25(11) — mining-region pollution (Gafsa basin primarily)"
+    url: "https://doi.org/10.1007/s10668-022-02606-x"
+    tier: 1
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S39
+    citation:
+      en: "Kwas, H., et al., 2024, Cureus 16(8):e66578 — Gabès pneumonia cohort"
+    url: "https://doi.org/10.7759/cureus.66578"
+    tier: 1
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S40
+    citation:
+      en: "Ahbil, K., Sellami, F., Azri, C., Environmental Forensics 27(1):90-108 (DOI/online 2022, issue 2026) — suburban Gabès AQHI"
+    url: "https://doi.org/10.1080/15275922.2022.2125111"
+    tier: 1
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S41
+    citation:
+      en: "Wikipedia FR, \"Groupe chimique tunisien\""
+    url: "https://fr.wikipedia.org/wiki/Groupe_chimique_tunisien"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S42
+    citation:
+      en: "GCT site header — tutelle ministry"
+    url: null
+    tier: 2
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S43
+    citation:
+      en: "IACE \"Guide-CPG\" (2017)"
+    url: null
+    tier: 2
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S44
+    citation:
+      en: "Tunisie Numerique, 07-08-2026 — JORT n°79; tribunal référé rejection 26-02-2026"
+    url: "https://www.tunisienumerique.com/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S45
+    citation:
+      en: "Managers, 29-07-2026 — ITFC $70M"
+    url: "https://managers.com.tn/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S46
+    citation:
+      en: "Kapitalis, 17-07-2026 — ITFC $50M Mourabaha"
+    url: "https://www.kapitalis.com/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S47
+    citation:
+      en: "AfDB press 30-01-2026 + MapAfrica 46002-P-TN-BB0-010 — $110M PAER-GCT"
+    url: "https://www.afdb.org/"
+    tier: 2
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S48
+    citation:
+      en: "African Manager, 25-05-2022 — 2022 deficit"
+    url: "https://africanmanager.com/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S49
+    citation:
+      en: "Business News / Réalités, 10-01-2026 — Cour des comptes 11 establishments"
+    url: null
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S50
+    citation:
+      en: "L'Éco Maghrébin, 25-12-2024 — CPG strike"
+    url: null
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S51
+    citation:
+      en: "Reuters (Tarek Amara), 05-03-2025 — 14 Mt target; \"8.2 million metric tons in 2010\""
+    url: "https://www.reuters.com/markets/commodities/tunisia-aims-raise-phosphate-output-14-million-metric-tons-2030-2025-03-05/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S52
+    citation:
+      en: "La Presse, 05-03-2025 — CMR details"
+    url: "https://www.lapresse.tn/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S53
+    citation:
+      en: "La Presse, 09-03-2025 — \"irréaliste\""
+    url: "https://www.lapresse.tn/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S54
+    citation:
+      en: "Reuters, 11 & 15-10-2025 — storming; march"
+    url: null
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S55
+    citation:
+      en: "Al Jazeera, 21-10-2025 — UGTT strike; 130–135k per activist counts"
+    url: "https://www.aljazeera.com/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S56
+    citation:
+      en: "TAP, 13-10-2025 — El M'dhilla projects"
+    url: null
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S57
+    citation:
+      en: "FIDH, 23-10-2025 — title-only (§6)"
+    url: "https://www.fidh.org/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S58
+    citation:
+      en: "Business News / Directinfo, 23-10-2025 — recruitments"
+    url: null
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S59
+    citation:
+      en: "Reuters, 17-12-2025 — march"
+    url: null
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S60
+    citation:
+      en: "WMC / Kapitalis, 05-01-2026 — CPG M'dhilla suspension"
+    url: null
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S61
+    citation:
+      en: "Press, 27-28-04-2026 — Chiboub dismissed"
+    url: null
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S62
+    citation:
+      en: "Tunisie Numerique, 30-06-2026 — ~11.4 Mt plan"
+    url: "https://www.tunisienumerique.com/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S63
+    citation:
+      en: "Webdo, 11-08-2026 — Saïed in Gabès"
+    url: "https://www.webdo.tn/fr/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S64
+    citation:
+      en: "Hédi Mechri, edito #937, L'Éco Maghrébin, Jan 2026 — \"move along — there is nothing to see\""
+    url: "https://leconomistemaghrebin.com/2026/02/09/les-3000/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S65
+    citation:
+      en: "L'Éco Maghrébin, 01-02-2020 — ranking method"
+    url: "https://leconomistemaghrebin.com/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S66
+    citation:
+      en: "L'Éco Maghrébin, 29-01-2024 — \"CA en millions de dinars HT\""
+    url: "https://leconomistemaghrebin.com/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S67
+    citation:
+      en: "MoF LF2021 Annexe 9 — GCT state share 99.998% (capital 476.084m)"
+    url: null
+    tier: 2
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S68
+    citation:
+      en: "African Manager, 02-06-2026 — GCT net 2021 +133m"
+    url: "https://africanmanager.com/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S69
+    citation:
+      en: "L'Éco Maghrébin, 29-07-2026 — loi 49/2026 (€110M + €7M EBRD, CPG)"
+    url: "https://leconomistemaghrebin.com/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S70
+    citation:
+      en: "African Manager, 29-07-2026 — loi 50/2026 ($70M ITFC)"
+    url: "https://africanmanager.com/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S71
+    citation:
+      en: "L'Éco Maghrébin, 29-07-2026 — loi 51/2026 (≈$50M ITFC)"
+    url: "https://leconomistemaghrebin.com/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S72
+    citation:
+      en: "L'Éco Maghrébin, 15-01-2025 — TIFERT debts (§6)"
+    url: "https://leconomistemaghrebin.com/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S73
+    citation:
+      en: "African Manager, 27-07-2026 — Alkimia silence (§6)"
+    url: "https://africanmanager.com/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S74
+    citation:
+      en: "African Manager, 04-02-2026 — Alkimia MAP; transfer pricing"
+    url: "https://africanmanager.com/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S75
+    citation:
+      en: "Webdo, 14-01-2026 — task-force team; never published"
+    url: "https://www.webdo.tn/fr/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S76
+    citation:
+      en: "Webdo, 11-08-2026 — Saïed: selective dismantling"
+    url: "https://www.webdo.tn/fr/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S77
+    citation:
+      en: "Webdo, 22-10-2025 — >20 schoolchildren; Collège Chatt Essalem"
+    url: "https://www.webdo.tn/fr/actualite/regions/gabes-plus-de-vingt-eleves-victimes-dasphyxie-au-college-chatt-essalem/386081/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S78
+    citation:
+      en: "Webdo, 13-11-2025 — 300 certificates; 30 filed (Talmoudi)"
+    url: "https://www.webdo.tn/fr/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S79
+    citation:
+      en: "Webdo, 14-11-2025 — ARP \"hausse des cancers\""
+    url: "https://www.webdo.tn/fr/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S80
+    citation:
+      en: "Webdo, 21-10-2025 — general strike"
+    url: "https://www.webdo.tn/fr/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S81
+    citation:
+      en: "Webdo, 14-10-2025 — Rhili: \"150 ans\" (§6)"
+    url: "https://www.webdo.tn/fr/"
+    tier: 4
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S82
+    citation:
+      en: "L'Éco Maghrébin, 01-07-2026 — UGTT mines council"
+    url: "https://leconomistemaghrebin.com/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S83
+    citation:
+      en: "L'Éco Maghrébin, 02-06-2026 — décrets 2026-79/81"
+    url: "https://leconomistemaghrebin.com/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S84
+    citation:
+      en: "World Bank CMO — prices/FX"
+    url: null
+    tier: 2
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S85
+    citation:
+      en: "WMC (avec TAP), 06-03-2025 — reclassification + VAT exemption"
+    url: "https://www.wmc.com.tn/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S86
+    citation:
+      en: "GCT website, gct.com.tn — reports stop 2014"
+    url: "http://www.gct.com.tn/"
+    tier: 2
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S87
+    citation:
+      en: "CMF site search \"GCT\" — all results are FCPR GCT I-IV investment-fund statements; GCT itself has no CMF filings"
+    url: null
+    tier: 1
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S88
+    citation:
+      en: "gbo.tn + finances.gov.tn, 11-08-2026 — LF2026 report unpublished"
+    url: null
+    tier: 2
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  # --------------------------------------------------------------------------
+  # S89–S112: MoF/BCT/World Bank debt-and-guarantee records; ITFC/EBRD/AfDB facilities
+  # as registered in the dossier (revenue-v1.html §17)
+  # --------------------------------------------------------------------------
+
+  - id: S89
+    citation:
+      en: "Ministère des Finances — \"Dette garantie\" page + \"Chiffres clés\" (2016): garantie 11,943 MDT (13.2% PIB; ext. 9,895.7; int. 1,454); direct 55,921 MDT (61.9% PIB)"
+    url: null
+    tier: 1
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S90
+    citation:
+      en: "World Bank, Tunisia Public Expenditure Review 2020 (June 2020) — SOE contingent liabilities ≈14% of GDP (2016); STEG external guaranteed debt 5.4bn ≈ 50% of SOE external guarantees"
+    url: null
+    tier: 2
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S91
+    citation:
+      en: "BCT, Rapport Statistique de la Dette Extérieure 2024 — SOE external LT debt 11,476 MDT end-2024 (85.7% of corporate stock); public administration 62,537 MDT; total 75,966"
+    url: null
+    tier: 1
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S92
+    citation:
+      en: "BCT, Rapport Annuel 2025 (June 2026) — public-debt ratio 84.9%→82.1%; external share <40%; net external financing −4,483.5 MDT (3rd consecutive year); endettement total 266,414 MDT (154.3% PIB)"
+    url: null
+    tier: 1
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S93
+    citation:
+      en: "MoF, Résultats provisoires de l'exécution du Budget de l'État à fin décembre 2025 (Feb 2026) — encours de la dette publique 2019–2025 (114,895.7 → 141,665.4 MDT) + LF2026 projection 156,704 MDT"
+    url: null
+    tier: 1
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S94
+    citation:
+      en: "Lois de Finances 2025 and 2026, art. 10–12 (JORT n°148, 12-12-2025; MoF Arabic PDFs) — guarantee ceiling 8,000 MDT (2025) / 7,000 MDT (2026); treasury advances 330/200 MDT; BCT facilities 7,000/11,000 MDT"
+    url: null
+    tier: 1
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S95
+    citation:
+      en: "African Manager, 12-02-2021 — ITFC framework 2021–2023 $1.5bn; GCT $50M; STEG €100M; beneficiaries STEG/GCT/STIR/El Fouladh"
+    url: null
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S96
+    citation:
+      en: "African Manager, 03-03-2023 — €120M STEG + $100M STIR + $50M GCT; ITFC cumulative for Tunisia since 2008 ≈ $2bn (essentially energy)"
+    url: null
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S97
+    citation:
+      en: "Webdo / Jeune Afrique / L'Éco Maghrébin, 29-04-2024 — ITFC framework 2024–2026 $1.2bn (≈3,780 MDT), signed Riyadh (Min. Économie Feryel Ouerghi Sebaï × ITFC CEO Hani Salem Sonbol); company list not published"
+    url: null
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S98
+    citation:
+      en: "L'Éco Maghrébin, 08-06-2021 — BID $50M GCT mourabaha; ARP finance commission: GCT forced to borrow abroad \"à des conditions abusives\" because local banks refused public enterprises"
+    url: null
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S99
+    citation:
+      en: "L'Éco Maghrébin, 10-10-2019 — CPG receivables ≈800 MDT from GCT + TIFERT; payment schedule (Min. Industrie Slim Feriani)"
+    url: null
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S100
+    citation:
+      en: "L'Éco Maghrébin, 04-07-2020 — CPG: receivables 850 (GCT 392 + TIFERT 458); losses 480 MDT end-2019 (PDG Ali Khemiri at ARP)"
+    url: null
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S101
+    citation:
+      en: "Tunisie Numérique, 12-03-2021 — GCT: ≈1,231 MDT debt (narrower definition); 760 MDT accumulated losses since 2012; production −40%; 1,602 recruitments despite \"faillite\""
+    url: "https://www.tunisienumerique.com/"
+    tier: 4
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S102
+    citation:
+      en: "Business News, 31-07-2026 — JORT décrets n°193–196 (EBRD €110M CPG; ITFC $120M GCT; Afreximbank 3rd tranche +$500M = $1.7bn total, rate renegotiated 9% → 5.86%)"
+    url: null
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S103
+    citation:
+      en: "WMC, 03-08-2026 — \"Les coulisses financières d'un plan d'urgence à 740 millions de dollars\" (Amir Hamza analysis): murabaha = \"risque d'interruption opérationnelle\"; equipment guarantees = \"passif éventuel (garantie souveraine)\"; Afreximbank = \"dette souveraine directe et ferme\"; the conditional-loading quote; \"aucune capacité industrielle nouvelle\""
+    url: "https://www.wmc.com.tn/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S104
+    citation:
+      en: "African Manager, 17-07-2026 — ARP finance commission: urgency procedure criticised; \"absence d'une vision stratégique\"; CPG/GCT \"institutions stratégiques qui pèsent sur les finances publiques\""
+    url: null
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S105
+    citation:
+      en: "WMC, 27-09-2023 — M. Hattab via TAP: external-loan tirage −52% H1-2022→H1-2023; Saïed \"ne renoncera plus jamais à sa souveraineté\""
+    url: null
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S106
+    citation:
+      en: "WMC, 13-02-2025 — M.S. Souilem (ex-BCT): 18.1bn TND external market debt repaid 2019–2025; no Eurobond since 2019; external ratio target <50% PIB (was 69% in 2018)"
+    url: null
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S107
+    citation:
+      en: "WMC, 24-07-2026 — Abdelbasset Sammari: \"illusion extérieure, fardeau intérieur\"; CADTM (R. Zaghdoudi, Dec 2023): no audit of the debt including the guaranteed component"
+    url: null
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S108
+    citation:
+      en: "Tustex / Moez Hadidane (Tera Finances), 26-06-2023 — phosphate-sector FX shortfall >$8bn over 2011–2021"
+    url: null
+    tier: 4
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S109
+    citation:
+      en: "BCT — \"Réglementation des changes\" official page: 10-day repatriation; 100% retention in comptes professionnels en devises (circulaires 93-14 → 2013-13)"
+    url: null
+    tier: 1
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S110
+    citation:
+      en: "Tunisie Numérique, 19-06-2026 — CNRD hearing 18-06-2026: GCT \"l'une des principales sources de devises du pays\"; CPG capacity ≈4.5 Mt; 2026–2035 plan 2,700 MDT; rescheduling + public-supplier debts"
+    url: "https://www.tunisienumerique.com/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S111
+    citation:
+      en: "L'Éco Maghrébin, 04-08-2026 — TIFERT relaunch/restructuring programme (GCT + CPG + Indian partners)"
+    url: null
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: S112
+    citation:
+      en: "AfDB press release 30-01-2026 + MapAfrica project page 46002-P-TN-BB0-010 — PAER-GCT: $110M sovereign loan (of $144M; GCT counterpart $34M), \"prêt souverain de la BAD garanti par la République tunisienne\""
+    url: "https://www.afdb.org/"
+    tier: 1
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  # --------------------------------------------------------------------------
+  # A-series — air-layer sources (A-1 through A-20)
+  # --------------------------------------------------------------------------
+
+  - id: A-1
+    citation:
+      en: "COMETE-SNC-LAVALIN-IHE, \"Caractérisation environnementale des sites des usines du GCT\" — March 2010 campaign, final report 2015; not online; quoted verbatim throughout the 2025 audit §6.3"
+    url: "http://www.gct.com.tn/fileadmin/user_upload/audit/Rapport_Audit_E_S-GCT-Gab.pdf"
+    tier: 2
+    date_consulted: 2026-08-11
+    access: not-online
+    archive_url: null
+
+  - id: A-2
+    citation:
+      en: "Décret n°2010-2519 du 28-09-2010 — valeurs limites à la source (air standard); quoted in audit §4.2"
+    url: null
+    tier: 1
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: A-3
+    citation:
+      en: "Décret gouvernemental n°2018-447 du 18-05-2018 — valeurs limites de l'air ambiant; quoted in audit §4.2"
+    url: null
+    tier: 1
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: A-4
+    citation:
+      en: "Kwas, H., Rangareddy, H., Rajhi, H.H., 2024, Cureus 16(8):e66578 — Gabès University Hospital pneumonia cohort Jan–Oct 2022"
+    url: "https://doi.org/10.7759/cureus.66578"
+    tier: 1
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: A-5
+    citation:
+      en: "Ahbil, K., Sellami, F., Azri, C., Environmental Forensics 27(1):90-108 — suburban Gabès 2017–19 AQHI"
+    url: "https://doi.org/10.1080/15275922.2022.2125111"
+    tier: 1
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: A-6
+    citation:
+      en: "Sellami, F., Gautam, S., Azri, C., 2026, Stoch. Environ. Res. Risk Assess. 40(2):40 — Ghannouch (GCT fence-line) study; metadata only"
+    url: "https://doi.org/10.1007/s00477-026-03172-8"
+    tier: 1
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: A-7
+    citation:
+      en: "Ahbil, K., et al., 2024, Sci. Total Environ. 954:176726 — dry-deposited particles (air→ground channel)"
+    url: "https://doi.org/10.1016/j.scitotenv.2024.176726"
+    tier: 1
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: A-8
+    citation:
+      en: "Ahbil, K., 2024 — PhD thesis, Université de Gabès — particulate deposits + air quality"
+    url: "https://doi.org/10.1007/s00477-026-03172-8"
+    tier: 2
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: A-9
+    citation:
+      en: "Rousselin, M., 2018, Journal of Political Ecology 25:20-39 — \"10% lung cancer\" claim (source inside unread paper; D)"
+    url: "https://journals.librarypublishing.arizona.edu/jpe/article/id/2050/"
+    tier: 1
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: A-10
+    citation:
+      en: "Webdo, 14-10-2025 — first school asphyxiation wave"
+    url: "https://www.webdo.tn/fr/actualite/regions/gabes-nouvelle-vague-dasphyxie-au-college-chatt-essalem-la-colere-monte/385655/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: A-11
+    citation:
+      en: "Webdo, 20-10-2025 — six unfinished projects ≈200 MDT (Zouari)"
+    url: "https://www.webdo.tn/fr/actualite/regions/tunisie-six-projets-inacheves-a-200-md-au-coeur-de-la-crise-environnementale-de-gabes/385958/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: A-12
+    citation:
+      en: "Webdo, 21-10-2025 — Ferjani announces cancer pole (ARP plenary)"
+    url: "https://www.webdo.tn/fr/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: A-13
+    citation:
+      en: "Webdo, 14-03-2021 — fire 13-03-2021 (5 dead); Saïed announces cancer centre"
+    url: "https://www.webdo.tn/fr/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: A-14
+    citation:
+      en: "Webdo, 26-29-09-2014 — \"cancéropôle offshore\" collapse; El Hamma protests"
+    url: "https://www.webdo.tn/fr/"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: A-15
+    citation:
+      en: "GCT, \"Performances Environnementales\" + \"Plan Environnemental 2009–2020\" — 10 Gabès air projects, declared 1,323 MDT; \"surveillance continue\" claim contradicted by its own audit"
+    url: "http://www.gct.com.tn/performances-environnementales/"
+    tier: 2
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: A-16
+    citation:
+      en: "Bouajila, A., Omar, Z., Saoud, R., 2022, Environ. Nat. Resour. J. 20 — phthalates in Gabès soils"
+    url: "https://doi.org/10.32526/ennrj/20/202200049"
+    tier: 1
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: A-17
+    citation:
+      en: "Mokadem, N., et al., 2012, Arab. J. Geosci. — Gafsa-basin atmospheric pollution (analogue, §6)"
+    url: "https://doi.org/10.1007/s12517-013-0852-2"
+    tier: 1
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: A-18
+    citation:
+      en: "Le Monde, 13-10-2025 — \"la colère monte après de nouvelles intoxications\"; France 24 / l'Opinion 16-10-2025 (headlines)"
+    url: "https://www.lemonde.fr"
+    tier: 3
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: A-19
+    citation:
+      en: "Oslock, W.M., et al., 2025, Ann. Thorac. Surg. — independent international citation of Kwas 2024"
+    url: "https://www.sciencedirect.com/science/article/pii/S0003497525003728"
+    tier: 1
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  - id: A-20
+    citation:
+      en: "Hamed, Y., et al., 2022/23, Environ. Dev. Sustain. 25(11):13619-13636 — mining-region pollution (Gafsa basin; Gabès-specific content unverified)"
+    url: "https://doi.org/10.1007/s10668-022-02606-x"
+    tier: 1
+    date_consulted: 2026-08-11
+    access: live
+    archive_url: null
+
+  # --------------------------------------------------------------------------
+  # TL-series — timeline sources (TL-1…35)
+  # All registered in data/contrib/gct-industrial-timeline-2026-08-14.yaml
+  # and gabes-pollution-history-2026-08-14.yaml with URLs and tiers.
+  # --------------------------------------------------------------------------
+
+  - id: TL-1…35
+    citation:
+      en: >-
+        Timeline sources (GCT official history/unit pages/PDG lists, archived 2012 history,
+        AccessData production series, CITET NT 106.002, NRGI 2016, Observatoire des
+        multinationales 2015, Wikipedia FR/EN (CPGCFG, CPG, GCT, Grèves de Gafsa),
+        WMC 2010, INSTM bulletins 1971–2008 (Ktari-Chakroun & Azouz; Andren & Salem;
+        Darmoul 1980/1988; Darmoul & Vitiello; Hamza & Ben Maiz; Mastouri; Zaouali 1993;
+        Ben Meriem; Ben Mustapha; Jabeur & Missaoui; Chouba & Mzoughi; Feki 2008),
+        Le Danois 1925, De Gaillande 1970, Ben Brahim 2010, Guillaumont 1995,
+        Medhioub 2003 (via audit biblio), Kapitalis 05-05-2018 (PGE-Gabès n°2),
+        WMC Cour des comptes 28-03-2018, Nessma 2019, Robert 2023/2025/2026,
+        Kamoun-Chouk 2023, Feki-Tounsi 2013, El Zrelli 2019 MPB, Darwish 2017,
+        Inkyfada 2026, Scribd SIAPE presentation, French Treasury note (lead) —
+        all registered in data/contrib/gct-industrial-timeline-2026-08-14.yaml and
+        gabes-pollution-history-2026-08-14.yaml with URLs and tiers.
+    url: null
+    tier: null
+    date_consulted: 2026-08-14
+    access: live
+    archive_url: null
+    note: "Group entry — 35 sources registered individually in data/contrib/ outbox files"

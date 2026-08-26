@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="%sveltekit.assets%/favicon.svg" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="color-scheme" content="dark light" />
+		<script>
+			// Resolve theme AND language before first paint. Without this the app renders
+			// dark and left-to-right, then flips — the single most noticeable defect a
+			// themed, bidirectional site can have.
+			//
+			// A theme is one complete look (mode + character): data-theme carries the
+			// mode, data-palette the character. Must mirror migrateLegacy()/isThemeId()
+			// in theme.svelte.ts — this runs before hydration and cannot import modules.
+			try {
+				var t = localStorage.getItem('deeptunisia:theme');
+				var tint = localStorage.getItem('deeptunisia:appearance');
+				var sysDark = matchMedia('(prefers-color-scheme: dark)').matches;
+				var ids = ['paper', 'porcelain', 'daylight', 'midnight', 'ember', 'eclipse'];
+				var modes = {
+					paper: 'light',
+					porcelain: 'light',
+					daylight: 'light',
+					midnight: 'dark',
+					ember: 'dark',
+					eclipse: 'dark'
+				};
+				var pick = null;
+				if (ids.indexOf(t) >= 0) {
+					pick = t;
+				} else if (t === 'light' || t === 'dark' || tint) {
+					/* Pre-unification pair: map it once to the closest new theme. */
+					var m = t === 'dark' ? 'dark' : 'light';
+					pick =
+						tint === 'slate'
+							? m === 'dark' ? 'midnight' : 'porcelain'
+							: tint === 'graphite'
+								? m === 'dark' ? 'eclipse' : 'porcelain'
+								: tint === 'sepia'
+									? m === 'dark' ? 'ember' : 'paper'
+									: m === 'dark' ? 'ember' : 'paper';
+					try {
+						localStorage.setItem('deeptunisia:theme', pick);
+					} catch (e2) {}
+				}
+				if (tint) {
+					try {
+						localStorage.removeItem('deeptunisia:appearance');
+					} catch (e3) {}
+				}
+				var mode = pick ? modes[pick] : sysDark ? 'dark' : 'light';
+				document.documentElement.dataset.theme = mode;
+				document.documentElement.dataset.palette = pick || (sysDark ? 'midnight' : 'paper');
+			} catch (e) {
+				document.documentElement.dataset.theme = 'dark';
+				document.documentElement.dataset.palette = 'midnight';
+			}
+			try {
+				var a = localStorage.getItem('deeptunisia:accent');
+				if (a) document.documentElement.style.setProperty('--accent-hue', a);
+			} catch (e) {
+				/* accent stays ochre */
+			}
+			try {
+				var loc = localStorage.getItem('deeptunisia:locale');
+				if (loc !== 'ar' && loc !== 'fr' && loc !== 'en') {
+					/* No stored choice: follow the system, so a first-time reader is
+					   greeted in their own language. The landing writes this same
+					   key, so a choice made there carries straight through. */
+					var sys = (navigator.language || '').toLowerCase();
+					loc = sys.indexOf('ar') === 0 ? 'ar' : sys.indexOf('fr') === 0 ? 'fr' : 'en';
+				}
+				document.documentElement.setAttribute('lang', loc);
+				document.documentElement.setAttribute('dir', loc === 'ar' ? 'rtl' : 'ltr');
+			} catch (e) {
+				/* language stays as authored */
+			}
+		</script>
+		<meta
+			name="description"
+			content="A source-backed interactive atlas of political, military, security and economic power in Tunisia, 1956-2026."
+		/>
+		<!-- Self-hosted, and it must stay that way. Loading these from Google told a
+		     third party every reader's IP, User-Agent and — through Referer — which
+		     page they were reading: opening a named official's entry disclosed that
+		     you had. See docs/anonymity-audit.md. Never reintroduce a remote font,
+		     icon, map or analytics host here. -->
+		<link rel="stylesheet" href="%sveltekit.assets%/fonts/fonts.css" />
+		%sveltekit.head%
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents">%sveltekit.body%</div>
+	</body>
+</html>

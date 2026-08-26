@@ -1,0 +1,542 @@
+# -----------------------------------------------------------------------------
+# LICENCES — time-bound rights between an operating company and a state body
+# (spec §4.5)
+#
+# A licence is a clean "who owns what permission under which regime" edge: a
+# spectrum, banking, mineral, media or import-export right granted by a state
+# body to a holder, with a grant date, term and any fees.
+#
+# Records landed 2026-08-08 from data/contrib/licences-2026-08-08.yaml
+# (roadmap P1 #8). Failure vocabulary preserved from that run:
+#   - `grant` = convention signature or decision date (tier-1 anchored where
+#     possible); the operating/launch date is recorded in the notes.
+#   - The licence schema carries `grant` + `term {years}` but no end field, so
+#     candidate `end` dates (~2024, ~2031, …) are folded into the notes.
+#   - Terms marked "renewable" in the candidates are recorded in the notes
+#     (the schema's term object carries only `years`).
+#   - Fee figures are claims with attribution; attribution lives in the notes.
+#   - The banking holders zitouna-bank and wifak-bank and the sovereign issuer
+#     etat-tunisien are real, documented entities that the graph lacked; their
+#     institution records were created 2026-08-08 with the same registered
+#     sources, so no A-grade JORT-sourced licence was dropped.
+# -----------------------------------------------------------------------------
+
+- id: lic-orange-3g-2009
+  holder: orange-tunisie
+  issuer: etat-tunisien
+  kind: spectrum
+  grant: "2009-07-13"
+  term: { years: 15 }
+  scope: { region: "Tunisia" }
+  fees: { amount: 257251000, currency: TND, year: 2009 }
+  status: active
+  confidence: A
+  basis: documented
+  reasoning: >-
+    Terme non publié dans le JORT; les licences 3G tunisiennes (voir Ooredoo
+    2012, Kapitalis) sont de 15 ans renouvelables.
+  falsifiable_by: >-
+    Annexe de la convention approuvée par décret 2009-2270 (JORT 2009) — durée
+    et redevances y figurent.
+  sources: [jort-2021-212, wmc-orange-licence-2009, jeuneafrique-orange-spoliation-2014, wikipedia-orange-tunisie-fr]
+  notes:
+    - >-
+      Licence fixe+mobile 2G/3G adjugée le 26 juin 2009 au consortium
+      Divona/Orange (France Télécom) pour 257,251 M TND (137,647 M EUR) —
+      concession globale (fixe + mobile 2G/3G); le ministre Ammar a précisé en
+      2010 que la licence 3G seule était chiffrée à 116 M TND (même prix que
+      celle de Tunisie Telecom), les deux chiffres coexistent donc.
+    - >-
+      Convention conclue le 13 juillet 2009; approuvée par décret n° 2009-2270
+      du 31 juillet 2009 (cité dans le décret 2021-212, JORT — annexe non
+      publiée). Lancement commercial d'Orange Tunisie le 5 mai 2010. Terme
+      15 ans INFÉRÉ (template des licences 3G tunisiennes) -> échéance ~2024;
+      avenants successifs (2014-37, 2017-65, 2018-350, 2021-212) montrent une
+      convention amendée, l'échéance exacte reste à confirmer.
+    - >-
+      Les conditions d'attribution ont été contestées après 2011 (accusations
+      d'enveloppe détournée, 26 M EUR, Usine Nouvelle 14-03-2011) — non
+      retenues ici, à traiter comme dispute si reprises.
+  notes_fr:
+    - >-
+      Licence fixe+mobile 2G/3G adjugée le 26 juin 2009 au consortium Divona/Orange (France
+      Télécom) pour 257,251 M TND (137,647 M EUR) — concession globale (fixe + mobile 2G/3G)
+      ; le ministre Ammar a précisé en 2010 que la licence 3G seule était chiffrée à 116 M
+      TND (même prix que celle de Tunisie Telecom), les deux chiffres coexistent donc.
+    - >-
+      Convention conclue le 13 juillet 2009 ; approuvée par décret n° 2009-2270 du 31
+      juillet 2009 (cité dans le décret 2021-212, JORT — annexe non publiée). Lancement
+      commercial d'Orange Tunisie le 5 mai 2010. Terme 15 ans INFÉRÉ (template des licences
+      3G tunisiennes) -> échéance ~2024 ; avenants successifs (2014-37, 2017-65, 2018-350,
+      2021-212) montrent une convention amendée, l'échéance exacte reste à confirmer.
+    - >-
+      Les conditions d'attribution ont été contestées après 2011 (accusations d'enveloppe
+      détournée, 26 M EUR, Usine Nouvelle 14-03-2011) — non retenues ici, à traiter comme
+      dispute si reprises.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      رخصة ثابتة+متنقلة 2G/3G مُنحت في 26 يونيو 2009 لتحالف Divona/Orange (فرنسا للاتصالات)
+      مقابل 257.251 مليون دينار تونسي (137.647 مليون يورو) — تخصيص شامل (ثابت + متنقل
+      2G/3G)؛ أوضح الوزير عمار في 2010 أن رخصة 3G وحدها كانت بقيمة 116 مليون دينار تونسي
+      (نفس سعر رخصة اتصالات تونس)، لذلك يتواجد الرقمان معاً.
+    - >-
+      اتفاقية عُقدت في 13 يوليو 2009؛ وافقت عليها الحكومة بموجب المرسوم رقم 2009-2270 بتاريخ
+      31 يوليو 2009 (مذكور في المرسوم 2021-212، الجريدة الرسمية — مرفق غير منشور). بدأ
+      النشاط التجاري لأورنج تونس في 5 مايو 2010. المدة 15 عاماً مستنتجة (قالب رخص 3G
+      التونسية) -> الاستحقاق ~2024؛ الإضافات اللاحقة (2014-37، 2017-65، 2018-350، 2021-212)
+      تظهر اتفاقية معدّلة، الاستحقاق الدقيق لا يزال قيد التأكيد.
+    - >-
+      طُعن في شروط المنح بعد 2011 (اتهامات تحويل مبلغ، 26 مليون يورو، مجلة Usine Nouvelle
+      14-03-2011) — لم تُقبل هنا، ويعالج كنزاع إذا أُعيد التطرق إليه.
+  notes_ar_by: model-reviewed
+
+- id: lic-tunisie-telecom-3g-2010
+  holder: tunisie-telecom
+  issuer: etat-tunisien
+  kind: spectrum
+  grant: "2010-09-24"
+  term: { years: 15 }
+  scope: { region: "Tunisia" }
+  fees: { amount: 116000000, currency: TND, year: 2010 }
+  status: active
+  confidence: B
+  basis: reported
+  reasoning: >-
+    Même template que la licence 3G d'Orange (2009) et de Tunisiana (2012,
+    15 ans renouvelables); échéance déduite 2010+15.
+  falsifiable_by: >-
+    Décret 2010 portant approbation de la convention 3G Etat tunisien /
+    Tunisie Telecom (JORT 2010).
+  sources: [zawya-tt-3g-2010, regulation-afrique-tt-3g-2010]
+  notes:
+    - >-
+      Licence 3G attribuée à Tunisie Telecom en septembre 2010 (Zawya:
+      24-09-2010, montant rapporté 80 M USD; le ministre Ammar: 116 M TND,
+      prix aligné sur celui d'Orange). Engagement pris par l'Etat lors de la
+      cession de 35 % du capital à Tecom (Dubaï) en 2006. Échéance inférée
+      ~2025 (15 ans).
+    - >-
+      Décret d'approbation de la convention NON localisé dans les archives JORT
+      accessibles (9anoun commence ~2016) — à chercher dans JORT 2010.
+  notes_fr:
+    - >-
+      Licence 3G attribuée à Tunisie Telecom en septembre 2010 (Zawya : 24-09-2010, montant
+      rapporté 80 M USD ; le ministre Ammar : 116 M TND, prix aligné sur celui d'Orange).
+      Engagement pris par l'Etat lors de la cession de 35 % du capital à Tecom (Dubaï) en
+      2006. Échéance inférée ~2025 (15 ans).
+    - >-
+      Décret d'approbation de la convention NON localisé dans les archives JORT accessibles
+      (9anoun commence ~2016) — à chercher dans JORT 2010.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      رخصة 3G مُنحت لاتصالات تونس في سبتمبر 2010 (Zawya: 24-09-2010، المبلغ المُبلغ عنه 80
+      مليون دولار أمريكي؛ الوزير عمار: 116 مليون دينار تونسي، السعر متوافق مع سعر أورنج).
+      التزام أخذته الدولة عند بيع 35٪ من رأس المال لشركة Tecom (دبي) في 2006. الاستحقاق
+      مستنتج ~2025 (15 عاماً).
+    - >-
+      مرسوم اعتماد الاتفاقية لم يتم العثور عليه في أرشيف الجريدة الرسمية المتاح (9anoun يبدأ
+      ~2016) — يجب البحث في الجريدة الرسمية لعام 2010.
+  notes_ar_by: model-reviewed
+
+- id: lic-ooredoo-3g-2012
+  holder: ooredoo-tunisie
+  issuer: etat-tunisien
+  kind: spectrum
+  grant: "2012-05-24"
+  term: { years: 15 }
+  scope: { region: "Tunisia" }
+  fees: { amount: 205000000, currency: TND, year: 2012 }
+  status: active
+  confidence: B
+  basis: reported
+  sources: [kapitalis-tunisiana-3g-2012, wikipedia-ooredoo-tunisia-en]
+  notes:
+    - >-
+      Licence 3G attribuée officiellement le 24 mai 2012 à Tunisiana (future
+      Ooredoo), 3e bénéficiaire après Orange et Tunisie Telecom; convention
+      signée par le ministre Moncef Marzouk et le DG Kenneth Campbell, période
+      15 ans RENOUVELABLE (Kapitalis, tier 4) -> échéance 24-05-2027. Le champ
+      schema term ne porte que la durée; le caractère renouvelable est
+      enregistré ici.
+    - >-
+      Décret d'approbation JORT non localisé (archive 9anoun débute ~2016) ->
+      confiance B. Renommage en Ooredoo Tunisie le 24 avril 2014.
+  notes_fr:
+    - >-
+      Licence 3G attribuée officiellement le 24 mai 2012 à Tunisiana (future Ooredoo), 3e
+      bénéficiaire après Orange et Tunisie Telecom ; convention signée par le ministre
+      Moncef Marzouk et le DG Kenneth Campbell, période 15 ans RENOUVELABLE (Kapitalis, tier
+      4) -> échéance 24-05-2027. Le champ schema term ne porte que la durée ; le caractère
+      renouvelable est enregistré ici.
+    - >-
+      Décret d'approbation JORT non localisé (archive 9anoun débute ~2016) -> confiance B.
+      Renommage en Ooredoo Tunisie le 24 avril 2014.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      رخصة 3G مُنحت رسمياً في 24 مايو 2012 لتونسiana (Ooredoo المستقبلية)، ثالث مستفيد بعد
+      أورنج واتصالات تونس؛ وقّع الاتفاقية الوزير منصف مرزوق والمدير العام كينيث كامبل، مدة
+      15 عاماً قابلة للتجديد (Kapitalis، الطبقة 4) -> الاستحقاق 24-05-2027. حقل المدة في
+      المخطط يحمل فقط المدة؛ يُسجل القابلية للتجديد هنا.
+    - >-
+      مرسوم اعتماد الجريدة الرسمية لم يتم العثور عليه (أرشيف 9anoun يبدأ ~2016) -> ثقة B.
+      أُعيد تسمية Ooredoo تونس في 24 أبريل 2014.
+  notes_ar_by: model-reviewed
+
+- id: lic-orange-4g-2016
+  holder: orange-tunisie
+  issuer: etat-tunisien
+  kind: spectrum
+  grant: "2016-03-15"
+  term: { years: 15 }
+  scope: { region: "Tunisia" }
+  fees: { amount: 156331000, currency: TND, year: 2016 }
+  status: active
+  confidence: A
+  basis: documented
+  reasoning: >-
+    Durée non publiée dans le décret; cahier des charges 4G et conventions des
+    trois opérateurs suivent le template 15 ans (voir 3G).
+  falsifiable_by: >-
+    Convention annexée au décret 2016-439 (JORT 2016-027).
+  sources: [jort-2016-439, kapitalis-4g-attribution-2016, kapitalis-4g-471md-2016, kapitalis-4g-appel-doffres-2016]
+  notes:
+    - >-
+      Convention 4G signée le 15 mars 2016 entre l'Etat tunisien et Orange
+      Tunisie; approuvée par décret gouvernemental n° 2016-439 du 29 mars 2016
+      (JORT n° 2016-027), en vigueur à compter de la publication au JORT.
+      Offre financière: 156,331 M TND (lots 2 et 3). Paiement exigible avant
+      le 15 avril 2016. Terme 15 ans INFÉRÉ -> ~2031.
+  notes_fr:
+    - >-
+      Convention 4G signée le 15 mars 2016 entre l'Etat tunisien et Orange Tunisie ;
+      approuvée par décret gouvernemental n° 2016-439 du 29 mars 2016 (JORT n° 2016-027), en
+      vigueur à compter de la publication au JORT. Offre financière : 156,331 M TND (lots 2
+      et 3). Paiement exigible avant le 15 avril 2016. Terme 15 ans INFÉRÉ -> ~2031.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      اتفاقية 4G وُقّعت في 15 مارس 2016 بين الدولة التونسية وأورنج تونس؛ وافقت عليها الحكومة
+      بموجب المرسوم رقم 2016-439 بتاريخ 29 مارس 2016 (الجريدة الرسمية رقم 2016-027)، نافذ
+      المفعول من تاريخ نشرها في الجريدة الرسمية. العرض المالي: 156.331 مليون دينار تونسي
+      (الدفعتان 2 و3). الدفع مطلوب قبل 15 أبريل 2016. المدة 15 عاماً مستنتجة -> ~2031.
+  notes_ar_by: model-reviewed
+
+- id: lic-ooredoo-4g-2016
+  holder: ooredoo-tunisie
+  issuer: etat-tunisien
+  kind: spectrum
+  grant: "2016-03-15"
+  term: { years: 15 }
+  scope: { region: "Tunisia" }
+  fees: { amount: 160000000, currency: TND, year: 2016 }
+  status: active
+  confidence: A
+  basis: documented
+  sources: [jort-2016-440, kapitalis-4g-attribution-2016, kapitalis-4g-471md-2016]
+  notes:
+    - >-
+      Convention 4G signée le 15 mars 2016; approuvée par décret gouvernemental
+      n° 2016-440 du 29 mars 2016 (JORT n° 2016-027). Offre financière la plus
+      élevée: 160 M TND. Terme 15 ans INFÉRÉ -> ~2031.
+  notes_fr:
+    - >-
+      Convention 4G signée le 15 mars 2016 ; approuvée par décret gouvernemental n° 2016-440
+      du 29 mars 2016 (JORT n° 2016-027). Offre financière la plus élevée : 160 M TND. Terme
+      15 ans INFÉRÉ -> ~2031.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      اتفاقية 4G وُقّعت في 15 مارس 2016؛ وافقت عليها الحكومة بموجب المرسوم رقم 2016-440
+      بتاريخ 29 مارس 2016 (الجريدة الرسمية رقم 2016-027). أعلى عرض مالي: 160 مليون دينار
+      تونسي. المدة 15 عاماً مستنتجة -> ~2031.
+  notes_ar_by: model-reviewed
+
+- id: lic-tunisie-telecom-4g-2016
+  holder: tunisie-telecom
+  issuer: etat-tunisien
+  kind: spectrum
+  grant: "2016-03-15"
+  term: { years: 15 }
+  scope: { region: "Tunisia" }
+  fees: { amount: 155100001, currency: TND, year: 2016 }
+  status: active
+  confidence: A
+  basis: documented
+  sources: [jort-2016-438, kapitalis-4g-attribution-2016, kapitalis-4g-471md-2016]
+  notes:
+    - >-
+      Convention 4G signée le 15 mars 2016; approuvée par décret gouvernemental
+      n° 2016-438 du 29 mars 2016 (JORT n° 2016-027), « société nationale des
+      télécommunications ». Offre financière: 155,100001 M TND. Terme 15 ans
+      INFÉRÉ -> ~2031.
+  notes_fr:
+    - >-
+      Convention 4G signée le 15 mars 2016 ; approuvée par décret gouvernemental n° 2016-438
+      du 29 mars 2016 (JORT n° 2016-027), « société nationale des télécommunications ».
+      Offre financière : 155,100001 M TND. Terme 15 ans INFÉRÉ -> ~2031.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      اتفاقية 4G وُقّعت في 15 مارس 2016؛ وافقت عليها الحكومة بموجب المرسوم رقم 2016-438
+      بتاريخ 29 مارس 2016 (الجريدة الرسمية رقم 2016-027)، «الشركة الوطنية للاتصالات». العرض
+      المالي: 155.100001 مليون دينار تونسي. المدة 15 عاماً مستنتجة -> ~2031.
+  notes_ar_by: model-reviewed
+
+- id: lic-zitouna-bank-2009
+  holder: zitouna-bank
+  issuer: bct
+  kind: banking
+  grant: "~2009-01"
+  status: active
+  confidence: C
+  basis: reported
+  attributed_to: >-
+    Wikipédia (fr) citant la presse de 2009 (Business News 21-10-2009, Les
+    Afriques 27-09-2009, Tunivisions 28-05-2010)
+  falsifiable_by: >-
+    La décision BCT d'agrément (n°/date) dans les archives BCT/JORT fixerait la
+    date exacte de l'agrément.
+  sources: [wikipedia-banque-zitouna-fr]
+  notes:
+    - >-
+      Première banque islamique tunisienne. Agrément des autorités monétaires
+      (BCT) obtenu en janvier 2009 par Mohamed Sakhr El Materi; constitution
+      publiée au JORT le 10-09-2009 (capital 30 M TND); démarrage officiel
+      28-05-2010. Mise sous administration provisoire par la BCT le 19-01-2011
+      (post-révolution); nationalisée de fait par le décret-loi du 14-03-2011;
+      69,15 % cédés au groupe qatari Majda en 2018.
+    - >-
+      Agrément bancaire — durée indéterminée, soumis à supervision BCT. Pas de
+      redevance d'agrément rapportée; capital initial 30 M TND (contexte).
+      Holder « zitouna-bank » créé dans le graphe le 2026-08-08 (la banque est
+      réelle et documentée; l'id était proposé par les candidats).
+  notes_fr:
+    - >-
+      Première banque islamique tunisienne. Agrément des autorités monétaires (BCT) obtenu
+      en janvier 2009 par Mohamed Sakhr El Materi ; constitution publiée au JORT le
+      10-09-2009 (capital 30 M TND) ; démarrage officiel 28-05-2010. Mise sous
+      administration provisoire par la BCT le 19-01-2011 (post-révolution) ; nationalisée de
+      fait par le décret-loi du 14-03-2011 ; 69,15 % cédés au groupe qatari Majda en 2018.
+    - >-
+      Agrément bancaire — durée indéterminée, soumis à supervision BCT. Pas de redevance
+      d'agrément rapportée ; capital initial 30 M TND (contexte). Holder « zitouna-bank »
+      créé dans le graphe le 2026-08-08 (la banque est réelle et documentée ; l'id était
+      proposé par les candidats).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      أول بنك إسلامي تونسي. حصل على موافقة السلطات النقدية (البنك المركزي التونسي) في يناير
+      2009 من قبل محمد صخر الماظري؛ نُشر العقد التأسيسي في الجريدة الرسمية في 10-09-2009
+      (رأس مال 30 مليون دينار تونسي)؛ بدأ رسمياً في 28-05-2010. وُضع تحت الإدارة المؤقتة من
+      البنك المركزي التونسي في 19-01-2011 (بعد الثورة)؛ أُخضِع فعلياً للملكية العامة بموجب
+      المرسوم-القانون في 14-03-2011؛ بيع 69.15٪ لمجموعة المجد القطرية في 2018.
+    - >-
+      تصريح مصرفي — مدة غير محددة، خاضع لإشراف البنك المركزي التونسي. لم يتم الإبلاغ عن رسوم
+      التصريح؛ رأس المال الأولي 30 مليون دينار تونسي (سياق). حُدد حامل « zitouna-bank» في
+      الرسم البياني في 2026-08-08 (البنك حقيقي ومُوثق؛ اقترحه المترشحون).
+  notes_ar_by: model-reviewed
+
+- id: lic-wifak-bank-2015
+  holder: wifak-bank
+  issuer: bct
+  kind: banking
+  grant: "2015"
+  status: active
+  confidence: B
+  basis: documented
+  sources: [wifakbank-official]
+  notes:
+    - >-
+      Conversion d'une société de leasing en banque universelle islamique :
+      « El Wifak Leasing » (créée 2002, Médenine) s'est transformée en 2015 en
+      « Wifak International Bank » (capital 150 M TND), avec démarrage de
+      l'activité commerciale bancaire le 28-04-2017. Holder « wifak-bank »
+      créé dans le graphe le 2026-08-08 (la banque est réelle et documentée;
+      l'id était proposé par les candidats).
+    - >-
+      Agrément bancaire — durée indéterminée, soumis à supervision BCT. Pas de
+      redevance d'agrément rapportée; capital de transformation 150 M TND
+      (contexte). L'agrément BCT (décision/décret de transformation) reste à
+      localiser -> la date 2015 est la date officielle avancée par la banque
+      elle-même.
+  notes_fr:
+    - >-
+      Conversion d'une société de leasing en banque universelle islamique : « El Wifak
+      Leasing » (créée 2002, Médenine) s'est transformée en 2015 en « Wifak International
+      Bank » (capital 150 M TND), avec démarrage de l'activité commerciale bancaire le
+      28-04-2017. Holder « wifak-bank » créé dans le graphe le 2026-08-08 (la banque est
+      réelle et documentée ; l'id était proposé par les candidats).
+    - >-
+      Agrément bancaire — durée indéterminée, soumis à supervision BCT. Pas de redevance
+      d'agrément rapportée ; capital de transformation 150 M TND (contexte). L'agrément BCT
+      (décision/décret de transformation) reste à localiser -> la date 2015 est la date
+      officielle avancée par la banque elle-même.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      تحويل شركة تأجير إلى بنك إسلامي شامل: « El Wifak Leasing » (تأسست 2002، مدنين) تحوّلت
+      في 2015 إلى « Wifak International Bank » (رأس مال 150 مليون دينار تونسي)، مع بدء
+      النشاط المصرفي التجاري في 28-04-2017. حُدد حامل « wifak-bank» في الرسم البياني في
+      2026-08-08 (البنك حقيقي ومُوثق؛ اقترحه المترشحون).
+    - >-
+      تصريح مصرفي — مدة غير محددة، خاضع لإشراف البنك المركزي التونسي. لم يتم الإبلاغ عن رسوم
+      التصريح؛ رأس مال التحويل 150 مليون دينار تونسي (سياق). تصريح البنك المركزي التونسي
+      (قرار/مرسوم تحويل) لا يزال قيد التحديد -> التاريخ 2015 هو التاريخ الرسمي الذي أعلنته
+      البنك نفسه.
+  notes_ar_by: model-reviewed
+
+- id: lic-cpg-phosphate-concession
+  holder: cpg
+  issuer: etat-tunisien
+  kind: mineral
+  grant: "1897"
+  status: active
+  confidence: C
+  basis: reported
+  attributed_to: "NRGI/Boubaker & Hassen 2016 (tier 2) et Wikipédia citant Perkins 2014 (tier 5)"
+  reasoning: >-
+    L'acte de concession moderne (décret) n'a pas été trouvé; la continuité du
+    droit est inférée de la nationalisation 1956-1976 et du monopole public
+    décrit par NRGI et la presse.
+  falsifiable_by: >-
+    Décrets JORT de concession minière (recherche/exploitation) au bénéfice de
+    la CPG; ou le cahier des charges CPG approuvé par décret.
+  sources: [nrgi-cpg, wikipedia-cpg]
+  notes:
+    - >-
+      Les droits miniers de la CPG sur le bassin de Gafsa (Métlaoui, Redeyef,
+      Moulares, M'dhilla, Kef Schfaier) remontent à la concession coloniale de
+      1897 (CPGCFG) et ont été nationalisés 1956-1976 (CPG, 100 % Etat). La CPG
+      détient en outre des licences à Chott El Jerid (nord) et Meknassy (sud)
+      (NRGI 2016). Monopole public de fait; concessions minières sous le régime
+      du code minier (décret de 1953; code minier loi n° 2003-30).
+    - >-
+      Les décrets de concession spécifiques (JORT) n'ONT PAS été localisés en
+      ligne lors de cette passe -> la concession en tant qu'acte daté reste à
+      documenter; ce record décrit le droit tel que rapporté. Redevances
+      minières non publiées (cf. NRGI 2016).
+  notes_fr:
+    - >-
+      Les droits miniers de la CPG sur le bassin de Gafsa (Métlaoui, Redeyef, Moulares,
+      M'dhilla, Kef Schfaier) remontent à la concession coloniale de 1897 (CPGCFG) et ont
+      été nationalisés 1956-1976 (CPG, 100 % Etat). La CPG détient en outre des licences à
+      Chott El Jerid (nord) et Meknassy (sud) (NRGI 2016). Monopole public de fait ;
+      concessions minières sous le régime du code minier (décret de 1953 ; code minier loi
+      n° 2003-30).
+    - >-
+      Les décrets de concession spécifiques (JORT) n'ONT PAS été localisés en ligne lors de
+      cette passe -> la concession en tant qu'acte daté reste à documenter ; ce record
+      décrit le droit tel que rapporté. Redevances minières non publiées (cf. NRGI 2016).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      تمتد حقوق التعدين لشركة CPG في حوض قفصة (المطارoui، الرديف، المولاري، المهدية، كاف
+      الشفائر) إلى الاستعمار الاستخراجي لعام 1897 (CPGCFG) وتم تأميمها 1956-1976 (CPG، 100٪
+      للدولة). تمتلك CPG أيضاً تراخيص في شط الجريد (شمال) ومكسي (جنوب) (NRGI 2016). احتكار
+      عام فعلي؛ استخراج تعديني ضمن نظام قانون التعدين (مرسوم 1953؛ قانون التعدين رقم
+      2003-30).
+    - >-
+      لم يتم العثور على مرسوم التخصيص المحدد (الجريدة الرسمية) عبر الإنترنت أثناء هذه الجولة
+      -> لا يزال التخصيص كعقد مؤرخ قيد التوثيق؛ يصف هذا السجل الحقوق كما أُبلغ عنها. رسوم
+      تعدين غير منشورة (انظر NRGI 2016).
+  notes_ar_by: model-reviewed
+
+- id: lic-elhiwar-broadcast-2014
+  holder: el-hiwar-ettounsi
+  issuer: haica
+  kind: media
+  grant: "2014-07-24"
+  status: active
+  confidence: A
+  basis: documented
+  sources: [haica-5-licences-2014, haica-elhiwar-page]
+  notes:
+    - >-
+      Décision HAICA du 24 juillet 2014 (Conseil, président Nouri Lejmi):
+      attribution d'une licence d'exploitation d'une chaîne de télévision
+      privée à la société Al Hiwar Attounsi. La chaîne diffusait depuis 2011
+      sous licence provisoire du premier ministre (procédure INRIC).
+      Représentant légal au registre HAICA: Asma Fehri. La chaîne figure au
+      registre HAICA des télévisions privées (Badr 4 / Nilesat). Licence
+      d'exploitation de chaîne de télévision privée (durée non précisée dans
+      la décision publiée); pas de redevance rapportée.
+  notes_fr:
+    - >-
+      Décision HAICA du 24 juillet 2014 (Conseil, président Nouri Lejmi) : attribution d'une
+      licence d'exploitation d'une chaîne de télévision privée à la société Al Hiwar
+      Attounsi. La chaîne diffusait depuis 2011 sous licence provisoire du premier ministre
+      (procédure INRIC). Représentant légal au registre HAICA : Asma Fehri. La chaîne figure
+      au registre HAICA des télévisions privées (Badr 4 / Nilesat). Licence d'exploitation
+      de chaîne de télévision privée (durée non précisée dans la décision publiée) ; pas de
+      redevance rapportée.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      قرار هيئة independents للاتصالات السمعية البصرية في 24 يوليو 2014 (المجلس، رئيس نوري
+      اللجمي): منح رخصة تشغيل قناة تلفزيونية خاصة لشركة الحوار التونسي. كانت القناة تبث منذ
+      2011 بموجب رخصة مؤقتة من رئيس الوزراء (إجراء INRIC). الممثل القانوني في سجل هيئة
+      independents للاتصالات السمعية البصرية: أسما فهري. القناة مدرجة في سجل القنوات الخاصة
+      (بدر 4 / نايل سات). رخصة تشغيل قناة تلفزيونية خاصة (المدة غير محددة في القرار
+      المنشور)؛ لم يتم الإبلاغ عن رسوم.
+  notes_ar_by: model-reviewed
+
+- id: lic-nessma-broadcast-2007
+  holder: nessma-tv
+  issuer: etat-tunisien
+  kind: media
+  grant: "2007-03-16"
+  status: suspended
+  confidence: C
+  basis: reported
+  attributed_to: >-
+    Wikipédia (en) (lancement); CPJ et DW (fermeture 2021); African Manager
+    (autorisation temporaire 2022)
+  sources: [wikipedia-nessma-en, cpj-nessma-2021, dw-nessma-2021, africanmanager-nessma-2022]
+  notes:
+    - >-
+      Nessma TV lancée le 16 mars 2007 (Nabil et Ghazi Karoui, Mediaset, Tarak
+      Ben Ammar) — l'instrument d'autorisation pré-2011 (décret/arrêté,
+      émetteur) N'A PAS été localisé. Le régulateur (HAICA) a ordonné sa
+      fermeture le 27 octobre 2021 au motif d'une diffusion « sans licence »
+      depuis des années (CPJ/DW, tier 3); autorisation temporaire de diffusion
+      accordée par la HAICA le 8 mars 2022; relance le 11 mars 2022 sous le nom
+      Nessma El Jadida (Maghreb Broadcast/Zied Riba).
+    - >-
+      Statut: la candidature portait « interrupted » — l'ordre de fermeture
+      HAICA du 27-10-2021 a suspendu l'autorisation; le champ schema n'a pas de
+      valeur « interrupted », « suspended » est la valeur la plus proche et la
+      rupture de continuité est décrite ici. Le record Nessma du graphe
+      (institutions.yaml) documente déjà la fermeture; celui-ci ajoute la
+      dimension « autorisation ». Pas de redevance rapportée.
+  notes_fr:
+    - >-
+      Nessma TV lancée le 16 mars 2007 (Nabil et Ghazi Karoui, Mediaset, Tarak Ben Ammar) —
+      l'instrument d'autorisation pré-2011 (décret/arrêté, émetteur) N'A PAS été localisé.
+      Le régulateur (HAICA) a ordonné sa fermeture le 27 octobre 2021 au motif d'une
+      diffusion « sans licence » depuis des années (CPJ/DW, tier 3) ; autorisation
+      temporaire de diffusion accordée par la HAICA le 8 mars 2022 ; relance le 11 mars 2022
+      sous le nom Nessma El Jadida (Maghreb Broadcast/Zied Riba).
+    - >-
+      Statut : la candidature portait « interrupted » — l'ordre de fermeture HAICA du
+      27-10-2021 a suspendu l'autorisation ; le champ schema n'a pas de valeur « interrupted
+      », « suspended » est la valeur la plus proche et la rupture de continuité est décrite
+      ici. Le record Nessma du graphe (institutions.yaml) documente déjà la fermeture ;
+      celui-ci ajoute la dimension « autorisation ». Pas de redevance rapportée.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      أُطلقت نسمة تي في في 16 مارس 2007 (نبيل وغازي قروي، Mediaset، طارق بن عمار) — لم يتم
+      العثور على أداة التصريح ما قبل 2011 (مرسوم/قرار، جهاز إرسال). أمر регلّатор (هيئة
+      independents للاتصالات السمعية البصرية) بإغلاقها في 27 أكتوبر 2021 بدعوى البث «بدون
+      رخصة» منذ سنوات (CPJ/DW، الطبقة 3)؛ منحت هيئة independents للاتصالات السمعية البصرية
+      تصريحاً مؤقتاً للبث في 8 مارس 2022؛ أُعيد إطلاقها في 11 مارس 2022 تحت اسم نسمة الجديدة
+      (Maghreb Broadcast/Zied Riba).
+    - >-
+      الحالة: كان الترشيح «متوقف» — أمر الإغلاق الصادر عن هيئة independents للاتصالات
+      السمعية البصرية في 27-10-2021 علّق التصريح؛ حقل المخطط لا يحتوي على قيمة «متوقف»،
+      «معلق» هي القيمة الأقرب وتم وصف انقطاع الاستمرارية هنا. يوثق سجل نسمة في الرسم البياني
+      (institutions.yaml) الإغلاق بالفعل؛ هذا يضيف بُعد «التصريح». لم يتم الإبلاغ عن رسوم.
+  notes_ar_by: model-reviewed

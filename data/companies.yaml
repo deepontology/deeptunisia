@@ -1,0 +1,894 @@
+# -----------------------------------------------------------------------------
+# COMPANIES — corporate records keyed by institution id (spec §4.2)
+#
+# A company IS an institution of type `company`/`bank`/`state-enterprise`/… plus
+# this corporate record. The record is keyed by the institution id, so the graph
+# node and its corporate identity can never desync into two different things.
+#
+# Every number carries a date (P7): `capital` is not "the capital is X", it is "a
+# primary document shows capital X at this balance-sheet date". Numbers never
+# float free.
+#
+# Records landed 2026-08-08 from data/contrib/companies-2026-08-08.yaml (roadmap
+# P1 #6): biat, poulina, mabrouk-group, elloumi-group, gct, steg, tunisair,
+# tunisie-telecom. RCC (registre de commerce) numbers were NOT verifiable in
+# that run (BRCT/RNE registries unreachable) — no `cin` is invented, and each
+# record's notes say where to look. The schema gained the base `notes` field
+# (parity with education/place; nothing relaxed — see spec R5/R8 rows).
+# -----------------------------------------------------------------------------
+
+- id: biat
+  legal_name_fr: "Banque Internationale Arabe de Tunisie (BIAT)"
+  legal_name_ar: "بنك تونس العربي الدولي"
+  legal_form: "SA (société anonyme)"
+  status: active
+  founded: "1976-03-29"
+  capital: { tnd: 204000000, date: "2024-12-31" }
+  state_owned: false
+  confidence: B
+  sources: [wikipedia-fr-biat, ilboursa-biat-capital-2024, ilboursa-biat-capital-2025]
+  notes:
+    - >-
+      Capital : l'AGE du 1er novembre 2024 a décidé d'augmenter le capital de
+      178,5 M TND à 204 M TND par incorporation de réserves (25,5 M TND ;
+      5 100 000 actions nouvelles de nominal 5 TND, 1 action gratuite pour 7
+      anciennes) — ilboursa, 27/11/2024. Le capital de 204 M figure donc dans
+      les états financiers annuels au 31/12/2024 (audités, publiés sur
+      biat.com.tn — à vérifier ligne « capital » du passif).
+    - >-
+      Fondation : Wikipédia FR donne « création 29 mars 1976 » (fusion des
+      succursales tunisiennes de la Société marseillaise de crédit et de HSBC
+      Bank Middle East) ; la version arabe dit avril 1976. Le décret/loi de
+      création (JORT 1976) reste à consulter pour la date exacte.
+    - >-
+      RCC non vérifié : extrait BRCT/RNE à demander. Banque privée ;
+      l'actionnaire de référence est le groupe Mabrouk (40 % du capital depuis
+      2007, selon biat.com.tn et Wikipédia FR). L'État tunisien n'est pas
+      actionnaire. L'institution du graphe porte désormais le nom arabe
+      « بنك تونس العربي الدولي » (corrigé le 2026-08-08 ; l'ancien nom arabe
+      était celui de l'Arab Tunisian Bank).
+  notes_fr:
+    - >-
+      Capital : l'AGE du 1er novembre 2024 a décidé d'augmenter le capital de 178,5 M TND à
+      204 M TND par incorporation de réserves (25,5 M TND ; 5 100 000 actions nouvelles de
+      nominal 5 TND, 1 action gratuite pour 7 anciennes) — ilboursa, 27/11/2024. Le capital
+      de 204 M figure donc dans les états financiers annuels au 31/12/2024 (audités, publiés
+      sur biat.com.tn — à vérifier ligne « capital » du passif).
+    - >-
+      Fondation : Wikipédia FR donne « création 29 mars 1976 » (fusion des succursales
+      tunisiennes de la Société marseillaise de crédit et de HSBC Bank Middle East) ; la
+      version arabe dit avril 1976. Le décret/loi de création (JORT 1976) reste à consulter
+      pour la date exacte.
+    - >-
+      RCC non vérifié : extrait BRCT/RNE à demander. Banque privée ; l'actionnaire de
+      référence est le groupe Mabrouk (40 % du capital depuis 2007, selon biat.com.tn et
+      Wikipédia FR). L'État tunisien n'est pas actionnaire. L'institution du graphe porte
+      désormais le nom arabe « بنك تونس العربي الدولي » (corrigé le 2026-08-08 ; l'ancien
+      nom arabe était celui de l'Arab Tunisian Bank).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      رأس المال: قررت الجمعية العامة الاستثنائية في 1 نوفمبر 2024 زيادة رأس المال من 178.5
+      مليون دينار تونسي إلى 204 مليون دينار تونسي عن طريق دمج الاحتياطيات (25.5 مليون دينار
+      تونسي؛ 5,100,000 سهم جديد بقيمة اسمية 5 دينارات تونسية، سهم مجاني واحد مقابل 7 أسهم
+      قديمة) — ilboursa، 27/11/2024. ويظهر رأس المال البالغ 204 مليون دينار تونسي بذلك في
+      القوائم المالية السنوية截至 31/12/2024 (مدققة، منشورة على biat.com.tn — للتحقق من سطر «
+      رأس المال » في جانب الخصوم).
+    - >-
+      التأسيس: تذكر ويكيبيديا الفرنسية «إنشاء 29 مارس 1976» (اندماج الفروع التونسية لشركة
+      مارسيليا للائتمان وبنك إتش إس بي سي الشرق الأوسط)؛ النسخة العربية تذكر أبريل 1976. لا
+      يزال قرار/قانون التأسيس (الجوهرة 1976) قيد المراجعة للحصول على التاريخ الدقيق.
+    - >-
+      سجل التجارة غير متحقق: يجب طلب كشوف BRCT/RNE. بنك خاص؛ المساهم المرجعي هو مجموعة
+      المبروك (40٪ من رأس المال منذ 2007، وفقاً لـ biat.com.tn وويكيبيديا الفرنسية). الدولة
+      التونسية ليست مساهمة. تحمل المؤسسة في الرسم البياني الاسم العربي «بنك تونس العربي
+      الدولي» (تم تصحيحه في 2026-08-08؛ الاسم العربي القديم كان لبنك عرب تونس).
+  notes_ar_by: model-reviewed
+
+- id: poulina
+  legal_name_fr: "Poulina Group Holding (PGH)"
+  legal_name_ar: "مجمع بولينا القابض"
+  legal_form: "SA (société anonyme)"
+  status: active
+  founded: "1967-07-14"
+  capital: { tnd: 189000000, date: "2026-04-16" }
+  state_owned: false
+  confidence: B
+  sources: [wikipedia-poulina-fr, managers-pgh-capital-2026, africanmanager-pgh-capital-2026, billionairesafrica-pgh-2026]
+  notes:
+    - >-
+      Dates : 14/07/1967 = acquisition d'un premier poulailler (Wikipédia FR) ;
+      la holding PGH a été créée le 24 juin 2008 et introduite en bourse le
+      24 juillet 2008 avec un capital de 150 M TND (Wikipédia FR, Tustex).
+    - >-
+      Capital : porté à 180 M TND avant 2026 ; l'AGE du 16 avril 2026 a approuvé
+      une augmentation par incorporation de réserves (1 action gratuite pour 20)
+      portant le capital de 180 à 189 M TND — Managers TN (16/04/2026), African
+      Manager EN (16/04/2026), Billionaires.Africa (11/07/2026). La date de
+      capital retenue (2026-04-16) est celle de l'AGE ; le capital de 180 M TND
+      reste la valeur des états 2025.
+    - >-
+      Groupe privé familial (fondé par Abdelwahab Ben Ayed et six partenaires) ;
+      coté à la BVMT depuis le 24 juillet 2008. Aucune participation publique.
+      RCC non vérifié (BRCT/RNE).
+  notes_fr:
+    - >-
+      Dates : 14/07/1967 = acquisition d'un premier poulailler (Wikipédia FR) ; la holding
+      PGH a été créée le 24 juin 2008 et introduite en bourse le 24 juillet 2008 avec un
+      capital de 150 M TND (Wikipédia FR, Tustex).
+    - >-
+      Capital : porté à 180 M TND avant 2026 ; l'AGE du 16 avril 2026 a approuvé une
+      augmentation par incorporation de réserves (1 action gratuite pour 20) portant le
+      capital de 180 à 189 M TND — Managers TN (16/04/2026), African Manager EN
+      (16/04/2026), Billionaires.Africa (11/07/2026). La date de capital retenue
+      (2026-04-16) est celle de l'AGE ; le capital de 180 M TND reste la valeur des états
+      2025.
+    - >-
+      Groupe privé familial (fondé par Abdelwahab Ben Ayed et six partenaires) ; coté à la
+      BVMT depuis le 24 juillet 2008. Aucune participation publique. RCC non vérifié
+      (BRCT/RNE).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      التواريخ: 14/07/1967 = امتلاك أول مزرعة دجاج (ويكيبيديا الفرنسية)؛ أُسست شركة الت
+      holding PGH في 24 يونيو 2008 وأُدخلت في البورصة في 24 يوليو 2008 برأس مال 150 مليون
+      دينار تونسي (ويكيبيديا الفرنسية، Tustex).
+    - >-
+      رأس المال: رُفع إلى 180 مليون دينار تونسي قبل 2026؛ وافقت الجمعية العامة الاستثنائية
+      في 16 أبريل 2026 على زيادة عن طريق دمج الاحتياطيات (سهم مجاني واحد مقابل 20) لرفع رأس
+      المال من 180 إلى 189 مليون دينار تونسي — Managers TN (16/04/2026)، African Manager EN
+      (16/04/2026)، Billionaires.Africa (11/07/2026). تاريخ رأس المال المعتمد (2026-04-16)
+      هو تاريخ الجمعية العامة الاستثنائية؛ رأس المال البالغ 180 مليون دينار تونسي يظل قيمة
+      القوائم المالية لعام 2025.
+    - >-
+      مجموعة خاصة عائلية (أسسها عبد الوهاب بن عياد وستة شركاء)؛ مدرجة في البورصة التونسية
+      منذ 24 يوليو 2008. لا توجد ملكية عامة. سجل التجارة غير متحقق (BRCT/RNE).
+  notes_ar_by: model-reviewed
+
+- id: mabrouk-group
+  legal_name_fr: "Groupe Mabrouk (famille Mabrouk)"
+  legal_name_ar: "مجموعة المبروك"
+  legal_form: "?"
+  status: active
+  founded: "~1945"
+  state_owned: false
+  confidence: C
+  attributed_to: "Wikipédia FR (Groupe Mabrouk)"
+  reasoning: >-
+    Le groupe n'existe pas comme une personne morale unique enregistrée au
+    registre de commerce : c'est un ensemble de sociétés (Sotubi, Monoprix
+    Tunisie, Le Moteur, holdings Saïda/IDM, participations BIAT, Orange
+    Tunisie…). Un seul RCC/capital « du groupe » n'existe pas.
+  falsifiable_by: >-
+    Un extrait BRCT/RNE au nom « Groupe Mabrouk » ou « Mabrouk Holding »
+    démontrerait l'inverse.
+  sources: [wikipedia-fr-mabrouk]
+  notes:
+    - >-
+      Fondation : Wikipédia FR situe le début des affaires d'Ali Mabrouk au
+      milieu des années 1940 (achat de la conserverie SIPCA) et la
+      diversification « à la fin des années 1940 » ; la valeur ~1945 est une
+      lecture de cette fourchette, pas une date d'enregistrement. Le graphe
+      porte active.start ~1950, cohérent avec ces récits.
+    - >-
+      Aucun capital de groupe citable (les capitaux se lisent société par
+      société : BIAT 204 M TND, Monoprix, Banque Zitouna…). RCC non applicable
+      / non vérifié. Conglomérat familial privé ; une branche (Marouane
+      Mabrouk) s'est alliée par mariage à la famille Ben Ali ; le groupe n'est
+      pas une entreprise publique.
+  notes_fr:
+    - >-
+      Fondation : Wikipédia FR situe le début des affaires d'Ali Mabrouk au milieu des
+      années 1940 (achat de la conserverie SIPCA) et la diversification « à la fin des
+      années 1940 » ; la valeur ~1945 est une lecture de cette fourchette, pas une date
+      d'enregistrement. Le graphe porte active.start ~1950, cohérent avec ces récits.
+    - >-
+      Aucun capital de groupe citable (les capitaux se lisent société par société : BIAT 204
+      M TND, Monoprix, Banque Zitouna…). RCC non applicable / non vérifié. Conglomérat
+      familial privé ; une branche (Marouane Mabrouk) s'est alliée par mariage à la famille
+      Ben Ali ; le groupe n'est pas une entreprise publique.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      التأسيس: تضع ويكيبيديا الفرنسية بداية أعمال علي المبروك في منتصف أربعينيات القرن
+      الماضي (شراء مصنع التصنيع الغذائي SIPCA) والتنويع «في أواخر أربعينيات القرن الماضي»؛
+      قيمة ~1945 هي قراءة لهذه المدة الزمنية، وليست تاريخ تسجيل. يحمل الرسم البياني
+      active.start ~1950، وهو متسق مع هذه الروايات.
+    - >-
+      لا يوجد رأس مال للمجموعة يمكن الاستشهاد به (تُقرأ أموال الشركات بشكل منفصل: BIAT 204
+      مليون دينار تونسي، Monoprix، بنك الزитونة...). سجل التجارة غير قابل للتطبيق / غير
+      متحقق. تكتل عائلي خاص؛ فرع (معوان المبروك) تزوج من عائلة بن علي؛ المجموعة ليست مؤسسة
+      عامة.
+  notes_ar_by: model-reviewed
+
+- id: elloumi-group
+  legal_name_fr: "Groupe Elloumi / COFICAB"
+  legal_name_ar: "مجموعة اللومي"
+  legal_form: "?"
+  status: active
+  founded: "1946"
+  state_owned: false
+  confidence: C
+  attributed_to: "COFICAB Group (site officiel)"
+  reasoning: >-
+    Le site officiel coficab.com indique « ELLOUMI Group was founded in Tunisia
+    in 1946 by Mr. Taoufik Elloumi » et « COFICAB was founded, in Tunisia, in
+    1992, by Mr. Hichem Elloumi ». Le graphe porte active.start ~1960 pour le
+    groupe ; aucune source consultée ne justifie 1960 (ni l'officiel 1946, ni
+    la création de COFICAB en 1992).
+  falsifiable_by: >-
+    Un extrait BRCT de « Coficab » ou des sociétés du groupe, ou une
+    biographie de la famille Elloumi, donnerait la date d'enregistrement.
+  disputes:
+    - claim: "Fondation du groupe Elloumi : 1946 (site officiel COFICAB) vs ~1960 (graphe)"
+      held_by: "COFICAB Group (site officiel)"
+      source: coficab-site
+      assessment: >-
+        Source unique de grade C ; aucun registre (BRCT) consulté ne tranche.
+        Le graphe garde ~1960 (date non modifiée le 2026-08-08) et le désaccord
+        est enregistré ici plutôt que tranché silencieusement (règle 5).
+      status: open
+  sources: [coficab-site]
+  notes:
+    - >-
+      L'institution du graphe fusionne le groupe familial (fondé 1946 selon
+      l'officiel) et sa société emblématique COFICAB (fondée 1992 par Hichem
+      Elloumi). Legal form et capital : non documentés dans les sources
+      accessibles (COFICAB n'est pas cotée à la BVMT) ; à compléter via le
+      registre de commerce. RCC non vérifié (BRCT/RNE).
+  notes_fr:
+    - >-
+      L'institution du graphe fusionne le groupe familial (fondé 1946 selon l'officiel) et
+      sa société emblématique COFICAB (fondée 1992 par Hichem Elloumi). Legal form et
+      capital : non documentés dans les sources accessibles (COFICAB n'est pas cotée à la
+      BVMT) ; à compléter via le registre de commerce. RCC non vérifié (BRCT/RNE).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      تجمع المؤسسة في الرسم البياني المجموعة العائلية (أسسها الموقع الرسمي عام 1946) وشركتها
+      الرمزية COFICAB (أسسها هشام اللومي عام 1992). الشكل القانوني ورأس المال: غير موثقين في
+      المصادر المتاحة (COFICAB غير مدرجة في البورصة التونسية)؛ يجب استكمالها عبر سجل
+      التجارة. سجل التجارة غير متحقق (BRCT/RNE).
+  notes_ar_by: model-reviewed
+
+- id: gct
+  legal_name_fr: "Groupe Chimique Tunisien (GCT)"
+  legal_name_ar: "المجمع الكيميائي التونسي"
+  legal_form: "Établissement public (EPIC) à caractère industriel et commercial"
+  status: active
+  founded: "1992"
+  state_owned: true
+  confidence: B
+  sources: [gct-site, wikipedia-fr-gct]
+  notes:
+    - >-
+      Histoire (officielle, gct.com.tn) : SIAPE fondée en 1947 à Sfax
+      (production TSP à partir de 1952) ; le GCT est créé en 1992 par fusion de
+      la SIAPE et de la SAEPA (après absorption des ICM, EG et ICG par la SIAPE
+      en 1989). Wikipédia FR confirme la formation du groupe par fusions
+      1992-1994. L'institution du graphe porte désormais active.start 1992
+      (corrigé le 2026-08-08).
+    - >-
+      Entreprise publique à 100 % (ministère de l'Industrie, de l'Énergie et
+      des Mines) — site officiel gct.com.tn : « le GCT, en tant qu'établissement
+      public… ». Capital : non publié sur le site officiel ni dans les sources
+      accessibles ; le capital des EPIC est fixé par décret (JORT) — à vérifier
+      au JORT ou au rapport du ministère des Finances sur les entreprises
+      publiques. RCC non vérifié.
+  notes_fr:
+    - >-
+      Histoire (officielle, gct.com.tn) : SIAPE fondée en 1947 à Sfax (production TSP à
+      partir de 1952) ; le GCT est créé en 1992 par fusion de la SIAPE et de la SAEPA (après
+      absorption des ICM, EG et ICG par la SIAPE en 1989). Wikipédia FR confirme la
+      formation du groupe par fusions 1992-1994. L'institution du graphe porte désormais
+      active.start 1992 (corrigé le 2026-08-08).
+    - >-
+      Entreprise publique à 100 % (ministère de l'Industrie, de l'Énergie et des Mines) —
+      site officiel gct.com.tn : « le GCT, en tant qu'établissement public… ». Capital : non
+      publié sur le site officiel ni dans les sources accessibles ; le capital des EPIC est
+      fixé par décret (JORT) — à vérifier au JORT ou au rapport du ministère des Finances
+      sur les entreprises publiques. RCC non vérifié.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      التاريخ (رسمي، gct.com.tn): تأسست SIAPE عام 1947 في صفاقس (إنتاج السماد الفوسفاتي
+      الترانس-أميد自从 1952)؛ أُنشئ المجمع الكيميائي التونسي عام 1992 عن طريق اندماج SIAPE
+      وSAEPA (بعد امتصاص ICM وEG وICG من قبل SIAPE عام 1989). تؤكد ويكيبيديا الفرنسية تشكيل
+      المجموعة عن طريق اندماج 1992-1994. تحمل المؤسسة في الرسم البياني active.start 1992 (تم
+      تصحيحه في 2026-08-08).
+    - >-
+      مؤسسة عامة بنسبة 100٪ (وزارة الصناعة والطاقة والمناجم) — الموقع الرسمي gct.com.tn:
+      «المجمع الكيميائي التونسي، بصفته مؤسسة عامة...». رأس المال: غير منشور على الموقع
+      الرسمي أو في المصادر المتاحة؛ رأس المال المؤسسة العامة يُحدد بموجب مرسوم (الجوهرة) —
+      للتحقق من الجوهرة أو تقرير وزارة المالية حول المؤسسات العامة. سجل التجارة غير متحقق.
+  notes_ar_by: model-reviewed
+
+- id: steg
+  legal_name_fr: "Société Tunisienne de l'Électricité et du Gaz (STEG)"
+  legal_name_ar: "الشركة التونسية للكهرباء والغاز"
+  legal_form: "Établissement public à caractère non administratif (entreprise publique)"
+  status: active
+  founded: "1962-04-03"
+  state_owned: true
+  confidence: A
+  sources: [wikipedia-steg, wikipedia-ar-steg]
+  notes:
+    - >-
+      Création par décret-loi n° 62-8 du 3 avril 1962 instaurant un monopole
+      public (Wikipédia FR/AR, citant le portail pm.gov.tn ; l'État avait placé
+      un comité de gestion sur la Compagnie tunisienne d'électricité et
+      transports dès août 1958). L'institution du graphe porte désormais
+      active.start 1962-04-03 (corrigé le 2026-08-08).
+    - >-
+      Actionnaire unique : l'État tunisien (100 %) — Wikipédia FR : « État
+      tunisien (100 %) ». Capital : non trouvé dans les sources accessibles
+      (fixé par décret, JORT) — à vérifier au JORT ou au rapport des entreprises
+      publiques. RCC non vérifié.
+  notes_fr:
+    - >-
+      Création par décret-loi n° 62-8 du 3 avril 1962 instaurant un monopole public
+      (Wikipédia FR/AR, citant le portail pm.gov.tn ; l'État avait placé un comité de
+      gestion sur la Compagnie tunisienne d'électricité et transports dès août 1958).
+      L'institution du graphe porte désormais active.start 1962-04-03 (corrigé le
+      2026-08-08).
+    - >-
+      Actionnaire unique : l'État tunisien (100 %) — Wikipédia FR : « État tunisien (100 %)
+      ». Capital : non trouvé dans les sources accessibles (fixé par décret, JORT) — à
+      vérifier au JORT ou au rapport des entreprises publiques. RCC non vérifié.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      الإنشاء بموجب المرسوم-القانون رقم 62-8 بتاريخ 3 أبريل 1962 الذي أنشأ احتكاراً عاماً
+      (ويكيبيديا الفرنسية/العربية، ناقلاً بوابة pm.gov.tn؛ كانت الدولة قد وضعت لجنة إدارة
+      على الشركة التونسية للكهرباء والنقل منذ أغسطس 1958). تحمل المؤسسة في الرسم البياني
+      active.start 1962-04-03 (تم تصحيحه في 2026-08-08).
+    - >-
+      المساهم الوحيد: الدولة التونسية (100٪) — ويكيبيديا الفرنسية: «الدولة التونسية (100٪)».
+      رأس المال: غير موجود في المصادر المتاحة (يُحدد بموجب مرسوم، الجوهرة) — للتحقق من
+      الجوهرة أو تقرير المؤسسات العامة. سجل التجارة غير متحقق.
+  notes_ar_by: model-reviewed
+
+- id: tunisair
+  legal_name_fr: "Société Tunisienne de l'Air (Tunisair)"
+  legal_name_ar: "الخطوط التونسية"
+  legal_form: "SA (société anonyme)"
+  status: active
+  founded: "1948-10-21"
+  capital: { tnd: 106199280, date: "2017-12-31" }
+  state_owned: true
+  confidence: A
+  sources: [wikipedia-fr-tunisair, wikipedia-tunisair-ar, ilboursa-tunisair-profil, wmc-tunisair-age-2018, encyclopedia-com-tunisair]
+  notes:
+    - >-
+      Fondation : décret du 21 octobre 1948 créant la Compagnie aérienne
+      tunisienne de l'air (capital initial 60 millions de francs français ;
+      actionnaires : gouvernement tunisien, Air France, privés) ; exploitation
+      débutée le 1er avril 1949 (Wikipédia FR/AR, ilboursa). L'institution du
+      graphe porte désormais active.start 1948-10-21 (corrigé le 2026-08-08 ;
+      l'ancien 1949-10-21 combinait par erreur l'année de début d'exploitation
+      avec le jour/mois du décret).
+    - >-
+      Majorité publique : État tunisien 64,86 % + CNSS 3,99 % + CNRPS 3,9 % +
+      CNAM 1,67 % ≈ 74,4 % public ; Air France 5,58 %, public 20 % (profil
+      ilboursa TAIR, ISIN TN0001200401). Encyclopedia.com la décrit « Public
+      Company (70 % Government-Owned) ».
+    - >-
+      Capital : 106 199 MDT au bilan communiqué à la convocation d'AGE d'avril
+      2018 (WMC 09/04/2018) ; le profil ilboursa actuel affiche toujours
+      106 199 280 titres, ce qui, à un nominal de 1 TND, corrobore un capital
+      inchangé depuis. RCC non vérifié (BRCT/RNE).
+  notes_fr:
+    - >-
+      Fondation : décret du 21 octobre 1948 créant la Compagnie aérienne tunisienne de l'air
+      (capital initial 60 millions de francs français ; actionnaires : gouvernement
+      tunisien, Air France, privés) ; exploitation débutée le 1er avril 1949 (Wikipédia
+      FR/AR, ilboursa). L'institution du graphe porte désormais active.start 1948-10-21
+      (corrigé le 2026-08-08 ; l'ancien 1949-10-21 combinait par erreur l'année de début
+      d'exploitation avec le jour/mois du décret).
+    - >-
+      Majorité publique : État tunisien 64,86 % + CNSS 3,99 % + CNRPS 3,9 % + CNAM 1,67 % ≈
+      74,4 % public ; Air France 5,58 %, public 20 % (profil ilboursa TAIR, ISIN
+      TN0001200401). Encyclopedia.com la décrit « Public Company (70 % Government-Owned) ».
+    - >-
+      Capital : 106 199 MDT au bilan communiqué à la convocation d'AGE d'avril 2018 (WMC
+      09/04/2018) ; le profil ilboursa actuel affiche toujours 106 199 280 titres, ce qui, à
+      un nominal de 1 TND, corrobore un capital inchangé depuis. RCC non vérifié (BRCT/RNE).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      التأسيس: مرسوم بتاريخ 21 أكتوبر 1948 ينشئ الشركة الجوية التونسية للطيران (رأس مال أولي
+      60 مليون فرنك فرنسي؛ المساهمون: الحكومة التونسية، الخطوط الجوية الفرنسية، خاصة)؛ بدأ
+      التشغيل في 1 أبريل 1949 (ويكيبيديا الفرنسية/العربية، ilboursa). تحمل المؤسسة في الرسم
+      البياني active.start 1948-10-21 (تم تصحيحه في 2026-08-08؛ كان 1949-10-21 القديم يخلط
+      بالخطأ بين عام بدء التشغيل ويوم/شهر المرسوم).
+    - >-
+      الملكية العامة: الدولة التونسية 64.86٪ + الصندوق الوطني للضمان الاجتماعي 3.99٪ +
+      الصندوق الوطني للمعاشات 3.9٪ + الصندوق الوطني للتواصل 1.67٪ ≈ 74.4٪ عام؛ الخطوط الجوية
+      الفرنسية 5.58٪، عام 20% (ملف ilboursa TAIR، ISIN TN0001200401). تصفها Encyclopedia.com
+      بـ «شركة عامة (70٪ مملوكة للحكومة)».
+    - >-
+      رأس المال: 106,199 مليون دينار تونسي في الميزانية التي أُعلن عنها في دعوة الجمعية
+      العامة لأبريل 2018 (WMC 09/04/2018)؛ لا يزال ملف ilboursa الحالي يعرض 106,199,280
+      سهماً، وهو ما يؤكد رأس المال ثابتاً منذ ذلك الحين بقيمة اسمية 1 دينار تونسي. سجل
+      التجارة غير متحقق (BRCT/RNE).
+  notes_ar_by: model-reviewed
+
+- id: tunisie-telecom
+  legal_name_fr: "Tunisie Télécom (SA)"
+  legal_name_ar: "اتصالات تونس"
+  legal_form: "SA (société anonyme) depuis 2004"
+  status: active
+  founded: "1995-04-17"
+  capital: { tnd: 1400000000, date: "2023-02-19" }
+  state_owned: true
+  confidence: C
+  attributed_to: "The Money (themoney.tn), 19/02/2023"
+  reasoning: >-
+    Capital de 1 400 000 000 TND rapporté par une seule source (The Money,
+    tier 4), sans référence à un bilan daté ; le chiffre est présenté comme
+    courant en février 2023. À confirmer par le décret de constitution de la SA
+    (5 avril 2004, JORT) ou le rapport du ministère des Finances sur les
+    entreprises publiques.
+  falsifiable_by: >-
+    Le décret n° 2004-… du 5 avril 2004 (JORT) fixant le capital social de
+    Tunisie Télécom SA, ou les états financiers publiés de la société.
+  sources: [wikipedia-tunisie-telecom, themoney-tt-wiki]
+  notes:
+    - >-
+      Création : loi du 17 avril 1995 portant création de l'Office national des
+      télécommunications (nom commercial « Tunisie Télécom »), entrée en
+      vigueur le 1er janvier 1996 ; transformation en SA de droit public fin
+      2002, puis décret du 5 avril 2004 lui donnant sa forme actuelle
+      (Wikipédia FR/AR). Le graphe porte active.start 1995-04-17, conforme à la
+      promulgation de la loi.
+    - >-
+      Majorité publique : État tunisien 65 %, TeCom-DIG (Dubai Holding) 35 %
+      (Wikipédia FR/AR). À noter : la cession à Abraaj (2017) n'a jamais été
+      finalisée ; EIT/TeCom-DIG reste à 35 % selon Wikipédia. RCC non vérifié
+      (BRCT/RNE).
+  notes_fr:
+    - >-
+      Création : loi du 17 avril 1995 portant création de l'Office national des
+      télécommunications (nom commercial « Tunisie Télécom »), entrée en vigueur le 1er
+      janvier 1996 ; transformation en SA de droit public fin 2002, puis décret du 5 avril
+      2004 lui donnant sa forme actuelle (Wikipédia FR/AR). Le graphe porte active.start
+      1995-04-17, conforme à la promulgation de la loi.
+    - >-
+      Majorité publique : État tunisien 65 %, TeCom-DIG (Dubai Holding) 35 % (Wikipédia
+      FR/AR). À noter : la cession à Abraaj (2017) n'a jamais été finalisée ; EIT/TeCom-DIG
+      reste à 35 % selon Wikipédia. RCC non vérifié (BRCT/RNE).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      التأسيس: قانون بتاريخ 17 أبريل 1995 بإنشاء المكتب الوطني للاتصالات (الاسم التجاري
+      «اتصالات تونس»)، نافذ المفعول في 1 يناير 1996؛ تحول إلى شركة عامة قانونية خاصة مملوكة
+      للدولة في نهاية 2002، ثم مرسوم بتاريخ 5 أبريل 2004 يمنحها شكلها الحالي (ويكيبيديا
+      الفرنسية/العربية). يحمل الرسم البياني active.start 1995-04-17، وهو متوافق مع نشر
+      القانون.
+    - >-
+      الملكية العامة: الدولة التونسية 65٪، TeCom-DIG (دبي القابضة) 35٪ (ويكيبيديا
+      الفرنسية/العربية). ملاحظة: لم تكتمل البيع إلى Abraaj (2017)؛ لا تزال EIT/TeCom-DIG
+      بنسبة 35٪ وفقاً لويكيبيديا. سجل التجارة غير متحقق (BRCT/RNE).
+  notes_ar_by: model-reviewed
+
+# ===========================================================================
+# === MERGE 2026-08-14 (outbox) ===
+# New companies from data/contrib/board-seats-2026-08-13.yaml (§I): corporate
+# records that anchor the ownership edges merged in the same session. Keyed by
+# institution id (V9, spec §4.2): the matching company-like institutions must
+# be created in data/institutions.yaml at the gate, using these records as the
+# source material (RCC/CIN were not verifiable in the research run — BRCT
+# unreachable — and are deliberately absent, never invented).
+# ===========================================================================
+
+- id: investec
+  legal_name_fr: "Investec (holding de Marwan Mabrouk)"
+  status: confiscated
+  founded: "~2008"
+  confidence: C
+  attributed_to: "Jeune Afrique (Samy Ghorbal, 14/03/2014)"
+  reasoning: >-
+    Jeune Afrique décrit Investec comme « le holding créé par Marwan Mabrouk »
+    qui détenait directement 51 % d'Orange Tunisie ; le fondement ~2008 est
+    déduit de la création d'Orange Tunisie en 2009 (le holding précède la prise
+    de participation) — aucune source ne date la constitution d'Investec.
+  falsifiable_by: >-
+    Extrait du registre de commerce (Tunisie ou offshore) d'Investec : date de
+    constitution, siège, capital.
+  sources: [jeuneafrique-orange-spoliation-2014, wikipedia-orange-tunisie-fr, webdo-orange-mabrouk]
+  notes:
+    - >-
+      Statut « confiscated » : les actions de la holding sont confisquées par l'État le
+      29/03/2011 (décret-loi 2011-13) puis transférées à Al Karama Holding (enregistrement
+      03/03/2013). RCC/siège non vérifiés (BRCT injoignable) — omis, jamais inventés. Sert
+      d'ancre aux trois edges own-investec-orange-51, own-mabrouk-investec-100,
+      own-state-investec-2011.
+  notes_fr:
+    - >-
+      Statut « confiscated » : les actions de la holding sont confisquées par l'État le
+      29/03/2011 (décret-loi 2011-13) puis transférées à Al Karama Holding (enregistrement
+      03/03/2013). RCC/siège non vérifiés (BRCT injoignable) — omis, jamais inventés. Sert
+      d'ancre aux trois edges own-investec-orange-51, own-mabrouk-investec-100,
+      own-state-investec-2011.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      وضع «مصادَر»: صادرت الدولة أسهم الشركة القابضة في 29/03/2011 (المرسوم عدد 2011-13)
+      ثم أحيلت إلى شركة الكرامة القابضة (تسجيل 03/03/2013). السجل التجاري/المقر غير
+      متحقق منهما (تعذر الاتصال بـBRCT) — حُذفا ولم يُختلقا أبدًا. يثبت المرتكزات
+      للروابط الثلاثة own-investec-orange-51 وown-mabrouk-investec-100
+      وown-state-investec-2011.
+  notes_ar_by: model-reviewed
+
+- id: tunisie-valeurs
+  legal_name_fr: "Tunisie Valeurs"
+  status: active
+  confidence: C
+  attributed_to: "Africa Business+ (27/03/2020)"
+  sources: [africabusinessplus-tunisie-valeurs-2020]
+  notes:
+    - >-
+      Intermédiaire en bourse (société de bourse) fondée par Fadhel Abdelkefi ; cotée sur
+      la cote de la BVMT (ticker TUNISIE VALEURS sur ilboursa.com). Forme juridique, date
+      de fondation, capital et RCC non documentés dans les sources accessibles — omis (à
+      compléter via le registre et la BVMT). Sert d'ancre à own-mabrouk-tunisie-valeurs-5047.
+  notes_fr:
+    - >-
+      Intermédiaire en bourse (société de bourse) fondée par Fadhel Abdelkefi ; cotée sur
+      la cote de la BVMT (ticker TUNISIE VALEURS sur ilboursa.com). Forme juridique, date
+      de fondation, capital et RCC non documentés dans les sources accessibles — omis (à
+      compléter via le registre et la BVMT). Sert d'ancre à own-mabrouk-tunisie-valeurs-5047.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      وسيط بورصة أسسته فاضل عبد الكافي؛ ومُدرج في بورصة تونس (رمز TUNISIE VALEURS على
+      ilboursa.com). الشكل القانوني وتاريخ التأسيس ورأس المال والسجل التجاري غير موثقة
+      في المصادر المتاحة — حُذفت (للاستكمال عبر السجل وبورصة تونس). يثبت المرتكز
+      لـown-mabrouk-tunisie-valeurs-5047.
+  notes_ar_by: model-reviewed
+
+- id: founders-capital-partners
+  legal_name_fr: "Founders Capital Partners"
+  status: active
+  confidence: B
+  sources: [ilboursa-pgh-profile, ja-poulina-2023]
+  notes:
+    - >-
+      Véhicule des familles fondatrices de Poulina Group Holding (Ben Ayed, Bouzguenda,
+      Bouricha), détenant 74,39 % du capital selon le profil BVMT/ilboursa (~2025-2026) ;
+      Jeune Afrique (30/01/2023) chiffre la détention combinée des trois familles à
+      74,4 %. Forme juridique/RCC non documentés — omis. Sert d'ancre à
+      own-fcp-poulina-7439.
+  notes_fr:
+    - >-
+      Véhicule des familles fondatrices de Poulina Group Holding (Ben Ayed, Bouzguenda,
+      Bouricha), détenant 74,39 % du capital selon le profil BVMT/ilboursa (~2025-2026) ;
+      Jeune Afrique (30/01/2023) chiffre la détention combinée des trois familles à
+      74,4 %. Forme juridique/RCC non documentés — omis. Sert d'ancre à
+      own-fcp-poulina-7439.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      أداة العائلات المؤسِّسة لمجمع بولينا القابض (بن عايد وبوزقندة وبوريشة)، تملك 74.39%
+      من رأس المال وفق ملف بورصة تونس/ilboursa (~2025-2026)؛ وتقدّر جون أفريك (30/01/2023)
+      الحيازة المشتركة للعائلات الثلاث بـ74.4%. الشكل القانوني/السجل التجاري غير موثقين —
+      حُذفا. يثبت المرتكز لـown-fcp-poulina-7439.
+  notes_ar_by: model-reviewed
+
+- id: sonibank
+  legal_name_fr: "Société Nigérienne de Banque (Sonibank)"
+  status: active
+  confidence: C
+  attributed_to: "Wikipedia FR (article STB), d'après African Manager (19/12/2017)"
+  sources: [wikipedia-stb]
+  notes:
+    - >-
+      Banque implantée au Niger et au Bénin, filiale de la STB (25 %). RCC
+      nigérien/béninois, forme juridique et capital non vérifiables dans ce run — omis.
+      Sert d'ancre à own-stb-sonibank-25.
+  notes_fr:
+    - >-
+      Banque implantée au Niger et au Bénin, filiale de la STB (25 %). RCC
+      nigérien/béninois, forme juridique et capital non vérifiables dans ce run — omis.
+      Sert d'ancre à own-stb-sonibank-25.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      بنك حاضر في النيجر وبنين، فرع للبنك التونسي (25%). السجل التجاري النيجري/البنيني
+      والشكل القانوني ورأس المال غير قابلة للتحقق في هذه الجولة — حُذفت. يثبت المرتكز
+      لـown-stb-sonibank-25.
+  notes_ar_by: model-reviewed
+
+- id: bhci
+  legal_name_fr: "Banque de l'Habitat de Côte d'Ivoire (BHCI)"
+  status: active
+  confidence: C
+  attributed_to: "Wikipedia FR (article BH Bank), d'après le360 Afrique (19/09/2016)"
+  sources: [wikipedia-bh-bank]
+  notes:
+    - >-
+      Banque ivoirienne dont la BH Bank acquiert 51,6 % en 2016. RCC ivoirien,
+      forme juridique et capital non vérifiables dans ce run — omis. Sert
+      d'ancre à own-bh-bhci-516.
+  notes_fr:
+    - >-
+      Banque ivoirienne dont la BH Bank acquiert 51,6 % en 2016. RCC ivoirien,
+      forme juridique et capital non vérifiables dans ce run — omis. Sert
+      d'ancre à own-bh-bhci-516.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      بنك إيفواري اقتنى بنك الإسكان 51.6% منه سنة 2016. السجل التجاري الإيفواري والشكل
+      القانوني ورأس المال غير قابلة للتحقق في هذه الجولة — حُذفت. يثبت المرتكز
+      لـown-bh-bhci-516.
+  notes_ar_by: model-reviewed
+
+- id: steg-energies-renouvelables
+  legal_name_fr: "STEG Énergies Renouvelables (STEG-ER)"
+  status: active
+  founded: "2010"
+  confidence: C
+  attributed_to: "Wikipedia FR (article STEG)"
+  sources: [wikipedia-steg]
+  notes:
+    - >-
+      Filiale spécialisée créée par la STEG en 2010 pour l'éolien et le solaire.
+      NÉGATIF DOCUMENTÉ : le pourcentage de détention par la STEG n'est indiqué
+      par aucune source accessible (probable 100 %, non inventé — à vérifier sur
+      le site STEG ou au registre). RCC non vérifié — omis. Ancre l'edge
+      own-steg-steger SANS pourcentage (equity omis).
+  notes_fr:
+    - >-
+      Filiale spécialisée créée par la STEG en 2010 pour l'éolien et le solaire.
+      NÉGATIF DOCUMENTÉ : le pourcentage de détention par la STEG n'est indiqué
+      par aucune source accessible (probable 100 %, non inventé — à vérifier sur
+      le site STEG ou au registre). RCC non vérifié — omis. Ancre l'edge
+      own-steg-steger SANS pourcentage (equity omis).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      فرع متخصص أنشأته الستاغ سنة 2010 لطاقتي الرياح والشمس. نفي موثق: لا تذكر أي مصدر
+      متاح نسبة ملكية الستاغ فيه (المرجح 100%، غير مختلق — للتحقق من موقع الستاغ أو
+      السجل). السجل التجاري غير متحقق — حُذف. يثبت المرتكز للرابط own-steg-steger دون
+      نسبة (equity محذوف).
+  notes_ar_by: model-reviewed
+
+- id: steg-international-services
+  legal_name_fr: "STEG International Services (SIS)"
+  status: active
+  founded: "2006-10"
+  confidence: C
+  attributed_to: "Wikipedia FR (article STEG)"
+  sources: [wikipedia-steg]
+  notes:
+    - >-
+      Filiale créée par la STEG en octobre 2006 pour les marchés africains et
+      moyen-orientaux (CA 3,2 MTND en 2007, 80 % à l'export — wikipedia-steg).
+      NÉGATIF DOCUMENTÉ : pourcentage de détention non indiqué par la source —
+      non inventé. RCC non vérifié — omis. Ancre l'edge own-steg-sis SANS
+      pourcentage (equity omis).
+  notes_fr:
+    - >-
+      Filiale créée par la STEG en octobre 2006 pour les marchés africains et
+      moyen-orientaux (CA 3,2 MTND en 2007, 80 % à l'export — wikipedia-steg).
+      NÉGATIF DOCUMENTÉ : pourcentage de détention non indiqué par la source —
+      non inventé. RCC non vérifié — omis. Ancre l'edge own-steg-sis SANS
+      pourcentage (equity omis).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      فرع أنشأته الستاغ في أكتوبر 2006 لأسواق أفريقيا والشرق الأوسط (رقم أعمال 3.2
+      مليون دينار سنة 2007، 80% للتصدير — wikipedia-steg). نفي موثق: نسبة الحيازة غير
+      مذكورة في المصدر — غير مختلقة. السجل التجاري غير متحقق — حُذف. يثبت المرتكز
+      للرابط own-steg-sis دون نسبة (equity محذوف).
+  notes_ar_by: model-reviewed
+
+# World rebuild v2 ? reviewed foreign counterparty company records (2026-08-16)
+- id: airbus
+  legal_name_en: Airbus SE
+  legal_form: SE (Societas Europaea) — registered in the Netherlands, main offices
+    in Toulouse/Blagnac, France
+  status: active
+  founded: ~1970
+  state_owned: false
+  activities:
+    - commercial aircraft
+    - aerospace
+  confidence: B
+  basis: documented
+  sources:
+    - airbus-worldwide-presence
+    - wikipedia-airbus
+  notes:
+    - "`founded` ~1970 = Airbus Industrie consortium; the Airbus SE legal form
+      dates from the EADS line (2000) renamed Airbus Group 2014 / Airbus SE 2017
+      (Wikipedia). Foreign company: no Tunisian registry data exists; the
+      companies.yaml `registration` field is jurisdiction-bound to Tunisian
+      registries and is left unset — the French/Dutch registries were not
+      consulted this run."
+- id: eni
+  legal_name_en: Eni S.p.A.
+  legal_form: S.p.A. (listed on Euronext Milan)
+  status: active
+  founded: 1953-02-10
+  state_owned: false
+  activities:
+    - oil and gas
+    - chemicals
+    - renewables
+  confidence: B
+  basis: documented
+  sources:
+    - eni-tunisia-activities
+    - wikipedia-eni
+    - lecm-eni-2025
+  notes:
+    - "Founding date 1953-02-10 per Wikipedia. Share capital €4,005,358,876
+      (eni.com registered-head-office block). ~32% of shares are held by the
+      Italian state-linked chain (Ministry of Economy and Finance + CDP) — a
+      minority, so `state_owned: false` with this note. Tunisia presence since
+      1961 (eni.com Tunisia page)."
+- id: alstom
+  legal_name_en: Alstom SA
+  legal_form: SA (listed on Euronext Paris)
+  status: active
+  founded: "1928"
+  state_owned: false
+  activities:
+    - rolling stock
+    - signalling
+    - rail services
+  confidence: B
+  basis: documented
+  sources:
+    - alstom-com
+    - wikipedia-alstom
+  notes:
+    - "`founded` 1928 = Alsthom; the Alstom SA line dates from GEC-Alsthom
+      (1989) and the 1998 flotation (Wikipedia). French company — no Tunisian
+      registry record; `registration` left unset."
+- id: caf
+  legal_name_en: Construcciones y Auxiliar de Ferrocarriles, S.A. (CAF)
+  legal_form: "S.A. (listed on the Madrid stock exchange, BME: CAF)"
+  status: active
+  founded: 1917-03-04
+  state_owned: false
+  activities:
+    - railway vehicles
+    - signalling
+    - buses (Solaris)
+  confidence: B
+  basis: documented
+  sources:
+    - wikipedia-caf
+    - cafmobility-com
+  notes:
+    - Founding date per Wikipedia (Compañía Auxiliar de Ferrocarriles,
+      1917-03-04). Spanish company — no Tunisian registry record; `registration`
+      left unset.
+- id: badc
+  legal_name_en: Bangladesh Agricultural Development Corporation (BADC)
+  legal_form: autonomous government body under the Ministry of Agriculture (Bangladesh)
+  status: active
+  founded: 1961-10-16
+  state_owned: true
+  activities:
+    - fertiliser procurement and distribution
+    - seeds
+    - minor irrigation
+  confidence: B
+  basis: reported
+  sources:
+    - wikipedia-badc
+    - banglapedia-badc
+    - tbsnews-badc-64th
+  notes:
+    - "Established 16 October 1961 as East Pakistan Agricultural Development
+      Corporation under Ordinance XXXVII of 1961; renamed BADC (Wikipedia,
+      Banglapedia; TBS confirms the 16 October 1961 date). Statutory government
+      body, hence `state_owned: true`."
+- id: jica
+  legal_name_en: Japan International Cooperation Agency (JICA)
+  legal_form: Incorporated Administrative Agency (Japan)
+  status: active
+  founded: 1974-08
+  state_owned: true
+  activities:
+    - development finance
+    - technical cooperation
+    - grant aid
+  confidence: B
+  basis: documented
+  sources:
+    - jica-about-history
+    - jica-about-organization
+  notes:
+    - "Established August 1974; reorganised as an Incorporated Administrative
+      Agency on 1 October 2003; capital ¥8,544 billion (February 2026,
+      jica.go.jp). A Japanese government agency — `state_owned: true` — not a
+      commercial company; typed state-enterprise for lack of a closer
+      institution type."
+- id: terna
+  legal_name_en: Terna S.p.A.
+  legal_form: S.p.A. (listed on Euronext Milan since June 2004)
+  status: active
+  state_owned: false
+  activities:
+    - electricity transmission
+  confidence: B
+  basis: documented
+  sources:
+    - terna-main-shareholders
+    - hitachi-elmed-converters-2026
+    - lecm-elmed-472m-2024
+  notes:
+    - "Listing since June 2004 per the Terna corporate governance report;
+      largest shareholder CDP Reti S.p.A. (29.851%, subsidiary of Cassa Depositi
+      e Prestiti) — a state-linked minority, so `state_owned: false` with this
+      note. The candidate's 1999 founding year is omitted because its cited
+      Wikipedia page was not imported as a source record; no date is inferred
+      here."
+- id: solar-water-plc
+  legal_name_en: Solar Water PLC
+  legal_form: Public limited company (United Kingdom)
+  status: active
+  founded: 2000-10-23
+  state_owned: false
+  activities:
+    - solar desalination
+    - water collection and supply
+  confidence: A
+  basis: documented
+  sources:
+    - companieshouse-solar-water
+    - solarwaterplc-com
+  notes:
+    - UK Companies House number 04094302; incorporated 23 October 2000;
+      registered office 19 Marina Point, Lensbury Avenue, Imperial Wharf, London
+      SW6 2GX; SIC 36000 — water collection, treatment and supply. The registry
+      number is carried here in notes because companies.yaml's
+      `registration.registry` field only accepts the Tunisian registries
+      (jurisdiction-bound); a schema/jurisdiction extension would be needed to
+      carry the Companies House reference structurally.
+
+- id: tunisie-autoroutes
+  legal_name_fr: Tunisie Autoroutes
+  legal_form: société publique
+  status: active
+  state_owned: true
+  activities:
+    - motorway operation
+    - toll collection
+    - road maintenance
+  confidence: C
+  basis: reported
+  verification: needs-primary-source
+  attributed_to: Kapitalis
+  notes:
+    - >-
+      Debt above 1.8 bn dinars; cumulative losses 176.1 MDT at last published
+      audits; 200 MDT of the state budget went to servicing its debt (Kapitalis,
+      13 Aug 2026). Figures are attributed reporting, not audited here.
+  sources:
+    - kapitalis-autoroutes-a1-a2-2026
+
+# --- merged 2026-08-26 (ministry/ATB/contracts pass)
+- id: atb
+  legal_name_en: Arab Tunisian Bank
+  legal_form: société anonyme cotée
+  status: active
+  state_owned: false
+  activities:
+    - retail banking
+    - corporate banking
+  confidence: C
+  basis: reported
+  verification: needs-primary-source
+  attributed_to: IlBoursa company profile
+  notes:
+    - >-
+      Shareholding per IlBoursa (undated): Arab Bank PLC 64.24%, public 30.44%,
+      Groupe Zerzeri 5.32%. Capital increase December 2025 (128 -> 150 million
+      titles) post-dates those percentages. ISIN TN0003600350.
+  sources:
+    - source-ilboursa-atb-profile

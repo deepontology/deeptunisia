@@ -1,0 +1,12 @@
+id,holder,issuer,kind,grant,status,basis,confidence
+lic-orange-3g-2009,orange-tunisie,etat-tunisien,spectrum,2009-07-13,active,documented,A
+lic-tunisie-telecom-3g-2010,tunisie-telecom,etat-tunisien,spectrum,2010-09-24,active,reported,B
+lic-ooredoo-3g-2012,ooredoo-tunisie,etat-tunisien,spectrum,2012-05-24,active,reported,B
+lic-orange-4g-2016,orange-tunisie,etat-tunisien,spectrum,2016-03-15,active,documented,A
+lic-ooredoo-4g-2016,ooredoo-tunisie,etat-tunisien,spectrum,2016-03-15,active,documented,A
+lic-tunisie-telecom-4g-2016,tunisie-telecom,etat-tunisien,spectrum,2016-03-15,active,documented,A
+lic-zitouna-bank-2009,zitouna-bank,bct,banking,~2009-01,active,reported,C
+lic-wifak-bank-2015,wifak-bank,bct,banking,2015,active,documented,B
+lic-cpg-phosphate-concession,cpg,etat-tunisien,mineral,1897,active,reported,C
+lic-elhiwar-broadcast-2014,el-hiwar-ettounsi,haica,media,2014-07-24,active,documented,A
+lic-nessma-broadcast-2007,nessma-tv,etat-tunisien,media,2007-03-16,suspended,reported,C

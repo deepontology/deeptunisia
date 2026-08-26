@@ -1,0 +1,38 @@
+# Cloudflare deployment.
+#
+# One Worker serves the whole product. The prerendered atlas is uploaded as static
+# assets and served by the platform WITHOUT invoking the Worker; only /api reaches
+# code. That is what keeps this inside a free tier — reading the map is not a
+# request against the Worker quota, so a person clicking through forty entity cards
+# costs nothing, and only Agora activity counts.
+#
+# It also means the atlas survives the Worker failing. The map is files.
+#
+# Nothing here contains a secret. RATE_PEPPER and MODERATORS are set with
+# `wrangler secret put`, never in this file, because this file is committed.
+
+name = "deeptunisia"
+main = "community/worker.ts"
+compatibility_date = "2026-07-29"
+
+# Ed25519 via crypto.subtle needs the Node compatibility layer on Workers.
+compatibility_flags = ["nodejs_compat"]
+
+[assets]
+directory = "build"
+binding = "ASSETS"
+# The atlas is fully prerendered, so every route has a file. A request that matches
+# nothing is a genuine 404 rather than something to hand to the Worker.
+not_found_handling = "404-page"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "deeptunisia-db"
+database_id = "cc16abcd-1ff5-4f64-8ed7-cdb1770bc9f8"
+
+[observability]
+enabled = true
+# Sampling, not full capture. Worker logs are a record of who asked for what, and
+# docs/anonymity-audit.md is explicit that the operator not looking at a log is not
+# the same as the log not existing.
+head_sampling_rate = 0.01

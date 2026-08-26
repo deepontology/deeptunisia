@@ -1,0 +1,233 @@
+@import './lib/design/tokens.css';
+@import './lib/viz/labels.css';
+
+/* ===========================================================================
+   Base layer.
+
+   Global element defaults and a small set of shared primitives. Everything here
+   references SEMANTIC tokens only — no raw colours. If you need a new visual
+   idea, add a token, not a one-off value.
+   =========================================================================== */
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	overflow: hidden; /* the shell owns scrolling, like an application window */
+	background: var(--surface-base);
+	color: var(--text-primary);
+	font-family: var(--font-sans);
+	font-size: var(--t-base);
+	line-height: var(--lh-snug);
+	font-feature-settings: 'cv11', 'ss01';
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+	transition: background var(--dur-normal) var(--ease-in-out), color var(--dur-normal) var(--ease-in-out);
+}
+
+[dir='rtl'] body {
+	font-family: 'IBM Plex Sans Arabic', var(--font-sans);
+}
+
+h1,
+h2,
+h3,
+h4 {
+	margin: 0;
+	font-weight: 520;
+	line-height: var(--lh-tight);
+	letter-spacing: var(--track-tight);
+}
+
+p {
+	margin: 0;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+	border-bottom: 1px solid var(--border-strong);
+	transition: border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+a:hover {
+	border-bottom-color: var(--accent);
+	color: var(--accent);
+}
+
+button {
+	font: inherit;
+	color: inherit;
+	background: none;
+	border: none;
+	padding: 0;
+	cursor: pointer;
+}
+
+input,
+select,
+textarea {
+	font: inherit;
+	color: inherit;
+}
+
+:focus {
+	outline: none;
+}
+:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: 2px;
+	border-radius: var(--r-xs);
+}
+
+::selection {
+	background: var(--accent-muted);
+	color: var(--text-primary);
+}
+
+svg {
+	display: block;
+}
+
+/* --- Scrollbars ---------------------------------------------------------- */
+
+* {
+	scrollbar-width: thin;
+	scrollbar-color: var(--border-strong) transparent;
+}
+*::-webkit-scrollbar {
+	width: 10px;
+	height: 10px;
+}
+*::-webkit-scrollbar-thumb {
+	background: var(--border-strong);
+	border-radius: var(--r-full);
+	border: 3px solid transparent;
+	background-clip: content-box;
+}
+*::-webkit-scrollbar-thumb:hover {
+	background: var(--text-faint);
+	background-clip: content-box;
+}
+*::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+/* --- Shared primitives --------------------------------------------------- */
+
+.eyebrow {
+	font-family: var(--font-mono);
+	font-size: var(--t-2xs);
+	font-weight: 500;
+	letter-spacing: var(--track-caps);
+	text-transform: uppercase;
+	color: var(--text-faint);
+}
+
+.mono {
+	font-family: var(--font-mono);
+	font-variant-numeric: tabular-nums;
+	font-feature-settings: 'zero';
+}
+
+.scroll-y {
+	overflow-y: auto;
+	overscroll-behavior: contain;
+}
+
+/* Long-form reading. Used on the document pages, never inside the instrument
+   views, which have their own denser typography. */
+.prose {
+	max-width: 70ch;
+	font-size: var(--t-md);
+	line-height: var(--lh-relaxed);
+	color: var(--text-secondary);
+}
+.prose p {
+	margin: 0 0 1em;
+}
+.prose h2 {
+	font-family: var(--font-serif);
+	font-size: var(--t-xl);
+	color: var(--text-primary);
+	margin: 2.2em 0 0.6em;
+	letter-spacing: var(--track-normal);
+}
+.prose h3 {
+	font-size: var(--t-md);
+	color: var(--text-primary);
+	margin: 1.8em 0 0.4em;
+}
+.prose ul,
+.prose ol {
+	padding-inline-start: 1.2em;
+	margin: 0 0 1em;
+}
+.prose li {
+	margin-bottom: 0.4em;
+}
+.prose strong {
+	font-weight: 560;
+	color: var(--text-primary);
+}
+.prose em {
+	font-style: italic;
+}
+.prose code {
+	font-family: var(--font-mono);
+	font-size: 0.88em;
+	background: var(--surface-sunken);
+	border: 1px solid var(--border-subtle);
+	border-radius: var(--r-xs);
+	padding: 0.08em 0.34em;
+}
+.prose a {
+	color: var(--accent);
+	border-bottom-color: var(--accent-border);
+}
+
+/* Accessible-only content, for the table alternatives to charts. */
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+/* --- View transition ----------------------------------------------------- */
+/* Applied by the Viewport component when the route changes. */
+
+@keyframes view-in {
+	from {
+		opacity: 0;
+		transform: translateY(6px) scale(0.995);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+@keyframes fade-in {
+	from {
+		opacity: 0;
+	}
+}
+
+@keyframes rise-in {
+	from {
+		opacity: 0;
+		transform: translateY(8px);
+	}
+}

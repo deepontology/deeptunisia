@@ -1,0 +1,98 @@
+# Fetches third-party news headlines into feed/feed.json and commits the result.
+#
+# This job touches NOTHING in data/ or src/generated/. The feed is not project
+# data: it is a list of links to what other people published, carrying no source,
+# no epistemic basis and no confidence grade, because none has been assessed. The
+# separation is asserted by scripts/test-feed.ts, which runs here before anything
+# is committed — so a run that somehow produced graded, body-bearing or
+# graph-colliding feed data fails instead of pushing it.
+#
+# Two outlets are deliberately absent (businessnews.com.tn, tap.info.tn): both
+# fail TLS certificate verification. See the comment in scripts/fetch-feed.ts.
+# Do not "fix" that here with NODE_TLS_REJECT_UNAUTHORIZED.
+
+name: News feed
+
+# Every four hours, at :25.
+#
+# Three of the four feeds expose only their most recent 10 items, and Kapitalis
+# alone publishes at roughly that rate over a busy day — so a six-hourly schedule
+# would silently drop headlines whenever an outlet had a heavy morning. Four hours
+# leaves comfortable headroom without polling anyone's server hard: six requests
+# per feed per day is well inside ordinary etiquette.
+#
+# The offset minute is deliberate. GitHub warns that jobs scheduled on the hour
+# queue behind everybody else's and can be delayed or dropped entirely.
+on:
+  schedule:
+    - cron: '25 */4 * * *'
+  workflow_dispatch:
+
+# The only write this job needs. No secrets, no packages, no pages, no actions.
+permissions:
+  contents: write
+
+# A slow run must never overlap the next scheduled one: two jobs merging into the
+# same file would race, and the loser's push would be rejected.
+concurrency:
+  group: news-feed
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    # Generous for a job that takes well under a minute; a hung socket cannot
+    # sit there burning the account's minutes.
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          # Restores ~/.npm between runs, which is what keeps `npm ci` to a few
+          # seconds. Actions minutes are free on public repos, but a job that
+          # runs six times a day should still be cheap.
+          cache: npm
+
+      - run: npm ci
+
+      # scripts/test-feed.ts checks feed ids against real entity ids, so it needs
+      # the built graph. This step writes only to src/generated/ and static/,
+      # both of which are gitignored and neither of which is staged below.
+      - name: Build the graph (for the separation checks)
+        run: npm run data
+
+      # `npx --no-install` resolves tsx from node_modules and never reaches the
+      # network. Equivalent to `npm run feed` once that script is registered.
+      - name: Fetch feeds
+        run: npx --no-install tsx scripts/fetch-feed.ts
+
+      - name: Assert the feed is separate from the graph
+        run: npx --no-install tsx scripts/test-feed.ts
+
+      - name: Commit the archive if it changed
+        run: |
+          set -euo pipefail
+          if [ -z "$(git status --porcelain -- feed/feed.json)" ]; then
+            echo "feed/feed.json unchanged — nothing to commit"
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Staged by path, so a graph rebuild or a refreshed stat span can never
+          # ride along in a commit that claims to be a feed update.
+          git add -- feed/feed.json
+          count=$(node -e "process.stdout.write(String(require('./feed/feed.json').items.length))")
+          git commit -m "Feed: refresh news archive (${count} headlines)" \
+                     -m "Third-party headlines only. Not project data: no source, no basis, no confidence grade. Written by scripts/fetch-feed.ts." \
+                     -m "[skip ci]"
+          git push
+
+# Loop guard, three ways:
+#   1. This workflow has no `push` trigger, so its own commit cannot start it.
+#   2. GitHub does not raise workflow events for pushes made with GITHUB_TOKEN,
+#      so it cannot start anything else either.
+#   3. `[skip ci]` in the commit message, in case a future workflow is added that
+#      does watch pushes — a data refresh should not spend anyone's minutes.

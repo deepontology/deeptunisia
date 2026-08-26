@@ -1,0 +1,1394 @@
+# -----------------------------------------------------------------------------
+# ROLES
+#
+# A role is a canonical office. Positions attach a person to a role for a span of
+# time. Normalising titles here means the succession chains can be derived
+# automatically instead of hand-maintained, and it kills transliteration drift.
+#
+# `authority` (0-100) is the FORMAL AUTHORITY WEIGHT used by the rankings view.
+# It is an editorial judgement, published openly on the methodology page so
+# readers can argue with it. It encodes constitutional and command authority, not
+# real-world influence. A presidential security chief scores lower here than an
+# interior minister even though reporting suggests the reverse may hold in
+# practice, precisely because "formal" and "actual" must stay separable.
+# -----------------------------------------------------------------------------
+
+# --- Political apex ---------------------------------------------------------
+
+- id: president
+  title_en: President of the Republic
+  title_fr: Président de la République
+  title_ar: رئيس الجمهورية
+  institution: presidency
+  authority: 100
+
+- id: prime-minister
+  title_en: Head of Government
+  title_fr: Chef du Gouvernement
+  title_ar: رئيس الحكومة
+  institution: head-of-government
+  authority: 70
+
+- id: speaker
+  title_en: Speaker of Parliament
+  title_fr: Président de l'Assemblée
+  title_ar: رئيس مجلس نواب الشعب
+  institution: legislature
+  authority: 55
+
+- id: cnrd-president
+  title_en: President of the National Council of Regions and Districts
+  title_fr: Président du Conseil National des Régions et des Districts
+  title_ar: رئيس المجلس الوطني للجهات والأقاليم
+  institution: cnrd
+  authority: 45
+  summary: >-
+    Presides the second chamber. Weighted below the Speaker because the chamber's
+    competence is confined to budget and regional development, and its members
+    arrive indirectly.
+  summary_fr: >-
+    Préside la seconde chambre. Pondéré en dessous du président du Parlement parce que la
+    compétence de cette chambre se limite au budget et au développement régional, et que ses
+    membres arrivent indirectement.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    يرأس الغرفة الثانية. رُجّح دون رئيس البرلمان لأن اختصاص هذه الغرفة يقتصر على الميزانية
+    والتنمية الجهوية، ولأن أعضاءها يصلون إليها بطريقة غير مباشرة.
+  summary_ar_by: model-reviewed
+
+- id: isie-president
+  title_en: President of the Independent High Authority for Elections
+  title_fr: Président de l'Instance Supérieure Indépendante pour les Élections
+  title_ar: رئيس الهيئة العليا المستقلة للانتخابات
+  institution: isie
+  authority: 50
+  summary: >-
+    Certifies every national result. Weighted at the level of the Central Bank
+    governor and the judicial council president: no command authority, but a
+    veto-shaped function over who takes office. The office changed character in
+    2022, when appointment moved from parliament to the presidency.
+  summary_fr: >-
+    Certifie chaque résultat national. Pondéré au niveau du gouverneur de la Banque centrale
+    et du président du conseil de la magistrature : aucune autorité de commandement, mais
+    une fonction en forme de veto sur qui entre en fonction. L'office a changé de nature en
+    2022, quand la nomination est passée du Parlement à la présidence.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    يصادق على كل نتيجة وطنية. رُجّح في مستوى محافظ البنك المركزي ورئيس مجلس القضاء: لا سلطة
+    قيادة له، لكن وظيفته أشبه بحق نقض على مَن يتولى المناصب. وقد تغيّرت طبيعة المنصب سنة
+    2022 حين انتقل التعيين من البرلمان إلى رئاسة الجمهورية.
+  summary_ar_by: model-reviewed
+
+# --- Security ministries ----------------------------------------------------
+
+- id: interior-minister
+  title_en: Minister of the Interior
+  title_fr: Ministre de l'Intérieur
+  title_ar: وزير الداخلية
+  institution: ministry-interior
+  authority: 75
+  summary: >-
+    In the Ben Ali system this was the most powerful office below the presidency.
+    Its weight here reflects command of the entire internal security apparatus.
+  summary_fr: >-
+    Dans le système Ben Ali, c'était la fonction la plus puissante en dessous de la
+    présidence. Son poids ici reflète le commandement de l'ensemble de l'appareil de
+    sécurité intérieure.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    في منظومة بن علي كان هذا أقوى منصب بعد رئاسة الجمهورية. ويعكس وزنه هنا قيادته لكامل جهاز
+    الأمن الداخلي.
+  summary_ar_by: model-reviewed
+
+- id: defence-minister
+  title_en: Minister of National Defence
+  title_fr: Ministre de la Défense nationale
+  title_ar: وزير الدفاع الوطني
+  institution: ministry-defence
+  authority: 62
+
+- id: religious-affairs-minister
+  title_en: Minister of Religious Affairs
+  title_fr: Ministre des Affaires religieuses
+  title_ar: وزير الشؤون الدينية
+  institution: ministry-religious-affairs
+  authority: 45
+  summary: >-
+    Heads the ministry that administers mosques, imams and religious
+    endowments — the instrument of the state's unusually direct supervision
+    of the religious field.
+  summary_fr: >-
+    À la tête du ministère qui administre les mosquées, les imams et les
+    biens religieux — l'instrument de la supervision inhabituellement
+    directe que l'État exerce sur le champ religieux.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    على رأس الوزارة التي تسيّر المساجد والأئمة والأوقاف — أداة الإشراف
+    المباشر الذي تمارسه الدولة على الحقل الديني على نحو غير معتاد.
+  summary_ar_by: model-reviewed
+  sources: [affaires-religieuses-official]
+
+- id: religious-affairs-secretary-of-state
+  title_en: Secretary of State to the Prime Minister for Religious Affairs
+  title_fr: Secrétaire d'État auprès du Premier ministre chargé des Affaires religieuses
+  title_ar: كاتب دولة لدى الوزير الأول مكلف بالشؤون الدينية
+  institution: head-of-government
+  authority: 40
+  summary: >-
+    Cabinet-level portfolio attached to the Prime Minister, created in 1989
+    as the direct successor of the religious affairs direction and elevated
+    to a full ministry on 9 March 1992.
+  summary_fr: >-
+    Poste gouvernemental rattaché au Premier ministre, créé en 1989 comme
+    successeur direct de la direction des affaires religieuses et élevé au
+    rang de ministère le 9 mars 1992.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    منصب حكومي مرتبط بالوزير الأول، أحدث سنة 1989 خلفًا مباشرًا لإدارة الشؤون
+    الدينية، وتمت ترقيته إلى مرتبة وزارة يوم 9 مارس 1992.
+  summary_ar_by: model-reviewed
+  sources: [frwiki-gouvernement-karoui, frwiki-gouvernement-baccouche-iii]
+
+- id: religious-affairs-director
+  title_en: Director of Religious Affairs
+  title_fr: Directeur des affaires religieuses (du culte musulman)
+  title_ar: مدير الشؤون الدينية
+  institution: head-of-government
+  authority: 35
+  summary: >-
+    Head of the state religious administration created by decree 345 of 5
+    October 1967 — the direct ancestor of the 1992 ministry — attached to
+    the Secretariat of State to the Presidency and, from 6 May 1986, to the
+    interior ministry. Held for over twenty years by Mustapha Kamel Tarzi.
+  summary_fr: >-
+    Chef de l'administration religieuse d'État créée par le décret 345 du 5
+    octobre 1967 — l'ancêtre direct du ministère de 1992 — rattachée à la
+    Secrétairerie d'État à la Présidence puis, à partir du 6 mai 1986, au
+    ministère de l'Intérieur. Occupé pendant plus de vingt ans par Mustapha
+    Kamel Tarzi.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    رئيس الإدارة الدينية الحكومية التي أحدثها الأمر عدد 345 المؤرخ في 5 أكتوبر
+    1967 — السلف المباشر لوزارة 1992 — التابعة لكتابة الدولة للرئاسة ثم لوزارة
+    الداخلية ابتداء من 6 ماي 1986. تولاها مصطفى كمال التارزي لأكثر من عشرين سنة.
+  summary_ar_by: model-reviewed
+  sources: [affaires-religieuses-tn-histoire, frwiki-mustapha-kamel-tarzi]
+
+# --- Police and gendarmerie -------------------------------------------------
+
+- id: dg-national-security
+  title_en: Director-General of National Security
+  title_fr: Directeur général de la sûreté nationale
+  title_ar: المدير العام للأمن الوطني
+  institution: national-security
+  authority: 68
+  summary: Operational command of the national police.
+  summary_fr: >-
+    Commandement opérationnel de la police nationale.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    القيادة العملياتية للأمن الوطني.
+  summary_ar_by: model-reviewed
+  sources: [tandf-police-benali]
+
+- id: ng-commander
+  title_en: Director-General Commander of the National Guard
+  title_fr: Directeur général commandant de la garde nationale
+  title_ar: المدير العام قائد الحرس الوطني
+  institution: national-guard
+  authority: 64
+
+- id: usgn-commander
+  title_en: Commander of the National Guard Special Unit
+  title_fr: Commandant de l'USGN
+  institution: usgn
+  authority: 40
+
+- id: sec-state-security
+  title_en: Secretary of State for Security
+  title_fr: Secrétaire d'État chargé de la sûreté nationale
+  title_ar: كاتب دولة مكلف بالأمن الوطني
+  institution: ministry-interior
+  authority: 55
+  summary: >-
+    Cabinet post under the Interior Minister with oversight of the police apparatus,
+    distinct from the DGSN directorate itself.
+  summary_fr: >-
+    Poste gouvernemental sous l'autorité du ministre de l'Intérieur avec tutelle sur
+    l'appareil policier, distinct de la direction générale de la sûreté nationale.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    منصب حكومي تابع لوزير الداخلية يشرف على جهاز الشرطة، ومتميز عن الإدارة العامة للأمن الوطني.
+  summary_ar_by: model-reviewed
+
+- id: dg-public-security
+  title_en: Director-General of Public Security
+  title_fr: Directeur général de la sûreté publique
+  institution: public-security
+  authority: 52
+
+# --- Military ---------------------------------------------------------------
+
+- id: chief-armed-forces
+  title_en: Chief of Staff of the Armed Forces
+  title_fr: Chef d'état-major interarmées
+  title_ar: رئيس هيئة أركان القوات المسلحة
+  institution: armed-forces
+  authority: 78
+  summary: >-
+    Tri-service coordination. Held only intermittently: it lapsed under Ben Ali
+    after 1991 and was revived for Rachid Ammar in April 2011. Do not confuse it
+    with the Land Army chief of staff, a common error in secondary accounts.
+  summary_fr: >-
+    Coordination des trois armes. Exercé seulement par intermittence : le poste est tombé en
+    désuétude sous Ben Ali après 1991 et a été rétabli pour Rachid Ammar en avril 2011. À ne
+    pas confondre avec le chef d'état-major de l'armée de terre, erreur courante dans les
+    sources secondaires.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    تنسيق الأسلحة الثلاثة. لم يُشغل إلا متقطعًا: تُرك مهملًا في عهد بن علي بعد 1991 وأُعيد
+    إحياؤه لفائدة رشيد عمار في أفريل 2011. ولا يُخلط بينه وبين رئيس أركان الجيش البري، وهو
+    خطأ شائع في المصادر الثانوية.
+  summary_ar_by: model-reviewed
+  sources: [carnegie-quiet-revolution, babnet-joint-chief]
+
+- id: chief-land-forces
+  title_en: Chief of Staff of the Land Army
+  title_fr: Chef d'état-major de l'armée de terre
+  title_ar: رئيس أركان القوات البرية
+  institution: land-forces
+  authority: 60
+
+- id: chief-air-force
+  title_en: Chief of Staff of the Air Force
+  title_fr: Chef d'état-major de l'armée de l'air
+  title_ar: رئيس أركان القوات الجوية
+  institution: air-force
+  authority: 55
+
+- id: chief-navy
+  title_en: Chief of Staff of the Navy
+  title_fr: Chef d'état-major de la marine
+  title_ar: رئيس أركان القوات البحرية
+  institution: navy
+  authority: 55
+
+- id: inspector-general-forces
+  title_en: Inspector-General of the Armed Forces
+  title_fr: Inspecteur général des forces armées
+  institution: armed-forces
+  authority: 48
+
+# --- Intelligence -----------------------------------------------------------
+
+- id: dg-military-security
+  title_en: Director-General of Military Security
+  title_fr: Directeur général de la sécurité militaire
+  title_ar: المدير العام للأمن العسكري
+  institution: military-security
+  authority: 66
+  summary: >-
+    Military counter-intelligence. Ranked high because its holders have repeatedly
+    moved directly into presidential national-security roles.
+  summary_fr: >-
+    Contre-espionnage militaire. Classé haut parce que ses titulaires sont passés à
+    plusieurs reprises directement à des fonctions de sécurité nationale auprès du
+    président.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    مكافحة التجسس العسكري. رُتّب عاليًا لأن شاغليه انتقلوا مرارًا مباشرةً إلى مهام الأمن
+    القومي لدى رئيس الجمهورية.
+  summary_ar_by: model-reviewed
+
+- id: head-anrsd
+  title_en: Head of the National Agency for Security and Defence Intelligence
+  title_fr: Directeur de l'ANRSD
+  institution: anrsd
+  authority: 72
+  summary: >-
+    Defence-side intelligence. Ranked high on the basis of its position in the
+    security architecture; the agency's formal powers are not publicly documented,
+    so this weight is a judgement more than usual.
+  summary_fr: >-
+    Renseignement du côté de la Défense. Classé haut sur la base de sa position dans
+    l'architecture sécuritaire ; les pouvoirs formels de l'agence ne sont pas publiquement
+    documentés, si bien que cette pondération relève du jugement plus qu'à l'ordinaire.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    الاستخبارات على الجانب الدفاعي. رُتّب عاليًا استنادًا إلى موقعه في البنية الأمنية؛ أما
+    صلاحيات الوكالة الرسمية فغير موثّقة علنًا، ما يجعل هذا الترجيح اجتهادًا أكثر من المعتاد.
+  summary_ar_by: model-reviewed
+
+# --- Presidency-adjacent ----------------------------------------------------
+
+- id: presidential-security-chief
+  title_en: Head of Presidential Security
+  title_fr: Chef de la sécurité présidentielle
+  title_ar: رئيس الأمن الرئاسي
+  institution: presidential-security
+  authority: 50
+  summary: >-
+    Formal authority is modest. Reported influence is not. The gap between those
+    two statements is one of the most interesting things in this dataset, and the
+    site keeps them in separate columns rather than averaging them.
+  summary_fr: >-
+    L'autorité formelle est modeste. L'influence rapportée ne l'est pas. L'écart entre ces
+    deux énoncés est l'une des choses les plus intéressantes de ce jeu de données, et le
+    site les garde dans des colonnes séparées plutôt que d'en faire une moyenne.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    السلطة الرسمية متواضعة. أما النفوذ المُبلَّغ عنه فليس كذلك. والفجوة بين هاتين العبارتين
+    من أكثر ما يثير الاهتمام في هذه البيانات، ويُبقيهما الموقع في عمودين منفصلين بدل حساب
+    متوسط بينهما.
+  summary_ar_by: model-reviewed
+
+- id: dg-presidential-security
+  title_en: Director-General of Presidential Security
+  title_fr: Directeur général de la sécurité présidentielle
+  institution: presidential-security
+  authority: 52
+
+- id: national-security-adviser
+  title_en: National Security Adviser to the President
+  title_fr: Conseiller à la sécurité nationale auprès du Président
+  institution: presidential-security-adviser
+  authority: 58
+
+- id: presidential-cabinet-director
+  title_en: Director of the Presidential Cabinet
+  title_fr: Directeur du cabinet présidentiel
+  title_ar: مدير الديوان الرئاسي
+  institution: presidency
+  authority: 56
+
+# --- Civil ministries relevant to the economic layer ------------------------
+
+- id: tourism-minister
+  title_en: Minister of Tourism
+  title_fr: Ministre du Tourisme
+  institution: head-of-government
+  authority: 35
+
+- id: foreign-minister
+  title_en: Minister of Foreign Affairs
+  title_fr: Ministre des Affaires étrangères
+  institution: head-of-government
+  authority: 50
+
+# --- Party and economic offices ---------------------------------------------
+
+- id: party-leader-ennahda
+  title_en: President of Ennahda
+  title_fr: Président d'Ennahdha
+  institution: ennahda
+  authority: 45
+
+- id: party-leader-nidaa
+  title_en: Leader of Nidaa Tounes
+  title_fr: Chef de Nidaa Tounes
+  institution: nidaa-tounes
+  authority: 42
+
+- id: party-leader-qalb
+  title_en: Leader of Qalb Tounes
+  title_fr: Chef de Qalb Tounes
+  institution: qalb-tounes
+  authority: 35
+
+- id: party-leader-tahya
+  title_en: Leader of Tahya Tounes
+  title_fr: Chef de Tahya Tounes
+  institution: tahya-tounes
+  authority: 32
+
+- id: party-leader-pdl
+  title_en: Leader of the Free Destourian Party
+  title_fr: Chef du Parti destourien libre
+  institution: pdl
+  authority: 28
+
+- id: party-leader-cpr
+  title_en: Leader of the Congress for the Republic
+  title_fr: Chef du Congrès pour la République
+  institution: cpr
+  authority: 38
+
+- id: party-leader-ettakatol
+  title_en: Leader of the Democratic Forum for Labour and Liberties
+  title_fr: Chef du Forum démocratique pour le travail et les libertés
+  institution: ettakatol
+  authority: 36
+
+- id: party-leader-aridha
+  title_en: Leader of the Popular Petition
+  title_fr: Chef de l'Aridha Chaabia
+  institution: aridha-chaabia
+  authority: 30
+
+- id: party-leader-pdp
+  title_en: Leader of the Progressive Democratic Party
+  title_fr: Chef du Parti démocratique progressiste
+  institution: pdp
+  authority: 32
+
+- id: party-leader-afek
+  title_en: Leader of Afek Tounes
+  title_fr: Chef d'Afek Tounes
+  institution: afek-tounes
+  authority: 28
+
+- id: party-leader-upl
+  title_en: Leader of the Free Patriotic Union
+  title_fr: Chef de l'Union patriotique libre
+  institution: upl
+  authority: 30
+
+- id: party-leader-popular-front
+  title_en: Leader of the Popular Front
+  title_fr: Chef du Front populaire
+  institution: popular-front
+  authority: 30
+
+- id: party-leader-tayyar
+  title_en: Leader of the Democratic Current
+  title_fr: Chef du Courant démocratique
+  institution: tayyar-dimocrati
+  authority: 32
+
+- id: party-leader-id
+  title_en: Leader of the National Destourian Initiative
+  title_fr: Chef de l'Initiative nationale destourienne
+  institution: id-party
+  authority: 25
+
+- id: party-leader-people-movement
+  title_en: Leader of the People's Movement
+  title_fr: Chef du Mouvement du peuple
+  institution: people-movement
+  authority: 28
+
+- id: party-leader-mds
+  title_en: Leader of the Movement of Socialist Democrats
+  title_fr: Chef du Mouvement des démocrates socialistes
+  institution: mds
+  authority: 25
+
+- id: party-leader-republican
+  title_en: Leader of the Republican Party
+  title_fr: Chef du Parti républicain
+  institution: republican-party
+  authority: 22
+
+- id: party-leader-democratic-alliance
+  title_en: Leader of the Democratic Alliance Party
+  title_fr: Chef du Parti de l'alliance démocratique
+  institution: democratic-alliance
+  authority: 20
+
+- id: party-leader-karama
+  title_en: Leader of the Dignity Coalition
+  title_fr: Chef de la Coalition Karama
+  institution: karama-coalition
+  authority: 30
+
+- id: party-leader-machrouu
+  title_en: Leader of Machrouu Tounes
+  title_fr: Chef de Machrouu Tounes
+  institution: machrouu-tounes
+  authority: 22
+
+- id: party-leader-vds
+  title_en: Leader of the Democratic and Social Union
+  title_fr: Chef de l'Union démocratique et sociale
+  institution: vds-pr-mds
+  authority: 20
+
+- id: party-leader-errahma
+  title_en: Leader of Errahma
+  title_fr: Chef d'Errahma
+  institution: errahma
+  authority: 22
+
+- id: party-leader-aich
+  title_en: Leader of Aich Tounsi
+  title_fr: Chef d'Aich Tounsi
+  institution: aich-tounsi
+  authority: 18
+
+- id: party-leader-alternative
+  title_en: Leader of the Tunisian Alternative
+  title_fr: Chef de l'Alternative tunisienne
+  institution: alten-tounsi
+  authority: 22
+
+- id: party-leader-upr
+  title_en: Leader of the Republican People's Union
+  title_fr: Chef de l'Union populaire républicaine
+  institution: republican-people-union
+  authority: 22
+
+- id: mabrouk-principal
+  title_en: Principal, Mabrouk Group
+  title_fr: Dirigeant du Groupe Mabrouk
+  institution: mabrouk-group
+  authority: 30
+
+- id: elloumi-principal
+  title_en: Principal, Elloumi Group
+  title_fr: Dirigeant du Groupe Elloumi
+  institution: elloumi-group
+  authority: 26
+
+- id: nessma-owner
+  title_en: Owner, Nessma TV
+  title_fr: Propriétaire de Nessma TV
+  institution: nessma-tv
+  authority: 24
+
+- id: ugtt-secretary-general
+  title_en: Secretary-General of the UGTT
+  title_fr: Secrétaire général de l'UGTT
+  institution: ugtt
+  authority: 40
+
+# --- Historical: Beylical era (pre-1956) ------------------------------------
+
+- id: grand-vizier
+  title_en: Grand Vizier
+  title_fr: Grand Vizir
+  title_ar: الوزير الأكبر
+  institution: beylical-government
+  authority: 85
+  summary: >-
+    The chief minister of the Bey of Tunis, heading the government apparatus
+    under the Husainid dynasty. The equivalent of the prime minister in the
+    republican period.
+  summary_fr: >-
+    Le ministre principal du Bey de Tunis, à la tête de l'appareil gouvernemental sous la
+    dynastie husseinite. L'équivalent du chef du gouvernement à l'époque républicaine.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    الوزير الأول للباي في تونس، على رأس الجهاز الحكومي في ظل الدولة الحسينية. وهو ما يعادل
+    رئيس الحكومة في العهد الجمهوري.
+  summary_ar_by: model-reviewed
+
+# --- Economic ministries ----------------------------------------------------
+
+- id: finance-minister
+  title_en: Minister of Finance
+  title_fr: Ministre des Finances
+  title_ar: وزير المالية
+  institution: head-of-government
+  authority: 45
+  summary: Portfolio covering finance, planning and the economy.
+  summary_fr: >-
+    Portefeuille couvrant les finances, le plan et l'économie.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    حقيبة تشمل المالية والتخطيط والاقتصاد.
+  summary_ar_by: model-reviewed
+
+- id: commerce-minister
+  title_en: Minister of Commerce
+  title_fr: Ministre du Commerce
+  title_ar: وزير التجارة
+  institution: head-of-government
+  authority: 38
+  summary: >-
+    Portfolio covering trade, handicrafts and export development. The Tunisian
+    ministry was named Commerce and Handicrafts (2009-2011) and Commerce and
+    Export Development (2016-2021); both map to this role.
+  summary_fr: >-
+    Portefeuille couvrant le commerce, l'artisanat et le développement des
+    exportations. Le ministère tunisien s'est appelé Commerce et Artisanat
+    (2009-2011) puis Commerce et Développement des exportations (2016-2021);
+    les deux noms correspondent à ce rôle.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    حقيبة تشمل التجارة والصناعات التقليدية وتنمية الصادرات. عُرفت الوزارة
+    التونسية باسم التجارة والصناعات التقليدية (2009-2011) ثم التجارة وتنمية
+    الصادرات (2016-2021)؛ وكلا الاسمين يقابل هذا الدور.
+  summary_ar_by: model-reviewed
+
+- id: state-properties-minister
+  title_en: Minister of State Properties
+  title_fr: Ministre des Domaines de l'État
+  title_ar: وزير أملاك الدولة
+  institution: head-of-government
+  authority: 38
+  summary: >-
+    Portfolio covering state land, property and land-affairs administration. The
+    ministry was called State Properties (Domaine de l'État) and, under the
+    Mechichi government, State Properties and Land Affairs.
+  summary_fr: >-
+    Portefeuille couvrant le foncier public, les domaines de l'État et les
+    affaires foncières. Le ministère s'est appelé Domaine de l'État puis, sous
+    le gouvernement Mechichi, Domaine de l'État et des Affaires foncières.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    حقيبة تشمل الأملاك العمومية والعقارات والشؤون العقارية للدولة. عُرفت الوزارة
+    باسم أملاك الدولة ثم، في حكومة المشيشي، أملاك الدولة والشؤون العقارية.
+  summary_ar_by: model-reviewed
+
+- id: bct-governor
+  title_en: Governor of the Central Bank
+  title_fr: Gouverneur de la Banque Centrale
+  title_ar: محافظ البنك المركزي
+  institution: bct
+  authority: 50
+  summary: >-
+    Governor of the Central Bank of Tunisia. The authority rating reflects formal
+    monetary-policy gatekeeping power, which real-world political pressure often
+    overrides — making turnover a useful proxy for institutional independence.
+  summary_fr: >-
+    Gouverneur de la Banque centrale de Tunisie. La note d'autorité reflète le pouvoir
+    formel de gardien de la politique monétaire, que la pression politique réelle contourne
+    souvent — ce qui fait de la rotation à ce poste un bon indicateur indirect de
+    l'indépendance de l'institution.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    محافظ البنك المركزي التونسي. يعكس تقدير السلطة هنا الدور الرسمي في التحكم بالسياسة
+    النقدية، وهو دور كثيرًا ما تتجاوزه الضغوط السياسية الفعلية — ما يجعل تواتر تغيير شاغلي
+    المنصب مؤشرًا غير مباشر مفيدًا على استقلال المؤسسة.
+  summary_ar_by: model-reviewed
+
+- id: justice-minister
+  title_en: Minister of Justice
+  title_fr: Ministre de la Justice
+  title_ar: وزير العدل
+  institution: head-of-government
+  authority: 42
+  summary: Portfolio covering justice and judicial administration.
+  summary_fr: >-
+    Portefeuille couvrant la justice et l'administration judiciaire.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    حقيبة تشمل العدل وإدارة القضاء.
+  summary_ar_by: model-reviewed
+
+- id: justice-ministry-advisor
+  title_en: Advisor at the Ministry of Justice
+  title_fr: Conseiller au ministère de la Justice
+  title_ar: مستشار في وزارة العدل
+  institution: head-of-government
+  authority: 25
+
+- id: health-minister
+  title_en: Minister of Health
+  title_fr: Ministre de la Santé
+  title_ar: وزير الصحة
+  institution: ministry-health
+  authority: 38
+  summary: >-
+    Portfolio covering public health, hospitals and medical education. Gained
+    political salience in the Saied era when its holder became a candidate
+    in the succession struggle.
+  summary_fr: >-
+    Portefeuille couvrant la santé publique, les hôpitaux et la formation
+    médicale. A gagné en importance politique à l'ère Saïed quand son
+    titulaire est devenu un candidat dans la lutte de succession.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    حقيبة تشمل الصحة العامة والمستشفيات والتعليم الطبي. اكتسبت أهمية
+    سياسية في عهد سعيد حين صار شاغلها مرشحًا في صراع الخلافة.
+  summary_ar_by: model-reviewed
+
+- id: agriculture-minister
+  title_en: Minister of Agriculture
+  title_fr: Ministre de l'Agriculture
+  title_ar: وزير الفلاحة
+  institution: head-of-government
+  authority: 35
+  summary: >-
+    Portfolio covering agriculture, food security and rural development.
+    Gained relevance in the Saied era when its holder Abdelmonem Belaâti,
+    with a military background, was cited by Mondafrigue as connected to the
+    power network around the presidency.
+  summary_fr: >-
+    Portefeuille couvrant l'agriculture, la sécurité alimentaire et le
+    développement rural. A gagné en pertinence à l'ère Saïed quand son
+    titulaire Abdelmonem Belaâti, au profil militaire, a été cité par
+    Mondafrigue comme connecté au réseau de pouvoir autour de la présidence.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    حقيبة تشمل الزراعة والأمن الغذائي والتنمية الريفية. اكتسبت أهمية في عصر السعيد عندما
+    أشارت موندافريكي إلى أن صاحبها Abdelmonem Belaâti، ذو الخلفية العسكرية، مرتبط بشبكة
+    السلطة حول الرئاسة.
+  summary_ar_by: model-reviewed
+  sources: [mondafrique-saied-clans-2026]
+
+# ===========================================================================
+# MEDIA ROLES
+# ===========================================================================
+
+- id: tv-president
+  title_en: President of the Public Television Establishment
+  title_fr: Président de l'Établissement de la Télévision Tunisienne
+  title_ar: رئيس مؤسسة التلفزة التونسية
+  institution: ett
+  authority: 35
+  summary: Appointed by HAICA. Oversight of public TV broadcasting.
+  summary_fr: >-
+    Nommé par la HAICA. Supervision de la télévision publique.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    تعيّنه هيئة الاتصال السمعي البصري. يشرف على التلفزة العمومية.
+  summary_ar_by: model-reviewed
+
+- id: media-regulator-president
+  title_en: President of HAICA
+  title_fr: Président de la HAICA
+  title_ar: رئيس الهيئة العليا المستقلة للاتصال السمعي البصري
+  institution: haica
+  authority: 30
+  summary: Chair of the independent audiovisual media regulator.
+  summary_fr: >-
+    Président du régulateur indépendant des médias audiovisuels.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    رئيس هيئة التعديل المستقلة للإعلام السمعي البصري.
+  summary_ar_by: model-reviewed
+
+- id: journalist
+  title_en: Journalist
+  title_fr: Journaliste
+  title_ar: صحفي
+  institution: la-presse-tunisie
+  authority: 10
+  summary: Generic role for journalists. Attach specific media outlet via the institution field when known.
+  summary_fr: >-
+    Rôle générique pour les journalistes. Rattacher le média précis via le champ institution
+    lorsqu'il est connu.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    دور عام للصحفيين. تُربط المؤسسة الإعلامية المحددة عبر حقل المؤسسة عند معرفتها.
+  summary_ar_by: model-reviewed
+
+- id: media-owner
+  title_en: Media Owner
+  title_fr: Propriétaire de média
+  title_ar: مالك وسيلة إعلامية
+  institution: nessma-tv
+  authority: 30
+  summary: Generic role for owners of media outlets.
+  summary_fr: >-
+    Rôle générique pour les propriétaires de médias.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    دور عام لمالكي وسائل الإعلام.
+  summary_ar_by: model-reviewed
+
+- id: hannibal-owner
+  title_en: Owner of Hannibal TV
+  title_fr: Propriétaire de Hannibal TV
+  title_ar: مالك قناة حنبعل
+  institution: hannibal-tv
+  authority: 28
+
+- id: hiwar-owner
+  title_en: Owner of El Hiwar Ettounsi
+  title_fr: Propriétaire de El Hiwar Ettounsi
+  title_ar: مالك الحوار التونسي
+  institution: el-hiwar-ettounsi
+  authority: 28
+
+- id: mosaique-fm-owner
+  title_en: Owner of Mosaique FM
+  title_fr: Propriétaire de Mosaïque FM
+  title_ar: مالك موزاييك إف إم
+  institution: mosaique-fm
+  authority: 30
+
+- id: leaders-editor
+  title_en: Editor-in-Chief of Leaders
+  title_fr: Rédacteur en chef de Leaders
+  title_ar: رئيس تحرير ليدرز
+  institution: leaders-tunisie
+  authority: 15
+
+- id: zitouna-tv-owner
+  title_en: Owner of Zitouna TV
+  title_fr: Propriétaire de Zitouna TV
+  title_ar: مالك قناة الزيتونة
+  institution: zitouna-tv
+  authority: 24
+
+- id: attessia-tv-owner
+  title_en: Owner of Attessia TV
+  title_fr: Propriétaire de Attessia TV
+  title_ar: مالك قناة التاسعة
+  institution: attessia-tv
+  authority: 24
+
+- id: nawaat-founder
+  title_en: Founder of Nawaat
+  title_fr: Fondateur de Nawaat
+  title_ar: مؤسس نوات
+  institution: nawaat
+  authority: 18
+
+# ===========================================================================
+# JUDICIAL ROLES
+# ===========================================================================
+
+- id: judge
+  title_en: Judge
+  title_fr: Juge
+  title_ar: قاض
+  institution: judiciary
+  authority: 25
+  summary: Generic role for members of the Tunisian judiciary.
+  summary_fr: >-
+    Rôle générique pour les membres de la magistrature tunisienne.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    دور عام لأعضاء السلك القضائي التونسي.
+  summary_ar_by: model-reviewed
+
+- id: csm-president
+  title_en: President of the Superior Council of the Judiciary
+  title_fr: Président du Conseil Supérieur de la Magistrature
+  title_ar: رئيس المجلس الأعلى للقضاء
+  institution: csm
+  authority: 50
+  summary: >-
+    Head of the self-governing judicial body responsible for appointments and
+    discipline of judges.
+  summary_fr: >-
+    Chef de l'organe autonome de la magistrature, chargé des nominations et de la discipline
+    des juges.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    رئيس الهيئة الذاتية للقضاء، المكلَّفة بتسمية القضاة وتأديبهم.
+  summary_ar_by: model-reviewed
+
+- id: cassation-president
+  title_en: President of the Court of Cassation
+  title_fr: Président de la Cour de Cassation
+  title_ar: رئيس محكمة التعقيب
+  institution: court-of-cassation
+  authority: 48
+
+- id: administrative-court-president
+  title_en: President of the Administrative Court
+  title_fr: Président du Tribunal Administratif
+  title_ar: رئيس المحكمة الإدارية
+  institution: administrative-court
+  authority: 44
+
+- id: audit-court-president
+  title_en: President of the Audit Court
+  title_fr: Président de la Cour des Comptes
+  title_ar: رئيس محكمة المحاسبات
+  institution: audit-court
+  authority: 42
+
+- id: human-rights-minister
+  title_en: Minister of Human Rights
+  title_fr: Ministre des Droits de l'Homme
+  title_ar: وزير حقوق الإنسان
+  institution: head-of-government
+  authority: 30
+  summary: >-
+    Portfolio covering human rights policy and transitional justice. Held
+    intermittently in post-2011 governments.
+  summary_fr: >-
+    Portefeuille couvrant la politique des droits humains et la justice transitionnelle.
+    Occupé par intermittence dans les gouvernements post-2011.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    حقيبة تشمل سياسة حقوق الإنسان والعدالة الانتقالية. شُغلت بشكل متقطع في حكومات ما بعد
+    2011.
+  summary_ar_by: model-reviewed
+
+- id: bar-president
+  title_en: President of the Bar Association
+  title_fr: Bâtonnier de l'Ordre des Avocats
+  title_ar: نقيب المحامين
+  institution: onat
+  authority: 35
+  summary: >-
+    Elected head of the Tunisian bar association. A politically influential
+    position, particularly in post-2011 Tunisia.
+  summary_fr: >-
+    Chef élu de l'ordre national des avocats de Tunisie. Poste politiquement influent, en
+    particulier dans la Tunisie post-2011.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    العميد المنتخَب للهيئة الوطنية للمحامين بتونس. منصب ذو نفوذ سياسي، خاصة في تونس ما بعد
+    2011.
+  summary_ar_by: model-reviewed
+
+- id: ivd-president
+  title_en: President of the Truth and Dignity Commission
+  title_fr: Présidente de l'Instance Vérité et Dignité
+  title_ar: رئيس هيئة الحقيقة والكرامة
+  institution: ivd
+  authority: 40
+  summary: Head of the transitional justice commission investigating past human rights violations.
+  summary_fr: >-
+    Chef de l'instance de justice transitionnelle enquêtant sur les violations passées des
+    droits humains.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    رئيس هيئة العدالة الانتقالية المكلَّفة بالتحقيق في انتهاكات حقوق الإنسان السابقة.
+  summary_ar_by: model-reviewed
+
+- id: anti-corruption-head
+  title_en: President of INLUCC
+  title_fr: Président de l'INLUCC
+  title_ar: رئيس الهيئة الوطنية لمكافحة الفساد
+  institution: inlucc
+  authority: 35
+  summary: Head of the independent anti-corruption authority.
+  summary_fr: >-
+    Chef de l'instance indépendante de lutte contre la corruption.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    رئيس الهيئة المستقلة لمكافحة الفساد.
+  summary_ar_by: model-reviewed
+
+# ===========================================================================
+# CIVIL SOCIETY ROLES
+# ===========================================================================
+
+- id: ngo-president
+  title_en: President of an NGO
+  title_fr: Président d'une ONG
+  title_ar: رئيس منظمة غير حكومية
+  institution: ltdh
+  authority: 15
+  summary: Generic role for heads of civil society organisations. Use a specific role (ltdh-president, atfd-president, etc.) when available.
+  summary_fr: >-
+    Rôle générique pour les présidents d'organisations de la société civile. Utiliser un
+    rôle spécifique (ltdh-president, atfd-president, etc.) lorsqu'il existe.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    دور عام لرؤساء منظمات المجتمع المدني. يُستعمل دور محدّد (رئيس الرابطة، رئيسة الجمعية،
+    إلخ) عند توفره.
+  summary_ar_by: model-reviewed
+
+- id: ngo-director
+  title_en: Executive Director of an NGO
+  title_fr: Directeur exécutif d'une ONG
+  title_ar: المدير التنفيذي لمنظمة غير حكومية
+  institution: ltdh
+  authority: 10
+  summary: Generic role for executive directors of civil society organisations.
+  summary_fr: >-
+    Rôle générique pour les directeurs exécutifs d'organisations de la société civile.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    دور عام للمديرين التنفيذيين لمنظمات المجتمع المدني.
+  summary_ar_by: model-reviewed
+
+- id: activist
+  title_en: Activist
+  title_fr: Militant
+  title_ar: ناشط
+  institution: nawaat
+  authority: 5
+  summary: Generic role for civil society or political activists.
+  summary_fr: >-
+    Rôle générique pour les militants de la société civile ou du champ politique.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    دور عام لناشطي المجتمع المدني أو الحقل السياسي.
+  summary_ar_by: model-reviewed
+
+- id: ltdh-president
+  title_en: President of the Tunisian League for Human Rights
+  title_fr: Président de la LTDH
+  title_ar: رئيس الرابطة التونسية للدفاع عن حقوق الإنسان
+  institution: ltdh
+  authority: 30
+  summary: Head of the oldest human rights organisation in Africa.
+  summary_fr: >-
+    Chef de la plus ancienne organisation de défense des droits humains d'Afrique.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    رئيس أقدم منظمة حقوقية في أفريقيا.
+  summary_ar_by: model-reviewed
+
+- id: atfd-president
+  title_en: President of the Tunisian Association of Democratic Women
+  title_fr: Présidente de l'ATFD
+  title_ar: رئيسة الرابطة التونسية للنساء الديمقراطيات
+  institution: atfd
+  authority: 25
+
+- id: iwatch-president
+  title_en: President of I Watch
+  title_fr: Président de I Watch
+  title_ar: رئيس أنا يقظ
+  institution: i-watch
+  authority: 20
+
+# ===========================================================================
+# ECONOMIC ROLES
+# ===========================================================================
+
+- id: utica-president
+  title_en: President of UTICA
+  title_fr: Président de l'UTICA
+  title_ar: رئيس الاتحاد التونسي للصناعة والتجارة والصناعات التقليدية
+  institution: utica
+  authority: 45
+  summary: >-
+    Head of Tunisia's main employers' organisation. A central figure in
+    economic policy and tripartite negotiations.
+  summary_fr: >-
+    Chef de la principale organisation patronale tunisienne. Figure centrale de la politique
+    économique et des négociations tripartites.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    رئيس منظمة الأعراف التونسية الرئيسية. شخصية محورية في السياسة الاقتصادية والمفاوضات
+    الثلاثية.
+  summary_ar_by: model-reviewed
+
+# ===========================================================================
+# STATE-OWNED ENTERPRISE AND BANK ROLES
+# ===========================================================================
+
+- id: soe-pdg
+  title_en: Président-Directeur Général
+  title_fr: Président-Directeur Général
+  title_ar: رئيس مدير عام
+  institution: tunisair
+  authority: 40
+  summary: >-
+    The top executive of a state-owned enterprise. In Tunisia's SOE sector,
+    the PDG is typically a political appointee whose tenure tracks political
+    cycles rather than corporate performance.
+  summary_fr: >-
+    Le dirigeant principal d'une entreprise publique. Dans le secteur public tunisien, le
+    PDG est généralement une nomination politique dont la durée suit les cycles politiques
+    plutôt que la performance de l'entreprise.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    المسؤول التنفيذي الأول لمؤسسة عمومية. في القطاع العمومي التونسي يكون الرئيس المدير العام
+    عادةً تعيينًا سياسيًا تتبع مدته الدورات السياسية لا أداء المؤسسة.
+  summary_ar_by: model-reviewed
+
+- id: soe-director-general
+  title_en: Directeur Général
+  title_fr: Directeur Général
+  title_ar: مدير عام
+  institution: tunisair
+  authority: 35
+  summary: >-
+    Director-General of a state-owned enterprise. In some SOEs the DG is
+    separate from the PDG (board chair); in others the roles are merged.
+  summary_fr: >-
+    Directeur général d'une entreprise publique. Dans certaines entreprises, le DG est
+    distinct du PDG (président du conseil) ; dans d'autres, les deux fonctions sont
+    fusionnées.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    المدير العام لمؤسسة عمومية. في بعض المؤسسات يكون منفصلًا عن الرئيس المدير العام (رئيس
+    مجلس الإدارة)، وفي أخرى يُدمج المنصبان.
+  summary_ar_by: model-reviewed
+
+- id: bank-director-general
+  title_en: Directeur Général
+  title_fr: Directeur Général d'une banque publique
+  title_ar: مدير عام بنك عمومي
+  institution: stb
+  authority: 42
+  summary: >-
+    Director-General of a state-owned bank. State banks are among the largest
+    financial institutions in Tunisia and their leadership is politically consequential.
+  summary_fr: >-
+    Directeur général d'une banque publique. Les banques publiques comptent parmi les plus
+    grandes institutions financières de Tunisie et leur direction est politiquement
+    conséquente.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    المدير العام لبنك عمومي. البنوك العمومية من أكبر المؤسسات المالية في تونس، وقيادتها ذات
+    أثر سياسي.
+  summary_ar_by: model-reviewed
+
+- id: steg-pdg
+  title_en: Président-Directeur Général
+  title_fr: Président-Directeur Général
+  title_ar: رئيس مدير عام
+  institution: steg
+  authority: 40
+  summary: >-
+    Top executive of STEG, Tunisia's electricity and gas utility.
+  summary_fr: >-
+    Dirigeant principal de la STEG, l'opérateur tunisien d'électricité et de gaz.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    المسؤول التنفيذي الأول للشركة التونسية للكهرباء والغاز.
+  summary_ar_by: model-reviewed
+
+- id: sncft-pdg
+  title_en: Président-Directeur Général
+  title_fr: Président-Directeur Général
+  title_ar: رئيس مدير عام
+  institution: sncft
+  authority: 38
+  summary: >-
+    Top executive of SNCFT, Tunisia's national railway company.
+  summary_fr: >-
+    Dirigeant principal de la SNCFT, la société nationale des chemins de fer tunisiens.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    المسؤول التنفيذي الأول للشركة الوطنية للسكك الحديدية التونسية.
+  summary_ar_by: model-reviewed
+
+- id: sonede-pdg
+  title_en: Président-Directeur Général
+  title_fr: Président-Directeur Général
+  title_ar: رئيس مدير عام
+  institution: sonede
+  authority: 36
+  summary: >-
+    Top executive of SONEDE, Tunisia's national water utility.
+  summary_fr: >-
+    Dirigeant principal de la SONEDE, la régie nationale des eaux.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    المسؤول التنفيذي الأول للشركة الوطنية لاستغلال وتوزيع المياه.
+  summary_ar_by: model-reviewed
+
+- id: onas-pdg
+  title_en: Directeur Général
+  title_fr: Directeur Général
+  title_ar: مدير عام
+  institution: onas
+  authority: 30
+  summary: >-
+    Director-General of ONAS, Tunisia's national sanitation office.
+  summary_fr: >-
+    Directeur général de l'ONAS, l'office national de l'assainissement.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    المدير العام للديوان الوطني للتطهير.
+  summary_ar_by: model-reviewed
+
+- id: la-poste-pdg
+  title_en: Président-Directeur Général
+  title_fr: Président-Directeur Général
+  title_ar: رئيس مدير عام
+  institution: la-poste-tunisienne
+  authority: 35
+  summary: >-
+    Top executive of La Poste Tunisienne, the national postal service.
+  summary_fr: >-
+    Dirigeant principal de la Poste tunisienne, le service postal national.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    المسؤول التنفيذي الأول للبريد التونسي.
+  summary_ar_by: model-reviewed
+
+- id: etap-pdg
+  title_en: Président-Directeur Général
+  title_fr: Président-Directeur Général
+  title_ar: رئيس مدير عام
+  institution: etap
+  authority: 38
+  summary: >-
+    Top executive of ETAP, Tunisia's national oil and gas exploration company.
+  summary_fr: >-
+    Dirigeant principal de l'ETAP, la compagnie nationale d'exploration pétrolière et
+    gazière.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    المسؤول التنفيذي الأول للمؤسسة التونسية للأنشطة البترولية.
+  summary_ar_by: model-reviewed
+
+- id: bna-pdg
+  title_en: Président-Directeur Général
+  title_fr: Président-Directeur Général
+  title_ar: رئيس مدير عام
+  institution: bna
+  authority: 42
+  summary: >-
+    Top executive of BNA, Tunisia's largest bank by assets.
+  summary_fr: >-
+    Dirigeant principal de la BNA, la plus grande banque tunisienne par les actifs.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    المسؤول التنفيذي الأول للبنك الوطني الفلاحي، أكبر بنك تونسي من حيث الأصول.
+  summary_ar_by: model-reviewed
+
+- id: bh-bank-pdg
+  title_en: Président-Directeur Général
+  title_fr: Président-Directeur Général
+  title_ar: رئيس مدير عام
+  institution: bh-bank
+  authority: 40
+  summary: >-
+    Top executive of BH Bank, Tunisia's leading housing credit bank.
+  summary_fr: >-
+    Dirigeant principal de la BH Bank, première banque tunisienne du crédit au logement.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    المسؤول التنفيذي الأول لبنك الإسكان، البنك التونسي الأول في قروض السكن.
+  summary_ar_by: model-reviewed
+
+# ===========================================================================
+# DIPLOMATIC ROLES
+# ===========================================================================
+
+- id: diplomat-ambassador
+  title_en: Ambassador
+  title_fr: Ambassadeur
+  title_ar: سفير
+  institution: presidency
+  authority: 15
+  summary: Generic role for heads of diplomatic missions to or from Tunisia.
+  summary_fr: >-
+    Rôle générique pour les chefs de missions diplomatiques vers ou depuis la Tunisie.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    دور عام لرؤساء البعثات الدبلوماسية من تونس وإليها.
+  summary_ar_by: model-reviewed
+
+# --- Extractive, industrial and revenue offices ------------------------------
+
+- id: cpg-gct-pdg
+  title_en: Président-Directeur Général, CPG and GCT
+  title_fr: Président-Directeur Général de la CPG et du GCT
+  title_ar: الرئيس المدير العام لشركة فسفاط قفصة والمجمع الكيميائي
+  institution: cpg
+  authority: 40
+  summary: >-
+    Runs both the extraction monopoly and the processing group. Weighted at the
+    level of the larger state enterprises because the office commands the largest
+    industrial workforce in the interior and the country's second export earner.
+  summary_fr: >-
+    Dirige à la fois le monopole d'extraction et le groupe de transformation. Pondéré au
+    niveau des plus grandes entreprises publiques parce que la fonction commande la première
+    main-d'œuvre industrielle de l'intérieur et le deuxième poste d'exportation du pays.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    يدير احتكار الاستخراج ومجمع التحويل معًا. رُجّح في مستوى أكبر المؤسسات العمومية لأن
+    المنصب يقود أكبر يد عاملة صناعية في الداخل وثاني مورد تصديري في البلاد.
+  summary_ar_by: model-reviewed
+
+- id: tunisie-telecom-pdg
+  title_en: Président-Directeur Général, Tunisie Telecom
+  title_fr: Président-Directeur Général de Tunisie Télécom
+  title_ar: الرئيس المدير العام لاتصالات تونس
+  institution: tunisie-telecom
+  authority: 35
+
+- id: ooredoo-tunisie-dg
+  title_en: Director-General, Ooredoo Tunisia
+  title_fr: Directeur Général de Ooredoo Tunisie
+  title_ar: المدير العام لأوريدو تونس
+  institution: ooredoo-tunisie
+  authority: 25
+
+- id: douane-dg
+  title_en: Director-General of Customs
+  title_fr: Directeur Général des Douanes
+  title_ar: المدير العام للديوانة
+  institution: douane
+  authority: 45
+  summary: >-
+    Weighted above most enterprise offices: customs sits on the frontier between
+    the formal economy, the informal border trade and the security services, and
+    the post has been filled from the magistracy and from the police as well as
+    from the customs corps.
+  summary_fr: >-
+    Pondéré au-dessus de la plupart des fonctions d'entreprise : la douane se tient à la
+    frontière entre l'économie formelle, le commerce transfrontalier informel et les
+    services de sécurité, et le poste a été pourvu depuis la magistrature et depuis la
+    police autant que depuis le corps des douanes.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    رُجّح فوق معظم المناصب المؤسساتية: فالديوانة تقف على الحد الفاصل بين الاقتصاد المنظّم
+    والتجارة الحدودية الموازية والأجهزة الأمنية، وقد مُلئ المنصب من سلك القضاء ومن سلك الأمن
+    بقدر ما مُلئ من سلك الديوانة.
+  summary_ar_by: model-reviewed
+
+- id: cnss-pdg
+  title_en: Président-Directeur Général, CNSS
+  title_fr: Président-Directeur Général de la CNSS
+  title_ar: الرئيس المدير العام للصندوق الوطني للضمان الاجتماعي
+  institution: cnss
+  authority: 35
+
+- id: poulina-chairman
+  title_en: Chairman, Poulina Group Holding
+  title_fr: Président du Conseil d'Administration de Poulina Group Holding
+  title_ar: رئيس مجلس إدارة مجمع بولينا القابض
+  institution: poulina
+  authority: 30
+
+- id: conect-president
+  title_en: President of CONECT
+  title_fr: Président de la CONECT
+  title_ar: رئيس الكنفدرالية التونسية للمؤسسات المواطنة
+  institution: conect
+  authority: 25
+
+- id: utap-president
+  title_en: President of UTAP
+  title_fr: Président de l'UTAP
+  title_ar: رئيس الاتحاد التونسي للفلاحة والصيد البحري
+  institution: utap
+  authority: 30
+
+- id: haute-instance-president
+  title_en: President of the Higher Authority for the Realisation of the Objectives of the Revolution
+  title_fr: Président de la Haute instance pour la réalisation des objectifs de la révolution
+  title_ar: رئيس الهيئة العليا لتحقيق أهداف الثورة
+  institution: haute-instance
+  authority: 60
+  summary: >-
+    Weighted high for a seven-month office: the body legislated, and the rules it
+    wrote governed every election that followed.
+  summary_fr: >-
+    Fortement pondéré pour une fonction de sept mois : l'organe a légiféré, et les règles
+    qu'il a écrites ont gouverné toutes les élections qui ont suivi.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    رُجّح ترجيحًا عاليًا رغم أن مدته سبعة أشهر: فالهيئة شرّعت، وحكمت القواعد التي كتبتها كل
+    الانتخابات التي تلت.
+  summary_ar_by: model-reviewed
+
+- id: amt-president
+  title_en: President of the Association of Tunisian Magistrates
+  title_fr: Président de l'Association des Magistrats Tunisiens
+  title_ar: رئيس جمعية القضاة التونسيين
+  institution: amt
+  authority: 35
+
+- id: mufti
+  title_en: Mufti of the Republic
+  title_fr: Mufti de la République
+  title_ar: مفتي الجمهورية
+  institution: mufti-republic
+  authority: 30
+  summary: >-
+    Formal authority is limited and the office issues no binding orders, but it
+    is the state's only official religious voice and it is filled by presidential
+    decree.
+  summary_fr: >-
+    L'autorité formelle est limitée et la fonction n'émet aucun ordre contraignant, mais
+    c'est la seule voix religieuse officielle de l'État et elle est pourvue par décret
+    présidentiel.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    السلطة الرسمية محدودة والمنصب لا يصدر أوامر ملزمة، لكنه الصوت الديني الرسمي الوحيد
+    للدولة ويُشغَل بأمر رئاسي.
+  summary_ar_by: model-reviewed
+
+# --- merged 2026-08-25 from daily-2026-08-25.yaml
+- id: csee-secretary-general
+  title_en: Secretary-General of the Higher Council for Education
+  title_fr: Secrétaire général du Conseil supérieur de l'éducation et de l'enseignement
+  institution: conseil-superieur-education
+  authority: 15
+
+# --- merged 2026-08-26 (ministry/ATB/contracts pass)
+- id: equipment-minister
+  title_en: Minister of Equipment and Housing
+  title_fr: Ministre de l'Équipement et de l'Habitat
+  institution: head-of-government
+  authority: 45

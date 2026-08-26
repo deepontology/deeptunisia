@@ -1,0 +1,277 @@
+# Subsection definitions for the network view.
+#
+# Each layer gets an ordered list of subsections. A subsection defines a header
+# (translatable) and a membership rule. Rules are evaluated in order; the first
+# match wins. Any entity matching no rule falls into an auto-appended "Other"
+# bucket, so nothing is ever dropped.
+#
+# Membership keys (any combination; entity matches if ANY rule matches):
+#   role        — exact role id from roles.yaml (holds of that role)
+#   role_prefix — role id starts with this string (e.g. "minister" catches
+#                 agriculture-minister, finance-minister, …)
+#   type        — institution.type match (string or array of strings)
+#   members     — explicit list of person/institution ids
+
+- layer: security
+  subsections:
+    - header_en: Armed Forces
+      header_fr: Forces armées
+      header_ar: القوات المسلحة
+      membership:
+        type: military
+
+    - header_en: Defence Ministry
+      header_fr: Ministère de la Défense
+      header_ar: وزارة الدفاع
+      membership:
+        role: defence-minister
+        members: [ministry-defence]
+
+    - header_en: Interior Ministry
+      header_fr: Ministère de l'Intérieur
+      header_ar: وزارة الداخلية
+      membership:
+        role: interior-minister
+        members: [ministry-interior]
+
+    - header_en: Police & Gendarmerie
+      header_fr: Police et gendarmerie
+      header_ar: الشرطة والدرك
+      membership:
+        type: [police, gendarmerie, association]
+        role: [ng-commander, usgn-commander, dg-public-security, dg-national-security]
+        members: [unsfst, snfsi]
+
+    - header_en: Intelligence
+      header_fr: Renseignement
+      header_ar: الاستخبارات
+      membership:
+        type: intelligence
+        role: [national-security-adviser, national-security-director]
+        members: [national-security-council, presidential-security-adviser]
+
+    - header_en: Presidential Security
+      header_fr: Sécurité présidentielle
+      header_ar: الحماية الرئاسية
+      membership:
+        type: presidential-security
+        role: [presidential-security-chief, dg-presidential-security]
+
+- layer: political
+  subsections:
+    - header_en: Presidents
+      header_fr: Présidents
+      header_ar: الرؤساء
+      membership:
+        role: president
+        type: presidency
+
+    - header_en: Head of Government
+      header_fr: Chef du gouvernement
+      header_ar: رئيس الحكومة
+      membership:
+        role: [prime-minister, grand-vizier]
+        type: government
+
+    - header_en: Presidential Team
+      header_fr: Équipe présidentielle
+      header_ar: الفريق الرئاسي
+      membership:
+        role: [presidential-cabinet-director, national-security-adviser]
+        members: [saied-family-clan-network]
+
+    - header_en: Ministers
+      header_fr: Ministres
+      header_ar: الوزراء
+      membership:
+        role: [agriculture-minister, commerce-minister, defence-minister, finance-minister, foreign-minister, health-minister, human-rights-minister, interior-minister, justice-minister, religious-affairs-director, religious-affairs-minister, religious-affairs-secretary-of-state, state-properties-minister, tourism-minister]
+
+    - header_en: Parliament
+      header_fr: Parlement
+      header_ar: البرلمان
+      membership:
+        type: legislature
+        role: speaker
+
+    - header_en: Parties
+      header_fr: Partis
+      header_ar: الأحزاب
+      membership:
+        type: party
+        role_prefix: party-leader
+
+    - header_en: Constitutional & Electoral Bodies
+      header_fr: Organes constitutionnels et électoraux
+      header_ar: الجهات الدستورية والانتخابية
+      membership:
+        members: [isie, cnrd]
+        role: [isie-president, cnrd-president, ivd-president, haute-instance-president]
+
+    - header_en: Religious Affairs
+      header_fr: Affaires religieuses
+      header_ar: الشؤون الدينية
+      membership:
+        role: [mufti, religious-affairs-director, religious-affairs-minister, religious-affairs-secretary-of-state]
+        members: [ministry-religious-affairs, mufti-republic]
+
+- layer: economic
+  subsections:
+    - header_en: Finance & Economy Ministers
+      header_fr: Ministres des finances et de l'économie
+      header_ar: وزراء المالية والاقتصاد
+      membership:
+        role: [finance-minister, commerce-minister, economy-minister]
+
+    - header_en: Central Bank
+      header_fr: Banque centrale
+      header_ar: البنك المركزي
+      membership:
+        members: [bct]
+        role: bct-governor
+
+    - header_en: Banks & Finance
+      header_fr: Banques et finance
+      header_ar: البنوك والمالية
+      membership:
+        members: [amen-bank, attijari-bank, bh-bank, biat, bna, uib, stb]
+        role: [bh-bank-pdg, bna-pdg, bank-director-general]
+
+    - header_en: State Enterprises
+      header_fr: Entreprises publiques
+      header_ar: المؤسسات العمومية
+      membership:
+        members: [etap, cpg, onas, sonede, sncft, steg, tunisair, tunisie-telecom, cnss, la-poste-tunisienne, office-des-cereales, douane, bvmt, orange-tunisie, ooredoo-tunisie, gct]
+        role: [soe-director-general, soe-pdg, etap-pdg, cpg-gct-pdg, cnss-pdg, onas-pdg, sncft-pdg, sonede-pdg, steg-pdg, la-poste-pdg, ooredoo-tunisie-dg, tunisie-telecom-pdg, douane-dg]
+
+    - header_en: Trade & Employer Organisations
+      header_fr: Organisations patronales
+      header_ar: المنظمات النقابية
+      membership:
+        members: [conect, utica]
+        role: [conect-president, utica-president, utap-president]
+
+    - header_en: Business Families
+      header_fr: Familles d'affaires
+      header_ar: العائلات التجارية
+      membership:
+        type: family
+        members: [leila-trabelsi, belhassen-trabelsi, sakher-el-materi, slim-chiboub, cyrine-ben-ali, nesrine-ben-ali, dorsaf-ben-ali]
+
+    - header_en: Conglomerates
+      header_fr: Conglomérats
+      header_ar: المجاميع التجارية
+      membership:
+        members: [mabrouk-group, poulina, elloumi-group, abou-khater-project, chebil-family-business]
+        role: [mabrouk-principal, poulina-chairman, elloumi-principal]
+
+    - header_en: Businesspeople
+      header_fr: Hommes d'affaires
+      header_ar: رجال الأعمال
+      membership:
+        members: [amel-ben-yedder, youssef-bayah, aziz-miled, hedi-bouchamaoui, moncef-mzabi, kamel-eltaief, abdelaziz-makhloufi, ridha-ben-mosbah]
+
+- layer: media
+  subsections:
+    - header_en: Media Regulation
+      header_fr: Régulation médiatique
+      header_ar: تنظيم الإعلام
+      membership:
+        members: [haica]
+        role: [media-regulator-president, tv-president]
+
+    - header_en: Media Owners
+      header_fr: Propriétaires de médias
+      header_ar: أصحاب وسائل الإعلام
+      membership:
+        role: [media-owner, nessma-owner, hannibal-owner, attessia-tv-owner, hiwar-owner, mosaique-fm-owner, zitouna-tv-owner]
+
+    - header_en: Television
+      header_fr: Télévision
+      header_ar: التلفزيون
+      membership:
+        members: [nessma-tv, hannibal-tv, attessia-tv, el-hiwar-ettounsi, wataniya-1, wataniya-2, tunisna-tv, zitouna-tv, ifm-tunisie, ett]
+
+    - header_en: Radio
+      header_fr: Radio
+      header_ar: الإذاعة
+      membership:
+        members: [mosaique-fm, express-fm, radio-tunis, rtci, radio-zaytouna, shems-fm, jawhara-fm]
+
+    - header_en: Print & Digital
+      header_fr: Presse écrite et numérique
+      header_ar: الصحافة المكتوبة والرقمية
+      membership:
+        members: [al-chourouk, assabah, la-presse-tunisie, le-temps-tunisie, leaders-tunisie, webdo, kapitalis, tuniscope, business-news, african-manager, inkyfada, nawaat]
+
+- layer: judicial
+  subsections:
+    - header_en: Courts & Judiciary
+      header_fr: Tribunaux et magistrature
+      header_ar: المحاكم والقضاء
+      membership:
+        members: [constitutional-council, court-of-cassation, csm, military-justice, judiciary]
+        role: [cassation-president, csm-president]
+
+    - header_en: Administrative Courts
+      header_fr: Tribunaux administratifs
+      header_ar: المحاكم الإدارية
+      membership:
+        members: [administrative-court, audit-court]
+        role: [audit-court-president, administrative-court-president]
+
+    - header_en: Legal Profession
+      header_fr: Profession juridique
+      header_ar: المهنة القانونية
+      membership:
+        members: [onat, amt]
+        role: [bar-president, judge]
+
+    - header_en: Accountability
+      header_fr: Contrôle et vérité
+      header_ar: الرقابة والحقيقة
+      membership:
+        members: [ivd]
+        role: [ivd-president]
+
+- layer: civil
+  subsections:
+    - header_en: Trade Unions
+      header_fr: Syndicats
+      header_ar: النقابات
+      membership:
+        members: [ugtt, utap, snjt]
+        role: [ugtt-secretary-general, utap-president]
+
+    - header_en: Human Rights
+      header_fr: Droits humains
+      header_ar: حقوق الإنسان
+      membership:
+        members: [ltdh, atfd, altt, mnemty]
+        role: [ltdh-president, atfd-president]
+
+    - header_en: Governance & Anti-Corruption
+      header_fr: Gouvernance et anti-corruption
+      header_ar: الحوكمة ومكافحة الفساد
+      membership:
+        members: [i-watch, inlucc, al-bawsala, kawakibi-center]
+        role: [iwatch-president]
+
+    - header_en: Civil Alliance
+      header_fr: Alliance civile
+      header_ar: التحالف المدني
+      membership:
+        members: [national-dialogue-quartet, ministry-health]
+
+- layer: foreign
+  subsections:
+    - header_en: States
+      header_fr: États
+      header_ar: الدول
+      membership:
+        type: foreign-state
+
+    - header_en: International Organisations
+      header_fr: Organisations internationales
+      header_ar: المنظمات الدولية
+      membership:
+        type: [international-organisation, ngo]
