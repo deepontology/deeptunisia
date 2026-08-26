@@ -1155,8 +1155,8 @@ import Chip from '$lib/ui/Chip.svelte';
 					: persistent
 						? PERSISTENT_PRIO
 						: rings && rings.one.has(n.id)
-							? 5_000 + (n.weight - (n.kind === 'institution' ? 5 : 0))
-							: n.weight - (n.kind === 'institution' ? 5 : 0),
+							? 5_000 + (n.weight - (n.kind === 'institution' ? (n.layer === 'foreign' ? 15 : 5) : 0))
+							: n.weight - (n.kind === 'institution' ? (n.layer === 'foreign' ? 15 : 5) : 0),
 				pinned: isFocus,
 				r: n.r,
 				data: { layer: n.layer, kind: n.kind, hop }
