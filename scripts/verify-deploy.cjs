@@ -105,7 +105,7 @@ fs.mkdirSync(OUT, { recursive: true });
   page.on('pageerror', (e) => errors.push('pageerror: ' + e.message));
 
   await page.goto(ORIGIN + '/', { waitUntil: 'networkidle' });
-  ok(await page.locator('a.enter').count() === 4, 'the landing page rendered');
+  ok(await page.locator('a.enter').count() === 5, 'the landing page rendered');
   /*
    * The dial is generated at runtime from the graph arrays the build embeds,
    * so the edge count grows with the data and a hardcoded count goes stale on
