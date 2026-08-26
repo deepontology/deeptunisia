@@ -344,6 +344,7 @@ const en: Dict = {
 	'layer.judicial': 'Judicial',
 	'layer.civil': 'Civil society',
 	'layer.foreign': 'Foreign & international',
+	'layer.foreign.short': 'Foreign',
 
 	'chronicle.hint':
 		'Bar length is tenure. Hatched ends mark dates the sources do not fix precisely. Scroll to zoom, drag to pan.',
@@ -1537,6 +1538,7 @@ const fr: Dict = {
 	'layer.judicial': 'Judiciaire',
 	'layer.civil': 'Société civile',
 	'layer.foreign': 'Étranger & international',
+	'layer.foreign.short': 'Étranger',
 
 	'chronicle.hint':
 		'La longueur des barres correspond à la durée du mandat. Les extrémités hachurées signalent des dates que les sources ne fixent pas précisément.',
@@ -2705,6 +2707,7 @@ const ar: Dict = {
 	'layer.judicial': 'القضاء',
 	'layer.civil': 'المجتمع المدني',
 	'layer.foreign': 'الخارج والدولي',
+	'layer.foreign.short': 'الخارج',
 
 	'chronicle.hint':
 		'طول الشريط يعبّر عن مدة تولّي المنصب. الأطراف المخططة تعني أن المصادر لا تحدّد التاريخ بدقة.',
