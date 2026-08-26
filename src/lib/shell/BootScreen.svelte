@@ -40,6 +40,9 @@
 	const label = $derived(STAGES[Math.min(stageIndex, STAGES.length - 1)].label);
 
 	onMount(() => {
+		// Hide the static placeholder that covered the first-paint flash;
+		// the Svelte boot now takes over with its counting animation.
+		try { document.getElementById('static-boot')?.remove(); } catch {}
 		if (theme.reduceMotion) {
 			onDone();
 			return;
@@ -120,7 +123,7 @@
 	.boot {
 		position: fixed;
 		inset: 0;
-		z-index: 500;
+		z-index: 600;
 		display: grid;
 		place-items: center;
 		background: var(--surface-base);
