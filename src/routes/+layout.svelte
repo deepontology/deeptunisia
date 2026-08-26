@@ -45,8 +45,25 @@ import { tour } from '$lib/shell/tour.svelte';
 		} catch {}
 		if (isDoc) finishBoot();
 		// Start the guided tour on first visit, or if ?tour=1 is present.
+		// Defer until the boot animation has finished, otherwise the tour
+		// modal appears on top of the counting boot — the exact overlap
+		// testers reported (tour before loading ends).
 		const force = page.url.searchParams.get('tour') === '1';
-		if (!isDoc) startTour(force);
+		if (!isDoc) {
+			if (booted) {
+				startTour(force);
+			} else {
+				const iv = setInterval(() => {
+					try {
+						if (document.documentElement.dataset.boot === 'ready') {
+							clearInterval(iv);
+							startTour(force);
+						}
+					} catch {}
+				}, 120);
+				setTimeout(() => clearInterval(iv), 4000);
+			}
+		}
 	});
 	function finishBoot() {
 		booted = true;
