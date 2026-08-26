@@ -1,0 +1,544 @@
+# -----------------------------------------------------------------------------
+# WORLD CLAIMS — the dossier's shelf (docs/plans/world-rebuild-v2.md §2.7, §4.4)
+#
+# Two shapes of claim about Tunisia's external relations, one record kind:
+#
+#   1. AGGREGATES the measured flow families cannot cover — total public debt
+#      including DOMESTIC debt (the World Bank IDS series is external-only),
+#      tourism receipts and arrivals, anything else a national body publishes
+#      that the flow datasets do not. Each is an authored claim with a source,
+#      a grade, and an `assessment` stating its boundary.
+#
+#   2. CONTESTED circulating claims, kept per rule 6 (unsubstantiated claims
+#      are kept, never deleted). What the popular account says about a
+#      counterparty — "France owns the debt", the IMF narrative — graded D,
+#      attributed to who circulates it, beside the measured reality in
+#      `assessment`.
+#
+# A world claim is NEVER a measurement. It carries the full claim envelope:
+# basis, confidence, attribution below grade B, and at least one source.
+# `entity` is the graph institution id the claim is about, or null when the
+# claim is about Tunisia itself.
+# -----------------------------------------------------------------------------
+# World rebuild v2 ? reviewed aggregates and contested claims (2026-08-16)
+- id: agg-public-debt-total-2024
+  entity: null
+  claim: L'encours total de la dette publique tunisienne (dette intérieure + dette
+    extérieure de l'État) s'établit à 135 milliards de dinars fin 2024, soit
+    84,9 % du PIB, selon les données du ministère des Finances.
+  assessment: "Recorded figure: 135 000 MDT (≈ 84,9 % du PIB). Reference year:
+    2024. Figure detail: stock_mdt_end_2024=135000; percent_of_gdp_2024=84.9;
+    reference_date=2024-12-31; currency=TND. Publisher or attribution: Ministère
+    des Finances (compilé par CEIC ; corroboré par EBRD et Banque mondiale).
+    Boundary: Ceci est l'agrégat TOTAL (intérieur + extérieur) — la série World
+    Bank IDS du dépôt ne couvre que la dette publique extérieure (PPG), soit
+    ~20,8 Mds USD en 2024. La différence est la dette intérieure (≈ 37 % du PIB
+    fin 2024, en hausse rapide). Editorial note: À importer de préférence avec
+    la série 2019-2025 (67,8 % → 84,9 %) pour le sparkline de la bande
+    nationale. Service de la dette publique 2025 : 24 441 MDT ≈ 14 % du PIB
+    (Inkyfada, données MF) — candidat séparé si le strip veut un flux et pas
+    seulement un stock."
+  confidence: B
+  basis: documented
+  verification: needs-primary-source
+  reasoning: "Le chiffre nominal (135 Mds TND) et le ratio (84,9 %) viennent de la
+    même source (ministère des Finances) et se recoupent avec le PIB INS 2024 (≈
+    159 Mds TND : 135/159 ≈ 85 %). Trois institutions indépendantes (EBRD,
+    Banque mondiale, CEIC/MF) convergent sur 84,5-84,9 % pour 2024. Le WEO du
+    FMI donne 85,7 % avec ses propres définitions ; l'écart est un écart de
+    définition, pas une contradiction."
+  falsifiable_by: Le document primaire du ministère des Finances (rapport
+    d'exécution du budget 2024 ou tableau de bord de la dette publique) — si
+    l'encours fin 2024 qui y figure n'est pas ~135 Mds TND, ce candidat tombe.
+  disputes:
+    - claim: 84,9 % du PIB (2024)
+      held_by: Ministère des Finances / CEIC ; EBRD ; APA News ; Banque mondiale (84,6
+        % en 2023)
+      status: adopted
+      assessment: "niveau exact du ratio 2024 (définitions différentes). Le chiffre
+        nominal (135 Mds TND) et le ratio (84,9 %) viennent de la même source
+        (ministère des Finances) et se recoupent avec le PIB INS 2024 (≈ 159 Mds
+        TND : 135/159 ≈ 85 %). Trois institutions indépendantes (EBRD, Banque
+        mondiale, CEIC/MF) convergent sur 84,5-84,9 % pour 2024. Le WEO du FMI
+        donne 85,7 % avec ses propres définitions ; l'écart est un écart de
+        définition, pas une contradiction."
+      source: ceic-tunisia-gov-debt
+    - claim: 85,7 % du PIB (2024)
+      held_by: IMF World Economic Outlook (via Statbase)
+      status: open
+      assessment: "niveau exact du ratio 2024 (définitions différentes). Le chiffre
+        nominal (135 Mds TND) et le ratio (84,9 %) viennent de la même source
+        (ministère des Finances) et se recoupent avec le PIB INS 2024 (≈ 159 Mds
+        TND : 135/159 ≈ 85 %). Trois institutions indépendantes (EBRD, Banque
+        mondiale, CEIC/MF) convergent sur 84,5-84,9 % pour 2024. Le WEO du FMI
+        donne 85,7 % avec ses propres définitions ; l'écart est un écart de
+        définition, pas une contradiction."
+      source: statbase-imf-weo-tunisia
+    - claim: 79,8 % (2024) / 82,9 % (2025)
+      held_by: Trading Economics, série « Government Debt to GDP » attribuée à la BCT
+        — périmètre probablement plus étroit
+      status: open
+      assessment: "niveau exact du ratio 2024 (définitions différentes). Le chiffre
+        nominal (135 Mds TND) et le ratio (84,9 %) viennent de la même source
+        (ministère des Finances) et se recoupent avec le PIB INS 2024 (≈ 159 Mds
+        TND : 135/159 ≈ 85 %). Trois institutions indépendantes (EBRD, Banque
+        mondiale, CEIC/MF) convergent sur 84,5-84,9 % pour 2024. Le WEO du FMI
+        donne 85,7 % avec ses propres définitions ; l'écart est un écart de
+        définition, pas une contradiction."
+      source: bct-rapport-dette-exterieure-2024
+  notes:
+    - Ceci est l'agrégat TOTAL (intérieur + extérieur) — la série World Bank IDS
+      du dépôt ne couvre que la dette publique extérieure (PPG), soit ~20,8 Mds
+      USD en 2024. La différence est la dette intérieure (≈ 37 % du PIB fin
+      2024, en hausse rapide).
+    - "À importer de préférence avec la série 2019-2025 (67,8 % → 84,9 %) pour
+      le sparkline de la bande nationale. Service de la dette publique 2025 : 24
+      441 MDT ≈ 14 % du PIB (Inkyfada, données MF) — candidat séparé si le strip
+      veut un flux et pas seulement un stock."
+  sources:
+    - ilboursa-dette-publique-135md-2024
+    - ceic-tunisia-gov-debt
+    - ebrd-tunisia-strategy-2026-31
+    - wmc-banque-mondiale-eviction-2025
+    - apanews-dette-849-2024
+    - statbase-imf-weo-tunisia
+- id: agg-public-debt-total-2025
+  entity: null
+  claim: L'encours total de la dette publique s'établit à 141 665,4 millions de
+    dinars fin 2025, dont ~86,2 Mds de dette intérieure (60,8 %) et ~55,5 Mds de
+    dette extérieure (39,2 %) ; le ratio tombe à ~80,5 % du PIB selon l'EBRD et
+    le ministère des Finances.
+  assessment: "Recorded figure: 141 665 MDT (≈ 80,5 % du PIB). Reference year:
+    2025. Figure detail: stock_mdt_end_2025=141665; domestic_share_pct=60.8;
+    external_share_pct=39.2; percent_of_gdp_2025=80.5;
+    reference_date=2025-12-31; currency=TND. Publisher or attribution: BCT
+    (balance des paiements) et ministère des Finances, compilés par Inkyfada ;
+    managers.tn ; EBRD. Boundary: Premier recul du ratio depuis 2019 — dû à la
+    croissance nominale et au désendettement extérieur net (remboursements >
+    tirages), pas à une baisse de la dette intérieure, qui a doublé en quatre
+    ans."
+  confidence: B
+  basis: documented
+  verification: needs-primary-source
+  reasoning: Deux compilations indépendantes aboutissent à 141,7 Mds TND ; la
+    première bascule structurelle (dette intérieure > extérieure) est confirmée
+    par l'EBRD (« shift in composition towards domestic debt ») et la Banque
+    mondiale. Le 145 Mds d'ilboursa est conservé comme dispute, pas écarté.
+  falsifiable_by: Le rapport annuel 2025 de la BCT ou le tableau de bord de la
+    dette du MF — si l'encours fin 2025 n'y est pas compris entre ~141 et ~145
+    Mds TND selon la définition, la version adoptée doit changer.
+  disputes:
+    - claim: 141 665,4 MTND
+      held_by: managers.tn ; somme BCT d'Inkyfada (86 178 + 55 487)
+      status: adopted
+      assessment: niveau nominal fin 2025. Deux compilations indépendantes aboutissent
+        à 141,7 Mds TND ; la première bascule structurelle (dette intérieure >
+        extérieure) est confirmée par l'EBRD (« shift in composition towards
+        domestic debt ») et la Banque mondiale. Le 145 Mds d'ilboursa est
+        conservé comme dispute, pas écarté.
+      source: managers-dette-141665-fin2025
+    - claim: 145 Mds TND (84 % du PIB)
+      held_by: ilboursa, sur la base des annexes de la LF 2026 — périmètre plus large
+        à confirmer (facilités BCT ? garanties ?)
+      status: open
+      assessment: niveau nominal fin 2025. Deux compilations indépendantes aboutissent
+        à 141,7 Mds TND ; la première bascule structurelle (dette intérieure >
+        extérieure) est confirmée par l'EBRD (« shift in composition towards
+        domestic debt ») et la Banque mondiale. Le 145 Mds d'ilboursa est
+        conservé comme dispute, pas écarté.
+      source: ilboursa-echeances-2026
+  notes:
+    - Premier recul du ratio depuis 2019 — dû à la croissance nominale et au
+      désendettement extérieur net (remboursements > tirages), pas à une baisse
+      de la dette intérieure, qui a doublé en quatre ans.
+  sources:
+    - managers-dette-141665-fin2025
+    - inkyfada-dette-silencieuse-2026
+    - ebrd-tunisia-strategy-2026-31
+    - ilboursa-echeances-2026
+- id: agg-public-debt-external-2024
+  entity: null
+  claim: L'encours de la dette extérieure à long terme de la Tunisie atteint 75
+    966 MD fin 2024, soit 47,5 % du PIB (54,6 % en 2023), selon le rapport
+    statistique de la dette extérieure 2024 de la BCT ; l'État (administration
+    publique) en porte 82,3 %.
+  assessment: "Recorded figure: 75 966 MDT (47,5 % du PIB). Reference year: 2024.
+    Figure detail: stock_mdt_end_2024=75966; percent_of_gdp_2024=47.5;
+    administration_publique_share_pct=82.3; reference_date=2024-12-31;
+    currency=TND. Publisher or attribution: Banque Centrale de Tunisie.
+    Boundary: Dette EXTÉRIEURE uniquement (publique + autres agents économiques
+    LT) — la moitié extérieure de l'agrégat total. C'est la famille que le
+    bundle IDS du dépôt mesure par créancier (~20,8 Mds USD en 2024). La dette
+    intérieure dépasse l'extérieure depuis 2024 — première fois depuis
+    l'indépendance (53,8 % / 46,2 % du total)."
+  confidence: B
+  basis: documented
+  verification: needs-primary-source
+  reasoning: Le chiffre vient du rapport publié de la BCT, rapporté le même jour
+    par La Presse et Universnews et détaillé par African Manager ; les trois
+    recoupent le même encours et le même ratio (47,5 %). La baisse (-5,8 Mds TND
+    sur un an) est cohérente avec le désendettement extérieur net documenté
+    (remboursements > tirages).
+  falsifiable_by: Le PDF du rapport statistique de la dette extérieure 2024 sur
+    bct.gov.tn — si l'encours fin 2024 n'y est pas 75 966 MD, le candidat tombe.
+  disputes:
+    - claim: 20 816 M USD de stock PPG externe en 2024 (IDS, par créancier)
+      held_by: src/generated/world.json (World Bank IDS, retrieved 2026-08-02)
+      status: open
+      assessment: conversion USD (IDS) vs TND (BCT). Le chiffre vient du rapport
+        publié de la BCT, rapporté le même jour par La Presse et Universnews et
+        détaillé par African Manager ; les trois recoupent le même encours et le
+        même ratio (47,5 %). La baisse (-5,8 Mds TND sur un an) est cohérente
+        avec le désendettement extérieur net documenté (remboursements >
+        tirages).
+    - claim: 75 966 MDT (~24-25 Mds USD au taux 2024) fin 2024 (BCT)
+      held_by: BCT — périmètre plus large que le PPG IDS (inclut d'autres agents)
+      status: adopted
+      assessment: conversion USD (IDS) vs TND (BCT). Le chiffre vient du rapport
+        publié de la BCT, rapporté le même jour par La Presse et Universnews et
+        détaillé par African Manager ; les trois recoupent le même encours et le
+        même ratio (47,5 %). La baisse (-5,8 Mds TND sur un an) est cohérente
+        avec le désendettement extérieur net documenté (remboursements >
+        tirages).
+      source: bct-rapport-dette-exterieure-2024
+  notes:
+    - Dette EXTÉRIEURE uniquement (publique + autres agents économiques LT) — la
+      moitié extérieure de l'agrégat total. C'est la famille que le bundle IDS
+      du dépôt mesure par créancier (~20,8 Mds USD en 2024). La dette intérieure
+      dépasse l'extérieure depuis 2024 — première fois depuis l'indépendance
+      (53,8 % / 46,2 % du total).
+  sources:
+    - bct-rapport-dette-exterieure-2024
+    - africanmanager-dette-exterieure-2024-detail
+- id: agg-tourism-receipts-2024
+  entity: null
+  claim: Les recettes touristiques en devises de la Tunisie atteignent 7 495 MDT
+    en 2024 (+8,3 %), contre 6 921 MDT en 2023 et 6 647 MDT en 2019, selon les
+    indicateurs monétaires et financiers de la BCT.
+  assessment: "Recorded figure: 7 495 MDT (recettes touristiques en devises).
+    Reference year: 2024. Figure detail: receipts_mdt_2024=7495;
+    receipts_mdt_2023=6921; receipts_mdt_2019=6647; change_pct_2024=8.3;
+    reference_date=2024-12-31; currency=TND. Publisher or attribution: Banque
+    Centrale de Tunisie (indicateurs monétaires et financiers) ; reprise
+    ONTT/min. du Tourisme. Boundary: Deux livres existent pour la même réalité :
+    la BCT compte les recettes en devises (balance des paiements, 7 495 MDT),
+    l'INS compte la dépense des visiteurs non-résidents dans le Compte satellite
+    du tourisme (11 817,6 MDT en 2024 — champ plus large : dépenses sur place,
+    pas seulement les recettes en devises). Ne jamais additionner ni moyenner
+    les deux."
+  confidence: B
+  basis: documented
+  verification: needs-primary-source
+  reasoning: Deux sources officielles indépendantes rapportent des chiffres
+    proches dans la presse (7,5 Mds TND) ; le chiffre BCT est celui de la bande
+    nationale car il mesure un flux de devises, comparable au solde courant.
+  falsifiable_by: Le tableau des indicateurs monétaires de la BCT (bct.gov.tn) —
+    si les recettes touristiques 2024 n'y figurent pas à ~7 495 MDT, le candidat
+    tombe.
+  disputes:
+    - claim: 7 495 MDT (recettes en devises, balance des paiements)
+      held_by: BCT
+      status: adopted
+      assessment: recettes 2024 — BCT vs INS. Deux sources officielles indépendantes
+        rapportent des chiffres proches dans la presse (7,5 Mds TND) ; le
+        chiffre BCT est celui de la bande nationale car il mesure un flux de
+        devises, comparable au solde courant.
+      source: bct-rapport-dette-exterieure-2024
+    - claim: 11 817,6 MDT (dépenses des visiteurs non-résidents, comptabilité
+        nationale)
+      held_by: INS — Compte satellite du tourisme 2023-2024
+      status: open
+      assessment: recettes 2024 — BCT vs INS. Deux sources officielles indépendantes
+        rapportent des chiffres proches dans la presse (7,5 Mds TND) ; le
+        chiffre BCT est celui de la bande nationale car il mesure un flux de
+        devises, comparable au solde courant.
+      source: ins-cst-tourisme-2023-2024
+  notes:
+    - "Deux livres existent pour la même réalité : la BCT compte les recettes en
+      devises (balance des paiements, 7 495 MDT), l'INS compte la dépense des
+      visiteurs non-résidents dans le Compte satellite du tourisme (11 817,6 MDT
+      en 2024 — champ plus large : dépenses sur place, pas seulement les
+      recettes en devises). Ne jamais additionner ni moyenner les deux."
+  sources:
+    - tunisienumerique-tourisme-nationalites-2024
+    - africanmanager-tourisme-revenus-2024
+    - ins-cst-tourisme-2023-2024
+- id: agg-tourism-gdp-2024
+  entity: null
+  claim: Selon le Compte satellite du tourisme 2023-2024 de l'INS, le PIB direct
+    de l'industrie touristique s'établit à 8 072,0 MDT en 2024 (5,1 % du PIB
+    national), la VAB directe à 7 844,5 MDT (5,2 %), et les dépenses
+    touristiques intérieures à 16 122,6 MDT dont 73,3 % imputées aux visiteurs
+    non-résidents.
+  assessment: "Recorded figure: PIB direct du tourisme 8 072,0 MDT (5,1 % du PIB).
+    Reference year: 2024. Figure detail: tourism_direct_gdp_mdt_2024=8072;
+    tourism_direct_gdp_pct=5.1; tourism_direct_gva_mdt_2024=7844.5;
+    internal_tourism_expenditure_mdt_2024=16122.6; non_resident_share_pct=73.3;
+    reference_date=2024; currency=TND. Publisher or attribution: Institut
+    National de la Statistique (INS). Boundary: Contribution DIRECTE
+    (comptabilité nationale, norme internationale du compte satellite) — la
+    contribution totale du tourisme (directe + indirecte), souvent citée autour
+    de 14-15 % du PIB par la profession, n'est pas dans ce chiffre et n'a pas
+    été sourcée ici."
+  confidence: A
+  basis: documented
+  verification: verified
+  reasoning: "Publication primaire lue sur ins.tn (page du CST 2023-2024) : les
+    trois agrégats (DTI, VABDT, PIBDT) sont extraits textuellement de la
+    synthèse."
+  falsifiable_by: Le PDF du CST 2023-2024 sur ins.tn — si le PIBDT n'y est pas 8
+    072,0 MDT, le candidat tombe.
+  disputes: []
+  notes:
+    - Contribution DIRECTE (comptabilité nationale, norme internationale du
+      compte satellite) — la contribution totale du tourisme (directe +
+      indirecte), souvent citée autour de 14-15 % du PIB par la profession,
+      n'est pas dans ce chiffre et n'a pas été sourcée ici.
+  sources:
+    - ins-cst-tourisme-2023-2024
+- id: agg-tourism-arrivals-2024
+  entity: null
+  claim: "La Tunisie établit en 2024 un record de fréquentation : plus de 10
+    millions de visiteurs, et ~10,2 millions d'entrées de non-résidents
+    (estimations ONTT), au-delà du record de 2019 (~9,4 millions). Les Algériens
+    (3,5 M), les Libyens (2,1 M) et les Français (1,08 M) dominent les entrées."
+  assessment: "Recorded figure: ≈ 10,2 millions d'entrées de non-résidents (record
+    absolu). Reference year: 2024. Figure detail: entries_non_resident_2024=~10
+    200 000; entries_2019=~9 400 000 (précédent record);
+    top_nationalities_2024=Algériens 3 509 700 ; Libyens 2 111 000 ; Français 1
+    081 600; reference_date=2024-12-31. Boundary: Définition comptable instable
+    selon la source : « entrées de non-résidents » (10,2 M, Destination Tunisie)
+    vs « arrivées de touristes » (~9,7 M, African Manager citant Travel and Tour
+    World). Les deux circulent pour 2024 ; la liste par nationalité publiée par
+    Tunisie Numérique ne somme qu'à ~8,9 M (catégories manquantes). Adopter 10,2
+    M uniquement avec l'attribution ONTT."
+  confidence: C
+  basis: reported
+  verification: needs-primary-source
+  attributed_to: ONTT / ministère du Tourisme (estimations annoncées par le
+    ministre Sofiane Tekaya fin novembre 2024 et reprises par African Manager,
+    Tunisie Numérique, Destination Tunisie)
+  reasoning: Une seule institution (ONTT/ministère) produit le chiffre officiel ;
+    deux définitions différentes circulent dans des outlets de niveau 4. D'où C
+    et non B, avec attribution explicite.
+  falsifiable_by: Le bulletin statistique du tourisme de l'ONTT pour 2024 — la
+    définition retenue (entrées de non-résidents vs arrivées) et le total publié
+    tranchent.
+  disputes:
+    - claim: ≈ 10,2 M d'entrées de non-résidents
+      held_by: ONTT (via Destination Tunisie ; ministère du Tourisme)
+      status: adopted
+      assessment: nombre de visiteurs 2024. Une seule institution (ONTT/ministère)
+        produit le chiffre officiel ; deux définitions différentes circulent
+        dans des outlets de niveau 4. D'où C et non B, avec attribution
+        explicite.
+      source: destinationtunisie-aeroports-2024
+    - claim: ≈ 9,7 M d'arrivées de touristes
+      held_by: Travel and Tour World (via African Manager)
+      status: open
+      assessment: nombre de visiteurs 2024. Une seule institution (ONTT/ministère)
+        produit le chiffre officiel ; deux définitions différentes circulent
+        dans des outlets de niveau 4. D'où C et non B, avec attribution
+        explicite.
+      source: africanmanager-tourisme-revenus-2024
+  notes:
+    - "Définition comptable instable selon la source : « entrées de
+      non-résidents » (10,2 M, Destination Tunisie) vs « arrivées de touristes »
+      (~9,7 M, African Manager citant Travel and Tour World). Les deux circulent
+      pour 2024 ; la liste par nationalité publiée par Tunisie Numérique ne
+      somme qu'à ~8,9 M (catégories manquantes). Adopter 10,2 M uniquement avec
+      l'attribution ONTT."
+  sources:
+    - tunisienumerique-tourisme-nationalites-2024
+    - africanmanager-tourisme-revenus-2024
+    - destinationtunisie-aeroports-2024
+- id: cc-france-largest-creditor
+  entity: france
+  claim: La France est le premier créancier de la Tunisie / « détient » (ou
+    possède) la dette tunisienne, et la dette est l'instrument de la domination
+    française sur la Tunisie.
+  assessment: >-
+    (a) Données IDS 2024 du dépôt (stock de dette publique extérieure PPG, par
+    créancier, USD) : la France détient 997,4 M USD — 4,8 % du stock total de 20
+    816 M USD. L'Allemagne (1 073 M, 5,2 %) la devance parmi les bilatéraux ;
+    les créanciers multilatéraux détiennent à eux seuls 15 246 M USD (73,2 %) :
+    Banque mondiale-IBRD 4 327 M, obligataires 2 484 M, BAD 2 398 M, BEI 1 457
+    M, UE 1 143 M. La « dette française » est donc, au mieux, un vingtième de la
+    dette publique extérieure — et la majorité absolue est détenue par des
+    institutions multilatérales et le marché. (b) Côté français (Trésor public,
+    fin 2022) : les créances de l'État français, de l'AFD, de Bpifrance AE et de
+    Natixis sur la Tunisie totalisent 1 128 M EUR — sixième position africaine,
+    derrière le Maroc (3 106 M EUR), l'Égypte et la Côte d'Ivoire. (c) La part
+    de vérité historique : la dette des années 1860 a bien servi de prétexte à
+    l'établissement du protectorat (1881) — c'est un fait documenté, mais il
+    concerne la Tunisie pré-républicaine, pas la structure actuelle de la dette,
+    qui depuis 2024 est majoritairement INTÉRIEURE.
+
+
+    Le récit historique (CADTM/Orient XXI) est lui-même documenté et ne doit pas
+    être importé en D : c'est le transfert du récit au présent (« la France
+    détient la dette tunisienne aujourd'hui ») qui est non-étayé. La distinction
+    (période historique vs stock actuel) doit être visible sur l'étagère.
+  confidence: D
+  basis: unsubstantiated
+  verification: disputed
+  attributed_to: Discours souverainiste et posts de réseaux sociaux (non
+    attribuables à un auteur unique) ; le récit historique qui l'alimente est
+    documenté par CADTM/Orient XXI pour la période 1863-1881 ; la presse
+    tunisienne le discute publiquement (La Presse, « Pas de diktats étrangers »,
+    mai 2024, qui répond à des affirmations sur la part française de la dette).
+  notes:
+    - "Where it appears: lapresse-fb-pas-de-diktats;
+      orientxxi-dette-conquete-tunisie"
+  sources:
+    - lapresse-fb-pas-de-diktats
+    - orientxxi-dette-conquete-tunisie
+    - economiste-maghrebin-dette-france-2024
+- id: cc-imf-debt-trap
+  entity: imf
+  claim: Le programme du FMI est un piège à dette / les « diktats » du FMI ne
+    mènent qu'à davantage d'appauvrissement, et l'endettement envers le FMI
+    domine la dette tunisienne.
+  assessment: >-
+    (a) Le programme n'a jamais existé en pratique : l'accord au niveau des
+    services d'octobre 2022 (1,9 Md USD, EFF) n'a jamais été présenté au conseil
+    d'administration du FMI et aucune tranche n'a été décaissée. Il ne peut donc
+    pas avoir « piégé » la dette : l'encours FMI a au contraire reculé (5,3 Mds
+    TND fin 2024, soit ~7 % de l'encours extérieur LT de 75 966 MDT — BCT), et
+    le FMI ne figure même pas parmi les créanciers de la série IDS du dépôt. (b)
+    La dette a augmenté PENDANT que le programme était gelé : de 84,6 % du PIB
+    (2023, note économique Banque mondiale) à 84,9 % (2024, données MF/CEIC),
+    par emprunt intérieur — crédit bancaire et avances directes de la BCT (lois
+    2024-10 et LF 2025/2026 : 7 + 7 + 11 Mds TND). La séquence observée
+    contredit la thèse « c'est le FMI qui endette » : l'endettement marginal est
+    domestique. (c) À l'échelle du stock, le programme de 1,9 Md USD
+    représentait ~9 % du stock de dette publique extérieure PPG (20,8 Mds USD,
+    IDS 2024) et ~4 % de la dette publique totale (135 Mds TND) — un ordre de
+    grandeur aux antipodes d'une domination.
+
+
+    Deux affirmations distinctes sont à garder séparées sur l'étagère : (i) la
+    déclaration du président existe (fait documenté sur le discours) ; (ii) la
+    thèse selon laquelle le programme FMI est un piège à dette pour la Tunisie
+    (non étayée par les données, D). Une partie de la thèse générale « la dette
+    est devenue insoutenable » est en revanche un constat partagé (FMI, Banque
+    mondiale, EBRD) — c'est la causalité attribuée au FMI qui est contestée.
+  confidence: D
+  basis: unsubstantiated
+  verification: disputed
+  attributed_to: "Le président de la République Kaïs Saïed, déclaration du 6 avril
+    2023 à Monastir : « En ce qui concerne le FMI, les diktats provenant de
+    l'étranger et qui ne mènent qu'à davantage d'appauvrissement sont
+    inacceptables » — reprise par AFP/Reuters (L'Orient-Le Jour), Agence Ecofin,
+    Anadolu, Kapitalis. La déclaration elle-même est documentée ; la thèse
+    causale (le programme du FMI = piège à dette) est une appréciation
+    politique."
+  notes:
+    - "Where it appears: lorientlejour-saied-diktats-fmi-2023;
+      agenceecofin-saied-fmi-2023"
+  sources:
+    - lorientlejour-saied-diktats-fmi-2023
+    - agenceecofin-saied-fmi-2023
+    - africanmanager-dette-exterieure-2024-detail
+- id: cc-turkey-fta-kills-industry
+  entity: turkey
+  claim: "L'accord de libre-échange tuniso-turc (signé 2004, en vigueur 2005) a
+    détruit l'industrie tunisienne : il existerait « un lien étroit entre
+    l'entrée en vigueur de cet accord et la perte de 250 mille emplois entre
+    2005 et 2015 dans le secteur de l'industrie, notamment dans le
+    textile/habillement »."
+  assessment: >-
+    (a) Poids mesuré de la Turquie (Comtrade, retours propres tunisiens, dépôt)
+    : en 2024, les importations turques font 1 187,5 M USD — 4,7 % des
+    importations totales (25 057,7 M USD) ; les exportations vers la Turquie
+    272,2 M USD (1,5 %). Le déficit bilatéral (-915 M USD) est réel mais ne
+    représente que 14 % du déficit commercial total. Un flux de 4,7 % des
+    importations ne peut pas expliquer seul la destruction d'un secteur
+    employeur majeur. (b) Le chiffre de 250 000 emplois est avancé par l'OTIC
+    sans aucune source ni méthode ; aucune série d'emploi sectoriel n'est citée.
+    La causalité est d'autant plus fragile que janvier 2005 est aussi la fin des
+    quotas de l'Accord multifibres (OMC), le choc structurel le plus souvent
+    cité pour l'emploi textile en Tunisie — variable confondante que la thèse
+    OTIC ignore. (c) La part vraie : l'accord a creusé un déficit commercial
+    persistant (le ministère du Commerce parle lui-même d'une « aggravation
+    inattendue du déficit commercial », amendement de décembre 2023
+    réassujettissant des produits turcs à 27-37,5 % de droits). Cette partie de
+    la revendication est étayée (reported, C) ; la partie « 250 000 emplois
+    perdus à cause de la Turquie » ne l'est pas (D).
+
+
+    Variante UE de la même famille (« le libre-échange avec l'UE tue l'industrie
+    ») : elle circule dans le discours anti-ALECA et mérite sa propre fiche,
+    mais aucune instance citable n'a été recueillie lors de cette passe — piste
+    à sourcer (tier 5), pas un record. Mesure UE pour l'étagère : l'UE = 74,3 %
+    des exportations et 45,1 % des importations tunisiennes (2024, Comtrade) —
+    la dépendance commerciale à l'UE, elle, est un fait mesuré.
+  confidence: D
+  basis: unsubstantiated
+  verification: disputed
+  attributed_to: "Organisation Tunisienne pour Informer le Consommateur (OTIC),
+    communiqué du 18 septembre 2017 (repris par Webmanagercenter). Variante
+    chiffrée extrême : l'économiste Mourad Hattab, mai 2017 — « si elle arrête
+    d'importer de la Turquie, la Tunisie pourrait rembourser 53 % de son service
+    de dette extérieure »."
+  notes:
+    - "Where it appears: wmc-otic-gel-accord-turquie-2017;
+      wmc-hattab-turquie-2017"
+  sources:
+    - wmc-otic-gel-accord-turquie-2017
+    - wmc-hattab-turquie-2017
+    - kapitalis-accord-turquie-2023
+
+# --- merged 2026-08-26 (ministry/ATB/contracts pass)
+- id: contested-algerie-frontiere-litige-2026
+  entity: algeria
+  claim: >-
+   Circulant en août 2026 dans une série de tribunes Kapitalis : la Tunisie
+   aurait renoncé sous contrainte à des revendications territoriales sur des
+   territoires annexés à l'Algérie à l'époque coloniale (« coup de poignard »,
+   accord de 1970 obtenu « sur le plan juridique mais pas sur le plan
+   légitimité »), et l'État algérien pomperait le pétrole du bassin d'El Borma
+   par des puits obliques — le plaidateur qualifiant l'Algérie de
+   « prédateur ».
+  notes:
+    - >-
+      Circulating in an August 2026 Kapitalis tribune series: that Tunisia
+      renounced colonial-era territorial claims under duress (the 1970
+      settlement "legal but not legitimate"), and that the Algerian state
+      slant-drills into Tunisia's El Borma oil basin - the basin's alleged
+      "predator".
+
+  assessment: >-
+   Contesté et non étayé : les deux volets sont portés par des tribunes signées
+   (Fékih 06/08/2026 ; réplique Cherfouh 09/08/2026), aucune action d'État
+   documentée. La réplique invoque l'uti possidetis juris (déclaration du Caire,
+   OUA 1964) et la Convention de bornage du 6 janvier 1970 comme règlement
+   définitif, et qualifie le « puits oblique » de légende urbaine contre un
+   réservoir continu géré conjointement par Sitep et Sonatrach ; TransMed
+   rapporte à la Tunisie des redevances de transit et des contrats long terme
+   Sonatrach-STEG. Fait daté dans l'échange : lettre de remerciement de la STEG
+   à Sonelgaz signée Fayçal Trifa le 4 août 2026. Divergence interne enregistrée
+   sans arbitrage : Fékih écrit « accord du 20 mars 1970 », Cherfouh « Convention
+   de bornage du 6 janvier 1970 ». Aucun volet ne corrobore une revendication
+   étatique en cours.
+  confidence: D
+  basis: unsubstantiated
+  verification: needs-primary-source
+  attributed_to: >-
+   Tribune authors via Kapitalis (A. Fékih 06/08/2026 ; H. Cherfouh 09/08/2026),
+   both private citizens — engineer and physician — not officials.
+  falsifiable_by: >-
+   Any official Tunisian or Algerian state document reopening the border file,
+   or a technical study of El Borma well paths by ETAP/Sonatrach.
+  disputes:
+    - claim: >-
+        Date of the 1970 border-settlement instrument: 20 March 1970 versus
+        6 January 1970.
+      held_by: Fékih tribune versus Cherfouh rebuttal (both Kapitalis)
+      assessment: >-
+        Both are tribune printings; the instrument itself (convention de bornage)
+        is not yet cited to a registry text in this exchange. Open until the
+        convention is pulled.
+      status: open
+  sources:
+    - kapitalis-algerie-litige-2026

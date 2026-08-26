@@ -1,0 +1,16 @@
+<svg width="1024" height="1024" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Deep Tunisia mark — tripod">
+  <!-- The app / favicon mark (MenuBar.svelte + static/favicon.svg), exported
+       standalone. A vertical stem with three nodes: the gold apex (head of
+       state / top of the command tree) and two layer-coloured base nodes.
+       Colours resolved from the app tokens in dark theme:
+         accent #ddb049 · layer-security #d17f6f · layer-economic #5fab7c. -->
+  <g stroke="#ddb049" stroke-width="1.7" fill="none" stroke-linecap="round">
+    <path d="M16 6.5v6" />
+    <path d="M8.5 26v-7" />
+    <path d="M23.5 26v-7" />
+    <path d="M8.5 19h15" />
+  </g>
+  <circle cx="16" cy="5" r="2.7" fill="#ddb049" />
+  <circle cx="8.5" cy="26.5" r="2.3" fill="#d17f6f" />
+  <circle cx="23.5" cy="26.5" r="2.3" fill="#5fab7c" />
+</svg>

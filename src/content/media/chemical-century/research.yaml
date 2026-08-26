@@ -1,0 +1,17 @@
+researcher: "DeepTunisia research team"
+research_period: "2026-07-01 to 2026-08-14"
+datasets_consulted:
+  - data/contrib/gct-industrial-timeline-2026-08-14.yaml
+  - data/contrib/gabes-pollution-history-2026-08-14.yaml
+  - data/contrib/gabes-air-pollution-2026-08-14.yaml
+records_created:
+  - gct-industrial-timeline-2026-08-14.yaml
+  - gabes-pollution-history-2026-08-14.yaml
+  - gabes-air-pollution-2026-08-14.yaml
+sources_consulted_count: 50
+primary_sources_count: 12
+entities_identified: 30
+claims_extracted: 66
+disputed_claims: 2
+unresolved_claims: 5
+documented_negatives: 8

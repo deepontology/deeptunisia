@@ -1,0 +1,556 @@
+# Timeline events — the spine data + per-scene dates.
+# Extracted from deeptunisia-gct-gabes-video-script-v6.html
+# Spine markers (147–161) + per-scene TL lists (269–438)
+events:
+  # ── S2 — The discovery and the railway ──────────────────────────
+  - id: T001
+    date: "1885-04"
+    end_date: null
+    description:
+      en: "Philippe Thomas discovers phosphate at Jebel Thelja, above Metlaoui"
+    source: gct-history-official
+    entity: philippe-thomas
+    type: discovery
+    section: S2
+
+  - id: T002
+    date: "1897-05-22"
+    end_date: null
+    description:
+      en: "CPGCFG — Compagnie des Phosphates et des Chemins de Fer de Gafsa — granted exclusive concession (convention 15-08-1896; beylic decree 22-05-1897), backed by Mirabaud–Hottinger banks"
+    source: wikipedia-fr-cpcg
+    entity: cpgcfg
+    type: founding
+    section: S2
+
+  - id: T003
+    date: "1899"
+    end_date: null
+    description:
+      en: "Railway Sfax–Gafsa–Métlaoui opens, 242.2 km"
+    source: wikipedia-fr-cpcg
+    entity: cpgcfg
+    type: construction
+    section: S2
+
+  - id: T004
+    date: "1916"
+    end_date: null
+    description:
+      en: "Branch railway to Gabès opens, 83.1 km"
+    source: wikipedia-fr-cpcg
+    entity: cpgcfg
+    type: construction
+    section: S2
+
+  - id: T005
+    date: "1925"
+    end_date: null
+    description:
+      en: "Le Danois surveys the Gulf of Gabès — first scientific survey of the southern Mediterranean fishing ground"
+    source: ledanois-1925
+    entity: null
+    type: measurement
+    section: S2
+
+  # ── S3 — The first factory and the state ────────────────────────
+  - id: T006
+    date: "1947"
+    end_date: null
+    description:
+      en: "SIAPE — Société Industrielle d'Acide Phosphorique et d'Engrais — constituted at Sfax; first president François Breynert"
+    source: gct-history-official
+    entity: siape
+    type: founding
+    section: S3
+
+  - id: T007
+    date: "1952"
+    end_date: null
+    description:
+      en: "TSP (triple superphosphate) production starts at Sfax, 330,000 t/yr"
+    source: gct-usines-official
+    entity: siape
+    type: production
+    section: S3
+
+  - id: T008
+    date: "1956"
+    end_date: "1976"
+    description:
+      en: "Nationalisations: CIPHOS fully Tunisian 1962, SNCFT absorbs concession railway 1967, pieces merged 1969, CPG consolidated January 1976"
+    source: gct-history-archive-2012
+    entity: cpg
+    type: political
+    section: S3
+
+  # ── Gulf surveys continued (S2 TL) ──────────────────────────────
+  - id: T009
+    date: "1965"
+    end_date: null
+    description:
+      en: "Calypso (Cousteau) surveys the Gulf of Gabès (De Gaillande 1970)"
+    source: ledanois-degaillande
+    entity: null
+    type: measurement
+    section: S2
+
+  - id: T010
+    date: "1971"
+    end_date: null
+    description:
+      en: "Ktari-Chakroun & Azouz publish the last great survey of the Gulf before the factory (INSTM Bull.)"
+    source: ktari-azouz-1971
+    entity: null
+    type: measurement
+    section: S2
+
+  # ── S4 — The complexes go in ────────────────────────────────────
+  - id: T011
+    date: "1972"
+    end_date: null
+    description:
+      en: "ICM — Industries Chimiques Maghrébines — phosphoric acid plant opens at Ghannouch industrial zone, Gabès; 470,000 t/yr merchant acid. Both streams start: grey gypsum to the sea, light-grey plume upward. Built by SPIE Batignolles"
+    source: gct-usines-official
+    entity: icm
+    type: founding
+    section: S4
+
+  - id: T012
+    date: "1974"
+    end_date: null
+    description:
+      en: "ICM II — second phosphoric acid line at Gabès"
+    source: gct-history-official
+    entity: icm
+    type: construction
+    section: S4
+
+  - id: T013
+    date: "1975"
+    end_date: null
+    description:
+      en: "SAEPA — Société Arabe des Engrais Phosphatés et Azotés — founded; president Ali Boukhris"
+    source: gct-history-official
+    entity: saepa
+    type: founding
+    section: S4
+
+  - id: T014
+    date: "1979"
+    end_date: null
+    description:
+      en: "DAP (SAEPA I) starts production, 650,000 t/yr"
+    source: gct-history-official
+    entity: saepa
+    type: production
+    section: S4
+
+  - id: T015
+    date: "1983"
+    end_date: null
+    description:
+      en: "Ammonitrate (SAEPA II) starts production, 330,000 t/yr; national output passes 5 Mt"
+    source: gct-history-official
+    entity: saepa
+    type: production
+    section: S4
+
+  - id: T016
+    date: "1985"
+    end_date: null
+    description:
+      en: "EG — Engrais de Gabès — DAP line (first PDG Gérard Valier) + ICG — Industries Chimiques de Gafsa — M'dhilla TSP 465,000 t/yr (first PDG Mohamed Mghaieth)"
+    source: gct-history-official
+    entity: eg
+    type: founding
+    section: S4
+
+  - id: T017
+    date: "1988"
+    end_date: null
+    description:
+      en: "Skhira phosphoric acid plant starts, 375,000 t/yr"
+    source: gct-history-official
+    entity: gct
+    type: production
+    section: S4
+
+  # ── S5 — They knew — sea documentation clock ────────────────────
+  - id: T018
+    date: "1976"
+    end_date: null
+    description:
+      en: "INSTOP at Salammbô (today's INSTM) begins six-year marine surveillance of the Gulf — the state's own institute starts measuring"
+    source: darmoul-1988
+    entity: instm
+    type: measurement
+    section: S5
+
+  - id: T019
+    date: "~1977"
+    end_date: "~1978"
+    description:
+      en: "Lethal concentrations of industrial effluent measured in situ at the Gabès outfall (Darmoul & Vitiello)"
+    source: darmoul-vitiello-1980
+    entity: null
+    type: measurement
+    section: S5
+
+  - id: T020
+    date: "1980"
+    end_date: null
+    description:
+      en: "230 hectares of seabed destroyed — dead zone measured at the outfall (Darmoul, Hadj Ali Salem & Vitiello)"
+    source: darmoul-1980
+    entity: null
+    type: environmental
+    section: S5
+
+  - id: T021
+    date: "1988"
+    end_date: null
+    description:
+      en: "Darmoul recommends storing phosphogypsum on land instead of dumping at sea — recommendation never implemented"
+    source: darmoul-1988
+    entity: null
+    type: regulation
+    section: S5
+
+  - id: T022
+    date: "1989"
+    end_date: null
+    description:
+      en: "Water standard NT 106.002 adopted (arrêté 20-07-1989, JORT n°59) — 17 years after the discharges began; violated immediately"
+    source: citet-nt-106002
+    entity: null
+    type: regulation
+    section: S5
+
+  # ── S5 — They knew — air documentation clock ────────────────────
+  - id: T023
+    date: "2003"
+    end_date: null
+    description:
+      en: "Medhioub court expertise — origin of the '95%' air-pollution claim repeated nationwide; never re-measured (chain: Medhioub 2003 → EU study 2017/18 → audit 2025)"
+    source: audit-biblio-p105
+    entity: null
+    type: measurement
+    layer: air
+    section: S5
+
+  - id: T024
+    date: "2010-03"
+    end_date: null
+    description:
+      en: "COMETE-SNC-LAVALIN-IHE air emission campaign — the only one ever run. SO₂ up to 7,805 vs 300 mg/m³ (26×); PM₁₀ 352 vs 5 (70×); HF 20 vs 5 (4×); never repeated"
+    source: comete-snc-lavalin-2010
+    entity: gct
+    type: measurement
+    layer: air
+    section: S5
+
+  - id: T025
+    date: "2010-09-28"
+    end_date: null
+    description:
+      en: "Décret 2010-2519 — air source-emission limits adopted; no measurement campaign followed"
+    source: decret-2010-2519
+    entity: null
+    type: regulation
+    layer: air
+    section: S5
+
+  # ── S5 — Continued sea documentation ────────────────────────────
+  - id: T026
+    date: "1990"
+    end_date: null
+    description:
+      en: "No living plants found on the Gulf floor — seagrass habitat collapsed (Zaouali)"
+    source: zaouali-1993
+    entity: null
+    type: environmental
+    section: S5
+
+  # ── S6 — The merge and the peak ─────────────────────────────────
+  - id: T027
+    date: "1992"
+    end_date: null
+    description:
+      en: "GCT — Groupe Chimique Tunisien — formed from merger of SIAPE and SAEPA"
+    source: gct-history-official
+    entity: gct
+    type: merger
+    section: S6
+
+  - id: T028
+    date: "1994"
+    end_date: null
+    description:
+      en: "Single PDG for both mining and chemical groups: Rafaâ Dekhil (1994–2001)"
+    source: gct-history-official
+    entity: gct
+    type: political
+    section: S6
+
+  - id: T029
+    date: "2000"
+    end_date: null
+    description:
+      en: "All-time peak production: 8.3 Mt phosphate"
+    source: official-open-data-series
+    entity: gct
+    type: production
+    section: S6
+
+  - id: T030
+    date: "2010"
+    end_date: null
+    description:
+      en: "Production 8.131 Mt — often misreported as '8.2 Mt' by rounding"
+    source: official-open-data-series
+    entity: gct
+    type: production
+    section: S6
+
+  - id: T031
+    date: "2011"
+    end_date: null
+    description:
+      en: "Production collapses to 2.28 Mt — the revolution year; two-thirds of output lost in a single year"
+    source: official-open-data-series
+    entity: gct
+    type: political
+    section: S6
+
+  - id: T032
+    date: "2014"
+    end_date: null
+    description:
+      en: "~90% of Posidonia seagrass gone — from ~1,300 km² in 1970 to <150 km² (El Zrelli et al. 2023)"
+    source: elzrelli-2023
+    entity: null
+    type: environmental
+    section: S6
+
+  # ── S7 — Air health and ambient beats ───────────────────────────
+  - id: T033
+    date: "2017"
+    end_date: "2019"
+    description:
+      en: "Ahbil, Sellami & Azri ambient air campaign — suburban Gabès 2017–19: >53% days moderate PM₁₀, >20% unhealthy for sensitive groups, ~3% very unhealthy-to-hazardous"
+    source: ahbil-env-forensics-2026
+    entity: null
+    type: measurement
+    layer: air
+    section: S7
+
+  - id: T034
+    date: "2017-06-29"
+    end_date: null
+    description:
+      en: "Chahed decision on Gulf remediation — never implemented"
+    source: as-v5-S7
+    entity: null
+    type: regulation
+    section: S7
+
+  - id: T035
+    date: "2020"
+    end_date: null
+    description:
+      en: "El Zrelli estimates sea damage at €60M/yr"
+    source: elzrelli-2023
+    entity: null
+    type: measurement
+    section: S7
+
+  - id: T036
+    date: "2021-03-13"
+    end_date: null
+    description:
+      en: "Fire at a GCT unit kills 5 workers; President Saïed announces a cancer-treatment centre"
+    source: webdo-saied-cancer-2021
+    entity: gct
+    type: incident
+    section: S7
+
+  - id: T037
+    date: "2022-01"
+    end_date: "2022-10"
+    description:
+      en: "Kwas et al. 2024 — Gabès University Hospital pneumonia cohort (Jan–Oct 2022): SO₂ significantly associated with non-invasive ventilation, CURB-65, PSI; PM₁₀ with lung abscess and pleural effusion"
+    source: kwas-cureus-2024
+    entity: null
+    type: measurement
+    layer: air
+    section: S7
+
+  - id: T038
+    date: "2023"
+    end_date: null
+    description:
+      en: "El Zrelli estimates sea damage at €105M ≈ 115% of the factories' value added"
+    source: elzrelli-2023
+    entity: null
+    type: measurement
+    section: S7
+
+  # ── S7 — Cancer-pole chain ──────────────────────────────────────
+  - id: T039
+    date: "~2013"
+    end_date: "~2014"
+    description:
+      en: "Offshore 'cancéropôle' project collapses in mutual recriminations"
+    source: webdo-canceropole-2014
+    entity: null
+    type: political
+    section: S7
+
+  - id: T040
+    date: "2025-10-21"
+    end_date: null
+    description:
+      en: "Health Minister Mustapha Ferjani announces a cancer pole at Gabès — 2-year timeline; no incidence statistics published"
+    source: webdo-cancerpole-2025
+    entity: null
+    type: political
+    section: S7
+
+  # ── S8 — The crisis year ────────────────────────────────────────
+  - id: T041
+    date: "2025-03-05"
+    end_date: null
+    description:
+      en: "CMR (restricted cabinet council) chaired by PM Kamel Maddouri, presented by Min. Fatma Thabet Chiboub: ×5 production target (14 Mt), phosphogypsum reclassified as 'value-added product' — hazardous waste becomes product by decree"
+    source: S51
+    entity: gct
+    type: political
+    section: S8
+
+  - id: T042
+    date: "2025-07-24"
+    end_date: null
+    description:
+      en: "Environmental audit published (I2E/IHE; AfDB P-TN-BB0-010): 14,000–15,000 t/day gypsum to the sea; air record — measured once in 2010, no campaign since, no continuous monitoring"
+    source: gct-audit-gabes-2025
+    entity: gct
+    type: measurement
+    section: S8
+
+  - id: T043
+    date: "2025-10-11"
+    end_date: null
+    description:
+      en: "Protesters storm the gates of the GCT complex at Gabès"
+    source: reuters-11-15-10-2025
+    entity: gct
+    type: protest
+    section: S1
+
+  - id: T044
+    date: "2025-10-14"
+    end_date: null
+    description:
+      en: "First asphyxiation wave — children at Collège Chatt Essalem inhale toxic gases from a GCT unit; some lose consciousness. The gas is unnamed in all reports"
+    source: webdo-14-10-2025
+    entity: gct
+    type: incident
+    layer: air
+    section: S8
+
+  - id: T045
+    date: "2025-10-20"
+    end_date: null
+    description:
+      en: "Minister Slah Zouari tells parliament six unfinished environmental projects (≈200 MDT) are 'directly linked to toxic gas emissions' — NOx 98%, SO₂ 75%, NH₃ 84% incomplete"
+    source: webdo-six-projets-2025-10-20
+    entity: gct
+    type: political
+    layer: air
+    section: S8
+
+  - id: T046
+    date: "2025-10-21"
+    end_date: null
+    description:
+      en: "UGTT calls a general strike; Gabès governorate stands still"
+    source: aljazeera-21-10-2025
+    entity: ugtt
+    type: political
+    section: S1
+
+  - id: T047
+    date: "2025-10-22"
+    end_date: null
+    description:
+      en: ">20 schoolchildren hospitalised at Collège Chatt Essalem after gas leak from a GCT unit — the school named for the beach the factory faces. The gas itself: the record does not say"
+    source: webdo-22-10-2025
+    entity: gct
+    type: incident
+    layer: air
+    section: S1
+
+  - id: T048
+    date: "2025-11-18"
+    end_date: null
+    description:
+      en: "Further asphyxiation wave at Collège Chatt Essalem"
+    source: webdo-14-10-2025
+    entity: gct
+    type: incident
+    layer: air
+    section: S8
+
+  # ── S8 — Walk-backs and aftermath ───────────────────────────────
+  - id: T049
+    date: "2026-02-26"
+    end_date: null
+    description:
+      en: "Tribunal rules 'préjudice non établi' against fisher-plaintiffs"
+    source: as-v5-S8
+    entity: null
+    type: political
+    section: S8
+
+  - id: T050
+    date: "2026-04-27"
+    end_date: null
+    description:
+      en: "Minister Fatma Thabet Chiboub dismissed"
+    source: as-v5-S8
+    entity: null
+    type: political
+    section: S8
+
+  - id: T051
+    date: "2026-06-01"
+    end_date: null
+    description:
+      en: "Décret n°79 — Omar Bouzouada appointed to lead both phosphate and chemical groups. Financial guarantees: ≈$120M ITFC + €110M+€7M EBRD + $110M AfDB"
+    source: as-v5-S8
+    entity: gct
+    type: political
+    section: S8
+
+  # ── S10 — The air bottom line ───────────────────────────────────
+  - id: T052
+    date: "2011"
+    end_date: "2025"
+    description:
+      en: "Decade-plus post-revolution: average ~3.2–3.5 Mt/yr; activity ≤40% (Hédi Youssef), ~20% of units (Houcine Rhili); M'dhilla 2 idle since 2020"
+    source: S20
+    entity: gct
+    type: production
+    section: S7
+
+  - id: T053
+    date: "2025"
+    end_date: null
+    description:
+      en: "2025 audit resident surveys (66 questionnaires): unanimous 'very grave'; workers name sulphur oxides and fluorinated gases; asphyxiation, respiratory/eye/skin irritation, persistent sulphur smell"
+    source: gct-audit-2025-6.8
+    entity: gct
+    type: measurement
+    layer: air
+    section: S7

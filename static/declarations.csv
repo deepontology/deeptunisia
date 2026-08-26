@@ -1,0 +1,10 @@
+id,declarer,date,kind,jurisdiction,body,status,basis,confidence
+decl-2011-regime-8717,,~2011,asset-declaration,tunisia,audit-court,sealed,documented,A
+decl-confiscation-2011,,2011-03-14,asset-declaration,tunisia,,available,documented,A
+decl-inlucc-2019-candidates,,2019-09-03,asset-declaration,tunisia,inlucc,available,reported,C
+decl-2018-46-regime,,2018-08-01,asset-declaration,tunisia,,sealed,documented,A
+decl-bouden-2021,najla-bouden,2021-10-14,asset-declaration,tunisia,inlucc,sealed,reported,C
+decl-chahed-2018,youssef-chahed,2018-12-12,asset-declaration,tunisia,inlucc,sealed,reported,C
+decl-essebsi-2018,beji-caid-essebsi,2018-11-24,asset-declaration,tunisia,inlucc,sealed,reported,C
+decl-gap-verification,,~2019,asset-declaration,tunisia,inlucc,sealed,reported,B
+decl-fakhfakh-2020-end-of-functions,,2020-09-29,asset-declaration,tunisia,inlucc,available,reported,C

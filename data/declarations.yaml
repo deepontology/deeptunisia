@@ -1,0 +1,674 @@
+# -----------------------------------------------------------------------------
+# DECLARATIONS — records ABOUT documents, not about the world (spec §4.6)
+#
+# A declaration record captures that a document exists and what it says (an asset
+# declaration filed with the anti-corruption body, an income statement, a DGI
+# file). It NEVER asserts the declared values are true — "filed" is the claim,
+# "accurate" is not.
+#
+# Records landed 2026-08-08 from data/contrib/declarations-2026-08-08.yaml
+# (roadmap P1 #9). Failure vocabulary preserved from that run:
+#   - "filed" = the document exists (or a named account of it exists). It never
+#     asserts the declared values are true.
+#   - Content of the sealed declarations (values, figures) is NOT known for any
+#     individual record.
+#   - Regime/class records (the 87-17 era, the confiscation file, the 2018-46
+#     regime, the INLUCC candidate list, the verification gap) have no single
+#     person declarer: `declarer` is null and the class is described in the
+#     summary. The schema's declarer field is nullable for exactly this (the
+#     person-less regime record is a legitimate shape — documented in spec §4.6).
+#   - The Instance nationale de la bonne gouvernance et de la lutte contre la
+#     corruption never took office, so declarations under loi 2018-46 were
+#     received by INLUCC (art. 48) — `body` is inlucc where the receiver is
+#     documented, null where the holding body is not a graph entity.
+# -----------------------------------------------------------------------------
+
+- id: decl-2011-regime-8717
+  declarer: null
+  date: "~2011"
+  kind: asset-declaration
+  jurisdiction: tunisia
+  body: audit-court
+  summary: >-
+    The 2011-era declaration regime: loi n° 87-17 du 10-04-1987 (déclaration sur
+    l'honneur des biens) obliged members of government, magistrates, ambassadors,
+    governors and state-enterprise presidents to declare their own assets, their
+    spouse's and minor children's within one month of appointment (renewal every
+    five years and at end of functions). Declarations were deposited with the
+    Premier Président de la Cour des comptes; for government members one of three
+    copies went to the President of the Republic. Art. 5: total secrecy — any
+    communication to third parties was a criminal offence (art. 109 Code pénal);
+    art. 6: usable in court only in a criminal action against the declarant;
+    art. 7: failure to file meant dismissal from the office. The law remained in
+    force through the 2011 revolution and the transitional governments
+    (Ghannouchi II, Essebsi, Jebali, Laarayedh, Jomaa) until abrogated by
+    loi 2018-46 art. 51 (01-08-2018). Under décret-loi 2011-120 art. 15, INLUCC
+    could request access to these declarations from the Cour des comptes.
+  summary_fr: >-
+    Le régime déclaratoire de l'ère 2011 : la loi n° 87-17 du 10-04-1987 (déclaration sur
+    l'honneur des biens) obligeait les membres du gouvernement, magistrats, ambassadeurs,
+    gouverneurs et présidents d'entreprises publiques à déclarer leurs propres biens, ceux
+    de leur épouse et de leurs enfants mineurs dans le mois suivant leur nomination
+    (renouvellement tous les cinq ans et à la fin des fonctions). Les déclarations étaient
+    déposées auprès du Premier Président de la Cour des comptes ; pour les membres du
+    gouvernement, l'un des trois exemplaires allait au Président de la République. Art. 5 :
+    secret total — toute communication à des tiers était un délit pénal (art. 109 Code
+    pénal) ; art. 6 : utilisables en justice uniquement dans une action criminelle contre le
+    déclarant ; art. 7 : défaut de déclaration entraînait la révocation de la fonction. La
+    loi est restée en vigueur pendant la révolution de 2011 et les gouvernements
+    transitoires (Ghannouchi II, Essebsi, Jebali, Laarayedh, Jomaa) jusqu'à son abrogation
+    par la loi 2018-46 art. 51 (01-08-2018). En vertu de l'article 15 du décret-loi
+    2011-120, l'INLUCC pouvait demander l'accès à ces déclarations auprès de la Cour des
+    comptes.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    نظام الإقرار لفترة ما بعد 2011: القانون رقم 87-17 بتاريخ 10-04-1987 (إقرار شرفى
+    بالملكيات) كان يُلزم أعضاء الحكومة والقضاة والسفرا والولاة ورؤساء المؤسسات العامة
+    بالإقرار بملكياتهم هم وأزواجهم وأطفالهم القاصرين في غضون شهر من تعيينهم (تجديد كل خمس
+    سنوات وفي نهاية الوظائف). كانت الإقرارات تُودع لدى الرئيس الأول للمجلس الأعلى للحسابات؛
+    بالنسبة لأعضاء الحكومة، ذهب نسخة واحدة من ثلاث إلى رئيس الجمهولة. المادة 5: سرية تامة —
+    أي إفصاح لأطراف ثالثة كان جريمة جنائية (المادة 109 من قانون العقوبات)؛ المادة 6: قابلة
+    للاستخدام في المحاكم فقط في دعوى جنائية ضد المُقر؛ المادة 7: عدم الإقرار كان يؤدي إلى
+    عزل من المنصب. ظل القانون سارياً أثناء ثورة 2011 والحكومات الانتقالية (العنابي الثاني،
+    السبسي، الجبالي، العريّض، الجومة) حتى إلغائه بالقانون 2018-46 المادة 51 (01-08-2018).
+    بموجب المادة 15 من المرسوم-القانون 2011-120، كان بإمكان INLUCC طلب الوصول إلى هذه
+    الإقرارات من المجلس الأعلى للحسابات.
+  summary_ar_by: model-reviewed
+  status: sealed
+  confidence: A
+  reasoning: >-
+    The 87-17 law is a primary record (JORT n° 27 du 14-04-1987) and was in force
+    until 01-08-2018 (abrogation by loi 2018-46 art. 51, also fetched). The claim
+    that the post-revolution transitional governments fell under it is inferred
+    from the law's uninterrupted force and from loi 2018-46 art. 50 (persons in
+    office at entry into force had to regularize under the new regime).
+  falsifiable_by: >-
+    A 2011 decree-law establishing a different declaration regime for transitional
+    officials, or evidence that the 2011-2018 governments did not file.
+  sources: [dcaf-loi-87-17, dcaf-decret-87-552, dcaf-loi-2018-46, dcaf-decret-loi-2011-120]
+  notes:
+    - >-
+      Regime record: declarer is the class of persons (members of government,
+      magistrates, ambassadors, governors, presidents of state enterprises), not
+      one individual — declarer null, the class described in the summary. Body is
+      audit-court (the graph's Cour des Comptes; the candidate id cour-des-comptes
+      does not exist as an institution node).
+    - >-
+      The widely-remembered story that the Essebsi government published its
+      members' declarations on pm.gov.tn in 2011 was NOT located in this pass
+      (search engines gated; WMC/Business News archives did not surface it). Kept
+      as a lead: if it happened it was a voluntary publicity act, not the
+      statutory channel, and it would falsify part of the "sealed" status.
+  notes_fr:
+    - >-
+      Regime record: declarer is the class of persons (members of government, magistrates,
+      ambassadors, governors, presidents of state enterprises), not one individual —
+      declarer null, the class described in the summary. Body is audit-court (the graph's
+      Cour des Comptes; the candidate id cour-des-comptes does not exist as an institution
+      node).
+    - >-
+      The widely-remembered story that the Essebsi government published its members'
+      declarations on pm.gov.tn in 2011 was NOT located in this pass (search engines gated;
+      WMC/Business News archives did not surface it). Kept as a lead: if it happened it was
+      a voluntary publicity act, not the statutory channel, and it would falsify part of the
+      "sealed" status.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      سجل النظام: المُقر هو فئة الأشخاص (أعضاء الحكومة والقضاة والسفرا والولاة ورؤساء
+      المؤسسات العامة)، وليس فرداً واحداً — المُقر فارغ، والفئة موصوفة في الملخص. الجهة هي
+      المحكمة العليا للحسابات (Cour des Comptes في الرسم البياني؛ المُعرّف البديل
+      cour-des-comptes غير موجود كعقدة مؤسسة).
+    - >-
+      لم يتم العثور في هذه الجولة على الرواية المتذكرة على نطاق واسع بأن حكومة السبسي نشرت
+      إقرار أعضائها على pm.gov.tn في 2011 (محركات البحث مقفلة؛ أرشيف WMC/Business News لم
+      يظهرها). محفوظة ك线索: إذا حدثت كانت عملاً إعلانياً طوعياً، وليس القناة القانونية، وقد
+      تدحض جزءاً من حالة «المختومة».
+  notes_ar_by: model-reviewed
+
+- id: decl-confiscation-2011
+  declarer: null
+  date: "2011-03-14"
+  kind: asset-declaration
+  jurisdiction: tunisia
+  body: null
+  summary: >-
+    Décret-loi n° 2011-13 du 14-03-2011 (JORT n° 18 du 18-03-2011, pp. 338-342)
+    confiscated for the state all movable/immovable assets and rights acquired
+    after 07-11-1987 belonging to Zine El Abidine Ben Ali, his wife Leila
+    Trabelsi, and the persons in the annexed list — 112 persons per the WMC
+    transcription, including Marouane Mabrouk, Belhassen Trabelsi, Sakher El
+    Materi, Slim Chiboub and Ben Ali's daughters. Art. 2 imposed a DECLARATION
+    duty: any holder or debtor of such assets had to declare them to the
+    commission de confiscation within two months (registered, receipted),
+    failing which they were deemed debtors of the state. Art. 7-8: on the
+    commission's report the assets were transferred to the state. State-transfer
+    sequence: décret-loi 2011-47 (31-05-2011, amendment), décret-loi 2011-68
+    (14-07-2011, commission nationale de gestion des avoirs confisqués), décret
+    2013-4420 (10-10-2013, permanent secretariat); by 05-08-2015 Finance Minister
+    Slim Chaker announced tenders for 7 companies and 14 confiscated properties.
+  summary_fr: >-
+    Décret-loi n° 2011-13 du 14-03-2011 (JORT n° 18 du 18-03-2011, pp. 338-342) a confisqué
+    pour l'État tous les biens meubles/immeubles et droits acquis après le 07-11-1987
+    appartenant à Zine El Abidine Ben Ali, à son épouse Leila Trabelsi, et aux personnes de
+    la liste annexée — 112 personnes selon la transcription WMC, dont Marouane Mabrouk,
+    Belhassen Trabelsi, Sakher El Materi, Slim Chiboub et les filles de Ben Ali. L'article 2
+    imposait une obligation de DÉCLARATION : tout détenteur ou débiteur de tels biens devait
+    les déclarer à la commission de confiscation dans les deux mois (enregistré, récépissé),
+    faute de quoi ils étaient considérés comme débiteurs de l'État. Art. 7-8 : sur le
+    rapport de la commission, les biens étaient transférés à l'État. Séquence de transfert
+    étatique : décret-loi 2011-47 (31-05-2011, amendement), décret-loi 2011-68 (14-07-2011,
+    commission nationale de gestion des avoirs confisqués), décret 2013-4420 (10-10-2013,
+    secrétariat permanent) ; au 05-08-2015 le ministre des Finances Slim Chaker a annoncé
+    des appels d'offres pour 7 sociétés et 14 biens confisqués.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    المرسوم-القانون رقم 2011-13 بتاريخ 14-03-2011 (الجريدة الرسمية رقم 18 بتاريخ 18-03-2011،
+    صفحات 338-342) صادر جميع الممتلكات المنقولة/العقارات والحقوق المكتسبة بعد 07-11-1987
+    المملوكة لزين العابدين بن علي وزوجته ليلى بن علي والأشخاص في القائمة المرفقة — 122 شخصاً
+    وفقاً لـ WMC، من بينهم معوان المبروك وبلحسن بن علي وساهر الماظري و Slim Chiboub وبنات بن
+    علي. فرضت المادة 2 واجب الإقرار: كان على أي حامل أو مدين لهذه الممتلكات الإقرار بها لدى
+    لجنة المصادرة في غضون شهرين (مسجلاً، إيصالاً)، وإلا اعتُبروا مدينين للدولة. المواد 7-8:
+    على تقرير اللجنة، تم نقل الممتلكات إلى الدولة. تسلسل النقل الحكومي: المرسوم-القانون
+    2011-47 (31-05-2011، تعديل)، المرسوم-القانون 2011-68 (14-07-2011، اللجنة الوطنية لإدارة
+    الأموال المصادرة)، المرسوم 2013-4420 (10-10-2013، أمانة دائمة)؛ بحلول 05-08-2015 أعلن
+    وزير المالية سليم شاكر عن مناقصات لـ 7 شركات و14 عقاراً مصادراً.
+  summary_ar_by: model-reviewed
+  status: available
+  confidence: A
+  sources: [dcaf-decret-loi-2011-13, dcaf-decret-loi-2011-47, dcaf-decret-loi-2011-68, wmc-112-list-2011, kapitalis-confiscated-2015]
+  notes:
+    - >-
+      State instrument: the annex list names 112 persons; declarer null, the
+      instrument described in the summary. Body null — the commission de
+      confiscation (ministère des Domaines de l'État, art. 3) is not a graph
+      entity. Status: the decree and the annexed list are public primary
+      documents -> available; the art. 2 holder declarations themselves are not
+      public.
+    - >-
+      The count of 112 names rests on WMC's transcription (tier 4) of the JORT
+      annex — falsifiable against the JORT PDF (cnudst link on the DCAF page).
+      The commission's own inventory (art. 7 report) and the art. 2 declarations
+      are not public — their status is unknown, not "verified". The décret-loi
+      2022-13 du 20-03-2022 (réconciliation pénale) later touched the proceeds of
+      these assets (DCAF) — not developed here.
+  notes_fr:
+    - >-
+      State instrument: the annex list names 112 persons; declarer null, the instrument
+      described in the summary. Body null — the commission de confiscation (ministère des
+      Domaines de l'État, art. 3) is not a graph entity. Status: the decree and the annexed
+      list are public primary documents -> available; the art. 2 holder declarations
+      themselves are not public.
+    - >-
+      The count of 112 names rests on WMC's transcription (tier 4) of the JORT annex —
+      falsifiable against the JORT PDF (cnudst link on the DCAF page). The commission's own
+      inventory (art. 7 report) and the art. 2 declarations are not public — their status is
+      unknown, not "verified". The décret-loi 2022-13 du 20-03-2022 (réconciliation pénale)
+      later touched the proceeds of these assets (DCAF) — not developed here.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      أداة الدولة: القائمة المرفقة تسمّي 122 شخصاً؛ المُقر فارغ، الأداة موصوفة في الملخص.
+      الجهة فارغة — لجنة المصادرة (وزارة أملاك الدولة، المادة 3) ليست كياناً في الرسم
+      البياني. الحالة: المرسوم والقائمة المرفقة وثائق أولية عامة -> متاحة؛ إقرار holders
+      بموجب المادة 2 نفسها ليست عامة.
+    - >-
+      يعتمد عدد الأسماء (122) على نسخ WMC (الطبقة 4) للمرفق في الجريدة الرسمية — يمكن تدحشه
+      مقابل PDF الجريدة الرسمية (رابط cnudst على صفحة DCAF). جرد اللجنة الخاص (تقرير المادة
+      7) وإقرار بموجب المادة 2 ليست عامة — حالتها غير معروفة، وليست «متحقق منها».
+      المرسوم-القانون 2022-13 بتاريخ 20-03-2022 (المصالحة الجنائية) تناول لاحقاً عائدات هذه
+      الأموال (DCAF) — لم يتم تطويرها هنا.
+  notes_ar_by: model-reviewed
+
+- id: decl-inlucc-2019-candidates
+  declarer: null
+  date: "2019-09-03"
+  kind: asset-declaration
+  jurisdiction: tunisia
+  body: inlucc
+  summary: >-
+    INLUCC (created by décret-loi cadre n° 2011-120 du 14-11-2011) published on
+    03-09-2019 the list of 2019 presidential candidates who declared their
+    patrimoine: 23 of 26 candidates declared; Hechmi Hamdi, Slim Riahi and Hatem
+    Boulabiar abstained. The publication is the semi-annual list mandated by
+    art. 14 of loi 2018-46. INLUCC's Unité de déclaration sur le patrimoine
+    (Nadia Saâdi) sent warnings to non-declaring party leaders with a one-month
+    deadline. President Chawki Tabib had announced the publication commitment on
+    24-08-2019. Names were published; declaration CONTENT was not.
+  summary_fr: >-
+    L'INLUCC (créée par le décret-loi cadre n° 2011-120 du 14-11-2011) a publié le
+    03-09-2019 la liste des candidats à la présidence de 2019 ayant déclaré leur patrimoine
+    : 23 des 26 candidats ont déclaré ; Hechmi Hamdi, Slim Riahi et Hatem Boulabiar se sont
+    abstenus. La publication est la liste semestrielle prescrite par l'article 14 de la loi
+    2018-46. L'Unité de déclaration sur le patrimoine de l'INLUCC (Nadia Saâdi) a envoyé des
+    avertissements aux chefs de parti n'ayant pas déclaré avec un délai d'un mois. Le
+    président Chawki Tabib avait annoncé l'engagement de publication le 24-08-2019. Les noms
+    ont été publiés ; le CONTENU des déclarations ne l'a pas été.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    نشرت INLUCC (التي أنشأها المرسوم-القانون الإطار رقم 2011-120 بتاريخ 14-11-2011) في
+    03-09-2019 قائمة مرشحي الرئاسة 2019 الذين أقرّوا بأموالهم: 23 من أصل 26 مرشحاً أقرّوا؛
+    امتنع هشام حمدي و Slim Riahi وحاتم بولابيار. النشر هو القائمة نصف السنوية المنصوص عليها
+    في المادة 14 من القانون 2018-46. أرسلت وحدة الإقرار على الأموال في INLUCC (نادية
+    الساعدي) تحذيرات لقادة الأحزاب الذين لم يُقرّوا مع مهلة شهر. كان رئيس INLUCC شوقي الطيب
+    قد أعلن عن الالتزام بالنشر في 24-08-2019. نُشرت الأسماء؛ لم يُنشر محتوى الإقرارات.
+  summary_ar_by: model-reviewed
+  status: available
+  confidence: C
+  attributed_to: "INLUCC communiqué, as reported by Webmanagercenter (single outlet fetched)"
+  sources: [wmc-inlucc-2019-list, wmc-inlucc-tabib-2019, dcaf-decret-loi-2011-120, dcaf-loi-2018-46]
+  notes:
+    - >-
+      Regime/class record: declarer is the 26 presidential candidates (2019);
+      three abstained: Hechmi Hamdi, Slim Riahi, Hatem Boulabiar. Slim Riahi is a
+      graph person (businessman/UPL president) — his abstention is the
+      business-family angle on this record. Status: names published, content
+      sealed (art. 16/30 loi 2018-46) — the LIST is available; the declarations'
+      content is not.
+    - >-
+      Cross-check with a second outlet (e.g. TAP/Kapitalis September 2019) would
+      move C→B. The graph's event inlucc-established is dated 2014; the primary
+      decree is 2011-11-14 — flagged for the human reviewer, not edited.
+  notes_fr:
+    - >-
+      Regime/class record: declarer is the 26 presidential candidates (2019); three
+      abstained: Hechmi Hamdi, Slim Riahi, Hatem Boulabiar. Slim Riahi is a graph person
+      (businessman/UPL president) — his abstention is the business-family angle on this
+      record. Status: names published, content sealed (art. 16/30 loi 2018-46) — the LIST is
+      available; the declarations' content is not.
+    - >-
+      Cross-check with a second outlet (e.g. TAP/Kapitalis September 2019) would move C→B.
+      The graph's event inlucc-established is dated 2014; the primary decree is 2011-11-14 —
+      flagged for the human reviewer, not edited.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      سجل النظام/الفئة: المُقر هو 26 مرشحاً رئاسياً (2019)؛ امتنع ثلاثة: هشام حمدي وSlim
+      Riahi وحاتم بولابيار. Slim Riahi شخص في الرسم البياني (رجل أعمال/رئيس UPL) — امتناعه
+      هو الزاوية العائلية التجارية في هذا السجل. الحالة: الأسماء منشورة، المحتوى مختوم
+      (المادة 16/30 القانون 2018-46) — القائمة متاحة؛ محتوى الإقرارات ليس كذلك.
+    - >-
+      التحقق مع وسيلة إعلام ثانية (مثل TAP/Kapitalis سبتمبر 2019) سينقل التصنيف من C إلى B.
+      الحدث في الرسم البياني inlucc-established يعود تاريخه إلى 2014؛ المرسوم الأولي هو
+      2011-11-14 — تم الإشارة إليه للمراجع البشري، وليس تحريره.
+  notes_ar_by: model-reviewed
+
+- id: decl-2018-46-regime
+  declarer: null
+  date: "2018-08-01"
+  kind: asset-declaration
+  jurisdiction: tunisia
+  body: null
+  summary: >-
+    Loi n° 2018-46 du 01-08-2018 created the modern declaration regime:
+    patrimoine and interests declarations within 60 days of taking office (art. 5),
+    covering spouse and minor children (art. 6-7), deposited with the Instance
+    (art. 8) with a copy to the Cour des comptes and a 10-year retention after
+    leaving office; content publication for categories 1-8 per the model decree
+    (art. 8); mandatory verification of categories 1-12 (art. 15); sanctions for
+    non-declaration and for divulging content (art. 30-33). The model and
+    threshold were fixed by décret gouvernemental 2018-818 du 11-10-2018.
+    DOCUMENTED GAP: the Instance nationale de la bonne gouvernance et de la lutte
+    contre la corruption never took office — the ARP published candidate lists on
+    22-06-2018 but members were never elected (fr-Wikipedia, checked 2026-08), and
+    per art. 48 INLUCC ran the missions until the Instance took office. No
+    declaration received BY the Instance is documented.
+  summary_fr: >-
+    La loi n° 2018-46 du 01-08-2018 a créé le régime déclaratoire moderne : déclarations de
+    patrimoine et d'intérêts dans les 60 jours suivant la prise de fonctions (art. 5),
+    couvrant l'époux et les enfants mineurs (art. 6-7), déposées auprès de l'Instance (art.
+    8) avec copie à la Cour des comptes et conservation de 10 ans après la fin des fonctions
+    ; publication du contenu pour les catégories 1-8 selon le décret modèle (art. 8) ;
+    vérification obligatoire des catégories 1-12 (art. 15) ; sanctions pour non-déclaration
+    et divulgation du contenu (art. 30-33). Le modèle et le seuil ont été fixés par le
+    décret gouvernemental 2018-818 du 11-10-2018. LACUNE DOCUMENTÉE : l'Instance nationale
+    de la bonne gouvernance et de la lutte contre la corruption n'a jamais pris ses
+    fonctions — l'ARP a publié les listes de candidats le 22-06-2018 mais les membres n'ont
+    jamais été élus (fr-Wikipedia, vérifié le 2026-08), et selon l'article 48, l'INLUCC a
+    dirigé les missions jusqu'à ce que l'Instance prenne ses fonctions. Aucune déclaration
+    reçue PAR l'Instance n'est documentée.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    أنشأ القانون رقم 2018-46 بتاريخ 01-08-2018 نظام الإقرار الحديث: إقرار الأموال والمصالح
+    في غضون 60 يوماً من تولي المنصب (المادة 5)، بما يشمل الزوج والأطفال القاصرين (المادة
+    6-7)، تُودع لدى الجهة (المادة 8) مع نسخة للمجلس الأعلى للحسابات وحفظ لمدة 10 سنوات بعد
+    انتهاء الوظائف؛ نشر المحتوى للفئات 1-8 وفقاً للمرسوم النموذجي (المادة 8)؛ التحقق
+    الإلزامي للفئات 1-12 (المادة 15)؛ عقوبات على عدم الإقرار ونشر المحتوى (المادة 30-33).
+    حُدد النموذج والحد بموجب المرسوم الحكومي 2018-818 بتاريخ 11-10-2018. فجوة موثقة: الهيئة
+    الوطنية للحوكمة الجيدة ومكافحة الفساد لم تتولى أبداً مناصبها — نشر البرلمان قوائم
+    المرشحين في 22-06-2018 لكن الأعضاء لم يُنتخبوا أبداً (ويكيبيديا الفرنسية، تم التحقق في
+    2026-08)، ووفقاً للمادة 48 أدارت INLUCC المهمات حتى تولت الجهة مناصبها. لم يتم توثيق أي
+    إقرار تلقته الجهة.
+  summary_ar_by: model-reviewed
+  status: sealed
+  confidence: A
+  reasoning: >-
+    Art. 48's transition clause means every 2018-2021 declaration under the law
+    went to INLUCC. Corroboration: the Bouden government's declarations of
+    14-10-2021 were explicitly filed at INLUCC (Kapitalis), and presidential
+    decrees of 2021 still operated on INLUCC's existence (2021-108, 2021-411).
+    Wikipedia states the Instance "n'a encore pas vu le jour".
+  falsifiable_by: >-
+    A document showing the Instance receiving, verifying or publishing any
+    declaration, or the ARP electing its members.
+  sources: [dcaf-loi-2018-46, dcaf-decret-2018-818, wikipedia-instance-bonne-gouvernance, dcaf-decret-pres-2021-108]
+  notes:
+    - >-
+      Regime record: declarer is the 37 categories under art. 5 (President, PM
+      and ministers, MPs, constitutional instances, judges, governors, customs
+      officers, journalists, party leaders...); declarer null, the class described
+      in the summary. Body null — the Instance never took office and is not a
+      graph entity; the declarations went to INLUCC (art. 48), which is the
+      documented receiver.
+    - >-
+      The task brief names "loi 2018-46, art. 130" as the Instance's source. The
+      primary texts show the Instance's legal basis is art. 130 of the 2014
+      Constitution with its organic law 2017-59 du 24-08-2017 (recited in décret
+      prés. 2021-108), while loi 2018-46 is the declaration law that designates
+      the Instance as receiver (art. 4) — recorded for the reviewer.
+  notes_fr:
+    - >-
+      Regime record: declarer is the 37 categories under art. 5 (President, PM and
+      ministers, MPs, constitutional instances, judges, governors, customs officers,
+      journalists, party leaders...); declarer null, the class described in the summary.
+      Body null — the Instance never took office and is not a graph entity; the declarations
+      went to INLUCC (art. 48), which is the documented receiver.
+    - >-
+      The task brief names "loi 2018-46, art. 130" as the Instance's source. The primary
+      texts show the Instance's legal basis is art. 130 of the 2014 Constitution with its
+      organic law 2017-59 du 24-08-2017 (recited in décret prés. 2021-108), while loi
+      2018-46 is the declaration law that designates the Instance as receiver (art. 4) —
+      recorded for the reviewer.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      سجل النظام: المُقر هو 37 فئة بموجب المادة 5 (الرئيس ورئيس الوزراء والوزراء والنواب
+      والجهات الدستورية والقضاة والولاة وضباط الجمارك والصحفيون وقادة الأحزاب...)؛ المُقر
+      فارغ، والفئة موصوفة في الملخص. الجهة فارغة — الهيئة لم تتولى منصبها وليست كياناً في
+      الرسم البياني؛ ذهبت الإقرارات إلى INLUCC (المادة 48)، وهي الجهة المستلمة الموثقة.
+    - >-
+      يسمّي بريفي المهمة «القانون 2018-46، المادة 130» كمصدر للهيئة. تُظهر النصوص الأولية أن
+      الأساس القانوني للهيئة هو المادة 130 من الدستور 2014 مع قانونها الأساسي 2017-59 بتاريخ
+      24-08-2017 (مذكور في المرسوم الرئاسي 2021-108)، بينما القانون 2018-46 هو قانون الإقرار
+      الذي يُعيّن الهيئة كمُستلم (المادة 4) — مُسجّل للمراجع.
+  notes_ar_by: model-reviewed
+
+- id: decl-bouden-2021
+  declarer: najla-bouden
+  date: "2021-10-14"
+  kind: asset-declaration
+  jurisdiction: tunisia
+  body: inlucc
+  summary: >-
+    Najla Bouden (cheffe du gouvernement) and the members of her government
+    declared their assets and interests to INLUCC on 14-10-2021, per loi n°
+    2018-46 du 01-08-2018 (communiqué of the présidence du gouvernement). The
+    same day INLUCC reopened after its premises were force-closed on 20-08-2021
+    and its secretary-general Anouar Ben Hassan was dismissed (décret présidentiel
+    2021-108 du 20-08-2021). No content of the declarations was published.
+  summary_fr: >-
+    Najla Bouden (cheffe du gouvernement) et les membres de son gouvernement ont déclaré
+    leurs biens et intérêts à l'INLUCC le 14-10-2021, conformément à la loi n° 2018-46 du
+    01-08-2018 (communiqué de la présidence du gouvernement). Le même jour, l'INLUCC a
+    rouvert après la fermeture forcée de ses locaux le 20-08-2021 et le licenciement de son
+    secrétaire général Anouar Ben Hassan (décret présidentiel 2021-108 du 20-08-2021). Aucun
+    contenu des déclarations n'a été publié.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    أقرّت نجلاء بودن (رئيسة الحكومة) وأعضاء حكومتها بأموالهم ومصالحهم لدى INLUCC في
+    14-10-2021، وفقاً للقانون رقم 2018-46 بتاريخ 01-08-2018 (بيان رئاسة الحكومة). في اليوم
+    نفسه، أعادت INLUCC فتح مقرها بعد إغلاقه بالقوة في 20-08-2021 وفصل أمينها العام أنور بن
+    حسن (مرسوم رئاسي 2021-108 بتاريخ 20-08-2021). لم يتم نشر أي محتوى من الإقرارات.
+  summary_ar_by: model-reviewed
+  status: sealed
+  confidence: C
+  attributed_to: "Présidence du gouvernement, as reported by Kapitalis (single outlet fetched)"
+  sources: [kapitalis-bouden-inlucc-2021, dcaf-decret-pres-2021-108, dcaf-loi-2018-46]
+  notes:
+    - >-
+      Filed; content not published. Also evidence that INLUCC kept receiving
+      declarations after the 20-08-2021 closure — refines the graph's
+      inlucc-dissolved event (2021), which reads as a clean dissolution.
+      Declarant id najla-bouden exists in data/people.yaml.
+  notes_fr:
+    - >-
+      Filed; content not published. Also evidence that INLUCC kept receiving declarations
+      after the 20-08-2021 closure — refines the graph's inlucc-dissolved event (2021),
+      which reads as a clean dissolution. Declarant id najla-bouden exists in
+      data/people.yaml.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      أُودع؛ لم يُنشر المحتوى. دليل آخر على أن INLUCC واصلت تلقي الإقرارات بعد الإغلاق في
+      20-08-2021 — يُحسّن حدث inlucc-dissolved في الرسم البياني (2021)، والذي يبدو كإنهاء
+      كامل. المُعرّف najla-bouden موجود في data/people.yaml.
+  notes_ar_by: model-reviewed
+
+- id: decl-chahed-2018
+  declarer: youssef-chahed
+  date: "2018-12-12"
+  kind: asset-declaration
+  jurisdiction: tunisia
+  body: inlucc
+  summary: >-
+    Chef du gouvernement Youssef Chahed declared his assets and interests to
+    INLUCC on 12-12-2018 (with INLUCC president Chawki Tabib present) — the first
+    head-of-government declaration under the loi 2018-46 regime, four months
+    after the law and two months after the model decree 2018-818. No content was
+    published.
+  summary_fr: >-
+    Le chef du gouvernement Youssef Chahed a déclaré ses biens et intérêts à l'INLUCC le
+    12-12-2018 (en présence du président de l'INLUCC Chawki Tabib) — la première déclaration
+    d'un chef de gouvernement sous le régime de la loi 2018-46, quatre mois après la loi et
+    deux mois après le décret modèle 2018-818. Aucun contenu n'a été publié.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    أقرّ رئيس الحكومة يوسف الشاهد بأمواله ومصالحه لدى INLUCC في 12-12-2018 (بحضور رئيس
+    INLUCC شوقي الطيب) — أول إقرار لرئيس حكومة بموجب نظام القانون 2018-46، بعد أربعة أشهر من
+    القانون وشهرتين من المرسوم النموذجي 2018-818. لم يتم نشر أي محتوى.
+  summary_ar_by: model-reviewed
+  status: sealed
+  confidence: C
+  attributed_to: "Kapitalis (single outlet fetched)"
+  sources: [kapitalis-chahed-inlucc-2018, dcaf-loi-2018-46, dcaf-decret-2018-818]
+  notes:
+    - >-
+      Filed; content sealed. Declarant id youssef-chahed exists in
+      data/people.yaml. Because the content was never published, no comparison is
+      possible from open sources with the assets examined in his 2025-2026
+      corruption conviction (graph event mabrouk-chahed-sentenced).
+  notes_fr:
+    - >-
+      Filed; content sealed. Declarant id youssef-chahed exists in data/people.yaml. Because
+      the content was never published, no comparison is possible from open sources with the
+      assets examined in his 2025-2026 corruption conviction (graph event
+      mabrouk-chahed-sentenced).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      أُودع؛ المحتوى مختوم. المُعرّف youssef-chahed موجود في data/people.yaml. لأن المحتوى
+      لم يُنشر أبداً، لا يمكن المقارنة من المصادر المفتوحة مع الأموال التي فُحصت في إدانته
+      بالفساد 2025-2026 (حدث الرسم البياني mabrouk-chahed-sentenced).
+  notes_ar_by: model-reviewed
+
+- id: decl-essebsi-2018
+  declarer: beji-caid-essebsi
+  date: "2018-11-24"
+  kind: asset-declaration
+  jurisdiction: tunisia
+  body: inlucc
+  summary: >-
+    President Béji Caïd Essebsi declared his assets to INLUCC on 24-11-2018 —
+    the first president-level declaration under the loi 2018-46 regime. No
+    content was published.
+  summary_fr: >-
+    Le président Béji Caïd Essebsi a déclaré ses biens à l'INLUCC le 24-11-2018 — la
+    première déclaration au niveau présidentiel sous le régime de la loi 2018-46. Aucun
+    contenu n'a été publié.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    أقرّ الرئيس الباجي قائد السبسي بأمواله لدى INLUCC في 24-11-2018 — أول إقرار على مستوى
+    رئاسي بموجب نظام القانون 2018-46. لم يتم نشر أي محتوى.
+  summary_ar_by: model-reviewed
+  status: sealed
+  confidence: C
+  attributed_to: "Kapitalis (single outlet fetched)"
+  sources: [kapitalis-essebsi-inlucc-2018, dcaf-loi-2018-46]
+  notes:
+    - >-
+      Filed; content sealed. Declarant id beji-caid-essebsi exists in
+      data/people.yaml. Both Essebsi and Chahed filed under the transition clause
+      (art. 48/50) — INLUCC as receiver.
+  notes_fr:
+    - >-
+      Filed; content sealed. Declarant id beji-caid-essebsi exists in data/people.yaml. Both
+      Essebsi and Chahed filed under the transition clause (art. 48/50) — INLUCC as
+      receiver.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      أُودع؛ المحتوى مختوم. المُعرّف beji-caid-essebsi موجود في data/people.yaml. أودع كلا
+      السبسي والشاهد بموجب بند الانتقالية (المادة 48/50) — INLUCC كمُستلم.
+  notes_ar_by: model-reviewed
+
+- id: decl-gap-verification
+  declarer: null
+  date: "~2019"
+  kind: asset-declaration
+  jurisdiction: tunisia
+  body: inlucc
+  summary: >-
+    The declared-vs-verified gap, three documented layers: (1) under loi 87-17
+    (1987-2018), declarations sat sealed at the Cour des comptes with no
+    verification mechanism and no publication (art. 5-6); (2) under the 2018-46
+    transition, INLUCC published NAMES of declarants and abstainers (art. 14;
+    the 03-09-2019 list) but never content, and the art. 15 verification duty
+    fell on a body with no published verification record; (3) verification was
+    promised — INLUCC president Imed Boukhris said on 07-04-2021 that the
+    declarations of all senior officials would soon be verified — while the
+    Instance de la bonne gouvernance (which was to publish content for the
+    top categories per art. 8) never took office. No public verification outcome
+    or published declaration content was located this pass.
+  summary_fr: >-
+    L'écart déclaré-vs-vérifié, trois couches documentées : (1) sous la loi 87-17
+    (1987-2018), les déclarations restaient scellées à la Cour des comptes sans mécanisme de
+    vérification ni publication (art. 5-6) ; (2) sous la transition 2018-46, l'INLUCC a
+    publié les NOMS des déclarants et des abstentionnistes (art. 14 ; la liste du
+    03-09-2019) mais jamais le contenu, et le devoir de vérification de l'article 15
+    incombait à un organe sans registre de vérification publié ; (3) la vérification était
+    promise — le président de l'INLUCC Imed Boukhris a déclaré le 07-04-2021 que les
+    déclarations de tous les hauts fonctionnaires seraient bientôt vérifiées — tandis que
+    l'Instance de la bonne gouvernance (devait publier le contenu pour les catégories
+    supérieures selon l'art. 8) n'a jamais pris ses fonctions. Aucun résultat de
+    vérification publique ou contenu de déclaration publié n'a été localisé lors de cette
+    passe.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    الفجوة بين المُقرّ به والمُتحقق منه، ثلاث طبقات موثقة: (1) بموجب القانون 87-17
+    (1987-2018)، كانت الإقرارات محفوظة ومختومة لدى المجلس الأعلى للحسابات دون آلية تحقق أو
+    نشر (المادة 5-6)؛ (2) بموجب انتقالية 2018-46، نشرت INLUCC أسماء المُقرّين والامتناعيين
+    (المادة 14؛ القائمة في 03-09-2019) لكنها لم تنشر المحتوى أبداً، وواجب التحقق المنصوص
+    عليه في المادة 15 كان يقع على جهة لا تملك سجلاً للتحقق منشوراً؛ (3) كان التحقق موعوداً —
+    صرّح رئيس INLUCC إيماد بوخريس في 07-04-2021 بأن إقرار جميع كبار المسؤولين ستتم
+    م很快就对其进行验证 — في حين أن الهيئة الوطنية للحوكمة الجيدة (كانت ستنشر المحتوى للفئات العليا
+    وفقاً للمادة 8) لم تتولى منصبها أبداً. لم يتم تحديد أي نتيجة تحقق عامة أو محتوى إقرار
+    منشور أثناء هذه الجولة.
+  summary_ar_by: model-reviewed
+  status: sealed
+  confidence: B
+  reasoning: >-
+    Each layer is sourced from a primary text or a dated press account. The
+    "no verification outcome" is a negative finding from this pass: absence of
+    evidence, not proof of absence.
+  falsifiable_by: >-
+    Any published verification report or audit by INLUCC, the Instance, or the
+    Cour des comptes on declarations filed 2011-2021, or any art. 8 publication
+    of declaration content.
+  sources: [dcaf-loi-87-17, dcaf-loi-2018-46, kapitalis-boukhris-2021, wmc-inlucc-2019-list, wikipedia-instance-bonne-gouvernance]
+  notes:
+    - >-
+      Meta-record about the declared-vs-verified gap across the 2019-2021 window
+      (candidate date "~2019-2021" is not a valid date token; the window is
+      described here). Status: the declarations sit sealed and unverified — the
+      schema status "sealed" is the closest honest label for documents whose
+      content was never published and never verified. Declarer is the class of
+      declarants under all three regimes; declarer null, the class described in
+      the summary. This is the record that answers the brief's core question: the
+      map must show "filed" without implying "verified" — none of the eight
+      candidate records asserts any declared value is true.
+  notes_fr:
+    - >-
+      Meta-record about the declared-vs-verified gap across the 2019-2021 window (candidate
+      date "~2019-2021" is not a valid date token; the window is described here). Status:
+      the declarations sit sealed and unverified — the schema status "sealed" is the closest
+      honest label for documents whose content was never published and never verified.
+      Declarer is the class of declarants under all three regimes; declarer null, the class
+      described in the summary. This is the record that answers the brief's core question:
+      the map must show "filed" without implying "verified" — none of the eight candidate
+      records asserts any declared value is true.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      سجل فرعي حول فجوة المُقرّ به مقابل المُتحقق منه عبر نافذة 2019-2021 (التاريخ البديل
+      «~2019-2021» ليس رمز تاريخ صالح؛ النافذة موصوفة هنا). الحالة: الإقرارات محفوظة ومختومة
+      وغير متحقق منها — حالة المخطط «مختومة» هي أقرب تسمية صادقة للوثائق التي لم يُنشر
+      محتواها ولم يتم التحقق منها أبداً. المُقر هو فئة المُقرّين بموجب الأنظمة الثلاثة؛
+      المُقر فارغ، والفئة موصوفة في الملخص. هذا هو السجل الذي يجيب على السؤال الأساسي
+      للبريف: يجب أن تُظهر الخريطة «مُودع» دون التلميح إلى «متحقق منه» — لا أحد من سجلات
+      المرشح الثمانية يزعم أن أي قيمة مُقرّ بها صحيحة.
+  notes_ar_by: model-reviewed
+
+- id: decl-fakhfakh-2020-end-of-functions
+  declarer: null
+  date: "2020-09-29"
+  kind: asset-declaration
+  jurisdiction: tunisia
+  body: inlucc
+  summary: >-
+    Six ministers of the Fakhfakh government filed end-of-functions asset and
+    interest declarations with INLUCC on 29/09/2020, after the government's
+    end of mission (end-of-functions declaration under art. 10 of loi
+    2018-46). The six individuals are not named in the source; the record is a
+    class record (the Fakhfakh government's outgoing ministers). Filing
+    happened; declared CONTENT was not published.
+  summary_fr: >-
+    Six ministres du gouvernement Fakhfakh ont déposé leurs déclarations de
+    biens et d'intérêts de fin de fonctions auprès de l'INLUCC le 29/09/2020,
+    après la fin de mission du gouvernement (déclaration de cessation de
+    fonctions, art. 10 de la loi 2018-46). Les six personnes ne sont pas
+    nommées dans la source ; le document est un enregistrement de classe (les
+    ministres sortants du gouvernement Fakhfakh). Le dépôt a eu lieu ; le
+    CONTENU des déclarations n'a pas été publié.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    أودع ستة وزراء من حكومة الفخفاخ تصاريح إنهاء المهام بالمكاسب والمصالح لدى
+    الهيئة الوطنية لمكافحة الفساد في 29/09/2020، بعد انتهاء مهام الحكومة
+    (تصريح إنهاء الوظائف، الفصل 10 من القانون 2018-46). لا تسمي المصادر
+    الأشخاص الستة؛ والسجل سجل فئوي (وزراء حكومة الفخفاخ المغادرون). جرى
+    الإيداع؛ ولم يُنشر مضمون التصاريح.
+  summary_ar_by: model-reviewed
+  status: available
+  confidence: C
+  attributed_to: Kapitalis (30/09/2020), reporting the INLUCC filing
+  notes:
+    - >-
+      Class record: declarer null because the six ministers are not named in
+      the source and the Fakhfakh cabinet is not modelled as a group in the
+      graph. Art. 10 loi 2018-46 governs the end-of-functions declaration.
+      Cross-check with TAP or INLUCC's own release would move C -> B.
+  notes_fr:
+    - >-
+      Enregistrement de classe : declarer nul car les six ministres ne sont
+      pas nommés dans la source et le gouvernement Fakhfakh n'est pas modélisé
+      comme un groupe dans le graphe. L'art. 10 de la loi 2018-46 régit la
+      déclaration de cessation de fonctions. Une contre-vérification auprès de
+      la TAP ou du communiqué propre de l'INLUCC ferait passer C -> B.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      سجل فئوي: المُقر فارغ لأن الوزراء الستة غير مسمّين في المصدر وحكومة
+      الفخفاخ غير ممثّلة كمجموعة في الرسم البياني. ينظّم الفصل 10 من القانون
+      2018-46 تصريح إنهاء الوظائف. من شأن تدقيق متقاطع مع وكالة تونس أفريقيا
+      للأنباء (TAP) أو مع بلاغ الهيئة ذاتها أن يرفع الدرجة من C إلى B.
+  notes_ar_by: model-reviewed
+  sources: [kapitalis-fakhfakh-2020]

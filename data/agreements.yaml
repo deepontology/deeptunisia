@@ -1,0 +1,906 @@
+# -----------------------------------------------------------------------------
+# AGREEMENTS — treaties and accessions binding Tunisia to other states
+#
+# WHY THESE ARE CLAIMS AND TRADE STATISTICS ARE NOT
+#
+# Everything in this file is the same kind of object as the rest of data/: a
+# statement that something happened on a date, which an instrument records and a
+# source can be cited for. So each record carries the full apparatus — basis,
+# confidence, sources, disputes — and the build fails on a record without a source,
+# exactly as it does for a position or a relationship.
+#
+# Bilateral trade quantities are not like that. They are measurements, produced in
+# bulk, revised, and reported differently by each of the two countries involved.
+# They will live in `flows/`, a sibling of this directory, for the same reason the
+# news feed lives in `feed/`: so that nobody mistakes an ingested number for a
+# graded claim.
+#
+# TUNISIA IS NEVER LISTED IN `parties`
+#
+# Every agreement here is one Tunisia is party to — that is the entire selection
+# criterion. Naming it in each record would be one more chance to omit it and have
+# an arc silently disappear.
+#
+# COVERAGE IS PARTIAL AND DELIBERATELY SO
+#
+# Twenty-three records, not the forty-plus Tunisia is actually party to. Each one
+# below was written against a source retrieved and read at the time of writing; the
+# rest are absent rather than guessed. Tunisia has 50-odd bilateral investment
+# treaties and a dozen more trade agreements that belong here, and adding one means
+# finding its instrument first. An empty row is a known gap; a plausible row with an
+# invented citation is the failure this whole project exists to prevent.
+#
+# Coverage added 2026-08-16: the EFTA and Tunisia–Turkey FTAs, selected bilateral
+# investment treaties, the France double-taxation convention, the ELMED support
+# agreement, and two United States security instruments. The TransMed pipeline
+# candidate remains in the outbox: its named counterparty is Eni, a company, while
+# this ontology's `parties` field can represent only states or institutions. The
+# JORT ratification field is still absent from the agreement schema; where a JORT
+# instrument was part of the evidence, it remains in the source apparatus rather
+# than being silently treated as a separate field.
+# -----------------------------------------------------------------------------
+
+# World rebuild v2 — reviewed agreement candidate (2026-08-16)
+- id: efta-free-trade-agreement
+  title_en: EFTA–Tunisia Free Trade Agreement
+  title_fr: Accord de libre-échange AELE–Tunisie
+  title_ar: اتفاقية التجارة الحرة بين تونس ودول الرابطة الأوروبية للتجارة الحرة (EFTA)
+  kind: free-trade
+  parties: [CH, LI, NO, IS]
+  signed: "2004-12-17"
+  in_force: "2005-06-01"
+  text_url: https://www.efta.int/sites/default/files/media/documents/legal-texts/free-trade-relations/tunisia/EFTA-Tunisia%20Free%20Trade%20Agreement%20EN.pdf
+  summary: >-
+    Signed in Geneva on 17 December 2004 between Tunisia and the four EFTA
+    States — Iceland, Liechtenstein, Norway and Switzerland. The agreement
+    entered into force on 1 June 2005 for Switzerland and Liechtenstein, on 1
+    August 2005 for Norway and on 1 March 2006 for Iceland; the date recorded
+    here is the first entry into force reported by the EFTA Secretariat. The
+    EFTA Secretariat also records a 2024 Joint Committee update to rules of
+    origin.
+  summary_fr: >-
+    Signé à Genève le 17 décembre 2004 entre la Tunisie et les quatre États de
+    l'AELE — l'Islande, le Liechtenstein, la Norvège et la Suisse. L'accord est
+    entré en vigueur le 1er juin 2005 pour la Suisse et le Liechtenstein, le 1er
+    août 2005 pour la Norvège et le 1er mars 2006 pour l'Islande ; la date
+    consignée ici est la première entrée en vigueur indiquée par le secrétariat
+    de l'AELE. Le secrétariat de l'AELE recense également une mise à jour des
+    règles d'origine par le comité mixte en 2024.
+  summary_fr_by: machine
+  summary_ar: >-
+    وُقّعت في جنيف في 17 ديسمبر 2004 بين تونس والدول الأربع للرابطة الأوروبية
+    للتجارة الحرة، وهي آيسلندا وليختنشتاين والنرويج وسويسرا. دخلت الاتفاقية حيز
+    النفاذ في 1 جوان 2005 بالنسبة إلى سويسرا وليختنشتاين، وفي 1 أوت 2005
+    بالنسبة إلى النرويج، وفي 1 مارس 2006 بالنسبة إلى آيسلندا؛ والتاريخ المسجّل
+    هنا هو أول تاريخ لدخولها حيز النفاذ حسب أمانة الرابطة. كما تسجّل الأمانة
+    تحديثًا لقواعد المنشأ اعتمدته اللجنة المشتركة سنة 2024.
+  summary_ar_by: machine
+  confidence: A
+  basis: documented
+  sources: [efta-tunisia-page, efta-tunisia-fta-text]
+
+- id: eu-association-agreement
+  title_en: EU–Tunisia Euro-Mediterranean Association Agreement
+  title_fr: Accord d'association euro-méditerranéen UE–Tunisie
+  title_ar: اتفاق الشراكة الأورومتوسطية بين تونس والاتحاد الأوروبي
+  kind: association
+  parties: [european-union]
+  signed: "1995-07-17"
+  in_force: "1998-03-01"
+  text_url: https://eur-lex.europa.eu/legal-content/EN/ALL/?uri=CELEX%3A21998A0330%2801%29
+  summary: >-
+    The agreement that governs most of Tunisia's external trade. It established a
+    free trade area in industrial goods, phased in over twelve years, while leaving
+    agriculture largely outside — an asymmetry that has been the substance of every
+    subsequent negotiation, including the stalled Deep and Comprehensive Free Trade
+    Area talks. Signed at Brussels on 17 July 1995 and in force from 1 March 1998.
+  summary_fr: >-
+    L'accord qui régit l'essentiel du commerce extérieur de la Tunisie. Il a instauré une
+    zone de libre-échange pour les produits industriels, déployée progressivement sur douze
+    ans, tout en laissant l'agriculture largement en dehors — une asymétrie qui a constitué
+    la substance de toutes les négociations ultérieures, y compris les pourparlers au point
+    mort sur l'accord de libre-échange complet et approfondi (ALECA). Signé à Bruxelles le
+    17 juillet 1995 et en vigueur depuis le 1er mars 1998.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    الاتفاق الذي يحكم معظم التجارة الخارجية لتونس. أقام منطقة تجارة حرة في السلع الصناعية،
+    طُبّقت تدريجيًا على مدى اثني عشر عامًا، مع إبقاء الفلاحة خارجها إلى حد كبير — وهو تفاوت
+    شكّل جوهر كل مفاوضات لاحقة، بما فيها محادثات اتفاقية التجارة الحرة العميقة والشاملة
+    المتعثرة. وُقّع في بروكسل في 17 جويلية 1995 ودخل حيز النفاذ في 1 مارس 1998.
+  summary_ar_by: model-reviewed
+  confidence: A
+  basis: documented
+  disputes:
+    - claim: The agreement entered into force on 30 March 1998.
+      held_by: EC trade relations page
+      source: ec-trade-tunisia
+      assessment: >-
+        The Commission's trade page dates entry into force at 30 March 1998; that
+        is the OJ publication date (L 97). The record adopts 1 March 1998, which
+        is the date the treaty entered into force per the agreement text.
+  sources: [eurlex-tunisia-association, ec-trade-tunisia]
+
+- id: wto-accession
+  title_en: Tunisia's accession to the World Trade Organization
+  title_fr: Adhésion de la Tunisie à l'Organisation mondiale du commerce
+  title_ar: انضمام تونس إلى منظمة التجارة العالمية
+  kind: accession
+  parties: [wto]
+  in_force: "1995-03-29"
+  summary: >-
+    Tunisia became a member of the WTO on 29 March 1995, having been a party to the
+    GATT since 19 August 1990. It was not among the 128 original members that
+    constituted the organisation on 1 January 1995.
+  summary_fr: >-
+    La Tunisie est devenue membre de l'OMC le 29 mars 1995, après avoir été partie au GATT
+    depuis le 19 août 1990. Elle ne figurait pas parmi les 128 membres fondateurs qui
+    constituaient l'organisation le 1er janvier 1995.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    أصبحت تونس عضوًا في منظمة التجارة العالمية في 29 مارس 1995، بعد أن كانت طرفًا في
+    الاتفاقية العامة للتعريفات الجمركية والتجارة (GATT) منذ 19 أوت 1990. ولم تكن من بين
+    الأعضاء الـ128 المؤسسين الذين شكّلوا المنظمة في 1 جانفي 1995.
+  summary_ar_by: model-reviewed
+  confidence: A
+  basis: documented
+  sources: [wto-tunisia-member]
+
+- id: arab-maghreb-union-treaty
+  title_en: Treaty instituting the Arab Maghreb Union
+  title_fr: Traité instituant l'Union du Maghreb Arabe
+  title_ar: معاهدة إنشاء اتحاد المغرب العربي
+  kind: free-trade
+  parties: [DZ, MA, LY, MR]
+  signed: "1989-02-17"
+  in_force: "1989-02-17"
+  text_url: https://treaties.un.org/doc/Publication/UNTS/Volume%201546/volume-1546-I-26844-English.pdf
+  summary: >-
+    Concluded at Marrakesh by Tunisia, Algeria, Morocco, Libya and Mauritania, and
+    registered with the United Nations as treaty I-26844. It committed the five to
+    the free movement of goods, services and factors of production between them.
+    The institution has been largely dormant since the 1990s, so the treaty is one
+    of the clearest cases in this dataset of a document that remains in force while
+    describing arrangements that do not operate.
+  summary_fr: >-
+    Conclu à Marrakech par la Tunisie, l'Algérie, le Maroc, la Libye et la Mauritanie, et
+    enregistré auprès des Nations unies sous la référence I-26844. Il engageait les cinq
+    États à la libre circulation des biens, des services et des facteurs de production entre
+    eux. L'institution est largement en sommeil depuis les années 1990 ; ce traité est donc
+    l'un des cas les plus nets de ce jeu de données d'un document qui reste en vigueur alors
+    qu'il décrit des arrangements qui ne fonctionnent pas.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    أُبرم في مراكش بين تونس والجزائر والمغرب وليبيا وموريتانيا، وسُجّل لدى الأمم المتحدة
+    كمعاهدة رقم I-26844. ألزم الدول الخمس بالحرية في تنقل السلع والخدمات وعوامل الإنتاج فيما
+    بينها. والمؤسسة في سبات شبه كامل منذ التسعينات، لذا تعدّ هذه المعاهدة من أوضح الحالات في
+    هذه المجموعة: وثيقة تبقى نافذة فيما تصف ترتيبات لا تعمل.
+  summary_ar_by: model-reviewed
+  confidence: A
+  basis: documented
+  sources: [unts-maghreb-union]
+
+- id: gafta
+  title_en: Greater Arab Free Trade Area
+  title_fr: Grande zone arabe de libre-échange
+  title_ar: منطقة التجارة الحرة العربية الكبرى
+  kind: free-trade
+  parties: [arab-league]
+  signed: "1997-02-19"
+  in_force: "1998-01-01"
+  text_url: https://rtais.wto.org/rtadocs/16/TOA/English/Pan-Arab%20Free%20Trade%20Area%20Agreement%20(1997).pdf
+  summary: >-
+    Established by resolution 1317 of the Arab League's Economic and Social Council
+    on 19 February 1997 and in force from 1 January 1998, building on the earlier
+    Agreement to Facilitate and Develop Trade Among Arab Countries. Tunisia was
+    among the founding participants. Tariffs between members were phased out over a
+    decade; non-tariff barriers, which are where most Arab intra-regional trade
+    friction actually sits, were not.
+  summary_fr: >-
+    Établie par la résolution 1317 du Conseil économique et social de la Ligue arabe le 19
+    février 1997 et en vigueur depuis le 1er janvier 1998, en prolongement de l'accord
+    antérieur de facilitation et de développement des échanges commerciaux entre les pays
+    arabes. La Tunisie figurait parmi les participants fondateurs. Les droits de douane
+    entre membres ont été supprimés progressivement sur une décennie ; les barrières non
+    tarifaires — là où se situe en réalité l'essentiel des frictions du commerce
+    intra-régional arabe — ne l'ont pas été.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    أُنشئت بموجب القرار 1317 الصادر عن المجلس الاقتصادي والاجتماعي لجامعة الدول العربية في
+    19 فيفري 1997، ودخلت حيز النفاذ في 1 جانفي 1998، انطلاقًا من الاتفاقية السابقة لتيسير
+    وتطوير التبادل التجاري بين الدول العربية. وكانت تونس من المشاركين المؤسسين. أُلغي
+    التعريف الجمركي بين الأعضاء تدريجيًا على مدى عقد؛ أما الحواجز غير الجمركية — حيث يكمن
+    فعليًا معظم الاحتكاك التجاري العربي البيني — فلم تُلغَ.
+  summary_ar_by: model-reviewed
+  confidence: B
+  basis: documented
+  sources: [wto-pafta-text]
+
+- id: agadir-agreement
+  title_en: Agadir Agreement
+  title_fr: Accord d'Agadir
+  title_ar: اتفاقية أغادير
+  kind: free-trade
+  parties: [EG, JO, MA]
+  signed: "2004-02-25"
+  in_force: "2006-07-06"
+  text_url: https://wits.worldbank.org/GPTAD/PDF/archive/agadir.pdf
+  summary: >-
+    A free trade agreement between Tunisia, Egypt, Jordan and Morocco, signed at
+    Rabat on 25 February 2004. Its practical significance is less the tariff
+    schedule than the cumulation of origin it permits with the European Union: goods
+    assembled from inputs of several Agadir members can qualify for EU preference in
+    a way they could not bilaterally.
+  summary_fr: >-
+    Un accord de libre-échange entre la Tunisie, l'Égypte, la Jordanie et le Maroc, signé à
+    Rabat le 25 février 2004. Son importance pratique tient moins au calendrier tarifaire
+    qu'au cumul d'origine qu'il permet avec l'Union européenne : des marchandises assemblées
+    à partir d'intrants de plusieurs membres d'Agadir peuvent bénéficier de la préférence
+    européenne d'une manière qui serait impossible bilatéralement.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    اتفاق تجارة حرة بين تونس ومصر والأردن والمغرب، وُقّع في الرباط في 25 فيفري 2004. وتكمن
+    أهميته العملية أقل في جدول التعريفات الجمركية وأكثر في تراكم المنشأ الذي يسمح به مع
+    الاتحاد الأوروبي: فالسلع المجمّعة من مدخلات عدة دول من أغادير يمكن أن تستفيد من الأفضلية
+    الأوروبية بما لا يمكن تحقيقه ثنائيًا.
+  summary_ar_by: model-reviewed
+  confidence: B
+  basis: documented
+  # The two dates below are both real and both cited as "entry into force"; the
+  # record adopts the ratification date and keeps the other rather than choosing
+  # silently between them.
+  disputes:
+    - claim: The agreement entered into force on 27 March 2007.
+      held_by: Sources dating entry into force from the start of tariff dismantling
+      source: wipo-agadir
+      assessment: >-
+        Both dates describe real events. Ratification requirements were completed on
+        6 July 2006, and customs authorities were instructed to begin applying the
+        preferences in March 2007. This record uses the ratification date, since that
+        is when the treaty bound its parties, and notes the operational date here.
+  sources: [wits-agadir-text, wipo-agadir]
+
+- id: comesa-accession
+  title_en: Tunisia's accession to COMESA
+  title_fr: Adhésion de la Tunisie au COMESA
+  title_ar: انضمام تونس إلى الكوميسا
+  kind: accession
+  parties: [comesa]
+  in_force: "2018-07-19"
+  summary: >-
+    Tunisia was admitted to the Common Market for Eastern and Southern Africa as its
+    twentieth member state at the summit held in Lusaka on 18 and 19 July 2018, and
+    subsequently joined the COMESA free trade area. The accession is part of a
+    broader post-2011 reorientation towards African markets, pursued while trade
+    with the European Union remained several times larger.
+  summary_fr: >-
+    La Tunisie a été admise au Marché commun de l'Afrique orientale et australe comme
+    vingtième État membre, lors du sommet tenu à Lusaka les 18 et 19 juillet 2018, puis a
+    rejoint la zone de libre-échange du COMESA. Cette adhésion s'inscrit dans une
+    réorientation plus large vers les marchés africains engagée après 2011, poursuivie alors
+    que le commerce avec l'Union européenne restait plusieurs fois supérieur.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    قُبلت تونس في السوق المشتركة لشرق وجنوب أفريقيا (الكوميسا) كعضوها العشرين، في القمة التي
+    انعقدت بلوساكا يومي 18 و19 جويلية 2018، ثم انضمت إلى منطقة التجارة الحرة للكوميسا. ويأتي
+    هذا الانضمام في إطار إعادة توجيه أوسع نحو الأسواق الأفريقية بعد 2011، تواصلت في وقت ظلّ
+    فيه التجارة مع الاتحاد الأوروبي أكبر بعدة مرات.
+  summary_ar_by: model-reviewed
+  confidence: B
+  basis: reported
+  attributed_to: COMESA and contemporary regional reporting
+  sources: [comesa-tunisia-fta, eastafrican-tunisia-comesa]
+
+- id: afcfta-ratification
+  title_en: African Continental Free Trade Area
+  title_fr: Zone de libre-échange continentale africaine
+  title_ar: منطقة التجارة الحرة القارية الأفريقية
+  kind: free-trade
+  parties: [african-union]
+  signed: "2018-03-21"
+  in_force: "2020-11-02"
+  summary: >-
+    Tunisia signed the AfCFTA agreement at Kigali on 21 March 2018 with 43 other
+    states, and deposited its instrument of ratification with the African Union
+    Commission on 2 November 2020. The agreement itself had entered into force on
+    30 May 2019, once twenty-four states had ratified; the date recorded here is the
+    date it began to bind Tunisia.
+  summary_fr: >-
+    La Tunisie a signé l'accord de la ZLECAf à Kigali le 21 mars 2018 avec 43 autres États,
+    et a déposé son instrument de ratification auprès de la Commission de l'Union africaine
+    le 2 novembre 2020. L'accord lui-même était entré en vigueur le 30 mai 2019, une fois
+    vingt-quatre États ratifiants ; la date consignée ici est celle à laquelle il a commencé
+    à lier la Tunisie.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    وقّعت تونس اتفاقية منطقة التجارة الحرة القارية الأفريقية (AfCFTA) في كيغالي في 21 مارس
+    2018 مع 43 دولة أخرى، وأودعت صك تصديقها لدى مفوضية الاتحاد الأفريقي في 2 نوفمبر 2020.
+    وكانت الاتفاقية نفسها قد دخلت حيز النفاذ في 30 ماي 2019 بعد تصديق أربع وعشرين دولة؛
+    والتاريخ المسجّل هنا هو التاريخ الذي بدأت فيه تُلزم تونس.
+  summary_ar_by: model-reviewed
+  confidence: B
+  basis: reported
+  attributed_to: tralac's ratification tracker and contemporary reporting
+  disputes:
+    - claim: Tunisia deposited its instrument of ratification on 27 November 2020.
+      held_by: Diacron commentary and COMFWB; consistent with tralac's chronological ordering
+      source: diacron-afcfta-tunisia
+      assessment: >-
+        A Diacron briefing and a COMESA Women in Business post both date Tunisia's
+        deposit to 27 November 2020. Tralac's chronological list places Tunisia
+        after Angola (4 November) and before Cameroon (1 December), consistent with
+        that date. The UNECA press release dates it to 2 November 2020. The record
+        retains 2 November per the ECA press release; the COMFWB post explicitly
+        identifies 27 November as the date Tunisia became the 31st state party.
+  sources: [tralac-afcfta-ratification, allafrica-tunisia-afcfta, diacron-afcfta-tunisia]
+
+# World rebuild v2 ? reviewed agreement candidates (2026-08-16)
+- id: turkey-tunisia-fta
+  title_en: Association Agreement establishing a Free Trade Area between Turkey
+    and Tunisia
+  title_fr: Accord d'association établissant une zone de libre-échange entre la
+    Turquie et la Tunisie
+  title_ar: اتفاق الشراكة لإقامة منطقة تجارة حرة بين تونس وتركيا
+  kind: free-trade
+  parties:
+    - TR
+  signed: 2004-11-25
+  in_force: 2005-07-01
+  text_url: https://wits.worldbank.org/GPTAD/PDF/archive/Turkey-Tunisia.pdf
+  summary: Signed in Tunis on 25 November 2004 and in force from 1 July 2005, with
+    a transitional period of up to nine years for the dismantling of tariffs in
+    conformity with Article XXIV of GATT 1994 (implementation period recorded by
+    the WTO as ending in 2014). It mirrored the EU association model Turkey
+    applies on its Euro-Mediterranean flank, and has been the subject of a
+    revision process since October 2022.
+  summary_fr: Signé à Tunis le 25 novembre 2004 et en vigueur depuis le 1er
+    juillet 2005, avec une période transitoire pouvant aller jusqu'à neuf ans
+    pour le démantèlement tarifaire, conformément à l'article XXIV du GATT de
+    1994 (période de mise en œuvre clôturée en 2014 selon l'OMC). Il transpose
+    le modèle d'association de l'UE que la Turquie applique sur son flanc
+    euro-méditerranéen et fait l'objet d'un processus de révision depuis octobre
+    2022.
+  summary_fr_by: machine
+  summary_ar: وُقّعت في تونس في 25 نوفمبر 2004 ودخلت حيز النفاذ في 1 جويلية 2005،
+    مع فترة انتقالية قد تصل إلى تسع سنوات لتفكيك التعريفات الجمركية طبقًا للمادة
+    الرابعة والعشرين من اتفاقية GATT 1994 (أُغلقت فترة التنفيذ سنة 2014 حسب
+    منظمة التجارة العالمية). وهي تنقل نموذج الشراكة مع الاتحاد الأوروبي الذي
+    تطبّقه تركيا في محيطها الأورومتوسطي، وخضعت لمسار مراجعة منذ أكتوبر 2022.
+  summary_ar_by: machine
+  confidence: A
+  basis: documented
+  disputes:
+    - claim: The agreement entered into force in June 2005.
+      held_by: Agenzia Nova (Italian news agency)
+      source: agenzia-nova-turkey-fta
+      status: rejected
+      assessment: The Turkish Ministry of Trade, WIPO Lex and the WTO RTA database all
+        date entry into force at 1 July 2005. Agenzia Nova's "June 2005" is a
+        single-outlet approximation; the record adopts 1 July 2005.
+  sources:
+    - turkish-trade-tunisia-fta
+    - agenzia-nova-turkey-fta
+    - wits-gptad-turkey-tunisia
+    - wto-rtais-turkey-tunisia
+- id: bit-france-1997
+  title_en: Agreement between France and Tunisia on the reciprocal encouragement
+    and protection of investments (1997)
+  title_fr: Accord entre la France et la Tunisie sur l'encouragement et la
+    protection réciproques des investissements (1997)
+  title_ar: الاتفاق بين تونس وفرنسا حول التشجيع والحماية المتبادلة للاستثمارات (1997)
+  kind: investment
+  parties:
+    - FR
+  signed: 1997-10-20
+  in_force: 1999-09-10
+  text_url: https://www.senat.fr/leg/pjl97-348.html
+  summary: Signed in Paris on 20 October 1997 by Dominique Strauss-Kahn and
+    Mohamed Ghannouchi, together with an interpretative exchange of letters. On
+    entry into force (one month after the last notification, which UNCTAD dates
+    10 September 1999) it annulled and replaced the earlier France–Tunisia
+    conventions of 9 August 1963 (economic relations and investment protection)
+    and 30 June 1972 (investment protection). Initial term fifteen years, then
+    tacitly renewable; ICSID arbitration for investor–state disputes. Published
+    in France by décret n° 99-772 of 8 September 1999 (JORF n° 209, 9 September
+    1999).
+  summary_fr: Signé à Paris le 20 octobre 1997 par Dominique Strauss-Kahn et
+    Mohamed Ghannouchi, assorti d'un échange de lettres interprétatif. À son
+    entrée en vigueur (un mois après la dernière notification, que l'UNCTAD date
+    du 10 septembre 1999), il a annulé et remplacé les conventions
+    franco-tunisiennes antérieures du 9 août 1963 (relations économiques et
+    protection des investissements) et du 30 juin 1972 (protection des
+    investissements). Durée initiale de quinze ans, renouvelable par tacite
+    reconduction ; arbitrage CIRDI pour les différends investisseur-État. Publié
+    en France par le décret n° 99-772 du 8 septembre 1999 (JORF n° 209 du 9
+    septembre 1999).
+  summary_fr_by: machine
+  summary_ar: وُقّع في باريس في 20 أكتوبر 1997 من طرف دومينيك ستراوس كان ومحمد
+    الغنوشي، مع تبادل رسائل تفسيري. وعند دخوله حيز النفاذ (بعد شهر من آخر إشعار،
+    تؤرخه الأونكتاد في 10 سبتمبر 1999) ألغى وحلّ محل الاتفاقيتين السابقتين بين
+    تونس وفرنسا المؤرختين في 9 أوت 1963 (العلاقات الاقتصادية وحماية الاستثمارات)
+    و30 جوان 1972 (حماية الاستثمارات). مدته الأولى خمس عشرة سنة قابلة للتجديد
+    الضمني؛ مع تحكيم لدى المركز الدولي لتسوية منازعات الاستثمار (CIRDI). نُشر في
+    فرنسا بالمرسوم عدد 99-772 بتاريخ 8 سبتمبر 1999 (الجريدة الرسمية الفرنسية عدد
+    209، 9 سبتمبر 1999).
+  summary_ar_by: machine
+  confidence: A
+  basis: documented
+  sources:
+    - senat-france-tunisia-bit-1997
+    - legifrance-decret-99-772
+    - unctad-france-tunisia-bit-1997
+    - unctad-france-tunisia-bit-1972
+    - unctad-france-tunisia-bit-1963
+- id: bit-germany-1963
+  title_en: Treaty between the Federal Republic of Germany and Tunisia on the
+    promotion and reciprocal protection of capital investments (1963)
+  title_fr: Traité entre la République fédérale d'Allemagne et la République
+    tunisienne relatif à l'encouragement et à la protection réciproques des
+    investissements en capitaux (1963)
+  title_ar: المعاهدة المبرمة بين تونس وجمهورية ألمانيا الاتحادية حول تشجيع
+    الاستثمارات الرأسمالية وحمايتها المتبادلة (1963)
+  kind: investment
+  parties:
+    - DE
+  signed: 1963-12-20
+  in_force: 1966-02-06
+  text_url: https://edit.wti.org/document/show/c332ec11-c7df-44da-9f58-f7861fc29bc6
+  summary: "One of the oldest investment treaties in the world: signed at Tunis on
+    20 December 1963 by Oskar Schlitter for the Federal Republic of Germany and
+    Ahmed Ben Salah for Tunisia, with a protocol and two exchanges of letters;
+    instruments of ratification exchanged in Bonn, in force 6 February 1966.
+    UNCTAD records it as still in force (checked 2026-08-16). Initial term ten
+    years, then renewable indefinitely with one year's notice; a twenty-year
+    sunset protects investments made before any termination."
+  summary_fr: "L'un des plus anciens traités d'investissement du monde : signé à
+    Tunis le 20 décembre 1963 par Oskar Schlitter pour la République fédérale
+    d'Allemagne et Ahmed Ben Salah pour la Tunisie, avec protocole et deux
+    échanges de lettres ; instruments de ratification échangés à Bonn, en
+    vigueur le 6 février 1966. L'UNCTAD le recense toujours comme en vigueur
+    (vérifié le 16 août 2026). Durée initiale de dix ans, ensuite reconductible
+    indéfiniment avec un préavis d'un an ; une clause de survie de vingt ans
+    protège les investissements réalisés avant toute dénonciation."
+  summary_fr_by: machine
+  summary_ar: "من أقدم معاهدات الاستثمار في العالم: وُقّعت في تونس في 20 ديسمبر
+    1963 من طرف أوسكار شليتر عن جمهورية ألمانيا الاتحادية وأحمد بن صالح عن تونس،
+    مع بروتوكول وتبادل رسالتين؛ تبادل صكوك التصديق في بون، ودخلت حيز النفاذ في 6
+    فيفري 1966. وتسجّلها الأونكتاد ما تزال نافذة (تم التحقق في 16 أوت 2026).
+    مدتها الأولى عشر سنوات، ثم قابلة للتجديد إلى أجل غير مسمى مع إشعار مسبق
+    بسنة؛ ويحمي شرط البقاء لعشرين سنة الاستثمارات المنجزة قبل أي إنهاء."
+  summary_ar_by: machine
+  confidence: B
+  basis: documented
+  sources:
+    - wti-edit-germany-tunisia
+    - unctad-germany-tunisia-bit
+- id: bit-italy-1985
+  title_en: Agreement between Italy and Tunisia for the reciprocal promotion and
+    protection of investments (1985)
+  title_fr: Accord entre la République italienne et la République tunisienne sur
+    la promotion et la protection réciproques des investissements (1985)
+  title_ar: الاتفاق المبرم بين تونس وإيطاليا حول التشجيع والحماية المتبادلة
+    للاستثمارات (1985)
+  kind: investment
+  parties:
+    - IT
+  signed: 1985-10-17
+  in_force: 1989-06-24
+  text_url: https://www.gazzettaufficiale.it/eli/id/1989/07/11/089A3023/sg
+  summary: Signed at Rome on 17 October 1985 with exchanges of letters, ratified
+    by Italy through legge 2 January 1989, and in force from 24 June 1989 (entry
+    into force noticed in the Gazzetta Ufficiale of 11 July 1989). The Italian
+    foreign ministry lists it as the bilateral investment instrument in force
+    between the two countries. It provides MFN/national treatment, prompt
+    compensation for expropriation, free transfers, and ICSID-compatible
+    investor–state arbitration.
+  summary_fr: Signé à Rome le 17 octobre 1985 avec échanges de lettres, ratifié
+    par l'Italie par la loi du 2 janvier 1989, et en vigueur depuis le 24 juin
+    1989 (entrée en vigueur notifiée à la Gazzetta Ufficiale du 11 juillet
+    1989). Le ministère italien des Affaires étrangères le recense comme
+    l'instrument bilatéral d'investissement en vigueur entre les deux pays. Il
+    prévoit traitement NPF/national, indemnisation prompte en cas
+    d'expropriation, liberté des transferts et arbitrage investisseur-État
+    compatible avec le CIRDI.
+  summary_fr_by: machine
+  summary_ar: وُقّع في روما في 17 أكتوبر 1985 مع تبادل رسائل، وصادقت عليه إيطاليا
+    بقانون 2 جانفي 1989، ودخل حيز النفاذ في 24 جوان 1989 (أُعلن دخوله حيز النفاذ
+    بالجريدة الرسمية الإيطالية في 11 جويلية 1989). وتسجّله وزارة الخارجية
+    الإيطالية كالصك الثنائي للاستثمار النافذ بين البلدين. ينص على المعاملة
+    الوطنية ومعاملة الدولة الأولى بالرعاية، وتعويض فوري عند نزع الملكية، وحرية
+    التحويلات، وتحكيم بين المستثمر والدولة متوافق مع CIRDI.
+  summary_ar_by: machine
+  confidence: A
+  basis: documented
+  sources:
+    - gazzetta-ufficiale-italy-tunisia-bit
+    - mimit-italy-tunisia-bit-law
+    - esteri-tunisia-reciprocity
+    - wti-edit-italy-tunisia
+- id: bit-uae-1996
+  title_en: Tunisia–United Arab Emirates Agreement on the reciprocal promotion and
+    protection of investments (1996)
+  title_fr: Accord Tunisie–Émirats arabes unis sur l'encouragement et la
+    protection réciproques des investissements (1996)
+  title_ar: اتفاقية تونس–الإمارات العربية المتحدة حول تشجيع وحماية الاستثمارات
+    المتبادلة (1996)
+  kind: investment
+  parties:
+    - AE
+  signed: 1996-04-10
+  in_force: 1997-02-24
+  text_url: https://investmentpolicy.unctad.org/international-investment-agreements/treaty-files/2351/download
+  summary: Signed 10 April 1996 and in force 24 February 1997, per the UNCTAD IIA
+    Navigator. The Arabic text is held by UNCTAD (treaty-files 2351); it could
+    not be machine-retrieved this run (bot-block) and should be read before any
+    upgrade to grade A.
+  summary_fr: Signé le 10 avril 1996 et en vigueur depuis le 24 février 1997,
+    selon le navigateur des AII de l'UNCTAD. Le texte arabe est conservé par
+    l'UNCTAD (treaty-files 2351) ; il n'a pas pu être récupéré automatiquement
+    lors de cette campagne (blocage anti-bot) et devra être lu avant tout
+    passage en grade A.
+  summary_fr_by: machine
+  summary_ar: وُقّعت في 10 أفريل 1996 ودخلت حيز النفاذ في 24 فيفري 1997، حسب متصفح
+    اتفاقيات الاستثمار الدولية للأونكتاد. والنص العربي محفوظ لدى الأونكتاد
+    (treaty-files 2351)؛ ولم يتسنّ استرجاعه آليًا في هذه الجولة (حجب آلي) ويجب
+    الاطلاع عليه قبل أي ترقية إلى درجة A.
+  summary_ar_by: machine
+  confidence: B
+  basis: documented
+  sources:
+    - unctad-tunisia-iia-navigator
+    - unctad-uae-tunisia-bit
+  verification: needs-primary-source
+- id: bit-kuwait-1973
+  title_en: Kuwait–Tunisia Agreement on the reciprocal promotion and protection of
+    investments (1973)
+  title_fr: Accord Koweït–Tunisie sur l'encouragement et la protection réciproques
+    des investissements (1973)
+  title_ar: اتفاقية الكويت–تونس حول تشجيع وحماية الاستثمارات المتبادلة (1973)
+  kind: investment
+  parties:
+    - KW
+  signed: 1973-09-14
+  in_force: 2006-05-28
+  text_url: https://investmentpolicy.unctad.org/international-investment-agreements/treaty-files/5279/download
+  summary: Signed 14 September 1973 but only in force from 28 May 2006 — an
+    unusually long, 33-year gap between signature and entry into force, per the
+    UNCTAD IIA Navigator, which lists it as in force. Arabic text held by UNCTAD
+    (treaty-files 5279); not machine-retrievable this run.
+  summary_fr: Signé le 14 septembre 1973 mais entré en vigueur seulement le 28 mai
+    2006 — un écart de trente-trois ans, inhabituellement long, entre signature
+    et entrée en vigueur, selon le navigateur des AII de l'UNCTAD, qui le
+    recense comme en vigueur. Texte arabe conservé par l'UNCTAD (treaty-files
+    5279) ; non récupérable automatiquement lors de cette campagne.
+  summary_fr_by: machine
+  summary_ar: وُقّعت في 14 سبتمبر 1973 لكنها لم تدخل حيز النفاذ إلا في 28 ماي 2006
+    — أي فجوة طويلة على نحو غير معتاد (33 سنة) بين التوقيع وبدء النفاذ، حسب
+    متصفح الأونكتاد الذي يسجّلها نافذة. والنص العربي محفوظ لدى الأونكتاد
+    (treaty-files 5279)؛ ولم يتسنّ استرجاعه آليًا في هذه الجولة.
+  summary_ar_by: machine
+  confidence: B
+  basis: documented
+  sources:
+    - unctad-tunisia-iia-navigator
+    - unctad-kuwait-tunisia-bit
+  verification: needs-primary-source
+- id: bit-oman-1991
+  title_en: Oman–Tunisia Agreement on the reciprocal promotion and protection of
+    investments (1991)
+  title_fr: Accord Oman–Tunisie sur l'encouragement et la protection réciproques
+    des investissements (1991)
+  title_ar: اتفاقية عُمان–تونس حول تشجيع وحماية الاستثمارات المتبادلة (1991)
+  kind: investment
+  parties:
+    - OM
+  signed: 1991-10-19
+  in_force: 1992-03-01
+  text_url: https://investmentpolicy.unctad.org/international-investment-agreements/treaty-files/5284/download
+  summary: Signed 19 October 1991 and in force 1 March 1992, per the UNCTAD IIA
+    Navigator. Arabic text held by UNCTAD (treaty-files 5284); not
+    machine-retrievable this run.
+  summary_fr: Signé le 19 octobre 1991 et en vigueur depuis le 1er mars 1992,
+    selon le navigateur des AII de l'UNCTAD. Texte arabe conservé par l'UNCTAD
+    (treaty-files 5284) ; non récupérable automatiquement lors de cette
+    campagne.
+  summary_fr_by: machine
+  summary_ar: وُقّعت في 19 أكتوبر 1991 ودخلت حيز النفاذ في 1 مارس 1992، حسب متصفح
+    الأونكتاد. والنص العربي محفوظ لدى الأونكتاد (treaty-files 5284)؛ ولم يتسنّ
+    استرجاعه آليًا في هذه الجولة.
+  summary_ar_by: machine
+  confidence: B
+  basis: documented
+  sources:
+    - unctad-tunisia-iia-navigator
+    - unctad-oman-tunisia-bit
+  verification: needs-primary-source
+- id: bit-qatar-1996
+  title_en: Qatar–Tunisia Agreement on the reciprocal promotion and protection of
+    investments (1996)
+  title_fr: Accord Qatar–Tunisie sur l'encouragement et la protection réciproques
+    des investissements (1996)
+  title_ar: اتفاقية قطر–تونس حول تشجيع وحماية الاستثمارات المتبادلة (1996)
+  kind: investment
+  parties:
+    - QA
+  signed: 1996-05-28
+  in_force: "?"
+  text_url: https://investmentpolicy.unctad.org/international-investment-agreements/treaty-files/5286/download
+  summary: Signed 28 May 1996 and recorded by the UNCTAD IIA Navigator as signed
+    but not in force — one of the signed Tunisian BITs that never completed
+    ratification. Arabic text held by UNCTAD (treaty-files 5286); not
+    machine-retrievable this run.
+  summary_fr: Signé le 28 mai 1996 et recensé par le navigateur des AII de
+    l'UNCTAD comme signé mais non entré en vigueur — l'un des TBI tunisiens
+    signés qui n'ont jamais achevé leur ratification. Texte arabe conservé par
+    l'UNCTAD (treaty-files 5286) ; non récupérable automatiquement lors de cette
+    campagne.
+  summary_fr_by: machine
+  summary_ar: وُقّعت في 28 ماي 1996 ويسجّلها متصفح الأونكتاد كاتفاقية موقّعة لكنها
+    لم تدخل حيز النفاذ — وهي من اتفاقيات الاستثمار الثنائية التونسية الموقّعة
+    التي لم تستكمل التصديق قط. والنص العربي محفوظ لدى الأونكتاد (treaty-files
+    5286)؛ ولم يتسنّ استرجاعه آليًا في هذه الجولة.
+  summary_ar_by: machine
+  confidence: B
+  basis: documented
+  sources:
+    - unctad-tunisia-iia-navigator
+    - unctad-qatar-tunisia-bit
+  verification: needs-primary-source
+- id: bit-turkey-1991
+  title_en: Tunisia–Turkey Agreement on the reciprocal promotion and protection of
+    investments (1991)
+  title_fr: Accord Tunisie–Turquie sur l'encouragement et la protection
+    réciproques des investissements (1991)
+  title_ar: اتفاقية تونس–تركيا حول تشجيع وحماية الاستثمارات المتبادلة (1991)
+  kind: investment
+  parties:
+    - TR
+  signed: 1991-05-29
+  in_force: 1994-04-28
+  text_url: https://investmentpolicy.unctad.org/international-investment-agreements/treaty-files/2350/download
+  summary: Signed 29 May 1991 and in force 28 April 1994, per the UNCTAD IIA
+    Navigator, which lists it as in force. A successor BIT signed 27 December
+    2017 is recorded as signed but not in force. English and Turkish texts held
+    by UNCTAD (treaty-files 2350/6743).
+  summary_fr: Signé le 29 mai 1991 et en vigueur depuis le 28 avril 1994, selon le
+    navigateur des AII de l'UNCTAD, qui le recense comme en vigueur. Un TBI
+    successeur signé le 27 décembre 2017 est recensé comme signé mais non en
+    vigueur. Textes anglais et turc conservés par l'UNCTAD (treaty-files
+    2350/6743).
+  summary_fr_by: machine
+  summary_ar: وُقّعت في 29 ماي 1991 ودخلت حيز النفاذ في 28 أفريل 1994، حسب متصفح
+    الأونكتاد الذي يسجّلها نافذة. أما اتفاقية استثمار خلف وُقّعت في 27 ديسمبر
+    2017 فتسجّلها الأونكتاد موقّعة دون نفاذ. والنصان الإنجليزي والتركي محفوظان
+    لدى الأونكتاد (treaty-files 2350/6743).
+  summary_ar_by: machine
+  confidence: B
+  basis: documented
+  sources:
+    - unctad-tunisia-iia-navigator
+    - unctad-turkey-tunisia-bit
+  verification: needs-primary-source
+- id: bit-switzerland-2012
+  title_en: Switzerland–Tunisia Agreement on the promotion and reciprocal
+    protection of investments (2012)
+  title_fr: Accord Suisse–Tunisie sur la promotion et la protection réciproques
+    des investissements (2012)
+  title_ar: اتفاقية سويسرا–تونس حول تشجيع وحماية الاستثمارات المتبادلة (2012)
+  kind: investment
+  parties:
+    - CH
+  signed: 2012-10-16
+  in_force: 2014-07-08
+  text_url: https://investmentpolicy.unctad.org/international-investment-agreements/treaty-files/4912/download
+  summary: Signed 16 October 2012 and in force 8 July 2014, per the UNCTAD IIA
+    Navigator; it replaced the 1961 Switzerland–Tunisia BIT (terminated 8 July
+    2014). English, French and Arabic texts held by UNCTAD (treaty-files
+    4912/4913/4919).
+  summary_fr: Signé le 16 octobre 2012 et en vigueur depuis le 8 juillet 2014,
+    selon le navigateur des AII de l'UNCTAD ; il a remplacé le TBI
+    Suisse–Tunisie de 1961 (dénoncé le 8 juillet 2014). Textes anglais, français
+    et arabe conservés par l'UNCTAD (treaty-files 4912/4913/4919).
+  summary_fr_by: machine
+  summary_ar: وُقّعت في 16 أكتوبر 2012 ودخلت حيز النفاذ في 8 جويلية 2014، حسب
+    متصفح الأونكتاد؛ وقد حلّت محل اتفاقية الاستثمار التونسية السويسرية لسنة 1961
+    (المنتهية في 8 جويلية 2014). والنصوص الإنجليزية والفرنسية والعربية محفوظة
+    لدى الأونكتاد (treaty-files 4912/4913/4919).
+  summary_ar_by: machine
+  confidence: B
+  basis: documented
+  sources:
+    - unctad-tunisia-iia-navigator
+    - unctad-switzerland-tunisia-bit
+  verification: needs-primary-source
+- id: bit-us-1990
+  title_en: Treaty between the United States of America and Tunisia concerning the
+    reciprocal encouragement and protection of investment (1990)
+  title_fr: Traité entre les États-Unis d'Amérique et la Tunisie concernant
+    l'encouragement et la protection réciproques des investissements (1990)
+  title_ar: المعاهدة المبرمة بين تونس والولايات المتحدة الأمريكية حول التشجيع
+    والحماية المتبادلة للاستثمار (1990)
+  kind: investment
+  parties:
+    - US
+  signed: 1990-05-15
+  in_force: 1993-02-07
+  text_url: https://2009-2017.state.gov/e/eb/ifd/43364.htm
+  summary: Signed 15 May 1990 and in force 7 February 1993 (Senate Treaty Doc.
+    102-6). It was the United States' BIT with Tunisia — a US model treaty with
+    minor departures — and remains the investment-protection instrument between
+    the two countries; UNCTAD records it as in force.
+  summary_fr: Signé le 15 mai 1990 et en vigueur depuis le 7 février 1993 (Senate
+    Treaty Doc. 102-6). C'est le TBI des États-Unis avec la Tunisie — un traité
+    calqué sur le modèle américain avec des écarts mineurs — et il demeure
+    l'instrument de protection des investissements entre les deux pays ;
+    l'UNCTAD le recense comme en vigueur.
+  summary_fr_by: machine
+  summary_ar: وُقّعت في 15 ماي 1990 ودخلت حيز النفاذ في 7 فيفري 1993 (وثيقة مجلس
+    الشيوخ 102-6). وهي معاهدة الاستثمار الثنائية بين الولايات المتحدة وتونس —
+    مبنية على النموذج الأمريكي مع فروق طفيفة — وتظل أداة حماية الاستثمار بين
+    البلدين؛ وتسجّلها الأونكتاد نافذة.
+  summary_ar_by: machine
+  confidence: A
+  basis: documented
+  sources:
+    - state-us-tunisia-bit
+    - unctad-us-tunisia-bit
+- id: dtt-france-1973
+  title_en: Convention between France and Tunisia for the avoidance of double
+    taxation and the establishment of rules of mutual administrative assistance
+    in fiscal matters (1973)
+  title_fr: Convention entre la France et la Tunisie tendant à éliminer les
+    doubles impositions et à établir des règles d'assistance mutuelle
+    administrative en matière fiscale (1973)
+  title_ar: اتفاقية تونس–فرنسا لإزالة الازدواج الضريبي وإرساء قواعد المساعدة
+    الإدارية المتبادلة في الميدان الجبائي (1973)
+  kind: double-taxation
+  parties:
+    - FR
+  signed: 1973-05-28
+  in_force: 1975-04-01
+  text_url: https://www.impots.gouv.fr/sites/default/files/media/10_conventions/tunisie/tunisie_convention-avec-la-tunisie_fd_1792.pdf
+  summary: Signed at Tunis on 28 May 1973 together with an integral protocol.
+    Approval authorised in France by loi n° 74-1080 of 21 December 1974;
+    ratification notifications exchanged on 11 March 1975 (Tunisia had ratified
+    14 June 1974); in force 1 April 1975; published in France by décret n°
+    75-1044 of 28 October 1975 (JO 12-13 November 1975). Amended by an exchange
+    of letters of 29 May and 24 June 1985. Still listed as in force on the
+    French administration's own list of tax conventions (30 June 2024).
+  summary_fr: Signée à Tunis le 28 mai 1973, assortie d'un protocole faisant
+    partie intégrante. Approbation autorisée en France par la loi n° 74-1080 du
+    21 décembre 1974 ; notifications de ratification échangées le 11 mars 1975
+    (la Tunisie ayant ratifié le 14 juin 1974) ; entrée en vigueur le 1er avril
+    1975 ; publiée en France par le décret n° 75-1044 du 28 octobre 1975 (JO des
+    12 et 13 novembre 1975). Modifiée par un échange de lettres des 29 mai et 24
+    juin 1985. Toujours en vigueur sur la liste officielle française des
+    conventions fiscales (30 juin 2024).
+  summary_fr_by: machine
+  summary_ar: وُقّعت في تونس في 28 ماي 1973 مع بروتوكول جزء لا يتجزأ منها. أُذن
+    بالمصادقة عليها في فرنسا بالقانون عدد 74-1080 بتاريخ 21 ديسمبر 1974؛ وتبادلت
+    الدولتان إشعاري التصديق في 11 مارس 1975 (وكانت تونس قد صدّقت في 14 جوان
+    1974)؛ ودخلت حيز النفاذ في 1 أفريل 1975؛ ونُشرت في فرنسا بالمرسوم عدد
+    75-1044 بتاريخ 28 أكتوبر 1975 (الجريدة الرسمية يومي 12 و13 نوفمبر 1975).
+    وعُدّلت بتبادل رسائل يومي 29 ماي و24 جوان 1985. وما تزال واردة في القائمة
+    الرسمية الفرنسية للاتفاقيات الجبائية النافذة (30 جوان 2024).
+  summary_ar_by: machine
+  confidence: A
+  basis: documented
+  sources:
+    - bofip-france-tunisia-dtt
+    - impots-france-tunisia-dtt-text
+    - bofip-france-dtt-list
+- id: elmed-interconnector-agreement
+  title_en: Intergovernmental agreement between Italy and Tunisia supporting the
+    ELMED electricity interconnection (2019)
+  title_fr: Accord intergouvernemental Italie–Tunisie d'appui au projet
+    d'interconnexion électrique ELMED (2019)
+  title_ar: الاتفاق الحكومي بين تونس وإيطاليا لدعم مشروع الربط الكهربائي «الميد»
+    ELMED (2019)
+  kind: other
+  parties:
+    - IT
+  signed: 2019-04-30
+  in_force: 2022-01-25
+  summary: Agreement reached on 30 April 2019 between the Italian Ministry of
+    Economic Development and the Tunisian Ministry of Industry to support the
+    600 MW HVDC electricity interconnection that Terna and STEG are building
+    between Partanna (Sicily) and Mlaabi (Cap Bon). Ratified by Tunisia on 29
+    January 2020 and by Italy on 19 December 2021, it came into force on 25
+    January 2022, per the official Terna/STEG project site. The interconnector
+    itself received €307 million in EU Connecting Europe Facility financing and
+    is scheduled for completion around 2028.
+  summary_fr: Accord conclu le 30 avril 2019 entre le ministère italien du
+    Développement économique et le ministère tunisien de l'Industrie pour
+    appuyer l'interconnexion électrique à courant continu de 600 MW que Terna et
+    la STEG construisent entre Partanna (Sicile) et Mlaabi (cap Bon). Ratifié
+    par la Tunisie le 29 janvier 2020 et par l'Italie le 19 décembre 2021, il
+    est entré en vigueur le 25 janvier 2022, selon le site officiel du projet
+    Terna/STEG. L'interconnexion a reçu 307 millions d'euros du Mécanisme pour
+    l'interconnexion en Europe et vise une mise en service vers 2028.
+  summary_fr_by: machine
+  summary_ar: اتفاق أُبرم في 30 أفريل 2019 بين وزارة التنمية الاقتصادية الإيطالية
+    ووزارة الصناعة التونسية لدعم الربط الكهربائي بالتيار المستمر (600 ميغاواط)
+    الذي تنجزه شركتا تيرنا والستاغ بين بارتانا (صقلية) والملعبي (الوطن القبلي).
+    صدّقت عليه تونس في 29 جانفي 2020 وإيطاليا في 19 ديسمبر 2021، ودخل حيز النفاذ
+    في 25 جانفي 2022، حسب الموقع الرسمي لمشروع تيرنا/الستاغ. وحصل الربط على
+    تمويل بـ307 ملايين يورو من آلية الربط الأوروبية، ويُتوقع دخوله الخدمة نحو
+    2028.
+  summary_ar_by: machine
+  confidence: B
+  basis: documented
+  sources:
+    - elmed-institutional-support
+- id: us-tunisia-icc-surrender-2003
+  title_en: Agreement between the United States and Tunisia regarding the
+    surrender of persons to the International Criminal Court (2003)
+  title_fr: Accord entre les États-Unis et la Tunisie relatif à la remise de
+    personnes à la Cour pénale internationale (2003)
+  title_ar: الاتفاق بين تونس والولايات المتحدة حول تسليم الأشخاص إلى المحكمة
+    الجنائية الدولية (2003)
+  kind: other
+  parties:
+    - US
+  signed: 2003-06-05
+  in_force: 2003-12-22
+  text_url: https://2009-2017.state.gov/s/l/treaty/34278.htm
+  summary: "An Article 98-type bilateral: effected by exchange of notes at Tunis
+    on 5 June 2003 and entered into force on 22 December 2003, per the State
+    Department's official treaty actions record. It is one of the
+    bilateral-security instruments in the US–Tunisia file; it is not a
+    status-of-forces agreement, of which none exists between the two countries
+    in the treaty actions record."
+  summary_fr: "Accord bilatéral de type « article 98 » : conclu par échange de
+    notes à Tunis le 5 juin 2003 et entré en vigueur le 22 décembre 2003, selon
+    le registre officiel des traités du département d'État. C'est l'un des
+    instruments de sécurité bilatéraux du dossier américano-tunisien ; ce n'est
+    pas un accord de statut des forces, dont aucun n'existe entre les deux pays
+    dans le registre des traités."
+  summary_fr_by: machine
+  summary_ar: "اتفاق ثنائي من نوع «المادة 98»: أُبرم بتبادل مذكرات في تونس في 5
+    جوان 2003 ودخل حيز النفاذ في 22 ديسمبر 2003، حسب السجل الرسمي لمعاهدات وزارة
+    الخارجية الأمريكية. وهو من الصكوك الأمنية الثنائية في الملف التونسي
+    الأمريكي؛ وهو ليس اتفاقًا حول مركز القوات، إذ لا يوجد أي اتفاق من هذا النوع
+    بين البلدين في سجل المعاهدات."
+  summary_ar_by: machine
+  confidence: A
+  basis: documented
+  sources:
+    - state-treaty-actions-2003
+- id: us-tunisia-defense-roadmap-2020
+  title_en: U.S.–Tunisia Road Map for Defense Cooperation (2020)
+  title_fr: Feuille de route États-Unis–Tunisie pour la coopération de défense (2020)
+  title_ar: خارطة طريق التعاون الدفاعي بين تونس والولايات المتحدة (2020)
+  kind: other
+  parties:
+    - US
+  signed: 2020-09-30
+  in_force: 2020-09-30
+  text_url: https://www.war.gov/News/News-Stories/Article/Article/2368982/us-tunisia-sign-road-map-for-defense-cooperation/
+  summary: Signed in Tunis on 30 September 2020 by U.S. Defense Secretary Mark
+    Esper and Tunisian Defense Minister Brahim Bartagi (TAP describes it as a
+    roadmap for military cooperation over 2020-2030). It is a political ten-year
+    framework — shared priorities, capability gaps, interoperability — rather
+    than a ratified treaty; the date recorded here is the date it became
+    effective by signature. It built on Tunisia's 2015 designation as a Major
+    Non-NATO Ally, which is itself a presidential designation, not an agreement.
+  summary_fr: Signée à Tunis le 30 septembre 2020 par le secrétaire américain à la
+    Défense Mark Esper et le ministre tunisien de la Défense Brahim Bartagi (la
+    TAP la présente comme une feuille de route de coopération militaire sur
+    2020-2030). C'est un cadre politique décennal — priorités partagées, lacunes
+    capacitaires, interopérabilité — plutôt qu'un traité ratifié ; la date
+    retenue est celle de sa prise d'effet par la signature. Elle s'appuie sur la
+    désignation de la Tunisie en 2015 comme allié majeur non-membre de l'OTAN,
+    désignation présidentielle, et non accord.
+  summary_fr_by: machine
+  summary_ar: وُقّعت في تونس في 30 سبتمبر 2020 من طرف وزير الدفاع الأمريكي مارك
+    إسبر ووزير الدفاع التونسي إبراهيم البرتاجي (تقدّمها وكالة تونس إفريقيا
+    للأنباء كخارطة طريق للتعاون العسكري على فترة 2020-2030). وهي إطار سياسي عشري
+    — أولويات مشتركة وفجوات في القدرات وقابلية التشغيل البيني — وليست معاهدة
+    مصدَّقًا عليها؛ والتاريخ المسجّل هنا هو تاريخ سريانها بالتوقيع. وهي تستند
+    إلى تصنيف تونس سنة 2015 حليفًا رئيسيًا من خارج الناتو، وهو تصنيف رئاسي
+    أمريكي وليس اتفاقًا.
+  summary_ar_by: machine
+  confidence: A
+  basis: documented
+  sources:
+    - dod-tunisia-roadmap
+    - tap-tunisia-us-roadmap

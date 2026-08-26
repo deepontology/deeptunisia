@@ -1,0 +1,1657 @@
+<!doctype html>
+<!--
+  Deep Tunisia — landing page (standalone prototype)
+
+  Fully separate from the SvelteKit app: serve with any static server rooted
+  at the repo (npx serve, python -m http.server, netlify drop…) or open from
+  disk. The only local dependency is the self-hosted webfonts in
+  ../static/fonts (privacy: no Google Fonts request ever).
+
+  Wire-up points (search "WIRE"):
+    · the instrument CTA  -> href of a.cta-deep
+    · contact address     -> the mailto: links
+    · source URL          -> the GitHub link in the footer
+
+  Toggles: locale (EN/FR/AR, flips lang + dir), theme (dark/light).
+  Both persist to localStorage. prefers-reduced-motion is honoured.
+
+  Every figure on this page is computed from the real build output:
+    · the memory line  -> positions active per year, from
+                          src/generated/dataset.json (379 positions;
+                          32 undated excluded)
+    · all stats        -> src/generated/stats.json
+    · the 12 key words -> real BIP-39 English words (the spec's wordlist)
+  Nothing is stylised, guessed, or invented.
+-->
+<html lang="en" dir="ltr" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deep Tunisia — a nation that remembers</title>
+<meta name="description" content="An open-source, source-backed public record of the people, institutions, companies and networks that shape Tunisia, 1956–2026. Every claim traceable, every conclusion challengeable.">
+<meta name="theme-color" content="#1d1b15">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' fill='%231d1b15'/%3E%3Ccircle cx='12' cy='12' r='5' fill='%2385c45c'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../static/fonts/fonts.css">
+<style>
+/* ============================================================
+   Tokens — values copied verbatim from src/lib/design/tokens.css
+   (one theme flips them; no raw colours in components)
+   ============================================================ */
+:root {
+  --font-sans: 'Inter', 'IBM Plex Sans Arabic', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Newsreader', 'Amiri', 'Noto Naskh Arabic', 'Traditional Arabic', Georgia, serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Mono', monospace;
+
+  --accent-hue: 85;
+  --layer-security: oklch(68% 0.105 32);
+  --layer-political: oklch(68% 0.105 85);
+  --layer-economic: oklch(68% 0.105 155);
+  --layer-media: oklch(68% 0.105 300);
+  --layer-judicial: oklch(68% 0.105 245);
+  --layer-civil: oklch(68% 0.105 55);
+  --layer-foreign: oklch(68% 0.105 205);
+
+  --basis-documented: oklch(72% 0.115 150);
+  --basis-reported: oklch(72% 0.115 95);
+  --basis-inferred: oklch(72% 0.115 55);
+  --basis-unsubstantiated: oklch(72% 0.115 20);
+}
+
+/* dark (default) */
+html[data-theme="dark"] {
+  --surface-sunken: oklch(9% 0.008 60);
+  --surface-base: oklch(12.5% 0.008 60);
+  --surface-raised: oklch(15.5% 0.008 60);
+  --surface-panel: oklch(18.5% 0.008 60);
+  --surface-hover: oklch(100% 0 0 / 0.045);
+  --border-subtle: oklch(100% 0 0 / 0.07);
+  --border-default: oklch(100% 0 0 / 0.11);
+  --border-strong: oklch(100% 0 0 / 0.18);
+  --text-primary: oklch(95% 0.004 60);
+  --text-secondary: oklch(72% 0.007 60);
+  --text-muted: oklch(60% 0.008 60);
+  --text-faint: oklch(50% 0.008 60);
+  --text-inverted: oklch(12.5% 0.008 60);
+  --accent: oklch(78% 0.13 var(--accent-hue));
+  --accent-hover: oklch(84% 0.14 var(--accent-hue));
+  --accent-muted: oklch(78% 0.13 var(--accent-hue) / 0.16);
+  --accent-border: oklch(78% 0.13 var(--accent-hue) / 0.42);
+  --rupture: oklch(62% 0.14 22);
+  --rupture-soft: oklch(62% 0.14 22 / 0.4);
+}
+
+/* light */
+html[data-theme="light"] {
+  --surface-sunken: oklch(95% 0.004 60);
+  --surface-base: oklch(99% 0.002 60);
+  --surface-raised: oklch(97.5% 0.003 60);
+  --surface-panel: oklch(97.5% 0.003 60);
+  --surface-hover: oklch(0% 0 0 / 0.035);
+  --border-subtle: oklch(0% 0 0 / 0.07);
+  --border-default: oklch(0% 0 0 / 0.12);
+  --border-strong: oklch(0% 0 0 / 0.2);
+  --text-primary: oklch(15.5% 0.008 60);
+  --text-secondary: oklch(41% 0.008 60);
+  --text-muted: oklch(50% 0.008 60);
+  --text-faint: oklch(60% 0.008 60);
+  --text-inverted: oklch(99% 0.002 60);
+  --accent: oklch(55% 0.13 calc(var(--accent-hue) - 15));
+  --accent-hover: oklch(48% 0.14 calc(var(--accent-hue) - 15));
+  --accent-muted: oklch(55% 0.13 calc(var(--accent-hue) - 15) / 0.12);
+  --accent-border: oklch(55% 0.13 calc(var(--accent-hue) - 15) / 0.4);
+  --rupture: oklch(52% 0.17 25);
+  --rupture-soft: oklch(52% 0.17 25 / 0.3);
+}
+
+/* ============================================================
+   Base
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* noise texture overlay — materiality, not decoration */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.028;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+body {
+  margin: 0;
+  background: var(--surface-base);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+@media (prefers-reduced-motion: reduce) { body { transition: none; } }
+::selection { background: var(--accent-muted); }
+
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-hover); }
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  inset-inline-start: 1rem;
+  top: -4rem;
+  padding: 0.5rem 1rem;
+  background: var(--surface-panel);
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  font-size: 0.9rem;
+  transition: top 0.2s ease;
+  z-index: 100;
+}
+.skip-link:focus { top: 1rem; }
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0 0 1.25rem;
+}
+.serif { font-family: var(--font-serif); }
+
+.container {
+  max-width: 74rem;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+@media (min-width: 900px) { .container { padding-inline: 3rem; } }
+
+/* ============================================================
+   Reveal on scroll — JS adds .in via IntersectionObserver.
+   Content is visible without JS (noscript block at the end of
+   the head forces it); motion is an enhancement, not a gate.
+   ============================================================ */
+.reveal, .reveal-up, .reveal-left, .reveal-scale {
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+html.js .reveal { opacity: 0; transform: translateY(18px); }
+html.js .reveal-up { opacity: 0; transform: translateY(28px); }
+html.js .reveal-left { opacity: 0; transform: translateX(-20px); }
+html.js .reveal-scale { opacity: 0; transform: scale(0.95); }
+html.js .reveal.in, html.js .reveal-up.in, html.js .reveal-left.in, html.js .reveal-scale.in {
+  opacity: 1; transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.js .reveal, html.js .reveal-up, html.js .reveal-left, html.js .reveal-scale {
+    opacity: 1; transform: none; transition: none;
+  }
+}
+
+/* ============================================================
+   Threshold bar
+   ============================================================ */
+header.threshold {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: color-mix(in oklab, var(--surface-base) 86%, transparent);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.threshold .container {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  height: 3.5rem;
+}
+.brand {
+  display: flex;
+  align-items: baseline;
+  gap: 0.55rem;
+  font-size: 1.02rem;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+.brand .mark {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  color: var(--accent);
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.threshold nav {
+  display: none;
+  gap: 1.4rem;
+  margin-inline-start: auto;
+  font-size: 0.95rem;
+}
+.threshold nav a { color: var(--text-secondary); }
+.threshold nav a:hover { color: var(--text-primary); }
+@media (min-width: 760px) { .threshold nav { display: flex; } }
+
+.toggles {
+  margin-inline-start: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+@media (min-width: 760px) { .toggles { margin-inline-start: 0; } }
+
+.locale {
+  display: flex;
+  border: 1px solid var(--border-default);
+  border-radius: 999px;
+  padding: 2px;
+}
+.locale button {
+  border: 0;
+  background: transparent;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  padding: 0.28rem 0.62rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+.locale button:hover { color: var(--text-primary); }
+.locale button[aria-pressed="true"] {
+  background: var(--accent-muted);
+  color: var(--accent);
+  border: 1px solid var(--accent-border);
+}
+@media (prefers-reduced-motion: reduce) { .locale button { transition: none; } }
+
+#theme-toggle {
+  border: 1px solid var(--border-default);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-secondary);
+  width: 2.1rem;
+  height: 2.1rem;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+#theme-toggle:hover { color: var(--text-primary); background: var(--surface-hover); }
+
+/* ============================================================
+   Hero
+   ============================================================ */
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(4.5rem, 12vh, 8rem) clamp(3rem, 7vh, 5rem);
+  border-bottom: 1px solid var(--border-subtle);
+}
+/* the names field — real people from the graph, dust in the archive */
+.names-field {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+}
+.names-field span {
+  position: absolute;
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-style: italic;
+  color: var(--text-primary);
+  opacity: 0.07;
+  white-space: nowrap;
+  will-change: transform;
+}
+/* each name drifts at its own pace — seeded via inline style */
+.names-field span:nth-child(3n)   { animation: drift 55s linear infinite alternate; }
+.names-field span:nth-child(3n+1) { animation: drift 70s linear infinite alternate; }
+.names-field span:nth-child(3n+2) { animation: drift 85s linear infinite alternate; }
+@keyframes drift {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-42px); }
+}
+@media (prefers-reduced-motion: reduce) { .names-field span { animation: none; } }
+
+.hero .content { position: relative; }
+.hero h1 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(2.6rem, 7vw, 4.9rem);
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+  max-width: 18ch;
+  margin: 0 0 1.6rem;
+}
+.hero .lede {
+  font-size: 1.2rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  max-width: 46rem;
+  margin: 0 0 2.4rem;
+}
+.cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.6rem;
+}
+.cta-deep {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.8rem 1.7rem;
+  border-radius: 999px;
+  border: 1px solid var(--accent-border);
+  background: var(--accent-muted);
+  color: var(--accent);
+  font-size: 1.02rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.cta-deep:hover { background: var(--accent); color: var(--text-inverted); border-color: var(--accent); }
+.cta-deep .arrow { font-size: 1.15rem; line-height: 1; }
+@media (prefers-reduced-motion: no-preference) {
+  .cta-deep .arrow { animation: bob 4s ease-in-out 2.2s; }
+}
+@keyframes bob {
+  0%, 45% { transform: translateY(0); }
+  50% { transform: translateY(4px); }
+  55% { transform: translateY(-2px); }
+  60%, 100% { transform: translateY(0); }
+}
+.cta-quiet {
+  color: var(--text-secondary);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.08rem;
+  border-bottom: 1px solid var(--border-default);
+  padding-bottom: 2px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.cta-quiet:hover { color: var(--text-primary); border-color: var(--text-primary); }
+
+/* ---- the memory line ---- */
+.memory { margin-top: clamp(3.5rem, 8vh, 5.5rem); }
+.memory svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.memory .caption-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.6rem 2rem;
+  margin-top: 0.9rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+}
+.memory .caption-row .attr { color: var(--text-faint); }
+
+/* ============================================================
+   The argument — five movements
+   ============================================================ */
+.argument {
+  padding-block: clamp(4rem, 10vh, 7rem);
+}
+.movement {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.2rem;
+  max-width: 58rem;
+  padding-block: clamp(2.2rem, 5vh, 3.4rem);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.movement:last-child { border-bottom: 0; }
+@media (min-width: 900px) {
+  .movement { grid-template-columns: 3.5rem 1fr; gap: 2.5rem; }
+}
+.movement .index {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  color: var(--text-faint);
+  padding-top: 0.5rem;
+}
+.movement .statement {
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 3.2vw, 2.1rem);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  margin: 0 0 1.1rem;
+}
+.movement .prose { color: var(--text-secondary); max-width: 46rem; }
+.movement .prose p { margin: 0 0 1rem; }
+.movement .prose p:last-child { margin-bottom: 0; }
+
+/* ---- basis ramp legend ---- */
+.legend {
+  margin-top: 2.2rem;
+  border: 1px solid var(--border-default);
+  border-radius: 10px;
+  background: var(--surface-raised);
+  padding: 1.5rem 1.6rem 1.1rem;
+  max-width: 46rem;
+}
+.legend h3 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 0 0 1.1rem;
+  color: var(--text-primary);
+}
+.legend .rows { display: grid; gap: 0.9rem; }
+.legend .row {
+  display: grid;
+  grid-template-columns: 2.6rem 1fr;
+  gap: 0.9rem;
+  align-items: baseline;
+}
+.legend .dot {
+  width: 0.85rem;
+  height: 0.85rem;
+  border-radius: 50%;
+  justify-self: end;
+  align-self: center;
+  transform: translateY(1px);
+}
+.legend .term {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+}
+.legend .meaning {
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+.legend .review-note {
+  margin-top: 1.2rem;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--border-default);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  letter-spacing: 0.01em;
+}
+
+/* ---- agora expanded section ---- */
+.agora-grid {
+  margin-top: 2.2rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  max-width: 46rem;
+}
+@media (min-width: 760px) { .agora-grid { grid-template-columns: 1fr 1fr; } }
+.agora-card {
+  border: 1px solid var(--border-default);
+  border-radius: 10px;
+  background: var(--surface-raised);
+  padding: 1.35rem 1.5rem;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+@media (prefers-reduced-motion: reduce) { .agora-card { transition: none; } }
+.agora-card:hover { border-color: var(--border-strong); transform: translateY(-2px); }
+@media (prefers-reduced-motion: reduce) { .agora-card:hover { transform: none; } }
+.agora-card .step {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 0.45rem;
+}
+.agora-card h4 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 1.25rem;
+  margin: 0 0 0.4rem;
+}
+.agora-card p { margin: 0; font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; }
+
+/* agora identity block */
+.agora-identity {
+  margin-top: 2.2rem;
+  max-width: 46rem;
+  border: 1px solid var(--border-default);
+  border-radius: 10px;
+  background: var(--surface-raised);
+  padding: 1.8rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.6rem;
+}
+@media (min-width: 760px) { .agora-identity { grid-template-columns: auto 1fr; gap: 2rem; } }
+
+.key-visual {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.5rem;
+  align-content: start;
+  max-width: 15rem;
+}
+.key-word {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  background: var(--surface-panel);
+  border: 1px solid var(--border-subtle);
+  border-radius: 4px;
+  padding: 0.22rem 0.55rem;
+  color: var(--text-secondary);
+}
+
+.identity-text h3 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 1.15rem;
+  margin: 0 0 0.6rem;
+}
+.identity-text p {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+/* agora rules row */
+.agora-rules {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  max-width: 46rem;
+}
+@media (min-width: 760px) { .agora-rules { grid-template-columns: 1fr 1fr 1fr; } }
+
+.rule {
+  border: 1px solid var(--border-default);
+  border-radius: 10px;
+  background: var(--surface-raised);
+  padding: 1.4rem 1.5rem;
+  border-top: 2px solid var(--border-strong);
+}
+.rule .num {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+.rule h4 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 1.05rem;
+  margin: 0 0 0.4rem;
+}
+.rule p {
+  margin: 0;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* agora path */
+.agora-path {
+  margin-top: 2.4rem;
+  max-width: 52rem;
+}
+.agora-path h3 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 1.15rem;
+  margin: 0 0 1.2rem;
+}
+.path-steps {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: start;
+  gap: 0.8rem;
+}
+.path-step {
+  flex: 1 1 140px;
+  min-width: 140px;
+}
+.path-step .num {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin-bottom: 0.3rem;
+}
+.path-step h4 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 1rem;
+  margin: 0 0 0.3rem;
+}
+.path-step p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+.path-arrow {
+  font-size: 1.1rem;
+  color: var(--text-faint);
+  padding-top: 1.1rem;
+  flex-shrink: 0;
+}
+/* the arrow follows reading direction — flips in RTL */
+html[dir="rtl"] .path-arrow { transform: scaleX(-1); }
+
+/* agora privacy */
+.agora-privacy {
+  margin-top: 2rem;
+  max-width: 46rem;
+  border-inline-start: 3px solid var(--rupture);
+  padding-inline-start: 1.4rem;
+}
+.agora-privacy p {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+  font-style: italic;
+}
+
+/* ============================================================
+   The instrument
+   ============================================================ */
+.instrument {
+  padding-block: clamp(4rem, 10vh, 7rem);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.instrument .head { max-width: 58rem; margin-bottom: 2.6rem; }
+.instrument .head .statement {
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 3.2vw, 2.1rem);
+  line-height: 1.3;
+  margin: 0;
+}
+.instrument-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.1rem;
+}
+@media (min-width: 760px) { .instrument-grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1100px) { .instrument-grid { grid-template-columns: 1fr 1fr 1fr; } }
+.instrument-card {
+  border: 1px solid var(--border-default);
+  border-radius: 10px;
+  background: var(--surface-raised);
+  padding: 1.5rem 1.6rem;
+  border-top: 3px solid var(--card-accent, var(--layer-political));
+  transition: border-color 0.2s ease;
+}
+.instrument-card:hover { border-color: var(--border-strong); }
+.instrument-card .view {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 0.6rem;
+}
+.instrument-card h4 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 1.3rem;
+  margin: 0 0 0.5rem;
+}
+.instrument-card p { margin: 0; font-size: 0.95rem; color: var(--text-muted); line-height: 1.65; }
+.instrument .cta-row { margin-top: 3rem; }
+
+/* ============================================================
+   Funders
+   ============================================================ */
+.funders {
+  padding-block: clamp(4rem, 10vh, 7rem);
+}
+.funders .statement {
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 3.2vw, 2.1rem);
+  line-height: 1.3;
+  max-width: 30ch;
+  margin: 0 0 1.4rem;
+}
+.funders .prose { color: var(--text-secondary); max-width: 52rem; }
+.funders .prose p { margin: 0 0 1rem; }
+
+/* stats grid — each cell carries a top hairline in the colour of
+   what the number is about; the basis-ramp cell colours each of
+   its four numbers with its own basis hue */
+.stats-grid {
+  margin-top: 2.8rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1px;
+  background: var(--border-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  overflow: hidden;
+}
+@media (min-width: 640px) { .stats-grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1000px) { .stats-grid { grid-template-columns: repeat(4, 1fr); } }
+.stat {
+  background: var(--surface-raised);
+  padding: 1.5rem 1.6rem 1.35rem;
+  border-top: 3px solid var(--stat-accent, transparent);
+  transition: background-color 0.2s ease;
+}
+.stat:hover { background: var(--surface-hover); }
+.stat .value {
+  font-family: var(--font-mono);
+  font-size: 1.7rem;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--text-primary);
+}
+.stat .value small { font-size: 1rem; color: var(--text-muted); }
+.stat .label {
+  margin-top: 0.5rem;
+  font-size: 0.84rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.stat.s-sources { --stat-accent: var(--basis-documented); }
+.stat.s-people { --stat-accent: var(--layer-political); }
+.stat.s-basis { --stat-accent: var(--layer-media); }
+.stat.s-pending { --stat-accent: var(--basis-inferred); }
+.stat.s-gaps { --stat-accent: var(--rupture); }
+.stat.s-contradictions { --stat-accent: var(--layer-judicial); }
+.stat.s-falsified { --stat-accent: var(--basis-unsubstantiated); }
+.stat.s-data { --stat-accent: var(--basis-documented); }
+
+.basis-ramp .b-doc { color: var(--basis-documented); }
+.basis-ramp .b-rep { color: var(--basis-reported); }
+.basis-ramp .b-inf { color: var(--basis-inferred); }
+.basis-ramp .b-unsub { color: var(--basis-unsubstantiated); }
+
+.buys {
+  margin-top: 2.8rem;
+  max-width: 52rem;
+  border-inline-start: 3px solid var(--accent);
+  padding-inline-start: 1.4rem;
+}
+.buys h3 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: 1.3rem;
+  margin: 0 0 0.5rem;
+}
+.buys p { margin: 0; color: var(--text-secondary); }
+.contact-line {
+  margin-top: 2.2rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.4rem;
+  font-size: 1.02rem;
+}
+.contact-line .license {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-faint);
+  letter-spacing: 0.02em;
+}
+
+/* ============================================================
+   Closing — the peak
+   ============================================================ */
+.closing {
+  padding-block: clamp(6rem, 18vh, 12rem);
+  text-align: center;
+  border-top: 1px solid var(--border-subtle);
+  background: linear-gradient(180deg, var(--surface-base) 0%, var(--surface-sunken) 100%);
+}
+.closing .verses {
+  font-family: var(--font-serif);
+  font-size: clamp(1.8rem, 5vw, 3.2rem);
+  line-height: 1.45;
+  letter-spacing: -0.015em;
+  max-width: 26ch;
+  margin: 0 auto 1.8rem;
+  font-weight: 400;
+}
+.closing .verses .line { display: block; margin-bottom: 0.15em; }
+.closing .verses .last {
+  color: var(--accent);
+  margin-top: 0.8em;
+  display: block;
+  font-weight: 500;
+}
+.closing .cta-row { justify-content: center; margin-top: 2.6rem; }
+
+/* ============================================================
+   Footer — the honesty strip
+   ============================================================ */
+footer {
+  border-top: 1px solid var(--border-subtle);
+  background: var(--surface-sunken);
+  padding-block: 3.2rem 3.6rem;
+}
+footer .grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem 3rem;
+}
+@media (min-width: 900px) { footer .grid { grid-template-columns: 1.4fr 1fr 1fr; } }
+footer .block h3 {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0 0 0.8rem;
+}
+footer .block p {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+footer .block p + p { margin-top: 0.8rem; }
+footer .footline {
+  margin-top: 2.6rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.6rem 2rem;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  letter-spacing: 0.03em;
+  color: var(--text-faint);
+}
+</style>
+<noscript><style>
+  html.js .reveal, html.js .reveal-up, html.js .reveal-left, html.js .reveal-scale { opacity: 1; transform: none; }
+</style></noscript>
+</head>
+
+<body>
+<a class="skip-link" href="#main" data-i18n="a11y.skip">Skip to content</a>
+
+<header class="threshold">
+  <div class="container">
+    <a class="brand" href="#top" aria-label="Deep Tunisia">
+      <span class="mark">DT</span>
+      <span>Deep&nbsp;Tunisia</span>
+    </a>
+    <nav aria-label="Primary">
+      <a href="#argument" data-i18n="nav.manifesto">Manifesto</a>
+      <a href="#instrument" data-i18n="nav.record">The record</a>
+      <a href="#funders" data-i18n="nav.funders">For funders</a>
+    </nav>
+    <div class="toggles">
+      <div class="locale" role="group" aria-label="Language">
+        <button data-locale="en" aria-pressed="true" lang="en">EN</button>
+        <button data-locale="fr" aria-pressed="false" lang="fr">FR</button>
+        <button data-locale="ar" aria-pressed="false" lang="ar">AR</button>
+      </div>
+      <button id="theme-toggle" aria-pressed="false" aria-label="Toggle theme">◐</button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <!-- ================= HERO ================= -->
+  <section class="hero" id="top">
+    <div class="names-field" aria-hidden="true"></div>
+    <div class="container content">
+      <p class="eyebrow reveal" data-i18n="hero.eyebrow">An open-source public record · Tunisia 1956–2026</p>
+      <h1 class="reveal-up" data-i18n="hero.h1">Every society is built on memory.</h1>
+      <p class="lede reveal" data-i18n="hero.lede">Deep Tunisia is a living public record of the people, institutions, companies and networks that shape the nation — every claim traceable to its source, every conclusion challengeable, every citizen able to verify the evidence for themselves.</p>
+      <div class="cta-row reveal-left">
+        <a class="cta-deep" href="/" data-i18n-html="hero.ctaPrimary">See into the deep <span class="arrow">↓</span></a>
+        <!-- WIRE: href above points at the deployed instrument when it exists -->
+        <a class="cta-quiet" href="#argument" data-i18n="hero.ctaSecondary">Read the manifesto</a>
+      </div>
+
+      <figure class="memory reveal-scale">
+        <svg id="memory-line" role="img" viewBox="0 0 1000 260" aria-label="Positions held per year, 1956 to 2026"></svg>
+        <figcaption class="caption-row">
+          <span data-i18n="hero.caption">The record drawn to scale — positions held per year, 1956–2026. Thicker where the archive is denser. 32 positions carry unknown dates and are not drawn.</span>
+          <span class="attr" data-i18n="hero.attr">379 positions · 467 sources · 359 people · 163 institutions</span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ================= THE ARGUMENT ================= -->
+  <section class="argument" id="argument">
+    <div class="container">
+
+      <!-- I · Memory is infrastructure -->
+      <div class="movement reveal">
+        <div class="index">I</div>
+        <div>
+          <h2 class="statement" data-i18n="m1.statement">Whoever controls information shapes the future.</h2>
+          <div class="prose" data-i18n-html="m1.prose"><p>Every society is built on memory. Memory is made of records; records are made of information.</p><p>For centuries the records were incomplete, the decisions hidden, and power difficult to understand — and harder still to challenge. That excuse no longer exists. We produce more information in a single day than entire generations once created in a lifetime. Yet understanding remains fragmented: facts are scattered, records disappear, connections stay invisible, public memory fades.</p><p>And wherever memory fades, power escapes accountability.</p></div>
+        </div>
+      </div>
+
+      <!-- II · The record -->
+      <div class="movement reveal">
+        <div class="index">II</div>
+        <div>
+          <h2 class="statement" data-i18n="m2.statement">A single appointment means little until it is connected to an institution.</h2>
+          <div class="prose" data-i18n-html="m2.prose"><p>Deep Tunisia is a living public record of the people, institutions, companies and networks that shape the nation. It maps relationships, documents appointments, preserves timelines, records actions, connects evidence — transforming isolated facts into public knowledge.</p><p>Facts rarely exist in isolation. A company means little until its ownership is understood. A decision means little until it is placed in its historical context. Deep Tunisia exists to connect those fragments into a public understanding that no single document can provide.</p><p>Knowledge should never require permission.</p></div>
+        </div>
+      </div>
+
+      <!-- III · The epistemic promise -->
+      <div class="movement reveal">
+        <div class="index">III</div>
+        <div>
+          <h2 class="statement" data-i18n="m3.statement">Every claim should be traceable. Every conclusion should be challengeable.</h2>
+          <div class="prose" data-i18n-html="m3.prose"><p>Every claim in the record is filed under one of four bases — and they never render identically. An inference is never allowed to become a fact. Unsubstantiated claims are kept, not deleted: a map that only shows what it can prove cannot show why the popular account is wrong.</p></div>
+          <div class="legend reveal-left">
+            <h3 data-i18n="m3.legendTitle">The four bases</h3>
+            <div class="rows">
+              <div class="row">
+                <span class="dot" style="background: var(--basis-documented)"></span>
+                <div>
+                  <div class="term" data-i18n="m3.bDoc">Documented</div>
+                  <div class="meaning" data-i18n="m3.bDocD">stated in the primary record — a decree, a gazette, a court ruling</div>
+                </div>
+              </div>
+              <div class="row">
+                <span class="dot" style="background: var(--basis-reported)"></span>
+                <div>
+                  <div class="term" data-i18n="m3.bRep">Reported</div>
+                  <div class="meaning" data-i18n="m3.bRepD">stated by credible outlets, not yet checked against the primary record</div>
+                </div>
+              </div>
+              <div class="row">
+                <span class="dot" style="background: var(--basis-inferred)"></span>
+                <div>
+                  <div class="term" data-i18n="m3.bInf">Inferred</div>
+                  <div class="meaning" data-i18n="m3.bInfD">reasoned from documented structure, with its reasoning and its falsifier attached</div>
+                </div>
+              </div>
+              <div class="row">
+                <span class="dot" style="background: var(--basis-unsubstantiated)"></span>
+                <div>
+                  <div class="term" data-i18n="m3.bUnsub">Unsubstantiated</div>
+                  <div class="meaning" data-i18n="m3.bUnsubD">circulating with no evidence — recorded, because deleting it would only hide why it circulates</div>
+                </div>
+              </div>
+            </div>
+            <p class="review-note" data-i18n="m3.review">Of 656 reviewable claims, 24 have been fully reviewed. The rest are published anyway — that is the system working, not failing.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- IV · The agora -->
+      <div class="movement reveal">
+        <div class="index">IV</div>
+        <div>
+          <h2 class="statement" data-i18n="m4.statement">Information alone does not create a free society.</h2>
+          <div class="prose" data-i18n-html="m4.prose"><p>A nation also needs a place where its people can think together. Deep Tunisia is more than an archive — it is Tunisia's digital Agora. Not a place to replace institutions, but a place where citizens can understand them, question them, and improve the public record together.</p><p>Disagreements are settled with evidence instead of rumors; every voice carries the same weight.</p></div>
+
+          <!-- Identity block -->
+          <div class="agora-identity reveal-up">
+            <div class="key-visual" aria-hidden="true">
+              <span class="key-word">silver</span><span class="key-word">river</span>
+              <span class="key-word">stone</span><span class="key-word">whisper</span>
+              <span class="key-word">frozen</span><span class="key-word">canyon</span>
+              <span class="key-word">dawn</span><span class="key-word">velvet</span>
+              <span class="key-word">crystal</span><span class="key-word">mirror</span>
+              <span class="key-word">gentle</span><span class="key-word">harvest</span>
+            </div>
+            <div class="identity-text">
+              <h3 data-i18n="m4.idT">Your identity is a 12-word key</h3>
+              <p data-i18n="m4.idD">Generated on your device from the standard BIP-39 word list. Never stored on a server. No email, no password, no profile to create or forget. The key IS your identity. Lose it, and your voice is gone. There is no recovery, because there is nothing to recover from.</p>
+            </div>
+          </div>
+
+          <!-- Rules -->
+          <div class="agora-rules reveal">
+            <div class="rule">
+              <div class="num">01</div>
+              <h4 data-i18n="m4.r1t">Weekly posting budget</h4>
+              <p data-i18n="m4.r1d">Four posts a week to start with — more as your standing grows. Citing a source costs half a post. This is deliberate, not a technical limit: it is a place for things you have thought about, not a chat.</p>
+            </div>
+            <div class="rule">
+              <div class="num">02</div>
+              <h4 data-i18n="m4.r2t">10-minute hold</h4>
+              <p data-i18n="m4.r2d">Every post waits ten minutes before it publishes. Only you can see it in that window; change your mind and it is refunded in full. Publish, and it enters the permanent record.</p>
+            </div>
+            <div class="rule">
+              <div class="num">03</div>
+              <h4 data-i18n="m4.r3t">Nothing is silently deleted</h4>
+              <p data-i18n="m4.r3d">Removed posts keep their place, their thread, their timestamp, and their reason. The body is nulled — but the record of the removal remains visible.</p>
+            </div>
+          </div>
+
+          <!-- The path -->
+          <div class="agora-path reveal">
+            <h3 data-i18n="m4.pathT">The path from conversation to action</h3>
+            <div class="path-steps">
+              <div class="path-step">
+                <div class="num">01</div>
+                <h4 data-i18n="m4.p1t">Discuss</h4>
+                <p data-i18n="m4.p1d">"Let's talk about this." Anchored to a specific record, with the entity's trajectory still in view.</p>
+              </div>
+              <div class="path-arrow">→</div>
+              <div class="path-step">
+                <div class="num">02</div>
+                <h4 data-i18n="m4.p2t">Propose a change</h4>
+                <p data-i18n="m4.p2d">"I think the record is wrong." A correction mechanism — reviewable, sourced, and tracked.</p>
+              </div>
+              <div class="path-arrow">→</div>
+              <div class="path-step">
+                <div class="num">03</div>
+                <h4 data-i18n="m4.p3t">Report</h4>
+                <p data-i18n="m4.p3d">"Something here needs attention." A human moderation path.</p>
+              </div>
+              <div class="path-arrow">→</div>
+              <div class="path-step">
+                <div class="num">04</div>
+                <h4 data-i18n="m4.p4t">Petition</h4>
+                <p data-i18n="m4.p4d">"Enough of us want something." Collective demand — verifiable, not an anonymous mob.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Privacy -->
+          <div class="agora-privacy reveal">
+            <p data-i18n="m4.privacy">We cannot see who you are. But this runs on ordinary hosting, and like every host, the service receives your connection. If you post under the same identity for a long time, the way you write can identify you no matter how good the cryptography. That is the threat model, stated plainly.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- V · Privacy -->
+      <div class="movement reveal">
+        <div class="index">V</div>
+        <div>
+          <h2 class="statement" data-i18n="m5.statement">Citizens should never be forced to choose between participation and personal safety.</h2>
+          <div class="prose" data-i18n-html="m5.prose"><p>Participation is pseudonymous by design: a key, not an account. No name, no email, no profile — nothing is asked of you, so nothing about you is stored anywhere.</p><p>Anonymity is engineered, not promised. Every layer that cannot hold is named on this page rather than hidden in fine print, because a promise the system cannot keep is a trap.</p></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= THE INSTRUMENT ================= -->
+  <section class="instrument" id="instrument">
+    <div class="container">
+      <div class="head reveal">
+        <p class="eyebrow" data-i18n="inst.eyebrow">The instrument</p>
+        <h2 class="statement" data-i18n="inst.statement">The website is a window. The knowledge graph is the project.</h2>
+      </div>
+      <div class="instrument-grid">
+        <div class="instrument-card reveal" style="--card-accent: var(--layer-political)">
+          <div class="view" data-i18n="inst.v1n">Chronicle</div>
+          <h4 data-i18n="inst.v1t">Who held what, when</h4>
+          <p data-i18n="inst.v1d">Who held which post, when, drawn to scale. Bar length is tenure, so continuity is visible without reading.</p>
+        </div>
+        <div class="instrument-card reveal" style="--card-accent: var(--layer-civil)">
+          <div class="view" data-i18n="inst.v2n">Now</div>
+          <h4 data-i18n="inst.v2t">Who holds office today</h4>
+          <p data-i18n="inst.v2d">Split by how recently each was verified, measured against that office's historical median tenure.</p>
+        </div>
+        <div class="instrument-card reveal" style="--card-accent: var(--layer-foreign)">
+          <div class="view" data-i18n="inst.v3n">Network</div>
+          <h4 data-i18n="inst.v3t">Who connects to whom</h4>
+          <p data-i18n="inst.v3d">A fixed lane per layer, so cross-layer bridges are literally the edges that cross lanes.</p>
+        </div>
+        <div class="instrument-card reveal" style="--card-accent: var(--layer-economic)">
+          <div class="view" data-i18n="inst.v4n">Atlas</div>
+          <h4 data-i18n="inst.v4t">Everything at once</h4>
+          <p data-i18n="inst.v4d">Structure per era as small multiples, a survival matrix of people against eras, an institution-crossing matrix.</p>
+        </div>
+        <div class="instrument-card reveal" style="--card-accent: var(--layer-media)">
+          <div class="view" data-i18n="inst.v5n">Agora</div>
+          <h4 data-i18n="inst.v5t">The public conversation</h4>
+          <p data-i18n="inst.v5d">Discuss, propose a change, report, petition — around the record, not away from it.</p>
+        </div>
+      </div>
+      <div class="cta-row reveal">
+        <a class="cta-deep" href="/" data-i18n-html="hero.ctaPrimary">See into the deep <span class="arrow">↓</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FUNDERS ================= -->
+  <section class="funders" id="funders">
+    <div class="container">
+      <p class="eyebrow reveal" data-i18n="fund.eyebrow">For funders and partners</p>
+      <h2 class="statement reveal-up" data-i18n="fund.statement">The state's attempt at collective memory was sealed. This one cannot be.</h2>
+      <div class="prose reveal" data-i18n-html="fund.prose"><p>In 2018 the official Truth and Dignity Institution — the state's own answer to "never forget" — was shut down and its archives were sealed. Deep Tunisia is the non-state, survivable alternative: an open-source record that exists independently of any government, any host, any single person.</p><p>The 1.3&nbsp;MB graph ships with the page: no server, no database, no accounts, nothing to compromise.</p></div>
+
+      <div class="stats-grid">
+        <div class="stat s-sources reveal">
+          <div class="value">467</div>
+          <div class="label" data-i18n="fund.s1">sources, tiered by reliability</div>
+        </div>
+        <div class="stat s-people reveal">
+          <div class="value">359 <small>·</small> 163 <small>·</small> 379 <small>·</small> 211 <small>·</small> 66</div>
+          <div class="label" data-i18n="fund.s2">people · institutions · positions · relationships · events</div>
+        </div>
+        <div class="stat s-basis reveal">
+          <div class="value basis-ramp"><span class="b-doc">127</span> <small>/</small> <span class="b-rep">431</span> <small>/</small> <span class="b-inf">94</span> <small>/</small> <span class="b-unsub">4</span></div>
+          <div class="label" data-i18n="fund.s3">documented / reported / inferred / unsubstantiated</div>
+        </div>
+        <div class="stat s-pending reveal">
+          <div class="value">278</div>
+          <div class="label" data-i18n="fund.s4">claims awaiting a primary source — published, flagged, not hidden</div>
+        </div>
+        <div class="stat s-gaps reveal">
+          <div class="value">39 <small>+</small> 9</div>
+          <div class="label" data-i18n="fund.s5">succession gaps and overlaps — surfaced automatically, not smoothed over</div>
+        </div>
+        <div class="stat s-contradictions reveal">
+          <div class="value">5</div>
+          <div class="label" data-i18n="fund.s6">unresolved source contradictions, both versions recorded</div>
+        </div>
+        <div class="stat s-falsified reveal">
+          <div class="value">2 <small>/</small> 6</div>
+          <div class="label" data-i18n="fund.s7">hypotheses the record currently fails — including the strong deep-state version</div>
+        </div>
+        <div class="stat s-data reveal">
+          <div class="value">0 <small>B</small></div>
+          <div class="label" data-i18n="fund.s8">bytes of personal data collected — no accounts, no tracking</div>
+        </div>
+      </div>
+
+      <div class="buys reveal-left">
+        <h3 data-i18n="fund.buysT">What support buys</h3>
+        <p data-i18n="fund.buysD">Verification, not vibes. Funding goes to the slow work: primary sources from the Gazette, translation of the record, review of the remaining claims, and the infrastructure that keeps a public archive independent.</p>
+      </div>
+
+      <div class="contact-line reveal">
+        <a class="cta-deep" href="mailto:contact@deeptunisia.org" data-i18n="fund.contact">Write to us</a>
+        <!-- WIRE: replace contact@deeptunisia.org with the real address -->
+        <span class="license" data-i18n="fund.license">Code AGPL-3.0 · Data CC BY 4.0 · Open source on GitHub</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CLOSING ================= -->
+  <section class="closing">
+    <div class="container">
+      <p class="verses reveal-up">
+        <span class="line" data-i18n="close.v1">A nation that remembers cannot be manipulated as easily.</span>
+        <span class="line" data-i18n="close.v2">A nation that understands cannot be ruled through confusion.</span>
+        <span class="line" data-i18n="close.v3">A nation that knows itself is far more difficult to deceive.</span>
+        <span class="last" data-i18n="close.v4">That is why Deep Tunisia exists.</span>
+      </p>
+      <div class="cta-row reveal">
+        <a class="cta-deep" href="/" data-i18n-html="hero.ctaPrimary">See into the deep <span class="arrow">↓</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ================= FOOTER · THE HONESTY STRIP ================= -->
+<footer>
+  <div class="container">
+    <div class="grid">
+      <div class="block reveal">
+        <h3 data-i18n="foot.f1h">What this is</h3>
+        <p data-i18n="foot.f1">An open-source, source-backed atlas of political, military, security and economic power in Tunisia, 1956–2026. What it is not: a claim that a hidden government runs the country — a hypothesis the record currently fails.</p>
+      </div>
+      <div class="block reveal">
+        <h3 data-i18n="foot.f2h">What this is not</h3>
+        <p data-i18n="foot.f2">Not a website exposing a "deep state". That framing presupposes its conclusion. The narrower question is answerable: which institutions, individuals and economic groups retain influence when the formal regime changes — and which relationships are genuinely continuous rather than reconstructed after each rupture.</p>
+      </div>
+      <div class="block reveal">
+        <h3 data-i18n="foot.f3h">Open by design</h3>
+        <p data-i18n="foot.f3">Every claim is traceable, every change published, every source cited. Two obligations are enforced by the build: an inference may never become a fact, and no claim ships without a source.</p>
+      </div>
+    </div>
+    <div class="footline">
+      <span data-i18n="foot.line1">Deep Tunisia · open source · 1956–2026</span>
+      <span><a href="https://github.com/deeptunisia/deeptunisia" data-i18n="foot.line2">Source on GitHub</a> · <a href="mailto:contact@deeptunisia.org" data-i18n="foot.line3">Contact</a></span>
+      <!-- WIRE: GitHub URL + contact address above -->
+    </div>
+  </div>
+</footer>
+
+<script>
+document.documentElement.classList.add('js');
+
+/* ============================================================
+   Real memory-line data — positions active per year, computed
+   from src/generated/dataset.json (379 positions; the 32 with
+   no usable dates are excluded).  [year, count]
+   ============================================================ */
+const MEMORY = [
+  [1956,12],[1957,12],[1958,13],[1959,13],[1960,14],[1961,14],[1962,15],[1963,14],
+  [1964,17],[1965,16],[1966,14],[1967,15],[1968,16],[1969,18],[1970,24],[1971,22],
+  [1972,19],[1973,17],[1974,15],[1975,13],[1976,13],[1977,16],[1978,14],[1979,15],
+  [1980,21],[1981,18],[1982,17],[1983,18],[1984,19],[1985,21],[1986,25],[1987,32],
+  [1988,24],[1989,25],[1990,26],[1991,25],[1992,22],[1993,21],[1994,26],[1995,26],
+  [1996,26],[1997,29],[1998,26],[1999,30],[2000,27],[2001,27],[2002,26],[2003,30],
+  [2004,37],[2005,38],[2006,38],[2007,36],[2008,38],[2009,38],[2010,41],[2011,66],
+  [2012,50],[2013,59],[2014,61],[2015,63],[2016,69],[2017,67],[2018,65],[2019,69],
+  [2020,67],[2021,58],[2022,54],[2023,49],[2024,47],[2025,38],[2026,34]
+];
+
+/* Real names from the graph — the hero's "dust in the archive" field */
+const NAMES = [
+  "Habib Bourguiba","Zine El Abidine Ben Ali","Moncef Marzouki","Beji Caid Essebsi",
+  "Kais Saied","Bahi Ladgham","Mohammed Mzali","Rachid Sfar","Mongi Slim",
+  "Habib Bourguiba Jr.","Mohamed Masmoudi","Habib Chatti","Hedi Baccouche",
+  "Hamadi Jebali","Ali Laarayedh","Mehdi Jomaa","Habib Essid","Youssef Chahed",
+  "Elyes Fakhfakh","Hichem Mechichi","Najla Bouden","Ahmed Hachani","Kamel Madouri",
+  "Taïeb Mehiri","Hédi Khefacha","Ahmed Mestiri","Habib Ammar","Ali Seriati",
+  "Abdelhamid Escheikh","Abdessatar Bennour","Abdelhamid Bouzidi","Taoufik Dabbabi",
+  "Ramzi Rajhi","Kamel Guizani","Sami Hichri","Mounir Ksiksi","Lotfi Brahem",
+  "Chokri Rahali","Chokri Riahi","Fadhel Guezguez","Hassine Gharbi",
+  "Mustapha Ben Jaafar","Slaheddine Baly","Mahmoud Mestiri","Hassib Ben Ammar",
+  "Béchir M'hedhbi","Abdallah Farhat","Fouad Mebazaa","Sadok Mokaddem",
+  "Mohamed Fitouri","Hassen Belkhodja","Hédi Mabrouk","Mohamed Ali Ben Khaled"
+];
+
+/* ============================================================
+   i18n — EN / FR / AR. Prose written for this page (never a
+   machine tier); keys map 1:1 to data-i18n attributes. Keys
+   whose value contains HTML are applied with innerHTML (they
+   are marked data-i18n-html in the markup).
+   ============================================================ */
+const I18N = {
+en: {
+  "a11y.skip": "Skip to content",
+  "nav.manifesto": "Manifesto",
+  "nav.record": "The record",
+  "nav.funders": "For funders",
+  "hero.eyebrow": "An open-source public record · Tunisia 1956–2026",
+  "hero.h1": "Every society is built on memory.",
+  "hero.lede": "Deep Tunisia is a living public record of the people, institutions, companies and networks that shape the nation — every claim traceable to its source, every conclusion challengeable, every citizen able to verify the evidence for themselves.",
+  "hero.ctaPrimary": "See into the deep <span class=\"arrow\">↓</span>",
+  "hero.ctaSecondary": "Read the manifesto",
+  "hero.caption": "The record drawn to scale — positions held per year, 1956–2026. Thicker where the archive is denser. 32 positions carry unknown dates and are not drawn.",
+  "hero.attr": "379 positions · 467 sources · 359 people · 163 institutions",
+  "m1.statement": "Whoever controls information shapes the future.",
+  "m1.prose": "<p>Every society is built on memory. Memory is made of records; records are made of information.</p><p>For centuries the records were incomplete, the decisions hidden, and power difficult to understand — and harder still to challenge. That excuse no longer exists. We produce more information in a single day than entire generations once created in a lifetime. Yet understanding remains fragmented: facts are scattered, records disappear, connections stay invisible, public memory fades.</p><p>And wherever memory fades, power escapes accountability.</p>",
+  "m2.statement": "A single appointment means little until it is connected to an institution.",
+  "m2.prose": "<p>Deep Tunisia is a living public record of the people, institutions, companies and networks that shape the nation. It maps relationships, documents appointments, preserves timelines, records actions, connects evidence — transforming isolated facts into public knowledge.</p><p>Facts rarely exist in isolation. A company means little until its ownership is understood. A decision means little until it is placed in its historical context. Deep Tunisia exists to connect those fragments into a public understanding that no single document can provide.</p><p>Knowledge should never require permission.</p>",
+  "m3.statement": "Every claim should be traceable. Every conclusion should be challengeable.",
+  "m3.prose": "<p>Every claim in the record is filed under one of four bases — and they never render identically. An inference is never allowed to become a fact. Unsubstantiated claims are kept, not deleted: a map that only shows what it can prove cannot show why the popular account is wrong.</p>",
+  "m3.legendTitle": "The four bases",
+  "m3.bDoc": "Documented", "m3.bDocD": "stated in the primary record — a decree, a gazette, a court ruling",
+  "m3.bRep": "Reported", "m3.bRepD": "stated by credible outlets, not yet checked against the primary record",
+  "m3.bInf": "Inferred", "m3.bInfD": "reasoned from documented structure, with its reasoning and its falsifier attached",
+  "m3.bUnsub": "Unsubstantiated", "m3.bUnsubD": "circulating with no evidence — recorded, because deleting it would only hide why it circulates",
+  "m3.review": "Of 656 reviewable claims, 24 have been fully reviewed. The rest are published anyway — that is the system working, not failing.",
+  "m4.statement": "Information alone does not create a free society.",
+  "m4.prose": "<p>A nation also needs a place where its people can think together. Deep Tunisia is more than an archive — it is Tunisia's digital Agora. Not a place to replace institutions, but a place where citizens can understand them, question them, and improve the public record together.</p><p>Disagreements are settled with evidence instead of rumors; every voice carries the same weight.</p>",
+  "m4.idT": "Your identity is a 12-word key",
+  "m4.idD": "Generated on your device from the standard BIP-39 word list. Never stored on a server. No email, no password, no profile to create or forget. The key IS your identity. Lose it, and your voice is gone. There is no recovery, because there is nothing to recover from.",
+  "m4.r1t": "Weekly posting budget",
+  "m4.r1d": "Four posts a week to start with — more as your standing grows. Citing a source costs half a post. This is deliberate, not a technical limit: it is a place for things you have thought about, not a chat.",
+  "m4.r2t": "10-minute hold",
+  "m4.r2d": "Every post waits ten minutes before it publishes. Only you can see it in that window; change your mind and it is refunded in full. Publish, and it enters the permanent record.",
+  "m4.r3t": "Nothing is silently deleted",
+  "m4.r3d": "Removed posts keep their place, their thread, their timestamp, and their reason. The body is nulled — but the record of the removal remains visible.",
+  "m4.pathT": "The path from conversation to action",
+  "m4.p1t": "Discuss", "m4.p1d": "\"Let's talk about this.\" Anchored to a specific record, with the entity's trajectory still in view.",
+  "m4.p2t": "Propose a change", "m4.p2d": "\"I think the record is wrong.\" A correction mechanism — reviewable, sourced, and tracked.",
+  "m4.p3t": "Report", "m4.p3d": "\"Something here needs attention.\" A human moderation path.",
+  "m4.p4t": "Petition", "m4.p4d": "\"Enough of us want something.\" Collective demand — verifiable, not an anonymous mob.",
+  "m4.privacy": "We cannot see who you are. But this runs on ordinary hosting, and like every host, the service receives your connection. If you post under the same identity for a long time, the way you write can identify you no matter how good the cryptography. That is the threat model, stated plainly.",
+  "m5.statement": "Citizens should never be forced to choose between participation and personal safety.",
+  "m5.prose": "<p>Participation is pseudonymous by design: a key, not an account. No name, no email, no profile — nothing is asked of you, so nothing about you is stored anywhere.</p><p>Anonymity is engineered, not promised. Every layer that cannot hold is named on this page rather than hidden in fine print, because a promise the system cannot keep is a trap.</p>",
+  "inst.eyebrow": "The instrument",
+  "inst.statement": "The website is a window. The knowledge graph is the project.",
+  "inst.v1n": "Chronicle", "inst.v1t": "Who held what, when", "inst.v1d": "Who held which post, when, drawn to scale. Bar length is tenure, so continuity is visible without reading.",
+  "inst.v2n": "Now", "inst.v2t": "Who holds office today", "inst.v2d": "Split by how recently each was verified, measured against that office's historical median tenure.",
+  "inst.v3n": "Network", "inst.v3t": "Who connects to whom", "inst.v3d": "A fixed lane per layer, so cross-layer bridges are literally the edges that cross lanes.",
+  "inst.v4n": "Atlas", "inst.v4t": "Everything at once", "inst.v4d": "Structure per era as small multiples, a survival matrix of people against eras, an institution-crossing matrix.",
+  "inst.v5n": "Agora", "inst.v5t": "The public conversation", "inst.v5d": "Discuss, propose a change, report, petition — around the record, not away from it.",
+  "fund.eyebrow": "For funders and partners",
+  "fund.statement": "The state's attempt at collective memory was sealed. This one cannot be.",
+  "fund.prose": "<p>In 2018 the official Truth and Dignity Institution — the state's own answer to \"never forget\" — was shut down and its archives were sealed. Deep Tunisia is the non-state, survivable alternative: an open-source record that exists independently of any government, any host, any single person.</p><p>The 1.3&nbsp;MB graph ships with the page: no server, no database, no accounts, nothing to compromise.</p>",
+  "fund.s1": "sources, tiered by reliability",
+  "fund.s2": "people · institutions · positions · relationships · events",
+  "fund.s3": "documented / reported / inferred / unsubstantiated",
+  "fund.s4": "claims awaiting a primary source — published, flagged, not hidden",
+  "fund.s5": "succession gaps and overlaps — surfaced automatically, not smoothed over",
+  "fund.s6": "unresolved source contradictions, both versions recorded",
+  "fund.s7": "hypotheses the record currently fails — including the strong deep-state version",
+  "fund.s8": "bytes of personal data collected — no accounts, no tracking",
+  "fund.buysT": "What support buys",
+  "fund.buysD": "Verification, not vibes. Funding goes to the slow work: primary sources from the Gazette, translation of the record, review of the remaining claims, and the infrastructure that keeps a public archive independent.",
+  "fund.contact": "Write to us",
+  "fund.license": "Code AGPL-3.0 · Data CC BY 4.0 · Open source on GitHub",
+  "close.v1": "A nation that remembers cannot be manipulated as easily.",
+  "close.v2": "A nation that understands cannot be ruled through confusion.",
+  "close.v3": "A nation that knows itself is far more difficult to deceive.",
+  "close.v4": "That is why Deep Tunisia exists.",
+  "foot.f1h": "What this is",
+  "foot.f1": "An open-source, source-backed atlas of political, military, security and economic power in Tunisia, 1956–2026. What it is not: a claim that a hidden government runs the country — a hypothesis the record currently fails.",
+  "foot.f2h": "What this is not",
+  "foot.f2": "Not a website exposing a \"deep state\". That framing presupposes its conclusion. The narrower question is answerable: which institutions, individuals and economic groups retain influence when the formal regime changes — and which relationships are genuinely continuous rather than reconstructed after each rupture.",
+  "foot.f3h": "Open by design",
+  "foot.f3": "Every claim is traceable, every change published, every source cited. Two obligations are enforced by the build: an inference may never become a fact, and no claim ships without a source.",
+  "foot.line1": "Deep Tunisia · open source · 1956–2026",
+  "foot.line2": "Source on GitHub",
+  "foot.line3": "Contact"
+},
+fr: {
+  "a11y.skip": "Aller au contenu",
+  "nav.manifesto": "Manifeste",
+  "nav.record": "Le fonds",
+  "nav.funders": "Aux bailleurs",
+  "hero.eyebrow": "Un fonds public ouvert · Tunisie 1956–2026",
+  "hero.h1": "Toute société est bâtie sur la mémoire.",
+  "hero.lede": "Deep Tunisia est un fonds public vivant des personnes, des institutions, des entreprises et des réseaux qui façonnent la nation — chaque affirmation traçable jusqu'à sa source, chaque conclusion contestable, chaque citoyen capable de vérifier les preuves par lui-même.",
+  "hero.ctaPrimary": "Voir dans la profondeur <span class=\"arrow\">↓</span>",
+  "hero.ctaSecondary": "Lire le manifeste",
+  "hero.caption": "Le fonds dessiné à l'échelle — postes occupés par année, 1956–2026. Plus le trait est épais, plus le fonds est dense. 32 postes sans date certaine ne sont pas dessinés.",
+  "hero.attr": "379 postes · 467 sources · 359 personnes · 163 institutions",
+  "m1.statement": "Qui contrôle l'information façonne l'avenir.",
+  "m1.prose": "<p>Toute société est bâtie sur la mémoire. La mémoire est faite de registres ; les registres sont faits d'information.</p><p>Pendant des siècles, les registres furent incomplets, les décisions cachées, et le pouvoir difficile à comprendre — et plus difficile encore à contester. Cet alibi n'existe plus. Nous produisons en un jour plus d'information que des générations entières n'en ont créé en une vie. Pourtant la compréhension reste fragmentée : les faits sont dispersés, les registres disparaissent, les liens restent invisibles, la mémoire publique s'efface.</p><p>Et partout où la mémoire s'efface, le pouvoir échappe à la responsabilité.</p>",
+  "m2.statement": "Une nomination ne signifie rien tant qu'elle n'est pas reliée à une institution.",
+  "m2.prose": "<p>Deep Tunisia est un fonds public vivant des personnes, des institutions, des entreprises et des réseaux qui façonnent la nation. Il cartographie les relations, documente les nominations, préserve les chronologies, enregistre les actions, relie les preuves — transformant des faits isolés en connaissance publique.</p><p>Les faits existent rarement de façon isolée. Une entreprise ne signifie rien tant que son actionnariat n'est pas compris. Une décision ne signifie rien tant qu'elle n'est pas replacée dans son contexte historique. Deep Tunisia existe pour relier ces fragments en une compréhension publique qu'aucun document unique ne peut fournir.</p><p>Le savoir ne devrait jamais requérir de permission.</p>",
+  "m3.statement": "Chaque affirmation doit être traçable. Chaque conclusion doit être contestable.",
+  "m3.prose": "<p>Chaque affirmation du fonds est classée sous l'une de quatre bases — et elles ne se rendent jamais à l'identique. Une inférence n'a jamais le droit de devenir un fait. Les affirmations non étayées sont conservées, jamais supprimées : une carte qui ne montre que ce qu'elle peut prouver ne peut pas montrer pourquoi le récit populaire est faux.</p>",
+  "m3.legendTitle": "Les quatre bases",
+  "m3.bDoc": "Documenté", "m3.bDocD": "établi dans le registre primaire — un décret, un journal officiel, une décision de justice",
+  "m3.bRep": "Rapporté", "m3.bRepD": "rapporté par des médias crédibles, non encore vérifié contre le registre primaire",
+  "m3.bInf": "Inféré", "m3.bInfD": "déduit d'une structure documentée, avec son raisonnement et son réfutable attachés",
+  "m3.bUnsub": "Non étayé", "m3.bUnsubD": "en circulation sans preuve — enregistré, car le supprimer ne ferait que cacher pourquoi il circule",
+  "m3.review": "Sur 656 affirmations examinables, 24 ont été entièrement vérifiées. Les autres sont publiées quand même — c'est le système qui fonctionne, pas qui échoue.",
+  "m4.statement": "L'information seule ne crée pas une société libre.",
+  "m4.prose": "<p>Une nation a aussi besoin d'un lieu où son peuple pense ensemble. Deep Tunisia est plus qu'une archive — c'est l'Agora numérique de la Tunisie. Non pas un lieu pour remplacer les institutions, mais un lieu où les citoyens peuvent les comprendre, les questionner et améliorer ensemble le registre public.</p><p>Les désaccords se règlent par la preuve plutôt que par la rumeur ; chaque voix pèse le même poids.</p>",
+  "m4.idT": "Votre identité est une clé de 12 mots",
+  "m4.idD": "Générée sur votre appareil à partir de la liste standard de mots BIP-39. Jamais stockée sur un serveur. Pas d'e-mail, pas de mot de passe, pas de profil à créer ou oublier. La clé EST votre identité. Perdez-la, et votre voix disparaît. Il n'y a pas de récupération, car il n'y a rien à récupérer.",
+  "m4.r1t": "Budget hebdomadaire de publications",
+  "m4.r1d": "Quatre publications par semaine pour commencer — davantage à mesure que votre statut grandit. Citer une source coûte la moitié d'une publication. C'est délibéré, pas une limite technique : c'est un lieu pour les choses auxquelles on a réfléchi, pas un salon de discussion.",
+  "m4.r2t": "Retenue de 10 minutes",
+  "m4.r2d": "Chaque publication attend dix minutes avant de paraître. Vous seul la voyez pendant ce délai ; changez d'avis, elle est remboursée intégralement. Publiez-la, et elle entre dans le registre permanent.",
+  "m4.r3t": "Rien n'est supprimé silencieusement",
+  "m4.r3d": "Les publications supprimées conservent leur place, leur fil, leur horodatage et leur raison. Le corps est vidé — mais l'enregistrement de la suppression reste visible.",
+  "m4.pathT": "Le chemin de la conversation à l'action",
+  "m4.p1t": "Discuter", "m4.p1d": "« Parlons-en. » Ancré sur un registre précis, la trajectoire de l'entité toujours visible.",
+  "m4.p2t": "Proposer une correction", "m4.p2d": "« Le registre se trompe. » Un mécanisme de correction — examinable, sourcé et suivi.",
+  "m4.p3t": "Signaler", "m4.p3d": "« Quelque chose mérite attention. » Un chemin de modération humaine.",
+  "m4.p4t": "Pétitionner", "m4.p4d": "« Nous sommes assez nombreux à le vouloir. » Une demande collective — vérifiable, pas une foule anonyme.",
+  "m4.privacy": "Nous ne pouvons pas voir qui vous êtes. Mais ce service tourne sur un hébergement ordinaire, et comme tout hébergeur, il reçoit votre connexion. Si vous publiez longtemps sous la même identité, votre façon d'écrire peut vous identifier, quelle que soit la qualité de la cryptographie. Voilà le modèle de menace, dit simplement.",
+  "m5.statement": "Les citoyens ne devraient jamais avoir à choisir entre participation et sécurité personnelle.",
+  "m5.prose": "<p>La participation est pseudonyme par conception : une clé, pas un compte. Pas de nom, pas d'e-mail, pas de profil — rien ne vous est demandé, donc rien n'est stocké sur vous.</p><p>L'anonymat est construit, pas promis. Chaque couche qui ne tient pas est nommée sur cette page plutôt que cachée en petits caractères, car une promesse que le système ne peut pas tenir est un piège.</p>",
+  "inst.eyebrow": "L'instrument",
+  "inst.statement": "Le site est une fenêtre. Le graphe de connaissances est le projet.",
+  "inst.v1n": "Chronique", "inst.v1t": "Qui a tenu quoi, quand", "inst.v1d": "Qui a occupé quel poste, quand, dessiné à l'échelle. La longueur du barreau est le mandat : la continuité se lit sans lire.",
+  "inst.v2n": "Maintenant", "inst.v2t": "Qui occupe un office aujourd'hui", "inst.v2d": "Selon la fraîcheur de la vérification, mesurée contre la durée médiane historique de l'office.",
+  "inst.v3n": "Réseau", "inst.v3t": "Qui est connecté à qui", "inst.v3d": "Une voie fixe par couche : les ponts entre couches sont littéralement les arêtes qui traversent les voies.",
+  "inst.v4n": "Atlas", "inst.v4t": "Tout à la fois", "inst.v4d": "La structure par époque en petites multiples, une matrice de survie des personnes contre les époques, une matrice de croisement des institutions.",
+  "inst.v5n": "Agora", "inst.v5t": "La conversation publique", "inst.v5d": "Discuter, proposer une correction, signaler, pétitionner — autour du fonds, pas loin de lui.",
+  "fund.eyebrow": "Aux bailleurs et aux partenaires",
+  "fund.statement": "La tentative d'État de mémoire collective a été scellée. Celle-ci ne peut pas l'être.",
+  "fund.prose": "<p>En 2018, l'Instance Vérité et Dignité — la réponse officielle de l'État au « ne jamais oublier » — a été fermée et ses archives scellées. Deep Tunisia est l'alternative non étatique et survivable : un fonds open source qui existe indépendamment de tout gouvernement, de tout hébergeur, de toute personne unique.</p><p>Le graphe de 1,3&nbsp;Mo voyage avec la page : pas de serveur, pas de base de données, pas de comptes, rien à compromettre.</p>",
+  "fund.s1": "sources, classées par fiabilité",
+  "fund.s2": "personnes · institutions · postes · relations · événements",
+  "fund.s3": "documentés / rapportés / inférés / non étayés",
+  "fund.s4": "affirmations en attente d'une source primaire — publiées, signalées, pas cachées",
+  "fund.s5": "lacunes et chevauchements de succession — détectés automatiquement, pas lissés",
+  "fund.s6": "contradictions de sources non résolues, les deux versions enregistrées",
+  "fund.s7": "hypothèses que le fonds réfute actuellement — y compris la version forte de l'État profond",
+  "fund.s8": "octets de données personnelles collectés — pas de comptes, pas de traçage",
+  "fund.buysT": "Ce que le soutien achète",
+  "fund.buysD": "De la vérification, pas des effets de manche. Le financement va au travail lent : sources primaires au Journal officiel, traduction du fonds, examen des affirmations restantes, et l'infrastructure qui garde une archive publique indépendante.",
+  "fund.contact": "Écrivez-nous",
+  "fund.license": "Code AGPL-3.0 · Données CC BY 4.0 · Open source sur GitHub",
+  "close.v1": "Une nation qui se souvient ne se manipule pas aussi facilement.",
+  "close.v2": "Une nation qui comprend ne se gouverne pas par la confusion.",
+  "close.v3": "Une nation qui se connaît est bien plus difficile à tromper.",
+  "close.v4": "Voilà pourquoi Deep Tunisia existe.",
+  "foot.f1h": "Ce que c'est",
+  "foot.f1": "Un atlas open source, adossé à ses sources, du pouvoir politique, militaire, sécuritaire et économique en Tunisie, 1956–2026. Ce que ce n'est pas : une affirmation qu'un gouvernement caché dirige le pays — une hypothèse que le fonds réfute actuellement.",
+  "foot.f2h": "Ce que ce n'est pas",
+  "foot.f2": "Pas un site qui dévoile un « État profond ». Ce cadrage présuppose sa conclusion. La question recevable est plus étroite : quelles institutions, quels individus et quels groupes économiques conservent leur influence quand le régime formel change — et quelles relations sont réellement continues plutôt que reconstruites après chaque rupture.",
+  "foot.f3h": "Ouvert par conception",
+  "foot.f3": "Chaque affirmation est traçable, chaque changement publié, chaque source citée. Deux obligations sont imposées par la construction : une inférence n'a jamais le droit de devenir un fait, et aucune affirmation ne part sans source.",
+  "foot.line1": "Deep Tunisia · open source · 1956–2026",
+  "foot.line2": "Source sur GitHub",
+  "foot.line3": "Contact"
+},
+ar: {
+  "a11y.skip": "تخطَّ إلى المحتوى",
+  "nav.manifesto": "البيان",
+  "nav.record": "السجل",
+  "nav.funders": "للمموّلين",
+  "hero.eyebrow": "سِجِلّ عام مفتوح المصدر · تونس 1956–2026",
+  "hero.h1": "كلُّ مجتمعٍ مبنيٌّ على الذاكرة.",
+  "hero.lede": "ديب تونس سجلٌّ عامٌّ حيٌّ للأشخاص والمؤسسات والشركات والشبكات التي تُشكّل الأمة — كلُّ ادعاءٍ قابلٌ للتتبّع إلى مصدره، وكلُّ استنتاجٍ قابلٌ للطعن، وكلُّ مواطنٍ قادرٌ على التحقق من الأدلة بنفسه.",
+  "hero.ctaPrimary": "انظُر إلى العمق <span class=\"arrow\">↓</span>",
+  "hero.ctaSecondary": "اقرأ البيان",
+  "hero.caption": "السجلُّ مرسومٌ بمقياس حقيقي — المناصب المشغولة كلَّ سنة، 1956–2026. كلّما كثُف الخطّ، كثُف السجلّ. 32 منصبًا بلا تاريخٍ مؤكَّد لم تُرسَم.",
+  "hero.attr": "379 منصبًا · 467 مصدرًا · 359 شخصًا · 163 مؤسسة",
+  "m1.statement": "من يتحكّم في المعلومة يُشكّل المستقبل.",
+  "m1.prose": "<p>كلُّ مجتمعٍ مبنيٌّ على الذاكرة. الذاكرة مصنوعةٌ من السجلات؛ والسجلات مصنوعةٌ من المعلومات.</p><p>لقرونٍ ظلّت السجلات ناقصةً، والقرارات خفيّةً، والسلطة صعبة الفهم — وأصعب منها الطعن. ذلك العذر لم يعد قائمًا. ننتج في يومٍ واحد من المعلومات أكثر ممّا أنتجت أجيالٌ كاملة في عمرها. ومع ذلك يبقى الفهم مشتّتًا: الحقائق متناثرة، والسجلات تختفي، والروابط تبقى خفيّة، والذاكرة العامة تتلاشى.</p><p>وحيثما تتلاشى الذاكرة، تفلت السلطة من المساءلة.</p>",
+  "m2.statement": "التعيينُ لا يعني شيئًا ما لم يُربط بمؤسسة.",
+  "m2.prose": "<p>ديب تونس سجلٌّ عامٌّ حيٌّ للأشخاص والمؤسسات والشركات والشبكات التي تُشكّل الأمة. يرسُم العلاقات، ويوثّق التعيينات، ويحفظ الخطوط الزمنية، ويسجّل الأفعال، ويربط الأدلة — محوّلًا الحقائق المعزولة إلى معرفة عامة.</p><p>نادرًا ما توجد الحقائق معزولة. الشركة لا تعني شيئًا ما لم يُفهَم ملكيّتها. القرار لا يعني شيئًا ما لم يوضع في سياقه التاريخي. ديب تونس موجودة لتربط تلك الشظايا في فهمٍ عامٍّ لا يمكن لأيّ وثيقةٍ واحدة أن توفّره.</p><p>المعرفة لا ينبغي أن تتطلّب إذنًا.</p>",
+  "m3.statement": "كلُّ ادعاءٍ يجب أن يكون قابلًا للتتبّع. كلُّ استنتاجٍ يجب أن يكون قابلًا للطعن.",
+  "m3.prose": "<p>كلُّ ادعاءٍ في السجلِّ مُصنَّفٌ تحت واحدةٍ من أربع قواعد — ولا تُعرَض أبدًا بصورةٍ متطابقة. الاستنتاجُ لا يُسمَح له أن يصبح حقيقةً أبدًا. الادعاءات غير المثبتة تُحفَظ، لا تُحذَف: الخريطة التي لا تُظهر إلا ما يمكنها إثباته لا يمكنها أن تُظهر لماذا الرواية الشائعة خاطئة.</p>",
+  "m3.legendTitle": "القواعد الأربع",
+  "m3.bDoc": "موثَّق", "m3.bDocD": "مثبَتٌ في السجلِّ الأولي — مرسوم، جريدة رسمية، حكم قضائي",
+  "m3.bRep": "منقول", "m3.bRepD": "منقولٌ عن وسائل إعلام موثوقة، لم يُدقَّق بعد في السجلِّ الأولي",
+  "m3.bInf": "مستنتَج", "m3.bInfD": "مستخلَصٌ من بنيةٍ موثّقة، مع استدلاله وما يمكنه تفنيده",
+  "m3.bUnsub": "غير مثبت", "m3.bUnsubD": "متداولٌ بلا دليل — يُسجَّل، لأن حذفه لن يخفي إلا سببَ تداوله",
+  "m3.review": "من 656 ادعاءً قابلًا للمراجعة، روجِع 24 مراجعةً كاملة. والباقي منشورٌ على أيّ حال — هكذا يعمل النظام، لا هكذا يفشل.",
+  "m4.statement": "المعلومات وحدها لا تصنع مجتمعًا حرًّا.",
+  "m4.prose": "<p>الأمة تحتاج أيضًا إلى مكانٍ يفكّر فيه شعبُها معًا. ديب تونس أكثر من أرشيف — إنها أغورا تونس الرقمية. لا مكانَ لاستبدال المؤسسات، بل مكانٌ يستطيع فيه المواطنون فهمَها ومساءلتَها وتحسينَ السجلِّ العام معًا.</p><p>الخلافات تُحسم بالدليل لا بالإشاعة؛ وكلُّ صوتٍ يحمل الوزن نفسه.</p>",
+  "m4.idT": "هويّتك مفتاحٌ من اثني عشر كلمةً",
+  "m4.idD": "يُولَد على جهازك من قائمة الكلمات القياسية BIP-39. لا يُخزَّن على خادم. لا بريد، لا كلمة سر، لا ملفّ يُنشأ أو يُنسى. المفتاح هو هويّتك. فقده، وصوتك يختفي. لا استرداد، لأنه لا شيء يُستردّ.",
+  "m4.r1t": "الميزانية الأسبوعية للمنشورات",
+  "m4.r1d": "أربعة منشورات أسبوعيًّا في البداية — وأكثر مع نموّ مكانتك. اقتباسُ مصدرٍ يكلّف نصف منشور. هذا تعمّدٌ لا حدٌّ تقني: مكانٌ للأشياء التي فكّرت فيها، لا للدردشة.",
+  "m4.r2t": "توقّف عشر دقائق",
+  "m4.r2d": "كلُّ منشورٍ ينتظر عشر دقائق قبل نشره. لا يراه إلا أنت في تلك النافذة؛ غيّر رأيك فيُردّ كاملًا. انشره، ويدخل السجلَّ الدائم.",
+  "m4.r3t": "لا شيء يُحذَف بصمت",
+  "m4.r3d": "المنشورات المُزالَة تحتفظ بموضعها، وسلسلتها، وتوقيتها، وسبب إزالتها. يُفرَغ المتن — لكن سجلَّ الإزالة يبقى ظاهرًا.",
+  "m4.pathT": "المسار من المحادثة إلى الفعل",
+  "m4.p1t": "ناقش", "m4.p1d": "«لنتحدّث في هذا.» مرساةٌ على سجلٍّ محدّد، مع مسار الكيان لا يزال ظاهرًا.",
+  "m4.p2t": "اقترح تعديلًا", "m4.p2d": "«أعتقد أن السجلَّ مخطئ.» آلية تصحيح — قابلةٌ للمراجعة وموثّقة المصدر ومتبوعة.",
+  "m4.p3t": "بلِّغ", "m4.p3d": "«هذا يحتاج إلى انتباه.» مسارُ مراجعةٍ بشريّة.",
+  "m4.p4t": "عريضة", "m4.p4d": "«يكفينا عددٌ منا يريده.» مطلبٌ جماعيّ — قابلٌ للتحقق، ليس غوغاءَ مجهولة.",
+  "m4.privacy": "لا نستطيع رؤية من أنت. لكن هذا يعمل على استضافةٍ عادية، ومثل كلِّ مضيفٍ، تتلقّى الخدمة اتصالك. إذا نشرت طويلًا تحت الهوية نفسها، فإن أسلوب كتابتك قد يُعرِّف بك مهما كانت جودة التشفير. هذا هو نموذج التهديد، معلَنًا بوضوح.",
+  "m5.statement": "لا ينبغي أن يُجبَر المواطنون على الاختيار بين المشاركة والسلامة الشخصية.",
+  "m5.prose": "<p>المشاركة مجهولةٌ بالتصميم: مفتاحٌ لا حساب. لا اسم، لا بريد، لا ملفّ — لا يُطلب منك شيء، فلا يُخزَّن عنك شيء.</p><p>إخفاء الهوية مُهندَسٌ لا موعود. كلُّ طبقةٍ لا تصمد تُسمّى في هذه الصفحة بدل أن تُخفى في الحواشي، لأن وعدًا لا يستطيع النظام الوفاء به فخٌّ.</p>",
+  "inst.eyebrow": "الأداة",
+  "inst.statement": "الموقع نافذة. الرسمُ البياني المعرفي هو المشروع.",
+  "inst.v1n": "التسلسل الزمني", "inst.v1t": "مَن تولّى ماذا، ومتى", "inst.v1d": "مَن تولّى أيَّ منصبٍ ومتى، مرسومًا بمقياسٍ حقيقي. طول الشريط هو مدّة المنصب، فتصبح الاستمرارية مرئيةً دون قراءة.",
+  "inst.v2n": "الآن", "inst.v2t": "من يشغل مكتبًا اليوم", "inst.v2d": "مقسومًا حسب حداثة التحقق، مقيسًا على الوسيط التاريخي لمدّة ذلك المكتب.",
+  "inst.v3n": "الشبكة", "inst.v3t": "من يتصل بمن", "inst.v3d": "مسارٌ ثابتٌ لكلِّ طبقة، فالجسور بين الطبقات هي حرفيًّا الحوافُ التي تعبر المسارات.",
+  "inst.v4n": "الأطلس", "inst.v4t": "كلُّ شيءٍ دفعةً واحدة", "inst.v4d": "البنية لكلِّ عصر في مضاعفاتٍ صغيرة، مصفوفةُ بقاء الأشخاص عبر العصور، مصفوفةُ تقاطع المؤسسات.",
+  "inst.v5n": "الأغورا", "inst.v5t": "المحادثة العامة", "inst.v5d": "ناقش، اقترح تعديلًا، بلِّغ، وقّع عريضة — حول السجلِّ لا بعيدًا عنه.",
+  "fund.eyebrow": "للمموّلين والشركاء",
+  "fund.statement": "مشروعُ الدولة للذاكرة الجماعية أُغلق بالشمع. هذا لا يمكن إغلاقه.",
+  "fund.prose": "<p>في 2018 أُغلقت هيئةُ الحقيقة والكرامة — جوابُ الدولة الرسمي عن «لن ننسى» — وخُتمت أرشيفاتُها. ديب تونس هي البديل غير الحكومي القابل للبقاء: سجلٌّ مفتوح المصدر يوجد باستقلالٍ عن أيّ حكومة، وأيّ مضيف، وأيّ شخصٍ واحد.</p><p>الرسمُ البياني البالغ 1.3&nbsp;ميغابايت يُشحن مع الصفحة: لا خادم، لا قاعدة بيانات، لا حسابات، لا شيء يُخترَق.</p>",
+  "fund.s1": "مصدرًا، مصنَّفين حسب الموثوقية",
+  "fund.s2": "أشخاص · مؤسسات · مناصب · علاقات · أحداث",
+  "fund.s3": "موثَّقة / منقولة / مستنتَجة / غير مثبتة",
+  "fund.s4": "ادعاءً بانتظار مصدرٍ أولي — منشورة، معلَّمة، غير مخفية",
+  "fund.s5": "فجواتٌ وتداخلاتٌ في الخلافة — تظهر تلقائيًّا، لا تُملَّس",
+  "fund.s6": "تناقضاتُ مصادر غير محلولة، الروايتان مسجَّلتان",
+  "fund.s7": "فرضيات يرفضها السجلُّ حاليًّا — بما فيها النسخة القوية من أطروحة الدولة العميقة",
+  "fund.s8": "بايتٌ من البيانات الشخصية — لا حسابات، لا تتبّع",
+  "fund.buysT": "ماذا يشتري الدعم",
+  "fund.buysD": "تحقّقًا، لا انطباعات. التمويل يذهب إلى العمل البطيء: المصادر الأولية في الجريدة الرسمية، وترجمة السجلِّ، ومراجعة الادعاءات المتبقية، والبنية التحتية التي تُبقي أرشيفًا عامًّا مستقلًّا.",
+  "fund.contact": "اكتب إلينا",
+  "fund.license": "الكود AGPL-3.0 · البيانات CC BY 4.0 · مفتوح المصدر على GitHub",
+  "close.v1": "أمّةٌ تتذكّر لا يمكن التلاعب بها بسهولة.",
+  "close.v2": "أمّةٌ تفهم لا يمكن حكمها بالتشويش.",
+  "close.v3": "أمّةٌ تعرف نفسها أصعبُ كثيرًا أن تُخدَع.",
+  "close.v4": "لهذا توجد ديب تونس.",
+  "foot.f1h": "ما هذه",
+  "foot.f1": "أطلس مفتوح المصدر، مسنودٌ إلى مصادره، للسلطة السياسية والعسكرية والأمنية والاقتصادية في تونس، 1956–2026. وما ليست هي: ادعاءً بأن حكومةً خفيّة تدير البلاد — فرضيةٌ يرفضها السجلُّ حاليًّا.",
+  "foot.f2h": "ما ليست هذه",
+  "foot.f2": "ليست موقعًا يكشف «دولةً عميقة». ذلك التأطير يفترض نتيجتَه مسبقًا. السؤال الجائز أضيق: أيُّ المؤسسات والأفراد والمجموعات الاقتصادية تحتفظ بنفوذها حين يتغيّر النظام الرسمي — وأيُّ العلاقات مستمرةٌ فعلًا بدل أن تُعاد بناؤها بعد كلِّ انقطاع.",
+  "foot.f3h": "مفتوحة بالتصميم",
+  "foot.f3": "كلُّ ادعاءٍ قابلٌ للتتبّع، وكلُّ تغييرٍ منشور، وكلُّ مصدرٍ مذكور. التزامان يفرضهما البناء: الاستنتاجُ لا يصبح حقيقةً أبدًا، ولا يخرج أيُّ ادعاءٍ بلا مصدر.",
+  "foot.line1": "ديب تونس · مفتوح المصدر · 1956–2026",
+  "foot.line2": "المصدر على GitHub",
+  "foot.line3": "اتصل بنا"
+},
+};
+
+/* ============================================================
+   Memory line — generate the ribbon from the real data above.
+   Thickness ∝ positions held that year; 2011 marked in the
+   rupture hue.  viewBox keeps aspect; width fills container.
+   ============================================================ */
+(function () {
+  var svg = document.getElementById('memory-line');
+  if (!svg) return;
+  var W = 1000, H = 260;
+  var padL = 30, padR = 30, baseY = 185;
+  var y0 = 1956, y1 = 2026;
+  var cMin = 12, cMax = 69;
+  var x = function (y) { return padL + (y - y0) / (y1 - y0) * (W - padL - padR); };
+  var thick = function (c) { return 4 + (c - cMin) / (cMax - cMin) * 26; };
+
+  var top = '', bot = '';
+  MEMORY.forEach(function (p) {
+    var px = x(p[0]), t = thick(p[1]) / 2;
+    top += (top ? 'L' : 'M') + px.toFixed(1) + ' ' + (baseY - t).toFixed(1);
+    bot += 'L' + px.toFixed(1) + ' ' + (baseY + t).toFixed(1);
+  });
+  var ribbon = top + ' ' + bot.split('L').slice(1).reverse().map(function (s) { return 'L' + s; }).join(' ') + ' Z';
+
+  var marks = '';
+  [1956, 1966, 1976, 1986, 1996, 2006, 2011, 2016, 2026].forEach(function (y) {
+    var px = x(y);
+    if (y === 2011) {
+      marks += '<line x1="' + px.toFixed(1) + '" y1="' + (baseY - 3) + '" x2="' + px.toFixed(1) + '" y2="18" stroke="var(--rupture)" stroke-opacity="0.55" stroke-width="1"/>';
+      marks += '<text x="' + px.toFixed(1) + '" y="30" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="13" fill="var(--rupture)">2011</text>';
+    } else {
+      marks += '<line x1="' + px.toFixed(1) + '" y1="' + (baseY + 6) + '" x2="' + px.toFixed(1) + '" y2="' + (baseY + 12) + '" stroke="var(--text-faint)" stroke-width="1"/>';
+      marks += '<text x="' + px.toFixed(1) + '" y="' + (baseY + 30) + '" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="var(--text-faint)">' + y + '</text>';
+    }
+  });
+
+  svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+  svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+  svg.innerHTML =
+    '<rect x="0" y="0" width="' + W + '" height="' + H + '" fill="none"/>' +
+    '<path d="' + ribbon + '" fill="var(--accent)" fill-opacity="0.62"/>' +
+    '<line x1="' + padL + '" y1="' + baseY + '" x2="' + (W - padR) + '" y2="' + baseY + '" stroke="var(--border-strong)" stroke-width="1"/>' +
+    marks;
+})();
+
+/* ============================================================
+   The names field — real people, dust in the archive.
+   Deterministic pseudo-random layout (seeded), honouring
+   prefers-reduced-motion via CSS.
+   ============================================================ */
+(function () {
+  var field = document.querySelector('.names-field');
+  if (!field) return;
+  var seed = 20260802;
+  function rand() {
+    seed = (seed * 16807) % 2147483647;
+    return seed / 2147483647;
+  }
+  var html = '';
+  NAMES.forEach(function (name, i) {
+    var left = (rand() * 92 + 2).toFixed(1);
+    var top = (rand() * 88 + 2).toFixed(1);
+    var delay = (-(rand() * 40)).toFixed(1);
+    html += '<span style="left:' + left + '%;top:' + top + '%;animation-delay:' + delay + 's">' + name + '</span>';
+  });
+  field.innerHTML = html;
+})();
+
+/* ============================================================
+   Locale + theme
+   ============================================================ */
+var STORAGE = 'dt-landing';
+var THEME_COLOR = { dark: '#1d1b15', light: '#fcfbf8' };
+
+function applyLocale(loc) {
+  var d = I18N[loc];
+  if (!d) return;
+  document.documentElement.lang = loc;
+  document.documentElement.dir = (loc === 'ar') ? 'rtl' : 'ltr';
+  document.querySelectorAll('[data-i18n]').forEach(function (el) {
+    el.textContent = d[el.dataset.i18n];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(function (el) {
+    el.innerHTML = d[el.dataset.i18nHtml];
+  });
+  document.querySelectorAll('.locale button').forEach(function (b) {
+    b.setAttribute('aria-pressed', String(b.dataset.locale === loc));
+  });
+  try { localStorage.setItem(STORAGE + '.locale', loc); } catch (e) {}
+}
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  document.getElementById('theme-toggle').setAttribute('aria-pressed', String(theme === 'light'));
+  var meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.setAttribute('content', THEME_COLOR[theme] || THEME_COLOR.dark);
+  try { localStorage.setItem(STORAGE + '.theme', theme); } catch (e) {}
+}
+
+(function init() {
+  var loc = 'en', theme = 'dark';
+  try {
+    loc = localStorage.getItem(STORAGE + '.locale') || 'en';
+    theme = localStorage.getItem(STORAGE + '.theme') || 'dark';
+  } catch (e) {}
+  if (!I18N[loc]) loc = 'en';
+  applyLocale(loc);
+  applyTheme(theme);
+
+  document.querySelectorAll('.locale button').forEach(function (b) {
+    b.addEventListener('click', function () { applyLocale(b.dataset.locale); });
+  });
+  document.getElementById('theme-toggle').addEventListener('click', function () {
+    var cur = document.documentElement.getAttribute('data-theme');
+    applyTheme(cur === 'dark' ? 'light' : 'dark');
+  });
+
+  /* Reveal on scroll with a short stagger (capped at 3 steps so
+     the last cards are not left waiting) */
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var reveals = document.querySelectorAll('.reveal, .reveal-up, .reveal-left, .reveal-scale');
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          var parent = e.target.parentElement;
+          var siblings = parent.querySelectorAll('.reveal, .reveal-up, .reveal-left, .reveal-scale');
+          var idx = Array.prototype.indexOf.call(siblings, e.target);
+          var delay = Math.min(idx, 3) * 80;
+          e.target.style.transitionDelay = delay + 'ms';
+          e.target.classList.add('in');
+          /* clear the delay once revealed, so later hovers are not lagged */
+          setTimeout(function () { e.target.style.transitionDelay = ''; }, delay + 800);
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.10, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(function (el) { io.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal, .reveal-up, .reveal-left, .reveal-scale').forEach(function (el) { el.classList.add('in'); });
+  }
+})();
+</script>
+</body>
+</html>

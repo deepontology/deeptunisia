@@ -1,0 +1,1181 @@
+# -----------------------------------------------------------------------------
+# OPEN RESEARCH QUESTIONS
+#
+# Published as a page on the site. The gaps in this dataset are a research agenda,
+# not something to hide: naming them invites correction and makes the difference
+# between "we checked and this is unknown" and "we did not check".
+# -----------------------------------------------------------------------------
+
+- id: q-cofaf-succession
+  kind: verification
+  question: >-
+    Is there a complete succession list for Chief of Staff of the Armed Forces from
+    1987 to 2026, and can the lapse of the post after 1991 be confirmed from an
+    official source rather than inferred from reporting?
+  question_fr: >-
+    Existe-t-il une liste complète des chefs d'état-major des armées de 1987 à 2026, et la
+    vacance du poste après 1991 peut-elle être confirmée par une source officielle plutôt
+    que déduite de la presse ?
+  question_fr_by: model-reviewed
+  question_ar: >-
+    هل توجد قائمة كاملة بشاغلي منصب رئيس أركان الجيوش من 1987 إلى 2026، وهل يمكن تأكيد شغور
+    المنصب بعد 1991 من مصدر رسمي لا استنتاجًا من التقارير الصحفية؟
+  question_ar_by: model-reviewed
+  status: partial
+  relates_to: [chief-armed-forces, rachid-ammar, armed-forces]
+  notes: >-
+    Currently the lapse rests on Carnegie's research and contemporary Tunisian
+    reporting stating the post had not existed before Rachid Ammar. No JORT record
+    has been located either creating or abolishing it.
+  notes_fr: >-
+    La vacance repose actuellement sur les recherches de Carnegie et les reportages
+    tunisiens contemporains affirmant que le poste n'existait pas avant Rachid Ammar. Aucun
+    document du JORT créant ou abolissant le poste n'a été localisé.
+  notes_fr_by: model-reviewed
+  notes_ar: >-
+    يعتمد الشغور حاليًا على أبحاث كارنيجي والتقارير التونسية المعاصرة التي تؤكد أن المنصب لم
+    يكن قائمًا قبل رشيد عمار. لم يُعثر على أي سند بالرائد الرسمي يُنشئ المنصب أو يُلغيه.
+  notes_ar_by: model-reviewed
+
+- id: q-service-chief-dates
+  kind: verification
+  question: Exact appointment dates for all Land, Air and Naval service chiefs since 1987.
+  question_fr: >-
+    Dates exactes de nomination de tous les chefs d'état-major de l'armée de terre, de l'air
+    et de la marine depuis 1987.
+  question_fr_by: model-reviewed
+  question_ar: >-
+    التواريخ الدقيقة لتعيين جميع رؤساء أركان الجيش البري والجوي والبحري منذ 1987.
+  question_ar_by: model-reviewed
+  status: partial
+  relates_to: [chief-land-forces, chief-air-force, chief-navy]
+  notes: >-
+    Land Army is reasonably documented from 2013. Air Force and Navy chronologies
+    before 2020 rest largely on secondary sources and are graded C. JORT PDFs on
+    legislation.tn could not be machine-read this run (image scans); the decree
+    numbers and gazette references are cited as given in the Wikipedia footnotes —
+    each is a tier-1 pointer awaiting human verification. Next step: OCR the three
+    legislation.tn PDFs (Ja06585, Ja05489, Ja0692003) and the 4 July 2002 Air
+    Force decree.
+  notes_fr: >-
+    L'armée de terre est raisonnablement documentée depuis 2013. Les chronologies de l'armée
+    de l'air et de la marine avant 2020 reposent largement sur des sources secondaires et
+    sont classées C. Les PDF du JORT sur legislation.tn n'ont pas pu être lus par machine lors
+    de ce passage (scans image) ; les numéros de décrets et références de gazette sont cités
+    tels que donnés dans les notes de bas de page de Wikipédia — chacun est un pointeur de
+    niveau 1 attendant une vérification humaine. Étape suivante : OCRiser les trois PDF de
+    legislation.tn (Ja06585, Ja05489, Ja0692003) et le décret du 4 juillet 2002 de l'armée de
+    l'air.
+  notes_fr_by: model-reviewed
+  notes_ar: >-
+    القوات البرية موثّقة بشكل معقول منذ 2013. أمّا التسلسلان الزمنيان للقوات الجوية والبحرية
+    قبل 2020 فيعتمدان إلى حد كبير على مصادر ثانوية ومصنّفان بدرجة C. تعذّرت القراءة الآلية
+    لملفات الرائد الرسمي على legislation.tn في هذه الجولة (مسح ضوئي للصور)؛ وأرقام الأوامر
+    ومراجع الجريدة منقولة كما وردت في حواشي ويكيبيديا — كلٌّ منها مؤشر من المستوى 1 بانتظار
+    تحقق بشري. الخطوة التالية: التعرف الضوئي على ملفات legislation.tn الثلاثة (Ja06585،
+    Ja05489، Ja0692003) وعلى أمر 4 جويلية 2002 الخاص بالقوات الجوية.
+  notes_ar_by: model-reviewed
+  answer: >-
+    The 1987-2026 service-chief sequences are now documented with named holders
+    for most of the window; the remaining gaps are tenure boundaries, not entire
+    posts. LAND ARMY (fr.wiki list): Abdelaziz Skik until 30 April 2002 (died in
+    office, helicopter crash near Medjez el-Bab, Jeune Afrique 13 May 2002);
+    Rachid Ammar 2002 - 9 July 2013 (start year-level 2002 per Europa/Routledge
+    "The Middle East and North Africa 2007", p. 1076; fr.wiki dates the end
+    9 July 2013 — the graph's end of 2013-06-25 is the retirement announcement,
+    see flag qa-flag-ammar-end); Mohamed Salah Hamdi 9 July 2013 - 30 July 2014;
+    Ismaïl Fathali 12 Aug 2014 - 1 June 2018; Mohamed El Ghoul 1 June 2018 -
+    present. Holders between 1987 and 2002 (Boubaker Ben Kraïem, Abdelhamid
+    Escheikh, Sadok Gmati, Mohamed Saïd El Kateb, Mohamed Hédi Ben Hassine) are
+    listed by fr.wiki without dates. AIR FORCE (fr.wiki + ar.wiki lists):
+    Abdelhamid El Fehri from 16 Sep 1985 (décret n° 1115/1985, JORT n° 65,
+    p. 1201) to an unknown end; Mahmoud Ben Mohamed 4 July 2002 - 9 Feb 2008
+    (JORT decree of 4 July 2002 per fr.wiki footnote); Taïeb Laâjimi 9 Feb 2008 -
+    1 Sep 2012; Mohamed Néjib Jelassi 1 Sep 2012 - 22 Aug 2013; Béchir Bédoui
+    22 Aug 2013 - 28 Aug 2015; Mohamed Foued El Aloui 28 Aug 2015 - 1 Aug 2017;
+    Mohamed El Hajjam from 1 Aug 2017 (still in post). NAVY (ar.wiki list with
+    JORT citations + fr.wiki): Mohamed Chadli Cherif from 1 Aug 1989 (décret
+    n° 1070/1989, JORT n° 54, p. 1166) to an unknown end; Tarek Faouzi El Arbi
+    from 2003 (décret n° 1818/2003, JORT n° 69, p. 2844) to an unknown end;
+    Mohamed Khamassi to 1 Oct 2015; Abderraouf Atallah 1 Oct 2015 - 13 May 2020;
+    Adel Jehane from 13 May 2020 (still in post, see q-jehane-status).
+  answer_fr: >-
+    Les séquences des chefs d'état-major 1987-2026 sont désormais documentées avec des
+    titulaires nommés pour l'essentiel de la période ; les lacunes restantes sont des bornes
+    de mandat, non des postes entiers. ARMÉE DE TERRE (liste fr.wiki) : Abdelaziz Skik jusqu'au
+    30 avril 2002 (mort en fonction, crash d'hélicoptère près de Medjez el-Bab, Jeune Afrique
+    13 mai 2002) ; Rachid Ammar 2002 - 9 juillet 2013 (début au niveau de l'année 2002 selon
+    Europa/Routledge « The Middle East and North Africa 2007 », p. 1076 ; fr.wiki date la fin
+    au 9 juillet 2013 — la fin 2013-06-25 du graphe est l'annonce de retraite, voir le drapeau
+    qa-flag-ammar-end) ; Mohamed Salah Hamdi 9 juillet 2013 - 30 juillet 2014 ; Ismaïl Fathali
+    12 août 2014 - 1er juin 2018 ; Mohamed El Ghoul 1er juin 2018 - présent. Les titulaires
+    entre 1987 et 2002 (Boubaker Ben Kraïem, Abdelhamid Escheikh, Sadok Gmati, Mohamed Saïd El
+    Kateb, Mohamed Hédi Ben Hassine) sont listés par fr.wiki sans dates. ARMÉE DE L'AIR
+    (listes fr.wiki + ar.wiki) : Abdelhamid El Fehri depuis le 16 sept 1985 (décret n° 1115/1985,
+    JORT n° 65, p. 1201) jusqu'à une fin inconnue ; Mahmoud Ben Mohamed 4 juillet 2002 -
+    9 fév 2008 (décret JORT du 4 juillet 2002 selon la note fr.wiki) ; Taïeb Laâjimi 9 fév 2008 -
+    1er sept 2012 ; Mohamed Néjib Jelassi 1er sept 2012 - 22 août 2013 ; Béchir Bédoui
+    22 août 2013 - 28 août 2015 ; Mohamed Foued El Aloui 28 août 2015 - 1er août 2017 ; Mohamed
+    El Hajjam depuis le 1er août 2017 (toujours en poste). MARINE (liste ar.wiki avec
+    citations JORT + fr.wiki) : Mohamed Chadli Cherif depuis le 1er août 1989 (décret
+    n° 1070/1989, JORT n° 54, p. 1166) jusqu'à une fin inconnue ; Tarek Faouzi El Arbi depuis
+    2003 (décret n° 1818/2003, JORT n° 69, p. 2844) jusqu'à une fin inconnue ; Mohamed Khamassi
+    jusqu'au 1er oct 2015 ; Abderraouf Atallah 1er oct 2015 - 13 mai 2020 ; Adel Jehane depuis
+    le 13 mai 2020 (toujours en poste, voir q-jehane-status).
+  answer_fr_by: model-reviewed
+  answer_ar: >-
+    أصبحت تسلسلات رؤساء أركان الفترة 1987-2026 موثّقة بأسماء شاغليها لمعظم النافذة؛ والثغرات
+    المتبقية هي حدود ولايات لا مناصب كاملة. الجيش البري (قائمة ويكيبيديا الفرنسية): عبد
+    العزيز سكيك حتى 30 أفريل 2002 (توفي في المنصب إثر سقوط مروحية قرب مجاز الباب، جون أفريك
+    13 ماي 2002)؛ رشيد عمار 2002 - 9 جويلية 2013 (البداية على مستوى السنة 2002 حسب
+    Europa/Routledge «The Middle East and North Africa 2007»، ص 1076؛ وتؤرخ ويكيبيديا
+    الفرنسية النهاية في 9 جويلية 2013 — ونهاية 2013-06-25 في الرسم البياني هي إعلان التقاعد،
+    انظر علم qa-flag-ammar-end)؛ محمد صالح الحامدي 9 جويلية 2013 - 30 جويلية 2014؛ إسماعيل
+    الفتحلي 12 أوت 2014 - 1 جوان 2018؛ محمد الغول منذ 1 جوان 2018 - الآن. أما الشاغلون بين
+    1987 و2002 (بوبكر بن كريّم، عبد الحميد الشيخ، الصادق قماطي، محمد سعيد الخطاب، محمد الهادي
+    بن حسين) فتدرجهم ويكيبيديا الفرنسية دون تواريخ. القوات الجوية (قائمتا ويكيبيديا الفرنسية
+    والعربية): عبد الحميد الفهري منذ 16 سبتمبر 1985 (أمر عدد 1115 لسنة 1985، الرائد الرسمي
+    عدد 65، ص 1201) حتى نهاية مجهولة؛ محمود بن محمد 4 جويلية 2002 - 9 فيفري 2008 (أمر الرائد
+    الرسمي الصادر في 4 جويلية 2002 حسب حاشية ويكيبيديا الفرنسية)؛ الطيب العجيلي 9 فيفري 2008 -
+    1 سبتمبر 2012؛ محمد نجيب جلاصي 1 سبتمبر 2012 - 22 أوت 2013؛ بشير بدوي 22 أوت 2013 - 28 أوت
+    2015؛ محمد فؤاد العلاوي 28 أوت 2015 - 1 أوت 2017؛ محمد الهاجم منذ 1 أوت 2017 (ما زال في
+    المنصب). البحرية (قائمة ويكيبيديا العربية بحواشي الرائد الرسمي + الفرنسية): محمد الشاذلي
+    الشريف منذ 1 أوت 1989 (أمر عدد 1070 لسنة 1989، الرائد الرسمي عدد 54، ص 1166) حتى نهاية
+    مجهولة؛ طارق فوزي العربي منذ 2003 (أمر عدد 1818 لسنة 2003، الرائد الرسمي عدد 69، ص 2844)
+    حتى نهاية مجهولة؛ محمد الخماسي حتى 1 أكتوبر 2015؛ عبد الرؤوف عطاء الله 1 أكتوبر 2015 -
+    13 ماي 2020؛ عادل جهان منذ 13 ماي 2020 (ما زال في المنصب، انظر q-jehane-status).
+  answer_ar_by: model-reviewed
+  confidence: B
+  basis: documented
+  reasoning: >-
+    The Land Army sequence from 2013 and the Air Force/Navy sequences from
+    2002/1989 now rest on two encyclopedic lists that cite JORT decrees, plus
+    dated reporting (Kapitalis 8 July 2013 and Jeune Afrique 13 May 2002 via
+    the fr.wiki footnotes; Mosaïque FM; Business News). The graph's pre-2013
+    Land and pre-2008 Air/pre-2010 Navy gaps are filled with named holders;
+    only tenure boundaries (El Fehri end, Cherif end, El Arbi end, Khamassi
+    start, the 1987-2002 Land holders) remain undated.
+  falsifiable_by: >-
+    The JORT issues cited (1985 n° 65 p. 1201; 1989 n° 54 p. 1166; 2003 n° 69
+    p. 2844; the 4 July 2002 Air Force decree) — each PDF exists on
+    legislation.tn but is an image scan; a human reading the decree text would
+    confirm or move every boundary dated above.
+  sources: [frwiki-land-chief-list, frwiki-air-chief-list, arwiki-air-chief-list, arwiki-navy-chief-list, frwiki-navy-chief-list, jort-1985-1115, jort-1989-1070, jort-2003-1818, tunisie-actualite-jehane-2020]
+
+- id: q-jehane-status
+  kind: verification
+  question: What is Adel Jehane's current status, and can his appointment date be confirmed from a decree?
+  question_fr: >-
+    Quel est le statut actuel d'Adel Jehane, et sa date de nomination peut-elle être
+    confirmée par un décret ?
+  question_fr_by: model-reviewed
+  question_ar: >-
+    ما هو الوضع الحالي لعادل جيهان، وهل يمكن تأكيد تاريخ تعيينه من مرسوم؟
+  question_ar_by: model-reviewed
+  status: partial
+  relates_to: [adel-jehane, chief-navy]
+  notes: >-
+    Rank-at-appointment wording: Jawhara FM says promoted from عميد (brigadier)
+    to أمير لواء (rear admiral); the graph's people.yaml says "promoted from
+    captain major" — likely a mistranslation of عميد; see flag
+    qa-flag-jehane-rank. The decree number (12 May 2020) remains the top
+    target for a tier-1 upgrade.
+  notes_fr: >-
+    Formulation du grade à la nomination : Jawhara FM dit promu de عميد (général de brigade)
+    à أمير لواء (contre-amiral) ; le people.yaml du graphe dit « promu de capitaine-major » —
+    probablement une mauvaise traduction de عميد ; voir le drapeau qa-flag-jehane-rank. Le
+    numéro du décret (12 mai 2020) reste la cible prioritaire d'une mise à niveau de niveau 1.
+  notes_fr_by: model-reviewed
+  notes_ar: >-
+    صياغة الرتبة عند التعيين: تقول جوهرة إف إم إنه رُقّي من عميد إلى أمير لواء؛ أما people.yaml
+    في الرسم البياني فيقول «رُقّي من نقيب أول» — وهو على الأرجح ترجمة خاطئة لعميد؛ انظر علم
+    qa-flag-jehane-rank. ويبقى رقم الأمر (12 ماي 2020) الهدف الأول لترقية إلى المستوى 1.
+  notes_ar_by: model-reviewed
+  answer: >-
+    Appointment: Adel Jehane was appointed Navy chief of staff on 13 May 2020.
+    Jawhara FM (13 May 2020) reports the ceremony: at Carthage Palace on
+    Wednesday 13 May 2020, President Saied, as supreme commander, promoted
+    him from navy brigadier to rear admiral (amiral de brigade) on the
+    occasion of appointing him Navy chief of staff, with Defence Minister
+    Imad Hazgui present. Mosaïque FM reported the same appointment the same
+    day; fr.wiki's navy list dates the tenure from 13 May 2020. The JORT
+    decree is dated 12 May 2020 per the graph's p-navy-atallah reasoning; the
+    decree number was not located. Current status: still Navy chief of staff
+    as of May 2026 — fr.wiki's navy list (edited 6 May 2026) still shows him
+    as incumbent; no independent 2025-2026 press confirmation was located, and
+    the graph's "verified:2025-12" end date carries no listed source (see flag
+    qa-flag-jehane-verified). Career per Jawhara FM: head of the National
+    Coast Guard service, director-general of the remote-sensing and
+    cartography centre, commander of the Higher War School, then military
+    attaché in France.
+  answer_fr: >-
+    Nomination : Adel Jehane a été nommé chef d'état-major de la Marine le 13 mai 2020.
+    Jawhara FM (13 mai 2020) relate la cérémonie : au palais de Carthage, le mercredi 13 mai
+    2020, le président Saïed, en tant que commandant suprême, l'a promu de brigadier de la
+    marine à contre-amiral (amiral de brigade) à l'occasion de sa nomination comme chef
+    d'état-major de la Marine, en présence du ministre de la Défense Imad Hazgui. Mosaïque FM
+    a rapporté la même nomination le même jour ; la liste marine de fr.wiki date le mandat du
+    13 mai 2020. Le décret JORT est daté du 12 mai 2020 selon le raisonnement de p-navy-atallah
+    dans le graphe ; le numéro du décret n'a pas été localisé. Statut actuel : toujours chef
+    d'état-major de la Marine en mai 2026 — la liste marine de fr.wiki (éditée le 6 mai 2026)
+    le montre toujours en fonction ; aucune confirmation de presse indépendante 2025-2026 n'a
+    été localisée, et la date de fin « verified:2025-12 » du graphe ne porte aucune source
+    listée (voir le drapeau qa-flag-jehane-verified). Carrière selon Jawhara FM : chef du
+    service de la Garde côtière nationale, directeur général du centre de télédétection et de
+    cartographie, commandant de l'École supérieure de guerre, puis attaché militaire en
+    France.
+  answer_fr_by: model-reviewed
+  answer_ar: >-
+    التعيين: عُيّن عادل جهان رئيسًا لأركان البحرية في 13 ماي 2020. تروي جوهرة إف إم (13 ماي
+    2020) الحفل: في قصر قرطاج، الأربعاء 13 ماي 2020، رقّاه الرئيس سعيّد بصفته القائد الأعلى
+    من عميد بحري إلى أمير لواء بمناسبة تعيينه رئيسًا لأركان البحرية، بحضور وزير الدفاع عماد
+    الحزقي. وروت موزاييك إف إم التعيين نفسه في اليوم نفسه؛ ويؤرخ سطر البحرية في ويكيبيديا
+    الفرنسية الولاية من 13 ماي 2020. أما أمر الرائد الرسمي فمؤرخ في 12 ماي 2020 حسب استدلال
+    p-navy-atallah في الرسم البياني؛ ولم يُعثر على رقم الأمر. الوضع الحالي: ما زال رئيسًا
+    لأركان البحرية حتى ماي 2026 — لا يزال سطر البحرية في ويكيبيديا الفرنسية (المحرَّر في 6 ماي
+    2026) يعرضه شاغلًا للمنصب؛ ولم يُعثر على أي تأكيد صحفي مستقل 2025-2026، وتاريخ النهاية
+    «verified:2025-12» في الرسم البياني لا يحمل أي مصدر مُدرَج (انظر علم qa-flag-jehane-verified).
+    المسار المهني حسب جوهرة إف إم: رئيس مصلحة الحرس البحري الوطني، ومدير عام لمركز الاستشعار
+    عن بعد والخرائط، وقائدًا للمدرسة الحربية العليا، ثم ملحقًا عسكريًا في فرنسا.
+  answer_ar_by: model-reviewed
+  confidence: B
+  basis: documented
+  reasoning: >-
+    The 13 May 2020 date is attested by two independent outlets plus the
+    encyclopedic list; the ceremony account (Jawhara FM) quotes the event in
+    detail. The current-status portion is weaker (single encyclopedic list)
+    and is graded C within this B answer.
+  falsifiable_by: >-
+    The JORT decree of 12 May 2020 appointing him, or a 2025-2026 ministry
+    communiqué naming a successor or confirming him — either would settle the
+    decree date and the current status.
+  sources: [jawharafm-jehane-2020, mosaique-jehane-2020, frwiki-navy-chief-list, tunisie-actualite-jehane-2020]
+
+- id: q-dhif-status
+  kind: verification
+  question: >-
+    What is Mohamed Habib Dhif's actual appointment date and current status, and does
+    any public document establish the ANRSD's statute and powers?
+  question_fr: >-
+    Quelle est la date réelle de nomination de Mohamed Habib Dhif et son statut actuel, et
+    un document public établit-il le statut et les pouvoirs de l'ANRSD ?
+  question_fr_by: model-reviewed
+  question_ar: >-
+    ما هو تاريخ تعيين محمد الحبيب ضيف الفعلي ووضعه الحالي، وهل توجد وثيقة عمومية تُثبت
+    النظام الأساسي للوكالة الوطنية للاستخبارات الأمنية والدفاعية وصلاحياتها؟
+  question_ar_by: model-reviewed
+  status: partial
+  relates_to: [mohamed-habib-dhif, anrsd, salah-ben-abdessalem]
+  notes: >-
+    The strongest available sourcing is specialist subscription reporting. Nothing
+    primary has been located. This is the single largest gap in the current security map.
+    Open: the 2014-2017 succession between Ben Taous (DGMS to 2014?, per the
+    graph's p-milsec-bentaous) and Rahmouni (first ANRSD director?, to 2017)
+    is not documented. The ANRSD legal-texts page on legislation-securite.tn
+    is the next stop (archived 2021-06-27); the live site requires
+    interaction.
+  notes_fr: >-
+    La meilleure source disponible est une presse spécialisée payante. Aucun document
+    primaire n'a été localisé. C'est la plus grande lacune de la carte sécuritaire actuelle.
+    À ouvrir : la succession 2014-2017 entre Ben Taous (DGMS jusqu'en 2014 ?, selon le
+    p-milsec-bentaous du graphe) et Rahmouni (premier directeur de l'ANRSD ?, jusqu'en 2017)
+    n'est pas documentée. La page des textes légaux de l'ANRSD sur legislation-securite.tn est
+    la prochaine étape (archivée le 2021-06-27) ; le site en direct exige une interaction.
+  notes_fr_by: model-reviewed
+  notes_ar: >-
+    أقوى مصدر متاح هو الصحافة المتخصصة المدفوعة. لم يُعثر على أي مصدر أولي. هذه أكبر ثغرة في
+    الخريطة الأمنية الحالية. مفتوح: التعاقب 2014-2017 بين بن تاوُس (الإدارة العامة للأمن
+    العسكري حتى 2014؟، حسب p-milsec-bentaous في الرسم البياني) ورحموني (أول مدير للوكالة؟،
+    حتى 2017) غير موثّق. صفحة النصوص القانونية للوكالة على legislation-securite.tn هي المحطة
+    التالية (مؤرشفة 2021-06-27)؛ والموقع المباشر يتطلب تفاعلًا.
+  notes_ar_by: model-reviewed
+  answer: >-
+    The ANRSD's statute IS publicly documented: the agency was created — from
+    the former Direction Générale de la Sécurité Militaire (DGMS,
+    الإدارة العامة للأمن العسكري) — by decree n° 2014-4208 of 20 November
+    2014, approved at the Council of Ministers of 20 Nov 2014, as a public
+    administrative institution under the President of the Republic (supreme
+    commander) and the Ministry of National Defence (ar.wiki citing the DCAF
+    legislation-securite.tn security-legislation database, archived June
+    2021). Mohamed Habib Dhif's appointment: ~April 2017 — Leaders (11 Apr
+    2017) introduces him as the NEW director-general of the ANRSD, succeeding
+    Brigadier General Taoufik Rahmouni; ar.wiki's infobox dates his
+    directorship from April 2017. The graph's ~2018 start is wrong on this
+    evidence (see flag qa-flag-dhif-start). Current status: still in post with
+    his retirement deferred as of 26 Feb 2025 (Africa Intelligence), and the
+    designated successor Salah Ben Abdessalem was promoted major general in
+    June 2025 without a completed handover (Leaders; graph event
+    dhif-succession-2025).
+  answer_fr: >-
+    Le statut de l'ANRSD EST documenté publiquement : l'agence a été créée — à partir de
+    l'ancienne Direction Générale de la Sécurité Militaire (DGMS, الإدارة العامة للأمن
+    العسكري) — par le décret n° 2014-4208 du 20 novembre 2014, approuvé au Conseil des
+    ministres du 20 nov 2014, comme établissement public administratif placé sous le Président
+    de la République (commandant suprême) et le ministère de la Défense nationale (ar.wiki
+    citant la base de données de législation sécuritaire legislation-securite.tn du DCAF,
+    archivée en juin 2021). Nomination de Mohamed Habib Dhif : ~avril 2017 — Leaders (11 avr
+    2017) le présente comme le NOUVEAU directeur général de l'ANRSD, succédant au général de
+    brigade Taoufik Rahmouni ; l'infobox de ar.wiki date sa direction d'avril 2017. Le début
+    ~2018 du graphe est erroné sur cette base (voir le drapeau qa-flag-dhif-start). Statut
+    actuel : toujours en poste, sa retraite ayant été différée au 26 fév 2025 (Africa
+    Intelligence), et le successeur désigné Salah Ben Abdessalem a été promu général de
+    division en juin 2025 sans passation achevée (Leaders ; événement dhif-succession-2025 du
+    graphe).
+  answer_fr_by: model-reviewed
+  answer_ar: >-
+    النظام الأساسي للوكالة موثّق عمومًا: أُنشئت الوكالة — انطلاقًا من الإدارة العامة للأمن
+    العسكري السابقة (DGMS، الإدارة العامة للأمن العسكري) — بموجب الأمر عدد 2014-4208 المؤرخ
+    في 20 نوفمبر 2014، وأُقرّ في مجلس الوزراء بتاريخ 20 نوفمبر 2014، كمؤسسة عمومية إدارية
+    تحت رئاسة الجمهورية (القائد الأعلى) ووزارة الدفاع الوطني (ويكيبيديا العربية نقلاً عن
+    قاعدة تشريعات الأمن legislation-securite.tn التابعة لـDCAF، المؤرشفة في جوان 2021).
+    تعيين محمد الحبيب ضيف: نحو أفريل 2017 — تقدمه ليدرز (11 أفريل 2017) بوصفه المدير العام
+    الجديد للوكالة، خلفًا للعميد توفيق رحموني؛ ويؤرخ صندوق معلومات ويكيبيديا العربية
+    إدارته من أفريل 2017. وبداية ~2018 في الرسم البياني خاطئة على ضوء هذا الدليل (انظر علم
+    qa-flag-dhif-start). الوضع الحالي: ما زال في المنصب مع تأجيل تقاعده حتى 26 فيفري 2025
+    (أفريكا إنتليجنس)، ورُقّي الخلف المعيّن صالح بن عبد السلام إلى لواء في جوان 2025 دون
+    اكتمال التسليم (ليدز؛ حدث dhif-succession-2025 في الرسم البياني).
+  answer_ar_by: model-reviewed
+  confidence: C
+  basis: documented
+  verification: needs-primary-source
+  attributed_to: >-
+    April 2017 appointment date: Leaders (11 Apr 2017) and Arabic Wikipedia
+    (infobox); ANRSD statute: Arabic Wikipedia citing the DCAF
+    legislation-securite.tn legal-texts database
+  reasoning: >-
+    The statute claim rests on a specific decree number (2014-4208) cited by
+    ar.wiki from a DCAF database of Tunisian security legislation — a concrete,
+    checkable reference, but not read in the original this run. The April 2017
+    appointment rests on Leaders (11 Apr 2017, a dedicated profile) and the
+    ar.wiki infobox. The graph's ~2018 start predates both.
+  falsifiable_by: >-
+    JORT publication of decree n° 2014-4208 du 20 novembre 2014, and the JORT
+    decree appointing Dhif (expected ~March-April 2017) — the DCAF taxonomy
+    page (legislation-securite.tn term 2044, archived) lists the ANRSD texts.
+  sources: [arwiki-anrsd, legislation-securite-anrsd, leaders-dhif-2017, africaintel-dhif-2025, leaders-promotions-2025]
+
+- id: q-seriati-chronology
+  kind: verification
+  question: Complete chronology of Ali Seriati's National Security and Presidential Security appointments.
+  question_fr: >-
+    Chronologie complète des nominations d'Ali Seriati à la Sûreté nationale et à la
+    sécurité présidentielle.
+  question_fr_by: model-reviewed
+  question_ar: >-
+    التسلسل الزمني الكامل لتعيينات علي السرياطي في الأمن الوطني والأمن الرئاسي.
+  question_ar_by: model-reviewed
+  status: open
+  relates_to: [ali-seriati]
+
+- id: q-ganzoui-chronology
+  kind: verification
+  question: Complete chronology of Mohamed Ali Ganzoui's appointments.
+  question_fr: >-
+    Chronologie complète des nominations de Mohamed Ali Ganzoui.
+  question_fr_by: model-reviewed
+  question_ar: >-
+    التسلسل الزمني الكامل لتعيينات محمد علي القنزوعي.
+  question_ar_by: model-reviewed
+  status: partial
+  relates_to: [mohamed-ali-ganzoui]
+  notes: >-
+    Open sub-questions: the exact role title of the 21 Nov 2005 - 5 June 2006
+    tenure (DGSN vs Secrétaire d'État), and the JORT decree numbers for every
+    appointment. The Taylor & Francis claim that Ganzoui was one of the two
+    longest-serving DGSNs under Ben Ali sits uneasily with a first DGSN term
+    of ~1 year (1989-90); "longest-serving" may count his wider security posts.
+  notes_fr: >-
+    Sous-questions ouvertes : le titre exact de fonction du mandat du 21 nov 2005 - 5 juin
+    2006 (DGSN vs Secrétaire d'État), et les numéros de décrets JORT de chaque nomination.
+    L'affirmation de Taylor & Francis selon laquelle Ganzoui fut l'un des deux DGSN ayant
+    exercé le plus longtemps sous Ben Ali s'accorde mal avec un premier mandat de DGSN d'environ
+    un an (1989-90) ; « le plus longtemps » compte peut-être ses postes sécuritaires plus larges.
+  notes_fr_by: model-reviewed
+  notes_ar: >-
+    أسئلة فرعية مفتوحة: المسمى الوظيفي الدقيق لولاية 21 نوفمبر 2005 - 5 جوان 2006 (مدير عام
+    للأمن الوطني أم كاتب دولة)؛ وأرقام أوامر الرائد الرسمي لكل تعيين. وادعاء تايلور وفرانسيس
+    بأن القنزوعي كان من أطول مديري الأمن الوطني خدمة في عهد بن علي لا ينسجم بسهولة مع ولاية
+    أولى للمديرية العامة للأمن الوطني مدتها نحو سنة (1989-90)؛ فربما يحسب «الأطول خدمة»
+    مناصبه الأمنية الأوسع.
+  notes_ar_by: model-reviewed
+  answer: >-
+    The documented chronology of Mohamed Ali Ganzoui (born 3 Oct 1944, Haïdra):
+    1988 chef du district de Tunis (fr.wiki bio); 1989 first term as
+    Directeur général de la Sûreté nationale (fr.wiki bio; Jeune Afrique);
+    1990 Directeur général des services spéciaux, leading the anti-Islamist
+    repression of 1990-91 (fr.wiki bio citing Libération); 24 Jan 1995 -
+    5 Sep 2002 Secrétaire d'État chargé de la Sûreté nationale (fr.wiki citing
+    Libération 26 Jan 1995; Kapitalis gives 12 Jan 1995 — the recorded
+    discrepancy stands), dismissed after the Ghriba attack (11 April 2002);
+    2002-2005 Ambassador to Damascus; 21 Nov 2005 - 5 June 2006 returned to the
+    security post, recorded as DGSN by Jeune Afrique and the graph but titled
+    "secrétaire d'État, chargé de la Sûreté nationale" by La Presse (22 Nov
+    2005, p. 6) and fr.wiki — a role-title discrepancy, see flag
+    qa-flag-ganzoui-2005role; 2006-? Ambassador to Malta; 2011 arrested,
+    29 Nov 2011 sentenced to four years (Barraket Essahel), reduced to two on
+    appeal 7 Apr 2012, released 3 May 2013 (fr.wiki citing Mosaïque FM,
+    Business News, Tunisie numérique).
+  answer_fr: >-
+    La chronologie documentée de Mohamed Ali Ganzoui (né le 3 oct 1944, Haïdra) : 1988 chef
+    du district de Tunis (bio fr.wiki) ; 1989 premier mandat de Directeur général de la
+    Sûreté nationale (bio fr.wiki ; Jeune Afrique) ; 1990 Directeur général des services
+    spéciaux, menant la répression anti-islamiste de 1990-91 (bio fr.wiki citant Libération) ;
+    24 janv 1995 - 5 sept 2002 Secrétaire d'État chargé de la Sûreté nationale (fr.wiki citant
+    Libération 26 janv 1995 ; Kapitalis donne 12 janv 1995 — la divergence enregistrée
+    demeure), démis après l'attentat de la Ghriba (11 avril 2002) ; 2002-2005 Ambassadeur à
+    Damas ; 21 nov 2005 - 5 juin 2006 retour au poste sécuritaire, enregistré comme DGSN par
+    Jeune Afrique et le graphe mais titré « secrétaire d'État, chargé de la Sûreté nationale »
+    par La Presse (22 nov 2005, p. 6) et fr.wiki — une divergence de titre de fonction, voir le
+    drapeau qa-flag-ganzoui-2005role ; 2006-? Ambassadeur à Malte ; 2011 arrêté, condamné le
+    29 nov 2011 à quatre ans (Barraket Essahel), réduits à deux en appel le 7 avr 2012, libéré
+    le 3 mai 2013 (fr.wiki citant Mosaïque FM, Business News, Tunisie numérique).
+  answer_fr_by: model-reviewed
+  answer_ar: >-
+    التسلسل الزمني الموثّق لمحمد علي القنزوعي (ولد في 3 أكتوبر 1944 بهيدرة): 1988 رئيس
+    دائرة تونس (سيرة ويكيبيديا الفرنسية)؛ 1989 الولاية الأولى كمدير عام للأمن الوطني (سيرة
+    ويكيبيديا الفرنسية؛ جون أفريك)؛ 1990 مدير عام للمصالح الخاصة، قاد حملة القمع ضد
+    الإسلاميين 1990-91 (سيرة ويكيبيديا الفرنسية نقلاً عن ليبيراسيون)؛ 24 جانفي 1995 - 5
+    سبتمبر 2002 كاتب دولة مكلف بالأمن الوطني (ويكيبيديا الفرنسية نقلاً عن ليبيراسيون 26 جانفي
+    1995؛ وكابيتاليس تعطي 12 جانفي 1995 — والتباين المسجّل قائم)، أُقيل بعد اعتداء الغريبة
+    (11 أفريل 2002)؛ 2002-2005 سفيرًا بدمشق؛ 21 نوفمبر 2005 - 5 جوان 2006 عاد إلى المنصب
+    الأمني، مسجَّلًا كمدير عام للأمن الوطني لدى جون أفريك والرسم البياني لكن بلقب «كاتب
+    دولة مكلف بالأمن الوطني» لدى لابراس (22 نوفمبر 2005، ص 6) وويكيبيديا الفرنسية — تباين في
+    المسمى الوظيفي، انظر علم qa-flag-ganzoui-2005role؛ 2006-؟ سفيرًا بمالطا؛ 2011 أُلقي
+    القبض عليه، وحُكم عليه في 29 نوفمبر 2011 بأربع سنوات (براكة الساحل)، خُفّضت إلى سنتين
+    استئنافًا في 7 أفريل 2012، وأُفرج عنه في 3 ماي 2013 (ويكيبيديا الفرنسية نقلاً عن موزاييك
+    إف إم وبيزنس نيوز وتونس الرقمية).
+  answer_ar_by: model-reviewed
+  confidence: B
+  basis: documented
+  reasoning: >-
+    Every step is attested by at least one established outlet or referenced
+    encyclopedia; the arrest-trial-release chain is confirmed by the graph's
+    existing sources (kapitalis-ganzoui-2011) and fr.wiki's dated references.
+  falsifiable_by: >-
+    JORT decrees for each appointment (1989 DGSN, 1995 Secrétaire d'État,
+    2002 Damascus posting, 21 Nov 2005 return, 5 June 2006 replacement,
+    Malta posting) — none located yet; any decree would date or move the
+    corresponding boundary.
+  sources: [wikipedia-ganzoui-fr, jeuneafrique-ganzoui-2006, kapitalis-ganzoui-2011, presse-ganzoui-2005]
+
+- id: q-dgsn-sequence-2014-2019
+  kind: verification
+  question: >-
+    What is the correct order and dating of Directors-General of National Security
+    between 2014 and 2019?
+  question_fr: >-
+    Quel est l'ordre exact et la datation des directeurs généraux de la Sûreté nationale
+    entre 2014 et 2019 ?
+  question_fr_by: model-reviewed
+  question_ar: >-
+    ما هو الترتيب الصحيح والتأريخ الدقيق للمديرين العامين للأمن الوطني بين 2014 و2019؟
+  question_ar_by: model-reviewed
+  status: open
+  relates_to: [taoufik-dabbabi, ramzi-rajhi, rached-bettaieb, abderrahmane-belhaj-ali]
+  notes: >-
+    The sequence Dabbabi / Rajhi / Bettaieb is reported but the dates do not
+    comfortably fit between the two firmly dated endpoints of Bennour in March 2018
+    and Guizani in December 2019. At least one of these tenures is likely misdated.
+  notes_fr: >-
+    La séquence Dabbabi / Rajhi / Bettaieb est rapportée, mais les dates ne s'insèrent pas
+    confortablement entre les deux bornes solidement datées que sont Bennour en mars 2018 et
+    Guizani en décembre 2019. Au moins un de ces mandats est probablement mal daté.
+  notes_fr_by: model-reviewed
+  notes_ar: >-
+    تسلسل الدبابي / الراجحي / بطيّب مُتداول، لكن التواريخ لا تنسجم بسهولة بين النقطتين
+    الثابتتين بدقة: بنور في مارس 2018 والقيزاني في ديسمبر 2019. على الأقل واحدة من هذه
+    الولايات يُرجّح أن تاريخها خاطئ.
+  notes_ar_by: model-reviewed
+
+- id: q-belhajali-chronology
+  kind: verification
+  question: Complete chronology of Abderrahmane Belhaj Ali, particularly his term running presidential security.
+  question_fr: >-
+    Chronologie complète d'Abderrahmane Belhaj Ali, en particulier son mandat à la tête de
+    la sécurité présidentielle.
+  question_fr_by: model-reviewed
+  question_ar: >-
+    التسلسل الزمني الكامل لعبد الرحمان بالحاج علي، وخاصة فترة إدارته للأمن الرئاسي.
+  question_ar_by: model-reviewed
+  status: partial
+  relates_to: [abderrahmane-belhaj-ali]
+  notes: >-
+    The exact month of the 1987 presidential-security appointment is not
+    documented ("fin 1987" per Leaders). The 2001-2010 Nouakchott span is
+    year-level ("neuf ans" per Leaders). Next step: JORT decrees for the three
+    postings; the arwiki-police-list may date the 1987 start.
+  notes_fr: >-
+    Le mois exact de la nomination de 1987 à la sécurité présidentielle n'est pas documenté
+    (« fin 1987 » selon Leaders). La période 2001-2010 à Nouakchott est au niveau de l'année
+    (« neuf ans » selon Leaders). Étape suivante : décrets JORT des trois affectations ; la
+    arwiki-police-list peut dater le début de 1987.
+  notes_fr_by: model-reviewed
+  notes_ar: >-
+    الشهر الدقيق لتعيين 1987 في الأمن الرئاسي غير موثّق («أواخر 1987» حسب ليدرز). وفترة
+    نواكشوط 2001-2010 على مستوى السنة («تسع سنوات» حسب ليدرز). الخطوة التالية: أوامر الرائد
+    الرسمي للتعيينات الثلاثة؛ وقد تؤرخ قائمة شرطة ويكيبيديا العربية بداية 1987.
+  notes_ar_by: model-reviewed
+  answer: >-
+    Abderrahmane Belhaj Ali's chronology per his dedicated Leaders profile
+    (1 Dec 2015): joined the Sûreté in the 1970s; senior Interior Ministry
+    posts including the Direction des Frontières et des Étrangers; named
+    director-general of presidential security at the end of 1987 (the first
+    holder of the post after the 7 Nov 1987 coup, corroborated by Arabic
+    Wikipedia); relieved by Ben Ali in 2001 under family pressure and posted
+    Ambassador to Nouakchott, Mauritania, where he stayed about nine years
+    (2001-2010); moved to La Valette as Ambassador to Malta in 2010; returned
+    to Tunisia after 14 Jan 2011 for retirement; called back by PM Habib
+    Essid, he took the restored DGSN post 1 Dec 2015 and resigned 15 Dec 2016.
+    The graph's presidential-security row (p-presec-belhajali, 1987-2001) and
+    DGSN row (p-dgsn-belhajali, 2015-12-01 to 2016-12-15) are consistent with
+    this; the people.yaml summary's "two ambassadorships (Cairo, Nicosia)" is
+    contradicted by the Leaders profile — see flag qa-flag-belhajali-amb.
+  answer_fr: >-
+    Chronologie d'Abderrahmane Belhaj Ali selon son profil dédié sur Leaders (1er déc 2015) :
+    entré dans la Sûreté dans les années 1970 ; hauts postes au ministère de l'Intérieur dont
+    la Direction des Frontières et des Étrangers ; nommé directeur général de la sécurité
+    présidentielle à la fin de 1987 (premier titulaire du poste après le coup d'État du 7 nov
+    1987, corroboré par Wikipédia en arabe) ; relevé par Ben Ali en 2001 sous pression
+    familiale et nommé Ambassadeur à Nouakchott, Mauritanie, où il est resté environ neuf ans
+    (2001-2010) ; muté à La Valette comme Ambassadeur à Malte en 2010 ; rentré en Tunisie après
+    le 14 janv 2011 pour prendre sa retraite ; rappelé par le Premier ministre Habib Essid, il
+    a pris le poste restauré de DGSN le 1er déc 2015 et démissionné le 15 déc 2016. La ligne de
+    sécurité présidentielle du graphe (p-presec-belhajali, 1987-2001) et la ligne DGSN
+    (p-dgsn-belhajali, 2015-12-01 à 2016-12-15) concordent avec cela ; le « deux ambassades
+    (Le Caire, Nicosie) » du résumé de people.yaml est contredit par le profil Leaders — voir
+    le drapeau qa-flag-belhajali-amb.
+  answer_fr_by: model-reviewed
+  answer_ar: >-
+    تسلسل عبد الرحمان بالحاج علي الزمني حسب ملفه الخاص في ليدرز (1 ديسمبر 2015): التحق
+    بالأمن في السبعينات؛ وشغل مناصب عليا بوزارة الداخلية منها إدارة الحدود والأجانب؛ وعُيّن
+    مديرًا عامًا للأمن الرئاسي في أواخر 1987 (أول شاغل للمنصب بعد انقلاب 7 نوفمبر 1987،
+    وهو ما تؤكده ويكيبيديا العربية)؛ وأعفاه بن علي سنة 2001 تحت ضغط عائلي وعيّنه سفيرًا في
+    نواكشوط بموريتانيا حيث مكث نحو تسع سنوات (2001-2010)؛ ثم انتقل إلى فاليتا سفيرًا في
+    مالطا سنة 2010؛ وعاد إلى تونس بعد 14 جانفي 2011 للتقاعد؛ واستُدعي من رئيس الحكومة الحبيب
+    الصيد فتولى منصب المديرية العامة للأمن الوطني المستعاد في 1 ديسمبر 2015 واستقال في 15
+    ديسمبر 2016. سطر الأمن الرئاسي في الرسم البياني (p-presec-belhajali، 1987-2001) وسطر
+    المديرية العامة للأمن الوطني (p-dgsn-belhajali، 2015-12-01 إلى 2016-12-15) متوافقان مع
+    هذا؛ أما «سفارتان (القاهرة، نيقوسيا)» في ملخص people.yaml فيناقضه ملف ليدرز — انظر علم
+    qa-flag-belhajali-amb.
+  answer_ar_by: model-reviewed
+  confidence: B
+  basis: documented
+  reasoning: >-
+    The Leaders profile is a dedicated biography published on the day of his
+    appointment; Arabic Wikipedia corroborates the first-holder claim for
+    presidential security. The ambassadorial postings (Nouakchott, then
+    Malta) are stated in both the article body and its subtitle.
+  falsifiable_by: >-
+    A JORT decree dating his appointment to presidential security (end-1987),
+    the 2001 Nouakchott posting, the 2010 Malta posting, or the 1 Dec 2015
+    DGSN appointment — any of these would pin down the year-level boundaries.
+  sources: [leaders-belhajali-2015, arwiki-police-list]
+
+- id: q-yahyaoui-chronology
+  kind: verification
+  question: >-
+    When did Khaled Yahyaoui actually take charge of presidential security, and what is
+    the formal scope of the post?
+  question_fr: >-
+    Quand Khaled Yahyaoui a-t-il réellement pris la tête de la sécurité présidentielle, et
+    quel est le périmètre formel du poste ?
+  question_fr_by: model-reviewed
+  question_ar: >-
+    متى تولّى خالد اليحياوي فعليًا رئاسة الأمن الرئاسي، وما هو النطاق الرسمي للمنصب؟
+  question_ar_by: model-reviewed
+  status: partial
+  relates_to: [khaled-yahyaoui, presidential-security]
+  notes: >-
+    The 2011-2019 holders of presidential security between Seriati (to
+    14 Jan 2011) and Yahyaoui remain undocumented in public sources located;
+    fr.wiki names Raouf Mradaâ as the immediate predecessor only.
+  notes_fr: >-
+    Les titulaires de la sécurité présidentielle de 2011 à 2019, entre Seriati (jusqu'au
+    14 janv 2011) et Yahyaoui, restent non documentés dans les sources publiques localisées ;
+    fr.wiki ne nomme que Raouf Mradaâ comme prédécesseur immédiat.
+  notes_fr_by: model-reviewed
+  notes_ar: >-
+    يبقى شاغلو الأمن الرئاسي بين 2011 و2019، من السرياطي (حتى 14 جانفي 2011) إلى اليحياوي،
+    غير موثّقين في المصادر العامة التي عُثر عليها؛ ولا تسمّي ويكيبيديا الفرنسية سوى رؤوف
+    مرادع سلفًا مباشرًا.
+  notes_ar_by: model-reviewed
+  answer: >-
+    Khaled Yahyaoui took charge of presidential security on 30 October 2019:
+    appointed by President Kais Saied "premier conseiller, directeur général
+    de la sûreté du chef de l'État et des personnalités officielles"
+    (DGSCEPO), succeeding Raouf Mradaâ (fr.wiki bio citing Business News,
+    31 Oct 2019). The formal scope of the post is thus the directorship-general
+    of the security service for the head of state and official personalities,
+    under the presidency, with the rank of premier conseiller. Career anchors:
+    Fondouk Jedid military academy 1997, Salammbô police officers' school
+    1998, anti-terrorism brigade 2007-2011, escort and special-forces
+    director; 26-29 July 2021 briefly in charge of the Interior Ministry
+    after Mechichi's dismissal (Reuters/Trust, Tunisie Tribune, Tunisie
+    Numérique); promoted brigadier general 3 Nov 2021 (Business News).
+    The graph's p-presec-yahyaoui start of "~2020" is imprecise: the
+    appointment is dated 30 Oct 2019 — see flag qa-flag-yahyaoui-start.
+  answer_fr: >-
+    Khaled Yahyaoui a pris la tête de la sécurité présidentielle le 30 octobre 2019 : nommé
+    par le président Kaïs Saïed « premier conseiller, directeur général de la sûreté du chef
+    de l'État et des personnalités officielles » (DGSCEPO), succédant à Raouf Mradaâ (bio
+    fr.wiki citant Business News, 31 oct 2019). Le périmètre formel du poste est donc la
+    direction générale du service de sécurité du chef de l'État et des personnalités
+    officielles, sous la présidence, avec le rang de premier conseiller. Ancres de carrière :
+    académie militaire de Fondouk Jedid 1997, école d'officiers de police de Salammbô 1998,
+    brigade antiterroriste 2007-2011, directeur des escortes et forces spéciales ; 26-29
+    juillet 2021 brièvement chargé du ministère de l'Intérieur après le limogeage de Mechichi
+    (Reuters/Trust, Tunisie Tribune, Tunisie Numérique) ; promu général de brigade le 3 nov
+    2021 (Business News). Le début « ~2020 » de p-presec-yahyaoui dans le graphe est imprécis :
+    la nomination est datée du 30 oct 2019 — voir le drapeau qa-flag-yahyaoui-start.
+  answer_fr_by: model-reviewed
+  answer_ar: >-
+    تولّى خالد اليحياوي رئاسة الأمن الرئاسي في 30 أكتوبر 2019: عيّنه الرئيس قيس سعيّد
+    «مستشارًا أول، مديرًا عامًا لأمن رئيس الدولة والشخصيات الرسمية» (DGSCEPO)، خلفًا لرؤوف
+    مرادع (سيرة ويكيبيديا الفرنسية نقلاً عن بيزنس نيوز، 31 أكتوبر 2019). فالنطاق الرسمي
+    للمنصب هو إذًا الإدارة العامة لجهاز أمن رئيس الدولة والشخصيات الرسمية، تحت الرئاسة،
+    برتبة مستشار أول. مراسٍ مهنية: الأكاديمية العسكرية بفندق الجديد 1997، ومدرسة ضباط الشرطة
+    بقرطاج 1998، وفرقة مكافحة الإرهاب 2007-2011، ومديرًا للمرافقات والقوات الخاصة؛ ومن 26 إلى
+    29 جويلية 2021 تولّى وزارة الداخلية مؤقتًا بعد إقالة المشيشي (رويترز/تراست، تونس
+    تريبيون، تونس الرقمية)؛ ورُقّي إلى عميد في 3 نوفمبر 2021 (بيزنس نيوز). وبداية «~2020»
+    للسطر p-presec-yahyaoui في الرسم البياني غير دقيقة: فالتعيين مؤرخ في 30 أكتوبر 2019 —
+    انظر علم qa-flag-yahyaoui-start.
+  answer_ar_by: model-reviewed
+  confidence: C
+  basis: documented
+  verification: needs-primary-source
+  attributed_to: French Wikipedia citing a Business News biography of 31 Oct 2019
+  reasoning: >-
+    The 30 Oct 2019 date is stated on the fr.wiki biography with a dated
+    Business News reference (31 Oct 2019) that could not be opened this run;
+    the date is consistent with the appointment falling in Saied's first
+    months in office. Graded C rather than B because the underlying Business
+    News article was not read.
+  falsifiable_by: >-
+    The Business News biography of 31 Oct 2019, or the JORT/presidency decree
+    appointing him premier conseiller / DGSCEPO — either would confirm or move
+    the 30 Oct 2019 date.
+  sources: [frwiki-yahyaoui]
+
+- id: q-benali-officers-after-2011
+  kind: verification
+  question: >-
+    What became of Ben Ali-era senior security officials after 2011 — how many retired,
+    how many were prosecuted, and how many returned to office?
+  question_fr: >-
+    Que sont devenus les hauts responsables sécuritaires de l'ère Ben Ali après 2011 —
+    combien ont pris leur retraite, combien ont été poursuivis, et combien sont revenus en
+    poste ?
+  question_fr_by: model-reviewed
+  question_ar: >-
+    ماذا حلّ بكبار المسؤولين الأمنيين من عهد بن علي بعد 2011 — كم منهم أُحيل على التقاعد،
+    وكم لوحق قضائيًا، وكم عاد إلى منصبه؟
+  question_ar_by: model-reviewed
+  status: partial
+  relates_to: [abdessatar-bennour, abderrahmane-belhaj-ali, ali-seriati, mohamed-ali-ganzoui]
+  notes: >-
+    Bennour's 2006 and 2018 tenures are the one fully documented case of return. A
+    systematic answer needs a prosopography of perhaps two hundred officers.
+  notes_fr: >-
+    Les mandats de Bennour en 2006 et 2018 constituent le seul cas pleinement documenté de
+    retour. Une réponse systématique exigerait une prosopographie d'environ deux cents
+    officiers.
+  notes_fr_by: model-reviewed
+  notes_ar: >-
+    وليتا بنور في 2006 و2018 هما الحالة الوحيدة الموثّقة بالكامل للعودة. الإجابة المنهجية
+    تتطلب دراسة سير جماعية لنحو مائتي ضابط.
+  notes_ar_by: model-reviewed
+
+- id: q-confiscated-firms
+  kind: verification
+  question: >-
+    What is the full list of firms connected to the confiscated clan, and what happened
+    to their ownership afterwards?
+  question_fr: >-
+    Quelle est la liste complète des entreprises liées au clan confisqué, et qu'est-il
+    advenu de leur propriété par la suite ?
+  question_fr_by: model-reviewed
+  question_ar: >-
+    ما هي القائمة الكاملة للشركات المرتبطة بالعائلة المصادَرة أملاكها، وماذا حلّ بملكيتها
+    بعد ذلك؟
+  question_ar_by: model-reviewed
+  status: partial
+  relates_to: [trabelsi-network]
+  notes: >-
+    The World Bank working paper establishes the aggregate picture. Firm-level ownership
+    changes after confiscation are the more revealing and much harder question.
+  notes_fr: >-
+    Le document de travail de la Banque mondiale établit le tableau d'ensemble. Les
+    changements de propriété au niveau de l'entreprise après la confiscation constituent la
+    question la plus révélatrice et de loin la plus difficile.
+  notes_fr_by: model-reviewed
+  notes_ar: >-
+    تثبت ورقة عمل البنك الدولي الصورة الإجمالية. أمّا تغيّرات الملكية على مستوى الشركات بعد
+    المصادرة فهي السؤال الأكثر كشفًا والأصعب بكثير.
+  notes_ar_by: model-reviewed
+
+- id: q-business-family-map
+  kind: verification
+  question: >-
+    A complete business-family map of the Mabrouk, Elloumi, Poulina, Bouchamaoui and
+    Miled groups, distinguishing established wealth from politically created wealth.
+  question_fr: >-
+    Une cartographie complète des groupes familiaux Mabrouk, Elloumi, Poulina, Bouchamaoui
+    et Miled, distinguant la fortune établie de la fortune créée par le politique.
+  question_fr_by: model-reviewed
+  question_ar: >-
+    خريطة كاملة للمجموعات العائلية المبروك والعلومي وبولينا وبوشماوي وميلاد، تميّز بين
+    الثروة المستقرّة والثروة التي صنعتها السياسة.
+  question_ar_by: model-reviewed
+  status: open
+  relates_to: [mabrouk-group, elloumi-group]
+
+- id: q-nidaa-business-links
+  kind: verification
+  question: Which business interests were represented inside Nidaa Tounes, and through whom?
+  question_fr: >-
+    Quels intérêts économiques étaient représentés au sein de Nidaa Tounes, et par
+    l'intermédiaire de qui ?
+  question_fr_by: model-reviewed
+  question_ar: >-
+    ما هي المصالح الاقتصادية التي كانت ممثَّلة داخل نداء تونس، وعبر مَن؟
+  question_ar_by: model-reviewed
+  status: partial
+  relates_to: [nidaa-tounes, selma-elloumi, faouzi-elloumi]
+
+- id: q-saied-military-relationship
+  kind: analytical
+  question: >-
+    What is the actual relationship between the presidency and senior military and
+    intelligence leadership since 2019?
+  question_fr: >-
+    Quelle est la relation réelle entre la présidence et les hauts responsables militaires
+    et du renseignement depuis 2019 ?
+  question_fr_by: model-reviewed
+  question_ar: >-
+    ما هي العلاقة الفعلية بين رئاسة الجمهورية وكبار قيادات الجيش والاستخبارات منذ 2019؟
+  question_ar_by: model-reviewed
+  status: open
+  relates_to: [kais-saied, mohamed-el-ghoul, mohamed-habib-dhif, khaled-yahyaoui]
+
+- id: q-informal-control
+  kind: analytical
+  question: >-
+    Is there evidence that individual security officials exercise informal political
+    control, as distinct from institutional authority?
+  question_fr: >-
+    Existe-t-il des preuves que des responsables sécuritaires exercent un contrôle politique
+    informel, distinct de leur autorité institutionnelle ?
+  question_fr_by: model-reviewed
+  question_ar: >-
+    هل توجد أدلة على أن مسؤولين أمنيين يمارسون سيطرة سياسية غير رسمية، متمايزة عن سلطتهم
+    المؤسسية؟
+  question_ar_by: model-reviewed
+  status: open
+  relates_to: [khaled-yahyaoui, mohamed-habib-dhif]
+  notes: >-
+    Everything located so far is reported analysis. Nothing rises above grade C. This
+    is precisely the question where the dataset must refuse to overclaim.
+  notes_fr: >-
+    Tout ce qui a été localisé jusqu'ici relève de l'analyse rapportée. Rien ne dépasse le
+    grade C. C'est précisément la question sur laquelle le jeu de données doit refuser de
+    surestimer ses affirmations.
+  notes_fr_by: model-reviewed
+  notes_ar: >-
+    كل ما وُجد حتى الآن هو تحليلات منقولة. لا شيء يتجاوز درجة C. هذا هو بالتحديد السؤال الذي
+    يجب أن ترفض فيه قاعدة البيانات المبالغة في الادعاء.
+  notes_ar_by: model-reviewed
+
+- id: q-turnover-asymmetry
+  kind: analytical
+  question: >-
+    Why has the National Guard command turned over roughly seven times in twelve years
+    while the three military service chiefs have held for five to seven years each?
+  question_fr: >-
+    Pourquoi le commandement de la Garde nationale a-t-il changé environ sept fois en douze
+    ans, alors que les trois chefs d'état-major d'armée restent en poste cinq à sept ans
+    chacun ?
+  question_fr_by: model-reviewed
+  question_ar: >-
+    لماذا تغيّرت قيادة الحرس الوطني نحو سبع مرات في اثنتي عشرة سنة، بينما بقي رؤساء أركان
+    الأسلحة الثلاثة في مناصبهم من خمس إلى سبع سنوات لكل منهم؟
+  question_ar_by: model-reviewed
+  status: open
+  relates_to: [national-guard, land-forces, air-force, navy]
+  notes: >-
+    This is the most striking pattern the data produces on its own, and the dataset
+    currently has no explanation for it. Candidate hypotheses: political sensitivity of
+    internal policing, differing retirement rules, or the National Guard's proximity to
+    contentious internal security operations.
+  notes_fr: >-
+    C'est le schéma le plus frappant que les données produisent d'elles-mêmes, et le jeu de
+    données n'a actuellement aucune explication. Hypothèses candidates : la sensibilité
+    politique du maintien de l'ordre interne, des règles de retraite différentes, ou la
+    proximité de la Garde nationale avec les opérations sensibles de sécurité intérieure.
+  notes_fr_by: model-reviewed
+  notes_ar: >-
+    هذا هو النمط الأكثر لفتًا الذي تنتجه البيانات بذاتها، ولا تملك قاعدة البيانات حاليًا أي
+    تفسير له. فرضيات محتملة: الحساسية السياسية للعمل الأمني الداخلي، أو اختلاف قواعد
+    التقاعد، أو قرب الحرس الوطني من العمليات الداخلية الحساسة.
+  notes_ar_by: model-reviewed
+
+- id: q-2011-elite-replacement
+  kind: analytical
+  question: >-
+    Did 2011 replace Tunisia's ruling elite, or redistribute power among competing
+    elites?
+  question_fr: >-
+    2011 a-t-il remplacé l'élite dirigeante tunisienne, ou redistribué le pouvoir entre
+    élites concurrentes ?
+  question_fr_by: model-reviewed
+  question_ar: >-
+    هل استبدلت سنة 2011 النخبة الحاكمة في تونس، أم أعادت توزيع السلطة بين نخب متنافسة؟
+  question_ar_by: model-reviewed
+  status: partial
+  relates_to: [revolution-2011]
+
+- id: q-2021-networks
+  kind: analytical
+  question: >-
+    Did the 2021 re-centralisation eliminate the post-2011 elite networks, or replace
+    them with a new presidential-security configuration?
+  question_fr: >-
+    La recentralisation de 2021 a-t-elle éliminé les réseaux d'élites issus de 2011, ou les
+    a-t-elle remplacés par une nouvelle configuration présidentielle et sécuritaire ?
+  question_fr_by: model-reviewed
+  question_ar: >-
+    هل قضت إعادة التمركز سنة 2021 على شبكات النخب المتشكّلة بعد 2011، أم استبدلتها بتشكيلة
+    رئاسية أمنية جديدة؟
+  question_ar_by: model-reviewed
+  status: partial
+  relates_to: [july-25-2021]
+
+- id: q-naoufel-saied-role
+  kind: analytical
+  question: >-
+    What, concretely, is Naoufel Saied's role in decision-making, and can any of it
+    be established from a record rather than from analysis?
+  question_fr: >-
+    Quel est, concrètement, le rôle de Naoufel Saïed dans la prise de décision, et une
+    partie de ce rôle peut-elle être établie par un document plutôt que par l'analyse ?
+  question_fr_by: model-reviewed
+  question_ar: >-
+    ما هو، على وجه التحديد، دور نوفل سعيّد في صنع القرار، وهل يمكن إثبات أي جزء منه بوثيقة
+    لا بالتحليل؟
+  question_ar_by: model-reviewed
+  status: open
+  relates_to: [naoufel-saied, kais-saied]
+  notes: >-
+    He holds no office, so there is no appointment decree to anchor anything to.
+    Everything located so far is assessment by named analysts, which is grade C by
+    this project's rules. This is the question where the dataset must refuse to
+    overclaim, in exactly the way it already refuses to on informal security
+    influence.
+  notes_fr: >-
+    Il n'occupe aucune fonction, donc aucun décret de nomination ne peut servir d'ancrage.
+    Tout ce qui a été localisé jusqu'ici relève de l'évaluation de analystes nommés, soit le
+    grade C selon les règles du projet. C'est la question sur laquelle le jeu de données
+    doit refuser de surestimer ses affirmations, exactement comme il le fait déjà pour
+    l'influence sécuritaire informelle.
+  notes_fr_by: model-reviewed
+  notes_ar: >-
+    لا يشغل أي منصب رسمي، فلا يوجد أي مرسوم تعيين يمكن أن يكون مرتكزًا. كل ما وُجد حتى الآن
+    هو تقييمات محللين بأسمائهم، وهو ما يعادل درجة C وفق قواعد المشروع. هذا هو السؤال الذي
+    يجب أن ترفض فيه قاعدة البيانات المبالغة في الادعاء، تمامًا كما تفعل فعلًا بشأن النفوذ
+    الأمني غير الرسمي.
+  notes_ar_by: model-reviewed
+
+- id: q-naoufel-giambrone
+  kind: verification
+  question: >-
+    What was Naoufel Saied's relationship with the Italian law firm Giambrone &
+    Partners, and why did it end?
+  question_fr: >-
+    Quelle était la relation de Naoufel Saïed avec le cabinet d'avocats italien Giambrone &
+    Partners, et pourquoi a-t-elle pris fin ?
+  question_fr_by: model-reviewed
+  question_ar: >-
+    ما هي علاقة نوفل سعيّد بمكتب المحاماة الإيطالي جيامبروني وشركاه، ولماذا انتهت؟
+  question_ar_by: model-reviewed
+  status: open
+  relates_to: [naoufel-saied]
+  notes: >-
+    Reported by Africa Intelligence, whose original is paywalled; only an
+    aggregator's version could be read. A single inaccessible source is a lead, not
+    a claim, so no relationship has been recorded. Corroboration — a corporate
+    filing, a bar registration, or the firm's own statement — would settle it.
+  notes_fr: >-
+    Rapporté par Africa Intelligence, dont l'original est payant ; seule la version d'un
+    agrégateur a pu être lue. Une source unique inaccessible est une piste, pas une
+    affirmation, donc aucune relation n'a été enregistrée. Une corroboration — un dépôt
+    d'entreprise, une inscription au barreau ou une déclaration du cabinet lui-même —
+    trancherait la question.
+  notes_fr_by: model-reviewed
+  notes_ar: >-
+    نقلته أفريكا إنتليجنس، وأصل المقال مدفوع؛ لم يتسنَّ قراءة سوى نسخة مجمّع الأخبار. مصدر
+    وحيد غير متاح هو خيط وليس ادعاءً، لذلك لم يُسجَّل أي رابط. تأكيد إضافي — إيداع تجاري، أو
+    قيد بجدول المحاماة، أو بيان من المكتب نفسه — من شأنه أن يحسم الأمر.
+  notes_ar_by: model-reviewed
+
+- id: q-saied-family-network
+  kind: verification
+  question: >-
+    Beyond his brother, which members of the president's family hold office, business
+    interests or advisory roles?
+  question_fr: >-
+    Au-delà de son frère, quels membres de la famille du président occupent des fonctions
+    publiques, détiennent des intérêts économiques ou exercent un rôle de conseil ?
+  question_fr_by: model-reviewed
+  question_ar: >-
+    إلى جانب شقيقه، أي أفراد من عائلة الرئيس يشغلون مناصب رسمية أو يملكون مصالح تجارية أو
+    يؤدّون أدوارًا استشارية؟
+  question_ar_by: model-reviewed
+  status: partial
+  relates_to: [kais-saied, naoufel-saied]
+  notes: >-
+    Partially addressed by Mondafrigue's August 2026 investigation, which mapped
+    two rival clans: Naoufel Saied (president's brother) and the Chebil family
+    (president's wife Ichraf Chebil and her sister Atika). The wife and sister-in-law
+    were added as new entities. The business connections (Abou Khater project, foreign
+    brand agencies) are recorded as unsubstantiated (confidence D). Remaining gaps:
+    children of the president, extended Chebil family members, and any formal advisory
+    roles that might exist. The family layer is now mapped, not empty — but it remains
+    incomplete.
+  notes_fr: >-
+    Partiellement traité par l'enquête de Mondafrigue d'août 2026, qui a cartographié deux
+    clans rivaux : Naoufel Saied (frère du président) et la famille Chebil (l'épouse du
+    président Ichraf Chebil et sa sœur Atika). L'épouse et la belle-sœur ont été ajoutées
+    comme nouvelles entités. Les connexions d'affaires (projet Abou Khater, agences de
+    marques étrangères) sont enregistrées comme non étayées (confiance D). Lacunes restantes
+    : les enfants du président, les membres élargis de la famille Chebil, et les éventuels
+    rôles consultatifs formels. La couche familiale est désormais cartographiée, non vide —
+    mais elle reste incomplète.
+  notes_fr_by: model-reviewed
+  notes_ar: >-
+    عالجها جزئيًا تحقيق موندافريك في أوت 2026، الذي رسم خريطة لعشيرتين متنافستين: نوفل سعيّد
+    (شقيق الرئيس) وعائلة شبيل (زوجة الرئيس إشفاق شبيل وشقيقتها عتيقة). أُضيفت الزوجة وأختها
+    ككيانين جديدين. الروابط التجارية (مشروع أبو خاطر، وكالات العلامات الأجنبية) مُسجّلة
+    بوصفها غير مدعومة بأدلة (درجة D). ثغرات متبقية: أبناء الرئيس، وأفراد عائلة شبيل
+    الموسّعة، وأي أدوار استشارية رسمية محتملة. طبقة العائلة لم تعد خاوية بعد الآن — لكنها
+    تبقى ناقصة.
+  notes_ar_by: model-reviewed
+
+- id: q-saied-no-party
+  question: >-
+    Kais Saied is the only president in this dataset with no party edge of any
+    kind. Is that a gap in the research, or a fact about the office as he holds it?
+  question_fr: >-
+    Kaïs Saïed est le seul président de ce jeu de données sans aucun lien partisan. Est-ce
+    une lacune de la recherche, ou un fait sur la fonction telle qu'il l'exerce ?
+  question_fr_by: model-reviewed
+  question_ar: >-
+    قيس سعيّد هو الرئيس الوحيد في هذه البيانات بلا أي صلة حزبية. هل هذا نقص في البحث، أم
+    حقيقة عن المنصب كما يشغله هو؟
+  question_ar_by: model-reviewed
+  kind: analytical
+  status: partial
+  relates_to: [kais-saied, presidency]
+  notes: >-
+    Every other president here reaches the office through a party — the
+    Neo-Destour, the RCD, the CPR, Nidaa Tounes — and the coverage audit
+    therefore flags the absence as missing coverage. The dataset's current answer
+    is that the absence is real: he was elected in 2019 without a party, has
+    never founded one, and governs through appointment rather than through an
+    organisation. That is a finding, not a hole. It is filed as partial rather
+    than answered because a party-shaped structure operating informally around
+    the presidency would be very hard to see from published sources, and its
+    absence here is not proof of its absence in fact.
+  notes_fr: >-
+    Chaque autre président de ce jeu de données accède à la fonction par un parti — le
+    Néo-Destour, le RCD, le CPR, Nidaa Tounes — et l'audit de couverture signale donc
+    l'absence comme une couverture manquante. La réponse actuelle du jeu de données est que
+    cette absence est réelle : il a été élu en 2019 sans parti, n'en a jamais fondé, et
+    gouverne par nomination plutôt que par organisation. C'est un résultat, pas un trou. Il
+    est classé partiel plutôt que résolu parce qu'une structure de type parti opérant
+    informellement autour de la présidence serait très difficile à voir depuis les sources
+    publiées, et son absence ici ne prouve pas son absence dans les faits.
+  notes_fr_by: model-reviewed
+  notes_ar: >-
+    كل رئيس آخر في هذه القاعدة البياناتية يصل إلى المنصب عبر حزب — الحزب الحر الدستوري
+    الجديد، التجمع الدستوري الديمقراطي، المؤتمر من أجل الجمهورية، نداء تونس — ولذلك يشير
+    تدقيق التغطية إلى هذا الغياب بوصفه تغطية ناقصة. الجواب الحالي لقاعدة البيانات هو أن هذا
+    الغياب حقيقي: انتُخب في 2019 دون حزب، ولم يؤسس حزبًا قط، ويحكم عبر التعيين لا عبر
+    التنظيم. هذه نتيجة وليست ثغرة. صُنّف بوصفه جزئيًا لا مُجابًا لأن بنية شبيهة بالحزب تعمل
+    بشكل غير رسمي حول الرئاسة سيكون من الصعب جدًا رصدها من المصادر المنشورة، وغيابها هنا لا
+    يثبت غيابها في الواقع.
+  notes_ar_by: model-reviewed
+
+- id: q-phosphate-counterfactual
+  question: >-
+    Would Tunisian phosphate output have recovered under any government, or is
+    the post-2011 level the price of the social settlement in the mining basin?
+  question_fr: >-
+    La production tunisienne de phosphate se serait-elle redressée sous n'importe quel
+    gouvernement, ou le niveau post-2011 est-il le prix du compromis social dans le bassin
+    minier ?
+  question_fr_by: model-reviewed
+  question_ar: >-
+    هل كان إنتاج الفسفاط التونسي سيتعافى في ظل أي حكومة كانت، أم أن المستوى المسجَّل بعد
+    2011 هو ثمن التسوية الاجتماعية في الحوض المنجمي؟
+  question_ar_by: model-reviewed
+  kind: analytical
+  status: open
+  relates_to: [cpg, gct, ugtt]
+  notes: >-
+    The dataset records the collapse from eight million tonnes in 2010 to around
+    3.4 million through the following decade, and it records two competing
+    explanations — a settlement that bought stability with hiring and output, and
+    a management and infrastructure failure that protest merely exposed. It has
+    no basis for choosing between them, and the 2026 recovery plan will be the
+    test.
+  notes_fr: >-
+    Le jeu de données enregistre l'effondrement de huit millions de tonnes en 2010 à environ
+    3,4 millions au cours de la décennie suivante, et enregistre deux explications
+    concurrentes — un accord qui a acheté la stabilité par des embauches et du rendement, et
+    une défaillance de gestion et d'infrastructure que la protestation n'a fait qu'exposer.
+    Il n'a aucune base pour choisir entre elles, et le plan de redressement de 2026 servira
+    de test.
+  notes_fr_by: model-reviewed
+  notes_ar: >-
+    تسجّل قاعدة البيانات الانهيار من ثمانية ملايين طن في 2010 إلى نحو 3.4 ملايين خلال العقد
+    التالي، وتُسجّل تفسيرين متنافسين — تسوية اشترت الاستقرار بالتوظيف والإنتاج، وإخفاق إداري
+    وبنيوي كشفت الاحتجاجاتُ عنه فقط. لا تملك أي أساس للاختيار بينهما، وسيكون مخطط التعافي
+    لسنة 2026 هو الاختبار.
+  notes_ar_by: model-reviewed
+
+- id: q-customs-command
+  question: >-
+    Why has the Directorate-General of Customs been filled four times in three
+    years, from the magistracy, the police and the customs corps in turn?
+  question_fr: >-
+    Pourquoi la Direction générale des douanes a-t-elle été pourvue quatre fois en trois
+    ans, successivement depuis la magistrature, la police et le corps des douanes ?
+  question_fr_by: model-reviewed
+  question_ar: >-
+    لماذا مُلئ منصب الإدارة العامة للديوانة أربع مرات في ثلاث سنوات، من القضاء ثم الأمن ثم
+    سلك الديوانة على التوالي؟
+  question_ar_by: model-reviewed
+  kind: analytical
+  status: open
+  relates_to: [douane, najet-jaouadi, zouheir-mejri, mohamed-hedi-safer]
+  notes: >-
+    The turnover is documented; the reason is not. Customs sits on the frontier
+    between formal trade, informal border trade and the security services, and
+    the pattern of appointments could reflect a contest over that frontier, a
+    series of unrelated failures, or ordinary administrative churn. No source
+    located explains any of the four changes.
+  notes_fr: >-
+    Le turnover est documenté ; la raison ne l'est pas. La douane se situe à la frontière
+    entre le commerce formel, le commerce frontalier informel et les services de sécurité,
+    et le schéma des nominations pourrait refléter une lutte pour cette frontière, une série
+    d'échecs sans lien, ou un simple renouvellement administratif ordinaire. Aucune source
+    localisée n'explique aucun des quatre changements.
+  notes_fr_by: model-reviewed
+  notes_ar: >-
+    تغيّر القيادة موثّق؛ أمّا السبب فلا. تقع الجمارك على الحدود بين التجارة الرسمية والتجارة
+    الحدودية غير الرسمية والأجهزة الأمنية، وقد يعكس نمط التعيينات صراعًا على تلك الحدود، أو
+    سلسلة إخفاقات متفرقة، أو مجرد تقلب إداري عادي. لا يفسّر أي مصدر وُجد أيًّا من التغييرات
+    الأربعة.
+  notes_ar_by: model-reviewed
+
+- id: q-wikipedia-tiering
+  question: >-
+    Is the source tiering honest? 194 of the 242 Wikipedia entries in this
+    bibliography are graded tier 3 or tier 4 — "established international
+    journalism" or "reputable regional media" — and 293 of 642 claims rest on
+    nothing but Wikipedia.
+  question_fr: >-
+    Le classement des sources est-il honnête ? 194 des 242 entrées Wikipédia de cette
+    bibliographie sont classées en niveau 3 ou 4 — « journalisme international établi » ou
+    mieux.
+  question_fr_by: model-reviewed
+  question_ar: >-
+    هل تصنيف المصادر أمين؟ 194 من أصل 242 مدخلًا من ويكيبيديا في هذه الببليوغرافيا مصنَّفة
+    في المستوى الثالث أو الرابع — أي «صحافة دولية راسخة» أو أعلى.
+  question_ar_by: model-reviewed
+  kind: verification
+  status: open
+  relates_to: []
+  notes: >-
+    Tier is not decoration. It is the input to the one automated guard this
+    project has against overstating its evidence: the build refuses to let the
+    number of grade-A records backed by nothing better than tier 3 grow past a
+    fixed ceiling. If an encyclopaedia entry is graded as journalism, that guard
+    is measuring the wrong thing, and a claim can render as `documented` on the
+    strength of a page anyone may edit. Records added in July 2026 grade
+    Wikipedia at tier 5, which is what the tier table in sources.yaml describes;
+    the older entries do not, and the two conventions now sit side by side in one
+    file. Resolving it means re-grading roughly 194 sources and then absorbing
+    whatever that does to the published documented share — which is precisely why
+    it is filed as an open question rather than quietly corrected.
+  notes_fr: >-
+    Le tier n'est pas décoratif. Il alimente le seul garde-fou automatisé que ce projet
+    oppose à la surestimation de ses preuves : la compilation refuse que le nombre de fiches
+    de grade A appuyées par rien de mieux qu'un tier 3 dépasse un plafond fixe. Si une
+    entrée encyclopédique est classée comme du journalisme, ce garde-fou mesure la mauvaise
+    chose, et une affirmation peut s'afficher comme « documenté » sur la foi d'une page que
+    n'importe qui peut modifier. Les fiches ajoutées en juillet 2026 classent Wikipédia en
+    tier 5, ce que décrit le tableau des tiers dans sources.yaml ; les entrées plus
+    anciennes ne le font pas, et les deux conventions coexistent désormais dans un seul
+    fichier. Résoudre cela implique de reclasser environ 194 sources puis d'absorber ce que
+    cela fait à la part « documentée » publiée — c'est précisément pourquoi c'est classé en
+    question ouverte plutôt que corrigé silencieusement.
+  notes_fr_by: model-reviewed
+  notes_ar: >-
+    التصنيف ليس زخرفًا. إنه مدخل الحارس الآلي الوحيد الذي تمتلكه هذه المنصة ضد المبالغة في
+    إثباتها: يرفض البناء أن يتجاوز عدد السجلات من درجة A المدعومة بما لا يرقى عن تصنيف 3
+    سقفًا ثابتًا. إذا صُنّف مدخل موسوعي بوصفه صحافة، فإن ذلك الحارس يقيس الشيء الخطأ، وقد
+    يُعرض ادعاء بوصفه «موثقًا» اعتمادًا على صفحة يمكن لأي شخص تعديلها. السجلات المضافة في
+    جويلية 2026 تصنّف ويكيبيديا في التصنيف 5، وهو ما يصفه جدول التصنيفات في sources.yaml؛
+    السجلات الأقدم لا تفعل ذلك، وباتت العادتان متجاورتين في ملف واحد. حلّ المسألة يعني إعادة
+    تصنيف نحو 194 مصدرًا ثم استيعاب أثر ذلك على الحصة «الموثّقة» المنشورة — وهذا هو بالضبط
+    سبب تصنيفها كسؤال مفتوح بدل تصحيحها بصمت.
+  notes_ar_by: model-reviewed
+
+- id: q-role-source-model
+  kind: analytical
+  question: >-
+    Do canonical office (role) records and open research questions need sources of
+    their own, or is their evidential standing carried by the records inside them?
+  question_fr: >-
+    Les fiches de fonction canoniques (roles) et les questions de recherche ouvertes
+    doivent-elles citer leurs propres sources, ou leur statut probant est-il porté
+    par les fiches qui s'y rapportent ?
+  question_fr_by: machine
+  question_ar: >-
+    هل تحتاج سجلات المناصب الرسمية (roles) والأسئلة البحثية المفتوحة إلى مصادر خاصة بها،
+    أم أن مكانتها الإثباتية تحملها السجلات المرتبطة بها؟
+  question_ar_by: machine
+  status: open
+  relates_to: []
+  notes: >-
+    The schema allows `sources: []` on roles and questions, and 110 of 116 roles
+    and 25 of 25 questions currently ship unsourced — a deliberate contrast with
+    the claim-bearing kinds, where the build now ratchets the zero-source count
+    (institutions 19, relationships 3, people 1, eras 2). The design question is
+    whether a canonical office — an analytical construct carrying an authority
+    weight — and an open research question — an admission of ignorance — are
+    claims about the world at all. Sourcing every role would mean citing a
+    founding decree for offices like "Minister of the Interior": possible, but an
+    editorial burden different from the one the claim envelope was built for.
+  notes_fr: >-
+    Le schéma autorise `sources: []` pour les fonctions et les questions, et 110
+    des 116 fonctions ainsi que les 25 questions sont actuellement publiées sans
+    source — contraste voulu avec les types à revendication, où le build plafonne
+    désormais le nombre de fiches sans source (institutions 19, relations 3,
+    personnes 1, époques 2). La question de conception est de savoir si une
+    fonction canonique — un construit analytique doté d'un poids d'autorité — et
+    une question de recherche ouverte — un aveu d'ignorance — sont des affirmations
+    sur le monde. Citer une source pour chaque fonction signifierait trouver un
+    décret fondateur pour des offices comme « ministre de l'Intérieur » : possible,
+    mais une charge éditoriale différente de celle pour laquelle l'enveloppe de
+    revendication a été conçue.
+  notes_fr_by: machine
+  notes_ar: >-
+    يتيح المخطط `sources: []` للمناصب والأسئلة، ويُنشر حالياً 110 من أصل 116 منصباً وجميع
+    الأسئلة الـ25 دون مصدر — وهو تباين مقصود مع الأنواع الحاملة للادعاءات، حيث يضع البناء
+    سقفاً لعدد السجلات بلا مصدر (المؤسسات 19، العلاقات 3، الأشخاص 1، العصور 2). سؤال
+    التصميم هو: هل المنصب الرسمي — بناء تحليلي بوزن سلطة — والسؤال البحثي المفتوح —
+    اعتراف بالجهل — ادعاءان عن العالم أصلاً؟ إسناد مصدر لكل منصب يعني العثور على مرسوم
+    تأسيس لمناصب مثل «وزير الداخلية»: ممكن، لكنه عبء تحريري مختلف عن الذي صُممت له
+    غلاف الادعاءات.
+  notes_ar_by: machine

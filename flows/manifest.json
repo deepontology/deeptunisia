@@ -1,0 +1,59 @@
+{
+ "generated": "2026-08-16T20:55:13.296Z",
+ "datasets": [
+  {
+   "id": "comtrade",
+   "title": "UN Comtrade — Tunisia bilateral goods trade, all partners, annual totals",
+   "publisher": "United Nations Statistics Division",
+   "url": "https://comtradeplus.un.org/",
+   "api": "https://comtradeapi.un.org/public/v1/preview/C/A",
+   "retrieved": "2026-08-16T20:40:31.116Z",
+   "coverage": {
+    "from": 1962,
+    "to": 2024,
+    "partners": 245,
+    "observations": 15444,
+    "mirrored": 11312,
+    "energy": 4683
+   },
+   "unit": "USD",
+   "classification": "SITC Rev.1 to 1987, HS from 1988",
+   "licence": "UN Comtrade terms of use",
+   "licence_url": "https://comtradeplus.un.org/",
+   "redistributable": true,
+   "attribution": "United Nations Statistics Division, UN Comtrade"
+  },
+  {
+   "id": "wb-points",
+   "title": "Capital coordinates, for countries absent from the 1:110m topology",
+   "publisher": "World Bank",
+   "url": "https://api.worldbank.org/v2/country",
+   "retrieved": "2026-08-16T20:40:31.116Z",
+   "licence": "CC-BY-4.0",
+   "licence_url": "https://datacatalog.worldbank.org/public-licenses",
+   "redistributable": true,
+   "attribution": "World Bank Open Data"
+  },
+  {
+   "id": "wdi",
+   "title": "World Bank World Development Indicators — Tunisia national context",
+   "publisher": "World Bank",
+   "url": "https://data.worldbank.org/country/tunisia",
+   "api": "https://api.worldbank.org/v2/country/TUN/indicator",
+   "retrieved": "2026-08-16T20:55:13.296Z",
+   "coverage": {
+    "series": [
+     "reserves",
+     "gdp",
+     "currentAccount",
+     "cpi"
+    ],
+    "observations": 222
+   },
+   "licence": "CC-BY-4.0",
+   "licence_url": "https://datacatalog.worldbank.org/public-licenses",
+   "redistributable": true,
+   "attribution": "World Bank Open Data"
+  }
+ ]
+}

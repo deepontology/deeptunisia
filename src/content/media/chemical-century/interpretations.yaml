@@ -1,0 +1,54 @@
+# =============================================================================
+# "The Chemical Century" — Interpretive layer
+#
+# House rule 1: an inference may never render as a fact. These are the
+# article's own readings, separated from the claim ledger on purpose. Each
+# names who makes the claim, states the reasoning, and gives the observable
+# that would prove it wrong (house rules 3 and 4). The renderer must show
+# them as panels, visually distinct from graded factual prose, in every
+# locale and theme.
+#
+# Referenced from the narrative as a standalone paragraph: > [I1]
+# =============================================================================
+
+interpretations:
+
+  - id: I3
+    section: S4
+    statement:
+      en: "\"Programmed by the builder\" is a reading, not a document. It rests on one engineer-director's 2015 testimony plus unbroken practice ever since. The documented core is narrower: both waste streams began with the first plants and neither has stopped."
+    attributed_to: "DeepTunisia editors"
+    reasoning:
+      en: "The design-intent wording traces to a single reported interview (C014). What the primary record supports is continuity of discharge from startup (C017, C048), not the builder's intention."
+    falsifier:
+      en: "Commissioning files, permits or contemporaneous plant plans showing treatment intended but deferred, which would date the failure differently; or engineering records showing the sea route was imposed on the builder from outside."
+
+  - id: I4
+    section: S6
+    statement:
+      en: "\"One actor\" names ownership concentration, not one mind. Owner, ministries, courts and the marine institute held different duties across this century and did not decide together. What merged was the balance sheet, and from 1994 the chief executive."
+    attributed_to: "DeepTunisia editors"
+    reasoning:
+      en: "The concentration is documented (99.998% state share, C066; one PDG over CPG and GCT from 1994, C025). Unified intent is not: the ledger also records the state's own institute measuring the damage, a court rejecting the motion to halt the units, and ministries announcing fixes the operator never finished."
+    falsifier:
+      en: "Records of coordinated owner-and-regulator decisions would support a stronger claim than structure. Records of institutions working against each other cap this reading at concentration."
+
+  - id: I1
+    section: S10
+    statement:
+      en: "Measurement followed institutional interest, not exposure. The sea was studied by the state's own marine scientists from 1976; the stacks were measured once, by consultants the company itself hired; ambient air and health, where residents meet the pollution directly, have no series at all."
+    attributed_to: "DeepTunisia editors"
+    reasoning:
+      en: "Each measured domain has an institution with a mandate or a liability inside it (C018–C022, C049); each unmeasured domain has none identified anywhere in the searched record (C050, C063)."
+    falsifier:
+      en: "A standing ambient-air or health-monitoring programme for Gabès that the searches missed, or audit evidence of stack campaigns that were run but never published."
+
+  - id: I2
+    section: S10
+    statement:
+      en: "That the gaps persisted for fifteen years is consistent with a system in which nobody with the power to require measurement wanted the numbers to exist. Offered as a hypothesis about incentive, nothing stronger."
+    attributed_to: "DeepTunisia editors"
+    reasoning:
+      en: "The operator has held its own exceedance figures since 2010 (C049). The same institution reclassified its waste when measurement threatened output (C037), and produced a full audit only once a lender demanded one (C038). Incentive is documented; intent is not."
+    falsifier:
+      en: "Evidence of measurement attempts that were proposed and then blocked or defunded, which would locate the failure in incapacity rather than will, and would falsify the incentive reading while leaving the gap itself intact."

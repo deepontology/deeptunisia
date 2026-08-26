@@ -1,0 +1,1681 @@
+# Regions gazetteer — the administrative hierarchy of Tunisia (spec §8.1).
+#
+# Names and the region grouping follow the Wikipedia "Governorates of Tunisia"
+# article (wikipedia-governorates-tunisia); governorate codes are the official
+# ISO 3166-2:TN codes carried by the geoBoundaries TUN ADM1 boundaries
+# (geoboundaries-tun-adm1), which also serve as the map view's basemap
+# (static/tn-adm.geojson).
+#
+# Hierarchy: region-tunisia → 6 regions → 24 governorates. Delegations and
+# municipalities (264 and ~350) are authored as the records exist; the schema
+# and validators already accept them.
+
+- id: region-tunisia
+  kind: region
+  name_en: Tunisia
+  name_fr: Tunisie
+  name_ar: تونس
+  sources: [wikipedia-governorates-tunisia]
+
+# ---- the six regions (Wikipedia "Regions of Tunisia") ----
+
+- id: region-north-east
+  kind: region
+  name_en: North East
+  name_fr: Nord-Est
+  name_ar: الشمال الشرقي
+  parent: region-tunisia
+  sources: [wikipedia-governorates-tunisia]
+
+- id: region-north-west
+  kind: region
+  name_en: North West
+  name_fr: Nord-Ouest
+  name_ar: الشمال الغربي
+  parent: region-tunisia
+  sources: [wikipedia-governorates-tunisia]
+
+- id: region-central-west
+  kind: region
+  name_en: Central West
+  name_fr: Centre-Ouest
+  name_ar: الوسط الغربي
+  parent: region-tunisia
+  sources: [wikipedia-governorates-tunisia]
+
+- id: region-central-east
+  kind: region
+  name_en: Central East
+  name_fr: Centre-Est
+  name_ar: الوسط الشرقي
+  parent: region-tunisia
+  sources: [wikipedia-governorates-tunisia]
+
+- id: region-south-west
+  kind: region
+  name_en: South West
+  name_fr: Sud-Ouest
+  name_ar: الجنوب الغربي
+  parent: region-tunisia
+  sources: [wikipedia-governorates-tunisia]
+
+- id: region-south-east
+  kind: region
+  name_en: South East
+  name_fr: Sud-Est
+  name_ar: الجنوب الشرقي
+  parent: region-tunisia
+  sources: [wikipedia-governorates-tunisia]
+
+# ---- the 24 governorates ----
+
+- id: gov-tunis
+  kind: governorate
+  name_en: Tunis
+  name_fr: Tunis
+  name_ar: تونس
+  parent: region-north-east
+  code: "TN-11"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+
+- id: gov-ariana
+  kind: governorate
+  name_en: Ariana
+  name_fr: Ariana
+  name_ar: أريانة
+  parent: region-north-east
+  code: "TN-12"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+
+- id: gov-ben-arous
+  kind: governorate
+  name_en: Ben Arous
+  name_fr: Ben Arous
+  name_ar: بن عروس
+  parent: region-north-east
+  code: "TN-13"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+
+- id: gov-manouba
+  kind: governorate
+  name_en: Manouba
+  name_fr: La Manouba
+  name_ar: منوبة
+  parent: region-north-east
+  code: "TN-14"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+
+- id: gov-nabeul
+  kind: governorate
+  name_en: Nabeul
+  name_fr: Nabeul
+  name_ar: نابل
+  parent: region-north-east
+  code: "TN-21"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+
+- id: gov-zaghouan
+  kind: governorate
+  name_en: Zaghouan
+  name_fr: Zaghouan
+  name_ar: زغوان
+  parent: region-north-east
+  code: "TN-22"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+
+- id: gov-bizerte
+  kind: governorate
+  name_en: Bizerte
+  name_fr: Bizerte
+  name_ar: بنزرت
+  parent: region-north-east
+  code: "TN-23"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+
+- id: gov-beja
+  kind: governorate
+  name_en: Béja
+  name_fr: Béja
+  name_ar: باجة
+  parent: region-north-west
+  code: "TN-31"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+
+- id: gov-jendouba
+  kind: governorate
+  name_en: Jendouba
+  name_fr: Jendouba
+  name_ar: جندوبة
+  parent: region-north-west
+  code: "TN-32"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+
+- id: gov-kef
+  kind: governorate
+  name_en: El Kef
+  name_fr: Le Kef
+  name_ar: الكاف
+  parent: region-north-west
+  code: "TN-33"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+
+- id: gov-siliana
+  kind: governorate
+  name_en: Siliana
+  name_fr: Siliana
+  name_ar: سليانة
+  parent: region-north-west
+  code: "TN-34"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+
+- id: gov-kairouan
+  kind: governorate
+  name_en: Kairouan
+  name_fr: Kairouan
+  name_ar: القيروان
+  parent: region-central-west
+  code: "TN-41"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+
+- id: gov-kasserine
+  kind: governorate
+  name_en: Kasserine
+  name_fr: Kasserine
+  name_ar: القصرين
+  parent: region-central-west
+  code: "TN-42"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+
+- id: gov-sidi-bouzid
+  kind: governorate
+  name_en: Sidi Bouzid
+  name_fr: Sidi Bouzid
+  name_ar: سيدي بوزيد
+  parent: region-central-west
+  code: "TN-43"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+
+- id: gov-sousse
+  kind: governorate
+  name_en: Sousse
+  name_fr: Sousse
+  name_ar: سوسة
+  parent: region-central-east
+  code: "TN-51"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+
+- id: gov-monastir
+  kind: governorate
+  name_en: Monastir
+  name_fr: Monastir
+  name_ar: المنستير
+  parent: region-central-east
+  code: "TN-52"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+
+- id: gov-mahdia
+  kind: governorate
+  name_en: Mahdia
+  name_fr: Mahdia
+  name_ar: المهدية
+  parent: region-central-east
+  code: "TN-53"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+
+- id: gov-sfax
+  kind: governorate
+  name_en: Sfax
+  name_fr: Sfax
+  name_ar: صفاقس
+  parent: region-central-east
+  code: "TN-61"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+
+- id: gov-gafsa
+  kind: governorate
+  name_en: Gafsa
+  name_fr: Gafsa
+  name_ar: قفصة
+  parent: region-south-west
+  code: "TN-71"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+
+- id: gov-tozeur
+  kind: governorate
+  name_en: Tozeur
+  name_fr: Tozeur
+  name_ar: توزر
+  parent: region-south-west
+  code: "TN-72"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+
+- id: gov-kebili
+  kind: governorate
+  name_en: Kébili
+  name_fr: Kébili
+  name_ar: قبلي
+  parent: region-south-west
+  code: "TN-73"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+
+- id: gov-gabes
+  kind: governorate
+  name_en: Gabès
+  name_fr: Gabès
+  name_ar: قابس
+  parent: region-south-east
+  code: "TN-81"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+
+- id: gov-medenine
+  kind: governorate
+  name_en: Médenine
+  name_fr: Médenine
+  name_ar: مدنين
+  parent: region-south-east
+  code: "TN-82"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+
+- id: gov-tataouine
+  kind: governorate
+  name_en: Tataouine
+  name_fr: Tataouine
+  name_ar: تطاوين
+  parent: region-south-east
+  code: "TN-83"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+
+# ---- delegations (first pass) ----
+# 53 delegations merged 2026-08-08 from data/contrib/delegations-2026-08-08.yaml
+# (roadmap P2 #16): gov-tunis 21, gov-sfax 16, gov-nabeul 16. Kind: delegation,
+# parent = the governorate id, per spec §8.1. Names verbatim from the Interior
+# Ministry registry (tier 2, interieur-opendata-secteurs) cross-checked against
+# the Wikipedia delegation index; Arabic + French kept. Per-delegation census
+# populations and imada (secteur) counts are contextual notes, not records.
+
+# --- gov-tunis (21 delegations) ---------------------------------------------
+
+- kind: delegation
+  id: del-tunis-bab-el-bhar
+  name_en: "Bab El Bhar"
+  name_fr: "Bab El Bhar"
+  name_ar: "باب البحر"
+  parent: gov-tunis
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-tunis]
+  notes:
+    - "RGPH 2014 population 36,210 (INS, via ar.wikipedia ولاية تونس table)."
+    - "8 imadats per Interior Ministry registry (باب البحر، الحدائق، بحيرة تونس، المنجي سليم، الحبيب ثامر، الطيب المهيري، الهادي شاكر، سيدي البحري)."
+  notes_fr:
+    - >-
+      Population RGPH 2014 : 36,210 (INS, d'après le tableau « ولاية تونس » de
+      ar.wikipedia).
+    - >-
+      8 imadats d'après le registre du ministère de l'Intérieur (باب البحر، الحدائق، بحيرة
+      تونس، المنجي سليم، الحبيب ثامر، الطيب المهيري، الهادي شاكر، سيدي البحري).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      عدد سكان RGPH 2014: 36,210 (INS، عن جدول «ولاية تونس» في ويكيبيديا العربية).
+    - >-
+      8 عمادات حسب سجل وزارة الداخلية (باب البحر، الحدائق، بحيرة تونس، المنجي سليم، الحبيب
+      ثامر، الطيب المهيري، الهادي شاكر، سيدي البحري).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-tunis-bab-souika
+  name_en: "Bab Souika"
+  name_fr: "Bab Souika"
+  name_ar: "باب سويقة"
+  parent: gov-tunis
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-tunis]
+  notes:
+    - "RGPH 2014 population 29,185 (INS, via ar.wikipedia ولاية تونس table)."
+    - "11 imadats per Interior Ministry registry."
+  notes_fr:
+    - >-
+      Population RGPH 2014 : 29,185 (INS, d'après le tableau « ولاية تونس » de
+      ar.wikipedia).
+    - >-
+      11 imadats d'après le registre du ministère de l'Intérieur.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      عدد سكان RGPH 2014: 29,185 (INS، عن جدول «ولاية تونس» في ويكيبيديا العربية).
+    - >-
+      11 عمادة حسب سجل وزارة الداخلية.
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-tunis-carthage
+  name_en: "Carthage"
+  name_fr: "Carthage"
+  name_ar: "قرطاج"
+  parent: gov-tunis
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-tunis]
+  notes:
+    - "RGPH 2014 population 24,216 (INS, via ar.wikipedia ولاية تونس table)."
+    - "6 imadats per Interior Ministry registry (سيدي بوسعيد، أميلكار، قرطاج بيرصا، قرطاج الشاطئ، الياسمينة، حي محمد علي). Presidential palace and seat of the Carthage municipality."
+  notes_fr:
+    - >-
+      Population RGPH 2014 : 24,216 (INS, d'après le tableau « ولاية تونس » de
+      ar.wikipedia).
+    - >-
+      6 imadats d'après le registre du ministère de l'Intérieur (سيدي بوسعيد، أميلكار، قرطاج
+      بيرصا، قرطاج الشاطئ، الياسمينة، حي محمد علي). Palais présidentiel et siège de la
+      municipalité de Carthage.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      عدد سكان RGPH 2014: 24,216 (INS، عن جدول «ولاية تونس» في ويكيبيديا العربية).
+    - >-
+      6 عمادات حسب سجل وزارة الداخلية (سيدي بوسعيد، أميلكار، قرطاج بيرصا، قرطاج الشاطئ،
+      الياسمينة، حي محمد علي). القصر الرئاسي ومقر بلدية قرطاج.
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-tunis-cite-el-khadra
+  name_en: "Cité El Khadra"
+  name_fr: "Cité El Khadra"
+  name_ar: "حي الخضراء"
+  parent: gov-tunis
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-tunis]
+  notes:
+    - "RGPH 2014 population 35,173 (INS, via ar.wikipedia ولاية تونس table)."
+    - "8 imadats per Interior Ministry registry (حي الخضراء، خير الدين باشا، حي الحدائق، حي السلام، علي البلهوان، فرحات حشاد، الشرقية، البحيرة)."
+  notes_fr:
+    - >-
+      Population RGPH 2014 : 35,173 (INS, d'après le tableau « ولاية تونس » de
+      ar.wikipedia).
+    - >-
+      8 imadats d'après le registre du ministère de l'Intérieur (حي الخضراء، خير الدين باشا،
+      حي الحدائق، حي السلام، علي البلهوان، فرحات حشاد، الشرقية، البحيرة).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      عدد سكان RGPH 2014: 35,173 (INS، عن جدول «ولاية تونس» في ويكيبيديا العربية).
+    - >-
+      8 عمادات حسب سجل وزارة الداخلية (حي الخضراء، خير الدين باشا، حي الحدائق، حي السلام،
+      علي البلهوان، فرحات حشاد، الشرقية، البحيرة).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-tunis-djebel-jelloud
+  name_en: "Djebel Jelloud"
+  name_fr: "Djebel Jelloud"
+  name_ar: "جبل الجلود"
+  parent: gov-tunis
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-tunis]
+  notes:
+    - "RGPH 2014 population 23,638 (INS, via ar.wikipedia ولاية تونس table)."
+    - "7 imadats per Interior Ministry registry (سيدي فتح الله، علي باش حانبة، القرجومة، حي الفتح، السبخاء، الافران، جبل الجلود)."
+  notes_fr:
+    - >-
+      Population RGPH 2014 : 23,638 (INS, d'après le tableau « ولاية تونس » de
+      ar.wikipedia).
+    - >-
+      7 imadats d'après le registre du ministère de l'Intérieur (سيدي فتح الله، علي باش
+      حانبة، القرجومة، حي الفتح، السبخاء، الافران، جبل الجلود).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      عدد سكان RGPH 2014: 23,638 (INS، عن جدول «ولاية تونس» في ويكيبيديا العربية).
+    - >-
+      7 عمادات حسب سجل وزارة الداخلية (سيدي فتح الله، علي باش حانبة، القرجومة، حي الفتح،
+      السبخاء، الافران، جبل الجلود).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-tunis-el-hrairia
+  name_en: "El Hraïria"
+  name_fr: "El Hraïria"
+  name_ar: "الحرايرية"
+  parent: gov-tunis
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-tunis]
+  notes:
+    - "RGPH 2014 population 110,184 (INS, via ar.wikipedia ولاية تونس table) — most populous delegation of the governorate."
+    - "9 imadats per Interior Ministry registry; ministry spelling is الحرائرية (with ئ) vs the ar.wikipedia spelling الحرايرية (with ي) — both recorded."
+  notes_fr:
+    - >-
+      Population RGPH 2014 : 110,184 (INS, d'après le tableau « ولاية تونس » de
+      ar.wikipedia) — délégation la plus peuplée du gouvernorat.
+    - >-
+      9 imadats d'après le registre du ministère de l'Intérieur ; le ministère écrit
+      الحرائرية (avec ئ), ar.wikipedia الحرايرية (avec ي) — les deux formes sont consignées.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      عدد سكان RGPH 2014: 110,184 (INS، عن جدول «ولاية تونس» في ويكيبيديا العربية) — أكبر
+      معتمديات الولاية سكانًا.
+    - >-
+      9 عمادات حسب سجل وزارة الداخلية؛ إملاء الوزارة هو الحرائرية (بحرف ئ) مقابل إملاء
+      ويكيبيديا العربية الحرايرية (بحرف ي) — وقد سُجّل الإملاءان معًا.
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-tunis-el-kabaria
+  name_en: "El Kabaria"
+  name_fr: "El Kabaria"
+  name_ar: "الكبارية"
+  parent: gov-tunis
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-tunis]
+  notes:
+    - "RGPH 2014 population 86,024 (INS, via ar.wikipedia ولاية تونس table)."
+    - "8 imadats per Interior Ministry registry (الكبارية 1-4، حي النور، ابن سيناء 1-2، المروج 2)."
+  notes_fr:
+    - >-
+      Population RGPH 2014 : 86,024 (INS, d'après le tableau « ولاية تونس » de
+      ar.wikipedia).
+    - >-
+      8 imadats d'après le registre du ministère de l'Intérieur (الكبارية 1-4، حي النور، ابن
+      سيناء 1-2، المروج 2).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      عدد سكان RGPH 2014: 86,024 (INS، عن جدول «ولاية تونس» في ويكيبيديا العربية).
+    - >-
+      8 عمادات حسب سجل وزارة الداخلية (الكبارية 1-4، حي النور، ابن سيناء 1-2، المروج 2).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-tunis-el-menzah
+  name_en: "El Menzah"
+  name_fr: "El Menzah"
+  name_ar: "المنزه"
+  parent: gov-tunis
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-tunis]
+  notes:
+    - "RGPH 2014 population 41,830 (INS, via ar.wikipedia ولاية تونس table)."
+    - "5 imadats per Interior Ministry registry (غرة جوان، المنزه، الفتح، المنار، المنار 1)."
+  notes_fr:
+    - >-
+      Population RGPH 2014 : 41,830 (INS, d'après le tableau « ولاية تونس » de
+      ar.wikipedia).
+    - >-
+      5 imadats d'après le registre du ministère de l'Intérieur (غرة جوان، المنزه، الفتح،
+      المنار، المنار 1).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      عدد سكان RGPH 2014: 41,830 (INS، عن جدول «ولاية تونس» في ويكيبيديا العربية).
+    - >-
+      5 عمادات حسب سجل وزارة الداخلية (غرة جوان، المنزه، الفتح، المنار، المنار 1).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-tunis-el-omrane
+  name_en: "El Omrane"
+  name_fr: "El Omrane"
+  name_ar: "العمران"
+  parent: gov-tunis
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-tunis]
+  notes:
+    - "RGPH 2014 population 42,208 (INS, via ar.wikipedia ولاية تونس table)."
+    - "6 imadats per Interior Ministry registry (العمران، الجبل الأحمر، حي الزياتين، راس الطابية، بئر عتيق، وادي السبعي)."
+  notes_fr:
+    - >-
+      Population RGPH 2014 : 42,208 (INS, d'après le tableau « ولاية تونس » de
+      ar.wikipedia).
+    - >-
+      6 imadats d'après le registre du ministère de l'Intérieur (العمران، الجبل الأحمر، حي
+      الزياتين، راس الطابية، بئر عتيق، وادي السبعي).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      عدد سكان RGPH 2014: 42,208 (INS، عن جدول «ولاية تونس» في ويكيبيديا العربية).
+    - >-
+      6 عمادات حسب سجل وزارة الداخلية (العمران، الجبل الأحمر، حي الزياتين، راس الطابية، بئر
+      عتيق، وادي السبعي).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-tunis-el-omrane-superieur
+  name_en: "El Omrane Supérieur"
+  name_fr: "El Omrane Supérieur"
+  name_ar: "العمران الأعلى"
+  parent: gov-tunis
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-tunis]
+  notes:
+    - "RGPH 2014 population 55,513 (INS, via ar.wikipedia ولاية تونس table)."
+    - "9 imadats per Interior Ministry registry (حي بن خلدون 1-2-6، الرمانة، حي الانطلاقة، العمران الأعلى، النسيم، أحمد التليلي، الصديق)."
+  notes_fr:
+    - >-
+      Population RGPH 2014 : 55,513 (INS, d'après le tableau « ولاية تونس » de
+      ar.wikipedia).
+    - >-
+      9 imadats d'après le registre du ministère de l'Intérieur (حي بن خلدون 1-2-6، الرمانة،
+      حي الانطلاقة، العمران الأعلى، النسيم، أحمد التليلي، الصديق).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      عدد سكان RGPH 2014: 55,513 (INS، عن جدول «ولاية تونس» في ويكيبيديا العربية).
+    - >-
+      9 عمادات حسب سجل وزارة الداخلية (حي بن خلدون 1-2-6، الرمانة، حي الانطلاقة، العمران
+      الأعلى، النسيم، أحمد التليلي، الصديق).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-tunis-el-ouardia
+  name_en: "El Ouardia"
+  name_fr: "El Ouardia"
+  name_ar: "الوردية"
+  parent: gov-tunis
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-tunis]
+  notes:
+    - "RGPH 2014 population 32,147 (INS, via ar.wikipedia ولاية تونس table)."
+    - "6 imadats per Interior Ministry registry (الوردية، بوقطفة، الطاهر صفر، حي الازدهار، حي محمد علي، سيدي بلحسن)."
+  notes_fr:
+    - >-
+      Population RGPH 2014 : 32,147 (INS, d'après le tableau « ولاية تونس » de
+      ar.wikipedia).
+    - >-
+      6 imadats d'après le registre du ministère de l'Intérieur (الوردية، بوقطفة، الطاهر
+      صفر، حي الازدهار، حي محمد علي، سيدي بلحسن).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      عدد سكان RGPH 2014: 32,147 (INS، عن جدول «ولاية تونس» في ويكيبيديا العربية).
+    - >-
+      6 عمادات حسب سجل وزارة الداخلية (الوردية، بوقطفة، الطاهر صفر، حي الازدهار، حي محمد
+      علي، سيدي بلحسن).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-tunis-ettahrir
+  name_en: "Ettahrir"
+  name_fr: "Ettahrir"
+  name_ar: "التحرير"
+  parent: gov-tunis
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-tunis]
+  notes:
+    - "RGPH 2014 population 21,709 (INS, via ar.wikipedia ولاية تونس table)."
+    - "5 imadats per Interior Ministry registry (التحرير 1-3، التحرير العلوي، الحديقة)."
+  notes_fr:
+    - >-
+      Population RGPH 2014 : 21,709 (INS, d'après le tableau « ولاية تونس » de
+      ar.wikipedia).
+    - >-
+      5 imadats d'après le registre du ministère de l'Intérieur (التحرير 1-3، التحرير
+      العلوي، الحديقة).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      عدد سكان RGPH 2014: 21,709 (INS، عن جدول «ولاية تونس» في ويكيبيديا العربية).
+    - >-
+      5 عمادات حسب سجل وزارة الداخلية (التحرير 1-3، التحرير العلوي، الحديقة).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-tunis-ezzouhour
+  name_en: "Ezzouhour"
+  name_fr: "Ezzouhour"
+  name_ar: "الزهور"
+  parent: gov-tunis
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-tunis]
+  notes:
+    - "RGPH 2014 population 40,728 (INS, via ar.wikipedia ولاية تونس table)."
+    - "6 imadats per Interior Ministry registry (الزهور، الزهور الرابع، السعادة، السمران، حي الطيران، باش حانبة)."
+  notes_fr:
+    - >-
+      Population RGPH 2014 : 40,728 (INS, d'après le tableau « ولاية تونس » de
+      ar.wikipedia).
+    - >-
+      6 imadats d'après le registre du ministère de l'Intérieur (الزهور، الزهور الرابع،
+      السعادة، السمران، حي الطيران، باش حانبة).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      عدد سكان RGPH 2014: 40,728 (INS، عن جدول «ولاية تونس» في ويكيبيديا العربية).
+    - >-
+      6 عمادات حسب سجل وزارة الداخلية (الزهور، الزهور الرابع، السعادة، السمران، حي الطيران،
+      باش حانبة).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-tunis-la-goulette
+  name_en: "La Goulette"
+  name_fr: "La Goulette"
+  name_ar: "حلق الوادي"
+  parent: gov-tunis
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-tunis]
+  notes:
+    - "RGPH 2014 population 45,711 (INS, via ar.wikipedia ولاية تونس table)."
+    - "5 imadats per Interior Ministry registry (حلق الوادي، حلق الوادي كازينو، خير الدين، الطيب المهيري، حي السلامة). Port of La Goulette."
+  notes_fr:
+    - >-
+      Population RGPH 2014 : 45,711 (INS, d'après le tableau « ولاية تونس » de
+      ar.wikipedia).
+    - >-
+      5 imadats d'après le registre du ministère de l'Intérieur (حلق الوادي، حلق الوادي
+      كازينو، خير الدين، الطيب المهيري، حي السلامة). Port de La Goulette.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      عدد سكان RGPH 2014: 45,711 (INS، عن جدول «ولاية تونس» في ويكيبيديا العربية).
+    - >-
+      5 عمادات حسب سجل وزارة الداخلية (حلق الوادي، حلق الوادي كازينو، خير الدين، الطيب
+      المهيري، حي السلامة). ميناء حلق الوادي.
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-tunis-la-marsa
+  name_en: "La Marsa"
+  name_fr: "La Marsa"
+  name_ar: "المرسى"
+  parent: gov-tunis
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-tunis]
+  notes:
+    - "RGPH 2014 population 92,987 (INS, via ar.wikipedia ولاية تونس table)."
+    - "10 imadats per Interior Ministry registry (المرسى الشاطئ/المدينة/الحدائق/الرياض، الرميلة، المرسى المنتزه، قمرت، قمرت العليا، سيدي داود، البحر الازرق)."
+  notes_fr:
+    - >-
+      Population RGPH 2014 : 92,987 (INS, d'après le tableau « ولاية تونس » de
+      ar.wikipedia).
+    - >-
+      10 imadats d'après le registre du ministère de l'Intérieur (المرسى
+      الشاطئ/المدينة/الحدائق/الرياض، الرميلة، المرسى المنتزه، قمرت، قمرت العليا، سيدي داود،
+      البحر الازرق).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      عدد سكان RGPH 2014: 92,987 (INS، عن جدول «ولاية تونس» في ويكيبيديا العربية).
+    - >-
+      10 عمادات حسب سجل وزارة الداخلية (المرسى الشاطئ/المدينة/الحدائق/الرياض، الرميلة،
+      المرسى المنتزه، قمرت، قمرت العليا، سيدي داود، البحر الازرق).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-tunis-le-bardo
+  name_en: "Le Bardo"
+  name_fr: "Le Bardo"
+  name_ar: "باردو"
+  parent: gov-tunis
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-tunis]
+  notes:
+    - "RGPH 2014 population 71,961 (INS, via ar.wikipedia ولاية تونس table)."
+    - "14 imadats per Interior Ministry registry (باردو، باردو الشمالي/الجنوبي، الحديقة، بوشوشة، الاقامة الطيبة، خزندار، الفتح، قصر السعيد، قصر السعيد الثاني، البساتين، السعادة، قصر البرطال، ابن سيناء). Seat of the Bardo National Museum and, until 2022, of parliament."
+  notes_fr:
+    - >-
+      Population RGPH 2014 : 71,961 (INS, d'après le tableau « ولاية تونس » de
+      ar.wikipedia).
+    - >-
+      14 imadats d'après le registre du ministère de l'Intérieur (باردو، باردو
+      الشمالي/الجنوبي، الحديقة، بوشوشة، الاقامة الطيبة، خزندار، الفتح، قصر السعيد، قصر
+      السعيد الثاني، البساتين، السعادة، قصر البرطال، ابن سيناء). Siège du musée national du
+      Bardo et, jusqu'en 2022, du Parlement.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      عدد سكان RGPH 2014: 71,961 (INS، عن جدول «ولاية تونس» في ويكيبيديا العربية).
+    - >-
+      14 عمادة حسب سجل وزارة الداخلية (باردو، باردو الشمالي/الجنوبي، الحديقة، بوشوشة،
+      الاقامة الطيبة، خزندار، الفتح، قصر السعيد، قصر السعيد الثاني، البساتين، السعادة، قصر
+      البرطال، ابن سيناء). مقر المتحف الوطني بباردو، ومقر البرلمان حتى 2022.
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-tunis-le-kram
+  name_en: "Le Kram"
+  name_fr: "Le Kram"
+  name_ar: "الكرم"
+  parent: gov-tunis
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-tunis]
+  notes:
+    - "RGPH 2014 population 74,132 (INS, via ar.wikipedia ولاية تونس table)."
+    - "7 imadats per Interior Ministry registry (الكرم الشرقي، الرياض، البحيرة، سيدي فرج، الكرم الغربي، سيدي عمر، البئر الحلو)."
+  notes_fr:
+    - >-
+      Population RGPH 2014 : 74,132 (INS, d'après le tableau « ولاية تونس » de
+      ar.wikipedia).
+    - >-
+      7 imadats d'après le registre du ministère de l'Intérieur (الكرم الشرقي، الرياض،
+      البحيرة، سيدي فرج، الكرم الغربي، سيدي عمر، البئر الحلو).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      عدد سكان RGPH 2014: 74,132 (INS، عن جدول «ولاية تونس» في ويكيبيديا العربية).
+    - >-
+      7 عمادات حسب سجل وزارة الداخلية (الكرم الشرقي، الرياض، البحيرة، سيدي فرج، الكرم
+      الغربي، سيدي عمر، البئر الحلو).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-tunis-medina
+  name_en: "Médina"
+  name_fr: "Médina"
+  name_ar: "المدينة"
+  parent: gov-tunis
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-tunis]
+  notes:
+    - "RGPH 2014 population 21,400 (INS, via ar.wikipedia ولاية تونس table). The historic medina of Tunis (UNESCO World Heritage Site)."
+    - "12 imadats per Interior Ministry registry (المدينة، الحفصية، باب البنات، سوق النحاس، الأسواق، باب المنارة، تربة الباي، الزرارعية، سيدي علي عزوز، التوفيق، الصباغين، سيدي بومنديل)."
+  notes_fr:
+    - >-
+      Population RGPH 2014 : 21,400 (INS, d'après le tableau « ولاية تونس » de
+      ar.wikipedia). La médina historique de Tunis (site du patrimoine mondial de l'UNESCO).
+    - >-
+      12 imadats d'après le registre du ministère de l'Intérieur (المدينة، الحفصية، باب
+      البنات، سوق النحاس، الأسواق، باب المنارة، تربة الباي، الزرارعية، سيدي علي عزوز،
+      التوفيق، الصباغين، سيدي بومنديل).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      عدد سكان RGPH 2014: 21,400 (INS، عن جدول «ولاية تونس» في ويكيبيديا العربية). مدينة
+      تونس العتيقة (موقع تراث عالمي لليونسكو).
+    - >-
+      12 عمادة حسب سجل وزارة الداخلية (المدينة، الحفصية، باب البنات، سوق النحاس، الأسواق،
+      باب المنارة، تربة الباي، الزرارعية، سيدي علي عزوز، التوفيق، الصباغين، سيدي بومنديل).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-tunis-sejoumi
+  name_en: "Séjoumi"
+  name_fr: "Séjoumi"
+  name_ar: "السيجومي"
+  parent: gov-tunis
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-tunis]
+  notes:
+    - "RGPH 2014 population 33,870 (INS, via ar.wikipedia ولاية تونس table)."
+    - "6 imadats per Interior Ministry registry (حي هلال، علي البلهوان، النجاح، حي الشهداء، بئر عنيبة، الملاسين)."
+  notes_fr:
+    - >-
+      Population RGPH 2014 : 33,870 (INS, d'après le tableau « ولاية تونس » de
+      ar.wikipedia).
+    - >-
+      6 imadats d'après le registre du ministère de l'Intérieur (حي هلال، علي البلهوان،
+      النجاح، حي الشهداء، بئر عنيبة، الملاسين).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      عدد سكان RGPH 2014: 33,870 (INS، عن جدول «ولاية تونس» في ويكيبيديا العربية).
+    - >-
+      6 عمادات حسب سجل وزارة الداخلية (حي هلال، علي البلهوان، النجاح، حي الشهداء، بئر عنيبة،
+      الملاسين).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-tunis-sidi-el-bechir
+  name_en: "Sidi El Béchir"
+  name_fr: "Sidi El Béchir"
+  name_ar: "سيدي البشير"
+  parent: gov-tunis
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-tunis]
+  notes:
+    - "RGPH 2014 population 27,749 (INS, via ar.wikipedia ولاية تونس table)."
+    - "6 imadats per Interior Ministry registry (سيدي البشير، سيدي منصور، معقل الزعيم، فرحات حشاد، أبو القاسم الشابي، السيدة المنوبية)."
+  notes_fr:
+    - >-
+      Population RGPH 2014 : 27,749 (INS, d'après le tableau « ولاية تونس » de
+      ar.wikipedia).
+    - >-
+      6 imadats d'après le registre du ministère de l'Intérieur (سيدي البشير، سيدي منصور،
+      معقل الزعيم، فرحات حشاد، أبو القاسم الشابي، السيدة المنوبية).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      عدد سكان RGPH 2014: 27,749 (INS، عن جدول «ولاية تونس» في ويكيبيديا العربية).
+    - >-
+      6 عمادات حسب سجل وزارة الداخلية (سيدي البشير، سيدي منصور، معقل الزعيم، فرحات حشاد، أبو
+      القاسم الشابي، السيدة المنوبية).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-tunis-sidi-hassine
+  name_en: "Sidi Hassine"
+  name_fr: "Sidi Hassine"
+  name_ar: "سيدي حسين"
+  parent: gov-tunis
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-tunis]
+  notes:
+    - "RGPH 2014 population 109,672 (INS, via ar.wikipedia ولاية تونس table)."
+    - "9 imadats per Interior Ministry registry (برج شاكير، الجيارة، سيدي حسين، 25 جويلية، 14 جانفي، 20 مارس، عطار، بيرين، مغيرة انزال)."
+  notes_fr:
+    - >-
+      Population RGPH 2014 : 109,672 (INS, d'après le tableau « ولاية تونس » de
+      ar.wikipedia).
+    - >-
+      9 imadats d'après le registre du ministère de l'Intérieur (برج شاكير، الجيارة، سيدي
+      حسين، 25 جويلية، 14 جانفي، 20 مارس، عطار، بيرين، مغيرة انزال).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      عدد سكان RGPH 2014: 109,672 (INS، عن جدول «ولاية تونس» في ويكيبيديا العربية).
+    - >-
+      9 عمادات حسب سجل وزارة الداخلية (برج شاكير، الجيارة، سيدي حسين، 25 جويلية، 14 جانفي،
+      20 مارس، عطار، بيرين، مغيرة انزال).
+  notes_ar_by: model-reviewed
+
+# --- gov-sfax (16 delegations) ----------------------------------------------
+# Note: per-delegation census populations were NOT sourced this pass (the
+# ar.wikipedia Sfax page carries no delegation population table). The
+# ar.wikipedia prose claim of 17 delegations (2016 division) is contradicted by
+# the Interior Ministry registry (16), en.wikipedia (16) and the ar.wikipedia
+# template (16); 16 adopted, discrepancy recorded in the header.
+
+- kind: delegation
+  id: del-sfax-agareb
+  name_en: "Agareb"
+  name_fr: "Agareb"
+  name_ar: "عقارب"
+  parent: gov-sfax
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-sfax]
+  notes:
+    - "8 imadats per Interior Ministry registry (عقارب، قرقور، بولذياب، المحروقة، التربة، بن سهلون، زليانة، الصغار)."
+  notes_fr:
+    - >-
+      8 imadats d'après le registre du ministère de l'Intérieur (عقارب، قرقور، بولذياب،
+      المحروقة، التربة، بن سهلون، زليانة، الصغار).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      8 عمادات حسب سجل وزارة الداخلية (عقارب، قرقور، بولذياب، المحروقة، التربة، بن سهلون،
+      زليانة، الصغار).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-sfax-bir-ali-ben-khalifa
+  name_en: "Bir Ali Ben Khalifa"
+  name_fr: "Bir Ali Ben Khalifa"
+  name_ar: "بئر علي بن خليفة"
+  parent: gov-sfax
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-sfax]
+  notes:
+    - "12 imadats per Interior Ministry registry (السديرات الشمالية/الجنوبية، ودران الشمالية/الجنوبية، وادي الشيخ، القندول، سيدي ظاهر، سيدي علي بلعابد، الأبراج، بوسليم، بئر علي بن خليفة، الناظور)."
+  notes_fr:
+    - >-
+      12 imadats d'après le registre du ministère de l'Intérieur (السديرات
+      الشمالية/الجنوبية، ودران الشمالية/الجنوبية، وادي الشيخ، القندول، سيدي ظاهر، سيدي علي
+      بلعابد، الأبراج، بوسليم، بئر علي بن خليفة، الناظور).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      12 عمادة حسب سجل وزارة الداخلية (السديرات الشمالية/الجنوبية، ودران الشمالية/الجنوبية،
+      وادي الشيخ، القندول، سيدي ظاهر، سيدي علي بلعابد، الأبراج، بوسليم، بئر علي بن خليفة،
+      الناظور).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-sfax-el-amra
+  name_en: "El Amra"
+  name_fr: "El Amra"
+  name_ar: "العامرة"
+  parent: gov-sfax
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-sfax]
+  notes:
+    - "6 imadats per Interior Ministry registry (العامرة، بليانة، المساترية، السلام، ذراع بني زياد، بودربالة)."
+  notes_fr:
+    - >-
+      6 imadats d'après le registre du ministère de l'Intérieur (العامرة، بليانة، المساترية،
+      السلام، ذراع بني زياد، بودربالة).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      6 عمادات حسب سجل وزارة الداخلية (العامرة، بليانة، المساترية، السلام، ذراع بني زياد،
+      بودربالة).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-sfax-el-hencha
+  name_en: "El Hencha"
+  name_fr: "El Hencha"
+  name_ar: "الحنشة"
+  parent: gov-sfax
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-sfax]
+  notes:
+    - "9 imadats per Interior Ministry registry (الحنشة، النصر، سيدي حسن بلحاج، دخان، بئر الشعبة، مركز مصباح، بئر صالح، الحجارة، الجواودة)."
+  notes_fr:
+    - >-
+      9 imadats d'après le registre du ministère de l'Intérieur (الحنشة، النصر، سيدي حسن
+      بلحاج، دخان، بئر الشعبة، مركز مصباح، بئر صالح، الحجارة، الجواودة).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      9 عمادات حسب سجل وزارة الداخلية (الحنشة، النصر، سيدي حسن بلحاج، دخان، بئر الشعبة، مركز
+      مصباح، بئر صالح، الحجارة، الجواودة).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-sfax-ghraiba
+  name_en: "Graïba"
+  name_fr: "Graïba"
+  name_ar: "الغريبة"
+  parent: gov-sfax
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-sfax]
+  notes:
+    - "French spelling per en.wikipedia index (variant 'Ghraiba' also circulates); Arabic الغريبة per ministry registry and ar.wikipedia template."
+    - "5 imadats per Interior Ministry registry (الغريبة، المنار، الحشيشينة الجنوبية، الحشيشينة الشمالية، الشعال)."
+  notes_fr:
+    - >-
+      Orthographe française selon l'index de en.wikipedia (la variante « Ghraiba » circule
+      aussi) ; en arabe الغريبة, d'après le registre du ministère et le modèle ar.wikipedia.
+    - >-
+      5 imadats d'après le registre du ministère de l'Intérieur (الغريبة، المنار، الحشيشينة
+      الجنوبية، الحشيشينة الشمالية، الشعال).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      الإملاء الفرنسي حسب فهرس ويكيبيديا الإنجليزية (والبديل «Ghraiba» متداول أيضًا)؛ أما
+      العربية الغريبة فحسب سجل الوزارة وقالب ويكيبيديا العربية.
+    - >-
+      5 عمادات حسب سجل وزارة الداخلية (الغريبة، المنار، الحشيشينة الجنوبية، الحشيشينة
+      الشمالية، الشعال).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-sfax-jebeniana
+  name_en: "Jebiniana"
+  name_fr: "Jebeniana"
+  name_ar: "جبنيانة"
+  parent: gov-sfax
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-sfax]
+  notes:
+    - "8 imadats per Interior Ministry registry (جبنيانة، بطرية، بلتش، حزق، القلالجة، العجانقة، اللوزة، الحوض)."
+  notes_fr:
+    - >-
+      8 imadats d'après le registre du ministère de l'Intérieur (جبنيانة، بطرية، بلتش، حزق،
+      القلالجة، العجانقة، اللوزة، الحوض).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      8 عمادات حسب سجل وزارة الداخلية (جبنيانة، بطرية، بلتش، حزق، القلالجة، العجانقة،
+      اللوزة، الحوض).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-sfax-kerkennah
+  name_en: "Kerkennah"
+  name_fr: "Kerkennah"
+  name_ar: "قرقنة"
+  parent: gov-sfax
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-sfax]
+  notes:
+    - "Islands delegation (Kerkennah archipelago)."
+    - "10 imadats per Interior Ministry registry (العطايا، الرملة، سيدي فرج، مليتة، الكلابين، النجاة، الشرقي، القنطرة، القراطن، أولاد قاسم)."
+  notes_fr:
+    - >-
+      Délégation insulaire (archipel de Kerkennah).
+    - >-
+      10 imadats d'après le registre du ministère de l'Intérieur (العطايا، الرملة، سيدي فرج،
+      مليتة، الكلابين، النجاة، الشرقي، القنطرة، القراطن، أولاد قاسم).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      معتمدية جزرية (أرخبيل قرقنة).
+    - >-
+      10 عمادات حسب سجل وزارة الداخلية (العطايا، الرملة، سيدي فرج، مليتة، الكلابين، النجاة،
+      الشرقي، القنطرة، القراطن، أولاد قاسم).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-sfax-mahres
+  name_en: "Mahrès"
+  name_fr: "Mahrès"
+  name_ar: "المحرس"
+  parent: gov-sfax
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-sfax]
+  notes:
+    - "6 imadats per Interior Ministry registry (المحرس، المحرس الجنوبية، الشفار، سيدي غريب، عيثة الشلايا، السمارة)."
+  notes_fr:
+    - >-
+      6 imadats d'après le registre du ministère de l'Intérieur (المحرس، المحرس الجنوبية،
+      الشفار، سيدي غريب، عيثة الشلايا، السمارة).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      6 عمادات حسب سجل وزارة الداخلية (المحرس، المحرس الجنوبية، الشفار، سيدي غريب، عيثة
+      الشلايا، السمارة).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-sfax-menzel-chaker
+  name_en: "Menzel Chaker"
+  name_fr: "Menzel Chaker"
+  name_ar: "منزل شاكر"
+  parent: gov-sfax
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-sfax]
+  notes:
+    - "12 imadats per Interior Ministry registry (منزل شاكر، بوجربوع، ماجل الدرج، بئر الملولي، بشكة، بوثدي، البقعة البيضاء، العوادنة، تليل العجلة، الاعشاش، الحاج قاسم، شعلاب)."
+  notes_fr:
+    - >-
+      12 imadats d'après le registre du ministère de l'Intérieur (منزل شاكر، بوجربوع، ماجل
+      الدرج، بئر الملولي، بشكة، بوثدي، البقعة البيضاء، العوادنة، تليل العجلة، الاعشاش، الحاج
+      قاسم، شعلاب).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      12 عمادة حسب سجل وزارة الداخلية (منزل شاكر، بوجربوع، ماجل الدرج، بئر الملولي، بشكة،
+      بوثدي، البقعة البيضاء، العوادنة، تليل العجلة، الاعشاش، الحاج قاسم، شعلاب).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-sfax-sakiet-eddaier
+  name_en: "Sakiet Eddaïer"
+  name_fr: "Sakiet Eddaïer"
+  name_ar: "ساقية الدائر"
+  parent: gov-sfax
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-sfax]
+  notes:
+    - "Ministry registry spelling ساقية الداير; ar.wikipedia template ساقية الدائر (adopted)."
+    - "8 imadats per Interior Ministry registry (ساقية الداير، الخيرية، مركز السبعي، البدارنة، سيدي منصور، حي بورقيبة، السلطنية، مركز كعنيش)."
+  notes_fr:
+    - >-
+      Le registre du ministère écrit ساقية الداير ; le modèle ar.wikipedia ساقية الدائر
+      (retenu).
+    - >-
+      8 imadats d'après le registre du ministère de l'Intérieur (ساقية الداير، الخيرية، مركز
+      السبعي، البدارنة، سيدي منصور، حي بورقيبة، السلطنية، مركز كعنيش).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      سجل الوزارة يكتب ساقية الداير؛ وقد اعتُمد إملاء قالب ويكيبيديا العربية ساقية الدائر.
+    - >-
+      8 عمادات حسب سجل وزارة الداخلية (ساقية الداير، الخيرية، مركز السبعي، البدارنة، سيدي
+      منصور، حي بورقيبة، السلطنية، مركز كعنيش).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-sfax-sakiet-ezzit
+  name_en: "Sakiet Ezzit"
+  name_fr: "Sakiet Ezzit"
+  name_ar: "ساقية الزيت"
+  parent: gov-sfax
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-sfax]
+  notes:
+    - "7 imadats per Interior Ministry registry (ساقية الزيت، مركز بوعصيدة، السدرة، الأنس، الشيحية، تنيور، سيدي صالح)."
+  notes_fr:
+    - >-
+      7 imadats d'après le registre du ministère de l'Intérieur (ساقية الزيت، مركز بوعصيدة،
+      السدرة، الأنس، الشيحية، تنيور، سيدي صالح).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      7 عمادات حسب سجل وزارة الداخلية (ساقية الزيت، مركز بوعصيدة، السدرة، الأنس، الشيحية،
+      تنيور، سيدي صالح).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-sfax-ouest
+  name_en: "Sfax Ouest"
+  name_fr: "Sfax Ouest"
+  name_ar: "صفاقس الغربية"
+  parent: gov-sfax
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-sfax]
+  notes:
+    - "7 imadats per Interior Ministry registry (مركز شاكر، حي الحبيب، سكرة، العالية، وادي الرمل، الهدى، حي البحري)."
+  notes_fr:
+    - >-
+      7 imadats d'après le registre du ministère de l'Intérieur (مركز شاكر، حي الحبيب، سكرة،
+      العالية، وادي الرمل، الهدى، حي البحري).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      7 عمادات حسب سجل وزارة الداخلية (مركز شاكر، حي الحبيب، سكرة، العالية، وادي الرمل،
+      الهدى، حي البحري).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-sfax-sud
+  name_en: "Sfax Sud"
+  name_fr: "Sfax Sud"
+  name_ar: "صفاقس الجنوبية"
+  parent: gov-sfax
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-sfax]
+  notes:
+    - "7 imadats per Interior Ministry registry (العين، قرمدة، بوزيان، الافران الشمالية، الخزانات، العوابد، عيون المايل)."
+  notes_fr:
+    - >-
+      7 imadats d'après le registre du ministère de l'Intérieur (العين، قرمدة، بوزيان،
+      الافران الشمالية، الخزانات، العوابد، عيون المايل).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      7 عمادات حسب سجل وزارة الداخلية (العين، قرمدة، بوزيان، الافران الشمالية، الخزانات،
+      العوابد، عيون المايل).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-sfax-ville
+  name_en: "Sfax Ville"
+  name_fr: "Sfax Ville"
+  name_ar: "صفاقس المدينة"
+  parent: gov-sfax
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-sfax]
+  notes:
+    - "INS usage is 'Sfax Médina'; en.wikipedia index uses 'Sfax Ville'. Arabic صفاقس المدينة."
+    - "12 imadats per Interior Ministry registry (المدينة، باب البحر، الحي الخيري، البساتين، الربض، 15 نوفمبر، عين شيخ روحه، الحي التعويضي، مركز قدور، مركز الباشا، سيدي عباس، محمد علي)."
+  notes_fr:
+    - >-
+      L'INS emploie « Sfax Médina » ; l'index de en.wikipedia « Sfax Ville ». En arabe :
+      صفاقس المدينة.
+    - >-
+      12 imadats d'après le registre du ministère de l'Intérieur (المدينة، باب البحر، الحي
+      الخيري، البساتين، الربض، 15 نوفمبر، عين شيخ روحه، الحي التعويضي، مركز قدور، مركز
+      الباشا، سيدي عباس، محمد علي).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      المعهد الوطني للإحصاء يستعمل «Sfax Médina»؛ وفهرس ويكيبيديا الإنجليزية يستعمل «Sfax
+      Ville». أما الصيغة العربية فهي صفاقس المدينة.
+    - >-
+      12 عمادة حسب سجل وزارة الداخلية (المدينة، باب البحر، الحي الخيري، البساتين، الربض، 15
+      نوفمبر، عين شيخ روحه، الحي التعويضي، مركز قدور، مركز الباشا، سيدي عباس، محمد علي).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-sfax-skhira
+  name_en: "Skhira"
+  name_fr: "Es-Skhira"
+  name_ar: "الصخيرة"
+  parent: gov-sfax
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-sfax]
+  notes:
+    - "Oil/chemical port of Es-Skhira (ar.wikipedia Sfax prose: 'ميناء الصخيرة مخصص أساسا للمواد النفطية والكيميائية')."
+    - "7 imadats per Interior Ministry registry (صبيح، الخضراء، نوال، الصخيرة، القنيطرة، سيدي محمد، الحمادة)."
+  notes_fr:
+    - >-
+      Port pétrolier et chimique d'Es-Skhira (texte de ar.wikipedia sur Sfax : « ميناء
+      الصخيرة مخصص أساسا للمواد النفطية والكيميائية »).
+    - >-
+      7 imadats d'après le registre du ministère de l'Intérieur (صبيح، الخضراء، نوال،
+      الصخيرة، القنيطرة، سيدي محمد، الحمادة).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      ميناء نفطي وكيميائي في الصخيرة (نص ويكيبيديا العربية عن صفاقس: «ميناء الصخيرة مخصص
+      أساسا للمواد النفطية والكيميائية»).
+    - >-
+      7 عمادات حسب سجل وزارة الداخلية (صبيح، الخضراء، نوال، الصخيرة، القنيطرة، سيدي محمد،
+      الحمادة).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-sfax-thyna
+  name_en: "Thyna"
+  name_fr: "Thyna"
+  name_ar: "طينة"
+  parent: gov-sfax
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-sfax]
+  notes:
+    - "Site of Sfax–Thyna International Airport (ar.wikipedia Sfax prose)."
+    - "3 imadats per Interior Ministry registry (طينة، سيدي عبيد، الحاجب)."
+  notes_fr:
+    - >-
+      Site de l'aéroport international de Sfax–Thyna (texte de ar.wikipedia sur Sfax).
+    - >-
+      3 imadats d'après le registre du ministère de l'Intérieur (طينة، سيدي عبيد، الحاجب).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      موقع مطار صفاقس–طينة الدولي (نص ويكيبيديا العربية عن صفاقس).
+    - >-
+      3 عمادات حسب سجل وزارة الداخلية (طينة، سيدي عبيد، الحاجب).
+  notes_ar_by: model-reviewed
+
+# --- gov-nabeul (16 delegations) --------------------------------------------
+
+- kind: delegation
+  id: del-nabeul-benikhalled
+  name_en: "Béni Khalled"
+  name_fr: "Béni Khalled"
+  name_ar: "بني خلاد"
+  parent: gov-nabeul
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-nabeul]
+  notes:
+    - "RGPH 2004 population 33,897 (INS, via ar.wikipedia ولاية نابل table)."
+    - "6 imadats per Interior Ministry registry (بني خلاد الجوفية/الشرقية/القبلية، زاوية الجديدي، القبة الكبيرة، بئر دراسن)."
+  notes_fr:
+    - >-
+      Population RGPH 2004 : 33,897 (INS, d'après le tableau « ولاية نابل » de
+      ar.wikipedia).
+    - >-
+      6 imadats d'après le registre du ministère de l'Intérieur (بني خلاد
+      الجوفية/الشرقية/القبلية، زاوية الجديدي، القبة الكبيرة، بئر دراسن).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      عدد سكان RGPH 2004: 33,897 (INS، عن جدول «ولاية نابل» في ويكيبيديا العربية).
+    - >-
+      6 عمادات حسب سجل وزارة الداخلية (بني خلاد الجوفية/الشرقية/القبلية، زاوية الجديدي،
+      القبة الكبيرة، بئر دراسن).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-nabeul-benikhiar
+  name_en: "Béni Khiar"
+  name_fr: "Béni Khiar"
+  name_ar: "بني خيار"
+  parent: gov-nabeul
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-nabeul]
+  notes:
+    - "RGPH 2004 population 35,565 (INS, via ar.wikipedia ولاية نابل table)."
+    - "5 imadats per Interior Ministry registry (بني خيار، ديار بن سالم، المعمورة، الصمعة، حلفاء)."
+  notes_fr:
+    - >-
+      Population RGPH 2004 : 35,565 (INS, d'après le tableau « ولاية نابل » de
+      ar.wikipedia).
+    - >-
+      5 imadats d'après le registre du ministère de l'Intérieur (بني خيار، ديار بن سالم،
+      المعمورة، الصمعة، حلفاء).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      عدد سكان RGPH 2004: 35,565 (INS، عن جدول «ولاية نابل» في ويكيبيديا العربية).
+    - >-
+      5 عمادات حسب سجل وزارة الداخلية (بني خيار، ديار بن سالم، المعمورة، الصمعة، حلفاء).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-nabeul-bou-argoub
+  name_en: "Bou Argoub"
+  name_fr: "Bou Argoub"
+  name_ar: "بوعرقوب"
+  parent: gov-nabeul
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-nabeul]
+  notes:
+    - "RGPH 2004 population 27,846 (INS, via ar.wikipedia ولاية نابل table)."
+    - "7 imadats per Interior Ministry registry (سيدي الظاهر، المشروحة، برج حفيظ، بوعرقوب الجوفية/القبلية، بلي، الخروبة)."
+  notes_fr:
+    - >-
+      Population RGPH 2004 : 27,846 (INS, d'après le tableau « ولاية نابل » de
+      ar.wikipedia).
+    - >-
+      7 imadats d'après le registre du ministère de l'Intérieur (سيدي الظاهر، المشروحة، برج
+      حفيظ، بوعرقوب الجوفية/القبلية، بلي، الخروبة).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      عدد سكان RGPH 2004: 27,846 (INS، عن جدول «ولاية نابل» في ويكيبيديا العربية).
+    - >-
+      7 عمادات حسب سجل وزارة الداخلية (سيدي الظاهر، المشروحة، برج حفيظ، بوعرقوب
+      الجوفية/القبلية، بلي، الخروبة).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-nabeul-dar-chaabane-el-fehri
+  name_en: "Dar Chaâbane El Fehri"
+  name_fr: "Dar Chaâbane El Fehri"
+  name_ar: "دار شعبان الفهري"
+  parent: gov-nabeul
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-nabeul]
+  notes:
+    - "RGPH 2004 population 39,477 (INS, via ar.wikipedia ولاية نابل table)."
+    - "4 imadats per Interior Ministry registry (دار شعبان، الفهري، الفرينين، عمرون)."
+  notes_fr:
+    - >-
+      Population RGPH 2004 : 39,477 (INS, d'après le tableau « ولاية نابل » de
+      ar.wikipedia).
+    - >-
+      4 imadats d'après le registre du ministère de l'Intérieur (دار شعبان، الفهري،
+      الفرينين، عمرون).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      عدد سكان RGPH 2004: 39,477 (INS، عن جدول «ولاية نابل» في ويكيبيديا العربية).
+    - >-
+      4 عمادات حسب سجل وزارة الداخلية (دار شعبان، الفهري، الفرينين، عمرون).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-nabeul-el-haouaria
+  name_en: "El Haouaria"
+  name_fr: "El Haouaria"
+  name_ar: "الهوارية"
+  parent: gov-nabeul
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-nabeul]
+  notes:
+    - "RGPH 2004 population 39,378 (INS, via ar.wikipedia ولاية نابل table). Northernmost point of Cap Bon."
+    - "8 imadats per Interior Ministry registry (الهوارية الجوفية/القبلية، صاحب الجبل الجوفية/القبلية، بوكريم، تزغران الشرقية/الغربية، زاوية المقايز)."
+  notes_fr:
+    - >-
+      Population RGPH 2004 : 39,378 (INS, d'après le tableau « ولاية نابل » de
+      ar.wikipedia). Point le plus septentrional du cap Bon.
+    - >-
+      8 imadats d'après le registre du ministère de l'Intérieur (الهوارية الجوفية/القبلية،
+      صاحب الجبل الجوفية/القبلية، بوكريم، تزغران الشرقية/الغربية، زاوية المقايز).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      عدد سكان RGPH 2004: 39,378 (INS، عن جدول «ولاية نابل» في ويكيبيديا العربية). أقصى نقطة
+      في شمال الرأس الطيب.
+    - >-
+      8 عمادات حسب سجل وزارة الداخلية (الهوارية الجوفية/القبلية، صاحب الجبل الجوفية/القبلية،
+      بوكريم، تزغران الشرقية/الغربية، زاوية المقايز).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-nabeul-el-mida
+  name_en: "El Mida"
+  name_fr: "El Mida"
+  name_ar: "الميدة"
+  parent: gov-nabeul
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-nabeul]
+  notes:
+    - "RGPH 2004 population 23,667 (INS, via ar.wikipedia ولاية نابل table)."
+    - "6 imadats per Interior Ministry registry (تافلون، الميدة، فرتونة، أم ذويل، لبنة، القرشين)."
+  notes_fr:
+    - >-
+      Population RGPH 2004 : 23,667 (INS, d'après le tableau « ولاية نابل » de
+      ar.wikipedia).
+    - >-
+      6 imadats d'après le registre du ministère de l'Intérieur (تافلون، الميدة، فرتونة، أم
+      ذويل، لبنة، القرشين).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      عدد سكان RGPH 2004: 23,667 (INS، عن جدول «ولاية نابل» في ويكيبيديا العربية).
+    - >-
+      6 عمادات حسب سجل وزارة الداخلية (تافلون، الميدة، فرتونة، أم ذويل، لبنة، القرشين).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-nabeul-grombalia
+  name_en: "Grombalia"
+  name_fr: "Grombalia"
+  name_ar: "قرمبالية"
+  parent: gov-nabeul
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-nabeul]
+  notes:
+    - "RGPH 2004 population 55,489 (INS, via ar.wikipedia ولاية نابل table)."
+    - "9 imadats per Interior Ministry registry (فندق الجديد، سماش، نيانو، تركي، خنقة الحجاج، قرنبالية الشرقية/الغربية، جبل طريف، عين طبرنق)."
+  notes_fr:
+    - >-
+      Population RGPH 2004 : 55,489 (INS, d'après le tableau « ولاية نابل » de
+      ar.wikipedia).
+    - >-
+      9 imadats d'après le registre du ministère de l'Intérieur (فندق الجديد، سماش، نيانو،
+      تركي، خنقة الحجاج، قرنبالية الشرقية/الغربية، جبل طريف، عين طبرنق).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      عدد سكان RGPH 2004: 55,489 (INS، عن جدول «ولاية نابل» في ويكيبيديا العربية).
+    - >-
+      9 عمادات حسب سجل وزارة الداخلية (فندق الجديد، سماش، نيانو، تركي، خنقة الحجاج، قرنبالية
+      الشرقية/الغربية، جبل طريف، عين طبرنق).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-nabeul-hammam-el-ghezaz
+  name_en: "Hammam El Ghezaz"
+  name_fr: "Hammam Ghezèze"
+  name_ar: "حمام الأغزاز"
+  parent: gov-nabeul
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-nabeul]
+  notes:
+    - "RGPH 2004 population 14,324 (INS, via ar.wikipedia ولاية نابل table) — smallest delegation of the governorate by 2004 census."
+    - "4 imadats per Interior Ministry registry (حمام الغزاز، دار علوش، حارة الشعراء، وزدرة)."
+  notes_fr:
+    - >-
+      Population RGPH 2004 : 14,324 (INS, d'après le tableau « ولاية نابل » de ar.wikipedia)
+      — plus petite délégation du gouvernorat selon le recensement de 2004.
+    - >-
+      4 imadats d'après le registre du ministère de l'Intérieur (حمام الغزاز، دار علوش، حارة
+      الشعراء، وزدرة).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      عدد سكان RGPH 2004: 14,324 (INS، عن جدول «ولاية نابل» في ويكيبيديا العربية) — أصغر
+      معتمديات الولاية حسب تعداد 2004.
+    - >-
+      4 عمادات حسب سجل وزارة الداخلية (حمام الغزاز، دار علوش، حارة الشعراء، وزدرة).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-nabeul-hammamet
+  name_en: "Hammamet"
+  name_fr: "Hammamet"
+  name_ar: "الحمامات"
+  parent: gov-nabeul
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-nabeul]
+  notes:
+    - "RGPH 2004 population 95,468 (INS, via ar.wikipedia ولاية نابل table) — most populous delegation of the governorate; leading tourist resort."
+    - "9 imadats per Interior Ministry registry (سيدي الجديدي، الأطرش، بئر بورقبة، براكة الساحل، ياسمين الحمامات، الحمامات الجوفية/الشرقية/الغربية، المرازقة)."
+  notes_fr:
+    - >-
+      Population RGPH 2004 : 95,468 (INS, d'après le tableau « ولاية نابل » de ar.wikipedia)
+      — délégation la plus peuplée du gouvernorat ; première station touristique.
+    - >-
+      9 imadats d'après le registre du ministère de l'Intérieur (سيدي الجديدي، الأطرش، بئر
+      بورقبة، براكة الساحل، ياسمين الحمامات، الحمامات الجوفية/الشرقية/الغربية، المرازقة).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      عدد سكان RGPH 2004: 95,468 (INS، عن جدول «ولاية نابل» في ويكيبيديا العربية) — أكبر
+      معتمديات الولاية سكانًا؛ والوجهة السياحية الأولى.
+    - >-
+      9 عمادات حسب سجل وزارة الداخلية (سيدي الجديدي، الأطرش، بئر بورقبة، براكة الساحل،
+      ياسمين الحمامات، الحمامات الجوفية/الشرقية/الغربية، المرازقة).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-nabeul-kelibia
+  name_en: "Kélibia"
+  name_fr: "Kélibia"
+  name_ar: "قليبية"
+  parent: gov-nabeul
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-nabeul]
+  notes:
+    - "RGPH 2004 population 53,648 (INS, via ar.wikipedia ولاية نابل table)."
+    - "5 imadats per Interior Ministry registry (وادي الخطف، ملول، أزمور، قليبية الشرقية، قليبية الغربية)."
+  notes_fr:
+    - >-
+      Population RGPH 2004 : 53,648 (INS, d'après le tableau « ولاية نابل » de
+      ar.wikipedia).
+    - >-
+      5 imadats d'après le registre du ministère de l'Intérieur (وادي الخطف، ملول، أزمور،
+      قليبية الشرقية، قليبية الغربية).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      عدد سكان RGPH 2004: 53,648 (INS، عن جدول «ولاية نابل» في ويكيبيديا العربية).
+    - >-
+      5 عمادات حسب سجل وزارة الداخلية (وادي الخطف، ملول، أزمور، قليبية الشرقية، قليبية
+      الغربية).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-nabeul-korba
+  name_en: "Korba"
+  name_fr: "Korba"
+  name_ar: "قربة"
+  parent: gov-nabeul
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-nabeul]
+  notes:
+    - "RGPH 2004 population 60,564 (INS, via ar.wikipedia ولاية نابل table)."
+    - "8 imadats per Interior Ministry registry (بني عياش، قرعة ساسي، ديار الحجاج، قربة الشرقية/الغربية، تازركة، بوجريدة، بولدين)."
+  notes_fr:
+    - >-
+      Population RGPH 2004 : 60,564 (INS, d'après le tableau « ولاية نابل » de
+      ar.wikipedia).
+    - >-
+      8 imadats d'après le registre du ministère de l'Intérieur (بني عياش، قرعة ساسي، ديار
+      الحجاج، قربة الشرقية/الغربية، تازركة، بوجريدة، بولدين).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      عدد سكان RGPH 2004: 60,564 (INS، عن جدول «ولاية نابل» في ويكيبيديا العربية).
+    - >-
+      8 عمادات حسب سجل وزارة الداخلية (بني عياش، قرعة ساسي، ديار الحجاج، قربة
+      الشرقية/الغربية، تازركة، بوجريدة، بولدين).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-nabeul-menzel-bouzelfa
+  name_en: "Menzel Bouzelfa"
+  name_fr: "Menzel Bouzelfa"
+  name_ar: "منزل بوزلفة"
+  parent: gov-nabeul
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-nabeul]
+  notes:
+    - "RGPH 2004 population 33,599 (INS, via ar.wikipedia ولاية نابل table)."
+    - "5 imadats per Interior Ministry registry (داموس الحاجة، الرحمة، منزل بوزلفة الجوفية/القبلية/الغربية)."
+  notes_fr:
+    - >-
+      Population RGPH 2004 : 33,599 (INS, d'après le tableau « ولاية نابل » de
+      ar.wikipedia).
+    - >-
+      5 imadats d'après le registre du ministère de l'Intérieur (داموس الحاجة، الرحمة، منزل
+      بوزلفة الجوفية/القبلية/الغربية).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      عدد سكان RGPH 2004: 33,599 (INS، عن جدول «ولاية نابل» في ويكيبيديا العربية).
+    - >-
+      5 عمادات حسب سجل وزارة الداخلية (داموس الحاجة، الرحمة، منزل بوزلفة
+      الجوفية/القبلية/الغربية).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-nabeul-menzel-temime
+  name_en: "Menzel Temime"
+  name_fr: "Menzel Temime"
+  name_ar: "منزل تميم"
+  parent: gov-nabeul
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-nabeul]
+  notes:
+    - "RGPH 2004 population 59,463 (INS, via ar.wikipedia ولاية نابل table)."
+    - "9 imadats per Interior Ministry registry (الوديان، الرعينين، بني عبد العزيز، الصقالبة، علي البلهوان، الطيب المهيري، منزل حر، عصفور، لزدين)."
+  notes_fr:
+    - >-
+      Population RGPH 2004 : 59,463 (INS, d'après le tableau « ولاية نابل » de
+      ar.wikipedia).
+    - >-
+      9 imadats d'après le registre du ministère de l'Intérieur (الوديان، الرعينين، بني عبد
+      العزيز، الصقالبة، علي البلهوان، الطيب المهيري، منزل حر، عصفور، لزدين).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      عدد سكان RGPH 2004: 59,463 (INS، عن جدول «ولاية نابل» في ويكيبيديا العربية).
+    - >-
+      9 عمادات حسب سجل وزارة الداخلية (الوديان، الرعينين، بني عبد العزيز، الصقالبة، علي
+      البلهوان، الطيب المهيري، منزل حر، عصفور، لزدين).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-nabeul-nabeul
+  name_en: "Nabeul"
+  name_fr: "Nabeul"
+  name_ar: "نابل"
+  parent: gov-nabeul
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-nabeul]
+  notes:
+    - "RGPH 2004 population 59,490 (INS, via ar.wikipedia ولاية نابل table). Chef-lieu of the governorate."
+    - "6 imadats per Interior Ministry registry (الأسواق، النور، بئر شلوف، نيابوليس، الحدائق، الهادي شاكر)."
+  notes_fr:
+    - >-
+      Population RGPH 2004 : 59,490 (INS, d'après le tableau « ولاية نابل » de
+      ar.wikipedia). Chef-lieu du gouvernorat.
+    - >-
+      6 imadats d'après le registre du ministère de l'Intérieur (الأسواق، النور، بئر شلوف،
+      نيابوليس، الحدائق، الهادي شاكر).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      عدد سكان RGPH 2004: 59,490 (INS، عن جدول «ولاية نابل» في ويكيبيديا العربية). مقر
+      الولاية.
+    - >-
+      6 عمادات حسب سجل وزارة الداخلية (الأسواق، النور، بئر شلوف، نيابوليس، الحدائق، الهادي
+      شاكر).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-nabeul-soliman
+  name_en: "Soliman"
+  name_fr: "Soliman"
+  name_ar: "سليمان"
+  parent: gov-nabeul
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-nabeul]
+  notes:
+    - "RGPH 2004 population 41,846 (INS, via ar.wikipedia ولاية نابل table)."
+    - "5 imadats per Interior Ministry registry (المريسة، الشريفات، بوشراي، سليمان، سليمان الجنوبية)."
+  notes_fr:
+    - >-
+      Population RGPH 2004 : 41,846 (INS, d'après le tableau « ولاية نابل » de
+      ar.wikipedia).
+    - >-
+      5 imadats d'après le registre du ministère de l'Intérieur (المريسة، الشريفات، بوشراي،
+      سليمان، سليمان الجنوبية).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      عدد سكان RGPH 2004: 41,846 (INS، عن جدول «ولاية نابل» في ويكيبيديا العربية).
+    - >-
+      5 عمادات حسب سجل وزارة الداخلية (المريسة، الشريفات، بوشراي، سليمان، سليمان الجنوبية).
+  notes_ar_by: model-reviewed
+
+- kind: delegation
+  id: del-nabeul-takelsa
+  name_en: "Takelsa"
+  name_fr: "Takelsa"
+  name_ar: "تاكلسة"
+  parent: gov-nabeul
+  confidence: A
+  sources: [interieur-opendata-secteurs, wikipedia-delegations-tunisia, wikipedia-ar-wilaya-nabeul]
+  notes:
+    - "RGPH 2004 population 20,169 (INS, via ar.wikipedia ولاية نابل table)."
+    - "5 imadats per Interior Ministry registry (وادي العبيد، بئر الزيت، العريمة، تاكلسة الجوفية، تاكلسة الوسطى)."
+  notes_fr:
+    - >-
+      Population RGPH 2004 : 20,169 (INS, d'après le tableau « ولاية نابل » de
+      ar.wikipedia).
+    - >-
+      5 imadats d'après le registre du ministère de l'Intérieur (وادي العبيد، بئر الزيت،
+      العريمة، تاكلسة الجوفية، تاكلسة الوسطى).
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      عدد سكان RGPH 2004: 20,169 (INS، عن جدول «ولاية نابل» في ويكيبيديا العربية).
+    - >-
+      5 عمادات حسب سجل وزارة الداخلية (وادي العبيد، بئر الزيت، العريمة، تاكلسة الجوفية،
+      تاكلسة الوسطى).
+  notes_ar_by: model-reviewed

@@ -1,0 +1,9 @@
+<svg width="1024" height="1024" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Deep Tunisia mark — circle and dot">
+  <!-- Circle-and-dot mark: the landing wordmark glyph, exported as a standalone SVG.
+       Colors resolved from landing/index.html tokens:
+         dark  theme accent #ddb049, accent-border #ddb049 @ 42% opacity
+         light theme accent #a16100, accent-border #a16100 @ 40% opacity
+       This file uses the dark-theme gold; sibling files fix the theme. -->
+  <circle cx="32" cy="32" r="29" fill="none" stroke="#ddb049" stroke-opacity="0.42" stroke-width="3"/>
+  <circle cx="32" cy="32" r="10" fill="#ddb049"/>
+</svg>
