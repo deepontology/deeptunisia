@@ -649,14 +649,14 @@ import Chip from '$lib/ui/Chip.svelte';
 	});
 
 	const INFLUENCE_TYPES = new Set(['influence', 'reported-influence', 'advisory']);
-	let mode = $state<'all' | 'influence' | 'ownership'>('all');
+	let mode = $state<'all' | 'influence' | 'ownership'>('influence');
 
 	/** One-shot: `?mode=` on arrival selects a lens, exactly like `?id=`/`?rel=` select a subject. */
 	let modeLinked = false;
 	function syncModeUrl(m: typeof mode) {
 		if (typeof history === 'undefined') return;
 		const u = new URL(page.url.href);
-		if (m === 'all') u.searchParams.delete('mode');
+		if (m === 'influence') u.searchParams.delete('mode');
 		else u.searchParams.set('mode', m);
 		history.replaceState(null, '', u);
 	}
@@ -921,9 +921,14 @@ import Chip from '$lib/ui/Chip.svelte';
 	const hoverTipAt = $derived.by(() => {
 		if (!hoveredNode) return null;
 		const s = cam.worldToScreen(hoveredNode.x, hoveredNode.y);
+		// Under, not over: the tip must never cover the node it names.
+		// Flip above only when the node sits hard against the bottom edge.
+		const below = s.y + 18;
+		const above = s.y - 56;
+		const y = below + 60 > cam.vh - 8 ? above : below;
 		return {
 			x: Math.max(8, Math.min(s.x + 14, cam.vw - 220)),
-			y: Math.max(8, Math.min(s.y - 46, cam.vh - 60))
+			y: Math.max(8, Math.min(y, cam.vh - 60))
 		};
 	});
 
@@ -1604,39 +1609,44 @@ import Chip from '$lib/ui/Chip.svelte';
 				</Tooltip>
 			{/if}
 		</div>
-		<!--
-			Quiet is the intensity dial. The map defaults to showing everything it can,
-			which is honest and can be a lot; one toggle withholds the dormant
-			scaffolding so the live graph reads alone.
-		-->
-		<Tooltip content={t('network.quiet.hint')}>
-			<button
-				class="quiet"
-				class:on={app.quiet}
-				aria-pressed={app.quiet}
-				onclick={() => (app.quiet = !app.quiet)}
-			>
-				<span class="dot" aria-hidden="true"></span>
-			{t('network.quiet')}
-		</button>
-		</Tooltip>
-		<!--
-			Edge modes (spec §10/§13): all edges, the influence routes, or the
-			corporate ownership graph.
-		-->
-		<Segmented
-			options={[
-				{ value: 'all', label: t('network.mode.all'), title: t('network.mode.all.hint') },
-				{ value: 'influence', label: t('network.mode.influence'), title: t('network.mode.influence.hint') },
-				{ value: 'ownership', label: t('network.mode.ownership'), title: t('network.mode.ownership.hint') }
-			]}
-			value={mode}
-			onchange={(v) => {
-				mode = v as typeof mode;
-				syncModeUrl(mode);
-			}}
-			size="xs"
-		/>
+		<div class="modes">
+			<!--
+				Quiet is the intensity dial. The map defaults to showing everything it can,
+				which is honest and can be a lot; one toggle withholds the dormant
+				scaffolding so the live graph reads alone.
+			-->
+			<Tooltip content={t('network.quiet.hint')}>
+				<button
+					class="quiet"
+					class:on={app.quiet}
+					aria-pressed={app.quiet}
+					onclick={() => (app.quiet = !app.quiet)}
+				>
+					<span class="dot" aria-hidden="true"></span>
+					{t('network.quiet')}
+				</button>
+			</Tooltip>
+			<!--
+				Edge modes (spec §10/§13): all edges, the influence routes, or the
+				corporate ownership graph. Influence is the default lens: the full
+				graph (60 live + 296 dormant nodes, 157 edges) overwhelms on first
+				sight, while the influence routes are the finding the Network exists
+				to show. Quiet stays as a secondary dimmer, not a headline control.
+			-->
+			<Segmented
+				options={[
+					{ value: 'all', label: t('network.mode.all'), title: t('network.mode.all.hint') },
+					{ value: 'influence', label: t('network.mode.influence'), title: t('network.mode.influence.hint') },
+					{ value: 'ownership', label: t('network.mode.ownership'), title: t('network.mode.ownership.hint') }
+				]}
+				value={mode}
+				onchange={(v) => {
+					mode = v as typeof mode;
+					syncModeUrl(mode);
+				}}
+				size="sm"
+			/>
+		</div>
 	</div>
 
 	<!--
@@ -2480,6 +2490,22 @@ import Chip from '$lib/ui/Chip.svelte';
 		box-shadow: 0 0 0 3px color-mix(in oklch, var(--accent) 25%, transparent);
 	}
 
+	/* The lens switcher + quiet dimmer are a single control group. The graph
+	   defaults to Influence, which is sparser and the point of the view; the
+	   panel's surface + border makes the group readable as a control rather
+	   than as metadata that can be skipped, which it was when it sat as two
+	   naked pills at the far right of the bar. */
+	.modes {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--s-4);
+		padding: 4px;
+		background: var(--surface-raised);
+		border: 1px solid var(--border-default);
+		border-radius: var(--r-full);
+		box-shadow: var(--elev-1);
+	}
+
 	.canvas {
 		position: relative;
 		flex: 1;
@@ -2590,13 +2616,13 @@ import Chip from '$lib/ui/Chip.svelte';
 		}
 	}
 	.node.dormant {
-		opacity: calc(var(--rf, 1) * 0.35);
+		opacity: calc(var(--rf, 1) * 0.52);
 	}
 	/* A persistent structural anchor (foreign state / intl org) that is dormant
 	   but labelled: brighter than generic dormant so it reads as "intentional
 	   structure", not "extra fake node." */
 	.node.anchor {
-		opacity: calc(var(--rf, 1) * 0.5);
+		opacity: calc(var(--rf, 1) * 0.76);
 	}
 	.node.r-one {
 		opacity: calc(var(--rf, 1));
