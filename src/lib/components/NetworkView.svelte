@@ -216,7 +216,14 @@ import Chip from '$lib/ui/Chip.svelte';
 			groupMembers.sort((a, b) => b.weight - a.weight || a.name.localeCompare(b.name));
 
 			// The group's own vertical slice, proportional to how many members it holds.
-			const sliceH = (groupMembers.length / totalCount) * contentH;
+			// Foreign lane's two groups (States vs International Organisations, 30 vs
+			// 15) would otherwise give the Organisations strip half the height and a
+			// cramped 8-row grid that truncates labels as "Internati…". Split that
+			// lane evenly so both groups breathe.
+			const sliceH =
+				layer === 'foreign' && present.length === 2
+					? contentH / present.length
+					: (groupMembers.length / totalCount) * contentH;
 			const contentTop = cursor + HEADER_H;
 			const contentBottom = contentTop + sliceH;
 
@@ -2514,6 +2521,27 @@ import Chip from '$lib/ui/Chip.svelte';
 		border: 1px solid var(--border-default);
 		border-radius: var(--r-full);
 		box-shadow: var(--elev-1);
+	}
+
+	@media (max-width: 900px) {
+		.toolbar {
+			gap: var(--s-4);
+			padding: var(--s-3) var(--s-4);
+		}
+		.stats {
+			gap: var(--s-3);
+			font-size: 9px;
+			flex-wrap: wrap;
+		}
+		.modes {
+			width: 100%;
+			justify-content: space-between;
+			padding: 3px;
+		}
+		.quiet {
+			padding: var(--s-1) var(--s-3);
+			font-size: 9px;
+		}
 	}
 
 	.canvas {
