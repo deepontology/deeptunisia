@@ -1,3 +1,10 @@
+![DeepTunisia](static/brand/wordmark-circle-dot.svg)
+
+[![License: MIT](https://img.shields.io/badge/code-MIT-blue.svg)](LICENSE)
+[![Data: CC BY 4.0](https://img.shields.io/badge/data-CC%20BY%204.0-green.svg)](data/LICENSE)
+[![Feed: hourly](https://img.shields.io/badge/feed-hourly-lightgrey.svg)](feed/feed.json)
+[![Svelte 5](https://img.shields.io/badge/svelte-5-orange.svg)](https://svelte.dev)
+
 # DeepTunisia
 
 **deeptunisia.org** — an open-source public-interest research project documenting Tunisia's political, institutional, economic and historical power structures through verifiable evidence, 1956–2026.
@@ -29,7 +36,7 @@ reachable during development; a reader on deeptunisia.org never touches it.
 
 The complete graph is <!--stat:graphKB-->4410<!--/stat--> KB as the internal
 bundle, and the public exports (dataset, CSVs, geographic layers, changelog)
-ship at <!--stat:shippedKB-->7920<!--/stat--> KB — both are computed by the
+ship at <!--stat:shippedKB-->7890<!--/stat--> KB — both are computed by the
 build, and `npm run test` fails if the README ever disagrees with them.
 
 ## The views
