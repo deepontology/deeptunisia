@@ -1749,7 +1749,7 @@ import Chip from '$lib/ui/Chip.svelte';
 						width={layout.laneW}
 						height={H}
 						fill={LAYER_COLOR[layer]}
-						opacity="0.028"
+						opacity={layer === 'foreign' ? 0.048 : 0.028}
 					/>
 					<line
 						x1={laneX(i, layout.laneW)}
@@ -2112,7 +2112,7 @@ import Chip from '$lib/ui/Chip.svelte';
 					title="{layerLabel(h.layer)} — {soloed ? t('network.lane.all') : t('network.lane.solo')}"
 					onclick={() => (soloed ? app.allLayers() : app.soloLayer(h.layer))}
 				>
-					{layerLabel(h.layer)}
+					{h.layer === 'foreign' ? t('layer.foreign.short') : layerLabel(h.layer)}
 					{#if h.count}<b>{h.count}</b>{/if}
 				</button>
 			{/each}
@@ -2459,34 +2459,44 @@ import Chip from '$lib/ui/Chip.svelte';
 		font-size: var(--t-xs);
 		letter-spacing: var(--track-caps);
 		text-transform: uppercase;
-		color: var(--text-secondary);
-		background: var(--surface-panel);
+		color: var(--text-faint);
+		background: transparent;
 		border: 1px solid var(--border-subtle);
 		border-radius: var(--r-full);
 		cursor: pointer;
+		opacity: 0.82;
 		transition:
 			color var(--dur-fast) var(--ease-out),
 			background var(--dur-fast) var(--ease-out),
-			border-color var(--dur-fast) var(--ease-out);
+			border-color var(--dur-fast) var(--ease-out),
+			opacity var(--dur-fast) var(--ease-out);
 	}
 	.quiet .dot {
 		width: 6px;
 		height: 6px;
 		border-radius: 50%;
 		background: var(--text-faint);
-		transition: background var(--dur-fast) var(--ease-out);
+		opacity: 0.7;
+		transition: background var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out);
 	}
 	.quiet:hover {
-		color: var(--text-primary);
-		border-color: var(--border-strong);
+		color: var(--text-secondary);
+		border-color: var(--border-default);
+		background: color-mix(in oklch, var(--surface-panel) 70%, transparent);
+		opacity: 1;
+	}
+	.quiet:hover .dot {
+		opacity: 1;
 	}
 	.quiet.on {
 		color: var(--text-primary);
 		border-color: color-mix(in oklch, var(--accent) 45%, transparent);
 		background: color-mix(in oklch, var(--accent) 10%, var(--surface-panel));
+		opacity: 1;
 	}
 	.quiet.on .dot {
 		background: var(--accent);
+		opacity: 1;
 		box-shadow: 0 0 0 3px color-mix(in oklch, var(--accent) 25%, transparent);
 	}
 
@@ -2823,9 +2833,11 @@ import Chip from '$lib/ui/Chip.svelte';
 		pointer-events: none;
 	}
 	.stats .withheld {
-		color: var(--text-faint);
+		color: color-mix(in oklch, var(--text-faint) 85%, transparent);
 		cursor: help;
-		border-bottom: 1px dotted var(--border-strong);
+		border-bottom: 1px dotted color-mix(in oklch, var(--border-strong) 70%, transparent);
+		opacity: 0.9;
+		font-size: calc(var(--t-xs) - 0.5px);
 	}
 	.a11y-sub {
 		margin: var(--s-5) 0 var(--s-3);
