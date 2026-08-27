@@ -35,7 +35,7 @@
   "connection.7": "Successions are <strong>derived, not asserted</strong> — computed from the intervals themselves, so a hole in the record shows up as a hole. There are currently <strong>41 succession gaps</strong> and <strong>2 overlapping tenures</strong>, and all of them are published.",
   "evidence.1": "How the knowledge is collected",
   "evidence.2": "<span class=\"curtain\"><span>Every claim is</span></span> <span class=\"curtain\"><span>traceable. Every</span></span> <span class=\"curtain\"><span>conclusion is</span></span> <span class=\"curtain\"><span>challengeable.</span></span>",
-  "evidence.3": "There is no scraper filling this graph and no language model writing into it. Knowledge enters through one door, in a fixed order, and the build refuses anything that arrives out of order.",
+  "evidence.3": "No language model writes claims into this graph. Knowledge enters through one door, in a fixed order, and the build refuses anything that arrives out of order. Models draft translations and research candidates — flagged and gated. See <a href=\"/colophon\">how this was made</a>.",
   "evidence.4": "<strong>The rule that matters most: an inference is never allowed to become a fact.</strong> Every claim is filed under one of four bases, and no two of them are ever drawn the same way.",
   "evidence.5": "The citation comes first",
   "evidence.6": "A source is added before the claim it supports, and tiered 1 to 5. Tier 1 is a decree or gazette entry. Tier 5 is a lead that needs corroborating and is never sufficient on its own. The current library is 1195 sources — 135 at tier 1, 209 at tier 2, 416 at tier 3, 357 at tier 4, 78 at tier 5.",
@@ -206,7 +206,8 @@
   "foot.10": "<a href=\"/methodology\">Methodology</a>",
   "foot.11": "<a href=\"/corrections\">Every correction, generated from version control</a>",
   "foot.12": "<a href=\"/evidence\">Hypotheses, falsifiers and open questions</a>",
-  "foot.13": "<a href=\"https://github.com/\">Source code</a>",
+  "foot.13": "<a href=\"https://github.com/deepontology/deeptunisia\">Source code</a>",
+  "foot.17": "<a href=\"/colophon\">How this was made</a>",
   "foot.14": "Deep Tunisia · deeptunisia.org",
   "foot.15": "Every figure on this page is generated from the build. Nothing is illustrative.",
   "foot.16": "contact@deeptunisia.org"

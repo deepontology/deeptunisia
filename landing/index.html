@@ -1252,9 +1252,10 @@ footer a:hover { color: var(--accent); }
       </div>
       <div class="prose rv">
         <p data-i18n="evidence.3">
-          There is no scraper filling this graph and no language model writing into it.
-          Knowledge enters through one door, in a fixed order, and the build refuses
-          anything that arrives out of order.
+          No language model writes claims into this graph. Knowledge enters through one
+          door, in a fixed order, and the build refuses anything that arrives out of order.
+          Models draft translations and research candidates — flagged and gated.
+          See <a href="/colophon">how this was made</a>.
         </p>
         <p data-i18n-html="evidence.4">
           <strong>The rule that matters most: an inference is never allowed to become a
@@ -1931,6 +1932,7 @@ footer a:hover { color: var(--accent); }
         <li data-i18n-html="foot.10"><a href="/methodology">Methodology</a></li>
         <li data-i18n-html="foot.11"><a href="/corrections">Every correction, generated from version control</a></li>
         <li data-i18n-html="foot.12"><a href="/evidence">Hypotheses, falsifiers and open questions</a></li>
+        <li data-i18n-html="foot.17"><a href="/colophon">How this was made</a></li>
         <li data-i18n-html="foot.13"><a href="https://github.com/deepontology/deeptunisia">Source code</a></li>
       </ul>
     </div>
@@ -2061,7 +2063,6 @@ footer a:hover { color: var(--accent); }
   "surface.3": "Deep Tunisia est un registre public vivant des personnes, des institutions, des entreprises et des réseaux qui façonnent un pays. Chaque affirmation remonte à sa source. Chaque conclusion reste contestable. Rien ici ne demande votre permission pour être lu.",
   "surface.4": "Lire l'argument",
   "surface.5": "Descendre",
-  "surface.6": "Cette page est l’argument — l’atlas est l’instrument. Chronique, Réseau, Carte & Monde, 1956–2026, chaque affirmation sourcée. S’ouvre instantanément. Sans compte, sans traceur.",
   "ledger.1": "Personnes",
   "ledger.2": "Mandats",
   "ledger.3": "Institutions",
@@ -2075,7 +2076,7 @@ footer a:hover { color: var(--accent); }
   "memory.4": "Pendant des siècles, l'excuse fut la rareté. Les archives étaient lacunaires, les décisions se prenaient à huis clos, et le pouvoir était difficile à comprendre et plus difficile encore à contester. Cette excuse a disparu. On produit aujourd'hui plus d'information en une journée que des générations entières n'en créaient en une vie.",
   "memory.5": "Et pourtant la compréhension n'a jamais été aussi fragmentée. Les faits se dispersent. Les archives disparaissent. Les liens restent invisibles. La mémoire publique s'efface — et <strong>là où la mémoire s'efface, le pouvoir échappe à toute reddition de comptes.</strong>",
   "memory.6": "Deep Tunisia existe pour que la Tunisie se souvienne : soixante-dix ans de nominations, d'institutions, de ruptures et de relations, réunis en un seul endroit, à découvert, sous une forme que n'importe qui peut vérifier.",
-  "memory.7": "Mandats recensés, par année, 1956–2026. Établi à partir de 416 mandats dans <span style=\"color:var(--text-secondary)\">data/positions.yaml</span> ; les 4 dont personne n'a publié les dates sont absents, ce qui constitue un constat plutôt qu'un oubli. La hausse après 2011 tient en partie à l'ouverture de l'État et en partie au fait que ce registre couvre mieux les décennies récentes — le graphique ne prétend pas savoir dans quelle proportion.",
+  "memory.7": "Mandats recensés, par année, 1956–2026. Établi à partir de 422 mandats dans <span style=\"color:var(--text-secondary)\">data/positions.yaml</span> ; aucune n'est dépourvue de dates publiées. La hausse après 2011 tient en partie à l'ouverture de l'État et en partie au fait que ce registre couvre mieux les décennies récentes — le graphique ne prétend pas savoir dans quelle proportion.",
   "connection.1": "Pourquoi un graphe",
   "connection.2": "Une nomination isolée ne dit presque rien tant qu'elle n'est pas rattachée à une institution.",
   "connection.3": "Le site est une fenêtre. Le graphe de connaissance est le projet.",
@@ -2085,12 +2086,12 @@ footer a:hover { color: var(--accent); }
   "connection.7": "Les successions sont <strong>déduites, non affirmées</strong> — calculées à partir des intervalles eux-mêmes, si bien qu'un trou dans le registre apparaît comme un trou. On compte actuellement <strong>41 ruptures de succession</strong> et <strong>2 mandats qui se chevauchent</strong>, tous publiés.",
   "evidence.1": "Comment le savoir est collecté",
   "evidence.2": "<span class=\"curtain\"><span>Chaque affirmation</span></span> <span class=\"curtain\"><span>est traçable. Chaque</span></span> <span class=\"curtain\"><span>conclusion est</span></span> <span class=\"curtain\"><span>contestable.</span></span>",
-  "evidence.3": "Aucun robot ne remplit ce graphe et aucun modèle de langage n'y écrit. Le savoir entre par une seule porte, dans un ordre fixe, et la compilation refuse tout ce qui arrive hors de cet ordre.",
+  "evidence.3": "Aucun modèle de langage n'écrit d'affirmations dans ce graphe. Le savoir entre par une seule porte, dans un ordre fixe, et la compilation refuse tout ce qui arrive hors de cet ordre. Les modèles rédigent des brouillons de traduction et des candidats de recherche — signalés et contrôlés. Voir <a href=\"/colophon\">comment c'est fait</a>.",
   "evidence.4": "<strong>La règle qui compte le plus : une déduction n'a jamais le droit de devenir un fait.</strong> Chaque affirmation est classée sous l'une de quatre bases, et jamais deux d'entre elles ne se dessinent de la même façon.",
   "evidence.5": "La citation vient d'abord",
-  "evidence.6": "La source est ajoutée avant l'affirmation qu'elle soutient, et classée de 1 à 5. Le niveau 1 est un décret ou une parution au journal officiel. Le niveau 5 est une piste à corroborer, jamais suffisante à elle seule. La bibliothèque compte aujourd'hui 1178 sources — 135 au niveau 1, 207 au niveau 2, 410 au niveau 3, 349 au niveau 4, 77 au niveau 5.",
+  "evidence.6": "La source est ajoutée avant l'affirmation qu'elle soutient, et classée de 1 à 5. Le niveau 1 est un décret ou une parution au journal officiel. Le niveau 5 est une piste à corroborer, jamais suffisante à elle seule. La bibliothèque compte aujourd'hui 1195 sources — 135 au niveau 1, 209 au niveau 2, 416 au niveau 3, 357 au niveau 4, 78 au niveau 5.",
   "evidence.7": "L'affirmation y est rattachée",
-  "evidence.8": "Rien n'est saisi en l'air. Un mandat, une relation, un événement — chacun renvoie aux identifiants des sources qui le soutiennent. 53 des 1178 sources n'appuient aujourd'hui aucune affirmation ; elles sont conservées comme lectures en attente et <em>exclues du décompte publié</em>, car une entrée bibliographique qui ne soutient rien n'est pas une preuve.",
+  "evidence.8": "Rien n'est saisi en l'air. Un mandat, une relation, un événement — chacun renvoie aux identifiants des sources qui le soutiennent. 35 des 1195 sources n'appuient aujourd'hui aucune affirmation ; elles sont conservées comme lectures en attente et <em>exclues du décompte publié</em>, car une entrée bibliographique qui ne soutient rien n'est pas une preuve.",
   "evidence.9": "La base est déclarée, et elle change l'apparence",
   "evidence.10": "Documenté, rapporté, déduit, non étayé. La base qualifie l'affirmation, non ses dates — « X a occupé ce poste » et « entre telles dates » sont deux affirmations distinctes dont la solidité diffère couramment, elles portent donc des indicateurs séparés. Le lecteur peut relever à tout moment le seuil de preuve et voir les affirmations les plus faibles quitter la carte.",
   "evidence.11": "La compilation refuse le reste",
@@ -2124,7 +2125,7 @@ footer a:hover { color: var(--accent); }
   "limits.1": "Ce que nous ignorons",
   "limits.2": "Un registre qui ne publie que ses forces fait de la publicité.",
   "limits.3": "L'architecture annoncée de ce projet est que les machines proposent et que les humains vérifient. Presque rien n'est encore passé sous un second regard, et le chiffre honnête est publié sur le site plutôt que rangé dans un tiroir — parce que c'est la seule façon pour que l'engagement veuille dire quelque chose.",
-  "limits.4": "Pire que le total : <strong>les 27 relectures effectuées ont toutes porté sur les affirmations les mieux étayées.</strong> Des 8 affirmations non étayées, des 84 affirmations attribuées et des 16 déductions — les fiches les plus susceptibles de nuire à une personne nommée — pas une n'a été vérifiée de façon indépendante. C'est le travail restant à plus forte valeur, et c'est pourquoi financer ce projet achète d'abord de la vérification.",
+  "limits.4": "Pire que le total : <strong>les 27 relectures effectuées ont toutes porté sur les affirmations les mieux étayées.</strong> Des 11 affirmations non étayées, des 123 affirmations attribuées et des 20 déductions — les fiches les plus susceptibles de nuire à une personne nommée — pas une n'a été vérifiée de façon indépendante. C'est le travail restant à plus forte valeur, et c'est pourquoi financer ce projet achète d'abord de la vérification.",
   "limits.5": "fiches ont fait l'objet d'une <b>relecture humaine indépendante</b>. Ventilée par risque, la couverture est la plus faible là où les enjeux sont les plus élevés.",
   "limits.6": "fiches <b>attendent une source primaire</b> — elles reposent aujourd'hui sur de la presse secondaire, et sont listées une à une plutôt que résumées.",
   "limits.7": "<b>ruptures de succession et mandats qui se chevauchent</b>, relevés automatiquement par la compilation. Un trou dans la chronologie s'affiche comme un trou.",
@@ -2257,11 +2258,11 @@ footer a:hover { color: var(--accent); }
   "foot.11": "<a href=\"/corrections\">Chaque correction, générée depuis le versionnement</a>",
   "foot.12": "<a href=\"/evidence\">Hypothèses, critères de réfutation et questions ouvertes</a>",
   "foot.13": "<a href=\"https://github.com/deepontology/deeptunisia\">Code source</a>",
+  "foot.17": "<a href=\"/colophon\">Comment c'est fait</a>",
   "foot.14": "Deep Tunisia · deeptunisia.org",
   "foot.15": "Chaque chiffre de cette page est généré par la compilation. Rien n'est illustratif.",
   "foot.16": "contact@deeptunisia.org",
   "cta.enter": "Entrer dans l'atlas",
-  "cta.enterHeader": "Explorer l’atlas",
   "cta.paper": "Lire le document",
   "cta.talk": "Parlons-en",
   "doc.title": "Deep Tunisia — là où la mémoire s'efface, le pouvoir échappe",
@@ -2308,7 +2309,6 @@ footer a:hover { color: var(--accent); }
   "surface.3": "«ديب تونيزيا» سجل عمومي حيّ للأشخاص والمؤسسات والشركات والشبكات التي تصوغ بلداً. كل ادعاء يمكن تتبّعه إلى مصدره. كل استنتاج قابل للطعن. ولا شيء هنا يستأذن أحداً كي يُقرأ.",
   "surface.4": "اقرأ الحجّة",
   "surface.5": "انزل",
-  "surface.6": "هذه الصفحة هي الحجة — والأطلس هو الأداة. التسلسل، الشبكة، الخريطة والعالم، ١٩٥٦–٢٠٢٦، كل ادعاء مُسنَد. يُفتح فورًا. بلا حساب، بلا متتبّع.",
   "ledger.1": "أشخاص",
   "ledger.2": "مناصب مشغولة",
   "ledger.3": "مؤسسات",
@@ -2322,7 +2322,7 @@ footer a:hover { color: var(--accent); }
   "memory.4": "طوال قرون كان العذر هو الندرة. كانت السجلات ناقصة، والقرارات تُتخذ خلف الأبواب المغلقة، وكانت السلطة صعبة الفهم وأصعب على المساءلة. لم يعد ذلك العذر قائماً. فما يُنتج من معلومات في يوم واحد اليوم يفوق ما أنتجته أجيال كاملة في عمر بأكمله.",
   "memory.5": "ومع ذلك لم يكن الفهم يوماً أكثر تشتتاً مما هو عليه الآن. تتبعثر الوقائع. تختفي السجلات. تبقى الصلات غير مرئية. تخبو الذاكرة العامة — و<strong>حيث تخبو الذاكرة، تفلت السلطة من المساءلة.</strong>",
   "memory.6": "وُجد «ديب تونيزيا» كي تتذكّر تونس: سبعون عاماً من التعيينات والمؤسسات والانقطاعات والعلاقات، مجموعة في مكان واحد، في العلن، وبصيغة يستطيع أي شخص تدقيقها.",
-  "memory.7": "المناصب المسجّلة في كل سنة، 1956–2026. مستخرجة من 416 فترة تولٍّ في <span style=\"color:var(--text-secondary)\">data/positions.yaml</span>؛ والأربع التي لم ينشر أحد تواريخها غائبة، وذلك نتيجة لا إغفال. الارتفاع بعد 2011 يعود جزئياً إلى انفتاح الدولة وجزئياً إلى أن هذا السجل يغطي العقود الأخيرة تغطية أفضل — والرسم لا يدّعي معرفة نسبة كل منهما.",
+  "memory.7": "المناصب المسجّلة في كل سنة، 1956–2026. مستخرجة من 422 فترة تولٍّ في <span style=\"color:var(--text-secondary)\">data/positions.yaml</span>؛ ولا واحدة منها بلا تواريخ منشورة. الارتفاع بعد 2011 يعود جزئياً إلى انفتاح الدولة وجزئياً إلى أن هذا السجل يغطي العقود الأخيرة تغطية أفضل — والرسم لا يدّعي معرفة نسبة كل منهما.",
   "connection.1": "لماذا مبيان معرفي",
   "connection.2": "التعيين وحده لا يعني الكثير ما لم يُربط بمؤسسة.",
   "connection.3": "الموقع نافذة. أما المشروع فهو المبيان المعرفي.",
@@ -2332,12 +2332,12 @@ footer a:hover { color: var(--accent); }
   "connection.7": "التعاقبات <strong>مستنتَجة لا مُقرَّرة</strong> — تُحسب من المجالات الزمنية نفسها، فتظهر الثغرة في السجل ثغرةً. يوجد حالياً <strong>41 انقطاعاً في التعاقب</strong> و<strong>2 فترات متداخلة</strong>، وكلها منشورة.",
   "evidence.1": "كيف تُجمع المعرفة",
   "evidence.2": "<span class=\"curtain\"><span>كل ادعاء قابل</span></span> <span class=\"curtain\"><span>للتتبّع. وكل</span></span> <span class=\"curtain\"><span>استنتاج قابل</span></span> <span class=\"curtain\"><span>للطعن.</span></span>",
-  "evidence.3": "لا يوجد روبوت يملأ هذا المبيان ولا نموذج لغوي يكتب فيه. تدخل المعرفة من باب واحد وبترتيب ثابت، وترفض عملية البناء كل ما يصل خارج هذا الترتيب.",
+  "evidence.3": "لا يكتب أي نموذج لغوي ادعاءات في هذا المبيان. تدخل المعرفة من باب واحد وبترتيب ثابت، وترفض عملية البناء كل ما يصل خارج هذا الترتيب. النماذج تصيغ مسودات ترجمة ومرشحي بحث — موسومة ومحكومة. انظر <a href=\"/colophon\">كيف صُنع</a>.",
   "evidence.4": "<strong>القاعدة الأهم: لا يُسمح للاستنتاج أبداً بأن يصير واقعة.</strong> يُصنَّف كل ادعاء تحت واحد من أربعة أسس، ولا يُرسم أيّ اثنين منها بالطريقة نفسها.",
   "evidence.5": "المصدر أولاً",
-  "evidence.6": "يُضاف المصدر قبل الادعاء الذي يسنده، ويُصنَّف من 1 إلى 5. المستوى 1 أمر أو نشر في الرائد الرسمي. والمستوى 5 خيط يحتاج إلى إسناد ولا يكفي وحده أبداً. تضم المكتبة اليوم 1178 مصدراً — 135 في المستوى 1، و207 في المستوى 2، و410 في المستوى 3، و349 في المستوى 4، و77 في المستوى 5.",
+  "evidence.6": "يُضاف المصدر قبل الادعاء الذي يسنده، ويُصنَّف من 1 إلى 5. المستوى 1 أمر أو نشر في الرائد الرسمي. والمستوى 5 خيط يحتاج إلى إسناد ولا يكفي وحده أبداً. تضم المكتبة اليوم 1195 مصدراً — 135 في المستوى 1، و209 في المستوى 2، و416 في المستوى 3، و357 في المستوى 4، و78 في المستوى 5.",
   "evidence.7": "ثم يُربط الادعاء به",
-  "evidence.8": "لا شيء يُدخَل معلّقاً في الهواء. المنصب والعلاقة والحدث — كلٌّ منها يحيل إلى معرّفات المصادر التي تسنده. و53 من المصادر الـ1178 لا تسند اليوم أي ادعاء؛ تُحفظ بوصفها قراءات مؤجّلة و<em>تُستبعد من العدد المنشور</em>، لأن مدخلاً ببليوغرافياً لا يسند شيئاً ليس دليلاً.",
+  "evidence.8": "لا شيء يُدخَل معلّقاً في الهواء. المنصب والعلاقة والحدث — كلٌّ منها يحيل إلى معرّفات المصادر التي تسنده. و35 من المصادر الـ1195 لا تسند اليوم أي ادعاء؛ تُحفظ بوصفها قراءات مؤجّلة و<em>تُستبعد من العدد المنشور</em>، لأن مدخلاً ببليوغرافياً لا يسند شيئاً ليس دليلاً.",
   "evidence.9": "ثم يُعلَن الأساس، وهو يغيّر الشكل",
   "evidence.10": "موثّق، منقول، مستنتَج، غير مُسنَد. الأساس يصف الادعاء لا تواريخه — «شغل فلان هذا المنصب» و«بين هذين التاريخين» ادعاءان منفصلان يختلف رسوخهما عادةً، ولذلك يحمل كلٌّ منهما مؤشره الخاص. ويستطيع القارئ في أي لحظة أن يرفع عتبة الدليل فيرى الادعاءات الأضعف تغادر الخريطة.",
   "evidence.11": "وعملية البناء ترفض ما تبقّى",
@@ -2371,7 +2371,7 @@ footer a:hover { color: var(--accent); }
   "limits.1": "ما لا نعرفه",
   "limits.2": "السجل الذي لا ينشر إلا مواطن قوته إعلانٌ لا سجل.",
   "limits.3": "البنية المعلنة لهذا المشروع أن الآلات تقترح والبشر يتحققون. ولم يمرّ حتى الآن إلا القليل جداً على عين ثانية، والرقم الصادق منشور على الموقع لا محفوظ في درج — لأن ذلك هو السبيل الوحيد كي يعني الالتزام شيئاً.",
-  "limits.4": "والأسوأ من المجموع: <strong>المراجعات السبع والعشرون كلها وقعت على الادعاءات الأقوى إسناداً.</strong> فمن الادعاءات الثمانية غير المُسنَدة، والأربعة والثمانين المنسوبة، والست عشرة المستنتَجة — وهي السجلات الأقدر على الإضرار بشخص مُسمّى — لم يُراجَع أي واحد منها مراجعة مستقلة. هذا أعلى عمل متبقٍّ قيمةً، ولذلك فإن تمويل هذا المشروع يشتري التحقق قبل أن يشتري أي شيء آخر.",
+  "limits.4": "والأسوأ من المجموع: <strong>المراجعات السبع والعشرون كلها وقعت على الادعاءات الأقوى إسناداً.</strong> فمن الادعاءات الأحد عشرة غير المُسنَدة، والمئة والثلاثة والعشرين المنسوبة، والعشرين المستنتَجة — وهي السجلات الأقدر على الإضرار بشخص مُسمّى — لم يُراجَع أي واحد منها مراجعة مستقلة. هذا أعلى عمل متبقٍّ قيمةً، ولذلك فإن تمويل هذا المشروع يشتري التحقق قبل أن يشتري أي شيء آخر.",
   "limits.5": "سجلاً خضع <b>لمراجعة بشرية مستقلة</b>. وبتفصيلها حسب المخاطر، تكون التغطية في أسوأ حالاتها تحديداً حيث تكون الرهانات أعلى.",
   "limits.6": "سجلاً <b>ينتظر مصدراً أولياً</b> — يقوم اليوم على نقل صحفي ثانوي، ومُدرَج واحداً واحداً لا مُلخَّصاً.",
   "limits.7": "<b>انقطاعاً في التعاقب وفترات متداخلة</b>، ترصدها عملية البناء تلقائياً. والثغرة في التسلسل الزمني تُعرَض ثغرةً.",
@@ -2504,11 +2504,11 @@ footer a:hover { color: var(--accent); }
   "foot.11": "<a href=\"/corrections\">كل تصويب، مُولَّد من إدارة الإصدارات</a>",
   "foot.12": "<a href=\"/evidence\">الفرضيات ومعايير الدحض والأسئلة المفتوحة</a>",
   "foot.13": "<a href=\"https://github.com/deepontology/deeptunisia\">الشفرة المصدرية</a>",
+  "foot.17": "<a href=\"/colophon\">كيف صُنع</a>",
   "foot.14": "ديب تونيزيا · deeptunisia.org",
   "foot.15": "كل رقم على هذه الصفحة مُولَّد من عملية البناء. لا شيء هنا للتوضيح فقط.",
   "foot.16": "contact@deeptunisia.org",
   "cta.enter": "ادخل إلى الأطلس",
-  "cta.enterHeader": "استكشف الأطلس",
   "cta.paper": "اقرأ الورقة البحثية",
   "cta.talk": "تحدّث إلينا",
   "doc.title": "ديب تونيزيا — حيث تخبو الذاكرة، تفلت السلطة",
