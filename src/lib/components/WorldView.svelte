@@ -999,20 +999,22 @@
 			{/if}
 		{/each}
 
-		{#each visibleAssets as a (a.id)}
-			<g class="anode" transform="translate({a.sx} {a.sy})" style:opacity={0.25 + a.facing * 0.75}>
-				<circle class="dot" r="3.5" />
-				<title>
-					{a.asset
-						? tf('world.asset.title.marked', {
-								name: nameOf(a),
-								kind: t(`world.place.${a.kind}`),
-								asset: t('world.asset.label')
-							})
-						: tf('world.asset.title', { name: nameOf(a), kind: t(`world.place.${a.kind}`) })}
-				</title>
-			</g>
-		{/each}
+		{#if false}
+			{#each visibleAssets as a (a.id)}
+				<g class="anode" transform="translate({a.sx} {a.sy})" style:opacity={0.25 + a.facing * 0.75}>
+					<circle class="dot" r="3.5" />
+					<title>
+						{a.asset
+							? tf('world.asset.title.marked', {
+									name: nameOf(a),
+									kind: t(`world.place.${a.kind}`),
+									asset: t('world.asset.label')
+								})
+							: tf('world.asset.title', { name: nameOf(a), kind: t(`world.place.${a.kind}`) })}
+					</title>
+				</g>
+			{/each}
+		{/if}
 
 		{#each labels as l (l.id)}
 			<text class="clabel" class:major={l.tier !== 'minor'} x={l.sx} y={l.sy + 12}>{l.text}</text>
