@@ -39,7 +39,6 @@
 	import { moneyM } from '$lib/world/format';
 	import Content from '$lib/ui/Content.svelte';
 	import Tooltip from '$lib/ui/Tooltip.svelte';
-	import Popover from '$lib/ui/Popover.svelte';
 
 	const year = $derived(new Date(app.t).getUTCFullYear());
 
@@ -83,6 +82,13 @@
 	}
 
 	let openExplain = $state<string | null>(null);
+	let explainPopEl = $state<HTMLDivElement | null>(null);
+
+	$effect(() => {
+		if (openExplain && explainPopEl) {
+			explainPopEl.focus({ preventScroll: true });
+		}
+	});
 
 const figures = $derived.by<Figure[]>(() => {
 		const tOfficial = tt;
@@ -179,16 +185,38 @@ const figures = $derived.by<Figure[]>(() => {
 					<button class="why-btn" onclick={() => (openExplain = openExplain === f.key ? null : f.key)} aria-expanded={openExplain === f.key} aria-controls={"explain-" + f.key}>
 						{t('world.strip.explain')}
 					</button>
-					<Popover open={openExplain === f.key} onclose={() => (openExplain = null)} align="start" label={f.label}>
-						<div id={"explain-" + f.key} class="why-pop">
-							<Content view="world" section={f.explain} compact />
-						</div>
-					</Popover>
 				</div>
 			</div>
 		{/each}
 	</dl>
 </div>
+
+{#if openExplain}
+	{@const active = figures.find((f) => f.key === openExplain)}
+	{#if active}
+		<!-- svelte-ignore a11y_click_events_have_key_events -->
+		<div class="explain-scrim" role="presentation" onclick={() => (openExplain = null)}></div>
+		<div
+			class="explain-pop"
+			bind:this={explainPopEl}
+			role="dialog"
+			aria-modal="false"
+			aria-label={active.label}
+			tabindex="-1"
+			onkeydown={(e) => {
+				if (e.key === 'Escape') {
+					e.stopPropagation();
+					openExplain = null;
+				}
+			}}
+		>
+			<button class="explain-close" onclick={() => (openExplain = null)} aria-label={t('world.strip.explain') + ' — close'}>×</button>
+			<div id={"explain-" + active.key} class="why-pop">
+				<Content view="world" section={active.explain} compact />
+			</div>
+		</div>
+	{/if}
+{/if}
 
 <style>
 	.totals {
@@ -297,6 +325,91 @@ const figures = $derived.by<Figure[]>(() => {
 		max-height: 50vh;
 		overflow-y: auto;
 		padding: var(--s-2) var(--s-1);
+	}
+
+	.explain-scrim {
+		position: fixed;
+		inset: 0;
+		z-index: 90;
+	}
+
+	.explain-pop {
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		z-index: 91;
+		width: min(560px, calc(100vw - 32px));
+		max-height: min(70vh, 600px);
+		overflow-y: auto;
+		overscroll-behavior: contain;
+		background: var(--surface-overlay);
+		border: 1px solid var(--border-default);
+		border-radius: var(--r-lg);
+		box-shadow: var(--elev-3);
+		padding: var(--s-5) var(--s-6) var(--s-6);
+		animation: rise-in var(--dur-fast) var(--ease-out);
+	}
+
+	.explain-close {
+		position: absolute;
+		top: var(--s-3);
+		inset-inline-end: var(--s-3);
+		width: 28px;
+		height: 28px;
+		display: grid;
+		place-items: center;
+		border-radius: var(--r-full);
+		border: 1px solid var(--border-subtle);
+		background: var(--surface-panel);
+		color: var(--text-muted);
+		font-size: 18px;
+		line-height: 1;
+		cursor: pointer;
+	}
+
+	.explain-close:hover {
+		color: var(--text-primary);
+		border-color: var(--border-strong);
+	}
+
+	@keyframes rise-in {
+		from { opacity: 0; transform: translate(-50%, -45%); }
+		to { opacity: 1; transform: translate(-50%, -50%); }
+	}
+	@keyframes fade-in {
+		from { opacity: 0; }
+		to { opacity: 1; }
+	}
+
+	@media (max-width: 900px) {
+		.explain-pop {
+			top: auto;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			transform: none;
+			width: auto;
+			max-width: none;
+			max-height: 80dvh;
+			border-inline: none;
+			border-bottom: none;
+			border-radius: var(--r-xl) var(--r-xl) 0 0;
+			padding-bottom: var(--safe-b);
+			animation: sheet-in var(--dur-normal) var(--ease-out);
+		}
+		.explain-scrim {
+			background: color-mix(in oklch, var(--n-1000) 55%, transparent);
+			backdrop-filter: blur(2px);
+			animation: fade-in var(--dur-fast) var(--ease-out);
+		}
+	}
+
+	@keyframes sheet-in {
+		from { transform: translateY(100%); }
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.explain-pop, .explain-scrim { animation: none; }
 	}
 
 </style>
