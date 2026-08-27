@@ -3564,10 +3564,10 @@
     - DGDDI
     - Douane
     - الجمارك
-  type: ministry
+  type: government
   layer: economic
-  parent: null
-  order: 48
+  parent: ministry-finance
+  order: 12
   active:
     start: ~1956
     end: ongoing
@@ -3581,6 +3581,8 @@
     - douane-dg-page
     - wikipedia-douane-tn
     - leaders-jaouadi-bio
+  notes:
+    - "Parent is Ministry of Finance (ministry-finance) — modelled 2026-08-27; previously null pending node."
 - id: poulina
   name_en: Poulina Group Holding
   name_fr: Poulina Group Holding
@@ -3771,7 +3773,7 @@
   name_en: Office of the Mufti of the Republic
   name_fr: Mufti de la République
   name_ar: مفتي الجمهورية التونسية
-  type: ministry
+  type: presidency
   layer: political
   parent: presidency
   order: 9
@@ -3788,6 +3790,33 @@
     - espacemanager-mufti-2022
     - lapresse-mufti-2026
     - pm-gov-mufti
+  notes:
+    - "Retyped from ministry to presidency — office, not portfolio ministry."
+- id: ministry-finance
+  name_en: Ministry of Finance
+  name_fr: Ministère des Finances
+  name_ar: وزارة المالية
+  aliases:
+    - Finance Ministry
+    - Ministère des Finances
+    - وزارة المالية
+  type: ministry
+  layer: economic
+  parent: head-of-government
+  order: 11
+  active:
+    start: "1956-04-11"
+    end: ongoing
+  summary: "Fiscal ministry: budget, treasury, customs oversight (douane), taxation and public accounting. Grantor of fiscal authority for SOEs and the state's principal revenue apparatus."
+  summary_fr: "Ministère fiscal : budget, trésor, tutelle de la douane, fiscalité et comptabilité publique. Autorité concédante de la tutelle fiscale sur les entreprises publiques et principal appareil de recettes de l'État."
+  summary_fr_by: model-reviewed
+  summary_ar: "وزارة المالية: الميزانية والخزينة والإشراف على الديوانة والجباية والمحاسبة العمومية. الجهة المانحة للسلطة المالية على المؤسسات العمومية والجهاز الرئيسي للإيرادات في الدولة."
+  summary_ar_by: model-reviewed
+  confidence: B
+  sources:
+    - frwiki-finance-ministers
+  notes:
+    - "Parent for douane; finance ministry not previously modelled — douane now correctly parented. Start date generic independence era, needs JORT organising decree to lift to A."
 - id: ministry-health
   name_en: Ministry of Health
   name_fr: Ministère de la Santé
@@ -3797,9 +3826,9 @@
     - Santé
     - وزارة الصحة
   type: ministry
-  layer: civil
+  layer: political
   parent: head-of-government
-  order: 40
+  order: 12
   active:
     start: 1956-04-11
     end: ongoing
@@ -4768,10 +4797,11 @@
     - Équipement
     - وزارة التجهيز
   type: ministry
-  layer: civil
+  layer: political
   parent: head-of-government
-  order: 22
+  order: 13
   active:
+    start: "?"
     end: ongoing
   summary: >-
     Civil-infrastructure ministry: motorways, bridges and chaussées, regional
@@ -4782,6 +4812,8 @@
   sources:
     - kapitalis-autoroutes-a1-a2-2026
     - lapresse-zouari-equipement-2025
+  notes:
+    - "Start needs JORT organising decree for Equipment/Housing (Travaux); interim Industry/Mines/Energy mandate per 12 Aug 2026 council."
 - id: atb
   name_en: Arab Tunisian Bank
   name_fr: Arab Tunisian Bank
