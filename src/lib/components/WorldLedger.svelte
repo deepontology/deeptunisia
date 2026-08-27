@@ -917,13 +917,14 @@
 		background: var(--surface-base);
 		z-index: 1;
 		border-bottom: 1px solid var(--border-subtle);
+		padding: var(--s-1) var(--s-2);
 	}
 	.sort {
 		font-size: var(--t-2xs);
 		letter-spacing: var(--track-wide);
 		text-transform: uppercase;
 		color: var(--text-muted);
-		padding: var(--s-2) 0;
+		padding: 0;
 		width: 100%;
 		text-align: start;
 	}
@@ -943,7 +944,7 @@
 	}
 	.totalsrow th,
 	.totalsrow td {
-		padding: var(--s-2) 0;
+		padding: var(--s-2) var(--s-2);
 		font-weight: 600;
 		color: var(--text-primary);
 	}
@@ -1025,6 +1026,7 @@
 	}
 	td.mono {
 		color: var(--text-primary);
+		text-align: end;
 	}
 	.sumrow {
 		display: block;
