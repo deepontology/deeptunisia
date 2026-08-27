@@ -2882,7 +2882,7 @@ import Chip from '$lib/ui/Chip.svelte';
 	.viewnav {
 		display: flex;
 		flex-direction: column;
-		align-items: stretch;
+		align-items: flex-end;
 		gap: var(--s-3);
 		position: absolute;
 		inset-inline-end: var(--s-6);
