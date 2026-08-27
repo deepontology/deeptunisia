@@ -84,6 +84,7 @@
       header_fr: Ministres
       header_ar: الوزراء
       membership:
+        members: [ministry-health, ministry-equipment-housing, ministry-religious-affairs]
         role: [agriculture-minister, commerce-minister, defence-minister, finance-minister, foreign-minister, health-minister, human-rights-minister, interior-minister, justice-minister, religious-affairs-director, religious-affairs-minister, religious-affairs-secretary-of-state, state-properties-minister, tourism-minister]
 
     - header_en: Parliament
@@ -129,18 +130,25 @@
         members: [bct]
         role: bct-governor
 
+    - header_en: Fiscal Administration
+      header_fr: Administration fiscale
+      header_ar: الإدارة المالية
+      membership:
+        members: [ministry-finance, douane]
+        role: [finance-minister, douane-dg]
+
     - header_en: Banks & Finance
       header_fr: Banques et finance
       header_ar: البنوك والمالية
       membership:
-        members: [amen-bank, attijari-bank, bh-bank, biat, bna, uib, stb]
+        members: [amen-bank, attijari-bank, bh-bank, biat, bna, uib, stb, zitouna-bank, wifak-bank, atb]
         role: [bh-bank-pdg, bna-pdg, bank-director-general]
 
     - header_en: State Enterprises
       header_fr: Entreprises publiques
       header_ar: المؤسسات العمومية
       membership:
-        members: [etap, cpg, onas, sonede, sncft, steg, tunisair, tunisie-telecom, cnss, la-poste-tunisienne, office-des-cereales, douane, bvmt, orange-tunisie, ooredoo-tunisie, gct]
+        members: [etap, cpg, onas, sonede, sncft, steg, tunisair, tunisie-telecom, cnss, la-poste-tunisienne, office-des-cereales, bvmt, orange-tunisie, ooredoo-tunisie, gct, al-karama-holding, steg-energies-renouvelables, steg-international-services, tunisie-autoroutes]
         role: [soe-director-general, soe-pdg, etap-pdg, cpg-gct-pdg, cnss-pdg, onas-pdg, sncft-pdg, sonede-pdg, steg-pdg, la-poste-pdg, ooredoo-tunisie-dg, tunisie-telecom-pdg, douane-dg]
 
     - header_en: Trade & Employer Organisations
@@ -260,7 +268,7 @@
       header_fr: Alliance civile
       header_ar: التحالف المدني
       membership:
-        members: [national-dialogue-quartet, ministry-health]
+        members: [national-dialogue-quartet]
 
 - layer: foreign
   subsections:

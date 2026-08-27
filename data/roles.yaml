@@ -578,7 +578,7 @@
   title_en: Minister of Finance
   title_fr: Ministre des Finances
   title_ar: وزير المالية
-  institution: head-of-government
+  institution: ministry-finance
   authority: 45
   summary: Portfolio covering finance, planning and the economy.
   summary_fr: >-
@@ -1390,5 +1390,5 @@
 - id: equipment-minister
   title_en: Minister of Equipment and Housing
   title_fr: Ministre de l'Équipement et de l'Habitat
-  institution: head-of-government
+  institution: ministry-equipment-housing
   authority: 45
