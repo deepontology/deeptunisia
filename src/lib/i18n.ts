@@ -1237,6 +1237,10 @@ const en: Dict = {
 	'guide.feed.when': 'The news: what is being published today, clearly separated from the sourced record.',
 	'guide.bases.title': 'The four bases',
 	'guide.bases.intro': 'Every claim in the dataset is filed under one of four epistemic bases, and they never render identically:',
+
+	'colophon.eyebrow': 'Colophon',
+	'colophon.title': 'How this was made',
+
 	'world.geoLoading': 'Loading the world geometry…',
 	'world.geoError': 'World geometry failed to load — the ledger still has every number.'
 };
@@ -2406,6 +2410,10 @@ const fr: Dict = {
 	'guide.feed.when': 'L\'actualité : ce qui se publie aujourd\'hui, clairement séparée du registre sourcé.',
 	'guide.bases.title': 'Les quatre bases',
 	'guide.bases.intro': 'Chaque affirmation du jeu de données est classée sous l\'une de quatre bases épistémiques, et elles ne s\'affichent jamais de la même façon :',
+
+	'colophon.eyebrow': 'Colophon',
+	'colophon.title': 'Comment c\'est fait',
+
 	'world.geoLoading': 'Chargement de la géographie mondiale…',
 	'world.geoError': 'La géographie mondiale n\'a pas pu être chargée — le tableau contient toujours tous les chiffres.'
 };
@@ -3570,6 +3578,10 @@ const ar: Dict = {
 	'guide.feed.when': 'الأخبار: ما يُنشر اليوم، مفصولًا بوضوح عن السجل الموثّق بالمصادر.',
 	'guide.bases.title': 'القواعد الأربع',
 	'guide.bases.intro': 'كل ادعاء في قاعدة البيانات مصنّف تحت واحدة من أربع قواعد إسناد معرفية، ولا تُعرض أي منها بالشكل نفسه:',
+
+	'colophon.eyebrow': 'Colophon',
+	'colophon.title': 'كيف صُنع',
+
 	'world.geoLoading': 'جارٍ تحميل جغرافية العالم…',
 	'world.geoError': 'تعذّر تحميل جغرافية العالم — السجل ما زال يحمل كل الأرقام.'
 };
