@@ -101,7 +101,10 @@ sources:
     tier: 2
     date_consulted: 2026-08-28
     access: live
-    archive_url: null
+    archive_url: https://web.archive.org/web/20191018105158/https://democracy-reporting.org/wp-content/uploads/2019/09/20190911_Tunisia_Social_Media_Monitoring_Report_One_ENG_FINAL.pdf
+    live_verified: 2026-08-28
+    live_status: "403 cf-mitigated at origin / 200 Wayback 20191018105158 (27pp, 2.4MB, PDF 1.6)"
+    excerpt: "Sample 291 Facebook pages sharing political content 15 May-15 Jul 2019; Netvizz manually per page (dead since 23 Aug 2019); corpus 52,512 posts -> 29,329 non-media analysed (42.7% political) + 12,078 pictures; Facebook only; unofficial = entertainment/satirical with no declared leaning; page network = 98% picture identical + 70% text identical + >=2 repeated posts + >=6 members + <8h window; >=13 networks biggest 24 pages"
 
   - id: carter-center-tunisia-2019-final
     citation:
@@ -115,6 +118,67 @@ sources:
     citation:
       en: "EU EOM Tunisia — Rapport final Tunisie 2019 (Présidentielle + législatives) — Jan 2020 (FR, PDF)"
     url: https://www.europarl.europa.eu/cmsdata/212454/Tunisia_parliamentary-elections-6-October-2019_EU-EOM_final_report_(FR).pdf
+    tier: 2
+    date_consulted: 2026-08-28
+    access: live
+
+
+  - id: fb-cib-iran-2019-01-31
+    citation:
+      en: "Meta (Facebook Newsroom), Nathaniel Gleicher — Removing Coordinated Inauthentic Behavior From Iran — 31 Jan 2019"
+    url: https://about.fb.com/news/2019/01/removing-cib-iran/
+    tier: 2
+    date_consulted: 2026-08-28
+    access: live
+    archive_url: https://web.archive.org/web/*/https://about.fb.com/news/2019/01/removing-cib-iran/
+
+  - id: fb-cib-iran-2020-04-05
+    citation:
+      en: "Meta (Facebook Newsroom) — April 2020 Coordinated Inauthentic Behavior Report — 5 May 2020"
+    url: https://about.fb.com/news/2020/05/april-cib-report/
+    tier: 2
+    date_consulted: 2026-08-28
+    access: live
+    archive_url: https://web.archive.org/web/*/https://about.fb.com/news/2020/05/april-cib-report/
+
+  - id: fb-cib-april2020-detailed-pdf
+    citation:
+      en: "Meta — April 2020 Detailed CIB Report (PDF) — 5 May 2020"
+    url: https://about.fb.com/wp-content/uploads/2020/05/April-2020-CIB-Report.pdf
+    tier: 2
+    date_consulted: 2026-08-28
+    access: live
+
+  - id: fb-cib-egypt-2019-10-03
+    citation:
+      en: "Meta (Facebook Newsroom), Nathaniel Gleicher — Removing Coordinated Inauthentic Behavior in UAE, Nigeria, Indonesia and Egypt — 3 Oct 2019"
+    url: https://about.fb.com/news/2019/10/removing-coordinated-inauthentic-behavior-in-uae-nigeria-indonesia-and-egypt
+    tier: 2
+    date_consulted: 2026-08-28
+    access: live
+    archive_url: https://web.archive.org/web/*/https://about.fb.com/news/2019/10/removing-coordinated-inauthentic-behavior-in-uae-nigeria-indonesia-and-egypt
+
+  - id: fb-cib-oct2020-muslim-brotherhood-2020-11-05
+    citation:
+      en: "Meta (Facebook Newsroom) — October 2020 Coordinated Inauthentic Behavior Report — 5 Nov 2020"
+    url: https://about.fb.com/news/2020/11/october-2020-cib-report
+    tier: 2
+    date_consulted: 2026-08-28
+    access: live
+    archive_url: https://web.archive.org/web/*/https://about.fb.com/news/2020/11/october-2020-cib-report
+
+  - id: freedomhouse-fotn-tunisia-2020
+    citation:
+      en: "Freedom House — Freedom on the Net 2020 — Tunisia — 2020"
+    url: https://freedomhouse.org/country/tunisia/freedom-net/2020
+    tier: 2
+    date_consulted: 2026-08-28
+    access: live
+
+  - id: dfrlab-archimedes-2019-05-17-detail
+    citation:
+      en: "DFRLab / Atlantic Council (Medium) — Inauthentic Israeli Facebook Assets Target the World — 17 May 2019 — Tunisian watchdog detail"
+    url: https://medium.com/dfrlab/inauthentic-israeli-facebook-assets-target-the-world-281ad7254264
     tier: 2
     date_consulted: 2026-08-28
     access: live

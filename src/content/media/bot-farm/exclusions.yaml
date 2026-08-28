@@ -49,3 +49,33 @@ exclusions:
     grade: unsubstantiated
     sources: [decree54-implementing-negative-2026-08-28]
     category: headline-only
+
+  - claim: "783 = Tunisia (January 2019 Iran global)"
+    reason: "783 is global across ~26 countries including Tunisia (262+356+3+162 = 783 verified) — Tunisia slice unpublished and = ? — keep misread as rejected dispute C025, not as timeline count; do not sum into domestic 993."
+    grade: unsubstantiated
+    sources: [fb-cib-iran-2019-01-31]
+    category: single-source
+
+  - claim: "540 = Tunisia (April 2020 Iran/IRIB global)"
+    reason: "540 is global across ~21 countries including Tunisia (118+389+27+6 = 540) — distinct from Jan 2019 783; Tunisia slice = ? — keep as rejected dispute C026; do not sum."
+    grade: unsubstantiated
+    sources: [fb-cib-iran-2020-04-05]
+    category: single-source
+
+  - claim: "58 = Tunisia (October 2020 Muslim Brotherhood global)"
+    reason: "58 is global across 6 countries including Tunisia (31+25+2 = 58) — Tunisia slice = ? — not a Tunisia-only farm; keep as rejected dispute C027."
+    grade: unsubstantiated
+    sources: [fb-cib-oct2020-muslim-brotherhood-2020-11-05]
+    category: single-source
+
+  - claim: "251 = Tunisia (October 2019 El Fagr global)"
+    reason: "251 is global across 10 foci including Tunisia (163+51+33+4 = 251) — Tunisia is one of 10 — slice = ? — separate from Oct 2020 MB 58; keep as rejected dispute C028."
+    grade: unsubstantiated
+    sources: [fb-cib-egypt-2019-10-03]
+    category: single-source
+
+  - claim: "Foreign globals summed to domestic total (e.g., 783+540+58+251+993 = cumulative Tunisia bots 2019-2020)"
+    reason: "Category error — foreign-targeting globals (783/251/540/58) and domestic 993 and 265 have different units, time windows and directions; no source instructs summation; kept as rejected taxonomy C031 with ?= ? for each Tunisia share."
+    grade: unsubstantiated
+    sources: [fb-cib-iran-2019-01-31]
+    category: scope-confusion
