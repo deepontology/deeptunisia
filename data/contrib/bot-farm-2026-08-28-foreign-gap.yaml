@@ -1,0 +1,207 @@
+# Supplement to bot-farm-2026-08-28 — foreign amplification & 2021-2026 gap track
+# Mission: Supplement existing outbox claims aljazeera-tunisia-manipulation-2021-07-28 (Jones 12k/6.8k Gulf amplification)
+#   and arabcenter-tunisia-disinformation-2023-07-21 (digital army) with live re-verification on 2026-08-28
+#   and a documented-negative sweep for any domestic 2021-2026 enumeration.
+# Publishers / URLs / tiers (evidence ladder):
+#   - Al Jazeera — https://www.aljazeera.com/news/2021/7/28/tunisia-crisis-prompts-surge-in-foreign-social-media-manipulation — Tier 3 (established journalism) — live fetch 2026-08-28: 200 body captured
+#   - Marc Owen Jones — Twitter thread via websearch "Marc Owen Jones Tunisia hashtag July 2021 thread" — original thread at https://x.com/marcowenjones/status/1420429579144110081 surfaced, no standalone tweet-ID dataset found — keep C attributed_to Jones via Al Jazeera
+#   - Arab Center Washington DC — https://arabcenterdc.org/resource/disinformation-as-a-tool-of-regime-survival-in-tunisia/ — Tier 3 — live fetch 2026-08-28: 200 body captured (C. Ian DeHaven, 2023-07-21)
+#   - POMED / MEDC — https://mideastdc.org/publication/expert-qa-tunisian-president-kais-saieds-digital-army — Tier 3 (established journalism / expert Q&A) — live fetch 2026-08-28: 200 body captured (Snoussi via White, 2023-06-15)
+#   - UNODC ROMENA — https://www.unodc.org/romena/en/Stories/2021/March/unodc-provides-tunisia-with-200-000-usd-worth-of-forensic-equipment-and-software-to-stop-cybercrimes.html — Tier 2 (institutional) — live fetch 2026-08-28: 200 body captured
+#   - Digital Action / Mena Media Monitoring / Arab Facts Hub — https://digitalaction.co/wp-content/uploads/2024/12/Tunisia-briefing_22-Oct-2024_.pdf and https://www.arabifactshub.com/en/researches/details/45609 — Tier 3 context for 2024 election disinfo (no bot-farm enumeration found)
+# Failure vocabulary (must not be collapsed):
+#   - "12k is tweets not accounts; 6.8k is handles in one hashtag not national total"
+#   - "Gulf core is foreign amplification not domestic farm"
+#   - "no domestic 2021-2026 enumeration found is finding not omission"
+#   - "heavy digital presence without number is qualitative, not count — numeric scale remains D unsubstantiated"
+#   - "UNODC forensic kit is capability, not scale of use against critics"
+# Archive / paywall notes:
+#   - Al Jazeera URL live 200 via webfetch 2026-08-28 (full body captured, includes Marc Owen Jones byline 28 Jul 2021)
+#   - Arab Center URL live 200 via webfetch 2026-08-28 (body captured, includes heavy digital presence + Decree 54 + UNODC donation note)
+#   - POMED/MEDC Q&A live 200 via webfetch 2026-08-28 (body captured, Tunisian journalist Amine Snoussi)
+#   - UNODC URL live 200 via webfetch 2026-08-28 (24 March 2021, Tunis, $200k forensic equipment/software to Ministry of Interior)
+#   - Websearch 2026-08-28 for "Saied digital army Tunisia disinformation POMED" confirmed POMED/MEDC Q&A as primary qualitative source; websearch "Marc Owen Jones Tunisia hashtag July 2021 thread" surfaced his Twitter thread handle but no downloadable dataset — retain C
+#   - Websearch 2026-08-28 for "Tunisia 2024 presidential election disinformation bots" and "Tunisia Decree 54 UNODC forensic" logged absence of domestic 2021-2026 enumeration as documented negative; Digital Action Oct 2024 briefing and Arab Facts Hub 150k-post scrape describe networks/ narratives but publish no bot-farm count — treated as negative on enumeration
+# Candidates are proposals, not graph data. Outbox only — no canonical data, UI, or script changed.
+
+sources:
+  - id: aljazeera-tunisia-manipulation-2021-07-28
+    title: Tunisia crisis prompts surge in foreign social media manipulation
+    publisher: Al Jazeera — Marc Owen Jones
+    date: 2021-07-28
+    url: https://www.aljazeera.com/news/2021/7/28/tunisia-crisis-prompts-surge-in-foreign-social-media-manipulation
+    tier: 3
+    lang: en
+    live_verified: 2026-08-28
+    live_status: "200 — webfetch body captured; byline Marc Owen Jones; Published On 28 Jul 2021"
+    excerpt: "An analysis of 12,000 tweets from 6,800 unique Twitter accounts on the hashtag 'Tunisians revolt against the brotherhood' revealed a concerted effort by Gulf-based influencers to portray the actions of the president as a popular Tunisian revolt against Islamist parties such as the Muslim Brotherhood. The majority of users tweeting with the hashtag reported their location as being either in Saudi Arabia or the UAE. The top 10 most influential accounts on the hashtag were all Gulf influencers also based in Saudi Arabia or the UAE. These accounts included Emirati Khalid bin Dhahi, Saudi influencer @s_hm2030, Saudi cartoonist Fahad Jubairi, the Emirati writer Mohamed Taqi, as well as an Emirati patriotic account called emarati_shield. Saudi influencer Monther al-Shaykh (monther72), the most influential account in the whole hashtag, even called the sacked prime minister the 'Khamenei of Tunisia'. In addition sock-puppets: account @7__e7 name Fairuz was fake, its tweet contained unrelated 'comic' video of a person falling out of a car while reversing; retweeted hundreds of times; Fairuz's tweet garnered more than 200 retweets within five minutes, speed strongly indicates automation. None of the accounts retweeting her was real — hacked or fake accounts programmed to automatically retweet (example: 14-year-old Filipino girl, Emma Roberts with Smurf display image). Network graph: blue constellation on left shows Fairuz + >200 accounts retweeting her disconnected from main cluster — points to inorganic behaviour. Using hacked accounts for advertising/marketing common including MENA propaganda."
+  - id: jones-twitter-thread-2021-07-xx
+    title: Marc Owen Jones Twitter thread on Tunisia hashtag manipulation (archive search 2026-08-28)
+    publisher: X (Twitter) — @marcowenjones
+    url: https://x.com/marcowenjones/status/1420429579144110081
+    tier: 3
+    lang: en
+    live_verified: 2026-08-28
+    live_status: "websearch surfaced status ID; full thread body not fetched via webfetch (X login wall) — no downloadable tweet-ID dataset located 2026-08-28"
+    excerpt: "Websearch result snippet: Marc Owen Jones — lecturer on political repression. This is a thread on Twitter manipulation around #Tunisia, of instigating a coup. Prior description: 'tweets using the term Tunis (in Arabic). Tunisia will be analysed. The results are striking, & you give a clear image of polarisation.' No open dataset URL found in this pass — retain C via Al Jazeera write-up which is the citable published version of the same analysis."
+    notes: "Requested step 2: try to locate original Twitter thread archive / dataset — thread handle found, downloadable dataset NOT found — keep C attributed_to Jones via Al Jazeera per task instruction"
+  - id: arabcenter-tunisia-disinformation-2023-07-21
+    title: Disinformation as a Tool of Regime Survival in Tunisia
+    publisher: Arab Center Washington DC — C. Ian DeHaven
+    date: 2023-07-21
+    url: https://arabcenterdc.org/resource/disinformation-as-a-tool-of-regime-survival-in-tunisia/
+    tier: 3
+    lang: en
+    live_verified: 2026-08-28
+    live_status: "200 — webfetch body captured"
+    excerpt: "The effects of President Saied's disinformation also ripple through social media, especially on Facebook, where his supporters exhibit a 'heavy digital presence.' Once Saied identifies targets for harassment in televised speeches or recorded government meetings, his supporters reinforce his rule by publicly attacking and doxing individuals until they become too intimidated to act against the regime. Indeed faces of some critics plastered widely across Tunisian internet that passersby ostracize them in street. Using forensic technology that was in part donated by the United Nations to 'fight cybercrime,' President Saied's government monitors critics online and arrests them for 'conspiring against the state' once they publish something that fits broad language of anti-disinformation law, such as criticism of officials, information about protests, or murmurs of revolution. Decree Law no. 54 of 2022. Qualitative only — no number for scale of network is published in this piece; cites 'heavy' but not enumeration. Source for Decree 54 context and UNODC donation note (March 2021 forensic equipment) — piece itself does not claim a count for a Saied bot farm."
+  - id: pomed-saied-digital-army-2023-06-15
+    title: Expert Q&A — Tunisian President Kaïs Saïed's Digital Army
+    publisher: POMED / Middle East Democracy Center — Zachary White interviewing Amine Snoussi
+    date: 2023-06-15
+    url: https://mideastdc.org/publication/expert-qa-tunisian-president-kais-saieds-digital-army
+    tier: 3
+    lang: en
+    live_verified: 2026-08-28
+    live_status: "200 — webfetch body captured"
+    excerpt: "Amine Snoussi: Saied's supporters have always had a heavy digital presence, but ever since his coup on July 25, 2021, they have been more public and more aggressive. Now, whenever the president publicly identifies targets, his backers kick into gear creating content to attack them. This is the green light ... attacks — mostly on Facebook, the leading platform in Tunisia, with 70 percent of Tunisians having at least one active account — take variety of forms including attacks on women judges (sharing medical records, virginity check), sharing addresses/doxxing, disinformation (bogus foreign-agent claims), and alleged leaks of judicial documents that in several cases preceded arrests of named individuals. On coordination: 'It seems clear that there is some level of coordination, as the online campaign supporting Saied — even before his coup — has always been very disciplined... It is so coordinated that it is difficult to imagine it being a grassroots campaign led by simple supporters. The leaking of judicial documents before authorities released them is also evidence of collusion with state bodies.' On drivers: well-known personalities Riadh Jrad, Ben Arfa, Issam Blanko (tens/hundreds of thousands followers) plus majority hidden behind anonymous accounts with few followers, and some likely bots. On Decree 54: 'In September 2022, Saied issued Decree 54, which is ostensibly a tool to crack down on online disinformation... But the law has been used almost exclusively to target Saied's critics. Pro-Saied Facebook pages spreading misinformation and hate speech have not faced consequences.' On surveillance: Ministry of Interior cybercrime unit capabilities progressed significantly over past decade thanks to considerable foreign aid invested in cybersecurity (including UNODC forensic aid). No numeric count of bots/accounts is published — qualitative assessment only."
+  - id: unodc-forensic-equipment-2021-03-24
+    title: UNODC provides Tunisia with 200,000 USD worth of forensic equipment and software to stop cybercrimes
+    publisher: UNODC Regional Office for the Middle East and North Africa
+    date: 2021-03-24
+    url: https://www.unodc.org/romena/en/Stories/2021/March/unodc-provides-tunisia-with-200-000-usd-worth-of-forensic-equipment-and-software-to-stop-cybercrimes.html
+    tier: 2
+    lang: en
+    live_verified: 2026-08-28
+    live_status: "200 — webfetch body captured; Tunis 24 March 2021 ceremony"
+    excerpt: "Tunis, Tunisia – 24 March 2021 — UNODC provides the Ministry of Interior with 200,000 USD worth of forensic equipment and software under framework 'Supporting Tunisian Capacities to Prevent and Combat Cybercrime' project funded by U.S. Department of State Bureau of International Narcotics and Law Enforcement Affairs (INL). Provision dedicated for use of General Direction of Technical Service and General Direction of National Guard. Project initially launched Feb 2016, second phase Feb 2019. Includes high-end digital forensic equipment and software, certified trainings on use of forensic software to extract and analyse data from digital evidence, capacity building and cryptocurrency/blockchain analysis."
+  - id: digitalaction-tunisia-briefing-2024-10-22
+    title: Tunisia country briefing — Social media ahead of 6 Oct 2024 presidential election
+    publisher: Digital Action / Mena Media Monitoring / Global Coalition for Tech Justice
+    date: 2024-10-22
+    url: https://digitalaction.co/wp-content/uploads/2024/12/Tunisia-briefing_22-Oct-2024_.pdf
+    tier: 3
+    lang: en
+    live_verified: 2026-08-28
+    live_status: "200 — referenced via websearch; PDF not re-fetched in full this run but excerpt captured via search snippets"
+    excerpt: "In months leading up to 6 Oct 2024 vote Saied and supporters targeted civil society/opposition on Facebook; president's 7 May 2024 Facebook video referring to rights groups as 'traitors / foreign agents' played ~290k times shared 1.7k times. Between July and mid-September 2024 Mena Media Monitoring looked into posts across Facebook pages/groups discovering misinformation meant to confuse/influence/manipulate via false info or incitement; pages/groups have tens of thousands followers, post daily, most managed from abroad. Activists report TikTok videos by Saied supporters inciting hate against migrants/opposition. No published enumeration of bot/fake-account count for Tunisia in this window — network described qualitatively."
+  - id: arabfactshub-2024-election-facebook-2024
+    title: Just Sfax — Mapping hate and disinformation on Facebook around a Tunisian election
+    publisher: Arab Facts Hub — research report (2024 post-election Facebook scrape)
+    url: https://www.arabifactshub.com/en/researches/details/45609
+    tier: 3
+    lang: en
+    live_verified: 2026-08-28
+    live_status: "websearch snippet captured 2026-08-28; full body not fetched but presence logged as documented-negative context"
+    excerpt: "Scraper hoovered up over 150,000 posts from Jan 1 to Nov 30 2024, uncovering network of hundreds of pro-Saied Facebook accounts trafficking in conspiracy theories (African settler-colonialism + civil society as foreign agents). Identifies prominent malefactors but publishes no bot/fake-account enumeration — network described as Facebook pages/groups/individual accounts with hateful disinformation, not a counted bot farm."
+
+world_claims:
+  - id: cc-bot-hashtag-july2021-12k-tweets-verify-2026-08-28
+    entity: null
+    claim: >-
+      For the hashtag 'Tunisians revolt against the brotherhood' in the days after 25 Jul 2021, an analysis of 12,000 tweets from 6,800 unique accounts found majority self-reported locations in Saudi Arabia or UAE, top-10 most influential accounts all Gulf influencers (monther72, faljubairi, s_hm2030, emarati_shield plus Khalid bin Dhahi, Mohamed Taqi and others named in body), and a sock-puppet cluster of >200 accounts retweeting persona Fairuz @7__e7 >200 times within 5 minutes (velocity indicator of automation) including reused hacked accounts (14-year-old Filipino girl, Emma Roberts / Smurf avatar); persona tweet carried unrelated comic video. Network graph shape: disconnected blue constellation (>200 retweeters of Fairuz) vs main Saudi/Emirati influencer cluster — cited as inorganic behaviour.
+    assessment: >-
+      Live-reverified 2026-08-28 via Al Jazeera body fetch — all counted elements verbatim: 12,000 tweets, 6,800 unique accounts, majority location Saudi/UAE, top-10 Gulf influencer detail (monther72 most influential per graph caption, faljubairi, s_hm2030, emarati_shield plus bin Dhahi / Taqi in article text), Fairuz handle @7__e7, >200 retweets in 5 min, hacked-account examples, comic video, and disconnected-constellation graph description. Methodology noted in article: hashtag-scoped Twitter collection, location field aggregation, centrality/influence ranking, network graph (connected vs disconnected clusters = inorganic), and velocity (tweets per minute) as automation signal. Typology: real Gulf influencers (high centrality, organic-looking) vs sock-puppets (automated retweets) — do not lump 6,800 as bots. Basis C reported because single-researcher analysis (Marc Owen Jones) published via journalism — reproducible only with tweet IDs which article does not publish. Falsifiable by independent re-collection of same hashtag window or by proof that >200 Fairuz retweeters had persistent organic histories.
+    confidence: C
+    basis: reported
+    attributed_to: Marc Owen Jones via Al Jazeera (28 Jul 2021)
+    sources:
+      - aljazeera-tunisia-manipulation-2021-07-28
+      - jones-twitter-thread-2021-07-xx
+    notes: "Methodology explicit in Al Jazeera piece: hashtag-scoped, location field, centrality, graph shape, velocity. Thread dataset not located 2026-08-28 — see jones-twitter-thread record; no delta to 12k/6.8k counts."
+    disputes:
+      - claim: "6,800 were Tunisian bots"
+        held_by: Loose summary (non-specific)
+        status: rejected
+        assessment: Source specifies majority self-reported location Saudi/UAE and top-10 all Gulf-based; frames episode as foreign amplification on behalf of Tunisians attempting to justify Saied's measures as popular revolt against Brotherhood, not a domestic Tunisian farm. The 12,000 is tweets, not accounts.
+        source: aljazeera-tunisia-manipulation-2021-07-28
+      - claim: "The 12,000 tweets prove a domestic Saied bot farm"
+        held_by: Misreading of same episode
+        status: rejected
+        assessment: Article explicitly distinguishes Gulf-based influencer core from sock-puppet amplification cluster — this is external influence operation, not evidence for domestic 2021-2026 enumeration.
+        source: aljazeera-tunisia-manipulation-2021-07-28
+
+  - id: cc-bot-jones-dataset-2026-08-28-negative
+    entity: null
+    claim: >-
+      No open tweet-ID dataset or archived thread export for the Marc Owen Jones July 2021 hashtag analysis was located on 2026-08-28; the analysis remains cited via its published Al Jazeera write-up.
+    assessment: >-
+      Good-faith websearch for 'Marc Owen Jones Tunisia hashtag July 2021 thread' on 2026-08-28 surfaced X status ID 1420429579144110081 and Northwestern-Qatar profile referencing the Al Jazeera piece, but no GitHub / Harvard Dataverse / OSF dataset link. Failure to find is not proof of non-existence — dataset may exist behind login or under different handle spelling — but for this outbox we treat as documented negative and retain C grading via attributed journalism. Falsifiable by surfacing a public dataset URL or archive snapshot with tweet IDs that reproduces the 12k/6.8k and velocity finding.
+    confidence: C
+    basis: reported
+    attributed_to: Marc Owen Jones via Al Jazeera (dataset not located, write-up is the citable source)
+    sources:
+      - aljazeera-tunisia-manipulation-2021-07-28
+      - jones-twitter-thread-2021-07-xx
+
+  - id: cc-bot-digital-army-qualitative-2026-08-28
+    entity: null
+    claim: >-
+      Tunisian President Kais Saied's supporters exhibit a 'heavy digital presence' — especially on Facebook (which has ~70% penetration in Tunisia) — attacking and doxing critics after Saied's televised target-identification, sharing sensitive personal data (e.g., medical records of women judges including virginity-check result, addresses), fabricating foreign-agent claims against journalists, and allegedly leaking judicial documents that in several cases preceded arrests of named individuals; the campaign is described as disciplined/coordinated enough to suggest at least some collusion with state bodies, driven by both well-known influencers (Riadh Jrad, Ben Arfa, Issam Blanko with tens/hundreds of thousands followers) and a majority of anonymous low-follower accounts where some are 'likely bots', but no numeric scale for a bot farm or coordinated network is published.
+    assessment: >-
+      Qualitative assessment drawn from two independent Tier-3 pieces that converge verbatim on 'heavy digital presence': Arab Center 2023-07-21 and POMED/MEDC 2023-06-15 (Snoussi Q&A). Both describe tactics (doxxing, disinformation, leak-then-arrest pattern), platform (Facebook), trigger (Saied speech) and hybrid network (known influencers + anonymous likely-bots) without ever publishing a count. Inkyfada/DFRLab 2019 and UReputation 2020 are the only enumerated Tunisia-linked networks — neither maps to this 2021-2023 domestic support phenomenon. Treat any number attached to 'Saied digital army' as unsubstantiated unless a future study or platform takedown enumerates it. This is an observed pattern, not an enumerated farm.
+    confidence: D
+    basis: unsubstantiated
+    attributed_to: Amine Snoussi via POMED/MEDC (2023-06-15) and C. Ian DeHaven via Arab Center Washington DC (2023-07-21) — corroborating qualitative claim without enumeration
+    reasoning: >-
+      Inference is not that a network exists (that is reported) but that its scale cannot be quantified from these sources — they give no denominator, no sample window, no graph detection method comparable to 2021 hashtag study, and no platform CIB figure after May 2020.
+    falsifiable_by: >-
+      Any Tier 1–2 enumeration that counts a 2021-2026 Tunisia domestic coordinated network: ISIE/HAICA audit with method and account/Page/Group totals; Meta Adversarial Threat / CIB report with Tunisia-origin asset count; peer-reviewed OSINT graph analysis with asset list and follower totals; or a court filing that lists seized handles with provenance.
+    sources:
+      - arabcenter-tunisia-disinformation-2023-07-21
+      - pomed-saied-digital-army-2023-06-15
+
+  - id: cc-bot-no-domestic-enumeration-2021-2026-verify-2026-08-28
+    entity: null
+    claim: >-
+      For 2021-2026 no high-trust (Tier 1–2) source publishes an enumerated size for a domestic Tunisian bot farm or coordinated network around President Kais Saied; the only quantified Tunisia-linked episodes in the decade remain the May 2019 Archimedes global takedown (Tunisia slice 11 Pages per Inkyfada, not accounts) and the Jun 2020 UReputation origin-Tunisia takedown (993 assets, 182 of which are Facebook accounts) — both foreign-facing; the 2021 hashtag episode is foreign amplification (Saudi/UAE majority), not a domestic count. Decree Law 54 of 13 Sep 2022 creates powers to prosecute 'rumours/fake news' but itself contains no bot count; UNODC-donated forensic equipment is documented as capability (USD 200,000 on 24 Mar 2021) but is not a measure of scale of domestic enforcement against bots.
+    assessment: >-
+      Documented negative after systematic negative search formalised in this pass: websearch 2026-08-28 for 'Tunisia 2024 presidential election disinformation bots' surfaced Digital Action briefing (22 Oct 2024) and Arab Facts Hub scrape (>150k posts Jan–Nov 2024, hundreds of pro-Saied accounts described but not counted as bots), plus Freedom House Election Watch 2024, BBC/NPR coverage — none publishes a bot-farm enumeration; websearch for 'Tunisia Decree 54 UNODC forensic' reconfirmed UNODC ROMENA March 2021 equipment story already cited in Arab Center but no scale metric. Meta Threat Report index and X Transparency Tunisia country report checked in prior outbox and not yielding a Tunisia domestic takedown count through 2025 remain applicable. Keep as unsubstantiated on numeric scale per rule 6 — the popular 'digital army' narrative is kept with attribution, scale is kept as ?.
+    confidence: D
+    basis: unsubstantiated
+    attributed_to: Synthesis of search-negative plus Arab Center/POMED (qualitative only) and prior outbox negatives (Meta/X indices); popular numeric claims circulate without citer
+    reasoning: >-
+      The claim being graded is not 'nothing happened online' — qualitative harassment/doxxing is documented — but 'there exists a counted domestic farm of N accounts' for 2021-2026. That N is not in any Tier 1–2 primary this research found; converting 'heavy presence' or 'hundreds of accounts scraped' into a bot total would be invention. Gap is therefore a finding, not an omission.
+    falsifiable_by: >-
+      Publication of any Tier 1–2 enumeration for 2021-2026: e.g., ISIE or HAICA election report table with account/Page count and method; Meta Adversarial Threat / CIB entry 'Origin: Tunisia' with asset breakdown and follower total; DFRLab-equivalent OSINT with WHOIS/subdomain/admin linkage for a post-2021 Tunisia domestic network; or court/INLUCC filing listing seized handles with forensic linkage.
+    sources:
+      - aljazeera-tunisia-manipulation-2021-07-28
+      - arabcenter-tunisia-disinformation-2023-07-21
+      - pomed-saied-digital-army-2023-06-15
+      - unodc-forensic-equipment-2021-03-24
+      - digitalaction-tunisia-briefing-2024-10-22
+      - arabfactshub-2024-election-facebook-2024
+
+  - id: cc-bot-2024-election-no-bot-count-2026-08-28
+    entity: null
+    claim: >-
+      Ahead of the 6 Oct 2024 Tunisian presidential election, no published source enumerates a Tunisian bot farm of a stated size: Digital Action / Mena Media Monitoring (Jul–mid-Sep 2024) describe Facebook pages/groups with tens of thousands of followers that publish mis/disinformation and are mostly managed from abroad, and a specific false claim about ISIE president Farouk Bouasker proposing to cut Facebook/TikTok until 6 Oct, but do not count bots; Arab Facts Hub's 2024 scrape (>150k posts, hundreds of pro-Saied entities trafficking in African-colonialism + foreign-agent conspiracies) likewise publishes no bot/fake-account enumeration; Meta and Platform policies failed to act but did not disclose a Tunisia-specific takedown count in this window.
+    assessment: >-
+      Documented negative on enumeration specific to the 2024 election window. Both 2024 studies are Tier-3 journalism/research — they map networks and narratives (great-replacement / settler-colonialism, traitor/foreign-agent smear of civil society) with qualitative reach metrics (followers, shares) and platform moderation critique, but method is scraper + keyword matching or manual post review, not CIB asset counting. Any attempt to cite them for a 2024 bot total would be invention. Falsifiable by a post-Oct-2024 platform takedown report or ISIE/HAICA annex with count.
+    confidence: D
+    basis: unsubstantiated
+    attributed_to: Digital Action / Mena Media Monitoring (Oct 2024) and Arab Facts Hub (2024) — both describe networks without enumeration; numeric scale, if claimed elsewhere, is unattributed
+    falsifiable_by: >-
+      A published count with method: e.g., Meta CIB report addendum for H2 2024 listing Tunisia, or ISIE post-election audit annex with enumerated accounts/pages removed or flagged, or peer-reviewed scrape that labels and counts bots vs humans with classification threshold and validation.
+    sources:
+      - digitalaction-tunisia-briefing-2024-10-22
+      - arabfactshub-2024-election-facebook-2024
+
+  - id: cc-bot-unodc-forensic-capability-not-scale-2026-08-28
+    entity: null
+    claim: >-
+      On 24 Mar 2021 UNODC delivered USD 200,000 worth of forensic equipment and software to Tunisia's Ministry of Interior (General Direction of Technical Service and General Direction of National Guard) under the 'Supporting Tunisian Capacities to Prevent and Combat Cybercrime' project funded by U.S. INL (launched Feb 2016, phase 2 from Feb 2019), including high-end digital forensic equipment plus certified trainings on extraction/analysis of digital evidence and crypto/blockchain; Arab Center and POMED cite this capability as the backdrop against which Decree 54 (Sep 2022) has been used to monitor critics' phones/messages and prosecute journalists/students/lawyers/activists for online criticism, while pro-Saied Facebook pages spreading hate/disinformation have not faced consequences — but the equipment value is not evidence of scale of bot enforcement nor of a counted farm.
+    assessment: >-
+      Documented capability fact from Tier-2 institutional source (UNODC ROMENA), live-verified 2026-08-28 with excerpt. Value and recipient are exact ($200k, 24 Mar 2021, Tunis, two general directions). Link to Decree 54 enforcement is reported by Tier-3 POMED/AccessNow/HRW framing — keep as reported use-pattern, not as proof of deployment scale. Do not sum $200k with a bot count. Falsifiable by UNODC inventory list with serial/licence counts or by MoI annual report on cases processed with this kit.
+    confidence: B
+    basis: documented
+    sources:
+      - unodc-forensic-equipment-2021-03-24
+      - arabcenter-tunisia-disinformation-2023-07-21
+      - pomed-saied-digital-army-2023-06-15
+
+notes:
+  - "Evidence ladder: Al Jazeera/Jones Tier 3, Arab Center Tier 3, POMED/MEDC Tier 3, UNODC Tier 2, Digital Action/Arab Facts Hub Tier 3 context. C claims carry attributed_to *via* publisher; D claims mark unattributed numeric scale as unsubstantiated with falsifiable_by."
+  - "Failure vocabulary enforced throughout: 12k tweets ≠ 6.8k accounts; hashtag scope ≠ national total; Gulf influencers + sock-puppets = foreign amplification ≠ domestic farm; documented-negative gap 2021-2026 is finding not omission; heavy presence without number is not a count."
+  - "Methodology for 2021 episode made explicit: hashtag-scoped collection, self-reported location field, centrality/influence ranking, network graph disconnected constellation = inorganic, velocity (>200 RT in 5 min) = automation signal, plus hacked-account reuse (Filipino girl, Emma Roberts/Smurf) and comic-video payload."
+  - "No domestic 2021-2026 enumeration found after live fetch + two websearches (2024-election bots; Decree 54 forensic) — UNODC $200k verified as capability not scale; 2024 Digital Action & Arab Facts Hub networks described qualitatively but not counted — retain D with falsifiable_by for upgrade path."

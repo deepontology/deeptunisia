@@ -1,0 +1,24 @@
+slug: bot-farm
+version: "0.1"
+title:
+  en: "The Tunisian Bot Farm That Was Not One Farm"
+  fr: "La ferme à bots tunisienne qui n'en était pas une"
+  ar: "مزرعة الذباب الإلكتروني التونسية التي لم تكن مزرعة واحدة"
+subtitle:
+  en: "Counting fakes from Carthage to Decree 54 — 2016 to 2026"
+  fr: "Compter les faux de Carthage au décret 54 — 2016 à 2026"
+  ar: "عدّ الحسابات الوهمية من قرطاج إلى المرسوم ٥٤ — ٢٠١٦ إلى ٢٠٢٦"
+series:
+  id: power-and-presence
+  title:
+    en: "Power and Presence"
+    fr: "Pouvoir et présence"
+    ar: "السلطة والحضور"
+  position: 2
+published: 2026-08-28
+status: draft
+reading_time_minutes: 16
+overall_confidence: B
+overall_confidence_reasoning: "Two platform-confirmed takedowns anchor the decade (2019 Archimedes global 265, 2020 Carthage 993 origin Tunisia); complementary prevalence and amplification studies reported; 2021-2026 domestic scale remains unsubstantiated — gap is a finding"
+tags: [disinformation, elections, platform-governance, law, facebook, social-media, decree54]
+cover_image: null

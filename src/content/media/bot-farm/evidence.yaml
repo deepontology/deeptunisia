@@ -1,0 +1,303 @@
+# Bot Farm — evidence layer
+# Claims C001–C027 map to outline §6; IDs preserve manual outline numbering for cross-ref to research/bot-farm-outline.md.
+# Grades: documented (platform/institutional verbatim), reported (journalism/single-researcher), unsubstantiated (circulating without number).
+# Sources are registered in ../media/bot-farm/sources.yaml and in data/contrib/bot-farm-*.yaml.
+
+claims:
+
+  # ── S02 — Archimedes (2019) ─────────────────────────────────────────
+
+  - id: C001
+    text:
+      en: "16 May 2019 — Meta (Archimedes Group) removes 265 assets globally including Tunisia: 65 FB accounts + 161 Pages + 23 Groups + 12 events + 4 IG = 265; ~2.8M Page followers, ~5,500 Group joins, ~920 IG followers; ~$812k ad spend Dec 2012–Apr 2019 (BRL/ILS/USD); focus: Nigeria, Senegal, Togo, Angola, Niger and Tunisia + LatAm/SEA"
+    grade: documented
+    sources: [fb-cib-israel-2019-05-16]
+    entities: [archimedes-group, facebook-meta-cib]
+    sections: [S02]
+    disputed: true
+    dispute:
+      description: "265 is global-including-Tunisia, not Tunisia count — Tunisia slice is ?"
+      positions:
+        - claim: "265 is the Tunisia bot farm"
+          source: fb-cib-israel-2019-05-16
+          holder: "Popular retelling (non-specific)"
+        - claim: "265 is global across at least 13 countries; Tunisia list membership only"
+          source: fb-cib-israel-2019-05-16
+          holder: "Meta primary (country list) + Nawaat 2019-05-27 note of scarcity"
+      adopted: "Global total retained; Tunisia share = ? until Meta country slice published"
+    text_note: "A-grade verbatim; live-verified 2026-08-28 via webfetch body captured; arithmetic 65+161+23+12+4 verified"
+
+  - id: C002
+    text:
+      en: "17 Jan–12 Mar 2019 — Inkyfada (via DFRLab dataset) counts 11 Tunisia-related Pages of the Archimedes takedown, 494,865 followers (~500k); 359 posts >1M interactions, 36 videos ~8M views; never attacked Nabil Karoui; 5 shared Nessma TV / Khalil Tounes"
+    grade: reported
+    sources: [inkyfada-facebook-israel-2019-06-03]
+    entities: [archimedes-group, nabil-karoui]
+    sections: [S02]
+    disputed: false
+    text_note: "C — single outlet via DFRLab dataset; Inkyfada body live-verified 2026-08-28"
+
+  - id: C003
+    text:
+      en: "15 May–15 Jul 2019 — ATIDE/DRI study sample: unaffiliated entertainment/satirical Pages produced 38.5% of political messages; flag clusters sharing similar content within time windows as 'page network'"
+    grade: documented
+    sources: [dri-atide-tunisia-social-media-2019-09-11]
+    entities: [atide, dri-democracy-reporting]
+    sections: [S02]
+    disputed: false
+    text_note: "B — institutional research; prevalence not a bot count; PDF live fetch 403 flagged needs-primary-source"
+
+  - id: C004
+    text:
+      en: "Tunisia slice of Archimedes remains undisclosed by Meta — only Tunisia-sliced enumeration for 2019 is Inkyfada's 11 Pages; contemporary Nawaat (27 May 2019) noted 'published information about Tunisia are quite scarce'"
+    grade: documented
+    sources: [fb-cib-israel-2019-05-16, inkyfada-facebook-israel-2019-06-03, nawaat-archimedes-tunisia-2019-05-27]
+    entities: [archimedes-group]
+    sections: [S02]
+    disputed: false
+    text_note: "Documented negative on enumeration — do not inflate 11 Pages or 161 Pages to Tunisia bots"
+
+  # ── S03 — Carthage (2020) — documented core ─────────────────────────
+
+  - id: C005
+    text:
+      en: "5 Jun 2020 — Facebook removes 993 Tunisia-origin assets: 446 Pages + 182 FB accounts + 96 Groups + 60 events + 209 IG = 993; ~3.8M Page followers, ~131,900 Group joins, ~171,500 IG followers, up to 4,300 event interest; ~$331k ad spend (EUR/USD); linked to UReputation"
+    grade: documented
+    sources: [fb-cib-may2020-announcement, fb-cib-may2020-detailed-pdf, dfrlab-operation-carthage-2020-06-05]
+    entities: [ureputation, facebook-meta-cib, dfrlab-atlantic-council]
+    sections: [S03]
+    disputed: false
+    text_note: "A — converged across 3 primaries live-verified 2026-08-28; only 182 is the account count"
+
+  - id: C006
+    text:
+      en: "Operation Carthage targeted 10 African countries and produced election content for Nabil Karoui (Tunisia 2019), Faure Gnassingbé (Togo Feb 2020), Henri Konan Bédié (CIV Oct 2020), Azali Assoumani (Comoros Mar 2019)"
+    grade: documented
+    sources: [dfrlab-operation-carthage-2020-06-05, fb-cib-may2020-detailed-pdf]
+    entities: [ureputation, lotfi-bel-hadj, nabil-karoui]
+    sections: [S03]
+    disputed: false
+
+  - id: C007
+    text:
+      en: "Francophone news-site infrastructure operated >5 years: Revue de l'Afrique (May 2014), Afrika News, AfrikanPost, Maghreb-Info etc. — >2 dozen Pages removed, some launched 8 Jul 2016"
+    grade: documented
+    sources: [dfrlab-operation-carthage-2020-06-05]
+    entities: [ureputation]
+    sections: [S03]
+    disputed: false
+
+  - id: C008
+    text:
+      en: "Attributable infrastructure: Fake News Checking 29 Aug 2019 (co-founder Moëz Bhar, ureputation.net since Jun 2014) / @360_tn Feb 2015 rename; kaissaied.com WHOIS Avenue Roseleo ≈ Digital Big Brother Carrer del Rosselló 218 (Lotfi Bel Hadj)"
+    grade: documented
+    sources: [dfrlab-operation-carthage-2020-06-05, nawaat-operation-carthage-2020-06-16]
+    entities: [moez-bhar, lotfi-bel-hadj, ureputation]
+    sections: [S03]
+    disputed: false
+    text_note: "B — open-source trail (WHOIS/SecurityTrails/LinkedIn/Twitter handle history); not identity-proof alone"
+
+  - id: C009
+    text:
+      en: "Method: CIB graph detection (fake-as-local + coordinated posting + concealment + deceptive audience building) after DFRLab referral Sep 2019, plus DFRLab OSINT Sep 2019–Jun 2020 (WHOIS, SecurityTrails subdomains, Twitter history, site graph)"
+    grade: documented
+    sources: [fb-cib-may2020-detailed-pdf, dfrlab-operation-carthage-2020-06-05]
+    entities: [ureputation, dfrlab-atlantic-council, facebook-meta-cib]
+    sections: [S03, S07]
+    disputed: false
+
+  # ── S04 — Collateral (full section per instruction) ─────────────────
+
+  - id: C010
+    text:
+      en: "29–30 May 2020 — up to 60 accounts/pages belonging to journalists, bloggers, artists and musicians deactivated without warning (incl. Haythem El Mekki, Sarah Ben Hamadi, Bendir Man; participative web radio Radyoon active since 2012)"
+    grade: reported
+    sources: [article19-tunisia-accounts-2020-06-15]
+    entities: [article-19]
+    sections: [S04]
+    disputed: true
+    dispute:
+      description: "Are the ~60 collateral accounts part of the 993 UReputation network or false positives?"
+      positions:
+        - claim: "The ~60 were UReputation fakes and their removal proves success"
+          source: fb-cib-may2020-announcement
+          holder: "Implied by proximity of CIB numbers to May-29 window"
+        - claim: "Deleted pages are not pages related to UReputation (Radyoon since 2012 and others deny link; ~20 restored)"
+          source: article19-tunisia-accounts-2020-06-15
+          holder: "ARTICLE 19 via affected users + Access Now / Nawaat"
+      adopted: "Dispute open — both holdings retained; ~20 restored <24h via I Watch suggests at least partial false positive"
+    text_note: "C — attributed_to ARTICLE 19 + affected-user testimony"
+
+  - id: C011
+    text:
+      en: "At least 28 accounts restored via Facebook Trusted Partner I Watch and Access Now Helpline; Facebook sequence — 4 Jun via Guardian: 'technical error, small number restored' then 5 Jun CIB Report: deliberate 993 removal — no reconciliation published"
+    grade: reported
+    sources: [article19-tunisia-accounts-2020-06-15, accessnow-carthage-transparency-2020-06-12]
+    entities: [article-19, access-now]
+    sections: [S04]
+    disputed: true
+    dispute:
+      description: "Technical error vs deliberate removal sequencing"
+      positions:
+        - claim: "Small number, technical error, now restored"
+          source: article19-tunisia-accounts-2020-06-15
+          holder: "Facebook via Guardian 4 Jun 2020"
+        - claim: "Deliberate removal of 446/182/96/60/209 UReputation assets"
+          source: fb-cib-may2020-announcement
+          holder: "Facebook May CIB Report 5 Jun 2020"
+      adopted: "Open — per-handle audit required to reconcile; Access Now 12 Jun: 'we can only speculate collateral damage'"
+
+  # ── S05 — Foreign amplification (not domestic farm) ─────────────────
+
+  - id: C012
+    text:
+      en: "Jul 2021 hashtag 'Tunisians revolt against the brotherhood' — 12,000 tweets from 6,800 unique accounts; majority self-reported location Saudi Arabia / UAE; top 10 most influential all Gulf-based (monther72, faljubairi, s_hm2030, emarati_shield) — foreign amplification of Saied's 25 Jul move"
+    grade: reported
+    sources: [aljazeera-tunisia-manipulation-2021-07-28]
+    entities: [marc-owen-jones]
+    sections: [S05]
+    disputed: false
+    text_note: "C — Marc Owen Jones via Al Jazeera; 12k is tweets not accounts"
+
+  - id: C013
+    text:
+      en: "Sock-puppet cluster >200 accounts retweeting persona Fairuz @7__e7 >200 times within 5 minutes (velocity as automation signal); hacked-account reuse (14yo Filipino girl, Emma Roberts / Smurf avatar); persona tweet carried unrelated comic video; disconnected blue constellation vs main cluster = inorganic"
+    grade: reported
+    sources: [aljazeera-tunisia-manipulation-2021-07-28]
+    entities: [marc-owen-jones]
+    sections: [S05]
+    disputed: true
+    dispute:
+      description: "Were 6,800 Tunisian bots or foreign influencers + sock-puppets?"
+      positions:
+        - claim: "6,800 were Tunisian bots"
+          source: aljazeera-tunisia-manipulation-2021-07-28
+          holder: "Loose summary (non-specific)"
+        - claim: "Gulf influencer core (real, high centrality) + sock-puppet automated retweeters — typology matters, not one bot label"
+          source: aljazeera-tunisia-manipulation-2021-07-28
+          holder: "Marc Owen Jones typology via Al Jazeera"
+      adopted: "Jones typology adopted — not 6,800 bots"
+    text_note: "C — velocity + graph shape + reuse pattern is claim; dataset not located — falsifiable by tweet-ID re-collection"
+
+  # ── S01 — Baseline / negatives (2016–2018) ──────────────────────────
+
+  - id: C014
+    text:
+      en: "2016–2018 — no Tier 1–2 Tunisia-specific fake-account or takedown count published; Meta Threat index + X country report list no Tunisia bot disclosure in this window (documented negative)"
+    grade: documented
+    sources: [meta-threat-reporting-2026-08-28, x-transparency-tunisia-2026-08-28]
+    entities: []
+    sections: [S01]
+    disputed: false
+    text_note: "Documented negative — absence of enumeration, not evidence of zero activity"
+
+  # ── S06 — Decree 54 & the digital army (full section) ───────────────
+
+  - id: C015
+    text:
+      en: "13 Sep 2022 — Decree Law 54 criminalises 'false news/rumours' via information systems (Art.24: 5 years + 50,000 TND, doubled if victim is public official) — text contains no bot count"
+    grade: documented
+    sources: [decree54-dcaf-2022-09-13]
+    entities: []
+    sections: [S06]
+    disputed: false
+    text_note: "A — Tier 1; full decree fetched 2026-08-28; no application decree enumerating bots found (C)"
+
+  - id: C016
+    text:
+      en: "24 Mar 2021 — UNODC delivers $200k forensic equipment/software to Tunisian Ministry of Interior (General Directions of Technical Service and National Guard) — capability, not scale"
+    grade: documented
+    sources: [unodc-forensic-equipment-2021-03-24]
+    entities: []
+    sections: [S06]
+    disputed: false
+    text_note: "B — institutional; cited by Arab Center as backdrop to Decree 54 enforcement pattern"
+
+  - id: C017
+    text:
+      en: "Saied 'digital army' qualitative claim — supporters exhibit 'heavy digital presence' on Facebook, doxing after televised targeting; POMED/Snoussi: disciplined, likely coordinated, collusion suggested by judicial-document leaks preceding arrests; majority anonymous low-follower accounts, some 'likely bots' — but no number published"
+    grade: unsubstantiated
+    sources: [arabcenter-tunisia-disinformation-2023-07-21, pomed-saied-digital-army-2023-06-15]
+    entities: []
+    sections: [S06]
+    disputed: true
+    dispute:
+      description: "Does a stated-size Saied domestic bot farm exist 2021–2026?"
+      positions:
+        - claim: "A Saied domestic farm of N accounts existed in 2021–2026"
+          source: arabcenter-tunisia-disinformation-2023-07-21
+          holder: "Circulating social-media claims (non-specific)"
+        - claim: "No enumeration at Tier 1–3 as of 2026-08-28 — qualitative pattern documented, scale remains ?"
+          source: arabcenter-tunisia-disinformation-2023-07-21
+          holder: "Arab Center / POMED — qualitative only"
+      adopted: "Scale unsubstantiated; retain claim with attributed_to — D (falsifiable by ISIE/HAICA audit or platform takedown with count)"
+    text_note: "D — attributed_to Snoussi via POMED + DeHaven via Arab Center; falsifiable_by any Tier 1–2 count with method"
+
+  - id: C018
+    text:
+      en: "2021–2026 — no Tier 1–2 source publishes an enumerated domestic farm size for Saied era; Meta Adversarial Threat + X Transparency checks through 2025 add no Tunisia domestic count; Digital Action Oct 2024 and Arab Facts Hub 150k-post scrape describe networks qualitatively without bot enumeration (documented negative)"
+    grade: unsubstantiated
+    sources: [meta-threat-reporting-2026-08-28, x-transparency-tunisia-2026-08-28, digitalaction-tunisia-briefing-2024-10-22]
+    entities: []
+    sections: [S06]
+    disputed: false
+    text_note: "D — absence of enumeration retained as finding, not omission; gap is the story"
+
+  - id: C019
+    text:
+      en: "6 Oct 2024 presidential window — pages/groups with tens of thousands of followers published misinformation mostly managed from abroad; no bot count published (Digital Action); >150k posts scraped, hundreds of pro-Saied entities trafficking conspiracies, no fake-account enumeration (Arab Facts Hub)"
+    grade: unsubstantiated
+    sources: [digitalaction-tunisia-briefing-2024-10-22, arabfactshub-2024-election-facebook-2024]
+    entities: []
+    sections: [S06]
+    disputed: false
+
+  # ── S01 — Platform negatives (cross-cutting) ────────────────────────
+
+  - id: C020
+    text:
+      en: "Meta Threat Reporting index 2018–2026 lists no additional Tunisia-origin CIB takedown beyond May 2019 Archimedes (origin Israel, Tunisia as target) and May 2020 UReputation (origin Tunisia)"
+    grade: documented
+    sources: [meta-threat-reporting-2026-08-28]
+    entities: [facebook-meta-cib]
+    sections: [S01, S07]
+    disputed: false
+
+  - id: C021
+    text:
+      en: "X Transparency reports for Tunisia (country + global/DSA 2025) publish no bot/IO enumeration for Tunisia; IO endpoint 404; no Tunisia campaign in public IO mirrors (MassMove, Zenodo 26)"
+    grade: documented
+    sources: [x-transparency-tunisia-2026-08-28, x-io-archive-negative-2026-08-28]
+    entities: []
+    sections: [S01, S07]
+    disputed: false
+
+  - id: C022
+    text:
+      en: "Google TAG bulletins 2018–2026 surface no Tunisia-specific coordinated IO termination for Tunisia_origin or Tunisia_target"
+    grade: documented
+    sources: [google-tag-negative-2026-08-28]
+    entities: []
+    sections: [S01, S07]
+    disputed: false
+
+  - id: C023
+    text:
+      en: "ISIE published reports list (2011–2024, HTML captured 2026-08-28) contains no bot/fake-account annex for 2019 or 2024; only quantified Art.143 application is Aich Tounsi France-2 (207 votes, Facebook ad breach) — spending/silence sanction, not bot census"
+    grade: documented
+    sources: [isie-reports-list-2026-08-28, eu-eom-tunisia-2019-final-fr]
+    entities: [isie]
+    sections: [S01, S07]
+    disputed: false
+
+  # ── S07 — Method synthesis (inferred, needs reasoning + falsifier) ──
+
+  - id: C024
+    text:
+      en: "The quantified estimates rely on four non-additive methods: (a) platform CIB graph detection (assets = Pages/accounts/Groups/events/IG), (b) OSINT Page/content review (Inkyfada 11 Pages, DFRLab WHOIS/SecurityTrails), (c) sample-based prevalence (ATIDE/DRI 38.5% share of messages), (d) hashtag network science (Jones 12k tweets, graph shape + velocity) — totals must not be summed"
+    grade: reported
+    sources: [fb-cib-may2020-detailed-pdf, inkyfada-facebook-israel-2019-06-03, dri-atide-tunisia-social-media-2019-09-11, aljazeera-tunisia-manipulation-2021-07-28]
+    entities: [facebook-meta-cib]
+    sections: [S07]
+    disputed: false
+    text_note: "C — research synthesis; reasoning: units differ (446 Pages ≠ 182 accounts; 38.5% is message share; 12k is tweets). Falsifiable by a primary instructing summation across methods."

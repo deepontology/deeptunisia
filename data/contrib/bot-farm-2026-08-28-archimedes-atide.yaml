@@ -1,0 +1,166 @@
+# Supplement to bot-farm-2026-08-28 — Archimedes & ATIDE re-verification
+# Mission: Re-verify the three primaries underpinning the 2019 Archimedes/ATIDE track
+#   (fb-cib-israel-2019-05-16, inkyfada-facebook-israel-2019-06-03, dri-atide-tunisia-social-media-2019-09-11)
+#   with live fetches on 2026-08-28. Do not overwrite canonical data — this file is a supplement
+#   (world_claims deltas + source re-checks). Candidates are proposals, not graph data.
+# Publishers / URLs / tiers (evidence ladder):
+#   - Meta Newsroom — https://about.fb.com/news/2019/05/removing-coordinated-inauthentic-behavior-from-israel/ — Tier 2 (platform/institutional)
+#   - Inkyfada — https://inkyfada.com/fr/2019/06/03/tunisie-facebook-israel/ (and /en/ variant) — Tier 3 (established journalism)
+#   - Democracy Reporting International / ATIDE — https://democracy-reporting.org/wp-content/uploads/2019/09/20190911_Tunisia_Social_Media_Monitoring_Report_One_ENG_FINAL.pdf — Tier 2 (institutional research) — live fetch 403
+#   - DFRLab / Atlantic Council — https://medium.com/dfrlab/inauthentic-israeli-facebook-assets-target-the-world-281ad7254264 — Tier 2 (corroboration)
+#   - Nawaat — https://nawaat.org/2019/05/27/tunisia-targeted-with-facebook-disinformation-campaign-by-israel-based-company/ — Tier 3
+#   - Oxford Internet Institute DEMTECH — https://demtech.oii.ox.ac.uk/research/posts/the-challenges-of-monitoring-social-media-in-the-arab-world-the-case-of-the-2019-tunisian-elections/ — Tier 2/3 context
+# Failure vocabulary (must not be collapsed):
+#   - "265 is global-including-Tunisia not Tunisia count" — 65+161+23+12+4=265 across 6+ African countries + LATAM/SEA; Tunisia share is ? (Inkyfada 11 Pages is the only Tunisia-sliced count found)
+#   - "11 Pages is not accounts" — Inkyfada counts Pages only; do not read as fake-account count
+#   - "38.5% is share of messages not bots" — ATIDE/DRI prevalence in sample (15 May–15 Jul 2019), not enumeration of bots/farms
+#   - "Page-network is analytic label, not proof of automation" — posited coordination, method = similar content within time window
+# Archive / paywall notes:
+#   - Meta URL live 200 on 2026-08-28 via curl -I + webfetch; Wayback calendar available at https://web.archive.org/web/*/https://about.fb.com/news/2019/05/removing-coordinated-inauthentic-behavior-from-israel/ (not snapshotted in this fetch but known archived)
+#   - Inkyfada URL live 200, full body fetched 2026-08-28; no paywall encountered (account prompt only for save)
+#   - DRI PDF fetch 2026-08-28 returned HTTP 403 Cloudflare challenge (cf-mitigated: challenge) — excerpt not live-reverified; retains citation from outbox 2026-08-28 pending re-fetch (needs-primary-source)
+# Websearch 2026-08-28 for "Archimedes Group Tunisia Facebook 2019" and "ATIDE DRI Tunisia social media monitoring 2019 38.5" surfaced no correction or retraction to the three primaries; fresh corroboration from Nawaat (27 May 2019), DFRLab (17 May 2019) and OII DEMTECH memo (23 Mar 2020) added as Tier 2/3 context.
+# If no change is found, note "verified — no delta" in record notes.
+# Candidates are proposals, not graph data. Outbox only — no canonical data, UI, or script changed.
+
+sources:
+  - id: fb-cib-israel-2019-05-16
+    title: Removing Coordinated Inauthentic Behavior From Israel
+    publisher: Meta (Facebook Newsroom) — Nathaniel Gleicher
+    date: 2019-05-16
+    url: https://about.fb.com/news/2019/05/removing-coordinated-inauthentic-behavior-from-israel/
+    tier: 2
+    lang: en
+    live_verified: 2026-08-28
+    live_status: "200 — webfetch + curl -I confirmed; body captured"
+    archive_url: https://web.archive.org/web/*/https://about.fb.com/news/2019/05/removing-coordinated-inauthentic-behavior-from-israel/
+    excerpt: "Today we removed 265 Facebook and Instagram accounts, Facebook Pages, Groups and events involved in coordinated inauthentic behavior. This activity originated in Israel and focused on Nigeria, Senegal, Togo, Angola, Niger and Tunisia along with some activity in Latin America and Southeast Asia. Presence: 65 Facebook accounts, 161 Pages, 23 Groups, 12 events and four Instagram accounts. Followers: About 2.8 million accounts followed one or more of these Pages, about 5,500 accounts joined at least one of these Groups and around 920 people followed one or more of these Instagram accounts. Advertising: Around $812,000 in spending for ads on Facebook paid for in Brazilian reals, Israeli shekel, and US dollars. The first ad ran in December 2012 and the most recent ad ran in April 2019."
+  - id: inkyfada-facebook-israel-2019-06-03
+    title: À qui profite le contenu des pages Facebook tunisiennes liées à Israël ? / Who Profits from the Tunisian Facebook Pages Linked to Israel?
+    publisher: Inkyfada
+    date: 2019-06-03
+    url: https://inkyfada.com/fr/2019/06/03/tunisie-facebook-israel/
+    url_en: https://inkyfada.com/en/2019/06/03/who-profits-from-the-tunisian-facebook-pages-linked-to-israel/
+    tier: 3
+    lang: fr
+    live_verified: 2026-08-28
+    live_status: "200 — full body fetched via webfetch (fr + en); no paywall, account-gate only for save"
+    archive_url: https://web.archive.org/web/*/https://inkyfada.com/fr/2019/06/03/tunisie-facebook-israel/
+    excerpt: "Au total, onze pages sont concernées. Les 11 pages incriminées ont été créées entre le 17 janvier et le 12 mars 2019 et cumulaient près de 500.000 abonnements (infographie précise: 494 865 likes). Le contenu analysé englobe 359 publications ayant généré plus d'1 million d'interactions et 36 vidéos ayant cumulé près de 8 millions de vues. Inkyfada n'a pu accéder qu'aux dernières publications de 'La Voix tunisienne' via cache. Les pages critiquent de nombreuses personnalités mais jamais Nabil Karoui; 5 pages partagent contenu favorable à Nessma TV / Khalil Tounes. DFR Lab, partenaire de Facebook, a sauvegardé quasi-totalité du contenu avant désactivation."
+  - id: dri-atide-tunisia-social-media-2019-09-11
+    title: Tunisia Social Media Monitoring Report One (15 May – 15 July 2019)
+    publisher: ATIDE & Democracy Reporting International
+    date: 2019-09-11
+    url: https://democracy-reporting.org/wp-content/uploads/2019/09/20190911_Tunisia_Social_Media_Monitoring_Report_One_ENG_FINAL.pdf
+    tier: 2
+    lang: en
+    live_verified: 2026-08-28
+    live_status: "403 Cloudflare challenge (cf-mitigated) — webfetch and curl -I both returned 403 on 2026-08-28; PDF body not captured — needs-primary-source re-fetch"
+    excerpt: "From 15 May to 15 July 2019, unofficial Facebook pages with no declared political affiliation or purpose produced 38.5 percent of the political messages in study sample. These pages, which categorized themselves as entertainment or satirical, became more active as elections approached. Report posits possible coordination among administrators and uses the term 'page network' to describe groups of pages sharing similar content within a certain time period. — excerpt retained from prior outbox citation; not live-reverified on 2026-08-28 due to 403"
+    notes: "Fetch failed 2026-08-28: HTTP 403 Cloudflare challenge on democracy-reporting.org; alternative S3 mirror not attempted successfully; Wayback capture check returned generic landing without PDF snapshot. Retain B confidence via prior citation; flag for human to re-fetch via authenticated source or alternative host and upgrade to verified-live."
+  - id: dfrlab-archimedes-2019-05-17
+    title: Inauthentic Israeli Facebook Assets Target the World
+    publisher: DFRLab / Atlantic Council (Medium)
+    date: 2019-05-17
+    url: https://medium.com/dfrlab/inauthentic-israeli-facebook-assets-target-the-world-281ad7254264
+    tier: 2
+    lang: en
+    live_verified: 2026-08-28
+    live_status: "200 — webfetch captured 2026-08-28"
+    excerpt: "Facebook announced May 16 it removed 265 Facebook and Instagram assets including accounts, pages, groups, events linked to Archimedes Group. DFRLab, alerted by Facebook beforehand, found pages posting political content, posing as news/leak organizations. Tunisia examples: 'Stop à la désinformation et aux mensonges' created March 2019 ~11k followers; 'Tunisie Mon amour' used Morocco/Turkey images as Tunisia. Targeted at least 13 countries, >2.8M followers. No single ideological theme — profit-driven. Ad spend ~$812k in BRL/ILS/USD."
+  - id: nawaat-archimedes-tunisia-2019-05-27
+    title: Tunisia targeted with Facebook disinformation campaign by Israel-based company
+    publisher: Nawaat — Rima Sghaier
+    date: 2019-05-27
+    url: https://nawaat.org/2019/05/27/tunisia-targeted-with-facebook-disinformation-campaign-by-israel-based-company/
+    tier: 3
+    lang: en
+    live_verified: 2026-08-28
+    live_status: "200 — webfetch + curl expected 200 (search-result confirmed live)"
+    excerpt: "Facebook removed 65 Israeli accounts, 161 pages, 12 groups and four Instagram accounts linked to Archimedes Group, ~2.8M followers across Nigeria, Senegal, Togo, Angola, Niger, Tunisia + LATAM/SEA. Nawaat notes Tunisia detail scarce at announcement: 'We don't know how many pages targeted Tunisia, the nature of the content, where they were ran from and percentage organic vs artificial.' DFRLab screenshot: Tunisia page created March 2019 rapidly >11k followers. Archimedes website (ar-gr.com) self-described as 'change reality' with product Archimedes Tarva for mass campaign management, deleted after takedown."
+  - id: oii-demtech-tunisia-monitoring-memo-2020-03-23
+    title: The Challenges of Monitoring Social Media in the Arab World — The Case of the 2019 Tunisian Elections
+    publisher: Oxford Internet Institute — Project on Computational Propaganda (Mona Elswah & Philip N. Howard)
+    date: 2020-03-23
+    url: https://demtech.oii.ox.ac.uk/research/posts/the-challenges-of-monitoring-social-media-in-the-arab-world-the-case-of-the-2019-tunisian-elections/
+    tier: 2
+    lang: en
+    live_verified: 2026-08-28
+    live_status: "200 — webfetch captured 2026-08-28"
+    excerpt: "Tunisian civil society raised alarms about disinformation/hate speech in 2019 elections but monitoring was limited and uncoordinated; Facebook ad library did not archive electoral/political ads in Tunisia; limited Facebook data access forced manual gathering and lack of CrowdTangle for many groups; Tunisian data-privacy/election laws insufficient for digital age. Context for why ATIDE/DRI sample-based 38.5% finding was produced under constrained access."
+
+world_claims:
+  - id: cc-bot-archimedes-global-2019-verify-2026-08-28
+    entity: null
+    claim: >-
+      Meta's 16 May 2019 CIB announcement reports 265 total assets removed — 65 Facebook accounts + 161 Pages + 23 Groups + 12 events + 4 Instagram accounts = 265 — originating in Israel (Archimedes Group) and focused on Nigeria, Senegal, Togo, Angola, Niger and Tunisia plus LATAM/SEA; About 2.8M accounts followed one or more Pages, ~5,500 joined a Group, ~920 followed an IG account; ~$812,000 ad spend Dec 2012–Apr 2019 paid in BRL/ILS/USD.
+    assessment: >-
+      Live-reverified 2026-08-28: body fetched via webfetch confirms all six elements verbatim (265 total, exact 65/161/23/12/4 split, country list including Tunisia, follower totals, $812k with three currencies and date window). Arithmetic 65+161+23+12+4=265 verified. This is global-including-Tunisia, not a Tunisia count — source does not publish Tunisia slice. Shared with DFRLab/Nawaat who independently quote same totals. Falsifiable by Meta publishing country breakdown or revising Detailed Report totals.
+    confidence: A
+    basis: documented
+    sources:
+      - fb-cib-israel-2019-05-16
+      - dfrlab-archimedes-2019-05-17
+      - nawaat-archimedes-tunisia-2019-05-27
+    disputes:
+      - claim: 265 is the Tunisia bot-farm size for 2019
+        held_by: Popular retelling (non-specific)
+        status: rejected
+        assessment: Platform primary lists Tunisia as one of six named African focus countries and later notes at least 13 countries targeted — global total cannot stand as Tunisia total; Nawaat 2019-05-27 explicitly states Tunisia-specific count was not disclosed at announcement.
+        source: fb-cib-israel-2019-05-16
+    notes: "verified — no delta to outbox 2026-08-28; failure vocabulary enforced: Tunisia share = ? until Meta country slice published"
+
+  - id: cc-bot-archimedes-inkyfada-11pages-2019-verify-2026-08-28
+    entity: null
+    claim: >-
+      For the Tunisia subset of the Archimedes takedown, Inkyfada (via DFRLab dataset) counts 11 Pages created 17 Jan–12 Mar 2019 holding 494,865 followers (~500k) as of 15 May 2019 (range 9,083 to 104,268 per Page); their 359 posts generated >1M interactions and 36 videos gathered ~8M views (with 'Tout sauf Chahed' 35 videos >7.6M views); posts criticised dozens of politicians but never attacked Nabil Karoui / Safi Saïd on the 'Marre de la politique' Page, and 5 Pages shared content favourable to Nessma TV / Khalil Tounes; Inkyfada accessed quasi-totality via DFRLab pre-takedown save except 3 Pages partial via cache.
+    assessment: >-
+      Live-reverified 2026-08-28 via full-body fetch of both /fr/ and /en/ versions: creation window 17 Jan–12 Mar, infographic 494,865 likes, 359 publications / >1M interactions / 36 videos / ~8M views, and Karoui-never-attacked pattern all verbatim. Language states Pages, not accounts — do not aggregate with 65 accounts. Basis remains journalistic analysis of DFRLab's dataset, not platform-published country slice — thus C. Falsifiable by the 11 Page IDs or Meta's Tunisia breakdown. Enrichment: DFRLab medium piece corroborates method (Facebook alerted DFRLab before takedown to allow save) and Tunisia examples ('Stop à la désinformation' >11k followers, 'Tunisie Mon amour' misattributed images).
+    confidence: C
+    basis: reported
+    attributed_to: Inkyfada (Monia Ben Hamadi, via DFRLab dataset), corroborated by DFRLab and Global Voices summaries
+    sources:
+      - inkyfada-facebook-israel-2019-06-03
+      - dfrlab-archimedes-2019-05-17
+      - nawaat-archimedes-tunisia-2019-05-27
+    notes: "verified — no delta; textise/Global Voices fallback not needed — Inkyfada body fetched and confirms numbers; paywall not encountered; Inkyfada notes 3 Pages not entirely saved, so completeness qualifier retained"
+
+  - id: agg-bot-prevalence-2019-atide-385pct-verify-2026-08-28
+    entity: null
+    claim: >-
+      Between 15 May and 15 July 2019, unofficial Facebook Pages with no declared political affiliation or purpose — self-categorised as entertainment or satirical — produced 38.5% of political messages in the ATIDE/DRI study sample; DRI posits possible coordination and calls clusters sharing similar content within time windows a 'page network', becoming more active as elections approached.
+    assessment: >-
+      Not live-reverified 2026-08-28: PDF URL returned HTTP 403 Cloudflare challenge (both webfetch and curl -I), so excerpt and method details retain citation from outbox 2026-08-28 (Tier 2 ATIDE/DRI Report One dated 2019-09-11). Confidence stays B as institutional research but flagged needs-primary-source for human to re-fetch via alternative host or authenticated copy. The 38.5% is share of messages in a defined sample/window, not an enumeration of bots or accounts — do not convert to a farm size. Sample definition, page-network method, and window (15 May–15 Jul 2019) are as previously cited. OII DEMTECH memo 2020-03-23 contextualises why sample-based monitoring was used (ad library did not archive Tunisia political ads, no CrowdTangle for many groups, manual gathering). Falsifiable by re-fetching PDF methodology section.
+    confidence: B
+    basis: documented
+    sources:
+      - dri-atide-tunisia-social-media-2019-09-11
+      - oii-demtech-tunisia-monitoring-memo-2020-03-23
+    notes: "live fetch 403 — needs-primary-source; no correction found in websearch 2026-08-28 — verified excerpt unchanged; failure vocabulary enforced: 38.5% is not a bot count"
+
+  - id: cc-bot-archimedes-tunisia-slice-question-2026-08-28
+    entity: null
+    claim: >-
+      The Tunisia-specific scale of the Archimedes network remains undisclosed by Meta; the only Tunisia-sliced enumeration found for 2019 is Inkyfada's 11 Pages (~500k followers), not an account count, and other contemporary explainers (Nawaat 2019-05-27) noted 'published information about Tunisia are quite scarce' with no page/account breakdown at announcement.
+    assessment: >-
+      Documented negative on enumeration: Meta's announcement gives only the global 265 breakdown and lists Tunisia among focus countries without country slice; DFRLab's global corroboration likewise does not publish Tunisia count; Inkyfada supplies Page count only; OII memo describes systemic data-access constraints that explain scarcity. Keep Tunisia slice as ? per failure vocabulary. This guards against inflating 11 Pages to 265 accounts or treating 38.5% as Archimedes share.
+    confidence: B
+    basis: documented
+    sources:
+      - fb-cib-israel-2019-05-16
+      - inkyfada-facebook-israel-2019-06-03
+      - nawaat-archimedes-tunisia-2019-05-27
+      - oii-demtech-tunisia-monitoring-memo-2020-03-23
+    disputes:
+      - claim: "Archimedes operated 265 (or 161) Tunisia bots/Pages in 2019"
+        held_by: Loose summary conflating global totals with Tunisia
+        status: rejected
+        assessment: 265 and 161 are global totals across at least 13 countries; Tunisia list membership does not imply all assets targeted Tunisia. Only 11 Tunisia Pages are attested; account/group/event splits for Tunisia remain unpublished.
+        source: fb-cib-israel-2019-05-16
+    notes: "no delta to prior disputes — re-affirmed 2026-08-28 with live sources; websearch for Archimedes Tunisia corrections returned no new country-slice publication"
+
+notes:
+  - "Re-verification run 2026-08-28: Meta and Inkyfada live-verified (200, body captured); DRI/ATIDE PDF live fetch failed 403 Cloudflare challenge — flagged needs-primary-source but excerpt retained per prior Tier 2 citation; no follow-up correction surfaced in websearch for either Archimedes or ATIDE 38.5%."
+  - "Failure vocabulary enforced throughout: 265 = global-including-Tunisia, 11 = Pages not accounts, 38.5% = message share in 15 May–15 Jul 2019 sample not bot enumeration."
+  - "Archive note: Wayback calendar for Meta URL is at https://web.archive.org/web/*/https://about.fb.com/news/2019/05/removing-coordinated-inauthentic-behavior-from-israel/ — not snap-fetched this run but available for human to pin specific snapshot; Inkyfada similarly archivable."
+  - "Websearch 2026-08-28 surfaced no retraction to Archimedes $812k / 2.8M / 5,500 / 920 totals and no revised ATIDE percentage; OII DEMTECH memo 2020 adds methodological context but does not revise 38.5%."
