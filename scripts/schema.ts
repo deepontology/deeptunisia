@@ -569,13 +569,16 @@ export const PersonSchema = withClaimEnvelope(
 	/** Required for inferred claims. (V18) */
 	reasoning: z.string().optional(),
 	falsifiable_by: z.string().optional(),
+	disputes: z.array(DisputeSchema).default([]),
 	review: ReviewSchema.optional(),
 	notes: z.array(z.string()).default([]),
 	sources: z.array(slug).default([]),
 	...translatable('tagline'),
 	...translatable('summary'),
 	...translatable('trajectory', 'list'),
-	...translatable('notes', 'list')
+	...translatable('notes', 'list'),
+	...translatable('reasoning'),
+	...translatable('falsifiable_by')
 	})
 );
 

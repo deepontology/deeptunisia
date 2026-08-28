@@ -3513,6 +3513,7 @@
   name_fr: Nabil Ammar
   name_ar: نبيل عمار
   aliases: [عمار]
+  birth: "?"
   layers: [political]
   tagline: Foreign minister 2023-2024
   tagline_fr: >-
@@ -3521,14 +3522,73 @@
   tagline_ar: >-
     وزير الخارجية 2023-2024
   tagline_ar_by: model-reviewed
-  confidence: B
-  sources: [wikipedia-foreign-ministers]
+  trajectory: [Diplomacy, Ambassador to Belgium/EU/Luxembourg, Ambassador to United Kingdom/Ireland, Foreign Minister]
+  trajectory_fr: [Diplomatie, Ambassadeur en Belgique/UE/Luxembourg, Ambassadeur au Royaume-Uni/Irlande, Ministre des Affaires étrangères]
+  trajectory_fr_by: model-reviewed
+  trajectory_ar: [الدبلوماسية, سفير في بلجيكا/الاتحاد الأوروبي/لوكسمبورغ, سفير في المملكة المتحدة/إيرلندا, وزير الخارجية]
+  trajectory_ar_by: model-reviewed
+  summary: >-
+    Career diplomat: Brussels (EU/Belgium/Luxembourg/NATO) ambassador from 2020 (JORT 2020-128, effective 24 Oct 2020), London 2012-2017, earlier postings Rome and Oslo (chargé d'affaires), Director-General for Europe; Foreign Minister 7 Feb 2023 – 25 Aug 2024 (decrees 2023-112 and 2024-465). Birth and ENA/Paris 1 education per embassy CV lineage (7 Sept 1965) remain single-source reported and are kept as dispute, not fact.
+  summary_fr: >-
+    Diplomate de carrière : ambassadeur à Bruxelles (UE/Belgique/Luxembourg/OTAN) dès 2020 (JORT 2020-128, effet 24 oct. 2020), Londres 2012-2017, postes antérieurs Rome et Oslo (chargé d'affaires), directeur général pour l'Europe ; ministre des Affaires étrangères du 7 fév. 2023 au 25 août 2024 (décrets 2023-112 et 2024-465). Naissance et formation ENA/Paris 1 selon la lignée CV d'ambassade (7 sept. 1965) restent à source unique et sont gardées en litige.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    دبلوماسي محترف: سفير في بروكسل (الاتحاد الأوروبي/بلجيكا/لوكسمبورغ/الناتو) منذ 2020 (الرائد الرسمي 2020-128، نافذ من 24 أكتوبر 2020)، ولندن 2012-2017، ومناصب سابقة في روما وأوسلو (قائم بالأعمال)، ومدير عام لأوروبا؛ وزير الخارجية من 7 فيفري 2023 إلى 25 أوت 2024 (المرسومان 2023-112 و2024-465). يبقى تاريخ الميلاد والتكوين ENA/باريس 1 حسب سلسلة سيرة السفارة (7 سبتمبر 1965) مصدرًا وحيدًا ومحفوظًا كنزاع لا كحقيقة.
+  summary_ar_by: model-reviewed
+  confidence: C
+  basis: reported
+  verification: verified
+  attributed_to: Leaders / Asian Voice (embassy CV lineage)
+  reasoning: >-
+    No JORT or civil record for birth was located. Birth 7 September 1965 appears in a single embassy-CV lineage (Asian Voice 2015 reproduces the London embassy CV, reused by fr.wikipedia/Wikidata/Tunisie Numérique), while UN credentials renders as 09/07/1965 (DD/MM ambiguity). Career postings are reported by Leaders (Belgium/Luxembourg/EU, Oslo chargé d'affaires, London 2013) and the Brussels posting is independently documented by JORT 2020-128; the other postings remain single-source.
+  reasoning_fr: >-
+    Aucun acte d'état civil ni JORT pour la naissance n'a été trouvé. Le 7 septembre 1965 figure dans une seule lignée CV d'ambassade (Asian Voice 2015 reproduit le CV de Londres, repris par fr.wikipedia/Wikidata/Tunisie Numérique), tandis que les lettres de créance ONU affichent 09/07/1965 (ambiguïté JJ/MM). Les postes sont rapportés par Leaders et Bruxelles est documenté par JORT 2020-128.
+  reasoning_fr_by: model-reviewed
+  reasoning_ar: >-
+    لم يُعثر على سجل مدني أو رائد رسمي لتاريخ الميلاد. يظهر 7 سبتمبر 1965 في سلسلة سيرة سفارة واحدة (Asian Voice 2015 تنسخ سيرة سفارة لندن، أعادت استخدامها ويكيبيديا وتونس الرقمية)، بينما تظهر أوراق اعتماد الأمم المتحدة 09/07/1965 (التباس يوم/شهر). المناصب منقولة عن Leaders وبروكسل موثقة بالرائد الرسمي 2020-128.
+  reasoning_ar_by: model-reviewed
+  falsifiable_by: >-
+    JORT-era personnel file or MAE official bio at diplomatie.gov.tn naming birth date/place; direct JORT decree for each ambassadorship (London, Oslo, Rome) or MAE organigramme.
+  falsifiable_by_fr: >-
+    Dossier personnel d'époque JORT ou bio officielle MAE sur diplomatie.gov.tn nommant date/lieu de naissance ; décret JORT direct pour chaque ambassade (Londres, Oslo, Rome) ou organigramme MAE.
+  falsifiable_by_fr_by: model-reviewed
+  falsifiable_by_ar: >-
+    ملف إداري منشور في الرائد الرسمي أو سيرة رسمية لوزارة الخارجية على diplomatie.gov.tn تذكر تاريخ ومكان الولادة؛ أو مرسوم مباشر في الرائد لكل سفارة (لندن، أوسلو، روما) أو هيكل تنظيمي للوزارة.
+  falsifiable_by_ar_by: model-reviewed
+  notes:
+    - >-
+      Birth dispute KEPT open: Asian Voice embassy CV lineage gives 7 September 1965 (reused by Wikipedia/Wikidata/Tunisie Numérique) vs UN credentials block 09/07/1965. Single-source lineage → confidence C, not B. Keep ? until MAE or gazette bio confirms.
+    - >-
+      Brussels ambassador documented tier-1 via JORT 2020-128 (effective 24 Oct 2020). Other postings (London 2012-2017, Oslo chargé d'affaires, Rome embassy, DG Europe) are reported tier-4; each needs its own decree/organigramme to reach A.
+  notes_fr:
+    - >-
+      Litige de naissance maintenu ouvert : la lignée CV d'ambassade Asian Voice donne 7 septembre 1965 (reprise par Wikipédia/Wikidata/Tunisie Numérique) contre bloc lettres de créance ONU 09/07/1965. Lignée à source unique → confiance C, non B. Garder ? jusqu'à bio MAE ou JORT.
+    - >-
+      Ambassadeur à Bruxelles documenté niveau 1 via JORT 2020-128 (effet 24 oct. 2020). Autres postes (Londres 2012-2017, Oslo chargé d'affaires, ambassade Rome, DG Europe) rapportés niveau 4 ; chacun exige son décret/organigramme pour passer en A.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      نزاع الميلاد مفتوح: سلسلة سيرة السفارة Asian Voice تعطي 7 سبتمبر 1965 (أعادت استعمالها ويكيبيديا/Wikidata/تونس الرقمية) مقابل كتلة أوراق اعتماد الأمم المتحدة 09/07/1965. سلسلة مصدر واحد → ثقة C لا B. يبقى ? حتى تأكيد سيرة الخارجية أو الرائد الرسمي.
+    - >-
+      سفارة بروكسل موثقة مستوى 1 عبر الرائد 2020-128 (نافذ 24 أكتوبر 2020). المناصب الأخرى (لندن 2012-2017، أوسلو قائم بالأعمال، سفارة روما، مدير عام أوروبا) منقولة مستوى 4؛ كل منها يحتاج مرسومه/هيكله للوصول إلى A.
+  notes_ar_by: model-reviewed
+  disputes:
+    - claim: Born 7 September 1965 in Tunis
+      held_by: Asian Voice 2015 embassy CV lineage (reused by fr.wikipedia, Wikidata, Tunisie Numérique)
+      assessment: OPEN — single lineage; UN credentials renders 09/07/1965; MAE bio blocked. Keep birth ? and record dispute; do not promote to B without second independent line or primary record.
+      status: open
+    - claim: Born 09/07/1965 (9 July 1965)
+      held_by: UN credentials syndication (Belgium News, 09/07/1965)
+      assessment: OPEN — likely same date in DD/MM vs MM/DD rendering; without MAE primary, treat as same claim with formatting ambiguity.
+      status: open
+  sources: [leaders-ammar-bio-2023-02-07, jort-2020-128-ammar, un-credentials-ammar-2025, asian-voice-ammar-cv-2015, tunisienumerique-ammar-permanent-2025-03-25]
 
 - id: mohamed-ali-nafti
   name_en: Mohamed Ali Nafti
   name_fr: Mohamed Ali Nafti
   name_ar: محمد علي النفطي
   aliases: [النفطي]
+  birth: "?"
   layers: [political]
   tagline: Foreign minister since August 2024
   tagline_fr: >-
@@ -3537,8 +3597,57 @@
   tagline_ar: >-
     وزير الخارجية منذ أوت 2024
   tagline_ar_by: model-reviewed
-  confidence: B
-  sources: [wikipedia-foreign-ministers]
+  trajectory: [Diplomacy, Secretary of State for Foreign Affairs, Ambassador to Greece/Spain/South Korea, Foreign Minister]
+  trajectory_fr: [Diplomatie, Secrétaire d'État aux Affaires étrangères, Ambassadeur en Grèce/Espagne/Corée du Sud, Ministre des Affaires étrangères]
+  trajectory_fr_by: model-reviewed
+  trajectory_ar: [الدبلوماسية, كاتب دولة للشؤون الخارجية, سفير في اليونان/إسبانيا/كوريا الجنوبية, وزير الخارجية]
+  trajectory_ar_by: model-reviewed
+  summary: >-
+    Diplomat; Secretary of State to the Foreign Minister Sep 2020 – 30 Jul 2021 (dismissed), then minister plenipotentiary hors classe / Director-General of the central governance cell at MFA (Oct 2023); previously posted to embassies in Greece, Spain and South Korea (Seoul) per contemporary reporting; appointed Foreign Minister 25 Aug 2024 (decree 2024-465). All pre-2024 postings are single-source reported.
+  summary_fr: >-
+    Diplomate ; secrétaire d'État auprès du ministre des Affaires étrangères sept. 2020 – 30 juil. 2021 (limogé), puis ministre plénipotentiaire hors classe / DG de la cellule centrale de gouvernance au MAE (oct. 2023) ; précédemment en poste aux ambassades de Grèce, d'Espagne et de Corée du Sud (Séoul) selon la presse contemporaine ; nommé ministre des Affaires étrangères le 25 août 2024 (décret 2024-465). Tous les postes avant 2024 sont à source unique.
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    دبلوماسي؛ كاتب دولة لدى وزير الخارجية من سبتمبر 2020 إلى 30 جويلية 2021 (أُقيل)، ثم وزير مفوض فوق العادة / مدير عام لخلية الحوكمة المركزية بوزارة الخارجية (أكتوبر 2023)؛ سابقًا في سفارات اليونان وإسبانيا وكوريا الجنوبية (سيول) حسب التقارير المعاصرة؛ عُيّن وزيرًا للخارجية في 25 أوت 2024 (المرسوم 2024-465). جميع المناصب قبل 2024 منقولة بمصدر واحد.
+  summary_ar_by: model-reviewed
+  confidence: C
+  basis: reported
+  verification: verified
+  attributed_to: Mosaïque FM / RFI(AFP)
+  reasoning: >-
+    Prior career (Secretary of State Sep 2020–30 Jul 2021 dismissal; DG governance Oct 2023; postings Greece, Spain, South Korea/Seoul) is reported by a single national outlet (Mosaïque FM) and one AFP wire (RFI), no JORT decree or MAE bio located for those postings. Single-outlet assessment → C + attributed_to per V20.
+  reasoning_fr: >-
+    Carrière antérieure (secrétaire d'État sept. 2020–30 juil. 2021 limogé ; DG gouvernance oct. 2023 ; postes Grèce, Espagne, Corée du Sud/Séoul) rapportée par un seul média national (Mosaïque FM) et une dépêche AFP (RFI), aucun décret JORT ni bio MAE trouvés. Source unique → C + attributed_to selon V20.
+  reasoning_fr_by: model-reviewed
+  reasoning_ar: >-
+    المسار السابق (كاتب دولة سبتمبر 2020–30 جويلية 2021 أُقيل؛ مدير حوكمة أكتوبر 2023؛ مناصب اليونان وإسبانيا وكوريا الجنوبية/سيول) منقول عن منفذ وطني واحد (موزاييك) وبرقية AFP (RFI)، دون مرسوم في الرائد أو سيرة خارجية. مصدر وحيد → C + attributed_to حسب V20.
+  reasoning_ar_by: model-reviewed
+  falsifiable_by: >-
+    JORT decrees or MAE organigramme naming Nafti in each prior posting (Secretary of State appointment, embassy postings Greece/Spain/Korea); official MAE bio page at diplomatie.gov.tn.
+  falsifiable_by_fr: >-
+    Décrets JORT ou organigramme MAE nommant Nafti à chaque poste antérieur (secrétaire d'État, ambassades Grèce/Espagne/Corée) ; page bio officielle MAE sur diplomatie.gov.tn.
+  falsifiable_by_fr_by: model-reviewed
+  falsifiable_by_ar: >-
+    مراسيم الرائد الرسمي أو هيكل تنظيمي لوزارة الخارجية يسمي النفطي في كل منصب سابق (كاتب دولة، سفارات اليونان/إسبانيا/كوريا)؛ صفحة سيرة رسمية للخارجية على diplomatie.gov.tn.
+  falsifiable_by_ar_by: model-reviewed
+  notes:
+    - >-
+      Negative finding 2026-08-28: no birth, education or MAE bio located for Nafti in open sources (MAE site blocked; World Policy Conference snippet confirms Seoul ambassador role only). Keep birth ? and education [] until tier-1/2 bio appears. Prior postings kept as reported C only.
+    - >-
+      Do not model diplomatic edges to Greece/Spain/Korea without a source naming both Nafti and the counterpart institution/country.
+  notes_fr:
+    - >-
+      Constat négatif 2026-08-28 : aucune naissance, formation ou bio MAE trouvée pour Nafti en sources ouvertes (site MAE bloqué ; extrait World Policy Conference confirme seulement rôle d'ambassadeur à Séoul). Garder naissance ? et formation [] jusqu'à bio niveau 1/2. Postes antérieurs gardés en C reported seulement.
+    - >-
+      Ne pas modéliser d'arêtes diplomatiques vers Grèce/Espagne/Corée sans source nommant à la fois Nafti et l'institution/pays homologue.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      نتيجة سلبية 2026-08-28: لم يُعثر على تاريخ ميلاد أو تكوين أو سيرة خارجية للنفطي في المصادر المفتوحة (موقع الخارجية محجوب؛ مقتطف World Policy Conference يؤكد فقط دور سفير سيول). يبقى الميلاد ? والتكوين [] حتى ظهور سيرة مستوى 1/2. المناصب السابقة محفوظة بدرجة C reported فقط.
+    - >-
+      لا تُنمذج حافة دبلوماسية نحو اليونان/إسبانيا/كوريا دون مصدر يسمي النفطي والمؤسسة/الدولة المقابلة معًا.
+  notes_ar_by: model-reviewed
+  sources: [mosaique-nafti-bio-2024-08-25, rfi-reshuffle-2024-08-25, pm-gov-composition-2024-08-25, jort-2024-465-nafti]
 
 # ===========================================================================
 # FINANCE MINISTERS
@@ -4136,6 +4245,8 @@
   name_fr: Fethi Zouhair Nouri
   name_ar: فتحي زهير النوري
   aliases: [النوري]
+  birth: "1955-11-07"
+  nationality: [TN]
   layers: [economic]
   tagline: BCT governor since February 2024
   tagline_fr: >-
@@ -4144,8 +4255,81 @@
   tagline_ar: >-
     محافظ البنك المركزي منذ فيفري 2024
   tagline_ar_by: model-reviewed
-  confidence: B
-  sources: [leaders-bct-governors]
+  trajectory: [Academic, Banking]
+  trajectory_fr: [Académique, Banque]
+  trajectory_fr_by: model-reviewed
+  trajectory_ar: [أكاديمي, بنكي]
+  trajectory_ar_by: model-reviewed
+  summary: >-
+    Economist and professor, specialist in energy and financial economics; member
+    of BCT Board 2016-2021 and Monetary Policy Committee since 2015; appointed
+    Governor 15-16 Feb 2024 succeeding Marouane El Abassi. University professor
+    at FSEGT Tunis since 1990 (Maître de conférences 2006, Professeur des
+    universités 2012).
+  summary_fr: >-
+    Économiste et professeur, spécialiste en économie de l'énergie et finance ;
+    membre du Conseil d'administration de la BCT 2016-2021 et du Comité de
+    politique monétaire depuis 2015 ; nommé gouverneur 15-16 fév. 2024 succédant
+    à Marouane El Abassi. Professeur des universités à la FSEGT Tunis depuis
+    1990 (maître de conférences 2006, professeur des universités 2012).
+  summary_fr_by: model-reviewed
+  summary_ar: >-
+    خبير اقتصادي وأستاذ جامعي مختص في اقتصاد الطاقة والمالية؛ عضو مجلس إدارة
+    البنك المركزي 2016-2021 ولجنة السياسة النقدية منذ 2015؛ عُيّن محافظًا 15-16
+    فيفري 2024 خلفًا لمروان العباسي. أستاذ جامعات بكلية العلوم الاقتصادية
+    والتصرف بتونس منذ 1990.
+  summary_ar_by: model-reviewed
+  confidence: C
+  basis: reported
+  attributed_to: "Leaders (15 Feb 2024 Who's Who 35647 and biography 35646) — birth 'Né le 7 nov 1955 à Tunis' and 'Nationalité Tunisienne' per structured fiche; BCT CV PDF (bct-cv-nouri-fr) linked from BCT board page but not human-verified inline, so C until verified"
+  verification: verified
+  reasoning: >-
+    Biographical detail from Leaders 35646/35647 (tier 4) corroborated by Le
+    Quotidien 2024-02-15; institutional BCT board page (tier1 bct-gov-conseil-2024)
+    and JORT decree 2024-122 (tier1, effective 16 Feb 2024) anchor the
+    governorship itself, but birth/education remain single-secondary until BCT CV
+    PDF is human-extracted. Trajectory [Academic, Banking] inferred from
+    professor + BCT board/monetary committee roles.
+  falsifiable_by: >-
+    BCT CV PDF https://www.bct.gov.tn/bct/siteprod/documents/CV_Fethi_Zouhaier_Nouri_fr.pdf
+    — if it lists different birth, nationality or degrees, or JORT shows
+    different effective date, this record is replaced
+  notes:
+    - >-
+      Hunt 2026-08-28: BCT Conseil page (bct-gov-conseil-2024) and CV PDF
+      (bct-cv-nouri-fr) are tier-1 institutional sources for governorship;
+      birth/education not yet extracted inline due to PDF fetch block — kept at C
+      + attributed_to Leaders until human-verified, then upgrade to B/A per ladder.
+    - >-
+      BCT career: Prof. universités FSEGT Tunis since 1990, Maître de conférences
+      2006, Professeur des universités 2012; BCT Conseil d'administration
+      2016-2021, Comité politique monétaire depuis 2015; also Conseil Marché
+      Financier, Conseil d'Analyse Économique, conseiller UTICA (per
+      Leaders/bct-cv summary). Positions sources added to p-bct-nouri; do not
+      promote position sources onto person for education.
+  notes_fr:
+    - >-
+      Chasse 2026-08-28 : page Conseil BCT et CV PDF sont sources institutionnelles
+      tier-1 pour le gouvernorat ; naissance/formation non extraites en ligne (PDF
+      bloqué) — maintenu en C + attributed_to Leaders jusqu'à vérification
+      humaine, puis passage en B/A.
+    - >-
+      Carrière BCT : Prof. universités FSEGT Tunis depuis 1990, maître de
+      conférences 2006, professeur des universités 2012 ; Conseil BCT 2016-2021,
+      comité monétaire depuis 2015 ; aussi CMF, Conseil d'analyse économique,
+      conseiller UTICA.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      بحث 2026-08-28: صفحة مجلس البنك والسيرة مصدران مؤسسيان للمحافظة؛ لم يُستخرج
+      الميلاد والتكوين مباشرة (PDF محجوب) — يبقى بدرجة ج + منسوب إلى Leaders
+      حتى التحقق البشري.
+    - >-
+      مسار البنك: أستاذ جامعات بكلية العلوم الاقتصادية والتصرف بتونس منذ 1990،
+      2006 محاضر، 2012 أستاذ تعليم عال؛ مجلس البنك 2016-2021، لجنة السياسة
+      النقدية منذ 2015.
+  notes_ar_by: model-reviewed
+  sources: [bct-gov-conseil-2024, bct-cv-nouri-fr, jort-2024-122-nouri, leaders-nouri-35646, leaders-nouri-35647, le-quotidien-nouri-2024-02-15, leaders-bct-governors, frwiki-bct, ilboursa-nouri-2024, jeuneafrique-nouri-2024]
 
 # ===========================================================================
 # JUSTICE MINISTERS
@@ -14189,7 +14373,58 @@
   basis: unsubstantiated
   attributed_to: >-
     Mondafrigue investigation (August 2026)
-  sources: [mondafrique-succession-saied-2026]
+  sources: [mondafrique-succession-saied-2026, businessnews-jrad-2026-04-14, tunisienumerique-jrad-series]
+  notes:
+    - >-
+      Hunt 2026-08-28 second-source sweep (BusinessNews 14 Apr 2026,
+      TunisieNumerique series ×5 in 2025, Webdo, DirectInfo, JA/Le
+      Monde/Reuters negative): closest match is BusinessNews 'chroniqueur
+      proche du pouvoir et son porte-parole officieux' re 72h ARP ultimatum
+      (43 deputies, Tarek Mahdi); TunisieNumerique consistently 'Le
+      chroniqueur / chroniqueur politique … a publié sur sa page Facebook'
+      across 2025, confirming Facebook-based commentary + Attessia TV
+      Rendez-vous 9 role (see DirectInfo tag and Webdo defamation complaint).
+      No tier-3 outlet independently reports 'propagandist' verbatim;
+      DirectInfo tag line 'porte-voix de Kaïs Saïed et de sa propagande' is a
+      tag-page header, not a citable article body — noted as lead, not
+      citation. Kept D unless reviewer accepts 'porte-parole officieux' as
+      functional equivalence to 'media ecosystem supporting presidency'.
+    - >-
+      Framing dispute kept in notes (neutral 'chroniqueur' vs evaluative
+      'porte-parole officieux'/'propagandist'): BusinessNews evaluative
+      single-outlet, TunisieNumerique neutral — no second independent
+      evaluative source found (V18/V20: evaluative characterisation needs
+      attribution, not promotion to reported).
+    - >-
+      No influence/sponsorship edge to presidency created — would be unmoored
+      (orphan, 0 positions) and warn-only under V9 (requires
+      influence:{channel,strength}+reasoning+moored endpoint). If later
+      proposed, must be kind reported-influence at C with channel media.social
+      and explicit falsifier.
+  notes_fr:
+    - >-
+      Chasse 2026-08-28 : BusinessNews 14 avr 2026 'chroniqueur proche du
+      pouvoir et son porte-parole officieux' (ultimatum 72h ARP, 43 députés) ;
+      TunisieNumerique série ×5 en 2025 'Le chroniqueur … a publié sur sa page
+      Facebook' confirmant rôle Facebook + Attessia TV Rendez-vous 9. Aucun
+      outlet tier-3 ne reprend 'propagandiste' verbatim ; ligne tag DirectInfo
+      'porte-voix … propagande' est un header de page tag, non citable.
+      Maintenu D sauf si le relecteur accepte l'équivalence fonctionnelle.
+    - >-
+      Aucun edge influence/sponsorship vers la présidence créé — serait non
+      ancré (orphelin, 0 positions) et warn-only sous V9.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      بحث 2026-08-28: BusinessNews 14 أفريل 2026 'معلّق مقرب من السلطة وناطقها
+      غير الرسمي' (مهلة 72 ساعة لمجلس النواب، 43 نائبًا)؛ تونس الرقمية سلسلة
+      2025 'المعلّق نشر على فيسبوك' تؤكد دور فيسبوك + قناة التاسعة. لا يوجد
+      مصدر tier-3 يورد 'دعاية' حرفيًا؛ سطر DirectInfo 'صوت سعيّد ودعايته'
+      ترويسة صفحة وسوم غير قابلة للاستشهاد. يبقى D.
+    - >-
+      لم يُنشأ رابط نفوذ/رعاية مع الرئاسة — سيكون غير موثق ويحتاج
+      channel+strength+reasoning.
+  notes_ar_by: model-reviewed
 
 
 

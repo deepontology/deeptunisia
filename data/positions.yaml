@@ -2528,28 +2528,32 @@
   holder: khelifa-harroum
   start: "2019-02-20"
   end: "?"
-  confidence: B
+  confidence: C
   verification: needs-primary-source
+  basis: reported
+  attributed_to: "Leaders (20 Feb 2019) + Interior Ministry communiqué relayed by TAP/Directinfo and Gnet"
+  reasoning: "Three independent relays of the same Interior Ministry communiqué (Leaders 20 Feb 2019, Directinfo/TAP 20 Feb 2019, Gnet 21 Feb 2019) date the appointment to 20 Feb 2019 and name Harroum DG Sûreté publique succeeding Adel Chouchane (who moved to Inspecteur général de la Sûreté nationale); Leaders adds Harroum's prior post as DG Police judiciaire. No JORT decree for this DG was located on 9anoun.tn/jort.tn (searched JORT 2019-026 and full-text 'sûreté publique'/'حروم'). Two apex DG decrees that do appear on 9anoun (2021-123 DGSN, 2021-124 Garde nationale, both 25 Sep 2021) show the gazette does publish director-general appointments, so the absence for DGSP is not a general archive gap — tenure stays press-dated and end ? stays open until a JORT successor is located."
+  reasoning_fr: "Trois relais indépendants du même communiqué du ministère de l'Intérieur (Leaders 20 fév. 2019, Directinfo/TAP 20 fév. 2019, Gnet 21 fév. 2019) datent la nomination au 20 fév. 2019 et nomment Harroum DG de la sûreté publique succédant à Adel Chouchane (passé inspecteur général de la Sûreté nationale) ; Leaders ajoute son poste antérieur de DG de la police judiciaire. Aucun décret au JORT pour cette direction n'a été trouvé sur 9anoun.tn/jort.tn (recherche JORT 2019-026 et plein-texte 'sûreté publique'/'حروم'). Deux décrets faîtiers qui y figurent (2021-123 DGSN, 2021-124 Garde nationale, 25 sept. 2021) montrent que le journal officiel publie les nominations de directeurs généraux, l'absence pour la DGSP n'est donc pas une lacune générale d'archive — la durée reste datée par la presse et la fin '?' reste ouverte jusqu'à un successeur au JORT."
+  reasoning_fr_by: model-reviewed
+  reasoning_ar: "ثلاثة نقول مستقلة لنفس بلاغ وزارة الداخلية (ليدرز 20 فيفري 2019 وDirectinfo/TAP 20 فيفري 2019 وGnet 21 فيفري 2019) تؤرخ التعيين بيوم 20 فيفري 2019 وتسمي حروم مديرًا عامًا للأمن العمومي خلفًا لعادل الشوشان (الذي انتقل إلى التفقد العام للأمن الوطني)؛ وتضيف ليدرز أن حروم كان سابقًا مديرًا عامًا للشرطة العدلية. لم يُعثر على مرسوم في الرائد الرسمي لهذه الإدارة على 9anoun/jort.tn (بحث في عدد 2019-026 وبحث نصي 'الأمن العمومي'/'حروم'). ويظهر مرسومان قميان منشوران على 9anoun (2021-123 للأمن الوطني و2021-124 للحرس الوطني، 25 سبتمبر 2021) أن الرائد الرسمي ينشر تعيينات المديرين العامين، فالغياب بالنسبة للأمن العمومي ليس ثغرة أرشيف عامة — وتبقى المدة مؤرخة صحفيًا والنهاية '؟' مفتوحة إلى حين العثور على خلف في الرائد الرسمي."
+  reasoning_ar_by: model-reviewed
+  falsifiable_by: "The JORT issue (Feb-Mar 2019) containing the presidential or ministerial decree appointing the Directeur général de la sûreté publique on 20 Feb 2019, or a JORT decree naming a successor — either would pin or close the interval; or an official organigramme listing DGSP as standalone not subordinate to DGSN"
+  falsifiable_by_fr: "Le numéro du JORT (fév.-mars 2019) contenant le décret nommant le directeur général de la sûreté publique le 20 fév. 2019, ou un décret au JORT nommant un successeur — l'un ou l'autre figerait ou clôturerait l'intervalle ; ou un organigramme officiel listant la DGSP comme autonome non subordonnée à la DGSN"
+  falsifiable_by_fr_by: model-reviewed
+  falsifiable_by_ar: "عدد الرائد الرسمي (فيفري-مارس 2019) المتضمن مرسوم تسمية المدير العام للأمن العمومي يوم 20 فيفري 2019، أو مرسوم في الرائد الرسمي يسمي خلفًا — أي منهما يثبت أو يغلق المدة؛ أو مخطط هيكلي رسمي يدرج الإدارة العامة للأمن العمومي كهيكل مستقل غير تابع للإدارة العامة للأمن الوطني"
+  falsifiable_by_ar_by: model-reviewed
   notes:
     - >-
-      Research pass 2026-08-11: the 20 February 2019 appointment rests on the
-      Leaders article of 20/02/2019 (naming Ben Khaled NG commander and Harroum
-      DG of public security, same day). No JORT decree located; end remains "?".
-      No upgrade possible.
+      Hunt 2026-08-28: JORT 20 Feb 2019 decree not located (9anoun search negative; JORT 2019-026 contains only an education arrêté). Interior communiqué found via TAP/Directinfo + Gnet relays (original interieur.gov.tn page returned transport error). Leaders corroborates prior DG Police judiciaire role and notes DG Sûreté nationale Rached Bettaieb (since Mar 2018) 'coiffe l'ensemble des directions générales, entre autres, celle de la sécurité publique' — i.e. DGSP reports to DGSN. No replacement decree located; end stays ?. Keep verification: needs-primary-source. Apex decrees 2021-123/124 show gazetting practice for the two top DGs.
   notes_fr:
     - >-
-      Passe de recherche 2026-08-11 : la nomination du 20 février 2019 repose sur l'article
-      de Leaders du 20/02/2019 (nommant Ben Khaled commandant de la Garde nationale et
-      Harroum DG de la sûreté publique, le même jour). Aucun décret au JORT trouvé ; la fin
-      reste « ? ». Aucune amélioration possible.
+      Chasse 2026-08-28 : décret JORT du 20 fév. 2019 non trouvé (recherche 9anoun négative ; JORT 2019-026 ne contient qu'un arrêté de l'éducation). Communiqué du ministère de l'Intérieur retrouvé via relais TAP/Directinfo + Gnet (page originelle interieur.gov.tn en erreur de transport). Leaders corrobore le rôle antérieur de DG de la police judiciaire et note que le DG Sûreté nationale Rached Bettaieb (depuis mars 2018) 'coiffe l'ensemble des directions générales, entre autres, celle de la sécurité publique' — la DGSP relève donc de la DGSN. Aucun décret de remplacement trouvé ; la fin reste '?'. Vérification : needs-primary-source. Les décrets faîtiers 2021-123/124 illustrent la pratique de publication au JORT pour les deux DG supérieures.
   notes_fr_by: model-reviewed
   notes_ar:
     - >-
-      جولة بحث 2026-08-11: تعيين 20 فيفري 2019 مبني على مقال Leaders المؤرخ في 20/02/2019
-      (الذي يعيّن بن خالد قائدًا للحرس الوطني والحرّوم مديرًا عامًا للأمن العمومي في اليوم
-      نفسه). لم يُعثر على أي مرسوم في الرائد الرسمي؛ والنهاية تبقى « ؟ ». لا ترقية ممكنة.
+      بحث 2026-08-28: لم يُعثر على مرسوم الرائد الرسمي ليوم 20 فيفري 2019 (بحث 9anoun سلبي؛ عدد 2019-026 يحوي قرارًا تربويًا فقط). عُثر على بلاغ وزارة الداخلية عبر نقلي TAP/Directinfo وGnet (الصفحة الأصلية interieur.gov.tn أعادت خطأ نقل). تؤكد ليدرز الدور السابق كمدير عام للشرطة العدلية وتشير إلى أن المدير العام للأمن الوطني راشد بطيب (منذ مارس 2018) 'يشرف على كافة الإدارات العامة ومنها إدارة الأمن العمومي' — أي أن الأمن العمومي يتبع الأمن الوطني. لم يُعثر على مرسوم استخلاف؛ والنهاية تبقى '؟'. التحقق: needs-primary-source. ويُظهر المرسومان القميان 2021-123/124 ممارسة النشر في الرائد الرسمي للمديرين العامين الأعلى.
   notes_ar_by: model-reviewed
-  sources: [leaders-benkhaled-2019]
+  sources: [leaders-benkhaled-2019, directinfo-harrom-2019, gnet-harrom-2019]
 
 # ===========================================================================
 # NATIONAL GUARD
@@ -5656,32 +5660,80 @@
   holder: nabil-ammar
   start: "2023-02-07"
   end: "2024-08-25"
-  confidence: B
+  confidence: A
+  basis: documented
+  verification: verified
   notes:
     - >-
-      Start corrected 2026-08-08 from month-level "2023-02": the handover is the
-      day Jerandi left, 7 February 2023, per the presidency's announcement (see
-      triage entry).
+      Start documented by décret n°2023-112 du 7 Feb 2023 (Visa in JORT 2023-045 tier-1 arrêté); oath ceremony same day at Carthage. End documented by décret n°2024-465 du 25 Aug 2024 (JORT N°104, 26 Aug 2024) which names the successor.
+    - >-
+      Start corrected 2026-08-08 from month-level "2023-02": the handover is the day Jerandi left, 7 February 2023, per the presidency's announcement (see triage entry).
   notes_fr:
     - >-
-      Début corrigé le 2026-08-08 du niveau mois « 2023-02 » : la passation est le jour du
-      départ de Jerandi, le 7 février 2023, selon l'annonce de la présidence (voir l'entrée
-      de triage).
+      Début attesté par le décret n°2023-112 du 7 fév. 2023 (visa dans l'arrêté JORT 2023-045, niveau 1) ; prestation le même jour à Carthage. Fin attestée par le décret n°2024-465 du 25 août 2024 (JORT n°104) qui nomme le successeur.
+    - >-
+      Début corrigé le 2026-08-08 du niveau mois « 2023-02 » : la passation est le jour du départ de Jerandi, le 7 février 2023, selon l'annonce de la présidence (voir l'entrée de triage).
   notes_fr_by: model-reviewed
   notes_ar:
     - >-
-      صُحّحت البداية يوم 2026-08-08 من مستوى الشهر « 2023-02 »: التسليم هو يوم مغادرة
-      الجرندي، 7 فيفري 2023، وفق إعلان الرئاسة (انظر مدخل الفرز).
+      البداية موثقة بالمرسوم عدد 2023-112 المؤرخ في 7 فيفري 2023 (تأشيرة في قرار الرائد الرسمي 2023-045 مستوى 1)؛ وأداء اليمين في اليوم نفسه بقرطاج. النهاية موثقة بالمرسوم عدد 2024-465 المؤرخ في 25 أوت 2024 (الرائد الرسمي عدد 104 بتاريخ 26 أوت 2024) الذي يسمي الخلف.
+    - >-
+      صُحّحت البداية يوم 2026-08-08 من مستوى الشهر « 2023-02 »: التسليم هو يوم مغادرة الجرندي، 7 فيفري 2023، وفق إعلان الرئاسة (انظر مدخل الفرز).
   notes_ar_by: model-reviewed
-  sources: [wikipedia-foreign-ministers]
+  reasoning: >-
+    JORT 2023-045 arrêté (Visa: Vu le décret n°2023-112 du 7 février 2023) and decree 2024-465 (JORT N°104, 26 Aug 2024) directly document the tenure bracket; both are tier-1 gazette records. Reuters and Mosaïque corroborate the oath ceremony same day but are not needed for the date.
+  reasoning_fr: >-
+    L'arrêté JORT 2023-045 (visa : Vu le décret n°2023-112 du 7 février 2023) et le décret 2024-465 (JORT n°104, 26 août 2024) documentent directement l'encadrement du mandat ; tous deux sont des actes gazette niveau 1. Reuters et Mosaïque corroborent la prestation le même jour.
+  reasoning_fr_by: model-reviewed
+  reasoning_ar: >-
+    قرار الرائد الرسمي 2023-045 (تأشيرة: وحيث المرسوم عدد 2023-112 المؤرخ في 7 فيفري 2023) والمرسوم 2024-465 (الرائد عدد 104، 26 أوت 2024) يوثقان مباشرة حدود الولاية؛ كلاهما سجل جريدة رسمية مستوى 1.
+  reasoning_ar_by: model-reviewed
+  falsifiable_by: >-
+    The JORT issue containing decree 2023-112 and JORT N°104 of 26 Aug 2024 containing decree 2024-465 — if either names a different holder or date, this record is wrong.
+  falsifiable_by_fr: >-
+    Le numéro du JORT contenant le décret 2023-112 et le JORT n°104 du 26 août 2024 contenant le décret 2024-465 — si l'un nomme un autre titulaire ou date, ce dossier est erroné.
+  falsifiable_by_fr_by: model-reviewed
+  falsifiable_by_ar: >-
+    عدد الرائد الرسمي الذي يتضمن المرسوم 2023-112 وعدد الرائد 104 بتاريخ 26 أوت 2024 الذي يتضمن المرسوم 2024-465 — إذا سمى أحدهما حاملًا أو تاريخًا مختلفًا فهذا السجل خاطئ.
+  falsifiable_by_ar_by: model-reviewed
+  sources: [jort-2023-112-ammar, jort-2024-465-nafti, reuters-ammar-nomination-2023-02-07, mosaique-ammar-oath-2023-02-07, wikipedia-foreign-ministers]
 
 - id: p-foreign-nafti
   role: foreign-minister
   holder: mohamed-ali-nafti
   start: "2024-08-25"
   end: ongoing
-  confidence: B
-  sources: [wikipedia-foreign-ministers]
+  confidence: A
+  basis: documented
+  verification: verified
+  notes:
+    - >-
+      Start documented by décret n°2024-465 du 25 Aug 2024, Art.1 (JORT N°104 26 Aug 2024); cross-checked at pm.gov.tn composition Depuis 25.08.2024 (both pm-gov-membres and pm-gov-composition). AFP via RFI contemporaneous reporting kept as reported corroboration only.
+  notes_fr:
+    - >-
+      Début attesté par le décret n°2024-465 du 25 août 2024, art. 1er (JORT n°104) ; vérification croisée pm.gov.tn Depuis 25.08.2024 (pm-gov-membres et pm-gov-composition). Dépêche AFP via RFI gardée comme corroboration reported seulement.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      البداية موثقة بالمرسوم عدد 2024-465 المؤرخ في 25 أوت 2024، الفصل الأول (الرائد الرسمي عدد 104)؛ والتحقق المتقاطع على pm.gov.tn منذ 25.08.2024. برقية AFP عبر RFI محفوظة كتأكيد reported فقط.
+  notes_ar_by: model-reviewed
+  reasoning: >-
+    JORT decree n°2024-465 du 25 août 2024 (JORT n°104 du 26 Aug 2024) lists 'Mohamed Ali Nafti : ministre des affaires étrangères, de la migration et des tunisiens à l'étranger' — gazette tier-1 document (legislation-decret-2024-465 and jort-2024-465-nafti are the same decree via two mirrors). pm.gov.tn members list corroborates incumbency 'depuis 25.08.2024' (pm-gov-membres and pm-gov-composition).
+  reasoning_fr: >-
+    Décret JORT n°2024-465 du 25 août 2024 (JORT n°104) nommant Mohamed Ali Nafti ministre des Affaires étrangères — document niveau 1 (deux miroirs : legislation-decret-2024-465 et jort-2024-465-nafti). Liste pm.gov.tn corrobore depuis 25.08.2024.
+  reasoning_fr_by: model-reviewed
+  reasoning_ar: >-
+    مرسوم الرائد الرسمي عدد 2024-465 المؤرخ في 25 أوت 2024 (الرائد الرسمي عدد 104) يسمي محمد علي النفطي وزيرًا للخارجية — وثيقة مستوى 1 (مرآتان: legislation-decret-2024-465 وjort-2024-465-nafti). قائمة رئاسة الحكومة تؤكد منذ 25 أوت 2024.
+  reasoning_ar_by: model-reviewed
+  falsifiable_by: >-
+    JORT N°104 of 26 Aug 2024 containing decree 2024-465 — if Nafti is not named Minister of Foreign Affairs in Art.1, this start is wrong; alternative falsifier is 9anoun.tn page for JORT n°104/2024 or a presidency decree with an earlier/later effective date.
+  falsifiable_by_fr: >-
+    JORT n°104 du 26 août 2024 contenant le décret 2024-465 — si Nafti n'y est pas nommé ministre des Affaires étrangères à l'art. 1er, ce début est erroné.
+  falsifiable_by_fr_by: model-reviewed
+  falsifiable_by_ar: >-
+    الرائد الرسمي عدد 104 بتاريخ 26 أوت 2024 الذي يتضمن المرسوم 2024-465 — إذا لم يكن النفطي مسمى فيه وزيرًا للخارجية في الفصل الأول فهذه البداية خاطئة.
+  falsifiable_by_ar_by: model-reviewed
+  sources: [legislation-decret-2024-465, jort-2024-465-nafti, pm-gov-membres-2024-08-25, pm-gov-composition-2024-08-25, rfi-reshuffle-2024-08-25, mosaique-nafti-bio-2024-08-25]
 
 - id: p-finance-ben-salah
   role: finance-minister
@@ -6104,28 +6156,93 @@
   start: "1989-09-27"
   end: "1990-03-03"
   confidence: B
-  verification: verified
+  verification: needs-primary-source
+  basis: reported
+  attributed_to: Wikipedia (French)
   reasoning: >-
     French Wikipedia's dated justice list records Bouaziz 27 September 1989 to
-    3 March 1990, in Karoui's own government.
+    3 March 1990, in Karoui's own government; corroborated by Gouvernement
+    Karoui composition table (27 Sep 1989 Justice: Mustapha Bouaziz; remaniement
+    03 Mar 1990 Justice: Chédli Neffati) and the dedicated Mustapha Bouaziz bio
+    (predecessor Hamed Karoui, successor Neffati, and later Domaines portfolio).
+    Tier-3 corroboration only — JORT decree n°89-1514 du 29 Sep 1989 and
+    remaniement 03 Mar 1990 not retrieved. Hunt 2026-08-28: 9anoun.tn browse
+    (https://9anoun.tn/kb/jorts) returns only recent JORTs, no 1989 index surfaced;
+    direct 9anoun guesses and KB search for Bouaziz/Justice 1989 returned no hits;
+    justice.gov.tn has no historical minister list. Trace: search-engine snippet
+    "Vu le décret n°89-1514 du 29 septembre 1989, portant nomination de Monsieur
+    Mustapha Bouaziz ministre de la justice" in https://www.pist.tn/jort/1989/1989F/Jo08089.pdf
+    (PDF not fetched — transport error). Still needs primary source for A.
   reasoning_fr: >-
     La liste datée de Wikipédia en français consigne Bouaziz du 27 septembre 1989 au 3 mars
-    1990, dans le gouvernement de Karoui lui-même.
+    1990, dans le gouvernement de Karoui lui-même ; corroboré par le tableau Gouvernement
+    Karoui (27 sept. 1989 Justice : Mustapha Bouaziz ; remaniement 03 mars 1990 Justice :
+    Chédli Neffati) et la bio dédiée Mustapha Bouaziz (prédécesseur Hamed Karoui,
+    successeur Neffati, et portefeuille Domaines ensuite). Corroboration de niveau 3
+    seulement — décret JORT n°89-1514 du 29 sept. 1989 et remaniement 03 mars 1990 non
+    récupérés. Chasse 2026-08-28 : navigation 9anoun.tn (https://9anoun.tn/kb/jorts) ne
+    renvoie que les JORT récents, aucun index 1989 surfacé ; tentatives directes 9anoun et
+    recherche KB Bouaziz/Justice 1989 sans résultat ; justice.gov.tn sans liste historique.
+    Trace : extrait moteur "Vu le décret n°89-1514 du 29 septembre 1989, portant nomination
+    de Monsieur Mustapha Bouaziz ministre de la justice" dans
+    https://www.pist.tn/jort/1989/1989F/Jo08089.pdf (PDF non récupéré — erreur de transport).
+    Reste en attente de source primaire pour A.
   reasoning_fr_by: model-reviewed
   reasoning_ar: >-
-    القائمة المؤرّخة في ويكيبيديا الفرنسية تسجّل بوعزيز من 27 سبتمبر 1989 إلى 3 مارس 1990،
-    في حكومة القروي نفسه.
+    القائمة المؤرّخة في ويكيبيديا الفرنسية تسجّل بوعزيز من 27 سبتمبر 1989 إلى 3 مارس 1990، في
+    حكومة القروي نفسه؛ ويؤيده جدول حكومة القروي (27 سبتمبر 1989 العدل: مصطفى بوعزيز؛ تعديل 3
+    مارس 1990 العدل: الشاذلي النفاتي) والسيرة المخصصة لمصطفى بوعزيز (السلف حامد القروي، الخلف
+    النفاتي، وحقيبة أملاك الدولة لاحقًا). تأييد من المستوى 3 فقط — لم يُسترد المرسوم بالرائد الرسمي
+    عدد 89-1514 المؤرخ في 29 سبتمبر 1989 ولا تعديل 3 مارس 1990. بحث 2026-08-28: تصفح 9anoun.tn
+    (https://9anoun.tn/kb/jorts) يعرض فقط الأعداد الحديثة، دون فهرس 1989؛ محاولات 9anoun المباشرة
+    وبحث القاعدة المعرفية عن Bouaziz/Justice 1989 دون نتيجة؛ justice.gov.tn بلا قائمة تاريخية.
+    أثر: مقتطف محرك البحث "Vu le décret n°89-1514 du 29 septembre 1989, portant nomination de
+    Monsieur Mustapha Bouaziz ministre de la justice" في https://www.pist.tn/jort/1989/1989F/Jo08089.pdf
+    (لم يُسحب الملف — خطأ نقل). لا يزال بحاجة إلى مصدر أولي للدرجة أ.
   reasoning_ar_by: model-reviewed
   falsifiable_by: >-
-    JORT decree appointing Mustapha Bouaziz as Minister of Justice with different dates.
+    JORT issue 1989-073 (https://lake.jort.tn/journal-officiel/fr/1989/073.pdf)
+    or PIST PDF https://www.pist.tn/jort/1989/1989F/Jo08089.pdf page showing
+    Mustapha Bouaziz appointment line (decree n°89-1514 du 29 Sep 1989) or the
+    03 Mar 1990 remaniement with different dates or holder; would upgrade to
+    documented/A. Justice.gov.tn historical list, if ever published, would also
+    falsify.
   falsifiable_by_fr: >-
-    Un décret au JORT nommant Mustapha Bouaziz ministre de la Justice avec des dates
-    différentes.
+    Numéro du JORT 1989-073 (https://lake.jort.tn/journal-officiel/fr/1989/073.pdf)
+    ou PDF PIST https://www.pist.tn/jort/1989/1989F/Jo08089.pdf montrant la ligne de
+    nomination de Mustapha Bouaziz (décret n°89-1514 du 29 sept. 1989) ou le remaniement du
+    03 mars 1990 avec des dates ou un titulaire différents ; permettrait un passage à
+    documenté/A. Une liste historique justice.gov.tn, si publiée, réfuterait aussi.
   falsifiable_by_fr_by: model-reviewed
   falsifiable_by_ar: >-
-    مرسوم في الرائد الرسمي يعيّن مصطفى بوعزيز وزيرًا للعدل بتواريخ مختلفة.
+    عدد الرائد الرسمي 1989-073 (https://lake.jort.tn/journal-officiel/fr/1989/073.pdf)
+    أو ملف PIST https://www.pist.tn/jort/1989/1989F/Jo08089.pdf الذي يعرض سطر تعيين مصطفى
+    بوعزيز (المرسوم عدد 89-1514 المؤرخ في 29 سبتمبر 1989) أو تعديل 3 مارس 1990 بتواريخ أو
+    صاحب منصب مختلفين؛ من شأنه الترقية إلى موثّق/أ. قائمة تاريخية على justice.gov.tn، إن
+    نُشرت، ستُفنّد أيضًا.
   falsifiable_by_ar_by: model-reviewed
-  sources: [wikipedia-justice-ministers-tunisia-fr]
+  notes:
+    - >-
+      Hunt 2026-08-28: JORT 27 Sep 1989 (Karoui composition) and 03 Mar 1990 (remaniement) via
+      9anoun.tn — not open in this session; JORT PDFs exist on pist.tn/JORT.tn but not fetched.
+      Corroborated at tier-3 by frwiki-gouvernement-karoui + frwiki-mustapha-bouaziz + dated
+      justice list. Falsifiable by lake.jort.tn 1989/073.pdf or Jo08089.pdf page image.
+  notes_fr:
+    - >-
+      Recherche 2026-08-28 : JORT 27 sept. 1989 (composition Karoui) et 03 mars 1990 (remaniement)
+      via 9anoun.tn — non ouverts lors de cette session ; PDFs JORT existent sur pist.tn/JORT.tn
+      mais non récupérés. Corroboré en niveau 3 par frwiki-gouvernement-karoui +
+      frwiki-mustapha-bouaziz + liste datée Justice. Réfutable par image de page
+      lake.jort.tn 1989/073.pdf ou Jo08089.pdf.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      بحث 2026-08-28: الرائد الرسمي 27 سبتمبر 1989 (تشكيلة القروي) و3 مارس 1990 (تعديل) عبر
+      9anoun.tn — غير متاحين في هذه الجلسة؛ ملفات الرائد الرسمي موجودة على pist.tn/JORT.tn لكن لم
+      تُسحب. مؤيد في المستوى 3 عبر frwiki-gouvernement-karoui + frwiki-mustapha-bouaziz + القائمة
+      المؤرخة للعدل. قابل للدحض بصورة صفحة lake.jort.tn 1989/073.pdf أو Jo08089.pdf.
+  notes_ar_by: model-reviewed
+  sources: [wikipedia-justice-ministers-tunisia-fr, frwiki-gouvernement-karoui, frwiki-mustapha-bouaziz]
 
 - id: p-justice-zouari
   role: justice-minister
@@ -6133,28 +6250,105 @@
   start: "1991-02-20"
   end: "1992-06-09"
   confidence: B
-  verification: verified
+  verification: needs-primary-source
+  basis: reported
+  attributed_to: Wikipedia (French)
   reasoning: >-
     French Wikipedia's dated justice list records Zouari 20 February 1991 to
-    9 June 1992, after Chédli Neffati and before Sadok Chaabane.
+    9 June 1992, after Chédli Neffati and before Sadok Chaabane; corroborated
+    by Gouvernement Karoui section "En vertu des décrets n°91-275 et 91-276 du
+    20 février 1991, une nouvelle composition du gouvernement est annoncée" with
+    table Justice: Abderrahim Zouari, and the dedicated Abderrahim Zouari bio
+    (Justice 20 Feb 1991–09 Jun 1992) plus remaniement 09 Jun 1992 successor
+    Sadok Chaabane. Tier-3 corroboration only — decree numbers 91-275/91-276 are
+    Wikipedia's transcription of the JORT, not a primary fetch. Hunt 2026-08-28:
+    9anoun.tn browse (https://9anoun.tn/kb/jorts) returns only recent JORTs, no
+    1991-1992 index surfaced; direct 9anoun guesses and KB search for Zouari/
+    Justice 1991-1992 returned no hits; legislation-securite.tn and juridoc.tn
+    not indexed for 1991 decrees; justice.gov.tn has no historical minister list.
+    Still needs primary source for A; transcription of decree numbers is the
+    disputed point until JORT page image is pulled.
   reasoning_fr: >-
     La liste datée de Wikipédia en français consigne Zouari du 20 février 1991 au 9 juin
-    1992, après Chédli Neffati et avant Sadok Chaâbane.
+    1992, après Chédli Neffati et avant Sadok Chaâbane ; corroboré par la section
+    Gouvernement Karoui "En vertu des décrets n°91-275 et 91-276 du 20 février 1991, une
+    nouvelle composition du gouvernement est annoncée" avec tableau Justice : Abderrahim Zouari,
+    et la bio dédiée Abderrahim Zouari (Justice 20 fév. 1991–09 juin 1992) plus remaniement
+    09 juin 1992 successeur Sadok Chaâbane. Corroboration de niveau 3 seulement — les numéros
+    91-275/91-276 sont la transcription Wikipédia du JORT, non une récupération primaire.
+    Chasse 2026-08-28 : navigation 9anoun.tn (https://9anoun.tn/kb/jorts) ne renvoie que les JORT
+    récents, aucun index 1991-1992 surfacé ; tentatives directes 9anoun et recherche KB
+    Zouari/Justice 1991-1992 sans résultat ; legislation-securite.tn et juridoc.tn non indexés
+    pour décrets 1991 ; justice.gov.tn sans liste historique. Reste en attente de source primaire
+    pour A ; la transcription des numéros est le point contesté jusqu'à récupération d'image JORT.
   reasoning_fr_by: model-reviewed
   reasoning_ar: >-
-    القائمة المؤرّخة في ويكيبيديا الفرنسية تسجّل الزواري من 20 فيفري 1991 إلى 9 جوان 1992،
-    بعد الشاذلي النفطي وقبل الصادق شعبان.
+    القائمة المؤرّخة في ويكيبيديا الفرنسية تسجّل الزواري من 20 فيفري 1991 إلى 9 جوان 1992، بعد
+    الشاذلي النفطي وقبل الصادق شعبان؛ ويؤيده قسم حكومة القروي "بمقتضى المرسومين عدد 91-275
+    و91-276 المؤرخين في 20 فيفري 1991، أُعلنت تشكيلة جديدة للحكومة" مع جدول العدل: عبد الرحيم
+    الزواري، والسيرة المخصصة لعبد الرحيم الزواري (العدل 20 فيفري 1991–09 جوان 1992) plus تعديل 9
+    جوان 1992 الخلف الصادق شعبان. تأييد من المستوى 3 فقط — رقما المرسومين 91-275/91-276 هما نسخ
+    ويكيبيديا للرائد الرسمي، ليس سحبًا أوليًا. بحث 2026-08-28: تصفح 9anoun.tn
+    (https://9anoun.tn/kb/jorts) يعرض فقط الأعداد الحديثة، دون فهرس 1991-1992؛ محاولات 9anoun
+    المباشرة وبحث القاعدة المعرفية عن Zouari/Justice 1991-1992 دون نتيجة؛ legislation-securite.tn
+    وjuridoc.tn غير مفهرسين لمراسيم 1991؛ justice.gov.tn بلا قائمة تاريخية. لا يزال بحاجة إلى مصدر
+    أولي للدرجة أ؛ نسخ رقمي المرسومين هو النقطة المتنازع عليها حتى سحب صورة الرائد الرسمي.
   reasoning_ar_by: model-reviewed
   falsifiable_by: >-
-    JORT decree appointing Abderrahim Zouari as Minister of Justice with different dates.
+    JORT issue containing decrees n°91-275/91-276 of 20 Feb 1991
+    (https://lake.jort.tn/journal-officiel/fr/1991/ — issue around 20 Feb 1991)
+    naming Abderrahim Zouari as Minister of Justice with different dates, or
+    showing a different holder/CIN/birth mismatching 18 Apr 1944 Dahmani, or
+    giving different decree numbers than Wikipedia's 91-275/91-276 transcription;
+    or JORT 09 Jun 1992 issue for the succession to Sadok Chaabane. Would upgrade
+    to documented/A and disambiguate homonym.
   falsifiable_by_fr: >-
-    Un décret au JORT nommant Abderrahim Zouari ministre de la Justice avec des dates
-    différentes.
+    Numéro du JORT contenant décrets n°91-275/91-276 du 20 fév. 1991
+    (https://lake.jort.tn/journal-officiel/fr/1991/ — numéro autour du 20 fév. 1991)
+    nommant Abderrahim Zouari ministre de la Justice avec des dates différentes, ou
+    montrant un titulaire/CIN/naissance différent ne correspondant pas au 18 avr. 1944
+    Dahmani, ou donnant des numéros différents de la transcription Wikipédia 91-275/91-276 ;
+    ou numéro JORT 09 juin 1992 pour succession à Sadok Chaâbane. Permettrait un passage à
+    documenté/A et lèverait l'homonymie.
   falsifiable_by_fr_by: model-reviewed
   falsifiable_by_ar: >-
-    مرسوم في الرائد الرسمي يعيّن عبد الرحيم الزواري وزيرًا للعدل بتواريخ مختلفة.
+    عدد الرائد الرسمي الحاوي للمرسومين عدد 91-275/91-276 المؤرخين في 20 فيفري 1991
+    (https://lake.jort.tn/journal-officiel/fr/1991/ — عدد حوالي 20 فيفري 1991) الذي يعيّن عبد
+    الرحيم الزواري وزيرًا للعدل بتواريخ مختلفة، أو يعرض صاحب منصب/رقم بطاقة تعريف/تاريخ ولادة
+    مختلفًا لا يطابق 18 أفريل 1944 بدهماني، أو يعطي رقمين مختلفين عن نسخ ويكيبيديا 91-275/91-276؛
+    أو عدد الرائد الرسمي 9 جوان 1992 لخلافة الصادق شعبان. من شأنه الترقية إلى موثّق/أ وتمييز
+    التشابه الاسمي.
   falsifiable_by_ar_by: model-reviewed
-  sources: [wikipedia-justice-ministers-tunisia-fr]
+  notes:
+    - >-
+      Hunt 2026-08-28: JORT 20 Feb 1991 (91-275/91-276) and 09 Jun 1992 via 9anoun.tn —
+      not open in this session; decree numbers known only from Wikipedia transcription.
+      Corroborated at tier-3 by frwiki-gouvernement-karoui + frwiki-abderrahim-zouari +
+      dated justice list. Falsifiable by lake.jort.tn 1991 issue page image.
+  notes_fr:
+    - >-
+      Recherche 2026-08-28 : JORT 20 fév. 1991 (91-275/91-276) et 09 juin 1992 via 9anoun.tn —
+      non ouverts lors de cette session ; numéros connus seulement par transcription Wikipédia.
+      Corroboré en niveau 3 par frwiki-gouvernement-karoui + frwiki-abderrahim-zouari +
+      liste datée Justice. Réfutable par image de page lake.jort.tn 1991.
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - >-
+      بحث 2026-08-28: الرائد الرسمي 20 فيفري 1991 (91-275/91-276) و9 جوان 1992 عبر 9anoun.tn —
+      غير متاحين في هذه الجلسة؛ الرقمان معروفان فقط عبر نسخ ويكيبيديا. مؤيد في المستوى 3 عبر
+      frwiki-gouvernement-karoui + frwiki-abderrahim-zouari + القائمة المؤرخة للعدل. قابل للدحض
+      بصورة صفحة lake.jort.tn 1991.
+  notes_ar_by: model-reviewed
+  disputes:
+    - claim: "Decree numbers n°91-275 and 91-276 of 20 Feb 1991 for the Zouari appointment"
+      held_by: Wikipedia (French) — Gouvernement Karoui transcription
+      assessment: >-
+        Transcription only; Wikipedia cites the decrees by number but the JORT page image
+        was not fetched in this session. The numbers are carried as reported, not as
+        verified gazette fact, and a different numbering on the actual JORT page would
+        supersede them.
+      status: open
+  sources: [wikipedia-justice-ministers-tunisia-fr, frwiki-gouvernement-karoui, frwiki-abderrahim-zouari]
 
 - id: p-justice-chaabane
   role: justice-minister
@@ -7104,34 +7298,39 @@
   holder: slim-chaker
   start: "2015-02-06"
   end: "2016-08-27"
-  confidence: B
-  verification: needs-primary-source
-  notes: ["Died in office."]
+  confidence: A
+  verification: verified
+  notes:
+    - Announcement 02 Feb 2015 (TAP/BusinessNews) vs decree 06 Feb 2015 (JORT n° 12 du 10 Feb 2015, pp. 468-469) is not a dispute on the legal act — ARP confidence 05 Feb, decree 06 Feb, JORT 10 Feb; candidates cite decree date 06 Feb 2015 (jort-2015-35-chaker).
+    - End bracketed by decree 2016-107 du 27 Aug 2016 naming Lamia Boujnah Zribi as Finance Minister (publication JORT n° 71 du 30 Aug 2016 lags 3 days — not a substantive disagreement).
+    - Also held as Health Minister 12 Sep – 08 Oct 2017; died as Health Minister, not while holding Finance — cause reported, not documented (see person notes).
   notes_fr:
-    - >-
-      Mort en fonction.
+    - L'annonce du 02 fév 2015 (TAP) vs le décret du 06 fév 2015 (JORT n° 12 du 10 fév 2015, pp. 468-469) ne constitue pas un différend sur l'acte juridique — confiance ARP 05 fév, décret 06 fév, JORT 10 fév.
+    - Fin encadrée par le décret 2016-107 du 27 août 2016 nommant Lamia Boujnah Zribi ministre des Finances (publication JORT n° 71 du 30 août, décalage 3 jours — sans incidence).
+    - Egalement ministre de la Santé 12 sep – 08 oct 2017 ; décédé comme ministre de la Santé, non comme Finances — cause rapportée, non documentée.
   notes_fr_by: model-reviewed
   notes_ar:
-    - >-
-      توفي في المنصب.
+    - إعلان 02 فيفري 2015 (وكالة تونس أفريقيا للأنباء) مقابل المرسوم 06 فيفري 2015 (الرائد الرسمي عدد 12 المؤرخ في 10 فيفري 2015، ص. 468-469) ليس خلافا على التصرف القانوني — ثقة مجلس النواب 05 فيفري، المرسوم 06 فيفري، الرائد الرسمي 10 فيفري.
+    - النهاية محددة بالمرسوم 2016-107 المؤرخ في 27 أوت 2016 الذي سمى لمياء بوجناح الزريبي وزيرة للمالية (النشر بالرائد الرسمي عدد 71 المؤرخ في 30 أوت بفارق 3 أيام — دون أثر جوهري).
+    - تولى أيضا الصحة 12 سبتمبر – 08 أكتوبر 2017؛ وتوفي بصفته وزير الصحة لا المالية — السبب منقول، غير موثق.
   notes_ar_by: model-reviewed
   reasoning: >-
-    Wikipedia records his tenure as finance minister.
+    Two tier-1 decrees bracket the tenure exactly: 2015-35 Art.2 names "Slim Chaker : ministre des finances" in the Essid composition (JORT 2015-012 pp.468-469, date 2015-02-06); 2016-107 Art.2 names "Lamia Boujnah Zribi : ministre des finances" in the Chahed composition (JORT 2016-071, date 2016-08-27), ending Chaker. No day invented; decree dates used, not JORT publication dates (10 Feb / 30 Aug). Wikipedia list corroborates.
   reasoning_fr: >-
-    Wikipédia consigne son mandat de ministre des Finances.
+    Deux décrets de niveau 1 bornent exactement le mandat : 2015-35 art.2 nomme « Slim Chaker : ministre des finances » (JORT 2015-012, 6 fév 2015) ; 2016-107 art.2 nomme « Lamia Boujnah Zribi : ministre des finances » (JORT 2016-071, 27 août 2016) qui clôt Chaker.
   reasoning_fr_by: model-reviewed
   reasoning_ar: >-
-    تسجّل ويكيبيديا ولايته وزيرًا للمالية.
+    مرسومان من الدرجة الأولى يحددان الولاية بدقة: 2015-35 في الفصل 2 يسمي « سليم شاكر : وزيرا للمالية » (الرائد الرسمي 2015-012، 6 فيفري 2015)؛ و2016-107 في الفصل 2 يسمي « لمياء بوجناح الزريبي : وزيرة للمالية » (الرائد الرسمي 2016-071، 27 أوت 2016) منهيًا ولاية شاكر.
   reasoning_ar_by: model-reviewed
   falsifiable_by: >-
-    JORT decree appointing Slim Chaker as Minister of Finance.
+    Production of JORT 2015-012 pp.468-469 and JORT 2016-071 showing different Art.2 listings or dates.
   falsifiable_by_fr: >-
-    Un décret au JORT nommant Slim Chaker ministre des Finances.
+    Production du JORT 2015-012 pp.468-469 et du JORT 2016-071 montrant une liste ou des dates différentes à l'article 2.
   falsifiable_by_fr_by: model-reviewed
   falsifiable_by_ar: >-
-    مرسوم في الرائد الرسمي يعيّن سليم شاكر وزيرًا للمالية.
+    إبراز الرائد الرسمي 2015-012 ص.468-469 والرائد الرسمي 2016-071 بفصل 2 مختلف أو بتواريخ مختلفة.
   falsifiable_by_ar_by: model-reviewed
-  sources: [wikipedia-finance-ministers]
+  sources: [jort-2015-35-chaker, legislation-decret-2016-107, wikipedia-finance-ministers]
 
 - id: p-finance-zribi
   role: finance-minister
@@ -7382,27 +7581,21 @@
 - id: p-finance-khaldi
   role: finance-minister
   holder: michkat-khaldi
-  start: "2025-02"
+  start: "2025-02-05"
   end: ongoing
-  confidence: B
-  verification: needs-primary-source
-  reasoning: >-
-    Appointed in the Zaafarani government reshuffle.
-  reasoning_fr: >-
-    Nommée dans le remaniement du gouvernement Zaafarani.
-  reasoning_fr_by: model-reviewed
-  reasoning_ar: >-
-    عُيّنت في تعديل حكومة الزعفراني.
-  reasoning_ar_by: model-reviewed
-  falsifiable_by: >-
-    JORT decree appointing Michkat Khaldi as Minister of Finance.
-  falsifiable_by_fr: >-
-    Un décret au JORT nommant Michkat Khaldi ministre des Finances.
-  falsifiable_by_fr_by: model-reviewed
-  falsifiable_by_ar: >-
-    مرسوم في الرائد الرسمي يعيّن مشكات خالدي وزيرة للمالية.
-  falsifiable_by_ar_by: model-reviewed
-  sources: [wikipedia-finance-ministers]
+  confidence: A
+  verification: verified
+  reasoning: "Ministry of Finance institutional page (tier 1) dates the appointment 'mercredi 5 février 2025' — replaces month-precision ~2025-02. Reuters contemporaneous relay of the presidency communiqué corroborates the same day (Wednesday). Prior finance minister Sihem Boughdiri's removal is stated in the same pages."
+  reasoning_fr: "La page institutionnelle du ministère des Finances date la nomination au 'mercredi 5 février 2025' — remplace la précision mensuelle ~2025-02. Le relais contemporain Reuters du communiqué de la présidence corrobore le même jour."
+  reasoning_fr_by: human
+  reasoning_ar: صفحة وزارة المالية المؤرخة «الأربعاء 5 فيفري 2025» تحل محل التاريخ الشهري. رويترز تؤكد اليوم نفسه.
+  reasoning_ar_by: machine
+  falsifiable_by: "JORT decree published in JORT n°16/2025 (or adjacent) naming Michket Slama Khaldi as Minister of Finance — Scribd preview indicates a decree exists 5 Feb 2025; the decree number + JORT reference not yet located on 9anoun.tn. If the JORT date differs, this start moves."
+  falsifiable_by_fr: "Décret au JORT n°16/2025 nommant Michket Slama Khaldi ministre des Finances."
+  falsifiable_by_fr_by: human
+  falsifiable_by_ar: مرسوم بالرائد الرسمي عدد 16/2025 يسمي مشكات سلامة الخالدي وزيرة للمالية.
+  falsifiable_by_ar_by: machine
+  sources: [finances-gov-khaldi-2025, reuters-khaldi-2025-02-05]
 
 # --- Central Bank governors -------------------------------------------------
 
@@ -7707,31 +7900,86 @@
 - id: p-bct-nouri
   role: bct-governor
   holder: fethi-zouhair-nouri
-  start: "2024-02-15"
+  start: "2024-02-16"
   end: ongoing
-  confidence: B
+  confidence: A
   verification: verified
+  notes:
+    - >-
+      Start corrected 2026-08-28 from 2024-02-15 to 2024-02-16 per JORT tier-1:
+      decree dated 15 Feb, effective 16 Feb (Décret 2024-122 Art.1 'à compter
+      du 16 février 2024', JORT n°2024-025, via 9anoun). BCT Conseil page
+      (bct-gov-conseil-2024) confirms incumbency as Gouverneur et Président du
+      Conseil with linked CV; contemporaneous secondary (WMC/TAP 15 Feb 2024,
+      ilboursa, Jeune Afrique, Leaders 35646, Le Quotidien) corroborates oath
+      on 15 Feb 2024 — ceremony vs legal effect.
+    - >-
+      Previous governor Marouane Abassi term ends 2024-02-15 in dataset —
+      succession now shows one-day gap (15→16 Feb) reflecting ceremony vs
+      effective date; not an overlap.
+  notes_fr:
+    - >-
+      Début corrigé le 2026-08-28 de 2024-02-15 à 2024-02-16 selon JORT tier-1 :
+      décret du 15 fév., effet 16 fév. (Décret 2024-122 Art.1 'à compter du 16
+      février 2024'). Page Conseil BCT confirme la fonction ; presse du 15 fév.
+      corroborre la prestation de serment — cérémonie vs effet juridique.
+    - >-
+      Succession après Abassi (fin 15 fév.) montre un intervalle d'un jour
+      reflétant cérémonie vs date d'effet.
+  notes_fr_by: human
+  notes_ar:
+    - >-
+      صُححت البداية 2026-08-28 من 15 إلى 16 فيفري 2024 وفق الرائد tier-1: مرسوم
+      15 فيفري نافذ 16 فيفري (مرسوم 2024-122). صفحة مجلس البنك تؤكد المحافظة؛
+      الصحافة 15 فيفري تؤكد أداء اليمين — مراسم مقابل النفاذ القانوني.
+    - >-
+      خلافة بعد العباسي (نهاية 15 فيفري) تُظهر فجوة يوم واحد بين المراسم والنفاذ.
+  notes_ar_by: machine
   reasoning: >-
-    French Wikipedia records his mandate from 15 February 2024, succeeding
-    Marouane Abassi; confirmed by ilboursa and Jeune Afrique on the same date.
+    JORT Décret n°2024-122 du 15 fév 2024 (JORT n°2024-025) Art.1 appoints Fethi
+    Zouhaier Nouri 'à compter du 16 février 2024' with minister rank
+    (Constitution Art.106, Loi 2016-35) — tier-1 legal effective date. BCT
+    Conseil page (tier1) lists him as Governor and President of the Board with
+    CV. Press (Ilboursa, Jeune Afrique, Leaders 35646, Le Quotidien, WMC/TAP)
+    reports oath/swearing on 15 Feb 2024 at Carthage — ceremony vs legal
+    effect. Prefer 16 Feb per gazette.
   reasoning_fr: >-
-    Wikipédia en français consigne son mandat à partir du 15 février 2024, succédant à
-    Marouane Abassi ; confirmé par ilboursa et Jeune Afrique à la même date.
-  reasoning_fr_by: model-reviewed
+    Décret JORT n°2024-122 Art.1 nomme Nouri 'à compter du 16 février 2024' —
+    date légale tier-1. Page Conseil BCT le liste gouverneur et président.
+    Presse (Ilboursa, JA, Leaders, Le Quotidien, WMC/TAP) rapporte prestation
+    de serment le 15 fév. 2024 — cérémonie vs effet juridique. Préférer 16
+    fév. selon JORT.
+  reasoning_fr_by: human
   reasoning_ar: >-
-    تسجّل ويكيبيديا الفرنسية ولايته انطلاقًا من 15 فيفري 2024، خلفًا لمروان العباسي؛ ويؤكده
-    ilboursa وجون أفريك في التاريخ نفسه.
-  reasoning_ar_by: model-reviewed
+    مرسوم الرائد 2024-122 يسمي النوري ابتداء من 16 فيفري 2024 — تاريخ قانوني.
+    صفحة مجلس البنك تدرجه محافظًا. الصحافة تنقل أداء اليمين 15 فيفري — مراسم
+    مقابل النفاذ القانوني.
+  reasoning_ar_by: machine
   falsifiable_by: >-
-    A JORT decree appointing Fethi Zouhair Nouri as BCT governor with different dates.
+    JORT n°2024-025 text — if Art.1 gives different effective date, or BCT
+    communiqué on handover, or BCT board page showing successor, this span
+    moves/closes
   falsifiable_by_fr: >-
-    Un décret au JORT nommant Fethi Zouhair Nouri gouverneur de la BCT avec des dates
-    différentes.
-  falsifiable_by_fr_by: model-reviewed
+    Texte JORT n°2024-025 — si Art.1 donne autre date d'effet, ou communiqué
+    BCT sur passation, cette durée bouge/se clôt.
+  falsifiable_by_fr_by: human
   falsifiable_by_ar: >-
-    مرسوم في الرائد الرسمي يعيّن فتحي زهير النوري محافظًا للبنك المركزي بتواريخ مختلفة.
-  falsifiable_by_ar_by: model-reviewed
-  sources: [frwiki-bct, ilboursa-nouri-2024, jeuneafrique-nouri-2024]
+    نص الرائد 2024-025 — إن ذكر تاريخ نفاذ آخر أو بيان تسليم من البنك يتحرك
+    هذا المدى.
+  falsifiable_by_ar_by: machine
+  disputes:
+    - claim: "BCT governor mandate started 15 Feb 2024 (swearing-in at Carthage)"
+      held_by: "Press contemporaneous 15 Feb 2024 (Ilboursa, Jeune Afrique, Leaders 35646, Le Quotidien, WMC/TAP) — ceremony date"
+      assessment: >-
+        NOT ADOPTED as start. 15 Feb is the swearing-in ceremony reported by
+        press; JORT Décret 2024-122 Art.1 (tier1) says 'à compter du 16 février
+        2024' — legal effective date. Dataset prefers gazette (16 Feb) per tier
+        ladder; 15 Feb retained here as disputed ceremony date.
+      status: open
+      source: jort-2024-122-nouri
+      resolved_by: Hunt bct-and-orphan 2026-08-28 + incumbents 2026-08-28
+      resolved_at: "2026-08-28"
+  sources: [jort-2024-122-nouri, bct-gov-conseil-2024, bct-cv-nouri-fr, frwiki-bct, ilboursa-nouri-2024, jeuneafrique-nouri-2024, leaders-nouri-35646, le-quotidien-nouri-2024-02-15, wmc-nouri-2024-02-15, africanmanager-nouri-bio-2024]
 
 # ===========================================================================
 # PARTY LEADERSHIP

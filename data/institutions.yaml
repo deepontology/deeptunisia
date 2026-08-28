@@ -423,26 +423,35 @@
   name_ar: الإدارة العامة للأمن العمومي
   type: police
   layer: security
-  parent: ministry-interior
+  parent: national-security
   order: 24
   active:
-    start: ~1970
+    start: "?"
     end: ongoing
   confidence: B
   verification: needs-primary-source
-  attributed_to: Dataset compilation; the interior ministry's current organisation chart (interieur.gov.tn, retrieved 2026-08-08) shows the DGSN as the public-order police command.
-  reasoning: "No primary source naming a distinct \"Direction générale de la sûreté publique\" (الإدارة العامة للأمن العمومي) was located. The interior ministry's official organisational chart (tier 1, read) lists \"هياكل الأمن الوطني\" — the DGSN (\"الإدارة العامة للأمن الوطني\") — as the police command charged with public order, and lists no separate DGSP structure. The record is kept (rule 6) but flagged: as named, the entity's independent existence is unverified; the historical \"sûreté publique\" appears to be a directorate within the DGSN rather than a separate directorate-general."
-  falsifiable_by: A JORT decree or official organigramme naming a "directeur général de la sûreté publique" (the ministry's own 2016+ charts do not), or a law establishing a distinct "الإدارة العامة للأمن العمومي".
+  basis: inferred
+  attributed_to: "Dataset compilation; inferred from organigramme read (interieur-gov-tn-org tier 1, décret 91-543 tier 1) + Leaders (tier 4) + J. of North African Studies (tandf-police-benali tier 2)"
+  reasoning: "No JORT decree or interieur.gov.tn chart lists a standalone DGSP at the same hierarchical level as the DGSN. Décret 91-543 art. 28 (mod. 2001-1455) enumerates only two force structures — sûreté nationale and garde nationale — with no third DGSP. The official chart (interieur-gov-tn-org) describes the DGSN as charged with 'المحافظة على الأمن العام' — the functional remit of 'sûreté publique'. The 20 Feb 2019 Interior communiqué (via TAP/Directinfo and Gnet) names Harroum 'à la Direction générale de la Sûreté nationale' and Leaders states the DG Sûreté nationale (Rached Bettaieb, since Mar 2018) 'coiffe l'ensemble des directions générales, entre autres, celle de la sécurité publique'. The institution is therefore modelled as a directorate within the DGSN (parent: national-security), not a separate directorate-general, pending a primary source. No founding decree for ~1970 was located, so start is '?'."
+  falsifiable_by: "A JORT decree or official organigramme naming a 'directeur général de la sûreté publique' as a standalone directorate-general not subordinate to the DGSN, or a law establishing a distinct 'الإدارة العامة للأمن العمومي'"
+  summary: "A directorate for public order and judicial police within the Directorate-General of National Security (DGSN), not a standalone directorate-general. Its head, styled directeur général, reports to the Directeur général de la sûreté nationale who commands the national police. The 20 February 2019 appointment of Khelifa Harroum (previously DG Police judiciaire, succeeding Adel Chouchane) was announced by Interior communiqué and reported by Leaders as 'à la tête de la direction générale de la Sûreté publique' under the DGSN."
+  summary_fr: "Une direction chargée de la sécurité publique et de la police judiciaire au sein de la Direction générale de la sûreté nationale (DGSN), et non une direction générale autonome. Son chef, titré directeur général, relève du directeur général de la sûreté nationale qui commande la police nationale. La nomination du 20 février 2019 de Khelifa Harroum (auparavant DG de la Police judiciaire, succédant à Adel Chouchane) a été annoncée par communiqué du ministère de l'Intérieur et rapportée par Leaders comme 'à la tête de la direction générale de la Sûreté publique' au sein de la DGSN."
+  summary_fr_by: model-reviewed
+  summary_ar: "إدارة للأمن العمومي والشرطة العدلية داخل الإدارة العامة للأمن الوطني، وليست إدارة عامة مستقلة. يتبع رئيسها، الملقب مديرًا عامًا، المدير العام للأمن الوطني الذي يقود الشرطة الوطنية. وأُعلن عن تعيين خليفة حروم يوم 20 فيفري 2019 (وكان مديرًا عامًا للشرطة العدلية خلفًا لعادل الشوشان) ببلاغ من وزارة الداخلية ونقلته ليدرز بصفته 'على رأس الإدارة العامة للأمن العمومي' داخل الإدارة العامة للأمن الوطني."
+  summary_ar_by: model-reviewed
   sources:
     - interieur-gov-tn-org
+    - dcaf-decret-91-543
     - tandf-police-benali
+    - leaders-benkhaled-2019
+    - directinfo-harrom-2019
   notes:
-    - "Sources and status flag added 2026-08-13. Suggested editorial paths for the human reviewer: (a) document the record as a sub-directorate of the DGSN with interieur-gov-tn-org + tandf-police-benali, or (b) rename/merge the record if the separate DG never existed. Confidence stays B only for the DGSN-level police apparatus the sources do document."
+    - "Reframed 2026-08-28 as sub-directorate of DGSN (parent: national-security); active.start ~1970 → ? (no founding decree located; previous ~1970 inferred with no source, now reasoning + ? per V18). Added tier-1 décret 91-543 art.28 (binary Sûreté nationale/Garde nationale) and phrasing evidence from Leaders + TAP/Directinfo (Harroum 'à la DGSN'; DGSN chief 'coiffe… celle de la sécurité publique'). Kept inferred + needs-primary-source until a JORT organigramme names a standalone DGSP. Sources: interieur-gov-tn-org (tier 1), dcaf-decret-91-543 (tier 1), tandf-police-benali (tier 2), leaders-benkhaled-2019 + directinfo-harrom-2019 (tier 4 phrasing)."
   notes_fr:
-    - "Sources et drapeau de statut ajoutés le 2026-08-13. Pistes éditoriales suggérées au relecteur humain : (a) documenter la fiche comme une sous-direction de la DGSN avec interieur-gov-tn-org + tandf-police-benali, ou (b) renommer/fusionner la fiche si la direction générale distincte n'a jamais existé. La confiance reste B uniquement pour l'appareil policier de niveau DGSN que les sources documentent."
+    - "Recadrée le 2026-08-28 comme sous-direction de la DGSN (parent : national-security) ; active.start ~1970 → ? (aucun décret fondateur trouvé ; le ~1970 antérieur était inféré sans source, désormais raisonnement + ? selon V18). Ajout du décret 91-543 art.28 (binôme Sûreté nationale/Garde nationale, niveau 1) et de la preuve de formulation via Leaders + TAP/Directinfo (Harroum 'à la DGSN' ; le chef de la DGSN 'coiffe… celle de la sécurité publique'). Maintenu inféré + needs-primary-source jusqu'à un organigramme au JORT nommant une DGSP autonome. Sources : interieur-gov-tn-org (niveau 1), dcaf-decret-91-543 (niveau 1), tandf-police-benali (niveau 2), leaders-benkhaled-2019 + directinfo-harrom-2019 (niveau 4 formulation)."
   notes_fr_by: model-reviewed
   notes_ar:
-    - "أُضيفت المصادر ووسم الوضع بتاريخ 2026-08-13. مسارات تحريرية مقترحة للمراجع البشري: (أ) توثيق السجل بوصفه إدارة فرعية ضمن الإدارة العامة للأمن الوطني مع interieur-gov-tn-org + tandf-police-benali، أو (ب) إعادة تسمية/دمج السجل إذا لم توجد الإدارة العامة المستقلة أبدًا. تبقى درجة الثقة B فقط للجهاز الأمني بمستوى الإدارة العامة للأمن الوطني الذي توثقه المصادر."
+    - "أُعيد تأطيرها يوم 2026-08-28 كإدارة فرعية ضمن الإدارة العامة للأمن الوطني (الأصل: national-security)؛ بداية النشاط ~1970 ← ؟ (لم يُعثر على مرسوم تأسيس؛ وكان ~1970 السابق استدلالًا بلا مصدر، والآن استدلال + ؟ حسب V18). أُضيف المرسوم 91-543 الفصل 28 (ثنائية الأمن الوطني/الحرس الوطني، مستوى 1) ودليل الصياغة من ليدرز + TAP/Directinfo (حروم 'بالإدارة العامة للأمن الوطني'؛ ورئيس الأمن الوطني 'يشرف على … إدارة الأمن العمومي'). بقيت مستدلّة + needs-primary-source إلى حين صدور مخطط رسمي في الرائد الرسمي يسمي إدارة عامة مستقلة للأمن العمومي. المصادر: interieur-gov-tn-org (مستوى 1)، dcaf-decret-91-543 (مستوى 1)، tandf-police-benali (مستوى 2)، leaders-benkhaled-2019 + directinfo-harrom-2019 (مستوى 4 صياغة)."
   notes_ar_by: model-reviewed
 - id: presidential-security
   name_en: Presidential Security
