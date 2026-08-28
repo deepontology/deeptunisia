@@ -1,0 +1,109 @@
+# Timeline — Bot farm / fake accounts 2016–2026
+events:
+  - id: T001
+    date: "2019-05-16"
+    end_date: null
+    description:
+      en: "Meta removes Archimedes Group network: 265 assets globally including Tunisia (65 accounts / 161 Pages / 23 Groups / 12 events / 4 IG)"
+    source: fb-cib-israel-2019-05-16
+    type: platform_enforcement
+    section: S02
+
+  - id: T002
+    date: "2019-05-15"
+    end_date: "2019-07-15"
+    description:
+      en: "ATIDE/DRI monitoring window: 38.5% of political messages from unaffiliated entertainment/satirical Pages (page network)"
+    source: dri-atide-tunisia-social-media-2019-09-11
+    type: measurement
+    section: S02
+
+  - id: T003
+    date: "2019-06-03"
+    end_date: null
+    description:
+      en: "Inkyfada counts 11 Tunisia-related Archimedes Pages (17 Jan–12 Mar 2019, ~500k followers; 359 posts >1M interactions)"
+    source: inkyfada-facebook-israel-2019-06-03
+    type: measurement
+    section: S02
+
+  - id: T004
+    date: "2019-08-29"
+    end_date: null
+    description:
+      en: "Fake News Checking page launches (ex-@360_tn) — later part of UReputation infrastructure per DFRLab"
+    source: dfrlab-operation-carthage-2020-06-05
+    type: infrastructure
+    section: S03
+
+  - id: T005
+    date: "2019-09-15"
+    end_date: "2019-10-13"
+    description:
+      en: "Presidential election rounds (context): platforms and monitors intensify observation; sponsored-page monitoring under Electoral Law Art.143"
+    source: dri-atide-tunisia-social-media-2019-09-11
+    type: election
+    section: S02
+
+  - id: T006
+    date: "2020-05-29"
+    end_date: "2020-05-30"
+    description:
+      en: "Up to 60 Tunisian accounts/pages (journalists/artists: Radyoon since 2012) deactivated without warning — collateral window"
+    source: article19-tunisia-accounts-2020-06-15
+    type: incident
+    section: S04
+
+  - id: T007
+    date: "2020-06-05"
+    end_date: null
+    description:
+      en: "Operation Carthage disclosed: Facebook removes 993 Tunisia-origin assets (446 Pages / 182 accounts / 96 Groups / 60 events / 209 IG) linked to UReputation; DFRLab publishes 30-page investigation"
+    source: fb-cib-may2020-detailed-pdf
+    type: platform_enforcement
+    section: S03
+
+  - id: T008
+    date: "2021-07-25"
+    end_date: null
+    description:
+      en: "President Saied invokes Article 80, dismisses government and freezes parliament"
+    source: aljazeera-tunisia-manipulation-2021-07-28
+    type: political
+    section: S05
+
+  - id: T009
+    date: "2021-07-28"
+    end_date: null
+    description:
+      en: "Al Jazeera / Marc Owen Jones publishes hashtag analysis: 12k tweets from 6.8k accounts, Gulf-centric amplification, Fairuz sock-puppet >200 RT/5 min"
+    source: aljazeera-tunisia-manipulation-2021-07-28
+    type: measurement
+    section: S05
+
+  - id: T010
+    date: "2022-07-25"
+    end_date: null
+    description:
+      en: "Constitutional referendum adopts new constitution (context for narrowed political field)"
+    source: decree54-dcaf-2022-09-13
+    type: political
+    section: S06
+
+  - id: T011
+    date: "2022-09-13"
+    end_date: null
+    description:
+      en: "Decree Law 54 criminalises spreading false news/rumours via information systems (Art.24: 5 years + 50,000 TND) — no bot count"
+    source: decree54-dcaf-2022-09-13
+    type: regulation
+    section: S06
+
+  - id: T012
+    date: "2024-10-06"
+    end_date: null
+    description:
+      en: "Presidential election — no Tier 1–2 bot-farm enumeration published for this window (Digital Action / Arab Facts Hub describe networks qualitatively only)"
+    source: digitalaction-tunisia-briefing-2024-10-22
+    type: election
+    section: S06

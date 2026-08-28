@@ -1,0 +1,23 @@
+researcher: "DeepTunisia research team — bot-farm sweep"
+research_period: "2026-08-28"
+datasets_consulted:
+  - data/contrib/bot-farm-2026-08-28.yaml
+  - data/contrib/bot-farm-2026-08-28-archimedes-atide.yaml
+  - data/contrib/bot-farm-2026-08-28-carthage-collateral.yaml
+  - data/contrib/bot-farm-2026-08-28-platform-legal.yaml
+  - data/contrib/bot-farm-2026-08-28-foreign-gap.yaml
+  - data/comparative_bot_estimates_2016_2026.csv
+records_created:
+  - bot-farm-2026-08-28.yaml
+  - bot-farm-2026-08-28-archimedes-atide.yaml
+  - bot-farm-2026-08-28-carthage-collateral.yaml
+  - bot-farm-2026-08-28-platform-legal.yaml
+  - bot-farm-2026-08-28-foreign-gap.yaml
+sources_consulted_count: 34
+primary_sources_count: 6
+entities_identified: 14
+claims_extracted: 27
+disputed_claims: 4
+unresolved_claims: 2
+documented_negatives: 4
+notes: "Live re-verification 2026-08-28 across 4 subagents: Meta and Inkyfada 200 body captured; DRI/ATIDE PDF 403 flagged needs-primary-source; Carthage 993 converged across 3 primaries; platform transparency negatives exhaustively logged (Meta index / X country + IO 404 / Google TAG / ISIE)."

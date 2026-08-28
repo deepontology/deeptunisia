@@ -1,0 +1,43 @@
+components:
+  - type: article
+    required: true
+
+  - type: evidence-ledger
+    required: false
+    config:
+      show_orphaned: true
+
+  - type: timeline
+    required: true
+    config:
+      range: [2016, 2026]
+      style: sidebar
+      events_source: timeline.yaml
+
+  - type: source-registry
+    required: true
+
+  - type: data-tables
+    required: false
+    config:
+      tables:
+        - file: data/comparative_bot_estimates_2016_2026.csv
+          title:
+            en: "Public estimates of fake-account assets, Tunisia 2016–2026"
+            fr: "Estimations publiques des faux comptes, Tunisie 2016–2026"
+            ar: "التقديرات العلنية للحسابات الوهمية، تونس ٢٠١٦–٢٠٢٦"
+          description:
+            en: "Every public number with claim-maker, methodology and dispute flag — do not sum across methods"
+
+  - type: network-schematic
+    required: false
+    config:
+      title:
+        en: "Operation Carthage — redrawn from counts (not from DFRLab artwork)"
+      note:
+        en: "Original data: DFRLab PDF + Meta Detailed PDF; redrawn SVG uses counts (446/182/96/60/209) and country list (10) — no tracing of Atlantic Council figure."
+
+  - type: exclusions
+    required: false
+    description:
+      en: "Claims considered and deliberately excluded, with reasons"

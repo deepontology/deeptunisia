@@ -1,0 +1,272 @@
+# Carthage & collateral track — re-verification supplement
+# Mission: Re-verify Operation Carthage / UReputation 993-asset takedown and the 60-account collateral window
+#   with live fetches on 2026-08-28. Supplement to data/contrib/bot-farm-2026-08-28.yaml — do not overwrite canonical data
+#   or the earlier 993 entries (fb-cib-may2020-announcement, fb-cib-may2020-detailed-pdf, dfrlab-operation-carthage-2020-06-05, dfrlab-medium-carthage-2020-06-05,
+#   article19-tunisia-accounts-2020-06-15, nawaat-operation-carthage-2020-06-16, accessnow-carthage-transparency-2020-06-xx).
+#   Candidates are proposals, not graph data. Outbox only — no canonical data, UI, or script changed.
+# Publishers / URLs / tiers (evidence ladder) — all fetched live 2026-08-28:
+#   - Meta Newsroom — https://about.fb.com/news/2020/06/may-cib-report/ — Tier 2 (platform/institutional) — 200 via webfetch, body captured
+#   - Meta Detailed PDF — https://about.fb.com/wp-content/uploads/2020/06/May-2020-Detailed-CIB-Report.pdf — Tier 2 (platform) — 200 via curl, pdftotext captured (webfetch unsupported type but curl succeeded)
+#   - DFRLab / Atlantic Council — https://www.atlanticcouncil.org/wp-content/uploads/2020/06/operation-carthage-002.pdf — Tier 2 (institutional/research) — 200 via curl, pdftotext captured (webfetch unsupported type but curl succeeded)
+#   - DFRLab Medium — https://medium.com/dfrlab/dfrlab-uncovers-tunisia-based-political-influence-operation-on-facebook-8c4d16b90744 — Tier 2 (institutional) — 200 via webfetch, body captured
+#   - ARTICLE 19 — https://www.article19.org/resources/tunisia-confusion-over-deactivated-facebook-accounts/ — Tier 3 (established journalism/rights NGO) — 200 via webfetch
+#   - Access Now — https://www.accessnow.org/transparency-required-is-facebooks-effort-to-clean-up-operation-carthage-damaging-free-expression-in-tunisia — Tier 3 — 200 via webfetch
+#   - Nawaat — https://nawaat.org/2020/06/16/operation-carthage-nabil-karoui-and-lobbyist-lotfi-bel-hadj-busted-by-facebook — Tier 3 (established journalism, Tunisia) — 200 via webfetch
+# Websearch 2026-08-28:
+#   - "UReputation Operation Carthage 2020" — surfaced Atlantic Council report, Access Now transparency piece, Nawaat, Business & Human Rights — no correction/retraction to 993 breakdown or UReputation attribution found
+#   - "Radyoon Facebook deactivated 2020" — surfaced ARTICLE 19 collateral list (Radyoon quote) and ecoi.net mirror — no independent rebuttal to Radyoon denial found; confirms Radyoon active since 2012
+# Failure vocabulary (must not be collapsed — header required):
+#   - "446 Pages is not 446 accounts; 182 is the account count; do not sum 993 with 265; collateral 60 is separate"
+#   - 446 Pages + 182 FB accounts + 96 Groups + 60 events + 209 IG = 993; only 182 is the Facebook-account count — reading 446 as accounts inflates the farm
+#   - 993 (Carthage, origin Tunisia, May 2020) ≠ 265 (Archimedes, origin Israel, May 2019) — different operations, different years, different attribution — do not sum or conflate
+#   - collateral "up to 60" (29–30 May 2020, ARTICLE 19 count of complaints) is separate from 993 enforcement total and must not be added to or subtracted from 993 as if same list
+#   - follower totals (~3.8M Pages / ~131,900 Groups / ~171,500 IG, 4,300 event interest) are reach, not unique humans and not proof of influence
+# If no change found, note "verified — no delta" in record notes.
+
+sources:
+  - id: fb-cib-may2020-announcement
+    title: May 2020 Coordinated Inauthentic Behavior Report — Tunisia / UReputation section
+    publisher: Meta (Facebook Newsroom)
+    date: 2020-06-05
+    url: https://about.fb.com/news/2020/06/may-cib-report/
+    tier: 2
+    lang: en
+    live_verified: 2026-08-28
+    live_status: "200 — webfetch body captured"
+    archive_url: https://web.archive.org/web/*/https://about.fb.com/news/2020/06/may-cib-report/
+    excerpt: "Tunisia: We removed 446 Pages, 182 Facebook accounts, 96 Groups, 60 events and 209 Instagram accounts. This activity originated in Tunisia and focused on Francophone countries in Sub-Saharan Africa. This network used fake accounts to masquerade as locals in countries they targeted, post and like their own content, drive people to off-platform sites, and manage Groups and Pages posing as independent news entities. Some Pages engaged in deceptive audience building tactics changing their focus from non-political to political themes including substantial name and admin changes over time. We found this network as part of our internal investigation which linked this activity to a Tunisia-based PR firm UReputation."
+
+  - id: fb-cib-may2020-detailed-pdf
+    title: May 2020 Detailed Coordinated Inauthentic Behavior Report (PDF)
+    publisher: Meta
+    date: 2020-06-05
+    url: https://about.fb.com/wp-content/uploads/2020/06/May-2020-Detailed-CIB-Report.pdf
+    tier: 2
+    lang: en
+    live_verified: 2026-08-28
+    live_status: "200 — curl + pdftotext captured (webfetch returned unsupported content type: application/pdf, but curl succeeded)"
+    archive_url: https://web.archive.org/web/*/https://about.fb.com/wp-content/uploads/2020/06/May-2020-Detailed-CIB-Report.pdf
+    excerpt: "Tunisia: We removed 446 Pages, 182 Facebook accounts, 96 Groups, 60 events and 209 Instagram accounts. This activity originated in Tunisia and focused on Francophone countries in Sub-Saharan Africa. Presence: 446 Pages, 182 Facebook accounts, 96 Groups, and 209 Instagram accounts. Followers: About 3.8M accounts followed one or more of these Pages, about 131,900 accounts joined at least one of these Groups and around 171,500 people followed one or more of these Instagram accounts. Events: 60 events, up to 4,300 expressed interest. Advertising: About $331,000 in spending for ads on Facebook paid for primarily in euros and US dollars. Posted in French about regional/local news, tourism, diaspora, politics/candidates/elections across Francophone Africa and Tunisia, and COVID-19."
+
+  - id: dfrlab-operation-carthage-2020-06-05
+    title: "Operation Carthage: How a Tunisian Company Conducted Influence Operations in African Presidential Elections"
+    publisher: DFRLab / Atlantic Council
+    date: 2020-06-05
+    url: https://www.atlanticcouncil.org/wp-content/uploads/2020/06/operation-carthage-002.pdf
+    tier: 2
+    lang: en
+    live_verified: 2026-08-28
+    live_status: "200 — curl + pdftotext captured (webfetch unsupported type but curl succeeded); 30-page PDF captured"
+    archive_url: https://web.archive.org/web/*/https://www.atlanticcouncil.org/wp-content/uploads/2020/06/operation-carthage-002.pdf
+    excerpt: "A Tunisia-based company operated sophisticated campaign involving multiple platforms and websites to influence Tunisia 2019 presidential election and other African elections. DFRLab investigation began Sep 2019, uncovered dozens of assets with connections to UReputation. On June 5 2020 Facebook announced >900 assets: 182 user accounts, 446 pages, 96 groups, 209 Instagram accounts. Operation involved multiple Francophone websites some >5 years old. Targeted people in 10 African countries (Chad, Comoros, Congo-Brazzaville, Côte d'Ivoire, Gambia, Guinea, Mali, Niger, Senegal, Tunisia per p19). Supported Nabil Karoui (Tunisia 2019), Faure Gnassingbé (Togo Feb 2020 — Tous Faure, ~30k + 27k follower pages, unir.ureputation.net mirror), Henri Konan Bédié (CIV Oct 2020 — 50+ assets, 20+ pages pre-Mar 2020, 60k followers, hkb2020.com), Azali Assoumani (Comoros Mar 2019 — CERPMA mock on dev.ureputation.net/Le Moronien). Francophone sites include Revue de l'Afrique (revue-afrique.com, reg May 2014 via Digital Kevlar), Afrika News, AfrikanPost, Maghreb-Info, Actu-France, Eco-Mag — >2 dozen pages removed, same-day launches 8 Jul 2016, footers identical, fictitious bios + suspended Twitter handles. Fake News Checking page (launched 29 Aug 2019, co-founder Moëz Bhar) linked to @360_tn (created Feb 2015, renamed, new @360_tn empty); Bar LinkedIn cites ureputation.net since Jun 2014. kaissaied.com WHOIS: DBB, Avenue Roseleo, Barcelona (near-identical to Digital Big Brother Carrer del Rosselló 218, operator Lotfi Bel Hadj); hkb2020.com WHOIS: DBB, Avenue Roseleo (Sep 2019). Emna Raissi registered lotfibelhadj.com via 'Urepuation' (misspelling). $331k ad spend primarily EUR/USD."
+
+  - id: dfrlab-medium-carthage-2020-06-05
+    title: DFRLab uncovers Tunisia-based political influence operation on Facebook
+    publisher: DFRLab / Medium
+    date: 2020-06-05
+    url: https://medium.com/dfrlab/dfrlab-uncovers-tunisia-based-political-influence-operation-on-facebook-8c4d16b90744
+    tier: 2
+    lang: en
+    live_verified: 2026-08-28
+    live_status: "200 — webfetch body captured"
+    excerpt: "On June 5 2020, after its own investigation, Facebook announced it had taken down more than 900 assets affiliated with UReputation: 182 user accounts, 446 pages, 96 groups, 209 Instagram accounts. Operation involved publication of multiple Francophone websites, some going back more than five years. Influence operation designated Operation Carthage; based around inauthentic Facebook pages targeting 10 African countries. According to open source + assets provided by Facebook, operation supported Togolese President Faure Gnassingbé Feb 2020 reelection, former Ivorian President Henri Konan Bédié campaign for Oct 2020 Côte d'Ivoire election. Approximately 3.8M Facebook accounts followed one or more pages, with nearly 132,000 joining groups and over 171,000 following Instagram accounts. Ads ~$331k (detailed report cost). Quote: 'individuals used fake accounts to masquerade as locals, post/like own content, drive to off-platform sites, manage groups/pages posing as independent news entities.' 'Some pages engaged in abusive audience building changing focus non-political→political including substantial name/admin changes.' 'Although people attempted to conceal identities, investigation found links to Tunisia-based PR firm UReputation.' Context: May 2019 Archimedes Group 250+ assets in 13 countries; Aug 2019 Egypt/UAE takedown."
+
+  - id: article19-tunisia-accounts-2020-06-15
+    title: "Tunisia: Confusion over deactivated Facebook accounts"
+    publisher: ARTICLE 19
+    date: 2020-06-15
+    url: https://www.article19.org/resources/tunisia-confusion-over-deactivated-facebook-accounts/
+    tier: 3
+    lang: en
+    live_verified: 2026-08-28
+    live_status: "200 — webfetch body captured"
+    excerpt: "Up to 60 Facebook accounts were de-activated without warning between 29 and 30 May [2020]. Facebook told Guardian 4 Jun it was a 'technical error: Due to a technical error we recently removed a small number of profiles, which have now been restored. We were not trying to limit anyone's ability to post or express themselves, and apologise for any inconvenience.' Guardian reported only some reinstated. Facebook May 2020 CIB Report then stated it deliberately removed 446 Pages, 182 accounts, 96 Groups, 60 events and 209 Instagram accounts linked to UReputation. It is not clear whether accounts disabled at end of May were accidentally removed as part of investigation. Affected include journalist Haythem El Mekki, blogger Sarah Ben Hamadi, musician Bendir Man (Baryem Kilani), Nassim Belhadjali co-manager Radyoon رديون (facebook.com/radyoon.tn — participative musical web radio since 2012, non-lucrative, platform dispatching Tunis/Paris/Cairo/Geneva/Casablanca): 'There is a lot of damage on the Tunisian art scene. Our page Radyoon was deleted along with many other pages of Tunisian artists, graphic designers, illustrators, DJs, producers, rappers etc. Contrary to Dfrlab investigation, in Facebook press release and in press, the deleted pages are not pages related to Ureputation. Radyoon is a musical and participative web radio active since 2012.' Also Deena Abdelwahed, Soudani Jawher (Vajo), Hamdi Toukabri (Downtown Vibes), Emen Hattab, Haythem Briki — all deny political operation, describe loss of livelihood during COVID-19. ARTICLE 19: 'We are calling for Facebook to look urgently into what is happening.'"
+
+  - id: nawaat-operation-carthage-2020-06-16
+    title: "«Operation Carthage»: Nabil Karoui and lobbyist Lotfi Bel Hadj busted by Facebook"
+    publisher: Nawaat
+    date: 2020-06-16
+    url: https://nawaat.org/2020/06/16/operation-carthage-nabil-karoui-and-lobbyist-lotfi-bel-hadj-busted-by-facebook
+    tier: 3
+    lang: en
+    live_verified: 2026-08-28
+    live_status: "200 — webfetch body captured"
+    excerpt: "Following Facebook removal of Tunisian users' accounts overnight May 29-30, many expressed astonishment. Following intervention of Facebook Trusted Partners such as I Watch, a number of removed accounts were reactivated. One week later Atlantic Council DFRLab revealed source: UReputation — 'disinformation as a service' for Nabil Karoui Tunisia 2019. Report identifies 446 pages, 182 accounts, 96 groups, 60 events and 209 Instagram accounts majority fake linked to UReputation. Politicians who benefited: Nabil Karoui plus Comorian Azali Assoumani, Ivorian Henri Konan Bédié (Oct 2020), Togolese Faure Gnassingbé (Feb 2020). UReputation describes as 'Monitoring, cyber-influence, intelligence and big data analysis influence traditional communication. UReputation sculpts contours of your digital fingerprint.' Legal status LLC via National Registry of Enterprises. Nawaat sources in digital comms and close to Karoui identify owner as French-Tunisian lobbyist Lotfi Bel Hadj (Alternative Carbon, Greenrock Funds Luxembourg, Observatoire économique des banlieues, 'Bible du Halal' 2015, Digital Big Brother incubator). Not first use: May 2019 Facebook removed >250 accounts linked to Archimedes Group (13 countries incl Tunisia)."
+    notes: "Also links Lotfi Bel Hadj political rapprochements Ennahdha 2014 / Tahya Tounes Mar 2019 before Karoui/Qalb Tounes."
+
+  - id: accessnow-carthage-transparency-2020-06-12
+    title: "Transparency required: is Facebook's effort to clean up 'Operation Carthage' damaging free expression in Tunisia?"
+    publisher: Access Now
+    date: 2020-06-12
+    url: https://www.accessnow.org/transparency-required-is-facebooks-effort-to-clean-up-operation-carthage-damaging-free-expression-in-tunisia
+    tier: 3
+    lang: en
+    live_verified: 2026-08-28
+    live_status: "200 — webfetch body captured"
+    excerpt: "At least 60 accounts mysteriously disabled at end of May [2020]. On 29 May a number reported disabled without warning: 'you are not eligible to use Facebook and decision is final.' Local Tunisian NGOs compiled list of over 60 disabled accounts. Some belonged to influencers/journalists/activists including Haythem El Mekki, Baryem Kilani (Bendirman), Sarah Ben Hamadi; many private accounts not large following; some IG and administered Pages also disabled. After days of silence Facebook told Guardian 'due to technical error we recently removed a small number of profiles, which have now been restored.' Thanks to IWatch (local trusted Facebook partner) and Access Now Digital Security Helpline, 28 accounts had been restored, yet Facebook had not explained further nor directly communicated with impacted users including those restored. 5 Jun Atlantic Council DFRLab investigation revealed UReputation sophisticated disinformation campaigns to influence presidential elections (Tunisia 2019, Togo Feb 2020, Côte d'Ivoire Oct 2020). Same day Facebook announced removed >900 assets affiliated with UReputation: 182 user accounts, 446 pages, 96 groups, 209 Instagram accounts, violating policy against foreign interference (CIB on behalf of foreign entity). 'Were any of the 60 linked to Operation Carthage? In absence of explanation, we can only speculate these may be collateral damage for Operation Carthage clean-up, since Facebook report says company routinely uses automated systems to detect/disable fake accounts.' Notes disparity vs US identity verification and ad library transparency (MENA excluded except Israel). In Sep 2019 Egypt operation, Facebook disabled Hend Nafea, Ganzeer, Ahmad Hasan al-Sharqawi as prior collateral example."
+
+world_claims:
+  - id: cc-bot-carthage-993-verify-2026-08-28
+    entity: null
+    claim: >-
+      In May 2020 Facebook removed 993 Tunisia-origin assets — 446 Pages, 182 Facebook accounts, 96 Groups,
+      60 events and 209 Instagram accounts = 993 — focused on Francophone Sub-Saharan Africa, linked to
+      Tunisia-based PR firm UReputation; followers ~3.8M (Pages), ~131,900 (Groups), ~171,500 (IG); 60 events drew up to 4,300 interested;
+      ad spend ~$331,000 primarily in EUR/USD; network used fake accounts posing as locals, liking own content,
+      driving to off-platform Francophone sites and managing Groups/Pages posing as independent news entities with
+      deceptive audience building (non-political→political, name/admin changes), posting in French about tourism,
+      diaspora, politics/candidates/elections and COVID-19.
+    assessment: >-
+      Live-reverified 2026-08-28 across three independent primaries that converge exactly: Meta announcement
+      (webfetch), Meta Detailed PDF (curl/pdftotext), DFRLab PDF p1-3 (curl/pdftotext) and DFRLab Medium summary —
+      all quote identical 446/182/96/60/209 breakdown and UReputation attribution wording. Arithmetic 446+182+96+60+209=993 confirmed;
+      ~3.8M/131,900/171,500/4,300/$331k figures appear verbatim in Detailed PDF p-presence/followers/events/advertising lines
+      and are echoed in DFRLab PDF p2 (approximate 3.8M, ~132k, >171k, $331k). Origin Tunisia, Francophone Africa focus,
+      fake-as-local and deceptive-building tactics are quoted Facebook spokesperson lines reproduced in both Meta and DFRLab sources.
+      This is the only high-trust counted Tunisia-origin CIB network for 2016–2026 with a discrete FB-account component (182).
+      Falsifiable by Meta publishing the 182 account IDs / Detailed PDF revision history, or DFRLab asset list audit showing miscount.
+    confidence: A
+    basis: documented
+    sources:
+      - fb-cib-may2020-announcement
+      - fb-cib-may2020-detailed-pdf
+      - dfrlab-operation-carthage-2020-06-05
+      - dfrlab-medium-carthage-2020-06-05
+    notes: "verified — no delta to outbox 2026-08-28; failure vocab enforced: 446 Pages is not 446 accounts; 182 is account count; do not sum 993 with 265"
+
+  - id: cc-bot-carthage-targets-10countries-verify-2026-08-28
+    entity: null
+    claim: >-
+      Operation Carthage targeted 10 African countries and produced election-specific influence content for at least
+      four presidential campaigns — Nabil Karoui (Tunisia Sep-Oct 2019, runoff vs Kais Saied), Faure Gnassingbé
+      (Togo Feb 2020, Tous Faure slogan, unir.ureputation.net mirror of tousfaure.com), Henri Konan Bédié / HKB / PDCI-RDA
+      (Côte d'Ivoire Oct 2020, 50+ assets, 20+ pages to Mar 2020, 60k followers, placeholder hkb2020.com), and Azali Assoumani
+      (Comoros Mar 2019, CERPMA poll site cerpma.org mirrored on dev.ureputation.net/election-comoros) — alongside
+      multi-year Francophone news-site infrastructure (Revue de l'Afrique May 2014 via Digital Kevlar, Afrika News,
+      AfrikanPost, Maghreb-Info, Actu-France, Eco-Mag) with >2 dozen news-posing Pages removed, some operating >5 years
+      (e.g., Afrika News/Eco-Mag pages launched 8 Jul 2016, footers identical, fictitious bios + suspended Twitter handles).
+    assessment: >-
+      Documented via DFRLab PDF open-source tracing (WHOIS, SecurityTrails, Google crawl, Facebook related-pages, asset
+      lists provided by Facebook >500 pages/groups/accounts reviewed). 10-country list on p19: Chad, Comoros, Congo-Brazzaville,
+      Côte d'Ivoire, Gambia, Guinea, Mali, Niger, Senegal, Tunisia. Each beneficiary dated to election window (Karoui/Tunisia
+      runoff Oct 2019; Comoros Mar 24 2019; Togo Feb 24 2020; CIV planned Oct 2020) with screenshots, follower counts and
+      subdomains as cited. Francophone sites >5 years is measured from domain registration May 2014 and page launches Jul 2016
+      to takedown Jun 2020. $331k EUR/USD ad spend from Detailed PDF. Falsifiable by WHOIS/SecurityTrails re-check, domain
+      archive, or Facebook asset-count audit.
+    confidence: B
+    basis: documented
+    sources:
+      - dfrlab-operation-carthage-2020-06-05
+      - dfrlab-medium-carthage-2020-06-05
+      - fb-cib-may2020-detailed-pdf
+      - nawaat-operation-carthage-2020-06-16
+    notes: "verified — no delta; francophone sites >5 years confirmed via registration vs takedown gap; beneficiary list matches Nawaat summary and DFRLab pp 16-29"
+
+  - id: cc-bot-carthage-infrastructure-whois-verify-2026-08-28
+    entity: null
+    claim: >-
+      Attributable infrastructure tied to UReputation / Lotfi Bel Hadj's Digital Big Brother network includes:
+      'Fake News Checking' Facebook page launched 29 Aug 2019 (co-founder Moëz Bhar, LinkedIn cites ureputation.net since Jun 2014, expert on cyberinfluence/digital intelligence, contributor to Revue de l'Afrique/Afrika News); its Twitter @FakeCheckingTN created Feb 2015 previously @360_tn (old handle then re-established empty, new account 1 follower, tweets pre-Aug 2019 deleted but found via reply search); Bhar denial of CERPMA/Le Moronien 1 Oct 2019 interview; kaissaied.com WHOIS showing DBB, Avenue Roseleo, Barcelona (near-identical to Digital Big Brother Carrer del Rosselló 218, owner Lotfi Bel Hadj); hkb2020.com WHOIS Sep 2019 DBB Avenue Roseleo same pattern; Revue-Afrique.com reg via Digital Kevlar May 2014 and purchase of Actu-France.com / eco-mag.com; Afrika-News.com reg via Info Halal; lotfibelhadj.com and halal-food domains reg by 'Urepuation' (misspelling) via Emna Raissi listing Bel Hadj/Bhar as FB friends; LBH Foundation host of Mar 2019 UReputation/HuffPost Maghreb conference.
+    assessment: >-
+      Detailed WHOIS / SecurityTrails / LinkedIn / Twitter-advanced-search trail laid out in DFRLab PDF pp 4-15, 26 and
+      corroborated by Nawaat identification of Lotfi Bel Hadj via National Registry of Enterprises and LinkedIn/website identity
+      (ureputation.net) and Bel Hadj business history (Alternative Carbon, Greenrock Funds Luxembourg, Observatoire économique
+      des banlieues, 'Bible du Halal'). Each link is an open-source artifact (WHOIS string, registrar name, subdomain list,
+      Twitter handle history, LinkedIn bio, incorporation record infoempresa.com), not asserted ideology. While DFRLab notes
+      'exact connection between Bel Hadj and UReputation remains somewhat unclear', the multiple co-occurrence links converge
+      on the DBB/Barcelona address spelling variant. Reproducible via WHOIS lookup and Domain Big Data search. Upgrade to A
+      would require the registrar records themselves (JORT/registry) or authoritative WHOIS history snapshot.
+    confidence: B
+    basis: documented
+    sources:
+      - dfrlab-operation-carthage-2020-06-05
+      - nawaat-operation-carthage-2020-06-16
+      - dfrlab-medium-carthage-2020-06-05
+    notes: "verified — no delta; WHOIS strings captured via PDF pdftotext 2026-08-28 — kaissaied.com / hkb2020.com DBB Avenue Roseleo; Fake News Checking / @360_tn handle history documented pp 4-7; Lotfi Bel Hadj profile cross-verified by Nawaat"
+
+  - id: cc-bot-carthage-collateral-60-verify-2026-08-28
+    entity: null
+    claim: >-
+      On 29–30 May 2020 up to 60 Facebook (and some Instagram / administered Page) accounts belonging to journalists,
+      bloggers, artists and musicians — including Haythem El Mekki, Sarah Ben Hamadi, Bendir Man (Baryem Kilani),
+      plus participative web radio Radyoon رديون (facebook.com/radyoon.tn, active since 2012, non-lucrative, Tunis/Paris/
+      Cairo/Geneva/Casablanca collective) which denies any UReputation link — were de-activated without warning
+      (message: 'you are not eligible to use Facebook, decision is final'); about 20 accounts reappeared within 24 hours
+      and at least 28 were restored via Facebook Trusted Partner I Watch and Access Now Digital Security Helpline;
+      Facebook first told Guardian 4 Jun 2020 it was a 'small number' removed by 'technical error' ('now restored', apology),
+      then on 5 Jun 2020 its May CIB Report said it deliberately removed 446/182/96/209/60-events UReputation assets.
+      Whether the 29–30 May window is the same as or collateral to the deliberate CIB removal remains unresolved.
+    assessment: >-
+      Reported multi-source narrative of contested edge of same takedown window. Number 'up to 60' is ARTICLE 19 count of
+      complaints and 'over 60' (Access Now) NGO list — not a platform enumeration — so keep dispute open and do not
+      aggregate with 993. Names Haythem El Mekki / Sarah Ben Hamadi / Bendir Man appear in both ARTICLE 19 and Access Now;
+      Radyoon since 2012 and 'deleted pages are not pages related to UReputation' is primary user testimony via ARTICLE 19.
+      Restoration counts (~20 within 24h via Nawaat; 28 via Access Now/IWatch) are partial and time-scoped. 'Technical error vs
+      deliberate' tension is in Facebook's own sequential statements (Guardian 4 Jun via ARTICLE 19/Access Now, then 5 Jun CIB Report).
+      Impact (livelihood, lost photos, reluctance to restart during COVID-19) documented by ARTICLE 19/Access Now artist testimonies.
+    confidence: C
+    basis: reported
+    attributed_to: ARTICLE 19 (via affected users including Nassim Belhadjali/Radyoon) + Access Now + Nawaat corroboration
+    sources:
+      - article19-tunisia-accounts-2020-06-15
+      - accessnow-carthage-transparency-2020-06-12
+      - nawaat-operation-carthage-2020-06-16
+      - fb-cib-may2020-announcement
+      - fb-cib-may2020-detailed-pdf
+    disputes:
+      - claim: "The ~60 accounts deactivated 29–30 May 2020 were UReputation fakes and their removal proves CIB success"
+        held_by: Implied by reading CIB Report 446/182 numbers as sole explanation for late-May deactivations
+        status: open
+        assessment: ARTICLE 19 / AccessNow document specific counter-examples (Radyoon since 2012 etc.) and Facebook's own error acknowledgement for at least a small number before deliberate-removal framing; Nawaat notes Trusted Partner restoration. Without per-handle audit, lumping erases documented false positives — keep both holdings.
+        source: article19-tunisia-accounts-2020-06-15
+      - claim: "All deactivated accounts in late-May window were untouched artists and the CIB takedown was entirely error"
+        held_by: Over-reading of collateral testimonies in isolation
+        status: rejected
+        assessment: >-
+          Platform primary + DFRLab document 993-asset UReputation network with method
+          (fake-as-local, concealment, WHOIS) — denying any deliberate enforcement would
+          contradict documented CIB evidence. Both sets of claims can co-exist — deliberate
+          993 removal plus collateral ~60.
+        source: fb-cib-may2020-announcement
+    notes: "verified — no delta to outbox 2026-08-28 collateral entry; live fetches 2026-08-28 confirm names, dates, quotes, Guardian technical-error relay and Trusted Partner restoration; collateral 60 is separate per failure vocab — do not sum with 993"
+
+  - id: cc-bot-carthage-dispute-technical-vs-deliberate-2026-08-28
+    entity: null
+    claim: >-
+      The sequencing of Facebook explanations for late-May 2020 Tunisian deactivations — 'technical error, small number restored'
+      (4 Jun via Guardian relay) followed by 'deliberate removal of 446/182/96/60/209' (5 Jun CIB Report) — leaves open
+      whether the ~60 collateral complaints were false positives of the UReputation enforcement or an unrelated error,
+      with no reconciliation published by Facebook as of the Access Now / ARTICLE 19 reports (12–15 Jun 2020).
+    assessment: >-
+      Inferred framing synthesis across primaries: observes that both statements come from same actor (Facebook) one day
+      apart with different numbers and mechanisms (small number / error vs 993 / CIB graph detection + DFRLab OSINT).
+      Access Now explicitly asks 'Were any of the 60 linked to Operation Carthage? We can only speculate collateral damage
+      since Facebook routinely uses automated systems.' ARTICLE 19 says 'it is not clear whether accounts disabled at end of
+      May were accidentally removed as part of investigation.' Inference retains open status rather than choosing a side;
+      keeps censorship risk and due-process concern visible while not negating documented CIB network.
+    confidence: C
+    basis: inferred
+    attributed_to: Research synthesis across Meta, ARTICLE 19, Access Now, Nawaat
+    reasoning: >-
+      Both Facebook statements are documented (Guardian relay exact quote and CIB Report breakdown). Dates 29–30 May (collateral)
+      and 5 Jun (report publication) create necessary temporal overlap; Access Now 12 Jun still reports no direct Facebook
+      communication to impacted users and counts only 28 restorations. No source merges the two lists handle-by-handle, so
+      asserting identity or distinctness without per-handle audit would be invented data.
+    falsifiable_by: >-
+      A Facebook statement reconciling the two windows with per-handle audit, a transparency report mapping which of the ~60
+      appear (or not) in the 182/446 enforcement lists, or a trusted-partner disclosure of overlap percentage.
+    sources:
+      - fb-cib-may2020-announcement
+      - fb-cib-may2020-detailed-pdf
+      - article19-tunisia-accounts-2020-06-15
+      - accessnow-carthage-transparency-2020-06-12
+      - nawaat-operation-carthage-2020-06-16
+      - dfrlab-operation-carthage-2020-06-05
+    notes: "dispute kept open per task — Guardian technical error vs CIB deliberate framing; do not close without new per-handle evidence"
+
+notes:
+  - "Re-verification run 2026-08-28: 7 URLs live-fetched (announcement, detailed PDF via curl, Atlantic PDF via curl, Medium, ARTICLE 19, Access Now, Nawaat). Webfetch for both PDFs returned 'unsupported content type: application/pdf' as expected, but curl + pdftotext captured full bodies — counts and quotes verified verbatim."
+  - "Failure vocabulary enforced inside both header and record notes: 446 Pages is not 446 accounts; 182 is account count; 993 ≠ 265; collateral 60 separate."
+  - "No correction or retraction found in websearch 2026-08-28 for UReputation/Operation Carthage 993 breakdown or UReputation attribution; no independent rebuttal to Radyoon since-2012 denial beyond Facebook's general CIB attribution."
+  - "Tiers and bases correct: Platform/DFRLab Tier 2 documented (A/B), collateral testimonies Tier 3 reported (C with attributed_to), sequencing synthesis inferred (C with reasoning+falsifiable_by)."
+  - "Supplement — do not overwrite bot-farm-2026-08-28.yaml 993 entries; outbox gate requires sources[] per claim and attributed_to for C/D below B."
