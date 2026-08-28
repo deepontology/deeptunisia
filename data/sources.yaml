@@ -1,3 +1,4 @@
+
 - id: jort-2022-546
   title: Décret présidentiel n° 2022-546 du 17 juin 2022, portant nomination d'un directeur général de la sûreté nationale
   title_gloss_ar: أمر رئاسي عدد 2022-546 بتاريخ 17 جوان 2022 يتعلق بتسمية مدير عام للأمن الوطني
@@ -124,6 +125,57 @@
   url: https://legislation-securite.tn/latest-laws/decret-presidentiel-n-2016-107-du-27-aout-2016-portant-nomination-du-chef-du-gouvernement-et-de-ses-membres/
   tier: 1
   lang: fr
+- id: jort-2015-35-chaker
+  title: Décret présidentiel n° 2015-35 du 6 février 2015, portant nomination du chef du gouvernement et de ses membres
+  title_gloss_ar: أمر رئاسي عدد 35 لسنة 2015 مؤرخ في 6 فيفري 2015 يتعلق بتسمية رئيس الحكومة وأعضائها
+  title_gloss_ar_by: model-reviewed
+  publisher: Journal Officiel de la République Tunisienne
+  date: 2015-02-06
+  url: https://legislation-securite.tn/latest-laws/decret-presidentiel-n-2015-35-du-6-fevrier-2015-portant-nomination-du-chef-du-gouvernement-et-de-ses-membres/
+  archive_url: https://web.archive.org/web/20260828000000/https://legislation-securite.tn/latest-laws/decret-presidentiel-n-2015-35-du-6-fevrier-2015-portant-nomination-du-chef-du-gouvernement-et-de-ses-membres/
+  tier: 1
+  lang: fr
+  excerpt: 'Article 2 lists "Slim Chaker : ministre des finances" among ministers in the Essid government. Published JORT n° 12 du 10 février 2015, pp. 468-469. PDF http://www.legislation.tn/sites/default/files/news/tf2015012.pdf ; mirror https://lake.jort.tn/journal-officiel/ar/2015/012.pdf'
+  excerpt_fr: 'L''article 2 liste « Slim Chaker : ministre des finances » parmi les ministres du gouvernement Essid. Publié JORT n° 12 du 10 février 2015, pp. 468-469.'
+  excerpt_fr_by: machine
+  excerpt_ar: 'يدرج الفصل 2 « سليم شاكر : وزيرا للمالية » ضمن وزراء حكومة الصيد. منشور بالرائد الرسمي عدد 12 المؤرخ في 10 فيفري 2015، ص. 468-469.'
+  excerpt_ar_by: machine
+- id: bbc-chaker-2017-10-09
+  title: Tunisia health minister Slim Chaker dies after charity run
+  publisher: BBC News
+  date: 2017-10-09
+  url: https://www.bbc.com/news/world-africa-41550978
+  tier: 3
+  lang: en
+  excerpt: Slim Chaker, 56, fell ill after running some 500 metres at a charity marathon in Nabeul (Association Nourane, cancer clinic fundraiser), then malaise, died at military hospital Tunis; health ministry said heart attack. Notes he was health minister since Sep 2017, previously finance 2015-2016. Cause is reported attribution, not documented.
+  excerpt_fr: Slim Chaker, 56 ans, malaise après avoir couru ~500 m au marathon caritatif de Nabeul (Association Nourane), puis décédé à l'hôpital militaire de Tunis ; le ministère évoque une crise cardiaque. Cause rapportée avec attribution, non documentée.
+  excerpt_fr_by: machine
+  excerpt_ar: سليم شاكر، 56 عاما، أصيب بوعكة بعد جري نحو 500 متر في ماراثون خيري بنابل (جمعية نوران)، ثم توفي بالمستشفى العسكري بتونس؛ وتتحدث الوزارة عن أزمة قلبية. السبب منقول منسوب، غير موثق.
+  excerpt_ar_by: machine
+- id: leaders-chaker-2017-10-08
+  title: Slim Chaker est décédé
+  publisher: Leaders
+  date: 2017-10-08
+  url: https://www.leaders.com.tn/article/23224-slim-chaker-est-decede
+  tier: 4
+  lang: fr
+  excerpt: Slim Chaker, 56, ministre de la Santé, décédé en début d'après-midi suite à un malaise cardiaque pendant le marathon de Nabeul (Association Nourane), transport d'urgence à l'hôpital militaire de Tunis. Cause reported with attribution.
+  excerpt_fr: Slim Chaker, 56 ans, ministre de la Santé, décédé en début d'après-midi suite à un malaise cardiaque pendant le marathon de Nabeul (Association Nourane), transport d'urgence à l'hôpital militaire de Tunis. Cause rapportée avec attribution.
+  excerpt_fr_by: machine
+  excerpt_ar: سليم شاكر، 56 عاما، وزير الصحة، توفي بعد الظهر إثر وعكة قلبية أثناء ماراثون نابل (جمعية نوران)، ونُقل إلى المستشفى العسكري بتونس. السبب منقول منسوب.
+  excerpt_ar_by: machine
+- id: directinfo-chaker-2017-10-09
+  title: Décès du ministre de la Santé, Slim Chaker — Un livre de condoléances est ouvert à partir de ce lundi au siège du ministère
+  publisher: Directinfo (avec TAP)
+  date: 2017-10-09
+  url: https://directinfo.webmanagercenter.com/2017/10/09/deces-du-ministre-de-la-sante-selim-chaker-un-livre-de-condoleances-est-ouvert-a-partir-de-ce-lundi-au-siege-du-ministere/
+  tier: 4
+  lang: fr
+  excerpt: 'Health Ministry communiqué 09 Oct 2017 (relayé avec TAP) : livre de condoléances ouvert au ministère Bab Saadoun + minute de silence ; rappelle malaise Nabeul, admission Grombalia puis transfert Hôpital militaire Tunis. Cause reported with attribution.'
+  excerpt_fr: 'Communiqué du ministère de la Santé du 09 oct 2017 (relayé avec TAP) : livre de condoléances ouvert au ministère Bab Saadoun + minute de silence ; rappelle le malaise à Nabeul, admission à Grombalia puis transfert à l''hôpital militaire de Tunis. Cause rapportée avec attribution.'
+  excerpt_fr_by: machine
+  excerpt_ar: 'بلاغ وزارة الصحة 09 أكتوبر 2017 (منقول عبر تونس أفريقيا للأنباء): فتح دفتر تعازٍ بمقر الوزارة بباب سعدون مع دقيقة صمت؛ يذكر الوعكة بنابل والدخول إلى قربالية ثم النقل إلى المستشفى العسكري بتونس. السبب منقول منسوب.'
+  excerpt_ar_by: machine
 - id: gov-tn-elloumi
   title: Selma Elloumi Rekik — membre du gouvernement
   title_gloss_ar: سلمى اللمي الركيك — عضوة في الحكومة
@@ -1184,6 +1236,48 @@
   url: https://www.leaders.com.tn/article/26553-mohamed-ali-ben-khaled-nouveau-directeur-general-commandant-de-la-garde-nationale-et-khelifa-harroum-directeur-general-de-la-surete-publique
   tier: 4
   lang: fr
+- id: directinfo-harrom-2019
+  title: "Tunisie : Nouvelles nominations au ministère de l'Intérieur"
+  title_gloss_ar: "تونس: تسميات جديدة بوزارة الداخلية"
+  title_gloss_ar_by: model-reviewed
+  publisher: Directinfo (via TAP — Agence Tunis Afrique Presse)
+  date: 2019-02-20
+  url: https://directinfo.webmanagercenter.com/2019/02/20/tunisie-nouvelles-nominations-au-ministere-de-linterieur-4/
+  tier: 4
+  lang: fr
+  excerpt: "Le ministère de l'Intérieur annonce, dans un communiqué rendu public mercredi, la nomination de: Mohamed Ali Ben Khaled, directeur général, commandant de la Garde nationale — Adel Chouchane, inspecteur général de la Sûreté nationale — Khelifa Harroum, directeur général de la Sûreté publique à la Direction générale de la Sûreté nationale."
+  excerpt_fr: "Le ministère de l'Intérieur annonce, dans un communiqué rendu public mercredi, la nomination de : Mohamed Ali Ben Khaled, directeur général, commandant de la Garde nationale — Adel Chouchane, inspecteur général de la Sûreté nationale — Khelifa Harroum, directeur général de la Sûreté publique à la Direction générale de la Sûreté nationale."
+  excerpt_fr_by: machine
+  excerpt_ar: "تعلن وزارة الداخلية، في بلاغ صادر يوم الأربعاء، عن تسمية: محمد علي بن خالد مديرًا عامًا قائدًا للحرس الوطني — عادل الشوشان متفقدًا عامًا للأمن الوطني — خليفة حروم مديرًا عامًا للأمن العمومي بالإدارة العامة للأمن الوطني."
+  excerpt_ar_by: machine
+- id: gnet-harrom-2019
+  title: "Le ministère de l'Intérieur annonce des nominations dans de hauts postes sécuritaires"
+  title_gloss_ar: "وزارة الداخلية تعلن تسميات في مناصب أمنية عليا"
+  title_gloss_ar_by: model-reviewed
+  publisher: GlobalNet (Gnet)
+  date: 2019-02-21
+  url: https://news.gnet.tn/le-ministere-de-linterieur-annonce-des-nominations-dans-de-hauts-postes-securitaires/
+  tier: 4
+  lang: fr
+  excerpt: "Dans un communiqué paru hier mercredi sur son site officiel, le département fait état de la nomination de Mohamed Ali Ben Khaled en tant que Directeur Général, commandant de la garde nationale ; d'Adel Chouchane, inspecteur général de la sûreté nationale, et Khalifa Haroum, directeur général de la sécurité publique à la direction générale de la sûreté nationale."
+  excerpt_fr: "Dans un communiqué paru hier mercredi sur son site officiel, le département fait état de la nomination de Mohamed Ali Ben Khaled en tant que Directeur Général, commandant de la garde nationale ; d'Adel Chouchane, inspecteur général de la sûreté nationale, et Khalifa Haroum, directeur général de la sécurité publique à la direction générale de la sûreté nationale."
+  excerpt_fr_by: machine
+  excerpt_ar: "في بلاغ صدر أمس الأربعاء على موقعه الرسمي، أعلنت الوزارة عن تسمية محمد علي بن خالد مديرًا عامًا قائدًا للحرس الوطني، وعادل الشوشان متفقدًا عامًا للأمن الوطني، وخليفة حروم مديرًا عامًا للأمن العمومي بالإدارة العامة للأمن الوطني."
+  excerpt_ar_by: machine
+- id: dcaf-decret-91-543
+  title: "Décret n° 91-543 du 1 avril 1991, portant organisation du ministère de l'Intérieur (version consolidée au 17 juin 2019)"
+  title_gloss_ar: "الأمر عدد 543 لسنة 1991 المؤرخ في 1 أفريل 1991 المتعلق بالتنظيم الهيكلي لوزارة الداخلية (النسخة المحينة إلى 17 جوان 2019)"
+  title_gloss_ar_by: model-reviewed
+  publisher: DCAF — base de données juridique du secteur de la sécurité en Tunisie (texte du JORT via legislation-securite.tn)
+  date: 1991-04-01
+  url: https://legislation-securite.tn/latest-laws/decret-n-91-543-du-1-avril-1991-portant-organisation-du-ministere-de-linterieur/
+  tier: 1
+  lang: fr
+  excerpt: "Art. 28 (modifié par décret 2001-1455): Les structures des forces de sécurité intérieure relevant du ministère de l'Intérieur comprennent: 1. les structures de la sûreté nationale, 2. les structures de la garde nationale."
+  excerpt_fr: "Art. 28 (modifié par le décret n° 2001-1455 du 15 juin 2001) : Les structures des forces de sécurité intérieure relevant du ministère de l'Intérieur comprennent : 1. les structures de la sûreté nationale, 2. les structures de la garde nationale."
+  excerpt_fr_by: machine
+  excerpt_ar: "الفصل 28 (نقح بالأمر عدد 1455 لسنة 2001): تشمل هياكل قوات الأمن الداخلي الراجعة بالنظر إلى وزارة الداخلية: 1. هياكل الأمن الوطني، 2. هياكل الحرس الوطني."
+  excerpt_ar_by: machine
 - id: leaders-belhajali-2015
   title: Qui est Abderrahmane Belhaj Ali, nouveau directeur général de la sûreté nationale
   title_gloss_ar: من هو عبد الرحمن بلحاج علي، المدير العام الجديد للأمن الوطني
@@ -2034,6 +2128,33 @@
   excerpt_fr_by: machine
   excerpt_ar: "قائمة مؤرخة لوزراء العدل: المستيري من 15 أفريل 1956 إلى 30 ديسمبر 1958؛ الخفاشة من 30 ديسمبر 1958 إلى 5 سبتمبر 1966؛ منجي سليم من 5 سبتمبر 1966 إلى 6 سبتمبر 1969؛ السنوسي من 6 سبتمبر 1969 إلى 12 جوان 1970؛ بورقيبة الابن من 12 جوان إلى 6 نوفمبر 1970؛ الفيتوري من 6 نوفمبر 1970 إلى 29 أكتوبر 1971؛ بلعلونة من 29 أكتوبر 1971 إلى 5 جوان 1973؛ بالي من 5 جوان 1973 إلى 25 أفريل 1980؛ شاكر من 25 أفريل 1980 إلى 29 أكتوبر 1984؛ بن علي من 29 أكتوبر 1984 إلى 12 فيفري 1986؛ العياري من 12 فيفري 1986 إلى 12 أفريل 1988؛ بالي (الثانية) من 12 أفريل إلى 27 جويلية 1988؛ ح. كرو من 27 جويلية 1988 إلى 27 سبتمبر 1989؛ بوعزيز من 27 سبتمبر 1989 إلى 3 مارس 1990؛ النفاتي من 3 مارس 1990 إلى 20 فيفري 1991؛ الزواري من 20 فيفري 1991 إلى 9 جوان 1992؛ شعبان من 9 جوان 1992 إلى 22 جانفي 1997؛ الكاللي من 22 جانفي 1997 إلى 17 نوفمبر 1999؛ التكاري من 17 نوفمبر 1999 إلى 15 جانفي 2010؛ بوعوني من 15 جانفي 2010 إلى 17 جانفي 2011؛ كرو الشبّي من 17 جانفي إلى 24 ديسمبر 2011؛ البحيري من 24 ديسمبر 2011 إلى 13 مارس 2013؛ بن عمّو من 13 مارس 2013 إلى 29 جانفي 2014؛ بن صالح من 29 جانفي 2014 إلى 6 فيفري 2015؛ بن عيسى من 6 فيفري إلى 20 أكتوبر 2015؛ الحرشاني (بالنيابة) من 20 أكتوبر 2015 إلى 12 جانفي 2016؛ عمر منصور من 12 جانفي إلى 27 أوت 2016؛ الغازي الجريبي من 27 أوت 2016 إلى 14 نوفمبر 2018؛ الجموسي من 14 نوفمبر 2018 إلى 27 فيفري 2020؛ ت. الجريبي من 27 فيفري إلى 2 سبتمبر 2020؛ بوسطة من 2 سبتمبر 2020 إلى 15 فيفري 2021؛ الجافل منذ 11 أكتوبر 2021."
   excerpt_ar_by: machine
+- id: frwiki-gouvernement-karoui
+  title: Gouvernement Karoui
+  publisher: Wikipédia
+  url: https://fr.wikipedia.org/wiki/Gouvernement_Karoui
+  tier: 3
+  lang: fr
+  excerpt: "Composition le 27 septembre 1989 — Ministre de la Justice: Mustapha Bouaziz (RCD). Remaniement du 3 mars 1990 — Justice: Chédli Neffati; Domaines de l'État: Mustapha Bouaziz. En vertu des décrets n°91-275 et 91-276 du 20 février 1991, nouvelle composition: Justice Abderrahim Zouari. Remaniement du 9 juin 1992 — successeur Sadok Chaâbane."
+  excerpt_fr: "Composition le 27 septembre 1989 — Ministre de la Justice : Mustapha Bouaziz (RCD). Remaniement du 3 mars 1990 — Justice : Chédli Neffati ; Domaines de l'État : Mustapha Bouaziz. En vertu des décrets n°91-275 et 91-276 du 20 février 1991, nouvelle composition : Justice Abderrahim Zouari. Remaniement du 9 juin 1992 — successeur Sadok Chaâbane."
+  excerpt_fr_by: machine
+- id: frwiki-mustapha-bouaziz
+  title: Mustapha Bouaziz
+  publisher: Wikipédia
+  url: https://fr.wikipedia.org/wiki/Mustapha_Bouaziz
+  tier: 3
+  lang: fr
+  excerpt: "Ministre de la Justice 27 septembre 1989 – 3 mars 1990 (5 mois et 4 jours), prédécesseur Hamed Karoui, successeur Chédli Neffati. En septembre 1989, nommé ministre de la Justice pour remplacer Hamed Karoui, appelé au poste de Premier ministre. En 1990, premier titulaire du ministère des Domaines de l'État et des Affaires foncières jusqu'en 1999. Carrière dans la justice militaire: juge au tribunal militaire, procureur général, DG justice militaire. Né 23 février 1934, décédé 11 juillet 2021."
+  excerpt_fr: "Ministre de la Justice 27 septembre 1989 – 3 mars 1990 (5 mois et 4 jours), prédécesseur Hamed Karoui, successeur Chédli Neffati. En septembre 1989, nommé ministre de la Justice pour remplacer Hamed Karoui, appelé au poste de Premier ministre. En 1990, premier titulaire du ministère des Domaines de l'État et des Affaires foncières jusqu'en 1999."
+  excerpt_fr_by: machine
+- id: frwiki-abderrahim-zouari
+  title: Abderrahim Zouari
+  publisher: Wikipédia
+  url: https://fr.wikipedia.org/wiki/Abderrahim_Zouari
+  tier: 3
+  lang: fr
+  excerpt: "Ministre de la Justice 20 février 1991 – 9 juin 1992. Secrétaire général du RCD 31 juillet 1988 – 20 février 1991. Gouverneur de Gabès 1974-1978, Gouverneur de Nabeul ensuite. Ambassadeur au Maroc 1992-1993. Puis Jeunesse/Enfance (1993-1997), Affaires étrangères (1997), Éducation (1998-1999), Sport (2000-2002), Tourisme/Artisanat (2002-2004), Transport (2004-2011). Né 18 avril 1944 à Dahmani."
+  excerpt_fr: "Ministre de la Justice 20 février 1991 – 9 juin 1992. Secrétaire général du RCD 31 juillet 1988 – 20 février 1991. Gouverneur de Gabès 1974-1978, Gouverneur de Nabeul ensuite. Ambassadeur au Maroc 1992-1993."
+  excerpt_fr_by: machine
 - id: wikipedia-bellalouna-fr
   title: Mohamed Bellalouna
   publisher: Wikipédia
@@ -6091,17 +6212,6 @@
   excerpt_fr: Le remaniement Essid du 6 janvier 2016 écarte Najem Gharsalli du ministère de l'Intérieur ; Hedi Majdoub prend le portefeuille. Formalisation par le décret présidentiel 2016-1 du 12 janvier 2016.
   excerpt_fr_by: machine
   excerpt_ar: تحوير 6 جانفي 2016 لحكومة الصيد يُخرج ناجم الغرسلي من وزارة الداخلية؛ ويتولى الهادي المجدوب الحقيبة. وصيغ رسميًا بالأمر الرئاسي عدد 2016-1 المؤرخ في 12 جانفي 2016.
-  excerpt_ar_by: machine
-- id: frwiki-gouvernement-karoui
-  title: Gouvernement Karoui
-  publisher: Wikipédia (français)
-  url: https://fr.wikipedia.org/wiki/Gouvernement_Hamed_Karoui
-  tier: 3
-  lang: fr
-  excerpt: "Composition 27 Sep 1989: Kacem Bousnina secretary of state for religious affairs. Remaniement of 3 Mar 1990: Ali Chebbi takes the post. The 20 Feb 1991 composition keeps Chebbi. Remaniement of 9 Mar 1992: Ali Chebbi becomes minister of religious affairs; the footnote records that the secretariat of state was elevated to a ministry."
-  excerpt_fr: "Composition du 27 septembre 1989 : Kacem Bousnina secrétaire d'État aux affaires religieuses. Remaniement du 3 mars 1990 : Ali Chebbi prend le poste. La composition du 20 février 1991 conserve Chebbi. Remaniement du 9 mars 1992 : Ali Chebbi devient ministre des affaires religieuses ; la note de bas de page relève que le secrétariat d'État a été érigé en ministère."
-  excerpt_fr_by: machine
-  excerpt_ar: "تركيبة 27 سبتمبر 1989: قاسم بوسنينة كاتب دولة للشؤون الدينية. وتحوير 3 مارس 1990: يتولى علي الشبّي المنصب. وتحافظ تركيبة 20 فيفري 1991 على الشبّي. وتحوير 9 مارس 1992: يصبح علي الشبّي وزيرًا للشؤون الدينية؛ وتذكر الحاشية أن كتابة الدولة رُفعت إلى مرتبة وزارة."
   excerpt_ar_by: machine
 - id: frwiki-gouvernement-baccouche-iii
   title: Gouvernement Hédi Baccouche III
@@ -11733,3 +11843,356 @@
     management of the Industry ministry after the sitting industry minister's
     dismissal (April 2026). Portfolio wording consistent with the ministry's
     own August 2026 communications.
+- id: finances-gov-khaldi-2025
+  title: "Le président de la République décide de nommer madame Mechket Slama Khaldi à la tête du ministère des Finances"
+  title_gloss_ar: قرار رئيس الجمهورية تسمية السيدة مشكات سلامة الخالدي على رأس وزارة المالية
+  title_gloss_ar_by: model-reviewed
+  publisher: Ministère des Finances, Tunisie
+  date: 2025-02-05
+  url: https://www.finances.gov.tn/fr/actualites-evenements/le-president-de-la-republique-decide-de-nommer-madame-mechket-slama-khaldi-la
+  tier: 1
+  lang: fr
+  excerpt: "Le président de la République a décidé, mercredi 5 février 2025, de nommer madame Mechket Slama Khaldi à la tête du ministère des Finances, en remplacement de madame Sihem Boughdiri Nemsia. La nouvelle ministre a prêté serment dans l'après-midi devant le chef de l'État."
+  excerpt_fr: "Le président de la République a décidé, mercredi 5 février 2025, de nommer madame Mechket Slama Khaldi à la tête du ministère des Finances, en remplacement de madame Sihem Boughdiri Nemsia. La nouvelle ministre a prêté serment dans l'après-midi devant le chef de l'État."
+  excerpt_fr_by: machine
+  excerpt_ar: قرر رئيس الجمهورية يوم الأربعاء 5 فيفري 2025 تسمية السيدة مشكات سلامة الخالدي على رأس وزارة المالية خلفًا للسيدة سهام بوغديري نمصية، وأدت الوزيرة الجديدة اليمين بعد الظهر أمام رئيس الدولة.
+  excerpt_ar_by: machine
+- id: reuters-khaldi-2025-02-05
+  title: Tunisian president sacks finance minister, names a judge as new minister
+  title_gloss_fr: Le président tunisien limoge la ministre des Finances et nomme une magistrate
+  title_gloss_fr_by: model-reviewed
+  title_gloss_ar: الرئيس التونسي يقيل وزيرة المالية ويعيّن قاضية خلفًا لها
+  title_gloss_ar_by: model-reviewed
+  publisher: Reuters
+  date: 2025-02-05
+  url: https://www.reuters.com/world/africa/tunisian-president-sacks-finance-minister-names-michkat-khaldi-new-minister-2025-02-05/
+  tier: 3
+  lang: en
+  excerpt: "TUNIS, Feb 5 (Reuters) — The Tunisian president on Wednesday sacked Finance Minister Sihem Boughdiri and named Michkat Khaldi, a judge, as new finance minister. Khaldi took the oath before the president at Carthage Palace, the presidency said in statement."
+  excerpt_fr: "TUNIS, 5 fév. (Reuters) — Le président tunisien a limogé mercredi la ministre des Finances Sihem Boughdiri et nommé Michkat Khaldi, magistrate, ministre des Finances. Khaldi a prêté serment devant le président au palais de Carthage, a indiqué la présidence dans un communiqué."
+  excerpt_fr_by: machine
+  excerpt_ar: تونس في 5 فيفري (رويترز) — أقال الرئيس التونسي يوم الأربعاء وزيرة المالية سهام بوغديري وعيّن مشكات خالدي، وهي قاضية، وزيرة للمالية. وأدت خالدي اليمين أمام الرئيس في قصر قرطاج، وفق ما جاء في بيان للرئاسة.
+  excerpt_ar_by: machine
+- id: pm-gov-membres-2024-08-25
+  title: "Portail de la Présidence du Gouvernement — Membres du Gouvernement"
+  title_gloss_ar: بوابة رئاسة الحكومة — أعضاء الحكومة
+  title_gloss_ar_by: model-reviewed
+  publisher: Portail de la Présidence du Gouvernement, Tunisie
+  date: 2024-08-25
+  url: http://pm.gov.tn/fr/membres-du-gouvernement
+  tier: 1
+  lang: fr
+  excerpt: "Composition du gouvernement; lists Mohamed Ali Nafti — Ministre des affaires étrangères, de la migration et des Tunisiens à l'étranger (depuis 25.08.2024), and Khaled Ennouri (Shili) — Ministre de l'Intérieur, etc. Per-minister page pattern http://pm.gov.tn/fr/membre_pg/... 'depuis 25.08.2024'."
+  excerpt_fr: "Composition du gouvernement ; mentionne Mohamed Ali Nafti — Ministre des affaires étrangères ... (depuis 25.08.2024)."
+  excerpt_fr_by: machine
+  excerpt_ar: تركيبة الحكومة؛ تذكر محمد علي النفطي وزيرًا للشؤون الخارجية ... منذ 25.08.2024
+  excerpt_ar_by: machine
+- id: bct-gov-conseil-2024
+  title: "Composition du Conseil d'Administration de la Banque Centrale de Tunisie"
+  title_gloss_ar: تركيبة مجلس إدارة البنك المركزي التونسي
+  title_gloss_ar_by: model-reviewed
+  publisher: Banque Centrale de Tunisie
+  url: https://www.bct.gov.tn/bct/siteprod/francais/presentation/conseil1.jsp
+  tier: 1
+  lang: fr
+  excerpt: "M. Fethi Zouhaier Nouri : Gouverneur et Président du Conseil — with linked CV https://www.bct.gov.tn/bct/siteprod/documents/CV_Fethi_Zouhaier_Nouri_fr.pdf"
+  excerpt_fr: "M. Fethi Zouhaier Nouri : Gouverneur et Président du Conseil"
+  excerpt_fr_by: machine
+  excerpt_ar: "السيد فتحي زهير النوري: محافظ ورئيس مجلس الإدارة"
+  excerpt_ar_by: machine
+- id: bct-cv-nouri-fr
+  title: "CV — M. Fethi Zouhaier Nouri, Gouverneur de la Banque Centrale de Tunisie"
+  title_gloss_ar: سيرة ذاتية — السيد فتحي زهير النوري محافظ البنك المركزي التونسي
+  title_gloss_ar_by: model-reviewed
+  publisher: Banque Centrale de Tunisie
+  date: 2024-02-15
+  url: https://www.bct.gov.tn/bct/siteprod/documents/CV_Fethi_Zouhaier_Nouri_fr.pdf
+  tier: 1
+  lang: fr
+  excerpt: "Official CV linked from the BCT board page (conseil1.jsp) for Governor Fethi Zouhaier Nouri; contains education and prior BCT board membership. Fetch blocked 2026-08-28 (application/pdf); secondary summary in African Manager indicates Licence en économie (FSEG Tunis), Doctorat en finance industrielle (Paris 13), Doctorat en économie énergétique (Paris 2), Doctorat d'État en sciences économiques (Sorbonne)."
+  excerpt_fr: "CV officiel lié depuis la page du Conseil d'administration de la BCT pour le gouverneur Fethi Zouhaier Nouri ; contient la formation et l'appartenance antérieure au conseil de la BCT. Récupération bloquée le 2026-08-28 (application/pdf) ; résumé secondaire chez African Manager."
+  excerpt_fr_by: machine
+  excerpt_ar: السيرة الرسمية المرتبطة من صفحة مجلس إدارة البنك المركزي للمحافظ فتحي زهير النوري؛ تتضمن التكوين والعضوية السابقة في مجلس البنك. تعذّر التنزيل يوم 2026-08-28.
+  excerpt_ar_by: machine
+- id: wmc-nouri-2024-02-15
+  title: "Banque centrale de Tunisie : Fethi Zouhair Nouri, nouveau gouverneur"
+  title_gloss_ar: "البنك المركزي التونسي: فتحي زهير النوري محافظ جديد"
+  title_gloss_ar_by: model-reviewed
+  publisher: Web Manager Center (WMC) avec TAP
+  date: 2024-02-15
+  url: https://www.webmanagercenter.com/2024/02/15/520698/banque-centrale-de-tunisie-fethi-zouhair-nouri-nouveau-gouverneur/
+  tier: 4
+  lang: fr
+  excerpt: "Fethi Zouhair Nouri a prêté, jeudi, 15 février 2024, serment devant le président de la République Kais Saïed, en tant que nouveau gouverneur de la Banque centrale de Tunisie (BCT)."
+  excerpt_fr: "Fethi Zouhair Nouri a prêté, jeudi, 15 février 2024, serment devant le président de la République Kaïs Saïed, en tant que nouveau gouverneur de la Banque centrale de Tunisie (BCT)."
+  excerpt_fr_by: machine
+  excerpt_ar: أدى فتحي زهير النوري يوم الخميس 15 فيفري 2024 اليمين أمام رئيس الجمهورية قيس سعيد بوصفه محافظًا جديدًا للبنك المركزي التونسي.
+  excerpt_ar_by: machine
+- id: africanmanager-nouri-bio-2024
+  title: "Fethi Zouhair Nouri nouveau Gouverneur de la BCT"
+  title_gloss_ar: "فتحي زهير النوري محافظ جديد للبنك المركزي"
+  title_gloss_ar_by: model-reviewed
+  publisher: African Manager
+  date: 2024-02-15
+  url: https://africanmanager.com/fethi-zouhair-nouri-nouveau-gouverneur-de-la-bct/
+  tier: 4
+  lang: fr
+  excerpt: "Universitaire et ancien membre du conseil d'administration de la BCT, Fethi Zouhair Nouri, a été ce jeudi 15 février 2024, intronisé Gouverneur de la BCT ... titulaire d'une Licence en économie spécialité planification de la faculté des sciences économiques et de gestion de Tunis, Doctorat en finance industrielle à Paris 13, et en économie énergétique à Paris 2, Docteur d'Etat en science économie à la Sorbonne."
+  excerpt_fr: "Universitaire et ancien membre du conseil d'administration de la BCT ... titulaire d'une Licence en économie spécialité planification de la faculté des sciences économiques et de gestion de Tunis, Doctorat en finance industrielle à Paris 13, et en économie énergétique à Paris 2, Docteur d'Etat en science économie à la Sorbonne."
+  excerpt_fr_by: machine
+  excerpt_ar: أكاديمي وعضو سابق في مجلس إدارة البنك المركزي، فتحي زهير النوري ... حاصل على إجازة في الاقتصاد اختصاص تخطيط من كلية العلوم الاقتصادية والتصرف بتونس، ودكتوراه في المالية الصناعية بباريس 13، ودكتوراه في اقتصاد الطاقة بباريس 2، ودكتوراه دولة في العلوم الاقتصادية بالسوربون.
+  excerpt_ar_by: machine
+- id: jort-2024-122-nouri
+  title: "Décret n° 2024-122 du 15 février 2024, portant nomination du gouverneur de la Banque Centrale de Tunisie"
+  title_gloss_ar: "أمر عدد 2024-122 بتاريخ 15 فيفري 2024 يتعلق بتسمية محافظ البنك المركزي التونسي"
+  title_gloss_ar_by: model-reviewed
+  publisher: Journal Officiel de la République Tunisienne (via 9anoun)
+  date: 2024-02-15
+  url: https://9anoun.tn/fr/kb/jorts/jort-2024-025-55bbe/decret-ndeg-2024-122-du-15-fevrier-2024-portant-nomination-du-gouverneur-de-la-banque-centrale-de-tunisie-6
+  tier: 1
+  lang: fr
+  excerpt: "Art.1: Fethi Zouhaier Nouri est nommé gouverneur de la Banque Centrale de Tunisie à compter du 16 février 2024, avec rang de ministre, en application de l'article 106 de la Constitution et de la loi 2016-35."
+  excerpt_fr: "Art.1 : Fethi Zouhaier Nouri est nommé gouverneur de la Banque Centrale de Tunisie à compter du 16 février 2024, avec rang de ministre."
+  excerpt_fr_by: machine
+  excerpt_ar: "الفصل 1: يُسمّى فتحي زهير النوري محافظًا للبنك المركزي التونسي ابتداءً من 16 فيفري 2024 برتبة وزير."
+  excerpt_ar_by: machine
+- id: leaders-nouri-35646
+  title: "Fethi Zouhair Nouri, nouveau gouverneur de la Banque Centrale"
+  title_gloss_ar: "فتحي زهير النوري محافظ جديد للبنك المركزي"
+  title_gloss_ar_by: model-reviewed
+  publisher: Leaders
+  date: 2024-02-15
+  url: https://www.leaders.com.tn/article/35646-fethi-zouhair-nouri
+  tier: 4
+  lang: fr
+  excerpt: "Né à Tunis, le 7 novembre 1955 … Doctorat en Sciences économiques, Université Paris 2 et IFP, thèse sur l'analyse des contrats pétroliers (1987) … Mastère économie de l'Énergie (IFP 1983-84), Mastère économie industrielle Finance internationale (1982-83), Maîtrise Sciences économiques: Planification (FSEG Tunis) … membre Conseil d'administration BCT 2016-2021, Comité de politique monétaire depuis 2015."
+  excerpt_fr: "Né à Tunis, le 7 novembre 1955 … Doctorat en Sciences économiques, Université Paris 2 et IFP, thèse sur l'analyse des contrats pétroliers (1987) … Mastère économie de l'Énergie (IFP 1983-84), Mastère économie industrielle Finance internationale (1982-83), Maîtrise Sciences économiques : Planification."
+  excerpt_fr_by: machine
+  excerpt_ar: "وُلد بتونس في 7 نوفمبر 1955 ... دكتوراه في العلوم الاقتصادية جامعة باريس 2 والمعهد الفرنسي للبترول، أطروحة حول تحليل العقود البترولية (1987) ..."
+  excerpt_ar_by: machine
+- id: leaders-nouri-35647
+  title: "Fethi Zouhair Nouri — Who's Who"
+  title_gloss_ar: "فتحي زهير النوري — من هو"
+  title_gloss_ar_by: model-reviewed
+  publisher: Leaders
+  date: 2024-02-15
+  url: https://www.leaders.com.tn/article/35647-fethi-zouhair-nouri
+  tier: 4
+  lang: fr
+  excerpt: "État civil: Né le 7 novembre 1955 à Tunis, Nationalité: Tunisienne, Marié; Diplômes: Doctorat Sciences économiques Paris 2/IFP 1987 Analyse des contrats pétroliers, Mastère énergie IFP 1983-84, Mastère économie industrielle 1982-83, Maîtrise planification; Expérience: Professeur universités FSEGT Tunis depuis 1990 (Maître de conférences 2006, Professeur des universités 2012), membre Comité politique monétaire BCT depuis 2015, Conseil d'Administration BCT 2016-2021, Conseil Marché Financier, Conseil d'Analyse Économique, conseiller UTICA."
+  excerpt_fr: "État civil : Né le 7 novembre 1955 à Tunis, Nationalité : Tunisienne ; Diplômes : Doctorat Sciences économiques Paris 2/IFP 1987, Mastères IFP, Maîtrise planification ; Expérience : Professeur FSEGT Tunis depuis 1990, BCT Conseil 2016-2021, Comité monétaire depuis 2015."
+  excerpt_fr_by: machine
+  excerpt_ar: "الحالة المدنية: وُلد في 7 نوفمبر 1955 بتونس، الجنسية تونسية؛ الشهادات: دكتوراه علوم اقتصادية باريس 2/المعهد الفرنسي للبترول 1987 ..."
+  excerpt_ar_by: machine
+- id: le-quotidien-nouri-2024-02-15
+  title: "Qui est Fethi Zouhaier Nouri, nouveau gouverneur de la Banque centrale de Tunisie"
+  title_gloss_ar: "من هو فتحي زهير النوري المحافظ الجديد للبنك المركزي التونسي"
+  title_gloss_ar_by: model-reviewed
+  publisher: Le Quotidien
+  date: 2024-02-15
+  url: https://www.lequotidien.com.tn/fr/nationale/1363-qui-est-fethi-zouhaier-nouri-nouveau-gouverneur-de-la-banque-centrale-de-tunisie
+  tier: 4
+  lang: fr
+  excerpt: "né le 7 novembre 1955 à Tunis, doctorat Paris 2 + IFP (contrats pétroliers 1987), mastères énergie IFP 1983-84 et économie industrielle/finance internationale 1982-83, Maîtrise planification FSEG Tunis; Prof. micro/macro, politique monétaire, BCT comité politique monétaire depuis 2015, CMF conseiller 2012-15, Conseil d'Analyse Économique 2012-16, conseiller UTICA, Conseil économique et social multiples mandats."
+  excerpt_fr: "né le 7 novembre 1955 à Tunis, doctorat Paris 2 + IFP (contrats pétroliers), mastères énergie et économie industrielle, Maîtrise planification FSEG Tunis ; Prof. micro/macro, politique monétaire, BCT comité depuis 2015."
+  excerpt_fr_by: machine
+  excerpt_ar: "وُلد في 7 نوفمبر 1955 بتونس، دكتوراه باريس 2 + المعهد الفرنسي للبترول (العقود البترولية) ..."
+  excerpt_ar_by: machine
+- id: businessnews-jrad-2026-04-14
+  title: "Riadh Jrad somme l'ARP de livrer Tarek Mahdi en 72 heures"
+  title_gloss_ar: "رياض الجراد يمهل مجلس النواب 72 ساعة لتسليم طارق المهدي"
+  title_gloss_ar_by: model-reviewed
+  publisher: Business News
+  date: 2026-04-14
+  url: https://businessnews.com.tn/2026/04/14/riadh-jrad-somme-larp-de-livrer-tarek-mehdi-en-72-heures/1396455/
+  tier: 4
+  lang: fr
+  excerpt: "Dans un long message publié sur Facebook, Riadh Jrad … le chroniqueur proche du pouvoir et son porte-parole officieux, affirme que Tarek Mahdi figure parmi 43 députés faisant l'objet de poursuites … exige la levée de l'immunité … menace de publier, un par jour, les noms des 43 députés concernés."
+  excerpt_fr: "le chroniqueur proche du pouvoir et son porte-parole officieux, affirme que Tarek Mahdi figure parmi 43 députés faisant l'objet de poursuites … exige la levée de l'immunité … menace de publier, un par jour, les noms des 43 députés concernés."
+  excerpt_fr_by: machine
+  excerpt_ar: "المعلّق المقرب من السلطة وناطقها غير الرسمي يؤكد أن طارق المهدي ضمن 43 نائبًا ملاحقين ..."
+  excerpt_ar_by: machine
+- id: tunisienumerique-jrad-series
+  title: "Riadh Jrad : chroniqueur politique et publications Facebook (série 2025)"
+  title_gloss_ar: "رياض الجراد: معلّق سياسي ومنشورات فيسبوك (سلسلة 2025)"
+  title_gloss_ar_by: model-reviewed
+  publisher: Tunisie Numerique
+  date: 2025-06-26
+  url: https://www.tunisienumerique.com/riadh-jrad-affirme-quune-partie-de-ladministration-de-saboter-les-reformes-sociales-de-kais-saied/
+  tier: 4
+  lang: fr
+  excerpt: "Le chroniqueur / Le chroniqueur politique Riadh Jrad a publié sur sa page Facebook … (série ≥5 articles 2025-06-26 → 2025-08-22) relayant/analysant l'action de Kaïs Saïed (réformes sociales, tournée, loi chèques sans provision, Gaza). Framing neutre 'chroniqueur' vs BusinessNews 'porte-parole officieux'; Attessia TV Rendez-vous 9 role noted in Webdo/DirectInfo; Facebook self-published (122k likes) not citable."
+  excerpt_fr: "Le chroniqueur / Le chroniqueur politique Riadh Jrad a publié sur sa page Facebook … série de 5 articles 2025 documentant son rôle de chroniqueur Facebook et Attessia TV."
+  excerpt_fr_by: machine
+  excerpt_ar: "نشر المعلّق السياسي رياض الجراد على صفحته في فيسبوك ..."
+  excerpt_ar_by: machine
+- id: jort-2023-112-ammar
+  title: Décret n° 2023-112 du 7 février 2023, portant nomination d'un membre du Gouvernement
+  title_gloss_ar: أمر عدد 2023-112 بتاريخ 7 فيفري 2023 يتعلق بتسمية عضو بالحكومة
+  title_gloss_ar_by: machine
+  publisher: Journal Officiel de la République Tunisienne (via 9anoun)
+  date: 2023-02-07
+  url: https://9anoun.tn/fr/kb/jorts/jort-2023-045-889b6/arrete-du-ministre-des-affaires-etrangeres-de-la-migration-et-des-tunisiens-a-l-etranger-du-5-mai-2023-portant-delegation-de-signature-6
+  tier: 1
+  lang: fr
+  excerpt: Visa cites "Vu le décret n° 2023-112 du 7 février 2023, portant nomination d'un membre du Gouvernement" — arrêté of 5 May 2023 signed by Foreign Minister Nabil Ammar, effective 10 February 2023. Direct JORT issue for decree 2023-112 still to be fetched; source is the official JORT cross-citation, tier-1 via 9anoun.
+  excerpt_fr: Visa cite « Vu le décret n° 2023-112 du 7 février 2023, portant nomination d'un membre du Gouvernement » — arrêté du 5 mai 2023 signé par le ministre Nabil Ammar, exécutoire à compter du 10 février 2023. Le numéro du JORT du décret reste à pinner.
+  excerpt_fr_by: machine
+  excerpt_ar: يشير التأشير إلى « أمر عدد 2023-112 بتاريخ 7 فيفري 2023 يتعلق بتسمية عضو بالحكومة » — قرار 5 ماي 2023 ممضى من الوزير نبيل عمار ونافذ من 10 فيفري 2023.
+  excerpt_ar_by: machine
+- id: jort-2024-465-nafti
+  title: Décret n° 2024-465 du 25 août 2024, portant nomination des membres du Gouvernement
+  title_gloss_ar: أمر عدد 2024-465 بتاريخ 25 أوت 2024 يتعلق بتسمية أعضاء بالحكومة
+  title_gloss_ar_by: machine
+  publisher: Journal Officiel de la République Tunisienne (via Legislation-Securite.tn / DCAF)
+  date: 2024-08-25
+  url: https://legislation-securite.tn/latest-laws/decret-n-2024-465-du-25-aout-2024-portant-nomination-des-membres-du-gouvernement/
+  tier: 1
+  lang: fr
+  excerpt: Article 1 lists Mohamed Ali Nafti as Minister of Foreign Affairs, Migration and Tunisians Abroad and Khaled Shili as Minister of Defence; published JORT N°104 of 26 August 2024, Tunis 25 August 2024. Closes Ammar tenure and opens Nafti tenure.
+  excerpt_fr: L'article 1er nomme Mohamed Ali Nafti ministre des Affaires étrangères, de la Migration et des Tunisiens à l'étranger et Khaled Shili ministre de la Défense ; publié au JORT n°104 du 26 août 2024, Tunis 25 août 2024. Clôt le mandat d'Ammar et ouvre celui de Nafti.
+  excerpt_fr_by: machine
+  excerpt_ar: يسمّي الفصل الأول محمد علي النفطي وزيرًا للشؤون الخارجية وخالد السهيلي وزيرًا للدفاع؛ منشور بالرائد الرسمي عدد 104 بتاريخ 26 أوت 2024، تونس 25 أوت 2024.
+  excerpt_ar_by: machine
+- id: jort-2020-128-ammar
+  title: Décret Présidentiel n° 2020-128 du 23 novembre 2020, portant nomination d'un ambassadeur extraordinaire et plénipotentiaire (Nabil Ammar à Bruxelles)
+  title_gloss_ar: أمر رئاسي عدد 2020-128 بتاريخ 23 نوفمبر 2020 يتعلق بتسمية سفير فوق العادة ومفوض
+  title_gloss_ar_by: machine
+  publisher: Journal Officiel de la République Tunisienne (via 9anoun)
+  date: 2020-11-23
+  url: https://9anoun.tn/fr/kb/jorts/jort-2020-118-1c8b2/decret-presidentiel-ndeg-2020-128-du-23-novembre-2020-portant-nomination-d-un-ambassadeur-extraordinaire-et-plenipotentiaire-14
+  tier: 1
+  lang: fr
+  excerpt: Nabil Ammar appointed Ambassador Extraordinary and Plenipotentiary to Brussels effective 24 October 2020.
+  excerpt_fr: Nabil Ammar nommé ambassadeur extraordinaire et plénipotentiaire à Bruxelles à compter du 24 octobre 2020.
+  excerpt_fr_by: machine
+  excerpt_ar: نبيل عمار يُعيّن سفيرًا فوق العادة ومفوضًا في بروكسل اعتبارًا من 24 أكتوبر 2020.
+  excerpt_ar_by: machine
+- id: pm-gov-composition-2024-08-25
+  title: Composition du gouvernement — Les membres du Gouvernement
+  title_gloss_ar: تركيبة الحكومة — أعضاء الحكومة
+  title_gloss_ar_by: model-reviewed
+  publisher: Portail de la Présidence du Gouvernement, Tunisie
+  date: 2024-08-25
+  url: https://pm.gov.tn/fr/membres-du-gouvernement
+  tier: 1
+  lang: fr
+  excerpt: Lists Mohamed Ali Nafti as Ministre des affaires étrangères, de la migration et des Tunisiens à l'étranger — Depuis 25.08.2024; Khaled Shili — Défense — Depuis 25.08.2024. Cross-check for Nafti start.
+  excerpt_fr: Liste Mohamed Ali Nafti comme ministre des Affaires étrangères, de la Migration et des Tunisiens à l'étranger — Depuis 25.08.2024 ; Khaled Shili — Défense — Depuis 25.08.2024. Vérification croisée pour Nafti.
+  excerpt_fr_by: machine
+  excerpt_ar: يذكر محمد علي النفطي وزيرًا للخارجية والهجرة والتونسيين بالخارج منذ 25 أوت 2024؛ وخالد شلي للدفاع منذ 25 أوت 2024.
+  excerpt_ar_by: machine
+- id: reuters-ammar-nomination-2023-02-07
+  title: Tunisian president dismisses foreign minister (Jerandi → Ammar)
+  title_gloss_fr: Le président tunisien limoge le ministre des Affaires étrangères (Jerandi → Ammar)
+  title_gloss_fr_by: machine
+  title_gloss_ar: الرئيس التونسي يقيل وزير الخارجية (الجرندي → عمار)
+  title_gloss_ar_by: machine
+  publisher: Reuters
+  date: 2023-02-07
+  url: https://www.reuters.com/world/africa/tunisian-president-dismisses-foreign-affairs-minister-2023-02-07/
+  tier: 3
+  lang: en
+  excerpt: President Kais Saied dismissed Foreign Minister Othman Jerandi on 7 February 2023, replacing him with former ambassador to the European Union and Belgium Nabil Ammar.
+  excerpt_fr: Le président Kaïs Saïed a limogé le ministre des Affaires étrangères Othman Jerandi le 7 février 2023, le remplaçant par l'ancien ambassadeur auprès de l'UE et de la Belgique Nabil Ammar.
+  excerpt_fr_by: machine
+  excerpt_ar: أقال الرئيس قيس سعيد وزير الخارجية عثمان الجرندي يوم 7 فيفري 2023 وعيّن مكانه السفير السابق لدى الاتحاد الأوروبي وبلجيكا نبيل عمار.
+  excerpt_ar_by: machine
+- id: leaders-ammar-bio-2023-02-07
+  title: Qui est Nabil Ammar, nouveau ministre des Affaires étrangères
+  title_gloss_ar: من هو نبيل عمار، وزير الخارجية الجديد
+  title_gloss_ar_by: machine
+  publisher: Leaders
+  date: 2023-02-07
+  url: https://www.leaders.com.tn/article/34439-qui-est-nabil-ammar-nouveau-ministre-des-affaires-etrangeres
+  tier: 4
+  lang: fr
+  excerpt: Career diplomat, was Ambassador to Belgium and Luxembourg and Representative to the EU; posted to Rome, Chargé d'Affaires in Oslo, Ambassador to London (2013), Director General for Europe before Brussels 2020.
+  excerpt_fr: Diplomate de carrière, était ambassadeur en Belgique et au Luxembourg et représentant auprès de l'UE ; poste à Rome, chargé d'Affaires à Oslo, ambassadeur à Londres (2013), directeur général pour l'Europe avant Bruxelles 2020.
+  excerpt_fr_by: machine
+  excerpt_ar: دبلوماسي محترف، كان سفيرًا في بلجيكا ولوكسمبورغ وممثلًا لدى الاتحاد الأوروبي؛ خدم في روما وقائم بالأعمال في أوسلو وسفيرًا في لندن (2013) ومديرًا عامًا لأوروبا قبل بروكسل 2020.
+  excerpt_ar_by: machine
+- id: mosaique-ammar-oath-2023-02-07
+  title: Le nouveau ministre des Affaires étrangères prête serment
+  title_gloss_ar: الوزير الجديد للشؤون الخارجية يؤدي اليمين
+  title_gloss_ar_by: machine
+  publisher: Mosaïque FM
+  date: 2023-02-07
+  url: https://www.mosaiquefm.net/fr/national-tunisie/1133471/le-nouveau-ministre-des-affaires-etrangeres-prete-serment
+  tier: 4
+  lang: fr
+  excerpt: Nabil Ammar swore the oath on Tuesday 7 February 2023 at the Palace of Carthage before President Kais Saied.
+  excerpt_fr: Nabil Ammar a prêté serment ce mardi 7 février 2023 au palais de Carthage devant le président Kaïs Saïed.
+  excerpt_fr_by: machine
+  excerpt_ar: أدى نبيل عمار اليمين يوم الثلاثاء 7 فيفري 2023 بقصر قرطاج أمام الرئيس قيس سعيد.
+  excerpt_ar_by: machine
+- id: rfi-reshuffle-2024-08-25
+  title: Tunisia president replaces key ministers in sweeping reshuffle (AFP via RFI)
+  title_gloss_fr: Le président tunisien remplace des ministres clés lors d'un vaste remaniement (AFP via RFI)
+  title_gloss_fr_by: machine
+  publisher: RFI (AFP)
+  date: 2024-08-25
+  url: https://www.rfi.fr/en/international-news/20240825-tunisia-president-replaces-key-ministers-in-sweeping-reshuffle
+  tier: 3
+  lang: en
+  excerpt: Mohamed Ali Nafti, previously Secretary of State to the Foreign Ministry before Saied fired him in 2021, appointed Foreign Affairs Minister; former diplomat at embassies in Greece, Spain and South Korea.
+  excerpt_fr: Mohamed Ali Nafti, précédemment secrétaire d'État aux Affaires étrangères avant d'être limogé par Saïed en 2021, nommé ministre des Affaires étrangères ; ancien diplomate en poste en Grèce, Espagne et Corée du Sud.
+  excerpt_fr_by: machine
+  excerpt_ar: محمد علي النفطي، كاتب دولة سابق للخارجية قبل أن يقيله سعيد سنة 2021، عُيّن وزيرًا للخارجية؛ دبلوماسي سابق في سفارات اليونان وإسبانيا وكوريا الجنوبية.
+  excerpt_ar_by: machine
+- id: mosaique-nafti-bio-2024-08-25
+  title: Qui est Mohamed Ali Nafti, nouveau ministre des Affaires étrangères ?
+  title_gloss_ar: من هو محمد علي النفطي، وزير الخارجية الجديد؟
+  title_gloss_ar_by: machine
+  publisher: Mosaïque FM
+  date: 2024-08-25
+  url: https://www.mosaiquefm.net/fr/national-tunisie/1305689/qui-est-mohamed-ali-nafti-nouveau-ministre-des-affaires-etrangeres
+  tier: 4
+  lang: fr
+  excerpt: Secretary of State September 2020, dismissed 30 July 2021; appointed minister plenipotentiary hors classe and DG of central governance cell at MFA in October 2023; posted embassies Greece, Spain, South Korea.
+  excerpt_fr: Secrétaire d'État septembre 2020, limogé le 30 juillet 2021 ; nommé ministre plénipotentiaire hors classe et DG de la cellule centrale de gouvernance au MAE en octobre 2023 ; ambassades Grèce, Espagne, Corée du Sud.
+  excerpt_fr_by: machine
+  excerpt_ar: كاتب دولة سبتمبر 2020 أُقيل في 30 جويلية 2021؛ عُيّن وزيرًا مفوضًا فوق العادة ومديرًا عامًا لخلية الحوكمة المركزية بوزارة الخارجية في أكتوبر 2023؛ سفارات اليونان وإسبانيا وكوريا الجنوبية.
+  excerpt_ar_by: machine
+- id: un-credentials-ammar-2025
+  title: New Permanent Representative of Tunisia Presents Credentials (Nabil Ammar) — UN biographical note
+  title_gloss_fr: Le nouveau Représentant permanent de la Tunisie présente ses lettres de créance (note biographique ONU)
+  title_gloss_fr_by: machine
+  publisher: United Nations (via Belgium News syndication)
+  date: 2025-03-27
+  url: https://www.belgiumnews.net/news/278180220/new-permanent-representative-of-tunisia-presents-credentials
+  tier: 2
+  lang: en
+  excerpt: 'Bio block: Born Tunis 09/07/1965; MFA 2023-2024; 2020 Ambassador Brussels (EU/NATO/Luxembourg); 2018 DG Europe/EU/Med; 2017 Inspector General; 2012-2017 Ambassador UK/Ireland London; 1998-2000 Counsellor Vienna; degree Economics & Management Univ Paris 1 Panthéon-Sorbonne; ENA Tunis.'
+  excerpt_fr: 'Bloc biographique : Né à Tunis 09/07/1965 ; MAE 2023-2024 ; 2020 ambassadeur Bruxelles (UE/OTAN/Luxembourg) ; 2018 DG Europe/UE/Méd. ; 2017 inspecteur général ; 2012-2017 ambassadeur Royaume-Uni/Irlande Londres ; 1998-2000 conseiller Vienne ; diplôme économie et gestion Univ Paris 1 Panthéon-Sorbonne ; ENA Tunis.'
+  excerpt_fr_by: machine
+  excerpt_ar: 'كتلة سيرة: مولود بتونس 09/07/1965؛ خارجية 2023-2024؛ 2020 سفير بروكسل (اتحاد أوروبي/ناتو/لوكسمبورغ)؛ 2018 مدير عام أوروبا/اتحاد أوروبي/متوسط؛ 2017 متفقد عام؛ 2012-2017 سفير بريطانيا/إيرلندا لندن؛ 1998-2000 مستشار فيينا؛ شهادة اقتصاد وتصرف جامعة باريس 1 بانتيون سوربون؛ المدرسة الوطنية للإدارة تونس.'
+  excerpt_ar_by: machine
+- id: asian-voice-ammar-cv-2015
+  title: Excellency Nabil Ammar — Keith Vaz column reproducing embassy CV
+  title_gloss_fr: Son Excellence Nabil Ammar — chronique Keith Vaz reproduisant le CV de l'ambassade
+  title_gloss_fr_by: machine
+  publisher: Asian Voice
+  date: 2015-12-07
+  url: https://www.asian-voice.com/Opinion/Columnists/Keith-Vaz/Excellency-Nabil-Ammar
+  tier: 4
+  lang: en
+  excerpt: Born in Tunis on 7 September 1965. Embassy CV reproduced via column.
+  excerpt_fr: Né à Tunis le 7 septembre 1965. CV d'ambassade reproduit via chronique.
+  excerpt_fr_by: machine
+  excerpt_ar: مولود بتونس في 7 سبتمبر 1965. سيرة سفارة منسوخة عبر مقال.
+  excerpt_ar_by: machine
+- id: tunisienumerique-ammar-permanent-2025-03-25
+  title: Qui est Nabil Ammar désigné représentant permanent de la Tunisie à l'ONU
+  title_gloss_ar: من هو نبيل عمار المعيّن ممثلا دائما لتونس لدى الأمم المتحدة
+  title_gloss_ar_by: machine
+  publisher: Tunisie Numérique
+  date: 2025-03-27
+  url: https://www.tunisienumerique.com/qui-est-nabil-ammar-designe-representant-permanent-de-la-tunisie-a-lonu-2/
+  tier: 4
+  lang: fr
+  excerpt: Né 7 septembre 1965 à Tunis; diplômé économie/gestion Panthéon-Sorbonne, ENA Tunis, Institut de défense nationale; career Rome, Oslo chargé d'affaires, Londres 2012-2017, DG Europe, Bruxelles 2020, MFA Feb 2023-Aug 2024.
+  excerpt_fr: Né 7 sept 1965 à Tunis ; diplômé économie/gestion Panthéon-Sorbonne, ENA Tunis, Institut de défense nationale ; parcours Rome, Oslo chargé d'affaires, Londres 2012-2017, DG Europe, Bruxelles 2020, MAE fév. 2023-août 2024.
+  excerpt_fr_by: machine
+  excerpt_ar: مولود في 7 سبتمبر 1965 بتونس؛ خريج اقتصاد/تصرف بانتيون سوربون والمدرسة الوطنية للإدارة بتونس ومعهد الدفاع الوطني؛ مسار روما وأوسلو قائم بالأعمال ولندن 2012-2017 ومدير عام أوروبا وبروكسل 2020 والخارجية فيفري 2023-أوت 2024.
+  excerpt_ar_by: machine

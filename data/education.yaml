@@ -28,10 +28,9 @@
 - id: edu-essebsi-paris-law
   person: beji-caid-essebsi
   institution: null
-  degree_en: "Licence in law (licence en droit)"
-  degree_fr: "Licence en droit"
-  degree_ar: >-
-    إجازة في الحقوق
+  degree_en: Licence in law (licence en droit)
+  degree_fr: Licence en droit
+  degree_ar: إجازة في الحقوق
   field: law
   field_fr: Droit
   field_fr_by: model-reviewed
@@ -41,38 +40,38 @@
   start: "1950"
   end: "1952"
   notes:
-    - "Studied at the Faculté de droit de Paris (Université de Paris), 1950–1952; obtained his licence on 13 July 1952, days before being expelled from France for his role as vice-president of the AEMNA (Association des étudiants musulmans nord-africains)."
-    - "Elite-channel marker: Paris law faculty + AEMNA leadership; secondary studies at Collège Sadiki (see edu-essebsi-sadiki)."
+    - Studied at the Faculté de droit de Paris (Université de Paris), 1950–1952;
+      obtained his licence on 13 July 1952, days before being expelled from
+      France for his role as vice-president of the AEMNA (Association des
+      étudiants musulmans nord-africains).
+    - "Elite-channel marker: Paris law faculty + AEMNA leadership; secondary
+      studies at Collège Sadiki (see edu-essebsi-sadiki)."
   notes_fr:
-    - >-
-      Étudié à la Faculté de droit de Paris (Université de Paris), 1950–1952 ; obtenu sa
-      licence le 13 juillet 1952, quelques jours avant d'être expulsé de France pour son
-      rôle de vice-président de l'AEMNA (Association des étudiants musulmans
-      nord-africains).
-    - >-
-      Marqueur d'élite : faculté de droit de Paris + direction de l'AEMNA ; études
-      secondaires au Collège Sadiki (voir edu-essebsi-sadiki).
+    - Étudié à la Faculté de droit de Paris (Université de Paris), 1950–1952 ;
+      obtenu sa licence le 13 juillet 1952, quelques jours avant d'être expulsé
+      de France pour son rôle de vice-président de l'AEMNA (Association des
+      étudiants musulmans nord-africains).
+    - "Marqueur d'élite : faculté de droit de Paris + direction de l'AEMNA ;
+      études secondaires au Collège Sadiki (voir edu-essebsi-sadiki)."
   notes_fr_by: model-reviewed
   notes_ar:
-    - >-
-      دراسة في كلية الحقوق بجامعة باريس (جامعة باريس)، 1950–1952؛ حصل على الإجازة في 13
-      يوليو 1952، بعد أيام من طرده من فرنسا لدوره كنائب رئيس الجمعية الإسلامية لطلاب شمال
-      أفريقيا (AEMNA).
-    - >-
-      مؤشر النخبة: كلية الحقوق بباريس وقيادة AEMNA؛ دراسات ثانوية في مدرسة الصادقية
-      (参见edu-essebsi-sadiki).
+    - دراسة في كلية الحقوق بجامعة باريس (جامعة باريس)، 1950–1952؛ حصل على
+      الإجازة في 13 يوليو 1952، بعد أيام من طرده من فرنسا لدوره كنائب رئيس
+      الجمعية الإسلامية لطلاب شمال أفريقيا (AEMNA).
+    - "مؤشر النخبة: كلية الحقوق بباريس وقيادة AEMNA؛ دراسات ثانوية في مدرسة
+      الصادقية (参见edu-essebsi-sadiki)."
   notes_ar_by: model-reviewed
   confidence: B
-  sources: [fr-wiki-beji-caid-essebsi]
-  falsifiable_by: "University of Paris enrolment/exam records 1950–1952; his memoir 'Habib Bourguiba, le bon grain et l'ivraie' gives the 13 July 1952 date."
-
+  sources:
+    - fr-wiki-beji-caid-essebsi
+  falsifiable_by: University of Paris enrolment/exam records 1950–1952; his memoir
+    'Habib Bourguiba, le bon grain et l'ivraie' gives the 13 July 1952 date.
 - id: edu-essebsi-sadiki
   person: beji-caid-essebsi
   institution: null
-  degree_en: "Secondary studies (Collège Sadiki)"
-  degree_fr: "Études secondaires au Collège Sadiki"
-  degree_ar: >-
-    دراسات ثانوية بالمدرسة الصادقية
+  degree_en: Secondary studies (Collège Sadiki)
+  degree_fr: Études secondaires au Collège Sadiki
+  degree_ar: دراسات ثانوية بالمدرسة الصادقية
   field: secondary
   field_fr: Secondaire
   field_fr_by: model-reviewed
@@ -82,29 +81,28 @@
   start: "?"
   end: "?"
   notes:
-    - "Attended the annex of Collège Sadiki (Tunis) — the colonial-era elite secondary school that filtered the Neo-Destour generation. Entered the Destour youth in 1941, aged 15."
+    - Attended the annex of Collège Sadiki (Tunis) — the colonial-era elite
+      secondary school that filtered the Neo-Destour generation. Entered the
+      Destour youth in 1941, aged 15.
   notes_fr:
-    - >-
-      A fréquenté l'annexe du Collège Sadiki (Tunis) — l'école secondaire d'élite de
-      l'époque coloniale qui filtrait la génération Néo-Destour. Entré au Destour jeune en
-      1941, âgé de 15 ans.
+    - A fréquenté l'annexe du Collège Sadiki (Tunis) — l'école secondaire
+      d'élite de l'époque coloniale qui filtrait la génération Néo-Destour.
+      Entré au Destour jeune en 1941, âgé de 15 ans.
   notes_fr_by: model-reviewed
   notes_ar:
-    - >-
-      التحق بفرع مدرسة الصادقية (تونس) — المدرسة الثانوية النخبية من الحقبة الاستعمارية التي
-      كانت تُ筛选 جيل الحزب الدستورى الجديد. دخل الحزب الدستورى الجديد في سن 15 عاماً عام
-      1941.
+    - التحق بفرع مدرسة الصادقية (تونس) — المدرسة الثانوية النخبية من الحقبة
+      الاستعمارية التي كانت تُ筛选 جيل الحزب الدستورى الجديد. دخل الحزب الدستورى
+      الجديد في سن 15 عاماً عام 1941.
   notes_ar_by: model-reviewed
   confidence: B
-  sources: [fr-wiki-beji-caid-essebsi]
-
+  sources:
+    - fr-wiki-beji-caid-essebsi
 - id: edu-saied-law-tunis
   person: kais-saied
   institution: null
-  degree_en: "Degree in law (jurist by training)"
-  degree_fr: "Formation en droit (juriste de formation)"
-  degree_ar: >-
-    تكوين في الحقوق (حقوقي التكوين)
+  degree_en: Degree in law (jurist by training)
+  degree_fr: Formation en droit (juriste de formation)
+  degree_ar: تكوين في الحقوق (حقوقي التكوين)
   field: law
   field_fr: Droit
   field_fr_by: model-reviewed
@@ -114,129 +112,133 @@
   start: "?"
   end: "?"
   notes:
-    - "fr.wiki: 'Juriste de formation, sans doctorat' — a lawyer by training with NO doctorate, per Le Point (2019-10-09) and TV5Monde (2019-10-14). en.wiki infobox lists University of Tunis as his alma mater. Exact degree level (licence/maîtrise) and dates not stated in either source."
-    - "Contradicts the spec §4.7 example record edu-saied-law ('Doctorate in Law', 1976–~1989). The doctorate is recorded separately as a circulating, unsubstantiated claim (edu-saied-doctorate-claim)."
-    - "Careful: he later DIRECTED the public-law department at the University of Sousse (1994–1999) and the Faculté des sciences juridiques et politiques de Tunis (1999–2018); those are teaching posts, not study records."
+    - "fr.wiki: 'Juriste de formation, sans doctorat' — a lawyer by training
+      with NO doctorate, per Le Point (2019-10-09) and TV5Monde (2019-10-14).
+      en.wiki infobox lists University of Tunis as his alma mater. Exact degree
+      level (licence/maîtrise) and dates not stated in either source."
+    - Contradicts the spec §4.7 example record edu-saied-law ('Doctorate in
+      Law', 1976–~1989). The doctorate is recorded separately as a circulating,
+      unsubstantiated claim (edu-saied-doctorate-claim).
+    - "Careful: he later DIRECTED the public-law department at the University of
+      Sousse (1994–1999) and the Faculté des sciences juridiques et politiques
+      de Tunis (1999–2018); those are teaching posts, not study records."
   notes_fr:
-    - >-
-      fr.wiki : « Juriste de formation, sans doctorat » — avocat de formation SANS DOCTORAT,
-      selon Le Point (2019-10-09) et TV5Monde (2019-10-14). L'infobox en.wiki indique
-      l'Université de Tunis comme alma mater. Niveau de diplôme exact (licence/maîtrise) et
-      dates non indiqués dans aucune source.
-    - >-
-      Contredit l'exemple du spec §4.7 edu-saied-law (« Doctorat en droit », 1976–~1989). Le
-      doctorat est enregistré séparément comme allégation circulante, non vérifiée
-      (edu-saied-doctorate-claim).
-    - >-
-      Attention : il a ensuite DIRIGÉ le département de droit public à l'Université de
-      Sousse (1994–1999) et à la Faculté des sciences juridiques et politiques de Tunis
-      (1999–2018) ; ce sont des postes d'enseignement, pas des enregistrements d'études.
+    - "fr.wiki : « Juriste de formation, sans doctorat » — avocat de formation
+      SANS DOCTORAT, selon Le Point (2019-10-09) et TV5Monde (2019-10-14).
+      L'infobox en.wiki indique l'Université de Tunis comme alma mater. Niveau
+      de diplôme exact (licence/maîtrise) et dates non indiqués dans aucune
+      source."
+    - Contredit l'exemple du spec §4.7 edu-saied-law (« Doctorat en droit »,
+      1976–~1989). Le doctorat est enregistré séparément comme allégation
+      circulante, non vérifiée (edu-saied-doctorate-claim).
+    - "Attention : il a ensuite DIRIGÉ le département de droit public à
+      l'Université de Sousse (1994–1999) et à la Faculté des sciences juridiques
+      et politiques de Tunis (1999–2018) ; ce sont des postes d'enseignement,
+      pas des enregistrements d'études."
   notes_fr_by: model-reviewed
   notes_ar:
-    - >-
-      ويكيبيديا الفرنسية: «حقوقي التكوين، بدون دكتوراه» — محامٍ بالتكوين بدون دكتوراه، وفقاً
-      لـ Le Point (2019-10-09) وTV5Monde (2019-10-14). تُظهر معلومات ويكيبيديا الإنجليزية أن
-      جامعة تونس هي alma mater. مستوى الشهادة الدقيق (إجازة/ماجستير) والتواريخ غير مذكورة في
-      أي مصدر.
-    - >-
-      يعارض مثال المواصفات §4.7 edu-saied-law («دكتوراه في القانون»، 1976–~1989). تسجل
-      الدكتوراه بشكل منفصل كادعاء متداول غير متحقق (edu-saied-doctorate-claim).
-    - >-
-      انتبه: لقد تولى لاحقاً رئاسة قسم القانون العام في جامعة سوسة (1994–1999) وكلية الحقوق
-      والعلوم السياسية بتونس (1999–2018)؛ تلك مناصب تدريس، وليست سجلات دراسة.
+    - "ويكيبيديا الفرنسية: «حقوقي التكوين، بدون دكتوراه» — محامٍ بالتكوين بدون
+      دكتوراه، وفقاً لـ Le Point (2019-10-09) وTV5Monde (2019-10-14). تُظهر
+      معلومات ويكيبيديا الإنجليزية أن جامعة تونس هي alma mater. مستوى الشهادة
+      الدقيق (إجازة/ماجستير) والتواريخ غير مذكورة في أي مصدر."
+    - يعارض مثال المواصفات §4.7 edu-saied-law («دكتوراه في القانون»،
+      1976–~1989). تسجل الدكتوراه بشكل منفصل كادعاء متداول غير متحقق
+      (edu-saied-doctorate-claim).
+    - "انتبه: لقد تولى لاحقاً رئاسة قسم القانون العام في جامعة سوسة (1994–1999)
+      وكلية الحقوق والعلوم السياسية بتونس (1999–2018)؛ تلك مناصب تدريس، وليست
+      سجلات دراسة."
   notes_ar_by: model-reviewed
   confidence: B
-  sources: [wikipedia-kais-saied, en-wiki-kais-saied]
-  falsifiable_by: "University of Tunis enrolment/graduation register; a doctorate record would refute the 'sans doctorat' claim."
-
+  sources:
+    - wikipedia-kais-saied
+    - en-wiki-kais-saied
+  falsifiable_by: University of Tunis enrolment/graduation register; a doctorate
+    record would refute the 'sans doctorat' claim.
 - id: edu-saied-doctorate-claim
   person: kais-saied
   institution: null
-  degree_en: "Doctorate in constitutional law (circulating claim, refuted by fr.wiki)"
-  degree_fr: "Doctorat en droit constitutionnel (allégation circulante, réfutée par fr.wiki)"
-  degree_ar: >-
-    دكتوراه في القانون الدستوري (ادعاء متداول، دحضته ويكيبيديا الفرنسية)
-  field: constitutional-law
-    Droit constitutionnel
-    القانون الدستوري
-  field_fr: >-
-    Droit constitutionnel
+  degree_en: Doctorate in constitutional law (circulating claim, refuted by fr.wiki)
+  degree_fr: Doctorat en droit constitutionnel (allégation circulante, réfutée par
+    fr.wiki)
+  degree_ar: دكتوراه في القانون الدستوري (ادعاء متداول، دحضته ويكيبيديا الفرنسية)
+  field: constitutional-law Droit constitutionnel القانون الدستوري
+  field_fr: Droit constitutionnel
   field_fr_by: model-reviewed
-  field_ar: >-
-    القانون الدستوري
+  field_ar: القانون الدستوري
   field_ar_by: model-reviewed
   kind: phd
   start: "?"
   end: "?"
   notes:
-    - "Widely repeated in 2019 campaign bios (e.g. Business News biography cited by fr.wiki) and in the spec's own §4.7 example. fr.wiki explicitly refutes it: 'Juriste de formation, sans doctorat', citing Le Point (2019-10-09) and TV5Monde (2019-10-14). No primary record located. Kept per rule: unsubstantiated claims are recorded, never deleted."
+    - "Widely repeated in 2019 campaign bios (e.g. Business News biography cited
+      by fr.wiki) and in the spec's own §4.7 example. fr.wiki explicitly refutes
+      it: 'Juriste de formation, sans doctorat', citing Le Point (2019-10-09)
+      and TV5Monde (2019-10-14). No primary record located. Kept per rule:
+      unsubstantiated claims are recorded, never deleted."
   notes_fr:
-    - >-
-      Largement répété dans les biographies de campagne 2019 (par ex. la biographie Business
-      News citée par fr.wiki) et dans l'exemple du spec §4.7. fr.wiki le réfute
-      explicitement : « Juriste de formation, sans doctorat », citant Le Point (2019-10-09)
-      et TV5Monde (2019-10-14). Aucun enregistrement primaire localisé. Conservé selon la
-      règle : les allégations non vérifiées sont enregistrées, jamais supprimées.
+    - "Largement répété dans les biographies de campagne 2019 (par ex. la
+      biographie Business News citée par fr.wiki) et dans l'exemple du spec
+      §4.7. fr.wiki le réfute explicitement : « Juriste de formation, sans
+      doctorat », citant Le Point (2019-10-09) et TV5Monde (2019-10-14). Aucun
+      enregistrement primaire localisé. Conservé selon la règle : les
+      allégations non vérifiées sont enregistrées, jamais supprimées."
   notes_fr_by: model-reviewed
   notes_ar:
-    - >-
-      مكرر على نطاق واسع في سير الذاتية لحملة 2019 (مثل سيرة Business News التي نقلتها
-      ويكيبيديا الفرنسية) ومثال المواصفات §4.7. تدحضه ويكيبيديا الفرنسية صراحةً: «حقوقي
-      التكوين، بدون دكتوراه»، مستشهدة بـ Le Point (2019-10-09) وTV5Monde (2019-10-14). لم
-      يتم تحديد سجل أولي. محفوظ وفقاً للقاعدة: الإدعاءات غير الموثقة مُسجلة، ولا تُحذف
-      أبداً.
+    - "مكرر على نطاق واسع في سير الذاتية لحملة 2019 (مثل سيرة Business News التي
+      نقلتها ويكيبيديا الفرنسية) ومثال المواصفات §4.7. تدحضه ويكيبيديا الفرنسية
+      صراحةً: «حقوقي التكوين، بدون دكتوراه»، مستشهدة بـ Le Point (2019-10-09)
+      وTV5Monde (2019-10-14). لم يتم تحديد سجل أولي. محفوظ وفقاً للقاعدة:
+      الإدعاءات غير الموثقة مُسجلة، ولا تُحذف أبداً."
   notes_ar_by: model-reviewed
   confidence: D
   basis: unsubstantiated
-  attributed_to: "2019 campaign-period biographies (Business News 2019-09-15, cited by fr.wiki) and the sprint spec §4.7 example"
-  sources: [wikipedia-kais-saied]
-  falsifiable_by: "A university archive listing a defended thesis by Kais Saied in constitutional law."
-
+  attributed_to: 2019 campaign-period biographies (Business News 2019-09-15, cited
+    by fr.wiki) and the sprint spec §4.7 example
+  sources:
+    - wikipedia-kais-saied
+  falsifiable_by: A university archive listing a defended thesis by Kais Saied in
+    constitutional law.
 - id: edu-saied-ihl-sanremo
   person: kais-saied
   institution: null
-  degree_en: "Diploma/attendance, International Institute of Humanitarian Law"
-  degree_fr: "Diplôme/cursus à l'Institut international de droit humanitaire"
-  degree_ar: >-
-    شهادة/مسار دراسي بالمعهد الدولي للقانون الإنساني
-  field: humanitarian-law
-    Droit humanitaire
-    القانون الإنساني
-  field_fr: >-
-    Droit humanitaire
+  degree_en: Diploma/attendance, International Institute of Humanitarian Law
+  degree_fr: Diplôme/cursus à l'Institut international de droit humanitaire
+  degree_ar: شهادة/مسار دراسي بالمعهد الدولي للقانون الإنساني
+  field: humanitarian-law Droit humanitaire القانون الإنساني
+  field_fr: Droit humanitaire
   field_fr_by: model-reviewed
-  field_ar: >-
-    القانون الإنساني
+  field_ar: القانون الإنساني
   field_ar_by: model-reviewed
   kind: certificate
   start: "?"
   end: "?"
   notes:
-    - "en.wiki infobox lists 'International Institute of Humanitarian Law' (Sanremo) among his alma maters; no detail (year, diploma) is given and fr.wiki does not mention it. Single-source, low-detail claim."
+    - en.wiki infobox lists 'International Institute of Humanitarian Law'
+      (Sanremo) among his alma maters; no detail (year, diploma) is given and
+      fr.wiki does not mention it. Single-source, low-detail claim.
   notes_fr:
-    - >-
-      L'infobox en.wiki indique « International Institute of Humanitarian Law » (Sanremo)
-      parmi ses alma maters ; aucun détail (année, diplôme) n'est donné et fr.wiki ne le
-      mentionne pas. Allégation à source unique, à faible détail.
+    - L'infobox en.wiki indique « International Institute of Humanitarian Law »
+      (Sanremo) parmi ses alma maters ; aucun détail (année, diplôme) n'est
+      donné et fr.wiki ne le mentionne pas. Allégation à source unique, à faible
+      détail.
   notes_fr_by: model-reviewed
   notes_ar:
-    - >-
-      تُظهر معلومات ويكيبيديا الإنجليزية «المعهد الدولي للقانون الإنساني» (سان ريمو) ضمن
-      كلياته؛ لا تفاصيل (سنة، شهادة) مذكورة وويكيبيديا الفرنسية لا تذكره. ادعاء من مصدر
-      واحد، بتفاصيل قليلة.
+    - تُظهر معلومات ويكيبيديا الإنجليزية «المعهد الدولي للقانون الإنساني» (سان
+      ريمو) ضمن كلياته؛ لا تفاصيل (سنة، شهادة) مذكورة وويكيبيديا الفرنسية لا
+      تذكره. ادعاء من مصدر واحد، بتفاصيل قليلة.
   notes_ar_by: model-reviewed
   confidence: C
-  attributed_to: "English Wikipedia infobox (alma mater listing)"
-  sources: [en-wiki-kais-saied]
-  falsifiable_by: "Sanremo institute records; a profile stating he merely attended courses without a diploma."
-
+  attributed_to: English Wikipedia infobox (alma mater listing)
+  sources:
+    - en-wiki-kais-saied
+  falsifiable_by: Sanremo institute records; a profile stating he merely attended
+    courses without a diploma.
 - id: edu-saied-sadiki
   person: kais-saied
   institution: null
-  degree_en: "Secondary studies (Collège Sadiki)"
-  degree_fr: "Études secondaires au Collège Sadiki"
-  degree_ar: >-
-    دراسات ثانوية بالمدرسة الصادقية
+  degree_en: Secondary studies (Collège Sadiki)
+  degree_fr: Études secondaires au Collège Sadiki
+  degree_ar: دراسات ثانوية بالمدرسة الصادقية
   field: secondary
   field_fr: Secondaire
   field_fr_by: model-reviewed
@@ -246,27 +248,27 @@
   start: "?"
   end: "?"
   notes:
-    - "Elite-channel marker: fr.wiki and en.wiki both state his secondary education was at Collège Sadiki (Tunis). Born 1958; dates not stated."
+    - "Elite-channel marker: fr.wiki and en.wiki both state his secondary
+      education was at Collège Sadiki (Tunis). Born 1958; dates not stated."
   notes_fr:
-    - >-
-      Marqueur d'élite : fr.wiki et en.wiki indiquent tous deux que sa formation secondaire
-      s'est faite au Collège Sadiki (Tunis). Né en 1958 ; dates non indiquées.
+    - "Marqueur d'élite : fr.wiki et en.wiki indiquent tous deux que sa
+      formation secondaire s'est faite au Collège Sadiki (Tunis). Né en 1958 ;
+      dates non indiquées."
   notes_fr_by: model-reviewed
   notes_ar:
-    - >-
-      مؤشر النخبة: تُظهر ويكيبيديا الفرنسية والإنجليزية معاً أن تعليمه الثانوي كان في مدرسة
-      الصادقية (تونس). وُلد عام 1958؛ التواريخ غير مذكورة.
+    - "مؤشر النخبة: تُظهر ويكيبيديا الفرنسية والإنجليزية معاً أن تعليمه الثانوي
+      كان في مدرسة الصادقية (تونس). وُلد عام 1958؛ التواريخ غير مذكورة."
   notes_ar_by: model-reviewed
   confidence: B
-  sources: [wikipedia-kais-saied, en-wiki-kais-saied]
-
+  sources:
+    - wikipedia-kais-saied
+    - en-wiki-kais-saied
 - id: edu-marzouki-sadiki
   person: moncef-marzouki
   institution: null
-  degree_en: "Secondary studies (Collège Sadiki)"
-  degree_fr: "Études secondaires au Collège Sadiki"
-  degree_ar: >-
-    دراسات ثانوية بالمدرسة الصادقية
+  degree_en: Secondary studies (Collège Sadiki)
+  degree_fr: Études secondaires au Collège Sadiki
+  degree_ar: دراسات ثانوية بالمدرسة الصادقية
   field: secondary
   field_fr: Secondaire
   field_fr_by: model-reviewed
@@ -276,27 +278,25 @@
   start: "1957"
   end: "1961"
   notes:
-    - "Elite-channel marker: at Collège Sadiki 1957–1961; schooling finished in Morocco after his family's political exile (1956)."
+    - "Elite-channel marker: at Collège Sadiki 1957–1961; schooling finished in
+      Morocco after his family's political exile (1956)."
   notes_fr:
-    - >-
-      Marqueur d'élite : au Collège Sadiki 1957–1961 ; ses études se sont poursuivies au
-      Maroc après l'exil politique de sa famille (1956).
+    - "Marqueur d'élite : au Collège Sadiki 1957–1961 ; ses études se sont
+      poursuivies au Maroc après l'exil politique de sa famille (1956)."
   notes_fr_by: model-reviewed
   notes_ar:
-    - >-
-      مؤشر النخبة: في مدرسة الصادقية 1957–1961؛ استمرت دراسته في المغرب بعد exile السياسي
-      لعائلته (1956).
+    - "مؤشر النخبة: في مدرسة الصادقية 1957–1961؛ استمرت دراسته في المغرب بعد
+      exile السياسي لعائلته (1956)."
   notes_ar_by: model-reviewed
   confidence: B
-  sources: [wikipedia-marzouki-fr]
-
+  sources:
+    - wikipedia-marzouki-fr
 - id: edu-marzouki-bac-regnault
   person: moncef-marzouki
   institution: null
-  degree_en: "Baccalauréat, Lycée Regnault (Tangier, Morocco)"
-  degree_fr: "Baccalauréat au lycée Regnault (Tanger, Maroc)"
-  degree_ar: >-
-    بكالوريا بثانوية رينو (طنجة، المغرب)
+  degree_en: Baccalauréat, Lycée Regnault (Tangier, Morocco)
+  degree_fr: Baccalauréat au lycée Regnault (Tanger, Maroc)
+  degree_ar: بكالوريا بثانوية رينو (طنجة، المغرب)
   field: secondary
   field_fr: Secondaire
   field_fr_by: model-reviewed
@@ -306,27 +306,27 @@
   start: "1964"
   end: "1964"
   notes:
-    - "Lauréat 1963 du concours général en arabe; baccalauréat in 1964 at the Lycée Regnault (French lycée in Tangier); then a university scholarship to France."
+    - Lauréat 1963 du concours général en arabe; baccalauréat in 1964 at the
+      Lycée Regnault (French lycée in Tangier); then a university scholarship to
+      France.
   notes_fr:
-    - >-
-      Lauréat 1963 du concours général en arabe ; baccalauréat en 1964 au lycée Regnault
-      (lycée français à Tanger) ; puis une bourse universitaire pour la France.
+    - Lauréat 1963 du concours général en arabe ; baccalauréat en 1964 au lycée
+      Regnault (lycée français à Tanger) ; puis une bourse universitaire pour la
+      France.
   notes_fr_by: model-reviewed
   notes_ar:
-    - >-
-      حاصل على المركز الأول في المسابقة العامة بالعربية عام 1963؛ بكالوريا في 1964 في ثانوية
-      رينو (ثانوية فرنسية في طنجة)؛ ثم منحة دراسية لفرنسا.
+    - حاصل على المركز الأول في المسابقة العامة بالعربية عام 1963؛ بكالوريا في
+      1964 في ثانوية رينو (ثانوية فرنسية في طنجة)؛ ثم منحة دراسية لفرنسا.
   notes_ar_by: model-reviewed
   confidence: B
-  sources: [wikipedia-marzouki-fr]
-
+  sources:
+    - wikipedia-marzouki-fr
 - id: edu-marzouki-strasbourg-md
   person: moncef-marzouki
   institution: null
-  degree_en: "Doctorate in medicine (docteur en médecine)"
-  degree_fr: "Doctorat en médecine"
-  degree_ar: >-
-    دكتوراه في الطب
+  degree_en: Doctorate in medicine (docteur en médecine)
+  degree_fr: Doctorat en médecine
+  degree_ar: دكتوراه في الطب
   field: medicine
   field_fr: Médecine
   field_fr_by: model-reviewed
@@ -336,70 +336,73 @@
   start: "1964"
   end: "1973"
   notes:
-    - "Faculté de médecine, Université de Strasbourg; doctor in medicine in 1973 (thesis on human experimentation, supervised by Prof. Marc Klein). Silver medal of the Strasbourg teaching-hospital internship; specialisation in internal medicine, neurology and public health; chef de clinique at Strasbourg 1977–1979. Later agrégation in social medicine (1982)."
+    - Faculté de médecine, Université de Strasbourg; doctor in medicine in 1973
+      (thesis on human experimentation, supervised by Prof. Marc Klein). Silver
+      medal of the Strasbourg teaching-hospital internship; specialisation in
+      internal medicine, neurology and public health; chef de clinique at
+      Strasbourg 1977–1979. Later agrégation in social medicine (1982).
   notes_fr:
-    - >-
-      Faculté de médecine, Université de Strasbourg ; docteur en médecine en 1973 (thèse sur
-      les expérimentations humaines, supervisée par le Pr. Marc Klein). Médaille d'argent de
-      l'externat des hôpitaux de Strasbourg ; spécialisation en médecine interne, neurologie
-      et santé publique ; chef de clinique à Strasbourg 1977–1979. Plus tard agrégation en
-      médecine sociale (1982).
+    - Faculté de médecine, Université de Strasbourg ; docteur en médecine en
+      1973 (thèse sur les expérimentations humaines, supervisée par le Pr. Marc
+      Klein). Médaille d'argent de l'externat des hôpitaux de Strasbourg ;
+      spécialisation en médecine interne, neurologie et santé publique ; chef de
+      clinique à Strasbourg 1977–1979. Plus tard agrégation en médecine sociale
+      (1982).
   notes_fr_by: model-reviewed
   notes_ar:
-    - >-
-      كلية الطب، جامعة ستراسبورغ؛ دكتوراه في الطب عام 1973 (أطروحة حول التجارب البشرية،
-      بإشراف البروفيسور مارك كلاين). الميدالية الفضية لمصلحة المستشفيات التعليمية في
-      ستراسبورغ؛ تخصص في الطب الباطني والعصبي والصحة العامة؛ طبيب clinics رئيسي في ستراسبورغ
-      1977–1979. لاحقاً درجة التأهيل في الطب الاجتماعي (1982).
+    - كلية الطب، جامعة ستراسبورغ؛ دكتوراه في الطب عام 1973 (أطروحة حول التجارب
+      البشرية، بإشراف البروفيسور مارك كلاين). الميدالية الفضية لمصلحة المستشفيات
+      التعليمية في ستراسبورغ؛ تخصص في الطب الباطني والعصبي والصحة العامة؛ طبيب
+      clinics رئيسي في ستراسبورغ 1977–1979. لاحقاً درجة التأهيل في الطب
+      الاجتماعي (1982).
   notes_ar_by: model-reviewed
   confidence: B
-  sources: [wikipedia-marzouki-fr]
-  falsifiable_by: "Strasbourg faculty records; the 1973 thesis registration."
-
+  sources:
+    - wikipedia-marzouki-fr
+  falsifiable_by: Strasbourg faculty records; the 1973 thesis registration.
 - id: edu-ghannouchi-zitouna
   person: rached-ghannouchi
   institution: null
-  degree_en: "Tahsil certificate in theology (Zitouna University)"
-  degree_fr: "Certificat de tahsil en théologie (Université Zitouna)"
-  degree_ar: >-
-    شهادة التحصيل في العلوم الدينية (جامعة الزيتونة)
-  field: theology
-    العلوم الدينية
+  degree_en: Tahsil certificate in theology (Zitouna University)
+  degree_fr: Certificat de tahsil en théologie (Université Zitouna)
+  degree_ar: شهادة التحصيل في العلوم الدينية (جامعة الزيتونة)
+  field: theology العلوم الدينية
   field_fr: Théologie
   field_fr_by: model-reviewed
-  field_ar: >-
-    العلوم الدينية
+  field_ar: العلوم الدينية
   field_ar_by: model-reviewed
   kind: certificate
   start: "1956"
   end: "1962"
   notes:
-    - "Studied at the Zitouna (Tunis) from 1956; obtained the 'tahsil' — the certificate closing the four-year post-primary Zitouna cycle — in 1962. It allowed him to teach Arabic in primary schools but, per fr.wiki, barred him from the University of Tunis. Elite-channel marker: the Zitouna religious establishment."
+    - "Studied at the Zitouna (Tunis) from 1956; obtained the 'tahsil' — the
+      certificate closing the four-year post-primary Zitouna cycle — in 1962. It
+      allowed him to teach Arabic in primary schools but, per fr.wiki, barred
+      him from the University of Tunis. Elite-channel marker: the Zitouna
+      religious establishment."
   notes_fr:
-    - >-
-      Étudié à la Zitouna (Tunis) à partir de 1956 ; obtenu le « tahsil » — le certificat
-      clôturant le cycle post-primaire de quatre ans de la Zitouna — en 1962. Cela lui
-      permettait d'enseigner l'arabe dans les écoles primaires mais, selon fr.wiki,
-      l'empêchait d'accéder à l'Université de Tunis. Marqueur d'élite : l'établissement
-      religieux de la Zitouna.
+    - "Étudié à la Zitouna (Tunis) à partir de 1956 ; obtenu le « tahsil » — le
+      certificat clôturant le cycle post-primaire de quatre ans de la Zitouna —
+      en 1962. Cela lui permettait d'enseigner l'arabe dans les écoles primaires
+      mais, selon fr.wiki, l'empêchait d'accéder à l'Université de Tunis.
+      Marqueur d'élite : l'établissement religieux de la Zitouna."
   notes_fr_by: model-reviewed
   notes_ar:
-    - >-
-      دراسة في الزيتونة (تونس) من عام 1956؛ حصل على شهادة «التحصيل» — الشهادة التي تُغلق
-      الدورة الثانوية الأربعة بعد الابتدائية في الزيتونة — في عام 1962. أتاح له تعليم اللغة
-      العربية في المدارس الابتدائية لكن وفقاً لويكيبيديا الفرنسية، مانعه من الالتحاق بجامعة
-      تونس. مؤشر النخبة: المؤسسة الدينية في الزيتونة.
+    - "دراسة في الزيتونة (تونس) من عام 1956؛ حصل على شهادة «التحصيل» — الشهادة
+      التي تُغلق الدورة الثانوية الأربعة بعد الابتدائية في الزيتونة — في عام
+      1962. أتاح له تعليم اللغة العربية في المدارس الابتدائية لكن وفقاً
+      لويكيبيديا الفرنسية، مانعه من الالتحاق بجامعة تونس. مؤشر النخبة: المؤسسة
+      الدينية في الزيتونة."
   notes_ar_by: model-reviewed
   confidence: B
-  sources: [fr-wiki-rached-ghannouchi]
-
+  sources:
+    - fr-wiki-rached-ghannouchi
 - id: edu-ghannouchi-damas
   person: rached-ghannouchi
   institution: null
-  degree_en: "Degree in philosophy (diplôme de philosophie)"
-  degree_fr: "Diplôme de philosophie"
-  degree_ar: >-
-    شهادة في الفلسفة
+  degree_en: Degree in philosophy (diplôme de philosophie)
+  degree_fr: Diplôme de philosophie
+  degree_ar: شهادة في الفلسفة
   field: philosophy
   field_fr: Philosophie
   field_fr_by: model-reviewed
@@ -407,43 +410,50 @@
   field_ar_by: model-reviewed
   kind: licence
   start: "1965"
-  end: "~1967"
+  end: ~1967
   notes:
-    - "University of Damascus. He left for Egypt in 1964 (Cairo agriculture faculty enrolment failed), then moved to Damascus where a Bourguiba scholarship let him study philosophy; the scholarship was suspended, he travelled in Europe ~6 months, then returned to Damascus and obtained the philosophy diploma. Infobox lists 'Université Zitouna, Université de Damas'."
-    - "End date inferred: between his Damascus arrival (1965) and his departure for France in 1968; fr.wiki gives no year. Start date likewise approximate."
+    - University of Damascus. He left for Egypt in 1964 (Cairo agriculture
+      faculty enrolment failed), then moved to Damascus where a Bourguiba
+      scholarship let him study philosophy; the scholarship was suspended, he
+      travelled in Europe ~6 months, then returned to Damascus and obtained the
+      philosophy diploma. Infobox lists 'Université Zitouna, Université de
+      Damas'.
+    - "End date inferred: between his Damascus arrival (1965) and his departure
+      for France in 1968; fr.wiki gives no year. Start date likewise
+      approximate."
   notes_fr:
-    - >-
-      Université de Damas. Il est parti en Égypte en 1964 (inscription à la faculté
-      d'agriculture du Caire échouée), puis s'est rendu à Damas où une bourse Bourguiba lui
-      a permis d'étudier la philosophie ; la bourse a été suspendue, il a voyagé en Europe
-      ~6 mois, puis est retourné à Damas et obtenu le diplôme de philosophie. L'infobox
-      indique « Université Zitouna, Université de Damas ».
-    - >-
-      Date de fin inféree : entre son arrivée à Damas (1965) et son départ pour la France en
-      1968 ; fr.wiki ne donne pas d'année. Date de début likewise approximative.
+    - Université de Damas. Il est parti en Égypte en 1964 (inscription à la
+      faculté d'agriculture du Caire échouée), puis s'est rendu à Damas où une
+      bourse Bourguiba lui a permis d'étudier la philosophie ; la bourse a été
+      suspendue, il a voyagé en Europe ~6 mois, puis est retourné à Damas et
+      obtenu le diplôme de philosophie. L'infobox indique « Université Zitouna,
+      Université de Damas ».
+    - "Date de fin inféree : entre son arrivée à Damas (1965) et son départ pour
+      la France en 1968 ; fr.wiki ne donne pas d'année. Date de début likewise
+      approximative."
   notes_fr_by: model-reviewed
   notes_ar:
-    - >-
-      جامعة دمشق. ذهب إلى مصر في 1964 (فشل الالتحاق بكلية الزراعة في القاهرة)، ثم انتقل إلى
-      دمشق حيث مكنته منحة بورقيبة من دراسة الفلسفة؛ توقفت المنحة، وسافر في أوروبا ~6 أشهر،
-      ثم عاد إلى دمشق وحصل على شهادة الفلسفة. تُظهر معلومات ويكيبيديا «جامعة الزيتونة، جامعة
-      دمشق».
-    - >-
-      تاريخ النهاية مستنتج: بين وصوله إلى دمشق (1965) ورحيله إلى فرنسا في 1968؛ ويكيبيديا
-      الفرنسية لا تذكر عاماً. تاريخ البداية likewise تقريبي.
+    - جامعة دمشق. ذهب إلى مصر في 1964 (فشل الالتحاق بكلية الزراعة في القاهرة)،
+      ثم انتقل إلى دمشق حيث مكنته منحة بورقيبة من دراسة الفلسفة؛ توقفت المنحة،
+      وسافر في أوروبا ~6 أشهر، ثم عاد إلى دمشق وحصل على شهادة الفلسفة. تُظهر
+      معلومات ويكيبيديا «جامعة الزيتونة، جامعة دمشق».
+    - "تاريخ النهاية مستنتج: بين وصوله إلى دمشق (1965) ورحيله إلى فرنسا في 1968؛
+      ويكيبيديا الفرنسية لا تذكر عاماً. تاريخ البداية likewise تقريبي."
   notes_ar_by: model-reviewed
   confidence: B
-  reasoning: "fr.wiki narrates Damascus philosophy studies between the 1964 Egypt episode and the 1968 France departure; the diploma therefore falls in ~1965–~1967."
-  falsifiable_by: "University of Damascus registration records or Ghannouchi's own account in Burgat's 1992 interview giving an exact year."
-  sources: [fr-wiki-rached-ghannouchi]
-
+  reasoning: fr.wiki narrates Damascus philosophy studies between the 1964 Egypt
+    episode and the 1968 France departure; the diploma therefore falls in
+    ~1965–~1967.
+  falsifiable_by: University of Damascus registration records or Ghannouchi's own
+    account in Burgat's 1992 interview giving an exact year.
+  sources:
+    - fr-wiki-rached-ghannouchi
 - id: edu-essid-tunis-econ
   person: habib-essid
   institution: null
-  degree_en: "Maîtrise in economics"
-  degree_fr: "Maîtrise en sciences économiques"
-  degree_ar: >-
-    الإجازة الأساسية في العلوم الاقتصادية
+  degree_en: Maîtrise in economics
+  degree_fr: Maîtrise en sciences économiques
+  degree_ar: الإجازة الأساسية في العلوم الاقتصادية
   field: economics
   field_fr: Économie
   field_fr_by: model-reviewed
@@ -453,65 +463,61 @@
   start: "?"
   end: "1971"
   notes:
-    - "Faculté de droit et des sciences économiques, Université de Tunis; degree obtained 1971. Infobox: 'Diplômé de Université de Tunis, Université du Minnesota'; profession ingénieur agricole."
+    - "Faculté de droit et des sciences économiques, Université de Tunis; degree
+      obtained 1971. Infobox: 'Diplômé de Université de Tunis, Université du
+      Minnesota'; profession ingénieur agricole."
   notes_fr:
-    - >-
-      Faculté de droit et des sciences économiques, Université de Tunis ; diplôme obtenu
-      1971. Infobox : « Diplômé de Université de Tunis, Université du Minnesota » ;
-      profession ingénieur agricole.
+    - "Faculté de droit et des sciences économiques, Université de Tunis ;
+      diplôme obtenu 1971. Infobox : « Diplômé de Université de Tunis,
+      Université du Minnesota » ; profession ingénieur agricole."
   notes_fr_by: model-reviewed
   notes_ar:
-    - >-
-      كلية الحقوق والعلوم الاقتصادية، جامعة تونس؛حصل على الشهادة عام 1971. معلومات
-      ويكيبيديا: «خريج جامعة تونس، جامعة مينيسوتا»؛ المهنة مهندس زراعي.
+    - "كلية الحقوق والعلوم الاقتصادية، جامعة تونس؛حصل على الشهادة عام 1971.
+      معلومات ويكيبيديا: «خريج جامعة تونس، جامعة مينيسوتا»؛ المهنة مهندس زراعي."
   notes_ar_by: model-reviewed
   confidence: B
-  sources: [fr-wiki-habib-essid]
-
+  sources:
+    - fr-wiki-habib-essid
 - id: edu-essid-minnesota
   person: habib-essid
   institution: null
-  degree_en: "Master in agricultural economics"
-  degree_fr: "Master en économie agricole"
-  degree_ar: >-
-    ماستر في الاقتصاد الفلاحي
-  field: agricultural-economics
-    Économie agricole
-    الاقتصاد الزراعي
-  field_fr: >-
-    Économie agricole
+  degree_en: Master in agricultural economics
+  degree_fr: Master en économie agricole
+  degree_ar: ماستر في الاقتصاد الفلاحي
+  field: agricultural-economics Économie agricole الاقتصاد الزراعي
+  field_fr: Économie agricole
   field_fr_by: model-reviewed
-  field_ar: >-
-    الاقتصاد الزراعي
+  field_ar: الاقتصاد الزراعي
   field_ar_by: model-reviewed
   kind: masters
   start: "1971"
-  end: "~1974"
+  end: ~1974
   notes:
-    - "University of Minnesota (USA) on a scholarship, three years ('il s'y rend et y passe trois années') following the 1971 Tunis maîtrise. End inferred from 'three years'."
+    - University of Minnesota (USA) on a scholarship, three years ('il s'y rend
+      et y passe trois années') following the 1971 Tunis maîtrise. End inferred
+      from 'three years'.
   notes_fr:
-    - >-
-      Université du Minnesota (USA) avec une bourse, trois ans (« il s'y rend et y passe
-      trois années ») suite à la maîtrise tunisienne de 1971. Fin inférée depuis « trois ans
-      ».
+    - Université du Minnesota (USA) avec une bourse, trois ans (« il s'y rend et
+      y passe trois années ») suite à la maîtrise tunisienne de 1971. Fin
+      inférée depuis « trois ans ».
   notes_fr_by: model-reviewed
   notes_ar:
-    - >-
-      جامعة مينيسوتا (الولايات المتحدة) بمنحة، ثلاث سنوات («s'y rend et y passe trois
-      années») بعد الماجستير التونسية عام 1971. النهاية مستنتجة من «ثلاث سنوات».
+    - جامعة مينيسوتا (الولايات المتحدة) بمنحة، ثلاث سنوات («s'y rend et y passe
+      trois années») بعد الماجستير التونسية عام 1971. النهاية مستنتجة من «ثلاث
+      سنوات».
   notes_ar_by: model-reviewed
   confidence: B
-  reasoning: "fr.wiki: he applied for a US scholarship after the 1971 maîtrise and spent three years at Minnesota — so ~1971–1974."
-  falsifiable_by: "University of Minnesota transcript/graduation record giving exact years."
-  sources: [fr-wiki-habib-essid]
-
+  reasoning: "fr.wiki: he applied for a US scholarship after the 1971 maîtrise and
+    spent three years at Minnesota — so ~1971–1974."
+  falsifiable_by: University of Minnesota transcript/graduation record giving exact years.
+  sources:
+    - fr-wiki-habib-essid
 - id: edu-chahed-inat
   person: youssef-chahed
   institution: null
-  degree_en: "Agricultural engineering degree (ingénieur agronome)"
-  degree_fr: "Diplôme d'ingénieur agronome"
-  degree_ar: >-
-    شهادة مهندس فلاحي
+  degree_en: Agricultural engineering degree (ingénieur agronome)
+  degree_fr: Diplôme d'ingénieur agronome
+  degree_ar: شهادة مهندس فلاحي
   field: agronomy
   field_fr: Agronomie
   field_fr_by: model-reviewed
@@ -521,102 +527,94 @@
   start: "?"
   end: "1998"
   notes:
-    - "Institut National Agronomique de Tunisie (INAT); graduated 1998, MAJOR DE PROMOTION (valedictorian) — elite-channel marker. Born 1975, so enrolment ~1993 is plausible but unstated; start left '?'."
+    - Institut National Agronomique de Tunisie (INAT); graduated 1998, MAJOR DE
+      PROMOTION (valedictorian) — elite-channel marker. Born 1975, so enrolment
+      ~1993 is plausible but unstated; start left '?'.
   notes_fr:
-    - >-
-      Institut National Agronomique de Tunisie (INAT) ; diplômé en 1998, MAJOR DE PROMOTION
-      (major de promotion) — marqueur d'élite. Né en 1975, donc l'inscription ~1993 est
-      plausible mais non indiquée ; début laissé '?'.
+    - Institut National Agronomique de Tunisie (INAT) ; diplômé en 1998, MAJOR
+      DE PROMOTION (major de promotion) — marqueur d'élite. Né en 1975, donc
+      l'inscription ~1993 est plausible mais non indiquée ; début laissé '?'.
   notes_fr_by: model-reviewed
   notes_ar:
-    - >-
-      المعهد الوطني الزراعي التونسي (INAT)؛ تخرج عام 1998، الأول على الدفعة — مؤشر النخبة.
-      وُلد عام 1975، فالالتحاق ~1993 ممكن لكن غير مذكور؛ البداية متروكة '?'.
+    - المعهد الوطني الزراعي التونسي (INAT)؛ تخرج عام 1998، الأول على الدفعة —
+      مؤشر النخبة. وُلد عام 1975، فالالتحاق ~1993 ممكن لكن غير مذكور؛ البداية
+      متروكة '?'.
   notes_ar_by: model-reviewed
   confidence: B
-  sources: [fr-wiki-youssef-chahed]
-
+  sources:
+    - fr-wiki-youssef-chahed
 - id: edu-chahed-dea
   person: youssef-chahed
   institution: null
-  degree_en: "DEA (post-graduate diploma) in environmental economics and natural resources"
-  degree_fr: "DEA en économie de l'environnement et ressources naturelles"
-  degree_ar: >-
-    شهادة الدراسات المعمقة في اقتصاد البيئة والموارد الطبيعية
-  field: environmental-economics
-    Économie de l'environnement
-    اقتصاد البيئة
-  field_fr: >-
-    Économie de l'environnement
+  degree_en: DEA (post-graduate diploma) in environmental economics and natural resources
+  degree_fr: DEA en économie de l'environnement et ressources naturelles
+  degree_ar: شهادة الدراسات المعمقة في اقتصاد البيئة والموارد الطبيعية
+  field: environmental-economics Économie de l'environnement اقتصاد البيئة
+  field_fr: Économie de l'environnement
   field_fr_by: model-reviewed
-  field_ar: >-
-    اقتصاد البيئة
+  field_ar: اقتصاد البيئة
   field_ar_by: model-reviewed
   kind: masters
   start: "1998"
   end: "1999"
   notes:
-    - "Institut National Agronomique Paris-Grignon (now AgroParisTech), 1999. DEA title: 'Mesure de l'impact sur le bien-être des réductions tarifaires relatives aux produits agricoles…'."
+    - "Institut National Agronomique Paris-Grignon (now AgroParisTech), 1999.
+      DEA title: 'Mesure de l'impact sur le bien-être des réductions tarifaires
+      relatives aux produits agricoles…'."
   notes_fr:
-    - >-
-      Institut National Agronomique Paris-Grignon (now AgroParisTech), 1999. DEA title:
-      'Mesure de l'impact sur le bien-être des réductions tarifaires relatives aux produits
-      agricoles…'.
+    - "Institut National Agronomique Paris-Grignon (now AgroParisTech), 1999.
+      DEA title: 'Mesure de l'impact sur le bien-être des réductions tarifaires
+      relatives aux produits agricoles…'."
   notes_fr_by: model-reviewed
   notes_ar:
-    - >-
-      المعهد الوطني الزراعي باريس-غرينيون ( hiện AgroParisTech)، 1999. عنوان DEA: «Mesure de
-      l'impact sur le bien-être des réductions tarifaires relatives aux produits
-      agricoles…».
+    - "المعهد الوطني الزراعي باريس-غرينيون ( hiện AgroParisTech)، 1999. عنوان
+      DEA: «Mesure de l'impact sur le bien-être des réductions tarifaires
+      relatives aux produits agricoles…»."
   notes_ar_by: model-reviewed
   confidence: B
-  sources: [fr-wiki-youssef-chahed]
-
+  sources:
+    - fr-wiki-youssef-chahed
 - id: edu-chahed-phd
   person: youssef-chahed
   institution: null
-  degree_en: "Doctorate in agricultural economics (doctorat en agroéconomie)"
-  degree_fr: "Doctorat en agroéconomie"
-  degree_ar: >-
-    دكتوراه في الاقتصاد الفلاحي
-  field: agricultural-economics
-    Économie agricole
-    الاقتصاد الزراعي
-  field_fr: >-
-    Économie agricole
+  degree_en: Doctorate in agricultural economics (doctorat en agroéconomie)
+  degree_fr: Doctorat en agroéconomie
+  degree_ar: دكتوراه في الاقتصاد الفلاحي
+  field: agricultural-economics Économie agricole الاقتصاد الزراعي
+  field_fr: Économie agricole
   field_fr_by: model-reviewed
-  field_ar: >-
-    الاقتصاد الزراعي
+  field_ar: الاقتصاد الزراعي
   field_ar_by: model-reviewed
   kind: phd
   start: "1999"
   end: "2003"
   notes:
-    - "Institut National Agronomique Paris-Grignon, 2003, under Jean-Christophe Bureau. Thesis: 'Mesure de l'impact de la libéralisation des marchés agricoles sur les échanges et le bien-être' (listed in the French national thesis register)."
+    - "Institut National Agronomique Paris-Grignon, 2003, under Jean-Christophe
+      Bureau. Thesis: 'Mesure de l'impact de la libéralisation des marchés
+      agricoles sur les échanges et le bien-être' (listed in the French national
+      thesis register)."
   notes_fr:
-    - >-
-      Institut National Agronomique Paris-Grignon, 2003, sous la direction de
-      Jean-Christophe Bureau. Thèse : « Mesure de l'impact de la libéralisation des marchés
-      agricoles sur les échanges et le bien-être » (inscrite au registre national des thèses
-      français).
+    - "Institut National Agronomique Paris-Grignon, 2003, sous la direction de
+      Jean-Christophe Bureau. Thèse : « Mesure de l'impact de la libéralisation
+      des marchés agricoles sur les échanges et le bien-être » (inscrite au
+      registre national des thèses français)."
   notes_fr_by: model-reviewed
   notes_ar:
-    - >-
-      المعهد الوطني الزراعي باريس-غرينيون، 2003، بإشراف جان-كريستوف بوتري. الأطروحة: «Mesure
-      de l'impact de la libéralisation des marchés agricoles sur les échanges et le
-      bien-être» (مسجلة في السجل الوطني الفرنسي للأطروحات).
+    - "المعهد الوطني الزراعي باريس-غرينيون، 2003، بإشراف جان-كريستوف بوتري.
+      الأطروحة: «Mesure de l'impact de la libéralisation des marchés agricoles
+      sur les échanges et le bien-être» (مسجلة في السجل الوطني الفرنسي
+      للأطروحات)."
   notes_ar_by: model-reviewed
   confidence: B
-  sources: [fr-wiki-youssef-chahed]
-  falsifiable_by: "French national thesis register (theses.fr) entry for the 2003 thesis."
-
+  sources:
+    - fr-wiki-youssef-chahed
+  falsifiable_by: French national thesis register (theses.fr) entry for the 2003 thesis.
 - id: edu-mechichi-tunis-law
   person: hichem-mechichi
   institution: null
-  degree_en: "Maîtrise in law"
-  degree_fr: "Maîtrise en droit"
-  degree_ar: >-
-    الإجازة الأساسية في الحقوق
+  degree_en: Maîtrise in law
+  degree_fr: Maîtrise en droit
+  degree_ar: الإجازة الأساسية في الحقوق
   field: law
   field_fr: Droit
   field_fr_by: model-reviewed
@@ -626,138 +624,126 @@
   start: "?"
   end: "?"
   notes:
-    - "Faculté de droit et des sciences politiques de Tunis (Université de Tunis). Dates not stated in sources; born January 1974."
+    - Faculté de droit et des sciences politiques de Tunis (Université de
+      Tunis). Dates not stated in sources; born January 1974.
   notes_fr:
-    - >-
-      Faculté de droit et des sciences politiques de Tunis (Université de Tunis). Dates non
-      indiquées dans les sources ; né en janvier 1974.
+    - Faculté de droit et des sciences politiques de Tunis (Université de
+      Tunis). Dates non indiquées dans les sources ; né en janvier 1974.
   notes_fr_by: model-reviewed
   notes_ar:
-    - >-
-      كلية الحقوق والعلوم السياسية بتونس (جامعة تونس). التواريخ غير مذكورة في المصادر؛ وُلد
-      في يناير 1974.
+    - كلية الحقوق والعلوم السياسية بتونس (جامعة تونس). التواريخ غير مذكورة في
+      المصادر؛ وُلد في يناير 1974.
   notes_ar_by: model-reviewed
   confidence: B
-  sources: [fr-wiki-hichem-mechichi]
-
+  sources:
+    - fr-wiki-hichem-mechichi
 - id: edu-mechichi-ena-tunis
   person: hichem-mechichi
   institution: null
-  degree_en: "Master in law, political science and public administration"
-  degree_fr: "Master en droit, sciences politiques et administration publique"
-  degree_ar: >-
-    ماستر في الحقوق والعلوم السياسية والإدارة العامة
-  field: public-administration
-    Administration publique
-    الإدارة العامة
-  field_fr: >-
-    Administration publique
+  degree_en: Master in law, political science and public administration
+  degree_fr: Master en droit, sciences politiques et administration publique
+  degree_ar: ماستر في الحقوق والعلوم السياسية والإدارة العامة
+  field: public-administration Administration publique الإدارة العامة
+  field_fr: Administration publique
   field_fr_by: model-reviewed
-  field_ar: >-
-    الإدارة العامة
+  field_ar: الإدارة العامة
   field_ar_by: model-reviewed
   kind: masters
   start: "?"
   end: "?"
   notes:
-    - "École Nationale d'Administration de Tunisie (ENA Tunis). Dates not stated. Elite-channel marker: the Tunisian ENA is the gateway to the senior civil service (he became a finance inspector / haut fonctionnaire)."
+    - "École Nationale d'Administration de Tunisie (ENA Tunis). Dates not
+      stated. Elite-channel marker: the Tunisian ENA is the gateway to the
+      senior civil service (he became a finance inspector / haut
+      fonctionnaire)."
   notes_fr:
-    - >-
-      École Nationale d'Administration de Tunisie (ENA Tunis). Dates non indiquées. Marqueur
-      d'élite : la tunisienne ENA est la porte d'entrée vers la haute fonction publique (il
-      est devenu inspecteur des finances / haut fonctionnaire).
+    - "École Nationale d'Administration de Tunisie (ENA Tunis). Dates non
+      indiquées. Marqueur d'élite : la tunisienne ENA est la porte d'entrée vers
+      la haute fonction publique (il est devenu inspecteur des finances / haut
+      fonctionnaire)."
   notes_fr_by: model-reviewed
   notes_ar:
-    - >-
-      المدرسة الوطنية للإدارة التونسية (ENA تونس). التواريخ غير مذكورة. مؤشر النخبة: المدرسة
-      الوطنية للإدارة التونسية هي بوابة الدخول للخدمة المدنية العليا (أصبح مفتشاً للمالية /
-      كبار الموظفين).
+    - "المدرسة الوطنية للإدارة التونسية (ENA تونس). التواريخ غير مذكورة. مؤشر
+      النخبة: المدرسة الوطنية للإدارة التونسية هي بوابة الدخول للخدمة المدنية
+      العليا (أصبح مفتشاً للمالية / كبار الموظفين)."
   notes_ar_by: model-reviewed
   confidence: B
-  sources: [fr-wiki-hichem-mechichi]
-
+  sources:
+    - fr-wiki-hichem-mechichi
 - id: edu-mechichi-ena-france
   person: hichem-mechichi
   institution: null
-  degree_en: "École Nationale d'Administration (France), promotion 'République'"
-  degree_fr: "École Nationale d'Administration (France), promotion « République »"
-  degree_ar: >-
-    المدرسة الوطنية للإدارة (فرنسا)، دفعة «الجمهورية»
-  field: public-administration
-    Administration publique
-    الإدارة العامة
-  field_fr: >-
-    Administration publique
+  degree_en: École Nationale d'Administration (France), promotion 'République'
+  degree_fr: École Nationale d'Administration (France), promotion « République »
+  degree_ar: المدرسة الوطنية للإدارة (فرنسا)، دفعة «الجمهورية»
+  field: public-administration Administration publique الإدارة العامة
+  field_fr: Administration publique
   field_fr_by: model-reviewed
-  field_ar: >-
-    الإدارة العامة
+  field_ar: الإدارة العامة
   field_ar_by: model-reviewed
   kind: other
   start: "2005"
   end: "2007"
   notes:
-    - "THE elite-channel marker: the French ENA, promotion 'République' (2005–2007). The ENA itself paid tribute to him on its website after his nomination as prime minister (per fr.wiki, citing Tuniscope). One of very few Tunisian officials through the French ENA."
+    - "THE elite-channel marker: the French ENA, promotion 'République'
+      (2005–2007). The ENA itself paid tribute to him on its website after his
+      nomination as prime minister (per fr.wiki, citing Tuniscope). One of very
+      few Tunisian officials through the French ENA."
   notes_fr:
-    - >-
-      LE marqueur d'élite : la française ENA, promotion « République » (2005–2007). L'ENA
-      elle-même lui a rendu hommage sur son site après sa nomination comme premier ministre
-      (selon fr.wiki, citant Tuniscope). L'un des tout rares fonctionnaires tunisiens passés
-      par la française ENA.
+    - "LE marqueur d'élite : la française ENA, promotion « République »
+      (2005–2007). L'ENA elle-même lui a rendu hommage sur son site après sa
+      nomination comme premier ministre (selon fr.wiki, citant Tuniscope). L'un
+      des tout rares fonctionnaires tunisiens passés par la française ENA."
   notes_fr_by: model-reviewed
   notes_ar:
-    - >-
-      مؤشر النخبة: المدرسة الوطنية للإدارة الفرنسية، دفعة «الجمهورية» (2005–2007). أقرّت
-      المدرسة الوطنية للإدارة الفرنسية له على موقعها بعد تعيينه رئيساً للحكومة (وفقاً
-      لويكيبيديا الفرنسية، ناقلاً Tuniscope). أحد الكبار الموظفين التونسيين القلائل الذين
-      مرّوا بالفرع الفرنسي للمدرسة الوطنية للإدارة.
+    - "مؤشر النخبة: المدرسة الوطنية للإدارة الفرنسية، دفعة «الجمهورية»
+      (2005–2007). أقرّت المدرسة الوطنية للإدارة الفرنسية له على موقعها بعد
+      تعيينه رئيساً للحكومة (وفقاً لويكيبيديا الفرنسية، ناقلاً Tuniscope). أحد
+      الكبار الموظفين التونسيين القلائل الذين مرّوا بالفرع الفرنسي للمدرسة
+      الوطنية للإدارة."
   notes_ar_by: model-reviewed
   confidence: B
-  sources: [fr-wiki-hichem-mechichi]
-  falsifiable_by: "French ENA alumni records / the ENA promotion 'République' listing (2005–2007)."
-
+  sources:
+    - fr-wiki-hichem-mechichi
+  falsifiable_by: French ENA alumni records / the ENA promotion 'République'
+    listing (2005–2007).
 - id: edu-bouden-estp
   person: najla-bouden
   institution: null
-  degree_en: "Engineering degree (diplôme d'ingénieur)"
-  degree_fr: "Diplôme d'ingénieur"
-  degree_ar: >-
-    شهادة مهندس
-  field: civil-engineering
-    Génie civil
-    الهندسة المدنية
-  field_fr: >-
-    Génie civil
+  degree_en: Engineering degree (diplôme d'ingénieur)
+  degree_fr: Diplôme d'ingénieur
+  degree_ar: شهادة مهندس
+  field: civil-engineering Génie civil الهندسة المدنية
+  field_fr: Génie civil
   field_fr_by: model-reviewed
-  field_ar: >-
-    الهندسة المدنية
+  field_ar: الهندسة المدنية
   field_ar_by: model-reviewed
   kind: other
   start: "?"
   end: "1983"
   notes:
-    - "École spéciale des travaux publics, du bâtiment et de l'industrie (ESTP, Paris), class of 1983 (per the IESF directory — Ingénieurs et scientifiques de France, no 278803)."
+    - École spéciale des travaux publics, du bâtiment et de l'industrie (ESTP,
+      Paris), class of 1983 (per the IESF directory — Ingénieurs et
+      scientifiques de France, no 278803).
   notes_fr:
-    - >-
-      École spéciale des travaux publics, du bâtiment et de l'industrie (ESTP, Paris),
-      classe de 1983 (selon le répertoire IESF — Ingénieurs et scientifiques de France, n°
-      278803).
+    - École spéciale des travaux publics, du bâtiment et de l'industrie (ESTP,
+      Paris), classe de 1983 (selon le répertoire IESF — Ingénieurs et
+      scientifiques de France, n° 278803).
   notes_fr_by: model-reviewed
   notes_ar:
-    - >-
-      المدرسة الخاصة للأشغال العامة والبناء والصناعة (ESTP، باريس)، دفعة 1983 (وفقاً لدليل
-      IESF — المهندسون وعلماء فرنسا، رقم 278803).
+    - المدرسة الخاصة للأشغال العامة والبناء والصناعة (ESTP، باريس)، دفعة 1983
+      (وفقاً لدليل IESF — المهندسون وعلماء فرنسا، رقم 278803).
   notes_ar_by: model-reviewed
   confidence: B
-  sources: [fr-wiki-najla-bouden]
-  falsifiable_by: "IESF directory entry (BOUDEN Nejla, no 278803); ESTP alumni records."
-
+  sources:
+    - fr-wiki-najla-bouden
+  falsifiable_by: IESF directory entry (BOUDEN Nejla, no 278803); ESTP alumni records.
 - id: edu-bouden-ensmp-phd
   person: najla-bouden
   institution: null
-  degree_en: "Doctorate in geology"
-  degree_fr: "Doctorat en géologie"
-  degree_ar: >-
-    دكتوراه في الجيولوجيا
+  degree_en: Doctorate in geology
+  degree_fr: Doctorat en géologie
+  degree_ar: دكتوراه في الجيولوجيا
   field: geology
   field_fr: Géologie
   field_fr_by: model-reviewed
@@ -767,22 +753,163 @@
   start: "?"
   end: "1987"
   notes:
-    - "École nationale supérieure des mines de Paris (Mines ParisTech); thesis defended 1987, 'Contribution à l'étude de la fragmentation des massifs rocheux à l'explosif'. Listed in the French national thesis register (theses.fr) and the BnF catalogue — the primary record exists, though this run consulted it only via fr.wiki's citation."
+    - École nationale supérieure des mines de Paris (Mines ParisTech); thesis
+      defended 1987, 'Contribution à l'étude de la fragmentation des massifs
+      rocheux à l'explosif'. Listed in the French national thesis register
+      (theses.fr) and the BnF catalogue — the primary record exists, though this
+      run consulted it only via fr.wiki's citation.
   notes_fr:
-    - >-
-      École nationale supérieure des mines de Paris (Mines ParisTech) ; thèse défendue en
-      1987, « Contribution à l'étude de la fragmentation des massifs rocheux à l'explosif ».
-      Inscrite au registre national des thèses françaises (theses.fr) et au catalogue BnF —
-      l'enregistrement primaire existe, bien que cette passe ne l'ait consulté que via la
-      citation de fr.wiki.
+    - École nationale supérieure des mines de Paris (Mines ParisTech) ; thèse
+      défendue en 1987, « Contribution à l'étude de la fragmentation des massifs
+      rocheux à l'explosif ». Inscrite au registre national des thèses
+      françaises (theses.fr) et au catalogue BnF — l'enregistrement primaire
+      existe, bien que cette passe ne l'ait consulté que via la citation de
+      fr.wiki.
   notes_fr_by: model-reviewed
   notes_ar:
-    - >-
-      المدرسة الوطنية العليا للمناجم باريس (Mines ParisTech)؛ أُيدت الأطروحة عام 1987،
-      «Contribution à l'étude de la fragmentation des massifs rocheux à l'explosif». مسجلة
-      في السجل الوطني الفرنسي للأطروحات (theses.fr) وكتالوج BnF — السجل الأولي موجود، على
-      الرغم من أن هذه الجولة استشارته فقط من خلال اقتباس ويكيبيديا الفرنسية.
+    - المدرسة الوطنية العليا للمناجم باريس (Mines ParisTech)؛ أُيدت الأطروحة عام
+      1987، «Contribution à l'étude de la fragmentation des massifs rocheux à
+      l'explosif». مسجلة في السجل الوطني الفرنسي للأطروحات (theses.fr) وكتالوج
+      BnF — السجل الأولي موجود، على الرغم من أن هذه الجولة استشارته فقط من خلال
+      اقتباس ويكيبيديا الفرنسية.
   notes_ar_by: model-reviewed
   confidence: B
-  sources: [fr-wiki-najla-bouden]
-  falsifiable_by: "theses.fr / BnF catalogue record for 'Bouden-Romdhane, Nejla', 1987."
+  sources:
+    - fr-wiki-najla-bouden
+  falsifiable_by: theses.fr / BnF catalogue record for 'Bouden-Romdhane, Nejla', 1987.
+- id: edu-nouri-doctorat-paris2-ifp-1987
+  person: fethi-zouhair-nouri
+  institution: null
+  degree_en: Doctorat en Sciences économiques — Analyse des contrats pétroliers
+  degree_fr: Doctorat en Sciences économiques — Analyse des contrats pétroliers
+  degree_ar: دكتوراه في العلوم الاقتصادية — تحليل العقود البترولية
+  field: Analysis of petroleum contracts
+  field_fr: Analyse des contrats pétroliers
+  field_fr_by: human
+  field_ar: تحليل العقود البترولية
+  field_ar_by: machine
+  kind: phd
+  end: "1987"
+  confidence: C
+  basis: reported
+  attributed_to: Leaders (35646/35647, 15 Feb 2024)
+  sources:
+    - leaders-nouri-35646
+    - leaders-nouri-35647
+    - bct-cv-nouri-fr
+    - le-quotidien-nouri-2024-02-15
+  notes:
+    - "Leaders 35646: 'Doctorat en Sciences économiques, Université Paris 2 et
+      IFP, thèse sur l'analyse des contrats pétroliers (1987)'; Leaders 35647
+      tabular Diplômes; Le Quotidien 2024-02-15 corroborates. BCT CV PDF not
+      human-extracted inline — keep C until verified, then upgrade to B/A with
+      bct-cv-nouri-fr as tier1."
+  notes_fr:
+    - "Leaders 35646 : 'Doctorat en Sciences économiques, Université Paris 2 et
+      IFP, thèse sur l'analyse des contrats pétroliers (1987)' ; corroboré par
+      Le Quotidien."
+  notes_fr_by: model-reviewed
+  notes_ar:
+    - "Leaders: دكتوراه علوم اقتصادية باريس 2 والمعهد الفرنسي للبترول 1987 تحليل
+      العقود البترولية."
+  notes_ar_by: model-reviewed
+  falsifiable_by: BCT CV PDF
+    https://www.bct.gov.tn/bct/siteprod/documents/CV_Fethi_Zouhaier_Nouri_fr.pdf
+    — if thesis year/title differs, replace
+- id: edu-nouri-mast-energie-ifp-1984
+  person: fethi-zouhair-nouri
+  institution: null
+  degree_en: Mastère en économie de l'Énergie
+  degree_fr: Mastère en économie de l'Énergie
+  degree_ar: ماجستير في اقتصاد الطاقة
+  field: économie de l'énergie
+  field_fr: Économie de l'énergie
+  field_fr_by: human
+  field_ar: اقتصاد الطاقة
+  field_ar_by: machine
+  kind: masters
+  end: "1984"
+  confidence: C
+  basis: reported
+  attributed_to: Leaders (35646/35647, 15 Feb 2024)
+  sources:
+    - leaders-nouri-35646
+    - leaders-nouri-35647
+    - bct-cv-nouri-fr
+  notes:
+    - "Leaders 35646: 'Mastère économie de l'Énergie (IFP 1983-84)'; Le
+      Quotidien corroborates. Institution IFP Energies Nouvelles — no graph
+      institution yet, so institution null. Keep C until BCT CV human-verified."
+  notes_fr:
+    - "Leaders 35646 : 'Mastère économie de l'Énergie (IFP 1983-84)'."
+  notes_fr_by: human
+  notes_ar:
+    - ماجستير اقتصاد الطاقة (المعهد الفرنسي للبترول 1983-84).
+  notes_ar_by: machine
+  falsifiable_by: BCT CV PDF — if mastère year/label differs, replace
+- id: edu-nouri-mast-industriel-1983
+  person: fethi-zouhair-nouri
+  institution: null
+  degree_en: Mastère en économie industrielle — Finance internationale
+  degree_fr: Mastère en économie industrielle — Finance internationale
+  degree_ar: ماجستير في الاقتصاد الصناعي — المالية الدولية
+  field: économie industrielle, finance internationale
+  field_fr: Économie industrielle, finance internationale
+  field_fr_by: human
+  field_ar: الاقتصاد الصناعي، المالية الدولية
+  field_ar_by: machine
+  kind: masters
+  end: "1983"
+  confidence: C
+  basis: reported
+  attributed_to: Leaders (35646/35647, 15 Feb 2024)
+  sources:
+    - leaders-nouri-35646
+    - leaders-nouri-35647
+    - bct-cv-nouri-fr
+  notes:
+    - "Leaders 35646: 'Mastère économie industrielle Finance internationale
+      (1982-83)'; corroborated by Le Quotidien. Keep C until BCT CV verified."
+  notes_fr:
+    - "Leaders 35646 : 'Mastère économie industrielle Finance internationale
+      (1982-83)'."
+  notes_fr_by: human
+  notes_ar:
+    - ماجستير اقتصاد صناعي مالية دولية 1982-83.
+  notes_ar_by: machine
+  falsifiable_by: BCT CV PDF — if wording differs, replace
+- id: edu-nouri-maitrise-fseg-1987
+  person: fethi-zouhair-nouri
+  institution: null
+  degree_en: Maîtrise en Sciences économiques — Planification (FSEG Tunis)
+  degree_fr: Maîtrise en Sciences économiques — Planification (FSEG Tunis)
+  degree_ar: أستاذية في العلوم الاقتصادية — تخطيط (كلية العلوم الاقتصادية والتصرف بتونس)
+  field: planification
+  field_fr: Planification
+  field_fr_by: human
+  field_ar: التخطيط
+  field_ar_by: machine
+  kind: licence
+  end: "1987"
+  confidence: C
+  basis: reported
+  attributed_to: Leaders (35646/35647, 15 Feb 2024)
+  sources:
+    - leaders-nouri-35646
+    - leaders-nouri-35647
+    - bct-cv-nouri-fr
+  notes:
+    - "Leaders 35646: 'Maîtrise Sciences économiques: Planification (1984-87)'
+      at FSEG Tunis; African Manager paraphrases as 'Licence en économie
+      spécialité planification de la FSEG de Tunis' — same faculty,
+      licence/maîtrise wording differs by source. Keep C until BCT CV confirms
+      exact degree label. End 1987 inferred from Leaders range 1984-87; start
+      left '?' per rule."
+  notes_fr:
+    - "Leaders 35646 : 'Maîtrise Sciences économiques : Planification (1984-87)'
+      à la FSEG Tunis ; African Manager dit 'Licence'."
+  notes_fr_by: human
+  notes_ar:
+    - أستاذية علوم اقتصادية تخطيط (كلية العلوم الاقتصادية والتصرف بتونس) 1984-87.
+  notes_ar_by: machine
+  falsifiable_by: BCT CV PDF — if degree is Licence vs Maîtrise or years differ, replace

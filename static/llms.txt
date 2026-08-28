@@ -44,7 +44,7 @@ span as a date, or an unsubstantiated claim as a finding, misrepresents the sour
   unresolved contradiction rather than smoothed over.
 - <!--stat:successionGaps-->43<!--/stat--> succession gaps and
   <!--stat:successionOverlaps-->2<!--/stat--> overlapping tenures are detected and
-  published; <!--stat:contradictions-->62<!--/stat--> source contradictions are
+  published; <!--stat:contradictions-->64<!--/stat--> source contradictions are
   recorded unresolved.
 
 ## Common factual traps
