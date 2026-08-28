@@ -1,13 +1,13 @@
 # Timeline — Bot farm / fake accounts 2016–2026
 events:
-  - id: T001
-    date: "2019-05-16"
+  - id: T013
+    date: "2019-01-31"
     end_date: null
     description:
-      en: "Meta removes Archimedes Group network: 265 assets globally including Tunisia (65 accounts / 161 Pages / 23 Groups / 12 events / 4 IG)"
-    source: fb-cib-israel-2019-05-16
+      en: "Meta removes Iran network: 783 assets globally including Tunisia (262 Pages / 356 accounts / 3 Groups / 162 IG = 783) — global, Tunisia slice = ?"
+    source: fb-cib-iran-2019-01-31
     type: platform_enforcement
-    section: S02
+    section: S03
 
   - id: T002
     date: "2019-05-15"
@@ -16,6 +16,15 @@ events:
       en: "ATIDE/DRI monitoring window: 38.5% of political messages from unaffiliated entertainment/satirical Pages (page network)"
     source: dri-atide-tunisia-social-media-2019-09-11
     type: measurement
+    section: S02
+
+  - id: T001
+    date: "2019-05-16"
+    end_date: null
+    description:
+      en: "Meta removes Archimedes Group network: 265 assets globally including Tunisia (65 accounts / 161 Pages / 23 Groups / 12 events / 4 IG)"
+    source: fb-cib-israel-2019-05-16
+    type: platform_enforcement
     section: S02
 
   - id: T003
@@ -34,7 +43,7 @@ events:
       en: "Fake News Checking page launches (ex-@360_tn) — later part of UReputation infrastructure per DFRLab"
     source: dfrlab-operation-carthage-2020-06-05
     type: infrastructure
-    section: S03
+    section: S04
 
   - id: T005
     date: "2019-09-15"
@@ -45,6 +54,24 @@ events:
     type: election
     section: S02
 
+  - id: T014
+    date: "2019-10-03"
+    end_date: null
+    description:
+      en: "Meta removes Egypt/El Fagr network: 251 assets globally including Tunisia (163 accounts / 51 Pages / 33 Groups / 4 IG = 251) — global, Tunisia is 1 of 10 foci, Tunisia slice = ?"
+    source: fb-cib-egypt-2019-10-03
+    type: platform_enforcement
+    section: S03
+
+  - id: T015
+    date: "2020-05-05"
+    end_date: null
+    description:
+      en: "Meta April 2020 CIB Report (published 5 May 2020): Iran network 540 assets globally including Tunisia (118 Pages / 389 accounts / 27 Groups / 6 IG = 540) — linked to IRIB, Tunisia among ~21 countries, Tunisia slice = ?"
+    source: fb-cib-iran-2020-04-05
+    type: platform_enforcement
+    section: S03
+
   - id: T006
     date: "2020-05-29"
     end_date: "2020-05-30"
@@ -52,7 +79,7 @@ events:
       en: "Up to 60 Tunisian accounts/pages (journalists/artists: Radyoon since 2012) deactivated without warning — collateral window"
     source: article19-tunisia-accounts-2020-06-15
     type: incident
-    section: S04
+    section: S05
 
   - id: T007
     date: "2020-06-05"
@@ -60,6 +87,15 @@ events:
     description:
       en: "Operation Carthage disclosed: Facebook removes 993 Tunisia-origin assets (446 Pages / 182 accounts / 96 Groups / 60 events / 209 IG) linked to UReputation; DFRLab publishes 30-page investigation"
     source: fb-cib-may2020-detailed-pdf
+    type: platform_enforcement
+    section: S04
+
+  - id: T016
+    date: "2020-11-05"
+    end_date: null
+    description:
+      en: "Meta October 2020 CIB Report (published 5 Nov 2020, covering October enforcement): Muslim Brotherhood network 58 assets globally including Tunisia (31 accounts / 25 Pages / 2 IG = 58) — operated Egypt/Turkey/Morocco, targeted 6 countries including Tunisia, Tunisia slice = ?"
+    source: fb-cib-oct2020-muslim-brotherhood-2020-11-05
     type: platform_enforcement
     section: S03
 
@@ -70,7 +106,7 @@ events:
       en: "President Saied invokes Article 80, dismisses government and freezes parliament"
     source: aljazeera-tunisia-manipulation-2021-07-28
     type: political
-    section: S05
+    section: S06
 
   - id: T009
     date: "2021-07-28"
@@ -79,7 +115,7 @@ events:
       en: "Al Jazeera / Marc Owen Jones publishes hashtag analysis: 12k tweets from 6.8k accounts, Gulf-centric amplification, Fairuz sock-puppet >200 RT/5 min"
     source: aljazeera-tunisia-manipulation-2021-07-28
     type: measurement
-    section: S05
+    section: S06
 
   - id: T010
     date: "2022-07-25"
@@ -88,7 +124,7 @@ events:
       en: "Constitutional referendum adopts new constitution (context for narrowed political field)"
     source: decree54-dcaf-2022-09-13
     type: political
-    section: S06
+    section: S07
 
   - id: T011
     date: "2022-09-13"
@@ -97,7 +133,7 @@ events:
       en: "Decree Law 54 criminalises spreading false news/rumours via information systems (Art.24: 5 years + 50,000 TND) — no bot count"
     source: decree54-dcaf-2022-09-13
     type: regulation
-    section: S06
+    section: S07
 
   - id: T012
     date: "2024-10-06"
@@ -106,4 +142,4 @@ events:
       en: "Presidential election — no Tier 1–2 bot-farm enumeration published for this window (Digital Action / Arab Facts Hub describe networks qualitatively only)"
     source: digitalaction-tunisia-briefing-2024-10-22
     type: election
-    section: S06
+    section: S07
