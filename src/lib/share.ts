@@ -42,13 +42,10 @@ export function canonicalShareUrl(
 ): string {
 	if (typeof window === 'undefined') return '';
 	const origin = location.origin;
-	const base = `${origin}/network`;
-	const u = new URL(base);
-	if (kind === 'entity') u.searchParams.set('id', id);
-	else if (kind === 'relationship') u.searchParams.set('rel', id);
-	else if (kind === 'flow') u.searchParams.set('flow', id);
-	else if (kind === 'agreement') u.searchParams.set('agreement', id);
-	return u.href;
+	// Share URLs are the crawler targets with proper OG (see /share/[kind]/[id]).
+	// Humans are redirected from there to /network via meta refresh + JS.
+	const path = kind === 'entity' ? 'entity' : kind === 'relationship' ? 'relationship' : kind;
+	return `${origin}/share/${path}/${encodeURIComponent(id)}`;
 }
 
 export function buildFlowId(kind: string, year: number, iso2: string): string {
