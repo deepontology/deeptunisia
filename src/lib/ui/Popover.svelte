@@ -27,6 +27,15 @@
 
 	let panel = $state<HTMLDivElement | null>(null);
 
+	function portal(node: HTMLDivElement) {
+		document.body.appendChild(node);
+		return {
+			destroy() {
+				if (node.parentNode) node.parentNode.removeChild(node);
+			}
+		};
+	}
+
 	/**
 	 * Move focus into the panel when it opens so keyboard and screen-reader users
 	 * land on the content rather than continuing from the trigger into the page
@@ -50,7 +59,7 @@
 
 {#if open}
 	<!-- svelte-ignore a11y_click_events_have_key_events -->
-	<div class="scrim" role="presentation" onclick={onclose}></div>
+	<div class="scrim" role="presentation" onclick={onclose} use:portal></div>
 	<!--
 		role="dialog" rather than "group": the panel takes focus, handles Escape and
 		is dismissed by the scrim, which is dialog behaviour. aria-modal is false
@@ -60,6 +69,7 @@
 	<div
 		class="pop a-{align}"
 		bind:this={panel}
+		use:portal
 		tabindex="-1"
 		role="dialog"
 		aria-modal="false"
@@ -79,20 +89,26 @@
 	}
 
 	.pop {
-		position: absolute;
+		position: fixed;
 		z-index: 91;
-		top: calc(100% + 6px);
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: min(360px, calc(100vw - 32px));
+		max-height: min(70vh, 600px);
+		overflow-y: auto;
+		overscroll-behavior: contain;
 		background: var(--surface-overlay);
 		border: 1px solid var(--border-default);
 		border-radius: var(--r-lg);
 		box-shadow: var(--elev-3);
 		animation: rise-in var(--dur-fast) var(--ease-out);
 	}
-	.a-end {
-		inset-inline-end: 0;
-	}
+	.a-end,
 	.a-start {
-		inset-inline-start: 0;
+		/* centered fixed now escapes overflow containers; alignment is no-op */
+		inset-inline-end: auto;
+		inset-inline-start: auto;
 	}
 
 	/* Only the sheet form needs a drag handle; hidden until then. */
