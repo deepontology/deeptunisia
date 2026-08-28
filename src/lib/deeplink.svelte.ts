@@ -33,7 +33,7 @@ import { page } from '$app/state';
 import { replaceState } from '$app/navigation';
 import { browser } from '$app/environment';
 import { app } from './state.svelte';
-import { personById, institutionById } from './model';
+import { personById, institutionById, relationshipById } from './model';
 
 /**
  * Routes whose selection is entity selection, and that consume `?id=`.
@@ -53,6 +53,19 @@ export function consumesEntityLink(pathname: string): boolean {
 /** True when the id names a real person or institution in the graph. */
 export function validEntity(id: string): boolean {
 	return personById.has(id) || institutionById.has(id);
+}
+
+/** True when the id names a relationship in the graph (or a flow synthetic). */
+export function validRelationship(id: string): boolean {
+	if (relationshipById.has(id)) return true;
+	// flows and synthetic membership edges use prefixes; consider them addressable for sharing
+	if (id.startsWith('flow-') || id.startsWith('pos-')) return true;
+	return false;
+}
+
+export function validFlowId(id: string): boolean {
+	// format: kind:year:iso2  e.g. trade:2024:US
+	return /^(trade|energy|debt):\d{4}:[A-Z0-9-]+$/.test(id);
 }
 
 /**
