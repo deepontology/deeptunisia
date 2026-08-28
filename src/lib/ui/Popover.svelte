@@ -91,8 +91,10 @@
 	.pop {
 		position: fixed;
 		z-index: 91;
+		inset: auto;
 		top: 50%;
 		left: 50%;
+		right: auto;
 		transform: translate(-50%, -50%);
 		width: min(360px, calc(100vw - 32px));
 		max-height: min(70vh, 600px);
@@ -104,13 +106,6 @@
 		box-shadow: var(--elev-3);
 		animation: rise-in var(--dur-fast) var(--ease-out);
 	}
-	.a-end,
-	.a-start {
-		/* centered fixed now escapes overflow containers; alignment is no-op */
-		inset-inline-end: auto;
-		inset-inline-start: auto;
-	}
-
 	/* Only the sheet form needs a drag handle; hidden until then. */
 	.grabber {
 		display: none;
