@@ -1,0 +1,116 @@
+entities:
+  - id: ureputation
+    name:
+      en: UReputation
+    role: primary_subject
+    mention_count: 3
+    description:
+      en: Tunis-based PR / digital communications firm linked by Facebook and DFRLab to Operation Carthage (993 assets, Jun 2020)
+    graph_id: ureputation
+
+  - id: lotfi-bel-hadj
+    name:
+      en: Lotfi Bel Hadj
+    role: identified
+    mention_count: 2
+    description:
+      en: French-Tunisian lobbyist; operator of Digital Big Brother incubator; identified by Nawaat via Registre National des Entreprises and open-source linkage (kaissaied.com WHOIS Avenue Roseleo ≈ Carrer del Rosselló)
+    graph_id: lotfi-bel-hadj
+
+  - id: moez-bhar
+    name:
+      en: Moëz Bhar
+    role: identified
+    mention_count: 2
+    description:
+      en: Co-founder of Fake News Checking (29 Aug 2019, ex-@360_tn); LinkedIn cites ureputation.net since Jun 2014
+
+  - id: nabil-karoui
+    name:
+      en: Nabil Karoui
+    role: beneficiary
+    mention_count: 2
+    description:
+      en: Media owner, Qalb Tounes candidate 2019; named beneficiary of Operation Carthage in Tunisia
+    graph_id: nabil-karoui
+
+  - id: archimedes-group
+    name:
+      en: Archimedes Group
+    role: historical
+    mention_count: 2
+    description:
+      en: Israel-origin influence operation; 265 assets removed May 2019 (Tunisia among 6 African targets)
+
+  - id: dfrlab-atlantic-council
+    name:
+      en: DFRLab / Atlantic Council
+    role: institutional
+    mention_count: 2
+    description:
+      en: Institutional OSINT investigator of Operation Carthage (30-page PDF, Jun 2020)
+
+  - id: facebook-meta-cib
+    name:
+      en: Meta / Facebook CIB team
+    role: institutional
+    mention_count: 3
+    description:
+      en: Platform enforcement author of May 2019 and May 2020 CIB Reports and Detailed PDF
+
+  - id: atide
+    name:
+      en: ATIDE
+    role: institutional
+    mention_count: 2
+    description:
+      en: Tunisian election-observation NGO; co-author with DRI of 15 May–15 Jul 2019 social-media monitoring report (38.5%)
+
+  - id: dri-democracy-reporting
+    name:
+      en: Democracy Reporting International
+    role: institutional
+    mention_count: 2
+    description:
+      en: Co-author with ATIDE of social-media monitoring reports; 38.5% prevalence study
+
+  - id: article-19
+    name:
+      en: ARTICLE 19
+    role: institutional
+    mention_count: 2
+    description:
+      en: Rights NGO reporting collateral deactivation of ~60 Tunisian accounts 29–30 May 2020
+
+  - id: access-now
+    name:
+      en: Access Now
+    role: institutional
+    mention_count: 2
+    description:
+      en: Rights NGO documenting transparency gap and collateral damage around Operation Carthage
+
+  - id: marc-owen-jones
+    name:
+      en: Marc Owen Jones
+    role: researcher
+    mention_count: 2
+    description:
+      en: Researcher of 25–28 Jul 2021 hashtag manipulation (12k tweets / 6.8k accounts, Gulf amplification)
+
+  - id: isie
+    name:
+      en: ISIE
+    role: institutional
+    mention_count: 2
+    description:
+      en: Independent High Authority for Elections; publisher of 2019 and 2024 reports — no bot annex found
+    graph_id: isie
+
+  - id: haica
+    name:
+      en: HAICA
+    role: institutional
+    mention_count: 1
+    description:
+      en: High Independent Authority for Audiovisual Communication; joint ISIE-HAICA decision Aug 2019 (49 articles) — broadcast equity, not bot count

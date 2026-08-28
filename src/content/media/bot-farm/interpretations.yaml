@@ -1,0 +1,33 @@
+# Bot Farm — Interpretive layer
+# House rule: inferences render as panels, never as fact prose. Each names who claims, why, and what would falsify.
+
+interpretations:
+  - id: I01
+    section: S07
+    statement:
+      en: "Counting Pages + Accounts + Groups as one 'bot number' misleads — the platform's own CIB definition separates them, and only 182 of the 993 is the Facebook-account count."
+    attributed_to: "DeepTunisia editors"
+    reasoning:
+      en: "Meta Detailed PDF counts assets: 446 Pages vs 182 accounts are different objects with different creation costs and detectability; the 60 events are not accounts at all. Reading 446 as accounts inflates the farm 2.4×; summing 265 (Archimedes global) + 993 (Carthage) double-counts distinct operations. Evidence: cc-bot-method-cib-vs-osint-vs-sample and live PDF excerpts."
+    falsifier:
+      en: "A primary that states 446 Pages = 446 fake accounts, or that instructs summing CIB totals across operations as a cumulative 2016–2026 bot total."
+
+  - id: I02
+    section: S05
+    statement:
+      en: "Foreign vs domestic are two different harms with different evidence — the 2021 hashtag (Saudi/UAE majority) does not prove a 2020 domestic farm still runs, nor does UReputation's Francophone-Africa targeting prove a domestic Saied army after 2021."
+    attributed_to: "DeepTunisia editors"
+    reasoning:
+      en: "Jones's graph distinguishes a Gulf influencer core (real, high centrality) from a sock-puppet constellation (>200 retweeters of Fairuz, disconnected) — that shape is foreign amplification, not the UReputation enterprise-service infrastructure (>5-year-old sites, WHOIS, subdomains) documented by DFRLab. Different beneficiaries, different address spellings, different windows."
+    falsifier:
+      en: "A linked asset list showing the same 182 Carthage accounts re-emerged in the 2021 hashtag handles, or a Meta/X disclosure tying the two clusters to one operator."
+
+  - id: I03
+    section: S08
+    statement:
+      en: "'No number found' for 2021–2026 is a finding about measurement, not about activity. Absence of enumeration is not evidence that nothing happened online."
+    attributed_to: "DeepTunisia editors"
+    reasoning:
+      en: "Qualitative harassment/doxxing after televised targeting is documented by Arab Center and POMED/Snoussi with tactics and trigger; Digital Action's 2024 scrape found hundreds of pro-Saied accounts without counting bots; UNODC's $200k forensic kit is capability not scale. Measurement gaps are explained by API access limits and archive closures (OII DEMTECH memo; X IO 404; no CrowdTangle for many groups)."
+    falsifier:
+      en: "A standing ISIE/HAICA or platform count for 2021–2026 that the searches missed, or a peer-reviewed scrape that classifies bots vs humans with a threshold and publishes N."

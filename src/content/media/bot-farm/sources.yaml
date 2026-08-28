@@ -1,0 +1,259 @@
+# Bot Farm — Source registry
+# Every claim in evidence.yaml must have a source id here. Ids match data/contrib/bot-farm-*.yaml supplements (live-verified 2026-08-28).
+# Tiers: 1 = gazette/decree/primary · 2 = institutional/platform · 3 = established journalism · 4 = single outlet
+
+sources:
+  # ── Tier 2 — Platform / institutional ────────────────────────────────
+  - id: fb-cib-israel-2019-05-16
+    citation:
+      en: "Meta (Facebook Newsroom), Nathaniel Gleicher — Removing Coordinated Inauthentic Behavior From Israel — 16 May 2019"
+    url: https://about.fb.com/news/2019/05/removing-coordinated-inauthentic-behavior-from-israel/
+    tier: 2
+    date_consulted: 2026-08-28
+    access: live
+    archive_url: https://web.archive.org/web/*/https://about.fb.com/news/2019/05/removing-coordinated-inauthentic-behavior-from-israel/
+
+  - id: fb-cib-may2020-announcement
+    citation:
+      en: "Meta (Facebook Newsroom) — May 2020 Coordinated Inauthentic Behavior Report — Tunisia / UReputation section — 5 Jun 2020"
+    url: https://about.fb.com/news/2020/06/may-cib-report/
+    tier: 2
+    date_consulted: 2026-08-28
+    access: live
+    archive_url: https://web.archive.org/web/*/https://about.fb.com/news/2020/06/may-cib-report/
+
+  - id: fb-cib-may2020-detailed-pdf
+    citation:
+      en: "Meta — May 2020 Detailed CIB Report (PDF) — Tunisia section (446/182/96/60/209, 3.8M/131900/171500, $331k EUR/USD)"
+    url: https://about.fb.com/wp-content/uploads/2020/06/May-2020-Detailed-CIB-Report.pdf
+    tier: 2
+    date_consulted: 2026-08-28
+    access: live
+
+  - id: dfrlab-operation-carthage-2020-06-05
+    citation:
+      en: "DFRLab / Atlantic Council — Operation Carthage: How a Tunisian Company Conducted Influence Operations in African Presidential Elections — 5 Jun 2020 (30 pp)"
+    url: https://www.atlanticcouncil.org/wp-content/uploads/2020/06/operation-carthage-002.pdf
+    tier: 2
+    date_consulted: 2026-08-28
+    access: live
+
+  - id: dfrlab-medium-carthage-2020-06-05
+    citation:
+      en: "DFRLab / Medium — DFRLab uncovers Tunisia-based political influence operation on Facebook — 5 Jun 2020"
+    url: https://medium.com/dfrlab/dfrlab-uncovers-tunisia-based-political-influence-operation-on-facebook-8c4d16b90744
+    tier: 2
+    date_consulted: 2026-08-28
+    access: live
+
+  - id: dfrlab-archimedes-2019-05-17
+    citation:
+      en: "DFRLab / Medium — Inauthentic Israeli Facebook Assets Target the World — 17 May 2019"
+    url: https://medium.com/dfrlab/inauthentic-israeli-facebook-assets-target-the-world-281ad7254264
+    tier: 2
+    date_consulted: 2026-08-28
+    access: live
+
+  - id: meta-threat-reporting-2026-08-28
+    citation:
+      en: "Meta Transparency Center — Threat Reporting index (CIB / Adversarial Threat Reports 2017–2026) — accessed 28 Aug 2026 (index updated 27 Aug 2026)"
+    url: https://transparency.meta.com/metasecurity/threat-reporting
+    tier: 2
+    date_consulted: 2026-08-28
+    access: live
+
+  - id: x-transparency-tunisia-2026-08-28
+    citation:
+      en: "X Transparency — Country report Tunisia (Information + Removal Requests) — accessed 28 Aug 2026"
+    url: https://transparency.x.com/en/reports/countries/tn
+    tier: 2
+    date_consulted: 2026-08-28
+    access: live
+
+  - id: x-io-archive-negative-2026-08-28
+    citation:
+      en: "X Transparency — Information Operations archive (endpoint 404) + public mirrors — negative for Tunisia"
+    url: https://transparency.x.com/en/reports/information-operations.html
+    tier: 2
+    date_consulted: 2026-08-28
+    access: live
+
+  - id: google-tag-negative-2026-08-28
+    citation:
+      en: "Google Threat Analysis Group — websearch negative for Tunisia-specific bulletin 2019–2026"
+    url: https://blog.google/threat-analysis-group/
+    tier: 2
+    date_consulted: 2026-08-28
+    access: live
+
+  - id: unodc-forensic-equipment-2021-03-24
+    citation:
+      en: "UNODC ROMENA — UNODC provides Tunisia with $200k forensic equipment/software to stop cybercrimes — 24 Mar 2021"
+    url: https://www.unodc.org/romena/en/Stories/2021/March/unodc-provides-tunisia-with-200-000-usd-worth-of-forensic-equipment-and-software-to-stop-cybercrimes.html
+    tier: 2
+    date_consulted: 2026-08-28
+    access: live
+
+  - id: dri-atide-tunisia-social-media-2019-09-11
+    citation:
+      en: "ATIDE & Democracy Reporting International — Tunisia Social Media Monitoring Report One (15 May – 15 Jul 2019) — 11 Sep 2019"
+    url: https://democracy-reporting.org/wp-content/uploads/2019/09/20190911_Tunisia_Social_Media_Monitoring_Report_One_ENG_FINAL.pdf
+    tier: 2
+    date_consulted: 2026-08-28
+    access: live
+    archive_url: null
+
+  - id: carter-center-tunisia-2019-final
+    citation:
+      en: "The Carter Center — 2019 Presidential and Parliamentary Elections in Tunisia — Final Report — May 2020"
+    url: https://cartercentee50c07c05.blob.core.windows.net/blobcartercentee50c07c05/wp-content/uploads/2020/05/tunisia-2019-final-report.pdf
+    tier: 2
+    date_consulted: 2026-08-28
+    access: live
+
+  - id: eu-eom-tunisia-2019-final-fr
+    citation:
+      en: "EU EOM Tunisia — Rapport final Tunisie 2019 (Présidentielle + législatives) — Jan 2020 (FR, PDF)"
+    url: https://www.europarl.europa.eu/cmsdata/212454/Tunisia_parliamentary-elections-6-October-2019_EU-EOM_final_report_(FR).pdf
+    tier: 2
+    date_consulted: 2026-08-28
+    access: live
+
+  # ── Tier 1 — Legal ──────────────────────────────────────────────────
+  - id: decree54-dcaf-2022-09-13
+    citation:
+      en: "Décret-loi n°2022-54 du 13 Sep 2022 (JORT n°103, 16 Sep 2022) — mirrored at legislation-securite.tn (DCAF)"
+    url: https://legislation-securite.tn/latest-laws/decret-loi-n-2022-54-du-13-septembre-2022-relatif-a-la-lutte-contre-les-infractions-se-rapportant-aux-systemes-dinformation-et-de-communication/
+    tier: 1
+    date_consulted: 2026-08-28
+    access: live
+
+  - id: isie-reports-list-2026-08-28
+    citation:
+      en: "ISIE — Rapports des élections et du référendum (reports list, HTML captured) — accessed 28 Aug 2026"
+    url: https://www.isie.tn/fr/isie/rapports-des-elections-et-du-referendum/
+    tier: 1
+    date_consulted: 2026-08-28
+    access: live
+
+  # ── Tier 3 — Journalism / research ──────────────────────────────────
+  - id: inkyfada-facebook-israel-2019-06-03
+    citation:
+      en: "Inkyfada — À qui profite le contenu des pages Facebook tunisiennes liées à Israël ? — 3 Jun 2019"
+    url: https://inkyfada.com/fr/2019/06/03/tunisie-facebook-israel/
+    tier: 3
+    date_consulted: 2026-08-28
+    access: live
+
+  - id: nawaat-archimedes-tunisia-2019-05-27
+    citation:
+      en: "Nawaat (Rima Sghaier) — Tunisia targeted with Facebook disinformation campaign by Israel-based company — 27 May 2019"
+    url: https://nawaat.org/2019/05/27/tunisia-targeted-with-facebook-disinformation-campaign-by-israel-based-company/
+    tier: 3
+    date_consulted: 2026-08-28
+    access: live
+
+  - id: nawaat-operation-carthage-2020-06-16
+    citation:
+      en: "Nawaat — Operation Carthage: Nabil Karoui and lobbyist Lotfi Bel Hadj busted by Facebook — 16 Jun 2020"
+    url: https://nawaat.org/2020/06/16/operation-carthage-nabil-karoui-and-lobbyist-lotfi-bel-hadj-busted-by-facebook
+    tier: 3
+    date_consulted: 2026-08-28
+    access: live
+
+  - id: article19-tunisia-accounts-2020-06-15
+    citation:
+      en: "ARTICLE 19 — Tunisia: Confusion over deactivated Facebook accounts — 15 Jun 2020"
+    url: https://www.article19.org/resources/tunisia-confusion-over-deactivated-facebook-accounts/
+    tier: 3
+    date_consulted: 2026-08-28
+    access: live
+
+  - id: accessnow-carthage-transparency-2020-06-12
+    citation:
+      en: "Access Now — Transparency required: is Facebook's effort to clean up Operation Carthage damaging free expression in Tunisia? — 12 Jun 2020"
+    url: https://www.accessnow.org/transparency-required-is-facebooks-effort-to-clean-up-operation-carthage-damaging-free-expression-in-tunisia
+    tier: 3
+    date_consulted: 2026-08-28
+    access: live
+
+  - id: aljazeera-tunisia-manipulation-2021-07-28
+    citation:
+      en: "Al Jazeera (Marc Owen Jones) — Tunisia crisis prompts surge in foreign social media manipulation — 28 Jul 2021"
+    url: https://www.aljazeera.com/news/2021/7/28/tunisia-crisis-prompts-surge-in-foreign-social-media-manipulation
+    tier: 3
+    date_consulted: 2026-08-28
+    access: live
+
+  - id: arabcenter-tunisia-disinformation-2023-07-21
+    citation:
+      en: "Arab Center Washington DC (C. Ian DeHaven) — Disinformation as a Tool of Regime Survival in Tunisia — 21 Jul 2023"
+    url: https://arabcenterdc.org/resource/disinformation-as-a-tool-of-regime-survival-in-tunisia/
+    tier: 3
+    date_consulted: 2026-08-28
+    access: live
+
+  - id: pomed-saied-digital-army-2023-06-15
+    citation:
+      en: "POMED / MEDC (Amine Snoussi via Zachary White) — Expert Q&A: Tunisian President Kaïs Saïed's Digital Army — 15 Jun 2023"
+    url: https://mideastdc.org/publication/expert-qa-tunisian-president-kais-saieds-digital-army
+    tier: 3
+    date_consulted: 2026-08-28
+    access: live
+
+  - id: digitalaction-tunisia-briefing-2024-10-22
+    citation:
+      en: "Digital Action / Mena Media Monitoring — Tunisia country briefing ahead of 6 Oct 2024 presidential election — 22 Oct 2024"
+    url: https://digitalaction.co/wp-content/uploads/2024/12/Tunisia-briefing_22-Oct-2024_.pdf
+    tier: 3
+    date_consulted: 2026-08-28
+    access: live
+
+  - id: arabfactshub-2024-election-facebook-2024
+    citation:
+      en: "Arab Facts Hub — Just Sfax: Mapping hate and disinformation on Facebook around a Tunisian election — 2024"
+    url: https://www.arabifactshub.com/en/researches/details/45609
+    tier: 3
+    date_consulted: 2026-08-28
+    access: live
+
+  - id: globalvoices-tunisia-disinformation-2019-12-09
+    citation:
+      en: "Global Voices (Advox) — Multiple measures failed to control mis- and disinformation in Tunisia's 2019 elections — 9 Dec 2019"
+    url: https://advox.globalvoices.org/2019/12/09/multiple-measures-failed-to-control-mis-and-disinformation-in-tunisias-2019-elections/
+    tier: 3
+    date_consulted: 2026-08-28
+    access: live
+
+  # ── Supporting context ─────────────────────────────────────────────
+  - id: oii-demtech-tunisia-monitoring-memo-2020-03-23
+    citation:
+      en: "Oxford Internet Institute DEMTECH (Mona Elswah & Philip Howard) — Challenges of Monitoring Social Media in the Arab World: Case of 2019 Tunisian Elections — 23 Mar 2020"
+    url: https://demtech.oii.ox.ac.uk/research/posts/the-challenges-of-monitoring-social-media-in-the-arab-world-the-case-of-the-2019-tunisian-elections/
+    tier: 2
+    date_consulted: 2026-08-28
+    access: live
+
+  - id: x-transparency-tunisia-2025
+    citation:
+      en: "X Transparency — Country report Tunisia (prior outbox anchor)"
+    url: https://transparency.x.com/en/reports/countries/tn
+    tier: 2
+    date_consulted: 2026-08-28
+    access: live
+
+  - id: meta-transparency-threat-index
+    citation:
+      en: "Meta Transparency Center — Threat Reporting index (prior outbox anchor)"
+    url: https://transparency.meta.com/metasecurity/threat-reporting
+    tier: 2
+    date_consulted: 2026-08-28
+    access: live
+
+  - id: jort-decree54-2022-09-13
+    citation:
+      en: "JORT — Décret-loi n°2022-54 du 13 Sep 2022 (legislation-securite.tn/law/105306 — prior anchor, mirror is decree54-dcaf)"
+    url: https://legislation-securite.tn/law/105306
+    tier: 1
+    date_consulted: 2026-08-28
+    access: live
