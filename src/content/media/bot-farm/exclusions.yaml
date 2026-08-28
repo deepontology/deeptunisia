@@ -1,0 +1,51 @@
+# Bot Farm — Exclusions
+# Claims considered and deliberately excluded, with reasons.
+
+exclusions:
+  - claim: "AI-generated accounts (post-2023) operate a Tunisian farm of stated size"
+    reason: "No Tunisia-specific measurement sourced — speculation without denominator or detection method."
+    grade: unsubstantiated
+    sources: ["Uncited"]
+    category: weak-evidence
+
+  - claim: "Election outcomes changed by counted fakes (causal claim)"
+    reason: "No study in the reviewed set quantifies vote effect — out of scope for this counting piece."
+    grade: unsubstantiated
+    sources: ["Uncited"]
+    category: off-thread
+
+  - claim: "Every imported influence operation in Tunisia (e.g., IRA, unrelated states) maps to this counting"
+    reason: "Narrow-casting to Tunisia-origin and Tunisia-target only — other operators read as import, not domestic."
+    grade: reported
+    sources: [meta-threat-reporting-2026-08-28]
+    category: scope-confusion
+
+  - claim: "265 = Tunisia (Archimedes) — single-number retelling"
+    reason: "Kept in world_claims as rejected dispute, not as a timeline entry — global-including-Tunisia misread; Tunisia slice is ?"
+    grade: unsubstantiated
+    sources: [fb-cib-israel-2019-05-16]
+    category: single-source
+
+  - claim: "38.5% = bot share — converting message prevalence to account total"
+    reason: "Sample share in 15 May–15 Jul 2019, not enumeration — category error to inflate to farm size."
+    grade: reported
+    sources: [dri-atide-tunisia-social-media-2019-09-11]
+    category: scope-confusion
+
+  - claim: "6,800 = Tunisian bots (2021 hashtag)"
+    reason: "Majority Saudi/UAE location per Al Jazeera/Jones — foreign amplification, not domestic farm; kept as rejected dispute."
+    grade: unsubstantiated
+    sources: [aljazeera-tunisia-manipulation-2021-07-28]
+    category: single-source
+
+  - claim: "Radyoon and other 2020 deactivated pages were proven UReputation fakes"
+    reason: "Specific denial (Radyoon since 2012) documented; ~20 restored — dispute kept open, not closed as fact."
+    grade: reported
+    sources: [article19-tunisia-accounts-2020-06-15]
+    category: single-source
+
+  - claim: "Decree Law 54 application decrees publish bot metrics"
+    reason: "Searched and not found — implementing/orders would fix retention not counts; headline-level only if found outside JORT."
+    grade: unsubstantiated
+    sources: [decree54-implementing-negative-2026-08-28]
+    category: headline-only

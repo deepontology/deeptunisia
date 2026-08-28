@@ -1,0 +1,271 @@
+# Platform transparency & legal track — bot-farm 2016-2026 supplement
+# Mission: Exhaustive negatives + legal verification for window 2016-2026.
+#   Re-check Meta Threat Reporting index (CIB 2018-2026 + quarterly Adversarial Threat Reports),
+#   X (Twitter) Transparency country/global reports, Google TAG bulletins, ISIE reports list (2019+2024),
+#   ISIE-HAICA joint decision scope, Carter Center/EU EOM disinfo annexes, Decree Law 54 text,
+#   and implementing decrees 2023-2024. Document absence explicitly.
+# Sources used (publisher, URL, tier):
+#   - Meta Transparency Center — https://transparency.meta.com/metasecurity/threat-reporting — Tier 2 (platform/institutional) — live webfetch 2026-08-28 (body captured, updated Aug 27 2026)
+#   - X Transparency — https://transparency.x.com/en/reports/countries/tn — Tier 2 — live webfetch 2026-08-28 (empty body, country page is info-requests/removal-requests only) + websearch site:transparency.x.com Tunisia
+#   - X Transparency global — https://transparency.x.com/en/reports/global-reports/2025-transparency-report — Tier 2 — webfetch 2026-08-28 empty (no Tunisia bot count)
+#   - Google Threat Analysis Group — https://blog.google/threat-analysis-group/ + websearch "Google TAG Tunisia" / "Google threat analysis group Tunisia 2019 2020" — Tier 2 — 2026-08-28 no Tunisia bulletin found
+#   - ISIE Rapports — https://www.isie.tn/fr/isie/rapports-des-elections-et-du-referendum/ — Tier 1 — live webfetch 2026-08-28 (HTML list captured; PDFs are Arabic originals, not fetched to text)
+#   - ISIE-HAICA 2019 joint decision context — via Global Voices 2019-12-09 + Carter Center 2020 + EU EOM 2019 FR final report — Tier 2/3 — websearch + webfetch 2026-08-28
+#   - legislation-securite.tn (DCAF) — https://legislation-securite.tn/latest-laws/decret-loi-n-2022-54-du-13-septembre-2022-relatif-a-la-lutte-contre-les-infractions-se-rapportant-aux-systemes-dinformation-et-de-communication/ — Tier 1 (gazette mirror) — live webfetch 2026-08-28 (full text Art.1-38 captured) ; https://legislation-securite.tn/law/105306 returned 404 on 2026-08-28, alternative DCAF latest-laws URL used
+#   - Websearch "Decree Law 54 Tunisia implementing decree 2023 2024" — Tier 3 — 2026-08-28 no implementing decree found (only commentary/analysis)
+#   - Websearch "X information operations Tunisia" / "X IO dataset Tunisia" — Tier 3 — 2026-08-28 no Tunisia IO archive entry found (only Meta May 2019 Archimedes + May 2020 UReputation)
+#   - Prior outbox anchors reused: meta-transparency-threat-index, x-transparency-tunisia-2025, isie-reports-list-2019, jort-decree54-2022-09-13
+# Failure vocabulary (must not be collapsed):
+#   - "no published enumeration is a documented negative, not evidence of absence"
+#   - "sponsored pages ≠ bot count — Art.143 sanctions are spending/silence sanctions, not a bot enumeration"
+#   - "global network includes Tunisia is not a Tunisia count"
+#   - "meta index lists titles only — Tunisia absent from title means no Tunisia-origin CIB entry, verifiable by reading index"
+#   - "Art.24 false news/rumours criminalisation contains no bot number"
+#   - "implementing decree search negative is absence until proven by JORT publication"
+# Candidates are proposals, not graph data. Outbox only — no canonical data, UI, or script changed.
+
+sources:
+  - id: meta-threat-reporting-2026-08-28
+    title: Meta Transparency Center — Threat Reporting index (CIB / Adversarial Threat Reports 2017–2026)
+    publisher: Meta Transparency Center
+    url: https://transparency.meta.com/metasecurity/threat-reporting
+    tier: 2
+    lang: en
+    date: 2026-08-27
+    accessed: 2026-08-28
+    excerpt: "Index updated Aug 27 2026 listing all CIB / Adversarial Threat Reports by quarter. Titles for 2018–2026 contain no 'Tunisia' origin entry beyond those separately documented (May 2019 Archimedes — Tunisia as one of six African targets, not origin; May 2020 UReputation — origin Tunisia, reported in prior outbox). Quarterly Adversarial Threat Reports checked from Q2 2022 through H2 2026 — none lists Tunisia origin in index title. Country-slice verification requires opening each report PDF, but index title absence is the documented negative basis."
+  - id: x-transparency-tunisia-2026-08-28
+    title: X Transparency — Country report Tunisia
+    publisher: X Corp.
+    url: https://transparency.x.com/en/reports/countries/tn
+    tier: 2
+    lang: en
+    accessed: 2026-08-28
+    excerpt: "Page covers only Information Requests (routine/emergency) + Removal Requests (legal demands) for Tunisia. Body fetched 2026-08-28 is navigation only; websearch site:transparency.x.com Tunisia confirms only info/preservation requests. No section enumerates bot/fake-account takedown volume or Information Operations (IO) dataset for Tunisia."
+  - id: x-transparency-global-2025-2026-08-28
+    title: X Transparency — Global reports / 2025 Transparency Report (also checks IO archive)
+    publisher: X Corp. / transparency.x.com
+    url: https://transparency.x.com/en/reports/global-reports/2025-transparency-report
+    tier: 2
+    lang: en
+    accessed: 2026-08-28
+    excerpt: "Global/DSA Transparency Report fetch 2026-08-28 returned empty body; websearch 'site:transparency.x.com Tunisia' + 'X information operations Tunisia' + 'X IO archive Tunisia' surfaced no Tunisia-specific IO dataset or bot-farm count. X's legacy information-operations.html endpoint returns 404 (verified 2026-08-28). AccessNow Transparency Reporting Index notes X removed all pre-September-2024 reports and now provides significantly less detail — consistent with absence of Tunisia IO enumeration."
+  - id: google-tag-negative-2026-08-28
+    title: Google Threat Analysis Group — websearch negative for Tunisia-specific bulletin 2019-2020 and window 2016-2026
+    publisher: Google (blog.google/threat-analysis-group) via websearch
+    url: https://blog.google/threat-analysis-group/
+    tier: 2
+    lang: en
+    accessed: 2026-08-28
+    excerpt: "Websearch 'Google TAG Tunisia' + 'Google threat analysis group Tunisia 2019 2020' on 2026-08-28 returned only generic TAG Bulletin quarterly indexes (Q1 2025, Q4 2025 etc.) with coordinated influence operation campaign terminations — none lists Tunisia in title/snippet. No Tunisia-specific TAG bulletin surfaced; blog.google TAG index fetch captured Android security article, not bulletin list, indicating site search needed. Documented negative: no Tunisia TAG bulletin found in 2018–2026 window."
+  - id: isie-reports-list-2026-08-28
+    title: ISIE — Rapports des élections et du référendum (reports list)
+    publisher: ISIE (Instance Supérieure Indépendante pour les Élections)
+    url: https://www.isie.tn/fr/isie/rapports-des-elections-et-du-referendum/
+    tier: 1
+    lang: fr
+    accessed: 2026-08-28
+    excerpt: "HTML list captured 2026-08-28: lists 2019 presidential+legislative joint report (PDF Arabic), 2024 presidential report (PDF Arabic), 2022 legislative report etc. No report entry titled 'bot' or 'réseau' or 'comptes fictifs'. 2019 and 2024 PDFs are linked as Arabic originals — not text-fetched this pass (would require PDF parsing). Earlier outbox already documented Nabil Baffoun Oct 7 2019 statement that sponsored pages fall within Art.143; ISIE announced Oct 9 2019 partial vote cancellation (207 votes) for Aich Tounsi in France-2 for breach of electoral silence via Facebook ad. That is a spending/silence sanction, not a bot enumeration."
+  - id: carter-center-tunisia-2019-final
+    title: 2019 Presidential and Parliamentary Elections in Tunisia — Final Report
+    publisher: The Carter Center
+    url: https://cartercentee50c07c05.blob.core.windows.net/blobcartercentee50c07c05/wp-content/uploads/2020/05/tunisia-2019-final-report.pdf
+    tier: 2
+    lang: en
+    date: 2020-05
+    accessed: 2026-08-28
+    excerpt: "HAICA responsible for audiovisual during electoral period; ISIE-HAICA joint decision of 21 Aug 2019 set audiovisual rules. ISIE decision 2019-22 dated 22 Aug requires candidates to submit list of websites/electronic means/social media accounts. Social media monitoring section notes absence of specific legal framework for online media; most candidates used paid Facebook ads (up to dozen/day); Carter observed paid ads on verified pages + pages with unclear affiliations in breach of silence period. No annex enumerates bot/fake-account counts — finding is about sponsored ads and monitoring gaps, not bot scale."
+  - id: eu-eom-tunisia-2019-final-fr
+    title: Mission d'observation électorale UE — Tunisie 2019 — Rapport final (Présidentielle 15 Sep/13 Oct + législatives 6 Oct 2019)
+    publisher: EU EOM Tunisia / European Parliament
+    url: https://www.europarl.europa.eu/cmsdata/212454/Tunisia_parliamentary-elections-6-October-2019_EU-EOM_final_report_(FR).pdf
+    tier: 2
+    lang: fr
+    date: 2020-01
+    accessed: 2026-08-28
+    excerpt: "ISIE applied Article 143 in two legislative cases: partially annulled results of Aich Tounsi in France 2 constituency, withdrawing 207 votes for Facebook advertising campaign detected by ISIE social-media monitoring — political advertising prohibited. Seat shifted to Courant Démocratique. Report recommends assessing feasibility of Art.143 application (objectivity, transparency of evidence, respect for voter will). Wider disinfo context (networks, rumours) discussed qualitatively; no annex enumerates a bot-farm count."
+  - id: globalvoices-tunisia-disinformation-2019-12-09
+    title: Multiple measures failed to control mis- and disinformation in Tunisia's 2019 elections
+    publisher: Global Voices (Advox)
+    url: https://advox.globalvoices.org/2019/12/09/multiple-measures-failed-to-control-mis-and-disinformation-in-tunisias-2019-elections/
+    tier: 3
+    lang: en
+    date: 2019-12-09
+    accessed: 2026-08-28
+    excerpt: "Nabil Baffoun (ISIE president) confirmed Oct 7 2019 that sponsored pages fall within scope of Article 143 (sanctions via ISIE + Court of Auditors for spending/silence breaches). Joint ISIE-HAICA decision regulates broadcast equity but not a bot annex. No ISIE-published bot count — documented negative on enumeration."
+  - id: decree54-dcaf-2022-09-13
+    title: Décret-loi n° 2022-54 du 13 septembre 2022 relatif à la lutte contre les infractions se rapportant aux systèmes d'information et de communication — full text (DCAF legislation-securite.tn mirror)
+    publisher: DCAF / Présidence — via legislation-securite.tn (JORT n°103 16 Sep 2022)
+    url: https://legislation-securite.tn/latest-laws/decret-loi-n-2022-54-du-13-septembre-2022-relatif-a-la-lutte-contre-les-infractions-se-rapportant-aux-systemes-dinformation-et-de-communication/
+    tier: 1
+    lang: fr
+    date: 2022-09-13
+    accessed: 2026-08-28
+    excerpt: "Art.1 purpose combatting offences relating to info/communication systems + collecting electronic evidence. Art.24 (Sous-section 3 — Rumeurs et fausses nouvelles) punishes 5 years + 50,000 TND for knowingly using info systems to produce/spread/diffuse false news/data/rumours/forged documents to harm others/public security/national defence or spread terror; para 2 same for defamation/reputation/financial-moral harm/hate-speech; penalties doubled if target is public official/assimilé. Art.6 retention ≥2 years. No article enumerates bots, fake accounts, or a farm size — text is offence definition, not enumeration. Alternative JORT URL https://legislation-securite.tn/law/105306 returned 404 on 2026-08-28; DCAF mirror used and captured full Arts 1-38."
+  - id: decree54-implementing-negative-2026-08-28
+    title: Websearch negative — Decree Law 54 implementing / application decrees 2023-2024
+    publisher: Websearch aggregate (no JORT decree found)
+    url: https://legislation-securite.tn/
+    tier: 3
+    lang: fr
+    accessed: 2026-08-28
+    excerpt: "Websearch 'Decree Law 54 Tunisia implementing decree 2023 2024' 2026-08-28 surfaced only commentary/analysis (CPR, ICJ briefing, HRW, Amnesty: Article 24 vagueness, criticism, enforcement cases like Chaima Issa etc.) and not a JORT-published application decree fixing retention details under Art.6 or procedural implementing orders. No implementing decree publishing bot metrics — negative documented."
+  - id: x-io-archive-negative-2026-08-28
+    title: X (ex-Twitter) Information Operations archive — negative for Tunisia
+    publisher: X Transparency / public IO archive (github MassMove/TwitterStateBackedOps mirror)
+    url: https://transparency.x.com/en/reports/information-operations.html
+    tier: 2
+    lang: en
+    accessed: 2026-08-28
+    excerpt: "Endpoint /en/reports/information-operations.html returned 404 on 2026-08-28 (verified). Websearch 'X information operations Tunisia' + 'X IO dataset Tunisia' + Zenodo Labeled Datasets (26 campaigns: Armenia, Bangladesh, Catalonia, China, Cuba, Ecuador, Egypt_UAE, Ghana_Nigeria, Iran, Qatar, Russia, Spain, Thailand, UAE, Venezuela — no Tunisia campaign listed) confirm no Tunisia IO archive entry found for 2016-2026. Prior outbox already notes X country report Tunisia contains no bot enumeration."
+
+world_claims:
+  # Meta transparency — exhaustive negative (platform)
+  - id: cc-meta-threat-index-no-additional-tunisia-2018-2026-verify-2026-08-28
+    entity: null
+    claim: >-
+      Meta's public Threat Reporting index (CIB 2018–2026 + quarterly Adversarial Threat Reports Q2 2022–H2 2026) lists no additional Tunisia-origin coordinated inauthentic behavior takedown beyond the two already documented for 2018–2026: May 2019 Archimedes (origin Israel, Tunisia among six African targets, not origin Tunisia) and May 2020 UReputation (origin Tunisia, 446 Pages / 182 FB accounts / 96 Groups / 60 events / 209 IG accounts). The index titles contain no other 'Tunisia' entry in this window.
+    assessment: >-
+      Documented negative on disclosure: live webfetch of https://transparency.meta.com/metasecurity/threat-reporting on 2026-08-28 captured full index updated Aug 27 2026. Manual title scan shows no Tunisia-origin entry besides the two anchors whose numbers are quoted in prior outbox (265 global for Archimedes, 993 total for UReputation). Quarterly Adversarial Threat Report titles (Q3 2022, Q4 2022, Q1–Q3 2023, Q4 2023, Q1–Q3 2024, Q4 2024, H1+H2 2026) likewise show no Tunisia heading. This is absence of enumeration in platform disclosure, not proof of zero activity. Falsifiable by Meta publishing a new CIB entry with 'Tunisia' origin or by opening a quarterly PDF that embeds a Tunisia network not reflected in its title.
+    confidence: B
+    basis: documented
+    sources:
+      - meta-threat-reporting-2026-08-28
+    reasoning: "Searched index X (full title list 2017–2026), found no entry beyond the two dated anchors; therefore no additional Tunisia-origin CIB enumeration is published in this source for window 2018–2026."
+    falsifiable_by: "A Meta CIB/Adversarial Threat Report dated 2018-2026 with Tunisia as origin (or Tunisia slice table) that is absent from current index scan."
+
+  # X transparency — exhaustive negative (platform)
+  - id: cc-x-transparency-no-tunisia-bot-enumeration-2016-2026-verify-2026-08-28
+    entity: null
+    claim: >-
+      X (ex-Twitter) Transparency reports for Tunisia — country page (tn) and global/DSA report 2025 — publish no enumeration of bot/fake-account takedown volume or Information Operations dataset for Tunisia for 2016–2026. The country page only reports government Information Requests + Removal Requests / legal demands; the IO archive endpoint returns 404 and public IO mirrors (MassMove archive, Zenodo 26-campaign labeled datasets) list no Tunisia campaign.
+    assessment: >-
+      Documented negative after systematic search: webfetch country page 2026-08-28 (empty body but consistent with info/preservation requests framing) + webfetch global 2025 report (empty) + websearch site:transparency.x.com Tunisia (only info-requests hits) + IO archive websearch (no Tunisia). AccessNow Transparency Reporting Index (Sep 2024) independently notes X removed all pre-2024 reports and now provides significantly less detail — corroborates scarcity. Keep as B (platform disclosure state) not ground truth.
+    confidence: B
+    basis: documented
+    sources:
+      - x-transparency-tunisia-2026-08-28
+      - x-transparency-global-2025-2026-08-28
+      - x-io-archive-negative-2026-08-28
+    reasoning: "Searched index X (X country page + global report + IO archive endpoint + third-party IO dataset catalog), found no entry with a Tunisia bot count; therefore X publishes no Tunisia bot-farm enumeration for window 2016-2026."
+    falsifiable_by: "X publishing a Tunisia country breakdown with bot/IO counts or re-exposing a Tunisia IO dataset under transparency.x.com or via Zenodo labeled archive."
+
+  # Google TAG — exhaustive negative (platform)
+  - id: cc-google-tag-no-tunisia-bulletin-2018-2026-verify-2026-08-28
+    entity: null
+    claim: >-
+      No Google Threat Analysis Group (TAG) Bulletin for Q1 2025 through Q4 2025 and prior quarterly indexes (back to 2018) surfaces a Tunisia-specific coordinated influence operation termination for window 2018–2026. Websearch for 'Google TAG Tunisia' and 'Google threat analysis group Tunisia 2019 2020' on 2026-08-28 returned only generic TAG Bulletin index pages describing coordinated IO terminations with no Tunisia in snippet/title.
+    assessment: >-
+      Documented negative: websearch across TAG domain returned quarterly Q1–Q4 2025 bulletins (May 2025, Jan 2026 etc.) listing 12 YouTube channels etc. per bulletin but no Tunisia-tagged entry; blog.google TAG index fetch did not expose bulletin list (Android article only), so absence is based on site: search, not full PDF scan. Confidence B as disclosure-state negative, not proof TAG never acted on Tunisia. Prior outbox already documented Meta as only platform with Tunisia takedown — TAG negative is consistent with that.
+    confidence: B
+    basis: documented
+    sources:
+      - google-tag-negative-2026-08-28
+    reasoning: "Searched index X (Google TAG bulletins via site search), found no entry naming Tunisia as target/origin; therefore no Tunisia-specific TAG bulletin enumeration is published for window 2018-2026."
+    falsifiable_by: "A Google TAG Bulletin PDF / blog post dated 2018-2026 whose title or body lists Tunisia as origin or target for a terminated coordinated IO network."
+
+  # ISIE — what IS documented vs what is absent (institutional)
+  - id: cc-isie-reports-no-bot-annex-2019-2024-verify-2026-08-28
+    entity: null
+    claim: >-
+      ISIE's published reports list (2011–2024, Arabic originals) accessible at https://www.isie.tn/fr/isie/rapports-des-elections-et-du-referendum/ contains no annex or table enumerating a bot/fake-account count for the 2019 or 2024 presidential/legislative elections. ISIE's 2019–2020 activity included monitoring of sponsored pages (ISIE detection of political advertising on Facebook) but that monitoring fed Article 143 spending/silence sanctions (e.g., Aich Tounsi France-2: 207 votes withdrawn), not a bot census. The 2019 joint ISIE-HAICA decision (Aug 2019, 4 chapters / 49 articles cited in 2019 context) regulates equal opportunity in audiovisual broadcast, not electronic bot enumeration.
+    assessment: >-
+      Live HTML capture 2026-08-28 shows report titles/links but PDF bodies are Arabic originals not parsed this pass — negative is about absence of a titled bot annex and absence of ISIE-published number in searchable HTML/executive summaries. EU EOM FR final (p54/66) independently documents the single quantified Art.143 sanction (207 votes) — confirming ISIE did sanction sponsored ads but without a farm-scale number. HAICA's role is broadcast-focused; Nabil Baffoun Oct 7 2019 statement (via Global Voices) that sponsored pages fall within Art.143 is the scope definition, not a count.
+    confidence: B
+    basis: documented
+    sources:
+      - isie-reports-list-2026-08-28
+      - eu-eom-tunisia-2019-final-fr
+      - globalvoices-tunisia-disinformation-2019-12-09
+      - carter-center-tunisia-2019-final
+    reasoning: "Searched index X (ISIE reports archive HTML + EU EOM synthesis of ISIE sanctions), found no entry publishing a Tunisia bot count; only 207-vote Art.143 sanction is published, which is spending/silence, not bot enumeration."
+    falsifiable_by: "An ISIE PDF (2019 or 2024 report, Arabic) annex/table explicitly counting fake accounts / Pages / 'comptes fictifs' / 'ذباب إلكتروني' with methodology, or a JORT-published ISIE decision enumerating such a count."
+
+  - id: cc-isie-art143-207-votes-2019-verify-2026-08-28
+    entity: null
+    claim: >-
+      For the 6 October 2019 legislative election, ISIE applied Article 143 of the electoral law to partially annul results of Aich Tounsi (3ich Tounsi) in the France-2 diaspora constituency, withdrawing 207 votes for Facebook campaign advertising detected via ISIE social-media monitoring (political advertising prohibited during campaign). The seat consequently shifted to Courant Démocratique (Attayar). This is the sole quantified Art.143 application for sponsored Facebook content in the EU EOM final report.
+    assessment: >-
+      Documented institutional sanction: EU EOM FR final p54 records the 207-vote withdrawal explicitly as a Facebook advertising violation, linking it to ISIE monitoring. Carter Center 2019 final (p47+) corroborates ISIE authority to apply Art.143 for spending/silence breaches and notes ISIE decision 2019-22 disclosure rule, but Carter does not cite the 207 figure — EU EOM is the source for the number. Global Voices Oct 2019 similarly notes the cancellation without detail on method. Confidence B as cross-institutional documented, but keep note this is not a bot count.
+    confidence: B
+    basis: documented
+    sources:
+      - eu-eom-tunisia-2019-final-fr
+      - carter-center-tunisia-2019-final
+    notes: "Art.143 scope clarification: 'substantial and decisive' standard leaves characterization to ISIE subject to Administrative Court review (IRI/IFES context); 207 assessment method not published."
+
+  # Decree Law 54 — legal track verification (Tier 1)
+  - id: cc-decree54-art24-no-bot-enumeration-2022-verify-2026-08-28
+    entity: null
+    claim: >-
+      Decree-Law No. 2022-54 of 13 September 2022 (JORT No.103, 16 Sep 2022) — full text mirrored at legislation-securite.tn — criminalises production/spreading false news/data/rumours/forged documents via info systems (Article 24: 5 years imprisonment + 50,000 TND, doubled if target is public official/assimilé; second paragraph same for defamation/reputation/hate-speech use). It imposes retention ≥2 years (Art.6 by joint ministerial order by nature of service) and cooperation/interception obligations (Arts 7–15) but contains no enumeration of bots, fake accounts, or farm size. The decree is offence definition, not a census.
+    assessment: >-
+      Tier 1 verification: entire decree body (Arts 1–38) fetched 2026-08-28 via DCAF latest-laws mirror; text of Art.24 verbatim in French and Arabic matches prior outbox citation (jort-decree54-2022-09-13). Title law/105306 URL returned 404, so mirror used — content identical to JORT. Crucially, no article counts bots. Article 6 explicitly delegates retention duration to future joint ministerial order (Defence/Interior/Justice/Telecoms) — explains why Art.6 has no fixed number beyond the floor of 2 years. Falsifiable by an amendment or implementing decree that adds bot metrics, but decree itself contains none.
+    confidence: A
+    basis: documented
+    sources:
+      - decree54-dcaf-2022-09-13
+    notes: "Tier 1 — gazette/mirror text. Enforced provisions include extraterritorial jurisdiction (Art.34) and corporate liability (Art.32). Vagueness of 'false news/rumours' is analytical commentary (ICJ/HRW/Amnesty), not decree text."
+
+  - id: cc-decree54-no-implementing-decree-2023-2024-verify-2026-08-28
+    entity: null
+    claim: >-
+      No JORT-published implementing/application decree for Decree Law 54 fixing the Art.6 retention modalities or publishing Article 24 enforcement statistics was surfaced by websearch on 2026-08-28 for 'Decree Law 54 Tunisia implementing decree 2023 2024' (alternative queries in French/Arabic not exhaustive). The search returned only analytical/legal commentary and case coverage (HRW Dec 2023 Chaima Issa/Zneidi examples, ICJ briefing, CPJ/ARTICLE19), not a JORT implementing text.
+    assessment: >-
+      Documented negative on legal sub-track: absence is in searchable web/JORT mirror, not proof none exists under different official title (Arabic 'قرار مشترك' etc.). DCAF database search 2026-08-28 only returned the decree itself, not a subsequent joint order. Keep as C (single search pass) — needs JORT systematic scan by human reviewer to upgrade to B. No bot count would be expected in such an implementing order in any case (it would fix durations/procedures).
+    confidence: C
+    basis: reported
+    attributed_to: Websearch aggregate negative (no JORT result) on 2026-08-28
+    sources:
+      - decree54-implementing-negative-2026-08-28
+      - decree54-dcaf-2022-09-13
+    reasoning: "Searched index X (legislation-securite.tn/JORT mirror + websearch for implementing decree 2023-2024), found no entry publishing Art.6 joint order or Art.24 statistics; therefore no implementing decree enumeration is retrievable via these indexes as of 2026-08-28."
+    falsifiable_by: "A JORT-published arrêté conjoint (Ministres Défense/Intérieur/Justice/Télécoms) dated 2023-2024 fixing retention periods per Art.6, or a JORT statistical annex on Decree 54 prosecutions."
+
+  # Window negatives — explicitly framed per task (2016-2018 and 2021-2026)
+  - id: cc-bot-no-enumeration-2016-2018-verify-2026-08-28
+    entity: null
+    claim: >-
+      For 2016–2018 no high-trust (Tier 1–2) source publishes a Tunisia-specific fake-account or takedown count; Meta CIB index (back to 2017), X Transparency country report Tunisia, and Google TAG bulletins list no Tunisia bot-farm disclosure in this window. ISIE's 2016–2018 cycle reports (municipal 2018 etc.) likewise publish no bot metric.
+    assessment: >-
+      Documented negative after systematic index scans: Meta index earliest entries 2017-2018 (IRA, Myanmar) contain no Tunisia; X country page covers info/removal requests only; Google TAG Q4 2025 etc. back-scan shows no Tunisia. This replicates prior outbox negative cc-bot-no-enumeration-2016-2018 — re-verified with live indexes on 2026-08-28. Absence is disclosure-state, not evidence of zero activity.
+    confidence: B
+    basis: documented
+    sources:
+      - meta-threat-reporting-2026-08-28
+      - x-transparency-tunisia-2026-08-28
+      - google-tag-negative-2026-08-28
+      - isie-reports-list-2026-08-28
+    reasoning: "Searched indexes X (Meta 2016-2018 titles), Y (X country/global), Z (Google TAG), W (ISIE 2018 reports) — found no entry publishing a Tunisia bot count for window 2016–2018."
+    falsifiable_by: "A pre-May-2019 CIB entry with Tunisia in its takedown table or an ISIE 2016-2018 report annex counting 'comptes fictifs' / 'bots'."
+    notes: "Re-verification — no delta to prior outbox negative; retains B (searched disclosure)."
+
+  - id: cc-bot-no-enumeration-2021-2026-verify-2026-08-28
+    entity: null
+    claim: >-
+      For 2021–2026 no high-trust source publishes an enumerated size for a domestic Tunisian bot farm or coordinated network around President Kais Saied; commentary (e.g., Arab Center Washington DC 2023) describes a 'heavy digital presence' / doxing and monitoring under Decree 54 but without number. Decree Law 54 (13 Sep 2022) creates powers to prosecute rumours/false news via Art.24 but itself contains no bot count; UNODC-donated forensic equipment is documented elsewhere but not a scale measure. X and Meta transparency reports through 2025-2026 add no Tunisia bot enumeration in this sub-window.
+    assessment: >-
+      Unsubstantiated numeric scale intentionally retained per evidence rule: qualitative claim (online support presence, monitoring) is reported and sourced elsewhere (Arab Center 2023 cited in prior outbox), but any NUMBER for a 2021–2026 domestic farm would be invented — none found in Tier 1–2 platform or institutional sources, including Meta Adversarial Threat Reports Q1 2021–H2 2026 and X reports through 2025 re-verified above. Keep popular claim with attributed holder and mark scale D. Archival note: X now hosts no IO dataset for Tunisia (404 + no entry in Zenodo 26-campaign set).
+    confidence: D
+    basis: unsubstantiated
+    attributed_to: Arab Center Washington DC (DeHaven 2023) / commentary synthesis; popular account of a 'digital army' — scale unquantified
+    sources:
+      - meta-threat-reporting-2026-08-28
+      - x-transparency-tunisia-2026-08-28
+      - decree54-dcaf-2022-09-13
+      - x-io-archive-negative-2026-08-28
+    reasoning: "Searched indexes X (Meta Adversarial Threat Reports 2021-2026), Y (X reports 2021-2025), Z (JORT Decree 54) — found no entry publishing an enumerated domestic farm size for 2021-2026; commentary's 'heavy presence' is qualitative attribution without method, therefore scale is unsubstantiated."
+    falsifiable_by: "Any ISIE/HAICA audit, peer-reviewed study, or platform takedown dated 2021-2026 that enumerates a Tunisia domestic network with asset counts + method."
+    disputes:
+      - claim: "A Saied domestic bot farm of a stated size existed in 2021–2026"
+        held_by: Circulating social-media claims (non-specific)
+        status: open
+        assessment: No enumeration found at Tier 1–3 as of 2026-08-28 live checks. Existence of online support is not evidence of a counted farm; absence of enumeration is not evidence of absence.
+        source: decree54-dcaf-2022-09-13
+    notes: "Re-verification — no new enumeration surfaced 2026-08-28; retains D per prior outbox cc-bot-no-enumeration-2021-2026."
+
+notes:
+  - "Live-fetch summary 2026-08-28: Meta index 200 (full list captured, updated Aug 27 2026); X Tunisia country page 200 but body is nav-only (no bot section); X global 2025 body empty; X IO endpoint 404 verified; Google TAG generic index only (no Tunisia snippet); ISIE list HTML captured (PDFs not parsed — Arabic originals); DCAF decree 54 full text captured (Arts 1–38); JORT law/105306 404 (mirror used)."
+  - "Evidence ladder enforced: Tier 1 DCAF decree text, Tier 2 Meta/X/ISIE/Carter/EU EOM, Tier 3 Global Voices commentary. Websearch negatives logged under tier 2/3 as disclosure-state findings, not ground truth."
+  - "Two platform-confirmed Tunisia-linked takedowns remain the only anchor enumerations for 2016–2026: May 2019 Archimedes (265 global, Tunisia share ?) and Jun 2020 UReputation/Operation Carthage (993 origin Tunisia, 182 FB accounts). All windows outside these (2016-2018, 2021-2026) are explicit documented negatives re-verified here."
+  - "No canonical data, UI, or script changed — outbox only. Needs-human: ISIE 2019/2024 PDFs need Arabic PDF parsing for any hidden Art.143/bot annex line; JORT systematic scan for Decree 54 arrêté conjoint 2023-2024 under Arabic title variations."
