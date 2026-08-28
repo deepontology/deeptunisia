@@ -39,6 +39,8 @@
 		return 'An entity in the DeepTunisia atlas of power, 1956–2026.';
 	});
 
+	const shareUrl = $derived(`https://deeptunisia.org/share/${encodeURIComponent(kind)}/${encodeURIComponent(id)}`);
+
 	const canonical = $derived.by(() => {
 		if (kind === 'entity') return `https://deeptunisia.org/network?id=${encodeURIComponent(id)}`;
 		if (kind === 'relationship') return `https://deeptunisia.org/network?rel=${encodeURIComponent(id)}`;
@@ -46,8 +48,6 @@
 		if (kind === 'agreement') return `https://deeptunisia.org/network?agreement=${encodeURIComponent(id)}`;
 		return `https://deeptunisia.org/network?id=${encodeURIComponent(id)}`;
 	});
-
-	const shareUrl = $derived(canonical);
 </script>
 
 <svelte:head>
@@ -61,7 +61,7 @@
 	<meta name="twitter:title" content={title} />
 	<meta name="twitter:description" content={desc} />
 	<meta name="twitter:image" content="https://deeptunisia.org/og/default.png" />
-	<link rel="canonical" href={canonical} />
+	<link rel="canonical" href={shareUrl} />
 	<meta http-equiv="refresh" content="0;url={canonical}" />
 </svelte:head>
 
