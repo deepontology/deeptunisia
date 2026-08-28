@@ -4,6 +4,8 @@
 	import SourceList from './SourceList.svelte';
 	import Chip from '$lib/ui/Chip.svelte';
 	import CommunityActions from '$lib/ui/CommunityActions.svelte';
+	import ShareMenu from '$lib/ui/ShareMenu.svelte';
+	import { canonicalShareUrl } from '$lib/share';
 	import {
 		LAYER_COLOR,
 		REL_LABEL,
@@ -81,6 +83,12 @@
 	 * record, and that is reachable from either endpoint's card.
 	 */
 	const addressable = $derived(!edge.id.startsWith('pos-'));
+	const shareUrl = $derived(
+		measurement
+			? canonicalShareUrl('flow', edge.id)
+			: canonicalShareUrl('relationship', rel.id)
+	);
+	const shareTitle = $derived(label);
 </script>
 
 <article class="card" style:--c={LAYER_COLOR[edge.a.layer]}>
@@ -91,7 +99,12 @@
 				<span class="sub" dir="auto">{rel.subtype}</span>
 			{/if}
 		</div>
-		<button class="close" onclick={onclose} aria-label={t('panel.close')}>×</button>
+		<div class="h-actions">
+			{#if addressable || measurement}
+				<ShareMenu url={shareUrl} title={shareTitle} />
+			{/if}
+			<button class="close" onclick={onclose} aria-label={t('panel.close')}>×</button>
+		</div>
 	</header>
 
 	<div class="ends">
@@ -197,6 +210,13 @@
 	.sub {
 		font-size: var(--t-2xs);
 		color: var(--text-faint);
+	}
+	.h-actions {
+		display: flex;
+		align-items: center;
+		gap: var(--s-3);
+		flex-shrink: 0;
+		margin: -4px -6px 0 0;
 	}
 	.close {
 		flex-shrink: 0;

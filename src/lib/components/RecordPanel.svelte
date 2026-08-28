@@ -4,6 +4,8 @@
 	import SourceList from './SourceList.svelte';
 	import Chip from '$lib/ui/Chip.svelte';
 	import CommunityActions from '$lib/ui/CommunityActions.svelte';
+	import ShareMenu from '$lib/ui/ShareMenu.svelte';
+	import { canonicalShareUrl } from '$lib/share';
 	import {
 		BASIS_COLOR,
 		companyById,
@@ -170,12 +172,18 @@
 		if (education) return 'education' as const;
 		return 'event' as const;
 	});
+
+	const shareUrl = $derived(canonicalShareUrl('entity', id));
+	const shareTitle = $derived(title);
 </script>
 
 <article class="rpanel" dir="auto">
 	<header>
 		<div class="eyebrow mono">{kindLabel}</div>
-		<button class="close" onclick={() => (app.selected = null)} aria-label={t('panel.close')}>×</button>
+		<div class="h-actions">
+			<ShareMenu url={shareUrl} title={shareTitle} />
+			<button class="close" onclick={() => (app.selected = null)} aria-label={t('panel.close')}>×</button>
+		</div>
 	</header>
 
 	<h2>{title}</h2>
@@ -301,6 +309,14 @@
 		display: flex;
 		align-items: flex-start;
 		justify-content: space-between;
+		gap: var(--s-4);
+	}
+	.h-actions {
+		display: flex;
+		align-items: center;
+		gap: var(--s-3);
+		flex-shrink: 0;
+		margin: -4px -6px 0 0;
 	}
 	.eyebrow {
 		font-size: var(--t-2xs);
@@ -312,7 +328,6 @@
 		flex-shrink: 0;
 		width: 22px;
 		height: 22px;
-		margin: -4px -6px 0 0;
 		display: grid;
 		place-items: center;
 		font-size: var(--t-lg);
