@@ -6,6 +6,8 @@ datasets_consulted:
   - data/contrib/bot-farm-2026-08-28-carthage-collateral.yaml
   - data/contrib/bot-farm-2026-08-28-platform-legal.yaml
   - data/contrib/bot-farm-2026-08-28-foreign-gap.yaml
+  - data/contrib/bot-farm-2026-08-28-foreign-ops-missing.yaml
+  - data/contrib/bot-farm-2026-08-28-atide-retry.yaml
   - data/comparative_bot_estimates_2016_2026.csv
 records_created:
   - bot-farm-2026-08-28.yaml
@@ -13,11 +15,13 @@ records_created:
   - bot-farm-2026-08-28-carthage-collateral.yaml
   - bot-farm-2026-08-28-platform-legal.yaml
   - bot-farm-2026-08-28-foreign-gap.yaml
-sources_consulted_count: 34
-primary_sources_count: 6
+  - bot-farm-2026-08-28-foreign-ops-missing.yaml
+  - bot-farm-2026-08-28-atide-retry.yaml
+sources_consulted_count: 44
+primary_sources_count: 12
 entities_identified: 14
-claims_extracted: 27
-disputed_claims: 4
+claims_extracted: 34
+disputed_claims: 9
 unresolved_claims: 2
 documented_negatives: 4
-notes: "Live re-verification 2026-08-28 across 4 subagents: Meta and Inkyfada 200 body captured; DRI/ATIDE PDF 403 flagged needs-primary-source; Carthage 993 converged across 3 primaries; platform transparency negatives exhaustively logged (Meta index / X country + IO 404 / Google TAG / ISIE)."
+notes: "Live re-verification 2026-08-28 sweep + foreign-origin targeting Tunisia gap-fill: Meta Jan 2019 Iran 783 (262+356+3+162), Oct 2019 Egypt/El Fagr 251 (163+51+33+4), Apr 2020 IRIB 540 (118+389+27+6) and Oct 2020 MB 58 (31+25+2) all live-verified 200 body captured with Tunisia list membership; FH FotN 2020 relay confirmed; DFRLab watchdog detail >11k March 2019 captured; DRI/ATIDE PDF recovered via Wayback 20191018105158 (27pp, 2.4MB, PDF 1.6, Author Makrem Dhifalli) — origin 403 cf-mitigated / archive 200, methodology now extracted: 291 FB pages 15 May–15 Jul 2019, Netvizz manual per page (dead 23 Aug 2019), 52,512 posts -> 29,329 non-media (42.7% political) + 12,078 pictures, FB only, unofficial def + page-network thresholds (98% pic/70% text/>=2 posts/>=6 members/<8h), >=13 networks; Jones 12k/6800 hashtag dataset search negative reconfirmed; taxonomy C031 do-not-sum inferred with ? for Tunisia slices."
