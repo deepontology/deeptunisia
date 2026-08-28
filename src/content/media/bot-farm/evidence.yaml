@@ -1,5 +1,5 @@
 # Bot Farm — evidence layer
-# Claims C001–C027 map to outline §6; IDs preserve manual outline numbering for cross-ref to research/bot-farm-outline.md.
+# Claims C001–C031 map to outline §6; IDs preserve manual outline numbering for cross-ref to research/bot-farm-outline.md. C025–C031 are foreign-targeting bucket (added 2026-08-28) — keep ? for Tunisia slice, do not sum into domestic.
 # Grades: documented (platform/institutional verbatim), reported (journalism/single-researcher), unsubstantiated (circulating without number).
 # Sources are registered in ../media/bot-farm/sources.yaml and in data/contrib/bot-farm-*.yaml.
 
@@ -45,7 +45,7 @@ claims:
     entities: [atide, dri-democracy-reporting]
     sections: [S02]
     disputed: false
-    text_note: "B — institutional research; prevalence not a bot count; PDF live fetch 403 flagged needs-primary-source"
+    text_note: "A — institutional research via Wayback 20191018105158 (27pp, 2.4MB, PDF 1.6, Author Makrem Dhifalli, live 403 cf-mitigated / archival 200); sample 291 Facebook pages 15 May–15 Jul 2019 (Annex 1), Netvizz manual per page (dead since 23 Aug 2019), corpus 52,512 posts -> 29,329 non-media analysed (42.7% political) + 12,078 pictures; Facebook only; unofficial = entertainment/satirical with no declared leaning, no discernible admin link, regular political posting/sponsoring; page network = 98% picture identical + 70% text identical + >=2 repeated posts + >=6 members + <8h window; >=13 networks biggest 24 pages; prevalence not bot count — two thirds of non-media political messaging from unofficial, 40% of 291 lack transparency"
 
   - id: C004
     text:
@@ -57,7 +57,7 @@ claims:
     disputed: false
     text_note: "Documented negative on enumeration — do not inflate 11 Pages or 161 Pages to Tunisia bots"
 
-  # ── S03 — Carthage (2020) — documented core ─────────────────────────
+  # ── S04 — Carthage (2020) — documented core ─────────────────────────
 
   - id: C005
     text:
@@ -65,7 +65,7 @@ claims:
     grade: documented
     sources: [fb-cib-may2020-announcement, fb-cib-may2020-detailed-pdf, dfrlab-operation-carthage-2020-06-05]
     entities: [ureputation, facebook-meta-cib, dfrlab-atlantic-council]
-    sections: [S03]
+    sections: [S04]
     disputed: false
     text_note: "A — converged across 3 primaries live-verified 2026-08-28; only 182 is the account count"
 
@@ -75,7 +75,7 @@ claims:
     grade: documented
     sources: [dfrlab-operation-carthage-2020-06-05, fb-cib-may2020-detailed-pdf]
     entities: [ureputation, lotfi-bel-hadj, nabil-karoui]
-    sections: [S03]
+    sections: [S04]
     disputed: false
 
   - id: C007
@@ -84,7 +84,7 @@ claims:
     grade: documented
     sources: [dfrlab-operation-carthage-2020-06-05]
     entities: [ureputation]
-    sections: [S03]
+    sections: [S04]
     disputed: false
 
   - id: C008
@@ -93,7 +93,7 @@ claims:
     grade: documented
     sources: [dfrlab-operation-carthage-2020-06-05, nawaat-operation-carthage-2020-06-16]
     entities: [moez-bhar, lotfi-bel-hadj, ureputation]
-    sections: [S03]
+    sections: [S04]
     disputed: false
     text_note: "B — open-source trail (WHOIS/SecurityTrails/LinkedIn/Twitter handle history); not identity-proof alone"
 
@@ -103,10 +103,10 @@ claims:
     grade: documented
     sources: [fb-cib-may2020-detailed-pdf, dfrlab-operation-carthage-2020-06-05]
     entities: [ureputation, dfrlab-atlantic-council, facebook-meta-cib]
-    sections: [S03, S07]
+    sections: [S04, S08]
     disputed: false
 
-  # ── S04 — Collateral (full section per instruction) ─────────────────
+  # ── S05 — Collateral (full section per instruction) ─────────────────
 
   - id: C010
     text:
@@ -114,7 +114,7 @@ claims:
     grade: reported
     sources: [article19-tunisia-accounts-2020-06-15]
     entities: [article-19]
-    sections: [S04]
+    sections: [S05]
     disputed: true
     dispute:
       description: "Are the ~60 collateral accounts part of the 993 UReputation network or false positives?"
@@ -134,7 +134,7 @@ claims:
     grade: reported
     sources: [article19-tunisia-accounts-2020-06-15, accessnow-carthage-transparency-2020-06-12]
     entities: [article-19, access-now]
-    sections: [S04]
+    sections: [S05]
     disputed: true
     dispute:
       description: "Technical error vs deliberate removal sequencing"
@@ -147,7 +147,7 @@ claims:
           holder: "Facebook May CIB Report 5 Jun 2020"
       adopted: "Open — per-handle audit required to reconcile; Access Now 12 Jun: 'we can only speculate collateral damage'"
 
-  # ── S05 — Foreign amplification (not domestic farm) ─────────────────
+  # ── S06 — Foreign amplification (not domestic farm) ─────────────────
 
   - id: C012
     text:
@@ -155,7 +155,7 @@ claims:
     grade: reported
     sources: [aljazeera-tunisia-manipulation-2021-07-28]
     entities: [marc-owen-jones]
-    sections: [S05]
+    sections: [S06]
     disputed: false
     text_note: "C — Marc Owen Jones via Al Jazeera; 12k is tweets not accounts"
 
@@ -165,7 +165,7 @@ claims:
     grade: reported
     sources: [aljazeera-tunisia-manipulation-2021-07-28]
     entities: [marc-owen-jones]
-    sections: [S05]
+    sections: [S06]
     disputed: true
     dispute:
       description: "Were 6,800 Tunisian bots or foreign influencers + sock-puppets?"
@@ -191,7 +191,7 @@ claims:
     disputed: false
     text_note: "Documented negative — absence of enumeration, not evidence of zero activity"
 
-  # ── S06 — Decree 54 & the digital army (full section) ───────────────
+  # ── S07 — Decree 54 & the digital army (full section) ───────────────
 
   - id: C015
     text:
@@ -199,7 +199,7 @@ claims:
     grade: documented
     sources: [decree54-dcaf-2022-09-13]
     entities: []
-    sections: [S06]
+    sections: [S07]
     disputed: false
     text_note: "A — Tier 1; full decree fetched 2026-08-28; no application decree enumerating bots found (C)"
 
@@ -209,7 +209,7 @@ claims:
     grade: documented
     sources: [unodc-forensic-equipment-2021-03-24]
     entities: []
-    sections: [S06]
+    sections: [S07]
     disputed: false
     text_note: "B — institutional; cited by Arab Center as backdrop to Decree 54 enforcement pattern"
 
@@ -219,7 +219,7 @@ claims:
     grade: unsubstantiated
     sources: [arabcenter-tunisia-disinformation-2023-07-21, pomed-saied-digital-army-2023-06-15]
     entities: []
-    sections: [S06]
+    sections: [S07]
     disputed: true
     dispute:
       description: "Does a stated-size Saied domestic bot farm exist 2021–2026?"
@@ -239,7 +239,7 @@ claims:
     grade: unsubstantiated
     sources: [meta-threat-reporting-2026-08-28, x-transparency-tunisia-2026-08-28, digitalaction-tunisia-briefing-2024-10-22]
     entities: []
-    sections: [S06]
+    sections: [S07]
     disputed: false
     text_note: "D — absence of enumeration retained as finding, not omission; gap is the story"
 
@@ -249,7 +249,7 @@ claims:
     grade: unsubstantiated
     sources: [digitalaction-tunisia-briefing-2024-10-22, arabfactshub-2024-election-facebook-2024]
     entities: []
-    sections: [S06]
+    sections: [S07]
     disputed: false
 
   # ── S01 — Platform negatives (cross-cutting) ────────────────────────
@@ -260,7 +260,7 @@ claims:
     grade: documented
     sources: [meta-threat-reporting-2026-08-28]
     entities: [facebook-meta-cib]
-    sections: [S01, S07]
+    sections: [S01, S08]
     disputed: false
 
   - id: C021
@@ -269,7 +269,7 @@ claims:
     grade: documented
     sources: [x-transparency-tunisia-2026-08-28, x-io-archive-negative-2026-08-28]
     entities: []
-    sections: [S01, S07]
+    sections: [S01, S08]
     disputed: false
 
   - id: C022
@@ -278,7 +278,7 @@ claims:
     grade: documented
     sources: [google-tag-negative-2026-08-28]
     entities: []
-    sections: [S01, S07]
+    sections: [S01, S08]
     disputed: false
 
   - id: C023
@@ -287,10 +287,10 @@ claims:
     grade: documented
     sources: [isie-reports-list-2026-08-28, eu-eom-tunisia-2019-final-fr]
     entities: [isie]
-    sections: [S01, S07]
+    sections: [S01, S08]
     disputed: false
 
-  # ── S07 — Method synthesis (inferred, needs reasoning + falsifier) ──
+  # ── S08 — Method synthesis (inferred, needs reasoning + falsifier) ──
 
   - id: C024
     text:
@@ -298,6 +298,132 @@ claims:
     grade: reported
     sources: [fb-cib-may2020-detailed-pdf, inkyfada-facebook-israel-2019-06-03, dri-atide-tunisia-social-media-2019-09-11, aljazeera-tunisia-manipulation-2021-07-28]
     entities: [facebook-meta-cib]
-    sections: [S07]
+    sections: [S08]
     disputed: false
     text_note: "C — research synthesis; reasoning: units differ (446 Pages ≠ 182 accounts; 38.5% is message share; 12k is tweets). Falsifiable by a primary instructing summation across methods."
+
+  - id: C025
+    text:
+      en: "31 Jan 2019 — Meta (Iran) removes 783 assets globally including Tunisia: 262 Pages + 356 accounts + 3 Groups + 162 IG = 783; followers ~2M Pages / ~1,600 Groups / >254k IG; ad spend <$30k; 8 events May 2014–May 2018; repurposed Iranian state media; Tunisia among ~26 countries (Afghanistan Albania Algeria Bahrain Egypt France Germany India Indonesia Iran Iraq Israel Libya Mexico Morocco Pakistan Qatar Saudi Arabia Serbia South Africa Spain Sudan Syria Tunisia US Yemen); Tunisia slice = ?"
+    grade: documented
+    sources: [fb-cib-iran-2019-01-31]
+    entities: [facebook-meta-cib]
+    sections: [S03]
+    disputed: true
+    dispute:
+      description: "783 is global-including-Tunisia, not Tunisia count — Tunisia slice is ?"
+      positions:
+        - claim: "783 is the Tunisia bot farm size in Jan 2019"
+          source: fb-cib-iran-2019-01-31
+          holder: "Misreading of Meta January 2019 disclosure (non-specific popular retelling)"
+        - claim: "783 is global across ~26 countries; Tunisia is one target, Tunisia share unpublished"
+          source: fb-cib-iran-2019-01-31
+          holder: "Meta primary (country list) live-verified 2026-08-28"
+      adopted: "Global total retained; Tunisia share = ? until Meta publishes country slice; 262+356+3+162=783 verified"
+    text_note: "A-grade verbatim; live-verified 2026-08-28 via webfetch body captured; arithmetic 262+356+3+162=783 verified; do not sum into domestic 993"
+
+  - id: C026
+    text:
+      en: "5 May 2020 — Meta (Iran, IRIB) removes 540 assets globally including Tunisia: 118 Pages + 389 accounts + 27 Groups + 6 IG = 540; focus ~21 countries including Algeria Bangladesh Bosnia Egypt Ghana Libya Mauritania Morocco Nigeria Senegal Sierra Leone Somalia Sudan Tanzania Tunisia US UK Zimbabwe; Tunisia slice = ?"
+    grade: documented
+    sources: [fb-cib-iran-2020-04-05, fb-cib-april2020-detailed-pdf]
+    entities: [facebook-meta-cib]
+    sections: [S03]
+    disputed: true
+    dispute:
+      description: "540 is global-including-Tunisia, not Tunisia count — do not read 540 as Tunisia bots"
+      positions:
+        - claim: "540 Iranian bots operated in Tunisia in April 2020"
+          source: fb-cib-iran-2020-04-05
+          holder: "Misreading if Freedom House relay stripped country list (non-specific)"
+        - claim: "540 is global across ~21 countries; Tunisia is one member, Tunisia share = ?"
+          source: fb-cib-iran-2020-04-05
+          holder: "Meta primary April 2020 (newsroom + detailed PDF) live-verified 2026-08-28"
+      adopted: "Global total retained; 118+389+27+6=540 verified; distinct from Jan 2019 783"
+    text_note: "A-grade verbatim; live PDF corroborates newsroom counts; IRIB attribution; do not sum with domestic 993"
+
+  - id: C027
+    text:
+      en: "5 Nov 2020 — Meta (Muslim Brotherhood) removes 58 assets globally including Tunisia: 31 accounts + 25 Pages + 2 IG = 58; operated from Egypt Turkey Morocco associated with Muslim Brotherhood; targeted Egypt Libya Tunisia Yemen Somalia Saudi Arabia (6 countries); Tunisia slice = ?"
+    grade: documented
+    sources: [fb-cib-oct2020-muslim-brotherhood-2020-11-05]
+    entities: [facebook-meta-cib]
+    sections: [S03]
+    disputed: true
+    dispute:
+      description: "58 is global-including-Tunisia across 6 targets — not Tunisia-only"
+      positions:
+        - claim: "58 is the Tunisia Muslim Brotherhood bot farm size"
+          source: fb-cib-oct2020-muslim-brotherhood-2020-11-05
+          holder: "Misreading if target list stripped (non-specific)"
+        - claim: "58 is global across 6 target countries; Tunisia is one member"
+          source: fb-cib-oct2020-muslim-brotherhood-2020-11-05
+          holder: "Meta primary Oct 2020 (report 5 Nov 2020) live-verified 2026-08-28"
+      adopted: "Global total retained; 31+25+2=58 verified; correct date is Oct 2020 (not Oct 2019)"
+    text_note: "A-grade verbatim; live-verified 2026-08-28; Tunisia slice = ?; do not sum with 251 El Fagr or domestic 993"
+
+  - id: C028
+    text:
+      en: "3 Oct 2019 — Meta (Egypt/El Fagr) removes 251 assets globally including Tunisia: 163 accounts + 51 Pages + 33 Groups + 4 IG = 251; origin Egypt, focused on Somalia Yemen Saudi Arabia Sudan Tunisia Iran Turkey Lebanon Qatar (10 foci); used fake accounts to pose as independent local news orgs, purchased/renamed Pages; links to El Fagr newspaper; Tunisia slice = ?"
+    grade: documented
+    sources: [fb-cib-egypt-2019-10-03]
+    entities: [facebook-meta-cib]
+    sections: [S03]
+    disputed: true
+    dispute:
+      description: "251 is global-including-Tunisia, not Tunisia count"
+      positions:
+        - claim: "251 is the Tunisia El Fagr bot farm"
+          source: fb-cib-egypt-2019-10-03
+          holder: "Misreading if target list stripped"
+        - claim: "251 is global across 10 foci; Tunisia is one target, share unpublished"
+          source: fb-cib-egypt-2019-10-03
+          holder: "Meta primary Oct 2019 live-verified 2026-08-28"
+      adopted: "Global total retained; 163+51+33+4=251 verified; second Egypt-origin network targeting Tunisia alongside Oct 2020 MB 58"
+    text_note: "A-grade verbatim; Tunisia is one of 10 targets; do not conflate with Oct 2020 MB operation"
+
+  - id: C029
+    text:
+      en: "Freedom House Freedom on the Net 2020 — Tunisia relays April 2020 Iran takedown: 118 Pages, 389 accounts, 27 Groups, 6 IG = 540 tied to Iran, targeting multiple countries including Tunisia (coverage window 1 Jun 2019–31 May 2020; cites Meta April 2020 CIB Report)"
+    grade: reported
+    sources: [freedomhouse-fotn-tunisia-2020, fb-cib-iran-2020-04-05]
+    entities: [facebook-meta-cib]
+    sections: [S03]
+    disputed: false
+    attributed_to: "Freedom House (Freedom on the Net 2020 Tunisia) relaying Meta April 2020 CIB"
+    text_note: "B — Tier 2 institutional relay; live-verified 2026-08-28 body captured; not primary enumeration — primary is Meta April 2020"
+
+  - id: C030
+    text:
+      en: "17 May 2019 — DFRLab documents Archimedes Tunisian-facing watchdog 'Stop à la désinformation et aux mensonges' (Stop Disinformation and Lies) — created March 2019, quickly amassed >11,000 followers — posing as anti-disinformation watchdog while itself inauthentic; corroborates Inkyfada 17 Jan–12 Mar 2019 window; fake-local tells include 'Tunisie Mon amour' using Morocco/Turkey images as Tunisia"
+    grade: reported
+    sources: [dfrlab-archimedes-2019-05-17-detail, fb-cib-israel-2019-05-16]
+    entities: [archimedes-group, dfrlab-atlantic-council, facebook-meta-cib]
+    sections: [S02]
+    disputed: false
+    attributed_to: "DFRLab / Atlantic Council (Medium, 17 May 2019) via pre-takedown asset save"
+    text_note: "C — Tier 2 OSINT via Facebook pre-alert; live-verified 2026-08-28 body captured; >11k follower count and March 2019 creation from screenshot; tactical pattern fake locals -> fake newsrooms/leak pages -> fake watchdogs"
+
+  - id: C031
+    text:
+      en: "Foreign-origin operations targeting Tunisia (Jan 2019 Iran 783, Oct 2019 Egypt/El Fagr 251, Apr 2020 Iran 540, Oct 2020 MB 58) are categorically distinct from Tunisia-origin Operation Carthage (993) and from global Archimedes (265 origin Israel); none of the foreign globals has a Tunisia slice published — all Tunisia shares = ? — and none should be summed with each other nor with 993 to produce a cumulative 'Tunisia bot total'"
+    grade: reported
+    basis: inferred
+    sources: [fb-cib-iran-2019-01-31, fb-cib-iran-2020-04-05, fb-cib-oct2020-muslim-brotherhood-2020-11-05, fb-cib-egypt-2019-10-03, freedomhouse-fotn-tunisia-2020]
+    entities: [facebook-meta-cib]
+    sections: [S03, S08]
+    disputed: true
+    dispute:
+      description: "Can foreign global totals be summed into a domestic total?"
+      positions:
+        - claim: "Tunisia experienced 783 + 540 + 58 = 1,381 foreign bots plus 993 domestic = 2,374 total 2019-2020"
+          source: fb-cib-iran-2019-01-31
+          holder: "Aggregation fallacy if foreign globals summed (non-specific)"
+        - claim: "Each total is global across multiple target countries; Tunisia list membership ≠ Tunisia count; no source instructs summation"
+          source: fb-cib-iran-2019-01-31
+          holder: "Research synthesis across Meta primaries (live-verified 2026-08-28)"
+      adopted: "Do-not-sum retained; present separate category with ? for Tunisia share"
+    attributed_to: "DeepTunisia editors — research synthesis across cited Meta primaries and Freedom House relay"
+    reasoning: "Each Meta primary defines total as assets removed for that specific network and lists targeted countries — 783 includes Tunisia among ~26, 540 among ~21, 58 among 6, 251 among 10. None breaks out per-country asset count. Adding 783+540 would count distinct Iran operations together; adding 58+251 would conflate separate Egypt operations; adding any foreign global to 993 domestic would conflate opposite directions (targeting Tunisia vs originating in Tunisia). Only enumerated Tunisia-specific assets in 2019-2020 remain Inkyfada 11 Pages (OSINT subset of Archimedes) and no foreign Tunisia slice."
+    falsifiable_by: "Meta publishing country-level slice for any foreign operation (e.g., 'of the 783, X Pages targeted Tunisia' with evidence) or a primary that states a foreign total should be read as Tunisia-only"
+    text_note: "Inferred taxonomy; units differ (globals vs domestic origin); ? is the honest form; prevents 1,381/2,374 fallacy"

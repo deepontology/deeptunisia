@@ -1,5 +1,5 @@
 slug: bot-farm
-version: "0.1"
+version: "0.3.1"
 title:
   en: "The Tunisian Bot Farm That Was Not One Farm"
   fr: "La ferme à bots tunisienne qui n'en était pas une"
@@ -19,6 +19,6 @@ published: 2026-08-28
 status: draft
 reading_time_minutes: 16
 overall_confidence: B
-overall_confidence_reasoning: "Two platform-confirmed takedowns anchor the decade (2019 Archimedes global 265, 2020 Carthage 993 origin Tunisia); complementary prevalence and amplification studies reported; 2021-2026 domestic scale remains unsubstantiated — gap is a finding"
+overall_confidence_reasoning: "Two platform-confirmed Tunisia-linked takedowns anchor decade (2019 Archimedes global 265, 2020 Carthage 993 origin Tunisia) plus four foreign-origin takedowns targeting Tunisia as separate bucket (2019 Iran 783, 2019 El Fagr 251, 2020 IRIB 540, 2020 MB 58) — all globals with Tunisia slice = ? — plus prevalence and amplification studies reported; 2021-2026 domestic scale remains unsubstantiated — gap is finding; do not sum foreign globals into domestic"
 tags: [disinformation, elections, platform-governance, law, facebook, social-media, decree54]
 cover_image: null
