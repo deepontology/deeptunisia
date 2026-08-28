@@ -4,9 +4,11 @@
 	import { browser } from '$app/environment';
 	import { page } from '$app/state';
 	import { app, startPlayback } from '$lib/state.svelte';
-	import { syncSelectionUrl } from '$lib/deeplink.svelte';
+	import { syncSelectionUrl, validEntity, validRelationship } from '$lib/deeplink.svelte';
 	import { initTheme, theme } from '$lib/design/theme.svelte';
 	import { dirFor } from '$lib/i18n';
+	import { personById, institutionById, relationshipById, resolveEntity } from '$lib/model';
+	import { nameOf } from '$lib/t.svelte';
 	import MenuBar from '$lib/shell/MenuBar.svelte';
 	import SubNav from '$lib/shell/SubNav.svelte';
 	import { rememberPath } from '$lib/shell/nav.svelte';
@@ -97,6 +99,50 @@ import { tour, tourSeen } from '$lib/shell/tour.svelte';
 	const hasDock = $derived(!isDoc && !TIMELESS.includes(page.url.pathname));
 	const dir = $derived(dirFor(app.locale));
 
+	// OG preview — dynamic per selection/rel/flow, client-enhanced (crawlers use prerendered /share shells).
+	// Prerender cannot access searchParams (SvelteKit forbids it); guard with browser so build succeeds.
+	const og = $derived.by(() => {
+		if (!browser) return null;
+		const rel = page.url.searchParams.get('rel');
+		if (rel && validRelationship(rel)) {
+			const r = relationshipById.get(rel);
+			const from = r ? (personById.get(r.from)?.name_en ?? institutionById.get(r.from)?.name_en ?? r.from) : rel;
+			const to = r ? (personById.get(r.to)?.name_en ?? institutionById.get(r.to)?.name_en ?? r.to) : '';
+			const label = to ? `${from} → ${to}` : from;
+			const desc = r?.description ? r.description.slice(0, 160) : 'A documented relationship in the DeepTunisia graph.';
+			return { title: `${label} · DeepTunisia`, desc, image: 'https://deeptunisia.org/og/default.png', url: page.url.href };
+		}
+		const flow = page.url.searchParams.get('flow');
+		if (flow) {
+			const [kind, year, iso] = flow.split(':');
+			const label = kind && year && iso ? `${kind} ${iso} · ${year}` : flow;
+			return { title: `${label} · DeepTunisia`, desc: 'A measured flow between Tunisia and a counterparty.', image: 'https://deeptunisia.org/og/default.png', url: page.url.href };
+		}
+		const agreement = page.url.searchParams.get('agreement');
+		if (agreement) {
+			return { title: `${agreement} · DeepTunisia`, desc: 'An agreement in the DeepTunisia world dataset.', image: 'https://deeptunisia.org/og/default.png', url: page.url.href };
+		}
+		const sel = page.url.searchParams.get('id') ?? app.selected;
+		if (sel && validEntity(sel)) {
+			const ref = resolveEntity(sel);
+			const raw = ref ? nameOf({ name_en: ref.name, name_fr: (ref as unknown as { name_fr?: string })?.name_fr, name_ar: (ref as unknown as { name_ar?: string })?.name_ar } as unknown as { name_en: string }) : sel;
+			// nameOf already picks locale; fallback to ref.name
+			const titleName = (() => {
+				const p = personById.get(sel);
+				if (p) return nameOf(p);
+				const i = institutionById.get(sel);
+				if (i) return nameOf(i);
+				return ref?.name ?? sel;
+			})();
+			const person = personById.get(sel);
+			const inst = institutionById.get(sel);
+			const descRaw = (person?.summary ?? inst?.summary ?? person?.tagline ?? '') as string;
+			const desc = descRaw ? descRaw.slice(0, 160) : `An entity in the DeepTunisia graph — ${ref?.kind ?? 'record'}.`;
+			return { title: `${titleName} · DeepTunisia`, desc, image: 'https://deeptunisia.org/og/default.png', url: page.url.href };
+		}
+		return null;
+	});
+
 	// Remember where each section was left, so crossing between Graph and Agora and
 	// back returns the reader to the view they were reading. See nav.svelte.ts.
 	$effect(() => {
@@ -161,6 +207,21 @@ import { tour, tourSeen } from '$lib/shell/tour.svelte';
 		}
 	}
 </script>
+
+<svelte:head>
+	{#if og}
+		<title>{og.title}</title>
+		<meta property="og:title" content={og.title} />
+		<meta property="og:description" content={og.desc} />
+		<meta property="og:url" content={og.url} />
+		<meta property="og:image" content={og.image} />
+		<meta property="og:type" content="article" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={og.title} />
+		<meta name="twitter:description" content={og.desc} />
+		<meta name="twitter:image" content={og.image} />
+	{/if}
+</svelte:head>
 
 <svelte:window onkeydown={onKey} />
 

@@ -39,6 +39,8 @@
 	import Chip from '$lib/ui/Chip.svelte';
 	import Tooltip from '$lib/ui/Tooltip.svelte';
 	import CommunityActions from '$lib/ui/CommunityActions.svelte';
+	import ShareMenu from '$lib/ui/ShareMenu.svelte';
+	import { canonicalShareUrl, buildFlowId } from '$lib/share';
 	import Prose from '$lib/ui/Prose.svelte';
 	import SourceList from './SourceList.svelte';
 	import { flows, debt } from '$lib/world/countries';
@@ -204,6 +206,15 @@
 				? { source: debt?.source, retrieved: debt?.retrieved }
 				: { source: flows?.source, retrieved: flows?.retrieved }
 	);
+
+	const shareUrl = $derived.by(() => {
+		if (selection.kind === 'agreement') return canonicalShareUrl('agreement', selection.agreementId);
+		const kind = selection.kind;
+		const year = selection.year;
+		const iso = selection.iso2;
+		return canonicalShareUrl('flow', buildFlowId(kind, year, iso));
+	});
+	const shareTitle = $derived(heading);
 </script>
 
 <article class="card">
@@ -214,7 +225,10 @@
 				<span class="sub mono">{selection.year}</span>
 			{/if}
 		</div>
-		<button class="close" onclick={onclose} aria-label={t('panel.close')}>×</button>
+		<div class="h-actions">
+			<ShareMenu url={shareUrl} title={shareTitle} />
+			<button class="close" onclick={onclose} aria-label={t('panel.close')}>×</button>
+		</div>
 	</header>
 
 	<div class="ends">
@@ -351,6 +365,12 @@
 	.sub {
 		font-size: var(--t-xs);
 		color: var(--text-faint);
+	}
+	.h-actions {
+		display: flex;
+		align-items: center;
+		gap: var(--s-3);
+		flex-shrink: 0;
 	}
 	.close {
 		font-size: var(--t-lg);

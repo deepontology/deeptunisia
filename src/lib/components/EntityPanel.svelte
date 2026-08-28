@@ -28,6 +28,8 @@
 	} from '$lib/model';
 
 	import CommunityActions from '$lib/ui/CommunityActions.svelte';
+	import ShareMenu from '$lib/ui/ShareMenu.svelte';
+	import { canonicalShareUrl } from '$lib/share';
 	import { tradeIn, debtIn, energyIn, debt } from '$lib/world/countries';
 
 	let { id }: { id: string } = $props();
@@ -151,6 +153,9 @@
 		if (m > 0 && m < 0.5) return `<1 ${t('world.mn')}`;
 		return `${m.toLocaleString(app.locale, { maximumFractionDigits: 0 })} ${t('world.mn')}`;
 	}
+
+	const shareUrl = $derived(canonicalShareUrl('entity', id));
+	const shareTitle = $derived(entity?.name ?? id);
 </script>
 
 <!--
@@ -265,7 +270,10 @@
 				<p class="tagline"><Prose record={person} field="tagline" /></p>
 			{/if}
 		</div>
-		<button class="close" onclick={() => (app.selected = null)} aria-label={t('panel.close')}>×</button>
+		<div class="h-actions">
+			<ShareMenu url={shareUrl} title={shareTitle} />
+			<button class="close" onclick={() => (app.selected = null)} aria-label={t('panel.close')}>×</button>
+		</div>
 	</header>
 
 	<!--
@@ -625,12 +633,18 @@
 		font-size: 22px;
 		line-height: 1;
 		color: var(--text-faint);
-		margin-inline-start: auto;
 		flex-shrink: 0;
 		padding: 0 3px;
 	}
 	.close:hover {
 		color: var(--text-primary);
+	}
+	.h-actions {
+		display: flex;
+		align-items: center;
+		gap: var(--s-3);
+		margin-inline-start: auto;
+		flex-shrink: 0;
 	}
 
 	/*
