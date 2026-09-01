@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { app } from '$lib/state.svelte';
 	import { applyEntityLink } from '$lib/deeplink.svelte';
-	import { t, nameOf} from '$lib/t.svelte';
+	import { t, nameOf, layerLabel } from '$lib/t.svelte';
 	import { format } from '$lib/i18n';
 	import Tooltip from '$lib/ui/Tooltip.svelte';
 	import { compact } from '$lib/design/media.svelte';
 	import { INDEX_KEYS, composite, computeIndices, type IndexKey } from '$lib/indices';
-	import { LAYER_COLOR, personById, type Layer } from '$lib/model';
+	import { LAYER_COLOR, personById, roleById, type Layer } from '$lib/model';
 	import { durationLabel, formatDate, indexMeta } from '$lib/t.svelte';
 	import Button from '$lib/ui/Button.svelte';
 	import Chip from '$lib/ui/Chip.svelte';
@@ -155,7 +155,9 @@
 									</Tooltip>
 								{/if}
 							</td>
-							<td class="role-col">{row.detail.topRole ?? '—'}</td>
+							<td class="role-col">
+								{row.detail.topRoleId ? nameOf(roleById.get(row.detail.topRoleId)) || row.detail.topRole : (row.detail.topRole ?? '—')}
+							</td>
 
 							{#each INDEX_KEYS as key (key)}
 								<td class="num">
@@ -180,30 +182,41 @@
 									<div class="why-grid">
 										<div>
 											<span class="eyebrow">{t('rankings.authority')}</span>
-											<p>{row.detail.topRole ?? 'no post at this date'} · weight {row.authority}</p>
+											<p>
+												{#if row.detail.topRoleId}
+													{format(app.locale, 'rankings.detail.authority', {
+														role: nameOf(roleById.get(row.detail.topRoleId)) || row.detail.topRole || '',
+														weight: row.authority
+													})}
+												{:else}
+													{t('rankings.detail.nopost')} · weight {row.authority}
+												{/if}
+											</p>
 										</div>
 										<div>
 											<span class="eyebrow">{t('rankings.proximity')}</span>
 											<p>
 												{row.detail.hops === null
-													? 'no documented path to the presidency'
-													: `${row.detail.hops} institutional step${row.detail.hops === 1 ? '' : 's'} from the presidency`}
+													? t('rankings.detail.nopath')
+													: format(app.locale, 'rankings.detail.hops', { n: row.detail.hops })}
 											</p>
 										</div>
 										<div>
 											<span class="eyebrow">{t('rankings.survival')}</span>
 											<p>
-												{durationLabel(row.detail.years)} in senior post · {row.detail
-													.rupturesSurvived} rupture{row.detail.rupturesSurvived === 1 ? '' : 's'} survived in office
+												{format(app.locale, 'rankings.detail.survival', {
+													duration: durationLabel(row.detail.years),
+													n: row.detail.rupturesSurvived
+												})}
 											</p>
 										</div>
 										<div>
 											<span class="eyebrow">{t('rankings.brokerage')}</span>
-											<p>{row.detail.bridgePaths} connection{row.detail.bridgePaths === 1 ? '' : 's'} reach outside their own layer</p>
+											<p>{format(app.locale, 'rankings.detail.brokerage', { n: row.detail.bridgePaths })}</p>
 										</div>
 										<div>
 											<span class="eyebrow">{t('rankings.reach')}</span>
-											<p>{row.detail.layers.join(', ')}</p>
+											<p>{row.detail.layers.map((l) => layerLabel(l as Layer)).join(', ')}</p>
 										</div>
 									</div>
 								</td>
@@ -215,12 +228,7 @@
 		{/if}
 	</div>
 
-	<p class="caveat">
-		This is a ranking of structural position, not of who secretly runs the country. A high brokerage
-		score means the dataset records this person connecting otherwise separate networks; it is not
-		evidence of wrongdoing, coordination, or hidden control. Select a row to see exactly which records
-		produced each number.
-	</p>
+	<p class="caveat">{t('rankings.caveat')}</p>
 </div>
 
 <style>

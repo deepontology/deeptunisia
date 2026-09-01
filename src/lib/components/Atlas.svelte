@@ -8,18 +8,17 @@
 	import {
 		CUTOFF,
 		LAYER_COLOR,
-		LAYER_LABEL,
 		LAYERS,
 		ds,
 		institutionById,
 		meetsBasis,
 		overlaps,
 		personById,
+		roleById,
 		type Basis,
-		type Confidence,
 		type Layer
 	} from '$lib/model';
-	import { durationLabel, nameOf, t} from '$lib/t.svelte';
+	import { durationLabel, formatDate, nameOf, t } from '$lib/t.svelte';
 	import { MIN_HOLDERS, tenureByRole } from '$lib/tenure';
 
 	/**
@@ -183,7 +182,7 @@
 					era: era.id,
 					held: inEra.length > 0,
 					authority: inEra.reduce((m, p) => Math.max(m, p.authority), 0),
-					roles: inEra.map((p) => p.roleTitle)
+					roles: inEra.map((p) => nameOf(roleById.get(p.role)) || p.roleTitle)
 				};
 			});
 			const erasCount = cells.filter((c) => c.held).length;
@@ -269,10 +268,7 @@
 <div class="atlas">
 	<div class="toolbar">
 		<span class="eyebrow">{t('atlas.eyebrow')}</span>
-		<p class="hint">
-			Four compressions of the whole dataset. All four respond to the evidence threshold and layer
-			filters above.
-		</p>
+		<p class="hint">{t('atlas.hint')}</p>
 	</div>
 
 	<div class="scroll">
@@ -280,12 +276,7 @@
 		<section>
 			<header>
 				<h2>{t('atlas.byera')}</h2>
-				<p>
-					One panel per era. Node positions are identical in every panel, so only the structure
-					changes: circle size is the number of people holding posts in that institution, and a line
-					means at least one person held posts in both. Watch the security cluster thicken after 1991
-					and again after 2021.
-				</p>
+				<p>{t('atlas.byera.desc')}</p>
 			</header>
 			<div class="panels-wrap">
 				<div class="panels">
@@ -355,7 +346,9 @@
 				<div class="m-head">
 					<span class="m-name"></span>
 					{#each eras as era (era.id)}
-						<Tooltip content={era.thesis}>
+						<Tooltip
+							content={(era as unknown as Record<string, string>)[`thesis_${app.locale}`] || era.thesis}
+						>
 							<span class="m-col" style:--c={era.accent}>{nameOf(era)}</span>
 						</Tooltip>
 					{/each}
@@ -471,35 +464,33 @@
 		<section>
 			<header>
 				<h2>{t('atlas.tenure')}</h2>
-				<p>
-					Median tenure per office, shortest first, for the {turnover.length} offices with at least
-					{MIN_HOLDERS} recorded holders. The bar spans the shortest to the longest tenure on record and
-					the notch marks the median. This is computed from position intervals alone — no weighting and
-					no editorial judgement — which makes the asymmetry at the top of this list the clearest
-					pattern the dataset produces without being asked.
-				</p>
+				<p>{format(app.locale, 'atlas.tenure.desc', { count: turnover.length, min: MIN_HOLDERS })}</p>
 			</header>
 
 			{#if turnover.length === 0}
 				<p class="empty-note">
-					No office has {MIN_HOLDERS} recorded holders at this evidence threshold. Lower it to see
-					turnover.
+					{format(app.locale, 'atlas.tenure.empty', { min: MIN_HOLDERS })}
 				</p>
 			{:else}
 				<ol class="turn">
 					{#each turnover as r (r.role)}
+						{@const localizedTitle = nameOf(roleById.get(r.role)) || r.title}
 						<li>
-							<span class="t-name" style:--c={LAYER_COLOR[r.layer]}><i></i>{r.title}</span>
-							<span class="t-n" title="{r.holders} recorded holders">
+							<span class="t-name" style:--c={LAYER_COLOR[r.layer]}><i></i>{localizedTitle}</span>
+							<span class="t-n" title={format(app.locale, 'atlas.tenure.holdersTitle', { n: r.holders })}>
 								{r.holders}{#if r.acting}<Tooltip content={format(app.locale, 'now.acting.who', { who: r.acting })}><em>*</em></Tooltip>{/if}
 							</span>
 							<span class="t-med">{durationLabel(r.median)}</span>
 							<span
 								class="t-bar"
 								role="img"
-								aria-label="{r.title}: {r.holders} holders, median tenure {durationLabel(
-									r.median
-								)}, range {durationLabel(r.shortest)} to {durationLabel(r.longest)}"
+								aria-label={format(app.locale, 'atlas.tenure.aria', {
+									title: localizedTitle,
+									holders: r.holders,
+									median: durationLabel(r.median),
+									shortest: durationLabel(r.shortest),
+									longest: durationLabel(r.longest)
+								})}
 							>
 								<span
 									class="t-range"
@@ -517,13 +508,7 @@
 					{/each}
 				</ol>
 
-				<p class="turn-note">
-					Turnover is not evidence of instability, purge or hidden control, and this dataset offers no
-					explanation for the spread — the question is open and recorded as such on the
-					<a href="/evidence">evidence page</a>. Interim and acting appointments are counted as holders
-					and marked <em>*</em>, which inflates the churn of offices that use them. Tenures drawn from
-					uncertain dates carry that uncertainty into the median.
-				</p>
+				<p class="turn-note">{t('atlas.tenure.note')}</p>
 			{/if}
 		</section>
 	</div>
@@ -997,9 +982,5 @@
 		font-size: var(--t-2xs);
 		line-height: 1.65;
 		color: var(--text-muted);
-	}
-	.turn-note em {
-		font-style: normal;
-		color: var(--basis-inferred);
 	}
 </style>
