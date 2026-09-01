@@ -20,6 +20,28 @@
 	);
 
 	/**
+	 * L3 interpretation advisories (warn-only). Each is an undirected 2-3 hop
+	 * path flagged for a different reason. Surface above the record as quiet
+	 * notes — they are advisories about how to read the chain, not verdicts
+	 * on the entities themselves. See src/lib/interpretation.ts.
+	 */
+	const temporalChain = $derived(
+		((ds.meta as unknown as { interpretationAudit?: { temporal: { entities: string[]; edges: string[]; depth: number; reason?: string }[] } }).interpretationAudit?.temporal ?? []).find((c) =>
+			c.entities.includes(app.selected ?? '')
+		) ?? null
+	);
+	const typeChain = $derived(
+		((ds.meta as unknown as { interpretationAudit?: { typeIncompatible: { entities: string[]; edges: string[]; depth: number; reason?: string }[] } }).interpretationAudit?.typeIncompatible ?? []).find((c) =>
+			c.entities.includes(app.selected ?? '')
+		) ?? null
+	);
+	const confidenceChain = $derived(
+		((ds.meta as unknown as { interpretationAudit?: { lowConfidence: { entities: string[]; edges: string[]; depth: number; reason?: string }[] } }).interpretationAudit?.lowConfidence ?? []).find((c) =>
+			c.entities.includes(app.selected ?? '')
+		) ?? null
+	);
+
+	/**
 	 * The inspector pane.
 	 *
 	 * Docked rather than floating on a wide screen: it takes width from the viewport
@@ -143,6 +165,37 @@
 						>
 					</div>
 				{/if}
+				{#if temporalChain}
+					<div class="weakchain temporal" role="note">
+						<span class="wc-label">{t('inspector.temporal.title')}</span>
+						<span
+							>{format(app.locale, 'inspector.temporal.body', {
+								edges: temporalChain.edges.length,
+								reason: temporalChain.reason ?? ''
+							})}</span
+						>
+					</div>
+				{/if}
+				{#if typeChain}
+					<div class="weakchain type" role="note">
+						<span class="wc-label">{t('inspector.type.title')}</span>
+						<span
+							>{format(app.locale, 'inspector.type.body', {
+								reason: typeChain.reason ?? ''
+							})}</span
+						>
+					</div>
+				{/if}
+				{#if confidenceChain}
+					<div class="weakchain confidence" role="note">
+						<span class="wc-label">{t('inspector.confidence.title')}</span>
+						<span
+							>{format(app.locale, 'inspector.confidence.body', {
+								reason: confidenceChain.reason ?? ''
+							})}</span
+						>
+					</div>
+				{/if}
 				<EntityPanel id={app.selected} />
 			{:else}
 				<!-- v0.0.2 records (contracts, licences, declarations, education,
@@ -173,9 +226,9 @@
 		min-height: 0;
 	}
 
-	/* W4 — the weak-chain advisory. Same tint the project gives every other
-	   number that counts against it; quiet by design, it is a note above the
-	   record, not a verdict on it. */
+	/* W4 + L3 — interpretation advisories. Same quiet tint family; each
+	   variant keeps its own accent so the kind is visible at a glance but
+	   none shouts — they are notes above the record, not verdicts on it. */
 	.weakchain {
 		margin: var(--s-4);
 		margin-block-end: 0;
@@ -188,6 +241,27 @@
 		display: flex;
 		flex-direction: column;
 		gap: 2px;
+	}
+	.weakchain.temporal {
+		border-inline-start-color: var(--basis-reported);
+		background: color-mix(in oklch, var(--basis-reported) 6%, transparent);
+	}
+	.weakchain.temporal .wc-label {
+		color: var(--basis-reported);
+	}
+	.weakchain.type {
+		border-inline-start-color: var(--basis-unsubstantiated);
+		background: color-mix(in oklch, var(--basis-unsubstantiated) 6%, transparent);
+	}
+	.weakchain.type .wc-label {
+		color: var(--basis-unsubstantiated);
+	}
+	.weakchain.confidence {
+		border-inline-start-color: var(--basis-documented);
+		background: color-mix(in oklch, var(--basis-documented) 6%, transparent);
+	}
+	.weakchain.confidence .wc-label {
+		color: var(--basis-documented);
 	}
 	.wc-label {
 		font-weight: 600;

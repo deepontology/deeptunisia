@@ -34,9 +34,9 @@ community API with a D1 database and pseudonymous identity, **staged behind
 `AGORA_OPEN` and not yet public**. `npm start` runs both so the Agora tab is
 reachable during development; a reader on deeptunisia.org never touches it.
 
-The complete graph is <!--stat:graphKB-->4520<!--/stat--> KB as the internal
+The complete graph is <!--stat:graphKB-->4560<!--/stat--> KB as the internal
 bundle, and the public exports (dataset, CSVs, geographic layers, changelog)
-ship at <!--stat:shippedKB-->8050<!--/stat--> KB — both are computed by the
+ship at <!--stat:shippedKB-->8120<!--/stat--> KB — both are computed by the
 build, and `npm run test` fails if the README ever disagrees with them.
 
 ## The views
