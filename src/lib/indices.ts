@@ -21,9 +21,10 @@ import {
  * that a ranking of institutional significance is not a ranking of who secretly
  * runs the country.
  *
- * So five indices are computed separately and shown side by side. Four are pure
+ * So six indices are computed separately and shown side by side. Four are pure
  * functions of the data; one (formal authority) derives from a published, openly
- * editable weight table. The reader can combine them with their own weights, and
+ * editable weight table; one (evidenced influence) derives from basis-discounted
+ * influence edges. The reader can combine them with their own weights, and
  * in doing so discovers that "most powerful" is a function of what you decide to
  * measure. That discovery is the actual argument.
  */
@@ -131,7 +132,7 @@ function hopsFrom(g: Graph, start: string): Map<string, number> {
 }
 
 /**
- * The five structural indices, memoised (spec §14.3).
+ * The six structural indices, memoised (spec §14.3).
  *
  * Rankings calls this from a `$derived`, which already recomputes only when its
  * reactive dependencies change — but toggling a layer off and back on re-runs the
