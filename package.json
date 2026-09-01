@@ -12,7 +12,7 @@
         "build": "npm run data && vite build && tsx scripts/build-landing.ts",
         "preview": "vite preview",
         "check": "npm run data && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-        "test": "tsx scripts/test-data.ts && tsx scripts/test-validators.ts && tsx scripts/test-pipeline.ts && tsx scripts/test-media.ts && tsx scripts/test-ui.ts && tsx scripts/test-i18n.ts && tsx scripts/test-match.ts && tsx scripts/test-markup.ts && tsx scripts/test-feed.ts && tsx scripts/test-emit.ts && tsx scripts/test-encoding.ts && tsx scripts/test-parameters.ts && tsx scripts/test-paper.ts && tsx scripts/test-community.ts && tsx scripts/test-api.ts",
+        "test": "tsx scripts/test-data.ts && tsx scripts/test-validators.ts && tsx scripts/test-pipeline.ts && tsx scripts/test-prefixtree.ts && tsx scripts/test-media.ts && tsx scripts/test-ui.ts && tsx scripts/test-i18n.ts && tsx scripts/test-match.ts && tsx scripts/test-markup.ts && tsx scripts/test-feed.ts && tsx scripts/test-emit.ts && tsx scripts/test-encoding.ts && tsx scripts/test-parameters.ts && tsx scripts/test-paper.ts && tsx scripts/test-community.ts && tsx scripts/test-api.ts",
         "test:markup": "tsx scripts/test-markup.ts",
         "test:i18n": "tsx scripts/test-i18n.ts",
         "test:data": "tsx scripts/test-data.ts",
@@ -39,7 +39,9 @@
         "deploy": "npm run build && wrangler deploy",
         "agents:discover": "tsx scripts/agents.ts",
         "agents:outbox": "tsx scripts/agents.ts --list",
-        "sensitivity": "tsx scripts/sensitivity.ts"
+        "sensitivity": "tsx scripts/sensitivity.ts",
+        "deploy:staging": "npm run build && wrangler deploy --env staging",
+        "deploy:dry": "npm run build && wrangler deploy --dry-run"
     },
     "devDependencies": {
         "@sveltejs/adapter-static": "3.0.10",
