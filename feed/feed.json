@@ -3,6 +3,24 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:african-manager:b113ac91580dd5b8",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Le Comité national d’octroi des avantages approuve des projets d’investissement d’une valeur de 19,6 MDT",
+      "link": "https://africanmanager.com/le-comite-national-doctroi-des-avantages-approuve-des-projets-dinvestissement-dune-valeur-de-196-mdt/",
+      "published": "2026-09-01T16:35:39Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:nawaat:a6f887558297ea70",
+      "outlet": "Nawaat",
+      "outletId": "nawaat",
+      "title": "أصحاب الشهادات يطالبون سعيّد بالإيفاء بوعده في تشغيلهم",
+      "link": "https://nawaat.org/2026/09/01/%d8%a3%d8%b5%d8%ad%d8%a7%d8%a8-%d8%a7%d9%84%d8%b4%d9%87%d8%a7%d8%af%d8%a7%d8%aa-%d9%8a%d8%b7%d8%a7%d9%84%d8%a8%d9%88%d9%86-%d8%b3%d8%b9%d9%8a%d9%91%d8%af-%d8%a8%d8%a7%d9%84%d8%a5%d9%8a%d9%81%d8%a7/",
+      "published": "2026-09-01T15:33:01Z",
+      "lang": "ar"
+    },
+    {
       "id": "feed:inkyfada:999151c658f1e30d",
       "outlet": "Inkyfada",
       "outletId": "inkyfada",
@@ -10782,24 +10800,6 @@
       "title": "Tunis Re améliore son taux de sinistralité",
       "link": "https://africanmanager.com/tunis-re-ameliore-son-taux-de-sinistralite/",
       "published": "2026-07-27T15:08:00Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:a14ad57e9fa04707",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Ben Moussa: Des restaurants fermés et des équipements endommagés",
-      "link": "https://africanmanager.com/ben-moussa-des-restaurants-fermes-et-des-equipements-endommages/",
-      "published": "2026-07-27T13:17:00Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:nawaat:2692b239585a1116",
-      "outlet": "Nawaat",
-      "outletId": "nawaat",
-      "title": "Électro-caniculo-phobie : Esquisse d’un vécu tunisien",
-      "link": "https://nawaat.org/2026/07/27/electro-caniculo-phobie-esquisse-dun-vecu-tunisien/",
-      "published": "2026-07-27T13:07:17Z",
       "lang": "fr"
     }
   ]
