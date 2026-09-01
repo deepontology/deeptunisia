@@ -6,7 +6,7 @@
 	<title>Rankings · DeepTunisia</title>
 	<meta
 		name="description"
-		content="Five separate structural indices of power in Tunisia, with reader-adjustable weights. Deliberately no single power score."
+		content="Six separate structural indices of power in Tunisia, with reader-adjustable weights. Deliberately no single power score."
 	/>
 </svelte:head>
 
