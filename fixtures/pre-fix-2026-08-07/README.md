@@ -1,6 +1,6 @@
 # Pre-fix fixture tree — 2026-08-07 audit snapshot
 
-**What this is:** The 7 distinct ways the build could be bypassed before the hardening contract (spec v0.0.2-v2 §2, validators V18–V24). Each case here is a *minimal invalid record* that **shipped green** on the 2026-08-07 build and **fails** on the current build.
+**What this is:** The 7 distinct ways the build could be bypassed before the hardening (see paper §7, validators V18–V24 in `scripts/schema.ts` / `scripts/dates.ts`). Each case here is a *minimal invalid record* that **shipped green** on the 2026-08-07 build and **fails** on the current build.
 
 **Why it exists (C1):** Peer Review 5.2 + Dual M4 — "reproducible in principle, unverifiable in practice (repo squashed 26 Aug, 790→884)". This folder makes the audit replayable: `npm run test` proves each bypass is closed, and a reader can diff this folder against `data/` to see what a "quietly wrong" record looks like.
 
@@ -30,7 +30,6 @@ A checkout of the tree at `2026-08-07` with these records *in* `data/` would fai
 **Files in this folder:**
 
 - `cases.yaml` — the 7 minimal invalid payloads + expected validator message (machine-readable)
-- `cases.json` — same, for tooling
 - This README — human-readable provenance
 
 This is not a full `data/` dump — it is the *smallest* reproducer per defect, so the test can pin the validator without needing a full graph.
