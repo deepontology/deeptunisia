@@ -38,6 +38,13 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
+import {
+	auditInterpretationPaths,
+	intervalsOverlap,
+	isTemporalCoherent,
+	areTypesCompatible,
+	isLowConfidence
+} from '../src/lib/interpretation.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
@@ -284,6 +291,237 @@ try {
 		);
 	} else {
 		ok('pipeline fixture: pathAudit reports the injected weak chain', false, 'weak tree did not build');
+	}
+
+	// -----------------------------------------------------------------------
+	// 4. L3 temporal coherence — 3-hop path with disjoint intervals, warn-only.
+	//    All edges carrying (reported-influence) and overlapping-grade B, so
+	//    type and confidence advisories must NOT fire — only temporal.
+	// -----------------------------------------------------------------------
+	const TREE_TEMPORAL = join(WORK, 'temporal');
+	cpSync(TREE, TREE_TEMPORAL, { recursive: true });
+	appendBlock(TREE_TEMPORAL, 'people.yaml', `
+- id: fixture-temp-a
+  name_en: Fixture Temp A
+  layers: [political]
+  sources: [${s}]
+- id: fixture-temp-b
+  name_en: Fixture Temp B
+  layers: [political]
+  sources: [${s}]
+- id: fixture-temp-c
+  name_en: Fixture Temp C
+  layers: [political]
+  sources: [${s}]
+- id: fixture-temp-d
+  name_en: Fixture Temp D
+  layers: [political]
+  sources: [${s}]`);
+	appendBlock(TREE_TEMPORAL, 'relationships.yaml', `
+- id: rel-fixture-temporal-1
+  from: fixture-temp-a
+  to: fixture-temp-b
+  type: reported-influence
+  description: "Synthetic temporal edge 1 — 1990-1995."
+  confidence: B
+  start: "1990-01-01"
+  end: "1995-01-01"
+  sources: [${s}]
+- id: rel-fixture-temporal-2
+  from: fixture-temp-b
+  to: fixture-temp-c
+  type: reported-influence
+  description: "Synthetic temporal edge 2 — 2000-2005."
+  confidence: B
+  start: "2000-01-01"
+  end: "2005-01-01"
+  sources: [${s}]
+- id: rel-fixture-temporal-3
+  from: fixture-temp-c
+  to: fixture-temp-d
+  type: reported-influence
+  description: "Synthetic temporal edge 3 — 2010-2015."
+  confidence: B
+  start: "2010-01-01"
+  end: "2015-01-01"
+  sources: [${s}]`);
+	const temporal = build(TREE_TEMPORAL, join(WORK, 'out-temporal'), join(WORK, 'static-temporal'));
+	ok('pipeline fixture: temporal-incoherent tree builds (warn-only)', temporal.code === 0, `exit ${temporal.code}`);
+	if (temporal.code === 0) {
+		const g = JSON.parse(readFileSync(join(WORK, 'out-temporal', 'dataset.json'), 'utf8')) as {
+			relationships?: Array<{ id: string; from: string; to: string; type: string; confidence: string; verification: string; basis: string; interval: { startEarliest: number; startLatest: number; endEarliest: number | null; endLatest: number | null; startPrecision: string; endPrecision: string; status: string; raw: { start: string | null; end: string | null } } }>;
+			meta?: { interpretationAudit?: { temporal: { edges: string[] }[]; typeIncompatible: { edges: string[] }[]; lowConfidence: { edges: string[] }[] } };
+		};
+		const rels = (g.relationships ?? []).filter((r) => r.id.startsWith('rel-fixture-temporal-'));
+		const r1 = rels.find((r) => r.id === 'rel-fixture-temporal-1')!;
+		const r2 = rels.find((r) => r.id === 'rel-fixture-temporal-2')!;
+		const r3 = rels.find((r) => r.id === 'rel-fixture-temporal-3')!;
+		const directTemporal = !isTemporalCoherent([
+			{ id: r1.id, from: r1.from, to: r1.to, type: r1.type, confidence: r1.confidence, verification: r1.verification, basis: r1.basis, interval: r1.interval },
+			{ id: r2.id, from: r2.from, to: r2.to, type: r2.type, confidence: r2.confidence, verification: r2.verification, basis: r2.basis, interval: r2.interval },
+			{ id: r3.id, from: r3.from, to: r3.to, type: r3.type, confidence: r3.confidence, verification: r3.verification, basis: r3.basis, interval: r3.interval }
+		]);
+		const adjacentGap = !intervalsOverlap(r1.interval, r2.interval) && !intervalsOverlap(r2.interval, r3.interval);
+		ok('pipeline fixture: temporal advisory flags the non-overlapping chain', directTemporal && adjacentGap, `${r1.interval.startEarliest}→${r1.interval.endLatest} vs ${r2.interval.startEarliest}→${r2.interval.endLatest}`);
+		// The capped meta is what the Inspector reads — it carries real-data temporal
+		// advisories even before the fixture. The build being warn-only is the gate.
+		const metaTemporal = g.meta?.interpretationAudit?.temporal ?? [];
+		ok('pipeline fixture: temporal advisory present in meta (Inspector-visible)', metaTemporal.length > 0, `meta ${metaTemporal.length}`);
+	} else {
+		ok('pipeline fixture: temporal advisory flags the non-overlapping chain', false, 'temporal tree did not build');
+		ok('pipeline fixture: temporal advisory present in meta (Inspector-visible)', false, 'temporal tree did not build');
+	}
+
+	// -----------------------------------------------------------------------
+	// 5. L3 type compatibility — board + family + funding path, warn-only.
+	//    Intervals overlap and confidences are high, so only type fires.
+	// -----------------------------------------------------------------------
+	const TREE_TYPE = join(WORK, 'type');
+	cpSync(TREE, TREE_TYPE, { recursive: true });
+	appendBlock(TREE_TYPE, 'people.yaml', `
+- id: fixture-type-p1
+  name_en: Fixture Type P1
+  layers: [political]
+  sources: [${s}]
+- id: fixture-type-p2
+  name_en: Fixture Type P2
+  layers: [political]
+  sources: [${s}]`);
+	appendBlock(TREE_TYPE, 'institutions.yaml', `
+- id: fixture-type-inst-a
+  name_en: "Fixture Type Inst A"
+  type: company
+  layer: economic
+  sources: [${s}]
+- id: fixture-type-inst-b
+  name_en: "Fixture Type Inst B"
+  type: company
+  layer: economic
+  sources: [${s}]`);
+	appendBlock(TREE_TYPE, 'relationships.yaml', `
+- id: rel-fixture-type-board
+  from: fixture-type-p1
+  to: fixture-type-inst-a
+  type: board
+  description: "Synthetic board edge — type-compatibility fixture."
+  confidence: A
+  start: "2015-01-01"
+  end: "2020-01-01"
+  sources: [${s}]
+- id: rel-fixture-type-family
+  from: fixture-type-p1
+  to: fixture-type-p2
+  type: family
+  subtype: sibling
+  description: "Synthetic family edge — type-compatibility fixture."
+  confidence: A
+  start: "2015-01-01"
+  end: "2020-01-01"
+  sources: [${s}]
+- id: rel-fixture-type-funding
+  from: fixture-type-p2
+  to: fixture-type-inst-b
+  type: funding
+  description: "Synthetic funding edge — type-compatibility fixture."
+  confidence: A
+  start: "2015-01-01"
+  end: "2020-01-01"
+  sources: [${s}]`);
+	const typ = build(TREE_TYPE, join(WORK, 'out-type'), join(WORK, 'static-type'));
+	ok('pipeline fixture: type-incompatible tree builds (warn-only)', typ.code === 0, `exit ${typ.code}`);
+	if (typ.code === 0) {
+		const g = JSON.parse(readFileSync(join(WORK, 'out-type', 'dataset.json'), 'utf8')) as {
+			relationships?: Array<{ id: string; from: string; to: string; type: string; confidence: string; verification: string; basis: string; interval: any }>;
+			meta?: { interpretationAudit?: { temporal: { edges: string[] }[]; typeIncompatible: { edges: string[] }[]; lowConfidence: { edges: string[] }[] } };
+		};
+		const rels = (g.relationships ?? []).filter((r) => r.id.startsWith('rel-fixture-type-'));
+		const types = rels.map((r) => r.type);
+		const directType = !areTypesCompatible(types);
+		ok('pipeline fixture: type advisory flags the mixed board+family+funding chain', directType, `${types.join('+')}`);
+		const metaType = g.meta?.interpretationAudit?.typeIncompatible ?? [];
+		ok('pipeline fixture: type advisory present in meta (Inspector-visible)', metaType.length > 0, `meta ${metaType.length}`);
+	} else {
+		ok('pipeline fixture: type advisory flags the mixed board+family+funding chain', false, 'type tree did not build');
+		ok('pipeline fixture: type advisory present in meta (Inspector-visible)', false, 'type tree did not build');
+	}
+
+	// -----------------------------------------------------------------------
+	// 6. L3 confidence floor — weakest link D (or C without primary), warn-only.
+	//    Intervals overlap and types are uniform carrying, so only confidence fires.
+	// -----------------------------------------------------------------------
+	const TREE_CONF = join(WORK, 'conf');
+	cpSync(TREE, TREE_CONF, { recursive: true });
+	appendBlock(TREE_CONF, 'people.yaml', `
+- id: fixture-conf-a
+  name_en: Fixture Conf A
+  layers: [political]
+  sources: [${s}]
+- id: fixture-conf-b
+  name_en: Fixture Conf B
+  layers: [political]
+  sources: [${s}]
+- id: fixture-conf-c
+  name_en: Fixture Conf C
+  layers: [political]
+  sources: [${s}]
+- id: fixture-conf-d
+  name_en: Fixture Conf D
+  layers: [political]
+  sources: [${s}]`);
+	appendBlock(TREE_CONF, 'relationships.yaml', `
+- id: rel-fixture-conf-1
+  from: fixture-conf-a
+  to: fixture-conf-b
+  type: reported-influence
+  description: "Synthetic confidence edge 1 — grade B, carrying."
+  confidence: B
+  start: "2015-01-01"
+  end: "2020-01-01"
+  sources: [${s}]
+- id: rel-fixture-conf-2
+  from: fixture-conf-b
+  to: fixture-conf-c
+  type: reported-influence
+  description: "Synthetic confidence edge 2 — grade D, the weak link."
+  confidence: D
+  attributed_to: "Fixture claimant D"
+  sources: [${s}]
+- id: rel-fixture-conf-3
+  from: fixture-conf-c
+  to: fixture-conf-d
+  type: reported-influence
+  description: "Synthetic confidence edge 3 — grade B, carrying."
+  confidence: B
+  start: "2015-01-01"
+  end: "2020-01-01"
+  sources: [${s}]`);
+	const conf = build(TREE_CONF, join(WORK, 'out-conf'), join(WORK, 'static-conf'));
+	ok('pipeline fixture: low-confidence tree builds (warn-only)', conf.code === 0, `exit ${conf.code}`);
+	if (conf.code === 0) {
+		const g = JSON.parse(readFileSync(join(WORK, 'out-conf', 'dataset.json'), 'utf8')) as {
+			relationships?: Array<{ id: string; from: string; to: string; type: string; confidence: string; verification: string; basis: string; interval: any }>;
+			meta?: { interpretationAudit?: { temporal: { edges: string[] }[]; typeIncompatible: { edges: string[] }[]; lowConfidence: { edges: string[] }[] } };
+		};
+		const rels = (g.relationships ?? []).filter((r) => r.id.startsWith('rel-fixture-conf-'));
+		const directLow = isLowConfidence(
+			rels.map((r) => ({
+				id: r.id,
+				from: r.from,
+				to: r.to,
+				type: r.type,
+				confidence: r.confidence,
+				verification: r.verification,
+				basis: r.basis,
+				interval: r.interval
+			}))
+		);
+		const hasD = rels.some((r) => r.confidence === 'D');
+		ok('pipeline fixture: confidence advisory flags the D-weakened chain', directLow && hasD, `${rels.map((r) => r.confidence).join(',')}`);
+		const metaLow = g.meta?.interpretationAudit?.lowConfidence ?? [];
+		ok('pipeline fixture: confidence advisory present in meta (Inspector-visible)', metaLow.length > 0, `meta ${metaLow.length}`);
+	} else {
+		ok('pipeline fixture: confidence advisory flags the D-weakened chain', false, 'conf tree did not build');
+		ok('pipeline fixture: confidence advisory present in meta (Inspector-visible)', false, 'conf tree did not build');
 	}
 
 	console.log(`\n  ${checks - failures}/${checks} pipeline-fixture checks passed${failures ? `, ${failures} FAILED` : ''}\n`);
