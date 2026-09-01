@@ -12,10 +12,10 @@
 	import Chip from '$lib/ui/Chip.svelte';
 
 	/**
-	 * Five indices, side by side, never summed by default.
+	 * Six indices, side by side, never summed by default.
 	 *
 	 * Any single "power score" would be read as truth, and it would not be. So the
-	 * reader gets five separately-derived columns and a set of weight sliders. Moving
+	 * reader gets six separately-derived columns and a set of weight sliders. Moving
 	 * the sliders reorders the board, and the reader discovers for themselves that
 	 * "most powerful" is a function of what you decide to measure. That discovery is
 	 * the argument, delivered as an interaction rather than a disclaimer.
@@ -91,7 +91,7 @@
 	{/if}
 
 	<!--
-		What the five columns measure.
+		What the six columns measure.
 
 		Open on a wide screen, where the cards sit in one row and are the explanation
 		you read before the table. Folded on a phone, where the same grid collapses to a
