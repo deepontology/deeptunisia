@@ -1169,6 +1169,15 @@ const en: Dict = {
 	'inspector.weakChain.title': 'This chain rests on weak evidence',
 	'inspector.weakChain.body':
 		'{edges} inferred or unsubstantiated influence edges connect this person into a chain of {depth} steps. Every step is a claim the evidence has not established.',
+	'inspector.temporal.title': 'Gap in time — links do not overlap',
+	'inspector.temporal.body':
+		'This chain stitches {edges} links whose time spans do not overlap — {reason}. A gap means no one could carry influence across it.',
+	'inspector.type.title': 'Mixed mechanisms — not one influence channel',
+	'inspector.type.body':
+		'This chain mixes {reason}. Board, family and funding are different mechanisms; reading them as one influence channel conflates them.',
+	'inspector.confidence.title': 'Weak link — chain inherits its lowest grade',
+	'inspector.confidence.body':
+		'The weakest link ({reason}) is below the grade a composed path needs. A chain is only as strong as its weakest edge.',
 	'data.eyebrow': 'Open data',
 	'data.title': 'Take the graph',
 	'data.dl.dataset': 'The complete graph: entities, positions, relationships, events, sources, gradings.',
@@ -2375,6 +2384,15 @@ const fr: Dict = {
 	'inspector.weakChain.title': 'Cette chaîne repose sur des preuves faibles',
 	'inspector.weakChain.body':
 		"{edges} liens d'influence déduits ou non étayés relient cette personne à une chaîne de {depth} étapes. Chaque étape est une affirmation que les preuves n'ont pas établie.",
+	'inspector.temporal.title': 'Trou temporel — les liens ne se chevauchent pas',
+	'inspector.temporal.body':
+		'Cette chaîne enchaîne {edges} liens dont les périodes ne se chevauchent pas — {reason}. Une interruption signifie que personne n’a pu porter l’influence à travers elle.',
+	'inspector.type.title': 'Mécanismes mélangés — pas un seul canal d’influence',
+	'inspector.type.body':
+		'Cette chaîne mélange {reason}. Conseil d’administration, famille et financement sont des mécanismes différents ; les lire comme un seul canal d’influence les confond.',
+	'inspector.confidence.title': 'Maillon faible — la chaîne vaut son plus faible grade',
+	'inspector.confidence.body':
+		'Le maillon le plus faible ({reason}) est sous le grade qu’exige un chemin composé. Une chaîne ne vaut que son maillon le plus faible.',
 	'data.eyebrow': 'Données ouvertes',
 	'data.title': 'Emportez le graphe',
 	'data.dl.dataset': 'Le graphe complet : entités, postes, relations, événements, sources, gradations.',
@@ -3577,6 +3595,15 @@ const ar: Dict = {
 	'inspector.weakChain.title': 'هذه السلسلة تستند إلى أدلة ضعيفة',
 	'inspector.weakChain.body':
 		'{edges} روابط تأثير مستنتجة أو غير مدعومة تربط هذا الشخص بسلسلة من {depth} خطوات. كل خطوة ادعاء لم تثبته الأدلة.',
+	'inspector.temporal.title': 'فجوة زمنية — الروابط لا تتداخل',
+	'inspector.temporal.body':
+		'تجمع هذه السلسلة {edges} روابط لا تتداخل فتراتها — {reason}. الفجوة تعني أن لا أحد كان قادرًا على نقل النفوذ عبرها.',
+	'inspector.type.title': 'آليات مختلطة — ليست قناة نفوذ واحدة',
+	'inspector.type.body':
+		'تخلط هذه السلسلة {reason}. مجلس الإدارة والعائلة والتمويل آليات مختلفة؛ قراءتها كقناة نفوذ واحدة تخلط بينها.',
+	'inspector.confidence.title': 'حلقة ضعيفة — السلسلة على قدر أضعف حلقاتها',
+	'inspector.confidence.body':
+		'الحلقة الأضعف ({reason}) دون الدرجة التي يتطلبها مسار مركّب. السلسلة لا تتجاوز قوة أضعف حلقاتها.',
 	'data.eyebrow': 'بيانات مفتوحة',
 	'data.title': 'خذ الرسم البياني',
 	'data.dl.dataset': 'الرسم البياني الكامل: الكيانات والمناصب والعلاقات والأحداث والمصادر والدرجات.',

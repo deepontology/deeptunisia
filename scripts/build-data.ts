@@ -57,6 +57,7 @@ import {
 	type ResolvedInterval
 } from './dates.ts';
 import { loadParameters, type Parameters } from './parameters.ts';
+import { auditInterpretationPaths } from '../src/lib/interpretation.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
@@ -851,6 +852,34 @@ const pathAudit: { chains: { entities: string[]; edges: string[]; depth: number 
 			}))
 	};
 })();
+
+// ---------------------------------------------------------------------------
+// Interpretation audit L3 — temporal, type, confidence floors (warn-only).
+//
+// The weak-chain audit (W4) found chains of all-weak edges. Three remainders
+// live here as Level 3 (interpretation validity) per §5.10: record validity is
+// L1/L2, interpretation validity is L3. These do NOT gate emission — the
+// dataset can ship with incoherent paths; the product names them where they
+// render (Inspector). One audit enumerates all 2-3 hop undirected paths and
+// flags each for three independent advisories:
+//   - temporal: adjacent intervals do not overlap (e.g. 1990-1995 → 2000-2005)
+//   - typeIncompatible: the types along the path cannot be presented as one
+//     influence conduit (e.g. board + family + funding)
+//   - lowConfidence: weakest link is D or C without primary source
+// The logic lives in src/lib/interpretation.ts (pure, reusable in UI/tests).
+// ---------------------------------------------------------------------------
+const interpretationAudit = auditInterpretationPaths(
+	resolvedRelationships.map((r) => ({
+		id: r.id,
+		from: r.from,
+		to: r.to,
+		type: r.type,
+		confidence: r.confidence,
+		verification: r.verification,
+		basis: r.basis,
+		interval: r.interval
+	}))
+);
 
 // V14 — direction semantics. `directed` means from→to is the claim and reversing
 // it makes a different claim; for the types whose orientation is fixed by the
@@ -1854,6 +1883,9 @@ const dataset = {
 		// W4: chains of all-weak influence edges (inferred/unsubstantiated),
 		// warn-only — the Inspector names them instead of letting them pass.
 		pathAudit,
+		// L3 interpretation validity (warn-only): temporal, type, confidence
+		// floors on 2-3 hop paths. See src/lib/interpretation.ts.
+		interpretationAudit,
 		cards: {
 			sections: [...CARD_SECTIONS],
 			histogram: cardHistogram,
@@ -2637,6 +2669,12 @@ export interface DatasetMeta {
 	pathAudit: {
 		chains: { entities: string[]; edges: string[]; depth: number }[];
 	};
+	/** L3 warn-only: interpretation advisories on 2-3 hop paths (temporal, type, confidence). */
+	interpretationAudit: {
+		temporal: { entities: string[]; edges: string[]; depth: number; reason?: string }[];
+		typeIncompatible: { entities: string[]; edges: string[]; depth: number; reason?: string }[];
+		lowConfidence: { entities: string[]; edges: string[]; depth: number; reason?: string }[];
+	};
 }
 
 export interface Agreement {
@@ -3245,4 +3283,8 @@ ${principalCoverage
 	.join('\n')}
 
     weak influence chains (warn-only, W4): ${pathAudit.chains.length} — see Inspector
+    interpretation advisories (warn-only, L3):
+      temporal incoherence: ${interpretationAudit.temporal.length}
+      type incompatible:    ${interpretationAudit.typeIncompatible.length}
+      low-confidence floor: ${interpretationAudit.lowConfidence.length}
 `);
