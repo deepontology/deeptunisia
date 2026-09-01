@@ -230,6 +230,12 @@
 
 		<h2>{t('coverage.cards')}</h2>
 		<table class="schema">
+			<thead>
+				<tr>
+					<th>{t('coverage.histogram.sections')}</th>
+					<th>{t('coverage.histogram.people')}</th>
+				</tr>
+			</thead>
 			<tbody>
 				{#each histogramRows as [k, count] (k)}
 					<tr>
@@ -265,12 +271,24 @@
 		<h2>{t('coverage.reviewed')}</h2>
 		<p>{t('coverage.reviewedNote')}</p>
 		<table class="schema">
+			<thead>
+				<tr>
+					<th>{t('coverage.reviewed.bucket')}</th>
+					<th>{t('coverage.reviewed.reviewed')}</th>
+					<th>{t('coverage.reviewed.histogram')}</th>
+				</tr>
+			</thead>
 			<tbody>
 				{#each RISK_ORDER as bucket (bucket)}
 					{@const counts = ds.meta.review.byRisk[bucket]}
+					{@const pct = counts.total ? Math.round((counts.reviewed / counts.total) * 100) : 0}
 					<tr>
 						<td>{t(RISK_KEY[bucket])}</td>
 						<td>{counts.reviewed} / {counts.total}</td>
+						<td>
+							<span class="hist-track"><span class="hist-fill" style="width: {pct}%"></span></span>
+							<span class="mono hist-pct">{pct}%</span>
+						</td>
 					</tr>
 				{/each}
 			</tbody>
@@ -426,5 +444,26 @@
 	.queue .mono {
 		color: var(--text-faint);
 		white-space: nowrap;
+	}
+
+	.hist-track {
+		display: inline-block;
+		width: 80px;
+		height: 7px;
+		background: var(--surface-sunken);
+		border: 1px solid var(--border-subtle);
+		border-radius: 999px;
+		overflow: hidden;
+		vertical-align: middle;
+		margin-inline-end: 6px;
+	}
+	.hist-fill {
+		display: block;
+		height: 100%;
+		background: var(--accent);
+	}
+	.hist-pct {
+		font-size: 10.5px;
+		vertical-align: middle;
 	}
 </style>
