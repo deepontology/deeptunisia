@@ -1077,6 +1077,22 @@ const en: Dict = {
 	'atlas.capCount': '{n} institutions · {m} crossings',
 	'atlas.mEras': 'eras',
 	'atlas.mTenure': 'tenure',
+	'atlas.byera.desc':
+		'One panel per era. Node positions are identical in every panel, so only the structure changes: circle size is the number of people holding posts in that institution, and a line means at least one person held posts in both. Watch the security cluster thicken after 1991 and again after 2021.',
+	'atlas.tenure.desc':
+		'Median tenure per office, shortest first, for the {count} offices with at least {min} recorded holders. The bar spans the shortest to the longest tenure on record and the notch marks the median. This is computed from position intervals alone — no weighting and no editorial judgement — which makes the asymmetry at the top of this list the clearest pattern the dataset produces without being asked.',
+	'atlas.tenure.note':
+		'Turnover is not evidence of instability, purge or hidden control, and this dataset offers no explanation for the spread — the question is open and recorded as such on the evidence page. Interim and acting appointments are counted as holders and marked *, which inflates the churn of offices that use them. Tenures drawn from uncertain dates carry that uncertainty into the median.',
+	'atlas.tenure.aria': '{title}: {holders} holders, median tenure {median}, range {shortest} to {longest}',
+	'atlas.tenure.holdersTitle': '{n} recorded holders',
+	'rankings.caveat':
+		'This is a ranking of structural position, not of who secretly runs the country. A high brokerage score means the dataset records this person connecting otherwise separate networks; it is not evidence of wrongdoing, coordination, or hidden control. Select a row to see exactly which records produced each number.',
+	'rankings.detail.nopost': 'no post at this date',
+	'rankings.detail.nopath': 'no documented path to the presidency',
+	'rankings.detail.hops': '{n} institutional step(s) from the presidency',
+	'rankings.detail.survival': '{duration} in senior post · {n} rupture(s) survived in office',
+	'rankings.detail.brokerage': '{n} connection(s) reach outside their own layer',
+	'rankings.detail.authority': '{role} · weight {weight}',
 	'feed.eyebrow': 'Feed',
 	'feed.hint': 'Headlines published by others. Not DeepTunisia data.',
 	'feed.latest': 'Latest {date}.',
@@ -2261,6 +2277,22 @@ const fr: Dict = {
 	'atlas.capCount': '{n} institutions · {m} passages',
 	'atlas.mEras': 'époques',
 	'atlas.mTenure': 'mandats',
+	'atlas.byera.desc':
+		'Un panneau par époque. Les positions des nœuds sont identiques dans chaque panneau, seule la structure change : la taille du cercle indique le nombre de personnes ayant occupé un poste dans cette institution, et un trait signifie qu’au moins une personne a occupé des postes dans les deux. Observez le groupe sécurité s’épaissir après 1991 puis de nouveau après 2021.',
+	'atlas.tenure.desc':
+		'Durée médiane par fonction, du plus bref au plus long, pour les {count} fonctions comptant au moins {min} titulaires enregistrés. La barre couvre la durée la plus courte à la plus longue constatée et l’encoche marque la médiane. Calculé uniquement à partir des intervalles de poste — sans pondération ni jugement éditorial — ce qui fait de l’asymétrie en tête de liste le motif le plus net que les données produisent d’elles-mêmes.',
+	'atlas.tenure.note':
+		'La rotation n’est pas une preuve d’instabilité, de purge ou de contrôle occulte, et ce jeu de données n’offre aucune explication de la dispersion — la question reste ouverte et consignée comme telle sur la page des preuves. Les nominations intérimaires ou par intérim sont comptées comme des titulaires et marquées d’un *, ce qui gonfle la rotation des postes qui y recourent. Les durées tirées de dates incertaines portent cette incertitude dans la médiane.',
+	'atlas.tenure.aria': '{title} : {holders} titulaires, médiane {median}, de {shortest} à {longest}',
+	'atlas.tenure.holdersTitle': '{n} titulaires enregistrés',
+	'rankings.caveat':
+		'Ceci est un classement de position structurelle, pas de qui dirigerait secrètement le pays. Un score d’intermédiation élevé signifie que les données enregistrent cette personne reliant des réseaux autrement séparés ; ce n’est pas une preuve de malversation, de coordination ou de contrôle occulte. Sélectionnez une ligne pour voir exactement quels enregistrements ont produit chaque chiffre.',
+	'rankings.detail.nopost': 'aucun poste à cette date',
+	'rankings.detail.nopath': 'aucun chemin documenté vers la présidence',
+	'rankings.detail.hops': '{n} pas institutionnel(s) de la présidence',
+	'rankings.detail.survival': '{duration} dans un poste de haut rang · {n} rupture(s) survécue(s) en fonction',
+	'rankings.detail.brokerage': '{n} lien(s) s’étend(ent) hors de leur propre strate',
+	'rankings.detail.authority': '{role} · poids {weight}',
 	'feed.eyebrow': 'Actualité',
 	'feed.hint': 'Des titres publiés par d’autres. Pas des données DeepTunisia.',
 	'feed.latest': 'Derniers titres au {date}.',
@@ -3443,6 +3475,22 @@ const ar: Dict = {
 	'atlas.capCount': '{n} مؤسسات · {m} تنقّلات',
 	'atlas.mEras': 'عصور',
 	'atlas.mTenure': 'مدد',
+	'atlas.byera.desc':
+		'لوحة لكل حقبة. مواضع العُقد متطابقة في كل لوحة، وحدها البنية تتغير: حجم الدائرة هو عدد الأشخاص الذين شغلوا مناصب في تلك المؤسسة، والخط يعني أن شخصًا واحدًا على الأقل شغل مناصب في الاثنتين. راقب تكاثف مجموعة الأمن بعد 1991 ومرة أخرى بعد 2021.',
+	'atlas.tenure.desc':
+		'الوسيط لمدة شغل المنصب لكل وظيفة، من الأقصر إلى الأطول، لعدد {count} من الوظائف تضم على الأقل {min} من شاغلي المناصب المسجلين. يمتد الشريط من أقصر مدة مسجلة إلى أطولها وتشير العلامة إلى الوسيط. هذا محسوب من مجالات المناصب فقط — دون ترجيح ولا حكم تحريري — مما يجعل عدم التناظر في رأس القائمة أوضح نمط تنتجه البيانات تلقائيًا.',
+	'atlas.tenure.note':
+		'التداول ليس دليلاً على عدم الاستقرار أو حملة تطهير أو سيطرة خفية، ولا تقدم هذه البيانات أي تفسير للتفاوت — والسؤال مفتوح ومسجّل كذلك في صفحة الأدلة. تُحتسب التعيينات المؤقتة أو بالنيابة كشاغلين وتُميّز بـ *، مما يضخّم معدّل التغيير في المناصب التي تلجأ إليها. والمدد المستمدة من تواريخ غير مؤكدة تحمل ذلك الالتباس إلى الوسيط.',
+	'atlas.tenure.aria': '{title}: {holders} من شاغلي المنصب، الوسيط {median}، المدى من {shortest} إلى {longest}',
+	'atlas.tenure.holdersTitle': '{n} من شاغلي المنصب المسجلين',
+	'rankings.caveat':
+		'هذا ترتيب للموقع البنيوي، وليس لمن يدير البلاد سرًا. درجة الوساطة العالية تعني أن البيانات تسجّل هذا الشخص رابطًا بين شبكات منفصلة لولاه؛ وهي ليست دليلاً على مخالفة أو تنسيق أو سيطرة خفية. اختر صفًا لترى بالضبط أي السجلات أنتجت كل رقم.',
+	'rankings.detail.nopost': 'لا منصب في هذا التاريخ',
+	'rankings.detail.nopath': 'لا يوجد مسار موثّق إلى الرئاسة',
+	'rankings.detail.hops': '{n} خطوة مؤسسية من الرئاسة',
+	'rankings.detail.survival': '{duration} في منصب عليا · {n} من القطائع نجت أثناء شغل المنصب',
+	'rankings.detail.brokerage': '{n} من الروابط تمتد خارج طبقتها',
+	'rankings.detail.authority': '{role} · الوزن {weight}',
 	'feed.eyebrow': 'الأخبار',
 	'feed.hint': 'عناوين تنشرها جهات أخرى. ليست من بيانات DeepTunisia.',
 	'feed.latest': 'أحدث العناوين بتاريخ {date}.',

@@ -15,10 +15,11 @@
 		institutionById,
 		meetsBasis,
 		personById,
+		roleById,
 		type Basis,
 		type Layer
 	} from '$lib/model';
-	import { t, durationLabel, formatDate, nameOf} from '$lib/t.svelte';
+	import { t, durationLabel, formatDate, nameOf } from '$lib/t.svelte';
 	import { format } from '$lib/i18n';
 	import { currencyOf, elapsedYears, monthsSince, tenureByRole, type Currency } from '$lib/tenure';
 
@@ -45,26 +46,28 @@
 	 * so rather than letting the comparison imply it.
 	 */
 
-	const TIER: { key: Currency; label: string; note: string; tint: string }[] = [
-		{
-			key: 'ongoing',
-			label: t('now.tier.ongoing'),
-			note: t('now.tier.ongoing.note'),
-			tint: 'var(--basis-documented)'
-		},
-		{
-			key: 'last-verified',
-			label: t('now.tier.lastverified'),
-			note: t('now.tier.lastverified.note'),
-			tint: 'var(--basis-reported)'
-		},
-		{
-			key: 'unknown',
-			label: t('now.tier.unknown'),
-			note: t('now.tier.unknown.note'),
-			tint: 'var(--basis-inferred)'
-		}
-	];
+	const TIER = $derived(
+		[
+			{
+				key: 'ongoing' as Currency,
+				label: t('now.tier.ongoing'),
+				note: t('now.tier.ongoing.note'),
+				tint: 'var(--basis-documented)'
+			},
+			{
+				key: 'last-verified' as Currency,
+				label: t('now.tier.lastverified'),
+				note: t('now.tier.lastverified.note'),
+				tint: 'var(--basis-reported)'
+			},
+			{
+				key: 'unknown' as Currency,
+				label: t('now.tier.unknown'),
+				note: t('now.tier.unknown.note'),
+				tint: 'var(--basis-inferred)'
+			}
+		] as const
+	);
 
 	const tenure = $derived(tenureByRole(ds.positions));
 
@@ -97,12 +100,13 @@
 			const stats = tenure.get(p.role);
 			const elapsed = elapsedYears(p.interval.startEarliest);
 
+			const localizedTitle = nameOf(roleById.get(p.role)) || p.roleTitle;
 			out.push({
 				id: p.id,
 				person: nameOf(personById.get(p.holder)) ?? p.holder,
 				personId: p.holder,
 				role: p.role,
-				roleTitle: p.roleTitle,
+				roleTitle: localizedTitle,
 				institution: nameOf(institutionById.get(p.institution)) ?? '',
 				layer: p.layer as Layer,
 				basis: p.basis as Basis,
@@ -136,7 +140,8 @@
 			const end = p.interval.endLatest ?? p.interval.startEarliest;
 			const prev = seen.get(p.role);
 			if (!prev || end > prev.last) {
-				seen.set(p.role, { title: p.roleTitle, layer: p.layer as Layer, last: end });
+				const localizedTitle = nameOf(roleById.get(p.role)) || p.roleTitle;
+				seen.set(p.role, { title: localizedTitle, layer: p.layer as Layer, last: end });
 			}
 		}
 		return [...seen.entries()]
@@ -281,7 +286,7 @@
 					<li style:--c={LAYER_COLOR[s.layer]}>
 						<i class="dot"></i>
 						<span class="role">{s.title}</span>
-						<span class="when">{new Date(s.last).getUTCFullYear()}</span>
+						<span class="when">{formatDate(s.last, 'year')}</span>
 					</li>
 				{/each}
 			</ul>

@@ -1,13 +1,11 @@
 <script lang="ts">
 	import Atlas from '$lib/components/Atlas.svelte';
+	import { t } from '$lib/t.svelte';
 </script>
 
 <svelte:head>
-	<title>Atlas · DeepTunisia</title>
-	<meta
-		name="description"
-		content="Everything at once: structure by era, who outlasts the regimes, and the institutional crossings that form career pipelines."
-	/>
+	<title>{t('nav.atlas')} · DeepTunisia</title>
+	<meta name="description" content={t('atlas.hint')} />
 </svelte:head>
 
 <Atlas />
