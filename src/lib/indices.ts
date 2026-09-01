@@ -46,6 +46,7 @@ export interface IndexScores {
 	/** Supporting detail so every score can be interrogated rather than trusted. */
 	detail: {
 		topRole: string | null;
+		topRoleId: string | null;
 		hops: number | null;
 		years: number;
 		rupturesSurvived: number;
@@ -201,8 +202,9 @@ function computeIndicesUncached(opts: IndexOptions): IndexScores[] {
 		if (relevant.length === 0 && !opts.allTime) continue;
 
 		const authority = relevant.reduce((max, p) => Math.max(max, p.authority), 0);
-		const topRole = relevant.reduce<{ authority: number; title: string } | null>(
-			(best, p) => (!best || p.authority > best.authority ? { authority: p.authority, title: p.roleTitle } : best),
+		const topRole = relevant.reduce<{ authority: number; title: string; id: string } | null>(
+			(best, p) =>
+				!best || p.authority > best.authority ? { authority: p.authority, title: p.roleTitle, id: p.role } : best,
 			null
 		);
 
@@ -269,6 +271,7 @@ function computeIndicesUncached(opts: IndexOptions): IndexScores[] {
 			influence,
 			detail: {
 				topRole: topRole?.title ?? null,
+				topRoleId: topRole?.id ?? null,
 				hops,
 				years: Math.round(years * 10) / 10,
 				rupturesSurvived,

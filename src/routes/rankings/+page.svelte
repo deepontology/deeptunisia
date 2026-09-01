@@ -1,13 +1,11 @@
 <script lang="ts">
 	import Rankings from '$lib/components/Rankings.svelte';
+	import { t } from '$lib/t.svelte';
 </script>
 
 <svelte:head>
-	<title>Rankings · DeepTunisia</title>
-	<meta
-		name="description"
-		content="Six separate structural indices of power in Tunisia, with reader-adjustable weights. Deliberately no single power score."
-	/>
+	<title>{t('nav.rankings')} · DeepTunisia</title>
+	<meta name="description" content={t('rankings.hint')} />
 </svelte:head>
 
 <Rankings />
