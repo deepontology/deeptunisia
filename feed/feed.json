@@ -3,6 +3,42 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:67b4211ce643f40c",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Tunisie | Rappel des horaires d’hiver des pharmacies",
+      "link": "https://kapitalis.com/tunisie/2026/09/01/tunisie-rappel-des-horaires-dhiver-des-pharmacies/",
+      "published": "2026-09-01T19:58:10Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:kapitalis:d0ae78787d71302d",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Le film « 13ème Round » rafle deux nouveaux prix au Festival de Saïdia au Maroc",
+      "link": "https://kapitalis.com/tunisie/2026/09/01/le-film-13eme-round-rafle-deux-nouveaux-prix-au-festival-de-saidia-au-maroc/",
+      "published": "2026-09-01T19:42:55Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:nawaat:e30b51cb259f968b",
+      "outlet": "Nawaat",
+      "outletId": "nawaat",
+      "title": "صفحات ومواقع رسمية تعطي المثال في انتهاك المعطيات الشخصية",
+      "link": "https://nawaat.org/2026/09/01/%d8%b5%d9%81%d8%ad%d8%a7%d8%aa-%d9%88%d9%85%d9%88%d8%a7%d9%82%d8%b9-%d8%b1%d8%b3%d9%85%d9%8a%d8%a9-%d8%aa%d8%b9%d8%b7%d9%8a-%d8%a7%d9%84%d9%85%d8%ab%d8%a7%d9%84-%d9%81%d9%8a-%d8%a7%d9%86%d8%aa/",
+      "published": "2026-09-01T18:57:25Z",
+      "lang": "ar"
+    },
+    {
+      "id": "feed:african-manager:a697de23eebbb88d",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Pêche : La balance commerciale excédentaire de 66,7 MDT",
+      "link": "https://africanmanager.com/produits-de-peche-la-balance-commerciale-excedentaire-de-667-mdt/",
+      "published": "2026-09-01T17:08:12Z",
+      "lang": "fr"
+    },
+    {
       "id": "feed:african-manager:b113ac91580dd5b8",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -10764,42 +10800,6 @@
       "title": "Incendies au Maghreb : Greenpeace interpelle les États",
       "link": "https://africanmanager.com/incendies-au-maghreb-greenpeace-interpelle-les-etats-sur-leur-responsabilite-climatique/",
       "published": "2026-07-28T03:50:08Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:3a517b648fa1d50e",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "« Aziza Othmana » accélère ses projets de modernisation",
-      "link": "https://africanmanager.com/lhopital-aziza-othmana-accelere-ses-projets-de-modernisation-et-de-renforcement-des-effectifs/",
-      "published": "2026-07-28T03:48:15Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:nawaat:572b116da9ac3153",
-      "outlet": "Nawaat",
-      "outletId": "nawaat",
-      "title": "نواة في دقيقة: الرئيس وحكومته أبطال الصمت والاختفاء وقت الشدة",
-      "link": "https://nawaat.org/2026/07/27/%d9%86%d9%88%d8%a7%d8%a9-%d9%81%d9%8a-%d8%af%d9%82%d9%8a%d9%82%d8%a9-%d8%a7%d9%84%d8%b1%d8%a6%d9%8a%d8%b3-%d9%88%d8%ad%d9%83%d9%88%d9%85%d8%aa%d9%87-%d8%a3%d8%a8%d8%b7%d8%a7%d9%84-%d8%a7%d9%84%d8%b5/",
-      "published": "2026-07-27T17:14:17Z",
-      "lang": "ar"
-    },
-    {
-      "id": "feed:african-manager:b4a52687bfefde3f",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Dix retardataires, la loi, et le silence du CMF et du TSE!",
-      "link": "https://africanmanager.com/dix-retardataires-la-loi-et-le-silence-du-cmf-et-du-tse/",
-      "published": "2026-07-27T15:59:44Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:486561cc0bfb940a",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Tunis Re améliore son taux de sinistralité",
-      "link": "https://africanmanager.com/tunis-re-ameliore-son-taux-de-sinistralite/",
-      "published": "2026-07-27T15:08:00Z",
       "lang": "fr"
     }
   ]
