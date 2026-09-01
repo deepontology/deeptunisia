@@ -297,6 +297,7 @@ interface ValidationIssue {
  * so the build refuses rather than quietly painting the claim as documented.
  */
 const CLAIM_GRADES = new Set(['documented', 'reported', 'unsubstantiated']);
+const CLAIM_SCOPES = new Set(['measurement', 'institutional-statement', 'model-output', 'inference']);
 
 /**
  * Absolutes lint: prose that asserts a number or a universal ("never",
@@ -379,6 +380,13 @@ function validate(
 		const g = typeof (c as Record<string, unknown>).grade === 'string' ? ((c as Record<string, unknown>).grade as string) : '';
 		if (!CLAIM_GRADES.has(g)) {
 			issues.push({ slug, type: 'bad_grade', detail: `Claim ${c.id} carries unknown grade "${g}" — allowed: documented, reported, unsubstantiated` });
+		}
+		const scope = (c as Record<string, unknown>).scope;
+		if (scope !== undefined) {
+			const s = String(scope);
+			if (!CLAIM_SCOPES.has(s)) {
+				issues.push({ slug, type: 'bad_grade', detail: `Claim ${c.id} carries unknown scope "${s}" — allowed: measurement, institutional-statement, model-output, inference` });
+			}
 		}
 	}
 

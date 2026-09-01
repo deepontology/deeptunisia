@@ -35,10 +35,13 @@ export interface InvestigationResearch {
 	documented_negatives: number;
 }
 
+export type ClaimScope = 'measurement' | 'institutional-statement' | 'model-output' | 'inference';
+
 export interface Claim {
 	id: string;
 	text: LocaleString;
 	grade: string;
+	scope?: ClaimScope;
 	sources: string[];
 	entities: string[];
 	sections: string[];
@@ -50,8 +53,7 @@ export interface Claim {
 	};
 	layer?: string;
 	negative?: boolean;
-	/** Reserved for a later pass; not rendered anywhere yet. */
-	scope?: string;
+	text_note?: string;
 }
 
 export interface Source {
