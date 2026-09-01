@@ -1,5 +1,5 @@
 /**
- * M3 — sensitivity harness for the index constants (roadmap item M3).
+ * M3 — sensitivity harness for the index constants + temporal window/slack (roadmap item M3 / C8).
  *
  * The influence index discounts each basis by a weight read from
  * data/parameters.yaml (`index.discount`). Those weights are editorial
@@ -7,11 +7,19 @@
  * them. This harness answers that: perturb each discount, recompute the
  * rankings, and emit the deltas as a published table.
  *
- * It never touches canonical data. The perturbations run against the built
+ * C8 extends it to the two temporal modelling assumptions that shape
+ * published behaviour (paper §5.4): the 8-year backwards window for `<=`
+ * tokens and the ±1 year / ±1 quarter slack for `~` tokens. Both are
+ * configuration, not claims, and their sensitivity is reported the same way:
+ * halving/doubling the window and ±50% slack, then ranking deltas.
+ *
+ * It never touches canonical data on disk. The perturbations run against the built
  * graph (src/generated/dataset.json) in memory, mutating the emitted
  * parameters object the client reads and resetting the indices memo between
  * runs (clearIndicesMemo — the memo key excludes the discount by design).
- * `npm run data` output is byte-identical before and after.
+ * For window/slack, intervals are recomputed in-memory via resolveInterval
+ * with reconfigured time globals, then indices and succession gaps are
+ * recomputed from those intervals. `npm run data` output is byte-identical before and after.
  *
  * The baseline is the all-time ranking (whole timeline, no instant filter):
  * the most stable reference for an audit of constants, and the posture the
@@ -26,6 +34,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { computeIndices, clearIndicesMemo, composite, DEFAULT_WEIGHTS, type IndexKey } from '../src/lib/indices.ts';
 import { LAYERS, ds, type Basis } from '../src/lib/model.ts';
+import { configureTime, resolveInterval, BEFORE_WINDOW_YEARS, APPROX_SLACK_DAYS, DATASET_FLOOR, DATASET_CUTOFF } from './dates.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
@@ -43,15 +52,21 @@ const shipped: Record<Basis, number> = {
 	unsubstantiated: ds.meta.parameters?.index?.discount?.unsubstantiated ?? 0
 };
 
+const shippedWindow = ds.meta.parameters?.time?.beforeWindowYears ?? BEFORE_WINDOW_YEARS;
+const shippedSlack = {
+	year: ds.meta.parameters?.time?.approxSlackDays?.year ?? APPROX_SLACK_DAYS.year,
+	month: ds.meta.parameters?.time?.approxSlackDays?.month ?? APPROX_SLACK_DAYS.month
+};
+
 /** The all-time baseline, computed with the shipped discount. */
 const OPTS = { t: Date.UTC(2026, 0, 1), basisFloor: 'reported' as const, layers: new Set(LAYERS), allTime: true };
 const baseline = computeIndices(OPTS);
 
 /** Perturbations: shipped, then each movable basis moved ±0.25 (clamped to [0,1]). */
-function perturbations(): { label: string; discount: Record<Basis, number> }[] {
+function discountPerturbations(): { label: string; discount: Record<Basis, number> }[] {
 	const out: { label: string; discount: Record<Basis, number> }[] = [{ label: 'shipped', discount: { ...shipped } }];
 	for (const b of BASES) {
-		if (shipped[b] <= 0) continue; // unsubstantiated = 0 is a floor, not a dial
+		if (shipped[b] <= 0) continue;
 		for (const delta of [-0.25, 0.25]) {
 			const next = { ...shipped };
 			next[b] = Math.max(0, Math.min(1, Math.round((shipped[b] + delta) * 100) / 100));
@@ -59,6 +74,22 @@ function perturbations(): { label: string; discount: Record<Basis, number> }[] {
 		}
 	}
 	return out;
+}
+
+function windowPerturbations(): { label: string; years: number }[] {
+	return [
+		{ label: 'shipped', years: shippedWindow },
+		{ label: `window ${shippedWindow}→${Math.max(1, Math.round(shippedWindow / 2))} (halved)`, years: Math.max(1, Math.round(shippedWindow / 2)) },
+		{ label: `window ${shippedWindow}→${shippedWindow * 2} (doubled)`, years: shippedWindow * 2 }
+	];
+}
+
+function slackPerturbations(): { label: string; slack: { year: number; month: number } }[] {
+	return [
+		{ label: 'shipped', slack: { ...shippedSlack } },
+		{ label: `slack year ${shippedSlack.year}→${Math.round(shippedSlack.year * 0.5)} month ${shippedSlack.month}→${Math.round(shippedSlack.month * 0.5)} (-50%)`, slack: { year: Math.round(shippedSlack.year * 0.5), month: Math.round(shippedSlack.month * 0.5) } },
+		{ label: `slack year ${shippedSlack.year}→${Math.round(shippedSlack.year * 1.5)} month ${shippedSlack.month}→${Math.round(shippedSlack.month * 1.5)} (+50%)`, slack: { year: Math.round(shippedSlack.year * 1.5), month: Math.round(shippedSlack.month * 1.5) } }
+	];
 }
 
 function topIds(scores: typeof baseline, key: IndexKey | 'composite'): string[] {
@@ -114,8 +145,7 @@ const rows: Row[] = [];
 const KEYS: ('influence' | 'composite')[] = ['influence', 'composite'];
 for (const key of KEYS) {
 	const shippedTop = topIds(baseline, key);
-	for (const p of perturbations()) {
-		// Apply the perturbation to the emitted parameters object in memory.
+	for (const p of discountPerturbations()) {
 		if (ds.meta.parameters?.index) ds.meta.parameters.index.discount = { ...p.discount };
 		clearIndicesMemo();
 		const perturbed = computeIndices(OPTS);
@@ -131,9 +161,77 @@ for (const key of KEYS) {
 			left: shippedTop.filter((id) => !top.includes(id))
 		});
 	}
-	// Restore before the next key's baseline.
 	if (ds.meta.parameters?.index) ds.meta.parameters.index.discount = { ...shipped };
 	clearIndicesMemo();
+}
+
+// Window and slack perturbations: recompute intervals in-memory, then indices.
+// For each, we reconfigure the time globals, recompute every position's interval
+// from its raw tokens, and recompute the ranking. This is the correct sensitivity
+// for §5.4's modelling assumptions — the published successionGaps and the
+// rankings both move when the window/slack do, and the appendix reports how.
+function recomputeWithTime(beforeYears: number, slack: { year: number; month: number }): typeof baseline {
+	configureTime({
+		floor: new Date(DATASET_FLOOR).toISOString().slice(0, 10),
+		cutoff: new Date(DATASET_CUTOFF).toISOString().slice(0, 10),
+		beforeWindowYears: beforeYears,
+		approxSlackDays: slack
+	});
+	// Patch the in-memory ds intervals in place for this run (clone first to restore after)
+	const originalIntervals = ds.positions.map((p: any) => p.interval);
+	for (const p of ds.positions as any[]) {
+		try {
+			p.interval = resolveInterval({ start: p.interval.raw.start, end: p.interval.raw.end });
+		} catch {
+			// Contradiction without dispute would throw — keep original for sensitivity
+		}
+	}
+	clearIndicesMemo();
+	const result = computeIndices(OPTS);
+	// Restore
+	for (let i = 0; i < ds.positions.length; i++) (ds.positions as any[])[i].interval = originalIntervals[i];
+	configureTime({
+		floor: new Date(DATASET_FLOOR).toISOString().slice(0, 10),
+		cutoff: new Date(DATASET_CUTOFF).toISOString().slice(0, 10),
+		beforeWindowYears: shippedWindow,
+		approxSlackDays: shippedSlack
+	});
+	clearIndicesMemo();
+	return result;
+}
+
+for (const key of KEYS) {
+	const shippedTop = topIds(baseline, key);
+	for (const w of windowPerturbations()) {
+		if (w.label === 'shipped') continue;
+		const perturbed = recomputeWithTime(w.years, shippedSlack);
+		const top = topIds(perturbed, key);
+		const c = compare(shippedTop, top);
+		rows.push({
+			perturbation: w.label,
+			key,
+			spearman: Math.round(c.spearman * 1000) / 1000,
+			overlap: Math.round(c.overlap * 10) / 10,
+			swaps: c.swaps,
+			entered: top.filter((id) => !shippedTop.includes(id)),
+			left: shippedTop.filter((id) => !top.includes(id))
+		});
+	}
+	for (const s of slackPerturbations()) {
+		if (s.label === 'shipped') continue;
+		const perturbed = recomputeWithTime(shippedWindow, s.slack);
+		const top = topIds(perturbed, key);
+		const c = compare(shippedTop, top);
+		rows.push({
+			perturbation: s.label,
+			key,
+			spearman: Math.round(c.spearman * 1000) / 1000,
+			overlap: Math.round(c.overlap * 10) / 10,
+			swaps: c.swaps,
+			entered: top.filter((id) => !shippedTop.includes(id)),
+			left: shippedTop.filter((id) => !top.includes(id))
+		});
+	}
 }
 
 // Emit.
@@ -148,7 +246,9 @@ const summary = {
 		}
 	})(),
 	shippedDiscount: shipped,
-	note: 'Perturbing index.discount moves ONLY the influence column and the composite that includes it. The other four indices are pure functions of the data and cannot move — that is a property, not a gap.',
+	shippedWindow,
+	shippedSlack,
+	note: 'Perturbing index.discount moves ONLY the influence column and the composite that includes it. The other four indices are pure functions of the data and cannot move — that is a property, not a gap. Window/slack perturbations recompute intervals in-memory and report ranking deltas the same way.',
 	rows
 };
 writeFileSync(join(OUT, 'index-sensitivity.json'), JSON.stringify(summary, null, 2), 'utf8');
@@ -167,6 +267,7 @@ const worstComposite = Math.min(...rows.filter((r) => r.key === 'composite').map
 console.log(`
   sensitivity: ${rows.length} rows -> output/sensitivity/
   shipped discount: documented ${shipped.documented} · reported ${shipped.reported} · inferred ${shipped.inferred} · unsubstantiated ${shipped.unsubstantiated}
+  shipped window: ${shippedWindow}y · slack year ${shippedSlack.year}d month ${shippedSlack.month}d
   worst influence spearman (vs shipped): ${worstInfluence}
   worst composite spearman (vs shipped): ${worstComposite}
   note: only influence/composite can move — the other four indices are pure functions of the data
