@@ -1,0 +1,128 @@
+# Pre-fix cases — 7 minimal invalid records that the 2026-08-07 build accepted.
+# Each block is the smallest payload that the current validator (V18–V24) rejects.
+# The `expect` string is a substring of the validator's error or the test's expected rejection.
+# These are NOT in data/ — they are synthetic fixtures for test-validators / test-pipeline.
+
+- id: H1-V18-inferred-without-reasoning
+  validator: V18
+  spec: H1
+  defect: "derived inferred (C + needs-primary-source) ships without reasoning/falsifiable_by"
+  real_record: "rel-beji-caid-essebsi-youssef-chahed-political-conflict"
+  expect: "reasoning"
+  kind: position
+  payload:
+    id: p-fixture
+    role: r-fixture
+    holder: h-fixture
+    start: "2018-06-01"
+    end: "2020-06-01"
+    confidence: C
+    verification: needs-primary-source
+    attributed_to: "Some Observer"
+    sources: [s-fixture]
+
+- id: H1-V18-inferred-without-falsifier
+  validator: V18
+  spec: H1
+  defect: "inferred without falsifiable_by"
+  expect: "falsifiable_by"
+  kind: position
+  payload:
+    id: p-fixture
+    role: r-fixture
+    holder: h-fixture
+    start: "2018-06-01"
+    end: "2020-06-01"
+    confidence: C
+    verification: needs-primary-source
+    attributed_to: "Some Observer"
+    reasoning: "some reasoning"
+    sources: [s-fixture]
+
+- id: H2-V19-stripped-field
+  validator: V19
+  spec: H2
+  defect: "attributed_to on people/positions silently stripped (schema strip mode)"
+  real_record: "10 people + 2 positions + 3 institutions"
+  expect: "undeclared key / strict"
+  kind: schema-audit
+  payload:
+    note: "Pre-fix PersonSchema lacked attributed_to, reasoning, falsifiable_by — Zod strip dropped it"
+    should_fail: "YAML key not declared in schema"
+
+- id: H3-V20-C-without-attribution
+  validator: V20
+  spec: H3
+  defect: "grade C on position without attributed_to ships (only relationships checked)"
+  expect: "attributed_to"
+  kind: position
+  payload:
+    id: p-fixture
+    role: r-fixture
+    holder: h-fixture
+    start: "2018-06-01"
+    end: "2020-06-01"
+    confidence: C
+    verification: verified
+    sources: [s-fixture]
+
+- id: H4-V21-calendar-rollover
+  validator: V21
+  spec: H4
+  defect: "2018-02-31 silently becomes 2018-03-03 via Date.UTC rollover"
+  expect: "calendar"
+  kind: date
+  payload:
+    token: "2018-02-31"
+
+- id: H4-V21-any-string-as-date
+  validator: V21
+  spec: H4
+  defect: "dateToken accepted any non-empty string"
+  expect: "dateToken"
+  kind: date
+  payload:
+    token: "not-a-date"
+
+- id: H5-V22-inverted-core
+  validator: V22
+  spec: H5
+  defect: "endEarliest > endLatest after old trim — inverted core, and contradiction silently trimmed"
+  real_record: "p-foreign-drif (2010 → 2010-01-14)"
+  expect: "inverted core / trimmed"
+  kind: interval
+  payload:
+    start: "2010"
+    end: "2010-01-14"
+
+- id: H6-V23-review-free-text
+  validator: V23
+  spec: H6
+  defect: "review.date free text, review.method free text, any review object counted"
+  expect: "review"
+  kind: review
+  payload:
+    by: reviewer
+    date: "26/07/2026"
+    method: "Checked directly against the JORT decree text"
+
+- id: H6-V23-review-impossible-date
+  validator: V23
+  spec: H6
+  defect: "review with 2026-02-31 accepted"
+  expect: "calendar"
+  kind: review
+  payload:
+    by: reviewer
+    date: "2026-02-31"
+    method: source-check
+
+- id: H7-V24-hidden-threshold
+  validator: V24
+  spec: H7
+  defect: "succession gap threshold (1 year) unpublished in code, unknown-end exemption hidden"
+  expect: "successionMeta"
+  kind: meta
+  payload:
+    note: "Pre-fix gap threshold lived only in build-data.ts:496-529, not in emitted meta"
+    should_fail: "gapYears not in meta"
