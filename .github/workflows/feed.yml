@@ -28,7 +28,9 @@ on:
     - cron: '25 */4 * * *'
   workflow_dispatch:
 
-# The only write this job needs. No secrets, no packages, no pages, no actions.
+# Pushes to main are gated by the "Protect main" ruleset (pull_request rule).
+# GITHUB_TOKEN cannot bypass that rule, so checkout uses FEED_PAT — a classic
+# PAT with `repo` scope owned by an admin (RepositoryRole bypass on the ruleset).
 permissions:
   contents: write
 
@@ -47,6 +49,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.FEED_PAT }}
 
       - uses: actions/setup-node@v4
         with:
