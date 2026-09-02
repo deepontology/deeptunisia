@@ -3912,6 +3912,12 @@
     - "هوية الكيان (درجة B، موثّقة): «أبو خاطر» هو النقل الإعلامي التونسي لاسم مجموعة بخيتير الإماراتية؛ والمشروع الموثّق هو مدينة تونس الرياضية (Tunis Sports City)، الذي تروّج له الشركة الفرعية التونسية للمجموعة Sport Cities International Tunis (SCIT) — 250 هكتارًا على الضفة الشمالية لبحيرة تونس، استثمار نحو 5 مليارات دولار، أُعلن عنه في ماي 2008 (رفع رأس المال من 5.001 مليون إلى 82.426 مليون دينار في أوت 2008)، وأُقرّ في عهد بن علي سنة 2008، وأُعيد إطلاقه في مارس 2022، وما زال متعطلًا وفق WMC 2024-03-31. أُبقي المعرف abou-khater-project لأن النقل الإعلامي هو الاسم الذي تتداول به دعوى عائلة سعيّد؛ أما الهوية الموثّقة فتُسجَّل هنا لا بإعادة التسمية."
     - "تبقى الصلة بنوفل سعيّد غير مدعومة بأدلة (D): لا سجل ولا مجلس إدارة ولا مساهمة ولا أمر بالرائد الرسمي ولا وثيقة قضائية تربطه بـSCIT؛ والادعاء الوحيد هو جملة موندافريك الشرطية. أما قضية الفساد الموثّقة في الملف (WMC 2024-03-31) فتخص وزير أملاك الدولة السابق حاتم الأوجي، لا عائلة سعيّد."
   notes_ar_by: model-reviewed
+  review:
+    by: adala
+    date: "2026-09-03"
+    method: source-check
+    note: >-
+      Checked all five cited sources for what they document versus what remains conditional. Mondafrique 2026-08-04 (tier 3) is the only source linking the project to Naoufel Saied, and does so in a single conditional 'seraient associes' via business circles -- no registry, board, shareholding, JORT or filing. WMC capital piece (2008), Bukhatir Group SCIT site, Jeune Afrique 2022 relaunch piece and AA 2022 together document the entity identity at B-grade: Tunis Sports City via SCIT, 250 ha north Lac de Tunis, ~$5bn, announced May 2008, capital 5.001->82.426 MTND Aug 2008, approved under Ben Ali 2008, relaunched Mar 2022, still stalled per WMC 2024-03-31. The id is kept as abou-khater-project because the media rendering is the name the Saied-family claim circulates under. The Naoufel association finds no support in any of the four documentary sources; the documented corruption dossier (WMC 2024-03-31) concerns ex-State Domains minister Hatem El Euchi. No RNE record or JORT approval was re-read this run; NOT verified against a gazette. For this institution record the D reflects the unsubstantiated Naoufel link, while the identity notes record the documented project; grade D kept.
   sources:
     - mondafrique-saied-clans-2026
     - wmc-tunis-sports-city-capital-2008
@@ -3937,6 +3943,12 @@
   confidence: D
   basis: unsubstantiated
   attributed_to: Mondafrigue investigation (August 2026)
+  review:
+    by: adala
+    date: "2026-09-03"
+    method: source-check
+    note: >-
+      Checked the single cited source and the negative search. Mondafrique 2026-08-04 (tier 3) alone states 'Several agencies of foreign brands ... reportedly connected to the Chebil family' with no brand names, no filing and no registry identifier -- the only evidence for the 'agencies' claim. No second source was located: Jeune Afrique 2024-10-10 documents the real family business detail (son Ahmed Ben Salah's Sousse car showroom July 2024; sister Sara, brother Fakhri, etc.) which is context, not the claimed agencies; Maghreb Intelligence 2024-10-07 describes Atika's palace role, not holdings; TBNA July 2026 (Noonpost/Arabi21) makes extortion allegations (complaints prepared, not filed) without naming brands; DEBATunisie 08/06/2025 Bestune blog remains tier-5 uncorroborated. French/Arabic RNE search 2026-08-08 found no filing for Chebil foreign-brand agencies; the car showroom is verifiable separately via RNE but not part of this claim. NOT verified against a registry or gazette. Grade D/unsubstantiated kept per rule 6; entity kept as placeholder for the circulating claim.
   sources:
     - mondafrique-saied-clans-2026
 - id: al-karama-holding

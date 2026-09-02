@@ -1,7 +1,7 @@
 {
-  "generated": "2026-09-02T22:59:21.658Z",
+  "generated": "2026-09-02T23:15:20.630Z",
   "total": 944,
-  "reviewed": 32,
+  "reviewed": 38,
   "queue": [
     {
       "kind": "relationship",
@@ -10,7 +10,7 @@
       "basis": "unsubstantiated",
       "risk": 0,
       "sources": 5,
-      "reviewed": false,
+      "reviewed": true,
       "title": "reported-influence: atika-chebil → chebil-family-business"
     },
     {
@@ -30,7 +30,7 @@
       "basis": "unsubstantiated",
       "risk": 0,
       "sources": 3,
-      "reviewed": false,
+      "reviewed": true,
       "title": "allegation: trabelsi-network → presidency"
     },
     {
@@ -70,7 +70,7 @@
       "basis": "unsubstantiated",
       "risk": 0,
       "sources": 2,
-      "reviewed": false,
+      "reviewed": true,
       "title": "Minister of the Interior — Mohamed Naceur Ghannouchi"
     },
     {
@@ -80,7 +80,7 @@
       "basis": "unsubstantiated",
       "risk": 0,
       "sources": 2,
-      "reviewed": false,
+      "reviewed": true,
       "title": "allegation: european-union → presidency"
     },
     {
@@ -90,7 +90,7 @@
       "basis": "unsubstantiated",
       "risk": 0,
       "sources": 2,
-      "reviewed": false,
+      "reviewed": true,
       "title": "allegation: khaled-yahyaoui → judiciary"
     },
     {
@@ -110,7 +110,7 @@
       "basis": "unsubstantiated",
       "risk": 0,
       "sources": 1,
-      "reviewed": false,
+      "reviewed": true,
       "title": "reported-influence: naoufel-saied → abou-khater-project"
     },
     {

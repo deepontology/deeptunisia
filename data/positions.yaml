@@ -4418,6 +4418,12 @@
     - claim: No such tenure exists; the 2011 interior succession is continuous without him.
       held_by: French Wikipedia interior ministers list, Arabic Wikipedia interior ministry page
       assessment: ADOPTED 2026-08-08. The row is kept but graded D/unsubstantiated.
+  review:
+    by: adala
+    date: "2026-09-03"
+    method: source-check
+    note: >-
+      Checked both cited sources against the interior-minister claim. Wikipedia English interior-ministers list (tier 3, wikipedia-interior-ministers) and the Arabic Wikipedia interior ministry page (wikipedia-ministry-of-interior-ar) do not contain 'Mohamed Naceur Ghannouchi' in any form. The dated succession in French Wikipedia (frwiki-interior-ministers excerpt: Friaa 12-27 Jan 2011 -> Rajhi 27 Jan-28 Mar 2011 -> Essid 28 Mar-24 Dec 2011 -> Laarayedh) is continuous with no Ghannouchi; the only Mohamed Ghannouchi in the 2011 transition is the prime minister, not interior. Second source sweep 2026-08-11 (Gouvernement Caid Essebsi page) confirms the same chain. No JORT decree of 2011 naming Ghannouchi was located; NOT verified against a gazette source. Dispute stands; D/unsubstantiated kept per rule 6.
   sources: [wikipedia-interior-ministers, wikipedia-ministry-of-interior-ar]
 
 - id: p-int-ben-jeddou

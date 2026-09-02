@@ -504,6 +504,8 @@ export const InstitutionSchema = withClaimEnvelope(
 	/** Required for inferred claims. (V18) */
 	reasoning: z.string().optional(),
 	falsifiable_by: z.string().optional(),
+	disputes: z.array(DisputeSchema).default([]),
+	review: ReviewSchema.optional(),
 	sources: z.array(slug).default([]),
 	...translatable('summary')
 	})

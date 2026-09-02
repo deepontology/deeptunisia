@@ -387,6 +387,12 @@
     documenté par CADTM/Orient XXI pour la période 1863-1881 ; la presse
     tunisienne le discute publiquement (La Presse, « Pas de diktats étrangers »,
     mai 2024, qui répond à des affirmations sur la part française de la dette).
+  review:
+    by: adala
+    date: "2026-09-03"
+    method: judge
+    note: >-
+      Checked the three cited sources against the 'France holds the debt' claim. La Presse 2024-05 'Pas de diktats' (tier not in excerpt) discusses public debate on French share, not evidence for dominance. Orient XXI / CADTM (tier 2) documents the 1860s debt as pretext for the 1881 protectorate -- historical phase, not current stock. Economiste Maghrebin 2024 (tier not detailed) is the third citation. Assessment in record shows measured reality: IDS 2024 PPG France 997.4 M USD (4.8% of 20 816 M), Germany 1 073 M (5.2%) ahead among bilaterals; multilaterals 15 246 M (73.2%) dominate; French Treasury end-2022 claims 1 128 M EUR (6th in Africa). No source shows France as largest creditor today; the historical truth (1863-1881) is separated from present structure, which since 2024 is majority domestic. Grade D/unsubstantiated kept; NOT verified against a registry or gazette.
   notes:
     - "Where it appears: lapresse-fb-pas-de-diktats;
       orientxxi-dette-conquete-tunisie"
@@ -433,6 +439,12 @@
     Anadolu, Kapitalis. La déclaration elle-même est documentée ; la thèse
     causale (le programme du FMI = piège à dette) est une appréciation
     politique."
+  review:
+    by: adala
+    date: "2026-09-03"
+    method: judge
+    note: >-
+      Checked the three cited sources for the 'IMF debt trap' causal claim. L'Orient-Le Jour 2023-04-06 and Agence Ecofin 2023-04-06 (both tier 3/4, via AFP/Reuters) document the president's Monastir declaration of 6 April 2023 -- 'diktats etrangers inacceptables' -- as a speech act, not as evidence for trap mechanics. African Manager 2024 detail (tier 4) provides the debt stock context: IMF encours 5.3 Mds TND end 2024 (~7% of exterior LT 75 966 MDT, BCT), and the programme never existed in practice (Oct 2022 staff-level 1.9 Md USD never presented to board, no tranche disbursed). Assessment shows debt rose while programme frozen (84.6% 2023 World Bank -> 84.9% 2024 MF/CEIC) via domestic borrowing (BCT advances 7+7+11 Mds TND). No source shows IMF domination of stock (programme ~9% of exterior PPG, ~4% of total 135 Mds TND). Two assertions separated: speech fact vs trap thesis (D). Grade D kept; NOT verified against a gazette.
   notes:
     - "Where it appears: lorientlejour-saied-diktats-fmi-2023;
       agenceecofin-saied-fmi-2023"
@@ -481,6 +493,12 @@
     chiffrée extrême : l'économiste Mourad Hattab, mai 2017 — « si elle arrête
     d'importer de la Turquie, la Tunisie pourrait rembourser 53 % de son service
     de dette extérieure »."
+  review:
+    by: adala
+    date: "2026-09-03"
+    method: judge
+    note: >-
+      Checked the three cited sources for the '250 000 jobs destroyed by Turkey FTA' claim. WMC 2017-09-18 OTIC communique (tier 4) advances the 250 000 figure between 2005-2015 in textiles without source or method; no sectoral employment series cited. WMC Hattab 2017-05 (tier 4) gives the extreme variant '53% of external debt service' if imports from Turkey stopped -- same unsourced arithmetic. Kapitalis 2023-12 (tier 4) reports the ministry's own 'aggravation inattendue du deficit' and December 2023 amendment re-imposing 27-37.5% duties -- documenting a persistent bilateral deficit, not mass job loss causation. Measured Comtrade 2024 (not a cited source but assessment data): Turkish imports 1 187.5 M USD (4.7% of total 25 057.7 M), bilateral deficit -915 M (14% of total deficit) -- too small to explain sector-wide destruction; Jan 2005 also ended Multifibre quotas, a confounder the OTIC thesis ignores. The deficit part is C/reported, the 250k jobs part stays D. Grade D kept; NOT verified against a trade registry.
   notes:
     - "Where it appears: wmc-otic-gel-accord-turquie-2017;
       wmc-hattab-turquie-2017"
@@ -540,5 +558,11 @@
         is not yet cited to a registry text in this exchange. Open until the
         convention is pulled.
       status: open
+  review:
+    by: adala
+    date: "2026-09-03"
+    method: judge
+    note: >-
+      Checked the single cited source Kapitalis tribune series Aug 2026 (tier 3/4, tribunes). Fekih 06/08/2026 advances two claims: 1970 settlement 'legal but not legitimate' under duress and Algerian slant-drilling into El Borma basin ('predator'); Cherfouh 09/08/2026 rebuttal invokes uti possidetis (Cairo 1964) and the 6 Jan 1970 bornage convention as definitive, calls slant-drilling an urban legend against a continuous reservoir jointly managed by Sitep/Sonatrach, and cites TransMed royalties and Sonatrach-STEG contracts plus a STEG-Sonelgaz thank-you letter signed Faycal Trifa 4 Aug 2026. No official Tunisian or Algerian state document reopening the file is cited; both are private-citizen tribunes, not officials. Internal date divergence (20 Mar vs 6 Jan 1970) remains open without the convention text. No technical well-path study located. Grade D/unsubstantiated kept; NOT verified against a gazette or technical registry.
   sources:
     - kapitalis-algerie-litige-2026

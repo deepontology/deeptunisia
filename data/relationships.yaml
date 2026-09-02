@@ -1199,6 +1199,12 @@
   confidence: D
   basis: unsubstantiated
   attributed_to: Recurring claim in Tunisian public and social-media discourse
+  review:
+    by: adala
+    date: "2026-09-03"
+    method: judge
+    note: >-
+      Checked the three cited sources for what they actually establish. Popular-discourse (tier 5, deeptunisia.org/methodology) is the editorial placeholder -- excerpt says 'Not a source for the truth ... Every entry citing this is graded unsubstantiated' -- it records only that the 'clan controls economy unchanged' claim circulates. World Bank 2023-05-22 political-economy assessment (tier 2) documents the narrower structural finding: shift after 2011 from authoritarian to competitive clientelism with rent-seeking mechanisms proving resilient -- a claim about structures, not named persons still controlling the economy. Reuters 2026-03-03 'Tunisia jails tycoon Mabrouk...' (tier 3) reports a court jailed Marouane Mabrouk (Géant/Monoprix/Orange Tunisie/BIAT group) and sentenced ex-PM Chahed in absentia over unfreezing of assets -- showing the network dismantled, assets confiscated under decree-law 2011-13, and the most prominent family-linked business figure serving prison sentences. No source corroborates unchanged clan control; the description's negative framing is upheld. Grade D/unsubstantiated kept; NOT verified against a gazette source.
   sources:
     - popular-discourse
     - wb-political-economy
@@ -1216,6 +1222,12 @@
   confidence: D
   basis: unsubstantiated
   attributed_to: Circulating claim in Tunisian political discourse, distinguished here from the narrower Africa Intelligence and Le Monde reporting
+  review:
+    by: adala
+    date: "2026-09-03"
+    method: judge
+    note: >-
+      Checked both cited sources to separate the stronger claim from the documented narrower one. Popular-discourse (tier 5) is the editorial placeholder for the circulating stronger version -- that the presidential security chief personally directs judicial decisions -- and carries no evidentiary weight per its excerpt. Africa Intelligence 2024-06-04 'makes and breaks ministerial careers' (tier 3) profiles the presidential security chief and his reported influence over senior appointments; excerpted as 'reported influence over senior appointments,' its ambit is ministerial careers, not courts. No reliable reporting located extends that influence to directing judicial decisions; Le Monde 2024 factional reporting (not cited here) and the narrower edge rel-khaled-yahyaoui-kais-saied-reported-influence are the documented ceiling. The two records exist precisely to keep the stronger and narrower claims apart. No court filing, appointment order or judicial record naming Yahyaoui in a judicial-decision role was found; NOT verified against a gazette source. D/unsubstantiated kept.
   sources:
     - popular-discourse
     - africaintel-yahyaoui-2024
@@ -1232,6 +1244,12 @@
   confidence: D
   basis: unsubstantiated
   attributed_to: Recurring claim in Tunisian and European political commentary
+  review:
+    by: adala
+    date: "2026-09-03"
+    method: judge
+    note: >-
+      Checked both cited sources for evidence of the causal claim. Popular-discourse (tier 5) records only that the allegation circulates in Tunisian and European commentary -- 'European governments engineered or underwrote the post-2021 concentration of power for migration control' -- not that it is established. Le Monde 2024-10-03 'embarrassing ally' (tier 3) reports a sharp fall in departures Tunisia->Italy after European cooperation arrangements and describes Saied as an embarrassing migration ally, documenting cooperation on migration, not sponsorship of constitutional engineering. The article does not state European causation of the 25 July 2021 measures or the subsequent power concentration. No EU statement, funding decision or diplomatic record in the cited sources establishes that causal link; documented cooperation is recorded separately in rel-european-union-presidency-diplomatic. Grade D/unsubstantiated kept; NOT verified against a gazette source.
   sources:
     - popular-discourse
     - lemonde-migration-2024
@@ -3529,6 +3547,12 @@
     - The Abou Khater project and Emirati involvement are mentioned once in the article without corroboration. Recorded as unsubstantiated per the project's rules for single-source business claims.
     - "The research positively identifies \"Abou Khater\" as the Tunisian media's rendering of the Bukhatir Group, whose Tunisian subsidiary Sport Cities International Tunis (SCIT) promotes the Tunis Sports City mega-project on the northern shore of Lac de Tunis (documented identity on the abou-khater-project institution record). No registry, board, shareholding, JORT decree or court filing connects Naoufel Saied to SCIT or to the project: the only claim remains Mondafrique's conditional sentence (\"À Naoufel Saïed seraient associés le projet immobilier « Abou Khater »\"), and the one corruption case in this dossier (WMC 2024-03-31) targets former State Domains minister Hatem El Euchi, not the Saied family. The edge therefore stays unsubstantiated."
     - "Documented anchor merged 2026-08-25: own-bukhatir-scit-2026-08-20 (ownership, B, basis documented) plus two board seats give the project endpoint a documented neighbourhood; this edge itself stays D-grade/unsubstantiated at the Naoufel endpoint."
+  review:
+    by: adala
+    date: "2026-09-03"
+    method: source-check
+    note: >-
+      Checked the single cited source and the documented neighbourhood. Mondafrique 2026-08-04 'guerre des clans' (tier 3) contains one conditional sentence -- 'A Naoufel Saied seraient associes le projet immobilier Abou Khater' -- attributed only to 'business circles in Tunis,' without a named registry, board, shareholding or decree. The entity identity is documented elsewhere in the graph (abou-khater-project): Tunis Sports City via SCIT, 250 ha north shore Lac de Tunis, ~$5bn, announced May 2008, capital 5.001->82.426 MTND Aug 2008, approved under Ben Ali 2008, relaunched Mar 2022, stalled per WMC 2024-03-31 -- none of those four documentary sources (wmc-tunis-sports-city-capital-2008, bukhatirgroup-scit, jeuneafrique-tunis-sports-city-2022, aa-bukhatir-2022) name Naoufel Saied. The one corruption case in this dossier (WMC 2024-03-31) concerns former State Domains minister Hatem El Euchi, not the Saied family. No RNE/registre-entreprises.tn record, no JORT decree and no court filing connecting Naoufel Saied to SCIT was located; NOT verified against a gazette or registry. Single-source business claim therefore stays D/unsubstantiated per the graph's rule; the endpoint's documentary neighbourhood is recorded via own-bukhatir-scit-2026-08-20.
   sources:
     - mondafrique-saied-clans-2026
 - id: rel-atika-chebil-business-foreign-brands-reported-influence
@@ -3547,6 +3571,12 @@
     - No specific brand names or corporate filings are provided. Recorded as unsubstantiated per the project's rules for single-source business claims.
     - "NEGATIVE FINDING (2026-08-08 run, recorded per rule 6): no named agency, no corporate filing and no registry record was found in French or Arabic searches for Chebil-family foreign-brand agencies. The documented family business detail (Jeune Afrique, 10/10/2024): Atika Chebil's son Ahmed Ben Salah opened a car showroom in the Sousse region in July 2024, and family members (sister Sara, brother Fakhri, brothers-in-law Omar Kassim and Lotfi Ben Salah) operate in business and sports circles — context for the chebil-family-business entity, NOT the claimed \"agencies of foreign brands\". A tier-5 blog lead (DEBATunisie, 08/06/2025) claiming the son took control of the Bestune dealership in Sousse remains uncorroborated. The car showroom is separately verifiable via the RNE register."
     - "TBNA (Brussels) statement July 2026 (Noonpost EN 13/07, Arabi21 12/07): alleged extortion named against Naoufel Saied and Atika Chebil (variant 'Chiboub'), complaints being prepared before European courts as of that date - prepared, not filed. A documented allegation about process; it does not name any foreign-brand agency."
+  review:
+    by: adala
+    date: "2026-09-03"
+    method: source-check
+    note: >-
+      Checked all five cited sources for brand-specific evidence. Mondafrique 2026-08-04 (tier 3) provides the sole mention -- Chebil family / president's in-laws 'several agencies of foreign brands' as part of the 'penal settlement' economy -- with no brand names, no corporate filing and no registry number. Jeune Afrique 2024-10-10 (tier 3, clan-saied) documents the Chebil family context: sister Sara, brother Fakhri, brothers-in-law Omar Kassim and Lotfi Ben Salah in business/sports circles, and son Ahmed Ben Salah opening a car showroom in the Sousse region July 2024 -- context for the chebil-family-business entity, not the claimed agencies. Maghreb Intelligence 2024-10-07 (tier 3, Atika Chebil at Carthage) reports her decisive role at the palace and fifteen advisors pushed out since 2019 -- influence narrative, not agencies. TBNA Brussels July 2026 (Noonpost EN 13/07 and Arabi21 12/07, tier 5) alleges extortion by Naoufel Saied and Atika Chebil and notes complaints being prepared before European courts (prepared, not filed) -- a documented allegation about process, not foreign-brand holdings. Negative search 2026-08-08: no named agency, filing or RNE record found FR/AR for Chebil foreign-brand agencies; tier-5 DEBATunisie 08/06/2025 claim about Bestune/Sousse remains uncorroborated. NOT verified against a registry or gazette. D/unsubstantiated kept.
   sources:
     - mondafrique-saied-clans-2026
     - jeuneafrique-clan-saied-2024

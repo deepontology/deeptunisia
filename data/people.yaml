@@ -3469,6 +3469,12 @@
   falsifiable_by: >-
     A JORT decree of 2009-2010 naming Rachid Drif as Minister of Foreign Affairs.
   attributed_to: Original compilation (no named contributor)
+  review:
+    by: adala
+    date: "2026-09-03"
+    method: source-check
+    note: >-
+      Checked both cited sources against the foreign-minister claim. Business News 2010-01-15 (tier 4) reports the 14 January 2010 reshuffle as Kamel Morjane moving from Defence to Foreign Affairs with Abdelwaheb Abdallah among the departures -- the name Rachid Drif does not appear. Espace Manager 2020-02-10 (tier 4, archived) publishes the 69-year FM list as Mestiri ... Abdallah -> Morjane with no Drif, excerpted as 'no Drif.' No source in French, Arabic or English search shows a Tunisian foreign minister of this name; the succession is continuous Abdallah (from 2005-01-14) to Morjane (2010-01-14) per those lists and frwiki-mae-list. No JORT appointment decree located; NOT verified against a gazette source. D/unsubstantiated kept per rule 6; falsifier remains a JORT decree naming Drif.
   sources: [businessnews-remaniement-2010, espacemanager-ministres-list]
 
 - id: othman-jarandi
@@ -14373,6 +14379,12 @@
   basis: unsubstantiated
   attributed_to: >-
     Mondafrigue investigation (August 2026)
+  review:
+    by: adala
+    date: "2026-09-03"
+    method: source-check
+    note: >-
+      Checked all three cited sources for what they actually support. Mondafrique 2026-08-04 (tier 3, succession piece 6/7) is the sole source for the 'media ecosystem supporting the presidency' framing; its excerpt describes the Article 109 succession vacuum and successor candidates, and the body was not fully re-read this run beyond the excerpt -- the evaluative tagline 'propagandist' is not verbatim in the excerpt. Business News 2026-04-14 (tier 4) calls Riadh Jrad 'le chroniqueur proche du pouvoir et son porte-parole officieux' re the 72-hour ARP ultimatum for Tarek Mahdi among 43 deputies, publishing the threat on Facebook. Tunisie Numerique series 2025 (tier 4, x5, 2025-06-26->08-22) consistently renders him as 'Le chroniqueur / chroniqueur politique ... a publie sur sa page Facebook,' confirming Facebook-based commentary and an Attessia TV Rendez-vous 9 role (see Webdo/DirectInfo tags). No second independent tier-3 outlet reports 'propagandist' verbatim; the DirectInfo tag line 'porte-voix de Kais Saied et de sa propagande' is a tag-page header, not a citable article body. No position or sponsorship edge ties him to the presidency. NOT verified against a gazette or registry. Grade D/unsubstantiated kept; 'porte-parole officieux' remains single-outlet evaluative, not promoted to reported.
   sources: [mondafrique-succession-saied-2026, businessnews-jrad-2026-04-14, tunisienumerique-jrad-series]
   notes:
     - >-
