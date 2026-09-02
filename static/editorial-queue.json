@@ -1,7 +1,7 @@
 {
-  "generated": "2026-08-28T05:27:17.957Z",
+  "generated": "2026-09-02T22:35:47.827Z",
   "total": 944,
-  "reviewed": 27,
+  "reviewed": 32,
   "queue": [
     {
       "kind": "relationship",
@@ -20,7 +20,7 @@
       "basis": "unsubstantiated",
       "risk": 0,
       "sources": 3,
-      "reviewed": false,
+      "reviewed": true,
       "title": "allegation: armed-forces → presidency"
     },
     {
@@ -60,7 +60,7 @@
       "basis": "unsubstantiated",
       "risk": 0,
       "sources": 2,
-      "reviewed": false,
+      "reviewed": true,
       "title": "Minister of Foreign Affairs — Rachid Drif"
     },
     {
@@ -120,7 +120,7 @@
       "basis": "reported",
       "risk": 1,
       "sources": 5,
-      "reviewed": false,
+      "reviewed": true,
       "title": "reported-influence: kamel-eltaief → presidency"
     },
     {
@@ -150,7 +150,7 @@
       "basis": "inferred",
       "risk": 1,
       "sources": 4,
-      "reviewed": false,
+      "reviewed": true,
       "title": "First local-council elections under the 2022 constitution"
     },
     {
@@ -940,7 +940,7 @@
       "basis": "inferred",
       "risk": 1,
       "sources": 1,
-      "reviewed": false,
+      "reviewed": true,
       "title": "ownership: etat-tunisien → al-karama-holding"
     },
     {

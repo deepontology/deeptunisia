@@ -2956,8 +2956,18 @@ const size = (JSON.stringify(dataset).length / 1024).toFixed(0);
 // cares about: adding records is expansion, rewriting them is where corrections
 // live, and net deletion is a retraction.
 //
-// Degrades to an empty list without git (a tarball, a shallow CI clone). The page
-// says so rather than rendering an empty table that implies nothing ever changed.
+// Squash repair (grant-readiness 0.5): the public history was squashed pre-launch
+// (commit 8584e09 "DeepTunisia: source-backed atlas …" collapses everything before
+// 2026-08-26), so `git log -- data/` on the public clone renders only 4 entries
+// for the period when most corrections actually happened. The pre-squash diffs
+// survive on the private mirror (private/master, 49 data commits 2026-07-27 →
+// 2026-08-20). They are replayed as a synthetic changelog committed at
+// scripts/changelog-synthetic.json so the public build can still surface them
+// when git history is shallow. Regenerate with: git log private/master -- data/
+// (see scripts/changelog-synthetic.json _note). When git history is deep enough
+// the synthetic entries are deduped by hash and merged; when git is absent the
+// page degrades to the synthetic window rather than an empty table that implies
+// nothing ever changed.
 // ---------------------------------------------------------------------------
 
 interface ChangeFile {
@@ -2975,18 +2985,7 @@ interface ChangeEntry {
 	files: ChangeFile[];
 }
 
-function readChangelog(): ChangeEntry[] {
-	let raw: string;
-	try {
-		raw = execFileSync(
-			'git',
-			['log', '--no-merges', '--format=%x00%H|%aI|%s', '--numstat', '--', 'data/'],
-			{ cwd: ROOT, encoding: 'utf8', maxBuffer: 32 * 1024 * 1024, stdio: ['ignore', 'pipe', 'ignore'] }
-		);
-	} catch {
-		return [];
-	}
-
+function parseChangelogRaw(raw: string): ChangeEntry[] {
 	const entries: ChangeEntry[] = [];
 	for (const block of raw.split('\0')) {
 		if (!block.trim()) continue;
@@ -3025,6 +3024,66 @@ function readChangelog(): ChangeEntry[] {
 	return entries;
 }
 
+function loadSyntheticChangelog(): ChangeEntry[] {
+	// Synthetic replay of private/master pre-squash history. Committed so CI and
+	// shallow public clones can render /corrections. See scripts/changelog-synthetic.json.
+	const candidates = [
+		join(ROOT, 'scripts', 'changelog-synthetic.json'),
+		join(ROOT, 'data', 'changelog-synthetic.json'),
+		join(ROOT, 'static', 'changelog-synthetic.json')
+	];
+	for (const p of candidates) {
+		try {
+			if (!existsSync(p)) continue;
+			const raw = readFileSync(p, 'utf8').trim();
+			if (!raw) continue;
+			const parsed = JSON.parse(raw);
+			// File is { _note, entries } or a bare array (backwards compat with manual edits).
+			const arr: unknown = Array.isArray(parsed) ? parsed : (parsed as { entries?: unknown }).entries ?? parsed;
+			if (!Array.isArray(arr)) continue;
+			// Validate minimal shape; drop malformed entries rather than crashing the build.
+			const out: ChangeEntry[] = [];
+			for (const e of arr as ChangeEntry[]) {
+				if (!e || typeof e.hash !== 'string' || typeof e.date !== 'string' || typeof e.subject !== 'string') continue;
+				if (!Array.isArray(e.files)) continue;
+				out.push(e);
+			}
+			return out;
+		} catch {
+			// Malformed synthetic file must not break the build; fall back to live history.
+			continue;
+		}
+	}
+	return [];
+}
+
+function readChangelog(): ChangeEntry[] {
+	let live: ChangeEntry[] = [];
+	try {
+		const raw = execFileSync(
+			'git',
+			['log', '--no-merges', '--format=%x00%H|%aI|%s', '--numstat', '--', 'data/'],
+			{ cwd: ROOT, encoding: 'utf8', maxBuffer: 32 * 1024 * 1024, stdio: ['ignore', 'pipe', 'ignore'] }
+		);
+		live = parseChangelogRaw(raw);
+	} catch {
+		live = [];
+	}
+
+	const synthetic = loadSyntheticChangelog();
+	if (synthetic.length === 0) return live;
+	if (live.length === 0) return synthetic.slice(0, 250);
+
+	// Merge synthetic entries that are not already in live (by hash), then sort
+	// newest-first. This repairs the squash (public live has only 4 commits) while
+	// staying idempotent when the clone already has deep history.
+	const seen = new Set(live.map((e) => e.hash));
+	const extra = synthetic.filter((e) => !seen.has(e.hash));
+	if (extra.length === 0) return live;
+	const merged = [...live, ...extra].sort((a, b) => b.date.localeCompare(a.date));
+	return merged;
+}
+
 // Bounded so the file cannot grow without limit as the project accumulates history.
 // The full record stays in git; this is the published window onto it.
 const changelog = readChangelog().slice(0, 250);
@@ -3044,6 +3103,11 @@ function readCommitSha(): string {
 }
 
 writeFileSync(join(OUT_DIR, 'changelog.json'), JSON.stringify(changelog), 'utf8');
+try {
+	writeFileSync(join(STATIC_DIR, 'changelog.json'), JSON.stringify(changelog, null, 2), 'utf8');
+} catch {
+	// STATIC_DIR may not exist in fixture mode.
+}
 
 // ---------------------------------------------------------------------------
 // What the public data payload actually weighs on disk.
