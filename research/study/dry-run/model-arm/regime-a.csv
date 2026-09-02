@@ -1,0 +1,11 @@
+study_id,kind,id,confidence,basis,notes
+S001,relationship,rel-judiciary-lazhar-akremi-prosecution,C,inferred,Simulated (rubric-only): 1 tier≤4 source(s), minTier=2, hasTier1=false → C/inferred
+S002,relationship,rel-khaled-yahyaoui-judiciary-allegation,C,inferred,Simulated (rubric-only): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/inferred
+S003,position,p-pm-hachani,A,documented,Simulated (rubric-only): 2 tier≤4 source(s), minTier=1, hasTier1=true → A/documented
+S004,event,dridi-prison-death-2026,B,reported,Simulated (rubric-only): 2 tier≤4 source(s), minTier=4, hasTier1=false → B/reported
+S005,position,p-dgsn-bennour-1,B,reported,Simulated (rubric-only): 2 tier≤4 source(s), minTier=3, hasTier1=false → B/reported
+S006,event,election-law-amendment-2024,C,reported,Simulated (rubric-only): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/reported
+S007,relationship,rel-moncef-marzouki-ltdh-institutional,B,reported,Simulated (rubric-only): 2 tier≤4 source(s), minTier=2, hasTier1=false → B/reported
+S008,position,p-justice-zouari,B,reported,Simulated (rubric-only): 3 tier≤4 source(s), minTier=3, hasTier1=false → B/reported
+S009,relationship,board-sncft-boufaied,C,inferred,Simulated (rubric-only): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/inferred
+S010,relationship,rel-united-arab-emirates-nessma-tv-reported-influence,C,reported,Simulated (rubric-only): 1 tier≤4 source(s), minTier=2, hasTier1=false → C/reported

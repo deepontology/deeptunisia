@@ -1,0 +1,11 @@
+study_id,kind,id,claim,confidence,basis,notes
+S003,position,p-pm-hachani,Ahmed Hachani held Head of Government (Head of Government) between 2023-08-01 and 2024-08-07,A,documented,
+S005,position,p-dgsn-bennour-1,Abdessatar Bennour held Director-General of National Security (Directorate-General of National Security) between 2006-06-05 and ~2008,B,reported,
+S006,event,election-law-amendment-2024,"Parliament strips courts of power over the election authority — Nine days before the presidential election, parliament amends the electoral law to remove the Administrative Court's power to review ISI",A,documented,
+S008,position,p-justice-zouari,Abderrahim Zouari held Minister of Justice (Head of Government) between 1991-02-20 and 1992-06-09,B,reported,
+S009,relationship,board-sncft-boufaied,Taoufik Boufaied —[board]→ SNCFT — Managing director (PDG) of the SNCFT since 10 January 2022 (wikipedia-sncft) — consistent with the graph position p-soe-sncft-taoufik-boufaied.,B,reported,
+S002,relationship,rel-khaled-yahyaoui-judiciary-allegation,"Khaled Salah Yahyaoui —[allegation]→ Judiciary — A stronger version of the reported-influence claim circulates, holding that the presidential security chief personally directs state decisions beyond a",C,reported,lenient: single tier3 as reported not unsubstantiated
+S001,relationship,rel-judiciary-lazhar-akremi-prosecution,"Judiciary —[prosecution]→ Lazhar Akremi — Eight years at first instance, the lightest term in the case.",A,documented,
+S004,event,dridi-prison-death-2026,Suspicious death of prisoner Hamza Dridi; his mother breaks the silence — Nawaat reports the suspicious death of prisoner Hamza Dridi and his mother's demand for the truth. The report is part of a clu,B,reported,upgrade C→B
+S007,relationship,rel-moncef-marzouki-ltdh-institutional,Moncef Marzouki —[institutional]→ Tunisian League for the Defence of Human Rights — President of the Tunisian League for the Defence of Human Rights before founding a party — the civil-society-to-pres,C,reported,reported vs inferred ambiguity
+S010,relationship,rel-united-arab-emirates-nessma-tv-reported-influence,"United Arab Emirates —[reported-influence]→ Nessma TV — Reporting has documented UAE financial support for Tunisian media outlets and political actors opposed to Ennahda, particularly after the 2013 E",C,inferred,inferred vs reported flip

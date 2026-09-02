@@ -1,0 +1,2474 @@
+{
+  "meta": {
+    "sampledAt": "2026-09-02T22:01:26.820Z",
+    "commitSha": "8e2caf7b767fe75edeb06076fcbdef8cf8145f77",
+    "seed": "8e2caf7",
+    "n": 300,
+    "requestedN": 300,
+    "dataset": {
+      "path": "/home/adala/Projects/deep tunisia/src/generated/dataset.json",
+      "counts": {
+        "sources": 1229,
+        "sourcesCited": 1191,
+        "institutions": 207,
+        "roles": 118,
+        "people": 444,
+        "positions": 422,
+        "relationships": 362,
+        "events": 100,
+        "questions": 26,
+        "hypotheses": 6,
+        "agreements": 23,
+        "worldClaims": 10,
+        "companies": 25,
+        "contracts": 15,
+        "licences": 11,
+        "declarations": 9,
+        "education": 25,
+        "regions": 84,
+        "places": 44
+      },
+      "basisCounts": {
+        "documented": 197,
+        "reported": 665,
+        "inferred": 20,
+        "unsubstantiated": 12
+      },
+      "confidenceCounts": {
+        "A": 128,
+        "B": 563,
+        "C": 91,
+        "D": 12
+      }
+    },
+    "population": 1002,
+    "bucketPopulations": {
+      "unsubstantiated": 15,
+      "inferred": 20,
+      "disputed": 68,
+      "attributed": 113,
+      "reported": 575,
+      "documented": 211
+    },
+    "bucketTargets": {
+      "unsubstantiated": 12,
+      "inferred": 20,
+      "disputed": 50,
+      "attributed": 60,
+      "reported": 100,
+      "documented": 58
+    },
+    "bucketActuals": {
+      "unsubstantiated": 12,
+      "inferred": 20,
+      "disputed": 50,
+      "attributed": 60,
+      "reported": 100,
+      "documented": 58
+    },
+    "kindTargets": "stratified within bucket, floor 1 per kind present",
+    "notes": "Mutually exclusive buckets by priority: unsubstantiated > inferred > disputed > attributed > reported > documented. See protocol §3.2."
+  },
+  "key": {
+    "S001": {
+      "kind": "position",
+      "id": "p-media-attessia-ouertani",
+      "confidence": "C",
+      "basis": "inferred",
+      "verification": "needs-primary-source",
+      "bucket": "inferred"
+    },
+    "S002": {
+      "kind": "position",
+      "id": "p-relaff-battikh",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S003": {
+      "kind": "relationship",
+      "id": "rel-lina-ben-mhenni-nawaat-institutional",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S004": {
+      "kind": "position",
+      "id": "p-air-laajimi",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "reported"
+    },
+    "S005": {
+      "kind": "position",
+      "id": "p-douane-safer",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S006": {
+      "kind": "position",
+      "id": "p-ig-laajimi",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "reported"
+    },
+    "S007": {
+      "kind": "relationship",
+      "id": "rel-houcine-abassi-ugtt-institutional",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S008": {
+      "kind": "position",
+      "id": "p-bank-stb-lotfi-debbabi",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "reported"
+    },
+    "S009": {
+      "kind": "contract",
+      "id": "ctr-steg-eni-gas-2015-2017",
+      "confidence": "D",
+      "basis": "unsubstantiated",
+      "verification": "verified",
+      "bucket": "unsubstantiated"
+    },
+    "S010": {
+      "kind": "contract",
+      "id": "ctr-sncft-attijari-locomotives-2017",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S011": {
+      "kind": "position",
+      "id": "p-isie-bouasker",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "disputed"
+    },
+    "S012": {
+      "kind": "relationship",
+      "id": "rel-wassila-bourguiba-presidency-reported-influence",
+      "confidence": "C",
+      "basis": "inferred",
+      "verification": "needs-primary-source",
+      "bucket": "inferred"
+    },
+    "S013": {
+      "kind": "contract",
+      "id": "ctr-sonede-zarat-dessalement-2023",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S014": {
+      "kind": "relationship",
+      "id": "rel-mohamed-ennaceur-youssef-chahed-political-alliance",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S015": {
+      "kind": "event",
+      "id": "conspiracy-trial-2025",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "disputed"
+    },
+    "S016": {
+      "kind": "relationship",
+      "id": "rel-kais-saied-khaled-nouri-appointment",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S017": {
+      "kind": "relationship",
+      "id": "rel-ben-ali-bourguiba-succession",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S018": {
+      "kind": "event",
+      "id": "tabib-convicted-2026",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "disputed"
+    },
+    "S019": {
+      "kind": "event",
+      "id": "hannibal-tv-confiscated",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "disputed"
+    },
+    "S020": {
+      "kind": "company",
+      "id": "steg-international-services",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S021": {
+      "kind": "relationship",
+      "id": "board-bna-nejia-gharbi",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S022": {
+      "kind": "event",
+      "id": "ivd-final-report",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "disputed"
+    },
+    "S023": {
+      "kind": "position",
+      "id": "p-dgsn-dabbabi",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "attributed"
+    },
+    "S024": {
+      "kind": "relationship",
+      "id": "rel-judiciary-saadia-mosbah-prosecution",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S025": {
+      "kind": "position",
+      "id": "p-def-kallel",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S026": {
+      "kind": "position",
+      "id": "p-cassation-hedi-guediri",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "needs-primary-source",
+      "bucket": "documented"
+    },
+    "S027": {
+      "kind": "relationship",
+      "id": "rel-judiciary-slim-riahi-prosecution",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S028": {
+      "kind": "relationship",
+      "id": "rel-tahar-ben-ammar-bourguiba-institutional",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S029": {
+      "kind": "relationship",
+      "id": "rel-conect-utica-political-conflict",
+      "confidence": "C",
+      "basis": "inferred",
+      "verification": "needs-primary-source",
+      "bucket": "inferred"
+    },
+    "S030": {
+      "kind": "relationship",
+      "id": "own-state-stb-7154",
+      "confidence": "C",
+      "basis": "inferred",
+      "verification": "needs-primary-source",
+      "bucket": "inferred"
+    },
+    "S031": {
+      "kind": "relationship",
+      "id": "rel-armed-forces-presidency-allegation",
+      "confidence": "D",
+      "basis": "unsubstantiated",
+      "verification": "verified",
+      "bucket": "unsubstantiated"
+    },
+    "S032": {
+      "kind": "relationship",
+      "id": "rel-faouzi-elloumi-al-badil-party",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S033": {
+      "kind": "event",
+      "id": "ugtt-khelifi-death-2026",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "attributed"
+    },
+    "S034": {
+      "kind": "relationship",
+      "id": "rel-aziz-miled-ben-ali-institutional",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "attributed"
+    },
+    "S035": {
+      "kind": "event",
+      "id": "wb-capture-2010",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S036": {
+      "kind": "relationship",
+      "id": "rel-cpg-ugtt-political-conflict",
+      "confidence": "C",
+      "basis": "inferred",
+      "verification": "needs-primary-source",
+      "bucket": "inferred"
+    },
+    "S037": {
+      "kind": "position",
+      "id": "p-bct-nouri",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "disputed"
+    },
+    "S038": {
+      "kind": "relationship",
+      "id": "rel-ennahda-mohamed-ennaceur-political-conflict",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S039": {
+      "kind": "position",
+      "id": "p-air-el-fehri",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "disputed"
+    },
+    "S040": {
+      "kind": "position",
+      "id": "p-air-aloui",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "reported"
+    },
+    "S041": {
+      "kind": "relationship",
+      "id": "rel-atika-chebil-abdelaziz-makhloufi-reported-influence",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "disputed"
+    },
+    "S042": {
+      "kind": "education",
+      "id": "edu-chahed-inat",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S043": {
+      "kind": "event",
+      "id": "election-2019",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "disputed"
+    },
+    "S044": {
+      "kind": "position",
+      "id": "p-finance-ben-hammouda",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "reported"
+    },
+    "S045": {
+      "kind": "relationship",
+      "id": "rel-marzouki-jebali-political-conflict",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S046": {
+      "kind": "relationship",
+      "id": "rel-csm-judiciary-institutional",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S047": {
+      "kind": "relationship",
+      "id": "rel-kamel-eltaief-presidency-reported-influence",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S048": {
+      "kind": "event",
+      "id": "ev-autoroutes-a1-a2-concessions-2026",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "attributed"
+    },
+    "S049": {
+      "kind": "relationship",
+      "id": "rel-imf-presidency-diplomatic",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S050": {
+      "kind": "relationship",
+      "id": "rel-court-of-cassation-judiciary-institutional",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S051": {
+      "kind": "relationship",
+      "id": "rel-trabelsi-network-presidency-allegation",
+      "confidence": "D",
+      "basis": "unsubstantiated",
+      "verification": "verified",
+      "bucket": "unsubstantiated"
+    },
+    "S052": {
+      "kind": "company",
+      "id": "elloumi-group",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "disputed"
+    },
+    "S053": {
+      "kind": "relationship",
+      "id": "board-bna-ahmed-ben-moulahem",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S054": {
+      "kind": "position",
+      "id": "p-dgsn-ghodhbani",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "reported"
+    },
+    "S055": {
+      "kind": "relationship",
+      "id": "board-tunisair-ibrahim-khouaja",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S056": {
+      "kind": "position",
+      "id": "p-dgsp-harroum",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "attributed"
+    },
+    "S057": {
+      "kind": "position",
+      "id": "p-int-laarayedh",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S058": {
+      "kind": "relationship",
+      "id": "rel-mohamed-ennaceur-ugtt-reported-influence",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S059": {
+      "kind": "position",
+      "id": "p-foreign-jarandi",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S060": {
+      "kind": "education",
+      "id": "edu-saied-doctorate-claim",
+      "confidence": "D",
+      "basis": "unsubstantiated",
+      "verification": "verified",
+      "bucket": "unsubstantiated"
+    },
+    "S061": {
+      "kind": "licence",
+      "id": "lic-tunisie-telecom-4g-2016",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S062": {
+      "kind": "event",
+      "id": "mabrouk-chahed-sentenced",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "disputed"
+    },
+    "S063": {
+      "kind": "position",
+      "id": "p-dgsn-benali-1",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S064": {
+      "kind": "position",
+      "id": "p-pm-ghannouchi",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S065": {
+      "kind": "position",
+      "id": "p-econ-faouzi-elloumi",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "reported"
+    },
+    "S066": {
+      "kind": "relationship",
+      "id": "rel-bourguiba-ennaceur-appointment-1974",
+      "confidence": "B",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S067": {
+      "kind": "relationship",
+      "id": "rel-marzouki-armed-forces-security",
+      "confidence": "B",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S068": {
+      "kind": "relationship",
+      "id": "rel-judiciary-abdelhamid-jelassi-prosecution",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S069": {
+      "kind": "position",
+      "id": "p-relaff-khalil",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S070": {
+      "kind": "position",
+      "id": "p-soe-sncft-sarra-rejeb",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "reported"
+    },
+    "S071": {
+      "kind": "position",
+      "id": "p-gv-tahar-ben-ammar",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "reported"
+    },
+    "S072": {
+      "kind": "position",
+      "id": "p-dgsn-bettaieb",
+      "confidence": "B",
+      "basis": "documented",
+      "verification": "needs-primary-source",
+      "bucket": "documented"
+    },
+    "S073": {
+      "kind": "position",
+      "id": "p-justice-bououni",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S074": {
+      "kind": "education",
+      "id": "edu-nouri-mast-energie-ifp-1984",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S075": {
+      "kind": "relationship",
+      "id": "rel-mohamed-ennaceur-armed-forces-security",
+      "confidence": "C",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S076": {
+      "kind": "relationship",
+      "id": "own-etap-stb-222",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S077": {
+      "kind": "position",
+      "id": "p-party-chahed",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "reported"
+    },
+    "S078": {
+      "kind": "position",
+      "id": "p-land-hamdi",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S079": {
+      "kind": "relationship",
+      "id": "own-state-zitouna-6915",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S080": {
+      "kind": "position",
+      "id": "p-speaker-boulares",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S081": {
+      "kind": "relationship",
+      "id": "own-state-radio-zaytouna-2011",
+      "confidence": "B",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S082": {
+      "kind": "position",
+      "id": "p-admin-raoudha-mechichi",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "reported"
+    },
+    "S083": {
+      "kind": "event",
+      "id": "ivd-established",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "disputed"
+    },
+    "S084": {
+      "kind": "event",
+      "id": "2014-constitution-adopted",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "disputed"
+    },
+    "S085": {
+      "kind": "position",
+      "id": "p-foreign-jerandi-2013",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "disputed"
+    },
+    "S086": {
+      "kind": "event",
+      "id": "steg-rationing-resumes-2026",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "disputed"
+    },
+    "S087": {
+      "kind": "relationship",
+      "id": "own-kallel-poulina-50",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S088": {
+      "kind": "position",
+      "id": "p-navy-el-arabi-2003",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "disputed"
+    },
+    "S089": {
+      "kind": "relationship",
+      "id": "own-state-alkarama-investec",
+      "confidence": "C",
+      "basis": "inferred",
+      "verification": "needs-primary-source",
+      "bucket": "inferred"
+    },
+    "S090": {
+      "kind": "agreement",
+      "id": "afcfta-ratification",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "disputed"
+    },
+    "S091": {
+      "kind": "position",
+      "id": "p-gv-shakir-saheb-ettabaa",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "reported"
+    },
+    "S092": {
+      "kind": "event",
+      "id": "dhif-succession-2025",
+      "confidence": "C",
+      "basis": "inferred",
+      "verification": "needs-primary-source",
+      "bucket": "inferred"
+    },
+    "S093": {
+      "kind": "agreement",
+      "id": "bit-turkey-1991",
+      "confidence": "B",
+      "basis": "documented",
+      "verification": "needs-primary-source",
+      "bucket": "documented"
+    },
+    "S094": {
+      "kind": "position",
+      "id": "p-cofaf-ammar",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S095": {
+      "kind": "event",
+      "id": "ev-cpg-strike-2026-09",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "attributed"
+    },
+    "S096": {
+      "kind": "worldClaim",
+      "id": "agg-public-debt-external-2024",
+      "confidence": "B",
+      "basis": "documented",
+      "verification": "needs-primary-source",
+      "bucket": "disputed"
+    },
+    "S097": {
+      "kind": "relationship",
+      "id": "rel-kais-saied-hichem-mechichi-political-conflict",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S098": {
+      "kind": "event",
+      "id": "ltdh-suspended-2026",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "disputed"
+    },
+    "S099": {
+      "kind": "worldClaim",
+      "id": "agg-tourism-gdp-2024",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S100": {
+      "kind": "event",
+      "id": "republic-day-demonstration-2026",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S101": {
+      "kind": "event",
+      "id": "ben-achour-commission",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "disputed"
+    },
+    "S102": {
+      "kind": "relationship",
+      "id": "rel-saida-sassi-bourguiba-reported-influence",
+      "confidence": "C",
+      "basis": "inferred",
+      "verification": "needs-primary-source",
+      "bucket": "inferred"
+    },
+    "S103": {
+      "kind": "relationship",
+      "id": "rel-rafaa-ben-achour-judiciary-appointment",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S104": {
+      "kind": "position",
+      "id": "p-tt-bendhiab",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S105": {
+      "kind": "agreement",
+      "id": "comesa-accession",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S106": {
+      "kind": "position",
+      "id": "p-def-zbidi-1",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S107": {
+      "kind": "education",
+      "id": "edu-nouri-maitrise-fseg-1987",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S108": {
+      "kind": "position",
+      "id": "p-media-zitouna-ben-salem",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S109": {
+      "kind": "event",
+      "id": "sghiri-deep-system",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "disputed",
+      "bucket": "disputed"
+    },
+    "S110": {
+      "kind": "company",
+      "id": "airbus",
+      "confidence": "B",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S111": {
+      "kind": "agreement",
+      "id": "bit-germany-1963",
+      "confidence": "B",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S112": {
+      "kind": "relationship",
+      "id": "rel-kais-saied-cnrd-institutional",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S113": {
+      "kind": "relationship",
+      "id": "board-biat-elyes-ben-rayana",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S114": {
+      "kind": "relationship",
+      "id": "rel-ennahda-marzouki-reported-influence",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S115": {
+      "kind": "relationship",
+      "id": "rel-utap-ugtt-institutional",
+      "confidence": "C",
+      "basis": "inferred",
+      "verification": "needs-primary-source",
+      "bucket": "inferred"
+    },
+    "S116": {
+      "kind": "event",
+      "id": "constitution-2022",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "disputed"
+    },
+    "S117": {
+      "kind": "position",
+      "id": "p-pm-hachani",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S118": {
+      "kind": "position",
+      "id": "p-justice-bousseta",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S119": {
+      "kind": "event",
+      "id": "hmaidi-convicted-2026",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S120": {
+      "kind": "position",
+      "id": "p-media-mosaique-boutar",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S121": {
+      "kind": "position",
+      "id": "p-gv-mustapha-ben-ismail",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "reported"
+    },
+    "S122": {
+      "kind": "company",
+      "id": "mabrouk-group",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S123": {
+      "kind": "relationship",
+      "id": "rel-kais-saied-chokri-riahi-appointment",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S124": {
+      "kind": "company",
+      "id": "bhci",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S125": {
+      "kind": "worldClaim",
+      "id": "agg-tourism-receipts-2024",
+      "confidence": "B",
+      "basis": "documented",
+      "verification": "needs-primary-source",
+      "bucket": "disputed"
+    },
+    "S126": {
+      "kind": "position",
+      "id": "p-int-ben-jeddou",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S127": {
+      "kind": "position",
+      "id": "p-foreign-chatti",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S128": {
+      "kind": "relationship",
+      "id": "own-state-investec-2011",
+      "confidence": "C",
+      "basis": "inferred",
+      "verification": "verified",
+      "bucket": "inferred"
+    },
+    "S129": {
+      "kind": "relationship",
+      "id": "rel-mouna-siala-la-presse-tunisie-institutional",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S130": {
+      "kind": "relationship",
+      "id": "rel-selma-elloumi-nidaa-tounes-party",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S131": {
+      "kind": "event",
+      "id": "reshuffle-may-2024",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "disputed"
+    },
+    "S132": {
+      "kind": "relationship",
+      "id": "rel-kamel-akrout-presidency-security",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S133": {
+      "kind": "position",
+      "id": "p-ig-nafti",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "reported"
+    },
+    "S134": {
+      "kind": "relationship",
+      "id": "rel-youssef-bayah-biat-institutional",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S135": {
+      "kind": "position",
+      "id": "p-soe-sonede-saad-seddik",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "reported"
+    },
+    "S136": {
+      "kind": "relationship",
+      "id": "rel-atika-chebil-business-foreign-brands-reported-influence",
+      "confidence": "D",
+      "basis": "unsubstantiated",
+      "verification": "verified",
+      "bucket": "unsubstantiated"
+    },
+    "S137": {
+      "kind": "declaration",
+      "id": "decl-fakhfakh-2020-end-of-functions",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S138": {
+      "kind": "licence",
+      "id": "lic-ooredoo-3g-2012",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S139": {
+      "kind": "position",
+      "id": "p-def-dahmani",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S140": {
+      "kind": "contract",
+      "id": "ctr-tunisie-autoroutes-a1-reconcession-2026",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "disputed"
+    },
+    "S141": {
+      "kind": "relationship",
+      "id": "rel-marzouki-bentaous-appointment",
+      "confidence": "B",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S142": {
+      "kind": "event",
+      "id": "libya-border-surveillance-cameras-2026",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "attributed"
+    },
+    "S143": {
+      "kind": "position",
+      "id": "p-justice-bhiri",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S144": {
+      "kind": "relationship",
+      "id": "board-gct-hedi-youssef",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S145": {
+      "kind": "position",
+      "id": "p-gv-mohamed-larbi-zarrouk",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "reported"
+    },
+    "S146": {
+      "kind": "relationship",
+      "id": "rel-najet-jaouadi-ministry-interior-institutional",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S147": {
+      "kind": "relationship",
+      "id": "rel-beji-caid-essebsi-youssef-chahed-political-conflict",
+      "confidence": "C",
+      "basis": "inferred",
+      "verification": "needs-primary-source",
+      "bucket": "inferred"
+    },
+    "S148": {
+      "kind": "relationship",
+      "id": "own-quinta-nessma-25-2008",
+      "confidence": "B",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S149": {
+      "kind": "position",
+      "id": "p-justice-ayari",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S150": {
+      "kind": "relationship",
+      "id": "rel-cyrine-ben-ali-ben-ali-family",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S151": {
+      "kind": "relationship",
+      "id": "rel-naoufel-saied-clan-membership",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S152": {
+      "kind": "position",
+      "id": "p-soe-sonede-ahmed-soula",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "reported"
+    },
+    "S153": {
+      "kind": "relationship",
+      "id": "rel-world-bank-trabelsi-network-institutional",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S154": {
+      "kind": "event",
+      "id": "july-25-2021",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S155": {
+      "kind": "position",
+      "id": "p-party-pdp-nejib-chebbi",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S156": {
+      "kind": "position",
+      "id": "p-utap-ezzar",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "disputed"
+    },
+    "S157": {
+      "kind": "event",
+      "id": "karmous-prison-death-2026",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "disputed"
+    },
+    "S158": {
+      "kind": "relationship",
+      "id": "own-steg-steger",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S159": {
+      "kind": "event",
+      "id": "bensedrine-financial-brigade-2026",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "attributed"
+    },
+    "S160": {
+      "kind": "relationship",
+      "id": "rel-selma-elloumi-elloumi-group-business",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S161": {
+      "kind": "relationship",
+      "id": "rel-zied-krichen-mosaique-fm-institutional",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S162": {
+      "kind": "position",
+      "id": "p-gv-mohamed-aziz-bouattour",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "reported"
+    },
+    "S163": {
+      "kind": "event",
+      "id": "election-2024",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "disputed"
+    },
+    "S164": {
+      "kind": "worldClaim",
+      "id": "cc-france-largest-creditor",
+      "confidence": "D",
+      "basis": "unsubstantiated",
+      "verification": "disputed",
+      "bucket": "unsubstantiated"
+    },
+    "S165": {
+      "kind": "position",
+      "id": "p-int-belhaj-kacem",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S166": {
+      "kind": "relationship",
+      "id": "rel-mohsen-marzouk-nidaa-tounes-party",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S167": {
+      "kind": "relationship",
+      "id": "rel-youssef-saheb-ettabaa-mohamed-larbi-zarrouk-political-conflict",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S168": {
+      "kind": "event",
+      "id": "rcd-dissolved",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S169": {
+      "kind": "relationship",
+      "id": "board-biat-elyes-jebir",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S170": {
+      "kind": "event",
+      "id": "haica-established",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "disputed"
+    },
+    "S171": {
+      "kind": "education",
+      "id": "edu-marzouki-bac-regnault",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S172": {
+      "kind": "relationship",
+      "id": "board-biat-ismail-mabrouk",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S173": {
+      "kind": "event",
+      "id": "election-locales-2023",
+      "confidence": "C",
+      "basis": "inferred",
+      "verification": "needs-primary-source",
+      "bucket": "inferred"
+    },
+    "S174": {
+      "kind": "position",
+      "id": "p-int-ghannouchi",
+      "confidence": "D",
+      "basis": "unsubstantiated",
+      "verification": "needs-primary-source",
+      "bucket": "unsubstantiated"
+    },
+    "S175": {
+      "kind": "relationship",
+      "id": "rel-khaled-yahyaoui-kais-saied-reported-influence",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S176": {
+      "kind": "position",
+      "id": "p-finance-zribi",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "reported"
+    },
+    "S177": {
+      "kind": "relationship",
+      "id": "own-stb-sonibank-25",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S178": {
+      "kind": "relationship",
+      "id": "rel-amel-ben-yedder-utica-institutional",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S179": {
+      "kind": "position",
+      "id": "p-finance-chalghoum-2",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "reported"
+    },
+    "S180": {
+      "kind": "company",
+      "id": "investec",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S181": {
+      "kind": "event",
+      "id": "2022-constitutional-referendum",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "disputed"
+    },
+    "S182": {
+      "kind": "position",
+      "id": "p-pres-saied",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S183": {
+      "kind": "relationship",
+      "id": "board-tunisair-bnouni",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S184": {
+      "kind": "event",
+      "id": "inlucc-established",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "disputed"
+    },
+    "S185": {
+      "kind": "relationship",
+      "id": "rel-qatar-ennahda-reported-influence",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S186": {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-tahya-tounes-party",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S187": {
+      "kind": "declaration",
+      "id": "decl-chahed-2018",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S188": {
+      "kind": "relationship",
+      "id": "rel-olfa-riahi-el-hiwar-ettounsi-institutional",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S189": {
+      "kind": "relationship",
+      "id": "rel-fouad-mebazaa-rcd-party",
+      "confidence": "C",
+      "basis": "inferred",
+      "verification": "needs-primary-source",
+      "bucket": "inferred"
+    },
+    "S190": {
+      "kind": "position",
+      "id": "p-gv-mohamed-chenik",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "reported"
+    },
+    "S191": {
+      "kind": "contract",
+      "id": "ctr-elmed-interconnector-2022",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S192": {
+      "kind": "position",
+      "id": "p-gv-taieb-djellouli",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "reported"
+    },
+    "S193": {
+      "kind": "position",
+      "id": "p-justice-snoussi",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S194": {
+      "kind": "event",
+      "id": "ammar-retires",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S195": {
+      "kind": "position",
+      "id": "p-justice-tjeribi",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S196": {
+      "kind": "event",
+      "id": "relaff-direction-created-1967",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S197": {
+      "kind": "relationship",
+      "id": "rel-ichraf-chebil-clan-membership",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S198": {
+      "kind": "relationship",
+      "id": "rel-mohamed-ennaceur-nidaa-tounes-party",
+      "confidence": "C",
+      "basis": "inferred",
+      "verification": "needs-primary-source",
+      "bucket": "inferred"
+    },
+    "S199": {
+      "kind": "event",
+      "id": "legislatives-2022",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "disputed"
+    },
+    "S200": {
+      "kind": "position",
+      "id": "p-cabdir-elloumi",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S201": {
+      "kind": "position",
+      "id": "p-douane-jaouadi",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S202": {
+      "kind": "position",
+      "id": "p-pm-chahed",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S203": {
+      "kind": "relationship",
+      "id": "board-stb-star-thuillier",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S204": {
+      "kind": "position",
+      "id": "p-relaff-se-chebbi",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S205": {
+      "kind": "worldClaim",
+      "id": "cc-turkey-fta-kills-industry",
+      "confidence": "D",
+      "basis": "unsubstantiated",
+      "verification": "disputed",
+      "bucket": "unsubstantiated"
+    },
+    "S206": {
+      "kind": "relationship",
+      "id": "rel-moncef-marzouki-cpr-party",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S207": {
+      "kind": "licence",
+      "id": "lic-zitouna-bank-2009",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S208": {
+      "kind": "event",
+      "id": "mabrouk-appeal-2026",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S209": {
+      "kind": "worldClaim",
+      "id": "contested-algerie-frontiere-litige-2026",
+      "confidence": "D",
+      "basis": "unsubstantiated",
+      "verification": "needs-primary-source",
+      "bucket": "unsubstantiated"
+    },
+    "S210": {
+      "kind": "relationship",
+      "id": "rel-marzouki-jomaa-appointment",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S211": {
+      "kind": "relationship",
+      "id": "rel-hedi-bouchamaoui-utica-institutional",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S212": {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-selma-elloumi-appointment",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S213": {
+      "kind": "agreement",
+      "id": "arab-maghreb-union-treaty",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S214": {
+      "kind": "position",
+      "id": "p-csee-sg-boughdiri",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "disputed"
+    },
+    "S215": {
+      "kind": "relationship",
+      "id": "rel-nesrine-ben-ali-ben-ali-family",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S216": {
+      "kind": "position",
+      "id": "p-presec-belhajali",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "disputed"
+    },
+    "S217": {
+      "kind": "relationship",
+      "id": "own-bukhatir-scit-2026-08-20",
+      "confidence": "B",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S218": {
+      "kind": "position",
+      "id": "p-cassation-taieb-rached",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "needs-primary-source",
+      "bucket": "documented"
+    },
+    "S219": {
+      "kind": "event",
+      "id": "mraihi-arrested-2024",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S220": {
+      "kind": "event",
+      "id": "tunisia-summons-french-ambassador-2026",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "disputed"
+    },
+    "S221": {
+      "kind": "position",
+      "id": "p-admin-abdessalem-mehdi-grissiaa",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "reported"
+    },
+    "S222": {
+      "kind": "company",
+      "id": "alstom",
+      "confidence": "B",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S223": {
+      "kind": "relationship",
+      "id": "rel-yadh-ben-achour-presidency-appointment",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S224": {
+      "kind": "relationship",
+      "id": "own-mabrouk-investec-100",
+      "confidence": "C",
+      "basis": "inferred",
+      "verification": "verified",
+      "bucket": "inferred"
+    },
+    "S225": {
+      "kind": "position",
+      "id": "p-pm-madouri",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S226": {
+      "kind": "position",
+      "id": "p-media-leaders-habaieb",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S227": {
+      "kind": "relationship",
+      "id": "rel-moncef-marzouki-ltdh-institutional",
+      "confidence": "C",
+      "basis": "inferred",
+      "verification": "needs-primary-source",
+      "bucket": "inferred"
+    },
+    "S228": {
+      "kind": "company",
+      "id": "steg-energies-renouvelables",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S229": {
+      "kind": "contract",
+      "id": "ctr-gct-bangladesh-2024",
+      "confidence": "B",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S230": {
+      "kind": "education",
+      "id": "edu-marzouki-strasbourg-md",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S231": {
+      "kind": "event",
+      "id": "army-founded",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S232": {
+      "kind": "position",
+      "id": "p-justice-bouaziz",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "reported"
+    },
+    "S233": {
+      "kind": "position",
+      "id": "p-foreign-escheikh",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "disputed"
+    },
+    "S234": {
+      "kind": "position",
+      "id": "p-csm-bouzakher",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "reported"
+    },
+    "S235": {
+      "kind": "position",
+      "id": "p-soe-sncft-taoufik-boufaied",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "reported"
+    },
+    "S236": {
+      "kind": "position",
+      "id": "p-int-khefacha-2",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S237": {
+      "kind": "event",
+      "id": "ev-libya-dbeibah-talks-tunis-2026",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "attributed"
+    },
+    "S238": {
+      "kind": "contract",
+      "id": "ctr-tunisair-airbus-a320neo-2016",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S239": {
+      "kind": "position",
+      "id": "p-pm-zaafarani",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S240": {
+      "kind": "position",
+      "id": "p-onat-chawki-tabib",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "needs-primary-source",
+      "bucket": "documented"
+    },
+    "S241": {
+      "kind": "position",
+      "id": "p-air-hajem",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "disputed"
+    },
+    "S242": {
+      "kind": "event",
+      "id": "cour-des-comptes-losses-2026",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "disputed"
+    },
+    "S243": {
+      "kind": "worldClaim",
+      "id": "agg-public-debt-total-2024",
+      "confidence": "B",
+      "basis": "documented",
+      "verification": "needs-primary-source",
+      "bucket": "disputed"
+    },
+    "S244": {
+      "kind": "relationship",
+      "id": "rel-sana-gammoudi-hannibal-tv-institutional",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S245": {
+      "kind": "position",
+      "id": "p-int-feki",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "disputed"
+    },
+    "S246": {
+      "kind": "declaration",
+      "id": "decl-gap-verification",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S247": {
+      "kind": "declaration",
+      "id": "decl-essebsi-2018",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S248": {
+      "kind": "position",
+      "id": "p-foreign-drif",
+      "confidence": "D",
+      "basis": "unsubstantiated",
+      "verification": "needs-primary-source",
+      "bucket": "unsubstantiated"
+    },
+    "S249": {
+      "kind": "relationship",
+      "id": "rel-radio-zaytouna-ennahda-reported-influence",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S250": {
+      "kind": "relationship",
+      "id": "board-bna-habib-benhadj-kouider",
+      "confidence": "C",
+      "basis": "inferred",
+      "verification": "needs-primary-source",
+      "bucket": "inferred"
+    },
+    "S251": {
+      "kind": "relationship",
+      "id": "rel-saida-sassi-bourguiba-family",
+      "confidence": "C",
+      "basis": "inferred",
+      "verification": "needs-primary-source",
+      "bucket": "inferred"
+    },
+    "S252": {
+      "kind": "company",
+      "id": "poulina",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S253": {
+      "kind": "relationship",
+      "id": "board-biat-cyrine-sanchou",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S254": {
+      "kind": "agreement",
+      "id": "us-tunisia-defense-roadmap-2020",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S255": {
+      "kind": "relationship",
+      "id": "board-gct-bouzouada",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S256": {
+      "kind": "relationship",
+      "id": "rel-judiciary-abdessalem-bouchlaka-prosecution",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S257": {
+      "kind": "relationship",
+      "id": "rel-united-arab-emirates-presidency-diplomatic",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S258": {
+      "kind": "position",
+      "id": "p-gv-slaheddine-baccouche",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "reported"
+    },
+    "S259": {
+      "kind": "event",
+      "id": "constitution-2014",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "disputed"
+    },
+    "S260": {
+      "kind": "relationship",
+      "id": "rel-mebazaa-mechichi-reported-influence",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S261": {
+      "kind": "relationship",
+      "id": "rel-khaled-yahyaoui-judiciary-allegation",
+      "confidence": "D",
+      "basis": "unsubstantiated",
+      "verification": "verified",
+      "bucket": "unsubstantiated"
+    },
+    "S262": {
+      "kind": "event",
+      "id": "isie-ordinance-544-2024",
+      "confidence": "C",
+      "basis": "inferred",
+      "verification": "needs-primary-source",
+      "bucket": "inferred"
+    },
+    "S263": {
+      "kind": "relationship",
+      "id": "board-tunisair-loukil-yaakoubi",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S264": {
+      "kind": "position",
+      "id": "p-media-ett-gouja",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "reported"
+    },
+    "S265": {
+      "kind": "position",
+      "id": "p-speaker-baly",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S266": {
+      "kind": "relationship",
+      "id": "rel-european-union-presidency-diplomatic",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S267": {
+      "kind": "relationship",
+      "id": "rel-judiciary-said-ferjani-prosecution",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S268": {
+      "kind": "agreement",
+      "id": "eu-association-agreement",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "disputed"
+    },
+    "S269": {
+      "kind": "relationship",
+      "id": "own-miled-biat-12",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S270": {
+      "kind": "position",
+      "id": "p-gv-rejeb-khaznadar",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "reported"
+    },
+    "S271": {
+      "kind": "event",
+      "id": "laarayedh-sentenced",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S272": {
+      "kind": "relationship",
+      "id": "board-poulina-bouzguenda",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S273": {
+      "kind": "relationship",
+      "id": "board-stb-lotfi-debbabi",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S274": {
+      "kind": "event",
+      "id": "nsc-created",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "disputed"
+    },
+    "S275": {
+      "kind": "relationship",
+      "id": "own-mabrouk-tunisie-valeurs-5047",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S276": {
+      "kind": "relationship",
+      "id": "rel-dhafer-sghiri-presidency-reported-influence",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S277": {
+      "kind": "agreement",
+      "id": "turkey-tunisia-fta",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "disputed"
+    },
+    "S278": {
+      "kind": "position",
+      "id": "p-media-ett-dali",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "reported"
+    },
+    "S279": {
+      "kind": "declaration",
+      "id": "decl-confiscation-2011",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S280": {
+      "kind": "relationship",
+      "id": "rel-samir-el-wafi-el-hiwar-ettounsi-institutional",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S281": {
+      "kind": "position",
+      "id": "p-onat-mohamed-fadhel-mahfoudh",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "needs-primary-source",
+      "bucket": "documented"
+    },
+    "S282": {
+      "kind": "position",
+      "id": "p-def-shili",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "disputed"
+    },
+    "S283": {
+      "kind": "relationship",
+      "id": "rel-amel-ben-yedder-amen-bank-business",
+      "confidence": "C",
+      "basis": "inferred",
+      "verification": "needs-primary-source",
+      "bucket": "inferred"
+    },
+    "S284": {
+      "kind": "event",
+      "id": "belaid-verdict-2024",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "disputed"
+    },
+    "S285": {
+      "kind": "position",
+      "id": "p-nsa-hamdi",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "attributed"
+    },
+    "S286": {
+      "kind": "relationship",
+      "id": "rel-lotfi-brahem-ministry-interior-security",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S287": {
+      "kind": "relationship",
+      "id": "rel-moncef-mzabi-ben-ali-institutional",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "attributed"
+    },
+    "S288": {
+      "kind": "position",
+      "id": "p-soe-poste-sami-mekki",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "reported"
+    },
+    "S289": {
+      "kind": "worldClaim",
+      "id": "agg-tourism-arrivals-2024",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "disputed"
+    },
+    "S290": {
+      "kind": "agreement",
+      "id": "bit-kuwait-1973",
+      "confidence": "B",
+      "basis": "documented",
+      "verification": "needs-primary-source",
+      "bucket": "documented"
+    },
+    "S291": {
+      "kind": "relationship",
+      "id": "rel-kais-saied-rached-ghannouchi-political-conflict",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S292": {
+      "kind": "relationship",
+      "id": "rel-european-union-presidency-allegation",
+      "confidence": "D",
+      "basis": "unsubstantiated",
+      "verification": "verified",
+      "bucket": "unsubstantiated"
+    },
+    "S293": {
+      "kind": "relationship",
+      "id": "own-stb-wifak-45",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S294": {
+      "kind": "declaration",
+      "id": "decl-2011-regime-8717",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S295": {
+      "kind": "event",
+      "id": "bensedrine-sentenced-2026",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "disputed"
+    },
+    "S296": {
+      "kind": "position",
+      "id": "p-justice-zouari",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "disputed"
+    },
+    "S297": {
+      "kind": "event",
+      "id": "ev-naufrage-zarzis-2026",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "disputed"
+    },
+    "S298": {
+      "kind": "education",
+      "id": "edu-saied-ihl-sanremo",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    },
+    "S299": {
+      "kind": "relationship",
+      "id": "rel-ltdh-national-dialogue-quartet-institutional",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S300": {
+      "kind": "position",
+      "id": "p-foreign-kefi",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    }
+  }
+}

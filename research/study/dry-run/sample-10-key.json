@@ -1,0 +1,154 @@
+{
+  "meta": {
+    "sampledAt": "2026-09-02T22:01:43.647Z",
+    "commitSha": "8e2caf7b767fe75edeb06076fcbdef8cf8145f77",
+    "seed": "20260902",
+    "n": 10,
+    "requestedN": 10,
+    "dataset": {
+      "path": "/home/adala/Projects/deep tunisia/src/generated/dataset.json",
+      "counts": {
+        "sources": 1229,
+        "sourcesCited": 1191,
+        "institutions": 207,
+        "roles": 118,
+        "people": 444,
+        "positions": 422,
+        "relationships": 362,
+        "events": 100,
+        "questions": 26,
+        "hypotheses": 6,
+        "agreements": 23,
+        "worldClaims": 10,
+        "companies": 25,
+        "contracts": 15,
+        "licences": 11,
+        "declarations": 9,
+        "education": 25,
+        "regions": 84,
+        "places": 44
+      },
+      "basisCounts": {
+        "documented": 197,
+        "reported": 665,
+        "inferred": 20,
+        "unsubstantiated": 12
+      },
+      "confidenceCounts": {
+        "A": 128,
+        "B": 563,
+        "C": 91,
+        "D": 12
+      }
+    },
+    "population": 1002,
+    "bucketPopulations": {
+      "unsubstantiated": 15,
+      "inferred": 20,
+      "disputed": 68,
+      "attributed": 113,
+      "reported": 575,
+      "documented": 211
+    },
+    "bucketTargets": {
+      "unsubstantiated": 1,
+      "inferred": 1,
+      "disputed": 2,
+      "attributed": 2,
+      "reported": 2,
+      "documented": 2
+    },
+    "bucketActuals": {
+      "unsubstantiated": 1,
+      "inferred": 1,
+      "disputed": 2,
+      "attributed": 2,
+      "reported": 2,
+      "documented": 2
+    },
+    "kindTargets": "stratified within bucket, floor 1 per kind present",
+    "notes": "Mutually exclusive buckets by priority: unsubstantiated > inferred > disputed > attributed > reported > documented. See protocol §3.2."
+  },
+  "key": {
+    "S001": {
+      "kind": "relationship",
+      "id": "rel-judiciary-lazhar-akremi-prosecution",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S002": {
+      "kind": "relationship",
+      "id": "rel-khaled-yahyaoui-judiciary-allegation",
+      "confidence": "D",
+      "basis": "unsubstantiated",
+      "verification": "verified",
+      "bucket": "unsubstantiated"
+    },
+    "S003": {
+      "kind": "position",
+      "id": "p-pm-hachani",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "documented"
+    },
+    "S004": {
+      "kind": "event",
+      "id": "dridi-prison-death-2026",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "attributed"
+    },
+    "S005": {
+      "kind": "position",
+      "id": "p-dgsn-bennour-1",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "reported"
+    },
+    "S006": {
+      "kind": "event",
+      "id": "election-law-amendment-2024",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "bucket": "disputed"
+    },
+    "S007": {
+      "kind": "relationship",
+      "id": "rel-moncef-marzouki-ltdh-institutional",
+      "confidence": "C",
+      "basis": "inferred",
+      "verification": "needs-primary-source",
+      "bucket": "inferred"
+    },
+    "S008": {
+      "kind": "position",
+      "id": "p-justice-zouari",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "bucket": "disputed"
+    },
+    "S009": {
+      "kind": "relationship",
+      "id": "board-sncft-boufaied",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "reported"
+    },
+    "S010": {
+      "kind": "relationship",
+      "id": "rel-united-arab-emirates-nessma-tv-reported-influence",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "bucket": "attributed"
+    }
+  }
+}

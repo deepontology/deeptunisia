@@ -40,6 +40,11 @@
         "agents:discover": "tsx scripts/agents.ts",
         "agents:outbox": "tsx scripts/agents.ts --list",
         "sensitivity": "tsx scripts/sensitivity.ts",
+        "study:sampler": "tsx scripts/study-sampler.ts",
+        "study:blinding": "tsx scripts/study-blinding.ts",
+        "study:kappa": "tsx scripts/study-kappa.ts",
+        "study:model": "tsx scripts/study-model-arm.ts",
+        "study:dry-run": "npm run data && tsx scripts/study-sampler.ts --n 10 --out research/study/dry-run --seed 20260902 && tsx scripts/study-blinding.ts --verify --sample research/study/dry-run/sample-10-blinded.json --key research/study/dry-run/sample-10-key.json && tsx scripts/study-blinding.ts --build --sample research/study/dry-run/sample-10-blinded.json --key research/study/dry-run/sample-10-key.json --out research/study/dry-run/raters",
         "deploy:staging": "npm run build && wrangler deploy --env staging",
         "deploy:dry": "npm run build && wrangler deploy --dry-run"
     },

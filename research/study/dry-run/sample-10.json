@@ -1,0 +1,836 @@
+{
+  "meta": {
+    "sampledAt": "2026-09-02T22:01:43.647Z",
+    "commitSha": "8e2caf7b767fe75edeb06076fcbdef8cf8145f77",
+    "seed": "20260902",
+    "n": 10,
+    "requestedN": 10,
+    "dataset": {
+      "path": "/home/adala/Projects/deep tunisia/src/generated/dataset.json",
+      "counts": {
+        "sources": 1229,
+        "sourcesCited": 1191,
+        "institutions": 207,
+        "roles": 118,
+        "people": 444,
+        "positions": 422,
+        "relationships": 362,
+        "events": 100,
+        "questions": 26,
+        "hypotheses": 6,
+        "agreements": 23,
+        "worldClaims": 10,
+        "companies": 25,
+        "contracts": 15,
+        "licences": 11,
+        "declarations": 9,
+        "education": 25,
+        "regions": 84,
+        "places": 44
+      },
+      "basisCounts": {
+        "documented": 197,
+        "reported": 665,
+        "inferred": 20,
+        "unsubstantiated": 12
+      },
+      "confidenceCounts": {
+        "A": 128,
+        "B": 563,
+        "C": 91,
+        "D": 12
+      }
+    },
+    "population": 1002,
+    "bucketPopulations": {
+      "unsubstantiated": 15,
+      "inferred": 20,
+      "disputed": 68,
+      "attributed": 113,
+      "reported": 575,
+      "documented": 211
+    },
+    "bucketTargets": {
+      "unsubstantiated": 1,
+      "inferred": 1,
+      "disputed": 2,
+      "attributed": 2,
+      "reported": 2,
+      "documented": 2
+    },
+    "bucketActuals": {
+      "unsubstantiated": 1,
+      "inferred": 1,
+      "disputed": 2,
+      "attributed": 2,
+      "reported": 2,
+      "documented": 2
+    },
+    "kindTargets": "stratified within bucket, floor 1 per kind present",
+    "notes": "Mutually exclusive buckets by priority: unsubstantiated > inferred > disputed > attributed > reported > documented. See protocol §3.2."
+  },
+  "records": [
+    {
+      "study_id": "S001",
+      "kind": "relationship",
+      "id": "rel-judiciary-lazhar-akremi-prosecution",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "disputes": [],
+      "bucket": "documented",
+      "sources": [
+        "hrw-conspiracy-2025"
+      ],
+      "interval": {
+        "startEarliest": 1672531200000,
+        "startLatest": 1704067199000,
+        "endEarliest": null,
+        "endLatest": 1787616000000,
+        "startPrecision": "year",
+        "endPrecision": "unknown",
+        "status": "unknown",
+        "raw": {
+          "start": "2023",
+          "end": null
+        }
+      },
+      "raw": {
+        "id": "rel-judiciary-lazhar-akremi-prosecution",
+        "from": "judiciary",
+        "to": "lazhar-akremi",
+        "type": "prosecution",
+        "start": "2023",
+        "description": "Eight years at first instance, the lightest term in the case.",
+        "confidence": "A",
+        "verification": "verified",
+        "disputes": [],
+        "sources": [
+          "hrw-conspiracy-2025"
+        ],
+        "description_fr": "Huit ans en première instance, la peine la plus légère de l'affaire.",
+        "description_fr_by": "model-reviewed",
+        "description_ar": "ثماني سنوات في الدرجة الأولى، أخف عقوبة في القضية.",
+        "description_ar_by": "model-reviewed",
+        "notes": [],
+        "basis": "documented",
+        "direction": "directed",
+        "interval": {
+          "startEarliest": 1672531200000,
+          "startLatest": 1704067199000,
+          "endEarliest": null,
+          "endLatest": 1787616000000,
+          "startPrecision": "year",
+          "endPrecision": "unknown",
+          "status": "unknown",
+          "raw": {
+            "start": "2023",
+            "end": null
+          }
+        }
+      }
+    },
+    {
+      "study_id": "S002",
+      "kind": "relationship",
+      "id": "rel-khaled-yahyaoui-judiciary-allegation",
+      "confidence": "D",
+      "basis": "unsubstantiated",
+      "verification": "verified",
+      "disputes": [],
+      "bucket": "unsubstantiated",
+      "sources": [
+        "popular-discourse",
+        "africaintel-yahyaoui-2024"
+      ],
+      "interval": {
+        "startEarliest": -435024000000,
+        "startLatest": 1787616000000,
+        "endEarliest": null,
+        "endLatest": 1787616000000,
+        "startPrecision": "unknown",
+        "endPrecision": "unknown",
+        "status": "unknown",
+        "raw": {
+          "start": null,
+          "end": null
+        }
+      },
+      "raw": {
+        "id": "rel-khaled-yahyaoui-judiciary-allegation",
+        "from": "khaled-yahyaoui",
+        "to": "judiciary",
+        "type": "allegation",
+        "subtype": "circulating claim",
+        "description": "A stronger version of the reported-influence claim circulates, holding that the presidential security chief personally directs state decisions beyond appointments, including judicial ones. No reliable evidence for the stronger claim has been located. What credible reporting supports is narrower: attributed influence over ministerial careers. The two should not be conflated, and this record exists precisely to keep them apart.",
+        "confidence": "D",
+        "basis": "unsubstantiated",
+        "verification": "verified",
+        "attributed_to": "Circulating claim in Tunisian political discourse, distinguished here from the narrower Africa Intelligence and Le Monde reporting",
+        "disputes": [],
+        "sources": [
+          "popular-discourse",
+          "africaintel-yahyaoui-2024"
+        ],
+        "description_fr": "Une version plus forte de l'affirmation d'influence rapportée circule, selon laquelle le chef de la sécurité présidentielle dirige personnellement les décisions de l'État au-delà des nominations, y compris judiciaires. Aucune preuve fiable de cette affirmation plus forte n'a été localisée. Ce que la presse crédible soutient est plus étroit : une influence attribuée sur les carrières ministérielles. Les deux ne doivent pas être confondues, et ce dossier existe précisément pour les maintenir séparées.",
+        "description_fr_by": "model-reviewed",
+        "description_ar": "تنتشر نسخة أقوى من ادعاء النفوذ المنقول، مفادها أن رئيس الأمن الرئاسي يوجّه شخصيًا قرارات الدولة بما يتجاوز التعيينات، ومنها القضائية. لم يُعثر على أي دليل موثوق للنسخة الأقوى. ما تدعمه الصحافة الموثوقة أضيق: نفوذ منسوب على المسارات الوزارية. لا ينبغي الخلط بين الاثنين، وهذا السجل موجود تحديدًا للفصل بينهما.",
+        "description_ar_by": "model-reviewed",
+        "notes": [],
+        "direction": "contextual",
+        "interval": {
+          "startEarliest": -435024000000,
+          "startLatest": 1787616000000,
+          "endEarliest": null,
+          "endLatest": 1787616000000,
+          "startPrecision": "unknown",
+          "endPrecision": "unknown",
+          "status": "unknown",
+          "raw": {
+            "start": null,
+            "end": null
+          }
+        }
+      }
+    },
+    {
+      "study_id": "S003",
+      "kind": "position",
+      "id": "p-pm-hachani",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "disputes": [],
+      "bucket": "documented",
+      "sources": [
+        "jort-2023-112-hachani",
+        "jort-2024-099-madouri"
+      ],
+      "interval": {
+        "startEarliest": 1690848000000,
+        "startLatest": 1690848000000,
+        "endEarliest": 1722988800000,
+        "endLatest": 1722988800000,
+        "startPrecision": "day",
+        "endPrecision": "day",
+        "status": "ended",
+        "raw": {
+          "start": "2023-08-01",
+          "end": "2024-08-07"
+        }
+      },
+      "raw": {
+        "id": "p-pm-hachani",
+        "role": "prime-minister",
+        "holder": "ahmed-hachani",
+        "start": "2023-08-01",
+        "end": "2024-08-07",
+        "acting": false,
+        "confidence": "A",
+        "verification": "verified",
+        "disputes": [],
+        "notes": [
+          "Named by decree no. 2023-550 of 1 August 2023. Replaced on 7 August 2024, when Kamel Madouri was named prime minister (decree no. 2024-451)."
+        ],
+        "sources": [
+          "jort-2023-112-hachani",
+          "jort-2024-099-madouri"
+        ],
+        "notes_fr": [
+          "Nommé par le décret n° 2023-550 du 1er août 2023. Remplacé le 7 août 2024, quand Kamel Maddouri a été nommé chef du gouvernement (décret n° 2024-451)."
+        ],
+        "notes_fr_by": "model-reviewed",
+        "notes_ar": [
+          "عُيّن بالمرسوم عدد 2023-550 المؤرخ في 1 أوت 2023. وعُوّض يوم 7 أوت 2024، حين عُيّن كمال المدوري رئيسًا للحكومة (المرسوم عدد 2024-451)."
+        ],
+        "notes_ar_by": "model-reviewed",
+        "basis": "documented",
+        "datesInferred": false,
+        "interval": {
+          "startEarliest": 1690848000000,
+          "startLatest": 1690848000000,
+          "endEarliest": 1722988800000,
+          "endLatest": 1722988800000,
+          "startPrecision": "day",
+          "endPrecision": "day",
+          "status": "ended",
+          "raw": {
+            "start": "2023-08-01",
+            "end": "2024-08-07"
+          }
+        },
+        "years": 1.0185014065997249,
+        "roleTitle": "Head of Government",
+        "roleTitleFr": "Chef du Gouvernement",
+        "roleTitleAr": "رئيس الحكومة",
+        "institution": "head-of-government",
+        "authority": 70,
+        "layer": "political",
+        "row": "head-of-government",
+        "predecessorDerived": "najla-bouden",
+        "successorDerived": "kamel-madouri"
+      }
+    },
+    {
+      "study_id": "S004",
+      "kind": "event",
+      "id": "dridi-prison-death-2026",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "disputes": [],
+      "bucket": "attributed",
+      "sources": [
+        "nawaat-dridi-2026",
+        "nawaat-prisons-canicule-2026"
+      ],
+      "title": "Suspicious death of prisoner Hamza Dridi; his mother breaks the silence",
+      "interval": {
+        "startEarliest": 1777507200000,
+        "startLatest": 1793404800000,
+        "endEarliest": 1793404800000,
+        "endLatest": 1793404800000,
+        "startPrecision": "approx",
+        "endPrecision": "approx",
+        "status": "ended",
+        "trimmed": true,
+        "raw": {
+          "start": "~2026-07-31",
+          "end": "~2026-07-31"
+        }
+      },
+      "raw": {
+        "id": "dridi-prison-death-2026",
+        "date": "~2026-07-31",
+        "title_en": "Suspicious death of prisoner Hamza Dridi; his mother breaks the silence",
+        "title_fr": "Mort suspecte du détenu Hamza Dridi ; sa mère brise le silence",
+        "title_ar": "موت مستراب للسجين حمزة الدريدي ووالدته تكسر حاجز الصمت",
+        "category": "legal",
+        "location": [],
+        "documents": [],
+        "materials": [],
+        "causes": [],
+        "consequences": [],
+        "rupture": false,
+        "summary": "Nawaat reports the suspicious death of prisoner Hamza Dridi and his mother's demand for the truth. The report is part of a cluster of prison-condition stories (heatwave as a double punishment, medical negligence) documented in 2026.",
+        "actors": [],
+        "institutions": [
+          "judiciary"
+        ],
+        "confidence": "C",
+        "basis": "reported",
+        "verification": "needs-primary-source",
+        "attributed_to": "Nawaat",
+        "reasoning": "The person is not in the graph (research note below); the death event is proposed with C and attribution. Exact date not established (~ 31 July 2026).",
+        "falsifiable_by": "An official record showing the death did not occur or that the reported circumstances are contradicted.",
+        "contested": [],
+        "disputes": [],
+        "sources": [
+          "nawaat-dridi-2026",
+          "nawaat-prisons-canicule-2026"
+        ],
+        "summary_fr": "Nawaat rapporte la mort suspecte du détenu Hamza Dridi et l'exigence de vérité de sa mère. Le reportage s'inscrit dans un ensemble d'histoires sur les conditions carcérales (la vague de chaleur comme double punition, la négligence médicale) documentées en 2026.",
+        "summary_fr_by": "model-reviewed",
+        "summary_ar": "تنقل نوات الوفاة المريبة للسجين حمزة الدريدي ومطالبة والدته بالحقيقة. يندرج التقرير ضمن مجموعة قصص عن أوضاع السجون (موجة الحر بوصفها عقوبة مضاعفة، والإهمال الطبي) وثّقت خلال 2026.",
+        "summary_ar_by": "model-reviewed",
+        "interval": {
+          "startEarliest": 1777507200000,
+          "startLatest": 1793404800000,
+          "endEarliest": 1793404800000,
+          "endLatest": 1793404800000,
+          "startPrecision": "approx",
+          "endPrecision": "approx",
+          "status": "ended",
+          "trimmed": true,
+          "raw": {
+            "start": "~2026-07-31",
+            "end": "~2026-07-31"
+          }
+        }
+      }
+    },
+    {
+      "study_id": "S005",
+      "kind": "position",
+      "id": "p-dgsn-bennour-1",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "disputes": [],
+      "bucket": "reported",
+      "sources": [
+        "jeuneafrique-ganzoui-2006",
+        "tuniscope-bennour-2018"
+      ],
+      "interval": {
+        "startEarliest": 1149465600000,
+        "startLatest": 1149465600000,
+        "endEarliest": 1167609600000,
+        "endLatest": 1262303999000,
+        "startPrecision": "day",
+        "endPrecision": "approx",
+        "status": "ended",
+        "raw": {
+          "start": "2006-06-05",
+          "end": "~2008"
+        }
+      },
+      "raw": {
+        "id": "p-dgsn-bennour-1",
+        "role": "dg-national-security",
+        "holder": "abdessatar-bennour",
+        "start": "2006-06-05",
+        "end": "~2008",
+        "acting": false,
+        "confidence": "B",
+        "verification": "needs-primary-source",
+        "disputes": [],
+        "notes": [
+          "First term, under Ben Ali, succeeding Ganzoui on 5 June 2006. End of term not precisely dated in any source located.",
+          "Research pass 2026-08-08: the 5 June 2006 start rests on Jeune Afrique's contemporaneous account (12 June 2006); no JORT decree located for the appointment or the ~2008 end. No upgrade possible."
+        ],
+        "sources": [
+          "jeuneafrique-ganzoui-2006",
+          "tuniscope-bennour-2018"
+        ],
+        "notes_fr": [
+          "« Premier mandat, sous Ben Ali, succédant à Ganzoui le 5 juin 2006. Fin de mandat non datée précisément dans aucune source trouvée. »",
+          "Passe de recherche 2026-08-08 : le début du 5 juin 2006 repose sur le récit contemporain de Jeune Afrique (12 juin 2006) ; aucun décret au JORT trouvé pour la nomination ni pour la fin ~2008. Aucune amélioration possible."
+        ],
+        "notes_fr_by": "model-reviewed",
+        "notes_ar": [
+          "« الولاية الأولى، في عهد بن علي، خلفًا لالقنزوعي يوم 5 جوان 2006. نهاية الولاية غير مؤرخة بدقة في أي مصدر وجدناه. »",
+          "جولة بحث 2026-08-08: بداية 5 جوان 2006 مبنية على رواية جون أفريك المعاصرة (12 جوان 2006)؛ ولم يُعثر على أي مرسوم في الرائد الرسمي للتعيين ولا للنهاية ~2008. لا ترقية ممكنة."
+        ],
+        "notes_ar_by": "model-reviewed",
+        "basis": "reported",
+        "datesInferred": true,
+        "interval": {
+          "startEarliest": 1149465600000,
+          "startLatest": 1149465600000,
+          "endEarliest": 1167609600000,
+          "endLatest": 1262303999000,
+          "startPrecision": "day",
+          "endPrecision": "approx",
+          "status": "ended",
+          "raw": {
+            "start": "2006-06-05",
+            "end": "~2008"
+          }
+        },
+        "years": 2.0753334954529197,
+        "roleTitle": "Director-General of National Security",
+        "roleTitleFr": "Directeur général de la sûreté nationale",
+        "roleTitleAr": "المدير العام للأمن الوطني",
+        "institution": "national-security",
+        "authority": 68,
+        "layer": "security",
+        "row": "national-security",
+        "predecessorDerived": "mohamed-ali-ganzoui",
+        "successorDerived": "abdessatar-bennour"
+      }
+    },
+    {
+      "study_id": "S006",
+      "kind": "event",
+      "id": "election-law-amendment-2024",
+      "confidence": "A",
+      "basis": "documented",
+      "verification": "verified",
+      "disputes": [
+        {
+          "claim": "The roadmap's \"2024 constitutional amendment (July 2024)\" could not be verified by research; this September 2024 electoral-law amendment is the real sourced pre-election rule change.",
+          "held_by": "The event-causality research pass (2026-08-08); failure vocabulary of data/contrib/event-causality-2026-08-08.yaml",
+          "assessment": "No July 2024 constitutional amendment appears in any source checked (2024-in- Tunisia chronologies, 2024 presidential election coverage, 2022 constitution articles EN+FR). The real July 2024 change was ISIE Ordinance 544 (4 July, administrative, not constitutional). Recorded as a note so the gap stays visible rather than being filled by invention.",
+          "status": "open"
+        }
+      ],
+      "bucket": "disputed",
+      "sources": [
+        "ap-election-law-2024",
+        "wikipedia-2024-election"
+      ],
+      "title": "Parliament strips courts of power over the election authority",
+      "interval": {
+        "startEarliest": 1727395200000,
+        "startLatest": 1727395200000,
+        "endEarliest": 1727395200000,
+        "endLatest": 1727395200000,
+        "startPrecision": "day",
+        "endPrecision": "day",
+        "status": "ended",
+        "raw": {
+          "start": "2024-09-27",
+          "end": "2024-09-27"
+        }
+      },
+      "raw": {
+        "id": "election-law-amendment-2024",
+        "date": "2024-09-27",
+        "title_en": "Parliament strips courts of power over the election authority",
+        "title_fr": "L'ARP retire aux tribunaux le controle de l'ISIE",
+        "title_ar": "البرلمان يجرّد القضاء من سلطة مراقبة هيئة الانتخابات",
+        "category": "legal",
+        "location": [
+          "gov-tunis"
+        ],
+        "documents": [],
+        "materials": [],
+        "causes": [],
+        "consequences": [
+          "election-2024"
+        ],
+        "rupture": false,
+        "summary": "Nine days before the presidential election, parliament amends the electoral law to remove the Administrative Court's power to review ISIE decisions, transferring its election powers to the Court of Appeal of Tunis — a response to the Court's order reinstating three excluded candidates. The ISIE, whose members are appointed by the president, had already refused to reinstate Zenaidi, Mekki and Daïmi.",
+        "actors": [
+          "kais-saied"
+        ],
+        "institutions": [
+          "legislature",
+          "isie",
+          "judiciary"
+        ],
+        "confidence": "A",
+        "verification": "verified",
+        "reasoning": "AP (27 September 2024) reports the amendment directly: \"Tunisia's parliament amended a law on Friday, stripping power from courts over decisions made by an embattled election authority whose members are appointed by President Kais Saied,\" nine days before the 6 October vote, amid the conflict over the three candidates the Administrative Court had ordered reinstated.",
+        "falsifiable_by": "A JORT record of the amending law dated other than 27 September 2024.",
+        "contested": [],
+        "disputes": [
+          {
+            "claim": "The roadmap's \"2024 constitutional amendment (July 2024)\" could not be verified by research; this September 2024 electoral-law amendment is the real sourced pre-election rule change.",
+            "held_by": "The event-causality research pass (2026-08-08); failure vocabulary of data/contrib/event-causality-2026-08-08.yaml",
+            "assessment": "No July 2024 constitutional amendment appears in any source checked (2024-in- Tunisia chronologies, 2024 presidential election coverage, 2022 constitution articles EN+FR). The real July 2024 change was ISIE Ordinance 544 (4 July, administrative, not constitutional). Recorded as a note so the gap stays visible rather than being filled by invention.",
+            "status": "open"
+          }
+        ],
+        "sources": [
+          "ap-election-law-2024",
+          "wikipedia-2024-election"
+        ],
+        "summary_fr": "Neuf jours avant l'élection présidentielle, le Parlement modifie la loi électorale pour retirer au Tribunal administratif le pouvoir d'examiner les décisions de l'ISIE, transférant ses compétences électorales à la cour d'appel de Tunis — une réponse à l'ordre du Tribunal de rétablir trois candidats exclus. L'ISIE, dont les membres sont nommés par le président, avait déjà refusé de rétablir Zenaidi, Mekki et Daïmi.",
+        "summary_fr_by": "model-reviewed",
+        "summary_ar": "قبل تسعة أيام من الانتخابات الرئاسية، يعدّل البرلمان القانون الانتخابي لسحب صلاحية مراجعة قرارات الهيئة العليا المستقلة للانتخابات من المحكمة الإدارية، ناقلًا اختصاصاته الانتخابية إلى محكمة الاستئناف بتونس — ردًا على أمر المحكمة بإعادة ثلاثة مرشحين مستبعدين. كانت الهيئة، التي يعيّن رئيس الجمهورية أعضاءها، قد رفضت بالفعل إعادة الزنيدي والمكي والدعيمي.",
+        "summary_ar_by": "model-reviewed",
+        "basis": "documented",
+        "interval": {
+          "startEarliest": 1727395200000,
+          "startLatest": 1727395200000,
+          "endEarliest": 1727395200000,
+          "endLatest": 1727395200000,
+          "startPrecision": "day",
+          "endPrecision": "day",
+          "status": "ended",
+          "raw": {
+            "start": "2024-09-27",
+            "end": "2024-09-27"
+          }
+        }
+      }
+    },
+    {
+      "study_id": "S007",
+      "kind": "relationship",
+      "id": "rel-moncef-marzouki-ltdh-institutional",
+      "confidence": "C",
+      "basis": "inferred",
+      "verification": "needs-primary-source",
+      "disputes": [],
+      "bucket": "inferred",
+      "sources": [
+        "carnegie-back-to-barracks",
+        "lepetitjournal-marzouki-bio"
+      ],
+      "interval": {
+        "startEarliest": 599616000000,
+        "startLatest": 631151999000,
+        "endEarliest": 757382400000,
+        "endLatest": 788918399000,
+        "startPrecision": "year",
+        "endPrecision": "year",
+        "status": "ended",
+        "raw": {
+          "start": "1989",
+          "end": "1994"
+        }
+      },
+      "raw": {
+        "id": "rel-moncef-marzouki-ltdh-institutional",
+        "from": "moncef-marzouki",
+        "to": "ltdh",
+        "type": "institutional",
+        "start": "1989",
+        "end": "1994",
+        "description": "President of the Tunisian League for the Defence of Human Rights before founding a party — the civil-society-to-presidency route, which almost nobody else in this dataset takes.",
+        "confidence": "C",
+        "verification": "needs-primary-source",
+        "attributed_to": "Published biographies of Marzouki, which agree on the 1989 election and the 1994 withdrawal",
+        "reasoning": "Marzouki’s LTDH presidency before founding his party rests on Carnegie’s profile and contemporaneous Tunisian reporting; the civil-society-to-presidency route is documented in the biographical record.",
+        "falsifiable_by": "Primary documentation of the LTDH’s presidency (minutes or election records) showing a different holder.",
+        "disputes": [],
+        "sources": [
+          "carnegie-back-to-barracks",
+          "lepetitjournal-marzouki-bio"
+        ],
+        "description_fr": "Président de la Ligue tunisienne pour la défense des droits de l'Homme avant de fonder un parti — le parcours société-civile-vers-présidence, que presque personne d'autre dans ce jeu de données n'emprunte.",
+        "description_fr_by": "model-reviewed",
+        "description_ar": "رئيس الرابطة التونسية للدفاع عن حقوق الإنسان قبل تأسيس حزب — المسار من المجتمع المدني إلى الرئاسة، الذي لا يسلكه أحد آخر تقريبًا في قاعدة البيانات هذه.",
+        "description_ar_by": "model-reviewed",
+        "reasoning_fr": "La présidence de la LTDH par Marzouki avant la fondation de son parti repose sur le profil de Carnegie et la presse tunisienne contemporaine ; le parcours société-civile-vers-présidence est documenté dans le dossier biographique.",
+        "reasoning_fr_by": "model-reviewed",
+        "reasoning_ar": "رئاسة المرزوقي للرابطة قبل تأسيس حزبه تستند إلى ملف كارنيجي والصحافة التونسية المعاصرة؛ ومسار المجتمع المدني إلى الرئاسة موثق في السجل السيري.",
+        "reasoning_ar_by": "model-reviewed",
+        "falsifiable_by_fr": "Documentation primaire de la présidence de la LTDH (minutes ou registres d'élection) montrant un titulaire différent.",
+        "falsifiable_by_fr_by": "model-reviewed",
+        "falsifiable_by_ar": "وثائق أولية لرئاسة الرابطة (محاضر أو سجلات انتخاب) تُظهر رئيسًا مختلفًا.",
+        "falsifiable_by_ar_by": "model-reviewed",
+        "notes": [],
+        "basis": "inferred",
+        "direction": "contextual",
+        "interval": {
+          "startEarliest": 599616000000,
+          "startLatest": 631151999000,
+          "endEarliest": 757382400000,
+          "endLatest": 788918399000,
+          "startPrecision": "year",
+          "endPrecision": "year",
+          "status": "ended",
+          "raw": {
+            "start": "1989",
+            "end": "1994"
+          }
+        }
+      }
+    },
+    {
+      "study_id": "S008",
+      "kind": "position",
+      "id": "p-justice-zouari",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "needs-primary-source",
+      "disputes": [
+        {
+          "claim": "Decree numbers n°91-275 and 91-276 of 20 Feb 1991 for the Zouari appointment",
+          "held_by": "Wikipedia (French) — Gouvernement Karoui transcription",
+          "assessment": "Transcription only; Wikipedia cites the decrees by number but the JORT page image was not fetched in this session. The numbers are carried as reported, not as verified gazette fact, and a different numbering on the actual JORT page would supersede them.",
+          "status": "open"
+        }
+      ],
+      "bucket": "disputed",
+      "sources": [
+        "wikipedia-justice-ministers-tunisia-fr",
+        "frwiki-gouvernement-karoui",
+        "frwiki-abderrahim-zouari"
+      ],
+      "interval": {
+        "startEarliest": 667008000000,
+        "startLatest": 667008000000,
+        "endEarliest": 708048000000,
+        "endLatest": 708048000000,
+        "startPrecision": "day",
+        "endPrecision": "day",
+        "status": "ended",
+        "raw": {
+          "start": "1991-02-20",
+          "end": "1992-06-09"
+        }
+      },
+      "raw": {
+        "id": "p-justice-zouari",
+        "role": "justice-minister",
+        "holder": "abderrahim-zouari",
+        "start": "1991-02-20",
+        "end": "1992-06-09",
+        "acting": false,
+        "confidence": "B",
+        "basis": "reported",
+        "verification": "needs-primary-source",
+        "attributed_to": "Wikipedia (French)",
+        "reasoning": "French Wikipedia's dated justice list records Zouari 20 February 1991 to 9 June 1992, after Chédli Neffati and before Sadok Chaabane; corroborated by Gouvernement Karoui section \"En vertu des décrets n°91-275 et 91-276 du 20 février 1991, une nouvelle composition du gouvernement est annoncée\" with table Justice: Abderrahim Zouari, and the dedicated Abderrahim Zouari bio (Justice 20 Feb 1991–09 Jun 1992) plus remaniement 09 Jun 1992 successor Sadok Chaabane. Tier-3 corroboration only — decree numbers 91-275/91-276 are Wikipedia's transcription of the JORT, not a primary fetch. Hunt 2026-08-28: 9anoun.tn browse (https://9anoun.tn/kb/jorts) returns only recent JORTs, no 1991-1992 index surfaced; direct 9anoun guesses and KB search for Zouari/ Justice 1991-1992 returned no hits; legislation-securite.tn and juridoc.tn not indexed for 1991 decrees; justice.gov.tn has no historical minister list. Still needs primary source for A; transcription of decree numbers is the disputed point until JORT page image is pulled.",
+        "falsifiable_by": "JORT issue containing decrees n°91-275/91-276 of 20 Feb 1991 (https://lake.jort.tn/journal-officiel/fr/1991/ — issue around 20 Feb 1991) naming Abderrahim Zouari as Minister of Justice with different dates, or showing a different holder/CIN/birth mismatching 18 Apr 1944 Dahmani, or giving different decree numbers than Wikipedia's 91-275/91-276 transcription; or JORT 09 Jun 1992 issue for the succession to Sadok Chaabane. Would upgrade to documented/A and disambiguate homonym.",
+        "disputes": [
+          {
+            "claim": "Decree numbers n°91-275 and 91-276 of 20 Feb 1991 for the Zouari appointment",
+            "held_by": "Wikipedia (French) — Gouvernement Karoui transcription",
+            "assessment": "Transcription only; Wikipedia cites the decrees by number but the JORT page image was not fetched in this session. The numbers are carried as reported, not as verified gazette fact, and a different numbering on the actual JORT page would supersede them.",
+            "status": "open"
+          }
+        ],
+        "notes": [
+          "Hunt 2026-08-28: JORT 20 Feb 1991 (91-275/91-276) and 09 Jun 1992 via 9anoun.tn — not open in this session; decree numbers known only from Wikipedia transcription. Corroborated at tier-3 by frwiki-gouvernement-karoui + frwiki-abderrahim-zouari + dated justice list. Falsifiable by lake.jort.tn 1991 issue page image."
+        ],
+        "sources": [
+          "wikipedia-justice-ministers-tunisia-fr",
+          "frwiki-gouvernement-karoui",
+          "frwiki-abderrahim-zouari"
+        ],
+        "reasoning_fr": "La liste datée de Wikipédia en français consigne Zouari du 20 février 1991 au 9 juin 1992, après Chédli Neffati et avant Sadok Chaâbane ; corroboré par la section Gouvernement Karoui \"En vertu des décrets n°91-275 et 91-276 du 20 février 1991, une nouvelle composition du gouvernement est annoncée\" avec tableau Justice : Abderrahim Zouari, et la bio dédiée Abderrahim Zouari (Justice 20 fév. 1991–09 juin 1992) plus remaniement 09 juin 1992 successeur Sadok Chaâbane. Corroboration de niveau 3 seulement — les numéros 91-275/91-276 sont la transcription Wikipédia du JORT, non une récupération primaire. Chasse 2026-08-28 : navigation 9anoun.tn (https://9anoun.tn/kb/jorts) ne renvoie que les JORT récents, aucun index 1991-1992 surfacé ; tentatives directes 9anoun et recherche KB Zouari/Justice 1991-1992 sans résultat ; legislation-securite.tn et juridoc.tn non indexés pour décrets 1991 ; justice.gov.tn sans liste historique. Reste en attente de source primaire pour A ; la transcription des numéros est le point contesté jusqu'à récupération d'image JORT.",
+        "reasoning_fr_by": "model-reviewed",
+        "reasoning_ar": "القائمة المؤرّخة في ويكيبيديا الفرنسية تسجّل الزواري من 20 فيفري 1991 إلى 9 جوان 1992، بعد الشاذلي النفطي وقبل الصادق شعبان؛ ويؤيده قسم حكومة القروي \"بمقتضى المرسومين عدد 91-275 و91-276 المؤرخين في 20 فيفري 1991، أُعلنت تشكيلة جديدة للحكومة\" مع جدول العدل: عبد الرحيم الزواري، والسيرة المخصصة لعبد الرحيم الزواري (العدل 20 فيفري 1991–09 جوان 1992) plus تعديل 9 جوان 1992 الخلف الصادق شعبان. تأييد من المستوى 3 فقط — رقما المرسومين 91-275/91-276 هما نسخ ويكيبيديا للرائد الرسمي، ليس سحبًا أوليًا. بحث 2026-08-28: تصفح 9anoun.tn (https://9anoun.tn/kb/jorts) يعرض فقط الأعداد الحديثة، دون فهرس 1991-1992؛ محاولات 9anoun المباشرة وبحث القاعدة المعرفية عن Zouari/Justice 1991-1992 دون نتيجة؛ legislation-securite.tn وjuridoc.tn غير مفهرسين لمراسيم 1991؛ justice.gov.tn بلا قائمة تاريخية. لا يزال بحاجة إلى مصدر أولي للدرجة أ؛ نسخ رقمي المرسومين هو النقطة المتنازع عليها حتى سحب صورة الرائد الرسمي.",
+        "reasoning_ar_by": "model-reviewed",
+        "falsifiable_by_fr": "Numéro du JORT contenant décrets n°91-275/91-276 du 20 fév. 1991 (https://lake.jort.tn/journal-officiel/fr/1991/ — numéro autour du 20 fév. 1991) nommant Abderrahim Zouari ministre de la Justice avec des dates différentes, ou montrant un titulaire/CIN/naissance différent ne correspondant pas au 18 avr. 1944 Dahmani, ou donnant des numéros différents de la transcription Wikipédia 91-275/91-276 ; ou numéro JORT 09 juin 1992 pour succession à Sadok Chaâbane. Permettrait un passage à documenté/A et lèverait l'homonymie.",
+        "falsifiable_by_fr_by": "model-reviewed",
+        "falsifiable_by_ar": "عدد الرائد الرسمي الحاوي للمرسومين عدد 91-275/91-276 المؤرخين في 20 فيفري 1991 (https://lake.jort.tn/journal-officiel/fr/1991/ — عدد حوالي 20 فيفري 1991) الذي يعيّن عبد الرحيم الزواري وزيرًا للعدل بتواريخ مختلفة، أو يعرض صاحب منصب/رقم بطاقة تعريف/تاريخ ولادة مختلفًا لا يطابق 18 أفريل 1944 بدهماني، أو يعطي رقمين مختلفين عن نسخ ويكيبيديا 91-275/91-276؛ أو عدد الرائد الرسمي 9 جوان 1992 لخلافة الصادق شعبان. من شأنه الترقية إلى موثّق/أ وتمييز التشابه الاسمي.",
+        "falsifiable_by_ar_by": "model-reviewed",
+        "notes_fr": [
+          "Recherche 2026-08-28 : JORT 20 fév. 1991 (91-275/91-276) et 09 juin 1992 via 9anoun.tn — non ouverts lors de cette session ; numéros connus seulement par transcription Wikipédia. Corroboré en niveau 3 par frwiki-gouvernement-karoui + frwiki-abderrahim-zouari + liste datée Justice. Réfutable par image de page lake.jort.tn 1991."
+        ],
+        "notes_fr_by": "model-reviewed",
+        "notes_ar": [
+          "بحث 2026-08-28: الرائد الرسمي 20 فيفري 1991 (91-275/91-276) و9 جوان 1992 عبر 9anoun.tn — غير متاحين في هذه الجلسة؛ الرقمان معروفان فقط عبر نسخ ويكيبيديا. مؤيد في المستوى 3 عبر frwiki-gouvernement-karoui + frwiki-abderrahim-zouari + القائمة المؤرخة للعدل. قابل للدحض بصورة صفحة lake.jort.tn 1991."
+        ],
+        "notes_ar_by": "model-reviewed",
+        "datesInferred": true,
+        "interval": {
+          "startEarliest": 667008000000,
+          "startLatest": 667008000000,
+          "endEarliest": 708048000000,
+          "endLatest": 708048000000,
+          "startPrecision": "day",
+          "endPrecision": "day",
+          "status": "ended",
+          "raw": {
+            "start": "1991-02-20",
+            "end": "1992-06-09"
+          }
+        },
+        "years": 1.3005058283195412,
+        "roleTitle": "Minister of Justice",
+        "roleTitleFr": "Ministre de la Justice",
+        "roleTitleAr": "وزير العدل",
+        "institution": "head-of-government",
+        "authority": 42,
+        "layer": "political",
+        "row": "head-of-government",
+        "predecessorDerived": "mustapha-bouaziz",
+        "successorDerived": "sadok-chaabane"
+      }
+    },
+    {
+      "study_id": "S009",
+      "kind": "relationship",
+      "id": "board-sncft-boufaied",
+      "confidence": "B",
+      "basis": "reported",
+      "verification": "verified",
+      "disputes": [],
+      "bucket": "reported",
+      "sources": [
+        "wikipedia-sncft"
+      ],
+      "interval": {
+        "startEarliest": 1641772800000,
+        "startLatest": 1641772800000,
+        "endEarliest": null,
+        "endLatest": null,
+        "startPrecision": "day",
+        "endPrecision": "after",
+        "status": "ongoing",
+        "raw": {
+          "start": "2022-01-10",
+          "end": "ongoing"
+        }
+      },
+      "raw": {
+        "id": "board-sncft-boufaied",
+        "from": "taoufik-boufaied",
+        "to": "sncft",
+        "type": "board",
+        "subtype": "ceo",
+        "start": "2022-01-10",
+        "end": "ongoing",
+        "description": "Managing director (PDG) of the SNCFT since 10 January 2022 (wikipedia-sncft) — consistent with the graph position p-soe-sncft-taoufik-boufaied.",
+        "confidence": "B",
+        "verification": "verified",
+        "disputes": [],
+        "sources": [
+          "wikipedia-sncft"
+        ],
+        "description_fr": "Directeur général (PDG) de la SNCFT depuis le 10 janvier 2022 (wikipedia-sncft) — cohérent avec la position du graphe p-soe-sncft-taoufik-boufaied.",
+        "description_fr_by": "model-reviewed",
+        "description_ar": "المدير العام للشركة الوطنية للسكك الحديدية التونسية منذ 10 جانفي 2022 (wikipedia-sncft) — متسق مع منصب الرسم البياني p-soe-sncft-taoufik-boufaied.",
+        "description_ar_by": "model-reviewed",
+        "notes": [],
+        "basis": "reported",
+        "direction": "directed",
+        "interval": {
+          "startEarliest": 1641772800000,
+          "startLatest": 1641772800000,
+          "endEarliest": null,
+          "endLatest": null,
+          "startPrecision": "day",
+          "endPrecision": "after",
+          "status": "ongoing",
+          "raw": {
+            "start": "2022-01-10",
+            "end": "ongoing"
+          }
+        }
+      }
+    },
+    {
+      "study_id": "S010",
+      "kind": "relationship",
+      "id": "rel-united-arab-emirates-nessma-tv-reported-influence",
+      "confidence": "C",
+      "basis": "reported",
+      "verification": "verified",
+      "disputes": [],
+      "bucket": "attributed",
+      "sources": [
+        "bloomberg-uae-nessma-2008"
+      ],
+      "interval": {
+        "startEarliest": 1325462400000,
+        "startLatest": 1420070399000,
+        "endEarliest": null,
+        "endLatest": 1787616000000,
+        "startPrecision": "approx",
+        "endPrecision": "unknown",
+        "status": "unknown",
+        "raw": {
+          "start": "~2013",
+          "end": null
+        }
+      },
+      "raw": {
+        "id": "rel-united-arab-emirates-nessma-tv-reported-influence",
+        "from": "united-arab-emirates",
+        "to": "nessma-tv",
+        "type": "reported-influence",
+        "subtype": "funding-anti-ennahda",
+        "start": "~2013",
+        "description": "Reporting has documented UAE financial support for Tunisian media outlets and political actors opposed to Ennahda, particularly after the 2013 Egyptian coup.",
+        "confidence": "C",
+        "basis": "reported",
+        "verification": "verified",
+        "attributed_to": "Reports by international media and investigative outlets",
+        "disputes": [],
+        "sources": [
+          "bloomberg-uae-nessma-2008"
+        ],
+        "description_fr": "La presse a documenté un soutien financier émirati à des médias tunisiens et à des acteurs politiques opposés à Ennahdha, particulièrement après le coup d'État égyptien de 2013.",
+        "description_fr_by": "model-reviewed",
+        "description_ar": "وثّقت التقارير دعمًا ماليًا إماراتيًا لوسائل إعلام تونسية وفاعلين سياسيين معادين للنهضة، لا سيما بعد الانقلاب المصري في 2013.",
+        "description_ar_by": "model-reviewed",
+        "notes": [
+          "Anchored at the media endpoint by the documented cap table (Karoui 50 / Mediaset 25 / Quinta 25, Bloomberg + MOM). No UAE sovereign fund or Emirati vehicle appears as a Nessma shareholder in MOM or registry searches; a silent UAE stake would contradict the documented cap table. The influence claim stays reported/C."
+        ],
+        "direction": "contextual",
+        "interval": {
+          "startEarliest": 1325462400000,
+          "startLatest": 1420070399000,
+          "endEarliest": null,
+          "endLatest": 1787616000000,
+          "startPrecision": "approx",
+          "endPrecision": "unknown",
+          "status": "unknown",
+          "raw": {
+            "start": "~2013",
+            "end": null
+          }
+        }
+      }
+    }
+  ]
+}
