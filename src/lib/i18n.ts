@@ -1087,6 +1087,10 @@ const en: Dict = {
 	'atlas.tenure.holdersTitle': '{n} recorded holders',
 	'rankings.caveat':
 		'This is a ranking of structural position, not of who secretly runs the country. A high brokerage score means the dataset records this person connecting otherwise separate networks; it is not evidence of wrongdoing, coordination, or hidden control. Select a row to see exactly which records produced each number.',
+	'rankings.sensitivityTitle': 'How the rankings depend on assumptions',
+	'rankings.sensitivityBody':
+		'The six indices barely move when the two temporal assumptions are perturbed (8-year window halved/doubled, ~slack ±50%: worst Spearman ≥0.997) or when the three influence weights are shifted ±0.25 (worst 0.997 — only five people score on influence today; near-zero deltas are the sparsity finding, not hidden robustness). The combined score is sensitive to the reader’s weighting: excluding survival drops it to 0.772 (47.5% top-40 overlap) and authority to 0.782, while brokerage and influence barely register (0.969 and 0.995). The full ranking-delta table with Spearman, overlap and top-10 swaps is published with every build.',
+	'rankings.sensitivityNote': 'full table: output/sensitivity/README.md · data: sensitivity.json',
 	'rankings.detail.nopost': 'no post at this date',
 	'rankings.detail.nopath': 'no documented path to the presidency',
 	'rankings.detail.hops': '{n} institutional step(s) from the presidency',
@@ -2301,6 +2305,10 @@ const fr: Dict = {
 	'atlas.tenure.holdersTitle': '{n} titulaires enregistrés',
 	'rankings.caveat':
 		'Ceci est un classement de position structurelle, pas de qui dirigerait secrètement le pays. Un score d’intermédiation élevé signifie que les données enregistrent cette personne reliant des réseaux autrement séparés ; ce n’est pas une preuve de malversation, de coordination ou de contrôle occulte. Sélectionnez une ligne pour voir exactement quels enregistrements ont produit chaque chiffre.',
+	'rankings.sensitivityTitle': 'Ce dont dépend le classement',
+	'rankings.sensitivityBody':
+		'Les six indices bougent à peine quand les deux hypothèses temporelles sont perturbées (fenêtre 8 ans divisée/doublée, marge ±50% : pire Spearman ≥0,997) ou quand les trois poids d’influence sont décalés de ±0,25 (pire 0,997 — seules cinq personnes marquent sur l’influence aujourd’hui ; ces deltas quasi nuls sont la sparsité, pas une robustesse cachée). Le score combiné dépend du choix de pondération du lecteur : exclure la survie le fait chuter à 0,772 (47,5% de recouvrement top-40) et l’autorité à 0,782, quand l’intermédiation et l’influence bougent à peine (0,969 et 0,995). La table complète des écarts (Spearman, recouvrement, swaps top-10) est publiée à chaque build.',
+	'rankings.sensitivityNote': 'table complète : output/sensitivity/README.md · données : sensitivity.json',
 	'rankings.detail.nopost': 'aucun poste à cette date',
 	'rankings.detail.nopath': 'aucun chemin documenté vers la présidence',
 	'rankings.detail.hops': '{n} pas institutionnel(s) de la présidence',
@@ -3513,6 +3521,10 @@ const ar: Dict = {
 	'atlas.tenure.holdersTitle': '{n} من شاغلي المنصب المسجلين',
 	'rankings.caveat':
 		'هذا ترتيب للموقع البنيوي، وليس لمن يدير البلاد سرًا. درجة الوساطة العالية تعني أن البيانات تسجّل هذا الشخص رابطًا بين شبكات منفصلة لولاه؛ وهي ليست دليلاً على مخالفة أو تنسيق أو سيطرة خفية. اختر صفًا لترى بالضبط أي السجلات أنتجت كل رقم.',
+	'rankings.sensitivityTitle': 'على ماذا يعتمد الترتيب',
+	'rankings.sensitivityBody':
+		'المؤشرات الستة بالكاد تتحرك عند تغيير الفرضيتين الزمنيتين (نافذة 8 أعوام نصف/ضعف، هامش ±50%: أسوأ سبيرمان ≥0.997) أو عند إزاحة أوزان النفوذ الثلاثة ±0.25 (الأسوأ 0.997 — خمسة أشخاص فقط يسجلون على النفوذ اليوم؛ القيم شبه الصفرية هي ندرة البيانات لا متانة مخفية). النتيجة المركبة حساسة لوزن القارئ: استبعاد البقاء يهبط بها إلى 0.772 (47.5% تداخل أعلى-40) والسلطة إلى 0.782، بينما الوساطة والنفوذ بالكاد يتحركان (0.969 و0.995). جدول فروق الترتيب الكامل مع سبيرمان والتداخل وتبديلات العشرة الأوائل منشور مع كل بناء.',
+	'rankings.sensitivityNote': 'الجدول الكامل: output/sensitivity/README.md · البيانات: sensitivity.json',
 	'rankings.detail.nopost': 'لا منصب في هذا التاريخ',
 	'rankings.detail.nopath': 'لا يوجد مسار موثّق إلى الرئاسة',
 	'rankings.detail.hops': '{n} خطوة مؤسسية من الرئاسة',

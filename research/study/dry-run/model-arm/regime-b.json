@@ -1,0 +1,104 @@
+{
+  "meta": {
+    "generatedAt": "2026-09-02T22:02:17.078Z",
+    "regime": "rubric+examples",
+    "model": "simulator:model-arm-v1",
+    "temperature": 0,
+    "synthetic": true,
+    "prompts": 10,
+    "sample": "research/study/dry-run/sample-10-blinded.json",
+    "note": "Synthetic grades (no API key) — heuristic from source tiers with seeded variation. Marked synthetic:true. Replace with real LLM for the funded study."
+  },
+  "grades": [
+    {
+      "study_id": "S001",
+      "kind": "relationship",
+      "id": "rel-judiciary-lazhar-akremi-prosecution",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=2, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S002",
+      "kind": "relationship",
+      "id": "rel-khaled-yahyaoui-judiciary-allegation",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S003",
+      "kind": "position",
+      "id": "p-pm-hachani",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S004",
+      "kind": "event",
+      "id": "dridi-prison-death-2026",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=4, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S005",
+      "kind": "position",
+      "id": "p-dgsn-bennour-1",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S006",
+      "kind": "event",
+      "id": "election-law-amendment-2024",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S007",
+      "kind": "relationship",
+      "id": "rel-moncef-marzouki-ltdh-institutional",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=2, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S008",
+      "kind": "position",
+      "id": "p-justice-zouari",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S009",
+      "kind": "relationship",
+      "id": "board-sncft-boufaied",
+      "confidence": "C",
+      "basis": "inferred",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/inferred (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S010",
+      "kind": "relationship",
+      "id": "rel-united-arab-emirates-nessma-tv-reported-influence",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=2, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    }
+  ]
+}

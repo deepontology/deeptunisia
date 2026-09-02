@@ -1,0 +1,272 @@
+{
+  "meta": {
+    "rater": "Rater B",
+    "seed": "20260902::rater:b",
+    "n": 10,
+    "blinded": true
+  },
+  "prompts": [
+    {
+      "study_id": "S003",
+      "kind": "position",
+      "id": "p-pm-hachani",
+      "claim": "Ahmed Hachani held Head of Government (Head of Government) between 2023-08-01 and 2024-08-07",
+      "context": "\nNotes: Named by decree no. 2023-550 of 1 August 2023. Replaced on 7 August 2024, when Kamel Madouri was named prime minister (decree no. 2024-451).",
+      "dates": {
+        "start": "2023-08-01",
+        "end": "2024-08-07"
+      },
+      "sources": [
+        {
+          "id": "jort-2023-112-hachani",
+          "title": "Arrêté du Chef du Gouvernement du 22 septembre 2023, portant délégation de signature (citing décret présidentiel n° 2023-550 du 1er août 2023)",
+          "publisher": "JORT n° 2023-112 via 9anoun",
+          "tier": 1,
+          "excerpt": "Official JORT document citing \"le décret Présidentiel n° 2023-550 du 1er août 2023, portant nomination du Chef du Gouvernement\", which \"prend effet à compter du 1er août 2023\" — primary record of Hachani's appointment date.",
+          "url": "https://9anoun.tn/fr/kb/jorts/jort-2023-112-9c2cc/arrete-du-chef-du-gouvernement-du-22-septembre-2023-portant-delegation-de-signature-3"
+        },
+        {
+          "id": "jort-2024-099-madouri",
+          "title": "Arrêté du Chef du Gouvernement du 12 août 2024, portant délégation de signature (citing décret n° 2024-451 du 7 août 2024)",
+          "publisher": "JORT n° 2024-099 via 9anoun",
+          "tier": 1,
+          "excerpt": "Official JORT document citing \"le décret n° 2024-451 du 7 août 2024, portant nomination du Chef du Gouvernement\" with delegation effective \"à compter du 8 août 2024\" — primary record of Madouri's appointment decree.",
+          "url": "https://9anoun.tn/fr/kb/jorts/jort-2024-099-aa16d/arrete-du-chef-du-gouvernement-du-12-aout-2024-portant-delegation-de-signature-8"
+        }
+      ]
+    },
+    {
+      "study_id": "S005",
+      "kind": "position",
+      "id": "p-dgsn-bennour-1",
+      "claim": "Abdessatar Bennour held Director-General of National Security (Directorate-General of National Security) between 2006-06-05 and ~2008",
+      "context": "A magistrate by training, formerly commander of the National Guard. Served as DGSN twice: from 5 June 2006 to ~2008 late in the Ben Ali era, and again from 2 March 2011 to ~2012 under the post-revolution Interior Ministry — one of the few senior security figures to serve on both sides of the rupture. A March 2011 Tunisoscope report on the second appointment has been persistently misdated as 2018, which once inflated the apparent count of chiefs in 2011-2012.\nNotes: First term, under Ben Ali, succeeding Ganzoui on 5 June 2006. End of term not precisely dated in any source located. | Research pass 2026-08-08: the 5 June 2006 start rests on Jeune Afrique's contemporaneous account (12 June 2006); no JORT decree located for the appointment or the ~2008 end. No upgrade possible.",
+      "dates": {
+        "start": "2006-06-05",
+        "end": "~2008"
+      },
+      "sources": [
+        {
+          "id": "jeuneafrique-ganzoui-2006",
+          "title": "Le sens d'une destitution",
+          "publisher": "Jeune Afrique",
+          "tier": 3,
+          "excerpt": "Ganzoui: DG Sûreté 1989, DG services spéciaux 1990, dismissed after Ghriba April 2002, ambassador Damascus, return 21 Nov 2005, replaced 5 June 2006 by Bennour.",
+          "url": "https://www.jeuneafrique.com/112595/archives-thematique/le-sens-d-une-destitution/"
+        },
+        {
+          "id": "tuniscope-bennour-2018",
+          "title": "Abdessatar Bennour nommé directeur général de la sûreté nationale",
+          "publisher": "Tuniscope",
+          "tier": 4,
+          "excerpt": "Notes that he had previously held the same post in 2006, succeeding Mohamed Ali Ganzoui. Article date corrected 2026-08-04: displayed dates on the page are unreliable; the event reported is the 2 March 2011 appointment, not 2018.",
+          "url": "https://www.tuniscope.com/article/6898/tunisie/actualites/abdessatar-553414"
+        }
+      ]
+    },
+    {
+      "study_id": "S006",
+      "kind": "event",
+      "id": "election-law-amendment-2024",
+      "claim": "Parliament strips courts of power over the election authority — Nine days before the presidential election, parliament amends the electoral law to remove the Administrative Court's power to review ISIE decisions, transferring its election powers to the Court of Appeal of Tunis — a response to the Court's order reinstating three excluded candidates. The ISIE, whose members are appointed by the president, had already refused to reinstate Zenaidi, Mekki and Daïmi (date: 2024-09-27)",
+      "dates": {
+        "start": "2024-09-27",
+        "end": null
+      },
+      "sources": [
+        {
+          "id": "ap-election-law-2024",
+          "title": "Tunisia passes law to strip courts of power over election authority appointed by president",
+          "publisher": "Associated Press",
+          "tier": 3,
+          "url": "https://apnews.com/article/tunisia-law-courts-election-president-saied-22f9e58a7ac11a772615b2ada7f4f73c"
+        },
+        {
+          "id": "wikipedia-2024-election",
+          "title": "2024 Tunisian presidential election",
+          "publisher": "Wikipedia",
+          "tier": 5,
+          "url": "https://en.wikipedia.org/wiki/2024_Tunisian_presidential_election"
+        }
+      ]
+    },
+    {
+      "study_id": "S008",
+      "kind": "position",
+      "id": "p-justice-zouari",
+      "claim": "Abderrahim Zouari held Minister of Justice (Head of Government) between 1991-02-20 and 1992-06-09",
+      "context": "\nNotes: Hunt 2026-08-28: JORT 20 Feb 1991 (91-275/91-276) and 09 Jun 1992 via 9anoun.tn — not open in this session; decree numbers known only from Wikipedia transcription. Corroborated at tier-3 by frwiki-gouvernement-karoui + frwiki-abderrahim-zouari + dated justice list. Falsifiable by lake.jort.tn 1991 issue page image.",
+      "dates": {
+        "start": "1991-02-20",
+        "end": "1992-06-09"
+      },
+      "sources": [
+        {
+          "id": "wikipedia-justice-ministers-tunisia-fr",
+          "title": "Ministère de la Justice (Tunisie)",
+          "publisher": "Wikipédia",
+          "tier": 3,
+          "excerpt": "Dated list of justice ministers: Mestiri 15 Apr 1956-30 Dec 1958; Khefacha 30 Dec 1958-5 Sep 1966; Mongi Slim 5 Sep 1966-6 Sep 1969; Snoussi 6 Sep 1969-12 Jun 1970; Bourguiba Jr 12 Jun-6 Nov 1970; Fitouri 6 Nov 1970-29 Oct 1971; Bellalouna 29 Oct 1971-5 Jun 1973; Baly 5 Jun 1973-25 Apr 1980; Chaker 25 Apr 1980-29 Oct 1984; Ben Ali 29 Oct 1984-12 Feb 1986; Ayari 12 Feb 1986-12 Apr 1988; Baly (2nd) 12 Apr-27 Jul 1988; H. Karoui 27 Jul 1988-27 Sep 1989; Bouaziz 27 Sep 1989-3 Mar 1990; Neffati 3 Mar 1990-20 Feb 1991; Zouari 20 Feb 1991-9 Jun 1992; Chaabane 9 Jun 1992-22 Jan 1997; Kallel 22 Jan 199",
+          "url": "https://fr.wikipedia.org/wiki/Minist%C3%A8re_de_la_Justice_%28Tunisie%29"
+        },
+        {
+          "id": "frwiki-gouvernement-karoui",
+          "title": "Gouvernement Karoui",
+          "publisher": "Wikipédia",
+          "tier": 3,
+          "excerpt": "Composition le 27 septembre 1989 — Ministre de la Justice: Mustapha Bouaziz (RCD). Remaniement du 3 mars 1990 — Justice: Chédli Neffati; Domaines de l'État: Mustapha Bouaziz. En vertu des décrets n°91-275 et 91-276 du 20 février 1991, nouvelle composition: Justice Abderrahim Zouari. Remaniement du 9 juin 1992 — successeur Sadok Chaâbane.",
+          "url": "https://fr.wikipedia.org/wiki/Gouvernement_Karoui"
+        },
+        {
+          "id": "frwiki-abderrahim-zouari",
+          "title": "Abderrahim Zouari",
+          "publisher": "Wikipédia",
+          "tier": 3,
+          "excerpt": "Ministre de la Justice 20 février 1991 – 9 juin 1992. Secrétaire général du RCD 31 juillet 1988 – 20 février 1991. Gouverneur de Gabès 1974-1978, Gouverneur de Nabeul ensuite. Ambassadeur au Maroc 1992-1993. Puis Jeunesse/Enfance (1993-1997), Affaires étrangères (1997), Éducation (1998-1999), Sport (2000-2002), Tourisme/Artisanat (2002-2004), Transport (2004-2011). Né 18 avril 1944 à Dahmani.",
+          "url": "https://fr.wikipedia.org/wiki/Abderrahim_Zouari"
+        }
+      ]
+    },
+    {
+      "study_id": "S009",
+      "kind": "relationship",
+      "id": "board-sncft-boufaied",
+      "claim": "Taoufik Boufaied —[board]→ SNCFT — Managing director (PDG) of the SNCFT since 10 January 2022 (wikipedia-sncft) — consistent with the graph position p-soe-sncft-taoufik-boufaied.",
+      "dates": {
+        "start": "2022-01-10",
+        "end": "ongoing"
+      },
+      "sources": [
+        {
+          "id": "wikipedia-sncft",
+          "title": "SNCFT",
+          "publisher": "Wikipedia",
+          "tier": 3,
+          "url": "https://fr.wikipedia.org/wiki/Soci%C3%A9t%C3%A9_nationale_des_chemins_de_fer_tunisiens"
+        }
+      ]
+    },
+    {
+      "study_id": "S002",
+      "kind": "relationship",
+      "id": "rel-khaled-yahyaoui-judiciary-allegation",
+      "claim": "Khaled Salah Yahyaoui —[allegation]→ Judiciary — A stronger version of the reported-influence claim circulates, holding that the presidential security chief personally directs state decisions beyond appointments, including judicial ones. No reliable evidence for the stronger claim has been located. What credible reporting supports is narrower: attributed influence over ministerial careers. The two should not be conflated, and this record exists precisely to keep them apart.",
+      "dates": {
+        "start": null,
+        "end": null
+      },
+      "sources": [
+        {
+          "id": "popular-discourse",
+          "title": "Recurring claims in Tunisian public and social-media discourse",
+          "publisher": "DeepTunisia editorial note",
+          "tier": 5,
+          "excerpt": "Not a source for the truth of any claim. Used solely to record that a claim circulates widely enough to be worth documenting and testing. Every entry citing this is graded unsubstantiated.",
+          "url": "https://deeptunisia.org/methodology"
+        },
+        {
+          "id": "africaintel-yahyaoui-2024",
+          "title": "Khaled Yahyaoui, the Carthage Palace security chief who makes and breaks ministerial careers",
+          "publisher": "Africa Intelligence",
+          "tier": 3,
+          "excerpt": "Profile of the presidential security chief and his reported influence over senior appointments.",
+          "url": "https://www.africaintelligence.com/north-africa/2024/06/04/khaled-yahyaoui-the-carthage-palace-security-chief-who-makes-and-breaks-ministerial-careers,110242437-art"
+        }
+      ]
+    },
+    {
+      "study_id": "S001",
+      "kind": "relationship",
+      "id": "rel-judiciary-lazhar-akremi-prosecution",
+      "claim": "Judiciary —[prosecution]→ Lazhar Akremi — Eight years at first instance, the lightest term in the case.",
+      "dates": {
+        "start": "2023",
+        "end": null
+      },
+      "sources": [
+        {
+          "id": "hrw-conspiracy-2025",
+          "title": "Tunisia: Harsh Sentences in 'Conspiracy Case' Sham Trial",
+          "publisher": "Human Rights Watch",
+          "tier": 2,
+          "excerpt": "Names the defendants and first-instance sentences of 19 April 2025 from the Tunis Court of First Instance: Kamel Ltaief 66 years, Khayam Turki 48, Noureddine Bhiri 43, Bochra Belhaj Hamida 28 in absentia, Ghazi Chaouachi, Issam Chebbi, Jaouhar Ben Mbarek, Ridha Belhaj and Chaima Issa 18 each, Abdelhamid Jelassi and Said Ferjani 13 each, Lazhar Akremi 8.",
+          "url": "https://www.hrw.org/news/2025/04/22/tunisia-harsh-sentences-conspiracy-case-sham-trial"
+        }
+      ]
+    },
+    {
+      "study_id": "S004",
+      "kind": "event",
+      "id": "dridi-prison-death-2026",
+      "claim": "Suspicious death of prisoner Hamza Dridi; his mother breaks the silence — Nawaat reports the suspicious death of prisoner Hamza Dridi and his mother's demand for the truth. The report is part of a cluster of prison-condition stories (heatwave as a double punishment, medical negligence) documented in 2026. (date: ~2026-07-31)",
+      "dates": {
+        "start": "~2026-07-31",
+        "end": null
+      },
+      "sources": [
+        {
+          "id": "nawaat-dridi-2026",
+          "title": "موت مستراب للسجين حمزة الدريدي، والدة الضحية تكسر حاجز الصمت",
+          "publisher": "Nawaat",
+          "tier": 4,
+          "url": "https://nawaat.org/2026/07/31/%d9%85%d9%88%d8%aa-%d9%85%d8%b3%d8%aa%d8%b1%d8%a7%d8%a8-%d9%84%d9%84%d8%b3%d8%ac%d9%8a%d9%86-%d8%ad%d9%85%d8%b2%d8%a9-%d8%a7%d9%84%d8%af%d8%b1%d9%8a%d8%af%d9%8a%d8%8c-%d9%88%d8%a7%d9%84%d8%af%d8%a9/"
+        },
+        {
+          "id": "nawaat-prisons-canicule-2026",
+          "title": "Prisons en Tunisie : La canicule comme double peine",
+          "publisher": "Nawaat",
+          "tier": 4,
+          "url": "https://nawaat.org/2026/08/05/prisons-en-tunisie-la-canicule-comme-double-peine/"
+        }
+      ]
+    },
+    {
+      "study_id": "S007",
+      "kind": "relationship",
+      "id": "rel-moncef-marzouki-ltdh-institutional",
+      "claim": "Moncef Marzouki —[institutional]→ Tunisian League for the Defence of Human Rights — President of the Tunisian League for the Defence of Human Rights before founding a party — the civil-society-to-presidency route, which almost nobody else in this dataset takes.",
+      "context": "Reasoning: Marzouki’s LTDH presidency before founding his party rests on Carnegie’s profile and contemporaneous Tunisian reporting; the civil-society-to-presidency route is documented in the biographical record.\nFalsifiable by: Primary documentation of the LTDH’s presidency (minutes or election records) showing a different holder.",
+      "dates": {
+        "start": "1989",
+        "end": "1994"
+      },
+      "sources": [
+        {
+          "id": "carnegie-back-to-barracks",
+          "title": "Back to the Barracks: The Tunisian Army Post-Revolution",
+          "publisher": "Carnegie Endowment for International Peace",
+          "tier": 2,
+          "url": "https://carnegieendowment.org/sada/2011/11/back-to-the-barracks-the-tunisian-army-post-revolution"
+        },
+        {
+          "id": "lepetitjournal-marzouki-bio",
+          "title": "Élections — Biographie de Moncef Marzouki",
+          "publisher": "Le Petit Journal (Tunis)",
+          "tier": 4,
+          "excerpt": "Elected president of the Tunisian League for the Defence of Human Rights in 1989; announced in February 1994 that he would seek no further office in it; founded and led the Congress for the Republic from July 2001.",
+          "url": "https://lepetitjournal.com/tunis/actualites/elections-biographie-de-moncef-marzouki-51960"
+        }
+      ]
+    },
+    {
+      "study_id": "S010",
+      "kind": "relationship",
+      "id": "rel-united-arab-emirates-nessma-tv-reported-influence",
+      "claim": "United Arab Emirates —[reported-influence]→ Nessma TV — Reporting has documented UAE financial support for Tunisian media outlets and political actors opposed to Ennahda, particularly after the 2013 Egyptian coup.",
+      "dates": {
+        "start": "~2013",
+        "end": null
+      },
+      "sources": [
+        {
+          "id": "bloomberg-uae-nessma-2008",
+          "title": "Mediaset in deal to buy into Tunisian TV",
+          "publisher": "Bloomberg",
+          "tier": 2,
+          "excerpt": "Mediaset's Quinta Communications acquired a stake in Nessma TV, with Karoui & Karoui (Nabil Karoui's advertising firm) as partners. The venture was later linked to UAE financial backing through Karoui's business relationships.",
+          "url": "https://www.bloomberg.com/news/articles/2008-04-18/mediaset-in-deal-to-buy-into-tunisian-tv"
+        }
+      ]
+    }
+  ]
+}

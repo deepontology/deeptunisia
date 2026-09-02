@@ -1,0 +1,11 @@
+study_id,kind,id,confidence,basis,notes
+S001,relationship,rel-judiciary-lazhar-akremi-prosecution,C,reported,Simulated (rubric+examples): 1 tier≤4 source(s), minTier=2, hasTier1=false → C/reported (few-shot regime, lower noise)
+S002,relationship,rel-khaled-yahyaoui-judiciary-allegation,C,reported,Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/reported (few-shot regime, lower noise)
+S003,position,p-pm-hachani,A,documented,Simulated (rubric+examples): 2 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)
+S004,event,dridi-prison-death-2026,B,reported,Simulated (rubric+examples): 2 tier≤4 source(s), minTier=4, hasTier1=false → B/reported (few-shot regime, lower noise)
+S005,position,p-dgsn-bennour-1,B,reported,Simulated (rubric+examples): 2 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)
+S006,event,election-law-amendment-2024,C,reported,Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/reported (few-shot regime, lower noise)
+S007,relationship,rel-moncef-marzouki-ltdh-institutional,B,reported,Simulated (rubric+examples): 2 tier≤4 source(s), minTier=2, hasTier1=false → B/reported (few-shot regime, lower noise)
+S008,position,p-justice-zouari,B,reported,Simulated (rubric+examples): 3 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)
+S009,relationship,board-sncft-boufaied,C,inferred,Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/inferred (few-shot regime, lower noise)
+S010,relationship,rel-united-arab-emirates-nessma-tv-reported-influence,C,reported,Simulated (rubric+examples): 1 tier≤4 source(s), minTier=2, hasTier1=false → C/reported (few-shot regime, lower noise)

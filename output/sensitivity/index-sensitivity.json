@@ -1,0 +1,860 @@
+{
+  "generated": "2026-09-02T21:50:20.763Z",
+  "commitSha": "8e2caf7b767fe75edeb06076fcbdef8cf8145f77",
+  "shippedDiscount": {
+    "documented": 1,
+    "reported": 0.55,
+    "inferred": 0.2,
+    "unsubstantiated": 0
+  },
+  "shippedWindow": 8,
+  "shippedSlack": {
+    "year": 365,
+    "month": 92
+  },
+  "shippedWeights": {
+    "authority": 1,
+    "proximity": 1,
+    "survival": 1,
+    "brokerage": 1,
+    "reach": 1,
+    "influence": 1
+  },
+  "counts": {
+    "totalPeople": 444,
+    "scoredInfluence": 5,
+    "scoredByKey": {
+      "authority": 338,
+      "proximity": 316,
+      "survival": 338,
+      "brokerage": 95,
+      "reach": 444,
+      "influence": 5
+    },
+    "influenceEdges": 19
+  },
+  "worstByKey": {
+    "authority": {
+      "spearman": 1,
+      "perturbation": "slack year 365→548 month 92→138 (+50%)"
+    },
+    "proximity": {
+      "spearman": 1,
+      "perturbation": "slack year 365→548 month 92→138 (+50%)"
+    },
+    "survival": {
+      "spearman": 0.997,
+      "perturbation": "slack year 365→183 month 92→46 (-50%)"
+    },
+    "brokerage": {
+      "spearman": 1,
+      "perturbation": "slack year 365→548 month 92→138 (+50%)"
+    },
+    "reach": {
+      "spearman": 1,
+      "perturbation": "slack year 365→548 month 92→138 (+50%)"
+    },
+    "influence": {
+      "spearman": 0.997,
+      "perturbation": "inferred-0.25"
+    },
+    "composite": {
+      "spearman": 0.772,
+      "perturbation": "weight survival 1→0 (excluded)"
+    }
+  },
+  "worstWeight": {
+    "spearman": 0.772,
+    "perturbation": "weight survival 1→0 (excluded)",
+    "key": "composite"
+  },
+  "note": "C11 sparsity: influence scores only ~5 people (19 influence-family edges, but only 5 exceed the published threshold), so discount/window/slack perturbations barely move its ranking (worst Spearman 0.997) — near-zero deltas are the sparsity finding, not hidden robustness. The composite’s sensitivity comes from elsewhere: halving/doubling a single index weight moves the composite most for survival (0.77 when excluded, ~0.95 halved, ~0.91 doubled) and authority (0.78 excluded), least for influence (0.995) and brokerage (0.97 excluded). Window/slack barely move any index in allTime mode (all Spearman ≥0.997) because the six indices’ core computations do not filter by time there; snapshot mode shows the same pattern (paper §5.4). Discount moves only influence + composite — the other five indices are pure functions of the data and cannot move.",
+  "rows": [
+    {
+      "perturbation": "shipped",
+      "family": "discount",
+      "key": "influence",
+      "spearman": 1,
+      "overlap": 100,
+      "swaps": 0,
+      "entered": [],
+      "left": []
+    },
+    {
+      "perturbation": "documented-0.25",
+      "family": "discount",
+      "key": "influence",
+      "spearman": 1,
+      "overlap": 100,
+      "swaps": 0,
+      "entered": [],
+      "left": []
+    },
+    {
+      "perturbation": "documented+0.25",
+      "family": "discount",
+      "key": "influence",
+      "spearman": 1,
+      "overlap": 100,
+      "swaps": 0,
+      "entered": [],
+      "left": []
+    },
+    {
+      "perturbation": "reported-0.25",
+      "family": "discount",
+      "key": "influence",
+      "spearman": 1,
+      "overlap": 100,
+      "swaps": 0,
+      "entered": [],
+      "left": []
+    },
+    {
+      "perturbation": "reported+0.25",
+      "family": "discount",
+      "key": "influence",
+      "spearman": 1,
+      "overlap": 100,
+      "swaps": 0,
+      "entered": [],
+      "left": []
+    },
+    {
+      "perturbation": "inferred-0.25",
+      "family": "discount",
+      "key": "influence",
+      "spearman": 0.997,
+      "overlap": 97.5,
+      "swaps": 0,
+      "entered": [
+        "ibrahim-chaibi"
+      ],
+      "left": [
+        "wassila-bourguiba"
+      ]
+    },
+    {
+      "perturbation": "inferred+0.25",
+      "family": "discount",
+      "key": "influence",
+      "spearman": 1,
+      "overlap": 100,
+      "swaps": 1,
+      "entered": [],
+      "left": []
+    },
+    {
+      "perturbation": "shipped",
+      "family": "discount",
+      "key": "composite",
+      "spearman": 1,
+      "overlap": 100,
+      "swaps": 0,
+      "entered": [],
+      "left": []
+    },
+    {
+      "perturbation": "documented-0.25",
+      "family": "discount",
+      "key": "composite",
+      "spearman": 1,
+      "overlap": 100,
+      "swaps": 0,
+      "entered": [],
+      "left": []
+    },
+    {
+      "perturbation": "documented+0.25",
+      "family": "discount",
+      "key": "composite",
+      "spearman": 1,
+      "overlap": 100,
+      "swaps": 0,
+      "entered": [],
+      "left": []
+    },
+    {
+      "perturbation": "reported-0.25",
+      "family": "discount",
+      "key": "composite",
+      "spearman": 0.999,
+      "overlap": 100,
+      "swaps": 1,
+      "entered": [],
+      "left": []
+    },
+    {
+      "perturbation": "reported+0.25",
+      "family": "discount",
+      "key": "composite",
+      "spearman": 1,
+      "overlap": 100,
+      "swaps": 0,
+      "entered": [],
+      "left": []
+    },
+    {
+      "perturbation": "inferred-0.25",
+      "family": "discount",
+      "key": "composite",
+      "spearman": 1,
+      "overlap": 100,
+      "swaps": 0,
+      "entered": [],
+      "left": []
+    },
+    {
+      "perturbation": "inferred+0.25",
+      "family": "discount",
+      "key": "composite",
+      "spearman": 1,
+      "overlap": 100,
+      "swaps": 0,
+      "entered": [],
+      "left": []
+    },
+    {
+      "perturbation": "window 8→4 (halved)",
+      "family": "window",
+      "key": "authority",
+      "spearman": 1,
+      "overlap": 100,
+      "swaps": 0,
+      "entered": [],
+      "left": []
+    },
+    {
+      "perturbation": "window 8→16 (doubled)",
+      "family": "window",
+      "key": "authority",
+      "spearman": 1,
+      "overlap": 100,
+      "swaps": 0,
+      "entered": [],
+      "left": []
+    },
+    {
+      "perturbation": "slack year 365→183 month 92→46 (-50%)",
+      "family": "slack",
+      "key": "authority",
+      "spearman": 1,
+      "overlap": 100,
+      "swaps": 0,
+      "entered": [],
+      "left": []
+    },
+    {
+      "perturbation": "slack year 365→548 month 92→138 (+50%)",
+      "family": "slack",
+      "key": "authority",
+      "spearman": 1,
+      "overlap": 100,
+      "swaps": 0,
+      "entered": [],
+      "left": []
+    },
+    {
+      "perturbation": "window 8→4 (halved)",
+      "family": "window",
+      "key": "proximity",
+      "spearman": 1,
+      "overlap": 100,
+      "swaps": 0,
+      "entered": [],
+      "left": []
+    },
+    {
+      "perturbation": "window 8→16 (doubled)",
+      "family": "window",
+      "key": "proximity",
+      "spearman": 1,
+      "overlap": 100,
+      "swaps": 0,
+      "entered": [],
+      "left": []
+    },
+    {
+      "perturbation": "slack year 365→183 month 92→46 (-50%)",
+      "family": "slack",
+      "key": "proximity",
+      "spearman": 1,
+      "overlap": 100,
+      "swaps": 0,
+      "entered": [],
+      "left": []
+    },
+    {
+      "perturbation": "slack year 365→548 month 92→138 (+50%)",
+      "family": "slack",
+      "key": "proximity",
+      "spearman": 1,
+      "overlap": 100,
+      "swaps": 0,
+      "entered": [],
+      "left": []
+    },
+    {
+      "perturbation": "window 8→4 (halved)",
+      "family": "window",
+      "key": "survival",
+      "spearman": 1,
+      "overlap": 100,
+      "swaps": 0,
+      "entered": [],
+      "left": []
+    },
+    {
+      "perturbation": "window 8→16 (doubled)",
+      "family": "window",
+      "key": "survival",
+      "spearman": 1,
+      "overlap": 100,
+      "swaps": 0,
+      "entered": [],
+      "left": []
+    },
+    {
+      "perturbation": "slack year 365→183 month 92→46 (-50%)",
+      "family": "slack",
+      "key": "survival",
+      "spearman": 0.997,
+      "overlap": 97.5,
+      "swaps": 0,
+      "entered": [
+        "habib-benhadj-kouider"
+      ],
+      "left": [
+        "youssef-chahed"
+      ]
+    },
+    {
+      "perturbation": "slack year 365→548 month 92→138 (+50%)",
+      "family": "slack",
+      "key": "survival",
+      "spearman": 1,
+      "overlap": 100,
+      "swaps": 0,
+      "entered": [],
+      "left": []
+    },
+    {
+      "perturbation": "window 8→4 (halved)",
+      "family": "window",
+      "key": "brokerage",
+      "spearman": 1,
+      "overlap": 100,
+      "swaps": 0,
+      "entered": [],
+      "left": []
+    },
+    {
+      "perturbation": "window 8→16 (doubled)",
+      "family": "window",
+      "key": "brokerage",
+      "spearman": 1,
+      "overlap": 100,
+      "swaps": 0,
+      "entered": [],
+      "left": []
+    },
+    {
+      "perturbation": "slack year 365→183 month 92→46 (-50%)",
+      "family": "slack",
+      "key": "brokerage",
+      "spearman": 1,
+      "overlap": 100,
+      "swaps": 0,
+      "entered": [],
+      "left": []
+    },
+    {
+      "perturbation": "slack year 365→548 month 92→138 (+50%)",
+      "family": "slack",
+      "key": "brokerage",
+      "spearman": 1,
+      "overlap": 100,
+      "swaps": 0,
+      "entered": [],
+      "left": []
+    },
+    {
+      "perturbation": "window 8→4 (halved)",
+      "family": "window",
+      "key": "reach",
+      "spearman": 1,
+      "overlap": 100,
+      "swaps": 0,
+      "entered": [],
+      "left": []
+    },
+    {
+      "perturbation": "window 8→16 (doubled)",
+      "family": "window",
+      "key": "reach",
+      "spearman": 1,
+      "overlap": 100,
+      "swaps": 0,
+      "entered": [],
+      "left": []
+    },
+    {
+      "perturbation": "slack year 365→183 month 92→46 (-50%)",
+      "family": "slack",
+      "key": "reach",
+      "spearman": 1,
+      "overlap": 100,
+      "swaps": 0,
+      "entered": [],
+      "left": []
+    },
+    {
+      "perturbation": "slack year 365→548 month 92→138 (+50%)",
+      "family": "slack",
+      "key": "reach",
+      "spearman": 1,
+      "overlap": 100,
+      "swaps": 0,
+      "entered": [],
+      "left": []
+    },
+    {
+      "perturbation": "window 8→4 (halved)",
+      "family": "window",
+      "key": "influence",
+      "spearman": 1,
+      "overlap": 100,
+      "swaps": 0,
+      "entered": [],
+      "left": []
+    },
+    {
+      "perturbation": "window 8→16 (doubled)",
+      "family": "window",
+      "key": "influence",
+      "spearman": 1,
+      "overlap": 100,
+      "swaps": 0,
+      "entered": [],
+      "left": []
+    },
+    {
+      "perturbation": "slack year 365→183 month 92→46 (-50%)",
+      "family": "slack",
+      "key": "influence",
+      "spearman": 1,
+      "overlap": 100,
+      "swaps": 0,
+      "entered": [],
+      "left": []
+    },
+    {
+      "perturbation": "slack year 365→548 month 92→138 (+50%)",
+      "family": "slack",
+      "key": "influence",
+      "spearman": 1,
+      "overlap": 100,
+      "swaps": 0,
+      "entered": [],
+      "left": []
+    },
+    {
+      "perturbation": "window 8→4 (halved)",
+      "family": "window",
+      "key": "composite",
+      "spearman": 1,
+      "overlap": 100,
+      "swaps": 0,
+      "entered": [],
+      "left": []
+    },
+    {
+      "perturbation": "window 8→16 (doubled)",
+      "family": "window",
+      "key": "composite",
+      "spearman": 1,
+      "overlap": 100,
+      "swaps": 0,
+      "entered": [],
+      "left": []
+    },
+    {
+      "perturbation": "slack year 365→183 month 92→46 (-50%)",
+      "family": "slack",
+      "key": "composite",
+      "spearman": 0.993,
+      "overlap": 100,
+      "swaps": 0,
+      "entered": [],
+      "left": []
+    },
+    {
+      "perturbation": "slack year 365→548 month 92→138 (+50%)",
+      "family": "slack",
+      "key": "composite",
+      "spearman": 0.996,
+      "overlap": 100,
+      "swaps": 0,
+      "entered": [],
+      "left": []
+    },
+    {
+      "perturbation": "weight authority 1→0 (excluded)",
+      "family": "weight",
+      "key": "composite",
+      "spearman": 0.782,
+      "overlap": 82.5,
+      "swaps": 2,
+      "entered": [
+        "marouane-mabrouk",
+        "slim-riahi",
+        "ghazi-chaouachi",
+        "ahmed-nejib-chebbi",
+        "abdessattar-ben-moussa",
+        "najet-jaouadi",
+        "ridha-chalghoum"
+      ],
+      "left": [
+        "lotfi-ben-jeddou",
+        "mourad-saidane",
+        "ahmed-mestiri",
+        "hassine-gharbi",
+        "najla-bouden",
+        "habib-ben-yahia",
+        "mustapha-ben-jaafar"
+      ]
+    },
+    {
+      "perturbation": "weight authority 1→0.5 (halved)",
+      "family": "weight",
+      "key": "composite",
+      "spearman": 0.954,
+      "overlap": 90,
+      "swaps": 1,
+      "entered": [
+        "marouane-mabrouk",
+        "najet-jaouadi",
+        "ridha-chalghoum",
+        "ghazi-chaouachi"
+      ],
+      "left": [
+        "ahmed-mestiri",
+        "najla-bouden",
+        "habib-ben-yahia",
+        "mustapha-ben-jaafar"
+      ]
+    },
+    {
+      "perturbation": "weight authority 1→2 (doubled)",
+      "family": "weight",
+      "key": "composite",
+      "spearman": 0.93,
+      "overlap": 87.5,
+      "swaps": 1,
+      "entered": [
+        "tahar-ben-ammar",
+        "rachid-ammar",
+        "abdallah-kallel",
+        "chokri-riahi",
+        "mohamed-aziz-bouattour"
+      ],
+      "left": [
+        "leila-jaffel",
+        "faouzi-elloumi",
+        "abdelwahab-ben-ayed",
+        "farouk-bouasker",
+        "mustapha-ben-jaafar"
+      ]
+    },
+    {
+      "perturbation": "weight proximity 1→0 (excluded)",
+      "family": "weight",
+      "key": "composite",
+      "spearman": 0.892,
+      "overlap": 70,
+      "swaps": 1,
+      "entered": [
+        "mohamed-aziz-bouattour",
+        "mohamed-el-ghoul",
+        "rejeb-khaznadar",
+        "mustapha-khaznadar",
+        "marouane-mabrouk",
+        "adel-jehane",
+        "mohamed-hajem",
+        "mohamed-khamassi",
+        "wided-bouchamaoui",
+        "ridha-chalghoum",
+        "khelifa-harroum",
+        "moncef-kchaou"
+      ],
+      "left": [
+        "othman-jarandi",
+        "ali-seriati",
+        "brahim-bertagi",
+        "lotfi-ben-jeddou",
+        "leila-jaffel",
+        "faouzi-elloumi",
+        "mourad-saidane",
+        "abdelwahab-ben-ayed",
+        "farouk-bouasker",
+        "ahmed-mestiri",
+        "najla-bouden",
+        "habib-ben-yahia"
+      ]
+    },
+    {
+      "perturbation": "weight proximity 1→0.5 (halved)",
+      "family": "weight",
+      "key": "composite",
+      "spearman": 0.97,
+      "overlap": 95,
+      "swaps": 1,
+      "entered": [
+        "marouane-mabrouk",
+        "ridha-chalghoum"
+      ],
+      "left": [
+        "najla-bouden",
+        "habib-ben-yahia"
+      ]
+    },
+    {
+      "perturbation": "weight proximity 1→2 (doubled)",
+      "family": "weight",
+      "key": "composite",
+      "spearman": 0.998,
+      "overlap": 92.5,
+      "swaps": 1,
+      "entered": [
+        "yadh-ben-achour",
+        "ridha-belhaj",
+        "nadia-akacha"
+      ],
+      "left": [
+        "mohamed-habib-dhif",
+        "hassine-gharbi",
+        "mustapha-ben-jaafar"
+      ]
+    },
+    {
+      "perturbation": "weight survival 1→0 (excluded)",
+      "family": "weight",
+      "key": "composite",
+      "spearman": 0.772,
+      "overlap": 47.5,
+      "swaps": 1,
+      "entered": [
+        "tahar-ben-ammar",
+        "yadh-ben-achour",
+        "ridha-belhaj",
+        "hichem-mechichi",
+        "lotfi-brahem",
+        "habib-ammar",
+        "abdelhamid-escheikh",
+        "abdallah-kallel",
+        "khaled-nouri",
+        "kamel-feki",
+        "chedli-neffati",
+        "mohamed-jegham",
+        "rafiq-belhaj-kacem",
+        "mohamed-najem-gharsalli",
+        "hedi-majdoub",
+        "hichem-fourati",
+        "rachid-sfar",
+        "mehdi-jomaa",
+        "mohammed-mzali",
+        "nadia-akacha",
+        "hassen-belkhodja"
+      ],
+      "left": [
+        "khaled-yahyaoui",
+        "brahim-bouderbala",
+        "nouri-ben-taous",
+        "rached-ghannouchi",
+        "mohamed-salah-hamdi",
+        "othman-battikh",
+        "abdelkarim-zbidi",
+        "mohamed-habib-dhif",
+        "othman-jarandi",
+        "ali-seriati",
+        "brahim-bertagi",
+        "leila-jaffel",
+        "faouzi-elloumi",
+        "mourad-saidane",
+        "abdelwahab-ben-ayed",
+        "farouk-bouasker",
+        "ahmed-mestiri",
+        "hassine-gharbi",
+        "najla-bouden",
+        "habib-ben-yahia",
+        "mustapha-ben-jaafar"
+      ]
+    },
+    {
+      "perturbation": "weight survival 1→0.5 (halved)",
+      "family": "weight",
+      "key": "composite",
+      "spearman": 0.951,
+      "overlap": 85,
+      "swaps": 1,
+      "entered": [
+        "tahar-ben-ammar",
+        "yadh-ben-achour",
+        "abdallah-kallel",
+        "habib-ammar",
+        "ridha-belhaj",
+        "rachid-sfar"
+      ],
+      "left": [
+        "othman-jarandi",
+        "leila-jaffel",
+        "faouzi-elloumi",
+        "abdelwahab-ben-ayed",
+        "hassine-gharbi",
+        "mustapha-ben-jaafar"
+      ]
+    },
+    {
+      "perturbation": "weight survival 1→2 (doubled)",
+      "family": "weight",
+      "key": "composite",
+      "spearman": 0.906,
+      "overlap": 82.5,
+      "swaps": 0,
+      "entered": [
+        "marouane-mabrouk",
+        "abdelhamid-belati",
+        "ridha-chalghoum",
+        "ghazi-chaouachi",
+        "slim-riahi",
+        "abdessattar-ben-moussa",
+        "ahmed-nejib-chebbi"
+      ],
+      "left": [
+        "mohamed-ennaceur",
+        "lotfi-ben-jeddou",
+        "mourad-saidane",
+        "farouk-bouasker",
+        "ahmed-mestiri",
+        "najla-bouden",
+        "habib-ben-yahia"
+      ]
+    },
+    {
+      "perturbation": "weight brokerage 1→0 (excluded)",
+      "family": "weight",
+      "key": "composite",
+      "spearman": 0.969,
+      "overlap": 97.5,
+      "swaps": 1,
+      "entered": [
+        "chokri-riahi"
+      ],
+      "left": [
+        "mustapha-ben-jaafar"
+      ]
+    },
+    {
+      "perturbation": "weight brokerage 1→0.5 (halved)",
+      "family": "weight",
+      "key": "composite",
+      "spearman": 0.993,
+      "overlap": 100,
+      "swaps": 0,
+      "entered": [],
+      "left": []
+    },
+    {
+      "perturbation": "weight brokerage 1→2 (doubled)",
+      "family": "weight",
+      "key": "composite",
+      "spearman": 0.989,
+      "overlap": 95,
+      "swaps": 2,
+      "entered": [
+        "marouane-mabrouk",
+        "tahar-ben-ammar"
+      ],
+      "left": [
+        "habib-ben-yahia",
+        "mustapha-ben-jaafar"
+      ]
+    },
+    {
+      "perturbation": "weight reach 1→0 (excluded)",
+      "family": "weight",
+      "key": "composite",
+      "spearman": 0.942,
+      "overlap": 95,
+      "swaps": 1,
+      "entered": [
+        "chokri-riahi",
+        "marouane-mabrouk"
+      ],
+      "left": [
+        "farouk-bouasker",
+        "habib-ben-yahia"
+      ]
+    },
+    {
+      "perturbation": "weight reach 1→0.5 (halved)",
+      "family": "weight",
+      "key": "composite",
+      "spearman": 0.98,
+      "overlap": 97.5,
+      "swaps": 1,
+      "entered": [
+        "chokri-riahi"
+      ],
+      "left": [
+        "habib-ben-yahia"
+      ]
+    },
+    {
+      "perturbation": "weight reach 1→2 (doubled)",
+      "family": "weight",
+      "key": "composite",
+      "spearman": 0.97,
+      "overlap": 95,
+      "swaps": 2,
+      "entered": [
+        "najet-jaouadi",
+        "ridha-chalghoum"
+      ],
+      "left": [
+        "najla-bouden",
+        "mustapha-ben-jaafar"
+      ]
+    },
+    {
+      "perturbation": "weight influence 1→0 (excluded)",
+      "family": "weight",
+      "key": "composite",
+      "spearman": 0.995,
+      "overlap": 100,
+      "swaps": 1,
+      "entered": [],
+      "left": []
+    },
+    {
+      "perturbation": "weight influence 1→0.5 (halved)",
+      "family": "weight",
+      "key": "composite",
+      "spearman": 0.999,
+      "overlap": 100,
+      "swaps": 1,
+      "entered": [],
+      "left": []
+    },
+    {
+      "perturbation": "weight influence 1→2 (doubled)",
+      "family": "weight",
+      "key": "composite",
+      "spearman": 0.995,
+      "overlap": 100,
+      "swaps": 0,
+      "entered": [],
+      "left": []
+    }
+  ]
+}

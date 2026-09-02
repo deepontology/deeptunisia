@@ -229,6 +229,14 @@
 	</div>
 
 	<p class="caveat">{t('rankings.caveat')}</p>
+
+	<details class="sensitivity">
+		<summary>{t('rankings.sensitivityTitle')}</summary>
+		<div class="sens">
+			<p>{t('rankings.sensitivityBody')}</p>
+			<p class="sens-links mono"><a href="/sensitivity.json" target="_blank" rel="noopener">sensitivity.json</a> · <span>{t('rankings.sensitivityNote')}</span></p>
+		</div>
+	</details>
 </div>
 
 <style>
@@ -492,6 +500,55 @@
 		line-height: var(--lh-relaxed);
 		color: var(--text-secondary);
 		max-width: 100ch;
+	}
+	.sensitivity {
+		border-top: 1px solid var(--border-subtle);
+	}
+	.sensitivity summary {
+		display: flex;
+		align-items: center;
+		gap: var(--s-3);
+		padding: var(--s-4) var(--s-6);
+		font-family: var(--font-mono);
+		font-size: var(--t-2xs);
+		letter-spacing: var(--track-caps);
+		text-transform: uppercase;
+		color: var(--text-faint);
+		cursor: pointer;
+		list-style: none;
+	}
+	.sensitivity summary::-webkit-details-marker {
+		display: none;
+	}
+	.sensitivity summary::before {
+		content: '▸';
+		font-size: 9px;
+		transition: transform var(--dur-fast) var(--ease-out);
+	}
+	.sensitivity[open] summary::before {
+		transform: rotate(90deg);
+	}
+	.sensitivity summary:hover {
+		color: var(--text-primary);
+	}
+	.sens {
+		padding: 0 var(--s-6) var(--s-5);
+		max-width: 100ch;
+	}
+	.sens p {
+		margin: 0 0 var(--s-3);
+		font-size: var(--t-sm);
+		line-height: var(--lh-relaxed);
+		color: var(--text-secondary);
+	}
+	.sens-links {
+		font-size: var(--t-xs);
+		color: var(--text-faint);
+	}
+	.sens-links a {
+		color: var(--accent);
+		text-decoration: underline;
+		text-underline-offset: 2px;
 	}
 	.empty {
 		padding: var(--s-11) var(--s-6);

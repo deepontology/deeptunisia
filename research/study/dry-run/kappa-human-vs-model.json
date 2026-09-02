@@ -1,0 +1,116 @@
+{
+  "meta": {
+    "generatedAt": "2026-09-02T22:02:21.084Z",
+    "raters": 3,
+    "raterFiles": [
+      "research/study/dry-run/raters/rater-a.csv",
+      "research/study/dry-run/raters/rater-b.csv",
+      "research/study/dry-run/model-arm/regime-a.csv"
+    ],
+    "totalStudyIds": 10,
+    "bootstrap": 1000,
+    "targets": {
+      "basis_kappa": 0.8,
+      "confidence_kappa": 0.7
+    },
+    "note": "Targets are pre-specified conventions, not laws of nature. Round 2 deltas are reported whether targets are met or not (protocol §8.1)."
+  },
+  "confidence": {
+    "n": 10,
+    "totalStudyIds": 10,
+    "categories": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "p_j": {
+      "A": 0.233,
+      "B": 0.367,
+      "C": 0.367,
+      "D": 0.033
+    },
+    "observedCats": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "fleiss": {
+      "kappa": 0.408,
+      "ci95": [
+        0.049,
+        0.677
+      ],
+      "P_bar": 0.6,
+      "P_e": 0.324,
+      "m_avg": 3
+    },
+    "krippendorff": {
+      "alpha": 0.428,
+      "ci95": [
+        0.084,
+        0.701
+      ],
+      "Do": 0.4,
+      "De": 0.699,
+      "nPairs": 30
+    },
+    "missing": {
+      "totalPossible": 30,
+      "totalObserved": 30,
+      "missing": 0,
+      "missingPct": 0
+    },
+    "perKind": {}
+  },
+  "basis": {
+    "n": 10,
+    "totalStudyIds": 10,
+    "categories": [
+      "documented",
+      "reported",
+      "inferred",
+      "unsubstantiated"
+    ],
+    "p_j": {
+      "documented": 0.233,
+      "reported": 0.567,
+      "inferred": 0.167,
+      "unsubstantiated": 0.033
+    },
+    "observedCats": [
+      "documented",
+      "inferred",
+      "reported",
+      "unsubstantiated"
+    ],
+    "fleiss": {
+      "kappa": 0.272,
+      "ci95": [
+        -0.143,
+        0.596
+      ],
+      "P_bar": 0.567,
+      "P_e": 0.404,
+      "m_avg": 3
+    },
+    "krippendorff": {
+      "alpha": 0.297,
+      "ci95": [
+        -0.08,
+        0.618
+      ],
+      "Do": 0.433,
+      "De": 0.616,
+      "nPairs": 30
+    },
+    "missing": {
+      "totalPossible": 30,
+      "totalObserved": 30,
+      "missing": 0,
+      "missingPct": 0
+    },
+    "perKind": {}
+  }
+}
