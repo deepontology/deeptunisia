@@ -1,0 +1,115 @@
+{
+  "meta": {
+    "generatedAt": "2026-09-02T22:02:45.630Z",
+    "raters": 2,
+    "raterFiles": [
+      "research/study/model-arm/regime-a.csv",
+      "research/study/model-arm/regime-b.csv"
+    ],
+    "totalStudyIds": 300,
+    "bootstrap": 1000,
+    "targets": {
+      "basis_kappa": 0.8,
+      "confidence_kappa": 0.7
+    },
+    "note": "Targets are pre-specified conventions, not laws of nature. Round 2 deltas are reported whether targets are met or not (protocol §8.1)."
+  },
+  "confidence": {
+    "n": 300,
+    "totalStudyIds": 300,
+    "categories": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "p_j": {
+      "A": 0.183,
+      "B": 0.365,
+      "C": 0.408,
+      "D": 0.043
+    },
+    "observedCats": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "fleiss": {
+      "kappa": 0.915,
+      "ci95": [
+        0.871,
+        0.954
+      ],
+      "P_bar": 0.943,
+      "P_e": 0.335,
+      "m_avg": 2
+    },
+    "krippendorff": {
+      "alpha": 0.915,
+      "ci95": [
+        0.876,
+        0.951
+      ],
+      "Do": 0.057,
+      "De": 0.666,
+      "nPairs": 300
+    },
+    "missing": {
+      "totalPossible": 600,
+      "totalObserved": 600,
+      "missing": 0,
+      "missingPct": 0
+    },
+    "perKind": {}
+  },
+  "basis": {
+    "n": 300,
+    "totalStudyIds": 300,
+    "categories": [
+      "documented",
+      "reported",
+      "inferred",
+      "unsubstantiated"
+    ],
+    "p_j": {
+      "documented": 0.183,
+      "reported": 0.615,
+      "inferred": 0.162,
+      "unsubstantiated": 0.04
+    },
+    "observedCats": [
+      "documented",
+      "inferred",
+      "reported",
+      "unsubstantiated"
+    ],
+    "fleiss": {
+      "kappa": 0.566,
+      "ci95": [
+        0.47,
+        0.655
+      ],
+      "P_bar": 0.757,
+      "P_e": 0.44,
+      "m_avg": 2
+    },
+    "krippendorff": {
+      "alpha": 0.567,
+      "ci95": [
+        0.475,
+        0.648
+      ],
+      "Do": 0.243,
+      "De": 0.561,
+      "nPairs": 300
+    },
+    "missing": {
+      "totalPossible": 600,
+      "totalObserved": 600,
+      "missing": 0,
+      "missingPct": 0
+    },
+    "perKind": {}
+  }
+}

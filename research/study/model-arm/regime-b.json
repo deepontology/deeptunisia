@@ -1,0 +1,2714 @@
+{
+  "meta": {
+    "generatedAt": "2026-09-02T22:02:33.587Z",
+    "regime": "rubric+examples",
+    "model": "simulator:model-arm-v1",
+    "temperature": 0,
+    "synthetic": true,
+    "prompts": 300,
+    "sample": "research/study/sample-300-blinded.json",
+    "note": "Synthetic grades (no API key) — heuristic from source tiers with seeded variation. Marked synthetic:true. Replace with real LLM for the funded study."
+  },
+  "grades": [
+    {
+      "study_id": "S001",
+      "kind": "position",
+      "id": "p-media-attessia-ouertani",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=4, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S002",
+      "kind": "position",
+      "id": "p-relaff-battikh",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S003",
+      "kind": "relationship",
+      "id": "rel-lina-ben-mhenni-nawaat-institutional",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S004",
+      "kind": "position",
+      "id": "p-air-laajimi",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=2, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S005",
+      "kind": "position",
+      "id": "p-douane-safer",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S006",
+      "kind": "position",
+      "id": "p-ig-laajimi",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=2, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S007",
+      "kind": "relationship",
+      "id": "rel-houcine-abassi-ugtt-institutional",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S008",
+      "kind": "position",
+      "id": "p-bank-stb-lotfi-debbabi",
+      "confidence": "C",
+      "basis": "inferred",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/inferred (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S009",
+      "kind": "contract",
+      "id": "ctr-steg-eni-gas-2015-2017",
+      "confidence": "C",
+      "basis": "inferred",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/inferred (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S010",
+      "kind": "contract",
+      "id": "ctr-sncft-attijari-locomotives-2017",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S011",
+      "kind": "position",
+      "id": "p-isie-bouasker",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 4 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S012",
+      "kind": "relationship",
+      "id": "rel-wassila-bourguiba-presidency-reported-influence",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=4, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S013",
+      "kind": "contract",
+      "id": "ctr-sonede-zarat-dessalement-2023",
+      "confidence": "C",
+      "basis": "inferred",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/inferred (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S014",
+      "kind": "relationship",
+      "id": "rel-mohamed-ennaceur-youssef-chahed-political-alliance",
+      "confidence": "C",
+      "basis": "inferred",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/inferred (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S015",
+      "kind": "event",
+      "id": "conspiracy-trial-2025",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 6 tier≤4 source(s), minTier=2, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S016",
+      "kind": "relationship",
+      "id": "rel-kais-saied-khaled-nouri-appointment",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S017",
+      "kind": "relationship",
+      "id": "rel-ben-ali-bourguiba-succession",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=2, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S018",
+      "kind": "event",
+      "id": "tabib-convicted-2026",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S019",
+      "kind": "event",
+      "id": "hannibal-tv-confiscated",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S020",
+      "kind": "company",
+      "id": "steg-international-services",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S021",
+      "kind": "relationship",
+      "id": "board-bna-nejia-gharbi",
+      "confidence": "C",
+      "basis": "inferred",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/inferred (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S022",
+      "kind": "event",
+      "id": "ivd-final-report",
+      "confidence": "C",
+      "basis": "inferred",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/inferred (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S023",
+      "kind": "position",
+      "id": "p-dgsn-dabbabi",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 4 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S024",
+      "kind": "relationship",
+      "id": "rel-judiciary-saadia-mosbah-prosecution",
+      "confidence": "C",
+      "basis": "inferred",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/inferred (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S025",
+      "kind": "position",
+      "id": "p-def-kallel",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S026",
+      "kind": "position",
+      "id": "p-cassation-hedi-guediri",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S027",
+      "kind": "relationship",
+      "id": "rel-judiciary-slim-riahi-prosecution",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S028",
+      "kind": "relationship",
+      "id": "rel-tahar-ben-ammar-bourguiba-institutional",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S029",
+      "kind": "relationship",
+      "id": "rel-conect-utica-political-conflict",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S030",
+      "kind": "relationship",
+      "id": "own-state-stb-7154",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S031",
+      "kind": "relationship",
+      "id": "rel-armed-forces-presidency-allegation",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=2, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S032",
+      "kind": "relationship",
+      "id": "rel-faouzi-elloumi-al-badil-party",
+      "confidence": "C",
+      "basis": "inferred",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/inferred (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S033",
+      "kind": "event",
+      "id": "ugtt-khelifi-death-2026",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S034",
+      "kind": "relationship",
+      "id": "rel-aziz-miled-ben-ali-institutional",
+      "confidence": "C",
+      "basis": "inferred",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/inferred (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S035",
+      "kind": "event",
+      "id": "wb-capture-2010",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=2, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S036",
+      "kind": "relationship",
+      "id": "rel-cpg-ugtt-political-conflict",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=2, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S037",
+      "kind": "position",
+      "id": "p-bct-nouri",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 10 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S038",
+      "kind": "relationship",
+      "id": "rel-ennahda-mohamed-ennaceur-political-conflict",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S039",
+      "kind": "position",
+      "id": "p-air-el-fehri",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S040",
+      "kind": "position",
+      "id": "p-air-aloui",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=3, hasTier1=false → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S041",
+      "kind": "relationship",
+      "id": "rel-atika-chebil-abdelaziz-makhloufi-reported-influence",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=2, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S042",
+      "kind": "education",
+      "id": "edu-chahed-inat",
+      "confidence": "D",
+      "basis": "inferred",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → D/inferred (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S043",
+      "kind": "event",
+      "id": "election-2019",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S044",
+      "kind": "position",
+      "id": "p-finance-ben-hammouda",
+      "confidence": "C",
+      "basis": "inferred",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/inferred (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S045",
+      "kind": "relationship",
+      "id": "rel-marzouki-jebali-political-conflict",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S046",
+      "kind": "relationship",
+      "id": "rel-csm-judiciary-institutional",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S047",
+      "kind": "relationship",
+      "id": "rel-kamel-eltaief-presidency-reported-influence",
+      "confidence": "C",
+      "basis": "inferred",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=3, hasTier1=false → C/inferred (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S048",
+      "kind": "event",
+      "id": "ev-autoroutes-a1-a2-concessions-2026",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S049",
+      "kind": "relationship",
+      "id": "rel-imf-presidency-diplomatic",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S050",
+      "kind": "relationship",
+      "id": "rel-court-of-cassation-judiciary-institutional",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S051",
+      "kind": "relationship",
+      "id": "rel-trabelsi-network-presidency-allegation",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=2, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S052",
+      "kind": "company",
+      "id": "elloumi-group",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=2, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S053",
+      "kind": "relationship",
+      "id": "board-bna-ahmed-ben-moulahem",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S054",
+      "kind": "position",
+      "id": "p-dgsn-ghodhbani",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S055",
+      "kind": "relationship",
+      "id": "board-tunisair-ibrahim-khouaja",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S056",
+      "kind": "position",
+      "id": "p-dgsp-harroum",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=4, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S057",
+      "kind": "position",
+      "id": "p-int-laarayedh",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S058",
+      "kind": "relationship",
+      "id": "rel-mohamed-ennaceur-ugtt-reported-influence",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S059",
+      "kind": "position",
+      "id": "p-foreign-jarandi",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S060",
+      "kind": "education",
+      "id": "edu-saied-doctorate-claim",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S061",
+      "kind": "licence",
+      "id": "lic-tunisie-telecom-4g-2016",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S062",
+      "kind": "event",
+      "id": "mabrouk-chahed-sentenced",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 4 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S063",
+      "kind": "position",
+      "id": "p-dgsn-benali-1",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=2, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S064",
+      "kind": "position",
+      "id": "p-pm-ghannouchi",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S065",
+      "kind": "position",
+      "id": "p-econ-faouzi-elloumi",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 4 tier≤4 source(s), minTier=1, hasTier1=true → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S066",
+      "kind": "relationship",
+      "id": "rel-bourguiba-ennaceur-appointment-1974",
+      "confidence": "D",
+      "basis": "unsubstantiated",
+      "reasoning": "Simulated (rubric+examples): 0 tier≤4 source(s), minTier=5, hasTier1=false → D/unsubstantiated (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S067",
+      "kind": "relationship",
+      "id": "rel-marzouki-armed-forces-security",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S068",
+      "kind": "relationship",
+      "id": "rel-judiciary-abdelhamid-jelassi-prosecution",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=2, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S069",
+      "kind": "position",
+      "id": "p-relaff-khalil",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S070",
+      "kind": "position",
+      "id": "p-soe-sncft-sarra-rejeb",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S071",
+      "kind": "position",
+      "id": "p-gv-tahar-ben-ammar",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S072",
+      "kind": "position",
+      "id": "p-dgsn-bettaieb",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 4 tier≤4 source(s), minTier=2, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S073",
+      "kind": "position",
+      "id": "p-justice-bououni",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S074",
+      "kind": "education",
+      "id": "edu-nouri-mast-energie-ifp-1984",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S075",
+      "kind": "relationship",
+      "id": "rel-mohamed-ennaceur-armed-forces-security",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S076",
+      "kind": "relationship",
+      "id": "own-etap-stb-222",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S077",
+      "kind": "position",
+      "id": "p-party-chahed",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S078",
+      "kind": "position",
+      "id": "p-land-hamdi",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S079",
+      "kind": "relationship",
+      "id": "own-state-zitouna-6915",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S080",
+      "kind": "position",
+      "id": "p-speaker-boulares",
+      "confidence": "D",
+      "basis": "unsubstantiated",
+      "reasoning": "Simulated (rubric+examples): 0 tier≤4 source(s), minTier=5, hasTier1=false → D/unsubstantiated (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S081",
+      "kind": "relationship",
+      "id": "own-state-radio-zaytouna-2011",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 4 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S082",
+      "kind": "position",
+      "id": "p-admin-raoudha-mechichi",
+      "confidence": "C",
+      "basis": "inferred",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/inferred (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S083",
+      "kind": "event",
+      "id": "ivd-established",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S084",
+      "kind": "event",
+      "id": "2014-constitution-adopted",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=2, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S085",
+      "kind": "position",
+      "id": "p-foreign-jerandi-2013",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 4 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S086",
+      "kind": "event",
+      "id": "steg-rationing-resumes-2026",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=4, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S087",
+      "kind": "relationship",
+      "id": "own-kallel-poulina-50",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=2, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S088",
+      "kind": "position",
+      "id": "p-navy-el-arabi-2003",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S089",
+      "kind": "relationship",
+      "id": "own-state-alkarama-investec",
+      "confidence": "C",
+      "basis": "inferred",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/inferred (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S090",
+      "kind": "agreement",
+      "id": "afcfta-ratification",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=2, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S091",
+      "kind": "position",
+      "id": "p-gv-shakir-saheb-ettabaa",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S092",
+      "kind": "event",
+      "id": "dhif-succession-2025",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S093",
+      "kind": "agreement",
+      "id": "bit-turkey-1991",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=2, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S094",
+      "kind": "position",
+      "id": "p-cofaf-ammar",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 4 tier≤4 source(s), minTier=2, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S095",
+      "kind": "event",
+      "id": "ev-cpg-strike-2026-09",
+      "confidence": "C",
+      "basis": "inferred",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/inferred (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S096",
+      "kind": "worldClaim",
+      "id": "agg-public-debt-external-2024",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=2, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S097",
+      "kind": "relationship",
+      "id": "rel-kais-saied-hichem-mechichi-political-conflict",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S098",
+      "kind": "event",
+      "id": "ltdh-suspended-2026",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=4, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S099",
+      "kind": "worldClaim",
+      "id": "agg-tourism-gdp-2024",
+      "confidence": "C",
+      "basis": "inferred",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=2, hasTier1=false → C/inferred (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S100",
+      "kind": "event",
+      "id": "republic-day-demonstration-2026",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S101",
+      "kind": "event",
+      "id": "ben-achour-commission",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S102",
+      "kind": "relationship",
+      "id": "rel-saida-sassi-bourguiba-reported-influence",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S103",
+      "kind": "relationship",
+      "id": "rel-rafaa-ben-achour-judiciary-appointment",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S104",
+      "kind": "position",
+      "id": "p-tt-bendhiab",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 4 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S105",
+      "kind": "agreement",
+      "id": "comesa-accession",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S106",
+      "kind": "position",
+      "id": "p-def-zbidi-1",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S107",
+      "kind": "education",
+      "id": "edu-nouri-maitrise-fseg-1987",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S108",
+      "kind": "position",
+      "id": "p-media-zitouna-ben-salem",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S109",
+      "kind": "event",
+      "id": "sghiri-deep-system",
+      "confidence": "C",
+      "basis": "inferred",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/inferred (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S110",
+      "kind": "company",
+      "id": "airbus",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=2, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S111",
+      "kind": "agreement",
+      "id": "bit-germany-1963",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=2, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S112",
+      "kind": "relationship",
+      "id": "rel-kais-saied-cnrd-institutional",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S113",
+      "kind": "relationship",
+      "id": "board-biat-elyes-ben-rayana",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=2, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S114",
+      "kind": "relationship",
+      "id": "rel-ennahda-marzouki-reported-influence",
+      "confidence": "D",
+      "basis": "unsubstantiated",
+      "reasoning": "Simulated (rubric+examples): 0 tier≤4 source(s), minTier=5, hasTier1=false → D/unsubstantiated (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S115",
+      "kind": "relationship",
+      "id": "rel-utap-ugtt-institutional",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S116",
+      "kind": "event",
+      "id": "constitution-2022",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=2, hasTier1=false → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S117",
+      "kind": "position",
+      "id": "p-pm-hachani",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S118",
+      "kind": "position",
+      "id": "p-justice-bousseta",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S119",
+      "kind": "event",
+      "id": "hmaidi-convicted-2026",
+      "confidence": "C",
+      "basis": "inferred",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=2, hasTier1=false → C/inferred (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S120",
+      "kind": "position",
+      "id": "p-media-mosaique-boutar",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S121",
+      "kind": "position",
+      "id": "p-gv-mustapha-ben-ismail",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S122",
+      "kind": "company",
+      "id": "mabrouk-group",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S123",
+      "kind": "relationship",
+      "id": "rel-kais-saied-chokri-riahi-appointment",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S124",
+      "kind": "company",
+      "id": "bhci",
+      "confidence": "C",
+      "basis": "inferred",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/inferred (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S125",
+      "kind": "worldClaim",
+      "id": "agg-tourism-receipts-2024",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=2, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S126",
+      "kind": "position",
+      "id": "p-int-ben-jeddou",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S127",
+      "kind": "position",
+      "id": "p-foreign-chatti",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S128",
+      "kind": "relationship",
+      "id": "own-state-investec-2011",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S129",
+      "kind": "relationship",
+      "id": "rel-mouna-siala-la-presse-tunisie-institutional",
+      "confidence": "C",
+      "basis": "inferred",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/inferred (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S130",
+      "kind": "relationship",
+      "id": "rel-selma-elloumi-nidaa-tounes-party",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S131",
+      "kind": "event",
+      "id": "reshuffle-may-2024",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S132",
+      "kind": "relationship",
+      "id": "rel-kamel-akrout-presidency-security",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=2, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S133",
+      "kind": "position",
+      "id": "p-ig-nafti",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S134",
+      "kind": "relationship",
+      "id": "rel-youssef-bayah-biat-institutional",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S135",
+      "kind": "position",
+      "id": "p-soe-sonede-saad-seddik",
+      "confidence": "C",
+      "basis": "inferred",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/inferred (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S136",
+      "kind": "relationship",
+      "id": "rel-atika-chebil-business-foreign-brands-reported-influence",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 5 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S137",
+      "kind": "declaration",
+      "id": "decl-fakhfakh-2020-end-of-functions",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S138",
+      "kind": "licence",
+      "id": "lic-ooredoo-3g-2012",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S139",
+      "kind": "position",
+      "id": "p-def-dahmani",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S140",
+      "kind": "contract",
+      "id": "ctr-tunisie-autoroutes-a1-reconcession-2026",
+      "confidence": "C",
+      "basis": "inferred",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/inferred (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S141",
+      "kind": "relationship",
+      "id": "rel-marzouki-bentaous-appointment",
+      "confidence": "C",
+      "basis": "inferred",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/inferred (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S142",
+      "kind": "event",
+      "id": "libya-border-surveillance-cameras-2026",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S143",
+      "kind": "position",
+      "id": "p-justice-bhiri",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S144",
+      "kind": "relationship",
+      "id": "board-gct-hedi-youssef",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=2, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S145",
+      "kind": "position",
+      "id": "p-gv-mohamed-larbi-zarrouk",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S146",
+      "kind": "relationship",
+      "id": "rel-najet-jaouadi-ministry-interior-institutional",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=4, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S147",
+      "kind": "relationship",
+      "id": "rel-beji-caid-essebsi-youssef-chahed-political-conflict",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S148",
+      "kind": "relationship",
+      "id": "own-quinta-nessma-25-2008",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 4 tier≤4 source(s), minTier=2, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S149",
+      "kind": "position",
+      "id": "p-justice-ayari",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S150",
+      "kind": "relationship",
+      "id": "rel-cyrine-ben-ali-ben-ali-family",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S151",
+      "kind": "relationship",
+      "id": "rel-naoufel-saied-clan-membership",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S152",
+      "kind": "position",
+      "id": "p-soe-sonede-ahmed-soula",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S153",
+      "kind": "relationship",
+      "id": "rel-world-bank-trabelsi-network-institutional",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=2, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S154",
+      "kind": "event",
+      "id": "july-25-2021",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 8 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S155",
+      "kind": "position",
+      "id": "p-party-pdp-nejib-chebbi",
+      "confidence": "D",
+      "basis": "unsubstantiated",
+      "reasoning": "Simulated (rubric+examples): 0 tier≤4 source(s), minTier=5, hasTier1=false → D/unsubstantiated (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S156",
+      "kind": "position",
+      "id": "p-utap-ezzar",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 4 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S157",
+      "kind": "event",
+      "id": "karmous-prison-death-2026",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=4, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S158",
+      "kind": "relationship",
+      "id": "own-steg-steger",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S159",
+      "kind": "event",
+      "id": "bensedrine-financial-brigade-2026",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S160",
+      "kind": "relationship",
+      "id": "rel-selma-elloumi-elloumi-group-business",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S161",
+      "kind": "relationship",
+      "id": "rel-zied-krichen-mosaique-fm-institutional",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S162",
+      "kind": "position",
+      "id": "p-gv-mohamed-aziz-bouattour",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S163",
+      "kind": "event",
+      "id": "election-2024",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 5 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S164",
+      "kind": "worldClaim",
+      "id": "cc-france-largest-creditor",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S165",
+      "kind": "position",
+      "id": "p-int-belhaj-kacem",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=3, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S166",
+      "kind": "relationship",
+      "id": "rel-mohsen-marzouk-nidaa-tounes-party",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S167",
+      "kind": "relationship",
+      "id": "rel-youssef-saheb-ettabaa-mohamed-larbi-zarrouk-political-conflict",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=2, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S168",
+      "kind": "event",
+      "id": "rcd-dissolved",
+      "confidence": "C",
+      "basis": "inferred",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=2, hasTier1=false → C/inferred (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S169",
+      "kind": "relationship",
+      "id": "board-biat-elyes-jebir",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S170",
+      "kind": "event",
+      "id": "haica-established",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S171",
+      "kind": "education",
+      "id": "edu-marzouki-bac-regnault",
+      "confidence": "D",
+      "basis": "unsubstantiated",
+      "reasoning": "Simulated (rubric+examples): 0 tier≤4 source(s), minTier=5, hasTier1=false → D/unsubstantiated (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S172",
+      "kind": "relationship",
+      "id": "board-biat-ismail-mabrouk",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=2, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S173",
+      "kind": "event",
+      "id": "election-locales-2023",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 4 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S174",
+      "kind": "position",
+      "id": "p-int-ghannouchi",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S175",
+      "kind": "relationship",
+      "id": "rel-khaled-yahyaoui-kais-saied-reported-influence",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S176",
+      "kind": "position",
+      "id": "p-finance-zribi",
+      "confidence": "C",
+      "basis": "inferred",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/inferred (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S177",
+      "kind": "relationship",
+      "id": "own-stb-sonibank-25",
+      "confidence": "C",
+      "basis": "inferred",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/inferred (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S178",
+      "kind": "relationship",
+      "id": "rel-amel-ben-yedder-utica-institutional",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S179",
+      "kind": "position",
+      "id": "p-finance-chalghoum-2",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S180",
+      "kind": "company",
+      "id": "investec",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S181",
+      "kind": "event",
+      "id": "2022-constitutional-referendum",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=2, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S182",
+      "kind": "position",
+      "id": "p-pres-saied",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S183",
+      "kind": "relationship",
+      "id": "board-tunisair-bnouni",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S184",
+      "kind": "event",
+      "id": "inlucc-established",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S185",
+      "kind": "relationship",
+      "id": "rel-qatar-ennahda-reported-influence",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=2, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S186",
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-tahya-tounes-party",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S187",
+      "kind": "declaration",
+      "id": "decl-chahed-2018",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S188",
+      "kind": "relationship",
+      "id": "rel-olfa-riahi-el-hiwar-ettounsi-institutional",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S189",
+      "kind": "relationship",
+      "id": "rel-fouad-mebazaa-rcd-party",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=2, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S190",
+      "kind": "position",
+      "id": "p-gv-mohamed-chenik",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S191",
+      "kind": "contract",
+      "id": "ctr-elmed-interconnector-2022",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S192",
+      "kind": "position",
+      "id": "p-gv-taieb-djellouli",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S193",
+      "kind": "position",
+      "id": "p-justice-snoussi",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S194",
+      "kind": "event",
+      "id": "ammar-retires",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=2, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S195",
+      "kind": "position",
+      "id": "p-justice-tjeribi",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S196",
+      "kind": "event",
+      "id": "relaff-direction-created-1967",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S197",
+      "kind": "relationship",
+      "id": "rel-ichraf-chebil-clan-membership",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S198",
+      "kind": "relationship",
+      "id": "rel-mohamed-ennaceur-nidaa-tounes-party",
+      "confidence": "D",
+      "basis": "unsubstantiated",
+      "reasoning": "Simulated (rubric+examples): 0 tier≤4 source(s), minTier=5, hasTier1=false → D/unsubstantiated (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S199",
+      "kind": "event",
+      "id": "legislatives-2022",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=2, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S200",
+      "kind": "position",
+      "id": "p-cabdir-elloumi",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S201",
+      "kind": "position",
+      "id": "p-douane-jaouadi",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=4, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S202",
+      "kind": "position",
+      "id": "p-pm-chahed",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S203",
+      "kind": "relationship",
+      "id": "board-stb-star-thuillier",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=2, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S204",
+      "kind": "position",
+      "id": "p-relaff-se-chebbi",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S205",
+      "kind": "worldClaim",
+      "id": "cc-turkey-fta-kills-industry",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S206",
+      "kind": "relationship",
+      "id": "rel-moncef-marzouki-cpr-party",
+      "confidence": "C",
+      "basis": "inferred",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=2, hasTier1=false → C/inferred (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S207",
+      "kind": "licence",
+      "id": "lic-zitouna-bank-2009",
+      "confidence": "D",
+      "basis": "unsubstantiated",
+      "reasoning": "Simulated (rubric+examples): 0 tier≤4 source(s), minTier=5, hasTier1=false → D/unsubstantiated (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S208",
+      "kind": "event",
+      "id": "mabrouk-appeal-2026",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S209",
+      "kind": "worldClaim",
+      "id": "contested-algerie-frontiere-litige-2026",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S210",
+      "kind": "relationship",
+      "id": "rel-marzouki-jomaa-appointment",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S211",
+      "kind": "relationship",
+      "id": "rel-hedi-bouchamaoui-utica-institutional",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S212",
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-selma-elloumi-appointment",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=1, hasTier1=true → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S213",
+      "kind": "agreement",
+      "id": "arab-maghreb-union-treaty",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S214",
+      "kind": "position",
+      "id": "p-csee-sg-boughdiri",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=2, hasTier1=false → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S215",
+      "kind": "relationship",
+      "id": "rel-nesrine-ben-ali-ben-ali-family",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=2, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S216",
+      "kind": "position",
+      "id": "p-presec-belhajali",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S217",
+      "kind": "relationship",
+      "id": "own-bukhatir-scit-2026-08-20",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 6 tier≤4 source(s), minTier=2, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S218",
+      "kind": "position",
+      "id": "p-cassation-taieb-rached",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S219",
+      "kind": "event",
+      "id": "mraihi-arrested-2024",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S220",
+      "kind": "event",
+      "id": "tunisia-summons-french-ambassador-2026",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S221",
+      "kind": "position",
+      "id": "p-admin-abdessalem-mehdi-grissiaa",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S222",
+      "kind": "company",
+      "id": "alstom",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=2, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S223",
+      "kind": "relationship",
+      "id": "rel-yadh-ben-achour-presidency-appointment",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S224",
+      "kind": "relationship",
+      "id": "own-mabrouk-investec-100",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S225",
+      "kind": "position",
+      "id": "p-pm-madouri",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S226",
+      "kind": "position",
+      "id": "p-media-leaders-habaieb",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S227",
+      "kind": "relationship",
+      "id": "rel-moncef-marzouki-ltdh-institutional",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=2, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S228",
+      "kind": "company",
+      "id": "steg-energies-renouvelables",
+      "confidence": "C",
+      "basis": "inferred",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/inferred (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S229",
+      "kind": "contract",
+      "id": "ctr-gct-bangladesh-2024",
+      "confidence": "C",
+      "basis": "inferred",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/inferred (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S230",
+      "kind": "education",
+      "id": "edu-marzouki-strasbourg-md",
+      "confidence": "D",
+      "basis": "unsubstantiated",
+      "reasoning": "Simulated (rubric+examples): 0 tier≤4 source(s), minTier=5, hasTier1=false → D/unsubstantiated (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S231",
+      "kind": "event",
+      "id": "army-founded",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=2, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S232",
+      "kind": "position",
+      "id": "p-justice-bouaziz",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S233",
+      "kind": "position",
+      "id": "p-foreign-escheikh",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 5 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S234",
+      "kind": "position",
+      "id": "p-csm-bouzakher",
+      "confidence": "C",
+      "basis": "inferred",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/inferred (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S235",
+      "kind": "position",
+      "id": "p-soe-sncft-taoufik-boufaied",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S236",
+      "kind": "position",
+      "id": "p-int-khefacha-2",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=2, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S237",
+      "kind": "event",
+      "id": "ev-libya-dbeibah-talks-tunis-2026",
+      "confidence": "C",
+      "basis": "inferred",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/inferred (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S238",
+      "kind": "contract",
+      "id": "ctr-tunisair-airbus-a320neo-2016",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S239",
+      "kind": "position",
+      "id": "p-pm-zaafarani",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S240",
+      "kind": "position",
+      "id": "p-onat-chawki-tabib",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S241",
+      "kind": "position",
+      "id": "p-air-hajem",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S242",
+      "kind": "event",
+      "id": "cour-des-comptes-losses-2026",
+      "confidence": "C",
+      "basis": "inferred",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/inferred (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S243",
+      "kind": "worldClaim",
+      "id": "agg-public-debt-total-2024",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 6 tier≤4 source(s), minTier=2, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S244",
+      "kind": "relationship",
+      "id": "rel-sana-gammoudi-hannibal-tv-institutional",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S245",
+      "kind": "position",
+      "id": "p-int-feki",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 4 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S246",
+      "kind": "declaration",
+      "id": "decl-gap-verification",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 4 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S247",
+      "kind": "declaration",
+      "id": "decl-essebsi-2018",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S248",
+      "kind": "position",
+      "id": "p-foreign-drif",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=4, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S249",
+      "kind": "relationship",
+      "id": "rel-radio-zaytouna-ennahda-reported-influence",
+      "confidence": "C",
+      "basis": "inferred",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/inferred (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S250",
+      "kind": "relationship",
+      "id": "board-bna-habib-benhadj-kouider",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S251",
+      "kind": "relationship",
+      "id": "rel-saida-sassi-bourguiba-family",
+      "confidence": "D",
+      "basis": "unsubstantiated",
+      "reasoning": "Simulated (rubric+examples): 0 tier≤4 source(s), minTier=5, hasTier1=false → D/unsubstantiated (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S252",
+      "kind": "company",
+      "id": "poulina",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S253",
+      "kind": "relationship",
+      "id": "board-biat-cyrine-sanchou",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=2, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S254",
+      "kind": "agreement",
+      "id": "us-tunisia-defense-roadmap-2020",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S255",
+      "kind": "relationship",
+      "id": "board-gct-bouzouada",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S256",
+      "kind": "relationship",
+      "id": "rel-judiciary-abdessalem-bouchlaka-prosecution",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=4, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S257",
+      "kind": "relationship",
+      "id": "rel-united-arab-emirates-presidency-diplomatic",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S258",
+      "kind": "position",
+      "id": "p-gv-slaheddine-baccouche",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S259",
+      "kind": "event",
+      "id": "constitution-2014",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 4 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S260",
+      "kind": "relationship",
+      "id": "rel-mebazaa-mechichi-reported-influence",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S261",
+      "kind": "relationship",
+      "id": "rel-khaled-yahyaoui-judiciary-allegation",
+      "confidence": "C",
+      "basis": "inferred",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/inferred (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S262",
+      "kind": "event",
+      "id": "isie-ordinance-544-2024",
+      "confidence": "D",
+      "basis": "unsubstantiated",
+      "reasoning": "Simulated (rubric+examples): 0 tier≤4 source(s), minTier=5, hasTier1=false → D/unsubstantiated (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S263",
+      "kind": "relationship",
+      "id": "board-tunisair-loukil-yaakoubi",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S264",
+      "kind": "position",
+      "id": "p-media-ett-gouja",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S265",
+      "kind": "position",
+      "id": "p-speaker-baly",
+      "confidence": "D",
+      "basis": "unsubstantiated",
+      "reasoning": "Simulated (rubric+examples): 0 tier≤4 source(s), minTier=5, hasTier1=false → D/unsubstantiated (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S266",
+      "kind": "relationship",
+      "id": "rel-european-union-presidency-diplomatic",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S267",
+      "kind": "relationship",
+      "id": "rel-judiciary-said-ferjani-prosecution",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=2, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S268",
+      "kind": "agreement",
+      "id": "eu-association-agreement",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S269",
+      "kind": "relationship",
+      "id": "own-miled-biat-12",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S270",
+      "kind": "position",
+      "id": "p-gv-rejeb-khaznadar",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 5 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S271",
+      "kind": "event",
+      "id": "laarayedh-sentenced",
+      "confidence": "D",
+      "basis": "unsubstantiated",
+      "reasoning": "Simulated (rubric+examples): 0 tier≤4 source(s), minTier=5, hasTier1=false → D/unsubstantiated (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S272",
+      "kind": "relationship",
+      "id": "board-poulina-bouzguenda",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=4, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S273",
+      "kind": "relationship",
+      "id": "board-stb-lotfi-debbabi",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S274",
+      "kind": "event",
+      "id": "nsc-created",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S275",
+      "kind": "relationship",
+      "id": "own-mabrouk-tunisie-valeurs-5047",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S276",
+      "kind": "relationship",
+      "id": "rel-dhafer-sghiri-presidency-reported-influence",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S277",
+      "kind": "agreement",
+      "id": "turkey-tunisia-fta",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 4 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S278",
+      "kind": "position",
+      "id": "p-media-ett-dali",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S279",
+      "kind": "declaration",
+      "id": "decl-confiscation-2011",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 5 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S280",
+      "kind": "relationship",
+      "id": "rel-samir-el-wafi-el-hiwar-ettounsi-institutional",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S281",
+      "kind": "position",
+      "id": "p-onat-mohamed-fadhel-mahfoudh",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S282",
+      "kind": "position",
+      "id": "p-def-shili",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 4 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S283",
+      "kind": "relationship",
+      "id": "rel-amel-ben-yedder-amen-bank-business",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S284",
+      "kind": "event",
+      "id": "belaid-verdict-2024",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S285",
+      "kind": "position",
+      "id": "p-nsa-hamdi",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=4, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S286",
+      "kind": "relationship",
+      "id": "rel-lotfi-brahem-ministry-interior-security",
+      "confidence": "C",
+      "basis": "inferred",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/inferred (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S287",
+      "kind": "relationship",
+      "id": "rel-moncef-mzabi-ben-ali-institutional",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=4, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S288",
+      "kind": "position",
+      "id": "p-soe-poste-sami-mekki",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S289",
+      "kind": "worldClaim",
+      "id": "agg-tourism-arrivals-2024",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=4, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S290",
+      "kind": "agreement",
+      "id": "bit-kuwait-1973",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=2, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S291",
+      "kind": "relationship",
+      "id": "rel-kais-saied-rached-ghannouchi-political-conflict",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 2 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S292",
+      "kind": "relationship",
+      "id": "rel-european-union-presidency-allegation",
+      "confidence": "C",
+      "basis": "inferred",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/inferred (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S293",
+      "kind": "relationship",
+      "id": "own-stb-wifak-45",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S294",
+      "kind": "declaration",
+      "id": "decl-2011-regime-8717",
+      "confidence": "A",
+      "basis": "documented",
+      "reasoning": "Simulated (rubric+examples): 4 tier≤4 source(s), minTier=1, hasTier1=true → A/documented (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S295",
+      "kind": "event",
+      "id": "bensedrine-sentenced-2026",
+      "confidence": "C",
+      "basis": "inferred",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/inferred (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S296",
+      "kind": "position",
+      "id": "p-justice-zouari",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 3 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S297",
+      "kind": "event",
+      "id": "ev-naufrage-zarzis-2026",
+      "confidence": "B",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 4 tier≤4 source(s), minTier=3, hasTier1=false → B/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S298",
+      "kind": "education",
+      "id": "edu-saied-ihl-sanremo",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S299",
+      "kind": "relationship",
+      "id": "rel-ltdh-national-dialogue-quartet-institutional",
+      "confidence": "C",
+      "basis": "inferred",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=2, hasTier1=false → C/inferred (few-shot regime, lower noise)",
+      "synthetic": true
+    },
+    {
+      "study_id": "S300",
+      "kind": "position",
+      "id": "p-foreign-kefi",
+      "confidence": "C",
+      "basis": "reported",
+      "reasoning": "Simulated (rubric+examples): 1 tier≤4 source(s), minTier=3, hasTier1=false → C/reported (few-shot regime, lower noise)",
+      "synthetic": true
+    }
+  ]
+}

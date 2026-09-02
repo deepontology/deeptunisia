@@ -1,0 +1,160 @@
+{
+  "meta": {
+    "generatedAt": "2026-09-02T22:02:02.527Z",
+    "raters": 3,
+    "raterFiles": [
+      "research/study/dry-run/raters/rater-a.csv",
+      "research/study/dry-run/raters/rater-b.csv",
+      "research/study/dry-run/raters/rater-c.csv"
+    ],
+    "totalStudyIds": 10,
+    "bootstrap": 1000,
+    "targets": {
+      "basis_kappa": 0.8,
+      "confidence_kappa": 0.7
+    },
+    "note": "Targets are pre-specified conventions, not laws of nature. Round 2 deltas are reported whether targets are met or not (protocol §8.1)."
+  },
+  "confidence": {
+    "n": 10,
+    "totalStudyIds": 10,
+    "categories": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "p_j": {
+      "A": 0.233,
+      "B": 0.367,
+      "C": 0.3,
+      "D": 0.1
+    },
+    "observedCats": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "fleiss": {
+      "kappa": 0.438,
+      "ci95": [
+        0.136,
+        0.696
+      ],
+      "P_bar": 0.6,
+      "P_e": 0.289,
+      "m_avg": 3
+    },
+    "krippendorff": {
+      "alpha": 0.456,
+      "ci95": [
+        0.15,
+        0.711
+      ],
+      "Do": 0.4,
+      "De": 0.736,
+      "nPairs": 30
+    },
+    "missing": {
+      "totalPossible": 30,
+      "totalObserved": 30,
+      "missing": 0,
+      "missingPct": 0
+    },
+    "perKind": {
+      "event": {
+        "n": 2,
+        "kappa": 0,
+        "alpha": 0.167,
+        "P_bar": 0.333,
+        "items": 2
+      },
+      "position": {
+        "n": 3,
+        "kappa": 1,
+        "alpha": 1,
+        "P_bar": 1,
+        "items": 3
+      },
+      "relationship": {
+        "n": 5,
+        "kappa": 0.221,
+        "alpha": 0.273,
+        "P_bar": 0.467,
+        "items": 5
+      }
+    }
+  },
+  "basis": {
+    "n": 10,
+    "totalStudyIds": 10,
+    "categories": [
+      "documented",
+      "reported",
+      "inferred",
+      "unsubstantiated"
+    ],
+    "p_j": {
+      "documented": 0.233,
+      "reported": 0.533,
+      "inferred": 0.133,
+      "unsubstantiated": 0.1
+    },
+    "observedCats": [
+      "documented",
+      "inferred",
+      "reported",
+      "unsubstantiated"
+    ],
+    "fleiss": {
+      "kappa": 0.316,
+      "ci95": [
+        0,
+        0.619
+      ],
+      "P_bar": 0.567,
+      "P_e": 0.367,
+      "m_avg": 3
+    },
+    "krippendorff": {
+      "alpha": 0.339,
+      "ci95": [
+        0.047,
+        0.597
+      ],
+      "Do": 0.433,
+      "De": 0.655,
+      "nPairs": 30
+    },
+    "missing": {
+      "totalPossible": 30,
+      "totalObserved": 30,
+      "missing": 0,
+      "missingPct": 0
+    },
+    "perKind": {
+      "event": {
+        "n": 2,
+        "kappa": -0.091,
+        "alpha": 0.091,
+        "P_bar": 0.333,
+        "items": 2
+      },
+      "position": {
+        "n": 3,
+        "kappa": 1,
+        "alpha": 1,
+        "P_bar": 1,
+        "items": 3
+      },
+      "relationship": {
+        "n": 5,
+        "kappa": 0.123,
+        "alpha": 0.182,
+        "P_bar": 0.4,
+        "items": 5
+      }
+    }
+  }
+}

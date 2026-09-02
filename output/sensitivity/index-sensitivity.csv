@@ -1,0 +1,61 @@
+perturbation,family,key,spearman,overlap_pct,swaps_top10,entered_top40,left_top40
+shipped,discount,influence,1,100,0,,
+documented-0.25,discount,influence,1,100,0,,
+documented+0.25,discount,influence,1,100,0,,
+reported-0.25,discount,influence,1,100,0,,
+reported+0.25,discount,influence,1,100,0,,
+inferred-0.25,discount,influence,0.997,97.5,0,ibrahim-chaibi,wassila-bourguiba
+inferred+0.25,discount,influence,1,100,1,,
+shipped,discount,composite,1,100,0,,
+documented-0.25,discount,composite,1,100,0,,
+documented+0.25,discount,composite,1,100,0,,
+reported-0.25,discount,composite,0.999,100,1,,
+reported+0.25,discount,composite,1,100,0,,
+inferred-0.25,discount,composite,1,100,0,,
+inferred+0.25,discount,composite,1,100,0,,
+window 8→4 (halved),window,authority,1,100,0,,
+window 8→16 (doubled),window,authority,1,100,0,,
+slack year 365→183 month 92→46 (-50%),slack,authority,1,100,0,,
+slack year 365→548 month 92→138 (+50%),slack,authority,1,100,0,,
+window 8→4 (halved),window,proximity,1,100,0,,
+window 8→16 (doubled),window,proximity,1,100,0,,
+slack year 365→183 month 92→46 (-50%),slack,proximity,1,100,0,,
+slack year 365→548 month 92→138 (+50%),slack,proximity,1,100,0,,
+window 8→4 (halved),window,survival,1,100,0,,
+window 8→16 (doubled),window,survival,1,100,0,,
+slack year 365→183 month 92→46 (-50%),slack,survival,0.997,97.5,0,habib-benhadj-kouider,youssef-chahed
+slack year 365→548 month 92→138 (+50%),slack,survival,1,100,0,,
+window 8→4 (halved),window,brokerage,1,100,0,,
+window 8→16 (doubled),window,brokerage,1,100,0,,
+slack year 365→183 month 92→46 (-50%),slack,brokerage,1,100,0,,
+slack year 365→548 month 92→138 (+50%),slack,brokerage,1,100,0,,
+window 8→4 (halved),window,reach,1,100,0,,
+window 8→16 (doubled),window,reach,1,100,0,,
+slack year 365→183 month 92→46 (-50%),slack,reach,1,100,0,,
+slack year 365→548 month 92→138 (+50%),slack,reach,1,100,0,,
+window 8→4 (halved),window,influence,1,100,0,,
+window 8→16 (doubled),window,influence,1,100,0,,
+slack year 365→183 month 92→46 (-50%),slack,influence,1,100,0,,
+slack year 365→548 month 92→138 (+50%),slack,influence,1,100,0,,
+window 8→4 (halved),window,composite,1,100,0,,
+window 8→16 (doubled),window,composite,1,100,0,,
+slack year 365→183 month 92→46 (-50%),slack,composite,0.993,100,0,,
+slack year 365→548 month 92→138 (+50%),slack,composite,0.996,100,0,,
+weight authority 1→0 (excluded),weight,composite,0.782,82.5,2,marouane-mabrouk;slim-riahi;ghazi-chaouachi;ahmed-nejib-chebbi;abdessattar-ben-moussa;najet-jaouadi;ridha-chalghoum,lotfi-ben-jeddou;mourad-saidane;ahmed-mestiri;hassine-gharbi;najla-bouden;habib-ben-yahia;mustapha-ben-jaafar
+weight authority 1→0.5 (halved),weight,composite,0.954,90,1,marouane-mabrouk;najet-jaouadi;ridha-chalghoum;ghazi-chaouachi,ahmed-mestiri;najla-bouden;habib-ben-yahia;mustapha-ben-jaafar
+weight authority 1→2 (doubled),weight,composite,0.93,87.5,1,tahar-ben-ammar;rachid-ammar;abdallah-kallel;chokri-riahi;mohamed-aziz-bouattour,leila-jaffel;faouzi-elloumi;abdelwahab-ben-ayed;farouk-bouasker;mustapha-ben-jaafar
+weight proximity 1→0 (excluded),weight,composite,0.892,70,1,mohamed-aziz-bouattour;mohamed-el-ghoul;rejeb-khaznadar;mustapha-khaznadar;marouane-mabrouk;adel-jehane;mohamed-hajem;mohamed-khamassi;wided-bouchamaoui;ridha-chalghoum;khelifa-harroum;moncef-kchaou,othman-jarandi;ali-seriati;brahim-bertagi;lotfi-ben-jeddou;leila-jaffel;faouzi-elloumi;mourad-saidane;abdelwahab-ben-ayed;farouk-bouasker;ahmed-mestiri;najla-bouden;habib-ben-yahia
+weight proximity 1→0.5 (halved),weight,composite,0.97,95,1,marouane-mabrouk;ridha-chalghoum,najla-bouden;habib-ben-yahia
+weight proximity 1→2 (doubled),weight,composite,0.998,92.5,1,yadh-ben-achour;ridha-belhaj;nadia-akacha,mohamed-habib-dhif;hassine-gharbi;mustapha-ben-jaafar
+weight survival 1→0 (excluded),weight,composite,0.772,47.5,1,tahar-ben-ammar;yadh-ben-achour;ridha-belhaj;hichem-mechichi;lotfi-brahem;habib-ammar;abdelhamid-escheikh;abdallah-kallel;khaled-nouri;kamel-feki;chedli-neffati;mohamed-jegham;rafiq-belhaj-kacem;mohamed-najem-gharsalli;hedi-majdoub;hichem-fourati;rachid-sfar;mehdi-jomaa;mohammed-mzali;nadia-akacha;hassen-belkhodja,khaled-yahyaoui;brahim-bouderbala;nouri-ben-taous;rached-ghannouchi;mohamed-salah-hamdi;othman-battikh;abdelkarim-zbidi;mohamed-habib-dhif;othman-jarandi;ali-seriati;brahim-bertagi;leila-jaffel;faouzi-elloumi;mourad-saidane;abdelwahab-ben-ayed;farouk-bouasker;ahmed-mestiri;hassine-gharbi;najla-bouden;habib-ben-yahia;mustapha-ben-jaafar
+weight survival 1→0.5 (halved),weight,composite,0.951,85,1,tahar-ben-ammar;yadh-ben-achour;abdallah-kallel;habib-ammar;ridha-belhaj;rachid-sfar,othman-jarandi;leila-jaffel;faouzi-elloumi;abdelwahab-ben-ayed;hassine-gharbi;mustapha-ben-jaafar
+weight survival 1→2 (doubled),weight,composite,0.906,82.5,0,marouane-mabrouk;abdelhamid-belati;ridha-chalghoum;ghazi-chaouachi;slim-riahi;abdessattar-ben-moussa;ahmed-nejib-chebbi,mohamed-ennaceur;lotfi-ben-jeddou;mourad-saidane;farouk-bouasker;ahmed-mestiri;najla-bouden;habib-ben-yahia
+weight brokerage 1→0 (excluded),weight,composite,0.969,97.5,1,chokri-riahi,mustapha-ben-jaafar
+weight brokerage 1→0.5 (halved),weight,composite,0.993,100,0,,
+weight brokerage 1→2 (doubled),weight,composite,0.989,95,2,marouane-mabrouk;tahar-ben-ammar,habib-ben-yahia;mustapha-ben-jaafar
+weight reach 1→0 (excluded),weight,composite,0.942,95,1,chokri-riahi;marouane-mabrouk,farouk-bouasker;habib-ben-yahia
+weight reach 1→0.5 (halved),weight,composite,0.98,97.5,1,chokri-riahi,habib-ben-yahia
+weight reach 1→2 (doubled),weight,composite,0.97,95,2,najet-jaouadi;ridha-chalghoum,najla-bouden;mustapha-ben-jaafar
+weight influence 1→0 (excluded),weight,composite,0.995,100,1,,
+weight influence 1→0.5 (halved),weight,composite,0.999,100,1,,
+weight influence 1→2 (doubled),weight,composite,0.995,100,0,,

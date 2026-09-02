@@ -1,0 +1,113 @@
+{
+  "meta": {
+    "generatedAt": "2026-09-02T22:02:20.699Z",
+    "raters": 2,
+    "raterFiles": [
+      "research/study/dry-run/model-arm/regime-a.csv",
+      "research/study/dry-run/model-arm/regime-b.csv"
+    ],
+    "totalStudyIds": 10,
+    "bootstrap": 1000,
+    "targets": {
+      "basis_kappa": 0.8,
+      "confidence_kappa": 0.7
+    },
+    "note": "Targets are pre-specified conventions, not laws of nature. Round 2 deltas are reported whether targets are met or not (protocol §8.1)."
+  },
+  "confidence": {
+    "n": 10,
+    "totalStudyIds": 10,
+    "categories": [
+      "A",
+      "B",
+      "C",
+      "D"
+    ],
+    "p_j": {
+      "A": 0.1,
+      "B": 0.4,
+      "C": 0.5,
+      "D": 0
+    },
+    "observedCats": [
+      "A",
+      "B",
+      "C"
+    ],
+    "fleiss": {
+      "kappa": 1,
+      "ci95": [
+        1,
+        1
+      ],
+      "P_bar": 1,
+      "P_e": 0.42,
+      "m_avg": 2
+    },
+    "krippendorff": {
+      "alpha": 1,
+      "ci95": [
+        1,
+        1
+      ],
+      "Do": 0,
+      "De": 0.611,
+      "nPairs": 10
+    },
+    "missing": {
+      "totalPossible": 20,
+      "totalObserved": 20,
+      "missing": 0,
+      "missingPct": 0
+    },
+    "perKind": {}
+  },
+  "basis": {
+    "n": 10,
+    "totalStudyIds": 10,
+    "categories": [
+      "documented",
+      "reported",
+      "inferred",
+      "unsubstantiated"
+    ],
+    "p_j": {
+      "documented": 0.1,
+      "reported": 0.7,
+      "inferred": 0.2,
+      "unsubstantiated": 0
+    },
+    "observedCats": [
+      "documented",
+      "inferred",
+      "reported"
+    ],
+    "fleiss": {
+      "kappa": 0.565,
+      "ci95": [
+        -0.25,
+        1
+      ],
+      "P_bar": 0.8,
+      "P_e": 0.54,
+      "m_avg": 2
+    },
+    "krippendorff": {
+      "alpha": 0.587,
+      "ci95": [
+        -0.187,
+        1
+      ],
+      "Do": 0.2,
+      "De": 0.484,
+      "nPairs": 10
+    },
+    "missing": {
+      "totalPossible": 20,
+      "totalObserved": 20,
+      "missing": 0,
+      "missingPct": 0
+    },
+    "perKind": {}
+  }
+}
