@@ -3,6 +3,33 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:8d1254c8193f9b3d",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Tunis | Grandes surfaces : Injection quotidienne de 2,3 millions de bouteilles d’eau minérale",
+      "link": "https://kapitalis.com/tunisie/2026/09/02/tunis-grandes-surfaces-injection-quotidienne-de-23-millions-de-bouteilles-deau-minerale/",
+      "published": "2026-09-02T20:07:44Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:kapitalis:70bfb1faff08935a",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Jardins d’enfants publics inclusifs | Inscriptions ouvertes pour l’année 2026-2027",
+      "link": "https://kapitalis.com/tunisie/2026/09/02/jardins-denfants-publics-inclusifs-inscriptions-ouvertes-pour-lannee-2026-2027/",
+      "published": "2026-09-02T19:28:50Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:al-jazeera:61c19e75e043929b",
+      "outlet": "Al Jazeera",
+      "outletId": "al-jazeera",
+      "title": "Brazilian activist demands Tunisia release Sumud Flotilla organisers",
+      "link": "https://www.aljazeera.com/news/2026/9/2/brazilian-activist-demands-tunisia-release-sumud-flotilla-organisers?traffic_source=rss",
+      "published": "2026-09-02T17:10:17Z",
+      "lang": "en"
+    },
+    {
       "id": "feed:african-manager:dfb721785fff7679",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -10773,33 +10800,6 @@
       "title": "L’UGTT relance sa demande d’un dialogue national",
       "link": "https://africanmanager.com/la-relance-de-leconomie-tunisienne-necessite-une-volonte-claire-de-reforme-et-louverture-dun-dialogue-national/",
       "published": "2026-07-31T07:32:25Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:b217bbd36e9526b3",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Siliana : Un feu de forêt maîtrisé à Kesra",
-      "link": "https://africanmanager.com/siliana-un-feu-de-foret-maitrise-a-kesra/",
-      "published": "2026-07-31T07:30:27Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:61ff08063064ebc7",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Bizerte : plus de 100 climatiseurs non conformes saisis",
-      "link": "https://africanmanager.com/bizerte-plus-de-100-climatiseurs-non-conformes-saisis-lors-dune-vaste-operation-de-controle/",
-      "published": "2026-07-31T07:30:10Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:3f78d18cc8f80b13",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "1.000 feux et 12 100 hectares dévastés recensés",
-      "link": "https://africanmanager.com/incendies-de-foret-1-000-feux-et-12-100-hectares-devastes-recenses-lors-dun-bilan-saisonnier/",
-      "published": "2026-07-31T07:27:50Z",
       "lang": "fr"
     }
   ]
