@@ -946,6 +946,20 @@
   falsifiable_by: >-
     ISIE's official results bulletin or the JORT text of decree 2023-590
     showing different dates or a different council count.
+  review:
+    by: adala
+    date: "2026-09-02"
+    method: source-check
+    note: >-
+      Checked the four Wikipedia sources cited -- ar/fr elections-locales-2023
+      and ar/fr conseil-local. Both election articles give two-round dates
+      24 Dec 2023 and 4 Feb 2024, 279 local councils and 2,129 independents,
+      and cite supervisory results and presidential order 2023-590 (21 Sept 2023
+      framework: 5 regions, 24 regionals, 279 locals). Both conseil-local
+      articles document the legal-framework shift from loi 94-87 (26 July 1994)
+      to order 2023-10 (8 Mar 2023) as the base for the second chamber. No
+      supervisory bulletin or enacting order's publication was consulted; that
+      publication would falsify dates/counts.
   sources:
     [
       wikipedia-ar-elections-locales-2023,

@@ -64,7 +64,7 @@ CREATE INDEX IF NOT EXISTS idx_buckets_expiry ON rate_buckets (expires_at);
 -- present, and the graph must never require this database to exist.
 CREATE TABLE IF NOT EXISTS threads (
   id           TEXT PRIMARY KEY,
-  target_type  TEXT NOT NULL CHECK (target_type IN ('person','institution','role','position','relationship','event','source','open')),
+  target_type  TEXT NOT NULL CHECK (target_type IN ('person','institution','role','position','relationship','event','source','open','company','contract','licence','declaration','education')),
   target_id    TEXT,
   title        TEXT NOT NULL,
   created_at   INTEGER NOT NULL,

@@ -100,7 +100,7 @@ function loadEntityIds(): Set<string> | undefined {
 	try {
 		const ds = JSON.parse(readFileSync(join(ROOT, 'src/generated/dataset.json'), 'utf8'));
 		const ids = new Set<string>();
-		for (const kind of ['people', 'institutions', 'roles', 'positions', 'relationships', 'events', 'sources']) {
+		for (const kind of ['people', 'institutions', 'roles', 'positions', 'relationships', 'events', 'sources', 'companies', 'contracts', 'licences', 'declarations', 'education', 'regions', 'places', 'agreements', 'worldClaims']) {
 			for (const r of ds[kind] ?? []) {
 				if (r?.id) ids.add(r.id);
 			}

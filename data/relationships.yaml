@@ -740,6 +740,21 @@
   influence:
     channel: advice-relationship
     strength: 0.55
+  review:
+    by: adala
+    date: "2026-09-02"
+    method: source-check
+    note: >-
+      Checked all five cited sources against the channel. Jeune Afrique profile
+      (Frida Dahmani, 6 Jan 2013) documents Eltaief as businessman-adviser who
+      met Ben Ali 1978, called strongman without office, distanced summer 1992,
+      consulted again until 10 Jan 2011; Le Monde (30 Oct 2001) documents his
+      2001 break; Rajhi's May 2011 accusation is recorded as an accusation by
+      a serving minister, not a finding; Reuters 11 Feb 2023 covers arrest, not
+      proof of directing governments; FR/AR Wikipedia mirror the same. No source
+      shows an interior ministry or formal post; the advice-relationship channel
+      at 0.55 with contested scale matches what sources actually state. No
+      primary appointment order located.
   sources:
     - jeuneafrique-eltaief-2013
     - lemonde-eltaief-2001
@@ -1154,6 +1169,19 @@
   confidence: D
   basis: unsubstantiated
   attributed_to: Recurring claim in Tunisian public and social-media discourse
+  review:
+    by: adala
+    date: "2026-09-02"
+    method: judge
+    note: >-
+      Checked the three sources for what they actually support. Popular-discourse
+      is the editorial placeholder for the circulating claim itself. Carnegie
+      (2016-02-24, A Quiet Revolution) and Grewal/OUP (2023, Marginalizing the
+      Military) both document the inverse: a deliberately small army, officers
+      removed from civilian posts after 1991, the vacant tri-service post for
+      roughly two decades, and the army not taking power in 2011. No source
+      corroborates secret military governance; the description is read as a
+      negative finding and the D grading is kept.
   sources:
     - popular-discourse
     - carnegie-quiet-revolution
@@ -3706,6 +3734,20 @@
   falsifiable_by_fr_by: model-reviewed
   falsifiable_by_ar: "مرسوم إنشاء الكرامة (الرائد الرسمي 2012) ونظامه الأساسي: المشاركة العمومية الصريحة وقائمة الشركات المدارة."
   falsifiable_by_ar_by: model-reviewed
+  review:
+    by: adala
+    date: "2026-09-02"
+    method: source-check
+    note: >-
+      Checked the single cited source -- Jeune Afrique 2014-03-14 (Ghorbal).
+      The article states Al Karama was created June 2012 by the Jebali
+      government to manage confiscated-company stakes, portfolio from ~20 to 58
+      firms. State ownership is the article's premise, but the text does not
+      state 100% or cite the creation order's publication or the holding's
+      statutes. The 100% equity and June 2012 as-of are therefore inferred from
+      the description, as recorded in reasoning/falsifiable_by; the creation
+      order's publication or registry filing would supersede this. No registry
+      filing was consulted this run.
   sources:
     - jeuneafrique-orange-spoliation-2014
 - id: own-state-stb-7154

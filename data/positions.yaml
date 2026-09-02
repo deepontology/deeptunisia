@@ -5386,6 +5386,17 @@
     - claim: No such tenure exists; Abdallah → Morjane is continuous.
       held_by: French Wikipedia FM list, Business News reshuffle coverage (2010-01-15), Espace Manager ministerial list
       assessment: ADOPTED 2026-08-04. The row is kept but graded D/unsubstantiated.
+  review:
+    by: adala
+    date: "2026-09-02"
+    method: source-check
+    note: >-
+      Checked both cited sources -- Business News 2010-01-15 reshuffle piece and
+      Espace Manager 69-year minister list -- against the claim. Neither contains
+      Rachid Drif; both show a continuous succession Abdallah (from 2005) to
+      Morjane (appointed 14 Jan 2010). No primary appointment order for a Drif
+      tenure was located; the two secondary lists contradict the claim and the
+      D/unsubstantiated grading is kept.
   sources: [businessnews-remaniement-2010, espacemanager-ministres-list]
 
 - id: p-foreign-morjane
