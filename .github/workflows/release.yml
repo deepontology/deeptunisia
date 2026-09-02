@@ -84,13 +84,10 @@ jobs:
         run: npm ci
 
       - name: Build the graph (deterministic export)
-        run: npm run data
+        run: npm run build
 
       - name: Sync SvelteKit aliases (required for $data in tests)
         run: npx svelte-kit sync
-
-      - name: Build landing (regenerate DENSITY/NODES/EDGES)
-        run: npx tsx scripts/build-landing.ts
 
       - name: Run full test gate
         run: npm run test
