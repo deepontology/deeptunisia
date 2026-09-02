@@ -3,6 +3,15 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:al-jazeera:fc4dc874c88dd29b",
+      "outlet": "Al Jazeera",
+      "outletId": "al-jazeera",
+      "title": "Tunisia’s civil society faces growing pressure as crackdown widens",
+      "link": "https://www.aljazeera.com/news/2026/9/2/tunisias-civil-society-faces-growing-pressure-as-crackdown-widens?traffic_source=rss",
+      "published": "2026-09-02T04:01:08Z",
+      "lang": "en"
+    },
+    {
       "id": "feed:kapitalis:b64de7c57727b329",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -10791,15 +10800,6 @@
       "title": "Coupures d’électricité: 70% des restaurants impactés",
       "link": "https://africanmanager.com/coupures-delectricite-70-des-restaurants-impactes/",
       "published": "2026-07-28T08:08:41Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:4440fceeb6436aa7",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Le Tunindex entame la semaine sur une note morose",
-      "link": "https://africanmanager.com/le-tunindex-entame-la-semaine-sur-une-note-morose/",
-      "published": "2026-07-28T03:58:28Z",
       "lang": "fr"
     }
   ]
