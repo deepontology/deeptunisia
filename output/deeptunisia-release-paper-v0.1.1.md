@@ -23,7 +23,7 @@ The review treated the paper the way the paper treats the data: every checkable 
 - **C5 — the release was versioned to a date, not a state.** V0.1 carried no way to identify the graph it described. This release carries the build-tagged commit in its reproducibility block; the PDF export freezes the state at export time.
 - **C6 — reference corrections and an independent prior-art sweep.** [10]'s canonical title, [18]'s co-author, subtitle and pagination, and [22]'s DOI are corrected in the reference list; [24]'s quoted slogan is updated to the policy's current wording; and the citation-verification paragraph records an independent verification run and a prior-art sweep that corroborated the Table 3 novelty claim at its stated grade-C standing (evidence: `research/findings/paper-reference-verification-v0.1.1.md`).
 
-**Reproducibility block.** Built from commit <!--stat:commitSha-->3a5dd0a03f3ae71f21a2c9fd63395c26780ef9f1<!--/stat--> — <!--stat:sources-->1229<!--/stat--> sources (<!--stat:sourcesCited-->1191<!--/stat--> cited), <!--stat:people-->444<!--/stat--> people, <!--stat:positions-->422<!--/stat--> positions, <!--stat:relationships-->362<!--/stat--> relationships, <!--stat:events-->100<!--/stat--> events. Every dataset figure in this file is a stat tag rewritten by the build; `scripts/test-paper.ts` fails the suite on drift; the frozen artifact is the PDF exported at release.
+**Reproducibility block.** Built from commit <!--stat:commitSha-->e6c9b50dd7a61d81ffcd226614e259b205c610c0<!--/stat--> — <!--stat:sources-->1229<!--/stat--> sources (<!--stat:sourcesCited-->1191<!--/stat--> cited), <!--stat:people-->444<!--/stat--> people, <!--stat:positions-->422<!--/stat--> positions, <!--stat:relationships-->362<!--/stat--> relationships, <!--stat:events-->100<!--/stat--> events. Every dataset figure in this file is a stat tag rewritten by the build; `scripts/test-paper.ts` fails the suite on drift; the frozen artifact is the PDF exported at release.
 
 **Keywords:** knowledge graphs · evidence grading · provenance · build-time validation · epistemic basis · fuzzy temporal intervals · computational social science · verifiability
 
@@ -595,7 +595,7 @@ This appendix exists to make the `test-paper.ts` gate's requirement visible: eve
 - reviewable-inferred: <!--stat:reviewable-inferred-->0<!--/stat-->
 - reviewable-unsubstantiated: <!--stat:reviewable-unsubstantiated-->12<!--/stat-->
 - translatedHuman: <!--stat:translatedHuman-->12<!--/stat-->
-- commitSha: <!--stat:commitSha-->3a5dd0a03f3ae71f21a2c9fd63395c26780ef9f1<!--/stat-->
+- commitSha: <!--stat:commitSha-->e6c9b50dd7a61d81ffcd226614e259b205c610c0<!--/stat-->
 
 ## References
 
