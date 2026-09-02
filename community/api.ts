@@ -352,7 +352,9 @@ export async function handle(request: Request, env: Env): Promise<Response> {
 
 			const where = targetType && targetId ? 'WHERE target_type = ? AND target_id = ?' : '';
 			const stmt = env.DB.prepare(
-				`SELECT t.*, (SELECT COUNT(*) FROM posts p WHERE p.thread_id = t.id) AS post_count
+				`SELECT t.*, (SELECT COUNT(*) FROM posts p WHERE p.thread_id = t.id) AS post_count,
+					(SELECT COUNT(*) FROM votes v WHERE v.target_type = 'thread' AND v.target_id = t.id AND v.value = 1) AS upvotes,
+					(SELECT COUNT(*) FROM votes v WHERE v.target_type = 'thread' AND v.target_id = t.id AND v.value = -1) AS downvotes
 				 FROM threads t ${where}`
 			);
 			const rows = (await (where ? stmt.bind(targetType, targetId) : stmt).all<any>()).results;
@@ -370,8 +372,8 @@ export async function handle(request: Request, env: Env): Promise<Response> {
 						note: t.author_note
 					}),
 					post_count: t.post_count,
-					upvotes: 0,
-					downvotes: 0,
+					upvotes: t.upvotes,
+					downvotes: t.downvotes,
 					removed: Boolean(t.removed_at),
 					removed_reason: t.removed_reason ?? null
 				}))

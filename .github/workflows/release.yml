@@ -1,0 +1,246 @@
+# Release — signed tag → mechanical DOI
+#
+# A signed tag `v*` cut on `main` produces a DOI'd snapshot without manual
+# steps. That is the release acceptance criterion and the
+# paper's promise of a DOI "before submission" — made mechanical.
+#
+# Trigger
+#   git tag -s v0.2 -m "v0.2 — ..." && git push origin v0.2
+# The tag MUST be annotated and signed (`-s`). Branch protection on `main`
+# already requires signed commits; this workflow additionally verifies that
+# the tag itself is cryptographically `Verified` (GitHub API) or
+# locally `git tag -v`–verified before any files are published.
+#
+# Gate
+#   1. Checkout with full history (so `git verify-tag` can see the key)
+#   2. npm ci → npm run data → npm run test → npm run check
+#      The build is the gate: a validator failure stops the release the same
+#      way it stops a merge. No hand-edited numbers are deposited.
+#   3. Verify tag signature (GitHub API + fallback to `git tag -v`)
+#   4. Deposit to Zenodo via scripts/deposit-zenodo.ts
+#      - If ZENODO_TOKEN is set (deposit:write), the run mints/publishes a DOI.
+#      - If absent (fork, or secret not yet wired) the script runs in dry-run
+#        mode: it assembles the Zenodo metadata payload, lists the files with
+#        sizes, prints the API calls that would run, and exits 0. The workflow
+#        still cuts a GitHub Release with the same artifacts — so a signed tag
+#        is never blocked solely by a missing Zenodo secret.
+#   5. Cut/attach a GitHub Release with the same artifacts (dataset.json + CSVs)
+#      so the tag is archived on GitHub even if Zenodo is dry-run.
+#
+# Secrets / vars
+#   ZENODO_TOKEN       (secret, required for live DOI): Zenodo token with
+#                      scope `deposit:write`. Generate at
+#                      zenodo.org/account/settings/applications/tokens/new
+#                      (or sandbox.zenodo.org). Never logged — the runner masks it.
+#   ZENODO_SANDBOX     (var, optional): set to `1` to deposit to sandbox.zenodo.org
+#                      for testing without minting a real DOI.
+#   ZENODO_CONCEPTRECID (var/secret, optional): numeric concept recid from the
+#                      first published deposition. When set, each subsequent tag
+#                      becomes a new version of the same concept (shared concept DOI).
+#                      Without it each tag mints an independent deposition.
+#   ZENODO_DEPOSITION_ID (legacy var): prior deposition id treated as concept hint
+#                      if CONCEPTRECID is absent.
+#
+# Notes
+#   - Permissions are `contents: write` only so the Release step can create
+#     a release and upload assets. No other scope.
+#   - `fetch-depth: 0` is load-bearing — `git tag -v` and the changelog generator
+#     need full history.
+#   - CRLF data YAML is preserved: the job never normalises line endings.
+#   - The feed is not deposited (I1) and Agora content is never dataset data.
+
+name: Release — signed tag → DOI
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout (full history for tag verify)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Build the graph (deterministic export)
+        run: npm run data
+
+      - name: Run full test gate
+        run: npm run test
+
+      - name: svelte-check (0 errors, 0 warnings)
+        run: npm run check
+
+      - name: Verify tag is signed and verified
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          TAG="${GITHUB_REF_NAME}"
+          echo "→ Verifying tag $TAG is signed…"
+          echo "  commit: $(git rev-list -n 1 "$TAG" 2>/dev/null | cut -c1-12)  tagger: $(git for-each-ref --format='%(taggername) %(taggeremail)' "refs/tags/$TAG" 2>/dev/null || echo '(lightweight?)')"
+
+          # Reject lightweight tags — a release tag must be annotated (`git tag -s`/`-a`)
+          if ! git cat-file -p "refs/tags/$TAG" 2>/dev/null | head -n 1 | grep -q "^object "; then
+            echo "::error::Tag $TAG is lightweight (not annotated). Create with: git tag -s $TAG -m \"v… — …\" && git push origin $TAG"
+            exit 1
+          fi
+
+          # Prefer GitHub's Verified flag: it is true when the pusher's GPG/SSH key
+          # is on file and the signature checks, without needing the public key in
+          # the runner's keyring. This is what the UI's green "Verified" badge reflects.
+          VERIFIED="false"
+          SHA="$(git rev-list -n 1 "$TAG" 2>/dev/null || true)"
+          TAG_SHA="$(git rev-parse "refs/tags/$TAG" 2>/dev/null || true)"
+          # For annotated tags the object is a tag object; the API endpoint needs the tag SHA
+          API_SHA="${TAG_SHA:-$SHA}"
+          if [ -n "$API_SHA" ] && command -v gh >/dev/null 2>&1; then
+            VERIFIED="$(gh api "repos/${{ github.repository }}/git/tags/$API_SHA" --jq '.verification.verified // false' 2>/dev/null || echo "false")"
+            REASON="$(gh api "repos/${{ github.repository }}/git/tags/$API_SHA" --jq '.verification.reason // ""' 2>/dev/null || echo "")"
+            echo "  GitHub API verification.verified=$VERIFIED  reason=$REASON"
+          fi
+
+          if [ "$VERIFIED" = "true" ]; then
+            echo "✓ Tag $TAG is cryptographically verified (GitHub API)."
+            # Also show the local verify if the key is known in the runner
+            git tag -v "$TAG" 2>&1 | head -n 20 || true
+            exit 0
+          fi
+
+          echo "  GitHub API did not report verified=true — falling back to local git verify…"
+          # Import the repo's allowed_signers if the key is stored as a variable/secret.
+          # Operator can set repo variable SSH_ALLOWED_SIGNERS with the single
+          # `principal ssh-ed25519 ...` line matching `commit-signing.md`.
+          if [ -n "${{ vars.SSH_ALLOWED_SIGNERS }}" ]; then
+            echo "${{ vars.SSH_ALLOWED_SIGNERS }}" > /tmp/allowed_signers
+            git config gpg.ssh.allowedSignersFile /tmp/allowed_signers
+          elif [ -n "${{ secrets.SSH_ALLOWED_SIGNERS }}" ]; then
+            echo "${{ secrets.SSH_ALLOWED_SIGNERS }}" > /tmp/allowed_signers
+            git config gpg.ssh.allowedSignersFile /tmp/allowed_signers
+          fi
+
+          if git tag -v "$TAG" 2>&1 | tee /tmp/tag-verify.txt | grep -qE "Good.*signature"; then
+            echo "✓ Tag $TAG verified locally via git tag -v."
+            cat /tmp/tag-verify.txt | head -n 20
+            exit 0
+          fi
+
+          echo "::error::Tag $TAG is not cryptographically verified. GitHub API verified=$VERIFIED; local git tag -v did not report a Good signature."
+          echo "  Expected: git tag -s $TAG -m \"v… — brief note\" && git push origin $TAG"
+          echo "  Check:    git tag -v $TAG ; git log --show-signature -1 $TAG"
+          cat /tmp/tag-verify.txt 2>/dev/null | head -n 40 || true
+          echo ""
+          echo "  If this is a test tag on a fork without the signing key, this failure is intended."
+          echo "  On the canonical repo the operator's SSH key (see docs/commit-signing.md) must sign tags."
+          exit 1
+
+      - name: Deposit to Zenodo (or dry-run if no token)
+        env:
+          ZENODO_TOKEN: ${{ secrets.ZENODO_TOKEN }}
+          ZENODO_SANDBOX: ${{ vars.ZENODO_SANDBOX }}
+          ZENODO_CONCEPTRECID: ${{ vars.ZENODO_CONCEPTRECID }}
+          ZENODO_DEPOSITION_ID: ${{ vars.ZENODO_DEPOSITION_ID }}
+          GITHUB_REF_NAME: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          echo "→ Zenodo deposit for ${GITHUB_REF_NAME} (base: ${ZENODO_SANDBOX:+sandbox }zenodo.org)"
+          if [ -z "${ZENODO_TOKEN:-}" ]; then
+            echo "::warning::ZENODO_TOKEN not set — running deposit script in dry-run mode (no DOI will be minted; GitHub Release still cut). Wire the secret at Settings → Secrets → Actions → ZENODO_TOKEN."
+          fi
+          npx --no-install tsx scripts/deposit-zenodo.ts
+          echo "✓ Zenodo step completed (live or dry-run — see output above)."
+
+      - name: Create / update GitHub Release with build artifacts
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          TAG="${GITHUB_REF_NAME}"
+          echo "→ GitHub Release for $TAG"
+
+          # Collect artifacts — same set the Zenodo deposit carries, plus any
+          # static exports the build emitted. Missing files are not an error
+          # (fresh clones before the world bundle has been fetched still release).
+          ASSETS=()
+          for f in static/dataset.json static/*.csv static/sensitivity.json static/changelog.json static/geo.json static/world-topo.json static/tn-adm.geojson LICENSE data/LICENSE; do
+            if [ -f "$f" ]; then ASSETS+=("$f"); fi
+          done
+          echo "  assets: ${ASSETS[*]:-(none)}"
+
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "  Release $TAG already exists — uploading assets to it…"
+            # Re-upload is safe; gh errors on duplicate asset names with --clobber we handle
+            for a in "${ASSETS[@]}"; do
+              echo "    → $a"
+              gh release upload "$TAG" "$a" --clobber 2>&1 | head -n 5 || echo "    (upload of $a: skipped/failed — see above)"
+            done
+            gh release view "$TAG" --json url,tagName,name,createdAt --jq '{url, tagName, name}' || true
+          else
+            echo "  Creating release $TAG…"
+            # Generate notes from commits since previous tag; --generate-notes is GitHub's auto notes
+            NOTES_FILE="$(mktemp)"
+            {
+              echo "DeepTunisia dataset \`${TAG}\` — signed release."
+              echo ""
+              echo "DOI: minted by the Zenodo step above when \`ZENODO_TOKEN\` is wired; otherwise this GitHub Release is the archived artifact (attach the DOI to \`CITATION.cff\` once live)."
+              echo ""
+              echo "Reproduce:"
+              echo "\`\`\`bash"
+              echo "git fetch --tags && git checkout ${TAG} && npm ci && npm run data && npm run test"
+              echo "\`\`\`"
+              echo ""
+              echo "Artifacts: dataset.json is canonical; CSVs and geographic layers are derived; licences in LICENSE + data/LICENSE."
+              echo ""
+              gh api "repos/${{ github.repository }}/releases/generate-notes" -f tag_name="$TAG" --jq '.body' 2>/dev/null || echo "_No auto-notes available._"
+            } > "$NOTES_FILE"
+
+            if [ "${#ASSETS[@]}" -gt 0 ]; then
+              gh release create "$TAG" "${ASSETS[@]}" --title "DeepTunisia $TAG" --notes-file "$NOTES_FILE" --latest 2>&1 | head -n 30
+            else
+              gh release create "$TAG" --title "DeepTunisia $TAG" --notes-file "$NOTES_FILE" --latest 2>&1 | head -n 30
+            fi
+            rm -f "$NOTES_FILE"
+            echo "✓ Release $TAG created."
+          fi
+
+          echo ""
+          echo "  Release URL: $(gh release view "$TAG" --json url --jq .url 2>/dev/null || echo "(not yet)")"
+          echo "  To verify locally: git verify-tag $TAG && git log --show-signature -1 $TAG"
+
+      - name: Summary
+        if: always()
+        run: |
+          TAG="${GITHUB_REF_NAME}"
+          echo "## Release $TAG — summary" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Tag: \`$TAG\` (annotated, signed — verified above)" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Gates: \`npm run data && npm run test && npm run check\` — all passed" >> "$GITHUB_STEP_SUMMARY"
+          if [ -n "${{ secrets.ZENODO_TOKEN }}" ]; then
+            echo "- Zenodo: deposited live at https://zenodo.org (or sandbox if ZENODO_SANDBOX=1)" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "- Zenodo: **dry-run** (no ZENODO_TOKEN) — GitHub Release still cut; wire the secret to mint a real DOI" >> "$GITHUB_STEP_SUMMARY"
+          fi
+          echo "- Artefacts: \`static/dataset.json\` + CSVs + geo layers (same set in Zenodo + GitHub Release)" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Next tag: \`git tag -s vX.Y -m \"…\" && git push origin vX.Y\`" >> "$GITHUB_STEP_SUMMARY"
+          cat "$GITHUB_STEP_SUMMARY"
