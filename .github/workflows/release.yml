@@ -101,8 +101,11 @@ jobs:
         run: |
           set -euo pipefail
           TAG="${GITHUB_REF_NAME}"
+          # Ensure the tag object is present (checkout with fetch-depth:0 should have it, but tag events sometimes need an explicit fetch)
+          git fetch --tags --force --prune 2>/dev/null || true
           echo "→ Verifying tag $TAG is signed…"
           echo "  commit: $(git rev-list -n 1 "$TAG" 2>/dev/null | cut -c1-12)  tagger: $(git for-each-ref --format='%(taggername) %(taggeremail)' "refs/tags/$TAG" 2>/dev/null || echo '(lightweight?)')"
+          echo "  tag-type: $(git cat-file -t "refs/tags/$TAG" 2>/dev/null || echo 'missing')  first-line: $(git cat-file -p "refs/tags/$TAG" 2>/dev/null | head -n 1 | cut -c1-40 || echo 'missing')"
 
           # Reject lightweight tags — a release tag must be annotated (`git tag -s`/`-a`)
           if ! git cat-file -p "refs/tags/$TAG" 2>/dev/null | head -n 1 | grep -q "^object "; then
