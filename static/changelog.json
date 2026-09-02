@@ -1,6 +1,6 @@
 [
   {
-    "hash": "3a5dd0a03",
+    "hash": "68aaa5242",
     "date": "2026-09-03T00:16:08+01:00",
     "subject": "chore: review remaining unsubstantiated records — 10 source-check reviews, bucket 2/12→12/12",
     "kind": "expansion",
@@ -35,7 +35,7 @@
     ]
   },
   {
-    "hash": "9a37d7069",
+    "hash": "d01814001",
     "date": "2026-09-02T23:58:25+01:00",
     "subject": "feat: verification pass — five risk-bucket source-check reviews, signed-tag release workflow with Zenodo deposit, Agora schema/API drift fixes",
     "kind": "expansion",
