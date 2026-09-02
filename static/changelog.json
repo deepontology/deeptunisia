@@ -1,8 +1,8 @@
 [
   {
-    "hash": "41321d89b",
-    "date": "2026-09-02T23:27:36+01:00",
-    "subject": "feat(grant): Phase 2 verification — risk-bucket reviews, signed-release DOI, Agora drift fixes",
+    "hash": "9a37d7069",
+    "date": "2026-09-02T23:58:25+01:00",
+    "subject": "feat: verification pass — five risk-bucket source-check reviews, signed-tag release workflow with Zenodo deposit, Agora schema/API drift fixes",
     "kind": "expansion",
     "added": 67,
     "removed": 0,
