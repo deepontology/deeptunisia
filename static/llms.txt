@@ -33,7 +33,7 @@ span as a date, or an unsubstantiated claim as a finding, misrepresents the sour
 
 ## Known limits, stated by the project
 
-- Only <!--stat:reviewed-->32<!--/stat--> of <!--stat:reviewable-->884<!--/stat-->
+- Only <!--stat:reviewed-->38<!--/stat--> of <!--stat:reviewable-->884<!--/stat-->
   records have had independent human review — and almost all of it landed on the
   best-evidenced claims, not the ones that need it.
 - <!--stat:needsPrimarySource-->229<!--/stat--> records await a primary source.
