@@ -1,5 +1,40 @@
 [
   {
+    "hash": "3a5dd0a03",
+    "date": "2026-09-03T00:16:08+01:00",
+    "subject": "chore: review remaining unsubstantiated records — 10 source-check reviews, bucket 2/12→12/12",
+    "kind": "expansion",
+    "added": 84,
+    "removed": 0,
+    "files": [
+      {
+        "file": "data/institutions.yaml",
+        "added": 12,
+        "removed": 0
+      },
+      {
+        "file": "data/people.yaml",
+        "added": 12,
+        "removed": 0
+      },
+      {
+        "file": "data/positions.yaml",
+        "added": 6,
+        "removed": 0
+      },
+      {
+        "file": "data/relationships.yaml",
+        "added": 30,
+        "removed": 0
+      },
+      {
+        "file": "data/world-claims.yaml",
+        "added": 24,
+        "removed": 0
+      }
+    ]
+  },
+  {
     "hash": "9a37d7069",
     "date": "2026-09-02T23:58:25+01:00",
     "subject": "feat: verification pass — five risk-bucket source-check reviews, signed-tag release workflow with Zenodo deposit, Agora schema/API drift fixes",
