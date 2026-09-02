@@ -3,6 +3,42 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:b64de7c57727b329",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "JM Taranto 2026 | Deux médailles pour Karem Ben Hnia",
+      "link": "https://kapitalis.com/tunisie/2026/09/02/jm-taranto-2026-deux-medailles-pour-karem-ben-hnia/",
+      "published": "2026-09-01T23:05:17Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:kapitalis:2fe49ad8244a4f2e",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Prévention des incendies de forêt | Les consignes de la Protection civile",
+      "link": "https://kapitalis.com/tunisie/2026/09/01/prevention-des-incendies-de-foret-les-consignes-de-la-protection-civile/",
+      "published": "2026-09-01T22:41:40Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:kapitalis:2dad4a4f411a1a75",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Gafsa | Appel à la mobilisation pour les détenus de la Flottille Soumoud",
+      "link": "https://kapitalis.com/tunisie/2026/09/01/gafsa-appel-a-la-mobilisation-pour-les-detenus-de-la-flottille-soumoud/",
+      "published": "2026-09-01T22:07:53Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:kapitalis:3455e0629e55c9bd",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "JM de Tarente | Trois médailles pour la Tunisie, dont l’or pour Marwa Bouzayani",
+      "link": "https://kapitalis.com/tunisie/2026/09/01/jm-de-tarente-trois-medailles-pour-la-tunisie-dont-lor-pour-marwa-bouzayani/",
+      "published": "2026-09-01T20:53:05Z",
+      "lang": "fr"
+    },
+    {
       "id": "feed:kapitalis:67b4211ce643f40c",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -10764,42 +10800,6 @@
       "title": "Le Tunindex entame la semaine sur une note morose",
       "link": "https://africanmanager.com/le-tunindex-entame-la-semaine-sur-une-note-morose/",
       "published": "2026-07-28T03:58:28Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:c755728cca52d1a9",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "+45 % en recettes des exportations de l’huile d’olive",
-      "link": "https://africanmanager.com/hausse-des-recettes-des-exportations-de-lhuile-dolive-de-45/",
-      "published": "2026-07-28T03:57:04Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:df7f0a2b34dde701",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Coupures d’eau et d’électricité : Les députés crient Haro !",
-      "link": "https://africanmanager.com/coupures-deau-et-delectricite-les-deputes-critiquent-la-defaillance-de-la-politique-de-communication-du-gouvernement/",
-      "published": "2026-07-28T03:55:16Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:b71b7b3e3411c100",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "L’autorité pénitentiaire rassure : détenus pris en charge",
-      "link": "https://africanmanager.com/face-aux-rumeurs-lautorite-penitentiaire-assure-detenus-pris-en-charge-visites-maintenues/",
-      "published": "2026-07-28T03:51:14Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:b10b618bd590de1b",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Incendies au Maghreb : Greenpeace interpelle les États",
-      "link": "https://africanmanager.com/incendies-au-maghreb-greenpeace-interpelle-les-etats-sur-leur-responsabilite-climatique/",
-      "published": "2026-07-28T03:50:08Z",
       "lang": "fr"
     }
   ]
