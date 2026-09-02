@@ -3,6 +3,60 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:african-manager:be0f76eb76ee12a2",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Ezzahra : Interpellation de plusieurs migrants",
+      "link": "https://africanmanager.com/ezzahra-interpellation-de-plusieurs-migrants/",
+      "published": "2026-09-02T08:35:16Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:c2861c61532acbce",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Eau minérale : retour progressif d’approvisionnement",
+      "link": "https://africanmanager.com/eau-minerale-retour-progressif-dapprovisionnement/",
+      "published": "2026-09-02T08:29:53Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:2f9470e0557fcda2",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Hammamet : lancement des travaux d’aménagement du stade",
+      "link": "https://africanmanager.com/hammamet-lancement-des-travaux-damenagement-du-stade/",
+      "published": "2026-09-02T08:26:41Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:kapitalis:f36c36a68aaaaadf",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "L’«affaire du complot n° 1» en cassation | Suite ou fin ?",
+      "link": "https://kapitalis.com/tunisie/2026/09/02/laffaire-du-complot-n-1-en-cassation-suite-ou-fin/",
+      "published": "2026-09-02T07:38:55Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:kapitalis:c33eefd5f2d64658",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Le CRLDHT exige la libération immédiate de Seif Eddine Arfaoui",
+      "link": "https://kapitalis.com/tunisie/2026/09/02/le-crldht-exige-la-liberation-immediate-de-seif-eddine-arfaoui/",
+      "published": "2026-09-02T06:25:21Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:kapitalis:ff1fe10118f9a10d",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "La France accusée de «harcèlement judiciaire» contre Rima Hassan",
+      "link": "https://kapitalis.com/tunisie/2026/09/02/la-france-accusee-de-harcelement-judiciaire-contre-rima-hassan/",
+      "published": "2026-09-02T06:06:39Z",
+      "lang": "fr"
+    },
+    {
       "id": "feed:al-jazeera:fc4dc874c88dd29b",
       "outlet": "Al Jazeera",
       "outletId": "al-jazeera",
@@ -10746,60 +10800,6 @@
       "title": "Trump demande à la Cour suprême l’autorisation de restreindre le vote par correspondance",
       "link": "https://africanmanager.com/trump-demande-a-la-cour-supreme-lautorisation-de-restreindre-le-vote-par-correspondance/",
       "published": "2026-07-28T08:28:32Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:1c8004aa6c8f9968",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Vente de F-35 à la Turquie : « Personne ne me dit ce que nous devrions vendre », affirme Trump",
-      "link": "https://africanmanager.com/vente-de-f-35-a-la-turquie-personne-ne-me-dit-ce-que-nous-devrions-vendre-affirme-trump/",
-      "published": "2026-07-28T08:28:13Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:a5e707ff57ff9bf1",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Les sondages de Trump à quelques mois d’élections décisives",
-      "link": "https://africanmanager.com/les-sondages-de-trump-a-quelques-mois-delections-decisives/",
-      "published": "2026-07-28T08:26:29Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:7ffad3a21dda1212",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Trump : Les pourparlers sur la guerre contre l’Iran se déroulent pendant une accalmie des frappes",
-      "link": "https://africanmanager.com/trump-les-pourparlers-sur-la-guerre-contre-liran-se-deroulent-pendant-une-accalmie-des-frappes/",
-      "published": "2026-07-28T08:25:30Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:07ea3517173e0352",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Soixante détenus palestiniens libérés par Israël à Gaza",
-      "link": "https://africanmanager.com/soixante-detenus-palestiniens-liberes-par-israel-a-gaza/",
-      "published": "2026-07-28T08:25:13Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:39852ab72ddd620e",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Tunisie: 85,9 % d’utilisateurs d’internet ont une forte percée de l’IA",
-      "link": "https://africanmanager.com/tunisie-859-dutilisateurs-dinternet-ont-une-forte-percee-de-lia/",
-      "published": "2026-07-28T08:24:49Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:d4c2986478c3d54f",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Coupures d’électricité: 70% des restaurants impactés",
-      "link": "https://africanmanager.com/coupures-delectricite-70-des-restaurants-impactes/",
-      "published": "2026-07-28T08:08:41Z",
       "lang": "fr"
     }
   ]
