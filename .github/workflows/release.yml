@@ -86,6 +86,9 @@ jobs:
       - name: Build the graph (deterministic export)
         run: npm run data
 
+      - name: Sync SvelteKit aliases (required for $data in tests)
+        run: npx svelte-kit sync
+
       - name: Run full test gate
         run: npm run test
 
