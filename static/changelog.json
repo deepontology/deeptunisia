@@ -1,0 +1,1792 @@
+[
+  {
+    "hash": "41321d89b",
+    "date": "2026-09-02T23:27:36+01:00",
+    "subject": "feat(grant): Phase 2 verification — risk-bucket reviews, signed-release DOI, Agora drift fixes",
+    "kind": "expansion",
+    "added": 67,
+    "removed": 0,
+    "files": [
+      {
+        "file": "data/events.yaml",
+        "added": 14,
+        "removed": 0
+      },
+      {
+        "file": "data/positions.yaml",
+        "added": 11,
+        "removed": 0
+      },
+      {
+        "file": "data/relationships.yaml",
+        "added": 42,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "cbc9a249a",
+    "date": "2026-08-28T04:07:16+01:00",
+    "subject": "feat(cards-richness): enrich 10 emptiest cards with tier-1 decrees (#3)",
+    "kind": "revision",
+    "added": 13359,
+    "removed": 12277,
+    "files": [
+      {
+        "file": "data/education.yaml",
+        "added": 558,
+        "removed": 431
+      },
+      {
+        "file": "data/institutions.yaml",
+        "added": 17,
+        "removed": 8
+      },
+      {
+        "file": "data/people.yaml",
+        "added": 242,
+        "removed": 7
+      },
+      {
+        "file": "data/positions.yaml",
+        "added": 344,
+        "removed": 96
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 12198,
+        "removed": 11735
+      }
+    ]
+  },
+  {
+    "hash": "c50f56c77",
+    "date": "2026-08-28T04:05:17+01:00",
+    "subject": "feat(media): bot-farm investigation — counting fakes 2016–2026 (draft) (#1)",
+    "kind": "expansion",
+    "added": 1360,
+    "removed": 0,
+    "files": [
+      {
+        "file": "data/comparative_bot_estimates_2016_2026.csv",
+        "added": 10,
+        "removed": 0
+      },
+      {
+        "file": "data/contrib/bot-farm-2026-08-28-archimedes-atide.yaml",
+        "added": 166,
+        "removed": 0
+      },
+      {
+        "file": "data/contrib/bot-farm-2026-08-28-carthage-collateral.yaml",
+        "added": 272,
+        "removed": 0
+      },
+      {
+        "file": "data/contrib/bot-farm-2026-08-28-foreign-gap.yaml",
+        "added": 207,
+        "removed": 0
+      },
+      {
+        "file": "data/contrib/bot-farm-2026-08-28-platform-legal.yaml",
+        "added": 271,
+        "removed": 0
+      },
+      {
+        "file": "data/contrib/bot-farm-2026-08-28.yaml",
+        "added": 434,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "9aadc8d5d",
+    "date": "2026-08-27T04:14:57+01:00",
+    "subject": "fix(data): integrity pass — ministries and grouping",
+    "kind": "revision",
+    "added": 53,
+    "removed": 13,
+    "files": [
+      {
+        "file": "data/groups.yaml",
+        "added": 11,
+        "removed": 3
+      },
+      {
+        "file": "data/institutions.yaml",
+        "added": 40,
+        "removed": 8
+      },
+      {
+        "file": "data/roles.yaml",
+        "added": 2,
+        "removed": 2
+      }
+    ]
+  },
+  {
+    "hash": "8584e0913",
+    "date": "2026-08-26T18:21:23+01:00",
+    "subject": "DeepTunisia: source-backed atlas of power in Tunisia, 1956–2026",
+    "kind": "expansion",
+    "added": 68209,
+    "removed": 0,
+    "files": [
+      {
+        "file": "data/LICENSE",
+        "added": 58,
+        "removed": 0
+      },
+      {
+        "file": "data/agreements.yaml",
+        "added": 906,
+        "removed": 0
+      },
+      {
+        "file": "data/companies.yaml",
+        "added": 894,
+        "removed": 0
+      },
+      {
+        "file": "data/contracts.yaml",
+        "added": 781,
+        "removed": 0
+      },
+      {
+        "file": "data/countries.yaml",
+        "added": 127,
+        "removed": 0
+      },
+      {
+        "file": "data/declarations.yaml",
+        "added": 674,
+        "removed": 0
+      },
+      {
+        "file": "data/education.yaml",
+        "added": 788,
+        "removed": 0
+      },
+      {
+        "file": "data/eras.yaml",
+        "added": 300,
+        "removed": 0
+      },
+      {
+        "file": "data/events.yaml",
+        "added": 4156,
+        "removed": 0
+      },
+      {
+        "file": "data/groups.yaml",
+        "added": 277,
+        "removed": 0
+      },
+      {
+        "file": "data/hypotheses.yaml",
+        "added": 791,
+        "removed": 0
+      },
+      {
+        "file": "data/institutions.yaml",
+        "added": 4823,
+        "removed": 0
+      },
+      {
+        "file": "data/licences.yaml",
+        "added": 542,
+        "removed": 0
+      },
+      {
+        "file": "data/parameters.yaml",
+        "added": 50,
+        "removed": 0
+      },
+      {
+        "file": "data/people.yaml",
+        "added": 15839,
+        "removed": 0
+      },
+      {
+        "file": "data/places.yaml",
+        "added": 1723,
+        "removed": 0
+      },
+      {
+        "file": "data/positions.yaml",
+        "added": 12670,
+        "removed": 0
+      },
+      {
+        "file": "data/questions.yaml",
+        "added": 1181,
+        "removed": 0
+      },
+      {
+        "file": "data/regions.yaml",
+        "added": 1681,
+        "removed": 0
+      },
+      {
+        "file": "data/relationships.yaml",
+        "added": 6275,
+        "removed": 0
+      },
+      {
+        "file": "data/roles.yaml",
+        "added": 1394,
+        "removed": 0
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 11735,
+        "removed": 0
+      },
+      {
+        "file": "data/world-claims.yaml",
+        "added": 544,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "67b4e740b",
+    "date": "2026-08-20T11:31:19+01:00",
+    "subject": "polish: anchor P0-2 unmoored edges + landing sync (201 inst/360 rel/1178 src, 21 stranded, 870 reviewable, 2890 translatable)",
+    "kind": "retraction",
+    "added": 6484,
+    "removed": 14620,
+    "files": [
+      {
+        "file": "data/events.yaml",
+        "added": 9,
+        "removed": 5
+      },
+      {
+        "file": "data/institutions.yaml",
+        "added": 2046,
+        "removed": 3476
+      },
+      {
+        "file": "data/relationships.yaml",
+        "added": 2607,
+        "removed": 6214
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 1822,
+        "removed": 4925
+      }
+    ]
+  },
+  {
+    "hash": "e90b560f8",
+    "date": "2026-08-17T13:26:22+01:00",
+    "subject": "fix(emit): trailing-eol guard for missing blank lines + worldClaims risk bucket fix",
+    "kind": "expansion",
+    "added": 7,
+    "removed": 0,
+    "files": [
+      {
+        "file": "data/events.yaml",
+        "added": 6,
+        "removed": 0
+      },
+      {
+        "file": "data/relationships.yaml",
+        "added": 1,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "c63290f16",
+    "date": "2026-08-17T08:13:48+01:00",
+    "subject": "feat(world): unified external-relations view — ledger, dossier, totals, claims, WDI, seats",
+    "kind": "revision",
+    "added": 2929,
+    "removed": 22,
+    "files": [
+      {
+        "file": "data/agreements.yaml",
+        "added": 624,
+        "removed": 11
+      },
+      {
+        "file": "data/companies.yaml",
+        "added": 168,
+        "removed": 0
+      },
+      {
+        "file": "data/countries.yaml",
+        "added": 6,
+        "removed": 1
+      },
+      {
+        "file": "data/institutions.yaml",
+        "added": 758,
+        "removed": 10
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 883,
+        "removed": 0
+      },
+      {
+        "file": "data/world-claims.yaml",
+        "added": 490,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "3bb0f2bb6",
+    "date": "2026-08-14T10:45:10+01:00",
+    "subject": "data(outbox): final merges — citation-triage attachments (27 source-attaches, 4 new records), 3 judicial-court source anchors with reasoning, mouna-siala name-collision documented (kept unsourced per rule 6); gates green",
+    "kind": "revision",
+    "added": 372,
+    "removed": 21,
+    "files": [
+      {
+        "file": "data/contracts.yaml",
+        "added": 45,
+        "removed": 0
+      },
+      {
+        "file": "data/declarations.yaml",
+        "added": 55,
+        "removed": 0
+      },
+      {
+        "file": "data/events.yaml",
+        "added": 109,
+        "removed": 4
+      },
+      {
+        "file": "data/institutions.yaml",
+        "added": 3,
+        "removed": 3
+      },
+      {
+        "file": "data/people.yaml",
+        "added": 41,
+        "removed": 1
+      },
+      {
+        "file": "data/places.yaml",
+        "added": 2,
+        "removed": 2
+      },
+      {
+        "file": "data/positions.yaml",
+        "added": 6,
+        "removed": 6
+      },
+      {
+        "file": "data/relationships.yaml",
+        "added": 111,
+        "removed": 5
+      }
+    ]
+  },
+  {
+    "hash": "1058da75c",
+    "date": "2026-08-14T10:20:59+01:00",
+    "subject": "data(outbox): merge batches 2-4 — board-seats/ownership/unmoored edges + 7 companies & institutions, events causality + 8 daily events, jort position/person upgrades, 6 places, 19 institution source-attachments, 6 question answers, hypothesis evidence; advance dataset cutoff 2026-07-26 → 2026-08-09 (sweep had merged August events under a stale cutoff); schema surfaces (question answers, graded eras, hypothesis evidence, institution notes) all additive with new V20/translation assertions",
+    "kind": "revision",
+    "added": 7554,
+    "removed": 481,
+    "files": [
+      {
+        "file": "data/companies.yaml",
+        "added": 212,
+        "removed": 0
+      },
+      {
+        "file": "data/eras.yaml",
+        "added": 107,
+        "removed": 0
+      },
+      {
+        "file": "data/events.yaml",
+        "added": 952,
+        "removed": 13
+      },
+      {
+        "file": "data/hypotheses.yaml",
+        "added": 393,
+        "removed": 0
+      },
+      {
+        "file": "data/institutions.yaml",
+        "added": 709,
+        "removed": 1
+      },
+      {
+        "file": "data/parameters.yaml",
+        "added": 5,
+        "removed": 2
+      },
+      {
+        "file": "data/people.yaml",
+        "added": 1417,
+        "removed": 211
+      },
+      {
+        "file": "data/places.yaml",
+        "added": 328,
+        "removed": 0
+      },
+      {
+        "file": "data/positions.yaml",
+        "added": 1368,
+        "removed": 244
+      },
+      {
+        "file": "data/questions.yaml",
+        "added": 481,
+        "removed": 9
+      },
+      {
+        "file": "data/relationships.yaml",
+        "added": 1582,
+        "removed": 1
+      }
+    ]
+  },
+  {
+    "hash": "77787abb0",
+    "date": "2026-08-14T08:54:28+01:00",
+    "subject": "data(outbox): merge presidential-networks-2026-08-13 — 29 relationships + 7 people with FR/AR, coverage gaps closed (Marzouki 4→18, Ennaceur 3→13, Mebazaa 5→11); audit ratchet narrowed with spec deviation (§2.8)",
+    "kind": "expansion",
+    "added": 1212,
+    "removed": 0,
+    "files": [
+      {
+        "file": "data/people.yaml",
+        "added": 133,
+        "removed": 0
+      },
+      {
+        "file": "data/relationships.yaml",
+        "added": 1079,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "80aead19e",
+    "date": "2026-08-14T08:37:43+01:00",
+    "subject": "data(outbox): register 122 new sources from contrib candidates — deduped against 950 existing (14 URL-aliases aligned, 2 true dups removed); build green",
+    "kind": "revision",
+    "added": 969,
+    "removed": 22,
+    "files": [
+      {
+        "file": "data/institutions.yaml",
+        "added": 1,
+        "removed": 1
+      },
+      {
+        "file": "data/relationships.yaml",
+        "added": 1,
+        "removed": 1
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 967,
+        "removed": 20
+      }
+    ]
+  },
+  {
+    "hash": "4355b3763",
+    "date": "2026-08-12T19:34:07+01:00",
+    "subject": "sprint(v0.1.2): surface the audits, parameterise the jurisdiction, corrections paper v0.1.1",
+    "kind": "expansion",
+    "added": 44,
+    "removed": 0,
+    "files": [
+      {
+        "file": "data/parameters.yaml",
+        "added": 44,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "a27b8165a",
+    "date": "2026-08-12T18:49:31+01:00",
+    "subject": "sprint(v0.1.1): review-response — licensing, mojibake gate, README truth, verification hardening",
+    "kind": "revision",
+    "added": 1686,
+    "removed": 37,
+    "files": [
+      {
+        "file": "data/LICENSE",
+        "added": 58,
+        "removed": 0
+      },
+      {
+        "file": "data/places.yaml",
+        "added": 949,
+        "removed": 0
+      },
+      {
+        "file": "data/positions.yaml",
+        "added": 64,
+        "removed": 37
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 615,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "c5e983b34",
+    "date": "2026-08-10T01:55:21+01:00",
+    "subject": "test(mutation): validator-invariant suite, fixture-pipeline runner, mutation harness — the closes the campaign earned",
+    "kind": "expansion",
+    "added": 49,
+    "removed": 0,
+    "files": [
+      {
+        "file": "data/questions.yaml",
+        "added": 49,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "42295da49",
+    "date": "2026-08-08T19:29:04+01:00",
+    "subject": "data: translate notes across the record kinds to FR/AR",
+    "kind": "revision",
+    "added": 23352,
+    "removed": 87,
+    "files": [
+      {
+        "file": "data/agreements.yaml",
+        "added": 93,
+        "removed": 0
+      },
+      {
+        "file": "data/companies.yaml",
+        "added": 217,
+        "removed": 0
+      },
+      {
+        "file": "data/contracts.yaml",
+        "added": 290,
+        "removed": 0
+      },
+      {
+        "file": "data/declarations.yaml",
+        "added": 321,
+        "removed": 0
+      },
+      {
+        "file": "data/education.yaml",
+        "added": 448,
+        "removed": 0
+      },
+      {
+        "file": "data/events.yaml",
+        "added": 1073,
+        "removed": 0
+      },
+      {
+        "file": "data/institutions.yaml",
+        "added": 121,
+        "removed": 0
+      },
+      {
+        "file": "data/licences.yaml",
+        "added": 235,
+        "removed": 0
+      },
+      {
+        "file": "data/people.yaml",
+        "added": 5045,
+        "removed": 3
+      },
+      {
+        "file": "data/places.yaml",
+        "added": 216,
+        "removed": 0
+      },
+      {
+        "file": "data/positions.yaml",
+        "added": 5448,
+        "removed": 0
+      },
+      {
+        "file": "data/questions.yaml",
+        "added": 186,
+        "removed": 0
+      },
+      {
+        "file": "data/regions.yaml",
+        "added": 750,
+        "removed": 0
+      },
+      {
+        "file": "data/relationships.yaml",
+        "added": 2768,
+        "removed": 0
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 6141,
+        "removed": 84
+      }
+    ]
+  },
+  {
+    "hash": "843e217d3",
+    "date": "2026-08-08T10:06:52+01:00",
+    "subject": "data: v0.0.2 economic-layer implementation pass",
+    "kind": "revision",
+    "added": 8266,
+    "removed": 2669,
+    "files": [
+      {
+        "file": "data/companies.yaml",
+        "added": 243,
+        "removed": 8
+      },
+      {
+        "file": "data/contracts.yaml",
+        "added": 379,
+        "removed": 8
+      },
+      {
+        "file": "data/declarations.yaml",
+        "added": 289,
+        "removed": 8
+      },
+      {
+        "file": "data/education.yaml",
+        "added": 331,
+        "removed": 7
+      },
+      {
+        "file": "data/events.yaml",
+        "added": 566,
+        "removed": 20
+      },
+      {
+        "file": "data/institutions.yaml",
+        "added": 294,
+        "removed": 12
+      },
+      {
+        "file": "data/licences.yaml",
+        "added": 298,
+        "removed": 8
+      },
+      {
+        "file": "data/people.yaml",
+        "added": 480,
+        "removed": 34
+      },
+      {
+        "file": "data/places.yaml",
+        "added": 219,
+        "removed": 0
+      },
+      {
+        "file": "data/positions.yaml",
+        "added": 534,
+        "removed": 123
+      },
+      {
+        "file": "data/regions.yaml",
+        "added": 645,
+        "removed": 0
+      },
+      {
+        "file": "data/relationships.yaml",
+        "added": 1303,
+        "removed": 14
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 2685,
+        "removed": 2427
+      }
+    ]
+  },
+  {
+    "hash": "7a9408119",
+    "date": "2026-08-08T03:11:40+01:00",
+    "subject": "feat(v0.0.2): sprint spec shipped — full gates green",
+    "kind": "revision",
+    "added": 765,
+    "removed": 29,
+    "files": [
+      {
+        "file": "data/companies.yaml",
+        "added": 20,
+        "removed": 0
+      },
+      {
+        "file": "data/contracts.yaml",
+        "added": 18,
+        "removed": 0
+      },
+      {
+        "file": "data/declarations.yaml",
+        "added": 17,
+        "removed": 0
+      },
+      {
+        "file": "data/education.yaml",
+        "added": 16,
+        "removed": 0
+      },
+      {
+        "file": "data/events.yaml",
+        "added": 6,
+        "removed": 0
+      },
+      {
+        "file": "data/institutions.yaml",
+        "added": 16,
+        "removed": 0
+      },
+      {
+        "file": "data/licences.yaml",
+        "added": 17,
+        "removed": 0
+      },
+      {
+        "file": "data/people.yaml",
+        "added": 229,
+        "removed": 0
+      },
+      {
+        "file": "data/places.yaml",
+        "added": 11,
+        "removed": 0
+      },
+      {
+        "file": "data/positions.yaml",
+        "added": 57,
+        "removed": 27
+      },
+      {
+        "file": "data/regions.yaml",
+        "added": 286,
+        "removed": 0
+      },
+      {
+        "file": "data/relationships.yaml",
+        "added": 46,
+        "removed": 2
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 26,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "defc17f82",
+    "date": "2026-08-06T22:08:40+01:00",
+    "subject": "fix(network): reorder subsections by structural anatomy — apex to periphery across all lanes",
+    "kind": "revision",
+    "added": 39,
+    "removed": 39,
+    "files": [
+      {
+        "file": "data/groups.yaml",
+        "added": 39,
+        "removed": 39
+      }
+    ]
+  },
+  {
+    "hash": "309c63f10",
+    "date": "2026-08-06T10:42:49+01:00",
+    "subject": "fix(network): real economic subsections, colour filled neighbour nodes, Firefox drag",
+    "kind": "revision",
+    "added": 16,
+    "removed": 3,
+    "files": [
+      {
+        "file": "data/groups.yaml",
+        "added": 16,
+        "removed": 3
+      }
+    ]
+  },
+  {
+    "hash": "b1722ca75",
+    "date": "2026-08-06T10:02:19+01:00",
+    "subject": "feat(network): subsection grouping, rel-type edge colouring, label fix for edge-endpoint nodes",
+    "kind": "expansion",
+    "added": 413,
+    "removed": 0,
+    "files": [
+      {
+        "file": "data/groups.yaml",
+        "added": 264,
+        "removed": 0
+      },
+      {
+        "file": "data/institutions.yaml",
+        "added": 123,
+        "removed": 0
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 26,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "a223dcf9a",
+    "date": "2026-08-06T05:16:25+01:00",
+    "subject": "Fix institutional flows: show lending in FLOWS section, not description",
+    "kind": "retraction",
+    "added": 30,
+    "removed": 49,
+    "files": [
+      {
+        "file": "data/institutions.yaml",
+        "added": 30,
+        "removed": 49
+      }
+    ]
+  },
+  {
+    "hash": "ceb81218d",
+    "date": "2026-08-06T05:07:16+01:00",
+    "subject": "Show lending figures on international org cards + enrich summaries with real data",
+    "kind": "revision",
+    "added": 103,
+    "removed": 26,
+    "files": [
+      {
+        "file": "data/institutions.yaml",
+        "added": 53,
+        "removed": 26
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 50,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "d2f0fc001",
+    "date": "2026-08-06T04:37:33+01:00",
+    "subject": "Add sources for 11 foreign state and international org edges",
+    "kind": "revision",
+    "added": 160,
+    "removed": 11,
+    "files": [
+      {
+        "file": "data/relationships.yaml",
+        "added": 11,
+        "removed": 11
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 149,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "f85b479b8",
+    "date": "2026-08-06T04:17:37+01:00",
+    "subject": "data: network densification sprint",
+    "kind": "revision",
+    "added": 197,
+    "removed": 39,
+    "files": [
+      {
+        "file": "data/events.yaml",
+        "added": 1,
+        "removed": 1
+      },
+      {
+        "file": "data/institutions.yaml",
+        "added": 7,
+        "removed": 1
+      },
+      {
+        "file": "data/people.yaml",
+        "added": 51,
+        "removed": 30
+      },
+      {
+        "file": "data/positions.yaml",
+        "added": 19,
+        "removed": 2
+      },
+      {
+        "file": "data/relationships.yaml",
+        "added": 73,
+        "removed": 5
+      },
+      {
+        "file": "data/roles.yaml",
+        "added": 7,
+        "removed": 0
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 39,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "099c06927",
+    "date": "2026-08-05T08:45:29+01:00",
+    "subject": "data: integrate Mondafrigue series 1-6 (Tunisia analysis, Aug 2026)",
+    "kind": "revision",
+    "added": 559,
+    "removed": 44,
+    "files": [
+      {
+        "file": "data/events.yaml",
+        "added": 57,
+        "removed": 0
+      },
+      {
+        "file": "data/people.yaml",
+        "added": 255,
+        "removed": 44
+      },
+      {
+        "file": "data/positions.yaml",
+        "added": 47,
+        "removed": 0
+      },
+      {
+        "file": "data/relationships.yaml",
+        "added": 94,
+        "removed": 0
+      },
+      {
+        "file": "data/roles.yaml",
+        "added": 23,
+        "removed": 0
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 83,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "69d77564b",
+    "date": "2026-08-05T07:39:38+01:00",
+    "subject": "data: add Saied clan dynamics from Mondafrigue investigation (Aug 2026)",
+    "kind": "revision",
+    "added": 563,
+    "removed": 7,
+    "files": [
+      {
+        "file": "data/institutions.yaml",
+        "added": 126,
+        "removed": 0
+      },
+      {
+        "file": "data/people.yaml",
+        "added": 167,
+        "removed": 2
+      },
+      {
+        "file": "data/positions.yaml",
+        "added": 24,
+        "removed": 0
+      },
+      {
+        "file": "data/questions.yaml",
+        "added": 9,
+        "removed": 5
+      },
+      {
+        "file": "data/relationships.yaml",
+        "added": 192,
+        "removed": 0
+      },
+      {
+        "file": "data/roles.yaml",
+        "added": 21,
+        "removed": 0
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 24,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "8ffb46fcf",
+    "date": "2026-08-05T06:32:38+01:00",
+    "subject": "fix: resolve 15 pre-existing type errors and wire agreements pipeline",
+    "kind": "revision",
+    "added": 210,
+    "removed": 3,
+    "files": [
+      {
+        "file": "data/agreements.yaml",
+        "added": 22,
+        "removed": 3
+      },
+      {
+        "file": "data/institutions.yaml",
+        "added": 52,
+        "removed": 0
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 136,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "7aa281bb4",
+    "date": "2026-08-04T10:03:00+01:00",
+    "subject": "research batch 10: jeribi bundle — justice chain 2016-2021 closed (jeribi, el-jamoussi, t. jeribi, bousseta, benslimane acting via decree 2021-124); interior gap-fill (jeribi + mechichi acting interims, 4 date fixes, charfeddine split into two tenures); defence gap (jeribi, jomaa govt 2014-15); religious pre-1992 field (tarzi director 1967-~1987, bousnina SE 1989-90, chebbi SE 1990-92, 2 events, 2 roles) — 12 positions, 6 cards, 19 sources, 1 relationship",
+    "kind": "revision",
+    "added": 695,
+    "removed": 26,
+    "files": [
+      {
+        "file": "data/events.yaml",
+        "added": 30,
+        "removed": 0
+      },
+      {
+        "file": "data/people.yaml",
+        "added": 166,
+        "removed": 16
+      },
+      {
+        "file": "data/positions.yaml",
+        "added": 206,
+        "removed": 10
+      },
+      {
+        "file": "data/relationships.yaml",
+        "added": 13,
+        "removed": 0
+      },
+      {
+        "file": "data/roles.yaml",
+        "added": 46,
+        "removed": 0
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 234,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "ec3b77655",
+    "date": "2026-08-04T09:39:41+01:00",
+    "subject": "research batch 9: full religious-affairs minister chain 1992-2024 from ministry official listing — 12 positions + 11 cards (chebbi, jribi, akhzouri, omrane, mizouri, khademi, tlili, khalil, ben-salem, jeribi interim, adhoum), battikh C->B, french names corrected via fr.wiki (chebbi not chaabi, ben salem), 3 date variants recorded vs wiki",
+    "kind": "revision",
+    "added": 431,
+    "removed": 7,
+    "files": [
+      {
+        "file": "data/people.yaml",
+        "added": 249,
+        "removed": 7
+      },
+      {
+        "file": "data/positions.yaml",
+        "added": 162,
+        "removed": 0
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 20,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "c440b2986",
+    "date": "2026-08-04T09:33:46+01:00",
+    "subject": "research batch 8: religious-affairs chain (chaibi 2021-2024, bouhali 2024-) from decrees 2021-138/2024-465; modern PM chain rebuilt on primary decrees 2021-69/137, 2023-550, 2024-451, 2025-164/165 — zaafrani discovered as current head, start fixed to 03-20",
+    "kind": "revision",
+    "added": 301,
+    "removed": 13,
+    "files": [
+      {
+        "file": "data/people.yaml",
+        "added": 52,
+        "removed": 4
+      },
+      {
+        "file": "data/positions.yaml",
+        "added": 58,
+        "removed": 9
+      },
+      {
+        "file": "data/roles.yaml",
+        "added": 21,
+        "removed": 0
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 170,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "ac480770e",
+    "date": "2026-08-04T07:26:24+01:00",
+    "subject": "research batch 7: bucket-1 first tier-1 anchors — p-def-shili to A on decree 2024-465, khaled-shili card corrected (name_ar -> decree spelling), 4 institutions C->B on official sites; amt/unsfst/snfsi kept C",
+    "kind": "revision",
+    "added": 113,
+    "removed": 19,
+    "files": [
+      {
+        "file": "data/institutions.yaml",
+        "added": 8,
+        "removed": 12
+      },
+      {
+        "file": "data/people.yaml",
+        "added": 11,
+        "removed": 4
+      },
+      {
+        "file": "data/positions.yaml",
+        "added": 8,
+        "removed": 3
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 86,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "da47f227d",
+    "date": "2026-08-04T06:43:30+01:00",
+    "subject": "research batch 6: final five C-grade records landed (hmaidi, msallem, laajimi, elloumi x2) — one C remains, falsifiable only by corporate filing",
+    "kind": "revision",
+    "added": 139,
+    "removed": 42,
+    "files": [
+      {
+        "file": "data/people.yaml",
+        "added": 9,
+        "removed": 10
+      },
+      {
+        "file": "data/positions.yaml",
+        "added": 40,
+        "removed": 32
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 90,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "3679c829f",
+    "date": "2026-08-04T06:32:06+01:00",
+    "subject": "research batch 5: bucket-5 corroboration — 17 C-grade records landed, 2 false records replaced, 4 new records, UTAP dispute recorded",
+    "kind": "revision",
+    "added": 767,
+    "removed": 166,
+    "files": [
+      {
+        "file": "data/people.yaml",
+        "added": 83,
+        "removed": 9
+      },
+      {
+        "file": "data/positions.yaml",
+        "added": 233,
+        "removed": 157
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 451,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "81e37e0a4",
+    "date": "2026-08-04T05:34:15+01:00",
+    "subject": "research batch 4: justice, finance, interior, BCT, speakers, mufti, media landed",
+    "kind": "revision",
+    "added": 896,
+    "removed": 366,
+    "files": [
+      {
+        "file": "data/people.yaml",
+        "added": 17,
+        "removed": 14
+      },
+      {
+        "file": "data/positions.yaml",
+        "added": 465,
+        "removed": 352
+      },
+      {
+        "file": "data/roles.yaml",
+        "added": 42,
+        "removed": 0
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 372,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "96e23e7f4",
+    "date": "2026-08-04T04:15:02+01:00",
+    "subject": "research batch 1: DGSN + foreign ministers landed, inventory regenerated",
+    "kind": "revision",
+    "added": 664,
+    "removed": 245,
+    "files": [
+      {
+        "file": "data/people.yaml",
+        "added": 160,
+        "removed": 95
+      },
+      {
+        "file": "data/positions.yaml",
+        "added": 245,
+        "removed": 139
+      },
+      {
+        "file": "data/roles.yaml",
+        "added": 17,
+        "removed": 0
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 242,
+        "removed": 11
+      }
+    ]
+  },
+  {
+    "hash": "6abfb07d6",
+    "date": "2026-08-04T03:29:49+01:00",
+    "subject": "research infrastructure: card inventory, research log, bucket-0 pilot",
+    "kind": "expansion",
+    "added": 28,
+    "removed": 0,
+    "files": [
+      {
+        "file": "data/people.yaml",
+        "added": 1,
+        "removed": 0
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 27,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "83bbb5d08",
+    "date": "2026-08-03T23:02:24+01:00",
+    "subject": "World view: link country dots to graph records, restore flow summaries",
+    "kind": "expansion",
+    "added": 15,
+    "removed": 0,
+    "files": [
+      {
+        "file": "data/institutions.yaml",
+        "added": 15,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "7ce7cae68",
+    "date": "2026-08-03T20:36:40+01:00",
+    "subject": "Landing page integration, build fixes, Sprint 7",
+    "kind": "expansion",
+    "added": 692,
+    "removed": 0,
+    "files": [
+      {
+        "file": "data/agreements.yaml",
+        "added": 180,
+        "removed": 0
+      },
+      {
+        "file": "data/countries.yaml",
+        "added": 122,
+        "removed": 0
+      },
+      {
+        "file": "data/institutions.yaml",
+        "added": 71,
+        "removed": 0
+      },
+      {
+        "file": "data/people.yaml",
+        "added": 319,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "1fe44e349",
+    "date": "2026-08-02T02:59:53+01:00",
+    "subject": "Every institution and every office, described in three languages",
+    "kind": "expansion",
+    "added": 1633,
+    "removed": 0,
+    "files": [
+      {
+        "file": "data/institutions.yaml",
+        "added": 1308,
+        "removed": 0
+      },
+      {
+        "file": "data/roles.yaml",
+        "added": 325,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "e6acad330",
+    "date": "2026-08-01T00:49:33+01:00",
+    "subject": "Every person in the graph, identified in three languages",
+    "kind": "expansion",
+    "added": 2156,
+    "removed": 0,
+    "files": [
+      {
+        "file": "data/people.yaml",
+        "added": 2156,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "f04b6cd0c",
+    "date": "2026-08-01T00:05:25+01:00",
+    "subject": "The arguments this project makes about itself, in three languages",
+    "kind": "expansion",
+    "added": 531,
+    "removed": 0,
+    "files": [
+      {
+        "file": "data/eras.yaml",
+        "added": 82,
+        "removed": 0
+      },
+      {
+        "file": "data/hypotheses.yaml",
+        "added": 256,
+        "removed": 0
+      },
+      {
+        "file": "data/questions.yaml",
+        "added": 193,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "2a55c2800",
+    "date": "2026-07-31T20:15:20+01:00",
+    "subject": "A shape for translations, and a number that says how few there are",
+    "kind": "expansion",
+    "added": 4,
+    "removed": 0,
+    "files": [
+      {
+        "file": "data/people.yaml",
+        "added": 4,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "5d1fb201d",
+    "date": "2026-07-31T08:44:02+01:00",
+    "subject": "Nine hundred lines of people, and the sources to hold them up",
+    "kind": "revision",
+    "added": 4502,
+    "removed": 1,
+    "files": [
+      {
+        "file": "data/events.yaml",
+        "added": 273,
+        "removed": 0
+      },
+      {
+        "file": "data/institutions.yaml",
+        "added": 407,
+        "removed": 1
+      },
+      {
+        "file": "data/people.yaml",
+        "added": 933,
+        "removed": 0
+      },
+      {
+        "file": "data/positions.yaml",
+        "added": 760,
+        "removed": 0
+      },
+      {
+        "file": "data/questions.yaml",
+        "added": 69,
+        "removed": 0
+      },
+      {
+        "file": "data/relationships.yaml",
+        "added": 667,
+        "removed": 0
+      },
+      {
+        "file": "data/roles.yaml",
+        "added": 118,
+        "removed": 0
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 1275,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "78e04f2ac",
+    "date": "2026-07-29T11:33:51+01:00",
+    "subject": "Give relationships real ids, so nothing can be pinned to a moving target",
+    "kind": "revision",
+    "added": 322,
+    "removed": 161,
+    "files": [
+      {
+        "file": "data/relationships.yaml",
+        "added": 322,
+        "removed": 161
+      }
+    ]
+  },
+  {
+    "hash": "af14f2d8a",
+    "date": "2026-07-29T06:02:13+01:00",
+    "subject": "Stop review notes claiming verifications that never happened",
+    "kind": "revision",
+    "added": 22,
+    "removed": 3,
+    "files": [
+      {
+        "file": "data/positions.yaml",
+        "added": 22,
+        "removed": 3
+      }
+    ]
+  },
+  {
+    "hash": "8551eab6e",
+    "date": "2026-07-29T05:29:20+01:00",
+    "subject": "Record the president's brother, at the grade the evidence supports",
+    "kind": "expansion",
+    "added": 155,
+    "removed": 0,
+    "files": [
+      {
+        "file": "data/people.yaml",
+        "added": 32,
+        "removed": 0
+      },
+      {
+        "file": "data/questions.yaml",
+        "added": 40,
+        "removed": 0
+      },
+      {
+        "file": "data/relationships.yaml",
+        "added": 35,
+        "removed": 0
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 48,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "1bcc4c897",
+    "date": "2026-07-28T23:46:16+01:00",
+    "subject": "Fix three places the project failed its own rules",
+    "kind": "revision",
+    "added": 40,
+    "removed": 20,
+    "files": [
+      {
+        "file": "data/hypotheses.yaml",
+        "added": 40,
+        "removed": 20
+      }
+    ]
+  },
+  {
+    "hash": "6321969e9",
+    "date": "2026-07-28T03:44:36+01:00",
+    "subject": "Cite 5 Arabic Wikipedia sources (Ben Ali, Interior, Defence, National Guard, Tunisair). ONAS/OC DG chronologies remain unfilled — sources inaccessible.",
+    "kind": "revision",
+    "added": 76,
+    "removed": 76,
+    "files": [
+      {
+        "file": "data/events.yaml",
+        "added": 2,
+        "removed": 2
+      },
+      {
+        "file": "data/institutions.yaml",
+        "added": 2,
+        "removed": 2
+      },
+      {
+        "file": "data/people.yaml",
+        "added": 30,
+        "removed": 30
+      },
+      {
+        "file": "data/positions.yaml",
+        "added": 40,
+        "removed": 40
+      },
+      {
+        "file": "data/relationships.yaml",
+        "added": 2,
+        "removed": 2
+      }
+    ]
+  },
+  {
+    "hash": "cb09e4b98",
+    "date": "2026-07-28T03:14:43+01:00",
+    "subject": "Sourcing quality pass: JORT verification (11 positions upgraded), 16 Arabic Wikipedia sources added (1→17 Arabic sources). 307 sources, 319 positions, 140 institutions, 94 roles, 310 people.",
+    "kind": "revision",
+    "added": 243,
+    "removed": 74,
+    "files": [
+      {
+        "file": "data/positions.yaml",
+        "added": 105,
+        "removed": 74
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 138,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "896c907a4",
+    "date": "2026-07-28T02:43:34+01:00",
+    "subject": "Research directive: SOEs (8 institutions + 25 positions), state banks (4 + 6), media officeholders (20 positions), judicial officeholders (23 positions), party census (19 new parties). 319 positions, 140 institutions, 94 roles, 310 people, 289 sources.",
+    "kind": "expansion",
+    "added": 2474,
+    "removed": 0,
+    "files": [
+      {
+        "file": "data/institutions.yaml",
+        "added": 471,
+        "removed": 0
+      },
+      {
+        "file": "data/people.yaml",
+        "added": 633,
+        "removed": 0
+      },
+      {
+        "file": "data/positions.yaml",
+        "added": 917,
+        "removed": 0
+      },
+      {
+        "file": "data/roles.yaml",
+        "added": 229,
+        "removed": 0
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 224,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "e927ef765",
+    "date": "2026-07-28T01:47:30+01:00",
+    "subject": "Research directive quick wins: PM gap closed (Karoui 1989-1999, Ghannouchi 1999-2011), CPR + Ettakatol parties added, UGTT SG + UTICA President positions, DG Military Security + National Guard gap notes. 254 positions, 110 institutions, 63 roles, 255 people, 257 sources.",
+    "kind": "expansion",
+    "added": 148,
+    "removed": 0,
+    "files": [
+      {
+        "file": "data/institutions.yaml",
+        "added": 33,
+        "removed": 0
+      },
+      {
+        "file": "data/people.yaml",
+        "added": 11,
+        "removed": 0
+      },
+      {
+        "file": "data/positions.yaml",
+        "added": 64,
+        "removed": 0
+      },
+      {
+        "file": "data/roles.yaml",
+        "added": 12,
+        "removed": 0
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 28,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "0ede9e163",
+    "date": "2026-07-27T18:55:01+01:00",
+    "subject": "Session 3: Massive position expansion — all foreign, interior, defence, finance, BCT, justice minister positions added (145→247). Zero orphan people remaining. New bct-governor role and BCT institution. All 17 tests pass, check clean.",
+    "kind": "revision",
+    "added": 7836,
+    "removed": 16,
+    "files": [
+      {
+        "file": "data/events.yaml",
+        "added": 287,
+        "removed": 0
+      },
+      {
+        "file": "data/institutions.yaml",
+        "added": 980,
+        "removed": 1
+      },
+      {
+        "file": "data/people.yaml",
+        "added": 2461,
+        "removed": 15
+      },
+      {
+        "file": "data/positions.yaml",
+        "added": 1792,
+        "removed": 0
+      },
+      {
+        "file": "data/relationships.yaml",
+        "added": 866,
+        "removed": 0
+      },
+      {
+        "file": "data/roles.yaml",
+        "added": 268,
+        "removed": 0
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 1182,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "df3bb24e9",
+    "date": "2026-07-27T01:01:58+01:00",
+    "subject": "DeepTunisia: source-backed Tunisian power graph, six views, four-tier epistemic basis",
+    "kind": "expansion",
+    "added": 5562,
+    "removed": 0,
+    "files": [
+      {
+        "file": "data/eras.yaml",
+        "added": 111,
+        "removed": 0
+      },
+      {
+        "file": "data/events.yaml",
+        "added": 548,
+        "removed": 0
+      },
+      {
+        "file": "data/hypotheses.yaml",
+        "added": 122,
+        "removed": 0
+      },
+      {
+        "file": "data/institutions.yaml",
+        "added": 611,
+        "removed": 0
+      },
+      {
+        "file": "data/people.yaml",
+        "added": 1002,
+        "removed": 0
+      },
+      {
+        "file": "data/positions.yaml",
+        "added": 1114,
+        "removed": 0
+      },
+      {
+        "file": "data/questions.yaml",
+        "added": 168,
+        "removed": 0
+      },
+      {
+        "file": "data/relationships.yaml",
+        "added": 875,
+        "removed": 0
+      },
+      {
+        "file": "data/roles.yaml",
+        "added": 251,
+        "removed": 0
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 760,
+        "removed": 0
+      }
+    ]
+  }
+]

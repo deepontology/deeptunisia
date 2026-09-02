@@ -36,7 +36,7 @@ reachable during development; a reader on deeptunisia.org never touches it.
 
 The complete graph is <!--stat:graphKB-->4560<!--/stat--> KB as the internal
 bundle, and the public exports (dataset, CSVs, geographic layers, changelog)
-ship at <!--stat:shippedKB-->8120<!--/stat--> KB — both are computed by the
+ship at <!--stat:shippedKB-->8150<!--/stat--> KB — both are computed by the
 build, and `npm run test` fails if the README ever disagrees with them.
 
 ## The views
@@ -141,7 +141,7 @@ This is not neutrality for its own sake — it is the project's only real protec
 
 ## Known limits
 
-- **Only <!--stat:reviewed-->27<!--/stat--> of <!--stat:reviewable-->884<!--/stat--> records have had independent human review.** The stated architecture is that machines propose and humans verify; almost nothing has been through a second pair of eyes. The real number is published on `/about` because that is the only way the commitment means anything.
+- **Only <!--stat:reviewed-->32<!--/stat--> of <!--stat:reviewable-->884<!--/stat--> records have had independent human review.** The stated architecture is that machines propose and humans verify; almost nothing has been through a second pair of eyes. The real number is published on `/about` because that is the only way the commitment means anything.
 - **Defence intelligence (ANRSD) has no primary sourcing at all** — statute, appointment date, current status all unestablished. Largest hole in the security map.
 - **Pre-2011 police chronology is the weakest area**, resting largely on secondary sources.
 - **The 2014–2019 police succession does not fit its endpoints.** Three reported tenures cannot fit between two firmly dated ones; recorded as an unresolved contradiction rather than smoothed over.

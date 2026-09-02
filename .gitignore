@@ -34,3 +34,6 @@ data/contrib/
 tmp/
 uncited.txt
 uncited2.txt
+
+# internal working material — never tracked, never shipped
+internal/
