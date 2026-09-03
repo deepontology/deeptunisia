@@ -194,8 +194,9 @@ jobs:
           done
           echo "  assets: ${ASSETS[*]:-(none)}"
 
+          # Race-free create: if a prior failed run left a release, delete it first.
           if gh release view "$TAG" >/dev/null 2>&1; then
-            echo "  Release $TAG already exists — deleting then recreating (avoids asset re-upload races)."
+            echo "  Release $TAG already exists — deleting it (avoids asset re-upload races)."
             gh release delete "$TAG" --yes >/dev/null 2>&1 || true
           fi
           if gh release view "$TAG" >/dev/null 2>&1; then
@@ -203,33 +204,31 @@ jobs:
             exit 1
           fi
           echo "  Release $TAG does not exist — creating it fresh."
-          else
-            echo "  Creating release $TAG…"
-            # Generate notes from commits since previous tag; --generate-notes is GitHub's auto notes
-            NOTES_FILE="$(mktemp)"
-            {
-              echo "DeepTunisia dataset \`${TAG}\` — signed release."
-              echo ""
-              echo "DOI: minted by the Zenodo step above when \`ZENODO_TOKEN\` is wired; otherwise this GitHub Release is the archived artifact (attach the DOI to \`CITATION.cff\` once live)."
-              echo ""
-              echo "Reproduce:"
-              echo "\`\`\`bash"
-              echo "git fetch --tags && git checkout ${TAG} && npm ci && npm run data && npm run test"
-              echo "\`\`\`"
-              echo ""
-              echo "Artifacts: dataset.json is canonical; CSVs and geographic layers are derived; licences in LICENSE + data/LICENSE."
-              echo ""
-              gh api "repos/${{ github.repository }}/releases/generate-notes" -f tag_name="$TAG" --jq '.body' 2>/dev/null || echo "_No auto-notes available._"
-            } > "$NOTES_FILE"
 
-            if [ "${#ASSETS[@]}" -gt 0 ]; then
-              gh release create "$TAG" "${ASSETS[@]}" --title "DeepTunisia $TAG" --notes-file "$NOTES_FILE" --latest 2>&1 | head -n 30
-            else
-              gh release create "$TAG" --title "DeepTunisia $TAG" --notes-file "$NOTES_FILE" --latest 2>&1 | head -n 30
-            fi
-            rm -f "$NOTES_FILE"
-            echo "✓ Release $TAG created."
+          # Generate notes from commits since previous tag.
+          NOTES_FILE="$(mktemp)"
+          {
+            echo "DeepTunisia dataset \`${TAG}\` — signed release."
+            echo ""
+            echo "DOI: minted by the Zenodo step above when \`ZENODO_TOKEN\` is wired; otherwise this GitHub Release is the archived artifact (attach the DOI to \`CITATION.cff\` once live)."
+            echo ""
+            echo "Reproduce:"
+            echo "\`\`\`bash"
+            echo "git fetch --tags && git checkout ${TAG} && npm ci && npm run data && npm run test"
+            echo "\`\`\`"
+            echo ""
+            echo "Artifacts: dataset.json is canonical; CSVs and geographic layers are derived; licences in LICENSE + data/LICENSE."
+            echo ""
+            gh api "repos/${{ github.repository }}/releases/generate-notes" -f tag_name="$TAG" --jq '.body' 2>/dev/null || echo "_No auto-notes available._"
+          } > "$NOTES_FILE"
+
+          if [ "${#ASSETS[@]}" -gt 0 ]; then
+            gh release create "$TAG" "${ASSETS[@]}" --title "DeepTunisia $TAG" --notes-file "$NOTES_FILE" --latest 2>&1 | head -n 30
+          else
+            gh release create "$TAG" --title "DeepTunisia $TAG" --notes-file "$NOTES_FILE" --latest 2>&1 | head -n 30
           fi
+          rm -f "$NOTES_FILE"
+          echo "✓ Release $TAG created."
 
           echo ""
           echo "  Release URL: $(gh release view "$TAG" --json url --jq .url 2>/dev/null || echo "(not yet)")"
