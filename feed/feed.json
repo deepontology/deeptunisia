@@ -3,6 +3,15 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:france24:6435dbe7134ca5d4",
+      "outlet": "France 24",
+      "outletId": "france24",
+      "title": "Tunisia court upholds prison sentences of up to 45 years for opposition figures",
+      "link": "https://www.france24.com/en/africa/20260903-tunisia-court-upholds-prison-sentences-of-up-to-45-years-for-opposition-figures",
+      "published": "2026-09-03T22:17:25Z",
+      "lang": "en"
+    },
+    {
       "id": "feed:african-manager:d498ac367dde5c8d",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -10791,15 +10800,6 @@
       "title": "Garantir les délais d’exécution du barrage El Raghaï",
       "link": "https://africanmanager.com/ghardimaou-mobilisation-pour-garantir-les-delais-dexecution-du-barrage-el-raghai/",
       "published": "2026-08-02T12:53:33Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:db032d73484d0542",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Au moins 72 personnes mortes dans la ruée migratoire vers Ceuta",
-      "link": "https://africanmanager.com/au-moins-72-personnes-mortes-dans-la-ruee-migratoire-vers-ceuta/",
-      "published": "2026-08-02T12:47:01Z",
       "lang": "fr"
     }
   ]
