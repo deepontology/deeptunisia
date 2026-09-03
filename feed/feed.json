@@ -3,6 +3,96 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:african-manager:d498ac367dde5c8d",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Approbation de l’octroi des aides à l’amélioration de l’habitat d’une valeur de 150 mille DT",
+      "link": "https://africanmanager.com/approbation-de-loctroi-des-aides-a-lamelioration-de-lhabitat-dune-valeur-de-150-mille-dt/",
+      "published": "2026-09-03T15:59:54Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:74c6db2e32061022",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Rentrée scolaire : 81 % des élèves ont effectué leur inscription en ligne",
+      "link": "https://africanmanager.com/rentree-scolaire-81-des-eleves-ont-effectue-leur-inscription-en-ligne/",
+      "published": "2026-09-03T15:57:52Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:nawaat:7d9eab6eb9044639",
+      "outlet": "Nawaat",
+      "outletId": "nawaat",
+      "title": "في بن ڤردان “الذرية” حرڤت وماتت..والدولة غايبة",
+      "link": "https://nawaat.org/2026/09/03/%d9%81%d9%8a-%d8%a8%d9%86-%da%a4%d8%b1%d8%af%d8%a7%d9%86-%d8%a7%d9%84%d8%b0%d8%b1%d9%8a%d8%a9-%d8%ad%d8%b1%da%a4%d8%aa-%d9%88%d9%85%d8%a7%d8%aa%d8%aa-%d9%88%d8%a7%d9%84%d8%af%d9%88%d9%84%d8%a9/",
+      "published": "2026-09-03T14:29:08Z",
+      "lang": "ar"
+    },
+    {
+      "id": "feed:african-manager:a1e541fc16186511",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "2,3 millions de bouteilles d’eau injectés sur les marchés par jour",
+      "link": "https://africanmanager.com/23-millions-de-bouteilles-deau-injectes-sur-les-marches-par-jour/",
+      "published": "2026-09-03T14:16:40Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:france24:04cf93e93c23d617",
+      "outlet": "France 24",
+      "outletId": "france24",
+      "title": "Tunisia water crisis deepens as temperatures approach 50°C",
+      "link": "https://www.france24.com/en/video/20260903-tunisia-water-crisis-deepens-as-temperatures-approach-50%C2%B0c",
+      "published": "2026-09-03T13:52:23Z",
+      "lang": "en"
+    },
+    {
+      "id": "feed:african-manager:32adbedefbc1b2d5",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "La SFBT sous une pile de contentieux",
+      "link": "https://africanmanager.com/la-sfbt-sous-une-pile-de-contentieux/",
+      "published": "2026-09-03T13:45:22Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:b30a2c532b01c02a",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "« Les USA dans une situation très confuse sur leurs objectifs stratégiques »",
+      "link": "https://africanmanager.com/les-usa-dans-une-situation-tres-confuse-sur-leurs-objectifs-strategiques/",
+      "published": "2026-09-03T13:43:21Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:0fa0f1ad4644e380",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Iran : Les actions militaires américaines n’ont eu « aucun véritable effet stratégique positif »",
+      "link": "https://africanmanager.com/iran-les-actions-militaires-americaines-nont-eu-aucun-veritable-effet-strategique-positif/",
+      "published": "2026-09-03T13:42:02Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:d65b0c24e5ee273c",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Iran : Les marchés boursiers reculent et la chute des obligations s’accentue",
+      "link": "https://africanmanager.com/iran-les-marches-boursiers-reculent-et-la-chute-des-obligations-saccentue/",
+      "published": "2026-09-03T13:40:46Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:1ea0cbc815eba81c",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "STA, plus rentable, plus diversifiée, mais aussi plus engagée",
+      "link": "https://africanmanager.com/sta-plus-rentable-plus-diversifiee-mais-aussi-plus-engagee/",
+      "published": "2026-09-03T13:00:00Z",
+      "lang": "fr"
+    },
+    {
       "id": "feed:african-manager:23c598b3c2994079",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -10710,96 +10800,6 @@
       "title": "Au moins 72 personnes mortes dans la ruée migratoire vers Ceuta",
       "link": "https://africanmanager.com/au-moins-72-personnes-mortes-dans-la-ruee-migratoire-vers-ceuta/",
       "published": "2026-08-02T12:47:01Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:f6a9ce8174be722d",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "1 070 MDT de pertes décelés par la Cour des Comptes",
-      "link": "https://africanmanager.com/1-070-mdt-de-pertes-deceles-par-la-cour-des-comptes/",
-      "published": "2026-08-02T12:45:31Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:9f6f687d48f1e8ff",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Coopération AIEA-CETIME-CTSTN pour le nucléaire",
-      "link": "https://africanmanager.com/cetime-les-perspectives-de-cooperation-avec-laiea-et-le-centre-national-des-sciences-et-technologies-nucleaires-en-examen/",
-      "published": "2026-08-02T11:37:46Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:71a2dd1330942a33",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Tunisie Autoroutes encensée par sa tutelle",
-      "link": "https://africanmanager.com/tunisie-autoroutes-designee-linstitution-la-plus-engagee-en-faveur-de-la-securite-routiere/",
-      "published": "2026-08-02T11:36:03Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:8aa978255b6a00ce",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Trump suspend les frappes américaines contre l’Iran",
-      "link": "https://africanmanager.com/trump-suspend-les-frappes-americaines-contre-liran/",
-      "published": "2026-08-02T11:25:00Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:54764801c0cb7934",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Les ressortissants américains invités à se tenir prêts à quitter le Moyen-Orient",
-      "link": "https://africanmanager.com/les-ressortissants-americains-invites-a-se-tenir-prets-a-quitter-le-moyen-orient/",
-      "published": "2026-08-02T11:23:54Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:7a9f5e0f075bd6b2",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "L’approvisionnement en eau en bouteille revient à la normale",
-      "link": "https://africanmanager.com/lapprovisionnement-en-eau-en-bouteille-revient-a-la-normale/",
-      "published": "2026-08-02T11:22:42Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:7cde0f3eb12eca48",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Ceuta : Les dizaines de milliers de migrants ont regagné le territoire marocain",
-      "link": "https://africanmanager.com/ceuta-les-dizaines-de-milliers-de-migrants-ont-regagne-le-territoire-marocain/",
-      "published": "2026-08-02T11:21:39Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:8dd5c9382ed30b53",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Israël relève son niveau d’alerte",
-      "link": "https://africanmanager.com/israel-releve-son-niveau-dalerte/",
-      "published": "2026-08-02T11:21:15Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:nawaat:53af89fc694def88",
-      "outlet": "Nawaat",
-      "outletId": "nawaat",
-      "title": "La résistance du mezoued : Hommage à Salah Farzit",
-      "link": "https://nawaat.org/2026/08/02/la-resistance-du-mezoued-hommage-a-salah-farzit/",
-      "published": "2026-08-02T08:22:34Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:86b164e5b0e2cf0a",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Céréales : la collecte atteint 10,752 millions de quintaux",
-      "link": "https://africanmanager.com/cereales-la-collecte-atteint-10752-millions-de-quintaux-un-taux-davancement-de-98/",
-      "published": "2026-08-02T07:41:43Z",
       "lang": "fr"
     }
   ]
