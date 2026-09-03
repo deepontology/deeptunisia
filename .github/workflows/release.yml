@@ -195,13 +195,14 @@ jobs:
           echo "  assets: ${ASSETS[*]:-(none)}"
 
           if gh release view "$TAG" >/dev/null 2>&1; then
-            echo "  Release $TAG already exists — uploading assets to it…"
-            # Re-upload is safe; gh errors on duplicate asset names with --clobber we handle
-            for a in "${ASSETS[@]}"; do
-              echo "    → $a"
-              gh release upload "$TAG" "$a" --clobber 2>&1 | head -n 5 || echo "    (upload of $a: skipped/failed — see above)"
-            done
-            gh release view "$TAG" --json url,tagName,name,createdAt --jq '{url, tagName, name}' || true
+            echo "  Release $TAG already exists — deleting then recreating (avoids asset re-upload races)."
+            gh release delete "$TAG" --yes >/dev/null 2>&1 || true
+          fi
+          if gh release view "$TAG" >/dev/null 2>&1; then
+            echo "::error::Release $TAG still exists after delete — cannot create cleanly. Re-run after manual cleanup."
+            exit 1
+          fi
+          echo "  Release $TAG does not exist — creating it fresh."
           else
             echo "  Creating release $TAG…"
             # Generate notes from commits since previous tag; --generate-notes is GitHub's auto notes

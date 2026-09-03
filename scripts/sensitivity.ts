@@ -1,6 +1,6 @@
 /**
  * M3 — sensitivity harness for the index constants + temporal window/slack + reader-weighted composite
- * (roadmap items M3 / C8 / grant-readiness 1.3).
+ * (roadmap items M3 / C8 — sensitivity extension, all six indices + composite).
  *
  * The influence index discounts each basis by a weight read from
  * data/parameters.yaml (`index.discount`). Those weights are editorial

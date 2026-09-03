@@ -2956,7 +2956,7 @@ const size = (JSON.stringify(dataset).length / 1024).toFixed(0);
 // cares about: adding records is expansion, rewriting them is where corrections
 // live, and net deletion is a retraction.
 //
-// Squash repair (grant-readiness 0.5): the public history was squashed pre-launch
+// Squash repair: when public git history is shallow, /corrections falls back to scripts/changelog-synthetic.json
 // (commit 8584e09 "DeepTunisia: source-backed atlas …" collapses everything before
 // 2026-08-26), so `git log -- data/` on the public clone renders only 4 entries
 // for the period when most corrections actually happened. The pre-squash diffs
