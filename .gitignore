@@ -37,3 +37,6 @@ uncited2.txt
 
 # internal working material — never tracked, never shipped
 internal/
+# Disclosures — staged locally; review before commit (and rename /GENAI.md → path once public)
+/GENAI.md
+/CONTRIBUTING.md
