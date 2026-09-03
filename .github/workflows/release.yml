@@ -84,6 +84,12 @@ jobs:
         run: npm ci
 
       - name: Build the graph (deterministic export)
+        env:
+          # Populate the paper's commitSha stat only at release time — the
+          # build is always one commit behind whatever the file is that
+          # *is* the release, so the release workflow injects the tag's
+          # commit explicitly. Local builds leave it empty.
+          DT_RELEASE_SHA: ${{ github.sha }}
         run: npm run build
 
       - name: Sync SvelteKit aliases (required for $data in tests)
@@ -188,10 +194,17 @@ jobs:
           # Collect artifacts — same set the Zenodo deposit carries, plus any
           # static exports the build emitted. Missing files are not an error
           # (fresh clones before the world bundle has been fetched still release).
+          # GitHub release assets are keyed by basename; LICENSE and data/LICENSE share the
+          # basename "LICENSE" so the second is silently dropped. Copy to a non-colliding
+          # basename so both ship (different content — root is the code MIT, data/ is CC BY 4.0).
           ASSETS=()
-          for f in static/dataset.json static/*.csv static/sensitivity.json static/changelog.json static/geo.json static/world-topo.json static/tn-adm.geojson LICENSE data/LICENSE; do
+          for f in static/dataset.json static/*.csv static/sensitivity.json static/changelog.json static/geo.json static/world-topo.json static/tn-adm.geojson LICENSE; do
             if [ -f "$f" ]; then ASSETS+=("$f"); fi
           done
+          if [ -f data/LICENSE ]; then
+            cp data/LICENSE /tmp/data-LICENSE.txt
+            ASSETS+=("/tmp/data-LICENSE.txt")
+          fi
           echo "  assets: ${ASSETS[*]:-(none)}"
 
           # Race-free create: if a prior failed run left a release, delete it first.

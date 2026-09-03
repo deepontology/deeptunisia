@@ -3090,18 +3090,6 @@ const changelog = readChangelog().slice(0, 250);
 
 // The commit the build runs from — the paper's reproducibility block tags it,
 // so "built from the then-current graph" names a state, not a date.
-function readCommitSha(): string {
-	try {
-		return execFileSync('git', ['rev-parse', 'HEAD'], {
-			cwd: ROOT,
-			encoding: 'utf8',
-			stdio: ['ignore', 'pipe', 'ignore']
-		}).trim();
-	} catch {
-		return '';
-	}
-}
-
 writeFileSync(join(OUT_DIR, 'changelog.json'), JSON.stringify(changelog), 'utf8');
 try {
 	writeFileSync(join(STATIC_DIR, 'changelog.json'), JSON.stringify(changelog, null, 2), 'utf8');
@@ -3227,8 +3215,14 @@ const stats: Record<string, string> = {
 			[`reviewable-${k}`, String(reviewByRisk[k].total)]
 		])
 	),
-	// The commit the build ran from, so a tagged paper can name its state.
-	commitSha: readCommitSha()
+	// The commit the build ran from. Tag/release pipelines inject DT_RELEASE_SHA
+	// (the tag's commit); local builds leave it empty so the README/paper stat
+	// tag is empty rather than one-behind-by-construction. The paper's
+	// reproducibility block is populated at release time, not from the build
+	// that wrote the file the release *is* — the always-one-commit lag is
+	// not a bug to chase, it is a structural fact, and we refuse to ship a
+	// stat tag that pretends otherwise.
+	commitSha: process.env.DT_RELEASE_SHA ?? ''
 };
 
 writeFileSync(join(OUT_DIR, 'stats.json'), JSON.stringify(stats, null, 2), 'utf8');
