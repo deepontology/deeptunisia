@@ -79,7 +79,7 @@ try {
 const entries = parseRaw(raw);
 const out = {
 	_note:
-		'Synthetic replay of pre-squash data history. Source: private mirror deeptunisiaorg/deep-tunisia private/master (266 commits ahead) — extracted via `git log private/master -- data/` and committed so the public build can render /corrections without a deep git history. Regenerate by re-running: node scripts/generate-synthetic-changelog.mjs (or see scripts/build-data.ts header). This file is the fallback the build reads when `git log -- data/` is shallow (post-squash public history has only 4 commits). When the private mirror is unavailable, this committed snapshot keeps /corrections honest; replace with a fresh extraction when available. Dates are author dates (%aI), hashes truncated to 9. See docs/plans/grant-readiness-v0.1.md Phase 0.5.',
+		'Synthetic replay of pre-squash data history. Source: private mirror deeptunisiaorg/deep-tunisia private/master (266 commits ahead) — extracted via `git log private/master -- data/` and committed so the public build can render /corrections without a deep git history. Regenerate by re-running: node scripts/generate-synthetic-changelog.mjs (or see scripts/build-data.ts header). This file is the fallback the build reads when `git log -- data/` is shallow (post-squash public history has only 4 commits). When the private mirror is unavailable, this committed snapshot keeps /corrections honest; replace with a fresh extraction when available. Dates are author dates (%aI), hashes truncated to 9. Synthetic replay of pre-squash data history.',
 	generated: new Date().toISOString(),
 	source: branch,
 	count: entries.length,
