@@ -3,6 +3,15 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:al-jazeera:89f58d05f3b13008",
+      "outlet": "Al Jazeera",
+      "outletId": "al-jazeera",
+      "title": "Tunisia’s top court upholds conviction of opposition figures, activists",
+      "link": "https://www.aljazeera.com/news/2026/9/3/tunisias-top-court-upholds-conviction-of-opposition-figures-activists?traffic_source=rss",
+      "published": "2026-09-03T23:23:26Z",
+      "lang": "en"
+    },
+    {
       "id": "feed:france24:6435dbe7134ca5d4",
       "outlet": "France 24",
       "outletId": "france24",
@@ -10791,15 +10800,6 @@
       "title": "Pétrole : L’Opep+ augmente à nouveau ses quotas de production",
       "link": "https://africanmanager.com/petrole-lopep-augmente-a-nouveau-ses-quotas-de-production/",
       "published": "2026-08-02T15:42:59Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:f23cfdef2122b86f",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Garantir les délais d’exécution du barrage El Raghaï",
-      "link": "https://africanmanager.com/ghardimaou-mobilisation-pour-garantir-les-delais-dexecution-du-barrage-el-raghai/",
-      "published": "2026-08-02T12:53:33Z",
       "lang": "fr"
     }
   ]
