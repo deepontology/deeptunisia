@@ -3,6 +3,123 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:african-manager:b034d83ca03afb0d",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "45 sièges pour les étudiants tunisiens en Jordanie",
+      "link": "https://africanmanager.com/45-sieges-pour-les-etudiants-tunisiens-dans-les-universites-jordaniennes/",
+      "published": "2026-09-04T16:45:02Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:64feea08029a898e",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "672 MDT pour la rénovation et l’équipement des écoles",
+      "link": "https://africanmanager.com/plus-de-672-millions-dt-consacres-a-la-renovation-et-lequipement-des-etablissements-educatifs-a-loccasion-de-la-rentree-scolaire/",
+      "published": "2026-09-04T16:43:14Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:8edc98d6284ead5d",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "309 projets de production d’électricité solaire approuvés",
+      "link": "https://africanmanager.com/approbation-de-309-demandes-de-projets-de-production-delectricite-a-partir-de-lenergie-solaire-photovoltaique/",
+      "published": "2026-09-04T16:41:15Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:a2e0e8d4c20da315",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Incendie du Mont Bargou: Deux mandats de dépôt",
+      "link": "https://africanmanager.com/incendie-du-mont-bargou-deux-mandats-de-depot/",
+      "published": "2026-09-04T14:49:30Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:fc0bca703b1daf54",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Saisie de 120 mille bouteilles d’eau minérale à Nabeul",
+      "link": "https://africanmanager.com/nabeul-saisie-de-120-mille-bouteilles-en-eau-minerale-en-aout-dernier/",
+      "published": "2026-09-04T14:42:55Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:5a54f63de8c3a593",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "197 infractions économiques relevées, en août à Siliana",
+      "link": "https://africanmanager.com/siliana-197-infractions-economiques-relevees-en-aout-dernier/",
+      "published": "2026-09-04T14:40:54Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:nawaat:4acc06112dffc562",
+      "outlet": "Nawaat",
+      "outletId": "nawaat",
+      "title": "حين تحتجز الدولة الجسد: من يجيب عن الموت خلف القضبان؟",
+      "link": "https://nawaat.org/2026/09/04/%d8%ad%d9%8a%d9%86-%d8%aa%d8%ad%d8%aa%d8%ac%d8%b2-%d8%a7%d9%84%d8%af%d9%88%d9%84%d8%a9-%d8%a7%d9%84%d8%ac%d8%b3%d8%af-%d9%85%d9%86-%d9%8a%d8%ac%d9%8a%d8%a8-%d8%b9%d9%86-%d8%a7%d9%84%d9%85%d9%88%d8%aa/",
+      "published": "2026-09-04T14:05:02Z",
+      "lang": "ar"
+    },
+    {
+      "id": "feed:african-manager:f0b1eeed9ee6be4c",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Supervision bancaire : Le gendarme tunisien qui ne verbalise qu’à peine",
+      "link": "https://africanmanager.com/supervision-bancaire-le-gendarme-tunisien-qui-ne-verbalise-qua-peine/",
+      "published": "2026-09-04T13:40:00Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:f2ac0fe8a1f947c1",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Tour Khalef ou l’hôtel-portefeuille",
+      "link": "https://africanmanager.com/tour-khalef-ou-lhotel-portefeuille/",
+      "published": "2026-09-04T13:37:52Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:cff1bcb83455f5a5",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Hausse de 8% du coût global de la rentrée scolaire !",
+      "link": "https://africanmanager.com/hausse-de-8-du-cout-global-de-la-rentree-scolaire/",
+      "published": "2026-09-04T13:14:20Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:e63558b16ac00104",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Les prix du diesel aux États-Unis atteignent un nouveau sommet",
+      "link": "https://africanmanager.com/les-prix-du-diesel-aux-etats-unis-atteignent-un-nouveau-sommet/",
+      "published": "2026-09-04T13:13:34Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:c86091d20ca1bec6",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Tataouine: 23 cas d’intoxication alimentaire recensés",
+      "link": "https://africanmanager.com/tataouine-23-cas-dintoxication-alimentaire-recenses/",
+      "published": "2026-09-04T13:01:23Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:0c104d8a80363385",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Les préparatifs de la rentrée scolaire 26-27 vont bon train",
+      "link": "https://africanmanager.com/les-preparatifs-de-la-nouvelle-rentree-scolaire-2026-2027-vont-bon-train/",
+      "published": "2026-09-04T12:53:49Z",
+      "lang": "fr"
+    },
+    {
       "id": "feed:african-manager:cfd5abe3b1b58310",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -10683,123 +10800,6 @@
       "title": "Monastir | « Yakine-Yassine », une tortue marine secourue et prise en charge par l’INSTM",
       "link": "https://kapitalis.com/tunisie/2026/08/03/monastir-yakine-yassine-une-tortue-marine-secourue-et-prise-en-charge-par-linstm/",
       "published": "2026-08-03T22:58:16Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:1e2c76e3c289b09e",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Festival international de Bizerte | Le concert de Ramy Ayach annulé",
-      "link": "https://kapitalis.com/tunisie/2026/08/03/festival-international-de-bizerte-le-concert-de-ramy-ayach-annule/",
-      "published": "2026-08-03T22:39:19Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:aee5230daff65ae6",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Tout savoir sur les inscriptions au Complexe social et éducatif pour enfants autistes",
-      "link": "https://kapitalis.com/tunisie/2026/08/03/tout-savoir-sur-les-inscriptions-au-complexe-social-et-educatif-pour-enfants-autistes/",
-      "published": "2026-08-03T22:02:12Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:86bde84456f17e6f",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Affaire du « don chinois »: Rafik Bouchlaka renvoyé devant la chambre criminelle",
-      "link": "https://africanmanager.com/affaire-du-don-chinois-rafik-bouchlaka-renvoye-devant-la-chambre-criminelle/",
-      "published": "2026-08-03T21:26:48Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:54e1e7e86d20b34d",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Festival international du Rap de Sbeïtla | Là où l’Histoire rencontre le flow",
-      "link": "https://kapitalis.com/tunisie/2026/08/03/festival-international-du-rap-de-sbeitla-la-ou-lhistoire-rencontre-le-flow/",
-      "published": "2026-08-03T21:05:39Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:7709d06c377aec3c",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "« Don chinois » | Clôture de l’instruction, Bouchlaka renvoyé devant la chambre criminelle",
-      "link": "https://kapitalis.com/tunisie/2026/08/03/don-chinois-cloture-de-linstruction-bouchlaka-renvoye-devant-la-chambre-criminelle/",
-      "published": "2026-08-03T19:24:36Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:f7f1a1a9e53f09c1",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Tunisie | CNCI : Avis concernant la participation à la 99e cérémonie des Oscars",
-      "link": "https://kapitalis.com/tunisie/2026/08/03/tunisie-cnci-avis-concernant-la-participation-a-la-99e-ceremonie-des-oscars/",
-      "published": "2026-08-03T18:42:24Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:401d854859d31a61",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Cellules orageuses et températures élevées pour cette nuit",
-      "link": "https://kapitalis.com/tunisie/2026/08/03/cellules-orageuses-et-temperatures-elevees-pour-cette-nuit/",
-      "published": "2026-08-03T18:26:37Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:9820ec2bcfbf7023",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "La diaspora, un pilier essentiel de l’économie tunisienne",
-      "link": "https://africanmanager.com/la-diaspora-un-pilier-essentiel-de-leconomie-tunisienne/",
-      "published": "2026-08-03T16:19:00Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:b8dbec5b4185541c",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Phosphate : La Tunisie et le Maroc importants pour la sécurité alimentaire des États-Unis !",
-      "link": "https://africanmanager.com/phosphate-la-tunisie-et-le-maroc-importants-pour-la-securite-alimentaire-des-etats-unis/",
-      "published": "2026-08-03T16:18:21Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:d016ae6883029949",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Convertir les déchets marins en opportunités d’économie circulaire",
-      "link": "https://africanmanager.com/convertir-les-dechets-marins-en-opportunites-deconomie-circulaire/",
-      "published": "2026-08-03T16:00:00Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:455ee54f99c90607",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Siliana : Les habitants d’Ain Zrig réclament leur droit à l’eau potable",
-      "link": "https://africanmanager.com/siliana-les-habitants-dain-zrig-reclament-leur-droit-a-leau-potable/",
-      "published": "2026-08-03T14:02:19Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:ac72e586265daf97",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Bourse de Tunis :Le Tunindex entame la semaine sur une note d’optimisme",
-      "link": "https://africanmanager.com/bourse-de-tunis-le-tunindex-entame-la-semaine-sur-une-note-doptimisme/",
-      "published": "2026-08-03T13:36:13Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:8f27354d224416ca",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Tunisie | Prisons surpeuplées et mauvais accès aux soins",
-      "link": "https://kapitalis.com/tunisie/2026/08/03/tunisie-prisons-surpeuplees-et-mauvais-acces-aux-soins/",
-      "published": "2026-08-03T12:46:32Z",
       "lang": "fr"
     }
   ]
