@@ -3,6 +3,60 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:0be2c572d44b8532",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "JCC 2026 | Prolongation de l’appel à création pour l’affiche officielle",
+      "link": "https://kapitalis.com/tunisie/2026/09/05/jcc-2026-prolongation-de-lappel-a-creation-pour-laffiche-officielle/",
+      "published": "2026-09-05T22:01:08Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:kapitalis:b67a37dabf010f61",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Incendies à Jebel Bargou | Deux suspects en détention",
+      "link": "https://kapitalis.com/tunisie/2026/09/05/incendies-a-jebel-bargou-deux-suspects-en-detention/",
+      "published": "2026-09-05T21:36:29Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:kapitalis:e1b66b4cea78457c",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Théâtre de l’Opéra | Ouverture des candidatures pour la production d’œuvres musicales",
+      "link": "https://kapitalis.com/tunisie/2026/09/05/theatre-de-lopera-ouverture-des-candidatures-pour-la-production-doeuvres-musicales/",
+      "published": "2026-09-05T21:20:33Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:kapitalis:ecaea7ed4c61b5ec",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "SNJT | Placé en garde à vue, le journaliste Mohamed Yousfi opéré en urgence",
+      "link": "https://kapitalis.com/tunisie/2026/09/05/snjt-place-en-garde-a-vue-le-journaliste-mohamed-yousfi-opere-en-urgence/",
+      "published": "2026-09-05T20:54:56Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:kapitalis:8d7de3056177757c",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Drame à Mateur | Un agent de la Steg meurt en service",
+      "link": "https://kapitalis.com/tunisie/2026/09/05/drame-a-mateur-un-agent-de-la-steg-meurt-en-service/",
+      "published": "2026-09-05T20:34:27Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:nawaat:4b699e0090286515",
+      "outlet": "Nawaat",
+      "outletId": "nawaat",
+      "title": "وقفة احتجاجية لحراك نفس ضد التنكيل بالتونسيين ومحاكمات الرأي",
+      "link": "https://nawaat.org/2026/09/05/%d9%88%d9%82%d9%81%d8%a9-%d8%a7%d8%ad%d8%aa%d8%ac%d8%a7%d8%ac%d9%8a%d8%a9-%d9%84%d8%ad%d8%b1%d8%a7%d9%83-%d9%86%d9%81%d8%b3-%d8%b6%d8%af-%d8%a7%d9%84%d8%aa%d9%86%d9%83%d9%8a%d9%84-%d8%a8%d8%a7%d9%84/",
+      "published": "2026-09-05T20:09:24Z",
+      "lang": "ar"
+    },
+    {
       "id": "feed:kapitalis:8aa7e63956ebd6f2",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -10746,60 +10800,6 @@
       "title": "Maroc: 61,48 MMDH de transferts des MRE à fin juin",
       "link": "https://africanmanager.com/maroc-6148-mmdh-de-transferts-des-mre-a-fin-juin/",
       "published": "2026-08-04T10:15:23Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:2ef9ea8d42e9e0d7",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Coupure d’eau potable dans plusieurs délégations de Nabeul en raison d’une panne sur la conduite principale",
-      "link": "https://africanmanager.com/coupure-deau-potable-dans-plusieurs-delegations-de-nabeul-en-raison-dune-panne-sur-la-conduite-principale/",
-      "published": "2026-08-04T10:13:44Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:926f82a717e1e507",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Appel au renforcement de la coordination pour préserver la pérennité de la filière avicole",
-      "link": "https://africanmanager.com/appel-au-renforcement-de-la-coordination-pour-preserver-la-perennite-de-la-filiere-avicole/",
-      "published": "2026-08-04T09:43:58Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:163caf9b4326a8ba",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Deux enseignantes-chercheuses de l’Université de Tunis El Manar distinguées par l’École de médecine de l’Université Harvard",
-      "link": "https://africanmanager.com/deux-enseignantes-chercheuses-de-luniversite-de-tunis-el-manar-distinguees-par-lecole-de-medecine-de-luniversite-harvard/",
-      "published": "2026-08-04T09:40:17Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:62416c34fe3024be",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Equipe de Tunisie : Sadok Mourali s’entretient avec le nouveau staff technique national",
-      "link": "https://africanmanager.com/equipe-de-tunisie-sadok-mourali-sentretient-avec-le-nouveau-staff-technique-national/",
-      "published": "2026-08-04T09:37:33Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:28a834bdf8cddce9",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Brésil : Neymar évite de se prononcer sur son avenir après la fin de son contrat avec Santos",
-      "link": "https://africanmanager.com/bresil-neymar-evite-de-se-prononcer-sur-son-avenir-apres-la-fin-de-son-contrat-avec-santos/",
-      "published": "2026-08-04T09:34:00Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:154772c52b707478",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Etoile du Sahel : stage de préparation à Hammam Bourguiba à partir d’aujourd’hui",
-      "link": "https://africanmanager.com/etoile-du-sahel-stage-de-preparation-a-hammam-bourguiba-a-partir-daujourdhui/",
-      "published": "2026-08-04T09:32:03Z",
       "lang": "fr"
     }
   ]
