@@ -3,6 +3,204 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:f1da963b8f6bca09",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Le mensonge a les jambes courtes, la vérité finira par éclater !",
+      "link": "https://kapitalis.com/tunisie/2026/09/05/le-mensonge-a-les-jambes-courtes-la-verite-finira-par-eclater/",
+      "published": "2026-09-05T11:51:20Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:39eff09382197b02",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Un système numérique intégré pour gerer les ZI",
+      "link": "https://africanmanager.com/afi-mise-en-place-dun-systeme-numerique-integre-pour-la-gestion-des-zones-industrielles/",
+      "published": "2026-09-05T11:30:28Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:kapitalis:9f107f91c5a76790",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Tunisie | La FIJ exige la libération immédiate du journaliste Mohamed Yousfi",
+      "link": "https://kapitalis.com/tunisie/2026/09/05/tunisie-la-fij-exige-la-liberation-immediate-du-journaliste-mohamed-yousfi/",
+      "published": "2026-09-05T10:47:13Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:kapitalis:cb2e9b65ee13c18f",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Le député Mohamed Ali solidaire avec le journaliste Mohamed Yousfi",
+      "link": "https://kapitalis.com/tunisie/2026/09/05/le-depute-mohmed-ali-solidaire-avec-le-journaliste-mohamed-yousfi/",
+      "published": "2026-09-05T10:22:59Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:kapitalis:ce7dba62203a98e9",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "L’économie tunisienne sous pression",
+      "link": "https://kapitalis.com/tunisie/2026/09/05/leconomie-tunisienne-sous-pression/",
+      "published": "2026-09-05T09:44:31Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:kapitalis:3c946bb80acdbde5",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Les pertes des Etats-Unis lors de la guerre en Iran",
+      "link": "https://kapitalis.com/tunisie/2026/09/05/les-pertes-des-etats-unis-lors-de-la-guerre-en-iran/",
+      "published": "2026-09-05T08:58:39Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:kapitalis:553f8f47ed5a65ea",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "BYD affrète le plus gros cargo de l’histoire avec 9 200 voitures à bord",
+      "link": "https://kapitalis.com/tunisie/2026/09/05/byd-affrete-le-plus-gros-cargo-de-lhistoire-avec-9-200-voitures-a-bord/",
+      "published": "2026-09-05T08:42:45Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:kapitalis:dbd7eaa5b2fe72b7",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Volkswagen | Le conseil de surveillance valide 100 000 suppressions de postes",
+      "link": "https://kapitalis.com/tunisie/2026/09/05/volkswagen-le-conseil-de-surveillance-valide-100-000-suppressions-de-postes/",
+      "published": "2026-09-05T08:31:11Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:1c4829987239d377",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "La Tunisie accueille « Phoenix Express 26 »",
+      "link": "https://africanmanager.com/la-tunisie-accueille-lexercice-naval-multilateral-phoenix-express-26/",
+      "published": "2026-09-05T08:07:54Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:bfeab6363b192664",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Le MI examine les préparatifs préventifs automne-hiver",
+      "link": "https://africanmanager.com/gestion-des-intemperies-le-ministre-de-linterieur-examine-les-preparatifs-preventifs-pour-lautomne-et-lhiver/",
+      "published": "2026-09-05T08:06:50Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:9f1edc15b19341e8",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "La Santé publique recrute à tour de bras",
+      "link": "https://africanmanager.com/ouverture-de-concours-pour-le-recrutement-de-medecins-de-pharmaciens-et-de-dentistes-de-la-sante-publique/",
+      "published": "2026-09-05T08:04:01Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:9e32d4b7c602a4ef",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "CHU Sahloul: Nouvelle Unité de soins post-opératoires à partir du mois d’octobre 2026",
+      "link": "https://africanmanager.com/chu-sahloul-nouvelle-unite-de-soins-post-operatoires-a-partir-du-mois-doctobre-2026/",
+      "published": "2026-09-05T08:02:11Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:1a0e5433492f9566",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Plan de développement 26-30 avec approche ascendante",
+      "link": "https://africanmanager.com/adoption-dune-approche-ascendante-pour-la-premiere-fois-en-tunisie-dans-lelaboration-du-plan-de-developpement-2026-2030/",
+      "published": "2026-09-05T08:00:06Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:328c30eb2648316f",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Le journaliste Mohamed Yousfi placé en garde à vue",
+      "link": "https://africanmanager.com/le-journaliste-mohamed-yousfi-place-en-garde-a-vue-pour-enrichissement-illicite-et-blanchiment-dargent/",
+      "published": "2026-09-05T07:59:54Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:a5d1e7c77e674b1c",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Yémen: Plus de 120 morts dans l’offensive des Houthis vers un détroit clé en mer Rouge",
+      "link": "https://africanmanager.com/yemen-plus-de-120-morts-dans-loffensive-des-houthis-vers-un-detroit-cle-en-mer-rouge/",
+      "published": "2026-09-05T07:17:38Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:a7d81eb4d81b5a40",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "La banque turque Golden Global nie toute relation avec l’Iran et rejette les sanctions américaines",
+      "link": "https://africanmanager.com/la-banque-turque-golden-global-nie-toute-relation-avec-liran-et-rejette-les-sanctions-americaines/",
+      "published": "2026-09-05T07:15:37Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:357f67cbd5327612",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Washington approuve une possible vente d’armes à l’Arabie saoudite d’une valeur de plus de 5 milliards de dollars",
+      "link": "https://africanmanager.com/washington-approuve-une-possible-vente-darmes-a-larabie-saoudite-dune-valeur-de-plus-de-5-milliards-de-dollars/",
+      "published": "2026-09-05T06:38:16Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:7b498cdbb80f63d2",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Witkoff et Kushner missionnés pour discuter de la paix en Ukraine",
+      "link": "https://africanmanager.com/witkoff-et-kushner-missionnes-pour-discuter-de-la-paix-en-ukraine/",
+      "published": "2026-09-05T06:36:51Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:kapitalis:7b3763b0366b1cb4",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Tunisie | L’arrestation du journaliste Mohamed Yousfi suscite une vague d’indignation",
+      "link": "https://kapitalis.com/tunisie/2026/09/05/tunisie-larrestation-du-journaliste-mohamed-yousfi-suscite-une-vague-dindignation/",
+      "published": "2026-09-05T06:36:39Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:6900e8cee6fd4e9b",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "« Difficultés persistantes » dans le commerce tuniso-libyen",
+      "link": "https://africanmanager.com/difficultes-persistantes-dans-le-commerce-transfrontalier-entre-la-tunisie-et-la-libye/",
+      "published": "2026-09-05T06:35:46Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:433679f7ea69acb0",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Trump affirme à nouveau que les États-Unis pourraient bientôt frapper le site nucléaire iranien de Pickaxe Mountain",
+      "link": "https://africanmanager.com/trump-affirme-a-nouveau-que-les-etats-unis-pourraient-bientot-frapper-le-site-nucleaire-iranien-de-pickaxe-mountain/",
+      "published": "2026-09-05T06:34:16Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:kapitalis:4d699a40ca61c164",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Ooredoo Tunisie et le Club Africain renouvellent leur partenariat",
+      "link": "https://kapitalis.com/tunisie/2026/09/05/ooredoo-tunisie-et-le-club-africain-renouvellent-leur-partenariat/",
+      "published": "2026-09-05T05:56:25Z",
+      "lang": "fr"
+    },
+    {
       "id": "feed:al-jazeera:17221a3ec7ce0965",
       "outlet": "Al Jazeera",
       "outletId": "al-jazeera",
@@ -10602,204 +10800,6 @@
       "title": "Déploiement d’une plateforme numérique pour les logements sociaux",
       "link": "https://africanmanager.com/deploiement-dune-plateforme-numerique-pour-les-logements-sociaux/",
       "published": "2026-08-04T08:22:00Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:96a344a6707299ee",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Ben Arous : L’église centenaire de Radès au cœur d’une opération de nettoyage",
-      "link": "https://africanmanager.com/ben-arous-leglise-centenaire-de-rades-au-coeur-dune-operation-de-nettoyage/",
-      "published": "2026-08-04T08:20:50Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:108b5c627bc783bf",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Tunisie | Les vraies raisons de la hausse des prix des médicaments",
-      "link": "https://kapitalis.com/tunisie/2026/08/04/tunisie-les-vraies-raisons-de-la-hausse-des-prix-des-medicaments/",
-      "published": "2026-08-04T08:20:02Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:bb0c985faae0c69c",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Mise en service de la station de détente de gaz alimentant le projet d’exploitation du minerai de fer",
-      "link": "https://africanmanager.com/mise-en-service-de-la-station-de-detente-de-gaz-alimentant-le-projet-dexploitation-du-minerai-de-fer/",
-      "published": "2026-08-04T08:18:09Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:de9e0246401221f2",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Le prix de médicaments revu à la hausse ?",
-      "link": "https://africanmanager.com/le-prix-de-nombre-de-medicaments-revu-a-la-hausse/",
-      "published": "2026-08-04T08:02:20Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:nawaat:732bad6bbce4691d",
-      "outlet": "Nawaat",
-      "outletId": "nawaat",
-      "title": "السلطة تمارس ”التصفية القضائية“ لمرفق العدالة، حوار مع غيلان الجلاصي",
-      "link": "https://nawaat.org/2026/08/04/%d8%a7%d9%84%d8%b3%d9%84%d8%b7%d8%a9-%d8%aa%d9%85%d8%a7%d8%b1%d8%b3-%d8%a7%d9%84%d8%aa%d8%b5%d9%81%d9%8a%d8%a9-%d8%a7%d9%84%d9%82%d8%b6%d8%a7%d8%a6%d9%8a%d8%a9-%d9%84%d9%85%d8%b1%d9%81%d9%82/",
-      "published": "2026-08-04T08:00:00Z",
-      "lang": "ar"
-    },
-    {
-      "id": "feed:african-manager:d7a3a31aa46d3bae",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Maroc: 39 mille passagers ont traversé Ceuta et de Tanger en une journée",
-      "link": "https://africanmanager.com/maroc-39-mille-passagers-ont-traverse-ceuta-et-de-tanger-en-une-seule-journee/",
-      "published": "2026-08-04T07:52:39Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:9c2fa04a3af15f1d",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Affaire du don chinois: Rafik Bouchlaka sera jugé",
-      "link": "https://africanmanager.com/affaire-du-don-chinois-rafik-bouchlaka-sera-juge/",
-      "published": "2026-08-04T07:43:01Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:6594ed9fa69ca7cf",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Mesures pour sauver le secteur laitier tunisien | Trop peu, trop tard ?",
-      "link": "https://kapitalis.com/tunisie/2026/08/04/mesures-pour-sauver-le-secteur-laitier-tunisien-trop-peu-trop-tard/",
-      "published": "2026-08-04T07:40:05Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:b6d814f396e98f9b",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Tunisie | L’OTE pointe la responsabilité de l’exécutif dans les coupures d’électricité",
-      "link": "https://kapitalis.com/tunisie/2026/08/04/tunisie-lote-pointe-la-responsabilite-de-lexecutif-dans-les-coupures-delectricite/",
-      "published": "2026-08-04T07:14:54Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:1dd0771766da7326",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Plus de 400 mille familles bénéficiaires du programme « Prosol » depuis 2005",
-      "link": "https://africanmanager.com/plus-de-400-mille-familles-beneficiaires-du-programme-prosol-depuis-2005/",
-      "published": "2026-08-04T07:13:40Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:54e2d6393cac214f",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Tataouine sélectionne ses futurs chauffeurs de taxi individuel pour la session 2026",
-      "link": "https://africanmanager.com/tataouine-selectionne-ses-futurs-chauffeurs-de-taxi-individuel-pour-la-session-2026/",
-      "published": "2026-08-04T07:12:26Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:cd02eaecc9923c62",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Au lendemain de sa visite à Radès, le président Saïed : Tolérance zéro envers les pollueurs",
-      "link": "https://africanmanager.com/au-lendemain-de-sa-visite-a-rades-le-president-saied-tolerance-zero-envers-les-pollueurs/",
-      "published": "2026-08-04T07:11:34Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:1de3058db081ebd3",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Le président Saïed aux médias publics : l’heure est au discours responsable, pas aux polémiques stériles",
-      "link": "https://africanmanager.com/le-president-saied-aux-medias-publics-lheure-est-au-discours-responsable-pas-aux-polemiques-steriles/",
-      "published": "2026-08-04T07:09:47Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:2c4846cd09443903",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Qatar, l’Égypte et la Turquie condamnent les attaques israéliennes contre Gaza",
-      "link": "https://africanmanager.com/qatar-legypte-et-la-turquie-condamnent-les-attaques-israeliennes-contre-gaza/",
-      "published": "2026-08-04T07:08:11Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:556f445de77619ac",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Difficile de déterminer si Trump adresse à l’Iran une nouvelle menace ou un ultimatum final",
-      "link": "https://africanmanager.com/difficile-de-determiner-si-trump-adresse-a-liran-une-nouvelle-menace-ou-un-ultimatum-final/",
-      "published": "2026-08-04T06:57:18Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:3564b5c0cddb7561",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Netanyahu affirme que les Palestiniens n’ont pas le droit de quitter Gaza, tout comme la Corée du Nord !",
-      "link": "https://africanmanager.com/netanyahu-affirme-que-les-palestiniens-nont-pas-le-droit-de-quitter-gaza-tout-comme-la-coree-du-nord/",
-      "published": "2026-08-04T06:56:22Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:156d611ab8cf7f92",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Premier raid aérien israélien depuis 24 heures signalé à Gaza",
-      "link": "https://africanmanager.com/premier-raid-aerien-israelien-depuis-24-heures-signale-a-gaza/",
-      "published": "2026-08-04T06:55:21Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:b58086dc48583e21",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Israël défie le plan de paix de Trump en intensifiant ses attaques meurtrières contre Gaza",
-      "link": "https://africanmanager.com/israel-defie-le-plan-de-paix-de-trump-en-intensifiant-ses-attaques-meurtrieres-contre-gaza/",
-      "published": "2026-08-04T06:54:57Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:df2abf46f50c72af",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Trump : La reprise des pourparlers entre les USA et l’Iran est la dernière chance pour Téhéran de signer un accord « avant la décapitation » !",
-      "link": "https://africanmanager.com/trump-la-reprise-des-pourparlers-entre-les-usa-et-liran-est-la-derniere-chance-pour-teheran-de-signer-un-accord-avant-la-decapitation/",
-      "published": "2026-08-04T06:53:29Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:949e42b7e6a33c05",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Les démocrates devancent les républicains sur les questions économiques, la popularité de Trump en baisse",
-      "link": "https://africanmanager.com/les-democrates-devancent-les-republicains-sur-les-questions-economiques-la-popularite-de-trump-en-baisse/",
-      "published": "2026-08-04T06:53:13Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:f14fc0ec6444d233",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "L’interventionnisme économique des États reprend de plus belle !",
-      "link": "https://kapitalis.com/tunisie/2026/08/04/linterventionnisme-economique-des-etats-reprend-de-plus-belle/",
-      "published": "2026-08-04T06:45:38Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:9a232765e42d08ea",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Ingérences étrangères en Afrique entre défense de l’autonomie et pressions géostratégiques",
-      "link": "https://kapitalis.com/tunisie/2026/08/04/ingerences-etrangeres-en-afrique-entre-defense-de-lautonomie-et-pressions-geostrategiques/",
-      "published": "2026-08-04T06:13:02Z",
       "lang": "fr"
     }
   ]
