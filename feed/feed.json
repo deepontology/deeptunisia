@@ -3,6 +3,24 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:8aa7e63956ebd6f2",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Tunisie | Mesures pour éviter l’effondrement de la filière avicole",
+      "link": "https://kapitalis.com/tunisie/2026/09/05/tunisie-mesures-pour-eviter-leffondrement-de-la-filiere-avicole/",
+      "published": "2026-09-05T12:57:00Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:kapitalis:149672caf39f3bb8",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Tunisie | Chaleur et hausse de la mortalité dans les prisons",
+      "link": "https://kapitalis.com/tunisie/2026/09/05/tunisie-chaleur-et-hausse-de-la-mortalite-dans-les-prisons/",
+      "published": "2026-09-05T12:25:09Z",
+      "lang": "fr"
+    },
+    {
       "id": "feed:kapitalis:f1da963b8f6bca09",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -10782,24 +10800,6 @@
       "title": "Etoile du Sahel : stage de préparation à Hammam Bourguiba à partir d’aujourd’hui",
       "link": "https://africanmanager.com/etoile-du-sahel-stage-de-preparation-a-hammam-bourguiba-a-partir-daujourdhui/",
       "published": "2026-08-04T09:32:03Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:de465a793899ee37",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Algérie : la FAF met fin à sa collaboration avec le sélectionneur Vladimir Petkovic",
-      "link": "https://africanmanager.com/algerie-la-faf-met-fin-a-sa-collaboration-avec-le-selectionneur-vladimir-petkovic/",
-      "published": "2026-08-04T09:29:47Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:94beab15e2021ca9",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Déploiement d’une plateforme numérique pour les logements sociaux",
-      "link": "https://africanmanager.com/deploiement-dune-plateforme-numerique-pour-les-logements-sociaux/",
-      "published": "2026-08-04T08:22:00Z",
       "lang": "fr"
     }
   ]
