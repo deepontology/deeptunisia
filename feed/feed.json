@@ -3,6 +3,60 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:african-manager:a07c998a135a5c26",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Webinaire sur les opportunités d’affaires du secteur digital en Tunisie",
+      "link": "https://africanmanager.com/webinaire-sur-les-opportunites-daffaires-du-secteur-digital-en-tunisie/",
+      "published": "2026-09-06T15:08:11Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:0a28b21c0239b4b5",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Entretien entre le ministre des AE et son homologue égyptien",
+      "link": "https://africanmanager.com/entretien-entre-le-ministre-des-ae-et-son-homologue-egyptien/",
+      "published": "2026-09-06T15:03:56Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:477815af08b794ed",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Crédits en Tunisie, qui paie le plus cher ?",
+      "link": "https://africanmanager.com/credits-en-tunisie-qui-paie-le-plus-cher/",
+      "published": "2026-09-06T14:16:00Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:53ffd59cf23a7e47",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Voici pourquoi La Poste ne deviendra probablement pas banque",
+      "link": "https://africanmanager.com/voici-pourquoi-la-poste-ne-deviendra-probablement-pas-banque/",
+      "published": "2026-09-06T14:14:46Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:61ef444b49d6abce",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "L’État veut-il réellement fermer le robinet de la perfusion et le peut-il ?",
+      "link": "https://africanmanager.com/letat-veut-il-reellement-fermer-le-robinet-de-la-perfusion-et-le-peut-il/",
+      "published": "2026-09-06T14:00:00Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:kapitalis:091fe9027321c0df",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Etude | Le sommeil profond ralentit la progression de l’Alzheimer",
+      "link": "https://kapitalis.com/tunisie/2026/09/06/etude-le-sommeil-profond-ralentit-la-progression-de-lalzheimer/",
+      "published": "2026-09-06T12:31:29Z",
+      "lang": "fr"
+    },
+    {
       "id": "feed:kapitalis:2b9d1bd56ac43f2a",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -10746,60 +10800,6 @@
       "title": "Israël rejette le plan de désarmement du Conseil de la paix",
       "link": "https://africanmanager.com/israel-rejette-le-plan-de-desarmement-du-conseil-de-la-paix/",
       "published": "2026-08-05T07:43:20Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:d6c161e2c439abe1",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Les prix du pétrole s’effondrent suite aux espoirs d’un accord entre les États-Unis et l’Iran",
-      "link": "https://africanmanager.com/les-prix-du-petrole-seffondrent-suite-aux-espoirs-dun-accord-entre-les-etats-unis-et-liran/",
-      "published": "2026-08-05T07:43:09Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:7a76116d74c6cdc8",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "L’armée américaine à court de munitions !",
-      "link": "https://africanmanager.com/larmee-americaine-a-court-de-munitions/",
-      "published": "2026-08-05T07:42:18Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:eb40d027705f80ee",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Un accord avec l’Iran pour la réouverture du canal d’Ormuz pourrait être conclu d’ici mercredi",
-      "link": "https://africanmanager.com/un-accord-avec-liran-pour-la-reouverture-du-canal-dormuz-pourrait-etre-conclu-dici-mercredi/",
-      "published": "2026-08-05T07:41:12Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:4a24d2b7e8556528",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "La baisse des prix mondiaux du pétrole n’a pas eu d’impact immédiat sur les consommateurs américains",
-      "link": "https://africanmanager.com/la-baisse-des-prix-mondiaux-du-petrole-na-pas-eu-dimpact-immediat-sur-les-consommateurs-americains/",
-      "published": "2026-08-05T07:40:58Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:36c37b0257dfca33",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Le ministre des AE rencontre son homologue égyptien",
-      "link": "https://africanmanager.com/le-ministre-des-ae-rencontre-son-homologue-egyptien/",
-      "published": "2026-08-05T07:35:08Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:9689e8eec5e53374",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "La Transtu brandit la loi contre les dépôts sauvages d’El Kram",
-      "link": "https://africanmanager.com/la-transtu-brandit-la-loi-contre-les-auteurs-de-depots-sauvages-sur-la-voie-ferree-de-el-kram/",
-      "published": "2026-08-05T07:33:39Z",
       "lang": "fr"
     }
   ]
