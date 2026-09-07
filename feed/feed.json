@@ -3,6 +3,24 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:france24:73bda4f816216d58",
+      "outlet": "France 24",
+      "outletId": "france24",
+      "title": "Tunisians tell the story of their summer of shortages",
+      "link": "https://www.france24.com/en/africa/20260907-tunisians-tell-story-their-summer-shortages",
+      "published": "2026-09-07T18:50:16Z",
+      "lang": "en"
+    },
+    {
+      "id": "feed:nawaat:e451189d879e97ba",
+      "outlet": "Nawaat",
+      "outletId": "nawaat",
+      "title": "نواة في دقيقة: كفى مخاتلة، اليوسفي في السجن لأنه أزعج الاستبداد",
+      "link": "https://nawaat.org/2026/09/07/%d9%86%d9%88%d8%a7%d8%a9-%d9%81%d9%8a-%d8%af%d9%82%d9%8a%d9%82%d8%a9-%d9%83%d9%81%d9%89-%d9%85%d8%ae%d8%a7%d8%aa%d9%84%d8%a9%d8%8c-%d8%a7%d9%84%d9%8a%d9%88%d8%b3%d9%81%d9%8a-%d9%81%d9%8a-%d8%a7%d9%84/",
+      "published": "2026-09-07T17:48:09Z",
+      "lang": "ar"
+    },
+    {
       "id": "feed:african-manager:b81ae265238ea719",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -10782,24 +10800,6 @@
       "title": "Les efforts se poursuivent pour maîtriser l’incendie de Siliana",
       "link": "https://africanmanager.com/jendouba-les-efforts-se-poursuivent-pour-maitriser-un-incendie-propage-jusqua-siliana/",
       "published": "2026-08-05T18:47:31Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:f35e8f01caa2ae54",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Kalâa Kébira en fête : « Maraya Al-Founoun » tisse les liens entre les arts et le savoir",
-      "link": "https://kapitalis.com/tunisie/2026/08/05/kalaa-kebira-en-fete-maraya-al-founoun-tisse-les-liens-entre-les-arts-et-le-savoir/",
-      "published": "2026-08-05T18:18:10Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:ce02567dc6e5bfe5",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Alerte météo | Tunisie : Pluies et vents forts",
-      "link": "https://kapitalis.com/tunisie/2026/08/05/alerte-meteo-tunisie-pluies-et-vents-forts/",
-      "published": "2026-08-05T17:40:52Z",
       "lang": "fr"
     }
   ]
