@@ -3,6 +3,33 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:a7ca0fba1a240abe",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "CNCI | Retour sur la double présence tunisienne à la 83e Mostra de Venise",
+      "link": "https://kapitalis.com/tunisie/2026/09/08/cnci-retour-sur-la-double-presence-tunisienne-a-la-83e-mostra-de-venise/",
+      "published": "2026-09-08T21:55:43Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:kapitalis:1e79ba710547c85c",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "HuMENA exprime sa solidarité avec Wael Naouar",
+      "link": "https://kapitalis.com/tunisie/2026/09/08/humena-exprime-sa-solidarite-avec-wael-naouar/",
+      "published": "2026-09-08T21:20:43Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:kapitalis:04aa6d8418727d0a",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Tunisie-Suisse | Vers une chaine de valeur textile euro-méditerranéenne résiliente",
+      "link": "https://kapitalis.com/tunisie/2026/09/08/tunisie-suisse-vers-une-chaine-de-valeur-textile-euro-mediterraneenne-resiliente/",
+      "published": "2026-09-08T20:28:29Z",
+      "lang": "fr"
+    },
+    {
       "id": "feed:kapitalis:920c020616458cb5",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -10773,33 +10800,6 @@
       "title": "L’Institut Pasteur de Tunis désigné Hub régional de surveillance environnementale",
       "link": "https://kapitalis.com/tunisie/2026/08/06/linstitut-pasteur-de-tunis-designe-hub-regional-de-surveillance-environnementale/",
       "published": "2026-08-06T18:39:32Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:a7015888840f19e8",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Tunisie | Météo : Les prévisions pour cette nuit",
-      "link": "https://kapitalis.com/tunisie/2026/08/06/tunisie-meteo-les-previsions-pour-cette-nuit-2/",
-      "published": "2026-08-06T18:15:46Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:e31d9018fe9c2c3f",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Siliana | L’armée intervient par les airs pour tenter de maîtriser l’incendie d’El Krib",
-      "link": "https://kapitalis.com/tunisie/2026/08/06/siliana-larmee-intervient-par-les-airs-pour-tenter-de-maitriser-lincendie-del-krib/",
-      "published": "2026-08-06T17:53:05Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:f2dd16435dd854da",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "OPAO pour un Co-contrôle paritaire dans l’invisibilité du Pacte",
-      "link": "https://africanmanager.com/opa-obligatoire-qui-scelle-un-co-controle-paritaire-dans-linvisibilite-du-pacte/",
-      "published": "2026-08-06T15:45:00Z",
       "lang": "fr"
     }
   ]
