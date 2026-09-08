@@ -3,6 +3,69 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:920c020616458cb5",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "La justice décide de prolonger la garde à vue de Me Mrabet",
+      "link": "https://kapitalis.com/tunisie/2026/09/08/la-justice-decide-de-prolonger-la-garde-a-vue-de-me-mrabet/",
+      "published": "2026-09-08T18:59:34Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:ae5fbc4765f4c50d",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Emission d’un mandat de dépôt contre le journaliste Mohamed Yousfi",
+      "link": "https://africanmanager.com/emission-dun-mandat-de-depot-contre-le-journaliste-mohamed-yousfi/",
+      "published": "2026-09-08T18:59:05Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:6c8de91509421df7",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Bourse: Le marché boursier clôture la séance de mardi sur une note baissière",
+      "link": "https://africanmanager.com/bourse-le-marche-boursier-cloture-la-seance-de-mardi-sur-une-note-baissiere/",
+      "published": "2026-09-08T18:57:48Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:kapitalis:add77538b77a2cc0",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Mandat de dépôt contre Mohamed Yousfi | Le SNJT tire la sonnette d’alarme",
+      "link": "https://kapitalis.com/tunisie/2026/09/08/mandat-de-depot-contre-mohamed-yousfi-le-snjt-tire-la-sonnette-dalarme/",
+      "published": "2026-09-08T17:57:27Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:nawaat:fb2419ea52191a04",
+      "outlet": "Nawaat",
+      "outletId": "nawaat",
+      "title": "بعد سجن اليوسفي وهرسلة الصحفيين: النقابة تعلن الطوارئ الصحفية والمقاومة الاعلامية",
+      "link": "https://nawaat.org/2026/09/08/%d8%a8%d8%b9%d8%af-%d8%b3%d8%ac%d9%86-%d8%a7%d9%84%d9%8a%d9%88%d8%b3%d9%81%d9%8a-%d9%88%d9%87%d8%b1%d8%b3%d9%84%d8%a9-%d8%a7%d9%84%d8%b5%d8%ad%d9%81%d9%8a%d9%8a%d9%86-%d8%a7%d9%84%d9%86%d9%82%d8%a7/",
+      "published": "2026-09-08T16:45:14Z",
+      "lang": "ar"
+    },
+    {
+      "id": "feed:nawaat:d6071ece0faae2e1",
+      "outlet": "Nawaat",
+      "outletId": "nawaat",
+      "title": "هيثم المكي انتقد الجميع، وحدها منظومة سعيّد حكمت بسجنه",
+      "link": "https://nawaat.org/2026/09/08/%d9%87%d9%8a%d8%ab%d9%85-%d8%a7%d9%84%d9%85%d9%83%d9%8a-%d8%a7%d9%86%d8%aa%d9%82%d8%af-%d8%a7%d9%84%d8%ac%d9%85%d9%8a%d8%b9%d8%8c-%d9%88%d8%ad%d8%af%d9%87%d8%a7-%d9%85%d9%86%d8%b8%d9%88%d9%85%d8%a9/",
+      "published": "2026-09-08T15:23:26Z",
+      "lang": "ar"
+    },
+    {
+      "id": "feed:african-manager:8eacec41b6521a40",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Hausse des visiteurs algériens et baisse des réservations hôtelières !",
+      "link": "https://africanmanager.com/hausse-des-visiteurs-algeriens-et-baisse-des-reservations-hotelieres/",
+      "published": "2026-09-08T13:58:41Z",
+      "lang": "fr"
+    },
+    {
       "id": "feed:african-manager:f1ca7172b1dbe94c",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -81,6 +144,15 @@
       "title": "La Haute Cour de justice israélienne dénonce « l’incapacité » des autorités à lutter contre la violence de colons",
       "link": "https://africanmanager.com/la-haute-cour-de-justice-israelienne-denonce-lincapacite-des-autorites-a-lutter-contre-la-violence-de-colons/",
       "published": "2026-09-08T12:07:15Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:4298f4b9d31d3eda",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Sotuver, l’entreprise des Bayahi que personne ne veut quitter",
+      "link": "https://africanmanager.com/sotuver-lentreprise-des-bayahi-que-personne-ne-veut-quitter/",
+      "published": "2026-09-08T12:00:00Z",
       "lang": "fr"
     },
     {
@@ -10728,78 +10800,6 @@
       "title": "OPAO pour un Co-contrôle paritaire dans l’invisibilité du Pacte",
       "link": "https://africanmanager.com/opa-obligatoire-qui-scelle-un-co-controle-paritaire-dans-linvisibilite-du-pacte/",
       "published": "2026-08-06T15:45:00Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:3637d220e47e437d",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "L’inflation se replie au taux de 5,1% en juillet",
-      "link": "https://africanmanager.com/linflation-se-replie-au-taux-de-51-en-juillet/",
-      "published": "2026-08-06T15:43:15Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:nawaat:3042f6b937f609e4",
-      "outlet": "Nawaat",
-      "outletId": "nawaat",
-      "title": "Réseaux sociaux tunisiens : l’espace numérique comme miroir des blessures collectives",
-      "link": "https://nawaat.org/2026/08/06/reseaux-sociaux-tunisiens-lespace-numerique-comme-miroir-des-blessures-collectives/",
-      "published": "2026-08-06T15:30:00Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:1c1d5df19fa72870",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Bourse de Tunis: Le revenu global progresse de 4,2%, au premier semestre 2026",
-      "link": "https://africanmanager.com/bourse-de-tunis-le-revenu-global-progresse-de-42-au-premier-semestre-2026/",
-      "published": "2026-08-06T15:13:00Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:89e2a44b4de4aad6",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Trump, « zappé » sur la pénurie de munitions aux États-Unis, tacle le chef du Pentagone",
-      "link": "https://africanmanager.com/trump-zappe-sur-la-penurie-de-munitions-aux-etats-unis-tacle-le-chef-du-pentagone/",
-      "published": "2026-08-06T13:22:20Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:nawaat:15a65df13588c543",
-      "outlet": "Nawaat",
-      "outletId": "nawaat",
-      "title": "مهرجان تويزة نافذة للأمل والتحدي، حوار مع يسري الدهواثي",
-      "link": "https://nawaat.org/2026/08/06/%d9%85%d9%87%d8%b1%d8%ac%d8%a7%d9%86-%d8%aa%d9%88%d9%8a%d8%b2%d8%a9-%d9%86%d8%a7%d9%81%d8%b0%d8%a9-%d9%84%d9%84%d8%a3%d9%85%d9%84-%d9%88%d8%a7%d9%84%d8%aa%d8%ad%d8%af%d9%8a%d8%8c-%d8%ad%d9%88%d8%a7/",
-      "published": "2026-08-06T13:05:14Z",
-      "lang": "ar"
-    },
-    {
-      "id": "feed:african-manager:71011ad9a48eaeff",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Tunisie: 5189 voitures populaires vendues au 1er semestre 2026",
-      "link": "https://africanmanager.com/tunisie-5189-voitures-populaires-vendues-au-1er-semestre-2026/",
-      "published": "2026-08-06T12:30:37Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:b909ecc7e7fdb38a",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Les Émirats se joignent à la Turquie et à l’Arabie saoudite pour accuser Israël de saper le plan de Trump pour Gaza",
-      "link": "https://africanmanager.com/les-emirats-se-joignent-a-la-turquie-et-a-larabie-saoudite-pour-accuser-israel-de-saper-le-plan-de-trump-pour-gaza/",
-      "published": "2026-08-06T12:23:12Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:70e7d654b98ca2be",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Meta développe une IA de Mark Zuckerberg pour ses employés",
-      "link": "https://africanmanager.com/meta-developpe-une-ia-de-mark-zuckerberg-pour-ses-employes/",
-      "published": "2026-08-06T12:15:07Z",
       "lang": "fr"
     }
   ]
