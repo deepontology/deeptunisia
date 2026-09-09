@@ -3,6 +3,87 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:african-manager:f8097c32f1862551",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "TIA : présentation d’une note d’analyse stratégique consacrée au potentiel d’investissement dans les Minéraux critiques",
+      "link": "https://africanmanager.com/tia-presentation-dune-note-danalyse-strategique-consacree-au-potentiel-dinvestissement-dans-les-mineraux-critiques/",
+      "published": "2026-09-09T16:20:27Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:dcf0c5101965122d",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "BAD/ Forum des Caisses de dépôt : Alliance stratégique pour renforcer le financement du développement en Afrique",
+      "link": "https://africanmanager.com/bad-forum-des-caisses-de-depot-alliance-strategique-pour-renforcer-le-financement-du-developpement-en-afrique/",
+      "published": "2026-09-09T16:19:56Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:f442f37a76538b78",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Mahdia: Remise des diplômes à la première promotion de stagiaires en infrastructures de recharge pour véhicules électriques",
+      "link": "https://africanmanager.com/mahdia-remise-des-diplomes-a-la-premiere-promotion-de-stagiaires-en-infrastructures-de-recharge-pour-vehicules-electriques/",
+      "published": "2026-09-09T16:18:21Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:2f1ec44ef519ebf9",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Tozeur : Le Centre de formation affiche complet pour la session de septembre 2026",
+      "link": "https://africanmanager.com/tozeur-le-centre-de-formation-affiche-complet-pour-la-session-de-septembre-2026/",
+      "published": "2026-09-09T16:15:36Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:fee6fd9abc655f66",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Kébili : Formation sur le système de gestion de la sécurité des denrées alimentaires",
+      "link": "https://africanmanager.com/kebili-formation-sur-le-systeme-de-gestion-de-la-securite-des-denrees-alimentaires/",
+      "published": "2026-09-09T15:26:35Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:66cd829d931765a9",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Affaire Ghazi Mrabet : encore des arrestations !",
+      "link": "https://africanmanager.com/affaire-ghazi-mrabet-encore-des-arrestations/",
+      "published": "2026-09-09T13:49:46Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:df5f502e8b04aeff",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Réouverture du site d’inscription à distance aux classes préparatoires",
+      "link": "https://africanmanager.com/reouverture-du-site-dinscription-a-distance-aux-classes-preparatoires/",
+      "published": "2026-09-09T13:18:40Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:african-manager:eed58558ecb4b5a9",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "L’UGTT examine la confirmation de la grève générale",
+      "link": "https://africanmanager.com/lugtt-examine-la-confirmation-de-la-greve-generale/",
+      "published": "2026-09-09T13:13:19Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:kapitalis:7bed082b16335d1e",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "La FAPaJ appelle à libérer le journaliste tunisien Mohamed El Yousfi",
+      "link": "https://kapitalis.com/tunisie/2026/09/09/la-fapaj-appelle-a-liberer-le-journaliste-tunisien-mohamed-el-yousfi/",
+      "published": "2026-09-09T13:06:27Z",
+      "lang": "fr"
+    },
+    {
       "id": "feed:african-manager:775679526df14998",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -10719,87 +10800,6 @@
       "title": "IVD | Entendue par la brigade financière, Sihem Bensedrine laissée en liberté",
       "link": "https://kapitalis.com/tunisie/2026/08/07/ivd-entendue-par-la-brigade-financiere-sihem-bensedrine-laissee-en-liberte/",
       "published": "2026-08-07T22:50:36Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:7342e026878b8151",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Ligne TGM | Le ras-le-bol de la Transtu face aux incivilités !",
-      "link": "https://kapitalis.com/tunisie/2026/08/07/ligne-tgm-le-ras-le-bol-de-la-transtu-face-aux-incivilites/",
-      "published": "2026-08-07T22:34:58Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:6cb3d0ea1cee8490",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Nefza | Vaste campagne pour libérer les plages du domaine public maritime",
-      "link": "https://kapitalis.com/tunisie/2026/08/07/nefza-vaste-campagne-pour-liberer-les-plages-du-domaine-public-maritime/",
-      "published": "2026-08-07T20:47:25Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:412a25e4f03dfe0c",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "SNCFT | Perturbations sur le trafic ferroviaire",
-      "link": "https://kapitalis.com/tunisie/2026/08/07/sncft-perturbations-sur-le-trafic-ferroviaire/",
-      "published": "2026-08-07T19:16:19Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:62921a598a230eb7",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "«Ciné Vague Ruspina», un rendez-vous ouvert sur la mer",
-      "link": "https://kapitalis.com/tunisie/2026/08/07/cine-vague-ruspina-un-rendez-vous-ouvert-sur-la-mer/",
-      "published": "2026-08-07T18:28:45Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:3dfce42a80093e40",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Protection civile | Plus de 650 interventions enregistrées ces dernières 24 heures",
-      "link": "https://kapitalis.com/tunisie/2026/08/07/protection-civile-plus-de-650-interventions-enregistrees-ces-dernieres-24-heures/",
-      "published": "2026-08-07T18:16:07Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:d2bbe6325f695b69",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Tunisie | Météo : Les températures attendues cette nuit",
-      "link": "https://kapitalis.com/tunisie/2026/08/07/tunisie-meteo-les-temperatures-attendues-cette-nuit/",
-      "published": "2026-08-07T17:48:25Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:021440c75256870f",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Afrobasket féminin U18 (2e J/ Gr C): La Tunisie bat le Sénégal (44-43)",
-      "link": "https://africanmanager.com/afrobasket-feminin-u18-2e-j-gr-c-la-tunisie-bat-le-senegal-44-43/",
-      "published": "2026-08-07T16:30:39Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:72dce9c7fe43072d",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Bourse de Tunis: Le Tunindex clôture la semaine quasiment à l’équilibre",
-      "link": "https://africanmanager.com/bourse-de-tunis-le-tunindex-cloture-la-semaine-quasiment-a-lequilibre/",
-      "published": "2026-08-07T16:26:43Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:731ed7b3f92e6d54",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "CMF- Banque de France: Signature de deux conventions visant à renforcer les actions d’éducation financière",
-      "link": "https://africanmanager.com/cmf-banque-de-france-signature-de-deux-conventions-visant-a-renforcer-les-actions-deducation-financiere/",
-      "published": "2026-08-07T16:25:29Z",
       "lang": "fr"
     }
   ]
