@@ -3,6 +3,42 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:7260b7f8bed942b0",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Trafic de drogue en milieu scolaire | Un réseau démantelé à Tajerouine",
+      "link": "https://kapitalis.com/tunisie/2026/09/09/trafic-de-drogue-en-milieu-scolaire-un-reseau-demantele-a-tajerouine/",
+      "published": "2026-09-09T22:20:27Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:kapitalis:b5fe4900cb092e19",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "EuroMed Droits appelle à la libération immédiate de Mohamed Yousfi",
+      "link": "https://kapitalis.com/tunisie/2026/09/09/euromed-droits-appelle-a-la-liberation-immediate-de-mohamed-yousfi/",
+      "published": "2026-09-09T21:58:35Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:kapitalis:f593513d668f2d09",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "La FTF solidaire d’Hannibal Mejbri après son intervention chirurgicale",
+      "link": "https://kapitalis.com/tunisie/2026/09/09/la-ftf-solidaire-dhannibal-mejbri-apres-son-intervention-chirurgicale/",
+      "published": "2026-09-09T21:48:01Z",
+      "lang": "fr"
+    },
+    {
+      "id": "feed:kapitalis:d419c9fc85509a59",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Affaire Mrabet | Deux nouveaux suspects arrêtés, l’enquête se poursuit",
+      "link": "https://kapitalis.com/tunisie/2026/09/09/affaire-mrabet-deux-nouveaux-suspects-arretes-lenquete-se-poursuit/",
+      "published": "2026-09-09T21:10:17Z",
+      "lang": "fr"
+    },
+    {
       "id": "feed:african-manager:f8097c32f1862551",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -10764,42 +10800,6 @@
       "title": "Un officiel américain prévoit un accord prochain entre l’Iran et Oman concernant le détroit d’Ormuz",
       "link": "https://africanmanager.com/un-officiel-americain-prevoit-un-accord-prochain-entre-liran-et-oman-concernant-le-detroit-dormuz/",
       "published": "2026-08-08T08:53:53Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:b2ecb4cd8376d11f",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "L’homme à abattre pour le lobby pro-israélien américain",
-      "link": "https://kapitalis.com/tunisie/2026/08/08/lhomme-a-abattre-pour-le-lobby-pro-israelien-americain/",
-      "published": "2026-08-08T07:37:28Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:2244007497d07f3e",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Trump et l’Iran | L’échec d’une diplomatie du bluff",
-      "link": "https://kapitalis.com/tunisie/2026/08/08/trump-et-liran-lechec-dune-diplomatie-du-bluff/",
-      "published": "2026-08-08T06:46:10Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:144795b3118a30de",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Le secteur automobile allemand va mal",
-      "link": "https://kapitalis.com/tunisie/2026/08/08/le-secteur-automobile-allemand-va-mal/",
-      "published": "2026-08-08T06:14:46Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:5476b38fb64e0011",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "IVD | Entendue par la brigade financière, Sihem Bensedrine laissée en liberté",
-      "link": "https://kapitalis.com/tunisie/2026/08/07/ivd-entendue-par-la-brigade-financiere-sihem-bensedrine-laissee-en-liberte/",
-      "published": "2026-08-07T22:50:36Z",
       "lang": "fr"
     }
   ]
