@@ -18,7 +18,7 @@ Et c'est toujours une seule personne qui décide. L'essaim ne tourne pas seul, i
 
 ## Le papier : l'épistémologie est le compilateur {#paper}
 
-L'idée est posée dans le [document de recherche](/deeptunisia-paper-v0_1-release.pdf) lié depuis la page d'accueil — *The Epistemology Is the Compiler*.
+L'idée est posée dans le [document de recherche](/deeptunisia-release-paper-v1.0.pdf) lié depuis la page d'accueil — *The Epistemology Is the Compiler*.
 
 Sa thèse est simple : demander à des éditeurs de se souvenir d'une politique de preuve n'est pas l'appliquer. Alors ce projet compile la politique à la place.
 
