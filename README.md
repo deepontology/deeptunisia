@@ -18,7 +18,7 @@ The website is a window. **The knowledge graph is the project.**
 ```bash
 # Fresh clone, in this order:
 npm ci --ignore-scripts
-npm run data          # build the graph and the public exports
+npm run build         # graph + landing page (the landing page is hash-tied to the dataset)
 npx svelte-kit sync   # generate the $data alias the test suites import
 npm run test          # all suites
 npm run check         # svelte-check — must be 0 errors, 0 warnings
@@ -32,7 +32,7 @@ npm run feed          # fetch news headlines into feed/ (also runs every 4h in C
 npm run audit:probes  # reproduce the independent review's compiler probes
 ```
 
-`npx svelte-kit sync` is required before `npm run test` on a fresh clone: the suites import the `$data` alias, which SvelteKit generates. The `ci` workflow runs the same sequence on a clean runner.
+`npx svelte-kit sync` is required before `npm run test` on a fresh clone: the suites import the `$data` alias, which SvelteKit generates. `npm run build` is required too, because `landing/index.html` is hash-tied to the generated dataset and the drift gate fails otherwise. The `ci` workflow runs the same sequence on a clean runner.
 
 The atlas itself needs no server, no database, no API and no accounts — the
 static site ships as files. The discussion layer (Agora) is separate: a
