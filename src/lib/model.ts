@@ -1,4 +1,9 @@
 import data from '$data/index';
+import {
+	certainlyActive as engineCertainlyActive,
+	possiblyActive as enginePossiblyActive,
+	configureTime as configureEngineTime
+} from 'deepepisteme/time';
 import { dateFormatter, format, translate, type Locale } from './i18n';
 import type {
 	Company,
@@ -154,18 +159,21 @@ export function targetName(type: string, id: string): string {
 }
 
 // --- Time ------------------------------------------------------------------
+//
+// The predicates are owned by the DeepEpisteme engine and imported here, so
+// the build algebra and the interface answer with one implementation. The
+// jurisdiction's parameters are installed at module load: without that, the
+// engine's cutoff clamp would use its shipped defaults instead of the
+// dataset's cutoff, and nothing could be certain at the horizon.
 
+configureEngineTime(ds.meta.parameters.time);
 
 export function certainlyActive(iv: Interval, t: number): boolean {
-	if (t < iv.startLatest) return false;
-	if (iv.endEarliest !== null && t > iv.endEarliest) return false;
-	return true;
+	return engineCertainlyActive(iv, t);
 }
 
 export function possiblyActive(iv: Interval, t: number): boolean {
-	if (t < iv.startEarliest) return false;
-	if (iv.endLatest !== null && t > iv.endLatest) return false;
-	return true;
+	return enginePossiblyActive(iv, t);
 }
 
 /** 0 = not active, 1 = possibly active, 2 = certainly active. */
