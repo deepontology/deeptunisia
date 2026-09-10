@@ -22,6 +22,7 @@
         "test:parameters": "tsx scripts/test-parameters.ts",
         "test:paper": "tsx scripts/test-paper.ts",
         "mutation": "tsx scripts/mutation-test.ts",
+        "audit:probes": "npm run data && svelte-kit sync && tsx scripts/audit-probes.mjs",
         "test:match": "tsx scripts/test-match.ts",
         "test:feed": "tsx scripts/test-feed.ts",
         "test:emit": "tsx scripts/test-emit.ts",
