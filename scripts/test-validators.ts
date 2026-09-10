@@ -52,9 +52,17 @@ import {
 	certainlyActive,
 	possiblyActive,
 	durationYears,
+	applyOngoingObservation,
 	DATASET_CUTOFF,
 	DATASET_FLOOR
 } from './dates.ts';
+import { configureTime } from './dates.ts';
+import { loadParameters } from './parameters.ts';
+import { fileURLToPath } from 'node:url';
+
+// The engine ships neutral example defaults; the fixtures below assert the
+// jurisdiction's floor and cutoff, so install data/parameters.yaml first.
+configureTime(loadParameters(fileURLToPath(new URL('../data/parameters.yaml', import.meta.url))).time);
 
 let failures = 0;
 let checks = 0;
@@ -823,11 +831,127 @@ ok(
 	'an open-ended interval measures its duration against the cutoff (m20)',
 	(() => {
 		const open = resolveInterval({ start: '2020-01-01' });
-		const years = durationYears(open);
-		// startMid is the exact day (2020-01-01); the cutoff is 2026-07-26 ≈ 6.57y.
-		return years > 6.4 && years < 6.7;
+		const expected = (DATASET_CUTOFF - Date.UTC(2020, 0, 1)) / (365.2425 * 86_400_000);
+		return Math.abs(durationYears(open) - expected) < 0.01;
 	})()
 );
+
+// ---------------------------------------------------------------------------
+// Temporal invariants — the certainty horizon, the month-only observation, the
+// ongoing confirmation window, and a generated sweep over token combinations
+// and boundary dates. The engine owns the predicates; this suite proves the
+// pinned engine upholds the contract DeepTunisia publishes.
+// ---------------------------------------------------------------------------
+
+ok(
+	'temporal: an unknown end is never certain past the cutoff',
+	!certainlyActive(resolveInterval({ start: '2020-01-01', end: '?' }), DATASET_CUTOFF + 86_400_000)
+);
+{
+	const unknownEnd = resolveInterval({ start: '2020-01-01', end: '?' });
+	ok(
+		'temporal: an unknown end is certain only at its one observation',
+		certainlyActive(unknownEnd, unknownEnd.startLatest) &&
+			!certainlyActive(unknownEnd, unknownEnd.startLatest + 86_400_000)
+	);
+}
+{
+	const monthVerified = resolveInterval({ start: '2019-01-01', end: 'verified:2020-06' });
+	const midpoint = Math.floor((Date.UTC(2020, 5, 1) + Date.UTC(2020, 5, 30, 23, 59, 59)) / 2);
+	ok(
+		'temporal: a month-only verification is certain at the month midpoint',
+		certainlyActive(monthVerified, midpoint)
+	);
+	ok(
+		'temporal: a month-only verification is not certain on the last day',
+		!certainlyActive(monthVerified, Date.UTC(2020, 5, 30, 23, 59, 59))
+	);
+}
+{
+	const openEnded = resolveInterval({ start: '2022-01-01', end: 'ongoing' });
+	const confirmed = applyOngoingObservation(openEnded, DATASET_CUTOFF - 10 * 86_400_000);
+	ok(
+		'temporal: a recent observation keeps an ongoing interval ongoing',
+		confirmed.status === 'ongoing'
+	);
+	ok(
+		'temporal: ongoing certainty stops at the confirming observation',
+		!certainlyActive(confirmed, DATASET_CUTOFF)
+	);
+	const stale = applyOngoingObservation(openEnded, Date.UTC(2024, 0, 1));
+	ok(
+		'temporal: a stale observation downgrades ongoing to last-verified',
+		stale.status === 'last-verified' &&
+			stale.lastObserved === Date.UTC(2024, 0, 1) &&
+			!certainlyActive(stale, DATASET_CUTOFF)
+	);
+}
+
+{
+	const starts = ['2018-06-01', '2018-06', '2018', '~2017', '~2017-06', '<=2018-06', '>=1984', '?'];
+	const ends = ['2020-06-01', '2020-06', '2020', '~2020', 'ongoing', 'verified:2020-06', 'verified:2020-06-15', '?'];
+	const queries = [
+		DATASET_FLOOR - 86_400_000,
+		DATASET_FLOOR,
+		DATASET_CUTOFF - 86_400_000,
+		DATASET_CUTOFF,
+		DATASET_CUTOFF + 86_400_000,
+		Date.UTC(2020, 1, 29),
+		Date.UTC(2024, 1, 29),
+		Date.UTC(2017, 0, 1),
+		Date.UTC(2018, 5, 15),
+		Date.UTC(2020, 5, 15),
+		Date.UTC(2021, 5, 15)
+	];
+	let seed = 20260910;
+	const rand = () => {
+		seed = (seed * 1103515245 + 12345) & 0x7fffffff;
+		return seed / 0x7fffffff;
+	};
+	const pool = starts.flatMap((s) => ends.map((e) => [s, e] as const));
+	const failures: string[] = [];
+	const check = (cond: boolean, msg: string) => {
+		if (!cond && failures.length < 5) failures.push(msg);
+	};
+	let cases = 0;
+	for (let i = 0; i < 1000; i++) {
+		const [s, e] = i < pool.length ? pool[i] : pool[Math.floor(rand() * pool.length)];
+		let iv;
+		try {
+			iv = resolveInterval({ start: s, end: e });
+		} catch {
+			continue;
+		}
+		cases++;
+		const settled = applyOngoingObservation(
+			iv,
+			i % 3 === 0 ? DATASET_CUTOFF - 1000 * 86_400_000 : DATASET_CUTOFF - 10 * 86_400_000
+		);
+		check(settled.startEarliest <= settled.startLatest, `start ordering ${s}/${e}`);
+		check(
+			settled.endEarliest === null || settled.endLatest === null || settled.endEarliest <= settled.endLatest,
+			`end ordering ${s}/${e}`
+		);
+		if (settled.status !== 'ongoing') {
+			check(settled.lastObserved !== null, `missing certainty horizon ${s}/${e}`);
+		}
+		for (const t of queries) {
+			check(
+				!certainlyActive(settled, t) || possiblyActive(settled, t),
+				`certain without possible ${s}/${e} @ ${new Date(t).toISOString()}`
+			);
+			check(
+				!(t > DATASET_CUTOFF && (certainlyActive(settled, t) || possiblyActive(settled, t))),
+				`assertion past cutoff ${s}/${e} @ ${new Date(t).toISOString()}`
+			);
+		}
+	}
+	ok(
+		`temporal: generated sweep upholds the invariants (${cases} cases)`,
+		cases === 1000 && failures.length === 0,
+		failures[0] ?? `${cases} cases`
+	);
+}
 
 console.log(
 	`\n  ${checks - failures}/${checks} validator-invariant checks passed${failures ? `, ${failures} FAILED` : ''}\n`

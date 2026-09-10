@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "generated": "2026-09-10T22:39:43.692Z",
+  "generated": "2026-09-10T23:15:32.866Z",
   "node": "v26.7.0",
-  "commit": "6a05dee",
+  "commit": "4e19ef7",
   "dataset": {
     "path": "src/generated/dataset.json",
     "counts": {
@@ -125,13 +125,14 @@
       "startPrecision": "day",
       "endPrecision": "unknown",
       "status": "unknown",
+      "lastObserved": 1577836800000,
       "raw": {
         "start": "2020-01-01",
         "end": "?"
       }
     },
     "queryDate": "2026-09-11T00:00:00.000Z",
-    "certain": true,
+    "certain": false,
     "possible": false
   },
   "unsourced": {
