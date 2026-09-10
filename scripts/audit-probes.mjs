@@ -137,8 +137,11 @@ function build(name, mutate) {
 
 	const errorLines = log
 		.split('\n')
-		.filter((l) => /error|fail|must|unknown|✗/i.test(l))
-		.slice(0, 5)
+		// The build prints one line per violation as `   x  where: message`, so
+		// this captures the record id a probe must name. Keyword matching missed
+		// the V27 override messages ("requires", not "must").
+		.filter((l) => /^\s+x\s/.test(l))
+		.slice(0, 8)
 		.map((l) => l.trim());
 
 	return {
