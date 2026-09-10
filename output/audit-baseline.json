@@ -1,0 +1,362 @@
+{
+  "schemaVersion": 1,
+  "generated": "2026-09-10T17:44:08.847Z",
+  "node": "v26.7.0",
+  "commit": "8327ba3",
+  "dataset": {
+    "path": "src/generated/dataset.json",
+    "counts": {
+      "sources": 1253,
+      "sourcesCited": 1215,
+      "institutions": 207,
+      "roles": 118,
+      "people": 450,
+      "positions": 422,
+      "relationships": 362,
+      "events": 112,
+      "questions": 26,
+      "hypotheses": 6,
+      "agreements": 23,
+      "worldClaims": 10,
+      "companies": 25,
+      "contracts": 15,
+      "licences": 11,
+      "declarations": 9,
+      "education": 25,
+      "regions": 84,
+      "places": 44
+    },
+    "review": {
+      "reviewed": 38,
+      "reviewable": 896,
+      "byRisk": {
+        "unsubstantiated": {
+          "reviewed": 12,
+          "total": 12
+        },
+        "attributed": {
+          "reviewed": 3,
+          "total": 133
+        },
+        "inferred": {
+          "reviewed": 0,
+          "total": 0
+        },
+        "reported": {
+          "reviewed": 19,
+          "total": 566
+        },
+        "documented": {
+          "reviewed": 8,
+          "total": 195
+        }
+      }
+    },
+    "cutoff": 1788998400000
+  },
+  "schemaProbes": {
+    "whitespaceInferenceAccepted": true,
+    "overrideWithoutReviewAccepted": true,
+    "overrideDerivedBasis": "documented",
+    "unsourcedPersonAccepted": true,
+    "nestedReviewOutcomeAccepted": true,
+    "nestedReviewOutcomePreserved": false
+  },
+  "pipeline": {
+    "whitespace": {
+      "exit": 0,
+      "datasetEmitted": true,
+      "editorialQueueEmitted": true,
+      "errorLines": []
+    },
+    "no-source": {
+      "exit": 0,
+      "datasetEmitted": true,
+      "editorialQueueEmitted": true,
+      "errorLines": []
+    },
+    "override": {
+      "exit": 0,
+      "datasetEmitted": true,
+      "editorialQueueEmitted": true,
+      "errorLines": []
+    },
+    "nested-outcome": {
+      "exit": 0,
+      "datasetEmitted": true,
+      "editorialQueueEmitted": true,
+      "errorLines": []
+    },
+    "bad-reference": {
+      "exit": 1,
+      "datasetEmitted": false,
+      "editorialQueueEmitted": true,
+      "errorLines": [
+        "DATA VALIDATION FAILED — 1 error(s)",
+        "x  position p-pres-bourguiba: unknown source \"audit-nonexistent-source\""
+      ]
+    }
+  },
+  "temporal": {
+    "interval": {
+      "startEarliest": 1577836800000,
+      "startLatest": 1577836800000,
+      "endEarliest": null,
+      "endLatest": 1788998400000,
+      "startPrecision": "day",
+      "endPrecision": "unknown",
+      "status": "unknown",
+      "raw": {
+        "start": "2020-01-01",
+        "end": "?"
+      }
+    },
+    "queryDate": "2026-09-11T00:00:00.000Z",
+    "certain": true,
+    "possible": false
+  },
+  "unsourced": {
+    "roles": [
+      "president",
+      "prime-minister",
+      "speaker",
+      "cnrd-president",
+      "isie-president",
+      "interior-minister",
+      "defence-minister",
+      "ng-commander",
+      "usgn-commander",
+      "sec-state-security",
+      "dg-public-security",
+      "chief-land-forces",
+      "chief-air-force",
+      "chief-navy",
+      "inspector-general-forces",
+      "dg-military-security",
+      "head-anrsd",
+      "presidential-security-chief",
+      "dg-presidential-security",
+      "national-security-adviser",
+      "presidential-cabinet-director",
+      "tourism-minister",
+      "foreign-minister",
+      "party-leader-ennahda",
+      "party-leader-nidaa",
+      "party-leader-qalb",
+      "party-leader-tahya",
+      "party-leader-pdl",
+      "party-leader-cpr",
+      "party-leader-ettakatol",
+      "party-leader-aridha",
+      "party-leader-pdp",
+      "party-leader-afek",
+      "party-leader-upl",
+      "party-leader-popular-front",
+      "party-leader-tayyar",
+      "party-leader-id",
+      "party-leader-people-movement",
+      "party-leader-mds",
+      "party-leader-republican",
+      "party-leader-democratic-alliance",
+      "party-leader-karama",
+      "party-leader-machrouu",
+      "party-leader-vds",
+      "party-leader-errahma",
+      "party-leader-aich",
+      "party-leader-alternative",
+      "party-leader-upr",
+      "mabrouk-principal",
+      "elloumi-principal",
+      "nessma-owner",
+      "ugtt-secretary-general",
+      "grand-vizier",
+      "finance-minister",
+      "commerce-minister",
+      "state-properties-minister",
+      "bct-governor",
+      "justice-minister",
+      "justice-ministry-advisor",
+      "health-minister",
+      "tv-president",
+      "media-regulator-president",
+      "journalist",
+      "media-owner",
+      "hannibal-owner",
+      "hiwar-owner",
+      "mosaique-fm-owner",
+      "leaders-editor",
+      "zitouna-tv-owner",
+      "attessia-tv-owner",
+      "nawaat-founder",
+      "judge",
+      "csm-president",
+      "cassation-president",
+      "administrative-court-president",
+      "audit-court-president",
+      "human-rights-minister",
+      "bar-president",
+      "ivd-president",
+      "anti-corruption-head",
+      "ngo-president",
+      "ngo-director",
+      "activist",
+      "ltdh-president",
+      "atfd-president",
+      "iwatch-president",
+      "utica-president",
+      "soe-pdg",
+      "soe-director-general",
+      "bank-director-general",
+      "steg-pdg",
+      "sncft-pdg",
+      "sonede-pdg",
+      "onas-pdg",
+      "la-poste-pdg",
+      "etap-pdg",
+      "bna-pdg",
+      "bh-bank-pdg",
+      "diplomat-ambassador",
+      "cpg-gct-pdg",
+      "tunisie-telecom-pdg",
+      "ooredoo-tunisie-dg",
+      "douane-dg",
+      "cnss-pdg",
+      "poulina-chairman",
+      "conect-president",
+      "utap-president",
+      "haute-instance-president",
+      "amt-president",
+      "mufti",
+      "csee-secretary-general",
+      "equipment-minister"
+    ],
+    "people": [
+      "mouna-siala"
+    ],
+    "questions": [
+      "q-cofaf-succession",
+      "q-seriati-chronology",
+      "q-dgsn-sequence-2014-2019",
+      "q-benali-officers-after-2011",
+      "q-confiscated-firms",
+      "q-business-family-map",
+      "q-nidaa-business-links",
+      "q-saied-military-relationship",
+      "q-informal-control",
+      "q-turnover-asymmetry",
+      "q-2011-elite-replacement",
+      "q-2021-networks",
+      "q-naoufel-saied-role",
+      "q-naoufel-giambrone",
+      "q-saied-family-network",
+      "q-saied-no-party",
+      "q-phosphate-counterfactual",
+      "q-customs-command",
+      "q-wikipedia-tiering",
+      "q-role-source-model"
+    ]
+  },
+  "countedInferences": [
+    {
+      "id": "p-media-attessia-ouertani",
+      "attributed": true,
+      "review": false
+    },
+    {
+      "id": "rel-fouad-mebazaa-rcd-party",
+      "attributed": true,
+      "review": false
+    },
+    {
+      "id": "rel-mohamed-ennaceur-nidaa-tounes-party",
+      "attributed": true,
+      "review": false
+    },
+    {
+      "id": "rel-moncef-marzouki-ltdh-institutional",
+      "attributed": true,
+      "review": false
+    },
+    {
+      "id": "rel-amel-ben-yedder-amen-bank-business",
+      "attributed": true,
+      "review": false
+    },
+    {
+      "id": "rel-conect-utica-political-conflict",
+      "attributed": true,
+      "review": false
+    },
+    {
+      "id": "rel-utap-ugtt-institutional",
+      "attributed": true,
+      "review": false
+    },
+    {
+      "id": "rel-cpg-ugtt-political-conflict",
+      "attributed": true,
+      "review": false
+    },
+    {
+      "id": "rel-beji-caid-essebsi-youssef-chahed-political-conflict",
+      "attributed": true,
+      "review": false
+    },
+    {
+      "id": "rel-wassila-bourguiba-presidency-reported-influence",
+      "attributed": true,
+      "review": false
+    },
+    {
+      "id": "rel-saida-sassi-bourguiba-family",
+      "attributed": true,
+      "review": false
+    },
+    {
+      "id": "rel-saida-sassi-bourguiba-reported-influence",
+      "attributed": true,
+      "review": false
+    },
+    {
+      "id": "own-state-alkarama-investec",
+      "attributed": true,
+      "review": true
+    },
+    {
+      "id": "own-state-stb-7154",
+      "attributed": true,
+      "review": false
+    },
+    {
+      "id": "board-bna-habib-benhadj-kouider",
+      "attributed": true,
+      "review": false
+    },
+    {
+      "id": "own-mabrouk-investec-100",
+      "attributed": true,
+      "review": false
+    },
+    {
+      "id": "own-state-investec-2011",
+      "attributed": true,
+      "review": false
+    },
+    {
+      "id": "election-locales-2023",
+      "attributed": true,
+      "review": true
+    },
+    {
+      "id": "dhif-succession-2025",
+      "attributed": true,
+      "review": false
+    },
+    {
+      "id": "isie-ordinance-544-2024",
+      "attributed": true,
+      "review": false
+    }
+  ],
+  "note": "Synthetic edits are test fixtures, not historical assertions. Before the Phase 1 fixes these probes are expected to be accepted (bypasses open); after the fixes the same probes must fail closed."
+}
