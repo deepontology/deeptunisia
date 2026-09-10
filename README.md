@@ -36,7 +36,7 @@ reachable during development; a reader on deeptunisia.org never touches it.
 
 The complete graph is <!--stat:graphKB-->4620<!--/stat--> KB as the internal
 bundle, and the public exports (dataset, CSVs, geographic layers, changelog)
-ship at <!--stat:shippedKB-->8230<!--/stat--> KB — both are computed by the
+ship at <!--stat:shippedKB-->8240<!--/stat--> KB — both are computed by the
 build, and `npm run test` fails if the README ever disagrees with them.
 
 ## The views
