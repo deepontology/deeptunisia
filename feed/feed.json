@@ -3,6 +3,46 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:african-manager:2c7890191144cdaa",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Les fournitures scolaires sous haute surveillance",
+      "link": "https://africanmanager.com/cette-initiative-qui-intervient-a-la-rentree-scolaire-a-pour/",
+      "published": "2026-09-10T16:12:12Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:02de4bd671e76ef1",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "La Tunisie au Forum des États membres de l’OCI",
+      "link": "https://africanmanager.com/participation-de-la-tunisie-a-la-premiere-session-du-forum-des-communautes-des-etats-membres-de-loci/",
+      "published": "2026-09-10T14:44:21Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:3f0191668b8cda99",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Accès à l’eau : 402 alertes citoyennes en août 2026",
+      "link": "https://africanmanager.com/acces-a-leau-402-alertes-citoyennes-en-aout-2026/",
+      "published": "2026-09-10T14:41:39Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:54f94bb119b08d24",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Formation spécialisée pour les recharges de véhicules électriques",
+      "link": "https://africanmanager.com/formation-specialisee-pour-les-recharges-de-vehicules-electriques/",
+      "published": "2026-09-10T13:13:45Z",
+      "lang": "fr",
+      "author": "Africanmanager"
+    },
+    {
       "id": "feed:african-manager:085cbd03c8bc7503",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -81,6 +121,16 @@
       "published": "2026-09-10T12:31:34Z",
       "lang": "fr",
       "author": "Africanmanager"
+    },
+    {
+      "id": "feed:african-manager:9c4e41446d036129",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "L’électricité tunisienne carbure au gaz de quelqu’un d’autre",
+      "link": "https://africanmanager.com/lelectricite-tunisienne-carbure-au-gaz-de-quelquun-dautre/",
+      "published": "2026-09-10T12:00:00Z",
+      "lang": "fr",
+      "author": "African Manager"
     },
     {
       "id": "feed:african-manager:6018b0171d28d0ad",
@@ -10917,51 +10967,6 @@
       "title": "Netanyahu affirme rejeter le plan de désarmement de Gaza du Conseil pour la paix",
       "link": "https://africanmanager.com/netanyahu-affirme-rejeter-le-plan-de-desarmement-de-gaza-du-conseil-pour-la-paix/",
       "published": "2026-08-09T13:23:27Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:a23e82a1e4ce9334",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Création d’un « SPEEDUP Tunisia Hub » à Tunis pour soutenir les PME et startups",
-      "link": "https://africanmanager.com/creation-dun-speedup-tunisia-hub-a-tunis-pour-soutenir-les-pme-et-startups/",
-      "published": "2026-08-09T13:22:19Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:85886a4d3bbcc57f",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Tunisie | Record des signalements de coupures d’eau en juillet",
-      "link": "https://kapitalis.com/tunisie/2026/08/09/tunisie-record-des-signalements-de-coupures-deau-en-juillet/",
-      "published": "2026-08-09T13:06:40Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:a29965873f126db8",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Des condamnés nettoient une plage à Djerba",
-      "link": "https://kapitalis.com/tunisie/2026/08/09/des-condamnes-nettoient-une-plage-a-djerba/",
-      "published": "2026-08-09T12:41:36Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:da562a1f217a5312",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Subvention américaine de 1,5 million de dollars pour un projet dans le phosphate tunisien !",
-      "link": "https://kapitalis.com/tunisie/2026/08/09/subvention-americaine-de-15-million-de-dollars-pour-un-projet-dans-le-phosphate-tunisien/",
-      "published": "2026-08-09T12:17:21Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:16dc82d0569e7d4d",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Nabeul : plus de 8.800 bouteilles d’eau minérale saisies pour suspicion de spéculation",
-      "link": "https://africanmanager.com/nabeul-plus-de-8-800-bouteilles-deau-minerale-saisies-pour-suspicion-de-speculation/",
-      "published": "2026-08-09T12:00:23Z",
       "lang": "fr"
     }
   ]
