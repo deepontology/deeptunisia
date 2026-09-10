@@ -1,6 +1,6 @@
 {
-  "generated": "2026-09-03T12:16:01.912Z",
-  "total": 944,
+  "generated": "2026-09-10T10:15:55.766Z",
+  "total": 956,
   "reviewed": 38,
   "queue": [
     {
@@ -414,6 +414,26 @@
       "title": "Suspicious death of prisoner Hamza Dridi; his mother breaks the silence"
     },
     {
+      "kind": "event",
+      "id": "ev-arp-petition-2026-08-29",
+      "confidence": "C",
+      "basis": "reported",
+      "risk": 1,
+      "sources": 2,
+      "reviewed": false,
+      "title": "~56 deputies demand an extraordinary ARP plenary"
+    },
+    {
+      "kind": "event",
+      "id": "ev-sumud-four-detention-2026-02",
+      "confidence": "C",
+      "basis": "reported",
+      "risk": 1,
+      "sources": 2,
+      "reviewed": false,
+      "title": "Four Sumud flotilla organisers held at Mornaguia; Naouar hunger strike"
+    },
+    {
       "kind": "licence",
       "id": "lic-cpg-phosphate-concession",
       "confidence": "C",
@@ -715,13 +735,13 @@
     },
     {
       "kind": "event",
-      "id": "ev-cpg-strike-2026-09",
+      "id": "ev-fitch-affirms-b-minus-2026-09",
       "confidence": "C",
       "basis": "reported",
       "risk": 1,
       "sources": 1,
       "reviewed": false,
-      "title": "CPG workers' 72-hour strike"
+      "title": "Fitch affirms Tunisia at B- with stable outlook"
     },
     {
       "kind": "event",
@@ -732,6 +752,46 @@
       "sources": 1,
       "reviewed": false,
       "title": "Libya's Dbeibah government holds crisis talks in Tunis"
+    },
+    {
+      "kind": "event",
+      "id": "ev-sabotage-declaration-2026-08-26",
+      "confidence": "C",
+      "basis": "reported",
+      "risk": 1,
+      "sources": 1,
+      "reviewed": false,
+      "title": "Saïed calls water and power cuts 'planned sabotage'"
+    },
+    {
+      "kind": "event",
+      "id": "ev-solar-309-authorisations-2026-09",
+      "confidence": "C",
+      "basis": "reported",
+      "risk": 1,
+      "sources": 1,
+      "reviewed": false,
+      "title": "309 solar projects authorised (455 MW)"
+    },
+    {
+      "kind": "event",
+      "id": "ev-tunisia-germany-accords-2026-08-31",
+      "confidence": "C",
+      "basis": "reported",
+      "risk": 1,
+      "sources": 1,
+      "reviewed": false,
+      "title": "Tunisia–Germany cooperation accords above EUR 100m"
+    },
+    {
+      "kind": "event",
+      "id": "ev-ugtt-strike-instance-2026-09-10",
+      "confidence": "C",
+      "basis": "reported",
+      "risk": 1,
+      "sources": 1,
+      "reviewed": false,
+      "title": "UGTT administrative instance to rule on general strike"
     },
     {
       "kind": "event",
@@ -1534,6 +1594,16 @@
       "title": "Migrant boat sinking off Zarzis (15 aboard)"
     },
     {
+      "kind": "event",
+      "id": "ev-yousfi-detention-2026-09",
+      "confidence": "B",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 4,
+      "reviewed": false,
+      "title": "Investigative journalist Mohamed Yousfi arrested, held, then jailed pending trial"
+    },
+    {
       "kind": "position",
       "id": "p-commerce-ben-mosbah",
       "confidence": "B",
@@ -1772,6 +1842,26 @@
       "sources": 3,
       "reviewed": false,
       "title": "Mohamed Brahmi is assassinated"
+    },
+    {
+      "kind": "event",
+      "id": "ev-complot-cassation-2026-09-03",
+      "confidence": "B",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 3,
+      "reviewed": false,
+      "title": "Court of Cassation upholds 'conspiracy' convictions"
+    },
+    {
+      "kind": "event",
+      "id": "ev-phoenix-express-2026-09",
+      "confidence": "B",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 3,
+      "reviewed": false,
+      "title": "Phoenix Express 2026 multinational naval exercise hosted in Tunisia"
     },
     {
       "kind": "event",
@@ -2705,6 +2795,26 @@
     },
     {
       "kind": "event",
+      "id": "ev-cpg-strike-2026-09",
+      "confidence": "B",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 2,
+      "reviewed": false,
+      "title": "CPG workers' 72-hour strike"
+    },
+    {
+      "kind": "event",
+      "id": "ev-fuel-strike-notice-2026-08-27",
+      "confidence": "B",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 2,
+      "reviewed": false,
+      "title": "UGTT strike notice for fuel transport, 23–24 September"
+    },
+    {
+      "kind": "event",
       "id": "ev-nafas-protest-2026-08-20",
       "confidence": "B",
       "basis": "reported",
@@ -2712,6 +2822,16 @@
       "sources": 2,
       "reviewed": false,
       "title": "Nafas march in Tunis against President Saied"
+    },
+    {
+      "kind": "event",
+      "id": "ev-sta-death-2026-09-08",
+      "confidence": "B",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 2,
+      "reviewed": false,
+      "title": "Businessman Lazhar Sta dies in detention"
     },
     {
       "kind": "event",
