@@ -6,7 +6,7 @@
     "n": 300,
     "requestedN": 300,
     "dataset": {
-      "path": "/home/adala/Projects/deep tunisia/src/generated/dataset.json",
+      "path": "src/generated/dataset.json",
       "counts": {
         "sources": 1229,
         "sourcesCited": 1191,
