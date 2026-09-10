@@ -2082,6 +2082,34 @@ console.log('\n  ── phone chrome ──');
 	await page.waitForTimeout(300);
 	const chips = await page.locator('.filter-sheet .lchip').count();
 	ok('phone filter sheet holds every layer', chips === 7, `${chips} chips`);
+	// The sheet used to carry the desktop centreing transform into its bottom-sheet
+	// form, which hung it half its width off the left edge — present in the DOM and
+	// fully "reachable" by selectors, but half off-screen for a thumb. Pin it inside
+	// the viewport instead.
+	const sheetBox = (await page.evaluate(`(() => {
+		const p = document.querySelector('.pop');
+		if (!p) return null;
+		const r = p.getBoundingClientRect();
+		return {
+			x: Math.round(r.x),
+			right: Math.round(r.right),
+			bottom: Math.round(r.bottom),
+			vw: window.innerWidth,
+			vh: window.innerHeight
+		};
+	})()`)) as { x: number; right: number; bottom: number; vw: number; vh: number } | null;
+	ok(
+		'phone filter sheet sits inside the viewport',
+		Boolean(
+			sheetBox &&
+				sheetBox.x <= 1 &&
+				sheetBox.right >= sheetBox.vw - 1 &&
+				sheetBox.bottom <= sheetBox.vh + 1
+		),
+		sheetBox
+			? `x=${sheetBox.x} right=${sheetBox.right}/${sheetBox.vw} bottom=${sheetBox.bottom}/${sheetBox.vh}`
+			: 'no sheet'
+	);
 	await page.keyboard.press('Escape');
 	await page.waitForTimeout(200);
 

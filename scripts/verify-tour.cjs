@@ -155,8 +155,37 @@ require('fs').mkdirSync(OUT, { recursive: true });
     const n = await m.evaluate(() => document.querySelectorAll('.dots i').length);
     console.log('mobile steps:', n);
     ok(n >= 7, 'mobile keeps at least seven steps, got ' + n);
-    for (let i = 0; i < 4; i++) { await m.locator('.card .go').click(); await m.waitForTimeout(450); }
-    await m.screenshot({ path: OUT + 'T-mobile.png' });
+    /* The card must never sit on top of the control it is describing. On a
+       phone it docks to the edge farthest from the spotlight, so what the card
+       names stays visible. Flat opening/closing steps dim the whole screen and
+       point at nothing, so only a real spotlight has a middle to keep clear —
+       and the card itself must stay inside the viewport rather than running a
+       long body off the screen. */
+    for (let i = 0; ; i++) {
+      // After the click: the spotlight travels for 380ms, so measure settled.
+      await m.waitForTimeout(700);
+      const g = await m.evaluate(() => {
+        const card = document.querySelector('.card[role="dialog"]');
+        const spot = document.querySelector('.spot');
+        if (!card || !spot) return null;
+        const c = card.getBoundingClientRect();
+        const s = spot.getBoundingClientRect();
+        const cx = s.left + s.width / 2, cy = s.top + s.height / 2;
+        return {
+          progress: card.querySelector('.progress').textContent,
+          flat: spot.classList.contains('flat'),
+          middleHidden: cx >= c.left && cx <= c.right && cy >= c.top && cy <= c.bottom,
+          cardInView: c.left >= 0 && c.right <= window.innerWidth + 1 && c.top >= 0 && c.bottom <= window.innerHeight + 1
+        };
+      });
+      if (!g) break;
+      if (i >= n + 1) { ok(false, 'mobile tour does not end', 'still open after ' + i + ' steps'); break; }
+      console.log('  mobile', g.progress, '| middle hidden:', g.middleHidden, '| card in view:', g.cardInView);
+      ok(!g.middleHidden || g.flat, 'mobile card leaves its target visible (' + g.progress + ')');
+      ok(g.cardInView, 'mobile card stays inside the viewport (' + g.progress + ')');
+      await m.screenshot({ path: OUT + 'T-mobile-' + String(i + 1).padStart(2, '0') + '.png' });
+      await m.locator('.card .go').click();
+    }
     const hasFilters = await m.evaluate(() => !!document.querySelector('[data-tour="filters"]'));
     ok(hasFilters, 'the filters button stands in for the dial on a phone');
   }
