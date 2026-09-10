@@ -1,5 +1,35 @@
 [
   {
+    "hash": "d4829e718",
+    "date": "2026-09-10T11:30:11+01:00",
+    "subject": "Daily sweep 2026-09-10: 12 events, 6 people, CPG correction, cutoff advance",
+    "kind": "revision",
+    "added": 627,
+    "removed": 15,
+    "files": [
+      {
+        "file": "data/events.yaml",
+        "added": 321,
+        "removed": 14
+      },
+      {
+        "file": "data/parameters.yaml",
+        "added": 5,
+        "removed": 1
+      },
+      {
+        "file": "data/people.yaml",
+        "added": 106,
+        "removed": 0
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 195,
+        "removed": 0
+      }
+    ]
+  },
+  {
     "hash": "68aaa5242",
     "date": "2026-09-03T00:16:08+01:00",
     "subject": "chore: review remaining unsubstantiated records — 10 source-check reviews, bucket 2/12→12/12",
