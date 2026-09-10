@@ -26,6 +26,14 @@
 	let card = $state<{ x: number; y: number } | null>(null);
 	let cardEl = $state<HTMLElement | null>(null);
 	let compact = $state(false);
+	/**
+	 * On a phone the card docks to whichever edge the spotlight is farthest
+	 * from, so it never sits on top of the control it is describing. The dock —
+	 * filters, timeline — lives at the bottom, which is why the old always-bottom
+	 * card covered exactly the steps that matter most. Centred steps (no target)
+	 * stay at the bottom.
+	 */
+	let dockTop = $state(false);
 
 	const step = $derived(tour.steps[tour.i]);
 	const last = $derived(tour.i === tour.steps.length - 1);
@@ -35,19 +43,24 @@
 		if (!step?.target) {
 			rect = null;
 			card = null;
+			dockTop = false;
 			return;
 		}
 		const el = document.querySelector(step.target);
 		if (!el) {
 			rect = null;
 			card = null;
+			dockTop = false;
 			return;
 		}
 		const r = el.getBoundingClientRect();
 		rect = { x: r.left - PAD, y: r.top - PAD, w: r.width + PAD * 2, h: r.height + PAD * 2 };
 
 		if (compact) {
-			card = null; // docked to the bottom by CSS instead
+			card = null; // docked to an edge by CSS instead
+			// A target whose centre is below the fold's middle gets the top edge,
+			// and vice versa. Physical pixels again, so RTL needs no second path.
+			dockTop = rect.y + rect.h / 2 > window.innerHeight / 2;
 			return;
 		}
 
@@ -125,6 +138,7 @@
 	<div
 		class="card"
 		class:compact
+		class:top={compact && dockTop}
 		class:centred={!rect && !compact}
 		bind:this={cardEl}
 		style:left={card ? `${card.x}px` : null}
@@ -221,15 +235,26 @@
 		width: 460px;
 		transition: none;
 	}
-	/* On a phone the card docks to the bottom and stops chasing the spotlight,
-	   which on a 390px viewport would cover the thing it is describing. */
+	/* On a phone the card docks to an edge and stops chasing the spotlight,
+	   which on a 390px viewport would cover the thing it is describing. Which
+	   edge depends on the step: a target in the lower half (the dock controls)
+	   puts the card at the top, a target in the upper half keeps it at the
+	   bottom. Steps about nothing stay at the bottom. The cap keeps a long body
+	   scrollable inside the card instead of running it off the screen. */
 	.card.compact {
 		inset-inline: 12px;
 		inset-block-end: calc(12px + var(--safe-b));
 		inset-block-start: auto;
 		width: auto;
+		max-height: calc(100dvh - 24px - var(--safe-t) - var(--safe-b));
+		overflow-y: auto;
+		overscroll-behavior: contain;
 		transform: none;
 		transition: none;
+	}
+	.card.compact.top {
+		inset-block-start: calc(12px + var(--safe-t));
+		inset-block-end: auto;
 	}
 
 	.progress {

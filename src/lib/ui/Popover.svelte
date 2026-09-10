@@ -121,6 +121,21 @@
 			position: fixed;
 			inset: auto 0 0 0;
 			top: auto;
+			/*
+			   The desktop rule centres with translate(-50%, -50%). Left in place it
+			   shifts the sheet half its own width off the left edge and half its
+			   height upward — the sheet hung off-screen and read as broken. A bottom
+			   sheet is already placed by its insets, so the centreing transform is
+			   explicitly cleared here rather than overridden per instance.
+			*/
+			transform: none;
+			/*
+			   Full-bleed, not centred. The desktop width cap (min(360px, …)) would
+			   otherwise over-constrain the box — left and right both set plus a
+			   fixed width resolves with left winning, leaving a dead gap down the
+			   right edge. With width auto the insets stretch it edge to edge.
+			*/
+			width: auto;
 			max-height: 80dvh;
 			overflow-y: auto;
 			overscroll-behavior: contain;

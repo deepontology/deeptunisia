@@ -168,6 +168,13 @@
 		flex-direction: column;
 		gap: var(--s-5);
 	}
+	/* Same as the settings panel: in a full-width bottom sheet a capped width
+	   pins the content to one side with dead space beside it. */
+	@media (max-width: 900px) {
+		.panel {
+			width: auto;
+		}
+	}
 	.head {
 		display: flex;
 		align-items: center;
