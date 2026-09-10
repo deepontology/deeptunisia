@@ -40,6 +40,12 @@ export interface FeedItem {
 	published: string;
 	/** BCP 47 primary subtag (`ar`, `fr`, `en`), or `und` when undetermined. */
 	lang: string;
+	/**
+	 * Byline exactly as the outlet published it, or absent when the feed carries
+	 * none. This is attribution, not assessment: the project makes no claim about
+	 * the article, and the name is displayed as received, never cleaned up.
+	 */
+	author?: string;
 }
 
 /** Plain-language statement of what this is, carried inside the data file itself. */
