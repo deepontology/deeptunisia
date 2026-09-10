@@ -83,7 +83,7 @@ function coordMessage(input: [number, number]): string {
 		DEFAULT_PARAMETERS.jurisdiction.gazette.sourcePrefixes.join(', ')
 	);
 	ok('default floor is Tunisian independence', DEFAULT_PARAMETERS.time.floor === '1956-03-20', DEFAULT_PARAMETERS.time.floor);
-	ok('default cutoff', DEFAULT_PARAMETERS.time.cutoff === '2026-08-25', DEFAULT_PARAMETERS.time.cutoff);
+	ok('default cutoff', DEFAULT_PARAMETERS.time.cutoff === '2026-09-10', DEFAULT_PARAMETERS.time.cutoff);
 	ok('default before-window is 8 years', DEFAULT_PARAMETERS.time.beforeWindowYears === 8, `${DEFAULT_PARAMETERS.time.beforeWindowYears} years`);
 	ok(
 		'default approx slack',
@@ -238,7 +238,7 @@ function coordMessage(input: [number, number]): string {
 		'metadata parity pin'
 	);
 	ok('emitted meta.floor is the epoch of 1956-03-20 UTC', ds.meta.floor === Date.UTC(1956, 2, 20), new Date(ds.meta.floor).toISOString());
-	ok('emitted meta.cutoff is the epoch of 2026-08-25 UTC', ds.meta.cutoff === Date.UTC(2026, 7, 25), new Date(ds.meta.cutoff).toISOString());
+	ok('emitted meta.cutoff is the epoch of 2026-09-10 UTC', ds.meta.cutoff === Date.UTC(2026, 8, 10), new Date(ds.meta.cutoff).toISOString());
 }
 
 // ---------------------------------------------------------------------------
@@ -255,7 +255,7 @@ function coordMessage(input: [number, number]): string {
 			reviewOverclaims('checked directly against the JORT decree text', ['jort-2020-123']) === false
 	);
 	ok('DATASET_FLOOR is restored to 1956-03-20', DATASET_FLOOR === Date.UTC(1956, 2, 20), new Date(DATASET_FLOOR).toISOString());
-	ok('DATASET_CUTOFF is restored to 2026-08-25', DATASET_CUTOFF === Date.UTC(2026, 7, 25), new Date(DATASET_CUTOFF).toISOString());
+	ok('DATASET_CUTOFF is restored to 2026-09-10', DATASET_CUTOFF === Date.UTC(2026, 8, 10), new Date(DATASET_CUTOFF).toISOString());
 	ok('approx slack is restored to ±365/±92 days', APPROX_SLACK_DAYS.year === 365 && APPROX_SLACK_DAYS.month === 92, JSON.stringify(APPROX_SLACK_DAYS));
 }
 
