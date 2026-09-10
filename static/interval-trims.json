@@ -355,25 +355,6 @@
     }
   },
   {
-    "kind": "relationship",
-    "id": "rel-judiciary-abdessalem-bouchlaka-prosecution",
-    "start": "2026-08",
-    "interval": {
-      "startEarliest": 1785542400000,
-      "startLatest": 1787616000000,
-      "endEarliest": null,
-      "endLatest": 1787616000000,
-      "startPrecision": "month",
-      "endPrecision": "unknown",
-      "status": "unknown",
-      "startClamped": true,
-      "raw": {
-        "start": "2026-08",
-        "end": null
-      }
-    }
-  },
-  {
     "kind": "event",
     "id": "military-security-created",
     "start": "1964",
@@ -630,6 +611,86 @@
       "raw": {
         "start": "~2026-08-18",
         "end": "~2026-08-18"
+      }
+    }
+  },
+  {
+    "kind": "event",
+    "id": "ev-fitch-affirms-b-minus-2026-09",
+    "start": "~2026-09-08",
+    "end": "~2026-09-08",
+    "interval": {
+      "startEarliest": 1780876800000,
+      "startLatest": 1796774400000,
+      "endEarliest": 1796774400000,
+      "endLatest": 1796774400000,
+      "startPrecision": "approx",
+      "endPrecision": "approx",
+      "status": "ended",
+      "trimmed": true,
+      "raw": {
+        "start": "~2026-09-08",
+        "end": "~2026-09-08"
+      }
+    }
+  },
+  {
+    "kind": "event",
+    "id": "ev-sumud-four-detention-2026-02",
+    "start": "~2026-02",
+    "end": "~2026-02",
+    "interval": {
+      "startEarliest": 1761955200000,
+      "startLatest": 1780271999000,
+      "endEarliest": 1780271999000,
+      "endLatest": 1780271999000,
+      "startPrecision": "approx",
+      "endPrecision": "approx",
+      "status": "ended",
+      "trimmed": true,
+      "raw": {
+        "start": "~2026-02",
+        "end": "~2026-02"
+      }
+    }
+  },
+  {
+    "kind": "event",
+    "id": "ev-solar-309-authorisations-2026-09",
+    "start": "~2026-09-07",
+    "end": "~2026-09-07",
+    "interval": {
+      "startEarliest": 1780790400000,
+      "startLatest": 1796688000000,
+      "endEarliest": 1796688000000,
+      "endLatest": 1796688000000,
+      "startPrecision": "approx",
+      "endPrecision": "approx",
+      "status": "ended",
+      "trimmed": true,
+      "raw": {
+        "start": "~2026-09-07",
+        "end": "~2026-09-07"
+      }
+    }
+  },
+  {
+    "kind": "event",
+    "id": "ev-ugtt-strike-instance-2026-09-10",
+    "start": "~2026-09-10",
+    "end": "~2026-09-10",
+    "interval": {
+      "startEarliest": 1781049600000,
+      "startLatest": 1796947200000,
+      "endEarliest": 1796947200000,
+      "endLatest": 1796947200000,
+      "startPrecision": "approx",
+      "endPrecision": "approx",
+      "status": "ended",
+      "trimmed": true,
+      "raw": {
+        "start": "~2026-09-10",
+        "end": "~2026-09-10"
       }
     }
   }
