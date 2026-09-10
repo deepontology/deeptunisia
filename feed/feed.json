@@ -3,6 +3,15 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:al-jazeera:2069061c272e1b89",
+      "outlet": "Al Jazeera",
+      "outletId": "al-jazeera",
+      "title": "Tunisian flotilla activists remain jailed as hunger striker worsens",
+      "link": "https://www.aljazeera.com/news/2026/9/10/tunisian-flotilla-activists-remain-jailed-as-hunger-striker-worsens?traffic_source=rss",
+      "published": "2026-09-10T02:41:50Z",
+      "lang": "en"
+    },
+    {
       "id": "feed:kapitalis:7260b7f8bed942b0",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -10791,15 +10800,6 @@
       "title": "Détroit d’Ormuz : L’obstination de Trump finira-t-elle par céder ?",
       "link": "https://africanmanager.com/detroit-dormuz-lobstination-de-trump-finira-t-elle-par-ceder/",
       "published": "2026-08-08T08:55:06Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:5eb2972010e020a4",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Un officiel américain prévoit un accord prochain entre l’Iran et Oman concernant le détroit d’Ormuz",
-      "link": "https://africanmanager.com/un-officiel-americain-prevoit-un-accord-prochain-entre-liran-et-oman-concernant-le-detroit-dormuz/",
-      "published": "2026-08-08T08:53:53Z",
       "lang": "fr"
     }
   ]
