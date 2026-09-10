@@ -55,6 +55,7 @@ import {
 import {
 	resolveInterval,
 	durationYears,
+	applyOngoingObservation,
 	DATASET_CUTOFF,
 	DATASET_FLOOR,
 	configureTime,
@@ -767,6 +768,51 @@ function safeInterval(
 }
 
 /**
+ * Latest publication date among a record's sources — the observation an
+ * `ongoing` interval is checked against. Undated sources contribute nothing;
+ * an interval with no dated source cannot be confirmed at the cutoff.
+ */
+const sourceDateById = new Map<string, number>();
+for (const source of sources) {
+	if (!source.date) continue;
+	const t = Date.parse(source.date);
+	if (!Number.isNaN(t)) sourceDateById.set(source.id, t);
+}
+
+/**
+ * Resolve an interval and settle `ongoing` against its evidence.
+ *
+ * `ongoing` claims the holder is positively in place at the dataset cutoff.
+ * That requires an observation within the engine's confirmation window; a stale
+ * or undated record is downgraded to `last-verified` (certainty stops at the
+ * last observation) and the build warns. This is a research backlog item, not a
+ * silent edit: the warning names the record, and the emitted interval says what
+ * the evidence actually supports.
+ */
+function settledInterval(
+	where: string,
+	record: { sources?: string[] },
+	spec: { start?: string | null; end?: string | null },
+	opts?: { allowEnvelopeTrim?: boolean }
+): ResolvedInterval {
+	const raw = safeInterval(where, spec, opts);
+	if (raw.status !== 'ongoing') return raw;
+	let latest: number | null = null;
+	for (const id of record.sources ?? []) {
+		const t = sourceDateById.get(id);
+		if (t !== undefined && (latest === null || t > latest)) latest = t;
+	}
+	const settled = applyOngoingObservation(raw, latest);
+	if (settled.status !== 'ongoing') {
+		warn(
+			where,
+			'ongoing with no source dated within 90 days of the cutoff — downgraded to last-verified'
+		);
+	}
+	return settled;
+}
+
+/**
  * V27 — emit both bases when an authored basis overrides the grade-implied one.
  *
  * The override changes the label a reader sees, so the dataset carries what the
@@ -799,8 +845,9 @@ function derivedBasisField(record: {
 }
 
 const resolvedPositions = positions.map((pos) => {
-	const interval = safeInterval(
+	const interval = settledInterval(
 		`position ${pos.id}`,
+		pos,
 		{ start: pos.start, end: pos.end },
 		// V22: an over-wide envelope may only be trimmed when the record itself
 		// records the disagreement as a dispute; otherwise the span is a failure.
@@ -918,8 +965,9 @@ const resolvedRelationships = relationships.map((rel) => {
 		// V14: the published direction semantics, so a reader and an editor see the
 		// same orientation contract the validator enforces.
 		direction: EDGE_DIRECTION[rel.type],
-		interval: safeInterval(
+		interval: settledInterval(
 			`relationship ${rel.from}->${rel.to}`,
+			rel,
 			{ start: rel.start, end: rel.end },
 			{ allowEnvelopeTrim: (rel.disputes?.length ?? 0) > 0 }
 		)
@@ -1129,8 +1177,9 @@ for (const rel of resolvedRelationships) {
 const resolvedEvents = events.map((ev) => ({
 	...ev,
 	...basisFields(ev),
-	interval: safeInterval(
+	interval: settledInterval(
 		`event ${ev.id}`,
+		ev,
 		{ start: ev.date, end: ev.date_end ?? ev.date },
 		{ allowEnvelopeTrim: (ev.disputes?.length ?? 0) > 0 }
 	)
@@ -1275,7 +1324,7 @@ for (const ev of resolvedEvents) {
 
 const resolvedEras = eras.map((era) => ({
 	...era,
-	interval: safeInterval(`era ${era.id}`, { start: era.start, end: era.end })
+	interval: settledInterval(`era ${era.id}`, era, { start: era.start, end: era.end })
 }));
 
 const resolvedAgreements = agreements.map((ag) => ({
@@ -1297,7 +1346,7 @@ const resolvedCompanies = companies.map((co) => ({
 const resolvedContracts = contracts.map((c) => ({
 	...c,
 	...basisFields(c),
-	interval: resolveInterval({ start: c.start ?? null, end: c.end ?? null })
+	interval: settledInterval(`contract ${c.id}`, c, { start: c.start ?? null, end: c.end ?? null })
 }));
 const resolvedLicences = licences.map((l) => ({
 	...l,
@@ -1310,7 +1359,7 @@ const resolvedDeclarations = declarations.map((d) => ({
 const resolvedEducation = education.map((e) => ({
 	...e,
 	...basisFields(e),
-	interval: resolveInterval({ start: e.start ?? null, end: e.end ?? null })
+	interval: settledInterval(`education ${e.id}`, e, { start: e.start ?? null, end: e.end ?? null })
 }));
 
 // Editorial queue (spec §13.1): every unreviewed claim record across ALL kinds,
@@ -1425,7 +1474,7 @@ for (const r of regions) {
 const resolvedInstitutions = institutions.map((inst) => ({
 	...inst,
 	...derivedBasisField(inst),
-	interval: safeInterval(`institution ${inst.id}`, inst.active),
+	interval: settledInterval(`institution ${inst.id}`, inst, inst.active),
 	group: groupMap.get(inst.id) ?? 'Other',
 	// Spec §9: company-like entities get a derived timeline too.
 	timeline: COMPANY_TYPES.has(inst.type) ? buildTimeline(inst.id) : []
@@ -2531,6 +2580,8 @@ export interface Interval {
 	startPrecision: Precision;
 	endPrecision: Precision;
 	status: IntervalStatus;
+	/** The certainty horizon: certain activity never runs past this instant. */
+	lastObserved: number | null;
 	raw: { start: string | null; end: string | null };
 }
 
