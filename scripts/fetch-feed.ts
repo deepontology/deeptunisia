@@ -21,7 +21,14 @@
  * ── What is stored ────────────────────────────────────────────────────────────
  *
  * A stable id, the outlet's name and its institution id in the graph, the headline,
- * the link, the publication timestamp in ISO 8601 UTC, and the language.
+ * the link, the publication timestamp in ISO 8601 UTC, the language, and the byline
+ * when the outlet publishes one.
+ *
+ * The byline is attribution, not assessment: it is the outlet's own statement of who
+ * wrote the piece, carried verbatim so a reader sees the same name the outlet shows.
+ * It is `dc:creator` (RSS) or `author > name` (Atom), and it is absent whenever the
+ * feed omits it — BBC and Al Jazeera publish none, and African Manager publishes only
+ * its own name. It is never inferred, guessed or filled in from anywhere else.
  *
  * Nothing else. In particular **no article body, no `content:encoded`, and no
  * description or excerpt** — those are the outlets' copyright, and storing even a
@@ -197,6 +204,11 @@ interface FeedItem {
 	published: string;
 	/** BCP 47 primary subtag, or `und` when it could not be determined. */
 	lang: string;
+	/**
+	 * Byline exactly as the outlet published it. Omitted when the feed carries none.
+	 * This is attribution metadata, not a project claim: no grade applies to it.
+	 */
+	author?: string;
 }
 
 interface FeedFile {
@@ -257,6 +269,32 @@ function cleanTitle(raw: string): string {
 		.replace(/<[^>]*>/g, ' ')
 		.replace(/\s+/g, ' ')
 		.trim();
+}
+
+/**
+ * Byline as the outlet published it, flattened and bounded, or '' when there is
+ * nothing usable.
+ *
+ * A bare email address is refused: RSS 2.0 puts the author's address in `<author>`,
+ * and republishing a journalist's address scraped from a feed we do not control
+ * would be worse than showing no byline. Nothing else is altered — `webmaster
+ * kapitalis` is a byline the outlet chose, not something to tidy into a person.
+ */
+function cleanAuthor(raw: string): string {
+	const clean = raw.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+	if (!clean.length || clean.length > 200) return '';
+	if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(clean)) return '';
+	return clean;
+}
+
+/** RSS `dc:creator` is text; Atom `author` is an object with a `name` child. */
+function feedAuthor(node: unknown): string {
+	const first = asArray(node)[0];
+	if (first && typeof first === 'object') {
+		const rec = first as Record<string, unknown>;
+		return cleanAuthor(text(rec.name) || text(first));
+	}
+	return cleanAuthor(text(first));
 }
 
 function escapeRe(s: string): string {
@@ -463,6 +501,8 @@ interface RawEntry {
 	title: string;
 	link: string;
 	date: string;
+	/** Byline as published, or '' when the feed carries none. Never inferred. */
+	author: string;
 }
 
 /**
@@ -484,7 +524,8 @@ function extractEntries(xml: string): RawEntry[] {
 			return {
 				title: cleanTitle(text(item.title)),
 				link: text(item.link) || guidUrl,
-				date: text(item.pubDate) || text(item['dc:date'])
+				date: text(item.pubDate) || text(item['dc:date']),
+				author: feedAuthor(item['dc:creator']) || feedAuthor(item.author)
 			};
 		});
 	}
@@ -499,7 +540,8 @@ function extractEntries(xml: string): RawEntry[] {
 			return {
 				title: cleanTitle(text(entry.title)),
 				link: attr(alternate, 'href') || text(entry.link) || text(entry.id),
-				date: text(entry.published) || text(entry.updated)
+				date: text(entry.published) || text(entry.updated),
+				author: feedAuthor(entry.author)
 			};
 		});
 	}
@@ -531,7 +573,7 @@ function readArchive(): FeedItem[] {
 
 /** Fixed key order, so a re-run that changes nothing produces a byte-identical file. */
 function orderItem(item: FeedItem): FeedItem {
-	return {
+	const ordered: FeedItem = {
 		id: item.id,
 		outlet: item.outlet,
 		outletId: item.outletId,
@@ -540,11 +582,22 @@ function orderItem(item: FeedItem): FeedItem {
 		published: item.published,
 		lang: item.lang
 	};
+	// Appended only when present, so an item without a byline keeps exactly the
+	// shape it had before the field existed.
+	if (item.author) ordered.author = item.author;
+	return ordered;
 }
 
 // ── Run ──────────────────────────────────────────────────────────────────────
 
-async function fetchOutlet(outlet: Outlet, seen: { links: Set<string>; titles: Set<string> }) {
+async function fetchOutlet(
+	outlet: Outlet,
+	seen: { links: Set<string>; titles: Set<string> },
+	/** Archived items keyed by canonical link, for byline enrichment only. */
+	archivedByLink: Map<string, FeedItem>,
+	/** Canonical link -> byline, for records that lack one. Filled in place. */
+	enrichment: Map<string, string>
+) {
 	const result: FeedResult = {
 		outlet,
 		fetched: 0,
@@ -604,7 +657,16 @@ async function fetchOutlet(outlet: Outlet, seen: { links: Set<string>; titles: S
 		}
 
 		const tKey = titleKey(outlet.id, entry.title);
-		if (seen.links.has(canonical) || seen.titles.has(tKey)) continue;
+		if (seen.links.has(canonical) || seen.titles.has(tKey)) {
+			// The item is already archived, and the archive keeps what it first stored:
+			// a later retitle must not rewrite history. A byline is the one thing that
+			// may be completed, because the outlet is re-declaring its own attribution
+			// for the same link, and a record with no byline has nothing to contradict.
+			// A byline already present is never replaced.
+			const archived = archivedByLink.get(canonical);
+			if (entry.author && archived && !archived.author) enrichment.set(canonical, entry.author);
+			continue;
+		}
 		seen.links.add(canonical);
 		seen.titles.add(tKey);
 
@@ -616,7 +678,8 @@ async function fetchOutlet(outlet: Outlet, seen: { links: Set<string>; titles: S
 				title: entry.title,
 				link: entry.link,
 				published,
-				lang: detectLang(entry.title, entry.link, outlet.declared)
+				lang: detectLang(entry.title, entry.link, outlet.declared),
+				author: entry.author || undefined
 			})
 		);
 	}
@@ -633,19 +696,26 @@ async function main() {
 	// archive is a record of what was published and when we saw it; rewriting an
 	// entry because the outlet later retitled the piece would make it unfaithful.
 	const seen = { links: new Set<string>(), titles: new Set<string>() };
+	const archivedByLink = new Map<string, FeedItem>();
 	for (const item of existing) {
 		try {
-			seen.links.add(canonicalLink(item.link));
+			const canonical = canonicalLink(item.link);
+			seen.links.add(canonical);
+			archivedByLink.set(canonical, item);
 		} catch {
 			seen.links.add(item.link);
 		}
 		seen.titles.add(titleKey(item.outletId, item.title));
 	}
 
+	// Byline-only enrichment, applied after the fetch: never a retitle, never a
+	// republish, never a replacement of a byline already stored.
+	const enrichment = new Map<string, string>();
+
 	const settled = await Promise.all(
 		OUTLETS.map(async (outlet) => {
 			try {
-				return await fetchOutlet(outlet, seen);
+				return await fetchOutlet(outlet, seen, archivedByLink, enrichment);
 			} catch (err) {
 				return {
 					result: {
@@ -662,7 +732,19 @@ async function main() {
 		})
 	);
 
-	const merged = [...existing.map(orderItem), ...settled.flatMap((s) => s.fresh)];
+	const enriched = existing.map((item) => {
+		if (item.author) return item;
+		let canonical: string;
+		try {
+			canonical = canonicalLink(item.link);
+		} catch {
+			return item;
+		}
+		const author = enrichment.get(canonical);
+		return author ? { ...item, author } : item;
+	});
+
+	const merged = [...enriched.map(orderItem), ...settled.flatMap((s) => s.fresh)];
 	merged.sort((a, b) =>
 		a.published === b.published
 			? a.id.localeCompare(b.id)
