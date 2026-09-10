@@ -16084,3 +16084,109 @@
     - lapresse-zouari-equipement-2025
     - pm-gov-zouari-2025
     - tunisiatv-zouari-industrie-2026
+- id: mohamed-yousfi
+  name_en: Mohamed Yousfi
+  name_fr: Mohamed Yousfi
+  aliases: [Mohamed El Yousfi]
+  layers: [media]
+  tagline: "Investigative journalist; editor-in-chief of Al Qatiba"
+  summary: >-
+    Editor-in-chief of the investigative outlet Al Qatiba. Arrested 4
+    September 2026, placed in garde à vue, then jailed under a dépôt warrant
+    of 8 September 2026 from the Tunis economic-financial judicial pole; the
+    SNJT and press unions describe the case as targeting his journalism,
+    while the relayed judicial charges cite illicit enrichment and money
+    laundering. Person and detention absent from the graph.
+  confidence: B
+  basis: reported
+  sources:
+    - aljazeera-yousfi-arrest-2026-09-04
+    - rfi-yousfi-rally-2026-09-09
+    - african-manager-yousfi-depot-2026-09-08
+- id: wael-naouar
+  name_en: Wael Naouar
+  name_fr: Wael Naouar
+  layers: [civil]
+  tagline: "Sumud flotilla steering-committee member; detained at Mornaguia"
+  summary: >-
+    Member of the Global Sumud Flotilla steering committee, held in
+    pre-trial detention at Mornaguia since ~February 2026 with three fellow
+    organisers; on hunger strike since 16 August 2026 with deteriorating
+    health as reported 10 September 2026. All single-outlet (Al Jazeera)
+    claims — verify against a Tunisian judicial source or the flotilla
+    committee before import.
+  confidence: C
+  basis: reported
+  verification: needs-primary-source
+  attributed_to: Al Jazeera
+  falsifiable_by: TAP or judicial-pole statement; Global Sumud Flotilla committee communiqué
+  sources:
+    - aljazeera-sumud-2026-09-10
+- id: nabil-channoufi
+  name_en: Nabil Channoufi
+  name_fr: Nabil Channoufi
+  layers: [civil]
+  tagline: "Sumud flotilla organiser; detained at Mornaguia"
+  summary: >-
+    One of four Tunisian Global Sumud Flotilla organisers reported held in
+    pre-trial detention at Mornaguia since ~February 2026. Single-outlet
+    claim — verify before import.
+  confidence: C
+  basis: reported
+  verification: needs-primary-source
+  attributed_to: Al Jazeera
+  falsifiable_by: TAP or judicial-pole statement; Global Sumud Flotilla committee communiqué
+  sources:
+    - aljazeera-sumud-2026-09-02
+- id: ghassan-henchiri
+  name_en: Ghassan Henchiri
+  name_fr: Ghassan Henchiri
+  layers: [civil]
+  tagline: "Sumud flotilla organiser; detained at Mornaguia"
+  summary: >-
+    One of four Tunisian Global Sumud Flotilla organisers reported held in
+    pre-trial detention at Mornaguia since ~February 2026. Single-outlet
+    claim — verify before import.
+  confidence: C
+  basis: reported
+  verification: needs-primary-source
+  attributed_to: Al Jazeera
+  falsifiable_by: TAP or judicial-pole statement; Global Sumud Flotilla committee communiqué
+  sources:
+    - aljazeera-sumud-2026-09-02
+- id: ghassan-boughdiri
+  name_en: Ghassan Boughdiri
+  name_fr: Ghassan Boughdiri
+  layers: [civil]
+  tagline: "Sumud flotilla organiser; detained at Mornaguia"
+  summary: >-
+    One of four Tunisian Global Sumud Flotilla organisers reported held in
+    pre-trial detention at Mornaguia since ~February 2026. Single-outlet
+    claim — verify before import. Not to be confused with the Boughdiri
+    ministers already in the graph.
+  confidence: C
+  basis: reported
+  verification: needs-primary-source
+  attributed_to: Al Jazeera
+  falsifiable_by: TAP or judicial-pole statement; Global Sumud Flotilla committee communiqué
+  sources:
+    - aljazeera-sumud-2026-09-02
+- id: lazhar-sta
+  name_en: Lazhar Sta
+  name_fr: Lazhar Sta
+  layers: [economic]
+  tagline: "Businessman; died in detention September 2026"
+  death: "2026-09-08"
+  summary: >-
+    Tunisian businessman reported as a former director-general of Carthage
+    Cement and sentenced to six years in June 2026; died in detention on the
+    night of 7–8 September 2026. The career and sentence details need a
+    primary check (verdict record) before import; the death itself is
+    multi-outlet reported. Same evidentiary standard as any business figure.
+  confidence: B
+  basis: reported
+  falsifiable_by: June 2026 verdict record; court or prison-administration statement on the death
+  sources:
+    - kapitalis-sta-deces-2026-09-08
+    - african-manager-sta-deces-2026-09-08
+
