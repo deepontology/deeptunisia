@@ -95,6 +95,23 @@
 		return list;
 	});
 
+	/**
+	 * The archive holds 1,200 headlines; rendering all of them makes the page an
+	 * endless scroll. The first page renders, the rest waits behind a button, and
+	 * any filter change restarts at the first page.
+	 */
+	const PAGE = 50;
+	let shown = $state(PAGE);
+	const visible = $derived(rows.slice(0, shown));
+	const remaining = $derived(rows.length - visible.length);
+
+	$effect(() => {
+		void outletFilter;
+		void langFilter;
+		void onlyLinked;
+		shown = PAGE;
+	});
+
 	const linkedCount = $derived(feedItems.filter((i) => linksFor(i.title).length > 0).length);
 
 	/** An entity id to a display name, in the reader's language. */
@@ -147,10 +164,16 @@
 		</div>
 
 		<ol class="items">
-			{#each rows as item (item.id)}
+			{#each visible as item (item.id)}
 				<li>
 					<div class="meta">
 						<time datetime={item.published}>{when(item.published)}</time>
+						{#if item.author}
+							<!-- The outlet's own byline, shown verbatim. `dir="auto"` because an
+							     outlet can publish a name in Arabic, French or Latin script and we
+							     have no language for the name itself. -->
+							<span class="author" dir="auto">{t('feed.by')} {item.author}</span>
+						{/if}
 						<span class="outlet">{item.outlet}</span>
 						<span class="lang mono">{item.lang}</span>
 					</div>
@@ -178,6 +201,17 @@
 
 		{#if rows.length === 0}
 			<p class="empty">{t('feed.empty')}</p>
+		{/if}
+
+		{#if rows.length > 0}
+			<div class="more">
+				<p class="count">{format(app.locale, 'feed.showing', { shown: visible.length, total: rows.length })}</p>
+				{#if remaining > 0}
+					<Button variant="outline" onclick={() => (shown += PAGE)}>
+						{t('feed.showMore')}
+					</Button>
+				{/if}
+			</div>
 		{/if}
 
 		<div class="foot">
@@ -303,6 +337,11 @@
 	.outlet {
 		color: var(--text-muted);
 	}
+	/* Same weight as the outlet; the name is metadata about who published it, not a
+	   credential and not an assessment of the piece. */
+	.author {
+		color: var(--text-muted);
+	}
 	.lang {
 		margin-inline-start: auto;
 		text-transform: uppercase;
@@ -363,6 +402,19 @@
 	.src:hover {
 		color: var(--text-secondary);
 		text-decoration: underline;
+	}
+
+	.more {
+		display: flex;
+		align-items: center;
+		gap: var(--s-5);
+		max-width: 900px;
+		margin-block-start: var(--s-5);
+	}
+	.count {
+		margin: 0;
+		font-size: var(--t-xs);
+		color: var(--text-muted);
 	}
 
 	.empty,
