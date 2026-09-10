@@ -4145,26 +4145,333 @@
   location: [gov-gafsa]
   institutions: [cpg]
   summary: >-
-    The agents and employees of the Compagnie des Phosphates de Gafsa announced
-    in mid-August 2026 a strike for 1–3 September. Demands are not detailed in
-    the report carried here; phosphate output is the strategic exposure. At
-    writing time the strike was announced, not observed — its outcome is open.
+    The agents and employees of the Compagnie des Phosphates de Gafsa struck on
+    1–3 September 2026 after announcing the stoppage in mid-August. Kapitalis,
+    relaying Diwan FM, reports the strike began 1 September across all
+    administrative services with ~95% participation at 08h, per UGTT
+    mining-federation unionist Rim Helal. Detailed demands (collective
+    agreement, 2016–2017 increases, subcontracting, board seat, GCT indemnity)
+    are relayed from BusinessNews without a captured citation — verify before
+    adding. Phosphate output remains the strategic exposure.
   summary_fr: >-
-    Les agents et employés de la Compagnie des Phosphates de Gafsa ont annoncé
-    mi-août 2026 une grève du 1er au 3 septembre. Les revendications ne sont
-    pas détaillées dans le reportage source ; l'enjeu stratégique est la
-    production phosphatière. Au moment de la rédaction, la grève était annoncée,
-    non observée — son issue reste ouverte.
+    Les agents et employés de la Compagnie des Phosphates de Gafsa ont fait
+    grève du 1er au 3 septembre 2026, après l'avoir annoncée mi-août.
+    Kapitalis, relayant Diwan FM, rapporte un démarrage le 1er septembre dans
+    tous les services administratifs avec ~95 % de participation à 08h, selon
+    la syndicaliste Rim Helal (fédération des mines de l'UGTT). Le détail des
+    revendications (convention collective, augmentations 2016–2017,
+    sous-traitance, siège au conseil, indemnité GCT) est relayé de
+    BusinessNews sans citation capturée — à vérifier avant ajout. L'enjeu
+    stratégique reste la production phosphatière.
   summary_fr_by: model-reviewed
   summary_ar: >-
-    أعلن أعوان وعمال شركة فوسفات قفصة في منتصف أوت 2026 عن إضراب من 1 إلى 3 سبتمبر.
-    لا تفصّل المصادر المطالب؛ الرهان الاستراتيجي هو إنتاج الفوسفاط. عند كتابة هذا
-    السجل كان الإضراب معلَنًا لا مرصودًا بعد، ونتيجته مفتوحة.
+    أضرب أعوان وعمال شركة فوسفات قفصة من 1 إلى 3 سبتمبر 2026 بعد إعلان الإضراب
+    في منتصف أوت. وتنقل كابيتاليس عن ديوان أف أم بدء الإضراب يوم 1 سبتمبر في
+    جميع المصالح الإدارية بنسبة مشاركة تناهز 95% عند الثامنة صباحًا، وفق
+    النقابية ريم هلال (الجامعة العامة للمناجم). أما تفاصيل المطالب (الاتفاقية
+    المشتركة، زيادات 2016–2017، المناولة، مقعد بمجلس الإدارة، منحة نهاية
+    الخدمة) فمتناقلة عن بيزنس نيوز دون توثيق مضبوط — يجب التحقق قبل الإضافة.
+    ويبقى إنتاج الفوسفاط الرهان الاستراتيجي.
   summary_ar_by: model-reviewed
+  confidence: B
+  basis: reported
+  verification: needs-primary-source
+  attributed_to: Kapitalis (via Diwan FM); African Manager
+  falsifiable_by: UGTT regional statements or production-stoppage reporting in September; BusinessNews 17 August 2026 preavis URL for the demands detail
+  sources:
+    - african-manager-cpg-greve-2026
+    - kapitalis-cpg-greve-2026-09-01
+- id: ev-fitch-affirms-b-minus-2026-09
+  date: "~2026-09-08"
+  title_en: "Fitch affirms Tunisia at B- with stable outlook"
+  title_fr: "Fitch confirme la note de la Tunisie à « B- », perspective stable"
+  category: economic
+  subcategory: sovereign-rating
+  summary: >-
+    Fitch Ratings affirmed Tunisia's long-term issuer rating at B- with a
+    stable outlook, as reported 9 September 2026 by African Manager (the
+    agency action itself is dated here ~8 September; confirm against Fitch's
+    rating-action page before import). Figures below are Fitch's projections
+    as relayed by that outlet on that date, not graph facts: 2026 budget
+    deficit 6.4% of GDP, public debt ~85% of GDP through 2028, current
+    account deficit 3.9% in 2026, reserves 3.3 months of external payments,
+    and full repayment of the EUR 700m eurobond maturing July 2026 via
+    central-bank loans. No prior rating-action event exists in the graph.
   confidence: C
   basis: reported
   verification: needs-primary-source
   attributed_to: African Manager
-  falsifiable_by: UGTT regional statements or production-stoppage reporting in September
+  falsifiable_by: Fitch Ratings sovereign rating-action page for Tunisia, September 2026
   sources:
-    - african-manager-cpg-greve-2026
+    - african-manager-fitch-b-2026-09-09
+- id: ev-phoenix-express-2026-09
+  date: "2026-09-06"
+  date_end: "2026-09-18"
+  title_en: "Phoenix Express 2026 multinational naval exercise hosted in Tunisia"
+  title_fr: "L'exercice naval multinational Phoenix Express 2026 accueilli en Tunisie"
+  category: military
+  subcategory: joint-exercise
+  institutions: [ministry-defence]
+  summary: >-
+    Tunisia hosted the Phoenix Express 2026 multinational maritime exercise
+    from 6 to 18 September 2026 at La Goulette and Bizerte, with US AFRICOM
+    (reported end date 18 September; one US Navy imagery set is dated 7
+    September, so opening ceremonies may fall on the 7th — the one-day
+    discrepancy is not smoothed here). African Manager, relaying the Defence
+    Ministry communiqué, reports ~400 personnel and observers and lists
+    Algeria, Libya, Morocco, Egypt, Turkey, Italy, France, Spain, Belgium,
+    Georgia and the United States alongside host Tunisia; Kapitalis reports
+    thirteen participating countries. Stated aims are maritime security,
+    smuggling and trafficking interdiction. No Phoenix event exists in the graph.
+  confidence: B
+  basis: reported
+  falsifiable_by: Tunisian Defence Ministry communiqué of 5 September 2026 or the US AFRICOM/NAVAF exercise release
+  sources:
+    - african-manager-phoenix-mod-2026-09-09
+    - african-manager-phoenix-26-2026-09-05
+    - kapitalis-phoenix-2026-09-06
+- id: ev-yousfi-detention-2026-09
+  date: "2026-09-04"
+  title_en: "Investigative journalist Mohamed Yousfi arrested, held, then jailed pending trial"
+  title_fr: "Le journaliste d'investigation Mohamed Yousfi arrêté, gardé à vue puis placé sous mandat de dépôt"
+  category: legal
+  subcategory: press-detention
+  actors: [mohamed-yousfi]
+  institutions: [snjt]
+  summary: >-
+    Mohamed Yousfi, editor-in-chief of the investigative outlet Al Qatiba,
+    was arrested 4 September 2026, placed in garde à vue, and on 8 September
+    an investigating judge of the Tunis economic-financial judicial pole
+    issued a dépôt warrant against him after questioning. The charges as
+    relayed by African Manager, citing a TAP-quoted judicial source, are
+    conspiracy to harm persons and property, illicit enrichment, and
+    organised money laundering via his professional position — press-relayed
+    charges, not adjudicated facts. RFI reported a 9 September support rally
+    and an interrupted interrogation; the SNJT declared a press emergency.
+  confidence: B
+  basis: reported
+  contested:
+    - framing: "The arrest targets Yousfi's journalism and criticism of the authorities"
+      held_by: "SNJT"
+      source: kapitalis-yousfi-snjt-2026-09-08
+    - framing: "The case concerns illicit enrichment and money laundering through an association"
+      held_by: "judicial source quoted by TAP via African Manager"
+      source: african-manager-yousfi-depot-2026-09-08
+  falsifiable_by: TAP dispatch of 8 September 2026 or the judicial-pole charging order
+  sources:
+    - aljazeera-yousfi-arrest-2026-09-04
+    - rfi-yousfi-rally-2026-09-09
+    - african-manager-yousfi-depot-2026-09-08
+    - kapitalis-yousfi-snjt-2026-09-08
+- id: ev-sumud-four-detention-2026-02
+  date: "~2026-02"
+  title_en: "Four Sumud flotilla organisers held at Mornaguia; Naouar hunger strike"
+  title_fr: "Quatre organisateurs de la flottille Soumoud détenus à la Mornaguia ; grève de la faim de Naouar"
+  category: legal
+  subcategory: pre-trial-detention
+  actors: [wael-naouar, nabil-channoufi, ghassan-henchiri, ghassan-boughdiri]
+  summary: >-
+    Four Tunisian organisers of the Global Sumud Flotilla — Wael Naouar,
+    Nabil Channoufi, Ghassan Henchiri and Ghassan Boughdiri — have been held
+    in pre-trial detention at Mornaguia since ~February 2026 after
+    rearrest following their return from Israeli detention in October 2025,
+    according to Al Jazeera's September reporting. The reported probe, via
+    the economic-financial judicial pole, concerns suspicious financial
+    flows; the money-laundering characterisation is single-outlet and stays
+    attributed. Naouar has been on hunger strike since 16 August 2026; a
+    hearing is reported for 16 September 2026 — verify before that date.
+  confidence: C
+  basis: reported
+  verification: needs-primary-source
+  attributed_to: Al Jazeera
+  falsifiable_by: TAP or judicial-pole statement on the charges; Global Sumud Flotilla committee communiqué
+  sources:
+    - aljazeera-sumud-2026-09-02
+    - aljazeera-sumud-2026-09-10
+- id: ev-complot-cassation-2026-09-03
+  date: "2026-09-03"
+  title_en: "Court of Cassation upholds 'conspiracy' convictions"
+  title_fr: "La Cour de cassation confirme les condamnations de l'affaire du « complot »"
+  category: legal
+  subcategory: mass-trial
+  institutions: [court-of-cassation]
+  summary: >-
+    The Court of Cassation rejected the final appeals in the 'conspiracy
+    against state security' case and confirmed the appeal-court verdicts of
+    28 November 2025, as reported 3–4 September 2026 by Al Jazeera (via
+    AFP/Reuters), Kapitalis and African Manager. African Manager reports 46
+    pourvois examined; Al Jazeera reports 40 appellants with sentences up to
+    the tens of years, naming among them Ferjani, Ghannouchi and the Chebbi
+    brothers — sentences and headcounts as relayed, not yet checked against
+    the court's dispositif. The families' coordination announced a press
+    conference for 4 September at the Republican Party seat.
+  confidence: B
+  basis: reported
+  falsifiable_by: Court of Cassation dispositif or a full legal-press account (e.g. Kapitalis follow-up)
+  sources:
+    - aljazeera-complot-cassation-2026-09-03
+    - kapitalis-complot-verdicts-2026-09-04
+    - african-manager-complot-pourvois-2026-09-04
+- id: ev-tunisia-germany-accords-2026-08-31
+  date: "2026-08-31"
+  title_en: "Tunisia–Germany cooperation accords above EUR 100m"
+  title_fr: "Accords de coopération Tunisie–Allemagne de plus de 100 M€"
+  category: political
+  subcategory: diplomacy
+  actors: [mohamed-ali-nafti]
+  institutions: [germany]
+  summary: >-
+    Tunisia and Germany signed cooperation accords worth above EUR 100
+    million in Tunis on 31 August 2026, in the presence of foreign minister
+    Mohamed Ali Nafti and visiting German foreign minister Johann Wadephul,
+    on the 70th anniversary of diplomatic relations; reported sectors are
+    SMEs, energy transition, water, administrative modernisation, tourism and
+    training. The amount is Nafti's figure as relayed by a single outlet —
+    a further ~EUR 40m green-economy tranche is reportedly still under
+    negotiation and is not conflated here. No 2026 accords event with
+    Germany exists in the graph.
+  confidence: C
+  basis: reported
+  verification: needs-primary-source
+  attributed_to: African Manager
+  falsifiable_by: MFA communiqué or German Federal Foreign Office press release of 31 August–1 September 2026
+  sources:
+    - african-manager-tunisie-allemagne-2026-09-01
+- id: ev-sabotage-declaration-2026-08-26
+  date: "2026-08-26"
+  title_en: "Saïed calls water and power cuts 'planned sabotage'"
+  title_fr: "Saïed qualifie les coupures d'eau et d'électricité de « sabotage planifié »"
+  category: political
+  subcategory: presidential-declaration
+  actors: [kais-saied, sara-zaafarani]
+  institutions: [steg]
+  summary: >-
+    At a 26 August 2026 Carthage meeting with the prime minister and the
+    STEG and SONEDE chiefs, President Kaïs Saïed declared the water and
+    electricity cuts 'not ordinary breakdowns' but deliberately planned
+    sabotage, per the presidency communiqué as relayed by African Manager.
+    The declaration is the record; the sabotage itself is an unproven
+    presidential attribution — no names, regions, investigations or evidence
+    were detailed in the relay. No sabotage-declaration event exists in the
+    graph; the STEG rationing event stands separately.
+  confidence: C
+  basis: reported
+  verification: needs-primary-source
+  attributed_to: African Manager
+  contested:
+    - framing: "The utility cuts are deliberately planned sabotage"
+      held_by: "Presidency of the Republic"
+      source: african-manager-sabotage-2026-08-27
+  falsifiable_by: Presidency communiqué of 26 August 2026; any judicial investigation opening on the alleged sabotage
+  sources:
+    - african-manager-sabotage-2026-08-27
+- id: ev-fuel-strike-notice-2026-08-27
+  date: "2026-08-27"
+  title_en: "UGTT strike notice for fuel transport, 23–24 September"
+  title_fr: "Préavis de grève de l'UGTT dans le transport des carburants, 23–24 septembre"
+  category: protest
+  subcategory: labour
+  institutions: [ugtt]
+  summary: >-
+    The UGTT private-sector department issued a strike notice on 27 August
+    2026 for the fuel-transport sector, with action planned nationwide on
+    23–24 September 2026; stated grounds are non-application of the 2 May
+    2019 accord and CNSS coverage. The notice was copied to five ministries,
+    UTICA and the dangerous-goods chamber. The action dates fall after this
+    sweep — outcome open; re-check whether the strike was held or called off.
+  confidence: B
+  basis: reported
+  falsifiable_by: UGTT communiqué or post-24-September outcome reporting
+  sources:
+    - kapitalis-carburant-preavis-2026-08-27
+    - african-manager-carburant-preavis-2026-08-27
+- id: ev-arp-petition-2026-08-29
+  date: "2026-08-29"
+  title_en: "~56 deputies demand an extraordinary ARP plenary"
+  title_fr: "≈56 députés exigent une plénière extraordinaire de l'ARP"
+  category: political
+  subcategory: parliamentary-petition
+  summary: >-
+    On 29 August 2026 about 56 deputies signed a demand, relayed via TAP and
+    deputy Mohamed Ali, for an extraordinary ARP plenary during recess on
+    socio-economic conditions, utility cuts and prices, invoking article 71
+    of the Constitution. The headcount is unresolved — later social-media
+    relay put it at 61 — so it stays '~56+'. Whether the bureau convened the
+    session is unknown; no 2026 ARP-session event exists in the graph.
+  confidence: C
+  basis: reported
+  verification: needs-primary-source
+  attributed_to: African Manager
+  falsifiable_by: ARP bureau record or reporting that the session was held or rejected
+  sources:
+    - african-manager-arp-petition-2026-08-29
+    - african-manager-arp-petition-2026-08-31
+- id: ev-sta-death-2026-09-08
+  date: "2026-09-08"
+  title_en: "Businessman Lazhar Sta dies in detention"
+  title_fr: "Décès en détention de l'homme d'affaires Lazhar Sta"
+  category: legal
+  subcategory: detention-death
+  actors: [lazhar-sta]
+  summary: >-
+    Businessman Lazhar Sta died in detention on the night of 7–8 September
+    2026, as reported by Kapitalis and African Manager; press accounts
+    describe him as a former director-general of Carthage Cement sentenced
+    to six years in June 2026 — the career detail needs a primary check
+    before import. His daughter Amina Sta publicly alleges medical
+    negligence; that allegation is kept as an attributed, unproven claim,
+    never deleted, never asserted.
+  confidence: B
+  basis: reported
+  contested:
+    - framing: "Negligence caused Lazhar Sta's death in detention"
+      held_by: "Amina Sta (daughter)"
+  falsifiable_by: court or prison-administration statement; the June 2026 verdict record for the career detail
+  sources:
+    - kapitalis-sta-deces-2026-09-08
+    - african-manager-sta-deces-2026-09-08
+- id: ev-solar-309-authorisations-2026-09
+  date: "~2026-09-07"
+  title_en: "309 solar projects authorised (455 MW)"
+  title_fr: "309 projets solaires autorisés (455 MW)"
+  category: economic
+  subcategory: procurement
+  institutions: [steg]
+  summary: >-
+    An authorisation decision reported 7–8 September 2026 approves 309 solar
+    projects totalling 455 MW under the authorisations regime, with power
+    sold exclusively to STEG, as reported by Kapitalis (specialist-press
+    corroboration reported but its URL not captured this run). The figures
+    are single-outlet claims — they enter no aggregate before the ministry
+    communiqué or JORT authorisation list is in hand.
+  confidence: C
+  basis: reported
+  verification: needs-primary-source
+  attributed_to: Kapitalis
+  falsifiable_by: Energy Ministry communiqué or JORT authorisation list, September 2026
+  sources:
+    - kapitalis-solaire-309-2026-09-08
+- id: ev-ugtt-strike-instance-2026-09-10
+  date: "~2026-09-10"
+  title_en: "UGTT administrative instance to rule on general strike"
+  title_fr: "L'instance administrative de l'UGTT se prononce sur la grève générale"
+  category: protest
+  subcategory: labour
+  institutions: [ugtt]
+  summary: >-
+    The UGTT national administrative instance met around 10 September 2026
+    to rule on confirming the general-strike principle decided at the March
+    2026 Monastir congress, per assistant secretary-general Othman Jellouli
+    as relayed by African Manager via Mosaïque FM; the same relay reports a
+    Thursday meeting of the 'cadre de coordination' (UGTT/LTDH/bar association)
+    on enlargement and an action plan. The meeting happened or not — outcome
+    and exact date unconfirmed; lift only with the Mosaïque original or a
+    UGTT communiqué.
+  confidence: C
+  basis: reported
+  verification: needs-primary-source
+  attributed_to: "African Manager relaying Mosaïque FM"
+  falsifiable_by: UGTT communiqué or Mosaïque FM original, ~10 September 2026
+  sources:
+    - african-manager-ugtt-greve-generale-2026-09-09
+

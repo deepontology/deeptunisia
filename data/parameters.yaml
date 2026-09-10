@@ -33,8 +33,12 @@ time:
   # 2026-08-25 when the Aug-13/25 sweep + wire backfill merged records
   # through 2026-08-25 (Nafas march, Zarzis sinking, CSEE appointment),
   # whose open-ended positions could not sit inside the old horizon.
+  # Advanced again 2026-09-10 when the Aug-27→Sep-10 catch-up sweep merged
+  # records through 2026-09-10 (complot cassation, Yousfi detention, Phoenix
+  # Express, Sumud detentions, Fitch affirmation, Sta death), which postdate
+  # the old horizon.
   floor: "1956-03-20"
-  cutoff: "2026-08-25"
+  cutoff: "2026-09-10"
   # How far back an open-ended "in post by X" bound may reach. A plausible
   # ceiling for a senior command tenure; the longest documented run in the
   # dataset is about seven and a half years.
