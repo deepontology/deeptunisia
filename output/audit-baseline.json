@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "generated": "2026-09-10T17:44:08.847Z",
+  "generated": "2026-09-10T22:39:43.692Z",
   "node": "v26.7.0",
-  "commit": "8327ba3",
+  "commit": "6a05dee",
   "dataset": {
     "path": "src/generated/dataset.json",
     "counts": {
@@ -55,44 +55,63 @@
     "cutoff": 1788998400000
   },
   "schemaProbes": {
-    "whitespaceInferenceAccepted": true,
-    "overrideWithoutReviewAccepted": true,
+    "whitespaceInferenceAccepted": false,
+    "overrideWithoutReviewAccepted": false,
     "overrideDerivedBasis": "documented",
-    "unsourcedPersonAccepted": true,
-    "nestedReviewOutcomeAccepted": true,
+    "unsourcedPersonAccepted": false,
+    "nestedReviewOutcomeAccepted": false,
     "nestedReviewOutcomePreserved": false
   },
   "pipeline": {
     "whitespace": {
-      "exit": 0,
-      "datasetEmitted": true,
+      "exit": 1,
+      "datasetEmitted": false,
       "editorialQueueEmitted": true,
-      "errorLines": []
+      "errorLines": [
+        "x  positions.yaml [p-pres-bourguiba]: (root) — grade C/D claims must name who is making the claim (attributed_to, non-blank)",
+        "x  positions.yaml [p-pres-bourguiba]: (root) — an inferred claim must state its reasoning and what would falsify it (non-blank)"
+      ]
     },
     "no-source": {
-      "exit": 0,
-      "datasetEmitted": true,
+      "exit": 1,
+      "datasetEmitted": false,
       "editorialQueueEmitted": true,
-      "errorLines": []
+      "errorLines": [
+        "x  people.yaml [bourguiba]: (root) — rule 2: every claim record must cite at least one source, or be listed in data/source-exceptions.yaml with an owner and a deadline",
+        "x  position p-pres-bourguiba: unknown holder \"bourguiba\"",
+        "x  position p-speaker-bourguiba: unknown holder \"bourguiba\"",
+        "x  relationship rel-bourguiba-neo-destour-party: unknown \"from\" entity \"bourguiba\"",
+        "x  relationship rel-habib-bourguiba-jr-bourguiba-family: unknown \"to\" entity \"bourguiba\"",
+        "x  relationship rel-rachid-sfar-bourguiba-institutional: unknown \"to\" entity \"bourguiba\"",
+        "x  relationship rel-mongi-slim-bourguiba-institutional: unknown \"to\" entity \"bourguiba\"",
+        "x  relationship rel-tahar-ben-ammar-bourguiba-institutional: unknown \"to\" entity \"bourguiba\""
+      ]
     },
     "override": {
-      "exit": 0,
-      "datasetEmitted": true,
+      "exit": 1,
+      "datasetEmitted": false,
       "editorialQueueEmitted": true,
-      "errorLines": []
+      "errorLines": [
+        "x  positions.yaml [p-pres-bourguiba]: basis — authored basis \"documented\" over grade-implied \"inferred\" (V27): a basis override requires a review object with a date and method",
+        "x  positions.yaml [p-pres-bourguiba]: basis — authored basis \"documented\" over grade-implied \"inferred\" (V27): a basis override requires non-blank reasoning",
+        "x  positions.yaml [p-pres-bourguiba]: basis — authored basis \"documented\" over grade-implied \"inferred\" (V27): a basis override on an inference requires a non-blank falsifiable_by",
+        "x  positions.yaml [p-pres-bourguiba]: basis — authored basis \"documented\" over grade-implied \"inferred\" (V27): a basis override requires basis_override_reason of at least 10 non-blank characters, or a live entry in data/source-exceptions.yaml"
+      ]
     },
     "nested-outcome": {
-      "exit": 0,
-      "datasetEmitted": true,
+      "exit": 1,
+      "datasetEmitted": false,
       "editorialQueueEmitted": true,
-      "errorLines": []
+      "errorLines": [
+        "x  positions.yaml [p-pres-bourguiba]: review — Unrecognized key: \"outcome\""
+      ]
     },
     "bad-reference": {
       "exit": 1,
       "datasetEmitted": false,
       "editorialQueueEmitted": true,
       "errorLines": [
-        "DATA VALIDATION FAILED — 1 error(s)",
+        "x  position p-pres-bourguiba: grade A must cite at least one tier-1 or tier-2 source (V25); it cites no resolvable source tier and is not listed in data/source-exceptions.yaml",
         "x  position p-pres-bourguiba: unknown source \"audit-nonexistent-source\""
       ]
     }
