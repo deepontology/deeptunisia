@@ -16,17 +16,23 @@ The website is a window. **The knowledge graph is the project.**
 ## Run it
 
 ```bash
-npm install
-npm run dev          # builds the graph, then starts the dev server on :5173
-npm start            # atlas on :5173 AND the Agora API on :5200, one command
-npm run build        # validates, exports, and produces a static site in build/
-npm run test         # 12 suites: graph assertions, matcher precision, post markup,
-                     #   feed separation, byte-fidelity, community layer and API
-npm run check        # svelte-check — must be 0 errors, 0 warnings
-npm run smoke        # real browser, both themes, desktop AND phone — needs a dev server
-npm run feed         # fetch news headlines into feed/ (also runs every 4h in CI)
-npm run data         # rebuild the graph and public exports only
+# Fresh clone, in this order:
+npm ci --ignore-scripts
+npm run data          # build the graph and the public exports
+npx svelte-kit sync   # generate the $data alias the test suites import
+npm run test          # all suites
+npm run check         # svelte-check — must be 0 errors, 0 warnings
+
+# Day to day:
+npm run dev           # builds the graph, then starts the dev server on :5173
+npm start             # atlas on :5173 AND the Agora API on :5200, one command
+npm run build         # validates, exports, and produces a static site in build/
+npm run smoke         # real browser, both themes, desktop AND phone — needs a dev server
+npm run feed          # fetch news headlines into feed/ (also runs every 4h in CI)
+npm run audit:probes  # reproduce the independent review's compiler probes
 ```
+
+`npx svelte-kit sync` is required before `npm run test` on a fresh clone: the suites import the `$data` alias, which SvelteKit generates. The `ci` workflow runs the same sequence on a clean runner.
 
 The atlas itself needs no server, no database, no API and no accounts — the
 static site ships as files. The discussion layer (Agora) is separate: a

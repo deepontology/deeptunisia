@@ -1,0 +1,44 @@
+name: CI
+
+# The fresh-clone gate. Every command below is the sequence the README
+# documents, run on a clean runner with no prior SvelteKit state. If a new
+# contributor cannot reproduce this order, this job fails first.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  fresh-clone:
+    name: fresh clone (data, tests, check)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm run data
+      - run: npx svelte-kit sync
+      - run: npm run test
+      - run: npm run check
+
+  audit-baseline:
+    name: review probe baseline
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm run audit:probes
+      - uses: actions/upload-artifact@v4
+        with:
+          name: audit-baseline
+          path: output/audit-baseline.json
+          if-no-files-found: error
