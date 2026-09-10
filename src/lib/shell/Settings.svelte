@@ -151,6 +151,17 @@
 		max-width: calc(100vw - var(--s-6) * 2);
 		padding: var(--s-6);
 	}
+	/*
+	   In a bottom sheet the panel takes the full width, so a fixed-width child
+	   would sit pinned to one side with dead space beside it. Let it fill the
+	   sheet instead — the theme grid is fractional and stretches cleanly.
+	*/
+	@media (max-width: 900px) {
+		.settings {
+			width: auto;
+			max-width: none;
+		}
+	}
 
 	section {
 		display: flex;
