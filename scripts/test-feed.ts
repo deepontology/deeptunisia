@@ -88,22 +88,56 @@ const GRADING_FIELDS = ['basis', 'confidence', 'sources', 'review'] as const;
 // An allow-list rather than a deny-list: a deny-list only forbids the four names
 // somebody already thought of, and would happily admit `verification`, `grade` or
 // `excerpt` tomorrow.
-const ALLOWED_FIELDS = ['id', 'outlet', 'outletId', 'title', 'link', 'published', 'lang'];
+//
+// `author` is the one optional field. It is attribution the outlet published, not
+// an assessment, so it does not belong with basis/confidence/sources/review — but
+// it is genuinely absent from some feeds (BBC, Al Jazeera), so it cannot be
+// required either. Nothing else may be added without a deliberate decision here.
+const REQUIRED_FIELDS = ['id', 'outlet', 'outletId', 'title', 'link', 'published', 'lang'];
+const OPTIONAL_FIELDS = ['author'];
+const ALLOWED_FIELDS = [...REQUIRED_FIELDS, ...OPTIONAL_FIELDS];
 {
 	const extras = new Set<string>();
 	const missing = new Set<string>();
+	const emptyOptional = new Set<string>();
 	for (const item of items) {
 		for (const key of Object.keys(item)) if (!ALLOWED_FIELDS.includes(key)) extras.add(key);
-		for (const key of ALLOWED_FIELDS) {
+		for (const key of REQUIRED_FIELDS) {
 			if (typeof item[key] !== 'string' || !(item[key] as string).length) missing.add(key);
+		}
+		for (const key of OPTIONAL_FIELDS) {
+			if (key in item && (typeof item[key] !== 'string' || !(item[key] as string).length)) {
+				emptyOptional.add(key);
+			}
 		}
 	}
 	ok(
-		'feed items carry exactly the seven permitted fields',
-		extras.size === 0 && missing.size === 0,
-		extras.size || missing.size
-			? `unexpected: ${[...extras].join(', ') || 'none'}; missing/empty: ${[...missing].join(', ') || 'none'}`
+		'feed items carry only the permitted fields, with the required ones non-empty',
+		extras.size === 0 && missing.size === 0 && emptyOptional.size === 0,
+		extras.size || missing.size || emptyOptional.size
+			? `unexpected: ${[...extras].join(', ') || 'none'}; missing/empty: ${[...missing].join(', ') || 'none'}; empty optional: ${[...emptyOptional].join(', ') || 'none'}`
 			: ALLOWED_FIELDS.join(', ')
+	);
+}
+
+// A byline is displayed as received. It must look like a name a person could
+// have published, not markup, a paragraph, or a scraped email address.
+{
+	const withAuthor = items.filter((item) => 'author' in item);
+	const bad = withAuthor.filter((item) => {
+		const author = String(item.author);
+		return (
+			/<[a-z!/]/i.test(author) ||
+			/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(author) ||
+			author.length > 200
+		);
+	});
+	ok(
+		'every stored byline is a clean, non-empty attribution string',
+		bad.length === 0,
+		bad.length
+			? bad.slice(0, 3).map((i) => String(i.author).slice(0, 60)).join(' | ')
+			: `${withAuthor.length} of ${items.length} items carry a byline`
 	);
 }
 
