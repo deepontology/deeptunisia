@@ -7,8 +7,8 @@
 	import { syncSelectionUrl, validEntity, validRelationship } from '$lib/deeplink.svelte';
 	import { initTheme, theme } from '$lib/design/theme.svelte';
 	import { dirFor } from '$lib/i18n';
-	import { personById, institutionById, relationshipById, resolveEntity } from '$lib/model';
-	import { nameOf } from '$lib/t.svelte';
+	import { personById, institutionById, relationshipById, eventById, resolveEntity } from '$lib/model';
+	import { eventTitle, nameOf } from '$lib/t.svelte';
 	import MenuBar from '$lib/shell/MenuBar.svelte';
 	import SubNav from '$lib/shell/SubNav.svelte';
 	import { rememberPath } from '$lib/shell/nav.svelte';
@@ -124,21 +124,34 @@ import { tour, tourSeen } from '$lib/shell/tour.svelte';
 		}
 		const sel = page.url.searchParams.get('id') ?? app.selected;
 		if (sel && validEntity(sel)) {
-			const ref = resolveEntity(sel);
-			const raw = ref ? nameOf({ name_en: ref.name, name_fr: (ref as unknown as { name_fr?: string })?.name_fr, name_ar: (ref as unknown as { name_ar?: string })?.name_ar } as unknown as { name_en: string }) : sel;
-			// nameOf already picks locale; fallback to ref.name
-			const titleName = (() => {
-				const p = personById.get(sel);
-				if (p) return nameOf(p);
-				const i = institutionById.get(sel);
-				if (i) return nameOf(i);
-				return ref?.name ?? sel;
-			})();
 			const person = personById.get(sel);
 			const inst = institutionById.get(sel);
-			const descRaw = (person?.summary ?? inst?.summary ?? person?.tagline ?? '') as string;
-			const desc = descRaw ? descRaw.slice(0, 160) : `An entity in the DeepTunisia graph — ${ref?.kind ?? 'record'}.`;
-			return { title: `${titleName} · DeepTunisia`, desc, image: 'https://deeptunisia.org/og/default.png', url: page.url.href };
+			if (person || inst) {
+				const ref = resolveEntity(sel);
+				const raw = ref ? nameOf({ name_en: ref.name, name_fr: (ref as unknown as { name_fr?: string })?.name_fr, name_ar: (ref as unknown as { name_ar?: string })?.name_ar } as unknown as { name_en: string }) : sel;
+				// nameOf already picks locale; fallback to ref.name
+				const titleName = (() => {
+					if (person) return nameOf(person);
+					if (inst) return nameOf(inst);
+					return ref?.name ?? sel;
+				})();
+				const descRaw = (person?.summary ?? inst?.summary ?? person?.tagline ?? '') as string;
+				const desc = descRaw ? descRaw.slice(0, 160) : `An entity in the DeepTunisia graph — ${ref?.kind ?? 'record'}.`;
+				return { title: `${titleName} · DeepTunisia`, desc, image: 'https://deeptunisia.org/og/default.png', url: page.url.href };
+			}
+			// Events (and only events, among records) are URL-addressable: lane
+			// clicks sync ?id=, so shared event links deserve a real title, not
+			// the id. resolveEntity covers persons and institutions only.
+			const ev = eventById.get(sel);
+			if (ev) {
+				const descRaw = ev.summary ?? '';
+				return {
+					title: `${eventTitle(ev)} · DeepTunisia`,
+					desc: descRaw ? descRaw.slice(0, 160) : 'An event in the DeepTunisia graph.',
+					image: 'https://deeptunisia.org/og/default.png',
+					url: page.url.href
+				};
+			}
 		}
 		return null;
 	});

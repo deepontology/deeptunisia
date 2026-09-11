@@ -323,6 +323,12 @@
 		letter-spacing: var(--track-caps);
 		text-transform: uppercase;
 		color: var(--text-faint);
+		/* The header row is tight; a long kind label truncates rather than
+		   pushing the share/close actions out of the panel. */
+		min-width: 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 	.close {
 		flex-shrink: 0;
@@ -381,10 +387,23 @@
 	.kv b {
 		font-weight: 520;
 	}
+	/*
+	 * The value side of a row must be able to shrink and wrap. A flex row hands
+	 * its items max-content width by default, so a long value — above all the
+	 * cause/consequence reference lists, which are rows of buttons — ran to
+	 * 1500px inside a 400px panel and out of the card entirely.
+	 */
+	.kv b,
+	.kv .refs {
+		flex: 1;
+		min-width: 0;
+	}
 	.ref {
 		color: var(--accent);
 		border-bottom: 1px solid var(--accent-border);
 		text-align: start;
+		/* A single reference longer than the panel wraps instead of overflowing. */
+		max-width: 100%;
 	}
 	.ref:hover {
 		color: var(--accent-hover);
