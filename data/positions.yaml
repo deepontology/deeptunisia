@@ -484,6 +484,9 @@
   start: "2019-11-13"
   end: "2021-07-25"
   confidence: A
+  basis: reported
+  source_relation: single-report
+  independence: 1
   notes: ["Parliament frozen on 25 July 2021; immunity lifted."]
   notes_fr:
     - >-
@@ -10791,6 +10794,8 @@
   start: "2017-06-14"
   end: "2018-11-09"
   confidence: A
+  source_relation: direct-record
+  independence: 2
   verification: needs-primary-source
   reasoning: >-
     JORT presidential decree n°2017-81 of 14 June 2017 records the appointment.
@@ -10808,7 +10813,7 @@
   falsifiable_by_ar: >-
     مرسوم في الرائد الرسمي يؤكد التعيين والمغادرة.
   falsifiable_by_ar_by: model-reviewed
-  sources: [wikipedia-cour-cassation-tunisie]
+  sources: [wikipedia-cour-cassation-tunisie, jort-2017-81]
 
 - id: p-cassation-taieb-rached
   role: cassation-president
@@ -10986,7 +10991,9 @@
   start: "2011-08-06"
   end: "2014-03-17"
   confidence: A
-  verification: needs-primary-source
+  source_relation: direct-record
+  independence: 2
+  verification: verified
   reasoning: >-
     Wikipedia Cour des comptes article records Abdelkader Zgolli as president
     from 6 August 2011 to 17 March 2014.
@@ -11006,7 +11013,7 @@
   falsifiable_by_ar: >-
     مرسوم في الرائد الرسمي أو وثائق رسمية من الدائرة.
   falsifiable_by_ar_by: model-reviewed
-  sources: [wikipedia-audit-court-tunisie]
+  sources: [wikipedia-audit-court-tunisie, jort-2011-1097, jort-2014-1768]
 
 - id: p-audit-abdellatif-kharrat
   role: audit-court-president
@@ -11130,6 +11137,9 @@
   start: "2004"
   end: "2007"
   confidence: A
+  basis: reported
+  source_relation: single-report
+  independence: 1
   verification: needs-primary-source
   reasoning: >-
     Wikipedia ONAT article records Abdessattar Ben Moussa as bâtonnier

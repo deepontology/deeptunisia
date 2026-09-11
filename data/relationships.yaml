@@ -460,6 +460,9 @@
   description_ar: رفع الحصانة البرلمانية وتجميد المجلس؛ ثم ملاحقة واعتقال.
   description_ar_by: model-reviewed
   confidence: A
+  basis: reported
+  source_relation: single-report
+  independence: 1
   sources:
     - axios-saied-2021
     - reuters-conspiracy-2025
@@ -4891,7 +4894,9 @@
   description_ar: طبيبة فرنسية، تزوجت المرزوقي في ديسمبر 2011، بعد أيام من انتخابه — أول سيدة أولى بعد الثورة. ليست والدة ابنتيه اللتين من زواج سابق.
   description_ar_by: model-reviewed
   confidence: B
-  basis: documented
+  basis: reported
+  source_relation: single-report
+  independence: 1
   sources:
     - wikipedia-premiere-dame-tunisie
     - wikipedia-marzouki-fr
@@ -5245,7 +5250,9 @@
   description_ar: "ابن الرئيس المؤقت المستقبلي: سباح بطل في فئات الناشئين (ألقاب وطنية في فئتي الصغار والكاديت)، ثم سينوغراف ومصمم؛ توفي إثر أزمة قلبية في 21 جويلية 2013 عن 48 عامًا."
   description_ar_by: model-reviewed
   confidence: B
-  basis: documented
+  basis: reported
+  source_relation: corroborated-report
+  independence: 2
   sources:
     - leaders-slim-ennaceur-2013
     - realites-slim-ennaceur-2013

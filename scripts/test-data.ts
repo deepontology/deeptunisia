@@ -63,9 +63,8 @@ ok(
 );
 
 // The kind-versus-strength migration (output/kind-migration.csv) is the record
-// of which claims were moved to explicit source relations. Every row marked
-// applied must match the graph exactly; rows marked research-confirm are
-// proposals and must not have been applied.
+// of which claims were moved to explicit kinds and source relations. Every row
+// is applied and must match the graph exactly: kind, relation and origin count.
 {
 	const migrationPath = join(HERE, '..', 'output', 'kind-migration.csv');
 	if (existsSync(migrationPath)) {
@@ -73,39 +72,50 @@ ok(
 		const parsed = lines.map((l) => {
 			const base = l.split(',');
 			// The reason is quoted and may contain commas; it is always last.
-			const head = base.slice(0, 9);
-			return { id: head[0], kind: head[1], confidence: head[2], relation: head[5], independence: head[6], applied: head[7], status: head[8] };
+			const head = base.slice(0, 10);
+			return {
+				id: head[0],
+				kind: head[1],
+				basisAfter: head[4],
+				relation: head[5],
+				independence: head[6],
+				applied: head[7],
+				status: head[8],
+				reviewer: head[9]
+			};
 		});
 		const applied = parsed.filter((r) => r.applied === 'yes');
 		const mismatches: string[] = [];
 		for (const row of applied) {
-			const rows = (ds[row.kind] ?? []) as { id: string; source_relation?: string; independence?: number }[];
+			const rows = (ds[row.kind] ?? []) as {
+				id: string;
+				basis?: string;
+				source_relation?: string;
+				independence?: number;
+			}[];
 			const record = rows.find((r) => r.id === row.id);
 			if (!record) mismatches.push(`${row.id} (missing)`);
-			else if (record.source_relation !== row.relation || String(record.independence) !== row.independence) {
-				mismatches.push(`${row.id} (${record.source_relation}/${record.independence} vs ${row.relation}/${row.independence})`);
+			else if (
+				record.basis !== row.basisAfter ||
+				record.source_relation !== row.relation ||
+				String(record.independence) !== row.independence
+			) {
+				mismatches.push(
+					`${row.id} (${record.basis}/${record.source_relation}/${record.independence} vs ${row.basisAfter}/${row.relation}/${row.independence})`
+				);
 			}
 		}
-		ok(
-			'kind migration: 30 applied rows are recorded',
-			applied.length === 30,
-			`${applied.length} applied`
-		);
+		const unresolved = applied.filter((r) => !r.reviewer || r.status === 'research-confirm');
+		ok('kind migration: 40 applied rows are recorded', applied.length === 40, `${applied.length} applied`);
 		ok(
 			'kind migration: every applied row matches the emitted graph',
 			mismatches.length === 0,
-			mismatches.slice(0, 5).join(', ') || 'all 30 match'
+			mismatches.slice(0, 5).join(', ') || 'all 40 match'
 		);
-		const proposed = parsed.filter((r) => r.applied === 'no');
-		const misapplied = proposed.filter((r) => {
-			const rows = (ds[r.kind] ?? []) as { id: string; basis?: string }[];
-			const record = rows.find((x) => x.id === r.id);
-			return !record || record.basis !== 'documented';
-		});
 		ok(
-			'kind migration: relabels stay proposals until research confirms them',
-			proposed.every((r) => r.status === 'research-confirm') && misapplied.length === 0,
-			misapplied.slice(0, 5).map((r) => r.id).join(', ') || `${proposed.length} proposals, none applied`
+			'kind migration: every applied row carries a reviewer',
+			unresolved.length === 0,
+			unresolved.slice(0, 5).map((r) => r.id).join(', ') || 'all signed off'
 		);
 	} else {
 		ok('kind migration: output/kind-migration.csv exists', false, 'file missing');
