@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-11T06:09:06.102Z",
+  "generated": "2026-09-11T10:20:03.426Z",
   "total": 956,
   "reviewed": 38,
   "queue": [
@@ -2724,6 +2724,16 @@
       "title": "political-conflict: moncef-marzouki → rached-ghannouchi"
     },
     {
+      "kind": "relationship",
+      "id": "rel-slim-ennaceur-mohamed-ennaceur-family",
+      "confidence": "B",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 3,
+      "reviewed": false,
+      "title": "family: slim-ennaceur → mohamed-ennaceur"
+    },
+    {
       "kind": "education",
       "id": "edu-saied-law-tunis",
       "confidence": "B",
@@ -2902,6 +2912,16 @@
       "sources": 2,
       "reviewed": false,
       "title": "Religious affairs secretariat of state elevated to a ministry"
+    },
+    {
+      "kind": "event",
+      "id": "sentences-july-2025",
+      "confidence": "A",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 2,
+      "reviewed": false,
+      "title": "Long sentences handed down, including to a former intelligence chief"
     },
     {
       "kind": "event",
@@ -4435,6 +4455,16 @@
     },
     {
       "kind": "relationship",
+      "id": "rel-beatrix-rhein-marzouki-family",
+      "confidence": "B",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 2,
+      "reviewed": false,
+      "title": "family: beatrix-rhein → moncef-marzouki"
+    },
+    {
+      "kind": "relationship",
       "id": "rel-belhassen-trabelsi-trabelsi-network-business",
       "confidence": "B",
       "basis": "reported",
@@ -4662,6 +4692,16 @@
       "sources": 2,
       "reviewed": false,
       "title": "security: kais-saied → national-security-council"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-kais-saied-rached-ghannouchi-political-conflict",
+      "confidence": "A",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 2,
+      "reviewed": false,
+      "title": "political-conflict: kais-saied → rached-ghannouchi"
     },
     {
       "kind": "relationship",
@@ -4975,6 +5015,16 @@
     },
     {
       "kind": "event",
+      "id": "arrests-feb-2023",
+      "confidence": "A",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 1,
+      "reviewed": false,
+      "title": "Businessmen and political figures arrested"
+    },
+    {
+      "kind": "event",
       "id": "ben-achour-commission",
       "confidence": "B",
       "basis": "reported",
@@ -5052,6 +5102,16 @@
       "sources": 1,
       "reviewed": false,
       "title": "A former prime minister sentenced to 24 years"
+    },
+    {
+      "kind": "event",
+      "id": "mabrouk-appeal-2026",
+      "confidence": "A",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 1,
+      "reviewed": false,
+      "title": "The appeal court upholds the money-laundering sentence"
     },
     {
       "kind": "event",
@@ -6055,6 +6115,16 @@
     },
     {
       "kind": "position",
+      "id": "p-onat-abdessattar-ben-moussa",
+      "confidence": "A",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 1,
+      "reviewed": false,
+      "title": "President of the Bar Association — Abdessattar Ben Moussa"
+    },
+    {
+      "kind": "position",
       "id": "p-onat-ameur-mehrezi",
       "confidence": "B",
       "basis": "reported",
@@ -6402,6 +6472,16 @@
       "sources": 1,
       "reviewed": false,
       "title": "Speaker of Parliament — Habib Bourguiba"
+    },
+    {
+      "kind": "position",
+      "id": "p-speaker-ghannouchi",
+      "confidence": "A",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 1,
+      "reviewed": false,
+      "title": "Speaker of Parliament — Rached Ghannouchi"
     },
     {
       "kind": "position",
@@ -8015,6 +8095,16 @@
     },
     {
       "kind": "position",
+      "id": "p-audit-abdelkader-zgolli",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 3,
+      "reviewed": false,
+      "title": "President of the Audit Court — Abdelkader Zgolli"
+    },
+    {
+      "kind": "position",
       "id": "p-finance-chaker",
       "confidence": "A",
       "basis": "documented",
@@ -8185,16 +8275,6 @@
     },
     {
       "kind": "relationship",
-      "id": "rel-slim-ennaceur-mohamed-ennaceur-family",
-      "confidence": "B",
-      "basis": "documented",
-      "risk": 4,
-      "sources": 3,
-      "reviewed": false,
-      "title": "family: slim-ennaceur → mohamed-ennaceur"
-    },
-    {
-      "kind": "relationship",
       "id": "rel-trabelsi-network-presidency-business",
       "confidence": "A",
       "basis": "documented",
@@ -8304,16 +8384,6 @@
       "title": "The security command is reshuffled by decree"
     },
     {
-      "kind": "event",
-      "id": "sentences-july-2025",
-      "confidence": "A",
-      "basis": "documented",
-      "risk": 4,
-      "sources": 2,
-      "reviewed": false,
-      "title": "Long sentences handed down, including to a former intelligence chief"
-    },
-    {
       "kind": "licence",
       "id": "lic-elhiwar-broadcast-2014",
       "confidence": "A",
@@ -8342,6 +8412,16 @@
       "sources": 2,
       "reviewed": false,
       "title": "Director of the Presidential Cabinet — Selma Elloumi Rekik"
+    },
+    {
+      "kind": "position",
+      "id": "p-cassation-hedi-guediri",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "President of the Court of Cassation — Hédi Guediri"
     },
     {
       "kind": "position",
@@ -8485,16 +8565,6 @@
     },
     {
       "kind": "relationship",
-      "id": "rel-beatrix-rhein-marzouki-family",
-      "confidence": "B",
-      "basis": "documented",
-      "risk": 4,
-      "sources": 2,
-      "reviewed": false,
-      "title": "family: beatrix-rhein → moncef-marzouki"
-    },
-    {
-      "kind": "relationship",
       "id": "rel-beji-caid-essebsi-selma-elloumi-appointment",
       "confidence": "A",
       "basis": "documented",
@@ -8622,16 +8692,6 @@
       "sources": 2,
       "reviewed": false,
       "title": "appointment: kais-saied → khaled-nouri"
-    },
-    {
-      "kind": "relationship",
-      "id": "rel-kais-saied-rached-ghannouchi-political-conflict",
-      "confidence": "A",
-      "basis": "documented",
-      "risk": 4,
-      "sources": 2,
-      "reviewed": false,
-      "title": "political-conflict: kais-saied → rached-ghannouchi"
     },
     {
       "kind": "relationship",
@@ -8765,16 +8825,6 @@
     },
     {
       "kind": "event",
-      "id": "arrests-feb-2023",
-      "confidence": "A",
-      "basis": "documented",
-      "risk": 4,
-      "sources": 1,
-      "reviewed": false,
-      "title": "Businessmen and political figures arrested"
-    },
-    {
-      "kind": "event",
       "id": "ayachi-hammami-arrested",
       "confidence": "A",
       "basis": "documented",
@@ -8792,16 +8842,6 @@
       "sources": 1,
       "reviewed": false,
       "title": "Truth and Dignity Commission submits final report"
-    },
-    {
-      "kind": "event",
-      "id": "mabrouk-appeal-2026",
-      "confidence": "A",
-      "basis": "documented",
-      "risk": 4,
-      "sources": 1,
-      "reviewed": false,
-      "title": "The appeal court upholds the money-laundering sentence"
     },
     {
       "kind": "event",
@@ -8875,16 +8915,6 @@
     },
     {
       "kind": "position",
-      "id": "p-audit-abdelkader-zgolli",
-      "confidence": "A",
-      "basis": "documented",
-      "risk": 4,
-      "sources": 1,
-      "reviewed": false,
-      "title": "President of the Audit Court — Abdelkader Zgolli"
-    },
-    {
-      "kind": "position",
       "id": "p-audit-abdellatif-kharrat",
       "confidence": "A",
       "basis": "documented",
@@ -8912,16 +8942,6 @@
       "sources": 1,
       "reviewed": false,
       "title": "President of the Audit Court — Néjib Ktari"
-    },
-    {
-      "kind": "position",
-      "id": "p-cassation-hedi-guediri",
-      "confidence": "A",
-      "basis": "documented",
-      "risk": 4,
-      "sources": 1,
-      "reviewed": false,
-      "title": "President of the Court of Cassation — Hédi Guediri"
     },
     {
       "kind": "position",
@@ -8992,16 +9012,6 @@
       "sources": 1,
       "reviewed": true,
       "title": "Director-General Commander of the National Guard — Chokri Riahi"
-    },
-    {
-      "kind": "position",
-      "id": "p-onat-abdessattar-ben-moussa",
-      "confidence": "A",
-      "basis": "documented",
-      "risk": 4,
-      "sources": 1,
-      "reviewed": false,
-      "title": "President of the Bar Association — Abdessattar Ben Moussa"
     },
     {
       "kind": "position",
@@ -9102,16 +9112,6 @@
       "sources": 1,
       "reviewed": false,
       "title": "President of the Republic — Fouad Mebazaa"
-    },
-    {
-      "kind": "position",
-      "id": "p-speaker-ghannouchi",
-      "confidence": "A",
-      "basis": "documented",
-      "risk": 4,
-      "sources": 1,
-      "reviewed": false,
-      "title": "Speaker of Parliament — Rached Ghannouchi"
     },
     {
       "kind": "relationship",

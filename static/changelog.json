@@ -1,5 +1,30 @@
 [
   {
+    "hash": "e60976d73",
+    "date": "2026-09-11T10:44:39+01:00",
+    "subject": "data: record source relations for 30 claims",
+    "kind": "expansion",
+    "added": 60,
+    "removed": 0,
+    "files": [
+      {
+        "file": "data/events.yaml",
+        "added": 20,
+        "removed": 0
+      },
+      {
+        "file": "data/positions.yaml",
+        "added": 20,
+        "removed": 0
+      },
+      {
+        "file": "data/relationships.yaml",
+        "added": 20,
+        "removed": 0
+      }
+    ]
+  },
+  {
     "hash": "263e6ea23",
     "date": "2026-09-11T00:30:02+01:00",
     "subject": "Phase 2: one temporal implementation with a certainty horizon (#17)",

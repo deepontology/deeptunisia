@@ -689,14 +689,6 @@
   authored: reported
 - rule: basis-override
   kind: relationship
-  id: rel-beatrix-rhein-marzouki-family
-  owner: RESEARCH
-  deadline: 2026-12-09
-  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
-  implied: reported
-  authored: documented
-- rule: basis-override
-  kind: relationship
   id: rel-bourguiba-ennaceur-appointment-1974
   owner: RESEARCH
   deadline: 2026-12-09
@@ -848,14 +840,6 @@
   implied: reported
   authored: documented
 - rule: basis-override
-  kind: relationship
-  id: rel-slim-ennaceur-mohamed-ennaceur-family
-  owner: RESEARCH
-  deadline: 2026-12-09
-  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
-  implied: reported
-  authored: documented
-- rule: basis-override
   kind: world-claim
   id: agg-public-debt-external-2024
   owner: RESEARCH
@@ -912,7 +896,7 @@
   id: arrests-feb-2023
   owner: RESEARCH
   deadline: 2026-12-09
-  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25). kind corrected to reported in the 2026-09-11 kind migration; grade and sourcing deadline unchanged.
 - rule: grade-a-primary
   kind: event
   id: ayachi-hammami-arrested
@@ -948,7 +932,7 @@
   id: mabrouk-appeal-2026
   owner: RESEARCH
   deadline: 2026-12-09
-  reason: Grade A cites tier 4. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+  reason: Grade A cites tier 4. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25). kind corrected to reported in the 2026-09-11 kind migration; grade and sourcing deadline unchanged.
 - rule: grade-a-primary
   kind: event
   id: mabrouk-chahed-sentenced
@@ -978,7 +962,7 @@
   id: sentences-july-2025
   owner: RESEARCH
   deadline: 2026-12-09
-  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25). kind corrected to reported in the 2026-09-11 kind migration; grade and sourcing deadline unchanged.
 - rule: grade-a-primary
   kind: institution
   id: bct
@@ -1179,12 +1163,6 @@
   reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
 - rule: grade-a-primary
   kind: position
-  id: p-audit-abdelkader-zgolli
-  owner: RESEARCH
-  deadline: 2026-12-09
-  reason: Grade A cites tier 4. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
-- rule: grade-a-primary
-  kind: position
   id: p-audit-abdellatif-kharrat
   owner: RESEARCH
   deadline: 2026-12-09
@@ -1207,12 +1185,6 @@
   owner: RESEARCH
   deadline: 2026-12-09
   reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
-- rule: grade-a-primary
-  kind: position
-  id: p-cassation-hedi-guediri
-  owner: RESEARCH
-  deadline: 2026-12-09
-  reason: Grade A cites tier 4. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
 - rule: grade-a-primary
   kind: position
   id: p-cassation-khaled-ayari
@@ -1242,7 +1214,7 @@
   id: p-onat-abdessattar-ben-moussa
   owner: RESEARCH
   deadline: 2026-12-09
-  reason: Grade A cites tier 4. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+  reason: Grade A cites tier 4. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25). kind corrected to reported in the 2026-09-11 kind migration; grade and sourcing deadline unchanged.
 - rule: grade-a-primary
   kind: position
   id: p-onat-chawki-tabib
@@ -1272,7 +1244,7 @@
   id: p-speaker-ghannouchi
   owner: RESEARCH
   deadline: 2026-12-09
-  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25). kind corrected to reported in the 2026-09-11 kind migration; grade and sourcing deadline unchanged.
 - rule: grade-a-primary
   kind: region
   id: region-central-east
@@ -1404,7 +1376,7 @@
   id: rel-kais-saied-rached-ghannouchi-political-conflict
   owner: RESEARCH
   deadline: 2026-12-09
-  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25). kind corrected to reported in the 2026-09-11 kind migration; grade and sourcing deadline unchanged.
 - rule: grade-a-primary
   kind: relationship
   id: rel-marouane-mabrouk-cyrine-ben-ali-family

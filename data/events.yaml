@@ -775,6 +775,9 @@
   actors: [kamel-eltaief, khayam-turki]
   institutions: [judiciary, ministry-interior]
   confidence: A
+  basis: reported
+  source_relation: single-report
+  independence: 1
   sources: [reuters-eltaief-2023]
 
 - id: gharbi-appointed
@@ -1090,6 +1093,9 @@
   institutions: [judiciary, national-security, anrsd]
   location: [gov-tunis]
   confidence: A
+  basis: reported
+  source_relation: single-report
+  independence: 1
   causes: [conspiracy-trial-2025]
   consequences: [conspiracy-appeal-2025]
   sources: [reuters-sentences-2025, reuters-conspiracy-2025]
@@ -1259,6 +1265,9 @@
   institutions: [judiciary]
   location: [gov-tunis]
   confidence: A
+  basis: reported
+  source_relation: single-report
+  independence: 1
   causes: [mabrouk-chahed-sentenced]
   sources: [tap-mabrouk-appeal-2026]
 
