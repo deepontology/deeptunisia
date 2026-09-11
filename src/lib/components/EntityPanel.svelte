@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { app } from '$lib/state.svelte';
 	import { format } from '$lib/i18n';
-	import { t, tf, describeInterval, durationLabel, formatDate, layerLabel, relLabel, confidenceLabel, nameOf, entityName} from '$lib/t.svelte';
+	import { t, tf, describeInterval, durationLabel, formatDate, layerLabel, relLabel, confidenceLabel, basisLabel, nameOf, entityName} from '$lib/t.svelte';
+	import Chip from '$lib/ui/Chip.svelte';
 	import Prose from '$lib/ui/Prose.svelte';
 	import Tooltip from '$lib/ui/Tooltip.svelte';
 	import SourceList from './SourceList.svelte';
@@ -201,7 +202,8 @@
 								{entityName(other(rel))}
 							</button>
 							{#if tone !== 'circulating'}
-								<span class="chip c-{rel.confidence}">{rel.confidence}</span>
+								<Chip size="xs" dot tint="var(--basis-{rel.basis})">{basisLabel(rel.basis)}</Chip>
+								<Chip variant="outline" size="xs" title={confidenceLabel(rel.confidence)}>{rel.confidence}</Chip>
 							{/if}
 						</div>
 
@@ -291,7 +293,8 @@
 				<span class="lp" style:--c={LAYER_COLOR[layer]}><i></i>{layerLabel(layer)}</span>
 			{/each}
 			{#if person}
-				<span class="chip c-{person.confidence}">{confidenceLabel(person.confidence as Confidence)}</span>
+				<Chip size="xs" dot tint="var(--basis-{person.basis})">{basisLabel(person.basis)}</Chip>
+				<Chip variant="outline" size="xs" title={confidenceLabel(person.confidence as Confidence)}>{confidenceLabel(person.confidence as Confidence)}</Chip>
 			{/if}
 			{#if person?.verification === 'needs-primary-source'}
 				<span class="warn-flag">{t('entity.needsPrimary')}</span>
@@ -456,7 +459,8 @@
 						<li>
 							<div class="o-head">
 								<strong>{nameOf(role)}</strong>
-								<span class="chip c-{pos.confidence}">{pos.confidence}</span>
+								<Chip size="xs" dot tint="var(--basis-{pos.basis})">{basisLabel(pos.basis)}</Chip>
+								<Chip variant="outline" size="xs" title={confidenceLabel(pos.confidence)}>{pos.confidence}</Chip>
 							</div>
 							<div class="o-meta mono">
 								{describeInterval(pos.interval)} · {durationLabel(pos.years)}
