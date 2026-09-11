@@ -169,6 +169,16 @@ export function navigableAxis(node: HTMLElement, params: AxisGestureParams) {
 
 	function onDown(e: PointerEvent) {
 		if (e.button !== 0 && e.pointerType === 'mouse') return;
+		/*
+		 * Let a real control inside the plot own its own pointer gesture.
+		 *
+		 * This is the same contract gestures.ts already honours for the 2-D
+		 * camera. Without it, the axis scrub surface and the camera both started
+		 * on the same press: the camera panned while the control scrubbed, and
+		 * the camera's deferred setPointerCapture then stole capture from the
+		 * control, which left its dragging flag stuck on.
+		 */
+		if ((e.target as Element)?.closest?.('[data-no-pan]')) return;
 		axis.stop();
 		pointers.set(e.pointerId, localX(e.clientX));
 
