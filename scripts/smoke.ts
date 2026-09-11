@@ -2447,7 +2447,8 @@ if (runSection('data coverage')) {
 			translate(locale, 'coverage.title'),
 			translate(locale, 'coverage.cards'),
 			translate(locale, 'coverage.queue'),
-			translate(locale, 'coverage.reviewed')
+			translate(locale, 'coverage.byKind'),
+			translate(locale, 'coverage.flags')
 		];
 
 		const section = (await page.evaluate(`(() => {
@@ -2478,8 +2479,8 @@ if (runSection('data coverage')) {
 		);
 		ok(
 			`${locale}//data all coverage headings localized`,
-			section.found === true && (section.seen || []).length === 4,
-			`${(section.seen || []).length}/4 of: ${(section.seen || []).join(' | ')}`
+			section.found === true && (section.seen || []).length === 5,
+			`${(section.seen || []).length}/5 of: ${(section.seen || []).join(' | ')}`
 		);
 		ok(
 			`${locale}//data coverage section has no English prose`,
