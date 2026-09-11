@@ -187,6 +187,18 @@ const MUTATIONS: Mutation[] = [
 		from: "\t\t\tif (!r.review) issue('a basis override requires a review object with a date and method');",
 		to: "\t\t\tif (false) issue('a basis override requires a review object with a date and method');"
 	},
+	{
+		id: 'm40', file: 'schema.ts', expect: 'test-validators V26 (incompatible relation)',
+		label: 'source relations stop being checked against the authored kind',
+		from: 'if (!allowed.includes(r.source_relation)) {',
+		to: 'if (false && !allowed.includes(r.source_relation)) {'
+	},
+	{
+		id: 'm41', file: 'schema.ts', expect: 'test-validators V26 (relation needs independence)',
+		label: 'a source relation no longer requires an origin count',
+		from: 'if (r.independence === undefined) {',
+		to: 'if (false && r.independence === undefined) {'
+	},
 	// --- build-data.ts: the pipeline ---------------------------------------------
 	{
 		id: 'm21', file: 'build-data.ts', expect: 'test-data V14 (direction on every edge)',

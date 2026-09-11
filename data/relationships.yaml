@@ -63,6 +63,8 @@
   description_ar: ابنة الرئيس.
   description_ar_by: model-reviewed
   confidence: A
+  source_relation: direct-record
+  independence: 1
   sources:
     - wb-wps6810
 - id: rel-marouane-mabrouk-cyrine-ben-ali-family
@@ -1167,6 +1169,8 @@
   description_ar: "ادعاء متكرر يقول إن الجيش التونسي يحكم البلاد سرًا. لا يدعمه أي دليل موثوق، وسجل قاعدة البيانات هذه نفسها يناقضه: ظل منصب القيادة المشتركة بين الأسلحة شاغرًا نحو عقدين، وأُقصي الضباط من المناصب المدنية بعد 1991، ولم يستولِ الجيش على السلطة في 2011 حين كان قادرًا على ذلك بوضوح، والفترة الوحيدة لسلطة عسكرية مركّزة استمرت ستة وعشرين شهرًا ولم تُجدَّد."
   description_ar_by: model-reviewed
   confidence: D
+  source_relation: circulating-claim
+  independence: 2
   basis: unsubstantiated
   attributed_to: Recurring claim in Tunisian public and social-media discourse
   review:
@@ -1197,6 +1201,8 @@
   description_ar: "ادعاء يقول إن عشيرة عهد بن علي ما تزال تتحكم في الاقتصاد التونسي دون تغيير. يعقّده السجل الموثق تعقيدًا شديدًا: فُككت الشبكة، وصودرت الأصول، وأبرز شخصية اقتصادية ناجية مرتبطة بالعائلة الرئاسية تقضي أحكامًا بالسجن. ما تدعمه الأدلة هو الاستنتاج الأضيق والأفضل توثيقًا للبنك الدولي بأن آليات الريع صمدت، وهو ادعاء حول البنى لا حول الأشخاص."
   description_ar_by: model-reviewed
   confidence: D
+  source_relation: circulating-claim
+  independence: 3
   basis: unsubstantiated
   attributed_to: Recurring claim in Tunisian public and social-media discourse
   review:
@@ -2993,6 +2999,8 @@
   description_ar: وكيل جمهورية لدى المحكمة الابتدائية بتونس قبل توليه الجمارك مباشرة — ثاني عبور متتالٍ إلى المصلحة الجبائية من خارجها، في الاتجاه المعاكس للأول.
   description_ar_by: model-reviewed
   confidence: B
+  source_relation: single-report
+  independence: 1
   sources:
     - ilboursa-mejri-2024
 - id: rel-conect-utica-political-conflict
@@ -3327,6 +3335,8 @@
   description_ar: تصف روايات العهد البورقيبي زوجة الرئيس بوصفها إحدى النفوذ الحاسمة داخل القصر لأكثر من عقدين دون أن تشغل أي وظيفة. سُجّل بوصفه نفوذًا منقولًا، وهو ما يعني في قاعدة البيانات هذه أن منشورات موثوقة تقوله دون إثبات السببية.
   description_ar_by: model-reviewed
   confidence: C
+  source_relation: inference-from-records
+  independence: 2
   attributed_to: Tunisian retrospectives of the Bourguiba presidency — Leaders ("la main invisible"); Wikipedia; Espace Manager
   verification: needs-primary-source
   influence:
@@ -3399,6 +3409,8 @@
   description_ar: أخ وأخت، كلاهما قاضٍ وكلاهما وزير عدل — غازي من أوت 2016 إلى نوفمبر 2018، وثريا من فيفري إلى سبتمبر 2020. ابنا المناضل القومي علي الجريبي؛ وقادت ابنة عمهما مية الجريبي الحزب الجمهوري.
   description_ar_by: model-reviewed
   confidence: B
+  source_relation: single-report
+  independence: 1
   sources:
     - frwiki-thouraya-jeribi-khemiri
     - kapitalis-thouraya-jeribi-2020
@@ -4251,6 +4263,8 @@
   description_ar: عضو مجلس إدارة منذ 2021، وعضو لجنة المخاطر؛ أطلق بنك تونس العربي الدولي فرنسا في 2015 ويدير البنك التجزئة منذ 2019 (السيرة الرسمية، biat.com.tn).
   description_ar_by: model-reviewed
   confidence: A
+  source_relation: direct-record
+  independence: 1
   sources:
     - biat-site-board
 - id: board-biat-moez-labidi
@@ -4698,6 +4712,8 @@
   description_ar: الرئيس المدير العام للبنك الوطني الفلاحي من 11 ديسمبر 2015 (ويكيبيديا، ليدرز 19/11/2015) إلى ~نهاية سبتمبر 2020 حسب تسلسل إيلبورصة (اللخال مدير عام بالنيابة من 01/10/2020).
   description_ar_by: model-reviewed
   confidence: C
+  source_relation: inference-from-records
+  independence: 1
   basis: inferred
   verification: needs-primary-source
   attributed_to: ilboursa.com (09/03/2023) pour la fin de mandat
@@ -4757,6 +4773,8 @@
   description_ar: "محمد العربي زروق خزندار، الخال للأميرين حسين ومصطفى، دبّرهما للتحريض على اغتيال يوسف صاحب الطابع بعد وفاة حاميه حمودة باشا: اعتُدي عليه في 15 سبتمبر 1814 عند مدخل سراي باردو، ومات متأثرًا بجروحه في 23 جانفي 1815. الصراع موثق من براون (جامعة برينستون، 2015) و، بشأن خلفية أزمة الخلافة، من بن عاشور في ليدرز. الصراع السياسي متماثل في خريطة الاتجاهات في المخطط؛ ويصرح الوصف بتوجه المحرّض نحو الضحية."
   description_ar_by: model-reviewed
   confidence: A
+  source_relation: direct-record
+  independence: 2
   basis: documented
   sources:
     - wikipedia-youssef-saheb-ettabaa
@@ -5720,6 +5738,8 @@
   description_ar: المدير العام بالنيابة لبنك الإسكان منذ أكتوبر 2024 (wikipedia-bh-bank) — متسق مع منصب الرسم البياني p-bank-bh-lotfi-ben-hammouda.
   description_ar_by: model-reviewed
   confidence: B
+  source_relation: single-report
+  independence: 1
   sources:
     - wikipedia-bh-bank
   notes:

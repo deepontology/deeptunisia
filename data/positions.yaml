@@ -1630,6 +1630,8 @@
   start: "2013-04-04"
   end: "2014-03-08"
   confidence: B
+  source_relation: corroborated-report
+  independence: 2
   verification: needs-primary-source
   notes:
     - "Appointed by Ennahda-era Interior Minister Lotfi Ben Jeddou, a move the Nawaat chronology calls highly controversial; publicly accused of abuses under Ben Ali and of building a parallel security apparatus after the revolution."
@@ -2915,6 +2917,8 @@
   start: "2013-07-08"
   end: "2014-07-30"
   confidence: C
+  source_relation: single-report
+  independence: 1
   notes: ["Resigned for stated personal reasons during the Chaambi attacks.", "The record's dates came from webdo-hamdi-2014; Kapitalis's profile of 30/10/2019 (dating the command 8 July 2013 – 30 July 2014) is proposed as the correction — C-grade, single outlet."]
   notes_fr:
     - >-
@@ -4325,6 +4329,8 @@
   start: "2011-01-27"
   end: "2011-12-24"
   confidence: D
+  source_relation: circulating-claim
+  independence: 1
   basis: unsubstantiated
   verification: needs-primary-source
   notes:
@@ -4879,6 +4885,8 @@
   start: "2015-02-06"
   end: "2018"
   confidence: A
+  source_relation: direct-record
+  independence: 2
   notes: ["Retained in post when Youssef Chahed formed his government on 27 August 2016."]
   notes_fr:
     - >-
@@ -7920,6 +7928,8 @@
   start: "2024-02-16"
   end: ongoing
   confidence: A
+  source_relation: direct-record
+  independence: 2
   verification: verified
   notes:
     - >-
@@ -8121,6 +8131,8 @@
   start: "2011"
   end: "2018"
   confidence: B
+  source_relation: single-report
+  independence: 1
   sources: [wikipedia-wided-bouchamaoui]
 
 # ===========================================================================
@@ -8756,6 +8768,8 @@
   start: "2018"
   end: ongoing
   confidence: C
+  source_relation: inference-from-records
+  independence: 1
   verification: needs-primary-source
   reasoning: >-
     Wikipedia's infobox lists Naoufel Ouertani as owner of Attessia TV from
@@ -9853,6 +9867,8 @@
   start: "1947-07-21"
   end: "1950-08-17"
   confidence: B
+  source_relation: single-report
+  independence: 1
   verification: needs-primary-source
   reasoning: >-
     Precision upgrade (2026-08-11): day-level dates from the en.wiki list (21
@@ -10908,6 +10924,8 @@
   start: "2016-04"
   end: ongoing
   confidence: B
+  source_relation: single-report
+  independence: 1
   verification: needs-primary-source
   reasoning: >-
     Wikipedia Administrative Court article records Abdessalem Mehdi Grissiaa
@@ -11824,6 +11842,8 @@
   start: "2019-04-21"
   end: "2020-09-02"
   confidence: B
+  source_relation: corroborated-report
+  independence: 2
   notes:
     - >-
       Returned to the leadership at the party's second congress on 21 April
