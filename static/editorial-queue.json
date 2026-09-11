@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-11T12:33:01.642Z",
+  "generated": "2026-09-11T16:05:27.456Z",
   "total": 956,
   "reviewed": 38,
   "queue": [
@@ -1484,6 +1484,16 @@
       "title": "reported-influence: zitouna-tv → ennahda"
     },
     {
+      "kind": "event",
+      "id": "sentences-july-2025",
+      "confidence": "A",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 6,
+      "reviewed": false,
+      "title": "Long sentences handed down, including to a former intelligence chief"
+    },
+    {
       "kind": "position",
       "id": "p-amt-hmaidi",
       "confidence": "B",
@@ -1812,6 +1822,16 @@
       "sources": 4,
       "reviewed": false,
       "title": "board: habib-mekki → tunisair"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-kais-saied-rached-ghannouchi-political-conflict",
+      "confidence": "A",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 4,
+      "reviewed": false,
+      "title": "political-conflict: kais-saied → rached-ghannouchi"
     },
     {
       "kind": "contract",
@@ -2755,6 +2775,16 @@
     },
     {
       "kind": "event",
+      "id": "arrests-feb-2023",
+      "confidence": "A",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 2,
+      "reviewed": false,
+      "title": "Businessmen and political figures arrested"
+    },
+    {
+      "kind": "event",
       "id": "belaid-verdict-2024",
       "confidence": "B",
       "basis": "reported",
@@ -2912,16 +2942,6 @@
       "sources": 2,
       "reviewed": false,
       "title": "Religious affairs secretariat of state elevated to a ministry"
-    },
-    {
-      "kind": "event",
-      "id": "sentences-july-2025",
-      "confidence": "A",
-      "basis": "reported",
-      "risk": 3,
-      "sources": 2,
-      "reviewed": false,
-      "title": "Long sentences handed down, including to a former intelligence chief"
     },
     {
       "kind": "event",
@@ -4235,6 +4255,16 @@
     },
     {
       "kind": "position",
+      "id": "p-speaker-ghannouchi",
+      "confidence": "A",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 2,
+      "reviewed": false,
+      "title": "Speaker of Parliament — Rached Ghannouchi"
+    },
+    {
+      "kind": "position",
       "id": "p-speaker-mebazaa",
       "confidence": "B",
       "basis": "reported",
@@ -4695,16 +4725,6 @@
     },
     {
       "kind": "relationship",
-      "id": "rel-kais-saied-rached-ghannouchi-political-conflict",
-      "confidence": "A",
-      "basis": "reported",
-      "risk": 3,
-      "sources": 2,
-      "reviewed": false,
-      "title": "political-conflict: kais-saied → rached-ghannouchi"
-    },
-    {
-      "kind": "relationship",
       "id": "rel-kais-saied-salah-ben-abdessalem-appointment",
       "confidence": "B",
       "basis": "reported",
@@ -5012,16 +5032,6 @@
       "sources": 1,
       "reviewed": false,
       "title": "Defence ministry issues statement affirming military neutrality"
-    },
-    {
-      "kind": "event",
-      "id": "arrests-feb-2023",
-      "confidence": "A",
-      "basis": "reported",
-      "risk": 3,
-      "sources": 1,
-      "reviewed": false,
-      "title": "Businessmen and political figures arrested"
     },
     {
       "kind": "event",
@@ -6472,16 +6482,6 @@
       "sources": 1,
       "reviewed": false,
       "title": "Speaker of Parliament — Habib Bourguiba"
-    },
-    {
-      "kind": "position",
-      "id": "p-speaker-ghannouchi",
-      "confidence": "A",
-      "basis": "reported",
-      "risk": 3,
-      "sources": 1,
-      "reviewed": false,
-      "title": "Speaker of Parliament — Rached Ghannouchi"
     },
     {
       "kind": "position",

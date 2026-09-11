@@ -1,5 +1,70 @@
 [
   {
+    "hash": "e7e49a26b",
+    "date": "2026-09-11T16:49:42+01:00",
+    "subject": "data: import the eight-claim evidence tranche into the graph",
+    "kind": "revision",
+    "added": 268,
+    "removed": 9,
+    "files": [
+      {
+        "file": "data/events.yaml",
+        "added": 78,
+        "removed": 2
+      },
+      {
+        "file": "data/positions.yaml",
+        "added": 36,
+        "removed": 1
+      },
+      {
+        "file": "data/relationships.yaml",
+        "added": 86,
+        "removed": 0
+      },
+      {
+        "file": "data/source-exceptions.yaml",
+        "added": 0,
+        "removed": 6
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 68,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "9ca657f43",
+    "date": "2026-09-11T13:47:28+01:00",
+    "subject": "feat: derive independent origins and require real archive snapshots (V29)",
+    "kind": "revision",
+    "added": 14,
+    "removed": 3,
+    "files": [
+      {
+        "file": "data/sources.yaml",
+        "added": 14,
+        "removed": 3
+      }
+    ]
+  },
+  {
+    "hash": "c5df8b2d7",
+    "date": "2026-09-11T13:46:53+01:00",
+    "subject": "data(outbox): passage-level evidence for eight high-risk claims",
+    "kind": "expansion",
+    "added": 318,
+    "removed": 0,
+    "files": [
+      {
+        "file": "data/contrib/evidence-tranche-2026-09-11.yaml",
+        "added": 318,
+        "removed": 0
+      }
+    ]
+  },
+  {
     "hash": "6fd4601a9",
     "date": "2026-09-11T11:26:46+01:00",
     "subject": "data: resolve the kind review, source two JORT appointments (#24)",

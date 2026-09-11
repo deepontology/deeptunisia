@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "generated": "2026-09-11T12:33:11.322Z",
+  "generated": "2026-09-11T16:04:28.241Z",
   "node": "v26.7.0",
-  "commit": "a9777bf",
+  "commit": "ece745c",
   "dataset": {
     "path": "src/generated/dataset.json",
     "counts": {
-      "sources": 1256,
-      "sourcesCited": 1218,
+      "sources": 1263,
+      "sourcesCited": 1225,
       "institutions": 207,
       "roles": 118,
       "people": 450,
