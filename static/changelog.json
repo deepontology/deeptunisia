@@ -1,5 +1,40 @@
 [
   {
+    "hash": "263e6ea23",
+    "date": "2026-09-11T00:30:02+01:00",
+    "subject": "Phase 2: one temporal implementation with a certainty horizon (#17)",
+    "kind": "expansion",
+    "added": 10,
+    "removed": 0,
+    "files": [
+      {
+        "file": "data/parameters.yaml",
+        "added": 10,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "4e19ef725",
+    "date": "2026-09-10T23:49:04+01:00",
+    "subject": "Harden the evidence contract (V25, V27, V28) and baseline the closed probes (#16)",
+    "kind": "revision",
+    "added": 1437,
+    "removed": 52,
+    "files": [
+      {
+        "file": "data/source-exceptions.yaml",
+        "added": 1437,
+        "removed": 0
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 0,
+        "removed": 52
+      }
+    ]
+  },
+  {
     "hash": "d4829e718",
     "date": "2026-09-10T11:30:11+01:00",
     "subject": "Daily sweep 2026-09-10: 12 events, 6 people, CPG correction, cutoff advance",
