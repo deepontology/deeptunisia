@@ -337,6 +337,10 @@ const en: Dict = {
 	'basis.floor.unsubstantiated': 'Plus unsubstantiated claims',
 	'basis.warning': 'Showing claims with no reliable evidence',
 
+	'origins.count': 'Independent origins: {n}',
+	'origins.note':
+		'Origins count independent evidence groups, not links; outlets republishing one wire are one origin.',
+
 	'layer.security': 'Security',
 	'layer.political': 'Political',
 	'layer.economic': 'Economic',
@@ -1618,6 +1622,10 @@ const fr: Dict = {
 	'basis.floor.unsubstantiated': 'Plus les allégations non étayées',
 	'basis.warning': 'Affichage d’allégations sans preuve fiable',
 
+	'origins.count': 'Origines indépendantes : {n}',
+	'origins.note':
+		'Les origines comptent des groupes de preuves indépendants, et non des liens ; des médias qui republient une même dépêche ne comptent que pour une seule origine.',
+
 	'layer.security': 'Sécurité',
 	'layer.political': 'Politique',
 	'layer.economic': 'Économique',
@@ -2873,6 +2881,10 @@ const ar: Dict = {
 	'basis.floor.inferred': 'بالإضافة إلى الاستنتاجات المبرَّرة',
 	'basis.floor.unsubstantiated': 'بالإضافة إلى الادعاءات غير المدعومة',
 	'basis.warning': 'يتم عرض ادعاءات بلا أدلة موثوقة',
+
+	'origins.count': 'أصول مستقلة: {n}',
+	'origins.note':
+		'الأصول مجموعات أدلة مستقلة، لا روابط؛ فوسائل الإعلام التي تنقل الخبر نفسه عن وكالة واحدة تُحسب أصلًا واحدًا.',
 
 	'layer.security': 'الأمن',
 	'layer.political': 'السياسة',

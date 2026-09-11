@@ -1,15 +1,15 @@
 {
-  "generated": "2026-09-11T09:43:07.687Z",
-  "commit": "b00765d",
+  "generated": "2026-09-11T12:37:49.240Z",
+  "commit": "a9777bf",
   "withValidators": true,
   "summary": {
-    "counted": 41,
-    "killed": 39,
+    "counted": 48,
+    "killed": 46,
     "latent": 2,
     "knownLatent": 2,
     "drift": 0,
     "invalid": 0,
-    "rate": 95
+    "rate": 96
   },
   "results": [
     {
@@ -173,6 +173,42 @@
       "by": "test-validators",
       "outputChanged": false,
       "expect": "test-validators V26 (relation needs independence)"
+    },
+    {
+      "id": "m42",
+      "label": "archive lookup format check disabled (a lookup passes as a snapshot)",
+      "file": "schema.ts",
+      "verdict": "killed",
+      "by": "test-validators",
+      "outputChanged": false,
+      "expect": "test-validators V29 (year-only/date-only lookup fixtures)"
+    },
+    {
+      "id": "m43",
+      "label": "evidence no longer needs a capture or a dated retry",
+      "file": "schema.ts",
+      "verdict": "killed",
+      "by": "test-validators",
+      "outputChanged": false,
+      "expect": "test-validators V29 (capture or retry required)"
+    },
+    {
+      "id": "m44",
+      "label": "the evidence locator minimum is weakened to allow whitespace",
+      "file": "schema.ts",
+      "verdict": "killed",
+      "by": "test-validators",
+      "outputChanged": false,
+      "expect": "test-validators V29 (locator required)"
+    },
+    {
+      "id": "m45",
+      "label": "source URLs stop being restricted to http(s)",
+      "file": "schema.ts",
+      "verdict": "killed",
+      "by": "test-validators",
+      "outputChanged": false,
+      "expect": "test-validators V29 source (http(s) url required)"
     },
     {
       "id": "m21",
@@ -371,6 +407,33 @@
       "by": "test-validators",
       "outputChanged": true,
       "expect": "test-validators (unknown-end observation, engine target)"
+    },
+    {
+      "id": "m46",
+      "label": "same-publisher evidence entries stop merging into one origin",
+      "file": "origins.ts",
+      "verdict": "killed",
+      "by": "test-validators",
+      "outputChanged": false,
+      "expect": "test-validators V29 origins (publisher dedupe)"
+    },
+    {
+      "id": "m47",
+      "label": "a shared origin host no longer collapses a renamed publisher",
+      "file": "origins.ts",
+      "verdict": "killed",
+      "by": "test-validators",
+      "outputChanged": false,
+      "expect": "test-validators V29 origins (host identity)"
+    },
+    {
+      "id": "m48",
+      "label": "the last lineage step is counted as the origin instead of the first",
+      "file": "origins.ts",
+      "verdict": "killed",
+      "by": "test-validators",
+      "outputChanged": false,
+      "expect": "test-validators V29 origins (wire counts once)"
     },
     {
       "id": "m39",

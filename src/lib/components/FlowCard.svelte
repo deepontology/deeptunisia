@@ -39,6 +39,7 @@
 	import { AGORA_OPEN } from '$lib/agora-gate';
 	import Chip from '$lib/ui/Chip.svelte';
 	import Tooltip from '$lib/ui/Tooltip.svelte';
+	import OriginsChip from '$lib/ui/OriginsChip.svelte';
 	import CommunityActions from '$lib/ui/CommunityActions.svelte';
 	import ShareMenu from '$lib/ui/ShareMenu.svelte';
 	import { canonicalShareUrl, buildFlowId } from '$lib/share';
@@ -268,6 +269,7 @@
 						{agreement.confidence ? `${agreement.confidence} — ` : ''}{basisLabel(agreement.basis as Basis)}
 					</Chip>
 				{/if}
+				<OriginsChip origins={agreement.origins} independence={agreement.independence} />
 				{#if agreement.in_force}
 					<Chip variant="outline" size="xs">{tf('world.inforce.date', { date: localDate(agreement.in_force) })}</Chip>
 				{/if}

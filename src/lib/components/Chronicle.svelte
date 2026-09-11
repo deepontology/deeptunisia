@@ -1786,7 +1786,7 @@
 		<table>
 			<caption>Officeholders by post, with the span each source actually supports.</caption>
 			<thead>
-				<tr><th>Post</th><th>Holder</th><th>Span</th><th>Duration</th><th>Evidence</th></tr>
+				<tr><th>Post</th><th>Holder</th><th>Span</th><th>Duration</th><th>Evidence</th><th>Origins</th></tr>
 			</thead>
 			<tbody>
 				{#each layout.items.filter((i) => i.kind === 'row') as row (row.roleId)}
@@ -1797,6 +1797,7 @@
 							<td>{describeInterval(pos.interval)}</td>
 							<td>{durationLabel(pos.years)}</td>
 							<td>{pos.confidence}</td>
+							<td>{pos.origins ?? pos.independence ?? '?'}</td>
 						</tr>
 					{/each}
 				{/each}
@@ -1805,7 +1806,7 @@
 		<table>
 			<caption>{t('timeline.lane.event')}</caption>
 			<thead>
-				<tr><th>Date</th><th>Event</th><th>Category</th><th>Rupture</th><th>Evidence</th></tr>
+				<tr><th>Date</th><th>Event</th><th>Category</th><th>Rupture</th><th>Evidence</th><th>Origins</th></tr>
 			</thead>
 			<tbody>
 				{#each eventsSorted.filter(eventPasses) as e (e.id)}
@@ -1815,6 +1816,7 @@
 						<td>{e.category}</td>
 						<td>{e.rupture ? 'yes' : 'no'}</td>
 						<td>{e.confidence}</td>
+						<td>{e.origins ?? e.independence ?? '?'}</td>
 					</tr>
 				{/each}
 			</tbody>

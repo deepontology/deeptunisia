@@ -2267,7 +2267,11 @@ if (runSection('every language')) for (const locale of ['ar', 'fr'] as const) {
 			// board seats, chain extensions); measured 51. Reviewer-facing
 			// worklist titles stay English by design - they name record ids -
 			// so the residue is structural, not a missing translation.
-			'/corrections': 55,
+			// 2026-09-11: 55 -> 65. The evidence import and its review commits
+			// add English subjects to the generated changelog this page renders;
+			// the page is a record of data changes, so its residue grows with
+			// the dataset. Measured 60.
+			'/corrections': 65,
 			'/rankings': 30,
 			// Residue is third-party headline text (legitimate — the feed shows
 			// what other outlets published; a few are English-language).

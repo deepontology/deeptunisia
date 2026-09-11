@@ -958,12 +958,6 @@
   deadline: 2026-12-09
   reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
 - rule: grade-a-primary
-  kind: event
-  id: sentences-july-2025
-  owner: RESEARCH
-  deadline: 2026-12-09
-  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25). kind corrected to reported in the 2026-09-11 kind migration; grade and sourcing deadline unchanged.
-- rule: grade-a-primary
   kind: institution
   id: bct
   owner: RESEARCH
