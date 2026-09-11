@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { t } from '$lib/t.svelte';
 	import ArticleLayout from '$lib/components/media/ArticleLayout.svelte';
+	import { localized } from '$lib/media/meta';
 	import type { InvestigationBundle } from '$lib/media/types';
 
 	/**
@@ -14,8 +14,8 @@
 </script>
 
 <svelte:head>
-	<title>{investigation.meta.title.en} · DeepTunisia Media</title>
-	<meta name="description" content={investigation.meta.subtitle.en} />
+	<title>{localized(investigation.meta.title)} · DeepTunisia Media</title>
+	<meta name="description" content={localized(investigation.meta.subtitle)} />
 </svelte:head>
 
 <ArticleLayout {investigation} />

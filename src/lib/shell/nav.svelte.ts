@@ -3,22 +3,29 @@
  *
  * THREE BUBBLES, NOT A FLAT TAB BAR
  *
- * Graph, Media and Agora are not three equal epistemic silos — they are two
- * worlds (Graph and Agora) with Media as a narrative surface that belongs to
- * the Graph world but gets its own navigation slot because the reading
- * experience is fundamentally different from the instrument.
+ * Graph, Media and Agora are not three equal epistemic silos. Graph and Media
+ * belong to the record; Agora is the argument about it, and it gets its own
+ * slot because crossing that line should be cheap and visible.
  *
  * Graph = the sourced record (instrument views)
- * Media = narrative interface over the evidence system (articles, investigations)
- * Agora = everything the record is not — discussion, proposed changes, feed
+ * Media = the reading surfaces: in-house investigations, and the third-party
+ *         headline feed
+ * Agora = the community layer: discussion, proposed changes, reports
  *
  * Media is architecturally connected to Graph: entities link to the graph,
  * sources are graph sources, the evidence vocabulary is shared. It is not a
- * separate epistemic world — it is a different rendering of the same evidence
+ * separate epistemic world; it is a different rendering of the same evidence
  * system, with editorial judgement and narrative framing added.
  *
- * One consequence to keep: nothing under Agora may ever render in the same
- * visual register as a sourced claim. The bubble is the promise; the views
+ * The feed sits here rather than under Agora for two reasons. Agora's three
+ * tabs share identity, moderation and a gate (`AGORA_OPEN`), and the feed shares
+ * none of them; keeping it there put a live page under a "soon" badge. And the
+ * feed's standing is already carried where a reader meets it: the notice at the
+ * top of the page, the item hint in this strip, and a rendering with no basis
+ * chips, no confidence grades and no evidence colours. That last point is the
+ * rule this file exists to keep: within Media, the feed must never borrow the
+ * register of a graded investigation, and nothing under Agora may ever render in
+ * the register of a sourced claim. The bubble sets the expectation; the views
  * have to keep it.
  */
 
@@ -82,7 +89,8 @@ export const BUBBLES: Bubble[] = [
 		key: 'media',
 		home: '/media',
 		items: [
-			{ href: '/media', key: 'investigations' }
+			{ href: '/media', key: 'investigations' },
+			{ href: '/feed', key: 'feed' }
 		]
 	},
 	{
@@ -97,15 +105,14 @@ export const BUBBLES: Bubble[] = [
 		items: [
 			{ href: '/agora?tab=discussion', key: 'discussion', tab: 'discussion' },
 			{ href: '/agora?tab=proposals', key: 'proposals', tab: 'proposals' },
-			{ href: '/agora?tab=reported', key: 'reported', tab: 'reported' },
-			{ href: '/feed', key: 'feed' }
+			{ href: '/agora?tab=reported', key: 'reported', tab: 'reported' }
 		]
 	}
 ];
 
 /** Routes that belong to Media or Agora. Everything else is Graph. */
-const MEDIA_PATHS = new Set(['/media']);
-const AGORA_PATHS = new Set(['/agora', '/feed']);
+const MEDIA_PATHS = new Set(['/media', '/feed']);
+const AGORA_PATHS = new Set(['/agora']);
 
 export function bubbleFor(pathname: string): Bubble {
 	if (MEDIA_PATHS.has(pathname) || pathname.startsWith('/media/')) {
@@ -140,7 +147,10 @@ export function isActive(item: NavItem, pathname: string, tab: string | null): b
 	const nestedWorld = path === '/world' && pathname.startsWith('/world/');
 	if (path !== pathname && !nestedWorld) return false;
 	if (!item.tab) return true;
-	return tab ? item.tab === tab : item.tab === BUBBLES[1].items[0].tab;
+	// No tab in the URL means the section's default, which is its first tab. The
+	// owner is resolved from the path; this used to read BUBBLES[1], which stopped
+	// being the bubble with tabs the moment a third section was added.
+	return tab ? item.tab === tab : item.tab === bubbleFor(pathname).items[0]?.tab;
 }
 
 /**

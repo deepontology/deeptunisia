@@ -12,11 +12,12 @@
 	/**
 	 * The menu bar — tier one.
 	 *
-	 * Three bubbles: Graph (the sourced record), Media (narrative investigations),
-	 * Agora (discussion and proposed changes). Media is architecturally connected
-	 * to Graph — it's a narrative interface over the same evidence system — but
-	 * gets its own navigation slot because the reading experience is fundamentally
-	 * different from the instrument. See nav.svelte.ts.
+	 * Three bubbles: Graph (the sourced record), Media (the reading surfaces:
+	 * investigations and the third-party feed), Agora (discussion and proposed
+	 * changes). Media is architecturally connected to Graph — investigations are a
+	 * narrative interface over the same evidence system — but gets its own
+	 * navigation slot because the reading experience is fundamentally different
+	 * from the instrument. See nav.svelte.ts.
 	 *
 	 * Everything narrower than the bubbles collapses: the wordmark first, then the
 	 * search label, then the language switcher into Settings. The bubbles themselves
