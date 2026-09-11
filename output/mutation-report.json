@@ -1,10 +1,10 @@
 {
-  "generated": "2026-09-11T09:43:07.687Z",
-  "commit": "b00765d",
+  "generated": "2026-09-11T19:40:44.792Z",
+  "commit": "da14745",
   "withValidators": true,
   "summary": {
-    "counted": 41,
-    "killed": 39,
+    "counted": 44,
+    "killed": 42,
     "latent": 2,
     "knownLatent": 2,
     "drift": 0,
@@ -380,6 +380,33 @@
       "by": "test-pipeline",
       "outputChanged": true,
       "expect": "test-pipeline (canonical byte equality)"
+    },
+    {
+      "id": "m52",
+      "label": "time ordering stops being enforced between path steps",
+      "file": "network-continuity.ts",
+      "verdict": "killed",
+      "by": "test-network-continuity",
+      "outputChanged": false,
+      "expect": "test-network-continuity (backwards chain fixture)"
+    },
+    {
+      "id": "m53",
+      "label": "unsubstantiated edges stop excluding a path",
+      "file": "network-continuity.ts",
+      "verdict": "killed",
+      "by": "test-network-continuity",
+      "outputChanged": false,
+      "expect": "test-network-continuity (unsubstantiated fixture)"
+    },
+    {
+      "id": "m54",
+      "label": "the grade gate accepts any basis instead of documented/reported",
+      "file": "network-continuity.ts",
+      "verdict": "killed",
+      "by": "test-network-continuity",
+      "outputChanged": false,
+      "expect": "test-network-continuity (weak-grade fixture)"
     }
   ]
 }

@@ -339,6 +339,25 @@ const MUTATIONS: Mutation[] = [
 		label: 'canonical bytes keep the wall-clock generated timestamp',
 		from: '\tcopy.meta.generated = CANONICAL_GENERATED;\n',
 		to: ''
+	},
+	// --- network-continuity.ts: the path query (Phase 10D) ------------------------
+	{
+		id: 'm52', file: 'network-continuity.ts', expect: 'test-network-continuity (backwards chain fixture)',
+		label: 'time ordering stops being enforced between path steps',
+		from: '\t\t\t\tif (prevEnd > step.edge.startLatest) continue; // wrong time order',
+		to: '\t\t\t\tif (false && prevEnd > step.edge.startLatest) continue; // wrong time order'
+	},
+	{
+		id: 'm53', file: 'network-continuity.ts', expect: 'test-network-continuity (unsubstantiated fixture)',
+		label: 'unsubstantiated edges stop excluding a path',
+		from: "\tif (path.some((e) => e.basis === 'unsubstantiated')) return 'excluded';",
+		to: "\tif (false && path.some((e) => e.basis === 'unsubstantiated')) return 'excluded';"
+	},
+	{
+		id: 'm54', file: 'network-continuity.ts', expect: 'test-network-continuity (weak-grade fixture)',
+		label: 'the grade gate accepts any basis instead of documented/reported',
+		from: '\t\tconst gradeOk = BASIS_RANK[basis] >= 2 && ((floor !== null && floor <= 2) || exceptionKeys.has(key));',
+		to: '\t\tconst gradeOk = BASIS_RANK[basis] >= 0 && ((floor !== null && floor <= 2) || exceptionKeys.has(key));'
 	}
 ];
 
@@ -347,6 +366,7 @@ const SUITES_FOR: Record<string, string[]> = {
 	'schema.ts': ['test-data.ts', 'test-validators.ts'],
 	'build-data.ts': ['test-data.ts', 'test-validators.ts', 'test-pipeline.ts'],
 	'canonical.ts': ['test-data.ts', 'test-pipeline.ts'],
+	'network-continuity.ts': ['test-network-continuity.ts'],
 	[ENGINE_TIME]: ['test-validators.ts', 'test-engine-conformance.ts']
 };
 const SYNTHETIC_SUITES = new Set(['test-validators.ts', 'test-pipeline.ts', 'test-engine-conformance.ts']);
