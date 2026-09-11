@@ -45,6 +45,7 @@ import {
 	areTypesCompatible,
 	isLowConfidence
 } from '../src/lib/interpretation.ts';
+import { canonicalBytes, computeDatasetHash, CANONICAL_GENERATED } from './canonical.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
@@ -73,12 +74,12 @@ const OUT_BAD = join(WORK, 'out-bad');
 const STATIC = join(WORK, 'static');
 const STATIC_BAD = join(WORK, 'static-bad');
 
-function build(dataDir: string, outDir: string, staticDir: string): { code: number; output: string } {
+function build(dataDir: string, outDir: string, staticDir: string, extraEnv: Record<string, string> = {}): { code: number; output: string } {
 	const r = spawnSync(process.execPath, [TSR, 'scripts/build-data.ts'], {
 		cwd: ROOT,
 		encoding: 'utf8',
 		timeout: 300_000,
-		env: { ...process.env, DT_DATA_DIR: dataDir, DT_OUT_DIR: outDir, DT_STATIC_DIR: staticDir }
+		env: { ...process.env, DT_DATA_DIR: dataDir, DT_OUT_DIR: outDir, DT_STATIC_DIR: staticDir, ...extraEnv }
 	});
 	return { code: r.status ?? 1, output: ((r.stdout ?? '') + (r.stderr ?? '')).trim() };
 }
@@ -122,26 +123,73 @@ try {
 	const clean = build(TREE, OUT, STATIC);
 	ok('pipeline fixture: the clean copy builds', clean.code === 0, clean.output.split('\n').slice(-3).join(' '));
 
-	if (clean.code === 0 && existsSync(join(OUT, 'dataset.json')) && existsSync(REAL_DATASET)) {
-		const fixture = JSON.parse(readFileSync(join(OUT, 'dataset.json'), 'utf8')) as { meta: { generated?: string; shippedKB?: number; datasetKB?: number } };
-		const real = JSON.parse(readFileSync(REAL_DATASET, 'utf8')) as { meta: { generated?: string; shippedKB?: number; datasetKB?: number } };
-		// Build-environment stats, not data: the payload sizes depend on which files
-		// exist in the throwaway static dir, the same way `generated` depends on the
-		// clock. Normalize both sides so the fixture-vs-real comparison tests the
-		// graph, not the environment.
-		delete fixture.meta.generated;
-		delete real.meta.generated;
-		delete fixture.meta.shippedKB;
-		delete real.meta.shippedKB;
-		delete fixture.meta.datasetKB;
-		delete real.meta.datasetKB;
+	const cleanGraph = clean.code === 0 && existsSync(join(OUT, 'dataset.json'))
+		? JSON.parse(readFileSync(join(OUT, 'dataset.json'), 'utf8'))
+		: null;
+
+	if (cleanGraph && existsSync(REAL_DATASET)) {
+		const real = JSON.parse(readFileSync(REAL_DATASET, 'utf8'));
+		// The comparison is now the canonical graph hash, not a JSON blob with the
+		// clock and the file sizes removed. Two builds agree when the graph agrees;
+		// `generated`, `shippedKB` and `datasetKB` are build environment, not data,
+		// and are excluded by scripts/canonical.ts.
 		ok(
-			'pipeline fixture: the clean fixture graph is byte-identical to the real graph',
-			JSON.stringify(fixture) === JSON.stringify(real),
-			'fixture mode changes no output'
+			'pipeline fixture: the clean fixture graph has the real graph datasetHash',
+			cleanGraph.meta.datasetHash === real.meta.datasetHash,
+			`fixture ${String(cleanGraph.meta.datasetHash).slice(0, 12)} vs real ${String(real.meta.datasetHash).slice(0, 12)}`
+		);
+		ok(
+			'pipeline fixture: the emitted datasetHash recomputes from the emitted graph',
+			computeDatasetHash(cleanGraph) === cleanGraph.meta.datasetHash
 		);
 	} else {
-		ok('pipeline fixture: the clean fixture graph is byte-identical to the real graph', false, 'clean build or dataset missing');
+		ok('pipeline fixture: the clean fixture graph has the real graph datasetHash', false, 'clean build or dataset missing');
+		ok('pipeline fixture: the emitted datasetHash recomputes from the emitted graph', false, 'clean build or dataset missing');
+	}
+
+	// -----------------------------------------------------------------------
+	// 1b. Canonical bytes (DT_CANONICAL=1). Two runs from the same data must be
+	//     byte-identical, carry a fixed `generated` placeholder and no payload
+	//     sizes, and produce the same graph hash as a normal build.
+	// -----------------------------------------------------------------------
+	{
+		const CAN1 = join(WORK, 'canonical-1');
+		const CAN2 = join(WORK, 'canonical-2');
+		const c1 = build(TREE, join(CAN1, 'out'), join(CAN1, 'static'), { DT_CANONICAL: '1' });
+		const c2 = build(TREE, join(CAN2, 'out'), join(CAN2, 'static'), { DT_CANONICAL: '1' });
+		const b1 = existsSync(join(CAN1, 'out', 'dataset.json'))
+			? readFileSync(join(CAN1, 'out', 'dataset.json'), 'utf8')
+			: '';
+		const b2 = existsSync(join(CAN2, 'out', 'dataset.json'))
+			? readFileSync(join(CAN2, 'out', 'dataset.json'), 'utf8')
+			: '';
+		ok(
+			'pipeline fixture: two canonical builds are byte-identical',
+			c1.code === 0 && c2.code === 0 && b1.length > 0 && b1 === b2,
+			c1.code !== 0 || c2.code !== 0 ? `${c1.output.split('\n').slice(-2).join(' ')}` : `${b1.length} bytes`
+		);
+		if (b1) {
+			const canonical = JSON.parse(b1);
+			ok(
+				'pipeline fixture: canonical bytes use the fixed generated time and omit payload sizes',
+				canonical.meta.generated === CANONICAL_GENERATED &&
+					!('shippedKB' in canonical.meta) &&
+					!('datasetKB' in canonical.meta),
+				`generated ${canonical.meta.generated}`
+			);
+			ok(
+				'pipeline fixture: canonical bytes can be regenerated with no drift',
+				canonicalBytes(canonical) === b1
+			);
+			ok(
+				'pipeline fixture: canonical hash matches the normal build hash',
+				Boolean(cleanGraph) && canonical.meta.datasetHash === cleanGraph.meta.datasetHash
+			);
+		} else {
+			ok('pipeline fixture: canonical bytes use the fixed generated time and omit payload sizes', false, 'no canonical dataset');
+			ok('pipeline fixture: canonical bytes can be regenerated with no drift', false, 'no canonical dataset');
+			ok('pipeline fixture: canonical hash matches the normal build hash', false, 'no canonical dataset');
+		}
 	}
 
 	// -----------------------------------------------------------------------
@@ -309,6 +357,25 @@ try {
 		'pipeline fixture: the grade-A error is the V25 primary-source message',
 		bad.output.includes('must cite at least one tier-1 or tier-2 source (V25)'),
 		'expected the V25 message in the build output'
+	);
+
+	// 3A: a failed build promotes nothing. The review caught editorial-queue.json
+	// leaking before the error gate; staging makes that impossible, and these
+	// assertions pin the promoted dirs (not just the staging dirs) as empty.
+	ok(
+		'pipeline fixture: a failed build promotes no dataset',
+		!existsSync(join(OUT_BAD, 'dataset.json')),
+		existsSync(join(OUT_BAD, 'dataset.json')) ? 'dataset present after failure' : 'absent'
+	);
+	ok(
+		'pipeline fixture: a failed build promotes no editorial queue',
+		!existsSync(join(STATIC_BAD, 'editorial-queue.json')),
+		existsSync(join(STATIC_BAD, 'editorial-queue.json')) ? 'queue present after failure' : 'absent'
+	);
+	ok(
+		'pipeline fixture: a failed build leaves no staging tree behind',
+		!existsSync(`${OUT_BAD}.tmp`) && !existsSync(`${STATIC_BAD}.tmp`),
+		[existsSync(`${OUT_BAD}.tmp`), existsSync(`${STATIC_BAD}.tmp`)].join(',')
 	);
 
 	// -----------------------------------------------------------------------

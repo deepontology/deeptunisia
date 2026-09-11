@@ -10,6 +10,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parse as parseYaml } from 'yaml';
 import { RelationshipType, EDGE_DIRECTION, REQUIRED_SOURCE_KINDS } from '../scripts/schema.ts';
+import { computeDatasetHash } from './canonical.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ds = JSON.parse(readFileSync(join(HERE, '..', 'src', 'generated', 'dataset.json'), 'utf8'));
@@ -45,6 +46,20 @@ ok('every position resolves to a role', ds.positions.every((p: Pos) => p.roleTit
 ok(
 	'every position has at least one source',
 	ds.positions.every((p: Pos) => p.sources.length > 0)
+);
+
+// The graph hash is the release's identity (scripts/canonical.ts): a 64-hex
+// sha256 over the stable projection. It must recompute from the emitted graph,
+// so a file edited after the build cannot pass as the build's output.
+ok(
+	'the emitted datasetHash is a well-formed sha256',
+	/^[0-9a-f]{64}$/.test(ds.meta.datasetHash ?? ''),
+	String(ds.meta.datasetHash ?? '(missing)')
+);
+ok(
+	'the emitted datasetHash recomputes from the emitted graph',
+	ds.meta.datasetHash === computeDatasetHash(ds),
+	'the hash identifies this exact graph, not a nearby one'
 );
 ok(
 	'every inferred claim states its reasoning',
