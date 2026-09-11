@@ -9,39 +9,49 @@
  * the build and the test suites against it, restore the file, and classify what
  * survived and why.
  *
+ * Targets are the files DeepTunisia owns (scripts/schema.ts,
+ * scripts/build-data.ts, scripts/canonical.ts) and the pinned engine the time
+ * predicates live in (node_modules/deepepisteme/src/time.ts). Mutating the
+ * engine copy is deliberate: it simulates a bad engine bump, which is the
+ * failure mode the pinned dependency and the conformance suite exist to catch.
+ *
  * CLASSIFICATION
  * --------------
- *   killed          the build crashed or a test failed while the mutation was
- *                   in place
+ *   killed          the build failed at the validation gate, or a test suite
+ *                   failed while the mutation was in place
  *   survived-latent the mutation changed nothing observable: build and tests
- *                   all pass and the emitted graph is byte-identical. The
- *                   invariant it weakened is invisible on a clean dataset.
+ *                   all pass and the emitted graph is unchanged. The invariant
+ *                   it weakened is invisible on the current dataset.
  *   survived-drift  build and tests pass BUT the emitted graph changed. This is
  *                   the dangerous class: a validator change silently rewrites
  *                   published data with nothing objecting (the V18-3 story —
  *                   a reclassification of 138 positions no assertion noticed).
+ *   invalid-mutant  the pattern is absent, or the build broke for a reason
+ *                   unrelated to the invariant (a transform or runtime error,
+ *                   not a validation failure). Invalid mutants are not kills.
  *
  * Usage:
- *   npm run mutation                  full run
+ *   npm run mutation                  full run, writes output/mutation-report.json
+ *   npm run mutation -- --check       pattern self-check only (no builds)
  *   npm run mutation -- --only=m04,m10   run a subset
  *   npm run mutation -- --list           list mutations without running
  *   npm run mutation -- --no-validators  simulate the pre-synthetic-fixture
  *                                        suite (no test-validators.ts, no
- *                                        test-pipeline.ts), to see what the
- *                                        added fixtures are worth
+ *                                        test-pipeline.ts, no conformance), to
+ *                                        see what the added fixtures are worth
  */
 import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync, statSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { tmpdir } from 'node:os';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
 const TSR = join(ROOT, 'node_modules', 'tsx', 'dist', 'cli.mjs');
 const DATASET = join(ROOT, 'src', 'generated', 'dataset.json');
 const S = (f: string) => join(HERE, f);
+const ENGINE_TIME = '../node_modules/deepepisteme/src/time.ts';
 
 const hash = (p: string) => {
 	if (!existsSync(p)) return 'missing';
@@ -62,7 +72,8 @@ const hash = (p: string) => {
 
 interface Mutation {
 	id: string;
-	file: string; // relative to scripts/
+	/** Relative to scripts/; `../node_modules/...` reaches the pinned engine. */
+	file: string;
 	label: string;
 	from: string;
 	to: string;
@@ -92,30 +103,31 @@ const MUTATIONS: Mutation[] = [
 		from: "if (confidence === 'D') return 'unsubstantiated';",
 		to: "if (false && confidence === 'D') return 'unsubstantiated';"
 	},
-	// --- schema.ts: the claim envelope (V18/V20) --------------------------------
+	// --- schema.ts: the claim envelope (V18/V20, now nonBlank) -------------------
 	{
 		id: 'm04', file: 'schema.ts', expect: 'test-validators V20 (C/D attribution)',
 		label: 'envelope stops requiring attributed_to on C/D',
-		from: "(r: any) => !((r.confidence === 'C' || r.confidence === 'D') && !r.attributed_to)",
+		from: "(r: any) => !((r.confidence === 'C' || r.confidence === 'D') && !nonBlank(r.attributed_to))",
 		to: '(r: any) => true'
 	},
 	{
 		id: 'm05', file: 'schema.ts', expect: 'test-validators V18 (inferred completeness)',
 		label: 'envelope stops requiring reasoning/falsifier on inferred',
-		from: "!(deriveBasis(r.confidence, r.verification, r.basis) === 'inferred' &&\n\t\t\t\t\t(!r.reasoning || !r.falsifiable_by))",
-		to: 'true'
+		from: "\t\t\t(r: any) => {\n\t\t\t\tconst derived = deriveBasis(r.confidence, r.verification, r.basis);\n\t\t\t\treturn !(derived === 'inferred' && (!nonBlank(r.reasoning) || !nonBlank(r.falsifiable_by)));\n\t\t\t}",
+		to: '(r: any) => true'
 	},
 	{
 		id: 'm06', file: 'schema.ts', expect: 'test-validators V18 (explicit unsubstantiated)',
 		label: 'envelope stops requiring attribution on unsubstantiated',
-		from: "!(deriveBasis(r.confidence, r.verification, r.basis) === 'unsubstantiated' && !r.attributed_to)",
-		to: 'true'
+		from: "(r: any) =>\n\t\t\t\t!(deriveBasis(r.confidence, r.verification, r.basis) === 'unsubstantiated' &&\n\t\t\t\t\t!nonBlank(r.attributed_to)),",
+		to: '(r: any) => true,'
 	},
 	{
-		id: 'm07', file: 'schema.ts', expect: 'test-validators V18 (company zero sources)',
+		id: 'm07', file: 'schema.ts', expect: 'latent — redundant with the envelope, documented below',
 		label: 'claim envelope drops the sources minimum',
 		from: "sources: z.array(slug).min(1, 'every claim record needs at least one source')",
-		to: 'sources: z.array(slug),'
+		to: 'sources: z.array(slug),',
+		known: 'by design after the required-source rule: the envelope refine rejects an empty sources list for every kind that carries it (company, contract, licence, declaration, education, place), so the field minimum no longer changes acceptance — only the error message.'
 	},
 	// --- schema.ts: review guard (V23) ------------------------------------------
 	{
@@ -134,8 +146,8 @@ const MUTATIONS: Mutation[] = [
 	{
 		id: 'm10', file: 'schema.ts', expect: 'test-validators V23 (calendar round-trip)',
 		label: 'review date loses its calendar round-trip (2026-02-31 accepted)',
-		from: 'return t.getUTCFullYear() === y && t.getUTCMonth() === mo - 1 && t.getUTCDate() === da;',
-		to: 'return true;'
+		from: "return t.getUTCFullYear() === y && t.getUTCMonth() === mo - 1 && t.getUTCDate() === da;\n\t\t\t},\n\t\t\t'review date must be a calendar-valid date (V23)'",
+		to: "return true;\n\t\t\t},\n\t\t\t'review date must be a calendar-valid date (V23)'"
 	},
 	{
 		id: 'm11', file: 'schema.ts', expect: 'test-validators V23-guard (disclaimer clause)',
@@ -150,54 +162,30 @@ const MUTATIONS: Mutation[] = [
 		from: "status: z.enum(['open', 'adopted', 'rejected']).optional(),",
 		to: 'status: z.string().optional(),'
 	},
-	// --- dates.ts: fuzzy grammar (V22) and calendar validity (V21) ---------------
+	// --- schema.ts: non-blank mandatory text and override provenance --------------
 	{
-		id: 'm13', file: 'dates.ts', expect: 'test-validators V22 (~ widening)',
-		label: '"~" widening reduced to zero slack',
-		from: "const slack = base.precision === 'year' ? 365 : 92;",
-		to: 'const slack = 0;'
+		id: 'm27', file: 'schema.ts', expect: 'test-validators whitespace fixtures (V18/V20)',
+		label: 'nonBlank stops trimming, so a space passes for prose',
+		from: "\treturn typeof v === 'string' && v.trim().length >= min;",
+		to: "\treturn typeof v === 'string' && v.length > 0;"
 	},
 	{
-		id: 'm14', file: 'dates.ts', expect: 'test-validators V22 (<= floor clamp)',
-		label: '"<=" bound no longer clamps to the dataset floor',
-		from: 'earliest: Math.max(DATASET_FLOOR, base.latest - BEFORE_WINDOW_MS),',
-		to: 'earliest: base.latest - BEFORE_WINDOW_MS,'
+		id: 'm28', file: 'schema.ts', expect: 'test-validators V23 (whitespace reviewer name)',
+		label: 'reviewer names stop being trimmed before the minimum',
+		from: "\tby: z.string().refine((v) => nonBlank(v, 2), 'reviewer name must be at least 2 non-blank characters (V23)'),",
+		to: '\tby: z.string().min(2),'
 	},
 	{
-		id: 'm15', file: 'dates.ts', expect: 'test-validators V21 (calendar round-trip)',
-		label: 'calendar-valid day check removed (2018-02-31 accepted)',
-		from: '\t\tconst d = new Date(t);\n\t\tif (d.getUTCFullYear() !== year || d.getUTCMonth() !== mo - 1 || d.getUTCDate() !== da) {\n\t\t\tthrow new Error(`Invalid calendar date: "${token}"`);\n\t\t}',
-		to: ''
+		id: 'm29', file: 'schema.ts', expect: 'the build gate (legacy override register)',
+		label: 'legacy basis-override exception register stops being consulted',
+		from: '\t\t\tif (schemaExceptions.basisOverrides?.has(overrideKey(kind, r))) return;',
+		to: '\t\t\tif (false) return;'
 	},
 	{
-		id: 'm16', file: 'dates.ts', expect: 'test-validators V22 (inversion rejection)',
-		label: 'inverted intervals no longer rejected',
-		from: 'if (endLatest !== null && endLatest < start.earliest && !opts?.allowEnvelopeTrim) {',
-		to: 'if (false && endLatest !== null && endLatest < start.earliest && !opts?.allowEnvelopeTrim) {'
-	},
-	{
-		id: 'm17', file: 'dates.ts', expect: 'test-data V22 inversion check and/or test-validators',
-		label: 'over-wide fuzzy start no longer clamped down',
-		from: 'if (endLatest !== null && start.latest > endLatest && !opts?.allowEnvelopeTrim) {',
-		to: 'if (false && endLatest !== null && start.latest > endLatest && !opts?.allowEnvelopeTrim) {'
-	},
-	{
-		id: 'm18', file: 'dates.ts', expect: 'test-validators V22 (verified-at cutoff clamp)',
-		label: 'verified-at bound no longer clamped to the dataset cutoff',
-		from: 'endEarliest = Math.min(at.latest, DATASET_CUTOFF);',
-		to: 'endEarliest = at.latest;'
-	},
-	{
-		id: 'm19', file: 'dates.ts', expect: 'test-validators (certainlyActive boundary)',
-		label: 'certainlyActive exclusive at the lower core edge',
-		from: 'if (t < iv.startLatest) return false;',
-		to: 'if (t <= iv.startLatest) return false;'
-	},
-	{
-		id: 'm20', file: 'dates.ts', expect: 'test-validators (open-ended duration)',
-		label: 'open-ended durations measured from the epoch instead of the cutoff',
-		from: '? DATASET_CUTOFF\n\t\t\t: (iv.endEarliest + iv.endLatest) / 2;',
-		to: '? 0\n\t\t\t: (iv.endEarliest + iv.endLatest) / 2;'
+		id: 'm30', file: 'schema.ts', expect: 'test-validators V27 (override review requirement)',
+		label: 'override review requirement stops issuing',
+		from: "\t\t\tif (!r.review) issue('a basis override requires a review object with a date and method');",
+		to: "\t\t\tif (false) issue('a basis override requires a review object with a date and method');"
 	},
 	// --- build-data.ts: the pipeline ---------------------------------------------
 	{
@@ -235,8 +223,121 @@ const MUTATIONS: Mutation[] = [
 		label: 'ghost relationship endpoint detection disabled (referential integrity)',
 		from: 'if (!entityIds.has(rel.from)) fail(`relationship ${label}`, `unknown "from" entity "${rel.from}"`);',
 		to: 'if (false && !entityIds.has(rel.from)) fail(`relationship ${label}`, `unknown "from" entity "${rel.from}"`);'
+	},
+	{
+		id: 'm31', file: 'build-data.ts', expect: 'the build gate (grade-A primary rule)',
+		label: 'grade-A records no longer checked for a tier-1/2 source',
+		from: '\t\tif (tiers.some((t) => t <= 2)) continue;',
+		to: '\t\tif (false) continue;'
+	},
+	{
+		id: 'm32', file: 'build-data.ts', expect: 'the build gate (no-source exception register)',
+		label: 'no-source exception register stops being consulted',
+		from: '\t\tif (emptySourceKeys.has(`${kind}:${record.id}`)) continue;',
+		to: '\t\tif (false) continue;'
+	},
+	// --- engine time.ts: fuzzy grammar (V21/V22) and the certainty horizon -------
+	{
+		id: 'm13', file: ENGINE_TIME, expect: 'test-validators V22 (~ widening, engine target)',
+		label: '"~" widening reduced to zero slack',
+		from: "    const slack = base.precision === 'year' ? APPROX_SLACK_DAYS.year : APPROX_SLACK_DAYS.month;",
+		to: '    const slack = 0;'
+	},
+	{
+		id: 'm14', file: ENGINE_TIME, expect: 'test-validators V22 (<= floor clamp, engine target)',
+		label: '"<=" bound no longer clamps to the dataset floor',
+		from: 'earliest: Math.max(DATASET_FLOOR, base.latest - BEFORE_WINDOW_MS),',
+		to: 'earliest: base.latest - BEFORE_WINDOW_MS,'
+	},
+	{
+		id: 'm15', file: ENGINE_TIME, expect: 'test-validators V21 (calendar round-trip, engine target)',
+		label: 'calendar-valid day check removed (2018-02-31 accepted)',
+		from: '    const d = new Date(t);\n    if (d.getUTCFullYear() !== year || d.getUTCMonth() !== mo - 1 || d.getUTCDate() !== da) {\n      throw new Error(`Invalid calendar date: "${token}"`);\n    }',
+		to: ''
+	},
+	{
+		id: 'm16', file: ENGINE_TIME, expect: 'test-validators V22 (inversion rejection, engine target)',
+		label: 'inverted intervals no longer rejected',
+		from: 'if (endLatest !== null && endLatest < start.earliest && !opts?.allowEnvelopeTrim) {',
+		to: 'if (false && endLatest !== null && endLatest < start.earliest && !opts?.allowEnvelopeTrim) {'
+	},
+	{
+		id: 'm17', file: ENGINE_TIME, expect: 'test-validators V22 (start clamp, engine target)',
+		label: 'over-wide fuzzy start no longer clamped down',
+		from: 'if (endLatest !== null && start.latest > endLatest && !opts?.allowEnvelopeTrim) {',
+		to: 'if (false && endLatest !== null && start.latest > endLatest && !opts?.allowEnvelopeTrim) {'
+	},
+	{
+		id: 'm18', file: ENGINE_TIME, expect: 'test-validators V22 (verified-at cutoff clamp, engine target)',
+		label: 'verified-at bound no longer clamped to the dataset cutoff',
+		from: 'endEarliest = Math.min(at.latest, DATASET_CUTOFF);',
+		to: 'endEarliest = at.latest;'
+	},
+	{
+		id: 'm19', file: ENGINE_TIME, expect: 'test-validators (certainlyActive boundary, engine target)',
+		label: 'certainlyActive exclusive at the lower core edge',
+		from: 'if (t < iv.startLatest) return false;',
+		to: 'if (t <= iv.startLatest) return false;'
+	},
+	{
+		id: 'm20', file: ENGINE_TIME, expect: 'test-validators (open-ended duration, engine target)',
+		label: 'open-ended durations measured from the epoch instead of the cutoff',
+		from: '? DATASET_CUTOFF\n      : (iv.endEarliest + iv.endLatest) / 2;',
+		to: '? 0\n      : (iv.endEarliest + iv.endLatest) / 2;'
+	},
+	{
+		id: 'm33', file: ENGINE_TIME, expect: 'test-validators (no assertion past cutoff, engine target)',
+		label: 'certainlyActive loses its cutoff clamp',
+		from: 'if (t > DATASET_CUTOFF) return false;\n  if (t < iv.startLatest) return false;',
+		to: 'if (t < iv.startLatest) return false;'
+	},
+	{
+		id: 'm34', file: ENGINE_TIME, expect: 'test-validators (no assertion past cutoff, engine target)',
+		label: 'possiblyActive loses its cutoff clamp',
+		from: 'if (t > DATASET_CUTOFF) return false;\n  if (t < iv.startEarliest) return false;',
+		to: 'if (t < iv.startEarliest) return false;'
+	},
+	{
+		id: 'm35', file: ENGINE_TIME, expect: 'test-validators (unknown-end certainty horizon, engine target)',
+		label: 'certainty no longer stops at the last observation',
+		from: 'if (coreEnd !== null && t > coreEnd) return false;',
+		to: 'if (false && coreEnd !== null && t > coreEnd) return false;'
+	},
+	{
+		id: 'm36', file: ENGINE_TIME, expect: 'test-validators (month-midpoint rule, engine target)',
+		label: 'month-only verification is certain through the whole month',
+		from: "const instant = at.precision === 'month' ? Math.floor((at.earliest + at.latest) / 2) : at.latest;",
+		to: 'const instant = at.latest;'
+	},
+	{
+		id: 'm37', file: ENGINE_TIME, expect: 'test-validators (ongoing confirmation window, engine target)',
+		label: 'ongoing is always treated as recently confirmed',
+		from: 'lastObservation !== null &&\n    lastObservation >= cutoff - ONGOING_CONFIRMATION_DAYS * 86_400_000;',
+		to: 'true;'
+	},
+	{
+		id: 'm38', file: ENGINE_TIME, expect: 'test-validators (unknown-end observation, engine target)',
+		label: 'unknown ends borrow the cutoff as their observation',
+		from: "else if (status === 'unknown') lastObserved = start.latest;",
+		to: "else if (status === 'unknown') lastObserved = endLatest;"
+	},
+	// --- canonical.ts: byte reproducibility --------------------------------------
+	{
+		id: 'm39', file: 'canonical.ts', expect: 'test-pipeline (canonical byte equality)',
+		label: 'canonical bytes keep the wall-clock generated timestamp',
+		from: '\tcopy.meta.generated = CANONICAL_GENERATED;\n',
+		to: ''
 	}
 ];
+
+/** Which suites exercise which target. Order is the attribution order. */
+const SUITES_FOR: Record<string, string[]> = {
+	'schema.ts': ['test-data.ts', 'test-validators.ts'],
+	'build-data.ts': ['test-data.ts', 'test-validators.ts', 'test-pipeline.ts'],
+	'canonical.ts': ['test-data.ts', 'test-pipeline.ts'],
+	[ENGINE_TIME]: ['test-validators.ts', 'test-engine-conformance.ts']
+};
+const SYNTHETIC_SUITES = new Set(['test-validators.ts', 'test-pipeline.ts', 'test-engine-conformance.ts']);
 
 function run(label: string, args: string[]): { code: number; output: string } {
 	const r = spawnSync(process.execPath, args, { cwd: ROOT, encoding: 'utf8', timeout: 300_000 });
@@ -250,21 +351,41 @@ function run(label: string, args: string[]): { code: number; output: string } {
 }
 
 /** CRLF discipline: target files are CRLF on disk; mutation literals are written LF. */
+function withEol(text: string, file: string): string {
+	return readFileSync(S(file), 'utf8').includes('\r\n') ? text.replace(/\n/g, '\r\n') : text;
+}
+
+function occurrenceCount(file: string, from: string): number {
+	if (!existsSync(S(file))) return -1;
+	const before = readFileSync(S(file), 'utf8');
+	return before.split(withEol(from, file)).length - 1;
+}
+
+function lineHint(file: string, from: string): string {
+	if (!existsSync(S(file))) return 'file missing';
+	const lines = readFileSync(S(file), 'utf8').replace(/\r\n/g, '\n').split('\n');
+	const probe = from.replace(/\r\n/g, '\n').split('\n')[0].trim().slice(0, 48);
+	const at = lines.findIndex((l) => l.includes(probe));
+	return at >= 0 ? `line ${at + 1}` : 'not found';
+}
+
 function applyMutation(file: string, from: string, to: string) {
 	const path = S(file);
 	const before = readFileSync(path, 'utf8');
-	const needle = before.includes('\r\n') ? from.replace(/\n/g, '\r\n') : from;
-	const replacement = before.includes('\r\n') ? to.replace(/\n/g, '\r\n') : to;
+	const needle = withEol(from, file);
+	const replacement = withEol(to, file);
 	const count = before.split(needle).length - 1;
 	if (count !== 1) throw new Error(`mutation: "${file}" pattern appears ${count} times, expected exactly 1`);
 	writeFileSync(path, before.replace(needle, replacement), 'utf8');
 }
 
+type Verdict = 'killed' | 'survived-latent' | 'survived-drift' | 'invalid-mutant';
+
 interface Result {
 	id: string;
 	label: string;
 	file: string;
-	verdict: 'killed' | 'survived-latent' | 'survived-drift' | 'error';
+	verdict: Verdict;
 	by: string;
 	outputChanged: boolean;
 	expect: string;
@@ -276,27 +397,54 @@ function main() {
 		args.filter((a) => a.startsWith('--only=')).flatMap((a) => a.slice(7).split(',').map((s) => s.trim()).filter(Boolean))
 	);
 	const withValidators = !args.includes('--no-validators');
+	const selected = MUTATIONS.filter((m) => !only.size || only.has(m.id));
 
 	if (args.includes('--list')) {
-		for (const m of MUTATIONS) {
-			console.log(`  ${m.id.padEnd(6)} ${m.file.padEnd(14)} ${m.label.padEnd(62)} expect: ${m.expect}`);
+		for (const m of selected) {
+			console.log(`  ${m.id.padEnd(6)} ${m.file.padEnd(34)} ${m.label.padEnd(64)} expect: ${m.expect}`);
 		}
 		return;
 	}
 
-	const targets = [...new Set(MUTATIONS.map((m) => m.file))];
-	const snapshots = new Map<string, string>();
+	// -------------------------------------------------------------------------
+	// Pattern self-check. A mutation whose `from` is absent or ambiguous is an
+	// invalid mutant, not a kill; report every one with a file and line hint
+	// before the campaign runs, so a stale harness cannot masquerade as coverage.
+	// -------------------------------------------------------------------------
+	console.log('\n  ── pattern self-check ──');
+	const runnable: Mutation[] = [];
+	const invalid: Result[] = [];
+	for (const m of selected) {
+		const count = occurrenceCount(m.file, m.from);
+		if (count === 1) {
+			runnable.push(m);
+			console.log(`    ok    ${m.id.padEnd(5)} ${m.file.padEnd(40)} ${lineHint(m.file, m.from)}`);
+		} else {
+			const reason =
+				count < 0 ? 'target file not found' : count === 0 ? 'pattern not found in target' : `pattern appears ${count} times`;
+			invalid.push({
+				id: m.id,
+				label: m.label,
+				file: m.file,
+				verdict: 'invalid-mutant',
+				by: `${reason} (${lineHint(m.file, m.from)})`,
+				outputChanged: false,
+				expect: m.expect
+			});
+			console.log(`    MISS  ${m.id.padEnd(5)} ${m.file.padEnd(40)} ${reason} — ${lineHint(m.file, m.from)}`);
+		}
+	}
+	if (args.includes('--check')) {
+		console.log(`\n    ${runnable.length}/${selected.length} patterns resolvable, ${invalid.length} invalid\n`);
+		process.exit(invalid.length ? 1 : 0);
+	}
 
-	/**
-	 * `npm run data` rewrites the whole public surface — src/generated/, static/
-	 * (dataset.json, the CSV exports, interval-trims.json, editorial-queue.json,
-	 * geo.json, regions.geojson) and the <!--stat:--> tags in the three docs —
-	 * and a mutated build can change any of it. Restoring only the source file
-	 * would leak one mutation's emitted graph into the next mutation's hash
-	 * comparison (and its test runs). Snapshot everything the build touches.
-	 * Keys are ABSOLUTE paths: restore must not have to guess whether a file
-	 * lives in scripts/ or the repo root.
-	 */
+	// -------------------------------------------------------------------------
+	// Snapshot everything a mutated build can touch, so one mutation cannot leak
+	// into the next. Keys are absolute paths.
+	// -------------------------------------------------------------------------
+	const targets = [...new Set(runnable.map((m) => m.file))];
+	const snapshots = new Map<string, string>();
 	const snapshot = (p: string) => {
 		if (!existsSync(p)) return;
 		if (statSync(p).isDirectory()) {
@@ -311,6 +459,7 @@ function main() {
 	snapshot(join(ROOT, 'README.md'));
 	snapshot(join(ROOT, 'AGENTS.md'));
 	snapshot(join(ROOT, 'DESIGN.md'));
+	snapshot(join(ROOT, 'output', 'basis-overrides.csv'));
 
 	const restore = () => {
 		for (const [p, content] of snapshots) {
@@ -325,10 +474,6 @@ function main() {
 		process.exit(130);
 	});
 	process.on('exit', () => {
-		// Best effort: even a hard crash mid-loop must not leave the tree mutated.
-		// (readFileSync/writeFileSync are synchronous, so this runs on normal exit
-		// paths; nothing can help against a SIGKILL, which is why the loop also
-		// restores after every single mutation.)
 		try {
 			restore();
 		} catch {
@@ -336,80 +481,71 @@ function main() {
 		}
 	});
 
-	// A target file that no longer matches its mutation patterns means the tree
-	// was left mutated by a previous interrupted run. Never stack mutations.
-	const dirty = MUTATIONS.filter((m) => {
-		if (only.size && !only.has(m.id)) return false;
-		const before = readFileSync(S(m.file), 'utf8');
-		const needle = before.includes('\r\n') ? m.from.replace(/\n/g, '\r\n') : m.from;
-		return before.split(needle).length - 1 !== 1;
-	});
-	if (dirty.length) {
-		console.error(
-			`\n  ABORT: the working tree is already mutated — restore the source files first:\n` +
-				dirty.map((m) => `    ${m.id} ${m.label} (pattern missing from ${m.file})`).join('\n') +
-				'\n  (run: git checkout -- scripts/schema.ts scripts/dates.ts scripts/build-data.ts, then rebuild)'
-		);
-		process.exit(2);
-	}
-
 	const beforeHash = hash(DATASET);
-	const results: Result[] = [];
+	const results: Result[] = [...invalid];
 
 	try {
-		for (const m of MUTATIONS) {
-			if (only.size && !only.has(m.id)) continue;
+		for (const m of runnable) {
 			process.stdout.write(`\n  ▸ ${m.id} ${m.label} … `);
+			try {
+				applyMutation(m.file, m.from, m.to);
 
-			applyMutation(m.file, m.from, m.to);
+				const build = run(`build`, [TSR, 'scripts/build-data.ts']);
+				const outputChanged = hash(DATASET) !== beforeHash;
+				const validationFailure = /DATA VALIDATION FAILED|translation errors/.test(build.output);
 
-			const build = run(`build`, [TSR, 'scripts/build-data.ts']);
-			const outputChanged = hash(DATASET) !== beforeHash;
+				const suites = (SUITES_FOR[m.file] ?? ['test-data.ts', 'test-validators.ts']).filter(
+					(s) => withValidators || !SYNTHETIC_SUITES.has(s)
+				);
+				const failures: { suite: string; output: string }[] = [];
+				if (build.code === 0) {
+					for (const suite of suites) {
+						const r = run(suite, [TSR, `scripts/${suite}`]);
+						if (r.code !== 0) {
+							failures.push({ suite, output: r.output });
+							break;
+						}
+					}
+				}
 
-			let testData = { code: 0, output: '' };
-			let testVal = { code: 0, output: '' };
-			let testPipeline = { code: 0, output: '' };
-			if (build.code === 0) {
-				testData = run(`test-data`, [TSR, 'scripts/test-data.ts']);
-				if (withValidators) testVal = run(`test-validators`, [TSR, 'scripts/test-validators.ts']);
-				// build-data mutations can only be exercised through the pipeline
-				// itself: run the fixture trees (clean + injected) against it.
-				if (withValidators && m.file === 'build-data.ts') testPipeline = run(`test-pipeline`, [TSR, 'scripts/test-pipeline.ts']);
-			}
-
-			restore();
-
-			if (build.code !== 0) {
-				results.push({ id: m.id, label: m.label, file: m.file, verdict: 'killed', by: 'build crashed', outputChanged, expect: m.expect });
-				console.log(`KILLED — build crashed`);
-			} else if (testData.code !== 0) {
-				results.push({ id: m.id, label: m.label, file: m.file, verdict: 'killed', by: 'test-data', outputChanged, expect: m.expect });
-				console.log(`KILLED — test-data`);
-			} else if (withValidators && testVal.code !== 0) {
-				results.push({ id: m.id, label: m.label, file: m.file, verdict: 'killed', by: 'test-validators', outputChanged, expect: m.expect });
-				console.log(`KILLED — test-validators`);
-			} else if (m.file === 'build-data.ts' && testPipeline.code !== 0) {
-				results.push({ id: m.id, label: m.label, file: m.file, verdict: 'killed', by: 'test-pipeline', outputChanged, expect: m.expect });
-				console.log(`KILLED — test-pipeline`);
-			} else if (outputChanged) {
-				results.push({ id: m.id, label: m.label, file: m.file, verdict: 'survived-drift', by: 'none — graph changed silently', outputChanged, expect: m.expect });
-				console.log(`SURVIVED — silent drift (graph changed, no assertion noticed)`);
-			} else {
-				results.push({ id: m.id, label: m.label, file: m.file, verdict: 'survived-latent', by: m.known ? 'known limitation (documented)' : 'none — latent on clean graph', outputChanged, expect: m.expect });
-				console.log(`SURVIVED — latent${m.known ? ' (known limitation)' : ' (graph unchanged)'}`);
+				if (build.code !== 0 && !validationFailure) {
+					const firstError =
+						build.output.split('\n').find((l) => /error|Error/.test(l))?.trim() ?? 'build failed without a validation message';
+					results.push({
+						id: m.id, label: m.label, file: m.file, verdict: 'invalid-mutant',
+						by: `build error outside the validation gate: ${firstError.slice(0, 120)}`,
+						outputChanged, expect: m.expect
+					});
+					console.log('INVALID — build broke for a reason unrelated to the invariant');
+				} else if (build.code !== 0) {
+					results.push({ id: m.id, label: m.label, file: m.file, verdict: 'killed', by: 'build gate', outputChanged, expect: m.expect });
+					console.log('KILLED — build gate');
+				} else if (failures.length) {
+					results.push({ id: m.id, label: m.label, file: m.file, verdict: 'killed', by: failures[0].suite.replace('.ts', ''), outputChanged, expect: m.expect });
+					console.log(`KILLED — ${failures[0].suite.replace('.ts', '')}`);
+				} else if (outputChanged) {
+					results.push({ id: m.id, label: m.label, file: m.file, verdict: 'survived-drift', by: 'none — graph changed silently', outputChanged, expect: m.expect });
+					console.log('SURVIVED — silent drift (graph changed, no assertion noticed)');
+				} else {
+					results.push({ id: m.id, label: m.label, file: m.file, verdict: 'survived-latent', by: m.known ? 'known limitation (documented)' : 'none — latent on clean graph', outputChanged, expect: m.expect });
+					console.log(`SURVIVED — latent${m.known ? ' (known limitation)' : ' (graph unchanged)'}`);
+				}
+			} catch (e) {
+				results.push({
+					id: m.id, label: m.label, file: m.file, verdict: 'invalid-mutant',
+					by: `harness error: ${(e as Error).message}`, outputChanged: false, expect: m.expect
+				});
+				console.log(`INVALID — ${(e as Error).message}`);
+			} finally {
+				restore();
 			}
 		}
-	} catch (e) {
-		restore();
-		console.error(`\n  harness error: ${(e as Error).message}`);
-		process.exit(1);
 	} finally {
 		restore();
 	}
 
-	// The per-mutation restores already return everything byte-exact. One final
-	// verification that the restored sources build cleanly, then restore again to
-	// neutralise the timestamp churn that verification itself produced.
+	// One final verification that the restored sources build cleanly, then
+	// restore again to neutralise the timestamp churn that verification produced.
 	console.log('\n  verifying restored sources build cleanly…');
 	const verify = run(`clean rebuild check`, [TSR, 'scripts/build-data.ts']);
 	restore();
@@ -422,20 +558,28 @@ function main() {
 	const killed = results.filter((r) => r.verdict === 'killed');
 	const latent = results.filter((r) => r.verdict === 'survived-latent');
 	const drift = results.filter((r) => r.verdict === 'survived-drift');
+	const broken = results.filter((r) => r.verdict === 'invalid-mutant');
 	const known = latent.filter((r) => r.by.startsWith('known limitation'));
-	const rate = results.length ? Math.round((killed.length / results.length) * 100) : 0;
+	const counted = killed.length + latent.length + drift.length;
+	const rate = counted ? Math.round((killed.length / counted) * 100) : 0;
 
-	console.log(`\n  Mutation report — ${killed.length}/${results.length} killed (${rate}%)`);
+	console.log(`\n  Mutation report — ${killed.length}/${counted} killed (${rate}%)`);
 	console.log(`  run with synthetic validator fixtures: ${withValidators ? 'YES' : 'NO'}`);
 	for (const r of results) {
 		console.log(
-			`    ${r.verdict === 'killed' ? '✗ killed' : '○ ' + r.verdict.padEnd(15)} ${r.id.padEnd(5)} ${r.label.padEnd(60)} ${r.by}`
+			`    ${r.verdict === 'killed' ? '✗ killed' : r.verdict === 'invalid-mutant' ? '! invalid' : '○ ' + r.verdict.padEnd(15)} ${r.id.padEnd(5)} ${r.label.padEnd(62)} ${r.by}`
 		);
 	}
-	console.log(`\n    ${killed.length} killed   ${latent.length} latent (${known.length} known limitations)   ${drift.length} silent-drift`);
+	console.log(
+		`\n    ${killed.length} killed   ${latent.length} latent (${known.length} known)   ${drift.length} silent-drift   ${broken.length} invalid`
+	);
 	if (drift.length) {
 		console.log('\n  SILENT DRIFT — graph-changing mutations nothing noticed:');
 		for (const r of drift) console.log(`    ${r.id} ${r.label}`);
+	}
+	if (broken.length) {
+		console.log('\n  INVALID MUTANTS — patterns or builds broken for unrelated reasons:');
+		for (const r of broken) console.log(`    ${r.id} ${r.label} — ${r.by}`);
 	}
 	if (known.length) {
 		console.log('\n  KNOWN LATENT — documented survivors, accepted deliberately:');
@@ -445,19 +589,31 @@ function main() {
 		}
 	}
 
-	// Persist a JSON artifact next to the last-run state so sessions can compare.
-	try {
-		const outDir = join(tmpdir(), 'opencode', 'deeptunisia-mutation');
-		mkdirSync(outDir, { recursive: true });
-		writeFileSync(
-			join(outDir, `report-${new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-')}.json`),
-			JSON.stringify({ withValidators, rate, killed: killed.length, latent: latent.length, drift: drift.length, results }, null, 2),
-			'utf8'
-		);
-		console.log(`\n  report written to ${outDir}`);
-	} catch {
-		/* temp-dir write failure is not a harness failure */
-	}
+	const report = {
+		generated: new Date().toISOString(),
+		commit: (() => {
+			const r = spawnSync('git', ['rev-parse', '--short', 'HEAD'], { cwd: ROOT, encoding: 'utf8' });
+			return (r.stdout || '').trim() || null;
+		})(),
+		withValidators,
+		summary: {
+			counted,
+			killed: killed.length,
+			latent: latent.length,
+			knownLatent: known.length,
+			drift: drift.length,
+			invalid: broken.length,
+			rate
+		},
+		results
+	};
+	mkdirSync(join(ROOT, 'output'), { recursive: true });
+	writeFileSync(join(ROOT, 'output', 'mutation-report.json'), JSON.stringify(report, null, 2) + '\n', 'utf8');
+	console.log(`\n  report written to output/mutation-report.json`);
+
+	// A campaign that leaves invalid mutants or silent drift is not green: drift
+	// must become a new assertion, and stale patterns must be repaired.
+	process.exit(broken.length || drift.length ? 1 : 0);
 }
 
 main();

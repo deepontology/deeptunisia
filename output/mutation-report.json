@@ -1,0 +1,367 @@
+{
+  "generated": "2026-09-11T07:38:49.962Z",
+  "commit": "0216add",
+  "withValidators": true,
+  "summary": {
+    "counted": 39,
+    "killed": 37,
+    "latent": 2,
+    "knownLatent": 2,
+    "drift": 0,
+    "invalid": 0,
+    "rate": 95
+  },
+  "results": [
+    {
+      "id": "m01",
+      "label": "deriveBasis ignores the explicit override",
+      "file": "schema.ts",
+      "verdict": "killed",
+      "by": "test-data",
+      "outputChanged": true,
+      "expect": "test-data deriveBasis truth table (rows 14-15)"
+    },
+    {
+      "id": "m02",
+      "label": "C + needs-primary-source no longer derives inferred",
+      "file": "schema.ts",
+      "verdict": "killed",
+      "by": "test-data",
+      "outputChanged": true,
+      "expect": "test-data deriveBasis truth table (row C/nps)"
+    },
+    {
+      "id": "m03",
+      "label": "grade D no longer derives unsubstantiated",
+      "file": "schema.ts",
+      "verdict": "killed",
+      "by": "test-data",
+      "outputChanged": true,
+      "expect": "test-data deriveBasis truth table (D rows)"
+    },
+    {
+      "id": "m04",
+      "label": "envelope stops requiring attributed_to on C/D",
+      "file": "schema.ts",
+      "verdict": "killed",
+      "by": "test-validators",
+      "outputChanged": false,
+      "expect": "test-validators V20 (C/D attribution)"
+    },
+    {
+      "id": "m05",
+      "label": "envelope stops requiring reasoning/falsifier on inferred",
+      "file": "schema.ts",
+      "verdict": "killed",
+      "by": "test-validators",
+      "outputChanged": false,
+      "expect": "test-validators V18 (inferred completeness)"
+    },
+    {
+      "id": "m06",
+      "label": "envelope stops requiring attribution on unsubstantiated",
+      "file": "schema.ts",
+      "verdict": "killed",
+      "by": "test-validators",
+      "outputChanged": false,
+      "expect": "test-validators V18 (explicit unsubstantiated)"
+    },
+    {
+      "id": "m07",
+      "label": "claim envelope drops the sources minimum",
+      "file": "schema.ts",
+      "verdict": "survived-latent",
+      "by": "known limitation (documented)",
+      "outputChanged": false,
+      "expect": "latent — redundant with the envelope, documented below"
+    },
+    {
+      "id": "m08",
+      "label": "review method becomes free text",
+      "file": "schema.ts",
+      "verdict": "killed",
+      "by": "test-validators",
+      "outputChanged": false,
+      "expect": "test-validators V23 (method enum)"
+    },
+    {
+      "id": "m09",
+      "label": "review date loses its ISO format check",
+      "file": "schema.ts",
+      "verdict": "survived-latent",
+      "by": "known limitation (documented)",
+      "outputChanged": false,
+      "expect": "latent — by design, documented below"
+    },
+    {
+      "id": "m10",
+      "label": "review date loses its calendar round-trip (2026-02-31 accepted)",
+      "file": "schema.ts",
+      "verdict": "killed",
+      "by": "test-validators",
+      "outputChanged": false,
+      "expect": "test-validators V23 (calendar round-trip)"
+    },
+    {
+      "id": "m11",
+      "label": "reviewOverclaims stops honouring the \"not verified\" disclaimer",
+      "file": "schema.ts",
+      "verdict": "killed",
+      "by": "build gate",
+      "outputChanged": false,
+      "expect": "test-validators V23-guard (disclaimer clause)"
+    },
+    {
+      "id": "m12",
+      "label": "dispute status becomes free text",
+      "file": "schema.ts",
+      "verdict": "killed",
+      "by": "test-validators",
+      "outputChanged": false,
+      "expect": "test-validators R11 (dispute status enum)"
+    },
+    {
+      "id": "m27",
+      "label": "nonBlank stops trimming, so a space passes for prose",
+      "file": "schema.ts",
+      "verdict": "killed",
+      "by": "test-validators",
+      "outputChanged": false,
+      "expect": "test-validators whitespace fixtures (V18/V20)"
+    },
+    {
+      "id": "m28",
+      "label": "reviewer names stop being trimmed before the minimum",
+      "file": "schema.ts",
+      "verdict": "killed",
+      "by": "test-validators",
+      "outputChanged": false,
+      "expect": "test-validators V23 (whitespace reviewer name)"
+    },
+    {
+      "id": "m29",
+      "label": "legacy basis-override exception register stops being consulted",
+      "file": "schema.ts",
+      "verdict": "killed",
+      "by": "build gate",
+      "outputChanged": false,
+      "expect": "the build gate (legacy override register)"
+    },
+    {
+      "id": "m30",
+      "label": "override review requirement stops issuing",
+      "file": "schema.ts",
+      "verdict": "killed",
+      "by": "test-validators",
+      "outputChanged": false,
+      "expect": "test-validators V27 (override review requirement)"
+    },
+    {
+      "id": "m21",
+      "label": "emitted relationships stop carrying a direction",
+      "file": "build-data.ts",
+      "verdict": "killed",
+      "by": "test-data",
+      "outputChanged": true,
+      "expect": "test-data V14 (direction on every edge)"
+    },
+    {
+      "id": "m22",
+      "label": "causal-cycle detection disabled (V8/Tarjan)",
+      "file": "build-data.ts",
+      "verdict": "killed",
+      "by": "test-pipeline",
+      "outputChanged": false,
+      "expect": "test-pipeline (injected causal cycle)"
+    },
+    {
+      "id": "m23",
+      "label": "unknown-source detection disabled (checkSources)",
+      "file": "build-data.ts",
+      "verdict": "killed",
+      "by": "test-pipeline",
+      "outputChanged": false,
+      "expect": "test-pipeline (injected unknown source id)"
+    },
+    {
+      "id": "m24",
+      "label": "cause-after-consequence ordering disabled (V8 temporal)",
+      "file": "build-data.ts",
+      "verdict": "killed",
+      "by": "test-pipeline",
+      "outputChanged": false,
+      "expect": "test-pipeline (injected cause-after-consequence)"
+    },
+    {
+      "id": "m25",
+      "label": "unmoored-influence rejection disabled (V9 anchoring)",
+      "file": "build-data.ts",
+      "verdict": "killed",
+      "by": "test-pipeline",
+      "outputChanged": false,
+      "expect": "test-pipeline (injected unmoored influence edge)"
+    },
+    {
+      "id": "m26",
+      "label": "ghost relationship endpoint detection disabled (referential integrity)",
+      "file": "build-data.ts",
+      "verdict": "killed",
+      "by": "test-pipeline",
+      "outputChanged": false,
+      "expect": "test-pipeline (injected ghost edge endpoint)"
+    },
+    {
+      "id": "m31",
+      "label": "grade-A records no longer checked for a tier-1/2 source",
+      "file": "build-data.ts",
+      "verdict": "killed",
+      "by": "build gate",
+      "outputChanged": false,
+      "expect": "the build gate (grade-A primary rule)"
+    },
+    {
+      "id": "m32",
+      "label": "no-source exception register stops being consulted",
+      "file": "build-data.ts",
+      "verdict": "killed",
+      "by": "build gate",
+      "outputChanged": false,
+      "expect": "the build gate (no-source exception register)"
+    },
+    {
+      "id": "m13",
+      "label": "\"~\" widening reduced to zero slack",
+      "file": "../node_modules/deepepisteme/src/time.ts",
+      "verdict": "killed",
+      "by": "test-validators",
+      "outputChanged": true,
+      "expect": "test-validators V22 (~ widening, engine target)"
+    },
+    {
+      "id": "m14",
+      "label": "\"<=\" bound no longer clamps to the dataset floor",
+      "file": "../node_modules/deepepisteme/src/time.ts",
+      "verdict": "killed",
+      "by": "test-validators",
+      "outputChanged": false,
+      "expect": "test-validators V22 (<= floor clamp, engine target)"
+    },
+    {
+      "id": "m15",
+      "label": "calendar-valid day check removed (2018-02-31 accepted)",
+      "file": "../node_modules/deepepisteme/src/time.ts",
+      "verdict": "killed",
+      "by": "test-validators",
+      "outputChanged": false,
+      "expect": "test-validators V21 (calendar round-trip, engine target)"
+    },
+    {
+      "id": "m16",
+      "label": "inverted intervals no longer rejected",
+      "file": "../node_modules/deepepisteme/src/time.ts",
+      "verdict": "killed",
+      "by": "test-validators",
+      "outputChanged": false,
+      "expect": "test-validators V22 (inversion rejection, engine target)"
+    },
+    {
+      "id": "m17",
+      "label": "over-wide fuzzy start no longer clamped down",
+      "file": "../node_modules/deepepisteme/src/time.ts",
+      "verdict": "killed",
+      "by": "test-validators",
+      "outputChanged": true,
+      "expect": "test-validators V22 (start clamp, engine target)"
+    },
+    {
+      "id": "m18",
+      "label": "verified-at bound no longer clamped to the dataset cutoff",
+      "file": "../node_modules/deepepisteme/src/time.ts",
+      "verdict": "killed",
+      "by": "test-validators",
+      "outputChanged": false,
+      "expect": "test-validators V22 (verified-at cutoff clamp, engine target)"
+    },
+    {
+      "id": "m19",
+      "label": "certainlyActive exclusive at the lower core edge",
+      "file": "../node_modules/deepepisteme/src/time.ts",
+      "verdict": "killed",
+      "by": "test-validators",
+      "outputChanged": false,
+      "expect": "test-validators (certainlyActive boundary, engine target)"
+    },
+    {
+      "id": "m20",
+      "label": "open-ended durations measured from the epoch instead of the cutoff",
+      "file": "../node_modules/deepepisteme/src/time.ts",
+      "verdict": "killed",
+      "by": "test-validators",
+      "outputChanged": true,
+      "expect": "test-validators (open-ended duration, engine target)"
+    },
+    {
+      "id": "m33",
+      "label": "certainlyActive loses its cutoff clamp",
+      "file": "../node_modules/deepepisteme/src/time.ts",
+      "verdict": "killed",
+      "by": "test-validators",
+      "outputChanged": false,
+      "expect": "test-validators (no assertion past cutoff, engine target)"
+    },
+    {
+      "id": "m34",
+      "label": "possiblyActive loses its cutoff clamp",
+      "file": "../node_modules/deepepisteme/src/time.ts",
+      "verdict": "killed",
+      "by": "test-validators",
+      "outputChanged": false,
+      "expect": "test-validators (no assertion past cutoff, engine target)"
+    },
+    {
+      "id": "m35",
+      "label": "certainty no longer stops at the last observation",
+      "file": "../node_modules/deepepisteme/src/time.ts",
+      "verdict": "killed",
+      "by": "test-validators",
+      "outputChanged": false,
+      "expect": "test-validators (unknown-end certainty horizon, engine target)"
+    },
+    {
+      "id": "m36",
+      "label": "month-only verification is certain through the whole month",
+      "file": "../node_modules/deepepisteme/src/time.ts",
+      "verdict": "killed",
+      "by": "test-validators",
+      "outputChanged": true,
+      "expect": "test-validators (month-midpoint rule, engine target)"
+    },
+    {
+      "id": "m37",
+      "label": "ongoing is always treated as recently confirmed",
+      "file": "../node_modules/deepepisteme/src/time.ts",
+      "verdict": "killed",
+      "by": "test-validators",
+      "outputChanged": true,
+      "expect": "test-validators (ongoing confirmation window, engine target)"
+    },
+    {
+      "id": "m38",
+      "label": "unknown ends borrow the cutoff as their observation",
+      "file": "../node_modules/deepepisteme/src/time.ts",
+      "verdict": "killed",
+      "by": "test-validators",
+      "outputChanged": true,
+      "expect": "test-validators (unknown-end observation, engine target)"
+    },
+    {
+      "id": "m39",
+      "label": "canonical bytes keep the wall-clock generated timestamp",
+      "file": "canonical.ts",
+      "verdict": "killed",
+      "by": "test-pipeline",
+      "outputChanged": true,
+      "expect": "test-pipeline (canonical byte equality)"
+    }
+  ]
+}
