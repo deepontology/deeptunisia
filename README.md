@@ -45,6 +45,31 @@ bundle, and the public exports (dataset, CSVs, geographic layers, changelog)
 ship at <!--stat:shippedKB-->8360<!--/stat--> KB — both are computed by the
 build, and `npm run test` fails if the README ever disagrees with them.
 
+## Reproducibility
+
+Two builds from the same commit and the same `data/` produce the same graph.
+The build validates and exports into staging directories (`src/generated.tmp/`
+and `static.tmp/`), then promotes them file by file only after every check
+passes. A failed build publishes nothing: not `dataset.json`, not the CSV
+exports, not `editorial-queue.json`.
+
+`meta.datasetHash` is a sha256 over the canonical projection of the graph:
+object keys sorted, `meta.generated` replaced by a fixed placeholder, payload
+sizes excluded, records in their emitted order. `npm run test` recomputes it
+and fails if the emitted file disagrees with its own hash.
+
+To compare two builds byte for byte:
+
+```bash
+DT_CANONICAL=1 npx tsx scripts/build-data.ts
+```
+
+Canonical bytes are identical for the same commit and the same data; release
+metadata (`meta.generated`, `shippedKB`, `datasetKB`) is not. `stats.json`
+publishes `datasetHash`, `lockHash` (the dependency lockfile), `node` (the
+runtime) and `commitSha`, so a release can be identified without trusting the
+clock. See `scripts/canonical.ts`.
+
 ## The views
 
 The in-product orientation page — each view's one-sentence answer, when to use
