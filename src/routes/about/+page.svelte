@@ -29,7 +29,7 @@
 	const coverage = ds.meta.coverage.principals;
 	const maxKin = Math.max(1, ...coverage.map((p) => p.kin));
 
-	const reviewRows = Object.entries(ds.meta.review.byRisk).map(([key, v]) => ({
+	const reviewRows = Object.entries(ds.meta.review.flags).map(([key, v]) => ({
 		key,
 		reviewed: v.reviewed,
 		total: v.total,
@@ -137,7 +137,7 @@
 	<table class="review">
 		<thead>
 			<tr>
-				<th>{t('about.review.claimtype')}</th>
+				<th>{t('about.review.flag')}</th>
 				<th>{t('about.review.reviewed')}</th>
 				<th>{t('about.review.coverage')}</th>
 			</tr>
@@ -164,6 +164,11 @@
 			{/each}
 		</tbody>
 	</table>
+
+	<div class="doc">
+		<p>{t('coverage.flagsNote')}</p>
+		<p>{t('coverage.examinedNote')}</p>
+	</div>
 
 	<div class="doc">
 		<Content view="about" section="languages-honest" />

@@ -429,6 +429,36 @@ ok(
 	}
 }
 
+console.log('\n  ── Phase 8: review coverage is flags and denominators, not one bucket ──\n');
+
+const ABOUT_PAGE = readFileSync(join(HERE, '..', 'src', 'routes', 'about', '+page.svelte'), 'utf8');
+const DATA_PAGE = readFileSync(join(HERE, '..', 'src', 'routes', 'data', '+page.svelte'), 'utf8');
+ok(
+	'the about page reads overlapping flags, not the retired partition',
+	ABOUT_PAGE.includes('ds.meta.review.flags') && !ABOUT_PAGE.includes('meta.review.byRisk')
+);
+ok(
+	'the data page shows a denominator for every claim kind',
+	DATA_PAGE.includes('ds.meta.review.byKind') && DATA_PAGE.includes('coverage.kind.')
+);
+ok(
+	'the data page shows the overlapping risk flags with their denominators',
+	DATA_PAGE.includes('ds.meta.review.flags') && DATA_PAGE.includes("coverage.flagsNote") && !DATA_PAGE.includes('byRisk')
+);
+ok(
+	'the independence limit is stated where the numbers are read',
+	ABOUT_PAGE.includes("coverage.examinedNote") && DATA_PAGE.includes("coverage.examinedNote")
+);
+for (const loc of ['en', 'fr', 'ar'] as const) {
+	ok(
+		`the review coverage note resolves in ${loc}`,
+		translate(loc, 'coverage.flagsNote') !== 'coverage.flagsNote' &&
+			translate(loc, 'coverage.kind.relationship') !== 'coverage.kind.relationship' &&
+			translate(loc, 'about.stat.reviewed').includes('{reviewed}'),
+		translate(loc, 'coverage.byKind')
+	);
+}
+
 console.log(`
   ${checks - failures}/${checks} checks passed${failures ? `, ${failures} FAILED` : ''}
 `);
