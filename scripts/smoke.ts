@@ -1123,13 +1123,16 @@ console.log('\n  ── chronicle navigation ──');
 	await page.mouse.click(plotBox.x + plotBox.width * 0.5, plotBox.y + 10);
 	await page.waitForTimeout(200);
 	const tagBefore = await page.locator('.axis-tag').first().textContent();
+	const domainBefore = (await page.locator('.plot .tick-label').allTextContents()).join('|');
 	await page.mouse.move(plotBox.x + plotBox.width * 0.7, plotBox.y + 10);
 	await page.mouse.down();
 	await page.mouse.move(plotBox.x + plotBox.width * 0.35, plotBox.y + 10, { steps: 8 });
 	await page.mouse.up();
 	await page.waitForTimeout(250);
 	const tagAfter = await page.locator('.axis-tag').first().textContent();
+	const domainAfter = (await page.locator('.plot .tick-label').allTextContents()).join('|');
 	ok('dragging the top axis scrubs the date', tagBefore !== tagAfter, `${tagBefore} -> ${tagAfter}`);
+	ok('axis scrub does not pan the camera', domainBefore === domainAfter, `${domainBefore} -> ${domainAfter}`);
 
 	await context.close();
 }
