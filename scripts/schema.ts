@@ -52,6 +52,45 @@ export function nonBlank(v: unknown, min = 1): boolean {
 }
 
 /**
+ * KIND VERSUS STRENGTH — the second and third axes of a claim (V26).
+ *
+ * `basis` answers "what KIND of claim is this". It is regularly derived from
+ * the grade, which is the tangle the September review identified: a newspaper
+ * reporting an appointment stays a report however confident the editor is, and
+ * a careful inference from decrees stays an inference however strong the
+ * documents. These fields make the source relationship and the number of
+ * independent origins explicit, and V26 rejects combinations that cannot both
+ * be true. They are optional on every claim kind, but required together once
+ * either is present.
+ *
+ *   direct-record          the cited source is the record itself (decree, gazette)
+ *   direct-report          a source states the claim in its own voice
+ *   corroborated-report    two or more independent reports agree
+ *   single-report          one report carries the claim alone
+ *   inference-from-records nobody states it; it is reasoned from records
+ *   circulating-claim      the claim circulates without reliable evidence
+ */
+export const SourceRelation = z.enum([
+	'direct-record',
+	'direct-report',
+	'corroborated-report',
+	'single-report',
+	'inference-from-records',
+	'circulating-claim'
+]);
+export type SourceRelationValue = z.infer<typeof SourceRelation>;
+
+const claimAxes = {
+	/** How the cited sources relate to the claim itself (V26). */
+	source_relation: SourceRelation.optional(),
+	/**
+	 * Count of independent origin groups behind the claim, never a count of
+	 * URLs. Two outlets republishing one wire are one origin.
+	 */
+	independence: z.number().int().min(1).optional()
+};
+
+/**
  * Confidence grading, retained as authoring shorthand.
  *   A  primary/official record
  *   B  several credible secondary sources agree
@@ -568,6 +607,7 @@ export const InstitutionSchema = withClaimEnvelope(
 	 * 10 non-blank characters when present; required for every new override.
 	 */
 	basis_override_reason: z.string().optional(),
+	...claimAxes,
 	disputes: z.array(DisputeSchema).default([]),
 	review: ReviewSchema.optional(),
 	sources: z.array(slug).default([]),
@@ -638,6 +678,7 @@ export const PersonSchema = withClaimEnvelope(
 	falsifiable_by: z.string().optional(),
 	/** V27 — why the authored `basis` overrides the grade-implied basis. */
 	basis_override_reason: z.string().optional(),
+	...claimAxes,
 	disputes: z.array(DisputeSchema).default([]),
 	review: ReviewSchema.optional(),
 	notes: z.array(z.string()).default([]),
@@ -680,6 +721,7 @@ export const PositionSchema = withClaimEnvelope(
 	falsifiable_by: z.string().optional(),
 	/** V27 — why the authored `basis` overrides the grade-implied basis. */
 	basis_override_reason: z.string().optional(),
+	...claimAxes,
 	/** Competing versions of the same span, recorded rather than silently resolved. */
 	disputes: z.array(DisputeSchema).default([]),
 	/** This record was merged into another (V16 escape, spec §13.3). */
@@ -734,6 +776,7 @@ export const RelationshipSchema = withClaimEnvelope(
 		falsifiable_by: z.string().optional(),
 		/** V27 — why the authored `basis` overrides the grade-implied basis. */
 		basis_override_reason: z.string().optional(),
+		...claimAxes,
 		disputes: z.array(DisputeSchema).default([]),
 		/** This record was merged into another (V16 escape, spec §13.3). */
 		merged_into: slug.optional(),
@@ -868,6 +911,7 @@ export const EventSchema = withClaimEnvelope(
 	falsifiable_by: z.string().optional(),
 	/** V27 — why the authored `basis` overrides the grade-implied basis. */
 	basis_override_reason: z.string().optional(),
+	...claimAxes,
 	/** Competing characterisations, shown side by side rather than adjudicated. */
 	contested: z
 		.array(z.strictObject({ framing: z.string(), held_by: z.string(), source: slug.optional() }))
@@ -939,6 +983,7 @@ export const AgreementSchema = withClaimEnvelope(
 		falsifiable_by: z.string().optional(),
 		/** V27 — why the authored `basis` overrides the grade-implied basis. */
 		basis_override_reason: z.string().optional(),
+		...claimAxes,
 		disputes: z.array(DisputeSchema).default([]),
 		review: ReviewSchema.optional(),
 		sources: z.array(slug).min(1, 'every agreement needs at least one source'),
@@ -979,6 +1024,7 @@ export const WorldClaimSchema = withClaimEnvelope(
 		falsifiable_by: z.string().optional(),
 		/** V27 — why the authored `basis` overrides the grade-implied basis. */
 		basis_override_reason: z.string().optional(),
+		...claimAxes,
 		disputes: z.array(DisputeSchema).default([]),
 		review: ReviewSchema.optional(),
 		notes: z.array(z.string()).default([]),
@@ -1012,6 +1058,7 @@ const claimFields = {
 	falsifiable_by: z.string().optional(),
 	/** V27 — why the authored `basis` overrides the grade-implied basis. */
 	basis_override_reason: z.string().optional(),
+	...claimAxes,
 	disputes: z.array(DisputeSchema).default([]),
 	review: ReviewSchema.optional(),
 	sources: z.array(slug).min(1, 'every claim record needs at least one source')
@@ -1355,6 +1402,19 @@ const BASIS_STRENGTH: Record<z.infer<typeof Basis>, number> = {
 	documented: 3
 };
 
+/**
+ * V26 — which source relationships can honestly carry which kinds of claim.
+ * `documented` means the record itself is held, so a report-relation
+ * contradicts it; `inferred` means nobody states it; a circulating claim is
+ * the whole of `unsubstantiated`.
+ */
+const RELATION_ALLOWED: Record<z.infer<typeof Basis>, SourceRelationValue[]> = {
+	documented: ['direct-record'],
+	reported: ['direct-report', 'corroborated-report', 'single-report'],
+	inferred: ['inference-from-records'],
+	unsubstantiated: ['circulating-claim']
+};
+
 /** True when `authored` claims more epistemic standing than `derived`. */
 export function isBasisUpgrade(
 	authored: z.infer<typeof Basis>,
@@ -1447,6 +1507,36 @@ function withClaimEnvelope<S extends z.ZodObject<z.ZodRawShape>>(kind: string, s
 				issue(
 					'a basis override requires basis_override_reason of at least 10 non-blank characters, or a live entry in data/source-exceptions.yaml'
 				);
+			}
+		})
+		.superRefine((r: any, ctx) => {
+			// V26 — kind versus strength. The source relationship is a separate
+			// axis from the authored kind; a combination that cannot both be true
+			// fails, and the two fields stand or fall together.
+			const basis = deriveBasis(r.confidence, r.verification, r.basis);
+			if (r.source_relation) {
+				const allowed = RELATION_ALLOWED[basis] ?? [];
+				if (!allowed.includes(r.source_relation)) {
+					ctx.addIssue({
+						code: 'custom',
+						message: `source_relation "${r.source_relation}" is incompatible with basis "${basis}" (V26)`,
+						path: ['source_relation']
+					});
+				}
+				if (r.independence === undefined) {
+					ctx.addIssue({
+						code: 'custom',
+						message: 'source_relation requires independence: how many independent origins carry this claim? (V26)',
+						path: ['independence']
+					});
+				}
+			}
+			if (r.independence !== undefined && Array.isArray(r.sources) && r.independence > r.sources.length) {
+				ctx.addIssue({
+					code: 'custom',
+					message: `independence ${r.independence} exceeds the ${r.sources.length} cited source(s) (V26)`,
+					path: ['independence']
+				});
 			}
 		});
 }

@@ -1,10 +1,10 @@
 {
-  "generated": "2026-09-11T07:38:49.962Z",
-  "commit": "0216add",
+  "generated": "2026-09-11T09:43:07.687Z",
+  "commit": "b00765d",
   "withValidators": true,
   "summary": {
-    "counted": 39,
-    "killed": 37,
+    "counted": 41,
+    "killed": 39,
     "latent": 2,
     "knownLatent": 2,
     "drift": 0,
@@ -17,8 +17,8 @@
       "label": "deriveBasis ignores the explicit override",
       "file": "schema.ts",
       "verdict": "killed",
-      "by": "test-data",
-      "outputChanged": true,
+      "by": "build gate",
+      "outputChanged": false,
       "expect": "test-data deriveBasis truth table (rows 14-15)"
     },
     {
@@ -26,8 +26,8 @@
       "label": "C + needs-primary-source no longer derives inferred",
       "file": "schema.ts",
       "verdict": "killed",
-      "by": "test-data",
-      "outputChanged": true,
+      "by": "build gate",
+      "outputChanged": false,
       "expect": "test-data deriveBasis truth table (row C/nps)"
     },
     {
@@ -155,6 +155,24 @@
       "by": "test-validators",
       "outputChanged": false,
       "expect": "test-validators V27 (override review requirement)"
+    },
+    {
+      "id": "m40",
+      "label": "source relations stop being checked against the authored kind",
+      "file": "schema.ts",
+      "verdict": "killed",
+      "by": "test-validators",
+      "outputChanged": false,
+      "expect": "test-validators V26 (incompatible relation)"
+    },
+    {
+      "id": "m41",
+      "label": "a source relation no longer requires an origin count",
+      "file": "schema.ts",
+      "verdict": "killed",
+      "by": "test-validators",
+      "outputChanged": false,
+      "expect": "test-validators V26 (relation needs independence)"
     },
     {
       "id": "m21",

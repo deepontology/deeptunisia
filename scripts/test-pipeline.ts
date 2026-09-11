@@ -314,7 +314,15 @@ try {
   holder: bourguiba
   start: "2020-01-01"
   confidence: A
-  sources: [${sourceIdWithTier(3)}]`);
+  sources: [${sourceIdWithTier(3)}]
+- id: p-fixture-relation
+  role: president
+  holder: bourguiba
+  start: "2020-01-01"
+  confidence: A
+  source_relation: single-report
+  independence: 1
+  sources: [${s}]`);
 	appendBlock(TREE_BAD, 'people.yaml', `
 - id: fixture-unsourced-person
   name_en: Fixture Unsourced Person
@@ -333,7 +341,8 @@ try {
 		['positions.yaml [p-fixture-override]', 'the override probe fails and names the record (1B)'],
 		['positions.yaml [p-fixture-review-outcome]', 'the nested-outcome probe fails and names the record (1C)'],
 		['people.yaml [fixture-unsourced-person]', 'the no-source probe fails and names the record (1D)'],
-		['position p-fixture-grade-a-weak', 'a grade-A record without a tier-1/2 source fails and names the record (V25)']
+		['position p-fixture-grade-a-weak', 'a grade-A record without a tier-1/2 source fails and names the record (V25)'],
+		['positions.yaml [p-fixture-relation]', 'an incompatible source relation fails and names the record (V26)']
 	];
 	for (const [needle, label] of expectations) {
 		ok(`pipeline fixture: ${label}`, bad.output.includes(needle), `expected the build to say "${needle}"`);
@@ -357,6 +366,11 @@ try {
 		'pipeline fixture: the grade-A error is the V25 primary-source message',
 		bad.output.includes('must cite at least one tier-1 or tier-2 source (V25)'),
 		'expected the V25 message in the build output'
+	);
+	ok(
+		'pipeline fixture: the source-relation error is the V26 message',
+		bad.output.includes('(V26)'),
+		'expected the V26 message in the build output'
 	);
 
 	// 3A: a failed build promotes nothing. The review caught editorial-queue.json

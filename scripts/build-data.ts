@@ -515,7 +515,18 @@ for (const [kind, rows] of claimKindRegistry) {
 			.map((id: string) => sourceTierById.get(id))
 			.filter((t): t is number => typeof t === 'number');
 		if (tiers.some((t) => t <= 2)) continue;
-		if (gradeAPrimaryKeys.has(`${kind}:${record.id}`)) continue;
+		if (gradeAPrimaryKeys.has(`${kind}:${record.id}`)) {
+			// V26 companion warning: a live exception can hold a grade-A record
+			// whose kind is a report. The exception keeps the build green; the
+			// warning keeps the mismatch visible until RESEARCH sources it.
+			if (deriveBasis(record.confidence, record.verification, record.basis) === 'reported') {
+				warn(
+					`${kind} ${record.id}`,
+					'grade A with a reported kind and no tier-1/2 source (V26): the exception is live, but the claim reads stronger than its evidence'
+				);
+			}
+			continue;
+		}
 		const shown = tiers.length
 			? `tier ${[...new Set(tiers)].sort().join('/')}`
 			: 'no resolvable source tier';

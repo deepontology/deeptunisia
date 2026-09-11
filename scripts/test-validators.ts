@@ -320,6 +320,72 @@ rejects(
 rejects(CompanySchema, co({ sources: [] }), 'V18: a company with zero sources is rejected');
 
 // ---------------------------------------------------------------------------
+// V26 — kind versus strength. The source relationship and the independent-origin
+// count are separate axes from the authored kind; incompatible combinations
+// fail, and the two fields stand or fall together.
+// ---------------------------------------------------------------------------
+
+accepts(
+	PositionSchema,
+	pos({ confidence: 'A', source_relation: 'direct-record', independence: 1 }),
+	'V26: documented with a direct-record relation and one origin parses'
+);
+accepts(
+	PositionSchema,
+	pos({
+		confidence: 'B',
+		sources: ['s-fixture', 's-fixture-2'],
+		source_relation: 'corroborated-report',
+		independence: 2
+	}),
+	'V26: reported with a corroborated relation and two origins parses'
+);
+rejectsWith(
+	PositionSchema,
+	pos({ confidence: 'A', source_relation: 'single-report', independence: 1 }),
+	'V26: a documented claim with a single-report relation is rejected',
+	'incompatible with basis'
+);
+rejectsWith(
+	PositionSchema,
+	pos({
+		confidence: 'C',
+		verification: 'needs-primary-source',
+		basis: 'inferred',
+		attributed_to: 'Some Observer',
+		reasoning: 'Reasoned from the records.',
+		falsifiable_by: 'A record contradicting the reading.',
+		source_relation: 'single-report',
+		independence: 1
+	}),
+	'V26: an inferred claim with a report relation is rejected',
+	'incompatible with basis'
+);
+rejectsWith(
+	PositionSchema,
+	pos({ confidence: 'D', attributed_to: 'a circulating account', source_relation: 'direct-record', independence: 1 }),
+	'V26: an unsubstantiated claim with a direct-record relation is rejected',
+	'incompatible with basis'
+);
+rejectsWith(
+	PositionSchema,
+	pos({ confidence: 'A', source_relation: 'direct-record' }),
+	'V26: a source relation without an origin count is rejected',
+	'requires independence'
+);
+rejectsWith(
+	PositionSchema,
+	pos({ confidence: 'B', source_relation: 'corroborated-report', independence: 3 }),
+	'V26: more independent origins than cited sources is rejected',
+	'exceeds the'
+);
+accepts(
+	PositionSchema,
+	pos({ confidence: 'B', independence: 1 }),
+	'V26: an origin count without a relation parses (the axes are optional)'
+);
+
+// ---------------------------------------------------------------------------
 // 1A — nonBlank across every claim kind. The reviewer replaced a position's
 // reasoning, falsifier and attribution with whitespace and the build accepted
 // it. Each kind tries " ", "\t\n " and "" on each mandatory envelope field.
