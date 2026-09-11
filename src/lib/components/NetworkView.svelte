@@ -148,6 +148,26 @@ import Chip from '$lib/ui/Chip.svelte';
 	const HEADER_H = 60;
 	const GROUP_GAP = 26;
 
+	/**
+	 * Foreign register geometry.
+	 *
+	 * The foreign lane is not a cluster; it is a roster of counterparties. States
+	 * and international organisations do not exchange edges among themselves the
+	 * way a domestic network does, so the grid-with-floating-labels treatment that
+	 * suits the other six lanes produces ragged, detached names here. Instead the
+	 * lane is laid out as one register column: a fixed section header, then one row
+	 * per entity at a constant pitch, all entities sharing a single node spine. The
+	 * name, the load meter and the code become columns of a table, so every row
+	 * starts and ends on the same two vertical lines.
+	 *
+	 * The spine sits a fifth of the way into the lane, which leaves the name field
+	 * most of the lane width while keeping the squares clear of the incoming
+	 * cross-layer bridges that arrive from the left gutter.
+	 */
+	const REG_SPINE_FRAC = 0.12;
+	/** A section header occupies this many row heights. */
+	const REG_HEADER_UNITS = 1.8;
+
 	const layout = $derived.by(() => {
 		const lanes = LAYERS.filter((l) => app.activeLayers.has(l));
 		// Each lane gives up half of each neighbouring gutter, so the world always
@@ -201,6 +221,68 @@ import Chip from '$lib/ui/Chip.svelte';
 		const totalCount = members.length;
 		if (totalCount === 0 || present.length === 0) continue;
 
+		/*
+		 * The foreign register.
+		 *
+		 * One column, sections stacked, constant pitch. Every row gets the same
+		 * vertical slot regardless of group, so the register reads as a table
+		 * rather than as two independently stretched grids. Header rows are
+		 * priced into the pitch so the sections do not push the roster off the
+		 * bottom of the world.
+		 */
+		if (layer === 'foreign') {
+			/*
+			 * Fill the lane from just under the pinned header to just above its
+			 * bottom edge. REG_TOP is the world height of the pinned lane header at
+			 * the fit floor, where it is largest relative to the map, so the first
+			 * section head can never sit under the title.
+			 *
+			 * Each section consumes REG_HEADER_UNITS row heights for its head plus
+			 * one per member, so those are the units the pitch divides. Pricing the
+			 * head at REG_HEADER_UNITS - 1 (as this once did) undercounts the total
+			 * height by a head per section, which is what pushed the last rows past
+			 * the bottom of the lane.
+			 */
+			const REG_TOP = 52;
+			const REG_BOTTOM = 16;
+			const registerH = H - REG_TOP - REG_BOTTOM;
+			const totalUnits = totalCount + present.length * REG_HEADER_UNITS;
+			const pitch = registerH / totalUnits;
+			const spineX = laneX(li, laneW) + laneW * REG_SPINE_FRAC;
+			let cursor = REG_TOP;
+
+			for (const groupName of present) {
+				const groupMembers = groupMap.get(groupName)!;
+				groupMembers.sort((a, b) => b.weight - a.weight || a.name.localeCompare(b.name));
+
+				const headerY = cursor;
+				const contentTop = cursor + pitch * REG_HEADER_UNITS;
+				const contentBottom = contentTop + groupMembers.length * pitch;
+
+				groupBands.push({
+					layer,
+					group: groupName,
+					headerY,
+					contentTop,
+					contentBottom,
+					memberCount: groupMembers.length
+				});
+
+				groupMembers.forEach((m, idx) => {
+					nodes.set(m.id, {
+						...m,
+						layer,
+						x: spineX,
+						y: contentTop + pitch * (idx + 0.5),
+						r: m.kind === 'institution' ? 8 : 5.2 + (m.weight / 100) * 8
+					});
+				});
+
+				cursor = contentBottom;
+			}
+			continue;
+		}
+
 		// Reserve one header strip per present group, plus inter-group gaps.
 		// The remainder is split between the groups proportionally to member count,
 		// so a four-person subsection does not stretch to the same height as a forty-person one.
@@ -215,15 +297,11 @@ import Chip from '$lib/ui/Chip.svelte';
 			// Sort within group by weight descending
 			groupMembers.sort((a, b) => b.weight - a.weight || a.name.localeCompare(b.name));
 
-			// The group's own vertical slice, proportional to how many members it holds.
-			// Foreign lane's two groups (States vs International Organisations, 30 vs
-			// 15) would otherwise give the Organisations strip half the height and a
-			// cramped 8-row grid that truncates labels as "Internati…". Split that
-			// lane evenly so both groups breathe.
-			const sliceH =
-				layer === 'foreign' && present.length === 2
-					? contentH / present.length
-					: (groupMembers.length / totalCount) * contentH;
+			// The group's own vertical slice, proportional to how many members it
+			// holds, so a four-person subsection does not stretch to the height of a
+			// forty-person one. (Foreign never reaches this path: it is a register,
+			// laid out above.)
+			const sliceH = (groupMembers.length / totalCount) * contentH;
 			const contentTop = cursor + HEADER_H;
 			const contentBottom = contentTop + sliceH;
 
@@ -510,6 +588,12 @@ import Chip from '$lib/ui/Chip.svelte';
 	 * dense end off-screen. Security and political hold most of the record, so the
 	 * camera starts there and the reader pans right into the thinner layers.
 	 *
+	 * The same is true vertically. The fit floor can make the world taller than a
+	 * short laptop canvas, and centring then clips the top of every lane, where the
+	 * pinned headers and the first rows live. When that happens the opening view is
+	 * aligned to the top of the world instead, so the reader starts at the map's
+	 * beginning and pans down, rather than at an arbitrary middle band.
+	 *
 	 * `framed` is a plain `let`, not `$state`: an effect that wrote state it also read
 	 * would self-trigger. `cam.vw` is read tracked, which is what fires this once the
 	 * element has actually been measured; the writes go inside `untrack`.
@@ -519,7 +603,11 @@ import Chip from '$lib/ui/Chip.svelte';
 		if (framed || cam.vw < 2) return;
 		framed = true;
 		untrack(() => {
-			if (W * cam.fitScale > cam.vw + 1) cam.alignTo(0, H / 2, 0.03, 0.5);
+			const wider = W * cam.fitScale > cam.vw + 1;
+			const taller = H * cam.fitScale > cam.vh + 1;
+			if (wider || taller) {
+				cam.alignTo(0, taller ? 0 : H / 2, 0.03, taller ? 0 : 0.5);
+			}
 		});
 	});
 
@@ -866,36 +954,49 @@ import Chip from '$lib/ui/Chip.svelte';
 		 * The 1-year buffer makes the appearance a fade rather than a cut.
 		 */
 		const all = [...layout.nodes.values()].filter((n) => hasAppeared(n.id));
-		// Compare mode: only the two anchors and their shared neighbours.
-		if (compare && compareSet) {
-			return all.filter((n) => compareSet.has(n.id));
-		}
-		// Quiet mode is the live graph only: no dormant scaffolding at all.
-		if (app.quiet && !showAll) {
+		/*
+		 * The foreign register is a complete roster, so its markers are never
+		 * culled by semantic zoom: a row without its square would be a name with
+		 * no anchor. They are unioned back in below rather than threaded through
+		 * every branch. Compare mode owns the whole canvas and the register stands
+		 * down, so it is excluded there.
+		 */
+		const retained = compare ? [] : [...layout.nodes.values()].filter(foreignExists);
+		const base = (() => {
+			// Compare mode: only the two anchors and their shared neighbours.
+			if (compare && compareSet) {
+				return all.filter((n) => compareSet.has(n.id));
+			}
+			// Quiet mode is the live graph only: no dormant scaffolding at all.
+			if (app.quiet && !showAll) {
+				const edgeNodes = new Set<string>();
+				for (const e of slice.edges.filter((e) => e.active)) {
+					edgeNodes.add(e.rel.from);
+					edgeNodes.add(e.rel.to);
+				}
+				return all.filter((n) => slice.live.has(n.id) || edgeNodes.has(n.id));
+			}
+			// The roster enters once its fade starts; --rf carries the opacity.
+			if (cam.zoomProgress > 0.32) return all;
+			// Include any node that has at least one edge in the current slice,
+			// so edges never terminate at an invisible point.
 			const edgeNodes = new Set<string>();
-			for (const e of slice.edges.filter((e) => e.active)) {
+			for (const e of slice.edges) {
 				edgeNodes.add(e.rel.from);
 				edgeNodes.add(e.rel.to);
 			}
+			if (rings) {
+				// Focus pulls its ego-network forward: the one-ring is always drawn,
+				// the two-ring only once the camera is in (it is part of the roster).
+				return all.filter(
+					(n) => rings.one.has(n.id) || (showAll && rings.two.has(n.id)) || slice.live.has(n.id) || edgeNodes.has(n.id)
+				);
+			}
 			return all.filter((n) => slice.live.has(n.id) || edgeNodes.has(n.id));
-		}
-		// The roster enters once its fade starts; --rf carries the opacity.
-		if (cam.zoomProgress > 0.32) return all;
-		// Include any node that has at least one edge in the current slice,
-		// so edges never terminate at an invisible point.
-		const edgeNodes = new Set<string>();
-		for (const e of slice.edges) {
-			edgeNodes.add(e.rel.from);
-			edgeNodes.add(e.rel.to);
-		}
-		if (rings) {
-			// Focus pulls its ego-network forward: the one-ring is always drawn,
-			// the two-ring only once the camera is in (it is part of the roster).
-			return all.filter(
-				(n) => rings.one.has(n.id) || (showAll && rings.two.has(n.id)) || slice.live.has(n.id) || edgeNodes.has(n.id)
-			);
-		}
-		return all.filter((n) => slice.live.has(n.id) || edgeNodes.has(n.id));
+		})();
+		if (!retained.length) return base;
+		const drawn = new Set(base.map((n) => n.id));
+		return [...base, ...retained.filter((n) => !drawn.has(n.id))];
 	});
 
 	const hovered = $derived(hoverEdge ? slice.edges.find((e) => e.id === hoverEdge) : null);
@@ -1084,20 +1185,19 @@ import Chip from '$lib/ui/Chip.svelte';
 			edgeEndpointNodes.add(e.rel.to);
 		}
 
-		// Foreign states and international organisations are persistent anchors:
-		// they sit over any time span, hold no office, yet name the whole contest.
-		// They get a fixed high priority so they clear the overview floor and take
-		// a slot whenever space is free — but being non-pinned, they still yield to
-		// a genuinely overlapping label, exactly as a colliding name should.
-		const isPersistent = (n: Node) =>
-			n.kind === 'institution' && (n.type === 'foreign-state' || n.type === 'international-organisation');
-		// Ranked below a focused node's neighbours: reading who surrounds the focus
-		// matters more than an anchor label in the same corner. Ranked well above
-		// every plain person/institution so an anchor is never starved of a slot.
-		const PERSISTENT_PRIO = 4_000;
-
+		/*
+		 * The persistent foreign anchors (states, international organisations)
+		 * are drawn by the register, never by this pass. Every label here
+		 * therefore belongs to the domestic graph and follows the clock: people
+		 * while they hold office, institutions while something connects them.
+		 */
 		const out = [];
 		for (const n of layout.nodes.values()) {
+			// The foreign lane is drawn by `registerRows` as a table, not by the
+			// floating-label pass. Its names are anchored to a spine and carry a
+			// meter and a code, so a second halo label for the same entity would
+			// be a duplicate, not a reinforcement.
+			if (n.layer === 'foreign') continue;
 			if (compare && compareSet && !compareSet.has(n.id)) continue;
 			// The focus PLATE belongs to the SELECTED node only. Hovering used to
 			// promote the hovered node to focus too, so it rendered the plate AND
@@ -1105,7 +1205,6 @@ import Chip from '$lib/ui/Chip.svelte';
 			// the card; selection gets the plate.
 			const isFocus = app.selected === n.id;
 			if (!isFocus && app.hovered === n.id) continue;
-			const persistent = isPersistent(n);
 			// Hop distance from the focus, for the label modifier that marks who
 			// surrounds the reader's subject. 0 = not in any ring.
 			const hop = rings
@@ -1120,11 +1219,9 @@ import Chip from '$lib/ui/Chip.svelte';
 				// time — a name must follow the clock, never trail it. Institutions are
 				// the exception: they are anchors that name the whole contest whether or
 				// not anyone currently holds office in them, so an institution that is
-				// even connected to the slice still earns its title. Foreign states and
-				// international organisations are persistent by construction — always
-				// eligible, never gated on a current connection.
+				// even connected to the slice still earns its title.
 				const inOffice = slice.live.has(n.id);
-				const anchored = n.kind === 'institution' && (edgeEndpointNodes.has(n.id) || persistent);
+				const anchored = n.kind === 'institution' && edgeEndpointNodes.has(n.id);
 				if (!inOffice && !anchored) continue;
 				// When something is focused, only its ego-network is labelled: the
 				// one-ring always, the two-ring once the roster itself is drawn.
@@ -1136,11 +1233,12 @@ import Chip from '$lib/ui/Chip.svelte';
 				y: n.y,
 				text: n.name,
 				// Anchor preference (see place.ts): interior lanes read right-first,
-				// with vertical slots to break dense columns; the RIGHTMOST lane
-				// anchors LEFT first — a right-anchored label for a foreign state
-				// falls off the world edge, the viewport check suppresses it, and
-				// the title never appears even though the node is live. Left pulls
-				// it back inside the map.
+				// with vertical slots to break dense columns. The RIGHTMOST active
+				// lane anchors LEFT first, because a right-anchored name there falls
+				// off the world edge and the viewport check would suppress it even
+				// though the node is live. With foreign drawn as a register, this
+				// fallback only bites when foreign is hidden and civil inherits the
+				// right edge.
 				dirs: (layout.lanes.indexOf(n.layer) === layout.lanes.length - 1
 					? (['left', 'above', 'below', 'right'] as LabelDir[])
 					: (['right', 'above', 'below', 'left'] as LabelDir[])),
@@ -1152,11 +1250,9 @@ import Chip from '$lib/ui/Chip.svelte';
 				// weight to beat the label collisions it would otherwise lose to.
 				priority: isFocus
 					? 10_000
-					: persistent
-						? PERSISTENT_PRIO
-						: rings && rings.one.has(n.id)
-							? 5_000 + (n.weight - (n.kind === 'institution' ? (n.layer === 'foreign' ? 15 : 5) : 0))
-							: n.weight - (n.kind === 'institution' ? (n.layer === 'foreign' ? 15 : 5) : 0),
+					: rings && rings.one.has(n.id)
+						? 5_000 + (n.weight - (n.kind === 'institution' ? 5 : 0))
+						: n.weight - (n.kind === 'institution' ? 5 : 0),
 				pinned: isFocus,
 				r: n.r,
 				data: { layer: n.layer, kind: n.kind, hop }
@@ -1168,6 +1264,124 @@ import Chip from '$lib/ui/Chip.svelte';
 	const labels = $derived(
 		placeLabels(labelCandidates, cam, { floor: labelFloor, majorAt: 66, limit: 100 })
 	);
+
+	/**
+	 * How busy each foreign counterparty is right now.
+	 *
+	 * The figure is the count of authored, active, non-measurement relationships
+	 * touching the entity at the current instant: "how many claims tie this
+	 * counterparty to the record right now", normalised against the busiest row.
+	 * Trade and debt flows are measurements, not authored claims, so they do not
+	 * count; conflating the two would let a single large trade line outrank a
+	 * dense web of documented appointments.
+	 *
+	 * The count is taken against the whole record, not only the nodes currently
+	 * drawn: soloing the lane removes every domestic endpoint from `layout`, and
+	 * a load that collapsed to zero the moment the reader isolated the lane would
+	 * be measuring the view rather than the counterparty.
+	 *
+	 * It is read twice. The register rows use it for the meter and the tooltip,
+	 * and the node markers themselves fill by it, which is what keeps the load
+	 * visible on a laptop-width lane where a meter column does not fit.
+	 */
+	const foreignLoad = $derived.by(() => {
+		const ids = new Set([...layout.nodes.values()].filter(foreignExists).map((n) => n.id));
+		const counts = new Map<string, number>();
+		for (const rel of ds.relationships) {
+			if (!meetsBasis(rel.basis as Basis, app.basisFloor)) continue;
+			if (mode === 'influence' && !INFLUENCE_TYPES.has(rel.type) && rel.type !== 'ownership' && rel.type !== 'appointment') continue;
+			if (mode === 'ownership' && !['ownership', 'board', 'shareholder', 'funding'].includes(rel.type)) continue;
+			const dated = rel.interval.raw.start !== null;
+			if (dated && !possiblyActive(rel.interval, app.t)) continue;
+			if (ids.has(rel.from)) counts.set(rel.from, (counts.get(rel.from) ?? 0) + 1);
+			if (ids.has(rel.to)) counts.set(rel.to, (counts.get(rel.to) ?? 0) + 1);
+		}
+		const max = Math.max(1, ...counts.values());
+		const out = new Map<string, { count: number; pct: number }>();
+		for (const id of ids) {
+			const c = counts.get(id) ?? 0;
+			out.set(id, { count: c, pct: c / max });
+		}
+		return out;
+	});
+
+	/**
+	 * The foreign register, in screen space.
+	 *
+	 * Emitted as a flat list of section heads and entity rows rather than through
+	 * the collision pass: a register is a structure, not a set of floating names,
+	 * so its rows are never suppressed and never re-anchored. Each row is a name
+	 * and nothing else, so the only geometry is the name's anchor, and there is
+	 * no column arithmetic left to get wrong. The load is carried by the node
+	 * marker and named in the row's tooltip.
+	 */
+	const registerRows = $derived.by(() => {
+		const foreign = [...layout.nodes.values()].filter(foreignExists);
+		if (!foreign.length) return [];
+		// Rows follow the register's vertical order, which is the authored section
+		// order and then alphabetical within each section.
+		foreign.sort((a, b) => a.y - b.y || a.name.localeCompare(b.name));
+		const bands = layout.groupBands.filter((b) => b.layer === 'foreign');
+		// The register column runs from the spine to the lane's right edge. The
+		// section heads use the same span, so a rule or a count can never stick out
+		// past the lane it belongs to.
+		const columnW = Math.min(380, layout.laneW * (1 - REG_SPINE_FRAC) * cam.k);
+		// A section head spans the whole lane, like a group head in any other
+		// lane, so a long name has room and the rule reads as the lane's divider.
+		const laneLeft = laneX(layout.lanes.indexOf('foreign'), layout.laneW);
+		const sectionW = (layout.laneW - 8) * cam.k;
+		const rows: {
+			key: string;
+			kind: 'section' | 'row';
+			name: string;
+			count: number;
+			x: number;
+			y: number;
+			pad: number;
+			width: number;
+			id?: string;
+		}[] = [];
+		for (const band of bands) {
+			const members = foreign.filter((n) => n.group === band.group);
+			if (!members.length) continue;
+			const head = cam.worldToScreen(laneLeft + 4, band.headerY);
+			rows.push({
+				key: 'sec:' + band.layer + ':' + band.group,
+				kind: 'section',
+				name: band.group,
+				count: band.memberCount,
+				x: head.x,
+				y: head.y,
+				pad: 0,
+				width: sectionW
+			});
+			for (const n of members) {
+				const s = cam.worldToScreen(n.x, n.y);
+				const rr = Math.max(n.r, minWorldR);
+				rows.push({
+					key: 'row:' + n.id,
+					kind: 'row',
+					id: n.id,
+					name: n.name,
+					count: foreignLoad.get(n.id)?.count ?? 0,
+					x: s.x,
+					y: s.y,
+					// Clear the node glyph at whatever the camera scale draws it,
+					// capped so a full-zoom square does not shove the name off-lane.
+					pad: Math.max(13, Math.min(30, rr * cam.k + 7)),
+					width: columnW
+				});
+			}
+		}
+		return rows;
+	});
+
+	/** The register's section names, which are data group ids rather than UI copy. */
+	function foreignGroupLabel(group: string): string {
+		if (group === 'States') return t('layer.foreign.section.states');
+		if (group === 'International Organisations') return t('layer.foreign.section.orgs');
+		return t('layer.foreign.section.other');
+	}
 
 	/**
 	 * Lane headers, pinned in screen space.
@@ -1217,7 +1431,10 @@ import Chip from '$lib/ui/Chip.svelte';
 	 */
 	const showGroupHeaders = $derived(headerFade > 0);
 	const groupHeaders = $derived(
-		layout.groupBands.map((band) => {
+		// The foreign lane's sections are drawn as part of the register, always
+		// visible rather than zoom-gated: a roster without its section heads is
+		// just a list of names, which is the failure being corrected.
+		layout.groupBands.filter((band) => band.layer !== 'foreign').map((band) => {
 			const laneIdx = layout.lanes.indexOf(band.layer);
 			const p = cam.worldToScreen(laneX(laneIdx, layout.laneW) + 10, band.headerY);
 			return {
@@ -1308,6 +1525,30 @@ import Chip from '$lib/ui/Chip.svelte';
 		const t = appearDates.get(id);
 		if (t === undefined) return true; // no dated anchor → structural, always in play
 		return app.t >= t;
+	};
+
+	/**
+	 * Does this foreign register entry exist at the current instant?
+	 *
+	 * `appearDates` is built from records that INVOLVE an entity, not from the
+	 * entity's own active interval, so a state whose earliest recorded tie is
+	 * 2010 would "appear" then even though it has existed since independence, and
+	 * a counterparty with no early tie would leave a hole in the middle of the
+	 * register. Every foreign record carries an authored active interval, so that
+	 * interval is the existence rule here; only an entity with no start at all
+	 * falls back to the record-based rule.
+	 */
+	const foreignExists = (n: Node) => {
+		if (n.layer !== 'foreign') return false;
+		if (n.kind !== 'institution') return hasAppeared(n.id);
+		const inst = institutionById.get(n.id);
+		// Every foreign record carries an authored active interval, so its own
+		// start is the honest existence rule. Only an entity with no start at all
+		// falls back to the record-based rule.
+		if (inst && inst.interval.raw.start !== null) {
+			return app.t >= inst.interval.startEarliest;
+		}
+		return hasAppeared(n.id);
 	};
 
 	/**
@@ -1784,15 +2025,32 @@ import Chip from '$lib/ui/Chip.svelte';
 						rx="5"
 					/>
 					<!-- The zone's top hairline: a band is a section of the lane,
-					     and sections have rules. -->
-					<line
-						x1={laneX(laneIdx, layout.laneW) + 4}
-						x2={laneX(laneIdx, layout.laneW) + layout.laneW - 4}
-						y1={band.headerY - 5}
-						y2={band.headerY - 5}
-						class="band-line"
-						style:--c={LAYER_COLOR[band.layer]}
-					/>
+					     and sections have rules. The foreign register is exempt: its
+					     section head carries its own rule underneath, and stacking the
+					     band line above it drew a double stripe around every title. -->
+					{#if band.layer !== 'foreign'}
+						<line
+							x1={laneX(laneIdx, layout.laneW) + 4}
+							x2={laneX(laneIdx, layout.laneW) + layout.laneW - 4}
+							y1={band.headerY - 5}
+							y2={band.headerY - 5}
+							class="band-line"
+							style:--c={LAYER_COLOR[band.layer]}
+						/>
+					{/if}
+					<!-- The foreign register's spine: one rail the section's node
+					     squares sit on, so a row's marker is visually moored to the
+					     section rather than floating at the end of its name. -->
+					{#if band.layer === 'foreign'}
+						<line
+							x1={laneX(laneIdx, layout.laneW) + layout.laneW * REG_SPINE_FRAC}
+							x2={laneX(laneIdx, layout.laneW) + layout.laneW * REG_SPINE_FRAC}
+							y1={band.contentTop}
+							y2={band.contentBottom}
+							class="register-spine"
+							style:--c={LAYER_COLOR[band.layer]}
+						/>
+					{/if}
 				{/if}
 			{/each}
 
@@ -1907,6 +2165,10 @@ import Chip from '$lib/ui/Chip.svelte';
 					{@const isAnchor = n.kind === 'institution' && (n.type === 'foreign-state' || n.type === 'international-organisation')}
 					{@const connected = focus ? (rings?.one.has(n.id) ?? false) : live}
 					{@const rr = Math.max(n.r, minWorldR)}
+					// A foreign register marker fills by how many authored ties it
+					// carries now, so the load is visible even where the meter column
+					// is dropped. The faintest fill still reads as a marker.
+					{@const fl = n.layer === 'foreign' ? foreignLoad.get(n.id) : undefined}
 				<g
 					class="node"
 					class:focus={isFocus}
@@ -1978,7 +2240,8 @@ import Chip from '$lib/ui/Chip.svelte';
 							width={rr * 2}
 							height={rr * 2}
 							rx="1.5"
-							fill={connected ? LAYER_COLOR[n.layer] : 'var(--surface-panel)'}
+							fill={connected || fl ? LAYER_COLOR[n.layer] : 'var(--surface-panel)'}
+							fill-opacity={fl ? 0.14 + 0.72 * fl.pct : 1}
 							stroke={LAYER_COLOR[n.layer]}
 							stroke-width={isFocus ? 2 : 1.2}
 							vector-effect="non-scaling-stroke"
@@ -2152,6 +2415,54 @@ import Chip from '$lib/ui/Chip.svelte';
 				{/each}
 			{/if}
 
+			{#if !compare}
+			{#each registerRows as r (r.key)}
+				{#if r.kind === 'section'}
+					<!-- A section head is a rule with a name: the register's structure,
+					     shown at every zoom because the roster is the lane's content. -->
+					<span
+						class="vreg-section"
+						style:left="{r.x}px"
+						style:top="{r.y}px"
+						style:width="{Math.max(60, r.width)}px"
+						style:--c={LAYER_COLOR.foreign}
+					>
+						<em>{foreignGroupLabel(r.name)}</em>
+						<i class="mono">{r.count}</i>
+					</span>
+				{:else}
+					<!--
+						One register row: the name, anchored to its node on the spine.
+						Nothing else lives in the row, so there are no columns to align
+						and no width to overflow. The node on the spine is the marker,
+						which is why the name carries no dot of its own; the load is on
+						the marker and named in the tooltip.
+					-->
+					<button
+						type="button"
+						tabindex="-1"
+						class="vrow"
+						class:hot={app.hovered === r.id}
+						class:focus={app.selected === r.id}
+						style:transform="translate({r.x}px, {r.y}px) translateY(-50%)"
+						style:padding-left="{r.pad}px"
+						style:max-width="{Math.max(80, r.width)}px"
+						style:--c={LAYER_COLOR.foreign}
+						title="{r.name} · {r.count} {t('network.register.ties')}"
+						onmouseenter={() => (app.hovered = r.id!)}
+						onmouseleave={() => (app.hovered = null)}
+						onclick={() => {
+							cam.skipResizePan = true;
+							selectFly = 'gentle';
+							app.select(r.id!);
+						}}
+					>
+						<span class="vrow-name">{r.name}</span>
+					</button>
+				{/if}
+			{/each}
+			{/if}
+
 			{#each labels as l (l.id)}
 				<span
 					class="vlabel t-{l.tier} l-{l.dir}"
@@ -2278,6 +2589,34 @@ import Chip from '$lib/ui/Chip.svelte';
 					{t('network.legend.gutter')}
 				</span>
 			</div>
+
+			<div class="lsec">{t('network.legend.register')}</div>
+			<!-- The register's load is painted on the node, not in a column, so the
+			     key is two markers: a quiet square and a busy one. -->
+			<span class="lrow">
+				<svg width="22" height="10" aria-hidden="true"
+					><rect
+						x="1"
+						y="1"
+						width="8"
+						height="8"
+						rx="1"
+						fill="var(--layer-foreign)"
+						fill-opacity="0.14"
+						stroke="var(--layer-foreign)"
+					/><rect
+						x="13"
+						y="1"
+						width="8"
+						height="8"
+						rx="1"
+						fill="var(--layer-foreign)"
+						fill-opacity="0.86"
+						stroke="var(--layer-foreign)"
+					/></svg
+				>
+				{t('network.legend.register.load')}
+			</span>
 		</details>
 
 		<!--
@@ -2700,6 +3039,15 @@ import Chip from '$lib/ui/Chip.svelte';
 		stroke: var(--c);
 		stroke-width: 1;
 		opacity: 0.32;
+		pointer-events: none;
+	}
+	/* The foreign register's node rail. Non-scaling, because it is structure, not
+	   a measurement, and it must not swell with the camera the way the nodes do. */
+	.register-spine {
+		stroke: var(--c);
+		stroke-width: 1;
+		opacity: 0.3;
+		vector-effect: non-scaling-stroke;
 		pointer-events: none;
 	}
 	/* Ghost arcs: dormant people to their last-held institution. The faintest

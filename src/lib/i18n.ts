@@ -345,6 +345,10 @@ const en: Dict = {
 	'layer.civil': 'Civil society',
 	'layer.foreign': 'Foreign & international',
 	'layer.foreign.short': 'Foreign',
+	'layer.foreign.section.states': 'States',
+	'layer.foreign.section.orgs': 'Organisations',
+	'layer.foreign.section.other': 'Other entities',
+	'network.register.ties': 'active ties',
 
 	'chronicle.hint':
 		'Bar length is tenure. Hatched ends mark dates the sources do not fix precisely. Scroll to zoom, drag to pan.',
@@ -402,6 +406,8 @@ const en: Dict = {
 	'network.gutter.short': 'cross-layer',
 	'network.legend.basis': 'Basis',
 	'network.legend.bridges': 'Bridges',
+	'network.legend.register': 'Foreign register',
+	'network.legend.register.load': 'node fill scales with active ties',
 	'network.compare.title': 'Comparing {a} and {b}',
 	'network.compare.common': '{n} shared connections',
 	'network.compare.exit': 'Exit compare',
@@ -1593,6 +1599,10 @@ const fr: Dict = {
 	'layer.civil': 'Société civile',
 	'layer.foreign': 'Étranger & international',
 	'layer.foreign.short': 'Étranger',
+	'layer.foreign.section.states': 'États',
+	'layer.foreign.section.orgs': 'Organismes',
+	'layer.foreign.section.other': 'Autres entités',
+	'network.register.ties': 'liens actifs',
 
 	'chronicle.hint':
 		'La longueur des barres correspond à la durée du mandat. Les extrémités hachurées signalent des dates que les sources ne fixent pas précisément.',
@@ -1652,6 +1662,8 @@ const fr: Dict = {
 	'network.gutter.short': 'inter-couches',
 	'network.legend.basis': 'Fondement',
 	'network.legend.bridges': 'Ponts',
+	'network.legend.register': 'Registre étranger',
+	'network.legend.register.load': 'le remplissage du nœud varie avec les liens actifs',
 	'network.compare.title': 'Comparaison : {a} et {b}',
 	'network.compare.common': '{n} connexions communes',
 	'network.compare.exit': 'Quitter la comparaison',
@@ -2816,6 +2828,10 @@ const ar: Dict = {
 	'layer.civil': 'المجتمع المدني',
 	'layer.foreign': 'الخارج والدولي',
 	'layer.foreign.short': 'الخارج',
+	'layer.foreign.section.states': 'الدول',
+	'layer.foreign.section.orgs': 'المنظمات',
+	'layer.foreign.section.other': 'كيانات أخرى',
+	'network.register.ties': 'روابط نشطة',
 
 	'chronicle.hint':
 		'طول الشريط يعبّر عن مدة تولّي المنصب. الأطراف المخططة تعني أن المصادر لا تحدّد التاريخ بدقة.',
@@ -2875,6 +2891,8 @@ const ar: Dict = {
 	'network.gutter.short': 'عابر للطبقات',
 	'network.legend.basis': 'الأساس',
 	'network.legend.bridges': 'الجسور',
+	'network.legend.register': 'سجل الخارج',
+	'network.legend.register.load': 'تعبئة المربع تتناسب مع الروابط النشطة',
 	'network.compare.title': 'مقارنة {a} و {b}',
 	'network.compare.common': '{n} اتصالات مشتركة',
 	'network.compare.exit': 'إنهاء المقارنة',
