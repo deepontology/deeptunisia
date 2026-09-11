@@ -8,6 +8,7 @@
 	 * current section's events expand to show their description.
 	 */
 
+	import { t, tf } from '$lib/t.svelte';
 	import type { TimelineEvent } from '$lib/media/types';
 
 	interface Props {
@@ -44,7 +45,7 @@
 	const currentIdx = $derived(current ? grouped.findIndex((g) => g.section === current!.section) : -1);
 </script>
 
-<div class="timeline" role="navigation" aria-label="Article timeline">
+<div class="timeline" role="navigation" aria-label={t('media.timeline.aria')}>
 	{#if current}
 		<div class="era-head" aria-live="polite">
 			<span class="era-kicker">{current.section}</span>
@@ -60,7 +61,7 @@
 
 		{#each grouped as group (group.section)}
 			<div class="group" class:active={group.section === currentSection}>
-				<button class="group-head" onclick={() => oneventclick(group.section)} aria-label="Jump to {group.section}">
+				<button class="group-head" onclick={() => oneventclick(group.section)} aria-label={tf('media.timeline.jump', { section: group.section })}>
 					<span class="group-dot" aria-hidden="true"></span>
 					<span class="group-id">{group.section}</span>
 					{#if group.title}

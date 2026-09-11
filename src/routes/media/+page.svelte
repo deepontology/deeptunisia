@@ -1,5 +1,9 @@
 <script lang="ts">
-	import { t } from '$lib/t.svelte';
+	import { app } from '$lib/state.svelte';
+	import { t, formatDate } from '$lib/t.svelte';
+	import { format } from '$lib/i18n';
+	import { localized } from '$lib/media/meta';
+	import { confidenceTint, isConfidence } from '$lib/media/confidence';
 
 	/**
 	 * Media index — lists all investigations.
@@ -9,6 +13,9 @@
 
 	let { data } = $props();
 	const investigations = $derived(data.investigations);
+
+	/** The bundle stores ISO dates; the rest of the site shows them in the reader's locale. */
+	const when = (iso: string) => (iso ? formatDate(new Date(iso).getTime()) : '');
 </script>
 
 <svelte:head>
@@ -21,29 +28,35 @@
 
 <div class="page">
 	<header class="page-head">
-		<span class="eyebrow">DeepTunisia Media</span>
+		<span class="eyebrow">{t('media.eyebrow')}</span>
 		<h1>{t('media.index.title')}</h1>
 		<div class="lede">{t('media.index.subtitle')}</div>
 	</header>
 
 	<div class="grid">
 		{#each investigations as inv (inv.slug)}
+			{@const conf = isConfidence(inv.overall_confidence) ? inv.overall_confidence : null}
 			<a class="card" href="/media/{inv.slug}">
 				<div class="card-head">
 					{#if inv.series}
-						<span class="series">{t('media.series.prefix')}: {inv.series.title.en} · #{inv.series.position}</span>
+						<span class="series">{t('media.series.prefix')}: {localized(inv.series.title)} · #{inv.series.position}</span>
 					{/if}
-					<h2>{inv.title.en}</h2>
-					<p class="subtitle">{inv.subtitle.en}</p>
+					<h2>{localized(inv.title)}</h2>
+					<p class="subtitle">{localized(inv.subtitle)}</p>
 				</div>
 				<div class="card-meta">
-					<span class="evidence-bar" style:--confidence={inv.overall_confidence}></span>
+					<span
+						class="evidence-bar"
+						style:--c={confidenceTint(inv.overall_confidence)}
+						role={conf ? 'img' : undefined}
+						aria-label={conf ? format(app.locale, 'media.confidence.aria', { grade: conf }) : undefined}
+					></span>
 					<span class="stats">
-						{inv.claim_count} claims · {inv.source_count} sources
-						{#if inv.disputed_count > 0} · {inv.disputed_count} disputed{/if}
-						{#if inv.unresolved_count > 0} · {inv.unresolved_count} unresolved{/if}
+						{format(app.locale, 'media.evidence.claims', { n: inv.claim_count })} · {format(app.locale, 'media.card.sources', { n: inv.source_count })}
+						{#if inv.disputed_count > 0} · {format(app.locale, 'media.evidence.disputed', { n: inv.disputed_count })}{/if}
+						{#if inv.unresolved_count > 0} · {format(app.locale, 'media.evidence.unresolved', { n: inv.unresolved_count })}{/if}
 					</span>
-					<span class="readtime">{inv.reading_time_minutes} min</span>
+					<span class="readtime">{format(app.locale, 'media.article.readtime', { n: inv.reading_time_minutes })}</span>
 				</div>
 				{#if inv.tags.length > 0}
 					<div class="tags">
@@ -52,7 +65,7 @@
 						{/each}
 					</div>
 				{/if}
-				<div class="date">{inv.published}</div>
+				<div class="date">{when(inv.published)}</div>
 			</a>
 		{/each}
 	</div>
@@ -151,7 +164,7 @@
 		width: 32px;
 		height: 4px;
 		border-radius: 2px;
-		background: var(--basis-documented);
+		background: var(--c);
 		opacity: 0.7;
 	}
 

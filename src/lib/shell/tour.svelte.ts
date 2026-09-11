@@ -11,8 +11,9 @@
  *
  * So the tour is not a feature tour. Six of its nine steps exist to teach one
  * sentence each: that a position is an interval, that basis changes how a claim
- * is drawn, that raising the floor dissolves the map, that Agora is not the
- * record. The rest is navigation, and could be dropped without loss.
+ * is drawn, that raising the floor dissolves the map, that Media is where you
+ * read the record and the Agora is where people argue with it. The rest is
+ * navigation, and could be dropped without loss.
  *
  * ONCE PER READER, AND NOT ONE FRAME LONGER
  *
@@ -35,8 +36,11 @@ import { browser } from '$app/environment';
  * seen version 1 should be shown a tour that now explains a control that did not
  * exist when they took it. Do NOT bump for a typo: every bump re-interrupts
  * everyone who already dismissed it once.
+ *
+ * v1 -> v2: the bubbles step said "two modes" when the shell has three sections,
+ * and described Agora as holding the feed. Both statements are now wrong.
  */
-export const TOUR_VERSION = 1;
+export const TOUR_VERSION = 2;
 
 const KEY = 'deeptunisia:tour';
 
