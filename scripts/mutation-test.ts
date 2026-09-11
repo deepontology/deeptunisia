@@ -199,6 +199,31 @@ const MUTATIONS: Mutation[] = [
 		from: 'if (r.independence === undefined) {',
 		to: 'if (false && r.independence === undefined) {'
 	},
+	// --- schema.ts: claim evidence and archive snapshots (V29) -------------------
+	{
+		id: 'm42', file: 'schema.ts', expect: 'test-validators V29 (year-only/date-only lookup fixtures)',
+		label: 'archive lookup format check disabled (a lookup passes as a snapshot)',
+		from: 'return /^https?:\\/\\/(www\\.)?web\\.archive\\.org\\/web\\/\\d{14}(?:[a-z_]+)?\\//i.test(url);',
+		to: 'return true;'
+	},
+	{
+		id: 'm43', file: 'schema.ts', expect: 'test-validators V29 (capture or retry required)',
+		label: 'evidence no longer needs a capture or a dated retry',
+		from: 'if (!e.capture_url && !e.capture_missing) {',
+		to: 'if (false && !e.capture_url && !e.capture_missing) {'
+	},
+	{
+		id: 'm44', file: 'schema.ts', expect: 'test-validators V29 (locator required)',
+		label: 'the evidence locator minimum is weakened to allow whitespace',
+		from: ".refine((v) => nonBlank(v, 2), 'evidence needs a locator (page, section or timestamp)'),",
+		to: ".refine((v) => nonBlank(v, 0), 'evidence needs a locator (page, section or timestamp)'),"
+	},
+	{
+		id: 'm45', file: 'schema.ts', expect: 'test-validators V29 source (http(s) url required)',
+		label: 'source URLs stop being restricted to http(s)',
+		from: ".refine((v) => /^https?:\\/\\//i.test(v), 'a source URL must be http(s) (V29)')",
+		to: ".refine(() => true, 'a source URL must be http(s) (V29)')"
+	},
 	// --- build-data.ts: the pipeline ---------------------------------------------
 	{
 		id: 'm21', file: 'build-data.ts', expect: 'test-data V14 (direction on every edge)',
@@ -333,6 +358,25 @@ const MUTATIONS: Mutation[] = [
 		from: "else if (status === 'unknown') lastObserved = start.latest;",
 		to: "else if (status === 'unknown') lastObserved = endLatest;"
 	},
+	// --- origins.ts: independent-origin counting (V29) ---------------------------
+	{
+		id: 'm46', file: 'origins.ts', expect: 'test-validators V29 origins (publisher dedupe)',
+		label: 'same-publisher evidence entries stop merging into one origin',
+		from: "const sharesPublisher = pub !== '' && groups.some((g) => g.publishers.has(pub));",
+		to: 'const sharesPublisher = false;'
+	},
+	{
+		id: 'm47', file: 'origins.ts', expect: 'test-validators V29 origins (host identity)',
+		label: 'a shared origin host no longer collapses a renamed publisher',
+		from: "const sharesHost = host !== '' && groups.some((g) => g.hosts.has(host));",
+		to: 'const sharesHost = false;'
+	},
+	{
+		id: 'm48', file: 'origins.ts', expect: 'test-validators V29 origins (wire counts once)',
+		label: 'the last lineage step is counted as the origin instead of the first',
+		from: 'const origin = entry.lineage?.[0];',
+		to: 'const origin = entry.lineage?.[entry.lineage.length - 1];'
+	},
 	// --- canonical.ts: byte reproducibility --------------------------------------
 	{
 		id: 'm39', file: 'canonical.ts', expect: 'test-pipeline (canonical byte equality)',
@@ -347,6 +391,7 @@ const SUITES_FOR: Record<string, string[]> = {
 	'schema.ts': ['test-data.ts', 'test-validators.ts'],
 	'build-data.ts': ['test-data.ts', 'test-validators.ts', 'test-pipeline.ts'],
 	'canonical.ts': ['test-data.ts', 'test-pipeline.ts'],
+	'origins.ts': ['test-validators.ts'],
 	[ENGINE_TIME]: ['test-validators.ts', 'test-engine-conformance.ts']
 };
 const SYNTHETIC_SUITES = new Set(['test-validators.ts', 'test-pipeline.ts', 'test-engine-conformance.ts']);
