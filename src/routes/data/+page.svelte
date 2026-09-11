@@ -14,10 +14,11 @@
 	 * disagreed with rather than taken on trust.
 	 */
 
-	// The review buckets, most-damaging first — the same order the build emits them
-	// in (build-data.ts REVIEW_RISK). Never re-sorted for display. `attributed` is a
-	// risk class (grade C/D claims that name their claimant), not a basis — it has
-	// its own key beside the basis labels.
+	// The review flags, most-damaging first — the same order the build emits them
+	// in (scripts/review-coverage.ts). They OVERLAP: a record carries every flag
+	// true of it, so the totals sum to more than the record count and neither
+	// table is a partition. `attributed` is orthogonal to basis — it has its own
+	// key beside the basis labels. Never re-sorted for display.
 	const RISK_ORDER = ['unsubstantiated', 'attributed', 'inferred', 'reported', 'documented'] as const;
 	const RISK_KEY: Record<(typeof RISK_ORDER)[number], string> = {
 		unsubstantiated: 'basis.unsubstantiated',
@@ -268,22 +269,21 @@
 			</ul>
 		{/if}
 
-		<h2>{t('coverage.reviewed')}</h2>
-		<p>{t('coverage.reviewedNote')}</p>
+		<h2>{t('coverage.byKind')}</h2>
+		<p>{t('coverage.byKindNote')}</p>
 		<table class="schema">
 			<thead>
 				<tr>
-					<th>{t('coverage.reviewed.bucket')}</th>
+					<th>{t('about.review.claimtype')}</th>
 					<th>{t('coverage.reviewed.reviewed')}</th>
 					<th>{t('coverage.reviewed.histogram')}</th>
 				</tr>
 			</thead>
 			<tbody>
-				{#each RISK_ORDER as bucket (bucket)}
-					{@const counts = ds.meta.review.byRisk[bucket]}
+				{#each Object.entries(ds.meta.review.byKind) as [kind, counts] (kind)}
 					{@const pct = counts.total ? Math.round((counts.reviewed / counts.total) * 100) : 0}
 					<tr>
-						<td>{t(RISK_KEY[bucket])}</td>
+						<td>{t(`coverage.kind.${kind}`)}</td>
 						<td>{counts.reviewed} / {counts.total}</td>
 						<td>
 							<span class="hist-track"><span class="hist-fill" style="width: {pct}%"></span></span>
@@ -293,6 +293,33 @@
 				{/each}
 			</tbody>
 		</table>
+
+		<h2>{t('coverage.flags')}</h2>
+		<p>{t('coverage.flagsNote')}</p>
+		<table class="schema">
+			<thead>
+				<tr>
+					<th>{t('coverage.reviewed.bucket')}</th>
+					<th>{t('coverage.reviewed.reviewed')}</th>
+					<th>{t('coverage.reviewed.histogram')}</th>
+				</tr>
+			</thead>
+			<tbody>
+				{#each RISK_ORDER as flag (flag)}
+					{@const counts = ds.meta.review.flags[flag]}
+					{@const pct = counts.total ? Math.round((counts.reviewed / counts.total) * 100) : 0}
+					<tr>
+						<td>{t(RISK_KEY[flag])}</td>
+						<td>{counts.reviewed} / {counts.total}</td>
+						<td>
+							<span class="hist-track"><span class="hist-fill" style="width: {pct}%"></span></span>
+							<span class="mono hist-pct">{pct}%</span>
+						</td>
+					</tr>
+				{/each}
+			</tbody>
+		</table>
+		<p>{t('coverage.examinedNote')}</p>
 
 		<Content view="data" section="rebuild" />
 	</div>
