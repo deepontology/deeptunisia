@@ -298,6 +298,105 @@
 	background: color-mix(in oklch, var(--c) 20%, var(--surface-base));
 	color: var(--text-primary);
 }
+/* ---------------------------------------------------------------------------
+   The foreign register.
+
+   The foreign lane holds counterparties, not members of a domestic cluster, so
+   it is drawn as a table rather than as a cloud of anchored names. One node
+   spine runs down the lane; each row is a fixed set of columns (name, load,
+   code) whose left and right edges align across the whole roster. The node
+   square on the spine is the row's marker, which is why a register label has no
+   leading dot: two markers for one entity was half the reason the old lane read
+   as scattered text.
+
+   Physical `left`/`transform` and a pinned `direction: ltr` keep the spine and
+   the columns in the same place in every locale. Arabic names run right-to-left
+   inside the field through the bidi algorithm; the register itself does not
+   mirror, because the graph it annotates does not mirror either.
+   --------------------------------------------------------------------------- */
+
+.vreg-section {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	direction: ltr;
+	gap: var(--s-3);
+	box-sizing: border-box;
+	padding: 0 2px 3px 4px;
+	white-space: nowrap;
+	overflow: hidden;
+	font-family: var(--font-mono);
+	font-size: var(--t-2xs);
+	font-weight: 560;
+	letter-spacing: var(--track-caps);
+	text-transform: uppercase;
+	color: color-mix(in oklch, var(--c, var(--text-muted)) 58%, var(--text-secondary));
+	border-bottom: 1px solid color-mix(in oklch, var(--c, var(--border-subtle)) 32%, transparent);
+	pointer-events: none;
+	will-change: transform;
+}
+.vreg-section em {
+	font-style: normal;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.vreg-section i {
+	font-style: normal;
+	font-weight: 400;
+	color: var(--text-faint);
+	font-variant-numeric: tabular-nums;
+}
+
+.vrow {
+	position: absolute;
+	top: 0;
+	left: 0;
+	display: flex;
+	align-items: center;
+	direction: ltr;
+	gap: var(--s-3);
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	background: transparent;
+	border: 0;
+	border-radius: var(--r-xs);
+	font-family: var(--font-sans);
+	font-size: var(--t-xs);
+	line-height: 1.2;
+	letter-spacing: var(--track-tight);
+	color: var(--text-secondary);
+	text-align: start;
+	cursor: pointer;
+	pointer-events: auto;
+	will-change: transform;
+	transition:
+		background var(--dur-fast) var(--ease-out),
+		color var(--dur-fast) var(--ease-out);
+}
+.vrow-name {
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.vrow.hot,
+.vrow.focus {
+	color: var(--text-primary);
+	background: color-mix(in oklch, var(--c, var(--accent)) 12%, transparent);
+}
+.vrow.focus {
+	box-shadow: inset 2px 0 0 var(--c, var(--accent));
+}
+.vrow:focus-visible {
+	outline: 2px solid var(--accent);
+	outline-offset: -1px;
+}
+
 @media (max-width: 900px) {
 	.vlabel {
 		max-width: 128px;
