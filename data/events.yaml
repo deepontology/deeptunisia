@@ -283,6 +283,8 @@
   institutions: [trabelsi-network]
   actors: [ben-ali, leila-trabelsi, belhassen-trabelsi]
   confidence: A
+  source_relation: direct-record
+  independence: 1
   sources: [wb-all-in-family-qa, wb-wps6810, wb-manipulation-pr]
 
 - id: bouazizi
@@ -929,6 +931,8 @@
   summary_ar_by: model-reviewed
   institutions: [isie, cnrd]
   confidence: C
+  source_relation: inference-from-records
+  independence: 1
   verification: needs-primary-source
   attributed_to: >-
     Arabic and French Wikipedia (élections locales tunisiennes de 2023-2024;
@@ -1389,6 +1393,8 @@
   institutions: [legislature, presidency]
   location: [gov-tunis]
   confidence: A
+  source_relation: direct-record
+  independence: 2
   causes: [revolution-2011, national-dialogue-quartet-formed]
   disputes:
     - claim: >-
@@ -2704,6 +2710,8 @@
   actors: [mustapha-kamel-tarzi]
   institutions: [ministry-religious-affairs]
   confidence: B
+  source_relation: corroborated-report
+  independence: 2
   sources: [affaires-religieuses-tn-histoire, frwiki-mustapha-kamel-tarzi]
 
 - id: relaff-secretariat-elevated-1992
@@ -2857,6 +2865,8 @@
   actors: [ayachi-hammami]
   institutions: [judiciary]
   confidence: B
+  source_relation: single-report
+  independence: 1
   causes: [ayachi-hammami-arrested]
   sources: [mondafrique-chebbi-hammami-2026]
 
@@ -3013,6 +3023,8 @@
   institutions: [judiciary]
   location: [gov-tunis]
   confidence: C
+  source_relation: single-report
+  independence: 1
   basis: reported
   verification: needs-primary-source
   attributed_to: Nawaat
@@ -3148,6 +3160,8 @@
   summary_ar_by: model-reviewed
   institutions: [judiciary]
   confidence: C
+  source_relation: single-report
+  independence: 1
   basis: reported
   verification: needs-primary-source
   attributed_to: Nawaat
@@ -3690,6 +3704,8 @@
   summary_ar_by: model-reviewed
   institutions: [national-guard, ministry-interior]
   confidence: C
+  source_relation: single-report
+  independence: 1
   basis: reported
   verification: needs-primary-source
   attributed_to: "Nawaat; the petitions are brought by ASGI and Brahim Belguith"
@@ -3761,6 +3777,8 @@
   summary_ar_by: model-reviewed
   institutions: [judiciary]
   confidence: C
+  source_relation: single-report
+  independence: 1
   basis: reported
   verification: needs-primary-source
   attributed_to: Nawaat
@@ -3932,6 +3950,8 @@
     جرجيس إلى عمليات البحث مع الحرس الوطني إلى غاية 25 أوت، وفُتح تحقيق قضائي.
   summary_ar_by: model-reviewed
   confidence: B
+  source_relation: single-report
+  independence: 1
   basis: reported
   verification: needs-primary-source
   attributed_to: CRLDHT communiqué relaying DGGN toll; Kapitalis; Al Jazeera/Reuters; Africanews
