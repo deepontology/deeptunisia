@@ -141,6 +141,71 @@ svg {
 	overscroll-behavior: contain;
 }
 
+/* --- Bottom sheets --------------------------------------------------------
+   One handle for every sheet: the inspector, the dock's filter sheet, share,
+   settings, the world explain panel, a flow card and the network edge card.
+   Hidden on wide screens, where those surfaces are docked panels or anchored
+   popovers and a grab rail would be a lie.
+
+   The drag contract itself lives in src/lib/ui/sheet-drag.ts; these rules are
+   the skin it expects: a `.sheet-handle` to grab, a `.sheet-grip` to show, a
+   `.sheet-scroll` for content, and `--sheet-p` / `--sheet-y` driven by CSS.
+--------------------------------------------------------------------------- */
+
+.sheet-handle {
+	display: none;
+}
+
+@media (max-width: 900px) {
+	.sheet-handle {
+		display: grid;
+		place-items: center;
+		flex-shrink: 0;
+		width: 100%;
+		min-height: var(--tap);
+		touch-action: none;
+		cursor: grab;
+	}
+	.sheet-handle:active {
+		cursor: grabbing;
+	}
+	.sheet-grip {
+		width: 38px;
+		height: 4px;
+		border-radius: var(--r-full);
+		background: var(--border-strong);
+		transition:
+			background var(--dur-fast) var(--ease-out),
+			width var(--dur-fast) var(--ease-out);
+	}
+	.sheet-dragging .sheet-grip {
+		background: var(--text-muted);
+		width: 44px;
+	}
+
+	/*
+	   While a finger is down the sheet follows it exactly. A transition here
+	   makes the drag fight back, so this is one of the few places worth an
+	   `!important`: component rules write transitions with equal or higher
+	   specificity, and this one has to win during the gesture only.
+	*/
+	.sheet-dragging {
+		transition: none !important;
+	}
+
+	/*
+	   One scroll surface per sheet. Containment is not decoration: without it a
+	   flick at the end of a card chains into the document (nothing to scroll,
+	   but the gesture still leaves) and on Android can trigger pull-to-refresh
+	   from inside a half-open sheet.
+	*/
+	.sheet-scroll {
+		overflow-y: auto;
+		overscroll-behavior: contain;
+		-webkit-overflow-scrolling: touch;
+	}
+}
+
 /* Long-form reading. Used on the document pages, never inside the instrument
    views, which have their own denser typography. */
 .prose {
