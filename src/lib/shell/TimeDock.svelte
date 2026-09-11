@@ -553,7 +553,12 @@
 		backdrop-filter: blur(18px) saturate(1.3);
 		border-top: 1px solid var(--border-default);
 		box-shadow: 0 -1px 0 var(--border-subtle), var(--elev-3);
-		z-index: 30;
+		/*
+		   The dock is layered ABOVE the companion sheet. On a phone a card being
+		   dragged down slides under the dock instead of over it; the chrome stays
+		   put and the card reads as tucked away.
+		*/
+		z-index: var(--z-dock);
 	}
 
 	.row {
@@ -978,6 +983,7 @@
 		margin-inline-start: auto;
 	}
 	.filter-btn {
+		position: relative;
 		display: flex;
 		align-items: center;
 		gap: var(--s-3);
@@ -988,6 +994,17 @@
 		background: var(--surface-sunken);
 		border: 1px solid var(--border-default);
 		border-radius: var(--r-md);
+	}
+	/*
+	   Thumb slop, horizontal only. The controls row is 32px and the track below
+	   it needs its full height for scrubbing, so a taller invisible target would
+	   steal drags from the timeline. Widening costs nothing and catches the near
+	   misses the 30px button produced.
+	*/
+	.filter-btn::before {
+		content: '';
+		position: absolute;
+		inset: 0 calc(-1 * var(--s-4));
 	}
 	.filter-btn:hover,
 	.filter-btn.on {
@@ -1089,10 +1106,12 @@
 			font-size: 8px;
 		}
 		/* The home-indicator inset is added to the height rather than taken out of it,
-		   so the track keeps its full thumb-sized depth on hardware that has one. */
+		   so the track keeps its full thumb-sized depth on hardware that has one. The
+		   inline insets keep the transport and filters clear of a landscape notch. */
 		.dock {
 			height: calc(var(--dock-h) + var(--safe-b));
 			padding-bottom: var(--safe-b);
+			padding-inline: var(--safe-l) var(--safe-r);
 		}
 	}
 </style>

@@ -162,6 +162,66 @@ ok(
 		/\.ref\s*\{[^}]*max-width:\s*100%/.test(RECORD_PANEL)
 );
 
+/*
+ * The sheet pass: every phone bottom sheet drags through one shared action
+ * (src/lib/ui/sheet-drag.ts), the entity card is the sheet's only scroller, and
+ * the z-scale keeps the dock above the companion sheet so a dismissal tucks the
+ * card under the chrome. The smoke suite measures the geometry at 390x844;
+ * these pin the source contracts a refactor could drop while every rendered
+ * desktop check still passed.
+ */
+const SHEET_DRAG = readFileSync(join(HERE, '..', 'src', 'lib', 'ui', 'sheet-drag.ts'), 'utf8');
+const APP_CSS = readFileSync(join(HERE, '..', 'src', 'app.css'), 'utf8');
+const TOKENS_CSS = readFileSync(join(HERE, '..', 'src', 'lib', 'design', 'tokens.css'), 'utf8');
+const POPOVER = readFileSync(join(HERE, '..', 'src', 'lib', 'ui', 'Popover.svelte'), 'utf8');
+const WORLD_TOTALS = readFileSync(join(HERE, '..', 'src', 'lib', 'components', 'WorldTotals.svelte'), 'utf8');
+const FLOW_CARD = readFileSync(join(HERE, '..', 'src', 'lib', 'components', 'FlowCard.svelte'), 'utf8');
+const APP_HTML = readFileSync(join(HERE, '..', 'src', 'app.html'), 'utf8');
+
+ok(
+	'every phone sheet shares the one drag action',
+	[INSPECTOR, POPOVER, WORLD_TOTALS, FLOW_CARD, NETWORK].every((f) => f.includes('sheet-drag')) &&
+		SHEET_DRAG.includes('export function sheetDrag'),
+	'Inspector, Popover, WorldTotals, FlowCard, NetworkView'
+);
+ok(
+	'the global sheet skin stays in app.css',
+	APP_CSS.includes('.sheet-handle') &&
+		APP_CSS.includes('.sheet-grip') &&
+		APP_CSS.includes('.sheet-scroll') &&
+		APP_CSS.includes('.sheet-dragging')
+);
+ok(
+	'the z-scale keeps the dock above the companion sheet',
+	Number(TOKENS_CSS.match(/--z-sheet:\s*(\d+)/)?.[1]) <
+		Number(TOKENS_CSS.match(/--z-dock:\s*(\d+)/)?.[1]),
+	`--z-sheet=${TOKENS_CSS.match(/--z-sheet:\s*(\d+)/)?.[1]} < --z-dock=${TOKENS_CSS.match(/--z-dock:\s*(\d+)/)?.[1]}`
+);
+ok(
+	'the phone inspector is the clip box with one scrolling inner',
+	INSPECTOR.includes('class="inner sheet-scroll"') && /\.inspector\s*\{[^}]*overflow:\s*hidden;/.test(INSPECTOR)
+);
+ok(
+	'the phone card body stops scrolling and its header sticks',
+	/\.inner :global\(\.panel \.body\)\s*\{[^}]*overflow:\s*visible/.test(INSPECTOR) &&
+		/\.inner :global\(\.panel header\)\s*\{[^}]*position:\s*sticky/.test(INSPECTOR)
+);
+ok(
+	'the viewport opts into the safe area and the chrome token carries it',
+	APP_HTML.includes('viewport-fit=cover') && /--chrome-h:\s*calc\([^;]*var\(--safe-t\)/.test(TOKENS_CSS)
+);
+
+// Deep links for cards that do not live on the map they were shared from.
+const WORLD = readFileSync(join(HERE, '..', 'src', 'lib', 'components', 'WorldView.svelte'), 'utf8');
+ok(
+	'the network hands energy flows and agreements to the world ledger',
+	NETWORK.includes("flowParam?.startsWith('energy:')") &&
+		NETWORK.includes("searchParams.get('agreement')") &&
+		WORLD.includes("searchParams.get('flow')") &&
+		WORLD.includes("searchParams.get('agreement')"),
+	'NetworkView redirects, WorldView opens the card'
+);
+
 // Hierarchy + navigation overlays + smoothing.
 const AXIS_TS = readFileSync(join(HERE, '..', 'src', 'lib', 'viz', 'axis.svelte.ts'), 'utf8');
 ok(

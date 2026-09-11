@@ -88,6 +88,17 @@
 		border-bottom: 1px solid var(--border-subtle);
 	}
 
+	/*
+	   A landscape phone keeps the canvas, not the caption. At that height the
+	   one-sentence answer is the only standing text between the chrome and the
+	   view, and the view needs the pixels more.
+	*/
+	@media (max-width: 900px) and (max-height: 520px) {
+		.caption {
+			display: none;
+		}
+	}
+
 	.body {
 		flex: 1;
 		min-width: 0;
