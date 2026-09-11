@@ -44,7 +44,7 @@ import { CountriesFileSchema } from './schema.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
-const OUT_DIR = join(ROOT, 'src', 'generated');
+const OUT_DIR = process.env.DT_OUT_DIR ?? join(ROOT, 'src', 'generated');
 const SOURCE = join(ROOT, 'node_modules', 'world-atlas', 'countries-110m.json');
 const COUNTRIES = join(ROOT, 'data', 'countries.yaml');
 const FLOWS_DIR = join(ROOT, 'flows');
@@ -1207,7 +1207,7 @@ if (!existsSync(OUT_DIR)) mkdirSync(OUT_DIR, { recursive: true });
  * countries.ts imports), and the geometry is a separate static file the
  * globe fetches after mount, degrading to a loading state until it arrives.
  */
-const STATIC_DIR = join(ROOT, 'static');
+const STATIC_DIR = process.env.DT_STATIC_DIR ?? join(ROOT, 'static');
 if (!existsSync(STATIC_DIR)) mkdirSync(STATIC_DIR, { recursive: true });
 
 const { topology, ...dataOnly } = bundle;

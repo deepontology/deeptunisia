@@ -8,8 +8,18 @@
  * is traceability cannot afford to discover those at runtime.
  */
 
-import { readFileSync, writeFileSync, mkdirSync, existsSync, statSync } from 'node:fs';
+import {
+	readFileSync,
+	writeFileSync,
+	mkdirSync,
+	existsSync,
+	statSync,
+	readdirSync,
+	renameSync,
+	rmSync
+} from 'node:fs';
 import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parse as parseYaml } from 'yaml';
@@ -63,6 +73,7 @@ import {
 } from './dates.ts';
 import { loadParameters, type Parameters } from './parameters.ts';
 import { auditInterpretationPaths } from '../src/lib/interpretation.ts';
+import { canonicalBytes, computeDatasetHash, CANONICAL_GENERATED } from './canonical.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
@@ -77,9 +88,30 @@ const ROOT = join(HERE, '..');
  * and derivation code paths are identical.
  */
 const FIXTURE_MODE = Boolean(process.env.DT_DATA_DIR);
+/**
+ * DT_CANONICAL=1 writes canonical bytes (sorted keys, fixed generated time, no
+ * payload sizes) so two builds can be compared byte for byte. Normal builds
+ * stay human-readable and carry the same `meta.datasetHash`.
+ */
+const CANONICAL = Boolean(process.env.DT_CANONICAL);
 const DATA_DIR = process.env.DT_DATA_DIR ?? join(ROOT, 'data');
 const OUT_DIR = process.env.DT_OUT_DIR ?? join(ROOT, 'src', 'generated');
 const STATIC_DIR = process.env.DT_STATIC_DIR ?? join(ROOT, 'static');
+
+/**
+ * Staging roots (build atomically; validate then promote). Every output this
+ * build writes goes here first. On success the files are renamed into OUT_DIR
+ * and STATIC_DIR; on any error the staging dirs are removed and the existing
+ * outputs are left exactly as they were. A failed build therefore updates
+ * nothing, including editorial-queue.json, which the review caught leaking
+ * before the error gate.
+ */
+const STAGE_OUT = `${OUT_DIR}.tmp`;
+const STAGE_STATIC = `${STATIC_DIR}.tmp`;
+rmSync(STAGE_OUT, { recursive: true, force: true });
+rmSync(STAGE_STATIC, { recursive: true, force: true });
+mkdirSync(STAGE_OUT, { recursive: true });
+mkdirSync(STAGE_STATIC, { recursive: true });
 
 // ---------------------------------------------------------------------------
 // Jurisdiction parameters. Loaded first, configured into every layer, emitted
@@ -104,6 +136,41 @@ function fail(where: string, message: string) {
 }
 function warn(where: string, message: string) {
 	warnings.push(`${where}: ${message}`);
+}
+
+/**
+ * Refuse the build without touching the promoted outputs. Staging dirs are
+ * removed; every file the previous successful build produced stays in place.
+ * Used by every fatal gate, including the one after the world build.
+ */
+function abortBuild(): never {
+	rmSync(STAGE_OUT, { recursive: true, force: true });
+	rmSync(STAGE_STATIC, { recursive: true, force: true });
+	process.exit(1);
+}
+
+/**
+ * Move a validated staging tree onto its promoted location, file by file.
+ *
+ * File-level renames (same filesystem, atomic per file) rather than a directory
+ * rename: `static/` also holds hand-curated assets this build does not own, so
+ * replacing the directory would delete them. Promotion happens only after every
+ * validation and export has succeeded, so no reader ever sees a partial graph.
+ */
+function promoteDirectory(stageDir: string, finalDir: string): void {
+	mkdirSync(finalDir, { recursive: true });
+	const walk = (rel: string) => {
+		for (const entry of readdirSync(join(stageDir, rel), { withFileTypes: true })) {
+			const child = rel ? join(rel, entry.name) : entry.name;
+			if (entry.isDirectory()) {
+				mkdirSync(join(finalDir, child), { recursive: true });
+				walk(child);
+			} else {
+				renameSync(join(stageDir, child), join(finalDir, child));
+			}
+		}
+	};
+	walk('');
 }
 
 // ---------------------------------------------------------------------------
@@ -182,9 +249,9 @@ configureSchema(parameters, {
 });
 
 // The queue report (editorial-queue.json) is written long before the later
-// mkdirs, so in fixture mode — where STATIC_DIR may not exist yet — this must
+// mkdirs, so in fixture mode — where STAGE_STATIC may not exist yet — this must
 // happen up front. Idempotent in normal mode.
-mkdirSync(STATIC_DIR, { recursive: true });
+mkdirSync(STAGE_STATIC, { recursive: true });
 
 function loadYaml<T>(file: string, schema: z.ZodType<T>): T[] {
 	const path = join(DATA_DIR, file);
@@ -466,6 +533,7 @@ for (const [kind, rows] of claimKindRegistry) {
 // exceptions file is the temporary waiver. Neither is a silent reclassification.
 // ---------------------------------------------------------------------------
 
+let basisOverrideCsv = '';
 {
 	const rows: string[] = ['id,kind,grade,implied,authored,has_review'];
 	for (const [kind, records] of claimKindRegistry) {
@@ -478,10 +546,7 @@ for (const [kind, rows] of claimKindRegistry) {
 			);
 		}
 	}
-	if (!FIXTURE_MODE) {
-		mkdirSync(join(ROOT, 'output'), { recursive: true });
-		writeFileSync(join(ROOT, 'output', 'basis-overrides.csv'), rows.join('\n') + '\n', 'utf8');
-	}
+	basisOverrideCsv = rows.join('\n') + '\n';
 }
 
 function checkSources(where: string, ids: string[]) {
@@ -1411,7 +1476,7 @@ const resolvedEducation = education.map((e) => ({
 	push('declaration', resolvedDeclarations.map((d) => ({ ...d, title: `${d.kind} — ${d.declarer ?? 'regime'}` })));
 	push('education', resolvedEducation.map((e) => ({ ...e, title: `${e.degree_en} — ${e.person}` })));
 	queue.sort((a, b) => a.risk - b.risk || b.sources - a.sources || a.kind.localeCompare(b.kind) || a.id.localeCompare(b.id));
-	writeFileSync(join(STATIC_DIR, 'editorial-queue.json'), JSON.stringify({ generated: new Date().toISOString(), total: queue.length, reviewed: queue.filter((q) => q.reviewed).length, queue }, null, 2), 'utf8');
+	writeFileSync(join(STAGE_STATIC, 'editorial-queue.json'), JSON.stringify({ generated: new Date().toISOString(), total: queue.length, reviewed: queue.filter((q) => q.reviewed).length, queue }, null, 2), 'utf8');
 }
 
 // V4/V5: a contract value is attributed — there is no "value filled from memory".
@@ -1693,7 +1758,7 @@ if (errors.length) {
 	console.error(`\n  DATA VALIDATION FAILED — ${errors.length} error(s)\n`);
 	for (const e of errors) console.error(`   x  ${e}`);
 	console.error('');
-	process.exit(1);
+	abortBuild();
 }
 
 if (warnings.length) {
@@ -1912,7 +1977,7 @@ if (translationProblems.length) {
 	console.error(`\n  translation errors (${translationProblems.length}):`);
 	for (const p of translationProblems.slice(0, 25)) console.error(`   ✗  ${p}`);
 	if (translationProblems.length > 25) console.error(`   … and ${translationProblems.length - 25} more`);
-	process.exit(1);
+	abortBuild();
 }
 
 const needsPrimary = [
@@ -2192,13 +2257,13 @@ const intervalTrims = [
 		.filter((e) => e.interval.trimmed || e.interval.startClamped)
 		.map((e) => ({ kind: 'event', id: e.id, start: e.date, end: e.date_end ?? e.date, interval: e.interval }))
 ];
-writeFileSync(join(STATIC_DIR, 'interval-trims.json'), JSON.stringify(intervalTrims, null, 2), 'utf8');
+writeFileSync(join(STAGE_STATIC, 'interval-trims.json'), JSON.stringify(intervalTrims, null, 2), 'utf8');
 if (intervalTrims.length) {
 	warn('interval-trims', `${intervalTrims.length} interval(s) envelope-clamped (V22) — see static/interval-trims.json`);
 }
 
-mkdirSync(OUT_DIR, { recursive: true });
-writeFileSync(join(OUT_DIR, 'dataset.json'), JSON.stringify(dataset), 'utf8');
+mkdirSync(STAGE_OUT, { recursive: true });
+writeFileSync(join(STAGE_OUT, 'dataset.json'), JSON.stringify(dataset), 'utf8');
 
 // The world geometry (src/generated/world.json + static/world-topo.json) is
 // compiled by scripts/build-world.ts from Natural Earth + data/countries.yaml.
@@ -2212,11 +2277,26 @@ if (!FIXTURE_MODE) {
 		execFileSync(
 			process.execPath,
 			[join(ROOT, 'node_modules', 'tsx', 'dist', 'cli.mjs'), join(ROOT, 'scripts', 'build-world.ts')],
-			{ cwd: ROOT, stdio: ['ignore', 'inherit', 'inherit'] }
+			{
+				cwd: ROOT,
+				stdio: ['ignore', 'inherit', 'inherit'],
+				// build-world reads the staged dataset and writes staged geometry, so
+				// a failure here still cannot touch the promoted outputs.
+				env: { ...process.env, DT_OUT_DIR: STAGE_OUT, DT_STATIC_DIR: STAGE_STATIC }
+			}
 		);
 	} catch {
 		fail('world', 'build-world.ts failed — the world view cannot build without its geometry');
 	}
+}
+
+// The world build is part of the build, not a postscript. Its failure must stop
+// promotion the same way a schema failure does.
+if (errors.length) {
+	console.error(`\n  DATA VALIDATION FAILED — ${errors.length} error(s)\n`);
+	for (const e of errors) console.error(`   x  ${e}`);
+	console.error('');
+	abortBuild();
 }
 
 // ---------------------------------------------------------------------------
@@ -2227,8 +2307,8 @@ if (!FIXTURE_MODE) {
 // as downloadable data alongside the site.
 // ---------------------------------------------------------------------------
 
-mkdirSync(STATIC_DIR, { recursive: true });
-writeFileSync(join(STATIC_DIR, 'dataset.json'), JSON.stringify(dataset, null, 2), 'utf8');
+mkdirSync(STAGE_STATIC, { recursive: true });
+writeFileSync(join(STAGE_STATIC, 'dataset.json'), JSON.stringify(dataset, null, 2), 'utf8');
 
 // GIS exports (spec §8.3): the gazetteer as GeoJSON for the map view and for
 // external tooling. Places carry Point geometry from their coordinates; regions
@@ -2266,10 +2346,10 @@ writeFileSync(join(STATIC_DIR, 'dataset.json'), JSON.stringify(dataset, null, 2)
 		generated: new Date().toISOString(),
 		features: [...regionFeatures, ...placeFeatures]
 	};
-	writeFileSync(join(STATIC_DIR, 'geo.json'), JSON.stringify(geo), 'utf8');
+	writeFileSync(join(STAGE_STATIC, 'geo.json'), JSON.stringify(geo), 'utf8');
 	// Same payload under the §8.3 path for GIS tooling.
-	mkdirSync(join(STATIC_DIR, 'tn'), { recursive: true });
-	writeFileSync(join(STATIC_DIR, 'tn', 'regions.geojson'), JSON.stringify(geo), 'utf8');
+	mkdirSync(join(STAGE_STATIC, 'tn'), { recursive: true });
+	writeFileSync(join(STAGE_STATIC, 'tn', 'regions.geojson'), JSON.stringify(geo), 'utf8');
 }
 
 function csvCell(value: unknown): string {
@@ -2287,7 +2367,7 @@ function toCsv(rows: Record<string, unknown>[], columns: string[]): string {
 const isoDay = (t: number | null) => (t === null ? '' : new Date(t).toISOString().slice(0, 10));
 
 writeFileSync(
-	join(STATIC_DIR, 'positions.csv'),
+	join(STAGE_STATIC, 'positions.csv'),
 	toCsv(
 		resolvedPositions.map((p) => ({
 			id: p.id,
@@ -2354,7 +2434,7 @@ writeFileSync(
 );
 
 writeFileSync(
-	join(STATIC_DIR, 'relationships.csv'),
+	join(STAGE_STATIC, 'relationships.csv'),
 	toCsv(
 		resolvedRelationships.map((r) => ({
 			id: r.id,
@@ -2399,7 +2479,7 @@ writeFileSync(
 );
 
 writeFileSync(
-	join(STATIC_DIR, 'sources.csv'),
+	join(STAGE_STATIC, 'sources.csv'),
 	toCsv(
 		sources.map((s) => ({
 			id: s.id,
@@ -2420,7 +2500,7 @@ writeFileSync(
 // v0.0.2 kinds — the same downloadable-data contract (P3). Empty kinds ship a
 // header row only; the first record populates the row, not the schema.
 writeFileSync(
-	join(STATIC_DIR, 'companies.csv'),
+	join(STAGE_STATIC, 'companies.csv'),
 	toCsv(
 		resolvedCompanies.map((c) => ({
 			id: c.id,
@@ -2441,7 +2521,7 @@ writeFileSync(
 	'utf8'
 );
 writeFileSync(
-	join(STATIC_DIR, 'contracts.csv'),
+	join(STAGE_STATIC, 'contracts.csv'),
 	toCsv(
 		resolvedContracts.map((c) => ({
 			id: c.id,
@@ -2464,7 +2544,7 @@ writeFileSync(
 	'utf8'
 );
 writeFileSync(
-	join(STATIC_DIR, 'licences.csv'),
+	join(STAGE_STATIC, 'licences.csv'),
 	toCsv(
 		resolvedLicences.map((l) => ({
 			id: l.id,
@@ -2481,7 +2561,7 @@ writeFileSync(
 	'utf8'
 );
 writeFileSync(
-	join(STATIC_DIR, 'declarations.csv'),
+	join(STAGE_STATIC, 'declarations.csv'),
 	toCsv(
 		resolvedDeclarations.map((d) => ({
 			id: d.id,
@@ -2499,7 +2579,7 @@ writeFileSync(
 	'utf8'
 );
 writeFileSync(
-	join(STATIC_DIR, 'education.csv'),
+	join(STAGE_STATIC, 'education.csv'),
 	toCsv(
 		resolvedEducation.map((e) => ({
 			id: e.id,
@@ -2875,6 +2955,12 @@ export interface DatasetMeta {
 	shippedKB: number;
 	/** The flagship dataset.json export on its own, KB. */
 	datasetKB: number;
+	/**
+	 * Canonical sha256 over the stable graph projection (fixed timestamp, no
+	 * sizes). Two builds from the same commit and data agree; see
+	 * scripts/canonical.ts and DT_CANONICAL=1.
+	 */
+	datasetHash: string;
 	counts: Record<string, number>;
 	confidenceCounts: Record<Confidence, number>;
 	basisCounts: Record<Basis, number>;
@@ -3180,7 +3266,7 @@ export interface PlaceRec {
 export const dataset = raw as unknown as Dataset;
 export default dataset;
 `;
-writeFileSync(join(OUT_DIR, 'index.ts'), types, 'utf8');
+writeFileSync(join(STAGE_OUT, 'index.ts'), types, 'utf8');
 
 const size = (JSON.stringify(dataset).length / 1024).toFixed(0);
 
@@ -3350,11 +3436,11 @@ const changelog = readChangelog().slice(0, 250);
 
 // The commit the build runs from — the paper's reproducibility block tags it,
 // so "built from the then-current graph" names a state, not a date.
-writeFileSync(join(OUT_DIR, 'changelog.json'), JSON.stringify(changelog), 'utf8');
+writeFileSync(join(STAGE_OUT, 'changelog.json'), JSON.stringify(changelog), 'utf8');
 try {
-	writeFileSync(join(STATIC_DIR, 'changelog.json'), JSON.stringify(changelog, null, 2), 'utf8');
+	writeFileSync(join(STAGE_STATIC, 'changelog.json'), JSON.stringify(changelog, null, 2), 'utf8');
 } catch {
-	// STATIC_DIR may not exist in fixture mode.
+	// STAGE_STATIC may not exist in fixture mode.
 }
 
 // ---------------------------------------------------------------------------
@@ -3384,34 +3470,54 @@ for (const rel of [
 	'editorial-queue.json',
 	join('tn', 'regions.geojson')
 ]) {
-	const p = join(STATIC_DIR, rel);
+	const p = join(STAGE_STATIC, rel);
 	if (existsSync(p)) shippedBytes += statSync(p).size;
 }
 for (const rel of ['changelog.json', 'world.json']) {
-	const p = join(OUT_DIR, rel);
+	const p = join(STAGE_OUT, rel);
 	if (existsSync(p)) shippedBytes += statSync(p).size;
 }
 // world-topo.json ships to static (the runtime-fetched globe geometry, W3).
 for (const rel of ['world-topo.json']) {
-	const p = join(STATIC_DIR, rel);
+	const p = join(STAGE_STATIC, rel);
 	if (existsSync(p)) shippedBytes += statSync(p).size;
 }
 const shippedKB = Math.round(shippedBytes / 1024 / 10) * 10;
 
 // The flagship export on its own, so /data can label the card honestly instead of
 // guessing at a proportion of the total.
-const datasetKB = Math.round(statSync(join(STATIC_DIR, 'dataset.json')).size / 1024);
+const datasetKB = Math.round(statSync(join(STAGE_STATIC, 'dataset.json')).size / 1024);
 
 // meta.shippedKB is a derived stat, and the payload sizes are only final after
 // every export is written — so patch the emitted bundle rather than hoist the
 // CSV generation above the dataset object. The patch runs in fixture mode too;
 // test-pipeline normalizes it away the same way it normalizes `generated`.
+// meta.datasetHash is the canonical graph hash: the stable projection of this
+// bundle (fixed timestamp, no sizes, no self-reference), so two builds from the
+// same commit and data agree. Normal builds keep the readable form; canonical
+// builds (DT_CANONICAL=1) write sorted bytes with a fixed generated time and no
+// payload sizes, which is what makes a byte-for-byte comparison meaningful.
+let datasetHashValue = '';
 {
-	const bundled = JSON.parse(readFileSync(join(OUT_DIR, 'dataset.json'), 'utf8'));
-	bundled.meta.shippedKB = shippedKB;
-	bundled.meta.datasetKB = datasetKB;
-	writeFileSync(join(OUT_DIR, 'dataset.json'), JSON.stringify(bundled), 'utf8');
-	writeFileSync(join(STATIC_DIR, 'dataset.json'), JSON.stringify(bundled, null, 2), 'utf8');
+	const bundled = JSON.parse(readFileSync(join(STAGE_OUT, 'dataset.json'), 'utf8'));
+	if (CANONICAL) {
+		bundled.meta.generated = CANONICAL_GENERATED;
+		delete bundled.meta.shippedKB;
+		delete bundled.meta.datasetKB;
+	} else {
+		bundled.meta.shippedKB = shippedKB;
+		bundled.meta.datasetKB = datasetKB;
+	}
+	bundled.meta.datasetHash = computeDatasetHash(bundled);
+	datasetHashValue = bundled.meta.datasetHash;
+	if (CANONICAL) {
+		const bytes = canonicalBytes(bundled);
+		writeFileSync(join(STAGE_OUT, 'dataset.json'), bytes, 'utf8');
+		writeFileSync(join(STAGE_STATIC, 'dataset.json'), bytes, 'utf8');
+	} else {
+		writeFileSync(join(STAGE_OUT, 'dataset.json'), JSON.stringify(bundled), 'utf8');
+		writeFileSync(join(STAGE_STATIC, 'dataset.json'), JSON.stringify(bundled, null, 2), 'utf8');
+	}
 }
 
 // The audits the product publishes: family edges (the coverage audit's kin walk
@@ -3420,6 +3526,17 @@ const datasetKB = Math.round(statSync(join(STATIC_DIR, 'dataset.json')).size / 1
 // by the same STAT_TAG mechanism as every other published figure — the product,
 // the paper and the console block can never disagree because they share one value.
 const familyEdges = resolvedRelationships.filter((r) => r.type === 'family').length;
+
+// sha256 of the dependency lockfile — the third leg of the release checksum
+// set (graph hash, lock hash, runtime), so a rebuild can be reproduced against
+// the exact dependency tree. Missing lockfile is empty, never a guess.
+const lockHashValue = (() => {
+	try {
+		return createHash('sha256').update(readFileSync(join(ROOT, 'package-lock.json'))).digest('hex');
+	} catch {
+		return '';
+	}
+})();
 
 const stats: Record<string, string> = {
 	sources: String(sources.length),
@@ -3482,10 +3599,16 @@ const stats: Record<string, string> = {
 	// that wrote the file the release *is* — the always-one-commit lag is
 	// not a bug to chase, it is a structural fact, and we refuse to ship a
 	// stat tag that pretends otherwise.
-	commitSha: process.env.DT_RELEASE_SHA ?? ''
+	commitSha: process.env.DT_RELEASE_SHA ?? '',
+	// Release checksums: the canonical graph hash, the dependency lock hash and
+	// the runtime the build ran on. commitSha above carries the commit at release
+	// time; together they identify a build without trusting the wall clock.
+	datasetHash: datasetHashValue,
+	lockHash: lockHashValue,
+	node: process.version
 };
 
-writeFileSync(join(OUT_DIR, 'stats.json'), JSON.stringify(stats, null, 2), 'utf8');
+writeFileSync(join(STAGE_OUT, 'stats.json'), JSON.stringify(stats, null, 2), 'utf8');
 
 // Sitemap for the static site. Generated, never hand-maintained: every route
 // in this list is a real prerendered page (adapter-static, strict mode fails
@@ -3520,7 +3643,32 @@ if (!FIXTURE_MODE) {
 		'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
 		SITEMAP_ROUTES.map((r) => `  <url><loc>${SITE_URL}${r}</loc><lastmod>${lastmod}</lastmod></url>`).join('\n') +
 		'\n</urlset>\n';
-	writeFileSync(join(STATIC_DIR, 'sitemap.xml'), sitemap, 'utf8');
+	writeFileSync(join(STAGE_STATIC, 'sitemap.xml'), sitemap, 'utf8');
+}
+
+// ---------------------------------------------------------------------------
+// Promote. Every validation and every export above wrote into the staging
+// dirs; a build that reached this line is complete. Promotion is file-level
+// renames onto the read locations, then the staging dirs are removed. Nothing
+// this build produced is visible to a reader until this moment, so a failure
+// anywhere above leaves the previous outputs exactly as they were.
+// ---------------------------------------------------------------------------
+
+{
+	if (errors.length) {
+		console.error(`\n  DATA VALIDATION FAILED — ${errors.length} error(s) after exports\n`);
+		for (const e of errors) console.error(`   x  ${e}`);
+		console.error('');
+		abortBuild();
+	}
+	promoteDirectory(STAGE_OUT, OUT_DIR);
+	promoteDirectory(STAGE_STATIC, STATIC_DIR);
+	rmSync(STAGE_OUT, { recursive: true, force: true });
+	rmSync(STAGE_STATIC, { recursive: true, force: true });
+	if (!FIXTURE_MODE && basisOverrideCsv) {
+		mkdirSync(join(ROOT, 'output'), { recursive: true });
+		writeFileSync(join(ROOT, 'output', 'basis-overrides.csv'), basisOverrideCsv, 'utf8');
+	}
 }
 
 if (!FIXTURE_MODE) {
