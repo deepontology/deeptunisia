@@ -132,9 +132,28 @@ const SEARCH = readFileSync(join(HERE, '..', 'src', 'lib', 'components', 'Search
 const MODEL = readFileSync(join(HERE, '..', 'src', 'lib', 'model.ts'), 'utf8');
 ok('the record card exists and carries basis chips', RECORD_PANEL.includes('basisLabel') && RECORD_PANEL.includes('CommunityActions'));
 ok('every record kind has a lookup map', ['companyById', 'contractById', 'licenceById', 'declarationById', 'educationById', 'eventById'].every((m) => MODEL.includes(m)));
-ok('the Inspector routes records away from the entity panel', INSPECTOR.includes('RecordPanel') && INSPECTOR.includes('personById.has(app.selected)'));
+ok('the Inspector routes records away from the entity panel', INSPECTOR.includes('RecordPanel') && INSPECTOR.includes('personById.has(panelSel)'));
 ok('search opens record cards instead of redirecting to a party', SEARCH.includes("app.selected = r.id") && !SEARCH.includes('no card yet'));
 ok('the record card renders entity references as buttons', RECORD_PANEL.includes('class="ref"'));
+
+// Polishing pass: the inspector keeps the card mounted through its exit and the
+// docked panel animates width, so the chart gives way smoothly rather than
+// snapping; long record values wrap instead of running out of the panel.
+ok(
+	'the inspector renders the last selection through its close transition',
+	INSPECTOR.includes('let panelId') && INSPECTOR.includes('class:closing') && INSPECTOR.includes('panelSel') && INSPECTOR.includes('untrack')
+);
+ok(
+	'the docked inspector animates width, with an exit transition',
+	INSPECTOR.includes('dock-in-width') &&
+		/\.inspector\.closing\s*\{[^}]*width:\s*0/.test(INSPECTOR) &&
+		/\.inspector\s+\.inner\s*\{[^}]*width:\s*var\(--inspector-w\)/.test(INSPECTOR)
+);
+ok(
+	'record rows let long values wrap instead of overflowing the panel',
+	/\.kv b,\s*\.kv \.refs\s*\{[^}]*min-width:\s*0/.test(RECORD_PANEL) &&
+		/\.ref\s*\{[^}]*max-width:\s*100%/.test(RECORD_PANEL)
+);
 
 // Hierarchy + navigation overlays + smoothing.
 const GROUPS_TS = readFileSync(join(HERE, '..', 'src', 'lib', 'viz', 'groups.ts'), 'utf8');
@@ -147,6 +166,196 @@ ok('wheel zoom is smoothed, with direct fallback', (() => {
 	const C = readFileSync(join(HERE, '..', 'src', 'lib', 'viz', 'camera.svelte.ts'), 'utf8');
 	return G.includes('zoomSmoothTo') && G.includes('else cam.zoomAt') && C.includes('zoomSmoothTo(');
 })());
+
+console.log('\n  ── §14.4: the chronicle events timeline (docs/plans/chronicle-events-timeline-v2.md) ──\n');
+
+// Geometry over the graph, not decoration: the lane iterates ds.events and the
+// marks read the basis language. v2 reworked the interaction model, so these
+// assertions pin the two tracks, the cluster overview and the single picker.
+const CHRONICLE = readFileSync(join(HERE, '..', 'src', 'lib', 'components', 'Chronicle.svelte'), 'utf8');
+// The lane's own markup, so the no-raw-colour assertion cannot trip on the
+// tenure rows below it (era accents, layer colours) or the tooltip above.
+const LANE = CHRONICLE.slice(
+	CHRONICLE.indexOf('<!-- Events lane'),
+	CHRONICLE.indexOf('<!-- Rows -->')
+);
+ok('the lane block exists as one contiguous group', LANE.length > 1000, `${LANE.length} chars`);
+ok('the lane band is tall enough to read as a layer', CHRONICLE.includes('const LANE_H = 72'));
+ok(
+	'the lane iterates the dataset, nothing hardcoded',
+	CHRONICLE.includes('[...ds.events]') && CHRONICLE.includes('{#each laneItems as it')
+);
+ok('existing rupture lines/dots are untouched', CHRONICLE.includes('class="rupture-line"') && CHRONICLE.includes('class="rupture-dot"'));
+ok('lane marks read BASIS_OPACITY, not a hand-picked alpha', LANE.includes('BASIS_OPACITY'));
+
+// v2 #1: shape is decided by RENDERED width, not by "has an end" — every event
+// has an end in this dataset, so the old test made every mark a pill.
+ok(
+	'shape follows rendered width, not the presence of an end',
+	CHRONICLE.includes('const DOT_PX =') && CHRONICLE.includes('w >= DOT_PX') && !CHRONICLE.includes('isSpanEvent')
+);
+// v2 #2: clusters. Dense anchors collapse; ruptures and long spans are exempt.
+ok(
+	'dense anchors collapse into counted clusters',
+	CHRONICLE.includes('const CLUSTER_PX =') &&
+		CHRONICLE.includes("kind: 'cluster'") &&
+		CHRONICLE.includes('laneItems') &&
+		CHRONICLE.includes('ev-cluster-count')
+);
+ok(
+	'ruptures and long spans are outside the clustering rule',
+	CHRONICLE.includes('if (e.rupture)') && CHRONICLE.includes('if (isLongSpan(e))')
+);
+// v2 #4: long spans get their own track, classified by intrinsic duration.
+ok(
+	'long spans sit on their own track by intrinsic duration',
+	CHRONICLE.includes('function intrinsicYears') &&
+		CHRONICLE.includes('function isLongSpan') &&
+		CHRONICLE.includes('SPAN_MID') &&
+		LANE.includes('ev-spanbar')
+);
+// v2: one owner for pointer picking. Marks cannot intercept a click.
+ok(
+	'marks cannot intercept pointer picking',
+	/\.ev-mark\s*\{[^}]*pointer-events:\s*none/.test(CHRONICLE) &&
+		CHRONICLE.includes('function lanePick') &&
+		LANE.includes('onclick={onLaneClick}')
+);
+ok(
+	'cluster opens a list and offers zoom-to-drill',
+	CHRONICLE.includes('function openCluster') &&
+		CHRONICLE.includes('function zoomToCluster') &&
+		CHRONICLE.includes('ev-pop') &&
+		CHRONICLE.includes('Zoom in')
+);
+ok('the lane respects the evidence dial via the shared predicate', CHRONICLE.includes('meetsBasis(e.basis') && CHRONICLE.includes('eventPasses('));
+ok(
+	'no raw colour literals in the lane code (semantic tokens only)',
+	!/#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})\b/.test(LANE) && !/rgba?\(/.test(LANE),
+	'category never gets a hue'
+);
+ok(
+	'tier predicate plus fits() gating present on labels',
+	CHRONICLE.includes('function eventTiered') && CHRONICLE.includes('laneLabels') && CHRONICLE.includes('eventTiered(e)') && CHRONICLE.includes('fits(title')
+);
+ok('the two-row stagger survives', CHRONICLE.includes('laneLabels') && CHRONICLE.includes('.findIndex('));
+ok(
+	'connectors render inside the lane group only',
+	LANE.includes('ev-link-cause') &&
+		LANE.includes('ev-link-conseq') &&
+		!CHRONICLE.slice(CHRONICLE.indexOf('<!-- Rows -->'), CHRONICLE.indexOf('<!-- Gutter mask')).includes('ev-link-'),
+	'no path element crosses into the rows'
+);
+ok(
+	'indicator strokes never swallow mark clicks',
+	/\.grid\s*\{[^}]*pointer-events:\s*none/.test(CHRONICLE) &&
+		/\.rupture-line\s*\{[^}]*pointer-events:\s*none/.test(CHRONICLE) &&
+		/\.playhead\s*\{[^}]*pointer-events:\s*none/.test(CHRONICLE),
+	'.grid / .rupture-line / .playhead'
+);
+ok(
+	'keyboard Enter/Space selects exactly that event',
+	LANE.includes("ke.key === 'Enter'") && LANE.includes('app.select(e.id)')
+);
+ok(
+	'pointer picking is measured against the lane rect, never the clicked mark',
+	CHRONICLE.includes('laneBg.getBoundingClientRect()') && CHRONICLE.includes('function lanePick')
+);
+ok('selecting an event never dims the tenure bars', CHRONICLE.includes('anyFocus && !eventFocus'));
+ok(
+	'marks are keyboard-reachable buttons with spoken labels',
+	LANE.includes('class="ev-mark"') && LANE.includes('role="button"') && LANE.includes('tabindex="0"') && LANE.includes('aria-label')
+);
+ok(
+	'every mark kind the timeline draws is present',
+	['ev-diamond', 'ev-dot', 'ev-pill', 'ev-contested', 'ev-selring', 'ev-cluster', 'ev-spanbar'].every((c) => LANE.includes(c)),
+	'rupture, point, pill, contested, selection, cluster, duration'
+);
+// v2 P2: the expanded investigative view — events stacked into labelled rows
+// with their own filters, reached from the events band's expand header.
+ok(
+	'the events band header is the control that opens the expanded view',
+	CHRONICLE.includes('class="lane-head"') &&
+		CHRONICLE.includes('data-no-pan') &&
+		CHRONICLE.includes("setView(expanded ? 'timeline' : 'events')") &&
+		CHRONICLE.includes("t('chronicle.events.expand')") &&
+		CHRONICLE.includes("t('chronicle.events.collapse')")
+);
+ok(
+	'the events header is a keyboard-reachable, labelled control',
+	/class="lane-head"[\s\S]{0,260}role="button"[\s\S]{0,120}tabindex="0"[\s\S]{0,220}aria-label=/.test(CHRONICLE)
+);
+ok(
+	'expanded mode stacks overlapping events into rows on one linear axis',
+	CHRONICLE.includes('expandedLayout') && CHRONICLE.includes('function packRows') && CHRONICLE.includes('laneYs')
+);
+ok(
+	'rows reserve label room for ruptures so the anchors always read',
+	CHRONICLE.includes('function ruptureReserve') && CHRONICLE.includes('occ:')
+);
+ok(
+	'expanded events aggregate into counted clusters on one axis',
+	CHRONICLE.includes('function clusterEvents') &&
+		CHRONICLE.includes('EXP_CLUSTER_PX') &&
+		CHRONICLE.includes('clusters: ExpCluster[]') &&
+		CHRONICLE.includes('ev-cluster-count')
+);
+ok(
+	'the time axis ticks adapt from decades down to months and weeks',
+	CHRONICLE.includes('const axisTicks') && CHRONICLE.includes('stepMonths') && CHRONICLE.includes('dayFmt')
+);
+ok(
+	'the axis is a scrub surface with a draggable date cursor',
+	CHRONICLE.includes('function axisTimeAt') &&
+		CHRONICLE.includes('onAxisDown') &&
+		CHRONICLE.includes('class="axis-scrub"') &&
+		CHRONICLE.includes('axisDateLabel') &&
+		CHRONICLE.includes('headX')
+);
+ok(
+	'expanded labels truncate to the gap with metrics matching the render',
+	CHRONICLE.includes('function fitText') &&
+		CHRONICLE.includes('fitText(eventTitle') &&
+		CHRONICLE.includes('const EV_LABEL_TYPE') &&
+		/\.ev-label\s*\{[^}]*font-size:\s*10px/.test(CHRONICLE)
+);
+ok(
+	'expanding lands on a readable window rather than full range',
+	CHRONICLE.includes('YEAR_MS * 25') && CHRONICLE.includes('function setRange')
+);
+ok(
+	'filters narrow events by category and rupture',
+	CHRONICLE.includes('function eventPassesFilters') &&
+		CHRONICLE.includes('hiddenCats') &&
+		CHRONICLE.includes('rupturesOnly') &&
+		CHRONICLE.includes('allEventCats')
+);
+ok(
+	'the expanded filter bar reuses existing dictionary keys (no new strings)',
+	CHRONICLE.includes("t('feed.all')") &&
+		CHRONICLE.includes("t('record.rupture')") &&
+		CHRONICLE.includes("t('record.category')") &&
+		CHRONICLE.includes("t('chronicle.fullrange')")
+);
+// ZERO new i18n keys were added: every literal key the view calls must already
+// resolve in all three locales (the sweep in test-i18n pins this repo-wide;
+// this pins it for this view).
+{
+	const keys = [...CHRONICLE.matchAll(/\bt\(\s*'([^']+)'/g)].map((m) => m[1]);
+	ok('the lane caption key already exists (no new keys)', keys.includes('timeline.lane.event'), `${keys.length} literal keys in the view`);
+	ok(
+		'every literal key in Chronicle.svelte exists in the dictionary',
+		keys.every((k) => translate('en', k) !== k),
+		keys.join(', ')
+	);
+	for (const loc of ['en', 'fr', 'ar'] as const) {
+		ok(
+			`the lane caption resolves in ${loc}`,
+			translate(loc, 'timeline.lane.event') !== 'timeline.lane.event',
+			translate(loc, 'timeline.lane.event')
+		);
+	}
+}
 
 console.log(`
   ${checks - failures}/${checks} checks passed${failures ? `, ${failures} FAILED` : ''}

@@ -722,6 +722,12 @@
 	.kv b {
 		font-weight: 520;
 	}
+	/* Same rule as RecordPanel: the value side shrinks and wraps rather than
+	   running to max-content width out of the panel. */
+	.kv b {
+		flex: 1;
+		min-width: 0;
+	}
 	.reclist {
 		list-style: none;
 		margin: 0;

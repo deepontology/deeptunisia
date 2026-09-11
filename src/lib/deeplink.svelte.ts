@@ -2,7 +2,7 @@
  * Deep links — W2: every selection is a URL.
  *
  * One shared convention across the entity views: `?id=<entity>` selects a
- * person or institution on arrival, exactly like the Network's existing
+ * person, institution, or event on arrival, exactly like the Network's existing
  * `?id=`/`?rel=` (the pattern this module generalises). Because every entity
  * view drives the SAME global `app.selected`, one write hook in the layout
  * keeps the URL in step with the selection everywhere — Chronicle, Now,
@@ -33,7 +33,7 @@ import { page } from '$app/state';
 import { replaceState } from '$app/navigation';
 import { browser } from '$app/environment';
 import { app } from './state.svelte';
-import { personById, institutionById, relationshipById } from './model';
+import { personById, institutionById, relationshipById, eventById } from './model';
 
 /**
  * Routes whose selection is entity selection, and that consume `?id=`.
@@ -50,9 +50,9 @@ export function consumesEntityLink(pathname: string): boolean {
 	return ENTITY_ROUTES.has(pathname);
 }
 
-/** True when the id names a real person or institution in the graph. */
+/** True when the id names a real person, institution, or event in the graph. */
 export function validEntity(id: string): boolean {
-	return personById.has(id) || institutionById.has(id);
+	return personById.has(id) || institutionById.has(id) || eventById.has(id);
 }
 
 /** True when the id names a relationship in the graph (or a flow synthetic). */
