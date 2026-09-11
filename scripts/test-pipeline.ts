@@ -99,6 +99,17 @@ function firstSourceId(): string {
 	return m[1];
 }
 
+/** The first source whose tier is at least `minTier` — for V25 fixtures. */
+function sourceIdWithTier(minTier: number): string {
+	const raw = readFileSync(join(TREE, 'sources.yaml'), 'utf8');
+	for (const block of raw.split(/\r?\n(?=- )/)) {
+		const id = /^- id: ([a-z0-9-]+)/m.exec(block);
+		const tier = /^\s+tier: (\d)/m.exec(block);
+		if (id && tier && Number(tier[1]) >= minTier) return id[1];
+	}
+	throw new Error(`no source with tier >= ${minTier} in sources.yaml fixture copy`);
+}
+
 // ---------------------------------------------------------------------------
 // 1. Clean control — the fixture tree must be a faithful copy of the real data.
 // ---------------------------------------------------------------------------
@@ -219,6 +230,48 @@ try {
   influence: { channel: appointment, strength: 0.5 }
   sources: [${s}]`);
 
+	// 1A/1B/1C pipeline regressions — the reviewer's corrupted records through
+	// the real compiler. Each must fail the build and the error must name the
+	// record, so a validator that silently stops checking removes its needle.
+	appendBlock(TREE_BAD, 'positions.yaml', `
+- id: p-fixture-whitespace
+  role: president
+  holder: bourguiba
+  start: "2020-01-01"
+  confidence: C
+  verification: needs-primary-source
+  basis: inferred
+  attributed_to: " "
+  reasoning: " "
+  falsifiable_by: " "
+  sources: [${s}]
+- id: p-fixture-override
+  role: president
+  holder: bourguiba
+  start: "2020-01-01"
+  confidence: C
+  verification: needs-primary-source
+  basis: documented
+  attributed_to: "Fixture claimant"
+  sources: [${s}]
+- id: p-fixture-review-outcome
+  role: president
+  holder: bourguiba
+  start: "2020-01-01"
+  confidence: A
+  review: { by: "Example reviewer", date: "2026-09-09", method: source-check, outcome: refuted }
+  sources: [${s}]
+- id: p-fixture-grade-a-weak
+  role: president
+  holder: bourguiba
+  start: "2020-01-01"
+  confidence: A
+  sources: [${sourceIdWithTier(3)}]`);
+	appendBlock(TREE_BAD, 'people.yaml', `
+- id: fixture-unsourced-person
+  name_en: Fixture Unsourced Person
+  layers: [political]`);
+
 	const bad = build(TREE_BAD, OUT_BAD, STATIC_BAD);
 	ok('pipeline fixture: the injected tree fails the build', bad.code !== 0, `exit ${bad.code}`);
 
@@ -227,11 +280,36 @@ try {
 		['begins after its consequence ends', 'the temporal-ordering check fires (kills m24)'],
 		['unknown source "no-such-source"', 'an unknown source id is rejected (kills m23)'],
 		['unknown "from" entity "no-such-entity"', 'a ghost edge endpoint is rejected (kills m26)'],
-		['is unmoored', 'an unanchored influence edge is rejected (kills m25)']
+		['is unmoored', 'an unanchored influence edge is rejected (kills m25)'],
+		['positions.yaml [p-fixture-whitespace]', 'the whitespace probe fails and names the record (1A)'],
+		['positions.yaml [p-fixture-override]', 'the override probe fails and names the record (1B)'],
+		['positions.yaml [p-fixture-review-outcome]', 'the nested-outcome probe fails and names the record (1C)'],
+		['people.yaml [fixture-unsourced-person]', 'the no-source probe fails and names the record (1D)'],
+		['position p-fixture-grade-a-weak', 'a grade-A record without a tier-1/2 source fails and names the record (V25)']
 	];
 	for (const [needle, label] of expectations) {
 		ok(`pipeline fixture: ${label}`, bad.output.includes(needle), `expected the build to say "${needle}"`);
 	}
+	ok(
+		'pipeline fixture: the whitespace error is the non-blank envelope message',
+		bad.output.includes('non-blank'),
+		'expected a non-blank requirement in the build output'
+	);
+	ok(
+		'pipeline fixture: the override error is a V27 provenance message',
+		bad.output.includes('V27'),
+		'expected a V27 message in the build output'
+	);
+	ok(
+		'pipeline fixture: the nested-outcome error is an unknown-key failure',
+		bad.output.includes('Unrecognized key'),
+		'expected the strict parser to name the unknown key'
+	);
+	ok(
+		'pipeline fixture: the grade-A error is the V25 primary-source message',
+		bad.output.includes('must cite at least one tier-1 or tier-2 source (V25)'),
+		'expected the V25 message in the build output'
+	);
 
 	// -----------------------------------------------------------------------
 	// 3. W4 — the weak-chain audit is warn-only and finds chains. A GOOD tree:
@@ -523,6 +601,58 @@ try {
 		ok('pipeline fixture: confidence advisory flags the D-weakened chain', false, 'conf tree did not build');
 		ok('pipeline fixture: confidence advisory present in meta (Inspector-visible)', false, 'conf tree did not build');
 	}
+
+	// -----------------------------------------------------------------------
+	// 7. Exception register (V25/V27 escape). A live entry lets an otherwise
+	//    failing record build and the build reports the count; an expired entry
+	//    is a build failure that names the record. This is what replaced the
+	//    count ceilings: a fixed defect cannot be replaced by a new one, because
+	//    every escape is enumerated by record id with an owner and a deadline.
+	// -----------------------------------------------------------------------
+	const TREE_FUTURE = join(WORK, 'exceptions-future');
+	cpSync(TREE, TREE_FUTURE, { recursive: true });
+	appendBlock(TREE_FUTURE, 'people.yaml', `
+- id: fixture-unsourced-person
+  name_en: Fixture Unsourced Person
+  layers: [political]`);
+	appendBlock(TREE_FUTURE, 'source-exceptions.yaml', `
+- rule: no-source
+  kind: person
+  id: fixture-unsourced-person
+  owner: RESEARCH
+  deadline: 2099-01-01
+  reason: "Fixture: a source is owed before a future deadline."`);
+	const future = build(TREE_FUTURE, join(WORK, 'out-exfuture'), join(WORK, 'static-exfuture'));
+	ok(
+		'pipeline fixture: a live exception lets an unsourced record build',
+		future.code === 0,
+		future.code === 0 ? 'built' : future.output.split('\n').slice(-4).join(' ')
+	);
+	ok(
+		'pipeline fixture: the build reports the live exception count',
+		future.output.includes('live exception'),
+		future.output.split('\n').filter((l) => l.includes('exception')).join(' ')
+	);
+
+	const TREE_EXPIRED = join(WORK, 'exceptions-expired');
+	cpSync(TREE_FUTURE, TREE_EXPIRED, { recursive: true });
+	const exPath = join(TREE_EXPIRED, 'source-exceptions.yaml');
+	writeFileSync(
+		exPath,
+		readFileSync(exPath, 'utf8').replace('deadline: 2099-01-01', 'deadline: 2020-01-01'),
+		'utf8'
+	);
+	const expired = build(TREE_EXPIRED, join(WORK, 'out-exexpired'), join(WORK, 'static-exexpired'));
+	ok(
+		'pipeline fixture: an expired exception fails the build',
+		expired.code !== 0,
+		`exit ${expired.code}`
+	);
+	ok(
+		'pipeline fixture: the expired-exception error names the record',
+		expired.output.includes('fixture-unsourced-person') && expired.output.includes('expired'),
+		expired.output.split('\n').filter((l) => l.includes('expired')).join(' ')
+	);
 
 	console.log(`\n  ${checks - failures}/${checks} pipeline-fixture checks passed${failures ? `, ${failures} FAILED` : ''}\n`);
 } finally {

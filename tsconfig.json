@@ -12,7 +12,14 @@
 		"moduleResolution": "bundler",
 		"module": "esnext",
 		"target": "es2022",
-		"verbatimModuleSyntax": false
+		"verbatimModuleSyntax": false,
+		/*
+		 * The DeepEpisteme engine is consumed as TypeScript source at its pinned
+		 * tag, and its internal imports carry the .ts extension. Typechecking the
+		 * engine is part of the point: a bad bump fails here, not at runtime.
+		 * noEmit is set by the SvelteKit base config, which is what allows this.
+		 */
+		"allowImportingTsExtensions": true
 	},
 	"include": [
 		"src/**/*.ts",

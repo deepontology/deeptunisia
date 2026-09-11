@@ -16,17 +16,23 @@ The website is a window. **The knowledge graph is the project.**
 ## Run it
 
 ```bash
-npm install
-npm run dev          # builds the graph, then starts the dev server on :5173
-npm start            # atlas on :5173 AND the Agora API on :5200, one command
-npm run build        # validates, exports, and produces a static site in build/
-npm run test         # 12 suites: graph assertions, matcher precision, post markup,
-                     #   feed separation, byte-fidelity, community layer and API
-npm run check        # svelte-check — must be 0 errors, 0 warnings
-npm run smoke        # real browser, both themes, desktop AND phone — needs a dev server
-npm run feed         # fetch news headlines into feed/ (also runs every 4h in CI)
-npm run data         # rebuild the graph and public exports only
+# Fresh clone, in this order:
+npm ci --ignore-scripts
+npm run build         # graph + landing page (the landing page is hash-tied to the dataset)
+npx svelte-kit sync   # generate the $data alias the test suites import
+npm run test          # all suites
+npm run check         # svelte-check — must be 0 errors, 0 warnings
+
+# Day to day:
+npm run dev           # builds the graph, then starts the dev server on :5173
+npm start             # atlas on :5173 AND the Agora API on :5200, one command
+npm run build         # validates, exports, and produces a static site in build/
+npm run smoke         # real browser, both themes, desktop AND phone — needs a dev server
+npm run feed          # fetch news headlines into feed/ (also runs every 4h in CI)
+npm run audit:probes  # reproduce the independent review's compiler probes
 ```
+
+`npx svelte-kit sync` is required before `npm run test` on a fresh clone: the suites import the `$data` alias, which SvelteKit generates. `npm run build` is required too, because `landing/index.html` is hash-tied to the generated dataset and the drift gate fails otherwise. The `ci` workflow runs the same sequence on a clean runner.
 
 The atlas itself needs no server, no database, no API and no accounts — the
 static site ships as files. The discussion layer (Agora) is separate: a
@@ -34,9 +40,9 @@ community API with a D1 database and pseudonymous identity, **staged behind
 `AGORA_OPEN` and not yet public**. `npm start` runs both so the Agora tab is
 reachable during development; a reader on deeptunisia.org never touches it.
 
-The complete graph is <!--stat:graphKB-->4620<!--/stat--> KB as the internal
+The complete graph is <!--stat:graphKB-->4710<!--/stat--> KB as the internal
 bundle, and the public exports (dataset, CSVs, geographic layers, changelog)
-ship at <!--stat:shippedKB-->8240<!--/stat--> KB — both are computed by the
+ship at <!--stat:shippedKB-->8360<!--/stat--> KB — both are computed by the
 build, and `npm run test` fails if the README ever disagrees with them.
 
 ## The views

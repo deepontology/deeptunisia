@@ -7,9 +7,49 @@ import { DEFAULT_PARAMETERS, type Parameters } from './parameters';
  * The build fails on any violation. That is deliberate: the credibility of this
  * project rests entirely on every claim being traceable, so "a fact with no source"
  * or "an edge pointing at nobody" must be a build error, not a runtime surprise.
+ *
+ * VALIDATOR REGISTER (canonical numbering; mirrored in the sprint spec table)
+ * ---------------------------------------------------------------------------
+ * V1–V24   shipped before the review-hardening pass: ownership sums, company
+ *          registration, contract/event/influence invariants, geographic
+ *          hierarchy, duplicate edges, and the H1–H7 hardening contract. The
+ *          full table is the sprint specification's validation section.
+ * V25      grade-A primary source (Phase 1D): every `confidence: A` claim record
+ *          cites at least one tier-1 or tier-2 source, or carries an explicit,
+ *          unexpired entry in `data/source-exceptions.yaml`.
+ * V26      kind versus strength cross-field compatibility (reserved; Phase 6).
+ * V27      basis-override provenance (Phase 1B): an authored basis stronger than
+ *          the grade-implied basis requires a review object, non-blank reasoning,
+ *          a falsifier for inferred targets, at least one source, and a
+ *          `basis_override_reason`; legacy overrides are listed in
+ *          `data/source-exceptions.yaml` with an owner and a deadline.
+ * V28      recursive strictness (Phase 1C): an undeclared key anywhere in a
+ *          claim-bearing record, including inside review, dispute and nested
+ *          objects, fails instead of being silently stripped.
+ * V29      source-record schema refinements (reserved; Phase 7).
+ *
+ * Numbering note: the pre-submission grant draft used "V25" for the grade-B
+ * corroboration rule (confidence B needs two sources or `attributed_to`). That
+ * rule is renumbered V30 and is not implemented in this pass; this tree reserves
+ * V25 for the grade-A primary-source rule, per the review-hardening spec. One
+ * number names one rule.
  */
 
 const slug = z.string().regex(/^[a-z0-9][a-z0-9-]*$/, 'ids must be lowercase kebab-case');
+
+/**
+ * A mandatory text field is satisfied only by a string with real content.
+ *
+ * `z.string().min(1)` accepts a single space, and `min(10)` accepts ten spaces.
+ * The independent review replaced a position's reasoning, falsifier and
+ * attribution with whitespace and the build accepted the record. A required
+ * field that whitespace satisfies is not required. `nonBlank` trims before it
+ * measures, and callers pass the field's existing minimum when there is one.
+ * (V18/V20/V23)
+ */
+export function nonBlank(v: unknown, min = 1): boolean {
+	return typeof v === 'string' && v.trim().length >= min;
+}
 
 /**
  * Confidence grading, retained as authoring shorthand.
@@ -194,8 +234,8 @@ export const NO_RAW_MACHINE = new Set(['hypotheses', 'eras']);
  */
 export const ReviewMethod = z.enum(['source-check', 'dedup', 'attribute', 'accept-reject', 'judge']);
 
-export const ReviewSchema = z.object({
-	by: z.string().min(2),
+export const ReviewSchema = z.strictObject({
+	by: z.string().refine((v) => nonBlank(v, 2), 'reviewer name must be at least 2 non-blank characters (V23)'),
 	/** Calendar-valid ISO date. (V23) */
 	date: z
 		.string()
@@ -259,9 +299,13 @@ export function reviewOverclaims(method: string | undefined, sources: string[]):
  * A competing claim about the same fact. When two sources disagree on a date, the
  * dataset records the disagreement rather than silently picking a winner.
  */
-export const DisputeSchema = z.object({
-	claim: z.string().min(3),
-	held_by: z.string().min(2),
+export const DisputeSchema = z.strictObject({
+	claim: z
+		.string()
+		.refine((v) => nonBlank(v, 3), 'a dispute claim must be at least 3 non-blank characters'),
+	held_by: z
+		.string()
+		.refine((v) => nonBlank(v, 2), 'a dispute holder must be at least 2 non-blank characters'),
 	source: slug.optional(),
 	/** Why this dataset does or does not adopt this version. */
 	assessment: z.string().optional(),
@@ -415,7 +459,7 @@ const dateToken = z
 		'date token must be YYYY, YYYY-MM, YYYY-MM-DD, ~YYYY[-MM], <=YYYY[-MM], >=YYYY[-MM], ?, ongoing, or verified:YYYY-MM[-DD] (V21)'
 	);
 
-const intervalSpec = z.object({
+const intervalSpec = z.strictObject({
 	start: dateToken.optional(),
 	end: dateToken.optional()
 });
@@ -424,8 +468,13 @@ const intervalSpec = z.object({
 // Source
 // ---------------------------------------------------------------------------
 
-export const SourceSchema = z.object({
+export const SourceSchema = z.strictObject({
 	id: slug,
+	/**
+	 * Optional record-type marker. A minority of source records carry
+	 * `kind: source` as a first key; before V28 the schema stripped it silently.
+	 */
+	kind: z.literal('source').optional(),
 	title: z.string().min(3),
 	publisher: z.string().min(2),
 	/** Publication date, ISO. Optional only for undated primary records. */
@@ -447,6 +496,15 @@ export const SourceSchema = z.object({
 	lang: z.enum(['ar', 'fr', 'en', 'it', 'de']).default('en'),
 	/** Short quotation supporting the claims that cite this source. */
 	excerpt: z.string().optional(),
+	/**
+	 * Editorial notes about the source itself (an HTTP block, a dead link, a
+	 * tier judgement). Before V28 these were silently stripped; making strict
+	 * parsing real surfaced 24 records that carried them.
+	 */
+	note: z.string().optional(),
+	notes: z.array(z.string()).optional(),
+	/** Why the tier is what it is (V28 audit find). */
+	tier_note: z.string().optional(),
 
 	// The original `excerpt` stays primary (quoted material). `excerpt_fr`/`excerpt_ar`
 	// are AI-produced reading aids carried at the `machine` tier — the admission that
@@ -466,6 +524,7 @@ export const SourceSchema = z.object({
 // ---------------------------------------------------------------------------
 
 export const InstitutionSchema = withClaimEnvelope(
+	'institution',
 	z.strictObject({
 	id: slug,
 	name_en: z.string().min(2),
@@ -504,6 +563,11 @@ export const InstitutionSchema = withClaimEnvelope(
 	/** Required for inferred claims. (V18) */
 	reasoning: z.string().optional(),
 	falsifiable_by: z.string().optional(),
+	/**
+	 * V27 — why the authored `basis` overrides the basis the grade implies. Min
+	 * 10 non-blank characters when present; required for every new override.
+	 */
+	basis_override_reason: z.string().optional(),
 	disputes: z.array(DisputeSchema).default([]),
 	review: ReviewSchema.optional(),
 	sources: z.array(slug).default([]),
@@ -515,7 +579,7 @@ export const InstitutionSchema = withClaimEnvelope(
 // Role  (a canonical office, held over time by different people)
 // ---------------------------------------------------------------------------
 
-export const RoleSchema = z.object({
+export const RoleSchema = z.strictObject({
 	id: slug,
 	title_en: z.string().min(2),
 	title_fr: z.string().optional(),
@@ -540,6 +604,7 @@ export const RoleSchema = z.object({
 // ---------------------------------------------------------------------------
 
 export const PersonSchema = withClaimEnvelope(
+	'person',
 	z.strictObject({
 	id: slug,
 	name_en: z.string().min(2),
@@ -571,6 +636,8 @@ export const PersonSchema = withClaimEnvelope(
 	/** Required for inferred claims. (V18) */
 	reasoning: z.string().optional(),
 	falsifiable_by: z.string().optional(),
+	/** V27 — why the authored `basis` overrides the grade-implied basis. */
+	basis_override_reason: z.string().optional(),
 	disputes: z.array(DisputeSchema).default([]),
 	review: ReviewSchema.optional(),
 	notes: z.array(z.string()).default([]),
@@ -589,6 +656,7 @@ export const PersonSchema = withClaimEnvelope(
 // ---------------------------------------------------------------------------
 
 export const PositionSchema = withClaimEnvelope(
+	'position',
 	z.strictObject({
 	id: slug,
 	role: slug,
@@ -610,6 +678,8 @@ export const PositionSchema = withClaimEnvelope(
 	/** Required for inferred claims: why this is reasoned, and what would refute it. */
 	reasoning: z.string().optional(),
 	falsifiable_by: z.string().optional(),
+	/** V27 — why the authored `basis` overrides the grade-implied basis. */
+	basis_override_reason: z.string().optional(),
 	/** Competing versions of the same span, recorded rather than silently resolved. */
 	disputes: z.array(DisputeSchema).default([]),
 	/** This record was merged into another (V16 escape, spec §13.3). */
@@ -628,6 +698,7 @@ export const PositionSchema = withClaimEnvelope(
 // ---------------------------------------------------------------------------
 
 export const RelationshipSchema = withClaimEnvelope(
+	'relationship',
 	z.strictObject({
 		/**
 		 * Required, since July 2026.
@@ -661,6 +732,8 @@ export const RelationshipSchema = withClaimEnvelope(
 		/** Required for inferred claims. */
 		reasoning: z.string().optional(),
 		falsifiable_by: z.string().optional(),
+		/** V27 — why the authored `basis` overrides the grade-implied basis. */
+		basis_override_reason: z.string().optional(),
 		disputes: z.array(DisputeSchema).default([]),
 		/** This record was merged into another (V16 escape, spec §13.3). */
 		merged_into: slug.optional(),
@@ -675,7 +748,7 @@ export const RelationshipSchema = withClaimEnvelope(
 		...translatable('notes', 'list'),
 		// v0.0.2 rich edge surface (spec §5.3)
 		equity: z
-			.object({
+			.strictObject({
 				pct: z.number().min(0).max(100),
 				direct: z.boolean().default(true),
 				beneficial: z.boolean().default(false),
@@ -683,7 +756,7 @@ export const RelationshipSchema = withClaimEnvelope(
 			})
 			.optional(),
 		finance: z
-			.object({
+			.strictObject({
 				amount: z.number().nonnegative(),
 				currency: z.string().regex(/^[A-Z]{3}$/, 'ISO 4217 code'),
 				year: z.number().int().min(1956).max(2030)
@@ -695,7 +768,7 @@ export const RelationshipSchema = withClaimEnvelope(
 		 * contract as the `authority` weight on roles.
 		 */
 		influence: z
-			.object({
+			.strictObject({
 				channel: z.enum(INFLUENCE_CHANNELS),
 				strength: z.number().min(0.3).max(1)
 			})
@@ -719,7 +792,7 @@ export const RelationshipSchema = withClaimEnvelope(
 // ---------------------------------------------------------------------------
 
 /** A single membership rule — an entity matches if ANY rule in the list matches. */
-const MembershipRule = z.object({
+const MembershipRule = z.strictObject({
 	role: z.union([z.string(), z.array(z.string()).min(1)]).optional(),
 	role_prefix: z.union([z.string(), z.array(z.string()).min(1)]).optional(),
 	type: z.union([z.string(), z.array(z.string()).min(1)]).optional(),
@@ -728,14 +801,14 @@ const MembershipRule = z.object({
 	message: 'membership rule must have at least one of: role, role_prefix, type, members'
 });
 
-const GroupDefSchema = z.object({
+const GroupDefSchema = z.strictObject({
 	header_en: z.string().min(1),
 	header_fr: z.string().optional(),
 	header_ar: z.string().optional(),
 	membership: MembershipRule
 });
 
-export const GroupLayerSchema = z.object({
+export const GroupLayerSchema = z.strictObject({
 	layer: Layer,
 	subsections: z.array(GroupDefSchema).min(1)
 });
@@ -745,6 +818,7 @@ export const GroupLayerSchema = z.object({
 // ---------------------------------------------------------------------------
 
 export const EventSchema = withClaimEnvelope(
+	'event',
 	z.strictObject({
 	id: slug,
 	date: dateToken,
@@ -772,7 +846,7 @@ export const EventSchema = withClaimEnvelope(
 	/** Place ids — validated once the places gazetteer ships (R8). */
 	location: z.array(slug).default([]),
 	/** Which layers the event moved, when the record can say so. */
-	impact: z.object({ layer: z.array(Layer).default([]) }).optional(),
+	impact: z.strictObject({ layer: z.array(Layer).default([]) }).optional(),
 	/** External references the event rests on (JORT decree ids, URLs). */
 	documents: z.array(z.string()).default([]),
 	materials: z.array(z.string()).default([]),
@@ -792,9 +866,11 @@ export const EventSchema = withClaimEnvelope(
 	/** Required for inferred claims. (V18) */
 	reasoning: z.string().optional(),
 	falsifiable_by: z.string().optional(),
+	/** V27 — why the authored `basis` overrides the grade-implied basis. */
+	basis_override_reason: z.string().optional(),
 	/** Competing characterisations, shown side by side rather than adjudicated. */
 	contested: z
-		.array(z.object({ framing: z.string(), held_by: z.string(), source: slug.optional() }))
+		.array(z.strictObject({ framing: z.string(), held_by: z.string(), source: slug.optional() }))
 		.default([]),
 	disputes: z.array(DisputeSchema).default([]),
 	review: ReviewSchema.optional(),
@@ -832,6 +908,7 @@ export const AgreementKind = z.enum([
  * globe's gazetteer.
  */
 export const AgreementSchema = withClaimEnvelope(
+	'agreement',
 	z.strictObject({
 		id: slug,
 		title_en: z.string().min(3),
@@ -860,6 +937,8 @@ export const AgreementSchema = withClaimEnvelope(
 		attributed_to: z.string().optional(),
 		reasoning: z.string().optional(),
 		falsifiable_by: z.string().optional(),
+		/** V27 — why the authored `basis` overrides the grade-implied basis. */
+		basis_override_reason: z.string().optional(),
 		disputes: z.array(DisputeSchema).default([]),
 		review: ReviewSchema.optional(),
 		sources: z.array(slug).min(1, 'every agreement needs at least one source'),
@@ -882,6 +961,7 @@ export const AgreementSchema = withClaimEnvelope(
 // the full envelope and must carry at least one source.
 // ---------------------------------------------------------------------------
 export const WorldClaimSchema = withClaimEnvelope(
+	'world-claim',
 	z.strictObject({
 		id: slug,
 		/** Graph institution id, or null when the claim is about Tunisia itself. */
@@ -897,6 +977,8 @@ export const WorldClaimSchema = withClaimEnvelope(
 		attributed_to: z.string().optional(),
 		reasoning: z.string().optional(),
 		falsifiable_by: z.string().optional(),
+		/** V27 — why the authored `basis` overrides the grade-implied basis. */
+		basis_override_reason: z.string().optional(),
 		disputes: z.array(DisputeSchema).default([]),
 		review: ReviewSchema.optional(),
 		notes: z.array(z.string()).default([]),
@@ -928,6 +1010,8 @@ const claimFields = {
 	/** Required for inferred claims (V18). */
 	reasoning: z.string().optional(),
 	falsifiable_by: z.string().optional(),
+	/** V27 — why the authored `basis` overrides the grade-implied basis. */
+	basis_override_reason: z.string().optional(),
 	disputes: z.array(DisputeSchema).default([]),
 	review: ReviewSchema.optional(),
 	sources: z.array(slug).min(1, 'every claim record needs at least one source')
@@ -938,6 +1022,7 @@ const claimFields = {
  * node and the corporate record can never desync (spec §4.2).
  */
 export const CompanySchema = withClaimEnvelope(
+	'company',
 	z.strictObject({
 		id: slug, // MUST be the id of an institution of a company-like type (checked in build-data)
 		legal_name_en: z.string().optional(),
@@ -945,7 +1030,7 @@ export const CompanySchema = withClaimEnvelope(
 		legal_name_ar: z.string().optional(),
 		legal_form: z.string().optional(),
 		registration: z
-			.object({
+			.strictObject({
 				/** The registry this number belongs to — one of the jurisdiction's listed registries. */
 				registry: slug.refine(
 					(r) => jurisdictionParams.jurisdiction.registry.registries.includes(r),
@@ -965,7 +1050,7 @@ export const CompanySchema = withClaimEnvelope(
 			.default('active'),
 		founded: dateToken.optional(),
 		/** Capital is a claim about a balance-sheet date (P7): numbers never float free. */
-		capital: z.object({ tnd: z.number().positive(), date: dateToken }).optional(),
+		capital: z.strictObject({ tnd: z.number().positive(), date: dateToken }).optional(),
 		state_owned: z.boolean().default(false),
 		activities: z.array(z.string()).default([]),
 		/** Place id — validated once the places gazetteer ships (R8). */
@@ -983,6 +1068,7 @@ export const CompanySchema = withClaimEnvelope(
 
 /** Procurement / PPP / concession records (spec §4.4). */
 export const ContractSchema = withClaimEnvelope(
+	'contract',
 	z.strictObject({
 		id: slug,
 		title_en: z.string().min(2),
@@ -992,7 +1078,7 @@ export const ContractSchema = withClaimEnvelope(
 		institution: slug,
 		kind: z.enum(['procurement', 'ppp', 'concession', 'privatisation', 'service', 'construction']),
 		procurement: z
-			.object({ mechanism: z.string().min(1), advertised: dateToken })
+			.strictObject({ mechanism: z.string().min(1), advertised: dateToken })
 			.optional(),
 		/**
 		 * Attributed value — a fuzzy token like "~400000000". There is no "value
@@ -1000,7 +1086,7 @@ export const ContractSchema = withClaimEnvelope(
 		 * reports the figure or draw on a primary source (V4/V5).
 		 */
 		award: z
-			.object({
+			.strictObject({
 				value: z.string().min(1),
 				currency: z.string().regex(/^[A-Z]{3}$/, 'ISO 4217 code'),
 				year: z.number().int().min(1956).max(2030)
@@ -1008,7 +1094,7 @@ export const ContractSchema = withClaimEnvelope(
 			.optional(),
 		winner: slug.optional(),
 		losers: z.array(slug).default([]),
-		financing: z.object({ type: z.string().min(1), lender: slug.nullable() }).optional(),
+		financing: z.strictObject({ type: z.string().min(1), lender: slug.nullable() }).optional(),
 		status: z.enum(['advertised', 'awarded', 'signed', 'annulled', 'finished', 'cancelled', 'sued', 'unknown']),
 		start: dateToken.optional(),
 		end: dateToken.optional(),
@@ -1022,16 +1108,19 @@ export const ContractSchema = withClaimEnvelope(
 
 /** Time-bound rights between an operating company and a state body (spec A4.5). */
 export const LicenceSchema = withClaimEnvelope(
+	'licence',
 	z.strictObject({
 		id: slug,
 		holder: slug,
 		issuer: slug,
 		kind: z.enum(['spectrum', 'banking', 'mineral', 'media', 'import-export']),
 		grant: dateToken,
-		term: z.object({ years: z.number().int().positive() }).optional(),
-		scope: z.object({ frequency: z.string().optional(), region: z.string().min(1) }).optional(),
+		term: z.strictObject({ years: z.number().int().positive() }).optional(),
+		scope: z
+			.strictObject({ frequency: z.string().optional(), region: z.string().min(1) })
+			.optional(),
 		fees: z
-			.object({
+			.strictObject({
 				amount: z.number().nonnegative(),
 				currency: z.string().regex(/^[A-Z]{3}$/, 'ISO 4217 code'),
 				year: z.number().int().min(1956).max(2030)
@@ -1051,6 +1140,7 @@ export const LicenceSchema = withClaimEnvelope(
  * the declared values are true.
  */
 export const DeclarationSchema = withClaimEnvelope(
+	'declaration',
 	z.strictObject({
 		id: slug,
 		/** Person id; null for regime/class records (a legal regime, a class of declarants). */
@@ -1072,6 +1162,7 @@ export const DeclarationSchema = withClaimEnvelope(
 
 /** Education records let multiple timelines overlap (spec §4.7). */
 export const EducationSchema = withClaimEnvelope(
+	'education',
 	z.strictObject({
 		id: slug,
 		person: slug,
@@ -1095,7 +1186,7 @@ export const EducationSchema = withClaimEnvelope(
 // Era
 // ---------------------------------------------------------------------------
 
-export const EraSchema = z.object({
+export const EraSchema = z.strictObject({
 	id: slug,
 	label_en: z.string().min(2),
 	label_fr: z.string().optional(),
@@ -1125,7 +1216,7 @@ export const EraSchema = z.object({
 // Open research question
 // ---------------------------------------------------------------------------
 
-export const QuestionSchema = z.object({
+export const QuestionSchema = z.strictObject({
 	id: slug,
 	question: z.string().min(10),
 	kind: z.enum(['verification', 'analytical']),
@@ -1166,6 +1257,7 @@ export const QuestionSchema = z.object({
  * provenance directly, the same way test-i18n treats sources.excerpt.
  */
 const HypothesisEvidenceSchema = withClaimEnvelope(
+	'hypothesis-evidence',
 	z.strictObject({
 		/** Which clause of the hypothesis's `falsifiable_by` this finding tests. */
 		falsifier_part: z.string().optional(),
@@ -1181,7 +1273,7 @@ const HypothesisEvidenceSchema = withClaimEnvelope(
 	})
 );
 
-export const HypothesisSchema = z.object({
+export const HypothesisSchema = z.strictObject({
 	id: slug,
 	label: z.string().min(3),
 	statement: z.string().min(10),
@@ -1239,28 +1331,124 @@ export function deriveBasis(
 }
 
 /**
- * V18/V20: the shared claim-envelope refines, applied to every claim-bearing
+ * V18/V20/V27: the shared claim-envelope refines, applied to every claim-bearing
  * record kind so no future kind can forget them. The inferred/unsubstantiated
  * checks run on the DERIVED basis (deriveBasis) rather than the authored one, so
  * an explicit `basis` may override the derivation but a derived `inferred` with
  * no reasoning or falsifier fails exactly like an authored one.
+ *
+ * Mandatory prose is checked with `nonBlank`, not truthiness: a string of spaces
+ * is a missing field, and the review that found the bypass is the regression
+ * fixture.
+ *
+ * A basis stronger than the grade implies is an override (V27). It requires a
+ * review object, reasoning, a falsifier when an inference is involved, at least
+ * one source and `basis_override_reason`. Overrides that pre-date the rule are
+ * enumerated in `data/source-exceptions.yaml` with an owner and a deadline; they
+ * are exempt from the requirement, never from visibility: the build still emits
+ * `basis_derived` beside the authored `basis`.
  */
-function withClaimEnvelope<S extends z.ZodObject<z.ZodRawShape>>(schema: S) {
+const BASIS_STRENGTH: Record<z.infer<typeof Basis>, number> = {
+	unsubstantiated: 0,
+	inferred: 1,
+	reported: 2,
+	documented: 3
+};
+
+/** True when `authored` claims more epistemic standing than `derived`. */
+export function isBasisUpgrade(
+	authored: z.infer<typeof Basis>,
+	derived: z.infer<typeof Basis>
+): boolean {
+	return BASIS_STRENGTH[authored] > BASIS_STRENGTH[derived];
+}
+
+/**
+ * Record kinds whose claim records must cite at least one source (rule 2).
+ * Roles, questions, regions, eras, institutions and the administrative
+ * scaffolding are deliberately absent: their standing is carried by the records
+ * inside them, not by a citation of their own.
+ */
+export const REQUIRED_SOURCE_KINDS = new Set([
+	'institution',
+	'person',
+	'position',
+	'relationship',
+	'event',
+	'agreement',
+	'world-claim',
+	'company',
+	'contract',
+	'licence',
+	'declaration',
+	'education',
+	'place'
+]);
+
+/** Exceptions the build configures into the schema before parsing any record. */
+export interface SchemaExceptions {
+	/** `${kind}:${id}` whose empty `sources` list is an explicit, unexpired escape. */
+	emptySources?: Set<string>;
+	/** `${kind}:${id}:${derived}>${authored}` basis overrides awaiting review provenance. */
+	basisOverrides?: Set<string>;
+}
+
+let schemaExceptions: SchemaExceptions = {};
+
+function overrideKey(kind: string, r: any): string {
+	const derived = deriveBasis(r.confidence, r.verification, undefined);
+	return `${kind}:${r.id}:${derived}>${r.basis}`;
+}
+
+function withClaimEnvelope<S extends z.ZodObject<z.ZodRawShape>>(kind: string, schema: S) {
 	return schema
-		.refine((r: any) => !((r.confidence === 'C' || r.confidence === 'D') && !r.attributed_to), {
-			message: 'grade C/D claims must name who is making the claim (attributed_to)'
+		.refine((r: any) => !((r.confidence === 'C' || r.confidence === 'D') && !nonBlank(r.attributed_to)), {
+			message: 'grade C/D claims must name who is making the claim (attributed_to, non-blank)'
 		})
 		.refine(
-			(r: any) =>
-				!(deriveBasis(r.confidence, r.verification, r.basis) === 'inferred' &&
-					(!r.reasoning || !r.falsifiable_by)),
-			{ message: 'an inferred claim must state its reasoning and what would falsify it' }
+			(r: any) => {
+				const derived = deriveBasis(r.confidence, r.verification, r.basis);
+				return !(derived === 'inferred' && (!nonBlank(r.reasoning) || !nonBlank(r.falsifiable_by)));
+			},
+			{ message: 'an inferred claim must state its reasoning and what would falsify it (non-blank)' }
 		)
 		.refine(
 			(r: any) =>
-				!(deriveBasis(r.confidence, r.verification, r.basis) === 'unsubstantiated' && !r.attributed_to),
-			{ message: 'an unsubstantiated claim must name where the claim circulates' }
-		);
+				!(deriveBasis(r.confidence, r.verification, r.basis) === 'unsubstantiated' &&
+					!nonBlank(r.attributed_to)),
+			{ message: 'an unsubstantiated claim must name where the claim circulates (non-blank)' }
+		)
+		.refine(
+			(r: any) => {
+				if (!REQUIRED_SOURCE_KINDS.has(kind)) return true;
+				if ((r.sources?.length ?? 0) > 0) return true;
+				return schemaExceptions.emptySources?.has(`${kind}:${r.id}`) ?? false;
+			},
+			{
+				message:
+					'rule 2: every claim record must cite at least one source, or be listed in data/source-exceptions.yaml with an owner and a deadline'
+			}
+		)
+		.superRefine((r: any, ctx) => {
+			if (!r.basis) return;
+			const derived = deriveBasis(r.confidence, r.verification, undefined);
+			if (!isBasisUpgrade(r.basis, derived)) return;
+			if (schemaExceptions.basisOverrides?.has(overrideKey(kind, r))) return;
+			const pair = `authored basis "${r.basis}" over grade-implied "${derived}"`;
+			const issue = (missing: string) =>
+				ctx.addIssue({ code: 'custom', message: `${pair} (V27): ${missing}`, path: ['basis'] });
+			if (!r.review) issue('a basis override requires a review object with a date and method');
+			if (!nonBlank(r.reasoning)) issue('a basis override requires non-blank reasoning');
+			if ((r.basis === 'inferred' || derived === 'inferred') && !nonBlank(r.falsifiable_by)) {
+				issue('a basis override on an inference requires a non-blank falsifiable_by');
+			}
+			if ((r.sources?.length ?? 0) < 1) issue('a basis override requires at least one source');
+			if (!nonBlank(r.basis_override_reason, 10)) {
+				issue(
+					'a basis override requires basis_override_reason of at least 10 non-blank characters, or a live entry in data/source-exceptions.yaml'
+				);
+			}
+		});
 }
 
 export type Source = z.infer<typeof SourceSchema>;
@@ -1289,7 +1477,7 @@ export type Review = z.infer<typeof ReviewSchema>;
 
 export const RegionKind = z.enum(['region', 'governorate', 'delegation', 'municipality']);
 
-export const RegionSchema = z.object({
+export const RegionSchema = z.strictObject({
 	id: slug,
 	kind: RegionKind,
 	name_en: z.string().min(2),
@@ -1343,9 +1531,84 @@ export const PlaceKind = z.enum([
  */
 let jurisdictionParams = DEFAULT_PARAMETERS;
 
-export function configureSchema(p: Parameters): void {
+export function configureSchema(p: Parameters, exceptions: SchemaExceptions = {}): void {
 	jurisdictionParams = p;
+	schemaExceptions = exceptions;
 }
+
+/**
+ * Configure only the exception sets, leaving the jurisdiction parameters at
+ * their current values. Used by tests and tooling that do not load a
+ * jurisdiction parameter file.
+ */
+export function configureSchemaExceptions(exceptions: SchemaExceptions): void {
+	schemaExceptions = exceptions;
+}
+
+// ---------------------------------------------------------------------------
+// Explicit escapes
+//
+// The build must fail on every new violation, and it must not pretend that
+// legacy violations do not exist. `data/source-exceptions.yaml` is the register:
+// one entry per known record, each naming an owner, a deadline and a reason.
+// An exception that has passed its deadline is a build failure, so the register
+// cannot quietly become permanent. (V25/V27)
+// ---------------------------------------------------------------------------
+
+export const SourceExceptionRule = z.enum(['no-source', 'grade-a-primary', 'basis-override']);
+
+export const SourceExceptionSchema = z
+	.strictObject({
+		rule: SourceExceptionRule,
+		/** Record kind, matching the build's kind name (e.g. "person", "event"). */
+		kind: z.string().min(1),
+		id: slug,
+		/** Who owns the work of removing the exception. */
+		owner: z
+			.string()
+			.refine((v) => nonBlank(v, 2), 'owner must be at least 2 non-blank characters'),
+		/** ISO date after which the exception stops working and the build fails. */
+		deadline: z
+			.string()
+			.regex(/^\d{4}-\d{2}-\d{2}$/, 'deadline must be an ISO date (YYYY-MM-DD)')
+			.refine((d) => {
+				const [y, mo, da] = d.split('-').map(Number);
+				const t = new Date(Date.UTC(y, mo - 1, da));
+				return t.getUTCFullYear() === y && t.getUTCMonth() === mo - 1 && t.getUTCDate() === da;
+			}, 'deadline must be a calendar-valid date'),
+		reason: z
+			.string()
+			.refine(
+				(v) => nonBlank(v, 10),
+				'reason must state, in at least 10 non-blank characters, why the exception exists'
+			),
+		/** basis-override entries only: the grade-implied baseline. */
+		implied: Basis.optional(),
+		/** basis-override entries only: the authored basis. */
+		authored: Basis.optional()
+	})
+	.superRefine((e, ctx) => {
+		if (e.rule === 'basis-override') {
+			if (!e.implied || !e.authored) {
+				ctx.addIssue({
+					code: 'custom',
+					message: 'a basis-override exception must name implied and authored bases'
+				});
+			} else if (!isBasisUpgrade(e.authored, e.implied)) {
+				ctx.addIssue({
+					code: 'custom',
+					message: `basis-override exception is not an upgrade: "${e.implied}" → "${e.authored}"`
+				});
+			}
+		} else if (e.implied || e.authored) {
+			ctx.addIssue({
+				code: 'custom',
+				message: `implied/authored are only valid on basis-override entries (rule "${e.rule}")`
+			});
+		}
+	});
+
+export type SourceException = z.infer<typeof SourceExceptionSchema>;
 
 export const Coordinates = z
 	.array(z.number())
@@ -1364,6 +1627,7 @@ export const Coordinates = z
 	);
 
 export const PlaceSchema = withClaimEnvelope(
+	'place',
 	z.strictObject({
 		id: slug,
 		kind: PlaceKind,

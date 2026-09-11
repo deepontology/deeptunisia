@@ -11,6 +11,7 @@ Outputs are written to output/pdf/.
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Optional
 import re
 from reportlab.lib import colors
 from reportlab.lib.enums import TA_CENTER, TA_LEFT, TA_RIGHT
@@ -77,28 +78,63 @@ VIOLET = colors.HexColor("#7253b8")
 RED = colors.HexColor("#b44737")
 
 
+FONT_DIRS = [
+    Path("C:/Windows/Fonts"),
+    Path.home() / "AppData/Local/Microsoft/Windows/Fonts",
+    Path("/usr/share/fonts"),
+    Path("/usr/local/share/fonts"),
+    Path.home() / "Library/Fonts",
+    Path("/Library/Fonts"),
+    Path("/System/Library/Fonts"),
+]
+
+
+def _find_font(*names: str) -> Optional[Path]:
+    """First existing font file across the platform font directories."""
+    for d in FONT_DIRS:
+        if not d.is_dir():
+            continue
+        for name in names:
+            direct = d / name
+            if direct.is_file():
+                return direct
+            for p in d.rglob(name):
+                if p.is_file():
+                    return p
+    return None
+
+
 def register_fonts() -> tuple[str, str, str]:
-    """Use Windows' bundled Segoe / Georgia fonts, with safe core-font fallback."""
-    font_dir = Path("C:/Windows/Fonts")
-    candidates = {
-        "DTNBody": font_dir / "segoeui.ttf",
-        "DTNBold": font_dir / "segoeuib.ttf",
-        "DTNSerif": font_dir / "georgia.ttf",
+    """Register a body/bold/serif trio from platform fonts, else core fonts."""
+    wanted = {
+        "DTNBody": ("segoeui.ttf", "DejaVuSans.ttf", "NotoSans-Regular.ttf"),
+        "DTNBold": ("segoeuib.ttf", "DejaVuSans-Bold.ttf", "NotoSans-Bold.ttf"),
+        "DTNSerif": ("georgia.ttf", "DejaVuSerif.ttf", "NotoSerif-Regular.ttf"),
     }
-    try:
-        for name, path in candidates.items():
-            if not path.exists():
-                raise FileNotFoundError(path)
-            pdfmetrics.registerFont(TTFont(name, str(path)))
-        return "DTNBody", "DTNBold", "DTNSerif"
-    except Exception:
+    found: dict[str, Path] = {}
+    for name, files in wanted.items():
+        path = _find_font(*files)
+        if path is not None:
+            found[name] = path
+    if len(found) != len(wanted):
         return "Helvetica", "Helvetica-Bold", "Times-Roman"
+    for name, path in found.items():
+        pdfmetrics.registerFont(TTFont(name, str(path)))
+    return "DTNBody", "DTNBold", "DTNSerif"
 
 
 BODY, BOLD, SERIF = register_fonts()
 ARABIC = "DTNArabic"
+_arabic_path = _find_font(
+    "ARIALUNI.TTF",
+    "NotoNaskhArabic-Regular.ttf",
+    "NotoSansArabic-Regular.ttf",
+    "Amiri-Regular.ttf",
+)
 try:
-    pdfmetrics.registerFont(TTFont(ARABIC, "C:/Windows/Fonts/ARIALUNI.TTF"))
+    if _arabic_path is None:
+        raise FileNotFoundError("no Arabic font found on this platform")
+    pdfmetrics.registerFont(TTFont(ARABIC, str(_arabic_path)))
 except Exception:
     ARABIC = BODY
 

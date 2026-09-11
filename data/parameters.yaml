@@ -46,6 +46,16 @@ time:
   # Widen "approximately" tokens: a year-precision guess gets this much slack
   # either side, a month-precision guess the month value.
   approxSlackDays: { year: 365, month: 92 }
+  # Date-token meanings for open ends (engine-owned; see deepepisteme/time):
+  #   ongoing          positively confirmed in place at the cutoff. Certainty
+  #                    requires an observation within 90 days of the cutoff; a
+  #                    stale or undated record is downgraded to `last-verified`
+  #                    at build time, with a warning naming it.
+  #   ?                unknown end. Certainty runs only to the latest possible
+  #                    start; the interval is possibly active through the cutoff.
+  #   verified:2025-12 documented in place that month. Certainty stops at the
+  #                    month midpoint; the month's end is possible, not certain.
+  # Nothing is asserted after the cutoff for any token.
 
 index:
   # Basis-discount weights for the evidenced-influence index. Unsubstantiated
