@@ -40,7 +40,7 @@ The local build never needs the signature to run; the release pipeline does.
 [tag]
   gpgSign = true
 [user]
-  signingkey = /home/adala/.ssh/id_ed25519.pub
+  signingkey = ~/.ssh/id_ed25519.pub
 ```
 
 `~/.config/git/allowed_signers` (single line, commit this key to the runner via
