@@ -466,6 +466,42 @@
   sources:
     - axios-saied-2021
     - reuters-conspiracy-2025
+    - arabnews-conspiracy-2025
+    - dw-clampdown-2025
+  evidence:
+    - passage_type: quote
+      passage: Tunisian President Kais Saied announced Sunday that he had dismissed the country's prime minister and frozen the parliament amidst mass protests in the country, Reuters reports.
+      locator: article lede (first paragraph) — assembly freeze, 25 July 2021
+      retrieved_at: '2026-09-11'
+      capture_url: https://web.archive.org/web/20230402065010/https://www.axios.com/2021/07/25/tunisia-sacks-president-prime-minister-parliament-protests
+      lineage:
+        - publisher: Axios
+          url: https://www.axios.com/2021/07/25/tunisia-sacks-president-prime-minister-parliament-protests
+    - passage_type: quote
+      passage: Saied also suspended the legal immunity of members of parliament.
+      locator: article, paragraph beginning 'Saied also suspended'
+      retrieved_at: '2026-09-11'
+      capture_url: https://web.archive.org/web/20230402065010/https://www.axios.com/2021/07/25/tunisia-sacks-president-prime-minister-parliament-protests
+      lineage:
+        - publisher: Axios
+          url: https://www.axios.com/2021/07/25/tunisia-sacks-president-prime-minister-parliament-protests
+    - passage_type: quote
+      passage: Some of the opposition defendants — including Ghazi Chaouachi, Issam Chebbi, Jawahar Ben Mbrak, Abdelhamid Jlassi, Ridha BelHajj and Khyam Turki — have been in custody since being detained in 2023.
+      locator: article, paragraph beginning 'Some of the opposition defendants' — mass-prosecution context
+      retrieved_at: '2026-09-11'
+      capture_url: https://web.archive.org/web/20260420063757/https://www.arabnews.com/node/2597632/middle-east
+      lineage:
+        - publisher: Reuters
+        - publisher: Arab News
+          url: https://www.arabnews.com/node/2597632/middle-east
+    - passage_type: quote
+      passage: Ghannouchi, the 86-year-old leader of Tunisia's Islamist Ennahda party and former speaker of the parliament, refused to appear in court, where he was given a 14-year sentence for forming a "secret security apparatus." By staying in his cell, where he has been since April 2023, he upheld his boycott of Tunisia's judiciary, which he deems politically manipulated.
+      locator: article, paragraphs beginning 'Ghannouchi, the 86-year-old leader' and 'By staying in his cell' — prosecution and detention, no characterisation added
+      retrieved_at: '2026-09-11'
+      capture_url: https://web.archive.org/web/20260902144029/https://www.dw.com/en/tunisia-presidents-far-reaching-clampdown-targets-opponents/a-73241559
+      lineage:
+        - publisher: Deutsche Welle
+          url: https://www.dw.com/en/tunisia-presidents-far-reaching-clampdown-targets-opponents/a-73241559
 - id: rel-nabil-karoui-kais-saied-political-conflict
   from: nabil-karoui
   to: kais-saied
@@ -4908,6 +4944,23 @@
   notes_ar:
     - تاريخ ديسمبر 2011 يستند إلى السجل الموسوعي (fr.wiki «السيدة الأولى لتونس»؛ وتؤكد ar.wiki «بياتريس راين» الزواج ومهنتها الطبية). لم يُعثر على أي مصدر مدني.
   notes_ar_by: model-reviewed
+  evidence:
+    - passage_type: quote
+      passage: Moncef Marzouki change de statut conjugal immédiatement après son accession de la présidence en épousant sa compagne française Béatrix Rhein en décembre 2011.
+      locator: section 'Situation conjugale'
+      retrieved_at: '2026-09-11'
+      capture_url: https://web.archive.org/web/20260209113317/https://fr.wikipedia.org/wiki/Premi%C3%A8re_dame_de_Tunisie
+      lineage:
+        - publisher: Wikipedia (FR)
+          url: https://fr.wikipedia.org/wiki/Premi%C3%A8re_dame_de_Tunisie
+    - passage_type: quote
+      passage: 'Moncef Marzouki est marié depuis décembre 2011 à Béatrix Rhein et père de deux filles : Myriam et Nadia.'
+      locator: section 'Vie privée'
+      retrieved_at: '2026-09-11'
+      capture_url: https://web.archive.org/web/20260906105633/https://fr.wikipedia.org/wiki/Moncef_Marzouki
+      lineage:
+        - publisher: Wikipedia (FR)
+          url: https://fr.wikipedia.org/wiki/Moncef_Marzouki
 - id: rel-myriam-marzouki-marzouki-family
   from: myriam-marzouki
   to: moncef-marzouki
@@ -5257,6 +5310,39 @@
     - leaders-slim-ennaceur-2013
     - realites-slim-ennaceur-2013
     - wikipedia-mohamed-ennaceur
+  evidence:
+    - passage_type: quote
+      passage: Esthète, féru de design, décoration et scénographie, Slim Ennaceur vient de nous quitter furtivement à l’âge de 48 ans, terrassé par une crise cardiaque.
+      locator: article, paragraph beginning 'Esthète, féru de design' — death and cause; no date stated
+      retrieved_at: '2026-09-11'
+      capture_url: https://web.archive.org/web/20260519072039/https://www.leaders.com.tn/article/11876-le-scenographe-et-designer-slim-ennaceur-est-decede
+      lineage:
+        - publisher: Leaders
+          url: https://www.leaders.com.tn/article/11876-le-scenographe-et-designer-slim-ennaceur-est-decede
+    - passage_type: quote
+      passage: A eux tous et particulièrement à ses parents, Mohamed Ennaceur, ancien ministre des Affaires sociale et son épouse, ainsi qu’à tous ses proches, nos sincères condoléances.
+      locator: article, paragraph beginning 'La disparition de Slim Ennaceur' — parentage
+      retrieved_at: '2026-09-11'
+      capture_url: https://web.archive.org/web/20260519072039/https://www.leaders.com.tn/article/11876-le-scenographe-et-designer-slim-ennaceur-est-decede
+      lineage:
+        - publisher: Leaders
+          url: https://www.leaders.com.tn/article/11876-le-scenographe-et-designer-slim-ennaceur-est-decede
+    - passage_type: quote
+      passage: Slim Ennaceur, victime d’une mort sans souffrances et sans atermoiements, le 21 juillet 2013, à quarante huit ans, a fait partie d’une espèce d’hommes rares en Tunisie.
+      locator: article, opening paragraph — death date and age; parentage not named in this passage
+      retrieved_at: '2026-09-11'
+      capture_missing: '2026-10-11'
+      lineage:
+        - publisher: Réalités
+          url: https://realites.com.tn/fr/deces-de-slim-ennaceur-une-mort-qui-eveille/
+    - passage_type: quote
+      passage: Il est père de cinq enfants. Son fils Slim, nageur, scénographe et décorateur, meurt en 2013.
+      locator: section 'Vie privée' — parentage and profession; year only
+      retrieved_at: '2026-09-11'
+      capture_url: https://web.archive.org/web/20251122014233/https://fr.wikipedia.org/wiki/Mohamed_Ennaceur
+      lineage:
+        - publisher: Wikipedia (FR)
+          url: https://fr.wikipedia.org/wiki/Mohamed_Ennaceur
 - id: rel-mohamed-ennaceur-legislature-institutional
   from: mohamed-ennaceur
   to: legislature

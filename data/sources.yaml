@@ -12374,3 +12374,71 @@
   tier: 1
   lang: fr
   excerpt: "Décret Présidentiel n° 2017-81 du 14 juin 2017, portant nomination du premier président de la cour de cassation. Hedi Guediri, magistrat de troisième grade, est nommé premier président de la cour de cassation."
+- id: dw-eltaief-2023
+  title: 'Tunisia: Activists, prominent businessman arrested by police'
+  publisher: Deutsche Welle
+  date: 2023-02-12
+  url: https://www.dw.com/en/tunisia-activists-prominent-businessman-arrested-by-police/a-64677383
+  archive_url: https://web.archive.org/web/20250724124457/https://www.dw.com/en/tunisia-activists-prominent-businessman-arrested-by-police/a-64677383
+  tier: 3
+  lang: en
+  excerpt: Police in Tunisia have arrested influential businessman Kamel Eltaief, a former confidant of ousted president Zine El Abidine Ben Ali, and two political activists ... Abdelhamid Jelassi ... and political activist Khayam Turki were also arrested.
+- id: bbc-ghannouchi-2025
+  title: 'Rached Ghannouchi: Tunisian opposition leader jailed for 14 years'
+  publisher: BBC News
+  date: 2025-07-09
+  url: https://www.bbc.com/news/articles/c04d1d71rx4o
+  archive_url: https://web.archive.org/web/20251117121842/https://www.bbc.com/news/articles/c04d1d71rx4o
+  tier: 3
+  lang: en
+  excerpt: Tunisian opposition leader Rached Ghannouchi has been sentenced to 14 years in prison ... Former Foreign Affairs Minister Rafik Abdessalem Bouchlaka and ex-intelligence chief Kamel Guizani were also sentenced in absentia.
+- id: amnesty-conspiracy2-2025
+  title: 'Tunisia: Mass Convictions in ''Conspiracy Case 2'' Deepen Rule of Law Crisis'
+  publisher: Amnesty International
+  date: 2025-07-28
+  url: https://www.amnestyusa.org/press-releases/tunisia-mass-convictions-in-conspiracy-case-2-deepen-rule-of-law-crisis
+  archive_url: https://web.archive.org/web/20250812063104/https://www.amnestyusa.org/press-releases/tunisia-mass-convictions-in-conspiracy-case-2-deepen-rule-of-law-crisis/
+  tier: 2
+  lang: en
+  excerpt: The trial opened on June 24, 2025 and concluded with mass conviction on July 8 of 21 out of 24 individuals ... Sentences ranged from 12 to 35 years imposed on 21 individuals.
+- id: arabnews-conspiracy-2025
+  title: Tunisian court set to rule in conspiracy trial, lawyers protest
+  publisher: Arab News (Reuters)
+  date: 2025-04-18
+  url: https://www.arabnews.com/node/2597632/middle-east
+  archive_url: https://web.archive.org/web/20260420063757/https://www.arabnews.com/node/2597632/middle-east
+  tier: 3
+  lang: en
+  excerpt: A Tunisian court is set to issue a ruling in the conspiracy case against prominent opponents, as lawyers protested and described the trial as a farce ... Some of the opposition defendants ... have been in custody since being detained in 2023.
+  notes:
+    - Reuters wire report republished by Arab News under a different headline; the fetched page carries the byline Reuters dated 18 April 2025.
+- id: meo-conspiracy-appeal-2026
+  title: Tunisia hands down jail terms of up to 35 years in conspiracy case
+  publisher: Middle East Online
+  date: 2026-02-03
+  url: https://middle-east-online.com/en/tunisia-hands-down-jail-terms-35-years-conspiracy-case
+  tier: 4
+  lang: en
+  excerpt: According to TAP, the court also confirmed 35-year sentences against Kamel Guizani, the former intelligence chief, Rafik Abdessalem, a former foreign minister, and Mouadh Ghannouchi, the son of Rached Ghannouchi.
+  notes:
+    - 'No usable Wayback replay located on 2026-09-11: the capture at 20260204052002 replays an HTTP 403 page; evidence entries carry capture_missing 2026-10-11.'
+- id: aljazeera-ghannouchi-speaker-2019
+  title: Tunisia parliament elects Ennahdha's Rachid Ghannouchi as speaker
+  publisher: Al Jazeera (Reuters)
+  date: 2019-11-13
+  url: https://www.aljazeera.com/news/2019/11/13/tunisia-parliament-elects-ennahdhas-rachid-ghannouchi-as-speaker/
+  archive_url: https://web.archive.org/web/20260901054216/https://www.aljazeera.com/news/2019/11/13/tunisia-parliament-elects-ennahdhas-rachid-ghannouchi-as-speaker
+  tier: 3
+  lang: en
+  excerpt: Tunisia's new parliament on Wednesday elected Islamist Ennahdha party's Rached Ghannouchi as its speaker after the rival Heart of Tunisia party backed him, opening the way for a possible coalition government between them.
+  notes:
+    - The fetched page carries the byline Reuters and the publication date 13 November 2019.
+- id: dw-clampdown-2025
+  title: Tunisia president's far-reaching clampdown targets opponents
+  publisher: Deutsche Welle
+  date: 2025-07-11
+  url: https://www.dw.com/en/tunisia-presidents-far-reaching-clampdown-targets-opponents/a-73241559
+  archive_url: https://web.archive.org/web/20260902144029/https://www.dw.com/en/tunisia-presidents-far-reaching-clampdown-targets-opponents/a-73241559
+  tier: 3
+  lang: en
+  excerpt: Politicians and officials, including opposition leader Rached Ghannouchi, were variously sentenced to 12 to 35 years in prison ... By staying in his cell, where he has been since April 2023, he upheld his boycott of Tunisia's judiciary.

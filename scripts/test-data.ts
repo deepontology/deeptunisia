@@ -11,6 +11,7 @@ import { fileURLToPath } from 'node:url';
 import { parse as parseYaml } from 'yaml';
 import { RelationshipType, EDGE_DIRECTION, REQUIRED_SOURCE_KINDS } from '../scripts/schema.ts';
 import { computeDatasetHash } from './canonical.ts';
+import { countOrigins } from './origins.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ds = JSON.parse(readFileSync(join(HERE, '..', 'src', 'generated', 'dataset.json'), 'utf8'));
@@ -502,6 +503,33 @@ const KIND_TO_DATASET: Record<string, string> = {
 		'every unsourced claim record is on the exception register (rule 2)',
 		unsourced.every((id) => noSourceExcepted.has(id)),
 		unsourced.filter((id) => !noSourceExcepted.has(id)).join(', ') || `${unsourced.length} excepted`
+	);
+
+	// V29: a published `origins` count must recompute from the record's own evidence.
+	// The build derives it; this re-derives it from the emitted graph, so a record
+	// that acquired evidence without gaining its count, or kept a stale count after a
+	// lineage edit, fails here instead of shipping a number nobody can reproduce.
+	const stale: string[] = [];
+	const counted: string[] = [];
+	for (const [kind, key] of Object.entries(KIND_TO_DATASET)) {
+		for (const record of (ds[key] ?? []) as {
+			id: string;
+			origins?: number;
+			evidence?: { lineage?: { publisher: string; url?: string }[] }[];
+		}[]) {
+			if (record.origins === undefined) continue;
+			const computed = countOrigins(record.evidence);
+			if (computed !== record.origins) {
+				stale.push(`${kind}:${record.id} (${record.origins} vs ${computed ?? 'none'})`);
+			} else {
+				counted.push(`${kind}:${record.id}`);
+			}
+		}
+	}
+	ok(
+		'every emitted origins count recomputes from the record evidence (V29)',
+		stale.length === 0,
+		stale.join(', ') || `${counted.length} record(s) carry a derived count`
 	);
 
 	// V27 visibility: a live basis-override entry must still be a promotion in
