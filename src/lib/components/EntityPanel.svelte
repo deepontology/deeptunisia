@@ -3,6 +3,7 @@
 	import { format } from '$lib/i18n';
 	import { t, tf, describeInterval, durationLabel, formatDate, layerLabel, relLabel, confidenceLabel, basisLabel, nameOf, entityName} from '$lib/t.svelte';
 	import Chip from '$lib/ui/Chip.svelte';
+	import OriginsChip from '$lib/ui/OriginsChip.svelte';
 	import Prose from '$lib/ui/Prose.svelte';
 	import Tooltip from '$lib/ui/Tooltip.svelte';
 	import SourceList from './SourceList.svelte';
@@ -461,6 +462,7 @@
 								<strong>{nameOf(role)}</strong>
 								<Chip size="xs" dot tint="var(--basis-{pos.basis})">{basisLabel(pos.basis)}</Chip>
 								<Chip variant="outline" size="xs" title={confidenceLabel(pos.confidence)}>{pos.confidence}</Chip>
+								<OriginsChip origins={pos.origins} independence={pos.independence} />
 							</div>
 							<div class="o-meta mono">
 								{describeInterval(pos.interval)} · {durationLabel(pos.years)}

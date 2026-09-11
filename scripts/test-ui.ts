@@ -429,6 +429,57 @@ ok(
 	}
 }
 
+console.log('\n  ── V29 origins: the derived origin count on claim cards ──\n');
+
+const ORIGINS_CHIP = readFileSync(join(HERE, '..', 'src', 'lib', 'ui', 'OriginsChip.svelte'), 'utf8');
+const FLOW_CARD = readFileSync(join(HERE, '..', 'src', 'lib', 'components', 'FlowCard.svelte'), 'utf8');
+const CONNECTION_CARD = readFileSync(join(HERE, '..', 'src', 'lib', 'components', 'ConnectionCard.svelte'), 'utf8');
+ok(
+	'the origins chip composes the ui primitives',
+	ORIGINS_CHIP.includes("from './Chip.svelte'") && ORIGINS_CHIP.includes("from './Tooltip.svelte'")
+);
+ok(
+	'the chip reads the dictionary pair and prefers the derived count',
+	ORIGINS_CHIP.includes("t('origins.note')") &&
+		ORIGINS_CHIP.includes("tf('origins.count'") &&
+		ORIGINS_CHIP.includes('origins ?? independence')
+);
+ok(
+	'the chip renders nothing when neither count is present',
+	ORIGINS_CHIP.includes('{#if value != null}')
+);
+ok(
+	'the agreement card carries the origins chip',
+	FLOW_CARD.includes('OriginsChip') && FLOW_CARD.includes('agreement.origins') && FLOW_CARD.includes('agreement.independence')
+);
+ok(
+	'the event record card carries the origins chip',
+	RECORD_PANEL.includes('OriginsChip') &&
+		RECORD_PANEL.includes('?.origins') &&
+		RECORD_PANEL.includes('?.independence')
+);
+ok(
+	'the relationship card carries the origins chip',
+	CONNECTION_CARD.includes('OriginsChip') && CONNECTION_CARD.includes('rel.origins') && CONNECTION_CARD.includes('rel.independence')
+);
+ok(
+	'the entity panel office rows carry the origins chip',
+	ENTITY_PANEL.includes('OriginsChip') && ENTITY_PANEL.includes('pos.origins') && ENTITY_PANEL.includes('pos.independence')
+);
+ok(
+	'both chronicle table alternatives gained an origins column',
+	(CHRONICLE.match(/<th>Origins<\/th>/g) ?? []).length === 2 &&
+		CHRONICLE.includes('pos.origins ?? pos.independence') &&
+		CHRONICLE.includes('e.origins ?? e.independence')
+);
+for (const loc of ['en', 'fr', 'ar'] as const) {
+	ok(
+		`the origins pair resolves in ${loc}`,
+		translate(loc, 'origins.count').includes('{n}') && translate(loc, 'origins.note') !== 'origins.note',
+		translate(loc, 'origins.count')
+	);
+}
+
 console.log(`
   ${checks - failures}/${checks} checks passed${failures ? `, ${failures} FAILED` : ''}
 `);

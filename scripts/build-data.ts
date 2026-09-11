@@ -2677,6 +2677,16 @@ export interface Dispute {
 	assessment?: string;
 }
 
+/**
+ * The claim axes every claim-bearing record shares (V26/V29). \`independence\` is
+ * the authored origin count and stays the fallback; \`origins\` is derived by the
+ * build from evidence lineage and is the stronger statement where it exists.
+ */
+export interface ClaimAxes {
+	independence?: number;
+	origins?: number;
+}
+
 export interface Interval {
 	startEarliest: number;
 	startLatest: number;
@@ -2756,7 +2766,7 @@ export interface Role {
 	sources: string[];
 }
 
-export interface Person {
+export interface Person extends ClaimAxes {
 	id: string;
 	name_en: string;
 	name_fr?: string;
@@ -2799,7 +2809,7 @@ export interface TimelineItem {
 	interval: Interval;
 }
 
-export interface Position {
+export interface Position extends ClaimAxes {
 	id: string;
 	role: string;
 	holder: string;
@@ -2830,7 +2840,7 @@ export interface Position {
 	successorDerived: string | null;
 }
 
-export interface Relationship {
+export interface Relationship extends ClaimAxes {
 	id: string;
 	from: string;
 	to: string;
@@ -2857,7 +2867,7 @@ export interface ContestedFraming {
 	source?: string;
 }
 
-export interface EventRec {
+export interface EventRec extends ClaimAxes {
 	id: string;
 	date: string;
 	date_end?: string;
@@ -3048,7 +3058,7 @@ export interface DatasetMeta {
 	};
 }
 
-export interface Agreement {
+export interface Agreement extends ClaimAxes {
 	id: string;
 	title_en: string;
 	title_fr?: string;
@@ -3084,7 +3094,7 @@ export interface Agreement {
  * cover (total debt incl. domestic, tourism) or a circulating claim kept per
  * rule 6. 'entity' is the graph institution id, or null for Tunisia itself.
  */
-export interface WorldClaim {
+export interface WorldClaim extends ClaimAxes {
 	id: string;
 	entity: string | null;
 	claim: string;
@@ -3106,7 +3116,7 @@ export interface WorldClaim {
 // --- v0.0.2 record kinds (spec §4) -------------------------------------------
 
 /** Corporate record, keyed by institution id (spec §4.2). */
-export interface Company {
+export interface Company extends ClaimAxes {
 	id: string;
 	legal_name_en?: string;
 	legal_name_fr?: string;
@@ -3132,7 +3142,7 @@ export interface Company {
 }
 
 /** Procurement / PPP / concession record (spec §4.4). */
-export interface Contract {
+export interface Contract extends ClaimAxes {
 	id: string;
 	title_en: string;
 	title_fr?: string;
@@ -3162,7 +3172,7 @@ export interface Contract {
 }
 
 /** Time-bound right between an operating company and a state body (spec §4.5). */
-export interface Licence {
+export interface Licence extends ClaimAxes {
 	id: string;
 	holder: string;
 	issuer: string;
@@ -3185,7 +3195,7 @@ export interface Licence {
 }
 
 /** A record about a document, not about the world (spec §4.6). */
-export interface Declaration {
+export interface Declaration extends ClaimAxes {
 	id: string;
 	declarer: string;
 	date: string;
@@ -3207,7 +3217,7 @@ export interface Declaration {
 }
 
 /** Education record (spec §4.7). */
-export interface Education {
+export interface Education extends ClaimAxes {
 	id: string;
 	person: string;
 	institution: string | null;
@@ -3267,7 +3277,7 @@ export interface RegionRec {
 	sources: string[];
 }
 
-export interface PlaceRec {
+export interface PlaceRec extends ClaimAxes {
 	id: string;
 	kind: string;
 	name_en: string;

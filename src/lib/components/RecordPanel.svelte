@@ -3,6 +3,7 @@
 	import { t, basisLabel, confidenceLabel, describeInterval, formatDate, nameOf } from '$lib/t.svelte';
 	import SourceList from './SourceList.svelte';
 	import Chip from '$lib/ui/Chip.svelte';
+	import OriginsChip from '$lib/ui/OriginsChip.svelte';
 	import CommunityActions from '$lib/ui/CommunityActions.svelte';
 	import ShareMenu from '$lib/ui/ShareMenu.svelte';
 	import { canonicalShareUrl } from '$lib/share';
@@ -81,6 +82,8 @@
 
 	const basis = $derived((contract ?? declaration ?? event ?? education)?.basis as Basis | undefined);
 	const confidence = $derived((contract ?? declaration ?? event ?? education)?.confidence as string | undefined);
+	const origins = $derived((contract ?? declaration ?? event ?? education)?.origins);
+	const independence = $derived((contract ?? declaration ?? event ?? education)?.independence);
 	const attributedTo = $derived((contract ?? declaration ?? event ?? education)?.attributed_to);
 	const notes = $derived(contract?.notes ?? declaration?.notes ?? education?.notes ?? []);
 	const disputes = $derived((contract ?? declaration ?? education)?.disputes ?? []);
@@ -194,6 +197,7 @@
 				{confidence ? `${confidence} — ` : ''}{basisLabel(basis)}
 			</Chip>
 		{/if}
+		<OriginsChip origins={origins} independence={independence} />
 		{#if dated}
 			<span class="span mono">{describeInterval(dated)}</span>
 		{:else if event}
