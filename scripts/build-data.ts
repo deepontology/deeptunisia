@@ -72,6 +72,7 @@ import {
 	type ResolvedInterval
 } from './dates.ts';
 import { loadParameters, type Parameters } from './parameters.ts';
+import { countOrigins, type EvidenceLike } from './origins.ts';
 import { auditInterpretationPaths } from '../src/lib/interpretation.ts';
 import { canonicalBytes, computeDatasetHash, CANONICAL_GENERATED } from './canonical.ts';
 
@@ -2158,6 +2159,19 @@ const cardWorklist = cardCompleteness
 	.filter((c) => c.authority >= 70 && c.filled <= 2)
 	.sort((a, b) => b.authority - a.authority || a.filled - b.filled);
 
+/**
+ * `origins` is computed from evidence lineage; `independence` stays the authored
+ * fallback. A record with no evidence — or evidence whose lineage names no
+ * origin — emits no `origins` field, so the interface can keep showing the
+ * authored count without a guessed replacement. (V29)
+ */
+function withOrigins<T extends { evidence?: readonly EvidenceLike[] }>(rows: T[]): (T & { origins?: number })[] {
+	return rows.map((row) => {
+		const origins = countOrigins(row.evidence);
+		return origins === undefined ? row : { ...row, origins };
+	});
+}
+
 const dataset = {
 	meta: {
 		generated: new Date().toISOString(),
@@ -2235,23 +2249,23 @@ const dataset = {
 	},
 	sources,
 	eras: resolvedEras,
-	institutions: resolvedInstitutions,
+	institutions: withOrigins(resolvedInstitutions),
 	roles,
-	people: resolvedPeople,
-	positions: resolvedPositions,
-	relationships: resolvedRelationships,
-	events: resolvedEvents,
+	people: withOrigins(resolvedPeople),
+	positions: withOrigins(resolvedPositions),
+	relationships: withOrigins(resolvedRelationships),
+	events: withOrigins(resolvedEvents),
 	questions,
 	hypotheses,
-	agreements: resolvedAgreements,
-	worldClaims: resolvedWorldClaims,
-	companies: resolvedCompanies,
-	contracts: resolvedContracts,
-	licences: resolvedLicences,
-	declarations: resolvedDeclarations,
-	education: resolvedEducation,
+	agreements: withOrigins(resolvedAgreements),
+	worldClaims: withOrigins(resolvedWorldClaims),
+	companies: withOrigins(resolvedCompanies),
+	contracts: withOrigins(resolvedContracts),
+	licences: withOrigins(resolvedLicences),
+	declarations: withOrigins(resolvedDeclarations),
+	education: withOrigins(resolvedEducation),
 	regions,
-	places
+	places: withOrigins(places)
 };
 
 // V22: trims are never silent. Every envelope clamp is published with the record,

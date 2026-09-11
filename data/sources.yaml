@@ -132,9 +132,13 @@
   publisher: Journal Officiel de la République Tunisienne
   date: 2015-02-06
   url: https://legislation-securite.tn/latest-laws/decret-presidentiel-n-2015-35-du-6-fevrier-2015-portant-nomination-du-chef-du-gouvernement-et-de-ses-membres/
-  archive_url: https://web.archive.org/web/20260828000000/https://legislation-securite.tn/latest-laws/decret-presidentiel-n-2015-35-du-6-fevrier-2015-portant-nomination-du-chef-du-gouvernement-et-de-ses-membres/
+  archive_url: https://web.archive.org/web/20260819075503/https://lake.jort.tn/journal-officiel/ar/2015/012.pdf
   tier: 1
   lang: fr
+  note: >-
+    The legislation-securite.tn link 404s, and the former generated lookup
+    snapshot was dead; the archive URL now points at the captured JORT n° 12
+    PDF mirror cited in the excerpt (2026-08-19 capture).
   excerpt: 'Article 2 lists "Slim Chaker : ministre des finances" among ministers in the Essid government. Published JORT n° 12 du 10 février 2015, pp. 468-469. PDF http://www.legislation.tn/sites/default/files/news/tf2015012.pdf ; mirror https://lake.jort.tn/journal-officiel/ar/2015/012.pdf'
   excerpt_fr: 'L''article 2 liste « Slim Chaker : ministre des finances » parmi les ministres du gouvernement Essid. Publié JORT n° 12 du 10 février 2015, pp. 468-469.'
   excerpt_fr_by: machine
@@ -829,9 +833,13 @@
   publisher: Leaders
   date: 2023-05-25
   url: https://www.leaders.com.tn/article/34851-qui-est-hassine-gharbi-nouveau-directeur-general-de-la-garde-nationale
-  archive_url: https://web.archive.org/web/20230605/https://www.leaders.com.tn/article/34851-qui-est-hassine-gharbi-nouveau-directeur-general-de-la-garde-nationale
   tier: 4
   lang: fr
+  note: >-
+    No Wayback capture of this article was located on 2026-09-11 (the CDX index
+    is empty for the URL); the former /web/20230605/ archive link was a
+    date-only lookup, not a snapshot, and was removed rather than left as a
+    capture.
   excerpt: Profile noting his previous command of the National Guard's special intervention unit (USGN) and counterterrorism background.
   excerpt_fr: Profil signalant son commandement antérieur de l'unité spéciale d'intervention de la garde nationale (USGN) et son parcours dans la lutte antiterroriste.
   excerpt_fr_by: machine
@@ -7197,9 +7205,12 @@
   publisher: Reuters
   date: 2008-07-21
   url: https://www.reuters.com/article/tunisair-capital-idINOUN13712620080721/
-  archive_url: https://web.archive.org/web/20210518004449/https://www.reuters.com/article/tunisair-capital-idINOUN13712620080721
   tier: 3
   lang: en
+  note: >-
+    The registered Wayback replay 404s and the CDX index holds no capture of
+    this article (checked 2026-09-11); the dead archive_url was removed rather
+    than left as a capture.
 - id: lapresse-tunisair-2025
   title: Tunisair approuve une émission obligataire de 150 millions de dinars (fonds propres sous la moitié du capital social depuis le 31/12/2021)
   title_gloss_ar: الخطوط التونسية توافق على إصدار سندات بقيمة 150 مليون دينار (الأموال الذاتية دون نصف رأس المال الاجتماعي منذ 31/12/2021)
