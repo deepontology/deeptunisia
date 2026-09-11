@@ -3,6 +3,96 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:african-manager:514f291334dfebd3",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Tourisme- Patrimoine : L’Hôtel Carlton Tunis célèbre vendredi 100 ans d’existence",
+      "link": "https://africanmanager.com/tourisme-patrimoine-lhotel-carlton-tunis-celebre-vendredi-100-ans-dexistence/",
+      "published": "2026-09-11T18:15:23Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:a3cfc73932ae61e9",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Transport scolaire et universitaire: 727 nouveaux bus renforceront le parc d’ici fin 2026",
+      "link": "https://africanmanager.com/transport-scolaire-et-universitaire-727-nouveaux-bus-renforceront-le-parc-dici-fin-2026/",
+      "published": "2026-09-11T18:12:29Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:408b43108ea857b6",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Le capital scientifique, valeur compétitive pour l’entreprise",
+      "link": "https://africanmanager.com/le-capital-scientifique-valeur-competitive-pour-lentreprise/",
+      "published": "2026-09-11T16:34:45Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:80b0648b87b9a57e",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Médenine : Prise en charge réussie d’une patiente victime d’un AVC à l’hôpital universitaire Habib Bourguiba",
+      "link": "https://africanmanager.com/medenine-prise-en-charge-reussie-dune-patiente-victime-dun-avc-a-lhopital-universitaire-habib-bourguiba/",
+      "published": "2026-09-11T15:22:22Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:4e0b344ce69f79f0",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Protéger la récolte et dynamiser le commerce des dattes",
+      "link": "https://africanmanager.com/kebili-des-mesures-pour-proteger-la-recolte-et-dynamiser-la-commercialisation-des-dattes/",
+      "published": "2026-09-11T15:21:40Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:0c419061b077cc83",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Les exercices Phoenix Express alternent en Tunisie",
+      "link": "https://africanmanager.com/les-exercices-phoenix-express-alternent-en-tunisie/",
+      "published": "2026-09-11T15:01:43Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:add3ce03e20303e5",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Pétrole : Le cours du Brent baisse à 104,40 dollars, vendredi, le diesel au-delà des 6$ le gallon",
+      "link": "https://africanmanager.com/petrole-le-cours-du-brent-baisse-a-10440-dollars-vendredi-le-diesel-au-dela-des-6-le-gallon/",
+      "published": "2026-09-11T14:56:46Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:435af24fd6d390fa",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Corruption : Les recours de l’homme d’affaires Youssef Mimouni rejetés",
+      "link": "https://africanmanager.com/corruption-les-recours-de-lhomme-daffaires-youssef-mimouni-rejetes/",
+      "published": "2026-09-11T13:55:22Z",
+      "lang": "fr",
+      "author": "Africanmanager"
+    },
+    {
+      "id": "feed:african-manager:08d59382a3255a21",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Algérie : Portail numérique d’accès aux produits pharmaceutiques",
+      "link": "https://africanmanager.com/algerie-lancement-du-portail-numerique-dacces-aux-produits-pharmaceutiques/",
+      "published": "2026-09-11T13:06:45Z",
+      "lang": "fr",
+      "author": "Africanmanager"
+    },
+    {
       "id": "feed:african-manager:52fda51e319b9114",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -10935,87 +11025,6 @@
       "title": "Attestation obligatoire pour l’exportation des produits forestiers",
       "link": "https://africanmanager.com/attestation-obligatoire-pour-lexportation-des-produits-forestiers/",
       "published": "2026-08-11T06:36:00Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:f22c8b4185783e0b",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Nations unies | Une juive costaricienne brigue la succession de Guterres",
-      "link": "https://kapitalis.com/tunisie/2026/08/11/nations-unies-une-juive-costaricienne-brigue-la-succession-de-guterres/",
-      "published": "2026-08-11T06:04:05Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:b63ab46d93ee0373",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "L’administration Trump a révoqué plus de 175 000 visas, selon le département d’État",
-      "link": "https://africanmanager.com/ladministration-trump-a-revoque-plus-de-175-000-visas-selon-le-departement-detat/",
-      "published": "2026-08-11T01:36:39Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:62917ad2d99cc34c",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Colombie : Un puissant séisme fait au moins 111 morts et des dizaines de blessés",
-      "link": "https://africanmanager.com/colombie-un-puissant-seisme-fait-au-moins-111-morts-et-des-dizaines-de-blesses/",
-      "published": "2026-08-11T01:35:30Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:27dabe3a96c1c3d8",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Trump affirme que les relations sont bonnes malgré le rejet par Netanyahu du plan de paix pour Gaza",
-      "link": "https://africanmanager.com/trump-affirme-que-les-relations-sont-bonnes-malgre-le-rejet-par-netanyahu-du-plan-de-paix-pour-gaza/",
-      "published": "2026-08-11T01:34:00Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:66b1454cd925baf9",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Iran : Khamenei nomme de nouveaux chefs militaires et des Gardiens de la révolution",
-      "link": "https://africanmanager.com/iran-khamenei-nomme-de-nouveaux-chefs-militaires-et-des-gardiens-de-la-revolution/",
-      "published": "2026-08-11T01:33:13Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:7ae55a160e9f8cbd",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Libye : Des explosions dans un réservoir de carburant à la raffinerie de pétrole de Zawiya",
-      "link": "https://africanmanager.com/libye-des-explosions-dans-un-reservoir-de-carburant-a-la-raffinerie-de-petrole-de-zawiya/",
-      "published": "2026-08-11T01:31:56Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:37c6a28a46974e30",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Monétique Tunisie: une intervention technique planifiée dans la nuit du mardi",
-      "link": "https://africanmanager.com/monetique-tunisie-une-intervention-technique-planifiee-dans-la-nuit-du-mardi/",
-      "published": "2026-08-11T01:31:46Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:812f311464787f4e",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "« BAKMA » d’Abdelhamid Bouchnak en première mondiale au Festival de Locarno",
-      "link": "https://kapitalis.com/tunisie/2026/08/10/bakma-dabdelhamid-bouchnak-en-premiere-mondiale-au-festival-de-locarno/",
-      "published": "2026-08-10T22:32:00Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:8c461322a2e362b8",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Saïed en visite à Gabès pour s’enquérir de la situation environnementale",
-      "link": "https://africanmanager.com/saied-en-visite-a-gabes-pour-senquerir-de-la-situation-environnementale/",
-      "published": "2026-08-10T22:14:43Z",
       "lang": "fr"
     }
   ]
