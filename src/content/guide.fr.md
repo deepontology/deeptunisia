@@ -4,7 +4,7 @@ translated_by: model-reviewed
 
 {#intro}
 
-DeepTunisia est un instrument, pas une page. Les affirmations qu'il avance sont tirées de preuves vérifiables, et l'interface est construite pour que l'on puisse toujours dire sur quoi repose chaque affirmation. Ce guide prend environ cinq minutes : il explique l'unique règle qui gouverne tout, les deux mondes entre lesquels l'interface se partage, comment le temps fonctionne ici, et quelle vue répond à quelle question.
+DeepTunisia est un instrument, pas une page. Les affirmations qu'il avance sont tirées de preuves vérifiables, et l'interface est construite pour que l'on puisse toujours dire sur quoi repose chaque affirmation. Ce guide prend environ cinq minutes : il explique l'unique règle qui gouverne tout, les sections entre lesquelles l'interface se partage, comment le temps fonctionne ici, et quelle vue répond à quelle question.
 
 ## L'unique règle : une inférence n'est jamais un fait {#rule}
 
@@ -14,12 +14,13 @@ Chaque affirmation du jeu de données est classée sous l'une de quatre bases é
 
 ## Le registre et l'argument {#bubbles}
 
-La barre du haut partage l'interface en deux bulles. Cette distinction est l'affirmation centrale du projet, énoncée avant même que vous n'ouvriez quoi que ce soit :
+La barre du haut partage l'interface en trois sections. Cette distinction est l'affirmation centrale du projet, énoncée avant même que vous n'ouvriez quoi que ce soit :
 
 - **Graphe** — le registre sourcé. Les postes, les relations, les événements et les preuves qui les étayent. Tout ce qui s'y trouve porte une base et une citation.
-- **Agora** — tout ce que le registre n'est pas : la discussion, les modifications proposées, les signalements et le fil d'actualité. Ni base, ni note de source, ni vérification. Elle est délibérément rendue dans un registre qu'aucune affirmation sourcée ne revêt jamais.
+- **Médias** — les surfaces de lecture : les enquêtes maison construites à partir du système de preuves, et le fil d'actualité de tiers. Les enquêtes portent le vocabulaire gradué du registre ; le fil ne porte aucune base et le dit sur la page.
+- **Agora** — la couche communautaire : la discussion, les modifications proposées et les signalements. Ni base, ni note de source, ni vérification. Elle est délibérément rendue dans un registre qu'aucune affirmation sourcée ne revêt jamais.
 
-Franchir la ligne est sans coût et sans risque. Les deux points à côté des noms portent tout le sens : pleins, ils signifient « ceci est le registre » ; creux, « ceci ne l'est pas ».
+Passer d'une section à l'autre est sans coût et sans risque. Les points à côté des noms portent tout le sens : pleins, ils signifient « ceci est le registre » ; creux, « ceci ne l'est pas ».
 
 ## Le temps est une dimension ici {#time}
 
