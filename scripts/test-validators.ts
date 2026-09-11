@@ -226,6 +226,20 @@ rejectsWith(
 	'V27: an inferred-to-documented override without basis_override_reason is rejected',
 	'basis_override_reason'
 );
+rejectsWith(
+	PositionSchema,
+	pos({
+		confidence: 'C',
+		verification: 'needs-primary-source',
+		basis: 'documented',
+		attributed_to: 'Some Observer',
+		reasoning: 'Reasoned from the decree structure.',
+		falsifiable_by: 'A later decree reversing the structure.',
+		basis_override_reason: 'The primary decree is the claim; the grade reflects the missing secondary literature.'
+	}),
+	'V27: an override without a review object is rejected even with the full envelope',
+	'review object'
+);
 accepts(
 	PositionSchema,
 	pos({
@@ -856,6 +870,30 @@ ok(
 	);
 }
 {
+	// A bound past the cutoff is clamped, so the core can never invert and the
+	// algebra never asserts after the horizon. Without this fixture a mutation
+	// that drops the clamp is invisible: the missing-start trim happens to hide
+	// it, and every end token in the sweep sits before the cutoff.
+	const futureVerified = resolveInterval({ start: '2020-01-01', end: 'verified:2027-01' });
+	ok(
+		'temporal: a verified bound past the cutoff is clamped to the cutoff',
+		futureVerified.status === 'last-verified' &&
+			futureVerified.endEarliest === DATASET_CUTOFF &&
+			futureVerified.endEarliest <= (futureVerified.endLatest ?? 0)
+	);
+	ok(
+		'temporal: a known end beyond the cutoff asserts nothing past it',
+		(() => {
+			const futureEnd = resolveInterval({ start: '2019-01-01', end: '2030-01-01' });
+			return (
+				possiblyActive(futureEnd, DATASET_CUTOFF) &&
+				!certainlyActive(futureEnd, DATASET_CUTOFF + 86_400_000) &&
+				!possiblyActive(futureEnd, DATASET_CUTOFF + 86_400_000)
+			);
+		})()
+	);
+}
+{
 	const monthVerified = resolveInterval({ start: '2019-01-01', end: 'verified:2020-06' });
 	const midpoint = Math.floor((Date.UTC(2020, 5, 1) + Date.UTC(2020, 5, 30, 23, 59, 59)) / 2);
 	ok(
@@ -889,7 +927,7 @@ ok(
 
 {
 	const starts = ['2018-06-01', '2018-06', '2018', '~2017', '~2017-06', '<=2018-06', '>=1984', '?'];
-	const ends = ['2020-06-01', '2020-06', '2020', '~2020', 'ongoing', 'verified:2020-06', 'verified:2020-06-15', '?'];
+	const ends = ['2020-06-01', '2020-06', '2020', '~2020', 'ongoing', 'verified:2020-06', 'verified:2020-06-15', '?', '2030-01-01', 'verified:2027-01'];
 	const queries = [
 		DATASET_FLOOR - 86_400_000,
 		DATASET_FLOOR,
