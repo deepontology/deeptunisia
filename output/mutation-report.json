@@ -1,10 +1,10 @@
 {
-  "generated": "2026-09-11T09:43:07.687Z",
-  "commit": "b00765d",
+  "generated": "2026-09-11T17:55:03.111Z",
+  "commit": "0ff01c6",
   "withValidators": true,
   "summary": {
-    "counted": 41,
-    "killed": 39,
+    "counted": 44,
+    "killed": 42,
     "latent": 2,
     "knownLatent": 2,
     "drift": 0,
@@ -380,6 +380,33 @@
       "by": "test-pipeline",
       "outputChanged": true,
       "expect": "test-pipeline (canonical byte equality)"
+    },
+    {
+      "id": "m49",
+      "label": "review flags revert to a first-match partition (inferred hidden by attributed)",
+      "file": "review-coverage.ts",
+      "verdict": "killed",
+      "by": "test-validators",
+      "outputChanged": true,
+      "expect": "test-validators Phase 8 (inferred + attributed flags)"
+    },
+    {
+      "id": "m50",
+      "label": "an unsubstantiated record stops carrying its attributed flag",
+      "file": "review-coverage.ts",
+      "verdict": "killed",
+      "by": "test-validators",
+      "outputChanged": true,
+      "expect": "test-validators Phase 8 (unsubstantiated + attributed overlap)"
+    },
+    {
+      "id": "m51",
+      "label": "the coverage CSV reports every examined record as independently checked",
+      "file": "review-coverage.ts",
+      "verdict": "killed",
+      "by": "test-validators",
+      "outputChanged": false,
+      "expect": "test-validators Phase 8 (examined is not independent)"
     }
   ]
 }
