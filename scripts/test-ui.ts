@@ -156,6 +156,11 @@ ok(
 );
 
 // Hierarchy + navigation overlays + smoothing.
+const AXIS_TS = readFileSync(join(HERE, '..', 'src', 'lib', 'viz', 'axis.svelte.ts'), 'utf8');
+ok(
+	'the axis gesture yields to no-pan controls (scrub strip vs camera)',
+	AXIS_TS.includes("closest?.('[data-no-pan]')")
+);
 const GROUPS_TS = readFileSync(join(HERE, '..', 'src', 'lib', 'viz', 'groups.ts'), 'utf8');
 ok('lane subsections are ordered by the authored groupOrder, never alphabetical', GROUPS_TS.includes('ds.meta.groupOrder') && !GROUPS_TS.includes('localeCompare'));
 ok('the minimap exists with a live viewport rect', NETWORK.includes('miniView') && NETWORK.includes('class="minimap"'));

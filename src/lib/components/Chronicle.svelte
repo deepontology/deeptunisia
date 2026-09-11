@@ -889,7 +889,9 @@
 	}
 	function onAxisUp(e: PointerEvent) {
 		scrubbing = false;
-		(e.currentTarget as Element).releasePointerCapture?.(e.pointerId);
+		const el = e.currentTarget as Element;
+		// Capture may already be gone (lostpointercapture), so do not assume it.
+		if (el.hasPointerCapture?.(e.pointerId)) el.releasePointerCapture(e.pointerId);
 	}
 
 	// --- Bar geometry ---------------------------------------------------------
@@ -1157,6 +1159,7 @@
 						onpointermove={onAxisMove}
 						onpointerup={onAxisUp}
 						onpointercancel={onAxisUp}
+						onlostpointercapture={onAxisUp}
 					/>
 				</g>
 
