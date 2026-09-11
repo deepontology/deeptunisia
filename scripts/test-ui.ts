@@ -127,10 +127,17 @@ ok('the table caption carries the mode', NETWORK.includes('network.table.caption
 
 // v0.0.2 records are first-class UI: a card, a route, and a search that opens it.
 const RECORD_PANEL = readFileSync(join(HERE, '..', 'src', 'lib', 'components', 'RecordPanel.svelte'), 'utf8');
+const ENTITY_PANEL = readFileSync(join(HERE, '..', 'src', 'lib', 'components', 'EntityPanel.svelte'), 'utf8');
 const INSPECTOR = readFileSync(join(HERE, '..', 'src', 'lib', 'shell', 'Inspector.svelte'), 'utf8');
 const SEARCH = readFileSync(join(HERE, '..', 'src', 'lib', 'components', 'SearchPalette.svelte'), 'utf8');
 const MODEL = readFileSync(join(HERE, '..', 'src', 'lib', 'model.ts'), 'utf8');
 ok('the record card exists and carries basis chips', RECORD_PANEL.includes('basisLabel') && RECORD_PANEL.includes('CommunityActions'));
+ok(
+	'the entity panel shows kind and strength as separate chips',
+	ENTITY_PANEL.includes('basisLabel(') &&
+		ENTITY_PANEL.includes('confidenceLabel(') &&
+		ENTITY_PANEL.includes('tint="var(--basis-')
+);
 ok('every record kind has a lookup map', ['companyById', 'contractById', 'licenceById', 'declarationById', 'educationById', 'eventById'].every((m) => MODEL.includes(m)));
 ok('the Inspector routes records away from the entity panel', INSPECTOR.includes('RecordPanel') && INSPECTOR.includes('personById.has(panelSel)'));
 ok('search opens record cards instead of redirecting to a party', SEARCH.includes("app.selected = r.id") && !SEARCH.includes('no card yet'));
