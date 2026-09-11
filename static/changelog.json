@@ -1,8 +1,43 @@
 [
   {
-    "hash": "e60976d73",
-    "date": "2026-09-11T10:44:39+01:00",
-    "subject": "data: record source relations for 30 claims",
+    "hash": "6fd4601a9",
+    "date": "2026-09-11T11:26:46+01:00",
+    "subject": "data: resolve the kind review, source two JORT appointments (#24)",
+    "kind": "revision",
+    "added": 61,
+    "removed": 39,
+    "files": [
+      {
+        "file": "data/events.yaml",
+        "added": 9,
+        "removed": 0
+      },
+      {
+        "file": "data/positions.yaml",
+        "added": 13,
+        "removed": 3
+      },
+      {
+        "file": "data/relationships.yaml",
+        "added": 9,
+        "removed": 2
+      },
+      {
+        "file": "data/source-exceptions.yaml",
+        "added": 6,
+        "removed": 34
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 24,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "6fd8ae4ec",
+    "date": "2026-09-11T10:47:58+01:00",
+    "subject": "Separate claim kind from evidence strength (V26) (#23)",
     "kind": "expansion",
     "added": 60,
     "removed": 0,

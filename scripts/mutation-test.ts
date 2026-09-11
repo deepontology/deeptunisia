@@ -339,6 +339,25 @@ const MUTATIONS: Mutation[] = [
 		label: 'canonical bytes keep the wall-clock generated timestamp',
 		from: '\tcopy.meta.generated = CANONICAL_GENERATED;\n',
 		to: ''
+	},
+	// --- review-coverage.ts: overlapping flags and honest columns (Phase 8) ------
+	{
+		id: 'm49', file: 'review-coverage.ts', expect: 'test-validators Phase 8 (inferred + attributed flags)',
+		label: 'review flags revert to a first-match partition (inferred hidden by attributed)',
+		from: "\tif (r.basis === 'inferred') out.push('inferred');",
+		to: "\tif (r.basis === 'inferred' && out.length === 0) out.push('inferred');"
+	},
+	{
+		id: 'm50', file: 'review-coverage.ts', expect: 'test-validators Phase 8 (unsubstantiated + attributed overlap)',
+		label: 'an unsubstantiated record stops carrying its attributed flag',
+		from: "\tif (r.attributed_to) out.push('attributed');",
+		to: "\tif (r.attributed_to && r.basis !== 'unsubstantiated') out.push('attributed');"
+	},
+	{
+		id: 'm51', file: 'review-coverage.ts', expect: 'test-validators Phase 8 (examined is not independent)',
+		label: 'the coverage CSV reports every examined record as independently checked',
+		from: '\t\t\t\tindependentlyChecked: 0,',
+		to: '\t\t\t\tindependentlyChecked: isReviewed ? 1 : 0,'
 	}
 ];
 
@@ -347,6 +366,7 @@ const SUITES_FOR: Record<string, string[]> = {
 	'schema.ts': ['test-data.ts', 'test-validators.ts'],
 	'build-data.ts': ['test-data.ts', 'test-validators.ts', 'test-pipeline.ts'],
 	'canonical.ts': ['test-data.ts', 'test-pipeline.ts'],
+	'review-coverage.ts': ['test-data.ts', 'test-validators.ts', 'test-emit.ts'],
 	[ENGINE_TIME]: ['test-validators.ts', 'test-engine-conformance.ts']
 };
 const SYNTHETIC_SUITES = new Set(['test-validators.ts', 'test-pipeline.ts', 'test-engine-conformance.ts']);
