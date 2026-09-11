@@ -18,7 +18,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseDocument } from 'yaml';
 import { applyEdit, assertOnlyTargetChanged, EmitError, type Edit } from './emit.ts';
-import { riskOf } from './admin.ts';
+import { reviewFlagsOf } from './review-coverage.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const read = (f: string) => readFileSync(join(HERE, '..', 'data', f), 'utf8');
@@ -589,35 +589,63 @@ console.log('\n  ── inserting a field first ──\n');
 console.log('\n  ── the editorial tool agrees with the build ──\n');
 
 {
-	// admin.ts keeps its own copy of the risk classification, because build-data.ts
-	// is a script with side effects and cannot be imported. A copy that drifts would
-	// order the review queue by one definition while /about published another — the
-	// queue would say a record is the most dangerous unreviewed thing in the dataset
-	// while the coverage table counted it somewhere else entirely.
-	//
-	// So compare the copy against the published table rather than trusting it.
+	// The published review coverage is recomputed here from the emitted graph with
+	// the shared flag classifier. admin.ts imports the same classifier, so the
+	// queue's ordering and the published table cannot drift apart; this check pins
+	// the emitted numbers themselves.
 	const ds = JSON.parse(
 		readFileSync(join(HERE, '..', 'src', 'generated', 'dataset.json'), 'utf8')
 	);
-	const published = ds.meta.review.byRisk as Record<string, { reviewed: number; total: number }>;
+	const published = ds.meta.review.flags as Record<string, { reviewed: number; total: number }>;
+	const KINDS = [
+		'institutions',
+		'people',
+		'positions',
+		'relationships',
+		'events',
+		'agreements',
+		'worldClaims',
+		'companies',
+		'contracts',
+		'licences',
+		'declarations',
+		'education',
+		'places'
+	] as const;
 
 	const mine: Record<string, { reviewed: number; total: number }> = {};
 	for (const key of Object.keys(published)) mine[key] = { reviewed: 0, total: 0 };
-	for (const kind of ['positions', 'relationships', 'events', 'worldClaims'] as const) {
+	let records = 0;
+	let reviewed = 0;
+	for (const kind of KINDS) {
 		for (const record of ds[kind] ?? []) {
-			const bucket = mine[riskOf(record)];
-			bucket.total++;
-			if (record.review) bucket.reviewed++;
+			records++;
+			const isReviewed = Boolean(record.review);
+			if (isReviewed) reviewed++;
+			for (const flag of reviewFlagsOf(record)) {
+				mine[flag].total++;
+				if (isReviewed) mine[flag].reviewed++;
+			}
 		}
 	}
 
-	for (const [risk, expected] of Object.entries(published)) {
+	for (const [flag, expected] of Object.entries(published)) {
 		ok(
-			`risk bucket "${risk}" matches the published table`,
-			mine[risk].total === expected.total && mine[risk].reviewed === expected.reviewed,
-			`build ${expected.reviewed}/${expected.total}, admin ${mine[risk].reviewed}/${mine[risk].total}`
+			`risk flag "${flag}" matches the published table`,
+			mine[flag].total === expected.total && mine[flag].reviewed === expected.reviewed,
+			`published ${expected.reviewed}/${expected.total}, recomputed ${mine[flag].reviewed}/${mine[flag].total}`
 		);
 	}
+	ok(
+		'the flags overlap: their totals exceed the record count',
+		Object.values(published).reduce((s, f) => s + f.total, 0) > records,
+		`${Object.values(published).reduce((s, f) => s + f.total, 0)} flag hits over ${records} records`
+	);
+	ok(
+		'the headline reviewed/reviewable recomputes from every claim kind',
+		ds.meta.review.reviewed === reviewed && ds.meta.review.reviewable === records,
+		`${ds.meta.review.reviewed}/${ds.meta.review.reviewable}`
+	);
 }
 
 console.log(`\n  ${checks - failures}/${checks} checks passed${failures ? `, ${failures} FAILED` : ''}\n`);

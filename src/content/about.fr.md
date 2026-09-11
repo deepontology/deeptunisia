@@ -47,7 +47,7 @@ Ce chiffre de relecture est délibérément peu flatteur. L'architecture affich�
 
 ## Où est passée cette relecture {#where-review-went}
 
-Un pourcentage unique traite la vérification d'une nomination datée au JORT comme interchangeable avec la vérification d'une allégation non étayée concernant une personne vivante nommée. Ce ne sont pas les mêmes risques, et les moyenner laisse le chiffre identique, que l'effort soit allé quelque part d'utile ou quelque part de confortable. Détail par détail, c'est pire que ce que l'agrégat suggère : chaque relecture jusqu'ici a porté sur les affirmations les mieux étayées, et les fiches les plus capables de nuire n'en ont reçu aucune.
+Un pourcentage unique traite la vérification d'une nomination datée au JORT comme interchangeable avec la vérification d'une allégation non étayée concernant une personne vivante nommée. Ce ne sont pas les mêmes risques, et les moyenner laisse le chiffre identique, que l'effort soit allé quelque part d'utile ou quelque part de confortable. Si l'on ventile par indicateur de risque, la plupart des affirmations non étayées portent déjà une note de relecture, mais toutes les notes jusqu'ici ont été écrites par les passes de compilation et de recherche, et aucune ne consigne de vérification indépendante. Les indicateurs se recoupent, si bien que les lignes ne s'additionnent pas pour former le total, et c'est là tout l'intérêt : une affirmation déduite qui nomme sa source doit apparaître sous les deux indicateurs.
 
 ## Combien de tout cela existe en trois langues {#languages-honest}
 
