@@ -90,16 +90,14 @@ record uses them.
 
 ## Migration
 
-`output/kind-migration.csv` is the record of the move. Its first 30 rows are
-applied: the record's derived kind already matches its evidence, so the row adds
-the source relation and the origin count without changing any published label.
-The remaining rows are proposals: records whose derived kind is `documented` but
-which cite no tier-1 or tier-2 source, marked `research-confirm`. They are not
-applied until a researcher confirms the reclassification, so no label changes
-without a named check.
+`output/kind-migration.csv` is the record of the move. Forty claims now carry an
+explicit kind, source relation and origin count: thirty whose derived kind
+already matched their evidence, eight relabelled `reported` after review, and two
+whose appointments were sourced to the JORT decrees and stay `documented` (their
+grade-A exceptions retire). Every row names its reviewer and its reason, and
+`test-data.ts` fails if a row and the graph disagree.
 
 The assignment is conservative on purpose. Independence counts origin families
 (official record, journalism, unclassified), and journalism counts once, because
 several outlets may share one wire. The claim-level evidence pass separates them
-later. A record is never reclassified wholesale; every row carries its reason,
-and `test-data.ts` fails if an applied row and the graph disagree.
+later. A record is never reclassified wholesale; every row carries its reason.
