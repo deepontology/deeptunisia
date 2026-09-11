@@ -3,6 +3,16 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:77ec217589373233",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "La municipalité de Radès appelle au respect des règles de propreté et de sécurité",
+      "link": "https://kapitalis.com/tunisie/2026/09/10/la-municipalite-de-rades-appelle-au-respect-des-regles-de-proprete-et-de-securite/",
+      "published": "2026-09-10T22:57:47Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
       "id": "feed:kapitalis:d75b84a8020bc31b",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -10963,15 +10973,6 @@
       "title": "Crise de l’électricité : La genèse d’un « blackout »",
       "link": "https://africanmanager.com/crise-de-lelectricite-la-genese-dun-blackout/",
       "published": "2026-08-09T17:39:56Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:c5df7df27ff8b135",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Le projet du code des eaux, dans sa version amendée, a intégré les remarques des différents ministères et structures concernées",
-      "link": "https://africanmanager.com/le-projet-du-code-des-eaux-dans-sa-version-amendee-a-integre-les-remarques-des-differents-ministeres-et-structures-concernees/",
-      "published": "2026-08-09T17:17:49Z",
       "lang": "fr"
     }
   ]
