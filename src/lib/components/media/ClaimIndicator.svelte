@@ -8,6 +8,9 @@
 	 * who has learned the Chronicle's colours reads this without re-learning.
 	 */
 
+	import { app } from '$lib/state.svelte';
+	import { t } from '$lib/t.svelte';
+	import { format, translate } from '$lib/i18n';
 	import type { Claim } from '$lib/media/types';
 
 	interface Props {
@@ -20,6 +23,12 @@
 
 	const grade = $derived(claim.grade);
 	const id = $derived(claim.id);
+	/** The grade as a word, from the dictionary; an unknown grade falls back to its id. */
+	const gradeLabel = $derived.by(() => {
+		const key = `media.claim.grade.${grade}`;
+		const label = translate(app.locale, key);
+		return label === key ? grade : label;
+	});
 	// Every known grade maps to its own basis colour. An UNKNOWN grade gets a
 	// deliberately unclassified neutral: it must never borrow the documented
 	// green, which would lend an ungraded claim the strongest standing in the
@@ -42,13 +51,13 @@
 	style:--c={tint}
 	aria-expanded={expanded}
 	aria-controls={`claim-expansion-${id}`}
-	aria-label="Evidence claim {id}, grade: {grade}"
+	aria-label={format(app.locale, 'media.claim.aria', { id, grade: gradeLabel })}
 	onclick={(e) => { e.stopPropagation(); onclick(); }}
 >
 	<span class="dot" aria-hidden="true"></span>
 	{id}
 	{#if claim.disputed}
-		<span class="disputed-mark" aria-label="disputed">!</span>
+		<span class="disputed-mark" aria-label={t('media.claim.disputed')}>!</span>
 	{/if}
 </button>
 

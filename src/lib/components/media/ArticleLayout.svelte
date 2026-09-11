@@ -17,8 +17,10 @@
 	 */
 
 	import { onMount } from 'svelte';
-	import { t } from '$lib/t.svelte';
 	import { app } from '$lib/state.svelte';
+	import { t, formatDate } from '$lib/t.svelte';
+	import { format } from '$lib/i18n';
+	import { localized } from '$lib/media/meta';
 	import { resolveEntity } from '$lib/model';
 	import type { InvestigationBundle, ContentBlock, Entity } from '$lib/media/types';
 	import ClaimIndicator from './ClaimIndicator.svelte';
@@ -41,6 +43,9 @@
 	const interpretations = $derived(investigation.interpretations?.interpretations ?? []);
 	const narrative = $derived(investigation.narrative);
 	const sections = $derived(narrative.en?.sections ?? []);
+
+	/** The bundle stores ISO dates; the rest of the site shows them in the reader's locale. */
+	const when = (iso: string) => (iso ? formatDate(new Date(iso).getTime()) : '');
 
 	/** Group narrative blocks under their section markers. */
 	const groupedAll = $derived.by(() => {
@@ -125,27 +130,27 @@
 	<div class="article-col">
 		<header class="article-header">
 			{#if meta.series}
-				<span class="series">{meta.series.title.en} · #{String(meta.series.position ?? '')}</span>
+				<span class="series">{localized(meta.series.title)} · #{String(meta.series.position ?? '')}</span>
 			{/if}
-			<h1>{meta.title.en}</h1>
-			<p class="dek">{meta.subtitle.en}</p>
+			<h1>{localized(meta.title)}</h1>
+			<p class="dek">{localized(meta.subtitle)}</p>
 			<div class="meta-line">
-				<span>{meta.published}</span>
+				<span>{t('media.published')}: {when(meta.published)}</span>
 				<span class="sep">·</span>
-				<span>{meta.reading_time_minutes} min read</span>
+				<span>{format(app.locale, 'media.article.readtime', { n: meta.reading_time_minutes })}</span>
 			</div>
 		</header>
 
 		{#if introGroup}
-			<section class="intro-box" class:open={introOpen} aria-label="How to read this investigation">
+			<section class="intro-box" class:open={introOpen} aria-label={t('media.intro.title')}>
 				<details class="intro-details" bind:open={introOpen}>
 					<summary class="intro-toggle">
 						<span class="intro-toggle-main">
-							<span class="intro-toggle-label">How to read this investigation</span>
-							<span class="intro-toggle-sub">Evidence badges · Entity links · Corrections</span>
+							<span class="intro-toggle-label">{t('media.intro.title')}</span>
+							<span class="intro-toggle-sub">{t('media.intro.sub')}</span>
 						</span>
 						<span class="intro-toggle-action" aria-hidden="true">
-							<span class="intro-toggle-hint">{introOpen ? 'Hide' : 'Show'}</span>
+							<span class="intro-toggle-hint">{introOpen ? t('media.intro.hide') : t('media.intro.show')}</span>
 							<span class="intro-toggle-icon" class:open={introOpen}>
 								<svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
 									<path d="M5 3.5L10 8L5 12.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
@@ -160,19 +165,19 @@
 						<div class="intro-profile">
 							<div class="profile-item">
 								<span class="profile-num">{evidence.claims.length}</span>
-								<span class="profile-label">claims</span>
+								<span class="profile-label">{t('media.profile.claims')}</span>
 							</div>
 							<div class="profile-item">
 								<span class="profile-num">{sources.sources.length}</span>
-								<span class="profile-label">sources</span>
+								<span class="profile-label">{t('media.profile.sources')}</span>
 							</div>
 							<div class="profile-item">
 								<span class="profile-num">{evidence.claims.filter((c) => c.disputed).length}</span>
-								<span class="profile-label">disputed</span>
+								<span class="profile-label">{t('media.profile.disputed')}</span>
 							</div>
 							<div class="profile-item">
 								<span class="profile-num">{evidence.claims.filter((c) => c.grade === 'unsubstantiated').length}</span>
-								<span class="profile-label">unresolved</span>
+								<span class="profile-label">{t('media.profile.unresolved')}</span>
 							</div>
 						</div>
 					</div>
@@ -199,16 +204,16 @@
 		<!-- Evidence ledger — real table, not div-based. The article's claims
 		     are authoritative; this renders them as a proper <table> with
 		     <th scope> so screen readers and the smoke ledger check see it. -->
-		<section class="ledger" aria-label="Evidence ledger">
-			<h2 class="ledger-title">Evidence ledger</h2>
+		<section class="ledger" aria-label={t('media.evidence.title')}>
+			<h2 class="ledger-title">{t('media.evidence.title')}</h2>
 			<div class="ledger-scroll">
 				<table>
 					<thead>
 						<tr>
-							<th scope="col">Claim</th>
-							<th scope="col">Grade</th>
-							<th scope="col">Text</th>
-							<th scope="col">Sources</th>
+							<th scope="col">{t('media.ledger.claim')}</th>
+							<th scope="col">{t('media.ledger.grade')}</th>
+							<th scope="col">{t('media.ledger.text')}</th>
+							<th scope="col">{t('media.sources.title')}</th>
 						</tr>
 					</thead>
 					<tbody>

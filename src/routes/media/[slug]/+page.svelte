@@ -1,5 +1,8 @@
 <script lang="ts">
-	import { t } from '$lib/t.svelte';
+	import { app } from '$lib/state.svelte';
+	import { t, formatDate } from '$lib/t.svelte';
+	import { format } from '$lib/i18n';
+	import { localized } from '$lib/media/meta';
 	import type { InvestigationBundle } from '$lib/media/types';
 
 	/**
@@ -16,24 +19,39 @@
 	const hasTimeline = $derived(compList.some((c) => c.type === 'timeline'));
 	const hasDataTables = $derived(compList.some((c) => c.type === 'data-tables'));
 	const hasExclusions = $derived(compList.some((c) => c.type === 'exclusions'));
+
+	const claimCount = $derived((investigation.evidence?.claims ?? []).length);
+	const sourceCount = $derived((investigation.sources?.sources ?? []).length);
+	const disputedCount = $derived(
+		(investigation.evidence?.claims ?? []).filter((c: { disputed?: boolean }) => c.disputed).length
+	);
+	const unresolvedCount = $derived(
+		(investigation.evidence?.claims ?? []).filter((c: { grade?: string }) => c.grade === 'unsubstantiated').length
+	);
+	const timelineCount = $derived((investigation.timeline?.events ?? []).length);
+	const exclusionCount = $derived((investigation.exclusions?.exclusions ?? []).length);
+	const recordCount = $derived((research?.records_created ?? []).length);
+
+	/** The bundle stores ISO dates; the rest of the site shows them in the reader's locale. */
+	const when = (iso: string) => (iso ? formatDate(new Date(iso).getTime()) : '');
 </script>
 
 <svelte:head>
-	<title>{meta.title.en} · Media · DeepTunisia</title>
-	<meta name="description" content={meta.subtitle.en} />
+	<title>{localized(meta.title)} · Media · DeepTunisia</title>
+	<meta name="description" content={localized(meta.subtitle)} />
 </svelte:head>
 
 <div class="page">
 	<header class="page-head">
 		{#if meta.series}
-			<span class="eyebrow">{t('media.series.prefix')}: {meta.series.title.en} · #{meta.series.position}</span>
+			<span class="eyebrow">{t('media.series.prefix')}: {localized(meta.series.title)} · #{meta.series.position}</span>
 		{/if}
-		<h1>{meta.title.en}</h1>
-		<div class="dek">{meta.subtitle.en}</div>
+		<h1>{localized(meta.title)}</h1>
+		<div class="dek">{localized(meta.subtitle)}</div>
 		<div class="meta-line">
-			<span>{t('media.published')}: {meta.published}</span>
+			<span>{t('media.published')}: {when(meta.published)}</span>
 			<span>·</span>
-			<span>{meta.reading_time_minutes} min read</span>
+			<span>{format(app.locale, 'media.article.readtime', { n: meta.reading_time_minutes })}</span>
 		</div>
 	</header>
 
@@ -41,20 +59,20 @@
 		<!-- Primary CTA -->
 		<a class="primary-cta" href="/media/{meta.slug}/article">
 			<span class="cta-label">{t('media.article.read')}</span>
-			<span class="cta-meta">{meta.reading_time_minutes} min · {(investigation.evidence?.claims ?? []).length} claims · {(investigation.sources?.sources ?? []).length} sources</span>
+			<span class="cta-meta">{format(app.locale, 'media.article.readtime', { n: meta.reading_time_minutes })} · {format(app.locale, 'media.evidence.claims', { n: claimCount })} · {format(app.locale, 'media.card.sources', { n: sourceCount })}</span>
 		</a>
 
 		<!-- Evidence profile -->
 		<div class="evidence-profile">
-			<div class="ep-title">Evidence profile</div>
+			<div class="ep-title">{t('media.evidence.profile')}</div>
 			<div class="ep-stats">
-				<span>{(investigation.evidence?.claims ?? []).length} claims</span>
+				<span>{format(app.locale, 'media.evidence.claims', { n: claimCount })}</span>
 				<span>·</span>
-				<span>{(investigation.sources?.sources ?? []).length} sources</span>
+				<span>{format(app.locale, 'media.card.sources', { n: sourceCount })}</span>
 				<span>·</span>
-				<span>{(investigation.evidence?.claims ?? []).filter((c: { disputed?: boolean }) => c.disputed).length} disputed</span>
+				<span>{format(app.locale, 'media.evidence.disputed', { n: disputedCount })}</span>
 				<span>·</span>
-				<span>{(investigation.evidence?.claims ?? []).filter((c: { grade?: string }) => c.grade === 'unsubstantiated').length} unresolved</span>
+				<span>{format(app.locale, 'media.evidence.unresolved', { n: unresolvedCount })}</span>
 			</div>
 		</div>
 
@@ -62,31 +80,31 @@
 		<div class="views-grid">
 			<a class="view-card" href="/media/{meta.slug}/article">
 				<span class="view-icon">📖</span>
-				<span class="view-label">Article</span>
-				<span class="view-desc">The full narrative</span>
+				<span class="view-label">{t('media.view.article')}</span>
+				<span class="view-desc">{t('media.view.article.desc')}</span>
 			</a>
 			<a class="view-card" href="/media/{meta.slug}/article">
 				<span class="view-icon">📋</span>
 				<span class="view-label">{t('media.evidence.title')}</span>
-				<span class="view-desc">{(investigation.evidence?.claims ?? []).length} claims</span>
+				<span class="view-desc">{format(app.locale, 'media.evidence.claims', { n: claimCount })}</span>
 			</a>
 			{#if hasTimeline}
 				<a class="view-card" href="/media/{meta.slug}/article">
 					<span class="view-icon">📅</span>
 					<span class="view-label">{t('media.timeline.title')}</span>
-					<span class="view-desc">{(investigation.timeline?.events ?? []).length} events</span>
+					<span class="view-desc">{format(app.locale, 'media.timeline.events', { n: timelineCount })}</span>
 				</a>
 			{/if}
 			<a class="view-card" href="/media/{meta.slug}/article">
 				<span class="view-icon">📚</span>
 				<span class="view-label">{t('media.sources.title')}</span>
-				<span class="view-desc">{(investigation.sources?.sources ?? []).length} entries</span>
+				<span class="view-desc">{format(app.locale, 'media.sources.entries', { n: sourceCount })}</span>
 			</a>
 			{#if hasExclusions}
 				<a class="view-card" href="/media/{meta.slug}/article">
 					<span class="view-icon">🚫</span>
 					<span class="view-label">{t('media.exclusions.title')}</span>
-					<span class="view-desc">{(investigation.exclusions?.exclusions ?? []).length} items</span>
+					<span class="view-desc">{format(app.locale, 'media.exclusions.items', { n: exclusionCount })}</span>
 				</a>
 			{/if}
 		</div>
@@ -94,16 +112,16 @@
 		<!-- Research details -->
 		{#if research}
 			<div class="research-details">
-				<div class="rd-title">Research details</div>
+				<div class="rd-title">{t('media.research.title')}</div>
 				<dl>
 					<dt>{t('media.research.researcher')}</dt>
 					<dd>{research.researcher}</dd>
 					<dt>{t('media.research.period')}</dt>
 					<dd>{research.research_period}</dd>
 					<dt>{t('media.research.sources_consulted')}</dt>
-					<dd>{research.sources_consulted_count} ({research.primary_sources_count} primary)</dd>
+					<dd>{format(app.locale, 'media.evidence.sources', { n: research.sources_consulted_count, n_primary: research.primary_sources_count })}</dd>
 					<dt>{t('media.research.records_created')}</dt>
-					<dd>{(research.records_created ?? []).length} files</dd>
+					<dd>{format(app.locale, 'media.research.files', { n: recordCount })}</dd>
 				</dl>
 			</div>
 		{/if}
