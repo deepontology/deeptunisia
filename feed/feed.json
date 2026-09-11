@@ -3,6 +3,106 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:77ec217589373233",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "La municipalité de Radès appelle au respect des règles de propreté et de sécurité",
+      "link": "https://kapitalis.com/tunisie/2026/09/10/la-municipalite-de-rades-appelle-au-respect-des-regles-de-proprete-et-de-securite/",
+      "published": "2026-09-10T22:57:47Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:d75b84a8020bc31b",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Un nouveau projet de coopération technique pour renforcer les services d’eau à Sfax",
+      "link": "https://kapitalis.com/tunisie/2026/09/10/un-nouveau-projet-de-cooperation-technique-pour-renforcer-les-services-deau-a-sfax/",
+      "published": "2026-09-10T22:09:03Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:b82f31d2bf8a84c6",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Point sur l’état de santé de Wael Nawar, en grève de la faim depuis 26 jours",
+      "link": "https://kapitalis.com/tunisie/2026/09/10/point-sur-letat-de-sante-de-wael-nawar-en-greve-de-la-faim-depuis-26-jours/",
+      "published": "2026-09-10T21:55:30Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:590343f73a61be7c",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Pluies orageuses en Tunisie | Appel à la vigilance",
+      "link": "https://kapitalis.com/tunisie/2026/09/10/pluies-orageuses-en-tunisie-appel-a-la-vigilance/",
+      "published": "2026-09-10T20:28:32Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:e94413b88229981b",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "JCC 2026 | Ouverture des inscriptions pour la compétition internationale « Visions+ »",
+      "link": "https://kapitalis.com/tunisie/2026/09/10/jcc-2026-ouverture-des-inscriptions-pour-la-competition-internationale-visions/",
+      "published": "2026-09-10T19:58:51Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:f499391b6fa9eee2",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Mourad Zeghidi exprime sa solidarité avec Ghazi Mrabet et Mohamed Yousfi",
+      "link": "https://kapitalis.com/tunisie/2026/09/10/mourad-zeghidi-exprime-sa-solidarite-avec-ghazi-mrabet-et-mohamed-yousfi/",
+      "published": "2026-09-10T19:22:36Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:african-manager:2c7890191144cdaa",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Les fournitures scolaires sous haute surveillance",
+      "link": "https://africanmanager.com/cette-initiative-qui-intervient-a-la-rentree-scolaire-a-pour/",
+      "published": "2026-09-10T16:12:12Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:02de4bd671e76ef1",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "La Tunisie au Forum des États membres de l’OCI",
+      "link": "https://africanmanager.com/participation-de-la-tunisie-a-la-premiere-session-du-forum-des-communautes-des-etats-membres-de-loci/",
+      "published": "2026-09-10T14:44:21Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:3f0191668b8cda99",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Accès à l’eau : 402 alertes citoyennes en août 2026",
+      "link": "https://africanmanager.com/acces-a-leau-402-alertes-citoyennes-en-aout-2026/",
+      "published": "2026-09-10T14:41:39Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:54f94bb119b08d24",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Formation spécialisée pour les recharges de véhicules électriques",
+      "link": "https://africanmanager.com/formation-specialisee-pour-les-recharges-de-vehicules-electriques/",
+      "published": "2026-09-10T13:13:45Z",
+      "lang": "fr",
+      "author": "Africanmanager"
+    },
+    {
       "id": "feed:african-manager:085cbd03c8bc7503",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -81,6 +181,16 @@
       "published": "2026-09-10T12:31:34Z",
       "lang": "fr",
       "author": "Africanmanager"
+    },
+    {
+      "id": "feed:african-manager:9c4e41446d036129",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "L’électricité tunisienne carbure au gaz de quelqu’un d’autre",
+      "link": "https://africanmanager.com/lelectricite-tunisienne-carbure-au-gaz-de-quelquun-dautre/",
+      "published": "2026-09-10T12:00:00Z",
+      "lang": "fr",
+      "author": "African Manager"
     },
     {
       "id": "feed:african-manager:6018b0171d28d0ad",
@@ -10863,105 +10973,6 @@
       "title": "Crise de l’électricité : La genèse d’un « blackout »",
       "link": "https://africanmanager.com/crise-de-lelectricite-la-genese-dun-blackout/",
       "published": "2026-08-09T17:39:56Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:c5df7df27ff8b135",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Le projet du code des eaux, dans sa version amendée, a intégré les remarques des différents ministères et structures concernées",
-      "link": "https://africanmanager.com/le-projet-du-code-des-eaux-dans-sa-version-amendee-a-integre-les-remarques-des-differents-ministeres-et-structures-concernees/",
-      "published": "2026-08-09T17:17:49Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:43d1765dd041a26f",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Crise de l’eau : 608 signalements en juillet, une urgence hydrique sans précédent",
-      "link": "https://africanmanager.com/crise-de-leau-608-signalements-en-juillet-une-urgence-hydrique-sans-precedent/",
-      "published": "2026-08-09T17:13:15Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:513a03e82e2e404c",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Migration : Le vade-mecum du retour volontaire !",
-      "link": "https://africanmanager.com/migration-le-vade-mecum-du-retour-volontaire/",
-      "published": "2026-08-09T17:00:00Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:069defaa99131b4b",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "L’Iran examine un accord sur Hormuz au milieu de perspectives incertaines avec les États-Unis",
-      "link": "https://africanmanager.com/liran-examine-un-accord-sur-hormuz-au-milieu-de-perspectives-incertaines-avec-les-etats-unis/",
-      "published": "2026-08-09T14:47:48Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:994e0197bd9c46a6",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Un haut gradé de l’armée américaine exhorte à une « sortie de guerre » contre l’Iran",
-      "link": "https://africanmanager.com/un-haut-grade-de-larmee-americaine-exhorte-a-une-sortie-de-guerre-contre-liran/",
-      "published": "2026-08-09T13:23:42Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:944ac45c71fc8c79",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Netanyahu affirme rejeter le plan de désarmement de Gaza du Conseil pour la paix",
-      "link": "https://africanmanager.com/netanyahu-affirme-rejeter-le-plan-de-desarmement-de-gaza-du-conseil-pour-la-paix/",
-      "published": "2026-08-09T13:23:27Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:a23e82a1e4ce9334",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Création d’un « SPEEDUP Tunisia Hub » à Tunis pour soutenir les PME et startups",
-      "link": "https://africanmanager.com/creation-dun-speedup-tunisia-hub-a-tunis-pour-soutenir-les-pme-et-startups/",
-      "published": "2026-08-09T13:22:19Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:85886a4d3bbcc57f",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Tunisie | Record des signalements de coupures d’eau en juillet",
-      "link": "https://kapitalis.com/tunisie/2026/08/09/tunisie-record-des-signalements-de-coupures-deau-en-juillet/",
-      "published": "2026-08-09T13:06:40Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:a29965873f126db8",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Des condamnés nettoient une plage à Djerba",
-      "link": "https://kapitalis.com/tunisie/2026/08/09/des-condamnes-nettoient-une-plage-a-djerba/",
-      "published": "2026-08-09T12:41:36Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:da562a1f217a5312",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Subvention américaine de 1,5 million de dollars pour un projet dans le phosphate tunisien !",
-      "link": "https://kapitalis.com/tunisie/2026/08/09/subvention-americaine-de-15-million-de-dollars-pour-un-projet-dans-le-phosphate-tunisien/",
-      "published": "2026-08-09T12:17:21Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:16dc82d0569e7d4d",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Nabeul : plus de 8.800 bouteilles d’eau minérale saisies pour suspicion de spéculation",
-      "link": "https://africanmanager.com/nabeul-plus-de-8-800-bouteilles-deau-minerale-saisies-pour-suspicion-de-speculation/",
-      "published": "2026-08-09T12:00:23Z",
       "lang": "fr"
     }
   ]
