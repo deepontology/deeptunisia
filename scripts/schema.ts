@@ -26,7 +26,11 @@ import { DEFAULT_PARAMETERS, type Parameters } from './parameters';
  * V28      recursive strictness (Phase 1C): an undeclared key anywhere in a
  *          claim-bearing record, including inside review, dispute and nested
  *          objects, fails instead of being silently stripped.
- * V29      source-record schema refinements (reserved; Phase 7).
+ * V29      claim-level evidence (Phase 7): a support/refute passage carries a
+ *          type (quote or marked paraphrase), a locator, a retrieval date, and
+ *          either a real timestamped capture or a dated retry promise. A
+ *          generated year-only archive lookup is not a capture. Source-record
+ *          schema refinements land in the same pass.
  *
  * Numbering note: the pre-submission grant draft used "V25" for the grade-B
  * corroboration rule (confidence B needs two sources or `attributed_to`). That
@@ -79,6 +83,57 @@ export const SourceRelation = z.enum([
 	'circulating-claim'
 ]);
 export type SourceRelationValue = z.infer<typeof SourceRelation>;
+
+/**
+ * CLAIM-LEVEL EVIDENCE (V29) — the passage, not the bibliography.
+ *
+ * `sources` says which records carry a claim; it does not say where in them, or
+ * whether the cited page was ever captured. An evidence entry binds the claim to
+ * an exact passage and a locator, and requires either a real capture or a dated
+ * promise to make one. `lineage` names the originating report and each
+ * republishing step, so two outlets sharing one wire count as one origin.
+ */
+export const EvidenceSchema = z
+	.strictObject({
+		passage_type: z.enum(['quote', 'paraphrase']),
+		/** Verbatim for `quote`; a close reading, marked as such, for `paraphrase`. */
+		passage: z
+			.string()
+			.refine((v) => nonBlank(v, 10), 'a passage must be at least 10 non-blank characters'),
+		/** Page, article section or timestamp: where in the source the passage sits. */
+		locator: z
+			.string()
+			.refine((v) => nonBlank(v, 2), 'evidence needs a locator (page, section or timestamp)'),
+		retrieved_at: z
+			.string()
+			.regex(/^\d{4}-\d{2}-\d{2}$/, 'retrieved_at must be an ISO date (YYYY-MM-DD)'),
+		/** A real snapshot, never a generated archive lookup. */
+		capture_url: z.string().url().optional(),
+		/** When no capture exists yet, the date a retry is owed. */
+		capture_missing: z
+			.string()
+			.regex(/^\d{4}-\d{2}-\d{2}$/, 'capture_missing must be an ISO retry date (YYYY-MM-DD)')
+			.optional(),
+		/** Originating report plus each republishing step, in order. */
+		lineage: z
+			.array(z.strictObject({ publisher: z.string().min(2), url: z.string().url().optional() }))
+			.default([])
+	})
+	.superRefine((e, ctx) => {
+		if (!e.capture_url && !e.capture_missing) {
+			ctx.addIssue({
+				code: 'custom',
+				message: 'evidence needs a capture_url, or capture_missing with the retry date (V29)'
+			});
+		}
+		if (e.capture_url && /web\.archive\.org\/web\/\d{4}\//.test(e.capture_url)) {
+			ctx.addIssue({
+				code: 'custom',
+				message:
+					'capture_url must be an actual snapshot (timestamped), not a year-only archive lookup (V29)'
+			});
+		}
+	});
 
 const claimAxes = {
 	/** How the cited sources relate to the claim itself (V26). */
@@ -608,6 +663,7 @@ export const InstitutionSchema = withClaimEnvelope(
 	 */
 	basis_override_reason: z.string().optional(),
 	...claimAxes,
+	evidence: z.array(EvidenceSchema).optional(),
 	disputes: z.array(DisputeSchema).default([]),
 	review: ReviewSchema.optional(),
 	sources: z.array(slug).default([]),
@@ -679,6 +735,7 @@ export const PersonSchema = withClaimEnvelope(
 	/** V27 — why the authored `basis` overrides the grade-implied basis. */
 	basis_override_reason: z.string().optional(),
 	...claimAxes,
+	evidence: z.array(EvidenceSchema).optional(),
 	disputes: z.array(DisputeSchema).default([]),
 	review: ReviewSchema.optional(),
 	notes: z.array(z.string()).default([]),
@@ -722,6 +779,7 @@ export const PositionSchema = withClaimEnvelope(
 	/** V27 — why the authored `basis` overrides the grade-implied basis. */
 	basis_override_reason: z.string().optional(),
 	...claimAxes,
+	evidence: z.array(EvidenceSchema).optional(),
 	/** Competing versions of the same span, recorded rather than silently resolved. */
 	disputes: z.array(DisputeSchema).default([]),
 	/** This record was merged into another (V16 escape, spec §13.3). */
@@ -777,6 +835,7 @@ export const RelationshipSchema = withClaimEnvelope(
 		/** V27 — why the authored `basis` overrides the grade-implied basis. */
 		basis_override_reason: z.string().optional(),
 		...claimAxes,
+		evidence: z.array(EvidenceSchema).optional(),
 		disputes: z.array(DisputeSchema).default([]),
 		/** This record was merged into another (V16 escape, spec §13.3). */
 		merged_into: slug.optional(),
@@ -912,6 +971,7 @@ export const EventSchema = withClaimEnvelope(
 	/** V27 — why the authored `basis` overrides the grade-implied basis. */
 	basis_override_reason: z.string().optional(),
 	...claimAxes,
+	evidence: z.array(EvidenceSchema).optional(),
 	/** Competing characterisations, shown side by side rather than adjudicated. */
 	contested: z
 		.array(z.strictObject({ framing: z.string(), held_by: z.string(), source: slug.optional() }))
@@ -984,6 +1044,7 @@ export const AgreementSchema = withClaimEnvelope(
 		/** V27 — why the authored `basis` overrides the grade-implied basis. */
 		basis_override_reason: z.string().optional(),
 		...claimAxes,
+		evidence: z.array(EvidenceSchema).optional(),
 		disputes: z.array(DisputeSchema).default([]),
 		review: ReviewSchema.optional(),
 		sources: z.array(slug).min(1, 'every agreement needs at least one source'),
@@ -1025,6 +1086,7 @@ export const WorldClaimSchema = withClaimEnvelope(
 		/** V27 — why the authored `basis` overrides the grade-implied basis. */
 		basis_override_reason: z.string().optional(),
 		...claimAxes,
+		evidence: z.array(EvidenceSchema).optional(),
 		disputes: z.array(DisputeSchema).default([]),
 		review: ReviewSchema.optional(),
 		notes: z.array(z.string()).default([]),
@@ -1109,7 +1171,8 @@ export const CompanySchema = withClaimEnvelope(
 		notes_ar: z.array(z.string()).optional(),
 		notes_fr_by: z.string().optional(),
 		notes_ar_by: z.string().optional(),
-		...claimFields
+		...claimFields,
+		evidence: z.array(EvidenceSchema).optional(),
 	})
 );
 
@@ -1149,7 +1212,8 @@ export const ContractSchema = withClaimEnvelope(
 		/** Free-text editorial context (announced-vs-awarded notes, negative findings). */
 		notes: z.array(z.string()).default([]),
 		...translatable('notes', 'list'),
-		...claimFields
+		...claimFields,
+		evidence: z.array(EvidenceSchema).optional(),
 	})
 );
 
@@ -1177,7 +1241,8 @@ export const LicenceSchema = withClaimEnvelope(
 		/** Free-text editorial context (decree references, licence chains). */
 		notes: z.array(z.string()).default([]),
 		...translatable('notes', 'list'),
-		...claimFields
+		...claimFields,
+		evidence: z.array(EvidenceSchema).optional(),
 	})
 );
 
@@ -1203,7 +1268,8 @@ export const DeclarationSchema = withClaimEnvelope(
 		/** Free-text editorial context (filing history, verification status). */
 		notes: z.array(z.string()).default([]),
 		...translatable('notes', 'list'),
-		...claimFields
+		...claimFields,
+		evidence: z.array(EvidenceSchema).optional(),
 	})
 );
 
@@ -1225,7 +1291,8 @@ export const EducationSchema = withClaimEnvelope(
 		end: dateToken.optional(),
 		notes: z.array(z.string()).default([]),
 		...translatable('notes', 'list'),
-		...claimFields
+		...claimFields,
+		evidence: z.array(EvidenceSchema).optional(),
 	})
 );
 
@@ -1733,6 +1800,7 @@ export const PlaceSchema = withClaimEnvelope(
 		/** Graph entity (institution/person) that owns or operates it, when known. */
 		owner: slug.optional(),
 		...claimFields,
+		evidence: z.array(EvidenceSchema).optional(),
 		/**
 		 * Source-backed notes (English base; `_fr`/`_ar` siblings via the
 		 * translatable spread below). The base key was omitted when the schema
