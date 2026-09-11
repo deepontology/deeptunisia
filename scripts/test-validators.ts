@@ -58,6 +58,14 @@ import {
 } from './dates.ts';
 import { configureTime } from './dates.ts';
 import { loadParameters } from './parameters.ts';
+import {
+	reviewFlagsOf,
+	reviewRiskOf,
+	summariseReview,
+	reviewCoverageCsv,
+	REVIEW_FLAGS,
+	type ReviewInput
+} from './review-coverage.ts';
 import { fileURLToPath } from 'node:url';
 
 // The engine ships neutral example defaults; the fixtures below assert the
@@ -1106,6 +1114,76 @@ ok(
 		`temporal: generated sweep upholds the invariants (${cases} cases)`,
 		cases === 1000 && failures.length === 0,
 		failures[0] ?? `${cases} cases`
+	);
+}
+
+// ---------------------------------------------------------------------------
+// Phase 8 — review coverage. The old aggregation was a first-match partition,
+// so an inferred claim that named its source was counted under `attributed` and
+// the published `inferred` bucket read 0/0 while inferred records existed. These
+// fixtures pin the replacement: flags overlap, every claim kind has a
+// denominator, and `independently_checked` is never inferred from `examined`.
+// ---------------------------------------------------------------------------
+
+{
+	const inferredAttributed = { basis: 'inferred', attributed_to: 'a named source' };
+	const flags = reviewFlagsOf(inferredAttributed);
+	ok(
+		'Phase 8: an inferred claim that names its source carries both flags',
+		flags.includes('inferred') && flags.includes('attributed'),
+		flags.join(', ')
+	);
+	ok(
+		'Phase 8: the queue ordering key stays the most damaging flag',
+		reviewRiskOf(inferredAttributed) === 'attributed',
+		reviewRiskOf(inferredAttributed)
+	);
+	ok(
+		'Phase 8: a documentary claim with a named claimant carries both flags',
+		reviewFlagsOf({ basis: 'documented', attributed_to: 'a named source' }).join(',') ===
+			'attributed,documented'
+	);
+	ok(
+		'Phase 8: every flag is represented in the published order',
+		REVIEW_FLAGS.join(',') === 'unsubstantiated,attributed,inferred,reported,documented'
+	);
+
+	const rows: ReviewInput[] = [
+		{ kind: 'relationship', basis: 'inferred', attributed_to: 'a named source' },
+		{ kind: 'relationship', basis: 'documented' },
+		{ kind: 'event', basis: 'unsubstantiated', attributed_to: 'a circulating account', review: {} }
+	];
+	const summary = summariseReview(rows);
+	ok(
+		'Phase 8: flag totals overlap rather than partition',
+		summary.flags.inferred.total === 1 &&
+			summary.flags.attributed.total === 2 &&
+			summary.flags.documented.total === 1,
+		`inferred ${summary.flags.inferred.total}, attributed ${summary.flags.attributed.total}, documented ${summary.flags.documented.total}`
+	);
+	ok(
+		'Phase 8: every claim kind gets a denominator, including the empty ones',
+		Object.keys(summary.byKind).length === 13 && summary.byKind.event.total === 1,
+		`${Object.keys(summary.byKind).length} kinds`
+	);
+	ok(
+		'Phase 8: examined never implies independently checked',
+		summary.coverage.every((c) => c.independentlyChecked === 0) && summary.reviewed === 1,
+		`examined ${summary.reviewed}, independent 0`
+	);
+	const csv = reviewCoverageCsv(summary);
+	const header = csv.split('\n')[0];
+	ok(
+		'Phase 8: the coverage CSV carries the spec columns',
+		header ===
+			'kind,basis,total,examined,independently_checked,supported,refuted,disputed,unresolved',
+		header
+	);
+	ok(
+		'Phase 8: the coverage CSV recomputes from the summary',
+		csv.includes('relationship,inferred,1,0,0,0,0,0,0') &&
+			csv.includes('event,unsubstantiated,1,1,0,0,0,0,0'),
+		`${csv.trim().split('\n').length - 1} row(s)`
 	);
 }
 

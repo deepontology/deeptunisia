@@ -11,6 +11,7 @@ import { fileURLToPath } from 'node:url';
 import { parse as parseYaml } from 'yaml';
 import { RelationshipType, EDGE_DIRECTION, REQUIRED_SOURCE_KINDS } from '../scripts/schema.ts';
 import { computeDatasetHash } from './canonical.ts';
+import { reviewCoverageCsv, summariseReview, type ReviewInput, type ReviewKind } from './review-coverage.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ds = JSON.parse(readFileSync(join(HERE, '..', 'src', 'generated', 'dataset.json'), 'utf8'));
@@ -1297,6 +1298,61 @@ const KIND_TO_DATASET: Record<string, string> = {
 		typeof ds.meta.shippedKB === 'number' && ds.meta.shippedKB > 0 && typeof ds.meta.datasetKB === 'number' && ds.meta.datasetKB > 0,
 		`shippedKB=${ds.meta.shippedKB}, datasetKB=${ds.meta.datasetKB}`
 	);
+}
+
+// Phase 8: the published review coverage must recompute from the emitted graph.
+// The old aggregation was a first-match partition over four kinds; this pins the
+// replacement, including the overlap that makes a record visible under every flag
+// true of it, and compares the published CSV byte-for-byte.
+{
+	const REVIEWED_KINDS: [string, ReviewKind][] = [
+		['institutions', 'institution'],
+		['people', 'person'],
+		['positions', 'position'],
+		['relationships', 'relationship'],
+		['events', 'event'],
+		['agreements', 'agreement'],
+		['worldClaims', 'world-claim'],
+		['companies', 'company'],
+		['contracts', 'contract'],
+		['licences', 'licence'],
+		['declarations', 'declaration'],
+		['education', 'education'],
+		['places', 'place']
+	];
+	const rows = REVIEWED_KINDS.flatMap(([key, kind]) =>
+		((ds[key] ?? []) as Record<string, unknown>[]).map((r) => ({ ...r, kind }))
+	) as ReviewInput[];
+	const summary = summariseReview(rows);
+
+	ok(
+		'the headline reviewed/reviewable recomputes from every claim kind',
+		ds.meta.review.reviewed === summary.reviewed && ds.meta.review.reviewable === summary.reviewable,
+		`${ds.meta.review.reviewed}/${ds.meta.review.reviewable}`
+	);
+	const flagHits = Object.values(summary.flags).reduce((s, f) => s + f.total, 0);
+	ok(
+		'the published risk flags overlap rather than partition',
+		flagHits > summary.reviewable &&
+			JSON.stringify(ds.meta.review.flags) === JSON.stringify(summary.flags),
+		`${flagHits} flag hits over ${summary.reviewable} records`
+	);
+	ok(
+		'the published per-kind denominators match the graph',
+		JSON.stringify(ds.meta.review.byKind) === JSON.stringify(summary.byKind),
+		`${Object.keys(summary.byKind).length} kinds`
+	);
+
+	const coveragePath = join(HERE, '..', 'output', 'review-coverage.csv');
+	if (existsSync(coveragePath)) {
+		const expected = reviewCoverageCsv(summary);
+		const actual = readFileSync(coveragePath, 'utf8');
+		ok(
+			'output/review-coverage.csv recomputes from the emitted graph',
+			actual === expected,
+			`${summary.coverage.length} kind/basis rows`
+		);
+	}
 }
 
 console.log(

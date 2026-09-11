@@ -72,6 +72,13 @@ import {
 	type ResolvedInterval
 } from './dates.ts';
 import { loadParameters, type Parameters } from './parameters.ts';
+import {
+	reviewCoverageCsv,
+	reviewCoverageMarkdown,
+	summariseReview,
+	REVIEW_FLAGS,
+	type ReviewInput
+} from './review-coverage.ts';
 import { auditInterpretationPaths } from '../src/lib/interpretation.ts';
 import { canonicalBytes, computeDatasetHash, CANONICAL_GENERATED } from './canonical.ts';
 
@@ -1836,52 +1843,42 @@ const contradictions = [
 		}))
 ];
 
-/** Human-review coverage: the honest denominator for "machines propose, humans verify". */
-const reviewed =
-	resolvedPositions.filter((p) => p.review).length +
-	resolvedRelationships.filter((r) => r.review).length +
-	resolvedEvents.filter((e) => e.review).length;
-const reviewable = resolvedPositions.length + resolvedRelationships.length + resolvedEvents.length;
-
 /**
- * Review coverage broken out by how much damage an unreviewed record could do.
- *
- * A single aggregate percentage is the wrong instrument here, because it treats
- * verifying a gazette-dated appointment as interchangeable with verifying an
- * unsubstantiated allegation about a named living person. Those are not the same
- * risk, and averaging them lets the number look identical whether review effort
- * went somewhere useful or somewhere safe.
- *
- * Buckets are ordered most-damaging first and assigned first-match, so every
- * record lands in exactly one. If the top buckets read 0, review is being spent
- * on the claims that least need it — which is exactly what this dataset showed
- * when the breakdown was first computed.
+ * Human-review coverage: the honest denominator for "machines propose, humans
+ * verify". Every claim kind whose schema carries a `review` field is counted,
+ * not only the three headline kinds, and the risk flags overlap rather than
+ * partitioning — see scripts/review-coverage.ts for why each of those is a
+ * separate statement and why `independently_checked` cannot be inferred from a
+ * reviewer's name.
  */
-const REVIEW_RISK = ['unsubstantiated', 'attributed', 'inferred', 'reported', 'documented'] as const;
-type ReviewRisk = (typeof REVIEW_RISK)[number];
-
-function reviewRiskOf(r: { basis?: string; attributed_to?: string }): ReviewRisk {
-	if (r.basis === 'unsubstantiated') return 'unsubstantiated';
-	if (r.attributed_to) return 'attributed';
-	if (r.basis === 'inferred') return 'inferred';
-	if (r.basis === 'reported') return 'reported';
-	return 'documented';
-}
-
-const reviewByRisk = Object.fromEntries(
-	REVIEW_RISK.map((k) => [k, { reviewed: 0, total: 0 }])
-) as Record<ReviewRisk, { reviewed: number; total: number }>;
-
-for (const rec of [
-	...resolvedPositions,
-	...resolvedRelationships,
-	...resolvedEvents,
-	...resolvedWorldClaims
-] as { basis?: string; attributed_to?: string; review?: unknown }[]) {
-	const bucket = reviewByRisk[reviewRiskOf(rec)];
-	bucket.total++;
-	if (rec.review) bucket.reviewed++;
-}
+const reviewSections: [
+	ReviewInput['kind'],
+	{ basis?: string; attributed_to?: string; review?: unknown; disputes?: unknown[] }[]
+][] = [
+	['institution', resolvedInstitutions],
+	['person', resolvedPeople],
+	['position', resolvedPositions],
+	['relationship', resolvedRelationships],
+	['event', resolvedEvents],
+	['agreement', resolvedAgreements],
+	['world-claim', resolvedWorldClaims],
+	['company', resolvedCompanies],
+	['contract', resolvedContracts],
+	['licence', resolvedLicences],
+	['declaration', resolvedDeclarations],
+	['education', resolvedEducation],
+	['place', places]
+];
+const reviewSummary = summariseReview(
+	reviewSections.flatMap(([kind, rows]) => rows.map((r) => ({ ...r, kind })))
+);
+const {
+	reviewed,
+	reviewable,
+	flags: reviewFlags,
+	byKind: reviewByKind,
+	byBasis: reviewByBasis
+} = reviewSummary;
 
 /* ---------------------------------------------------------------------------
  * Translation coverage.
@@ -2211,7 +2208,7 @@ const dataset = {
 			exemption: SUCCESSION_EXEMPTION
 		},
 		contradictions,
-		review: { reviewed, reviewable, byRisk: reviewByRisk },
+		review: { reviewed, reviewable, flags: reviewFlags, byKind: reviewByKind, byBasis: reviewByBasis },
 		translation,
 		coverage: { expectedCategories, principals: principalCoverage },
 		// W4: chains of all-weak influence edges (inferred/unsubstantiated),
@@ -2994,11 +2991,19 @@ export interface DatasetMeta {
 	review: {
 		reviewed: number;
 		reviewable: number;
-		/** Coverage per risk bucket, most-damaging first. See reviewRiskOf in build-data.ts. */
-		byRisk: Record<
+		/**
+		 * Coverage per overlapping risk flag, most-damaging first. A record
+		 * carries every flag true of it, so these totals exceed \`reviewable\`.
+		 * See scripts/review-coverage.ts.
+		 */
+		flags: Record<
 			'unsubstantiated' | 'attributed' | 'inferred' | 'reported' | 'documented',
 			{ reviewed: number; total: number }
 		>;
+		/** Denominator per claim kind, including people, institutions and the newer kinds. */
+		byKind: Record<string, { reviewed: number; total: number }>;
+		/** Denominator per derived basis. */
+		byBasis: Record<string, { reviewed: number; total: number }>;
 	};
 	/** Card completeness: how much each record actually carries. A worklist. */
 	cards: {
@@ -3598,9 +3603,9 @@ const stats: Record<string, string> = {
 		])
 	),
 	...Object.fromEntries(
-		REVIEW_RISK.flatMap((k) => [
-			[`reviewed-${k}`, String(reviewByRisk[k].reviewed)],
-			[`reviewable-${k}`, String(reviewByRisk[k].total)]
+		REVIEW_FLAGS.flatMap((k) => [
+			[`reviewed-${k}`, String(reviewFlags[k].reviewed)],
+			[`reviewable-${k}`, String(reviewFlags[k].total)]
 		])
 	),
 	// The commit the build ran from. Tag/release pipelines inject DT_RELEASE_SHA
@@ -3680,6 +3685,14 @@ if (!FIXTURE_MODE) {
 		mkdirSync(join(ROOT, 'output'), { recursive: true });
 		writeFileSync(join(ROOT, 'output', 'basis-overrides.csv'), basisOverrideCsv, 'utf8');
 	}
+	if (!FIXTURE_MODE) {
+		// The review coverage is published as a worklist, not a dashboard value:
+		// `examined` and `independently_checked` are separate columns so a
+		// compilation pass can never read as an independent review. (Phase 8)
+		mkdirSync(join(ROOT, 'output'), { recursive: true });
+		writeFileSync(join(ROOT, 'output', 'review-coverage.csv'), reviewCoverageCsv(reviewSummary), 'utf8');
+		writeFileSync(join(ROOT, 'output', 'review-coverage.md'), reviewCoverageMarkdown(reviewSummary), 'utf8');
+	}
 }
 
 if (!FIXTURE_MODE) {
@@ -3731,9 +3744,9 @@ console.log(`
     basis   documented ${basisCounts.documented}   reported ${basisCounts.reported}   inferred ${basisCounts.inferred}   unsubstantiated ${basisCounts.unsubstantiated}
     flagged for primary-source verification: ${needsPrimary.length}
     succession gaps: ${successionGaps.length}   overlaps: ${successionOverlaps.length}   recorded contradictions: ${contradictions.length}
-    human-reviewed: ${reviewed}/${reviewable}
-${REVIEW_RISK.map(
-	(k) => `      ${k.padEnd(16)} ${String(reviewByRisk[k].reviewed).padStart(4)}/${String(reviewByRisk[k].total).padEnd(4)}`
+    human-reviewed: ${reviewed}/${reviewable}  (flags overlap)
+${REVIEW_FLAGS.map(
+	(k) => `      ${k.padEnd(16)} ${String(reviewFlags[k].reviewed).padStart(4)}/${String(reviewFlags[k].total).padEnd(4)}`
 ).join('\n')}
 
     translation coverage        fr        ar
