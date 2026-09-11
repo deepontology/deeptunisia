@@ -432,7 +432,6 @@ ok(
 console.log('\n  ── V29 origins: the derived origin count on claim cards ──\n');
 
 const ORIGINS_CHIP = readFileSync(join(HERE, '..', 'src', 'lib', 'ui', 'OriginsChip.svelte'), 'utf8');
-const FLOW_CARD = readFileSync(join(HERE, '..', 'src', 'lib', 'components', 'FlowCard.svelte'), 'utf8');
 const CONNECTION_CARD = readFileSync(join(HERE, '..', 'src', 'lib', 'components', 'ConnectionCard.svelte'), 'utf8');
 ok(
 	'the origins chip composes the ui primitives',

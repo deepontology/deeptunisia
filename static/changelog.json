@@ -1,6 +1,6 @@
 [
   {
-    "hash": "e7e49a26b",
+    "hash": "145ea0ed2",
     "date": "2026-09-11T16:49:42+01:00",
     "subject": "data: import the eight-claim evidence tranche into the graph",
     "kind": "revision",
@@ -35,7 +35,7 @@
     ]
   },
   {
-    "hash": "9ca657f43",
+    "hash": "57f241034",
     "date": "2026-09-11T13:47:28+01:00",
     "subject": "feat: derive independent origins and require real archive snapshots (V29)",
     "kind": "revision",
@@ -50,7 +50,7 @@
     ]
   },
   {
-    "hash": "c5df8b2d7",
+    "hash": "cfcbd65c0",
     "date": "2026-09-11T13:46:53+01:00",
     "subject": "data(outbox): passage-level evidence for eight high-risk claims",
     "kind": "expansion",
