@@ -322,7 +322,19 @@ try {
   confidence: A
   source_relation: single-report
   independence: 1
-  sources: [${s}]`);
+  sources: [${s}]
+- id: p-fixture-evidence
+  role: president
+  holder: bourguiba
+  start: "2020-01-01"
+  confidence: A
+  sources: [${s}]
+  evidence:
+    - passage_type: quote
+      passage: "A passage long enough to be evidence."
+      locator: "p. 6"
+      retrieved_at: "2026-09-11"
+      capture_url: "https://web.archive.org/web/2026/https://example.org/a"`);
 	appendBlock(TREE_BAD, 'people.yaml', `
 - id: fixture-unsourced-person
   name_en: Fixture Unsourced Person
@@ -342,7 +354,8 @@ try {
 		['positions.yaml [p-fixture-review-outcome]', 'the nested-outcome probe fails and names the record (1C)'],
 		['people.yaml [fixture-unsourced-person]', 'the no-source probe fails and names the record (1D)'],
 		['position p-fixture-grade-a-weak', 'a grade-A record without a tier-1/2 source fails and names the record (V25)'],
-		['positions.yaml [p-fixture-relation]', 'an incompatible source relation fails and names the record (V26)']
+		['positions.yaml [p-fixture-relation]', 'an incompatible source relation fails and names the record (V26)'],
+		['positions.yaml [p-fixture-evidence]', 'a year-only archive lookup fails and names the record (V29)']
 	];
 	for (const [needle, label] of expectations) {
 		ok(`pipeline fixture: ${label}`, bad.output.includes(needle), `expected the build to say "${needle}"`);
@@ -371,6 +384,11 @@ try {
 		'pipeline fixture: the source-relation error is the V26 message',
 		bad.output.includes('(V26)'),
 		'expected the V26 message in the build output'
+	);
+	ok(
+		'pipeline fixture: the evidence error is the V29 message',
+		bad.output.includes('(V29)'),
+		'expected the V29 message in the build output'
 	);
 
 	// 3A: a failed build promotes nothing. The review caught editorial-queue.json

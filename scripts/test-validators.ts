@@ -386,6 +386,58 @@ accepts(
 );
 
 // ---------------------------------------------------------------------------
+// V29 — claim-level evidence: a passage, a locator, and a real capture (or a
+// dated promise to make one). A generated year-only archive lookup is not a
+// capture; two publishers in the lineage are one origin's worth of evidence.
+// ---------------------------------------------------------------------------
+
+const evidence = (over: Record<string, unknown> = {}) => ({
+	passage_type: 'quote',
+	passage: 'A passage long enough to be evidence.',
+	locator: 'p. 6',
+	retrieved_at: '2026-09-11',
+	capture_url: 'https://web.archive.org/web/20260911000000/https://example.org/a',
+	lineage: [{ publisher: 'Example Press' }],
+	...over
+});
+accepts(PositionSchema, pos({ evidence: [evidence()] }), 'V29: a position with a captured passage parses');
+accepts(
+	PositionSchema,
+	pos({ evidence: [evidence({ passage_type: 'paraphrase', capture_url: undefined, capture_missing: '2026-10-01' })] }),
+	'V29: a paraphrase with a dated capture retry parses'
+);
+rejectsWith(
+	PositionSchema,
+	pos({ evidence: [evidence({ locator: ' ' })] }),
+	'V29: evidence without a real locator is rejected',
+	'locator'
+);
+rejectsWith(
+	PositionSchema,
+	pos({ evidence: [evidence({ capture_url: undefined, capture_missing: undefined })] }),
+	'V29: evidence without a capture or a retry date is rejected',
+	'capture'
+);
+rejectsWith(
+	PositionSchema,
+	pos({ evidence: [evidence({ capture_url: 'https://web.archive.org/web/2026/https://example.org/a' })] }),
+	'V29: a year-only archive lookup is not a capture',
+	'actual snapshot'
+);
+rejectsWith(
+	PositionSchema,
+	pos({ evidence: [evidence({ passage_type: 'summary' })] }),
+	'V29: a passage must be a quote or a marked paraphrase',
+	'Invalid option'
+);
+rejectsWith(
+	PositionSchema,
+	pos({ evidence: [evidence({ extra: 'x' })] }),
+	'V29: unknown evidence keys fail instead of being stripped',
+	'Unrecognized key'
+);
+
+// ---------------------------------------------------------------------------
 // 1A — nonBlank across every claim kind. The reviewer replaced a position's
 // reasoning, falsifier and attribution with whitespace and the build accepted
 // it. Each kind tries " ", "\t\n " and "" on each mandatory envelope field.
