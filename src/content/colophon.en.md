@@ -18,7 +18,7 @@ And it is still one person who decides. The swarm does not run on its own, it do
 
 ## The paper: the epistemology is the compiler {#paper}
 
-The idea is written down in the [research paper](/deeptunisia-paper-v0_1-release.pdf) linked from the landing page — *The Epistemology Is the Compiler*.
+The idea is written down in the [research paper](/deeptunisia-release-paper-v1.0.pdf) linked from the landing page — *The Epistemology Is the Compiler*.
 
 Its thesis is simple: asking editors to remember an evidence policy is not enforcement. So this project compiles the policy instead.
 

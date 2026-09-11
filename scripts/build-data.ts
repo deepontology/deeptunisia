@@ -38,6 +38,9 @@ import {
 	GroupLayerSchema,
 	EDGE_DIRECTION,
 	deriveBasis,
+	isBasisUpgrade,
+	REQUIRED_SOURCE_KINDS,
+	SourceExceptionSchema,
 	reviewOverclaims,
 	configureSchema,
 	TRANSLATABLE_FIELDS,
@@ -45,12 +48,14 @@ import {
 	TRANSLATION_TIERS,
 	NO_RAW_MACHINE,
 	type Review,
+	type SourceException,
 	type WorldClaim,
 	type Layer
 } from './schema.ts';
 import {
 	resolveInterval,
 	durationYears,
+	applyOngoingObservation,
 	DATASET_CUTOFF,
 	DATASET_FLOOR,
 	configureTime,
@@ -86,12 +91,6 @@ const STATIC_DIR = process.env.DT_STATIC_DIR ?? join(ROOT, 'static');
 
 const parameters: Parameters = loadParameters(join(DATA_DIR, 'parameters.yaml'));
 configureTime(parameters.time);
-configureSchema(parameters);
-
-// The queue report (editorial-queue.json) is written long before the later
-// mkdirs, so in fixture mode — where STATIC_DIR may not exist yet — this must
-// happen up front. Idempotent in normal mode.
-mkdirSync(STATIC_DIR, { recursive: true });
 
 // ---------------------------------------------------------------------------
 // Error collection: report every problem at once rather than one per run.
@@ -106,6 +105,86 @@ function fail(where: string, message: string) {
 function warn(where: string, message: string) {
 	warnings.push(`${where}: ${message}`);
 }
+
+// ---------------------------------------------------------------------------
+// Explicit escapes (V25/V27). Loaded before any record is parsed: the schema's
+// own refines read these sets, so an excepted record parses exactly like a
+// compliant one, and a record that is NOT excepted fails at the gate.
+//
+// The register is data, not code: one entry per known record, each naming an
+// owner, a deadline and a reason. An expired deadline is a build failure. The
+// build failing is the product working.
+// ---------------------------------------------------------------------------
+
+const sourceExceptions: SourceException[] = [];
+{
+	const path = join(DATA_DIR, 'source-exceptions.yaml');
+	if (!existsSync(path)) {
+		fail('source-exceptions.yaml', 'file not found — the explicit escape register must exist (an empty list is valid)');
+	} else {
+		let raw: unknown;
+		try {
+			raw = parseYaml(readFileSync(path, 'utf8'));
+		} catch (e) {
+			fail('source-exceptions.yaml', `YAML parse error: ${(e as Error).message}`);
+		}
+		if (raw !== null && raw !== undefined) {
+			if (!Array.isArray(raw)) {
+				fail('source-exceptions.yaml', 'expected a top-level YAML list');
+			} else {
+				raw.forEach((entry, i) => {
+					const result = SourceExceptionSchema.safeParse(entry);
+					if (!result.success) {
+						const label =
+							entry && typeof entry === 'object' && 'id' in entry
+								? String((entry as { id: unknown }).id)
+								: `index ${i}`;
+						for (const issue of result.error.issues) {
+							const p = issue.path.length ? issue.path.join('.') : '(root)';
+							fail(`source-exceptions.yaml [${label}]`, `${p} — ${issue.message}`);
+						}
+					} else {
+						sourceExceptions.push(result.data);
+					}
+				});
+			}
+		}
+	}
+}
+
+const emptySourceKeys = new Set<string>();
+const gradeAPrimaryKeys = new Set<string>();
+const basisOverrideKeys = new Set<string>();
+const todayISO = new Date().toISOString().slice(0, 10);
+for (const ex of sourceExceptions) {
+	if (ex.deadline < todayISO) {
+		fail(
+			`source-exceptions.yaml [${ex.id}]`,
+			`exception expired on ${ex.deadline} (${ex.rule}: ${ex.reason}) — source the record, fix it, or re-justify it with a new deadline`
+		);
+	}
+	if (ex.rule === 'no-source') emptySourceKeys.add(`${ex.kind}:${ex.id}`);
+	if (ex.rule === 'grade-a-primary') gradeAPrimaryKeys.add(`${ex.kind}:${ex.id}`);
+	if (ex.rule === 'basis-override' && ex.implied && ex.authored) {
+		basisOverrideKeys.add(`${ex.kind}:${ex.id}:${ex.implied}>${ex.authored}`);
+	}
+}
+if (sourceExceptions.length > 0) {
+	warn(
+		'source-exceptions.yaml',
+		`${sourceExceptions.length} live exception(s) — each is a research task, and an expired deadline is a build failure`
+	);
+}
+
+configureSchema(parameters, {
+	emptySources: emptySourceKeys,
+	basisOverrides: basisOverrideKeys
+});
+
+// The queue report (editorial-queue.json) is written long before the later
+// mkdirs, so in fixture mode — where STATIC_DIR may not exist yet — this must
+// happen up front. Idempotent in normal mode.
+mkdirSync(STATIC_DIR, { recursive: true });
 
 function loadYaml<T>(file: string, schema: z.ZodType<T>): T[] {
 	const path = join(DATA_DIR, file);
@@ -310,6 +389,100 @@ function resolveGroups(): Map<string, string> {
 }
 
 const groupMap = resolveGroups();
+
+// ---------------------------------------------------------------------------
+// Rule 2 / V25 — sources are required, and grade A means a primary record.
+//
+// `checkSources` below verifies that every listed source id exists. It says
+// nothing about an empty list, and the independent review removed a person's
+// sources entirely and watched the record ship as `documented`. So:
+//
+//   * Every required claim kind must cite at least one source, unless the
+//     record has a live `no-source` entry in data/source-exceptions.yaml.
+//   * Every `confidence: A` record must cite at least one tier-1 or tier-2
+//     source, unless it has a live `grade-a-primary` entry. Grade A is the
+//     strongest label this site has; it means a primary record, not "we are
+//     confident". (V25)
+//
+// Roles, questions, regions, eras and institutions are scaffolding kinds: their
+// standing is carried by the records inside them, so they are outside the
+// required-source rule. They are still inside V25: a grade-A institution with
+// only tier-3 citations is exactly the defect the rule exists to catch.
+// ---------------------------------------------------------------------------
+
+const claimKindRegistry: [string, any[]][] = [
+	['institution', institutions],
+	['person', people],
+	['position', positions],
+	['relationship', relationships],
+	['event', events],
+	['agreement', agreements],
+	['world-claim', worldClaims],
+	['company', companies],
+	['contract', contracts],
+	['licence', licences],
+	['declaration', declarations],
+	['education', education],
+	['region', regions],
+	['place', places],
+	['era', eras]
+];
+
+for (const [kind, rows] of claimKindRegistry) {
+	if (!REQUIRED_SOURCE_KINDS.has(kind)) continue;
+	for (const record of rows) {
+		if ((record.sources?.length ?? 0) > 0) continue;
+		if (emptySourceKeys.has(`${kind}:${record.id}`)) continue;
+		fail(
+			`${kind} ${record.id}`,
+			'no sources — every claim record must cite at least one source, or be listed in data/source-exceptions.yaml (rule 2, V12)'
+		);
+	}
+}
+
+const sourceTierById = new Map(sources.map((s) => [s.id, s.tier]));
+for (const [kind, rows] of claimKindRegistry) {
+	for (const record of rows) {
+		if (record.confidence !== 'A') continue;
+		const tiers = (record.sources ?? [])
+			.map((id: string) => sourceTierById.get(id))
+			.filter((t): t is number => typeof t === 'number');
+		if (tiers.some((t) => t <= 2)) continue;
+		if (gradeAPrimaryKeys.has(`${kind}:${record.id}`)) continue;
+		const shown = tiers.length
+			? `tier ${[...new Set(tiers)].sort().join('/')}`
+			: 'no resolvable source tier';
+		fail(
+			`${kind} ${record.id}`,
+			`grade A must cite at least one tier-1 or tier-2 source (V25); it cites ${shown} and is not listed in data/source-exceptions.yaml`
+		);
+	}
+}
+
+// ---------------------------------------------------------------------------
+// Basis-override register (V27). Every authored basis stronger than the
+// grade-implied one is written to output/basis-overrides.csv for research
+// triage, including the ones currently excepted. The CSV is the work list; the
+// exceptions file is the temporary waiver. Neither is a silent reclassification.
+// ---------------------------------------------------------------------------
+
+{
+	const rows: string[] = ['id,kind,grade,implied,authored,has_review'];
+	for (const [kind, records] of claimKindRegistry) {
+		for (const record of records) {
+			if (!record.basis || !record.confidence) continue;
+			const derived = deriveBasis(record.confidence, record.verification, undefined);
+			if (!isBasisUpgrade(record.basis, derived)) continue;
+			rows.push(
+				[record.id, kind, record.confidence, derived, record.basis, record.review ? 'yes' : 'no'].join(',')
+			);
+		}
+	}
+	if (!FIXTURE_MODE) {
+		mkdirSync(join(ROOT, 'output'), { recursive: true });
+		writeFileSync(join(ROOT, 'output', 'basis-overrides.csv'), rows.join('\n') + '\n', 'utf8');
+	}
+}
 
 function checkSources(where: string, ids: string[]) {
 	for (const id of ids) {
@@ -594,9 +767,87 @@ function safeInterval(
 	}
 }
 
+/**
+ * Latest publication date among a record's sources — the observation an
+ * `ongoing` interval is checked against. Undated sources contribute nothing;
+ * an interval with no dated source cannot be confirmed at the cutoff.
+ */
+const sourceDateById = new Map<string, number>();
+for (const source of sources) {
+	if (!source.date) continue;
+	const t = Date.parse(source.date);
+	if (!Number.isNaN(t)) sourceDateById.set(source.id, t);
+}
+
+/**
+ * Resolve an interval and settle `ongoing` against its evidence.
+ *
+ * `ongoing` claims the holder is positively in place at the dataset cutoff.
+ * That requires an observation within the engine's confirmation window; a stale
+ * or undated record is downgraded to `last-verified` (certainty stops at the
+ * last observation) and the build warns. This is a research backlog item, not a
+ * silent edit: the warning names the record, and the emitted interval says what
+ * the evidence actually supports.
+ */
+function settledInterval(
+	where: string,
+	record: { sources?: string[] },
+	spec: { start?: string | null; end?: string | null },
+	opts?: { allowEnvelopeTrim?: boolean }
+): ResolvedInterval {
+	const raw = safeInterval(where, spec, opts);
+	if (raw.status !== 'ongoing') return raw;
+	let latest: number | null = null;
+	for (const id of record.sources ?? []) {
+		const t = sourceDateById.get(id);
+		if (t !== undefined && (latest === null || t > latest)) latest = t;
+	}
+	const settled = applyOngoingObservation(raw, latest);
+	if (settled.status !== 'ongoing') {
+		warn(
+			where,
+			'ongoing with no source dated within 90 days of the cutoff — downgraded to last-verified'
+		);
+	}
+	return settled;
+}
+
+/**
+ * V27 — emit both bases when an authored basis overrides the grade-implied one.
+ *
+ * The override changes the label a reader sees, so the dataset carries what the
+ * grade implied beside what the author wrote. A promotion without its baseline
+ * is invisible, and an invisible promotion is how a grade becomes a fact.
+ */
+function basisFields(record: {
+	confidence: 'A' | 'B' | 'C' | 'D';
+	verification: 'verified' | 'needs-primary-source' | 'disputed';
+	basis?: 'documented' | 'reported' | 'inferred' | 'unsubstantiated';
+}): { basis: 'documented' | 'reported' | 'inferred' | 'unsubstantiated'; basis_derived?: string } {
+	const basis = deriveBasis(record.confidence, record.verification, record.basis);
+	const derived = deriveBasis(record.confidence, record.verification, undefined);
+	return basis === derived ? { basis } : { basis, basis_derived: derived };
+}
+
+/**
+ * The `basis_derived` half alone, for records that keep their authored `basis`
+ * via a spread (institutions). Returns `{}` when there is no override, so no
+ * undefined key ever reaches the emitted graph.
+ */
+function derivedBasisField(record: {
+	confidence: 'A' | 'B' | 'C' | 'D';
+	verification: 'verified' | 'needs-primary-source' | 'disputed';
+	basis?: 'documented' | 'reported' | 'inferred' | 'unsubstantiated';
+}): Record<string, string> {
+	if (!record.basis) return {};
+	const derived = deriveBasis(record.confidence, record.verification, undefined);
+	return record.basis === derived ? {} : { basis_derived: derived };
+}
+
 const resolvedPositions = positions.map((pos) => {
-	const interval = safeInterval(
+	const interval = settledInterval(
 		`position ${pos.id}`,
+		pos,
 		{ start: pos.start, end: pos.end },
 		// V22: an over-wide envelope may only be trimmed when the record itself
 		// records the disagreement as a dispute; otherwise the span is a failure.
@@ -604,6 +855,7 @@ const resolvedPositions = positions.map((pos) => {
 	);
 	const role = roleById.get(pos.role);
 	const basis = deriveBasis(pos.confidence, pos.verification, pos.basis);
+	const derivedBasis = deriveBasis(pos.confidence, pos.verification, undefined);
 	// Hard failure, not a warning. An inference with no stated reasoning is
 	// indistinguishable from a guess, and the site presents inferences to readers as
 	// reasoned. If that promise can be broken silently it is not a promise.
@@ -616,6 +868,7 @@ const resolvedPositions = positions.map((pos) => {
 	return {
 		...pos,
 		basis,
+		...(derivedBasis !== basis ? { basis_derived: derivedBasis } : {}),
 		/**
 		 * True when the officeholding is accepted but the span is an estimate. The
 		 * Chronicle draws these with hatched edges; keeping it separate from `basis`
@@ -701,17 +954,20 @@ for (const [roleId, list] of byRole) {
 
 const resolvedRelationships = relationships.map((rel) => {
 	const basis = deriveBasis(rel.confidence, rel.verification, rel.basis);
+	const derivedBasis = deriveBasis(rel.confidence, rel.verification, undefined);
 	return {
 		...rel,
 		// The `rel.id ?? \`rel-${i}-...\`` fallback that used to sit here derived an
 		// id from the array index, so inserting one relationship renumbered every
 		// later one. Ids are authored in the file now and the schema requires them.
 		basis,
+		...(derivedBasis !== basis ? { basis_derived: derivedBasis } : {}),
 		// V14: the published direction semantics, so a reader and an editor see the
 		// same orientation contract the validator enforces.
 		direction: EDGE_DIRECTION[rel.type],
-		interval: safeInterval(
+		interval: settledInterval(
 			`relationship ${rel.from}->${rel.to}`,
+			rel,
 			{ start: rel.start, end: rel.end },
 			{ allowEnvelopeTrim: (rel.disputes?.length ?? 0) > 0 }
 		)
@@ -920,9 +1176,10 @@ for (const rel of resolvedRelationships) {
 
 const resolvedEvents = events.map((ev) => ({
 	...ev,
-	basis: deriveBasis(ev.confidence, ev.verification, ev.basis),
-	interval: safeInterval(
+	...basisFields(ev),
+	interval: settledInterval(
 		`event ${ev.id}`,
+		ev,
 		{ start: ev.date, end: ev.date_end ?? ev.date },
 		{ allowEnvelopeTrim: (ev.disputes?.length ?? 0) > 0 }
 	)
@@ -1067,42 +1324,42 @@ for (const ev of resolvedEvents) {
 
 const resolvedEras = eras.map((era) => ({
 	...era,
-	interval: safeInterval(`era ${era.id}`, { start: era.start, end: era.end })
+	interval: settledInterval(`era ${era.id}`, era, { start: era.start, end: era.end })
 }));
 
 const resolvedAgreements = agreements.map((ag) => ({
 	...ag,
-	basis: deriveBasis(ag.confidence, ag.verification, ag.basis)
+	...basisFields(ag)
 }));
 
 const resolvedWorldClaims = worldClaims.map((wc) => ({
 	...wc,
-	basis: deriveBasis(wc.confidence, wc.verification, wc.basis)
+	...basisFields(wc)
 }));
 
 // v0.0.2 kinds: resolve their interval tokens through the same fuzzy machinery as
 // every other claim, and publish the derived basis.
 const resolvedCompanies = companies.map((co) => ({
 	...co,
-	basis: deriveBasis(co.confidence, co.verification, co.basis)
+	...basisFields(co)
 }));
 const resolvedContracts = contracts.map((c) => ({
 	...c,
-	basis: deriveBasis(c.confidence, c.verification, c.basis),
-	interval: resolveInterval({ start: c.start ?? null, end: c.end ?? null })
+	...basisFields(c),
+	interval: settledInterval(`contract ${c.id}`, c, { start: c.start ?? null, end: c.end ?? null })
 }));
 const resolvedLicences = licences.map((l) => ({
 	...l,
-	basis: deriveBasis(l.confidence, l.verification, l.basis)
+	...basisFields(l)
 }));
 const resolvedDeclarations = declarations.map((d) => ({
 	...d,
-	basis: deriveBasis(d.confidence, d.verification, d.basis)
+	...basisFields(d)
 }));
 const resolvedEducation = education.map((e) => ({
 	...e,
-	basis: deriveBasis(e.confidence, e.verification, e.basis),
-	interval: resolveInterval({ start: e.start ?? null, end: e.end ?? null })
+	...basisFields(e),
+	interval: settledInterval(`education ${e.id}`, e, { start: e.start ?? null, end: e.end ?? null })
 }));
 
 // Editorial queue (spec §13.1): every unreviewed claim record across ALL kinds,
@@ -1216,7 +1473,8 @@ for (const r of regions) {
 
 const resolvedInstitutions = institutions.map((inst) => ({
 	...inst,
-	interval: safeInterval(`institution ${inst.id}`, inst.active),
+	...derivedBasisField(inst),
+	interval: settledInterval(`institution ${inst.id}`, inst, inst.active),
 	group: groupMap.get(inst.id) ?? 'Other',
 	// Spec §9: company-like entities get a derived timeline too.
 	timeline: COMPANY_TYPES.has(inst.type) ? buildTimeline(inst.id) : []
@@ -1409,7 +1667,7 @@ const resolvedPeople = people.map((person) => {
 		trajectory,
 		/** True when the arc was computed from positions rather than written by hand. */
 		trajectoryDerived: !authoredTrajectory && trajectory.length > 0,
-		basis: deriveBasis(person.confidence, person.verification, person.basis),
+		...basisFields(person),
 		birthResolved: person.birth
 			? safeInterval(`person ${person.id} birth`, { start: person.birth })
 			: null,
@@ -2322,6 +2580,8 @@ export interface Interval {
 	startPrecision: Precision;
 	endPrecision: Precision;
 	status: IntervalStatus;
+	/** The certainty horizon: certain activity never runs past this instant. */
+	lastObserved: number | null;
 	raw: { start: string | null; end: string | null };
 }
 
