@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { untrack } from 'svelte';
 	import { app } from '$lib/state.svelte';
 	import { compact } from '$lib/design/media.svelte';
 	import { ds, institutionById, personById } from '$lib/model';
@@ -6,6 +7,43 @@
 	import { format } from '$lib/i18n';
 	import EntityPanel from '$lib/components/EntityPanel.svelte';
 	import RecordPanel from '$lib/components/RecordPanel.svelte';
+
+	/**
+	 * The panel outlives the selection by one transition.
+	 *
+	 * `panelId` is what the card renders; `closing` drives the exit animation.
+	 * Without it the pane unmounted the instant a selection cleared, so it
+	 * snapped away while the chart snapped back — the most jarring part of the
+	 * old behaviour. Now the chart gives way and closes smoothly.
+	 */
+	let panelId = $state<string | null>(null);
+	let closing = $state(false);
+	let closeTimer: ReturnType<typeof setTimeout> | undefined;
+
+	/** What the advisories and content branch read — live id, or the one leaving. */
+	const panelSel = $derived(app.selected ?? panelId);
+
+	$effect(() => {
+		const sel = app.selected;
+		if (sel !== null) {
+			clearTimeout(closeTimer);
+			closing = false;
+			panelId = sel;
+		} else {
+			// untrack: we only act on the selection turning null, not on our own writes.
+			const had = untrack(() => panelId);
+			if (had !== null) {
+				closing = true;
+				closeTimer = setTimeout(() => {
+					panelId = null;
+					closing = false;
+				}, 420);
+			}
+		}
+	});
+
+	/** Never let a pending close tick outlive the component. */
+	$effect(() => () => clearTimeout(closeTimer));
 
 	/**
 	 * W4 — the weak-chain advisory. meta.pathAudit carries the connected
@@ -16,7 +54,7 @@
 	 * record. Warn-only by construction; the build never gates on it.
 	 */
 	const weakChain = $derived(
-		(ds.meta.pathAudit?.chains ?? []).find((c) => c.entities.includes(app.selected ?? '')) ?? null
+		(ds.meta.pathAudit?.chains ?? []).find((c) => c.entities.includes(panelSel ?? '')) ?? null
 	);
 
 	/**
@@ -27,17 +65,17 @@
 	 */
 	const temporalChain = $derived(
 		((ds.meta as unknown as { interpretationAudit?: { temporal: { entities: string[]; edges: string[]; depth: number; reason?: string }[] } }).interpretationAudit?.temporal ?? []).find((c) =>
-			c.entities.includes(app.selected ?? '')
+			c.entities.includes(panelSel ?? '')
 		) ?? null
 	);
 	const typeChain = $derived(
 		((ds.meta as unknown as { interpretationAudit?: { typeIncompatible: { entities: string[]; edges: string[]; depth: number; reason?: string }[] } }).interpretationAudit?.typeIncompatible ?? []).find((c) =>
-			c.entities.includes(app.selected ?? '')
+			c.entities.includes(panelSel ?? '')
 		) ?? null
 	);
 	const confidenceChain = $derived(
 		((ds.meta as unknown as { interpretationAudit?: { lowConfidence: { entities: string[]; edges: string[]; depth: number; reason?: string }[] } }).interpretationAudit?.lowConfidence ?? []).find((c) =>
-			c.entities.includes(app.selected ?? '')
+			c.entities.includes(panelSel ?? '')
 		) ?? null
 	);
 
@@ -117,7 +155,7 @@
 	}
 </script>
 
-{#if app.selected}
+{#if panelId}
 	<!-- svelte-ignore a11y_no_static_element_interactions -->
 	<div
 		class="backdrop"
@@ -129,6 +167,7 @@
 	<aside
 		class="inspector d-{detent}"
 		class:dragging
+		class:closing
 		aria-label="Entity inspector"
 		style:--drag="{dragY}px"
 	>
@@ -153,7 +192,8 @@
 		{/if}
 
 		<div class="inner">
-			{#if personById.has(app.selected) || institutionById.has(app.selected)}
+			{#if panelSel}
+			{#if personById.has(panelSel) || institutionById.has(panelSel)}
 				{#if weakChain}
 					<div class="weakchain" role="note">
 						<span class="wc-label">{t('inspector.weakChain.title')}</span>
@@ -196,12 +236,13 @@
 						>
 					</div>
 				{/if}
-				<EntityPanel id={app.selected} />
+				<EntityPanel id={panelSel} />
 			{:else}
 				<!-- v0.0.2 records (contracts, licences, declarations, education,
 				     events, companies) get their own card; a selection that is
 				     neither entity nor record renders the fallback below. -->
-				<RecordPanel id={app.selected} />
+				<RecordPanel id={panelSel} />
+			{/if}
 			{/if}
 		</div>
 	</aside>
@@ -285,6 +326,43 @@
 		from {
 			opacity: 0;
 			transform: translateX(-24px);
+		}
+	}
+
+	/*
+	 * Docked panel: it takes width from the layout, so animating its width is
+	 * what makes the CHART give way smoothly. The old slide translated only the
+	 * panel's own 24px while the viewport reflowed in a single frame, which read
+	 * as a snap. `.inner` stays at the full width and is clipped, so the record
+	 * does not reflow mid-slide.
+	 */
+	@media (min-width: 1101px) {
+		.inspector {
+			overflow: hidden;
+			animation-name: dock-in-width;
+		}
+		:global([dir='rtl']) .inspector {
+			animation-name: dock-in-width;
+		}
+		.inspector .inner {
+			width: var(--inspector-w);
+			flex: none;
+		}
+		.inspector.closing {
+			animation: none;
+			width: 0;
+			opacity: 0;
+			border-inline-start-width: 0;
+			transition:
+				width var(--dur-slow) var(--ease-in-out),
+				opacity var(--dur-normal) var(--ease-in-out),
+				border-inline-start-width var(--dur-slow) var(--ease-in-out);
+		}
+	}
+	@keyframes dock-in-width {
+		from {
+			width: 0;
+			opacity: 0;
 		}
 	}
 

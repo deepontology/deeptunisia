@@ -354,6 +354,8 @@ const en: Dict = {
 		'Bar length is tenure. Hatched ends mark dates the sources do not fix precisely. Scroll to zoom, drag to pan.',
 	'chronicle.fullrange': 'full range',
 	'chronicle.table': 'Table view of every tenure shown above',
+	'chronicle.events.expand': 'Open the full events timeline',
+	'chronicle.events.collapse': 'Back to the timeline',
 
 	'network.hint':
 		'Each layer has a fixed lane, so edges that cross lanes are the cross-network bridges. Node positions never move.',
@@ -1608,6 +1610,8 @@ const fr: Dict = {
 		'La longueur des barres correspond à la durée du mandat. Les extrémités hachurées signalent des dates que les sources ne fixent pas précisément.',
 	'chronicle.fullrange': 'période complète',
 	'chronicle.table': 'Vue tableau de tous les mandats ci-dessus',
+	'chronicle.events.expand': 'Ouvrir la chronologie complète des événements',
+	'chronicle.events.collapse': 'Retour à la chronologie',
 
 	'network.hint':
 		'Chaque couche occupe un couloir fixe : les liens qui traversent les couloirs sont les ponts entre réseaux.',
@@ -2837,6 +2841,8 @@ const ar: Dict = {
 		'طول الشريط يعبّر عن مدة تولّي المنصب. الأطراف المخططة تعني أن المصادر لا تحدّد التاريخ بدقة.',
 	'chronicle.fullrange': 'المدى الكامل',
 	'chronicle.table': 'عرض جدولي لكل المناصب أعلاه',
+	'chronicle.events.expand': 'فتح الجدول الزمني الكامل للأحداث',
+	'chronicle.events.collapse': 'العودة إلى الجدول الزمني',
 
 	'network.hint':
 		'كل طبقة لها مسار ثابت، لذا فإن الخطوط التي تعبر المسارات هي الجسور بين الشبكات.',
