@@ -26,8 +26,24 @@ import {
 	PositionSchema,
 	RelationshipSchema,
 	CompanySchema,
+	ContractSchema,
+	DeclarationSchema,
 	DisputeSchema,
+	EducationSchema,
+	EventSchema,
+	AgreementSchema,
+	EraSchema,
+	HypothesisSchema,
+	InstitutionSchema,
+	LicenceSchema,
+	PersonSchema,
+	PlaceSchema,
+	QuestionSchema,
 	ReviewSchema,
+	WorldClaimSchema,
+	configureSchemaExceptions,
+	isBasisUpgrade,
+	nonBlank,
 	reviewOverclaims
 } from './schema.ts';
 import {
@@ -36,9 +52,17 @@ import {
 	certainlyActive,
 	possiblyActive,
 	durationYears,
+	applyOngoingObservation,
 	DATASET_CUTOFF,
 	DATASET_FLOOR
 } from './dates.ts';
+import { configureTime } from './dates.ts';
+import { loadParameters } from './parameters.ts';
+import { fileURLToPath } from 'node:url';
+
+// The engine ships neutral example defaults; the fixtures below assert the
+// jurisdiction's floor and cutoff, so install data/parameters.yaml first.
+configureTime(loadParameters(fileURLToPath(new URL('../data/parameters.yaml', import.meta.url))).time);
 
 let failures = 0;
 let checks = 0;
@@ -61,6 +85,26 @@ function accepts(schema: { safeParse(input: unknown): { success: boolean; error?
 function rejects(schema: { safeParse(input: unknown): { success: boolean } }, input: unknown, name: string) {
 	const r = schema.safeParse(input);
 	ok(name, !r.success, r.success ? 'accepted — expected rejection' : 'rejected');
+}
+
+/**
+ * Reject AND prove why. A fixture that fails for the wrong reason (a missing
+ * required sibling field, a typo) passes `rejects` while testing nothing, so
+ * gate-critical fixtures name the message fragment they exist to pin.
+ */
+function rejectsWith(
+	schema: { safeParse(input: unknown): { success: boolean; error?: { issues: { message: string }[] } } },
+	input: unknown,
+	name: string,
+	needle: string
+) {
+	const r = schema.safeParse(input);
+	const messages = r.success ? [] : (r.error?.issues ?? []).map((i) => i.message);
+	ok(
+		name,
+		!r.success && messages.some((m) => m.includes(needle)),
+		r.success ? 'accepted — expected rejection' : messages.join('; ')
+	);
 }
 
 function throws(fn: () => unknown, name: string, detail = '') {
@@ -106,9 +150,17 @@ const co = (over: Record<string, unknown> = {}) => ({
 	...over
 });
 
+/** A well-formed review; the V23/V28 suites override one field at a time. */
+const review = (over: Record<string, unknown> = {}) => ({
+	by: 'reviewer',
+	date: '2026-07-26',
+	method: 'source-check',
+	...over
+});
+
 // ---------------------------------------------------------------------------
-// V18/V20 — the claim envelope: C/D attribution, inferred completeness,
-// unsubstantiated attribution, explicit-override semantics, source minimum.
+// V18/V20/V27 — the claim envelope: C/D attribution, inferred completeness,
+// unsubstantiated attribution, basis-override provenance, source minimum.
 // Kills m4, m5, m6, m7. The graph-level sweep exists in test-data; this pins
 // the ENVELOPE itself, which clean data cannot distinguish from a disabled one.
 // ---------------------------------------------------------------------------
@@ -121,16 +173,98 @@ accepts(
 	pos({ confidence: 'C', verification: 'needs-primary-source', attributed_to: 'Some Observer', reasoning: 'r', falsifiable_by: 'f' }),
 	'V18: a complete inferred claim parses'
 );
-accepts(
+// V27 — a stronger authored basis is an override, and an override needs
+// provenance. The reviewer's probe wrote `basis: documented` on a grade-C
+// needs-primary-source record and the build accepted it with no review.
+rejects(
 	PositionSchema,
 	pos({ confidence: 'C', verification: 'needs-primary-source', basis: 'reported', attributed_to: 'Some Observer' }),
-	'V18: explicit basis override exempts the inferred obligations (reported beats C/nps)'
+	'V27: a reported-over-inferred override without review is rejected'
+);
+rejects(
+	PositionSchema,
+	pos({ confidence: 'D', verification: 'disputed', basis: 'documented', attributed_to: 'Some Observer' }),
+	'V27: a documented-over-unsubstantiated override without review is rejected'
+);
+rejectsWith(
+	PositionSchema,
+	pos({
+		confidence: 'D',
+		verification: 'disputed',
+		basis: 'documented',
+		attributed_to: 'Some Observer',
+		basis_override_reason: 'The decree text is primary evidence for the officeholding.',
+		review: { by: 'fixture reviewer', date: '2026-09-10', method: 'source-check' }
+	}),
+	'V27: an override missing required reasoning fails and names the rule',
+	'V27'
 );
 accepts(
 	PositionSchema,
-	pos({ confidence: 'D', verification: 'disputed', basis: 'documented', attributed_to: 'Some Observer' }),
-	'V18: explicit documented basis on D parses (override beats the D derivation)'
+	pos({
+		confidence: 'D',
+		verification: 'disputed',
+		basis: 'documented',
+		attributed_to: 'Some Observer',
+		reasoning: 'The decree establishes the office; the D grade covered the earlier circulating account.',
+		basis_override_reason: 'The decree text is primary; the D grade reflected the pre-decree reporting.',
+		review: { by: 'fixture reviewer', date: '2026-09-10', method: 'source-check' }
+	}),
+	'V27: a documented-over-unsubstantiated override with review, reasoning and reason parses'
 );
+rejectsWith(
+	PositionSchema,
+	pos({
+		confidence: 'C',
+		verification: 'needs-primary-source',
+		basis: 'documented',
+		attributed_to: 'Some Observer',
+		reasoning: 'Reasoned from the decree structure.',
+		falsifiable_by: 'A later decree reversing the structure.',
+		review: { by: 'fixture reviewer', date: '2026-09-10', method: 'source-check' }
+	}),
+	'V27: an inferred-to-documented override without basis_override_reason is rejected',
+	'basis_override_reason'
+);
+accepts(
+	PositionSchema,
+	pos({
+		confidence: 'C',
+		verification: 'needs-primary-source',
+		basis: 'documented',
+		attributed_to: 'Some Observer',
+		reasoning: 'Reasoned from the decree structure.',
+		falsifiable_by: 'A later decree reversing the structure.',
+		basis_override_reason: 'The primary decree is the claim; the grade reflects the missing secondary literature.',
+		review: { by: 'fixture reviewer', date: '2026-09-10', method: 'source-check' }
+	}),
+	'V27: a full inferred-to-documented override parses'
+);
+
+// The explicit escape register: a listed legacy override parses without the
+// provenance it is still owed, and stops parsing the moment its entry is gone.
+{
+	const legacyOverride = pos({
+		confidence: 'C',
+		verification: 'needs-primary-source',
+		basis: 'documented',
+		attributed_to: 'Some Observer'
+	});
+	configureSchemaExceptions({
+		basisOverrides: new Set(['position:p-fixture:inferred>documented'])
+	});
+	accepts(
+		PositionSchema,
+		legacyOverride,
+		'V27: a live exception-register entry lets a legacy override parse'
+	);
+	configureSchemaExceptions({});
+	rejects(
+		PositionSchema,
+		legacyOverride,
+		'V27: the same record fails once its exception entry is removed'
+	);
+}
 
 // Negative fixtures — the exact records the envelope exists to reject.
 rejects(PositionSchema, pos({ confidence: 'C' }), 'V20: grade C without attributed_to is rejected');
@@ -170,6 +304,325 @@ rejects(
 	'V18: company inferred claim without reasoning is rejected'
 );
 rejects(CompanySchema, co({ sources: [] }), 'V18: a company with zero sources is rejected');
+
+// ---------------------------------------------------------------------------
+// 1A — nonBlank across every claim kind. The reviewer replaced a position's
+// reasoning, falsifier and attribution with whitespace and the build accepted
+// it. Each kind tries " ", "\t\n " and "" on each mandatory envelope field.
+// ---------------------------------------------------------------------------
+
+const personRec = (over: Record<string, unknown> = {}) => ({
+	id: 'p-person-fixture',
+	name_en: 'Fixture Person',
+	layers: ['political'],
+	sources: ['s-fixture'],
+	...over
+});
+const institutionRec = (over: Record<string, unknown> = {}) => ({
+	id: 'i-fixture',
+	name_en: 'Fixture Institution',
+	type: 'ministry',
+	layer: 'political',
+	sources: ['s-fixture'],
+	...over
+});
+const eventRec = (over: Record<string, unknown> = {}) => ({
+	id: 'e-fixture',
+	date: '2020-01-01',
+	title_en: 'Fixture Event',
+	category: 'political',
+	summary: 'A fixture summary long enough.',
+	sources: ['s-fixture'],
+	...over
+});
+const agreementRec = (over: Record<string, unknown> = {}) => ({
+	id: 'a-fixture',
+	title_en: 'Fixture Agreement',
+	kind: 'other',
+	parties: ['FR'],
+	summary: 'A fixture summary long enough.',
+	confidence: 'A',
+	sources: ['s-fixture'],
+	...over
+});
+const worldClaimRec = (over: Record<string, unknown> = {}) => ({
+	id: 'w-fixture',
+	claim: 'A fixture claim long enough.',
+	assessment: 'A fixture assessment long enough.',
+	sources: ['s-fixture'],
+	...over
+});
+const contractRec = (over: Record<string, unknown> = {}) => ({
+	id: 'c-fixture',
+	title_en: 'Fixture Contract',
+	institution: 'i-fixture',
+	kind: 'procurement',
+	status: 'awarded',
+	sources: ['s-fixture'],
+	...over
+});
+const licenceRec = (over: Record<string, unknown> = {}) => ({
+	id: 'l-fixture',
+	holder: 'i-fixture',
+	issuer: 'i-fixture',
+	kind: 'media',
+	grant: '2020-01-01',
+	sources: ['s-fixture'],
+	...over
+});
+const declarationRec = (over: Record<string, unknown> = {}) => ({
+	id: 'd-fixture',
+	declarer: null,
+	body: null,
+	date: '2020-01-01',
+	kind: 'asset-declaration',
+	jurisdiction: 'tn',
+	summary: 'Fixture declaration.',
+	sources: ['s-fixture'],
+	...over
+});
+const educationRec = (over: Record<string, unknown> = {}) => ({
+	id: 'ed-fixture',
+	person: 'p-person-fixture',
+	institution: null,
+	degree_en: 'PhD',
+	kind: 'phd',
+	sources: ['s-fixture'],
+	...over
+});
+const placeRec = (over: Record<string, unknown> = {}) => ({
+	id: 'pl-fixture',
+	kind: 'port',
+	name_en: 'Fixture Port',
+	sources: ['s-fixture'],
+	...over
+});
+const eraRec = (over: Record<string, unknown> = {}) => ({
+	id: 'era-fixture',
+	label_en: 'Fixture Era',
+	start: '2000',
+	end: '2010',
+	thesis: 'A fixture thesis long enough.',
+	accent: '#112233',
+	...over
+});
+const questionRec = (over: Record<string, unknown> = {}) => ({
+	id: 'q-fixture',
+	question: 'A fixture question long enough?',
+	kind: 'analytical',
+	...over
+});
+const hypothesisRec = (over: Record<string, unknown> = {}) => ({
+	id: 'h-fixture',
+	label: 'Fixture Hypothesis',
+	statement: 'A fixture statement long enough.',
+	support: 'insufficient',
+	reasoning: 'A fixture reasoning long enough.',
+	falsifiable_by: 'A fixture falsifier long enough.',
+	...over
+});
+
+ok('nonBlank: a single space is not content', nonBlank(' ') === false);
+ok('nonBlank: tab, newline and space are not content', nonBlank('\t\n ') === false);
+ok('nonBlank: the empty string is not content', nonBlank('') === false);
+ok(
+	'nonBlank: the minimum applies after trimming',
+	nonBlank('  x  ', 2) === false && nonBlank('  xy  ', 2) === true
+);
+ok('isBasisUpgrade: documented over reported is an upgrade', isBasisUpgrade('documented', 'reported'));
+ok('isBasisUpgrade: reported over documented is not', !isBasisUpgrade('reported', 'documented'));
+
+const envelopeFixtures: [string, any, (over?: any) => any][] = [
+	['position', PositionSchema, pos],
+	['relationship', RelationshipSchema, rel],
+	['event', EventSchema, eventRec],
+	['agreement', AgreementSchema, agreementRec],
+	['world claim', WorldClaimSchema, worldClaimRec],
+	['company', CompanySchema, co],
+	['contract', ContractSchema, contractRec],
+	['licence', LicenceSchema, licenceRec],
+	['declaration', DeclarationSchema, declarationRec],
+	['education', EducationSchema, educationRec],
+	['person', PersonSchema, personRec],
+	['institution', InstitutionSchema, institutionRec],
+	['place', PlaceSchema, placeRec]
+];
+
+for (const [kind, schema, base] of envelopeFixtures) {
+	for (const blank of [' ', '\t\n ', '']) {
+		const label = JSON.stringify(blank);
+		rejectsWith(
+			schema,
+			base({
+				confidence: 'C',
+				verification: 'needs-primary-source',
+				attributed_to: blank,
+				reasoning: 'Reasoned from the record.',
+				falsifiable_by: 'A source contradicting the record.'
+			}),
+			`V20: ${kind} whitespace attributed_to ${label} is rejected`,
+			'non-blank'
+		);
+		rejectsWith(
+			schema,
+			base({
+				confidence: 'C',
+				verification: 'needs-primary-source',
+				attributed_to: 'Some Observer',
+				reasoning: blank,
+				falsifiable_by: 'A source contradicting the record.'
+			}),
+			`V18: ${kind} whitespace reasoning ${label} is rejected`,
+			'non-blank'
+		);
+		rejectsWith(
+			schema,
+			base({
+				confidence: 'C',
+				verification: 'needs-primary-source',
+				attributed_to: 'Some Observer',
+				reasoning: 'Reasoned from the record.',
+				falsifiable_by: blank
+			}),
+			`V18: ${kind} whitespace falsifiable_by ${label} is rejected`,
+			'non-blank'
+		);
+	}
+	rejectsWith(
+		schema,
+		base({ confidence: 'D', attributed_to: ' ' }),
+		`V20: ${kind} grade D whitespace attribution is rejected`,
+		'non-blank'
+	);
+}
+
+// ---------------------------------------------------------------------------
+// 1C — recursive strictness. ReviewSchema and DisputeSchema were plain
+// z.object, so an extra key vanished and the record still counted as reviewed.
+// The reviewer's exact probe: a valid review carrying `outcome: refuted`.
+// ---------------------------------------------------------------------------
+
+rejectsWith(
+	ReviewSchema,
+	review({ outcome: 'refuted' }),
+	'V28: an unknown review key (outcome) fails instead of being stripped',
+	'Unrecognized key'
+);
+rejectsWith(
+	PositionSchema,
+	pos({ review: review({ outcome: 'refuted' }) }),
+	'V28: a nested review outcome fails the whole record',
+	'Unrecognized key'
+);
+rejectsWith(
+	DisputeSchema,
+	{ claim: 'a competing account of the date', held_by: 'somebody', kind: 'settled' },
+	'V28: an unknown dispute key fails',
+	'Unrecognized key'
+);
+rejectsWith(
+	PositionSchema,
+	pos({ disputes: [{ claim: 'a competing account of the date', held_by: 'somebody', extra: 'x' }] }),
+	'V28: an unknown nested dispute key fails',
+	'Unrecognized key'
+);
+rejectsWith(
+	InstitutionSchema,
+	institutionRec({ active: { start: '2020', end: '2021', extra: 'x' } }),
+	'V28: an unknown interval key fails',
+	'Unrecognized key'
+);
+rejectsWith(
+	RelationshipSchema,
+	rel({ equity: { pct: 50, direct: true, beneficial: false, extra: 'x' } }),
+	'V28: an unknown equity key fails',
+	'Unrecognized key'
+);
+rejectsWith(
+	RelationshipSchema,
+	rel({ type: 'funding', finance: { amount: 1, currency: 'TND', year: 2020, extra: 'x' } }),
+	'V28: an unknown finance key fails',
+	'Unrecognized key'
+);
+rejectsWith(
+	RelationshipSchema,
+	rel({ type: 'influence', reasoning: 'r', influence: { channel: 'appointment', strength: 0.5, extra: 'x' } }),
+	'V28: an unknown influence key fails',
+	'Unrecognized key'
+);
+rejectsWith(
+	CompanySchema,
+	co({ registration: { registry: 'registre-de-commerce', number: '1', date: '2020-01-01', extra: 'x' } }),
+	'V28: an unknown registration key fails',
+	'Unrecognized key'
+);
+rejectsWith(
+	CompanySchema,
+	co({ capital: { tnd: 100, date: '2020-01-01', extra: 'x' } }),
+	'V28: an unknown capital key fails',
+	'Unrecognized key'
+);
+rejectsWith(
+	ContractSchema,
+	contractRec({ award: { value: '~100', currency: 'TND', year: 2020, extra: 'x' } }),
+	'V28: an unknown award key fails',
+	'Unrecognized key'
+);
+rejectsWith(
+	LicenceSchema,
+	licenceRec({ fees: { amount: 1, currency: 'TND', year: 2020, extra: 'x' } }),
+	'V28: an unknown fees key fails',
+	'Unrecognized key'
+);
+rejectsWith(
+	EventSchema,
+	eventRec({ impact: { layer: ['political'], extra: 'x' } }),
+	'V28: an unknown impact key fails',
+	'Unrecognized key'
+);
+rejectsWith(
+	EventSchema,
+	eventRec({ contested: [{ framing: 'x', held_by: 'y', extra: 'z' }] }),
+	'V28: an unknown contested key fails',
+	'Unrecognized key'
+);
+rejectsWith(EraSchema, eraRec({ extra: 'x' }), 'V28: an unknown top-level era key fails', 'Unrecognized key');
+rejectsWith(
+	QuestionSchema,
+	questionRec({ extra: 'x' }),
+	'V28: an unknown top-level question key fails',
+	'Unrecognized key'
+);
+rejectsWith(
+	HypothesisSchema,
+	hypothesisRec({ extra: 'x' }),
+	'V28: an unknown top-level hypothesis key fails',
+	'Unrecognized key'
+);
+rejectsWith(PersonSchema, personRec({ extra: 'x' }), 'V28: an unknown person key fails', 'Unrecognized key');
+rejectsWith(
+	InstitutionSchema,
+	institutionRec({ extra: 'x' }),
+	'V28: an unknown institution key fails',
+	'Unrecognized key'
+);
+
+// V23 — whitespace reviewer names and dispute fields are missing fields too.
+rejectsWith(ReviewSchema, review({ by: ' ' }), 'V23: a whitespace reviewer name is rejected', 'non-blank');
+rejectsWith(ReviewSchema, review({ by: '\t\n ' }), 'V23: a tab/newline reviewer name is rejected', 'non-blank');
+rejectsWith(ReviewSchema, review({ by: '' }), 'V23: an empty reviewer name is rejected', 'non-blank');
+rejectsWith(
+	DisputeSchema,
+	{ claim: ' ', held_by: 'somebody' },
+	'V23: a whitespace dispute claim is rejected',
+	'non-blank'
+);
+rejectsWith(
+	DisputeSchema,
+	{ claim: 'a competing account of the date', held_by: '\t\n ' },
+	'V23: a whitespace dispute holder is rejected',
+	'non-blank'
+);
 
 // ---------------------------------------------------------------------------
 // V9/V13 — relationship-only invariants: allegations need a circulating source,
@@ -214,7 +667,6 @@ accepts(
 // makes "calendar-valid" true rather than aspirational.
 // ---------------------------------------------------------------------------
 
-const review = (over: Record<string, unknown> = {}) => ({ by: 'reviewer', date: '2026-07-26', method: 'source-check', ...over });
 accepts(ReviewSchema, review(), 'V23: a well-formed review parses');
 accepts(ReviewSchema, review({ method: 'dedup' }), 'V23: every enum method parses');
 accepts(ReviewSchema, review({ date: '2026-02-28' }), 'V23: a leap-safe February date parses');
@@ -379,11 +831,127 @@ ok(
 	'an open-ended interval measures its duration against the cutoff (m20)',
 	(() => {
 		const open = resolveInterval({ start: '2020-01-01' });
-		const years = durationYears(open);
-		// startMid is the exact day (2020-01-01); the cutoff is 2026-07-26 ≈ 6.57y.
-		return years > 6.4 && years < 6.7;
+		const expected = (DATASET_CUTOFF - Date.UTC(2020, 0, 1)) / (365.2425 * 86_400_000);
+		return Math.abs(durationYears(open) - expected) < 0.01;
 	})()
 );
+
+// ---------------------------------------------------------------------------
+// Temporal invariants — the certainty horizon, the month-only observation, the
+// ongoing confirmation window, and a generated sweep over token combinations
+// and boundary dates. The engine owns the predicates; this suite proves the
+// pinned engine upholds the contract DeepTunisia publishes.
+// ---------------------------------------------------------------------------
+
+ok(
+	'temporal: an unknown end is never certain past the cutoff',
+	!certainlyActive(resolveInterval({ start: '2020-01-01', end: '?' }), DATASET_CUTOFF + 86_400_000)
+);
+{
+	const unknownEnd = resolveInterval({ start: '2020-01-01', end: '?' });
+	ok(
+		'temporal: an unknown end is certain only at its one observation',
+		certainlyActive(unknownEnd, unknownEnd.startLatest) &&
+			!certainlyActive(unknownEnd, unknownEnd.startLatest + 86_400_000)
+	);
+}
+{
+	const monthVerified = resolveInterval({ start: '2019-01-01', end: 'verified:2020-06' });
+	const midpoint = Math.floor((Date.UTC(2020, 5, 1) + Date.UTC(2020, 5, 30, 23, 59, 59)) / 2);
+	ok(
+		'temporal: a month-only verification is certain at the month midpoint',
+		certainlyActive(monthVerified, midpoint)
+	);
+	ok(
+		'temporal: a month-only verification is not certain on the last day',
+		!certainlyActive(monthVerified, Date.UTC(2020, 5, 30, 23, 59, 59))
+	);
+}
+{
+	const openEnded = resolveInterval({ start: '2022-01-01', end: 'ongoing' });
+	const confirmed = applyOngoingObservation(openEnded, DATASET_CUTOFF - 10 * 86_400_000);
+	ok(
+		'temporal: a recent observation keeps an ongoing interval ongoing',
+		confirmed.status === 'ongoing'
+	);
+	ok(
+		'temporal: ongoing certainty stops at the confirming observation',
+		!certainlyActive(confirmed, DATASET_CUTOFF)
+	);
+	const stale = applyOngoingObservation(openEnded, Date.UTC(2024, 0, 1));
+	ok(
+		'temporal: a stale observation downgrades ongoing to last-verified',
+		stale.status === 'last-verified' &&
+			stale.lastObserved === Date.UTC(2024, 0, 1) &&
+			!certainlyActive(stale, DATASET_CUTOFF)
+	);
+}
+
+{
+	const starts = ['2018-06-01', '2018-06', '2018', '~2017', '~2017-06', '<=2018-06', '>=1984', '?'];
+	const ends = ['2020-06-01', '2020-06', '2020', '~2020', 'ongoing', 'verified:2020-06', 'verified:2020-06-15', '?'];
+	const queries = [
+		DATASET_FLOOR - 86_400_000,
+		DATASET_FLOOR,
+		DATASET_CUTOFF - 86_400_000,
+		DATASET_CUTOFF,
+		DATASET_CUTOFF + 86_400_000,
+		Date.UTC(2020, 1, 29),
+		Date.UTC(2024, 1, 29),
+		Date.UTC(2017, 0, 1),
+		Date.UTC(2018, 5, 15),
+		Date.UTC(2020, 5, 15),
+		Date.UTC(2021, 5, 15)
+	];
+	let seed = 20260910;
+	const rand = () => {
+		seed = (seed * 1103515245 + 12345) & 0x7fffffff;
+		return seed / 0x7fffffff;
+	};
+	const pool = starts.flatMap((s) => ends.map((e) => [s, e] as const));
+	const failures: string[] = [];
+	const check = (cond: boolean, msg: string) => {
+		if (!cond && failures.length < 5) failures.push(msg);
+	};
+	let cases = 0;
+	for (let i = 0; i < 1000; i++) {
+		const [s, e] = i < pool.length ? pool[i] : pool[Math.floor(rand() * pool.length)];
+		let iv;
+		try {
+			iv = resolveInterval({ start: s, end: e });
+		} catch {
+			continue;
+		}
+		cases++;
+		const settled = applyOngoingObservation(
+			iv,
+			i % 3 === 0 ? DATASET_CUTOFF - 1000 * 86_400_000 : DATASET_CUTOFF - 10 * 86_400_000
+		);
+		check(settled.startEarliest <= settled.startLatest, `start ordering ${s}/${e}`);
+		check(
+			settled.endEarliest === null || settled.endLatest === null || settled.endEarliest <= settled.endLatest,
+			`end ordering ${s}/${e}`
+		);
+		if (settled.status !== 'ongoing') {
+			check(settled.lastObserved !== null, `missing certainty horizon ${s}/${e}`);
+		}
+		for (const t of queries) {
+			check(
+				!certainlyActive(settled, t) || possiblyActive(settled, t),
+				`certain without possible ${s}/${e} @ ${new Date(t).toISOString()}`
+			);
+			check(
+				!(t > DATASET_CUTOFF && (certainlyActive(settled, t) || possiblyActive(settled, t))),
+				`assertion past cutoff ${s}/${e} @ ${new Date(t).toISOString()}`
+			);
+		}
+	}
+	ok(
+		`temporal: generated sweep upholds the invariants (${cases} cases)`,
+		cases === 1000 && failures.length === 0,
+		failures[0] ?? `${cases} cases`
+	);
+}
 
 console.log(
 	`\n  ${checks - failures}/${checks} validator-invariant checks passed${failures ? `, ${failures} FAILED` : ''}\n`

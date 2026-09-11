@@ -8,7 +8,8 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { RelationshipType, EDGE_DIRECTION } from '../scripts/schema.ts';
+import { parse as parseYaml } from 'yaml';
+import { RelationshipType, EDGE_DIRECTION, REQUIRED_SOURCE_KINDS } from '../scripts/schema.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ds = JSON.parse(readFileSync(join(HERE, '..', 'src', 'generated', 'dataset.json'), 'utf8'));
@@ -332,82 +333,118 @@ const MIN_DOCUMENTED_SHARE = 0.185; // of all based claims
 	);
 }
 
-// Grade A means a primary record, per the grading rules in AGENTS.md — tier 1
-// (gazette, decree, government portal) or tier 2 (institutional, peer-reviewed).
-// Not "we are confident it is true".
+// Grade A means a primary record, per the grading rules — tier 1 (gazette,
+// decree, government portal) or tier 2 (institutional, peer-reviewed). V25 now
+// enforces that at the build gate, and the escape for legacy records is the
+// explicit register in data/source-exceptions.yaml: one entry per record, with
+// an owner and a deadline, and an expired deadline fails the build.
 //
-// Nothing enforced that, and 53 records are graded A while citing nothing better
-// than tier 3 journalism. Each of them renders as `documented`, the strongest label
-// this site has, on the strength of a news article. That is not a build failure —
-// fixing 53 records is editorial work, and some may be defensible — but it must not
-// grow. The editorial tool refuses to create a 54th.
-//
-// Lower this number as records are sourced. Raising it means a claim was promoted
-// to `documented` without a document, which needs saying out loud in the commit.
-const MAX_GRADE_A_WITHOUT_PRIMARY = 53;
+// These assertions are the graph-side half of that contract. The build already
+// refuses an unexcepted violation; this suite proves the published graph and
+// the register agree, including that every basis promotion is visible as
+// `basis_derived` beside the authored `basis` (V27).
+
+const KIND_TO_DATASET: Record<string, string> = {
+	institution: 'institutions',
+	person: 'people',
+	position: 'positions',
+	relationship: 'relationships',
+	event: 'events',
+	agreement: 'agreements',
+	'world-claim': 'worldClaims',
+	company: 'companies',
+	contract: 'contracts',
+	licence: 'licences',
+	declaration: 'declarations',
+	education: 'education',
+	region: 'regions',
+	place: 'places'
+};
 
 {
-	const tierOf = new Map<string, number>(ds.sources.map((s: any) => [s.id, s.tier]));
-	const offenders: string[] = [];
+	const exceptions = (parseYaml(readFileSync(join(HERE, '..', 'data', 'source-exceptions.yaml'), 'utf8')) ?? []) as {
+		rule: string;
+		kind: string;
+		id: string;
+		owner: string;
+		deadline: string;
+		implied?: string;
+		authored?: string;
+	}[];
+	const today = new Date().toISOString().slice(0, 10);
 
-	for (const kind of ['positions', 'relationships', 'events'] as const) {
-		for (const record of (ds[kind] ?? []) as any[]) {
-			if (record.confidence !== 'A') continue;
-			const tiers = (record.sources ?? [])
-				.map((id: string) => tierOf.get(id))
-				.filter((t: number | undefined): t is number => typeof t === 'number');
-			if (tiers.length && Math.min(...tiers) > 2) offenders.push(`${kind}:${record.id}`);
-		}
-	}
-
+	const expired = exceptions.filter((e) => e.deadline < today);
 	ok(
-		'grade A backed by something below a primary source has not grown',
-		offenders.length <= MAX_GRADE_A_WITHOUT_PRIMARY,
-		`${offenders.length} (ceiling ${MAX_GRADE_A_WITHOUT_PRIMARY})${
-			offenders.length > MAX_GRADE_A_WITHOUT_PRIMARY ? ` — newest: ${offenders.slice(-3).join(', ')}` : ''
-		}`
+		'no exception register entry has passed its deadline',
+		expired.length === 0,
+		expired.map((e) => `${e.id}@${e.deadline}`).join(', ') || `${exceptions.length} live`
 	);
-}
 
-// Rule 2 says every claim carries a source — but the schema allows `default([])`
-// on the older kinds, so an institution, era, relationship or person record can
-// ship with zero sources while still rendering a `basis` label (the presidency
-// and the armed-forces branches currently render `documented` citing nothing).
-// Mutation testing surfaced this as a validator that validates nothing on a
-// clean graph: the checkSources() loop only verifies that cited ids EXIST, so
-// an empty list passes silently.
-//
-// This is a RATCHET in the same sense as MAX_GRADE_A_WITHOUT_PRIMARY above: the
-// 24 records that currently ship unsourced are the worst the dataset is allowed
-// to be. Sourcing them is editorial work (find the gazette entry or a tier-1
-// institutional page); adding more unsourced claim records is a build failure.
-// Roles and questions are excluded deliberately: a canonical office and an open
-// research question are scaffolding whose standing is carried by the records
-// inside them, not a claim about the world — whether that is the right model is
-// an editorial decision, but it is not the same defect as an unsourced claim.
-{
-	const kinds: [string, { id?: string; sources?: string[] }[]][] = [
-		['institution', ds.institutions],
-		['relationship', ds.relationships],
-		['person', ds.people],
-		['era', ds.eras]
-	];
-	const unsourced: string[] = [];
-	for (const [kind, records] of kinds) {
-		for (const r of records) {
-			if (!r.sources || r.sources.length === 0) unsourced.push(`${kind}:${r.id}`);
-		}
-	}
-	const CEILINGS: Record<string, number> = { institution: 19, relationship: 3, person: 1, era: 2 };
-	const over: string[] = [];
-	for (const kind of Object.keys(CEILINGS)) {
-		const n = unsourced.filter((u) => u.startsWith(`${kind}:`)).length;
-		if (n > CEILINGS[kind]) over.push(`${kind}: ${n} (ceiling ${CEILINGS[kind]})`);
+	// Stale entries are the mirror of a missing one: they hide that the record
+	// was fixed or renamed.
+	const liveById = new Map(exceptions.map((e) => [`${KIND_TO_DATASET[e.kind] ?? e.kind}:${e.id}`, e]));
+	const missingRecords: string[] = [];
+	for (const e of exceptions) {
+		const rows = (ds[KIND_TO_DATASET[e.kind]] ?? []) as { id: string }[];
+		if (!rows.some((r) => r.id === e.id)) missingRecords.push(`${e.kind}:${e.id}`);
 	}
 	ok(
-		'rule 2: no claim-bearing record is unsourced beyond the current ceiling',
-		over.length === 0,
-		over.length ? over.join('; ') : `${unsourced.length} unsourced claim records total (institution 19, relationship 3, person 1, era 2)`
+		'every exception register entry names a record in the graph',
+		missingRecords.length === 0,
+		missingRecords.join(', ') || `${exceptions.length} entries resolve`
+	);
+
+	const tierOf = new Map<string, number>(ds.sources.map((s: any) => [s.id, s.tier]));
+	const gradeAUnbacked: string[] = [];
+	const unsourced: string[] = [];
+	for (const [kind, key] of Object.entries(KIND_TO_DATASET)) {
+		for (const record of (ds[key] ?? []) as any[]) {
+			if (record.confidence === 'A') {
+				const tiers = (record.sources ?? [])
+					.map((id: string) => tierOf.get(id))
+					.filter((t: number | undefined): t is number => typeof t === 'number');
+				if (!tiers.some((t) => t <= 2)) gradeAUnbacked.push(`${kind}:${record.id}`);
+			}
+			if (REQUIRED_SOURCE_KINDS.has(kind) && (record.sources ?? []).length === 0) {
+				unsourced.push(`${kind}:${record.id}`);
+			}
+		}
+	}
+
+	const gradeAExcepted = new Set(
+		exceptions.filter((e) => e.rule === 'grade-a-primary').map((e) => `${e.kind}:${e.id}`)
+	);
+	const noSourceExcepted = new Set(
+		exceptions.filter((e) => e.rule === 'no-source').map((e) => `${e.kind}:${e.id}`)
+	);
+	ok(
+		'every grade-A record without a tier-1/2 source is on the exception register (V25)',
+		gradeAUnbacked.every((id) => gradeAExcepted.has(id)),
+		gradeAUnbacked.filter((id) => !gradeAExcepted.has(id)).join(', ') ||
+			`${gradeAUnbacked.length} excepted`
+	);
+	ok(
+		'every unsourced claim record is on the exception register (rule 2)',
+		unsourced.every((id) => noSourceExcepted.has(id)),
+		unsourced.filter((id) => !noSourceExcepted.has(id)).join(', ') || `${unsourced.length} excepted`
+	);
+
+	// V27 visibility: a live basis-override entry must still be a promotion in
+	// the graph, with the grade-implied basis emitted beside the authored one.
+	const overrideFailures: string[] = [];
+	for (const e of exceptions) {
+		if (e.rule !== 'basis-override' || !liveById.has(`${KIND_TO_DATASET[e.kind] ?? e.kind}:${e.id}`)) continue;
+		const rows = (ds[KIND_TO_DATASET[e.kind]] ?? []) as any[];
+		const record = rows.find((r) => r.id === e.id);
+		if (!record || record.basis !== e.authored || record.basis_derived !== e.implied) {
+			overrideFailures.push(`${e.kind}:${e.id} expected ${e.implied}->${e.authored}`);
+		}
+	}
+	ok(
+		'every registered basis override is emitted with basis_derived visible (V27)',
+		overrideFailures.length === 0,
+		overrideFailures.slice(0, 5).join(', ') ||
+			`${exceptions.filter((e) => e.rule === 'basis-override').length} overrides exposed`
 	);
 }
 
