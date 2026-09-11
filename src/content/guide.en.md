@@ -4,7 +4,7 @@ translated_by: human
 
 {#intro}
 
-DeepTunisia is an instrument, not a page. The claims it makes are drawn from verifiable evidence, and the interface is built so you can always tell which claim rests on what. This guide takes about five minutes: it explains the one rule that governs everything, the two worlds the interface splits into, how time works here, and which view answers which question.
+DeepTunisia is an instrument, not a page. The claims it makes are drawn from verifiable evidence, and the interface is built so you can always tell which claim rests on what. This guide takes about five minutes: it explains the one rule that governs everything, the sections the interface splits into, how time works here, and which view answers which question.
 
 ## The one rule: an inference is never a fact {#rule}
 
@@ -14,12 +14,13 @@ Every claim in the dataset is filed under one of four epistemic bases. They neve
 
 ## The record and the argument {#bubbles}
 
-The top bar splits the interface into two bubbles. The distinction is the project's whole claim, stated before you open anything:
+The top bar splits the interface into three sections. The distinction is the project's whole claim, stated before you open anything:
 
 - **Graph** — the sourced record. Positions, relationships, events, and the evidence behind them. Everything here carries a basis and a citation.
-- **Agora** — everything the record is not: discussion, proposed changes, reports, and the news feed. No basis, no source grade, no verification. It is deliberately rendered in a register no sourced claim ever wears.
+- **Media** — the reading surfaces: in-house investigations built from the evidence system, and the third-party news feed. Investigations carry the same graded vocabulary as the record; the feed carries no basis and says so on the page.
+- **Agora** — the community layer: discussion, proposed changes and reports. No basis, no source grade, no verification. It is deliberately rendered in a register no sourced claim ever wears.
 
-Crossing the line is cheap and safe. The two dots next to the names are load-bearing: filled means "this is the record", hollow means "this is not".
+Crossing between sections is cheap and safe. The dots next to the names are load-bearing: filled means "this is the record", hollow means "this is not".
 
 ## Time is a dimension here {#time}
 
