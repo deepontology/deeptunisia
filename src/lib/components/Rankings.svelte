@@ -34,6 +34,36 @@
 		if (!deepLinked && applyEntityLink()) deepLinked = true;
 	});
 
+	/**
+	 * The table is 912px wide on a 390px screen, and a clipped Authority column
+	 * reads as the end of the table rather than as more of it. The trailing fade
+	 * appears only while there is table left inline-end and retracts at the end;
+	 * on a desktop, where the table fits, it never appears at all.
+	 */
+	let tableScroll = $state<HTMLDivElement | null>(null);
+	let moreInlineEnd = $state(false);
+
+	function measureTableEdge() {
+		const el = tableScroll;
+		if (!el) return;
+		const overflow = el.scrollWidth - el.clientWidth;
+		// RTL reports scrollLeft as zero at the start and negative toward inline-end.
+		const rtl = getComputedStyle(el).direction === 'rtl';
+		const travelled = rtl ? -el.scrollLeft : el.scrollLeft;
+		moreInlineEnd = overflow - travelled > 1;
+	}
+
+	$effect(() => {
+		const el = tableScroll;
+		if (!el) return;
+		measureTableEdge();
+		const ro = new ResizeObserver(measureTableEdge);
+		ro.observe(el);
+		// The table's own width is what changes when the rows do, so watch it too.
+		if (el.firstElementChild) ro.observe(el.firstElementChild);
+		return () => ro.disconnect();
+	});
+
 	const scores = $derived(
 		computeIndices({
 			t: app.t,
@@ -111,7 +141,12 @@
 		</div>
 	</details>
 
-	<div class="table-scroll">
+	<div
+		class="table-scroll"
+		class:more-inline-end={moreInlineEnd}
+		bind:this={tableScroll}
+		onscroll={measureTableEdge}
+	>
 		{#if ranked.length === 0}
 			<p class="empty">{format(app.locale, 'rankings.empty', { date: formatDate(app.t, 'day') })}</p>
 		{:else}
@@ -370,9 +405,17 @@
 		overflow-y: auto;
 		-webkit-overflow-scrolling: touch;
 		scrollbar-width: thin;
-		mask-image: linear-gradient(to right, black 90%, transparent);
-		-webkit-mask-image: linear-gradient(to right, black 90%, transparent);
+	}
+	/* The trailing fade and its shadow say "there is more" only while there is;
+	   static, they dimmed the Authority column even where the table fit. */
+	.table-scroll.more-inline-end {
+		mask-image: linear-gradient(to right, black calc(100% - 28px), transparent 100%);
+		-webkit-mask-image: linear-gradient(to right, black calc(100% - 28px), transparent 100%);
 		box-shadow: inset -12px 0 10px -10px color-mix(in srgb, var(--border-strong) 28%, transparent);
+	}
+	:global([dir='rtl']) .table-scroll.more-inline-end {
+		mask-image: linear-gradient(to left, black calc(100% - 28px), transparent 100%);
+		-webkit-mask-image: linear-gradient(to left, black calc(100% - 28px), transparent 100%);
 	}
 	table {
 		width: 100%;

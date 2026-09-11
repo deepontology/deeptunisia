@@ -111,7 +111,7 @@ function onKey(e: KeyboardEvent) {
 		inset: 0;
 		background: rgb(0 0 0 / 0.55);
 		backdrop-filter: blur(2px);
-		z-index: 60;
+		z-index: var(--z-search);
 	}
 	.palette {
 		position: fixed;
@@ -123,7 +123,7 @@ function onKey(e: KeyboardEvent) {
 		border: 1px solid var(--border-default);
 		border-radius: var(--r-lg);
 		box-shadow: var(--elev-3);
-		z-index: 61;
+		z-index: calc(var(--z-search) + 1);
 		overflow: hidden;
 	}
 	input {

@@ -94,6 +94,22 @@ export function syncSelectionUrl() {
 	if (!browser) return;
 	if (!consumesEntityLink(page.url.pathname)) return;
 	const sel = app.selected;
+	const current = page.url.searchParams.get('id');
+	/*
+	 * Compare the PARAM, not the whole href.
+	 *
+	 * URLSearchParams re-encodes every param it serialises, so a route carrying
+	 * an unrelated value like `?flow=trade:2011:FR` produced a "different" href
+	 * on every run and called replaceState from the layout's first effect, before
+	 * the SvelteKit router was initialised. That threw on any entity route with a
+	 * colon in the query and rewrote params the reader had not changed. Deciding
+	 * on the `id` value alone leaves every other param byte-for-byte alone.
+	 */
+	if (sel && validEntity(sel)) {
+		if (current === sel) return;
+	} else if (current === null) {
+		return;
+	}
 	const u = new URL(page.url.href);
 	if (sel && validEntity(sel)) u.searchParams.set('id', sel);
 	else u.searchParams.delete('id');

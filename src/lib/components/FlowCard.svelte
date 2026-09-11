@@ -35,6 +35,7 @@
 	import { t, tf, nameOf, basisLabel, formatDate } from '$lib/t.svelte';
 	import { app } from '$lib/state.svelte';
 	import { ds, type Basis } from '$lib/model';
+	import { compact } from '$lib/design/media.svelte';
 	import { AGORA_OPEN } from '$lib/agora-gate';
 	import Chip from '$lib/ui/Chip.svelte';
 	import Tooltip from '$lib/ui/Tooltip.svelte';
@@ -43,6 +44,7 @@
 	import { canonicalShareUrl, buildFlowId } from '$lib/share';
 	import Prose from '$lib/ui/Prose.svelte';
 	import SourceList from './SourceList.svelte';
+	import { sheetDrag, type SheetDragParams } from '$lib/ui/sheet-drag';
 	import { flows, debt } from '$lib/world/countries';
 	import { moneyM } from '$lib/world/format';
 
@@ -82,9 +84,21 @@
 		onclose: () => void;
 		/** Open the country's own record, where the graph has one. */
 		onpick: (institutionId: string) => void;
+		/** True through the exit transition; the parent keeps the card mounted. */
+		closing?: boolean;
 	}
 
-	let { selection, onclose, onpick }: Props = $props();
+	let { selection, onclose, onpick, closing = false }: Props = $props();
+
+	/** Modal sheet on a phone, anchored card on a wide screen. See the styles. */
+	const dragParams: SheetDragParams = {
+		enabled: () => compact.current,
+		detent: () => 'full',
+		setDetent: () => {},
+		dismiss: () => onclose(),
+		hasPeek: () => false,
+		handle: '.sheet-handle'
+	};
 
 	/** The graph record this card can hang a discussion on, if there is one. */
 	const countryRecord = $derived(
@@ -217,118 +231,121 @@
 	const shareTitle = $derived(heading);
 </script>
 
-<article class="card">
-	<header>
-		<div class="verb">
-			<span class="eyebrow">{eyebrow}</span>
-			{#if selection.kind !== 'agreement'}
-				<span class="sub mono">{selection.year}</span>
+<article class="card" class:closing use:sheetDrag={dragParams}>
+	<span class="sheet-handle" aria-hidden="true"><i class="sheet-grip"></i></span>
+	<div class="body sheet-scroll">
+		<header>
+			<div class="verb">
+				<span class="eyebrow">{eyebrow}</span>
+				{#if selection.kind !== 'agreement'}
+					<span class="sub mono">{selection.year}</span>
+				{/if}
+			</div>
+			<div class="h-actions">
+				<ShareMenu url={shareUrl} title={shareTitle} />
+				<button class="close" onclick={onclose} aria-label={t('panel.close')}>×</button>
+			</div>
+		</header>
+
+		<div class="ends">
+			<span class="end fixed">{t('world.tunisia')}</span>
+			<span class="arrow" aria-hidden="true">↔</span>
+			{#if countryRecord}
+				<button class="end" onclick={() => onpick(countryRecord.id)}>{heading}</button>
+			{:else}
+				<span class="end plain">{heading}</span>
 			{/if}
 		</div>
-		<div class="h-actions">
-			<ShareMenu url={shareUrl} title={shareTitle} />
-			<button class="close" onclick={onclose} aria-label={t('panel.close')}>×</button>
-		</div>
-	</header>
 
-	<div class="ends">
-		<span class="end fixed">{t('world.tunisia')}</span>
-		<span class="arrow" aria-hidden="true">↔</span>
-		{#if countryRecord}
-			<button class="end" onclick={() => onpick(countryRecord.id)}>{heading}</button>
+		{#if selection.kind === 'agreement' && agreement}
+			<!-- The ends say who; this says what. Both are needed: "Tunisia ↔ European Union"
+			     is true of half a dozen things. -->
+			<h3 class="title" dir="auto">{nameOf(agreement)}</h3>
+			<p class="desc" dir="auto"><Prose record={agreement} field="summary" block /></p>
+			<div class="meta">
+				{#if agreement.basis}
+					<Chip size="xs" dot tint="var(--basis-{agreement.basis})">
+						{agreement.confidence ? `${agreement.confidence} — ` : ''}{basisLabel(agreement.basis as Basis)}
+					</Chip>
+				{/if}
+				{#if agreement.in_force}
+					<Chip variant="outline" size="xs">{tf('world.inforce.date', { date: localDate(agreement.in_force) })}</Chip>
+				{/if}
+			</div>
+			{#if agreement.sources?.length}
+				<SourceList ids={agreement.sources} />
+			{/if}
 		{:else}
-			<span class="end plain">{heading}</span>
+			<dl class="figures">
+				{#each figures as f (f.label)}
+					<div class="row">
+						<dt>{f.label}</dt>
+						<dd class="mono">{money(f.own)}</dd>
+						{#if f.mirror !== null}
+							<dd class="mono mirror">
+								<Tooltip content={t('world.partnersays')}>{money(f.mirror)}</Tooltip>
+							</dd>
+						{/if}
+					</div>
+				{/each}
+			</dl>
+
+			{#if selection.kind === 'trade'}
+				<!--
+					The disagreement, stated in words as well as drawn as a halo on the arc.
+					A reader who cannot see the halo (on a phone, or with the arc behind the
+					globe) still gets the number.
+				-->
+				<p class="two-books">
+					{#if gap === null}
+						{t('world.nocounter')}
+					{:else}
+						{tf('world.dossier.twobooks', { gap: localPercent(gap) })}
+					{/if}
+				</p>
+			{/if}
+
+			{#if provenance?.source}
+				<!--
+					Publisher and retrieval date instead of a basis chip. A measurement is not
+					a graded claim and must not wear one's clothes; see the header.
+				-->
+				<p class="prov">
+					{#if provenance.retrieved}
+						{tf('world.provenance', { source: provenance.source, date: localDate(provenance.retrieved) })}
+					{:else}
+						{provenance.source}
+					{/if}
+				</p>
+			{/if}
+		{/if}
+
+		{#if countryRecord && selection.kind === 'agreement'}
+			<CommunityActions type="institution" id={countryRecord.id} label={nameOf(agreement)} />
+		{:else if countryRecord}
+			<!--
+				Discuss only. There is no "propose a change" against a UN Comtrade figure:
+				the number is not this project's to edit, and offering the door would promise
+				something the review process cannot deliver. While the Agora is staged the
+				door is a coming-soon mark; when AGORA_OPEN flips it becomes the real link.
+			-->
+			<div class="acts">
+				{#if AGORA_OPEN}
+					<a class="cbtn" href="/agora?target_type=institution&target_id={countryRecord.id}&label={encodeURIComponent(heading)}">
+						{t('panel.discuss')}
+					</a>
+				{:else}
+					<Tooltip content={t('agora.comingsoon')}>
+						<span class="cbtn soon">
+							{t('panel.discuss')}<i class="chip">{t('agora.soon.badge')}</i>
+						</span>
+					</Tooltip>
+				{/if}
+			</div>
+		{:else}
+			<p class="norecord">{t('world.norecord')}</p>
 		{/if}
 	</div>
-
-	{#if selection.kind === 'agreement' && agreement}
-		<!-- The ends say who; this says what. Both are needed: "Tunisia ↔ European Union"
-		     is true of half a dozen things. -->
-		<h3 class="title" dir="auto">{nameOf(agreement)}</h3>
-		<p class="desc" dir="auto"><Prose record={agreement} field="summary" block /></p>
-		<div class="meta">
-			{#if agreement.basis}
-				<Chip size="xs" dot tint="var(--basis-{agreement.basis})">
-					{agreement.confidence ? `${agreement.confidence} — ` : ''}{basisLabel(agreement.basis as Basis)}
-				</Chip>
-			{/if}
-			{#if agreement.in_force}
-				<Chip variant="outline" size="xs">{tf('world.inforce.date', { date: localDate(agreement.in_force) })}</Chip>
-			{/if}
-		</div>
-		{#if agreement.sources?.length}
-			<SourceList ids={agreement.sources} />
-		{/if}
-	{:else}
-		<dl class="figures">
-			{#each figures as f (f.label)}
-				<div class="row">
-					<dt>{f.label}</dt>
-					<dd class="mono">{money(f.own)}</dd>
-					{#if f.mirror !== null}
-						<dd class="mono mirror">
-							<Tooltip content={t('world.partnersays')}>{money(f.mirror)}</Tooltip>
-						</dd>
-					{/if}
-				</div>
-			{/each}
-		</dl>
-
-		{#if selection.kind === 'trade'}
-			<!--
-				The disagreement, stated in words as well as drawn as a halo on the arc.
-				A reader who cannot see the halo — on a phone, or with the arc behind the
-				globe — still gets the number.
-			-->
-			<p class="two-books">
-				{#if gap === null}
-					{t('world.nocounter')}
-				{:else}
-					{tf('world.dossier.twobooks', { gap: localPercent(gap) })}
-				{/if}
-			</p>
-		{/if}
-
-		{#if provenance?.source}
-			<!--
-				Publisher and retrieval date instead of a basis chip. A measurement is not
-				a graded claim and must not wear one's clothes; see the header.
-			-->
-			<p class="prov">
-				{#if provenance.retrieved}
-					{tf('world.provenance', { source: provenance.source, date: localDate(provenance.retrieved) })}
-				{:else}
-					{provenance.source}
-				{/if}
-			</p>
-		{/if}
-	{/if}
-
-	{#if countryRecord && selection.kind === 'agreement'}
-		<CommunityActions type="institution" id={countryRecord.id} label={nameOf(agreement)} />
-	{:else if countryRecord}
-		<!--
-			Discuss only. There is no "propose a change" against a UN Comtrade figure:
-			the number is not this project's to edit, and offering the door would promise
-			something the review process cannot deliver. While the Agora is staged the
-			door is a coming-soon mark; when AGORA_OPEN flips it becomes the real link.
-		-->
-		<div class="acts">
-			{#if AGORA_OPEN}
-				<a class="cbtn" href="/agora?target_type=institution&target_id={countryRecord.id}&label={encodeURIComponent(heading)}">
-					{t('panel.discuss')}
-				</a>
-			{:else}
-				<Tooltip content={t('agora.comingsoon')}>
-					<span class="cbtn soon">
-						{t('panel.discuss')}<i class="chip">{t('agora.soon.badge')}</i>
-					</span>
-				</Tooltip>
-			{/if}
-		</div>
-	{:else}
-		<p class="norecord">{t('world.norecord')}</p>
-	{/if}
 </article>
 
 <style>
@@ -339,6 +356,14 @@
 		border: 1px solid var(--border-default);
 		border-radius: var(--r-lg);
 		box-shadow: var(--elev-3);
+		display: flex;
+		flex-direction: column;
+	}
+	/*
+	 * The one scroll surface on a phone sits under the handle, so the card's own
+	 * frame (and its close button) never scrolls off the top of the view.
+	 */
+	.body {
 		display: flex;
 		flex-direction: column;
 		gap: var(--s-4);
@@ -511,5 +536,43 @@
 		border: 1px solid var(--border-default);
 		color: var(--text-faint);
 		background: var(--surface-overlay);
+	}
+
+	/* ---------------------------------------------------------------------------
+	   Phone: a modal sheet at one detent. The shared drag action owns the pull;
+	   this owns the frame and the exit.
+	   --------------------------------------------------------------------------- */
+
+	@media (max-width: 900px) {
+		.card {
+			width: auto;
+			max-height: 100%;
+			padding-top: var(--s-2);
+			overflow: hidden;
+			transform: translateY(var(--sheet-y, 0px));
+			overscroll-behavior: contain;
+			animation: sheet-up var(--dur-normal) var(--ease-out);
+			transition: transform var(--dur-normal) var(--ease-out);
+		}
+		/* Leaving: under the bottom edge of the view, handle last. */
+		.card.closing {
+			transform: translateY(100%);
+			transition: transform var(--dur-normal) var(--ease-in-out);
+		}
+		.body {
+			flex: 1;
+			min-height: 0;
+		}
+	}
+
+	@keyframes sheet-up {
+		from {
+			transform: translateY(100%);
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.card {
+			animation: none;
+		}
 	}
 </style>

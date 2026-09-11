@@ -161,13 +161,19 @@
 <style>
 	.menubar {
 		position: relative;
-		z-index: 40;
+		z-index: var(--z-chrome);
 		flex-shrink: 0;
 		display: flex;
 		align-items: center;
 		gap: var(--s-6);
-		height: var(--menubar-h);
-		padding: 0 calc(var(--s-5) + var(--safe-r)) 0 calc(var(--s-5) + var(--safe-l));
+		/*
+		   The safe-area inset is inside the height, not beside it. app.html opts
+		   into viewport-fit=cover, so under a notch this bar starts at y=0 beneath
+		   the status bar; padding-top keeps the controls clear of the clock while
+		   --chrome-h (which includes --safe-t) still describes the whole rail.
+		*/
+		height: calc(var(--menubar-h) + var(--safe-t));
+		padding: var(--safe-t) calc(var(--s-5) + var(--safe-r)) 0 calc(var(--s-5) + var(--safe-l));
 		background: color-mix(in oklch, var(--surface-panel) 90%, transparent);
 		backdrop-filter: blur(18px) saturate(1.3);
 		border-bottom: 1px solid var(--border-default);

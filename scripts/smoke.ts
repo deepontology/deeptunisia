@@ -1868,6 +1868,81 @@ console.log('\n  ── deep-link round trips ──');
 		await page.close();
 	}
 
+	/*
+	 * A sheet's share link followed to its end. `?flow=` pins a measurement edge
+	 * on the map; `?agreement=` names no edge, so the Network hands the reader
+	 * to the World ledger, where the FlowCard owns the record. Arriving at the
+	 * right route with nothing rendered is the failure these measure, and both
+	 * pages go through the console listener above.
+	 */
+	{
+		const page = await context.newPage();
+		const at = problems.length;
+		await page.goto(BASE + '/network?flow=trade:2011:FR', { waitUntil: 'networkidle', timeout: 30_000 });
+		await settle(page);
+		/*
+		 * The pin is placed after the layout measures, and the graph has grown
+		 * enough that a fixed wait raced it. Wait for the card itself; the count
+		 * below still fails when it never arrives.
+		 */
+		await page.locator('.edgecard').first().waitFor({ state: 'attached', timeout: 10_000 }).catch(() => {});
+		const edgeCards = await page.locator('.edgecard').count();
+		ok(
+			'deep-link /network?flow=trade:2011:FR pins the France measurement edge',
+			edgeCards === 1,
+			`${edgeCards} edge cards at ${page.url().replace(BASE, '')}`
+		);
+		ok('deep-link flow sheet is console-free', problems.length === at, problems.slice(at).join(' | ') || 'clean');
+		await page.close();
+	}
+
+	{
+		/*
+		 * Energy is the measurement family the Network cannot draw, so its share
+		 * link has to arrive on the globe with the card open. Trade and debt pin
+		 * an edge; energy redirects, and the redirect is what this measures.
+		 */
+		const page = await context.newPage();
+		const at = problems.length;
+		await page.goto(BASE + '/network?flow=energy:2024:DZ', { waitUntil: 'networkidle', timeout: 30_000 });
+		await settle(page);
+		await page.locator('.flowcard .card').first().waitFor({ state: 'attached', timeout: 10_000 }).catch(() => {});
+		ok(
+			'deep-link /network?flow=energy:... hands the energy flow to the World ledger',
+			page.url().includes('/world?flow=energy') || page.url().includes('/world?flow=energy%3A'),
+			page.url().replace(BASE, '')
+		);
+		const energyCards = await page.locator('.flowcard .card').count();
+		ok(
+			'deep-link /world?flow=energy:... opens the energy flow card',
+			energyCards === 1,
+			`${energyCards} flow cards`
+		);
+		ok('deep-link energy sheet is console-free', problems.length === at, problems.slice(at).join(' | ') || 'clean');
+		await page.close();
+	}
+
+	{
+		const page = await context.newPage();
+		const at = problems.length;
+		await page.goto(BASE + '/network?agreement=efta-free-trade-agreement', { waitUntil: 'networkidle', timeout: 30_000 });
+		await settle(page);
+		await page.locator('.flowcard .card').first().waitFor({ state: 'attached', timeout: 10_000 }).catch(() => {});
+		ok(
+			'deep-link /network?agreement=... hands the agreement to the World ledger',
+			page.url().includes('/world?agreement=efta-free-trade-agreement'),
+			page.url().replace(BASE, '')
+		);
+		const flowCards = await page.locator('.flowcard .card').count();
+		ok(
+			'deep-link /world?agreement=... opens the agreement flow card',
+			flowCards === 1,
+			`${flowCards} flow cards`
+		);
+		ok('deep-link agreement sheet is console-free', problems.length === at, problems.slice(at).join(' | ') || 'clean');
+		await page.close();
+	}
+
 	ok('deep-link section console clean', problems.length === 0, problems.slice(0, 4).join(' | '));
 	await context.close();
 }
@@ -2547,6 +2622,377 @@ console.log('\n  ── phone chrome ──');
 	);
 
 	await page.screenshot({ path: join(OUT, 'phone-inspector.png') });
+
+	/*
+	 * The sheet pass. One shared drag action (src/lib/ui/sheet-drag.ts) now
+	 * drives every bottom sheet, the entity card is the sheet's only scroller,
+	 * and the z-scale keeps the dock above the companion sheet. Each of these
+	 * replaced a defect a static screenshot cannot see: a nested scroller inside
+	 * a 46dvh card, controls buried under a card taller than its box, and grab
+	 * rails that looked draggable but were decoration.
+	 *
+	 * A fresh navigation and a fresh listener, so this block counts only its own
+	 * console noise, not anything the earlier chronicle flow produced.
+	 */
+	const sheetProblems: string[] = [];
+	page.on('console', (m: ConsoleMessage) => {
+		if ((m.type() === 'error' || m.type() === 'warning') && !isIgnorable(m.text())) {
+			sheetProblems.push(`[${m.type()}] ${m.text()}`);
+		}
+	});
+	page.on('pageerror', (e) => sheetProblems.push(`[pageerror] ${e.message}`));
+
+	await page.goto(BASE + '/atlas?id=bourguiba', { waitUntil: 'networkidle', timeout: 30_000 });
+	await settle(page);
+	await page.waitForSelector('.inspector', { timeout: 10_000 });
+	await page.waitForTimeout(500);
+
+	// 8. The viewport opts into the safe area, and the chrome token carries the
+	// top inset with it. Without both, a notched phone puts the menubar under
+	// the status bar and every view reserving --chrome-h is short.
+	const viewportOptIn = (await page.evaluate(`(() => {
+		const meta = document.querySelector('meta[name=viewport]');
+		return { content: meta ? meta.getAttribute('content') : '' };
+	})()`)) as { content: string };
+	ok(
+		'phone viewport opts into the safe area (viewport-fit=cover)',
+		viewportOptIn.content.includes('viewport-fit=cover'),
+		viewportOptIn.content || 'no meta viewport'
+	);
+
+	// 1. The dock stays usable with a card open at peek.
+	//
+	// elementFromPoint is the honest question: whatever the thumb lands on is
+	// the answer. Each control's centre must resolve to the control (or its own
+	// descendants) inside .dock, and never to a node inside .inspector.
+	const dockHits = (await page.evaluate(`(() => {
+		const out = [];
+		for (const sel of ['.filter-btn', '.transport button', '.track']) {
+			const el = document.querySelector(sel);
+			if (!el) { out.push({ sel, missing: true }); continue; }
+			const r = el.getBoundingClientRect();
+			const hit = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+			const chain = [];
+			for (let n = hit; n && chain.length < 10; n = n.parentElement) {
+				chain.push(n.tagName.toLowerCase() + (n.getAttribute('class') ? '.' + n.getAttribute('class').split(/\\s+/).filter(function (c) { return c && c.indexOf('svelte-') !== 0; }).slice(0, 2).join('.') : ''));
+			}
+			out.push({
+				sel,
+				own: Boolean(hit && (hit === el || el.contains(hit))),
+				inDock: Boolean(hit && hit.closest('.dock')),
+				inSheet: Boolean(hit && hit.closest('.inspector')),
+				chain: chain.join(' > ')
+			});
+		}
+		return out;
+	})()`)) as { sel: string; own: boolean; inDock: boolean; inSheet: boolean; chain: string; missing?: boolean }[];
+	for (const hit of dockHits) {
+		ok(
+			`phone dock control ${hit.sel} is tappable with a card open`,
+			Boolean(hit.own && hit.inDock && !hit.inSheet),
+			hit.missing ? 'control missing' : hit.chain
+		);
+	}
+
+	// 2. The sheet clips its content.
+	//
+	// The inspector is the clip box, .inner is the one scroller global CSS gives
+	// it, and for this entity the content genuinely overflows, so the
+	// scrollHeight witness proves the two rules are doing work. The direct
+	// children check is the paint-level witness: nothing the sheet itself draws
+	// can hang below the dock top. Descendants inside .inner are clipped by its
+	// own scroll, so their untrimmed rects are not evidence.
+	const clip = (await page.evaluate(`(() => {
+		const s = document.querySelector('.inspector');
+		const inner = document.querySelector('.inspector .inner');
+		const dock = document.querySelector('.dock');
+		if (!s || !inner || !dock) return null;
+		const direct = [];
+		for (const child of s.children) {
+			const r = child.getBoundingClientRect();
+			if (r.bottom > dock.getBoundingClientRect().top + 1) {
+				direct.push(child.tagName.toLowerCase() + '.' + String(child.getAttribute('class') || '').split(/\\s+/)[0] + ' bottom=' + Math.round(r.bottom));
+			}
+		}
+		return {
+			overflow: getComputedStyle(s).overflow,
+			innerOverflowY: getComputedStyle(inner).overflowY,
+			scrollHeight: inner.scrollHeight,
+			clientHeight: inner.clientHeight,
+			advisories: s.querySelectorAll('.weakchain').length,
+			direct: direct
+		};
+	})()`)) as { overflow: string; innerOverflowY: string; scrollHeight: number; clientHeight: number; advisories: number; direct: string[] } | null;
+	ok(
+		'phone inspector clips its content (overflow hidden)',
+		clip?.overflow === 'hidden',
+		clip ? `overflow=${clip.overflow}` : 'no sheet'
+	);
+	ok(
+		'phone inspector scrolls as one surface (.inner is the scroller)',
+		Boolean(clip && (clip.innerOverflowY === 'auto' || clip.innerOverflowY === 'scroll')),
+		clip ? `overflow-y=${clip.innerOverflowY}` : 'no sheet'
+	);
+	ok(
+		'phone inspector content actually overflows (the clip is doing work)',
+		Boolean(clip && clip.scrollHeight > clip.clientHeight),
+		clip ? `${clip.scrollHeight} > ${clip.clientHeight}, ${clip.advisories} advisories` : 'no sheet'
+	);
+	ok(
+		'no direct child of the phone inspector overhangs the dock',
+		Boolean(clip && clip.direct.length === 0),
+		clip ? clip.direct.join(' | ') || 'none' : 'no sheet'
+	);
+
+	// 3. One scroll surface: the card's own body stops scrolling on a phone and
+	// the card header sticks to the top of the sheet, so advisories scroll away
+	// with the record instead of staying pinned while a second pane moves.
+	// Scrolling past the header's natural offset is what makes sticky hold it;
+	// reading position alone would pass on a static header.
+	const cardBox = (await page.evaluate(`(() => {
+		const body = document.querySelector('.inspector .panel .body');
+		const header = document.querySelector('.inspector .panel header');
+		const inner = document.querySelector('.inspector .inner');
+		if (!body || !header || !inner) return null;
+		const bodyOverflowY = getComputedStyle(body).overflowY;
+		const headerPosition = getComputedStyle(header).position;
+		inner.scrollTop = 600;
+		return {
+			bodyOverflowY,
+			headerPosition,
+			scrollTop: inner.scrollTop,
+			headerTop: Math.round(header.getBoundingClientRect().top),
+			innerTop: Math.round(inner.getBoundingClientRect().top)
+		};
+	})()`)) as { bodyOverflowY: string; headerPosition: string; scrollTop: number; headerTop: number; innerTop: number } | null;
+	ok(
+		'phone card body does not run a nested scroller',
+		cardBox?.bodyOverflowY === 'visible',
+		cardBox ? `overflow-y=${cardBox.bodyOverflowY}` : 'no card'
+	);
+	ok(
+		'phone card header sticks inside the sheet',
+		Boolean(
+			cardBox &&
+				cardBox.headerPosition === 'sticky' &&
+				cardBox.scrollTop > 0 &&
+				Math.abs(cardBox.headerTop - cardBox.innerTop) <= 1
+		),
+		cardBox
+			? `position=${cardBox.headerPosition} top=${cardBox.headerTop} vs sheet ${cardBox.innerTop} after ${cardBox.scrollTop}px`
+			: 'no card'
+	);
+
+	// 4. Swipe-up expands the sheet.
+	//
+	// A real pointer drag with move steps (the action has a 6px threshold before
+	// a gesture counts as a drag). The dock top is the invariant: the sheet grows
+	// upward from the same resting bottom edge.
+	const beforeExpand = (await page.evaluate(`(() => {
+		const s = document.querySelector('.inspector');
+		const d = document.querySelector('.dock');
+		if (!s || !d) return null;
+		return {
+			h: Math.round(s.getBoundingClientRect().height),
+			bottom: Math.round(s.getBoundingClientRect().bottom),
+			dockTop: Math.round(d.getBoundingClientRect().top)
+		};
+	})()`)) as { h: number; bottom: number; dockTop: number } | null;
+	const upHandle = await page.locator('.inspector .handle').boundingBox();
+	if (upHandle) {
+		const ux = upHandle.x + upHandle.width / 2;
+		const uy = upHandle.y + upHandle.height / 2;
+		await page.mouse.move(ux, uy);
+		await page.mouse.down();
+		for (let step = 1; step <= 10; step++) {
+			await page.mouse.move(ux, uy - step * 20);
+			await page.waitForTimeout(16);
+		}
+		await page.mouse.up();
+		await page.waitForTimeout(400);
+	}
+	const expanded = (await page.evaluate(`(() => {
+		const s = document.querySelector('.inspector');
+		const d = document.querySelector('.dock');
+		if (!s || !d) return null;
+		return {
+			full: s.classList.contains('d-full'),
+			h: Math.round(s.getBoundingClientRect().height),
+			bottom: Math.round(s.getBoundingClientRect().bottom),
+			dockTop: Math.round(d.getBoundingClientRect().top)
+		};
+	})()`)) as { full: boolean; h: number; bottom: number; dockTop: number } | null;
+	ok(
+		'phone swipe-up expands the sheet',
+		Boolean(expanded?.full && beforeExpand && expanded.h - beforeExpand.h > 100),
+		expanded && beforeExpand ? `d-full=${expanded.full} ${beforeExpand.h}px -> ${expanded.h}px` : 'no sheet'
+	);
+	ok(
+		'phone expanded sheet still stops at the dock',
+		Boolean(expanded && beforeExpand && expanded.dockTop === beforeExpand.dockTop && expanded.bottom <= expanded.dockTop + 1),
+		expanded ? `bottom=${expanded.bottom} dockTop=${expanded.dockTop}` : 'no sheet'
+	);
+
+	// 7. The layering invariant: the dock is above the companion sheet, so a
+	// dismissal tucks the card under the chrome rather than climbing it. The
+	// numbers come from the z-scale tokens; this asserts their relationship,
+	// not the particular values.
+	const layers = (await page.evaluate(`(() => {
+		const s = document.querySelector('.inspector');
+		const d = document.querySelector('.dock');
+		if (!s || !d) return null;
+		return { sheet: parseInt(getComputedStyle(s).zIndex, 10), dock: parseInt(getComputedStyle(d).zIndex, 10) };
+	})()`)) as { sheet: number; dock: number } | null;
+	ok(
+		'phone dock layer is above the inspector sheet',
+		Boolean(layers && Number.isFinite(layers.dock) && Number.isFinite(layers.sheet) && layers.dock > layers.sheet),
+		layers ? `dock z=${layers.dock} > sheet z=${layers.sheet}` : 'no sheet'
+	);
+
+	// 5. Drag-down dismisses through an exit.
+	//
+	// Reopened on a fresh navigation so the sheet is back at peek. A
+	// MutationObserver records the closing class the moment it is applied, so
+	// the assertion does not race the 280ms removal timer: a sheet that only
+	// vanishes leaves nothing for the reader to see.
+	await page.goto(BASE + '/atlas?id=bourguiba', { waitUntil: 'networkidle', timeout: 30_000 });
+	await settle(page);
+	await page.waitForSelector('.inspector', { timeout: 10_000 });
+	await page.waitForTimeout(300);
+	await page.evaluate(`(() => {
+		window.__sheetClosing = false;
+		window.__sheetClosingTransform = '';
+		const obs = new MutationObserver(() => {
+			const el = document.querySelector('.inspector');
+			if (el && el.classList.contains('closing')) {
+				window.__sheetClosing = true;
+				window.__sheetClosingTransform = getComputedStyle(el).transform;
+			}
+		});
+		obs.observe(document.body, { subtree: true, attributes: true, attributeFilter: ['class'] });
+		window.__sheetObserver = obs;
+	})()`);
+	const downHandle = await page.locator('.inspector .handle').boundingBox();
+	if (downHandle) {
+		const dx = downHandle.x + downHandle.width / 2;
+		const dy = downHandle.y + downHandle.height / 2;
+		await page.mouse.move(dx, dy);
+		await page.mouse.down();
+		for (let step = 1; step <= 10; step++) {
+			await page.mouse.move(dx, dy + step * 22);
+			await page.waitForTimeout(16);
+		}
+		await page.mouse.up();
+	}
+	const exitSeen = await page
+		.waitForFunction('window.__sheetClosing === true || !document.querySelector(".inspector")', null, { timeout: 600 })
+		.then(() => page.evaluate('window.__sheetClosing'))
+		.catch(() => false);
+	const exitTransform = exitSeen ? ((await page.evaluate('window.__sheetClosingTransform')) as string) : '';
+	const sheetGone = await page
+		.waitForSelector('.inspector', { state: 'detached', timeout: 600 })
+		.then(() => true)
+		.catch(() => false);
+	ok(
+		'phone drag-down dismisses the sheet',
+		sheetGone,
+		sheetGone ? 'detached within 600ms' : 'still mounted after 600ms'
+	);
+	ok(
+		'phone drag-down plays an exit before removal',
+		Boolean(exitSeen),
+		exitSeen ? `closing class applied, transform ${exitTransform}` : 'closing class never observed'
+	);
+	await page.evaluate('window.__sheetObserver && window.__sheetObserver.disconnect()');
+
+	// 6. The dock's filter sheet is a real sheet: its body scrolls and the
+	// grabber dismisses it through the shared action. The drag raises no
+	// console error.
+	const popProblemsAt = sheetProblems.length;
+	await page.locator('.filter-btn').click();
+	await page.waitForSelector('.pop', { timeout: 5_000 });
+	await page.waitForTimeout(300);
+	const popBody = (await page.evaluate(`(() => {
+		const b = document.querySelector('.pop-body');
+		return b ? getComputedStyle(b).overflowY : null;
+	})()`)) as string | null;
+	ok(
+		'phone filter sheet body scrolls',
+		popBody === 'auto' || popBody === 'scroll',
+		popBody ? `overflow-y=${popBody}` : 'no sheet'
+	);
+	const popGrabber = await page.locator('.pop .grabber').boundingBox();
+	if (popGrabber) {
+		const gx = popGrabber.x + popGrabber.width / 2;
+		const gy = popGrabber.y + popGrabber.height / 2;
+		await page.mouse.move(gx, gy);
+		await page.mouse.down();
+		for (let step = 1; step <= 8; step++) {
+			await page.mouse.move(gx, gy + step * 20);
+			await page.waitForTimeout(16);
+		}
+		await page.mouse.up();
+	}
+	const popGone = await page
+		.waitForSelector('.pop', { state: 'detached', timeout: 600 })
+		.then(() => true)
+		.catch(() => false);
+	ok(
+		'phone filter sheet drag-down dismisses it',
+		popGone,
+		popGone ? 'detached within 600ms' : 'still mounted after 600ms'
+	);
+	ok(
+		'phone filter sheet drag raises no console error',
+		sheetProblems.length === popProblemsAt,
+		sheetProblems.slice(popProblemsAt).join(' | ') || 'clean'
+	);
+
+	// 9. A record card scrolls instead of overflowing.
+	//
+	// bread-riots-1984 is an event, so it renders through RecordPanel, the other
+	// card. Its footer sits below the fold at peek; scrolling the one surface
+	// must bring it inside the sheet rather than over the dock.
+	await page.goto(BASE + '/atlas?id=bread-riots-1984', { waitUntil: 'networkidle', timeout: 30_000 });
+	await settle(page);
+	await page.waitForSelector('.inspector .rpanel', { timeout: 10_000 });
+	await page.waitForTimeout(500);
+	const recordScroll = (await page.evaluate(`(() => {
+		const s = document.querySelector('.inspector');
+		const inner = document.querySelector('.inspector .inner');
+		const footer = document.querySelector('.inspector .rpanel footer');
+		if (!s || !inner || !footer) return null;
+		const before = footer.getBoundingClientRect().bottom;
+		const sheetBottom = s.getBoundingClientRect().bottom;
+		inner.scrollTop = inner.scrollHeight;
+		const after = footer.getBoundingClientRect().bottom;
+		return {
+			overflows: inner.scrollHeight > inner.clientHeight,
+			before: Math.round(before),
+			after: Math.round(after),
+			sheetBottom: Math.round(sheetBottom),
+			scrollTop: inner.scrollTop
+		};
+	})()`)) as { overflows: boolean; before: number; after: number; sheetBottom: number; scrollTop: number } | null;
+	ok(
+		'phone record card scrolls instead of overflowing',
+		Boolean(recordScroll && recordScroll.overflows && recordScroll.after < recordScroll.before),
+		recordScroll
+			? `${recordScroll.scrollTop}px scrolled, footer ${recordScroll.before}px -> ${recordScroll.after}px`
+			: 'no record card'
+	);
+	ok(
+		'phone record card footer stays inside the sheet after scrolling',
+		Boolean(recordScroll && recordScroll.after <= recordScroll.sheetBottom + 1),
+		recordScroll ? `footer bottom=${recordScroll.after}, sheet bottom=${recordScroll.sheetBottom}` : 'no record card'
+	);
+
+	ok(
+		'phone sheet interactions console clean',
+		sheetProblems.length === 0,
+		sheetProblems.slice(0, 4).join(' | ') || 'clean'
+	);
+
 	await context.close();
 }
 

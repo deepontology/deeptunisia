@@ -1,5 +1,7 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
+	import { compact } from '$lib/design/media.svelte';
+	import { sheetDrag, type SheetDragParams } from './sheet-drag';
 
 	/**
 	 * An anchored panel that becomes a bottom sheet on small screens.
@@ -12,6 +14,14 @@
 	 * The scrim is a real element rather than a document-level listener: a listener
 	 * has to decide whether each click landed inside the panel, and gets that wrong
 	 * the moment the panel contains something that unmounts on click.
+	 *
+	 * ON A PHONE IT IS A REAL SHEET
+	 *
+	 * The grabber used to be decoration: it looked draggable and was not. It is
+	 * now the handle for the shared drag action, so filters, share and settings
+	 * all dismiss with the same downward pull as the entity card. Scrolling lives
+	 * in `.pop-body`, one surface under a fixed handle, and containment keeps a
+	 * flick from chaining into the app behind the scrim.
 	 */
 
 	interface Props {
@@ -26,6 +36,40 @@
 	let { open = $bindable(), onclose, align = 'end', label, children }: Props = $props();
 
 	let panel = $state<HTMLDivElement | null>(null);
+
+	/** Matches the exit transition below, so the DOM leaves exactly when it ends. */
+	const EXIT_MS = 260;
+
+	let mounted = $state(open);
+	let closing = $state(false);
+
+	/*
+	 * Mount with `open`, stay mounted through the exit so the sheet can slide
+	 * away instead of vanishing on the frame `open` turns false.
+	 */
+	$effect(() => {
+		if (open) {
+			mounted = true;
+			closing = false;
+			return;
+		}
+		if (!mounted) return;
+		closing = true;
+		const t = setTimeout(() => {
+			closing = false;
+			mounted = false;
+		}, EXIT_MS);
+		return () => clearTimeout(t);
+	});
+
+	const dragParams: SheetDragParams = {
+		enabled: () => compact.current,
+		detent: () => 'full',
+		setDetent: () => {},
+		dismiss: () => onclose(),
+		hasPeek: () => false,
+		handle: '.grabber'
+	};
 
 	function portal(node: HTMLDivElement) {
 		document.body.appendChild(node);
@@ -57,9 +101,9 @@
 	}
 </script>
 
-{#if open}
+{#if mounted}
 	<!-- svelte-ignore a11y_click_events_have_key_events -->
-	<div class="scrim" role="presentation" onclick={onclose} use:portal></div>
+	<div class="scrim" class:closing role="presentation" onclick={onclose} use:portal></div>
 	<!--
 		role="dialog" rather than "group": the panel takes focus, handles Escape and
 		is dismissed by the scrim, which is dialog behaviour. aria-modal is false
@@ -68,16 +112,20 @@
 	-->
 	<div
 		class="pop a-{align}"
+		class:closing
 		bind:this={panel}
 		use:portal
+		use:sheetDrag={dragParams}
 		tabindex="-1"
 		role="dialog"
 		aria-modal="false"
 		aria-label={label}
 		onkeydown={onKey}
 	>
-		<span class="grabber" aria-hidden="true"></span>
-		{@render children()}
+		<span class="grabber sheet-handle" aria-hidden="true"><i class="sheet-grip"></i></span>
+		<div class="pop-body sheet-scroll">
+			{@render children()}
+		</div>
 	</div>
 {/if}
 
@@ -85,12 +133,16 @@
 	.scrim {
 		position: fixed;
 		inset: 0;
-		z-index: 90;
+		z-index: var(--z-scrim);
+	}
+	.scrim.closing {
+		opacity: 0;
+		transition: opacity var(--dur-normal) var(--ease-in-out);
 	}
 
 	.pop {
 		position: fixed;
-		z-index: 91;
+		z-index: var(--z-modal);
 		inset: auto;
 		top: 50%;
 		left: 50%;
@@ -98,18 +150,30 @@
 		transform: translate(-50%, -50%);
 		width: min(360px, calc(100vw - 32px));
 		max-height: min(70vh, 600px);
-		overflow-y: auto;
-		overscroll-behavior: contain;
+		display: flex;
+		flex-direction: column;
+		overflow: hidden;
 		background: var(--surface-overlay);
 		border: 1px solid var(--border-default);
 		border-radius: var(--r-lg);
 		box-shadow: var(--elev-3);
 		animation: rise-in var(--dur-fast) var(--ease-out);
 	}
-	/* Only the sheet form needs a drag handle; hidden until then. */
-	.grabber {
-		display: none;
+	.pop-body {
+		flex: 1;
+		min-height: 0;
+		overflow-y: auto;
+		overscroll-behavior: contain;
 	}
+	.pop.closing {
+		animation: none;
+		opacity: 0;
+		transform: translate(-50%, -46%);
+		transition:
+			opacity var(--dur-normal) var(--ease-in-out),
+			transform var(--dur-normal) var(--ease-in-out);
+	}
+	/* The global .sheet-handle hides the grabber on wide screens. */
 
 	@media (max-width: 900px) {
 		.scrim {
@@ -128,7 +192,7 @@
 			   sheet is already placed by its insets, so the centreing transform is
 			   explicitly cleared here rather than overridden per instance.
 			*/
-			transform: none;
+			transform: translateY(var(--sheet-y, 0px));
 			/*
 			   Full-bleed, not centred. The desktop width cap (min(360px, …)) would
 			   otherwise over-constrain the box — left and right both set plus a
@@ -137,22 +201,22 @@
 			*/
 			width: auto;
 			max-height: 80dvh;
-			overflow-y: auto;
-			overscroll-behavior: contain;
 			padding-bottom: var(--safe-b);
+			/* Landscape notch: full-bleed frame, inset content. */
+			padding-inline: var(--safe-l) var(--safe-r);
 			border-inline: none;
 			border-bottom: none;
 			border-radius: var(--r-xl) var(--r-xl) 0 0;
 			box-shadow: var(--elev-4);
 			animation: sheet-in var(--dur-normal) var(--ease-out);
+			transition:
+				transform var(--dur-normal) var(--ease-out),
+				opacity var(--dur-normal) var(--ease-in-out);
 		}
-		.grabber {
-			display: block;
-			width: 36px;
-			height: 4px;
-			margin: var(--s-3) auto 0;
-			border-radius: var(--r-full);
-			background: var(--border-strong);
+		/* Leaving: under the bottom edge, which clears the dock behind the scrim. */
+		.pop.closing {
+			transform: translateY(100%);
+			transition: transform var(--dur-normal) var(--ease-in-out);
 		}
 	}
 

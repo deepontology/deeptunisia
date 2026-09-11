@@ -457,7 +457,11 @@
 	   that need to reserve space, so they can never drift apart. */
 	--menubar-h: 44px;
 	--subnav-h: 38px;
-	--chrome-h: calc(var(--menubar-h) + var(--subnav-h));
+	/* The top inset is part of the chrome, because app.html opts into
+	   viewport-fit=cover: under a notch the menubar draws beneath the status
+	   bar and must add --safe-t itself. Views reserve --chrome-h and would
+	   otherwise put their first row under the clock. */
+	--chrome-h: calc(var(--menubar-h) + var(--subnav-h) + var(--safe-t));
 	--dock-h: 92px;
 	--inspector-w: 400px;
 
@@ -471,6 +475,31 @@
 	--safe-b: env(safe-area-inset-bottom, 0px);
 	--safe-l: env(safe-area-inset-left, 0px);
 	--safe-r: env(safe-area-inset-right, 0px);
+
+	/*
+	   Layering. One ordered scale instead of per-component numbers.
+
+	   The order encodes intent, and two of these choices matter:
+
+	   - The dock sits ABOVE the companion sheet (--z-sheet < --z-dock). A card
+	     dragged down slides under the dock instead of over it, which is what
+	     makes a dismissal read as "putting it away" rather than "the card
+	     climbing the chrome".
+	   - Boot, cursor and tour stay far above everything. A modal surface must
+	     never be able to cover the boot gate or the guided tour.
+
+	   Add a surface by picking its role, never by typing a new number.
+	*/
+	--z-view: 1;
+	--z-sheet: 30;
+	--z-dock: 40;
+	--z-chrome: 50;
+	--z-scrim: 70;
+	--z-modal: 71;
+	--z-search: 80;
+	--z-boot: 90;
+	--z-cursor: 95;
+	--z-tour: 100;
 }
 
 /* ---------------------------------------------------------------------------
@@ -490,6 +519,23 @@
 		   this number, so a dock taller than its token silently covers them. */
 		--dock-h: 72px;
 		--inspector-w: 100vw;
+	}
+}
+
+/* ---------------------------------------------------------------------------
+   Short landscapes.
+
+   A phone held sideways has roughly 390px of height, and the stacked chrome
+   plus the dock claimed 166 of it. The two top rails contract here; the dock
+   does not, because its rows sum to --dock-h and the inspector sheet positions
+   against that token. Views also drop their one-line caption at this height,
+   which is the other piece of standing text that is not the canvas.
+   --------------------------------------------------------------------------- */
+
+@media (max-width: 900px) and (max-height: 520px) {
+	:root {
+		--menubar-h: 44px;
+		--subnav-h: 34px;
 	}
 }
 

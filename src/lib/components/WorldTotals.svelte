@@ -27,6 +27,7 @@
 	 */
 	import { t, tf } from '$lib/t.svelte';
 	import { app } from '$lib/state.svelte';
+	import { compact } from '$lib/design/media.svelte';
 	import {
 		flows,
 		debt,
@@ -39,6 +40,7 @@
 	import { moneyM } from '$lib/world/format';
 	import Content from '$lib/ui/Content.svelte';
 	import Tooltip from '$lib/ui/Tooltip.svelte';
+	import { sheetDrag, type SheetDragParams } from '$lib/ui/sheet-drag';
 
 	const year = $derived(new Date(app.t).getUTCFullYear());
 
@@ -89,6 +91,50 @@
 			explainPopEl.focus({ preventScroll: true });
 		}
 	});
+
+	/** Matches the exit transition below, so the DOM leaves exactly when it ends. */
+	const EXPLAIN_CLOSE_MS = 260;
+	/** What the pop renders; it outlives `openExplain` by the exit transition. */
+	let showExplain = $state<string | null>(null);
+	let explainClosing = $state(false);
+	let explainTimer: ReturnType<typeof setTimeout> | undefined;
+
+	/*
+	 * Mount with `openExplain`, stay mounted through the exit so the sheet can
+	 * slide away instead of vanishing on the frame the key turns null. The wide
+	 * layout is a centred popup with no closing style, so it leaves at once.
+	 */
+	$effect(() => {
+		const key = openExplain;
+		if (key) {
+			clearTimeout(explainTimer);
+			explainClosing = false;
+			showExplain = key;
+			return;
+		}
+		if (!showExplain) return;
+		if (!compact.current) {
+			explainClosing = false;
+			showExplain = null;
+			return;
+		}
+		explainClosing = true;
+		explainTimer = setTimeout(() => {
+			explainClosing = false;
+			showExplain = null;
+		}, EXPLAIN_CLOSE_MS);
+		return () => clearTimeout(explainTimer);
+	});
+
+	/** Modal sheet on a phone, like Popover; centered popup on a wide screen. */
+	const explainDrag: SheetDragParams = {
+		enabled: () => compact.current,
+		detent: () => 'full',
+		setDetent: () => {},
+		dismiss: () => (openExplain = null),
+		hasPeek: () => false,
+		handle: '.sheet-handle'
+	};
 
 const figures = $derived.by<Figure[]>(() => {
 		const tOfficial = tt;
@@ -191,14 +237,21 @@ const figures = $derived.by<Figure[]>(() => {
 	</dl>
 </div>
 
-{#if openExplain}
-	{@const active = figures.find((f) => f.key === openExplain)}
+{#if showExplain}
+	{@const active = figures.find((f) => f.key === showExplain)}
 	{#if active}
 		<!-- svelte-ignore a11y_click_events_have_key_events -->
-		<div class="explain-scrim" role="presentation" onclick={() => (openExplain = null)}></div>
+		<div
+			class="explain-scrim"
+			class:closing={explainClosing}
+			role="presentation"
+			onclick={() => (openExplain = null)}
+		></div>
 		<div
 			class="explain-pop"
+			class:closing={explainClosing}
 			bind:this={explainPopEl}
+			use:sheetDrag={explainDrag}
 			role="dialog"
 			aria-modal="false"
 			aria-label={active.label}
@@ -210,8 +263,9 @@ const figures = $derived.by<Figure[]>(() => {
 				}
 			}}
 		>
+			<span class="sheet-handle" aria-hidden="true"><i class="sheet-grip"></i></span>
 			<button class="explain-close" onclick={() => (openExplain = null)} aria-label={t('world.strip.explain') + ' — close'}>×</button>
-			<div id={"explain-" + active.key} class="why-pop">
+			<div id={"explain-" + active.key} class="why-pop sheet-scroll">
 				<Content view="world" section={active.explain} compact />
 			</div>
 		</div>
@@ -324,13 +378,18 @@ const figures = $derived.by<Figure[]>(() => {
 		max-width: 42ch;
 		max-height: 50vh;
 		overflow-y: auto;
+		overscroll-behavior: contain;
 		padding: var(--s-2) var(--s-1);
 	}
 
 	.explain-scrim {
 		position: fixed;
 		inset: 0;
-		z-index: 90;
+		z-index: var(--z-scrim);
+	}
+	.explain-scrim.closing {
+		opacity: 0;
+		transition: opacity var(--dur-normal) var(--ease-in-out);
 	}
 
 	.explain-pop {
@@ -338,7 +397,7 @@ const figures = $derived.by<Figure[]>(() => {
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
-		z-index: 91;
+		z-index: var(--z-modal);
 		width: min(560px, calc(100vw - 32px));
 		max-height: min(70vh, 600px);
 		overflow-y: auto;
@@ -388,15 +447,32 @@ const figures = $derived.by<Figure[]>(() => {
 			bottom: 0;
 			left: 0;
 			right: 0;
-			transform: none;
+			transform: translateY(var(--sheet-y, 0px));
 			width: auto;
 			max-width: none;
 			max-height: 80dvh;
+			display: flex;
+			flex-direction: column;
+			overflow: hidden;
 			border-inline: none;
 			border-bottom: none;
 			border-radius: var(--r-xl) var(--r-xl) 0 0;
 			padding-bottom: var(--safe-b);
+			/* Landscape notch: full-bleed frame, inset content. */
+			padding-inline: var(--safe-l) var(--safe-r);
 			animation: sheet-in var(--dur-normal) var(--ease-out);
+			transition: transform var(--dur-normal) var(--ease-out);
+		}
+		/* Leaving: under the bottom edge, which clears the dock behind the scrim. */
+		.explain-pop.closing {
+			transform: translateY(100%);
+			transition: transform var(--dur-normal) var(--ease-in-out);
+		}
+		/* One scroll surface under the fixed handle. */
+		.why-pop {
+			flex: 1;
+			min-height: 0;
+			max-height: none;
 		}
 		.explain-scrim {
 			background: color-mix(in oklch, var(--n-1000) 55%, transparent);
