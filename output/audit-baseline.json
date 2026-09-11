@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "generated": "2026-09-10T23:15:32.866Z",
+  "generated": "2026-09-11T07:03:11.409Z",
   "node": "v26.7.0",
-  "commit": "4e19ef7",
+  "commit": "4ba77cd",
   "dataset": {
     "path": "src/generated/dataset.json",
     "counts": {
@@ -66,7 +66,7 @@
     "whitespace": {
       "exit": 1,
       "datasetEmitted": false,
-      "editorialQueueEmitted": true,
+      "editorialQueueEmitted": false,
       "errorLines": [
         "x  positions.yaml [p-pres-bourguiba]: (root) — grade C/D claims must name who is making the claim (attributed_to, non-blank)",
         "x  positions.yaml [p-pres-bourguiba]: (root) — an inferred claim must state its reasoning and what would falsify it (non-blank)"
@@ -75,7 +75,7 @@
     "no-source": {
       "exit": 1,
       "datasetEmitted": false,
-      "editorialQueueEmitted": true,
+      "editorialQueueEmitted": false,
       "errorLines": [
         "x  people.yaml [bourguiba]: (root) — rule 2: every claim record must cite at least one source, or be listed in data/source-exceptions.yaml with an owner and a deadline",
         "x  position p-pres-bourguiba: unknown holder \"bourguiba\"",
@@ -90,7 +90,7 @@
     "override": {
       "exit": 1,
       "datasetEmitted": false,
-      "editorialQueueEmitted": true,
+      "editorialQueueEmitted": false,
       "errorLines": [
         "x  positions.yaml [p-pres-bourguiba]: basis — authored basis \"documented\" over grade-implied \"inferred\" (V27): a basis override requires a review object with a date and method",
         "x  positions.yaml [p-pres-bourguiba]: basis — authored basis \"documented\" over grade-implied \"inferred\" (V27): a basis override requires non-blank reasoning",
@@ -101,7 +101,7 @@
     "nested-outcome": {
       "exit": 1,
       "datasetEmitted": false,
-      "editorialQueueEmitted": true,
+      "editorialQueueEmitted": false,
       "errorLines": [
         "x  positions.yaml [p-pres-bourguiba]: review — Unrecognized key: \"outcome\""
       ]
@@ -109,7 +109,7 @@
     "bad-reference": {
       "exit": 1,
       "datasetEmitted": false,
-      "editorialQueueEmitted": true,
+      "editorialQueueEmitted": false,
       "errorLines": [
         "x  position p-pres-bourguiba: grade A must cite at least one tier-1 or tier-2 source (V25); it cites no resolvable source tier and is not listed in data/source-exceptions.yaml",
         "x  position p-pres-bourguiba: unknown source \"audit-nonexistent-source\""
