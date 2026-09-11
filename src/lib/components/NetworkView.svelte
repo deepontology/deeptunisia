@@ -1,8 +1,10 @@
 <script lang="ts">
 import { untrack } from 'svelte';
 import { page } from '$app/state';
+import { goto } from '$app/navigation';
 import { app } from '$lib/state.svelte';
 import Tooltip from '$lib/ui/Tooltip.svelte';
+import { sheetDrag, type SheetDragParams } from '$lib/ui/sheet-drag';
 import { t, tf, formatDate, nameOf, layerLabel, basisLabel, relLabel } from '$lib/t.svelte';
 import { format } from '$lib/i18n';
 import Chip from '$lib/ui/Chip.svelte';
@@ -1055,6 +1057,60 @@ import Chip from '$lib/ui/Chip.svelte';
 	const pinned = $derived(pinnedId ? slice.edges.find((e) => e.id === pinnedId) : null);
 
 	/**
+	 * The card outlives the pinned edge by one transition, the same way the
+	 * Inspector outlives its selection: `pinnedId` is what renders, `pinnedClosing`
+	 * drives the exit. Without it a dismissal unmounted the card on the frame it
+	 * landed and it snapped away instead of sliding under the dock.
+	 */
+	let pinnedClosing = $state(false);
+	let pinnedCloseTimer: ReturnType<typeof setTimeout> | undefined;
+
+	function closePinned() {
+		if (pinnedId === null) return;
+		clearTimeout(pinnedCloseTimer);
+		/*
+		 * The exit exists on phones, where the card is a sheet. A wide screen
+		 * uses the anchored card with no closing style, so waiting would leave a
+		 * dismissed card on the canvas for a quarter second with nothing to see.
+		 */
+		if (!compact.current) {
+			pinnedId = null;
+			pinnedClosing = false;
+			return;
+		}
+		pinnedClosing = true;
+		pinnedCloseTimer = setTimeout(() => {
+			pinnedId = null;
+			pinnedClosing = false;
+		}, 260);
+	}
+
+	/** A new pin supersedes a pending exit; the timer must not close what was just asked for. */
+	$effect(() => {
+		if (pinnedId !== null) {
+			clearTimeout(pinnedCloseTimer);
+			pinnedClosing = false;
+		}
+	});
+
+	/** Never let a pending close tick outlive the view. */
+	$effect(() => () => clearTimeout(pinnedCloseTimer));
+
+	/**
+	 * The edge card's gesture contract. It has one detent, so a downward pull
+	 * dismisses through the same `closePinned` the close button uses; `enabled`
+	 * gates the gesture to the phone layout, where the card is a sheet.
+	 */
+	const edgeDragParams: SheetDragParams = {
+		enabled: () => compact.current,
+		detent: () => 'full',
+		setDetent: () => {},
+		hasPeek: () => false,
+		handle: '.sheet-handle',
+		dismiss: () => closePinned()
+	};
+
+	/**
 	 * Where the card sits.
 	 *
 	 * Anchored to the midpoint of the curve it describes, clamped inside the canvas so
@@ -1105,6 +1161,43 @@ import Chip from '$lib/ui/Chip.svelte';
 	let deepLinked = false;
 	$effect(() => {
 		/*
+		 * An agreement is not an edge, so nothing on this map can show it. Hand the
+		 * reader to the World ledger, which owns that record, once and with the URL
+		 * shape FlowCard shared. `deepLinked` guards the one redirect; the other
+		 * branches below never see a URL this branch consumed.
+		 */
+		const agreement = page.url.searchParams.get('agreement');
+		if (agreement && !deepLinked) {
+			deepLinked = true;
+			untrack(() => {
+				const u = new URL(page.url);
+				u.pathname = '/world';
+				u.search = new URLSearchParams({ agreement }).toString();
+				void goto(u, { replaceState: true });
+			});
+			return;
+		}
+
+		/*
+		 * Energy is the one measurement family this map does not synthesise edges
+		 * for, so a shared energy flow has nothing to pin here. The globe draws
+		 * those arcs and its card is the same FlowCard, so hand the reader there
+		 * with the URL shape the share already carries. Trade and debt stay: their
+		 * measurement edges exist and pin below.
+		 */
+		const flowParam = page.url.searchParams.get('flow');
+		if (flowParam?.startsWith('energy:') && !deepLinked) {
+			deepLinked = true;
+			untrack(() => {
+				const u = new URL(page.url);
+				u.pathname = '/world';
+				u.search = new URLSearchParams({ flow: flowParam }).toString();
+				void goto(u, { replaceState: true });
+			});
+			return;
+		}
+
+		/*
 		 * `?mode=` selects a lens on arrival. The mode is a reading of the map, not
 		 * a property of the reader, so it travels in the URL like the subject it
 		 * frames; `?id=`/`?rel=` name who, `?mode=` names how.
@@ -1131,6 +1224,71 @@ import Chip from '$lib/ui/Chip.svelte';
 				app.selected = entity;
 				const n = layout.nodes.get(entity);
 				if (n && cam.vw >= 2) cam.flyTo(n.x, n.y);
+			});
+			return;
+		}
+
+		/*
+		 * `?flow=<kind>:<year>:<iso2>` is what a FlowCard shares. Measurement edges
+		 * are synthesised per year, so the link resolves only when the current slice
+		 * carries that year. Try the id the synthesiser would have built, then the
+		 * country the lender's record names (a debt id carries the institution id
+		 * when the counterparty is a body, not a state), then any edge that touches
+		 * the country. When nothing matches, the globe opens the card instead: a
+		 * shared measurement must not resolve to a blank page just because the map
+		 * is filtered. The reader's own filters are never changed.
+		 */
+		const flow = page.url.searchParams.get('flow');
+		if (flow && !deepLinked && cam.vw >= 2) {
+			deepLinked = true;
+			untrack(() => {
+				const parts = flow.split(':');
+				if (parts.length !== 3) return;
+				const [kind, yearStr, iso2] = parts;
+				if ((kind !== 'trade' && kind !== 'debt' && kind !== 'energy') || !iso2) return;
+				if (!/^\d{4}$/.test(yearStr)) return;
+				/*
+				 * Measurement edges only exist in the `all` lens. A shared flow that
+				 * opened the card over an influence map would name a line the reader
+				 * cannot see, so the lens follows the link. An explicit `?mode=` in the
+				 * URL still wins: that is the reader naming the view they want.
+				 */
+				if (!modeLinked) mode = 'all';
+				const prefix = `flow-${kind}-${yearStr}-`;
+				const ofKind = slice.edges.filter((x) => x.id.startsWith(prefix));
+				// A foreign state's record carries `iso2`; a lender body carries the
+				// country of its seat. Both are ways an edge "connects" the country.
+				const isoOf = (id: string) =>
+					(institutionById.get(id) as { iso2?: string } | undefined)?.iso2;
+				const seatOf = (id: string) =>
+					(institutionById.get(id) as { seat?: string } | undefined)?.seat;
+				const e =
+					ofKind.find((x) => x.id === `${prefix}${iso2}`) ??
+					(kind === 'debt'
+						? ofKind.find((x) => [x.a.id, x.b.id].some((id) => isoOf(id) === iso2))
+						: undefined) ??
+					ofKind.find(
+						(x) =>
+							[x.a.id, x.b.id, x.rel.from, x.rel.to].includes(iso2) ||
+							[x.a.id, x.b.id].some((id) => seatOf(id) === iso2)
+					);
+				if (!e) {
+					/*
+					 * No edge carries this measurement: outside the top 20, a year the
+					 * slice does not hold, or below the evidence floor. The card still
+					 * exists and the globe owns it, so the link is not a dead end. This
+					 * moves no threshold: the network stays as filtered as the reader
+					 * left it, and the record opens where it can be read.
+					 */
+					const u = new URL(page.url);
+					u.pathname = '/world';
+					u.search = new URLSearchParams({ flow }).toString();
+					void goto(u, { replaceState: true });
+					return;
+				}
+				pinnedId = e.id;
+				const m = routes.get(e.id)?.mid ?? { x: e.a.x, y: e.a.y };
+				cam.flyTo(m.x, m.y);
 			});
 			return;
 		}
@@ -1164,7 +1322,7 @@ import Chip from '$lib/ui/Chip.svelte';
 			return;
 		}
 		if (e.key === 'Escape' && pinnedId) {
-			pinnedId = null;
+			closePinned();
 			e.stopPropagation();
 		}
 	}
@@ -2330,11 +2488,14 @@ import Chip from '$lib/ui/Chip.svelte';
 			<div
 				class="edgecard"
 				class:sheet={compact.current}
+				class:closing={pinnedClosing}
 				style:left={compact.current ? undefined : `${cardAt.x}px`}
 				style:top={compact.current ? undefined : `${cardAt.y}px`}
+				use:sheetDrag={edgeDragParams}
 				data-no-pan
 			>
-				<ConnectionCard edge={pinned} onclose={() => (pinnedId = null)} onpick={pick} />
+				<span class="sheet-handle" aria-hidden="true"><i class="sheet-grip"></i></span>
+				<ConnectionCard edge={pinned} onclose={closePinned} onpick={pick} />
 			</div>
 		{/if}
 
@@ -3332,10 +3493,51 @@ import Chip from '$lib/ui/Chip.svelte';
 		position: absolute;
 		z-index: 4;
 	}
-	/* On a phone the card docks to the bottom instead of chasing the tapped line: a
-	   320px panel placed near a tap on a 390px screen covers what was tapped. */
+	/*
+	 * On a phone the card docks to the bottom instead of chasing the tapped line: a
+	 * 320px panel placed near a tap on a 390px screen covers what was tapped. It is
+	 * a real sheet now: the handle is the drag target, the wrapper is the surface
+	 * that slides away, and the ConnectionCard inside keeps its own scroll under a
+	 * cap measured against the canvas, never the viewport, so it can never paint
+	 * past the view it belongs to.
+	 */
 	.edgecard.sheet {
-		inset: auto var(--s-4) var(--s-4) var(--s-4);
+		/* Flush to the canvas bottom, which is the dock top: the sheet reads as
+		   coming out from under the dock, and translateY(100%) hides it completely. */
+		inset: auto 0 0 0;
+		/* Landscape notch: full-bleed frame, inset content. */
+		padding-inline: var(--safe-l) var(--safe-r);
+		display: flex;
+		flex-direction: column;
+		max-height: calc(100% - var(--s-8));
+		background: var(--surface-overlay);
+		border: 1px solid var(--border-strong);
+		border-bottom: none;
+		border-radius: var(--r-xl) var(--r-xl) 0 0;
+		box-shadow: var(--elev-4);
+		overflow: hidden;
+		transform: translateY(var(--sheet-y, 0px));
+		transition: transform var(--dur-normal) var(--ease-out);
+	}
+	/* The wrapper is the surface; the card inside is the scroll. Its own skin would
+	   double the border and corner, so only the layer hairline survives. */
+	.edgecard.sheet :global(.card) {
+		flex: 1;
+		min-height: 0;
+		width: 100%;
+		max-width: none;
+		max-height: none;
+		border: none;
+		border-inline-start: 2px solid var(--c);
+		border-radius: 0;
+		background: transparent;
+		box-shadow: none;
+		backdrop-filter: none;
+	}
+	/* Leaving: under the bottom edge, the same exit the other sheets use. */
+	.edgecard.sheet.closing {
+		transform: translateY(100%);
+		transition: transform var(--dur-normal) var(--ease-in-out);
 	}
 
 	.a11y {
@@ -3501,8 +3703,14 @@ import Chip from '$lib/ui/Chip.svelte';
 			font-size: var(--t-2xs);
 			gap: var(--s-4);
 		}
+		/*
+		 * Bottom-start on a phone: the zoom stack owns the bottom-end corner, and a
+		 * legend that shares it collides with the controls whenever the reference
+		 * opens. Opposite corners cannot intersect, whatever the legend's height.
+		 */
 		.legend {
-			inset-inline-end: var(--s-4);
+			inset-inline-start: var(--s-4);
+			inset-inline-end: auto;
 			bottom: var(--s-4);
 			padding: var(--s-3) var(--s-4);
 		}

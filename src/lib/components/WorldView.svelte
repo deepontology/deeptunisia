@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { untrack } from 'svelte';
+	import { page } from '$app/state';
 	import { geoGraticule10, type GeoProjection } from 'd3-geo';
 	import { feature, mesh } from 'topojson-client';
 	import type { Topology, GeometryCollection } from 'topojson-specification';
@@ -20,6 +22,7 @@
 	import NavControls from '$lib/viz/NavControls.svelte';
 	import FlowCard, { type FlowSelection } from './FlowCard.svelte';
 	import { cssVar } from '$lib/design/theme.svelte';
+	import { compact } from '$lib/design/media.svelte';
 	import { app } from '$lib/state.svelte';
 	import { ds, LAYER_COLOR } from '$lib/model';
 	import { t, tf, nameOf } from '$lib/t.svelte';
@@ -360,6 +363,48 @@
 	let picked = $state<FlowSelection | null>(null);
 
 	/**
+	 * Dismissal is a transition, so `picked` outlives the close by one.
+	 *
+	 * The card is a sheet on a phone; unmounting on the frame the close button
+	 * fired made it vanish instead of sliding away. The flag goes into FlowCard,
+	 * which owns the class and the transform.
+	 */
+	let flowClosing = $state(false);
+	let flowTimer: ReturnType<typeof setTimeout> | undefined;
+	/** Matches the sheet exit transition; the wide anchored card closes at once. */
+	const FLOW_CLOSE_MS = 260;
+
+	function closeFlow() {
+		if (flowClosing) return;
+		clearTimeout(flowTimer);
+		/*
+		 * The slide away only exists in the phone media query. On a wide screen
+		 * the anchored card has no closing style, so a delayed unmount would just
+		 * leave a dismissed card floating for a quarter second.
+		 */
+		if (!compact.current) {
+			picked = null;
+			flowClosing = false;
+			return;
+		}
+		flowClosing = true;
+		flowTimer = setTimeout(() => {
+			picked = null;
+			flowClosing = false;
+		}, FLOW_CLOSE_MS);
+	}
+
+	/** Open a card, cancelling any dismissal still in flight. */
+	function pick(sel: FlowSelection) {
+		clearTimeout(flowTimer);
+		flowClosing = false;
+		picked = sel;
+	}
+
+	/** Never let a pending close tick outlive the view. */
+	$effect(() => () => clearTimeout(flowTimer));
+
+	/**
 	 * Trade arcs for the year under the cursor.
 	 *
 	 * WHY ONLY THE TOP PARTNERS
@@ -580,33 +625,60 @@
 		return `${m.toLocaleString(app.locale, { maximumFractionDigits: 0 })} ${t('world.mn')}`;
 	}
 
+	/**
+	 * Where an agreement's party sits, and what its arc opens.
+	 *
+	 * Shared by the drawn arcs and the `?agreement=` deep link so the two can never
+	 * disagree about the target record: a link to an agreement whose arc is behind
+	 * the horizon still opens the card the arc would have.
+	 *
+	 * A party is either a state, placed by its own alpha-2, or a body, placed at
+	 * the country hosting its seat. The second case is why the EU Association
+	 * Agreement (which governs most of Tunisia's real trade) finally draws a line:
+	 * it runs to Belgium, where the Union sits.
+	 */
+	function agreementPlacement(ag: (typeof ds.agreements)[number], party: string) {
+		let c = /^[A-Z]{2}$/.test(party) ? countryOf(party) : null;
+		let label: string | null = null;
+
+		if (!c) {
+			const inst = ds.institutions.find((i) => i.id === party);
+			const seat = (inst as { seat?: string } | undefined)?.seat;
+			if (!inst || !seat) return null; // unseated body: a known gap, not an error
+			c = countryOf(seat);
+			if (c) label = nameOf(inst);
+		}
+		if (!c) return null; // build-world.ts fails before this can happen
+
+		return {
+			c,
+			label,
+			select: {
+				kind: 'agreement',
+				agreementId: ag.id,
+				/*
+				 * The record to file a thread against. For a body that is the body
+				 * itself; for a state it is that country's institution record, where
+				 * one exists. Never the host country of a seat: a discussion about
+				 * the EU Association Agreement addressed to Belgium is nonsense.
+				 */
+				targetId: /^[A-Z]{2}$/.test(party)
+					? (ds.institutions.find((i) => (i as { iso2?: string }).iso2 === party)?.id ?? null)
+					: party,
+				partyName: label ?? c.names[app.locale] ?? c.names.en
+			} as FlowSelection
+		};
+	}
+
 	const arcs = $derived.by(() => {
 		const path = pathFor(globe.projection);
 		const out: { key: string; id: string; kind: string; d: string; title: string; select: FlowSelection }[] = [];
 
 		for (const ag of ds.agreements ?? []) {
 			for (const party of ag.parties) {
-				/*
-				 * A party is either a state, placed by its own alpha-2, or a body, placed
-				 * at the country hosting its seat. The second case is why the EU
-				 * Association Agreement — which governs most of Tunisia's real trade —
-				 * finally draws a line: it runs to Belgium, where the Union sits.
-				 *
-				 * The arc is labelled with the body's name, never the host country's. An
-				 * arc to Brussels marked "Belgium" would assert a bilateral treaty that
-				 * does not exist.
-				 */
-				let c = /^[A-Z]{2}$/.test(party) ? countryOf(party) : null;
-				let label: string | null = null;
-
-				if (!c) {
-					const inst = ds.institutions.find((i) => i.id === party);
-					const seat = (inst as { seat?: string } | undefined)?.seat;
-					if (!inst || !seat) continue; // unseated body — a known gap, not an error
-					c = countryOf(seat);
-					if (c) label = nameOf(inst);
-				}
-				if (!c) continue; // build-world.ts fails before this can happen
+				const placed = agreementPlacement(ag, party);
+				if (!placed) continue;
+				const { c } = placed;
 
 				if (!globe.visible(TUNISIA[0], TUNISIA[1]) && !globe.visible(c.anchor[0], c.anchor[1])) {
 					continue;
@@ -623,29 +695,100 @@
 					id: ag.id,
 					kind: ag.kind,
 					d,
-					// nameOf detects the `title_*` convention itself; agreements have no `name_*`.
+					// The arc is labelled with the body's name, never the host country's.
+					// An arc to Brussels marked "Belgium" would assert a bilateral treaty
+					// that does not exist. nameOf detects the `title_*` convention itself;
+					// agreements have no `name_*`.
 					title: tf('world.arc.agreement', {
 						agreement: nameOf(ag),
-						party: label ?? c.names[app.locale] ?? c.names.en
+						party: placed.label ?? c.names[app.locale] ?? c.names.en
 					}),
-					select: {
-						kind: 'agreement',
-						agreementId: ag.id,
-						/*
-						 * The record to file a thread against. For a body that is the body
-						 * itself; for a state it is that country's institution record, where
-						 * one exists. Never the host country of a seat — a discussion about
-						 * the EU Association Agreement addressed to Belgium is nonsense.
-						 */
-						targetId: /^[A-Z]{2}$/.test(party)
-							? (ds.institutions.find((i) => (i as { iso2?: string }).iso2 === party)?.id ?? null)
-							: party,
-						partyName: label ?? c.names[app.locale] ?? c.names.en
-					} as FlowSelection
+					select: placed.select
 				});
 			}
 		}
 		return out;
+	});
+
+	/**
+	 * `?agreement=` opens an agreement's card on arrival.
+	 *
+	 * The arc may be behind the horizon, in which case nothing on the globe matches
+	 * and the card is built from the record instead. An unknown id is ignored: the
+	 * link resolved and the view is right to show nothing rather than throw.
+	 */
+	let linked = false;
+	$effect(() => {
+		const id = page.url.searchParams.get('agreement');
+		if (!id || linked) return;
+		linked = true;
+		untrack(() => {
+			const arc = arcs.find((a) => a.id === id);
+			if (arc) {
+				pick(arc.select);
+				return;
+			}
+			const ag = (ds.agreements ?? []).find((a) => a.id === id);
+			if (!ag) return;
+			for (const party of ag.parties) {
+				const placed = agreementPlacement(ag, party);
+				if (placed) {
+					pick(placed.select);
+					return;
+				}
+			}
+		});
+	});
+
+	/**
+	 * `?flow=<kind>:<year>:<iso2>` opens a measurement card on arrival.
+	 *
+	 * The network hands energy links here because it synthesises no energy edges,
+	 * and this view accepts all three families uniformly. A flow outside the drawn
+	 * top 20 still opens: a shared link names the measurement, not the arc that
+	 * happens to be on screen, so the card is built from the emitted row when no
+	 * drawn arc matches. The family follows the link so the globe behind the card
+	 * is drawing the same kind of line.
+	 */
+	let flowLinked = false;
+	$effect(() => {
+		const raw = page.url.searchParams.get('flow');
+		if (!raw || flowLinked) return;
+		flowLinked = true;
+		untrack(() => {
+			const [kind, yearStr, iso2] = raw.split(':');
+			if ((kind !== 'trade' && kind !== 'energy' && kind !== 'debt') || !iso2) return;
+			if (!/^\d{4}$/.test(yearStr ?? '')) return;
+			const linkYear = Number(yearStr);
+			const drawn = trade.find(
+				(a) =>
+					a.select.kind === kind &&
+					a.select.year === linkYear &&
+					(a.select.iso2 === iso2 ||
+						('institutionId' in a.select && a.select.institutionId === iso2))
+			);
+			if (drawn) {
+				family = kind as Family;
+				pick(drawn.select);
+				return;
+			}
+			const c = countryOf(iso2);
+			const countryName = c ? (c.names[app.locale] ?? c.names.en) : iso2;
+			if (kind === 'debt') {
+				const row = debtIn(linkYear).find((r) => r.iso2 === iso2 || r.institutionId === iso2);
+				family = 'debt';
+				pick({
+					kind: 'debt',
+					iso2: row?.iso2 ?? iso2,
+					countryName,
+					institutionId: row?.institutionId,
+					year: linkYear
+				});
+				return;
+			}
+			family = kind as Family;
+			pick({ kind, iso2, countryName, year: linkYear });
+		});
 	});
 
 	/** Those currently on the near face, projected, with how head-on they are. */
@@ -913,11 +1056,11 @@
 					role="button"
 					tabindex="0"
 					aria-label={f.title}
-					onclick={() => (picked = f.select)}
+					onclick={() => pick(f.select)}
 					onkeydown={(e) => {
 						if (e.key === 'Enter' || e.key === ' ') {
 							e.preventDefault();
-							picked = f.select;
+							pick(f.select);
 						}
 					}}
 				>
@@ -935,11 +1078,11 @@
 					role="button"
 					tabindex="0"
 					aria-label={a.title}
-					onclick={() => (picked = a.select)}
+					onclick={() => pick(a.select)}
 					onkeydown={(e) => {
 						if (e.key === 'Enter' || e.key === ' ') {
 							e.preventDefault();
-							picked = a.select;
+							pick(a.select);
 						}
 					}}
 				>
@@ -1077,12 +1220,13 @@
 		<div class="flowcard" data-no-pan>
 			<FlowCard
 				selection={picked}
-				onclose={() => (picked = null)}
-					onpick={(id) => {
-						app.select(id);
-						world.entity = id;
-						picked = null;
-					}}
+				closing={flowClosing}
+				onclose={closeFlow}
+				onpick={(id) => {
+					app.select(id);
+					world.entity = id;
+					closeFlow();
+				}}
 			/>
 		</div>
 	{/if}
@@ -1233,6 +1377,28 @@
 		left: 50%;
 		transform: translateX(-50%);
 		z-index: 2;
+	}
+	/*
+	 * Phone: the card is a sheet. The frame spans the view and sits above the
+	 * bottom edge so the card can be capped to what is visible; without the cap a
+	 * long agreement clipped its own close button against the top of the map.
+	 * Pointer events pass through the empty frame to the globe.
+	 */
+	@media (max-width: 900px) {
+		.flowcard {
+			/* The notch inset can exceed the gutter; the card clears both. */
+			inset-inline: max(var(--s-4), var(--safe-l)) max(var(--s-4), var(--safe-r));
+			top: var(--s-4);
+			bottom: var(--s-4);
+			transform: none;
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-end;
+			pointer-events: none;
+		}
+		.flowcard :global(.card) {
+			pointer-events: auto;
+		}
 	}
 	.trades.debt .disputed {
 		stroke: var(--layer-judicial);

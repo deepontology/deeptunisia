@@ -7,6 +7,7 @@
 	import { format } from '$lib/i18n';
 	import EntityPanel from '$lib/components/EntityPanel.svelte';
 	import RecordPanel from '$lib/components/RecordPanel.svelte';
+	import { sheetDrag, type SheetDragParams } from '$lib/ui/sheet-drag';
 
 	/**
 	 * The panel outlives the selection by one transition.
@@ -19,6 +20,17 @@
 	let panelId = $state<string | null>(null);
 	let closing = $state(false);
 	let closeTimer: ReturnType<typeof setTimeout> | undefined;
+
+	/**
+	 * The close timer matches the exit transition, not a fixed guess.
+	 *
+	 * The two exits differ: on a phone the sheet slides away in --dur-normal
+	 * (240ms), while the docked panel animates its width over --dur-slow
+	 * (380ms). A phone-sized timer on the wide layout unmounted the pane 100ms
+	 * before its own animation ended, which read as a snap at the end.
+	 */
+	const CLOSE_PHONE_MS = 280;
+	const CLOSE_WIDE_MS = 420;
 
 	/** What the advisories and content branch read — live id, or the one leaving. */
 	const panelSel = $derived(app.selected ?? panelId);
@@ -37,7 +49,7 @@
 				closeTimer = setTimeout(() => {
 					panelId = null;
 					closing = false;
-				}, 420);
+				}, compact.current ? CLOSE_PHONE_MS : CLOSE_WIDE_MS);
 			}
 		}
 	});
@@ -92,20 +104,21 @@
 	 *
 	 * Same argument, different geometry. A card that covers the screen breaks the
 	 * pairing just as surely as a modal does, so the sheet has two detents and rests
-	 * at the lower one: enough to read who this is and their most recent office, with
-	 * the timeline still visible and still working underneath. Dragging up commits to
-	 * reading; dragging down dismisses.
+	 * at the lower one, with the timeline still visible and still working underneath.
+	 * Dragging up commits to reading; dragging down tucks the card under the dock and
+	 * dismisses it.
 	 *
-	 * The detents are heights rather than a scroll position on purpose — a sheet that
-	 * grows as you scroll it fights the reader for control of the same gesture.
+	 * ONE SCROLL SURFACE
+	 *
+	 * The sheet is the only scroller on a phone. A card's internal body used to keep
+	 * its own scrollbar inside a 46dvh sheet, so advisories stayed pinned while the
+	 * record scrolled somewhere else, and content taller than the sheet painted over
+	 * the dock and made its controls untappable. Now the card stops scrolling, the
+	 * card header sticks to the top of the sheet, and everything between handle and
+	 * dock scrolls as one document. See the compact block in the styles.
 	 */
 
 	let detent = $state<'peek' | 'full'>('peek');
-
-	/** Live drag offset in pixels, positive downward. Zero when not dragging. */
-	let dragY = $state(0);
-	let dragging = $state(false);
-	let startY = 0;
 
 	/*
 	 * A new selection always opens at the peek height. Leaving a sheet expanded from
@@ -115,39 +128,20 @@
 	$effect(() => {
 		void app.selected;
 		detent = 'peek';
-		dragY = 0;
 	});
 
-	function onDown(e: PointerEvent) {
-		dragging = true;
-		startY = e.clientY;
-		(e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
-	}
-
-	function onMove(e: PointerEvent) {
-		if (!dragging) return;
-		const dy = e.clientY - startY;
-		// Resist upward drag past the full detent so the sheet cannot be thrown off
-		// the top of the screen, while still acknowledging the gesture.
-		dragY = dy < 0 && detent === 'full' ? dy * 0.25 : dy;
-	}
-
-	function onUp(e: PointerEvent) {
-		if (!dragging) return;
-		dragging = false;
-		(e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
-
-		const dy = dragY;
-		dragY = 0;
-
-		if (dy < -48) detent = 'full';
-		else if (dy > 110) {
-			// From peek, a decisive downward drag dismisses. From full it returns to
-			// peek first, so one gesture never both collapses and closes.
-			if (detent === 'full') detent = 'peek';
-			else app.selected = null;
-		} else if (dy > 48 && detent === 'full') detent = 'peek';
-	}
+	/**
+	 * The gesture contract, passed once. The action reads these callbacks at
+	 * gesture time, so a stale object can never settle the wrong detent.
+	 */
+	const dragParams: SheetDragParams = {
+		enabled: () => compact.current && panelId !== null,
+		detent: () => detent,
+		setDetent: (d) => (detent = d),
+		dismiss: () => (app.selected = null),
+		hasPeek: () => true,
+		handle: '.handle'
+	};
 
 	/** Tapping the handle is the keyboard- and precision-friendly equivalent. */
 	function toggle() {
@@ -166,32 +160,28 @@
 
 	<aside
 		class="inspector d-{detent}"
-		class:dragging
 		class:closing
 		aria-label="Entity inspector"
-		style:--drag="{dragY}px"
+		use:sheetDrag={dragParams}
 	>
 		{#if compact.current}
 			<!--
 				The drag handle. A button, not a bare div: expanding and collapsing has to
 				be reachable without a pointer, and "drag me" is not something a screen
-				reader can act on.
+				reader can act on. The drag itself is the shared action on the aside; this
+				button reports the keyboard/tap equivalent and never both at once.
 			-->
 			<button
-				class="handle"
-				onpointerdown={onDown}
-				onpointermove={onMove}
-				onpointerup={onUp}
-				onpointercancel={onUp}
+				class="handle sheet-handle"
 				onclick={toggle}
 				aria-expanded={detent === 'full'}
 				aria-label={detent === 'full' ? 'Collapse panel' : 'Expand panel'}
 			>
-				<span class="grip"></span>
+				<span class="grip sheet-grip"></span>
 			</button>
 		{/if}
 
-		<div class="inner">
+		<div class="inner sheet-scroll">
 			{#if panelSel}
 			{#if personById.has(panelSel) || institutionById.has(panelSel)}
 				{#if weakChain}
@@ -309,10 +299,6 @@
 		color: var(--basis-inferred);
 	}
 
-	.handle {
-		display: none;
-	}
-
 	@keyframes dock-in {
 		from {
 			opacity: 0;
@@ -381,78 +367,101 @@
 			inset-block: var(--chrome-h) var(--dock-h);
 			inset-inline-end: 0;
 			width: min(var(--inspector-w), 100vw);
-			z-index: 45;
+			z-index: var(--z-sheet);
 		}
+		/*
+		   One level under the panel, which also puts it under the dock. Dimming
+		   the timeline while the reader is meant to keep scrubbing it was the
+		   wrong trade: the scrim catches taps on the view, the dock stays live.
+		*/
 		.backdrop {
 			display: block;
 			position: fixed;
 			inset: 0;
-			z-index: 44;
+			z-index: calc(var(--z-sheet) - 1);
 			background: color-mix(in srgb, var(--surface-base) 55%, transparent);
 		}
 	}
 
 	/* ---------------------------------------------------------------------------
-	   Phone: a sheet above the dock.
+	   Phone: a sheet above the dock, below it while leaving.
 	   --------------------------------------------------------------------------- */
 
 	@media (max-width: 900px) {
 		.inspector {
 			position: fixed;
-			/* Above the dock, never over it: the timeline has to stay usable while a
-			   record is open, which is the entire reason this is a sheet and not a page. */
+			/*
+			   Above the dock at rest, never over it: the timeline has to stay usable
+			   while a record is open, which is the entire reason this is a sheet and
+			   not a page. The dock is layered above the sheet so a dismissal reads as
+			   the card sliding under the chrome rather than climbing it.
+			*/
 			inset: auto 0 calc(var(--dock-h) + var(--safe-b)) 0;
 			width: auto;
-			height: var(--sheet-h, 46dvh);
+			/* Landscape notch: the sheet spans the screen, its content does not. */
+			padding-inline: var(--safe-l) var(--safe-r);
+			--sheet-peek: 46dvh;
+			--sheet-full: calc(100dvh - var(--chrome-h) - var(--dock-h) - var(--s-4));
+			height: calc(var(--sheet-peek) + (var(--sheet-full) - var(--sheet-peek)) * var(--sheet-p, 0));
 			flex-direction: column;
+			/* The sheet is the box. Content that outgrows it scrolls inside; nothing
+			   paints past the rounded corners onto the dock behind. */
+			overflow: hidden;
 			border-inline-start: none;
 			border-top: 1px solid var(--border-strong);
 			border-radius: var(--r-xl) var(--r-xl) 0 0;
 			box-shadow: var(--elev-4);
-			z-index: 45;
-			transform: translateY(var(--drag, 0px));
+			z-index: var(--z-sheet);
+			transform: translateY(var(--sheet-y, 0px));
 			animation: sheet-up var(--dur-normal) var(--ease-out);
 			transition:
 				height var(--dur-normal) var(--ease-out),
 				transform var(--dur-normal) var(--ease-out);
 		}
-		/* While a finger is down, the sheet must track it exactly — a transition here
-		   makes the drag feel like it is fighting back. */
-		.inspector.dragging {
-			transition: none;
-		}
+		/*
+		   The two detents are the same height formula at 0 and 1. The shared drag
+		   action writes --sheet-p between them while a finger is down, so growing
+		   and settling are one continuous movement.
+		*/
 		.d-peek {
-			--sheet-h: 46dvh;
+			--sheet-p: 0;
 		}
 		.d-full {
-			--sheet-h: calc(100dvh - var(--chrome-h) - var(--dock-h) - var(--s-4));
+			--sheet-p: 1;
+		}
+		/* Leaving: the card slides all the way down, under the dock. */
+		.inspector.closing {
+			transform: translateY(100%);
+			transition: transform var(--dur-normal) var(--ease-in-out);
+		}
+		/*
+		   A phone sheet rises from the bottom in every language. The wide-screen
+		   RTL rule slides in from the inline edge and outranks the shorthand above,
+		   so it has to be named back here or the sheet enters sideways in Arabic.
+		*/
+		:global([dir='rtl']) .inspector {
+			animation-name: sheet-up;
 		}
 
-		.handle {
-			display: grid;
-			place-items: center;
-			flex-shrink: 0;
-			width: 100%;
-			height: 26px;
-			touch-action: none;
-			cursor: grab;
+		/*
+		   ONE SCROLL SURFACE. The card's own body stops scrolling on a phone and
+		   the sheet scrolls as a single document, so the card header can stick to
+		   the top and the advisories scroll away with the record. Without this the
+		   card was a second scroller inside the sheet and anything taller than the
+		   peek painted over the dock, making its controls untappable.
+		*/
+		.inner :global(.panel) {
+			flex: none;
 		}
-		.handle:active {
-			cursor: grabbing;
+		.inner :global(.panel .body) {
+			overflow: visible;
+			flex: none;
 		}
-		.grip {
-			width: 38px;
-			height: 4px;
-			border-radius: var(--r-full);
-			background: var(--border-strong);
-			transition: background var(--dur-fast) var(--ease-out);
-		}
-		.handle:hover .grip {
-			background: var(--text-faint);
-		}
-		.inspector.dragging .grip {
-			background: var(--text-muted);
-			width: 44px;
+		.inner :global(.panel header) {
+			position: sticky;
+			top: 0;
+			z-index: 1;
+			background: var(--surface-panel);
 		}
 
 		/* The map behind stays visible and legible: this sheet is a companion to it,
