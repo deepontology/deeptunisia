@@ -1880,12 +1880,17 @@ console.log('\n  ── deep-link round trips ──');
 		const at = problems.length;
 		await page.goto(BASE + '/network?flow=trade:2011:FR', { waitUntil: 'networkidle', timeout: 30_000 });
 		await settle(page);
-		await page.waitForTimeout(1500);
+		/*
+		 * The pin is placed after the layout measures, and the graph has grown
+		 * enough that a fixed wait raced it. Wait for the card itself; the count
+		 * below still fails when it never arrives.
+		 */
+		await page.locator('.edgecard').first().waitFor({ state: 'attached', timeout: 10_000 }).catch(() => {});
 		const edgeCards = await page.locator('.edgecard').count();
 		ok(
 			'deep-link /network?flow=trade:2011:FR pins the France measurement edge',
 			edgeCards === 1,
-			`${edgeCards} edge cards`
+			`${edgeCards} edge cards at ${page.url().replace(BASE, '')}`
 		);
 		ok('deep-link flow sheet is console-free', problems.length === at, problems.slice(at).join(' | ') || 'clean');
 		await page.close();
@@ -1901,7 +1906,7 @@ console.log('\n  ── deep-link round trips ──');
 		const at = problems.length;
 		await page.goto(BASE + '/network?flow=energy:2024:DZ', { waitUntil: 'networkidle', timeout: 30_000 });
 		await settle(page);
-		await page.waitForTimeout(1500);
+		await page.locator('.flowcard .card').first().waitFor({ state: 'attached', timeout: 10_000 }).catch(() => {});
 		ok(
 			'deep-link /network?flow=energy:... hands the energy flow to the World ledger',
 			page.url().includes('/world?flow=energy') || page.url().includes('/world?flow=energy%3A'),
@@ -1922,7 +1927,7 @@ console.log('\n  ── deep-link round trips ──');
 		const at = problems.length;
 		await page.goto(BASE + '/network?agreement=efta-free-trade-agreement', { waitUntil: 'networkidle', timeout: 30_000 });
 		await settle(page);
-		await page.waitForTimeout(1500);
+		await page.locator('.flowcard .card').first().waitFor({ state: 'attached', timeout: 10_000 }).catch(() => {});
 		ok(
 			'deep-link /network?agreement=... hands the agreement to the World ledger',
 			page.url().includes('/world?agreement=efta-free-trade-agreement'),
