@@ -1,0 +1,234 @@
+{
+  "parameters": {
+    "cohortDates": [
+      "1987-11-07",
+      "2011-01-14",
+      "2021-07-25"
+    ],
+    "minAuthority": 40,
+    "maxPathEdges": 3,
+    "successionMaxGapYears": 1,
+    "nullTrials": 200,
+    "seed": 20260911,
+    "cutoff": 1788998400000
+  },
+  "cohorts": [
+    {
+      "date": "1987-11-07",
+      "certain": [
+        "abdelhamid-el-fehri",
+        "habib-ammar",
+        "slaheddine-baly"
+      ],
+      "watch": [
+        "abderrahmane-belhaj-ali",
+        "mohamed-karboul"
+      ]
+    },
+    {
+      "date": "2011-01-14",
+      "certain": [
+        "ali-seriati",
+        "mohamed-khamassi",
+        "rachid-ammar",
+        "rafiq-belhaj-kacem",
+        "taieb-laajimi"
+      ],
+      "watch": [
+        "kamel-akrout"
+      ]
+    },
+    {
+      "date": "2021-07-25",
+      "certain": [
+        "abdelhamid-belati",
+        "adel-jehane",
+        "hassine-gharbi",
+        "hichem-mechichi",
+        "iyed-dahmani",
+        "khaled-yahyaoui",
+        "mohamed-ali-ben-khaled",
+        "mohamed-el-ghoul",
+        "mohamed-habib-dhif",
+        "mohamed-hajem",
+        "zouhair-seddik"
+      ],
+      "watch": [
+        "khelifa-harroum",
+        "mohamed-salah-hamdi",
+        "nouri-ben-taous"
+      ]
+    }
+  ],
+  "personnel": {
+    "spanning": [],
+    "crossings": []
+  },
+  "edges": {
+    "total": 150,
+    "byKind": {
+      "succession": 64,
+      "appointment": 25,
+      "patronage": 1,
+      "co-membership": 60
+    }
+  },
+  "paths": {
+    "cohort1to2": {
+      "primary": [
+        {
+          "nodes": [
+            "abdelhamid-el-fehri",
+            "mahmoud-ben-mohamed",
+            "taieb-laajimi"
+          ],
+          "edges": [
+            "co:air-force:p-air-el-fehri:p-air-ben-mohamed",
+            "succession:p-air-ben-mohamed:p-air-laajimi"
+          ],
+          "kind": "primary"
+        },
+        {
+          "nodes": [
+            "abdelhamid-el-fehri",
+            "mahmoud-ben-mohamed",
+            "taieb-laajimi",
+            "rachid-ammar"
+          ],
+          "edges": [
+            "co:air-force:p-air-el-fehri:p-air-ben-mohamed",
+            "succession:p-air-ben-mohamed:p-air-laajimi",
+            "co:armed-forces:p-cofaf-ammar:p-ig-laajimi"
+          ],
+          "kind": "primary"
+        },
+        {
+          "nodes": [
+            "abdelhamid-el-fehri",
+            "mahmoud-ben-mohamed",
+            "taieb-laajimi"
+          ],
+          "edges": [
+            "co:air-force:p-air-el-fehri:p-air-ben-mohamed",
+            "co:air-force:p-air-laajimi:p-air-ben-mohamed"
+          ],
+          "kind": "primary"
+        },
+        {
+          "nodes": [
+            "abdelhamid-el-fehri",
+            "mahmoud-ben-mohamed",
+            "taieb-laajimi",
+            "rachid-ammar"
+          ],
+          "edges": [
+            "co:air-force:p-air-el-fehri:p-air-ben-mohamed",
+            "co:air-force:p-air-laajimi:p-air-ben-mohamed",
+            "co:armed-forces:p-cofaf-ammar:p-ig-laajimi"
+          ],
+          "kind": "primary"
+        }
+      ],
+      "secondary": [],
+      "excluded": 0
+    },
+    "cohort2to3": {
+      "primary": [],
+      "secondary": [
+        {
+          "nodes": [
+            "mohamed-khamassi",
+            "abderraouf-atallah",
+            "adel-jehane"
+          ],
+          "edges": [
+            "succession:p-navy-khamassi:p-navy-atallah",
+            "succession:p-navy-atallah:p-navy-jehane"
+          ],
+          "kind": "secondary"
+        },
+        {
+          "nodes": [
+            "mohamed-khamassi",
+            "abderraouf-atallah",
+            "adel-jehane"
+          ],
+          "edges": [
+            "succession:p-navy-khamassi:p-navy-atallah",
+            "co:navy:p-navy-atallah:p-navy-jehane"
+          ],
+          "kind": "secondary"
+        },
+        {
+          "nodes": [
+            "mohamed-khamassi",
+            "abderraouf-atallah",
+            "adel-jehane"
+          ],
+          "edges": [
+            "co:navy:p-navy-khamassi:p-navy-atallah",
+            "succession:p-navy-atallah:p-navy-jehane"
+          ],
+          "kind": "secondary"
+        },
+        {
+          "nodes": [
+            "mohamed-khamassi",
+            "abderraouf-atallah",
+            "adel-jehane"
+          ],
+          "edges": [
+            "co:navy:p-navy-khamassi:p-navy-atallah",
+            "co:navy:p-navy-atallah:p-navy-jehane"
+          ],
+          "kind": "secondary"
+        },
+        {
+          "nodes": [
+            "rachid-ammar",
+            "mohamed-salah-hamdi",
+            "ismail-fathali",
+            "mohamed-el-ghoul"
+          ],
+          "edges": [
+            "succession:p-land-ammar:p-land-hamdi",
+            "succession:p-land-hamdi:p-land-fathali",
+            "succession:p-land-fathali:p-land-elghoul"
+          ],
+          "kind": "secondary"
+        },
+        {
+          "nodes": [
+            "rachid-ammar",
+            "mohamed-salah-hamdi",
+            "ismail-fathali",
+            "mohamed-el-ghoul"
+          ],
+          "edges": [
+            "succession:p-land-ammar:p-land-hamdi",
+            "succession:p-land-hamdi:p-land-fathali",
+            "co:land-forces:p-land-fathali:p-land-elghoul"
+          ],
+          "kind": "secondary"
+        }
+      ],
+      "excluded": 0
+    }
+  },
+  "nullControls": {
+    "shuffledCohorts": {
+      "trials": 200,
+      "min": 0,
+      "median": 2,
+      "max": 19,
+      "atLeastReal": 82
+    },
+    "randomDates": {
+      "trials": 200,
+      "min": 0,
+      "median": 0,
+      "max": 19,
+      "atLeastReal": 10
+    }
+  }
+}

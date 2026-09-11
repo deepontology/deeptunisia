@@ -429,6 +429,32 @@ ok(
 	}
 }
 
+console.log('\n  ── Phase 10D: the H1 card carries both continuity tests ──\n');
+
+const EVIDENCE_PAGE = readFileSync(join(HERE, '..', 'src', 'routes', 'evidence', '+page.svelte'), 'utf8');
+ok(
+	'the H1 card renders the continuity table from the probe output',
+	EVIDENCE_PAGE.includes('network-continuity.json') && EVIDENCE_PAGE.includes("ev.continuity.title")
+);
+ok(
+	'the personnel snapshot and the network path are separate rows',
+	EVIDENCE_PAGE.includes("ev.continuity.personnel") && EVIDENCE_PAGE.includes("ev.continuity.network")
+);
+ok(
+	'the null-control comparison travels with the counts',
+	EVIDENCE_PAGE.includes('nullControls.shuffledCohorts') &&
+		EVIDENCE_PAGE.includes("ev.continuity.networkThreshold") &&
+		EVIDENCE_PAGE.includes("ev.continuity.note")
+);
+for (const loc of ['en', 'fr', 'ar'] as const) {
+	ok(
+		`the continuity card resolves in ${loc}`,
+		translate(loc, 'ev.continuity.title') !== 'ev.continuity.title' &&
+			translate(loc, 'ev.continuity.networkThreshold').includes('{atLeastReal}'),
+		translate(loc, 'ev.continuity.network')
+	);
+}
+
 console.log(`
   ${checks - failures}/${checks} checks passed${failures ? `, ${failures} FAILED` : ''}
 `);
