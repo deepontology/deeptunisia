@@ -3,6 +3,46 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:0729098cf28231cf",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Tunis | Détention prolongée pour les membres de la Flottille Al-Soumoud",
+      "link": "https://kapitalis.com/tunisie/2026/09/11/tunis-detention-prolongee-pour-les-membres-de-la-flottille-al-soumoud/",
+      "published": "2026-09-11T22:09:14Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:f98c97e0e9147d0c",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Pluies en Tunisie | Plus de 250 opérations menées par la Protection civile en 24h",
+      "link": "https://kapitalis.com/tunisie/2026/09/11/pluies-en-tunisie-plus-de-250-operations-menees-par-la-protection-civile-en-24h/",
+      "published": "2026-09-11T21:55:03Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:7fb75fecb2cb63ea",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "La Tunisie marque sa présence au Sommet international sur l’espace à Paris",
+      "link": "https://kapitalis.com/tunisie/2026/09/11/la-tunisie-marque-sa-presence-au-sommet-international-sur-lespace-a-paris/",
+      "published": "2026-09-11T21:25:41Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:040fc8b608216f44",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Tunisie | Des pluies attendues pour ce samedi",
+      "link": "https://kapitalis.com/tunisie/2026/09/11/tunisie-des-pluies-attendues-pour-ce-samedi/",
+      "published": "2026-09-11T21:03:42Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
       "id": "feed:african-manager:514f291334dfebd3",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -10989,42 +11029,6 @@
       "title": "Coupure de courant électrique dans plusieurs zones",
       "link": "https://africanmanager.com/coupure-de-courant-electrique-dans-plusieurs-zones/",
       "published": "2026-08-11T08:19:00Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:262fdc96d273fd7b",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Le Hezbollah tend la main à la Syrie d’Ahmed al-Charaa",
-      "link": "https://kapitalis.com/tunisie/2026/08/11/le-hezbollah-tend-la-main-a-la-syrie-dahmed-al-charaa/",
-      "published": "2026-08-11T07:00:00Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:7fcfd1d83bb6db8f",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Ce que le biocentrisme nous apprend sur l’immortalité",
-      "link": "https://kapitalis.com/tunisie/2026/08/11/ce-que-le-biocentrisme-nous-apprend-sur-limmortalite/",
-      "published": "2026-08-11T06:52:40Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:14702a60da94f6bf",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Lancement immédiat des procédures relatives à la réalisation de la centrale de Borj El Amri, de l’hôpital de Thala et de la Cité numérique d’Ennahli",
-      "link": "https://africanmanager.com/lancement-immediat-des-procedures-relatives-a-la-realisation-de-la-centrale-de-borj-el-amri-de-lhopital-de-thala-et-de-la-cite-numerique-dennahli/",
-      "published": "2026-08-11T06:46:00Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:f00da46eef101e2f",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Attestation obligatoire pour l’exportation des produits forestiers",
-      "link": "https://africanmanager.com/attestation-obligatoire-pour-lexportation-des-produits-forestiers/",
-      "published": "2026-08-11T06:36:00Z",
       "lang": "fr"
     }
   ]
