@@ -1,0 +1,1437 @@
+# Explicit escape register (V25/V27).
+#
+# One entry per known violation of a hard rule, each with an owner and a
+# deadline. The build fails when an unexcepted record violates the rule, and it
+# fails when an entry's deadline has passed. Entries are removed by fixing the
+# record, never by extending the list.
+#
+# Rules:
+#   no-source         the record cites no source (rule 2); scaffolding kinds are
+#                     not listed because the rule does not apply to them
+#   grade-a-primary   confidence A cites no tier-1/tier-2 source (V25)
+#   basis-override    an authored basis is stronger than the grade-implied one
+#                     (V27); implies/authored name the pair
+#
+# Generated from the review-hardening pass on 2026-09-10. Every entry is a
+# research task, not a permanent waiver.
+
+- rule: basis-override
+  kind: agreement
+  id: agadir-agreement
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: agreement
+  id: bit-germany-1963
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: agreement
+  id: bit-kuwait-1973
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: agreement
+  id: bit-oman-1991
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: agreement
+  id: bit-qatar-1996
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: agreement
+  id: bit-switzerland-2012
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: agreement
+  id: bit-turkey-1991
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: agreement
+  id: bit-uae-1996
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: agreement
+  id: elmed-interconnector-agreement
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: agreement
+  id: gafta
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: company
+  id: airbus
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: company
+  id: alstom
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: company
+  id: atb
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: company
+  id: caf
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: company
+  id: eni
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: company
+  id: jica
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: company
+  id: terna
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: company
+  id: tunisie-autoroutes
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: contract
+  id: ctr-elmed-financing-2023-2024
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: contract
+  id: ctr-gct-bangladesh-2024
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: contract
+  id: ctr-sncft-ebrd-2017
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: contract
+  id: ctr-sonede-djerba-dessalement-2018
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: contract
+  id: ctr-sonede-sfax-dessalement-2022
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: contract
+  id: ctr-tunisie-autoroutes-a1-reconcession-2026
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: contract
+  id: ctr-tunisie-autoroutes-a2-concession-2026
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: event
+  id: african-court-withdrawal-2026
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: event
+  id: bensedrine-financial-brigade-2026
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: event
+  id: cour-des-comptes-losses-2026
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: event
+  id: dridi-prison-death-2026
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: event
+  id: ev-arp-petition-2026-08-29
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: event
+  id: ev-autoroutes-a1-a2-concessions-2026
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: event
+  id: ev-fitch-affirms-b-minus-2026-09
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: event
+  id: ev-libya-dbeibah-talks-tunis-2026
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: event
+  id: ev-sabotage-declaration-2026-08-26
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: event
+  id: ev-solar-309-authorisations-2026-09
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: event
+  id: ev-sumud-four-detention-2026-02
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: event
+  id: ev-tunisia-germany-accords-2026-08-31
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: event
+  id: ev-ugtt-strike-instance-2026-09-10
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: event
+  id: hammami-open-letter-2026
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: event
+  id: karmous-prison-death-2026
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: event
+  id: libya-border-surveillance-cameras-2026
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: event
+  id: migrants-african-court-petitions-2026
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: event
+  id: moussi-cassation-appeals-2026
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: event
+  id: tunisia-summons-french-ambassador-2026
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: event
+  id: ugtt-khelifi-death-2026
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: event
+  id: zied-el-heni-sentenced-2026
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: institution
+  id: airbus
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: institution
+  id: alstom
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: institution
+  id: atb
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: institution
+  id: caf
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: institution
+  id: ebrd
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: institution
+  id: eni
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: institution
+  id: india
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: institution
+  id: japan
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: institution
+  id: jica
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: institution
+  id: nafas-collective
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: institution
+  id: spain
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: institution
+  id: terna
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: institution
+  id: tunisie-autoroutes
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: licence
+  id: lic-wifak-bank-2015
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: person
+  id: amel-ben-yedder
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: person
+  id: aziz-miled
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: person
+  id: ghassan-boughdiri
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: person
+  id: ghassan-henchiri
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: person
+  id: hedi-bouchamaoui
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: person
+  id: moncef-mzabi
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: person
+  id: nabil-channoufi
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: person
+  id: wael-naouar
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: person
+  id: youssef-bayah
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: person
+  id: youssef-zouaghi
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: person
+  id: zied-el-heni
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: position
+  id: p-dgsn-bettaieb
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: position
+  id: p-dgsn-dabbabi
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: position
+  id: p-dgsn-guizani
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: position
+  id: p-dgsn-rajhi
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: position
+  id: p-dgsp-harroum
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: position
+  id: p-nsa-hamdi
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: relationship
+  id: own-bukhatir-scit-2026-08-20
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: relationship
+  id: own-karoui-nessma-50-2008
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: relationship
+  id: own-materi-radio-zaytouna-2007
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: relationship
+  id: own-mediaset-nessma-25-2008
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: relationship
+  id: own-quinta-nessma-25-2008
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: relationship
+  id: own-state-radio-zaytouna-2011
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: relationship
+  id: rel-aziz-miled-ben-ali-institutional
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: relationship
+  id: rel-beatrix-rhein-marzouki-family
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: relationship
+  id: rel-bourguiba-ennaceur-appointment-1974
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: relationship
+  id: rel-bourguiba-ennaceur-appointment-1979
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: relationship
+  id: rel-judiciary-makhloufi-prosecution
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: relationship
+  id: rel-lilia-ben-chedly-mebazaa-family
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: relationship
+  id: rel-lotfi-bel-hadj-marzouki-family
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: relationship
+  id: rel-marzouki-armed-forces-security
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: relationship
+  id: rel-marzouki-bentaous-appointment
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: relationship
+  id: rel-marzouki-laarayedh-appointment
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: relationship
+  id: rel-marzouki-rached-ghannouchi-political-alliance
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: relationship
+  id: rel-mebazaa-ennaceur-appointment
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: relationship
+  id: rel-mebazaa-essebsi-appointment
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: relationship
+  id: rel-mebazaa-ghannouchi-appointment
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: relationship
+  id: rel-mebazaa-ghannouchi-succession-conflict
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: relationship
+  id: rel-mohamed-ennaceur-armed-forces-security
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: relationship
+  id: rel-mohamed-ennaceur-legislature-institutional
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: relationship
+  id: rel-moncef-mzabi-ben-ali-institutional
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: relationship
+  id: rel-myriam-marzouki-marzouki-family
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: relationship
+  id: rel-nadia-marzouki-marzouki-family
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: relationship
+  id: rel-siren-ennaceur-mohamed-ennaceur-family
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: relationship
+  id: rel-slim-ennaceur-mohamed-ennaceur-family
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: world-claim
+  id: agg-public-debt-external-2024
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: world-claim
+  id: agg-public-debt-total-2024
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: world-claim
+  id: agg-public-debt-total-2025
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: basis-override
+  kind: world-claim
+  id: agg-tourism-arrivals-2024
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: inferred
+  authored: reported
+- rule: basis-override
+  kind: world-claim
+  id: agg-tourism-receipts-2024
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Authored basis "documented" over the grade-implied "reported" at grade B. Pending review provenance and a basis_override_reason (V27 triage).
+  implied: reported
+  authored: documented
+- rule: grade-a-primary
+  kind: company
+  id: steg
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: company
+  id: tunisair
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: event
+  id: arrests-feb-2023
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: event
+  id: ayachi-hammami-arrested
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: event
+  id: election-2019
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: event
+  id: election-2024
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3/4/5. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: event
+  id: election-law-amendment-2024
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3/5. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: event
+  id: ivd-final-report
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: event
+  id: mabrouk-appeal-2026
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 4. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: event
+  id: mabrouk-chahed-sentenced
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3/4. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: event
+  id: mabrouk-detained
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: event
+  id: reshuffle-may-2024
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: event
+  id: saadia-mosbah-arrested
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: event
+  id: sentences-july-2025
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: institution
+  id: bct
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: institution
+  id: bh-bank
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: institution
+  id: bna
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: institution
+  id: bvmt
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: institution
+  id: ennahda
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3/4. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: institution
+  id: head-of-government
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: institution
+  id: la-poste-tunisienne
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: institution
+  id: legislature
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3/5. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: institution
+  id: ministry-defence
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: institution
+  id: national-guard
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3/5. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: institution
+  id: nidaa-tounes
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: institution
+  id: orange-tunisie
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 4. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: institution
+  id: sncft
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: institution
+  id: sonede
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: institution
+  id: stb
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: institution
+  id: steg
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: institution
+  id: tunisair
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: institution
+  id: ugtt
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3/4. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: institution
+  id: utica
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3/4. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: person
+  id: ahmed-ben-salah
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: person
+  id: ahmed-ounaies
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: person
+  id: bahi-ladgham
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: person
+  id: habib-bourguiba-jr
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: person
+  id: hedi-baccouche
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 4. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: person
+  id: hedi-nouira
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: person
+  id: kais-saied
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3/4. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: person
+  id: kamel-feki
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: person
+  id: mohammed-mzali
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: person
+  id: mongi-slim
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: person
+  id: rached-ghannouchi
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: person
+  id: rachid-sfar
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: person
+  id: tahar-ben-ammar
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: person
+  id: taieb-mehiri
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: position
+  id: p-audit-abdelkader-zgolli
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 4. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: position
+  id: p-audit-abdellatif-kharrat
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 4. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: position
+  id: p-audit-faiza-kefi
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 4. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: position
+  id: p-audit-nejib-ktari
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 4. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: position
+  id: p-bct-nouira
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: position
+  id: p-cassation-hedi-guediri
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 4. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: position
+  id: p-cassation-khaled-ayari
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 4. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: position
+  id: p-cassation-moncef-kchaou
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 4. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: position
+  id: p-cassation-taieb-rached
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 4. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: position
+  id: p-ivd-bensedrine
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 4. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: position
+  id: p-onat-abdessattar-ben-moussa
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 4. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: position
+  id: p-onat-chawki-tabib
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 4. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: position
+  id: p-onat-mohamed-fadhel-mahfoudh
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 4. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: position
+  id: p-pres-benali
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3/5. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: position
+  id: p-pres-saied
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: position
+  id: p-speaker-ghannouchi
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: region
+  id: region-central-east
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: region
+  id: region-central-west
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: region
+  id: region-north-east
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: region
+  id: region-north-west
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: region
+  id: region-south-east
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: region
+  id: region-south-west
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: region
+  id: region-tunisia
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: relationship
+  id: rel-ben-ali-rcd-party
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3/5. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: relationship
+  id: rel-csm-judiciary-institutional
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 4. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: relationship
+  id: rel-cyrine-ben-ali-ben-ali-family
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: relationship
+  id: rel-faouzi-elloumi-selma-elloumi-family
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 4. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: relationship
+  id: rel-habib-bourguiba-jr-bourguiba-family
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: relationship
+  id: rel-hafedh-caid-essebsi-beji-caid-essebsi-family
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 4. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: relationship
+  id: rel-judiciary-kamel-eltaief-prosecution
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: relationship
+  id: rel-judiciary-kamel-guizani-prosecution
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: relationship
+  id: rel-judiciary-marouane-mabrouk-prosecution
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3/4. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: relationship
+  id: rel-judiciary-nabil-karoui-prosecution
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: relationship
+  id: rel-judiciary-rached-ghannouchi-prosecution
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: relationship
+  id: rel-judiciary-youssef-chahed-prosecution
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: relationship
+  id: rel-kais-saied-hichem-mechichi-political-conflict
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: relationship
+  id: rel-kais-saied-khaled-nouri-appointment
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: relationship
+  id: rel-kais-saied-rached-ghannouchi-political-conflict
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: relationship
+  id: rel-marouane-mabrouk-cyrine-ben-ali-family
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3/4. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: relationship
+  id: rel-marouane-mabrouk-orange-tunisie-business
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 4. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: relationship
+  id: rel-nabil-karoui-kais-saied-political-conflict
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: grade-a-primary
+  kind: relationship
+  id: rel-rafik-abdessalem-rached-ghannouchi-family
+  owner: RESEARCH
+  deadline: 2026-12-09
+  reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
+- rule: no-source
+  kind: person
+  id: mouna-siala
+  owner: RESEARCH
+  deadline: 2026-10-10
+  reason: Kept unsourced under rule 6. The record itself states the good-faith search found no support for the identification; RESEARCH owns sourcing it or retiring it before the deadline.

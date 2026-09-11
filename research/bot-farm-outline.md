@@ -1,6 +1,6 @@
 # Bot Farms & Fake Social Media Accounts in Tunisia (2016–2026) — Research Outline for /media
 
-**Worktree:** `/home/adala/Projects/deep-tunisia-bot-farm` — branch `research/bot-farm-media`
+**Worktree:** private research worktree — branch `research/bot-farm-media`
 **Mission:** Deep dive into bot farms / fake accounts in Tunisia past 10 years. Quantify how many fake accounts existed, who reported what numbers, methodologies, disputes.
 **Evidence ladder:** Tier 1 gazette/decree → Tier 2 institutional/registry/platform transparency → Tier 3 established journalism/encyclopedia → Tier 4 single outlet → Tier 5 lead. Every claim carries `basis` documented|reported|inferred|unsubstantiated + source. C/D require `attributed_to`. Disagreements recorded in `disputes`. Never invent numbers/dates (`?`/`~`).
 **Status:** Research/outbox work — candidates propose, humans dispose (P4). Canonical data read-only; proposals in `data/contrib/bot-farm-2026-08-28.yaml`.

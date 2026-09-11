@@ -9902,8 +9902,6 @@
   url: https://www.ilboursa.com/marches/habib-mekki-nomme-president-du-conseil-dadministration-de-tunisair_48754
   tier: 3
   lang: fr
-  sources:
-    - ilboursa-tunisair-mekki
 - id: managers-tunisair-mekki-2024
   title: "Tunisair : Habib Mekki nommé président du conseil d'administration (CA du 02/08/2024 ; Mekki aussi secrétaire général du ministère du Transport depuis juin 2024)"
   publisher: Managers TN
@@ -9911,8 +9909,6 @@
   url: https://managers.tn/2024/10/17/tunisair-habib-mekki-nomme-president-du-conseil-dadministration/
   tier: 4
   lang: fr
-  sources:
-    - managers-tunisair-mekki-2024
 - id: directinfo-tunisair-mekki-revoked-2025
   title: "Tunisair : fin de fonction du président du conseil d'administration Habib Mekki (révocation annoncée par le ministère du Transport, 05/07/2025)"
   publisher: Directinfo (Webmanagercenter)
@@ -9920,8 +9916,6 @@
   url: https://directinfo.webmanagercenter.com/2025/07/05/tunisair-fin-de-fonction-du-president-du-conseil-dadministration-habib-mekki/
   tier: 4
   lang: fr
-  sources:
-    - directinfo-tunisair-mekki-revoked-2025
 - id: leconomiste-tunisair-mekki-revoked-2025
   title: Urgent - Limogeages et nominations au sein de Tunisair (éviction de Habib Mekki de la présidence du CA, 05/07/2025)
   publisher: L'Economiste Maghrébin
@@ -9929,8 +9923,6 @@
   url: https://www.leconomistemaghrebin.com/2025/07/05/limogeages-et-nominations-au-sein-de-tunisair/
   tier: 4
   lang: fr
-  sources:
-    - leconomiste-tunisair-mekki-revoked-2025
 - id: wmc-tunisair-loukil-2025
   title: "Tunisair : Basma Loukil Yaakoubi prend la tête du Conseil d'administration (CA du 07/07/2025 ; Halima Ibrahim Khouaja chargée de la Direction Générale — communiqué officiel)"
   publisher: Webmanagercenter (communiqué Tunisair)
@@ -9938,8 +9930,6 @@
   url: https://www.webmanagercenter.com/2025/07/15/549176/tunisair-basma-loukil-yaakoubi-prend-la-tete-du-conseil-dadministration/
   tier: 4
   lang: fr
-  sources:
-    - wmc-tunisair-loukil-2025
 - id: managers-tunisair-loukil-2025
   title: "Tunisair: Basma Loukil Yaakoubi prend la tête du conseil d'administration (administratrice représentant le ministère des Finances, DG des participations publiques)"
   publisher: Managers TN
@@ -9947,8 +9937,6 @@
   url: https://managers.tn/2025/07/07/tunisair-basma-loukil-yaakoubi-prend-la-tete-du-conseil-dadministration/
   tier: 4
   lang: fr
-  sources:
-    - managers-tunisair-loukil-2025
 - id: businessnews-steg-anane-trifa-2023
   title: Kaïs Saïed limoge le PDG de la Steg (Hichem Anane) et nomme Fayçal Trifa à sa place — communiqué de la présidence, 22/09/2023
   publisher: BusinessNews Tunisie
@@ -9956,8 +9944,6 @@
   url: https://businessnews.com.tn/2023/09/22/article-1200716/1200716/
   tier: 4
   lang: fr
-  sources:
-    - businessnews-steg-anane-trifa-2023
 - id: kapitalis-steg-anane-2023
   title: "Tunisie : Le Pdg de la Steg limogé (Hichem Anane ; Faycel Trifa nommé à la tête de la STEG)"
   publisher: Kapitalis
@@ -9965,8 +9951,6 @@
   url: https://kapitalis.com/tunisie/2023/09/22/tunisie-le-pdg-de-la-steg-limoge/
   tier: 4
   lang: fr
-  sources:
-    - kapitalis-steg-anane-2023
 - id: directinfo-gct-youssef-2026
   title: "Tunisie: Nomination de Omar Bouzouada à la tête de la CPG et du GCT (décret n° 2026-79 du 01/06/2026 ; décret n° 2026-81 mettant fin aux fonctions de Hédi Youssef, DG du GCT)"
   publisher: Directinfo (Webmanagercenter)
@@ -9974,8 +9958,6 @@
   url: https://directinfo.webmanagercenter.com/2026/06/02/tunisie-nomination-de-omar-bouzouada-a-la-tete-de-la-cpg-et-du-gct/
   tier: 4
   lang: fr
-  sources:
-    - directinfo-gct-youssef-2026
 - id: ilboursa-bouzouada-2026
   title: Omar Bouzouada nommé PDG de la CPG et du Groupe chimique Tunisien (décret n° 2026-79 du 1er juin 2026, JORT)
   publisher: ilboursa.com
@@ -9983,8 +9965,6 @@
   url: https://www.ilboursa.com/marches/omar-bouzouada-nomme-pdg-de-la-cpg-et-du-groupe-chimique-tunisien_62004
   tier: 3
   lang: fr
-  sources:
-    - ilboursa-bouzouada-2026
 - id: kapitalis-tt-bendhiab-2022
   title: Lassâad Ben Dhiab désigné comme nouveau PDG de Tunisie Télécom
   publisher: Kapitalis
@@ -9992,8 +9972,6 @@
   url: https://kapitalis.com/tunisie/2022/04/07/lassaad-ben-dhiab-designe-comme-nouveau-pdg-de-tunisie-telecom/
   tier: 4
   lang: fr
-  sources:
-    - kapitalis-tt-bendhiab-2022
 - id: leaders-tt-tlili-2021
   title: Syrine Tlili dirigera provisoirement Tunisie Telecom (CA du 12/10/2021)
   publisher: Leaders
@@ -10001,8 +9979,6 @@
   url: https://www.leaders.com.tn/article/32527-syrine-tlili-dirigera-provisoirement-tunisie-telecom
   tier: 4
   lang: fr
-  sources:
-    - leaders-tt-tlili-2021
 - id: kapitalis-tt-saied-2020
   title: Samir Saïed nouveau PDG de Tunisie Télécom
   publisher: Kapitalis
@@ -10010,8 +9986,6 @@
   url: https://kapitalis.com/tunisie/2020/04/15/samir-saied-nouveau-pdg-de-tunisie-telecom/
   tier: 4
   lang: fr
-  sources:
-    - kapitalis-tt-saied-2020
 - id: kapitalis-bensedrine-brigade-2026
   title: IVD | Entendue par la brigade financière, Sihem Bensedrine laissée en liberté
   publisher: Kapitalis
@@ -10741,8 +10715,6 @@
   url: https://www.ilboursa.com/marches/societe/TJARI
   tier: 3
   lang: fr
-  sources:
-    - source-ilboursa-attijari-profile
   note: Profil consulte 2026-08-11 (as-of ~2025-2026, non date par ilboursa).
 - id: source-ilboursa-uib-profile
   title: "UIB, chiffres cles et profil financier de la societe (actionnaires: Societe Generale 52,34 %; dirigeants: Kamel Neji, Pierre Le Run)"
@@ -10750,8 +10722,6 @@
   url: https://www.ilboursa.com/marches/societe/UIB
   tier: 3
   lang: fr
-  sources:
-    - source-ilboursa-uib-profile
   note: Profil consulte 2026-08-11. Mentionne aussi la creation de la banque en 1964 (cf. flag-uib-founding-year).
 - id: source-ilboursa-amen-profile
   title: "AMEN BANK, chiffres cles et profil financier de la societe (actionnaires: COMAR 28,76 %, PGI Holding 20,39 %, Ennakl 7,93 %; dirigeants: Neji Ghandri, Karim Ben Yedder)"
@@ -10759,8 +10729,6 @@
   url: https://www.ilboursa.com/marches/societe/AB
   tier: 3
   lang: fr
-  sources:
-    - source-ilboursa-amen-profile
   note: Profil consulte 2026-08-11. Confirme la description du groupe Amen (52 societes, holding PGI, famille Ben Yedder).
 - id: source-ilboursa-wifak-profile
   title: "WIFAK INT BANK, chiffres cles et profil financier de la societe (actionnaires: Mohamed Hedi Ben Ayed 39,96 %, ICD 30 %, Hamrouni 13,01 %, CDC 10 %, STB 4,5 %; DG: Mohammed Mellousse)"
@@ -10768,8 +10736,6 @@
   url: https://www.ilboursa.com/marches/societe/WIFAK
   tier: 3
   lang: fr
-  sources:
-    - source-ilboursa-wifak-profile
   note: Profil consulte 2026-08-11.
 - id: source-ilboursa-atb-profile
   title: "ARAB TUNISIAN BANK, chiffres cles et profil financier de la societe (actionnaires: Arab Bank PLC 64,24 %, Zerzeri 5,32 %; DG: Riadh Hajjej)"
@@ -10777,8 +10743,6 @@
   url: https://www.ilboursa.com/marches/societe/ATB
   tier: 3
   lang: fr
-  sources:
-    - source-ilboursa-atb-profile
   note: Profil consulte 2026-08-11. ATB hors perimetre des 6 banques de la mission; enregistre pour le futur pass societes.
 - id: source-businessnews-zitouna-shareholders-2009
   title: "Tunisie - Banque Zitouna : liste des actionnaires et composition du conseil d'administration (AGC constitutive, 21/10/2009, Gammarth)"
@@ -10788,8 +10752,6 @@
   archive_url: https://web.archive.org/web/20180714221957/http://www.businessnews.com.tn/tunisie-banque-zitouna--liste-des-actionnaires-et-composition-du-conseil-dadministration,520,19168,1
   tier: 4
   lang: fr
-  sources:
-    - source-businessnews-zitouna-shareholders-2009
   note: "Communique de l'AGC du 21/10/2009: capital initial 30 MD; Groupe Princesse EL MATERI Holding fondateur et actionnaire majoritaire (>51%); groupes La Carte, Poulina, TTS, Delice-Danone, UTIC, Bouchamaoui; premier conseil (El Materi president; DG Mahfoudh Barouni; DGA Walid Koubaa). C'est le document contemporain qui nomme le holding d'El Materi 'Princesse'."
 - id: source-africareport-cho-arrest-2024
   title: Tunisian olive oil sector rocked by CHO Group CEO's arrest (Mathieu Galtier)
@@ -10798,8 +10760,6 @@
   url: https://www.theafricareport.com/367674/tunisian-olive-oil-sector-rocked-by-cho-group-ceos-arrest/
   tier: 3
   lang: en
-  sources:
-    - source-africareport-cho-arrest-2024
   note: "Arrest of CHO Group CEO Abdelaziz Makhloufi on 30 October 2024 after President Saied's visit to Henchir Chaal (5,000-ha site, property of the Tunisian Republic); CHO created in 1996, exports to 42 countries, more than half of Tunisia's packaged oil exports, head office in Sfax, refuses to reveal turnover. Meme contenu qu'une proposition 08-08 non adoptee (id 08-08: africareport-makhloufi-arrest-2024) - dedup a l'import."
 - id: source-bfmtv-cho-detention-2024
   title: "Huile d'olive: le patron du groupe tunisien CHO (Terra Delyssa) place en detention pour corruption"
@@ -10808,8 +10768,6 @@
   url: https://www.bfmtv.com/economie/entreprises/huile-d-olive-le-patron-du-groupe-tunisien-cho-terra-delyssa-place-en-detention-pour-corruption_AD-202411110659.html
   tier: 3
   lang: fr
-  sources:
-    - source-bfmtv-cho-detention-2024
   note: "Mandat de depot emis par un procureur du pole economique et financier de Tunis contre Abdelaziz Makhloufi (interpelle le 2 novembre 2024); groupe CHO premier exportateur tunisien d'huile d'olive, marques Terra Delyssa et Moresh; president du Club Sportif Sfaxien; affaire Henchir Chaal (420.000 ha, ~360.000 en oliviers); 15 personnes poursuivies dont un ancien ministre de l'Agriculture. Meme contenu qu'une proposition 08-08 non adoptee (id 08-08: bfmtv-makhloufi-detention-2024) - dedup a l'import."
 - id: source-wmc-scit-difficulte-2024
   title: "Tunis Sports City : Le megaprojet en difficulte, vers un nouveau report ? (Abou Sarra)"
@@ -10818,8 +10776,6 @@
   url: https://www.webmanagercenter.com/2024/03/31/521941/tunis-sports-city-le-megaprojet-en-difficulte-vers-un-nouveau-report/
   tier: 4
   lang: fr
-  sources:
-    - source-wmc-scit-difficulte-2024
   note: "Texte integral relu ce run: projet du magnat emirati Aboukhater en difficulte; Afif Bejaoui 'president executif de Tunis sport city Sport'; conference de presse de relance annulee 22/01/2024; audiences des ministres avec l'ambassadrice des EAU (19/01/2024 et 07/03/2024); Hatem El Euchi defere le 11/01/2024 devant la chambre correctionnelle du pole (plainte Raqabah du 17/08/2022, conflit d'interets: avocat de SCIT contre Al Bouhaira/SPLT); vente des 252 ha par Al Bouheira invest en 2007 a 70 TND/m2 (vs >3.500 TND/m2 actuellement). Meme contenu qu'une proposition 08-08 non adoptee (id 08-08: wmc-tunis-sports-city-difficulte-2024) - dedup a l'import."
 - id: source-zawya-bukhatir-scit-2022
   title: Tunis Sports City, the Emirati BUKHATIR Group's mega project will build up a new city on the banks of the Lac de Tunis (communique)
@@ -10828,8 +10784,6 @@
   url: https://www.zawya.com/en/press-release/companies-news/tunis-sports-city-the-emirati-bukhatir-groups-mega-project-will-build-up-a-new-city-on-the-banks-of-the-lac-de-tunis-i6232ck4
   tier: 4
   lang: en
-  sources:
-    - source-zawya-bukhatir-scit-2022
   note: "Salah A. Bukhatir chairman; Afif Bejaoui nouveau CEO de la filiale tunisienne a compter du 1er fevrier 2022; 250 ha; stade, quatre academies sportives, golf PGA, six hotels, parc central de 20 ha. La page a renvoye une erreur 400 ce run (2026-08-11); les faits cites proviennent de la lecture 08-08 (proposition 08-08 non adoptee, id: zawya-bukhatir-2022) - dedup et re-verification a l'import."
 - id: source-arabi21-tbna-july2026
   title: ?????? ??????.. ???? ???? ??????? ???????? ?? ?????? ????? ???? ???? ?????? ?????
@@ -10838,8 +10792,6 @@
   url: https://arabi21.com/stories/t/199854/0/????-????
   tier: 4
   lang: ar
-  sources:
-    - source-arabi21-tbna-july2026
   note: "La TBNA annonce son intention d'engager des actions en justice devant les tribunaux europeens contre des personnalites liees au pouvoir pour 'extorsion financiere systematique' et abus d'influence contre des investisseurs tunisiens a l'etranger (Nawfel Saied, frere du president, et Atika Chebil, soeur de l'epouse du president). Meme contenu qu'une proposition 08-08 non adoptee (id 08-08: arabi21-tbna-2026) - dedup."
 - id: source-alestiklal-ja-clans-repub
   title: ????? ???? ????? ??? ???? ???? ????? ????? ??????? ?? ????? ????? ?? ??? (republication arabe de l'enquete Jeune Afrique du 10/10/2024)
@@ -10848,8 +10800,6 @@
   url: https://www.alestiklal.net/ar/article/tzayd-nfwth-aaelh-qys-sayd-ythyr-mkhawf-alshab-altwnsy-mn-tkrar-nmwthj-bn-aly
   tier: 4
   lang: ar
-  sources:
-    - source-alestiklal-ja-clans-repub
   note: "Detail de l'enquete JA (corps payant): le fils d'Atika Chebil, Ahmed Ben Salah, a ouvert un showroom automobile en juillet 2024 (region de Sousse); membres de la famille (soeur Sara, frere Fakhri, beaux-freres Omar Kassim et Lotfi Ben Salah) actifs dans les affaires et le sport. La page a renvoye 500 ce run; contenu lu le 08-08 (proposition 08-08 non adoptee, id: alestiklal-ja-clans-ar) - dedup et re-verification a l'import."
   tier_note: Republication d'un contenu tier-3 (JA); cote 4 car non verifie a la source ce run.
 - id: source-ja-zitouna-majda-2025
@@ -10859,8 +10809,6 @@
   url: https://www.jeuneafrique.com/1686009/economie-entreprises/tunisie-pourquoi-le-holding-de-lemir-du-qatar-fait-le-menage-au-sein-de-zitouna-bank/
   tier: 3
   lang: fr
-  sources:
-    - source-ja-zitouna-majda-2025
   note: Zitouna 'entierement detenue par Majda Group, le gerant des interets des Al Thani, la famille royale au Qatar'; Nabil el-Madani demis, Mounir Fakhet DG provisoire le 25/04/2025; scandale des creances douteuses du secteur oleicole. Cite aussi 'BH Bank et Zitouna, victimes collaterales du scandale de l'huile d'olive' (24/04/2025) - canal documente entre le dossier CHO/Makhloufi et le systeme bancaire.
 - id: worldbank-contacts-hq
   title: World Bank Group — contacts page (headquarters address)

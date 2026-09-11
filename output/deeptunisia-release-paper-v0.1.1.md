@@ -2,7 +2,7 @@
 
 ## Build-gate enforcement of evidential standards in an evidence-graded historical knowledge graph
 
-*Adala, Y. — DeepTunisia Project, deeptunisia.org*
+*DeepOntology Collective & DeepEpisteme Research Group, deeptunisia.org · deepontology.org*
 
 **Release V0.1.1 — corrections release.** This release supersedes V0.1 and exists because a maintainer review (12 August 2026) found that V0.1, in a few places, violated its own thesis: it stated claims about the dataset that the build it describes already contradicted, and it stated mechanism claims that were not true of the shipped code. V0.1 remains available unmodified for citation continuity; the corrections are itemised in "Corrections in this release" below. Every dataset number in this file is now a `&lt;!--stat:key--&gt;value&lt;!--/stat--&gt;` tag rewritten by the build at every `npm run data`, and a test gate (`scripts/test-paper.ts`) fails the suite if any of them drifts. The citable, frozen form of a release is the accompanying PDF, exported from a specific commit; this markdown file is the live form, tracking the graph.
 
