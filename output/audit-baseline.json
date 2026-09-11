@@ -1,13 +1,13 @@
 {
   "schemaVersion": 1,
-  "generated": "2026-09-11T07:03:11.409Z",
+  "generated": "2026-09-11T17:50:34.419Z",
   "node": "v26.7.0",
-  "commit": "4ba77cd",
+  "commit": "2ccc30d",
   "dataset": {
     "path": "src/generated/dataset.json",
     "counts": {
-      "sources": 1253,
-      "sourcesCited": 1215,
+      "sources": 1256,
+      "sourcesCited": 1218,
       "institutions": 207,
       "roles": 118,
       "people": 450,
@@ -27,28 +27,104 @@
       "places": 44
     },
     "review": {
-      "reviewed": 38,
-      "reviewable": 896,
-      "byRisk": {
+      "reviewed": 46,
+      "reviewable": 1715,
+      "flags": {
         "unsubstantiated": {
-          "reviewed": 12,
-          "total": 12
+          "reviewed": 16,
+          "total": 19
         },
         "attributed": {
-          "reviewed": 3,
-          "total": 133
+          "reviewed": 19,
+          "total": 307
         },
         "inferred": {
-          "reviewed": 0,
-          "total": 0
+          "reviewed": 2,
+          "total": 32
         },
         "reported": {
-          "reviewed": 19,
-          "total": 566
+          "reviewed": 20,
+          "total": 1161
         },
         "documented": {
           "reviewed": 8,
-          "total": 195
+          "total": 321
+        }
+      },
+      "byKind": {
+        "institution": {
+          "reviewed": 2,
+          "total": 207
+        },
+        "person": {
+          "reviewed": 2,
+          "total": 450
+        },
+        "position": {
+          "reviewed": 29,
+          "total": 422
+        },
+        "relationship": {
+          "reviewed": 8,
+          "total": 362
+        },
+        "event": {
+          "reviewed": 1,
+          "total": 112
+        },
+        "agreement": {
+          "reviewed": 0,
+          "total": 23
+        },
+        "world-claim": {
+          "reviewed": 4,
+          "total": 10
+        },
+        "company": {
+          "reviewed": 0,
+          "total": 25
+        },
+        "contract": {
+          "reviewed": 0,
+          "total": 15
+        },
+        "licence": {
+          "reviewed": 0,
+          "total": 11
+        },
+        "declaration": {
+          "reviewed": 0,
+          "total": 9
+        },
+        "education": {
+          "reviewed": 0,
+          "total": 25
+        },
+        "place": {
+          "reviewed": 0,
+          "total": 44
+        }
+      },
+      "byBasis": {
+        "unknown": {
+          "reviewed": 0,
+          "total": 182
+        },
+        "inferred": {
+          "reviewed": 2,
+          "total": 32
+        },
+        "unsubstantiated": {
+          "reviewed": 16,
+          "total": 19
+        },
+        "documented": {
+          "reviewed": 8,
+          "total": 321
+        },
+        "reported": {
+          "reviewed": 20,
+          "total": 1161
         }
       }
     },
