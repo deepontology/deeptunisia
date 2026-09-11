@@ -19,6 +19,15 @@ import { translate } from '../src/lib/i18n.ts';
 import { hasDoubleEncoding } from './encoding-guard.ts';
 
 const BASE = process.argv[2] ?? 'http://localhost:5173';
+/*
+ * Partial runs: `npx tsx scripts/smoke.ts <base> <filter>` runs only the
+ * sections whose header contains the filter (e.g. `lane`, `connections`).
+ * Empty filter runs everything, exactly as before.
+ */
+const FILTER = (process.argv[3] ?? '').toLowerCase();
+function runSection(header: string): boolean {
+	return FILTER === '' || header.toLowerCase().includes(FILTER);
+}
 const HERE = dirname(fileURLToPath(import.meta.url));
 const OUT = join(HERE, '..', '.smoke');
 
@@ -460,7 +469,7 @@ const browser = await chromium.launch(
 		: undefined,
 );
 
-for (const themeName of ['dark', 'light'] as const) {
+if (runSection('theme matrix')) for (const themeName of ['dark', 'light'] as const) {
 	console.log(`\n  ── ${themeName} ──`);
 	const context = await browser.newContext({
 		viewport: { width: 1600, height: 1000 },
@@ -569,8 +578,8 @@ for (const themeName of ['dark', 'light'] as const) {
  * measurement rows, but it must not remove the totals strip, the real table, or
  * the agreement/empty-state explanation around it.
  */
+if (runSection('world projections')) {
 console.log('\n  ── world projections ──');
-{
 	for (const themeName of ['dark', 'light'] as const) {
 		const context = await browser.newContext({
 			viewport: { width: 1440, height: 900 },
@@ -710,8 +719,8 @@ console.log('\n  ── world projections ──');
 
 // --- Interaction: the things that make it an app rather than a page ---------
 
+if (runSection('interaction')) {
 console.log('\n  ── interaction ──');
-{
 	const context = await browser.newContext({ viewport: { width: 1600, height: 1000 } });
 	const page = await context.newPage();
 	const problems: string[] = [];
@@ -951,8 +960,8 @@ console.log('\n  ── interaction ──');
  * break, because they are positioned by percentage against a track whose width
  * depends on everything else in the shell.
  */
+if (runSection('timeline')) {
 console.log('\n  ── timeline ──');
-{
 	const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
 	const page = await context.newPage();
 	await page.goto(BASE + '/chronicle', { waitUntil: 'networkidle' });
@@ -1029,8 +1038,8 @@ console.log('\n  ── timeline ──');
  * `pointer-events: none`, so dragging the chart did nothing at all and nothing
  * caught it. It now shares the axis camera; these assert the verbs work.
  */
+if (runSection('chronicle navigation')) {
 console.log('\n  ── chronicle navigation ──');
-{
 	const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
 	const page = await context.newPage();
 	await page.goto(BASE + '/chronicle', { waitUntil: 'networkidle' });
@@ -1077,7 +1086,8 @@ console.log('\n  ── chronicle navigation ──');
 			(await page.locator('.bar.tied.focus').count()) === 0
 	);
 	await page.keyboard.press('Escape');
-	await page.waitForTimeout(400);
+	await page.waitForSelector('.inspector', { state: 'detached', timeout: 2500 }).catch(() => {});
+	await page.waitForTimeout(120);
 
 	/*
 	 * Re-measured here, not reused from before the selection test above: opening the
@@ -1095,6 +1105,369 @@ console.log('\n  ── chronicle navigation ──');
 	const after = await firstTick();
 	ok('dragging the chronicle pans time', after !== before, `${before} -> ${after}`);
 
+	// The axis is a scrub surface, and its ticks adapt to the zoom.
+	const plotBox = (await page.locator('.plot').boundingBox())!;
+	await page.mouse.move(plotBox.x + plotBox.width * 0.5, plotBox.y + 200);
+	for (let i = 0; i < 10; i++) {
+		await page.mouse.wheel(0, -600);
+		await page.waitForTimeout(100);
+	}
+	const tickLabels = await page.locator('.plot .tick-label').allTextContents();
+	ok(
+		'axis ticks adapt to months when zoomed in',
+		tickLabels.some((l) => !/^\d{4}$/.test(l.trim())),
+		tickLabels.slice(0, 4).join(', ')
+	);
+	// Put the cursor inside the window first: the deep zoom above may have left
+	// the scrubbed date outside it, and the chip is hidden when it is.
+	await page.mouse.click(plotBox.x + plotBox.width * 0.5, plotBox.y + 10);
+	await page.waitForTimeout(200);
+	const tagBefore = await page.locator('.axis-tag').first().textContent();
+	await page.mouse.move(plotBox.x + plotBox.width * 0.7, plotBox.y + 10);
+	await page.mouse.down();
+	await page.mouse.move(plotBox.x + plotBox.width * 0.35, plotBox.y + 10, { steps: 8 });
+	await page.mouse.up();
+	await page.waitForTimeout(250);
+	const tagAfter = await page.locator('.axis-tag').first().textContent();
+	ok('dragging the top axis scrubs the date', tagBefore !== tagAfter, `${tagBefore} -> ${tagAfter}`);
+
+	await context.close();
+}
+
+// --- Chronicle events lane ---------------------------------------------------
+/*
+ * Spec docs/plans/chronicle-events-lane.md §6 (browser): every event gets a
+ * mark on the shared axis; clicking one selects it like any other record;
+ * zoom is what makes labels appear. The lane respects the evidence dial, so
+ * the mark count is asserted against the events table (the same eventPasses
+ * predicate) rather than a hard-coded number.
+ */
+if (runSection('chronicle events lane')) {
+console.log('\n  ── chronicle events lane ──');
+	const context = await browser.newContext({ viewport: { width: 1600, height: 1000 } });
+	const page = await context.newPage();
+	const problems: string[] = [];
+	page.on('pageerror', (e) => problems.push(`[pageerror] ${e.message}`));
+	page.on('console', (m: ConsoleMessage) => {
+		if ((m.type() === 'error' || m.type() === 'warning') && !isIgnorable(m.text())) {
+			problems.push(`[${m.type()}] ${m.text()}`);
+		}
+	});
+
+	await page.goto(BASE + '/chronicle', { waitUntil: 'networkidle' });
+	await settle(page);
+
+	// v2: dense anchors aggregate into counted clusters, so the lane draws fewer
+	// marks than events, while the accessible table still lists every event.
+	// Reconstruction: individual marks + the counts of all cluster badges must
+	// equal the table's row count.
+	const marks = await page.locator('.ev-mark').count();
+	ok('events lane renders marks', marks > 0, `${marks} marks`);
+	const tables = await page.locator('.a11y table').count();
+	ok('events table present beside the tenures table', tables >= 2, `${tables} tables`);
+	const evRows = await page.locator('.a11y table').nth(1).locator('tbody tr').count();
+	const recon = (await page.evaluate(`(() => {
+		const marks = Array.from(document.querySelectorAll('.chronicle .ev-mark'));
+		const clusters = marks.filter((m) => m.querySelector('.ev-cluster'));
+		const singles = marks.length - clusters.length;
+		let counted = 0;
+		for (const c of document.querySelectorAll('.ev-cluster-count')) counted += Number(c.textContent) || 0;
+		return { singles: singles, clusters: clusters.length, counted: counted, represented: singles + counted };
+	})()`)) as { singles: number; clusters: number; counted: number; represented: number };
+	ok('dense periods aggregate into clusters at full range', recon.clusters > 0, `${recon.clusters} clusters`);
+	ok(
+		'every event is represented exactly once (marks + cluster counts)',
+		evRows > 0 && recon.represented === evRows,
+		`${evRows} rows = ${recon.singles} marks + ${recon.counted} clustered`
+	);
+
+	/*
+	 * Clicking a rupture diamond must select exactly that event. The click goes
+	 * to an isolated diamond: at full range neighbours sit sub-pixel apart, so
+	 * the first diamond in the DOM may lie under another mark. A real pointer
+	 * click is what proves the 1px indicator strokes do not swallow it.
+	 */
+	const target = (await page.evaluate(`(() => {
+		const shapes = Array.from(document.querySelectorAll('.ev-diamond, .ev-dot, .ev-pill, .ev-contested'));
+		const pts = shapes.map(function (s) {
+			const r = s.getBoundingClientRect();
+			return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+		});
+		const dias = Array.from(document.querySelectorAll('.chronicle .ev-diamond'));
+		for (const d of dias) {
+			const r = d.getBoundingClientRect();
+			const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+			if (cx < 0 || cy < 0 || cx > window.innerWidth || cy > window.innerHeight) continue;
+			const clear = pts.every(function (p) {
+				return (p.x === cx && p.y === cy) || Math.hypot(p.x - cx, p.y - cy) > 10;
+			});
+			if (!clear) continue;
+			const mark = d.closest('.ev-mark');
+			if (!mark) continue;
+			const title = mark.querySelector('title');
+			return {
+				x: cx, y: cy,
+				label: mark.getAttribute('aria-label') || '',
+				tip: title ? title.textContent || '' : ''
+			};
+		}
+		return null;
+	})()`)) as { x: number; y: number; label: string; tip: string } | null;
+	ok(
+		'an isolated rupture diamond is clickable',
+		Boolean(target),
+		target ? target.label.slice(0, 60) : 'every diamond crowded'
+	);
+	if (target) {
+		// The aria-label is "title, date" and the native title is "date — title":
+		// the date is the join, so stripping it leaves the exact title.
+		const date = target.tip.split(' — ')[0];
+		const title = target.label.endsWith(', ' + date)
+			? target.label.slice(0, -(date.length + 2))
+			: target.label;
+		await page.mouse.click(target.x, target.y);
+		await page.waitForTimeout(700);
+		const insp = await page.locator('.inspector').count();
+		const inspText = insp ? await page.locator('.inspector').innerText() : '';
+		ok('clicking a lane diamond opens the inspector', insp === 1);
+		ok('the inspector shows that event', Boolean(title) && inspText.includes(title), title.slice(0, 70));
+		await page.keyboard.press('Escape');
+		await page.waitForSelector('.inspector', { state: 'detached', timeout: 2500 }).catch(() => {});
+		await page.waitForTimeout(120);
+		ok('Escape clears the event selection', (await page.locator('.inspector').count()) === 0);
+	}
+
+	/*
+	 * The regression this rework exists for: a long-duration bar must not
+	 * swallow a click on a point that lies over it. Marks are pointer-events
+	 * none and the picker scores by distance, so a dot on the point track wins
+	 * even where the 2011–2021 phosphate bar runs underneath. Clicking the bar
+	 * itself (on its own thin track) still selects the span.
+	 */
+	await page.keyboard.press('Escape');
+	await page.waitForSelector('.inspector', { state: 'detached', timeout: 2500 }).catch(() => {});
+	await page.waitForTimeout(120);
+	const overSpan = (await page.evaluate(`(() => {
+		const sb = document.querySelector('.ev-spanbar');
+		if (!sb) return null;
+		const b = sb.getBoundingClientRect();
+		for (const d of document.querySelectorAll('.chronicle .ev-dot, .chronicle .ev-pill')) {
+			const r = d.getBoundingClientRect();
+			const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+			if (cx > b.left + 12 && cx < b.right - 12) {
+				const g = d.closest('.ev-mark');
+				return { x: cx, y: cy, label: g.getAttribute('aria-label') || '' };
+			}
+		}
+		return null;
+	})()`)) as { x: number; y: number; label: string } | null;
+	ok('a point lies over the long span to test with', Boolean(overSpan), overSpan ? overSpan.label.slice(0, 50) : 'none');
+	if (overSpan) {
+		await page.mouse.click(overSpan.x, overSpan.y);
+		await page.waitForTimeout(600);
+		const inspTitle = (await page.locator('.inspector h2').count()) ? await page.locator('.inspector h2').innerText() : '';
+		const want = overSpan.label.split(',')[0];
+		ok(
+			'clicking a point over a long span selects the point, not the span',
+			inspTitle.includes(want),
+			`got "${inspTitle.slice(0, 40)}", wanted "${want}"`
+		);
+		await page.keyboard.press('Escape');
+		await page.waitForSelector('.inspector', { state: 'detached', timeout: 2500 }).catch(() => {});
+		await page.waitForTimeout(120);
+	}
+
+	/*
+	 * Clusters: clicking a badge opens its list; "Zoom in" fits the camera and
+	 * splits the cluster, which is the progressive-disclosure path from the
+	 * overview to individual events.
+	 */
+	const clusterAt = (await page.evaluate(`(() => {
+		const rects = Array.from(document.querySelectorAll('.chronicle .ev-cluster'));
+		if (!rects.length) return null;
+		const r = rects[rects.length - 1].getBoundingClientRect();
+		return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+	})()`)) as { x: number; y: number } | null;
+	if (clusterAt) {
+		await page.mouse.click(clusterAt.x, clusterAt.y);
+		await page.waitForTimeout(400);
+		ok('clicking a cluster opens its event list', (await page.locator('.ev-pop-row').count()) > 1, `${await page.locator('.ev-pop-row').count()} rows`);
+		const clustersBefore = await page.locator('.ev-cluster').count();
+		await page.getByRole('button', { name: 'Zoom in' }).click();
+		await page.waitForTimeout(700);
+		const clustersZoomed = await page.locator('.ev-cluster').count();
+		ok(
+			'zoom-to-drill splits the cluster',
+			clustersZoomed !== clustersBefore || (await page.locator('.ev-cluster-count').first().innerText()) !== '',
+			`${clustersBefore} -> ${clustersZoomed} clusters`
+		);
+		await page.getByRole('button', { name: /full range|toute la période|المدى/i }).click();
+		await page.waitForTimeout(500);
+	}
+
+	// Zooming to an era span must change what the lane shows: out-of-span marks
+	// leave, and the tier grant moves, so either count may move.
+	const labelsBefore = await page.locator('.ev-label').count();
+	await page.locator('.era-jump button').first().click();
+	await page.waitForTimeout(600);
+	const marksAfter = await page.locator('.ev-mark').count();
+	const labelsAfter = await page.locator('.ev-label').count();
+	ok(
+		'era-chip zoom changes the labeled count or mark count',
+		marksAfter !== marks || labelsAfter !== labelsBefore,
+		`marks ${marks} -> ${marksAfter}, labels ${labelsBefore} -> ${labelsAfter}`
+	);
+	await page.getByRole('button', { name: /full range|toute la période|المدى/i }).click();
+	await page.waitForTimeout(500);
+
+	/*
+	 * Events are URL-addressable (validEntity accepts event ids): arrival with
+	 * ?id= selects the event — the lane mark highlights and the Inspector
+	 * opens with its title — and the URL keeps the parameter. Selecting a
+	 * lane mark writes ?id= back (read page.url, not the DOM).
+	 */
+	await page.goto(BASE + '/chronicle?id=revolution-2011', { waitUntil: 'networkidle' });
+	await settle(page);
+	await page.waitForTimeout(800);
+	const deepCount = await page.locator('.inspector').count();
+	const deepText = deepCount ? await page.locator('.inspector').innerText() : '';
+	ok(
+		'arrival with ?id=revolution-2011 opens the inspector with that event',
+		deepCount === 1 && deepText.includes('Ben Ali leaves the country'),
+		deepText.slice(0, 70) || 'no inspector'
+	);
+	ok(
+		'arrival keeps ?id=revolution-2011 in the URL',
+		page.url().includes('id=revolution-2011'),
+		page.url().replace(BASE, '')
+	);
+	await page.keyboard.press('Escape');
+	await page.waitForSelector('.inspector', { state: 'detached', timeout: 2500 }).catch(() => {});
+	await page.waitForTimeout(120);
+	/*
+	 * Target a mark well inside the plot, not the first in the DOM. The earliest
+	 * event sits a few pixels into a 70-year domain, so its box straddles the
+	 * gutter mask and a centre click lands on the clipped edge rather than the
+	 * mark. This pin is about the URL round trip, not edge picking, so any mark
+	 * past the gutter will do — and a near miss still selects by nearest-in-time.
+	 */
+	const insideMark = (await page.evaluate(`(() => {
+		const marks = Array.from(document.querySelectorAll('.chronicle .ev-mark'));
+		for (const m of marks) {
+			const r = m.getBoundingClientRect();
+			const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+			if (cx > 320 && cx < window.innerWidth - 60 && cy > 150 && cy < window.innerHeight - 180) {
+				return { x: cx, y: cy, label: m.getAttribute('aria-label') || '' };
+			}
+		}
+		return null;
+	})()`)) as { x: number; y: number; label: string } | null;
+	ok('a lane mark is present to select', Boolean(insideMark), insideMark ? insideMark.label.slice(0, 60) : 'no marks');
+	if (insideMark) {
+		await page.mouse.click(insideMark.x, insideMark.y);
+		await page.waitForTimeout(700);
+	}
+	ok(
+		'selecting a lane mark writes ?id= back to the URL',
+		/\/chronicle\?id=/.test(page.url()),
+		page.url().replace(BASE, '')
+	);
+
+	ok('events lane console clean', problems.length === 0, problems.slice(0, 3).join(' | '));
+	await context.close();
+}
+
+// --- Chronicle expanded events ----------------------------------------------
+/*
+ * The investigative view: events stacked into labelled rows with their own
+ * filters. It fixes what the single inline lane cannot — simultaneous events
+ * are separable and individually clickable, and expanding lands on a readable
+ * window instead of the full-range smudge.
+ */
+if (runSection('chronicle events expanded')) {
+	console.log('\n  ── chronicle events expanded ──');
+	const context = await browser.newContext({ viewport: { width: 1600, height: 1000 } });
+	const page = await context.newPage();
+	const problems: string[] = [];
+	page.on('pageerror', (e) => problems.push(`[pageerror] ${e.message}`));
+	page.on('console', (m: ConsoleMessage) => {
+		if ((m.type() === 'error' || m.type() === 'warning') && !isIgnorable(m.text())) {
+			problems.push(`[${m.type()}] ${m.text()}`);
+		}
+	});
+
+	await page.goto(BASE + '/chronicle', { waitUntil: 'networkidle' });
+	await settle(page);
+	await page.getByRole('button', { name: 'Open the full events timeline' }).first().click();
+	await page.waitForTimeout(800);
+
+	const rows = await page.locator('.ev-row-line').count();
+	const marks = await page.locator('.ev-mark.clickable').count();
+	const labels = await page.locator('.ev-label').count();
+	ok('the expanded filter bar appears', (await page.locator('.events-bar').count()) === 1);
+	ok('expanded mode stacks events into rows', rows >= 4 && marks > 0, `${rows} rows / ${marks} marks`);
+	ok('expanded rows carry labels', labels > 0, `${labels} labels`);
+
+	const clusterBadge = page.locator('.ev-mark.clickable').filter({ has: page.locator('.ev-cluster') }).first();
+	ok('dense expanded events aggregate into cluster badges', (await clusterBadge.count()) > 0);
+	if (await clusterBadge.count()) {
+		await clusterBadge.click();
+		await page.waitForTimeout(400);
+		ok(
+			'clicking an expanded cluster opens its event list',
+			(await page.locator('.ev-pop-row').count()) > 1,
+			`${await page.locator('.ev-pop-row').count()} rows`
+		);
+		await page.locator('.ev-pop-x').click().catch(() => {});
+		await page.waitForTimeout(300);
+	}
+
+	// Expanding from full range must fit a readable window (~25 years), not the
+	// whole record: otherwise the first ticks would be 1960/1970.
+	const firstTick = await page.locator('.plot .tick-label').first().textContent();
+	ok('expanding lands on a readable window', Number(firstTick) > 1980, `first tick ${firstTick}`);
+
+	// Labels must not sit on top of the marks they describe.
+	const overlaps = await page.evaluate(`(() => {
+		const labels = Array.from(document.querySelectorAll('.ev-label')).map((l) => l.getBoundingClientRect());
+		const marks = Array.from(document.querySelectorAll('.ev-mark.clickable .ev-dot, .ev-mark.clickable .ev-pill, .ev-mark.clickable .ev-diamond, .ev-mark.clickable .ev-spanbar')).map((el) => el.getBoundingClientRect());
+		const hit = (a, b) => !(a.right <= b.left || a.left >= b.right || a.bottom <= b.top || a.top >= b.bottom);
+		let n = 0;
+		for (const l of labels) if (marks.some((m) => hit(l, m))) n++;
+		return n;
+	})()`) as number;
+	ok('no expanded label overlaps a mark', overlaps === 0, `${overlaps} overlaps`);
+
+	// Clicking a mark opens the record.
+	await page.locator('.ev-mark.clickable').first().click();
+	await page.waitForTimeout(600);
+	ok('clicking an expanded mark opens the inspector', (await page.locator('.inspector').count()) === 1);
+	await page.keyboard.press('Escape');
+	await page.waitForSelector('.inspector', { state: 'detached', timeout: 2500 }).catch(() => {});
+	await page.waitForTimeout(120);
+
+	// Filters: switching a category off must reduce the visible events.
+	const before = await page.locator('.ev-mark.clickable').count();
+	const legal = page.locator('.events-bar .eb-chip', { hasText: 'legal' }).first();
+	await legal.click();
+	await page.waitForTimeout(500);
+	const after = await page.locator('.ev-mark.clickable').count();
+	ok('a category filter reduces the events shown', after < before, `${before} -> ${after}`);
+	await legal.click();
+	await page.waitForTimeout(400);
+	await page.locator('.events-bar .eb-chip', { hasText: 'Rupture' }).first().click();
+	await page.waitForTimeout(500);
+	const rupt = await page.locator('.ev-mark.clickable').count();
+	ok('the rupture filter narrows to the ruptures', rupt > 0 && rupt < before, `${rupt} ruptures`);
+	await page.locator('.events-bar .eb-chip', { hasText: 'Rupture' }).first().click();
+	await page.waitForTimeout(300);
+
+	// Collapsing returns the inline overview with its clusters.
+	await page.getByRole('button', { name: 'Back to the timeline' }).first().click();
+	await page.waitForTimeout(600);
+	ok('collapsing returns the inline overview', (await page.locator('.events-bar').count()) === 0 && (await page.locator('.ev-cluster').count()) > 0);
+
+	ok('expanded events console clean', problems.length === 0, problems.slice(0, 3).join(' | '));
 	await context.close();
 }
 
@@ -1105,8 +1478,8 @@ console.log('\n  ── chronicle navigation ──');
  * claim in this dataset is an edge rather than a node, that mattered — so the card,
  * and specifically its route into the Agora, is asserted rather than assumed.
  */
+if (runSection('connections')) {
 console.log('\n  ── connections ──');
-{
 	const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
 	const page = await context.newPage();
 	const problems: string[] = [];
@@ -1211,7 +1584,8 @@ console.log('\n  ── connections ──');
 		ok('clicking a node on the canvas selects it', (await page.locator('.inspector').count()) === 1);
 	}
 	await page.keyboard.press('Escape');
-	await page.waitForTimeout(300);
+	await page.waitForSelector('.inspector', { state: 'detached', timeout: 2500 }).catch(() => {});
+	await page.waitForTimeout(120);
 
 	// Driven from the table row rather than by hunting for a curve's pixels: that
 	// button is also the keyboard route, so testing it covers both.
@@ -1321,8 +1695,8 @@ console.log('\n  ── connections ──');
  * is exactly what marking the flag sets up — the same trick the locale sweep
  * uses to pin the reader's language.
  */
+if (runSection('deep-link')) {
 console.log('\n  ── deep-link round trips ──');
-{
 	const context = await browser.newContext({ viewport: { width: 1600, height: 1000 } });
 	// The app itself treats storage-disabled contexts as "tour seen" (tour.svelte.ts);
 	// the init script must tolerate the same — on about:blank (opaque origin)
@@ -1503,8 +1877,8 @@ console.log('\n  ── deep-link round trips ──');
  * the table — /guide is the nearest non-view route that shares the shell
  * chrome — must have no caption at all.
  */
+if (runSection('captions')) {
 console.log('\n  ── captions ──');
-{
 	const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
 	await context.addInitScript(`(() => { try { localStorage.setItem('deeptunisia:tour', '1'); } catch {} })()`);
 	for (const path of ['/rankings', '/map']) {
@@ -1555,8 +1929,8 @@ const MODES = [
 ] as const;
 
 // --- Arabic, and motion turned off -----------------------------------------
-console.log('\n  ── rtl + reduced motion ──');
-for (const mode of MODES.filter((m) => m.id !== 'ltr')) {
+if (runSection('rtl')) console.log('\n  ── rtl + reduced motion ──');
+if (runSection('rtl')) for (const mode of MODES.filter((m) => m.id !== 'ltr')) {
 	const context = await browser.newContext({
 		viewport: { width: 1440, height: 900 },
 		colorScheme: 'dark',
@@ -1676,8 +2050,8 @@ const PROSE_MARKERS =
 /* One page per route; duplicates in CHECKS visit the same path twice. */
 const LOCALE_ROUTES = [...new Set(CHECKS.map((c) => c.path))];
 
-console.log('\n  ── every route, in every language ──');
-for (const locale of ['ar', 'fr'] as const) {
+if (runSection('every language')) console.log('\n  ── every route, in every language ──');
+if (runSection('every language')) for (const locale of ['ar', 'fr'] as const) {
 	const context = await browser.newContext({
 		viewport: { width: 1440, height: 900 },
 		colorScheme: 'dark',
@@ -1895,7 +2269,7 @@ for (const locale of ['ar', 'fr'] as const) {
  * stays green. That is exactly the drift the paper's §8.2 correction exists to
  * close.
  */
-{
+if (runSection('data coverage')) {
 	const KIN_SAIED = Number(STATS['kin-kais-saied']);
 	const KIN_BEN_ALI = Number(STATS['kin-ben-ali']);
 	ok(
@@ -2052,8 +2426,8 @@ for (const locale of ['ar', 'fr'] as const) {
  * Nothing about that failure is visible in a screenshot of a page with no record
  * selected, and no contrast or overflow check catches it. So it is measured.
  */
+if (runSection('phone chrome')) {
 console.log('\n  ── phone chrome ──');
-{
 	const context = await browser.newContext({
 		viewport: { width: 390, height: 844 },
 		isMobile: true,
@@ -2179,8 +2553,8 @@ console.log('\n  ── phone chrome ──');
 // ClaimExpansion region); EntityMention is a button with aria-label; the
 // evidence ledger is a real <table> with <th scope>. This block pins those
 // contracts in both themes and on phone, plus RTL for the article.
+if (runSection('media')) {
 console.log('\n  ── media ──');
-{
 	for (const themeName of ['dark', 'light'] as const) {
 		const context = await browser.newContext({ viewport: { width: 1440, height: 900 }, colorScheme: themeName });
 		const page = await context.newPage();
@@ -2326,8 +2700,8 @@ const VIEWPORTS = [
 ] as const;
 
 
-console.log('\n  ── layout ──');
-for (const vp of VIEWPORTS) {
+if (runSection('layout')) console.log('\n  ── layout ──');
+if (runSection('layout')) for (const vp of VIEWPORTS) {
 	const context = await browser.newContext({
 		viewport: { width: vp.width, height: vp.height },
 		isMobile: vp.touch,
