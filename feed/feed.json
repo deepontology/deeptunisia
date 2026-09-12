@@ -3,6 +3,26 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:5ed7fd1af201a9b8",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "La Marsa | Journée de vaccination gratuite contre la rage",
+      "link": "https://kapitalis.com/tunisie/2026/09/12/la-marsa-journee-de-vaccination-gratuite-contre-la-rage/",
+      "published": "2026-09-11T23:19:18Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:399f1ac4d313e02a",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "JCC 2026 | Inscriptions ouvertes pour « Cinéma du Monde »",
+      "link": "https://kapitalis.com/tunisie/2026/09/11/jcc-2026-inscriptions-ouvertes-pour-cinema-du-monde/",
+      "published": "2026-09-11T22:59:54Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
       "id": "feed:kapitalis:0729098cf28231cf",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -11011,24 +11031,6 @@
       "title": "Amical : le CA Bizertin bat la JS Omrane 1-0",
       "link": "https://africanmanager.com/amical-le-ca-bizertin-bat-la-js-omrane-1-0/",
       "published": "2026-08-11T08:28:33Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:71b2bc54a052b022",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Afrobasket-2026 U18 : les sélections tunisiennes féminine et masculine en quarts de finale",
-      "link": "https://africanmanager.com/afrobasket-2026-u18-les-selections-tunisiennes-feminine-et-masculine-en-quarts-de-finale/",
-      "published": "2026-08-11T08:23:17Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:504748fbf8f2096c",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Coupure de courant électrique dans plusieurs zones",
-      "link": "https://africanmanager.com/coupure-de-courant-electrique-dans-plusieurs-zones/",
-      "published": "2026-08-11T08:19:00Z",
       "lang": "fr"
     }
   ]
