@@ -3,6 +3,36 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:928d98fc99139f19",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Journée Mondiale de la maladie d’Alzheimer | Innovation, prévention et accompagnement",
+      "link": "https://kapitalis.com/tunisie/2026/09/12/journee-mondiale-de-la-maladie-dalzheimer-innovation-prevention-et-accompagnement/",
+      "published": "2026-09-12T22:10:33Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:cc30a26bef78020e",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Appel à la mobilisation après la prolongation de la détention des membres d’Al-Soumoud",
+      "link": "https://kapitalis.com/tunisie/2026/09/12/appel-a-la-mobilisation-apres-la-prolongation-de-la-detention-des-membres-dal-soumoud/",
+      "published": "2026-09-12T21:42:45Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:8f86ff450722bf37",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Corruption et blanchiment d’argent | Des fonctionnaires parmi les suspects",
+      "link": "https://kapitalis.com/tunisie/2026/09/12/corruption-et-blanchiment-dargent-des-fonctionnaires-parmi-les-suspects/",
+      "published": "2026-09-12T18:39:01Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
       "id": "feed:kapitalis:ad135e58dc0e4411",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -11031,33 +11061,6 @@
       "title": "Israël a averti les États-Unis des plans iraniens visant à assassiner Trump à bord d’Air Force One et a facilité sa fuite !",
       "link": "https://africanmanager.com/israel-a-averti-les-etats-unis-des-plans-iraniens-visant-a-assassiner-trump-a-bord-dair-force-one-et-a-facilite-sa-fuite/",
       "published": "2026-08-12T07:06:04Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:4d8c28672dbdb895",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Libye : Le gouvernement de Tripoli décidé à « renforcer la préparation et de relever les défis sécuritaires »",
-      "link": "https://africanmanager.com/libye-le-gouvernement-de-tripoli-decide-a-renforcer-la-preparation-et-de-relever-les-defis-securitaires/",
-      "published": "2026-08-12T07:05:44Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:158202bcbb8f4537",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Tunisie | Des pistes pour dépasser une crise électrique prolongée",
-      "link": "https://kapitalis.com/tunisie/2026/08/12/tunisie-des-pistes-pour-depasser-une-crise-electrique-prolongee/",
-      "published": "2026-08-12T06:56:00Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:cba91de7621003a2",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Hammamet | Sauver les patrimoines et les mémoires en danger",
-      "link": "https://kapitalis.com/tunisie/2026/08/12/hammamet-sauver-les-patrimoines-et-les-memoires-en-danger/",
-      "published": "2026-08-12T05:57:03Z",
       "lang": "fr"
     }
   ]
