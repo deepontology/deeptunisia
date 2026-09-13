@@ -3,6 +3,26 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:4f5a7be2420d01ce",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Prévisions météo pour le dimanche 13 septembre 2026",
+      "link": "https://kapitalis.com/tunisie/2026/09/13/previsions-meteo-pour-le-dimanche-13-septembre-2026/",
+      "published": "2026-09-12T23:33:47Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:30a1d480857c6d4c",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "L’Ambassade de Suisse en Tunisie soutient Telehealth en tant que partenaire stratégique",
+      "link": "https://kapitalis.com/tunisie/2026/09/13/lambassade-de-suisse-en-tunisie-soutient-telehealth-en-tant-que-partenaire-strategique/",
+      "published": "2026-09-12T23:21:43Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
       "id": "feed:kapitalis:928d98fc99139f19",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -11043,24 +11063,6 @@
       "title": "Londres appelle Israël à sévir contre les violences des colons",
       "link": "https://africanmanager.com/londres-appelle-israel-a-sevir-contre-les-violences-des-colons/",
       "published": "2026-08-12T07:11:17Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:701b65aa7e181932",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Six morts après l’attaque d’un navire par les Houthis dans le détroit de Bab el-Mandeb",
-      "link": "https://africanmanager.com/six-morts-apres-lattaque-dun-navire-par-les-houthis-dans-le-detroit-de-bab-el-mandeb/",
-      "published": "2026-08-12T07:09:02Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:ac1983ee9d8c8162",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Israël a averti les États-Unis des plans iraniens visant à assassiner Trump à bord d’Air Force One et a facilité sa fuite !",
-      "link": "https://africanmanager.com/israel-a-averti-les-etats-unis-des-plans-iraniens-visant-a-assassiner-trump-a-bord-dair-force-one-et-a-facilite-sa-fuite/",
-      "published": "2026-08-12T07:06:04Z",
       "lang": "fr"
     }
   ]
