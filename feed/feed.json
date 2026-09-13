@@ -3,6 +3,56 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:african-manager:11c51d2d0fa8bd36",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Le déficit commercial se détériore encore",
+      "link": "https://africanmanager.com/le-deficit-commercial-se-deteriore-encore/",
+      "published": "2026-09-13T15:50:00Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:0ff2743b0e3a35a7",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Les entreprises autrichiennes à la recherche de « nouvelles coopérations » en Tunisie",
+      "link": "https://africanmanager.com/les-entreprises-autrichiennes-a-la-recherche-de-nouvelles-cooperations-en-tunisie/",
+      "published": "2026-09-13T15:48:57Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:c129d05ac6e6d61e",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "La Tunisie s’initie au solaire à portée de main",
+      "link": "https://africanmanager.com/la-tunisie-sinitie-au-solaire-a-portee-de-main/",
+      "published": "2026-09-13T15:00:00Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:110cc4e903cade6c",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "13 étudiants tununisiens pour un programme international en Chine",
+      "link": "https://africanmanager.com/ensit-13-etudiants-selectionnes-pour-un-programme-international-en-chine/",
+      "published": "2026-09-13T14:23:32Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:00037898e33880b0",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "DGI : Le bénéfice de l’amnistie fiscale va jusqu’au 30.9.26",
+      "link": "https://africanmanager.com/la-direction-generale-des-impots-rappelle-que-la-possibilite-de-beneficier-de-lamnistie-fiscale-se-poursuit-jusquau-30-septembre-2026/",
+      "published": "2026-09-13T14:21:04Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
       "id": "feed:kapitalis:c750c74859c44cfa",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -11052,51 +11102,6 @@
       "title": "Robotique | 45 médailles et une 1ère place mondiale pour la Tunisie",
       "link": "https://kapitalis.com/tunisie/2026/08/12/robotique-45-medailles-et-une-1ere-place-mondiale-pour-la-tunisie/",
       "published": "2026-08-12T18:04:13Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:61ef37bb6c481152",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Météo | Des températures relativement clémentes attendues cette nuit",
-      "link": "https://kapitalis.com/tunisie/2026/08/12/meteo-des-temperatures-relativement-clementes-attendues-cette-nuit/",
-      "published": "2026-08-12T17:42:20Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:091098a8bd456976",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "El Mourouj | Mandat de dépôt contre le père qui a jeté ses deux fillettes du 3e étage",
-      "link": "https://kapitalis.com/tunisie/2026/08/12/el-mourouj-mandat-de-depot-contre-le-pere-qui-a-jete-ses-deux-fillettes-du-3e-etage/",
-      "published": "2026-08-12T17:28:48Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:f1b12dbb18507715",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Concours nationaux d’accès aux cycles d’ingénieurs : les résultats définitifs publiés aujourd’hui",
-      "link": "https://africanmanager.com/concours-nationaux-dacces-aux-cycles-dingenieurs-les-resultats-definitifs-publies-aujourdhui/",
-      "published": "2026-08-12T15:09:12Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:ac18dbdc4af821a2",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Automobile en Bourse, quatre publient, un disparaît",
-      "link": "https://africanmanager.com/automobile-en-bourse-quatre-publient-un-disparait/",
-      "published": "2026-08-12T14:30:00Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:fb7fbc2c43daa572",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "La cote de Tunis, un géant et une poignée de mastodontes",
-      "link": "https://africanmanager.com/la-cote-de-tunis-un-geant-et-une-poignee-de-mastodontes/",
-      "published": "2026-08-12T14:29:00Z",
       "lang": "fr"
     }
   ]
