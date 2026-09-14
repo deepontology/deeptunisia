@@ -3,6 +3,466 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:african-manager:8d6f3300ab2fade5",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Tozeur : Coupure d’eau pour le troisième jour consécutif à Tamaghza",
+      "link": "https://africanmanager.com/tozeur-coupure-deau-pour-le-troisieme-jour-consecutif-a-tamaghza/",
+      "published": "2026-09-14T14:03:16Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:1b50839de9fcc1e5",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Rentrée scolaire 2026-2027 : Près de 2 millions 341 mille élèves rejoignent demain, mardi, les bancs de l’école",
+      "link": "https://africanmanager.com/rentree-scolaire-2026-2027-pres-de-2-millions-341-mille-eleves-rejoignent-demain-mardi-les-bancs-de-lecole/",
+      "published": "2026-09-14T14:01:48Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:019b448db46f8395",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Normalisation :Démarrage à Tunis des travaux de la 15éme semaine des comités techniques du SMIIC",
+      "link": "https://africanmanager.com/normalisation-demarrage-a-tunis-des-travaux-de-la-15eme-semaine-des-comites-techniques-du-smiic/",
+      "published": "2026-09-14T13:51:04Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:75d22f2e6d644596",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Le ministère de l’emploi met en garde les demandeurs de formation contre les pratiques illégales dans certains établissements de formation privés",
+      "link": "https://africanmanager.com/le-ministere-de-lemploi-met-en-garde-les-demandeurs-de-formation-contre-les-pratiques-illegales-dans-certains-etablissements-de-formation-prives/",
+      "published": "2026-09-14T13:48:56Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:c52cd9ec75054aed",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Industrie: La stratégie sous intérim",
+      "link": "https://africanmanager.com/industrie-la-strategie-sous-interim/",
+      "published": "2026-09-14T13:27:30Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:c517b4749a187e2c",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Le déficit commercial n’explose pas partout, il explose avec quatre pays",
+      "link": "https://africanmanager.com/le-deficit-commercial-nexplose-pas-partout-il-explose-avec-quatre-pays/",
+      "published": "2026-09-14T13:25:00Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:c6a6d878d02d8d23",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Le crédit sur l’honneur applicable dès le 1er octobre. A quoi va-t-il servir ?",
+      "link": "https://africanmanager.com/le-credit-sur-lhonneur-applicable-des-le-1er-octobre-a-quoi-va-t-il-servir/",
+      "published": "2026-09-14T13:20:00Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:e5b7eec9872bb1a2",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Google présente une refonte majeure de son moteur de recherche !",
+      "link": "https://africanmanager.com/google-presente-une-refonte-majeure-de-son-moteur-de-recherche/",
+      "published": "2026-09-14T12:58:47Z",
+      "lang": "fr",
+      "author": "Africanmanager"
+    },
+    {
+      "id": "feed:african-manager:7a9f39a46c9ea8df",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Sghiri appelle au recours à une loi de finances complémentaire !",
+      "link": "https://africanmanager.com/sghiri-appelle-au-recours-a-une-loi-de-finances-complementaire/",
+      "published": "2026-09-14T12:47:49Z",
+      "lang": "fr",
+      "author": "Africanmanager"
+    },
+    {
+      "id": "feed:african-manager:9ada90f8af938a55",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Fournitures scolaires : Jusqu’à 150 dinars…",
+      "link": "https://africanmanager.com/fournitures-scolaires-jusqua-150-dinars/",
+      "published": "2026-09-14T12:42:14Z",
+      "lang": "fr",
+      "author": "Africanmanager"
+    },
+    {
+      "id": "feed:african-manager:3dc1ee5d9e7634c8",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "20 MDT pour réhabiliter écoles, collèges et lycées à Nabeul",
+      "link": "https://africanmanager.com/nabeul-20-mdt-consacres-aux-travaux-de-rehabilitation-des-etablissements-scolaires/",
+      "published": "2026-09-14T12:38:26Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:077b07d7fccce8dc",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Foot-CSHL: L’attaquant Rafik Kamerji signe pour deux saisons",
+      "link": "https://africanmanager.com/foot-cshl-lattaquant-rafik-kamerji-signe-pour-deux-saisons/",
+      "published": "2026-09-14T12:15:31Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:0b71c76fcdee4035",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Le commerce avec les colons israéliens passible de 3 ans de prison en Norvège",
+      "link": "https://africanmanager.com/le-commerce-avec-les-colons-israeliens-passible-de-3-ans-de-prison-en-norvege/",
+      "published": "2026-09-14T12:13:16Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:f5c2c69f87e6bd6a",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Selmi appelle à la reprise du dialogue social",
+      "link": "https://africanmanager.com/slaheddine-selmi-appelle-au-respect-du-droit-syndical-et-a-la-reprise-du-dialogue-social/",
+      "published": "2026-09-14T12:08:05Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:b27d421869caf630",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Les prix du pétrole continuent de flamber dans un contexte de troubles régionaux",
+      "link": "https://africanmanager.com/les-prix-du-petrole-continuent-de-flamber-dans-un-contexte-de-troubles-regionaux/",
+      "published": "2026-09-14T11:54:54Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:557d2528c5de94e9",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Aucune activité à Pickaxe Mountain, affirme Téhéran",
+      "link": "https://africanmanager.com/aucune-activite-a-pickaxe-mountain-affirme-teheran/",
+      "published": "2026-09-14T11:53:58Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:kapitalis:5b0156d959ff0337",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Tunisie | Les enseignants de l’Ipsi solidaires avec leur collègue Mohamed Yousfi",
+      "link": "https://kapitalis.com/tunisie/2026/09/14/tunisie-les-enseignants-de-lipsi-solidaires-avec-leur-collegue-mohamed-yousfi/",
+      "published": "2026-09-14T11:50:32Z",
+      "lang": "fr",
+      "author": "webmaster kapitalis"
+    },
+    {
+      "id": "feed:african-manager:eb83b8dff45c85ab",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "L’Algérie appelle à une classification internationale de substances non soumises au contrôle",
+      "link": "https://africanmanager.com/lalgerie-appelle-a-une-classification-internationale-de-substances-non-soumises-au-controle/",
+      "published": "2026-09-14T10:37:33Z",
+      "lang": "fr",
+      "author": "Africanmanager"
+    },
+    {
+      "id": "feed:african-manager:1eadb2f1dda6f7ee",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Siliana-Céréales : 155 000 he, dont 13,5 mille en blé de farine",
+      "link": "https://africanmanager.com/siliana-cereales-les-superficies-programmees-selevent-a-155-000-hectares/",
+      "published": "2026-09-14T10:37:18Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:58a2247a2c2df9ad",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Maroc: Opération de retour volontaire de migrants soudanais",
+      "link": "https://africanmanager.com/maroc-operation-de-retour-volontaire-de-migrants-soudanais/",
+      "published": "2026-09-14T10:30:05Z",
+      "lang": "fr",
+      "author": "Africanmanager"
+    },
+    {
+      "id": "feed:inkyfada:1a1d7fa3fba8aaa5",
+      "outlet": "Inkyfada",
+      "outletId": "inkyfada",
+      "title": "Affaire Mohamed Yousfi : des publications Facebook au cœur d’un dossier pour blanchiment et terrorisme",
+      "link": "https://inkyfada.com/fr/2026/09/14/affaire-mohamed-yousfi-des-publications-facebook-au-coeur-dun-dossier-pour-blanchiment-et-terrorisme/",
+      "published": "2026-09-14T10:18:55Z",
+      "lang": "fr",
+      "author": "Manel Lassoued"
+    },
+    {
+      "id": "feed:kapitalis:fc1e11b784ec1af6",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Tunis | Démantèlement d’un réseau de trafic de cocaïne dirigé par un rappeur",
+      "link": "https://kapitalis.com/tunisie/2026/09/14/tunis-demantelement-dun-reseau-de-trafic-de-cocaine-dirige-par-un-rappeur/",
+      "published": "2026-09-14T09:56:22Z",
+      "lang": "fr",
+      "author": "webmaster kapitalis"
+    },
+    {
+      "id": "feed:african-manager:4be3b002bd2914ff",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Karaté – Championnats d’Afrique : la Tunisie termine avec un total de 18 médailles dont 5 or",
+      "link": "https://africanmanager.com/kumite-elles-ont-ete-remportees-par-ranim-ben-hassan/",
+      "published": "2026-09-14T09:46:13Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:72f00530056dcd9b",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Championnat Elite (2e journée) : SC Moknine – EM Mahdia (28-27)",
+      "link": "https://africanmanager.com/sc-moknine-a-battu-lem-mahdia-28-27-lors-du-dernier-match-de-la-deuxieme-journee/",
+      "published": "2026-09-14T09:41:06Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:38049e19c65cbb6d",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Liga : le FC Barcelone s’impose face à Levante (4-2)",
+      "link": "https://africanmanager.com/liga-le-fc-barcelone-simpose-face-a-levante-4-2/",
+      "published": "2026-09-14T09:39:23Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:2f8c0e0ac5dd379d",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Ligue 1 (4e journée) : L’Espérance de Tunis nouveau leader",
+      "link": "https://africanmanager.com/ligue-1-4e-journee-lesperance-de-tunis-nouveau-leader/",
+      "published": "2026-09-14T09:36:47Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:kapitalis:3b923416f92a38a5",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "TABC | Nouveau bureau, nouvelle feuille de route",
+      "link": "https://kapitalis.com/tunisie/2026/09/14/tabc-nouveau-bureau-nouvelle-feuille-de-route/",
+      "published": "2026-09-14T09:33:21Z",
+      "lang": "fr",
+      "author": "webmaster kapitalis"
+    },
+    {
+      "id": "feed:african-manager:991fc188aca5b5a2",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Démantèlement d’un réseau de trafic de drogue",
+      "link": "https://africanmanager.com/grand-tunis-demantelement-dun-reseau-de-trafic-de-drogue-et-arrestation-de-13-personnes-dont-un-rappeur-connu/",
+      "published": "2026-09-14T08:56:13Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:648f7ee603326f79",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Sept mandats de dépôt pour blanchiment d’argent",
+      "link": "https://africanmanager.com/sept-mandats-de-depot-pour-blanchiment-dargent/",
+      "published": "2026-09-14T08:51:56Z",
+      "lang": "fr",
+      "author": "Africanmanager"
+    },
+    {
+      "id": "feed:kapitalis:d9f8a09c27a7210f",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Tunisie | L’AMT se dit préoccupée par la hausse des décès en milieu carcéral",
+      "link": "https://kapitalis.com/tunisie/2026/09/14/tunisie-lamt-se-dit-preoccupee-par-la-hausse-des-deces-en-milieu-carceral/",
+      "published": "2026-09-14T08:50:38Z",
+      "lang": "fr",
+      "author": "webmaster kapitalis"
+    },
+    {
+      "id": "feed:african-manager:197385d5c764ad48",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Réseau de cocaïne : des arrestations en cascade !",
+      "link": "https://africanmanager.com/reseau-de-cocaine-des-arrestations-en-cascade/",
+      "published": "2026-09-14T08:49:41Z",
+      "lang": "fr",
+      "author": "Africanmanager"
+    },
+    {
+      "id": "feed:african-manager:8d9329389c3f23a0",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Le «prêt sur l’honneur », entre les Pour et les Contre",
+      "link": "https://africanmanager.com/le-mecanisme-de-pret-sur-lhonneur-entre-renforcement-de-linclusion-financiere-et-satisfaction-des-besoins-de-consommation/",
+      "published": "2026-09-14T08:25:03Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:dc00729d5ba2b33b",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Hemissi sur la désactivation des commentaires : c’est les Admins",
+      "link": "https://africanmanager.com/la-desactivation-de-la-fonctionnalite-des-commentaires-sur-les-pages-officielles-ne-releve-pas-dune-decision-centralisee/",
+      "published": "2026-09-14T08:21:26Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:e80e296b45d4ad0f",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "La Tunisie s’apprête à réviser la loi sur les stupéfiants",
+      "link": "https://africanmanager.com/la-tunisie-sapprete-a-reviser-la-loi-1992-relative-aux-stupefiants-face-a-levolution-des-reseaux-de-crime-organise/",
+      "published": "2026-09-14T08:11:21Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:f30774107089d04b",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Yasmine Sfar et Mehdi Kebaier lauréats du Prix de l’IMA",
+      "link": "https://africanmanager.com/yasmine-sfar-et-mehdi-kebaier-laureats-du-prix-de-lartisanat-contemporain/",
+      "published": "2026-09-14T08:07:35Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:03e567d4d5651a19",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Lahmar au Caire pour faire la Promo d’une plateforme",
+      "link": "https://africanmanager.com/lahmar-met-en-avant-les-reformes-tunisiennes-face-aux-mutations-du-travail/",
+      "published": "2026-09-14T08:03:07Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:c1e785b253bf1260",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Suspension temporaire de la desserte Tunis-Annaba",
+      "link": "https://africanmanager.com/suspension-temporaire-de-la-desserte-tunis-annaba-en-raison-des-travaux-ferroviaires-entrepris-en-algerie/",
+      "published": "2026-09-14T07:58:09Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:f76352caa56934d4",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "“J’ai voulu offrir à mon fils un avenir brillant” : le témoignage de Madame Souad",
+      "link": "https://africanmanager.com/jai-voulu-offrir-a-mon-fils-un-avenir-brillant-le-temoignage-de-madame-souad-2/",
+      "published": "2026-09-14T07:42:34Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:65897c43f21986e6",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Trump ordonne à Zelensky de cesser de s’en prendre aux approvisionnements russes en diesel",
+      "link": "https://africanmanager.com/trump-ordonne-a-zelensky-de-cesser-de-sen-prendre-aux-approvisionnements-russes-en-diesel/",
+      "published": "2026-09-14T07:41:46Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:eb9eb016a019d1ef",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Les importations iraniennes à Dubaï se poursuivent malgré l’embargo commercial",
+      "link": "https://africanmanager.com/les-importations-iraniennes-a-dubai-se-poursuivent-malgre-lembargo-commercial/",
+      "published": "2026-09-14T07:40:36Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:a712c874d2054b5d",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "France-Présidentielle : Marine Le Pen toujours en tête des intentions de vote, selon un sondage",
+      "link": "https://africanmanager.com/france-presidentielle-marine-le-pen-toujours-en-tete-des-intentions-de-vote-selon-un-sondage/",
+      "published": "2026-09-14T07:40:31Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:d1f94bf1c85c505e",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Afrique, un débouché majeur pour les exportations chinoises",
+      "link": "https://africanmanager.com/afrique-un-debouche-majeur-pour-les-exportations-chinoises/",
+      "published": "2026-09-14T07:39:01Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:fd42285f92fd5989",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Législatives en Suède : L’extrême droite recule",
+      "link": "https://africanmanager.com/legislatives-en-suede-lextreme-droite-recule/",
+      "published": "2026-09-14T07:38:47Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:5275f467f3af4598",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Oman annonce le report des pourparlers d’Ormuz entre l’Iran et les États du Golfe",
+      "link": "https://africanmanager.com/oman-annonce-le-report-des-pourparlers-dormuz-entre-liran-et-les-etats-du-golfe/",
+      "published": "2026-09-14T07:37:42Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:kapitalis:d41361fb1bae3f45",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "La Chine fait main basse sur la high-tech européenne",
+      "link": "https://kapitalis.com/tunisie/2026/09/14/la-chine-fait-main-basse-sur-la-high-tech-europeenne/",
+      "published": "2026-09-14T07:35:07Z",
+      "lang": "fr",
+      "author": "webmaster kapitalis"
+    },
+    {
+      "id": "feed:kapitalis:ce11dfb7d1fe3287",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Les Houthis s’emparent du détroit de Bab el-Mandeb, le monde retient son souffle",
+      "link": "https://kapitalis.com/tunisie/2026/09/14/les-houthis-semparent-du-detroit-de-bab-el-mandeb-le-monde-retient-son-souffle/",
+      "published": "2026-09-14T06:38:28Z",
+      "lang": "fr",
+      "author": "webmaster kapitalis"
+    },
+    {
       "id": "feed:african-manager:11c51d2d0fa8bd36",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -10688,420 +11148,6 @@
       "title": "Sfax : le conseil régional se penche sur la rentrée scolaire 2026-2027",
       "link": "https://africanmanager.com/sfax-le-conseil-regional-se-penche-sur-la-rentree-scolaire-2026-2027/",
       "published": "2026-08-14T07:40:56Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:bc0133eae27d5316",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Attaque d’un important terminal d’exportation de céréales russe",
-      "link": "https://africanmanager.com/attaque-dun-important-terminal-dexportation-de-cereales-russe/",
-      "published": "2026-08-14T07:37:00Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:4763ce73b0f5e2c6",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Un juge rejette la plainte de l’administration Trump accusant Harvard",
-      "link": "https://africanmanager.com/un-juge-rejette-la-plainte-de-ladministration-trump-accusant-harvard/",
-      "published": "2026-08-14T07:33:21Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:ba1b5f9580aeca68",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Huckabee qualifie les colons israéliens de terroristes",
-      "link": "https://africanmanager.com/huckabee-qualifie-les-colons-israeliens-de-terroristes/",
-      "published": "2026-08-14T07:32:27Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:f91a3a2d67020ad1",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Kushner en Israël pour faire pression sur Netanyahu au sujet de Gaza",
-      "link": "https://africanmanager.com/kushner-en-israel-pour-faire-pression-sur-netanyahu-au-sujet-de-gaza/",
-      "published": "2026-08-14T07:31:20Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:7e7011a60c34a648",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Menace iranienne contre Air Force One : : La CIA juge peu fiables les renseignements israéliens",
-      "link": "https://africanmanager.com/menace-iranienne-contre-air-force-one-la-cia-juge-peu-fiables-les-renseignements-israeliens/",
-      "published": "2026-08-14T07:31:00Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:aaf6e04c760edd24",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Le Tunisien Anis Zayana ambassadeur du CIDH en Ouganda",
-      "link": "https://kapitalis.com/tunisie/2026/08/14/le-tunisien-anis-zayana-ambassadeur-du-cidh-en-ouganda/",
-      "published": "2026-08-14T07:25:33Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:f23364759c471b8c",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Salut nazi pour les supporters d’un club israélien en Pologne",
-      "link": "https://kapitalis.com/tunisie/2026/08/14/salut-nazi-pour-les-supporters-dun-club-israelien-en-pologne/",
-      "published": "2026-08-14T06:59:01Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:c5c8d22ef96ae77b",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Italie | Une politique migratoire qui enferme, maltraite et tue",
-      "link": "https://kapitalis.com/tunisie/2026/08/14/italie-une-politique-migratoire-qui-enferme-maltraite-et-tue/",
-      "published": "2026-08-14T05:54:08Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:048e2ac9079e7118",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Drame sur l’autoroute à Médenine | Un mort et un blessé dans un état critique",
-      "link": "https://kapitalis.com/tunisie/2026/08/13/drame-sur-lautoroute-a-medenine-un-mort-et-un-blesse-dans-un-etat-critique/",
-      "published": "2026-08-13T22:52:47Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:338cc7464ba29456",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "L’Association tunisienne des randonneurs rend hommage à Yasser Jeradi",
-      "link": "https://kapitalis.com/tunisie/2026/08/13/lassociation-tunisienne-des-randonneurs-rend-hommage-a-yasser-jeradi/",
-      "published": "2026-08-13T21:46:04Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:610a4d0f2c22d354",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Société civile & municipalité | Opération conjointe de propreté à La Marsa",
-      "link": "https://kapitalis.com/tunisie/2026/08/13/societe-civile-municipalite-operation-conjointe-de-proprete-a-la-marsa/",
-      "published": "2026-08-13T19:45:24Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:060a01056c2622e2",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Officiel | Tunisie : Date de la fête du Mouled",
-      "link": "https://kapitalis.com/tunisie/2026/08/13/officiel-tunisie-date-de-la-fete-du-mouled/",
-      "published": "2026-08-13T19:14:36Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:bc0ed185d4f7063f",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "L’Onsr rend hommage à Feu commandant Tawfik Zayani",
-      "link": "https://kapitalis.com/tunisie/2026/08/13/lonsr-rend-hommage-a-feu-commandant-tawfik-zayani/",
-      "published": "2026-08-13T18:25:56Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:967daec59b6fac7b",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Météo pour cette nuit | Des pluies orageuses sur plusieurs régions du pays",
-      "link": "https://kapitalis.com/tunisie/2026/08/13/meteo-pour-cette-nuit-des-pluies-orageuses-sur-plusieurs-regions-du-pays/",
-      "published": "2026-08-13T17:40:31Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:e8f26b9dbafa9c78",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "La souveraineté technologique, un slogan sans mathématiciens",
-      "link": "https://africanmanager.com/la-souverainete-technologique-un-slogan-sans-mathematiciens/",
-      "published": "2026-08-13T16:11:04Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:b79c74ade792d26f",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Le capital humain, cet actif qu’on laisse se déprécier sans provision",
-      "link": "https://africanmanager.com/le-capital-humain-cet-actif-quon-laisse-se-deprecier-sans-provision/",
-      "published": "2026-08-13T16:08:46Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:nawaat:eabb8f63117eb74a",
-      "outlet": "Nawaat",
-      "outletId": "nawaat",
-      "title": "تقتيل النساء: من الحماية إلى الوقاية… هل نحمي المرأة قبل فوات الأوان؟",
-      "link": "https://nawaat.org/2026/08/13/%d8%aa%d9%82%d8%aa%d9%8a%d9%84-%d8%a7%d9%84%d9%86%d8%b3%d8%a7%d8%a1-%d9%85%d9%86-%d8%a7%d9%84%d8%ad%d9%85%d8%a7%d9%8a%d8%a9-%d8%a5%d9%84%d9%89-%d8%a7%d9%84%d9%88%d9%82%d8%a7%d9%8a%d8%a9/",
-      "published": "2026-08-13T15:18:33Z",
-      "lang": "ar"
-    },
-    {
-      "id": "feed:african-manager:237a24470b67020c",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Toute opération américaine visant à s’emparer du détroit serait longue, coûteuse et meurtrière, selon le Renseignement US",
-      "link": "https://africanmanager.com/toute-operation-americaine-visant-a-semparer-du-detroit-serait-longue-couteuse-et-meurtriere-selon-le-renseignement-us/",
-      "published": "2026-08-13T13:48:22Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:296c579991715516",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "L’attachée de presse de Trump quittera son poste à la fin du mois",
-      "link": "https://africanmanager.com/lattachee-de-presse-de-trump-quittera-son-poste-a-la-fin-du-mois/",
-      "published": "2026-08-13T13:47:20Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:82a1b2d5c6de77fd",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "L’inflation américaine à 3,4 % en juillet",
-      "link": "https://africanmanager.com/linflation-americaine-a-34-en-juillet/",
-      "published": "2026-08-13T13:46:19Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:f4d37dfdde14cec8",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Le Congrès national de l’ONE dans six mois",
-      "link": "https://africanmanager.com/le-congres-national-de-lone-dans-six-mois/",
-      "published": "2026-08-13T13:45:15Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:646ebd9267ba3529",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "APIA: Appel à candidatures destiné aux MPME en faveur de l’agroécologie et la santé des sols",
-      "link": "https://africanmanager.com/apia-appel-a-candidatures-destine-aux-mpme-en-faveur-de-lagroecologie-et-la-sante-des-sols/",
-      "published": "2026-08-13T13:43:37Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:b780a2e78787ea1b",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Tunisie | Hausse des prix des logements en Tunisie",
-      "link": "https://kapitalis.com/tunisie/2026/08/13/tunisie-hausse-des-prix-des-logements-en-tunisie/",
-      "published": "2026-08-13T12:10:33Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:b51fd4e2edd7efa2",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Connexion mobile | La Tunisie 3e parmi 7 pays à richesse par habitant comparable",
-      "link": "https://kapitalis.com/tunisie/2026/08/13/connexion-mobile-la-tunisie-3e-parmi-7-pays-a-richesse-par-habitant-comparable/",
-      "published": "2026-08-13T11:54:06Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:fdc81e46989cba97",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Sociétés communautaires | Mirage ou solution miracle ?",
-      "link": "https://kapitalis.com/tunisie/2026/08/13/societes-communautaires-mirage-ou-solution-miracle/",
-      "published": "2026-08-13T11:27:36Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:d23b2d84534c7d9a",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Les voitures électriques gagnent du terrain en Tunisie",
-      "link": "https://kapitalis.com/tunisie/2026/08/13/les-voitures-electriques-gagnent-du-terrain-en-tunisie/",
-      "published": "2026-08-13T10:13:36Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:bfd8ad1d50299c62",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Une progressiste, critique d’Israël, remporte la primaire sénatoriale du Minnesota",
-      "link": "https://africanmanager.com/une-progressiste-critique-disrael-remporte-la-primaire-senatoriale-du-minnesota/",
-      "published": "2026-08-13T10:04:39Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:78a8f166e40c1a3f",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Football | L’attaquant tunisien Seifeddine Jaziri aux Emirats",
-      "link": "https://kapitalis.com/tunisie/2026/08/13/football-lattaquant-tunisien-seifeddine-jaziri-au-qatar/",
-      "published": "2026-08-13T09:47:09Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:91c8efa59202614a",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Tunisie-Allemagne : coopération en santé numérique et IA",
-      "link": "https://africanmanager.com/tunisie-allemagne-vers-le-renforcement-de-la-cooperation-dans-la-sante-numerique-et-lia/",
-      "published": "2026-08-13T09:02:20Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:6482c92eb82e13b6",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Saisie de 147 mille litres d’eau conditionnée en juillet 2026",
-      "link": "https://africanmanager.com/saisie-de-plus-de-147-mille-litres-deau-conditionnee-depuis-mi-juillet-2026/",
-      "published": "2026-08-13T08:59:10Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:d691c26c46e16fbf",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Accélérer les projets publics et dans les délais impartis",
-      "link": "https://africanmanager.com/reunion-de-travail-consacree-a-lexamen-des-moyens-daccelerer-les-travaux-et-de-les-achever-dans-les-delais-impartis/",
-      "published": "2026-08-13T08:57:09Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:73cf9cfaf13ac0b6",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Se préparer à la saison des pluies et aux inondations",
-      "link": "https://africanmanager.com/le-ministere-de-lagriculture-renforce-la-prevention-des-risques-dinondations/",
-      "published": "2026-08-13T08:56:59Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:91359ee7bb52d886",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Saïed : démanteler la corruption, préalable aux réformes",
-      "link": "https://africanmanager.com/le-president-saied-demanteler-les-reseaux-de-corruption-prealable-incontournable-aux-reformes/",
-      "published": "2026-08-13T08:54:49Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:5e12e8566351df95",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Tanfouri inspecte l’oued El Halouf en prévention des inondations",
-      "link": "https://africanmanager.com/sousse-tanfouri-inspecte-le-curage-de-loued-el-halouf-pour-prevenir-les-inondations/",
-      "published": "2026-08-13T08:52:34Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:78861264d745dc4b",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Zaghouan anticipe la saison des pluies",
-      "link": "https://africanmanager.com/zaghouan-anticipe-la-saison-des-pluies-commission-des-catastrophes-en-etat-de-reunion-permanente/",
-      "published": "2026-08-13T08:47:28Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:nawaat:ee6f6d466e4a7992",
-      "outlet": "Nawaat",
-      "outletId": "nawaat",
-      "title": "70 ans de CSP : où en est la libération des femmes?",
-      "link": "https://nawaat.org/2026/08/13/70-ans-de-csp-ou-en-est-la-liberation-des-femmes/",
-      "published": "2026-08-13T08:30:00Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:94d4aa7dc67d8977",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Tunisie | Pas de lueur au bout du tunnel pour les diplômés chômeurs",
-      "link": "https://kapitalis.com/tunisie/2026/08/13/tunisie-pas-de-lueur-au-bout-du-tunnel-pour-les-diplomes-chomeurs/",
-      "published": "2026-08-13T08:28:02Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:489c10b24c7264a8",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Iran | Le come-back de Mohsen Rezaie !",
-      "link": "https://kapitalis.com/tunisie/2026/08/13/iran-le-come-back-de-mohsen-rezaie/",
-      "published": "2026-08-13T07:34:00Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:26b63b0c9b2c603a",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Malgré sa fragilité financière, Tunisie Autoroutes obtient la gestion des autoroutes A1 et A2",
-      "link": "https://kapitalis.com/tunisie/2026/08/13/malgre-sa-fragilite-financiere-tunisie-autoroutes-obtient-la-gestion-des-autoroutes-a1-et-a2/",
-      "published": "2026-08-13T07:24:27Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:cc8415a1d3864ec1",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Monastir | Les activités de « Ciné Vague Ruspina » se poursuivent sur la plage Ennakhil à Skanès",
-      "link": "https://kapitalis.com/tunisie/2026/08/12/monastir-les-activites-de-cine-vague-ruspina-se-poursuivent-sur-la-plage-ennakhil-a-skanes/",
-      "published": "2026-08-12T22:16:27Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:025d6fa3548f663f",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Aswat Nissa alerte sur une hausse continue des féminicides en Tunisie",
-      "link": "https://kapitalis.com/tunisie/2026/08/12/aswat-nissa-alerte-sur-une-hausse-continue-des-feminicides-en-tunisie/",
-      "published": "2026-08-12T21:19:27Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:3937c122f234edb1",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Tunisie | Humena : Appel à la libération des membres de la Flottille Al-Soumoud",
-      "link": "https://kapitalis.com/tunisie/2026/08/12/tunisie-humena-appel-a-la-liberation-des-membres-de-la-flottille-al-soumoud/",
-      "published": "2026-08-12T20:31:44Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:80abac9897b08013",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Djerba : L’Atutax et ses partenaires agissent contre les engins de pêche fantômes",
-      "link": "https://kapitalis.com/tunisie/2026/08/12/djerba-latutax-et-ses-partenaires-agissent-contre-les-engins-de-peche-fantomes/",
-      "published": "2026-08-12T19:12:36Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:c8a2ff4063298072",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "La Tunisie remporte la première place au championnat du monde Open de robotique en Chine",
-      "link": "https://africanmanager.com/la-tunisie-remporte-la-premiere-place-au-championnat-du-monde-open-de-robotique-en-chine/",
-      "published": "2026-08-12T19:10:29Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:e951a939fe5a2866",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "La Tunisie 1ère à l’Open mondial de robotique en Chine",
-      "link": "https://africanmanager.com/remportant-au-total-45-medailles-dor-dargent-et-de-bronze/",
-      "published": "2026-08-12T19:10:29Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:f2cc68136ab79304",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Robotique | 45 médailles et une 1ère place mondiale pour la Tunisie",
-      "link": "https://kapitalis.com/tunisie/2026/08/12/robotique-45-medailles-et-une-1ere-place-mondiale-pour-la-tunisie/",
-      "published": "2026-08-12T18:04:13Z",
       "lang": "fr"
     }
   ]
