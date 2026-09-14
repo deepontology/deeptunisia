@@ -778,7 +778,24 @@
   basis: reported
   source_relation: single-report
   independence: 1
-  sources: [reuters-eltaief-2023]
+  sources: [reuters-eltaief-2023, dw-eltaief-2023]
+  evidence:
+    - passage_type: quote
+      passage: Police in Tunisia have arrested influential businessman Kamel Eltaief, a former confidant of ousted president Zine El Abidine Ben Ali, and two political activists in a case that, according to local media, was based on suspicion of conspiracy against state security.
+      locator: article lede (first paragraph)
+      retrieved_at: '2026-09-11'
+      capture_url: https://web.archive.org/web/20250724124457/https://www.dw.com/en/tunisia-activists-prominent-businessman-arrested-by-police/a-64677383
+      lineage:
+        - publisher: Deutsche Welle
+          url: https://www.dw.com/en/tunisia-activists-prominent-businessman-arrested-by-police/a-64677383
+    - passage_type: quote
+      passage: Abdelhamid Jelassi, a former senior leader of the Islamist-inspired movement Ennahdha — staunch opponents of President Kais Saied — and political activist Khayam Turki were also arrested.
+      locator: article, paragraph beginning 'Abdelhamid Jelassi'
+      retrieved_at: '2026-09-11'
+      capture_url: https://web.archive.org/web/20250724124457/https://www.dw.com/en/tunisia-activists-prominent-businessman-arrested-by-police/a-64677383
+      lineage:
+        - publisher: Deutsche Welle
+          url: https://www.dw.com/en/tunisia-activists-prominent-businessman-arrested-by-police/a-64677383
 
 - id: gharbi-appointed
   date: "2023-05-24"
@@ -1098,7 +1115,49 @@
   independence: 1
   causes: [conspiracy-trial-2025]
   consequences: [conspiracy-appeal-2025]
-  sources: [reuters-sentences-2025, reuters-conspiracy-2025]
+  sources: [reuters-sentences-2025, reuters-conspiracy-2025, bbc-ghannouchi-2025, amnesty-conspiracy2-2025, arabnews-conspiracy-2025, meo-conspiracy-appeal-2026]
+  evidence:
+    - passage_type: quote
+      passage: Tunisian opposition leader Rached Ghannouchi has been sentenced to 14 years in prison, adding to a string of other jail terms he has received in separate cases.
+      locator: opening paragraph
+      retrieved_at: '2026-09-11'
+      capture_url: https://web.archive.org/web/20251117121842/https://www.bbc.com/news/articles/c04d1d71rx4o
+      lineage:
+        - publisher: BBC News
+          url: https://www.bbc.com/news/articles/c04d1d71rx4o
+    - passage_type: quote
+      passage: Former Foreign Affairs Minister Rafik Abdessalem Bouchlaka and ex-intelligence chief Kamel Guizani were also sentenced in absentia.
+      locator: article, paragraph beginning 'According to news agency Tunis Afrique Presse'
+      retrieved_at: '2026-09-11'
+      capture_url: https://web.archive.org/web/20251117121842/https://www.bbc.com/news/articles/c04d1d71rx4o
+      lineage:
+        - publisher: BBC News
+          url: https://www.bbc.com/news/articles/c04d1d71rx4o
+    - passage_type: quote
+      passage: The trial opened on June 24, 2025 and concluded with mass conviction on July 8 of 21 out of 24 individuals including senior political leaders from Ennahdha Party, former government and security officials, lawyers, and other opposition party members. Sentences ranged from 12 to 35 years imposed on 21 individuals.
+      locator: section 'Mass sentences following a politically motivated trial', first paragraph
+      retrieved_at: '2026-09-11'
+      capture_url: https://web.archive.org/web/20250812063104/https://www.amnestyusa.org/press-releases/tunisia-mass-convictions-in-conspiracy-case-2-deepen-rule-of-law-crisis/
+      lineage:
+        - publisher: Amnesty International
+          url: https://www.amnestyusa.org/press-releases/tunisia-mass-convictions-in-conspiracy-case-2-deepen-rule-of-law-crisis
+    - passage_type: quote
+      passage: A Tunisian court is set to issue a ruling in the conspiracy case against prominent opponents, as lawyers protested and described the trial as a farce, while others called the proceedings a symbol of President Kais Saied's authoritarian rule.
+      locator: article lede (first paragraph) — supports the trial/mass-prosecution context, not the sentence detail
+      retrieved_at: '2026-09-11'
+      capture_url: https://web.archive.org/web/20260420063757/https://www.arabnews.com/node/2597632/middle-east
+      lineage:
+        - publisher: Reuters
+        - publisher: Arab News
+          url: https://www.arabnews.com/node/2597632/middle-east
+    - passage_type: quote
+      passage: According to TAP, the court also confirmed 35-year sentences against Kamel Guizani, the former intelligence chief, Rafik Abdessalem, a former foreign minister, and Mouadh Ghannouchi, the son of Rached Ghannouchi. All three are currently outside Tunisia.
+      locator: article, paragraph beginning 'According to TAP' (report dated 3 February 2026 on the 2 February 2026 appeal ruling) — confirms the 35-year term against Guizani that the 8 July 2025 first-instance reports do not publish
+      retrieved_at: '2026-09-11'
+      capture_missing: '2026-10-11'
+      lineage:
+        - publisher: Middle East Online
+          url: https://middle-east-online.com/en/tunisia-hands-down-jail-terms-35-years-conspiracy-case
 
 - id: dhif-succession-2025
   attributed_to: Africa Intelligence and Leaders (reporting on the ANRSD succession)
@@ -1270,6 +1329,23 @@
   independence: 1
   causes: [mabrouk-chahed-sentenced]
   sources: [tap-mabrouk-appeal-2026]
+  evidence:
+    - passage_type: quote
+      passage: 'Affaire de blanchiment d’argent : la Cour d’appel confirme la condamnation de l''homme d''affaires Marouane Mabrouk à 14 ans de prison'
+      locator: article title (headline)
+      retrieved_at: '2026-09-11'
+      capture_missing: '2026-10-11'
+      lineage:
+        - publisher: Tunis Afrique Presse (TAP)
+          url: https://www.tap.info.tn/fr/Portail-Titres-de-l-actualit%C3%A9/20356219-affaire-de
+    - passage_type: quote
+      passage: Tunis, 3 juil (TAP)-La chambre criminelle spécialisée dans les affaires de corruption financière près la Cour d’appel de Tunis a confirmé, dans la nuit de jeudi à vendredi, le jugement rendu en première instance à l’encontre de l’homme d’affaires...
+      locator: article chapô / standfirst paragraph (the body below it is client-gated)
+      retrieved_at: '2026-09-11'
+      capture_missing: '2026-10-11'
+      lineage:
+        - publisher: Tunis Afrique Presse (TAP)
+          url: https://www.tap.info.tn/fr/Portail-Titres-de-l-actualit%C3%A9/20356219-affaire-de
 
 - id: sghiri-deep-system
   attributed_to: Dhafer Sghiri, as quoted in Business News

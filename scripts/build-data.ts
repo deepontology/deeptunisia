@@ -72,6 +72,7 @@ import {
 	type ResolvedInterval
 } from './dates.ts';
 import { loadParameters, type Parameters } from './parameters.ts';
+import { countOrigins, type EvidenceLike } from './origins.ts';
 import { auditInterpretationPaths } from '../src/lib/interpretation.ts';
 import { canonicalBytes, computeDatasetHash, CANONICAL_GENERATED } from './canonical.ts';
 
@@ -2158,6 +2159,19 @@ const cardWorklist = cardCompleteness
 	.filter((c) => c.authority >= 70 && c.filled <= 2)
 	.sort((a, b) => b.authority - a.authority || a.filled - b.filled);
 
+/**
+ * `origins` is computed from evidence lineage; `independence` stays the authored
+ * fallback. A record with no evidence — or evidence whose lineage names no
+ * origin — emits no `origins` field, so the interface can keep showing the
+ * authored count without a guessed replacement. (V29)
+ */
+function withOrigins<T extends { evidence?: readonly EvidenceLike[] }>(rows: T[]): (T & { origins?: number })[] {
+	return rows.map((row) => {
+		const origins = countOrigins(row.evidence);
+		return origins === undefined ? row : { ...row, origins };
+	});
+}
+
 const dataset = {
 	meta: {
 		generated: new Date().toISOString(),
@@ -2235,23 +2249,23 @@ const dataset = {
 	},
 	sources,
 	eras: resolvedEras,
-	institutions: resolvedInstitutions,
+	institutions: withOrigins(resolvedInstitutions),
 	roles,
-	people: resolvedPeople,
-	positions: resolvedPositions,
-	relationships: resolvedRelationships,
-	events: resolvedEvents,
+	people: withOrigins(resolvedPeople),
+	positions: withOrigins(resolvedPositions),
+	relationships: withOrigins(resolvedRelationships),
+	events: withOrigins(resolvedEvents),
 	questions,
 	hypotheses,
-	agreements: resolvedAgreements,
-	worldClaims: resolvedWorldClaims,
-	companies: resolvedCompanies,
-	contracts: resolvedContracts,
-	licences: resolvedLicences,
-	declarations: resolvedDeclarations,
-	education: resolvedEducation,
+	agreements: withOrigins(resolvedAgreements),
+	worldClaims: withOrigins(resolvedWorldClaims),
+	companies: withOrigins(resolvedCompanies),
+	contracts: withOrigins(resolvedContracts),
+	licences: withOrigins(resolvedLicences),
+	declarations: withOrigins(resolvedDeclarations),
+	education: withOrigins(resolvedEducation),
 	regions,
-	places
+	places: withOrigins(places)
 };
 
 // V22: trims are never silent. Every envelope clamp is published with the record,
@@ -2663,6 +2677,16 @@ export interface Dispute {
 	assessment?: string;
 }
 
+/**
+ * The claim axes every claim-bearing record shares (V26/V29). \`independence\` is
+ * the authored origin count and stays the fallback; \`origins\` is derived by the
+ * build from evidence lineage and is the stronger statement where it exists.
+ */
+export interface ClaimAxes {
+	independence?: number;
+	origins?: number;
+}
+
 export interface Interval {
 	startEarliest: number;
 	startLatest: number;
@@ -2742,7 +2766,7 @@ export interface Role {
 	sources: string[];
 }
 
-export interface Person {
+export interface Person extends ClaimAxes {
 	id: string;
 	name_en: string;
 	name_fr?: string;
@@ -2785,7 +2809,7 @@ export interface TimelineItem {
 	interval: Interval;
 }
 
-export interface Position {
+export interface Position extends ClaimAxes {
 	id: string;
 	role: string;
 	holder: string;
@@ -2816,7 +2840,7 @@ export interface Position {
 	successorDerived: string | null;
 }
 
-export interface Relationship {
+export interface Relationship extends ClaimAxes {
 	id: string;
 	from: string;
 	to: string;
@@ -2843,7 +2867,7 @@ export interface ContestedFraming {
 	source?: string;
 }
 
-export interface EventRec {
+export interface EventRec extends ClaimAxes {
 	id: string;
 	date: string;
 	date_end?: string;
@@ -3034,7 +3058,7 @@ export interface DatasetMeta {
 	};
 }
 
-export interface Agreement {
+export interface Agreement extends ClaimAxes {
 	id: string;
 	title_en: string;
 	title_fr?: string;
@@ -3070,7 +3094,7 @@ export interface Agreement {
  * cover (total debt incl. domestic, tourism) or a circulating claim kept per
  * rule 6. 'entity' is the graph institution id, or null for Tunisia itself.
  */
-export interface WorldClaim {
+export interface WorldClaim extends ClaimAxes {
 	id: string;
 	entity: string | null;
 	claim: string;
@@ -3092,7 +3116,7 @@ export interface WorldClaim {
 // --- v0.0.2 record kinds (spec §4) -------------------------------------------
 
 /** Corporate record, keyed by institution id (spec §4.2). */
-export interface Company {
+export interface Company extends ClaimAxes {
 	id: string;
 	legal_name_en?: string;
 	legal_name_fr?: string;
@@ -3118,7 +3142,7 @@ export interface Company {
 }
 
 /** Procurement / PPP / concession record (spec §4.4). */
-export interface Contract {
+export interface Contract extends ClaimAxes {
 	id: string;
 	title_en: string;
 	title_fr?: string;
@@ -3148,7 +3172,7 @@ export interface Contract {
 }
 
 /** Time-bound right between an operating company and a state body (spec §4.5). */
-export interface Licence {
+export interface Licence extends ClaimAxes {
 	id: string;
 	holder: string;
 	issuer: string;
@@ -3171,7 +3195,7 @@ export interface Licence {
 }
 
 /** A record about a document, not about the world (spec §4.6). */
-export interface Declaration {
+export interface Declaration extends ClaimAxes {
 	id: string;
 	declarer: string;
 	date: string;
@@ -3193,7 +3217,7 @@ export interface Declaration {
 }
 
 /** Education record (spec §4.7). */
-export interface Education {
+export interface Education extends ClaimAxes {
 	id: string;
 	person: string;
 	institution: string | null;
@@ -3253,7 +3277,7 @@ export interface RegionRec {
 	sources: string[];
 }
 
-export interface PlaceRec {
+export interface PlaceRec extends ClaimAxes {
 	id: string;
 	kind: string;
 	name_en: string;

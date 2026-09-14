@@ -475,6 +475,25 @@ console.log('\n  ── content files ──\n');
 	}
 }
 
+// --- The origins chip pair (V29) -------------------------------------------
+//
+// The chip makes a specific claim: it counts independent evidence groups, not
+// links. The note is what tells the reader that, so it must exist in all three
+// locales and must not be an English copy-paste; the count template must keep
+// its `{n}` placeholder everywhere or it renders without a number.
+
+console.log('\n  ── origins chip pair ──\n');
+
+{
+	const enNote = translate('en', 'origins.note');
+	for (const l of locales) {
+		ok(`${l} origins.count keeps the number placeholder`, placeholdersIn(translate(l, 'origins.count')).has('n'));
+		const note = translate(l, 'origins.note');
+		ok(`${l} origins.note is present and substantive`, note !== 'origins.note' && note.length > 20, `${note.length} chars`);
+		if (l !== 'en') ok(`${l} origins.note is a translation, not a copy`, note !== enNote);
+	}
+}
+
 console.log(
 	`\n  ${checks - failures}/${checks} checks passed${failures ? `, ${failures} FAILED` : ''}\n`
 );

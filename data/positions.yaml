@@ -496,11 +496,37 @@
     - >-
       جُمّد البرلمان يوم 25 جويلية 2021؛ ورُفعت الحصانة.
   notes_ar_by: model-reviewed
-  sources: [axios-saied-2021]
+  sources: [axios-saied-2021, aljazeera-ghannouchi-speaker-2019]
 
 # ===========================================================================
 # INTERIOR MINISTRY
 # ===========================================================================
+  evidence:
+    - passage_type: quote
+      passage: Tunisian President Kais Saied announced Sunday that he had dismissed the country's prime minister and frozen the parliament amidst mass protests in the country, Reuters reports.
+      locator: article lede (first paragraph) — the 25 July 2021 freeze, not the 2019 election
+      retrieved_at: '2026-09-11'
+      capture_url: https://web.archive.org/web/20230402065010/https://www.axios.com/2021/07/25/tunisia-sacks-president-prime-minister-parliament-protests
+      lineage:
+        - publisher: Axios
+          url: https://www.axios.com/2021/07/25/tunisia-sacks-president-prime-minister-parliament-protests
+    - passage_type: quote
+      passage: Saied also suspended the legal immunity of members of parliament.
+      locator: article, paragraph beginning 'Saied also suspended'
+      retrieved_at: '2026-09-11'
+      capture_url: https://web.archive.org/web/20230402065010/https://www.axios.com/2021/07/25/tunisia-sacks-president-prime-minister-parliament-protests
+      lineage:
+        - publisher: Axios
+          url: https://www.axios.com/2021/07/25/tunisia-sacks-president-prime-minister-parliament-protests
+    - passage_type: quote
+      passage: Tunisia‘s new parliament on Wednesday elected Islamist Ennahdha party’s Rached Ghannouchi as its speaker after the rival Heart of Tunisia party backed him, opening the way for a possible coalition government between them.
+      locator: opening paragraph (published 13 November 2019) — supports the position start date
+      retrieved_at: '2026-09-11'
+      capture_url: https://web.archive.org/web/20260901054216/https://www.aljazeera.com/news/2019/11/13/tunisia-parliament-elects-ennahdhas-rachid-ghannouchi-as-speaker
+      lineage:
+        - publisher: Reuters
+        - publisher: Al Jazeera
+          url: https://www.aljazeera.com/news/2019/11/13/tunisia-parliament-elects-ennahdhas-rachid-ghannouchi-as-speaker/
 
 - id: p-int-benali
   role: interior-minister
@@ -11160,6 +11186,15 @@
     وثائق من هيئة المحامين أو وثائق تعيين رسمية.
   falsifiable_by_ar_by: model-reviewed
   sources: [wikipedia-onat]
+  evidence:
+    - passage_type: quote
+      passage: '2004-2007 : Abdessattar Ben Moussa'
+      locator: section 'Présidents', list entry '2004-2007'
+      retrieved_at: '2026-09-11'
+      capture_url: https://web.archive.org/web/20250114113915/https://fr.wikipedia.org/wiki/Ordre_national_des_avocats_de_Tunisie
+      lineage:
+        - publisher: Wikipedia (FR)
+          url: https://fr.wikipedia.org/wiki/Ordre_national_des_avocats_de_Tunisie
 
 - id: p-onat-ameur-mehrezi
   role: bar-president

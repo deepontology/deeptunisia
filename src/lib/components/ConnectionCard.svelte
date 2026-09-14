@@ -3,6 +3,7 @@
 	import { t, describeInterval, basisLabel, relLabel } from '$lib/t.svelte';
 	import SourceList from './SourceList.svelte';
 	import Chip from '$lib/ui/Chip.svelte';
+	import OriginsChip from '$lib/ui/OriginsChip.svelte';
 	import CommunityActions from '$lib/ui/CommunityActions.svelte';
 	import ShareMenu from '$lib/ui/ShareMenu.svelte';
 	import { canonicalShareUrl } from '$lib/share';
@@ -48,6 +49,8 @@
 			subtype?: string;
 			basis?: string;
 			confidence?: string;
+			origins?: number;
+			independence?: number;
 			description?: string;
 			attributed_to?: string;
 			sources?: string[];
@@ -126,6 +129,7 @@
 				{rel.confidence ? `${rel.confidence} — ` : ''}{basisLabel(rel.basis as Basis)}
 			</Chip>
 		{/if}
+		<OriginsChip origins={rel.origins} independence={rel.independence} />
 		{#if edge.crossLayer}
 			<Chip variant="outline" size="xs" tint="var(--bridge)">{t('network.legend.crosses')}</Chip>
 		{/if}
