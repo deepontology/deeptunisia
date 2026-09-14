@@ -87,6 +87,41 @@
 	function resetWeights() {
 		app.weights = { authority: 1, proximity: 1, survival: 1, brokerage: 1, reach: 1, influence: 1 };
 	}
+
+	/**
+	 * Sensitivity banner (Phase 10A). The figures and thresholds come from
+	 * static/sensitivity.json, published by scripts/sensitivity.ts. A ranking
+	 * with too few nonzero people, or a worst perturbation below the unstable
+	 * threshold, says so here instead of rendering as a bare league table.
+	 */
+	interface SensitivitySummary {
+		counts?: { scoredByKey?: Record<string, number> };
+		worstByKey?: Record<string, { spearman: number; perturbation: string }>;
+		thresholds?: { sparseScored: number; unstableSpearman: number };
+	}
+	let sensitivity = $state<SensitivitySummary | null>(null);
+	$effect(() => {
+		fetch('/sensitivity.json')
+			.then((r) => (r.ok ? r.json() : null))
+			.then((d) => {
+				sensitivity = d;
+			})
+			.catch(() => {});
+	});
+	const limitation = $derived.by(() => {
+		const s = sensitivity;
+		if (!s?.thresholds) return null;
+		const key = sortKey;
+		const scored = s.counts?.scoredByKey?.[key];
+		const worst = s.worstByKey?.[key];
+		if (scored !== undefined && scored < s.thresholds.sparseScored) {
+			return { kind: 'sparse' as const, scored, threshold: s.thresholds.sparseScored };
+		}
+		if (worst && worst.spearman < s.thresholds.unstableSpearman) {
+			return { kind: 'unstable' as const, worst, threshold: s.thresholds.unstableSpearman };
+		}
+		return null;
+	});
 </script>
 
 <div class="rankings">
@@ -140,6 +175,24 @@
 			{/each}
 		</div>
 	</details>
+
+	{#if limitation}
+		<div class="limitation" role="note">
+			<strong>{t('rankings.limit.title')}</strong>
+			<span>
+				{limitation.kind === 'sparse'
+					? format(app.locale, 'rankings.limit.sparse', {
+							scored: limitation.scored,
+							threshold: limitation.threshold
+						})
+					: format(app.locale, 'rankings.limit.unstable', {
+							spearman: limitation.worst.spearman,
+							perturbation: limitation.worst.perturbation
+						})}
+			</span>
+			<a href="/sensitivity.json">{t('rankings.limit.method')}</a>
+		</div>
+	{/if}
 
 	<div
 		class="table-scroll"
@@ -543,6 +596,27 @@
 		line-height: var(--lh-relaxed);
 		color: var(--text-secondary);
 		max-width: 100ch;
+	}
+	.limitation {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: var(--s-2) var(--s-3);
+		border: 1px solid color-mix(in oklch, var(--basis-inferred) 35%, transparent);
+		background: color-mix(in oklch, var(--basis-inferred) 7%, transparent);
+		border-radius: var(--r-md);
+		padding: var(--s-3) var(--s-4);
+		margin: var(--s-3) 0;
+		font-size: var(--t-xs);
+		line-height: 1.5;
+	}
+	.limitation strong {
+		font-weight: 560;
+		color: var(--text-primary);
+	}
+	.limitation a {
+		color: var(--text-muted);
+		text-decoration: underline;
 	}
 	.sensitivity {
 		border-top: 1px solid var(--border-subtle);

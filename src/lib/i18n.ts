@@ -1080,6 +1080,12 @@ const en: Dict = {
 	'now.ratio.around': 'around',
 	'rankings.eyebrow': 'Rankings',
 	'rankings.hint': 'Six indices, computed separately. There is deliberately no single power score: the columns measure different things and disagree with each other, which is the finding rather than a defect.',
+	'rankings.limit.title': 'This ranking is not stable enough to read as a league table',
+	'rankings.limit.sparse':
+		'Only {scored} people score above zero on this column (threshold {threshold}); the order below comes mostly from zeros and ties. Every row links to the records behind it.',
+	'rankings.limit.unstable':
+		'The worst sensitivity run ({perturbation}) moves this order to Spearman {spearman}. Every row links to the records behind it.',
+	'rankings.limit.method': 'Method and raw sensitivity data',
 	'rankings.asof': 'As of {date}',
 	'rankings.alltime': 'Whole timeline',
 	'rankings.reset': 'reset to equal',
@@ -2380,6 +2386,12 @@ const fr: Dict = {
 	'now.ratio.around': 'environ',
 	'rankings.eyebrow': 'Classements',
 	'rankings.hint': "Six indices, calculés séparément. Il n'y a volontairement pas de score de pouvoir unique : les colonnes mesurent des choses différentes et se contredisent parfois, ce qui est le résultat plutôt qu'un défaut.",
+	'rankings.limit.title': 'Ce classement n’est pas assez stable pour être lu comme un classement de championnat',
+	'rankings.limit.sparse':
+		'Seules {scored} personnes obtiennent un score supérieur à zéro dans cette colonne (seuil {threshold}) ; l’ordre ci-dessous vient surtout de zéros et d’ex æquo. Chaque ligne renvoie aux enregistrements qui la sous-tendent.',
+	'rankings.limit.unstable':
+		'La pire exécution de l’analyse de sensibilité ({perturbation}) amène cet ordre à un Spearman de {spearman}. Chaque ligne renvoie aux enregistrements qui la sous-tendent.',
+	'rankings.limit.method': 'Méthode et données brutes de sensibilité',
 	'rankings.asof': 'Au {date}',
 	'rankings.alltime': 'Toute la chronologie',
 	'rankings.reset': 'réinitialiser à égal',
@@ -3674,6 +3686,12 @@ const ar: Dict = {
 	'now.ratio.around': 'حوالي',
 	'rankings.eyebrow': 'الترتيب',
 	'rankings.hint': 'ستة مؤشرات تُحسب منفصلة. لا يوجد عمدًا درجة قوة واحدة: الأعمدة تقيس أشياء مختلفة وقد تتعارض، وهذا هو النتيجة لا عيب.',
+	'rankings.limit.title': 'هذا الترتيب ليس مستقرًا بما يكفي لقراءته كجدول ترتيب',
+	'rankings.limit.sparse':
+		'{scored} أشخاص فقط يسجّلون فوق الصفر في هذا العمود (العتبة {threshold})؛ والترتيب أدناه يأتي في معظمه من الأصفار والتعادلات. كل صف يرتبط بالسجلات التي تقف خلفه.',
+	'rankings.limit.unstable':
+		'التشغيل الأسوأ للحساسية ({perturbation}) ينقل هذا الترتيب إلى سبيرمان {spearman}. كل صف يرتبط بالسجلات التي تقف خلفه.',
+	'rankings.limit.method': 'المنهجية وبيانات الحساسية الخام',
 	'rankings.asof': 'حتى {date}',
 	'rankings.alltime': 'كامل الخط الزمني',
 	'rankings.reset': 'إعادة ضبط إلى التساوي',
