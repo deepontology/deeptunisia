@@ -42,6 +42,11 @@ import { resolveInterval } from './dates.ts';
 import { z } from 'zod';
 import { applyEdit, EmitError, type Target } from './emit.ts';
 import {
+	REVIEW_FLAGS as RISK,
+	reviewRiskOf as riskOf,
+	type ReviewFlag as Risk
+} from './review-coverage.ts';
+import {
 	PositionSchema,
 	RelationshipSchema,
 	EventSchema,
@@ -76,21 +81,12 @@ const SOURCES_FILE = 'sources.yaml';
 const PRIMARY_TIERS = [1, 2];
 
 /**
- * Risk order, copied deliberately from build-data.ts rather than imported.
- *
- * If the two ever diverge, the queue would order by one definition while the
- * published coverage table reports another — so test-emit.ts asserts they agree.
+ * Risk order and the single ordering key come from the shared review-coverage
+ * module. They used to be a copy checked against the build by test-emit; the
+ * import removes the copy, so the queue ordering and the published coverage
+ * cannot diverge by construction. The published table itself uses every flag
+ * (they overlap); this key is only what orders the queue, most-damaging first.
  */
-const RISK = ['unsubstantiated', 'attributed', 'inferred', 'reported', 'documented'] as const;
-type Risk = (typeof RISK)[number];
-
-export function riskOf(r: { basis?: string; attributed_to?: string }): Risk {
-	if (r.basis === 'unsubstantiated') return 'unsubstantiated';
-	if (r.attributed_to) return 'attributed';
-	if (r.basis === 'inferred') return 'inferred';
-	if (r.basis === 'documented') return 'documented';
-	return 'reported';
-}
 
 const dataPath = (file: string) => join(ROOT, 'data', file);
 const readData = (file: string) => readFileSync(dataPath(file), 'utf8');

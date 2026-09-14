@@ -240,13 +240,16 @@ function checkLedger(html: string, d: any): void {
 		[/at tier 3,\s*(\d+) at tier 4,/, tierCount(d, 4), 'tier 4'],
 		[/at tier 4,\s*(\d+) at tier 5\./, tierCount(d, 5), 'tier 5'],
 		[/(\d+) of the \d+ sources currently back/, counts.sources - counts.sourcesCited, 'uncited sources'],
-		[/<span class="v">27 \/ (\d+)<\/span>/, review.reviewable, 'reviewed / reviewable'],
+		[/<span class="v">(\d+) \/ \d+<\/span>/, review.reviewed, 'reviewed'],
+		[/<span class="v">\d+ \/ (\d+)<\/span>/, review.reviewable, 'reviewable'],
 		[/<span class="v">(\d+)<\/span>\s*\n\s*<span class="d" data-i18n-html="limits\.8"/, (d.meta?.contradictions ?? []).length, 'contradictions'],
 		[/<b>human-translated entries<\/b> of ([\d,]+) translatable strings/, translation.total, 'translatable strings'],
 		[/translatable strings, (\d+) human-translated/, translation.tiers?.human ?? 0, 'human-translated count'],
 		[/<span class="v">(\d+)<\/span>\s*\n\s*<span class="d" data-i18n-html="limits\.6"/, d.meta?.needsPrimarySourceCount, 'needs-primary-source'],
-		[/Of the \d+ unsubstantiated claims, the (\d+) attributed/, review.byRisk?.attributed?.total, 'attributed claims'],
-		[/the \d+ attributed\s*\n\s*ones and the (\d+) inferences/, d.meta?.basisCounts?.inferred, 'inferences']
+		[/all (\d+) review notes/, review.reviewed, 'review notes'],
+		[/Of the (\d+) unsubstantiated claims/, review.flags?.unsubstantiated?.total, 'unsubstantiated claims'],
+		[/the (\d+) that name a source/, review.flags?.attributed?.total, 'attributed claims'],
+		[/and the (\d+)\s+inferences/, review.flags?.inferred?.total, 'inferences']
 	];
 	let failed = false;
 	for (const [re, want, label] of expected) {
@@ -322,16 +325,33 @@ function checkLocalizedLedger(d: any): void {
 			bad(loc, 'uncited count', m[0], counts.sources - counts.sourcesCited);
 		}
 	}
-	// Risk figures: FR "des 84 affirmations attribuées… des 16 déductions";
-	// AR "الأربعة والثمانين المنسوبة… الست عشرة المستنتَجة"
-	for (const [loc, s4] of [['fr', fr4], ['ar', ar4]] as const) {
-		const attr = s4.match(/(?:des )?(\d+) affirmations attribuées/);
-		if (attr && Number(attr[1]) !== (d.meta?.review?.byRisk?.attributed?.total ?? 0)) {
-			bad(loc, 'attributed claims', attr[0], d.meta?.review?.byRisk?.attributed?.total ?? 0);
-		}
-		const inf = s4.match(/(?:des )?(\d+) déductions/);
-		if (inf && Number(inf[1]) !== (d.meta?.basisCounts?.inferred ?? 0)) {
-			bad(loc, 'inferences', inf[0], d.meta?.basisCounts?.inferred ?? 0);
+	// Risk figures. The flags overlap, so every figure is checked against its own
+	// flag total, never against a partition. One missing figure is a failure, not
+	// a skip: a translation that drops a number must not pass silently.
+	const flagTotal = (flag: string) => d.meta?.review?.flags?.[flag]?.total ?? 0;
+	const riskFigures: Record<'fr' | 'ar', [RegExp, string, number][]> = {
+		fr: [
+			[/(\d+)\s+notes? de relecture/, 'review notes', d.meta?.review?.reviewed ?? 0],
+			[/(\d+)\s+affirmations? non étayées?/, 'unsubstantiated claims', flagTotal('unsubstantiated')],
+			[/(\d+)\s+qui nomment une source/, 'attributed claims', flagTotal('attributed')],
+			[/(\d+)\s+déductions?/, 'inferences', flagTotal('inferred')]
+		],
+		ar: [
+			[/المراجعة الـ(\d+)/, 'review notes', d.meta?.review?.reviewed ?? 0],
+			[/(\d+)\s+ادعاءً غير مُسنَد/, 'unsubstantiated claims', flagTotal('unsubstantiated')],
+			[/(\d+)\s+ادعاءات تسمّي مصدرًا/, 'attributed claims', flagTotal('attributed')],
+			[/(\d+)\s+استنتاجًا/, 'inferences', flagTotal('inferred')]
+		]
+	};
+	for (const loc of ['fr', 'ar'] as const) {
+		const s4 = loc === 'fr' ? fr4 : ar4;
+		for (const [re, what, want] of riskFigures[loc]) {
+			const m = s4.match(re);
+			if (!m) {
+				bad(loc, what, '(figure not found in limits.4)', want);
+				continue;
+			}
+			if (Number(m[1]) !== want) bad(loc, what, m[0], want);
 		}
 	}
 }

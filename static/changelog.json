@@ -1,12 +1,17 @@
 [
   {
-    "hash": "145ea0ed2",
-    "date": "2026-09-11T16:49:42+01:00",
-    "subject": "data: import the eight-claim evidence tranche into the graph",
+    "hash": "03f927b4f",
+    "date": "2026-09-14T16:08:06+01:00",
+    "subject": "Claim-level evidence in the graph, derived origins, and the origins chip (#28)",
     "kind": "revision",
-    "added": 268,
-    "removed": 9,
+    "added": 600,
+    "removed": 12,
     "files": [
+      {
+        "file": "data/contrib/evidence-tranche-2026-09-11.yaml",
+        "added": 318,
+        "removed": 0
+      },
       {
         "file": "data/events.yaml",
         "added": 78,
@@ -29,38 +34,8 @@
       },
       {
         "file": "data/sources.yaml",
-        "added": 68,
-        "removed": 0
-      }
-    ]
-  },
-  {
-    "hash": "57f241034",
-    "date": "2026-09-11T13:47:28+01:00",
-    "subject": "feat: derive independent origins and require real archive snapshots (V29)",
-    "kind": "revision",
-    "added": 14,
-    "removed": 3,
-    "files": [
-      {
-        "file": "data/sources.yaml",
-        "added": 14,
+        "added": 82,
         "removed": 3
-      }
-    ]
-  },
-  {
-    "hash": "cfcbd65c0",
-    "date": "2026-09-11T13:46:53+01:00",
-    "subject": "data(outbox): passage-level evidence for eight high-risk claims",
-    "kind": "expansion",
-    "added": 318,
-    "removed": 0,
-    "files": [
-      {
-        "file": "data/contrib/evidence-tranche-2026-09-11.yaml",
-        "added": 318,
-        "removed": 0
       }
     ]
   },
