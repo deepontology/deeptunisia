@@ -68,6 +68,7 @@ import {
 	REVIEW_FLAGS,
 	type ReviewInput
 } from './review-coverage.ts';
+import { buildCoverage, SPARSE_THRESHOLD } from './coverage.ts';
 import { fileURLToPath } from 'node:url';
 
 // The engine ships neutral example defaults; the fixtures below assert the
@@ -1268,6 +1269,90 @@ ok(
 		csv.includes('relationship,inferred,1,0,0,0,0,0,0') &&
 			csv.includes('event,unsubstantiated,1,1,0,0,0,0,0'),
 		`${csv.trim().split('\n').length - 1} row(s)`
+	);
+}
+
+// ---------------------------------------------------------------------------
+// Phase 10A — coverage by slice. The published CSV must show a slice's
+// effective nonzero sample (evidence or derived origins), not its nominal
+// record count, so a two-record slice cannot render as a league table.
+// ---------------------------------------------------------------------------
+
+{
+	const D = (s: string) => Date.parse(`${s}T00:00:00Z`);
+	const iv = (a: string, b: string) => ({ startEarliest: D(a), endEarliest: D(b), endLatest: D(b) });
+	const pos = (id: string, extra: Record<string, unknown> = {}) => ({
+		id,
+		role: 'r-a',
+		interval: iv('2000-01-01', '2005-01-01'),
+		sources: ['s1'],
+		...extra
+	});
+	const base = {
+		meta: { cutoff: D('2026-01-01') },
+		institutions: [{ id: 'i-sec' }],
+		roles: [{ id: 'r-a', institution: 'i-sec' }],
+		positions: [
+			pos('p1', { review: {}, evidence: [{}], origins: 1 }),
+			pos('p2', { evidence: [{}] }),
+			pos('p3', { origins: 2 })
+		],
+		relationships: [],
+		events: [],
+		eras: [{ id: 'era-a', interval: iv('1990-01-01', '2010-01-01') }],
+		sources: [
+			{ id: 's1', publisher: 'TAP', lang: 'fr', tier: 1 },
+			{ id: 's2', publisher: 'TAP', lang: 'fr', tier: 3 }
+		]
+	};
+	const rows = buildCoverage(base);
+	const office = rows.find((r) => r.dimension === 'office' && r.value === 'r-a')!;
+	ok(
+		'Phase 10A: a slice counts evidence and origins as its effective nonzero sample',
+		office.records === 3 &&
+			office.nonzero === 3 &&
+			office.withEvidence === 2 &&
+			office.originsKnown === 2 &&
+			office.sparse === false,
+		`records ${office.records}, nonzero ${office.nonzero}`
+	);
+	ok(
+		'Phase 10A: the institution slice includes its roles\u2019 positions',
+		rows.find((r) => r.dimension === 'institution' && r.value === 'i-sec')!.nonzero === 3
+	);
+	ok(
+		'Phase 10A: the era slice counts overlapping records',
+		rows.find((r) => r.dimension === 'era' && r.value === 'era-a')!.records === 3
+	);
+	ok(
+		'Phase 10A: the source-family dimension normalises the publisher',
+		rows.find((r) => r.dimension === 'source_family' && r.value === 'tap')!.records === 2,
+		'two TAP rows in one family'
+	);
+
+	const sparse = buildCoverage({
+		...base,
+		positions: [pos('p1', { evidence: [{}] }), pos('p2'), pos('p3', { review: {} })]
+	});
+	const sparseOffice = sparse.find((r) => r.dimension === 'office')!;
+	ok(
+		'Phase 10A: fewer than three effective records marks the slice sparse',
+		sparseOffice.nonzero === 1 && sparseOffice.sparse === true && sparseOffice.reviewed === 1,
+		`nonzero ${sparseOffice.nonzero}, threshold ${SPARSE_THRESHOLD}`
+	);
+	ok(
+		'Phase 10A: a review note alone is not an effective nonzero sample',
+		sparseOffice.reviewed === 1 && sparseOffice.nonzero === 1
+	);
+
+	const outside = buildCoverage({
+		...base,
+		positions: [pos('p9')],
+		eras: [{ id: 'era-b', interval: iv('2006-01-01', '2010-01-01') }]
+	});
+	ok(
+		'Phase 10A: a record outside the era window is not counted',
+		outside.find((r) => r.value === 'era-b')!.records === 0
 	);
 }
 
