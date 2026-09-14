@@ -47,7 +47,7 @@ That review figure is deliberately unflattering. The project's stated architectu
 
 ## Where that review went {#where-review-went}
 
-A single percentage treats verifying a gazette-dated appointment as interchangeable with verifying an unsubstantiated allegation about a named living person. Those are not the same risk, and averaging them lets the figure look identical whether the effort went somewhere useful or somewhere safe. Broken out, it is worse than the aggregate suggests: every review so far has landed on the best-evidenced claims, and the records most capable of doing harm have had none at all.
+A single percentage treats verifying a gazette-dated appointment as interchangeable with verifying an unsubstantiated allegation about a named living person. Those are not the same risk, and averaging them lets the figure look identical whether the effort went somewhere useful or somewhere safe. Broken out by risk flag, most unsubstantiated claims already carry a review note, but every note so far was written by the compilation and research passes, and none records an independent check. The flags overlap, so the rows do not add up to the total, and that overlap is the point: an inferred claim that names its source has to be visible under both.
 
 ## How much of this exists in three languages {#languages-honest}
 
