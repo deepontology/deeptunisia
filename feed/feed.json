@@ -3,6 +3,56 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:21ef285a8dc13f35",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "La Tunisie au Salon professionnel « Maison & Objet » à Paris",
+      "link": "https://kapitalis.com/tunisie/2026/09/14/la-tunisie-au-salon-professionnel-maison-objet-a-paris/",
+      "published": "2026-09-14T18:51:33Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:11629349a7ddd061",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Tunisie | Bulletin météo pour cette nuit",
+      "link": "https://kapitalis.com/tunisie/2026/09/14/tunisie-bulletin-meteo-pour-cette-nuit-2/",
+      "published": "2026-09-14T18:32:48Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:african-manager:137e072bb93f4e14",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Industrie de la chaussure : La Tunisie participe au salon MICAM Milano, à Milan",
+      "link": "https://africanmanager.com/industrie-de-la-chaussure-la-tunisie-participe-au-salon-micam-milano-a-milan/",
+      "published": "2026-09-14T16:51:52Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:nawaat:abf13b1dad86af8e",
+      "outlet": "Nawaat",
+      "outletId": "nawaat",
+      "title": "وفاة شاب مريض في السجن، العائلة تحت الصدمة",
+      "link": "https://nawaat.org/2026/09/14/%d9%88%d9%81%d8%a7%d8%a9-%d8%b4%d8%a7%d8%a8-%d9%85%d8%b1%d9%8a%d8%b6-%d9%81%d9%8a-%d8%a7%d9%84%d8%b3%d8%ac%d9%86%d8%8c-%d8%a7%d9%84%d8%b9%d8%a7%d8%a6%d9%84%d8%a9-%d8%aa%d8%ad%d8%aa-%d8%a7%d9%84%d8%b5/",
+      "published": "2026-09-14T16:26:13Z",
+      "lang": "ar",
+      "author": "Chaker Jahmi"
+    },
+    {
+      "id": "feed:african-manager:9afcb43629420250",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Bourse : Le marché reprend des couleurs",
+      "link": "https://africanmanager.com/bourse-le-marche-reprend-des-couleurs/",
+      "published": "2026-09-14T15:57:19Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
       "id": "feed:african-manager:8d6f3300ab2fade5",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -11103,51 +11153,6 @@
       "title": "Bizerte: Une facture salée pour un pétrolier polluant ?",
       "link": "https://africanmanager.com/bizerte-une-facture-salee-pour-un-petrolier-polluant/",
       "published": "2026-08-14T08:26:46Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:c37a20686e573a88",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "L’Allemagne réforme ses services de renseignement",
-      "link": "https://kapitalis.com/tunisie/2026/08/14/lallemagne-reforme-ses-services-de-renseignement/",
-      "published": "2026-08-14T08:23:47Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:b5ab1d429c5398bb",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Auto électrique | Dongfeng Box bouscule les Européennes de son segment",
-      "link": "https://kapitalis.com/tunisie/2026/08/14/auto-electrique-dongfeng-box-bouscule-les-europeennes-de-son-segment/",
-      "published": "2026-08-14T07:52:07Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:eb73172a257d599e",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Gabès-Sud : conseil local et administrations régionales réunis pour débloquer les projets",
-      "link": "https://africanmanager.com/gabes-sud-conseil-local-et-administrations-regionales-reunis-pour-debloquer-les-projets/",
-      "published": "2026-08-14T07:43:58Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:23310a3994a911f6",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "13 août : le Conseil des régions appelle à protéger les femmes précaires et sans soutien",
-      "link": "https://africanmanager.com/13-aout-le-conseil-des-regions-appelle-a-proteger-les-femmes-precaires-et-sans-soutien/",
-      "published": "2026-08-14T07:43:08Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:449b782dd8737be5",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Sfax : le conseil régional se penche sur la rentrée scolaire 2026-2027",
-      "link": "https://africanmanager.com/sfax-le-conseil-regional-se-penche-sur-la-rentree-scolaire-2026-2027/",
-      "published": "2026-08-14T07:40:56Z",
       "lang": "fr"
     }
   ]
