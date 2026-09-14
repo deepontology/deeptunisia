@@ -1,0 +1,318 @@
+# Evidence patch to existing records — passage-level evidence (schema V29), 2026-09-11.
+# Mission: bind eight high-risk claims to an exact passage, a locator and a capture
+#   (or a dated capture retry).
+# Sources fetched 2026-09-11: Deutsche Welle, BBC News, Amnesty International,
+#   Arab News (Reuters wire), Middle East Online, Axios, Al Jazeera (Reuters wire),
+#   fr.wikipedia (Ordre national des avocats de Tunisie, Première dame de Tunisie,
+#   Moncef Marzouki, Mohamed Ennaceur), Leaders, Réalités, Tunis Afrique Presse.
+# Unreachable cited sources: the three reuters.com article URLs serve no article text to a
+#   direct fetch (404/401, or a bot-challenge page); the registered Wayback replays of the two 2025 Reuters stories resolve
+#   to a DataDome JS challenge page, not article text. Fetched replacements are proposed
+#   under `sources:` and added to the affected rows (dw-eltaief-2023, bbc-ghannouchi-2025,
+#   amnesty-conspiracy2-2025, arabnews-conspiracy-2025, meo-conspiracy-appeal-2026,
+#   aljazeera-ghannouchi-speaker-2019, dw-clampdown-2025).
+# Failure vocabulary (must not be collapsed):
+#   - "12-35 is a range across the 8 July 2025 first-instance sentences, not a single sentence."
+#   - "BBC states Kamel Guizani was sentenced in absentia on 8 July 2025 without publishing
+#      his term; the 35-year term against him is confirmed at the 2 February 2026 appeal in
+#      a TAP-derived report, not in the 8 July text."
+#   - "'political conflict' is a record label: the fetched passages state the freeze, the
+#      immunity suspension, the prosecution and the detention; no fetched document uses
+#      that characterisation."
+#   - "TAP is client-gated beyond the headline and the chapô; those are the published,
+#      quotable text."
+#   - "Slim Ennaceur's youth swimming titles (minime/cadet) are not stated by the three
+#      cited obituary/encyclopaedia sources fetched here."
+# Candidates are proposals, not graph data. Outbox only; nothing canonical changed.
+
+sources:
+  - id: dw-eltaief-2023
+    title: "Tunisia: Activists, prominent businessman arrested by police"
+    publisher: Deutsche Welle
+    date: 2023-02-12
+    url: https://www.dw.com/en/tunisia-activists-prominent-businessman-arrested-by-police/a-64677383
+    archive_url: https://web.archive.org/web/20250724124457/https://www.dw.com/en/tunisia-activists-prominent-businessman-arrested-by-police/a-64677383
+    tier: 3
+    lang: en
+    excerpt: "Police in Tunisia have arrested influential businessman Kamel Eltaief, a former confidant of ousted president Zine El Abidine Ben Ali, and two political activists ... Abdelhamid Jelassi ... and political activist Khayam Turki were also arrested."
+  - id: bbc-ghannouchi-2025
+    title: "Rached Ghannouchi: Tunisian opposition leader jailed for 14 years"
+    publisher: BBC News
+    date: 2025-07-09
+    url: https://www.bbc.com/news/articles/c04d1d71rx4o
+    archive_url: https://web.archive.org/web/20251117121842/https://www.bbc.com/news/articles/c04d1d71rx4o
+    tier: 3
+    lang: en
+    excerpt: "Tunisian opposition leader Rached Ghannouchi has been sentenced to 14 years in prison ... Former Foreign Affairs Minister Rafik Abdessalem Bouchlaka and ex-intelligence chief Kamel Guizani were also sentenced in absentia."
+  - id: amnesty-conspiracy2-2025
+    title: "Tunisia: Mass Convictions in 'Conspiracy Case 2' Deepen Rule of Law Crisis"
+    publisher: Amnesty International
+    date: 2025-07-28
+    url: https://www.amnestyusa.org/press-releases/tunisia-mass-convictions-in-conspiracy-case-2-deepen-rule-of-law-crisis
+    archive_url: https://web.archive.org/web/20250812063104/https://www.amnestyusa.org/press-releases/tunisia-mass-convictions-in-conspiracy-case-2-deepen-rule-of-law-crisis/
+    tier: 2
+    lang: en
+    excerpt: "The trial opened on June 24, 2025 and concluded with mass conviction on July 8 of 21 out of 24 individuals ... Sentences ranged from 12 to 35 years imposed on 21 individuals."
+  - id: arabnews-conspiracy-2025
+    title: "Tunisian court set to rule in conspiracy trial, lawyers protest"
+    publisher: Arab News (Reuters)
+    date: 2025-04-18
+    url: https://www.arabnews.com/node/2597632/middle-east
+    archive_url: https://web.archive.org/web/20260420063757/https://www.arabnews.com/node/2597632/middle-east
+    tier: 3
+    lang: en
+    excerpt: "A Tunisian court is set to issue a ruling in the conspiracy case against prominent opponents, as lawyers protested and described the trial as a farce ... Some of the opposition defendants ... have been in custody since being detained in 2023."
+    notes:
+      - "Reuters wire report republished by Arab News under a different headline; the fetched page carries the byline Reuters dated 18 April 2025."
+  - id: meo-conspiracy-appeal-2026
+    title: "Tunisia hands down jail terms of up to 35 years in conspiracy case"
+    publisher: Middle East Online
+    date: 2026-02-03
+    url: https://middle-east-online.com/en/tunisia-hands-down-jail-terms-35-years-conspiracy-case
+    tier: 4
+    lang: en
+    excerpt: "According to TAP, the court also confirmed 35-year sentences against Kamel Guizani, the former intelligence chief, Rafik Abdessalem, a former foreign minister, and Mouadh Ghannouchi, the son of Rached Ghannouchi."
+    notes:
+      - "No usable Wayback replay located on 2026-09-11: the capture at 20260204052002 replays an HTTP 403 page; evidence entries carry capture_missing 2026-10-11."
+  - id: aljazeera-ghannouchi-speaker-2019
+    title: "Tunisia parliament elects Ennahdha's Rachid Ghannouchi as speaker"
+    publisher: Al Jazeera (Reuters)
+    date: 2019-11-13
+    url: https://www.aljazeera.com/news/2019/11/13/tunisia-parliament-elects-ennahdhas-rachid-ghannouchi-as-speaker/
+    archive_url: https://web.archive.org/web/20260901054216/https://www.aljazeera.com/news/2019/11/13/tunisia-parliament-elects-ennahdhas-rachid-ghannouchi-as-speaker
+    tier: 3
+    lang: en
+    excerpt: "Tunisia's new parliament on Wednesday elected Islamist Ennahdha party's Rached Ghannouchi as its speaker after the rival Heart of Tunisia party backed him, opening the way for a possible coalition government between them."
+    notes:
+      - "The fetched page carries the byline Reuters and the publication date 13 November 2019."
+  - id: dw-clampdown-2025
+    title: "Tunisia president's far-reaching clampdown targets opponents"
+    publisher: Deutsche Welle
+    date: 2025-07-11
+    url: https://www.dw.com/en/tunisia-presidents-far-reaching-clampdown-targets-opponents/a-73241559
+    archive_url: https://web.archive.org/web/20260902144029/https://www.dw.com/en/tunisia-presidents-far-reaching-clampdown-targets-opponents/a-73241559
+    tier: 3
+    lang: en
+    excerpt: "Politicians and officials, including opposition leader Rached Ghannouchi, were variously sentenced to 12 to 35 years in prison ... By staying in his cell, where he has been since April 2023, he upheld his boycott of Tunisia's judiciary."
+
+events:
+  - id: arrests-feb-2023
+    sources: [reuters-eltaief-2023, dw-eltaief-2023]
+    evidence:
+      - passage_type: quote
+        passage: "Police in Tunisia have arrested influential businessman Kamel Eltaief, a former confidant of ousted president Zine El Abidine Ben Ali, and two political activists in a case that, according to local media, was based on suspicion of conspiracy against state security."
+        locator: "article lede (first paragraph)"
+        retrieved_at: "2026-09-11"
+        capture_url: https://web.archive.org/web/20250724124457/https://www.dw.com/en/tunisia-activists-prominent-businessman-arrested-by-police/a-64677383
+        lineage:
+          - publisher: Deutsche Welle
+            url: https://www.dw.com/en/tunisia-activists-prominent-businessman-arrested-by-police/a-64677383
+      - passage_type: quote
+        passage: "Abdelhamid Jelassi, a former senior leader of the Islamist-inspired movement Ennahdha — staunch opponents of President Kais Saied — and political activist Khayam Turki were also arrested."
+        locator: "article, paragraph beginning 'Abdelhamid Jelassi'"
+        retrieved_at: "2026-09-11"
+        capture_url: https://web.archive.org/web/20250724124457/https://www.dw.com/en/tunisia-activists-prominent-businessman-arrested-by-police/a-64677383
+        lineage:
+          - publisher: Deutsche Welle
+            url: https://www.dw.com/en/tunisia-activists-prominent-businessman-arrested-by-police/a-64677383
+
+  - id: sentences-july-2025
+    sources: [reuters-sentences-2025, reuters-conspiracy-2025, bbc-ghannouchi-2025, amnesty-conspiracy2-2025, arabnews-conspiracy-2025, meo-conspiracy-appeal-2026]
+    evidence:
+      - passage_type: quote
+        passage: "Tunisian opposition leader Rached Ghannouchi has been sentenced to 14 years in prison, adding to a string of other jail terms he has received in separate cases."
+        locator: "opening paragraph"
+        retrieved_at: "2026-09-11"
+        capture_url: https://web.archive.org/web/20251117121842/https://www.bbc.com/news/articles/c04d1d71rx4o
+        lineage:
+          - publisher: BBC News
+            url: https://www.bbc.com/news/articles/c04d1d71rx4o
+      - passage_type: quote
+        passage: "Former Foreign Affairs Minister Rafik Abdessalem Bouchlaka and ex-intelligence chief Kamel Guizani were also sentenced in absentia."
+        locator: "article, paragraph beginning 'According to news agency Tunis Afrique Presse'"
+        retrieved_at: "2026-09-11"
+        capture_url: https://web.archive.org/web/20251117121842/https://www.bbc.com/news/articles/c04d1d71rx4o
+        lineage:
+          - publisher: BBC News
+            url: https://www.bbc.com/news/articles/c04d1d71rx4o
+      - passage_type: quote
+        passage: "The trial opened on June 24, 2025 and concluded with mass conviction on July 8 of 21 out of 24 individuals including senior political leaders from Ennahdha Party, former government and security officials, lawyers, and other opposition party members. Sentences ranged from 12 to 35 years imposed on 21 individuals."
+        locator: "section 'Mass sentences following a politically motivated trial', first paragraph"
+        retrieved_at: "2026-09-11"
+        capture_url: https://web.archive.org/web/20250812063104/https://www.amnestyusa.org/press-releases/tunisia-mass-convictions-in-conspiracy-case-2-deepen-rule-of-law-crisis/
+        lineage:
+          - publisher: Amnesty International
+            url: https://www.amnestyusa.org/press-releases/tunisia-mass-convictions-in-conspiracy-case-2-deepen-rule-of-law-crisis
+      - passage_type: quote
+        passage: "A Tunisian court is set to issue a ruling in the conspiracy case against prominent opponents, as lawyers protested and described the trial as a farce, while others called the proceedings a symbol of President Kais Saied's authoritarian rule."
+        locator: "article lede (first paragraph) — supports the trial/mass-prosecution context, not the sentence detail"
+        retrieved_at: "2026-09-11"
+        capture_url: https://web.archive.org/web/20260420063757/https://www.arabnews.com/node/2597632/middle-east
+        lineage:
+          - publisher: Reuters
+          - publisher: Arab News
+            url: https://www.arabnews.com/node/2597632/middle-east
+      - passage_type: quote
+        passage: "According to TAP, the court also confirmed 35-year sentences against Kamel Guizani, the former intelligence chief, Rafik Abdessalem, a former foreign minister, and Mouadh Ghannouchi, the son of Rached Ghannouchi. All three are currently outside Tunisia."
+        locator: "article, paragraph beginning 'According to TAP' (report dated 3 February 2026 on the 2 February 2026 appeal ruling) — confirms the 35-year term against Guizani that the 8 July 2025 first-instance reports do not publish"
+        retrieved_at: "2026-09-11"
+        capture_missing: "2026-10-11"
+        lineage:
+          - publisher: Middle East Online
+            url: https://middle-east-online.com/en/tunisia-hands-down-jail-terms-35-years-conspiracy-case
+
+  - id: mabrouk-appeal-2026
+    sources: [tap-mabrouk-appeal-2026]
+    evidence:
+      - passage_type: quote
+        passage: "Affaire de blanchiment d’argent : la Cour d’appel confirme la condamnation de l'homme d'affaires Marouane Mabrouk à 14 ans de prison"
+        locator: "article title (headline)"
+        retrieved_at: "2026-09-11"
+        capture_missing: "2026-10-11"
+        lineage:
+          - publisher: Tunis Afrique Presse (TAP)
+            url: https://www.tap.info.tn/fr/Portail-Titres-de-l-actualit%C3%A9/20356219-affaire-de
+      - passage_type: quote
+        passage: "Tunis, 3 juil (TAP)-La chambre criminelle spécialisée dans les affaires de corruption financière près la Cour d’appel de Tunis a confirmé, dans la nuit de jeudi à vendredi, le jugement rendu en première instance à l’encontre de l’homme d’affaires..."
+        locator: "article chapô / standfirst paragraph (the body below it is client-gated)"
+        retrieved_at: "2026-09-11"
+        capture_missing: "2026-10-11"
+        lineage:
+          - publisher: Tunis Afrique Presse (TAP)
+            url: https://www.tap.info.tn/fr/Portail-Titres-de-l-actualit%C3%A9/20356219-affaire-de
+
+positions:
+  - id: p-speaker-ghannouchi
+    sources: [axios-saied-2021, aljazeera-ghannouchi-speaker-2019]
+    evidence:
+      - passage_type: quote
+        passage: "Tunisian President Kais Saied announced Sunday that he had dismissed the country's prime minister and frozen the parliament amidst mass protests in the country, Reuters reports."
+        locator: "article lede (first paragraph) — the 25 July 2021 freeze, not the 2019 election"
+        retrieved_at: "2026-09-11"
+        capture_url: https://web.archive.org/web/20230402065010/https://www.axios.com/2021/07/25/tunisia-sacks-president-prime-minister-parliament-protests
+        lineage:
+          - publisher: Axios
+            url: https://www.axios.com/2021/07/25/tunisia-sacks-president-prime-minister-parliament-protests
+      - passage_type: quote
+        passage: "Saied also suspended the legal immunity of members of parliament."
+        locator: "article, paragraph beginning 'Saied also suspended'"
+        retrieved_at: "2026-09-11"
+        capture_url: https://web.archive.org/web/20230402065010/https://www.axios.com/2021/07/25/tunisia-sacks-president-prime-minister-parliament-protests
+        lineage:
+          - publisher: Axios
+            url: https://www.axios.com/2021/07/25/tunisia-sacks-president-prime-minister-parliament-protests
+      - passage_type: quote
+        passage: "Tunisia‘s new parliament on Wednesday elected Islamist Ennahdha party’s Rached Ghannouchi as its speaker after the rival Heart of Tunisia party backed him, opening the way for a possible coalition government between them."
+        locator: "opening paragraph (published 13 November 2019) — supports the position start date"
+        retrieved_at: "2026-09-11"
+        capture_url: https://web.archive.org/web/20260901054216/https://www.aljazeera.com/news/2019/11/13/tunisia-parliament-elects-ennahdhas-rachid-ghannouchi-as-speaker
+        lineage:
+          - publisher: Reuters
+          - publisher: Al Jazeera
+            url: https://www.aljazeera.com/news/2019/11/13/tunisia-parliament-elects-ennahdhas-rachid-ghannouchi-as-speaker/
+
+  - id: p-onat-abdessattar-ben-moussa
+    sources: [wikipedia-onat]
+    evidence:
+      - passage_type: quote
+        passage: "2004-2007 : Abdessattar Ben Moussa"
+        locator: "section 'Présidents', list entry '2004-2007'"
+        retrieved_at: "2026-09-11"
+        capture_url: https://web.archive.org/web/20250114113915/https://fr.wikipedia.org/wiki/Ordre_national_des_avocats_de_Tunisie
+        lineage:
+          - publisher: Wikipedia (FR)
+            url: https://fr.wikipedia.org/wiki/Ordre_national_des_avocats_de_Tunisie
+
+relationships:
+  - id: rel-beatrix-rhein-marzouki-family
+    sources: [wikipedia-premiere-dame-tunisie, wikipedia-marzouki-fr]
+    evidence:
+      - passage_type: quote
+        passage: "Moncef Marzouki change de statut conjugal immédiatement après son accession de la présidence en épousant sa compagne française Béatrix Rhein en décembre 2011."
+        locator: "section 'Situation conjugale'"
+        retrieved_at: "2026-09-11"
+        capture_url: https://web.archive.org/web/20260209113317/https://fr.wikipedia.org/wiki/Premi%C3%A8re_dame_de_Tunisie
+        lineage:
+          - publisher: Wikipedia (FR)
+            url: https://fr.wikipedia.org/wiki/Premi%C3%A8re_dame_de_Tunisie
+      - passage_type: quote
+        passage: "Moncef Marzouki est marié depuis décembre 2011 à Béatrix Rhein et père de deux filles : Myriam et Nadia."
+        locator: "section 'Vie privée'"
+        retrieved_at: "2026-09-11"
+        capture_url: https://web.archive.org/web/20260906105633/https://fr.wikipedia.org/wiki/Moncef_Marzouki
+        lineage:
+          - publisher: Wikipedia (FR)
+            url: https://fr.wikipedia.org/wiki/Moncef_Marzouki
+
+  - id: rel-kais-saied-rached-ghannouchi-political-conflict
+    sources: [axios-saied-2021, reuters-conspiracy-2025, arabnews-conspiracy-2025, dw-clampdown-2025]
+    evidence:
+      - passage_type: quote
+        passage: "Tunisian President Kais Saied announced Sunday that he had dismissed the country's prime minister and frozen the parliament amidst mass protests in the country, Reuters reports."
+        locator: "article lede (first paragraph) — assembly freeze, 25 July 2021"
+        retrieved_at: "2026-09-11"
+        capture_url: https://web.archive.org/web/20230402065010/https://www.axios.com/2021/07/25/tunisia-sacks-president-prime-minister-parliament-protests
+        lineage:
+          - publisher: Axios
+            url: https://www.axios.com/2021/07/25/tunisia-sacks-president-prime-minister-parliament-protests
+      - passage_type: quote
+        passage: "Saied also suspended the legal immunity of members of parliament."
+        locator: "article, paragraph beginning 'Saied also suspended'"
+        retrieved_at: "2026-09-11"
+        capture_url: https://web.archive.org/web/20230402065010/https://www.axios.com/2021/07/25/tunisia-sacks-president-prime-minister-parliament-protests
+        lineage:
+          - publisher: Axios
+            url: https://www.axios.com/2021/07/25/tunisia-sacks-president-prime-minister-parliament-protests
+      - passage_type: quote
+        passage: "Some of the opposition defendants — including Ghazi Chaouachi, Issam Chebbi, Jawahar Ben Mbrak, Abdelhamid Jlassi, Ridha BelHajj and Khyam Turki — have been in custody since being detained in 2023."
+        locator: "article, paragraph beginning 'Some of the opposition defendants' — mass-prosecution context"
+        retrieved_at: "2026-09-11"
+        capture_url: https://web.archive.org/web/20260420063757/https://www.arabnews.com/node/2597632/middle-east
+        lineage:
+          - publisher: Reuters
+          - publisher: Arab News
+            url: https://www.arabnews.com/node/2597632/middle-east
+      - passage_type: quote
+        passage: "Ghannouchi, the 86-year-old leader of Tunisia's Islamist Ennahda party and former speaker of the parliament, refused to appear in court, where he was given a 14-year sentence for forming a \"secret security apparatus.\" By staying in his cell, where he has been since April 2023, he upheld his boycott of Tunisia's judiciary, which he deems politically manipulated."
+        locator: "article, paragraphs beginning 'Ghannouchi, the 86-year-old leader' and 'By staying in his cell' — prosecution and detention, no characterisation added"
+        retrieved_at: "2026-09-11"
+        capture_url: https://web.archive.org/web/20260902144029/https://www.dw.com/en/tunisia-presidents-far-reaching-clampdown-targets-opponents/a-73241559
+        lineage:
+          - publisher: Deutsche Welle
+            url: https://www.dw.com/en/tunisia-presidents-far-reaching-clampdown-targets-opponents/a-73241559
+
+  - id: rel-slim-ennaceur-mohamed-ennaceur-family
+    sources: [leaders-slim-ennaceur-2013, realites-slim-ennaceur-2013, wikipedia-mohamed-ennaceur]
+    evidence:
+      - passage_type: quote
+        passage: "Esthète, féru de design, décoration et scénographie, Slim Ennaceur vient de nous quitter furtivement à l’âge de 48 ans, terrassé par une crise cardiaque."
+        locator: "article, paragraph beginning 'Esthète, féru de design' — death and cause; no date stated"
+        retrieved_at: "2026-09-11"
+        capture_url: https://web.archive.org/web/20260519072039/https://www.leaders.com.tn/article/11876-le-scenographe-et-designer-slim-ennaceur-est-decede
+        lineage:
+          - publisher: Leaders
+            url: https://www.leaders.com.tn/article/11876-le-scenographe-et-designer-slim-ennaceur-est-decede
+      - passage_type: quote
+        passage: "A eux tous et particulièrement à ses parents, Mohamed Ennaceur, ancien ministre des Affaires sociale et son épouse, ainsi qu’à tous ses proches, nos sincères condoléances."
+        locator: "article, paragraph beginning 'La disparition de Slim Ennaceur' — parentage"
+        retrieved_at: "2026-09-11"
+        capture_url: https://web.archive.org/web/20260519072039/https://www.leaders.com.tn/article/11876-le-scenographe-et-designer-slim-ennaceur-est-decede
+        lineage:
+          - publisher: Leaders
+            url: https://www.leaders.com.tn/article/11876-le-scenographe-et-designer-slim-ennaceur-est-decede
+      - passage_type: quote
+        passage: "Slim Ennaceur, victime d’une mort sans souffrances et sans atermoiements, le 21 juillet 2013, à quarante huit ans, a fait partie d’une espèce d’hommes rares en Tunisie."
+        locator: "article, opening paragraph — death date and age; parentage not named in this passage"
+        retrieved_at: "2026-09-11"
+        capture_missing: "2026-10-11"
+        lineage:
+          - publisher: Réalités
+            url: https://realites.com.tn/fr/deces-de-slim-ennaceur-une-mort-qui-eveille/
+      - passage_type: quote
+        passage: "Il est père de cinq enfants. Son fils Slim, nageur, scénographe et décorateur, meurt en 2013."
+        locator: "section 'Vie privée' — parentage and profession; year only"
+        retrieved_at: "2026-09-11"
+        capture_url: https://web.archive.org/web/20251122014233/https://fr.wikipedia.org/wiki/Mohamed_Ennaceur
+        lineage:
+          - publisher: Wikipedia (FR)
+            url: https://fr.wikipedia.org/wiki/Mohamed_Ennaceur

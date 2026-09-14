@@ -40,9 +40,9 @@ community API with a D1 database and pseudonymous identity, **staged behind
 `AGORA_OPEN` and not yet public**. `npm start` runs both so the Agora tab is
 reachable during development; a reader on deeptunisia.org never touches it.
 
-The complete graph is <!--stat:graphKB-->4710<!--/stat--> KB as the internal
+The complete graph is <!--stat:graphKB-->4730<!--/stat--> KB as the internal
 bundle, and the public exports (dataset, CSVs, geographic layers, changelog)
-ship at <!--stat:shippedKB-->8370<!--/stat--> KB — both are computed by the
+ship at <!--stat:shippedKB-->8390<!--/stat--> KB — both are computed by the
 build, and `npm run test` fails if the README ever disagrees with them.
 
 ## Reproducibility
@@ -180,7 +180,7 @@ This is not neutrality for its own sake — it is the project's only real protec
 - **UI is translated for chrome only.** Arabic, French and English navigation, controls and labels, with RTL. Entity names are trilingual in the data and all three are searchable. Long-form analytical prose is deliberately *not* machine-translated — a machine-translated epistemology page would undermine the point.
 - **<!--stat:needsPrimarySource-->232<!--/stat--> records await a primary source.** Listed in full on `/evidence`.
 - **Human review is not merely thin, it is aimed at the wrong records.** Broken out by risk, all of it has landed on the best-evidenced claims: **0 of the unsubstantiated claims, 0 of the attributed ones and 0 of the inferences** have been through a second pair of eyes. The breakdown is on `/about`.
-- **<!--stat:sourcesUncited-->38<!--/stat--> of <!--stat:sources-->1256<!--/stat--> sources back no claim.** Staged reading, kept in the file but excluded from the published count of <!--stat:sourcesCited-->1218<!--/stat--> — a bibliography entry that holds nothing up is not evidence.
+- **<!--stat:sourcesUncited-->38<!--/stat--> of <!--stat:sources-->1263<!--/stat--> sources back no claim.** Staged reading, kept in the file but excluded from the published count of <!--stat:sourcesCited-->1225<!--/stat--> — a bibliography entry that holds nothing up is not evidence.
 
 ## Deliberately not built yet
 

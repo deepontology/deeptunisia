@@ -29,8 +29,13 @@ import { DEFAULT_PARAMETERS, type Parameters } from './parameters';
  * V29      claim-level evidence (Phase 7): a support/refute passage carries a
  *          type (quote or marked paraphrase), a locator, a retrieval date, and
  *          either a real timestamped capture or a dated retry promise. A
- *          generated year-only archive lookup is not a capture. Source-record
- *          schema refinements land in the same pass.
+ *          generated year-only or date-only archive lookup is not a capture.
+ *          Source records get the same treatment: a fetchable http(s) URL, and
+ *          a web.archive.org snapshot URL that carries its full capture
+ *          timestamp. The build derives each claim's `origins` count from
+ *          evidence lineage — unique origin publishers/hosts, never a URL
+ *          count — and keeps the authored `independence` where no evidence
+ *          exists.
  *
  * Numbering note: the pre-submission grant draft used "V25" for the grade-B
  * corroboration rule (confidence B needs two sources or `attributed_to`). That
@@ -85,6 +90,20 @@ export const SourceRelation = z.enum([
 export type SourceRelationValue = z.infer<typeof SourceRelation>;
 
 /**
+ * Is this archive URL a snapshot, or a lookup that resolves to one later?
+ *
+ * Only web.archive.org URLs are checked, because that is where the review found
+ * generated links. `/web/2026/` and `/web/20230605/` are lookups: the Wayback
+ * Machine resolves them to whichever capture is nearest, which is not evidence
+ * that the page was ever read. A real capture carries the full 14-digit
+ * timestamp, optionally with the replay modifier suffix (`if_`, `id_`). (V29)
+ */
+export function isArchiveSnapshot(url: string): boolean {
+	if (!/^https?:\/\/(www\.)?web\.archive\.org\//i.test(url)) return true;
+	return /^https?:\/\/(www\.)?web\.archive\.org\/web\/\d{14}(?:[a-z_]+)?\//i.test(url);
+}
+
+/**
  * CLAIM-LEVEL EVIDENCE (V29) — the passage, not the bibliography.
  *
  * `sources` says which records carry a claim; it does not say where in them, or
@@ -108,7 +127,14 @@ export const EvidenceSchema = z
 			.string()
 			.regex(/^\d{4}-\d{2}-\d{2}$/, 'retrieved_at must be an ISO date (YYYY-MM-DD)'),
 		/** A real snapshot, never a generated archive lookup. */
-		capture_url: z.string().url().optional(),
+		capture_url: z
+			.string()
+			.url()
+			.refine(
+				isArchiveSnapshot,
+				'capture_url must be an actual snapshot (timestamped), not a year-only or date-only archive lookup (V29)'
+			)
+			.optional(),
 		/** When no capture exists yet, the date a retry is owed. */
 		capture_missing: z
 			.string()
@@ -124,13 +150,6 @@ export const EvidenceSchema = z
 			ctx.addIssue({
 				code: 'custom',
 				message: 'evidence needs a capture_url, or capture_missing with the retry date (V29)'
-			});
-		}
-		if (e.capture_url && /web\.archive\.org\/web\/\d{4}\//.test(e.capture_url)) {
-			ctx.addIssue({
-				code: 'custom',
-				message:
-					'capture_url must be an actual snapshot (timestamped), not a year-only archive lookup (V29)'
 			});
 		}
 	});
@@ -573,12 +592,24 @@ export const SourceSchema = z.strictObject({
 	publisher: z.string().min(2),
 	/** Publication date, ISO. Optional only for undated primary records. */
 	date: z.string().optional(),
-	url: z.string().url(),
+	/** The page a reader can fetch. A source URL is a web link, not any URI. */
+	url: z
+		.string()
+		.url()
+		.refine((v) => /^https?:\/\//i.test(v), 'a source URL must be http(s) (V29)'),
 	/**
 	 * Snapshot URL. Tunisian media and gazette links rot fast, so a source-backed
-	 * site whose sources 404 in two years is worthless.
+	 * site whose sources 404 in two years is worthless. A registered snapshot must
+	 * be a real timestamped capture, not a generated archive lookup. (V29)
 	 */
-	archive_url: z.string().url().optional(),
+	archive_url: z
+		.string()
+		.url()
+		.refine(
+			isArchiveSnapshot,
+			'a web.archive.org archive_url must be an actual snapshot (timestamped), not a year-only or date-only archive lookup (V29)'
+		)
+		.optional(),
 	/**
 	 * 1 official/primary (gazette, decrees, government portals)
 	 * 2 institutional or peer-reviewed research
