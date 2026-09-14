@@ -1,8 +1,7 @@
-# JORT P0 verification pass, candidate file dated 2026-09-11 (produced 2026-09-14).
+# JORT verification pass, candidate file dated 2026-09-11 (produced 2026-09-14).
 #
 # MISSION: resolve `verification: needs-primary-source` positions with fetched
-#   primary records, starting from docs/research-roadmap.md P0 item 1 (JORT
-#   appointment decrees).
+#   primary records — JORT appointment decrees and equivalent gazette text.
 # SCOPE: post-1956 positions only. Priority: ministers, service chiefs,
 #   directors-general, with vague or single-source dates. PRE-1956 BEYLICAL
 #   OFFICES ARE OUT OF SCOPE in this pass: the Grand Vizier tenures (1759-1956,
@@ -84,7 +83,7 @@
 #   - p-onat-*: bar association elections, not a JORT appointment; out of scope.
 #   - p-admin-*, p-ivd-bensedrine, p-audit-faiza-kefi and the remaining
 #     cassation rows: not attempted in this pass; no lead formed.
-# Candidates are proposals, not graph data. Outbox only; nothing canonical changed.
+# Candidates are proposals, not graph data. Review only; nothing canonical changed.
 
 sources:
   - id: jort-2023-268-feki
