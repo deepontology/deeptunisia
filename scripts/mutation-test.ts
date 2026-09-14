@@ -431,7 +431,6 @@ const SUITES_FOR: Record<string, string[]> = {
 	'canonical.ts': ['test-data.ts', 'test-pipeline.ts'],
 	'origins.ts': ['test-validators.ts'],
 	'review-coverage.ts': ['test-data.ts', 'test-validators.ts', 'test-emit.ts'],
-	},
 	'network-continuity.ts': ['test-network-continuity.ts'],
 	[ENGINE_TIME]: ['test-validators.ts', 'test-engine-conformance.ts']
 };
