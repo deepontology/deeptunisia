@@ -1,6 +1,6 @@
 {
-  "generated": "2026-09-11T17:55:03.111Z",
-  "commit": "0ff01c6",
+  "generated": "2026-09-11T19:40:44.792Z",
+  "commit": "da14745",
   "withValidators": true,
   "summary": {
     "counted": 44,
@@ -382,31 +382,31 @@
       "expect": "test-pipeline (canonical byte equality)"
     },
     {
-      "id": "m49",
-      "label": "review flags revert to a first-match partition (inferred hidden by attributed)",
-      "file": "review-coverage.ts",
+      "id": "m52",
+      "label": "time ordering stops being enforced between path steps",
+      "file": "network-continuity.ts",
       "verdict": "killed",
-      "by": "test-validators",
-      "outputChanged": true,
-      "expect": "test-validators Phase 8 (inferred + attributed flags)"
-    },
-    {
-      "id": "m50",
-      "label": "an unsubstantiated record stops carrying its attributed flag",
-      "file": "review-coverage.ts",
-      "verdict": "killed",
-      "by": "test-validators",
-      "outputChanged": true,
-      "expect": "test-validators Phase 8 (unsubstantiated + attributed overlap)"
-    },
-    {
-      "id": "m51",
-      "label": "the coverage CSV reports every examined record as independently checked",
-      "file": "review-coverage.ts",
-      "verdict": "killed",
-      "by": "test-validators",
+      "by": "test-network-continuity",
       "outputChanged": false,
-      "expect": "test-validators Phase 8 (examined is not independent)"
+      "expect": "test-network-continuity (backwards chain fixture)"
+    },
+    {
+      "id": "m53",
+      "label": "unsubstantiated edges stop excluding a path",
+      "file": "network-continuity.ts",
+      "verdict": "killed",
+      "by": "test-network-continuity",
+      "outputChanged": false,
+      "expect": "test-network-continuity (unsubstantiated fixture)"
+    },
+    {
+      "id": "m54",
+      "label": "the grade gate accepts any basis instead of documented/reported",
+      "file": "network-continuity.ts",
+      "verdict": "killed",
+      "by": "test-network-continuity",
+      "outputChanged": false,
+      "expect": "test-network-continuity (weak-grade fixture)"
     }
   ]
 }

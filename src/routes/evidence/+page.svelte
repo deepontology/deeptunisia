@@ -5,6 +5,14 @@
 	import { format } from '$lib/i18n';
 	import Prose from '$lib/ui/Prose.svelte';
 	import { BASIS_COLOR, BASIS_LABEL, BASIS_ORDER, ds, type Basis } from '$lib/model';
+	import continuity from '$data/network-continuity.json';
+
+	/**
+	 * The network-continuity probe (Phase 10D) is published beside H1: the
+	 * personnel reading is a snapshot, the network reading is a path query, and
+	 * the two answer different questions. The counts carry no claim without
+	 * their null distribution.
+	 */
 
 	/**
 	 * The evidence page. Everything the dataset cannot yet establish is published here
@@ -127,6 +135,56 @@
 						<span class="eyebrow">{t('ev.overturn')}</span>
 						<p><Prose record={h} field="falsifiable_by" block /></p>
 					</div>
+					{#if h.id === 'h1-continuous-deep-state'}
+						<!-- Two tests, two answers: the personnel snapshot and the network
+						     path query. The null distribution travels with the counts. -->
+						<div class="continuity">
+							<span class="eyebrow">{t('ev.continuity.title')}</span>
+							<table>
+								<thead>
+									<tr>
+										<th>{t('ev.continuity.test')}</th>
+										<th>{t('ev.continuity.result')}</th>
+										<th>{t('ev.continuity.threshold')}</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>{t('ev.continuity.personnel')}</td>
+										<td
+											>{format(app.locale, 'ev.continuity.personnelValue', {
+												spanning: continuity.personnel.spanning.length,
+												crossings: continuity.personnel.crossings.length
+											})}</td
+										>
+										<td
+											>{format(app.locale, 'ev.continuity.personnelThreshold', {
+												dates: continuity.parameters.cohortDates.length,
+												floor: continuity.parameters.minAuthority
+											})}</td
+										>
+									</tr>
+									<tr>
+										<td>{t('ev.continuity.network')}</td>
+										<td
+											>{format(app.locale, 'ev.continuity.networkValue', {
+												first: continuity.paths.cohort1to2.primary.length,
+												second: continuity.paths.cohort2to3.primary.length,
+												max: continuity.parameters.maxPathEdges
+											})}</td
+										>
+										<td
+											>{format(app.locale, 'ev.continuity.networkThreshold', {
+												atLeastReal: continuity.nullControls.shuffledCohorts.atLeastReal,
+												trials: continuity.nullControls.shuffledCohorts.trials
+											})}</td
+										>
+									</tr>
+								</tbody>
+							</table>
+							<p class="continuity-note">{t('ev.continuity.note')}</p>
+						</div>
+					{/if}
 					{#if h.sources.length}
 						<div class="h-sources"><SourceList ids={h.sources} compact /></div>
 					{/if}
@@ -498,6 +556,36 @@
 		font-size: 12px;
 		line-height: 1.55;
 		color: var(--text-secondary);
+	}
+	.continuity {
+		margin-bottom: 12px;
+		padding-top: 10px;
+		border-top: 1px solid var(--border-subtle);
+	}
+	.continuity table {
+		width: 100%;
+		border-collapse: collapse;
+		margin: 8px 0;
+	}
+	.continuity th,
+	.continuity td {
+		text-align: start;
+		padding: 6px 10px;
+		border-bottom: 1px solid var(--border-subtle);
+		font-size: 12px;
+		line-height: 1.5;
+		color: var(--text-secondary);
+		vertical-align: top;
+	}
+	.continuity th {
+		color: var(--text-muted);
+		font-weight: 560;
+	}
+	.continuity-note {
+		margin: 6px 0 0;
+		font-size: 12px;
+		line-height: 1.55;
+		color: var(--text-muted);
 	}
 	.h-sources {
 		border-top: 1px solid var(--border-subtle);
