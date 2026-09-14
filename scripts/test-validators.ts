@@ -40,6 +40,7 @@ import {
 	PlaceSchema,
 	QuestionSchema,
 	ReviewSchema,
+	SourceSchema,
 	WorldClaimSchema,
 	configureSchemaExceptions,
 	isBasisUpgrade,
@@ -58,6 +59,7 @@ import {
 } from './dates.ts';
 import { configureTime } from './dates.ts';
 import { loadParameters } from './parameters.ts';
+import { countOrigins } from './origins.ts';
 import { fileURLToPath } from 'node:url';
 
 // The engine ships neutral example defaults; the fixtures below assert the
@@ -423,6 +425,88 @@ rejectsWith(
 	pos({ evidence: [evidence({ capture_url: 'https://web.archive.org/web/2026/https://example.org/a' })] }),
 	'V29: a year-only archive lookup is not a capture',
 	'actual snapshot'
+);
+rejectsWith(
+	PositionSchema,
+	pos({ evidence: [evidence({ capture_url: 'https://web.archive.org/web/20230605/https://example.org/a' })] }),
+	'V29: a date-only archive lookup is not a capture',
+	'actual snapshot'
+);
+
+// ---------------------------------------------------------------------------
+// V29 source-side — a source URL is a fetchable web link, and a registered
+// archive URL is a snapshot, not a lookup that resolves to one later.
+// ---------------------------------------------------------------------------
+
+const sourceRec = (over: Record<string, unknown> = {}) => ({
+	id: 's-fixture',
+	title: 'Fixture source',
+	publisher: 'Fixture Press',
+	url: 'https://example.org/a',
+	tier: 3,
+	...over
+});
+accepts(SourceSchema, sourceRec(), 'V29 source: an http(s) source URL parses');
+accepts(
+	SourceSchema,
+	sourceRec({ archive_url: 'https://web.archive.org/web/20260911000000/https://example.org/a' }),
+	'V29 source: a timestamped snapshot parses'
+);
+rejectsWith(
+	SourceSchema,
+	sourceRec({ url: 'ftp://example.org/a' }),
+	'V29 source: a non-http(s) source URL is rejected',
+	'http(s)'
+);
+rejectsWith(
+	SourceSchema,
+	sourceRec({ archive_url: 'https://web.archive.org/web/2026/https://example.org/a' }),
+	'V29 source: a year-only archive lookup is rejected',
+	'actual snapshot'
+);
+rejectsWith(
+	SourceSchema,
+	sourceRec({ archive_url: 'https://web.archive.org/web/20230605/https://example.org/a' }),
+	'V29 source: a date-only archive lookup is rejected',
+	'actual snapshot'
+);
+
+// ---------------------------------------------------------------------------
+// V29 origins — independent evidence groups, never a URL count. Only the first
+// lineage step is an origin, so a wire republished by different outlets is one
+// origin; the same publisher twice is one; a shared URL host is a second
+// identity key that collapses a renamed publisher.
+// ---------------------------------------------------------------------------
+
+const lineage = (publisher: string, url?: string) => ({ lineage: [{ publisher, ...(url ? { url } : {}) }] });
+ok(
+	'V29 origins: the same publisher twice is one origin',
+	countOrigins([lineage('Reuters'), lineage('Reuters')]) === 1
+);
+ok(
+	'V29 origins: two different publishers are two origins',
+	countOrigins([
+		lineage('Deutsche Welle', 'https://www.dw.com/a'),
+		lineage('BBC News', 'https://www.bbc.com/b')
+	]) === 2
+);
+ok(
+	'V29 origins: a wire republished by different outlets is one origin',
+	countOrigins([
+		{ lineage: [{ publisher: 'Reuters' }, { publisher: 'Arab News', url: 'https://www.arabnews.com/x' }] },
+		{ lineage: [{ publisher: 'Reuters' }, { publisher: 'Al Jazeera', url: 'https://www.aljazeera.com/y' }] }
+	]) === 1
+);
+ok(
+	'V29 origins: a shared host collapses a renamed publisher',
+	countOrigins([
+		lineage('TAP', 'https://www.tap.info.tn/a'),
+		lineage('Tunis Afrique Presse', 'https://www.tap.info.tn/b')
+	]) === 1
+);
+ok(
+	'V29 origins: no evidence leaves the authored independence alone',
+	countOrigins([]) === undefined && countOrigins(undefined) === undefined
 );
 rejectsWith(
 	PositionSchema,
