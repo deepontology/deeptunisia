@@ -3,6 +3,46 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:dfda84dc08bd1421",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Santé | L’Ordre des médecins de Tunisie lance son nouveau site internet officiel",
+      "link": "https://kapitalis.com/tunisie/2026/09/14/sante-lordre-des-medecins-de-tunisie-lance-son-nouveau-site-internet-officiel/",
+      "published": "2026-09-14T22:44:55Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:d8936ad78e592d6c",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Coopération tuniso-japonaise : Visite de terrain à la centrale électrique de Radès C",
+      "link": "https://kapitalis.com/tunisie/2026/09/14/cooperation-tuniso-japonaise-visite-de-terrain-a-la-centrale-electrique-de-rades-c/",
+      "published": "2026-09-14T22:30:22Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:3b3b98f14c29b8dc",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Sousse | Rassemblement pour réclamer la libération des membres d’Al-Somoud",
+      "link": "https://kapitalis.com/tunisie/2026/09/14/sousse-rassemblement-pour-reclamer-la-liberation-des-membres-dal-somoud/",
+      "published": "2026-09-14T21:34:32Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:3d11e17d1c65c3d7",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "​SNCFT | Reprise de la ligne Tunis-Annaba ce 15 septembre",
+      "link": "https://kapitalis.com/tunisie/2026/09/14/sncft-reprise-de-la-ligne-tunis-annaba-ce-15-septembre/",
+      "published": "2026-09-14T21:16:35Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
       "id": "feed:kapitalis:21ef285a8dc13f35",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -11117,42 +11157,6 @@
       "title": "Basma Omrani décroche le Prix Zoubeida Béchir 2026",
       "link": "https://kapitalis.com/tunisie/2026/08/14/basma-omrani-decroche-le-prix-zoubeida-bechir-2026/",
       "published": "2026-08-14T09:35:44Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:ae424cddf817d5cd",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Le FC Barcelone et le PSG d’accord pour le transfert de Ferran Torres",
-      "link": "https://africanmanager.com/le-fc-barcelone-et-le-psg-daccord-pour-le-transfert-de-ferran-torres/",
-      "published": "2026-08-14T09:25:36Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:93caa8b818343e9d",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Voitures de location: Une plateforme contre le secteur parallèle",
-      "link": "https://africanmanager.com/voitures-de-location-une-plateforme-contre-le-secteur-parallele/",
-      "published": "2026-08-14T08:33:04Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:7e038d9ebc05cf84",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Ibrahim Nefzaoui dénonce une hausse injustifiée des prix des œufs",
-      "link": "https://africanmanager.com/ibrahim-nefzaoui-denonce-une-hausse-injustifiee-des-prix-des-oeufs/",
-      "published": "2026-08-14T08:29:42Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:cac287199fa9fcf8",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Bizerte: Une facture salée pour un pétrolier polluant ?",
-      "link": "https://africanmanager.com/bizerte-une-facture-salee-pour-un-petrolier-polluant/",
-      "published": "2026-08-14T08:26:46Z",
       "lang": "fr"
     }
   ]
