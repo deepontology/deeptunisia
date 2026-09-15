@@ -645,7 +645,7 @@ const KIND_TO_DATASET: Record<string, string> = {
 	const drift: string[] = [];
 	let tagged = 0;
 
-	for (const file of ['README.md', 'AGENTS.md', 'DESIGN.md']) {
+	for (const file of ['README.md', 'AGENTS.md', 'DESIGN.md', 'static/llms.txt']) {
 		let text: string;
 		try {
 			text = readFileSync(join(HERE, '..', file), 'utf8');
