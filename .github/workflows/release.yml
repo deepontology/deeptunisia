@@ -101,6 +101,15 @@ jobs:
       - name: svelte-check (0 errors, 0 warnings)
         run: npm run check
 
+      - name: Generate the release paper PDF from the tracked source
+        env:
+          # The build above already rewrote the paper commitSha tag from the tag
+          # commit; the PDF step verifies that binding before it exports.
+          DT_RELEASE_SHA: ${{ github.sha }}
+        run: |
+          npx playwright install --with-deps chromium
+          npx --no-install tsx scripts/build-paper-pdf.ts
+
       - name: Verify tag is signed and verified
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -198,7 +207,7 @@ jobs:
           # basename "LICENSE" so the second is silently dropped. Copy to a non-colliding
           # basename so both ship (different content — root is the code MIT, data/ is CC BY 4.0).
           ASSETS=()
-          for f in static/dataset.json static/*.csv static/sensitivity.json static/changelog.json static/geo.json static/world-topo.json static/tn-adm.geojson LICENSE; do
+          for f in static/dataset.json static/*.csv static/sensitivity.json static/changelog.json static/geo.json static/world-topo.json static/tn-adm.geojson output/deeptunisia-release-paper-*.pdf LICENSE; do
             if [ -f "$f" ]; then ASSETS+=("$f"); fi
           done
           if [ -f data/LICENSE ]; then
