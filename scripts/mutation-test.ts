@@ -421,6 +421,19 @@ const MUTATIONS: Mutation[] = [
 		label: 'the grade gate accepts any basis instead of documented/reported',
 		from: '\t\tconst gradeOk = BASIS_RANK[basis] >= 2 && ((floor !== null && floor <= 2) || exceptionKeys.has(key));',
 		to: '\t\tconst gradeOk = BASIS_RANK[basis] >= 0 && ((floor !== null && floor <= 2) || exceptionKeys.has(key));'
+	},
+	// --- coverage.ts: the effective nonzero sample (Phase 10A) --------------------
+	{
+		id: 'm55', file: 'coverage.ts', expect: 'test-validators Phase 10A (sparse slice fixture)',
+		label: 'the sparse flag stops marking thin slices',
+		from: '\t\t\tsparse: acc.nonzero < SPARSE_THRESHOLD',
+		to: '\t\t\tsparse: false'
+	},
+	{
+		id: 'm56', file: 'coverage.ts', expect: 'test-validators Phase 10A (nonzero sample fixture)',
+		label: 'the effective nonzero sample stops counting evidence and origins',
+		from: '\tif (hasEvidence || hasOrigins) acc.nonzero++;',
+		to: '\tif (false) acc.nonzero++;'
 	}
 ];
 
@@ -432,6 +445,7 @@ const SUITES_FOR: Record<string, string[]> = {
 	'origins.ts': ['test-validators.ts'],
 	'review-coverage.ts': ['test-data.ts', 'test-validators.ts', 'test-emit.ts'],
 	'network-continuity.ts': ['test-network-continuity.ts'],
+	'coverage.ts': ['test-validators.ts', 'test-data.ts'],
 	[ENGINE_TIME]: ['test-validators.ts', 'test-engine-conformance.ts']
 };
 const SYNTHETIC_SUITES = new Set(['test-validators.ts', 'test-pipeline.ts', 'test-engine-conformance.ts']);

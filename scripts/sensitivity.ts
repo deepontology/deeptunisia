@@ -164,7 +164,7 @@ function compare(a: string[], b: string[]): { spearman: number; overlap: number;
 
 interface Row {
 	perturbation: string;
-	family: 'discount' | 'window' | 'slack' | 'weight';
+	family: 'discount' | 'window' | 'slack' | 'weight' | 'edge-removal' | 'source-family' | 'snapshot';
 	key: IndexKey | 'composite';
 	spearman: number;
 	overlap: number;
@@ -174,6 +174,27 @@ interface Row {
 }
 
 const rows: Row[] = [];
+
+/** Push one comparison against a baseline top-40. */
+function pushRow(
+	perturbation: string,
+	family: Row['family'],
+	key: IndexKey | 'composite',
+	shippedTop: string[],
+	top: string[]
+): void {
+	const c = compare(shippedTop, top);
+	rows.push({
+		perturbation,
+		family,
+		key,
+		spearman: Math.round(c.spearman * 1000) / 1000,
+		overlap: Math.round(c.overlap * 10) / 10,
+		swaps: c.swaps,
+		entered: top.filter((id) => !shippedTop.includes(id)),
+		left: shippedTop.filter((id) => !top.includes(id))
+	});
+}
 
 // ---- Family A: discount perturbations (only influence + composite can move) ----
 const DISCOUNT_KEYS: (IndexKey | 'composite')[] = ['influence', 'composite'];
@@ -302,6 +323,80 @@ for (const key of ALL_KEYS) {
 	}
 }
 
+// ---- Family D: edge removal — does the ranking depend on one relationship family? ----
+// Remove every relationship of one type at a time and recompute. This is the
+// reviewer's "edge removal" experiment: a ranking that collapses when one edge
+// family is withdrawn is resting on that family, not on the graph.
+{
+	const allRelationships = [...(ds.relationships as any[])];
+	const edgeFamilies = [...new Set(allRelationships.map((r) => r.type as string))].sort();
+	for (const family of edgeFamilies) {
+		(ds as any).relationships = allRelationships.filter((r) => r.type !== family);
+		clearIndicesMemo();
+		const perturbed = computeIndices(OPTS);
+		for (const key of ALL_KEYS) {
+			const shippedTop = topIds(baseline, key as IndexKey | 'composite');
+			pushRow(`remove ${family}`, 'edge-removal', key as IndexKey | 'composite', shippedTop, topIds(perturbed, key as IndexKey | 'composite'));
+		}
+		(ds as any).relationships = allRelationships;
+		clearIndicesMemo();
+	}
+}
+
+// ---- Family E: source-family removal — what survives losing a tier family? ----
+// For each source tier family, drop the records that would lose every citation
+// if that family were withdrawn, then recompute. The question is not whether
+// the source count falls (it does) but whether the ranking depends on it.
+{
+	const sourceFamilies: { label: string; tiers: number[] }[] = [
+		{ label: 'tier-1-2 primary/institutional', tiers: [1, 2] },
+		{ label: 'tier-3 established journalism', tiers: [3] },
+		{ label: 'tier-4 regional media', tiers: [4] },
+		{ label: 'tier-5 leads', tiers: [5] }
+	];
+	const tierById = new Map((ds.sources as any[]).map((s) => [s.id as string, s.tier as number]));
+	const allRelationships = [...(ds.relationships as any[])];
+	const allPositions = [...(ds.positions as any[])];
+	const allEvents = [...(ds.events as any[])];
+	const losesFamilyOnly = (rec: any, tiers: number[]): boolean => {
+		const sources = (rec.sources ?? []) as string[];
+		if (sources.length === 0) return false;
+		return sources.every((id) => tiers.includes(tierById.get(id) as number));
+	};
+	for (const fam of sourceFamilies) {
+		(ds as any).relationships = allRelationships.filter((r) => !losesFamilyOnly(r, fam.tiers));
+		(ds as any).positions = allPositions.filter((p) => !losesFamilyOnly(p, fam.tiers));
+		(ds as any).events = allEvents.filter((e) => !losesFamilyOnly(e, fam.tiers));
+		clearIndicesMemo();
+		const perturbed = computeIndices(OPTS);
+		for (const key of ALL_KEYS) {
+			const shippedTop = topIds(baseline, key as IndexKey | 'composite');
+			pushRow(`remove sources ${fam.label}`, 'source-family', key as IndexKey | 'composite', shippedTop, topIds(perturbed, key as IndexKey | 'composite'));
+		}
+		(ds as any).relationships = allRelationships;
+		(ds as any).positions = allPositions;
+		(ds as any).events = allEvents;
+		clearIndicesMemo();
+	}
+}
+
+// ---- Family F: time snapshots — is the ranking a function of the instant? ----
+// The all-time baseline is compared with the ranking as it stood at four
+// instants. Large deltas here mean a published ranking is a snapshot opinion,
+// which the interface must say rather than present as an all-time fact.
+{
+	for (const date of ['1990-01-01', '2000-01-01', '2010-01-01', '2020-01-01']) {
+		const t = Date.parse(`${date}T00:00:00Z`);
+		clearIndicesMemo();
+		const perturbed = computeIndices({ ...OPTS, allTime: false, t });
+		for (const key of ALL_KEYS) {
+			const shippedTop = topIds(baseline, key as IndexKey | 'composite');
+			pushRow(`snapshot ${date}`, 'snapshot', key as IndexKey | 'composite', shippedTop, topIds(perturbed, key as IndexKey | 'composite'));
+		}
+	}
+	clearIndicesMemo();
+}
+
 // ---- Counts for C11 sparsity note ----
 const scoredInfluence = baseline.filter((s) => s.influence > 0).length;
 const scoredByKey: Record<string, number> = {};
@@ -331,6 +426,14 @@ const worstWeight = (() => {
 	return { spearman: worst.spearman, perturbation: worst.perturbation, key: worst.key };
 })();
 
+const worstOf = (family: Row['family']): Row | null => {
+	const pool = rows.filter((r) => r.family === family);
+	return pool.length ? pool.reduce((a, b) => (a.spearman < b.spearman ? a : b)) : null;
+};
+const worstEdgeRemoval = worstOf('edge-removal');
+const worstSourceFamily = worstOf('source-family');
+const worstSnapshot = worstOf('snapshot');
+
 const summary = {
 	generated: new Date().toISOString(),
 	commitSha,
@@ -344,10 +447,23 @@ const summary = {
 		scoredByKey,
 		influenceEdges: (ds.relationships as any[]).filter((r) => ['influence', 'reported-influence', 'advisory'].includes(r.type)).length
 	},
+	/**
+	 * Banner thresholds, published with the data they govern: a ranking with
+	 * fewer than `sparseScored` nonzero people, or a worst perturbation below
+	 * `unstableSpearman`, renders with the limitation banner on /rankings.
+	 */
+	thresholds: {
+		sparseScored: 10,
+		unstableSpearman: 0.9
+	},
 	worstByKey,
 	worstWeight,
 	note:
-		'C11 sparsity: influence scores only ~5 people (19 influence-family edges, but only 5 exceed the published threshold), so discount/window/slack perturbations barely move its ranking (worst Spearman 0.997) — near-zero deltas are the sparsity finding, not hidden robustness. The composite’s sensitivity comes from elsewhere: halving/doubling a single index weight moves the composite most for survival (0.77 when excluded, ~0.95 halved, ~0.91 doubled) and authority (0.78 excluded), least for influence (0.995) and brokerage (0.97 excluded). Window/slack barely move any index in allTime mode (all Spearman ≥0.997) because the six indices’ core computations do not filter by time there; snapshot mode shows the same pattern (paper §5.4). Discount moves only influence + composite — the other five indices are pure functions of the data and cannot move.',
+		'C11 sparsity: influence scores only ~5 people (19 influence-family edges, but only 5 exceed the published threshold), so discount/window/slack perturbations barely move its ranking (worst Spearman 0.997 on those families) — near-zero deltas are the sparsity finding, not hidden robustness. The composite’s sensitivity comes from elsewhere: halving/doubling a single index weight moves the composite most for survival (0.77 when excluded, ~0.95 halved, ~0.91 doubled) and authority (0.78 excluded), least for influence (0.995) and brokerage (0.97 excluded). Window/slack barely move any index in allTime mode because the six indices’ core computations do not filter by time there. Removal and snapshot sensitivity (Phase 10A) is the larger finding: ' +
+		(worstEdgeRemoval ? `withdrawing the ${worstEdgeRemoval.perturbation.replace('remove ', '')} edges moves ${worstEdgeRemoval.key} to Spearman ${worstEdgeRemoval.spearman}; ` : '') +
+		(worstSourceFamily ? `withdrawing ${worstSourceFamily.perturbation.replace('remove sources ', '')} moves ${worstSourceFamily.key} to ${worstSourceFamily.spearman}; ` : '') +
+		(worstSnapshot ? `the ${worstSnapshot.perturbation.replace('snapshot ', '')} snapshot diverges most at ${worstSnapshot.key} (${worstSnapshot.spearman}). ` : '') +
+		'Rankings that move this much under removal are resting on the removed layer, and the /rankings banner says so.',
 	rows
 };
 writeFileSync(join(OUT, 'index-sensitivity.json'), JSON.stringify(summary, null, 2), 'utf8');
@@ -393,7 +509,14 @@ mdLines.push('');
 mdLines.push('| Index / composite | worst Spearman (discount/temporal) | worst perturbation | interpretation |');
 mdLines.push('|---|---:|---|---|');
 for (const k of [...INDEX_KEYS, 'composite']) {
-	const pool = k === 'composite' ? rows.filter((r) => r.key === 'composite' && r.family !== 'weight') : rows.filter((r) => r.key === k);
+	const pool = rows.filter(
+		(r) =>
+			r.key === k &&
+			r.family !== 'edge-removal' &&
+			r.family !== 'source-family' &&
+			r.family !== 'snapshot' &&
+			(k === 'composite' ? r.family !== 'weight' : true)
+	);
 	if (pool.length === 0) continue;
 	const worst = pool.reduce((a, b) => (a.spearman < b.spearman ? a : b));
 	const weightWorst = k === 'composite'
@@ -443,6 +566,19 @@ for (const r of rows.filter((x) => x.family === 'weight')) {
 	mdLines.push(`| ${r.perturbation} | ${r.spearman} | ${r.overlap} | ${r.swaps} | ${r.entered.join(';') || '—'} | ${r.left.join(';') || '—'} |`);
 }
 mdLines.push('');
+mdLines.push('## Removal and snapshot sensitivity (Phase 10A)');
+mdLines.push('');
+mdLines.push('Edge removal = every relationship of one type withdrawn. Source-family removal = records that would lose every citation without that tier family dropped. Snapshot = the ranking at that instant, compared with the all-time baseline.');
+mdLines.push('');
+mdLines.push('| family | worst perturbation (by Spearman) | key | Spearman | overlap% |');
+mdLines.push('|---|---|---|---:|---:|');
+for (const family of ['edge-removal', 'source-family', 'snapshot'] as const) {
+	const pool = rows.filter((r) => r.family === family);
+	if (pool.length === 0) continue;
+	const worst = pool.reduce((a, b) => (a.spearman < b.spearman ? a : b));
+	mdLines.push(`| ${family} | ${worst.perturbation} | ${worst.key} | ${worst.spearman} | ${worst.overlap} |`);
+}
+mdLines.push('');
 mdLines.push('## How to read');
 mdLines.push('');
 mdLines.push('- Spearman = rank correlation of the full top-40 (does the order move?). 1.0 = identical.');
@@ -471,5 +607,5 @@ console.log(`
   scored influence: ${scoredInfluence}/444 people; worst influence spearman (vs shipped): ${worstInfluence}
   worst composite spearman (vs shipped, all families): ${worstComposite}
   worst weight perturbation: ${worstWeightInfo}
-  note: influence near-zero deltas are sparsity (C11); real deltas are elsewhere (survival 0.772, authority 0.782 when excluded)
+  note: influence near-zero deltas are sparsity (C11); removal/snapshot worst: edge-removal ${worstEdgeRemoval?.spearman ?? '—'} (${worstEdgeRemoval?.perturbation ?? '—'}), source-family ${worstSourceFamily?.spearman ?? '—'}, snapshot ${worstSnapshot?.spearman ?? '—'}
 `);

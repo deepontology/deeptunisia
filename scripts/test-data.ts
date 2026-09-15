@@ -13,6 +13,7 @@ import { RelationshipType, EDGE_DIRECTION, REQUIRED_SOURCE_KINDS } from '../scri
 import { computeDatasetHash } from './canonical.ts';
 import { countOrigins } from './origins.ts';
 import { reviewCoverageCsv, summariseReview, type ReviewInput, type ReviewKind } from './review-coverage.ts';
+import { buildCoverage, coverageCsv } from './coverage.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ds = JSON.parse(readFileSync(join(HERE, '..', 'src', 'generated', 'dataset.json'), 'utf8'));
@@ -1379,6 +1380,28 @@ const KIND_TO_DATASET: Record<string, string> = {
 			'output/review-coverage.csv recomputes from the emitted graph',
 			actual === expected,
 			`${summary.coverage.length} kind/basis rows`
+		);
+	}
+}
+
+// Phase 10A: the coverage-by-slice CSV must recompute from the emitted graph,
+// and the sparse flag must mark slices whose effective nonzero sample is under
+// the published threshold.
+{
+	const coveragePath = join(HERE, '..', 'output', 'coverage.csv');
+	if (existsSync(coveragePath)) {
+		const rows = buildCoverage(ds as never);
+		ok(
+			'output/coverage.csv recomputes from the emitted graph',
+			readFileSync(coveragePath, 'utf8') === coverageCsv(rows),
+			`${rows.length} slice(s)`
+		);
+		ok(
+			'the coverage table marks sparse slices rather than hiding them',
+			rows.some((r) => r.sparse) &&
+				rows.filter((r) => r.sparse).every((r) => r.nonzero < 3) &&
+				rows.filter((r) => !r.sparse).every((r) => r.nonzero >= 3),
+			`${rows.filter((r) => r.sparse).length} sparse of ${rows.length}`
 		);
 	}
 }

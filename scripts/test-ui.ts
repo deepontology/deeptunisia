@@ -534,6 +534,33 @@ for (const loc of ['en', 'fr', 'ar'] as const) {
 	);
 }
 
+console.log('\n  ── Phase 10A: the rankings limitation banner ──\n');
+
+const RANKINGS = readFileSync(join(HERE, '..', 'src', 'lib', 'components', 'Rankings.svelte'), 'utf8');
+ok(
+	'the rankings page fetches the published sensitivity summary',
+	RANKINGS.includes("fetch('/sensitivity.json')") && RANKINGS.includes('thresholds')
+);
+ok(
+	'the banner names both the sparse case and the unstable case',
+	RANKINGS.includes('rankings.limit.title') &&
+		RANKINGS.includes('rankings.limit.sparse') &&
+		RANKINGS.includes('rankings.limit.unstable')
+);
+ok(
+	'the banner links to the method and the raw data',
+	RANKINGS.includes('rankings.limit.method') && RANKINGS.includes('href="/sensitivity.json"')
+);
+for (const loc of ['en', 'fr', 'ar'] as const) {
+	ok(
+		`the limitation copy resolves in ${loc}`,
+		translate(loc, 'rankings.limit.title') !== 'rankings.limit.title' &&
+			translate(loc, 'rankings.limit.sparse').includes('{scored}') &&
+			translate(loc, 'rankings.limit.unstable').includes('{spearman}'),
+		translate(loc, 'rankings.limit.title')
+	);
+}
+
 console.log(`
   ${checks - failures}/${checks} checks passed${failures ? `, ${failures} FAILED` : ''}
 `);

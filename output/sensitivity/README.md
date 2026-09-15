@@ -1,6 +1,6 @@
 # Sensitivity analysis
 
-Generated 2026-09-02T21:50:20.763Z — commit 8e2caf7b767fe75edeb06076fcbdef8cf8145f77. Baseline: all-time ranking (t=2026-01-01), 444 people, basisFloor=reported, all layers enabled.
+Generated 2026-09-14T16:27:35.830Z — commit ba2ba8c5adb803cf57276b219c16c17af52bd287. Baseline: all-time ranking (t=2026-01-01), 444 people, basisFloor=reported, all layers enabled.
 
 ## Finding (C11 sparsity)
 
@@ -87,24 +87,34 @@ The composite inherits the same near-invariance to discount (worst **0.999**) an
 
 | perturbation | Spearman | overlap% | swaps | entered | left |
 |---|---:|---:|---:|---|---|
-| weight authority 1→0 (excluded) | 0.782 | 82.5 | 2 | marouane-mabrouk;slim-riahi;ghazi-chaouachi;ahmed-nejib-chebbi;abdessattar-ben-moussa;najet-jaouadi;ridha-chalghoum | lotfi-ben-jeddou;mourad-saidane;ahmed-mestiri;hassine-gharbi;najla-bouden;habib-ben-yahia;mustapha-ben-jaafar |
-| weight authority 1→0.5 (halved) | 0.954 | 90 | 1 | marouane-mabrouk;najet-jaouadi;ridha-chalghoum;ghazi-chaouachi | ahmed-mestiri;najla-bouden;habib-ben-yahia;mustapha-ben-jaafar |
-| weight authority 1→2 (doubled) | 0.93 | 87.5 | 1 | tahar-ben-ammar;rachid-ammar;abdallah-kallel;chokri-riahi;mohamed-aziz-bouattour | leila-jaffel;faouzi-elloumi;abdelwahab-ben-ayed;farouk-bouasker;mustapha-ben-jaafar |
-| weight proximity 1→0 (excluded) | 0.892 | 70 | 1 | mohamed-aziz-bouattour;mohamed-el-ghoul;rejeb-khaznadar;mustapha-khaznadar;marouane-mabrouk;adel-jehane;mohamed-hajem;mohamed-khamassi;wided-bouchamaoui;ridha-chalghoum;khelifa-harroum;moncef-kchaou | othman-jarandi;ali-seriati;brahim-bertagi;lotfi-ben-jeddou;leila-jaffel;faouzi-elloumi;mourad-saidane;abdelwahab-ben-ayed;farouk-bouasker;ahmed-mestiri;najla-bouden;habib-ben-yahia |
-| weight proximity 1→0.5 (halved) | 0.97 | 95 | 1 | marouane-mabrouk;ridha-chalghoum | najla-bouden;habib-ben-yahia |
+| weight authority 1→0 (excluded) | 0.793 | 82.5 | 2 | marouane-mabrouk;slim-riahi;ghazi-chaouachi;ahmed-nejib-chebbi;abdessattar-ben-moussa;najet-jaouadi;ridha-chalghoum | lotfi-ben-jeddou;mourad-saidane;ahmed-mestiri;hassine-gharbi;najla-bouden;habib-ben-yahia;mustapha-ben-jaafar |
+| weight authority 1→0.5 (halved) | 0.957 | 90 | 1 | marouane-mabrouk;najet-jaouadi;ridha-chalghoum;ghazi-chaouachi | ahmed-mestiri;najla-bouden;habib-ben-yahia;mustapha-ben-jaafar |
+| weight authority 1→2 (doubled) | 0.932 | 87.5 | 1 | tahar-ben-ammar;rachid-ammar;abdallah-kallel;chokri-riahi;mohamed-aziz-bouattour | faouzi-elloumi;abdelwahab-ben-ayed;farouk-bouasker;leila-jaffel;mustapha-ben-jaafar |
+| weight proximity 1→0 (excluded) | 0.877 | 72.5 | 1 | mohamed-aziz-bouattour;mohamed-el-ghoul;rejeb-khaznadar;mustapha-khaznadar;marouane-mabrouk;adel-jehane;mohamed-hajem;mohamed-khamassi;wided-bouchamaoui;ridha-chalghoum;khelifa-harroum | ali-seriati;brahim-bertagi;lotfi-ben-jeddou;faouzi-elloumi;mourad-saidane;abdelwahab-ben-ayed;farouk-bouasker;ahmed-mestiri;leila-jaffel;najla-bouden;habib-ben-yahia |
+| weight proximity 1→0.5 (halved) | 0.967 | 95 | 1 | marouane-mabrouk;ridha-chalghoum | najla-bouden;habib-ben-yahia |
 | weight proximity 1→2 (doubled) | 0.998 | 92.5 | 1 | yadh-ben-achour;ridha-belhaj;nadia-akacha | mohamed-habib-dhif;hassine-gharbi;mustapha-ben-jaafar |
-| weight survival 1→0 (excluded) | 0.772 | 47.5 | 1 | tahar-ben-ammar;yadh-ben-achour;ridha-belhaj;hichem-mechichi;lotfi-brahem;habib-ammar;abdelhamid-escheikh;abdallah-kallel;khaled-nouri;kamel-feki;chedli-neffati;mohamed-jegham;rafiq-belhaj-kacem;mohamed-najem-gharsalli;hedi-majdoub;hichem-fourati;rachid-sfar;mehdi-jomaa;mohammed-mzali;nadia-akacha;hassen-belkhodja | khaled-yahyaoui;brahim-bouderbala;nouri-ben-taous;rached-ghannouchi;mohamed-salah-hamdi;othman-battikh;abdelkarim-zbidi;mohamed-habib-dhif;othman-jarandi;ali-seriati;brahim-bertagi;leila-jaffel;faouzi-elloumi;mourad-saidane;abdelwahab-ben-ayed;farouk-bouasker;ahmed-mestiri;hassine-gharbi;najla-bouden;habib-ben-yahia;mustapha-ben-jaafar |
-| weight survival 1→0.5 (halved) | 0.951 | 85 | 1 | tahar-ben-ammar;yadh-ben-achour;abdallah-kallel;habib-ammar;ridha-belhaj;rachid-sfar | othman-jarandi;leila-jaffel;faouzi-elloumi;abdelwahab-ben-ayed;hassine-gharbi;mustapha-ben-jaafar |
+| weight survival 1→0 (excluded) | 0.772 | 47.5 | 1 | tahar-ben-ammar;yadh-ben-achour;ridha-belhaj;hichem-mechichi;lotfi-brahem;habib-ammar;abdelhamid-escheikh;abdallah-kallel;khaled-nouri;kamel-feki;chedli-neffati;mohamed-jegham;rafiq-belhaj-kacem;mohamed-najem-gharsalli;hedi-majdoub;hichem-fourati;rachid-sfar;mehdi-jomaa;mohammed-mzali;nadia-akacha;hassen-belkhodja | khaled-yahyaoui;brahim-bouderbala;nouri-ben-taous;rached-ghannouchi;mohamed-salah-hamdi;othman-battikh;abdelkarim-zbidi;mohamed-habib-dhif;othman-jarandi;ali-seriati;brahim-bertagi;faouzi-elloumi;mourad-saidane;abdelwahab-ben-ayed;farouk-bouasker;ahmed-mestiri;leila-jaffel;hassine-gharbi;najla-bouden;habib-ben-yahia;mustapha-ben-jaafar |
+| weight survival 1→0.5 (halved) | 0.951 | 85 | 1 | tahar-ben-ammar;yadh-ben-achour;abdallah-kallel;habib-ammar;ridha-belhaj;rachid-sfar | othman-jarandi;faouzi-elloumi;abdelwahab-ben-ayed;leila-jaffel;hassine-gharbi;mustapha-ben-jaafar |
 | weight survival 1→2 (doubled) | 0.906 | 82.5 | 0 | marouane-mabrouk;abdelhamid-belati;ridha-chalghoum;ghazi-chaouachi;slim-riahi;abdessattar-ben-moussa;ahmed-nejib-chebbi | mohamed-ennaceur;lotfi-ben-jeddou;mourad-saidane;farouk-bouasker;ahmed-mestiri;najla-bouden;habib-ben-yahia |
-| weight brokerage 1→0 (excluded) | 0.969 | 97.5 | 1 | chokri-riahi | mustapha-ben-jaafar |
-| weight brokerage 1→0.5 (halved) | 0.993 | 100 | 0 | — | — |
-| weight brokerage 1→2 (doubled) | 0.989 | 95 | 2 | marouane-mabrouk;tahar-ben-ammar | habib-ben-yahia;mustapha-ben-jaafar |
-| weight reach 1→0 (excluded) | 0.942 | 95 | 1 | chokri-riahi;marouane-mabrouk | farouk-bouasker;habib-ben-yahia |
-| weight reach 1→0.5 (halved) | 0.98 | 97.5 | 1 | chokri-riahi | habib-ben-yahia |
-| weight reach 1→2 (doubled) | 0.97 | 95 | 2 | najet-jaouadi;ridha-chalghoum | najla-bouden;mustapha-ben-jaafar |
+| weight brokerage 1→0 (excluded) | 0.967 | 97.5 | 1 | chokri-riahi | mustapha-ben-jaafar |
+| weight brokerage 1→0.5 (halved) | 0.992 | 100 | 0 | — | — |
+| weight brokerage 1→2 (doubled) | 0.99 | 95 | 2 | marouane-mabrouk;tahar-ben-ammar | habib-ben-yahia;mustapha-ben-jaafar |
+| weight reach 1→0 (excluded) | 0.941 | 95 | 1 | chokri-riahi;marouane-mabrouk | farouk-bouasker;habib-ben-yahia |
+| weight reach 1→0.5 (halved) | 0.979 | 97.5 | 1 | chokri-riahi | habib-ben-yahia |
+| weight reach 1→2 (doubled) | 0.972 | 95 | 2 | najet-jaouadi;ridha-chalghoum | najla-bouden;mustapha-ben-jaafar |
 | weight influence 1→0 (excluded) | 0.995 | 100 | 1 | — | — |
 | weight influence 1→0.5 (halved) | 0.999 | 100 | 1 | — | — |
 | weight influence 1→2 (doubled) | 0.995 | 100 | 0 | — | — |
+
+## Removal and snapshot sensitivity (Phase 10A)
+
+Edge removal = every relationship of one type withdrawn. Source-family removal = records that would lose every citation without that tier family dropped. Snapshot = the ranking at that instant, compared with the all-time baseline.
+
+| family | worst perturbation (by Spearman) | key | Spearman | overlap% |
+|---|---|---|---:|---:|
+| edge-removal | remove prosecution | brokerage | 0.782 | 87.5 |
+| source-family | remove sources tier-3 established journalism | authority | 0.637 | 42.5 |
+| snapshot | snapshot 2010-01-01 | survival | 0.543 | 38.2 |
 
 ## How to read
 

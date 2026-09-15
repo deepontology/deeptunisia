@@ -1,0 +1,589 @@
+dimension,value,records,with_sources,reviewed,with_evidence,origins_known,nonzero,distinct_sources,sparse
+institution,abou-khater-project,4,4,1,0,0,0,7,1
+institution,administrative-court,4,4,0,0,0,0,2,1
+institution,afdb,1,1,0,0,0,0,1,1
+institution,air-force,7,7,0,0,0,0,8,1
+institution,al-badil,1,1,0,0,0,0,1,1
+institution,al-karama-holding,1,1,1,0,0,0,1,1
+institution,algeria,1,1,0,0,0,0,1,1
+institution,altt,1,1,0,0,0,0,2,1
+institution,amen-bank,1,1,0,0,0,0,2,1
+institution,amt,1,1,0,0,0,0,6,1
+institution,anrsd,2,2,0,0,0,0,4,1
+institution,armed-forces,11,11,1,0,0,0,20,1
+institution,atfd,1,1,0,0,0,0,2,1
+institution,attessia-tv,3,3,0,0,0,0,6,1
+institution,audit-court,5,5,0,0,0,0,5,1
+institution,bct,14,14,0,0,0,0,11,1
+institution,beylical-government,25,25,0,0,0,0,10,1
+institution,bh-bank,4,4,0,0,0,0,1,1
+institution,bhci,1,1,0,0,0,0,1,1
+institution,biat,19,19,0,0,0,0,11,1
+institution,bna,7,7,0,0,0,0,5,1
+institution,bouricha-family,1,1,0,0,0,0,5,1
+institution,bouzguenda-family,1,1,0,0,0,0,5,1
+institution,bukhatir-group,1,1,0,0,0,0,6,1
+institution,chebil-family-business,1,1,1,0,0,0,5,1
+institution,china,1,1,0,0,0,0,1,1
+institution,cnrd,3,3,0,0,0,0,4,1
+institution,cnss,3,3,0,0,0,0,4,1
+institution,conect,3,3,0,0,0,0,6,1
+institution,conseil-superieur-education,1,1,0,0,0,0,3,1
+institution,court-of-cassation,5,5,0,0,0,0,3,1
+institution,cpg,3,3,0,0,0,0,5,1
+institution,cpr,2,2,0,0,0,0,2,1
+institution,csm,3,3,0,0,0,0,1,1
+institution,douane,4,4,0,0,0,0,10,1
+institution,egypt,1,1,0,0,0,0,1,1
+institution,el-hiwar-ettounsi,6,6,0,0,0,0,8,1
+institution,elloumi-group,4,4,0,0,0,0,7,1
+institution,ennahda,7,7,0,0,0,0,9,1
+institution,etap,2,2,0,0,0,0,2,1
+institution,etat-tunisien,12,12,1,0,0,0,17,1
+institution,ett,12,12,0,0,0,0,2,1
+institution,ettakatol,1,1,0,0,0,0,1,1
+institution,european-union,2,2,1,0,0,0,2,1
+institution,founders-capital-partners,1,1,0,0,0,0,2,1
+institution,france,1,1,0,0,0,0,1,1
+institution,gct,4,4,0,0,0,0,6,1
+institution,germany,1,1,0,0,0,0,2,1
+institution,haica,6,6,0,0,0,0,1,1
+institution,hannibal-tv,4,4,0,0,0,0,5,1
+institution,haute-instance,1,1,0,0,0,0,2,1
+institution,head-of-government,86,86,12,0,0,0,106,1
+institution,id-party,1,1,0,0,0,0,1,1
+institution,imf,1,1,0,0,0,0,2,1
+institution,inlucc,2,2,0,0,0,0,4,1
+institution,intl-rights-orgs,1,1,0,0,0,0,2,1
+institution,investec,3,3,0,0,0,0,4,1
+institution,isie,8,8,0,0,0,0,16,1
+institution,italy,1,1,0,0,0,0,1,1
+institution,ivd,2,2,0,0,0,0,2,1
+institution,judiciary,37,37,1,0,0,0,46,1
+institution,kallel-family,1,1,0,0,0,0,2,1
+institution,karama-coalition,1,1,0,0,0,0,3,1
+institution,la-poste-tunisienne,3,3,0,0,0,0,1,1
+institution,la-presse-tunisie,2,2,0,0,0,0,2,1
+institution,land-forces,5,5,0,0,0,0,12,1
+institution,leaders-tunisie,2,2,0,0,0,0,4,1
+institution,legislature,19,19,0,1,1,1,16,1
+institution,libya,1,1,0,0,0,0,1,1
+institution,ltdh,8,8,0,0,0,0,11,1
+institution,mabrouk-group,6,6,0,0,0,0,11,1
+institution,machrouu-tounes,1,1,0,0,0,0,1,1
+institution,mds,1,1,0,0,0,0,3,1
+institution,mediaset,1,1,0,0,0,0,4,1
+institution,military-security,4,4,0,0,0,0,4,1
+institution,ministry-defence,14,14,3,0,0,0,15,1
+institution,ministry-equipment-housing,1,1,0,0,0,0,2,1
+institution,ministry-finance,26,26,0,0,0,0,12,1
+institution,ministry-health,1,1,0,0,0,0,1,1
+institution,ministry-interior,31,31,10,0,0,0,32,1
+institution,ministry-religious-affairs,14,14,0,0,0,0,8,1
+institution,mnemty,1,1,0,0,0,0,1,1
+institution,mosaique-fm,5,5,0,0,0,0,8,1
+institution,mufti-republic,2,2,0,0,0,0,6,1
+institution,national-dialogue-quartet,4,4,0,0,0,0,1,1
+institution,national-guard,9,9,1,0,0,0,19,1
+institution,national-security,25,25,2,0,0,0,38,1
+institution,national-security-council,1,1,0,0,0,0,2,1
+institution,navy,6,6,0,0,0,0,9,1
+institution,nawaat,3,3,0,0,0,0,3,1
+institution,neo-destour,1,1,0,0,0,0,1,1
+institution,nessma-tv,7,7,0,0,0,0,7,1
+institution,nidaa-tounes,7,7,0,0,0,0,6,1
+institution,onat,10,10,0,1,1,1,4,1
+institution,ooredoo-tunisie,1,1,0,0,0,0,2,1
+institution,orange-tunisie,4,4,0,0,0,0,4,1
+institution,pdl,1,1,0,0,0,0,1,1
+institution,pdp,2,2,0,0,0,0,4,1
+institution,people-movement,2,2,0,0,0,0,4,1
+institution,popular-front,2,2,0,0,0,0,3,1
+institution,poulina,13,13,0,0,0,0,12,1
+institution,presidency,33,33,5,0,0,0,52,1
+institution,presidential-security,4,4,0,0,0,0,7,1
+institution,presidential-security-adviser,2,2,0,0,0,0,4,1
+institution,public-security,1,1,0,0,0,0,3,1
+institution,qalb-tounes,1,1,0,0,0,0,2,1
+institution,qatar,2,2,0,0,0,0,1,1
+institution,quintacom,1,1,0,0,0,0,4,1
+institution,radio-zaytouna,3,3,0,0,0,0,7,1
+institution,rcd,2,2,0,0,0,0,4,1
+institution,republican-party,2,2,0,0,0,0,3,1
+institution,republican-people-union,1,1,0,0,0,0,4,1
+institution,russia,1,1,0,0,0,0,1,1
+institution,saied-family-clan-network,3,3,0,0,0,0,3,1
+institution,sncft,6,6,0,0,0,0,1,1
+institution,sonede,2,2,0,0,0,0,1,1
+institution,sonibank,1,1,0,0,0,0,1,1
+institution,stb,26,26,0,0,0,0,6,1
+institution,steg,8,8,0,0,0,0,3,1
+institution,steg-energies-renouvelables,1,1,0,0,0,0,1,1
+institution,steg-international-services,1,1,0,0,0,0,1,1
+institution,tahya-tounes,2,2,0,0,0,0,1,1
+institution,tayyar-dimocrati,4,4,0,0,0,0,6,1
+institution,trabelsi-network,4,4,1,0,0,0,6,1
+institution,tunisair,12,12,0,0,0,0,14,1
+institution,tunisie-telecom,5,5,0,0,0,0,8,1
+institution,tunisie-valeurs,1,1,0,0,0,0,1,1
+institution,turkey,1,1,0,0,0,0,1,1
+institution,ugtt,8,8,0,0,0,0,8,1
+institution,united-arab-emirates,2,2,0,0,0,0,2,1
+institution,united-kingdom,1,1,0,0,0,0,1,1
+institution,united-states,1,1,0,0,0,0,4,1
+institution,upl,1,1,0,0,0,0,5,1
+institution,usgn,2,2,0,0,0,0,1,1
+institution,utap,3,3,0,0,0,0,5,1
+institution,utica,6,6,0,0,0,0,5,1
+institution,wifak-bank,1,1,0,0,0,0,1,1
+institution,world-bank,1,1,0,0,0,0,3,1
+institution,zitouna-bank,2,2,0,0,0,0,4,1
+institution,zitouna-tv,3,3,0,0,0,0,3,1
+era,ben-ali-consolidation,187,187,11,1,1,1,184,1
+era,bourguiba,217,217,19,1,1,1,171,1
+era,fragmentation,323,323,12,3,3,3,366,0
+era,pluralism,361,361,8,1,1,1,364,1
+era,police-state,265,265,13,2,2,2,260,1
+era,recentralisation,461,461,15,6,6,6,509,0
+era,transition,365,365,11,2,2,2,357,1
+source_family,africa business,3,2,0,0,0,2,3,1
+source_family,africa intelligence,2,2,0,0,0,2,2,1
+source_family,africa intelligence accessed via blackfacts aggregator original is paywalled,1,0,0,0,0,0,1,1
+source_family,africa intelligence maghreb confidential,1,1,0,0,0,1,1,1
+source_family,african development bank,3,1,0,0,0,1,3,1
+source_family,african manager,28,23,0,0,0,23,28,0
+source_family,african manager en,1,0,0,0,0,0,1,1
+source_family,african union,1,0,0,0,0,0,1,1
+source_family,africanews,2,2,0,0,0,2,2,1
+source_family,agence ecofin,1,0,0,0,0,0,1,1
+source_family,agenzia nova,1,0,0,0,0,0,1,1
+source_family,airbus,1,0,0,0,0,0,1,1
+source_family,al arabiya,1,1,0,0,0,1,1,1
+source_family,al bawaba,1,1,0,0,0,1,1,1
+source_family,al estiklal republication du contenu jeune afrique,1,0,0,0,0,0,1,1
+source_family,al jazeera,13,13,0,0,0,13,13,0
+source_family,al jazeera heba habib reuters,1,1,0,0,0,1,1,1
+source_family,al jazeera reuters,1,1,0,0,0,1,1,1
+source_family,al jazeera staff and reuters,1,1,0,0,0,1,1,1
+source_family,allafrica,1,1,0,0,0,1,1,1
+source_family,allafrica carrying a united nations economic commission for africa press release,1,0,0,0,0,0,1,1
+source_family,alstom,1,0,0,0,0,0,1,1
+source_family,amen bank,1,1,0,0,0,1,1,1
+source_family,amen invest pdf diffuse par webmanagercenter,1,1,0,0,0,1,1,1
+source_family,amnesty international,4,3,0,0,0,3,4,0
+source_family,anadolu agency,4,4,0,0,0,4,4,0
+source_family,anadolu agency fr,1,1,0,0,0,1,1,1
+source_family,annales economies societes civilisations persee,1,0,0,0,0,0,1,1
+source_family,ansa,1,1,0,0,0,1,1,1
+source_family,ap news,1,1,0,0,0,1,1,1
+source_family,apa news,1,0,0,0,0,0,1,1
+source_family,arab news reuters,1,1,0,0,0,1,1,1
+source_family,arabi21 ar,1,1,0,0,0,1,1,1
+source_family,arabic wikipedia,9,9,0,0,0,9,9,0
+source_family,arabic wikipedia governorate page,3,0,0,0,0,0,3,1
+source_family,arabic wikipedia municipality list,1,0,0,0,0,0,1,1
+source_family,asian voice,1,0,0,0,0,0,1,1
+source_family,associated press,3,3,0,0,0,3,3,0
+source_family,axios,2,2,0,0,0,2,2,1
+source_family,babnet,2,2,0,0,0,2,2,1
+source_family,babnet tap,1,0,0,0,0,0,1,1
+source_family,babnet tunisie,3,2,0,0,0,2,3,1
+source_family,banglapedia national encyclopedia of bangladesh,1,0,0,0,0,0,1,1
+source_family,banque centrale de tunisie,2,2,0,0,0,2,2,1
+source_family,banque centrale de tunisie compte rendu par la presse de tunisie,1,0,0,0,0,0,1,1
+source_family,banque tuniso koweitienne official site,1,1,0,0,0,1,1,1
+source_family,bbc,3,3,0,0,0,3,3,0
+source_family,bbc afrique,1,1,0,0,0,1,1,1
+source_family,bbc news,2,1,0,0,0,1,2,1
+source_family,bergens tidende norway,1,1,0,0,0,1,1,1
+source_family,bfm tv avec afp,1,1,0,0,0,1,1,1
+source_family,biat biat com tn,1,1,0,0,0,1,1,1
+source_family,biat site officiel,1,1,0,0,0,1,1,1
+source_family,billionaires africa,1,0,0,0,0,0,1,1
+source_family,blog radioreporter org,1,1,0,0,0,1,1,1
+source_family,bloomberg,1,1,0,0,0,1,1,1
+source_family,bofip impots boi annx 000306,1,0,0,0,0,0,1,1
+source_family,bofip impots direction generale des finances publiques france,1,0,0,0,0,0,1,1
+source_family,bukhatir group official site,1,1,0,0,0,1,1,1
+source_family,business news,20,16,0,0,0,16,20,0
+source_family,business news via web archive org capture 14 07 2018,1,1,0,0,0,1,1,1
+source_family,businessnews tunisie,2,2,0,0,0,2,2,1
+source_family,caf construcciones y auxiliar de ferrocarriles,1,0,0,0,0,0,1,1
+source_family,carnegie endowment for international peace,3,3,0,0,0,3,3,0
+source_family,carnegie middle east center via eth zurich center for security studies,1,0,0,0,0,0,1,1
+source_family,cartaginoiseries carthage,1,1,0,0,0,1,1,1
+source_family,ceic data,1,0,0,0,0,0,1,1
+source_family,cmf conseil du marche financier,1,1,0,0,0,1,1,1
+source_family,coficab group site officiel,1,0,0,0,0,0,1,1
+source_family,comesa secretariat,2,0,0,0,0,0,2,1
+source_family,committee for justice,1,1,0,0,0,1,1,1
+source_family,committee to protect journalists,1,0,0,0,0,0,1,1
+source_family,companies house uk,1,0,0,0,0,0,1,1
+source_family,conect,1,0,0,0,0,0,1,1
+source_family,conect international,1,1,0,0,0,1,1,1
+source_family,conect official site,1,1,0,0,0,1,1,1
+source_family,conseil national des regions et des districts,1,1,0,0,0,1,1,1
+source_family,cour de cassation republique tunisienne,1,0,0,0,0,0,1,1
+source_family,cour des comptes republique tunisienne,1,1,0,0,0,1,1,1
+source_family,dcaf base de donnees juridique du secteur de la securite en tunisie texte du jort,5,3,0,0,0,3,5,0
+source_family,dcaf base de donnees juridique du secteur de la securite en tunisie texte du jort via legislation securite tn,1,0,0,0,0,0,1,1
+source_family,dcaf geneva centre for security sector governance legislation securite tn,1,0,0,0,0,0,1,1
+source_family,dcaf legislation securite tn,6,3,0,0,0,3,6,0
+source_family,dcaf legislation securite tn jort,1,0,0,0,0,0,1,1
+source_family,dcaf legislation securite tn jort n 18 du 18 03 2011 pp 338 342,1,1,0,0,0,1,1,1
+source_family,dcaf legislation securite tn jort n 27 du 14 04 1987 p 507,1,0,0,0,0,0,1,1
+source_family,dcaf legislation securite tn jort n 34 du 16 04 2021 p 838,1,0,0,0,0,0,1,1
+source_family,deeptunisia docs research roadmap md,1,0,0,0,0,0,1,1
+source_family,deeptunisia editorial note,1,1,0,0,0,1,1,1
+source_family,defensenews,1,1,0,0,0,1,1,1
+source_family,departement federal des affaires etrangeres suisse,1,0,0,0,0,0,1,1
+source_family,destination tunisie,3,2,0,0,0,2,3,1
+source_family,deutsche welle,3,2,0,0,0,2,3,1
+source_family,diacron group tax and trade compliance briefing,1,0,0,0,0,0,1,1
+source_family,directinfo,2,2,0,0,0,2,2,1
+source_family,directinfo avec tap,1,0,0,0,0,0,1,1
+source_family,directinfo via tap agence tunis afrique presse,1,1,0,0,0,1,1,1
+source_family,directinfo webmanagercenter,16,14,0,0,0,14,16,0
+source_family,direction generale des douanes tunisie,1,1,0,0,0,1,1,1
+source_family,direction generale des finances publiques france,1,0,0,0,0,0,1,1
+source_family,editions l harmattan,1,1,0,0,0,1,1,1
+source_family,elmedniniya,1,1,0,0,0,1,1,1
+source_family,embassy of belgium in tunis official facebook page,1,0,0,0,0,0,1,1
+source_family,embassy of india tunis,1,0,0,0,0,0,1,1
+source_family,encyclopedia com international directory of company histories,1,1,0,0,0,1,1,1
+source_family,english wikipedia,4,3,0,0,0,3,4,0
+source_family,english wikipedia index article,1,0,0,0,0,0,1,1
+source_family,eni s p a,1,0,0,0,0,0,1,1
+source_family,entreprises magazine,1,1,0,0,0,1,1,1
+source_family,espace diwan,1,0,0,0,0,0,1,1
+source_family,espace manager,8,8,0,0,0,8,8,0
+source_family,eur lex official journal of the european union,1,0,0,0,0,0,1,1
+source_family,european bank for reconstruction and development,2,0,0,0,0,0,2,1
+source_family,european bank for reconstruction and development ebrd,1,0,0,0,0,0,1,1
+source_family,european commission directorate general for trade,1,0,0,0,0,0,1,1
+source_family,european free trade association,2,0,0,0,0,0,2,1
+source_family,european investment bank,2,0,0,0,0,0,2,1
+source_family,european union official website,1,0,0,0,0,0,1,1
+source_family,fondation pour la maitrise des enjeux strategiques fmes,1,1,0,0,0,1,1,1
+source_family,forbes,1,0,0,0,0,0,1,1
+source_family,fps foreign affairs foreign trade and development cooperation belgium,1,0,0,0,0,0,1,1
+source_family,fr wikipedia,4,4,0,0,0,4,4,0
+source_family,france 24,4,4,0,0,0,4,4,0
+source_family,french wikipedia,17,17,0,0,0,17,17,0
+source_family,french wikipedia municipality list,1,0,0,0,0,0,1,1
+source_family,gazzetta ufficiale della repubblica italiana,1,0,0,0,0,0,1,1
+source_family,gct site officiel,1,1,0,0,0,1,1,1
+source_family,gendarmerie nationale ministere de l interieur france site officiel,1,0,0,0,0,0,1,1
+source_family,german federal foreign office,1,1,0,0,0,1,1,1
+source_family,giz,1,1,0,0,0,1,1,1
+source_family,global media registry al khatt media ownership monitor tunisia,1,1,0,0,0,1,1,1
+source_family,globalnet gnet,1,1,0,0,0,1,1,1
+source_family,gnet news,1,1,0,0,0,1,1,1
+source_family,gnet news gnet tn,1,1,0,0,0,1,1,1
+source_family,government of the netherlands,1,0,0,0,0,0,1,1
+source_family,habib bourguiba net,1,1,0,0,0,1,1,1
+source_family,haica,1,0,0,0,0,0,1,1
+source_family,haica haute autorite independante de la communication audiovisuelle,1,0,0,0,0,0,1,1
+source_family,hitachi energy,1,0,0,0,0,0,1,1
+source_family,human rights watch,4,4,0,0,0,4,4,0
+source_family,icmpd,1,1,0,0,0,1,1,1
+source_family,ilboursa,5,3,0,0,0,3,5,0
+source_family,ilboursa com,7,5,0,0,0,5,7,0
+source_family,ilboursa com donnees bvmt,6,2,0,0,0,2,6,1
+source_family,ilboursa com o e o,1,1,0,0,0,1,1,1
+source_family,ilboursa com omar el oudi,3,3,0,0,0,3,3,0
+source_family,inkyfada,4,3,0,0,0,3,4,0
+source_family,instance superieure independante pour les elections,2,2,0,0,0,2,2,1
+source_family,institut national de la statistique ins,1,0,0,0,0,0,1,1
+source_family,international commission of jurists,1,1,0,0,0,1,1,1
+source_family,international monetary fund,2,0,0,0,0,0,2,1
+source_family,jadaliyya,1,1,0,0,0,1,1,1
+source_family,japan international cooperation agency,2,0,0,0,0,0,2,1
+source_family,jawhara fm,3,3,0,0,0,3,3,0
+source_family,jeune afrique,21,20,0,0,0,20,21,0
+source_family,jeune afrique camille lafrance,2,2,0,0,0,2,2,1
+source_family,jort n 2023 112 via 9anoun,1,1,0,0,0,1,1,1
+source_family,jort n 2024 099 via 9anoun,1,1,0,0,0,1,1,1
+source_family,jort n 2025 033 via 9anoun,2,2,0,0,0,2,2,1
+source_family,jort via 9anoun tn,2,2,0,0,0,2,2,1
+source_family,jort via legislation securite tn,3,3,0,0,0,3,3,0
+source_family,journal officiel de la republique tunisienne,2,2,0,0,0,2,2,1
+source_family,journal officiel de la republique tunisienne archive jort,2,2,0,0,0,2,2,1
+source_family,journal officiel de la republique tunisienne n 2016 027 via 9anoun tn,3,0,0,0,0,0,3,1
+source_family,journal officiel de la republique tunisienne via 9anoun,11,10,0,0,0,10,11,0
+source_family,journal officiel de la republique tunisienne via ar wiki dcaf,1,0,0,0,0,0,1,1
+source_family,journal officiel de la republique tunisienne via ar wiki footnote,3,3,0,0,0,3,3,0
+source_family,journal officiel de la republique tunisienne via cnudst sommaire scan,1,1,0,0,0,1,1,1
+source_family,journal officiel de la republique tunisienne via legislation securite tn dcaf,2,2,0,0,0,2,2,1
+source_family,jurisitetunisie base de textes legaux tunisiens,1,0,0,0,0,0,1,1
+source_family,jurist,1,1,0,0,0,1,1,1
+source_family,kapitalis,57,45,0,0,0,45,57,0
+source_family,kapitalis avec tap,1,0,0,0,0,0,1,1
+source_family,kuna,1,0,0,0,0,0,1,1
+source_family,l economiste maghrebin,17,7,0,0,0,7,17,0
+source_family,l economiste maghrebin tap,1,0,0,0,0,0,1,1
+source_family,l orient le jour afp,1,0,0,0,0,0,1,1
+source_family,la depeche du midi afp,1,1,0,0,0,1,1,1
+source_family,la presse de tunisie,13,12,0,0,0,12,13,0
+source_family,la presse de tunisie page facebook officielle,1,0,0,0,0,0,1,1
+source_family,le matin maghreb arabe presse,1,1,0,0,0,1,1,1
+source_family,le monde,12,11,0,0,0,11,12,0
+source_family,le monde archives,1,1,0,0,0,1,1,1
+source_family,le petit journal tunis,1,1,0,0,0,1,1,1
+source_family,le quotidien,1,1,0,0,0,1,1,1
+source_family,leaders,32,26,0,0,0,26,32,0
+source_family,leaders official site,1,1,0,0,0,1,1,1
+source_family,leaders tunisia,1,0,0,0,0,0,1,1
+source_family,leaders tunisie,1,1,0,0,0,1,1,1
+source_family,league of arab states general secretariat,1,0,0,0,0,0,1,1
+source_family,legal agenda,1,1,0,0,0,1,1,1
+source_family,legal databases tunisie,1,1,0,0,0,1,1,1
+source_family,legifrance jorf n 209,1,0,0,0,0,0,1,1
+source_family,legislation securite tn,3,3,0,0,0,3,3,0
+source_family,legislation securite tn dcaf,4,4,0,0,0,4,4,0
+source_family,legislation securite tn jort,1,1,0,0,0,1,1,1
+source_family,legislation securite tn legal database,1,1,0,0,0,1,1,1
+source_family,los angeles times,1,1,0,0,0,1,1,1
+source_family,maghreb intelligence,1,1,0,0,0,1,1,1
+source_family,managers,1,1,0,0,0,1,1,1
+source_family,managers tn,4,2,0,0,0,2,4,1
+source_family,maxula bourse,1,1,0,0,0,1,1,1
+source_family,media ownership monitor tunisia reporters without borders,2,2,0,0,0,2,2,1
+source_family,menadefense specialiste defense maghreb,1,0,0,0,0,0,1,1
+source_family,middle east institute,1,1,0,0,0,1,1,1
+source_family,middle east online,1,1,0,0,0,1,1,1
+source_family,ministere de l interieur interieur gov tn,2,1,0,0,0,1,2,1
+source_family,ministere de l interieur tunisie portail officiel,1,0,0,0,0,0,1,1
+source_family,ministere de l interieur tunisie portail open data direction generale des affaires regionales,1,0,0,0,0,0,1,1
+source_family,ministere de la defense nationale tunisie portail officiel,2,0,0,0,0,0,2,1
+source_family,ministere des affaires religieuses,1,0,0,0,0,0,1,1
+source_family,ministere des affaires religieuses site officiel,1,1,0,0,0,1,1,1
+source_family,ministere des affaires religieuses tunisie,1,1,0,0,0,1,1,1
+source_family,ministere des finances tunisie,1,1,0,0,0,1,1,1
+source_family,ministerio de asuntos exteriores union europea y cooperacion spain,1,0,0,0,0,0,1,1
+source_family,ministero degli affari esteri e della cooperazione internazionale italia,1,0,0,0,0,0,1,1
+source_family,ministero delle imprese e del made in italy italia,1,0,0,0,0,0,1,1
+source_family,ministry of defence egypt,1,1,0,0,0,1,1,1
+source_family,ministry of foreign affairs of japan,2,0,0,0,0,0,2,1
+source_family,ministry of national defence algeria,1,1,0,0,0,1,1,1
+source_family,mondafrique,7,4,0,0,0,4,7,0
+source_family,mosaique fm,7,6,0,0,0,6,7,0
+source_family,natural resource governance institute,1,1,0,0,0,1,1,1
+source_family,nawaat,16,13,0,0,0,13,16,0
+source_family,nessma tv,1,1,0,0,0,1,1,1
+source_family,nobel prize committee,1,1,0,0,0,1,1,1
+source_family,noonpost,2,1,0,0,0,1,2,1
+source_family,noria research mena programme,1,1,0,0,0,1,1,1
+source_family,occrp,1,1,0,0,0,1,1,1
+source_family,openstreetmap,37,0,0,0,0,0,37,1
+source_family,orient xxi avec cadtm,1,0,0,0,0,0,1,1
+source_family,orient xxi khadija mohsen finan,1,1,0,0,0,1,1,1
+source_family,oryx,1,1,0,0,0,1,1,1
+source_family,oxford university press,1,1,0,0,0,1,1,1
+source_family,portail de la presidence du gouvernement,3,3,0,0,0,3,3,0
+source_family,portail de la presidence du gouvernement tunisie,6,5,0,0,0,5,6,0
+source_family,portail du gouvernement tunisien,2,1,0,0,0,1,2,1
+source_family,presidence du gouvernement tunisien,1,1,0,0,0,1,1,1
+source_family,primature pm gov tn,1,1,0,0,0,1,1,1
+source_family,princeton university press,1,1,0,0,0,1,1,1
+source_family,publisud,1,1,0,0,0,1,1,1
+source_family,realites,3,3,0,0,0,3,3,0
+source_family,regulation afrique blogspot com relayant business news,1,0,0,0,0,0,1,1
+source_family,republic of turkiye ministry of trade,1,0,0,0,0,0,1,1
+source_family,reuters,22,17,0,0,0,17,22,0
+source_family,revue d histoire moderne et contemporaine cairn,1,0,0,0,0,0,1,1
+source_family,rfi,3,3,0,0,0,3,3,0
+source_family,rfi afp,1,1,0,0,0,1,1,1
+source_family,rtbf belga,1,1,0,0,0,1,1,1
+source_family,script tunis,1,0,0,0,0,0,1,1
+source_family,senat france,1,0,0,0,0,0,1,1
+source_family,solar water plc,1,0,0,0,0,0,1,1
+source_family,statbase org imf world economic outlook,1,0,0,0,0,0,1,1
+source_family,stb bank site officiel,1,1,0,0,0,1,1,1
+source_family,tap agence tunisienne d information,1,1,0,0,0,1,1,1
+source_family,telecompaper,1,1,0,0,0,1,1,1
+source_family,terna s p a,1,0,0,0,0,0,1,1
+source_family,terna s p a and steg elmedproject com,1,0,0,0,0,0,1,1
+source_family,the africa report,1,1,0,0,0,1,1,1
+source_family,the business standard bangladesh,1,0,0,0,0,0,1,1
+source_family,the eastafrican,1,0,0,0,0,0,1,1
+source_family,the journal of north african studies taylor and francis,1,1,0,0,0,1,1,1
+source_family,the money themoney tn,1,0,0,0,0,0,1,1
+source_family,time,1,1,0,0,0,1,1,1
+source_family,tralac trade law centre,1,0,0,0,0,0,1,1
+source_family,tunis afrique presse tap,4,3,0,0,0,3,4,0
+source_family,tunis afrique presse via aman alliance,1,0,0,0,0,0,1,1
+source_family,tuniscope,2,2,0,0,0,2,2,1
+source_family,tuniscope who s who,1,0,0,0,0,0,1,1
+source_family,tunisia japan friendship association,1,0,0,0,0,0,1,1
+source_family,tunisiatv,1,0,0,0,0,0,1,1
+source_family,tunisie actualite,1,1,0,0,0,1,1,1
+source_family,tunisie actualite source tunivisions,1,1,0,0,0,1,1,1
+source_family,tunisie direct,1,0,0,0,0,0,1,1
+source_family,tunisie haut debit,1,1,0,0,0,1,1,1
+source_family,tunisie haut debit thd,1,1,0,0,0,1,1,1
+source_family,tunisie numerique,12,8,0,0,0,8,12,0
+source_family,tunisie radio com annuaire des radios tunisiennes,1,1,0,0,0,1,1,1
+source_family,tunisie valeurs,1,1,0,0,0,1,1,1
+source_family,tunisie14,2,2,0,0,0,2,2,1
+source_family,turess la presse,1,1,0,0,0,1,1,1
+source_family,tustex,3,1,0,0,0,1,3,1
+source_family,tv 2 norway,1,1,0,0,0,1,1,1
+source_family,u s air forces in europe air forces africa,2,2,0,0,0,2,2,1
+source_family,u s army southern european task force africa,2,2,0,0,0,2,2,1
+source_family,u s department of defense news war gov,1,0,0,0,0,0,1,1
+source_family,u s department of state,1,0,0,0,0,0,1,1
+source_family,u s department of state office of the legal adviser,1,0,0,0,0,0,1,1
+source_family,uae ministry of foreign affairs,1,1,0,0,0,1,1,1
+source_family,uib,1,0,0,0,0,0,1,1
+source_family,uk government,1,1,0,0,0,1,1,1
+source_family,unctad investment policy hub,12,0,0,0,0,0,12,1
+source_family,union syndicale des magistrats france,1,1,0,0,0,1,1,1
+source_family,union tunisienne de l agriculture et de la peche,1,1,0,0,0,1,1,1
+source_family,united nations,1,0,0,0,0,0,1,1
+source_family,united nations treaty series,1,0,0,0,0,0,1,1
+source_family,united nations via belgium news syndication,1,0,0,0,0,0,1,1
+source_family,united states africa command,1,1,0,0,0,1,1,1
+source_family,university of texas press,1,0,0,0,0,0,1,1
+source_family,upr official site,1,1,0,0,0,1,1,1
+source_family,us embassy tunis wikileaks cable 09tunis171,1,1,0,0,0,1,1,1
+source_family,variety,1,1,0,0,0,1,1,1
+source_family,web manager center wmc avec tap,1,1,0,0,0,1,1,1
+source_family,webdo,9,9,0,0,0,9,9,0
+source_family,webdo tap,1,1,0,0,0,1,1,1
+source_family,webmanagercenter,26,15,0,0,0,15,26,0
+source_family,webmanagercenter afp,1,0,0,0,0,0,1,1
+source_family,webmanagercenter amel belhadj ali,1,1,0,0,0,1,1,1
+source_family,webmanagercenter ar,2,2,0,0,0,2,2,1
+source_family,webmanagercenter avec tap,1,0,0,0,0,0,1,1
+source_family,webmanagercenter communique tunisair,1,1,0,0,0,1,1,1
+source_family,webmanagercenter directinfo,2,2,0,0,0,2,2,1
+source_family,webmanagercenter tap,3,0,0,0,0,0,3,1
+source_family,wifak bank site officiel,1,0,0,0,0,0,1,1
+source_family,wikidata,66,0,0,0,0,0,66,1
+source_family,wikipedia,131,79,0,0,0,79,131,0
+source_family,wikipedia ar,1,0,0,0,0,0,1,1
+source_family,wikipedia en,3,0,0,0,0,0,3,1
+source_family,wikipedia encyclopedie referencee,1,0,0,0,0,0,1,1
+source_family,wikipedia english,19,3,0,0,0,3,19,0
+source_family,wikipedia fr,140,92,0,0,0,92,140,0
+source_family,wikipedia francais,22,13,0,0,0,13,22,0
+source_family,wikipedia french,14,13,0,0,0,13,14,0
+source_family,william and mary geolab geoboundaries,1,0,0,0,0,0,1,1
+source_family,wipo lex,1,0,0,0,0,0,1,1
+source_family,world bank,5,4,0,0,0,4,5,0
+source_family,world bank global preferential trade agreements database archive,1,0,0,0,0,0,1,1
+source_family,world bank group,1,0,0,0,0,0,1,1
+source_family,world bank world integrated trade solution,1,0,0,0,0,0,1,1
+source_family,world trade institute university of bern,2,0,0,0,0,0,2,1
+source_family,world trade organization,3,0,0,0,0,0,3,1
+source_family,world trade organization regional trade agreements information system,1,0,0,0,0,0,1,1
+source_family,xinhua,1,1,0,0,0,1,1,1
+source_family,zawya,1,0,0,0,0,0,1,1
+source_family,zawya communique de presse,1,1,0,0,0,1,1,1
+source_family,zoom tunisia,1,1,0,0,0,1,1,1
+source_family,ويكيبيديا (العربية),1,0,0,0,0,0,1,1
+language,ar,66,37,0,0,0,37,66,0
+language,en,448,186,0,0,0,186,448,0
+language,fr,745,549,0,0,0,549,745,0
+language,it,4,1,0,0,0,1,4,1
+office,administrative-court-president,3,3,0,0,0,0,1,1
+office,agriculture-minister,1,1,0,0,0,0,1,1
+office,amt-president,1,1,0,0,0,0,6,1
+office,anti-corruption-head,1,1,0,0,0,0,3,1
+office,attessia-tv-owner,2,2,0,0,0,0,5,1
+office,audit-court-president,4,4,0,0,0,0,3,1
+office,bank-director-general,3,3,0,0,0,0,1,1
+office,bar-president,7,7,0,1,1,1,1,1
+office,bct-governor,14,14,0,0,0,0,11,1
+office,bh-bank-pdg,1,1,0,0,0,0,1,1
+office,bna-pdg,2,2,0,0,0,0,2,1
+office,cassation-president,4,4,0,0,0,0,2,1
+office,chief-air-force,7,7,0,0,0,0,8,1
+office,chief-armed-forces,1,1,0,0,0,0,4,1
+office,chief-land-forces,4,4,0,0,0,0,12,1
+office,chief-navy,5,5,0,0,0,0,9,1
+office,cnrd-president,1,1,0,0,0,0,3,1
+office,cnss-pdg,1,1,0,0,0,0,2,1
+office,commerce-minister,1,1,0,0,0,0,4,1
+office,conect-president,2,2,0,0,0,0,5,1
+office,cpg-gct-pdg,1,1,0,0,0,0,3,1
+office,csee-secretary-general,1,1,0,0,0,0,3,1
+office,csm-president,2,2,0,0,0,0,1,1
+office,defence-minister,14,14,3,0,0,0,15,1
+office,dg-military-security,3,3,0,0,0,0,4,1
+office,dg-national-security,22,22,2,0,0,0,37,1
+office,dg-presidential-security,2,2,0,0,0,0,4,1
+office,dg-public-security,1,1,0,0,0,0,3,1
+office,douane-dg,4,4,0,0,0,0,10,1
+office,elloumi-principal,2,2,0,0,0,0,7,1
+office,equipment-minister,1,1,0,0,0,0,2,1
+office,etap-pdg,1,1,0,0,0,0,1,1
+office,finance-minister,26,26,0,0,0,0,12,1
+office,foreign-minister,31,31,4,0,0,0,47,1
+office,grand-vizier,25,25,0,0,0,0,10,1
+office,hannibal-owner,1,1,0,0,0,0,2,1
+office,haute-instance-president,1,1,0,0,0,0,2,1
+office,head-anrsd,1,1,0,0,0,0,3,1
+office,health-minister,1,1,0,0,0,0,1,1
+office,hiwar-owner,2,2,0,0,0,0,4,1
+office,human-rights-minister,1,1,0,0,0,0,2,1
+office,inspector-general-forces,3,3,0,0,0,0,4,1
+office,interior-minister,27,27,10,0,0,0,27,1
+office,isie-president,5,5,0,0,0,0,14,1
+office,ivd-president,1,1,0,0,0,0,2,1
+office,justice-minister,23,23,0,0,0,0,19,1
+office,justice-ministry-advisor,1,1,0,0,0,0,1,1
+office,la-poste-pdg,3,3,0,0,0,0,1,1
+office,leaders-editor,1,1,0,0,0,0,3,1
+office,ltdh-president,5,5,0,0,0,0,9,1
+office,mabrouk-principal,1,1,0,0,0,0,2,1
+office,media-regulator-president,2,2,0,0,0,0,1,1
+office,mosaique-fm-owner,1,1,0,0,0,0,4,1
+office,mufti,2,2,0,0,0,0,6,1
+office,national-security-adviser,2,2,0,0,0,0,4,1
+office,nessma-owner,1,1,0,0,0,0,2,1
+office,ng-commander,8,8,1,0,0,0,19,1
+office,ooredoo-tunisie-dg,1,1,0,0,0,0,2,1
+office,party-leader-cpr,1,1,0,0,0,0,1,1
+office,party-leader-ennahda,1,1,0,0,0,0,1,1
+office,party-leader-ettakatol,1,1,0,0,0,0,1,1
+office,party-leader-id,1,1,0,0,0,0,1,1
+office,party-leader-karama,1,1,0,0,0,0,3,1
+office,party-leader-machrouu,1,1,0,0,0,0,1,1
+office,party-leader-mds,1,1,0,0,0,0,3,1
+office,party-leader-nidaa,2,2,0,0,0,0,1,1
+office,party-leader-pdl,1,1,0,0,0,0,1,1
+office,party-leader-pdp,2,2,0,0,0,0,4,1
+office,party-leader-people-movement,2,2,0,0,0,0,4,1
+office,party-leader-popular-front,1,1,0,0,0,0,2,1
+office,party-leader-qalb,1,1,0,0,0,0,2,1
+office,party-leader-republican,2,2,0,0,0,0,3,1
+office,party-leader-tahya,1,1,0,0,0,0,1,1
+office,party-leader-tayyar,4,4,0,0,0,0,6,1
+office,party-leader-upl,1,1,0,0,0,0,5,1
+office,party-leader-upr,1,1,0,0,0,0,4,1
+office,poulina-chairman,2,2,0,0,0,0,7,1
+office,president,7,7,1,0,0,0,11,1
+office,presidential-cabinet-director,3,3,0,0,0,0,6,1
+office,presidential-security-chief,1,1,0,0,0,0,3,1
+office,prime-minister,22,22,8,0,0,0,26,1
+office,religious-affairs-director,1,1,0,0,0,0,2,1
+office,religious-affairs-minister,14,14,0,0,0,0,8,1
+office,religious-affairs-secretary-of-state,2,2,0,0,0,0,3,1
+office,sec-state-security,1,1,0,0,0,0,2,1
+office,sncft-pdg,3,3,0,0,0,0,1,1
+office,soe-director-general,1,1,0,0,0,0,2,1
+office,soe-pdg,4,4,0,0,0,0,6,1
+office,sonede-pdg,2,2,0,0,0,0,1,1
+office,speaker,15,15,0,1,1,1,12,1
+office,state-properties-minister,1,1,0,0,0,0,2,1
+office,steg-pdg,2,2,0,0,0,0,1,1
+office,tourism-minister,1,1,0,0,0,0,3,1
+office,tunisie-telecom-pdg,1,1,0,0,0,0,5,1
+office,tv-president,11,11,0,0,0,0,1,1
+office,ugtt-secretary-general,2,2,0,0,0,0,2,1
+office,usgn-commander,1,1,0,0,0,0,1,1
+office,utap-president,2,2,0,0,0,0,5,1
+office,utica-president,1,1,0,0,0,0,1,1
+office,zitouna-tv-owner,2,2,0,0,0,0,3,1
