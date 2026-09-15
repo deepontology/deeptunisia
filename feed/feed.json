@@ -3,6 +3,106 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:3b2f4fd95895a1de",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Football | Comment les compositions changent la lecture d’un match",
+      "link": "https://kapitalis.com/tunisie/2026/09/15/football-comment-les-compositions-changent-la-lecture-dun-match/",
+      "published": "2026-09-15T12:48:44Z",
+      "lang": "fr",
+      "author": "webmaster kapitalis"
+    },
+    {
+      "id": "feed:kapitalis:a6d3b3338035903d",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Hammamet accueille le championnat d’Afrique de golf 2026",
+      "link": "https://kapitalis.com/tunisie/2026/09/15/hammamet-accueille-le-championnat-dafrique-de-golf-2026/",
+      "published": "2026-09-15T11:16:59Z",
+      "lang": "fr",
+      "author": "webmaster kapitalis"
+    },
+    {
+      "id": "feed:kapitalis:7616bf47f40f3129",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Industrie | Eurostat Group s’implante en Tunisie",
+      "link": "https://kapitalis.com/tunisie/2026/09/15/industrie-eurostat-group-simplante-en-tunisie/",
+      "published": "2026-09-15T10:38:17Z",
+      "lang": "fr",
+      "author": "webmaster kapitalis"
+    },
+    {
+      "id": "feed:kapitalis:62f87a571a58f7b5",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "La Tunisie œuvre pour une refonte globale de la loi antidrogue",
+      "link": "https://kapitalis.com/tunisie/2026/09/15/la-tunisie-oeuvre-pour-une-refonte-globale-de-la-loi-antidrogue/",
+      "published": "2026-09-15T09:23:16Z",
+      "lang": "fr",
+      "author": "webmaster kapitalis"
+    },
+    {
+      "id": "feed:kapitalis:7ec9057812854edb",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Tunisie | Les crues des oueds perturbent le transport du phosphate",
+      "link": "https://kapitalis.com/tunisie/2026/09/15/tunisie-les-crues-des-oueds-perturbent-le-transport-du-phosphate/",
+      "published": "2026-09-15T08:50:06Z",
+      "lang": "fr",
+      "author": "webmaster kapitalis"
+    },
+    {
+      "id": "feed:kapitalis:16e5d8f303da1273",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Tunisie | Un été 2026 particulièrement chaud",
+      "link": "https://kapitalis.com/tunisie/2026/09/15/tunisie-un-ete-2026-particulierement-chaud/",
+      "published": "2026-09-15T08:31:20Z",
+      "lang": "fr",
+      "author": "webmaster kapitalis"
+    },
+    {
+      "id": "feed:kapitalis:365ffd878d34bb19",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Les dessous de la rupture entre l’Algérie et les Émirats",
+      "link": "https://kapitalis.com/tunisie/2026/09/15/les-dessous-de-la-rupture-entre-lalgerie-et-les-emirats/",
+      "published": "2026-09-15T07:59:00Z",
+      "lang": "fr",
+      "author": "webmaster kapitalis"
+    },
+    {
+      "id": "feed:kapitalis:fb180b127cb3d802",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Omar Oueslati à ses collègues | «Les gens n’oublient pas l’injustice qu’ils ont subie»",
+      "link": "https://kapitalis.com/tunisie/2026/09/15/omar-oueslati-a-ses-collegues-les-gens-noublient-pas-linjustice-quils-ont-subie/",
+      "published": "2026-09-15T07:56:19Z",
+      "lang": "fr",
+      "author": "webmaster kapitalis"
+    },
+    {
+      "id": "feed:kapitalis:efa3bfb8cfd8dc8c",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Les gouvernances archaïques face à l’IA partagée",
+      "link": "https://kapitalis.com/tunisie/2026/09/15/les-gouvernances-archaiques-face-a-lia-partagee/",
+      "published": "2026-09-15T07:10:00Z",
+      "lang": "fr",
+      "author": "webmaster kapitalis"
+    },
+    {
+      "id": "feed:kapitalis:1c7400c55eb8a13c",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "ISO 9001:2026 | Vers un système de management intelligent et durable",
+      "link": "https://kapitalis.com/tunisie/2026/09/15/iso-90012026-vers-un-systeme-de-management-intelligent-et-durable/",
+      "published": "2026-09-15T06:25:00Z",
+      "lang": "fr",
+      "author": "webmaster kapitalis"
+    },
+    {
       "id": "feed:kapitalis:dfda84dc08bd1421",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -11067,96 +11167,6 @@
       "title": "Hausse du déficit énergétique de 35% à fin juin 2026",
       "link": "https://africanmanager.com/hausse-du-deficit-energetique-de-35-a-fin-juin-2026/",
       "published": "2026-08-14T12:38:54Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:29a50dfc631211b4",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Blanchiment des capitaux: le Maroc renforce la régulation des holdings offshore",
-      "link": "https://africanmanager.com/blanchiment-des-capitaux-le-maroc-renforce-la-regulation-des-holdings-offshore/",
-      "published": "2026-08-14T11:37:02Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:e23470a4d56ab4db",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Des colons israéliens détournent l’eau palestinienne pour remplir une piscine en Cisjordanie",
-      "link": "https://africanmanager.com/des-colons-israeliens-detournent-leau-palestinienne-pour-remplir-une-piscine-en-cisjordanie/",
-      "published": "2026-08-14T11:28:42Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:a17380f11ee8b269",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Les USA affirment pouvoir maintenir le blocus naval contre l’Iran « indéfiniment »",
-      "link": "https://africanmanager.com/les-usa-affirment-pouvoir-maintenir-le-blocus-naval-contre-liran-indefiniment/",
-      "published": "2026-08-14T11:20:15Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:nawaat:5fc6bc5660a115e9",
-      "outlet": "Nawaat",
-      "outletId": "nawaat",
-      "title": "في رواد مات أنيس تحت الإيقاف، رغم المخاوف العائلة تتحدث",
-      "link": "https://nawaat.org/2026/08/14/%d9%81%d9%8a-%d8%b1%d9%88%d8%a7%d8%af-%d9%85%d8%a7%d8%aa-%d8%a3%d9%86%d9%8a%d8%b3-%d8%aa%d8%ad%d8%aa-%d8%a7%d9%84%d8%a5%d9%8a%d9%82%d8%a7%d9%81%d8%8c-%d8%b1%d8%ba%d9%85-%d8%a7%d9%84%d9%85%d8%ae%d8%a7/",
-      "published": "2026-08-14T10:59:57Z",
-      "lang": "ar"
-    },
-    {
-      "id": "feed:african-manager:90ecb0921bff7679",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Tunisie : 22 blessés dans l’accident d’un bus libyen !",
-      "link": "https://africanmanager.com/tunisie-22-blesses-dans-laccident-dun-bus-libyen/",
-      "published": "2026-08-14T10:58:24Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:fe58a57d1f331bf5",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Algérie-Complexe d’El-Hadjar: coopération avec un groupe chinois",
-      "link": "https://africanmanager.com/algerie-complexe-del-hadjar-cooperation-avec-un-groupe-chinois/",
-      "published": "2026-08-14T10:56:16Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:67cbae4fd817c540",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Plus de 147.000 litres d’eau minérale saisis",
-      "link": "https://africanmanager.com/plus-de-147-000-litres-deau-minerale-saisis/",
-      "published": "2026-08-14T09:53:49Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:0f5dead1f06fa9c6",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "FIFA : six fédérations arabes soutiennent Infantino",
-      "link": "https://africanmanager.com/fifa-six-federations-arabes-soutiennent-infantino/",
-      "published": "2026-08-14T09:39:58Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:9167bab2f4562970",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Espérance de Tunis : la sanction de Youcef Belaïli levée, son nouveau contrat activé",
-      "link": "https://africanmanager.com/esperance-de-tunis-la-sanction-de-youcef-belaili-levee-son-nouveau-contrat-active/",
-      "published": "2026-08-14T09:35:57Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:cf88f6881b830dcc",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Basma Omrani décroche le Prix Zoubeida Béchir 2026",
-      "link": "https://kapitalis.com/tunisie/2026/08/14/basma-omrani-decroche-le-prix-zoubeida-bechir-2026/",
-      "published": "2026-08-14T09:35:44Z",
       "lang": "fr"
     }
   ]
