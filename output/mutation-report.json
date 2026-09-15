@@ -1,10 +1,10 @@
 {
-  "generated": "2026-09-14T15:46:15.300Z",
-  "commit": "0000a40",
+  "generated": "2026-09-14T16:36:36.003Z",
+  "commit": "ba2ba8c",
   "withValidators": true,
   "summary": {
-    "counted": 54,
-    "killed": 52,
+    "counted": 56,
+    "killed": 54,
     "latent": 2,
     "knownLatent": 2,
     "drift": 0,
@@ -497,6 +497,24 @@
       "by": "test-network-continuity",
       "outputChanged": false,
       "expect": "test-network-continuity (weak-grade fixture)"
+    },
+    {
+      "id": "m55",
+      "label": "the sparse flag stops marking thin slices",
+      "file": "coverage.ts",
+      "verdict": "killed",
+      "by": "test-validators",
+      "outputChanged": false,
+      "expect": "test-validators Phase 10A (sparse slice fixture)"
+    },
+    {
+      "id": "m56",
+      "label": "the effective nonzero sample stops counting evidence and origins",
+      "file": "coverage.ts",
+      "verdict": "killed",
+      "by": "test-validators",
+      "outputChanged": false,
+      "expect": "test-validators Phase 10A (nonzero sample fixture)"
     }
   ]
 }
