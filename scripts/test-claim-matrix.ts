@@ -66,7 +66,9 @@ if (!existsSync(csvPath)) {
 } else {
 	ok(
 		'output/claim-matrix.csv recomputes from the matrix module',
-		readFileSync(csvPath, 'utf8') === claimMatrixCsv(CLAIM_MATRIX),
+		// Compare EOL-insensitively: the artifact is written LF, and a checkout
+		// under core.autocrlf can hand back CRLF without any content change.
+		readFileSync(csvPath, 'utf8').replace(/\r\n/g, '\n') === claimMatrixCsv(CLAIM_MATRIX),
 		`${CLAIM_MATRIX.length} rows`
 	);
 }
