@@ -1,0 +1,509 @@
+# JORT verification pass, candidate file dated 2026-09-11 (produced 2026-09-14).
+#
+# MISSION: resolve `verification: needs-primary-source` positions with fetched
+#   primary records — JORT appointment decrees and equivalent gazette text.
+# SCOPE: post-1956 positions only. Priority: ministers, service chiefs,
+#   directors-general, with vague or single-source dates. PRE-1956 BEYLICAL
+#   OFFICES ARE OUT OF SCOPE in this pass: the Grand Vizier tenures (1759-1956,
+#   p-gv-*) are not JORT appointments and no gazette surrogate was fetched, so
+#   they are noted here and not guessed at.
+# METHOD: (1) read the canonical row in data/positions.yaml; (2) locate the
+#   issue by target date via jort.tn year browse and view pages, fetch the
+#   issue PDF from lake.jort.tn, extract with pdftotext; (3) for government and
+#   judiciary decrees 2011-2022, fetch the full text on legislation-securite.tn
+#   (DCAF) and 9anoun.tn. Every record below was fetched on 2026-09-14 and the
+#   decisive passage grepped from the fetched text, never from a search snippet.
+# CONFIRMED: 20 positions patched, 17 new tier-1 sources.
+#   Appointment date confirmed, no date token changed (13): p-int-feki,
+#   p-csm-kchaou, p-audit-nejib-ktari, p-cassation-hedi-guediri,
+#   p-finance-boughdiri, p-finance-zribi, p-finance-yaiche, p-milsec-bentaous,
+#   p-ig-nafti, p-air-bedoui, p-equipment-zouari, p-csee-sg-boughdiri,
+#   p-douane-zouaghi (already-cited gazette source now read, flag flipped).
+#   Start corrected to the gazette date (4): p-finance-dimassi (2011-12-29),
+#   p-finance-chalghoum-2 (2017-09-12), p-finance-kooli (2020-09-02),
+#   p-cassation-moncef-kchaou (2021-10-22).
+#   Start corrected to the gazette effective date (1): p-cassation-khaled-ayari
+#   (2014-09-18; the decree itself is dated 2014-10-02).
+#   Start narrowed by a signed record (1): p-finance-jeri (<=1997-04-05).
+#   End narrowed (1): p-finance-zorgati-2 (verified:1997-01-18).
+# FAILURE VOCABULARY (must not be collapsed):
+#   - "the fetched page is the gazette text" is not the same as "a cessation
+#     decree was found". For p-finance-boughdiri the start is named by decree
+#     2021-138; the end is only bounded by the successor's signature (Michket
+#     Slama Khaldi signing as ministre des finances on 12 February 2025), no
+#     decree in the fetched issues ends her functions by name.
+#   - "the successor's gazetted appointment bounds the predecessor's end" is a
+#     corollary, not a names-the-holder record: the arrêtés of 21 August 2013
+#     (JORT n° 69) name Ben Taous, Nafti and Bédoui, not their predecessors, so
+#     p-air-jelassi and p-ig-laajimi are left as leads even though their ends
+#     fall on 2013-08-22 by succession.
+#   - "a signature block names the office, not the person" when the minister is
+#     not named in the arrêté itself; only records that print the holder's name
+#     are treated as naming the holder.
+#   - "2019 lake.jort.tn PDFs served under /fr/ are the Arabic edition" for
+#     2019/020 (1 Rajab 1440 = 8 March 2019); the French security appointments of
+#     February 2019 were therefore not resolved.
+#   - "the 2004 PDF has a text layer but its encoding is shifted +29 on
+#     printable ASCII": names decode, decree numbers and dates do not; no 2004
+#     record is claimed from it.
+#   - "the 1989 and 1991 lake.jort.tn issues probed are image-only" and tesseract in this
+#     environment has only eng/osd traineddata, so no OCR claim is made for
+#     1989-1996 (p-justice-bouaziz, p-foreign-khelil, p-foreign-boulares,
+#     p-finance-zorgati-1, p-dgsn-seriati and the other Ben Ali-era security
+#     rows stay unresolved).
+#   - "a decree number discarded earlier stays discarded until the issue is
+#     read": the 2023-268 lead that an earlier pass rejected as a French decree
+#     is in fact the Tunisian appointment decree of Kamel Fekih (JORT n° 29 du
+#     21 mars 2023). This pass read the issue, so the lead is reinstated.
+# UNRESOLVED LEADS (position id, what was searched, what was found):
+#   - p-finance-abdelkefi: JORT n° 74 du 15 septembre 2017 shows "Le ministre
+#     des finances par intérim Mouhamed Fadhel Abdelkefi" countersigning a
+#     decree dated 17 August 2017; the DCAF text of the 12
+#     September 2017 government decree (2017-124) names Chalghoum as finance
+#     minister. The canonical 2017-09-06 to 2017-12 span for Abdelkefi is not
+#     supported by either fetched record. No patch: the two records contradict
+#     the row but do not establish the correct span.
+#   - p-cassation-taieb-rached: searched JORT 2018 issues 089, 090, 092, 093,
+#     095, 096, 097, 099 (November-December 2018); no appointment of Taïeb
+#     Rached located.
+#   - p-audit-abdellatif-kharrat: searched JORT 2014 issues 022 to 026 (March
+#     2014); only Mondher Kharrat appears, not the Audit Court president.
+#   - p-ng-ksiksi: searched JORT 2013 issues 078 to 084 (September-October
+#     2013); the National Guard command appointment was not located.
+#   - p-ng-guezguez: searched JORT 2022 issues 083 to 088 (July-August 2022);
+#     not located.
+#   - p-dgsp-harroum: the February-March 2019 issues consulted served the
+#     Arabic edition under /fr/; not resolved.
+#   - p-soe-sncft-boufaied, p-soe-steg-trifa, p-soe-sonede-soula,
+#     p-soe-poste-*, p-bank-stb-rachid-batita, p-bank-stb-*, p-bank-bna-*:
+#     JORT issues around the appointment dates (2022 issue 005, 2024 issues
+#     074 to 079, 2023 issue 101 and others) were fetched and grepped; these
+#     director-general appointments are not gazetted as decrees in the issues
+#     searched, or not under the holder's name.
+#   - p-onat-*: bar association elections, not a JORT appointment; out of scope.
+#   - p-admin-*, p-ivd-bensedrine, p-audit-faiza-kefi and the remaining
+#     cassation rows: not attempted in this pass; no lead formed.
+# Candidates are proposals, not graph data. Review only; nothing canonical changed.
+
+sources:
+  - id: jort-2023-268-feki
+    title: "Décret n° 2023-268 du 17 mars 2023, portant nomination d'un membre du gouvernement (Kamel Fekih, ministre de l'intérieur), JORT n° 29 du 21 mars 2023"
+    publisher: Journal Officiel de la République Tunisienne (archive officielle jort.tn)
+    date: 2023-03-17
+    url: https://lake.jort.tn/journal-officiel/fr/2023/029.pdf
+    tier: 1
+    lang: fr
+    excerpt: "Décret n° 2023-268 du 17 mars 2023, portant nomination d'un membre du gouvernement. ... Article premier - Monsieur Kamel Fekih est nommé ministre de l'intérieur."
+    notes:
+      - "Le même numéro publie le décret n° 2023-267 du 17 mars 2023, portant cessation de fonctions de Monsieur Taoufik Charfeddine, ministre de l'intérieur."
+  - id: jort-2021-155-kchaou
+    title: "Décret présidentiel n° 2021-155 du 22 octobre 2021, portant nomination du Premier président de la Cour de cassation (Moncef Kchaou), JORT n° 99 du 26 octobre 2021"
+    publisher: Journal Officiel de la République Tunisienne (archive officielle jort.tn)
+    date: 2021-10-22
+    url: https://lake.jort.tn/journal-officiel/fr/2021/099.pdf
+    tier: 1
+    lang: fr
+    excerpt: "Par décret Présidentiel n° 2021-155 du 22 octobre 2021. Monsieur Moncef Kchou est nommé Premier président de la Cour de Cassation."
+  - id: jort-2021-138-boughdiri
+    title: "Décret Présidentiel n° 2021-138 du 11 octobre 2021, portant nomination des membres du Gouvernement (Sihem Boughdiri Nemsia, ministre des finances)"
+    publisher: Journal Officiel de la République Tunisienne (via legislation-securite.tn, DCAF)
+    date: 2021-10-11
+    url: https://legislation-securite.tn/latest-laws/decret-presidentiel-n-2021-138-du-11-octobre-2021-portant-nomination-des-membres-du-gouvernement/
+    tier: 1
+    lang: fr
+    excerpt: "Article premier – Sont nommés Mesdames et Messieurs: ... Sihem Boughdiri Nemsia : ministre des finances, ... Tunis, le 11 octobre 2021."
+  - id: jort-2025-019-slama
+    title: "JORT n° 19 du 13 février 2025, arrêtés de la ministre des finances (Michket Slama Khaldi) du 12 février 2025"
+    publisher: Journal Officiel de la République Tunisienne (archive officielle jort.tn)
+    date: 2025-02-13
+    url: https://lake.jort.tn/journal-officiel/fr/2025/019.pdf
+    tier: 1
+    lang: fr
+    excerpt: "Tunis, le 12 février 2025. La ministre des finances Michket Slama Khaldi."
+    notes:
+      - "Arrêtés du 12 février 2025 signés par la ministre des finances. Aucun décret de cessation de fonctions de Sihem Boughdiri Nemsia n'a été trouvé dans les numéros consultés; cette pièce borne la fin de son mandat par l'arrivée de sa successeure."
+  - id: jort-2016-107-zribi
+    title: "Décret présidentiel n° 2016-107 du 27 août 2016 portant nomination du chef du gouvernement et de ses membres (Lamia Boujnah Zribi, ministre des finances)"
+    publisher: Journal Officiel de la République Tunisienne (via legislation-securite.tn, DCAF)
+    date: 2016-08-27
+    url: https://legislation-securite.tn/latest-laws/decret-presidentiel-n-2016-107-du-27-aout-2016-portant-nomination-du-chef-du-gouvernement-et-de-ses-membres/
+    tier: 1
+    lang: fr
+    excerpt: "... Farhat Horchani : ministre de la défense nationale, Hedi Mejdoub : ministre de l'intérieur, Khemaies Jhinaoui : ministre des affaires étrangères, ... Lamia Boujnah Zribi : ministre des finances, Mouhamed Fadhel Abdelkefi : ministre du développement, de l'investissement et de la coopération internationale, ..."
+  - id: jort-2017-124-chalghoum
+    title: "Décret présidentiel n° 2017-124 du 12 septembre 2017, portant nomination des membres du gouvernement (Mohamed Ridha Chalghoum, ministre des finances)"
+    publisher: Journal Officiel de la République Tunisienne (via legislation-securite.tn, DCAF)
+    date: 2017-09-12
+    url: https://legislation-securite.tn/latest-laws/decret-presidentiel-n-2017-124-du-12-septembre-2017-portant-nomination-des-membres-du-gouvernement/
+    tier: 1
+    lang: fr
+    excerpt: "Article premier – Sont nommés Messieurs : Abdelkarim Zbidi : ministre de la défense nationale, Lotfi Brahem : ministre de l'intérieur, Mohamed Ridha Chalghoum : ministre des finances, ... Tunis, le 12 septembre 2017."
+  - id: jort-2020-84-kooli
+    title: "Décret Présidentiel n° 2020-84 du 2 septembre 2020, portant nomination du Chef du Gouvernement et de ses membres (Ali Kooli)"
+    publisher: Journal Officiel de la République Tunisienne (via 9anoun.tn)
+    date: 2020-09-02
+    url: https://9anoun.tn/fr/kb/jorts/jort-2020-089-cf9a4/decret-presidentiel-ndeg-2020-84-du-2-septembre-2020-portant-nomination-du-chef-du-gouvernement-et-de-ses-membres-3
+    tier: 1
+    lang: fr
+    excerpt: "Article premier - Monsieur Hichem Mechichi est nommé Chef du Gouvernement. Art. 2 - Sont nommés Mesdames et Messieurs : ... - Ali Kooli : ministre de l'économie, des finances et de l'appui à l'investissement, ..."
+  - id: jort-2020-19-yaiche
+    title: "Décret Présidentiel n° 2020-19 du 27 février 2020, portant nomination du chef du gouvernement et de ses membres (Mohamed Nizar Yaïche, ministre des finances), JORT n° 17 du 28 février 2020"
+    publisher: Journal Officiel de la République Tunisienne (archive officielle jort.tn)
+    date: 2020-02-27
+    url: https://lake.jort.tn/journal-officiel/fr/2020/017.pdf
+    tier: 1
+    lang: fr
+    excerpt: "Décret Présidentiel n° 2020-19 du 27 février 2020, portant nomination du chef du gouvernement et de ses membres. ... - Mohamed Nizar Yaïche : ministre des finances, ..."
+  - id: jort-2011-4796-dimassi
+    title: "Décret n° 2011-4796 du 29 décembre 2011, portant nomination des membres du Gouvernement (Houcine Dimassi, ministre des finances)"
+    publisher: Journal Officiel de la République Tunisienne (via legislation-securite.tn, DCAF)
+    date: 2011-12-29
+    url: https://legislation-securite.tn/latest-laws/decret-n-2011-4796-du-29-decembre-2011-portant-nomination-des-membres-du-gouvernement/
+    tier: 1
+    lang: fr
+    excerpt: "Décret n° 2011-4796 du 29 décembre 2011, portant nomination des membres du Gouvernement. ... Monsieur Houcine Dimassi, ministre des finances, ... Tunis, le 29 décembre 2011."
+  - id: jort-2022-217-kchaou
+    title: "Décret Présidentiel n° 2022-217 du 7 mars 2022, portant nomination des membres des conseils provisoires de la magistrature (Moncef Kchaou, président)"
+    publisher: Journal Officiel de la République Tunisienne (via legislation-securite.tn, DCAF)
+    date: 2022-03-07
+    url: https://legislation-securite.tn/latest-laws/decret-presidentiel-n-2022-217-du-7-mars-2022-portant-nomination-des-membres-des-conseils-provisoires-de-la-magistrature/
+    tier: 1
+    lang: fr
+    excerpt: "Article premier – Mesdames et Messieurs, ci-après cités, sont nommés membres des conseils provisoires de la magistrature judiciaire, administrative et financière, comme suit : Le Conseil provisoire de la magistrature judicaire : Moncef Kchaou, premier président de la Cour de cassation, président."
+  - id: jort-2017-82-ktari
+    title: "Décret Présidentiel n° 2017-82 du 14 juin 2017, portant nomination du premier Président de la cour des comptes (Néjib Ktari)"
+    publisher: Journal Officiel de la République Tunisienne (via 9anoun.tn)
+    date: 2017-06-14
+    url: https://9anoun.tn/fr/kb/jorts/jort-2017-048-5baca/decret-presidentiel-ndeg-2017-82-du-14-juin-2017-portant-nomination-du-premier-president-de-la-cour-des-comptes-5
+    tier: 1
+    lang: fr
+    excerpt: "Article premier - Monsieur Néjib Ktari, conseiller à la cour des comptes, est nommé premier Président de la cour des comptes."
+  - id: jort-2013-226-228-military
+    title: "Arrêtés républicains n° 2013-226, 2013-227 et 2013-228 du 21 août 2013 (sécurité militaire, inspection générale des forces armées, état-major de l'armée de l'air), JORT n° 69 du 27 août 2013"
+    publisher: Journal Officiel de la République Tunisienne (archive officielle jort.tn)
+    date: 2013-08-21
+    url: https://lake.jort.tn/journal-officiel/fr/2013/069.pdf
+    tier: 1
+    lang: fr
+    excerpt: "Par arrêté Républicain n° 2013-226 du 21 août 2013. Le général de brigade, Monsieur Nouri Ben Taous, est nommé directeur général de la sécurité militaire et ce, à compter du 22 août 2013. Par arrêté Républicain n° 2013-227 du 21 août 2013. Le général de brigade, Monsieur Mohamed Nafti, est nommé inspecteur général des forces armées et ce, à compter du 22 août 2013. Par arrêté Républicain n° 2013-228 du 21 août 2013. Le général de brigade, Monsieur Béchir Bédoui, est nommé chef d'état major de l'armée de l'air et ce, à compter du 22 août 2013."
+  - id: jort-2014-3506-ayari
+    title: "Décret n° 2014-3506 du 2 octobre 2014, portant nomination du premier président de la cour de cassation (Khaled Ayari), JORT n° 80 du 3 octobre 2014"
+    publisher: Journal Officiel de la République Tunisienne (archive officielle jort.tn)
+    date: 2014-10-02
+    url: https://lake.jort.tn/journal-officiel/fr/2014/080.pdf
+    tier: 1
+    lang: fr
+    excerpt: "Par décret n° 2014-3506 du 2 octobre 2014. Monsieur Khaled Ayari, magistrat de troisième grade, est nommé premier président de la cour de cassation, à compter du 18 septembre 2014."
+  - id: jort-2025-166-zouari
+    title: "Décret n° 2025-166 du 20 mars 2025, portant nomination d'un membre du Gouvernement (Slah Zouari, ministre de l'équipement et de l'habitat), JORT n° 33 du 21 mars 2025"
+    publisher: Journal Officiel de la République Tunisienne (archive officielle jort.tn)
+    date: 2025-03-20
+    url: https://lake.jort.tn/journal-officiel/fr/2025/033.pdf
+    tier: 1
+    lang: fr
+    excerpt: "Décret n° 2025-166 du 20 mars 2025, portant nomination d'un membre du Gouvernement. ... Article premier - Monsieur Slah Zouari est nommé ministre de l'équipement et de l'habitat. Tunis, le 20 mars 2025."
+  - id: jort-2026-204-boughdiri
+    title: "Décret n° 2026-204 du 12 août 2026, portant nomination du secrétaire général du Conseil supérieur de l'éducation et de l'enseignement (Mohamed Ali Boughdiri), JORT n° 82 du 14 août 2026"
+    publisher: Journal Officiel de la République Tunisienne (archive officielle jort.tn)
+    date: 2026-08-12
+    url: https://lake.jort.tn/journal-officiel/fr/2026/082.pdf
+    tier: 1
+    lang: fr
+    excerpt: "Décret n° 2026-204 du 12 août 2026, portant nomination du secrétaire général du Conseil supérieur de l'éducation et de l'enseignement. ... Article premier - Monsieur Mohamed Ali Boughdiri est chargé des fonctions du secrétaire général du Conseil supérieur de l'éducation et de l'enseignement. Tunis, le 12 août 2026."
+  - id: jort-1997-010-zorgati
+    title: "JORT n° 10 du 4 février 1997, arrêté du ministre des finances Nouri Zorgati daté du 18 janvier 1997"
+    publisher: Journal Officiel de la République Tunisienne (archive officielle jort.tn)
+    date: 1997-01-18
+    url: https://lake.jort.tn/journal-officiel/fr/1997/010.pdf
+    tier: 1
+    lang: fr
+    excerpt: "Tunis, le 18 janvier 1997. Le Ministre des Finances Nouri Zorgati."
+  - id: jort-1997-030-jeri
+    title: "JORT n° 30 du 15 avril 1997, arrêté du ministre des finances Mohamed El Jeri daté du 5 avril 1997"
+    publisher: Journal Officiel de la République Tunisienne (archive officielle jort.tn)
+    date: 1997-04-05
+    url: https://lake.jort.tn/journal-officiel/fr/1997/030.pdf
+    tier: 1
+    lang: fr
+    excerpt: "Tunis, le 5 avril 1997. ... Le Ministre des Finances Mohamed El Jeri"
+
+positions:
+  - id: p-int-feki
+    role: interior-minister
+    holder: kamel-feki
+    start: "2023-03-17"
+    end: "2024-05-25"
+    confidence: B
+    verification: verified
+    sources: [reuters-feki-2023, aljazeera-feki-2023, lemonde-interior-2024, france24-nouri-2024, jort-2023-268-feki]
+    notes:
+      - >-
+        Décret n° 2023-268 du 17 mars 2023 (JORT n° 29 du 21 mars 2023) : « Article premier -
+        Monsieur Kamel Fekih est nommé ministre de l'intérieur. » The same issue publishes décret
+        n° 2023-267 du 17 mars 2023 ending Taoufik Charfeddine's functions. The earlier rejected
+        lead for decree 2023-268 was correct for Tunisia; it had been discarded as a French decree.
+        The end date (25 May 2024) rests on press sources and is not fixed by a fetched gazette
+        record.
+  - id: p-cassation-moncef-kchaou
+    role: cassation-president
+    holder: moncef-kchaou
+    start: "2021-10-22"
+    end: ongoing
+    confidence: A
+    verification: verified
+    sources: [wikipedia-cour-cassation-tunisie, jort-2021-155-kchaou]
+    notes:
+      - >-
+        Décret présidentiel n° 2021-155 du 22 octobre 2021 (JORT n° 99 du 26 octobre 2021) : «
+        Monsieur Moncef Kchou est nommé Premier président de la Cour de Cassation. » Start
+        corrected from 2021-10-26 (the issue's publication date) to the decree date 2021-10-22,
+        per the prefer-the-gazette rule.
+  - id: p-csm-kchaou
+    role: csm-president
+    holder: moncef-kchaou
+    start: "2022-03-07"
+    end: ongoing
+    confidence: B
+    verification: verified
+    sources: [wikipedia-csm-tunisie, jort-2022-217-kchaou]
+    notes:
+      - >-
+        Décret présidentiel n° 2022-217 du 7 mars 2022 : « Le Conseil provisoire de la magistrature
+        judicaire : Moncef Kchaou, premier président de la Cour de cassation, président. » The
+        gazette names holder, office and date.
+  - id: p-audit-nejib-ktari
+    role: audit-court-president
+    holder: nejib-ktari
+    start: "2017-06-14"
+    end: ongoing
+    confidence: A
+    verification: verified
+    sources: [wikipedia-audit-court-tunisie, jort-2017-82-ktari]
+    notes:
+      - >-
+        Décret présidentiel n° 2017-82 du 14 juin 2017 : « Article premier - Monsieur Néjib Ktari,
+        conseiller à la cour des comptes, est nommé premier Président de la cour des comptes. »
+  - id: p-cassation-hedi-guediri
+    role: cassation-president
+    holder: hedi-guediri
+    start: "2017-06-14"
+    end: "2018-11-09"
+    confidence: A
+    verification: verified
+    sources: [wikipedia-cour-cassation-tunisie, jort-2017-81]
+    notes:
+      - >-
+        The already-registered source jort-2017-81 was re-read from 9anoun.tn on 2026-09-14. Décret
+        présidentiel n° 2017-81 du 14 juin 2017 : « Article premier - Monsieur Hedi Guediri,
+        magistrat de troisième grade, est nommé premier président de la cour de cassation. » No new
+        source id is proposed because the registry already holds this record; the flag is flipped.
+        The end (9 November 2018) rests on the successor's appointment and is not fixed by this
+        decree.
+  - id: p-finance-boughdiri
+    role: finance-minister
+    holder: sihem-boughdiri
+    start: "2021-10-11"
+    end: "2025-02"
+    confidence: B
+    verification: verified
+    sources: [wikipedia-finance-ministers, jort-2021-138-boughdiri, jort-2025-019-slama]
+    notes:
+      - >-
+        Start: décret présidentiel n° 2021-138 du 11 octobre 2021 names « Sihem Boughdiri Nemsia :
+        ministre des finances ». End: no cessation decree was found in the consulted issues; the
+        February 2025 end is bounded by the successor's signature, Michket Slama Khaldi signing as
+        « La ministre des finances » on 12 February 2025 (JORT n° 19 du 13 février 2025). The end
+        token therefore stays 2025-02 and rests on the successor's arrival, not on a names-the-
+        holder cessation record.
+  - id: p-finance-zribi
+    role: finance-minister
+    holder: lamia-zribi
+    start: "2016-08-27"
+    end: "2017-09-06"
+    confidence: B
+    verification: verified
+    sources: [wikipedia-finance-ministers, jort-2016-107-zribi]
+    notes:
+      - >-
+        Décret présidentiel n° 2016-107 du 27 août 2016 names « Lamia Boujnah Zribi : ministre des
+        finances ». The end (6 September 2017) rests on press/encyclopedic sources and is not fixed
+        by a fetched gazette record; the successor decree of 12 September 2017 (jort-2017-124-
+        chalghoum) places the handover after 6 September.
+  - id: p-finance-chalghoum-2
+    role: finance-minister
+    holder: ridha-chalghoum
+    start: "2017-09-12"
+    end: "2020-02-27"
+    confidence: B
+    verification: verified
+    sources: [wikipedia-finance-ministers, jort-2017-124-chalghoum]
+    notes:
+      - >-
+        Décret présidentiel n° 2017-124 du 12 septembre 2017 names « Mohamed Ridha Chalghoum :
+        ministre des finances ». Start corrected from 2017-12 to the decree date. This contradicts
+        the canonical p-finance-abdelkefi row (2017-09-06 to 2017-12); the two records cannot both
+        be right and the conflict is recorded here rather than resolved silently. End 2020-02-27
+        is the Fakhfakh government's arrival (jort-2020-19-yaiche), not a cessation record naming
+        Chalghoum.
+  - id: p-finance-kooli
+    role: finance-minister
+    holder: ali-kooli
+    start: "2020-09-02"
+    end: "2021-07-25"
+    confidence: B
+    verification: verified
+    sources: [wikipedia-finance-ministers, jort-2020-84-kooli]
+    notes:
+      - >-
+        Décret présidentiel n° 2020-84 du 2 septembre 2020 names « Ali Kooli : ministre de
+        l'économie, des finances et de l'appui à l'investissement ». Start corrected from 2020-07
+        to the decree date. The end (25 July 2021) rests on the exceptional-measures date and is
+        not fixed by a fetched record.
+  - id: p-finance-yaiche
+    role: finance-minister
+    holder: nizar-yaiche
+    start: "2020-02-27"
+    end: "2020-07"
+    confidence: B
+    verification: verified
+    sources: [wikipedia-finance-ministers, jort-2020-19-yaiche]
+    notes:
+      - >-
+        Décret Présidentiel n° 2020-19 du 27 février 2020 (JORT n° 17 du 28 février 2020) names «
+        Mohamed Nizar Yaïche : ministre des finances ». The end rests on press sources.
+  - id: p-finance-dimassi
+    role: finance-minister
+    holder: houcine-dimassi
+    start: "2011-12-29"
+    end: "2012-07"
+    confidence: B
+    verification: verified
+    sources: [wikipedia-finance-ministers, jort-2011-4796-dimassi]
+    notes:
+      - >-
+        Décret n° 2011-4796 du 29 décembre 2011 names « Monsieur Houcine Dimassi, ministre des
+        finances » and closes « Tunis, le 29 décembre 2011 ». Start corrected from 2011-12-24 (the
+        government's political announcement) to the composition decree's date. The end rests on
+        press sources.
+  - id: p-milsec-bentaous
+    role: dg-military-security
+    holder: nouri-ben-taous
+    start: "2013-08-22"
+    end: "?"
+    confidence: B
+    verification: verified
+    sources: [directinfo-military-nominations-2013, jort-2013-226-228-military]
+    notes:
+      - >-
+        Arrêté républicain n° 2013-226 du 21 août 2013 (JORT n° 69 du 27 août 2013) : « Le général
+        de brigade, Monsieur Nouri Ben Taous, est nommé directeur général de la sécurité militaire
+        et ce, à compter du 22 août 2013. » End remains open; no cessation record located.
+  - id: p-ig-nafti
+    role: inspector-general-forces
+    holder: mohamed-nafti
+    start: "2013-08-22"
+    end: "~2015-08"
+    confidence: B
+    verification: verified
+    sources: [directinfo-military-nominations-2013, leaders-belati-ig-2017, jort-2013-226-228-military]
+    notes:
+      - >-
+        Arrêté républicain n° 2013-227 du 21 août 2013 (JORT n° 69) : « Le général de brigade,
+        Monsieur Mohamed Nafti, est nommé inspecteur général des forces armées et ce, à compter du
+        22 août 2013. » The end stays approximate; it is not fixed by a fetched record.
+  - id: p-air-bedoui
+    role: chief-air-force
+    holder: bechir-bedoui
+    start: "2013-08-22"
+    end: "2015-08-28"
+    confidence: B
+    verification: verified
+    sources: [directinfo-military-nominations-2013, frwiki-air-chief-list, jort-2013-226-228-military]
+    notes:
+      - >-
+        Arrêté républicain n° 2013-228 du 21 août 2013 (JORT n° 69) : « Le général de brigade,
+        Monsieur Béchir Bédoui, est nommé chef d'état major de l'armée de l'air et ce, à compter du
+        22 août 2013. » The end (28 August 2015) rests on the successor's appointment, not on a
+        fetched record.
+  - id: p-cassation-khaled-ayari
+    role: cassation-president
+    holder: khaled-ayari
+    start: "2014-09-18"
+    end: "2017-06-14"
+    confidence: A
+    verification: verified
+    sources: [wikipedia-cour-cassation-tunisie, jort-2014-3506-ayari]
+    notes:
+      - >-
+        Décret n° 2014-3506 du 2 octobre 2014 (JORT n° 80 du 3 octobre 2014) : « Monsieur Khaled
+        Ayari, magistrat de troisième grade, est nommé premier président de la cour de cassation,
+        à compter du 18 septembre 2014. » Start corrected from 2014-10-02 (the decree date) to the
+        gazette's own effective date, 2014-09-18. The end is the successor's appointment date and
+        is not fixed by this record.
+  - id: p-equipment-zouari
+    role: equipment-minister
+    holder: salah-zouari
+    start: "2025-03-20"
+    confidence: B
+    verification: verified
+    sources: [lapresse-zouari-equipement-2025, pm-gov-zouari-2025, jort-2025-166-zouari]
+    notes:
+      - >-
+        Décret n° 2025-166 du 20 mars 2025 (JORT n° 33 du 21 mars 2025) : « Article premier -
+        Monsieur Slah Zouari est nommé ministre de l'équipement et de l'habitat. » The gazette
+        names holder, office and date; the open end is unchanged.
+  - id: p-csee-sg-boughdiri
+    role: csee-secretary-general
+    holder: mohamed-ali-boughdiri
+    start: "2026-08-12"
+    confidence: B
+    verification: verified
+    sources: [african-manager-csee-boughdiri-2026, tap-csee-boughdiri-2026, businessnews-csee-boughdiri-2026, jort-2026-204-boughdiri]
+    notes:
+      - >-
+        Décret n° 2026-204 du 12 août 2026 (JORT n° 82 du 14 août 2026) : « Article premier -
+        Monsieur Mohamed Ali Boughdiri est chargé des fonctions du secrétaire général du Conseil
+        supérieur de l'éducation et de l'enseignement. » The gazette names holder, office and date.
+  - id: p-finance-zorgati-2
+    role: finance-minister
+    holder: nouri-zorgati
+    start: "1992"
+    end: "verified:1997-01-18"
+    confidence: B
+    verification: verified
+    sources: [wikipedia-finance-ministers, jort-1997-010-zorgati]
+    notes:
+      - >-
+        JORT n° 10 du 4 février 1997 carries an arrêté signed « Tunis, le 18 janvier 1997. Le
+        Ministre des Finances Nouri Zorgati. » End narrowed from 1997 to verified:1997-01-18:
+        the gazette documents him in office on that date; the handover to Mohamed El Jeri falls
+        between 18 January and 5 April 1997. Start 1992 rests on the encyclopedic list only.
+  - id: p-finance-jeri
+    role: finance-minister
+    holder: mohamed-jeri
+    start: "<=1997-04-05"
+    end: "1999"
+    confidence: B
+    verification: verified
+    sources: [wikipedia-finance-ministers, jort-1997-030-jeri]
+    notes:
+      - >-
+        JORT n° 30 du 15 avril 1997 carries an arrêté signed « Tunis, le 5 avril 1997. ... Le
+        Ministre des Finances Mohamed El Jeri ». Start narrowed from 1997 to <=1997-04-05 (in post
+        by then). The appointment decree itself was not located; the handover from Zorgati falls
+        between 18 January and 5 April 1997. End 1999 rests on the encyclopedic list only.
+  - id: p-douane-zouaghi
+    role: douane-dg
+    holder: youssef-zouaghi
+    start: "2018-01-16"
+    end: "2021-12-24"
+    confidence: B
+    verification: verified
+    sources: [jort-2018-71, wmc-zouaghi-2018, wmc-jaouadi-2021]
+    notes:
+      - >-
+        The already-registered source jort-2018-71 was re-read from 9anoun.tn on 2026-09-14.
+        Décret gouvernemental n° 2018-71 du 16 janvier 2018 : « Monsieur Youssef Zouaghi, magistrat
+        du troisième grade, est chargé des fonctions de directeur général de la douane au ministère des finances ». No new
+        source id is proposed because the registry already holds this record; the flag is flipped.
+        The end (24 December 2021) rests on the successor's appointment, not on this record.
