@@ -73,6 +73,7 @@ import {
 } from './dates.ts';
 import { loadParameters, type Parameters } from './parameters.ts';
 import { countOrigins, type EvidenceLike } from './origins.ts';
+import { buildCoverage, coverageCsv, coverageMarkdown } from './coverage.ts';
 import {
 	reviewCoverageCsv,
 	reviewCoverageMarkdown,
@@ -2265,6 +2266,23 @@ const dataset = {
 	places: withOrigins(places)
 };
 
+/**
+ * Coverage by slice (Phase 10A): institution, era, source family, language and
+ * office, with the effective nonzero sample size so a thin slice is visible
+ * before it renders as a league table. Read from the assembled dataset so the
+ * derived origins counts are the ones a reader gets. See scripts/coverage.ts.
+ */
+const coverageRows = buildCoverage({
+	meta: { cutoff: DATASET_CUTOFF },
+	institutions: dataset.institutions,
+	roles: dataset.roles,
+	positions: dataset.positions,
+	relationships: dataset.relationships,
+	events: dataset.events,
+	eras: dataset.eras,
+	sources: dataset.sources
+});
+
 // V22: trims are never silent. Every envelope clamp is published with the record,
 // its original span and its resolved interval, so a reader can see what the model
 // decided and an editor can fix the span instead of the report growing.
@@ -3716,6 +3734,9 @@ if (!FIXTURE_MODE) {
 		mkdirSync(join(ROOT, 'output'), { recursive: true });
 		writeFileSync(join(ROOT, 'output', 'review-coverage.csv'), reviewCoverageCsv(reviewSummary), 'utf8');
 		writeFileSync(join(ROOT, 'output', 'review-coverage.md'), reviewCoverageMarkdown(reviewSummary), 'utf8');
+		// Coverage by slice (Phase 10A) travels with the same publish step.
+		writeFileSync(join(ROOT, 'output', 'coverage.csv'), coverageCsv(coverageRows), 'utf8');
+		writeFileSync(join(ROOT, 'output', 'coverage.md'), coverageMarkdown(coverageRows), 'utf8');
 	}
 }
 
