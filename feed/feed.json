@@ -3,6 +3,16 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:a21dfb2142c2248a",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Les prévisions météo pour cette nuit en Tunisie",
+      "link": "https://kapitalis.com/tunisie/2026/09/16/les-previsions-meteo-pour-cette-nuit-en-tunisie/",
+      "published": "2026-09-16T18:20:42Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
       "id": "feed:african-manager:2de42b2a2ce31f8d",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -11243,15 +11253,6 @@
       "link": "https://africanmanager.com/croissance-du-pib-la-triste-realite-derriere-les-chiffres/",
       "published": "2026-08-17T08:31:23Z",
       "lang": "fr"
-    },
-    {
-      "id": "feed:nawaat:ddb4166ae1e128e6",
-      "outlet": "Nawaat",
-      "outletId": "nawaat",
-      "title": "Parliament-Government-Presidency: The Unannounced Rupture",
-      "link": "https://nawaat.org/2026/08/17/parliament-government-presidency-the-unannounced-rupture/",
-      "published": "2026-08-17T07:57:11Z",
-      "lang": "en"
     }
   ]
 }
