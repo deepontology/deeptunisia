@@ -3,6 +3,56 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:334d0959013c602a",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Trafic de médicaments | Un ressortissant étranger arrêté à Tunis",
+      "link": "https://kapitalis.com/tunisie/2026/09/16/trafic-de-medicaments-un-ressortissant-etranger-arrete-a-tunis/",
+      "published": "2026-09-16T22:44:49Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:7b601d733aef618d",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "L’INM alerte sur des pluies orageuses et localement abondantes du 17 au 19 septembre",
+      "link": "https://kapitalis.com/tunisie/2026/09/16/linm-alerte-sur-des-pluies-orageuses-et-localement-abondantes-du-17-au-19-septembre/",
+      "published": "2026-09-16T22:23:25Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:fdb2b13286fd3033",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Radio Tunisienne | RTCI lance une émission en langue chinoise",
+      "link": "https://kapitalis.com/tunisie/2026/09/16/radio-tunisienne-rtci-lance-une-emission-en-langue-chinoise/",
+      "published": "2026-09-16T21:41:28Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:9080b8f5b61f3cc9",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "L’Université Centrale salue la mémoire de Sabiha Mesbeh",
+      "link": "https://kapitalis.com/tunisie/2026/09/16/luniversite-centrale-salue-la-memoire-de-sabiha-mesbeh/",
+      "published": "2026-09-16T20:19:55Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:a29f485b69d9cca6",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Vague de solidarité avec Me Mrabet visé par un mandat de dépôt",
+      "link": "https://kapitalis.com/tunisie/2026/09/16/vague-de-solidarite-avec-me-mrabet-vise-par-un-mandat-de-depot/",
+      "published": "2026-09-16T19:54:40Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
       "id": "feed:kapitalis:a21dfb2142c2248a",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -11207,51 +11257,6 @@
       "title": "Mouled: Privilégier les points de vente spécialisés",
       "link": "https://africanmanager.com/mouled-privilegier-les-points-de-vente-specialises-et-agrees-lors-de-lachat-de-zgougou-et-de-fruits-secs/",
       "published": "2026-08-17T08:35:27Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:bf047a235ddebef6",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Kasserine : Les producteurs de figues de barbarie alertent",
-      "link": "https://africanmanager.com/kasserine-face-a-la-propagation-de-cochenille-les-producteurs-de-figues-de-barbarie-tirent-la-sonnette-dalarme/",
-      "published": "2026-08-17T08:34:20Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:393f021410af89e9",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "La consommation d’eau minérale a presque triplé, en 10 ans",
-      "link": "https://africanmanager.com/la-consommation-deau-minerale-a-presque-triple-en-10-ans/",
-      "published": "2026-08-17T08:33:21Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:da99aee1fc9d3416",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Juillet 26 au 2ᵉ mois de juillet les plus chauds depuis 1950",
-      "link": "https://africanmanager.com/juillet-2026-au-2%e1%b5%89-rang-des-mois-de-juillet-les-plus-chauds-depuis-1950/",
-      "published": "2026-08-17T08:32:48Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:4ff574bbd6bab1ba",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "La production nationale d’électricité en hausse de 5 % à fin juin 2026",
-      "link": "https://africanmanager.com/la-production-nationale-delectricite-en-hausse-de-5-a-fin-juin-2026/",
-      "published": "2026-08-17T08:31:28Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:41b0a45fd60a753d",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Croissance du PIB : La triste réalité derrière les chiffres.",
-      "link": "https://africanmanager.com/croissance-du-pib-la-triste-realite-derriere-les-chiffres/",
-      "published": "2026-08-17T08:31:23Z",
       "lang": "fr"
     }
   ]
