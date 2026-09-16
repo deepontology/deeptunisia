@@ -3,6 +3,86 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:african-manager:23d9fe028d4a9c57",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Le pétrole grimpe encore",
+      "link": "https://africanmanager.com/le-petrole-grimpe-encore/",
+      "published": "2026-09-16T04:50:13Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:1c7f50ba54ef20d2",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Arabie saoudite : Découverte de 110 millions de tonnes de terres rares et d’uranium à Médine",
+      "link": "https://africanmanager.com/arabie-saoudite-decouverte-de-110-millions-de-tonnes-de-terres-rares-et-duranium-a-medine/",
+      "published": "2026-09-16T04:48:29Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:e523e22bc16b43d2",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Des taux au plus haut depuis 2007 plombent les marchés avant la Fed",
+      "link": "https://africanmanager.com/des-taux-au-plus-haut-depuis-2007-plombent-les-marches-avant-la-fed/",
+      "published": "2026-09-16T04:45:27Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:14e1c7f7257a347f",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "La Cour suprême inflige un cuisant revers à Trump à propos du vote par correspondance",
+      "link": "https://africanmanager.com/la-cour-supreme-inflige-un-cuisant-revers-a-trump-a-propos-du-vote-par-correspondance/",
+      "published": "2026-09-16T04:45:05Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:fb69fd4aca12de52",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Israël œuvre à l’élimination de la présence palestinienne en Cisjordanie, avertit une ONG",
+      "link": "https://africanmanager.com/israel-oeuvre-a-lelimination-de-la-presence-palestinienne-en-cisjordanie-avertit-une-ong/",
+      "published": "2026-09-16T04:43:05Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:3b1012c6fa3a3161",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Appel à une enquête indépendante sur les crimes de guerre commis à Gaza",
+      "link": "https://africanmanager.com/appel-a-une-enquete-independante-sur-les-crimes-de-guerre-commis-a-gaza/",
+      "published": "2026-09-16T04:41:24Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:c91ae18309a6f7e8",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Les pertes militaires américaines dues aux attaques iraniennes estimées 33,4 milliards de dollars",
+      "link": "https://africanmanager.com/les-pertes-militaires-americaines-dues-aux-attaques-iraniennes-estimees-334-milliards-de-dollars/",
+      "published": "2026-09-16T04:40:00Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:kapitalis:7ff94549a8b97081",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "MammoLife : La prévention du cancer du sein au plus près des femmes à Menzel Bouzelfa",
+      "link": "https://kapitalis.com/tunisie/2026/09/16/mammolife-la-prevention-du-cancer-du-sein-au-plus-pres-des-femmes-a-menzel-bouzelfa/",
+      "published": "2026-09-15T23:29:06Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
       "id": "feed:kapitalis:b5e2927921745bd6",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -11140,78 +11220,6 @@
       "title": "Le conseiller principal de la Maison Blanche en sécurité nationale, quitte ses fonctions",
       "link": "https://africanmanager.com/le-conseiller-principal-de-la-maison-blanche-en-securite-nationale-quitte-ses-fonctions/",
       "published": "2026-08-16T00:18:23Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:845bc865707f59ee",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Soudan: Les FSR enchaînent les attaques",
-      "link": "https://africanmanager.com/soudan-les-fsr-enchainent-les-attaques/",
-      "published": "2026-08-16T00:17:20Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:772777b04d2f0c8e",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Le Royaume-Uni fustige Netanyahu pour avoir qualifié le pays de « république islamique »",
-      "link": "https://africanmanager.com/le-royaume-uni-fustige-netanyahu-pour-avoir-qualifie-le-pays-de-republique-islamique/",
-      "published": "2026-08-16T00:16:13Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:d0de21bc1d92d732",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Liban-Sud : 11 tués dans des frappes israéliennes",
-      "link": "https://africanmanager.com/liban-sud-11-tues-dans-des-frappes-israeliennes/",
-      "published": "2026-08-16T00:15:03Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:dbffe71395dcb7a0",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Téhéran réaffirme que le détroit d’Ormuz restera iranien",
-      "link": "https://africanmanager.com/teheran-reaffirme-que-le-detroit-dormuz-restera-iranien/",
-      "published": "2026-08-16T00:13:39Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:12144ab998ab4e61",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "« La plage nous appartient à tous » | Campagne de nettoyage et de sensibilisation",
-      "link": "https://kapitalis.com/tunisie/2026/08/16/la-plage-nous-appartient-a-tous-campagne-de-nettoyage-et-de-sensibilisation/",
-      "published": "2026-08-15T23:11:37Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:9ec03b878fe342b2",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Protection Civile | 593 interventions enregistrées en 24 heures",
-      "link": "https://kapitalis.com/tunisie/2026/08/15/protection-civile-593-interventions-enregistrees-en-24-heures/",
-      "published": "2026-08-15T22:08:42Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:d36123eaa204ab80",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Municipalité de Tunis | Saisie de 400 kg de fromage impropre à la consommation",
-      "link": "https://kapitalis.com/tunisie/2026/08/15/municipalite-de-tunis-saisie-de-400-kg-de-fromage-impropre-a-la-consommation/",
-      "published": "2026-08-15T20:18:30Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:594c25fdd2306250",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "​Festival des arts plastiques de Mahrès | la 37e édition célébrera l’art durable du 16 au 23 août",
-      "link": "https://kapitalis.com/tunisie/2026/08/15/festival-des-arts-plastiques-de-mahres-la-37e-edition-celebrera-lart-durable-du-16-au-23-aout/",
-      "published": "2026-08-15T19:00:21Z",
       "lang": "fr"
     }
   ]
