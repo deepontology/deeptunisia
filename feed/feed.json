@@ -3,6 +3,46 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:818dfe1e3f656f50",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Série de vols dans des voitures à Tunis | Le suspect arrêté",
+      "link": "https://kapitalis.com/tunisie/2026/09/17/serie-de-vols-dans-des-voitures-a-tunis-le-suspect-arrete/",
+      "published": "2026-09-17T19:32:27Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:african-manager:9a03d562f3011004",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "La Tunisie réinscrite au « Vert Michelin » après 10 ans",
+      "link": "https://africanmanager.com/la-tunisie-retrouve-son-guide-vert-michelin-apres-dix-ans-dabsence/",
+      "published": "2026-09-17T18:43:50Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:kapitalis:0cd1e82201e36f2d",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Le Canada et la Tunisie échangent sur des priorités communes dans les secteurs agricole et hydrique",
+      "link": "https://kapitalis.com/tunisie/2026/09/17/le-canada-et-la-tunisie-echangent-sur-des-priorites-communes-dans-les-secteurs-agricole-et-hydrique/",
+      "published": "2026-09-17T18:39:23Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:b467f301deb75c74",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Alerte météo | Pluies orageuses et vents forts pour cette nuit",
+      "link": "https://kapitalis.com/tunisie/2026/09/17/alerte-meteo-pluies-orageuses-et-vents-forts-pour-cette-nuit/",
+      "published": "2026-09-17T18:25:54Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
       "id": "feed:african-manager:8af1f12ec6ea52dd",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -11265,42 +11305,6 @@
       "title": "Jendouba : deux élèves noyés au barrage de Bouhertma, les corps repêchés",
       "link": "https://africanmanager.com/jendouba-deux-eleves-noyes-au-barrage-de-bouhertma-les-corps-repeches/",
       "published": "2026-08-18T08:18:53Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:74205fc67dc0f893",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Le président Saïed plaide un enseignement national, démocratique et sans diktats",
-      "link": "https://africanmanager.com/le-president-saied-plaide-un-enseignement-national-democratique-et-sans-diktats/",
-      "published": "2026-08-18T08:16:29Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:723799d68c4ab57d",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Les Talibans veulent ouvrir un nouveau chapitre avec les États-Unis !",
-      "link": "https://kapitalis.com/tunisie/2026/08/18/les-talibans-veulent-ouvrir-un-nouveau-chapitre-avec-les-etats-unis/",
-      "published": "2026-08-18T07:01:35Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:752d2c465cf89b1a",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Pourquoi les Tunisiens bloquent-ils sur l’égalité successorale ?",
-      "link": "https://kapitalis.com/tunisie/2026/08/18/pourquoi-les-tunisiens-bloquent-ils-sur-legalite-successorale/",
-      "published": "2026-08-18T06:37:13Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:837e51becdc381c7",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Kairouan : Des mesures pour accélérer les projets de développement à Aïn Jloula",
-      "link": "https://africanmanager.com/kairouan-des-mesures-pour-accelerer-les-projets-de-developpement-a-ain-jloula/",
-      "published": "2026-08-18T06:02:00Z",
       "lang": "fr"
     }
   ]
