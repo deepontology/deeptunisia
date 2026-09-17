@@ -3,6 +3,26 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:d12018f8defd120e",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Marche à Tunis pour exiger la libération des détenus d’Al-Soumoud",
+      "link": "https://kapitalis.com/tunisie/2026/09/17/marche-a-tunis-pour-exiger-la-liberation-des-detenus-dal-soumoud/",
+      "published": "2026-09-17T22:10:48Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:46661d3b2e506762",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "​Attaques en Arabie Saoudite | La Tunisie condamne et appelle au dialogue",
+      "link": "https://kapitalis.com/tunisie/2026/09/17/attaques-en-arabie-saoudite-la-tunisie-condamne-et-appelle-au-dialogue/",
+      "published": "2026-09-17T20:46:35Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
       "id": "feed:kapitalis:818dfe1e3f656f50",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -11287,24 +11307,6 @@
       "title": "Fonction publique: le gouvernement étudie la situation des contractuels",
       "link": "https://africanmanager.com/fonction-publique-le-gouvernement-etudie-la-situation-des-contractuels/",
       "published": "2026-08-18T08:59:21Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:f2aa851260630ace",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Les agents de la CPG annoncent une grève de 3 jours",
-      "link": "https://africanmanager.com/les-agents-de-la-cpg-annoncent-une-greve-de-3-jours/",
-      "published": "2026-08-18T08:27:06Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:fed241e8313a9bef",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Jendouba : deux élèves noyés au barrage de Bouhertma, les corps repêchés",
-      "link": "https://africanmanager.com/jendouba-deux-eleves-noyes-au-barrage-de-bouhertma-les-corps-repeches/",
-      "published": "2026-08-18T08:18:53Z",
       "lang": "fr"
     }
   ]
