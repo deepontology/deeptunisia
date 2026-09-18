@@ -3,6 +3,25 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:al-jazeera:4cd1f1fc2e4d8f2d",
+      "outlet": "Al Jazeera",
+      "outletId": "al-jazeera",
+      "title": "Tunisia floods disrupt capital as heavy rain traps motorists and residents",
+      "link": "https://www.aljazeera.com/news/2026/9/18/tunisia-floods-disrupt-capital-as-heavy-rain-traps-motorists-and-residents?traffic_source=rss",
+      "published": "2026-09-18T00:49:24Z",
+      "lang": "en"
+    },
+    {
+      "id": "feed:kapitalis:52f862af88b3f2ca",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "La CTN au salon professionnel du tourisme IFTM à Paris",
+      "link": "https://kapitalis.com/tunisie/2026/09/18/la-ctn-au-salon-professionnel-du-tourisme-iftm-a-paris/",
+      "published": "2026-09-17T23:23:55Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
       "id": "feed:kapitalis:d12018f8defd120e",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -11289,24 +11308,6 @@
       "title": "Nous sommes un peuple déshumanisé et déshumanisant",
       "link": "https://nawaat.org/2026/08/18/nous-sommes-un-peuple-deshumanise-et-deshumanisant/",
       "published": "2026-08-18T09:00:00Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:f14f678ac0537002",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Kairouan | Trois chercheurs de trésor ensevelis dans le tunnel qu’ils ont creusé",
-      "link": "https://kapitalis.com/tunisie/2026/08/18/kairouan-trois-chercheurs-de-tresor-ensevelis-dans-le-tunnel-quils-ont-creuse/",
-      "published": "2026-08-18T08:59:43Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:fdbbabf54b20bb7a",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Fonction publique: le gouvernement étudie la situation des contractuels",
-      "link": "https://africanmanager.com/fonction-publique-le-gouvernement-etudie-la-situation-des-contractuels/",
-      "published": "2026-08-18T08:59:21Z",
       "lang": "fr"
     }
   ]
