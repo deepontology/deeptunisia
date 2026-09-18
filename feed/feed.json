@@ -3,6 +3,86 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:2fce6c1e700d96b2",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "En solidarité avec Wael Nawar, Ayachi Hammami entre en grève de la faim",
+      "link": "https://kapitalis.com/tunisie/2026/09/18/en-solidarite-avec-wael-nawar-ayachi-hammami-entre-en-greve-de-la-faim/",
+      "published": "2026-09-18T18:47:25Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:fdec2f6c8238cd58",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Tunisie | Pluies orageuses et baisse relative des températures cette nuit",
+      "link": "https://kapitalis.com/tunisie/2026/09/18/tunisie-pluies-orageuses-et-baisse-relative-des-temperatures-cette-nuit/",
+      "published": "2026-09-18T18:30:34Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:african-manager:d800b9af703f02af",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Fermeture nocturne de la locale n°457, les 20 et 21 septembre",
+      "link": "https://africanmanager.com/entree-sud-de-tunis-fermeture-nocturne-de-la-route-locale-n457-les-20-et-21-septembre/",
+      "published": "2026-09-18T16:57:10Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:d681fb01fda8b6aa",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Jendouba: Appel à la révision du tarif de l’eau d’irrigation",
+      "link": "https://africanmanager.com/jendouba-appel-a-la-revision-du-tarif-de-leau-dirrigation/",
+      "published": "2026-09-18T16:43:45Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:nawaat:8b33e0ec5c632b46",
+      "outlet": "Nawaat",
+      "outletId": "nawaat",
+      "title": "السجن والتشويه والرقابة الذاتية، أسلحة تركيع الصحافة والمجتمع",
+      "link": "https://nawaat.org/2026/09/18/%d8%a7%d9%84%d8%b3%d8%ac%d9%86-%d9%88%d8%a7%d9%84%d8%aa%d8%b4%d9%88%d9%8a%d9%87-%d9%88%d8%a7%d9%84%d8%b1%d9%82%d8%a7%d8%a8%d8%a9-%d8%a7%d9%84%d8%b0%d8%a7%d8%aa%d9%8a%d8%a9%d8%8c-%d8%a3%d8%b3%d9%84/",
+      "published": "2026-09-18T16:08:48Z",
+      "lang": "ar",
+      "author": "Sabri Zghidi"
+    },
+    {
+      "id": "feed:african-manager:2df0853508c3e742",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Retour à la normale en eaux minérales mais …",
+      "link": "https://africanmanager.com/ariana-retour-a-la-normale-de-lapprovisionnement-en-eaux-minerales-sur-fond-dinfractions-persistantes/",
+      "published": "2026-09-18T15:32:01Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:426cdef8db4df66c",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "La production de dattes baisse de 15% à Tozeur",
+      "link": "https://africanmanager.com/tozeur-la-production-de-dattes-en-baisse-de-15-la-qualite-en-progression/",
+      "published": "2026-09-18T15:12:26Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:61df2bdd7b433193",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Le procès en appel de Harouni et Frikha reporté",
+      "link": "https://africanmanager.com/le-proces-en-appel-de-harouni-et-frikha-reporte/",
+      "published": "2026-09-18T14:03:42Z",
+      "lang": "fr",
+      "author": "Africanmanager"
+    },
+    {
       "id": "feed:african-manager:9b4c41af6c5b8d7c",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -89,6 +169,16 @@
       "title": "Les cours du pétrole baissent de 2%, vendredi",
       "link": "https://africanmanager.com/les-cours-du-petrole-baissent-de-2-vendredi/",
       "published": "2026-09-18T12:10:51Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:ccee079ac6497c14",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Phoenix Express 2026 s’achève en Tunisie",
+      "link": "https://africanmanager.com/phoenix-express-2026-sacheve-en-tunisie/",
+      "published": "2026-09-18T12:00:00Z",
       "lang": "fr",
       "author": "African Manager"
     },
@@ -11270,87 +11360,6 @@
       "title": "Cinéma amateur | Kélibia accueille la 39e édition du Fifak",
       "link": "https://kapitalis.com/tunisie/2026/08/19/cinema-amateur-kelibia-accueille-la-39e-edition-du-fifak/",
       "published": "2026-08-19T09:51:20Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:7e8f20c72ab9a976",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Madrid dément tout projet de sanctions contre le Maroc",
-      "link": "https://africanmanager.com/madrid-dement-tout-projet-de-sanctions-contre-le-maroc/",
-      "published": "2026-08-19T09:36:21Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:fccf7684d4ac1981",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "QNB Tunisia annonce des résultats financiers performants au premier semestre 2026",
-      "link": "https://africanmanager.com/qnb-tunisia-annonce-des-resultats-financiers-performants-au-premier-semestre-2026/",
-      "published": "2026-08-19T09:32:21Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:8c97a00c98755677",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Plus de 1.000 bouteilles d’eau minérale saisies",
-      "link": "https://africanmanager.com/plus-de-1-000-bouteilles-deau-minerale-saisies/",
-      "published": "2026-08-19T09:20:34Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:368acd2b4ec92479",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "CNPTO: 11 prélèvements d’organes réalisés récemment par le centre au profit de 31 patients",
-      "link": "https://africanmanager.com/cnpto-11-prelevements-dorganes-realises-recemment-par-le-centre-au-profit-de-31-patients/",
-      "published": "2026-08-19T09:16:41Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:0a3d5f08867d1aee",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Ben Arous : Les travaux d’extension du service des urgences de l’hôpital universitaire prévus pour fin 2026",
-      "link": "https://africanmanager.com/ben-arous-les-travaux-dextension-du-service-des-urgences-de-lhopital-universitaire-prevus-pour-fin-2026/",
-      "published": "2026-08-19T09:14:34Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:ae1316a547992acc",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Coupe du Monde (préparation) : La Tunisie battue par l’Egypte (70-92)",
-      "link": "https://africanmanager.com/coupe-du-monde-preparation-la-tunisie-battue-par-legypte-70-92/",
-      "published": "2026-08-19T09:12:41Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:62ae9ee86271a01d",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "US Ben Guerdane : Chahreddine Aoun président",
-      "link": "https://africanmanager.com/us-ben-guerdane-chahreddine-aoun-president/",
-      "published": "2026-08-19T09:08:28Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:9b962168c144c2ce",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Préparatifs du 26e Festival arabe de la radio et de la télévision",
-      "link": "https://africanmanager.com/preparatifs-du-26e-festival-arabe-de-la-radio-et-de-la-television/",
-      "published": "2026-08-19T09:05:56Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:98357585e5590dce",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Tunisie-GB-Santé: Des experts britanniques forment des équipes médicales aux techniques avancées d’endoscopie digestive",
-      "link": "https://africanmanager.com/tunisie-gb-sante-des-experts-britanniques-forment-des-equipes-medicales-aux-techniques-avancees-dendoscopie-digestive/",
-      "published": "2026-08-19T09:03:01Z",
       "lang": "fr"
     }
   ]
