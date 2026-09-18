@@ -3,6 +3,36 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:590e790e8df1d784",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Siliana | Un enfant de 8 ans meurt emporté par les eaux d’un oued en crue",
+      "link": "https://kapitalis.com/tunisie/2026/09/18/siliana-un-enfant-de-8-ans-meurt-emporte-par-les-eaux-dun-oued-en-crue/",
+      "published": "2026-09-18T22:18:57Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:42c3730b89ef7492",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Harouni et Frikha devant la Cour d’appel en octobre",
+      "link": "https://kapitalis.com/tunisie/2026/09/18/harouni-et-frikha-devant-la-cour-dappel-en-octobre/",
+      "published": "2026-09-18T21:37:10Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:22acd20bd81c6807",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Trafic de cocaïne | Visé par 16 avis de recherche, un dealer arrêté à la Soukra",
+      "link": "https://kapitalis.com/tunisie/2026/09/18/trafic-de-cocaine-vise-par-16-avis-de-recherche-un-dealer-arrete-a-la-soukra/",
+      "published": "2026-09-18T21:01:10Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
       "id": "feed:kapitalis:2fce6c1e700d96b2",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -11333,33 +11363,6 @@
       "title": "Tunisie | Retour de la canicule à partir de samedi",
       "link": "https://kapitalis.com/tunisie/2026/08/19/tunisie-retour-de-la-canicule-a-partir-de-samedi/",
       "published": "2026-08-19T10:55:00Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:6c06397cce3b64cd",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Algérie: La demande en électricité dépasse 21600 MW et enregistre un 3e pic record",
-      "link": "https://africanmanager.com/algerie-la-demande-en-electricite-depasse-21600-mw-et-enregistre-un-3e-pic-record/",
-      "published": "2026-08-19T10:14:04Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:f2df0e097e58d8eb",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Jaou Tunis | Une biennale-archipel entre Tunis et Genève",
-      "link": "https://kapitalis.com/tunisie/2026/08/19/jaou-tunis-une-biennale-archipel-entre-tunis-et-geneve/",
-      "published": "2026-08-19T10:13:41Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:e3a30fbfdb39511e",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Cinéma amateur | Kélibia accueille la 39e édition du Fifak",
-      "link": "https://kapitalis.com/tunisie/2026/08/19/cinema-amateur-kelibia-accueille-la-39e-edition-du-fifak/",
-      "published": "2026-08-19T09:51:20Z",
       "lang": "fr"
     }
   ]
