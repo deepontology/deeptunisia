@@ -3,6 +3,26 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:8695a5da52b21da3",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "De Taranto à Nagoya : La diplomatie sportive tunisienne en action au sein du CIO",
+      "link": "https://kapitalis.com/tunisie/2026/09/19/de-taranto-a-nagoya-la-diplomatie-sportive-tunisienne-en-action-au-sein-du-cio/",
+      "published": "2026-09-19T20:51:55Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:f0b8ae7cd977a678",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "​Alerte météo | Le ministère de l’Intérieur appelle à la plus grande vigilance",
+      "link": "https://kapitalis.com/tunisie/2026/09/19/alerte-meteo-le-ministere-de-linterieur-appelle-a-la-plus-grande-vigilance/",
+      "published": "2026-09-19T19:22:29Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
       "id": "feed:kapitalis:c47a4e7e90f2e7eb",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -11376,24 +11396,6 @@
       "title": "L’extrême droite mondiale, grande amie d’Israël !",
       "link": "https://kapitalis.com/tunisie/2026/08/20/lextreme-droite-mondiale-grande-amie-disrael/",
       "published": "2026-08-20T07:00:00Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:96662065ca1d01d0",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Ouverture des candidatures pour 30 bourses universitaires destinées à la réalisation de projets de fin d’études au Canada",
-      "link": "https://africanmanager.com/ouverture-des-candidatures-pour-30-bourses-universitaires-destinees-a-la-realisation-de-projets-de-fin-detudes-au-canada/",
-      "published": "2026-08-20T06:59:25Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:a1db01da4d7c46bc",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Hausse des investissements internationaux en Tunisie pour se situer à 1929,5 MDT",
-      "link": "https://africanmanager.com/hausse-des-investissements-internationaux-en-tunisie-pour-se-situer-a-19295-mdt/",
-      "published": "2026-08-20T06:58:20Z",
       "lang": "fr"
     }
   ]
