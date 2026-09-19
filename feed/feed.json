@@ -3,6 +3,56 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:c47a4e7e90f2e7eb",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Pluies orageuses et parfois abondantes sur plusieurs régions cette nuit",
+      "link": "https://kapitalis.com/tunisie/2026/09/19/pluies-orageuses-et-parfois-abondantes-sur-plusieurs-regions-cette-nuit/",
+      "published": "2026-09-19T18:20:54Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:0d9ecaad4631a2f2",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Sousse | Un élève de 12 ans tué par un adolescent à Kalaa Kebira",
+      "link": "https://kapitalis.com/tunisie/2026/09/19/sousse-un-eleve-de-12-ans-tue-par-un-adolescent-a-kalaa-kebira/",
+      "published": "2026-09-19T18:12:31Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:african-manager:96c23d9afc89e87e",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "L’ANMPS prolonge les délais de transition électronique",
+      "link": "https://africanmanager.com/lanmps-prolonge-les-delais-de-transition-vers-le-format-electronique/",
+      "published": "2026-09-19T14:06:51Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:1a7e7228945b393c",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Béja : D’importants dégâts de l’infrastructure routière",
+      "link": "https://africanmanager.com/beja-pluies-dimportants-degats-enregistres-au-niveau-de-linfrastructure-routiere/",
+      "published": "2026-09-19T14:01:26Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:france24:ab2f41807ed6a3ef",
+      "outlet": "France 24",
+      "outletId": "france24",
+      "title": "Tunisia’s booming boat industry: From pleasure craft to luxury yachts",
+      "link": "https://www.france24.com/en/tunisia-s-booming-boat-industry-from-pleasure-craft-to-luxury-yachts",
+      "published": "2026-09-19T12:40:40Z",
+      "lang": "en",
+      "author": "FRANCE24"
+    },
+    {
       "id": "feed:kapitalis:a0473178abc98721",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -11344,51 +11394,6 @@
       "title": "Hausse des investissements internationaux en Tunisie pour se situer à 1929,5 MDT",
       "link": "https://africanmanager.com/hausse-des-investissements-internationaux-en-tunisie-pour-se-situer-a-19295-mdt/",
       "published": "2026-08-20T06:58:20Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:9eeb8664e0282662",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Produits avicoles : Le ministère du Commerce fixe le prix maximal de vente",
-      "link": "https://africanmanager.com/produits-avicoles-le-ministere-du-commerce-fixe-le-prix-maximal-de-vente/",
-      "published": "2026-08-20T06:56:30Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:7b546dea30a2fcf7",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Budget 2027 : le gouvernement fixe les grandes orientations et les priorités",
-      "link": "https://africanmanager.com/budget-2027-le-gouvernement-fixe-les-grandes-orientations-et-les-priorites/",
-      "published": "2026-08-20T06:55:34Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:7b6a941827211546",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Bizerte : près de 9,4 millions DT pour améliorer l’infrastructure routière dans deux municipalités",
-      "link": "https://africanmanager.com/bizerte-pres-de-94-millions-dt-pour-ameliorer-linfrastructure-routiere-dans-deux-municipalites/",
-      "published": "2026-08-20T06:54:10Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:106d4201c7f7d7b0",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Tataouine : le PNUD déploie un tableau de bord régional pour mieux suivre les porteurs de projets",
-      "link": "https://africanmanager.com/tataouine-le-pnud-deploie-un-tableau-de-bord-regional-pour-mieux-suivre-les-porteurs-de-projets/",
-      "published": "2026-08-20T06:53:01Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:c9d7e342c1928c75",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Sfax : 235 000 manuels du secondaire prêts pour la rentrée 2026-2027",
-      "link": "https://africanmanager.com/sfax-235-000-manuels-du-secondaire-prets-pour-la-rentree-2026-2027/",
-      "published": "2026-08-20T06:50:24Z",
       "lang": "fr"
     }
   ]
