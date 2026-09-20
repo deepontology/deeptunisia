@@ -3,6 +3,26 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:28e3496f50c4c84e",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Tunis | Mobilisation avec les détenus de la Flottille Al-Soumoud",
+      "link": "https://kapitalis.com/tunisie/2026/09/19/tunis-mobilisation-avec-les-detenus-de-la-flottille-al-soumoud/",
+      "published": "2026-09-19T22:51:03Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:0324a6867446a818",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "L’Espérance de Tunis renforce sa défense avec la signature d’Adem Alilet",
+      "link": "https://kapitalis.com/tunisie/2026/09/19/lesperance-de-tunis-renforce-sa-defense-avec-la-signature-dadem-alilet/",
+      "published": "2026-09-19T22:29:39Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
       "id": "feed:kapitalis:8695a5da52b21da3",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -11378,24 +11398,6 @@
       "title": "«Lettre à Ayachi Hammami, prisonnier politique à Mornaguia»",
       "link": "https://kapitalis.com/tunisie/2026/08/20/lettre-a-ayachi-hammami-prisonnier-politique-a-mornaguia/",
       "published": "2026-08-20T08:12:26Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:8b527f97fe74163b",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "L’Allemagne face à une vague de faillites sans précédent",
-      "link": "https://kapitalis.com/tunisie/2026/08/20/lallemagne-face-a-une-vague-de-faillites-sans-precedent/",
-      "published": "2026-08-20T07:32:35Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:0c2ee577986e6d0e",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "L’extrême droite mondiale, grande amie d’Israël !",
-      "link": "https://kapitalis.com/tunisie/2026/08/20/lextreme-droite-mondiale-grande-amie-disrael/",
-      "published": "2026-08-20T07:00:00Z",
       "lang": "fr"
     }
   ]
