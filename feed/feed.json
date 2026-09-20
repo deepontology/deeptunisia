@@ -3,6 +3,45 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:al-jazeera:59ef01db2110d9e3",
+      "outlet": "Al Jazeera",
+      "outletId": "al-jazeera",
+      "title": "Hundreds protest in Tunisia for release of jailed Gaza flotilla activists",
+      "link": "https://www.aljazeera.com/video/newsfeed/2026/9/20/hundreds-protest-in-tunisia-for-release-of-jailed-gaza-flotilla-activists?traffic_source=rss",
+      "published": "2026-09-20T14:38:01Z",
+      "lang": "en"
+    },
+    {
+      "id": "feed:african-manager:f168ab9f17f9a409",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Monoprix : Un bénéfice qui vient des filiales, pas des rayons",
+      "link": "https://africanmanager.com/monoprix-un-benefice-qui-vient-des-filiales-pas-des-rayons/",
+      "published": "2026-09-20T13:46:05Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:d1c906814a3c34b3",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "L’Ukraine frappe une raffinerie de pétrole lors d’une attaque massive de drones à Moscou",
+      "link": "https://africanmanager.com/lukraine-frappe-une-raffinerie-de-petrole-lors-dune-attaque-massive-de-drones-a-moscou/",
+      "published": "2026-09-20T13:40:48Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:1e4c055c56883738",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Tunisie : L’Italie n’arrive plus, elle s’enracine",
+      "link": "https://africanmanager.com/tunisie-litalie-narrive-plus-elle-senracine/",
+      "published": "2026-09-20T13:30:00Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
       "id": "feed:african-manager:2cdd65eb22bf6c43",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -11391,42 +11430,6 @@
       "published": "2026-08-21T17:41:16Z",
       "lang": "fr",
       "author": "La rédaction"
-    },
-    {
-      "id": "feed:african-manager:946abacbb3d36df7",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "La réhabilitation des superficies incendiées exige un an",
-      "link": "https://africanmanager.com/la-rehabilitation-des-superficies-incendiees-exige-au-moins-un-an-pour-une-regeneration-naturelle-du-sol/",
-      "published": "2026-08-21T15:10:24Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:afb0d7f7b3916f1c",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Le CNOMT s’insurge contre les injections esthétiques",
-      "link": "https://africanmanager.com/les-injections-et-et-actes-medicaux-esthetiques-doivent-etre-pratiques-par-des-professionnels-qualifies/",
-      "published": "2026-08-21T15:09:23Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:25028b56df8dbe89",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Bourse de Tunis:Le Tunindex clôture la semaine sur une note légèrement baissière",
-      "link": "https://africanmanager.com/bourse-de-tunisle-tunindex-cloture-la-semaine-sur-une-note-legerement-baissiere/",
-      "published": "2026-08-21T15:06:40Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:2d2fd603ba8559c8",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Bourse de Tunis: Le Tunindex clôture la séance de vendredi dans le vert",
-      "link": "https://africanmanager.com/bourse-de-tunis-le-tunindex-cloture-la-seance-de-vendredi-dans-le-vert/",
-      "published": "2026-08-21T15:05:23Z",
-      "lang": "fr"
     }
   ]
 }
