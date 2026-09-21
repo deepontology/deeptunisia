@@ -3,12 +3,82 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:9f4e89badcd91928",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Lutte contre le trafic de drogue | Sept suspects arrêtés à Tunis",
+      "link": "https://kapitalis.com/tunisie/2026/09/21/lutte-contre-le-trafic-de-drogue-sept-suspects-arretes-a-tunis/",
+      "published": "2026-09-21T18:50:47Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:african-manager:73b3e293ce245035",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "BH Leasing réalise un bénéfice net s’élevant à 1 142 mille DT",
+      "link": "https://africanmanager.com/bh-leasing-realise-un-benefice-net-selevant-a-1-142-mille-dt/",
+      "published": "2026-09-21T17:49:44Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:kapitalis:bdfb42b06a03b53a",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Météo | Tunisie : Des Pluies orageuses annoncées pour cette nuit",
+      "link": "https://kapitalis.com/tunisie/2026/09/21/meteo-tunisie-des-pluies-orageuses-annoncees-pour-cette-nuit/",
+      "published": "2026-09-21T17:43:30Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:african-manager:aa43224735fc94d7",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Tunis accueille, le SITEF 26 orienté transition énergétique",
+      "link": "https://africanmanager.com/la-tunisie-accueille-la-4e-edition-du-salon-international-de-la-transition-energetique/",
+      "published": "2026-09-21T16:45:25Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:1cabd6a411b67878",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Bourse : Le marché termine la séance de lundi dans le rouge",
+      "link": "https://africanmanager.com/bourse-le-marche-termine-la-seance-de-lundi-dans-le-rouge/",
+      "published": "2026-09-21T16:42:49Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
       "id": "feed:african-manager:c79b1a67d10ad328",
       "outlet": "African Manager",
       "outletId": "african-manager",
       "title": "Sousse et la Costa Dorada espagnole trônent sur les destinations automnales abordables",
       "link": "https://africanmanager.com/sousse-et-la-costa-dorada-espagnole-tronent-sur-les-destinations-automnales-abordables/",
       "published": "2026-09-21T14:58:40Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:b78630ca28e216d8",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Ras Jdir et Dhehiba : Un « marché ouvert » pour les personnes et les marchandises !",
+      "link": "https://africanmanager.com/ras-jdir-et-dhehiba-un-marche-ouvert-pour-les-personnes-et-les-marchandises/",
+      "published": "2026-09-21T14:50:00Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:228d9a64f653dfa2",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "La Tunisie améliore son attractivité mondiale",
+      "link": "https://africanmanager.com/la-tunisie-ameliore-son-attractivite-mondiale/",
+      "published": "2026-09-21T14:00:00Z",
       "lang": "fr",
       "author": "African Manager"
     },
@@ -11409,69 +11479,6 @@
       "title": "JM Tarente-2026 : la Tunisie décroche son premier or et porte son bilan à 8 médailles",
       "link": "https://africanmanager.com/jm-tarente-2026-la-tunisie-decroche-son-premier-or-et-porte-son-bilan-a-8-medailles/",
       "published": "2026-08-24T08:13:04Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:e2a4511c4c466ccb",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Barrage-réservoir de Saïda : entrée en service imminente",
-      "link": "https://africanmanager.com/manouba-le-barrage-reservoir-de-saida-avance-a-91-entree-en-service-imminente/",
-      "published": "2026-08-24T06:42:53Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:abe9504de4420fac",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Salon de l’artisanat à Kairouan : 104 artisans au Mouled",
-      "link": "https://africanmanager.com/kairouan-le-salon-national-de-lartisanat-accueille-104-artisans-venus-de-21-gouvernorats-a-loccasion-du-mouled/",
-      "published": "2026-08-24T06:42:44Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:23279b871389a676",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "L’OTIC réclame le contrôle du zgougou et des fruits secs",
-      "link": "https://africanmanager.com/lotic-reclame-un-controle-strict-des-circuits-de-distribution-du-zgougou-et-des-fruits-secs/",
-      "published": "2026-08-24T06:39:15Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:7d13ef8ceb61fd6a",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Salon « Back to School » du 2 au 5 septembre prochain",
-      "link": "https://africanmanager.com/tunis-lancement-de-la-premiere-edition-du-salon-back-to-school-du-2-au-5-septembre-prochain/",
-      "published": "2026-08-24T06:39:03Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:b61128510f558b0b",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "L’administration Trump met en garde le Canada contre un conflit commercial avec les USA",
-      "link": "https://africanmanager.com/ladministration-trump-met-en-garde-le-canada-contre-un-conflit-commercial-avec-les-usa/",
-      "published": "2026-08-24T06:26:13Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:f13350a43ec624c2",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Visas américains : Une juge bloque le gel imposé par Donald Trump à 75 pays",
-      "link": "https://africanmanager.com/visas-americains-une-juge-bloque-le-gel-impose-par-donald-trump-a-75-pays/",
-      "published": "2026-08-24T06:25:49Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:d6ccf5513f78757f",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Des élections en temps de guerre « détruiraient » l’Ukraine, affirme Zelensky",
-      "link": "https://africanmanager.com/des-elections-en-temps-de-guerre-detruiraient-lukraine-affirme-zelensky/",
-      "published": "2026-08-24T06:24:15Z",
       "lang": "fr"
     }
   ]
