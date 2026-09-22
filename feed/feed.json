@@ -3,6 +3,56 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:053c9a5afd216eb2",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Philatélie | La Poste tunisienne célèbre le centenaire du Musée océanographique de Salammbô",
+      "link": "https://kapitalis.com/tunisie/2026/09/21/philatelie-la-poste-tunisienne-celebre-le-centenaire-du-musee-oceanographique-de-salammbo/",
+      "published": "2026-09-21T22:56:36Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:20900b099dc018d1",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Sonede | Point sur les perturbations touchant 4 gouvernorats",
+      "link": "https://kapitalis.com/tunisie/2026/09/21/sonede-point-sur-les-perturbations-touchant-4-gouvernorats/",
+      "published": "2026-09-21T22:02:51Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:b3aa0148aded2c0c",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "«Looking for my mother» d’Anis Lassoued à la Galerie Saladin",
+      "link": "https://kapitalis.com/tunisie/2026/09/21/looking-for-my-mother-danis-lassoued-a-la-galerie-saladin/",
+      "published": "2026-09-21T21:09:39Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:african-manager:97929d7fd3ce72bc",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "L’UTICA dit pas avoir reçu le préavis de grève de l’essence",
+      "link": "https://africanmanager.com/le-patronat-assure-navoir-recu-aucun-preavis-de-greve-legal-et-se-mobilise-pour-garantir-lapprovisionnement/",
+      "published": "2026-09-21T20:49:32Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:kapitalis:aeabff18240e0685",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Tunis | Appels à la libération des personnes interpellées après la marche du 19 septembre",
+      "link": "https://kapitalis.com/tunisie/2026/09/21/tunis-appels-a-la-liberation-des-personnes-interpellees-apres-la-marche-du-19-septembre/",
+      "published": "2026-09-21T20:39:46Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
       "id": "feed:kapitalis:9f4e89badcd91928",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -11434,51 +11484,6 @@
       "title": "Le naufrage de Zarzis : Les recherches se poursuiven",
       "link": "https://africanmanager.com/le-naufrage-de-zarzis-les-recherches-se-poursuiven/",
       "published": "2026-08-24T09:31:46Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:c4a99c10a57a295a",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Hammam-Lif : un agent postal arrêté",
-      "link": "https://africanmanager.com/hammam-lif-un-agent-postal-arrete/",
-      "published": "2026-08-24T08:56:30Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:0648398388906214",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "JM Tarente-2026 (Natation) : Ahmed Jaouadi décroche la médaille de bronze du 400 m nage libre",
-      "link": "https://africanmanager.com/jm-tarente-2026-natation-ahmed-jaouadi-decroche-la-medaille-de-bronze-du-400-m-nage-libre/",
-      "published": "2026-08-24T08:20:59Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:0a175892d6942359",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "JM Tarente-2026/Volley (messieurs)/3e journée : la Tunisie bat la Serbie (3-2)",
-      "link": "https://africanmanager.com/jm-tarente-2026-volley-messieurs-3e-journee-la-tunisie-bat-la-serbie-3-2/",
-      "published": "2026-08-24T08:18:36Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:2a1abf71df3b88f3",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "JM Tarente-2026 (Padel) : la paire tunisienne Dorra Chemli/Nour Allani en quarts de finale du double dames",
-      "link": "https://africanmanager.com/jm-tarente-2026-padel-la-paire-tunisienne-dorra-chemli-nour-allani-en-quarts-de-finale-du-double-dames/",
-      "published": "2026-08-24T08:14:46Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:41788e43ee74c920",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "JM Tarente-2026 : la Tunisie décroche son premier or et porte son bilan à 8 médailles",
-      "link": "https://africanmanager.com/jm-tarente-2026-la-tunisie-decroche-son-premier-or-et-porte-son-bilan-a-8-medailles/",
-      "published": "2026-08-24T08:13:04Z",
       "lang": "fr"
     }
   ]
