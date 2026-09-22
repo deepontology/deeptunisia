@@ -3,6 +3,26 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:b90692a0920aa02a",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "SNCFT | Perturbations du trafic sur la ligne de la banlieue sud de Tunis et les grandes lignes",
+      "link": "https://kapitalis.com/tunisie/2026/09/22/sncft-perturbations-du-trafic-sur-la-ligne-de-la-banlieue-sud-de-tunis-et-les-grandes-lignes/",
+      "published": "2026-09-22T22:31:39Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:2ffad3b1df634864",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "UGTT : Grève des transporteurs de carburants les 23 et 24 septembre",
+      "link": "https://kapitalis.com/tunisie/2026/09/22/ugtt-greve-des-transporteurs-de-carburants-les-23-et-24-septembre/",
+      "published": "2026-09-22T21:04:10Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
       "id": "feed:kapitalis:9a8297b3e7f20322",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -11519,24 +11539,6 @@
       "title": "Recettes des exportations en hausse de 12,2% à fin juillet",
       "link": "https://africanmanager.com/dattes-les-recettes-des-exportations-en-hausse-de-122-a-fin-juillet/",
       "published": "2026-08-26T06:36:31Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:5c91cf7b6116cd74",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "1,162 MDT pour la propreté le tourisme à Kairouan",
-      "link": "https://africanmanager.com/kairouan-1162-mdt-debloques-pour-renforcer-la-proprete-et-soutenir-lactivite-touristique/",
-      "published": "2026-08-26T06:34:37Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:6c64a871bab77dbb",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Les transferts des TRE et les recettes du tourisme à 11 Mds DT",
-      "link": "https://africanmanager.com/les-transferts-des-tunisiens-residents-a-letranger-et-les-recettes-du-tourisme-atteignent-11-milliards-dt/",
-      "published": "2026-08-26T06:26:29Z",
       "lang": "fr"
     }
   ]
