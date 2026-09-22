@@ -3,12 +3,132 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:9a8297b3e7f20322",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Cinéma | La 7ᵉ édition du festival « Regards de Femmes » célèbre l’espoir du 3 au 7 octobre",
+      "link": "https://kapitalis.com/tunisie/2026/09/22/cinema-la-7%e1%b5%89-edition-du-festival-regards-de-femmes-celebre-lespoir-du-3-au-7-octobre/",
+      "published": "2026-09-22T19:29:56Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:0e38b3a4e22b74a0",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Tunisie- Suisse | Rencontre à New York pour le renforcement de la coopération bilatérale",
+      "link": "https://kapitalis.com/tunisie/2026/09/22/tunisie-suisse-rencontre-a-new-york-pour-le-renforcement-de-la-cooperation-bilaterale/",
+      "published": "2026-09-22T19:19:09Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:e89345c1edecacb7",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Des pluies orageuses et localement abondantes annoncées pour cette nuit",
+      "link": "https://kapitalis.com/tunisie/2026/09/22/des-pluies-orageuses-et-localement-abondantes-annoncees-pour-cette-nuit/",
+      "published": "2026-09-22T18:26:50Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:nawaat:c9de47097b68b37c",
+      "outlet": "Nawaat",
+      "outletId": "nawaat",
+      "title": "نواة في دقيقة: لن نترك تونس تغرق في أوحال الاستبداد",
+      "link": "https://nawaat.org/2026/09/22/%d9%86%d9%88%d8%a7%d8%a9-%d9%81%d9%8a-%d8%af%d9%82%d9%8a%d9%82%d8%a9-%d9%84%d9%86-%d9%86%d8%aa%d8%b1%d9%83-%d8%aa%d9%88%d9%86%d8%b3-%d8%aa%d8%ba%d8%b1%d9%82-%d9%81%d9%8a-%d8%a3%d9%88%d8%ad%d8%a7/",
+      "published": "2026-09-22T18:18:21Z",
+      "lang": "ar",
+      "author": "Samih Beji Okkez"
+    },
+    {
+      "id": "feed:african-manager:2e27eee566e5194f",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Energie électrique : renforcer la coordination entre les différentes parties prenantes dans le projet ELMED",
+      "link": "https://africanmanager.com/energie-electrique-renforcer-la-coordination-entre-les-differentes-parties-prenantes-dans-le-projet-elmed/",
+      "published": "2026-09-22T18:13:33Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:c1ebc2c1aa4f99da",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "La ministre Khaldi audionnée par l’ARP sur le retard budgétaire",
+      "link": "https://africanmanager.com/la-commission-des-finances-de-larp-auditionnera-la-ministre-des-finances-sur-le-retard-de-communication-des-donnees-budgetaires/",
+      "published": "2026-09-22T16:17:19Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:551c1975d1286d81",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "4780,4 MDT en exportation d’huile d’olive en 10 mois",
+      "link": "https://africanmanager.com/huile-dolive-3812-mille-tonnes-exportees-pour-une-valeur-de-47804-mdt/",
+      "published": "2026-09-22T16:09:11Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:8c2f8c06a76d1ae6",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Bourse : Le marché clôture la séance de mardi sur une baisse de 1,18%",
+      "link": "https://africanmanager.com/bourse-le-marche-cloture-la-seance-de-mardi-sur-une-baisse-de-118/",
+      "published": "2026-09-22T15:03:51Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:b9c7fefb5c288100",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "La BAD garantira 2 financements à la Sonede et au GCT",
+      "link": "https://africanmanager.com/tunisie-bad-signature-de-deux-accords-de-garantie-de-financement-au-profit-de-la-sonede-et-du-gct/",
+      "published": "2026-09-22T15:02:38Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:03937f195ed6f5a3",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "La Gafta courtise le secteur privé tunisien",
+      "link": "https://africanmanager.com/nizar-jamil-nous-soutenons-la-tunisie-pour-beneficier-des-avantages-de-la-gafta/",
+      "published": "2026-09-22T14:16:13Z",
+      "lang": "fr",
+      "author": "Africanmanager"
+    },
+    {
+      "id": "feed:african-manager:cea0b27040de56a1",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Banque de Tunisie : Le bénéfice en hausse, la caisse en baisse",
+      "link": "https://africanmanager.com/banque-de-tunisie-le-benefice-en-hausse-la-caisse-en-baisse/",
+      "published": "2026-09-22T13:31:00Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
       "id": "feed:african-manager:6338947f2877e4b4",
       "outlet": "African Manager",
       "outletId": "african-manager",
       "title": "Ports tunisiens : L’esquisse d’une touche américaine !",
       "link": "https://africanmanager.com/ports-tunisiens-lesquisse-dune-touche-americaine/",
       "published": "2026-09-22T13:30:30Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:dc3f5b019d28825a",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "New Body Line : Trois quarts du bilan pris au piège de TSI",
+      "link": "https://africanmanager.com/new-body-line-trois-quarts-du-bilan-pris-au-piege-de-tsi/",
+      "published": "2026-09-22T13:30:00Z",
       "lang": "fr",
       "author": "African Manager"
     },
@@ -11417,114 +11537,6 @@
       "title": "Les transferts des TRE et les recettes du tourisme à 11 Mds DT",
       "link": "https://africanmanager.com/les-transferts-des-tunisiens-residents-a-letranger-et-les-recettes-du-tourisme-atteignent-11-milliards-dt/",
       "published": "2026-08-26T06:26:29Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:eeac6165d2d2778b",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "L’administration Trump a violé une décision de justice relative aux règles du vote par correspondance, statue une juge",
-      "link": "https://africanmanager.com/ladministration-trump-a-viole-une-decision-de-justice-relative-aux-regles-du-vote-par-correspondance-statue-une-juge/",
-      "published": "2026-08-26T06:22:20Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:ea984cce83c0579a",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Le Canada riposte en imposant des surtaxes de 15 à 50% aux Etats-Unis",
-      "link": "https://africanmanager.com/le-canada-riposte-en-imposant-des-surtaxes-de-15-a-50-aux-etats-unis/",
-      "published": "2026-08-26T06:21:01Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:6e3e1f1cbcfb02da",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Raid israélien pour s’emparer du centre de formation de l’UNRWA à Jérusalem-Est occupée",
-      "link": "https://africanmanager.com/raid-israelien-pour-semparer-du-centre-de-formation-de-lunrwa-a-jerusalem-est-occupee/",
-      "published": "2026-08-26T06:19:22Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:0a68193839bc4efe",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Le Luxembourg suspend l’approbation des obligations israéliennes. Incertitude sur les futures émissions de l’UE",
-      "link": "https://africanmanager.com/le-luxembourg-suspend-lapprobation-des-obligations-israeliennes-incertitude-sur-les-futures-emissions-de-lue/",
-      "published": "2026-08-26T06:15:25Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:454c7bf87bde5b46",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Un député d’extrême droite détruit un mémorial palestinien à coups de masse sous le regard de Tsahal",
-      "link": "https://africanmanager.com/un-depute-dextreme-droite-detruit-un-memorial-palestinien-a-coups-de-masse-sous-le-regard-de-tsahal/",
-      "published": "2026-08-26T06:13:54Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:473b034df2ccd08f",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "L’Iran et Oman discutent d’un corridor temporaire à Hormuz et du déminage",
-      "link": "https://africanmanager.com/liran-et-oman-discutent-dun-corridor-temporaire-a-hormuz-et-du-deminage/",
-      "published": "2026-08-26T06:10:44Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:f0c2021811af0a71",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Court-circuit à la centrale d’El Jem et coupures d’électricité",
-      "link": "https://africanmanager.com/mahdia-un-court-circuit-a-la-centrale-del-jem-a-lorigine-de-coupures-delectricite/",
-      "published": "2026-08-26T05:38:00Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:7c2061563b6db1c1",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Le ministre de la santé reçoit la dermatologue tunisienne Ismahan Souissi, lauréate du prix des jeunes dermatologues pour l’excellence internationale 2027",
-      "link": "https://africanmanager.com/le-ministre-de-la-sante-recoit-la-dermatologue-tunisienne-ismahan-souissi-laureate-du-prix-des-jeunes-dermatologues-pour-lexcellence-internationale-2027/",
-      "published": "2026-08-25T17:04:46Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:nawaat:6d2673078223d45c",
-      "outlet": "Nawaat",
-      "outletId": "nawaat",
-      "title": "لا غرف مظلمة ولا متآمرين، سياسات فاشلة سببت قطع الكهرباء",
-      "link": "https://nawaat.org/2026/08/25/%d9%84%d8%a7-%d8%ba%d8%b1%d9%81-%d9%85%d8%b8%d9%84%d9%85%d8%a9-%d9%88%d9%84%d8%a7-%d9%85%d8%aa%d8%a2%d9%85%d8%b1%d9%8a%d9%86%d8%8c-%d8%b3%d9%8a%d8%a7%d8%b3%d8%a7%d8%aa-%d9%81%d8%a7%d8%b4%d9%84%d8%a9/",
-      "published": "2026-08-25T15:44:13Z",
-      "lang": "ar"
-    },
-    {
-      "id": "feed:kapitalis:e1d3d38b47816daa",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Tunisie | Seifeddine Arfaoui comparaîtra le 27 août devant le juge",
-      "link": "https://kapitalis.com/tunisie/2026/08/25/tunisie-seifeddine-arfaoui-comparaitra-le-27-aout-devant-le-juge/",
-      "published": "2026-08-25T12:18:52Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:62182c24861855bf",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Hôpital numérique en Tunisie ; ça marche",
-      "link": "https://africanmanager.com/lhopital-numerique-a-permis-au-cours-de-la-premiere-annee-de-son-lancement-de-realiser-120-mille-examens-dimagerie-a-distance-et-334-consultations-medicales/",
-      "published": "2026-08-25T11:59:29Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:968c93bcc4260c69",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Sousse accueillera Intertex Tunisia, du 22 au 24 octobre 26",
-      "link": "https://africanmanager.com/textile-sousse-accueillera-la-8eme-edition-du-intertex-tunisia-du-22-au-24-octobre-2026/",
-      "published": "2026-08-25T11:57:32Z",
       "lang": "fr"
     }
   ]
