@@ -3,6 +3,16 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:48edd519b3862724",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Le Tunisien Bechir Boussandel expose à Genève",
+      "link": "https://kapitalis.com/tunisie/2026/09/23/le-tunisien-bechir-boussandel-expose-a-geneve/",
+      "published": "2026-09-23T00:15:10Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
       "id": "feed:kapitalis:b90692a0920aa02a",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -11530,15 +11540,6 @@
       "title": "Près de 80 mille visiteurs affluent pour célébrer le Mouled",
       "link": "https://africanmanager.com/kairouan-pres-de-80-mille-visiteurs-affluent-pour-celebrer-le-mouled/",
       "published": "2026-08-26T06:37:55Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:b7d94e1780cbb9c8",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Recettes des exportations en hausse de 12,2% à fin juillet",
-      "link": "https://africanmanager.com/dattes-les-recettes-des-exportations-en-hausse-de-122-a-fin-juillet/",
-      "published": "2026-08-26T06:36:31Z",
       "lang": "fr"
     }
   ]
