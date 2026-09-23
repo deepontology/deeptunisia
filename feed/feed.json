@@ -3,6 +3,45 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:e2d06e817787200a",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Tunisie | Bizerte accueille le 9e Forum mondial de la mer",
+      "link": "https://kapitalis.com/tunisie/2026/09/23/tunisie-bizerte-accueille-le-9e-forum-mondial-de-la-mer/",
+      "published": "2026-09-23T22:55:15Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:b4489d594cb3eaf5",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Près de 5 tonnes de volaille avariée saisies dans un abattoir de Mahdia",
+      "link": "https://kapitalis.com/tunisie/2026/09/23/pres-de-5-tonnes-de-volaille-avariee-saisies-dans-un-abattoir-de-mahdia/",
+      "published": "2026-09-23T21:25:02Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:al-jazeera:a2f40f13a11bb1ac",
+      "outlet": "Al Jazeera",
+      "outletId": "al-jazeera",
+      "title": "Gaza flotilla activist on hunger strike in Tunisia jail ‘on verge of death’",
+      "link": "https://www.aljazeera.com/news/2026/9/23/gaza-flotilla-activist-on-hunger-strike-in-tunisia-jail-on-verge-of-death?traffic_source=rss",
+      "published": "2026-09-23T20:56:15Z",
+      "lang": "en"
+    },
+    {
+      "id": "feed:african-manager:e6d177a0cb1baf40",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Carrefour Tunisie donne vie aux dessins d’enfants grâce à l’intelligence artificielle",
+      "link": "https://africanmanager.com/carrefour-tunisie-donne-vie-aux-dessins-denfants-grace-a-lintelligence-artificielle/",
+      "published": "2026-09-23T20:35:18Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
       "id": "feed:kapitalis:831127ec9845ca38",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -11555,42 +11594,6 @@
       "title": "Le Real Madrid étrille la Real Sociedad 4-1 et prend la tête de la Liga",
       "link": "https://africanmanager.com/le-real-madrid-etrille-la-real-sociedad-4-1-et-prend-la-tete-de-la-liga/",
       "published": "2026-08-27T09:10:07Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:c534e1f8fc739788",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Maroc – Italie : Près de 5 MM€ d’échanges commerciaux",
-      "link": "https://africanmanager.com/maroc-italie-avec-pres-de-5-mme-dechanges/",
-      "published": "2026-08-27T09:01:17Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:c0eeac26100c80ef",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Football | MC Alger – MC Oran en ouverture de la Ligue 1 algérienne",
-      "link": "https://kapitalis.com/tunisie/2026/08/27/football-mc-alger-mc-oran-en-ouverture-de-la-ligue-1-algerienne/",
-      "published": "2026-08-27T09:01:06Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:d83eb0a82874ff83",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Météo: Températures entre 44° et 48°",
-      "link": "https://africanmanager.com/meteo-temperatures-entre-44-et-48/",
-      "published": "2026-08-27T09:00:02Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:df040c31fd93cec0",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Saisie de 25 000 litres d’eau minérale",
-      "link": "https://africanmanager.com/saisie-de-25-000-litres-deau-minerale/",
-      "published": "2026-08-27T08:40:19Z",
       "lang": "fr"
     }
   ]
