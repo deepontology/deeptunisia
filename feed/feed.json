@@ -3,6 +3,96 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:831127ec9845ca38",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Wael Naouar annonce la suspension de sa grève de la faim après 38 jours",
+      "link": "https://kapitalis.com/tunisie/2026/09/23/wael-naouar-annonce-la-suspension-de-sa-greve-de-la-faim-apres-38-jours/",
+      "published": "2026-09-23T19:13:59Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:f81c084900e697ad",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Tunisie | 15 ans de prison supplémentaires pour l’ancien procureur Bechir Akremi",
+      "link": "https://kapitalis.com/tunisie/2026/09/23/tunisie-15-ans-de-prison-supplementaires-pour-lancien-procureur-bechir-akremi/",
+      "published": "2026-09-23T19:02:24Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:baaad9ba6c717b57",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Météo | Persistance d’orages et de pluies localement fortes cette nuit",
+      "link": "https://kapitalis.com/tunisie/2026/09/23/meteo-persistance-dorages-et-de-pluies-localement-fortes-cette-nuit/",
+      "published": "2026-09-23T18:32:01Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:african-manager:214da8e8f071258d",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Atelier pour la mise en œuvre de la CDN 3.0 à Jendouba",
+      "link": "https://africanmanager.com/jendouba-un-atelier-consacre-a-la-mise-en-oeuvre-de-la-cdn-3-0-et-aux-enjeux-climatiques/",
+      "published": "2026-09-23T15:47:30Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:7ee638037ec98e8a",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Produits médicaux suspects : l’ANMPS appelle au signalement",
+      "link": "https://africanmanager.com/produits-medicaux-suspects-lanmps-appelle-au-signalement/",
+      "published": "2026-09-23T15:08:43Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:nawaat:692fffd7e779b655",
+      "outlet": "Nawaat",
+      "outletId": "nawaat",
+      "title": "يحصل في تونس: تضامنوا مع موقوفين فتم إيقافهم",
+      "link": "https://nawaat.org/2026/09/23/%d9%8a%d8%ad%d8%b5%d9%84-%d9%81%d9%8a-%d8%aa%d9%88%d9%86%d8%b3-%d8%aa%d8%b6%d8%a7%d9%85%d9%86%d9%88%d8%a7-%d9%85%d8%b9-%d9%85%d9%88%d9%82%d9%88%d9%81%d9%8a%d9%86-%d9%81%d8%aa%d9%85-%d8%a5%d9%8a%d9%82/",
+      "published": "2026-09-23T14:58:49Z",
+      "lang": "ar",
+      "author": "Mahdi Jlassi"
+    },
+    {
+      "id": "feed:african-manager:60d0cd00841c7be3",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Bettine: La grève des transporteurs sans impact sur les stations-service",
+      "link": "https://africanmanager.com/bettine-la-greve-des-transporteurs-sans-impact-sur-les-stations-service/",
+      "published": "2026-09-23T14:30:58Z",
+      "lang": "fr",
+      "author": "Africanmanager"
+    },
+    {
+      "id": "feed:african-manager:1192e75edb30374e",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "La transformation énergétique, levier du développement économique",
+      "link": "https://africanmanager.com/la-transformation-energetique-levier-du-developpement-economique/",
+      "published": "2026-09-23T14:23:16Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:4722f775f08222f5",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "La Tunisie et les USA se dotent d’un Centre d’excellence maritime à Bizerte. De quoi s’agirait-il ?",
+      "link": "https://africanmanager.com/la-tunisie-et-les-usa-se-dotent-dun-centre-dexcellence-maritime-a-bizerte-de-quoi-sagirait-il/",
+      "published": "2026-09-23T14:00:00Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
       "id": "feed:african-manager:4cbaf968d44fa685",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -11501,87 +11591,6 @@
       "title": "Saisie de 25 000 litres d’eau minérale",
       "link": "https://africanmanager.com/saisie-de-25-000-litres-deau-minerale/",
       "published": "2026-08-27T08:40:19Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:13cee3432820556b",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Festival du Poisson à la Goulette | Entre mer, gastronomie et patrimoine",
-      "link": "https://kapitalis.com/tunisie/2026/08/27/festival-du-poisson-a-la-goulette-entre-mer-gastronomie-et-patrimoine/",
-      "published": "2026-08-27T08:06:14Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:21c602671d900671",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Ben Guerdane | Obsèques de 11 migrants irréguliers noyés sur fond de tensions",
-      "link": "https://kapitalis.com/tunisie/2026/08/27/ben-guerdane-obseques-de-11-migrants-irreguliers-noyes-sur-fond-de-tensions/",
-      "published": "2026-08-27T07:34:58Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:b23d0205f0785ab9",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Les unités d’eaux minérales fonctionnent à plein régime",
-      "link": "https://africanmanager.com/les-unites-de-production-deaux-minerales-fonctionnent-a-plein-regime/",
-      "published": "2026-08-27T07:13:13Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:34b5a882f0d687c5",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Vers de nouveaux projets de valorisation des déchets",
-      "link": "https://africanmanager.com/gestion-des-dechets-vers-de-nouveaux-projets-de-valorisation-energetique-des-dechets-avec-onu-habitat/",
-      "published": "2026-08-27T07:10:34Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:7ddb8256de157bb1",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Sfax : la municipalité intensifie l’entretien des routes",
-      "link": "https://africanmanager.com/sfax-la-municipalite-intensifie-lentretien-des-routes-et-lutte-contre-le-vandalisme/",
-      "published": "2026-08-27T06:59:32Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:2e53cb704d81fa12",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Le SG de l’UGTT parle prixet pénuries avec le bâtonnier",
-      "link": "https://africanmanager.com/le-secretaire-general-de-lugtt-sentretient-avec-le-batonnier-de-lordre-national-des-avocats/",
-      "published": "2026-08-27T06:56:55Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:ca3054c4c3abe4b7",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Les Houthis ne sont pas des marionnettes de Téhéran",
-      "link": "https://kapitalis.com/tunisie/2026/08/27/les-houthis-ne-sont-pas-des-marionnettes-de-teheran/",
-      "published": "2026-08-27T06:56:11Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:516b92d5fa904f62",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Saisie de 25 mille litres d’eau minérale au Cap-Bon",
-      "link": "https://africanmanager.com/nabeul-saisie-de-25-mille-litres-deau-minerale-a-nabeul-hammamet-et-beni-khalled/",
-      "published": "2026-08-27T06:38:56Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:f0b71b144807c637",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "La SNCFT annule des voyages pour manque de locomotives",
-      "link": "https://africanmanager.com/sncft-annulation-de-plusieurs-voyages-les-26-et-27-aout-en-raison-dun-manque-de-locomotives/",
-      "published": "2026-08-27T06:37:30Z",
       "lang": "fr"
     }
   ]
