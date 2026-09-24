@@ -3,6 +3,56 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:098ab7d7be0313b3",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Le comité de défense dénonce le transfert de Me Ayachi Hammami à Monastir",
+      "link": "https://kapitalis.com/tunisie/2026/09/25/le-comite-de-defense-denonce-le-transfert-de-me-ayachi-hammami-a-monastir/",
+      "published": "2026-09-24T23:15:38Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:a47943d9bdfdcf3a",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Le ministère du Commerce dément catégoriquement toute hausse des prix des carburants",
+      "link": "https://kapitalis.com/tunisie/2026/09/24/le-ministere-du-commerce-dement-categoriquement-toute-hausse-des-prix-des-carburants/",
+      "published": "2026-09-24T22:36:27Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:733a12737513b948",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Béja | Six arrestations après le braquage d’un DAB",
+      "link": "https://kapitalis.com/tunisie/2026/09/24/beja-six-arrestations-apres-le-braquage-dun-dab/",
+      "published": "2026-09-24T21:38:56Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:african-manager:107682221e42c9b8",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "CAN-2027 (Elim.GrH/1re J.): la Tunisie fait match nul avec l’Ouganda (1-1)",
+      "link": "https://africanmanager.com/can-2027-elim-grh-1re-j-la-tunisie-fait-match-nul-avec-louganda-1-1/",
+      "published": "2026-09-24T21:22:14Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:kapitalis:92bc9c61e1b750c1",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "La Tunisie reçoit le certificat officiel d’inscription de Sidi Bou Saïd à l’Unesco",
+      "link": "https://kapitalis.com/tunisie/2026/09/24/la-tunisie-recoit-le-certificat-officiel-dinscription-de-sidi-bou-said-a-lunesco/",
+      "published": "2026-09-24T20:33:52Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
       "id": "feed:african-manager:bf5b2c61ebe74e83",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -11608,51 +11658,6 @@
       "title": "« Je ne veux pas le voir en prison » : Bennett soutient la grâce de Netanyahu s’il quitte la politique",
       "link": "https://africanmanager.com/je-ne-veux-pas-le-voir-en-prison-bennett-soutient-la-grace-de-netanyahu-sil-quitte-la-politique/",
       "published": "2026-08-31T06:14:45Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:0c0e3c6d0efeef8d",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "La cote de popularité de Trump est en forte baisse sur tous les sujets, selon un sondage Newsweek",
-      "link": "https://africanmanager.com/la-cote-de-popularite-de-trump-est-en-forte-baisse-sur-tous-les-sujets-selon-un-sondage-newsweek/",
-      "published": "2026-08-31T06:12:24Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:c9e2a31de610166e",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Un ex responsable US exhorte son pays à retirer ses troupes du Golfe face à la montée des tensions",
-      "link": "https://africanmanager.com/un-ex-responsable-us-exhorte-son-pays-a-retirer-ses-troupes-du-golfe-face-a-la-montee-des-tensions/",
-      "published": "2026-08-31T06:11:02Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:3be4a864ae20b9d3",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Mahdia : aucun dégât chez les aviculteurs légaux",
-      "link": "https://africanmanager.com/mahdia-aucun-degat-na-ete-enregistre-pour-les-aviculteurs-exercant-dans-un-cadre-legal/",
-      "published": "2026-08-30T16:16:59Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:025603ef574d738c",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "JM Tarente-2026 (aviron) : « La sélection tunisienne vise une première médaille méditerranéenne de son histoire » (DTN)",
-      "link": "https://africanmanager.com/jm-tarente-2026-aviron-la-selection-tunisienne-vise-une-premiere-medaille-mediterraneenne-de-son-histoire-dtn/",
-      "published": "2026-08-30T14:48:23Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:f253ec506bb9fb1a",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Le parc public de Faïd Bennour ouvrira bientôt ses portes",
-      "link": "https://africanmanager.com/sidi-bouzid-le-parc-public-de-faid-bennour-ouvre-bientot-ses-portes/",
-      "published": "2026-08-30T14:44:35Z",
       "lang": "fr"
     }
   ]
