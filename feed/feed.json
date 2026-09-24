@@ -3,6 +3,16 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:80a615dee71d03d6",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Dr. Mokhtar Zaghdoud élu au Conseil départemental de l’Ordre des médecins de Paris",
+      "link": "https://kapitalis.com/tunisie/2026/09/24/dr-mokhtar-zaghdoud-elu-au-conseil-departemental-de-lordre-des-medecins-de-paris/",
+      "published": "2026-09-23T23:29:11Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
       "id": "feed:kapitalis:e2d06e817787200a",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -11585,15 +11595,6 @@
       "title": "Compétition interclubs de l’UEFA 2026-2027: le tirage au sort de la phase de ligue les 27 et 28 août",
       "link": "https://africanmanager.com/competition-interclubs-de-luefa-2026-2027-le-tirage-au-sort-de-la-phase-de-ligue-les-27-et-28-aout/",
       "published": "2026-08-27T09:11:56Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:9b130f8a0439d026",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Le Real Madrid étrille la Real Sociedad 4-1 et prend la tête de la Liga",
-      "link": "https://africanmanager.com/le-real-madrid-etrille-la-real-sociedad-4-1-et-prend-la-tete-de-la-liga/",
-      "published": "2026-08-27T09:10:07Z",
       "lang": "fr"
     }
   ]
