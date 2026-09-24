@@ -3,6 +3,86 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:african-manager:bf5b2c61ebe74e83",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Bourse : Le marché reprend des couleurs jeudi",
+      "link": "https://africanmanager.com/bourse-le-marche-reprend-des-couleurs-jeudi/",
+      "published": "2026-09-24T19:05:36Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:kapitalis:071231914c2ca23c",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Pluies orageuses pour cette nuit | Les zones concernées",
+      "link": "https://kapitalis.com/tunisie/2026/09/24/pluies-orageuses-pour-cette-nuit-les-zones-concernees/",
+      "published": "2026-09-24T18:52:18Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:75208a79465f9964",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Tunisie | Abir Moussi en grève de la faim sauvage",
+      "link": "https://kapitalis.com/tunisie/2026/09/24/tunisie-abir-moussi-en-greve-de-la-faim-sauvage-3/",
+      "published": "2026-09-24T17:53:49Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:african-manager:ff33aba33c4d24cb",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "6 médecins tunisiens au C.O.M de Paris",
+      "link": "https://africanmanager.com/election-de-six-medecins-tunisiens-au-conseil-de-lordre-des-medecins-de-paris/",
+      "published": "2026-09-24T16:35:19Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:c0b11b2fe429d1dd",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Tunisie-Chine : de grandes opportunités selon Abdelhafid",
+      "link": "https://africanmanager.com/tunisie-chine-de-grandes-opportunites-pour-renforcer-le-partenariat-bilateral-selon-samir-abdelhafid/",
+      "published": "2026-09-24T16:20:07Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:37028f7467412074",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Tunisie : 2 M de tonnes de déchets par an, 77 % plastique",
+      "link": "https://africanmanager.com/la-tunisie-face-a-la-necessite-dagir-pour-reduire-la-pollution-plastique/",
+      "published": "2026-09-24T16:18:28Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:74f642fd3ca4327f",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "La BMICE lorgne +50 % en prêts et financements en 2030",
+      "link": "https://africanmanager.com/la-bmice-oeuvre-a-accroitre-son-portefeuille-de-prets-et-de-financements-de-50-dici-2030/",
+      "published": "2026-09-24T16:16:44Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:138bf6bee542ccb4",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Ennakl Automobiles : Le grand pont confirmé par les comptes du semestre",
+      "link": "https://africanmanager.com/ennakl-automobiles-le-grand-pont-confirme-par-les-comptes-du-semestre/",
+      "published": "2026-09-24T13:48:03Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
       "id": "feed:african-manager:bf4012ec6e871136",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -19,6 +99,16 @@
       "title": "BH Bank : Quand les commissaires aux comptes mettent le doigt sur du lourd",
       "link": "https://africanmanager.com/bh-bank-quand-les-commissaires-aux-comptes-mettent-le-doigt-sur-du-lourd/",
       "published": "2026-09-24T13:11:53Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:6a1d94f4c2728fb9",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Microfinance en Tunisie : Exclues des banques, elles paient trois fois plus cher leur crédit",
+      "link": "https://africanmanager.com/microfinance-en-tunisie-exclues-des-banques-elles-paient-trois-fois-plus-cher-leur-credit/",
+      "published": "2026-09-24T13:11:00Z",
       "lang": "fr",
       "author": "African Manager"
     },
@@ -11563,87 +11653,6 @@
       "title": "Le parc public de Faïd Bennour ouvrira bientôt ses portes",
       "link": "https://africanmanager.com/sidi-bouzid-le-parc-public-de-faid-bennour-ouvre-bientot-ses-portes/",
       "published": "2026-08-30T14:44:35Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:cdcee03a9d0a8d82",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "La « Déclaration de Yaoundé » impose l’agroécologie face",
-      "link": "https://africanmanager.com/adoption-de-la-declaration-de-yaounde-pour-imposer-lagroecologie-face-a-la-crise-forestiere-et-alimentaire/",
-      "published": "2026-08-30T14:37:35Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:955829d8b4c2f2a9",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Du jamais-vu en Tunisie, la soif d’un pays !",
-      "link": "https://africanmanager.com/du-jamais-vu-en-tunisie-la-soif-dun-pays/",
-      "published": "2026-08-30T14:30:11Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:8c7a0b0718f4d38f",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Le tabac public renfloué par le Trésor",
-      "link": "https://africanmanager.com/le-tabac-public-renfloue-par-le-tresor/",
-      "published": "2026-08-30T14:28:26Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:44301497f2b6c4b4",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "STEG, créancière insolvable de l’État tunisien",
-      "link": "https://africanmanager.com/steg-creanciere-insolvable-de-letat-tunisien/",
-      "published": "2026-08-30T14:20:00Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:98dd1f8c5ef40954",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Cisjordanie : Les colons assaillants du village de Qusra toujours en liberté",
-      "link": "https://africanmanager.com/cisjordanie-les-colons-assaillants-du-village-de-qusra-toujours-en-liberte/",
-      "published": "2026-08-30T11:54:58Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:b168365d204d195c",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Augmentation des bourses russes aux étudiants tunisiens",
-      "link": "https://africanmanager.com/valery-falkov-nous-oeuvrons-a-augmenter-le-nombre-de-bourses-accordees-aux-etudiants-tunisiens-et-nous-sommes-ouverts-a-toutes-les-propositions-visant-a-renforcer-les-relations-bilaterales/",
-      "published": "2026-08-30T08:25:27Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:106f193cf597fb60",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Zaghouan : Projet « Fatima » dédié à l’innovation agricole",
-      "link": "https://africanmanager.com/zaghouan-lancement-du-projet-fatima-dedie-a-linnovation-agricole/",
-      "published": "2026-08-30T08:21:43Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:d433b6679e496c20",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Valorisation des gaz de la décharge Rahma à Nabeul",
-      "link": "https://africanmanager.com/lunite-dextraction-de-traitement-et-de-valorisation-des-gaz-emis-par-la-decharge-controlee-rahma-bientot-exploitable/",
-      "published": "2026-08-30T08:18:42Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:049039036cacac3c",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "L’OTE appelle au renforcement de la transparence budgétaire",
-      "link": "https://africanmanager.com/lote-appelle-au-renforcement-de-la-transparence-budgetaire/",
-      "published": "2026-08-30T08:15:46Z",
       "lang": "fr"
     }
   ]
