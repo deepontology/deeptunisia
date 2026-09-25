@@ -3,6 +3,36 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:def1aabfc28989fa",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "La Sonede annonce des perturbations de la distribution de l’eau potable",
+      "link": "https://kapitalis.com/tunisie/2026/09/25/la-sonede-annonce-des-perturbations-de-la-distribution-de-leau-potable/",
+      "published": "2026-09-25T22:21:59Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:abf89da8a56d4184",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Coopération scientifique | L’Institut Pasteur de Tunis au cœur de la stratégie régionale « One Health »",
+      "link": "https://kapitalis.com/tunisie/2026/09/25/cooperation-scientifique-linstitut-pasteur-de-tunis-au-coeur-de-la-strategie-regionale-one-health/",
+      "published": "2026-09-25T21:56:36Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:1ed3d3c37b91a65a",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Partenariat tuniso-suisse pour la digitalisation de l’administration du travail",
+      "link": "https://kapitalis.com/tunisie/2026/09/25/partenariat-tuniso-suisse-pour-la-digitalisation-de-ladministration-du-travail/",
+      "published": "2026-09-25T21:13:09Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
       "id": "feed:kapitalis:b8231ea316a375bc",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -11686,33 +11716,6 @@
       "title": "Le Raja Club Athletic se sépare de son entraîneur tunisien Nasreddine Nabi",
       "link": "https://africanmanager.com/le-raja-club-athletic-se-separe-de-son-entraineur-tunisien-nasreddine-nabi/",
       "published": "2026-09-01T11:13:57Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:e8d3c2a162948a22",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "JM Tarente-2026 (11e jour) : le bronze de Eya Aouadi porte le bilan de la Tunisie à 17 médailles",
-      "link": "https://africanmanager.com/jm-tarente-2026-11e-jour-le-bronze-de-eya-aouadi-porte-le-bilan-de-la-tunisie-a-17-medailles/",
-      "published": "2026-09-01T11:10:01Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:0d96418d5b7d7cad",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "ASBU: le 26ème Festival arabe de la radio et de la télévision du 21 au 24 septembre sous le slogan « Le rythme de l’image et l’écho de l’avenir »",
-      "link": "https://africanmanager.com/asbu-le-26eme-festival-arabe-de-la-radio-et-de-la-television-du-21-au-24-septembre-sous-le-slogan-le-rythme-de-limage-et-lecho-de-lavenir/",
-      "published": "2026-09-01T11:06:59Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:d703339aab11e0e9",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "JM Tarente-2026 (haltérophilie): Karem Ben Hnia médaillé d’argent (arraché) et de bronze (épaulé-jeté)",
-      "link": "https://africanmanager.com/jm-tarente-2026-halterophilie-karem-ben-hnia-medaille-dargent-arrache-et-de-bronze-epaule-jete/",
-      "published": "2026-09-01T11:03:03Z",
       "lang": "fr"
     }
   ]
