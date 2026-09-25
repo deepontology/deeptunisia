@@ -36,7 +36,9 @@ function freshEnv(moderators = ''): Env {
 	// exec resolves immediately in the local adapter, so the schema is in place
 	// before the first request without needing an async factory here.
 	void db.exec(SCHEMA);
-	return { DB: db, RATE_PEPPER: 'a-pepper-long-enough-for-tests', MODERATORS: moderators };
+	// `beta` is explicit: the default is `off`, and these suites exercise the
+	// open handler. The mode contract itself is asserted in test-modes.ts.
+	return { DB: db, RATE_PEPPER: 'a-pepper-long-enough-for-tests', MODERATORS: moderators, mode: 'beta' };
 }
 
 /** Sign and send, exactly as the browser client will. `ip` simulates a distinct

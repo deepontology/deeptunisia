@@ -25,6 +25,19 @@ binding = "ASSETS"
 # nothing is a genuine 404 rather than something to hand to the Worker.
 not_found_handling = "404-page"
 
+# The enforced community mode, read at runtime by community/worker.ts and resolved
+# by community/mode.ts. An absent or unrecognised value is `off`, so this value
+# being present, absent or typo'd all leave the API closed.
+#
+#   off        every /api/* route answers the uniform 404 before any D1 access.
+#   read-only  public GET reads only; every write and identity action refused.
+#   beta       the signed API, still with no budget or hold wired.
+#
+# This is a deployment control, not a build flag: closing Agora must never
+# require rebuilding the atlas.
+[vars]
+COMMUNITY_MODE = "off"
+
 [[d1_databases]]
 binding = "DB"
 database_name = "deeptunisia-db"
@@ -36,3 +49,27 @@ enabled = true
 # docs/anonymity-audit.md is explicit that the operator not looking at a log is not
 # the same as the log not existing.
 head_sampling_rate = 0.01
+
+# There is no staging environment.
+#
+# One existed here and its D1 binding pointed at the production database above
+# (same database_id), so a staging deploy would have read and written production
+# data while its name suggested otherwise. Rather than carry a binding that lies
+# about which database it serves, the environment is gone until a distinct staging
+# database exists: uncomment a block below with its OWN database_id first.
+#
+# Staging must also declare COMMUNITY_MODE. It defaults to `off` from [vars], and
+# `beta` is an explicit choice to test the live client against real data.
+#
+# [env.staging]
+# name = "deeptunisia-staging"
+# [env.staging.vars]
+# COMMUNITY_MODE = "beta"
+# [[env.staging.d1_databases]]
+# binding = "DB"
+# database_name = "deeptunisia-db-staging"
+# database_id = "<distinct from the production id>"
+# [env.staging.assets]
+# directory = "build"
+# binding = "ASSETS"
+# not_found_handling = "404-page"

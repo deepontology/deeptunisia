@@ -34,9 +34,16 @@ import {
 import { bucketKey, consume, RateLimitError, type Bucket, type BucketStore } from './ratelimit.ts';
 import { rank, reportPressure, type Sort } from './ranking.ts';
 import { checkHoneypot, checkInterval, checkLinkCount, countLinks, isDuplicate, AbuseError } from './abuse.ts';
+import { isPublicRead, modeUnavailable, type CommunityMode } from './mode.ts';
 
 export interface Env {
 	DB: Db;
+	/**
+	 * The enforced operating mode. Absent resolves to `off` in `handle`, so a
+	 * caller that forgets to set it gets a closed API rather than an open one.
+	 * The Worker and the local server both resolve it from runtime configuration.
+	 */
+	mode?: CommunityMode;
 	/** Held outside the database. Without it a leaked bucket table is reversible. */
 	RATE_PEPPER: string;
 	/** Public keys allowed to moderate. Deliberately a list, never a database flag. */
@@ -341,6 +348,16 @@ export async function handle(request: Request, env: Env): Promise<Response> {
 	const url = new URL(request.url);
 	const path = url.pathname.replace(/\/+$/, '') || '/';
 	const now = Date.now();
+
+	/*
+	 * The mode gate runs before the router and before any database access. In
+	 * `off` nothing below this line is reached, so no route can read, write,
+	 * verify a signature, spend a nonce or touch moderation. `read-only` admits
+	 * the public reads and refuses everything else with the same response.
+	 */
+	const mode = env.mode ?? 'off';
+	if (mode === 'off') return modeUnavailable();
+	if (mode === 'read-only' && !isPublicRead(request.method, path)) return modeUnavailable();
 
 	try {
 		// ---- reads: no identity, no rate limit, nothing recorded -------------
