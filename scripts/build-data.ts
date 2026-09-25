@@ -3606,10 +3606,36 @@ const stats: Record<string, string> = {
 	positions: String(positions.length),
 	relationships: String(relationships.length),
 	events: String(events.length),
+	// The remaining kind counts the paper's scale table states. They were
+	// hand-typed and had drifted by the successor release (agreements 7 vs 23,
+	// companies 8 vs 25, places 12 vs 44); emitting them is the only way the
+	// table can stay true between releases.
+	agreements: String(agreements.length),
+	questions: String(questions.length),
+	hypotheses: String(hypotheses.length),
+	companies: String(companies.length),
+	contracts: String(contracts.length),
+	licences: String(licences.length),
+	declarations: String(declarations.length),
+	education: String(education.length),
+	regions: String(regions.length),
+	places: String(places.length),
 	documented: String(basisCounts.documented),
 	reported: String(basisCounts.reported),
 	inferred: String(basisCounts.inferred),
 	unsubstantiated: String(basisCounts.unsubstantiated),
+	// The sum the paper's §8.1 and §11 quote as "claim-bearing records". A total
+	// the prose states is a claim like any other; it is emitted rather than added
+	// up in the text so a basis shift cannot change the breakdown without
+	// changing the total.
+	claimRecords: String(
+		basisCounts.documented + basisCounts.reported + basisCounts.inferred + basisCounts.unsubstantiated
+	),
+	// The two temporal constants the paper quotes in prose. They were published
+	// as data before they were tags, and the cutoff moved twice while the prose
+	// did not; the tags make the parameter file the only place the value lives.
+	floor: parameters.time.floor,
+	cutoff: parameters.time.cutoff,
 	needsPrimarySource: String(needsPrimary.length),
 	successionGaps: String(successionGaps.length),
 	successionOverlaps: String(successionOverlaps.length),
@@ -3747,7 +3773,8 @@ if (!FIXTURE_MODE) {
 		'AGENTS.md',
 		'DESIGN.md',
 		'static/llms.txt',
-		'output/deeptunisia-release-paper-v0.1.1.md'
+		'output/deeptunisia-release-paper-v0.1.1.md',
+		'output/deeptunisia-release-paper-v0.1.2.md'
 	];
 
 	const statUpdates: string[] = [];
