@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "milestone": "M0",
+  "recordedAt": "2026-09-25T22:02:28Z",
+  "note": "Internal M0 reproducible-baseline record for the v0.1.3 plan (docs/plans/next-period-execution-plan.md). Not a public build manifest. The public manifest is an M6 deliverable.",
+  "commit": "d19702483969fa953d94a4fedfdd314bbb7c7229",
+  "commitShort": "d197024",
+  "commitSubject": "Claim-to-code-to-test matrix, and paper claims aligned with the build (#35)",
+  "runtime": {
+    "node": "v26.7.0",
+    "npm": "11.19.0"
+  },
+  "lockHash": "47173c9f1ecfe23060644d0da4a5ef630d98eca6404ce1ea7e175ef0a5d51dd1",
+  "datasetHash": "2a5352c0f7a25b8b911e47461b25849b245ecc674e11b817df1a93fe71f2bb0d",
+  "datasetGenerated": "2026-09-25T22:01:59.310Z",
+  "cutoff": 1788998400000,
+  "counts": {
+    "sources": 1263,
+    "sourcesCited": 1225,
+    "sourcesUncited": 38,
+    "institutions": 207,
+    "roles": 118,
+    "people": 450,
+    "positions": 422,
+    "relationships": 362,
+    "events": 112,
+    "questions": 26,
+    "hypotheses": 6,
+    "agreements": 23,
+    "worldClaims": 10,
+    "companies": 25,
+    "contracts": 15,
+    "licences": 11,
+    "declarations": 9,
+    "education": 25,
+    "regions": 84,
+    "places": 44
+  },
+  "review": {
+    "reviewed": 46,
+    "reviewable": 1715,
+    "independent": 0,
+    "note": "46 editorial review notes; zero independently checked, by design until the v0.2 study records real independent checks."
+  },
+  "feed": {
+    "items": 1200,
+    "newest": "2026-09-25T19:23:02Z",
+    "sha256": "f8dfd2f23c49ec87688fe18059575414324e6065d0de6ca627c4953db5d43ea2"
+  },
+  "sensitivity": {
+    "generated": "2026-09-14T16:27:35.830Z",
+    "staleVsRelease": true,
+    "note": "Older than the release graph. Regenerate from the release commit or exclude it (M6)."
+  },
+  "release": {
+    "currentTag": "v0.1.2-C1",
+    "tags": [
+      "v0.1.1",
+      "v0.1.2-C1"
+    ],
+    "packageVersion": "0.1.0",
+    "targetVersion": "v0.1.3",
+    "note": "package.json is still 0.1.0 and no CITATION.cff exists; both are M6 alignment work."
+  },
+  "production": {
+    "origin": "https://deeptunisia.org",
+    "checkedAt": "2026-09-25T22:00:00Z",
+    "datasetRawSha256": "aa8f28ca8d0dccf463f36806aefb1557f313eb4170cdbee697d2d8fa7859c8b1",
+    "datasetGenerated": "2026-09-15T11:36:56.528Z",
+    "countsMatchBaseline": true,
+    "buildManifest": "absent (/build-manifest.json returns 404)",
+    "apiThreadsStatus": 200,
+    "apiThreadsExpected": "404 in off mode (M1 containment)",
+    "note": "Production graph matches the last substantive revision (c424464). The public community API answers while the client presents Agora as closed; Agora containment is M1."
+  },
+  "dependencyAudit": {
+    "production": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0,
+      "total": 0
+    },
+    "all": {
+      "info": 0,
+      "low": 1,
+      "moderate": 2,
+      "high": 1,
+      "critical": 0,
+      "total": 4
+    },
+    "note": "No production advisory. One high development-only advisory remains; M5 requires it fixed or justified."
+  },
+  "gates": {
+    "data": "pass",
+    "test": "pass, 19 suites",
+    "check": "pass, 0 errors and 0 warnings"
+  }
+}
