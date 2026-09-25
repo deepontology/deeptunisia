@@ -473,18 +473,27 @@
   status: open
   relates_to: [taoufik-dabbabi, ramzi-rajhi, rached-bettaieb, abderrahmane-belhaj-ali]
   notes: >-
-    The sequence Dabbabi / Rajhi / Bettaieb is reported but the dates do not
-    comfortably fit between the two firmly dated endpoints of Bennour in March 2018
-    and Guizani in December 2019. At least one of these tenures is likely misdated.
+    The sequence Dabbabi / Rajhi / Bettaieb is reported and now fits between the dated
+    records: Belhaj Ali (2015-12-01) to Rajhi (2016-12-16) to Dabbabi (2017-10-25) to
+    Bettaieb (2018-03-03) to Guizani (2019-12-12). The apparent misfit came from a
+    misdated Tuniscope article: its displayed 2018 date is Bennour's second appointment,
+    dated 2 March 2011, which is recorded as resolved on 2026-08-04. Still open is
+    primary-source confirmation of the three press-dated tenures.
   notes_fr: >-
-    La séquence Dabbabi / Rajhi / Bettaieb est rapportée, mais les dates ne s'insèrent pas
-    confortablement entre les deux bornes solidement datées que sont Bennour en mars 2018 et
-    Guizani en décembre 2019. Au moins un de ces mandats est probablement mal daté.
+    La séquence Dabbabi / Rajhi / Bettaieb est rapportée et s'insère désormais entre les
+    dates documentées : Belhaj Ali (01-12-2015) puis Rajhi (16-12-2016), Dabbabi
+    (25-10-2017), Bettaieb (03-03-2018), Guizani (12-12-2019). Le décalage apparent venait
+    d'un article de Tuniscope mal daté : sa date affichée en 2018 correspond à la seconde
+    nomination de Bennour, datée du 2 mars 2011, dont le décalage est tranché au
+    04-08-2026. Reste ouverte la confirmation par des sources primaires des trois mandats
+    datés par la presse.
   notes_fr_by: model-reviewed
   notes_ar: >-
-    تسلسل الدبابي / الراجحي / بطيّب مُتداول، لكن التواريخ لا تنسجم بسهولة بين النقطتين
-    الثابتتين بدقة: بنور في مارس 2018 والقيزاني في ديسمبر 2019. على الأقل واحدة من هذه
-    الولايات يُرجّح أن تاريخها خاطئ.
+    تسلسل الدبابي / الراجحي / بطيّب مُتداول، وقد عُدّل لينسجم مع التواريخ الموثّقة: بلهج علي
+    (01-12-2015) ثم الراجحي (16-12-2016) والدبابي (25-10-2017) وطيّب (03-03-2018)
+    والقيزاني (12-12-2019). كان الانحراف الظاهر ناتجًا عن مقال في تونيسكوب مؤرّخ خطأً:
+    تاريخه المعروض 2018 يخصّ التعيين الثاني لـبنّور المؤرخ في 2 مارس 2011، وقد حُسم في
+    04-08-2026. وما يبقى مفتوحًا هو التأكيد بمصادر أولية لولايات الثلاث المؤرّخة صحفيًا.
   notes_ar_by: model-reviewed
 
 - id: q-belhajali-chronology
@@ -673,15 +682,15 @@
   status: partial
   relates_to: [abdessatar-bennour, abderrahmane-belhaj-ali, ali-seriati, mohamed-ali-ganzoui]
   notes: >-
-    Bennour's 2006 and 2018 tenures are the one fully documented case of return. A
+    Bennour's 2006 and 2011 tenures are the one fully documented case of return. A
     systematic answer needs a prosopography of perhaps two hundred officers.
   notes_fr: >-
-    Les mandats de Bennour en 2006 et 2018 constituent le seul cas pleinement documenté de
+    Les mandats de Bennour en 2006 et 2011 constituent le seul cas pleinement documenté de
     retour. Une réponse systématique exigerait une prosopographie d'environ deux cents
     officiers.
   notes_fr_by: model-reviewed
   notes_ar: >-
-    وليتا بنور في 2006 و2018 هما الحالة الوحيدة الموثّقة بالكامل للعودة. الإجابة المنهجية
+    وليتا بنور في 2006 و2011 هما الحالة الوحيدة الموثّقة بالكامل للعودة. الإجابة المنهجية
     تتطلب دراسة سير جماعية لنحو مائتي ضابط.
   notes_ar_by: model-reviewed
 
@@ -1079,18 +1088,22 @@
 
 - id: q-wikipedia-tiering
   question: >-
-    Is the source tiering honest? 194 of the 242 Wikipedia entries in this
+    Is the source tiering honest? 302 of the 375 Wikipedia entries in this
     bibliography are graded tier 3 or tier 4 — "established international
-    journalism" or "reputable regional media" — and 293 of 642 claims rest on
-    nothing but Wikipedia.
+    journalism" or "reputable regional media" — and 619 of the 1,823 records
+    carrying a source rest on nothing but Wikipedia. Both counts are measured
+    from the built graph on 2026-09-25.
   question_fr: >-
-    Le classement des sources est-il honnête ? 194 des 242 entrées Wikipédia de cette
+    Le classement des sources est-il honnête ? 302 des 375 entrées Wikipédia de cette
     bibliographie sont classées en niveau 3 ou 4 — « journalisme international établi » ou
-    mieux.
+    mieux — et 619 des 1 823 fiches portant une source ne reposent que sur Wikipédia. Les
+    deux comptes sont mesurés sur le graphe compilé le 2026-09-25.
   question_fr_by: model-reviewed
   question_ar: >-
-    هل تصنيف المصادر أمين؟ 194 من أصل 242 مدخلًا من ويكيبيديا في هذه الببليوغرافيا مصنَّفة
-    في المستوى الثالث أو الرابع — أي «صحافة دولية راسخة» أو أعلى.
+    هل تصنيف المصادر أمين؟ 302 من أصل 375 مدخلًا من ويكيبيديا في هذه الببليوغرافيا مصنَّفة
+    في المستوى الثالث أو الرابع — أي «صحافة دولية راسخة» أو أعلى — و619 من 1 823 سجلًا
+    حاملًا لمصدر لا تقوم إلا على ويكيبيديا. قِيست القيمتان على المخطط المُجمَّع في
+    2026-09-25.
   question_ar_by: model-reviewed
   kind: verification
   status: open
@@ -1104,7 +1117,7 @@
     strength of a page anyone may edit. Records added in July 2026 grade
     Wikipedia at tier 5, which is what the tier table in sources.yaml describes;
     the older entries do not, and the two conventions now sit side by side in one
-    file. Resolving it means re-grading roughly 194 sources and then absorbing
+    file. Resolving it means re-grading roughly 302 sources and then absorbing
     whatever that does to the published documented share — which is precisely why
     it is filed as an open question rather than quietly corrected.
   notes_fr: >-
@@ -1116,7 +1129,7 @@
     n'importe qui peut modifier. Les fiches ajoutées en juillet 2026 classent Wikipédia en
     tier 5, ce que décrit le tableau des tiers dans sources.yaml ; les entrées plus
     anciennes ne le font pas, et les deux conventions coexistent désormais dans un seul
-    fichier. Résoudre cela implique de reclasser environ 194 sources puis d'absorber ce que
+    fichier. Résoudre cela implique de reclasser environ 302 sources puis d'absorber ce que
     cela fait à la part « documentée » publiée — c'est précisément pourquoi c'est classé en
     question ouverte plutôt que corrigé silencieusement.
   notes_fr_by: model-reviewed
@@ -1127,7 +1140,7 @@
     يُعرض ادعاء بوصفه «موثقًا» اعتمادًا على صفحة يمكن لأي شخص تعديلها. السجلات المضافة في
     جويلية 2026 تصنّف ويكيبيديا في التصنيف 5، وهو ما يصفه جدول التصنيفات في sources.yaml؛
     السجلات الأقدم لا تفعل ذلك، وباتت العادتان متجاورتين في ملف واحد. حلّ المسألة يعني إعادة
-    تصنيف نحو 194 مصدرًا ثم استيعاب أثر ذلك على الحصة «الموثّقة» المنشورة — وهذا هو بالضبط
+    تصنيف نحو 302 مصدرًا ثم استيعاب أثر ذلك على الحصة «الموثّقة» المنشورة — وهذا هو بالضبط
     سبب تصنيفها كسؤال مفتوح بدل تصحيحها بصمت.
   notes_ar_by: model-reviewed
 
