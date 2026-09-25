@@ -26,6 +26,7 @@ import { fileURLToPath } from 'node:url';
 import { localDb } from './db-local.ts';
 import { migrate } from './migrate.ts';
 import { handle, localRequest, type Env } from './api.ts';
+import { resolveMode } from './mode.ts';
 
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -85,6 +86,10 @@ const env: Env = {
 	// Locally, whoever is testing is the moderator. In production this is a secret
 	// holding a list of public keys — never a database flag that a bug could set.
 	MODERATORS: process.env.COMMUNITY_MODERATORS ?? '',
+	// The same runtime switch the Worker reads. There is no local default beyond
+	// `off`: a developer who wants the client must say `COMMUNITY_MODE=beta`, and
+	// `npm start` sets that explicitly for the dev loop. Closing is never a build.
+	mode: resolveMode(process.env.COMMUNITY_MODE),
 	// The built entity index, used to validate thread graph targets (spec §15.3 R4).
 	// Absent on the Worker until an asset binding is wired; locally it is the real
 	// dataset the site is built from.
@@ -138,6 +143,7 @@ const server = createServer(async (req, res) => {
 server.listen(PORT, '127.0.0.1', () => {
 	console.log(`\n  Deep Tunisia community — http://127.0.0.1:${PORT}`);
 	console.log(`  database: .community/community.sqlite`);
+	console.log(`  mode:     ${env.mode}${env.mode === 'off' ? ' (the API answers 404; set COMMUNITY_MODE=beta to use the client)' : ''}`);
 	console.log(
 		env.MODERATORS
 			? `  moderators: ${env.MODERATORS.split(',').length} key(s)`

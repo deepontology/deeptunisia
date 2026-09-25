@@ -23,7 +23,17 @@ const fs = require('node:fs');
 
 const ORIGIN = (process.argv[2] || '').replace(/\/$/, '');
 if (!/^https?:\/\//.test(ORIGIN)) {
-  console.error('\n  usage: node scripts/verify-deploy.cjs https://your-domain\n');
+  console.error('\n  usage: node scripts/verify-deploy.cjs https://your-domain [off|read-only|beta]\n');
+  process.exit(2);
+}
+/*
+ * The mode is an argument, and the default is the closed one. Verification must
+ * never proceed against the mode somebody hoped for: if the deployment runs
+ * `off` and this asks for `beta`, the checks fail, and that is the point.
+ */
+const MODE = (process.argv[3] || 'off').replace(/[^a-z-]/g, '');
+if (!['off', 'read-only', 'beta'].includes(MODE)) {
+  console.error('\n  mode must be off, read-only or beta\n');
   process.exit(2);
 }
 const OUT = (process.env.SHOT_DIR || path.join(os.tmpdir(), 'dt-deploy-shots')) + path.sep;
@@ -35,6 +45,7 @@ fs.mkdirSync(OUT, { recursive: true });
   const should = (c, n, d = '') => { c ? pass++ : (warn++, console.log('  WARN   ' + n + (d ? ' — ' + d : ''))); };
 
   console.log(`\n  ── ${ORIGIN} ──\n`);
+  console.log(`  expected community mode: ${MODE}\n`);
 
   // ---------------------------------------------------------------- headers
   const root = await fetch(ORIGIN + '/', { redirect: 'follow' });
@@ -54,24 +65,78 @@ fs.mkdirSync(OUT, { recursive: true });
   ok(/Deep Tunisia/.test(body), 'the root is the landing page');
   ok(!/\.\.\/static\//.test(body), 'the landing font path was rewritten for the build');
 
-  // ---------------------------------------------------------------- the API
-  const threads = await fetch(ORIGIN + '/api/threads');
-  ok(threads.status === 200, '/api/threads answers 200 — the Worker and D1 are wired', String(threads.status));
-  ok(/application\/json/.test(threads.headers.get('content-type') || ''), '/api/threads returns JSON');
-  let parsed = null;
-  try { parsed = await threads.json(); } catch { /* handled below */ }
-  ok(parsed !== null, '/api/threads returns parseable JSON');
-  ok(parsed && Array.isArray(parsed.items ?? parsed), '/api/threads returns a list', JSON.stringify(parsed).slice(0, 120));
+  // ---------------------------------------------------------------- the mode
+  /*
+   * The community API is enforced by the server, so this is where the mode
+   * contract is verified against a real deployment rather than a test harness.
+   * `off` must refuse every route identically, before it touches D1; a single
+   * 200, a 500, or a body that names a route means the boundary is not there.
+   */
+  const apiGet = async (p) => {
+    const res = await fetch(ORIGIN + p);
+    const text = await res.text();
+    let body = null;
+    try { body = JSON.parse(text); } catch { /* not json */ }
+    return { status: res.status, text, body, cache: res.headers.get('cache-control'), ct: res.headers.get('content-type') };
+  };
+  const apiPost = async (p, payload) => {
+    const res = await fetch(ORIGIN + p, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(payload === undefined ? {} : payload)
+    });
+    const text = await res.text();
+    let body = null;
+    try { body = JSON.parse(text); } catch { /* not json */ }
+    return { status: res.status, text, body, cache: res.headers.get('cache-control'), ct: res.headers.get('content-type') };
+  };
 
-  /* An unsigned write must be refused. If this ever returns 2xx the signature
-     check has been bypassed and the deployment must come down. */
-  const unsigned = await fetch(ORIGIN + '/api/posts', {
-    method: 'POST',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({ body: 'verify-deploy probe — this must never be accepted' })
-  });
-  ok(unsigned.status >= 400 && unsigned.status < 500, 'an unsigned write is refused', String(unsigned.status));
-  ok(unsigned.status !== 500, 'the refusal is a refusal, not a crash', String(unsigned.status));
+  const threads = await apiGet('/api/threads');
+  const identity = await apiPost('/api/whoami', {});
+  const write = await apiPost('/api/posts', { body: 'verify-deploy probe — this must never be accepted' });
+  const missingRoute = await apiGet('/api/does-not-exist-verify-probe');
+  const otherReads = await Promise.all(['/api/mentions', '/api/prs', '/api/queue'].map(apiGet));
+
+  if (MODE === 'off') {
+    const probes = [
+      ['the thread list', threads],
+      ['the identity action', identity],
+      ['an unsigned write', write],
+      ['an unknown route', missingRoute],
+      ...otherReads.map((r, i) => [`a public read ${['/api/mentions', '/api/prs', '/api/queue'][i]}`, r])
+    ];
+    for (const [label, r] of probes) {
+      ok(r.status === 404, `off: ${label} is the uniform 404`, String(r.status));
+      ok(r.body && r.body.error === 'not found', `off: ${label} refuses with the uniform body`, r.text.slice(0, 80));
+      ok(r.cache === 'no-store', `off: ${label} refusal is not cacheable`, String(r.cache));
+      ok(/application\/json/.test(r.ct || ''), `off: ${label} refusal is json`, String(r.ct));
+    }
+    ok(probes.every(([, r]) => r.text === threads.text), 'off: every route refuses identically');
+    ok(probes.every(([, r]) => r.status === 404), 'off: no route answered anything else');
+  }
+
+  if (MODE === 'read-only') {
+    ok(threads.status === 200, 'read-only: the thread list is served', String(threads.status));
+    ok(Array.isArray(threads.body && threads.body.items), 'read-only: it is a list', JSON.stringify(threads.body || {}).slice(0, 80));
+    ok(otherReads.every((r) => r.status === 200), 'read-only: the other public reads are served', otherReads.map((r) => r.status).join(','));
+    ok(identity.status === 404, 'read-only: no identity may be minted', String(identity.status));
+    ok(write.status === 404, 'read-only: an unsigned write is refused', String(write.status));
+    ok(missingRoute.status === 404, 'read-only: an unknown route is the uniform 404', String(missingRoute.status));
+    ok(
+      [identity, write, missingRoute].every((r) => r.text === identity.text),
+      'read-only: every refusal is uniform',
+      [identity.text, write.text, missingRoute.text].join(' | ').slice(0, 120)
+    );
+    ok([identity, write].every((r) => r.cache === 'no-store'), 'read-only: refusals are not cacheable');
+  }
+
+  if (MODE === 'beta') {
+    ok(threads.status === 200, 'beta: the thread list is served', String(threads.status));
+    ok(Array.isArray(threads.body && threads.body.items), 'beta: it is a list', JSON.stringify(threads.body || {}).slice(0, 80));
+    ok(write.status >= 400 && write.status < 500, 'beta: an unsigned write is refused', String(write.status));
+    ok(write.status !== 500, 'beta: the refusal is a refusal, not a crash', String(write.status));
+    ok(identity.status !== 404, 'beta: the API is reachable, not closed', String(identity.status));
+  }
 
   // ---------------------------------------------------------------- routes
   for (const r of ['/chronicle', '/now', '/network', '/world', '/atlas', '/rankings',
@@ -136,12 +201,22 @@ fs.mkdirSync(OUT, { recursive: true });
 
   await page.goto(ORIGIN + '/agora', { waitUntil: 'networkidle' });
   await page.waitForTimeout(800);
-  // The Agora is gated by AGORA_OPEN at build time. Either state is a working
-  // page: the coming-soon banner, or the live client's privacy notice.
+  /*
+   * The client's build-time mode and the server's runtime mode must agree, and
+   * this is where that agreement is checked: a build compiled with `beta`
+   * pointed at an `off` server would show a live client whose every request
+   * 404s, and an `off` build on a `beta` server would hide working software
+   * behind a banner. Either way the reader is being told something untrue.
+   */
   const soon = await page.locator('.agora .soon').count();
   const privacy = await page.locator('.agora .privacy').count();
-  ok(soon === 1 || privacy >= 1, 'the Agora page renders (banner or live client)',
-     `soon=${soon} privacy=${privacy}`);
+  if (MODE === 'beta') {
+    ok(soon === 0, 'beta: the client is not behind a closed banner', `soon=${soon}`);
+    ok(privacy >= 1, 'beta: the live client rendered its privacy notice', `privacy=${privacy}`);
+  } else {
+    ok(soon === 1, `${MODE}: the client renders the closed banner`, `soon=${soon} privacy=${privacy}`);
+    ok(privacy === 0, `${MODE}: the live client is not rendered`, `privacy=${privacy}`);
+  }
   await page.screenshot({ path: OUT + 'D-agora.png' });
 
   /*
