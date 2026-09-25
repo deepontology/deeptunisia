@@ -3,6 +3,106 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:b8231ea316a375bc",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Tunis | Report du procès et maintien en détention pour Mondher Ounissi",
+      "link": "https://kapitalis.com/tunisie/2026/09/25/tunis-report-du-proces-et-maintien-en-detention-pour-mondher-ounissi/",
+      "published": "2026-09-25T19:23:02Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:african-manager:5a2511ddfe05f31a",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Bourse : Le marché termine la semaine dans le rouge",
+      "link": "https://africanmanager.com/bourse-le-marche-termine-la-semaine-dans-le-rouge/",
+      "published": "2026-09-25T19:10:30Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:095ead9305df8ae1",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Championnat d’Afrique messieurs : la Tunisie sacrée pour la 12e fois et se qualifie pour les JO-2028",
+      "link": "https://africanmanager.com/tunisie-decroche-directement-son-billet-pour-les-jeux-olympiques-de-los/",
+      "published": "2026-09-25T19:07:11Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:nawaat:61a603d4bf477d94",
+      "outlet": "Nawaat",
+      "outletId": "nawaat",
+      "title": "فاجعة المحمدية: استكثروا عليه دفتر علاج فمات محترقا",
+      "link": "https://nawaat.org/2026/09/25/%d9%81%d8%a7%d8%ac%d8%b9%d8%a9-%d8%a7%d9%84%d9%85%d8%ad%d9%85%d8%af%d9%8a%d8%a9-%d8%a7%d8%b3%d8%aa%d9%83%d8%ab%d8%b1%d9%88%d8%a7-%d8%b9%d9%84%d9%8a%d9%87-%d8%af%d9%81%d8%aa%d8%b1-%d8%b9%d9%84%d8%a7/",
+      "published": "2026-09-25T19:01:00Z",
+      "lang": "ar",
+      "author": "Chaker Jahmi"
+    },
+    {
+      "id": "feed:kapitalis:bfb36f5bcfa7ce61",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Août 2026, le mois le plus chaud de l’histoire de la Tunisie depuis 1950",
+      "link": "https://kapitalis.com/tunisie/2026/09/25/aout-2026-le-mois-le-plus-chaud-de-lhistoire-de-la-tunisie-depuis-1950/",
+      "published": "2026-09-25T18:49:17Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:3e423a57062292c4",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Mandats de dépôt contre les manifestants interpellés après la marche du 19 septembre",
+      "link": "https://kapitalis.com/tunisie/2026/09/25/mandats-de-depot-contre-les-manifestants-interpelles-apres-la-marche-du-19-septembre/",
+      "published": "2026-09-25T17:50:39Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:african-manager:703b5067638a5222",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Carrefour Tunisie transforme le passage en caisse en moment de sensibilisation à la consommation de sel",
+      "link": "https://africanmanager.com/carrefour-tunisie-transforme-le-passage-en-caisse-en-moment-desensibilisation-a-la-consommation-de-sel/",
+      "published": "2026-09-25T16:35:42Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:38072ba1a455f8ce",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "5 MUSD à l’Ecopark de Borj Cédria",
+      "link": "https://africanmanager.com/5-musd-a-l2copark-de-borj-cedria/",
+      "published": "2026-09-25T14:41:23Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:52afb99a171c24de",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Inclusion financière en Tunisie : Posséder un compte ne change rien au réflexe du cash",
+      "link": "https://africanmanager.com/inclusion-financiere-en-tunisie-posseder-un-compte-ne-change-rien-au-reflexe-du-cash/",
+      "published": "2026-09-25T14:03:00Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:7b1c9f3629cd1906",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "La Tunisie 74ème sur 88 dans l’indice mondial de transparence immobilière",
+      "link": "https://africanmanager.com/la-tunisie-74eme-sur-88-dans-lindice-mondial-de-transparence-immobiliere/",
+      "published": "2026-09-25T14:00:00Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
       "id": "feed:african-manager:2b8f78cd658f7f8c",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -11613,97 +11713,6 @@
       "title": "JM Tarente-2026 (haltérophilie): Karem Ben Hnia médaillé d’argent (arraché) et de bronze (épaulé-jeté)",
       "link": "https://africanmanager.com/jm-tarente-2026-halterophilie-karem-ben-hnia-medaille-dargent-arrache-et-de-bronze-epaule-jete/",
       "published": "2026-09-01T11:03:03Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:282b255b5b0b8ffb",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "« Khadamet » pour accéder aux services administratifs on-line",
-      "link": "https://africanmanager.com/digitalisation-lancement-de-khadamet-une-application-mobile-pour-acceder-aux-services-administratifs-numeriques/",
-      "published": "2026-09-01T10:44:57Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:8865b5ec0299cef4",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Bourse de Tunis: le Tunindex en baisse de 0,23%",
-      "link": "https://africanmanager.com/bourse-de-tunis-le-tunindex-en-baisse-de-023/",
-      "published": "2026-09-01T10:43:50Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:0f5f7e31ccab5e81",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Infrastructures et des RH pour l’Université de Gafsa",
-      "link": "https://africanmanager.com/gafsa-renforcement-des-infrastructures-et-des-ressources-humaines-a-luniversite-de-gafsa/",
-      "published": "2026-09-01T10:43:01Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:49155260fc6c92c3",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Accords de 100 M€ entre la Tunisie et l’Allemagne",
-      "link": "https://africanmanager.com/signature-daccords-de-cooperation-dune-valeur-de-plus-de-100-millions-deuros-entre-la-tunisie-et-lallemagne/",
-      "published": "2026-09-01T10:40:26Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:9861a0ffd6830056",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Trois jours après, l’incendie de Bargou non encore maîtrisé",
-      "link": "https://kapitalis.com/tunisie/2026/09/01/trois-jours-apres-lincendie-de-bargou-non-encore-maitrise/",
-      "published": "2026-09-01T10:30:50Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:france24:7adebd282b94c9a4",
-      "outlet": "France 24",
-      "outletId": "france24",
-      "title": "Tunisia's iconic Sidi Bou Said town added to UNESCO world heritage list",
-      "link": "https://www.france24.com/en/tunisia-s-iconic-sidi-bou-said-town-added-to-unesco-world-heritage-list",
-      "published": "2026-09-01T10:07:32Z",
-      "lang": "en",
-      "author": "FRANCE24"
-    },
-    {
-      "id": "feed:kapitalis:12946222436c4464",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Phosphate | Trois jours de grève à la CPG",
-      "link": "https://kapitalis.com/tunisie/2026/09/01/phosphate-trois-jours-de-greve-a-la-cpg/",
-      "published": "2026-09-01T10:01:25Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:fdd36f77b4e2e9d5",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Algérie-Incendies : Instructions pour assurer la continuité de l’approvisionnement des citoyens",
-      "link": "https://africanmanager.com/algerie-incendies-instructions-pour-assurer-la-continuite-de-lapprovisionnement-des-citoyens/",
-      "published": "2026-09-01T09:45:08Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:f8063b9fb639a287",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Poutine et Xi réaffirment leur alliance stratégique dans un monde « imprévisible »",
-      "link": "https://africanmanager.com/poutine-et-xi-reaffirment-leur-alliance-strategique-dans-un-monde-imprevisible/",
-      "published": "2026-09-01T09:38:54Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:cc4f11da0a349675",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "L’Alliance de La Mecque convient de mesures pour renforcer la défense collective et la stabilité régionale",
-      "link": "https://africanmanager.com/lalliance-de-la-mecque-convient-de-mesures-pour-renforcer-la-defense-collective-et-la-stabilite-regionale/",
-      "published": "2026-09-01T09:37:37Z",
       "lang": "fr"
     }
   ]
