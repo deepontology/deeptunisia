@@ -24,8 +24,12 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 
 const children: ChildProcess[] = [];
 
-function start(label: string, args: string[], colour: string) {
-	const child = spawn(process.execPath, args, { cwd: ROOT, stdio: ['ignore', 'pipe', 'pipe'] });
+function start(label: string, args: string[], colour: string, env?: NodeJS.ProcessEnv) {
+	const child = spawn(process.execPath, args, {
+		cwd: ROOT,
+		stdio: ['ignore', 'pipe', 'pipe'],
+		env: env ? { ...process.env, ...env } : process.env
+	});
 	children.push(child);
 
 	const prefix = `\x1b[${colour}m${label.padEnd(9)}\x1b[0m`;
@@ -58,8 +62,22 @@ process.on('SIGTERM', () => stop(0));
 
 const tsx = join(ROOT, 'node_modules', 'tsx', 'dist', 'cli.mjs');
 
-start('agora', [tsx, join(ROOT, 'community', 'server.ts')], '35');
-start('atlas', [join(ROOT, 'node_modules', 'vite', 'bin', 'vite.js'), 'dev', '--port', '5173', '--strictPort'], '36');
+/*
+ * One mode for both halves of the dev loop: the API the community server runs
+ * and the state the atlas is built with must agree, or the tab renders a
+ * coming-soon banner for an API that answers. Local development runs `beta` so
+ * the client can be used and judged; production sets COMMUNITY_MODE=off in
+ * wrangler.toml. Either can be overridden from the environment.
+ */
+const communityMode = process.env.COMMUNITY_MODE ?? 'beta';
+
+start('agora', [tsx, join(ROOT, 'community', 'server.ts')], '35', { COMMUNITY_MODE: communityMode });
+start(
+	'atlas',
+	[join(ROOT, 'node_modules', 'vite', 'bin', 'vite.js'), 'dev', '--port', '5173', '--strictPort'],
+	'36',
+	{ VITE_COMMUNITY_MODE: process.env.VITE_COMMUNITY_MODE ?? communityMode }
+);
 
 console.log('\n  atlas   http://localhost:5173');
 console.log('  agora   the tab in that app; its API is on 5200\n');
