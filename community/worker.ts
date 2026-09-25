@@ -14,6 +14,7 @@
  * production-only logic is logic nobody tested.
  */
 import { handle, type Env as ApiEnv } from './api.ts';
+import { resolveMode } from './mode.ts';
 import type { Db, Prepared } from './db.ts';
 
 interface WorkerEnv {
@@ -23,6 +24,11 @@ interface WorkerEnv {
 	RATE_PEPPER: string;
 	/** Secret: comma-separated public keys. Never a database flag a bug could set. */
 	MODERATORS?: string;
+	/**
+	 * The enforced community mode, a plain Worker variable in wrangler.toml.
+	 * Absent or unrecognised resolves to `off`. Production v0.1.3 runs `off`.
+	 */
+	COMMUNITY_MODE?: string;
 	/** Static assets binding — the built atlas. */
 	ASSETS: Fetcher;
 }
@@ -44,7 +50,8 @@ export default {
 			const apiEnv: ApiEnv = {
 				DB: asDb(env.DB),
 				RATE_PEPPER: env.RATE_PEPPER,
-				MODERATORS: env.MODERATORS
+				MODERATORS: env.MODERATORS,
+				mode: resolveMode(env.COMMUNITY_MODE)
 				// ENTITY_IDS is deliberately absent here until an asset binding is
 				// wired (spec §15.3 R4): typed thread targets are then accepted by
 				// format only, and the client's own index check remains the guard.
