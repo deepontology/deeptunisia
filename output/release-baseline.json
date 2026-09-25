@@ -68,10 +68,57 @@
     "datasetRawSha256": "aa8f28ca8d0dccf463f36806aefb1557f313eb4170cdbee697d2d8fa7859c8b1",
     "datasetGenerated": "2026-09-15T11:36:56.528Z",
     "countsMatchBaseline": true,
-    "buildManifest": "absent (/build-manifest.json returns 404)",
-    "apiThreadsStatus": 200,
+    "apiThreadsStatus": 404,
     "apiThreadsExpected": "404 in off mode (M1 containment)",
-    "note": "Production graph matches the last substantive revision (c424464). The public community API answers while the client presents Agora as closed; Agora containment is M1."
+    "buildManifest": "absent (/build-manifest.json returns 404)",
+    "note": "Agora containment is deployed: every probed /api/* route answers 404 with the uniform body and cache-control no-store, while the client renders the closed banner. Before the 2026-09-25 deployment these routes answered 200 and the production D1 was reachable through them; the graph itself was already matching the last substantive revision (c424464)."
+  },
+  "deployment": {
+    "origin": "https://deeptunisia.org",
+    "deployedAt": "2026-09-25T22:53:05Z",
+    "versionId": "31182733-1ec5-4b39-a9c9-b528f7c46485",
+    "commit": "e50b55f30fe376507874ca2db37d88fe7b7d7dad",
+    "effectiveMode": "off",
+    "bindings": {
+      "COMMUNITY_MODE": "off",
+      "DB": "deeptunisia-db",
+      "ASSETS": "build"
+    },
+    "rollback": {
+      "versionId": "f5dfd268-30c5-4e20-aa99-d2000c90bf17",
+      "created": "2026-09-15T11:39:37.038Z",
+      "command": "npx wrangler rollback https://deeptunisia.org f5dfd268-30c5-4e20-aa99-d2000c90bf17"
+    },
+    "verification": {
+      "command": "node scripts/verify-deploy.cjs https://deeptunisia.org off",
+      "passed": 75,
+      "failed": 0,
+      "warnings": 0,
+      "apiProbes": {
+        "/api/threads": 404,
+        "/api/queue": 404,
+        "/api/whoami": 404,
+        "/api/<unknown>": 404
+      },
+      "uniformBody": "{\"error\":\"not found\"}",
+      "cacheControl": "no-store",
+      "contentType": "application/json; charset=utf-8",
+      "clientState": "closed banner — soon=1, privacy=0"
+    },
+    "negativeControl": {
+      "command": "node scripts/verify-deploy.cjs https://deeptunisia.org beta",
+      "expected": 1,
+      "observed": 1,
+      "failedChecks": [
+        "beta: the thread list is served",
+        "beta: it is a list",
+        "beta: the API is reachable, not closed",
+        "beta: the client is not behind a closed banner",
+        "beta: the live client rendered its privacy notice"
+      ],
+      "note": "Claiming the wrong mode against this deployment fails, so the check is not vacuous."
+    },
+    "note": "Wrangler 4.125.0 (mise-managed global), authenticated as deeptunisia@proton.me. The CLI is not pinned in the lockfile yet; pinning it is M5 work."
   },
   "dependencyAudit": {
     "production": {
