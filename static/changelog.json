@@ -1,5 +1,20 @@
 [
   {
+    "hash": "c42446480",
+    "date": "2026-09-15T12:35:08+01:00",
+    "subject": "JORT primary records for 20 needs-primary-source positions (candidates for review) (#34)",
+    "kind": "expansion",
+    "added": 509,
+    "removed": 0,
+    "files": [
+      {
+        "file": "data/contrib/jort-verification-2026-09-11.yaml",
+        "added": 509,
+        "removed": 0
+      }
+    ]
+  },
+  {
     "hash": "03f927b4f",
     "date": "2026-09-14T16:08:06+01:00",
     "subject": "Claim-level evidence in the graph, derived origins, and the origins chip (#28)",
