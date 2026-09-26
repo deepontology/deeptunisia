@@ -54,6 +54,31 @@
    "licence_url": "https://datacatalog.worldbank.org/public-licenses",
    "redistributable": true,
    "attribution": "World Bank Open Data"
+  },
+  {
+   "id": "ids-debt",
+   "title": "World Bank International Debt Statistics: Tunisia external debt by creditor, stocks and flows",
+   "publisher": "World Bank",
+   "url": "https://datacatalog.worldbank.org/search/dataset/0038015/international-debt-statistics",
+   "api": "https://api.worldbank.org/v2/sources/6/country/TUN",
+   "retrieved": "2026-08-16T20:25:57.775Z",
+   "coverage": {
+    "from": 1970,
+    "to": 2024,
+    "years": 55,
+    "creditors": 60
+   },
+   "unit": "USD",
+   "licence": "CC-BY-4.0",
+   "licence_url": "https://datacatalog.worldbank.org/search/dataset/0038015/international-debt-statistics",
+   "licence_terms": "Creative Commons Attribution 4.0: reuse and redistribution permitted for any purpose with attribution.",
+   "redistributable": true,
+   "attribution": "World Bank International Debt Statistics (World Bank Open Data)",
+   "freshness": {
+    "warn_days": 90,
+    "fail_days": 365,
+    "policy": "Hand-refetched with npm run fetch:debt. Warn at 90 days: the World Bank refreshes IDS annually with the IDR release and in December and April as needed, so a 90-day-old snapshot has likely missed a refresh window. Fail at 365 days: past one annual cycle the snapshot is at least one release behind and the build refuses to ship it as current."
+   }
   }
  ]
 }

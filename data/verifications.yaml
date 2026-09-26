@@ -1,0 +1,12 @@
+# Independent verification records — none exist yet.
+#
+# This file is the schema, not a backlog. A record here means a second human,
+# blinded to the project grade, assessed a claim under the study rubric (see
+# scripts/schema.ts -> VerificationSchema and docs/plans/next-period-execution-plan.md,
+# milestone M2). Every published independent count is zero because this list is
+# empty, and the v0.2 study is what would fill it.
+#
+# Editorial review (46 notes) and the editorial queue (956 items) are separate
+# populations with their own denominators. Nothing here is derived from them,
+# and nothing there is derived from this file.
+[]
