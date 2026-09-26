@@ -36,6 +36,7 @@ import {
 	EraSchema,
 	QuestionSchema,
 	HypothesisSchema,
+	VerificationSchema,
 	AgreementSchema,
 	WorldClaimSchema,
 	CompanySchema,
@@ -74,6 +75,7 @@ import {
 import { loadParameters, type Parameters } from './parameters.ts';
 import { countOrigins, type EvidenceLike } from './origins.ts';
 import { buildCoverage, coverageCsv, coverageMarkdown } from './coverage.ts';
+import { checkNarrative, type NarrativeClaim } from './consistency.ts';
 import {
 	reviewCoverageCsv,
 	reviewCoverageMarkdown,
@@ -316,6 +318,12 @@ const relationships = loadYaml('relationships.yaml', RelationshipSchema);
 const events = loadYaml('events.yaml', EventSchema);
 const questions = loadYaml('questions.yaml', QuestionSchema);
 const hypotheses = loadYaml('hypotheses.yaml', HypothesisSchema);
+// Independent verification is its own record type (M2), deliberately separate
+// from the editorial `review` object: an editorial note can never be read as an
+// independent check, because the two live in different files with different
+// schemas and different denominators. Empty today, and that is what makes every
+// published independent count zero rather than a claim.
+const verifications = loadYaml('verifications.yaml', VerificationSchema);
 const agreements = loadYaml('agreements.yaml', AgreementSchema);
 
 // v0.0.2 record kinds (spec §4). Empty files are valid: the schema is the feature
@@ -1771,6 +1779,40 @@ const resolvedPeople = people.map((person) => {
 });
 
 // ---------------------------------------------------------------------------
+// Narrative consistency (M2)
+//
+// The last check before the gate, because it needs every record resolved. A
+// typed reference that contradicts a canonical position is an error; a claim
+// that declares none is a published warning naming its file and id. See
+// scripts/consistency.ts for what is and is not checked.
+// ---------------------------------------------------------------------------
+const narrativeClaims: NarrativeClaim[] = [
+	...hypotheses.map((h) => ({
+		file: 'hypotheses.yaml',
+		id: h.id,
+		sources: h.sources,
+		references: h.references
+	})),
+	...hypotheses.flatMap((h) =>
+		(h.evidence ?? []).map((f, i) => ({
+			file: 'hypotheses.yaml',
+			id: `${h.id}/evidence-${i}`,
+			sources: f.sources,
+			references: (f as { references?: NarrativeClaim['references'] }).references
+		}))
+	),
+	...questions.map((q) => ({
+		file: 'questions.yaml',
+		id: q.id,
+		sources: q.sources,
+		references: q.references
+	}))
+];
+const narrative = checkNarrative(narrativeClaims, resolvedPositions, DATASET_CUTOFF);
+for (const issue of narrative.errors) fail(issue.where, issue.message);
+for (const issue of narrative.warnings) warn(issue.where, issue.message);
+
+// ---------------------------------------------------------------------------
 // Report
 // ---------------------------------------------------------------------------
 
@@ -1872,7 +1914,8 @@ const reviewSections: [
 	['place', places]
 ];
 const reviewSummary = summariseReview(
-	reviewSections.flatMap(([kind, rows]) => rows.map((r) => ({ ...r, kind })))
+	reviewSections.flatMap(([kind, rows]) => rows.map((r) => ({ ...r, kind }))),
+	verifications
 );
 const {
 	reviewed,
@@ -2208,7 +2251,8 @@ const dataset = {
 			declarations: declarations.length,
 			education: education.length,
 			regions: regions.length,
-			places: places.length
+			places: places.length,
+			verifications: verifications.length
 		},
 		confidenceCounts,
 		basisCounts,
@@ -2263,7 +2307,10 @@ const dataset = {
 	declarations: withOrigins(resolvedDeclarations),
 	education: withOrigins(resolvedEducation),
 	regions,
-	places: withOrigins(places)
+	places: withOrigins(places),
+	// Independent verification records. A distinct collection with its own
+	// schema, so the three review populations can never be summed (M2).
+	verifications
 };
 
 /**
@@ -3760,6 +3807,14 @@ if (!FIXTURE_MODE) {
 		mkdirSync(join(ROOT, 'output'), { recursive: true });
 		writeFileSync(join(ROOT, 'output', 'review-coverage.csv'), reviewCoverageCsv(reviewSummary), 'utf8');
 		writeFileSync(join(ROOT, 'output', 'review-coverage.md'), reviewCoverageMarkdown(reviewSummary), 'utf8');
+		// A verification pointing at no record would otherwise disappear into a
+		// smaller count. Named, so the number and the file cannot drift.
+		if (reviewSummary.unmatchedVerifications.length) {
+			warn(
+				'verifications',
+				`${reviewSummary.unmatchedVerifications.length} verification record(s) name no claim: ${reviewSummary.unmatchedVerifications.join(', ')}`
+			);
+		}
 		// Coverage by slice (Phase 10A) travels with the same publish step.
 		writeFileSync(join(ROOT, 'output', 'coverage.csv'), coverageCsv(coverageRows), 'utf8');
 		writeFileSync(join(ROOT, 'output', 'coverage.md'), coverageMarkdown(coverageRows), 'utf8');

@@ -14,6 +14,7 @@ import { computeDatasetHash } from './canonical.ts';
 import { countOrigins } from './origins.ts';
 import { reviewCoverageCsv, summariseReview, type ReviewInput, type ReviewKind } from './review-coverage.ts';
 import { buildCoverage, coverageCsv } from './coverage.ts';
+import { verifyDebtProvenance, DEBT_MANIFEST_ID, type DebtManifestEntry } from './debt-provenance.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ds = JSON.parse(readFileSync(join(HERE, '..', 'src', 'generated', 'dataset.json'), 'utf8'));
@@ -1404,6 +1405,192 @@ const KIND_TO_DATASET: Record<string, string> = {
 			`${rows.filter((r) => r.sparse).length} sparse of ${rows.length}`
 		);
 	}
+}
+
+// ── IDS debt: the public claim ships with its manifest and inside its ────────
+// ── freshness policy (M2 population contract) ─────────────────────────────────
+//
+// The figures are drawn on /world, so the claim is public. What is checked
+// here is that its provenance is complete (licence, retrieval date, freshness
+// policy), that the manifest and the snapshot agree about that date, and that
+// the freshness checker refuses every state it promises to refuse. Removing
+// the check from scripts/debt-provenance.ts kills these assertions.
+
+console.log('\n  ── IDS debt provenance ──\n');
+
+{
+	const manifestPath = join(HERE, '..', 'flows', 'manifest.json');
+	const manifest = existsSync(manifestPath)
+		? (JSON.parse(readFileSync(manifestPath, 'utf8')) as { datasets?: DebtManifestEntry[] })
+		: {};
+	const entry = manifest.datasets?.find((d) => d.id === DEBT_MANIFEST_ID);
+	ok('flows/manifest.json records an ids-debt dataset', Boolean(entry), entry?.retrieved ?? 'entry absent');
+	ok(
+		'the ids-debt entry states a licence',
+		Boolean(entry?.licence && entry.licence.trim()),
+		entry?.licence ?? 'licence absent'
+	);
+	ok(
+		'the ids-debt entry states a freshness policy',
+		typeof entry?.freshness?.warn_days === 'number' && typeof entry?.freshness?.fail_days === 'number',
+		entry?.freshness ? `warn ${entry.freshness.warn_days}d, fail ${entry.freshness.fail_days}d` : 'policy absent'
+	);
+
+	const debt = (world as { debt?: { retrieved?: string } | null }).debt;
+	ok('world.json ships the debt claim', Boolean(debt), debt?.retrieved ?? 'debt absent');
+
+	/** Run `fn`, returning null when it throws the promised message. */
+	const refuses = (fn: () => unknown, needle: string): string | null => {
+		try {
+			fn();
+			return `did not throw (expected "${needle}")`;
+		} catch (e) {
+			const msg = (e as Error).message;
+			return msg.includes(needle) ? null : `threw "${msg}" without "${needle}"`;
+		}
+	};
+
+	const snapshotRetrieved = debt?.retrieved;
+	if (entry && typeof snapshotRetrieved === 'string') {
+		ok('manifest and snapshot record the same retrieval date', entry.retrieved === snapshotRetrieved, String(entry.retrieved));
+		try {
+			const shipped = verifyDebtProvenance(entry, snapshotRetrieved);
+			ok(
+				'the shipped snapshot satisfies its own freshness policy',
+				!shipped.warn || shipped.ageDays <= shipped.failDays,
+				`age ${shipped.ageDays}d (warn ${shipped.warnDays}d, fail ${shipped.failDays}d)`
+			);
+		} catch (e) {
+			ok('the shipped snapshot satisfies its own freshness policy', false, (e as Error).message);
+		}
+
+		ok(
+			'a manifest entry with no licence is refused',
+			refuses(() => verifyDebtProvenance({ ...entry, licence: ' ' }, snapshotRetrieved), 'records no licence') === null
+		);
+		ok(
+			'an absent manifest entry is refused while the snapshot exists',
+			refuses(() => verifyDebtProvenance(undefined, snapshotRetrieved), `records no "${DEBT_MANIFEST_ID}"`) === null
+		);
+		ok(
+			'a snapshot with no retrieved timestamp is refused',
+			refuses(() => verifyDebtProvenance(entry, undefined), 'no readable `retrieved` timestamp') === null
+		);
+		ok(
+			'a manifest/snapshot retrieval disagreement is refused',
+			refuses(
+				() => verifyDebtProvenance({ ...entry, retrieved: '2026-08-02T00:00:00.000Z' }, snapshotRetrieved),
+				're-run npm run fetch:debt'
+			) === null
+		);
+		ok(
+			'a policy whose warn threshold is not below its fail threshold is refused',
+			refuses(
+				() => verifyDebtProvenance({ ...entry, freshness: { warn_days: 400, fail_days: 365 } }, snapshotRetrieved),
+				'warn_days < fail_days'
+			) === null
+		);
+		ok(
+			'a snapshot past the fail threshold fails the build',
+			refuses(
+				() => verifyDebtProvenance(entry, snapshotRetrieved, new Date(Date.parse(snapshotRetrieved) + 400 * 86_400_000)),
+				'fail threshold'
+			) === null
+		);
+		// Past the warn threshold but inside the fail one: ship, and say so.
+		try {
+			const mid = verifyDebtProvenance(entry, snapshotRetrieved, new Date(Date.parse(snapshotRetrieved) + 100 * 86_400_000));
+			ok(
+				'100 days warns instead of failing',
+				mid.warn === true && mid.ageDays === 100,
+				`age ${mid.ageDays}d`
+			);
+		} catch (e) {
+			ok('100 days warns instead of failing', false, (e as Error).message);
+		}
+	}
+}
+
+console.log('\n  ── three review populations, never summed ──\n');
+/*
+ * M2. Editorial review, the editorial queue and independent verification are
+ * three different questions with three different denominators, and the project's
+ * credibility depends on none of them ever being derived from another. What is
+ * tested here is the mechanism, not the current zeros: an editorial note must
+ * not move the independent count, an independent verification must, and one
+ * pointing at nothing must be reported rather than swallowed.
+ */
+{
+	const synthetic: ReviewInput[] = [{ id: 'p-x', kind: 'position' as ReviewKind, basis: 'reported' }];
+	const editorial = summariseReview([{ id: 'p-x', kind: 'position' as ReviewKind, basis: 'reported', review: { by: 'editor' } } as ReviewInput]);
+	ok('an editorial review note raises the examined count', editorial.reviewed === 1);
+	ok('but never raises the independent count', editorial.independentlyChecked === 0, `${editorial.independentlyChecked}`);
+
+	const verified = summariseReview(synthetic, [{ claim: 'position:p-x' }]);
+	ok('an independent verification record raises the independent count', verified.independentlyChecked === 1, `${verified.independentlyChecked}`);
+	ok('and is counted in its own denominator', verified.verifications === 1, `${verified.verifications}`);
+	ok('the two counts stay separate numbers', verified.reviewed === 0 && verified.independentlyChecked === 1);
+
+	const orphan = summariseReview(synthetic, [{ claim: 'position:no-such-record' }]);
+	ok('a verification naming no record is reported, not silently dropped', orphan.independentlyChecked === 0 && orphan.unmatchedVerifications.length === 1, orphan.unmatchedVerifications.join(','));
+
+	// The shipped graph.
+	const ds = JSON.parse(readFileSync(join(HERE, '..', 'src', 'generated', 'dataset.json'), 'utf8')) as Record<string, any>;
+	const queuePath = join(HERE, '..', 'static', 'editorial-queue.json');
+	const queue = existsSync(queuePath) ? JSON.parse(readFileSync(queuePath, 'utf8')) as { total: number } : { total: 0 };
+	const verifications = Array.isArray(ds.verifications) ? ds.verifications : [];
+
+	ok('independent verification is a collection of its own in the graph', Array.isArray(ds.verifications));
+	ok('with its own count beside the others', typeof ds.meta.counts.verifications === 'number', `counts.verifications=${ds.meta.counts.verifications}`);
+	ok('the collection carries the same count as its meta', ds.meta.counts.verifications === verifications.length);
+	ok('it is empty today, so the published independent count is zero', verifications.length === 0 && ds.meta.review.reviewed === 46, `verifications=${verifications.length} reviewed=${ds.meta.review.reviewed}`);
+	ok('the editorial queue keeps its own denominator', queue.total > ds.meta.review.reviewed, `${queue.total} queued vs ${ds.meta.review.reviewed} reviewed`);
+	ok(
+		'the three populations are three distinct numbers',
+		new Set([ds.meta.review.reviewed, queue.total, verifications.length]).size === 3,
+		`${ds.meta.review.reviewed} / ${queue.total} / ${verifications.length}`
+	);
+
+	// The published artifact must say the same thing as the graph.
+	const covPath = join(HERE, '..', 'output', 'review-coverage.md');
+	if (existsSync(covPath)) {
+		const cov = readFileSync(covPath, 'utf8');
+		ok('the published coverage names the three populations separately', /never summed/i.test(cov));
+		ok('it states the independent denominator as zero of its own file', /0 of 0/.test(cov), cov.match(/\| independent verifications \|.*$/m)?.[0] ?? 'no row');
+	}
+
+	/*
+	 * Claim-level evidence (V29): every passage entry carries either a real
+	 * capture or an ISO retry date. A retry date is the schema-approved way to
+	 * say "not captured yet, and here is when to try again", so the four entries
+	 * with no capture are complete rather than broken — but only while the date
+	 * is there. Hypothesis findings are claim prose, not passage evidence, and
+	 * are excluded by requiring `passage`.
+	 */
+	let passageEvidence = 0;
+	let captured = 0;
+	let retryDated = 0;
+	const missingCapture: string[] = [];
+	const walkEvidence = (v: unknown, path: string) => {
+		if (Array.isArray(v)) return v.forEach((x, i) => walkEvidence(x, `${path}[${i}]`));
+		if (v && typeof v === 'object') {
+			const o = v as Record<string, unknown>;
+			if (typeof o.passage === 'string') {
+				passageEvidence++;
+				if (typeof o.capture_url === 'string' && o.capture_url) captured++;
+				else if (typeof o.capture_missing === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(o.capture_missing)) retryDated++;
+				else missingCapture.push(path);
+			}
+			for (const [k, x] of Object.entries(o)) walkEvidence(x, `${path}.${k}`);
+		}
+	};
+	walkEvidence(ds, '$');
+	ok('passage-level evidence exists and is counted', passageEvidence >= 4, `${passageEvidence} passage entr(ies)`);
+	ok(
+		`every passage entry has a capture or an ISO retry date (${captured} captured, ${retryDated} retrying)`,
+		missingCapture.length === 0,
+		missingCapture.slice(0, 5).join(', ')
+	);
 }
 
 console.log(
