@@ -276,6 +276,9 @@ const GRAPH_COLLECTIONS = [
 	'licences',
 	'declarations',
 	'education',
+	// Independent verification (M2) — its own record type, its own denominator.
+	// Declared-but-empty by design: the v0.2 study is what fills it.
+	'verifications',
 	// R8 — the geographic layer (spec §8). Region ids are graph ids the same way
 	// institution ids are; places too, once authored.
 	'regions',

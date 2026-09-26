@@ -230,5 +230,16 @@
       "max": 19,
       "atLeastReal": 10
     }
+  },
+  "review": {
+    "reviewed": 4,
+    "total": 4,
+    "supported": 0,
+    "refuted": 4,
+    "unresolved": 0,
+    "unreviewed": 0,
+    "reviewer": "dt-research",
+    "review_date": "2026-09-25",
+    "source": "output/network-continuity-review.csv"
   }
 }

@@ -41,6 +41,7 @@ import { feature } from 'topojson-client';
 import type { Topology, GeometryCollection } from 'topojson-specification';
 import type { Feature, Polygon, MultiPolygon, Position } from 'geojson';
 import { CountriesFileSchema } from './schema.ts';
+import { verifyDebtProvenance, DEBT_MANIFEST_ID, type DebtManifestEntry } from './debt-provenance.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
@@ -870,6 +871,30 @@ function loadDebt(
 			interest?: Record<string, number>;
 		};
 	};
+
+	/*
+	 * The public claim ships only with its provenance. The absent-snapshot
+	 * case above returns null and builds; once the figures exist, the manifest
+	 * entry must exist too, with a licence, one agreed retrieval date, and a
+	 * freshness policy this snapshot still satisfies. Each failure mode has
+	 * its own message in debt-provenance.ts; past the warn threshold the build
+	 * continues but says so out loud.
+	 */
+	const manifestFile = join(FLOWS_DIR, 'manifest.json');
+	if (!existsSync(manifestFile)) {
+		throw new Error('flows/manifest.json is missing while the debt snapshot exists');
+	}
+	const manifest = JSON.parse(readFileSync(manifestFile, 'utf8')) as { datasets?: DebtManifestEntry[] };
+	const freshness = verifyDebtProvenance(
+		manifest.datasets?.find((d) => d.id === DEBT_MANIFEST_ID),
+		raw.retrieved
+	);
+	if (freshness.warn) {
+		console.warn(
+			`  debt:  snapshot is ${freshness.ageDays} days old (warn threshold ${freshness.warnDays}): ` +
+				`run \`npm run fetch:debt\``
+		);
+	}
 
 	const years = new Set<number>();
 	for (const side of [raw.stock, raw.disbursed, raw.principal, raw.interest]) {

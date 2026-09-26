@@ -36,6 +36,7 @@ import {
 	EraSchema,
 	QuestionSchema,
 	HypothesisSchema,
+	VerificationSchema,
 	AgreementSchema,
 	WorldClaimSchema,
 	CompanySchema,
@@ -74,6 +75,7 @@ import {
 import { loadParameters, type Parameters } from './parameters.ts';
 import { countOrigins, type EvidenceLike } from './origins.ts';
 import { buildCoverage, coverageCsv, coverageMarkdown } from './coverage.ts';
+import { checkNarrative, type NarrativeClaim } from './consistency.ts';
 import {
 	reviewCoverageCsv,
 	reviewCoverageMarkdown,
@@ -316,6 +318,12 @@ const relationships = loadYaml('relationships.yaml', RelationshipSchema);
 const events = loadYaml('events.yaml', EventSchema);
 const questions = loadYaml('questions.yaml', QuestionSchema);
 const hypotheses = loadYaml('hypotheses.yaml', HypothesisSchema);
+// Independent verification is its own record type (M2), deliberately separate
+// from the editorial `review` object: an editorial note can never be read as an
+// independent check, because the two live in different files with different
+// schemas and different denominators. Empty today, and that is what makes every
+// published independent count zero rather than a claim.
+const verifications = loadYaml('verifications.yaml', VerificationSchema);
 const agreements = loadYaml('agreements.yaml', AgreementSchema);
 
 // v0.0.2 record kinds (spec §4). Empty files are valid: the schema is the feature
@@ -1771,6 +1779,40 @@ const resolvedPeople = people.map((person) => {
 });
 
 // ---------------------------------------------------------------------------
+// Narrative consistency (M2)
+//
+// The last check before the gate, because it needs every record resolved. A
+// typed reference that contradicts a canonical position is an error; a claim
+// that declares none is a published warning naming its file and id. See
+// scripts/consistency.ts for what is and is not checked.
+// ---------------------------------------------------------------------------
+const narrativeClaims: NarrativeClaim[] = [
+	...hypotheses.map((h) => ({
+		file: 'hypotheses.yaml',
+		id: h.id,
+		sources: h.sources,
+		references: h.references
+	})),
+	...hypotheses.flatMap((h) =>
+		(h.evidence ?? []).map((f, i) => ({
+			file: 'hypotheses.yaml',
+			id: `${h.id}/evidence-${i}`,
+			sources: f.sources,
+			references: (f as { references?: NarrativeClaim['references'] }).references
+		}))
+	),
+	...questions.map((q) => ({
+		file: 'questions.yaml',
+		id: q.id,
+		sources: q.sources,
+		references: q.references
+	}))
+];
+const narrative = checkNarrative(narrativeClaims, resolvedPositions, DATASET_CUTOFF);
+for (const issue of narrative.errors) fail(issue.where, issue.message);
+for (const issue of narrative.warnings) warn(issue.where, issue.message);
+
+// ---------------------------------------------------------------------------
 // Report
 // ---------------------------------------------------------------------------
 
@@ -1872,7 +1914,8 @@ const reviewSections: [
 	['place', places]
 ];
 const reviewSummary = summariseReview(
-	reviewSections.flatMap(([kind, rows]) => rows.map((r) => ({ ...r, kind })))
+	reviewSections.flatMap(([kind, rows]) => rows.map((r) => ({ ...r, kind }))),
+	verifications
 );
 const {
 	reviewed,
@@ -2208,7 +2251,8 @@ const dataset = {
 			declarations: declarations.length,
 			education: education.length,
 			regions: regions.length,
-			places: places.length
+			places: places.length,
+			verifications: verifications.length
 		},
 		confidenceCounts,
 		basisCounts,
@@ -2263,7 +2307,10 @@ const dataset = {
 	declarations: withOrigins(resolvedDeclarations),
 	education: withOrigins(resolvedEducation),
 	regions,
-	places: withOrigins(places)
+	places: withOrigins(places),
+	// Independent verification records. A distinct collection with its own
+	// schema, so the three review populations can never be summed (M2).
+	verifications
 };
 
 /**
@@ -3606,10 +3653,36 @@ const stats: Record<string, string> = {
 	positions: String(positions.length),
 	relationships: String(relationships.length),
 	events: String(events.length),
+	// The remaining kind counts the paper's scale table states. They were
+	// hand-typed and had drifted by the successor release (agreements 7 vs 23,
+	// companies 8 vs 25, places 12 vs 44); emitting them is the only way the
+	// table can stay true between releases.
+	agreements: String(agreements.length),
+	questions: String(questions.length),
+	hypotheses: String(hypotheses.length),
+	companies: String(companies.length),
+	contracts: String(contracts.length),
+	licences: String(licences.length),
+	declarations: String(declarations.length),
+	education: String(education.length),
+	regions: String(regions.length),
+	places: String(places.length),
 	documented: String(basisCounts.documented),
 	reported: String(basisCounts.reported),
 	inferred: String(basisCounts.inferred),
 	unsubstantiated: String(basisCounts.unsubstantiated),
+	// The sum the paper's §8.1 and §11 quote as "claim-bearing records". A total
+	// the prose states is a claim like any other; it is emitted rather than added
+	// up in the text so a basis shift cannot change the breakdown without
+	// changing the total.
+	claimRecords: String(
+		basisCounts.documented + basisCounts.reported + basisCounts.inferred + basisCounts.unsubstantiated
+	),
+	// The two temporal constants the paper quotes in prose. They were published
+	// as data before they were tags, and the cutoff moved twice while the prose
+	// did not; the tags make the parameter file the only place the value lives.
+	floor: parameters.time.floor,
+	cutoff: parameters.time.cutoff,
 	needsPrimarySource: String(needsPrimary.length),
 	successionGaps: String(successionGaps.length),
 	successionOverlaps: String(successionOverlaps.length),
@@ -3734,6 +3807,14 @@ if (!FIXTURE_MODE) {
 		mkdirSync(join(ROOT, 'output'), { recursive: true });
 		writeFileSync(join(ROOT, 'output', 'review-coverage.csv'), reviewCoverageCsv(reviewSummary), 'utf8');
 		writeFileSync(join(ROOT, 'output', 'review-coverage.md'), reviewCoverageMarkdown(reviewSummary), 'utf8');
+		// A verification pointing at no record would otherwise disappear into a
+		// smaller count. Named, so the number and the file cannot drift.
+		if (reviewSummary.unmatchedVerifications.length) {
+			warn(
+				'verifications',
+				`${reviewSummary.unmatchedVerifications.length} verification record(s) name no claim: ${reviewSummary.unmatchedVerifications.join(', ')}`
+			);
+		}
 		// Coverage by slice (Phase 10A) travels with the same publish step.
 		writeFileSync(join(ROOT, 'output', 'coverage.csv'), coverageCsv(coverageRows), 'utf8');
 		writeFileSync(join(ROOT, 'output', 'coverage.md'), coverageMarkdown(coverageRows), 'utf8');
@@ -3747,7 +3828,8 @@ if (!FIXTURE_MODE) {
 		'AGENTS.md',
 		'DESIGN.md',
 		'static/llms.txt',
-		'output/deeptunisia-release-paper-v0.1.1.md'
+		'output/deeptunisia-release-paper-v0.1.1.md',
+		'output/deeptunisia-release-paper-v0.1.2.md'
 	];
 
 	const statUpdates: string[] = [];

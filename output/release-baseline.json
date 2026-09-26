@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "milestone": "M0",
+  "recordedAt": "2026-09-25T22:02:28Z",
+  "note": "Internal M0 reproducible-baseline record for the v0.1.3 plan (docs/plans/next-period-execution-plan.md). Not a public build manifest. The public manifest is an M6 deliverable.",
+  "commit": "d19702483969fa953d94a4fedfdd314bbb7c7229",
+  "commitShort": "d197024",
+  "commitSubject": "Claim-to-code-to-test matrix, and paper claims aligned with the build (#35)",
+  "runtime": {
+    "node": "v26.7.0",
+    "npm": "11.19.0"
+  },
+  "lockHash": "47173c9f1ecfe23060644d0da4a5ef630d98eca6404ce1ea7e175ef0a5d51dd1",
+  "datasetHash": "2a5352c0f7a25b8b911e47461b25849b245ecc674e11b817df1a93fe71f2bb0d",
+  "datasetGenerated": "2026-09-25T22:01:59.310Z",
+  "cutoff": 1788998400000,
+  "counts": {
+    "sources": 1263,
+    "sourcesCited": 1225,
+    "sourcesUncited": 38,
+    "institutions": 207,
+    "roles": 118,
+    "people": 450,
+    "positions": 422,
+    "relationships": 362,
+    "events": 112,
+    "questions": 26,
+    "hypotheses": 6,
+    "agreements": 23,
+    "worldClaims": 10,
+    "companies": 25,
+    "contracts": 15,
+    "licences": 11,
+    "declarations": 9,
+    "education": 25,
+    "regions": 84,
+    "places": 44
+  },
+  "review": {
+    "reviewed": 46,
+    "reviewable": 1715,
+    "independent": 0,
+    "note": "46 editorial review notes; zero independently checked, by design until the v0.2 study records real independent checks."
+  },
+  "feed": {
+    "items": 1200,
+    "newest": "2026-09-25T19:23:02Z",
+    "sha256": "f8dfd2f23c49ec87688fe18059575414324e6065d0de6ca627c4953db5d43ea2"
+  },
+  "sensitivity": {
+    "generated": "2026-09-14T16:27:35.830Z",
+    "staleVsRelease": true,
+    "note": "Older than the release graph. Regenerate from the release commit or exclude it (M6)."
+  },
+  "release": {
+    "currentTag": "v0.1.2-C1",
+    "tags": [
+      "v0.1.1",
+      "v0.1.2-C1"
+    ],
+    "packageVersion": "0.1.0",
+    "targetVersion": "v0.1.3",
+    "note": "package.json is still 0.1.0 and no CITATION.cff exists; both are M6 alignment work."
+  },
+  "production": {
+    "origin": "https://deeptunisia.org",
+    "checkedAt": "2026-09-25T22:00:00Z",
+    "datasetRawSha256": "aa8f28ca8d0dccf463f36806aefb1557f313eb4170cdbee697d2d8fa7859c8b1",
+    "datasetGenerated": "2026-09-15T11:36:56.528Z",
+    "countsMatchBaseline": true,
+    "apiThreadsStatus": 404,
+    "apiThreadsExpected": "404 in off mode (M1 containment)",
+    "buildManifest": "absent (/build-manifest.json returns 404)",
+    "note": "Agora containment is deployed: every probed /api/* route answers 404 with the uniform body and cache-control no-store, while the client renders the closed banner. Before the 2026-09-25 deployment these routes answered 200 and the production D1 was reachable through them; the graph itself was already matching the last substantive revision (c424464)."
+  },
+  "deployment": {
+    "origin": "https://deeptunisia.org",
+    "deployedAt": "2026-09-26T01:41:37Z",
+    "versionId": "a912e0d7-1c92-450c-a50d-5a707e44337d",
+    "commit": "66bbdc44daf2eeb57fb81e5eb14f98ed013d7699",
+    "effectiveMode": "off",
+    "previous": {
+      "versionId": "31182733-1ec5-4b39-a9c9-b528f7c46485",
+      "deployedAt": "2026-09-25T22:53:05Z",
+      "commit": "e50b55f30fe376507874ca2db37d88fe7b7d7dad",
+      "note": "M1 containment. This is the rollback target for a bad M2 deploy: it keeps the API closed."
+    },
+    "bindings": {
+      "COMMUNITY_MODE": "off",
+      "DB": "deeptunisia-db",
+      "ASSETS": "build"
+    },
+    "rollback": {
+      "versionId": "31182733-1ec5-4b39-a9c9-b528f7c46485",
+      "created": "2026-09-25T22:53:05Z",
+      "command": "npx wrangler rollback https://deeptunisia.org 31182733-1ec5-4b39-a9c9-b528f7c46485",
+      "note": "Rolls back to M1 with the API still closed. Do not roll back to f5dfd268 (2026-09-15) to fix a bad release: that version predates containment and would reopen every /api/* route."
+    },
+    "verification": {
+      "command": "node scripts/verify-deploy.cjs https://deeptunisia.org off",
+      "reRunFor": "a912e0d7-1c92-450c-a50d-5a707e44337d",
+      "passed": 75,
+      "failed": 0,
+      "warnings": 0,
+      "apiProbes": {
+        "/api/threads": 404,
+        "/api/queue": 404,
+        "/api/whoami": 404,
+        "/api/<unknown>": 404
+      },
+      "uniformBody": "{\"error\":\"not found\"}",
+      "cacheControl": "no-store",
+      "contentType": "application/json; charset=utf-8",
+      "clientState": "closed banner — soon=1, privacy=0"
+    },
+    "negativeControl": {
+      "command": "node scripts/verify-deploy.cjs https://deeptunisia.org beta",
+      "expected": 1,
+      "observed": 1,
+      "failedChecks": [
+        "beta: the thread list is served",
+        "beta: it is a list",
+        "beta: the API is reachable, not closed",
+        "beta: the client is not behind a closed banner",
+        "beta: the live client rendered its privacy notice"
+      ],
+      "note": "Claiming the wrong mode against this deployment fails, so the check is not vacuous."
+    },
+    "note": "Wrangler 4.125.0 (mise-managed global), authenticated as deeptunisia@proton.me. The CLI is not pinned in the lockfile yet; pinning it is M5 work."
+  },
+  "dependencyAudit": {
+    "production": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0,
+      "total": 0
+    },
+    "all": {
+      "info": 0,
+      "low": 1,
+      "moderate": 2,
+      "high": 1,
+      "critical": 0,
+      "total": 4
+    },
+    "note": "No production advisory. One high development-only advisory remains; M5 requires it fixed or justified."
+  },
+  "gates": {
+    "data": "pass",
+    "test": "pass, 19 suites",
+    "check": "pass, 0 errors and 0 warnings"
+  }
+}

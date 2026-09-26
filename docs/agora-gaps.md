@@ -86,5 +86,9 @@ Until both of the authenticity note's 2027 conditions (Tunisia circulates a chip
 * Docs (`docs/authenticity.md` + this file) rule petitions out for now and record that the paper's petition language is intent, not implementation.
 * No public page claims the posting budget, hold, or petition count is enforced — `docs/posting-limits.md` header already says "Specified — not wired ... implementation parked behind counsel review; wiring is deferred pending counsel review."
 
-The Agora remains `AGORA_OPEN = false` in the committed tree (see `docs/agora-launch-decision.md` gates). Opening it is explicitly not part of 2.4.
+The Agora remains closed: `wrangler.toml` ships `COMMUNITY_MODE = "off"` and no
+build sets `VITE_COMMUNITY_MODE`, so `AGORA_OPEN` evaluates false and the server
+refuses every `/api/*` route before it touches the database (`community/mode.ts`
+is the boundary, not a constant in the interface). See
+`docs/agora-launch-decision.md` gates. Opening it is explicitly not part of 2.4.
 

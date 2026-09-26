@@ -429,13 +429,19 @@ const MUTATIONS: Mutation[] = [
 		from: '\t\t\tsparse: acc.nonzero < SPARSE_THRESHOLD',
 		to: '\t\t\tsparse: false'
 	},
-	{
-		id: 'm56', file: 'coverage.ts', expect: 'test-validators Phase 10A (nonzero sample fixture)',
-		label: 'the effective nonzero sample stops counting evidence and origins',
-		from: '\tif (hasEvidence || hasOrigins) acc.nonzero++;',
-		to: '\tif (false) acc.nonzero++;'
-	}
-];
+		{
+			id: 'm56', file: 'coverage.ts', expect: 'test-validators Phase 10A (nonzero sample fixture)',
+			label: 'the effective nonzero sample stops counting evidence and origins',
+			from: '\tif (hasEvidence || hasOrigins) acc.nonzero++;',
+			to: '\tif (false) acc.nonzero++;'
+		},
+		{
+			id: 'm57', file: 'consistency.ts', expect: 'test-consistency (the pre-correction Bennour reference)',
+			label: 'the interval comparison always passes, so a contradictory date is never seen',
+			from: 'return at >= from && at <= to;',
+			to: 'return true;'
+		}
+	];
 
 /** Which suites exercise which target. Order is the attribution order. */
 const SUITES_FOR: Record<string, string[]> = {
@@ -446,6 +452,7 @@ const SUITES_FOR: Record<string, string[]> = {
 	'review-coverage.ts': ['test-data.ts', 'test-validators.ts', 'test-emit.ts'],
 	'network-continuity.ts': ['test-network-continuity.ts'],
 	'coverage.ts': ['test-validators.ts', 'test-data.ts'],
+	'consistency.ts': ['test-consistency.ts'],
 	[ENGINE_TIME]: ['test-validators.ts', 'test-engine-conformance.ts']
 };
 const SYNTHETIC_SUITES = new Set(['test-validators.ts', 'test-pipeline.ts', 'test-engine-conformance.ts']);

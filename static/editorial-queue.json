@@ -1,6 +1,6 @@
 {
-  "generated": "2026-09-26T01:41:05.004Z",
-  "total": 975,
+  "generated": "2026-09-26T01:30:31.502Z",
+  "total": 956,
   "reviewed": 38,
   "queue": [
     {
@@ -425,23 +425,13 @@
     },
     {
       "kind": "event",
-      "id": "ev-fitch-affirms-b-minus-2026-09",
+      "id": "ev-sumud-four-detention-2026-02",
       "confidence": "C",
       "basis": "reported",
       "risk": 1,
       "sources": 2,
       "reviewed": false,
-      "title": "Fitch affirms Tunisia at B- with stable outlook"
-    },
-    {
-      "kind": "event",
-      "id": "ev-ounissi-audio-case-2026-09-25",
-      "confidence": "C",
-      "basis": "inferred",
-      "risk": 1,
-      "sources": 2,
-      "reviewed": false,
-      "title": "Ounissi audio-recordings trial postponed, release request rejected"
+      "title": "Four Sumud flotilla organisers held at Mornaguia; Naouar hunger strike"
     },
     {
       "kind": "licence",
@@ -735,16 +725,6 @@
     },
     {
       "kind": "event",
-      "id": "ev-aksa-composites-borj-cedria-2026-09-24",
-      "confidence": "C",
-      "basis": "inferred",
-      "risk": 1,
-      "sources": 1,
-      "reviewed": false,
-      "title": "Turkish Aksa Composites signs an industrial lease at Borj Cédria"
-    },
-    {
-      "kind": "event",
       "id": "ev-autoroutes-a1-a2-concessions-2026",
       "confidence": "C",
       "basis": "reported",
@@ -755,23 +735,13 @@
     },
     {
       "kind": "event",
-      "id": "ev-bh-bank-h1-2026-auditors",
+      "id": "ev-fitch-affirms-b-minus-2026-09",
       "confidence": "C",
-      "basis": "inferred",
+      "basis": "reported",
       "risk": 1,
       "sources": 1,
       "reviewed": false,
-      "title": "BH Bank H1 2026 statements published with four auditors' reservations"
-    },
-    {
-      "kind": "event",
-      "id": "ev-bizerte-maritime-excellence-centre-2026",
-      "confidence": "C",
-      "basis": "inferred",
-      "risk": 1,
-      "sources": 1,
-      "reviewed": false,
-      "title": "Bizerte Maritime Centre of Excellence under construction with US funding"
+      "title": "Fitch affirms Tunisia at B- with stable outlook"
     },
     {
       "kind": "event",
@@ -785,26 +755,6 @@
     },
     {
       "kind": "event",
-      "id": "ev-military-industry-conference-2026-09-22",
-      "confidence": "C",
-      "basis": "inferred",
-      "risk": 1,
-      "sources": 1,
-      "reviewed": false,
-      "title": "First military-research conference on defence industry and technology opens in Tunis"
-    },
-    {
-      "kind": "event",
-      "id": "ev-nafti-iom-voluntary-returns-2026-09-22",
-      "confidence": "C",
-      "basis": "inferred",
-      "risk": 1,
-      "sources": 1,
-      "reviewed": false,
-      "title": "Nafti and IOM's Amy Pope review the voluntary-return mechanism in New York"
-    },
-    {
-      "kind": "event",
       "id": "ev-sabotage-declaration-2026-08-26",
       "confidence": "C",
       "basis": "reported",
@@ -812,16 +762,6 @@
       "sources": 1,
       "reviewed": false,
       "title": "Saïed calls water and power cuts 'planned sabotage'"
-    },
-    {
-      "kind": "event",
-      "id": "ev-sehli-anderson-meeting-2026-09-16",
-      "confidence": "C",
-      "basis": "inferred",
-      "risk": 1,
-      "sources": 1,
-      "reviewed": false,
-      "title": "Defence minister Khaled Shili receives US 6th Fleet commander Jeffrey Anderson in Tunis"
     },
     {
       "kind": "event",
@@ -1544,26 +1484,6 @@
       "title": "reported-influence: zitouna-tv → ennahda"
     },
     {
-      "kind": "position",
-      "id": "p-soe-sonede-ahmed-soula",
-      "confidence": "B",
-      "basis": "inferred",
-      "risk": 2,
-      "sources": 2,
-      "reviewed": false,
-      "title": "Président-Directeur Général — Ahmed Soula"
-    },
-    {
-      "kind": "event",
-      "id": "ev-sumud-four-detention-2026-02",
-      "confidence": "B",
-      "basis": "reported",
-      "risk": 3,
-      "sources": 7,
-      "reviewed": false,
-      "title": "Four Sumud flotilla organisers held at Mornaguia; Naouar hunger strike"
-    },
-    {
       "kind": "event",
       "id": "sentences-july-2025",
       "confidence": "A",
@@ -1602,26 +1522,6 @@
       "sources": 5,
       "reviewed": false,
       "title": "asset-declaration — regime"
-    },
-    {
-      "kind": "event",
-      "id": "ev-phoenix-express-2026-09",
-      "confidence": "B",
-      "basis": "reported",
-      "risk": 3,
-      "sources": 5,
-      "reviewed": false,
-      "title": "Phoenix Express 2026 multinational naval exercise hosted in Tunisia"
-    },
-    {
-      "kind": "event",
-      "id": "ev-yousfi-detention-2026-09",
-      "confidence": "B",
-      "basis": "reported",
-      "risk": 3,
-      "sources": 5,
-      "reviewed": false,
-      "title": "Investigative journalist Mohamed Yousfi arrested, held, then jailed pending trial"
     },
     {
       "kind": "position",
@@ -1695,16 +1595,6 @@
     },
     {
       "kind": "event",
-      "id": "ev-fuel-strike-notice-2026-08-27",
-      "confidence": "B",
-      "basis": "reported",
-      "risk": 3,
-      "sources": 4,
-      "reviewed": false,
-      "title": "UGTT strike notice for fuel transport, 23–24 September"
-    },
-    {
-      "kind": "event",
       "id": "ev-naufrage-zarzis-2026",
       "confidence": "B",
       "basis": "reported",
@@ -1715,13 +1605,13 @@
     },
     {
       "kind": "event",
-      "id": "ev-sumud-march-arrests-2026-09-19",
+      "id": "ev-yousfi-detention-2026-09",
       "confidence": "B",
       "basis": "reported",
       "risk": 3,
       "sources": 4,
       "reviewed": false,
-      "title": "Tunis march for the Sumud four; night arrests and pre-trial detention warrants"
+      "title": "Investigative journalist Mohamed Yousfi arrested, held, then jailed pending trial"
     },
     {
       "kind": "position",
@@ -1985,33 +1875,13 @@
     },
     {
       "kind": "event",
-      "id": "ev-hammami-solidarity-hunger-strike-2026-09-18",
+      "id": "ev-phoenix-express-2026-09",
       "confidence": "B",
       "basis": "reported",
       "risk": 3,
       "sources": 3,
       "reviewed": false,
-      "title": "Ayachi Hammami begins hunger strike in solidarity with Wael Naouar"
-    },
-    {
-      "kind": "event",
-      "id": "ev-mrabet-detention-2026-09",
-      "confidence": "B",
-      "basis": "reported",
-      "risk": 3,
-      "sources": 3,
-      "reviewed": false,
-      "title": "Lawyer Ghazi Mrabet among nine jailed in a drug-network case"
-    },
-    {
-      "kind": "event",
-      "id": "ev-world-bank-tunisia-monitor-water-2026-09-22",
-      "confidence": "B",
-      "basis": "reported",
-      "risk": 3,
-      "sources": 3,
-      "reviewed": false,
-      "title": "World Bank Tunisia Economic Monitor: water scarcity could cut GDP 6.4% by 2050"
+      "title": "Phoenix Express 2026 multinational naval exercise hosted in Tunisia"
     },
     {
       "kind": "event",
@@ -2955,16 +2825,6 @@
     },
     {
       "kind": "event",
-      "id": "ev-akremi-sentence-2026-09-23",
-      "confidence": "B",
-      "basis": "reported",
-      "risk": 3,
-      "sources": 2,
-      "reviewed": false,
-      "title": "Bechir Akremi given 15 more years for falsification"
-    },
-    {
-      "kind": "event",
       "id": "ev-ben-guerdane-protests-2026",
       "confidence": "B",
       "basis": "reported",
@@ -2985,33 +2845,13 @@
     },
     {
       "kind": "event",
-      "id": "ev-elmed-steering-committee-2026-09-22",
+      "id": "ev-fuel-strike-notice-2026-08-27",
       "confidence": "B",
       "basis": "reported",
       "risk": 3,
       "sources": 2,
       "reviewed": false,
-      "title": "First steering committee for the ELMED Tunisia–Italy electricity interconnector"
-    },
-    {
-      "kind": "event",
-      "id": "ev-knauf-tataouine-2026-09-17",
-      "confidence": "B",
-      "basis": "reported",
-      "risk": 3,
-      "sources": 2,
-      "reviewed": false,
-      "title": "Governor-led working session on Knauf's 70 MDT Tataouine gypsum project"
-    },
-    {
-      "kind": "event",
-      "id": "ev-moussi-hunger-strike-2026-09-23",
-      "confidence": "B",
-      "basis": "reported",
-      "risk": 3,
-      "sources": 2,
-      "reviewed": false,
-      "title": "Abir Moussi begins open-ended hunger strike in Bulla Regia prison"
+      "title": "UGTT strike notice for fuel transport, 23–24 September"
     },
     {
       "kind": "event",
@@ -3022,16 +2862,6 @@
       "sources": 2,
       "reviewed": false,
       "title": "Nafas march in Tunis against President Saied"
-    },
-    {
-      "kind": "event",
-      "id": "ev-sidi-bou-said-unesco-certificate-2026-09-24",
-      "confidence": "B",
-      "basis": "reported",
-      "risk": 3,
-      "sources": 2,
-      "reviewed": false,
-      "title": "Tunisia receives UNESCO certificate for the Sidi Bou Saïd World Heritage listing"
     },
     {
       "kind": "event",
@@ -5345,6 +5175,16 @@
     },
     {
       "kind": "position",
+      "id": "p-admin-abdessalem-mehdi-grissiaa",
+      "confidence": "B",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 1,
+      "reviewed": false,
+      "title": "President of the Administrative Court — Abdessalem Mehdi Grissiaa"
+    },
+    {
+      "kind": "position",
       "id": "p-admin-mohamed-faouzi-ben-hamed",
       "confidence": "B",
       "basis": "reported",
@@ -6185,6 +6025,16 @@
     },
     {
       "kind": "position",
+      "id": "p-media-ett-dali",
+      "confidence": "B",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 1,
+      "reviewed": false,
+      "title": "President of the Public Television Establishment — Awatef Dali"
+    },
+    {
+      "kind": "position",
       "id": "p-media-ett-gharbi",
       "confidence": "B",
       "basis": "reported",
@@ -6485,6 +6335,16 @@
     },
     {
       "kind": "position",
+      "id": "p-soe-poste-marouen-ben-slimene",
+      "confidence": "B",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 1,
+      "reviewed": false,
+      "title": "Président-Directeur Général — Marouen Ben Slimene"
+    },
+    {
+      "kind": "position",
       "id": "p-soe-poste-sami-mekki",
       "confidence": "B",
       "basis": "reported",
@@ -6495,6 +6355,16 @@
     },
     {
       "kind": "position",
+      "id": "p-soe-sncft-belgacem-tayaa",
+      "confidence": "B",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 1,
+      "reviewed": false,
+      "title": "Président-Directeur Général — Belgacem Tayaa"
+    },
+    {
+      "kind": "position",
       "id": "p-soe-sncft-sarra-rejeb",
       "confidence": "B",
       "basis": "reported",
@@ -6502,6 +6372,26 @@
       "sources": 1,
       "reviewed": false,
       "title": "Président-Directeur Général — Sarra Rejeb"
+    },
+    {
+      "kind": "position",
+      "id": "p-soe-sncft-taoufik-boufaied",
+      "confidence": "B",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 1,
+      "reviewed": false,
+      "title": "Président-Directeur Général — Taoufik Boufaied"
+    },
+    {
+      "kind": "position",
+      "id": "p-soe-sonede-ahmed-soula",
+      "confidence": "B",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 1,
+      "reviewed": false,
+      "title": "Président-Directeur Général — Ahmed Soula"
     },
     {
       "kind": "position",
@@ -8295,26 +8185,6 @@
     },
     {
       "kind": "position",
-      "id": "p-soe-poste-marouen-ben-slimene",
-      "confidence": "A",
-      "basis": "documented",
-      "risk": 4,
-      "sources": 3,
-      "reviewed": false,
-      "title": "Président-Directeur Général — Marouen Ben Slimene"
-    },
-    {
-      "kind": "position",
-      "id": "p-soe-sncft-belgacem-tayaa",
-      "confidence": "A",
-      "basis": "documented",
-      "risk": 4,
-      "sources": 3,
-      "reviewed": false,
-      "title": "Président-Directeur Général — Belgacem Tayaa"
-    },
-    {
-      "kind": "position",
       "id": "p-tourism-elloumi",
       "confidence": "A",
       "basis": "documented",
@@ -8525,16 +8395,6 @@
     },
     {
       "kind": "position",
-      "id": "p-admin-abdessalem-mehdi-grissiaa",
-      "confidence": "A",
-      "basis": "documented",
-      "risk": 4,
-      "sources": 2,
-      "reviewed": false,
-      "title": "President of the Administrative Court — Abdessalem Mehdi Grissiaa"
-    },
-    {
-      "kind": "position",
       "id": "p-bct-nouira",
       "confidence": "A",
       "basis": "documented",
@@ -8635,26 +8495,6 @@
     },
     {
       "kind": "position",
-      "id": "p-media-ett-dali",
-      "confidence": "A",
-      "basis": "documented",
-      "risk": 4,
-      "sources": 2,
-      "reviewed": false,
-      "title": "President of the Public Television Establishment — Awatef Dali"
-    },
-    {
-      "kind": "position",
-      "id": "p-onpf-rhouma",
-      "confidence": "A",
-      "basis": "documented",
-      "risk": 4,
-      "sources": 2,
-      "reviewed": false,
-      "title": "President-Director General, Office national de la propriété foncière — Wadii Rhouma"
-    },
-    {
-      "kind": "position",
       "id": "p-pm-chahed",
       "confidence": "A",
       "basis": "documented",
@@ -8702,16 +8542,6 @@
       "sources": 2,
       "reviewed": true,
       "title": "President of the Republic — Kais Saied"
-    },
-    {
-      "kind": "position",
-      "id": "p-soe-sncft-taoufik-boufaied",
-      "confidence": "A",
-      "basis": "documented",
-      "risk": 4,
-      "sources": 2,
-      "reviewed": false,
-      "title": "Président-Directeur Général — Taoufik Boufaied"
     },
     {
       "kind": "relationship",
@@ -9282,26 +9112,6 @@
       "sources": 1,
       "reviewed": false,
       "title": "President of the Republic — Fouad Mebazaa"
-    },
-    {
-      "kind": "position",
-      "id": "p-soe-poste-faria-2026",
-      "confidence": "A",
-      "basis": "documented",
-      "risk": 4,
-      "sources": 1,
-      "reviewed": false,
-      "title": "Président-Directeur Général — Yassine Faria"
-    },
-    {
-      "kind": "position",
-      "id": "p-soe-sonede-mnaja",
-      "confidence": "A",
-      "basis": "documented",
-      "risk": 4,
-      "sources": 1,
-      "reviewed": false,
-      "title": "Président-Directeur Général — Abdelhamid Mnaja"
     },
     {
       "kind": "relationship",

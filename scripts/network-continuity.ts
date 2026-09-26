@@ -41,6 +41,15 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { parse as parseYaml } from 'yaml';
 import { certainlyActive, possiblyActive, configureTime } from './dates.ts';
 import { loadParameters } from './parameters.ts';
+import {
+	buildRows,
+	mergeRows,
+	parseReviewCsv,
+	renderReviewCsv,
+	summarize,
+	type ReviewSummary,
+	type ReviewRow
+} from './network-continuity-review.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
@@ -171,6 +180,14 @@ export interface ContinuityResult {
 		shuffledCohorts: { trials: number; min: number; median: number; max: number; atLeastReal: number };
 		randomDates: { trials: number; min: number; median: number; max: number; atLeastReal: number };
 	};
+	/**
+	 * The editorial triage of the published paths, read back from
+	 * `output/network-continuity-review.csv` (M2). Present only where the CSV
+	 * exists: the count, the human verdicts on that count and the null
+	 * distribution are published together so a path count is never read as a
+	 * finding on its own.
+	 */
+	review?: ReviewSummary;
 }
 
 const BASIS_RANK: Record<Basis, number> = {
@@ -583,24 +600,114 @@ export function loadExceptionKeys(): Set<string> {
 	return new Set(rows.map((r) => `${r.kind}:${r.id}`));
 }
 
+/**
+ * Structural CSV rows: one per primary path, derived from the probe.
+ *
+ * The review columns stay blank here; a verdict belongs to the reviewer, not to
+ * the compiler. Grades and source paths are read from the records the edge
+ * actually sits on, so a triage row can be traced back to `positions.yaml`
+ * without anyone re-deriving it.
+ */
+function structuralRows(result: ContinuityResult, ds: DatasetLike, exceptionKeys: Set<string>) {
+	const edgeById = new Map(buildEdges(ds, exceptionKeys).map((e) => [e.id, e]));
+	const posById = new Map(ds.positions.map((p) => [p.id, p]));
+	const relById = new Map(ds.relationships.map((r) => [r.id, r]));
+	const dates = result.parameters.cohortDates;
+	const segments: [string, string, ContinuityPath[]][] = [
+		['c1c2', `${dates[0]}->${dates[1]}`, result.paths.cohort1to2.primary],
+		['c2c3', `${dates[1]}->${dates[2]}`, result.paths.cohort2to3.primary]
+	];
+
+	const out: {
+		path_id: string;
+		cohort_pair: string;
+		index: string;
+		nodes: string;
+		edges: string;
+		edge_kinds: string;
+		edge_grades: string;
+		source_paths: string;
+	}[] = [];
+
+	for (const [seg, pair, paths] of segments) {
+		paths.forEach((path, i) => {
+			const kinds: string[] = [];
+			const grades: string[] = [];
+			const sources: string[] = [];
+			for (const id of path.edges) {
+				const e = edgeById.get(id);
+				kinds.push(e?.kind ?? id.split(':')[0]);
+				const a = e ? posById.get(e.from) : undefined;
+				const b = e ? posById.get(e.to) : undefined;
+				const rel = e && relById.has(id) ? relById.get(id) : undefined;
+				const conf = e
+					? `${a?.confidence ?? e.confidence}+${b?.confidence ?? e.confidence}`
+					: '';
+				grades.push(e ? `${e.basis}(${conf})` : '');
+				const ids = [
+					...new Set([...(a?.sources ?? []), ...(b?.sources ?? []), ...(rel?.sources ?? [])])
+				];
+				sources.push(ids.join('+'));
+			}
+			out.push({
+				path_id: `h1-net-${seg}-p${i}`,
+				cohort_pair: pair,
+				index: String(i),
+				nodes: path.nodes.join(';'),
+				edges: path.edges.join(';'),
+				edge_kinds: kinds.join(';'),
+				edge_grades: grades.join(';'),
+				source_paths: sources.join(';')
+			});
+		});
+	}
+	return out;
+}
+
+const REVIEW_CSV = 'output/network-continuity-review.csv';
+
 function main(): void {
 	// The engine owns time; install the jurisdiction parameters before any
 	// predicate runs, exactly as the build does.
 	configureTime(loadParameters(join(ROOT, 'data', 'parameters.yaml')).time);
 	const ds = JSON.parse(readFileSync(join(ROOT, 'src', 'generated', 'dataset.json'), 'utf8')) as DatasetLike;
-	const result = computeNetworkContinuity(ds, { exceptionKeys: loadExceptionKeys() });
+	const exceptionKeys = loadExceptionKeys();
+	const result = computeNetworkContinuity(ds, { exceptionKeys });
 	mkdirSync(join(ROOT, 'output'), { recursive: true });
 	mkdirSync(join(ROOT, 'src', 'generated'), { recursive: true });
+
+	/*
+	 * The triage file is both input and output: verdicts survive a rebuild only
+	 * for paths whose nodes and edges are unchanged, so a probe that starts
+	 * publishing a different chain reopens that row instead of inheriting a
+	 * verdict written for a path that no longer exists.
+	 */
+	const csvPath = join(ROOT, REVIEW_CSV);
+	const existing = existsSync(csvPath) ? parseReviewCsv(readFileSync(csvPath, 'utf8')) : [];
+	const merged = mergeRows(buildRows(structuralRows(result, ds, exceptionKeys)), existing);
+	writeFileSync(csvPath, renderReviewCsv(merged.rows), 'utf8');
+	result.review = summarize(merged.rows, REVIEW_CSV);
+
 	const json = JSON.stringify(result, null, 2) + '\n';
 	writeFileSync(join(ROOT, 'output', 'network-continuity.json'), json, 'utf8');
 	writeFileSync(join(ROOT, 'src', 'generated', 'network-continuity.json'), json, 'utf8');
 	const p12 = result.paths.cohort1to2.primary.length;
 	const p23 = result.paths.cohort2to3.primary.length;
+	const r = result.review;
 	console.log(
 		`  network continuity: ${result.personnel.spanning.length} person(s) span all three dates; ` +
 			`${p12} primary path(s) 1987→2011, ${p23} 2011→2021; ` +
-			`nulls ${result.nullControls.shuffledCohorts.median}/${result.nullControls.randomDates.median} median`
+			`nulls ${result.nullControls.shuffledCohorts.median}/${result.nullControls.randomDates.median} median; ` +
+			`triage ${r.reviewed}/${r.total} reviewed (${r.refuted} refuted)`
 	);
+	if (merged.dropped.length) {
+		console.log(
+			`  review rows no longer matching any published path: ${merged.dropped.map((d) => d.path_id).join(', ')} — retriage or retire them`
+		);
+	}
+	if (r.unreviewed) {
+		console.log(`  ${r.unreviewed} primary path(s) carry no verdict yet — fill them in on ${REVIEW_CSV}`);
+	}
 }
 
 const runDirectly = process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href;
