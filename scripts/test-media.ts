@@ -22,6 +22,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import { tmpdir } from 'node:os';
+import { parse as parseYaml } from 'yaml';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
@@ -43,6 +44,9 @@ function ok(name: string, condition: boolean, detail = '') {
 const BUNDLE_PATH = join(ROOT, 'src', 'generated', 'media', 'chemical-century.json');
 const BUNDLE = JSON.parse(readFileSync(BUNDLE_PATH, 'utf8')) as {
 	slug: string;
+	status?: string;
+	reviewer?: string | null;
+	editorial_state?: Record<string, unknown>;
 	interpretations?: { interpretations?: Array<Record<string, unknown>> };
 	evidence?: { claims?: Array<{ id: string; grade?: string }> };
 	narrative?: Record<string, { sections?: Array<Record<string, unknown>> }>;
@@ -93,6 +97,144 @@ ok(
 		offVocab.length === 0,
 		offVocab.length ? offVocab.map((c) => `${c.id}=${c.grade}`).join(', ') : `${claims.length} claims`
 	);
+}
+
+// ── §1b: the editorial state ships with the route (M2) ───────────────────────
+
+/*
+ * A draft investigation is a live production route in this build, so its draft
+ * state has to be part of what ships rather than a fact only the source tree
+ * knows. Each index entry carries the resolved status, the reviewer (including
+ * its absence), and the localized wording sourced from
+ * src/content/media/editorial-state.yaml; the index card, the investigation
+ * page and the article header all render that. These checks pin the data half
+ * and the wiring: a missing locale, a missing translation tier, a status
+ * outside the vocabulary, or a surface that stops rendering the state all
+ * fail here, the first three also failing the builder itself.
+ */
+
+console.log('\n  ── media: editorial state in the shipped index ──\n');
+
+type LocaleMap = Record<string, string>;
+
+interface StateShape {
+	label?: LocaleMap;
+	label_by?: LocaleMap | null;
+	note?: LocaleMap | null;
+	note_by?: LocaleMap | null;
+	reviewer_label?: LocaleMap;
+	reviewer_label_by?: LocaleMap | null;
+	no_reviewer?: LocaleMap;
+	no_reviewer_by?: LocaleMap | null;
+}
+
+const INDEX = JSON.parse(readFileSync(join(ROOT, 'src', 'generated', 'media', 'index.json'), 'utf8')) as Array<{
+	slug: string;
+	status?: string;
+	reviewer?: string | null;
+	editorial_state?: StateShape;
+}>;
+const VOCAB = parseYaml(
+	readFileSync(join(ROOT, 'src', 'content', 'media', 'editorial-state.yaml'), 'utf8')
+) as { statuses?: Record<string, unknown> };
+const TIERS = ['machine', 'model-reviewed', 'machine-reviewed', 'human'];
+const STATUS_LOCALES = ['en', 'fr', 'ar'] as const;
+const TRANSLATED = ['fr', 'ar'] as const;
+
+ok(
+	'the status vocabulary is loaded from the content tree',
+	Object.keys(VOCAB.statuses ?? {}).length > 0,
+	Object.keys(VOCAB.statuses ?? {}).join(', ')
+);
+ok('the index carries every investigation', INDEX.length >= 2, `${INDEX.length} entries`);
+
+for (const entry of INDEX) {
+	const state = entry.editorial_state;
+	ok(`${entry.slug}: the index entry carries a status`, Boolean(entry.status), entry.status ?? 'absent');
+	ok(
+		`${entry.slug}: the status exists in the vocabulary`,
+		Boolean(entry.status && VOCAB.statuses?.[entry.status]),
+		entry.status ?? ''
+	);
+	ok(`${entry.slug}: the index entry carries a reviewer field`, Object.hasOwn(entry, 'reviewer'), JSON.stringify(entry.reviewer));
+	ok(`${entry.slug}: the index entry carries the rendered wording`, Boolean(state), state ? '' : 'editorial_state absent');
+
+	for (const field of ['label', 'reviewer_label', 'no_reviewer'] as const) {
+		const values = state?.[field];
+		ok(
+			`${entry.slug}: ${field} exists in en, fr and ar`,
+			STATUS_LOCALES.every((l) => Boolean(values?.[l]?.trim())),
+			STATUS_LOCALES.filter((l) => !values?.[l]?.trim()).join(', ') || 'all three'
+		);
+		for (const l of TRANSLATED) {
+			const tier = state?.[`${field}_by`]?.[l];
+			ok(`${entry.slug}: ${field}_${l} carries a translation tier`, TIERS.includes(String(tier)), String(tier));
+			ok(
+				`${entry.slug}: ${field}_${l} is a translation, not a copy of the English`,
+				Boolean(values?.[l]) && values?.[l] !== values?.en,
+				String(values?.[l] ?? '').slice(0, 30)
+			);
+		}
+	}
+
+	// The note is what tells a reader what the status costs them; published
+	// needs none (the label is the whole statement), every other status does.
+	const note = state?.note;
+	if (entry.status !== 'published') {
+		ok(
+			`${entry.slug}: a non-published status explains itself`,
+			Boolean(note?.en?.trim()),
+			note?.en ?? ''
+		);
+		ok(
+			`${entry.slug}: the note exists in en, fr and ar`,
+			STATUS_LOCALES.every((l) => Boolean(note?.[l]?.trim())),
+			STATUS_LOCALES.filter((l) => !note?.[l]?.trim()).join(', ') || 'all three'
+		);
+		for (const l of TRANSLATED) {
+			const tier = state?.note_by?.[l];
+			ok(`${entry.slug}: note_${l} carries a translation tier`, TIERS.includes(String(tier)), String(tier));
+			ok(
+				`${entry.slug}: note_${l} is a translation, not a copy of the English`,
+				Boolean(note?.[l]) && note?.[l] !== note?.en,
+				String(note?.[l] ?? '').slice(0, 30)
+			);
+		}
+	}
+}
+
+// The M2 case in one line: the second investigation is a draft, it is a live
+// route, and the shipped index says both.
+const draftEntry = INDEX.find((i) => i.slug === 'bot-farm');
+ok(
+	'bot-farm ships as a draft with no reviewer recorded',
+	draftEntry?.status === 'draft' && draftEntry.reviewer === null && Boolean(draftEntry.editorial_state?.note),
+	`status ${draftEntry?.status}, reviewer ${JSON.stringify(draftEntry?.reviewer)}`
+);
+const bundleIndexEntry = INDEX.find((i) => i.slug === BUNDLE.slug);
+ok(
+	'the bundle status matches its index entry',
+	bundleIndexEntry?.status === BUNDLE.status,
+	`bundle ${BUNDLE.status} vs index ${bundleIndexEntry?.status ?? 'absent'}`
+);
+{
+	ok(
+		'the bundle state slice matches the index entry byte for byte',
+		JSON.stringify(BUNDLE.editorial_state) === JSON.stringify(bundleIndexEntry?.editorial_state),
+		''
+	);
+}
+
+// The rendering half, checked at the source level the way the ArticleLayout
+// wiring above is: a surface that stops importing the component stops stating
+// the draft state, and no data assertion can see that.
+for (const [file, label] of [
+	[join(ROOT, 'src', 'routes', 'media', '+page.svelte'), 'the media index route'],
+	[join(ROOT, 'src', 'routes', 'media', '[slug]', '+page.svelte'), 'the investigation route'],
+	[join(ROOT, 'src', 'lib', 'components', 'media', 'ArticleLayout.svelte'), 'the article header']
+] as const) {
+	const src = readFileSync(file, 'utf8');
+	ok(`${label} renders the editorial state`, src.includes('EditorialState'), file.split('/').slice(-1)[0]);
 }
 
 // ── §2: the narrative — interp blocks resolve, removed superlatives stay gone ──
@@ -310,6 +452,18 @@ try {
 		].join('\n')
 	);
 
+	// (f) Two contradicting editorial states at once: meta.yaml still says
+	//     "published" while editorial.yaml is moved to a status the vocabulary
+	//     does not define. Both must be refused; neither may win silently.
+	{
+		const p = join(BAD_TREE, 'editorial.yaml');
+		const text = readFileSync(p, 'utf8');
+		if (!text.includes('status: published')) {
+			throw new Error('fixture: could not locate status in editorial.yaml copy');
+		}
+		writeFileSync(p, text.replace('status: published', 'status: review'), 'utf8');
+	}
+
 	const bad = buildMedia(join(WORK, 'bad'), join(WORK, 'out-bad'), join(WORK, 'static-bad'));
 	ok('fixtures: the injected tree fails the build', bad.code !== 0, `exit ${bad.code}`);
 
@@ -318,7 +472,9 @@ try {
 		['Narrative references [I9] but no such interpretation', 'an unresolvable [I#] reference is rejected'],
 		['Interpretation I5 exists in interpretations.yaml but no [I5] reference', 'an unreferenced interpretation record is rejected'],
 		['malformed interpretation block', 'a ">"-prefixed paragraph without [I#] is fatal'],
-		['absolutes lint', 'a long absolute-bearing paragraph without a claim reference is rejected']
+		['absolutes lint', 'a long absolute-bearing paragraph without a claim reference is rejected'],
+		['editorial state disagrees: meta.yaml says status "published"', 'a status contradicting meta.yaml is rejected'],
+		['unknown editorial status "review"', 'a status outside the vocabulary is rejected']
 	];
 	for (const [needle, label] of expectations) {
 		ok(`fixtures: ${label}`, bad.output.includes(needle), `expected "${needle.slice(0, 48)}…"`);

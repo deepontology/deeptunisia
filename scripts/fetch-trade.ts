@@ -74,7 +74,7 @@
  * Usage: `npx tsx scripts/fetch-trade.ts`
  */
 
-import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -447,12 +447,26 @@ async function main() {
 	}
 	const sorted = [...years].sort((a, b) => a - b);
 
+	/*
+	 * Entries this script does not own (`wdi`, `ids-debt`) are carried over,
+	 * not dropped. The world build reads their licence and freshness fields,
+	 * so a trade refetch must not erase another dataset's provenance; the
+	 * same read-modify-write fetch-wdi.ts already does.
+	 */
+	const manifestFile = join(FLOWS_DIR, 'manifest.json');
+	const priorManifest: { generated?: string; datasets?: Record<string, unknown>[] } = existsSync(manifestFile)
+		? (JSON.parse(readFileSync(manifestFile, 'utf8')) as { generated?: string; datasets?: Record<string, unknown>[] })
+		: {};
+	const carried = (priorManifest.datasets ?? []).filter((d) => d.id !== 'comtrade' && d.id !== 'wb-points');
+
 	writeFileSync(
-		join(FLOWS_DIR, 'manifest.json'),
+		manifestFile,
 		JSON.stringify(
 			{
+				...priorManifest,
 				generated: retrieved,
 				datasets: [
+					...carried,
 					{
 						id: 'comtrade',
 						title: 'UN Comtrade — Tunisia bilateral goods trade, all partners, annual totals',

@@ -1361,6 +1361,80 @@ export const EraSchema = z.strictObject({
 // Open research question
 // ---------------------------------------------------------------------------
 
+/**
+ * A typed narrative reference (v0.1.3 M2) — the machine-checkable half of a
+ * sentence that names a person in a post on a date.
+ *
+ * Hypotheses, evidence findings and questions are free prose. This is how one
+ * asserts a fact from that prose WITHOUT parsing it: the author states the fact
+ * explicitly, and `scripts/consistency.ts` compares it against the canonical
+ * positions and their intervals. A reference that contradicts a record fails
+ * the build; a claim that declares none gets a named review warning.
+ *
+ * `on` is an exact date on purpose. A range cannot be contradicted cleanly —
+ * "between 2011 and 2018" would overlap the canonical record under any reading.
+ */
+export const NarrativeReferenceSchema = z.strictObject({
+	/** Canonical person id, as `people.yaml` uses it. */
+	person: slug,
+	/** Canonical role id, as `positions.yaml` uses it. */
+	role: slug.optional(),
+	/** Canonical institution id, when the narrative names the body, not the post. */
+	institution: slug.optional(),
+	/** The instant the narrative asserts they held it. */
+	on: z
+		.string()
+		.regex(/^\d{4}-\d{2}-\d{2}$/, 'a typed reference needs an exact date (YYYY-MM-DD), not a range or a ?'),
+	/** Why this reference is here, when it is not obvious from the claim. */
+	note: z.string().max(400).optional()
+});
+
+export type NarrativeReference = z.infer<typeof NarrativeReferenceSchema>;
+
+/**
+ * Independent verification (v0.1.3 plan, milestone M2).
+ *
+ * Deliberately its own record type, not a flag on the editorial `review`
+ * object. The three populations must stay separate forever, because the
+ * project's credibility rests on never adding them together:
+ *
+ *   editorial review     a maintainer or agent looked at a record — 46 of them
+ *   editorial queue      the records still waiting for a look — 956 of them
+ *   independent          a second human, blinded to the project's own grade,
+ *   verification         assessed the same record under the study rubric
+ *
+ * Only the third may raise the independent count, and today it raises nothing:
+ * no record of this kind exists, which is why every published figure says zero.
+ * A verification record is the evidence that the study happened; the absence of
+ * the records is what makes "zero independently checked" true rather than a
+ * claim. The outcome taxonomy is the five-valued one the protocol defines, not
+ * the editorial `review.outcome` that governance has not opened yet.
+ */
+export const VerificationSchema = z.strictObject({
+	id: slug,
+	/** The record checked, as `kind:id` — e.g. `position:p-dgsn-bennour-2`. */
+	claim: z.string().min(3),
+	/** The claim kind, so coverage can be reported per kind. */
+	kind: slug,
+	/** The claim's basis, so coverage can be reported per basis. */
+	basis: z.enum(['documented', 'reported', 'inferred', 'unsubstantiated']),
+	/** When the check happened. */
+	date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'a verification needs a YYYY-MM-DD date'),
+	/** Who checked it: a second human who did not compile the record. */
+	by: z.string().min(2),
+	/** The instrument applied, from the frozen study protocol. */
+	method: z.string().min(2),
+	/** Whether the rater was shown the project's own grade. Blinding is the point. */
+	blinded: z.boolean().default(true),
+	/** What the rater concluded. A reviewed claim may legitimately be refuted. */
+	outcome: z.enum(['supported', 'refuted', 'disputed', 'unresolved', 'insufficient_evidence']),
+	/** The evidence the rater read. */
+	sources: z.array(slug).default([]),
+	note: z.string().max(2000).optional()
+});
+
+export type Verification = z.infer<typeof VerificationSchema>;
+
 export const QuestionSchema = z.strictObject({
 	id: slug,
 	question: z.string().min(10),
@@ -1368,6 +1442,12 @@ export const QuestionSchema = z.strictObject({
 	status: z.enum(['open', 'partial', 'answered']).default('open'),
 	/** Entities this question bears on, so the UI can surface it in context. */
 	relates_to: z.array(slug).default([]),
+	/**
+	 * Typed assertions this question makes about the canonical record (M2).
+	 * Empty is legal — but an empty list is reported as a review warning, so an
+	 * unchecked claim is never mistaken for a checked one.
+	 */
+	references: z.array(NarrativeReferenceSchema).default([]),
 	notes: z.string().optional(),
 	/**
 	 * P2 #18 — a sourced answer. An answer is a claim like any other: it carries
@@ -1414,6 +1494,8 @@ const HypothesisEvidenceSchema = withClaimEnvelope(
 		...translatable('falsifier_progress'),
 		note: z.string().optional(),
 		...translatable('note'),
+		/** Typed assertions this finding makes about the canonical record (M2). */
+		references: z.array(NarrativeReferenceSchema).default([]),
 		...claimFields
 	})
 );
@@ -1441,6 +1523,8 @@ export const HypothesisSchema = z.strictObject({
 	 */
 	falsifiable_by: z.string().min(10),
 	sources: z.array(slug).default([]),
+	/** Typed assertions this hypothesis makes about the canonical record (M2). */
+	references: z.array(NarrativeReferenceSchema).default([]),
 	/** Evidence findings tested against the falsifier clauses (P2 #19). */
 	evidence: z.array(HypothesisEvidenceSchema).default([]),
 	...translatable('label'),

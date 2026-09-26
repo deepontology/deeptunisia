@@ -391,6 +391,18 @@
     المناصب تُثبت أن عودة بنّور إلى الإدارة العامة للأمن الوطني سنة 2011 حالة معزولة لا
     دالّة.
   falsifiable_by_ar_by: model-reviewed
+  # The reasoning and the falsifier above date two DGSN tenures in prose. These
+  # are those assertions, stated so scripts/consistency.ts can compare them with
+  # positions.yaml instead of trusting the sentence.
+  references:
+    - person: abdessatar-bennour
+      role: dg-national-security
+      on: "2006-06-05"
+      note: First DGSN term, late Ben Ali era.
+    - person: abdessatar-bennour
+      role: dg-national-security
+      on: "2011-03-02"
+      note: The return the falsifier calls "Bennour's return to the DGSN".
   sources: [carnegie-quiet-revolution, tuniscope-bennour-2018]
 
 - id: h3-structural-continuity

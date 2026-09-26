@@ -1,0 +1,65 @@
+# -----------------------------------------------------------------------------
+# EDITORIAL STATE — the wording a reader sees for an investigation's status
+#
+# One file for every investigation, because the status vocabulary is shared and
+# the translations must be reviewable in one place rather than copied into each
+# slug's editorial.yaml. build-media.ts resolves a piece's `status` from
+# editorial.yaml and meta.yaml (they must agree, and the status must exist in
+# this file — an unknown status or a disagreement fails the build rather than
+# shipping an unlabeled route), then emits the slice for that status into
+# src/generated/media/index.json and <slug>.json as `editorial_state`.
+#
+# PROVENANCE. `label_by` / `note_by` / `none_by` carry the translation tier of
+# every non-English string beside them — the same `_by` convention the graph
+# data uses for `field_fr` / `field_ar`. The French and Arabic here were
+# written by the editing model in the 2026-09-26 M2 pass and have NOT been
+# read by a human reviewer; the `machine` tier says exactly that and must not
+# be raised to `machine-reviewed` or `human` until someone does review them.
+# English is the source string the others were translated from.
+#
+# The status note never claims review: `draft` says the piece is unpublished,
+# and the reviewer line below says what the record actually holds. A published
+# piece with no reviewer reads "No reviewer recorded." — review is not implied
+# by publication.
+# -----------------------------------------------------------------------------
+
+statuses:
+  draft:
+    label:
+      en: "Draft"
+      fr: "Brouillon"
+      ar: "مسودة"
+    label_by:
+      fr: machine
+      ar: machine
+    note:
+      en: "This investigation is a draft and has not been published."
+      fr: "Cette enquête est un brouillon et n'a pas été publiée."
+      ar: "لم يُنشر هذا التحقيق بعد، وما زال في مرحلة المسودة."
+    note_by:
+      fr: machine
+      ar: machine
+  published:
+    label:
+      en: "Published"
+      fr: "Publié"
+      ar: "منشور"
+    label_by:
+      fr: machine
+      ar: machine
+
+reviewer:
+  label:
+    en: "Reviewer"
+    fr: "Relecteur"
+    ar: "المراجع"
+  label_by:
+    fr: machine
+    ar: machine
+  none:
+    en: "No reviewer recorded."
+    fr: "Aucun relecteur enregistré."
+    ar: "لم يُسجَّل أي مراجع."
+  none_by:
+    fr: machine
+    ar: machine

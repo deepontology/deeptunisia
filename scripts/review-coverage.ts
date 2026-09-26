@@ -17,10 +17,19 @@
  *   * EVERY CLAIM KIND GETS A DENOMINATOR. Any kind whose schema carries a
  *     `review` field is counted, not only the three headline kinds.
  *   * `examined` IS NOT `independently_checked`. `examined` means a review
- *     object exists. Independence, support, refutation and resolution are not
- *     expressed by the schema yet, so they are reported as zero rather than
- *     inferred from a reviewer's name — a zero here means "not recorded", not
- *     "not done", and the coverage note says so.
+ *     object exists — a maintainer or agent looked. `independently_checked`
+ *     means a record in `data/verifications.yaml` exists, which is a second
+ *     human, blinded to the project's own grade, applying the study rubric.
+ *     Independence is therefore never inferred from a reviewer's name or from
+ *     an editorial note: the count comes from the separate record type or it
+ *     stays zero. Support, refutation and resolution stay at zero because
+ *     `review.outcome` is deliberately not in the schema until governance
+ *     defines it (Phase 1C); the verification records carry their own outcome
+ *     enum instead.
+ *   * THE THREE POPULATIONS ARE NEVER SUMMED. Editorial review notes, the
+ *     editorial queue and independent verifications answer different questions,
+ *     each with its own denominator. The markdown says so, and the CSV keeps
+ *     them in separate columns.
  */
 
 export const REVIEW_KINDS = [
@@ -54,11 +63,19 @@ export type ReviewFlag = (typeof REVIEW_FLAGS)[number];
 export const REVIEW_BASIS = ['documented', 'reported', 'inferred', 'unsubstantiated'] as const;
 
 export interface ReviewInput {
+	/** Present on graph records; used to attach verification records to a cell. */
+	id?: string;
 	kind: ReviewKind;
 	basis?: string;
 	attributed_to?: string;
 	review?: unknown;
 	disputes?: unknown[] | null;
+}
+
+/** An independent verification record — see VerificationSchema in scripts/schema.ts. */
+export interface VerificationInput {
+	/** `kind:id`, pointing at the record that was checked. */
+	claim: string;
 }
 
 export interface ReviewCount {
@@ -81,6 +98,12 @@ export interface CoverageRow {
 export interface ReviewSummary {
 	reviewed: number;
 	reviewable: number;
+	/** Independent verifications that resolved to a graph claim. Separate population. */
+	independentlyChecked: number;
+	/** Every independent verification record, resolved or not. Its own denominator. */
+	verifications: number;
+	/** `kind:id` values pointing at no record — reported, never dropped silently. */
+	unmatchedVerifications: string[];
 	flags: Record<ReviewFlag, ReviewCount>;
 	byKind: Record<ReviewKind, ReviewCount>;
 	byBasis: Record<string, ReviewCount>;
@@ -116,11 +139,14 @@ function emptyCounts<K extends string>(keys: readonly K[]): Record<K, ReviewCoun
 	return Object.fromEntries(keys.map((k) => [k, { reviewed: 0, total: 0 }])) as Record<K, ReviewCount>;
 }
 
-export function summariseReview(rows: ReviewInput[]): ReviewSummary {
+export function summariseReview(rows: ReviewInput[], verifications: VerificationInput[] = []): ReviewSummary {
 	const flags = emptyCounts(REVIEW_FLAGS);
 	const byKind = emptyCounts(REVIEW_KINDS);
 	const byBasis: Record<string, ReviewCount> = {};
 	const coverageMap = new Map<string, CoverageRow>();
+	// `kind:id` → the coverage cell the record sits in, so an independent
+	// verification increments a count instead of being a flag someone can set.
+	const cellByClaim = new Map<string, CoverageRow>();
 	let reviewed = 0;
 
 	for (const row of rows) {
@@ -157,6 +183,27 @@ export function summariseReview(rows: ReviewInput[]): ReviewSummary {
 		if (isReviewed) cell.examined++;
 		if ((row.disputes?.length ?? 0) > 0) cell.disputed++;
 		coverageMap.set(key, cell);
+		if (row.id) cellByClaim.set(`${row.kind}:${row.id}`, cell);
+	}
+
+	/*
+	 * Independent verification is counted from its own records, never from the
+	 * editorial `review` object: an editorial note can never raise this number,
+	 * because the two populations live in different files with different
+	 * schemas. A verification pointing at nothing is reported rather than
+	 * discarded — a count that quietly skips unresolvable rows would flatter
+	 * itself.
+	 */
+	let independentlyChecked = 0;
+	const unmatchedVerifications: string[] = [];
+	for (const v of verifications) {
+		const cell = cellByClaim.get(v.claim);
+		if (!cell) {
+			unmatchedVerifications.push(v.claim);
+			continue;
+		}
+		cell.independentlyChecked++;
+		independentlyChecked++;
 	}
 
 	const basisRank = new Map<string, number>(REVIEW_BASIS.map((b, i) => [b, i]));
@@ -169,7 +216,17 @@ export function summariseReview(rows: ReviewInput[]): ReviewSummary {
 				a.basis.localeCompare(b.basis)
 		);
 
-	return { reviewed, reviewable: rows.length, flags, byKind, byBasis, coverage };
+	return {
+		reviewed,
+		reviewable: rows.length,
+		independentlyChecked,
+		verifications: verifications.length,
+		unmatchedVerifications,
+		flags,
+		byKind,
+		byBasis,
+		coverage
+	};
 }
 
 const CSV_COLUMNS = [
@@ -216,15 +273,28 @@ Generated by \`scripts/build-data.ts\` from \`data/*.yaml\`. Do not edit by hand
 
 - \`total\`: records of this kind and basis in the graph. The denominator.
 - \`examined\`: records carrying a \`review\` object — someone looked at them.
-- \`independently_checked\`: records whose review records that the reviewer was
-  independent of the compilation. **Zero everywhere today**: the schema has no
-  independence field, so the build reports what the data expresses and does not
-  infer it from a reviewer's name. Zero means "not recorded", not "not done".
+- \`independently_checked\`: records with an **independent verification record**
+  of their own — \`data/verifications.yaml\`, a second human blinded to the
+  project's grade, applying the study rubric. **Zero everywhere today**: that
+  file holds ${summary.verifications} record(s), because the v0.2 study has not run.
+  An editorial note cannot raise this number, which is why the record type is
+  separate.
 - \`supported\`, \`refuted\`, \`unresolved\`: review outcomes. **Zero everywhere
   today** for the same reason: \`review.outcome\` is deliberately not in the
   schema until governance defines it (Phase 1C).
 - \`disputed\`: records carrying at least one recorded source disagreement. This
   is a graph fact, not a review outcome.
+
+## Three populations, never summed
+
+| Population | Where it lives | Denominator |
+|---|---|---|
+| editorial review notes | a \`review\` object on a record | ${summary.reviewed} of ${summary.reviewable} |
+| the editorial queue | \`static/editorial-queue.json\` | its own count, never derived from the two above |
+| independent verifications | \`data/verifications.yaml\` | ${summary.independentlyChecked} of ${summary.verifications} |
+
+They answer different questions and are never added together, multiplied or
+substituted for one another.
 
 ## Flags overlap
 

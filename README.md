@@ -159,6 +159,17 @@ Names in headlines are linked to graph entities by **deterministic string matchi
 
 Surname-only matches are refused. The matcher can only measure distinctiveness against the few hundred people recorded here, and Tunisia has around twelve million: on real headlines that rule linked a 2012 interim finance minister to a story about solar batteries. `scripts/test-match.ts` pins the decision with those fixtures.
 
+## Media counts come from two populations
+
+`/media` prints two sets of numbers for each investigation, and they count different things:
+
+- **Research ledger**: `src/content/media/<slug>/research.yaml`, written during the research sweep. Sources consulted, claims extracted before any editorial cut, the sweep's own disputed and unresolved tallies.
+- **Shipped index**: `src/generated/media/index.json`, counted at build time from the ledgers that ship: claims in `evidence.yaml`, sources cited in `sources.yaml`, disputed and unresolved among the shipped claims.
+
+They are independent populations. Neither is derived from the other, they are never summed, and they are not expected to match: consultation counts what was opened, the index counts what survived curation. The investigation page keeps them apart for that reason, the evidence profile counting the shipped ledger and the research block counting the sweep. `scripts/build-media.ts` carries the same statement beside the code that emits the index.
+
+Editorial state is separate from both counts. `status` and `reviewer` come from each investigation's `editorial.yaml`, checked against `meta.yaml` at build time, and rendered wherever the piece appears. A draft investigation is a live route, so the index card, the investigation page and the article header each say that it is a draft, in English, French and Arabic, and a piece with no reviewer reads "No reviewer recorded." rather than implying a review that did not happen. `npm run test:media` pins all of it, including the refusal to ship a status the vocabulary does not define.
+
 ## Adding to the dataset
 
 1. Add the citation to `data/sources.yaml` first, with a tier. Tier 1 is a decree or gazette entry; tier 5 is a lead that needs corroborating and is never sufficient alone.

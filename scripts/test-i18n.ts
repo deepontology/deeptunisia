@@ -146,8 +146,10 @@ const TEMPLATES: [string, Record<string, string>][] = [
 	['edge.before', { date: 'Jun 2018' }],
 	['edge.after', { year: '2011' }],
 	['duration.y', { y: '3' }],
-	['duration.ym', { y: '3', m: '4' }],
-	['duration.m', { m: '7' }]
+	['duration.ym', { y: '3', m: '5' }],
+	['duration.m', { m: '7' }],
+	['ev.continuity.reviewValue', { reviewed: '4', total: '4', refuted: '4', supported: '0', unresolved: '0' }],
+	['ev.continuity.reviewThreshold', { reviewer: 'dt-research', date: '2026-09-25' }]
 ];
 
 for (const l of locales) {

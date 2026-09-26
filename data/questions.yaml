@@ -474,15 +474,15 @@
   relates_to: [taoufik-dabbabi, ramzi-rajhi, rached-bettaieb, abderrahmane-belhaj-ali]
   notes: >-
     The sequence Dabbabi / Rajhi / Bettaieb is reported and now fits between the dated
-    records: Belhaj Ali (2015-12-01) to Rajhi (2016-12-16) to Dabbabi (2017-10-25) to
-    Bettaieb (2018-03-03) to Guizani (2019-12-12). The apparent misfit came from a
+    records: Belhaj Ali (2015-12-01) to Rajhi (2016-12-15) to Dabbabi (2017-10-25) to
+    Bettaieb (2018-03-03) to Guizani (2019-12-11). The apparent misfit came from a
     misdated Tuniscope article: its displayed 2018 date is Bennour's second appointment,
     dated 2 March 2011, which is recorded as resolved on 2026-08-04. Still open is
     primary-source confirmation of the three press-dated tenures.
   notes_fr: >-
     La séquence Dabbabi / Rajhi / Bettaieb est rapportée et s'insère désormais entre les
-    dates documentées : Belhaj Ali (01-12-2015) puis Rajhi (16-12-2016), Dabbabi
-    (25-10-2017), Bettaieb (03-03-2018), Guizani (12-12-2019). Le décalage apparent venait
+    dates documentées : Belhaj Ali (01-12-2015) puis Rajhi (15-12-2016), Dabbabi
+    (25-10-2017), Bettaieb (03-03-2018), Guizani (11-12-2019). Le décalage apparent venait
     d'un article de Tuniscope mal daté : sa date affichée en 2018 correspond à la seconde
     nomination de Bennour, datée du 2 mars 2011, dont le décalage est tranché au
     04-08-2026. Reste ouverte la confirmation par des sources primaires des trois mandats
@@ -490,11 +490,28 @@
   notes_fr_by: model-reviewed
   notes_ar: >-
     تسلسل الدبابي / الراجحي / بطيّب مُتداول، وقد عُدّل لينسجم مع التواريخ الموثّقة: بلهج علي
-    (01-12-2015) ثم الراجحي (16-12-2016) والدبابي (25-10-2017) وطيّب (03-03-2018)
-    والقيزاني (12-12-2019). كان الانحراف الظاهر ناتجًا عن مقال في تونيسكوب مؤرّخ خطأً:
+    (01-12-2015) ثم الراجحي (15-12-2016) والدبابي (25-10-2017) وبطيّب (03-03-2018)
+    والقيزاني (11-12-2019). كان الانحراف الظاهر ناتجًا عن مقال في تونيسكوب مؤرّخ خطأً:
     تاريخه المعروض 2018 يخصّ التعيين الثاني لـبنّور المؤرخ في 2 مارس 2011، وقد حُسم في
     04-08-2026. وما يبقى مفتوحًا هو التأكيد بمصادر أولية لولايات الثلاث المؤرّخة صحفيًا.
   notes_ar_by: model-reviewed
+  # The sequence named above, typed so the note cannot drift from the records.
+  references:
+    - person: abderrahmane-belhaj-ali
+      role: dg-national-security
+      on: "2015-12-01"
+    - person: ramzi-rajhi
+      role: dg-national-security
+      on: "2016-12-15"
+    - person: taoufik-dabbabi
+      role: dg-national-security
+      on: "2017-10-25"
+    - person: rached-bettaieb
+      role: dg-national-security
+      on: "2018-03-03"
+    - person: kamel-guizani
+      role: dg-national-security
+      on: "2019-12-11"
 
 - id: q-belhajali-chronology
   kind: verification
@@ -693,6 +710,14 @@
     وليتا بنور في 2006 و2011 هما الحالة الوحيدة الموثّقة بالكامل للعودة. الإجابة المنهجية
     تتطلب دراسة سير جماعية لنحو مائتي ضابط.
   notes_ar_by: model-reviewed
+  # The two tenures the note calls "the one fully documented case of return".
+  references:
+    - person: abdessatar-bennour
+      role: dg-national-security
+      on: "2006-06-05"
+    - person: abdessatar-bennour
+      role: dg-national-security
+      on: "2011-03-02"
 
 - id: q-confiscated-firms
   kind: verification
