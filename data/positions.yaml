@@ -8591,8 +8591,8 @@
   holder: awatef-dali
   start: "2021-07-28"
   end: ongoing
-  confidence: B
-  verification: needs-primary-source
+  confidence: A
+  verification: verified
   reasoning: >-
     Wikipedia records Awatef Dali as interim PDG of ETT since July 2021.
   reasoning_fr: >-
@@ -8609,7 +8609,8 @@
   falsifiable_by_ar: >-
     مرسوم في الرائد الرسمي أو وثيقة مؤسسية للتلفزة التونسية تؤكد التعيين.
   falsifiable_by_ar_by: model-reviewed
-  sources: [wikipedia-ett]
+  sources: [wikipedia-ett, jort-2021-066]
+  basis: documented
 
 - id: p-media-hannibal-nasra
   role: hannibal-owner
@@ -10302,11 +10303,10 @@
   role: sonede-pdg
   holder: ahmed-soula
   start: "2023-07"
-  end: ongoing
+  end: "2024-12-11"
   confidence: B
   verification: needs-primary-source
-  reasoning: >-
-    Wikipedia infobox lists Ahmed Soula as PDG. Reference [1] from July 2023 reports a new PDG appointment.
+  reasoning: "The end date is not stated by any fetched act: it is reasoned from the tier-1 decree charging a successor with the same functions on 11 December 2024, so it is recorded as an inference rather than a documented cessation."
   reasoning_fr: >-
     L'encadré de Wikipédia liste Ahmed Soula comme PDG. La référence [1] de juillet 2023
     rapporte la nomination d'un nouveau PDG.
@@ -10315,8 +10315,7 @@
     يذكر موجز ويكيبيديا أحمد سولة كرئيس مدير عام. وتفيد المرجعية [1] من جويلية 2023 بتعيين
     رئيس مدير عام جديد.
   reasoning_ar_by: model-reviewed
-  falsifiable_by: >-
-    JORT decree or SONEDE corporate filing confirming the appointment.
+  falsifiable_by: "A cessation decree naming Ahmed Soula, or SONEDE minutes/JORT acts showing a different handover date."
   falsifiable_by_fr: >-
     Un décret au JORT ou un dépôt d'entreprise de la SONEDE confirmant la nomination.
   falsifiable_by_fr_by: model-reviewed
@@ -10324,7 +10323,8 @@
     مرسوم في الرائد الرسمي أو إيداع مؤسسي للشركة الوطنية لاستغلال وتوزيع المياه يؤكد
     التعيين.
   falsifiable_by_ar_by: model-reviewed
-  sources: [wikipedia-sonede]
+  sources: [wikipedia-sonede, jort-2024-150]
+  basis: inferred
 
 - id: p-soe-sonede-saad-seddik
   role: sonede-pdg
@@ -10359,10 +10359,10 @@
 - id: p-soe-sncft-taoufik-boufaied
   role: sncft-pdg
   holder: taoufik-boufaied
-  start: "2022-01-10"
+  start: "2022-01-07"
   end: ongoing
-  confidence: B
-  verification: needs-primary-source
+  confidence: A
+  verification: verified
   reasoning: >-
     Wikipedia records Taoufik Boufaied as PDG since January 10, 2022.
   reasoning_fr: >-
@@ -10380,15 +10380,16 @@
     مرسوم في الرائد الرسمي أو إيداع مؤسسي للشركة الوطنية للسكك الحديدية التونسية يؤكد
     التعيين.
   falsifiable_by_ar_by: model-reviewed
-  sources: [wikipedia-sncft]
+  sources: [wikipedia-sncft, jort-2022-023]
+  basis: documented
 
 - id: p-soe-sncft-belgacem-tayaa
   role: sncft-pdg
   holder: belgacem-tayaa
-  start: "2020-10-23"
+  start: "2020-11-02"
   end: "2021-10-08"
-  confidence: B
-  verification: needs-primary-source
+  confidence: A
+  verification: verified
   reasoning: >-
     Wikipedia records Belgacem Tayaa as PDG from October 2020, dismissed October 2021.
   reasoning_fr: >-
@@ -10406,7 +10407,8 @@
     مرسوم في الرائد الرسمي أو إيداع مؤسسي للشركة الوطنية للسكك الحديدية التونسية يؤكد
     التعيين.
   falsifiable_by_ar_by: model-reviewed
-  sources: [wikipedia-sncft]
+  sources: [wikipedia-sncft, jort-2020-127, jort-2021-092]
+  basis: documented
 
 - id: p-soe-sncft-sarra-rejeb
   role: sncft-pdg
@@ -10440,10 +10442,10 @@
 - id: p-soe-poste-marouen-ben-slimene
   role: la-poste-pdg
   holder: marouen-ben-slimene
-  start: "2024-12"
-  end: ongoing
-  confidence: B
-  verification: needs-primary-source
+  start: "2024-12-11"
+  end: "2026-04-27"
+  confidence: A
+  verification: verified
   reasoning: >-
     Wikipedia records Marouen Ben Slimene as PDG since December 2024.
   reasoning_fr: >-
@@ -10460,7 +10462,8 @@
   falsifiable_by_ar: >-
     مرسوم في الرائد الرسمي أو إيداع مؤسسي لديوان البريد يؤكد التعيين.
   falsifiable_by_ar_by: model-reviewed
-  sources: [wikipedia-la-poste-tunisienne]
+  sources: [wikipedia-la-poste-tunisienne, jort-2024-150, jort-2026-043]
+  basis: documented
 
 - id: p-soe-poste-sami-mekki
   role: la-poste-pdg
@@ -10952,12 +10955,12 @@
 - id: p-admin-abdessalem-mehdi-grissiaa
   role: administrative-court-president
   holder: abdessalem-mehdi-grissiaa
-  start: "2016-04"
+  start: "2016-04-01"
   end: ongoing
-  confidence: B
-  source_relation: single-report
-  independence: 1
-  verification: needs-primary-source
+  confidence: A
+  source_relation: direct-record
+  independence: 2
+  verification: verified
   reasoning: >-
     Wikipedia Administrative Court article records Abdessalem Mehdi Grissiaa
     appointed in 2016. Also listed as president of the administrative section
@@ -10979,7 +10982,8 @@
   falsifiable_by_ar: >-
     مرسوم في الرائد الرسمي أو وثائق رسمية من المحكمة.
   falsifiable_by_ar_by: model-reviewed
-  sources: [wikipedia-administrative-court]
+  sources: [wikipedia-administrative-court, jort-2016-029]
+  basis: documented
 
 # --- Audit Court Presidents ---
 
@@ -12998,3 +13002,36 @@
   sources:
     - lapresse-zouari-equipement-2025
     - pm-gov-zouari-2025
+
+- id: p-onpf-rhouma
+  role: onpf-pdg
+  holder: wadii-rhouma
+  start: "?"
+  end: "2026-09-10"
+  confidence: A
+  basis: documented
+  verification: verified
+  sources: [jort-2026-091, jort-2026-091-ar]
+  notes: ["New position and new role/institution (Office national de la propriété foncière is not in the graph). Décret n° 2026-221 du 10 septembre 2026 (JORT n° 91 du 11 septembre 2026, p. 1854) ends his functions as « Président-directeur général de l'Office national de la propriété foncière »; the same day's décret n° 2026-220 ends the separate function of « conservateur de la propriété foncière ». Only the end is documented; the appointment (start) was not located, so a second position row for the conservateur office is kept in this note rather than claimed. The Arabic edition confirms the operative verb (يعفى, relieved)."]
+
+- id: p-soe-poste-faria-2026
+  role: la-poste-pdg
+  holder: yassine-faria
+  start: "2026-04-27"
+  end: ongoing
+  confidence: A
+  basis: documented
+  verification: verified
+  sources: [jort-2026-043]
+  notes: ["Décret n° 2026-61 du 27 avril 2026 (JORT n° 43 du 28 avril 2026) : « Monsieur Yassine Faria est nommé Président-directeur général de l'Office national des postes. » Same-day décret n° 2026-62 ends Ben Slimene's functions. New person row for yassine-faria is needed; his Arabic spelling was not fetched, so none is proposed here."]
+
+- id: p-soe-sonede-mnaja
+  role: sonede-pdg
+  holder: abdelhamid-mnaja
+  start: "2024-12-11"
+  end: ongoing
+  confidence: A
+  basis: documented
+  verification: verified
+  sources: [jort-2024-150]
+  notes: ["Décret n° 2024-636 du 11 décembre 2024 (JORT n° 150 du 13 décembre 2024) : « Monsieur Abdelhamid Mnaja, ingénieur général, est chargé des fonctions de président directeur général de la société nationale d'exploitation et de distribution des eaux. » New person row for abdelhamid-mnaja is needed. Cross-check: the 2026-09-25 economy outbox flags this same replacement from press/SONEDE-board sources; this row supplies the gazette date."]

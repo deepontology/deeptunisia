@@ -1,7 +1,7 @@
 id,kind,confidence,basis_before,basis_after,source_relation,independence,applied,status,reviewer,reason
 p-bct-nouri,positions,A,documented,documented,direct-record,2,yes,applied,adala,"kind matches the evidence; origins counted by family (record+journalism), journalism counted once until lineage review"
 p-tourism-elloumi,positions,A,documented,documented,direct-record,2,yes,applied,adala,"kind matches the evidence; origins counted by family (record+journalism), journalism counted once until lineage review"
-p-admin-abdessalem-mehdi-grissiaa,positions,B,reported,reported,single-report,1,yes,applied,adala,"kind matches the evidence; origins counted by family (journalism), journalism counted once until lineage review"
+p-admin-abdessalem-mehdi-grissiaa,positions,A,reported,documented,direct-record,2,yes,applied,adala,"JORT décret gouvernemental n° 2016-447 du 8 avril 2016 now cited (jort-2016-029), so the appointment is a held record: documented, direct-record, two origin families (record + unclassified)"
 p-dgsn-toujani,positions,B,reported,reported,corroborated-report,2,yes,applied,adala,"kind matches the evidence; origins counted by family (unclassified+journalism), journalism counted once until lineage review"
 p-gv-mustapha-kaak,positions,B,reported,reported,single-report,1,yes,applied,adala,"kind matches the evidence; origins counted by family (journalism), journalism counted once until lineage review"
 p-land-hamdi,positions,C,reported,reported,single-report,1,yes,applied,adala,"kind matches the evidence; origins counted by family (journalism), journalism counted once until lineage review"

@@ -669,21 +669,21 @@
   {
     "kind": "event",
     "id": "ev-sumud-four-detention-2026-02",
-    "start": "~2026-02",
-    "end": "~2026-02",
+    "start": "~2026-03-06",
+    "end": "~2026-03-06",
     "interval": {
-      "startEarliest": 1761955200000,
-      "startLatest": 1780271999000,
-      "endEarliest": 1780271999000,
-      "endLatest": 1780271999000,
+      "startEarliest": 1764806400000,
+      "startLatest": 1780704000000,
+      "endEarliest": 1780704000000,
+      "endLatest": 1780704000000,
       "startPrecision": "approx",
       "endPrecision": "approx",
       "status": "ended",
-      "lastObserved": 1780271999000,
+      "lastObserved": 1780704000000,
       "trimmed": true,
       "raw": {
-        "start": "~2026-02",
-        "end": "~2026-02"
+        "start": "~2026-03-06",
+        "end": "~2026-03-06"
       }
     }
   },
@@ -726,6 +726,27 @@
       "raw": {
         "start": "~2026-09-10",
         "end": "~2026-09-10"
+      }
+    }
+  },
+  {
+    "kind": "event",
+    "id": "ev-bizerte-maritime-excellence-centre-2026",
+    "start": "~2026-06-14",
+    "end": "~2026-06-14",
+    "interval": {
+      "startEarliest": 1773446400000,
+      "startLatest": 1789344000000,
+      "endEarliest": 1789344000000,
+      "endLatest": 1789344000000,
+      "startPrecision": "approx",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1789344000000,
+      "trimmed": true,
+      "raw": {
+        "start": "~2026-06-14",
+        "end": "~2026-06-14"
       }
     }
   }

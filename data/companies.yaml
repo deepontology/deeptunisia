@@ -892,3 +892,25 @@
       titles) post-dates those percentages. ISIN TN0003600350.
   sources:
     - source-ilboursa-atb-profile
+
+- id: knauf-tunisie
+  legal_name_fr: Knauf Tunisie
+  status: active
+  state_owned: false
+  activities: [gypsum extraction, plaster and gypsum building materials]
+  confidence: B
+  basis: reported
+  notes: ["German building-materials group specialising in gypsum. Kapitalis and African Manager both report the group entered the Tunisian market in 2004 through the acquisition of Les Plâtres Tunisiens at Meknassi (Sidi Bouzid governorate), the platform managing its commercial activity for the Maghreb and Africa. No RCC/CIN number, legal form, capital or exact incorporation date was found this run — left unset, not guessed.", "On 17 September 2026 the Tataouine governor chaired a working session with regional services and Knauf representatives on a planned 70 MDT gypsum extraction and processing unit in Tataouine, a project on hold since 2012; the land-tenure terms are not settled. This is an announced investment, not an awarded contract or a start of works."]
+  sources: [kapitalis-knauf-tataouine-2026-09-18, african-manager-knauf-tataouine-2026-09-18]
+
+- id: eurostat-tunisie
+  legal_name_fr: Eurostat Tunisie
+  status: active
+  state_owned: false
+  activities: [thermoforming, mould machining, ESD product assembly for electronics]
+  confidence: B
+  basis: reported
+  verification: needs-primary-source
+  attributed_to: "Kapitalis and African Manager, reporting the 14 September 2026 inauguration"
+  notes: ["Tunisian subsidiary of the French Eurostat Group (Toulouse), inaugurated at Tunis on 14 September 2026 in the presence of French ambassador Anne Guéguen and Slim Ferchichi of the Industry, Mines and Energy ministry. Site 1,500 m²; 28 employees; two thermoforming lines, two machining centres and an assembly workshop; the group states the site should eventually generate 20% of its value and lead MEA sales (Kapitalis; African Manager).", "Group figures as printed by Kapitalis: 50 years of experience, more than EUR 10m invested to date, three plants (France, Poland, Tunisia), 150 employees and EUR 35m revenue, 80% export. African Manager relays the French embassy's frame of 1,700 French-participation firms employing over 170,000 people in Tunisia. No RCC/CIN, legal form or capital found this run — omitted."]
+  sources: [kapitalis-eurostat-tunisie-2026-09-15, african-manager-eurostat-tunisie-2026-09-16]

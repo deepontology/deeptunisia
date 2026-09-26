@@ -297,14 +297,6 @@
   authored: reported
 - rule: basis-override
   kind: event
-  id: ev-sumud-four-detention-2026-02
-  owner: RESEARCH
-  deadline: 2026-12-09
-  reason: Authored basis "reported" over the grade-implied "inferred" at grade C. Pending review provenance and a basis_override_reason (V27 triage).
-  implied: inferred
-  authored: reported
-- rule: basis-override
-  kind: event
   id: ev-tunisia-germany-accords-2026-08-31
   owner: RESEARCH
   deadline: 2026-12-09
