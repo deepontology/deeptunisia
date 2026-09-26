@@ -13,6 +13,45 @@
  * from a fixed vocabulary; and the absolutes lint requires any long paragraph
  * asserting a number or a universal ("never", "only", "every", ...) to carry
  * at least one claim reference. Build fails on any violation.
+ *
+ * ── Two populations, named (M2 population contract) ──────────────────────────
+ *
+ * The research ledger and the shipped index count different things, so they
+ * do not reconcile and are not expected to:
+ *
+ *   research ledger: src/content/media/<slug>/research.yaml, written during
+ *     the research sweep: `sources_consulted_count` (how many sources the team
+ *     opened) and `claims_extracted` (what extraction produced before any
+ *     editorial cut), plus its own disputed/unresolved tallies.
+ *   shipped index: src/generated/media/index.json, counted at build time from
+ *     the ledgers that actually ship: `claim_count` from evidence.yaml,
+ *     `source_count` from sources.yaml, `disputed_count`/`unresolved_count`
+ *     from the shipped claims. The research file is never read for these.
+ *
+ * They diverge on both investigations today (as of 2026-09-26: bot-farm 44
+ * consulted → 38 cited, 34 extracted → 31 shipped, disputed 9 → 10; chemical-
+ * century 50 consulted → 133 cited, 66 extracted → 66 shipped, disputed 2 → 8).
+ * Curation drops claims and adds sources, so either direction of difference is
+ * ordinary: extraction counts what was tried, the index counts what survived,
+ * and consultation counts what was opened, not what was cited.
+ *
+ * The rule those numbers encode: the two populations are never summed,
+ * neither is derived from the other, and a reader meeting both figures on one
+ * page is meeting two denominators. The same statement is in README.md under
+ * "Media counts come from two populations", where a reader of the docs looks
+ * first.
+ *
+ * ── Editorial state ships with the route ─────────────────────────────────────
+ *
+ * A draft investigation is a production route in this build, deliberately
+ * rather than by omission, so the draft state travels with the data: each
+ * index entry and bundle carries `status`, `reviewer`, and a localized
+ * `editorial_state` slice from src/content/media/editorial-state.yaml, and the
+ * index card, the investigation page and the article header all render it.
+ * `status` must exist in that vocabulary, meta.yaml and editorial.yaml must
+ * agree on it, and every label must be present in en/fr/ar with its `_by`
+ * translation tier. Any of those missing fails this build rather than
+ * shipping an unlabeled draft.
  */
 
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, statSync } from 'node:fs';
@@ -432,6 +471,99 @@ function validate(
 
 // ── Main ────────────────────────────────────────────────────────────────────
 
+/**
+ * src/content/media/editorial-state.yaml: the closed status vocabulary and
+ * the three-locale wording every investigation's state renders from.
+ *
+ * A localized field is an `en`/`fr`/`ar` map. Its `_by` sibling names the
+ * translation tier of the non-English values, the same convention the graph
+ * data uses (`name_fr` + `name_fr_by`); the tiers are schema.ts's
+ * TRANSLATION_TIERS, restated here so this build stays standalone.
+ */
+interface EditorialStateFile {
+	statuses: Record<
+		string,
+		{
+			label: Record<string, string>;
+			label_by?: Record<string, string>;
+			note?: Record<string, string>;
+			note_by?: Record<string, string>;
+		}
+	>;
+	reviewer: {
+		label: Record<string, string>;
+		label_by?: Record<string, string>;
+		none: Record<string, string>;
+		none_by?: Record<string, string>;
+	};
+}
+
+/** What ships in index entries and bundles as `editorial_state`. */
+interface EditorialStateOut {
+	label: Record<string, string>;
+	label_by: Record<string, string> | null;
+	note: Record<string, string> | null;
+	note_by: Record<string, string> | null;
+	reviewer_label: Record<string, string>;
+	reviewer_label_by: Record<string, string> | null;
+	no_reviewer: Record<string, string>;
+	no_reviewer_by: Record<string, string> | null;
+}
+
+const TRANSLATION_TIERS = ['machine', 'model-reviewed', 'machine-reviewed', 'human'] as const;
+const TRANSLATED_LOCALES = ['fr', 'ar'] as const;
+const REQUIRED_LOCALES = ['en', 'fr', 'ar'] as const;
+
+/**
+ * A localized label must be complete and honest about where it came from.
+ *
+ * A missing locale falls back to English at render time, which is exactly the
+ * silent incompleteness the i18n suite exists to prevent, so it fails here
+ * instead. A translation with no `_by` tier would render as if reviewed by
+ * nobody and checked by nobody in particular, so it fails too.
+ *
+ * Returns the list of violations rather than throwing, so one run reports the
+ * whole vocabulary at once.
+ */
+function checkLocalizedField(
+	where: string,
+	field: string,
+	values: Record<string, string> | undefined,
+	by: Record<string, string> | undefined
+): string[] {
+	const issues: string[] = [];
+	for (const locale of REQUIRED_LOCALES) {
+		if (!values?.[locale]?.trim()) issues.push(`${where}: ${field} has no ${locale} string`);
+	}
+	for (const locale of TRANSLATED_LOCALES) {
+		if (!values?.[locale]) continue;
+		const tier = by?.[locale];
+		if (!tier) issues.push(`${where}: ${field}_${locale} carries no _by translation tier`);
+		else if (!(TRANSLATION_TIERS as readonly string[]).includes(tier))
+			issues.push(`${where}: ${field}_${locale} has unknown tier "${tier}" (allowed: ${TRANSLATION_TIERS.join(', ')})`);
+		// A "translation" byte-identical to the English source changes nothing
+		// and inflates the appearance of coverage, the same copy-paste rule
+		// test-i18n applies to the interface dictionary.
+		if (values[locale] === values.en && values.en.length > 12)
+			issues.push(`${where}: ${field}_${locale} is a copy of the English source`);
+	}
+	return issues;
+}
+
+/** Every status in the vocabulary must be renderable, not only the ones in use. */
+function checkEditorialState(state: EditorialStateFile): string[] {
+	const issues: string[] = [];
+	if (!state.statuses || !Object.keys(state.statuses).length)
+		return ['editorial-state.yaml defines no statuses (the vocabulary is empty)'];
+	for (const [status, slice] of Object.entries(state.statuses)) {
+		issues.push(...checkLocalizedField('editorial-state.yaml', `statuses.${status}.label`, slice.label, slice.label_by));
+		if (slice.note) issues.push(...checkLocalizedField('editorial-state.yaml', `statuses.${status}.note`, slice.note, slice.note_by));
+	}
+	issues.push(...checkLocalizedField('editorial-state.yaml', 'reviewer.label', state.reviewer?.label, state.reviewer?.label_by));
+	issues.push(...checkLocalizedField('editorial-state.yaml', 'reviewer.none', state.reviewer?.none, state.reviewer?.none_by));
+	return issues;
+}
+
 interface InvestigationIndex {
 	slug: string;
 	title: Record<string, string>;
@@ -445,16 +577,22 @@ interface InvestigationIndex {
 	source_count: number;
 	disputed_count: number;
 	unresolved_count: number;
+	status: string;
+	reviewer: string | null;
+	editorial_state: EditorialStateOut;
 }
 
-function buildInvestigation(slug: string): { bundle: Record<string, unknown>; index: InvestigationIndex } {
+function buildInvestigation(
+	slug: string,
+	editorialState: EditorialStateFile
+): { bundle: Record<string, unknown>; index: InvestigationIndex } {
 	const dir = join(MEDIA_DIR, slug);
 	console.log(`  Building ${slug}...`);
 
 	// Load YAML files
 	const meta = loadYaml<Record<string, unknown>>(join(dir, 'meta.yaml'));
 	const research = loadOptionalYaml(join(dir, 'research.yaml'), {});
-	const editorial = loadOptionalYaml(join(dir, 'editorial.yaml'), {});
+	const editorial = loadOptionalYaml<Record<string, unknown>>(join(dir, 'editorial.yaml'), {});
 	const components = loadOptionalYaml(join(dir, 'components.yaml'), { components: [] });
 	const evidence = loadYaml<{ claims: Array<Record<string, unknown>> }>(join(dir, 'evidence.yaml'));
 	const sources = loadYaml<{ sources: Array<Record<string, unknown>> }>(join(dir, 'sources.yaml'));
@@ -482,6 +620,34 @@ function buildInvestigation(slug: string): { bundle: Record<string, unknown>; in
 		console.error(`  ❌ ${detail}`);
 		problems.push(detail);
 	};
+
+	/*
+	 * Editorial state: one status must ship, and it must be one this build
+	 * knows how to label.
+	 *
+	 * meta.yaml and editorial.yaml both carry `status`. A disagreement would
+	 * put two contradicting states in front of the reader, so it is reported
+	 * rather than silently resolved to either side, and an unknown status
+	 * fails instead of shipping a route with no wording for its state. The
+	 * resolved value is what the index and the bundle carry below; the exit at
+	 * the end of the narrative pass guarantees it never reaches them invalid.
+	 */
+	const metaStatus = typeof meta.status === 'string' ? meta.status : '';
+	const editorialStatus = typeof editorial.status === 'string' ? editorial.status : '';
+	if (!metaStatus && !editorialStatus) {
+		reportProblem(`${slug}: no editorial state: meta.yaml and editorial.yaml both lack \`status\``);
+	} else if (metaStatus && editorialStatus && metaStatus !== editorialStatus) {
+		reportProblem(
+			`${slug}: editorial state disagrees: meta.yaml says status "${metaStatus}", editorial.yaml says "${editorialStatus}"; one state must ship`
+		);
+	}
+	const status = editorialStatus || metaStatus;
+	if (status && !editorialState.statuses[status]) {
+		reportProblem(
+			`${slug}: unknown editorial status "${status}"; editorial-state.yaml defines ${Object.keys(editorialState.statuses).join(', ')}`
+		);
+	}
+	const reviewer = typeof editorial.reviewer === 'string' && editorial.reviewer ? editorial.reviewer : null;
 
 	// Load and parse narrative
 	const narrativeDir = join(dir, 'narrative');
@@ -519,12 +685,33 @@ function buildInvestigation(slug: string): { bundle: Record<string, unknown>; in
 		process.exit(1);
 	}
 
+	/*
+	 * The localized slice this piece renders. Reaching this line means `status`
+	 * resolved and exists in the vocabulary (anything else exited above), and
+	 * main() already checked the vocabulary's own translations and tiers, so
+	 * the label the routes read is complete in all three locales.
+	 */
+	const stateSlice = editorialState.statuses[status];
+	const editorialStateOut: EditorialStateOut = {
+		label: stateSlice.label,
+		label_by: stateSlice.label_by ?? null,
+		note: stateSlice.note ?? null,
+		note_by: stateSlice.note ? (stateSlice.note_by ?? null) : null,
+		reviewer_label: editorialState.reviewer.label,
+		reviewer_label_by: editorialState.reviewer.label_by ?? null,
+		no_reviewer: editorialState.reviewer.none,
+		no_reviewer_by: editorialState.reviewer.none_by ?? null
+	};
+
 	// Build the bundle
 	const bundle: Record<string, unknown> = {
 		slug,
 		meta,
 		research,
 		editorial,
+		status,
+		reviewer,
+		editorial_state: editorialStateOut,
 		components,
 		evidence,
 		sources,
@@ -552,7 +739,10 @@ function buildInvestigation(slug: string): { bundle: Record<string, unknown>; in
 		claim_count: evidence.claims.length,
 		source_count: sources.sources.length,
 		disputed_count: evidence.claims.filter((c) => c.disputed === true).length,
-		unresolved_count: evidence.claims.filter((c) => c.grade === 'unsubstantiated').length
+		unresolved_count: evidence.claims.filter((c) => c.grade === 'unsubstantiated').length,
+		status,
+		reviewer,
+		editorial_state: editorialStateOut
 	};
 
 	return { bundle, index };
@@ -568,6 +758,24 @@ function main() {
 		return;
 	}
 
+	/*
+	 * The status vocabulary ships with the corpus, not with this script: a
+	 * missing file is a failed build, not an unlabeled route, and a status
+	 * label missing one of its three languages fails here so the interface
+	 * never falls back to English silently.
+	 */
+	const statePath = join(MEDIA_DIR, 'editorial-state.yaml');
+	if (!existsSync(statePath)) {
+		console.error('  ❌ editorial-state.yaml is missing from the media content directory (status labels are sourced there)');
+		process.exit(1);
+	}
+	const editorialState = loadYaml<EditorialStateFile>(statePath);
+	const stateIssues = checkEditorialState(editorialState);
+	if (stateIssues.length > 0) {
+		for (const issue of stateIssues) console.error(`  ❌ ${issue}`);
+		process.exit(1);
+	}
+
 	mkdirSync(OUT_DIR, { recursive: true });
 	mkdirSync(STATIC_DIR, { recursive: true });
 
@@ -579,7 +787,7 @@ function main() {
 	const indices: InvestigationIndex[] = [];
 
 	for (const slug of slugs) {
-		const { bundle, index } = buildInvestigation(slug);
+		const { bundle, index } = buildInvestigation(slug, editorialState);
 
 		// Write bundle
 		const outPath = join(OUT_DIR, `${slug}.json`);

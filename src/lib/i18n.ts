@@ -121,6 +121,10 @@ const en: Dict = {
 		'degree-shuffled cohorts meet or exceed the real count in {atLeastReal}/{trials} trials',
 	'ev.continuity.note':
 		'Personnel discontinuity is not network discontinuity. The path counts travel with their null distribution: where random cohorts match the real count, no continuity claim is made.',
+	'ev.continuity.review': 'Editorial triage',
+	'ev.continuity.reviewValue':
+		'{reviewed} of {total} path(s) reviewed — {refuted} refuted, {supported} supported, {unresolved} unresolved',
+	'ev.continuity.reviewThreshold': 'reviewed by {reviewer} on {date}, edge by edge',
 	'ev.openq': 'These are unanswered. Publishing them is how the project distinguishes “we checked and this is unknown” from “we did not check”. Corrections and primary sources are welcome.',
 	'ev.contra': 'When two sources disagree, this dataset records the disagreement instead of quietly picking a winner. Every entry below shows what was adopted, what the competing claim was, who made it, and why it was or was not accepted. Where the conflict is genuinely unresolved, it says so.',
 	'ev.nocontra': 'No contradictions currently recorded.',
@@ -1454,6 +1458,10 @@ const fr: Dict = {
 		'les cohortes permutées à degré préservé égalent ou dépassent le nombre réel sur {atLeastReal}/{trials} essais',
 	'ev.continuity.note':
 		'La discontinuité du personnel n\'est pas la discontinuité du réseau. Les décomptes de chemins se lisent avec leur distribution nulle : là où des cohortes aléatoires égalent le nombre réel, aucune affirmation de continuité n\'est faite.',
+	'ev.continuity.review': 'Examen éditorial',
+	'ev.continuity.reviewValue':
+		'{reviewed} chemin(s) sur {total} examiné(s) — {refuted} réfuté, {supported} appuyé, {unresolved} non résolu',
+	'ev.continuity.reviewThreshold': 'examiné par {reviewer} le {date}, arête par arête',
 	'ev.openq': 'Ces questions restent sans réponse. Les publier est la façon dont le projet distingue « nous avons vérifié et cela demeure inconnu » de « nous n\'avons pas vérifié ». Corrections et sources primaires bienvenues.',
 	'ev.contra': 'Lorsque deux sources divergent, ce jeu de données enregistre le désaccord au lieu de désigner discrètement un vainqueur. Chaque entrée ci-dessous indique ce qui a été retenu, quelle était l\'affirmation concurrente, qui la portait, et pourquoi elle a été ou non acceptée. Là où le conflit demeure véritablement non résolu, elle le dit.',
 	'ev.nocontra': 'Aucune contradiction enregistrée pour l\'instant.',
@@ -2759,6 +2767,10 @@ const ar: Dict = {
 		'مجموعات مُعاد خلطها مع الحفاظ على الدرجات تبلغ العدد الحقيقي أو تتجاوزه في {atLeastReal}/{trials} تجربة',
 	'ev.continuity.note':
 		'انقطاع الأفراد ليس انقطاعًا في الشبكة. تُقرأ أعداد المسارات مع توزيعها الصفري: حيث تبلغ مجموعات عشوائية العدد الحقيقي، لا يُقدَّم أي ادعاء بالاستمرارية.',
+	'ev.continuity.review': 'المراجعة التحريرية',
+	'ev.continuity.reviewValue':
+		'مُراجَعة {reviewed} من {total} مسارًا — {refuted} مرفوض، {supported} مؤيَّد، {unresolved} غير محسوم',
+	'ev.continuity.reviewThreshold': 'راجَعها {reviewer} في {date} حافةً بحافة',
 	'ev.openq': 'هذه أسئلة بلا إجابة. ونشرها هو ما يميّز به المشروع بين «تحققنا وبقي هذا مجهولًا» و«لم نتحقق». والتصحيحات والمصادر الأولية مُرحَّب بها.',
 	'ev.contra': 'حين تختلف مصادر اثنان، تسجّل هذه البيانات الخلاف بدل أن تختار فائزًا في صمت. ويبيّن كل مدخل أدناه ما الذي اعتُمد، وما كان الادعاء المنافس، ومن قال به، ولماذا قُبل أو لم يُقبل. وحيث يبقى الخلاف دون حسم فعلي، فإنها تقول ذلك.',
 	'ev.nocontra': 'لا تناقضات مسجّلة حاليًا.',

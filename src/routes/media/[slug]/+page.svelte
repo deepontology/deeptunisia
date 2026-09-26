@@ -3,6 +3,7 @@
 	import { t, formatDate } from '$lib/t.svelte';
 	import { format } from '$lib/i18n';
 	import { localized } from '$lib/media/meta';
+	import EditorialState from '$lib/components/media/EditorialState.svelte';
 	import type { InvestigationBundle } from '$lib/media/types';
 
 	/**
@@ -53,6 +54,13 @@
 			<span>·</span>
 			<span>{format(app.locale, 'media.article.readtime', { n: meta.reading_time_minutes })}</span>
 		</div>
+		<!-- Draft state and reviewer, read from the bundle: the route states what
+		     the editorial record states, including a reviewer that is absent. -->
+		<EditorialState
+			status={investigation.status}
+			state={investigation.editorial_state}
+			reviewer={investigation.reviewer}
+		/>
 	</header>
 
 	<div class="content">

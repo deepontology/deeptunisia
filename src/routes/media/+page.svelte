@@ -4,6 +4,7 @@
 	import { format } from '$lib/i18n';
 	import { localized } from '$lib/media/meta';
 	import { confidenceTint, isConfidence } from '$lib/media/confidence';
+	import EditorialState from '$lib/components/media/EditorialState.svelte';
 
 	/**
 	 * Media index — lists all investigations.
@@ -43,6 +44,13 @@
 					{/if}
 					<h2>{localized(inv.title)}</h2>
 					<p class="subtitle">{localized(inv.subtitle)}</p>
+					<!-- The state is part of the listing, not a detail for the page behind it. -->
+					<EditorialState
+						status={inv.status}
+						state={inv.editorial_state}
+						reviewer={inv.reviewer}
+						size="xs"
+					/>
 				</div>
 				<div class="card-meta">
 					<span

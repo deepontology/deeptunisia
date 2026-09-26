@@ -14,3 +14,18 @@ export function localized(value: LocaleString | undefined): string {
 	if (!value) return '';
 	return value[app.locale] || value.en || '';
 }
+
+/**
+ * The ink an editorial-status chip wears.
+ *
+ * Draft gets `--basis-inferred`, the amber that already means "reasoned, not
+ * established" everywhere else in the product: a draft is work in progress,
+ * which is a gap in the work rather than a fault in the record, so it must
+ * not borrow an error colour either. Every other status is plain chrome. The
+ * badge never takes a claim grade's colour: publication state is not an
+ * epistemic grade, and mixing the two would let a status chip imply evidence
+ * strength nobody claimed.
+ */
+export function statusTint(status: string): string {
+	return status === 'draft' ? 'var(--basis-inferred)' : 'var(--text-muted)';
+}

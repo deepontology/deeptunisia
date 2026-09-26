@@ -25,6 +25,7 @@
 	import type { InvestigationBundle, ContentBlock, Entity } from '$lib/media/types';
 	import ClaimIndicator from './ClaimIndicator.svelte';
 	import ClaimExpansion from './ClaimExpansion.svelte';
+	import EditorialState from './EditorialState.svelte';
 	import EntityMention from './EntityMention.svelte';
 	import InterpretationPanel from './InterpretationPanel.svelte';
 	import SidebarTimeline from './SidebarTimeline.svelte';
@@ -139,6 +140,13 @@
 				<span class="sep">·</span>
 				<span>{format(app.locale, 'media.article.readtime', { n: meta.reading_time_minutes })}</span>
 			</div>
+			<!-- The reading surface states the editorial state too: a draft read in
+			     full must not look like a published investigation. -->
+			<EditorialState
+				status={investigation.status}
+				state={investigation.editorial_state}
+				reviewer={investigation.reviewer}
+			/>
 		</header>
 
 		{#if introGroup}

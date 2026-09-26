@@ -136,8 +136,10 @@
 						<p><Prose record={h} field="falsifiable_by" block /></p>
 					</div>
 					{#if h.id === 'h1-continuous-deep-state'}
-						<!-- Two tests, two answers: the personnel snapshot and the network
-						     path query. The null distribution travels with the counts. -->
+						<!-- Three rows, one question: the personnel snapshot, the network
+						     path query, and the editorial triage of those paths. The null
+						     distribution and the human verdict travel with the count, so a
+						     path count is never published as a finding on its own. -->
 						<div class="continuity">
 							<span class="eyebrow">{t('ev.continuity.title')}</span>
 							<table>
@@ -180,6 +182,26 @@
 											})}</td
 										>
 									</tr>
+									{#if continuity.review}
+										<tr>
+											<td>{t('ev.continuity.review')}</td>
+											<td
+												>{format(app.locale, 'ev.continuity.reviewValue', {
+													reviewed: continuity.review.reviewed,
+													total: continuity.review.total,
+													refuted: continuity.review.refuted,
+													supported: continuity.review.supported,
+													unresolved: continuity.review.unresolved
+												})}</td
+											>
+											<td
+												>{format(app.locale, 'ev.continuity.reviewThreshold', {
+													reviewer: continuity.review.reviewer ?? '—',
+													date: continuity.review.review_date ?? '—'
+												})}</td
+											>
+										</tr>
+									{/if}
 								</tbody>
 							</table>
 							<p class="continuity-note">{t('ev.continuity.note')}</p>

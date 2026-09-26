@@ -20,6 +20,12 @@ import {
 	MIN_AUTHORITY,
 	MAX_PATH_EDGES
 } from './network-continuity.ts';
+import {
+	REVIEW_COLUMNS,
+	invalidVerdicts,
+	parseReviewCsv,
+	unattributed
+} from './network-continuity-review.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
@@ -67,9 +73,17 @@ ok(
 
 const outPath = join(ROOT, 'output', 'network-continuity.json');
 if (existsSync(outPath)) {
+	/*
+	 * The published file carries one field the pure recompute cannot: `review`,
+	 * which is read back from the hand-authored triage CSV. Comparing without
+	 * it keeps the original promise — the emitted probe output is the
+	 * recompute — while the triage half is asserted separately below.
+	 */
+	const publishedProbe = JSON.parse(readFileSync(outPath, 'utf8'));
+	delete publishedProbe.review;
 	ok(
 		'output/network-continuity.json matches the recompute',
-		readFileSync(outPath, 'utf8') === JSON.stringify(result, null, 2) + '\n',
+		JSON.stringify(publishedProbe, null, 2) === JSON.stringify(result, null, 2),
 		existsSync(outPath) ? 'published' : 'missing'
 	);
 }
@@ -200,6 +214,70 @@ ok(
 	backwards.paths.cohort1to2.primary.length === 0 && backwards.paths.cohort1to2.secondary.length === 0,
 	`${backwards.paths.cohort1to2.primary.length + backwards.paths.cohort1to2.secondary.length} path(s)`
 );
+
+console.log('\n  ── network continuity: the editorial triage surface ──\n');
+/*
+ * A path count is arithmetic, not a finding. M2 requires the probe's number,
+ * its null controls and the human triage to be published together, so these
+ * assertions keep all three from drifting apart: the file must be current
+ * (a row per published path, matching its edges), every verdict must be inside
+ * the vocabulary and attributed, and the JSON the interface reads must carry
+ * the summary the CSV produced. A path that changes shape loses its verdict
+ * here rather than inheriting one written for different edges.
+ */
+{
+	const csvPath = join(ROOT, 'output', 'network-continuity-review.csv');
+	ok('the triage file is emitted', existsSync(csvPath), csvPath);
+
+	const raw = existsSync(csvPath) ? readFileSync(csvPath, 'utf8') : '';
+	const header = raw.split(/\r?\n/)[0].split(',');
+	ok(
+		'it carries the documented header',
+		header.length === REVIEW_COLUMNS.length && header.every((h, i) => h === REVIEW_COLUMNS[i]),
+		header.join(',').slice(0, 80)
+	);
+
+	const rows = parseReviewCsv(raw);
+	const primary = [
+		...result.paths.cohort1to2.primary.map((p, i) => ({ seg: 'c1c2', i, p })),
+		...result.paths.cohort2to3.primary.map((p, i) => ({ seg: 'c2c3', i, p }))
+	];
+	ok('one row per published primary path', rows.length === primary.length, `${rows.length} row(s) / ${primary.length} path(s)`);
+
+	let stale = 0;
+	for (const { seg, i, p } of primary) {
+		const row = rows.find((r) => r.path_id === `h1-net-${seg}-p${i}`);
+		if (!row || row.nodes !== p.nodes.join(';') || row.edges !== p.edges.join(';')) stale++;
+	}
+	ok('every row matches the path it names — the file is current, not stale', stale === 0, `${stale} mismatch(es)`);
+	ok('no row survives for a path the probe no longer publishes', rows.length === primary.length, `${rows.length} rows`);
+
+	const badVerdicts = invalidVerdicts(rows);
+	ok('every verdict is supported, refuted or unresolved', badVerdicts.length === 0, badVerdicts.join('; '));
+	ok(
+		'every path is triaged — none carries an empty verdict',
+		rows.every((r) => r.verdict.trim().length > 0),
+		`${rows.filter((r) => !r.verdict.trim()).length} untriaged`
+	);
+	const unattributedRows = unattributed(rows);
+	ok('every verdict names a reviewer and a date', unattributedRows.length === 0, unattributedRows.join('; '));
+	ok('the reviewer is recorded on every row', rows.every((r) => r.reviewer.trim().length > 0), [...new Set(rows.map((r) => r.reviewer))].join(', '));
+
+	const published = JSON.parse(readFileSync(join(ROOT, 'src', 'generated', 'network-continuity.json'), 'utf8'));
+	ok('the published JSON carries the triage summary', !!published.review, JSON.stringify(published.review ?? null));
+	ok(
+		'the summary matches the file it was read from',
+		published.review?.reviewed === rows.length && published.review?.refuted === rows.filter((r) => r.verdict === 'refuted').length,
+		`reviewed ${published.review?.reviewed} / refuted ${published.review?.refuted}`
+	);
+	ok(
+		'it names where it came from',
+		typeof published.review?.source === 'string' && published.review.source.endsWith('network-continuity-review.csv'),
+		published.review?.source
+	);
+	ok('the null controls are published beside it', typeof published.nullControls?.shuffledCohorts?.atLeastReal === 'number');
+	ok('and so is the personnel reading', Array.isArray(published.personnel?.spanning));
+}
 
 console.log(
 	`\n  ${checks - failures}/${checks} network-continuity checks passed${failures ? `, ${failures} FAILED` : ''}\n`

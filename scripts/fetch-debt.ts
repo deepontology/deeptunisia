@@ -33,18 +33,24 @@
  * the globe can open the record. That join lives in build-world.ts; this script only
  * transcribes what the World Bank publishes, names and all.
  *
- * ── Licence ───────────────────────────────────────────────────────────────────
+ * ── Licence and manifest ─────────────────────────────────────────────────────
  *
- * World Bank Open Data is CC-BY 4.0 — explicitly redistributable with attribution,
- * which is why this snapshot is committed where the IMF's could not be. See the
- * header of scripts/fetch-trade.ts for that story.
+ * IDS is licensed CC-BY 4.0, stated on the World Bank's own catalogue entry
+ * for the dataset (dataset 0038015), so this snapshot is redistributable with
+ * attribution. That decision is recorded rather than assumed: this script
+ * writes the `ids-debt` entry into flows/manifest.json (licence and its
+ * terms, the retrieval date, the freshness policy) beside the snapshot, and
+ * the world build refuses to ship the debt figures without it. The rules and
+ * the thresholds live in scripts/debt-provenance.ts. See the header of
+ * scripts/fetch-trade.ts for why the IMF's figures are not committed here.
  *
  * Usage: `npx tsx scripts/fetch-debt.ts`
  */
 
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { DEBT_MANIFEST_ID, type DebtFreshness, type DebtManifestEntry } from './debt-provenance.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
@@ -57,6 +63,19 @@ const FETCH_TIMEOUT_MS = 120_000;
 
 /** Source 6 is International Debt Statistics. */
 const IDS = 'https://api.worldbank.org/v2/sources/6/country/TUN';
+
+/** The catalogue page, where the dataset's licence is stated. */
+const IDS_DATASET_PAGE = 'https://datacatalog.worldbank.org/search/dataset/0038015/international-debt-statistics';
+const IDS_ATTRIBUTION = 'World Bank International Debt Statistics (World Bank Open Data)';
+const CC_BY_4_TERMS = 'Creative Commons Attribution 4.0: reuse and redistribution permitted for any purpose with attribution.';
+const DEFAULT_LICENCE = 'CC-BY-4.0';
+
+/**
+ * Seeded only when the manifest has no entry yet. An existing policy is kept
+ * as it stands: the thresholds are a recorded decision (see
+ * scripts/debt-provenance.ts), not something a routine refetch resets.
+ */
+const DEFAULT_FRESHNESS: DebtFreshness = { warn_days: 90, fail_days: 365 };
 
 /**
  * The four series, and the direction each one points.
@@ -235,8 +254,42 @@ async function main() {
 		'utf8'
 	);
 
+	/*
+	 * The manifest entry is written with the snapshot, never by hand after it,
+	 * so `retrieved` cannot drift between the two. Licence and freshness are
+	 * recorded decisions rather than fetch output: an existing entry keeps
+	 * them, and only a first run seeds the documented defaults.
+	 */
+	const manifestFile = join(FLOWS_DIR, 'manifest.json');
+	const manifest: { generated?: string; datasets?: Record<string, unknown>[] } = existsSync(manifestFile)
+		? (JSON.parse(readFileSync(manifestFile, 'utf8')) as { generated?: string; datasets?: Record<string, unknown>[] })
+		: {};
+	const prior: Record<string, unknown> =
+		(manifest.datasets ?? []).find((d) => d.id === DEBT_MANIFEST_ID) ?? {};
+	const entry: DebtManifestEntry & Record<string, unknown> = {
+		...prior,
+		id: DEBT_MANIFEST_ID,
+		title: 'World Bank International Debt Statistics: Tunisia external debt by creditor, stocks and flows',
+		publisher: 'World Bank',
+		url: IDS_DATASET_PAGE,
+		api: IDS,
+		retrieved,
+		coverage: { from: sorted[0], to: sorted.at(-1), years: sorted.length, creditors: creditors.size },
+		unit: 'USD',
+		licence: typeof prior.licence === 'string' && prior.licence ? prior.licence : DEFAULT_LICENCE,
+		licence_url: IDS_DATASET_PAGE,
+		licence_terms: CC_BY_4_TERMS,
+		redistributable: true,
+		attribution: IDS_ATTRIBUTION,
+		freshness: (prior.freshness as DebtFreshness | undefined) ?? DEFAULT_FRESHNESS
+	};
+	const datasets = (manifest.datasets ?? []).filter((d) => d.id !== DEBT_MANIFEST_ID);
+	datasets.push(entry);
+	writeFileSync(manifestFile, JSON.stringify({ ...manifest, generated: retrieved, datasets }, null, 1), 'utf8');
+
 	console.log(`\n  period     ${sorted[0]}–${sorted.at(-1)} (${sorted.length} years)`);
 	console.log(`  creditors  ${creditors.size} distinct`);
+	console.log(`  manifest   flows/manifest.json (${DEBT_MANIFEST_ID})`);
 	console.log(`\n  → flows/worldbank/`);
 }
 

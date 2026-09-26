@@ -6,6 +6,27 @@
 
 export type LocaleString = Record<string, string>;
 
+/**
+ * The localized editorial-state slice build-media.ts emits from
+ * src/content/media/editorial-state.yaml, so the routes render the status
+ * wording in the reader's language instead of a hard-coded badge.
+ *
+ * Each `_by` sibling carries the translation tier of its field's fr/ar values,
+ * the same convention as `field_fr` / `field_fr_by` on graph records. `note`
+ * is null for statuses that state nothing beyond the label itself (published),
+ * so a route can test for it rather than render an empty line.
+ */
+export interface EditorialState {
+	label: LocaleString;
+	label_by: LocaleString | null;
+	note: LocaleString | null;
+	note_by: LocaleString | null;
+	reviewer_label: LocaleString;
+	reviewer_label_by: LocaleString | null;
+	no_reviewer: LocaleString;
+	no_reviewer_by: LocaleString | null;
+}
+
 export interface InvestigationMeta {
 	slug: string;
 	version: string;
@@ -137,6 +158,10 @@ export interface InterpretationRecord {
 
 export interface InvestigationBundle {
 	slug: string;
+	/** Resolved editorial state: meta.yaml and editorial.yaml must agree, and build-media.ts checks that. */
+	status: string;
+	reviewer: string | null;
+	editorial_state: EditorialState;
 	meta: InvestigationMeta;
 	research: InvestigationResearch;
 	editorial: unknown;
@@ -163,4 +188,7 @@ export interface InvestigationIndexEntry {
 	source_count: number;
 	disputed_count: number;
 	unresolved_count: number;
+	status: string;
+	reviewer: string | null;
+	editorial_state: EditorialState;
 }
