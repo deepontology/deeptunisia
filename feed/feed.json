@@ -3,6 +3,46 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:d1e3bc64ae630cb9",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Équipe nationale | La FTF lance un appel à l’unité et à l’esprit sportif",
+      "link": "https://kapitalis.com/tunisie/2026/09/26/equipe-nationale-la-ftf-lance-un-appel-a-lunite-et-a-lesprit-sportif/",
+      "published": "2026-09-26T22:08:04Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:ea0bbe6359f9a0be",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "JMC 2026 | Le groupe JadaL attendu le 7 octobre à Tunis",
+      "link": "https://kapitalis.com/tunisie/2026/09/26/jmc-2026-le-groupe-jadal-attendu-le-7-octobre-a-tunis/",
+      "published": "2026-09-26T21:29:16Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:db1a0811bfe02dce",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Trafic de cocaïne et d’héroïne | Fin de cavale pour un réseau opérant à Tunis",
+      "link": "https://kapitalis.com/tunisie/2026/09/26/trafic-de-cocaine-et-dheroine-fin-de-cavale-pour-un-reseau-operant-a-tunis/",
+      "published": "2026-09-26T19:50:45Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:678fa2b1eca4b8b2",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Lutte contre la rage | La campagne de vaccination gratuite se poursuit à l’Ariana",
+      "link": "https://kapitalis.com/tunisie/2026/09/26/lutte-contre-la-rage-la-campagne-de-vaccination-gratuite-se-poursuit-a-lariana/",
+      "published": "2026-09-26T19:25:04Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
       "id": "feed:kapitalis:fead83c0ce12b0e3",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -11708,42 +11748,6 @@
       "title": "Le Maroc et l’Inde s’engagent à consolider leurs liens économiques",
       "link": "https://africanmanager.com/le-maroc-et-linde-sengagent-a-consolider-leurs-liens-economiques/",
       "published": "2026-09-02T08:39:23Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:babb154f7662eceb",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Siliana – incendie du Djebel Boulmane: le ministre de l’Agriculture constate les dégâts alors que les efforts se poursuivent pour maîtriser l’incendie",
-      "link": "https://africanmanager.com/siliana-incendie-du-djebel-boulmane-le-ministre-de-lagriculture-constate-les-degats-alors-que-les-efforts-se-poursuivent-pour-maitriser-lincendie/",
-      "published": "2026-09-02T08:38:31Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:8c53e64e6c134e6d",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Sousse : le gouverneur mobilise les services de contrôle pour une rentrée scolaire sans spéculation",
-      "link": "https://africanmanager.com/sousse-le-gouverneur-mobilise-les-services-de-controle-pour-une-rentree-scolaire-sans-speculation/",
-      "published": "2026-09-02T08:38:06Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:be0f76eb76ee12a2",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Ezzahra : Interpellation de plusieurs migrants",
-      "link": "https://africanmanager.com/ezzahra-interpellation-de-plusieurs-migrants/",
-      "published": "2026-09-02T08:35:16Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:c2861c61532acbce",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Eau minérale : retour progressif d’approvisionnement",
-      "link": "https://africanmanager.com/eau-minerale-retour-progressif-dapprovisionnement/",
-      "published": "2026-09-02T08:29:53Z",
       "lang": "fr"
     }
   ]
