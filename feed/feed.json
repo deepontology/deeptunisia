@@ -3,6 +3,76 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:african-manager:55036a1053aceec4",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Déchets plastiques: Une station de tri sera créée, bientôt, à Hammam-Sousse",
+      "link": "https://africanmanager.com/dechets-plastiques-une-station-de-tri-sera-creee-bientot-a-hammam-sousse/",
+      "published": "2026-09-26T00:40:40Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:ded7d3b543201c15",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "L’UE met en garde contre une « crise des prix de l’énergie »",
+      "link": "https://africanmanager.com/lue-met-en-garde-contre-une-crise-des-prix-de-lenergie/",
+      "published": "2026-09-26T00:29:12Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:26445fac61fc8881",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Araghchi qualifie de « gros mensonge » l’affirmation que l’Iran serait proche de se doter de l’arme nucléaire",
+      "link": "https://africanmanager.com/araghchi-qualifie-de-gros-mensonge-laffirmation-que-liran-serait-proche-de-se-doter-de-larme-nucleaire/",
+      "published": "2026-09-26T00:27:59Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:54267d3ef236a414",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "La pression fiscale en Tunisie excède le double de la moyenne africaine",
+      "link": "https://africanmanager.com/la-pression-fiscale-en-tunisie-excede-le-double-de-la-moyenne-africaine/",
+      "published": "2026-09-26T00:26:48Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:c8610a9e3317b991",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Un documentaire dénonçant des exactions de l’armée israélienne à Gaza nominé aux Emmy Awards",
+      "link": "https://africanmanager.com/un-documentaire-denoncant-des-exactions-de-larmee-israelienne-a-gaza-nomine-aux-emmy-awards/",
+      "published": "2026-09-26T00:25:15Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:2b5636bba94938da",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Le nombre de transits de navires marchands dans le terminal d’Ormuz chute à neuf",
+      "link": "https://africanmanager.com/le-nombre-de-transits-de-navires-marchands-dans-le-terminal-dormuz-chute-a-neuf/",
+      "published": "2026-09-26T00:23:56Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:e525e58779cf7e5c",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Trump dit que la visite de Xi a été « très positive pour les deux pays »",
+      "link": "https://africanmanager.com/trump-dit-que-la-visite-de-xi-a-ete-tres-positive-pour-les-deux-pays/",
+      "published": "2026-09-26T00:22:38Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
       "id": "feed:kapitalis:def1aabfc28989fa",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -11653,69 +11723,6 @@
       "title": "Quand l’État renonce à planifier pour documenter l’arrivée d’une bouteille d’eau",
       "link": "https://africanmanager.com/quand-letat-renonce-a-planifier-pour-documenter-larrivee-dune-bouteille-deau/",
       "published": "2026-09-01T13:09:00Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:43a39ddb1c269cbd",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "SIPHAT, le laboratoire public qui ne paie plus l’État et ne publie plus ses comptes",
-      "link": "https://africanmanager.com/siphat-le-laboratoire-public-qui-ne-paie-plus-letat-et-ne-publie-plus-ses-comptes/",
-      "published": "2026-09-01T13:00:00Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:a5e6ad4569b6fa19",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Un livre ravive la mémoire des Italiens de Tunisie",
-      "link": "https://kapitalis.com/tunisie/2026/09/01/un-livre-ravive-la-memoire-des-italiens-de-tunisie/",
-      "published": "2026-09-01T12:48:03Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:89732817ec03b11c",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Le FTDES avertit contre une crise globale en Tunisie",
-      "link": "https://kapitalis.com/tunisie/2026/09/01/le-ftdes-avertit-contre-une-crise-globale-en-tunisie/",
-      "published": "2026-09-01T12:04:32Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:fef95761f7ee7c75",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Les forces israéliennes ont tenté, sans succès, de cibler un membre de Hamas",
-      "link": "https://africanmanager.com/les-forces-israeliennes-ont-tente-sans-succes-de-cibler-un-membre-de-hamas/",
-      "published": "2026-09-01T11:25:05Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:17b000477c9592c5",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Plus de 5 000 décès liés à la chaleur en Espagne, 0 en Tunisie !",
-      "link": "https://kapitalis.com/tunisie/2026/09/01/plus-de-5-000-deces-lies-a-la-chaleur-en-espagne-0-en-tunisie/",
-      "published": "2026-09-01T11:19:16Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:1bc046f1c97cd9b1",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "L’Allemagne lorgne le gaz algérien pour diversifier ses approvisionnements",
-      "link": "https://africanmanager.com/lallemagne-lorgne-le-gaz-algerien-pour-diversifier-ses-approvisionnements/",
-      "published": "2026-09-01T11:16:44Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:a724323e0e248661",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Le Raja Club Athletic se sépare de son entraîneur tunisien Nasreddine Nabi",
-      "link": "https://africanmanager.com/le-raja-club-athletic-se-separe-de-son-entraineur-tunisien-nasreddine-nabi/",
-      "published": "2026-09-01T11:13:57Z",
       "lang": "fr"
     }
   ]
