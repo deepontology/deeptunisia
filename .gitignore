@@ -1,4 +1,4 @@
-node_modules/
+node_modules
 build/
 .svelte-kit/
 src/generated/
@@ -11,32 +11,44 @@ static/dataset.json
 static/positions.csv
 static/relationships.csv
 static/sources.csv
-.smoke/
-.cache/
-.community/
+.smoke
+.cache
+.community
 moderator-key.pem
 moderator-pub.pem
-.wrangler/
+.wrangler
 # --- workshop — stays on disk, never pushed to public ---
-.claude/
-.opencode/
-.reasonix/
-.vscode/
-.mimocode/
-.freebuff/
-.gstack/
-.ula/
+#
+# NO TRAILING SLASH ON ANY LOCAL-STATE ENTRY, anywhere in this file.
+#
+# A trailing slash matches directories only. An opencode worktree represents
+# `node_modules`, `.claude` and `.opencode` as symlinks to the main checkout, and
+# a symlink is not a directory — so `node_modules/` does not match it, and
+# `git add -A` commits the link with its absolute local path inside. That has
+# happened once (commit 6b5523c). On a machine where core.symlinks=false, git
+# then checks those links out as plain files, which REPLACES the real directory
+# it pointed at. Directory-only patterns are still correct for generated content
+# below (build/, src/generated/, output/, docs/, ...), where a file of that name
+# must not be ignored by accident.
+.claude
+.opencode
+.reasonix
+.vscode
+.mimocode
+.freebuff
+.gstack
+.ula
 output/
 docs/
 design-plans/
 research/
 data/contrib/
-tmp/
+tmp
 uncited.txt
 uncited2.txt
 
 # internal working material — never tracked, never shipped
-internal/
+internal
 # Disclosures — staged locally; review before commit (and rename /GENAI.md → path once public)
 /GENAI.md
 /CONTRIBUTING.md
