@@ -3,6 +3,26 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:fead83c0ce12b0e3",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Lamjarred condamné de 10 ans et inscrit au fichier des auteurs d’infractions sexuelles",
+      "link": "https://kapitalis.com/tunisie/2026/09/26/lamjarred-condamne-de-10-ans-et-inscrit-au-fichier-des-auteurs-dinfractions-sexuelles/",
+      "published": "2026-09-26T18:22:51Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:african-manager:8a93546a79e482bf",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Déficit des caisses sociales : L’UGTT veut vite les réformes",
+      "link": "https://africanmanager.com/deficit-des-caisses-sociales-des-experts-de-lugtt-appellent-a-accelerer-les-reformes/",
+      "published": "2026-09-26T14:26:34Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
       "id": "feed:kapitalis:c8cfbf193465b85c",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -11724,24 +11744,6 @@
       "title": "Eau minérale : retour progressif d’approvisionnement",
       "link": "https://africanmanager.com/eau-minerale-retour-progressif-dapprovisionnement/",
       "published": "2026-09-02T08:29:53Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:2f9470e0557fcda2",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Hammamet : lancement des travaux d’aménagement du stade",
-      "link": "https://africanmanager.com/hammamet-lancement-des-travaux-damenagement-du-stade/",
-      "published": "2026-09-02T08:26:41Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:f36c36a68aaaaadf",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "L’«affaire du complot n° 1» en cassation | Suite ou fin ?",
-      "link": "https://kapitalis.com/tunisie/2026/09/02/laffaire-du-complot-n-1-en-cassation-suite-ou-fin/",
-      "published": "2026-09-02T07:38:55Z",
       "lang": "fr"
     }
   ]
