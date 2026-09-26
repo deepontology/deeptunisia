@@ -33,10 +33,10 @@ span as a date, or an unsubstantiated claim as a finding, misrepresents the sour
 
 ## Known limits, stated by the project
 
-- Only <!--stat:reviewed-->46<!--/stat--> of <!--stat:reviewable-->1715<!--/stat-->
+- Only <!--stat:reviewed-->46<!--/stat--> of <!--stat:reviewable-->1750<!--/stat-->
   records have had independent human review — and almost all of it landed on the
   best-evidenced claims, not the ones that need it.
-- <!--stat:needsPrimarySource-->232<!--/stat--> records await a primary source.
+- <!--stat:needsPrimarySource-->227<!--/stat--> records await a primary source.
 - Defence intelligence (ANRSD) has no primary sourcing at all: statute, appointment
   date and current status are unestablished.
 - The pre-2011 police chronology rests largely on secondary sources.
@@ -44,7 +44,7 @@ span as a date, or an unsubstantiated claim as a finding, misrepresents the sour
   unresolved contradiction rather than smoothed over.
 - <!--stat:successionGaps-->43<!--/stat--> succession gaps and
   <!--stat:successionOverlaps-->2<!--/stat--> overlapping tenures are detected and
-  published; <!--stat:contradictions-->64<!--/stat--> source contradictions are
+  published; <!--stat:contradictions-->65<!--/stat--> source contradictions are
   recorded unresolved.
 
 ## Common factual traps

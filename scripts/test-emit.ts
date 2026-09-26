@@ -153,6 +153,89 @@ console.log('\n  ── the file outside the edit ──\n');
 	ok('append-to-list: stays a flow sequence', /sources: \[.*jort-1957-01\]/.test(text));
 }
 
+// --- append-object ---------------------------------------------------------
+
+{
+	const before = positions;
+	const { text, splice } = applyEdit(before, {
+		op: 'append-object',
+		target: { id: 'p-int-feki' },
+		field: 'disputes',
+		item: { claim: 'A third, test-only reading of the appointment date', held_by: 'Test fixture', status: 'open' }
+	});
+
+	ok(
+		'append-object: only the spliced region differs',
+		untouchedOutside(before, text, splice.start, splice.end, splice.text)
+	);
+	ok('append-object: adds three lines', text.split('\n').length === before.split('\n').length + 3);
+
+	const after = (parseDocument(text).toJS() as any[]).find((r) => r.id === 'p-int-feki');
+	ok('append-object: entry lands last', after.disputes[after.disputes.length - 1].claim.startsWith('A third'));
+	ok('append-object: existing entries survive unchanged', after.disputes.length === 3 && after.disputes[0].status === 'open');
+	ok('append-object: the appended entry reads back', after.disputes[2].held_by === 'Test fixture' && after.disputes[2].status === 'open');
+	ok(
+		'append-object: neighbouring records are identical',
+		JSON.stringify((parseDocument(text).toJS() as any[]).find((r) => r.id === 'p-int-essid')) ===
+			JSON.stringify((parseDocument(before).toJS() as any[]).find((r) => r.id === 'p-int-essid'))
+	);
+}
+
+// --- remove-field ----------------------------------------------------------
+
+{
+	const before = people;
+	const { text, splice } = applyEdit(before, {
+		op: 'remove-field',
+		target: { id: 'bourguiba' },
+		field: 'tagline'
+	});
+
+	ok(
+		'remove-field: only the spliced region differs',
+		untouchedOutside(before, text, splice.start, splice.end, splice.text)
+	);
+	ok('remove-field: removes exactly one line', text.split('\n').length === before.split('\n').length - 1);
+
+	const after = (parseDocument(text).toJS() as any[]).find((r) => r.id === 'bourguiba');
+	ok('remove-field: field is gone', !('tagline' in after));
+	ok(
+		'remove-field: the record keeps its other fields',
+		after.name_en === 'Habib Bourguiba' && after.death === '2000-04-06'
+	);
+	ok(
+		'remove-field: neighbouring records are identical',
+		JSON.stringify((parseDocument(text).toJS() as any[]).find((r) => r.id === 'ben-ali')) ===
+			JSON.stringify((parseDocument(before).toJS() as any[]).find((r) => r.id === 'ben-ali'))
+	);
+}
+
+{
+	// The real use: a field whose value is a block scalar. The whole field and
+	// the line break that ended it must go, or the next key glues onto the
+	// removed value's last line and the file stops parsing.
+	const before = people;
+	const { text, splice } = applyEdit(before, {
+		op: 'remove-field',
+		target: { id: 'bourguiba' },
+		field: 'summary'
+	});
+
+	ok(
+		'remove-field block scalar: only the spliced region differs',
+		untouchedOutside(before, text, splice.start, splice.end, splice.text)
+	);
+
+	const after = (parseDocument(text).toJS() as any[]).find((r) => r.id === 'bourguiba');
+	ok('remove-field block scalar: field is gone', !('summary' in after));
+	ok('remove-field block scalar: next field survives', after.summary_fr.startsWith('A conduit la Tunisie'));
+	ok(
+		'remove-field block scalar: neighbours are identical',
+		JSON.stringify((parseDocument(text).toJS() as any[]).find((r) => r.id === 'ben-ali')) ===
+			JSON.stringify((parseDocument(before).toJS() as any[]).find((r) => r.id === 'ben-ali'))
+	);
+}
+
 // --- add-block (the review lever) ------------------------------------------
 
 {
@@ -308,6 +391,11 @@ throws('duplicate record id', () => applyEdit(people, { op: 'append-record', rec
 throws('record without an id', () => applyEdit(people, { op: 'append-record', record: { name_en: 'x' } }), 'needs a string id');
 throws('add-block over an existing field', () => applyEdit(people, { op: 'add-block', target: { id: 'bourguiba' }, field: 'sources', entries: { a: 'b' } }), 'already has');
 throws('empty block', () => applyEdit(people, { op: 'add-block', target: { id: 'bourguiba' }, field: 'review', entries: {} }), 'is empty');
+throws('remove-field on a missing field', () => applyEdit(people, { op: 'remove-field', target: { id: 'bourguiba' }, field: 'nope' }), 'has no field');
+throws('remove-field on a missing record', () => applyEdit(people, { op: 'remove-field', target: { id: 'nobody' }, field: 'tagline' }), 'no record with id');
+throws('append-object on a non-list', () => applyEdit(people, { op: 'append-object', target: { id: 'bourguiba' }, field: 'tagline', item: { a: 'b' } }), 'is not a list');
+throws('append-object on a scalar list', () => applyEdit(people, { op: 'append-object', target: { id: 'bourguiba' }, field: 'sources', item: { a: 'b' } }), 'is not a block list of objects');
+throws('append-object with an empty object', () => applyEdit(people, { op: 'append-object', target: { id: 'bourguiba' }, field: 'sources', item: {} }), 'needs at least one field');
 throws('multi-line value', () => applyEdit(people, { op: 'set', target: { id: 'bourguiba' }, field: 'tagline', value: 'one\ntwo' }), 'does not fit on one line');
 // Mojibake must not reach canonical data. This exact string — a cp1252 body decoded
 // as UTF-8 — was written into sources.yaml before the check existed.

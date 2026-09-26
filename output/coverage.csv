@@ -1,6 +1,6 @@
 dimension,value,records,with_sources,reviewed,with_evidence,origins_known,nonzero,distinct_sources,sparse
 institution,abou-khater-project,4,4,1,0,0,0,7,1
-institution,administrative-court,4,4,0,0,0,0,2,1
+institution,administrative-court,4,4,0,0,0,0,3,1
 institution,afdb,1,1,0,0,0,0,1,1
 institution,air-force,7,7,0,0,0,0,8,1
 institution,al-badil,1,1,0,0,0,0,1,1
@@ -40,7 +40,7 @@ institution,elloumi-group,4,4,0,0,0,0,7,1
 institution,ennahda,7,7,0,0,0,0,9,1
 institution,etap,2,2,0,0,0,0,2,1
 institution,etat-tunisien,12,12,1,0,0,0,17,1
-institution,ett,12,12,0,0,0,0,2,1
+institution,ett,12,12,0,0,0,0,3,1
 institution,ettakatol,1,1,0,0,0,0,1,1
 institution,european-union,2,2,1,0,0,0,2,1
 institution,founders-capital-partners,1,1,0,0,0,0,2,1
@@ -62,7 +62,7 @@ institution,ivd,2,2,0,0,0,0,2,1
 institution,judiciary,37,37,1,0,0,0,46,1
 institution,kallel-family,1,1,0,0,0,0,2,1
 institution,karama-coalition,1,1,0,0,0,0,3,1
-institution,la-poste-tunisienne,3,3,0,0,0,0,1,1
+institution,la-poste-tunisienne,4,4,0,0,0,0,3,1
 institution,la-presse-tunisie,2,2,0,0,0,0,2,1
 institution,land-forces,5,5,0,0,0,0,12,1
 institution,leaders-tunisie,2,2,0,0,0,0,4,1
@@ -93,6 +93,7 @@ institution,neo-destour,1,1,0,0,0,0,1,1
 institution,nessma-tv,7,7,0,0,0,0,7,1
 institution,nidaa-tounes,7,7,0,0,0,0,6,1
 institution,onat,10,10,0,1,1,1,4,1
+institution,onpf,1,1,0,0,0,0,2,1
 institution,ooredoo-tunisie,1,1,0,0,0,0,2,1
 institution,orange-tunisie,4,4,0,0,0,0,4,1
 institution,pdl,1,1,0,0,0,0,1,1
@@ -113,8 +114,8 @@ institution,republican-party,2,2,0,0,0,0,3,1
 institution,republican-people-union,1,1,0,0,0,0,4,1
 institution,russia,1,1,0,0,0,0,1,1
 institution,saied-family-clan-network,3,3,0,0,0,0,3,1
-institution,sncft,6,6,0,0,0,0,1,1
-institution,sonede,2,2,0,0,0,0,1,1
+institution,sncft,6,6,0,0,0,0,4,1
+institution,sonede,3,3,0,0,0,0,2,1
 institution,sonibank,1,1,0,0,0,0,1,1
 institution,stb,26,26,0,0,0,0,6,1
 institution,steg,8,8,0,0,0,0,3,1
@@ -139,19 +140,19 @@ institution,wifak-bank,1,1,0,0,0,0,1,1
 institution,world-bank,1,1,0,0,0,0,3,1
 institution,zitouna-bank,2,2,0,0,0,0,4,1
 institution,zitouna-tv,3,3,0,0,0,0,3,1
-era,ben-ali-consolidation,187,187,11,1,1,1,184,1
-era,bourguiba,217,217,19,1,1,1,171,1
-era,fragmentation,323,323,12,3,3,3,366,0
-era,pluralism,361,361,8,1,1,1,364,1
-era,police-state,265,265,13,2,2,2,260,1
-era,recentralisation,461,461,15,6,6,6,509,0
-era,transition,365,365,11,2,2,2,357,1
+era,ben-ali-consolidation,188,188,11,1,1,1,186,1
+era,bourguiba,218,218,19,1,1,1,173,1
+era,fragmentation,324,324,12,3,3,3,371,0
+era,pluralism,362,362,8,1,1,1,367,1
+era,police-state,266,266,13,2,2,2,262,1
+era,recentralisation,465,465,15,6,6,6,525,0
+era,transition,366,366,11,2,2,2,359,1
 source_family,africa business,3,2,0,0,0,2,3,1
 source_family,africa intelligence,2,2,0,0,0,2,2,1
 source_family,africa intelligence accessed via blackfacts aggregator original is paywalled,1,0,0,0,0,0,1,1
 source_family,africa intelligence maghreb confidential,1,1,0,0,0,1,1,1
-source_family,african development bank,3,1,0,0,0,1,3,1
-source_family,african manager,28,23,0,0,0,23,28,0
+source_family,african development bank,4,1,0,0,0,1,4,1
+source_family,african manager,48,37,0,0,0,37,48,0
 source_family,african manager en,1,0,0,0,0,0,1,1
 source_family,african union,1,0,0,0,0,0,1,1
 source_family,africanews,2,2,0,0,0,2,2,1
@@ -161,7 +162,7 @@ source_family,airbus,1,0,0,0,0,0,1,1
 source_family,al arabiya,1,1,0,0,0,1,1,1
 source_family,al bawaba,1,1,0,0,0,1,1,1
 source_family,al estiklal republication du contenu jeune afrique,1,0,0,0,0,0,1,1
-source_family,al jazeera,13,13,0,0,0,13,13,0
+source_family,al jazeera,15,15,0,0,0,15,15,0
 source_family,al jazeera heba habib reuters,1,1,0,0,0,1,1,1
 source_family,al jazeera reuters,1,1,0,0,0,1,1,1
 source_family,al jazeera staff and reuters,1,1,0,0,0,1,1,1
@@ -205,7 +206,7 @@ source_family,bloomberg,1,1,0,0,0,1,1,1
 source_family,bofip impots boi annx 000306,1,0,0,0,0,0,1,1
 source_family,bofip impots direction generale des finances publiques france,1,0,0,0,0,0,1,1
 source_family,bukhatir group official site,1,1,0,0,0,1,1,1
-source_family,business news,20,16,0,0,0,16,20,0
+source_family,business news,22,18,0,0,0,18,22,0
 source_family,business news via web archive org capture 14 07 2018,1,1,0,0,0,1,1,1
 source_family,businessnews tunisie,2,2,0,0,0,2,2,1
 source_family,caf construcciones y auxiliar de ferrocarriles,1,0,0,0,0,0,1,1
@@ -213,6 +214,7 @@ source_family,carnegie endowment for international peace,3,3,0,0,0,3,3,0
 source_family,carnegie middle east center via eth zurich center for security studies,1,0,0,0,0,0,1,1
 source_family,cartaginoiseries carthage,1,1,0,0,0,1,1,1
 source_family,ceic data,1,0,0,0,0,0,1,1
+source_family,channel africa sabc,1,1,0,0,0,1,1,1
 source_family,cmf conseil du marche financier,1,1,0,0,0,1,1,1
 source_family,coficab group site officiel,1,0,0,0,0,0,1,1
 source_family,comesa secretariat,2,0,0,0,0,0,2,1
@@ -225,6 +227,7 @@ source_family,conect official site,1,1,0,0,0,1,1,1
 source_family,conseil national des regions et des districts,1,1,0,0,0,1,1,1
 source_family,cour de cassation republique tunisienne,1,0,0,0,0,0,1,1
 source_family,cour des comptes republique tunisienne,1,1,0,0,0,1,1,1
+source_family,crldht,2,1,0,0,0,1,2,1
 source_family,dcaf base de donnees juridique du secteur de la securite en tunisie texte du jort,5,3,0,0,0,3,5,0
 source_family,dcaf base de donnees juridique du secteur de la securite en tunisie texte du jort via legislation securite tn,1,0,0,0,0,0,1,1
 source_family,dcaf geneva centre for security sector governance legislation securite tn,1,0,0,0,0,0,1,1
@@ -254,7 +257,7 @@ source_family,encyclopedia com international directory of company histories,1,1,
 source_family,english wikipedia,4,3,0,0,0,3,4,0
 source_family,english wikipedia index article,1,0,0,0,0,0,1,1
 source_family,eni s p a,1,0,0,0,0,0,1,1
-source_family,entreprises magazine,1,1,0,0,0,1,1,1
+source_family,entreprises magazine,2,1,0,0,0,1,2,1
 source_family,espace diwan,1,0,0,0,0,0,1,1
 source_family,espace manager,8,8,0,0,0,8,8,0
 source_family,eur lex official journal of the european union,1,0,0,0,0,0,1,1
@@ -286,13 +289,14 @@ source_family,haica,1,0,0,0,0,0,1,1
 source_family,haica haute autorite independante de la communication audiovisuelle,1,0,0,0,0,0,1,1
 source_family,hitachi energy,1,0,0,0,0,0,1,1
 source_family,human rights watch,4,4,0,0,0,4,4,0
+source_family,iaea,1,0,0,0,0,0,1,1
 source_family,icmpd,1,1,0,0,0,1,1,1
 source_family,ilboursa,5,3,0,0,0,3,5,0
 source_family,ilboursa com,7,5,0,0,0,5,7,0
 source_family,ilboursa com donnees bvmt,6,2,0,0,0,2,6,1
 source_family,ilboursa com o e o,1,1,0,0,0,1,1,1
 source_family,ilboursa com omar el oudi,3,3,0,0,0,3,3,0
-source_family,inkyfada,4,3,0,0,0,3,4,0
+source_family,inkyfada,5,4,0,0,0,4,5,0
 source_family,instance superieure independante pour les elections,2,2,0,0,0,2,2,1
 source_family,institut national de la statistique ins,1,0,0,0,0,0,1,1
 source_family,international commission of jurists,1,1,0,0,0,1,1,1
@@ -309,6 +313,8 @@ source_family,jort via 9anoun tn,2,2,0,0,0,2,2,1
 source_family,jort via legislation securite tn,3,3,0,0,0,3,3,0
 source_family,journal officiel de la republique tunisienne,2,2,0,0,0,2,2,1
 source_family,journal officiel de la republique tunisienne archive jort,2,2,0,0,0,2,2,1
+source_family,journal officiel de la republique tunisienne archive officielle lake jort tn,12,8,0,0,0,8,12,0
+source_family,journal officiel de la republique tunisienne edition arabe officielle archive lake jort tn,1,1,0,0,0,1,1,1
 source_family,journal officiel de la republique tunisienne n 2016 027 via 9anoun tn,3,0,0,0,0,0,3,1
 source_family,journal officiel de la republique tunisienne via 9anoun,11,10,0,0,0,10,11,0
 source_family,journal officiel de la republique tunisienne via ar wiki dcaf,1,0,0,0,0,0,1,1
@@ -317,7 +323,7 @@ source_family,journal officiel de la republique tunisienne via cnudst sommaire s
 source_family,journal officiel de la republique tunisienne via legislation securite tn dcaf,2,2,0,0,0,2,2,1
 source_family,jurisitetunisie base de textes legaux tunisiens,1,0,0,0,0,0,1,1
 source_family,jurist,1,1,0,0,0,1,1,1
-source_family,kapitalis,57,45,0,0,0,45,57,0
+source_family,kapitalis,79,61,0,0,0,61,79,0
 source_family,kapitalis avec tap,1,0,0,0,0,0,1,1
 source_family,kuna,1,0,0,0,0,0,1,1
 source_family,l economiste maghrebin,17,7,0,0,0,7,17,0
@@ -369,8 +375,9 @@ source_family,ministry of national defence algeria,1,1,0,0,0,1,1,1
 source_family,mondafrique,7,4,0,0,0,4,7,0
 source_family,mosaique fm,7,6,0,0,0,6,7,0
 source_family,natural resource governance institute,1,1,0,0,0,1,1,1
-source_family,nawaat,16,13,0,0,0,13,16,0
+source_family,nawaat,17,13,0,0,0,13,17,0
 source_family,nessma tv,1,1,0,0,0,1,1,1
+source_family,news tunisia tunisie numerique,1,1,0,0,0,1,1,1
 source_family,nobel prize committee,1,1,0,0,0,1,1,1
 source_family,noonpost,2,1,0,0,0,1,2,1
 source_family,noria research mena programme,1,1,0,0,0,1,1,1
@@ -397,6 +404,7 @@ source_family,rfi afp,1,1,0,0,0,1,1,1
 source_family,rtbf belga,1,1,0,0,0,1,1,1
 source_family,script tunis,1,0,0,0,0,0,1,1
 source_family,senat france,1,0,0,0,0,0,1,1
+source_family,societe nationale d exploitation et de distribution des eaux,1,0,0,0,0,0,1,1
 source_family,solar water plc,1,0,0,0,0,0,1,1
 source_family,statbase org imf world economic outlook,1,0,0,0,0,0,1,1
 source_family,stb bank site officiel,1,1,0,0,0,1,1,1
@@ -411,6 +419,7 @@ source_family,the journal of north african studies taylor and francis,1,1,0,0,0,
 source_family,the money themoney tn,1,0,0,0,0,0,1,1
 source_family,time,1,1,0,0,0,1,1,1
 source_family,tralac trade law centre,1,0,0,0,0,0,1,1
+source_family,transport canada news release via cision newswire,1,0,0,0,0,0,1,1
 source_family,tunis afrique presse tap,4,3,0,0,0,3,4,0
 source_family,tunis afrique presse via aman alliance,1,0,0,0,0,0,1,1
 source_family,tuniscope,2,2,0,0,0,2,2,1
@@ -483,11 +492,11 @@ source_family,zawya,1,0,0,0,0,0,1,1
 source_family,zawya communique de presse,1,1,0,0,0,1,1,1
 source_family,zoom tunisia,1,1,0,0,0,1,1,1
 source_family,ويكيبيديا (العربية),1,0,0,0,0,0,1,1
-language,ar,66,37,0,0,0,37,66,0
-language,en,448,186,0,0,0,186,448,0
-language,fr,745,549,0,0,0,549,745,0
+language,ar,67,38,0,0,0,38,67,0
+language,en,456,190,0,0,0,190,456,0
+language,fr,806,591,0,0,0,591,806,0
 language,it,4,1,0,0,0,1,4,1
-office,administrative-court-president,3,3,0,0,0,0,1,1
+office,administrative-court-president,3,3,0,0,0,0,2,1
 office,agriculture-minister,1,1,0,0,0,0,1,1
 office,amt-president,1,1,0,0,0,0,6,1
 office,anti-corruption-head,1,1,0,0,0,0,3,1
@@ -534,7 +543,7 @@ office,isie-president,5,5,0,0,0,0,14,1
 office,ivd-president,1,1,0,0,0,0,2,1
 office,justice-minister,23,23,0,0,0,0,19,1
 office,justice-ministry-advisor,1,1,0,0,0,0,1,1
-office,la-poste-pdg,3,3,0,0,0,0,1,1
+office,la-poste-pdg,4,4,0,0,0,0,3,1
 office,leaders-editor,1,1,0,0,0,0,3,1
 office,ltdh-president,5,5,0,0,0,0,9,1
 office,mabrouk-principal,1,1,0,0,0,0,2,1
@@ -544,6 +553,7 @@ office,mufti,2,2,0,0,0,0,6,1
 office,national-security-adviser,2,2,0,0,0,0,4,1
 office,nessma-owner,1,1,0,0,0,0,2,1
 office,ng-commander,8,8,1,0,0,0,19,1
+office,onpf-pdg,1,1,0,0,0,0,2,1
 office,ooredoo-tunisie-dg,1,1,0,0,0,0,2,1
 office,party-leader-cpr,1,1,0,0,0,0,1,1
 office,party-leader-ennahda,1,1,0,0,0,0,1,1
@@ -572,16 +582,16 @@ office,religious-affairs-director,1,1,0,0,0,0,2,1
 office,religious-affairs-minister,14,14,0,0,0,0,8,1
 office,religious-affairs-secretary-of-state,2,2,0,0,0,0,3,1
 office,sec-state-security,1,1,0,0,0,0,2,1
-office,sncft-pdg,3,3,0,0,0,0,1,1
+office,sncft-pdg,3,3,0,0,0,0,4,1
 office,soe-director-general,1,1,0,0,0,0,2,1
 office,soe-pdg,4,4,0,0,0,0,6,1
-office,sonede-pdg,2,2,0,0,0,0,1,1
+office,sonede-pdg,3,3,0,0,0,0,2,1
 office,speaker,15,15,0,1,1,1,12,1
 office,state-properties-minister,1,1,0,0,0,0,2,1
 office,steg-pdg,2,2,0,0,0,0,1,1
 office,tourism-minister,1,1,0,0,0,0,3,1
 office,tunisie-telecom-pdg,1,1,0,0,0,0,5,1
-office,tv-president,11,11,0,0,0,0,1,1
+office,tv-president,11,11,0,0,0,0,2,1
 office,ugtt-secretary-general,2,2,0,0,0,0,2,1
 office,usgn-commander,1,1,0,0,0,0,1,1
 office,utap-president,2,2,0,0,0,0,5,1

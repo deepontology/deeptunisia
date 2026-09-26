@@ -16190,3 +16190,70 @@
     - kapitalis-sta-deces-2026-09-08
     - african-manager-sta-deces-2026-09-08
 
+- id: wadii-rhouma
+  name_en: Wadii Rhouma
+  name_fr: Wadii Rhouma
+  name_ar: وديع رحومة
+  aliases: [وديع رحومة, Wadi Rhouma]
+  layers: [civil]
+  confidence: A
+  basis: documented
+  sources: [jort-2026-091, jort-2026-091-ar]
+  notes: ["Named in the two decrees of 10 September 2026 as inspector-general of state property, relieved of the conservateur de la propriété foncière and of the ONPF PDG functions. The JORT index shows him in gazette acts since at least 2016 as inspector of state property and in a 2020 act ending a nomination; none of those earlier acts was read in this pass, so no start date is proposed."]
+
+- id: abdelhamid-mnaja
+  name_en: Abdelhamid Mnaja
+  name_fr: Abdelhamid Mnaja
+  aliases: [Abdelhamid MNAJA]
+  layers: [economic, civil]
+  tagline: Engineer; SONEDE president-director general from 11 December 2024
+  summary: "Engineer-general charged with the functions of president-director general of SONEDE (Société nationale d'exploitation et de distribution des eaux) by décret n° 2024-636 of 11 December 2024 (JORT n° 150 of 13 December 2024). Named as SONEDE PDG in the August 2026 JICA record of discussions, the September 2026 AfDB guarantee signing and SONEDE's own board page."
+  confidence: A
+  basis: documented
+  sources: [jort-2024-150]
+
+- id: yassine-faria
+  name_en: Yassine Faria
+  name_fr: Yassine Faria
+  layers: [civil]
+  tagline: President-director general of the Office national des postes from 27 April 2026
+  summary: "Appointed president-director general of the Office national des postes by décret n° 2026-61 of 27 April 2026 (JORT n° 43 of 28 April 2026), succeeding Marouen Ben Slimene, whose functions were ended the same day by décret n° 2026-62. No Arabic spelling was fetched, so none is proposed."
+  confidence: A
+  basis: documented
+  sources: [jort-2026-043]
+
+- id: ghazi-mrabet
+  name_en: Ghazi Mrabet
+  name_fr: Ghazi Mrabet
+  aliases: [Me Ghazi Mrabet]
+  layers: [judicial, civil]
+  tagline: Tunisian lawyer and human-rights defender; jailed in a drug-trafficking case
+  summary: "Tunisian lawyer and human-rights defender with whom Avocats sans frontières says it has collaborated repeatedly. On 16 September 2026 the investigating judge of the Tunis economic and financial judicial pole issued nine pre-trial detention warrants against nine detained suspects in a case a judicial source described to TAP as an international drug-trafficking and money-laundering network operating between Tunisia and a European country; 21 people face prosecution and nine are held. Mrabet, three security agents and a pharmacist are among the nine jailed. The first-instance prosecutor authorised a five-day garde à vue on 4 September for Mrabet and a wanted trafficker sentenced in absentia to 40 years; the two were arrested in flagrante delicto at the trafficker's home, where more than 8 kg of cocaine and 394,000 dinars were seized. Mrabet's defence committee denies every charge and says he was at the client's home strictly in his professional capacity; ASF says he spent eight days in custody without access to his lawyers. No charge is adjudicated; pre-trial detention only."
+  confidence: B
+  basis: reported
+  falsifiable_by: "The judicial pole's charging and detention orders, or a court ruling, would confirm or correct the counts and settle the defence's denial."
+  sources: [african-manager-mrabet-depot-2026-09-17, kapitalis-mrabet-coaccuses-2026-09-13, kapitalis-asf-mrabet-2026-09-17]
+
+- id: bechir-akremi
+  name_en: Bechir Akremi
+  name_fr: Béchir Akremi
+  aliases: [Bechir Akermi, Juge Béchir Akremi]
+  layers: [judicial]
+  tagline: Former public prosecutor of Tunis; imprisoned since February 2023
+  summary: "Former public prosecutor (procureur de la République) at the Tunis Court of First Instance and later first investigating judge, detained since 12 February 2023. He is prosecuted in several cases arising from his handling of sensitive dossiers, notably the political assassinations of Chokri Belaïd and Mohamed Brahmi; reported charges include failing to execute an arrest warrant, concealing procedural material and falsification. On 4 March 2026 he received a 23-year first-instance sentence in two Belaïd-related cases, raised to 29 years on appeal on 13 July 2026; on the night of 22-23 September 2026 a fourth criminal chamber of the Tunis Court of First Instance sentenced him to a further 15 years for falsification and holding/using forged documents. Kapitalis instead reports he \"already\" carried 20 years; the totals conflict and are not aggregated here. CRLDHT cites UN Working Group on Arbitrary Detention Opinion 2/2025 finding his detention arbitrary. NOT the graph's `lazhar-akremi`: different person and career."
+  confidence: B
+  basis: reported
+  falsifiable_by: "The sentencing dispositifs of 4 March, 13 July and 22 September 2026, or a court record giving the consolidated totals, would correct the figures."
+  sources: [kapitalis-akremi-15-ans-2026-09-23, businessnews-akremi-15-ans-2026-09-23, crldht-akremi-29-ans-2026-07-20]
+
+- id: mondher-ounissi
+  name_en: Mondher Ounissi
+  name_fr: Mondher Ounissi
+  aliases: [Monder Ounissi]
+  layers: [political, civil]
+  tagline: Acting president of Ennahdha; defendant in the audio-recordings case
+  summary: 'Tunisian physician and university professor, and acting president (président par intérim) of the Ennahdha movement per Kapitalis. He is a defendant in the "audio recordings" case opened over leaked recordings attributed to him that discussed a meeting with influential businessmen and financial violations concerning the party. More than ten other defendants, mostly prosecuted in absentia, were referred to the criminal chamber specialised in terrorism cases at the Tunis Court of First Instance; Ounissi appears by videoconference from Mornaguia civil prison. His defence disputes the attribution of the recording and has requested a forensic technical examination. Pre-trial detention, no adjudicated charge.'
+  confidence: B
+  basis: reported
+  falsifiable_by: The referral and hearing records would confirm the co-defendant list and the postponement; a forensic report would settle the attribution dispute.
+  sources: [kapitalis-ounissi-report-2026-09-25, tunisienumerique-ounissi-case-2026-07-11]

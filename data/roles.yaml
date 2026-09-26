@@ -1392,3 +1392,10 @@
   title_fr: Ministre de l'Équipement et de l'Habitat
   institution: ministry-equipment-housing
   authority: 45
+
+- id: onpf-pdg
+  title_en: "President-Director General, Office national de la propriété foncière"
+  title_fr: "Président-directeur général, Office national de la propriété foncière"
+  institution: onpf
+  authority: 35
+  sources: [jort-2026-091]

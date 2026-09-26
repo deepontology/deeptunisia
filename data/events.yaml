@@ -4292,16 +4292,7 @@
   title_fr: "Fitch confirme la note de la Tunisie à « B- », perspective stable"
   category: economic
   subcategory: sovereign-rating
-  summary: >-
-    Fitch Ratings affirmed Tunisia's long-term issuer rating at B- with a
-    stable outlook, as reported 9 September 2026 by African Manager (the
-    agency action itself is dated here ~8 September; confirm against Fitch's
-    rating-action page before import). Figures below are Fitch's projections
-    as relayed by that outlet on that date, not graph facts: 2026 budget
-    deficit 6.4% of GDP, public debt ~85% of GDP through 2028, current
-    account deficit 3.9% in 2026, reserves 3.3 months of external payments,
-    and full repayment of the EUR 700m eurobond maturing July 2026 via
-    central-bank loans. No prior rating-action event exists in the graph.
+  summary: "Fitch Ratings affirmed Tunisia's long-term issuer rating at B- with a stable outlook, as reported 9 September 2026 by African Manager (the agency action itself is dated here ~8 September; confirm against Fitch's rating-action page before import). Figures below are Fitch's projections as relayed by that outlet on that date, not graph facts: 2026 budget deficit 6.4% of GDP, public debt ~85% of GDP through 2028, current account deficit 3.9% in 2026, reserves 3.3 months of external payments, and full repayment of the EUR 700m eurobond maturing July 2026 via central-bank loans. No prior rating-action event exists in the graph. Kapitalis reported on 12 September 2026 that S&P also maintained Tunisia at B- with a stable outlook, and relayed a Fitch-sourced figure that central-bank loans should reach 11 bn TND in 2026 against 7 bn in 2024."
   confidence: C
   basis: reported
   verification: needs-primary-source
@@ -4309,6 +4300,7 @@
   falsifiable_by: Fitch Ratings sovereign rating-action page for Tunisia, September 2026
   sources:
     - african-manager-fitch-b-2026-09-09
+    - kapitalis-sp-fitch-2026-09-12
 - id: ev-phoenix-express-2026-09
   date: "2026-09-06"
   date_end: "2026-09-18"
@@ -4317,17 +4309,7 @@
   category: military
   subcategory: joint-exercise
   institutions: [ministry-defence]
-  summary: >-
-    Tunisia hosted the Phoenix Express 2026 multinational maritime exercise
-    from 6 to 18 September 2026 at La Goulette and Bizerte, with US AFRICOM
-    (reported end date 18 September; one US Navy imagery set is dated 7
-    September, so opening ceremonies may fall on the 7th — the one-day
-    discrepancy is not smoothed here). African Manager, relaying the Defence
-    Ministry communiqué, reports ~400 personnel and observers and lists
-    Algeria, Libya, Morocco, Egypt, Turkey, Italy, France, Spain, Belgium,
-    Georgia and the United States alongside host Tunisia; Kapitalis reports
-    thirteen participating countries. Stated aims are maritime security,
-    smuggling and trafficking interdiction. No Phoenix event exists in the graph.
+  summary: "Tunisia hosted the Phoenix Express 2026 multinational maritime exercise from 6 to 18 September 2026 at La Goulette and Bizerte, with US AFRICOM (reported end date 18 September; one US Navy imagery set is dated 7 September, so opening ceremonies may fall on the 7th — the one-day discrepancy is not smoothed here). African Manager, relaying the Defence Ministry communiqué, reports ~400 personnel and observers and lists Algeria, Libya, Morocco, Egypt, Turkey, Italy, France, Spain, Belgium, Georgia and the United States alongside host Tunisia; Kapitalis reports thirteen participating countries. Stated aims are maritime security, smuggling and trafficking interdiction. No Phoenix event exists in the graph. Completion coverage (African Manager, 18 September): the closing ceremony was held at the La Goulette naval base, ending the 21st edition in a twelve-day exercise (the same one-day tension with the 6-18 window noted above); African Manager reports five military ships and two one-week phases — ashore/command-post work including a multinational communications centre, and a tactical sea phase with visit-board-search-seizure, search-and-rescue, demining and CBRN exchanges — and quotes Tunisian navy chief of staff Adel Jehane and Vice-Admiral Jeffrey Anderson. The 09-18 closing report lists Saudi Arabia as the thirteenth country, while the same day's Anderson report lists Malta; the two African Manager pieces disagree on the thirteenth participant and the graph does not resolve it. The 09-17 ministerial readout lists twelve countries (neither Malta nor Saudi Arabia). Anderson, commander of the US 6th Fleet and NATO Naval Striking and Support Forces, is described as based in Naples."
   confidence: B
   basis: reported
   falsifiable_by: Tunisian Defence Ministry communiqué of 5 September 2026 or the US AFRICOM/NAVAF exercise release
@@ -4335,6 +4317,9 @@
     - african-manager-phoenix-mod-2026-09-09
     - african-manager-phoenix-26-2026-09-05
     - kapitalis-phoenix-2026-09-06
+    - am-phoenix-close-2026-09-18
+    - am-phoenix-anderson-2026-09-18
+  disputes: [{claim: "Participant list: twelve countries in the 17 September ministry readout; thirteen including Malta in the 18 September Anderson report; thirteen including Saudi Arabia in the same day's closing report", held_by: Tunisian Defence Ministry communiqué via African Manager; African Manager (both 18 September reports), source: am-phoenix-close-2026-09-18, status: open}]
 - id: ev-yousfi-detention-2026-09
   date: "2026-09-04"
   title_en: "Investigative journalist Mohamed Yousfi arrested, held, then jailed pending trial"
@@ -4343,16 +4328,7 @@
   subcategory: press-detention
   actors: [mohamed-yousfi]
   institutions: [snjt]
-  summary: >-
-    Mohamed Yousfi, editor-in-chief of the investigative outlet Al Qatiba,
-    was arrested 4 September 2026, placed in garde à vue, and on 8 September
-    an investigating judge of the Tunis economic-financial judicial pole
-    issued a dépôt warrant against him after questioning. The charges as
-    relayed by African Manager, citing a TAP-quoted judicial source, are
-    conspiracy to harm persons and property, illicit enrichment, and
-    organised money laundering via his professional position — press-relayed
-    charges, not adjudicated facts. RFI reported a 9 September support rally
-    and an interrupted interrogation; the SNJT declared a press emergency.
+  summary: "Mohamed Yousfi, editor-in-chief of the investigative outlet Al Qatiba, was arrested 4 September 2026, placed in garde à vue, and on 8 September an investigating judge of the Tunis economic-financial judicial pole issued a dépôt warrant against him after questioning. The charges as relayed by African Manager, citing a TAP-quoted judicial source, are conspiracy to harm persons and property, illicit enrichment, and organised money laundering via his professional position — press-relayed charges, not adjudicated facts. RFI reported a 9 September support rally and an interrupted interrogation; the SNJT declared a press emergency. Inkyfada reported on 14 September 2026 that two case documents dated 4 September 2026 — the prosecutor's report and the economic-financial pole's decision to open a judicial investigation — rest the financial allegations on a Facebook post by journalist Saida Hammami dated 31 August 2026 and a comment under a \"Hassen Jarboui\" account, in neither of which Yousfi's name appears; the documents cite no financial document, property register, audit or other independent element, treat the offences as continuous and their author as in \"flagrant délit permanent\", and defence counsel Hela Ben Salem calls that unjustified."
   confidence: B
   basis: reported
   contested:
@@ -4362,37 +4338,36 @@
     - framing: "The case concerns illicit enrichment and money laundering through an association"
       held_by: "judicial source quoted by TAP via African Manager"
       source: african-manager-yousfi-depot-2026-09-08
+    - framing: The file's financial allegations rest on social-media material in which Yousfi is not named
+      held_by: "Yousfi defence counsel Hela Ben Salem, per Inkyfada"
+      source: inkyfada-yousfi-dossier-2026-09-14
   falsifiable_by: TAP dispatch of 8 September 2026 or the judicial-pole charging order
   sources:
     - aljazeera-yousfi-arrest-2026-09-04
     - rfi-yousfi-rally-2026-09-09
     - african-manager-yousfi-depot-2026-09-08
     - kapitalis-yousfi-snjt-2026-09-08
+    - inkyfada-yousfi-dossier-2026-09-14
 - id: ev-sumud-four-detention-2026-02
-  date: "~2026-02"
+  date: "~2026-03-06"
   title_en: "Four Sumud flotilla organisers held at Mornaguia; Naouar hunger strike"
   title_fr: "Quatre organisateurs de la flottille Soumoud détenus à la Mornaguia ; grève de la faim de Naouar"
   category: legal
   subcategory: pre-trial-detention
   actors: [wael-naouar, nabil-channoufi, ghassan-henchiri, ghassan-boughdiri]
-  summary: >-
-    Four Tunisian organisers of the Global Sumud Flotilla — Wael Naouar,
-    Nabil Channoufi, Ghassan Henchiri and Ghassan Boughdiri — have been held
-    in pre-trial detention at Mornaguia since ~February 2026 after
-    rearrest following their return from Israeli detention in October 2025,
-    according to Al Jazeera's September reporting. The reported probe, via
-    the economic-financial judicial pole, concerns suspicious financial
-    flows; the money-laundering characterisation is single-outlet and stays
-    attributed. Naouar has been on hunger strike since 16 August 2026; a
-    hearing is reported for 16 September 2026 — verify before that date.
-  confidence: C
+  summary: 'Four Tunisian organisers of the Global Sumud Flotilla — Wael Naouar, Nabil Channoufi, Ghassan Henchiri and Ghassan Boughdiri — have been held in pre-trial detention at Mornaguia since 6 March 2026 per CRLDHT (Al Jazeera says "since March"), after rearrest following their return from Israeli detention in October 2025. On 11 September 2026 the investigating judge at the Tunis economic-financial judicial pole extended their pre-trial detention by four months. Naouar began an open-ended hunger strike on 16 August 2026 and the other three joined on 9 September; Naouar was taken to hospital and reported on the verge of death on 23 September, and that evening suspended his strike after 38 days (Al Jazeera and the LTDH say the 39th day — not reconciled), calling on the other three to end theirs. The charges as relayed are money laundering, fraud and misappropriation of Gaza-siege donations; the four and their lawyers deny them, and the money-laundering characterisation stays attributed.'
+  confidence: B
   basis: reported
   verification: needs-primary-source
-  attributed_to: Al Jazeera
   falsifiable_by: TAP or judicial-pole statement on the charges; Global Sumud Flotilla committee communiqué
   sources:
     - aljazeera-sumud-2026-09-02
     - aljazeera-sumud-2026-09-10
+    - kapitalis-sumud-prolongation-2026-09-11
+    - aljazeera-sumud-protest-2026-09-20
+    - aljazeera-naouar-hospital-2026-09-23
+    - kapitalis-naouar-suspension-2026-09-23
+    - crldht-solidarite-2026-09-22
 - id: ev-complot-cassation-2026-09-03
   date: "2026-09-03"
   title_en: "Court of Cassation upholds 'conspiracy' convictions"
@@ -4477,19 +4452,16 @@
   category: protest
   subcategory: labour
   institutions: [ugtt]
-  summary: >-
-    The UGTT private-sector department issued a strike notice on 27 August
-    2026 for the fuel-transport sector, with action planned nationwide on
-    23–24 September 2026; stated grounds are non-application of the 2 May
-    2019 accord and CNSS coverage. The notice was copied to five ministries,
-    UTICA and the dangerous-goods chamber. The action dates fall after this
-    sweep — outcome open; re-check whether the strike was held or called off.
+  summary: "The UGTT private-sector department issued a strike notice on 27 August 2026 for the fuel-transport sector, with action planned nationwide on 23–24 September 2026; stated grounds are non-application of the 2 May 2019 accord and CNSS coverage. The notice was copied to five ministries, UTICA and the dangerous-goods chamber. The UGTT confirmed on 22 September 2026 that the two-day strike would run from Tuesday midnight to Thursday 23:59 on 23–24 September, and it went ahead. AGIL Energy PDG Khaled Bettine said on 23 September that the strike had no impact on service stations, that the Radès and Skhira depots were unaffected, and that national reserves covered about one month after two cargoes of petrol and diesel arrived on 22 September; UTICA had said distributors and stations stayed mobilised to keep supply going."
   confidence: B
   basis: reported
   falsifiable_by: UGTT communiqué or post-24-September outcome reporting
   sources:
     - kapitalis-carburant-preavis-2026-08-27
     - african-manager-carburant-preavis-2026-08-27
+    - kapitalis-ugtt-carburants-2026-09-22
+    - african-manager-bettine-greve-2026-09-23
+  date_end: "2026-09-24"
 - id: ev-arp-petition-2026-08-29
   date: "2026-08-29"
   title_en: "~56 deputies demand an extraordinary ARP plenary"
@@ -4580,3 +4552,242 @@
   sources:
     - african-manager-ugtt-greve-generale-2026-09-09
 
+- id: ev-mrabet-detention-2026-09
+  date: "2026-09-16"
+  title_en: Lawyer Ghazi Mrabet among nine jailed in a drug-network case
+  title_fr: Me Ghazi Mrabet parmi neuf détenus dans une affaire de trafic de stupéfiants
+  category: legal
+  subcategory: pre-trial-detention
+  actors: [ghazi-mrabet]
+  institutions: [judiciary, onat]
+  summary: "The investigating judge of the Tunis economic and financial judicial pole issued nine pre-trial detention warrants on Wednesday 16 September 2026 against nine detained suspects in a case a judicial source described to TAP as an international drug-trafficking and money-laundering network operating between Tunisia and a European country; 21 people are prosecuted in total and nine held. The lawyer Ghazi Mrabet, three security agents and a pharmacist are among those jailed. The Tunis first-instance prosecutor had authorised a five-day garde à vue on 4 September for Mrabet and a wanted trafficker sentenced in absentia to 40 years; the two were arrested in flagrante delicto at the trafficker's home, where more than 8 kg of cocaine and 394,000 dinars were seized (African Manager/TAP adds 4 kg of cannabis, Kapitalis 40 slabs of cannabis resin — not reconciled). An earlier Kapitalis report put the co-accused at six. ASF said Mrabet spent eight days in custody without meeting his lawyers; his defence committee denies all charges and says he was at the client's home strictly in a professional capacity; a TAP judicial source says he tried to obstruct the police to let the client flee. Charges are reported, not adjudicated."
+  confidence: B
+  basis: reported
+  contested: [{framing: Mrabet was at the trafficker's home in the strict exercise of his profession, held_by: Mrabet defence committee, source: kapitalis-asf-mrabet-2026-09-17}, {framing: Mrabet tried to obstruct the judicial police so his client could flee, held_by: "judicial source quoted by TAP, relayed by Kapitalis and African Manager", source: kapitalis-mrabet-coaccuses-2026-09-13}]
+  falsifiable_by: "The judicial pole's charging and detention orders, or the TAP dispatch of 17 September 2026, would correct the counts; a court ruling would settle the denial."
+  sources: [african-manager-mrabet-depot-2026-09-17, kapitalis-mrabet-coaccuses-2026-09-13, kapitalis-asf-mrabet-2026-09-17]
+
+- id: ev-akremi-sentence-2026-09-23
+  date: "2026-09-22"
+  title_en: Bechir Akremi given 15 more years for falsification
+  title_fr: Béchir Akremi condamné à 15 ans de prison supplémentaires pour falsification
+  category: legal
+  subcategory: conviction
+  actors: [bechir-akremi]
+  institutions: [judiciary]
+  summary: "Late on Tuesday 22 September 2026 the fourth criminal chamber of the Tunis Court of First Instance sentenced former Tunis public prosecutor Béchir Akremi to 15 years' firm imprisonment for falsification and the holding and use of forged documents; Kapitalis and Business News reported it on 23 September. It is a further conviction in a case distinct from the Belaïd-dossier proceedings: Business News reports 23 years at first instance on 4 March 2026 in two Belaïd-related cases, raised to 29 years on appeal on 13 July 2026, while Kapitalis says he already carried 20 years in total. The conflicting totals are kept as reported and never summed with the new sentence. This Akremi is distinct from the graph's `lazhar-akremi`."
+  confidence: B
+  basis: reported
+  falsifiable_by: "The sentencing dispositifs of 4 March, 13 July and 22 September 2026 would settle the totals and the distinct-case framing."
+  sources: [kapitalis-akremi-15-ans-2026-09-23, businessnews-akremi-15-ans-2026-09-23]
+
+- id: ev-ounissi-audio-case-2026-09-25
+  date: "2026-09-25"
+  title_en: "Ounissi audio-recordings trial postponed, release request rejected"
+  title_fr: Report du procès des enregistrements audio pour Mondher Ounissi
+  category: legal
+  subcategory: terrorism-trial
+  actors: [mondher-ounissi]
+  institutions: [judiciary, ennahda]
+  summary: "On 25 September 2026 the criminal chamber specialised in terrorism cases at the Tunis Court of First Instance postponed examination of the \"audio recordings\" case against Ennahdha acting president Mondher Ounissi and rejected the detained defendants' release requests; the defendants followed the hearing from the remote-hearing room at Mornaguia civil prison. The case concerns recordings circulated on social networks, attributed to Ounissi, discussing a meeting with influential businessmen and financial violations concerning the party. The defence challenges the attribution and has asked for a forensic technical examination. At the 11 July 2026 hearing the same chamber had set the 25 September date and rejected a release request; more than ten co-defendants, mostly fugitives tried in absentia, face terrorism-related charges, and the journalist Zied El Heni (already in the graph) is among them."
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: Kapitalis (25 September postponement); Tunisie Numérique (11 July case history)
+  reasoning: "The 25 September postponement and rejected release requests rest on a single outlet's report of the hearing; the 11 July case history is a second outlet for the case's existence but not for the September hearing. The record therefore states the postponement as a reasoned reading of the press accounts, not as a court record."
+  falsifiable_by: "The chamber's hearing record or the indictment referral would confirm the postponement, the co-defendant list and which defendants are in absentia."
+  sources: [kapitalis-ounissi-report-2026-09-25, tunisienumerique-ounissi-case-2026-07-11]
+
+- id: ev-moussi-hunger-strike-2026-09-23
+  date: "2026-09-23"
+  title_en: Abir Moussi begins open-ended hunger strike in Bulla Regia prison
+  title_fr: Abir Moussi entame une grève de la faim sauvage à la prison de Bulla Regia
+  category: legal
+  subcategory: detention-protest
+  actors: [abir-moussi]
+  institutions: [pdl]
+  summary: "PDL president and lawyer Abir Moussi, held at Bulla Regia prison and prosecuted in several cases, began an open-ended (\"sauvage\") hunger strike on Wednesday 23 September 2026. Her lawyer Nafaa Laaribi announced it after a visit to the prison, saying she was protesting \"l'amplification des injustices et des vices de procédures\" against her after exhausting administrative and legal remedies, and the deterioration of her detention conditions; the party said it would keep the public informed of her health and case. Announced by her defence, no independent medical confirmation."
+  confidence: B
+  basis: reported
+  falsifiable_by: "A prison-administration or medical statement on her condition, or the defence's own follow-up, would confirm the strike and its continuation."
+  sources: [kapitalis-moussi-greve-faim-2026-09-24, businessnews-cinq-infos-2026-09-24]
+
+- id: ev-sumud-march-arrests-2026-09-19
+  date: "2026-09-19"
+  title_en: Tunis march for the Sumud four; night arrests and pre-trial detention warrants
+  title_fr: Marche à Tunis pour les quatre de la Flottille Soumoud ; arrestations nocturnes et mandats de dépôt
+  category: protest
+  subcategory: repression
+  actors: [wael-naouar, nabil-channoufi, ghassan-henchiri, ghassan-boughdiri]
+  institutions: [snjt, ugtt, onat, ltdh]
+  summary: "A peaceful march from the SNJT headquarters to Avenue Habib Bourguiba in Tunis on Saturday 19 September 2026 demanded the release of the four detained Global Sumud Flotilla organisers; Al Jazeera reports dozens of protesters with Tunisian and Palestinian flags and anti-government slogans. In the night of Sunday 20 to Monday 21 September police arrested a large number of participants; Al Jazeera reports at least 11 arrested, and CRLDHT describes night raids at homes and in the street, several detainees held for long hours without contact with family or lawyers, and minors among those picked up. On 25 September the Sumud defence committee announced pre-trial detention warrants against all those arrested, including the pupil Adam Mbarek, whose file was referred to the children's judge. CRLDHT, and a joint UGTT-ONAT-LTDH statement it relays, demanded releases and denounced the criminalisation of peaceful assembly; the government denies the prosecutions are political and says the judiciary is independent."
+  confidence: B
+  basis: reported
+  contested: [{framing: "Night raids aimed at intimidating civil society, with short forced disappearances of detainees", held_by: CRLDHT, source: crldht-solidarite-2026-09-22}, {framing: Prosecutions follow the law; freedoms are guaranteed and the judiciary is independent, held_by: "Tunisian government / President Saïed, as relayed by Al Jazeera", source: aljazeera-sumud-protest-2026-09-20}]
+  falsifiable_by: "Police or prosecution records, or the children's-judge file for Adam Mbarek, would confirm or correct the arrest and detention counts."
+  sources: [aljazeera-sumud-protest-2026-09-20, aljazeera-naouar-hospital-2026-09-23, crldht-solidarite-2026-09-22, kapitalis-mandats-depot-manifestants-2026-09-25]
+
+- id: ev-hammami-solidarity-hunger-strike-2026-09-18
+  date: "2026-09-18"
+  title_en: Ayachi Hammami begins hunger strike in solidarity with Wael Naouar
+  title_fr: Ayachi Hammami entame une grève de la faim en solidarité avec Wael Naouar
+  category: legal
+  subcategory: detention-protest
+  actors: [ayachi-hammami, wael-naouar]
+  institutions: [judiciary]
+  summary: "From Mornaguia prison the lawyer Ayachi Hammami announced on 18 September 2026 that he had begun a hunger strike in support of Wael Naouar, whose health his lawyers said had deteriorated after more than a month of protest fasting. He said the action would end only when Naouar ends his or the demands for Naouar's release are met, denounced the use of justice and law to repress peaceful civil solidarity, and called on lawyers, rights defenders and democratic, union and student forces in Tunisia and abroad to intensify pressure. On 24 September 2026 the defence committee for the detained \"conspiracy\" case leaders denounced his transfer from Mornaguia prison to Monastir prison as a \"repressive and abusive removal\" coming just after the hunger strike, and held the prison authority responsible for his safety. This is distinct from the graph's undated `hammami-hunger-strike-2026` (sourced to Mondafrique, 30 July 2026), which predates this September episode; do not merge without checking whether the July episode was separate."
+  confidence: B
+  basis: reported
+  falsifiable_by: The defence committee's statement of 18 September or a prison record of the transfer would confirm both parts; a check of the 30 July Mondafrique text would settle whether the two strikes are distinct.
+  sources: [kapitalis-hammami-greve-faim-2026-09-18, kapitalis-hammami-transfert-2026-09-25, businessnews-cinq-infos-2026-09-24]
+
+- id: ev-bizerte-maritime-excellence-centre-2026
+  date: "~2026-06-14"
+  title_en: Bizerte Maritime Centre of Excellence under construction with US funding
+  title_fr: Le Centre d'excellence maritime de Bizerte en construction avec un financement américain
+  category: military
+  subcategory: infrastructure
+  location: [gov-bizerte]
+  institutions: [ministry-defence, united-states]
+  summary: "African Manager (23 September 2026) reports that the United States relaunched the Bizerte Maritime Centre of Excellence project through the US government procurement platform. The article relays US Naval Forces Europe/Africa and Sixth Fleet material dated 14 June 2026 in which Admiral George M. Wikoff, commander of US Naval Forces Africa, described the centre under construction as dedicated to training marine commandos: a close-combat site, two firing ranges, an obstacle course, a training tower, gym and pool, a port and a heliport, with administrative, academic and logistics buildings. The construction contract went about two years earlier to the Turkish firm Biltek under a US Department of Defense award; the article states a negotiated value of about USD 1.3 million raised above USD 2.15 million through amendments, and that the works are in their third phase and should not exceed two years. It states the United States handles contracting, financing and execution while the centre remains on Tunisian territory under Tunisian sovereignty and military command. The centre was discussed at the Shili–Anderson meeting of 16 September 2026, where the minister called it the Centre of Excellence of the naval special forces. No agreement or memorandum of understanding is cited in the fetched article: it describes a financed construction project, not a signed instrument, and no such instrument is proposed here."
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "African Manager, relaying a US Naval Forces Europe/Africa and Sixth Fleet communiqué dated 14 June 2026 and Army Recognition"
+  reasoning: "The project's existence, value range, phases and construction details come from one relay of US Navy material; no US DoD award, procurement listing or Tunisian readout was fetched. The record is a reasoned reading of that single account."
+  falsifiable_by: The US Naval Forces Europe/Africa and Sixth Fleet communiqué of 14 June 2026; the US Department of Defense contract award to Biltek; or the US government procurement platform listing for the centre.
+  sources: [am-bizerte-coe-2026-09-23]
+
+- id: ev-sehli-anderson-meeting-2026-09-16
+  date: "2026-09-16"
+  title_en: Defence minister Khaled Shili receives US 6th Fleet commander Jeffrey Anderson in Tunis
+  title_fr: Le ministre de la Défense Khaled Sehili reçoit le commandant de la 6e flotte américaine Jeffrey Anderson à Tunis
+  category: political
+  subcategory: diplomacy
+  location: [gov-tunis]
+  actors: [khaled-shili]
+  institutions: [ministry-defence, united-states]
+  summary: "Defence Minister Khaled Sehili received Vice-Admiral Jeffrey Anderson, commander of the US 6th Fleet, at the defence ministry on Wednesday 16 September 2026 during Phoenix Express 26, in the presence of US ambassador Bill Bazzi and the chief of staff of the National Navy (Adel Jehane), per the Defence Ministry communiqué relayed by African Manager (17 September). Sehili called the Tunisia-US military cooperation deep, continuous and diverse, said the bilateral programme goes beyond logistics and technical support to training, expertise exchange and joint exercises, and asked to widen it to maritime-threat response, intelligence, and naval capability and readiness. He said Tunisia has what it takes to become a regional hub for military training, notably through the Centre of Excellence of the naval special forces. Anderson praised the cooperation and the Tunisian navy's training capacity and reaffirmed the US administration's commitment to develop it. The same readout says the exercise runs 6-18 September with about 400 military personnel and observers from twelve countries and began at the La Goulette and Bizerte naval bases."
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: Tunisian Defence Ministry communiqué via African Manager
+  reasoning: The meeting and its content rest on a single relay of the Defence Ministry communiqué; no ministry page or US Navy readout was fetched. The record states the account as a reasoned reading of that relay.
+  falsifiable_by: Defence Ministry communiqué of 16-17 September 2026; US 6th Fleet readout of the same meeting
+  sources: [am-sehli-anderson-2026-09-17]
+
+- id: ev-military-industry-conference-2026-09-22
+  date: "2026-09-22"
+  title_en: First military-research conference on defence industry and technology opens in Tunis
+  title_fr: Première conférence du Centre de recherches militaires sur l'industrie de défense à Tunis
+  category: military
+  subcategory: defence-industry
+  actors: [khaled-shili]
+  institutions: [ministry-defence]
+  summary: "Defence Minister Khaled Sehili opened the first conference organised by the Centre de recherches militaires, on technological development and the defence industry in the service of national security, at the Centre national de cartographie et de télédétection (African Manager, 23 September; the minister spoke 'mardi', i.e. Tuesday 22 September 2026, and the readout is the Defence Ministry communiqué). Sehili called for mobilising all human, material, scientific and technological resources, stressed public-private partnership in research and technology, and said the approach should feed a national military-industry strategy aimed at reducing dependence on defence-equipment imports and promoting local manufacture. He said Tunisian firms had demonstrated design, development, manufacturing and integration capacity, and called for moving beyond individual projects to a durable 'defence industrial sovereignty' built on technology accumulation and a strategic partnership between the army, universities, research centres and national industry. Industrialists, military and civilian experts attended; an exhibition of Tunisian industrial products and innovation projects followed."
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: Tunisian Defence Ministry communiqué via African Manager
+  reasoning: "The conference, the minister's speech and the quoted positions rest on a single relay of the Defence Ministry communiqué; no ministry transcript or strategy document was fetched. The record is a reasoned reading of that relay."
+  falsifiable_by: Defence Ministry communiqué of 22-23 September 2026; any published national military-industry strategy document
+  sources: [am-sehili-industry-2026-09-23]
+
+- id: ev-sidi-bou-said-unesco-certificate-2026-09-24
+  date: "2026-09-24"
+  title_en: Tunisia receives UNESCO certificate for the Sidi Bou Saïd World Heritage listing
+  title_fr: La Tunisie reçoit le certificat UNESCO d'inscription du village de Sidi Bou Saïd
+  category: political
+  subcategory: diplomacy
+  summary: "The Village of Sidi Bou Saïd was inscribed on the UNESCO World Heritage List by a unanimous World Heritage Committee decision on 25 July 2026 at its 48th session in Busan, South Korea, as reported by Kapitalis and African Manager (both 24 September 2026, relaying the Tunisian permanent delegation's communiqué). The official certificate was handed over on 24 September 2026 at UNESCO headquarters in Paris to ambassador Dhia Khaled, Tunisia's permanent delegate to UNESCO, by Lazare Eloundou Assomo, director of the UNESCO World Heritage Centre. With this listing, the relays say Tunisia has ten World Heritage properties (nine cultural, one natural); the Dahar Geopark's entry into the UNESCO Global Geoparks Network in April 2026 is reported as Tunisia's other 2026 listing. The article also lists Tunisia's intangible-heritage files, Memory of the World entries and UNESCO chairs as context."
+  confidence: B
+  basis: reported
+  falsifiable_by: UNESCO World Heritage List entry for Sidi Bou Saïd and the World Heritage Committee 48th-session decision; Tunisian permanent delegation readout
+  sources: [kapitalis-sidi-bou-said-2026-09-24, am-sidi-bou-said-2026-09-24]
+
+- id: ev-nafti-iom-voluntary-returns-2026-09-22
+  date: "2026-09-22"
+  title_en: Nafti and IOM's Amy Pope review the voluntary-return mechanism in New York
+  title_fr: Nafti et la directrice générale de l'OIM examinent le mécanisme de retour volontaire à New York
+  category: security
+  subcategory: migration
+  actors: [mohamed-ali-nafti]
+  summary: "Foreign Minister Mohamed Ali Nafti met IOM Director General Amy Pope in New York on Tuesday 22 September 2026, on the margins of the high-level segment of the 81st UN General Assembly, per a Foreign Ministry communiqué published 23 September and relayed by African Manager. The readout states the voluntary return and reintegration mechanism produced 5,077 voluntary returns of irregular migrants since 1 January 2026, bringing the total since the mechanism's establishment to 25,351. Nafti restated Tunisia's position that it refuses to be a land of settlement or transit, and called for a comprehensive approach based on shared responsibility, state sovereignty, human dignity and human rights, and action against human-trafficking networks; Pope praised the cooperation level and stressed development programmes and dismantling trafficking networks. The figures are the ministry's, not IOM-published here."
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "Tunisian Ministry of Foreign Affairs, Migration and Tunisians Abroad communiqué via African Manager"
+  reasoning: The meeting and the return figures are the ministry's own communiqué relayed by one outlet; no IOM readout or IOM-published statistic for Tunisia 2026 was fetched. The record states the figures as a reasoned reading of that relay.
+  falsifiable_by: MFA communiqué of 22-23 September 2026; IOM readout or IOM return statistics for Tunisia in 2026
+  sources: [am-nafti-iom-2026-09-23]
+
+- id: ev-elmed-steering-committee-2026-09-22
+  date: "2026-09-22"
+  title_en: First steering committee for the ELMED Tunisia–Italy electricity interconnector
+  title_fr: Première réunion du comité de pilotage du projet ELMED
+  category: economic
+  subcategory: energy
+  institutions: [steg]
+  summary: "The first meeting of the steering committee for the ELMED 600 MW HVDC interconnector between Mlaabi (Cap Bon) and Partanna (Sicily) was held in Tunis on Tuesday 22 September 2026, chaired by Equipment and Housing Minister Salah Zouari in his interim charge of Industry, Mines and Energy, with Energy Transition Secretary of State Wael Chouchane and STEG CEO Fayçal Trifa, and representatives of Defence, Economy, Agriculture, Environment and Customs. The ministry communiqué frames it as reinforcing Tunisian coordination and keeping the schedule, not as the formal launch of the already-under-way project. Kapitalis reports the link as ~220 km (about 200 km submarine), African Manager as ~223 km, 500 kV, bidirectional, commissioning planned 2028 per Terna; the same article recalls the Prysmian submarine-cable contract of about EUR 460m and the Hitachi Energy converter-station contract of about EUR 770m awarded in June 2026. Existing graph anchor: agreement elmed-interconnector-agreement; no ELMED event existed."
+  confidence: B
+  basis: reported
+  falsifiable_by: The Industry Ministry communiqué and the Terna/STEG project site; the steering-committee minutes
+  sources: [kapitalis-elmed-pilotage-2026-09-24, african-manager-elmed-pilotage-2026-09-22]
+
+- id: ev-knauf-tataouine-2026-09-17
+  date: "2026-09-17"
+  title_en: Governor-led working session on Knauf's 70 MDT Tataouine gypsum project
+  title_fr: Séance de travail sur le projet Knauf de 70 MDT à Tataouine
+  category: economic
+  subcategory: investment
+  institutions: [knauf-tunisie]
+  summary: "Tataouine governor Amir Gabsi chaired a working session on Thursday 17 September 2026 with regional services and Knauf representatives on a planned 70 MDT industrial unit for gypsum extraction and processing in Tataouine — a project on hold since 2012. The land-tenure terms were not yet settled; regional services pledged to accompany the investor, and fiscal and financial incentives under the investment-support schemes were presented. Knauf Tunisia's administrative and financial director said the mobilisation \"revived hope\" and that further group investment in the region is possible. Reported 18 September by Kapitalis and African Manager, citing TAP. Status: announced, not started."
+  confidence: B
+  basis: reported
+  falsifiable_by: "A JORT concession/investment decision, the land allocation record, or TAP's original despatch"
+  sources: [kapitalis-knauf-tataouine-2026-09-18, african-manager-knauf-tataouine-2026-09-18]
+
+- id: ev-aksa-composites-borj-cedria-2026-09-24
+  date: "2026-09-24"
+  title_en: Turkish Aksa Composites signs an industrial lease at Borj Cédria
+  title_fr: La turque Aksa Composites signe son bail industriel à Borj Cédria
+  category: economic
+  subcategory: investment
+  summary: "Aksa Composites, a Turkish company and subsidiary of the Akkök group, signed its industrial lease at the Borj Cédria technopole south of Tunis on Thursday 24 September 2026 — its first site in Africa — with an announced initial investment of USD 5m for composite components and materials, notably for aeronautics. The Gitas industry association, whose president Stefania Sonia Dallali is credited with the contact work begun at the Hamburg Aviation Forum 2025, announced the signing; FIPA-Tunisia accompanied the project (a 19 May 2026 FIPA meeting confirmed it). Sector sources cited by Kapitalis expect operations around 2028 and several dozen direct jobs. Single-outlet, association-sourced account — treated as a reported claim, not a registered investment."
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "Gitas (Groupement des industries tunisiennes aéronautiques et spatiales), via Kapitalis"
+  reasoning: "The lease signature and the USD 5m figure rest on a single industry association communiqué relayed by one outlet; no FIPA-Tunisia, technopole or company record was retrieved. The record states the signing as a reasoned reading of that account, not as a registered investment."
+  falsifiable_by: "FIPA-Tunisia or Borj Cédria technopole record of the lease, or an Aksa/Akkök corporate statement"
+  sources: [kapitalis-aksa-composites-2026-09-25]
+
+- id: ev-bh-bank-h1-2026-auditors
+  date: "2026-09-16"
+  title_en: BH Bank H1 2026 statements published with four auditors' reservations
+  title_fr: BH Bank publie ses comptes du premier semestre 2026 avec quatre réserves des commissaires aux comptes
+  category: economic
+  subcategory: corporate-results
+  institutions: [bh-bank]
+  summary: "BH Bank published its interim financial statements at 30 June 2026 with the auditors' limited-review report signed in Tunis on 16 September 2026. Per African Manager's reading: four reservations (significant information-system weaknesses including client-level revenue allocation and flow reconciliation; capitalisation of T24 core-banking project expenditure, with 37 MDT reclassified from capitalised charges during the semester; unsupported balances and pending items; no exhaustive documented collateral base, with a provisioning-rate concern); two observation paragraphs (structural risk signals, and two credit relationships with net exposures of 105 MDT and 72 MDT — 177 MDT combined, African Manager's derived sum); net result down 72% (54,385 to 15,225 thousand dinars, AM-derived), earnings per share 1.143 to 0.320 dinar; negative liquidity of −1,500,796 thousand dinars and a net debit position vis-à-vis the BCT of 755,628 thousand dinars (AM-derived). The statements and report themselves were not retrieved this run; all figures are attributed to AM's reading."
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: African Manager
+  reasoning: "Every figure (four reservations, two observation paragraphs, the 37 MDT reclassification, the 177 MDT exposures, the profit and liquidity movements) is African Manager's reading of statements and an auditors' report that were not retrieved directly; several figures are the outlet's own derived sums. The event is recorded as a reasoned reading of that single account."
+  falsifiable_by: BH Bank's H1 2026 interim financial statements and the auditors' limited-review report as published (BVMT / bank site); the reclassification and liquidity figures would be checked against the primary tables
+  sources: [african-manager-bh-bank-reserves-2026-09-24]
+
+- id: ev-world-bank-tunisia-monitor-water-2026-09-22
+  date: "2026-09-22"
+  title_en: "World Bank Tunisia Economic Monitor: water scarcity could cut GDP 6.4% by 2050"
+  title_fr: "Bulletin de conjoncture de la Banque mondiale : la pénurie d'eau pourrait réduire le PIB de 6,4% d'ici 2050"
+  category: economic
+  subcategory: report
+  institutions: [world-bank]
+  summary: "The World Bank published its Tunisia Economic Monitor, \"Tunisia's Water Challenge: From Scarcity to Resilience\", on Tuesday 22 September 2026. Figures as relayed by African Manager and Channel Africa: real GDP grew 2.7% in 2025 and 2.4% year-on-year in H1 2026; growth is projected at 2.3% in 2026 and 2.1% on average over 2027–2028; without action, water scarcity could reduce GDP by 6.4% by 2050 and eliminate at least 30% of agricultural jobs (agriculture employs 14% of the workforce and up to half of rural workers); renewable freshwater availability is about 380 m³ per person per year; the government's Plan Eau 2050 envisages about USD 900m of investment per year; the first phase of the World Bank-supported RESEau programme is expected to create about 4,000 permanent and 13,400 temporary jobs. The same relay reports the energy deficit up 30% and the current-account deficit up 49% in nominal terms in H1 2026, with reserves pressured in mid-July by a 2.47 bn TND eurobond repayment. The official World Bank publication page was not retrievable this run (404 on the publication URL pattern); figures are the outlets' relay of the report."
+  confidence: B
+  basis: reported
+  verification: needs-primary-source
+  falsifiable_by: The World Bank Tunisia Economic Monitor PDF/page for September 2026 and its data annex
+  sources: [african-manager-banque-mondiale-eau-2026-09-23, african-manager-croissance-2026-09-23, channel-africa-tunisia-water-2026-09-23]
