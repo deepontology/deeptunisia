@@ -4874,3 +4874,62 @@
       unaudited here.
   sources:
     - source-ilboursa-atb-profile
+
+- id: onpf
+  name_en: National Office of State Property
+  name_fr: Office national de la propriété foncière
+  name_ar: الديوان الوطني للملكية العقارية
+  aliases: [ONPF]
+  type: state-enterprise
+  layer: civil
+  parent: null
+  active: {start: "?", end: ongoing}
+  order: 203
+  confidence: A
+  sources: [jort-2026-091-ar]
+  notes: ["Public land-registry agency whose PDG and conservateur functions were both vacated by decrees 2026-220/221. English name is a working translation; the Arabic name is as printed in the gazette. The supervising ministry (domaines de l'État et affaires foncières) is not modelled in institutions.yaml, so parent is left null rather than guessed. An arrêté in the same issue cites décret n° 2026-159 du 23 juillet 2026 charging Tarek Ben Salem as director-general of management and sales in that ministry."]
+
+- id: iaea
+  name_en: International Atomic Energy Agency
+  name_fr: Agence internationale de l'énergie atomique
+  aliases: [IAEA, AIEA, Agence internationale de l'énergie atomique]
+  abbr: IAEA
+  type: international-organisation
+  seat: AT
+  layer: foreign
+  parent: null
+  order: 204
+  active: {start: ~1957, end: ongoing}
+  summary: "UN nuclear-technical-cooperation body, seated at the Vienna International Centre (Austria). Tunisia has been a member state since 1957; the two signed a Country Programme Framework for 2026-2030 in Vienna on 17 September 2026. Proposed here because the graph has no IAEA record and the new agreement needs an anchor."
+  confidence: A
+  basis: documented
+  notes: ["Seat AT/Vienna from the IAEA page footer (Vienna International Centre, PO Box 100, A-1400 Vienna, Austria). Membership start '~1957' because the IAEA release states only the year ('Tunisia has been an IAEA Member State since 1957'); the exact accession day was not fetched.", "Arabic name owed: the standard Arabic name was not fetched from a sourced page and is not machine-guessed here."]
+  sources: [iaea-tunisia-cpf-2026-09-17]
+
+- id: knauf-tunisie
+  name_en: Knauf Tunisia
+  name_fr: Knauf Tunisie
+  type: company
+  layer: economic
+  parent: null
+  order: 205
+  active: {start: ~2004, end: ongoing}
+  summary: "Tunisian subsidiary of the German Knauf group (gypsum and building materials). Present in Tunisia since 2004 via the acquisition of Les Plâtres Tunisiens at Meknassi, which serves as the group's Maghreb/Africa platform. In September 2026 a planned 70 MDT gypsum extraction and processing unit at Tataouine was the subject of a governor-led working session; land tenure is still unsettled and the investment remains announced."
+  confidence: B
+  basis: reported
+  sources: [kapitalis-knauf-tataouine-2026-09-18, african-manager-knauf-tataouine-2026-09-18]
+
+- id: eurostat-tunisie
+  name_en: Eurostat Tunisia
+  name_fr: Eurostat Tunisie
+  type: company
+  layer: economic
+  parent: null
+  order: 206
+  active: {start: ~2026-09-14, end: ongoing}
+  summary: "Tunisian industrial subsidiary of the French Eurostat Group, inaugurated at Tunis on 14 September 2026; 1,500 m² site dedicated to thermoforming, mould machining and assembly of electrostatic-discharge (ESD) protection products for the electronics industry, with 28 employees and stated plans to grow. The exact incorporation date predating the inauguration is unknown — the start recorded is the earliest documented date (inauguration)."
+  confidence: B
+  basis: reported
+  verification: needs-primary-source
+  attributed_to: Kapitalis and African Manager
+  sources: [kapitalis-eurostat-tunisie-2026-09-15, african-manager-eurostat-tunisie-2026-09-16]

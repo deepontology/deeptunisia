@@ -3,6 +3,16 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:1ed3d3c37b91a65a",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Partenariat tuniso-suisse pour la digitalisation de l’administration du travail",
+      "link": "https://kapitalis.com/tunisie/2026/09/25/partenariat-tuniso-suisse-pour-la-digitalisation-de-ladministration-du-travail/",
+      "published": "2026-09-25T21:13:09Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
       "id": "feed:kapitalis:b8231ea316a375bc",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -11704,15 +11714,6 @@
       "title": "ASBU: le 26ème Festival arabe de la radio et de la télévision du 21 au 24 septembre sous le slogan « Le rythme de l’image et l’écho de l’avenir »",
       "link": "https://africanmanager.com/asbu-le-26eme-festival-arabe-de-la-radio-et-de-la-television-du-21-au-24-septembre-sous-le-slogan-le-rythme-de-limage-et-lecho-de-lavenir/",
       "published": "2026-09-01T11:06:59Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:d703339aab11e0e9",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "JM Tarente-2026 (haltérophilie): Karem Ben Hnia médaillé d’argent (arraché) et de bronze (épaulé-jeté)",
-      "link": "https://africanmanager.com/jm-tarente-2026-halterophilie-karem-ben-hnia-medaille-dargent-arrache-et-de-bronze-epaule-jete/",
-      "published": "2026-09-01T11:03:03Z",
       "lang": "fr"
     }
   ]
