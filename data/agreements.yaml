@@ -904,3 +904,54 @@
   sources:
     - dod-tunisia-roadmap
     - tap-tunisia-us-roadmap
+
+- id: canada-tunisia-air-transport-agreement
+  title_en: Canada–Tunisia Air Transport Agreement (concluded 2010; expanded 2019 and 2026)
+  title_fr: Accord sur le transport aérien Canada–Tunisie (conclu en 2010 ; élargi en 2019 et 2026)
+  kind: other
+  parties: [CA]
+  signed: "2010"
+  text_url: https://www.canada.ca/en/transport-canada/news/2026/09/the-government-of-canada-announces-expanded-air-transport-agreement-between-canada-and-tunisia.html
+  summary: "Bilateral air transport agreement originally concluded in 2010 and first expanded in 2019; Transport Canada announced a further expansion on 14 September 2026 (Minister of Transport Steven MacKinnon): up to seven weekly passenger-combination flights per country (from four), access to all points in each country (from one each), and unlimited weekly all-cargo flights (previously no dedicated all-cargo rights). The release also states passenger traffic between the two countries is up more than 55 per cent since the 2019 expansion, bilateral merchandise trade reached CAD 439 million in 2025, Canadian direct investment CAD 183 million, a Canadian-Tunisian diaspora of more than 30,000 (2021 Census) and nearly 3,000 Tunisian students in Canada in 2025. No Canadian page or Tunisian readout of the 2026 expansion was located; the announcement date is the release date, not a signature or entry-into-force date, which the release does not give."
+  confidence: A
+  basis: documented
+  sources: [tc-canada-tunisia-air-2026-09-14, kapitalis-canada-air-2026-09-15]
+
+- id: tunisia-iaea-country-programme-framework-2026-2030
+  title_en: Tunisia–IAEA Country Programme Framework 2026–2030
+  title_fr: Programme national-cadre Tunisie–AIEA 2026-2030
+  kind: other
+  parties: [iaea]
+  signed: "2026-09-17"
+  text_url: https://www.iaea.org/newscenter/news/tunisia-signs-a-country-programme-framework-cpf-for-2026-2030
+  summary: "Signed in Vienna on 17 September 2026 by Hua Liu, IAEA Deputy Director General and Head of the Department of Technical Cooperation, and Mondher Belaid, Tunisian Minister of Higher Education and Scientific Research (also president of the National Atomic Energy Commission per African Manager), on the margins of the 70th regular session of the IAEA General Conference (14-18 September 2026). A CPF is the frame of reference for medium-term technical cooperation; Tunisia's 2026-2030 CPF identifies seven priority areas: nuclear and radiation safety and nuclear security; health and nutrition; food and agriculture; water and the environment; industrial applications and radiation technology; energy planning and nuclear power; nuclear knowledge development and management. The IAEA release calls the signatories' roles as above and records Tunisia as a member state since 1957."
+  confidence: A
+  basis: documented
+  sources: [iaea-tunisia-cpf-2026-09-17, am-iaea-cpf-2026-09-22]
+
+- id: agr-tunisia-afdb-sonede-gct-2026
+  title_en: Tunisia–AfDB guarantee agreements for the SONEDE Greater Tunis water project and the GCT industrial rehabilitation project (2026)
+  title_fr: Accords de garantie Tunisie–BAD pour le projet d'eau du Grand Tunis (SONEDE) et le projet de réhabilitation du GCT (2026)
+  kind: other
+  parties: [afdb]
+  signed: "2026-09-22"
+  text_url: https://www.afdb.org/en/news-and-events/press-releases/african-development-bank-provides-240-million-modernize-sonedes-drinking-water-network-and-upgrade-tunisian-chemical-group-97015
+  summary: "Two state-guarantee agreements were signed in Tunis on 22 September 2026 between the Republic of Tunisia and the African Development Bank, covering two loans: EUR 111.5 million to SONEDE for the Greater Tunis Drinking Water Network Technical and Energy Performance Improvement Project (PAP-GT), and USD 110 million to GCT for the Environmental Upgrading and Rehabilitation Support Project (PAER-GCT) — about USD 240 million combined, per the AfDB. Signed by Economy and Planning Minister Samir Abdelhafidh and AfDB Deputy Director-General for North Africa Malinne Blomberg; SONEDE CEO Abdelhamid Mnaja and GCT CEO Omar Bouzouada signed the loan documents. The press relays conversions of roughly 377 MDT and 321 MDT respectively (African Manager). Recorded here as one candidate row covering two same-day instruments; a human may split it if the canonical convention is one record per instrument."
+  confidence: A
+  basis: documented
+  verification: verified
+  falsifiable_by: The signed agreements or the AfDB board approval documents; any JORT ratification text
+  sources: [afdb-tunisia-guarantees-240m-2026-09-24, african-manager-bad-garanties-2026-09-22]
+
+- id: agr-sonede-jica-sfax-2060-2026
+  title_en: SONEDE–JICA technical cooperation for the Sfax water supply master plan to 2060 (2026)
+  title_fr: Coopération technique SONEDE–JICA pour le schéma directeur d'alimentation en eau de Sfax à l'horizon 2060 (2026)
+  kind: other
+  parties: [jica]
+  signed: "2026-08-21"
+  summary: "On 21 August 2026 SONEDE CEO Abdelhamid Mnaja and JICA detailed-planning study mission chief Masahito Miyagawa signed a record of discussions (procès-verbal) launching a four-year JICA technical-cooperation project: a Sfax governorate water-supply master plan to 2060, a water safety plan (PGSSE), and SONEDE capacity building on network efficiency and non-revenue water, with Japanese experts deployed in Tunisia. Reported 10–11 September 2026 (JICA communiqué relayed by African Manager; Entreprises Magazine). This is technical cooperation: no works contract or loan value is stated in the sources, and the instrument is a record of discussions, not a financing agreement."
+  confidence: B
+  basis: reported
+  verification: needs-primary-source
+  falsifiable_by: JICA Tunisia project page or the signed procès-verbal; a JORT notice if one exists
+  sources: [african-manager-sonede-jica-sfax-2026-09-11, entreprises-magazine-sonede-jica-2026-09-10]

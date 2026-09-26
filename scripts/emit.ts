@@ -53,7 +53,9 @@ export type Target = { id: string } | { index: number; match?: Record<string, st
 export type Edit =
 	| { op: 'set'; target: Target; field: string; value: unknown }
 	| { op: 'add-field'; target: Target; field: string; value: unknown; at?: 'start' | 'end' }
+	| { op: 'remove-field'; target: Target; field: string }
 	| { op: 'append-to-list'; target: Target; field: string; item: string }
+	| { op: 'append-object'; target: Target; field: string; item: Record<string, unknown> }
 	| { op: 'add-block'; target: Target; field: string; entries: Record<string, string> }
 	| { op: 'append-record'; record: Record<string, unknown> };
 
@@ -131,15 +133,35 @@ function pairOf(record: YAMLMap, field: string) {
 }
 
 /**
- * Byte range of a node's value, excluding any trailing comment.
+ * Byte range of a node's value, excluding any trailing comment and line break.
  *
  * yaml gives [start, value-end, node-end]; node-end swallows trailing comments and
  * the newline, so splicing to it would eat a moderator's note.
+ *
+ * A block scalar is the one node whose value-end also includes the line break
+ * that terminates it. That break is file structure, not value: splicing over it
+ * glues the replacement onto the next key — `reasoning: "..."  reasoning_fr: >-`
+ * — and the file stops parsing. Plain and quoted scalars stop before the break,
+ * so this trims only BLOCK_FOLDED and BLOCK_LITERAL nodes.
+ *
+ * Block collections behave like block scalars here, not like flow ones: a block
+ * sequence's or mapping's value-end also sits after the line break terminating
+ * its last entry. Trimming it is what keeps `add-field` from inserting below the
+ * blank line that separates records, and `set` from gluing the next key onto a
+ * one-line replacement.
  */
-function valueRange(node: unknown): [number, number] {
+function valueRange(node: unknown, source: string): [number, number] {
 	const range = (node as { range?: [number, number, number] })?.range;
 	if (!range) throw new EmitError('node carries no source range');
-	return [range[0], range[1]];
+	let end = range[1];
+	const type = (node as { type?: string })?.type;
+	const block =
+		type === 'BLOCK_FOLDED' || type === 'BLOCK_LITERAL' || isSeq(node) || isMap(node);
+	if (block && source[end - 1] === '\n') {
+		end--;
+		if (source[end - 1] === '\r') end--;
+	}
+	return [range[0], end];
 }
 
 // ---------------------------------------------------------------------------
@@ -237,7 +259,7 @@ function endOfFields(source: string, record: YAMLMap): { at: number; indent: str
 	let last = -1;
 	for (const pair of record.items) {
 		const node = pair.value ?? pair.key;
-		const [, end] = valueRange(node);
+		const [, end] = valueRange(node, source);
 		if (end > last) last = end;
 	}
 	if (last < 0) throw new EmitError('record has no fields');
@@ -248,7 +270,7 @@ function endOfFields(source: string, record: YAMLMap): { at: number; indent: str
 	if (restOfLine.trimStart().startsWith('#')) last = nextNewline === -1 ? source.length : nextNewline;
 
 	const firstKey = record.items[0].key;
-	const [keyStart] = valueRange(firstKey);
+	const [keyStart] = valueRange(firstKey, source);
 	return { at: last, indent: indentAt(source, keyStart) };
 }
 
@@ -269,7 +291,7 @@ function opSet(source: string, doc: Doc, target: Target, field: string, value: u
 	if (!pair) throw new EmitError(`record ${describe(target)} has no field "${field}" — use add-field`);
 	if (!pair.value) throw new EmitError(`field "${field}" on ${describe(target)} has no value to replace`);
 
-	const [start, end] = valueRange(pair.value);
+	const [start, end] = valueRange(pair.value, source);
 	return splice(source, start, end, inlineValue(value));
 }
 
@@ -290,7 +312,7 @@ function opAddField(
 		// Insert ahead of the first key, on the `- ` line. Every other data file puts
 		// `id` first, and a record whose id is buried at the bottom reads as an
 		// afterthought rather than the record's name.
-		const [keyStart] = valueRange(record.items[0].key);
+		const [keyStart] = valueRange(record.items[0].key, source);
 		const indent = indentAt(source, keyStart);
 		return splice(source, keyStart, keyStart, `${field}: ${inlineValue(value)}${eol}${indent}`);
 	}
@@ -315,7 +337,7 @@ function opAppendToList(source: string, doc: Doc, target: Target, field: string,
 		throw new EmitError(`"${item}" is already in ${describe(target)}.${field}`);
 	}
 
-	const [start, end] = valueRange(seq);
+	const [start, end] = valueRange(seq, source);
 	const text = source.slice(start, end);
 
 	if (text.trimStart().startsWith('[')) {
@@ -329,11 +351,80 @@ function opAppendToList(source: string, doc: Doc, target: Target, field: string,
 
 	// Block sequence: a new "- item" line at the dash column.
 	const lastItem = seq.items[seq.items.length - 1];
-	const [itemStart, itemEnd] = valueRange(lastItem);
+	const [itemStart, itemEnd] = valueRange(lastItem, source);
 	const dash = source.lastIndexOf('-', itemStart);
 	const indent = indentAt(source, dash);
 	const eol = lineEnding(source);
 	return splice(source, itemEnd, itemEnd, `${eol}${indent}- ${item}`);
+}
+
+/**
+ * Append one map entry to a block sequence of maps — `contested` and `disputes`.
+ *
+ * `set` is the wrong tool here. It replaces the collection's whole byte range,
+ * which for a block sequence includes the line break terminating the last
+ * entry, so a one-line flow replacement glues the following key onto the same
+ * line; and it reflows every existing entry into flow style, a whole-record
+ * reformat dressed up as an append. Inserting at the last entry's value end
+ * leaves every pre-existing byte of the sequence alone.
+ */
+function opAppendObject(
+	source: string,
+	doc: Doc,
+	target: Target,
+	field: string,
+	item: Record<string, unknown>
+): EmitResult {
+	const record = recordOf(doc, target);
+	const pair = pairOf(record, field);
+	if (!pair?.value) throw new EmitError(`record ${describe(target)} has no list "${field}"`);
+	if (!isSeq(pair.value)) throw new EmitError(`field "${field}" on ${describe(target)} is not a list`);
+
+	const entries = Object.entries(item);
+	if (entries.length === 0) throw new EmitError('an appended object needs at least one field');
+
+	const seq = pair.value;
+	const lastItem = seq.items[seq.items.length - 1];
+	if (!lastItem || !isMap(lastItem)) {
+		throw new EmitError(`field "${field}" on ${describe(target)} is not a block list of objects`);
+	}
+
+	const [itemStart, itemEnd] = valueRange(lastItem, source);
+	const dash = source.lastIndexOf('-', itemStart);
+	if (dash === -1) throw new EmitError(`could not locate the list dash for "${field}"`);
+	const indent = indentAt(source, dash);
+	const eol = lineEnding(source);
+	const body = entries
+		.map(([k, v], i) => `${i === 0 ? `${eol}${indent}- ` : `${eol}${indent}  `}${k}: ${inlineValue(v)}`)
+		.join('');
+	// A map's value range ends AFTER the line break that terminates it (a plain
+	// scalar's does not), so when the entry is not the last line of the file the
+	// break has to be re-added or the next key glues onto the appended body.
+	const trail = itemEnd < source.length && source[itemEnd] !== '\n' && source[itemEnd] !== '\r' ? eol : '';
+	return splice(source, itemEnd, itemEnd, body + trail);
+}
+
+/**
+ * Remove a key and its value outright.
+ *
+ * Unlike every other operation this one deletes bytes, so the range has to be
+ * the whole field: from the start of the key's line (not the key itself, or the
+ * indentation is left behind as a whitespace-only line) through the line break
+ * that ends the value. For a block scalar, `valueRange` stops before that break,
+ * so the break is carried past explicitly.
+ */
+function opRemoveField(source: string, doc: Doc, target: Target, field: string): EmitResult {
+	const record = recordOf(doc, target);
+	const pair = pairOf(record, field);
+	if (!pair) throw new EmitError(`record ${describe(target)} has no field "${field}" to remove`);
+	if (!pair.value) throw new EmitError(`field "${field}" on ${describe(target)} has no value to remove`);
+
+	const [keyStart] = valueRange(pair.key, source);
+	const lineStart = source.lastIndexOf('\n', keyStart - 1) + 1;
+	const [, valueEnd] = valueRange(pair.value, source);
+	const newline = source.indexOf('\n', valueEnd);
+	const end = newline === -1 ? source.length : newline + 1;
+	return splice(source, lineStart, end, '');
 }
 
 /**
@@ -407,8 +498,12 @@ export function applyEdit(source: string, edit: Edit): EmitResult {
 				return opSet(source, doc, edit.target, edit.field, edit.value);
 			case 'add-field':
 				return opAddField(source, doc, edit.target, edit.field, edit.value, edit.at);
+			case 'remove-field':
+				return opRemoveField(source, doc, edit.target, edit.field);
 			case 'append-to-list':
 				return opAppendToList(source, doc, edit.target, edit.field, edit.item);
+			case 'append-object':
+				return opAppendObject(source, doc, edit.target, edit.field, edit.item);
 			case 'add-block':
 				return opAddBlock(source, doc, edit.target, edit.field, edit.entries);
 			case 'append-record':

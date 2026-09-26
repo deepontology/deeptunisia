@@ -1,5 +1,65 @@
 [
   {
+    "hash": "d4fcc5993",
+    "date": "2026-09-26T02:44:13+01:00",
+    "subject": "Data: 2026-09-25 sweep — JORT worklist corrections and sourced records",
+    "kind": "revision",
+    "added": 3768,
+    "removed": 87,
+    "files": [
+      {
+        "file": "data/agreements.yaml",
+        "added": 51,
+        "removed": 0
+      },
+      {
+        "file": "data/companies.yaml",
+        "added": 22,
+        "removed": 0
+      },
+      {
+        "file": "data/contrib/daily-2026-09-25.yaml",
+        "added": 2595,
+        "removed": 0
+      },
+      {
+        "file": "data/events.yaml",
+        "added": 262,
+        "removed": 51
+      },
+      {
+        "file": "data/institutions.yaml",
+        "added": 59,
+        "removed": 0
+      },
+      {
+        "file": "data/people.yaml",
+        "added": 67,
+        "removed": 0
+      },
+      {
+        "file": "data/positions.yaml",
+        "added": 65,
+        "removed": 28
+      },
+      {
+        "file": "data/roles.yaml",
+        "added": 7,
+        "removed": 0
+      },
+      {
+        "file": "data/source-exceptions.yaml",
+        "added": 0,
+        "removed": 8
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 640,
+        "removed": 0
+      }
+    ]
+  },
+  {
     "hash": "66bbdc44d",
     "date": "2026-09-26T02:37:46+01:00",
     "subject": "data, build: correct the narrative record and check it against the graph (#39)",
