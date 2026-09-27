@@ -1,10 +1,10 @@
 {
-  "generated": "2026-09-14T16:36:36.003Z",
-  "commit": "ba2ba8c",
+  "generated": "2026-09-27T03:34:08.267Z",
+  "commit": "fbc2bfd",
   "withValidators": true,
   "summary": {
-    "counted": 56,
-    "killed": 54,
+    "counted": 57,
+    "killed": 55,
     "latent": 2,
     "knownLatent": 2,
     "drift": 0,
@@ -515,6 +515,15 @@
       "by": "test-validators",
       "outputChanged": false,
       "expect": "test-validators Phase 10A (nonzero sample fixture)"
+    },
+    {
+      "id": "m57",
+      "label": "the interval comparison always passes, so a contradictory date is never seen",
+      "file": "consistency.ts",
+      "verdict": "killed",
+      "by": "test-consistency",
+      "outputChanged": false,
+      "expect": "test-consistency (the pre-correction Bennour reference)"
     }
   ]
 }
