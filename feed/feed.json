@@ -3,6 +3,15 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:al-jazeera:e2d8c8ebe41bdc43",
+      "outlet": "Al Jazeera",
+      "outletId": "al-jazeera",
+      "title": "Detained Tunisian flotilla activists: Worsening health amid family anguish",
+      "link": "https://www.aljazeera.com/news/2026/9/27/detained-tunisian-flotilla-activists-worsening-health-amid-family-anguish?traffic_source=rss",
+      "published": "2026-09-27T03:51:46Z",
+      "lang": "en"
+    },
+    {
       "id": "feed:kapitalis:d1e3bc64ae630cb9",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -11739,15 +11748,6 @@
       "title": "Le ministre de l’agriculture se rend au gouvernorat de Zaghouan",
       "link": "https://africanmanager.com/le-ministre-de-lagriculture-se-rend-au-gouvernorat-de-zaghouan/",
       "published": "2026-09-02T08:40:51Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:f9d797793b80d163",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Le Maroc et l’Inde s’engagent à consolider leurs liens économiques",
-      "link": "https://africanmanager.com/le-maroc-et-linde-sengagent-a-consolider-leurs-liens-economiques/",
-      "published": "2026-09-02T08:39:23Z",
       "lang": "fr"
     }
   ]
