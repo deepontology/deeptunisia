@@ -22,7 +22,7 @@
 	import EntityMenu from './EntityMenu.svelte';
 	import PrivacyNotice from './PrivacyNotice.svelte';
 	import PostingAs from './PostingAs.svelte';
-	import { search, type Hit } from '$lib/search';
+	import { search, type Hit, type HitKind } from '$lib/search';
 	import { THREAD_KINDS } from '$lib/agora.svelte';
 	import { t } from '$lib/t.svelte';
 	import { LAYER_COLOR } from '$lib/model';
@@ -46,7 +46,24 @@
 	let cursor = $state(0);
 	let focused = $state(false);
 
-	const hits = $derived(focused && !chosen ? search(query, { limit: 6 }) : []);
+	/**
+	 * The kinds the thread API accepts as a target AND the search index actually
+	 * holds. Places and regions are in the index but are not addressable community
+	 * targets: offering them let a reader compose a whole thread and only then meet
+	 * `unknown target_type` from the server.
+	 */
+	const ATTACHABLE: readonly HitKind[] = [
+		'person',
+		'institution',
+		'event',
+		'relationship',
+		'contract',
+		'licence',
+		'declaration',
+		'education'
+	];
+
+	const hits = $derived(focused && !chosen ? search(query, { limit: 6, kinds: ATTACHABLE }) : []);
 
 	function choose(h: Hit) {
 		chosen = h;

@@ -22,6 +22,7 @@
 	import Chip from '$lib/ui/Chip.svelte';
 	import { editableFields, type EditableField } from './fields';
 	import { t } from '$lib/t.svelte';
+	import { agora } from '$lib/agora.svelte';
 
 	interface Props {
 		target: { type: string; id: string; label: string } | null;
@@ -37,9 +38,18 @@
 			title: string;
 		}) => void;
 		oncancel: () => void;
+		onidentity?: () => void;
 	}
 
-	let { target, busy = false, error = '', onfile, oncancel }: Props = $props();
+	let { target, busy = false, error = '', onfile, oncancel, onidentity }: Props = $props();
+
+	/*
+	 * Proposing needs trust level 2. The server has always refused below it, but
+	 * the form let a new identity fill everything in and only then meet a 403.
+	 * `agora.ready` guards the first paint so the locked notice never flashes
+	 * before whoami has answered.
+	 */
+	const locked = $derived(agora.ready === true && agora.can.createPr !== true);
 
 	const fields = $derived<EditableField[]>(
 		target ? editableFields(target.type, target.id) : []
@@ -93,6 +103,23 @@
 		</div>
 	{/if}
 
+	{#if locked}
+		<!--
+			A door that cannot open should say so before the work, not after. The
+			server refuses under trust 2; this is the same refusal, earlier and with
+			the way forward attached.
+		-->
+		<div class="locked" role="note">
+			<p class="locked-title">{t('agora.locked.title')}</p>
+			<p class="locked-body">{t('agora.proposelocked')}</p>
+			<div class="actions">
+				{#if onidentity}
+					<Button variant="solid" onclick={onidentity}>{t('agora.locked.action')}</Button>
+				{/if}
+				<Button variant="ghost" onclick={oncancel}>{t('agora.cancel')}</Button>
+			</div>
+		</div>
+	{:else}
 	{#if structured}
 		<Field label={t('agora.whichfield')} required>
 			<div class="fields">
@@ -113,9 +140,9 @@
 		</Field>
 
 		{#if field}
-			<Field label={t('agora.shouldsay')} required hint={t('agora.currentis')}>
+			<Field for="prop-f1" label={t('agora.shouldsay')} required hint={t('agora.currentis')}>
 				{#if field.multiline}
-					<Textarea bind:value rows={4} />
+					<Textarea id="prop-f1" bind:value rows={4} />
 				{:else}
 					<Input bind:value size="md" />
 				{/if}
@@ -124,19 +151,19 @@
 	{:else}
 		<!-- No structured record behind this target. Say so rather than pretending. -->
 		<p class="fallback">{t('agora.freeform')}</p>
-		<Field label="Field" required>
-			<Input bind:value={rawField} placeholder={t('agora.exstart')} mono size="md" />
+		<Field for="prop-f2" label={t('agora.proposal.field')} required>
+			<Input id="prop-f2" bind:value={rawField} placeholder={t('agora.exstart')} mono size="md" />
 		</Field>
-		<Field label={t('agora.nowsays')}>
-			<Input bind:value={rawOld} mono size="md" />
+		<Field for="prop-f3" label={t('agora.nowsays')}>
+			<Input id="prop-f3" bind:value={rawOld} mono size="md" />
 		</Field>
-		<Field label={t('agora.shouldsay')} required>
-			<Input bind:value mono size="md" />
+		<Field for="prop-f4" label={t('agora.shouldsay')} required>
+			<Input id="prop-f4" bind:value mono size="md" />
 		</Field>
 	{/if}
 
-	<Field label={t('agora.why')} required hint={t('agora.whyhint')}>
-		<Textarea bind:value={reason} rows={3} placeholder={t('agora.whyph')} limit={2000} />
+	<Field for="prop-f5" label={t('agora.why')} required hint={t('agora.whyhint')}>
+		<Textarea id="prop-f5" bind:value={reason} rows={3} placeholder={t('agora.whyph')} limit={2000} />
 	</Field>
 
 	<!-- Evidence is not optional in spirit, only in mechanics: a proposal without it
@@ -144,8 +171,8 @@
 	     form says which of those two is happening. -->
 	<Field label={t('agora.evidence')} hint={t('agora.evidencehint')}>
 		<div class="evidence">
-			<Input bind:value={url} placeholder={t('agora.evidenceurl')} size="md" type="url" />
-			<Input bind:value={title} placeholder={t('agora.evidencewhat')} size="md" />
+			<Input bind:value={url} placeholder={t('agora.evidenceurl')} aria-label={t('agora.evidenceurl')} size="md" type="url" />
+			<Input bind:value={title} placeholder={t('agora.evidencewhat')} aria-label={t('agora.evidencewhat')} size="md" />
 		</div>
 	</Field>
 
@@ -160,6 +187,7 @@
 		<Button variant="solid" onclick={file} disabled={!ready}>{t('agora.file')}</Button>
 		<Button variant="ghost" onclick={oncancel}>{t('agora.cancel')}</Button>
 	</div>
+	{/if}
 </Panel>
 
 <style>
@@ -173,6 +201,29 @@
 		color: var(--text-secondary);
 		line-height: 1.5;
 		max-width: 66ch;
+	}
+	.locked {
+		display: flex;
+		flex-direction: column;
+		gap: var(--s-3);
+		margin-top: var(--s-5);
+		padding: var(--s-5);
+		border: 1px solid var(--border-subtle);
+		border-inline-start: 2px solid var(--basis-inferred);
+		border-radius: var(--r-md);
+		background: color-mix(in oklch, var(--basis-inferred) 6%, transparent);
+	}
+	.locked-title {
+		margin: 0;
+		font-size: var(--t-sm);
+		font-weight: 560;
+	}
+	.locked-body {
+		margin: 0;
+		font-size: var(--t-sm);
+		color: var(--text-secondary);
+		line-height: 1.55;
+		max-width: 62ch;
 	}
 	.target {
 		display: flex;

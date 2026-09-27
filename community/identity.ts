@@ -70,6 +70,26 @@ export function fromB64u(text: string): Uint8Array {
 }
 
 /**
+ * One key, one identity row.
+ *
+ * base64url is not canonical: padding variants and aliased trailing bits decode
+ * to the same 32 bytes while remaining different strings, so keying rows by the
+ * submitted text let one key present several identities and multiply its
+ * allowances. Decode, check the length, re-encode once, and key on that.
+ */
+export function canonicalPubkey(pubkey: unknown): string {
+	if (typeof pubkey !== 'string' || !pubkey) throw new IdentityError('public key is missing');
+	let bytes: Uint8Array;
+	try {
+		bytes = fromB64u(pubkey);
+	} catch {
+		throw new IdentityError('public key is not valid base64url');
+	}
+	if (bytes.length !== 32) throw new IdentityError('public key is not a 32-byte Ed25519 key');
+	return toB64u(bytes);
+}
+
+/**
  * The handle shown beside a post.
  *
  * Derived from the public key, so it cannot be claimed by anyone else and there is no

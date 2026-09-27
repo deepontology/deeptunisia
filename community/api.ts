@@ -27,6 +27,7 @@ import {
 	cleanLabel,
 	earnedLevel,
 	handleFor,
+	canonicalPubkey,
 	IdentityError,
 	type Identity,
 	type SignedAction
@@ -35,6 +36,15 @@ import { bucketKey, consume, RateLimitError, type Bucket, type BucketStore } fro
 import { rank, reportPressure, type Sort } from './ranking.ts';
 import { checkHoneypot, checkInterval, checkLinkCount, countLinks, isDuplicate, AbuseError } from './abuse.ts';
 import { isPublicRead, modeUnavailable, type CommunityMode } from './mode.ts';
+import {
+	PUBLIC_FIELDS,
+	REQUIRED_FIELDS,
+	ENUM_FIELDS,
+	REFERENCE_FIELDS,
+	RELATIONSHIP_TYPES,
+	INSTITUTION_TYPES,
+	LAYERS
+} from '../src/lib/taxonomy.ts';
 
 export interface Env {
 	DB: Db;
@@ -202,12 +212,16 @@ async function authenticate(env: Env, request: Request, action: SignedAction, no
 		return row !== null;
 	});
 
+	// One key, one row. The submitted text is not trusted as the key: it is
+	// decoded and re-encoded canonically before anything is looked up or written.
+	const pubkey = canonicalPubkey(action.pubkey);
+
 	await env.DB.prepare('INSERT INTO used_nonces (nonce, expires_at) VALUES (?, ?)')
 		.bind(action.nonce, now + 15 * 60 * 1000)
 		.run();
 
 	let identity = await env.DB.prepare('SELECT * FROM identities WHERE pubkey = ?')
-		.bind(action.pubkey)
+		.bind(pubkey)
 		.first<Identity>();
 
 	if (!identity) {
@@ -217,10 +231,10 @@ async function authenticate(env: Env, request: Request, action: SignedAction, no
 		// history. (spec §15.3 R1 — LIMITS.identity was dead config before this.)
 		await limit(env, request, 'identity', now);
 		await env.DB.prepare('INSERT INTO identities (pubkey, created_at) VALUES (?, ?)')
-			.bind(action.pubkey, now)
+			.bind(pubkey, now)
 			.run();
 		identity = await env.DB.prepare('SELECT * FROM identities WHERE pubkey = ?')
-			.bind(action.pubkey)
+			.bind(pubkey)
 			.first<Identity>();
 	}
 
@@ -344,6 +358,30 @@ async function expandPr(db: Db, pr: any) {
 	};
 }
 
+/**
+ * One thread row as the public sees it. Shared by the list and the single fetch,
+ * so a permalink and a list row can never drift apart.
+ */
+async function enrichThread(db: Db, t: any) {
+	return {
+		id: t.id,
+		title: t.title,
+		kind: t.kind,
+		target_type: t.target_type,
+		target_id: t.target_id,
+		created_at: t.created_at,
+		author: await publicAuthor(db, t.created_by, {
+			name: t.author_name,
+			note: t.author_note
+		}),
+		post_count: t.post_count,
+		upvotes: t.upvotes,
+		downvotes: t.downvotes,
+		removed: Boolean(t.removed_at),
+		removed_reason: t.removed_reason ?? null
+	};
+}
+
 export async function handle(request: Request, env: Env): Promise<Response> {
 	const url = new URL(request.url);
 	const path = url.pathname.replace(/\/+$/, '') || '/';
@@ -367,35 +405,72 @@ export async function handle(request: Request, env: Env): Promise<Response> {
 			const targetId = url.searchParams.get('target_id');
 			const sort = (url.searchParams.get('sort') ?? 'trending') as Sort;
 
-			const where = targetType && targetId ? 'WHERE target_type = ? AND target_id = ?' : '';
-			const stmt = env.DB.prepare(
+			/*
+			 * Bound the read and walk with a keyset cursor, exactly as posts do.
+			 * An unbounded list on a free-tier database is a free amplification
+			 * vector; the page cap keeps any single fetch small.
+			 */
+			const PAGE = 200;
+			const cursorRaw = url.searchParams.get('cursor');
+			let after: { created_at: number; id: string } | null = null;
+			if (cursorRaw) {
+				const [c, i] = Buffer.from(cursorRaw, 'base64url').toString('utf8').split(':');
+				after = { created_at: Number(c) || 0, id: i ?? '' };
+			}
+
+			const clauses: string[] = [];
+			const binds: unknown[] = [];
+			if (targetType && targetId) {
+				clauses.push('target_type = ?', 'target_id = ?');
+				binds.push(targetType, targetId);
+			}
+			if (after) {
+				clauses.push('(t.created_at < ? OR (t.created_at = ? AND t.id < ?))');
+				binds.push(after.created_at, after.created_at, after.id);
+			}
+			const where = clauses.length ? `WHERE ${clauses.join(' AND ')}` : '';
+
+			const rows = (
+				await env.DB.prepare(
+					`SELECT t.*, (SELECT COUNT(*) FROM posts p WHERE p.thread_id = t.id) AS post_count,
+						(SELECT COUNT(*) FROM votes v WHERE v.target_type = 'thread' AND v.target_id = t.id AND v.value = 1) AS upvotes,
+						(SELECT COUNT(*) FROM votes v WHERE v.target_type = 'thread' AND v.target_id = t.id AND v.value = -1) AS downvotes
+					 FROM threads t ${where}
+					 ORDER BY t.created_at DESC, t.id DESC
+					 LIMIT ?`
+				)
+					.bind(...binds, PAGE + 1)
+					.all<any>()
+			).results;
+
+			const hasMore = rows.length > PAGE;
+			const page = hasMore ? rows.slice(0, PAGE) : rows;
+			const last = page[page.length - 1];
+			const next_cursor =
+				hasMore && last ? Buffer.from(`${last.created_at}:${last.id}`).toString('base64url') : null;
+
+			const items = await Promise.all(page.map((t) => enrichThread(env.DB, t)));
+			return json({ items: rank(items as any, sort, now), next_cursor });
+		}
+
+		/*
+		 * One thread by id. A permalink can arrive with no list loaded, and once the
+		 * list is paginated the old "fetch recent and find it" fallback could miss a
+		 * thread that is no longer on the first page.
+		 */
+		if (request.method === 'GET' && path === '/api/thread') {
+			const threadId = url.searchParams.get('id');
+			if (!threadId) throw new ApiError('id is required');
+			const t = await env.DB.prepare(
 				`SELECT t.*, (SELECT COUNT(*) FROM posts p WHERE p.thread_id = t.id) AS post_count,
 					(SELECT COUNT(*) FROM votes v WHERE v.target_type = 'thread' AND v.target_id = t.id AND v.value = 1) AS upvotes,
 					(SELECT COUNT(*) FROM votes v WHERE v.target_type = 'thread' AND v.target_id = t.id AND v.value = -1) AS downvotes
-				 FROM threads t ${where}`
-			);
-			const rows = (await (where ? stmt.bind(targetType, targetId) : stmt).all<any>()).results;
-
-			const items = await Promise.all(
-				rows.map(async (t) => ({
-					id: t.id,
-					title: t.title,
-					kind: t.kind,
-					target_type: t.target_type,
-					target_id: t.target_id,
-					created_at: t.created_at,
-					author: await publicAuthor(env.DB, t.created_by, {
-						name: t.author_name,
-						note: t.author_note
-					}),
-					post_count: t.post_count,
-					upvotes: t.upvotes,
-					downvotes: t.downvotes,
-					removed: Boolean(t.removed_at),
-					removed_reason: t.removed_reason ?? null
-				}))
-			);
-			return json({ items: rank(items as any, sort, now) });
+				 FROM threads t WHERE t.id = ?`
+			)
+				.bind(threadId)
+				.first<any>();
+			if (!t) throw new ApiError('no such thread', 404);
+			return json(await enrichThread(env.DB, t));
 		}
 
 		if (request.method === 'GET' && path === '/api/mentions') {
@@ -488,6 +563,16 @@ export async function handle(request: Request, env: Env): Promise<Response> {
 			const status = url.searchParams.get('status');
 			const targetId = url.searchParams.get('target_id');
 
+			// Bounded like the thread list: the review queue is small, but "small
+			// today" is not a reason to leave the read unbounded.
+			const PAGE = 50;
+			const cursorRaw = url.searchParams.get('cursor');
+			let after: { created_at: number; id: string } | null = null;
+			if (cursorRaw) {
+				const [c, i] = Buffer.from(cursorRaw, 'base64url').toString('utf8').split(':');
+				after = { created_at: Number(c) || 0, id: i ?? '' };
+			}
+
 			const clauses: string[] = [];
 			const binds: unknown[] = [];
 			if (status) {
@@ -498,13 +583,28 @@ export async function handle(request: Request, env: Env): Promise<Response> {
 				clauses.push('target_id = ?');
 				binds.push(targetId);
 			}
+			if (after) {
+				clauses.push('(created_at < ? OR (created_at = ? AND id < ?))');
+				binds.push(after.created_at, after.created_at, after.id);
+			}
 			const where = clauses.length ? `WHERE ${clauses.join(' AND ')}` : '';
 
-			const stmt = env.DB.prepare(`SELECT * FROM prs ${where} ORDER BY created_at DESC`);
-			const rows = (await (binds.length ? stmt.bind(...binds) : stmt).all<any>()).results;
+			const rows = (
+				await env.DB.prepare(
+					`SELECT * FROM prs ${where} ORDER BY created_at DESC, id DESC LIMIT ?`
+				)
+					.bind(...binds, PAGE + 1)
+					.all<any>()
+			).results;
 
-			const items = await Promise.all(rows.map((pr) => expandPr(env.DB, pr)));
-			return json({ items });
+			const hasMore = rows.length > PAGE;
+			const page = hasMore ? rows.slice(0, PAGE) : rows;
+			const last = page[page.length - 1];
+			const next_cursor =
+				hasMore && last ? Buffer.from(`${last.created_at}:${last.id}`).toString('base64url') : null;
+
+			const items = await Promise.all(page.map((pr) => expandPr(env.DB, pr)));
+			return json({ items, next_cursor });
 		}
 
 		/*
@@ -569,6 +669,7 @@ export async function handle(request: Request, env: Env): Promise<Response> {
 
 		if (path === '/api/thread') {
 			if (!can.createThread) throw new ApiError('this identity cannot open threads', 403);
+			checkHoneypot(data);
 			await limit(env, request, 'thread', now);
 
 			/*
@@ -616,6 +717,24 @@ export async function handle(request: Request, env: Env): Promise<Response> {
 			const kind = data.kind ?? 'discussion';
 			if (!THREAD_KINDS.includes(kind)) throw new ApiError('unknown kind');
 
+			const title = requireString(data.title, 'title', MAX_TITLE);
+			/*
+			 * The same floor and duplicate check posts get. A thread is the most
+			 * visible thing anyone writes here; a key that opens four identical
+			 * threads in a minute is the cheapest abuse on the surface.
+			 */
+			const recentThreads = (
+				await env.DB.prepare(
+					'SELECT title, created_at FROM threads WHERE created_by = ? ORDER BY created_at DESC LIMIT 5'
+				)
+					.bind(identity.pubkey)
+					.all<{ title: string; created_at: number }>()
+			).results;
+			checkInterval(recentThreads[0]?.created_at ?? null, now);
+			if (isDuplicate(title, recentThreads.map((t) => t.title))) {
+				throw new ApiError('you have just opened a thread with this title');
+			}
+
 			const threadId = id();
 			const who = await selfLabels(env.DB, identity.pubkey);
 			await env.DB.prepare(
@@ -626,7 +745,7 @@ export async function handle(request: Request, env: Env): Promise<Response> {
 					threadId,
 					targetType,
 					data.target_id ?? null,
-					requireString(data.title, 'title', MAX_TITLE),
+					title,
 					now,
 					identity.pubkey,
 					who.name,
@@ -639,11 +758,31 @@ export async function handle(request: Request, env: Env): Promise<Response> {
 		}
 
 		if (path === '/api/post') {
-			// Layered, per section 13: none of these is relied on alone, and none of
-			// them is visible to somebody writing an ordinary comment.
+			// Layered, per section 13: none of these is relied on alone, and none
+			// of them is visible to somebody writing an ordinary comment.
 			checkHoneypot(data);
 			await limit(env, request, 'comment', now);
 			const body = requireString(data.body, 'body', MAX_BODY);
+
+			/*
+			 * The per-identity hourly allowance, which capabilitiesFor has published
+			 * since the first version and nothing enforced. The address bucket prices
+			 * a flooder holding many keys; this prices one key, so the trust ladder is
+			 * not a decoration.
+			 */
+			if (can.commentsPerHour > 0) {
+				const hour = await env.DB.prepare(
+					'SELECT COUNT(*) AS n FROM posts WHERE created_by = ? AND created_at > ?'
+				)
+					.bind(identity.pubkey, now - 3_600_000)
+					.first<{ n: number }>();
+				if ((hour?.n ?? 0) >= can.commentsPerHour) {
+					throw new RateLimitError(
+						`you have posted ${can.commentsPerHour} times this hour — the limit for your trust level, and it resets within the hour`,
+						3_600_000
+					);
+				}
+			}
 
 			// Capability before throttling: "you may not do this" and "not so fast" are
 			// different answers, and a caller acts differently on each.
@@ -760,8 +899,10 @@ export async function handle(request: Request, env: Env): Promise<Response> {
 
 		if (path === '/api/vote') {
 			await limit(env, request, 'vote', now);
-			const value = data.value === 1 ? 1 : data.value === -1 ? -1 : null;
-			if (value === null) throw new ApiError('a vote is 1 or -1');
+			// 0 retracts. A vote that cannot be taken back is a trap, and the value is
+			// the caller's own choice: nothing here is a grade.
+			const value = data.value === 1 ? 1 : data.value === -1 ? -1 : data.value === 0 ? 0 : null;
+			if (value === null) throw new ApiError('a vote is 1 or -1, or 0 to remove it');
 			const targetType = data.target_type === 'thread' ? 'thread' : 'post';
 
 			// R4: a vote must point at something that exists. An orphan vote row is
@@ -781,31 +922,50 @@ export async function handle(request: Request, env: Env): Promise<Response> {
 				.bind(targetType, data.target_id, identity.pubkey)
 				.first<{ value: number }>();
 
-			if (existing?.value === value) return json({ ok: true, unchanged: true });
+			if ((existing?.value ?? 0) === value) return json({ ok: true, unchanged: true });
 
-			await env.DB.prepare(
-				`INSERT INTO votes (target_type, target_id, identity, value, created_at)
-				 VALUES (?, ?, ?, ?, ?)
-				 ON CONFLICT(target_type, target_id, identity) DO UPDATE SET value = excluded.value`
-			)
-				.bind(targetType, data.target_id, identity.pubkey, value, now)
-				.run();
-
-			if (targetType === 'post') {
-				const up = value === 1 ? 1 : 0;
-				const down = value === -1 ? 1 : 0;
-				const undoUp = existing?.value === 1 ? 1 : 0;
-				const undoDown = existing?.value === -1 ? 1 : 0;
-				await env.DB.prepare(
-					'UPDATE posts SET upvotes = upvotes + ? - ?, downvotes = downvotes + ? - ? WHERE id = ?'
-				)
-					.bind(up, undoUp, down, undoDown, data.target_id)
-					.run();
+			/*
+			 * The vote row and the post's counters move in one batch, and the
+			 * counters are RECOMPUTED from the votes table rather than adjusted by a
+			 * remembered delta. The old read-modify-write could double-decrement on
+			 * two concurrent flips and drift permanently on a crash between the two
+			 * statements; a derived count cannot drift.
+			 */
+			const statements = [];
+			if (value === 0) {
+				statements.push(
+					env.DB.prepare('DELETE FROM votes WHERE target_type = ? AND target_id = ? AND identity = ?').bind(
+						targetType,
+						data.target_id,
+						identity.pubkey
+					)
+				);
+			} else {
+				statements.push(
+					env.DB.prepare(
+						`INSERT INTO votes (target_type, target_id, identity, value, created_at)
+						 VALUES (?, ?, ?, ?, ?)
+						 ON CONFLICT(target_type, target_id, identity) DO UPDATE SET value = excluded.value`
+					).bind(targetType, data.target_id, identity.pubkey, value, now)
+				);
 			}
-			return json({ ok: true });
+			if (targetType === 'post') {
+				statements.push(
+					env.DB.prepare(
+						`UPDATE posts SET
+						   upvotes = (SELECT COUNT(*) FROM votes WHERE target_type = 'post' AND target_id = ? AND value = 1),
+						   downvotes = (SELECT COUNT(*) FROM votes WHERE target_type = 'post' AND target_id = ? AND value = -1)
+						 WHERE id = ?`
+					).bind(data.target_id, data.target_id, data.target_id)
+				);
+			}
+			await env.DB.batch(statements);
+
+			return json(value === 0 ? { ok: true, removed: true } : { ok: true });
 		}
 
 		if (path === '/api/report') {
+			checkHoneypot(data);
 			await limit(env, request, 'report', now);
 			const reason = requireString(data.reason, 'reason', 40);
 			if (!REPORT_REASONS.includes(reason)) throw new ApiError('unknown report reason');
@@ -964,6 +1124,7 @@ export async function handle(request: Request, env: Env): Promise<Response> {
 
 		if (path === '/api/pr') {
 			if (!can.createPr) throw new ApiError('proposing graph changes needs an established identity', 403);
+			checkHoneypot(data);
 			await limit(env, request, 'pr', now);
 
 			const operation = requireString(data.operation, 'operation', 40);
@@ -971,10 +1132,151 @@ export async function handle(request: Request, env: Env): Promise<Response> {
 			const reason = requireString(data.reason, 'reason', 2000);
 			const targetType = requireString(data.target_type, 'target_type', 40);
 			if (!TARGET_TYPES.includes(targetType)) throw new ApiError('unknown target_type');
+			// Trim once, here. A padded id used to be validated after trimming but
+			// stored raw, so the row disagreed with the change it carried.
+			const targetId =
+				typeof data.target_id === 'string' ? data.target_id.trim() || null : (data.target_id ?? null);
 
 			const changes = Array.isArray(data.changes) ? data.changes : [];
 			if (!changes.length) throw new ApiError('a proposal must say what should change');
 			if (changes.length > 20) throw new ApiError('too many changes in one proposal — split it');
+
+			/*
+			 * Validate every source before the first insert.
+			 *
+			 * A URL on a proposal is shown as a link to every reader, so it must be a
+			 * web address. The check runs before any row is written: a refusal after
+			 * the prs and pr_changes inserts would leave a pending proposal behind
+			 * with no evidence attached. The client refuses `javascript:` and `data:`
+			 * in rendered posts through its own parser; this is the server-side lock
+			 * for the one field the parser never sees.
+			 */
+			const sourceInputs = Array.isArray(data.sources) ? data.sources.slice(0, 20) : [];
+			for (const s of sourceInputs) {
+				if (!s?.source_id && !s?.url) continue;
+				if (s.url) {
+					let protocol = '';
+					try {
+						protocol = new URL(String(s.url)).protocol;
+					} catch {
+						protocol = '';
+					}
+					if (protocol !== 'http:' && protocol !== 'https:') {
+						throw new ApiError('a source URL must be an http or https web address');
+					}
+				}
+			}
+
+			// Every change is shaped before the first insert, for the same reason the
+			// sources are: a refused field must not leave a proposal behind.
+			const changeInputs = changes.map((c) => ({
+				field: requireString(c.field, 'field', 80),
+				old_value: typeof c.old_value === 'string' ? c.old_value.slice(0, 4000) : null,
+				new_value: typeof c.new_value === 'string' ? c.new_value.slice(0, 4000) : null
+			}));
+
+			// The record's id is a slug; trim it once so the row, the change and the
+			// collision check all carry the same string.
+			if (operation === 'append-record') {
+				const idChange = changeInputs.find((c) => c.field === 'id');
+				if (idChange && typeof idChange.new_value === 'string') {
+					idChange.new_value = idChange.new_value.trim();
+				}
+			}
+
+			// Enumerated fields are validated by value on every operation, so a
+			// hand-crafted `set confidence: "bogus"` cannot reach the graph.
+			for (const c of changeInputs) {
+				const allowed = ENUM_FIELDS[c.field];
+				if (!allowed) continue;
+				const value = (c.new_value ?? '').trim();
+				if (value && !allowed.includes(value)) {
+					throw new ApiError(`"${value}" is not a valid ${c.field}`);
+				}
+			}
+
+			/*
+			 * An addition carries a whole record, so it has a shape to check before a
+			 * reviewer ever opens it: an appendable kind, a slug id, only publicly
+			 * proposable fields, the enums the schema constrains, the fields that kind
+			 * cannot exist without, and no collision with the graph. The id and
+			 * reference checks are local-server only for now (env.ENTITY_IDS is absent
+			 * on the Worker until the asset binding ships); the apply step and the
+			 * build gate check again.
+			 *
+			 * The vocabulary lives in src/lib/taxonomy.ts, which a test compares
+			 * against scripts/schema.ts so this cannot drift into a second truth.
+			 */
+			if (operation === 'append-record') {
+				const publicFields = PUBLIC_FIELDS[targetType];
+				if (!publicFields) {
+					throw new ApiError(`"${targetType}" records are not added by proposal`);
+				}
+				const proposedId = typeof targetId === 'string' ? targetId : '';
+				if (!/^[a-z][a-z0-9-]{1,79}$/.test(proposedId)) {
+					throw new ApiError('a new record needs a lowercase id like "name-of-record"');
+				}
+				if (env.ENTITY_IDS?.has(proposedId)) {
+					throw new ApiError('a record with that id already exists', 409);
+				}
+
+				const fields = new Map(changeInputs.map((c) => [c.field, c.new_value ?? '']));
+				for (const c of changeInputs) {
+					if (!publicFields.has(c.field)) {
+						throw new ApiError(`a new ${targetType} cannot set "${c.field}"`);
+					}
+				}
+				if ((fields.get('id') ?? '') !== proposedId) {
+					throw new ApiError('the proposed id and the id field must agree');
+				}
+				for (const field of REQUIRED_FIELDS[targetType] ?? []) {
+					if (!(fields.get(field) ?? '').trim()) {
+						throw new ApiError(`a new ${targetType} needs a "${field}"`);
+					}
+				}
+				// Enumerated fields, by value.
+				for (const [field, allowed] of Object.entries(ENUM_FIELDS)) {
+					const value = (fields.get(field) ?? '').trim();
+					if (value && !allowed.includes(value)) {
+						throw new ApiError(`"${value}" is not a valid ${field}`);
+					}
+				}
+				if (targetType === 'relationship') {
+					const value = (fields.get('type') ?? '').trim();
+					if (!RELATIONSHIP_TYPES.includes(value)) {
+						throw new ApiError(`"${value}" is not a valid relationship type`);
+					}
+				}
+				if (targetType === 'institution') {
+					const type = (fields.get('type') ?? '').trim();
+					if (!INSTITUTION_TYPES.includes(type)) {
+						throw new ApiError(`"${type}" is not a valid institution type`);
+					}
+				}
+				if (targetType === 'person') {
+					const list = (fields.get('layers') ?? '')
+						.split(',')
+						.map((s) => s.trim())
+						.filter(Boolean);
+					if (!list.length || list.some((l) => !LAYERS.includes(l))) {
+						throw new ApiError('layers must be one or more of: ' + LAYERS.join(', '));
+					}
+				}
+				// Referenced records, when the local server knows the graph's ids.
+				if (env.ENTITY_IDS) {
+					for (const field of REFERENCE_FIELDS[targetType] ?? []) {
+						const value = (fields.get(field) ?? '').trim();
+						if (value && !env.ENTITY_IDS.has(value)) {
+							throw new ApiError(`no record "${value}" in the graph for "${field}"`, 404);
+						}
+					}
+				}
+				// Anything below grade B must name who is making the claim (rule 4).
+				const confidence = (fields.get('confidence') ?? '').trim();
+				if ((confidence === 'C' || confidence === 'D') && !(fields.get('attributed_to') ?? '').trim()) {
+					throw new ApiError('a grade C or D claim must name who is making it');
+				}
+			}
 
 			const prId = id();
 			const prAuthor = await selfLabels(env.DB, identity.pubkey);
@@ -990,28 +1292,23 @@ export async function handle(request: Request, env: Env): Promise<Response> {
 					now,
 					now,
 					targetType,
-					data.target_id ?? null,
+					targetId,
 					operation,
 					reason,
 					data.from_thread ?? null
 				)
 				.run();
 
-			for (const c of changes) {
+			for (const c of changeInputs) {
 				await env.DB.prepare(
 					'INSERT INTO pr_changes (id, pr_id, field, old_value, new_value) VALUES (?, ?, ?, ?, ?)'
 				)
-					.bind(
-						id(),
-						prId,
-						requireString(c.field, 'field', 80),
-						typeof c.old_value === 'string' ? c.old_value.slice(0, 4000) : null,
-						typeof c.new_value === 'string' ? c.new_value.slice(0, 4000) : null
-					)
+					.bind(id(), prId, c.field, c.old_value, c.new_value)
 					.run();
 			}
 
-			for (const s of Array.isArray(data.sources) ? data.sources.slice(0, 20) : []) {
+			// Sources were validated before the first insert; write them now.
+			for (const s of sourceInputs) {
 				if (!s?.source_id && !s?.url) continue;
 				await env.DB.prepare(
 					'INSERT OR IGNORE INTO pr_sources (pr_id, source_id, url, title, note, created_at) VALUES (?, ?, ?, ?, ?, ?)'
@@ -1019,7 +1316,7 @@ export async function handle(request: Request, env: Env): Promise<Response> {
 					.bind(
 						prId,
 						s.source_id ?? '',
-						s.url ?? '',
+						typeof s.url === 'string' ? s.url.slice(0, 500) : '',
 						typeof s.title === 'string' ? s.title.slice(0, 300) : null,
 						typeof s.note === 'string' ? s.note.slice(0, 1000) : null,
 						now
@@ -1122,24 +1419,106 @@ export async function handle(request: Request, env: Env): Promise<Response> {
 			const reason = requireString(data.reason, 'reason', 500);
 			const targetType = data.target_type === 'thread' ? 'threads' : 'posts';
 
+			// The target must exist. An orphan moderation row is a decision about
+			// nothing, and the audit log is not a scratchpad.
+			const targetExists =
+				targetType === 'threads'
+					? await env.DB.prepare('SELECT id FROM threads WHERE id = ?').bind(data.target_id).first()
+					: await env.DB.prepare('SELECT id FROM posts WHERE id = ?').bind(data.target_id).first();
+			if (!targetExists) throw new ApiError('no such target', 404);
+
+			const statements = [];
+			let auditAction = action;
+
 			if (action === 'remove' || action === 'restore') {
 				const removing = action === 'remove';
-				await env.DB.prepare(
-					`UPDATE ${targetType} SET removed_at = ?, removed_by = ?, removed_reason = ? WHERE id = ?`
-				)
-					.bind(removing ? now : null, removing ? identity.pubkey : null, removing ? reason : null, data.target_id)
-					.run();
+				statements.push(
+					env.DB.prepare(
+						`UPDATE ${targetType} SET removed_at = ?, removed_by = ?, removed_reason = ? WHERE id = ?`
+					).bind(
+						removing ? now : null,
+						removing ? identity.pubkey : null,
+						removing ? reason : null,
+						data.target_id
+					)
+				);
+			} else if (action === 'resolve') {
+				/*
+				 * Closing a report is the other half of the loop: without it the queue
+				 * only grows, and `reports_upheld` can never move, which makes the
+				 * promotion guard that reads it decorative. Upheld increments the
+				 * reported author (the claim was a real problem); rejected increments
+				 * the reporter (the objection did not hold).
+				 *
+				 * The decision is explicit. It used to default to upheld, so a missing
+				 * or misspelled value silently backed the reporter.
+				 */
+				const decision =
+					data.decision === 'upheld' || data.decision === 'rejected' ? data.decision : null;
+				if (!decision) throw new ApiError('a resolve decision is "upheld" or "rejected"');
+				auditAction = decision === 'rejected' ? 'reject-report' : 'uphold-report';
+
+				const reportType = data.target_type === 'thread' ? 'thread' : 'post';
+				const open = (
+					await env.DB.prepare(
+						"SELECT id, reporter FROM reports WHERE target_type = ? AND target_id = ? AND status = 'open'"
+					)
+						.bind(reportType, data.target_id)
+						.all<{ id: string; reporter: string }>()
+				).results;
+				if (!open.length) throw new ApiError('nothing open on that target', 409);
+
+				statements.push(
+					env.DB.prepare(
+						"UPDATE reports SET status = ? WHERE target_type = ? AND target_id = ? AND status = 'open'"
+					).bind(decision, reportType, data.target_id)
+				);
+
+				if (decision === 'upheld') {
+					const author = await env.DB.prepare(`SELECT created_by FROM ${targetType} WHERE id = ?`)
+						.bind(data.target_id)
+						.first<{ created_by: string }>();
+					if (author) {
+						statements.push(
+							env.DB.prepare(
+								'UPDATE identities SET reports_upheld = reports_upheld + 1 WHERE pubkey = ?'
+							).bind(author.created_by)
+						);
+					}
+				} else {
+					for (const r of open) {
+						statements.push(
+							env.DB.prepare(
+								'UPDATE identities SET reports_rejected = reports_rejected + 1 WHERE pubkey = ?'
+							).bind(r.reporter)
+						);
+					}
+				}
 			} else {
 				throw new ApiError(`unknown moderation action "${action}"`);
 			}
 
-			// Every moderator action is logged, with a reason, append-only.
-			await env.DB.prepare(
-				`INSERT INTO moderation_actions (id, target_type, target_id, moderator, action, reason, created_at)
-				 VALUES (?, ?, ?, ?, ?, ?, ?)`
-			)
-				.bind(id(), data.target_type ?? 'post', data.target_id, identity.pubkey, action, reason, now)
-				.run();
+			/*
+			 * Every moderator action is logged, with a reason, append-only — in the
+			 * same batch as the action itself, so a failure cannot close a report
+			 * without leaving the audit entry that explains it.
+			 */
+			statements.push(
+				env.DB.prepare(
+					`INSERT INTO moderation_actions (id, target_type, target_id, moderator, action, reason, created_at)
+					 VALUES (?, ?, ?, ?, ?, ?, ?)`
+				).bind(
+					id(),
+					data.target_type ?? 'post',
+					data.target_id,
+					identity.pubkey,
+					auditAction,
+					reason,
+					now
+				)
+			);
+
+			await env.DB.batch(statements);
 
 			return json({ ok: true });
 		}
@@ -1158,8 +1537,16 @@ export async function handle(request: Request, env: Env): Promise<Response> {
 
 /** The moderation queue, ordered by distinct reporters. Reads nothing it should not. */
 export async function moderationQueue(db: Db) {
+	/*
+	 * Bounded twice: at most 500 open reports are considered, and at most 100
+	 * grouped targets are returned. The queue is human-scale, and the read is
+	 * unauthenticated, so it must not be a way to make the database do unbounded
+	 * work.
+	 */
 	const rows = (
-		await db.prepare("SELECT * FROM reports WHERE status = 'open' ORDER BY created_at").all<any>()
+		await db
+			.prepare("SELECT * FROM reports WHERE status = 'open' ORDER BY created_at DESC LIMIT 500")
+			.all<any>()
 	).results;
 
 	const grouped = new Map<string, any[]>();
@@ -1176,5 +1563,6 @@ export async function moderationQueue(db: Db) {
 			reasons: [...new Set(reports.map((r) => r.reason))],
 			reports: reports.length
 		}))
-		.sort((a, b) => b.pressure - a.pressure);
+		.sort((a, b) => b.pressure - a.pressure)
+		.slice(0, 100);
 }

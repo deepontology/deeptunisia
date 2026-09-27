@@ -24,9 +24,15 @@
 	interface Props {
 		body: string;
 		mentions?: MentionSpan[];
+		/**
+		 * When present, a mention opens the record in the anchored rail instead of
+		 * leaving the room for the graph. The atlas is still one link away from the
+		 * record itself; this keeps the argument and its object on one screen.
+		 */
+		onpeek?: (id: string) => void;
 	}
 
-	let { body, mentions = [] }: Props = $props();
+	let { body, mentions = [], onpeek }: Props = $props();
 
 	const blocks = $derived<Block[]>(parse(body, mentions));
 
@@ -50,7 +56,13 @@
 			>
 		{:else if n.t === 'mention'}
 			{@const hit = resolve(n.id)}
-			{#if hit}
+			{#if hit && onpeek}
+				<Tooltip content={hit.detail || hit.name}>
+					<button type="button" class="mention peek" onclick={() => onpeek(n.id)}>
+						<i class="dot" style:background={LAYER_COLOR[hit.layer]} aria-hidden="true"></i>{n.raw}
+					</button>
+				</Tooltip>
+			{:else if hit}
 				<Tooltip content={hit.detail || hit.name}>
 					<a
 						class="mention"
@@ -148,6 +160,15 @@
 		text-decoration-color: var(--border-strong);
 		text-underline-offset: 2px;
 		white-space: nowrap;
+	}
+	/* A mention that opens the rail is a control, so it must not drag button
+	   chrome into the prose: same type, no background, no padding. */
+	button.mention {
+		font: inherit;
+		padding: 0;
+		border: none;
+		background: none;
+		cursor: pointer;
 	}
 	.mention:hover {
 		text-decoration-color: var(--text-secondary);

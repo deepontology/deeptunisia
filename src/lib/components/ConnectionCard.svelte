@@ -63,9 +63,15 @@
 
 	let {
 		edge,
+		embedded = false,
 		onclose,
 		onpick
-	}: { edge: Edge; onclose: () => void; onpick: (id: string) => void } = $props();
+	}: {
+		edge: Edge;
+		embedded?: boolean;
+		onclose: () => void;
+		onpick: (id: string) => void;
+	} = $props();
 
 	const rel = $derived(edge.rel);
 	const from = $derived(resolveEntity(rel.from));
@@ -106,7 +112,9 @@
 			{#if addressable || measurement}
 				<ShareMenu url={shareUrl} title={shareTitle} />
 			{/if}
-			<button class="close" onclick={onclose} aria-label={t('panel.close')}>×</button>
+			{#if !embedded}
+				<button class="close" onclick={onclose} aria-label={t('panel.close')}>×</button>
+			{/if}
 		</div>
 	</header>
 
@@ -160,11 +168,14 @@
 		</div>
 	{/if}
 
-	{#if addressable}
-		<footer>
-			<CommunityActions type="relationship" id={rel.id} {label} />
-		</footer>
-	{:else if measurement}
+	<!--
+		Measurements first. A flow edge is synthesised and addressable in the map's
+		own id space (`flow-*`), but it exists in no data file: there is nothing to
+		propose a change to. Checked before `addressable` because every measurement
+		is addressable, so the old order made this the dead branch and offered
+		Propose against an id no reviewer could ever apply.
+	-->
+	{#if measurement}
 		<footer>
 			{#if AGORA_OPEN}
 				<a
@@ -174,6 +185,10 @@
 			{:else}
 				<p class="note">{t('world.measurement.discuss')}</p>
 			{/if}
+		</footer>
+	{:else if addressable}
+		<footer>
+			<CommunityActions type="relationship" id={rel.id} {label} only={embedded ? 'propose' : undefined} />
 		</footer>
 	{:else}
 		<p class="note">{t('network.frompost')}</p>
