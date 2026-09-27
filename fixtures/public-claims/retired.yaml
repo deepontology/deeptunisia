@@ -1,0 +1,21 @@
+schemaVersion: 1
+inventory:
+  - path: fixtures/public-claims/surfaces/retired.md
+    rule: authored-prose
+    note: Negative fixture surface that still publishes a superseded claim.
+claims:
+  - id: fixture-retired
+    kind: metric
+    claim: Fixture claim that has been superseded but is still on a live surface.
+    surfaces:
+      - path: fixtures/public-claims/surfaces/retired.md
+        locator: '(\d+) records'
+    resolver: { source: stats, key: sources }
+    format: plain
+    population: fixture population
+    lifecycle: superseded
+    locale: en
+    owner: TESTING
+    authority: compiler
+    assurance: compiled
+    validity: current-build
