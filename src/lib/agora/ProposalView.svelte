@@ -8,37 +8,51 @@
 	import Button from '$lib/ui/Button.svelte';
 	import Panel from '$lib/ui/Panel.svelte';
 	import Chip from '$lib/ui/Chip.svelte';
-	import Field from '$lib/ui/Field.svelte';
-	import Segmented from '$lib/ui/Segmented.svelte';
-	import Textarea from '$lib/ui/Textarea.svelte';
 	import Author from './Author.svelte';
+	import Tooltip from '$lib/ui/Tooltip.svelte';
 	import { targetName } from '$lib/model';
 	import { relativeTime } from './time';
 	import { hostOf } from './markdown';
 	import { app } from '$lib/state.svelte';
+	import { agora } from '$lib/agora.svelte';
 	import { t } from '$lib/t.svelte';
 	import type { Pr } from '$lib/community';
 
 	interface Props {
 		pr: Pr;
-		canModerate?: boolean;
 		busy?: boolean;
 		error?: string;
-		ondecide: (decision: string, reason: string) => void;
+		onwithdraw?: () => void;
 	}
 
-	let { pr, canModerate = false, busy = false, error = '', ondecide }: Props = $props();
+	let { pr, busy = false, error = '', onwithdraw }: Props = $props();
 
-	let decision = $state('needs-evidence');
-	let reason = $state('');
+	/** The author can withdraw while the proposal is still theirs to withdraw. */
+	const isAuthor = $derived(!!agora.handle && pr.author.handle === agora.handle);
+	const canWithdraw = $derived(
+		isAuthor && pr.status !== 'applied' && pr.status !== 'withdrawn' && pr.status !== 'rejected'
+	);
 
-	const DECISIONS = ['needs-evidence', 'under-review', 'accept', 'reject'];
+	/**
+	 * Only a real web address becomes a link. The API validates this server-side;
+	 * this is the second lock, because a `javascript:` URL that slipped through an
+	 * older database would otherwise render as an executable link in this origin.
+	 */
+	function webUrl(url: string | null | undefined): string | null {
+		if (!url) return null;
+		try {
+			const parsed = new URL(url);
+			return parsed.protocol === 'http:' || parsed.protocol === 'https:' ? url : null;
+		} catch {
+			return null;
+		}
+	}
 </script>
 
 <div class="pr">
 	<Panel elevation={1} padded>
 		<div class="head">
-			<Chip dot>{pr.status}</Chip>
+			<Chip dot>{t(`agora.status.${pr.status}`)}</Chip>
 			{#if pr.target_id}
 				<Chip variant="outline">{targetName(pr.target_type, pr.target_id)}</Chip>
 			{/if}
@@ -51,28 +65,43 @@
 			<span class="spacer"></span>
 			<Author author={pr.author} />
 			<span>{relativeTime(pr.created_at, app.locale)}</span>
+			{#if canWithdraw && onwithdraw}
+				<Tooltip content={t('agora.withdraw.hint')}>
+					<Button size="xs" variant="ghost" onclick={onwithdraw} disabled={busy}>
+						{t('agora.withdraw')}
+					</Button>
+				</Tooltip>
+			{/if}
 		</div>
 
 		<p class="reason">{pr.reason}</p>
 
-		<h4>{t('agora.thechange')}</h4>
+		<h4>{pr.operation === 'append-record' ? t('agora.newrecord') : t('agora.thechange')}</h4>
 		{#each pr.changes as c (c.field)}
 			<div class="diff">
 				<code class="field">{c.field}</code>
-				<div class="minus"><span aria-hidden="true">−</span> {c.old_value ?? t('agora.unset')}</div>
-				<div class="plus"><span aria-hidden="true">+</span> {c.new_value ?? '—'}</div>
+				{#if pr.operation === 'append-record'}
+					<!-- A new record has no old value; a minus line would be noise. -->
+					<div class="plus"><span aria-hidden="true">+</span> {c.new_value ?? '—'}</div>
+				{:else}
+					<div class="minus"><span aria-hidden="true">−</span> {c.old_value ?? t('agora.unset')}</div>
+					<div class="plus"><span aria-hidden="true">+</span> {c.new_value ?? '—'}</div>
+				{/if}
 			</div>
 		{/each}
 
 		<h4>{t('agora.evidence')}</h4>
 		<ul class="sources">
 			{#each pr.sources as s (s.url || s.source_id)}
+				{@const safe = webUrl(s.url)}
 				<li>
-					{#if s.url}
-						<a href={s.url} target="_blank" rel="nofollow noopener noreferrer">
-							{s.title || s.url}
+					{#if safe}
+						<a href={safe} target="_blank" rel="nofollow noopener noreferrer">
+							{s.title || safe}
 						</a>
-						<span class="host">{hostOf(s.url)}</span>
+						<span class="host">{hostOf(safe)}</span>
+					{:else if s.url}
+						<span class="badlink" title={t('agora.source.invalid')}>{s.title || s.url}</span>
 					{:else}
 						<code>{s.source_id}</code>
 					{/if}
@@ -85,7 +114,7 @@
 		<h4>{t('agora.review')}</h4>
 		{#each pr.reviews as r (r.created_at)}
 			<div class="review">
-				<Chip>{r.decision}</Chip>
+				<Chip>{t(`agora.decision.${r.decision}`)}</Chip>
 				<Author author={r.reviewer} compact />
 				<span class="when">{relativeTime(r.created_at, app.locale)}</span>
 				<p>{r.reason}</p>
@@ -95,24 +124,14 @@
 		{/each}
 	</Panel>
 
-	{#if canModerate && pr.status !== 'applied'}
-		<Panel elevation={1} padded>
-			<h4 class="first">{t('agora.record')}</h4>
-			<Field label={t('agora.decision')}>
-				<Segmented
-					options={DECISIONS.map((d) => ({ value: d, label: d }))}
-					value={decision}
-					onchange={(v) => (decision = v)}
-					label={t('agora.decision')}
-				/>
-			</Field>
-			<Field label={t('agora.reasonlabel')} hint={t('agora.reasonph')} required error={error || undefined}>
-				<Textarea bind:value={reason} rows={3} limit={2000} />
-			</Field>
-			<Button variant="solid" onclick={() => ondecide(decision, reason)} disabled={!reason.trim() || busy}>
-				{t('agora.record')}
-			</Button>
-		</Panel>
+	<!--
+		No review or decision controls live here. Reviewing a proposed change to
+		the graph is maintainer work and belongs in the editorial dashboard, not in
+		the room where the change was argued for. This view is the public record of
+		the proposal: what would change, on what evidence, and what was decided.
+	-->
+	{#if error}
+		<p class="error" role="alert">{error}</p>
 	{/if}
 </div>
 
@@ -146,8 +165,10 @@
 		letter-spacing: var(--track-caps);
 		color: var(--text-faint);
 	}
-	h4.first {
-		margin-top: 0;
+	.error {
+		margin: 0;
+		color: var(--basis-unsubstantiated);
+		font-size: var(--t-sm);
 	}
 
 	.diff {
@@ -197,6 +218,11 @@
 		font-size: var(--t-2xs);
 		color: var(--text-faint);
 		margin-inline-start: var(--s-2);
+	}
+	.badlink {
+		color: var(--text-faint);
+		font-style: italic;
+		overflow-wrap: anywhere;
 	}
 	.none {
 		color: var(--basis-inferred);

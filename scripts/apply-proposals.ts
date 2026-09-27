@@ -27,11 +27,19 @@ import { execFileSync } from 'node:child_process';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parse as parseYaml } from 'yaml';
-import { applyEdit, EmitError, type Edit } from './emit.ts';
+import { applyEdit, EmitError } from './emit.ts';
+import { editsFor } from './proposal-edit.ts';
 import { signAction, toB64u, fromB64u } from '../community/identity.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-const ROOT = join(HERE, '..');
+/**
+ * The repository the bridge writes into. Defaults to this checkout; overridable
+ * so the whole apply path can be exercised against a throwaway copy without
+ * touching canonical data.
+ */
+const ROOT = process.env.DT_APPLY_ROOT ?? join(HERE, '..');
+/** Where the build scripts live. Same as ROOT unless a throwaway root is used. */
+const REPO = join(HERE, '..');
 const ORIGIN = process.env.COMMUNITY_ORIGIN ?? 'http://127.0.0.1:5200';
 const KEY_PATH = join(ROOT, '.community', 'operator-key.json');
 
@@ -100,29 +108,53 @@ async function post(path: string, data: unknown, key: Awaited<ReturnType<typeof 
 	return { status: res.status, body: (await res.json()) as any };
 }
 
-/** Turn a proposal into the edit the emitter understands. */
-function editFor(pr: any): Edit {
-	const change = pr.changes[0];
-	if (!change) throw new EmitError('proposal carries no change');
+/*
+ * The mapping lives in proposal-edit.ts so the test suite can exercise it
+ * without running this CLI or touching data/.
+ */
 
-	const target = { id: pr.target_id as string };
-	switch (pr.operation) {
-		case 'set':
-			return { op: 'set', target, field: change.field, value: change.new_value };
-		case 'add-field':
-			return { op: 'add-field', target, field: change.field, value: change.new_value };
-		case 'append-to-list':
-			return { op: 'append-to-list', target, field: change.field, item: change.new_value };
-		case 'add-block':
-			return {
-				op: 'add-block',
-				target,
-				field: change.field,
-				entries: Object.fromEntries(pr.changes.map((c: any) => [c.field, c.new_value]))
-			};
-		default:
-			throw new EmitError(`"${pr.operation}" cannot be applied automatically — do it by hand`);
+/** git, with the repo root as cwd, returning stdout. */
+function git(args: string[]): string {
+	return execFileSync('git', args, { cwd: ROOT, encoding: 'utf8' });
+}
+
+/**
+ * The schema gate, run before anything is committed.
+ *
+ * `scripts/build-data.ts` validates every record against its Zod schema and the
+ * cross-file references, and stages its output so a failed build publishes
+ * nothing. Running it here is the difference between "a bad record entered a
+ * commit and CI caught it later" and "the proposal went back to needs-evidence".
+ */
+function buildGate(): { ok: boolean; output: string } {
+	try {
+		execFileSync(process.execPath, ['--import', 'tsx', 'scripts/build-data.ts'], {
+			cwd: REPO,
+			env: {
+				...process.env,
+				// Validate the data the bridge is writing, which may be a throwaway
+				// copy when DT_APPLY_ROOT is set.
+				DT_DATA_DIR: join(ROOT, 'data'),
+				DT_OUT_DIR: join(ROOT, '.community', 'build-gate-out'),
+				DT_STATIC_DIR: join(ROOT, '.community', 'build-gate-static')
+			},
+			stdio: 'pipe'
+		});
+		return { ok: true, output: '' };
+	} catch (e: any) {
+		const out = `${e.stdout ?? ''}\n${e.stderr ?? ''}`;
+		return { ok: false, output: String(out).trim() };
 	}
+}
+
+/** The first few lines of a build failure, for the public review reason. */
+function failureReason(output: string): string {
+	const lines = output
+		.split('\n')
+		.map((l) => l.trim())
+		.filter(Boolean);
+	const picked = lines.slice(-6).join(' | ');
+	return `the build refused this proposal: ${picked.slice(0, 600)}`;
 }
 
 const res = await fetch(`${ORIGIN}/api/prs?status=accepted`).catch(() => null);
@@ -149,7 +181,7 @@ for (const pr of items) {
 	console.log(`  ${label}`);
 	console.log(`    ${pr.reason.slice(0, 90)}`);
 	for (const c of pr.changes) console.log(`    ${c.field}: ${c.old_value ?? '(unset)'} -> ${c.new_value}`);
-	console.log(`    evidence: ${pr.sources.length} source(s), author ${pr.author}`);
+	console.log(`    evidence: ${pr.sources.length} source(s), author @${pr.author?.handle ?? 'unknown'}`);
 
 	if (!file) {
 		console.log(`    REFUSED: no file for target type "${pr.target_type}"\n`);
@@ -162,51 +194,95 @@ for (const pr of items) {
 		const source = readFileSync(path, 'utf8');
 
 		/*
+		 * The file must be clean before we touch it. Otherwise a commit made here
+		 * would carry unrelated in-progress edits, and the recorded SHA would
+		 * describe a tree the reviewer never saw.
+		 */
+		const dirty = git(['status', '--porcelain', '--', `data/${file}`]).trim();
+		if (dirty) throw new EmitError(`data/${file} already has uncommitted changes`);
+
+		/*
 		 * The record must still say what the proposal said it said.
 		 *
 		 * A proposal may have been filed weeks ago. If the field has changed since,
 		 * writing the proposed value would silently overwrite whatever happened in
 		 * between — and the reviewer approved a change from a value that no longer
 		 * exists, so their judgement does not apply to the record as it stands.
+		 *
+		 * An addition inverts the check: the id must NOT be taken. A record created
+		 * from another route after the proposal was accepted would be silently
+		 * duplicated.
 		 */
 		const record = (parseYaml(source) as any[]).find((r) => r.id === pr.target_id);
-		if (!record) throw new EmitError(`no record "${pr.target_id}" in ${file}`);
+		if (pr.operation === 'append-record') {
+			if (record) throw new EmitError(`a record "${pr.target_id}" already exists in ${file}`);
+		} else {
+			if (!record) throw new EmitError(`no record "${pr.target_id}" in ${file}`);
 
-		for (const c of pr.changes) {
-			if (c.old_value != null && String(record[c.field] ?? '') !== String(c.old_value)) {
-				throw new EmitError(
-					`${c.field} now reads "${record[c.field]}", but the proposal was reviewed against "${c.old_value}" — it needs re-reviewing`
-				);
+			for (const c of pr.changes) {
+				if (c.old_value != null && String(record[c.field] ?? '') !== String(c.old_value)) {
+					throw new EmitError(
+						`${c.field} now reads "${record[c.field]}", but the proposal was reviewed against "${c.old_value}" — it needs re-reviewing`
+					);
+				}
 			}
 		}
 
-		const { text } = applyEdit(source, editFor(pr));
+		/*
+		 * Every change, folded over the source in order. The emitter's guard is
+		 * single-region, so each edit is applied and re-parsed before the next.
+		 */
+		const edits = editsFor(pr);
+		let text = source;
+		for (const edit of edits) text = applyEdit(text, edit).text;
 
 		if (!APPLY) {
-			console.log('    would apply (dry run)\n');
+			console.log(`    would apply ${edits.length} edit(s) (dry run)\n`);
 			continue;
 		}
 
 		writeFileSync(path, text, 'utf8');
-		execFileSync('git', ['add', '--', `data/${file}`], { cwd: ROOT });
-		execFileSync(
-			'git',
-			[
+
+		// The gate runs before the commit, not after it.
+		const gate = buildGate();
+		if (!gate.ok) {
+			writeFileSync(path, source, 'utf8');
+			const reason = failureReason(gate.output);
+			const sent = await post('/api/pr/review', { pr_id: pr.id, decision: 'needs-evidence', reason }, key!);
+			console.log(`    REFUSED by the build; file restored.`);
+			console.log(`    ${reason}`);
+			console.log(
+				sent.status === 200
+					? `    proposal reopened as needs-evidence\n`
+					: `    but the community app refused to reopen it: ${sent.body.error}\n`
+			);
+			refused++;
+			continue;
+		}
+
+		git(['add', '--', `data/${file}`]);
+		try {
+			git([
 				'commit',
 				'-m',
 				`Apply proposal: ${pr.reason.slice(0, 68)}`,
 				'-m',
-				`Proposed by ${pr.author}, accepted after review.\nEvidence: ${pr.sources.map((s: any) => s.url || s.source_id).join(', ')}\nProposal ${pr.id}`
-			],
-			{ cwd: ROOT }
-		);
-		const sha = execFileSync('git', ['rev-parse', '--short', 'HEAD'], { cwd: ROOT, encoding: 'utf8' }).trim();
+				`Proposed by @${pr.author?.handle ?? 'unknown'}, accepted after review.\nEvidence: ${pr.sources.map((s: any) => s.url || s.source_id).join(', ')}\nProposal ${pr.id}`,
+				'--',
+				`data/${file}`
+			]);
+		} catch (e) {
+			// A commit that fails after the write must not leave the tree altered.
+			writeFileSync(path, source, 'utf8');
+			throw new Error(`git commit failed: ${(e as Error).message.split('\n')[0]}`);
+		}
+		const sha = git(['rev-parse', 'HEAD']).trim();
 
 		const marked = await post('/api/pr/applied', { pr_id: pr.id, sha }, key!);
 		if (marked.status !== 200) {
-			console.log(`    written as ${sha}, but the community app refused the mark: ${marked.body.error}\n`);
+			console.log(`    written as ${sha.slice(0, 12)}, but the community app refused the mark: ${marked.body.error}\n`);
 		} else {
-			console.log(`    applied as ${sha}\n`);
+			console.log(`    applied and committed as ${sha.slice(0, 12)}\n`);
 		}
 		applied++;
 	} catch (e) {
@@ -217,7 +293,7 @@ for (const pr of items) {
 
 if (APPLY) {
 	console.log(`  ${applied} applied, ${refused} refused`);
-	console.log('  Run `npm run data && npm run test` before pushing.\n');
+	console.log('  The build gate ran before each commit. Run `npm run test` before pushing.\n');
 } else {
 	console.log('  Dry run. Re-run with --apply to write them.\n');
 }

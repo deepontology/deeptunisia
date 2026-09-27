@@ -34,7 +34,21 @@
 	import { canonicalShareUrl } from '$lib/share';
 	import { tradeIn, debtIn, energyIn, debt } from '$lib/world/countries';
 
-	let { id }: { id: string } = $props();
+	let {
+		id,
+		embedded = false,
+		onselect
+	}: { id: string; embedded?: boolean; onselect?: (id: string) => void } = $props();
+
+	/**
+	 * Inline use (the Agora record rail) must not fight the shell Inspector for
+	 * `app.selected`: a click inside the rail re-points the rail, not the global
+	 * selection. Embedded is the switch; the default is unchanged.
+	 */
+	function pick(next: string) {
+		if (embedded && onselect) onselect(next);
+		else app.select(next);
+	}
 
 	const entity = $derived(resolveEntity(id));
 	const person = $derived(personById.get(id));
@@ -199,7 +213,7 @@
 							{:else}
 								<span class="verb">{relLabel(rel.type)}</span>
 							{/if}
-							<button class="target" onclick={() => app.select(other(rel))}>
+							<button class="target" onclick={() => pick(other(rel))}>
 								{entityName(other(rel))}
 							</button>
 							{#if tone !== 'circulating'}
@@ -253,6 +267,7 @@
 			id={rel.id}
 			label="{entityName(rel.from)} → {entityName(rel.to)}"
 			size="sm"
+			only={embedded ? 'propose' : undefined}
 		/>
 	</div>
 {/snippet}
@@ -275,7 +290,9 @@
 		</div>
 		<div class="h-actions">
 			<ShareMenu url={shareUrl} title={shareTitle} />
-			<button class="close" onclick={() => (app.selected = null)} aria-label={t('panel.close')}>×</button>
+			{#if !embedded}
+				<button class="close" onclick={() => (app.selected = null)} aria-label={t('panel.close')}>×</button>
+			{/if}
 		</div>
 	</header>
 
@@ -285,7 +302,7 @@
 		server about this entity would tell it what each reader is looking at.
 	-->
 	<div class="community">
-		<CommunityActions type={targetType} {id} label={entity?.name} />
+		<CommunityActions type={targetType} {id} label={entity?.name} only={embedded ? 'propose' : undefined} />
 	</div>
 
 	<div class="body">
@@ -336,10 +353,10 @@
 				<h3>{t('panel.records')}</h3>
 				<ul class="reclist">
 					{#each institutionContracts as c (c.id)}
-						<li><button class="reclink" onclick={() => (app.selected = c.id)}>{c.title_en}</button></li>
+						<li><button class="reclink" onclick={() => pick(c.id)}>{c.title_en}</button></li>
 					{/each}
 					{#each institutionLicences as l (l.id)}
-						<li><button class="reclink" onclick={() => (app.selected = l.id)}>{entityName(l.holder)} — {l.kind} {t('record.licence')}</button></li>
+						<li><button class="reclink" onclick={() => pick(l.id)}>{entityName(l.holder)} — {l.kind} {t('record.licence')}</button></li>
 					{/each}
 				</ul>
 			</div>
@@ -471,12 +488,12 @@
 							{#if pos.predecessorDerived || pos.successorDerived}
 								<div class="chain">
 									{#if pos.predecessorDerived}
-										<button onclick={() => app.select(pos.predecessorDerived!)}>
+										<button onclick={() => pick(pos.predecessorDerived!)}>
 											← {entityName(pos.predecessorDerived)}
 										</button>
 									{/if}
 									{#if pos.successorDerived}
-										<button onclick={() => app.select(pos.successorDerived!)}>
+										<button onclick={() => pick(pos.successorDerived!)}>
 											{entityName(pos.successorDerived)} →
 										</button>
 									{/if}
@@ -531,7 +548,7 @@
 						<button
 							class="pill"
 							style:--c={LAYER_COLOR[inst!.layer as Layer]}
-							onclick={() => app.select(inst!.id)}>{nameOf(inst!)}</button
+							onclick={() => pick(inst!.id)}>{nameOf(inst!)}</button
 						>
 					{/each}
 				</div>

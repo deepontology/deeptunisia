@@ -33,26 +33,40 @@
 		label?: string;
 		/** Full width on a card, inline on a dense list. */
 		size?: 'md' | 'sm';
+		/**
+		 * Show one door only. The inline record rail uses `propose`, because a
+		 * "Discuss" button beside an open discussion would navigate away from the
+		 * thread the reader is already in.
+		 */
+		only?: 'discuss' | 'propose';
 	}
 
-	let { type, id, label, size = 'md' }: Props = $props();
+	let { type, id, label, size = 'md', only }: Props = $props();
 </script>
 
 <div class="acts s-{size}" data-target={type} data-id={id} data-label={label}>
 	{#if AGORA_OPEN}
-		<a class="cbtn" href={discussUrl(type, id, label)}>{t('panel.discuss')}</a>
-		<a class="cbtn quiet" href={proposeUrl(type, id, label)}>{t('panel.propose')}</a>
+		{#if only !== 'propose'}
+			<a class="cbtn" href={discussUrl(type, id, label)}>{t('panel.discuss')}</a>
+		{/if}
+		{#if only !== 'discuss'}
+			<a class="cbtn quiet" href={proposeUrl(type, id, label)}>{t('panel.propose')}</a>
+		{/if}
 	{:else}
-		<Tooltip content={t('agora.comingsoon')}>
-			<span class="cbtn soon">
-				{t('panel.discuss')}<i class="chip">{t('agora.soon.badge')}</i>
-			</span>
-		</Tooltip>
-		<Tooltip content={t('agora.comingsoon')}>
-			<span class="cbtn quiet soon">
-				{t('panel.propose')}<i class="chip">{t('agora.soon.badge')}</i>
-			</span>
-		</Tooltip>
+		{#if only !== 'propose'}
+			<Tooltip content={t('agora.comingsoon')}>
+				<span class="cbtn soon">
+					{t('panel.discuss')}<i class="chip">{t('agora.soon.badge')}</i>
+				</span>
+			</Tooltip>
+		{/if}
+		{#if only !== 'discuss'}
+			<Tooltip content={t('agora.comingsoon')}>
+				<span class="cbtn quiet soon">
+					{t('panel.propose')}<i class="chip">{t('agora.soon.badge')}</i>
+				</span>
+			</Tooltip>
+		{/if}
 	{/if}
 </div>
 

@@ -192,6 +192,9 @@ export interface Pr {
 export interface QueueItem {
 	target: string;
 	target_type: 'thread' | 'post';
+	target_id: string;
+	/** The thread a post lives in, or the thread's own id. Used to open it. */
+	thread_id: string;
 	pressure: number;
 	reasons: string[];
 	removed: boolean;

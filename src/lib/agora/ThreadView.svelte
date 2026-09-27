@@ -15,11 +15,13 @@
 	import Popover from '$lib/ui/Popover.svelte';
 	import Chip from '$lib/ui/Chip.svelte';
 	import Tooltip from '$lib/ui/Tooltip.svelte';
+	import Textarea from '$lib/ui/Textarea.svelte';
 	import Composer from './Composer.svelte';
 	import PostBody from './PostBody.svelte';
 	import Author from './Author.svelte';
 	import { relativeTime } from './time';
 	import { REPORT_REASONS } from '$lib/agora.svelte';
+	import { copyText } from '$lib/share';
 	import { t } from '$lib/t.svelte';
 	import { app } from '$lib/state.svelte';
 	import type { MentionSpan } from './markdown';
@@ -41,7 +43,9 @@
 			burn: boolean
 		) => Promise<boolean>;
 		onvote: (post: Post, value: 1 | -1) => void;
-		onreport: (post: Post, reason: string) => void;
+		onreport: (post: Post, reason: string, details: string) => Promise<boolean>;
+		/** Bring a mentioned record into the anchored rail. */
+		onpeek?: (id: string) => void;
 	}
 
 	let {
@@ -54,11 +58,44 @@
 		votes,
 		onpost,
 		onvote,
-		onreport
+		onreport,
+		onpeek
 	}: Props = $props();
 
 	let replyingTo = $state<string | null>(null);
 	let reporting = $state<string | null>(null);
+	let reportDetails = $state('');
+	let reportBusy = $state(false);
+	let reportSent = $state<string | null>(null);
+	let copied = $state(false);
+
+	/** The thread's own permalink, so a discussion can be cited without a screenshot. */
+	async function copyLink() {
+		if (await copyText(location.href)) {
+			copied = true;
+			setTimeout(() => (copied = false), 1600);
+		}
+	}
+
+	/**
+	 * A reason alone is enough to queue a report, but "misinformation" without
+	 * what the reporter checked hands the moderator a puzzle. Details are optional
+	 * and travel with the report when given.
+	 */
+	async function submitReport(p: Post, reason: string) {
+		if (reportBusy) return;
+		reportBusy = true;
+		const ok = await onreport(p, reason, reportDetails);
+		reportBusy = false;
+		if (ok) {
+			reportSent = p.id;
+			reportDetails = '';
+			setTimeout(() => {
+				reporting = null;
+				reportSent = null;
+			}, 1600);
+		}
+	}
 
 	const roots = $derived(posts.filter((p) => !p.parent_id));
 	const childrenOf = $derived.by(() => {
@@ -102,22 +139,24 @@
 			<span class="spacer"></span>
 
 			<div class="votes">
-				<Tooltip content={t('agora.upvote')}>
+				<Tooltip content={votes[p.id] === 1 ? t('agora.vote.undo') : t('agora.upvote')}>
 					<Button
 						size="xs"
 						variant="ghost"
 						active={votes[p.id] === 1}
+						aria-pressed={votes[p.id] === 1}
 						onclick={() => onvote(p, 1)}
 						aria-label={t('agora.upvote')}
 					>
 						▲<b>{p.upvotes}</b>
 					</Button>
 				</Tooltip>
-				<Tooltip content={t('agora.downvote')}>
+				<Tooltip content={votes[p.id] === -1 ? t('agora.vote.undo') : t('agora.downvote')}>
 					<Button
 						size="xs"
 						variant="ghost"
 						active={votes[p.id] === -1}
+						aria-pressed={votes[p.id] === -1}
 						onclick={() => onvote(p, -1)}
 						aria-label={t('agora.downvote')}
 					>
@@ -148,12 +187,30 @@
 					label={t('agora.report')}
 				>
 					<div class="reasons">
-						<p class="reasonhint">{t('agora.reporthint')}</p>
-						{#each REPORT_REASONS as r (r)}
-							<button type="button" class="reason" onclick={() => onreport(p, r)}>
-								{t(`agora.reason.${r}`)}
-							</button>
-						{/each}
+						{#if reportSent === p.id}
+							<p class="sent" role="status">{t('agora.reportsent')}</p>
+						{:else}
+							<p class="reasonhint">{t('agora.reporthint')}</p>
+							<label class="details">
+								<span>{t('agora.reportdetails')}</span>
+								<Textarea
+									bind:value={reportDetails}
+									rows={2}
+									limit={2000}
+									placeholder={t('agora.reportdetailsph')}
+								/>
+							</label>
+							{#each REPORT_REASONS as r (r)}
+								<button
+									type="button"
+									class="reason"
+									disabled={reportBusy}
+									onclick={() => submitReport(p, r)}
+								>
+									{t(`agora.reason.${r}`)}
+								</button>
+							{/each}
+						{/if}
 					</div>
 				</Popover>
 			</div>
@@ -165,7 +222,7 @@
 				{p.removed_reason}
 			</p>
 		{:else if p.body}
-			<PostBody body={p.body} mentions={spansFor(p)} />
+			<PostBody body={p.body} mentions={spansFor(p)} {onpeek} />
 		{/if}
 	</article>
 
@@ -190,8 +247,12 @@
 
 <div class="thread">
 	<header>
-		<Chip>{thread.kind}</Chip>
+		<Chip>{t(`agora.kind.${thread.kind}`)}</Chip>
 		<h2>{thread.title}</h2>
+		<span class="spacer"></span>
+		<Button size="xs" variant="ghost" onclick={copyLink} aria-live="polite">
+			{copied ? t('agora.copied') : t('agora.copylink')}
+		</Button>
 	</header>
 
 	{#if error}
@@ -313,6 +374,29 @@
 		line-height: 1.45;
 		max-width: 34ch;
 	}
+	.details {
+		display: flex;
+		flex-direction: column;
+		gap: var(--s-2);
+		padding: 0 var(--s-3) var(--s-3);
+	}
+	.details span {
+		font-size: var(--t-2xs);
+		text-transform: uppercase;
+		letter-spacing: var(--track-caps);
+		color: var(--text-faint);
+	}
+	.sent {
+		margin: 0;
+		padding: var(--s-4) var(--s-3);
+		font-size: var(--t-sm);
+		color: var(--basis-documented);
+		max-width: 30ch;
+		line-height: 1.5;
+	}
+	.reason:disabled {
+		opacity: 0.5;
+	}
 	.reason {
 		text-align: start;
 		padding: var(--s-3) var(--s-4);
@@ -336,7 +420,8 @@
 		font-style: italic;
 	}
 	.replybox {
-		margin: var(--s-4) 0 0 var(--s-6);
+		margin: var(--s-4) 0 0 0;
+		margin-inline-start: var(--s-6);
 		padding-inline-start: var(--s-4);
 		border-inline-start: 2px solid var(--accent);
 	}
