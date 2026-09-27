@@ -33,9 +33,9 @@ span as a date, or an unsubstantiated claim as a finding, misrepresents the sour
 
 ## Known limits, stated by the project
 
-- Only <!--stat:reviewed-->46<!--/stat--> of <!--stat:reviewable-->1750<!--/stat-->
-  records have had independent human review — and almost all of it landed on the
-  best-evidenced claims, not the ones that need it.
+- <!--stat:reviewed-->46<!--/stat--> of <!--stat:reviewable-->1750<!--/stat-->
+  records carry an editorial review note; independent human verification is
+  <!--stat:independent-->0<!--/stat-->.
 - <!--stat:needsPrimarySource-->227<!--/stat--> records await a primary source.
 - Defence intelligence (ANRSD) has no primary sourcing at all: statute, appointment
   date and current status are unestablished.
@@ -72,11 +72,12 @@ span as a date, or an unsubstantiated claim as a finding, misrepresents the sour
 
 ## Pages
 
-- /              Chronicle — officeholding across time, drawn to scale
+- /              the landing page; the atlas entry point
+- /chronicle     officeholding across time, drawn to scale
 - /now           who holds which office today, against each office's median tenure
 - /network       who connects to whom, layers in fixed lanes
 - /atlas         structure per era, survival matrix, institutional crossings
-- /rankings      five separate structural indices, no single power score
+- /rankings      six separate structural indices, no single power score
 - /map           governorates and strategic assets
 - /world         Tunisia among states and international organisations
 - /investigate   structured queries computed from the graph, not generated

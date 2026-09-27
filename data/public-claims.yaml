@@ -1,0 +1,1490 @@
+# Public-claim registry — the declaration file for M3 of the v0.1.3 plan.
+#
+# WHAT THIS IS
+#
+# One entry per mutable public figure or product-status statement. Each entry
+# names the typed resolver that produces the value, the exact surfaces that
+# publish it, the population it belongs to, and its lifecycle. The build
+# (scripts/build-public-claims.ts) fails on an unresolved, stale, retired,
+# duplicated or malformed claim, and scans governed templates for figures that
+# no declaration covers.
+#
+# WHAT THIS IS NOT
+#
+# It is not part of the canonical Tunisia evidence graph. It describes the
+# product and its evidence state — counts, review populations, translation
+# provenance, deployment and release state — and it never carries a claim about
+# a person, an institution or an event in Tunisia. Historical evidence keeps its
+# own rules in data/*.yaml and scripts/schema.ts.
+#
+# THE INVENTORY RULES
+#
+# generated-template  a template with generated or generated-adjacent values; scanned
+# authored-prose      authored prose stating current product figures; scanned
+# release-paper       only `<!--stat:-->` spans and the current-state summary are governed
+# historical-prose    superseded history, kept but never a live claim surface
+# generated-artifact  a generated file bound to another surface; never hand-edited
+# resolver-input      a canonical record a resolver reads; not a public surface itself
+#
+# Exclusions are narrow and reviewed: dates, citations, HTTP codes and proposal
+# history. An exclusion is where a number is not a current-state claim; it is
+# not where a claim was inconvenient.
+
+schemaVersion: 1
+
+inventory:
+  - path: README.md
+    rule: authored-prose
+    note: Current-state product and dataset figures only. Historical narrative and release history are out of scope.
+    exclude:
+      - '\b(?:18|19|20)\d{2}\b'
+      - '\bv\d+\.\d+[.\d]*\b'
+  - path: static/llms.txt
+    rule: authored-prose
+    note: Machine-facing summary. Every current figure must resolve; historical years are dates.
+    exclude:
+      - '\b(?:18|19|20)\d{2}\b'
+  - path: landing/index.html
+    rule: generated-template
+    note: The landing page. Current-state figures and the generated evidence arrays; historical years and the demo slice size are excluded by pattern.
+    exclude:
+      - '\b(?:18|19|20)\d{2}\b'
+      - '\b46 people\b'
+      - '\b400/500\b'
+  - path: landing/_strings.en.json
+    rule: generated-template
+    note: English translation source extracted from the markup; must mirror it.
+    exclude:
+      - '\b(?:18|19|20)\d{2}\b'
+      - '\b46 people\b'
+  - path: landing/_strings.fr.json
+    rule: generated-template
+    note: French dictionary; the inline copy in index.html is regenerated from this file.
+    exclude:
+      - '\b(?:18|19|20)\d{2}\b'
+  - path: landing/_strings.ar.json
+    rule: generated-template
+    note: Arabic dictionary; the inline copy in index.html is regenerated from this file.
+    exclude:
+      - '\b(?:18|19|20)\d{2}\b'
+  - path: src/content/
+    rule: authored-prose
+    note: User-visible content pages. Frontmatter translated_by is a separate population resolved under content-translation; historical facts about Tunisia are not product claims.
+    exclude:
+      - '\b(?:18|19|20)\d{2}\b'
+  - path: src/lib/i18n.ts
+    rule: generated-template
+    note: Application chrome. Current figures are interpolated from typed state at render; any literal count in this file must be declared.
+    exclude:
+      - '\b(?:18|19|20)\d{2}\b'
+      - '\b40 overlap\b'
+  - path: src/routes/
+    rule: generated-template
+    note: Route metadata and application shell text.
+    exclude:
+      - '\b(?:18|19|20)\d{2}\b'
+  - path: output/deeptunisia-release-paper-v0.1.2.md
+    rule: release-paper
+    note: Active release paper. Only its `<!--stat:-->` spans and its current-state summary are governed; the methodology history is historical prose.
+  - path: output/deeptunisia-release-paper-v0.1.1.md
+    rule: historical-prose
+    note: Superseded release paper, kept as release history.
+  - path: static/deeptunisia-release-paper-v1.0.pdf
+    rule: generated-artifact
+    note: Generated PDF bound to the active release identity, not hand-edited.
+  - path: docs/agora-deployment.md
+    rule: authored-prose
+    note: Current-state operational documentation; the mode contract.
+    exclude:
+      - '\b(?:18|19|20)\d{2}\b'
+  - path: docs/agora-gaps.md
+    rule: authored-prose
+    note: Current-state operational documentation; closed-state record.
+    exclude:
+      - '\b(?:18|19|20)\d{2}\b'
+      - '\bv\d+\.\d+(?:\.\d+)?\b'
+  - path: docs/network-continuity.md
+    rule: authored-prose
+    note: Current-state operational documentation; H1 probe method and thresholds.
+    exclude:
+      - '\b(?:18|19|20)\d{2}\b'
+      - '\btier-\d+/\d+\b'
+  - path: docs/posting-limits.md
+    rule: authored-prose
+    note: Current-state operational documentation; the specified-not-wired policy.
+    exclude:
+      - '\b(?:18|19|20)\d{2}\b'
+      - '\b4/8/14/20\b'
+  - path: docs/commit-signing.md
+    rule: authored-prose
+    note: Current-state operational documentation; release artifact set.
+    exclude:
+      - '\b(?:18|19|20)\d{2}\b'
+      - '\bv\d+\.\d+\b'
+      - '\b401/403\b'
+  - path: docs/methodology-kind-vs-strength.md
+    rule: authored-prose
+    note: Current-state methodology documentation.
+    exclude:
+      - '\b(?:18|19|20)\d{2}\b'
+      - '\btier-\d+\b'
+      - '\bV\d+\b'
+  - path: static/editorial-queue.json
+    rule: generated-artifact
+    note: Emitted editorial queue; resolver input for the editorial-queue population.
+  - path: static/sensitivity.json
+    rule: generated-artifact
+    note: Emitted sensitivity and ranking-population record; resolver input.
+  - path: flows/manifest.json
+    rule: resolver-input
+    note: External dataset manifest with licence and retrieval state; resolver input.
+  - path: data/verifications.yaml
+    rule: resolver-input
+    note: The independent verification population. Zero records until the v0.2 study fills it.
+  - path: data/source-exceptions.yaml
+    rule: resolver-input
+    note: The live escape register. Categories overlap; it is never summed into one figure.
+  - path: src/content/media/
+    rule: resolver-input
+    note: Investigation evidence, narrative and research ledgers. Data for the media resolvers; the shipped index is the public population, and the narrative prose is evidence, not a product-claim surface.
+  - path: src/generated/
+    rule: generated-artifact
+    note: All compiler output; resolvers read it, no surface is hand-edited.
+
+claims:
+  # ------------------------------------------------------------------ graph
+  - id: people-total
+    kind: metric
+    claim: People recorded in the published graph.
+    surfaces:
+      - path: landing/index.html
+        locator: 'og:description" content="(\d+) people\.'
+      - path: landing/index.html
+        locator: 'data-count="(\d+)">0</div><div class="micro k" data-i18n="ledger\.1"'
+    resolver: { source: stats, key: people }
+    format: plain
+    population: person records in the published graph
+    lifecycle: current
+    locale: all
+    owner: DATA
+    authority: compiler
+    assurance: compiled
+    validity: cutoff-bound
+  - id: positions-total
+    kind: metric
+    claim: Officeholdings recorded in the published graph.
+    surfaces:
+      - path: landing/index.html
+        locator: 'people\. (\d+) offices held\.'
+      - path: landing/index.html
+        locator: 'data-count="(\d+)">0</div><div class="micro k" data-i18n="ledger\.2"'
+      - path: landing/index.html
+        locator: 'Drawn from (\d+) tenures'
+      - path: landing/_strings.en.json
+        locator: 'Drawn from (\d+) tenures'
+      - path: landing/_strings.fr.json
+        locator: 'Établi à partir de (\d+) mandats'
+      - path: landing/_strings.ar.json
+        locator: 'مستخرجة من (\d+) فترة'
+    resolver: { source: stats, key: positions }
+    format: plain
+    population: position records in the published graph
+    lifecycle: current
+    locale: all
+    owner: DATA
+    authority: compiler
+    assurance: compiled
+    validity: cutoff-bound
+  - id: institutions-total
+    kind: metric
+    claim: Institutions recorded in the published graph.
+    surfaces:
+      - path: landing/index.html
+        locator: 'data-count="(\d+)">0</div><div class="micro k" data-i18n="ledger\.3"'
+    resolver: { source: stats, key: institutions }
+    format: plain
+    population: institution records in the published graph
+    lifecycle: current
+    locale: all
+    owner: DATA
+    authority: compiler
+    assurance: compiled
+    validity: cutoff-bound
+  - id: relationships-total
+    kind: metric
+    claim: Documented relationships recorded in the published graph.
+    surfaces:
+      - path: landing/index.html
+        locator: '(\d+) documented relationships\.'
+      - path: landing/index.html
+        locator: 'data-count="(\d+)">0</div><div class="micro k" data-i18n="ledger\.4"'
+    resolver: { source: stats, key: relationships }
+    format: plain
+    population: relationship records in the published graph
+    lifecycle: current
+    locale: all
+    owner: DATA
+    authority: compiler
+    assurance: compiled
+    validity: cutoff-bound
+  - id: sources-total
+    kind: metric
+    claim: Sources defined in the library.
+    surfaces:
+      - path: landing/index.html
+        locator: '(\d+) sources\.'
+      - path: landing/index.html
+        locator: 'data-count="(\d+)">0</div><div class="micro k" data-i18n="ledger\.5"'
+      - path: landing/index.html
+        locator: 'The current library is (\d+) sources'
+      - path: landing/index.html
+        locator: 'of the (\d+) sources currently back'
+      - path: landing/_strings.en.json
+        locator: 'The current library is (\d+) sources'
+      - path: landing/_strings.en.json
+        locator: 'of the (\d+) sources currently back'
+      - path: landing/_strings.fr.json
+        locator: "compte aujourd'hui (\\d+) sources"
+      - path: landing/_strings.fr.json
+        locator: 'des (\d+) sources n.appuient'
+      - path: landing/_strings.ar.json
+        locator: 'تضم المكتبة اليوم (\d+) مصدراً'
+      - path: landing/_strings.ar.json
+        locator: 'من المصادر الـ(\d+) لا تسند'
+    resolver: { source: stats, key: sources }
+    format: plain
+    population: sources defined in data/sources.yaml
+    lifecycle: current
+    locale: all
+    owner: DATA
+    authority: compiler
+    assurance: compiled
+    validity: cutoff-bound
+  - id: sources-cited
+    kind: metric
+    claim: Sources that back at least one claim.
+    surfaces: []
+    resolver: { source: stats, key: sourcesCited }
+    format: plain
+    population: sources defined in data/sources.yaml that back at least one claim
+    lifecycle: current
+    locale: all
+    owner: DATA
+    authority: compiler
+    assurance: compiled
+    validity: cutoff-bound
+  - id: sources-uncited
+    kind: metric
+    claim: Sources kept as staged reading and excluded from the published count.
+    surfaces:
+      - path: landing/index.html
+        locator: '(\d+) of the 1333 sources currently back'
+      - path: landing/_strings.en.json
+        locator: '(\d+) of the 1333 sources currently back'
+      - path: landing/_strings.fr.json
+        locator: '(\d+) des 1333 sources n.appuient'
+      - path: landing/_strings.ar.json
+        locator: 'و(\d+) من المصادر الـ1333'
+    resolver: { source: stats, key: sourcesUncited }
+    format: plain
+    population: sources defined in data/sources.yaml that back no claim
+    lifecycle: current
+    locale: all
+    owner: DATA
+    authority: compiler
+    assurance: compiled
+    validity: cutoff-bound
+  - id: events-total
+    kind: metric
+    claim: Events recorded in the published graph.
+    surfaces:
+      - path: landing/index.html
+        locator: 'data-count="(\d+)">0</div><div class="micro k" data-i18n="ledger\.6"'
+    resolver: { source: stats, key: events }
+    format: plain
+    population: event records in the published graph
+    lifecycle: current
+    locale: all
+    owner: DATA
+    authority: compiler
+    assurance: compiled
+    validity: cutoff-bound
+  - id: succession-gaps
+    kind: metric
+    claim: Succession gaps derived from the position intervals.
+    surfaces:
+      - path: landing/index.html
+        locator: '<strong>(\d+) succession gaps</strong>'
+      - path: landing/_strings.en.json
+        locator: '<strong>(\d+) succession gaps</strong>'
+      - path: landing/_strings.fr.json
+        locator: '<strong>(\d+) ruptures de succession</strong>'
+      - path: landing/_strings.ar.json
+        locator: '<strong>(\d+) انقطاعاً في التعاقب</strong>'
+    resolver: { source: stats, key: successionGaps }
+    format: plain
+    population: derived succession gaps, all published
+    lifecycle: current
+    locale: all
+    owner: DATA
+    authority: compiler
+    assurance: compiled
+    validity: cutoff-bound
+  - id: succession-overlaps
+    kind: metric
+    claim: Overlapping tenures derived from the position intervals.
+    surfaces:
+      - path: landing/index.html
+        locator: '<strong>(\d+) overlapping tenures</strong>'
+      - path: landing/_strings.en.json
+        locator: '<strong>(\d+) overlapping tenures</strong>'
+      - path: landing/_strings.fr.json
+        locator: '<strong>(\d+) mandats qui se chevauchent</strong>'
+      - path: landing/_strings.ar.json
+        locator: '<strong>(\d+) فترات متداخلة</strong>'
+    resolver: { source: stats, key: successionOverlaps }
+    format: plain
+    population: derived overlapping tenures, all published
+    lifecycle: current
+    locale: all
+    owner: DATA
+    authority: compiler
+    assurance: compiled
+    validity: cutoff-bound
+  - id: contradictions
+    kind: metric
+    claim: Source contradictions recorded unresolved.
+    surfaces:
+      - path: landing/index.html
+        locator: '<span class="v">(\d+)</span>\s*<span class="d" data-i18n-html="limits\.8"'
+    resolver: { source: stats, key: contradictions }
+    format: plain
+    population: unresolved source contradictions in the published graph
+    lifecycle: current
+    locale: all
+    owner: RESEARCH
+    authority: compiler
+    assurance: compiled
+    validity: cutoff-bound
+  - id: needs-primary-source
+    kind: metric
+    claim: Records awaiting a primary source.
+    surfaces:
+      - path: landing/index.html
+        locator: '<span class="v">(\d+)</span>\s*<span class="d" data-i18n-html="limits\.6"'
+    resolver: { source: stats, key: needsPrimarySource }
+    format: plain
+    population: records resting on secondary reporting
+    lifecycle: current
+    locale: all
+    owner: RESEARCH
+    authority: compiler
+    assurance: compiled
+    validity: cutoff-bound
+  - id: hypotheses-total
+    kind: metric
+    claim: Hypotheses published with falsifiers.
+    surfaces:
+      - path: README.md
+        locator: 'two of (six) hypotheses'
+      - path: src/content/about.en.md
+        locator: 'two of the (six) hypotheses'
+      - path: landing/index.html
+        locator: '(Six) hypotheses are published'
+        format: word-cap
+      - path: landing/_strings.en.json
+        locator: '(Six) hypotheses are published'
+        format: word-cap
+    resolver: { source: stats, key: hypotheses }
+    format: word
+    population: hypothesis records in data/hypotheses.yaml
+    lifecycle: current
+    locale: all
+    owner: RESEARCH
+    authority: compiler
+    assurance: compiled
+    validity: cutoff-bound
+  - id: basis-documented
+    kind: epistemic-state
+    claim: Claims whose basis is documented.
+    surfaces:
+      - path: landing/index.html
+        locator: 'data-i18n="evidence\.19">(\d+) claims'
+      - path: landing/_strings.en.json
+        locator: '"evidence\.19": "(\d+) claims'
+      - path: landing/_strings.fr.json
+        locator: '"evidence\.19": "(\d+) affirmations'
+      - path: landing/_strings.ar.json
+        locator: '"evidence\.19": "(\d+) ادعاءً'
+    resolver: { source: stats, key: documented }
+    format: plain
+    population: claim-bearing records with basis=documented
+    lifecycle: current
+    locale: all
+    owner: RESEARCH
+    authority: compiler
+    assurance: compiled
+    validity: cutoff-bound
+  - id: basis-reported
+    kind: epistemic-state
+    claim: Claims whose basis is reported.
+    surfaces:
+      - path: landing/index.html
+        locator: 'data-i18n="evidence\.22">(\d+) claims'
+      - path: landing/_strings.en.json
+        locator: '"evidence\.22": "(\d+) claims'
+      - path: landing/_strings.fr.json
+        locator: '"evidence\.22": "(\d+) affirmations'
+      - path: landing/_strings.ar.json
+        locator: '"evidence\.22": "(\d+) ادعاءً'
+    resolver: { source: stats, key: reported }
+    format: plain
+    population: claim-bearing records with basis=reported
+    lifecycle: current
+    locale: all
+    owner: RESEARCH
+    authority: compiler
+    assurance: compiled
+    validity: cutoff-bound
+  - id: basis-inferred
+    kind: epistemic-state
+    claim: Claims whose basis is inferred.
+    surfaces:
+      - path: landing/index.html
+        locator: 'data-i18n="evidence\.25">(\d+) claims'
+      - path: landing/_strings.en.json
+        locator: '"evidence\.25": "(\d+) claims'
+      - path: landing/_strings.fr.json
+        locator: '"evidence\.25": "(\d+) affirmations'
+      - path: landing/_strings.ar.json
+        locator: '"evidence\.25": "(\d+) ادعاءً'
+    resolver: { source: stats, key: inferred }
+    format: plain
+    population: claim-bearing records with basis=inferred
+    lifecycle: current
+    locale: all
+    owner: RESEARCH
+    authority: compiler
+    assurance: compiled
+    validity: cutoff-bound
+  - id: basis-unsubstantiated
+    kind: epistemic-state
+    claim: Claims whose basis is unsubstantiated.
+    surfaces:
+      - path: landing/index.html
+        locator: 'data-i18n="evidence\.28">(\d+) claims'
+      - path: landing/_strings.en.json
+        locator: '"evidence\.28": "(\d+) claims'
+      - path: landing/_strings.fr.json
+        locator: '"evidence\.28": "(\d+) affirmations'
+      - path: landing/_strings.ar.json
+        locator: '"evidence\.28": "(\d+) ادعاءات'
+    resolver: { source: stats, key: unsubstantiated }
+    format: plain
+    population: claim-bearing records with basis=unsubstantiated
+    lifecycle: current
+    locale: all
+    owner: RESEARCH
+    authority: compiler
+    assurance: compiled
+    validity: cutoff-bound
+  - id: source-tier-1
+    kind: metric
+    claim: Sources at tier 1 (decree or gazette entry).
+    surfaces:
+      - path: landing/index.html
+        locator: '— (\d+) at tier 1,'
+      - path: landing/_strings.en.json
+        locator: '— (\d+) at tier 1,'
+      - path: landing/_strings.fr.json
+        locator: '(\d+) au niveau 1'
+      - path: landing/_strings.ar.json
+        locator: '(\d+) في المستوى 1'
+    resolver: { source: dataset, key: source-tier-1 }
+    format: plain
+    population: sources with tier=1
+    lifecycle: current
+    locale: all
+    owner: RESEARCH
+    authority: compiler
+    assurance: compiled
+    validity: cutoff-bound
+  - id: source-tier-2
+    kind: metric
+    claim: Sources at tier 2.
+    surfaces:
+      - path: landing/index.html
+        locator: '(\d+) at tier 2,'
+      - path: landing/_strings.en.json
+        locator: '(\d+) at tier 2,'
+      - path: landing/_strings.fr.json
+        locator: '(\d+) au niveau 2'
+      - path: landing/_strings.ar.json
+        locator: '(\d+) في المستوى 2'
+    resolver: { source: dataset, key: source-tier-2 }
+    format: plain
+    population: sources with tier=2
+    lifecycle: current
+    locale: all
+    owner: RESEARCH
+    authority: compiler
+    assurance: compiled
+    validity: cutoff-bound
+  - id: source-tier-3
+    kind: metric
+    claim: Sources at tier 3.
+    surfaces:
+      - path: landing/index.html
+        locator: '(\d+) at tier 3,'
+      - path: landing/_strings.en.json
+        locator: '(\d+) at tier 3,'
+      - path: landing/_strings.fr.json
+        locator: '(\d+) au niveau 3'
+      - path: landing/_strings.ar.json
+        locator: '(\d+) في المستوى 3'
+    resolver: { source: dataset, key: source-tier-3 }
+    format: plain
+    population: sources with tier=3
+    lifecycle: current
+    locale: all
+    owner: RESEARCH
+    authority: compiler
+    assurance: compiled
+    validity: cutoff-bound
+  - id: source-tier-4
+    kind: metric
+    claim: Sources at tier 4.
+    surfaces:
+      - path: landing/index.html
+        locator: '(\d+) at tier 4,'
+      - path: landing/_strings.en.json
+        locator: '(\d+) at tier 4,'
+      - path: landing/_strings.fr.json
+        locator: '(\d+) au niveau 4'
+      - path: landing/_strings.ar.json
+        locator: '(\d+) في المستوى 4'
+    resolver: { source: dataset, key: source-tier-4 }
+    format: plain
+    population: sources with tier=4
+    lifecycle: current
+    locale: all
+    owner: RESEARCH
+    authority: compiler
+    assurance: compiled
+    validity: cutoff-bound
+  - id: source-tier-5
+    kind: metric
+    claim: Sources at tier 5.
+    surfaces:
+      - path: landing/index.html
+        locator: '(\d+) at tier 5\.'
+      - path: landing/_strings.en.json
+        locator: '(\d+) at tier 5\.'
+      - path: landing/_strings.fr.json
+        locator: '(\d+) au niveau 5'
+      - path: landing/_strings.ar.json
+        locator: '(\d+) في المستوى 5'
+    resolver: { source: dataset, key: source-tier-5 }
+    format: plain
+    population: sources with tier=5
+    lifecycle: current
+    locale: all
+    owner: RESEARCH
+    authority: compiler
+    assurance: compiled
+    validity: cutoff-bound
+  - id: graph-hash
+    kind: metric
+    claim: Canonical graph hash (the release identity).
+    surfaces: []
+    resolver: { source: dataset, key: meta.datasetHash }
+    format: text
+    population: the stable projection of the emitted bundle — NOT the landing visuals marker, which ties DENSITY/NODES/EDGES to dataset.json and is never production graph identity
+    lifecycle: current
+    locale: all
+    owner: RELEASE
+    authority: compiler
+    assurance: compiled
+    validity: current-build
+  - id: graph-cutoff
+    kind: metric
+    claim: Dataset cutoff date.
+    surfaces: []
+    resolver: { source: dataset, key: meta.parameters.time.cutoff }
+    format: iso-date
+    population: parameters.time.cutoff
+    lifecycle: current
+    locale: all
+    owner: DATA
+    authority: canonical-data
+    assurance: compiled
+    validity: cutoff-bound
+  - id: graph-floor
+    kind: metric
+    claim: Dataset floor date.
+    surfaces: []
+    resolver: { source: dataset, key: meta.parameters.time.floor }
+    format: iso-date
+    population: parameters.time.floor
+    lifecycle: current
+    locale: all
+    owner: DATA
+    authority: canonical-data
+    assurance: compiled
+    validity: current-build
+  - id: payload-internal
+    kind: metric
+    claim: Internal graph bundle size.
+    surfaces: []
+    resolver: { source: stats, key: graphKB }
+    format: plain
+    population: the in-memory graph bundle, rounded to 10 KB
+    lifecycle: current
+    locale: all
+    owner: BUILD
+    authority: compiler
+    assurance: compiled
+    validity: current-build
+  - id: payload-shipped
+    kind: metric
+    claim: Public export payload size.
+    surfaces: []
+    resolver: { source: dataset, key: meta.shippedKB }
+    format: plain
+    population: the public exports on disk (dataset, CSVs, geometry, changelog, topology)
+    lifecycle: current
+    locale: all
+    owner: BUILD
+    authority: compiler
+    assurance: compiled
+    validity: current-build
+  - id: payload-shipped-mb
+    kind: metric
+    claim: Public export payload, in megabytes.
+    surfaces:
+      - path: landing/index.html
+        locator: 'roughly (\d+\.\d+) MB'
+      - path: landing/_strings.en.json
+        locator: 'roughly (\d+\.\d+) MB'
+      - path: landing/_strings.fr.json
+        locator: 'environ (\d+,\d+) Mo'
+        format: mb1-fr
+      - path: landing/_strings.ar.json
+        locator: 'نحو (\d+[٫.]\d+) ميغابايت'
+        format: mb1-ar
+    resolver: { source: stats, key: shippedKB }
+    format: mb1
+    population: the public exports on disk, rendered in MB
+    lifecycle: current
+    locale: all
+    owner: BUILD
+    authority: compiler
+    assurance: compiled
+    validity: current-build
+  - id: dataset-export-size
+    kind: metric
+    claim: Canonical bundle size.
+    surfaces:
+      - path: docs/commit-signing.md
+        locator: 'canonical bundle \((\d+\.\d+) MB\)'
+    resolver: { source: dataset, key: meta.datasetKB }
+    format: mb1
+    population: static/dataset.json on disk, rounded to the nearest KB
+    lifecycle: current
+    locale: en
+    owner: RELEASE
+    authority: compiler
+    assurance: compiled
+    validity: current-build
+
+  # ----------------------------------------------------------------- review
+  - id: review-editorial-notes
+    kind: metric
+    claim: Records carrying an editorial review note.
+    surfaces:
+      - path: landing/index.html
+        locator: '<span class="v">(\d+) / 1750</span>'
+      - path: landing/index.html
+        locator: 'all (\d+) review notes'
+      - path: landing/_strings.en.json
+        locator: 'all (\d+) review notes'
+      - path: landing/_strings.fr.json
+        locator: 'les (\d+) notes de relecture'
+      - path: landing/_strings.ar.json
+        locator: 'ملاحظات المراجعة الـ(\d+)'
+    resolver: { source: review, key: editorial-notes }
+    format: plain
+    population: editorial review notes (not independent checks)
+    lifecycle: current
+    locale: all
+    owner: EDITORIAL
+    authority: compiler
+    assurance: compiled
+    validity: cutoff-bound
+  - id: review-editorial-denominator
+    kind: metric
+    claim: Reviewable records, the editorial-note denominator.
+    surfaces:
+      - path: landing/index.html
+        locator: '<span class="v">46 / (\d+)</span>'
+    resolver: { source: review, key: editorial-notes-denominator }
+    format: plain
+    population: reviewable records (the denominator for editorial notes)
+    lifecycle: current
+    locale: all
+    owner: EDITORIAL
+    authority: compiler
+    assurance: compiled
+    validity: cutoff-bound
+  - id: review-editorial-notes-stat
+    kind: metric
+    claim: Records carrying an editorial review note, as emitted for tagged documents.
+    surfaces: []
+    resolver: { source: stats, key: reviewed }
+    format: plain
+    population: editorial review notes (not independent checks)
+    lifecycle: current
+    locale: all
+    owner: EDITORIAL
+    authority: compiler
+    assurance: compiled
+    validity: cutoff-bound
+  - id: review-editorial-denominator-stat
+    kind: metric
+    claim: Reviewable records, as emitted for tagged documents.
+    surfaces: []
+    resolver: { source: stats, key: reviewable }
+    format: plain
+    population: reviewable records (the denominator for editorial notes)
+    lifecycle: current
+    locale: all
+    owner: EDITORIAL
+    authority: compiler
+    assurance: compiled
+    validity: cutoff-bound
+  - id: review-independent-stat
+    kind: metric
+    claim: Independent verifications, as emitted for tagged documents.
+    surfaces: []
+    resolver: { source: stats, key: independent }
+    format: plain
+    population: independent verification records in data/verifications.yaml
+    lifecycle: current
+    locale: all
+    owner: EDITORIAL
+    authority: compiler
+    assurance: compiled
+    validity: current-build
+  - id: review-independent-study
+    kind: metric
+    claim: Independent checks recorded by the study population.
+    surfaces: []
+    resolver: { source: study, key: independent-checks }
+    format: plain
+    population: independent verification records in data/verifications.yaml
+    lifecycle: current
+    locale: all
+    owner: EDITORIAL
+    authority: canonical-data
+    assurance: independent
+    validity: current-build
+  - id: review-flag-unsubstantiated
+    kind: metric
+    claim: Records flagged unsubstantiated.
+    surfaces:
+      - path: landing/index.html
+        locator: 'the (\d+) unsubstantiated claims'
+      - path: landing/_strings.en.json
+        locator: 'the (\d+) unsubstantiated claims'
+      - path: landing/_strings.fr.json
+        locator: 'les (\d+) affirmations non étayées'
+      - path: landing/_strings.ar.json
+        locator: '(\d+) ادعاءً غير مُسنَد'
+    resolver: { source: review, key: flag-unsubstantiated }
+    format: plain
+    population: records flagged unsubstantiated (flags overlap)
+    lifecycle: current
+    locale: all
+    owner: EDITORIAL
+    authority: compiler
+    assurance: compiled
+    validity: cutoff-bound
+  - id: review-flag-attributed
+    kind: metric
+    claim: Records that name who is making the claim.
+    surfaces:
+      - path: landing/index.html
+        locator: 'the (\d+) that name a source'
+      - path: landing/_strings.en.json
+        locator: 'the (\d+) that name a source'
+      - path: landing/_strings.fr.json
+        locator: 'les (\d+) qui nomment une source'
+      - path: landing/_strings.ar.json
+        locator: 'و(\d+) ادعاءات تسمّي مصدرًا'
+    resolver: { source: review, key: flag-attributed }
+    format: plain
+    population: records flagged attributed (flags overlap)
+    lifecycle: current
+    locale: all
+    owner: EDITORIAL
+    authority: compiler
+    assurance: compiled
+    validity: cutoff-bound
+  - id: review-flag-inferred
+    kind: metric
+    claim: Records flagged inferred.
+    surfaces:
+      - path: landing/index.html
+        locator: 'the (\d+)\s+inferences'
+      - path: landing/_strings.en.json
+        locator: 'the (\d+) inferences'
+      - path: landing/_strings.fr.json
+        locator: 'les (\d+) déductions'
+      - path: landing/_strings.ar.json
+        locator: 'و(\d+) استنتاجًا'
+    resolver: { source: review, key: flag-inferred }
+    format: plain
+    population: records flagged inferred (flags overlap)
+    lifecycle: current
+    locale: all
+    owner: EDITORIAL
+    authority: compiler
+    assurance: compiled
+    validity: cutoff-bound
+  - id: review-notes-unsubstantiated
+    kind: metric
+    claim: Unsubstantiated records carrying an editorial note.
+    surfaces: []
+    resolver: { source: stats, key: reviewed-unsubstantiated }
+    format: plain
+    population: records flagged unsubstantiated that carry an editorial note
+    lifecycle: current
+    locale: all
+    owner: EDITORIAL
+    authority: compiler
+    assurance: compiled
+    validity: cutoff-bound
+  - id: review-notes-attributed
+    kind: metric
+    claim: Attributed records carrying an editorial note.
+    surfaces: []
+    resolver: { source: stats, key: reviewed-attributed }
+    format: plain
+    population: records flagged attributed that carry an editorial note
+    lifecycle: current
+    locale: all
+    owner: EDITORIAL
+    authority: compiler
+    assurance: compiled
+    validity: cutoff-bound
+  - id: review-notes-inferred
+    kind: metric
+    claim: Inferred records carrying an editorial note.
+    surfaces: []
+    resolver: { source: stats, key: reviewed-inferred }
+    format: plain
+    population: records flagged inferred that carry an editorial note
+    lifecycle: current
+    locale: all
+    owner: EDITORIAL
+    authority: compiler
+    assurance: compiled
+    validity: cutoff-bound
+  - id: review-denominator-unsubstantiated
+    kind: metric
+    claim: Records flagged unsubstantiated.
+    surfaces: []
+    resolver: { source: stats, key: reviewable-unsubstantiated }
+    format: plain
+    population: records flagged unsubstantiated
+    lifecycle: current
+    locale: all
+    owner: EDITORIAL
+    authority: compiler
+    assurance: compiled
+    validity: cutoff-bound
+  - id: review-denominator-attributed
+    kind: metric
+    claim: Records flagged attributed.
+    surfaces: []
+    resolver: { source: stats, key: reviewable-attributed }
+    format: plain
+    population: records flagged attributed
+    lifecycle: current
+    locale: all
+    owner: EDITORIAL
+    authority: compiler
+    assurance: compiled
+    validity: cutoff-bound
+  - id: review-denominator-inferred
+    kind: metric
+    claim: Records flagged inferred.
+    surfaces: []
+    resolver: { source: stats, key: reviewable-inferred }
+    format: plain
+    population: records flagged inferred
+    lifecycle: current
+    locale: all
+    owner: EDITORIAL
+    authority: compiler
+    assurance: compiled
+    validity: cutoff-bound
+  - id: contested-about-people
+    kind: metric
+    claim: Recorded relationships about named people that rest on less than an official document.
+    surfaces:
+      - path: landing/index.html
+        locator: 'The (\d+) recorded relationships'
+      - path: landing/_strings.en.json
+        locator: 'The (\d+) recorded relationships'
+      - path: landing/_strings.fr.json
+        locator: 'Les (\d+) relations consignées'
+      - path: landing/_strings.ar.json
+        locator: 'السجلات الـ(\d+) للعلاقات'
+    resolver: { source: dataset, key: contested-about-people }
+    format: plain
+    population: relationships whose basis is reported, inferred or unsubstantiated and whose endpoints include at least one person
+    lifecycle: current
+    locale: all
+    owner: EDITORIAL
+    authority: compiler
+    assurance: compiled
+    validity: cutoff-bound
+  - id: editorial-queue-total
+    kind: metric
+    claim: Records in the editorial queue.
+    surfaces: []
+    resolver: { source: editorial-queue, key: total }
+    format: plain
+    population: the editorial queue worklist (separate from review notes and independent checks)
+    lifecycle: current
+    locale: all
+    owner: EDITORIAL
+    authority: generated-artifact
+    assurance: editorial
+    validity: current-build
+  - id: editorial-queue-reviewed
+    kind: metric
+    claim: Queued records already carrying an editorial note.
+    surfaces: []
+    resolver: { source: editorial-queue, key: reviewed }
+    format: plain
+    population: the editorial queue worklist that carries an editorial note
+    lifecycle: current
+    locale: all
+    owner: EDITORIAL
+    authority: generated-artifact
+    assurance: editorial
+    validity: current-build
+  - id: source-exceptions-total
+    kind: metric
+    claim: Live source exceptions, overlapping categories.
+    surfaces: []
+    resolver: { source: review, key: exceptions-total }
+    format: plain
+    population: entries in data/source-exceptions.yaml (categories overlap; never summed into one rate)
+    lifecycle: current
+    locale: all
+    owner: RESEARCH
+    authority: canonical-data
+    assurance: editorial
+    validity: current-build
+  - id: source-exceptions-basis-override
+    kind: metric
+    claim: Basis-override exceptions.
+    surfaces: []
+    resolver: { source: review, key: exceptions-basis-override }
+    format: plain
+    population: data/source-exceptions.yaml entries with rule=basis-override
+    lifecycle: current
+    locale: all
+    owner: RESEARCH
+    authority: canonical-data
+    assurance: editorial
+    validity: current-build
+  - id: source-exceptions-no-source
+    kind: metric
+    claim: No-source exceptions.
+    surfaces: []
+    resolver: { source: review, key: exceptions-no-source }
+    format: plain
+    population: data/source-exceptions.yaml entries with rule=no-source
+    lifecycle: current
+    locale: all
+    owner: RESEARCH
+    authority: canonical-data
+    assurance: editorial
+    validity: current-build
+  - id: source-exceptions-grade-a-primary
+    kind: metric
+    claim: Grade-A primary-source exceptions.
+    surfaces: []
+    resolver: { source: review, key: exceptions-grade-a-primary }
+    format: plain
+    population: data/source-exceptions.yaml entries with rule=grade-a-primary
+    lifecycle: current
+    locale: all
+    owner: RESEARCH
+    authority: canonical-data
+    assurance: editorial
+    validity: current-build
+
+  # ------------------------------------------------------------ translation
+  - id: data-prose-strings-total
+    kind: translation-state
+    claim: Translatable strings in dataset prose.
+    surfaces:
+      - path: landing/index.html
+        locator: '<b>human-translated entries</b> of ([\d,]+) translatable'
+      - path: landing/index.html
+        locator: 'done by people\. ([\d,]+) translatable'
+      - path: landing/_strings.en.json
+        locator: '<b>human-translated entries</b> of ([\d,]+) translatable'
+      - path: landing/_strings.en.json
+        locator: 'done by people\. ([\d,]+) translatable'
+      - path: landing/_strings.fr.json
+        locator: 'sur ([\d ]+) chaînes traduisibles'
+        format: space
+      - path: landing/_strings.fr.json
+        locator: 'personnes\. ([\d ]+) chaînes traduisibles'
+        format: space
+      - path: landing/_strings.ar.json
+        locator: 'من أصل ([\d٬]+) سلسلة قابلة'
+        format: ar-comma
+      - path: landing/_strings.ar.json
+        locator: 'أشخاص\. ([\d٬]+) سلسلة قابلة'
+        format: ar-comma
+    resolver: { source: data-translation, key: fr-total }
+    format: comma
+    population: dataset prose strings requiring translation (French denominator; Arabic is the same set)
+    lifecycle: current
+    locale: all
+    owner: TRANSLATION
+    authority: compiler
+    assurance: compiled
+    validity: cutoff-bound
+  - id: data-prose-strings-human
+    kind: translation-state
+    claim: Dataset prose strings with a human translation.
+    surfaces:
+      - path: landing/index.html
+        locator: '<span class="v">(\d+)</span>\s*<span class="d" data-i18n-html="limits\.9"'
+      - path: landing/index.html
+        locator: '(\d+) human-translated'
+      - path: landing/_strings.en.json
+        locator: '(\d+) human-translated'
+      - path: landing/_strings.fr.json
+        locator: '(\d+) traduites par un humain'
+      - path: landing/_strings.ar.json
+        locator: 'و(\d+) مترجمة بيد بشر'
+    resolver: { source: data-translation, key: fr-human }
+    format: plain
+    population: dataset prose strings with translated_by=human in French (Arabic human count is a separate population)
+    lifecycle: current
+    locale: all
+    owner: TRANSLATION
+    authority: compiler
+    assurance: compiled
+    validity: cutoff-bound
+  - id: data-prose-strings-human-ar
+    kind: translation-state
+    claim: Dataset prose strings with a human translation in Arabic.
+    surfaces: []
+    resolver: { source: data-translation, key: ar-human }
+    format: plain
+    population: dataset prose strings with translated_by=human in Arabic
+    lifecycle: current
+    locale: ar
+    owner: TRANSLATION
+    authority: compiler
+    assurance: compiled
+    validity: cutoff-bound
+  - id: content-pages-human-en
+    kind: translation-state
+    claim: Content pages with a human translation in English.
+    surfaces: []
+    resolver: { source: content-translation, key: human-en }
+    format: plain
+    population: src/content page files with frontmatter translated_by=human, English
+    lifecycle: current
+    locale: en
+    owner: TRANSLATION
+    authority: canonical-data
+    assurance: editorial
+    validity: current-build
+  - id: content-pages-human-fr
+    kind: translation-state
+    claim: Content pages with a human translation in French.
+    surfaces: []
+    resolver: { source: content-translation, key: human-fr }
+    format: plain
+    population: src/content page files with frontmatter translated_by=human, French
+    lifecycle: current
+    locale: fr
+    owner: TRANSLATION
+    authority: canonical-data
+    assurance: editorial
+    validity: current-build
+  - id: content-pages-human-ar
+    kind: translation-state
+    claim: Content pages with a human translation in Arabic.
+    surfaces: []
+    resolver: { source: content-translation, key: human-ar }
+    format: plain
+    population: src/content page files with frontmatter translated_by=human, Arabic
+    lifecycle: current
+    locale: ar
+    owner: TRANSLATION
+    authority: canonical-data
+    assurance: editorial
+    validity: current-build
+  - id: landing-dictionary-keys-en
+    kind: translation-state
+    claim: Keys in the English landing dictionary.
+    surfaces: []
+    resolver: { source: content-translation, key: landing-en-keys }
+    format: plain
+    population: landing/_strings.en.json key set (the extraction source, not a live dictionary)
+    lifecycle: current
+    locale: en
+    owner: TRANSLATION
+    authority: canonical-data
+    assurance: compiled
+    validity: current-build
+  - id: landing-dictionary-keys-fr
+    kind: translation-state
+    claim: Keys in the French landing dictionary.
+    surfaces: []
+    resolver: { source: content-translation, key: landing-fr-keys }
+    format: plain
+    population: landing/_strings.fr.json key set
+    lifecycle: current
+    locale: fr
+    owner: TRANSLATION
+    authority: canonical-data
+    assurance: compiled
+    validity: current-build
+  - id: landing-dictionary-keys-ar
+    kind: translation-state
+    claim: Keys in the Arabic landing dictionary.
+    surfaces: []
+    resolver: { source: content-translation, key: landing-ar-keys }
+    format: plain
+    population: landing/_strings.ar.json key set
+    lifecycle: current
+    locale: ar
+    owner: TRANSLATION
+    authority: canonical-data
+    assurance: compiled
+    validity: current-build
+
+  # --------------------------------------------------------------- rankings
+  - id: ranking-indices
+    kind: feature-state
+    claim: Structural indices computed separately on the rankings page.
+    surfaces:
+      - path: static/llms.txt
+        locator: '(six) separate structural indices'
+      - path: src/lib/i18n.ts
+        locator: "'nav\\.rankings\\.hint': '(Six) separate indices'"
+        format: word-cap
+      - path: src/lib/i18n.ts
+        locator: "'m\\.noscore1': '(Six) indices are computed separately"
+        format: word-cap
+      - path: src/lib/i18n.ts
+        locator: "'rankings\\.hint': '(Six) indices, computed separately"
+        format: word-cap
+      - path: src/lib/i18n.ts
+        locator: 'What the (six) columns measure'
+    resolver: { source: dataset, key: sensitivity.indices }
+    format: word
+    population: keys in static/sensitivity.json counts.scoredByKey (the ranking index set)
+    lifecycle: current
+    locale: all
+    owner: DATA
+    authority: generated-artifact
+    assurance: compiled
+    validity: current-build
+  - id: ranking-scored-influence
+    kind: metric
+    claim: People with a scored influence index.
+    surfaces: []
+    resolver: { source: dataset, key: sensitivity.people-scored-influence }
+    format: plain
+    population: people scored by the influence index in the sensitivity record
+    lifecycle: current
+    locale: all
+    owner: DATA
+    authority: generated-artifact
+    assurance: compiled
+    validity: current-build
+  - id: ranking-people-total
+    kind: metric
+    claim: People in the ranking population.
+    surfaces: []
+    resolver: { source: dataset, key: sensitivity.people-total }
+    format: plain
+    population: people considered by the sensitivity run
+    lifecycle: current
+    locale: all
+    owner: DATA
+    authority: generated-artifact
+    assurance: compiled
+    validity: current-build
+  - id: ranking-sparse-threshold
+    kind: feature-state
+    claim: Threshold under which a ranking slice is published as sparse.
+    surfaces: []
+    resolver: { source: dataset, key: sensitivity.sparse-threshold }
+    format: plain
+    population: scored records below which a slice reads as sparse
+    lifecycle: current
+    locale: all
+    owner: DATA
+    authority: generated-artifact
+    assurance: compiled
+    validity: current-build
+
+  # ------------------------------------------------------------------ media
+  - id: media-shipped
+    kind: metric
+    claim: Investigations in the shipped index.
+    surfaces: []
+    resolver: { source: media, key: shipped-index }
+    format: plain
+    population: src/generated/media/index.json (shipped index population)
+    lifecycle: current
+    locale: all
+    owner: EDITORIAL
+    authority: compiler
+    assurance: compiled
+    validity: current-build
+  - id: media-published
+    kind: metric
+    claim: Published investigations.
+    surfaces: []
+    resolver: { source: media, key: published }
+    format: plain
+    population: shipped investigations with status=published
+    lifecycle: current
+    locale: all
+    owner: EDITORIAL
+    authority: compiler
+    assurance: compiled
+    validity: current-build
+  - id: media-drafts
+    kind: metric
+    claim: Draft investigations.
+    surfaces: []
+    resolver: { source: media, key: drafts }
+    format: plain
+    population: shipped investigations with status=draft
+    lifecycle: current
+    locale: all
+    owner: EDITORIAL
+    authority: compiler
+    assurance: compiled
+    validity: current-build
+  - id: media-research-ledger-sources
+    kind: metric
+    claim: Sources consulted in the media research ledger.
+    surfaces: []
+    resolver: { source: media, key: research-ledger-sources }
+    format: plain
+    population: src/content/media/*/research.yaml sources_consulted_count (research ledger, never the shipped index)
+    lifecycle: current
+    locale: all
+    owner: RESEARCH
+    authority: canonical-data
+    assurance: editorial
+    validity: current-build
+  - id: media-shipped-claims
+    kind: metric
+    claim: Claims in the shipped media investigations.
+    surfaces: []
+    resolver: { source: media, key: shipped-claims }
+    format: plain
+    population: claim_count across the shipped media index
+    lifecycle: current
+    locale: all
+    owner: EDITORIAL
+    authority: compiler
+    assurance: compiled
+    validity: current-build
+  - id: media-bot-farm-status
+    kind: feature-state
+    claim: Editorial status of the bot-farm investigation.
+    surfaces: []
+    resolver: { source: media, key: bot-farm-status }
+    format: text
+    population: src/generated/media/index.json slug=bot-farm
+    lifecycle: current
+    locale: all
+    owner: EDITORIAL
+    authority: compiler
+    assurance: compiled
+    validity: current-build
+
+  # ------------------------------------------------------------------ world
+  - id: world-claims
+    kind: metric
+    claim: World claims recorded.
+    surfaces: []
+    resolver: { source: world, key: claims }
+    format: plain
+    population: data/world-claims.yaml
+    lifecycle: current
+    locale: all
+    owner: RESEARCH
+    authority: canonical-data
+    assurance: compiled
+    validity: cutoff-bound
+  - id: world-snapshot
+    kind: metric
+    claim: World snapshot generation date.
+    surfaces: []
+    resolver: { source: world, key: snapshot-generated }
+    format: iso-date
+    population: src/generated/world.json snapshot
+    lifecycle: current
+    locale: all
+    owner: RESEARCH
+    authority: compiler
+    assurance: compiled
+    validity: current-build
+  - id: world-manifest-datasets
+    kind: metric
+    claim: External datasets in the world manifest.
+    surfaces: []
+    resolver: { source: world, key: manifest-datasets }
+    format: plain
+    population: flows/manifest.json datasets (licence and retrieval state)
+    lifecycle: current
+    locale: all
+    owner: RESEARCH
+    authority: canonical-data
+    assurance: compiled
+    validity: current-build
+
+  # ----------------------------------------------------- release/deployment
+  - id: release-target-version
+    kind: release-state
+    claim: Version the plan targets next.
+    surfaces: []
+    resolver: { source: release, key: target-version }
+    format: version
+    population: output/release-baseline.json release block
+    lifecycle: planning
+    locale: all
+    owner: RELEASE
+    authority: generated-artifact
+    assurance: compiled
+    validity: release-pinned
+  - id: release-current-tag
+    kind: release-state
+    claim: Current release tag.
+    surfaces: []
+    resolver: { source: release, key: current-tag }
+    format: version
+    population: output/release-baseline.json release block
+    lifecycle: current
+    locale: all
+    owner: RELEASE
+    authority: generated-artifact
+    assurance: compiled
+    validity: release-pinned
+  - id: deployment-mode
+    kind: deployment-state
+    claim: Community mode the deployment configuration enforces.
+    surfaces:
+      - path: README.md
+        locator: 'COMMUNITY_MODE=(\w+)'
+      - path: docs/agora-gaps.md
+        locator: 'COMMUNITY_MODE = "(\w+)"'
+    resolver: { source: deployment-manifest, key: config-mode }
+    format: text
+    population: wrangler.toml [vars] COMMUNITY_MODE (server-enforced)
+    lifecycle: current
+    locale: all
+    owner: COMMUNITY
+    authority: generated-artifact
+    assurance: compiled
+    validity: deployment-pinned
+  - id: deployment-version
+    kind: deployment-state
+    claim: Deployed Worker version.
+    surfaces: []
+    resolver: { source: deployment-manifest, key: deployed-version }
+    format: version
+    population: output/release-baseline.json deployment record
+    lifecycle: current
+    locale: all
+    owner: RELEASE
+    authority: generated-artifact
+    assurance: compiled
+    validity: deployment-pinned
+  - id: deployment-verified
+    kind: deployment-state
+    claim: Deployment verification checks passed.
+    surfaces: []
+    resolver: { source: deployment-manifest, key: verification-passed }
+    format: plain
+    population: node scripts/verify-deploy.cjs against the recorded deployment
+    lifecycle: current
+    locale: all
+    owner: RELEASE
+    authority: generated-artifact
+    assurance: compiled
+    validity: deployment-pinned
+  - id: feature-budget
+    kind: feature-state
+    claim: Whether the posting budget is wired into the community runtime.
+    surfaces: []
+    resolver: { source: deployment-manifest, key: feature-budget }
+    format: text
+    population: community runtime import graph
+    lifecycle: current
+    locale: all
+    owner: COMMUNITY
+    authority: generated-artifact
+    assurance: compiled
+    validity: current-build
+  - id: feature-hold
+    kind: feature-state
+    claim: Whether the ten-minute hold is wired into the community runtime.
+    surfaces: []
+    resolver: { source: deployment-manifest, key: feature-hold }
+    format: text
+    population: community runtime import graph and HOLD_MS
+    lifecycle: current
+    locale: all
+    owner: COMMUNITY
+    authority: generated-artifact
+    assurance: compiled
+    validity: current-build
+  - id: feature-petitions
+    kind: feature-state
+    claim: Whether petitions are wired into the community runtime.
+    surfaces: []
+    resolver: { source: deployment-manifest, key: feature-petitions }
+    format: text
+    population: community/api.ts
+    lifecycle: current
+    locale: all
+    owner: COMMUNITY
+    authority: generated-artifact
+    assurance: compiled
+    validity: current-build
+  - id: study-verification-records
+    kind: metric
+    claim: Independent verification records in the study population.
+    surfaces: []
+    resolver: { source: study, key: verification-records }
+    format: plain
+    population: data/verifications.yaml (the v0.2 study is reserved, with no date or staffing)
+    lifecycle: planning
+    locale: all
+    owner: EDITORIAL
+    authority: canonical-data
+    assurance: independent
+    validity: current-build

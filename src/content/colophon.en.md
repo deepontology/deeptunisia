@@ -56,7 +56,7 @@ The assistance does not change the rule: the human remains responsible for the j
 
 Two numbers explain the restraint:
 
-- Only a small fraction of records have had independent human review. The exact figure is on [/about](/about); it is deliberately unflattering, and broken out by risk — `unsubstantiated` and `inferred` claims sit near zero.
+- Only a small fraction of records carry an editorial review note, and independent checks stand at zero. The exact figure is on [/about](/about); it is deliberately unflattering, and broken out by risk — `unsubstantiated` and `inferred` claims sit near zero.
 - Most dataset prose is not yet human-translated. Long-form analytical text is deliberately not machine-translated, because fluency must never read as verification.
 
 The project's stated architecture is *machines propose, humans verify*. The second half is the load-bearing one. Almost nothing has been through a second pair of eyes yet, and publishing that number is the only way the first half means anything.

@@ -20,7 +20,7 @@ Here `status: "last-verified"` means the officeholder was confirmed in post on 1
 - **{contradictions} contradictions are unresolved.** Where sources disagree, the dataset records the disagreement instead of choosing. Check the `disputes` array before using a figure.
 - **The pre-2011 police chronology is the weakest area.** The sequence of national police chiefs under Ben Ali rests largely on secondary sources.
 - **The authority weights are editorial.** They are a judgement about formal authority, published on the [method page](/methodology) so you can substitute your own.
-- **Only {reviewed} of {reviewable} records have been through independent human review.** Treat the rest as compiled but unaudited.
+- **Only {reviewed} of {reviewable} records carry an editorial review note; independent checks stand at zero.** Treat the rest as compiled but unaudited.
 
 ## Rebuilding it yourself {#rebuild}
 

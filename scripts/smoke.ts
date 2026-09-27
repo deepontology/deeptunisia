@@ -14,9 +14,18 @@ import { chromium, type ConsoleMessage, type Page } from 'playwright';
 import { mkdirSync, rmSync, readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { AGORA_OPEN } from '../src/lib/agora-gate.ts';
+import { resolveClientMode } from '../src/lib/agora-gate.ts';
 import { translate } from '../src/lib/i18n.ts';
 import { hasDoubleEncoding } from './encoding-guard.ts';
+
+/*
+ * Which mode the dev server was started with. `npm start` defaults both halves
+ * to `beta`; the environment overrides it. The smoke process reads the same
+ * variables the dev server was given, so a closed dev server is checked as
+ * closed rather than failing against a banner it expected to be open.
+ */
+const AGORA_OPEN =
+	resolveClientMode(process.env.VITE_COMMUNITY_MODE ?? process.env.COMMUNITY_MODE ?? 'beta') === 'beta';
 
 const BASE = process.argv[2] ?? 'http://localhost:5173';
 /*

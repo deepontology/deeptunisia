@@ -23,6 +23,7 @@ import { fileURLToPath } from 'node:url';
 import { localDb } from '../community/db-local.ts';
 import { handle, type Env } from '../community/api.ts';
 import { resolveMode } from '../community/mode.ts';
+import { resolveClientMode } from '../src/lib/agora-gate.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const SCHEMA = readFileSync(join(HERE, '..', 'community', 'schema.sql'), 'utf8');
@@ -124,6 +125,25 @@ console.log('\n  ── an absent or unknown mode is closed ──\n');
 	ok('read-only resolves to read-only', resolveMode('read-only') === 'read-only');
 	ok('beta resolves to beta', resolveMode('beta') === 'beta');
 	ok('case is not accepted silently', resolveMode('BETA') === 'off', String(resolveMode('BETA')));
+}
+
+// ── the client display rule matches the server rule ─────────────────────────
+//
+// AGORA_OPEN is display only; the server is the boundary. But if the two rules
+// diverge, a build renders the live client against a closed server (or hides a
+// reachable one), which is the mismatch verify-deploy.cjs exists to catch in
+// production. Comparing the rules here means they cannot drift in code without
+// a failure — and it is the only place the client module is exercised outside
+// Vite, so the import itself must not throw.
+{
+	const inputs: unknown[] = ['off', 'read-only', 'beta', '', undefined, null, 'BETA', 'open', 0, {}];
+	for (const raw of inputs) {
+		ok(
+			`client and server agree on ${JSON.stringify(raw)}`,
+			resolveClientMode(raw) === resolveMode(raw),
+			`${resolveClientMode(raw)} / ${resolveMode(raw)}`
+		);
+	}
 }
 
 // ── off ─────────────────────────────────────────────────────────────────────

@@ -1,0 +1,2470 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-09-27T01:44:07.412Z",
+  "cutoff": "2026-09-10",
+  "counts": {
+    "claims": 82,
+    "current": 80,
+    "historical": 0,
+    "planning": 2,
+    "superseded": 0
+  },
+  "claims": [
+    {
+      "id": "people-total",
+      "kind": "metric",
+      "claim": "People recorded in the published graph.",
+      "value": "456",
+      "display": "456",
+      "format": "plain",
+      "population": "person records in the published graph",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "DATA",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "cutoff-bound",
+      "resolver": {
+        "source": "stats",
+        "key": "people"
+      },
+      "basis": "src/generated/stats.json#people",
+      "asOf": "2026-09-10",
+      "surfaces": [
+        {
+          "path": "landing/index.html",
+          "locator": "og:description\" content=\"(\\d+) people\\.",
+          "format": "plain"
+        },
+        {
+          "path": "landing/index.html",
+          "locator": "data-count=\"(\\d+)\">0</div><div class=\"micro k\" data-i18n=\"ledger\\.1\"",
+          "format": "plain"
+        }
+      ]
+    },
+    {
+      "id": "positions-total",
+      "kind": "metric",
+      "claim": "Officeholdings recorded in the published graph.",
+      "value": "425",
+      "display": "425",
+      "format": "plain",
+      "population": "position records in the published graph",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "DATA",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "cutoff-bound",
+      "resolver": {
+        "source": "stats",
+        "key": "positions"
+      },
+      "basis": "src/generated/stats.json#positions",
+      "asOf": "2026-09-10",
+      "surfaces": [
+        {
+          "path": "landing/index.html",
+          "locator": "people\\. (\\d+) offices held\\.",
+          "format": "plain"
+        },
+        {
+          "path": "landing/index.html",
+          "locator": "data-count=\"(\\d+)\">0</div><div class=\"micro k\" data-i18n=\"ledger\\.2\"",
+          "format": "plain"
+        },
+        {
+          "path": "landing/index.html",
+          "locator": "Drawn from (\\d+) tenures",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.en.json",
+          "locator": "Drawn from (\\d+) tenures",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.fr.json",
+          "locator": "Établi à partir de (\\d+) mandats",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.ar.json",
+          "locator": "مستخرجة من (\\d+) فترة",
+          "format": "plain"
+        }
+      ]
+    },
+    {
+      "id": "institutions-total",
+      "kind": "metric",
+      "claim": "Institutions recorded in the published graph.",
+      "value": "211",
+      "display": "211",
+      "format": "plain",
+      "population": "institution records in the published graph",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "DATA",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "cutoff-bound",
+      "resolver": {
+        "source": "stats",
+        "key": "institutions"
+      },
+      "basis": "src/generated/stats.json#institutions",
+      "asOf": "2026-09-10",
+      "surfaces": [
+        {
+          "path": "landing/index.html",
+          "locator": "data-count=\"(\\d+)\">0</div><div class=\"micro k\" data-i18n=\"ledger\\.3\"",
+          "format": "plain"
+        }
+      ]
+    },
+    {
+      "id": "relationships-total",
+      "kind": "metric",
+      "claim": "Documented relationships recorded in the published graph.",
+      "value": "362",
+      "display": "362",
+      "format": "plain",
+      "population": "relationship records in the published graph",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "DATA",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "cutoff-bound",
+      "resolver": {
+        "source": "stats",
+        "key": "relationships"
+      },
+      "basis": "src/generated/stats.json#relationships",
+      "asOf": "2026-09-10",
+      "surfaces": [
+        {
+          "path": "landing/index.html",
+          "locator": "(\\d+) documented relationships\\.",
+          "format": "plain"
+        },
+        {
+          "path": "landing/index.html",
+          "locator": "data-count=\"(\\d+)\">0</div><div class=\"micro k\" data-i18n=\"ledger\\.4\"",
+          "format": "plain"
+        }
+      ]
+    },
+    {
+      "id": "sources-total",
+      "kind": "metric",
+      "claim": "Sources defined in the library.",
+      "value": "1333",
+      "display": "1333",
+      "format": "plain",
+      "population": "sources defined in data/sources.yaml",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "DATA",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "cutoff-bound",
+      "resolver": {
+        "source": "stats",
+        "key": "sources"
+      },
+      "basis": "src/generated/stats.json#sources",
+      "asOf": "2026-09-10",
+      "surfaces": [
+        {
+          "path": "landing/index.html",
+          "locator": "(\\d+) sources\\.",
+          "format": "plain"
+        },
+        {
+          "path": "landing/index.html",
+          "locator": "data-count=\"(\\d+)\">0</div><div class=\"micro k\" data-i18n=\"ledger\\.5\"",
+          "format": "plain"
+        },
+        {
+          "path": "landing/index.html",
+          "locator": "The current library is (\\d+) sources",
+          "format": "plain"
+        },
+        {
+          "path": "landing/index.html",
+          "locator": "of the (\\d+) sources currently back",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.en.json",
+          "locator": "The current library is (\\d+) sources",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.en.json",
+          "locator": "of the (\\d+) sources currently back",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.fr.json",
+          "locator": "compte aujourd'hui (\\d+) sources",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.fr.json",
+          "locator": "des (\\d+) sources n.appuient",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.ar.json",
+          "locator": "تضم المكتبة اليوم (\\d+) مصدراً",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.ar.json",
+          "locator": "من المصادر الـ(\\d+) لا تسند",
+          "format": "plain"
+        }
+      ]
+    },
+    {
+      "id": "sources-cited",
+      "kind": "metric",
+      "claim": "Sources that back at least one claim.",
+      "value": "1283",
+      "display": "1283",
+      "format": "plain",
+      "population": "sources defined in data/sources.yaml that back at least one claim",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "DATA",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "cutoff-bound",
+      "resolver": {
+        "source": "stats",
+        "key": "sourcesCited"
+      },
+      "basis": "src/generated/stats.json#sourcesCited",
+      "asOf": "2026-09-10",
+      "surfaces": []
+    },
+    {
+      "id": "sources-uncited",
+      "kind": "metric",
+      "claim": "Sources kept as staged reading and excluded from the published count.",
+      "value": "50",
+      "display": "50",
+      "format": "plain",
+      "population": "sources defined in data/sources.yaml that back no claim",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "DATA",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "cutoff-bound",
+      "resolver": {
+        "source": "stats",
+        "key": "sourcesUncited"
+      },
+      "basis": "src/generated/stats.json#sourcesUncited",
+      "asOf": "2026-09-10",
+      "surfaces": [
+        {
+          "path": "landing/index.html",
+          "locator": "(\\d+) of the 1333 sources currently back",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.en.json",
+          "locator": "(\\d+) of the 1333 sources currently back",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.fr.json",
+          "locator": "(\\d+) des 1333 sources n.appuient",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.ar.json",
+          "locator": "و(\\d+) من المصادر الـ1333",
+          "format": "plain"
+        }
+      ]
+    },
+    {
+      "id": "events-total",
+      "kind": "metric",
+      "claim": "Events recorded in the published graph.",
+      "value": "128",
+      "display": "128",
+      "format": "plain",
+      "population": "event records in the published graph",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "DATA",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "cutoff-bound",
+      "resolver": {
+        "source": "stats",
+        "key": "events"
+      },
+      "basis": "src/generated/stats.json#events",
+      "asOf": "2026-09-10",
+      "surfaces": [
+        {
+          "path": "landing/index.html",
+          "locator": "data-count=\"(\\d+)\">0</div><div class=\"micro k\" data-i18n=\"ledger\\.6\"",
+          "format": "plain"
+        }
+      ]
+    },
+    {
+      "id": "succession-gaps",
+      "kind": "metric",
+      "claim": "Succession gaps derived from the position intervals.",
+      "value": "43",
+      "display": "43",
+      "format": "plain",
+      "population": "derived succession gaps, all published",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "DATA",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "cutoff-bound",
+      "resolver": {
+        "source": "stats",
+        "key": "successionGaps"
+      },
+      "basis": "src/generated/stats.json#successionGaps",
+      "asOf": "2026-09-10",
+      "surfaces": [
+        {
+          "path": "landing/index.html",
+          "locator": "<strong>(\\d+) succession gaps</strong>",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.en.json",
+          "locator": "<strong>(\\d+) succession gaps</strong>",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.fr.json",
+          "locator": "<strong>(\\d+) ruptures de succession</strong>",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.ar.json",
+          "locator": "<strong>(\\d+) انقطاعاً في التعاقب</strong>",
+          "format": "plain"
+        }
+      ]
+    },
+    {
+      "id": "succession-overlaps",
+      "kind": "metric",
+      "claim": "Overlapping tenures derived from the position intervals.",
+      "value": "2",
+      "display": "2",
+      "format": "plain",
+      "population": "derived overlapping tenures, all published",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "DATA",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "cutoff-bound",
+      "resolver": {
+        "source": "stats",
+        "key": "successionOverlaps"
+      },
+      "basis": "src/generated/stats.json#successionOverlaps",
+      "asOf": "2026-09-10",
+      "surfaces": [
+        {
+          "path": "landing/index.html",
+          "locator": "<strong>(\\d+) overlapping tenures</strong>",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.en.json",
+          "locator": "<strong>(\\d+) overlapping tenures</strong>",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.fr.json",
+          "locator": "<strong>(\\d+) mandats qui se chevauchent</strong>",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.ar.json",
+          "locator": "<strong>(\\d+) فترات متداخلة</strong>",
+          "format": "plain"
+        }
+      ]
+    },
+    {
+      "id": "contradictions",
+      "kind": "metric",
+      "claim": "Source contradictions recorded unresolved.",
+      "value": "65",
+      "display": "65",
+      "format": "plain",
+      "population": "unresolved source contradictions in the published graph",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "RESEARCH",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "cutoff-bound",
+      "resolver": {
+        "source": "stats",
+        "key": "contradictions"
+      },
+      "basis": "src/generated/stats.json#contradictions",
+      "asOf": "2026-09-10",
+      "surfaces": [
+        {
+          "path": "landing/index.html",
+          "locator": "<span class=\"v\">(\\d+)</span>\\s*<span class=\"d\" data-i18n-html=\"limits\\.8\"",
+          "format": "plain"
+        }
+      ]
+    },
+    {
+      "id": "needs-primary-source",
+      "kind": "metric",
+      "claim": "Records awaiting a primary source.",
+      "value": "227",
+      "display": "227",
+      "format": "plain",
+      "population": "records resting on secondary reporting",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "RESEARCH",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "cutoff-bound",
+      "resolver": {
+        "source": "stats",
+        "key": "needsPrimarySource"
+      },
+      "basis": "src/generated/stats.json#needsPrimarySource",
+      "asOf": "2026-09-10",
+      "surfaces": [
+        {
+          "path": "landing/index.html",
+          "locator": "<span class=\"v\">(\\d+)</span>\\s*<span class=\"d\" data-i18n-html=\"limits\\.6\"",
+          "format": "plain"
+        }
+      ]
+    },
+    {
+      "id": "hypotheses-total",
+      "kind": "metric",
+      "claim": "Hypotheses published with falsifiers.",
+      "value": "6",
+      "display": "six",
+      "format": "word",
+      "population": "hypothesis records in data/hypotheses.yaml",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "RESEARCH",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "cutoff-bound",
+      "resolver": {
+        "source": "stats",
+        "key": "hypotheses"
+      },
+      "basis": "src/generated/stats.json#hypotheses",
+      "asOf": "2026-09-10",
+      "surfaces": [
+        {
+          "path": "README.md",
+          "locator": "two of (six) hypotheses",
+          "format": "word"
+        },
+        {
+          "path": "src/content/about.en.md",
+          "locator": "two of the (six) hypotheses",
+          "format": "word"
+        },
+        {
+          "path": "landing/index.html",
+          "locator": "(Six) hypotheses are published",
+          "format": "word-cap"
+        },
+        {
+          "path": "landing/_strings.en.json",
+          "locator": "(Six) hypotheses are published",
+          "format": "word-cap"
+        }
+      ]
+    },
+    {
+      "id": "basis-documented",
+      "kind": "epistemic-state",
+      "claim": "Claims whose basis is documented.",
+      "value": "197",
+      "display": "197",
+      "format": "plain",
+      "population": "claim-bearing records with basis=documented",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "RESEARCH",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "cutoff-bound",
+      "resolver": {
+        "source": "stats",
+        "key": "documented"
+      },
+      "basis": "src/generated/stats.json#documented",
+      "asOf": "2026-09-10",
+      "surfaces": [
+        {
+          "path": "landing/index.html",
+          "locator": "data-i18n=\"evidence\\.19\">(\\d+) claims",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.en.json",
+          "locator": "\"evidence\\.19\": \"(\\d+) claims",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.fr.json",
+          "locator": "\"evidence\\.19\": \"(\\d+) affirmations",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.ar.json",
+          "locator": "\"evidence\\.19\": \"(\\d+) ادعاءً",
+          "format": "plain"
+        }
+      ]
+    },
+    {
+      "id": "basis-reported",
+      "kind": "epistemic-state",
+      "claim": "Claims whose basis is reported.",
+      "value": "688",
+      "display": "688",
+      "format": "plain",
+      "population": "claim-bearing records with basis=reported",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "RESEARCH",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "cutoff-bound",
+      "resolver": {
+        "source": "stats",
+        "key": "reported"
+      },
+      "basis": "src/generated/stats.json#reported",
+      "asOf": "2026-09-10",
+      "surfaces": [
+        {
+          "path": "landing/index.html",
+          "locator": "data-i18n=\"evidence\\.22\">(\\d+) claims",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.en.json",
+          "locator": "\"evidence\\.22\": \"(\\d+) claims",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.fr.json",
+          "locator": "\"evidence\\.22\": \"(\\d+) affirmations",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.ar.json",
+          "locator": "\"evidence\\.22\": \"(\\d+) ادعاءً",
+          "format": "plain"
+        }
+      ]
+    },
+    {
+      "id": "basis-inferred",
+      "kind": "epistemic-state",
+      "claim": "Claims whose basis is inferred.",
+      "value": "28",
+      "display": "28",
+      "format": "plain",
+      "population": "claim-bearing records with basis=inferred",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "RESEARCH",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "cutoff-bound",
+      "resolver": {
+        "source": "stats",
+        "key": "inferred"
+      },
+      "basis": "src/generated/stats.json#inferred",
+      "asOf": "2026-09-10",
+      "surfaces": [
+        {
+          "path": "landing/index.html",
+          "locator": "data-i18n=\"evidence\\.25\">(\\d+) claims",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.en.json",
+          "locator": "\"evidence\\.25\": \"(\\d+) claims",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.fr.json",
+          "locator": "\"evidence\\.25\": \"(\\d+) affirmations",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.ar.json",
+          "locator": "\"evidence\\.25\": \"(\\d+) ادعاءً",
+          "format": "plain"
+        }
+      ]
+    },
+    {
+      "id": "basis-unsubstantiated",
+      "kind": "epistemic-state",
+      "claim": "Claims whose basis is unsubstantiated.",
+      "value": "12",
+      "display": "12",
+      "format": "plain",
+      "population": "claim-bearing records with basis=unsubstantiated",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "RESEARCH",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "cutoff-bound",
+      "resolver": {
+        "source": "stats",
+        "key": "unsubstantiated"
+      },
+      "basis": "src/generated/stats.json#unsubstantiated",
+      "asOf": "2026-09-10",
+      "surfaces": [
+        {
+          "path": "landing/index.html",
+          "locator": "data-i18n=\"evidence\\.28\">(\\d+) claims",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.en.json",
+          "locator": "\"evidence\\.28\": \"(\\d+) claims",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.fr.json",
+          "locator": "\"evidence\\.28\": \"(\\d+) affirmations",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.ar.json",
+          "locator": "\"evidence\\.28\": \"(\\d+) ادعاءات",
+          "format": "plain"
+        }
+      ]
+    },
+    {
+      "id": "source-tier-1",
+      "kind": "metric",
+      "claim": "Sources at tier 1 (decree or gazette entry).",
+      "value": 162,
+      "display": "162",
+      "format": "plain",
+      "population": "sources with tier=1",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "RESEARCH",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "cutoff-bound",
+      "resolver": {
+        "source": "dataset",
+        "key": "source-tier-1"
+      },
+      "basis": "src/generated/dataset.json#sources.tier=1",
+      "asOf": null,
+      "surfaces": [
+        {
+          "path": "landing/index.html",
+          "locator": "— (\\d+) at tier 1,",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.en.json",
+          "locator": "— (\\d+) at tier 1,",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.fr.json",
+          "locator": "(\\d+) au niveau 1",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.ar.json",
+          "locator": "(\\d+) في المستوى 1",
+          "format": "plain"
+        }
+      ]
+    },
+    {
+      "id": "source-tier-2",
+      "kind": "metric",
+      "claim": "Sources at tier 2.",
+      "value": 217,
+      "display": "217",
+      "format": "plain",
+      "population": "sources with tier=2",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "RESEARCH",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "cutoff-bound",
+      "resolver": {
+        "source": "dataset",
+        "key": "source-tier-2"
+      },
+      "basis": "src/generated/dataset.json#sources.tier=2",
+      "asOf": null,
+      "surfaces": [
+        {
+          "path": "landing/index.html",
+          "locator": "(\\d+) at tier 2,",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.en.json",
+          "locator": "(\\d+) at tier 2,",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.fr.json",
+          "locator": "(\\d+) au niveau 2",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.ar.json",
+          "locator": "(\\d+) في المستوى 2",
+          "format": "plain"
+        }
+      ]
+    },
+    {
+      "id": "source-tier-3",
+      "kind": "metric",
+      "claim": "Sources at tier 3.",
+      "value": 464,
+      "display": "464",
+      "format": "plain",
+      "population": "sources with tier=3",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "RESEARCH",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "cutoff-bound",
+      "resolver": {
+        "source": "dataset",
+        "key": "source-tier-3"
+      },
+      "basis": "src/generated/dataset.json#sources.tier=3",
+      "asOf": null,
+      "surfaces": [
+        {
+          "path": "landing/index.html",
+          "locator": "(\\d+) at tier 3,",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.en.json",
+          "locator": "(\\d+) at tier 3,",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.fr.json",
+          "locator": "(\\d+) au niveau 3",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.ar.json",
+          "locator": "(\\d+) في المستوى 3",
+          "format": "plain"
+        }
+      ]
+    },
+    {
+      "id": "source-tier-4",
+      "kind": "metric",
+      "claim": "Sources at tier 4.",
+      "value": 412,
+      "display": "412",
+      "format": "plain",
+      "population": "sources with tier=4",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "RESEARCH",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "cutoff-bound",
+      "resolver": {
+        "source": "dataset",
+        "key": "source-tier-4"
+      },
+      "basis": "src/generated/dataset.json#sources.tier=4",
+      "asOf": null,
+      "surfaces": [
+        {
+          "path": "landing/index.html",
+          "locator": "(\\d+) at tier 4,",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.en.json",
+          "locator": "(\\d+) at tier 4,",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.fr.json",
+          "locator": "(\\d+) au niveau 4",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.ar.json",
+          "locator": "(\\d+) في المستوى 4",
+          "format": "plain"
+        }
+      ]
+    },
+    {
+      "id": "source-tier-5",
+      "kind": "metric",
+      "claim": "Sources at tier 5.",
+      "value": 78,
+      "display": "78",
+      "format": "plain",
+      "population": "sources with tier=5",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "RESEARCH",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "cutoff-bound",
+      "resolver": {
+        "source": "dataset",
+        "key": "source-tier-5"
+      },
+      "basis": "src/generated/dataset.json#sources.tier=5",
+      "asOf": null,
+      "surfaces": [
+        {
+          "path": "landing/index.html",
+          "locator": "(\\d+) at tier 5\\.",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.en.json",
+          "locator": "(\\d+) at tier 5\\.",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.fr.json",
+          "locator": "(\\d+) au niveau 5",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.ar.json",
+          "locator": "(\\d+) في المستوى 5",
+          "format": "plain"
+        }
+      ]
+    },
+    {
+      "id": "graph-hash",
+      "kind": "metric",
+      "claim": "Canonical graph hash (the release identity).",
+      "value": "f6b0eaf46d8b7fe853aa99f99581c22ad58a1858d0e77532053a556739a4a50c",
+      "display": "f6b0eaf46d8b7fe853aa99f99581c22ad58a1858d0e77532053a556739a4a50c",
+      "format": "text",
+      "population": "the stable projection of the emitted bundle — NOT the landing visuals marker, which ties DENSITY/NODES/EDGES to dataset.json and is never production graph identity",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "RELEASE",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "current-build",
+      "resolver": {
+        "source": "dataset",
+        "key": "meta.datasetHash"
+      },
+      "basis": "src/generated/dataset.json#meta.datasetHash",
+      "asOf": null,
+      "surfaces": []
+    },
+    {
+      "id": "graph-cutoff",
+      "kind": "metric",
+      "claim": "Dataset cutoff date.",
+      "value": "2026-09-10",
+      "display": "2026-09-10",
+      "format": "iso-date",
+      "population": "parameters.time.cutoff",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "DATA",
+      "authority": "canonical-data",
+      "assurance": "compiled",
+      "validity": "cutoff-bound",
+      "resolver": {
+        "source": "dataset",
+        "key": "meta.parameters.time.cutoff"
+      },
+      "basis": "src/generated/dataset.json#meta.parameters.time.cutoff",
+      "asOf": null,
+      "surfaces": []
+    },
+    {
+      "id": "graph-floor",
+      "kind": "metric",
+      "claim": "Dataset floor date.",
+      "value": "1956-03-20",
+      "display": "1956-03-20",
+      "format": "iso-date",
+      "population": "parameters.time.floor",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "DATA",
+      "authority": "canonical-data",
+      "assurance": "compiled",
+      "validity": "current-build",
+      "resolver": {
+        "source": "dataset",
+        "key": "meta.parameters.time.floor"
+      },
+      "basis": "src/generated/dataset.json#meta.parameters.time.floor",
+      "asOf": null,
+      "surfaces": []
+    },
+    {
+      "id": "payload-internal",
+      "kind": "metric",
+      "claim": "Internal graph bundle size.",
+      "value": "4850",
+      "display": "4850",
+      "format": "plain",
+      "population": "the in-memory graph bundle, rounded to 10 KB",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "BUILD",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "current-build",
+      "resolver": {
+        "source": "stats",
+        "key": "graphKB"
+      },
+      "basis": "src/generated/stats.json#graphKB",
+      "asOf": "2026-09-10",
+      "surfaces": []
+    },
+    {
+      "id": "payload-shipped",
+      "kind": "metric",
+      "claim": "Public export payload size.",
+      "value": 8610,
+      "display": "8610",
+      "format": "plain",
+      "population": "the public exports on disk (dataset, CSVs, geometry, changelog, topology)",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "BUILD",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "current-build",
+      "resolver": {
+        "source": "dataset",
+        "key": "meta.shippedKB"
+      },
+      "basis": "src/generated/dataset.json#meta.shippedKB",
+      "asOf": null,
+      "surfaces": []
+    },
+    {
+      "id": "payload-shipped-mb",
+      "kind": "metric",
+      "claim": "Public export payload, in megabytes.",
+      "value": "8610",
+      "display": "8.4",
+      "format": "mb1",
+      "population": "the public exports on disk, rendered in MB",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "BUILD",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "current-build",
+      "resolver": {
+        "source": "stats",
+        "key": "shippedKB"
+      },
+      "basis": "src/generated/stats.json#shippedKB",
+      "asOf": "2026-09-10",
+      "surfaces": [
+        {
+          "path": "landing/index.html",
+          "locator": "roughly (\\d+\\.\\d+) MB",
+          "format": "mb1"
+        },
+        {
+          "path": "landing/_strings.en.json",
+          "locator": "roughly (\\d+\\.\\d+) MB",
+          "format": "mb1"
+        },
+        {
+          "path": "landing/_strings.fr.json",
+          "locator": "environ (\\d+,\\d+) Mo",
+          "format": "mb1-fr"
+        },
+        {
+          "path": "landing/_strings.ar.json",
+          "locator": "نحو (\\d+[٫.]\\d+) ميغابايت",
+          "format": "mb1-ar"
+        }
+      ]
+    },
+    {
+      "id": "dataset-export-size",
+      "kind": "metric",
+      "claim": "Canonical bundle size.",
+      "value": 6639,
+      "display": "6.5",
+      "format": "mb1",
+      "population": "static/dataset.json on disk, rounded to the nearest KB",
+      "lifecycle": "current",
+      "locale": "en",
+      "owner": "RELEASE",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "current-build",
+      "resolver": {
+        "source": "dataset",
+        "key": "meta.datasetKB"
+      },
+      "basis": "src/generated/dataset.json#meta.datasetKB",
+      "asOf": null,
+      "surfaces": [
+        {
+          "path": "docs/commit-signing.md",
+          "locator": "canonical bundle \\((\\d+\\.\\d+) MB\\)",
+          "format": "mb1"
+        }
+      ]
+    },
+    {
+      "id": "review-editorial-notes",
+      "kind": "metric",
+      "claim": "Records carrying an editorial review note.",
+      "value": 46,
+      "display": "46",
+      "format": "plain",
+      "population": "editorial review notes (not independent checks)",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "EDITORIAL",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "cutoff-bound",
+      "resolver": {
+        "source": "review",
+        "key": "editorial-notes"
+      },
+      "basis": "src/generated/dataset.json#meta.review.reviewed",
+      "asOf": null,
+      "surfaces": [
+        {
+          "path": "landing/index.html",
+          "locator": "<span class=\"v\">(\\d+) / 1750</span>",
+          "format": "plain"
+        },
+        {
+          "path": "landing/index.html",
+          "locator": "all (\\d+) review notes",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.en.json",
+          "locator": "all (\\d+) review notes",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.fr.json",
+          "locator": "les (\\d+) notes de relecture",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.ar.json",
+          "locator": "ملاحظات المراجعة الـ(\\d+)",
+          "format": "plain"
+        }
+      ]
+    },
+    {
+      "id": "review-editorial-denominator",
+      "kind": "metric",
+      "claim": "Reviewable records, the editorial-note denominator.",
+      "value": 1750,
+      "display": "1750",
+      "format": "plain",
+      "population": "reviewable records (the denominator for editorial notes)",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "EDITORIAL",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "cutoff-bound",
+      "resolver": {
+        "source": "review",
+        "key": "editorial-notes-denominator"
+      },
+      "basis": "src/generated/dataset.json#meta.review.reviewable",
+      "asOf": null,
+      "surfaces": [
+        {
+          "path": "landing/index.html",
+          "locator": "<span class=\"v\">46 / (\\d+)</span>",
+          "format": "plain"
+        }
+      ]
+    },
+    {
+      "id": "review-editorial-notes-stat",
+      "kind": "metric",
+      "claim": "Records carrying an editorial review note, as emitted for tagged documents.",
+      "value": "46",
+      "display": "46",
+      "format": "plain",
+      "population": "editorial review notes (not independent checks)",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "EDITORIAL",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "cutoff-bound",
+      "resolver": {
+        "source": "stats",
+        "key": "reviewed"
+      },
+      "basis": "src/generated/stats.json#reviewed",
+      "asOf": "2026-09-10",
+      "surfaces": []
+    },
+    {
+      "id": "review-editorial-denominator-stat",
+      "kind": "metric",
+      "claim": "Reviewable records, as emitted for tagged documents.",
+      "value": "1750",
+      "display": "1750",
+      "format": "plain",
+      "population": "reviewable records (the denominator for editorial notes)",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "EDITORIAL",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "cutoff-bound",
+      "resolver": {
+        "source": "stats",
+        "key": "reviewable"
+      },
+      "basis": "src/generated/stats.json#reviewable",
+      "asOf": "2026-09-10",
+      "surfaces": []
+    },
+    {
+      "id": "review-independent-stat",
+      "kind": "metric",
+      "claim": "Independent verifications, as emitted for tagged documents.",
+      "value": "0",
+      "display": "0",
+      "format": "plain",
+      "population": "independent verification records in data/verifications.yaml",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "EDITORIAL",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "current-build",
+      "resolver": {
+        "source": "stats",
+        "key": "independent"
+      },
+      "basis": "src/generated/stats.json#independent",
+      "asOf": "2026-09-10",
+      "surfaces": []
+    },
+    {
+      "id": "review-independent-study",
+      "kind": "metric",
+      "claim": "Independent checks recorded by the study population.",
+      "value": 0,
+      "display": "0",
+      "format": "plain",
+      "population": "independent verification records in data/verifications.yaml",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "EDITORIAL",
+      "authority": "canonical-data",
+      "assurance": "independent",
+      "validity": "current-build",
+      "resolver": {
+        "source": "study",
+        "key": "independent-checks"
+      },
+      "basis": "data/verifications.yaml (the only independent population)",
+      "asOf": null,
+      "surfaces": []
+    },
+    {
+      "id": "review-flag-unsubstantiated",
+      "kind": "metric",
+      "claim": "Records flagged unsubstantiated.",
+      "value": 19,
+      "display": "19",
+      "format": "plain",
+      "population": "records flagged unsubstantiated (flags overlap)",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "EDITORIAL",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "cutoff-bound",
+      "resolver": {
+        "source": "review",
+        "key": "flag-unsubstantiated"
+      },
+      "basis": "dataset meta.review.flags.unsubstantiated.total",
+      "asOf": null,
+      "surfaces": [
+        {
+          "path": "landing/index.html",
+          "locator": "the (\\d+) unsubstantiated claims",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.en.json",
+          "locator": "the (\\d+) unsubstantiated claims",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.fr.json",
+          "locator": "les (\\d+) affirmations non étayées",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.ar.json",
+          "locator": "(\\d+) ادعاءً غير مُسنَد",
+          "format": "plain"
+        }
+      ]
+    },
+    {
+      "id": "review-flag-attributed",
+      "kind": "metric",
+      "claim": "Records that name who is making the claim.",
+      "value": 315,
+      "display": "315",
+      "format": "plain",
+      "population": "records flagged attributed (flags overlap)",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "EDITORIAL",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "cutoff-bound",
+      "resolver": {
+        "source": "review",
+        "key": "flag-attributed"
+      },
+      "basis": "dataset meta.review.flags.attributed.total",
+      "asOf": null,
+      "surfaces": [
+        {
+          "path": "landing/index.html",
+          "locator": "the (\\d+) that name a source",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.en.json",
+          "locator": "the (\\d+) that name a source",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.fr.json",
+          "locator": "les (\\d+) qui nomment une source",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.ar.json",
+          "locator": "و(\\d+) ادعاءات تسمّي مصدرًا",
+          "format": "plain"
+        }
+      ]
+    },
+    {
+      "id": "review-flag-inferred",
+      "kind": "metric",
+      "claim": "Records flagged inferred.",
+      "value": 40,
+      "display": "40",
+      "format": "plain",
+      "population": "records flagged inferred (flags overlap)",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "EDITORIAL",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "cutoff-bound",
+      "resolver": {
+        "source": "review",
+        "key": "flag-inferred"
+      },
+      "basis": "dataset meta.review.flags.inferred.total",
+      "asOf": null,
+      "surfaces": [
+        {
+          "path": "landing/index.html",
+          "locator": "the (\\d+)\\s+inferences",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.en.json",
+          "locator": "the (\\d+) inferences",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.fr.json",
+          "locator": "les (\\d+) déductions",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.ar.json",
+          "locator": "و(\\d+) استنتاجًا",
+          "format": "plain"
+        }
+      ]
+    },
+    {
+      "id": "review-notes-unsubstantiated",
+      "kind": "metric",
+      "claim": "Unsubstantiated records carrying an editorial note.",
+      "value": "16",
+      "display": "16",
+      "format": "plain",
+      "population": "records flagged unsubstantiated that carry an editorial note",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "EDITORIAL",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "cutoff-bound",
+      "resolver": {
+        "source": "stats",
+        "key": "reviewed-unsubstantiated"
+      },
+      "basis": "src/generated/stats.json#reviewed-unsubstantiated",
+      "asOf": "2026-09-10",
+      "surfaces": []
+    },
+    {
+      "id": "review-notes-attributed",
+      "kind": "metric",
+      "claim": "Attributed records carrying an editorial note.",
+      "value": "19",
+      "display": "19",
+      "format": "plain",
+      "population": "records flagged attributed that carry an editorial note",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "EDITORIAL",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "cutoff-bound",
+      "resolver": {
+        "source": "stats",
+        "key": "reviewed-attributed"
+      },
+      "basis": "src/generated/stats.json#reviewed-attributed",
+      "asOf": "2026-09-10",
+      "surfaces": []
+    },
+    {
+      "id": "review-notes-inferred",
+      "kind": "metric",
+      "claim": "Inferred records carrying an editorial note.",
+      "value": "2",
+      "display": "2",
+      "format": "plain",
+      "population": "records flagged inferred that carry an editorial note",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "EDITORIAL",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "cutoff-bound",
+      "resolver": {
+        "source": "stats",
+        "key": "reviewed-inferred"
+      },
+      "basis": "src/generated/stats.json#reviewed-inferred",
+      "asOf": "2026-09-10",
+      "surfaces": []
+    },
+    {
+      "id": "review-denominator-unsubstantiated",
+      "kind": "metric",
+      "claim": "Records flagged unsubstantiated.",
+      "value": "19",
+      "display": "19",
+      "format": "plain",
+      "population": "records flagged unsubstantiated",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "EDITORIAL",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "cutoff-bound",
+      "resolver": {
+        "source": "stats",
+        "key": "reviewable-unsubstantiated"
+      },
+      "basis": "src/generated/stats.json#reviewable-unsubstantiated",
+      "asOf": "2026-09-10",
+      "surfaces": []
+    },
+    {
+      "id": "review-denominator-attributed",
+      "kind": "metric",
+      "claim": "Records flagged attributed.",
+      "value": "315",
+      "display": "315",
+      "format": "plain",
+      "population": "records flagged attributed",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "EDITORIAL",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "cutoff-bound",
+      "resolver": {
+        "source": "stats",
+        "key": "reviewable-attributed"
+      },
+      "basis": "src/generated/stats.json#reviewable-attributed",
+      "asOf": "2026-09-10",
+      "surfaces": []
+    },
+    {
+      "id": "review-denominator-inferred",
+      "kind": "metric",
+      "claim": "Records flagged inferred.",
+      "value": "40",
+      "display": "40",
+      "format": "plain",
+      "population": "records flagged inferred",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "EDITORIAL",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "cutoff-bound",
+      "resolver": {
+        "source": "stats",
+        "key": "reviewable-inferred"
+      },
+      "basis": "src/generated/stats.json#reviewable-inferred",
+      "asOf": "2026-09-10",
+      "surfaces": []
+    },
+    {
+      "id": "contested-about-people",
+      "kind": "metric",
+      "claim": "Recorded relationships about named people that rest on less than an official document.",
+      "value": 212,
+      "display": "212",
+      "format": "plain",
+      "population": "relationships whose basis is reported, inferred or unsubstantiated and whose endpoints include at least one person",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "EDITORIAL",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "cutoff-bound",
+      "resolver": {
+        "source": "dataset",
+        "key": "contested-about-people"
+      },
+      "basis": "src/generated/dataset.json relationships whose basis is reported, inferred or unsubstantiated and whose endpoints include at least one person",
+      "asOf": null,
+      "surfaces": [
+        {
+          "path": "landing/index.html",
+          "locator": "The (\\d+) recorded relationships",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.en.json",
+          "locator": "The (\\d+) recorded relationships",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.fr.json",
+          "locator": "Les (\\d+) relations consignées",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.ar.json",
+          "locator": "السجلات الـ(\\d+) للعلاقات",
+          "format": "plain"
+        }
+      ]
+    },
+    {
+      "id": "editorial-queue-total",
+      "kind": "metric",
+      "claim": "Records in the editorial queue.",
+      "value": 975,
+      "display": "975",
+      "format": "plain",
+      "population": "the editorial queue worklist (separate from review notes and independent checks)",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "EDITORIAL",
+      "authority": "generated-artifact",
+      "assurance": "editorial",
+      "validity": "current-build",
+      "resolver": {
+        "source": "editorial-queue",
+        "key": "total"
+      },
+      "basis": "static/editorial-queue.json#total",
+      "asOf": null,
+      "surfaces": []
+    },
+    {
+      "id": "editorial-queue-reviewed",
+      "kind": "metric",
+      "claim": "Queued records already carrying an editorial note.",
+      "value": 38,
+      "display": "38",
+      "format": "plain",
+      "population": "the editorial queue worklist that carries an editorial note",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "EDITORIAL",
+      "authority": "generated-artifact",
+      "assurance": "editorial",
+      "validity": "current-build",
+      "resolver": {
+        "source": "editorial-queue",
+        "key": "reviewed"
+      },
+      "basis": "static/editorial-queue.json#reviewed",
+      "asOf": null,
+      "surfaces": []
+    },
+    {
+      "id": "source-exceptions-total",
+      "kind": "metric",
+      "claim": "Live source exceptions, overlapping categories.",
+      "value": 194,
+      "display": "194",
+      "format": "plain",
+      "population": "entries in data/source-exceptions.yaml (categories overlap; never summed into one rate)",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "RESEARCH",
+      "authority": "canonical-data",
+      "assurance": "editorial",
+      "validity": "current-build",
+      "resolver": {
+        "source": "review",
+        "key": "exceptions-total"
+      },
+      "basis": "data/source-exceptions.yaml (overlapping categories, never summed)",
+      "asOf": null,
+      "surfaces": []
+    },
+    {
+      "id": "source-exceptions-basis-override",
+      "kind": "metric",
+      "claim": "Basis-override exceptions.",
+      "value": 107,
+      "display": "107",
+      "format": "plain",
+      "population": "data/source-exceptions.yaml entries with rule=basis-override",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "RESEARCH",
+      "authority": "canonical-data",
+      "assurance": "editorial",
+      "validity": "current-build",
+      "resolver": {
+        "source": "review",
+        "key": "exceptions-basis-override"
+      },
+      "basis": "data/source-exceptions.yaml#rule=basis-override",
+      "asOf": null,
+      "surfaces": []
+    },
+    {
+      "id": "source-exceptions-no-source",
+      "kind": "metric",
+      "claim": "No-source exceptions.",
+      "value": 1,
+      "display": "1",
+      "format": "plain",
+      "population": "data/source-exceptions.yaml entries with rule=no-source",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "RESEARCH",
+      "authority": "canonical-data",
+      "assurance": "editorial",
+      "validity": "current-build",
+      "resolver": {
+        "source": "review",
+        "key": "exceptions-no-source"
+      },
+      "basis": "data/source-exceptions.yaml#rule=no-source",
+      "asOf": null,
+      "surfaces": []
+    },
+    {
+      "id": "source-exceptions-grade-a-primary",
+      "kind": "metric",
+      "claim": "Grade-A primary-source exceptions.",
+      "value": 86,
+      "display": "86",
+      "format": "plain",
+      "population": "data/source-exceptions.yaml entries with rule=grade-a-primary",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "RESEARCH",
+      "authority": "canonical-data",
+      "assurance": "editorial",
+      "validity": "current-build",
+      "resolver": {
+        "source": "review",
+        "key": "exceptions-grade-a-primary"
+      },
+      "basis": "data/source-exceptions.yaml#rule=grade-a-primary",
+      "asOf": null,
+      "surfaces": []
+    },
+    {
+      "id": "data-prose-strings-total",
+      "kind": "translation-state",
+      "claim": "Translatable strings in dataset prose.",
+      "value": 3043,
+      "display": "3,043",
+      "format": "comma",
+      "population": "dataset prose strings requiring translation (French denominator; Arabic is the same set)",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "TRANSLATION",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "cutoff-bound",
+      "resolver": {
+        "source": "data-translation",
+        "key": "fr-total"
+      },
+      "basis": "src/generated/dataset.json#meta.translation.fr.total",
+      "asOf": null,
+      "surfaces": [
+        {
+          "path": "landing/index.html",
+          "locator": "<b>human-translated entries</b> of ([\\d,]+) translatable",
+          "format": "comma"
+        },
+        {
+          "path": "landing/index.html",
+          "locator": "done by people\\. ([\\d,]+) translatable",
+          "format": "comma"
+        },
+        {
+          "path": "landing/_strings.en.json",
+          "locator": "<b>human-translated entries</b> of ([\\d,]+) translatable",
+          "format": "comma"
+        },
+        {
+          "path": "landing/_strings.en.json",
+          "locator": "done by people\\. ([\\d,]+) translatable",
+          "format": "comma"
+        },
+        {
+          "path": "landing/_strings.fr.json",
+          "locator": "sur ([\\d ]+) chaînes traduisibles",
+          "format": "space"
+        },
+        {
+          "path": "landing/_strings.fr.json",
+          "locator": "personnes\\. ([\\d ]+) chaînes traduisibles",
+          "format": "space"
+        },
+        {
+          "path": "landing/_strings.ar.json",
+          "locator": "من أصل ([\\d٬]+) سلسلة قابلة",
+          "format": "ar-comma"
+        },
+        {
+          "path": "landing/_strings.ar.json",
+          "locator": "أشخاص\\. ([\\d٬]+) سلسلة قابلة",
+          "format": "ar-comma"
+        }
+      ]
+    },
+    {
+      "id": "data-prose-strings-human",
+      "kind": "translation-state",
+      "claim": "Dataset prose strings with a human translation.",
+      "value": 12,
+      "display": "12",
+      "format": "plain",
+      "population": "dataset prose strings with translated_by=human in French (Arabic human count is a separate population)",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "TRANSLATION",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "cutoff-bound",
+      "resolver": {
+        "source": "data-translation",
+        "key": "fr-human"
+      },
+      "basis": "src/generated/dataset.json#meta.translation.fr.tiers.human",
+      "asOf": null,
+      "surfaces": [
+        {
+          "path": "landing/index.html",
+          "locator": "<span class=\"v\">(\\d+)</span>\\s*<span class=\"d\" data-i18n-html=\"limits\\.9\"",
+          "format": "plain"
+        },
+        {
+          "path": "landing/index.html",
+          "locator": "(\\d+) human-translated",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.en.json",
+          "locator": "(\\d+) human-translated",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.fr.json",
+          "locator": "(\\d+) traduites par un humain",
+          "format": "plain"
+        },
+        {
+          "path": "landing/_strings.ar.json",
+          "locator": "و(\\d+) مترجمة بيد بشر",
+          "format": "plain"
+        }
+      ]
+    },
+    {
+      "id": "data-prose-strings-human-ar",
+      "kind": "translation-state",
+      "claim": "Dataset prose strings with a human translation in Arabic.",
+      "value": 0,
+      "display": "0",
+      "format": "plain",
+      "population": "dataset prose strings with translated_by=human in Arabic",
+      "lifecycle": "current",
+      "locale": "ar",
+      "owner": "TRANSLATION",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "cutoff-bound",
+      "resolver": {
+        "source": "data-translation",
+        "key": "ar-human"
+      },
+      "basis": "src/generated/dataset.json#meta.translation.ar.tiers.human",
+      "asOf": null,
+      "surfaces": []
+    },
+    {
+      "id": "content-pages-human-en",
+      "kind": "translation-state",
+      "claim": "Content pages with a human translation in English.",
+      "value": 9,
+      "display": "9",
+      "format": "plain",
+      "population": "src/content page files with frontmatter translated_by=human, English",
+      "lifecycle": "current",
+      "locale": "en",
+      "owner": "TRANSLATION",
+      "authority": "canonical-data",
+      "assurance": "editorial",
+      "validity": "current-build",
+      "resolver": {
+        "source": "content-translation",
+        "key": "human-en"
+      },
+      "basis": "src/content frontmatter translated_by=human",
+      "asOf": null,
+      "surfaces": []
+    },
+    {
+      "id": "content-pages-human-fr",
+      "kind": "translation-state",
+      "claim": "Content pages with a human translation in French.",
+      "value": 0,
+      "display": "0",
+      "format": "plain",
+      "population": "src/content page files with frontmatter translated_by=human, French",
+      "lifecycle": "current",
+      "locale": "fr",
+      "owner": "TRANSLATION",
+      "authority": "canonical-data",
+      "assurance": "editorial",
+      "validity": "current-build",
+      "resolver": {
+        "source": "content-translation",
+        "key": "human-fr"
+      },
+      "basis": "src/content frontmatter translated_by=human",
+      "asOf": null,
+      "surfaces": []
+    },
+    {
+      "id": "content-pages-human-ar",
+      "kind": "translation-state",
+      "claim": "Content pages with a human translation in Arabic.",
+      "value": 0,
+      "display": "0",
+      "format": "plain",
+      "population": "src/content page files with frontmatter translated_by=human, Arabic",
+      "lifecycle": "current",
+      "locale": "ar",
+      "owner": "TRANSLATION",
+      "authority": "canonical-data",
+      "assurance": "editorial",
+      "validity": "current-build",
+      "resolver": {
+        "source": "content-translation",
+        "key": "human-ar"
+      },
+      "basis": "src/content frontmatter translated_by=human",
+      "asOf": null,
+      "surfaces": []
+    },
+    {
+      "id": "landing-dictionary-keys-en",
+      "kind": "translation-state",
+      "claim": "Keys in the English landing dictionary.",
+      "value": 212,
+      "display": "212",
+      "format": "plain",
+      "population": "landing/_strings.en.json key set (the extraction source, not a live dictionary)",
+      "lifecycle": "current",
+      "locale": "en",
+      "owner": "TRANSLATION",
+      "authority": "canonical-data",
+      "assurance": "compiled",
+      "validity": "current-build",
+      "resolver": {
+        "source": "content-translation",
+        "key": "landing-en-keys"
+      },
+      "basis": "landing/_strings.en.json key count (landing dictionary population)",
+      "asOf": null,
+      "surfaces": []
+    },
+    {
+      "id": "landing-dictionary-keys-fr",
+      "kind": "translation-state",
+      "claim": "Keys in the French landing dictionary.",
+      "value": 244,
+      "display": "244",
+      "format": "plain",
+      "population": "landing/_strings.fr.json key set",
+      "lifecycle": "current",
+      "locale": "fr",
+      "owner": "TRANSLATION",
+      "authority": "canonical-data",
+      "assurance": "compiled",
+      "validity": "current-build",
+      "resolver": {
+        "source": "content-translation",
+        "key": "landing-fr-keys"
+      },
+      "basis": "landing/_strings.fr.json key count (landing dictionary population)",
+      "asOf": null,
+      "surfaces": []
+    },
+    {
+      "id": "landing-dictionary-keys-ar",
+      "kind": "translation-state",
+      "claim": "Keys in the Arabic landing dictionary.",
+      "value": 244,
+      "display": "244",
+      "format": "plain",
+      "population": "landing/_strings.ar.json key set",
+      "lifecycle": "current",
+      "locale": "ar",
+      "owner": "TRANSLATION",
+      "authority": "canonical-data",
+      "assurance": "compiled",
+      "validity": "current-build",
+      "resolver": {
+        "source": "content-translation",
+        "key": "landing-ar-keys"
+      },
+      "basis": "landing/_strings.ar.json key count (landing dictionary population)",
+      "asOf": null,
+      "surfaces": []
+    },
+    {
+      "id": "ranking-indices",
+      "kind": "feature-state",
+      "claim": "Structural indices computed separately on the rankings page.",
+      "value": 6,
+      "display": "six",
+      "format": "word",
+      "population": "keys in static/sensitivity.json counts.scoredByKey (the ranking index set)",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "DATA",
+      "authority": "generated-artifact",
+      "assurance": "compiled",
+      "validity": "current-build",
+      "resolver": {
+        "source": "dataset",
+        "key": "sensitivity.indices"
+      },
+      "basis": "static/sensitivity.json#counts.scoredByKey",
+      "asOf": "2026-09-14T16:27:35.830Z",
+      "surfaces": [
+        {
+          "path": "static/llms.txt",
+          "locator": "(six) separate structural indices",
+          "format": "word"
+        },
+        {
+          "path": "src/lib/i18n.ts",
+          "locator": "'nav\\.rankings\\.hint': '(Six) separate indices'",
+          "format": "word-cap"
+        },
+        {
+          "path": "src/lib/i18n.ts",
+          "locator": "'m\\.noscore1': '(Six) indices are computed separately",
+          "format": "word-cap"
+        },
+        {
+          "path": "src/lib/i18n.ts",
+          "locator": "'rankings\\.hint': '(Six) indices, computed separately",
+          "format": "word-cap"
+        },
+        {
+          "path": "src/lib/i18n.ts",
+          "locator": "What the (six) columns measure",
+          "format": "word"
+        }
+      ]
+    },
+    {
+      "id": "ranking-scored-influence",
+      "kind": "metric",
+      "claim": "People with a scored influence index.",
+      "value": 5,
+      "display": "5",
+      "format": "plain",
+      "population": "people scored by the influence index in the sensitivity record",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "DATA",
+      "authority": "generated-artifact",
+      "assurance": "compiled",
+      "validity": "current-build",
+      "resolver": {
+        "source": "dataset",
+        "key": "sensitivity.people-scored-influence"
+      },
+      "basis": "static/sensitivity.json#counts.scoredInfluence",
+      "asOf": "2026-09-14T16:27:35.830Z",
+      "surfaces": []
+    },
+    {
+      "id": "ranking-people-total",
+      "kind": "metric",
+      "claim": "People in the ranking population.",
+      "value": 450,
+      "display": "450",
+      "format": "plain",
+      "population": "people considered by the sensitivity run",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "DATA",
+      "authority": "generated-artifact",
+      "assurance": "compiled",
+      "validity": "current-build",
+      "resolver": {
+        "source": "dataset",
+        "key": "sensitivity.people-total"
+      },
+      "basis": "static/sensitivity.json#counts.totalPeople",
+      "asOf": "2026-09-14T16:27:35.830Z",
+      "surfaces": []
+    },
+    {
+      "id": "ranking-sparse-threshold",
+      "kind": "feature-state",
+      "claim": "Threshold under which a ranking slice is published as sparse.",
+      "value": 10,
+      "display": "10",
+      "format": "plain",
+      "population": "scored records below which a slice reads as sparse",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "DATA",
+      "authority": "generated-artifact",
+      "assurance": "compiled",
+      "validity": "current-build",
+      "resolver": {
+        "source": "dataset",
+        "key": "sensitivity.sparse-threshold"
+      },
+      "basis": "static/sensitivity.json#thresholds.sparseScored",
+      "asOf": null,
+      "surfaces": []
+    },
+    {
+      "id": "media-shipped",
+      "kind": "metric",
+      "claim": "Investigations in the shipped index.",
+      "value": 2,
+      "display": "2",
+      "format": "plain",
+      "population": "src/generated/media/index.json (shipped index population)",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "EDITORIAL",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "current-build",
+      "resolver": {
+        "source": "media",
+        "key": "shipped-index"
+      },
+      "basis": "src/generated/media/index.json (shipped index population)",
+      "asOf": null,
+      "surfaces": []
+    },
+    {
+      "id": "media-published",
+      "kind": "metric",
+      "claim": "Published investigations.",
+      "value": 1,
+      "display": "1",
+      "format": "plain",
+      "population": "shipped investigations with status=published",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "EDITORIAL",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "current-build",
+      "resolver": {
+        "source": "media",
+        "key": "published"
+      },
+      "basis": "src/generated/media/index.json#status=published",
+      "asOf": null,
+      "surfaces": []
+    },
+    {
+      "id": "media-drafts",
+      "kind": "metric",
+      "claim": "Draft investigations.",
+      "value": 1,
+      "display": "1",
+      "format": "plain",
+      "population": "shipped investigations with status=draft",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "EDITORIAL",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "current-build",
+      "resolver": {
+        "source": "media",
+        "key": "drafts"
+      },
+      "basis": "src/generated/media/index.json#status=draft",
+      "asOf": null,
+      "surfaces": []
+    },
+    {
+      "id": "media-research-ledger-sources",
+      "kind": "metric",
+      "claim": "Sources consulted in the media research ledger.",
+      "value": 94,
+      "display": "94",
+      "format": "plain",
+      "population": "src/content/media/*/research.yaml sources_consulted_count (research ledger, never the shipped index)",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "RESEARCH",
+      "authority": "canonical-data",
+      "assurance": "editorial",
+      "validity": "current-build",
+      "resolver": {
+        "source": "media",
+        "key": "research-ledger-sources"
+      },
+      "basis": "src/content/media/*/research.yaml#sources_consulted_count (research ledger population)",
+      "asOf": null,
+      "surfaces": []
+    },
+    {
+      "id": "media-shipped-claims",
+      "kind": "metric",
+      "claim": "Claims in the shipped media investigations.",
+      "value": 97,
+      "display": "97",
+      "format": "plain",
+      "population": "claim_count across the shipped media index",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "EDITORIAL",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "current-build",
+      "resolver": {
+        "source": "media",
+        "key": "shipped-claims"
+      },
+      "basis": "src/generated/media/index.json#claim_count (shipped claims, never the consulted ledger)",
+      "asOf": null,
+      "surfaces": []
+    },
+    {
+      "id": "media-bot-farm-status",
+      "kind": "feature-state",
+      "claim": "Editorial status of the bot-farm investigation.",
+      "value": "draft",
+      "display": "draft",
+      "format": "text",
+      "population": "src/generated/media/index.json slug=bot-farm",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "EDITORIAL",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "current-build",
+      "resolver": {
+        "source": "media",
+        "key": "bot-farm-status"
+      },
+      "basis": "src/generated/media/index.json#slug=bot-farm.status",
+      "asOf": "2026-08-28",
+      "surfaces": []
+    },
+    {
+      "id": "world-claims",
+      "kind": "metric",
+      "claim": "World claims recorded.",
+      "value": 10,
+      "display": "10",
+      "format": "plain",
+      "population": "data/world-claims.yaml",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "RESEARCH",
+      "authority": "canonical-data",
+      "assurance": "compiled",
+      "validity": "cutoff-bound",
+      "resolver": {
+        "source": "world",
+        "key": "claims"
+      },
+      "basis": "data/world-claims.yaml",
+      "asOf": null,
+      "surfaces": []
+    },
+    {
+      "id": "world-snapshot",
+      "kind": "metric",
+      "claim": "World snapshot generation date.",
+      "value": "2026-09-27T01:44:05.690Z",
+      "display": "2026-09-27T01:44:05.690Z",
+      "format": "iso-date",
+      "population": "src/generated/world.json snapshot",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "RESEARCH",
+      "authority": "compiler",
+      "assurance": "compiled",
+      "validity": "current-build",
+      "resolver": {
+        "source": "world",
+        "key": "snapshot-generated"
+      },
+      "basis": "src/generated/world.json#generated",
+      "asOf": null,
+      "surfaces": []
+    },
+    {
+      "id": "world-manifest-datasets",
+      "kind": "metric",
+      "claim": "External datasets in the world manifest.",
+      "value": 4,
+      "display": "4",
+      "format": "plain",
+      "population": "flows/manifest.json datasets (licence and retrieval state)",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "RESEARCH",
+      "authority": "canonical-data",
+      "assurance": "compiled",
+      "validity": "current-build",
+      "resolver": {
+        "source": "world",
+        "key": "manifest-datasets"
+      },
+      "basis": "flows/manifest.json#datasets",
+      "asOf": "2026-08-16T20:55:13.296Z",
+      "surfaces": []
+    },
+    {
+      "id": "release-target-version",
+      "kind": "release-state",
+      "claim": "Version the plan targets next.",
+      "value": "v0.1.3",
+      "display": "v0.1.3",
+      "format": "version",
+      "population": "output/release-baseline.json release block",
+      "lifecycle": "planning",
+      "locale": "all",
+      "owner": "RELEASE",
+      "authority": "generated-artifact",
+      "assurance": "compiled",
+      "validity": "release-pinned",
+      "resolver": {
+        "source": "release",
+        "key": "target-version"
+      },
+      "basis": "output/release-baseline.json#release.targetVersion",
+      "asOf": null,
+      "surfaces": []
+    },
+    {
+      "id": "release-current-tag",
+      "kind": "release-state",
+      "claim": "Current release tag.",
+      "value": "v0.1.2-C1",
+      "display": "v0.1.2-C1",
+      "format": "version",
+      "population": "output/release-baseline.json release block",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "RELEASE",
+      "authority": "generated-artifact",
+      "assurance": "compiled",
+      "validity": "release-pinned",
+      "resolver": {
+        "source": "release",
+        "key": "current-tag"
+      },
+      "basis": "output/release-baseline.json#release.currentTag",
+      "asOf": null,
+      "surfaces": []
+    },
+    {
+      "id": "deployment-mode",
+      "kind": "deployment-state",
+      "claim": "Community mode the deployment configuration enforces.",
+      "value": "off",
+      "display": "off",
+      "format": "text",
+      "population": "wrangler.toml [vars] COMMUNITY_MODE (server-enforced)",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "COMMUNITY",
+      "authority": "generated-artifact",
+      "assurance": "compiled",
+      "validity": "deployment-pinned",
+      "resolver": {
+        "source": "deployment-manifest",
+        "key": "config-mode"
+      },
+      "basis": "wrangler.toml#vars.COMMUNITY_MODE",
+      "asOf": null,
+      "surfaces": [
+        {
+          "path": "README.md",
+          "locator": "COMMUNITY_MODE=(\\w+)",
+          "format": "text"
+        },
+        {
+          "path": "docs/agora-gaps.md",
+          "locator": "COMMUNITY_MODE = \"(\\w+)\"",
+          "format": "text"
+        }
+      ]
+    },
+    {
+      "id": "deployment-version",
+      "kind": "deployment-state",
+      "claim": "Deployed Worker version.",
+      "value": "b717d5a7-f2cb-4839-9006-95338c0e772e",
+      "display": "b717d5a7-f2cb-4839-9006-95338c0e772e",
+      "format": "version",
+      "population": "output/release-baseline.json deployment record",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "RELEASE",
+      "authority": "generated-artifact",
+      "assurance": "compiled",
+      "validity": "deployment-pinned",
+      "resolver": {
+        "source": "deployment-manifest",
+        "key": "deployed-version"
+      },
+      "basis": "output/release-baseline.json#deployment.versionId",
+      "asOf": null,
+      "surfaces": []
+    },
+    {
+      "id": "deployment-verified",
+      "kind": "deployment-state",
+      "claim": "Deployment verification checks passed.",
+      "value": 75,
+      "display": "75",
+      "format": "plain",
+      "population": "node scripts/verify-deploy.cjs against the recorded deployment",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "RELEASE",
+      "authority": "generated-artifact",
+      "assurance": "compiled",
+      "validity": "deployment-pinned",
+      "resolver": {
+        "source": "deployment-manifest",
+        "key": "verification-passed"
+      },
+      "basis": "output/release-baseline.json#deployment.verification.passed",
+      "asOf": "2026-09-26T02:59:46Z",
+      "surfaces": []
+    },
+    {
+      "id": "feature-budget",
+      "kind": "feature-state",
+      "claim": "Whether the posting budget is wired into the community runtime.",
+      "value": "specified-not-wired",
+      "display": "specified-not-wired",
+      "format": "text",
+      "population": "community runtime import graph",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "COMMUNITY",
+      "authority": "generated-artifact",
+      "assurance": "compiled",
+      "validity": "current-build",
+      "resolver": {
+        "source": "deployment-manifest",
+        "key": "feature-budget"
+      },
+      "basis": "community runtime import graph",
+      "asOf": null,
+      "surfaces": []
+    },
+    {
+      "id": "feature-hold",
+      "kind": "feature-state",
+      "claim": "Whether the ten-minute hold is wired into the community runtime.",
+      "value": "specified-not-wired",
+      "display": "specified-not-wired",
+      "format": "text",
+      "population": "community runtime import graph and HOLD_MS",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "COMMUNITY",
+      "authority": "generated-artifact",
+      "assurance": "compiled",
+      "validity": "current-build",
+      "resolver": {
+        "source": "deployment-manifest",
+        "key": "feature-hold"
+      },
+      "basis": "community/budget.ts HOLD_MS + community runtime import graph",
+      "asOf": null,
+      "surfaces": []
+    },
+    {
+      "id": "feature-petitions",
+      "kind": "feature-state",
+      "claim": "Whether petitions are wired into the community runtime.",
+      "value": "specified-not-wired",
+      "display": "specified-not-wired",
+      "format": "text",
+      "population": "community/api.ts",
+      "lifecycle": "current",
+      "locale": "all",
+      "owner": "COMMUNITY",
+      "authority": "generated-artifact",
+      "assurance": "compiled",
+      "validity": "current-build",
+      "resolver": {
+        "source": "deployment-manifest",
+        "key": "feature-petitions"
+      },
+      "basis": "community/api.ts",
+      "asOf": null,
+      "surfaces": []
+    },
+    {
+      "id": "study-verification-records",
+      "kind": "metric",
+      "claim": "Independent verification records in the study population.",
+      "value": 0,
+      "display": "0",
+      "format": "plain",
+      "population": "data/verifications.yaml (the v0.2 study is reserved, with no date or staffing)",
+      "lifecycle": "planning",
+      "locale": "all",
+      "owner": "EDITORIAL",
+      "authority": "canonical-data",
+      "assurance": "independent",
+      "validity": "current-build",
+      "resolver": {
+        "source": "study",
+        "key": "verification-records"
+      },
+      "basis": "data/verifications.yaml",
+      "asOf": null,
+      "surfaces": []
+    }
+  ],
+  "project": "deeptunisia",
+  "origin": "https://deeptunisia.org",
+  "license": "CC-BY-4.0",
+  "note": "Every value resolves from typed state through data/public-claims.yaml. These are declarations about the product and its evidence state, not claims about Tunisia."
+}
