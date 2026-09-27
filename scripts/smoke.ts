@@ -15,8 +15,19 @@ import { mkdirSync, rmSync, readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { resolveClientMode } from '../src/lib/agora-gate.ts';
+import { TOUR_KEY, TOUR_VERSION } from '../src/lib/shell/tour-version.ts';
 import { translate } from '../src/lib/i18n.ts';
 import { hasDoubleEncoding } from './encoding-guard.ts';
+
+/**
+ * A returning reader has already seen the current tour. Seeding the seen-flag
+ * must use the same version the app compares against: while it wrote `1` after
+ * the v2 bump, every page loaded behind the tour overlay, and the Escape that
+ * dismissed it also cleared a flow pin placed by a deep link.
+ */
+const TOUR_SEEN_INIT = `(() => { try { localStorage.setItem(${JSON.stringify(TOUR_KEY)}, ${JSON.stringify(
+	String(TOUR_VERSION)
+)}); } catch {} })()`;
 
 /*
  * Which mode the dev server was started with. `npm start` defaults both halves
@@ -946,7 +957,16 @@ console.log('\n  ── interaction ──');
 	await page.locator('.bubbles a', { hasText: 'Agora' }).click();
 	await page.waitForTimeout(500);
 	ok('bubble navigates to Agora', page.url().includes('/agora'), page.url());
-	ok('Agora sub-nav replaces the Graph one', (await page.locator('.subnav .strip a').count()) === 4);
+	const agoraNav = await page
+		.locator('.subnav .strip a')
+		.evaluateAll((els) => els.map((e) => e.getAttribute('href')));
+	// Three Agora tabs since the feed moved to Media (2026-09-11); the assertion
+	// is about replacement, so it checks the hrefs rather than only the count.
+	ok(
+		'Agora sub-nav replaces the Graph one',
+		agoraNav.length === 3 && agoraNav.every((h) => h?.startsWith('/agora?tab=')),
+		agoraNav.join(', ')
+	);
 
 	// Search palette.
 	await page.keyboard.press('/');
@@ -1187,10 +1207,20 @@ console.log('\n  ── chronicle events lane ──');
 		return { singles: singles, clusters: clusters.length, counted: counted, represented: singles + counted };
 	})()`)) as { singles: number; clusters: number; counted: number; represented: number };
 	ok('dense periods aggregate into clusters at full range', recon.clusters > 0, `${recon.clusters} clusters`);
+	/*
+	 * The lane draws the events inside the visible domain; the accessible table
+	 * lists every event above the evidence floor, including the ones outside it.
+	 * So the reconstruction is checked against the lane's own advertised count,
+	 * not the table's: marks + cluster counts must account for every event the
+	 * lane says it draws, exactly once. Comparing to the table conflated "drawn"
+	 * with "listed" and failed by exactly the out-of-domain count.
+	 */
+	const laneCount = Number(((await page.locator('.lane-head-count').first().textContent()) ?? '').trim());
+	ok('the lane advertises how many events it draws', laneCount > 0, `${laneCount} drawn of ${evRows} listed`);
 	ok(
-		'every event is represented exactly once (marks + cluster counts)',
-		evRows > 0 && recon.represented === evRows,
-		`${evRows} rows = ${recon.singles} marks + ${recon.counted} clustered`
+		'every drawn event is represented exactly once (marks + cluster counts)',
+		laneCount > 0 && recon.represented === laneCount,
+		`${recon.represented} represented of ${laneCount} drawn (${evRows} listed; the rest fall outside the visible domain)`
 	);
 
 	/*
@@ -1497,6 +1527,13 @@ console.log('\n  ── connections ──');
 	const problems: string[] = [];
 	page.on('pageerror', (e) => problems.push(`[pageerror] ${e.message}`));
 	page.on('console', (m: ConsoleMessage) => {
+		/*
+		 * The W2 write hook calls raw history.replaceState, so SvelteKit's
+		 * dev-mode advisory fires on the lens writes this section performs. It
+		 * is dev-only noise, pinned by the deep-link section's own assertions,
+		 * not an error in the flows under test.
+		 */
+		if (m.text().includes('Avoid using `history.pushState')) return;
 		if ((m.type() === 'error' || m.type() === 'warning') && !isIgnorable(m.text())) {
 			problems.push(`[${m.type()}] ${m.text()}`);
 		}
@@ -1540,15 +1577,31 @@ console.log('\n  ── connections ──');
 	 * (NetworkView's `isMeasurementEdge`), so this does not depend on a fabricated
 	 * relationship id being added to the graph.
 	 */
+	/*
+	 * Measurement edges render in the All lens only; the influence lens filters
+	 * them out by design (a flow deep link switches the lens to All for exactly
+	 * that reason). Count in All, and assert the default lens withholds them, so
+	 * this covers both the synthesis and the mode filter.
+	 */
 	const flowEndpoints = graphBackedFlowEndpoints(NETWORK_DEFAULT_YEAR);
+	const beforeSwitch = await page.locator('.edge.measurement').count();
+	await page.locator('.modes').getByRole('radio', { name: 'All', exact: true }).click();
+	await page.waitForTimeout(400);
 	const measurementEdges = await page.locator('.edge.measurement').count();
 	ok(
 		'network renders a flow- edge only for a snapshot-backed graph endpoint',
 		flowEndpoints.length === 0 || measurementEdges > 0,
 		flowEndpoints.length
-			? `${measurementEdges} measurement edges for ${flowEndpoints.slice(0, 3).join(', ')}`
+			? `${measurementEdges} measurement edges in All for ${flowEndpoints.slice(0, 3).join(', ')}`
 			: 'no committed snapshot endpoint requires a flow edge'
 	);
+	ok(
+		'the influence lens withholds measurement edges',
+		flowEndpoints.length === 0 || beforeSwitch === 0,
+		`${beforeSwitch} measurement edges before switching to All`
+	);
+	await page.locator('.modes').getByRole('radio', { name: 'Influence', exact: true }).click();
+	await page.waitForTimeout(300);
 
 	/*
 	 * Clicking a node on the canvas.
@@ -1665,6 +1718,13 @@ console.log('\n  ── connections ──');
 
 	await page.goto(BASE + relLink!, { waitUntil: 'networkidle' });
 	await page.waitForTimeout(2000);
+	/*
+	 * The card renders as soon as the pin lands; the drawn edge follows the
+	 * entrance animation, so wait for the mark too before counting. Both
+	 * assertions still fail when either never arrives.
+	 */
+	await page.locator('.edgecard .card').first().waitFor({ state: 'attached', timeout: 10_000 }).catch(() => {});
+	await page.locator('.edge.pinned').first().waitFor({ state: 'attached', timeout: 10_000 }).catch(() => {});
 	ok('that link opens the connection', (await page.locator('.edgecard .card').count()) === 1);
 	ok('and marks it on the map', (await page.locator('.edge.pinned').count()) >= 1);
 
@@ -1714,7 +1774,7 @@ console.log('\n  ── deep-link round trips ──');
 	// the init script must tolerate the same — on about:blank (opaque origin)
 	// localStorage access throws, and a pageerror on the blank document would be
 	// caught by this section's console listener as if the app had crashed.
-	await context.addInitScript(`(() => { try { localStorage.setItem('deeptunisia:tour', '1'); } catch {} })()`);
+	await context.addInitScript(TOUR_SEEN_INIT);
 	const problems: string[] = [];
 	context.on('page', (page) => {
 		page.on('pageerror', (e) => problems.push(`[pageerror] ${e.message}`));
@@ -1967,7 +2027,7 @@ console.log('\n  ── deep-link round trips ──');
 if (runSection('captions')) {
 console.log('\n  ── captions ──');
 	const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
-	await context.addInitScript(`(() => { try { localStorage.setItem('deeptunisia:tour', '1'); } catch {} })()`);
+	await context.addInitScript(TOUR_SEEN_INIT);
 	for (const path of ['/rankings', '/map']) {
 		const page = await context.newPage();
 		await page.goto(BASE + path, { waitUntil: 'networkidle', timeout: 30_000 });
@@ -2134,6 +2194,16 @@ if (runSection('rtl')) for (const mode of MODES.filter((m) => m.id !== 'ltr')) {
 const PROSE_MARKERS =
 	'\\b(the|and|with|that|which|these|those|from|their|there|where|when|what|this|have|has|been|were|are|not|but|for|into|than|then|would|could|should|about|between|through|after|before|every|each|other|more|most|some|only|also|because|while|during|under|over|against|without|within|whether|rather)\\b';
 
+/*
+ * Generated dataset content is not interface chrome, and the ratchet must not
+ * grow with the dataset. /corrections renders the changelog, whose commit
+ * subjects are English by design; measured 2026-09-27, all 69 English function
+ * words on the French page came from that list and the chrome contributed zero.
+ * The entries are excluded from the count; the ceiling then measures what the
+ * assertion claims it measures — whether the page's own copy is translated.
+ */
+const PROSE_EXCLUDE: Record<string, string> = { '/corrections': '.entries' };
+
 /* One page per route; duplicates in CHECKS visit the same path twice. */
 const LOCALE_ROUTES = [...new Set(CHECKS.map((c) => c.path))];
 
@@ -2244,8 +2314,12 @@ if (runSection('every language')) for (const locale of ['ar', 'fr'] as const) {
 		const englishProse = (await page.evaluate(`(() => {
 			const main = document.querySelector('main');
 			if (!main) return 0;
-			const m = (main.innerText || '').match(new RegExp(${JSON.stringify(PROSE_MARKERS)}, 'gi'));
-			return m ? m.length : 0;
+			const re = new RegExp(${JSON.stringify(PROSE_MARKERS)}, 'gi');
+			const count = (s) => { const m = (s || '').match(re); return m ? m.length : 0; };
+			const exclude = ${JSON.stringify(PROSE_EXCLUDE[path] ?? '')};
+			if (!exclude) return count(main.innerText);
+			const excluded = [...main.querySelectorAll(exclude)].reduce((n, el) => n + count(el.innerText), 0);
+			return count(main.innerText) - excluded;
 		})()`)) as number;
 
 		/*
@@ -2280,7 +2354,10 @@ if (runSection('every language')) for (const locale of ['ar', 'fr'] as const) {
 			// add English subjects to the generated changelog this page renders;
 			// the page is a record of data changes, so its residue grows with
 			// the dataset. Measured 60.
-			'/corrections': 65,
+			// 2026-09-27: the changelog list is excluded from the count
+			// (PROSE_EXCLUDE): measured chrome is 0, and the 65 ceiling was
+			// entirely commit subjects. The ceiling now measures the page copy.
+			'/corrections': 10,
 			'/rankings': 30,
 			// Residue is third-party headline text (legitimate — the feed shows
 			// what other outlets published; a few are English-language).
