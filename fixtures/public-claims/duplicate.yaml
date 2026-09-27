@@ -1,0 +1,34 @@
+schemaVersion: 1
+inventory:
+  - path: fixtures/public-claims/surfaces/duplicate.md
+    rule: authored-prose
+    note: Negative fixture surface.
+claims:
+  - id: fixture-duplicate
+    kind: metric
+    claim: Fixture claim.
+    surfaces:
+      - path: fixtures/public-claims/surfaces/duplicate.md
+        locator: '(\d+) records'
+    resolver: { source: stats, key: sources }
+    format: plain
+    population: fixture population
+    lifecycle: current
+    locale: en
+    owner: TESTING
+    authority: compiler
+    assurance: compiled
+    validity: current-build
+  - id: fixture-duplicate
+    kind: metric
+    claim: The same id declared twice.
+    surfaces: []
+    resolver: { source: stats, key: people }
+    format: plain
+    population: fixture population
+    lifecycle: current
+    locale: en
+    owner: TESTING
+    authority: compiler
+    assurance: compiled
+    validity: current-build

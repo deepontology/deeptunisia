@@ -1,0 +1,19 @@
+schemaVersion: 1
+inventory:
+  - path: fixtures/public-claims/surfaces/stale.md
+    rule: authored-prose
+    note: Negative fixture surface.
+claims:
+  - id: fixture-unresolved
+    kind: metric
+    claim: Fixture claim naming a resolver key that does not exist.
+    surfaces: []
+    resolver: { source: stats, key: no-such-key }
+    format: plain
+    population: fixture population
+    lifecycle: current
+    locale: en
+    owner: TESTING
+    authority: compiler
+    assurance: compiled
+    validity: current-build

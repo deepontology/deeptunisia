@@ -33,6 +33,7 @@ import { createHash } from 'node:crypto';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { certainlyActive } from '../src/lib/model';
+import { loadPublicClaims, loadClaimContext, validateClaims } from './public-claims.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
@@ -70,7 +71,37 @@ if (existsSync(OUT)) {
 	}
 }
 
-let html = readFileSync(SRC, 'utf8');
+const original = readFileSync(SRC, 'utf8');
+let html = original;
+
+/* ---------------------------------------------------------------------------
+   THE DICTIONARIES ARE GENERATED. The inline French and Arabic dictionaries
+   are one writable copy too many: the page can be opened off disk, so they
+   must live inside it, but the file people edit is landing/_strings.{fr,ar}.json.
+   Regenerating the block here from those files removes the drift path that
+   produced two different translatable-string counts in one page. The claim
+   registry then checks the JSON values, and the generated copy follows.
+   --------------------------------------------------------------------------- */
+const DICT_BEGIN = '  /* ---- BEGIN GENERATED DICTIONARIES — edit the JSON, not this ---- */';
+const DICT_END = '  /* ---- END GENERATED DICTIONARIES ---- */';
+
+function withFreshDictionaries(html: string): string {
+	const dicts: Record<string, Record<string, string>> = {};
+	for (const lang of ['fr', 'ar'] as const) {
+		dicts[lang] = JSON.parse(readFileSync(join(ROOT, 'landing', `_strings.${lang}.json`), 'utf8'));
+	}
+	const a = html.indexOf(DICT_BEGIN);
+	const b = html.indexOf(DICT_END);
+	if (a === -1 || b === -1) {
+		fail('landing/index.html is missing the generated-dictionary markers — run landing/_i18n-inline.cjs');
+	}
+	const eol = html.includes('\r\n') ? '\r\n' : '\n';
+	const body = JSON.stringify(dicts, null, 1).split('\n').join(eol);
+	const block = `${DICT_BEGIN}${eol}  var DICT = ${body};${eol}${DICT_END}`;
+	return html.slice(0, a) + block + html.slice(b + DICT_END.length);
+}
+
+html = withFreshDictionaries(html);
 
 /* ---------------------------------------------------------------------------
    THE VISUALS ARE THE GRAPH. The DENSITY ribbon and the evidence-dial demo are
@@ -196,87 +227,34 @@ function checkFloorNote(html: string, v: Visuals): void {
 	}
 }
 
-/* The ledger cells, the tier mix, the limits cards and the og:description all
-   carry graph counts. They drifted once (the 08-14 outbox merges moved every
-   one of them and nothing caught it), so they are checked here against the
-   build's own metadata — the same numbers the /data page publishes. A stale
-   number on the front page is a lie about the dataset on the page most people
-   see, so this is a hard fail, not a warning. */
-function checkLedger(html: string, d: any): void {
-	const counts = d.meta?.counts ?? {};
-	const review = d.meta?.review ?? {};
-	const translation = d.meta?.translation?.fr ?? {};
-	const expected: [RegExp, number, string][] = [
-		[/(\d+)">0<\/div><div class="micro k" data-i18n="ledger\.1"/, counts.people, 'ledger People'],
-		[/(\d+)">0<\/div><div class="micro k" data-i18n="ledger\.2"/, counts.positions, 'ledger Offices held'],
-		[/(\d+)">0<\/div><div class="micro k" data-i18n="ledger\.3"/, counts.institutions, 'ledger Institutions'],
-		[/(\d+)">0<\/div><div class="micro k" data-i18n="ledger\.4"/, counts.relationships, 'ledger Relationships'],
-		[/(\d+)">0<\/div><div class="micro k" data-i18n="ledger\.5"/, counts.sources, 'ledger Sources'],
-		[/(\d+)">0<\/div><div class="micro k" data-i18n="ledger\.6"/, counts.events, 'ledger Events'],
-		[
-			/og:description" content="(\d+) people\./,
-			counts.people,
-			'og:description people'
-		],
-		[
-			/og:description" content="\d+ people\. (\d+) offices held\./,
-			counts.positions,
-			'og:description offices'
-		],
-		[
-			/og:description" content="\d+ people\. \d+ offices held\. (\d+) documented relationships\./,
-			counts.relationships,
-			'og:description relationships'
-		],
-		[
-			/og:description" content="\d+ people\. \d+ offices held\. \d+ documented relationships\. (\d+) sources\./,
-			counts.sources,
-			'og:description sources'
-		],
-		[/The current library is (\d+) sources/, counts.sources, 'library total'],
-		[/The current library is \d+ sources — (\d+) at tier 1,/, counts.tier1 ?? tierCount(d, 1), 'tier 1'],
-		[/at tier 1,\s*(\d+) at tier 2,/, tierCount(d, 2), 'tier 2'],
-		[/at tier 2,\s*(\d+) at tier 3,/, tierCount(d, 3), 'tier 3'],
-		[/at tier 3,\s*(\d+) at tier 4,/, tierCount(d, 4), 'tier 4'],
-		[/at tier 4,\s*(\d+) at tier 5\./, tierCount(d, 5), 'tier 5'],
-		[/(\d+) of the \d+ sources currently back/, counts.sources - counts.sourcesCited, 'uncited sources'],
-		[/<span class="v">(\d+) \/ \d+<\/span>/, review.reviewed, 'reviewed'],
-		[/<span class="v">\d+ \/ (\d+)<\/span>/, review.reviewable, 'reviewable'],
-		[/<span class="v">(\d+)<\/span>\s*\n\s*<span class="d" data-i18n-html="limits\.8"/, (d.meta?.contradictions ?? []).length, 'contradictions'],
-		[/<b>human-translated entries<\/b> of ([\d,]+) translatable strings/, translation.total, 'translatable strings'],
-		[/translatable strings, (\d+) human-translated/, translation.tiers?.human ?? 0, 'human-translated count'],
-		[/<span class="v">(\d+)<\/span>\s*\n\s*<span class="d" data-i18n-html="limits\.6"/, d.meta?.needsPrimarySourceCount, 'needs-primary-source'],
-		[/all (\d+) review notes/, review.reviewed, 'review notes'],
-		[/Of the (\d+) unsubstantiated claims/, review.flags?.unsubstantiated?.total, 'unsubstantiated claims'],
-		[/the (\d+) that name a source/, review.flags?.attributed?.total, 'attributed claims'],
-		[/and the (\d+)\s+inferences/, review.flags?.inferred?.total, 'inferences']
-	];
-	let failed = false;
-	for (const [re, want, label] of expected) {
-		const m = html.match(re);
-		if (!m) {
-			fail(`could not locate the ${label} figure in landing/index.html — has the markup changed?`);
-		}
-		const have = Number(m![1].replace(/,/g, ''));
-		if (have !== want) {
-			fail(`landing ${label} says ${have} but the graph implies ${want} — update index.html and _strings.{fr,ar}.json, then rebuild`);
-		}
+/* The landing page's mutable figures are checked against the public-claim
+   registry (data/public-claims.yaml), not against a second set of hand-written
+   expectations. Every declared landing surface must match the value its typed
+   resolver produces, so a stale number on the front page is a hard failure
+   naming the claim and the file. */
+function checkClaims(): void {
+	const file = loadPublicClaims(join(ROOT, 'data', 'public-claims.yaml'));
+	const ctx = loadClaimContext(ROOT);
+	const { issues } = validateClaims(file, ROOT, ctx);
+	const landing = issues.filter((i) => i.detail.includes('landing/'));
+	if (landing.length) {
+		fail(
+			'landing claims are stale or unresolved:\n    ' +
+				landing.map((i) => `[${i.code}] ${i.detail}`).join('\n    ')
+		);
 	}
 }
-
-function tierCount(d: any, tier: number): number {
-	return (d.sources ?? []).filter((s: any) => s.tier === tier).length;
-}
-
 const visuals = computeVisuals();
 // Stable hash tied to the visuals themselves (derived from dataset.json), not the
 // file's timestamp — otherwise every `npm run data` would invalidate the landing
 // even when the graph is unchanged, which would make `npm run data && npm run test`
 // spuriously fail. The arrays are the contract; the hash is the manifest tie.
+// This marker is NOT the graph identity (dataset.json meta.datasetHash is): it ties
+// the committed DENSITY/NODES/EDGES arrays to the dataset they were computed from.
 const datasetHash = createHash('sha256').update(JSON.stringify(visuals)).digest('hex').slice(0, 16);
 let fresh = withFreshVisuals(html, visuals);
 fresh = withFreshHash(fresh, datasetHash);
-if (fresh !== html) {
+if (fresh !== original) {
 	/* the source stays the true snapshot — the same rule as the build's own
 	   published statistics, which rewrite the docs that carry them */
 	writeFileSync(SRC, fresh, 'utf8');
@@ -284,78 +262,7 @@ if (fresh !== html) {
 }
 checkFloorNote(html, visuals);
 checkDatasetHash(html, datasetHash);
-{
-	const d = JSON.parse(readFileSync(GRAPH, 'utf8'));
-	checkLedger(html, d);
-}
-
-/* The FR/AR landing strings carry the same graph counts the English page
-   does. They are not covered by checkLedger (which reads index.html only), so
-   they drifted once with it. The translated prose spells numbers as words and
-   digits differently per language, so this checks the five figures that must
-   match across all three locales: the library total, the tier mix, the uncited
-   count, and the attributed/inferred risk figures. */
-function checkLocalizedLedger(d: any): void {
-	const counts = d.meta?.counts ?? {};
-	const fr = JSON.parse(readFileSync(join(ROOT, 'landing', '_strings.fr.json'), 'utf8')) as Record<string, string>;
-	const ar = JSON.parse(readFileSync(join(ROOT, 'landing', '_strings.ar.json'), 'utf8')) as Record<string, string>;
-	const bad = (loc: string, what: string, have: string, want: number) =>
-		fail(`landing _strings.${loc} ${what} reads "${have}" but the graph implies ${want} — update _strings.${loc}.json, then rebuild`);
-	const fr6 = fr['evidence.6'] ?? '';
-	const fr8 = fr['evidence.8'] ?? '';
-	const fr4 = fr['limits.4'] ?? '';
-	const ar6 = ar['evidence.6'] ?? '';
-	const ar8 = ar['evidence.8'] ?? '';
-	const ar4 = ar['limits.4'] ?? '';
-	// Library total + tier mix, e.g. "874 sources — 99 au niveau 1, 85 au niveau 2…"
-	for (const [loc, s6] of [['fr', fr6], ['ar', ar6]] as const) {
-		const total = s6.match(/(\d+) sources?|(\d+) مصدر/);
-		if (total && Number(total[1] ?? total[2]) !== counts.sources) bad(loc, 'library total', total[0], counts.sources);
-		for (const tier of [1, 2, 3, 4, 5] as const) {
-			// FR: "110 au niveau 1"; AR: "و110 في المستوى 1" — the number PRECEDES the label.
-			const re = new RegExp(`(\\d+)\\s*(?:au niveau ${tier}|في المستوى ${tier})`);
-			const m = s6.match(re);
-			if (m && Number(m[1]) !== tierCount(d, tier)) bad(loc, `tier ${tier}`, m[0], tierCount(d, tier));
-		}
-	}
-	// Uncited: FR "38 des 874 sources"; AR "38 من المصادر الـ874"
-	for (const [loc, s8] of [['fr', fr8], ['ar', ar8]] as const) {
-		const m = s8.match(/(\d+) des \d+ sources|(\d+) من المصادر الـ\d+/);
-		if (m && Number(m[1] ?? m[2]) !== counts.sources - counts.sourcesCited) {
-			bad(loc, 'uncited count', m[0], counts.sources - counts.sourcesCited);
-		}
-	}
-	// Risk figures. The flags overlap, so every figure is checked against its own
-	// flag total, never against a partition. One missing figure is a failure, not
-	// a skip: a translation that drops a number must not pass silently.
-	const flagTotal = (flag: string) => d.meta?.review?.flags?.[flag]?.total ?? 0;
-	const riskFigures: Record<'fr' | 'ar', [RegExp, string, number][]> = {
-		fr: [
-			[/(\d+)\s+notes? de relecture/, 'review notes', d.meta?.review?.reviewed ?? 0],
-			[/(\d+)\s+affirmations? non étayées?/, 'unsubstantiated claims', flagTotal('unsubstantiated')],
-			[/(\d+)\s+qui nomment une source/, 'attributed claims', flagTotal('attributed')],
-			[/(\d+)\s+déductions?/, 'inferences', flagTotal('inferred')]
-		],
-		ar: [
-			[/المراجعة الـ(\d+)/, 'review notes', d.meta?.review?.reviewed ?? 0],
-			[/(\d+)\s+ادعاءً غير مُسنَد/, 'unsubstantiated claims', flagTotal('unsubstantiated')],
-			[/(\d+)\s+ادعاءات تسمّي مصدرًا/, 'attributed claims', flagTotal('attributed')],
-			[/(\d+)\s+استنتاجًا/, 'inferences', flagTotal('inferred')]
-		]
-	};
-	for (const loc of ['fr', 'ar'] as const) {
-		const s4 = loc === 'fr' ? fr4 : ar4;
-		for (const [re, what, want] of riskFigures[loc]) {
-			const m = s4.match(re);
-			if (!m) {
-				bad(loc, what, '(figure not found in limits.4)', want);
-				continue;
-			}
-			if (Number(m[1]) !== want) bad(loc, what, m[0], want);
-		}
-	}
-}
-checkLocalizedLedger(JSON.parse(readFileSync(GRAPH, 'utf8')));
+checkClaims();
 
 /*
  * The page is authored to be opened straight off disk, so it reaches its fonts

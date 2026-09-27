@@ -1,0 +1,21 @@
+schemaVersion: 1
+inventory:
+  - path: fixtures/public-claims/surfaces/stale.md
+    rule: authored-prose
+    note: Negative fixture surface.
+claims:
+  - id: fixture-stale
+    kind: metric
+    claim: Fixture claim whose published value drifted from its resolver.
+    surfaces:
+      - path: fixtures/public-claims/surfaces/stale.md
+        locator: '(\d+) sources in the library'
+    resolver: { source: stats, key: sources }
+    format: plain
+    population: fixture population
+    lifecycle: current
+    locale: en
+    owner: TESTING
+    authority: compiler
+    assurance: compiled
+    validity: current-build

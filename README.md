@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/code-MIT-blue.svg)](LICENSE)
 [![Data: CC BY 4.0](https://img.shields.io/badge/data-CC%20BY%204.0-green.svg)](data/LICENSE)
-[![Feed: hourly](https://img.shields.io/badge/feed-hourly-lightgrey.svg)](feed/feed.json)
+[![Feed: every 4h](https://img.shields.io/badge/feed-4h-lightgrey.svg)](feed/feed.json)
 [![Svelte 5](https://img.shields.io/badge/svelte-5-orange.svg)](https://svelte.dev)
 
 # DeepTunisia
@@ -27,9 +27,9 @@ npm run check         # svelte-check — must be 0 errors, 0 warnings
 npm run dev           # builds the graph, then starts the dev server on :5173
 npm start             # atlas on :5173 AND the Agora API on :5200, one command
 npm run build         # validates, exports, and produces a static site in build/
-npm run smoke         # real browser, both themes, desktop AND phone — needs a dev server
+npm run smoke         # real browser, both themes, desktop AND phone — needs a dev server (mode defaults to beta; override with VITE_COMMUNITY_MODE)
 npm run feed          # fetch news headlines into feed/ (also runs every 4h in CI)
-npm run audit:probes  # reproduce the independent review's compiler probes
+npm run audit:probes  # reproduce the external code review's compiler probes
 ```
 
 `npx svelte-kit sync` is required before `npm run test` on a fresh clone: the suites import the `$data` alias, which SvelteKit generates. `npm run build` is required too, because `landing/index.html` is hash-tied to the generated dataset and the drift gate fails otherwise. The `ci` workflow runs the same sequence on a clean runner.
@@ -187,14 +187,14 @@ This is not neutrality for its own sake — it is the project's only real protec
 
 ## Known limits
 
-- **Only <!--stat:reviewed-->46<!--/stat--> of <!--stat:reviewable-->1750<!--/stat--> records have had independent human review.** The stated architecture is that machines propose and humans verify; almost nothing has been through a second pair of eyes. The real number is published on `/about` because that is the only way the commitment means anything.
+- **<!--stat:reviewed-->46<!--/stat--> of <!--stat:reviewable-->1750<!--/stat--> records carry an editorial review note, and independent human verification is <!--stat:independent-->0<!--/stat-->.** The stated architecture is that machines propose and humans verify; almost nothing has been through a second pair of eyes. The real numbers are published on `/about` because that is the only way the commitment means anything.
 - **Defence intelligence (ANRSD) has no primary sourcing at all** — statute, appointment date, current status all unestablished. Largest hole in the security map.
 - **Pre-2011 police chronology is the weakest area**, resting largely on secondary sources.
 - **The 2014–2019 police succession does not fit its endpoints.** Three reported tenures cannot fit between two firmly dated ones; recorded as an unresolved contradiction rather than smoothed over.
 - **`<=` bounds use an 8-year window.** Stated modelling assumption, not a fact.
 - **UI is translated for chrome only.** Arabic, French and English navigation, controls and labels, with RTL. Entity names are trilingual in the data and all three are searchable. Long-form analytical prose is deliberately *not* machine-translated — a machine-translated epistemology page would undermine the point.
 - **<!--stat:needsPrimarySource-->227<!--/stat--> records await a primary source.** Listed in full on `/evidence`.
-- **Human review is not merely thin, it is aimed at the wrong records.** Broken out by risk, all of it has landed on the best-evidenced claims: **0 of the unsubstantiated claims, 0 of the attributed ones and 0 of the inferences** have been through a second pair of eyes. The breakdown is on `/about`.
+- **Human review is not merely thin, it is not independent.** Independent checks stand at <!--stat:independent-->0<!--/stat--> in every category, and the editorial notes that do exist are unevenly spread: <!--stat:reviewed-unsubstantiated-->16<!--/stat--> of <!--stat:reviewable-unsubstantiated-->19<!--/stat--> unsubstantiated claims, <!--stat:reviewed-attributed-->19<!--/stat--> of <!--stat:reviewable-attributed-->315<!--/stat--> that name a source and <!--stat:reviewed-inferred-->2<!--/stat--> of <!--stat:reviewable-inferred-->40<!--/stat--> inferences carry one. The breakdown is on `/about`.
 - **<!--stat:sourcesUncited-->50<!--/stat--> of <!--stat:sources-->1333<!--/stat--> sources back no claim.** Staged reading, kept in the file but excluded from the published count of <!--stat:sourcesCited-->1283<!--/stat--> — a bibliography entry that holds nothing up is not evidence.
 
 ## Deliberately not built yet

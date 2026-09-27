@@ -1,0 +1,18 @@
+schemaVersion: 1
+inventory:
+  - path: fixtures/public-claims/surfaces/stale.md
+    rule: authored-prose
+    note: Negative fixture surface.
+claims:
+  - id: fixture-malformed
+    kind: metric
+    claim: Fixture claim missing its owner field.
+    surfaces: []
+    resolver: { source: stats, key: sources }
+    format: plain
+    population: fixture population
+    lifecycle: current
+    locale: en
+    authority: compiler
+    assurance: compiled
+    validity: current-build

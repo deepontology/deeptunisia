@@ -1,0 +1,21 @@
+schemaVersion: 1
+inventory:
+  - path: fixtures/public-claims/surfaces/does-not-exist.md
+    rule: authored-prose
+    note: "Negative fixture: the inventory names a surface that does not exist."
+claims:
+  - id: fixture-missing-surface
+    kind: metric
+    claim: Fixture claim pointing at a missing surface.
+    surfaces:
+      - path: fixtures/public-claims/surfaces/does-not-exist.md
+        locator: '(\d+) records'
+    resolver: { source: stats, key: sources }
+    format: plain
+    population: fixture population
+    lifecycle: current
+    locale: en
+    owner: TESTING
+    authority: compiler
+    assurance: compiled
+    validity: current-build

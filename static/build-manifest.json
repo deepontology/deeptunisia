@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "project": "deeptunisia",
+  "origin": "https://deeptunisia.org",
+  "license": "CC-BY-4.0",
+  "generatedAt": "2026-09-27T01:44:07.412Z",
+  "release": {
+    "packageVersion": "0.1.0",
+    "currentTag": "v0.1.2-C1",
+    "targetVersion": "v0.1.3"
+  },
+  "build": {
+    "commit": "",
+    "node": "v26.7.0"
+  },
+  "graph": {
+    "datasetHash": "f6b0eaf46d8b7fe853aa99f99581c22ad58a1858d0e77532053a556739a4a50c",
+    "generated": "2026-09-27T01:44:05.241Z",
+    "cutoff": "2026-09-10",
+    "floor": "1956-03-20",
+    "graphKB": 4850,
+    "shippedKB": 8610,
+    "counts": {
+      "sources": 1333,
+      "people": 456,
+      "positions": 425,
+      "relationships": 362,
+      "events": 128
+    }
+  },
+  "populations": {
+    "review": {
+      "editorialNotes": 46,
+      "reviewable": 1750,
+      "independentChecks": 0,
+      "editorialQueue": 975,
+      "note": "separate populations, never summed"
+    },
+    "translation": {
+      "dataProse": {
+        "fr": {
+          "total": 3043,
+          "done": 2869,
+          "tiers": {
+            "machine": 18,
+            "model-reviewed": 2839,
+            "machine-reviewed": 0,
+            "human": 12
+          }
+        },
+        "ar": {
+          "total": 3043,
+          "done": 2862,
+          "tiers": {
+            "machine": 30,
+            "model-reviewed": 2832,
+            "machine-reviewed": 0,
+            "human": 0
+          }
+        }
+      },
+      "contentPages": {
+        "en": 9,
+        "fr": 9,
+        "ar": 9
+      },
+      "landingDictionary": {
+        "en": 212,
+        "fr": 244,
+        "ar": 244
+      }
+    },
+    "media": {
+      "shipped": 2,
+      "published": 1,
+      "drafts": 1
+    },
+    "world": {
+      "claims": 10,
+      "datasets": 4
+    }
+  },
+  "community": {
+    "mode": "off",
+    "deployedMode": "off"
+  },
+  "claims": {
+    "count": 82,
+    "export": "/public-claims.json",
+    "note": "Resolved declarations, not historical evidence; see data/public-claims.yaml."
+  }
+}

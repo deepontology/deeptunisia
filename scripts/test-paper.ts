@@ -301,7 +301,7 @@ const papers = new Map<string, string>();
 		const datasetHash = createHash('sha256').update(JSON.stringify(expectedVisuals)).digest('hex').slice(0, 16);
 		const landedHash = landing.match(/\/\* dataset-hash: ([0-9a-f]+) \*\//)?.[1] ?? null;
 		ok(
-			'landing dataset-hash matches dataset.json',
+			'landing dataset-hash matches the computed visuals (not the graph hash)',
 			landedHash === datasetHash,
 			landedHash ? `landing ${landedHash} vs dataset ${datasetHash} — run npm run build` : 'no hash comment in landing/index.html — run npm run build'
 		);

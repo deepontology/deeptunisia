@@ -3689,6 +3689,10 @@ const stats: Record<string, string> = {
 	contradictions: String(contradictions.length),
 	reviewed: String(reviewed),
 	reviewable: String(reviewable),
+	// Independent verification is the study population (data/verifications.yaml),
+	// never the editorial pass. Emitted so README and llms.txt can say zero with a
+	// tag, and so no summary can rename an editorial note as an independent check.
+	independent: String(reviewSummary.independentlyChecked),
 	// Translation coverage, published for the same reason the review numbers are: a
 	// commitment nobody can see the shortfall in does not mean anything. `human` is
 	// the only tier that means a person who reads the language has looked at it.

@@ -29,14 +29,33 @@
 export type CommunityMode = 'off' | 'read-only' | 'beta';
 
 /** The same acceptance rule the server uses: anything unrecognised is `off`. */
-function resolveClientMode(raw: unknown): CommunityMode {
+export function resolveClientMode(raw: unknown): CommunityMode {
 	return raw === 'read-only' || raw === 'beta' ? raw : 'off';
 }
 
+/**
+ * The raw mode, read without ever throwing.
+ *
+ * `import.meta.env.VITE_COMMUNITY_MODE` is what Vite statically replaces in the
+ * client bundle. Outside Vite it is undefined — scripts/smoke.ts and
+ * scripts/test-modes.ts import this module under tsx — and reading a property
+ * of it threw, which took the whole smoke suite down before a browser opened.
+ * The Node environment is the fallback so a harness can state the mode it is
+ * pointing at; an unset variable still resolves to `off`.
+ */
+function rawClientMode(): unknown {
+	try {
+		const statically = import.meta.env.VITE_COMMUNITY_MODE;
+		if (statically !== undefined) return statically;
+	} catch {
+		/* import.meta.env does not exist outside Vite */
+	}
+	return (globalThis as { process?: { env?: Record<string, string | undefined> } }).process?.env
+		?.VITE_COMMUNITY_MODE;
+}
+
 /** What this build was compiled to believe about the community API. */
-export const COMMUNITY_MODE: CommunityMode = resolveClientMode(
-	import.meta.env.VITE_COMMUNITY_MODE
-);
+export const COMMUNITY_MODE: CommunityMode = resolveClientMode(rawClientMode());
 
 /** Display only: render the live Agora client instead of the closed banner. */
 export const AGORA_OPEN = COMMUNITY_MODE === 'beta';
