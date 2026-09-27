@@ -46,10 +46,12 @@
 	import ProposalList from '$lib/agora/ProposalList.svelte';
 	import ProposalView from '$lib/agora/ProposalView.svelte';
 	import ProposalForm from '$lib/agora/ProposalForm.svelte';
+	import AdditionForm from '$lib/agora/AdditionForm.svelte';
 	import EmptyState from '$lib/agora/EmptyState.svelte';
 	import PrivacyNotice from '$lib/agora/PrivacyNotice.svelte';
 	import Identity from '$lib/agora/Identity.svelte';
 	import Author from '$lib/agora/Author.svelte';
+	import RecordRail from '$lib/agora/RecordRail.svelte';
 	import { t } from '$lib/t.svelte';
 	import {
 		agora,
@@ -60,7 +62,7 @@
 		messageFor,
 		OfflineError
 	} from '$lib/agora.svelte';
-	import { targetName as nameOfTarget } from '$lib/model';
+	import { targetName as nameOfTarget, communityTypeOf } from '$lib/model';
 	import type { MentionSpan } from '$lib/agora/markdown';
 	import type { Thread, Post, Pr, Mention, QueueItem, ListResponse } from '$lib/community';
 	import { AGORA_OPEN } from '$lib/agora-gate';
@@ -73,6 +75,7 @@
 	const prId = $derived(params.get('pr'));
 	const composing = $derived(params.has('compose'));
 	const proposing = $derived(params.has('propose'));
+	const adding = $derived(params.has('add'));
 	const identityOpen = $derived(params.has('identity'));
 	const sort = $derived(params.get('sort') ?? 'trending');
 
@@ -96,6 +99,45 @@
 			else next.set(k, v);
 		}
 		void goto(`/agora?${next}`, { replaceState: replace, noScroll: true, keepFocus: true });
+	}
+
+	/*
+	 * The anchored canvas.
+	 *
+	 * The landing page's headline promise is that the record stays beside the
+	 * argument. `rail` renders the anchored record with EntityPanel/RecordPanel in
+	 * embedded mode, and a click inside it re-points the URL anchor instead of
+	 * touching the shell Inspector — so the atlas selection and the rail never
+	 * fight over `app.selected`.
+	 *
+	 * Collapsed on phones by default (the thread comes first), expanded on wide
+	 * screens. The choice persists per browser, because a reader who resizes the
+	 * rail once does not want to resize it every visit.
+	 */
+	const railVisible = $derived(!!target && target.type !== 'open');
+	let railCollapsed = $state(false);
+	const railOpen = $derived(railVisible && !railCollapsed);
+
+	function toggleRail() {
+		railCollapsed = !railCollapsed;
+		try {
+			localStorage.setItem('agora-rail-collapsed', railCollapsed ? '1' : '0');
+		} catch {
+			/* private mode: the rail still works, it just forgets. */
+		}
+	}
+
+	function selectRail(type: string, id: string) {
+		go({ target_type: type, target_id: id, label: null });
+	}
+
+	/**
+	 * A mention in a post opens its record in the rail rather than navigating to
+	 * the graph, so reading a contested claim and checking the record it names are
+	 * one gesture apart.
+	 */
+	function peekRecord(id: string) {
+		go({ target_type: communityTypeOf(id), target_id: id, label: null });
 	}
 
 	/* ---- data ---- */
@@ -138,13 +180,28 @@
 	}
 
 	async function loadThreads() {
-		const q = new URLSearchParams({ sort });
-		if (target) {
-			q.set('target_type', target.type);
-			q.set('target_id', target.id);
-		}
-		const r = await run(() => read<ListResponse<Thread>>(`/api/threads?${q}`));
-		if (r) threads = r.items;
+		/*
+		 * The server paginates every read now. `recent` is ordered by time, so the
+		 * cursor walks it correctly; trending and top are ranked per page, so they
+		 * take the first page only rather than concatenating rankings that were
+		 * never global.
+		 */
+		const all: Thread[] = [];
+		let cursor: string | null = null;
+		do {
+			const q = new URLSearchParams({ sort });
+			if (target) {
+				q.set('target_type', target.type);
+				q.set('target_id', target.id);
+			}
+			if (cursor) q.set('cursor', cursor);
+			const r = await run(() => read<ListResponse<Thread>>(`/api/threads?${q}`));
+			if (!r) break;
+			all.push(...r.items);
+			cursor = r.next_cursor ?? null;
+			if (sort !== 'recent') cursor = null;
+		} while (cursor);
+		threads = all;
 	}
 
 	async function loadThread(id: string) {
@@ -163,11 +220,9 @@
 		posts = allPosts;
 		openThread =
 			threads.find((t) => t.id === id) ??
-			// Arrived by permalink with no list loaded. Fetch enough to title the page.
-			(await (async () => {
-				const all = await run(() => read<ListResponse<Thread>>('/api/threads?sort=recent'));
-				return all?.items.find((t) => t.id === id) ?? null;
-			})());
+			// Arrived by permalink with no list loaded. Ask for the thread directly,
+			// since a paginated list may no longer hold an old thread.
+			(await run(() => read<Thread>(`/api/thread?id=${encodeURIComponent(id)}`)));
 
 		const ids = posts.map((p) => p.id).join(',');
 		if (ids) {
@@ -177,9 +232,18 @@
 	}
 
 	async function loadProposals() {
-		const q = target ? `?target_id=${encodeURIComponent(target.id)}` : '';
-		const r = await run(() => read<ListResponse<Pr>>(`/api/prs${q}`));
-		if (r) prs = r.items;
+		const all: Pr[] = [];
+		let cursor: string | null = null;
+		do {
+			const q = new URLSearchParams();
+			if (target) q.set('target_id', target.id);
+			if (cursor) q.set('cursor', cursor);
+			const r = await run(() => read<ListResponse<Pr>>(`/api/prs?${q}`));
+			if (!r) break;
+			all.push(...r.items);
+			cursor = r.next_cursor ?? null;
+		} while (cursor);
+		prs = all;
 	}
 
 	async function loadProposal(id: string) {
@@ -190,6 +254,37 @@
 	async function loadQueue() {
 		const r = await run(() => read<ListResponse<QueueItem>>('/api/queue'));
 		if (r) queue = r.items;
+	}
+
+	/**
+	 * Offer continuity once, after the first write, per docs/identity-recovery.md §5.
+	 *
+	 * The default key lives only in this browser. The offer is not at first visit,
+	 * because a reader who has not written anything has nothing to protect; it is
+	 * not shown to a burn identity, because that trade was already chosen; and it is
+	 * remembered so it never nags.
+	 */
+	const KEEP_KEY = 'deeptunisia:keep-identity';
+	let keepPrompt = $state(false);
+
+	function maybeOfferRecovery(burn: boolean) {
+		if (burn || agora.tier !== 'this-browser') return;
+		try {
+			if (localStorage.getItem(KEEP_KEY)) return;
+		} catch {
+			/* private mode: offer anyway, it is the safer direction. */
+		}
+		keepPrompt = true;
+	}
+
+	function dismissKeep(open: boolean) {
+		keepPrompt = false;
+		try {
+			localStorage.setItem(KEEP_KEY, '1');
+		} catch {
+			/* nothing to remember with. */
+		}
+		if (open) go({ identity: '1' });
 	}
 
 	/* ---- writes ---- */
@@ -222,6 +317,7 @@
 			return false;
 		}
 		await loadThread(openThread.id);
+		maybeOfferRecovery(burn);
 		return true;
 	}
 
@@ -239,6 +335,7 @@
 			error = r.body.error;
 			return;
 		}
+		maybeOfferRecovery(false);
 		go({ compose: null, thread: r.body.id });
 	}
 
@@ -252,32 +349,88 @@
 	async function vote(p: Post, value: 1 | -1) {
 		const was = votes[p.id];
 		const undo = was === value;
-		const delta = undo ? -value : value;
+		// 0 is the retraction the API accepts. Counts move by the difference between
+		// what existed and what is being asked for, never by the click alone.
+		const next: 1 | -1 | 0 = undo ? 0 : value;
 
 		posts = posts.map((x) =>
 			x.id !== p.id
 				? x
 				: {
 						...x,
-						upvotes: x.upvotes + (delta === 1 ? 1 : was === 1 ? -1 : 0),
-						downvotes: x.downvotes + (delta === -1 ? 1 : was === -1 ? -1 : 0)
+						upvotes: x.upvotes + (next === 1 ? 1 : 0) - (was === 1 ? 1 : 0),
+						downvotes: x.downvotes + (next === -1 ? 1 : 0) - (was === -1 ? 1 : 0)
 					}
 		);
 		if (undo) delete votes[p.id];
 		else votes[p.id] = value;
 
-		const r = await run(() => send('/api/vote', { target_type: 'post', target_id: p.id, value }));
+		const r = await run(() => send('/api/vote', { target_type: 'post', target_id: p.id, value: next }));
 		if (!r || r.status !== 200) {
 			if (r) error = r.body.error;
+			// Roll the arrow back as well, or it stays lit against a count that
+			// never moved.
+			if (undo) votes[p.id] = value;
+			else delete votes[p.id];
 			await loadThread(openThread!.id);
 		}
 	}
 
-	async function report(p: Post, reason: string) {
+	async function withdraw() {
+		if (!openPr) return;
+		const r = await run(() => send('/api/pr/withdraw', { pr_id: openPr!.id }));
+		if (!r) return;
+		if (r.status !== 200) error = r.body.error;
+		else await loadProposal(openPr.id);
+	}
+
+	/**
+	 * Filing a proposal to add a record that does not exist yet.
+	 *
+	 * The form has already built the field list and a collision-free id; this adds
+	 * the optional graph source id and files an `append-record` proposal. The
+	 * record itself is written by the editorial tool after review, through the
+	 * same emitter and build gate as every other change.
+	 */
+	async function fileAddition(v: {
+		kind: string;
+		id: string;
+		changes: { field: string; new_value: string }[];
+		reason: string;
+		url: string;
+		title: string;
+		sourceId: string;
+	}) {
+		const changes = [...v.changes];
+		if (v.sourceId.trim()) changes.push({ field: 'sources', new_value: v.sourceId.trim() });
 		const r = await run(() =>
-			send('/api/report', { target_type: 'post', target_id: p.id, reason })
+			send('/api/pr', {
+				target_type: v.kind,
+				target_id: v.id,
+				operation: 'append-record',
+				reason: v.reason,
+				changes,
+				sources: v.url ? [{ url: v.url, title: v.title }] : []
+			})
 		);
-		if (r && r.status !== 200) error = r.body.error;
+		if (!r) return;
+		if (r.status !== 200) {
+			error = r.body.error;
+			return;
+		}
+		go({ add: null, tab: 'proposals', pr: r.body.id });
+	}
+
+	async function report(p: Post, reason: string, details: string): Promise<boolean> {
+		const r = await run(() =>
+			send('/api/report', { target_type: 'post', target_id: p.id, reason, details })
+		);
+		if (!r) return false;
+		if (r.status !== 200) {
+			error = r.body.error;
+			return false;
+		}
+		return true;
 	}
 
 	async function fileProposal(v: {
@@ -307,17 +460,17 @@
 		go({ propose: null, tab: 'proposals', pr: r.body.id });
 	}
 
-	async function decide(decision: string, reason: string) {
-		if (!openPr) return;
-		const r = await run(() => send('/api/pr/review', { pr_id: openPr!.id, decision, reason }));
-		if (!r) return;
-		if (r.status !== 200) error = r.body.error;
-		else await loadProposal(openPr.id);
-	}
-
 	onMount(() => {
 		// Closed: the banner touches nothing — no identity, no fetches, no API.
 		if (!AGORA_OPEN) return;
+		try {
+			const stored = localStorage.getItem('agora-rail-collapsed');
+			railCollapsed = stored
+				? stored === '1'
+				: window.matchMedia('(max-width: 1179px)').matches;
+		} catch {
+			railCollapsed = window.matchMedia('(max-width: 1179px)').matches;
+		}
 		refreshIdentity();
 	});
 
@@ -337,13 +490,13 @@
 		// wants — a reader must never reach the API through a closed door.
 		if (!AGORA_OPEN) return;
 
-		const key = `${tab}|${threadId}|${prId}|${composing}|${proposing}|${identityOpen}|${sort}|${target?.id ?? ''}`;
+		const key = `${tab}|${threadId}|${prId}|${composing}|${proposing}|${adding}|${identityOpen}|${sort}|${target?.id ?? ''}`;
 		if (key === seen) return;
 		seen = key;
 
 		untrack(() => {
 			error = '';
-			if (proposing || composing || identityOpen) return;
+			if (proposing || composing || identityOpen || adding) return;
 			if (threadId) void loadThread(threadId);
 			else if (prId) void loadProposal(prId);
 			else if (tab === 'proposals') void loadProposals();
@@ -366,7 +519,7 @@
 		</section>
 	</div>
 {:else}
-<div class="agora">
+<div class="agora" class:rail-open={railOpen}>
 	<header>
 		<div>
 			<h1>{t('agora.title')}</h1>
@@ -385,22 +538,37 @@
 				<span class="anon">{t('agora.identity.new')}</span>
 			{/if}
 			<span class="trust">{t('agora.trust')} {agora.trustLevel}</span>
+			{#if agora.handle}
+				<span class="tier">{t(`agora.tier.${agora.tier}`)}</span>
+			{/if}
 		</button>
 	</header>
 
-	{#if target}
-		<div class="context">
-			<Chip variant="outline">{target.type}</Chip>
-			<strong>{target.label}</strong>
-			<span class="dim">{t('agora.attached')}</span>
-			<a href="/agora">{t('agora.showall')}</a>
-		</div>
-	{/if}
+	<div class="canvas" class:rail-collapsed={railCollapsed} class:has-rail={railVisible}>
+		<div class="main">
+			{#if target}
+				<div class="context">
+					<Chip variant="outline">{target.type}</Chip>
+					<strong>{target.label}</strong>
+					<span class="dim">{t('agora.attached')}</span>
+					<a href="/agora">{t('agora.showall')}</a>
+					{#if railVisible}
+						<span class="spacer"></span>
+						<button
+							class="rail-toggle"
+							onclick={toggleRail}
+							aria-expanded={!railCollapsed}
+						>
+							{t(railCollapsed ? 'agora.rail.show' : 'agora.rail.hide')}
+						</button>
+					{/if}
+				</div>
+			{/if}
 
 	{#if agora.offline}
 		<Panel elevation={1} padded>
 			<p class="offline">
-				{t('agora.offline')}<br /><code>npm run community</code>
+				{t('agora.offline')}
 			</p>
 			<Button variant="outline" size="xs" onclick={() => location.reload()}>
 				{t('agora.retry')}
@@ -408,6 +576,21 @@
 		</Panel>
 	{:else if threadId && openThread}
 		<Button size="xs" variant="ghost" onclick={() => go({ thread: null })}>← {t('agora.back')}</Button>
+		{#if keepPrompt}
+			<!-- Offered once, after the first write. See maybeOfferRecovery. -->
+			<Panel elevation={1} padded>
+				<p class="keep-title">{t('agora.keep.title')}</p>
+				<p class="keep-body">{t('agora.keep.body')}</p>
+				<div class="actions">
+					<Button variant="solid" onclick={() => dismissKeep(true)}>
+						{t('agora.keep.action')}
+					</Button>
+					<Button variant="ghost" onclick={() => dismissKeep(false)}>
+						{t('agora.keep.later')}
+					</Button>
+				</div>
+			</Panel>
+		{/if}
 		<ThreadView
 			thread={openThread}
 			{posts}
@@ -419,15 +602,15 @@
 			onpost={post}
 			onvote={vote}
 			onreport={report}
+			onpeek={peekRecord}
 		/>
 	{:else if prId && openPr}
 		<Button size="xs" variant="ghost" onclick={() => go({ pr: null })}>← {t('agora.back')}</Button>
 		<ProposalView
 			pr={openPr}
-			canModerate={!!agora.can.moderate}
 			busy={loading}
 			{error}
-			ondecide={decide}
+			onwithdraw={withdraw}
 		/>
 	{:else if identityOpen}
 		<Identity onclose={() => go({ identity: null })} />
@@ -446,6 +629,15 @@
 			{error}
 			onfile={fileProposal}
 			oncancel={() => go({ propose: null, tab: 'proposals' })}
+			onidentity={() => go({ propose: null, identity: '1' })}
+		/>
+	{:else if adding}
+		<AdditionForm
+			busy={loading}
+			{error}
+			onfile={fileAddition}
+			oncancel={() => go({ add: null, tab: 'proposals' })}
+			onidentity={() => go({ add: null, identity: '1' })}
 		/>
 	{:else}
 		<PrivacyNotice />
@@ -458,14 +650,18 @@
 			<div class="bar">
 				<span class="spacer"></span>
 				{#if agora.can.createPr}
+					<Button variant="outline" onclick={() => go({ add: '1' })}>
+						{t('agora.add.button')}
+					</Button>
 					<Button variant="outline" onclick={() => go({ propose: '1' })}>
 						{t('agora.propose')}
 					</Button>
 				{:else}
 					<Tooltip content={t('agora.proposelocked')}>
-						<Button variant="outline" disabled>
-							{t('agora.propose')}
-						</Button>
+						<Button variant="outline" disabled>{t('agora.add.button')}</Button>
+					</Tooltip>
+					<Tooltip content={t('agora.proposelocked')}>
+						<Button variant="outline" disabled>{t('agora.propose')}</Button>
 					</Tooltip>
 				{/if}
 			</div>
@@ -489,6 +685,17 @@
 							{#if q.removed}<Chip tint="var(--text-faint)">{t('agora.removed')}</Chip>{/if}
 						</div>
 						<p class="excerpt">{q.excerpt ?? t('agora.removed')}</p>
+						<!--
+							The queue is public transparency: what was reported, by how many
+							distinct people, and why. Acting on it (remove, uphold, reject, ban)
+							is maintainer work and belongs in the editorial dashboard, which
+							is not built in this tree yet; the API endpoints for it already
+							exist and are tested. One place to manage proposals and reports,
+							not two.
+						-->
+						<div class="qact">
+							<a class="qopen" href={`/agora?thread=${q.thread_id}`}>{t('agora.moderate.open')}</a>
+						</div>
 					</div>
 				</Panel>
 			{:else}
@@ -533,6 +740,27 @@
 			{/if}
 		{/if}
 	{/if}
+		</div>
+		{#if railVisible && target}
+			<aside class="rail" class:open={!railCollapsed} aria-label={t('agora.rail.title')}>
+				<div class="rail-bar">
+					<span class="eyebrow mono">{t('agora.rail.title')}</span>
+					<span class="spacer"></span>
+					<button
+						class="rail-collapse"
+						onclick={toggleRail}
+						aria-expanded={!railCollapsed}
+						aria-label={t(railCollapsed ? 'agora.rail.show' : 'agora.rail.hide')}
+					>
+						{railCollapsed ? '▸' : '▾'}
+					</button>
+				</div>
+				<div class="rail-body">
+					<RecordRail type={target.type} id={target.id} onselect={selectRail} />
+				</div>
+			</aside>
+		{/if}
+	</div>
 </div>
 {/if}
 
@@ -542,8 +770,113 @@
 		flex-direction: column;
 		gap: var(--s-5);
 		padding: var(--s-7) var(--s-8) var(--s-11);
+		/* Fill the viewport up to the cap. Without this the column shrink-wraps to
+		   its content whenever no rail is rendered, and a form ends up half-width. */
+		width: 100%;
 		max-width: 860px;
 		margin-inline: auto;
+	}
+	.agora.rail-open {
+		max-width: 1240px;
+	}
+
+	/*
+		Two columns: the argument and the record it is about. The rail is a sticky
+		viewer, not a second page — it scrolls independently and never takes the
+		thread's width below the point where both stop being readable.
+	*/
+	.canvas {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr);
+		gap: var(--s-6);
+		align-items: start;
+	}
+	.main {
+		min-width: 0;
+		display: flex;
+		flex-direction: column;
+		gap: var(--s-5);
+	}
+	.rail {
+		display: none;
+		flex-direction: column;
+		min-width: 0;
+		border: 1px solid var(--border-subtle);
+		border-radius: var(--r-lg);
+		background: var(--surface-raised);
+		box-shadow: var(--elev-1);
+		overflow: hidden;
+	}
+	.rail.open {
+		display: flex;
+	}
+	.rail-bar {
+		display: flex;
+		align-items: center;
+		gap: var(--s-3);
+		padding: var(--s-3) var(--s-4);
+		border-bottom: 1px solid var(--border-subtle);
+		background: var(--surface-sunken);
+	}
+	.rail-collapse {
+		color: var(--text-faint);
+		min-height: 24px;
+		padding: 0 var(--s-2);
+		font-size: var(--t-sm);
+	}
+	.rail-collapse:hover {
+		color: var(--text-primary);
+	}
+	.rail-body {
+		min-height: 0;
+		max-height: 70vh;
+		overflow-y: auto;
+		overscroll-behavior: contain;
+	}
+	.rail-toggle {
+		font-size: var(--t-xs);
+		color: var(--text-secondary);
+		border: 1px solid var(--border-default);
+		border-radius: var(--r-full);
+		padding: var(--s-1) var(--s-4);
+		min-height: 26px;
+	}
+	.rail-toggle:hover {
+		color: var(--text-primary);
+		border-color: var(--border-strong);
+		background: var(--surface-hover);
+	}
+
+	@media (min-width: 1180px) {
+		/*
+			Two columns only when the rail exists. Without the has-rail guard, a page
+			with no anchored record (a proposal form opened from the list, the queue)
+			reserved an empty 420px column and squeezed the content into half the
+			page.
+		*/
+		.canvas.has-rail:not(.rail-collapsed) {
+			grid-template-columns: minmax(0, 1fr) minmax(340px, 420px);
+		}
+		.rail {
+			display: flex;
+			position: sticky;
+			top: var(--s-6);
+			max-height: calc(100vh - 220px);
+		}
+		.canvas.rail-collapsed .rail {
+			display: none;
+		}
+		/*
+			Only hide the context-bar toggle while the rail is open. If it were
+			hidden whenever the viewport is wide, collapsing the rail would hide the
+			rail-bar control inside it and leave no way back.
+		*/
+		.canvas.has-rail:not(.rail-collapsed) .rail-toggle {
+			display: none;
+		}
+		.rail-body {
+			max-height: calc(100vh - 270px);
+		}
 	}
 
 	/* The coming-soon banner: one raised surface, no affordances — it must not
@@ -615,6 +948,27 @@
 		font-family: var(--font-mono);
 		font-variant-numeric: tabular-nums;
 	}
+	.tier {
+		font-family: var(--font-mono);
+		font-size: var(--t-2xs);
+		letter-spacing: var(--track-wide);
+		color: var(--text-faint);
+	}
+	.keep-title {
+		margin: 0 0 var(--s-2);
+		font-size: var(--t-sm);
+		font-weight: 560;
+	}
+	.keep-body {
+		margin: 0;
+		font-size: var(--t-sm);
+		color: var(--text-secondary);
+		line-height: 1.55;
+		max-width: 62ch;
+	}
+	.keep-title + .keep-body {
+		margin-bottom: var(--s-4);
+	}
 	.anon {
 		font-style: italic;
 		color: var(--text-secondary);
@@ -645,6 +999,19 @@
 	.qrow {
 		padding: var(--s-5) var(--s-6);
 	}
+	.qact {
+		display: flex;
+		align-items: center;
+		gap: var(--s-3);
+		flex-wrap: wrap;
+		margin-top: var(--s-4);
+		padding-top: var(--s-4);
+		border-top: 1px solid var(--border-subtle);
+	}
+	.qopen {
+		font-size: var(--t-xs);
+		color: var(--accent);
+	}
 	.meta {
 		display: flex;
 		gap: var(--s-3);
@@ -668,11 +1035,6 @@
 		color: var(--text-secondary);
 		font-size: var(--t-sm);
 		line-height: 1.55;
-	}
-	.offline code {
-		font-family: var(--font-mono);
-		font-size: var(--t-xs);
-		color: var(--text-primary);
 	}
 
 	@media (max-width: 900px) {

@@ -42,7 +42,11 @@
 	 * this component is the scrollable content, not the shell.
 	 */
 
-	let { id }: { id: string } = $props();
+	let {
+		id,
+		embedded = false,
+		onselect
+	}: { id: string; embedded?: boolean; onselect?: (id: string) => void } = $props();
 
 	// Resolve which kind of record this id is.
 	const contract = $derived(contractById.get(id) ?? null);
@@ -89,9 +93,13 @@
 	const disputes = $derived((contract ?? declaration ?? education)?.disputes ?? []);
 	const sources = $derived((contract ?? declaration ?? event ?? education)?.sources ?? []);
 
-	/** A clickable entity reference: selecting it swaps the Inspector to that record. */
+	/**
+	 * A clickable entity reference: the shell Inspector swaps to that record, and
+	 * the inline rail re-points itself instead when this panel is embedded.
+	 */
 	function ref(id: string) {
-		app.selected = id;
+		if (embedded && onselect) onselect(id);
+		else app.selected = id;
 	}
 	function refName(id: string): string {
 		const p = personById.get(id);
@@ -173,6 +181,7 @@
 		if (licence) return 'licence' as const;
 		if (declaration) return 'declaration' as const;
 		if (education) return 'education' as const;
+		if (company) return 'company' as const;
 		return 'event' as const;
 	});
 
@@ -185,7 +194,9 @@
 		<div class="eyebrow mono">{kindLabel}</div>
 		<div class="h-actions">
 			<ShareMenu url={shareUrl} title={shareTitle} />
-			<button class="close" onclick={() => (app.selected = null)} aria-label={t('panel.close')}>×</button>
+			{#if !embedded}
+				<button class="close" onclick={() => (app.selected = null)} aria-label={t('panel.close')}>×</button>
+			{/if}
 		</div>
 	</header>
 
@@ -212,12 +223,12 @@
 			<div class="kf">
 				{#if preds.length}
 					<div class="kv"><span>{t('record.causes')}</span><span class="refs">
-						{#each preds as pe (pe.id)}<button class="ref" onclick={() => (app.selected = pe.id)}>{pe.title_en}</button>{/each}
+						{#each preds as pe (pe.id)}<button class="ref" onclick={() => ref(pe.id)}>{pe.title_en}</button>{/each}
 					</span></div>
 				{/if}
 				{#if succs.length}
 					<div class="kv"><span>{t('record.consequences')}</span><span class="refs">
-						{#each succs as se (se.id)}<button class="ref" onclick={() => (app.selected = se.id)}>{se.title_en}</button>{/each}
+						{#each succs as se (se.id)}<button class="ref" onclick={() => ref(se.id)}>{se.title_en}</button>{/each}
 					</span></div>
 				{/if}
 			</div>
@@ -301,7 +312,7 @@
 	{/if}
 
 	<footer>
-		<CommunityActions type={targetType} id={id} {label} />
+		<CommunityActions type={targetType} id={id} {label} only={embedded ? 'propose' : undefined} />
 	</footer>
 </article>
 

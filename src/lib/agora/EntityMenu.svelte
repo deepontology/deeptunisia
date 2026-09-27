@@ -29,7 +29,7 @@
 		empty?: string;
 	}
 
-	let { hits, cursor, onpick, onhover, empty = 'No record matches.' }: Props = $props();
+	let { hits, cursor, onpick, onhover, empty = t('agora.entitymenu.empty') }: Props = $props();
 </script>
 
 <ul class="menu" role="listbox" aria-label={t('agora.records')}>
