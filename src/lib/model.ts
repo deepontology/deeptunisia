@@ -133,6 +133,29 @@ export const licenceById = new Map(ds.licences.map((l) => [l.id, l]));
 export const declarationById = new Map(ds.declarations.map((d) => [d.id, d]));
 export const educationById = new Map(ds.education.map((e) => [e.id, e]));
 
+/**
+ * The community target type a graph id resolves to.
+ *
+ * One place decides, so the Agora rail, mention peeks and proposal targets all
+ * name a record the same way the API does. The graph's own answer is the truth;
+ * callers that already have a declared type use it only as a fallback.
+ */
+export function communityTypeOf(id: string): string {
+	if (personById.has(id)) return 'person';
+	if (institutionById.has(id)) return 'institution';
+	if (contractById.has(id)) return 'contract';
+	if (licenceById.has(id)) return 'licence';
+	if (declarationById.has(id)) return 'declaration';
+	if (educationById.has(id)) return 'education';
+	if (eventById.has(id)) return 'event';
+	if (companyById.has(id)) return 'company';
+	if (relationshipById.has(id)) return 'relationship';
+	if (sourceById.has(id)) return 'source';
+	if (positionById.has(id)) return 'position';
+	if (roleById.has(id)) return 'role';
+	return 'open';
+}
+
 /** The v0.0.2 record kinds a selection can land on (companies resolve as institutions). */
 export const RECORD_KINDS = ['contract', 'licence', 'declaration', 'education', 'event'] as const;
 export type RecordKind = (typeof RECORD_KINDS)[number];

@@ -960,8 +960,9 @@ console.log('\n  ── interaction ──');
 	const agoraNav = await page
 		.locator('.subnav .strip a')
 		.evaluateAll((els) => els.map((e) => e.getAttribute('href')));
-	// Three Agora tabs since the feed moved to Media (2026-09-11); the assertion
-	// is about replacement, so it checks the hrefs rather than only the count.
+	// Agora carries three tabs — discussion, proposals, reported. The feed moved
+	// to Media, so this is no longer the four-link strip it once was. The
+	// assertion is about replacement, so it checks the hrefs, not only the count.
 	ok(
 		'Agora sub-nav replaces the Graph one',
 		agoraNav.length === 3 && agoraNav.every((h) => h?.startsWith('/agora?tab=')),
@@ -1539,7 +1540,16 @@ console.log('\n  ── connections ──');
 		}
 	});
 
-	await page.goto(BASE + '/network', { waitUntil: 'networkidle' });
+	/*
+	 * The `all` lens, not the default `influence` reading.
+	 *
+	 * Measurement edges (`flow-*`) and prosecution/family/business authored
+	 * edges are only drawn under `?mode=all` (NetworkView's mode filter), and
+	 * this section is about connections as records, so it asks for the lens
+	 * that holds every edge. That is also what makes the `.edge.measurement`
+	 * count below meaningful: under the default lens it is legitimately 0.
+	 */
+	await page.goto(BASE + '/network?mode=all', { waitUntil: 'networkidle' });
 	await settle(page);
 
 	/*
@@ -1580,13 +1590,10 @@ console.log('\n  ── connections ──');
 	/*
 	 * Measurement edges render in the All lens only; the influence lens filters
 	 * them out by design (a flow deep link switches the lens to All for exactly
-	 * that reason). Count in All, and assert the default lens withholds them, so
-	 * this covers both the synthesis and the mode filter.
+	 * that reason). The page above asked for All by URL; this counts the witness
+	 * there, then opens a clean page to prove the default lens withholds them.
 	 */
 	const flowEndpoints = graphBackedFlowEndpoints(NETWORK_DEFAULT_YEAR);
-	const beforeSwitch = await page.locator('.edge.measurement').count();
-	await page.locator('.modes').getByRole('radio', { name: 'All', exact: true }).click();
-	await page.waitForTimeout(400);
 	const measurementEdges = await page.locator('.edge.measurement').count();
 	ok(
 		'network renders a flow- edge only for a snapshot-backed graph endpoint',
@@ -1595,13 +1602,18 @@ console.log('\n  ── connections ──');
 			? `${measurementEdges} measurement edges in All for ${flowEndpoints.slice(0, 3).join(', ')}`
 			: 'no committed snapshot endpoint requires a flow edge'
 	);
-	ok(
-		'the influence lens withholds measurement edges',
-		flowEndpoints.length === 0 || beforeSwitch === 0,
-		`${beforeSwitch} measurement edges before switching to All`
-	);
-	await page.locator('.modes').getByRole('radio', { name: 'Influence', exact: true }).click();
-	await page.waitForTimeout(300);
+	{
+		const plain = await context.newPage();
+		await plain.goto(BASE + '/network', { waitUntil: 'networkidle' });
+		await settle(plain);
+		const defaultLens = await plain.locator('.edge.measurement').count();
+		ok(
+			'the influence lens withholds measurement edges',
+			flowEndpoints.length === 0 || defaultLens === 0,
+			`${defaultLens} measurement edges in the default lens`
+		);
+		await plain.close();
+	}
 
 	/*
 	 * Clicking a node on the canvas.
@@ -1716,7 +1728,17 @@ console.log('\n  ── connections ──');
 		String(relLink)
 	);
 
-	await page.goto(BASE + relLink!, { waitUntil: 'networkidle' });
+	/*
+	 * The entity panel emits a plain `/network?rel=<id>`; carry the `all` lens
+	 * beside it, because the lens is what makes the relationship visible. The
+	 * first row is a family tie, which the default influence lens excludes, so
+	 * without the parameter the map would honour the id by opening nothing.
+	 * `?mode=` is part of the deep-link contract (NetworkView reads both on
+	 * arrival), which is exactly what this round trip exercises.
+	 */
+	const relUrl = new URL(relLink!, BASE);
+	relUrl.searchParams.set('mode', 'all');
+	await page.goto(relUrl.toString(), { waitUntil: 'networkidle' });
 	await page.waitForTimeout(2000);
 	/*
 	 * The card renders as soon as the pin lands; the drawn edge follows the
@@ -1747,6 +1769,410 @@ console.log('\n  ── connections ──');
 	ok('connection console clean', problems.length === 0, problems.slice(0, 3).join(' | '));
 	await page.screenshot({ path: join(OUT, 'connection.png') });
 	await context.close();
+}
+
+// --- The Agora record rail --------------------------------------------------
+/*
+ * The landing page's headline promise made physical: the record an argument is
+ * anchored to stays beside it. An anchored Agora URL renders EntityPanel /
+ * RecordPanel inline in `.rail` (embedded mode: the panels drop their close
+ * button and the rail gets the propose door only), and on phones the rail
+ * starts collapsed behind a `.rail-toggle` button.
+ *
+ * The section branches on AGORA_OPEN because the same URL under a closed gate
+ * must still render the coming-soon banner and must not grow a rail or a
+ * toggle. The desktop labels (panel.discuss / agora.rail.show) are asserted in
+ * English: the default context carries no locale, and this is about which
+ * doors exist, not about translation.
+ */
+if (runSection('agora rail')) {
+	console.log('\n  ── agora rail ──');
+	const AGORA_RAIL = '/agora?target_type=person&target_id=bourguiba&label=Habib%20Bourguiba';
+
+	if (!AGORA_OPEN) {
+		const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+		const page = await context.newPage();
+		await page.goto(BASE + AGORA_RAIL, { waitUntil: 'networkidle', timeout: 30_000 });
+		await settle(page);
+		ok('closed/agora anchored URL still renders the coming-soon banner', (await page.locator('.soon').count()) === 1);
+		ok('closed/agora renders no record rail', (await page.locator('.rail').count()) === 0);
+		ok('closed/agora renders no rail toggle', (await page.locator('.rail-toggle').count()) === 0);
+		await page.close();
+		await context.close();
+	} else {
+		// Wide screen: both columns, no toggle.
+		{
+			const context = await browser.newContext({ viewport: { width: 1600, height: 1000 }, colorScheme: 'dark' });
+			// A returning reader: the tour's click-catcher otherwise swallows taps while
+			// it is up, and this section is about the rail, not the first-visit tour.
+			// The value must match TOUR_VERSION in $lib/shell/tour.svelte.ts.
+			await context.addInitScript(`(() => { try { localStorage.setItem('deeptunisia:tour', '2'); } catch {} })()`);
+			const page = await context.newPage();
+			const problems: string[] = [];
+			page.on('pageerror', (e) => problems.push(`[pageerror] ${e.message}`));
+			page.on('console', (m) => {
+				if ((m.type() === 'error' || m.type() === 'warning') && !isIgnorable(m.text())) {
+					problems.push(`[${m.type()}] ${m.text()}`);
+				}
+			});
+
+			await page.goto(BASE + AGORA_RAIL, { waitUntil: 'networkidle', timeout: 30_000 });
+			await settle(page);
+
+			ok(
+				'open/agora client renders the privacy notice',
+				(await page.locator('.agora').count()) === 1 && (await page.locator('.privacy').count()) === 1
+			);
+			ok(
+				'wide/agora rail is visible without a toggle',
+				(await page.locator('.rail').isVisible()) && (await page.locator('.rail-toggle').isHidden())
+			);
+			ok(
+				'wide/agora rail names the anchored record',
+				((await page.locator('.rail').innerText()) || '').includes('Bourguiba')
+			);
+			ok(
+				'wide/agora rail body carries the record',
+				((await page.locator('.rail-body').innerText()) || '').length > 40
+			);
+			// Embedded panels are inline viewers: their close button belongs to the
+			// shell Inspector, where closing means clearing the global selection.
+			ok(
+				'wide/agora rail panels hide their close button',
+				(await page.locator('.rail .close').count()) === 0,
+				`${await page.locator('.rail .close').count()} close buttons`
+			);
+
+			// The rail is a viewer, not a second Agora: the doors it carries are
+			// propose doors, never Discuss — a Discuss door beside an open discussion
+			// would navigate away from the thread the reader is already in.
+			const railDoors = page.locator('.rail a.cbtn');
+			const proposeDoors = page.locator('.rail a.cbtn', { hasText: translate('en', 'panel.propose') });
+			const discussDoors = page.locator('.rail a.cbtn', { hasText: translate('en', 'panel.discuss') });
+			const doorCount = await railDoors.count();
+			const proposeCount = await proposeDoors.count();
+			const discussCount = await discussDoors.count();
+			ok(
+				'wide/agora rail doors are propose doors',
+				doorCount >= 1 && proposeCount === doorCount,
+				`${proposeCount}/${doorCount} propose`
+			);
+			ok('wide/agora rail has no Discuss link', discussCount === 0, `${discussCount} Discuss doors`);
+
+			/*
+			 * The collapse fix. The rail-bar control hides the rail, and at desktop
+			 * width the context-bar toggle that reopens it used to be hidden too, which
+			 * left no way back. Collapse through the rail bar, then reopen through the
+			 * context bar, and assert both states.
+			 */
+			const collapse = page.locator('.rail-bar .rail-collapse');
+			ok(
+				'wide/agora rail-bar carries a collapse control',
+				(await collapse.count()) === 1 && (await collapse.isVisible()),
+				`${await collapse.count()} control(s)`
+			);
+			await collapse.click();
+			await page.waitForTimeout(250);
+			ok('wide/agora collapsed rail is hidden', !(await page.locator('.rail').isVisible()));
+			const reopen = page.locator('.context .rail-toggle');
+			ok(
+				'wide/agora collapsed rail leaves a visible toggle in the context bar',
+				await reopen.isVisible(),
+				`${await reopen.count()} toggle(s)`
+			);
+			ok(
+				'wide/agora reopen toggle says what it does',
+				((await reopen.innerText()) || '').trim() === translate('en', 'agora.rail.show'),
+				await reopen.innerText()
+			);
+			await reopen.click();
+			await page.waitForTimeout(250);
+			ok('wide/agora toggle reopens the rail', await page.locator('.rail').isVisible());
+
+			ok('wide/agora rail console clean', problems.length === 0, problems.slice(0, 3).join(' | '));
+			await page.screenshot({ path: join(OUT, 'agora-rail.png') });
+			await page.close();
+			await context.close();
+		}
+
+		// Phone: the thread comes first; the toggle is the way to the record.
+		{
+			const context = await browser.newContext({
+				viewport: { width: 390, height: 844 },
+				isMobile: true,
+				hasTouch: true,
+				colorScheme: 'dark'
+			});
+			// Same returning-reader state as the wide pass: the toggle has to be
+			// tappable, and the tour catcher is not what this section is testing.
+			// The value must match TOUR_VERSION in $lib/shell/tour.svelte.ts.
+			await context.addInitScript(`(() => { try { localStorage.setItem('deeptunisia:tour', '2'); } catch {} })()`);
+			const page = await context.newPage();
+			const problems: string[] = [];
+			page.on('pageerror', (e) => problems.push(`[pageerror] ${e.message}`));
+			page.on('console', (m) => {
+				if ((m.type() === 'error' || m.type() === 'warning') && !isIgnorable(m.text())) {
+					problems.push(`[${m.type()}] ${m.text()}`);
+				}
+			});
+
+			await page.goto(BASE + AGORA_RAIL, { waitUntil: 'networkidle', timeout: 30_000 });
+			await settle(page);
+
+			ok('phone/agora rail starts hidden', !(await page.locator('.rail').isVisible()));
+			const toggle = page.locator('.rail-toggle');
+			ok('phone/agora rail toggle is visible', await toggle.isVisible());
+			ok(
+				'phone/agora rail toggle says what it does',
+				((await toggle.innerText()) || '').trim() === translate('en', 'agora.rail.show'),
+				await toggle.innerText()
+			);
+
+			await toggle.click();
+			await page.waitForTimeout(300);
+			ok('phone/agora toggle reveals the rail', await page.locator('.rail').isVisible());
+			ok(
+				'phone/agora revealed rail names the anchored record',
+				((await page.locator('.rail').innerText()) || '').includes('Bourguiba')
+			);
+			ok(
+				'phone/agora rail toggle flips to hide',
+				((await toggle.innerText()) || '').trim() === translate('en', 'agora.rail.hide'),
+				await toggle.innerText()
+			);
+			ok(
+				'phone/agora rail has no Discuss link',
+				(await page.locator('.rail a.cbtn', { hasText: translate('en', 'panel.discuss') }).count()) === 0,
+				`${await page.locator('.rail a.cbtn', { hasText: translate('en', 'panel.discuss') }).count()} Discuss doors`
+			);
+			ok('phone/agora rail console clean', problems.length === 0, problems.slice(0, 3).join(' | '));
+			await page.screenshot({ path: join(OUT, 'phone-agora-rail.png') });
+			await page.close();
+			await context.close();
+		}
+	}
+}
+
+// --- Anonymous Agora: the doors are locked, not hidden ----------------------
+/*
+ * A browser with no identity (a fresh context, no stored key) must be told what
+ * an identity would unlock rather than handed a form it can fill in and never
+ * submit. The addition form shows the locked notice and no submit button; the
+ * proposals tab shows both propose doors disabled. The labels are asserted in
+ * English: the default context carries no locale, and this is about which doors
+ * are closed, not about translation.
+ */
+if (runSection('agora anonymous')) {
+	console.log('\n  ── agora anonymous ──');
+	const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+	// A returning reader: the tour's click-catcher otherwise swallows taps while
+	// it is up, and this section is about the identity gate.
+	await context.addInitScript(`(() => { try { localStorage.setItem('deeptunisia:tour', '1'); } catch {} })()`);
+	const page = await context.newPage();
+	const problems: string[] = [];
+	page.on('pageerror', (e) => problems.push(`[pageerror] ${e.message}`));
+	page.on('console', (m) => {
+		if ((m.type() === 'error' || m.type() === 'warning') && !isIgnorable(m.text())) {
+			problems.push(`[${m.type()}] ${m.text()}`);
+		}
+	});
+
+	// The addition form asks for an identity instead of rendering the form.
+	await page.goto(BASE + '/agora?add=1', { waitUntil: 'networkidle', timeout: 30_000 });
+	await settle(page);
+	await page.locator('.locked').first().waitFor({ state: 'attached', timeout: 5_000 }).catch(() => {});
+	ok('anon/agora?add=1 renders the locked notice', (await page.locator('.locked').count()) === 1);
+	const lockedTitle = ((await page.locator('.locked-title').first().innerText().catch(() => '')) || '').trim();
+	ok(
+		'anon/agora?add=1 locked notice names the identity requirement',
+		lockedTitle === translate('en', 'agora.locked.title'),
+		lockedTitle
+	);
+	const submit = page.locator('button', { hasText: translate('en', 'agora.add.file') });
+	ok('anon/agora?add=1 renders no Submit button', (await submit.count()) === 0, `${await submit.count()} submit buttons`);
+
+	// Both doors on the proposals tab are visible and disabled.
+	await page.goto(BASE + '/agora?tab=proposals', { waitUntil: 'networkidle', timeout: 30_000 });
+	await settle(page);
+	await page.locator('.bar button').first().waitFor({ state: 'attached', timeout: 5_000 }).catch(() => {});
+	const addDoor = page.locator('.bar button', { hasText: translate('en', 'agora.add.button') });
+	const changeDoor = page.locator('.bar button', { hasText: translate('en', 'agora.propose') });
+	ok('anon/agora proposals shows the addition door', (await addDoor.count()) === 1, `${await addDoor.count()} door(s)`);
+	ok('anon/agora proposals addition door is disabled', await addDoor.isDisabled());
+	ok('anon/agora proposals shows the change door', (await changeDoor.count()) === 1, `${await changeDoor.count()} door(s)`);
+	ok('anon/agora proposals change door is disabled', await changeDoor.isDisabled());
+	ok('anon/agora console clean', problems.length === 0, problems.slice(0, 3).join(' | '));
+
+	await page.screenshot({ path: join(OUT, 'agora-anonymous.png') });
+	await page.close();
+	await context.close();
+}
+
+// --- One thread page: header, report dialog, identity chip ------------------
+/*
+ * The rail section never opens a thread, so the other half of the Agora chrome
+ * went unsmoked: the copy-link control in the thread header, the report dialog's
+ * details field and role="status" confirmation, and the tier chip, which is a fact
+ * about the stored identity and must not render for a reader who has none.
+ *
+ * The thread under test comes from the public list: reads need no identity, and
+ * smoke must not write to the development database. The report and whoami are
+ * answered by route fulfilment for the same reason — this section asserts what
+ * the interface renders, not what the server stores; test-api.ts drives the
+ * server against a real database.
+ *
+ * When no API answers /api/threads there is no thread to open, and the section
+ * says so rather than failing on a server the atlas does not own.
+ */
+if (runSection('agora thread')) {
+	console.log('\n  ── agora thread ──');
+	const listed = await fetch(`${BASE}/api/threads`, { headers: { accept: 'application/json' } })
+		.then((r) => (r.ok ? r.json() : null))
+		.catch(() => null);
+	const threadId: string | null = listed?.items?.[0]?.id ?? null;
+	/*
+	 * The thread page is reached through the single-thread permalink. A deployment
+	 * older than that endpoint answers 404, and there is nothing to assert against;
+	 * say so rather than fail on a server the atlas does not own. It answers 200 on
+	 * any build carrying the permalink, which is the one that must pass this.
+	 */
+	const permalink = threadId
+		? await fetch(`${BASE}/api/thread?id=${encodeURIComponent(threadId)}`)
+				.then((r) => r.status)
+				.catch(() => 0)
+		: 0;
+
+	if (!threadId || permalink !== 200) {
+		console.log(
+			`  skip  no thread page to open — GET /api/thread answered ${permalink || 'nothing'}` +
+				(threadId ? ' (the running API predates the thread permalink)' : ' (no threads)')
+		);
+	} else {
+		const context = await browser.newContext({
+			viewport: { width: 1440, height: 900 },
+			colorScheme: 'dark',
+			permissions: ['clipboard-read', 'clipboard-write']
+		});
+		// A returning reader: the tour's click-catcher otherwise swallows taps.
+		await context.addInitScript(`(() => { try { localStorage.setItem('deeptunisia:tour', '2'); } catch {} })()`);
+		const page = await context.newPage();
+		const problems: string[] = [];
+		page.on('pageerror', (e) => problems.push(`[pageerror] ${e.message}`));
+		page.on('console', (m) => {
+			if ((m.type() === 'error' || m.type() === 'warning') && !isIgnorable(m.text())) {
+				problems.push(`[${m.type()}] ${m.text()}`);
+			}
+		});
+
+		await page.goto(`${BASE}/agora?thread=${threadId}`, { waitUntil: 'networkidle', timeout: 30_000 });
+		await settle(page);
+		await page.locator('.thread').waitFor({ state: 'visible', timeout: 10_000 }).catch(() => {});
+
+		ok('thread/agora opens the thread as its own page', await page.locator('.thread').isVisible());
+
+		// Copy link: the permalink is a citation a reader can paste elsewhere.
+		const copy = page.locator('.thread header button').first();
+		ok(
+			'thread/agora header renders the copy-link button',
+			((await copy.textContent()) ?? '').trim() === translate('en', 'agora.copylink'),
+			((await copy.textContent()) ?? '').trim()
+		);
+		// A clipboard write needs a focused document; a headless page that has never
+		// been brought forward refuses it, which is an artefact of the harness.
+		await page.bringToFront();
+		await copy.click();
+		const confirmed = await page
+			.locator('.thread header button', { hasText: translate('en', 'agora.copied') })
+			.waitFor({ state: 'visible', timeout: 2_000 })
+			.then(() => true)
+			.catch(() => false);
+		ok(
+			'thread/agora copy-link confirms the copy',
+			confirmed,
+			((await copy.textContent()) ?? '').trim()
+		);
+
+		// The tier chip is a fact about this browser's stored identity. A reader
+		// without one is not "This browser".
+		const tier = page.locator('.agora .tier');
+		ok(
+			'thread/agora tier chip is absent without an identity',
+			(await tier.count()) === 0,
+			`${await tier.count()} chip(s)`
+		);
+
+		// Report: a reason alone queues it, the details field is where the reporter
+		// says what they checked, and the confirmation is announced, not just painted.
+		await page
+			.locator('.thread article.post button', { hasText: translate('en', 'agora.report') })
+			.first()
+			.click();
+		const dialog = page.locator('.reasons');
+		await dialog.waitFor({ state: 'visible', timeout: 5_000 }).catch(() => {});
+		ok('thread/agora report dialog opens', await dialog.isVisible());
+		ok(
+			'thread/agora report dialog offers a details field',
+			(await page.locator('.reasons textarea').count()) === 1,
+			`${await page.locator('.reasons textarea').count()} field(s)`
+		);
+		ok(
+			'thread/agora report dialog labels the details field',
+			((await page.locator('.reasons .details span').textContent()) ?? '').trim() ===
+				translate('en', 'agora.reportdetails'),
+			((await page.locator('.reasons .details span').textContent()) ?? '').trim()
+		);
+
+		// One write answered locally: the interface's confirmation is what is under
+		// test, and this keeps the development database read-only.
+		await page.route('**/api/report', (route) =>
+			route.fulfill({
+				status: 200,
+				contentType: 'application/json',
+				body: JSON.stringify({ ok: true, queued: true })
+			})
+		);
+		const status = page.locator('.reasons [role="status"]');
+		await page.locator('.reasons button.reason').first().click();
+		await status.waitFor({ state: 'visible', timeout: 5_000 }).catch(() => {});
+		ok(
+			'thread/agora report confirmation carries role="status"',
+			(await status.count()) === 1,
+			`${await status.count()} live region(s)`
+		);
+		ok(
+			'thread/agora report confirmation says it was sent',
+			((await status.innerText().catch(() => '')) || '').trim() === translate('en', 'agora.reportsent'),
+			await status.innerText().catch(() => '')
+		);
+
+		// The chip's positive half. The report above minted a browser identity, so a
+		// reload with whoami answered locally must render the chip.
+		await page.route('**/api/whoami', (route) =>
+			route.fulfill({
+				status: 200,
+				contentType: 'application/json',
+				body: JSON.stringify({
+					handle: 'anon-smoketest',
+					name: null,
+					note: null,
+					trust_level: 0,
+					can: {}
+				})
+			})
+		);
+		await page.reload({ waitUntil: 'networkidle' });
+		await settle(page);
+		ok(
+			'thread/agora tier chip renders once an identity exists',
+			(await tier.count()) === 1,
+			`${await tier.count()} chip(s)`
+		);
+
+		ok('thread/agora console clean', problems.length === 0, problems.slice(0, 3).join(' | '));
+		await page.screenshot({ path: join(OUT, 'agora-thread.png') });
+		await page.close();
+		await context.close();
+	}
 }
 
 // --- Deep-link round trips -------------------------------------------------
