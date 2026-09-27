@@ -1297,10 +1297,27 @@ import Chip from '$lib/ui/Chip.svelte';
 		if (!want || deepLinked || cam.vw < 2) return;
 		deepLinked = true;
 		untrack(() => {
-			const e = slice.edges.find((x) => x.rel.id === want || x.id === want);
-			// A relationship below the current evidence threshold is genuinely not on
-			// this map. Silently doing nothing is right: raising the threshold is the
-			// reader's decision, and moving it for them would misrepresent the view.
+			let e = slice.edges.find((x) => x.rel.id === want || x.id === want);
+			if (!e) {
+				/*
+				 * A real, above-floor relationship can still be absent from the
+				 * slice because the current lens filters it out — a family tie is
+				 * not an influence route. A shared connection link that lands on
+				 * nothing looks like it worked, which is the worst shape of broken,
+				 * so the lens follows the link the same way a flow deep link
+				 * switches it: only when the relationship exists and passes the
+				 * evidence floor, and never over an explicit `?mode=` the reader
+				 * named themselves. A relationship below the floor still does
+				 * nothing: raising the threshold is the reader's decision.
+				 */
+				const authored = ds.relationships.find(
+					(r) => r.id === want && meetsBasis(r.basis as Basis, app.basisFloor)
+				);
+				if (authored && !modeLinked) {
+					mode = 'all';
+					e = slice.edges.find((x) => x.rel.id === want || x.id === want);
+				}
+			}
 			if (!e) return;
 			pinnedId = e.id;
 			const m = routes.get(e.id)?.mid ?? { x: e.a.x, y: e.a.y };
@@ -2212,9 +2229,13 @@ import Chip from '$lib/ui/Chip.svelte';
 				{/if}
 			{/each}
 
-			<!-- Edges: inactive first so active ones sit on top -->
+			<!-- Edges: inactive first so active ones sit on top. A pinned edge is
+			     drawn with the active pass even when its own interval or endpoint
+			     liveness would keep it idle: the reader opened it by URL, and a
+			     card over a line the map does not mark is the failure the share
+			     link exists to prevent. -->
 			<g class="edges">
-				{#each shownEdges.filter((e) => !e.active && !app.quiet) as e (e.id)}
+				{#each shownEdges.filter((e) => !e.active && !app.quiet && e.id !== pinnedId) as e (e.id)}
 					{@const r = routes.get(e.id)}
 					{#if r}
 						{#if !focus}
@@ -2238,7 +2259,7 @@ import Chip from '$lib/ui/Chip.svelte';
 					{/if}
 				{/each}
 
-				{#each shownEdges.filter((e) => e.active) as e (e.id)}
+				{#each shownEdges.filter((e) => e.active || e.id === pinnedId) as e (e.id)}
 					{@const r = routes.get(e.id)}
 					{#if r}
 						<!-- The source-layer hairline: a bridge's identity tag. The

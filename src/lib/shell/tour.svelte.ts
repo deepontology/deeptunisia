@@ -30,6 +30,7 @@
  */
 
 import { browser } from '$app/environment';
+import { TOUR_KEY as KEY, TOUR_VERSION } from './tour-version';
 
 /**
  * Bump when a step is added, removed, or materially rewritten — a reader who has
@@ -39,10 +40,11 @@ import { browser } from '$app/environment';
  *
  * v1 -> v2: the bubbles step said "two modes" when the shell has three sections,
  * and described Agora as holding the feed. Both statements are now wrong.
+ *
+ * The version lives in ./tour-version.ts (a plain module) so scripts/smoke.ts
+ * can seed the seen-flag under tsx; keep this re-export for existing importers.
  */
-export const TOUR_VERSION = 2;
-
-const KEY = 'deeptunisia:tour';
+export { TOUR_VERSION };
 
 export interface TourStep {
 	/** i18n key stem. Resolved as `tour.<id>.t` and `tour.<id>.b`. */
