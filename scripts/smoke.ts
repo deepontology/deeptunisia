@@ -1590,13 +1590,10 @@ console.log('\n  ── connections ──');
 	/*
 	 * Measurement edges render in the All lens only; the influence lens filters
 	 * them out by design (a flow deep link switches the lens to All for exactly
-	 * that reason). Count in All, and assert the default lens withholds them, so
-	 * this covers both the synthesis and the mode filter.
+	 * that reason). The page above asked for All by URL; this counts the witness
+	 * there, then opens a clean page to prove the default lens withholds them.
 	 */
 	const flowEndpoints = graphBackedFlowEndpoints(NETWORK_DEFAULT_YEAR);
-	const beforeSwitch = await page.locator('.edge.measurement').count();
-	await page.locator('.modes').getByRole('radio', { name: 'All', exact: true }).click();
-	await page.waitForTimeout(400);
 	const measurementEdges = await page.locator('.edge.measurement').count();
 	ok(
 		'network renders a flow- edge only for a snapshot-backed graph endpoint',
@@ -1605,13 +1602,18 @@ console.log('\n  ── connections ──');
 			? `${measurementEdges} measurement edges in All for ${flowEndpoints.slice(0, 3).join(', ')}`
 			: 'no committed snapshot endpoint requires a flow edge'
 	);
-	ok(
-		'the influence lens withholds measurement edges',
-		flowEndpoints.length === 0 || beforeSwitch === 0,
-		`${beforeSwitch} measurement edges before switching to All`
-	);
-	await page.locator('.modes').getByRole('radio', { name: 'Influence', exact: true }).click();
-	await page.waitForTimeout(300);
+	{
+		const plain = await context.newPage();
+		await plain.goto(BASE + '/network', { waitUntil: 'networkidle' });
+		await settle(plain);
+		const defaultLens = await plain.locator('.edge.measurement').count();
+		ok(
+			'the influence lens withholds measurement edges',
+			flowEndpoints.length === 0 || defaultLens === 0,
+			`${defaultLens} measurement edges in the default lens`
+		);
+		await plain.close();
+	}
 
 	/*
 	 * Clicking a node on the canvas.
