@@ -3,6 +3,26 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:african-manager:107f903d365f7e2b",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Tunisie-Algérie : Une envolée à 3 chiffres des échanges commerciaux",
+      "link": "https://africanmanager.com/tunisie-algerie-une-envolee-a-3-chiffres-des-echanges-commerciaux/",
+      "published": "2026-09-27T15:10:38Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:e04d303ba7e7e3cc",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Environnement : La Tunisie « sommée » de réduire la pollution plastique !",
+      "link": "https://africanmanager.com/environnement-la-tunisie-sommee-de-reduire-la-pollution-plastique/",
+      "published": "2026-09-27T15:03:57Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
       "id": "feed:african-manager:28f47596c4bbebc3",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -11761,24 +11781,6 @@
       "title": "TIA, des mots sans chiffres et de l’IDE au rabais qui coûte cher en devises !",
       "link": "https://africanmanager.com/tia-des-mots-sans-chiffres-et-de-lide-au-rabais-qui-coute-cher-en-devises/",
       "published": "2026-09-02T15:39:00Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:0824142ea1b96f89",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "La Tunisie 10e en Afrique en matière de gouvernance de l’IA",
-      "link": "https://africanmanager.com/la-tunisie-10e-en-afrique-en-matiere-de-gouvernance-de-lia/",
-      "published": "2026-09-02T15:38:10Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:aaa089dcf97bdc91",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Zenzri appelle à une réforme globale et structurelle des EP",
-      "link": "https://africanmanager.com/etablissements-publics-la-cheffe-du-gouvernement-appelle-a-un-processus-de-reforme-globale-et-structurelle/",
-      "published": "2026-09-02T15:00:55Z",
       "lang": "fr"
     }
   ]
