@@ -3,6 +3,96 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:145c89a5aaf977fc",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Journées musicales de Carthage | Tout savoir sur la billetterie",
+      "link": "https://kapitalis.com/tunisie/2026/09/29/journees-musicales-de-carthage-tout-savoir-sur-la-billetterie/",
+      "published": "2026-09-29T00:02:24Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:f0f84651b3ac5157",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "La Sonede annonce des perturbations | Les zones concernées",
+      "link": "https://kapitalis.com/tunisie/2026/09/28/la-sonede-annonce-des-perturbations-les-zones-concernees/",
+      "published": "2026-09-28T22:07:11Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:african-manager:0ac6156dc2fdeb34",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "La Tunisie concède le nul face au Botswana (2-2)",
+      "link": "https://africanmanager.com/la-tunisie-concede-le-nul-face-au-botswana-2-2/",
+      "published": "2026-09-28T21:18:48Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:kapitalis:3fa8867e67f35e8f",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Santé & Deepfake | Pr Nissaf Ben Alaya victime d’un montage par IA",
+      "link": "https://kapitalis.com/tunisie/2026/09/28/sante-deepfake-pr-nissaf-ben-alaya-victime-dun-montage-par-ia/",
+      "published": "2026-09-28T20:41:59Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:african-manager:52458e7559a52a7e",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Phosphates : La Tunisie veut reconquérir sa position de leader mondial",
+      "link": "https://africanmanager.com/phosphates-la-tunisie-veut-reconquerir-sa-position-de-leader-mondial/",
+      "published": "2026-09-28T20:11:32Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:d519dd4beeb43551",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Des cliniques privées menacées d’une crise financière…Des fermetures sont prévues ?",
+      "link": "https://africanmanager.com/des-cliniques-privees-menacees-dune-crise-financiere-des-fermetures-sont-prevues/",
+      "published": "2026-09-28T19:42:02Z",
+      "lang": "fr",
+      "author": "Africanmanager"
+    },
+    {
+      "id": "feed:african-manager:cdaccd9511538658",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Tebboune limoge son porte-parole Samir Aggoune !",
+      "link": "https://africanmanager.com/tebboune-limoge-son-porte-parole-samir-aggoune/",
+      "published": "2026-09-28T19:24:53Z",
+      "lang": "fr",
+      "author": "Africanmanager"
+    },
+    {
+      "id": "feed:kapitalis:f0e7485e8f9d19a1",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Un accident à Mhamdia coûte la vie à deux femmes et fait trois blessés",
+      "link": "https://kapitalis.com/tunisie/2026/09/28/un-accident-a-mhamdia-coute-la-vie-a-deux-femmes-et-fait-trois-blesses/",
+      "published": "2026-09-28T19:09:49Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:5cce3e1b945b2a60",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Tunis | Séquestrée et violée, une adolescente de 15 ans en réanimation",
+      "link": "https://kapitalis.com/tunisie/2026/09/28/tunis-sequestree-et-violee-une-adolescente-de-15-ans-en-reanimation/",
+      "published": "2026-09-28T18:38:13Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
       "id": "feed:african-manager:beaf16091fba11a8",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -11745,89 +11835,6 @@
       "published": "2026-09-03T22:17:25Z",
       "lang": "en",
       "author": "FRANCE 24"
-    },
-    {
-      "id": "feed:african-manager:d498ac367dde5c8d",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Approbation de l’octroi des aides à l’amélioration de l’habitat d’une valeur de 150 mille DT",
-      "link": "https://africanmanager.com/approbation-de-loctroi-des-aides-a-lamelioration-de-lhabitat-dune-valeur-de-150-mille-dt/",
-      "published": "2026-09-03T15:59:54Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:74c6db2e32061022",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Rentrée scolaire : 81 % des élèves ont effectué leur inscription en ligne",
-      "link": "https://africanmanager.com/rentree-scolaire-81-des-eleves-ont-effectue-leur-inscription-en-ligne/",
-      "published": "2026-09-03T15:57:52Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:nawaat:7d9eab6eb9044639",
-      "outlet": "Nawaat",
-      "outletId": "nawaat",
-      "title": "في بن ڤردان “الذرية” حرڤت وماتت..والدولة غايبة",
-      "link": "https://nawaat.org/2026/09/03/%d9%81%d9%8a-%d8%a8%d9%86-%da%a4%d8%b1%d8%af%d8%a7%d9%86-%d8%a7%d9%84%d8%b0%d8%b1%d9%8a%d8%a9-%d8%ad%d8%b1%da%a4%d8%aa-%d9%88%d9%85%d8%a7%d8%aa%d8%aa-%d9%88%d8%a7%d9%84%d8%af%d9%88%d9%84%d8%a9/",
-      "published": "2026-09-03T14:29:08Z",
-      "lang": "ar",
-      "author": "Chaker Jahmi"
-    },
-    {
-      "id": "feed:african-manager:a1e541fc16186511",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "2,3 millions de bouteilles d’eau injectés sur les marchés par jour",
-      "link": "https://africanmanager.com/23-millions-de-bouteilles-deau-injectes-sur-les-marches-par-jour/",
-      "published": "2026-09-03T14:16:40Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:france24:04cf93e93c23d617",
-      "outlet": "France 24",
-      "outletId": "france24",
-      "title": "Tunisia water crisis deepens as temperatures approach 50°C",
-      "link": "https://www.france24.com/en/video/20260903-tunisia-water-crisis-deepens-as-temperatures-approach-50%C2%B0c",
-      "published": "2026-09-03T13:52:23Z",
-      "lang": "en",
-      "author": "FRANCE24"
-    },
-    {
-      "id": "feed:african-manager:32adbedefbc1b2d5",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "La SFBT sous une pile de contentieux",
-      "link": "https://africanmanager.com/la-sfbt-sous-une-pile-de-contentieux/",
-      "published": "2026-09-03T13:45:22Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:b30a2c532b01c02a",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "« Les USA dans une situation très confuse sur leurs objectifs stratégiques »",
-      "link": "https://africanmanager.com/les-usa-dans-une-situation-tres-confuse-sur-leurs-objectifs-strategiques/",
-      "published": "2026-09-03T13:43:21Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:0fa0f1ad4644e380",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Iran : Les actions militaires américaines n’ont eu « aucun véritable effet stratégique positif »",
-      "link": "https://africanmanager.com/iran-les-actions-militaires-americaines-nont-eu-aucun-veritable-effet-strategique-positif/",
-      "published": "2026-09-03T13:42:02Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:d65b0c24e5ee273c",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Iran : Les marchés boursiers reculent et la chute des obligations s’accentue",
-      "link": "https://africanmanager.com/iran-les-marches-boursiers-reculent-et-la-chute-des-obligations-saccentue/",
-      "published": "2026-09-03T13:40:46Z",
-      "lang": "fr"
     }
   ]
 }
