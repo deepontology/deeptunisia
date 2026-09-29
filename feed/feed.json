@@ -3,6 +3,86 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:aad8cfe6bfc58529",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Mineure séquestrée et violée à Tunis | Le point sur l’enquête",
+      "link": "https://kapitalis.com/tunisie/2026/09/29/mineure-sequestree-et-violee-a-tunis-le-point-sur-lenquete/",
+      "published": "2026-09-29T22:40:00Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:059badc5a93079c1",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "La créativité humaine à l’épreuve de l’intelligence artificielle",
+      "link": "https://kapitalis.com/tunisie/2026/09/29/la-creativite-humaine-a-lepreuve-de-lintelligence-artificielle/",
+      "published": "2026-09-29T21:39:47Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:b1479fe3bdef0edf",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Tunisie-Japon | Suivi du projet de contrôle des inondations de l’Oued Medjerda",
+      "link": "https://kapitalis.com/tunisie/2026/09/29/tunisie-japon-suivi-du-projet-de-controle-des-inondations-de-loued-medjerda/",
+      "published": "2026-09-29T20:26:08Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:5636b8dc3a9df586",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "La peine d’Abdallah Saïd portée à deux ans de prison en appel",
+      "link": "https://kapitalis.com/tunisie/2026/09/29/la-peine-dabdallah-said-portee-a-deux-ans-de-prison-en-appel/",
+      "published": "2026-09-29T20:01:50Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:african-manager:a6cde4b78ae54d52",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Tunisie : 40 entreprises tunisiennes certifiées Halal !",
+      "link": "https://africanmanager.com/tunisie-40-entreprises-tunisiennes-certifiees-halal/",
+      "published": "2026-09-29T19:49:46Z",
+      "lang": "fr",
+      "author": "Africanmanager"
+    },
+    {
+      "id": "feed:african-manager:b88d49823c9bba93",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Mohammed VI: Toute attaque contre l’Arabie saoudite est une attaque contre le Maroc !",
+      "link": "https://africanmanager.com/mohammed-vi-toute-attaque-contre-larabie-saoudite-est-une-attaque-contre-le-maroc/",
+      "published": "2026-09-29T19:37:16Z",
+      "lang": "fr",
+      "author": "Africanmanager"
+    },
+    {
+      "id": "feed:african-manager:03a32bdf3c35ec9b",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Auto: Le marché parallèle progresse plus vite que les concessionnaires !",
+      "link": "https://africanmanager.com/auto-le-marche-parallele-progresse-plus-vite-que-les-concessionnaires/",
+      "published": "2026-09-29T19:15:05Z",
+      "lang": "fr",
+      "author": "Africanmanager"
+    },
+    {
+      "id": "feed:kapitalis:ae4bf1343181cd8e",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Mobilisation pour la prise en charge de la mineure séquestrée et violée à Tunis",
+      "link": "https://kapitalis.com/tunisie/2026/09/29/mobilisation-pour-la-prise-en-charge-de-la-mineure-sequestree-et-violee-a-tunis/",
+      "published": "2026-09-29T18:19:03Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
       "id": "feed:nawaat:6175dca5768ac3e4",
       "outlet": "Nawaat",
       "outletId": "nawaat",
@@ -11796,79 +11876,6 @@
       "title": "Incendie du Mont Bargou: Deux mandats de dépôt",
       "link": "https://africanmanager.com/incendie-du-mont-bargou-deux-mandats-de-depot/",
       "published": "2026-09-04T14:49:30Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:fc0bca703b1daf54",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Saisie de 120 mille bouteilles d’eau minérale à Nabeul",
-      "link": "https://africanmanager.com/nabeul-saisie-de-120-mille-bouteilles-en-eau-minerale-en-aout-dernier/",
-      "published": "2026-09-04T14:42:55Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:5a54f63de8c3a593",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "197 infractions économiques relevées, en août à Siliana",
-      "link": "https://africanmanager.com/siliana-197-infractions-economiques-relevees-en-aout-dernier/",
-      "published": "2026-09-04T14:40:54Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:nawaat:4acc06112dffc562",
-      "outlet": "Nawaat",
-      "outletId": "nawaat",
-      "title": "حين تحتجز الدولة الجسد: من يجيب عن الموت خلف القضبان؟",
-      "link": "https://nawaat.org/2026/09/04/%d8%ad%d9%8a%d9%86-%d8%aa%d8%ad%d8%aa%d8%ac%d8%b2-%d8%a7%d9%84%d8%af%d9%88%d9%84%d8%a9-%d8%a7%d9%84%d8%ac%d8%b3%d8%af-%d9%85%d9%86-%d9%8a%d8%ac%d9%8a%d8%a8-%d8%b9%d9%86-%d8%a7%d9%84%d9%85%d9%88%d8%aa/",
-      "published": "2026-09-04T14:05:02Z",
-      "lang": "ar",
-      "author": "Amir Ammar"
-    },
-    {
-      "id": "feed:african-manager:f0b1eeed9ee6be4c",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Supervision bancaire : Le gendarme tunisien qui ne verbalise qu’à peine",
-      "link": "https://africanmanager.com/supervision-bancaire-le-gendarme-tunisien-qui-ne-verbalise-qua-peine/",
-      "published": "2026-09-04T13:40:00Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:f2ac0fe8a1f947c1",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Tour Khalef ou l’hôtel-portefeuille",
-      "link": "https://africanmanager.com/tour-khalef-ou-lhotel-portefeuille/",
-      "published": "2026-09-04T13:37:52Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:cff1bcb83455f5a5",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Hausse de 8% du coût global de la rentrée scolaire !",
-      "link": "https://africanmanager.com/hausse-de-8-du-cout-global-de-la-rentree-scolaire/",
-      "published": "2026-09-04T13:14:20Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:e63558b16ac00104",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Les prix du diesel aux États-Unis atteignent un nouveau sommet",
-      "link": "https://africanmanager.com/les-prix-du-diesel-aux-etats-unis-atteignent-un-nouveau-sommet/",
-      "published": "2026-09-04T13:13:34Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:c86091d20ca1bec6",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Tataouine: 23 cas d’intoxication alimentaire recensés",
-      "link": "https://africanmanager.com/tataouine-23-cas-dintoxication-alimentaire-recenses/",
-      "published": "2026-09-04T13:01:23Z",
       "lang": "fr"
     }
   ]
