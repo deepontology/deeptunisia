@@ -3,6 +3,76 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:african-manager:e101bd803e9631d0",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Bourse : Le marché termine la séance de mercredi sur une note positive",
+      "link": "https://africanmanager.com/bourse-le-marche-termine-la-seance-de-mercredi-sur-une-note-positive/",
+      "published": "2026-09-30T20:15:53Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:186ceae7dc88fe15",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Accompagnement des entreprises vers l’industrie 4.0",
+      "link": "https://africanmanager.com/lancement-dun-programme-daccompagnement-des-entreprises-tunisiennes-vers-lindustrie-4-0/",
+      "published": "2026-09-30T20:11:30Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:kapitalis:0df99f4bbadfcb22",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "JOJ Dakar 2026 à l’Unesco : Hommage aux champions olympiques tunisiens à Paris",
+      "link": "https://kapitalis.com/tunisie/2026/09/30/joj-dakar-2026-a-lunesco-hommage-aux-champions-olympiques-tunisiens-a-paris/",
+      "published": "2026-09-30T19:19:22Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:eb025aa736ed2434",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Décret 54 | Ce qui change après la révision de l’article 24",
+      "link": "https://kapitalis.com/tunisie/2026/09/30/decret-54-ce-qui-change-apres-la-revision-de-larticle-24/",
+      "published": "2026-09-30T19:08:04Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:7c603a4644abb433",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Météo | Les prévisions pour cette nuit (INM)",
+      "link": "https://kapitalis.com/tunisie/2026/09/30/meteo-les-previsions-pour-cette-nuit-inm-3/",
+      "published": "2026-09-30T18:36:09Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:nawaat:d96fea1a3da4dab2",
+      "outlet": "Nawaat",
+      "outletId": "nawaat",
+      "title": "The Media Under Kais Saied: Propaganda, Silence and Resistance",
+      "link": "https://nawaat.org/2026/09/30/the-media-under-kais-saied-propaganda-silence-and-resistance/",
+      "published": "2026-09-30T18:00:31Z",
+      "lang": "en",
+      "author": "Samih Beji Okkez"
+    },
+    {
+      "id": "feed:african-manager:878326f638fb642b",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "L’Algérie, 3e pays de départ de migrants vers ce contient !",
+      "link": "https://africanmanager.com/lalgerie-3e-pays-de-depart-de-migrants-vers-ce-contient/",
+      "published": "2026-09-30T15:02:45Z",
+      "lang": "fr",
+      "author": "Africanmanager"
+    },
+    {
       "id": "feed:african-manager:43ef5a96c7170a70",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -161,6 +231,16 @@
       "published": "2026-09-30T11:24:57Z",
       "lang": "fr",
       "author": "Africanmanager"
+    },
+    {
+      "id": "feed:african-manager:eae28ba1d26fee2f",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Dattes : Le glas des sentiers battus !",
+      "link": "https://africanmanager.com/dattes-le-glas-des-sentiers-battus/",
+      "published": "2026-09-30T11:21:00Z",
+      "lang": "fr",
+      "author": "African Manager"
     },
     {
       "id": "feed:african-manager:5acc1ad417238a99",
@@ -11856,79 +11936,6 @@
       "link": "https://kapitalis.com/tunisie/2026/09/06/etude-le-sommeil-profond-ralentit-la-progression-de-lalzheimer/",
       "published": "2026-09-06T12:31:29Z",
       "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:2b9d1bd56ac43f2a",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Treize pays à l’exercice Phoenix Express sur les côtes tunisiennes",
-      "link": "https://kapitalis.com/tunisie/2026/09/06/treize-pays-a-lexercice-phoenix-express-sur-les-cotes-tunisiennes/",
-      "published": "2026-09-06T12:09:09Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:d1043b6b6ebe7ed4",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Les banques multilatérales de développement s’unissent pour sécuriser les chaînes d’approvisionnement mondiales en engrais",
-      "link": "https://africanmanager.com/les-banques-multilaterales-de-developpement-sunissent-pour-securiser-les-chaines-dapprovisionnement-mondiales-en-engrais/",
-      "published": "2026-09-06T12:07:50Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:fca0b3599cd4cf90",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Progression du commerce intra-africain à 206,6 milliards de dollars en 2024",
-      "link": "https://africanmanager.com/progression-du-commerce-intra-africain-a-2066-milliards-de-dollars-en-2024/",
-      "published": "2026-09-06T11:51:59Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:d1cb1efdbdb5411a",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Reprise des vols directs entre l’Iran et la Tunisie",
-      "link": "https://africanmanager.com/reprise-des-vols-directs-entre-liran-et-la-tunisie/",
-      "published": "2026-09-06T11:43:45Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:29c79742e81849a1",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "L’IACE plaide pour le développement du tourisme non conventionnel en Tunisie",
-      "link": "https://kapitalis.com/tunisie/2026/09/06/liace-plaide-pour-le-developpement-du-tourisme-non-conventionnel-en-tunisie/",
-      "published": "2026-09-06T11:41:58Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:d4298fea1b7328a2",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Tunis accueille son 1er Forum international du halal",
-      "link": "https://kapitalis.com/tunisie/2026/09/06/tunis-accueille-son-1er-forum-international-du-halal/",
-      "published": "2026-09-06T11:16:12Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:f3ee66446c2fae38",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Tunisie | Les partis politiques indésirables au «cadre de coordination»",
-      "link": "https://kapitalis.com/tunisie/2026/09/06/tunisie-les-partis-politiques-indesirables-au-cadre-de-coordination/",
-      "published": "2026-09-06T10:41:57Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:nawaat:8a774f9312f5c550",
-      "outlet": "Nawaat",
-      "outletId": "nawaat",
-      "title": "الورشة: فضاء للمقاومة الفنية وصناعة الأمل",
-      "link": "https://nawaat.org/2026/09/06/%d8%a7%d9%84%d9%88%d8%b1%d8%b4%d8%a9-%d9%81%d8%b6%d8%a7%d8%a1-%d9%84%d9%84%d9%85%d9%82%d8%a7%d9%88%d9%85%d8%a9-%d8%a7%d9%84%d9%81%d9%86%d9%8a%d8%a9-%d9%88%d8%b5%d9%86%d8%a7%d8%b9%d8%a9-%d8%a7%d9%84/",
-      "published": "2026-09-06T10:30:00Z",
-      "lang": "ar",
-      "author": "Chaker Jahmi"
     }
   ]
 }
