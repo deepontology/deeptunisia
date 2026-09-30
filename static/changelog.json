@@ -1,5 +1,35 @@
 [
   {
+    "hash": "e3b4097e6",
+    "date": "2026-09-30T18:55:08+01:00",
+    "subject": "Data: 2026-09-30 sweep, JORT n° 96 decrees and Decree-Law 54 amendment",
+    "kind": "revision",
+    "added": 951,
+    "removed": 13,
+    "files": [
+      {
+        "file": "data/contrib/daily-2026-09-30.yaml",
+        "added": 688,
+        "removed": 0
+      },
+      {
+        "file": "data/events.yaml",
+        "added": 133,
+        "removed": 8
+      },
+      {
+        "file": "data/public-claims.yaml",
+        "added": 5,
+        "removed": 5
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 125,
+        "removed": 0
+      }
+    ]
+  },
+  {
     "hash": "e5084b17a",
     "date": "2026-09-27T03:06:55+01:00",
     "subject": "data, build: compile public figures through a claim registry (#44)",
