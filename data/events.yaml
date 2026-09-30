@@ -4355,7 +4355,7 @@
   category: legal
   subcategory: pre-trial-detention
   actors: [wael-naouar, nabil-channoufi, ghassan-henchiri, ghassan-boughdiri]
-  summary: 'Four Tunisian organisers of the Global Sumud Flotilla — Wael Naouar, Nabil Channoufi, Ghassan Henchiri and Ghassan Boughdiri — have been held in pre-trial detention at Mornaguia since 6 March 2026 per CRLDHT (Al Jazeera says "since March"), after rearrest following their return from Israeli detention in October 2025. On 11 September 2026 the investigating judge at the Tunis economic-financial judicial pole extended their pre-trial detention by four months. Naouar began an open-ended hunger strike on 16 August 2026 and the other three joined on 9 September; Naouar was taken to hospital and reported on the verge of death on 23 September, and that evening suspended his strike after 38 days (Al Jazeera and the LTDH say the 39th day — not reconciled), calling on the other three to end theirs. The charges as relayed are money laundering, fraud and misappropriation of Gaza-siege donations; the four and their lawyers deny them, and the money-laundering characterisation stays attributed.'
+  summary: 'Four Tunisian organisers of the Global Sumud Flotilla — Wael Naouar, Nabil Channoufi, Ghassan Henchiri and Ghassan Boughdiri — have been held in pre-trial detention at Mornaguia since 6 March 2026 per CRLDHT (Al Jazeera says "since March"), after rearrest following their return from Israeli detention in October 2025. On 11 September 2026 the investigating judge at the Tunis economic-financial judicial pole extended their pre-trial detention by four months. Naouar began an open-ended hunger strike on 16 August 2026 and the other three joined on 9 September; Naouar was taken to hospital and reported on the verge of death on 23 September, and that evening suspended his strike after 38 days (Al Jazeera and the LTDH say the 39th day — not reconciled), calling on the other three to end theirs. The charges as relayed are money laundering, fraud and misappropriation of Gaza-siege donations; the four and their lawyers deny them, and the money-laundering characterisation stays attributed. On 23 September 2026 the Tunis Court of Appeal rejected the defence challenge to the 11 September extension, leaving the four in pre-trial detention for another four months; Al Jazeera reported on 27 September that Ghassan Henchiri, Ghassan Boughdiri and Nabil Channoufi remained on hunger strike, and relayed Human Rights Watch concerns over the use of financial and money-laundering investigations against civil society actors in Tunisia.'
   confidence: B
   basis: reported
   verification: needs-primary-source
@@ -4368,6 +4368,7 @@
     - aljazeera-naouar-hospital-2026-09-23
     - kapitalis-naouar-suspension-2026-09-23
     - crldht-solidarite-2026-09-22
+    - aljazeera-sumud-appeal-2026-09-27
 - id: ev-complot-cassation-2026-09-03
   date: "2026-09-03"
   title_en: "Court of Cassation upholds 'conspiracy' convictions"
@@ -4590,13 +4591,12 @@
   actors: [mondher-ounissi]
   institutions: [judiciary, ennahda]
   summary: "On 25 September 2026 the criminal chamber specialised in terrorism cases at the Tunis Court of First Instance postponed examination of the \"audio recordings\" case against Ennahdha acting president Mondher Ounissi and rejected the detained defendants' release requests; the defendants followed the hearing from the remote-hearing room at Mornaguia civil prison. The case concerns recordings circulated on social networks, attributed to Ounissi, discussing a meeting with influential businessmen and financial violations concerning the party. The defence challenges the attribution and has asked for a forensic technical examination. At the 11 July 2026 hearing the same chamber had set the 25 September date and rejected a release request; more than ten co-defendants, mostly fugitives tried in absentia, face terrorism-related charges, and the journalist Zied El Heni (already in the graph) is among them."
-  confidence: C
-  basis: inferred
+  confidence: B
+  basis: reported
   verification: needs-primary-source
-  attributed_to: Kapitalis (25 September postponement); Tunisie Numérique (11 July case history)
-  reasoning: "The 25 September postponement and rejected release requests rest on a single outlet's report of the hearing; the 11 July case history is a second outlet for the case's existence but not for the September hearing. The record therefore states the postponement as a reasoned reading of the press accounts, not as a court record."
+  reasoning: "The 25 September postponement and rejected release requests are reported by Kapitalis (25 September) and African Manager (28 September), whose texts differ; the case history rests on Tunisie Numérique. No hearing record is cited, so the record states a press-corroborated report of the hearing, not a court record."
   falsifiable_by: "The chamber's hearing record or the indictment referral would confirm the postponement, the co-defendant list and which defendants are in absentia."
-  sources: [kapitalis-ounissi-report-2026-09-25, tunisienumerique-ounissi-case-2026-07-11]
+  sources: [kapitalis-ounissi-report-2026-09-25, tunisienumerique-ounissi-case-2026-07-11, africanmanager-ounissi-release-2026-09-28]
 
 - id: ev-moussi-hunger-strike-2026-09-23
   date: "2026-09-23"
@@ -4620,12 +4620,12 @@
   subcategory: repression
   actors: [wael-naouar, nabil-channoufi, ghassan-henchiri, ghassan-boughdiri]
   institutions: [snjt, ugtt, onat, ltdh]
-  summary: "A peaceful march from the SNJT headquarters to Avenue Habib Bourguiba in Tunis on Saturday 19 September 2026 demanded the release of the four detained Global Sumud Flotilla organisers; Al Jazeera reports dozens of protesters with Tunisian and Palestinian flags and anti-government slogans. In the night of Sunday 20 to Monday 21 September police arrested a large number of participants; Al Jazeera reports at least 11 arrested, and CRLDHT describes night raids at homes and in the street, several detainees held for long hours without contact with family or lawyers, and minors among those picked up. On 25 September the Sumud defence committee announced pre-trial detention warrants against all those arrested, including the pupil Adam Mbarek, whose file was referred to the children's judge. CRLDHT, and a joint UGTT-ONAT-LTDH statement it relays, demanded releases and denounced the criminalisation of peaceful assembly; the government denies the prosecutions are political and says the judiciary is independent."
+  summary: "A peaceful march from the SNJT headquarters to Avenue Habib Bourguiba in Tunis on Saturday 19 September 2026 demanded the release of the four detained Global Sumud Flotilla organisers; Al Jazeera reports dozens of protesters with Tunisian and Palestinian flags and anti-government slogans. In the night of Sunday 20 to Monday 21 September police arrested a large number of participants; Al Jazeera reports at least 11 arrested, and CRLDHT describes night raids at homes and in the street, several detainees held for long hours without contact with family or lawyers, and minors among those picked up. On 25 September the Sumud defence committee announced pre-trial detention warrants against all those arrested, including the pupil Adam Mbarek, whose file was referred to the children's judge. CRLDHT, and a joint UGTT-ONAT-LTDH statement it relays, demanded releases and denounced the criminalisation of peaceful assembly; the government denies the prosecutions are political and says the judiciary is independent. Al Jazeera reported on 27 September, citing lawyer Rafed Rabbeh, that fourteen people detained after the protest had been placed in pre-trial detention, including a 17-year-old brought before a juvenile judge; the reported charges include participating in a gathering allegedly intended to disturb public order and commit an offence, publicly attributing unlawful acts to a public official without proof, and public statements deemed to damage the reputation of a person or official body."
   confidence: B
   basis: reported
   contested: [{framing: "Night raids aimed at intimidating civil society, with short forced disappearances of detainees", held_by: CRLDHT, source: crldht-solidarite-2026-09-22}, {framing: Prosecutions follow the law; freedoms are guaranteed and the judiciary is independent, held_by: "Tunisian government / President Saïed, as relayed by Al Jazeera", source: aljazeera-sumud-protest-2026-09-20}]
   falsifiable_by: "Police or prosecution records, or the children's-judge file for Adam Mbarek, would confirm or correct the arrest and detention counts."
-  sources: [aljazeera-sumud-protest-2026-09-20, aljazeera-naouar-hospital-2026-09-23, crldht-solidarite-2026-09-22, kapitalis-mandats-depot-manifestants-2026-09-25]
+  sources: [aljazeera-sumud-protest-2026-09-20, aljazeera-naouar-hospital-2026-09-23, crldht-solidarite-2026-09-22, kapitalis-mandats-depot-manifestants-2026-09-25, aljazeera-sumud-appeal-2026-09-27]
 
 - id: ev-hammami-solidarity-hunger-strike-2026-09-18
   date: "2026-09-18"
@@ -4791,3 +4791,128 @@
   verification: needs-primary-source
   falsifiable_by: The World Bank Tunisia Economic Monitor PDF/page for September 2026 and its data annex
   sources: [african-manager-banque-mondiale-eau-2026-09-23, african-manager-croissance-2026-09-23, channel-africa-tunisia-water-2026-09-23]
+
+- id: ev-conseil-ministres-decrets-2026-09-29
+  date: "2026-09-29"
+  title_en: "Council of Ministers examines four draft decrees, including the Decree-Law 54 amendment"
+  title_fr: "Conseil des ministres : quatre projets de décrets examinés, dont l'amendement du décret-loi 54"
+  category: political
+  subcategory: executive
+  actors: [kais-saied]
+  institutions: [presidency]
+  summary: "On Tuesday 29 September 2026 President Kaïs Saïed chaired a Council of Ministers at Carthage Palace; the presidency communiqué, published on Wednesday 30 September and relayed by Business News, Le Temps News and other outlets, states that it examined four draft decrees: one amending Decree-Law 54/2022 on offences related to information and communication systems; one amending Decree-Law 13/2022 on penal reconciliation and the allocation of its revenues; one amending certain provisions of organic law 2012-23 on the Independent High Authority for Elections (ISIE); and one concerning municipal councils. The meeting also covered questions of public-service operation. The communiqué did not state the content of the changes; all four texts were published the following day in JORT n° 96 (see the four linked events). The presidency communiqué is a single origin; the outlets relaying it are not independent corroboration."
+  confidence: B
+  basis: reported
+  verification: verified
+  sources: [businessnews-conseil-ministres-2026-09-30, letemps-conseil-ministres-2026-09-30, africanmanager-decret54-revision-2026-09-30]
+  attributed_to: "Présidence de la République communiqué, relayed by Business News, Le Temps News and African Manager"
+
+- id: ev-decret-2026-1-decret54-amendment-2026-09-30
+  date: "2026-09-30"
+  title_en: "Decree 2026-1 published: article 24 of Decree-Law 54 rewritten, prison replaced by a fine outside recidivism"
+  title_fr: "Décret n° 1 de 2026 publié : l'article 24 du décret-loi 54 réécrit, la prison remplacée par une amende hors récidive"
+  title_ar: مرسوم عدد 1 لسنة 2026 يتعلق بتنقيح المرسوم عدد 54 لسنة 2022 المتعلق بمكافحة الجرائم المتصلة بأنظمة المعلومات والاتصال
+  category: legal
+  subcategory: legislation
+  actors: [kais-saied]
+  institutions: [presidency]
+  causes: [ev-conseil-ministres-decrets-2026-09-29]
+  documents: [مرسوم عدد 1 لسنة 2026 المؤرخ في 30 سبتمبر 2026، الرائد الرسمي عدد 96، ص 2056, https://lake.jort.tn/journal-officiel/ar/2026/096.pdf]
+  summary: "JORT n° 96 of 30 September 2026 (p. 2056) published Decree No. 1 of 2026, dated 30 September 2026, which repeals and replaces article 24 of Decree-Law 54/2022 of 13 September 2022 on combating offences related to information and communication systems; it does not repeal the article, it rewrites it, and the rest of Decree-Law 54 is untouched. The new article 24 punishes with a fine of 10,000 to 20,000 dinars — no custodial sentence for the base offence — anyone who deliberately uses information and communication networks or systems to produce, promote, publish, send or prepare false news, data or rumours, fabricated or forged documents, or material falsely attributed to others, where the purpose is to harm others' rights or public security or national defence, or to spread terror among the population; the same fine applies to deliberate publication of false personal data or untrue attributions intended to defame or harm, incite an attack on a person, or incite hatred. On recidivism the penalty is six months' imprisonment and a 50,000-dinar fine; the penalties double where the targeted person is a public official or equivalent; article 53 of the Penal Code does not apply to these offences in cases of recidivism. The decree followed the Council of Ministers of 29 September 2026 and bypasses Parliament, where MP Mohamed Ali's February 2024 initiative to delete article 24 had remained blocked in committee; the SNJT, RSF and other organisations had demanded repeal of article 24, not its conversion to a fine. Press readings describe the headline change as the abolition of the prison sentence (Mosaïque FM); the gazette text keeps imprisonment on recidivism."
+  confidence: A
+  basis: documented
+  verification: verified
+  falsifiable_by: The gazette text itself is the record; a misreading would be shown by a human re-read of JORT n° 96 p. 2056 (the two-column extraction is artefacted).
+  sources: [jort-2026-096, tunisienumerique-decret54-article24-2026-09-30, mosaiquefm-decret54-amendement-2026-09-30, businessnews-decret54-mohamed-ali-2026-09-24, africanmanager-decret54-revision-2026-09-30]
+
+- id: ev-decret-2026-2-reconciliation-penale-2026-09-30
+  date: "2026-09-30"
+  title_en: "Decree 2026-2 published: penal-reconciliation payment terms relaxed, revenue allocation tied to the National Security Council"
+  title_fr: "Décret n° 2 de 2026 publié : assouplissement des paiements de la réconciliation pénale, recettes liées au Conseil de sécurité nationale"
+  title_ar: مرسوم عدد 2 لسنة 2026 يتعلق بتنقيح المرسوم عدد 13 لسنة 2022 المتعلق بالصلح الجزائي وتوظيف عائداته وإتمامه
+  category: legal
+  subcategory: legislation
+  actors: [kais-saied]
+  institutions: [presidency, national-security-council]
+  causes: [ev-conseil-ministres-decrets-2026-09-29]
+  documents: [مرسوم عدد 2 لسنة 2026 المؤرخ في 30 سبتمبر 2026، الرائد الرسمي عدد 96، ص 2056, https://lake.jort.tn/journal-officiel/ar/2026/096.pdf]
+  summary: "JORT n° 96 of 30 September 2026 (p. 2056) published Decree No. 2 of 2026, dated 30 September 2026, amending Decree-Law 13/2022 of 20 March 2022 on penal reconciliation and the allocation of its revenues. The repeals and replacements: article 25's second paragraph now allows a provisional settlement project providing for payment of at least 50% of the sums due, with a commitment to pay the remainder within a period proposed by the commission that must not exceed two years, based on solid and serious evidence provided by the applicant; a new final paragraph of article 25 lets the commission propose a lower rate where it deems that justified from the file; article 30's third paragraph now allocates penal-reconciliation revenues to financing the projects mentioned in its first paragraph, in accordance with the decisions of the National Security Council; the last paragraph of article 30 is repealed. African Manager described the same instrument as concerning prison regulations (\"règlements pénitentiaires\"), while the gazette title, Business News, Mosaïque FM and Le Temps News identify it as penal reconciliation; the discrepancy is recorded as a rejected dispute below."
+  confidence: A
+  basis: documented
+  verification: verified
+  disputes: [{claim: The instrument amended by the second draft decree is the prison-regulations decree (décret-loi 2022-13), held_by: African Manager, source: africanmanager-decret54-revision-2026-09-30, assessment: 'The gazette title ("الصلح الجزائي وتوظيف عائداته وإتمامه") and three other outlets identify décret-loi 2022-13 as the penal-reconciliation text; the primary source settles it against the African Manager wording, which is not adopted.', status: rejected}]
+  sources: [jort-2026-096, mosaiquefm-reconciliation-penale-2026-09-30, businessnews-conseil-ministres-2026-09-30, africanmanager-decret54-revision-2026-09-30]
+
+- id: ev-decret-2026-3-isie-2026-09-30
+  date: "2026-09-30"
+  title_en: "Decree 2026-3 published: nine-member ISIE, six-year non-renewable terms, appointment by decree"
+  title_fr: "Décret n° 3 de 2026 publié : une ISIE à neuf membres, mandats de six ans non renouvelables, nomination par décret"
+  title_ar: مرسوم عدد 3 لسنة 2026 يتعلق بتنقيح بعض أحكام القانون الأساسي عدد 23 لسنة 2012 المتعلق بالهيئة العليا المستقلة للانتخابات
+  category: constitutional
+  subcategory: electoral-body
+  actors: [kais-saied]
+  institutions: [presidency, isie]
+  causes: [ev-conseil-ministres-decrets-2026-09-29]
+  documents: [مرسوم عدد 3 لسنة 2026 المؤرخ في 30 سبتمبر 2026، الرائد الرسمي عدد 96، ص 2057, https://lake.jort.tn/journal-officiel/ar/2026/096.pdf]
+  summary: "JORT n° 96 of 30 September 2026 (p. 2057) published Decree No. 3 of 2026, dated 30 September 2026, amending organic law 2012-23 on the Independent High Authority for Elections. It repeals articles 5, 6 and 9 and replaces them: the ISIE council is composed of nine independent, neutral members chosen as follows — three with at least ten years' experience in election administration chosen by the President; a judicial judge with at least ten years' seniority from three proposed by the Conseil supérieur de la magistrature; an administrative judge proposed by the administrative judiciary council; a financial judge proposed by the financial judiciary council; an engineer specialised in information systems and security from three proposed by the National Information Centre; a statistics engineer from three proposed by the National Institute of Statistics; and a retired diplomat from three proposed by the Ministry of Foreign Affairs. Members are appointed by decree, public-sector members keep their original ranks, and the President appoints the ISIE president from among the members. Each member serves a non-renewable six-year term, with one third of the council renewed every two years; a lottery fixes the first renewals at the end of the second and fourth years, the president not being drawn in the first two rounds; the ISIE president informs the President three months before a term ends. Members appointed under Decree-Law 2022-22 continue until the new council takes office. The article 3 substitutions also drop references to \"the head of government\" and replace \"five members\" with \"seven members\", \"by presidential decree\" with \"by decree\", \"accountant\" with \"specialist in accounting or financial audit\", and the Audit Court references."
+  confidence: A
+  basis: documented
+  verification: verified
+  sources: [jort-2026-096, businessnews-conseil-ministres-2026-09-30]
+
+- id: ev-decret-2026-4-municipal-councils-2026-09-30
+  date: "2026-09-30"
+  title_en: "Decree 2026-4 published: a new municipal-councils text"
+  title_fr: "Décret n° 4 de 2026 publié : un nouveau texte sur les conseils municipaux"
+  title_ar: مرسوم عدد 4 لسنة 2026 يتعلق بالمجالس البلدية
+  category: legal
+  subcategory: local-government
+  actors: [kais-saied]
+  institutions: [presidency, ministry-interior]
+  causes: [ev-conseil-ministres-decrets-2026-09-29]
+  documents: [مرسوم عدد 4 لسنة 2026 المؤرخ في 30 سبتمبر 2026، الرائد الرسمي عدد 96، ص 2058-2074, https://lake.jort.tn/journal-officiel/ar/2026/096.pdf]
+  summary: "JORT n° 96 of 30 September 2026 (p. 2058) published Decree No. 4 of 2026, dated 30 September 2026, on municipal councils: a comprehensive text running to p. 2074 (the next sommaire item begins at p. 2075). The pages read so far cover general provisions (the municipal council as a local collectivity with legal personality and administrative and financial autonomy, mandated to deliver citizen services and guarantee residents' participation), the merger of two or more municipal areas by decree with transfer of rights and obligations and an Interior Ministry inventory of the merged councils' assets, state support for municipal financial balance and staffing, council tasks (local regulations, budget, planning schemes, environmental and social programmes, cooperation, naming of public spaces), civil-status functions of the mayor and assistants, and standing committees. Full-text analysis of the whole text (roughly seventeen gazette pages) is owed before any detailed record; this candidate records the act and its scope only."
+  confidence: A
+  basis: documented
+  verification: verified
+  falsifiable_by: A full reading of p. 2058-2074 would correct or extend the scope summary; the candidate deliberately states only what was read.
+  sources: [jort-2026-096]
+
+- id: ev-moussi-cassation-rejet-2026-09-29
+  date: "2026-09-29"
+  title_en: Court of Cassation rejects Abir Moussi's appeals in three cases
+  title_fr: La Cour de cassation rejette les recours d'Abir Moussi dans trois affaires
+  title_ar: محكمة التعقيب ترفض طعون عبير موسي في ثلاث قضايا
+  category: legal
+  subcategory: cassation
+  actors: [abir-moussi]
+  institutions: [court-of-cassation, judiciary]
+  location: [gov-tunis]
+  causes: [moussi-cassation-appeals-2026]
+  summary: "On 29 September 2026 (first report by Mosaïque FM at 18:19; African Manager carried the same text on 30 September) the Court of Cassation rejected the appeals filed by the defence committee of Free Destourian Party president Abir Moussi against several appeal decisions. The appeals concerned the \"bureau d'ordre of the presidency of the Republic\" case and two cases brought against her by the ISIE. The report recalls the 13 March 2026 Tunis Court of Appeal criminal-chamber judgment: ten years' imprisonment in the bureau d'ordre case and six months for \"obstruction of freedom of work\", plus two years and six months in the two ISIE cases. Both outlets state the cumulative total as twelve years and six months, while the article's own itemised terms (10 years + 6 months + 2 years + 6 months) sum to thirteen; the figure is kept as reported and not averaged. The two items carry identical report text, so they count as one origin."
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "Mosaïque FM and African Manager, carrying the same report (single origin)"
+  reasoning: "The rejection is reported by two outlets but in identical text, so the independence is one origin; C with attribution. The three underlying convictions and the appeal judgment are press-relayed, not court records. Basis stays `inferred` rather than `reported` because the single-origin report is not independent corroboration."
+  falsifiable_by: "The Court of Cassation's decision, or the 13 March 2026 appeal dispositif, would settle the case list and the cumulative sentence."
+  disputes: [{claim: The cumulative sentence in the three cases is 12 years and 6 months, held_by: Mosaïque FM / African Manager (same report text), source: mosaiquefm-moussi-cassation-2026-09-29, assessment: The itemised terms in the same report sum to 13 years; the stated total is 12 years 6 months. Kept as reported; not averaged or adjudicated., status: open}]
+  sources: [mosaiquefm-moussi-cassation-2026-09-29, africanmanager-moussi-cassation-2026-09-30]
+
+- id: ev-naufrage-hasdrubal-2026-09-30
+  date: "2026-09-30"
+  title_en: "Migrant boat breaks up near the Hasdrubal platform: 28 rescued, 2 dead, 6 missing"
+  title_fr: "Naufrage d'une embarcation près de la plateforme Hasdrubal : 28 rescapés, 2 morts, 6 disparus"
+  title_ar: "غرق قارب مهاجرين قرب منصة الحصدرﱡبال: إنقاذ 28 ووفاة اثنين وفقدان ستة"
+  category: security
+  subcategory: migration
+  institutions: []
+  location: []
+  summary: "On 30 September 2026 Kapitalis relayed Ansa and Sea Watch: the NGO ship Aurora found a nearly deflated dinghy — signalled by Alarm Phone in the Libyan SAR zone — carrying five people and two bodies, one of a child according to witnesses; about 25 people had clung to the Hasdrubal offshore gas platform to escape the sinking, and two women said they lost their children in the waves; the dinghy was at the boundary of the Libyan and Tunisian SAR zones, and survivors told Sea Watch that others reached the platform after the sinking. After recovering the five survivors and the two bodies, the Aurora — authorised by the Tunisian authorities — transferred people from the platform and disembarked 28 people (five women and a young child among them) at Lampedusa, Italy; six people are missing, three of them children. The account rests on Sea Watch and Alarm Phone statements relayed by one outlet; no Tunisian authority statement was cited."
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "Sea Watch and Alarm Phone statements via Ansa, relayed by Kapitalis"
+  reasoning: "Single-outlet relay of NGO statements; the toll and the SAR-zone boundary detail are the organisations' accounts, not official Tunisian figures. C with attribution. Basis stays `inferred`: one relay of one origin is not a multi-outlet report, and no Tunisian statement was cited."
+  falsifiable_by: "Tunisian, Italian or Libyan SAR records, or a Sea Watch log, would confirm the toll, the platform transfer and the six missing."
+  sources: [kapitalis-naufrage-hasdrubal-2026-09-30]

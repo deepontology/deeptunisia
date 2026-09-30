@@ -1,6 +1,6 @@
 {
-  "generated": "2026-09-27T04:07:20.826Z",
-  "total": 975,
+  "generated": "2026-09-30T17:50:01.574Z",
+  "total": 982,
   "reviewed": 38,
   "queue": [
     {
@@ -435,13 +435,13 @@
     },
     {
       "kind": "event",
-      "id": "ev-ounissi-audio-case-2026-09-25",
+      "id": "ev-moussi-cassation-rejet-2026-09-29",
       "confidence": "C",
       "basis": "inferred",
       "risk": 1,
       "sources": 2,
       "reviewed": false,
-      "title": "Ounissi audio-recordings trial postponed, release request rejected"
+      "title": "Court of Cassation rejects Abir Moussi's appeals in three cases"
     },
     {
       "kind": "licence",
@@ -802,6 +802,16 @@
       "sources": 1,
       "reviewed": false,
       "title": "Nafti and IOM's Amy Pope review the voluntary-return mechanism in New York"
+    },
+    {
+      "kind": "event",
+      "id": "ev-naufrage-hasdrubal-2026-09-30",
+      "confidence": "C",
+      "basis": "inferred",
+      "risk": 1,
+      "sources": 1,
+      "reviewed": false,
+      "title": "Migrant boat breaks up near the Hasdrubal platform: 28 rescued, 2 dead, 6 missing"
     },
     {
       "kind": "event",
@@ -1559,7 +1569,7 @@
       "confidence": "B",
       "basis": "reported",
       "risk": 3,
-      "sources": 7,
+      "sources": 8,
       "reviewed": false,
       "title": "Four Sumud flotilla organisers held at Mornaguia; Naouar hunger strike"
     },
@@ -1612,6 +1622,16 @@
       "sources": 5,
       "reviewed": false,
       "title": "Phoenix Express 2026 multinational naval exercise hosted in Tunisia"
+    },
+    {
+      "kind": "event",
+      "id": "ev-sumud-march-arrests-2026-09-19",
+      "confidence": "B",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 5,
+      "reviewed": false,
+      "title": "Tunis march for the Sumud four; night arrests and pre-trial detention warrants"
     },
     {
       "kind": "event",
@@ -1712,16 +1732,6 @@
       "sources": 4,
       "reviewed": false,
       "title": "Migrant boat sinking off Zarzis (15 aboard)"
-    },
-    {
-      "kind": "event",
-      "id": "ev-sumud-march-arrests-2026-09-19",
-      "confidence": "B",
-      "basis": "reported",
-      "risk": 3,
-      "sources": 4,
-      "reviewed": false,
-      "title": "Tunis march for the Sumud four; night arrests and pre-trial detention warrants"
     },
     {
       "kind": "position",
@@ -1985,6 +1995,16 @@
     },
     {
       "kind": "event",
+      "id": "ev-conseil-ministres-decrets-2026-09-29",
+      "confidence": "B",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 3,
+      "reviewed": false,
+      "title": "Council of Ministers examines four draft decrees, including the Decree-Law 54 amendment"
+    },
+    {
+      "kind": "event",
       "id": "ev-hammami-solidarity-hunger-strike-2026-09-18",
       "confidence": "B",
       "basis": "reported",
@@ -2002,6 +2022,16 @@
       "sources": 3,
       "reviewed": false,
       "title": "Lawyer Ghazi Mrabet among nine jailed in a drug-network case"
+    },
+    {
+      "kind": "event",
+      "id": "ev-ounissi-audio-case-2026-09-25",
+      "confidence": "B",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 3,
+      "reviewed": false,
+      "title": "Ounissi audio-recordings trial postponed, release request rejected"
     },
     {
       "kind": "event",
@@ -7824,6 +7854,16 @@
       "title": "The Barraket Essahel affair"
     },
     {
+      "kind": "event",
+      "id": "ev-decret-2026-1-decret54-amendment-2026-09-30",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 5,
+      "reviewed": false,
+      "title": "Decree 2026-1 published: article 24 of Decree-Law 54 rewritten, prison replaced by a fine outside recidivism"
+    },
+    {
       "kind": "position",
       "id": "p-dgsn-ganzoui",
       "confidence": "A",
@@ -7912,6 +7952,16 @@
       "sources": 4,
       "reviewed": false,
       "title": "The 2014 constitution is adopted"
+    },
+    {
+      "kind": "event",
+      "id": "ev-decret-2026-2-reconciliation-penale-2026-09-30",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 4,
+      "reviewed": false,
+      "title": "Decree 2026-2 published: penal-reconciliation payment terms relaxed, revenue allocation tied to the National Security Council"
     },
     {
       "kind": "event",
@@ -8495,6 +8545,16 @@
     },
     {
       "kind": "event",
+      "id": "ev-decret-2026-3-isie-2026-09-30",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "Decree 2026-3 published: nine-member ISIE, six-year non-renewable terms, appointment by decree"
+    },
+    {
+      "kind": "event",
       "id": "judge-dismissals-2022",
       "confidence": "A",
       "basis": "documented",
@@ -9002,6 +9062,16 @@
       "sources": 1,
       "reviewed": false,
       "title": "Ayachi Hammami arrested on terrorism charges"
+    },
+    {
+      "kind": "event",
+      "id": "ev-decret-2026-4-municipal-councils-2026-09-30",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "Decree 2026-4 published: a new municipal-councils text"
     },
     {
       "kind": "event",
