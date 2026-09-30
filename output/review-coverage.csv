@@ -16,9 +16,9 @@ relationship,documented,93,0,0,0,0,0,0
 relationship,reported,247,1,0,0,0,2,0
 relationship,inferred,16,1,0,0,0,0,0
 relationship,unsubstantiated,6,6,0,0,0,0,0
-event,documented,35,0,0,0,0,16,0
-event,reported,83,0,0,0,0,21,0
-event,inferred,10,1,0,0,0,1,0
+event,documented,39,0,0,0,0,17,0
+event,reported,85,0,0,0,0,21,0
+event,inferred,11,1,0,0,0,2,0
 agreement,documented,24,0,0,0,0,3,0
 agreement,reported,3,0,0,0,0,1,0
 world-claim,documented,5,0,0,0,0,4,0

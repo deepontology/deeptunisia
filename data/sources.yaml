@@ -13082,3 +13082,128 @@
   tier: 2
   lang: fr
   excerpt: '"Abdelhamid MNAJA — PDG de la SONEDE" (current board listing, page updated December 2024; retrieved 2026-09-25).'
+
+- id: jort-2026-096
+  title: Journal Officiel de la République Tunisienne n° 96 du 30 septembre 2026 (édition arabe officielle)
+  publisher: Imprimerie Officielle de la République Tunisienne (archive lake.jort.tn)
+  date: "2026-09-30"
+  url: https://lake.jort.tn/journal-officiel/ar/2026/096.pdf
+  tier: 1
+  lang: ar
+  note: "The /fr/ path served the same Arabic-edition PDF when fetched on 2026-09-30 (identical md5); the French edition of this issue was not separately available. The issue carries four decrees: 2026-1 (Decree-Law 54/2022 amendment, p. 2056), 2026-2 (Decree-Law 13/2022 penal reconciliation, p. 2056), 2026-3 (organic law 2012-23 on ISIE, p. 2057), 2026-4 (municipal councils, p. 2058). The sommaire follows the 30 September 2026 date; the next sommaire item starts at p. 2075, so the municipal-councils text runs to p. 2074."
+  excerpt: مرسوم عدد 1 لسنة 2026 مؤرخ في 30 سبتمبر 2026 يتعلّق بتنقيح المرسوم عدد 54 لسنة 2022 المؤرخ في 13 سبتمبر 2022 المتعلّق بمكافحة الجرائم المتصلة بأنظمة المعلومات والاتصال. مرسوم عدد 2 لسنة 2026 مؤرخ في 30 سبتمبر 2026 يتعلّق بتنقيح المرسوم عدد 13 لسنة 2022 المؤرخ في 20 مارس 2022 المتعلق بالصلح الجزائي وتوظيف عائداته وإتمامه. مرسوم عدد 3 لسنة 2026 مؤرخ في 30 سبتمبر 2026 يتعلّق بتنقيح بعض أحكام القانون الأساسي عدد 23 لسنة 2012 المؤرخ في 20 ديسمبر 2012 المتعلق بالهيئة العليا المستقلة للانتخابات. مرسوم عدد 4 لسنة 2026 مؤرخ في 30 سبتمبر 2026 يتعلق بالمجالس البلدية.
+  notes: ["The PDF has a text layer, but the two-column Arabic layout extracts with word-order artefacts; the article text summarised in the event rows below was read from the rendered pages (p. 2056-2058), not copy-pasted from pdftotext. A human should re-read p. 2056 before merging the A-grade rows.", 'The French designation of the amending instruments varies in the press ("décret n°1 de 2026", "décret-loi n°1", "décret-loi n° 2 de 2026"); the gazette wording is "مرسوم عدد N لسنة 2026".']
+
+- id: businessnews-conseil-ministres-2026-09-30
+  title: "Décret 54, réconciliation pénale et Isie : des amendements examinés en Conseil des ministres sous la présidence de Kaïs Saïed"
+  publisher: Business News
+  date: "2026-09-30"
+  url: https://businessnews.com.tn/2026/09/30/decret-54-reconciliation-penale-et-isie-des-amendements-examines-en-conseil-des-ministres-sous-la-presidence-de-kais-saied/1420748/
+  tier: 3
+  lang: fr
+  excerpt: "Le décret 54, la réconciliation pénale, le cadre juridique de l'Instance supérieure indépendante pour les élections (Isie) et les conseils municipaux étaient au menu du Conseil des ministres présidé, mardi 29 septembre 2026, par le président de la République, Kaïs Saïed. Trois projets prévoient de modifier des textes existants, tandis qu'un quatrième porte sur les conseils municipaux, selon un communiqué publié mercredi matin par la présidence de la République. ... Le communiqué ne précise toutefois pas les dispositions concernées ni la teneur des changements envisagés dans ces deux textes."
+  note: "Relays the presidency communiqué (same origin as the other Council items). Unlike African Manager, it correctly identifies the second instrument as the penal-reconciliation decree."
+
+- id: letemps-conseil-ministres-2026-09-30
+  title: Saïed préside un Conseil des ministres consacré à la modification de plusieurs décret-lois
+  publisher: Le Temps News
+  date: "2026-09-30"
+  url: https://letemps.news/2026/09/30/saied-preside-un-conseil-des-ministres-consacre-a-la-modification-de-plusieurs-decret-lois/
+  tier: 3
+  lang: fr
+  excerpt: "Le président Kaïs Saïed a présidé mardi au palais de Carthage un Conseil des ministres consacré à l'examen de plusieurs projets de décrets-lois ainsi qu'à des questions liées au fonctionnement des services publics, selon un communiqué de la présidence publié mercredi. Le Conseil a notamment examiné un projet de décret-loi portant modification du décret-loi 54 de 2022 relatif à la lutte contre les infractions liées aux systèmes d'information et de communication, ainsi qu'un texte modifiant le décret-loi 13 de 2022 relatif à la réconciliation pénale et à l'affectation de ses recettes."
+  note: Relays the presidency communiqué (same origin).
+
+- id: mosaiquefm-decret54-amendement-2026-09-30
+  title: "Amendement du décret 54 : La peine de prison annulée"
+  publisher: Mosaique FM
+  date: "2026-09-30"
+  url: https://www.mosaiquefm.net/fr/national-tunisie/1531930/amendement-du-decret-54-la-peine-de-prison-annulee
+  tier: 3
+  lang: fr
+  excerpt: "D'après le Journal officiel de la République tunisienne du 30 septembre 2026, l'article 24 du décret-loi 54 de 2022, relatif à la lutte contre les infractions se rapportant aux systèmes d'information et de communication, vient d'être amendé. En effet, la peine de cinq ans de prison et les 50 mille dinars d'amende ont été remplacés par une amende de 10 mille à 20 mille dinars, infligée à quiconque utilise sciemment des systèmes et des réseaux d'information et de communication, en vue de produire, répandre, diffuser, envoyer, ou rédiger de fausses nouvelles, de fausses données, des rumeurs, des documents faux ou falsifiés ou faussement attribués à autrui, dans le but de porter atteinte aux droits d'autrui ou porter préjudice à la sûreté publique ou à la défense nationale ou de semer la terreur parmi la population. En cas de récidive, de l'une de ces infractions, la peine est portée à six mois de prison et à 50 mille dinars d'amende. Les peines prévues sont portées au double si la personne visée est un agent public ou assimilé."
+  note: "The headline (\"la peine de prison annulée\") describes the base offence only; the gazette keeps six months' imprisonment for recidivism — noted, not treated as a contradiction."
+
+- id: mosaiquefm-reconciliation-penale-2026-09-30
+  title: Amendement du décret sur la réconciliation pénale
+  publisher: Mosaique FM
+  date: "2026-09-30"
+  url: https://www.mosaiquefm.net/fr/national-tunisie/1531944/amendement-du-decret-sur-la-reconciliation-penale
+  tier: 3
+  lang: fr
+  excerpt: "Le décret-loi n° 2 de 2026, portant modification du Décret-loi- n° 2022-13 du 20 mars 2022, portant sur la réconciliation pénale et l'affectation de ses ressources, a été publié au Journal officiel de ce mercredi 30 septembre et ce, après avoir été examiné par le Conseil ministériel qui a eu lieu, hier à Carthage, sous la présidence du chef de l'Etat, Kais Saïed. L'amendement de l'article 25 de ce décret-loi de 2022, prévoit la possibilité de proposer un projet de conciliation provisoire comprenant le paiement d'au moins 50 % des montants financiers dus, assorti d'un engagement de verser les sommes restantes dans les délais proposés par la commission et qui ne doivent pas dépasser les deux ans. ... L'amendement de l'article 30 prévoit, par ailleurs, que les recettes issues de la conciliation pénale soient affectées au financement des projets mentionnés au premier paragraphe de cet article, conformément aux décisions du Conseil de sécurité nationale."
+
+- id: tunisienumerique-decret54-article24-2026-09-30
+  title: "Tunisie : ce qui change dans l'article 24 du décret 54"
+  publisher: Tunisie Numérique
+  date: "2026-09-30"
+  url: https://www.tunisienumerique.com/tunisie-ce-qui-change-dans-larticle-24-du-decret-54/
+  tier: 3
+  lang: fr
+  excerpt: "Le Journal officiel de la République tunisienne (JORT) a publié, ce mercredi 30 septembre 2026, le décret n°1 de 2026 modifiant le décret-loi n°54 du 13 septembre 2022 relatif à la lutte contre les infractions liées aux systèmes d'information et de communication. Le texte remplace intégralement les anciennes dispositions de l'article 24, sans supprimer cet article. ... Le nouvel article 24 prévoit désormais, pour les faits visés par ses deux premiers paragraphes, une amende comprise entre 10.000 et 20.000 dinars. Aucune peine d'emprisonnement n'est prévue dans ces deux paragraphes hors situation de récidive. ... Enfin, le nouvel article précise que les dispositions de l'article 53 du Code pénal ne s'appliquent pas aux infractions prévues par cet article en cas de récidive."
+
+- id: africanmanager-decret54-revision-2026-09-30
+  title: Révision du décret-loi 54 et du dispositif de réconciliation pénale
+  publisher: African Manager
+  date: "2026-09-30"
+  url: https://africanmanager.com/revision-du-decret-loi-54-et-du-dispositif-de-reconciliation-penale/
+  tier: 3
+  lang: fr
+  excerpt: "Le président de la République Kaïs Saïed a présidé hier, 29 septembre, une réunion du Conseil des ministres au palais de Carthage, afin d'examiner plusieurs projets de décrets et diverses questions relatives au fonctionnement des services publics. ... – Décret modifiant le décret n° 54 de 2022 du 13 septembre 2022 relatif à la lutte contre la criminalité liée aux systèmes d'information et de communication. – Décret modifiant le décret n° 13 de 2022 du 20 mars 2022 relatif aux règlements pénitentiaires, à l'affectation de leurs recettes et à leur achèvement. ..."
+  note: "The second item misdescribes décret 2022-13 as prison regulations; the gazette title and three other outlets identify it as penal reconciliation. Recorded as a rejected dispute on the decree 2026-2 event, never silently harmonised."
+
+- id: businessnews-decret54-mohamed-ali-2026-09-24
+  title: "Décret 54 : deux ans et demi après son dépôt, Mohamed Ali affirme que l'amendement se heurte toujours à un mur au Parlement"
+  publisher: Business News
+  date: "2026-09-24"
+  url: https://businessnews.com.tn/2026/09/24/decret-54-deux-ans-et-demi-apres-son-depot-mohamed-ali-affirme-que-lamendement-se-heurte-toujours-a-un-mur-au-parlement/1419889/
+  tier: 3
+  lang: fr
+  excerpt: "Plus de deux ans et demi après son dépôt, la proposition d'amendement du décret 54 continue de faire du surplace au Parlement. À l'origine de l'initiative, le député Mohamed Ali affirme que le texte, après avoir longtemps attendu avant d'être transmis à une commission, n'a toujours pas dépassé le stade d'une première audition. Il estime que même cette révision, qu'il présente comme le « minimum », s'est heurtée à un « mur » au sein de l'Assemblée. ... Dans sa version déposée en février 2024, elle proposait notamment la suppression de l'article 24."
+  note: "Backstory for the executive-bypass reading of the 30 September decree: Parliament's amendment route was stalled; the President's decree achieved the article 24 rewrite without it."
+
+- id: mosaiquefm-moussi-cassation-2026-09-29
+  title: "Cour de cassation : Les recours de Abir Moussi rejetés"
+  publisher: Mosaique FM
+  date: "2026-09-29"
+  url: https://www.mosaiquefm.net/fr/national-tunisie/1531829/cour-de-cassation-les-recours-de-abir-moussi-rejetes
+  tier: 3
+  lang: fr
+  excerpt: "La Cour de cassation a rejeté les recours introduits par le collectif de défense de la présidente du Parti destourien libre (PDL), Abir Moussi, contre plusieurs décisions rendues à son encontre en appel, dans différentes affaires. Les recours concernent notamment l'affaire dite du « bureau d'ordre de la présidence de la République », ainsi que deux autres affaires engagées contre elle par l'Instance supérieure indépendante pour les élections (ISIE). Le 13 mars 2026, la Chambre criminelle de la Cour d'appel de Tunis avait condamné Abir Moussi à dix ans de prison dans l'affaire du « bureau d'ordre », ainsi qu'à six mois de prison pour « entrave à la liberté du travail ». Dans les deux affaires liées à l'ISIE, elle avait été condamnée en appel à deux ans de prison dans le premier dossier et à six mois dans le second. Le cumul des peines prononcées dans ces trois affaires s'élève ainsi à 12 ans et six mois de prison."
+
+- id: africanmanager-moussi-cassation-2026-09-30
+  title: Les recours de Abir Moussi rejetés
+  publisher: African Manager
+  date: "2026-09-30"
+  url: https://africanmanager.com/les-recours-de-abir-moussi-rejetes/
+  tier: 3
+  lang: fr
+  excerpt: "La Cour de cassation a rejeté les recours introduits par le collectif de défense de la présidente du Parti destourien libre (PDL), Abir Moussi, contre plusieurs décisions rendues à son encontre en appel, dans différentes affaires. ... Le cumul des peines prononcées dans ces trois affaires s'élève ainsi à 12 ans et six mois de prison."
+  note: "Text identical to the Mosaique FM item (same origin, likely one court report); the two are not independent corroboration."
+
+- id: aljazeera-sumud-appeal-2026-09-27
+  title: "Detained Tunisian flotilla activists: Worsening health amid family anguish"
+  publisher: Al Jazeera
+  date: "2026-09-27"
+  url: https://www.aljazeera.com/news/2026/9/27/detained-tunisian-flotilla-activists-worsening-health-amid-family-anguish
+  tier: 3
+  lang: en
+  excerpt: "The four-month extension was ordered on September 11 and the defence challenged the decision before the Court of Appeal in Tunis. ... The Court of Appeal rejected the challenge on Wednesday, leaving the quartet in pretrial detention for another four months while the investigation continues. Henchiri, Boughdiri and Channoufi remain on hunger strike. ... Fourteen people detained after the September 19 protest calling for their release have since been placed in pretrial detention, lawyer Rafed Rabbeh confirmed to Al Jazeera on Friday. Among them is a 17-year-old who was brought before a juvenile judge. ... Human Rights Watch has also raised concerns over the use of financial and money-laundering investigations against civil society actors in Tunisia."
+
+- id: africanmanager-ounissi-release-2026-09-28
+  title: Rejet de la demande de libération de Mondher Ounissi
+  publisher: African Manager
+  date: "2026-09-28"
+  url: https://africanmanager.com/rejet-de-la-demande-de-liberation-de-mondher-ounissi/
+  tier: 3
+  lang: fr
+  excerpt: "La Chambre criminelle spécialisée dans les affaires de terrorisme près le Tribunal de première instance de Tunis a rejeté, ce vendredi 25 septembre, la demande de libération de l'ancien président par intérim du mouvement Ennahdha, Mondher Ounissi, dans le cadre de l'affaire dite des « enregistrements audio », impliquant notamment le journaliste Zied El Héni et d'autres personnes."
+
+- id: kapitalis-naufrage-hasdrubal-2026-09-30
+  title: "Naufrage de migrants au large de la Tunisie | 28 rescapés, 2 morts et 6 disparus"
+  publisher: Kapitalis
+  date: "2026-09-30"
+  url: https://kapitalis.com/tunisie/2026/09/30/naufrage-de-migrants-au-large-de-la-tunisie-28-rescapes-2-morts-et-6-disparus/
+  tier: 3
+  lang: fr
+  excerpt: "Le navire Aurora de l'ONG Sea Watch a repéré un canot pneumatique quasi dégonflé — signalé par Alarm Phone dans la zone SAR libyenne — transportant 5 personnes et 2 corps sans vie, dont celui d'un enfant selon les témoins, indique l'agence Ansa. « Environ 25 personnes s'étaient accrochées à la plateforme Hasdrubal pour échapper au naufrage. Deux femmes ont raconté avoir perdu leurs enfants dans les vagues », explique l'ONG. « Le canot se trouvait à la limite des zones SAR libyenne et tunisienne ; ce sont les 5 survivants qui nous ont indiqué que d'autres personnes avaient réussi à atteindre la plateforme pétrolière après le naufrage », souligne Sea Watch, ajoutant que « parmi les deux corps sans vie se trouvait celui d'un enfant ». ... « En discutant avec les survivants à bord de l'Aurora, nous avons appris qu'il y a six disparus, dont trois enfants. » Le navire a fait débarquer les personnes secourues à Lampedusa, Italie. Elles sont au nombre de 28 : 5 secourues depuis le canot pneumatique et 23 depuis la plateforme de production de gaz et de pétrole offshore."

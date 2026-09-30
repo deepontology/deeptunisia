@@ -145,14 +145,14 @@ era,bourguiba,218,218,19,1,1,1,173,1
 era,fragmentation,324,324,12,3,3,3,371,0
 era,pluralism,362,362,8,1,1,1,367,1
 era,police-state,266,266,13,2,2,2,262,1
-era,recentralisation,465,465,15,6,6,6,525,0
+era,recentralisation,465,465,15,6,6,6,526,0
 era,transition,366,366,11,2,2,2,359,1
 source_family,africa business,3,2,0,0,0,2,3,1
 source_family,africa intelligence,2,2,0,0,0,2,2,1
 source_family,africa intelligence accessed via blackfacts aggregator original is paywalled,1,0,0,0,0,0,1,1
 source_family,africa intelligence maghreb confidential,1,1,0,0,0,1,1,1
 source_family,african development bank,4,1,0,0,0,1,4,1
-source_family,african manager,48,37,0,0,0,37,48,0
+source_family,african manager,51,40,0,0,0,40,51,0
 source_family,african manager en,1,0,0,0,0,0,1,1
 source_family,african union,1,0,0,0,0,0,1,1
 source_family,africanews,2,2,0,0,0,2,2,1
@@ -162,7 +162,7 @@ source_family,airbus,1,0,0,0,0,0,1,1
 source_family,al arabiya,1,1,0,0,0,1,1,1
 source_family,al bawaba,1,1,0,0,0,1,1,1
 source_family,al estiklal republication du contenu jeune afrique,1,0,0,0,0,0,1,1
-source_family,al jazeera,15,15,0,0,0,15,15,0
+source_family,al jazeera,16,16,0,0,0,16,16,0
 source_family,al jazeera heba habib reuters,1,1,0,0,0,1,1,1
 source_family,al jazeera reuters,1,1,0,0,0,1,1,1
 source_family,al jazeera staff and reuters,1,1,0,0,0,1,1,1
@@ -206,7 +206,7 @@ source_family,bloomberg,1,1,0,0,0,1,1,1
 source_family,bofip impots boi annx 000306,1,0,0,0,0,0,1,1
 source_family,bofip impots direction generale des finances publiques france,1,0,0,0,0,0,1,1
 source_family,bukhatir group official site,1,1,0,0,0,1,1,1
-source_family,business news,22,18,0,0,0,18,22,0
+source_family,business news,24,20,0,0,0,20,24,0
 source_family,business news via web archive org capture 14 07 2018,1,1,0,0,0,1,1,1
 source_family,businessnews tunisie,2,2,0,0,0,2,2,1
 source_family,caf construcciones y auxiliar de ferrocarriles,1,0,0,0,0,0,1,1
@@ -296,6 +296,7 @@ source_family,ilboursa com,7,5,0,0,0,5,7,0
 source_family,ilboursa com donnees bvmt,6,2,0,0,0,2,6,1
 source_family,ilboursa com o e o,1,1,0,0,0,1,1,1
 source_family,ilboursa com omar el oudi,3,3,0,0,0,3,3,0
+source_family,imprimerie officielle de la republique tunisienne archive lake jort tn,1,1,0,0,0,1,1,1
 source_family,inkyfada,5,4,0,0,0,4,5,0
 source_family,instance superieure independante pour les elections,2,2,0,0,0,2,2,1
 source_family,institut national de la statistique ins,1,0,0,0,0,0,1,1
@@ -323,7 +324,7 @@ source_family,journal officiel de la republique tunisienne via cnudst sommaire s
 source_family,journal officiel de la republique tunisienne via legislation securite tn dcaf,2,2,0,0,0,2,2,1
 source_family,jurisitetunisie base de textes legaux tunisiens,1,0,0,0,0,0,1,1
 source_family,jurist,1,1,0,0,0,1,1,1
-source_family,kapitalis,79,61,0,0,0,61,79,0
+source_family,kapitalis,80,62,0,0,0,62,80,0
 source_family,kapitalis avec tap,1,0,0,0,0,0,1,1
 source_family,kuna,1,0,0,0,0,0,1,1
 source_family,l economiste maghrebin,17,7,0,0,0,7,17,0
@@ -337,6 +338,7 @@ source_family,le monde,12,11,0,0,0,11,12,0
 source_family,le monde archives,1,1,0,0,0,1,1,1
 source_family,le petit journal tunis,1,1,0,0,0,1,1,1
 source_family,le quotidien,1,1,0,0,0,1,1,1
+source_family,le temps news,1,1,0,0,0,1,1,1
 source_family,leaders,32,26,0,0,0,26,32,0
 source_family,leaders official site,1,1,0,0,0,1,1,1
 source_family,leaders tunisia,1,0,0,0,0,0,1,1
@@ -373,7 +375,7 @@ source_family,ministry of defence egypt,1,1,0,0,0,1,1,1
 source_family,ministry of foreign affairs of japan,2,0,0,0,0,0,2,1
 source_family,ministry of national defence algeria,1,1,0,0,0,1,1,1
 source_family,mondafrique,7,4,0,0,0,4,7,0
-source_family,mosaique fm,7,6,0,0,0,6,7,0
+source_family,mosaique fm,10,9,0,0,0,9,10,0
 source_family,natural resource governance institute,1,1,0,0,0,1,1,1
 source_family,nawaat,17,13,0,0,0,13,17,0
 source_family,nessma tv,1,1,0,0,0,1,1,1
@@ -431,7 +433,7 @@ source_family,tunisie actualite source tunivisions,1,1,0,0,0,1,1,1
 source_family,tunisie direct,1,0,0,0,0,0,1,1
 source_family,tunisie haut debit,1,1,0,0,0,1,1,1
 source_family,tunisie haut debit thd,1,1,0,0,0,1,1,1
-source_family,tunisie numerique,12,8,0,0,0,8,12,0
+source_family,tunisie numerique,13,9,0,0,0,9,13,0
 source_family,tunisie radio com annuaire des radios tunisiennes,1,1,0,0,0,1,1,1
 source_family,tunisie valeurs,1,1,0,0,0,1,1,1
 source_family,tunisie14,2,2,0,0,0,2,2,1
@@ -492,9 +494,9 @@ source_family,zawya,1,0,0,0,0,0,1,1
 source_family,zawya communique de presse,1,1,0,0,0,1,1,1
 source_family,zoom tunisia,1,1,0,0,0,1,1,1
 source_family,ويكيبيديا (العربية),1,0,0,0,0,0,1,1
-language,ar,67,38,0,0,0,38,67,0
-language,en,456,190,0,0,0,190,456,0
-language,fr,806,591,0,0,0,591,806,0
+language,ar,68,39,0,0,0,39,68,0
+language,en,457,191,0,0,0,191,457,0
+language,fr,817,602,0,0,0,602,817,0
 language,it,4,1,0,0,0,1,4,1
 office,administrative-court-president,3,3,0,0,0,0,2,1
 office,agriculture-minister,1,1,0,0,0,0,1,1
