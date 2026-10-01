@@ -873,7 +873,8 @@ for (const source of sources) {
 }
 
 /**
- * Resolve an interval and settle `ongoing` against its evidence.
+ * Resolve an interval and settle `ongoing` against its evidence, then hold the
+ * interval to the cutoff contract.
  *
  * `ongoing` claims the holder is positively in place at the dataset cutoff.
  * That requires an observation within the engine's confirmation window; a stale
@@ -881,6 +882,14 @@ for (const source of sources) {
  * last observation) and the build warns. This is a research backlog item, not a
  * silent edit: the warning names the record, and the emitted interval says what
  * the evidence actually supports.
+ *
+ * The cutoff contract applies to every token: nothing is asserted after the
+ * horizon. The engine caps `?`, `ongoing` and `verified:` at the cutoff, but a
+ * dated end keeps its own envelope — a `~` point event widens by the month
+ * slack and a year-precision end lands in December, both past the horizon (8
+ * events when V31 first ran). The clamp below pulls those envelopes back to the
+ * cutoff: the authored token stays in `raw`, and `trimmed` publishes the
+ * adjustment in the V22 interval-trims report.
  */
 function settledInterval(
 	where: string,
@@ -889,20 +898,38 @@ function settledInterval(
 	opts?: { allowEnvelopeTrim?: boolean }
 ): ResolvedInterval {
 	const raw = safeInterval(where, spec, opts);
-	if (raw.status !== 'ongoing') return raw;
-	let latest: number | null = null;
-	for (const id of record.sources ?? []) {
-		const t = sourceDateById.get(id);
-		if (t !== undefined && (latest === null || t > latest)) latest = t;
+	let iv = raw;
+	if (raw.status === 'ongoing') {
+		let latest: number | null = null;
+		for (const id of record.sources ?? []) {
+			const t = sourceDateById.get(id);
+			if (t !== undefined && (latest === null || t > latest)) latest = t;
+		}
+		iv = applyOngoingObservation(raw, latest);
+		if (iv.status !== 'ongoing') {
+			warn(
+				where,
+				'ongoing with no source dated within 90 days of the cutoff — downgraded to last-verified'
+			);
+		}
 	}
-	const settled = applyOngoingObservation(raw, latest);
-	if (settled.status !== 'ongoing') {
-		warn(
-			where,
-			'ongoing with no source dated within 90 days of the cutoff — downgraded to last-verified'
-		);
+	if (iv.endLatest !== null && iv.endLatest > DATASET_CUTOFF) {
+		const endLatest = DATASET_CUTOFF;
+		const endEarliest = iv.endEarliest !== null ? Math.min(iv.endEarliest, endLatest) : null;
+		// The engine's own invariant, re-applied to the lowered end: a start that
+		// can fall after the end is clamped down to it and flagged `startClamped`.
+		const startLatest = iv.startLatest > endLatest ? endLatest : iv.startLatest;
+		return {
+			...iv,
+			endEarliest,
+			endLatest,
+			startLatest,
+			startClamped: iv.startClamped || startLatest < iv.startLatest,
+			lastObserved: iv.lastObserved !== null ? Math.min(iv.lastObserved, endLatest) : null,
+			trimmed: true
+		};
 	}
-	return settled;
+	return iv;
 }
 
 /**
@@ -1277,6 +1304,42 @@ const resolvedEvents = events.map((ev) => ({
 		{ allowEnvelopeTrim: (ev.disputes?.length ?? 0) > 0 }
 	)
 }));
+
+// ---------------------------------------------------------------------------
+// V31 — research-cutoff horizon. What leaked: two sweeps merged 22 of the 135
+// events dated past an un-advanced `time.cutoff`, and every time-based view
+// clips records past `meta.cutoff`, so those events rendered nowhere while all
+// gates stayed green — nothing in this file compared a record's resolved
+// interval to the cutoff. Events were the leak because they carry authored
+// dates; positions and relationships clamp by construction, and the sweep
+// checked both kinds anyway. Scope is record intervals only: a verification or
+// a dispute dated after the cutoff is a fact about the review, not about the
+// world, and stays legal. Equality passes, so an event dated on the cutoff day
+// is a valid record rather than a future one.
+// ---------------------------------------------------------------------------
+{
+	const isoDay = (t: number) => new Date(t).toISOString().slice(0, 10);
+	const cutoffDay = isoDay(DATASET_CUTOFF);
+	const insideHorizon = (kind: string, id: string, interval: ResolvedInterval): void => {
+		if (interval.startEarliest > DATASET_CUTOFF) {
+			fail(
+				`${kind} ${id}`,
+				`interval begins ${isoDay(interval.startEarliest)}, past the research cutoff ${cutoffDay} (V31)`
+			);
+		}
+		// `?? 0`: an open-ended (`ongoing`) interval has no end bound and is
+		// settled at the cutoff by construction, so it is inside by definition.
+		if ((interval.endLatest ?? 0) > DATASET_CUTOFF) {
+			fail(
+				`${kind} ${id}`,
+				`interval ends ${isoDay(interval.endLatest!)}, past the research cutoff ${cutoffDay} (V31)`
+			);
+		}
+	};
+	for (const p of resolvedPositions) insideHorizon('position', p.id, p.interval);
+	for (const r of resolvedRelationships) insideHorizon('relationship', r.id, r.interval);
+	for (const e of resolvedEvents) insideHorizon('event', e.id, e.interval);
+}
 
 // V16 — duplicate relationships (spec §12): the same (from,to,type,subtype) with
 // overlapping intervals is a duplicate and fails, unless one of the two records
