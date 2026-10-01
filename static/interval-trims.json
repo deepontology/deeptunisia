@@ -148,6 +148,27 @@
     }
   },
   {
+    "kind": "position",
+    "id": "p-onpf-rhouma",
+    "start": "?",
+    "end": "2026-09-10",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1788998400000,
+      "endEarliest": 1788998400000,
+      "endLatest": 1788998400000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1788998400000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2026-09-10"
+      }
+    }
+  },
+  {
     "kind": "relationship",
     "id": "rel-youssef-chahed-lotfi-brahem-political-conflict",
     "start": "2018",
