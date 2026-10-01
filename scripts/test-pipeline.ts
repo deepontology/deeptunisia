@@ -235,6 +235,18 @@ try {
   summary: "Synthetic cause event that begins after its consequence ends, injected by the pipeline fixture runner."
   sources: [${s}]`);
 
+	// V31 research-cutoff horizon: an event dated past time.cutoff. What leaked:
+	// two sweeps merged 22 of the 135 events past an un-advanced cutoff, and
+	// every time-based view clips records past it, so those events rendered
+	// nowhere while the gates stayed green.
+	appendBlock(TREE_BAD, 'events.yaml', `
+- id: fixture-beyond-cutoff
+  date: "2027-01-01"
+  title_en: "Fixture beyond cutoff"
+  category: political
+  summary: "Synthetic event dated past the research cutoff, injected by the pipeline fixture runner to prove the V31 horizon check fires."
+  sources: [${s}]`);
+
 	// checkSources: a position citing a source id that does not exist.
 	appendBlock(TREE_BAD, 'positions.yaml', `
 - id: p-fixture-unknown-src
@@ -355,7 +367,8 @@ try {
 		['people.yaml [fixture-unsourced-person]', 'the no-source probe fails and names the record (1D)'],
 		['position p-fixture-grade-a-weak', 'a grade-A record without a tier-1/2 source fails and names the record (V25)'],
 		['positions.yaml [p-fixture-relation]', 'an incompatible source relation fails and names the record (V26)'],
-		['positions.yaml [p-fixture-evidence]', 'a year-only archive lookup fails and names the record (V29)']
+		['positions.yaml [p-fixture-evidence]', 'a year-only archive lookup fails and names the record (V29)'],
+		['event fixture-beyond-cutoff', 'an event dated past the research cutoff fails and names the record (V31)']
 	];
 	for (const [needle, label] of expectations) {
 		ok(`pipeline fixture: ${label}`, bad.output.includes(needle), `expected the build to say "${needle}"`);
@@ -389,6 +402,11 @@ try {
 		'pipeline fixture: the evidence error is the V29 message',
 		bad.output.includes('(V29)'),
 		'expected the V29 message in the build output'
+	);
+	ok(
+		'pipeline fixture: the cutoff error is the V31 horizon message',
+		bad.output.includes('(V31)'),
+		'expected the V31 message in the build output'
 	);
 
 	// 3A: a failed build promotes nothing. The review caught editorial-queue.json
