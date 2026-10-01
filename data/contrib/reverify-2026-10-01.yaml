@@ -1,0 +1,846 @@
+# reverify-2026-10-01 — P0 #6 re-verification batch: 15 state officeholder roles
+#
+# MISSION: the build downgraded 34 `ongoing` officeholder positions to
+#   `last-verified` because no source on the record is dated within 90 days of
+#   the research cutoff (2026-09-30; window opens 2026-07-02). This file
+#   re-verifies the 15 state roles of the first batch (SOE/media owners are a
+#   later batch): who holds each role as of 2026-09-30, with either an
+#   in-window source attached to the unchanged holder, or a sourced end date
+#   plus a sourced start for the successor, or an honest non-finding.
+# SOURCES USED (all retrieved 2026-10-01; full text fetched where marked
+#   [fetched], otherwise the verbatim excerpt is the live page's search-index
+#   highlight — same caveat applies to every row so marked):
+#   - JORT decree text via the 9anoun mirror [fetched] — tier 1
+#     https://9anoun.tn/fr/kb/jorts/jort-2026-025-165c3/decret-ndeg-2026-30-du-2-mars-2026-portant-nomination-de-la-premiere-presidente-du-tribunal-administratif-2
+#   - La Presse de Tunisie (est. 1936, national daily) — tier 3
+#     https://www.lapresse.tn/ (articles dated 2026-07-14, 2026-07-18 [fetched],
+#     2026-03-03, 2026-09-25)
+#   - Mosaïque FM, L'Economiste Maghrébin, Business News, Webdo, El Watan,
+#     Leaders, WMC DirectInfo, Nawaat, Hivos EuSee — tier 3 (established
+#     journalism / established organisational publications)
+#   - Association des magistrats tunisiens, report to the UIM (Baku, Oct 2025)
+#     and the INTOSAI Journal — tier 2 (institutional primary documents)
+#   - Univers News — tier 4 (single outlet)
+#   Tiers follow the ladder as written (established journalism = 3). The
+#   registry itself grades the same publisher 3 and 4 in different rows (La
+#   Presse is 4 in data/sources.yaml today); that inconsistency is flagged for
+#   editorial reconciliation here, not silently fixed.
+# FAILURE VOCABULARY (must not be collapsed):
+#   - "an in-window article names the person in the role" is not "a JORT
+#     appointment decree was located": no gazette act was fetched for any
+#     incumbent's continuing tenure in this batch. The one decree fetched
+#     (n° 2026-30 du 2 mars 2026) concerns a successor's appointment, not the
+#     predecessor's cessation.
+#   - "the successor's dated appointment bounds the predecessor's end" is not
+#     "a cessation decree names the holder": used for Grissiaa (Guiza's decree,
+#     2 March 2026) and Taboubi (Selmi's election, 28 March 2026) — both graded
+#     B / basis inferred, per the house convention (cf. p-soe-sonede-ahmed-soula
+#     in jort-2026-09-25.yaml).
+#   - "a one-day boundary is not an exact date": Kchaou left "fin septembre
+#     2023" (Univers News) vs "October 1, 2023" (Nawaat) — the end token is
+#     "~2023-10", never a chosen day.
+#   - "a dateless official page" is not "a dated source": the BTK board page
+#     (btkbank-elloumi-board, tier 1, fetched 2026-10-01, still lists Faouzi
+#     Elloumi as board chairman) carries no date and therefore cannot enter the
+#     90-day window; it does not restore `ongoing` for p-econ-faouzi-elloumi.
+#   - "styling by an international journal" is not "an appointment decree":
+#     the INTOSAI Journal (30 Apr 2026) styles Fadhila Gargouri "Premier
+#     Président de la Cour des comptes" while AMT/WMC (10 Feb 2026) still report
+#     the post vacant — recorded as a conflict flag, not as a position.
+#   - REJECTED: tixup.com "Tunisie: Remaniement au sein du corps judiciaire"
+#     (surfaced 2026-03-08) listing Ibrahim Mejri as first president of the
+#     Court of Cassation — Mejri held that post until 2014 (Nawaat 2013, conference
+#     records); the page is a scraped aggregator with contradictory timestamps
+#     and no verifiable issue date. Tier 5 lead, not evidence for 2026.
+#   - Corroboration located but NOT registered in this batch (attach later if a
+#     second citation is wanted): nessma.tv 2026-07-23 and WMC 2026-06-19
+#     (Nouri/Intérieur), Mosaïque 2026-07-16 and African Challenges 2026-07-20
+#     (Jaffel), WMC/TAP 2026-07-22, Réalités 2026-07-31, AMI Mauritania
+#     2026-09-15 (Bouhali), Tustex 2026-09-30 (BCT), Radio Express 2026-07-20
+#     (Bethabet), Kapitalis 2026-09-11 (UGTT), Tuniscope 2026-03-03 and Webdo
+#     2026-03-03 (Guiza).
+#   - The justice-minister "alarm" (roadmap P0 #6: last attested 2021) is a
+#     NON-FINDING in the other direction: Leïla Jaffel never left office; the
+#     gap was citation, not turnover.
+#   - Patch rows (patch_reason) are merge instructions, not whole records;
+#     fields not shown (notes/translations/long reasoning) stay as they are in
+#     the canonical row.
+# CANDIDATES ARE PROPOSALS, NOT GRAPH DATA. Nothing canonical was changed (P4).
+
+sources:
+  - id: lapresse-nouri-interieur-2026-07-18
+    title: "Khaled Nouri : « La Tunisie poursuit la construction d'un système de sécurité moderne et efficace »"
+    publisher: La Presse de Tunisie
+    date: 2026-07-18
+    url: https://www.lapresse.tn/2026/07/18/khaled-nouri-la-tunisie-poursuit-la-construction-dun-systeme-de-securite-moderne-et-efficace/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      Le ministre de l'Intérieur, Khaled Nouri, a réaffirmé la volonté de son
+      département de poursuivre la modernisation de l'appareil sécuritaire afin
+      de bâtir un système “moderne et efficace”, conciliant performance
+      opérationnelle, respect de l'État de droit et protection des droits de
+      l'Homme. S'exprimant vendredi à l'École nationale de la Garde nationale
+      de Bir Bouregba, à l'occasion de la cérémonie de remise des diplômes de
+      la 38e promotion des officiers de l'École d'application…
+    notes: ["Fetched in full 2026-10-01; excerpt taken from the fetched page."]
+
+  - id: mosaiquefm-jaffel-justice-2026-09-28
+    title: "La ministre de la Justice reçoit l'ambassadeur des USA en Tunisie"
+    publisher: Mosaïque FM
+    date: 2026-09-28
+    url: https://www.mosaiquefm.net/fr/national-tunisie/1531687/la-ministre-de-la-justice-recoit-l-ambassadeur-des-usa-en-tunisie
+    tier: 3
+    lang: fr
+    excerpt: >-
+      La ministre de la Justice, Leïla Jaffel, s'est entretenue lundi, au siège
+      du département, avec l'ambassadeur des Etats-Unis en Tunisie, Bill Bazzi,
+      en présence d'une délégation américaine et de plusieurs cadres du
+      ministère.
+
+  - id: leconomiste-khaldi-bm-2026-09-25
+    title: "Tunisie-BM : Ahmadou Moustapha Ndiaye reçu au ministère des Finances"
+    publisher: L'Economiste Maghrébin
+    date: 2026-09-25
+    url: https://www.leconomistemaghrebin.com/2026/09/25/tunisie-bm-ahmadou-moustapha-ndiaye-recu-au-ministere-des-finances/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      La ministre des Finances, Michket Slama Khaldi, a reçu, le 24 septembre
+      2026, au siège de son département, Ahmadou Moustapha Ndiaye, directeur
+      régional de la Banque mondiale pour le Maghreb et Malte.
+
+  - id: lapresse-bouhali-hajj-2027-2026-07-14
+    title: "Hajj 2027 : les préparatifs lancés"
+    publisher: La Presse de Tunisie
+    date: 2026-07-14
+    url: https://www.lapresse.tn/2026/07/14/hajj-2027-les-preparatifs-lances/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      Une réunion consacrée aux préparatifs de la saison du Hajj 1448 de
+      l'hégire/2027, axée sur les aspects organisationnels et logistiques,
+      s'est tenue, mardi, sous la présidence du ministre des Affaires
+      religieuses, Ahmed Bouhali.
+
+  - id: lapresse-bct-nouri-2026-09-25
+    title: "Fethi Nouri : « Il faut accélérer la réalisation des projets et des investissements »"
+    publisher: La Presse de Tunisie
+    date: 2026-09-25
+    url: https://www.lapresse.tn/2026/09/25/fethi-nouri-il-faut-accelerer-la-realisation-des-projets-et-des-investissements/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      Le Gouverneur de la Banque Centrale de Tunisie (BCT), Fethi Zouhaier Nouri
+      a appelé à passer d'une logique de résilience à une logique de création de
+      richesse, soulignant la nécessité d'accélérer le rythme de réalisation des
+      projets et des investissements, notamment dans les secteurs du phosphate et
+      des énergies renouvelables. Intervenant lors de sa rencontre avec le
+      Directeur Pays de la Banque mondiale…
+
+  - id: webdo-selmi-ugtt-sg-2026-03-29
+    title: "La nouvelle direction de l'UGTT veut relancer le dialogue avec le gouvernement — Noureddine Taboubi passe le témoin à Slaheddine Selmi"
+    publisher: Webdo
+    date: 2026-03-29
+    url: https://www.webdo.tn/fr/actualite/national/la-nouvelle-direction-de-lugtt-veut-relancer-le-dialogue-avec-le-gouvernement/395407/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      Le nouveau secrétaire général de l'Union générale tunisienne du travail
+      (UGTT), Slaheddine Selmi, a affirmé, samedi à Tunis, que la relance du
+      dialogue social avec le gouvernement constitue une priorité « urgente ».
+      (Article subtitle: « Noureddine Taboubi passe le témoin à Slaheddine
+      Selmi ».)
+
+  - id: elwatan-selmi-ugtt-2026-03-29
+    title: "Slaheddine Selmi nouveau leader de l'UGTT en Tunisie : Tous les compromis pour remettre l'action syndicale en selle"
+    publisher: El Watan (Algérie)
+    date: 2026-03-29
+    url: https://elwatan.dz/slaheddine-selmi-nouveau-leader-de-lugtt-en-tunisie-tous-les-compromis-pour-remettre-laction-syndicale-en-selle/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      Le 26e congrès ordinaire de l'Union générale des travailleurs de Tunisie
+      (UGTT) vient de finir ses travaux à l'aube du 28 mars 2026 à Monastir,
+      avec l'élection de Slaheddine Selmi comme nouveau Secrétaire général,
+      clôturant ainsi une année de tiraillements à la tête de la centrale
+      syndicale. Le Secrétaire général sortant, Noureddine Taboubi, a été élu
+      président et porte-parole du congrès.
+
+  - id: hivos-eusee-ugtt-bureau-2026-04-16
+    title: "Election of the new executive board of the Tunisian General Labour Union (UGTT)"
+    publisher: EuSee / Hivos
+    date: 2026-04-16
+    url: https://eusee.hivos.org/alert/election-of-the-new-executive-board-of-the-tunisian-general-labor-union-ugtt-2/
+    tier: 3
+    lang: en
+    excerpt: >-
+      In the night of 27–28 March 2026, delegates elected a new executive
+      committee comprising 15 members, the majority of whom were from the
+      “Stability and Challenge” list led by Slaheddine Selmi. Selmi was
+      appointed secretary-general, succeeding Noureddine Taboubi, against a
+      backdrop of internal tensions and debates over the organisation's future.
+
+  - id: businessnews-selmi-ugtt-2026-09-20
+    title: "Slaheddine Selmi : « L'UGTT ne s'intéresse pas à qui gouverne, mais à la manière dont on gouverne »"
+    publisher: Business News
+    date: 2026-09-20
+    url: https://businessnews.com.tn/2026/09/20/slaheddine-selmi-lugtt-ne-sinteresse-pas-a-qui-gouverne-mais-a-la-maniere-dont-on-gouverne/1419241/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      Le secrétaire général de l'Union générale tunisienne du travail (UGTT),
+      Slaheddine Selmi, a affirmé, dimanche 20 septembre 2026, que la centrale
+      syndicale ne se préoccupait pas de l'identité de ceux qui gouvernent, mais
+      de la manière dont le pouvoir est exercé.
+
+  - id: nawaat-judicial-vacancy-2025
+    title: "Judicial Vacancy: The Kais Saied System"
+    publisher: Nawaat
+    date: 2025-05-16
+    url: https://nawaat.org/2025/05/16/judicial-vacancy-the-kais-saied-system/
+    tier: 3
+    lang: en
+    excerpt: >-
+      Nearly two years ago, on October 1, 2023, the first president of the
+      cassation court, Moncef Kchaou, was forced to retire. Ever since Moncef
+      Kchaou retired, the position of first president of the Court of
+      Cassation—the highest jurisdiction in the judicial hierarchy—has remained
+      vacant. … The authority lacks a president, a consequence of the unfilled
+      position of first president of the Court of Cassation, who is also to
+      serve as president of the Provisional High Judicial Council. … the Council
+      of Financial Magistrates is chaired by the president of the Court of
+      Auditors, … whose president—also the president of the Court of
+      Auditors—was retired two years ago and not replaced.
+
+  - id: universnews-kchaou-departure-2023
+    title: "Le président de la Cour de cassation Moncef Kchaou quitte ses fonctions"
+    publisher: Univers News
+    date: 2023-10-16
+    url: https://universnews.tn/le-president-de-la-cour-de-cassation-moncef-kchaou-quitte-ses-fonctions/
+    tier: 4
+    lang: fr
+    excerpt: >-
+      Le premier président de la Cour de cassation, Moncef Kchaou, a
+      officiellement quitté ses fonctions à la Cour de cassation après avoir
+      atteint l'âge légal de la retraite fin septembre dernier, et le poste est
+      devenu « vacant ». Moncef Kchaou avait retiré sa demande de prolongation
+      de son travail après avoir atteint l'âge de la retraite.
+
+  - id: amt-uim-report-2025
+    title: "Rapport de la Tunisie à l'Union Internationale des Magistrats (UIM), Baku 2025"
+    publisher: Association des magistrats tunisiens (AMT)
+    date: 2025-10
+    url: https://www.iaj-uim.org/iuw/wp-content/uploads/2025/10/Rapport-de-la-Tunisie-UIM-Bakou-2025.pdf
+    tier: 2
+    lang: fr
+    excerpt: >-
+      « le pouvoir exécutif n'a pas validé les nominations du Premier Président
+      de la Cour des Comptes depuis Novembre 2022 et du Premier Président de la
+      Cour de Cassation depuis Octobre 2023 » ; « le début de l'année judiciaire
+      2025-2026 a coïncidé avec plus de deux années de vacance délibérée, par le
+      pouvoir exécutif, des postes importants suivants : Premier Président de la
+      Cour de Cassation - Procureur Général d'État - Président du Tribunal
+      Foncier - Premier Président de la Cour des Comptes ».
+
+  - id: directinfo-amt-vacances-2026-02-10
+    title: "L'AMT alerte sur les vacances de postes clés et les pénuries d'effectifs dans les tribunaux"
+    publisher: WMC DirectInfo
+    date: 2026-02-10
+    url: https://directinfo.webmanagercenter.com/2026/02/10/lamt-alerte-sur-les-vacances-de-postes-cles-et-les-penuries-deffectifs-dans-les-tribunaux/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      L'organisation a également réclamé la levée rapide des vacances dans
+      plusieurs hautes fonctions judiciaires, dont celles de premier président
+      de la Cour de cassation, de procureur général près cette Cour, de
+      président du Tribunal foncier et de procureur général, directeur des
+      services judiciaires. Il a en outre appelé à la publication des décisions
+      de promotion de magistrats du Tribunal administratif, ainsi qu'à la
+      nomination du premier président de la Cour des comptes.
+
+  - id: jort-2026-025-guiza
+    title: "JORT n° 2026-025 — Décret n° 2026-30 du 2 mars 2026, portant nomination de la première présidente du Tribunal administratif"
+    publisher: Journal Officiel de la République Tunisienne (text via the 9anoun mirror)
+    date: 2026-03-02
+    url: https://9anoun.tn/fr/kb/jorts/jort-2026-025-165c3/decret-ndeg-2026-30-du-2-mars-2026-portant-nomination-de-la-premiere-presidente-du-tribunal-administratif-2
+    tier: 1
+    lang: fr
+    excerpt: "Par décret n° 2026-30 du 2 mars 2026. Madame Samira Guiza est nommée première présidente du Tribunal administratif."
+    notes:
+      - >-
+        Fetched in full 2026-10-01 on 9anoun, which mirrors the JORT issue
+        number 2026-025 (Tunisie Numérique reports the issue went on sale
+        3 March 2026). The decree date — not the newsstand date — is recorded
+        as the source date; the decree text does not mention Grissiaa, which is
+        why his end below is graded B (successor-bounded), not A.
+
+  - id: lapresse-guiza-installation-2026-03-03
+    title: "Samira Guiza prend ses fonctions à la tête du Tribunal administratif"
+    publisher: La Presse de Tunisie
+    date: 2026-03-03
+    url: https://www.lapresse.tn/2026/03/03/samira-guiza-prend-ses-fonctions-a-la-tete-du-tribunal-administratif/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      Samira Guiza a été officiellement installée, mardi 3 mars 2026, dans ses
+      fonctions de Première Présidente du Tribunal administratif, lors d'une
+      cérémonie de passation organisée au siège de l'institution, rue de Rome.
+      Elle succède à Abdessalem Mehdi Ghrissia, admis à la retraite après avoir
+      atteint l'âge légal.
+
+  - id: leaders-guiza-who-who-2026-04-06
+    title: "Qui est Samira Guiza, nouvelle première présidente du Tribunal administratif"
+    publisher: Leaders
+    date: 2026-04-06
+    url: https://www.leaders.com.tn/article/37916-samira-guiza-nouvelle-premiere-presidente-du-tribunal-administratif-un-role-encore-plus-important-pour-la-justice-administrative
+    tier: 3
+    lang: fr
+    excerpt: >-
+      « elle succède à Abdesselem Mehdi Grissiaâ qui y a officié de 2016 jusqu'à
+      début mars dernier » ; liste des présidents : « 11. Abdesselem Mehdi
+      Grissiaâ, 2016 à mars 2026 — 12. Samira Guiza, épouse Oueslati, depuis
+      mars 2026. »
+
+  - id: businessnews-bethabet-usurpation-2026-09-18
+    title: "Usurpation du titre de bâtonnier : l'Ordre des avocats alerte et saisit le parquet"
+    publisher: Business News
+    date: 2026-09-18
+    url: https://businessnews.com.tn/2026/09/18/usurpation-du-titre-de-batonnier-lordre-des-avocats-alerte-et-saisit-le-parquet/1419120/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      Dans un communiqué publié vendredi 18 septembre 2026 et signé par le
+      bâtonnier Boubaker Bethabet, l'Ordre dénonce « des individus qui se
+      présenteraient sous ce titre pour proposer des services étrangers à ses
+      compétences ».
+
+  - id: leaders-ktari-retirement-2023
+    title: "Qui succédera à Néjib Gtari à la tête de la Cour des comptes ?"
+    publisher: Leaders
+    date: 2023-02-06
+    url: https://www.leaders.com.tn/article/34436-qui-succedera-a-nejib-gtari-a-la-tete-de-la-cour-des-comptes
+    tier: 3
+    lang: fr
+    excerpt: >-
+      Néjib Gtari, premier président de la Cour des comptes, a été admis à faire
+      valoir ses droits à la retraite. Douzième président de cette prestigieuse
+      institution, créée en 1968, il y a accompli 35 ans de carrière depuis
+      qu'il l'avait rejoint en 1988. Son successeur n'a pas encore été désigné.
+
+  - id: intosai-journal-gargouri-2026-04-30
+    title: "Fonds saoudien pour l'amélioration des performances des ISC (Saudi FISP) Meet & Greet — points forts de l'événement parallèle à INCOSAI XXV à Charm el-Cheikh"
+    publisher: INTOSAI Journal (Revue internationale de l'audit gouvernemental)
+    date: 2026-04-30
+    url: https://intosaijournal.org/fr/journal-entry/fonds-saoudien-pour-lamelioration-des-performances-des-isc-saudi-fisp-meet-greet-points-forts-de-levenement-parallele-a-incosai-xxv-a-sharm-el-sheikh/
+    tier: 2
+    lang: fr
+    excerpt: >-
+      « Mme Fadhila Gargouri, Premier Président de la Cour des comptes de
+      Tunisie et Secrétariat général de l'ARABOSAI, signe le livre de réflexions
+      du FISP saoudien. Source : Revue internationale de l'audit
+      gouvernemental. »
+    notes:
+      - >-
+        Conflicting styling, not a resolved fact: AMT/WMC (10 Feb 2026) still
+        call for the appointment of a first president of the Court of Accounts,
+        and a 7 July 2026 COMESA description carried by Gargouri's own LinkedIn
+        calls her « First Vice President of Tunisia's Court of Accounts ».
+        Recorded as a flag below; no position row is proposed from this.
+
+positions:
+  # ---- 1. president — unchanged, two in-window sources awaiting attachment ---
+  - id: p-pres-saied
+    role: president
+    holder: kais-saied
+    start: "2019-10-23"
+    end: ongoing
+    confidence: A
+    sources: [reuters-election-2024, axios-saied-2021, inkyfada-vacance-2026, nawaat-demo-2026]
+    patch_reason: >-
+      Attachment only; no date or grade change. The two sources flagged in the
+      roadmap are confirmed to attest the tenure: Inkyfada (28 Jul 2026) reports
+      the president's 8-18 July absence and that « Le président est enfin
+      apparu le 27 juillet … recevant des diplomates de pays européens » (fetched
+      in full 2026-10-01); Nawaat (25 Jul 2026) reports a mass demonstration
+      demanding « le départ de Saïed ». Both are dated inside the window
+      (≥ 2026-07-02), so `ongoing` is restored for this row.
+
+  # ---- 2. prime minister — unchanged, in-window source awaiting attachment ---
+  - id: p-pm-zaafarani
+    role: prime-minister
+    holder: sara-zaafarani
+    start: "2025-03-20"
+    end: ongoing
+    confidence: A
+    sources: [jort-2025-165-zaafrani, pm-gov-zaafrani-2025, france24-zaafrani-2025, kapitalis-autoroutes-a1-a2-2026]
+    patch_reason: >-
+      Attachment only; no date or grade change. Kapitalis (13 Aug 2026) records
+      the restricted ministerial council of 12 August 2026 « présidée par la
+      cheffe du gouvernement Sara Zaafarani » awarding the A1/A2 concessions —
+      the source is already in data/sources.yaml and its stored excerpt attests
+      the chairmanship in-window (≥ 2026-07-02), so `ongoing` is restored.
+
+  # ---- 3. interior minister — unchanged, new in-window source ----------------
+  - id: p-int-nouri
+    role: interior-minister
+    holder: khaled-nouri
+    start: "2024-05-25"
+    end: ongoing
+    confidence: A
+    sources: [pm-gov-nouri, lemonde-interior-2024, lapresse-nouri-interieur-2026-07-18]
+    patch_reason: >-
+      Attachment only; no date or grade change. La Presse (18 Jul 2026,
+      fetched) names « Le ministre de l'Intérieur, Khaled Nouri » at the Bir
+      Bouregba graduation ceremony — in-window. Corroborated (not registered
+      in this batch): nessma.tv 23 Jul 2026 (Nouri at the ARP plenary),
+      WMC/TAP 19 Jun 2026. The official pm.gov.tn listing (« Depuis
+      25.05.2024 ») remains the start's anchor.
+
+  # ---- 4. foreign minister — unchanged, in-window source awaiting attachment --
+  - id: p-foreign-nafti
+    role: foreign-minister
+    holder: mohamed-ali-nafti
+    start: "2024-08-25"
+    end: ongoing
+    confidence: A
+    basis: documented
+    verification: verified
+    sources: [legislation-decret-2024-465, jort-2024-465-nafti, pm-gov-membres-2024-08-25, pm-gov-composition-2024-08-25, rfi-reshuffle-2024-08-25, mosaique-nafti-bio-2024-08-25, african-manager-tunisie-allemagne-2026-09-01]
+    patch_reason: >-
+      Attachment only; no date or grade change. The source flagged in the
+      roadmap was fetched in full 2026-10-01 and does attest the tenure: at
+      the joint press conference with German foreign minister Johann Wadephul
+      (reported 1 Sep 2026), African Manager styles him « le ministre des
+      Affaires étrangères, de la Migration et des Tunisiens à l'étranger,
+      Mohamed Ali Nafti ». In-window (≥ 2026-07-02), so `ongoing` is restored.
+      The row's long JORT-based start envelope (reasoning/falsifiable_by) stays
+      as recorded on the canonical row.
+
+  # ---- 5. justice minister — UNCHANGED (the roadmap's alarm resolves to a gap,
+  #      not a turnover): Leïla Jaffel is still minister, in-window ------------
+  - id: p-justice-jaffel
+    role: justice-minister
+    holder: leila-jaffel
+    start: "2021-10-11"
+    end: ongoing
+    confidence: B
+    verification: verified
+    sources: [jort-2021-138, pm-gov-jaffel, wmc-jaffel-2021, mosaiquefm-jaffel-justice-2026-09-28]
+    patch_reason: >-
+      Attachment only; no date or grade change. Mosaïque FM (28 Sep 2026,
+      two days before the cutoff) records « La ministre de la Justice, Leïla
+      Jaffel » receiving the US ambassador at the ministry — in-window, so
+      `ongoing` is restored. The record's newest source was 2021-10-11, which
+      read as possible turnover; it was citation, not turnover. Corroborated
+      (not registered): Mosaïque 16 Jul 2026, African Challenges 20 Jul 2026,
+      Mondafrique 9 Sep 2026 (which recounts her 2021 appointment as the start
+      of the current judicial line).
+
+  # ---- 6. finance minister — unchanged, new in-window source -----------------
+  - id: p-finance-khaldi
+    role: finance-minister
+    holder: michkat-khaldi
+    start: "2025-02-05"
+    end: ongoing
+    confidence: A
+    verification: verified
+    sources: [finances-gov-khaldi-2025, reuters-khaldi-2025-02-05, leconomiste-khaldi-bm-2026-09-25]
+    patch_reason: >-
+      Attachment only; no date or grade change. L'Economiste Maghrébin
+      (25 Sep 2026) records « La ministre des Finances, Michket Slama Khaldi »
+      receiving the World Bank regional director on 24 September 2026 —
+      in-window, so `ongoing` is restored. Corroborated (not registered):
+      African Manager 1 Aug 2026, Mosaïque 31 Jul 2026, Tunisie Numérique
+      21 Jul 2026.
+
+  # ---- 7. religious affairs minister — unchanged, new in-window source -------
+  - id: p-relaff-bouhali
+    role: religious-affairs-minister
+    holder: ahmed-bouhali
+    start: "2024-08-25"
+    end: ongoing
+    confidence: A
+    sources: [legislation-decret-2024-465, pm-gov-bouhali, tunisienumerique-remaniement-2024, lapresse-bouhali-hajj-2027-2026-07-14]
+    patch_reason: >-
+      Attachment only; no date or grade change. La Presse (14 Jul 2026)
+      records the Hajj 2027 preparatory meeting « sous la présidence du
+      ministre des Affaires religieuses, Ahmed Bouhali » — in-window, so
+      `ongoing` is restored (the record's newest source was 2024-08-27, while
+      its own note already claimed July 2026 ministry news). Corroborated (not
+      registered): WMC/TAP 22 Jul 2026, Réalités 31 Jul 2026, AMI Mauritanie
+      15 Sep 2026 (Bouhali received in Nouakchott as « le ministre tunisien des
+      Affaires religieuses »).
+
+  # ---- 8. BCT governor — unchanged, new in-window source ---------------------
+  - id: p-bct-nouri
+    role: bct-governor
+    holder: fethi-zouhair-nouri
+    start: "2024-02-16"
+    end: ongoing
+    confidence: A
+    verification: verified
+    sources: [jort-2024-122-nouri, bct-gov-conseil-2024, bct-cv-nouri-fr, frwiki-bct, ilboursa-nouri-2024, jeuneafrique-nouri-2024, leaders-nouri-35646, le-quotidien-nouri-2024-02-15, wmc-nouri-2024-02-15, africanmanager-nouri-bio-2024, lapresse-bct-nouri-2026-09-25]
+    patch_reason: >-
+      Attachment only; no date or grade change (the 2026-08-28 JORT start
+      correction to 2024-02-16 stands as recorded). La Presse (25 Sep 2026)
+      records « Le Gouverneur de la Banque Centrale de Tunisie (BCT), Fethi
+      Zouhaier Nouri » receiving the World Bank and IFC country directors —
+      in-window, so `ongoing` is restored. Corroborated (not registered):
+      Managers.tn 16 Sep 2026 (OCI-COMCEC Istanbul), Tustex 30 Sep 2026 (Arab
+      central-bank governors' council, Abu Dhabi).
+
+  # ---- 9. UGTT secretary-general — HOLDER CHANGED (26th congress, March 2026)
+  - id: p-ugtt-taboubi
+    role: ugtt-secretary-general
+    holder: noureddine-taboubi
+    start: "2017-01"
+    end: "2026-03-28"
+    confidence: B
+    basis: inferred
+    verification: needs-primary-source
+    reasoning: >-
+      End corrected from ongoing. The 26th ordinary UGTT congress (Monastir,
+      25-28 March 2026) elected a new 15-member executive bureau overnight
+      27-28 March, and the new bureau designated Slaheddine Selmi
+      secretary-general: El Watan (29 Mar 2026) closes the congress « à l'aube
+      du 28 mars 2026 … avec l'élection de Slaheddine Selmi comme nouveau
+      Secrétaire général » and calls Taboubi « le Secrétaire général sortant »;
+      Webdo (29 Mar 2026) headlines « Noureddine Taboubi passe le témoin à
+      Slaheddine Selmi »; EuSee/Hivos (16 Apr 2026) states flatly « Selmi was
+      appointed secretary-general, succeeding Noureddine Taboubi ». The exact
+      last day of Taboubi's mandate is not separately recorded — the date is
+      bounded by the successor's election (house convention: successor-bounded,
+      hence B/inferred, not a cessation record). Primary record would be the
+      UGTT congress communiqué or the bureau's designation minutes; neither was
+      fetched.
+    falsifiable_by: >-
+      The UGTT 26th congress communiqué or bureau minutes naming the date Selmi
+      took office, or a later report giving a different handover date; the
+      December 2025 resignation Taboubi tendered and withdrew (allAfrica, Jan
+      2026 reporting) must not be confused with this handover.
+    sources: [wikipedia-noureddine-taboubi, webdo-selmi-ugtt-sg-2026-03-29, elwatan-selmi-ugtt-2026-03-29, hivos-eusee-ugtt-bureau-2026-04-16]
+    patch_reason: >-
+      End corrected from ongoing to 2026-03-28 (successor-bounded); grade held
+      at B; verification set to needs-primary-source until the UGTT's own
+      congress record is in hand. Also stale on the person record — see the
+      noureddine-taboubi flag at the end of this file.
+
+  - id: p-ugtt-selmi
+    role: ugtt-secretary-general
+    holder: slaheddine-selmi
+    start: "2026-03-28"
+    end: ongoing
+    confidence: B
+    basis: reported
+    verification: needs-primary-source
+    reasoning: >-
+      New position. Elected secretary-general by the 26th UGTT congress's new
+      executive bureau at the close of the Monastir congress, in the small
+      hours of 28 March 2026 (El Watan), and speaking as « le nouveau
+      secrétaire général » the same Saturday (Webdo); EuSee/Hivos dates the
+      appointment to the night of 27-28 March. No JORT act exists for a union
+      general secretary — the primary record is the UGTT's own communiqué,
+      which was not fetched, hence needs-primary-source despite several
+      credible outlets. Currency confirmed in-window: Business News, 20 Sep
+      2026, « Le secrétaire général de l'Union générale tunisienne du travail
+      (UGTT), Slaheddine Selmi » — so `ongoing` is live at the cutoff.
+      Corroborated (not registered): Le Temps 7 Sep 2026, WMC/TAP 14 Sep 2026,
+      L'Economiste Maghrébin 22 and 27 Sep 2026.
+    falsifiable_by: >-
+      The UGTT 26th congress communiqué or bureau designation minutes with the
+      exact date; any post-March-2026 report naming a different secretary-
+      general would overturn this row.
+    sources: [webdo-selmi-ugtt-sg-2026-03-29, elwatan-selmi-ugtt-2026-03-29, hivos-eusee-ugtt-bureau-2026-04-16, businessnews-selmi-ugtt-2026-09-20]
+
+  # ---- 10. CSM president — the chair lapsed with the Cassation presidency ----
+  - id: p-csm-kchaou
+    role: csm-president
+    holder: moncef-kchaou
+    start: "2022-03-07"
+    end: "~2023-10"
+    confidence: B
+    basis: inferred
+    verification: needs-primary-source
+    reasoning: >-
+      End corrected from ongoing. The provisional CSM is chaired ex officio by
+      the first president of the Court of Cassation (décret-loi n° 2022-11 of
+      12 February 2022, art. 7 — the legal link already asserted in this
+      record's own start reasoning). Kchaou left the first presidency at the
+      turn of September/October 2023 (see p-cassation-moncef-kchaou), and
+      Nawaat (16 May 2025) states the consequence directly: « The authority
+      lacks a president, a consequence of the unfilled position of first
+      president of the Court of Cassation, who is also to serve as president of
+      the Provisional High Judicial Council. » AMT (Oct 2025) and AMT/WMC
+      (10 Feb 2026) confirm the Cassation presidency — hence the chair — was
+      still unfilled. The end date is inferred from the legal consequence, not
+      from a decree relieving him of the CSM chair, hence B/inferred. The
+      one-day boundary in the underlying sources (30 Sep vs 1 Oct 2023) is why
+      the token is month-approximate.
+    falsifiable_by: >-
+      A presidential decree relieving Kchaou of the CSM chairmanship with a
+      date; or a CSM communiqué/organigram from late 2023 or later showing him
+      still presiding (or naming a successor chair) would move or delete this
+      end.
+    sources: [wikipedia-csm-tunisie, nawaat-judicial-vacancy-2025, universnews-kchaou-departure-2023, amt-uim-report-2025]
+    patch_reason: >-
+      End corrected from ongoing to ~2023-10; no successor position is
+      proposed because the chair has been vacant, not reassigned (per Nawaat,
+      AMT and AMT/WMC above). Confidence held at B (was B).
+
+  # ---- 11. Court of Cassation president — HOLDER LEFT, post still vacant -----
+  - id: p-cassation-moncef-kchaou
+    role: cassation-president
+    holder: moncef-kchaou
+    start: "2021-10-26"
+    end: "~2023-10"
+    confidence: B
+    basis: reported
+    verification: needs-primary-source
+    reasoning: >-
+      End corrected from ongoing. Univers News (16 Oct 2023): Kchaou « a
+      officiellement quitté ses fonctions … après avoir atteint l'âge légal de
+      la retraite fin septembre dernier, et le poste est devenu "vacant" ».
+      Nawaat (16 May 2025) dates the forced retirement to 1 October 2023 and
+      says the first presidency « has remained vacant » ever since. AMT's
+      report to the UIM (Oct 2025) lists the first presidency of the Court of
+      Cassation among posts vacant since October 2023 and still unfilled at
+      the start of judicial year 2025-2026; AMT/WMC (10 Feb 2026) still calls
+      for the appointment. JORT full-text scans recorded in this repo
+      (jort-2026-09-25 header: "p-cassation-taieb-rached … no appointment
+      decree located") found no successor decree. Confidence drops A → B
+      because the corrected end rests on press plus an association report, not
+      a cessation act — the start (decree-backed) is unchanged; cf. the Soula
+      convention of grading a patch by its weakest documented element.
+    falsifiable_by: >-
+      A cessation decree for Kchaou in the JORT, or any 2023-2026 JORT decree
+      naming a first president of the Court of Cassation (which would both
+      close this row's end question and open the successor's row).
+    sources: [wikipedia-cour-cassation-tunisie, universnews-kchaou-departure-2023, nawaat-judicial-vacancy-2025, amt-uim-report-2025]
+    patch_reason: >-
+      End corrected from ongoing to ~2023-10 (boundary: "fin septembre" vs
+      "1 October 2023" — month-approximate, never an exact day). No successor
+      row: post vacant per Nawaat, AMT, AMT/WMC and the JORT scans. The Tixup
+      page naming Ibrahim Mejri as cassation president was rejected (see
+      header): Mejri left that post in 2014.
+
+  # ---- 12. Administrative Court president — HOLDER CHANGED, tier-1 successor --
+  - id: p-admin-abdessalem-mehdi-grissiaa
+    role: administrative-court-president
+    holder: abdessalem-mehdi-grissiaa
+    start: "2016-04-01"
+    end: "2026-03-02"
+    confidence: B
+    basis: inferred
+    verification: verified
+    reasoning: >-
+      End corrected from ongoing. Décret n° 2026-30 du 2 mars 2026 (JORT n°
+      2026-025, fetched on 9anoun 2026-10-01) names Samira Guiza first
+      president of the Administrative Tribunal; the decree does not mention
+      Grissiaa, so the end is bounded by the successor's appointment (house
+      convention, cf. p-soe-sonede-ahmed-soula) rather than documented by a
+      cessation act, hence B/inferred. La Presse (3 Mar 2026) adds the reason:
+      he « succède à Abdessalem Mehdi Ghrissia, admis à la retraite après avoir
+      atteint l'âge légal », installed the day after the decree. Leaders
+      (6 Apr 2026) independently dates his tenure « 2016 à mars 2026 ».
+      Confidence drops A → B for the same reason the end is inferred: no decree
+      naming his release was located; a cessation decree would restore A.
+    falsifiable_by: >-
+      A JORT decree relieving or retiring Abdessalem Mehdi Grissiaa (which
+      would fix an exact end), or the installation record of Samira Guiza
+      stating Grissiaa's last day.
+    sources: [wikipedia-administrative-court, jort-2016-029, jort-2026-025-guiza, lapresse-guiza-installation-2026-03-03, leaders-guiza-who-who-2026-04-06]
+    patch_reason: >-
+      End corrected from ongoing to 2026-03-02 (successor-bounded by décret
+      2026-30 of the same day). The 2016-04-01 start (gazette effective date,
+      proposed in jort-2026-09-25.yaml) is preserved as recorded.
+
+  - id: p-admin-samira-guiza
+    role: administrative-court-president
+    holder: samira-guiza
+    start: "2026-03-02"
+    end: ongoing
+    confidence: A
+    basis: documented
+    verification: verified
+    notes:
+      - >-
+        New position: successor of p-admin-abdessalem-mehdi-grissiaa, named by
+        décret n° 2026-30 du 2 mars 2026 (JORT n° 2026-025, fetched 2026-10-01
+        on the 9anoun mirror), installed 3 March 2026 (La Presse). In her new
+        quality she is first vice-president of the provisional CSM and
+        president of the provisional council of the administrative order
+        (Leaders, 6 Apr 2026).
+      - >-
+        WINDOW HONESTY: no source dated ≥ 2026-07-02 naming Guiza in office was
+        found in this pass, so `end: ongoing` will emit as `last-verified`
+        (newest source 2026-04-06) — correct, not a defect. The natural
+        in-window candidate is a JORT arrêté signed by her as first president
+        in the July-September 2026 issues (Grissiaa's March 2025 arrêté in JORT
+        n° 38/2025 was the model); no such issue was read here. The La Presse
+        report of 30 Sep 2026 on JORT n° 96's administrative magistracy
+        decrees (fetched) does NOT name her and was therefore not used.
+    sources: [jort-2026-025-guiza, lapresse-guiza-installation-2026-03-03, leaders-guiza-who-who-2026-04-06]
+
+  # ---- 13. Audit Court president — HOLDER LEFT (~early 2023), post vacant -----
+  - id: p-audit-nejib-ktari
+    role: audit-court-president
+    holder: nejib-ktari
+    start: "2017-06-14"
+    end: "~2023-02"
+    confidence: B
+    basis: inferred
+    verification: needs-primary-source
+    reasoning: >-
+      End corrected from ongoing. Leaders (6 Feb 2023): « Néjib Gtari, premier
+      président de la Cour des comptes, a été admis à faire valoir ses droits à
+      la retraite … Son successeur n'a pas encore été désigné. » The exact last
+      day is not sourced: Nawaat (16 May 2025) rounds to « retired two years
+      ago », while AMT's UIM report (Oct 2025) points earlier still — « le
+      pouvoir exécutif n'a pas validé les nominations du Premier Président de la
+      Cour des Comptes depuis Novembre 2022 » — which reads as the nomination
+      freeze dating from November 2022. The honest envelope is therefore
+      late-2022 to February 2023; the token ~2023-02 marks the first attested
+      bound (Leaders), not a claimed day. AMT/WMC (10 Feb 2026) still asks for
+      « la nomination du premier président de la Cour des comptes », i.e. the
+      post remained unfilled more than three years after the start date
+      recorded here. Confidence drops A → B: the end is inferred from
+      retirement reporting, not a decree.
+    falsifiable_by: >-
+      The decree retiring Néjib Ktari (or fixing his last day), the minutes of
+      the provisional council of the financial order proposing his successor,
+      or any JORT act filling the first presidency — any of these would replace
+      the approximate end and open/close the successor row.
+    sources: [wikipedia-audit-court-tunisie, leaders-ktari-retirement-2023, nawaat-judicial-vacancy-2025, amt-uim-report-2025]
+    patch_reason: >-
+      End corrected from ongoing to ~2023-02 with the date conflict recorded in
+      the reasoning (Nov 2022 pointer vs Feb 2023 attestation) rather than
+      resolved by guessing. No successor position proposed — see the
+      audit-court successor flag below.
+
+  # ---- 14. Bar association president — unchanged, new in-window source --------
+  - id: p-onat-boubaker-bethabet
+    role: bar-president
+    holder: boubaker-bethabet
+    start: "2025-09-13"
+    end: ongoing
+    confidence: B
+    verification: needs-primary-source
+    sources: [wikipedia-onat, businessnews-bethabet-usurpation-2026-09-18]
+    patch_reason: >-
+      Attachment only; no date or grade change. Business News (18 Sep 2026)
+      records the ONAT communiqué « signé par le bâtonnier Boubaker Bethabet » —
+      in-window (≥ 2026-07-02), so `ongoing` is restored; the 2025-09-13 start
+      remains encyclopedic (Wikipedia) pending ONAT's own records, hence
+      needs-primary-source is kept. Corroborated (not registered): Radio
+      Express 20 Jul 2026 (« Le bâtonnier de l'Ordre national des avocats de
+      Tunisie, Boubaker Bethabet »), Business News 11 Sep 2026.
+
+  # ---- 15. Elloumi group principal — NOT CONFIRMABLE with a dated source -----
+  #      (flag, no date change: the record keeps its 2019 newest source)
+
+people:
+  - id: samira-guiza
+    name_en: Samira Guiza
+    name_fr: Samira Guiza
+    aliases: [Samira Guiza Oueslati]
+    layers: [civil]
+    tagline: First president of the Administrative Tribunal since 2 March 2026
+    confidence: A
+    basis: documented
+    sources: [jort-2026-025-guiza, lapresse-guiza-installation-2026-03-03, leaders-guiza-who-who-2026-04-06]
+    notes:
+      - >-
+        Career magistrate at the Tribunal administratif since June 1993;
+        president of a cassation chamber 2017-2026; named 12th first president
+        of the Tribunal administratif by décret n° 2026-30 of 2 March 2026.
+        Arabic spelling not carried by the fetched sources, so name_ar is left
+        empty rather than transliterated.
+
+  - id: slaheddine-selmi
+    name_en: Slaheddine Selmi
+    name_fr: Slaheddine Selmi
+    aliases: [Salaheddine Selmi, Salah Eddine Selmi]
+    layers: [civil]
+    tagline: UGTT secretary-general since 28 March 2026
+    confidence: B
+    basis: reported
+    verification: needs-primary-source
+    sources: [webdo-selmi-ugtt-sg-2026-03-29, elwatan-selmi-ugtt-2026-03-29, hivos-eusee-ugtt-bureau-2026-04-16, businessnews-selmi-ugtt-2026-09-20]
+    notes:
+      - >-
+        Successor of Noureddine Taboubi at the 26th UGTT congress (Monastir,
+        March 2026); led the « Stabilité et Défi » list that swept the new
+        15-member executive bureau. Transliterations vary across outlets
+        (Slaheddine / Salaheddine / Salah Eddine); name_ar not carried by the
+        fetched sources, so it is left empty rather than guessed.
+
+flags:
+  - kind: flag
+    id: p-econ-faouzi-elloumi
+    role: elloumi-principal
+    note: >-
+      HOLDER NOT CONFIRMABLE PAST 2019-06-01 with a dated source; this flag
+      does not restore `ongoing` and proposes no date change. What was checked
+      on 2026-10-01: (1) the official BTK Bank shareholders/board page
+      (btkbank-elloumi-board, tier 1) still lists « Président du conseil
+      d'administration Monsieur Faouzi ELLOUMI » — but it carries no date, so
+      it cannot enter the 90-day window and cannot be the "newest source"; (2)
+      no press item dated in the window (≥ 2026-07-02) or in 2026 at all names
+      Faouzi Elloumi in a group role — searches returned only his LinkedIn
+      self-profile (tier 5, "PDG de Cofat") and the JORT arrêté of 4 June 2026
+      on a ministry representative at "société Ellouhoum", which is about a
+      state board seat, not him; (3) the newest dated press on the group's
+      leadership cuts against the row rather than for it: L'Economiste
+      Maghrébin (22 Jul 2026, in-window) calls Hichem Elloumi « le président du
+      groupe Coficab », and Challenge.ma (2024) describes the family holding as
+      « dirigée par Hichem Elloumi ». The record's claim — Faouzi as the
+      group's principal, end: ongoing — is therefore supported only by a
+      dateless official page and a tier-5 self-report. Next step for a human:
+      an RCC/BRCT filing or a dated Groupe Elloumi/Cofat governance page would
+      settle it; a corporate-registry batch should own that.
+    sources: [tunisie14-faouzi-elloumi-2019, btkbank-elloumi-board, cablegate-elloumi-group-2009, africabusinessplus-btk-2021]
+
+  - kind: flag
+    id: p-audit-nejib-ktari
+    role: audit-court-president
+    note: >-
+      SUCCESSOR UNCONFIRMED — the Audit Court first presidency cannot be given
+      a holder after Ktari on the evidence in hand, and the two claims in
+      circulation conflict. (a) AMT/WMC, 10 Feb 2026: the association still
+      calls for « la nomination du premier président de la Cour des comptes » —
+      i.e. vacant 16 months after Nawaat reported the same. (b) INTOSAI
+      Journal, 30 Apr 2026, styles Fadhila Gargouri « Premier Président de la
+      Cour des comptes de Tunisie » — but she was appointed vice-first-
+      president effective 1 Oct 2024 (Leaders, 5 Sep 2024), was still called
+      « vice-premier présidente » when presenting the court's report to the
+      president on 9 Jan 2026 (Le Temps), and a 7 Jul 2026 COMESA description
+      she herself circulated says « First Vice President of Tunisia's Court of
+      Accounts »; her own profile headline reads "Acting Head". Reading: she
+      may be acting head without a confirmed appointment, but that is an
+      interpretation, not a record. No JORT appointment decree for the first
+      presidency was located (this repo's JORT scans list p-audit-* among the
+      unresolved). NO POSITION ROW is proposed; a human should resolve this
+      against the JORT and the court's own site before any successor record is
+      written.
+    sources: [directinfo-amt-vacances-2026-02-10, intosai-journal-gargouri-2026-04-30, leaders-ktari-retirement-2023]
+
+  - kind: flag
+    id: noureddine-taboubi
+    note: >-
+      Person record out of date: tagline/summary read « UGTT Secretary-General
+      since 2017 » / « Secretary-General of the UGTT since 2017 » (en/fr/ar),
+      which stopped being true on 28 March 2026 per the handover evidenced in
+      p-ugtt-taboubi above. The Arabic and French summary lines need human
+      rewriting (translations are never machine-filled here), so this is filed
+      as a flag rather than a patch row. Same standard as the positions:
+      evidence attached, no canonical edit.
+    sources: [webdo-selmi-ugtt-sg-2026-03-29, elwatan-selmi-ugtt-2026-03-29, hivos-eusee-ugtt-bureau-2026-04-16]
+
+notes:
+  - "Counts: 19 new sources, 16 position rows (14 attachment/correction patches + 2 new), 2 new people, 3 flags."
+  - "In-window attachments (≥ 2026-07-02): p-pres-saied, p-pm-zaafarani, p-int-nouri, p-foreign-nafti, p-justice-jaffel, p-finance-khaldi, p-relaff-bouhali, p-bct-nouri, p-onat-boubaker-bethabet, p-ugtt-selmi (via businessnews-selmi-ugtt-2026-09-20)."
+  - "Holder changed with sourced dates: p-ugtt-taboubi → p-ugtt-selmi (2026-03-28), p-admin-abdessalem-mehdi-grissiaa → p-admin-samira-guiza (2026-03-02)."
+  - "Tenure closed, post vacant: p-cassation-moncef-kchaou (~2023-10), p-csm-kchaou (~2023-10), p-audit-nejib-ktari (~2023-02)."
+  - "Not confirmable: p-econ-faouzi-elloumi (flag only, newest dated source remains 2019-06-01)."
+  - "p-admin-samira-guiza's `ongoing` has no in-window source yet — it will honestly emit as last-verified; the next JORT arrêté signed by her as first president is the fix."

@@ -33,10 +33,10 @@ span as a date, or an unsubstantiated claim as a finding, misrepresents the sour
 
 ## Known limits, stated by the project
 
-- <!--stat:reviewed-->46<!--/stat--> of <!--stat:reviewable-->1757<!--/stat-->
+- <!--stat:reviewed-->46<!--/stat--> of <!--stat:reviewable-->1761<!--/stat-->
   records carry an editorial review note; independent human verification is
   <!--stat:independent-->0<!--/stat-->.
-- <!--stat:needsPrimarySource-->227<!--/stat--> records await a primary source.
+- <!--stat:needsPrimarySource-->230<!--/stat--> records await a primary source.
 - Defence intelligence (ANRSD) has no primary sourcing at all: statute, appointment
   date and current status are unestablished.
 - The pre-2011 police chronology rests largely on secondary sources.
