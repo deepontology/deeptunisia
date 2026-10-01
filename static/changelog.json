@@ -1,5 +1,20 @@
 [
   {
+    "hash": "df9d7ae26",
+    "date": "2026-10-01T09:31:28+01:00",
+    "subject": "Build: V31 fails the build on records dated past the research cutoff",
+    "kind": "expansion",
+    "added": 1,
+    "removed": 0,
+    "files": [
+      {
+        "file": "data/parameters.yaml",
+        "added": 1,
+        "removed": 0
+      }
+    ]
+  },
+  {
     "hash": "11495a2d6",
     "date": "2026-10-01T07:51:59+01:00",
     "subject": "Data: advance the research cutoff to 2026-09-30",
