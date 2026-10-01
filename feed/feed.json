@@ -3,6 +3,36 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:6188718c5e5464cc",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "« Plus forts ensemble » | L’IPT au cœur de la riposte régionale contre la rage",
+      "link": "https://kapitalis.com/tunisie/2026/09/30/plus-forts-ensemble-lipt-au-coeur-de-la-riposte-regionale-contre-la-rage/",
+      "published": "2026-09-30T22:43:08Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:eb99bb24f528b234",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Monastir | Fermeture d’un espace pour enfants clandestin à Sayada",
+      "link": "https://kapitalis.com/tunisie/2026/09/30/monastir-fermeture-dun-espace-pour-enfants-clandestin-a-sayada/",
+      "published": "2026-09-30T22:19:01Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:f5acfe9b9cb8a3b0",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Un impressionnant incendie ravage une usine à Ksar Saïd",
+      "link": "https://kapitalis.com/tunisie/2026/09/30/un-impressionnant-incendie-ravage-une-usine-a-ksar-said/",
+      "published": "2026-09-30T21:02:16Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
       "id": "feed:african-manager:e101bd803e9631d0",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -11908,33 +11938,6 @@
       "title": "Crédits en Tunisie, qui paie le plus cher ?",
       "link": "https://africanmanager.com/credits-en-tunisie-qui-paie-le-plus-cher/",
       "published": "2026-09-06T14:16:00Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:53ffd59cf23a7e47",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Voici pourquoi La Poste ne deviendra probablement pas banque",
-      "link": "https://africanmanager.com/voici-pourquoi-la-poste-ne-deviendra-probablement-pas-banque/",
-      "published": "2026-09-06T14:14:46Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:61ef444b49d6abce",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "L’État veut-il réellement fermer le robinet de la perfusion et le peut-il ?",
-      "link": "https://africanmanager.com/letat-veut-il-reellement-fermer-le-robinet-de-la-perfusion-et-le-peut-il/",
-      "published": "2026-09-06T14:00:00Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:091fe9027321c0df",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Etude | Le sommeil profond ralentit la progression de l’Alzheimer",
-      "link": "https://kapitalis.com/tunisie/2026/09/06/etude-le-sommeil-profond-ralentit-la-progression-de-lalzheimer/",
-      "published": "2026-09-06T12:31:29Z",
       "lang": "fr"
     }
   ]
