@@ -771,6 +771,48 @@ try {
 		expired.output.split('\n').filter((l) => l.includes('expired')).join(' ')
 	);
 
+	// -----------------------------------------------------------------------
+	// 8. V22 warning print — the interval-trims warn is pushed near the end of
+	//    the build, after the report section that used to print the warning
+	//    list. A succeeding fixture that guarantees at least one clamp (a
+	//    year-precision event resolves its end to 2026-12-31, past the cutoff,
+	//    and the clamp pulls it back) pins the warning in build stdout; a
+	//    print placed before the last warn() call removes exactly these
+	//    needles while the published file stays correct — which is how the gap
+	//    hid.
+	// -----------------------------------------------------------------------
+	const TREE_TRIM = join(WORK, 'trim');
+	cpSync(TREE, TREE_TRIM, { recursive: true });
+	appendBlock(TREE_TRIM, 'events.yaml', `
+- id: fixture-year-event
+  date: "2026"
+  title_en: "Fixture year event"
+  category: political
+  summary: "Synthetic year-precision event injected by the pipeline fixture runner to guarantee a published interval clamp."
+  sources: [${s}]`);
+	const trimBuild = build(TREE_TRIM, join(WORK, 'out-trim'), join(WORK, 'static-trim'));
+	ok(
+		'pipeline fixture: the year-precision fixture builds (V31 sees the clamped interval)',
+		trimBuild.code === 0,
+		`exit ${trimBuild.code}`
+	);
+	ok(
+		'pipeline fixture: the interval-trims warning reaches build stdout',
+		trimBuild.output.includes('envelope-clamped (V22)'),
+		'expected the V22 warning in the build output'
+	);
+	if (trimBuild.code === 0) {
+		const published = JSON.parse(
+			readFileSync(join(WORK, 'static-trim', 'interval-trims.json'), 'utf8')
+		) as { id: string }[];
+		ok(
+			'pipeline fixture: the fixture clamp is published in interval-trims.json',
+			published.some((t) => t.id === 'fixture-year-event')
+		);
+	} else {
+		ok('pipeline fixture: the fixture clamp is published in interval-trims.json', false, 'trim tree did not build');
+	}
+
 	console.log(`\n  ${checks - failures}/${checks} pipeline-fixture checks passed${failures ? `, ${failures} FAILED` : ''}\n`);
 } finally {
 	rmSync(WORK, { recursive: true, force: true });

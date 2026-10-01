@@ -1879,16 +1879,25 @@ for (const issue of narrative.warnings) warn(issue.where, issue.message);
 // Report
 // ---------------------------------------------------------------------------
 
+/**
+ * Warnings print when this is called, never earlier: `warn()` runs until the
+ * end of the build (the interval-trims and unmatched-verification warns arrive
+ * well after this section), and a warning that never reaches stdout is not a
+ * warning. Called once on each path: after the errors on a failed build, at
+ * the very end of a successful one.
+ */
+function printWarnings(): void {
+	if (!warnings.length) return;
+	console.warn(`\n  ${warnings.length} warning(s)`);
+	for (const w of warnings) console.warn(`   !  ${w}`);
+}
+
 if (errors.length) {
 	console.error(`\n  DATA VALIDATION FAILED — ${errors.length} error(s)\n`);
 	for (const e of errors) console.error(`   x  ${e}`);
 	console.error('');
+	printWarnings();
 	abortBuild();
-}
-
-if (warnings.length) {
-	console.warn(`\n  ${warnings.length} warning(s)`);
-	for (const w of warnings) console.warn(`   !  ${w}`);
 }
 
 // ---------------------------------------------------------------------------
@@ -3972,3 +3981,7 @@ ${principalCoverage
       type incompatible:    ${interpretationAudit.typeIncompatible.length}
       low-confidence floor: ${interpretationAudit.lowConfidence.length}
 `);
+
+// The last statement on purpose: every warn() call in the build runs before
+// this line, so no late push can miss the print.
+printWarnings();
