@@ -1,6 +1,6 @@
 {
-  "generated": "2026-10-01T09:46:46.082Z",
-  "total": 982,
+  "generated": "2026-10-01T10:46:11.937Z",
+  "total": 984,
   "reviewed": 38,
   "queue": [
     {
@@ -1555,6 +1555,46 @@
     },
     {
       "kind": "position",
+      "id": "p-admin-abdessalem-mehdi-grissiaa",
+      "confidence": "B",
+      "basis": "inferred",
+      "risk": 2,
+      "sources": 5,
+      "reviewed": false,
+      "title": "President of the Administrative Court — Abdessalem Mehdi Grissiaa"
+    },
+    {
+      "kind": "position",
+      "id": "p-audit-nejib-ktari",
+      "confidence": "B",
+      "basis": "inferred",
+      "risk": 2,
+      "sources": 4,
+      "reviewed": false,
+      "title": "President of the Audit Court — Néjib Ktari"
+    },
+    {
+      "kind": "position",
+      "id": "p-csm-kchaou",
+      "confidence": "B",
+      "basis": "inferred",
+      "risk": 2,
+      "sources": 4,
+      "reviewed": false,
+      "title": "President of the Superior Council of the Judiciary — Moncef Kchaou"
+    },
+    {
+      "kind": "position",
+      "id": "p-ugtt-taboubi",
+      "confidence": "B",
+      "basis": "inferred",
+      "risk": 2,
+      "sources": 4,
+      "reviewed": false,
+      "title": "Secretary-General of the UGTT — Noureddine Taboubi"
+    },
+    {
+      "kind": "position",
       "id": "p-soe-sonede-ahmed-soula",
       "confidence": "B",
       "basis": "inferred",
@@ -1735,6 +1775,16 @@
     },
     {
       "kind": "position",
+      "id": "p-cassation-moncef-kchaou",
+      "confidence": "B",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 4,
+      "reviewed": false,
+      "title": "President of the Court of Cassation — Moncef Kchaou"
+    },
+    {
+      "kind": "position",
       "id": "p-commerce-ben-mosbah",
       "confidence": "B",
       "basis": "reported",
@@ -1845,6 +1895,16 @@
     },
     {
       "kind": "position",
+      "id": "p-justice-jaffel",
+      "confidence": "B",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 4,
+      "reviewed": false,
+      "title": "Minister of Justice — Leila Jaffel"
+    },
+    {
+      "kind": "position",
       "id": "p-ltdh-marzouki",
       "confidence": "B",
       "basis": "reported",
@@ -1932,6 +1992,16 @@
       "sources": 4,
       "reviewed": false,
       "title": "Speaker of Parliament — Sahbi Karoui"
+    },
+    {
+      "kind": "position",
+      "id": "p-ugtt-selmi",
+      "confidence": "B",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 4,
+      "reviewed": false,
+      "title": "Secretary-General of the UGTT — Slaheddine Selmi"
     },
     {
       "kind": "relationship",
@@ -2472,16 +2542,6 @@
       "sources": 3,
       "reviewed": false,
       "title": "Minister of Justice — Mustapha Bouaziz"
-    },
-    {
-      "kind": "position",
-      "id": "p-justice-jaffel",
-      "confidence": "B",
-      "basis": "reported",
-      "risk": 3,
-      "sources": 3,
-      "reviewed": false,
-      "title": "Minister of Justice — Leila Jaffel"
     },
     {
       "kind": "position",
@@ -4065,6 +4125,16 @@
     },
     {
       "kind": "position",
+      "id": "p-onat-boubaker-bethabet",
+      "confidence": "B",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 2,
+      "reviewed": false,
+      "title": "President of the Bar Association — Boubaker Bethabet"
+    },
+    {
+      "kind": "position",
       "id": "p-ooredoo-assaf",
       "confidence": "B",
       "basis": "reported",
@@ -5475,16 +5545,6 @@
     },
     {
       "kind": "position",
-      "id": "p-csm-kchaou",
-      "confidence": "B",
-      "basis": "reported",
-      "risk": 3,
-      "sources": 1,
-      "reviewed": false,
-      "title": "President of the Superior Council of the Judiciary — Moncef Kchaou"
-    },
-    {
-      "kind": "position",
       "id": "p-def-baly",
       "confidence": "B",
       "basis": "reported",
@@ -6325,16 +6385,6 @@
     },
     {
       "kind": "position",
-      "id": "p-onat-boubaker-bethabet",
-      "confidence": "B",
-      "basis": "reported",
-      "risk": 3,
-      "sources": 1,
-      "reviewed": false,
-      "title": "President of the Bar Association — Boubaker Bethabet"
-    },
-    {
-      "kind": "position",
       "id": "p-onat-brahim-bouderbala",
       "confidence": "B",
       "basis": "reported",
@@ -6642,16 +6692,6 @@
       "sources": 1,
       "reviewed": false,
       "title": "Secretary-General of the UGTT — Houcine Abassi"
-    },
-    {
-      "kind": "position",
-      "id": "p-ugtt-taboubi",
-      "confidence": "B",
-      "basis": "reported",
-      "risk": 3,
-      "sources": 1,
-      "reviewed": false,
-      "title": "Secretary-General of the UGTT — Noureddine Taboubi"
     },
     {
       "kind": "position",
@@ -7739,7 +7779,7 @@
       "confidence": "A",
       "basis": "documented",
       "risk": 4,
-      "sources": 10,
+      "sources": 11,
       "reviewed": false,
       "title": "Governor of the Central Bank — Fethi Zouhair Nouri"
     },
@@ -7762,6 +7802,16 @@
       "sources": 7,
       "reviewed": false,
       "title": "The mass conspiracy trial resumes"
+    },
+    {
+      "kind": "position",
+      "id": "p-foreign-nafti",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 7,
+      "reviewed": false,
+      "title": "Minister of Foreign Affairs — Mohamed Ali Nafti"
     },
     {
       "kind": "event",
@@ -7792,16 +7842,6 @@
       "sources": 6,
       "reviewed": false,
       "title": "Minister of Foreign Affairs — Abdelhamid Escheikh"
-    },
-    {
-      "kind": "position",
-      "id": "p-foreign-nafti",
-      "confidence": "A",
-      "basis": "documented",
-      "risk": 4,
-      "sources": 6,
-      "reviewed": false,
-      "title": "Minister of Foreign Affairs — Mohamed Ali Nafti"
     },
     {
       "kind": "position",
@@ -8054,6 +8094,36 @@
       "title": "Minister of Foreign Affairs — Othman Jarandi"
     },
     {
+      "kind": "position",
+      "id": "p-pm-zaafarani",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 4,
+      "reviewed": false,
+      "title": "Head of Government — Sara Zaafarani"
+    },
+    {
+      "kind": "position",
+      "id": "p-pres-saied",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 4,
+      "reviewed": true,
+      "title": "President of the Republic — Kais Saied"
+    },
+    {
+      "kind": "position",
+      "id": "p-relaff-bouhali",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 4,
+      "reviewed": false,
+      "title": "Minister of Religious Affairs — Ahmed Bouhali"
+    },
+    {
       "kind": "relationship",
       "id": "own-karoui-nessma-50-2008",
       "confidence": "B",
@@ -8255,6 +8325,16 @@
     },
     {
       "kind": "position",
+      "id": "p-admin-samira-guiza",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 3,
+      "reviewed": false,
+      "title": "President of the Administrative Court — Samira Guiza"
+    },
+    {
+      "kind": "position",
       "id": "p-audit-abdelkader-zgolli",
       "confidence": "A",
       "basis": "documented",
@@ -8272,6 +8352,26 @@
       "sources": 3,
       "reviewed": false,
       "title": "Minister of Finance — Slim Chaker"
+    },
+    {
+      "kind": "position",
+      "id": "p-finance-khaldi",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 3,
+      "reviewed": false,
+      "title": "Minister of Finance — Michkat Khaldi"
+    },
+    {
+      "kind": "position",
+      "id": "p-int-nouri",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 3,
+      "reviewed": true,
+      "title": "Minister of the Interior — Khaled Nouri"
     },
     {
       "kind": "position",
@@ -8305,16 +8405,6 @@
     },
     {
       "kind": "position",
-      "id": "p-pm-zaafarani",
-      "confidence": "A",
-      "basis": "documented",
-      "risk": 4,
-      "sources": 3,
-      "reviewed": false,
-      "title": "Head of Government — Sara Zaafarani"
-    },
-    {
-      "kind": "position",
       "id": "p-pres-benali",
       "confidence": "A",
       "basis": "documented",
@@ -8322,16 +8412,6 @@
       "sources": 3,
       "reviewed": false,
       "title": "President of the Republic — Zine El Abidine Ben Ali"
-    },
-    {
-      "kind": "position",
-      "id": "p-relaff-bouhali",
-      "confidence": "A",
-      "basis": "documented",
-      "risk": 4,
-      "sources": 3,
-      "reviewed": false,
-      "title": "Minister of Religious Affairs — Ahmed Bouhali"
     },
     {
       "kind": "position",
@@ -8585,16 +8665,6 @@
     },
     {
       "kind": "position",
-      "id": "p-admin-abdessalem-mehdi-grissiaa",
-      "confidence": "A",
-      "basis": "documented",
-      "risk": 4,
-      "sources": 2,
-      "reviewed": false,
-      "title": "President of the Administrative Court — Abdessalem Mehdi Grissiaa"
-    },
-    {
-      "kind": "position",
       "id": "p-bct-nouira",
       "confidence": "A",
       "basis": "documented",
@@ -8635,16 +8705,6 @@
     },
     {
       "kind": "position",
-      "id": "p-finance-khaldi",
-      "confidence": "A",
-      "basis": "documented",
-      "risk": 4,
-      "sources": 2,
-      "reviewed": false,
-      "title": "Minister of Finance — Michkat Khaldi"
-    },
-    {
-      "kind": "position",
       "id": "p-foreign-ennaifer",
       "confidence": "A",
       "basis": "documented",
@@ -8672,16 +8732,6 @@
       "sources": 2,
       "reviewed": true,
       "title": "Minister of Foreign Affairs — Othman Jarandi"
-    },
-    {
-      "kind": "position",
-      "id": "p-int-nouri",
-      "confidence": "A",
-      "basis": "documented",
-      "risk": 4,
-      "sources": 2,
-      "reviewed": true,
-      "title": "Minister of the Interior — Khaled Nouri"
     },
     {
       "kind": "position",
@@ -8752,16 +8802,6 @@
       "sources": 2,
       "reviewed": false,
       "title": "President of the Republic — Habib Bourguiba"
-    },
-    {
-      "kind": "position",
-      "id": "p-pres-saied",
-      "confidence": "A",
-      "basis": "documented",
-      "risk": 4,
-      "sources": 2,
-      "reviewed": true,
-      "title": "President of the Republic — Kais Saied"
     },
     {
       "kind": "position",
@@ -9175,16 +9215,6 @@
     },
     {
       "kind": "position",
-      "id": "p-audit-nejib-ktari",
-      "confidence": "A",
-      "basis": "documented",
-      "risk": 4,
-      "sources": 1,
-      "reviewed": false,
-      "title": "President of the Audit Court — Néjib Ktari"
-    },
-    {
-      "kind": "position",
       "id": "p-cassation-khaled-ayari",
       "confidence": "A",
       "basis": "documented",
@@ -9192,16 +9222,6 @@
       "sources": 1,
       "reviewed": false,
       "title": "President of the Court of Cassation — Khaled Ayari"
-    },
-    {
-      "kind": "position",
-      "id": "p-cassation-moncef-kchaou",
-      "confidence": "A",
-      "basis": "documented",
-      "risk": 4,
-      "sources": 1,
-      "reviewed": false,
-      "title": "President of the Court of Cassation — Moncef Kchaou"
     },
     {
       "kind": "position",

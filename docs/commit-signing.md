@@ -208,7 +208,7 @@ live mint without any workflow edit.
 ### Files deposited (same set archived on Zenodo and attached to the GitHub Release)
 
 ```
-static/dataset.json          canonical bundle (6.5 MB) — always first
+static/dataset.json          canonical bundle (6.6 MB) — always first
 static/*.csv                 positions, relationships, sources, companies,
                              contracts, licences, declarations, education
 static/geo.json, world-topo.json, sensitivity.json, changelog.json, tn-adm.geojson

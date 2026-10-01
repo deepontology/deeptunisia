@@ -16257,3 +16257,26 @@
   basis: reported
   falsifiable_by: The referral and hearing records would confirm the co-defendant list and the postponement; a forensic report would settle the attribution dispute.
   sources: [kapitalis-ounissi-report-2026-09-25, tunisienumerique-ounissi-case-2026-07-11]
+
+- id: samira-guiza
+  name_en: Samira Guiza
+  name_fr: Samira Guiza
+  aliases: [Samira Guiza Oueslati]
+  layers: [civil]
+  tagline: First president of the Administrative Tribunal since 2 March 2026
+  confidence: A
+  basis: documented
+  sources: [jort-2026-025-guiza, lapresse-guiza-installation-2026-03-03, leaders-guiza-who-who-2026-04-06]
+  notes: ["Career magistrate at the Tribunal administratif since June 1993; president of a cassation chamber 2017-2026; named 12th first president of the Tribunal administratif by décret n° 2026-30 of 2 March 2026. Arabic spelling not carried by the fetched sources, so name_ar is left empty rather than transliterated."]
+
+- id: slaheddine-selmi
+  name_en: Slaheddine Selmi
+  name_fr: Slaheddine Selmi
+  aliases: [Salaheddine Selmi, Salah Eddine Selmi]
+  layers: [civil]
+  tagline: UGTT secretary-general since 28 March 2026
+  confidence: B
+  basis: reported
+  verification: needs-primary-source
+  sources: [webdo-selmi-ugtt-sg-2026-03-29, elwatan-selmi-ugtt-2026-03-29, hivos-eusee-ugtt-bureau-2026-04-16, businessnews-selmi-ugtt-2026-09-20]
+  notes: ["Successor of Noureddine Taboubi at the 26th UGTT congress (Monastir, March 2026); led the « Stabilité et Défi » list that swept the new 15-member executive bureau. Transliterations vary across outlets (Slaheddine / Salaheddine / Salah Eddine); name_ar not carried by the fetched sources, so it is left empty rather than guessed."]
