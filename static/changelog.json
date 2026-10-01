@@ -1,5 +1,40 @@
 [
   {
+    "hash": "ede11662c",
+    "date": "2026-10-01T11:47:15+01:00",
+    "subject": "Data: merge the 2026-10-01 re-verification batch (15 state officeholders)",
+    "kind": "revision",
+    "added": 1110,
+    "removed": 52,
+    "files": [
+      {
+        "file": "data/contrib/reverify-2026-10-01.yaml",
+        "added": 846,
+        "removed": 0
+      },
+      {
+        "file": "data/people.yaml",
+        "added": 23,
+        "removed": 0
+      },
+      {
+        "file": "data/positions.yaml",
+        "added": 62,
+        "removed": 47
+      },
+      {
+        "file": "data/public-claims.yaml",
+        "added": 5,
+        "removed": 5
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 174,
+        "removed": 0
+      }
+    ]
+  },
+  {
     "hash": "df9d7ae26",
     "date": "2026-10-01T09:31:28+01:00",
     "subject": "Build: V31 fails the build on records dated past the research cutoff",
