@@ -43,6 +43,7 @@ time:
   # view clipped: records past the horizon are invisible on the Chronicle
   # lane and the Now view, and nothing in the build checked record dates
   # against the cutoff.
+  # V31 now fails the build on any record interval dated past the cutoff.
   floor: "1956-03-20"
   cutoff: "2026-09-30"
   # How far back an open-ended "in post by X" bound may reach. A plausible

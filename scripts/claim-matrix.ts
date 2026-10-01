@@ -340,6 +340,21 @@ export const CLAIM_MATRIX: MatrixRow[] = [
 	},
 
 	// -----------------------------------------------------------------------
+	// V31: the research-cutoff horizon
+	// -----------------------------------------------------------------------
+	{
+		paper_ref: 'successor Appendix A (V31)',
+		claim_text:
+			'No record interval may begin or end past the research cutoff: a record dated beyond time.cutoff fails the build, so a cutoff advance and the batch that needs it are one edit.',
+		status: 'shipped+tested',
+		code_pointer: 'scripts/build-data.ts :: past the research cutoff',
+		test_pointer:
+			'scripts/test-pipeline.ts :: an event dated past the research cutoff fails and names the record (V31); scripts/test-pipeline.ts :: the cutoff error is the V31 horizon message',
+		notes:
+			'V30 stays reserved (grade-B corroboration), so V31 is the next number in use. Built after two sweeps merged 22 of 135 events past an un-advanced cutoff (2026-09-10): every time-based view clips records past meta.cutoff, so the events rendered nowhere while all gates stayed green. Scope is record intervals only; a review or dispute dated after the cutoff is a fact about the review and stays legal.'
+	},
+
+	// -----------------------------------------------------------------------
 	// Time
 	// -----------------------------------------------------------------------
 	{
@@ -778,6 +793,7 @@ export const REQUIRED_TOPICS: { label: string; pattern: RegExp }[] = [
 	{ label: 'V27 override provenance', pattern: /V27/ },
 	{ label: 'V28 recursive strictness', pattern: /V28/ },
 	{ label: 'V29 claim-level evidence', pattern: /V29/ },
+	{ label: 'V31 cutoff horizon', pattern: /V31/ },
 	{ label: 'temporal predicates', pattern: /certainlyActive/ },
 	{ label: 'citation guarantee / rule 2', pattern: /rule-2|rule 2|citation/i },
 	{ label: 'mutation report provenance', pattern: /mutation-report\.json/ },

@@ -568,18 +568,19 @@
     "end": "2026",
     "interval": {
       "startEarliest": 1767225600000,
-      "startLatest": 1798761599000,
-      "endEarliest": 1798761599000,
-      "endLatest": 1798761599000,
+      "startLatest": 1790726400000,
+      "endEarliest": 1790726400000,
+      "endLatest": 1790726400000,
       "startPrecision": "year",
       "endPrecision": "year",
       "status": "ended",
-      "lastObserved": 1798761599000,
+      "lastObserved": 1790726400000,
       "trimmed": true,
       "raw": {
         "start": "2026",
         "end": "2026"
-      }
+      },
+      "startClamped": true
     }
   },
   {
@@ -589,18 +590,19 @@
     "end": "~2026-07-31",
     "interval": {
       "startEarliest": 1777507200000,
-      "startLatest": 1793404800000,
-      "endEarliest": 1793404800000,
-      "endLatest": 1793404800000,
+      "startLatest": 1790726400000,
+      "endEarliest": 1790726400000,
+      "endLatest": 1790726400000,
       "startPrecision": "approx",
       "endPrecision": "approx",
       "status": "ended",
-      "lastObserved": 1793404800000,
+      "lastObserved": 1790726400000,
       "trimmed": true,
       "raw": {
         "start": "~2026-07-31",
         "end": "~2026-07-31"
-      }
+      },
+      "startClamped": true
     }
   },
   {
@@ -626,23 +628,46 @@
   },
   {
     "kind": "event",
+    "id": "ev-naufrage-zarzis-2026",
+    "start": "~2026-08-20",
+    "end": "~2026-08-20",
+    "interval": {
+      "startEarliest": 1779235200000,
+      "startLatest": 1790726400000,
+      "endEarliest": 1779235200000,
+      "endLatest": 1790726400000,
+      "startPrecision": "approx",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1779235200000,
+      "raw": {
+        "start": "~2026-08-20",
+        "end": "~2026-08-20"
+      },
+      "startClamped": true,
+      "trimmed": true
+    }
+  },
+  {
+    "kind": "event",
     "id": "ev-ben-guerdane-protests-2026",
     "start": "~2026-08-22",
     "end": "~2026-08-25",
     "interval": {
       "startEarliest": 1779408000000,
-      "startLatest": 1795305600000,
-      "endEarliest": 1795305600000,
-      "endLatest": 1795564800000,
+      "startLatest": 1790726400000,
+      "endEarliest": 1790726400000,
+      "endLatest": 1790726400000,
       "startPrecision": "approx",
       "endPrecision": "approx",
       "status": "ended",
-      "lastObserved": 1795305600000,
+      "lastObserved": 1790726400000,
       "trimmed": true,
       "raw": {
         "start": "~2026-08-22",
         "end": "~2026-08-25"
-      }
+      },
+      "startClamped": true
     }
   },
   {
@@ -652,18 +677,19 @@
     "end": "~2026-08-18",
     "interval": {
       "startEarliest": 1779062400000,
-      "startLatest": 1794960000000,
-      "endEarliest": 1794960000000,
-      "endLatest": 1794960000000,
+      "startLatest": 1790726400000,
+      "endEarliest": 1790726400000,
+      "endLatest": 1790726400000,
       "startPrecision": "approx",
       "endPrecision": "approx",
       "status": "ended",
-      "lastObserved": 1794960000000,
+      "lastObserved": 1790726400000,
       "trimmed": true,
       "raw": {
         "start": "~2026-08-18",
         "end": "~2026-08-18"
-      }
+      },
+      "startClamped": true
     }
   },
   {
@@ -673,18 +699,19 @@
     "end": "~2026-09-08",
     "interval": {
       "startEarliest": 1780876800000,
-      "startLatest": 1796774400000,
-      "endEarliest": 1796774400000,
-      "endLatest": 1796774400000,
+      "startLatest": 1790726400000,
+      "endEarliest": 1790726400000,
+      "endLatest": 1790726400000,
       "startPrecision": "approx",
       "endPrecision": "approx",
       "status": "ended",
-      "lastObserved": 1796774400000,
+      "lastObserved": 1790726400000,
       "trimmed": true,
       "raw": {
         "start": "~2026-09-08",
         "end": "~2026-09-08"
-      }
+      },
+      "startClamped": true
     }
   },
   {
@@ -715,18 +742,19 @@
     "end": "~2026-09-07",
     "interval": {
       "startEarliest": 1780790400000,
-      "startLatest": 1796688000000,
-      "endEarliest": 1796688000000,
-      "endLatest": 1796688000000,
+      "startLatest": 1790726400000,
+      "endEarliest": 1790726400000,
+      "endLatest": 1790726400000,
       "startPrecision": "approx",
       "endPrecision": "approx",
       "status": "ended",
-      "lastObserved": 1796688000000,
+      "lastObserved": 1790726400000,
       "trimmed": true,
       "raw": {
         "start": "~2026-09-07",
         "end": "~2026-09-07"
-      }
+      },
+      "startClamped": true
     }
   },
   {
@@ -736,18 +764,19 @@
     "end": "~2026-09-10",
     "interval": {
       "startEarliest": 1781049600000,
-      "startLatest": 1796947200000,
-      "endEarliest": 1796947200000,
-      "endLatest": 1796947200000,
+      "startLatest": 1790726400000,
+      "endEarliest": 1790726400000,
+      "endLatest": 1790726400000,
       "startPrecision": "approx",
       "endPrecision": "approx",
       "status": "ended",
-      "lastObserved": 1796947200000,
+      "lastObserved": 1790726400000,
       "trimmed": true,
       "raw": {
         "start": "~2026-09-10",
         "end": "~2026-09-10"
-      }
+      },
+      "startClamped": true
     }
   },
   {
