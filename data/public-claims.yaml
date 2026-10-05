@@ -278,13 +278,13 @@ claims:
     claim: Sources kept as staged reading and excluded from the published count.
     surfaces:
       - path: landing/index.html
-        locator: '(\d+) of the 1365 sources currently back'
+        locator: '(\d+) of the 1367 sources currently back'
       - path: landing/_strings.en.json
-        locator: '(\d+) of the 1365 sources currently back'
+        locator: '(\d+) of the 1367 sources currently back'
       - path: landing/_strings.fr.json
-        locator: '(\d+) des 1365 sources n.appuient'
+        locator: '(\d+) des 1367 sources n.appuient'
       - path: landing/_strings.ar.json
-        locator: 'و(\d+) من المصادر الـ1365'
+        locator: 'و(\d+) من المصادر الـ1367'
     resolver: { source: stats, key: sourcesUncited }
     format: plain
     population: sources defined in data/sources.yaml that back no claim
@@ -703,7 +703,7 @@ claims:
     claim: Records carrying an editorial review note.
     surfaces:
       - path: landing/index.html
-        locator: '<span class="v">(\d+) / 1761</span>'
+        locator: '<span class="v">(\d+) / 1762</span>'
       - path: landing/index.html
         locator: 'all (\d+) review notes'
       - path: landing/_strings.en.json

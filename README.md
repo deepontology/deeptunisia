@@ -187,15 +187,15 @@ This is not neutrality for its own sake — it is the project's only real protec
 
 ## Known limits
 
-- **<!--stat:reviewed-->46<!--/stat--> of <!--stat:reviewable-->1761<!--/stat--> records carry an editorial review note, and independent human verification is <!--stat:independent-->0<!--/stat-->.** The stated architecture is that machines propose and humans verify; almost nothing has been through a second pair of eyes. The real numbers are published on `/about` because that is the only way the commitment means anything.
+- **<!--stat:reviewed-->46<!--/stat--> of <!--stat:reviewable-->1762<!--/stat--> records carry an editorial review note, and independent human verification is <!--stat:independent-->0<!--/stat-->.** The stated architecture is that machines propose and humans verify; almost nothing has been through a second pair of eyes. The real numbers are published on `/about` because that is the only way the commitment means anything.
 - **Defence intelligence (ANRSD) has no primary sourcing at all** — statute, appointment date, current status all unestablished. Largest hole in the security map.
 - **Pre-2011 police chronology is the weakest area**, resting largely on secondary sources.
 - **The 2014–2019 police succession does not fit its endpoints.** Three reported tenures cannot fit between two firmly dated ones; recorded as an unresolved contradiction rather than smoothed over.
 - **`<=` bounds use an 8-year window.** Stated modelling assumption, not a fact.
 - **UI is translated for chrome only.** Arabic, French and English navigation, controls and labels, with RTL. Entity names are trilingual in the data and all three are searchable. Long-form analytical prose is deliberately *not* machine-translated — a machine-translated epistemology page would undermine the point.
 - **<!--stat:needsPrimarySource-->230<!--/stat--> records await a primary source.** Listed in full on `/evidence`.
-- **Human review is not merely thin, it is not independent.** Independent checks stand at <!--stat:independent-->0<!--/stat--> in every category, and the editorial notes that do exist are unevenly spread: <!--stat:reviewed-unsubstantiated-->16<!--/stat--> of <!--stat:reviewable-unsubstantiated-->19<!--/stat--> unsubstantiated claims, <!--stat:reviewed-attributed-->19<!--/stat--> of <!--stat:reviewable-attributed-->317<!--/stat--> that name a source and <!--stat:reviewed-inferred-->2<!--/stat--> of <!--stat:reviewable-inferred-->45<!--/stat--> inferences carry one. The breakdown is on `/about`.
-- **<!--stat:sourcesUncited-->52<!--/stat--> of <!--stat:sources-->1365<!--/stat--> sources back no claim.** Staged reading, kept in the file but excluded from the published count of <!--stat:sourcesCited-->1313<!--/stat--> — a bibliography entry that holds nothing up is not evidence.
+- **Human review is not merely thin, it is not independent.** Independent checks stand at <!--stat:independent-->0<!--/stat--> in every category, and the editorial notes that do exist are unevenly spread: <!--stat:reviewed-unsubstantiated-->16<!--/stat--> of <!--stat:reviewable-unsubstantiated-->19<!--/stat--> unsubstantiated claims, <!--stat:reviewed-attributed-->19<!--/stat--> of <!--stat:reviewable-attributed-->318<!--/stat--> that name a source and <!--stat:reviewed-inferred-->2<!--/stat--> of <!--stat:reviewable-inferred-->46<!--/stat--> inferences carry one. The breakdown is on `/about`.
+- **<!--stat:sourcesUncited-->52<!--/stat--> of <!--stat:sources-->1367<!--/stat--> sources back no claim.** Staged reading, kept in the file but excluded from the published count of <!--stat:sourcesCited-->1315<!--/stat--> — a bibliography entry that holds nothing up is not evidence.
 
 ## Deliberately not built yet
 
