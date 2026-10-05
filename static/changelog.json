@@ -1,5 +1,40 @@
 [
   {
+    "hash": "bcc8c2437",
+    "date": "2026-10-05T21:09:15+01:00",
+    "subject": "Data: merge the 2026-10-05 sweep (Chebbi hunger strike) and advance the research cutoff (#49)",
+    "kind": "revision",
+    "added": 343,
+    "removed": 6,
+    "files": [
+      {
+        "file": "data/contrib/daily-2026-10-05.yaml",
+        "added": 253,
+        "removed": 0
+      },
+      {
+        "file": "data/events.yaml",
+        "added": 44,
+        "removed": 0
+      },
+      {
+        "file": "data/parameters.yaml",
+        "added": 6,
+        "removed": 1
+      },
+      {
+        "file": "data/public-claims.yaml",
+        "added": 5,
+        "removed": 5
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 35,
+        "removed": 0
+      }
+    ]
+  },
+  {
     "hash": "ede11662c",
     "date": "2026-10-01T11:47:15+01:00",
     "subject": "Data: merge the 2026-10-01 re-verification batch (15 state officeholders)",
