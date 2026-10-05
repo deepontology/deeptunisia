@@ -1,0 +1,253 @@
+# daily-2026-10-05, daily dataset sweep (full mode), consolidated outbox
+#
+# Window swept: 2026-09-30T14:51:14Z to 2026-10-05 (24 new feed items).
+# Feed refreshed 2026-10-05: 1200 archived, +21 new, 21 aged out (fr 1171,
+#   ar 16, en 13). African Manager failed on this run (ECONNRESET), so its
+#   1-5 October output is absent. Wires BBC 30/0, France 24 30/0, Al Jazeera
+#   25/0, filtered as non-Tunisia as before.
+# Coverage gap: fetch-feed.ts takes only the 10 newest items per outlet, and
+#   the previous fetch ran 2026-09-30T14:51Z. The Kapitalis items of 1-3
+#   October therefore never entered the archive and cannot be recovered
+#   through this feed. Two graph-relevant pieces from those days were
+#   recovered by direct fetch on 2026-10-05 (the Chebbi hunger strike, the
+#   Bensedrine/Krichi hearing); the rest survive as headline leads in notes.
+# Web-verified 2026-10-05: five Kapitalis pages (Chebbi hunger strike, Chebbi
+#   prison column, Decree-Law 54 article 24, TABC Guinea mission, Libya
+#   tribune) plus the Bensedrine/Krichi hearing and the Abdallah Said appeal.
+#   The websearch provider was down on 2026-10-05, so no outlet beyond
+#   Kapitalis could be sought for the two items below.
+# The single candidate is dated 2026-10-01, past time.cutoff (2026-09-30) in
+#   data/parameters.yaml. V31 fails the build on a canonical record dated past
+#   the cutoff, so whoever merges it must move the cutoff to 2026-10-01 in the
+#   same edit and update the pinned defaults in scripts/parameters.ts and
+#   scripts/test-parameters.ts. No cutoff was advanced here: this batch is
+#   proposals, and the advance belongs to the merge.
+# CANDIDATES ARE PROPOSALS, NOT GRAPH DATA. Nothing canonical was changed;
+#   humans dispose (P4).
+
+sources:
+  - id: kapitalis-chebbi-greve-faim-2026-10-01
+    title: "Tunisie | Ahmed Néjib Chebbi en grève de la faim"
+    publisher: Kapitalis
+    date: 2026-10-01
+    url: https://kapitalis.com/tunisie/2026/10/01/tunisie-ahmed-nejib-chebbi-en-greve-de-la-faim/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      Depuis sa cellule Ahmed Néjib Chebbi a entamé, ce jeudi 1er octobre
+      2026, une grève de la faim afin de dénoncer la censure en prison, selon
+      un communiqué publié sur la page de l'intéressé. Ahmed Néjib Chebbi
+      explique que par cette action, il souhaite protester "contre la privation
+      du droit à l'information imposée aux détenus et le blocage des médias
+      indépendants dans les établissements pénitentiaires".
+    note: >-
+      Reports a communiqué issued by the person concerned; no prison
+      administration, medical or defence account in the piece.
+
+  - id: kapitalis-chebbi-experience-carcerale-2026-10-05
+    title: "À propos de l'expérience carcérale d'Ahmed Néjib Chebbi"
+    publisher: Kapitalis
+    date: 2026-10-05
+    url: https://kapitalis.com/tunisie/2026/10/05/a-propos-de-lexperience-carcerale-dahmed-nejib-chebbi/
+    tier: 4
+    lang: fr
+    excerpt: >-
+      Il a été incarcéré en 1968 ... jusqu'à son incarcération actuelle à la
+      prison de Mornaguia, où il observe une grève de la faim. Translation of
+      an Arabic column by Fathi Ben Haj Yahia, a left-wing activist and former
+      political prisoner.
+    note: >-
+      A signed column, not reporting. It confirms on 5 October that the
+      strike was still running at Mornaguia and that he has passed 80; it is
+      the same outlet as the 1 October report, so it corroborates continuation
+      only and adds no independence.
+
+  - id: kapitalis-tabc-guinee-2026-10-05
+    title: "Mission économique multisectorielle tunisienne en Guinée"
+    publisher: Kapitalis
+    date: 2026-10-05
+    url: https://kapitalis.com/tunisie/2026/10/05/mission-economique-multisectorielle-tunisienne-en-guinee/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      Le Tunisia Africa Business Council (TABC) conduira, du 6 au 11 octobre
+      2026, une mission économique multisectorielle en Guinée à laquelle
+      participent 30 chefs d'entreprise tunisiens issus de plusieurs secteurs
+      stratégiques ... un workshop par le consortium Tunisien Tucad consacré à
+      la structuration et au financement des projets en partenariat
+      public-privé (PPP) ... participation de la délégation tunisienne à la
+      3e édition du Forum pour la croissance inclusive en Afrique (Focia 2026).
+    note: >-
+      Names TABC, the Tucad consortium and Focia 2026. None of the three
+      exists in the graph, so this stays a research note (candidate rule:
+      missing entity, missing record).
+
+  - id: kapitalis-bensedrine-krichi-proces-2026-10-01
+    title: "Le procès de Ben Sedrine et Krichi reporté, verdict attendu le 12 octobre"
+    publisher: Kapitalis
+    date: 2026-10-01
+    url: https://kapitalis.com/tunisie/2026/10/01/le-proces-de-ben-sedrine-et-krichi-reporte-verdict-attendu-le-12-octobre/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      La Chambre criminelle spécialisée dans les affaires de corruption
+      financière près le Tribunal de première instance de Tunis a examiné, ce
+      jeudi 1er octobre 2026, l'affaire relative aux dépassements présumés
+      ayant entaché les travaux de l'Instance Vérité et Dignité (IVD) ... la
+      cour a décidé de renvoyer l'examen de l'affaire au 12 octobre courant ...
+      à l'encontre de Khaled Krichi, avocat et ancien membre de l'IVD, qui s'est
+      présenté en état d'arrestation et Sihem Ben Sedrine, ancienne
+      présidente de l'Instance, qui a comparu en état de liberté.
+    note: >-
+      Khaled Krichi has no person record, so the event cannot be proposed yet.
+
+  - id: kapitalis-abdallah-said-appel-2026-09-29
+    title: "La peine d'Abdallah Saïd portée à deux ans de prison en appel"
+    publisher: Kapitalis
+    date: 2026-09-29
+    url: https://kapitalis.com/tunisie/2026/09/29/la-peine-dabdallah-said-portee-a-deux-ans-de-prison-en-appel/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      La Cour d'appel de Médenine a alourdi la peine du président de
+      l'association, "Enfants de la Lune de Médenine", Abdallah Saïd, détenu
+      depuis novembre 2024 pour des accusations à caractère financier. Sa
+      peine a été révisée, hier en appel, à deux ans de prison contre un
+      jugement de première instance à un an ferme, dénonce Intersection parmi
+      d'autres associations. Initialement renvoyé devant le Pôle judiciaire de
+      lutte contre le terrorisme, le dossier a été réorienté vers la justice
+      ordinaire de Médenine après l'abandon des soupçons de terrorisme.
+    note: >-
+      Carried over: published 2026-09-29, inside the previous sweep's window
+      but not triaged there. Abdallah Saïd and the association have no records.
+
+events:
+  - id: ev-chebbi-hunger-strike-2026-10-01
+    date: "2026-10-01"
+    title_en: "Ahmed Néjib Chebbi begins a hunger strike in Mornaguia prison"
+    title_fr: "Ahmed Néjib Chebbi entame une grève de la faim à la prison de Mornaguia"
+    category: legal
+    subcategory: detention-protest
+    actors: [ahmed-nejib-chebbi]
+    causes: [nejib-chebbi-arrested-2025]
+    summary: >-
+      From his cell, Ahmed Néjib Chebbi began a hunger strike on Thursday
+      1 October 2026, according to a communiqué published on his own Facebook
+      page and relayed by Kapitalis the same day. The communiqué says the
+      strike is against "the privation of the right to information imposed on
+      detainees and the blocking of independent media in penitentiary
+      establishments"; it says prison authorities let in only the press and
+      channels that carry official propaganda, and it denounces detention
+      conditions meant to isolate opponents from the outside world. He is held
+      at Mornaguia prison, where he has been since his arrest on 4 December
+      2025 (see nejib-chebbi-arrested-2025); a Kapitalis column of 5 October
+      2026 still describes him on hunger strike there. The strike rests on a
+      statement by the prisoner himself. No prison administration, medical or
+      defence-committee account was found, and no outlet other than Kapitalis
+      was located: the websearch provider was unavailable on 2026-10-05.
+    confidence: C
+    basis: reported
+    verification: needs-primary-source
+    attributed_to: "Communiqué on Ahmed Néjib Chebbi's Facebook page, as relayed by Kapitalis"
+    reasoning: >-
+      One outlet, one origin: the report carries a communiqué issued by the
+      person concerned, so the claim is his own and uncorroborated. Grade C
+      with attribution rather than B, because no second independent account
+      was obtained and the search provider was down on the day of the sweep.
+      The 5 October column is the same outlet and does not raise the grade.
+    falsifiable_by: >-
+      A prison administration or medical statement on his condition, a
+      follow-up from his defence committee or family, or a second outlet
+      reporting the strike would confirm or refute the date and the stated
+      grounds; a communiqué withdrawing it would refute the record outright.
+    sources:
+      - kapitalis-chebbi-greve-faim-2026-10-01
+      - kapitalis-chebbi-experience-carcerale-2026-10-05
+
+notes:
+  - >-
+    Research backlog, priority 1: Khaled Krichi, lawyer and former IVD bureau
+    member, has no person record, so the hearing of 1 October 2026 cannot be
+    proposed. The criminal chamber specialising in financial corruption near
+    the Tunis Court of First Instance examined the alleged overspend in the
+    Truth and Dignity Commission's work tied to a reconciliation accord with a
+    businessman, then adjourned to 12 October 2026 for the pleas and the
+    judgment; Krichi appeared under arrest, Sihem Bensedrine free. Source row
+    kapitalis-bensedrine-krichi-proces-2026-10-01. Create the person record
+    first, then propose the event against sihem-bensedrine and judiciary.
+    Distinct from bensedrine-sentenced-2026 (25 years, appeal pending) and
+    bensedrine-financial-brigade-2026 (7 August hearing).
+  - >-
+    Research backlog, priority 2: TABC mission to Guinea, 6 to 11 October
+    2026. Thirty Tunisian business people across infrastructure, energy,
+    pharmaceuticals, agri-food, higher education, tourism, technology, health
+    and services; B2B and B2G days in Conakry, a PPP workshop by the Tucad
+    consortium, and attendance at Focia 2026 on 10 October. The piece also
+    gives TABC's stated goal of doubling national exports to the continent to
+    13 billion dinars by 2030, and puts African exports at about 10% of total
+    trade (6.5 to 6.8 billion dinars), sub-Saharan Africa at about 3% (1.6
+    billion). TABC, Tucad and Focia are all absent from the graph, so no
+    record can be proposed. Source row kapitalis-tabc-guinee-2026-10-05.
+  - >-
+    Research backlog, priority 3: Abdallah Saïd, president of the association
+    Enfants de la Lune de Médenine, detained since November 2024 on financial
+    accusations, had his sentence raised from one year to two on appeal at
+    the Médenine Court of Appeal on 28 September 2026 (reported 29 September).
+    The file first went to the anti-terrorism judicial pole and was moved to
+    ordinary Médenine justice after the terrorism suspicions were dropped.
+    Intersection association and the CRLDHT both called for his release; the
+    CRLDHT call is a Kapitalis flash item of 1 October 2026. Neither the
+    person, the association nor Intersection has a record. Source row
+    kapitalis-abdallah-said-appel-2026-09-29.
+  - >-
+    No change, Decree-Law 54: the Kapitalis piece of 30 September on the
+    revision of article 24 repeats what ev-decret-2026-1-decret54-amendment-
+    2026-09-30 already holds, with the gazette text (JORT n° 96, p. 2056)
+    behind it. The Kapitalis reading ("la peine de cinq ans de prison ferme est
+    supprimée") is the press framing the record already records as a framing;
+    the six-month term on recidivism stands. No correction.
+  - >-
+    No change, Ahmed Néjib Chebbi biography: the 5 October column restates the
+    1968 detention at Borj Erroumi, the Perspectives group becoming L'Ouvrier
+    tunisien in exile, the PDP founded in 1983 and its transformation into
+    Al Joumhouri in 2011. All of it matches the person record
+    (ahmed-nejib-chebbi); nothing to correct. It also names Ayachi Hammami as
+    imprisoned, which the graph holds, and Mourad and Meriem Zghidi, who have
+    no records and are not load-bearing here.
+  - >-
+    No change, Libya: the 5 October piece is a signed tribune by Abdelwaheb
+    Ben Moussa, described as an IT engineer and public-bank cadre. It argues
+    for an engaged Tunisian neutrality at Ras Jedir. It asserts no fact the
+    graph can hold, and the author is not a graph person.
+  - >-
+    Headline leads from the unrecovered 1-3 October Kapitalis run, read on the
+    flash module on 2026-10-05 and not fetched: "Sahbi Atig en grève de la
+    faim depuis mardi dernier" (2 October, no Atig record in the graph);
+    "Le CRLDHT appelle à la libération immédiate de Abdallah Saïd" (1 October);
+    "Le CRLDHT dénonce l'inhumanité, étendard des prisons en Tunisie"
+    (3 October); "Des habitants de Menzel Bouzelfa protestent contre les
+    rejets d'une usine de biotechnologie" (4 October, place in regions.yaml,
+    no company record); "TIDM | Le Tunisien Slim Laghmani prête serment"
+    (3 October); "Extension de la décharge de déchets de Béja avec une aide
+    japonaise" (4 October); "Tunisie-Canada | Vers un partenariat renforcé
+    dans le domaine de la formation médicale" (4 October). Headline level
+    only: no URL, no source row, nothing proposed.
+  - >-
+    No change, the rest of the window: artisanat design and export, the Dani
+    de Morón concert, the Tunisian date trade, the Habib Kazdaghli exhibition
+    in Marseille, the 1985 UN vote commemoration, the Béja autism centre, the
+    Sayada unlicensed children's space closure, the Ksar Saïd factory fire,
+    the Bourse session, the Industry 4.0 programme, the JOJ Dakar Unesco
+    homage, the weather bulletin, the US withdrawal from Iraq, and the four
+    Nawaat essays (sub-Saharan children's education, the Saïed mirror piece,
+    public broadcasting since 25 July, artists leaving the country). None of
+    them names a person, institution, company or event the graph holds or is
+    missing.
+  - >-
+    Failure vocabulary: the African Manager fetch died with ECONNRESET on
+    2026-10-05, so nothing from that outlet entered this window; the
+    websearch provider returned "Missing key at [result]" on both attempts, so
+    the Chebbi strike could not be sought beyond Kapitalis; no JORT issue
+    covers this window, so no tier-1 source was available; and the three feed
+    days of 1-3 October are gone from the archive because the fetcher keeps
+    only the 10 newest items per outlet.

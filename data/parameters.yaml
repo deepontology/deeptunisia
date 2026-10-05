@@ -43,9 +43,14 @@ time:
   # view clipped: records past the horizon are invisible on the Chronicle
   # lane and the Now view, and nothing in the build checked record dates
   # against the cutoff.
+  # Advanced again 2026-10-05 when the Sep-30→Oct-05 sweep merged one event
+  #   (ev-chebbi-hunger-strike-2026-10-01: Ahmed Néjib Chebbi on hunger strike
+  #   at Mornaguia from 1 October 2026) whose date sat past the previous
+  #   horizon. The sweep read the feed through 2026-10-05, so the cutoff takes
+  #   the coverage date rather than the single record date.
   # V31 now fails the build on any record interval dated past the cutoff.
   floor: "1956-03-20"
-  cutoff: "2026-09-30"
+  cutoff: "2026-10-05"
   # How far back an open-ended "in post by X" bound may reach. A plausible
   # ceiling for a senior command tenure; the longest documented run in the
   # dataset is about seven and a half years.

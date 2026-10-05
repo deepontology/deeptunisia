@@ -4916,3 +4916,47 @@
   reasoning: "Single-outlet relay of NGO statements; the toll and the SAR-zone boundary detail are the organisations' accounts, not official Tunisian figures. C with attribution. Basis stays `inferred`: one relay of one origin is not a multi-outlet report, and no Tunisian statement was cited."
   falsifiable_by: "Tunisian, Italian or Libyan SAR records, or a Sea Watch log, would confirm the toll, the platform transfer and the six missing."
   sources: [kapitalis-naufrage-hasdrubal-2026-09-30]
+
+- id: ev-chebbi-hunger-strike-2026-10-01
+  date: "2026-10-01"
+  title_en: "Ahmed Néjib Chebbi begins a hunger strike in Mornaguia prison"
+  title_fr: "Ahmed Néjib Chebbi entame une grève de la faim à la prison de Mornaguia"
+  category: legal
+  subcategory: detention-protest
+  actors: [ahmed-nejib-chebbi]
+  causes: [nejib-chebbi-arrested-2025]
+  summary: >-
+    From his cell, Ahmed Néjib Chebbi began a hunger strike on Thursday
+    1 October 2026, according to a communiqué published on his own Facebook
+    page and relayed by Kapitalis the same day. The communiqué says the
+    strike is against "the privation of the right to information imposed on
+    detainees and the blocking of independent media in penitentiary
+    establishments"; it says prison authorities let in only the press and
+    channels that carry official propaganda, and it denounces detention
+    conditions meant to isolate opponents from the outside world. He is held
+    at Mornaguia prison, where he has been since his arrest on 4 December
+    2025 (see nejib-chebbi-arrested-2025); a Kapitalis column of 5 October
+    2026 still describes him on hunger strike there. The strike rests on a
+    statement by the prisoner himself. No prison administration, medical or
+    defence-committee account was found, and no outlet other than Kapitalis
+    was located: the websearch provider was unavailable on 2026-10-05.
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "Communiqué on Ahmed Néjib Chebbi's Facebook page, as relayed by Kapitalis"
+  reasoning: >-
+    One outlet, one origin: the report carries a communiqué issued by the
+    person concerned, so the claim is his own and uncorroborated. Grade C
+    with attribution rather than B, because no second independent account
+    was obtained and the search provider was down on the day of the sweep.
+    The 5 October column is the same outlet and does not raise the grade.
+    Basis stays `inferred`: one relay of one origin is not a multi-outlet
+    report, and grade C with `needs-primary-source` derives `inferred`, so
+    `reported` here would be an override (V27). Falsified the same way as
+    the claim itself.
+  falsifiable_by: >-
+    A prison administration or medical statement on his condition, a
+    follow-up from his defence committee or family, or a second outlet
+    reporting the strike would confirm or refute the date and the stated
+    grounds; a communiqué withdrawing it would refute the record outright.
+  sources: [kapitalis-chebbi-greve-faim-2026-10-01, kapitalis-chebbi-experience-carcerale-2026-10-05]

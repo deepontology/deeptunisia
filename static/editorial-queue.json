@@ -1,6 +1,6 @@
 {
-  "generated": "2026-10-01T10:47:32.612Z",
-  "total": 984,
+  "generated": "2026-10-05T19:33:40.867Z",
+  "total": 985,
   "reviewed": 38,
   "queue": [
     {
@@ -422,6 +422,16 @@
       "sources": 2,
       "reviewed": false,
       "title": "~56 deputies demand an extraordinary ARP plenary"
+    },
+    {
+      "kind": "event",
+      "id": "ev-chebbi-hunger-strike-2026-10-01",
+      "confidence": "C",
+      "basis": "inferred",
+      "risk": 1,
+      "sources": 2,
+      "reviewed": false,
+      "title": "Ahmed Néjib Chebbi begins a hunger strike in Mornaguia prison"
     },
     {
       "kind": "event",

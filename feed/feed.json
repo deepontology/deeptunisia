@@ -3,6 +3,146 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:76c53abb6d83e8ff",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "L’artisanat tunisien mise sur le design et l’innovation pour mieux s’exporter",
+      "link": "https://kapitalis.com/tunisie/2026/10/05/lartisanat-tunisien-mise-sur-le-design-et-linnovation-pour-mieux-sexporter/",
+      "published": "2026-10-05T12:42:45Z",
+      "lang": "fr",
+      "author": "webmaster kapitalis"
+    },
+    {
+      "id": "feed:kapitalis:d920801ce77863bd",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Concert à Tunis du guitariste espagnol Dani de Morón",
+      "link": "https://kapitalis.com/tunisie/2026/10/05/concert-a-tunis-du-guitariste-espagnol-dani-de-moron/",
+      "published": "2026-10-05T11:53:00Z",
+      "lang": "fr",
+      "author": "webmaster kapitalis"
+    },
+    {
+      "id": "feed:kapitalis:6783f43163878148",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Mission économique multisectorielle tunisienne en Guinée",
+      "link": "https://kapitalis.com/tunisie/2026/10/05/mission-economique-multisectorielle-tunisienne-en-guinee/",
+      "published": "2026-10-05T11:28:48Z",
+      "lang": "fr",
+      "author": "webmaster kapitalis"
+    },
+    {
+      "id": "feed:kapitalis:969c4b5304d613a0",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "La datte tunisienne lorgne de nouveaux marchés",
+      "link": "https://kapitalis.com/tunisie/2026/10/05/la-datte-tunisienne-lorgne-de-nouveaux-marches/",
+      "published": "2026-10-05T10:42:11Z",
+      "lang": "fr",
+      "author": "webmaster kapitalis"
+    },
+    {
+      "id": "feed:kapitalis:8f58caa45fb9ef8d",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "À propos de l’expérience carcérale d’Ahmed Néjib Chebbi",
+      "link": "https://kapitalis.com/tunisie/2026/10/05/a-propos-de-lexperience-carcerale-dahmed-nejib-chebbi/",
+      "published": "2026-10-05T09:56:40Z",
+      "lang": "fr",
+      "author": "webmaster kapitalis"
+    },
+    {
+      "id": "feed:kapitalis:29193a6d2e2e5f39",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Quel rôle pour la Tunisie dans la gestion de la crise en Libye ?",
+      "link": "https://kapitalis.com/tunisie/2026/10/05/quel-role-pour-la-tunisie-dans-la-gestion-de-la-crise-en-libye/",
+      "published": "2026-10-05T08:20:28Z",
+      "lang": "fr",
+      "author": "webmaster kapitalis"
+    },
+    {
+      "id": "feed:kapitalis:34414378f81cd38c",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Les États-Unis se retirent définitivement de l’Irak",
+      "link": "https://kapitalis.com/tunisie/2026/10/05/les-etats-unis-se-retirent-definitivement-de-lirak/",
+      "published": "2026-10-05T07:38:01Z",
+      "lang": "fr",
+      "author": "webmaster kapitalis"
+    },
+    {
+      "id": "feed:kapitalis:72a7a2e3d5bee689",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Habib Kazdaghli présente la collection «Tunisie plurielle» à Marseille",
+      "link": "https://kapitalis.com/tunisie/2026/10/05/habib-kazdaghli-presente-la-collection-tunisie-plurielle-a-marseille/",
+      "published": "2026-10-05T07:00:39Z",
+      "lang": "fr",
+      "author": "webmaster kapitalis"
+    },
+    {
+      "id": "feed:kapitalis:5fa644d9f72c9197",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Il y a 41 ans | La Tunisie faisait condamner Israël à l’Onu",
+      "link": "https://kapitalis.com/tunisie/2026/10/04/il-y-a-41-ans-la-tunisie-faisait-condamner-israel-a-lonu/",
+      "published": "2026-10-04T12:42:19Z",
+      "lang": "fr",
+      "author": "webmaster kapitalis"
+    },
+    {
+      "id": "feed:kapitalis:aaddb8f3385238c0",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Autisme et troubles de l’apprentissage | Ouverture d’un centre privé à Béja",
+      "link": "https://kapitalis.com/tunisie/2026/10/04/autisme-et-troubles-de-lapprentissage-ouverture-dun-centre-prive-a-beja/",
+      "published": "2026-10-04T12:09:41Z",
+      "lang": "fr",
+      "author": "webmaster kapitalis"
+    },
+    {
+      "id": "feed:nawaat:f28b6707bf66ef59",
+      "outlet": "Nawaat",
+      "outletId": "nawaat",
+      "title": "Education des enfants subsahariens en Tunisie : un droit bafoué",
+      "link": "https://nawaat.org/2026/10/04/education-des-enfants-subsahariens-en-tunisie-un-droit-bafoue/",
+      "published": "2026-10-04T12:00:00Z",
+      "lang": "fr",
+      "author": "Rihab Boukhayatia"
+    },
+    {
+      "id": "feed:nawaat:c1b8185605387330",
+      "outlet": "Nawaat",
+      "outletId": "nawaat",
+      "title": "قيس سعيّد: ما الذي نرفض أن نراه في المرآة؟",
+      "link": "https://nawaat.org/2026/10/03/%d9%82%d9%8a%d8%b3-%d8%b3%d8%b9%d9%8a%d9%91%d8%af-%d9%85%d8%a7-%d8%a7%d9%84%d8%b0%d9%8a-%d9%86%d8%b1%d9%81%d8%b6-%d8%a3%d9%86-%d9%86%d8%b1%d8%a7%d9%87-%d9%81%d9%8a-%d8%a7%d9%84%d9%85%d8%b1%d8%a2/",
+      "published": "2026-10-03T11:10:31Z",
+      "lang": "ar",
+      "author": "Ramy Mahmoud"
+    },
+    {
+      "id": "feed:nawaat:ce42cc19c68948a5",
+      "outlet": "Nawaat",
+      "outletId": "nawaat",
+      "title": "كان يا ما كان إعلام عمومي في تونس.. حتى داهمه 25 جويلية",
+      "link": "https://nawaat.org/2026/10/02/%d9%83%d8%a7%d9%86-%d9%8a%d8%a7-%d9%85%d8%a7-%d9%83%d8%a7%d9%86-%d8%a5%d8%b9%d9%84%d8%a7%d9%85-%d8%b9%d9%85%d9%88%d9%85%d9%8a-%d9%81%d9%8a-%d8%aa%d9%88%d9%86%d8%b3-%d8%ad%d8%aa%d9%89-%d8%af%d8%a7/",
+      "published": "2026-10-02T12:31:34Z",
+      "lang": "ar",
+      "author": "Najla Ben Salah"
+    },
+    {
+      "id": "feed:nawaat:b4aa5f29c8bd83de",
+      "outlet": "Nawaat",
+      "outletId": "nawaat",
+      "title": "« Sauve-qui-peut » : les artistes tunisiens fuient leur pays",
+      "link": "https://nawaat.org/2026/10/01/sauve-qui-peut-les-artistes-tunisiens-fuient-leur-pays/",
+      "published": "2026-10-01T13:00:00Z",
+      "lang": "fr",
+      "author": "Rihab Boukhayatia"
+    },
+    {
       "id": "feed:kapitalis:6188718c5e5464cc",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -11812,132 +11952,6 @@
       "title": "Énergie solaire : 309 projets autorisés",
       "link": "https://africanmanager.com/energie-solaire-309-projets-autorises/",
       "published": "2026-09-07T08:49:46Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:261d5ab81eeb6e7b",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Sousse : Mesures préventives avant la saison des pluies",
-      "link": "https://africanmanager.com/sousse-renforcement-des-mesures-preventives-avant-la-saison-des-pluies/",
-      "published": "2026-09-07T08:49:31Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:1ec855a4903eb790",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Les enseignants appelés à créer des compte sur « Vie scolaire »",
-      "link": "https://africanmanager.com/le-ministere-de-leducation-appelle-les-enseignants-a-creer-des-compte-sur-la-plateforme-vie-scolaire/",
-      "published": "2026-09-07T08:49:13Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:18330b608b38987f",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Kushner : Le gouvernement israélien agit de manière « quelque peu irrationnelle » à Gaza en raison des élections",
-      "link": "https://africanmanager.com/kushner-le-gouvernement-israelien-agit-de-maniere-quelque-peu-irrationnelle-a-gaza-en-raison-des-elections/",
-      "published": "2026-09-07T08:46:42Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:e84707a5102b253d",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Zelenskyy prévient que la guerre avec la Russie se poursuivra jusqu’à l’hiver",
-      "link": "https://africanmanager.com/zelenskyy-previent-que-la-guerre-avec-la-russie-se-poursuivra-jusqua-lhiver/",
-      "published": "2026-09-07T08:46:31Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:3457aa511e2e8619",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "La résilience de l’Iran face à la guerre menée par les États-Unis ne cesse de surprendre",
-      "link": "https://africanmanager.com/la-resilience-de-liran-face-a-la-guerre-menee-par-les-etats-unis-ne-cesse-de-surprendre/",
-      "published": "2026-09-07T08:45:06Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:b7020ae4b6c04d93",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Les attaques américaines contre l’Iran reposent sur « la frustration plutôt que sur des calculs stratégiques »",
-      "link": "https://africanmanager.com/les-attaques-americaines-contre-liran-reposent-sur-la-frustration-plutot-que-sur-des-calculs-strategiques/",
-      "published": "2026-09-07T08:44:51Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:bf808802a726ef92",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Allemagne : Victoire électorale historique de l’extrême droite en Saxe-Anhalt",
-      "link": "https://africanmanager.com/allemagne-victoire-electorale-historique-de-lextreme-droite-en-saxe-anhalt/",
-      "published": "2026-09-07T08:43:26Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:3740568c96f7bbb4",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "L’Iran menace d’intensifier sa riposte aux attaques américaines",
-      "link": "https://africanmanager.com/liran-menace-dintensifier-sa-riposte-aux-attaques-americaines/",
-      "published": "2026-09-07T08:42:49Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:93f0a80fe93a067d",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Le marché tunisien de l’acier dans l’expectative",
-      "link": "https://kapitalis.com/tunisie/2026/09/07/le-marche-tunisien-de-lacier-dans-lexpectative/",
-      "published": "2026-09-07T08:25:23Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:4d9a64c6e3b03757",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Les Prix Ibn Khaldoun 2026 décernés à Tunis",
-      "link": "https://kapitalis.com/tunisie/2026/09/07/les-prix-ibn-khaldoun-2026-decernes-a-tunis/",
-      "published": "2026-09-07T07:17:33Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:kapitalis:fdc41755076a450b",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Ce que la double réservation dit de l’économie tunisienne",
-      "link": "https://kapitalis.com/tunisie/2026/09/07/ce-que-la-double-reservation-dit-de-leconomie-tunisienne/",
-      "published": "2026-09-07T06:32:31Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:a07c998a135a5c26",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Webinaire sur les opportunités d’affaires du secteur digital en Tunisie",
-      "link": "https://africanmanager.com/webinaire-sur-les-opportunites-daffaires-du-secteur-digital-en-tunisie/",
-      "published": "2026-09-06T15:08:11Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:0a28b21c0239b4b5",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Entretien entre le ministre des AE et son homologue égyptien",
-      "link": "https://africanmanager.com/entretien-entre-le-ministre-des-ae-et-son-homologue-egyptien/",
-      "published": "2026-09-06T15:03:56Z",
-      "lang": "fr"
-    },
-    {
-      "id": "feed:african-manager:477815af08b794ed",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Crédits en Tunisie, qui paie le plus cher ?",
-      "link": "https://africanmanager.com/credits-en-tunisie-qui-paie-le-plus-cher/",
-      "published": "2026-09-06T14:16:00Z",
       "lang": "fr"
     }
   ]
