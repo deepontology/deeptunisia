@@ -43,7 +43,7 @@
   status: design
   design_type: repeated-cross-sectional-online
   population: open-online-18-plus
-  population_statement: null
+  population_statement: "Among respondents to an open, self-selected online survey of adults. Results describe the people who took part, not Tunisians as a whole."
   locales: [en, fr, ar]
   ethics_review: null
   data_protection_review: null

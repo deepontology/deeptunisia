@@ -8,6 +8,7 @@
 	import Barcode from './Barcode.svelte';
 	import Stamp from './Stamp.svelte';
 	import Grid from './Grid.svelte';
+	import Content from '$lib/ui/Content.svelte';
 	import type { LiveResults } from './live';
 
 	/**
@@ -433,6 +434,15 @@
 		{/if}
 	</section>
 
+	<!-- Long-form statements live in content files (src/content/police-index.*.md),
+	     where each locale's provenance is recorded in its front matter. #data is
+	     the anchor the consent screen links to. -->
+	{#each ['data', 'limits', 'deviations'] as id (id)}
+		<section class="block prose-block" id={id}>
+			<Content view="police-index" section={id} />
+		</section>
+	{/each}
+
 	{#if liveState === 'offline'}
 		<p class="note">{t('index.offline')}</p>
 	{/if}
@@ -839,6 +849,10 @@
 		font-size: 0.7rem;
 		color: var(--text-faint);
 		margin: 0.3rem 0 0;
+	}
+
+	.prose-block {
+		max-width: 46rem;
 	}
 
 	/* ---- phone ---------------------------------------------------------- */
