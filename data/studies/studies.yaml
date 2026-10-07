@@ -34,3 +34,33 @@
   outputs: []
   created: 2026-09-14
   updated: 2026-09-14
+
+- id: dt-research-002
+  slug: police
+  title_en: "Tunisia Police Index"
+  title_fr: "Indice tunisien de la police"
+  title_ar: "المؤشّر التونسي للشرطة"
+  status: design
+  design_type: repeated-cross-sectional-online
+  population: open-online-18-plus
+  population_statement: null
+  locales: [en, fr, ar]
+  ethics_review: null
+  data_protection_review: null
+  preregistration: null
+  instrument_versions:
+    - id: dt002-police-index
+      version: 0.1.0-draft
+      hash: null
+      source: research/portal/study-002/instrument-v0.yaml
+      frozen: false
+  fielding_window: null
+  target_n: 1000
+  realized_n: null
+  weighting: raking-ins-2024
+  data_license: CC-BY-4.0
+  funding: null
+  pi: null
+  outputs: []
+  created: 2026-10-07
+  updated: 2026-10-07

@@ -15,6 +15,7 @@
  * instead of deleting them, so a future instrument key enters the hash only by a
  * deliberate edit here, and a text or response change always moves the hash.
  */
+import { evaluateCondition, type ScoringSpec } from './research-scoring.ts';
 
 export type Locale = 'en' | 'fr' | 'ar';
 
@@ -36,6 +37,29 @@ export interface RuntimeItem {
 	options?: string[];
 	maxChars?: number;
 	showIf?: string;
+	/** Labelled scale endpoints per locale; the generic scale note is the fallback. */
+	anchors?: Partial<Record<Locale, ScaleAnchors>>;
+	/** Option code → display text, per locale. Codes are what is stored. */
+	optionLabels?: Partial<Record<Locale, Record<string, string>>>;
+	/** multi_choice options that cannot be combined with any other ("none"). */
+	exclusive?: string[];
+}
+
+export interface ScaleAnchors {
+	low: string;
+	high: string;
+	mid?: string;
+}
+
+export interface RuntimeModule {
+	id: string;
+	label: string;
+	/** Translated headings; absent locales fall back to `label`. */
+	labels: RuntimeText;
+	/** Optional lead text shown above the module's first item. */
+	intro: RuntimeText | null;
+	items: string[];
+	block?: string;
 }
 
 export interface RuntimeMaxDiffSet {
@@ -70,10 +94,16 @@ export interface RuntimeInstrument {
 	locales: Locale[];
 	estimatedMinutes: number;
 	completionTargetMinutesMax: number;
-	modules: Array<{ id: string; label: string; items: string[]; block?: string }>;
+	modules: RuntimeModule[];
 	items: RuntimeItem[];
 	maxdiff: RuntimeMaxDiff | null;
 	gap: RuntimeGap | null;
+	/**
+	 * The study's scoring specification, passed through whole so the runner can
+	 * show a respondent their own score with the same engine the results use
+	 * (community/research-scoring.ts). Null for a study that does not score.
+	 */
+	scoring: ScoringSpec | null;
 	experiments: Array<{
 		id: string;
 		factor: string;
@@ -141,7 +171,17 @@ export interface InstrumentDocument {
 		estimated_minutes: number;
 		completion_target_minutes_max: number;
 	};
-	modules: Array<{ id: string; label: string; items?: string[]; block?: string }>;
+	modules: Array<{
+		id: string;
+		label: string;
+		label_fr?: string;
+		label_ar?: string;
+		intro_en?: string;
+		intro_fr?: string;
+		intro_ar?: string;
+		items?: string[];
+		block?: string;
+	}>;
 	items: Array<{
 		id: string;
 		module: string;
@@ -154,10 +194,14 @@ export interface InstrumentDocument {
 		options?: string[];
 		show_if?: string;
 		max_chars?: number;
+		anchors?: Partial<Record<Locale, ScaleAnchors>>;
+		option_labels?: Partial<Record<Locale, Record<string, string>>>;
+		exclusive?: string[];
 	}>;
 	maxdiff_priority?: MaxDiffBlockDocument | null;
 	gap_block?: GapBlockDocument | null;
 	experiments?: ExperimentDocument[] | null;
+	scoring?: ScoringSpec | null;
 }
 
 // ---------------------------------------------------------------------------
@@ -281,14 +325,42 @@ export function computeInstrumentHash(doc: InstrumentDocument): string {
 			source_locale: doc.instrument.source_locale,
 			locales: [...doc.instrument.locales]
 		},
-		items: doc.items.map((item) => ({
-			id: item.id,
-			response: item.response,
-			required: item.required,
-			text_en: item.text_en,
-			text_fr: item.text_fr,
-			text_ar: item.text_ar
-		})),
+		items: doc.items.map((item) => {
+			const projected: Record<string, unknown> = {
+				id: item.id,
+				response: item.response,
+				required: item.required,
+				text_en: item.text_en,
+				text_fr: item.text_fr,
+				text_ar: item.text_ar
+			};
+			// Shown content that only some items carry. Each key enters the
+			// projection only when the item declares it, so an instrument that
+			// uses none of them keeps the hash it had before they existed.
+			if (item.options !== undefined) projected.options = item.options;
+			if (item.option_labels !== undefined) projected.option_labels = item.option_labels;
+			if (item.anchors !== undefined) projected.anchors = item.anchors;
+			if (item.show_if !== undefined) projected.show_if = item.show_if;
+			if (item.exclusive !== undefined) projected.exclusive = item.exclusive;
+			return projected;
+		}),
+		// Module headings and intros are shown text once they are translated.
+		...(doc.modules.some((m) => m.label_fr ?? m.label_ar ?? m.intro_en ?? m.intro_fr ?? m.intro_ar)
+			? {
+					modules: doc.modules.map((m) => ({
+						id: m.id,
+						label: m.label,
+						label_fr: m.label_fr ?? null,
+						label_ar: m.label_ar ?? null,
+						intro_en: m.intro_en ?? null,
+						intro_fr: m.intro_fr ?? null,
+						intro_ar: m.intro_ar ?? null
+					}))
+				}
+			: {}),
+		// How a response is scored is instrument content: the formula cannot
+		// change without the hash moving.
+		...(doc.scoring ? { scoring: doc.scoring } : {}),
 		// The MaxDiff block travels whole, generated sets included: what the
 		// respondent was shown is instrument content, so the hash covers it.
 		maxdiff_priority: doc.maxdiff_priority ?? null,
@@ -325,6 +397,9 @@ export function compileInstrument(doc: InstrumentDocument): RuntimeInstrument {
 		if (item.options) compiled.options = [...item.options];
 		if (item.max_chars !== undefined) compiled.maxChars = item.max_chars;
 		if (item.show_if !== undefined) compiled.showIf = item.show_if;
+		if (item.anchors !== undefined) compiled.anchors = structuredClone(item.anchors);
+		if (item.option_labels !== undefined) compiled.optionLabels = structuredClone(item.option_labels);
+		if (item.exclusive !== undefined) compiled.exclusive = [...item.exclusive];
 		return compiled;
 	});
 
@@ -341,9 +416,14 @@ export function compileInstrument(doc: InstrumentDocument): RuntimeInstrument {
 		estimatedMinutes: doc.instrument.estimated_minutes,
 		completionTargetMinutesMax: doc.instrument.completion_target_minutes_max,
 		modules: doc.modules.map((module) => {
-			const compiled: { id: string; label: string; items: string[]; block?: string } = {
+			const hasIntro = module.intro_en ?? module.intro_fr ?? module.intro_ar;
+			const compiled: RuntimeModule = {
 				id: module.id,
 				label: module.label,
+				labels: text(module.label, module.label_fr ?? null, module.label_ar ?? null),
+				intro: hasIntro
+					? text(module.intro_en ?? null, module.intro_fr ?? null, module.intro_ar ?? null)
+					: null,
 				items: module.items ? [...module.items] : []
 			};
 			if (module.block !== undefined) compiled.block = module.block;
@@ -377,7 +457,8 @@ export function compileInstrument(doc: InstrumentDocument): RuntimeInstrument {
 			arms: [...experiment.arms],
 			allocation: experiment.allocation,
 			analysis: experiment.analysis
-		}))
+		})),
+		scoring: doc.scoring ? structuredClone(doc.scoring) : null
 	};
 }
 
@@ -470,6 +551,13 @@ function answerProblem(item: RuntimeItem, value: unknown): string | null {
 			if (!Array.isArray(value) || !value.every((v) => typeof v === 'string' && options.includes(v))) {
 				return 'expected an array of declared options';
 			}
+			if (new Set(value).size !== value.length) return 'an option is repeated';
+			// "None of these" next to an abuse is a contradiction, and the score
+			// would count the abuse while the respondent also denied it.
+			const exclusive = (item.exclusive ?? []).filter((o) => value.includes(o));
+			if (exclusive.length && value.length > 1) {
+				return `"${exclusive[0]}" cannot be combined with another option`;
+			}
 			return null;
 		}
 		case 'text_short': {
@@ -557,6 +645,12 @@ export function validateSubmission(
 		if (value === null) continue; // an explicit skip is always allowed
 		const problem = answerProblem(item, value);
 		if (problem) return invalid('invalid-answer', `"${key}": ${problem}`);
+		// An item hidden by its condition was never shown, so it cannot have
+		// been answered. Accepting a value would store an answer to a question
+		// nobody saw, and the scoring would read it as real.
+		if (item.showIf !== undefined && !evaluateCondition(item.showIf, answers)) {
+			return invalid('hidden-item-answered', `"${key}" was not shown, because "${item.showIf}" does not hold`);
+		}
 	}
 
 	// `omitted` is true only for an ungenerated design whose payload left the
