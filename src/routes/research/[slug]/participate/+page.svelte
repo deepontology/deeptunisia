@@ -7,6 +7,7 @@
 	import Input from '$lib/ui/Input.svelte';
 	import Textarea from '$lib/ui/Textarea.svelte';
 	import type { RuntimeInstrument, RuntimeItem, StudyRecord } from '$lib/research';
+	import { evaluateCondition, scoreResponse } from '../../../../../community/research-scoring.ts';
 
 	/**
 	 * The survey runner.
@@ -83,6 +84,7 @@
 	interface Step {
 		id: string;
 		label: string;
+		intro: string | null;
 		kind: 'items' | 'consent' | 'maxdiff';
 		items: RuntimeItem[];
 	}
@@ -93,15 +95,19 @@
 		const out: Step[] = [];
 		for (const m of inst.modules) {
 			if (m.id === 'design') continue;
+			// Module headings are instrument text: the translated label when the
+			// instrument carries one, the source label otherwise.
+			const label = m.labels?.[locale] ?? m.label;
+			const intro = m.intro ? (m.intro[locale] ?? m.intro.en) : null;
 			if (m.block === 'maxdiff_priority') {
-				if (inst.maxdiff?.sets?.length) out.push({ id: m.id, label: m.label, kind: 'maxdiff', items: [] });
+				if (inst.maxdiff?.sets?.length) out.push({ id: m.id, label, intro, kind: 'maxdiff', items: [] });
 				continue;
 			}
 			if (m.block && inst.gap && m.block === inst.gap.id) {
 				const items = inst.gap.items
 					.map((id) => byId.get(id))
 					.filter((i): i is RuntimeItem => Boolean(i) && i!.displayed);
-				if (items.length) out.push({ id: m.id, label: m.label, kind: 'items', items });
+				if (items.length) out.push({ id: m.id, label, intro, kind: 'items', items });
 				continue;
 			}
 			const items = (m.items ?? [])
@@ -110,7 +116,8 @@
 			if (items.length) {
 				out.push({
 					id: m.id,
-					label: m.label,
+					label,
+					intro,
 					kind: items.some((i) => i.response === 'consent') ? 'consent' : 'items',
 					items
 				});
@@ -178,9 +185,37 @@
 		return scaleDescending ? [...values].reverse() : values;
 	}
 
-	function optionLabel(option: string): string {
-		return option.replaceAll('_', ' ');
+	function optionLabel(item: RuntimeItem, option: string): string {
+		return item.optionLabels?.[locale]?.[option] ?? item.optionLabels?.en?.[option] ?? option.replaceAll('_', ' ');
 	}
+
+	/** The labelled scale ends for this item, in the current locale. */
+	function anchorsOf(item: RuntimeItem) {
+		return item.anchors?.[locale] ?? item.anchors?.en ?? null;
+	}
+
+	/**
+	 * Whether an item is shown, given the answers so far. The server applies the
+	 * same condition with the same function and refuses an answer to an item the
+	 * respondent could not have seen.
+	 */
+	function isShown(item: RuntimeItem): boolean {
+		return item.showIf === undefined || evaluateCondition(item.showIf, answers);
+	}
+
+	function toggleOption(item: RuntimeItem, option: string, on: boolean) {
+		const prior = Array.isArray(answers[item.id]) ? (answers[item.id] as string[]) : [];
+		const exclusive = item.exclusive ?? [];
+		let next: string[];
+		if (!on) next = prior.filter((o) => o !== option);
+		// "None of these" clears the rest, and any other choice clears "none".
+		else if (exclusive.includes(option)) next = [option];
+		else next = [...prior.filter((o) => !exclusive.includes(o)), option];
+		setAnswer(item.id, next.length ? next : null);
+	}
+
+	/** The respondent's own result, computed here and never sent anywhere. */
+	let ownScore = $state<ReturnType<typeof scoreResponse> | null>(null);
 
 	function textById(inst: RuntimeInstrument | null, id: string): string {
 		const item = inst?.items.find((i) => i.id === id);
@@ -189,6 +224,11 @@
 
 	function setAnswer(id: string, value: boolean | number | string | string[] | null) {
 		answers[id] = value;
+		// An answer that hides a later item takes that item's answer with it, so
+		// nothing is submitted for a question the respondent no longer sees.
+		for (const item of instrument?.items ?? []) {
+			if (item.showIf !== undefined && item.id in answers && !isShown(item)) delete answers[item.id];
+		}
 	}
 
 	function setPair(setId: string, side: 'most' | 'least', itemId: string) {
@@ -254,8 +294,10 @@
 		errorKey = null;
 		try {
 			const payloadAnswers: Record<string, boolean | number | string | string[] | null> = {};
+			const byId = new Map(instrument.items.map((i) => [i.id, i]));
 			for (const [k, v] of Object.entries(answers)) {
-				if (v !== undefined) payloadAnswers[k] = v;
+				const item = byId.get(k);
+				if (v !== undefined && item && isShown(item)) payloadAnswers[k] = v;
 			}
 			const sets = instrument.maxdiff?.sets ?? [];
 			const maxdiff = sets.length
@@ -284,6 +326,7 @@
 				const body = (await res.json()) as { receipt?: string };
 				receipt = body.receipt ?? null;
 				if (!receipt) errorKey = 'research.participate.error';
+				else if (instrument.scoring) ownScore = scoreResponse(instrument.scoring, payloadAnswers);
 			} else if (res.status === 409) {
 				errorKey = 'research.study.notOpen';
 			} else {
@@ -313,6 +356,22 @@
 		<header class="prose">
 			<p class="eyebrow">{t('research.participate.eyebrow')}</p>
 			<h1>{t('research.participate.thanks')}</h1>
+			{#if instrument?.scoring && ownScore}
+				{@const band = instrument.scoring.bands.find((b) => b.id === ownScore?.band)}
+				<section class="own" aria-labelledby="own-title">
+					<p class="eyebrow" id="own-title">{t('research.own.title')}</p>
+					{#if ownScore.index !== null}
+						<p class="own-index mono">{Math.round(ownScore.index)}<span>/100</span></p>
+						{#if band}
+							<p class="own-band">{band[`label_${locale}`] ?? band.label_en}</p>
+						{/if}
+						<a class="back" href="/research/{study.slug}">{t('research.own.compare')}</a>
+					{:else}
+						<p class="note">{t('research.own.incomplete')}</p>
+					{/if}
+					<p class="note">{t('research.own.private')}</p>
+				</section>
+			{/if}
 			<p class="receipt-label">{t('research.participate.receipt')}</p>
 			<Input value={receipt} readonly mono size="md" aria-label={t('research.participate.receipt')} />
 			<p class="note">{t('research.participate.receiptNote')}</p>
@@ -323,6 +382,9 @@
 			<p class="eyebrow">{t('research.participate.eyebrow')}</p>
 			<h1>{current.label}</h1>
 			<p class="progress">{progressLine}</p>
+			{#if current.intro}
+				<p class="intro">{current.intro}</p>
+			{/if}
 		</header>
 
 		<div class="step">
@@ -366,8 +428,9 @@
 					{/each}
 				</fieldset>
 			{:else}
-			{#each current.items as item (item.id)}
-				{@const caption = captionKey(item.response)}
+			{#each current.items.filter(isShown) as item (item.id)}
+				{@const anchors = anchorsOf(item)}
+				{@const caption = anchors ? null : captionKey(item.response)}
 				{#if item.response === 'consent'}
 					<label class="check consent">
 						<input
@@ -384,7 +447,7 @@
 							<p class="caption">{t(caption)}</p>
 						{/if}
 						{#if item.response === 'scale_essential' || item.response === 'scale_present' || item.response === 'scale_0_10' || item.response === 'agree_4'}
-							<div class="scale" role="radiogroup" aria-label={textOf(item)}>
+							<div class="scale" role="radiogroup" aria-label={textOf(item)} style:--n={scaleValues(item.response).length}>
 								{#each displayedScaleValues(item.response) as v (v)}
 									<label class="opt">
 										<input
@@ -393,11 +456,23 @@
 											value={v}
 											checked={answers[item.id] === v}
 											onchange={() => setAnswer(item.id, v)}
+											aria-label={anchors && v === 0
+												? `0, ${anchors.low}`
+												: anchors && v === 10
+													? `10, ${anchors.high}`
+													: undefined}
 										/>
 										<span>{item.response === 'scale_essential' && v === 0 ? t('research.participate.against') : String(v)}</span>
 									</label>
 								{/each}
 							</div>
+							{#if anchors}
+								<div class="anchors" class:reversed={scaleDescending} aria-hidden="true">
+									<span>{anchors.low}</span>
+									{#if anchors.mid}<span class="mid">{anchors.mid}</span>{/if}
+									<span>{anchors.high}</span>
+								</div>
+							{/if}
 						{:else if item.response === 'single_choice'}
 							<div class="choices" role="radiogroup" aria-label={textOf(item)}>
 								{#each item.options ?? [] as opt (opt)}
@@ -409,7 +484,21 @@
 											checked={answers[item.id] === opt}
 											onchange={() => setAnswer(item.id, opt)}
 										/>
-										<span>{optionLabel(opt)}</span>
+										<span>{optionLabel(item, opt)}</span>
+									</label>
+								{/each}
+							</div>
+						{:else if item.response === 'multi_choice'}
+							<div class="choices" role="group" aria-label={textOf(item)}>
+								{#each item.options ?? [] as opt (opt)}
+									<label class="check">
+										<input
+											type="checkbox"
+											value={opt}
+											checked={Array.isArray(answers[item.id]) && (answers[item.id] as string[]).includes(opt)}
+											onchange={(e) => toggleOption(item, opt, (e.currentTarget as HTMLInputElement).checked)}
+										/>
+										<span>{optionLabel(item, opt)}</span>
 									</label>
 								{/each}
 							</div>
@@ -423,9 +512,13 @@
 								oninput={(e) => setAnswer(item.id, (e.currentTarget as HTMLTextAreaElement).value)}
 							/>
 						{/if}
-						<button class="skip" type="button" onclick={() => setAnswer(item.id, null)}>
-							{t('research.participate.skip')}
-						</button>
+						<!-- An item that offers "prefer not to say" as an answer already has
+						     its skip; a second control would ask the same thing twice. -->
+						{#if !(item.options ?? []).includes('prefer_not_to_say')}
+							<button class="skip" type="button" onclick={() => setAnswer(item.id, null)}>
+								{t('research.participate.skip')}
+							</button>
+						{/if}
 					</fieldset>
 				{/if}
 			{/each}
@@ -497,10 +590,80 @@
 		color: var(--text-faint);
 		margin: 0.3rem 0 0.6rem;
 	}
+	/* One row of equal cells, so a 0 to 10 scale reads as a scale and never
+	   wraps a lone value onto a second line. The whole cell is the target; the
+	   native radio stays in the accessibility tree but is not drawn. */
 	.scale {
+		display: grid;
+		grid-template-columns: repeat(var(--n, 11), minmax(0, 1fr));
+		gap: 0.25rem;
+	}
+	.scale .opt {
+		position: relative;
+		text-align: center;
+		overflow-wrap: anywhere;
+		line-height: 1.15;
+		justify-content: center;
+		padding: 0.5rem 0;
+		min-height: 2.4rem;
+		font-variant-numeric: tabular-nums;
+	}
+	.scale .opt input {
+		position: absolute;
+		opacity: 0;
+		pointer-events: none;
+	}
+	.scale .opt:has(input:checked) {
+		background: var(--text-primary);
+		border-color: var(--text-primary);
+		color: var(--text-inverted);
+	}
+	.scale .opt:has(input:focus-visible) {
+		outline: 2px solid var(--accent);
+		outline-offset: 2px;
+	}
+	.intro {
+		color: var(--text-muted);
+		margin-top: 0.6rem;
+	}
+	/* The labelled ends of a 0 to 10 scale. In the descending arm the ends swap
+	   with the buttons, so the label always sits beside the value it names. */
+	.anchors {
 		display: flex;
-		flex-wrap: wrap;
-		gap: 0.3rem;
+		justify-content: space-between;
+		gap: 1rem;
+		margin-top: 0.45rem;
+		font-size: 0.8rem;
+		color: var(--text-faint);
+	}
+	.anchors.reversed {
+		flex-direction: row-reverse;
+	}
+	.anchors span:last-child {
+		text-align: end;
+	}
+	.anchors .mid {
+		text-align: center;
+	}
+	.own {
+		border: 1px solid var(--border-default);
+		border-radius: var(--r-md);
+		padding: 1rem 1.1rem;
+		margin: 1rem 0 1.4rem;
+	}
+	.own-index {
+		font-size: 3rem;
+		line-height: 1;
+		margin: 0.2rem 0;
+		font-variant-numeric: tabular-nums;
+	}
+	.own-index span {
+		font-size: 1rem;
+		color: var(--text-faint);
+	}
+	.own-band {
+		font-weight: 600;
+		margin-bottom: 0.5rem;
 	}
 	.opt,
 	.check {

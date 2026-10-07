@@ -3,6 +3,7 @@
 	import { app } from '$lib/state.svelte';
 	import { titleOf } from '$lib/research';
 	import Content from '$lib/ui/Content.svelte';
+	import IndexStudy from '$lib/index-study/IndexStudy.svelte';
 
 	/**
 	 * A study page.
@@ -29,6 +30,11 @@
 	<title>{titleOf(study, app.locale)} · DeepTunisia</title>
 </svelte:head>
 
+<!-- A study that publishes a scoring specification is a live index, and its
+     page is the instrument and its readouts rather than the study case. -->
+{#if instrument?.scoring}
+	<IndexStudy {study} {instrument} />
+{:else}
 <div class="wrap">
 	<header class="prose hero">
 		<p class="eyebrow">
@@ -88,6 +94,7 @@
 		<p>{t('research.study.resultsSoon')}</p>
 	</section>
 </div>
+{/if}
 
 <style>
 	.wrap {

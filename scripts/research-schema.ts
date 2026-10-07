@@ -13,6 +13,7 @@
  */
 import { z } from 'zod';
 import { computeInstrumentHash } from '../community/research-contract.ts';
+import { validateScoringSpec, type ScoringSpec } from '../community/research-scoring.ts';
 
 /*
  * The hash and the runtime compiler live in community/research-contract.ts, which
@@ -212,6 +213,14 @@ export function validateStudyLifecycle(study: Study): string[] {
  */
 const itemText = z.string().nullable();
 
+const ScaleAnchorsSchema = z.strictObject({
+	low: z.string().min(1),
+	high: z.string().min(1),
+	mid: z.string().min(1).optional()
+});
+
+const optionLabelMap = z.record(z.string(), z.string().min(1));
+
 export const ItemSchema = z.strictObject({
 	id: z.string().min(1),
 	module: z.string().min(1),
@@ -229,13 +238,28 @@ export const ItemSchema = z.strictObject({
 	options: z.array(z.string().min(1)).optional(),
 	show_if: z.string().optional(),
 	max_chars: z.number().int().positive().optional(),
-	arms: z.array(z.string().min(1)).optional()
+	arms: z.array(z.string().min(1)).optional(),
+	/** Labelled scale endpoints per locale (`mid` for a bipolar scale). */
+	anchors: z
+		.strictObject({ en: ScaleAnchorsSchema.optional(), fr: ScaleAnchorsSchema.optional(), ar: ScaleAnchorsSchema.optional() })
+		.optional(),
+	/** Option code → display text per locale. The code is what is stored. */
+	option_labels: z
+		.strictObject({ en: optionLabelMap.optional(), fr: optionLabelMap.optional(), ar: optionLabelMap.optional() })
+		.optional(),
+	/** multi_choice options that cannot be combined with another ("none"). */
+	exclusive: z.array(z.string().min(1)).optional()
 });
 export type Item = z.infer<typeof ItemSchema>;
 
 export const ModuleSchema = z.strictObject({
 	id: z.string().min(1),
 	label: z.string().min(1),
+	label_fr: z.string().min(1).optional(),
+	label_ar: z.string().min(1).optional(),
+	intro_en: z.string().min(1).optional(),
+	intro_fr: z.string().min(1).optional(),
+	intro_ar: z.string().min(1).optional(),
 	/** Items this module presents; a module may instead reference a block. */
 	items: z.array(z.string().min(1)).optional(),
 	block: z.string().min(1).optional()
@@ -328,7 +352,13 @@ export const InstrumentSchema = z.strictObject({
 	maxdiff_priority: MaxDiffBlockSchema.optional(),
 	gap_block: GapBlockSchema.optional(),
 	experiments: z.array(ExperimentSchema).optional(),
-	tiers: z.record(z.string(), z.string()).optional()
+	tiers: z.record(z.string(), z.string()).optional(),
+	/**
+	 * The scoring specification. Its shape and every cross-reference are checked
+	 * by `validateScoringSpec` in community/research-scoring.ts, the same module
+	 * that evaluates it, so the rule and the engine cannot disagree.
+	 */
+	scoring: z.record(z.string(), z.unknown()).optional()
 });
 export type InstrumentDoc = z.infer<typeof InstrumentSchema>;
 
@@ -359,6 +389,70 @@ export function validateInstrument(doc: InstrumentDoc): string[] {
 			if (!ids.has(ref)) {
 				violations.push(`module "${module.id}" references unknown item "${ref}"`);
 			}
+		}
+	}
+
+	// Presentation order: a condition may only read an answer given earlier.
+	const shownOrder = doc.modules.flatMap((module) => module.items ?? []);
+	const position = new Map(shownOrder.map((id, i) => [id, i]));
+	const byId = new Map(doc.items.map((item) => [item.id, item]));
+	const SCALES = new Set(['scale_0_10', 'scale_essential', 'scale_present']);
+
+	for (const item of doc.items) {
+		if (item.show_if !== undefined) {
+			const m = /^\s*([a-z0-9_]+)\s*==\s*([a-z0-9_]+)\s*$/.exec(item.show_if);
+			const target = m ? byId.get(m[1]) : undefined;
+			if (!m) {
+				violations.push(`item "${item.id}" show_if "${item.show_if}" is not "<item> == <option>"`);
+			} else if (!target) {
+				violations.push(`item "${item.id}" show_if names unknown item "${m[1]}"`);
+			} else if (!(target.options ?? []).includes(m[2])) {
+				violations.push(`item "${item.id}" show_if value "${m[2]}" is not an option of "${m[1]}"`);
+			} else if ((position.get(m[1]) ?? Infinity) >= (position.get(item.id) ?? -Infinity)) {
+				violations.push(`item "${item.id}" show_if reads "${m[1]}", which is not shown before it`);
+			}
+		}
+
+		if (item.anchors !== undefined && !SCALES.has(item.response)) {
+			violations.push(`item "${item.id}" has anchors but response "${item.response}" is not a scale`);
+		}
+
+		if (item.option_labels !== undefined) {
+			const options = item.options ?? [];
+			for (const [locale, labels] of Object.entries(item.option_labels)) {
+				if (!labels) continue;
+				for (const option of options) {
+					if (!nonBlank(labels[option])) {
+						violations.push(`item "${item.id}" has no ${locale} label for option "${option}"`);
+					}
+				}
+				for (const key of Object.keys(labels)) {
+					if (!options.includes(key)) {
+						violations.push(`item "${item.id}" labels "${key}" in ${locale}, which is not an option`);
+					}
+				}
+			}
+		}
+
+		if (item.exclusive !== undefined) {
+			if (item.response !== 'multi_choice') {
+				violations.push(`item "${item.id}" declares exclusive options but is not multi_choice`);
+			}
+			for (const option of item.exclusive) {
+				if (!(item.options ?? []).includes(option)) {
+					violations.push(`item "${item.id}" exclusive option "${option}" is not an option`);
+				}
+			}
+		}
+	}
+
+	if (doc.scoring !== undefined) {
+		for (const problem of validateScoringSpec(
+			doc.scoring as unknown as ScoringSpec,
+			ids,
+			new Map(doc.items.map((item) => [item.id, { response: item.response, options: item.options }]))
+		)) {
+			violations.push(`scoring: ${problem}`);
 		}
 	}
 
@@ -421,6 +515,24 @@ export function validateInstrument(doc: InstrumentDoc): string[] {
 				if (item.response === 'auto') continue;
 				if (!nonBlank(item[key])) {
 					violations.push(`frozen instrument item "${item.id}" has no ${locale} text`);
+				}
+				// Translated scale ends and options are shown text too: a frozen
+				// instrument that labels them in one locale labels them in all.
+				if (item.anchors !== undefined && !item.anchors[locale]) {
+					violations.push(`frozen instrument item "${item.id}" has no ${locale} anchors`);
+				}
+				if (item.option_labels !== undefined && !item.option_labels[locale]) {
+					violations.push(`frozen instrument item "${item.id}" has no ${locale} option labels`);
+				}
+			}
+			const translatedModules = doc.modules.some((m) => m.label_fr ?? m.label_ar);
+			for (const module of doc.modules) {
+				if (translatedModules && locale !== 'en' && !nonBlank((module as Record<string, unknown>)[`label_${locale}`])) {
+					violations.push(`frozen instrument module "${module.id}" has no ${locale} label`);
+				}
+				const hasIntro = module.intro_en ?? module.intro_fr ?? module.intro_ar;
+				if (hasIntro && !nonBlank(module[`intro_${locale}`])) {
+					violations.push(`frozen instrument module "${module.id}" has no ${locale} intro`);
 				}
 			}
 			// Block instructions name English `instruction_en`, not `text_en`.

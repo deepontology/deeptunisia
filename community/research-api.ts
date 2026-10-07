@@ -36,6 +36,7 @@ import {
 	type RuntimeInstrument,
 	type StudiesRegistry
 } from './research-contract.ts';
+import { aggregateResponses, applyExclusions } from './research-scoring.ts';
 
 /** What the research handler needs from its caller, per request. */
 export interface ResearchContext {
@@ -58,11 +59,81 @@ class ResearchError extends Error {
 	}
 }
 
-const json = (body: unknown, status = 200) =>
+const json = (body: unknown, status = 200, headers: Record<string, string> = {}) =>
 	new Response(JSON.stringify(body), {
 		status,
-		headers: { 'content-type': 'application/json; charset=utf-8' }
+		headers: { 'content-type': 'application/json; charset=utf-8', ...headers }
 	});
+
+// ---------------------------------------------------------------------------
+// Live results (study 002 runs fully live; index-spec §7).
+//
+// Aggregates only: no row, receipt, locale, channel or timestamp finer than an
+// hour leaves this function. Rows are read for the instrument hash the study
+// currently fields, so a wave is exactly one instrument version. The bootstrap
+// seed is fixed, so the same rows always give the same interval and a reader
+// refreshing the page never sees the numbers jitter without new data.
+// ---------------------------------------------------------------------------
+
+const LIVE_STATUSES = new Set(['fielding', 'closed', 'analyzed', 'published']);
+const LIVE_MAX_AGE_SECONDS = 30;
+const LIVE_SEED = 20261007;
+const LIVE_RESAMPLES = 1000;
+const HOUR_MS = 3_600_000;
+const SERIES_HOURS = 72;
+
+async function liveResults(db: Db, study: StudySummary, instrument: RuntimeInstrument, now: number) {
+	const spec = instrument.scoring!;
+	const { results } = await db
+		.prepare(
+			`SELECT answers, completion_ms, submitted_at FROM research_responses
+			 WHERE study_id = ? AND instrument_hash = ?`
+		)
+		.bind(study.id, instrument.hash)
+		.all<{ answers: string; completion_ms: number; submitted_at: number }>();
+
+	const rows = (results ?? []).map((r) => ({
+		answers: safeAnswers(r.answers),
+		completionMs: r.completion_ms,
+		submittedAt: r.submitted_at
+	}));
+	const { kept, exclusions } = applyExclusions(spec, rows);
+
+	// Submissions per hour, every row (excluded ones too), so a flood is visible
+	// to every reader whether or not the rules caught it.
+	const firstHour = Math.floor(now / HOUR_MS) - (SERIES_HOURS - 1);
+	const perHour = new Array<number>(SERIES_HOURS).fill(0);
+	for (const row of rows) {
+		const slot = Math.floor(row.submittedAt / HOUR_MS) - firstHour;
+		if (slot >= 0 && slot < SERIES_HOURS) perHour[slot] += 1;
+	}
+
+	return {
+		study: study.id,
+		instrument: { id: instrument.id, version: instrument.version, hash: instrument.hash },
+		generated_at: new Date(now).toISOString(),
+		received: rows.length,
+		exclusions,
+		submissions_per_hour: { start: new Date(firstHour * HOUR_MS).toISOString(), counts: perHour },
+		results: aggregateResponses(spec, kept, {
+			seed: LIVE_SEED,
+			resamples: LIVE_RESAMPLES,
+			conditions: Object.fromEntries(
+				instrument.items.filter((item) => item.showIf !== undefined).map((item) => [item.id, item.showIf!])
+			)
+		})
+	};
+}
+
+/** A stored answers column that fails to parse counts as an empty response. */
+function safeAnswers(raw: string): Record<string, unknown> {
+	try {
+		const parsed = JSON.parse(raw);
+		return isRecord(parsed) ? parsed : {};
+	} catch {
+		return {};
+	}
+}
 
 // ---------------------------------------------------------------------------
 // Registry reading. The registry is build output (contract §3); these guards
@@ -241,9 +312,18 @@ function assignmentToken(
 }
 
 /** A fresh assignment for an instrument read. */
-async function makeAssignment(env: Env, study: StudySummary): Promise<RuntimeAssignment> {
-	const blockOrder = BLOCK_ORDERS[randomBit()];
-	const scaleDirection = SCALE_DIRECTIONS[randomBit()];
+async function makeAssignment(
+	env: Env,
+	study: StudySummary,
+	instrument: RuntimeInstrument
+): Promise<RuntimeAssignment> {
+	// An arm is randomized only when the instrument declares that experiment.
+	// Otherwise every respondent gets the control arm, which is what they are
+	// actually shown, so the stored row never records an experiment that did
+	// not run.
+	const declares = (id: string) => instrument.experiments.some((e) => e.id === id);
+	const blockOrder = declares('exp_block_order') ? BLOCK_ORDERS[randomBit()] : BLOCK_ORDERS[0];
+	const scaleDirection = declares('exp_scale_direction') ? SCALE_DIRECTIONS[randomBit()] : SCALE_DIRECTIONS[0];
 	return {
 		blockOrder,
 		scaleDirection,
@@ -324,7 +404,7 @@ export async function handleResearch(
 			if (!instrument) throw new ResearchError('no instrument is published for this study', 404);
 			// The arms travel with the instrument: they must be fixed before the
 			// respondent sees the first block, so the server assigns them here.
-			return json({ instrument, assignment: await makeAssignment(env, study) });
+			return json({ instrument, assignment: await makeAssignment(env, study, instrument) });
 		}
 
 		if (request.method === 'GET' && slug && !action) {
@@ -343,7 +423,7 @@ export async function handleResearch(
 			return json({
 				study: raw ? { ...raw, status: effectiveStatus(env, study) } : null,
 				instrument,
-				assignment: await makeAssignment(env, study)
+				assignment: await makeAssignment(env, study, instrument)
 			});
 		}
 
@@ -358,6 +438,22 @@ export async function handleResearch(
 				.bind(study.id)
 				.first<{ n: number }>();
 			return json({ count: row?.n ?? 0 });
+		}
+
+		if (request.method === 'GET' && slug && action === 'live') {
+			if (!env.STUDIES) throw new ResearchError('the studies registry is not available', 503);
+			const study = findStudy(env.STUDIES, slug);
+			if (!study) throw new ResearchError('no such study', 404);
+			const instrument = instrumentFor(env.STUDIES, study);
+			if (!instrument?.scoring) throw new ResearchError('this study publishes no live results', 404);
+			// Live results exist only once responses can exist: a study in design
+			// has nothing real to show, and a dev override shows its test rows.
+			const status = effectiveStatus(env, study);
+			if (!LIVE_STATUSES.has(status)) throw new ResearchError('this study is not collecting responses', 409);
+			if (!env.RESEARCH_DB) throw new ResearchError('research storage is not configured', 503);
+			return json(await liveResults(env.RESEARCH_DB, study, instrument, ctx.now), 200, {
+				'cache-control': `public, max-age=${LIVE_MAX_AGE_SECONDS}`
+			});
 		}
 
 		// ---- submissions ------------------------------------------------------
