@@ -138,7 +138,7 @@ What is live: n, the headline index with its interval, the T, G and H components
 What keeps live honest:
 - **Submissions per hour** chart on the same page, so a flood is visible to everyone.
 - The **exclusion counts** update live too.
-- Turnstile, the salted rate limit and the honeypot stay on.
+- A first-party proof-of-work check (no third-party script; a puzzle solved in the background while the respondent answers, each one usable once), the salted rate limit and the honeypot stay on.
 - At wave close the numbers are frozen. The final results are recomputed offline from the exported data, and the published wave result is the frozen one.
 
 ## 8. Waves

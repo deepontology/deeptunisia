@@ -19,6 +19,7 @@
  * Usage: `npx tsx scripts/test-research-api.ts`
  */
 import { existsSync, readFileSync } from 'node:fs';
+import { createHmac } from 'node:crypto';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { handle, type Env } from '../community/api.ts';
@@ -293,6 +294,62 @@ async function submitAssigned(env: Env, slug: string, over: Record<string, unkno
 	return { ...result, assignment };
 }
 
+// ---- proof-of-work helpers -------------------------------------------------
+
+/** The leading zero bits of a SHA-256 digest: the proof-of-work score. */
+function leadingZeroBits(bytes: Uint8Array): number {
+	let bits = 0;
+	for (const byte of bytes) {
+		if (byte === 0) {
+			bits += 8;
+			continue;
+		}
+		bits += Math.clz32(byte) - 24;
+		break;
+	}
+	return bits;
+}
+
+/** Solve a challenge the way the browser worker does. */
+async function solve(salt: string, difficulty: number): Promise<number> {
+	const encoder = new TextEncoder();
+	for (let nonce = 0; ; nonce++) {
+		const digest = new Uint8Array(
+			await crypto.subtle.digest('SHA-256', encoder.encode(`${salt}:${nonce}`))
+		);
+		if (leadingZeroBits(digest) >= difficulty) return nonce;
+	}
+}
+
+/** A nonce that does NOT clear the difficulty, for the wrong-nonce refusal. */
+async function failSolve(salt: string, difficulty: number): Promise<number> {
+	const encoder = new TextEncoder();
+	for (let nonce = 0; ; nonce++) {
+		const digest = new Uint8Array(
+			await crypto.subtle.digest('SHA-256', encoder.encode(`${salt}:${nonce}`))
+		);
+		if (leadingZeroBits(digest) < difficulty) return nonce;
+	}
+}
+
+/** A fresh 16-byte salt in hex, matching the server's. */
+function randomSalt(): string {
+	return [...crypto.getRandomValues(new Uint8Array(16))]
+		.map((byte) => byte.toString(16).padStart(2, '0'))
+		.join('');
+}
+
+/**
+ * Sign a challenge exactly as the server does. Used to forge the one challenge
+ * the endpoint refuses to issue itself: a valid signature over a difficulty
+ * below the production constant, so the difficulty gate alone can refuse it.
+ */
+function signChallenge(env: Env, studyId: string, salt: string, difficulty: number, expires: number): string {
+	return createHmac('sha256', env.ASSIGNMENT_SECRET ?? env.RATE_PEPPER)
+		.update(`${studyId}|${salt}|${difficulty}|${expires}`)
+		.digest('hex');
+}
+
 console.log('\n  ── reads: unauthenticated, unlimited ──\n');
 
 {
@@ -343,7 +400,7 @@ console.log('\n  ── the refusal ladder, in order ──\n');
 
 	const noChallenge = researchEnv({ TURNSTILE_VERIFY: undefined });
 	const bots = await post(noChallenge, '/api/studies/fixture/submit', submitPayload());
-	ok('an open study with no challenge configured is refused 503', bots.status === 503);
+	ok('a submission without a proof of work is refused 403', bots.status === 403);
 
 	const failedChallenge = researchEnv({ TURNSTILE_VERIFY: async () => false });
 	const robot = await post(failedChallenge, '/api/studies/fixture/submit', submitPayload());
@@ -497,6 +554,22 @@ console.log('\n  ── minimum completion time ──\n');
 	const devEnv = researchEnv({ RESEARCH_DEV_STUDY: 'fixture', TURNSTILE_VERIFY: undefined });
 	const waived = await post(devEnv, '/api/studies/fixture/submit', submitPayload({ completionMs: 1 }));
 	ok('the dev override waives the floor', waived.status === 200, waived.body.error ?? '');
+
+	// A study that pre-registers a speed exclusion (40 s) is refused at the door
+	// only below half of it. A fast human between the two is stored and counted
+	// by the published exclusion, instead of being shown an error at the end.
+	const scored = {
+		...fixtureInstrument,
+		scoring: { exclusions: { min_completion_seconds: 40, straightline_items: [] } }
+	} as unknown as typeof fixtureInstrument;
+	const scoredRegistry: StudiesRegistry = {
+		...FIXTURE_REGISTRY,
+		instruments: { ...FIXTURE_REGISTRY.instruments, [`${fixtureInstrument.id}@${fixtureInstrument.version}`]: scored }
+	};
+	const bot = await submitAssigned(researchEnv({ STUDIES: scoredRegistry }), 'fixture', { completionMs: 19_999 });
+	ok('a scored study refuses below half its speed rule', bot.status === 400, bot.body.error ?? '');
+	const human = await submitAssigned(researchEnv({ STUDIES: scoredRegistry }), 'fixture', { completionMs: 25_000 });
+	ok('a fast human above that is accepted, for the published exclusion to count', human.status === 200, human.body.error ?? '');
 }
 
 console.log('\n  ── the dev fielding override (local only) ──\n');
@@ -719,6 +792,171 @@ console.log('\n  ── the real registry ──\n');
 	const env = researchEnv({ STUDIES: real, TURNSTILE_VERIFY: async () => true });
 	const refused = await post(env, `/api/studies/${realStudy.slug}/submit`, submitPayload());
 	ok('a submit against the real registry is refused 409', refused.status === 409, refused.body.error ?? '');
+}
+
+console.log('\n  ── the first-party proof of work ──\n');
+
+{
+	// No Turnstile verifier in these envs: the proof-of-work path is the one
+	// under test. The production difficulty is the one exercised — the tests
+	// solve it for real, because lowering it here would be testing a different
+	// gate from the one that ships.
+	const env = researchEnv({ TURNSTILE_VERIFY: undefined });
+
+	const challenge = await get(env, '/api/studies/fixture/challenge');
+	ok(
+		'a fielding study issues a challenge',
+		challenge.status === 200 &&
+			/^[0-9a-f]{32}$/.test(challenge.body.salt ?? '') &&
+			challenge.body.difficulty === 17 &&
+			/^[0-9a-f]{64}$/.test(challenge.body.sig ?? ''),
+		challenge.body.error ?? ''
+	);
+	ok(
+		'the challenge expires about two hours out',
+		challenge.body.expires > Date.now() + 7_000_000 &&
+			challenge.body.expires < Date.now() + 7_400_000,
+		String(challenge.body.expires)
+	);
+
+	const missing = await get(env, '/api/studies/no-such-study/challenge');
+	ok('an unknown study has no challenge', missing.status === 404);
+	const notFielding = await get(env, '/api/studies/fixture-design/challenge');
+	ok('a study not fielding has no challenge', notFielding.status === 409);
+
+	// The issued challenge verifies: solve it and submit with a live assignment.
+	const assignment = await assignmentFor(env, 'fixture');
+	const nonce = await solve(challenge.body.salt, challenge.body.difficulty);
+	const pow = { ...challenge.body, nonce };
+	const accepted = await post(env, '/api/studies/fixture/submit', submitPayload({ assignment, pow }));
+	ok('a solved challenge is accepted', accepted.status === 200, accepted.body.error ?? '');
+
+	const spent = await env.RESEARCH_DB!.prepare('SELECT * FROM research_pow_used').all<any>();
+	const spentRow = spent.results[0];
+	ok(
+		'the spent salt is recorded, and the table keeps nothing about a person',
+		spent.results.length === 1 &&
+			spentRow?.salt === challenge.body.salt &&
+			JSON.stringify(Object.keys(spentRow ?? {})) === JSON.stringify(['salt', 'expires']),
+		Object.keys(spentRow ?? {}).join(', ')
+	);
+
+	// The same solved challenge again, on another channel so the row would
+	// differ: the salt is spent, so it is refused before a second row exists.
+	const replayed = await post(
+		env,
+		'/api/studies/fixture/submit',
+		submitPayload({ assignment, pow, channel: 'replay' })
+	);
+	ok(
+		'a replayed salt is refused 403',
+		replayed.status === 403 && replayed.body.error === 'the bot check failed',
+		replayed.body.error ?? ''
+	);
+
+	// A wrong nonce under an otherwise valid challenge.
+	const wrongEnv = researchEnv({ TURNSTILE_VERIFY: undefined });
+	const wrongChallenge = await get(wrongEnv, '/api/studies/fixture/challenge');
+	const wrongNonce = await failSolve(wrongChallenge.body.salt, wrongChallenge.body.difficulty);
+	const wrong = await post(
+		wrongEnv,
+		'/api/studies/fixture/submit',
+		submitPayload({ pow: { ...wrongChallenge.body, nonce: wrongNonce } })
+	);
+	ok(
+		'a wrong nonce is refused 403',
+		wrong.status === 403 && wrong.body.error === 'the bot check failed',
+		wrong.body.error ?? ''
+	);
+
+	// A tampered signature over an issued challenge.
+	const sigEnv = researchEnv({ TURNSTILE_VERIFY: undefined });
+	const sigChallenge = await get(sigEnv, '/api/studies/fixture/challenge');
+	const sig = sigChallenge.body.sig as string;
+	const tampered = `${sig.slice(0, -1)}${sig.endsWith('0') ? '1' : '0'}`;
+	const badSig = await post(
+		sigEnv,
+		'/api/studies/fixture/submit',
+		submitPayload({ pow: { ...sigChallenge.body, sig: tampered, nonce: 0 } })
+	);
+	ok(
+		'a tampered signature is refused 403',
+		badSig.status === 403 && badSig.body.error === 'the bot check failed',
+		badSig.body.error ?? ''
+	);
+
+	// An expired challenge, signed with the same secret but past its expiry.
+	const expiredEnv = researchEnv({ TURNSTILE_VERIFY: undefined });
+	const expiredSalt = randomSalt();
+	const expiredAt = Date.now() - 1;
+	const expired = await post(
+		expiredEnv,
+		'/api/studies/fixture/submit',
+		submitPayload({
+			pow: {
+				salt: expiredSalt,
+				difficulty: 17,
+				expires: expiredAt,
+				sig: signChallenge(expiredEnv, 'dt-fixture-001', expiredSalt, 17, expiredAt),
+				nonce: 0
+			}
+		})
+	);
+	ok(
+		'an expired challenge is refused 403',
+		expired.status === 403 && expired.body.error === 'the bot check failed',
+		expired.body.error ?? ''
+	);
+
+	// A difficulty lowered by the client: the test signs a challenge at 16 the
+	// way the server signs its own, so only the difficulty gate can refuse it.
+	const loweredEnv = researchEnv({ TURNSTILE_VERIFY: undefined });
+	const loweredSalt = randomSalt();
+	const loweredExpires = Date.now() + 3_600_000;
+	const loweredNonce = await solve(loweredSalt, 16);
+	const lowered = await post(
+		loweredEnv,
+		'/api/studies/fixture/submit',
+		submitPayload({
+			pow: {
+				salt: loweredSalt,
+				difficulty: 16,
+				expires: loweredExpires,
+				sig: signChallenge(loweredEnv, 'dt-fixture-001', loweredSalt, 16, loweredExpires),
+				nonce: loweredNonce
+			}
+		})
+	);
+	ok(
+		'a client-lowered difficulty is refused 403',
+		lowered.status === 403 && lowered.body.error === 'the bot check failed',
+		lowered.body.error ?? ''
+	);
+}
+
+console.log('\n  ── Turnstile and the dev override are unchanged ──\n');
+
+{
+	// An injected verifier is still the challenge that runs: no proof of work is
+	// sent, and the submission is accepted because the verifier said so.
+	let verified = 0;
+	const env = researchEnv({
+		TURNSTILE_VERIFY: async () => {
+			verified++;
+			return true;
+		}
+	});
+	const sent = await submitAssigned(env, 'fixture');
+	ok(
+		'the injected Turnstile verifier is still used',
+		sent.status === 200 && verified === 1,
+		sent.body.error ?? ''
+	);
+
+	// The local override skips the challenge entirely, exactly as before.
+	const dev = researchEnv({ RESEARCH_DEV_STUDY: 'fixture', TURNSTILE_VERIFY: undefined });
+	const waived = await post(dev, '/api/studies/fixture/submit', submitPayload());
+	ok('the dev override still skips the check', waived.status === 200, waived.body.error ?? '');
 }
 
 console.log(
