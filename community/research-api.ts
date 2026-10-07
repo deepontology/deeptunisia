@@ -252,6 +252,124 @@ async function verifyHuman(env: Env, token: string, address: string): Promise<bo
 }
 
 // ---------------------------------------------------------------------------
+// The first-party bot check (contract §4)
+//
+// Study pages make no third-party requests (research/portal/README.md §8), so
+// the default challenge is a hash puzzle the client solves in a worker rather
+// than a CAPTCHA script fetched from another origin. Turnstile remains the path
+// when a secret is configured (verifyHuman above); this is what runs when one
+// is not. The puzzle costs a bot about 131k hashes per response, paid in
+// advance of the request, and costs a human one solve in the background while
+// they read the first question.
+// ---------------------------------------------------------------------------
+
+/**
+ * The difficulty, in leading zero bits of `sha256(salt + ':' + nonce)`.
+ *
+ * 17 bits is 2^17 ≈ 131,000 hashes on average: roughly one to three seconds on
+ * a mid-range phone, in a worker, while the respondent is still reading. The
+ * number is a constant rather than configuration, because a difficulty knob is
+ * a tool for turning the cost down to zero at exactly the moment it matters.
+ */
+const POW_DIFFICULTY = 17;
+/** How long a challenge stays valid: long enough for the slowest reader. */
+const POW_TTL_MS = 2 * 60 * 60 * 1000;
+const POW_SALT_BYTES = 16;
+
+/** A fresh random salt, hex, from the platform CSPRNG. */
+function powSalt(): string {
+	const bytes = new Uint8Array(POW_SALT_BYTES);
+	crypto.getRandomValues(bytes);
+	return [...bytes].map((byte) => byte.toString(16).padStart(2, '0')).join('');
+}
+
+/** The number of leading zero bits in a digest: the proof-of-work score. */
+function leadingZeroBits(bytes: Uint8Array): number {
+	let bits = 0;
+	for (const byte of bytes) {
+		if (byte === 0) {
+			bits += 8;
+			continue;
+		}
+		bits += Math.clz32(byte) - 24;
+		break;
+	}
+	return bits;
+}
+
+/**
+ * Constant-time comparison of two hex strings.
+ *
+ * The signature is derived from a secret, so how many leading characters match
+ * must not be readable through timing. The length check is not constant time
+ * and does not need to be: the digest is always 64 hex characters, so a length
+ * mismatch is a malformed value, never a near-miss.
+ */
+function constantTimeEqual(a: string, b: string): boolean {
+	if (a.length !== b.length) return false;
+	let diff = 0;
+	for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
+	return diff === 0;
+}
+
+/**
+ * Verify the proof of work and spend its salt.
+ *
+ * Every failure is the same 403 and the same sentence: a caller learns that the
+ * check did not pass, never which of the checks noticed. The salt is inserted
+ * in this same request, before the response row, so a spent challenge can never
+ * back a second response; the primary key is what makes that atomic under
+ * concurrent submissions.
+ */
+async function verifyProofOfWork(
+	env: Env,
+	study: StudySummary,
+	value: unknown,
+	db: Db,
+	now: number
+): Promise<void> {
+	if (!isRecord(value)) throw new ResearchError('the bot check failed', 403);
+	const { salt, difficulty, expires, sig, nonce } = value;
+	if (
+		typeof salt !== 'string' ||
+		!/^[0-9a-f]{32}$/.test(salt) ||
+		typeof difficulty !== 'number' ||
+		!Number.isInteger(difficulty) ||
+		typeof expires !== 'number' ||
+		!Number.isFinite(expires) ||
+		typeof sig !== 'string' ||
+		typeof nonce !== 'number' ||
+		!Number.isInteger(nonce) ||
+		nonce < 0
+	) {
+		throw new ResearchError('the bot check failed', 403);
+	}
+	const expected = await hmacHex(
+		env.ASSIGNMENT_SECRET ?? env.RATE_PEPPER,
+		`${study.id}|${salt}|${difficulty}|${expires}`
+	);
+	if (!constantTimeEqual(sig, expected)) throw new ResearchError('the bot check failed', 403);
+	if (!(expires > now)) throw new ResearchError('the bot check failed', 403);
+	if (difficulty < POW_DIFFICULTY) throw new ResearchError('the bot check failed', 403);
+	const digest = new Uint8Array(
+		await crypto.subtle.digest('SHA-256', new TextEncoder().encode(`${salt}:${nonce}`))
+	);
+	if (leadingZeroBits(digest) < difficulty) throw new ResearchError('the bot check failed', 403);
+	// Expired salts are swept on the next insert, one cheap statement; the table
+	// is a set of live challenges, not a log.
+	await db.prepare('DELETE FROM research_pow_used WHERE expires < ?').bind(now).run();
+	try {
+		await db
+			.prepare('INSERT INTO research_pow_used (salt, expires) VALUES (?, ?)')
+			.bind(salt, expires)
+			.run();
+	} catch {
+		// The salt's primary key already exists: this challenge has been spent.
+		throw new ResearchError('the bot check failed', 403);
+	}
+}
+
+// ---------------------------------------------------------------------------
 // Arm assignment (contract §10)
 //
 // The instrument reads hand out the block order and scale direction with an
@@ -440,6 +558,24 @@ export async function handleResearch(
 			return json({ count: row?.n ?? 0 });
 		}
 
+		if (request.method === 'GET' && slug && action === 'challenge') {
+			if (!env.STUDIES) throw new ResearchError('the studies registry is not available', 503);
+			const study = findStudy(env.STUDIES, slug);
+			if (!study) throw new ResearchError('no such study', 404);
+			// A puzzle is served only while the study accepts responses: work for
+			// a closed study would be work for nothing.
+			if (effectiveStatus(env, study) !== 'fielding') {
+				throw new ResearchError('this study is not accepting responses', 409);
+			}
+			const salt = powSalt();
+			const expires = ctx.now + POW_TTL_MS;
+			const sig = await hmacHex(
+				env.ASSIGNMENT_SECRET ?? env.RATE_PEPPER,
+				`${study.id}|${salt}|${POW_DIFFICULTY}|${expires}`
+			);
+			return json({ salt, difficulty: POW_DIFFICULTY, expires, sig });
+		}
+
 		if (request.method === 'GET' && slug && action === 'live') {
 			if (!env.STUDIES) throw new ResearchError('the studies registry is not available', 503);
 			const study = findStudy(env.STUDIES, slug);
@@ -486,18 +622,26 @@ export async function handleResearch(
 				}
 				throw e;
 			}
-			// 7. the bot challenge. Open for business without one is not an option,
-			//    except on the local dev path: the runner has to be answerable
-			//    without Turnstile keys while the study is being fielded locally.
-			//    The Worker does not read RESEARCH_DEV_STUDY, so this branch cannot
-			//    exist in production, and every other check still runs.
+			// 7. the bot challenge. When Turnstile is configured its verifier runs
+			//    exactly as before. Otherwise the first-party proof of work is
+			//    required (portal README §8: a study page makes no third-party
+			//    request), and the puzzle the runner solved in the background is
+			//    spent here. The local dev path skips the check entirely: the
+			//    runner has to be answerable without a challenge while the study
+			//    is being fielded locally. The Worker does not read
+			//    RESEARCH_DEV_STUDY, so this branch cannot exist in production,
+			//    and every other check still runs.
 			if (!isDevFielding(env, study)) {
-				const token = typeof payload.turnstileToken === 'string' ? payload.turnstileToken : '';
-				const human = await verifyHuman(env, token, ctx.clientAddress);
-				if (human === null) {
-					throw new ResearchError('the bot challenge is not configured', 503);
+				if (env.TURNSTILE_VERIFY || env.TURNSTILE_SECRET) {
+					const token = typeof payload.turnstileToken === 'string' ? payload.turnstileToken : '';
+					const human = await verifyHuman(env, token, ctx.clientAddress);
+					if (human === null) {
+						throw new ResearchError('the bot challenge is not configured', 503);
+					}
+					if (!human) throw new ResearchError('the bot challenge failed', 403);
+				} else {
+					await verifyProofOfWork(env, study, payload.pow, db, ctx.now);
 				}
-				if (!human) throw new ResearchError('the bot challenge failed', 403);
 			}
 			// 8. five responses an hour per address, counted from a salted hash.
 			const key = await bucketKey(ctx.clientAddress, env.RATE_PEPPER, ctx.now);
@@ -511,13 +655,19 @@ export async function handleResearch(
 			//     absent assignment with null arms; a supplied assignment is verified
 			//     either way.
 			const arms = await verifyAssignment(env, study, payload.assignment);
-			// 11. minimum completion time. The threshold is provisional until the
-			//     pretest median exists: 40% of the estimated completion is a floor
-			//     against straight-through bots, not a data-quality rule. The dev
-			//     override waives it because manual testing cannot spend minutes per
-			//     submission.
+			// 11. minimum completion time: a floor against straight-through bots,
+			//     not a data-quality rule. A study that pre-registers a speed
+			//     exclusion (its scoring block) is refused at the door only below
+			//     half of that threshold: a fast human who clears the door is kept
+			//     and counted in the published exclusion instead of being shown an
+			//     error after answering everything. Other studies keep the
+			//     provisional 40% of the estimated completion until a pretest
+			//     median exists. The dev override waives it because manual testing
+			//     cannot spend minutes per submission.
 			const completionMs = payload.completionMs;
-			const minimumCompletion = instrument.estimatedMinutes * 0.4 * 60_000;
+			const speedRule = instrument.scoring?.exclusions?.min_completion_seconds;
+			const minimumCompletion =
+				typeof speedRule === 'number' ? speedRule * 0.5 * 1000 : instrument.estimatedMinutes * 0.4 * 60_000;
 			if (
 				!isDevFielding(env, study) &&
 				typeof completionMs === 'number' &&

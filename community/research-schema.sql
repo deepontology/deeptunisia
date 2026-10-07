@@ -33,3 +33,13 @@ CREATE TABLE IF NOT EXISTS research_responses (
   created_at INTEGER NOT NULL
 );
 CREATE INDEX IF NOT EXISTS idx_responses_study ON research_responses (study_id, submitted_at DESC);
+
+-- Spent proof-of-work salts (contract §4). One row per challenge that reached
+-- verification, deleted again once expired, so the table holds only challenges
+-- currently in play. It stores a random salt and its expiry and NOTHING else:
+-- no address, no device, no receipt, no time of use — nothing that could attach
+-- a solved puzzle to a person or to the response it backed.
+CREATE TABLE IF NOT EXISTS research_pow_used (
+  salt TEXT PRIMARY KEY,
+  expires INTEGER NOT NULL
+);

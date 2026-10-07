@@ -10,6 +10,7 @@
         "studies:build": "tsx scripts/build-studies.ts",
         "studies:export": "tsx scripts/studies-export.ts",
         "studies:aggregate": "tsx scripts/studies-aggregate.ts",
+        "studies:freeze": "tsx scripts/studies-freeze.ts",
         "dev": "npm run data && vite dev --port 5173 --strictPort",
         "start": "npm run data && tsx scripts/dev-all.ts",
         "build": "npm run data && vite build && tsx scripts/build-landing.ts",
