@@ -35,6 +35,8 @@
 {#if instrument?.scoring}
 	<IndexStudy {study} {instrument} />
 {:else}
+<!-- The shell is a fixed window; a document page owns its own scroll. -->
+<div class="scroll">
 <div class="wrap">
 	<header class="prose hero">
 		<p class="eyebrow">
@@ -94,9 +96,15 @@
 		<p>{t('research.study.resultsSoon')}</p>
 	</section>
 </div>
+</div>
 {/if}
 
 <style>
+	.scroll {
+		flex: 1;
+		min-height: 0;
+		overflow-y: auto;
+	}
 	.wrap {
 		max-width: 46rem;
 		margin-inline: auto;

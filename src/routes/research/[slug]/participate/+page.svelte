@@ -344,6 +344,8 @@
 	<title>{t('research.participate.eyebrow')} · DeepTunisia</title>
 </svelte:head>
 
+<!-- The shell is a fixed window; a document page owns its own scroll. -->
+<div class="scroll">
 <div class="wrap">
 	{#if !open}
 		<header class="prose">
@@ -554,8 +556,14 @@
 		</header>
 	{/if}
 </div>
+</div>
 
 <style>
+	.scroll {
+		flex: 1;
+		min-height: 0;
+		overflow-y: auto;
+	}
 	.wrap {
 		max-width: 46rem;
 		margin-inline: auto;

@@ -7,7 +7,7 @@
 	import { titleOf, type RuntimeInstrument, type StudyRecord } from '$lib/research';
 	import Barcode from './Barcode.svelte';
 	import Stamp from './Stamp.svelte';
-	import Plane from './Plane.svelte';
+	import Grid from './Grid.svelte';
 	import type { LiveResults } from './live';
 
 	/**
@@ -136,6 +136,8 @@
 	const regionKeys = ['grand_tunis', 'north_east', 'north_west', 'centre_east', 'centre_west', 'south_east', 'south_west'];
 </script>
 
+<!-- The shell is a fixed window; a document page owns its own scroll. -->
+<div class="scroll">
 <article class="pti" class:rtl={locale === 'ar'}>
 	<!-- Masthead: the volume line from the reference, carrying the wave. -->
 	<header class="masthead">
@@ -209,9 +211,9 @@
 	</section>
 
 	<section class="panel-row">
-		<!-- The three components as one vertical meter, like the swatch column in
-		     the reference. Grip and harm count against the index, so their bars
-		     are labelled with the direction they pull. -->
+		<!-- The three components as a row of meters, like the swatch column in
+		     the reference laid on its side. Grip and harm count against the index,
+		     so their bars are labelled with the direction they pull. -->
 		<div class="meter" aria-label={t('index.components.title')}>
 			{#each components as c (c.id)}
 				<div class="meter-row">
@@ -223,11 +225,13 @@
 			{/each}
 		</div>
 
-		<figure class="plane-figure">
-			<Plane grid={results?.plane ?? null} />
-			<figcaption>{t('index.plane.caption')}</figcaption>
-		</figure>
 	</section>
+
+	<Grid
+		grid={results?.plane ?? null}
+		meanX={results?.components?.T?.mean ?? null}
+		meanY={results?.components?.G?.mean ?? null}
+	/>
 
 	<p class="population">{t('index.population')}</p>
 
@@ -430,8 +434,15 @@
 		<p class="note">{t('index.offline')}</p>
 	{/if}
 </article>
+</div>
 
 <style>
+	.scroll {
+		flex: 1;
+		min-height: 0;
+		overflow-y: auto;
+		overflow-x: hidden;
+	}
 	.pti {
 		--rule: var(--border-default);
 		max-width: 72rem;
@@ -564,14 +575,11 @@
 
 	/* ---- the panel row -------------------------------------------------- */
 	.panel-row {
-		display: grid;
-		grid-template-columns: 11rem 1fr;
-		gap: 1.5rem;
-		align-items: stretch;
+		display: block;
 	}
 	.meter {
 		display: grid;
-		grid-template-rows: repeat(3, 1fr);
+		grid-template-columns: repeat(3, 1fr);
 		gap: 2px;
 	}
 	.meter-row {
@@ -611,10 +619,6 @@
 		font-size: 0.72rem;
 		color: var(--text-secondary);
 	}
-	.plane-figure {
-		margin: 0;
-	}
-	.plane-figure figcaption,
 	.population {
 		font-size: 0.8rem;
 		color: var(--text-faint);
