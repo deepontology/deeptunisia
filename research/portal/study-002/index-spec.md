@@ -35,15 +35,18 @@ All attitude items use **0 to 10** with labelled endpoints and a visible "prefer
 
 T1 follows the European Social Survey trust-in-police wording (0 to 10), so the number has an outside benchmark.
 
-### Grip (G): 5 items
+### Grip (G): 6 items
 
 | ID | Item | 0 = | 10 = | Key |
 |---|---|---|---|---|
 | G1 | How worried are you about being stopped by the police without a reason? | not at all | extremely | + |
 | G2 | How free do you feel to criticise the police in public or online? | not free at all | completely free | ⟲ |
 | G3 | How much do you think the police watch what ordinary people say, online or in private? | not at all | constantly | + |
-| G4 | How often do you avoid places, gatherings or posts because of the police? | never | all the time | + |
-| G5 | In your area, the police can do what they want without anyone stopping them. | strongly disagree | strongly agree | + |
+| G4 | How often do you stay away from places or gatherings because of the police? | never | all the time | + |
+| G6 | How often do you hold back from posting or commenting online because of the police? | never | all the time | + |
+| G5 | Where you live, the police can do whatever they want. | strongly disagree | strongly agree | + |
+
+G4 was one question about avoiding places and posting online; it is two, because avoiding a gathering and self-censoring online can have different causes. G5 asks one thing, how unchecked the police feel; whether abuse is punished is T4, so "and nobody can stop them" is dropped rather than counted twice. Several items carry a one-line explanation shown under the question (`help_*`), hashed like the question text.
 
 ### Harm (H): encounters, direct and close
 
@@ -127,7 +130,7 @@ The band names and their meanings are published with the formula before any data
 
 - Cronbach's alpha and item-total correlations for T and G. If either alpha falls below 0.7, the page says so.
 - The correlation between T and G. If they are nearly the same thing, two axes are the wrong model, and the page says that too.
-- Exclusions, by rule: completion time under 40 seconds, identical answers on all ten index items (straight-lining), honeypot field filled, rate-limit refusals.
+- Exclusions, by rule: completion time under 40 seconds, identical answers on all eleven index items (straight-lining), honeypot field filled, rate-limit refusals.
 
 ## 7. Live results
 

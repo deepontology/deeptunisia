@@ -8,6 +8,7 @@
 	import Input from '$lib/ui/Input.svelte';
 	import Textarea from '$lib/ui/Textarea.svelte';
 	import Grid from '$lib/index-study/Grid.svelte';
+	import Content from '$lib/ui/Content.svelte';
 	import type { LiveResults } from '$lib/index-study/live';
 	import type { RuntimeInstrument, RuntimeItem, StudyRecord } from '$lib/research';
 	import { startProofOfWork, type ProofOfWork } from '$lib/pow';
@@ -252,6 +253,10 @@
 	const optionLabel = (item: RuntimeItem, option: string) =>
 		item.optionLabels?.[locale]?.[option] ?? item.optionLabels?.en?.[option] ?? option.replaceAll('_', ' ');
 	const anchorsOf = (item: RuntimeItem) => item.anchors?.[locale] ?? item.anchors?.en ?? null;
+	/** The privacy sheet opened from the consent screen. */
+	let storedDialog = $state<HTMLDialogElement | null>(null);
+	/** The question's own explanation, when it has one. */
+	const helpOf = (item: RuntimeItem) => item.help?.[locale] ?? item.help?.en ?? null;
 	const isScale = (r: string) => r === 'scale_essential' || r === 'scale_present' || r === 'scale_0_10' || r === 'agree_4';
 
 	function captionKey(response: string): string | null {
@@ -472,9 +477,13 @@
 
 					{#if current.kind === 'consent'}
 						<h1 tabindex="-1">{t('research.participate.consent')}</h1>
-						<!-- What the first consent statement refers to: the study page's
-						     account of what is stored. A new tab, so the survey keeps its place. -->
-						<p class="caption"><a href="/research/{study.slug}#data" target="_blank" rel="noopener">{t('research.participate.howStored')}</a></p>
+						<!-- What the first consent statement refers to, opened over the
+						     survey so it keeps its place. -->
+						<button type="button" class="stored-open" onclick={() => storedDialog?.showModal()}>
+							<svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M4.5 7V5a3.5 3.5 0 0 1 7 0v2" fill="none" stroke="currentColor" stroke-width="1.5" /><rect x="3" y="7" width="10" height="7" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.5" /></svg>
+							<span>{t('research.participate.howStored')}</span>
+							<span class="stored-go" aria-hidden="true">{locale === 'ar' ? '←' : '→'}</span>
+						</button>
 						<div class="consents">
 							{#each current.items as item (item.id)}
 								<label class="consent" class:on={answers[item.id] === true}>
@@ -518,11 +527,12 @@
 						{@const anchors = anchorsOf(item)}
 						{@const caption = anchors ? null : captionKey(item.response)}
 						<h1 tabindex="-1">{textOf(item)}</h1>
+						{#if helpOf(item)}<p class="help" id="help-{item.id}">{helpOf(item)}</p>{/if}
 						{#if caption}<p class="caption">{t(caption)}</p>{/if}
 
 						{#if isScale(item.response)}
 							{@const values = scaleValues(item.response)}
-							<div class="scale" role="radiogroup" aria-label={textOf(item)} style:--n={values.length}>
+							<div class="scale" role="radiogroup" aria-label={textOf(item)} aria-describedby={helpOf(item) ? `help-${item.id}` : undefined} style:--n={values.length}>
 								{#each values as v (v)}
 									<label class="cell" class:on={answers[item.id] === v}>
 										<input
@@ -545,7 +555,7 @@
 								</div>
 							{/if}
 						{:else if item.response === 'single_choice'}
-							<div class="options" role="radiogroup" aria-label={textOf(item)}>
+							<div class="options" role="radiogroup" aria-label={textOf(item)} aria-describedby={helpOf(item) ? `help-${item.id}` : undefined}>
 								{#each item.options ?? [] as opt (opt)}
 									<label class="option" class:on={answers[item.id] === opt} class:quiet={opt === 'prefer_not_to_say'}>
 										<input type="radio" name={item.id} value={opt} checked={answers[item.id] === opt} onchange={() => answerAndAdvance(item, opt)} />
@@ -555,7 +565,7 @@
 								{/each}
 							</div>
 						{:else if item.response === 'multi_choice'}
-							<div class="options" role="group" aria-label={textOf(item)}>
+							<div class="options" role="group" aria-label={textOf(item)} aria-describedby={helpOf(item) ? `help-${item.id}` : undefined}>
 								{#each item.options ?? [] as opt (opt)}
 									{@const on = Array.isArray(answers[item.id]) && (answers[item.id] as string[]).includes(opt)}
 									<label class="option multi" class:on class:quiet={(item.exclusive ?? []).includes(opt)}>
@@ -617,6 +627,37 @@
 		</div>
 	{/if}
 </div>
+
+
+<!-- What is stored, and what never is: over the survey, never instead of it. -->
+<dialog
+	class="stored"
+	bind:this={storedDialog}
+	aria-labelledby="stored-title"
+	onclick={(e) => e.target === storedDialog && storedDialog?.close()}
+	dir={locale === 'ar' ? 'rtl' : 'ltr'}
+>
+	<div class="stored-sheet research-type">
+		<header class="stored-head">
+			<p class="eyebrow">{t('research.store.eyebrow')}</p>
+			<h2 id="stored-title">{t('research.participate.howStored')}</h2>
+			<button type="button" class="stored-x" aria-label={t('research.store.close')} onclick={() => storedDialog?.close()}>×</button>
+		</header>
+		<ul class="stored-short">
+			<li class="yes"><span class="mark mono" aria-hidden="true">+</span><span>{t('research.store.kept')}</span></li>
+			<li class="no"><span class="mark mono" aria-hidden="true">×</span><span>{t('research.store.never')}</span></li>
+			{#if instrument?.scoring?.series}
+				<li><span class="mark mono" aria-hidden="true">#</span><span>{t('research.store.receipt')}</span></li>
+			{/if}
+		</ul>
+		<div class="stored-full prose">
+			<Content view={instrument?.scoring ? 'police-index' : 'research'} section={instrument?.scoring ? 'data' : 'answers'} />
+		</div>
+		<footer class="stored-foot">
+			<button type="button" class="solid" onclick={() => storedDialog?.close()}>{t('research.store.ok')}</button>
+		</footer>
+	</div>
+</dialog>
 
 <style>
 	.scroll {
@@ -707,6 +748,174 @@
 		font-weight: 600;
 		margin: 0 0 1.5rem;
 		outline: none;
+	}
+	/* ---- the privacy sheet ------------------------------------------------ */
+	.stored-open {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		width: 100%;
+		margin: -0.4rem 0 1.4rem;
+		padding: 0.8rem 0.95rem;
+		border: 1px solid var(--border-default);
+		border-radius: var(--r-md);
+		background: var(--surface-sunken);
+		color: var(--text-primary);
+		font: inherit;
+		font-size: 0.95rem;
+		text-align: start;
+		cursor: pointer;
+	}
+	.stored-open svg {
+		flex: none;
+		color: var(--accent);
+	}
+	.stored-open span:nth-of-type(1) {
+		flex: 1;
+	}
+	.stored-go {
+		color: var(--text-faint);
+	}
+	@media (hover: hover) {
+		.stored-open:hover {
+			border-color: var(--accent);
+		}
+	}
+	.stored {
+		width: min(42rem, calc(100vw - 2rem));
+		max-height: min(86vh, 52rem);
+		padding: 0;
+		border: 1px solid var(--border-default);
+		border-radius: var(--r-lg, 12px);
+		background: var(--surface-base);
+		color: var(--text-primary);
+		box-shadow: var(--elev-4, 0 24px 52px -12px rgb(0 0 0 / 0.4));
+	}
+	.stored::backdrop {
+		background: rgb(0 0 0 / 0.55);
+		backdrop-filter: blur(3px);
+	}
+	.stored-sheet {
+		display: flex;
+		flex-direction: column;
+		max-height: inherit;
+	}
+	.stored-head {
+		position: relative;
+		padding: 1.3rem 3.2rem 0.9rem 1.4rem;
+		border-bottom: 1px solid var(--border-subtle);
+	}
+	.stored[dir='rtl'] .stored-head {
+		padding: 1.3rem 1.4rem 0.9rem 3.2rem;
+	}
+	.stored-head h2 {
+		margin: 0.2rem 0 0;
+		font-size: 1.25rem;
+		line-height: 1.25;
+	}
+	.stored-x {
+		position: absolute;
+		top: 0.9rem;
+		inset-inline-end: 0.9rem;
+		width: 2.25rem;
+		height: 2.25rem;
+		border: 0;
+		border-radius: 50%;
+		background: var(--surface-sunken);
+		color: var(--text-secondary);
+		font-size: 1.3rem;
+		line-height: 1;
+		cursor: pointer;
+	}
+	.stored-short {
+		list-style: none;
+		margin: 0;
+		padding: 1rem 1.4rem;
+		display: grid;
+		gap: 0.6rem;
+		border-bottom: 1px solid var(--border-subtle);
+		background: color-mix(in oklab, var(--accent) 6%, var(--surface-base));
+	}
+	.stored-short li {
+		display: grid;
+		grid-template-columns: 1.4rem 1fr;
+		gap: 0.5rem;
+		font-size: 0.95rem;
+		line-height: 1.5;
+	}
+	.mark {
+		display: grid;
+		place-items: center;
+		width: 1.4rem;
+		height: 1.4rem;
+		border-radius: 50%;
+		font-size: 0.85rem;
+		font-weight: 700;
+		background: var(--surface-sunken);
+		color: var(--text-secondary);
+	}
+	.yes .mark {
+		background: color-mix(in oklab, var(--index-band-5) 25%, transparent);
+		color: var(--index-band-5);
+	}
+	.no .mark {
+		background: color-mix(in oklab, var(--index-band-1) 25%, transparent);
+		color: var(--index-band-1);
+	}
+	.stored-full {
+		overflow-y: auto;
+		padding: 0.4rem 1.4rem 1rem;
+		font-size: 0.95rem;
+	}
+	/* The dialog's own title already says what the section's heading says. */
+	.stored-full :global(h2:first-child) {
+		display: none;
+	}
+	.stored-foot {
+		padding: 0.9rem 1.4rem 1.1rem;
+		border-top: 1px solid var(--border-subtle);
+		display: flex;
+		justify-content: flex-end;
+	}
+	.stored-foot .solid {
+		min-height: 2.75rem;
+		padding: 0.6rem 1.6rem;
+		border: 1px solid var(--text-primary);
+		border-radius: var(--r-md);
+		background: var(--text-primary);
+		color: var(--surface-base);
+		font: inherit;
+		font-weight: 600;
+		cursor: pointer;
+	}
+	.stored-full :global(p) {
+		font-size: 0.95rem;
+		line-height: 1.6;
+	}
+	@media (max-width: 760px) {
+		/* A bottom sheet on a phone. */
+		.stored {
+			width: 100vw;
+			max-width: none;
+			max-height: 88vh;
+			margin: auto 0 0;
+			border-radius: 14px 14px 0 0;
+			border-inline: 0;
+			border-bottom: 0;
+		}
+		.stored-foot .solid {
+			width: 100%;
+		}
+	}
+
+	/* A question's explanation: quiet, but read before the answers. */
+	.help {
+		margin: -0.6rem 0 1.2rem;
+		padding-inline-start: 0.75rem;
+		border-inline-start: 2px solid color-mix(in oklab, var(--accent) 55%, transparent);
+		font-size: 0.92rem;
+		line-height: 1.5;
+		color: var(--text-secondary);
 	}
 	.caption {
 		font-size: 0.85rem;

@@ -100,6 +100,7 @@ console.log('\n  ── anchors ──\n');
 		pti_g2: 10,
 		pti_g3: 0,
 		pti_g4: 0,
+		pti_g6: 0,
 		pti_g5: 0,
 		pti_e1: 'no',
 		pti_e5: ['none']
@@ -130,6 +131,7 @@ console.log('\n  ── anchors ──\n');
 		pti_g2: 0,
 		pti_g3: 10,
 		pti_g4: 10,
+		pti_g6: 10,
 		pti_g5: 10,
 		pti_e1: 'yes',
 		pti_e3: 0,
@@ -159,8 +161,8 @@ console.log('\n  ── hand-computed case ──\n');
 {
 	// T: t1 = 8, t2 = 6, t3 = 7 (3 of 5 answered)
 	//    T = (8/10 + 6/10 + 7/10) / 3 = 21/30 = 0.7
-	// G: g1 = 4, g2 = 6 (reverse), g3 = 2
-	//    G = (4/10 + (1 - 6/10) + 2/10) / 3 = 10/30 = 1/3
+	// G: g1 = 4, g2 = 6 (reverse), g3 = 2, g4 = 3, g6 = 3, g5 = 4 (all six)
+	//    G = (4/10 + (1 - 6/10) + 2/10 + 3/10 + 3/10 + 4/10) / 6 = 2/6 = 1/3
 	// H: contact, E3 = 3, E4 = [money, insult], E5 = [threat]
 	//    D_treat = 1 - 3/10 = 0.7
 	//    D_abuse = 2/3 (two abuses)
@@ -176,6 +178,9 @@ console.log('\n  ── hand-computed case ──\n');
 		pti_g1: 4,
 		pti_g2: 6,
 		pti_g3: 2,
+		pti_g4: 3,
+		pti_g6: 3,
+		pti_g5: 4,
 		pti_e1: 'yes',
 		pti_e3: 3,
 		pti_e4: ['money', 'insult'],
@@ -186,6 +191,8 @@ console.log('\n  ── hand-computed case ──\n');
 	ok('mixed: H = 17/30', Math.abs((mixed.components.H ?? NaN) - 17 / 30) < 1e-9);
 	ok('mixed: I = 60', Math.abs((mixed.index ?? NaN) - 60) < 1e-9);
 	ok('mixed: D = 41/60', Math.abs((mixed.components.D ?? NaN) - 41 / 60) < 1e-9);
+	const threeGrip = scoreResponse(spec, { pti_t1: 5, pti_t2: 5, pti_t3: 5, pti_g1: 4, pti_g2: 6, pti_g3: 2 });
+	ok('grip needs four of its six answers', threeGrip.components.G === null && threeGrip.index === null);
 }
 
 // ---------------------------------------------------------------------------
@@ -408,6 +415,7 @@ console.log('\n  ── exclusions ──\n');
 		pti_g2: 5,
 		pti_g3: 5,
 		pti_g4: 5,
+		pti_g6: 5,
 		pti_g5: 5
 	};
 	const rows = [
@@ -426,11 +434,11 @@ console.log('\n  ── exclusions ──\n');
 	ok('rows_excluded counts distinct rows', exclusions.rows_excluded === 3, String(exclusions.rows_excluded));
 	ok('the kept rows are the clean ones', kept.length === 2 && kept[0].completionMs === 120_000);
 
-	// The published rule is "the same answer on all ten": nine identical answers
-	// and one skip is not a straight line, and the row is kept.
-	const nine = { ...flat, pti_g5: null };
-	const boundary = applyExclusions(spec, [{ answers: nine, completionMs: 120_000 }]);
-	ok('nine identical answers and a skip are not straight-lining', boundary.kept.length === 1, JSON.stringify(boundary.exclusions.rules));
+	// The published rule is "the same answer on all eleven": ten identical
+	// answers and one skip is not a straight line, and the row is kept.
+	const ten = { ...flat, pti_g5: null };
+	const boundary = applyExclusions(spec, [{ answers: ten, completionMs: 120_000 }]);
+	ok('ten identical answers and a skip are not straight-lining', boundary.kept.length === 1, JSON.stringify(boundary.exclusions.rules));
 }
 
 // ---------------------------------------------------------------------------

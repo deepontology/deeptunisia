@@ -273,6 +273,20 @@ console.log('\n  ── instrument hash ──\n');
 		translation: { policy: 'a policy', report: 'report.md', locales: {} }
 	} as unknown as InstrumentDocument;
 	ok('hash: status, content_hash, notes and translation are excluded', computeInstrumentHash(withNoise) === hash);
+
+	// An explanation under a question is shown text: adding or changing one
+	// moves the hash, and the compiled item carries it per locale.
+	const withHelp = {
+		...doc,
+		items: doc.items.map((it, i) => (i === 1 ? { ...it, help_en: 'What this asks.', help_fr: 'Ce que cela demande.', help_ar: 'ما يطرحه السؤال.' } : it))
+	};
+	ok('hash: an added explanation moves the hash', computeInstrumentHash(withHelp) !== hash);
+	const changedHelp = { ...withHelp, items: withHelp.items.map((it, i) => (i === 1 ? { ...it, help_en: 'Something else.' } : it)) };
+	ok('hash: a changed explanation moves it again', computeInstrumentHash(changedHelp) !== computeInstrumentHash(withHelp));
+	ok(
+		'compile: the explanation reaches the runtime item in every locale',
+		compileInstrument(withHelp as never).items[1].help?.fr === 'Ce que cela demande.'
+	);
 }
 
 // ---------------------------------------------------------------------------

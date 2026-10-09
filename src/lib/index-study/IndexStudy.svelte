@@ -13,6 +13,7 @@
 	import MonthlyChart from './MonthlyChart.svelte';
 	import Content from '$lib/ui/Content.svelte';
 	import type { LiveResults } from './live';
+	import { scoreResponse } from '../../../community/research-scoring.ts';
 
 	/**
 	 * The index study page: a live public instrument, not an article.
@@ -189,6 +190,40 @@
 		const item = instrument.items.find((i) => i.id === id);
 		return item?.anchors?.[locale] ?? item?.anchors?.en ?? null;
 	};
+	const itemHelp = (id: string) => {
+		const item = instrument.items.find((i) => i.id === id);
+		return item?.help?.[locale] ?? item?.help?.en ?? null;
+	};
+
+	/**
+	 * A worked example: one invented respondent, scored by the same function
+	 * that scores everyone, so the example can never drift from the formula.
+	 */
+	const example = $derived.by(() => {
+		const meanItems = (id: string) => {
+			const c = spec.components.find((x) => x.id === id);
+			return c && c.kind === 'mean' ? (c.items ?? []) : [];
+		};
+		const reversed = (id: string) => {
+			const c = spec.components.find((x) => x.id === id);
+			return c && c.kind === 'mean' ? (c.reverse ?? []) : [];
+		};
+		const tItems = meanItems(spec.plane.x);
+		const gItems = meanItems(spec.plane.y);
+		const tValues = [6, 5, 4, 3, 5];
+		const gValues = [7, 3, 6, 5, 4, 6];
+		const answers: Record<string, unknown> = { pti_e1: 'yes', pti_e3: 4, pti_e4: ['insult'], pti_e5: ['none'] };
+		tItems.forEach((id, i) => (answers[id] = tValues[i % tValues.length]));
+		gItems.forEach((id, i) => (answers[id] = gValues[i % gValues.length]));
+		const flipped = gItems.find((id) => reversed(spec.plane.y).includes(id)) ?? null;
+		return {
+			t: tItems.map((id) => answers[id] as number),
+			g: gItems.map((id) => ({ v: answers[id] as number, flip: id === flipped })),
+			flip: flipped ? (answers[flipped] as number) : null,
+			score: scoreResponse(spec, answers)
+		};
+	});
+
 	const exclusiveOf = (id: string) => instrument.items.find((i) => i.id === id)?.exclusive ?? [];
 	const optionsOf = (id: string) => instrument.items.find((i) => i.id === id)?.options ?? [];
 	const optionText = (id: string, option: string) => {
@@ -560,6 +595,40 @@
 			<p>{t('index.method.body')}</p>
 			<p class="formula mono" dir="ltr">I = 100 · ( T + (1 − G) + (1 − H) ) / 3</p>
 			<p class="note">{t('index.method.components')}</p>
+			{#if example.score.index !== null}
+				<!-- One invented respondent, taken through the formula. -->
+				<div class="example">
+					<p class="example-title">{t('index.example.title')}</p>
+					<p class="note">{t('index.example.lede')}</p>
+					<dl>
+						<div>
+							<dt>{t('index.example.trust')}</dt>
+							<dd><span class="mono">{example.t.join(' · ')}</span><b class="mono">T = {fmt(example.score.components.T, 2)}</b></dd>
+						</div>
+						<div>
+							<dt>{t('index.example.grip')}</dt>
+							<dd>
+								<span class="mono">{#each example.g as g, i (i)}{i ? ' · ' : ''}{g.v}{#if g.flip}<sup>↺</sup>{/if}{/each}</span>
+								<b class="mono">G = {fmt(example.score.components.G, 2)}</b>
+							</dd>
+						</div>
+						<div>
+							<dt>{t('index.example.harm')}</dt>
+							<dd><span>{t('index.example.harmAnswers')}</span><b class="mono">H = {fmt(example.score.components.H, 2)}</b></dd>
+						</div>
+						<div class="example-total">
+							<dt>{t('index.example.index')}</dt>
+							<dd>
+								<span class="mono" dir="ltr">100 · ({fmt(example.score.components.T, 2)} + (1 − {fmt(example.score.components.G, 2)}) + (1 − {fmt(example.score.components.H, 2)})) / 3</span>
+								<b class="mono">= {fmt(example.score.index)}</b>
+							</dd>
+						</div>
+					</dl>
+					{#if example.flip !== null}
+						<p class="note">{tf('index.example.flip', { a: example.flip, b: 10 - example.flip })}</p>
+					{/if}
+				</div>
+			{/if}
 		</div>
 		<aside class="card">
 			<div class="card-row">
@@ -608,6 +677,7 @@
 		{@const ends = anchors(id)}
 		<div class="question">
 			<p class="q-text">{itemText(id)}</p>
+			{#if itemHelp(id)}<p class="q-help">{itemHelp(id)}</p>{/if}
 			<!-- Each strip is scaled to its own fullest answer: the strip shows the
 			     shape of one question's answers, and the table carries the counts. -->
 			{#if hist}
@@ -666,6 +736,7 @@
 			{@const asked = summary ? (results?.n_total ?? 0) - summary.not_shown - summary.skipped : 0}
 			<div class="question">
 				<p class="q-text">{itemText(id)}</p>
+				{#if itemHelp(id)}<p class="q-help">{itemHelp(id)}</p>{/if}
 				{#if counts}
 					<!-- Every option in the order the questionnaire shows it, zeros
 					     included. A bar is the share of the people who were asked and
@@ -1392,6 +1463,53 @@
 		text-transform: uppercase;
 		letter-spacing: 0.04em;
 		margin: 0 0 0.6rem;
+	}
+	.example {
+		margin-top: 1.2rem;
+		padding: 0.9rem 1rem;
+		border: 1px dashed var(--border-strong);
+		border-radius: var(--r-sm);
+	}
+	.example-title {
+		margin: 0;
+		font-weight: 700;
+	}
+	.example dl {
+		margin: 0.6rem 0 0;
+		display: grid;
+		gap: 0.5rem;
+	}
+	.example dl > div {
+		display: grid;
+		gap: 0.15rem;
+	}
+	.example dt {
+		font-size: 0.8rem;
+		color: var(--text-secondary);
+	}
+	.example dd {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		gap: 0.3rem 1rem;
+		margin: 0;
+	}
+	.example dd b {
+		color: var(--accent);
+		white-space: nowrap;
+	}
+	.example-total {
+		padding-top: 0.5rem;
+		border-top: 1px solid var(--border-subtle);
+	}
+	.example-total dd b {
+		font-size: 1.2rem;
+	}
+	.q-help {
+		margin: -0.2rem 0 0.5rem;
+		font-size: 0.82rem;
+		line-height: 1.45;
+		color: var(--text-faint);
 	}
 	.formula {
 		font-size: 1rem;
