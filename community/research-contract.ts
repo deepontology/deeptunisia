@@ -43,6 +43,8 @@ export interface RuntimeItem {
 	optionLabels?: Partial<Record<Locale, Record<string, string>>>;
 	/** multi_choice options that cannot be combined with any other ("none"). */
 	exclusive?: string[];
+	/** A short explanation shown under the question, per locale. */
+	help?: RuntimeText;
 }
 
 export interface ScaleAnchors {
@@ -197,6 +199,9 @@ export interface InstrumentDocument {
 		anchors?: Partial<Record<Locale, ScaleAnchors>>;
 		option_labels?: Partial<Record<Locale, Record<string, string>>>;
 		exclusive?: string[];
+		help_en?: string;
+		help_fr?: string;
+		help_ar?: string;
 	}>;
 	maxdiff_priority?: MaxDiffBlockDocument | null;
 	gap_block?: GapBlockDocument | null;
@@ -342,6 +347,10 @@ export function computeInstrumentHash(doc: InstrumentDocument): string {
 			if (item.anchors !== undefined) projected.anchors = item.anchors;
 			if (item.show_if !== undefined) projected.show_if = item.show_if;
 			if (item.exclusive !== undefined) projected.exclusive = item.exclusive;
+			// An explanation is shown text: it changes what a respondent reads.
+			if (item.help_en !== undefined || item.help_fr !== undefined || item.help_ar !== undefined) {
+				projected.help = { en: item.help_en ?? null, fr: item.help_fr ?? null, ar: item.help_ar ?? null };
+			}
 			return projected;
 		}),
 		// Module headings and intros are shown text once they are translated.
@@ -400,6 +409,9 @@ export function compileInstrument(doc: InstrumentDocument): RuntimeInstrument {
 		if (item.anchors !== undefined) compiled.anchors = structuredClone(item.anchors);
 		if (item.option_labels !== undefined) compiled.optionLabels = structuredClone(item.option_labels);
 		if (item.exclusive !== undefined) compiled.exclusive = [...item.exclusive];
+		if (item.help_en !== undefined || item.help_fr !== undefined || item.help_ar !== undefined) {
+			compiled.help = text(item.help_en ?? null, item.help_fr ?? null, item.help_ar ?? null);
+		}
 		return compiled;
 	});
 

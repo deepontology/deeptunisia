@@ -12,13 +12,15 @@ No name, email address, phone number, account, IP address, browser fingerprint, 
 
 Two things touch your connection without being stored with your answers. To stop one machine from flooding the survey, the server counts submissions per address using a salted fingerprint of the address that changes every day; the address itself is never written down. And the site runs on Cloudflare, which, like any host, sees connections pass through; its logs are sampled at one request in a hundred and are not joined to answers.
 
-Your receipt code is the only way to delete your answers. It works until the end of the month in which you answered. The index is published once a month, and a month's figure never changes after it closes, so that month's answers are fixed from then on. Any data released later has regions instead of governorates, no date finer than the month and no receipt codes.
+Your receipt code is the only way to delete your answers. It works until the end of the month in which you answered. If you lose it, your answers can no longer be deleted, by you or by us, because nothing else links them to you. The index is published once a month, and a month's figure never changes after it closes, so that month's answers are fixed from then on. Any data released later has regions instead of governorates, no date finer than the month and no receipt codes.
 
 ## What the index can and cannot tell you {#limits}
 
 The index describes the people who answered. Anyone can take part, so the people who do are not a random sample of Tunisia: they are online, they found the link, and they chose to answer. The numbers are reported as "among respondents" for that reason, and they are never presented as the opinion of Tunisians in general.
 
 It is called a satisfaction index, but satisfaction here is more than a rating of a service. The number combines trust in the police, how free people feel around them, and what happened when they met them.
+
+The 95% interval shown beside each figure covers only the uncertainty that comes from the number of answers. It does not cover the difference between the people who chose to answer and everyone else, which can be much larger.
 
 The index measures how policed people feel, not how the police behave. A low score is a finding about trust, fear and experience. It is not proof of misconduct, and a high score is not proof of its absence.
 

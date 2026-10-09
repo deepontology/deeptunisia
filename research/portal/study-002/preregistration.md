@@ -16,7 +16,7 @@ One construct: **how strongly respondents sense that they live under a police st
 | Component | Items | Meaning |
 |---|---|---|
 | Trust (T) | pti_t1 to pti_t5 | Whether the police are seen as fair, accountable, safe to approach and on the public's side |
-| Grip (G) | pti_g1 to pti_g5 | Whether respondents feel afraid, watched and unfree around the police |
+| Grip (G) | pti_g1 to pti_g6 | Whether respondents feel afraid, watched and unfree around the police |
 | Harm (H) | pti_e1, pti_e3, pti_e4, pti_e5 | Bad encounters in the last 12 months: the respondent's own, and those of people close to them |
 
 Two context items (pti_c1, compared with before 2011; pti_c2, change in trust over a year) are reported beside the index and never enter it.
@@ -32,7 +32,7 @@ Open, self-selected online participation by adults (18 and over, confirmed by a 
 The formula is the instrument's `scoring` block, which is hashed. In words:
 
 - Every 0 to 10 answer becomes x/10. pti_g2 is reverse-keyed (1 − x/10).
-- **T** is the mean of answered trust items. It is missing if fewer than 3 of the 5 are answered. **G** is the same for the grip items.
+- **T** is the mean of answered trust items. It is missing if fewer than 3 of the 5 are answered. **G** is the same for the six grip items, and is missing if fewer than 4 of the 6 are answered.
 - **Harm.** Direct harm D is the mean of (1 − treatment/10) and min(1, abuses ticked / 3). Close harm V is min(1, abuses ticked for people close / 3). For a respondent with contact, H = (2·D + V) / 3; otherwise H = V. "None of these" scores 0. A skipped item is missing; missing parts drop out and the weights renormalise.
 - **Index:** I = 100 · (T + (1 − G) + (1 − H)) / 3, with equal weights. T and G are required. If H is missing, the index renormalises over T and G.
 - **Bands:** Police state [0, 20), Coercive [20, 40), Divided [40, 60), Accountable [60, 80), Guardian [80, 100].
@@ -42,7 +42,7 @@ The formula is the instrument's `scoring` block, which is hashed. In words:
 These are applied before any aggregate and published live with their counts:
 
 1. **Speed:** completion in under 40 seconds.
-2. **Straight-lining:** the identical answer on all ten index items (pti_t1 to pti_t5, pti_g1 to pti_g5). Because pti_g2 is reverse-keyed, an honest extreme respondent does not trip this rule.
+2. **Straight-lining:** the identical answer on all eleven index items (pti_t1 to pti_t5, pti_g1 to pti_g6). Because pti_g2 is reverse-keyed, an honest extreme respondent does not trip this rule.
 
 These are refused at submission and never stored:
 
@@ -61,7 +61,7 @@ These are refused at submission and never stored:
 The components, the T × G grid, the band counts, the item distributions and the splits are shown over the last 12 months. Each month's own figures are shown in the series.
 
 For each month on its own:
-- the mean I over valid respondents, with a percentile bootstrap 95% interval (seeded; 1,000 resamples);
+- the mean I over valid respondents, with a percentile bootstrap 95% interval (seeded; 1,000 resamples). The interval covers sampling noise only; it says nothing about how the self-selected respondents differ from the population, and the page says so;
 - the median;
 - band counts.
 
