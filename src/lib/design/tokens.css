@@ -580,3 +580,16 @@
 /* The compatibility bridge that used to live here has been removed. Every view now
    references semantic tokens directly. If you reintroduce a flat alias like `--fg`
    or `--line`, you are undoing that work. */
+
+/* ---------------------------------------------------------------------------
+   Research type. The research pages (the programme, each study, the
+   questionnaire) set their reading text in Libron. Mono stays mono: numbers,
+   labels and the ruler keep JetBrains Mono, which is what makes them read as
+   instruments. Arabic has no Libron glyphs and falls through to IBM Plex
+   Sans Arabic, as it does everywhere else.
+   --------------------------------------------------------------------------- */
+.research-type {
+	--font-sans: 'Libron', 'IBM Plex Sans Arabic', Georgia, serif;
+	--font-serif: 'Libron', 'IBM Plex Sans Arabic', Georgia, serif;
+	font-family: var(--font-sans);
+}
