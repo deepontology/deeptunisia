@@ -24,8 +24,8 @@ moderator-pub.pem
 # A trailing slash matches directories only. An opencode worktree represents
 # `node_modules`, `.claude` and `.opencode` as symlinks to the main checkout, and
 # a symlink is not a directory — so `node_modules/` does not match it, and
-# `git add -A` commits the link with its absolute local path inside. That has
-# happened once (commit 6b5523c). On a machine where core.symlinks=false, git
+# `git add -A` commits the link with its absolute local path inside, and
+# scripts/test-tree-hygiene.ts fails the build on it. On a machine where core.symlinks=false, git
 # then checks those links out as plain files, which REPLACES the real directory
 # it pointed at. Directory-only patterns are still correct for generated content
 # below (build/, src/generated/, output/, docs/, ...), where a file of that name
