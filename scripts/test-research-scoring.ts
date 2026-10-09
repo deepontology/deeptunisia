@@ -76,8 +76,12 @@ console.log('\n  ── the study-002 scoring block ──\n');
 	ok('the scoring block is the study index', spec.id === 'pti' && spec.scale_max === 10);
 	ok('the real spec validates clean', violations.length === 0, violations.join('; '));
 	const componentIds = spec.components.map((component) => component.id).sort().join(',');
-	ok('the spec declares the expected components', componentIds === 'D,D_abuse,D_treat,G,H,H_contact,T,V', componentIds);
+	ok('the spec declares the expected components', componentIds === 'D,G,H,H_contact,S,S_contact,S_good,S_handled,S_seen,S_treat,S_view,T,V', componentIds);
 	ok('the plane is (T, G)', spec.plane.x === 'T' && spec.plane.y === 'G');
+	ok(
+		'the index reads T, S, G and H, with G and H against it',
+		spec.index.parts.map((part) => `${part.ref}${part.invert ? '-' : '+'}${part.weight}`).join(' ') === 'T+1 S+1 G-1 H-1'
+	);
 }
 
 // ---------------------------------------------------------------------------
@@ -87,15 +91,22 @@ console.log('\n  ── the study-002 scoring block ──\n');
 console.log('\n  ── anchors ──\n');
 
 {
-	// Guardian (index-spec.md §4): T = 1 means every T item 10; G = 0 means every
-	// G item 0 except the reverse-keyed G2, which is 10; H = 0 with no contact and
-	// an E5 of "none", so V = 0.
+	// Guardian (index-spec.md §4): T = 1 means every T item 10; S = 1 means S1-S3
+	// at 10, the reverse-keyed S4 at 0 and at least two good moments (no contact,
+	// so there is no contact part); G = 0 means every G item 0 except the
+	// reverse-keyed G2, which is 10; H = 0 with no contact and an E5 of "none",
+	// so V = 0.
 	const guardian = scoreResponse(spec, {
 		pti_t1: 10,
 		pti_t2: 10,
 		pti_t3: 10,
 		pti_t4: 10,
 		pti_t5: 10,
+		pti_s1: 10,
+		pti_s2: 10,
+		pti_s3: 10,
+		pti_s4: 0,
+		pti_s6: ['helped', 'respectful'],
 		pti_g1: 0,
 		pti_g2: 10,
 		pti_g3: 0,
@@ -106,6 +117,7 @@ console.log('\n  ── anchors ──\n');
 		pti_e5: ['none']
 	});
 	ok('guardian: T = 1', guardian.components.T === 1);
+	ok('guardian: S = 1', guardian.components.S === 1);
 	ok('guardian: G = 0', guardian.components.G === 0);
 	ok('guardian: H = 0', guardian.components.H === 0);
 	ok('guardian: I = 100', Math.abs((guardian.index ?? NaN) - 100) < 1e-9, String(guardian.index));
@@ -114,19 +126,27 @@ console.log('\n  ── anchors ──\n');
 		'guardian: scoreResponse reproduces the anchor record',
 		spec.anchors.guardian.I === 100 &&
 			guardian.components.T === spec.anchors.guardian.T &&
+			guardian.components.S === spec.anchors.guardian.S &&
 			guardian.components.G === spec.anchors.guardian.G &&
 			guardian.components.H === spec.anchors.guardian.H
 	);
 
-	// Police state: T = 0 means every T item 0; G = 1 means every G item 10
-	// except G2 = 0; H = 1 with contact, E3 = 0 (reverse-keyed treatment),
-	// three abuses in E4 and three in E5.
+	// Police state: T = 0 means every T item 0; S = 0 means S1-S3 at 0, S4 at
+	// 10, a contact treated 0 and handled 0, and no good moment; G = 1 means
+	// every G item 10 except G2 = 0; H = 1 with contact, three abuses in E4 and
+	// three in E5.
 	const policeState = scoreResponse(spec, {
 		pti_t1: 0,
 		pti_t2: 0,
 		pti_t3: 0,
 		pti_t4: 0,
 		pti_t5: 0,
+		pti_s1: 0,
+		pti_s2: 0,
+		pti_s3: 0,
+		pti_s4: 10,
+		pti_s5: 0,
+		pti_s6: ['none'],
 		pti_g1: 10,
 		pti_g2: 0,
 		pti_g3: 10,
@@ -139,6 +159,7 @@ console.log('\n  ── anchors ──\n');
 		pti_e5: ['money', 'insult', 'threat']
 	});
 	ok('police state: T = 0', policeState.components.T === 0);
+	ok('police state: S = 0', policeState.components.S === 0);
 	ok('police state: G = 1', policeState.components.G === 1);
 	ok('police state: H = 1', policeState.components.H === 1);
 	ok('police state: I = 0', Math.abs((policeState.index ?? NaN) - 0) < 1e-9, String(policeState.index));
@@ -147,6 +168,7 @@ console.log('\n  ── anchors ──\n');
 		'police state: scoreResponse reproduces the anchor record',
 		spec.anchors.police_state.I === 0 &&
 			policeState.components.T === spec.anchors.police_state.T &&
+			policeState.components.S === spec.anchors.police_state.S &&
 			policeState.components.G === spec.anchors.police_state.G &&
 			policeState.components.H === spec.anchors.police_state.H
 	);
@@ -163,18 +185,26 @@ console.log('\n  ── hand-computed case ──\n');
 	//    T = (8/10 + 6/10 + 7/10) / 3 = 21/30 = 0.7
 	// G: g1 = 4, g2 = 6 (reverse), g3 = 2, g4 = 3, g6 = 3, g5 = 4 (all six)
 	//    G = (4/10 + (1 - 6/10) + 2/10 + 3/10 + 3/10 + 4/10) / 6 = 2/6 = 1/3
-	// H: contact, E3 = 3, E4 = [money, insult], E5 = [threat]
-	//    D_treat = 1 - 3/10 = 0.7
-	//    D_abuse = 2/3 (two abuses)
-	//    D       = (0.7 + 2/3) / 2 = 41/60
-	//    V       = 1/3
-	//    H       = (2 * 41/60 + 1/3) / 3 = 17/30
-	// I = 100 * (0.7 + (1 - 1/3) + (1 - 17/30)) / 3
-	//   = 100 * (21/30 + 20/30 + 13/30) / 3 = 60
+	// S: s1 = 6, s2 = 4, s3 = 5 (3 of 4 answered)
+	//    S_view    = (0.6 + 0.4 + 0.5) / 3 = 0.5
+	//    contact, E3 = 3, S5 = 5
+	//    S_contact = (0.3 + 0.5) / 2 = 0.4
+	//    S_good    = 1/2 (one good moment, saturating at two)
+	//    S         = (3 * 0.5 + 2 * 0.4 + 1 * 0.5) / 6 = 7/15
+	// H: contact, E4 = [money, insult], E5 = [threat]
+	//    D = 2/3 (two abuses), V = 1/3
+	//    H = (2 * 2/3 + 1/3) / 3 = 5/9
+	// I = 100 * (0.7 + 7/15 + (1 - 1/3) + (1 - 5/9)) / 4
+	//   = 100 * (63/90 + 42/90 + 60/90 + 40/90) / 4 = 100 * 205/360 = 1025/18
 	const mixed = scoreResponse(spec, {
 		pti_t1: 8,
 		pti_t2: 6,
 		pti_t3: 7,
+		pti_s1: 6,
+		pti_s2: 4,
+		pti_s3: 5,
+		pti_s5: 5,
+		pti_s6: ['respectful'],
 		pti_g1: 4,
 		pti_g2: 6,
 		pti_g3: 2,
@@ -188,9 +218,11 @@ console.log('\n  ── hand-computed case ──\n');
 	});
 	ok('mixed: T = 0.7', Math.abs((mixed.components.T ?? NaN) - 0.7) < 1e-9);
 	ok('mixed: G = 1/3', Math.abs((mixed.components.G ?? NaN) - 1 / 3) < 1e-9);
-	ok('mixed: H = 17/30', Math.abs((mixed.components.H ?? NaN) - 17 / 30) < 1e-9);
-	ok('mixed: I = 60', Math.abs((mixed.index ?? NaN) - 60) < 1e-9);
-	ok('mixed: D = 41/60', Math.abs((mixed.components.D ?? NaN) - 41 / 60) < 1e-9);
+	ok('mixed: S = 7/15', Math.abs((mixed.components.S ?? NaN) - 7 / 15) < 1e-9);
+	ok('mixed: S_contact = 0.4', Math.abs((mixed.components.S_contact ?? NaN) - 0.4) < 1e-9);
+	ok('mixed: H = 5/9', Math.abs((mixed.components.H ?? NaN) - 5 / 9) < 1e-9);
+	ok('mixed: D = 2/3, treatment no longer counts as harm', Math.abs((mixed.components.D ?? NaN) - 2 / 3) < 1e-9);
+	ok('mixed: I = 1025/18', Math.abs((mixed.index ?? NaN) - 1025 / 18) < 1e-9, String(mixed.index));
 	const threeGrip = scoreResponse(spec, { pti_t1: 5, pti_t2: 5, pti_t3: 5, pti_g1: 4, pti_g2: 6, pti_g3: 2 });
 	ok('grip needs four of its six answers', threeGrip.components.G === null && threeGrip.index === null);
 }
@@ -240,7 +272,44 @@ console.log('\n  ── missing answers ──\n');
 		pti_e1: 'no'
 	});
 	ok('missing H: H is null', noHarm.components.H === null);
-	ok('missing H: the index renormalises over T and G', Math.abs((noHarm.index ?? NaN) - 50) < 1e-9);
+	ok('missing H and S: the index renormalises over T and G', Math.abs((noHarm.index ?? NaN) - 50) < 1e-9);
+}
+
+// ---------------------------------------------------------------------------
+// Service: the view, the contact, and good moments
+// ---------------------------------------------------------------------------
+
+console.log('\n  ── service ──\n');
+
+{
+	const view = { pti_s1: 8, pti_s2: 8, pti_s3: 8, pti_s4: 2 };
+
+	// No contact: no contact part, so S = (3 * view + good) / 4.
+	const noContact = scoreResponse(spec, { ...view, pti_e1: 'no', pti_s6: ['none'] });
+	ok('no contact: S_contact is missing', noContact.components.S_contact === null);
+	ok('no contact, no good moment: S = 3 * 0.8 / 4 = 0.6', Math.abs((noContact.components.S ?? NaN) - 0.6) < 1e-9);
+
+	// A good moment raises S and leaves H alone.
+	const base = { ...view, pti_e1: 'yes', pti_e3: 5, pti_s5: 5, pti_e4: ['insult'], pti_e5: ['none'] };
+	const without = scoreResponse(spec, { ...base, pti_s6: ['none'] });
+	const withGood = scoreResponse(spec, { ...base, pti_s6: ['helped', 'came_quickly'] });
+	ok('good moments raise S', (withGood.components.S ?? 0) > (without.components.S ?? 1));
+	ok('good moments do not offset harm', withGood.components.H === without.components.H && withGood.components.H !== null);
+	ok('two good moments saturate', withGood.components.S_good === 1);
+
+	// A treatment answer left over after contact was changed to "no" is not read.
+	const stale = scoreResponse(spec, { ...view, pti_e1: 'no', pti_e3: 0, pti_s5: 0 });
+	ok('contact answers count only with contact', stale.components.S_contact === null);
+
+	// Two of four view items is below min_answered: S is missing, even with good
+	// moments ticked, and the index renormalises without it.
+	const thin = scoreResponse(spec, { pti_s1: 9, pti_s2: 9, pti_s6: ['helped', 'respectful'] });
+	ok('2 of 4 view items: S is missing', thin.components.S === null);
+
+	// S4 (asking for money or favours) is keyed against the job.
+	const honest = scoreResponse(spec, { pti_s1: 5, pti_s2: 5, pti_s3: 5, pti_s4: 0 });
+	const corrupt = scoreResponse(spec, { pti_s1: 5, pti_s2: 5, pti_s3: 5, pti_s4: 10 });
+	ok('S4 is reverse-keyed', (honest.components.S_view ?? 0) > (corrupt.components.S_view ?? 1));
 }
 
 // ---------------------------------------------------------------------------
@@ -292,13 +361,13 @@ console.log('\n  ── spec validation ──\n');
 	const has = (violations: string[], needle: string) => violations.some((v) => v.includes(needle));
 
 	const withCycle = structuredClone(spec);
-	const cycleTarget = withCycle.components.find((component) => component.id === 'D') as BlendComponent;
-	cycleTarget.parts[0] = { ref: 'H_contact', weight: 1 };
+	const cycleTarget = withCycle.components.find((component) => component.id === 'H_contact') as BlendComponent;
+	cycleTarget.parts[0] = { ref: 'H', weight: 1 };
 	const cycleViolations = validateScoringSpec(withCycle, itemIds, itemMeta);
 	ok('a reference cycle is reported', has(cycleViolations, 'cycle'), cycleViolations.join('; '));
 
 	const withUnknownRef = structuredClone(spec);
-	const unknownTarget = withUnknownRef.components.find((component) => component.id === 'D') as BlendComponent;
+	const unknownTarget = withUnknownRef.components.find((component) => component.id === 'H_contact') as BlendComponent;
 	unknownTarget.parts[0] = { ref: 'NOPE', weight: 1 };
 	const unknownViolations = validateScoringSpec(withUnknownRef, itemIds, itemMeta);
 	ok(
@@ -319,7 +388,7 @@ console.log('\n  ── spec validation ──\n');
 
 	const withWrongResponse = structuredClone(spec);
 	const responseTarget = withWrongResponse.components.find(
-		(component) => component.id === 'D_abuse'
+		(component) => component.id === 'D'
 	) as CountComponent;
 	responseTarget.item = 'pti_e3';
 	const responseViolations = validateScoringSpec(withWrongResponse, itemIds, itemMeta);
@@ -330,7 +399,7 @@ console.log('\n  ── spec validation ──\n');
 	);
 
 	const withBadIgnore = structuredClone(spec);
-	const ignoreTarget = withBadIgnore.components.find((component) => component.id === 'D_abuse') as CountComponent;
+	const ignoreTarget = withBadIgnore.components.find((component) => component.id === 'D') as CountComponent;
 	ignoreTarget.ignore = ['nope'];
 	const ignoreViolations = validateScoringSpec(withBadIgnore, itemIds, itemMeta);
 	ok(
@@ -411,6 +480,10 @@ console.log('\n  ── exclusions ──\n');
 		pti_t3: 5,
 		pti_t4: 5,
 		pti_t5: 5,
+		pti_s1: 5,
+		pti_s2: 5,
+		pti_s3: 5,
+		pti_s4: 5,
 		pti_g1: 5,
 		pti_g2: 5,
 		pti_g3: 5,
@@ -434,11 +507,11 @@ console.log('\n  ── exclusions ──\n');
 	ok('rows_excluded counts distinct rows', exclusions.rows_excluded === 3, String(exclusions.rows_excluded));
 	ok('the kept rows are the clean ones', kept.length === 2 && kept[0].completionMs === 120_000);
 
-	// The published rule is "the same answer on all eleven": ten identical
-	// answers and one skip is not a straight line, and the row is kept.
+	// The published rule is "the same answer on all fifteen": fourteen
+	// identical answers and one skip is not a straight line, and the row is kept.
 	const ten = { ...flat, pti_g5: null };
 	const boundary = applyExclusions(spec, [{ answers: ten, completionMs: 120_000 }]);
-	ok('ten identical answers and a skip are not straight-lining', boundary.kept.length === 1, JSON.stringify(boundary.exclusions.rules));
+	ok('fourteen identical answers and a skip are not straight-lining', boundary.kept.length === 1, JSON.stringify(boundary.exclusions.rules));
 }
 
 // ---------------------------------------------------------------------------
