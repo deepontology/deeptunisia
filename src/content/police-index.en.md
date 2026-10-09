@@ -18,11 +18,11 @@ Your receipt code is the only way to delete your answers. It works until the end
 
 The index describes the people who answered. Anyone can take part, so the people who do are not a random sample of Tunisia: they are online, they found the link, and they chose to answer. The numbers are reported as "among respondents" for that reason, and they are never presented as the opinion of Tunisians in general.
 
-It is called a satisfaction index, but satisfaction here is more than a rating of a service. The number combines trust in the police, how free people feel around them, and what happened when they met them.
+It is called a satisfaction index, and part of it is a rating of the service: how well people think the police do the job, how their last contact was handled, and the good moments they saw in person. The number combines that with trust in the police, how free people feel around them, and what was done to them when they met them. Good moments raise the service score; they never cancel out abuse.
 
 The 95% interval shown beside each figure covers only the uncertainty that comes from the number of answers. It does not cover the difference between the people who chose to answer and everyone else, which can be much larger.
 
-The index measures how policed people feel, not how the police behave. A low score is a finding about trust, fear and experience. It is not proof of misconduct, and a high score is not proof of its absence.
+The index measures how people see and live with the police, not how the police behave. A low score is a finding about trust, service, fear and experience. It is not proof of misconduct, and a high score is not proof of its absence.
 
 ## Where this study departs from the platform's own rules {#deviations}
 

@@ -11,13 +11,14 @@ This document is fixed before the first response is collected. The hash above is
 
 ## 1. What is being measured
 
-One construct: **how strongly respondents sense that they live under a police state**. It is measured in three parts, and the parts are kept separate before they are combined:
+One construct: **how satisfied respondents are with the police they live with**. It is measured in four parts, and the parts are kept separate before they are combined:
 
 | Component | Items | Meaning |
 |---|---|---|
 | Trust (T) | pti_t1 to pti_t5 | Whether the police are seen as fair, accountable, safe to approach and on the public's side |
+| Service (S) | pti_s1 to pti_s6, pti_e3 | Whether the police are seen to do the job (overall, coming in an emergency, dealing with crime, not asking for money or favours), how the last contact was treated and handled, and good moments seen in person in the last 12 months |
 | Grip (G) | pti_g1 to pti_g6 | Whether respondents feel afraid, watched and unfree around the police |
-| Harm (H) | pti_e1, pti_e3, pti_e4, pti_e5 | Bad encounters in the last 12 months: the respondent's own, and those of people close to them |
+| Harm (H) | pti_e1, pti_e4, pti_e5 | Abuse in the last 12 months: suffered by the respondent, and by people close to them |
 
 Two context items (pti_c1, compared with before 2011; pti_c2, change in trust over a year) are reported beside the index and never enter it.
 
@@ -31,10 +32,11 @@ Open, self-selected online participation by adults (18 and over, confirmed by a 
 
 The formula is the instrument's `scoring` block, which is hashed. In words:
 
-- Every 0 to 10 answer becomes x/10. pti_g2 is reverse-keyed (1 − x/10).
+- Every 0 to 10 answer becomes x/10. pti_s4 and pti_g2 are reverse-keyed (1 − x/10).
 - **T** is the mean of answered trust items. It is missing if fewer than 3 of the 5 are answered. **G** is the same for the six grip items, and is missing if fewer than 4 of the 6 are answered.
-- **Harm.** Direct harm D is the mean of (1 − treatment/10) and min(1, abuses ticked / 3). Close harm V is min(1, abuses ticked for people close / 3). For a respondent with contact, H = (2·D + V) / 3; otherwise H = V. "None of these" scores 0. A skipped item is missing; missing parts drop out and the weights renormalise.
-- **Index:** I = 100 · (T + (1 − G) + (1 − H)) / 3, with equal weights. T and G are required. If H is missing, the index renormalises over T and G.
+- **Service.** The view Sv is the mean of answered pti_s1 to pti_s4, missing if fewer than 3 of the 4 are answered. For a respondent with contact, the contact part Sc is the mean of treatment (pti_e3/10) and handling (pti_s5/10). Good moments Sg are min(1, moments ticked in pti_s6 / 2). S = (3·Sv + 2·Sc + Sg) / 6 with contact, (3·Sv + Sg) / 4 without. S is missing if Sv is missing.
+- **Harm.** Direct harm D is min(1, abuses ticked / 3). Close harm V is min(1, abuses ticked for people close / 3). For a respondent with contact, H = (2·D + V) / 3; otherwise H = V. Good moments are never subtracted from harm. "None of these" scores 0. A skipped item is missing; missing parts drop out and the weights renormalise.
+- **Index:** I = 100 · (T + S + (1 − G) + (1 − H)) / 4, with equal weights. T and G are required. If S or H is missing, the index renormalises over the parts present.
 - **Bands:** Police state [0, 20), Coercive [20, 40), Divided [40, 60), Accountable [60, 80), Guardian [80, 100].
 
 ## 4. Exclusions
@@ -42,7 +44,7 @@ The formula is the instrument's `scoring` block, which is hashed. In words:
 These are applied before any aggregate and published live with their counts:
 
 1. **Speed:** completion in under 40 seconds.
-2. **Straight-lining:** the identical answer on all eleven index items (pti_t1 to pti_t5, pti_g1 to pti_g6). Because pti_g2 is reverse-keyed, an honest extreme respondent does not trip this rule.
+2. **Straight-lining:** the identical answer on all fifteen index items (pti_t1 to pti_t5, pti_s1 to pti_s4, pti_g1 to pti_g6). Because pti_s4 and pti_g2 are reverse-keyed, an honest extreme respondent does not trip this rule.
 
 These are refused at submission and never stored:
 
@@ -65,7 +67,7 @@ For each month on its own:
 - the median;
 - band counts.
 
-**Components:** the mean T, G and H, each with its n.
+**Components:** the mean T, S, G and H, each with its n.
 
 **Distributions:**
 - the full 0 to 10 distribution of every scale item;
@@ -109,7 +111,8 @@ These are registered before data. They are directional, and each is tested once,
 
 - **H1:** Respondents who report police contact in the last 12 months have a lower mean I than those who report none. Test: difference in means with a bootstrap 95% interval excluding 0.
 - **H2:** T and G are negatively correlated (Pearson r below −0.3). If they are not, the two-axis model is reported as unsupported for this series.
-- **H3:** The trust items and the grip items each form a reliable scale (Cronbach's alpha ≥ 0.70). If either falls short, the page says so beside the headline.
+- **H3:** The trust items, the grip items and the service view items (pti_s1 to pti_s4) each form a reliable scale (Cronbach's alpha ≥ 0.70). If any falls short, the page says so beside the headline.
+- **H4:** T and S are positively correlated but distinct (Pearson r between 0.3 and 0.8). The correlation is published at every 12-month review. If r exceeds 0.8, trust and service are reported as one dimension for this series, and the next version of the instrument merges them.
 
 Everything else on the results page is descriptive. A pattern noticed after the data comes in is reported as exploratory.
 

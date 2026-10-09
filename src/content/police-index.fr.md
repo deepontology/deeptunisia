@@ -18,11 +18,11 @@ Votre code de reçu est le seul moyen de supprimer vos réponses. Il fonctionne 
 
 L'indice décrit les personnes qui ont répondu. Tout le monde peut participer, si bien que les répondants ne forment pas un échantillon aléatoire de la Tunisie : ils sont en ligne, ils ont trouvé le lien et ils ont choisi de répondre. C'est pourquoi les chiffres sont présentés « parmi les répondants » et jamais comme l'opinion des Tunisiens en général.
 
-On l'appelle indice de satisfaction, mais la satisfaction n'y est pas une simple note donnée à un service. Le chiffre combine la confiance envers la police, la liberté que l'on ressent en sa présence et ce qui s'est passé lors des rencontres avec elle.
+On l'appelle indice de satisfaction, et une partie en est bien une note donnée au service : la façon dont les gens jugent le travail de la police, la manière dont leur dernier contact a été géré et les bons moments vus en personne. Le chiffre combine cela avec la confiance envers la police, la liberté que l'on ressent en sa présence et ce qui a été fait aux gens lors des rencontres avec elle. Les bons moments font monter la note de service ; ils n'effacent jamais un abus.
 
 L'intervalle à 95 % affiché à côté de chaque chiffre ne couvre que l'incertitude liée au nombre de réponses. Il ne couvre pas l'écart entre les personnes qui ont choisi de répondre et l'ensemble des autres, qui peut être bien plus grand.
 
-L'indice mesure à quel point les gens se sentent encadrés par la police, pas la façon dont la police se comporte. Un score bas est un constat sur la confiance, la peur et l'expérience. Ce n'est pas une preuve d'abus, et un score élevé n'est pas la preuve de leur absence.
+L'indice mesure la façon dont les gens voient la police et vivent avec elle, pas la façon dont la police se comporte. Un score bas est un constat sur la confiance, le service, la peur et l'expérience. Ce n'est pas une preuve d'abus, et un score élevé n'est pas la preuve de leur absence.
 
 ## Là où cette étude s'écarte des règles de la plateforme {#deviations}
 

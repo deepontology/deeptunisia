@@ -7,17 +7,20 @@
 
 ## 1. What it measures
 
-One construct, stated once: **how strongly respondents sense that they live under a police state.** That sense has three parts, and the index keeps them separate before combining them:
+One construct, stated once: **how satisfied respondents are with the police they live with.** Satisfaction here has four parts, and the index keeps them separate before combining them:
 
 | Component | Symbol | Question it answers | Direction in the index |
 |---|---|---|---|
 | Trust | **T** | Do people believe the police are fair, accountable and on the public's side? | higher T raises the index |
+| Service | **S** | Do people find that the police do the job: come when called, deal with crime, handle contact well, and stay clean? | higher S raises the index |
 | Grip | **G** | Do people feel watched, afraid and unfree around the police? | higher G lowers the index |
-| Harm | **H** | Have people, or those close to them, had bad encounters with the police? | higher H lowers the index |
+| Harm | **H** | Have people, or those close to them, been abused by the police? | higher H lowers the index |
+
+Trust and service are related but not the same: a person can distrust the police and still find that they come when called, or the reverse. Their correlation is published at every review (§6).
 
 The index runs from **0 (police state)** to **100 (guardian police)**. Both ends are defined by the instrument itself, not by opinion (§4).
 
-What it is not: a measure of crime, of police effectiveness, or of what Tunisians in general think. Every number reads "among respondents".
+What it is not: a measure of crime, an audit of police performance, or what Tunisians in general think. Service is how respondents judge the job and what they saw of it, not a record of response times or cases solved. Every number reads "among respondents".
 
 ## 2. The instrument (English source)
 
@@ -48,15 +51,34 @@ T1 follows the European Social Survey trust-in-police wording (0 to 10), so the 
 
 G4 was one question about avoiding places and posting online; it is two, because avoiding a gathering and self-censoring online can have different causes. G5 asks one thing, how unchecked the police feel; whether abuse is punished is T4, so "and nobody can stop them" is dropped rather than counted twice. Several items carry a one-line explanation shown under the question (`help_*`), hashed like the question text.
 
-### Harm (H): encounters, direct and close
+### Service (S): how well the job is done
 
-| ID | Item | Response |
-|---|---|---|
-| E1 | In the last 12 months, have you had any contact with the police? | yes / no / prefer not to say |
-| E2 | (if yes) What kind? | multi: traffic stop · ID check or street stop · reported a crime · checkpoint · at a protest or gathering · summoned or questioned · arrested or held · other |
-| E3 | (if yes) Thinking of the most recent contact, how were you treated? | 0 very badly … 10 very well |
-| E4 | (if yes) During any contact, did any of these happen? | multi: asked for money or a favour · insulted or humiliated · threatened · physical force · phone searched or demanded · held without explanation · none of these |
-| E5 | In the last 12 months, has someone close to you (family or friends) had any of those things happen with the police? | same list as E4 |
+Asked of everyone, after Trust:
+
+| ID | Item | 0 = | 10 = | Key |
+|---|---|---|---|---|
+| S1 | Overall, how good a job do the police do where you live? | a very bad job | a very good job | + |
+| S2 | If you called the police in an emergency, how likely is it that they would come in time? | not at all likely | very likely | + |
+| S3 | How well do the police deal with everyday crime where you live, such as theft and break-ins? | very badly | very well | + |
+| S4 | Where you live, how common is it for the police to ask for money or favours? | it never happens | very common | ⟲ |
+
+Asked in the encounters module (below): E3 and S5 of those who had contact, and S6 of everyone.
+
+S1 is the global satisfaction question, comparable with the "how good a job" items of the large police surveys; S2 to S4 are specific, so the part does not rest on general mood alone. S4 asks what the respondent believes happens around them; whether it happened to them is E4, in harm.
+
+### Encounters: service and harm, direct and close
+
+| ID | Item | Response | Feeds |
+|---|---|---|---|
+| E1 | In the last 12 months, have you had any contact with the police? | yes / no / prefer not to say | routes S and H |
+| E2 | (if yes) What kind? | multi: traffic stop · ID check or street stop · reported a crime · checkpoint · at a protest or gathering · summoned or questioned · arrested or held · other | context |
+| E3 | (if yes) Thinking of the most recent contact, how were you treated? | 0 very badly … 10 very well | S |
+| S5 | (if yes) Still thinking of that contact, how satisfied are you with how the police handled it? | 0 not at all satisfied … 10 completely satisfied | S |
+| E4 | (if yes) During any contact, did any of these happen? | multi: asked for money or a favour · insulted or humiliated · threatened · physical force · phone searched or demanded · held without explanation · none of these | H |
+| E5 | In the last 12 months, has someone close to you (family or friends) had any of those things happen with the police? | same list as E4 | H |
+| S6 | In the last 12 months, have you yourself seen or experienced any of these? | multi: an officer helped me or someone near me · was respectful at a stop or checkpoint · clearly explained why I was stopped or what would happen next · the police came quickly when called · dealt with something I reported · none of these | S |
+
+E3 was scored as harm in earlier drafts (bad treatment raised H). It now feeds service, in both directions: good treatment earns credit and bad treatment lowers S. Harm keeps only the abuses, which nothing offsets. S6 counts only what the respondent saw or lived in person.
 
 ### Context (not in the index)
 
@@ -71,7 +93,7 @@ C1 is the "again" question. It stays outside the index so the index is not built
 
 Anonymity is a design rule: nothing is asked about who the respondent is. There is no age, gender or residence question. The one exception is optional and comes last: which governorate the respondent lives in, with "I live outside Tunisia" and "prefer not to answer" among the options. It is published only as one of the seven INS regions, under the cell floor. Recruitment channel is recorded from the link, not asked.
 
-About 15 screens, roughly three minutes.
+About 18 screens, roughly four minutes.
 
 ## 3. Scoring one respondent
 
@@ -79,48 +101,63 @@ Every answer x on 0 to 10 becomes x / 10. Reverse-keyed items become 1 − x / 1
 
 **Trust** T = mean of the answered T items. Requires at least 3 of 5.
 
-**Grip** G = mean of the answered G items. Requires at least 3 of 5.
-
-**Harm** H combines what happened to the respondent and to people close to them:
+**Service** S combines the respondent's view of the job, their last contact, and good moments seen in person:
 
 ```
-D  = direct harm    = ½ · (1 − E3/10) + ½ · min(1, k / 3)      k = abuses ticked in E4
-V  = close harm     = min(1, v / 3)                             v = abuses ticked in E5
+Sv = view          = mean of the answered S1–S4 (S4 reversed)    requires 3 of 4
+Sc = contact       = ½ · E3/10 + ½ · S5/10                       only with contact
+Sg = good moments  = min(1, g / 2)                               g = moments ticked in S6
+S  = (3·Sv + 2·Sc + Sg) / 6     if the respondent had contact
+S  = (3·Sv + Sg) / 4            if they had none
+S  = missing                    if Sv is missing
+```
+
+The view carries most of the weight. Two good moments saturate the count, and having seen none pulls only a little, because many people rarely meet the police at all. Without Sv the part is missing, so a respondent who skipped the view questions is not scored on good moments alone.
+
+**Grip** G = mean of the answered G items. Requires at least 4 of 6.
+
+**Harm** H combines what was done to the respondent and to people close to them:
+
+```
+D  = direct harm    = min(1, k / 3)      k = abuses ticked in E4
+V  = close harm     = min(1, v / 3)      v = abuses ticked in E5
 H  = (2·D + V) / 3      if the respondent had contact
 H  = V                  if they had none
 ```
 
-Three distinct abuses saturate the count. Treatment counts as much as the checklist for direct contact. Something that happened to you counts twice as much as something you heard about from close people.
+Three distinct abuses saturate the count. Something that happened to you counts twice as much as something you heard about from close people. Good moments are never subtracted from harm: one polite stop does not cancel one beating, and the two are published separately.
 
 **The respondent's index**
 
 ```
-I = 100 · ( wT · T  +  wG · (1 − G)  +  wH · (1 − H) )        wT = wG = wH = 1/3
+I = 100 · ( wT · T  +  wS · S  +  wG · (1 − G)  +  wH · (1 − H) )        wT = wS = wG = wH = 1/4
 ```
+
+T and G are required. S and H may be missing (skipped), and the remaining weights renormalise.
 
 Equal weights are the pre-registered headline. Following the Rankings view, readers can move the weights on the results page, but the headline never moves.
 
 ## 4. The anchors and the bands
 
-| | T | G | H | I |
-|---|---|---|---|---|
-| **Guardian police** (the ideal) | 1 | 0 | 0 | **100** |
-| **Police state** (the opposite) | 0 | 1 | 1 | **0** |
+| | T | S | G | H | I |
+|---|---|---|---|---|---|
+| **Guardian police** (the ideal) | 1 | 1 | 0 | 0 | **100** |
+| **Police state** (the opposite) | 0 | 0 | 1 | 1 | **0** |
 
 | Band | Range | What a respondent here is saying |
 |---|---|---|
-| Police state | 0–19 | distrusts the police, feels watched and unfree, and has been harmed or knows people who were |
-| Coercive | 20–39 | mostly distrust and fear; the police are something to avoid |
-| Divided | 40–59 | mixed: some trust, some fear, experiences cut both ways |
-| Accountable | 60–79 | broadly trusts the police and feels free around them |
-| Guardian | 80–100 | the police are trusted, restrained and safe to approach |
+| Police state | 0–19 | distrusts the police, sees them fail at the job, feels watched and unfree, and has been harmed or knows people who were |
+| Coercive | 20–39 | mostly distrust and fear; the police are something to avoid, not someone to call |
+| Divided | 40–59 | mixed: some trust, some fear, service and experiences that cut both ways |
+| Accountable | 60–79 | broadly trusts the police, finds they do the job, and feels free around them |
+| Guardian | 80–100 | the police are trusted, do the job well, are restrained and safe to approach |
 
 The band names and their meanings are published with the formula before any data comes in.
 
 ## 5. Scoring a month
 
 - **Headline:** the month's published index (§8), with its interval. Beside it, the month on its own: mean I across its valid respondents, with a 95% bootstrap interval (1,000 resamples), and the median.
-- **Components:** mean T, G and H, each with an interval, so a move in the index can be traced to its source.
+- **Components:** mean T, S, G and H, each with an interval, so a move in the index can be traced to its source.
 - **The plane:** each respondent is a point at (T, G). The quadrants are Guardian (high T, low G), Strong state (high T, high G), Absent (low T, low G) and Police state (low T, high G). A density map of all respondents is drawn on it.
 - **Splits:** contact versus no contact, and region over those who chose to answer it. A split with fewer than 20 respondents in a cell is not shown.
 - **Per item:** the full 0 to 10 distribution for every item, plus how many skipped it.
@@ -128,15 +165,16 @@ The band names and their meanings are published with the formula before any data
 
 ## 6. Validity checks published at every review
 
-- Cronbach's alpha and item-total correlations for T and G. If either alpha falls below 0.7, the page says so.
+- Cronbach's alpha and item-total correlations for T, G and the service view (S1–S4). If any alpha falls below 0.7, the page says so.
 - The correlation between T and G. If they are nearly the same thing, two axes are the wrong model, and the page says that too.
-- Exclusions, by rule: completion time under 40 seconds, identical answers on all eleven index items (straight-lining), honeypot field filled, rate-limit refusals.
+- The correlation between T and S. Trust and satisfaction with the job are expected to move together (in large police surveys they typically correlate around 0.5 to 0.7). If the correlation exceeds 0.8, they are measuring one thing; the page says so, and the next version of the instrument merges them.
+- Exclusions, by rule: completion time under 40 seconds, identical answers on all fifteen index items (straight-lining), honeypot field filled, rate-limit refusals.
 
 ## 7. Live results
 
 Decision: **fully live.** The results page updates as responses arrive. This overrides the platform default of "counts only during fielding" (portal README §13), and the override is recorded publicly on the methodology page.
 
-What is live: n, the headline index with its interval, the T, G and H components, item distributions, the plane, and splits above the cell floor.
+What is live: n, the headline index with its interval, the T, S, G and H components, item distributions, the plane, and splits above the cell floor.
 
 What keeps live honest:
 - **Submissions per hour** chart on the same page, so a flood is visible to everyone.

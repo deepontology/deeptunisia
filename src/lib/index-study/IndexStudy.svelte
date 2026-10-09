@@ -175,12 +175,35 @@
 				}).format(v);
 	const pct = (v: number | null | undefined) => (v === null || v === undefined ? '—' : fmt(v * 100));
 
+	/** The name of each part of the index, by component id. */
+	const COMPONENT_KEY: Record<string, string> = {
+		T: 'index.component.trust',
+		S: 'index.component.service',
+		G: 'index.component.grip',
+		H: 'index.component.harm'
+	};
+	const componentKey = (id: string) => COMPONENT_KEY[id] ?? id;
+
 	/** Component readouts, in the order the formula reads them. */
-	const components = $derived([
-		{ id: 'T', key: 'index.component.trust', invert: false, value: results?.components?.T?.mean ?? null },
-		{ id: 'G', key: 'index.component.grip', invert: true, value: results?.components?.G?.mean ?? null },
-		{ id: 'H', key: 'index.component.harm', invert: true, value: results?.components?.H?.mean ?? null }
-	]);
+	const components = $derived(
+		spec.index.parts.map((part) => ({
+			id: part.ref,
+			key: componentKey(part.ref),
+			invert: part.invert === true,
+			value: results?.components?.[part.ref]?.mean ?? null
+		}))
+	);
+
+	/**
+	 * The formula's terms, written from the spec so the page cannot drift from
+	 * it. Each term is kept whole when the line wraps.
+	 */
+	const formulaTerms = (value: (ref: string) => string) =>
+		spec.index.parts.map((part) => {
+			const term = part.weight === 1 ? value(part.ref) : `${part.weight}·${value(part.ref)}`;
+			return part.invert ? `(1 − ${term})` : term;
+		});
+	const formulaWeight = $derived(spec.index.parts.reduce((sum, part) => sum + part.weight, 0));
 
 	const itemText = (id: string) => {
 		const item = instrument.items.find((i) => i.id === id);
@@ -210,15 +233,28 @@
 		};
 		const tItems = meanItems(spec.plane.x);
 		const gItems = meanItems(spec.plane.y);
+		const sItems = meanItems('S_view');
 		const tValues = [6, 5, 4, 3, 5];
+		const sValues = [6, 4, 5, 7];
 		const gValues = [7, 3, 6, 5, 4, 6];
-		const answers: Record<string, unknown> = { pti_e1: 'yes', pti_e3: 4, pti_e4: ['insult'], pti_e5: ['none'] };
+		const answers: Record<string, unknown> = {
+			pti_e1: 'yes',
+			pti_e3: 4,
+			pti_s5: 3,
+			pti_s6: ['respectful'],
+			pti_e4: ['insult'],
+			pti_e5: ['none']
+		};
 		tItems.forEach((id, i) => (answers[id] = tValues[i % tValues.length]));
+		sItems.forEach((id, i) => (answers[id] = sValues[i % sValues.length]));
 		gItems.forEach((id, i) => (answers[id] = gValues[i % gValues.length]));
+		const flips = [...reversed('S_view'), ...reversed(spec.plane.y)];
 		const flipped = gItems.find((id) => reversed(spec.plane.y).includes(id)) ?? null;
+		const row = (ids: string[]) => ids.map((id) => ({ v: answers[id] as number, flip: flips.includes(id) }));
 		return {
 			t: tItems.map((id) => answers[id] as number),
-			g: gItems.map((id) => ({ v: answers[id] as number, flip: id === flipped })),
+			s: row(sItems),
+			g: row(gItems),
 			flip: flipped ? (answers[flipped] as number) : null,
 			score: scoreResponse(spec, answers)
 		};
@@ -231,24 +267,31 @@
 		return item?.optionLabels?.[locale]?.[option] ?? item?.optionLabels?.en?.[option] ?? option;
 	};
 
-	const scaleItems = $derived(
-		spec.components.flatMap((c) => (c.kind === 'mean' ? (c.items ?? []) : c.kind === 'scale' && c.item ? [c.item] : []))
-	);
 	const countItems = $derived(spec.components.flatMap((c) => (c.kind === 'count' && c.item ? [c.item] : [])));
-	/** The scale questions grouped by the component they feed: T, G, then H. */
+	/**
+	 * The questions grouped by the part of the index they feed, in the order the
+	 * formula reads them, each group in questionnaire order. An item belongs to
+	 * the part whose components reach it.
+	 */
 	const questionGroups = $derived.by(() => {
-		const of = (id: string) => {
-			const c = spec.components.find((x) => x.id === id);
-			return c && c.kind === 'mean' ? (c.items ?? []) : [];
+		const byId = new Map(spec.components.map((c) => [c.id, c]));
+		const reach = (id: string, seen = new Set<string>()): string[] => {
+			if (seen.has(id)) return [];
+			seen.add(id);
+			const c = byId.get(id);
+			if (!c) return [];
+			if (c.kind === 'mean') return c.items ?? [];
+			if (c.kind === 'scale' || c.kind === 'count') return c.item ? [c.item] : [];
+			if (c.kind === 'blend') return c.parts.flatMap((part) => reach(part.ref, seen));
+			return c.cases.flatMap((clause) => reach(clause.ref, seen));
 		};
-		const t = of(spec.plane.x);
-		const g = of(spec.plane.y);
-		const h = scaleItems.filter((id) => !t.includes(id) && !g.includes(id));
-		return [
-			{ id: 'T', key: 'index.component.trust', items: t },
-			{ id: 'G', key: 'index.component.grip', items: g },
-			{ id: 'H', key: 'index.component.harm', items: h }
-		].filter((x) => x.items.length);
+		const order = instrument.items.map((i) => i.id);
+		return spec.index.parts
+			.map((part) => {
+				const items = [...new Set(reach(part.ref))].sort((a, b) => order.indexOf(a) - order.indexOf(b));
+				return { id: part.ref, key: componentKey(part.ref), against: part.invert === true, items };
+			})
+			.filter((x) => x.items.length);
 	});
 
 	const hourly = $derived(live?.submissions_per_hour.counts ?? []);
@@ -477,10 +520,10 @@
 	{@render kicker('grid')}
 	{@render scope()}
 	<section class="panel-row">
-		<!-- The three components as one vertical meter, like the swatch column in
+		<!-- The components as one vertical meter, like the swatch column in
 		     the reference. Grip and harm count against the index, so their bars
 		     are labelled with the direction they pull. -->
-		<div class="meter" aria-label={t('index.components.title')}>
+		<div class="meter" aria-label={t('index.components.title')} style:--count={components.length}>
 			{#each components as c (c.id)}
 				<div class="meter-row">
 					<span class="meter-key mono">{c.id}</span>
@@ -593,7 +636,7 @@
 		<div class="fact">
 			<h2>{t('index.method.title')}</h2>
 			<p>{t('index.method.body')}</p>
-			<p class="formula mono" dir="ltr">I = 100 · ( T + (1 − G) + (1 − H) ) / 3</p>
+			<p class="formula mono" dir="ltr">I = 100 · ( {#each formulaTerms((ref) => ref) as term, i (i)}{i ? ' + ' : ''}<span class="term">{term}</span>{/each} ) / {formulaWeight}</p>
 			<p class="note">{t('index.method.components')}</p>
 			{#if example.score.index !== null}
 				<!-- One invented respondent, taken through the formula. -->
@@ -604,6 +647,13 @@
 						<div>
 							<dt>{t('index.example.trust')}</dt>
 							<dd><span class="mono">{example.t.join(' · ')}</span><b class="mono">T = {fmt(example.score.components.T, 2)}</b></dd>
+						</div>
+						<div>
+							<dt>{t('index.example.service')}</dt>
+							<dd>
+								<span><span class="mono">{#each example.s as s, i (i)}{i ? ' · ' : ''}{s.v}{#if s.flip}<sup>↺</sup>{/if}{/each}</span>, {t('index.example.serviceAnswers')}</span>
+								<b class="mono">S = {fmt(example.score.components.S, 2)}</b>
+							</dd>
 						</div>
 						<div>
 							<dt>{t('index.example.grip')}</dt>
@@ -619,7 +669,7 @@
 						<div class="example-total">
 							<dt>{t('index.example.index')}</dt>
 							<dd>
-								<span class="mono" dir="ltr">100 · ({fmt(example.score.components.T, 2)} + (1 − {fmt(example.score.components.G, 2)}) + (1 − {fmt(example.score.components.H, 2)})) / 3</span>
+								<span class="mono" dir="ltr">100 · ({#each formulaTerms((ref) => fmt(example.score.components[ref], 2)) as term, i (i)}{i ? ' + ' : ''}<span class="term">{term}</span>{/each}) / {formulaWeight}</span>
 								<b class="mono">= {fmt(example.score.index)}</b>
 							</dd>
 						</div>
@@ -726,41 +776,41 @@
 		{#each questionGroups as group (group.id)}
 			<h3 class="q-group"><span class="q-group-key mono">{group.id}</span>{t(group.key)}</h3>
 			{#each group.items as id (id)}
-				{@render strip(id)}
+				{#if countItems.includes(id)}{@render options(id, group.against)}{:else}{@render strip(id)}{/if}
 			{/each}
 		{/each}
-
-		{#each countItems as id (id)}
-			{@const summary = results?.items?.[id] ?? null}
-			{@const counts = summary?.counts ?? null}
-			{@const asked = summary ? (results?.n_total ?? 0) - summary.not_shown - summary.skipped : 0}
-			<div class="question">
-				<p class="q-text">{itemText(id)}</p>
-				{#if itemHelp(id)}<p class="q-help">{itemHelp(id)}</p>{/if}
-				{#if counts}
-					<!-- Every option in the order the questionnaire shows it, zeros
-					     included. A bar is the share of the people who were asked and
-					     answered; a person may tick several, so the shares do not sum. -->
-					<table class="options">
-						<tbody>
-							{#each optionsOf(id) as option (option)}
-								{@const n = counts[option] ?? 0}
-								<tr>
-									<td>{optionText(id, option)}</td>
-									<td class="bar-cell"><span class="bar" class:neutral={exclusiveOf(id).includes(option)} style:width="{asked ? (n / asked) * 100 : 0}%"></span></td>
-									<td class="mono">{fmt(n)}</td>
-								</tr>
-							{/each}
-							<tr class="aside"><td>{t('index.table.skipped')}</td><td></td><td class="mono">{fmt(summary?.skipped ?? 0)}</td></tr>
-							{#if summary?.not_shown}
-								<tr class="aside"><td>{t('index.table.notShown')}</td><td></td><td class="mono">{fmt(summary.not_shown)}</td></tr>
-							{/if}
-						</tbody>
-					</table>
-				{/if}
-			</div>
-		{/each}
 	</section>
+
+	{#snippet options(id: string, against: boolean)}
+		{@const summary = results?.items?.[id] ?? null}
+		{@const counts = summary?.counts ?? null}
+		{@const asked = summary ? (results?.n_total ?? 0) - summary.not_shown - summary.skipped : 0}
+		<div class="question">
+			<p class="q-text">{itemText(id)}</p>
+			{#if itemHelp(id)}<p class="q-help">{itemHelp(id)}</p>{/if}
+			{#if counts}
+				<!-- Every option in the order the questionnaire shows it, zeros
+				     included. A bar is the share of the people who were asked and
+				     answered; a person may tick several, so the shares do not sum. -->
+				<table class="options">
+					<tbody>
+						{#each optionsOf(id) as option (option)}
+							{@const n = counts[option] ?? 0}
+							<tr>
+								<td>{optionText(id, option)}</td>
+								<td class="bar-cell"><span class="bar" class:good={!against} class:neutral={exclusiveOf(id).includes(option)} style:width="{asked ? (n / asked) * 100 : 0}%"></span></td>
+								<td class="mono">{fmt(n)}</td>
+							</tr>
+						{/each}
+						<tr class="aside"><td>{t('index.table.skipped')}</td><td></td><td class="mono">{fmt(summary?.skipped ?? 0)}</td></tr>
+						{#if summary?.not_shown}
+							<tr class="aside"><td>{t('index.table.notShown')}</td><td></td><td class="mono">{fmt(summary.not_shown)}</td></tr>
+						{/if}
+					</tbody>
+				</table>
+			{/if}
+		</div>
+	{/snippet}
 
 	{#if (spec.report_items ?? []).length}
 		<section class="block">
@@ -1389,9 +1439,12 @@
 		gap: 1.5rem;
 		align-items: stretch;
 	}
+	.term {
+		white-space: nowrap;
+	}
 	.meter {
 		display: grid;
-		grid-template-rows: repeat(3, 1fr);
+		grid-template-rows: repeat(var(--count, 4), 1fr);
 		gap: 2px;
 	}
 	.meter-row {
@@ -1674,6 +1727,10 @@
 		background: var(--index-band-1);
 		border-radius: 0 2px 2px 0;
 	}
+	/* Good moments wear the colour of what raises the index. */
+	.bar.good {
+		background: var(--index-band-5);
+	}
 	/* "None of these" is an answer, not a harm: it never wears the harm colour. */
 	.bar.neutral {
 		background: var(--text-faint);
@@ -1756,7 +1813,7 @@
 		}
 		.meter {
 			grid-template-rows: none;
-			grid-template-columns: repeat(3, 1fr);
+			grid-template-columns: repeat(2, 1fr);
 		}
 		.band-list li {
 			grid-template-columns: 0.8rem 3.4rem 1fr;
