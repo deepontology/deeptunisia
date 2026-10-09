@@ -49,7 +49,7 @@
 				loading={eager ? 'eager' : 'lazy'}
 				fetchpriority={eager ? 'high' : 'auto'}
 				decoding="async"
-				style:object-position={focus}
+				style:object-position="var(--plate-focus, {focus})"
 			/>
 		</picture>
 		{#if children}<div class="plate-over">{@render children()}</div>{/if}

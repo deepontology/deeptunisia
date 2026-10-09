@@ -163,6 +163,21 @@
 		spec.components.flatMap((c) => (c.kind === 'mean' ? (c.items ?? []) : c.kind === 'scale' && c.item ? [c.item] : []))
 	);
 	const countItems = $derived(spec.components.flatMap((c) => (c.kind === 'count' && c.item ? [c.item] : [])));
+	/** The scale questions grouped by the component they feed: T, G, then H. */
+	const questionGroups = $derived.by(() => {
+		const of = (id: string) => {
+			const c = spec.components.find((x) => x.id === id);
+			return c && c.kind === 'mean' ? (c.items ?? []) : [];
+		};
+		const t = of(spec.plane.x);
+		const g = of(spec.plane.y);
+		const h = scaleItems.filter((id) => !t.includes(id) && !g.includes(id));
+		return [
+			{ id: 'T', key: 'index.component.trust', items: t },
+			{ id: 'G', key: 'index.component.grip', items: g },
+			{ id: 'H', key: 'index.component.harm', items: h }
+		].filter((x) => x.items.length);
+	});
 
 	const hourly = $derived(live?.submissions_per_hour.counts ?? []);
 	const hourlyMax = $derived(Math.max(1, ...hourly));
@@ -259,22 +274,12 @@
 					{t(open ? 'research.stage.live' : 'research.stage.development')}
 				</span>
 				{#if month}<span>{monthLabel(month.period)}</span>{/if}
-				{#if hasIndex}<span>PSI {fmt(headline)}</span><span>n = {fmt(results?.n)}</span>{/if}
 			</p>
 		</div>
 	</Plate>
 
 	<!-- The title band: the number and its name on one full-width plate. -->
 	<div class="title-band">
-	<header class="masthead">
-		<span class="kicker">{t('index.kicker')}</span>
-		<span class="wave mono">
-			{waveLabel}
-			<span class="chips" aria-hidden="true">
-				{#each spec.bands as b, i (b.id)}<span class="chip" style:background="var(--index-band-{i + 1})"></span>{/each}
-			</span>
-		</span>
-	</header>
 
 	<section class="hero" id="index">
 		<div class="numeral" aria-live="polite">
@@ -441,7 +446,7 @@
 		name="psi-6"
 		width={1920}
 		height={1080}
-		focus="50% 45%"
+		focus="50% 35%"
 		class="plate-strip"
 		label="{t('index.fig.label')} 02"
 		caption={t('index.fig.two')}
@@ -488,7 +493,7 @@
 					<strong>{bandLabel(b.id)}</strong>
 					<span class="band-desc">{bandDescription(b)}</span>
 					{#if results?.bands}
-						<span class="band-n mono">{tf('index.bands.count', { n: fmt(results.bands[b.id] ?? 0) })}</span>
+						<span class="band-n mono">{tf('index.bands.count', { n: fmt(results.bands[b.id] ?? 0), month: month ? monthLabel(month.period) : '' })}</span>
 					{/if}
 				</li>
 			{/each}
@@ -539,21 +544,17 @@
 
 	<div class="sec" id="questions">
 	{@render kicker('questions')}
-	{#if (spec.report_items ?? []).length}
-		<section class="block">
-			<h2>{t('index.context.title')}</h2>
-			<p class="note">{t('index.context.lede')}</p>
-			{#each spec.report_items ?? [] as id (id)}
-				{@render strip(id)}
-			{/each}
-		</section>
-	{/if}
 
 	<section class="block">
 		<h2>{t('index.questions.title')}</h2>
 		<p class="note">{t('index.questions.lede')}</p>
-		{#each scaleItems as id (id)}
-			{@render strip(id)}
+		<!-- In the order the formula reads them: what raises the index, then
+		     what lowers it. -->
+		{#each questionGroups as group (group.id)}
+			<h3 class="q-group"><span class="q-group-key mono">{group.id}</span>{t(group.key)}</h3>
+			{#each group.items as id (id)}
+				{@render strip(id)}
+			{/each}
 		{/each}
 
 		{#each countItems as id (id)}
@@ -588,6 +589,16 @@
 			</div>
 		{/each}
 	</section>
+
+	{#if (spec.report_items ?? []).length}
+		<section class="block">
+			<h2>{t('index.context.title')}</h2>
+			<p class="note">{t('index.context.lede')}</p>
+			{#each spec.report_items ?? [] as id (id)}
+				{@render strip(id)}
+			{/each}
+		</section>
+	{/if}
 	</div>
 
 	<section class="block" id="splits">
@@ -800,7 +811,7 @@
 		--plate-h: min(74vh, 56cqw);
 	}
 	.pti :global(.plate-strip) {
-		--plate-h: clamp(20rem, 64vh, 42rem);
+		--plate-h: clamp(15rem, 44vh, 30rem);
 		margin-top: 4rem;
 	}
 	.pti :global(.plate-closing) {
@@ -816,12 +827,6 @@
 		padding: 1.6rem max(1rem, calc((100cqw - 72rem) / 2 + 1rem)) 2.4rem;
 		background: color-mix(in oklab, var(--accent) 13%, var(--surface-base));
 		border-block: 1px solid color-mix(in oklab, var(--accent) 35%, transparent);
-	}
-	.title-band .masthead {
-		border-bottom-color: color-mix(in oklab, var(--accent) 35%, transparent);
-	}
-	.title-band .kicker {
-		color: var(--accent);
 	}
 
 	/* ---- the cover on plate 01 ------------------------------------------- */
@@ -950,32 +955,6 @@
 		color: var(--accent-text);
 	}
 
-	/* ---- masthead ------------------------------------------------------- */
-	.masthead {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		border-bottom: 1px solid var(--rule);
-		padding-bottom: 0.5rem;
-		font-size: 0.72rem;
-		letter-spacing: 0.22em;
-		text-transform: uppercase;
-		color: var(--text-secondary);
-	}
-	.wave {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.6rem;
-		letter-spacing: 0.12em;
-	}
-	.chips {
-		display: inline-flex;
-		gap: 2px;
-	}
-	.chip {
-		width: 1.4rem;
-		height: 0.45rem;
-	}
 
 	/* ---- hero ----------------------------------------------------------- */
 	.hero {
@@ -1106,7 +1085,6 @@
 		margin: 0 0 1rem;
 	}
 	.rtl .tagline,
-	.rtl .masthead,
 	.rtl .ends {
 		letter-spacing: 0;
 	}
@@ -1280,6 +1258,20 @@
 		color: var(--text-secondary);
 		font-size: 0.9rem;
 	}
+	.q-group {
+		display: flex;
+		align-items: baseline;
+		gap: 0.6rem;
+		margin: 2rem 0 0.6rem;
+		padding-top: 0.6rem;
+		border-top: 1px dashed var(--border-default);
+		font-size: 0.95rem;
+		font-weight: 600;
+	}
+	.q-group-key {
+		font-size: 0.75rem;
+		color: var(--accent);
+	}
 	.question {
 		margin: 1.2rem 0 0;
 	}
@@ -1391,18 +1383,23 @@
 	.prose-block {
 		max-width: 46rem;
 	}
+	/* The content files' headings take the same register as every other
+	   section heading on the page. */
+	.prose-block :global(h2) {
+		font-size: 1.1rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		margin: 0 0 0.8rem;
+	}
+	.rtl .prose-block :global(h2) {
+		letter-spacing: 0;
+	}
 
 	/* ---- phone ---------------------------------------------------------- */
 	@media (max-width: 760px) {
 		.frame {
 			--ruler: 0.9rem;
-		}
-		.masthead {
-			flex-wrap: wrap;
-			row-gap: 0.4rem;
-		}
-		.masthead > span {
-			white-space: nowrap;
 		}
 		.secbar-id {
 			display: none;
@@ -1416,28 +1413,11 @@
 		.pti :global(.plate-hero) {
 			--plate-h: 58vh;
 		}
-		/* On a phone the barrier and the street are shown whole, at their
-		   own 16:9, instead of a tall crop of a wide scene. The closing copy
-		   moves under the street, on the plate's black, so it covers nothing. */
-		.pti :global(.plate-strip) {
-			--plate-h: auto;
-			--plate-ar: 16 / 9;
-			margin-top: 3rem;
-		}
-		.pti :global(.plate-closing .plate-frame) {
-			height: auto;
-		}
-		.pti :global(.plate-closing picture) {
-			height: auto;
-			aspect-ratio: 16 / 9;
-		}
-		.pti :global(.plate-closing .plate-over) {
-			position: static;
-		}
-		.closing-copy {
-			position: static;
-			padding: 1.4rem 1rem 1.6rem;
-			background: none;
+		/* On a phone the street is a tall crop; it holds to the right so the
+		   face of the man shouting stays in frame. */
+		.pti :global(.plate-closing) {
+			--plate-h: 82vh;
+			--plate-focus: 80% 35%;
 		}
 		.panel-row,
 		.facts {
