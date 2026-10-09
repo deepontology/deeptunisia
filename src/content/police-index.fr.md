@@ -18,6 +18,8 @@ Votre code de reçu est le seul moyen de supprimer vos réponses. Il fonctionne 
 
 L'indice décrit les personnes qui ont répondu. Tout le monde peut participer, si bien que les répondants ne forment pas un échantillon aléatoire de la Tunisie : ils sont en ligne, ils ont trouvé le lien et ils ont choisi de répondre. C'est pourquoi les chiffres sont présentés « parmi les répondants » et jamais comme l'opinion des Tunisiens en général.
 
+On l'appelle indice de satisfaction, mais la satisfaction n'y est pas une simple note donnée à un service. Le chiffre combine la confiance envers la police, la liberté que l'on ressent en sa présence et ce qui s'est passé lors des rencontres avec elle.
+
 L'indice mesure à quel point les gens se sentent encadrés par la police, pas la façon dont la police se comporte. Un score bas est un constat sur la confiance, la peur et l'expérience. Ce n'est pas une preuve d'abus, et un score élevé n'est pas la preuve de leur absence.
 
 ## Là où cette étude s'écarte des règles de la plateforme {#deviations}
