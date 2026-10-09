@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { t, tf } from '$lib/t.svelte';
-	import type { MonthAggregate, ScoringBand } from '../../../community/research-scoring.ts';
+	import type { PublishedMonth, ScoringBand } from '../../../community/research-scoring.ts';
 
 	/**
 	 * The monthly index as a line, like a market index: one published level per
@@ -20,7 +20,7 @@
 		monthLabel,
 		fmt
 	}: {
-		months: MonthAggregate[];
+		months: PublishedMonth[];
 		bands: ScoringBand[];
 		selected: string | null;
 		onselect: (period: string) => void;
@@ -102,8 +102,8 @@
 		<!-- Points are buttons, so a month can be chosen by touch, mouse or keys. -->
 		{#each months as m, i (m.period)}
 			{@const level = m.index.level}
-			{@const own = m.results.index.mean}
-			{#if own !== null && m.results.n > 0}
+			{@const own = m.results?.index.mean ?? null}
+			{#if own !== null}
 				<span class="own" style:left="{x(i)}%" style:bottom="{own}%" aria-hidden="true"></span>
 			{/if}
 			<button

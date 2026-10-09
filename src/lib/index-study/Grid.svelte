@@ -26,8 +26,18 @@
 	let {
 		grid,
 		meanX = null,
-		meanY = null
-	}: { grid: number[][] | null; meanX?: number | null; meanY?: number | null } = $props();
+		meanY = null,
+		you = null,
+		emptyNote = null
+	}: {
+		grid: number[][] | null;
+		meanX?: number | null;
+		meanY?: number | null;
+		/** The reader's own trust and grip (0..1), computed in their browser: their square is marked. */
+		you?: { x: number; y: number } | null;
+		/** Said where the crowd would be, when there is no crowd to show yet. */
+		emptyNote?: string | null;
+	} = $props();
 
 	const N = 10;
 	const counts = $derived(grid ?? Array.from({ length: N }, () => new Array<number>(N).fill(0)));
@@ -48,7 +58,10 @@
 	let hovered = $state<{ x: number; y: number } | null>(null);
 	/** True once the reader has pointed at, tapped or focused a square. */
 	const engaged = $derived(picked !== null || hovered !== null);
-	const active = $derived(hovered ?? picked ?? densest);
+	const youCell = $derived(
+		you ? { x: Math.max(0, Math.min(N - 1, Math.floor(you.x * N))), y: Math.max(0, Math.min(N - 1, Math.floor(you.y * N))) } : null
+	);
+	const active = $derived(hovered ?? picked ?? youCell ?? densest);
 
 	// Ripple: the pointer position in grid units, read by every square in CSS.
 	let px = $state(-100);
@@ -138,6 +151,7 @@
 					class:rest={!engaged && on}
 					class:line={engaged && (c.x === a.x || c.y === a.y)}
 					class:zero={c.n === 0}
+					class:you={youCell?.x === c.x && youCell?.y === c.y}
 					style:--cx={c.x + 0.5}
 					style:--cy={N - c.y - 0.5}
 					style:--w={c.n / max}
@@ -156,8 +170,16 @@
 			{#if centre && total > 0}
 				<span class="centre" style:left="{centre.x}%" style:top="{centre.y}%" aria-hidden="true"></span>
 			{/if}
-			{#if total === 0}
-				<span class="empty">{t('index.plane.empty')}</span>
+			{#if youCell}
+				<span
+					class="you-mark mono"
+					style:left="{((youCell.x + 0.5) / N) * 100}%"
+					style:top="{((N - youCell.y - 0.5) / N) * 100}%"
+					aria-hidden="true">{t('index.grid.you')}</span
+				>
+			{/if}
+			{#if total === 0 && !youCell}
+				<span class="empty">{emptyNote ?? t('index.plane.empty')}</span>
 			{/if}
 		</div>
 
@@ -176,8 +198,18 @@
 
 	<!-- The readout: the active square in words. -->
 	<aside class="readout" aria-live="polite">
-		{#if total === 0}
-			<p class="desc">{t('index.plane.empty')}</p>
+		{#if total === 0 && youCell}
+			<!-- No crowd yet: the reader's own square, in words. -->
+			<p class="tag q-{a.q}"><i></i>{t(`index.quadrant.${a.q}`)}</p>
+			<p class="big mono">{t('index.grid.you')}</p>
+			<dl class="coords">
+				<div><dt>{t('index.plane.xAxis')}</dt><dd class="mono"><bdi dir="ltr">{range(a.x)}</bdi></dd></div>
+				<div><dt>{t('index.plane.yAxis')}</dt><dd class="mono"><bdi dir="ltr">{range(a.y)}</bdi></dd></div>
+			</dl>
+			<p class="desc">{t(`index.quadrant.${a.q}.desc`)}</p>
+			{#if emptyNote}<p class="hint">{emptyNote}</p>{/if}
+		{:else if total === 0}
+			<p class="desc">{emptyNote ?? t('index.plane.empty')}</p>
 		{:else}
 			<p class="tag q-{a.q}"><i></i>{t(`index.quadrant.${a.q}`)}</p>
 			<p class="big mono">{fmt(a.n)}<small>{t('index.grid.people')}</small></p>
@@ -233,28 +265,35 @@
 		width: min(100%, 30rem);
 		justify-self: center;
 	}
+	/* Each corner name has its half of the width and wraps inside it, so two
+	   names on one edge never run into each other on a narrow screen. */
 	.quad {
+		max-width: 48%;
 		font-size: 0.6rem;
-		letter-spacing: 0.18em;
+		line-height: 1.35;
+		letter-spacing: 0.12em;
 		text-transform: uppercase;
 		color: var(--text-secondary);
-		white-space: nowrap;
 	}
 	.quad.tl,
 	.quad.tr {
 		grid-row: 1;
 		grid-column: 1;
+		align-self: end;
 	}
 	.quad.tr {
 		justify-self: end;
+		text-align: end;
 	}
 	.quad.bl,
 	.quad.br {
 		grid-row: 4;
 		grid-column: 1;
+		align-self: start;
 	}
 	.quad.br {
 		justify-self: end;
+		text-align: end;
 	}
 	.quad.tl {
 		color: var(--index-band-1);
@@ -594,5 +633,24 @@
 			transform: none;
 			filter: none;
 		}
+	}
+	/* The reader's own square: ringed in the accent, labelled above. */
+	.tile.you {
+		outline: 2px solid var(--accent);
+		outline-offset: 1px;
+		z-index: 2;
+	}
+	.you-mark {
+		position: absolute;
+		transform: translate(-50%, -165%);
+		padding: 0.1rem 0.35rem;
+		font-size: 0.5625rem;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		background: var(--accent);
+		color: var(--accent-text);
+		pointer-events: none;
+		z-index: 3;
+		white-space: nowrap;
 	}
 </style>

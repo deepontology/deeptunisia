@@ -619,6 +619,13 @@ scoring:
     utc_offset_minutes: 60
     process_sd: 2.5
     min_month_n: 30
+    # The rolling reading beside the headline: every kept answer from the last
+    # 12 calendar months, counted equally (index-spec.md §8).
+    window_months: 12
+    # The first figure waits for 100 valid answers in total; until then only
+    # counts are published (index-spec.md §7). Each respondent sees their own
+    # score at once: it is computed in their browser and never published.
+    first_figure_n: 100
   # Context items: published as distributions beside the index, never scored.
   report_items: [pti_c1, pti_c2]
   # Pre-registered exclusions, applied before any aggregate and counted per rule

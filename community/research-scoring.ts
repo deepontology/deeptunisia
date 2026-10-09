@@ -129,6 +129,17 @@ export interface ScoringSeries {
 	process_sd: number;
 	/** A month with fewer scored respondents carries the previous level forward. */
 	min_month_n: number;
+	/**
+	 * The rolling window, in months, read beside the headline: every kept answer
+	 * from this month and the window_months - 1 before it, counted equally.
+	 */
+	window_months?: number;
+	/**
+	 * The publication floor for the first figure: until this many valid, scored
+	 * answers exist in total, only counts are published. After it, a month's own
+	 * figures still need min_month_n answers in that month.
+	 */
+	first_figure_n?: number;
 }
 
 /**
@@ -726,6 +737,20 @@ export function validateScoringSpec(
 			if (typeof minN !== 'number' || !Number.isInteger(minN) || minN < 2) {
 				violations.push('series.min_month_n is not a whole number of at least 2');
 			}
+			const firstFigure = rawSeries.first_figure_n;
+			if (
+				firstFigure !== undefined &&
+				(typeof firstFigure !== 'number' || !Number.isInteger(firstFigure) || firstFigure < 1)
+			) {
+				violations.push('series.first_figure_n is not a whole number of at least 1');
+			}
+			const windowMonths = rawSeries.window_months;
+			if (
+				windowMonths !== undefined &&
+				(typeof windowMonths !== 'number' || !Number.isInteger(windowMonths) || windowMonths < 1 || windowMonths > 60)
+			) {
+				violations.push('series.window_months is not a whole number of months between 1 and 60');
+			}
 		}
 	}
 
@@ -1208,6 +1233,11 @@ export interface MonthAggregate {
 export interface SeriesAggregate {
 	settings: ScoringSeries;
 	months: MonthAggregate[];
+	/**
+	 * The rolling window: every kept answer from `first` to `last` (this month)
+	 * pooled and counted equally. Null when the spec sets no window_months.
+	 */
+	window: { first: string; last: string; months: number; results: WaveAggregate } | null;
 }
 
 /**
@@ -1245,8 +1275,25 @@ export function aggregateSeries(
 		),
 		settings.process_sd
 	);
+	// The rolling window: this month and the window_months - 1 before it. It is
+	// not clipped to the first fielding month; a young series simply has fewer
+	// months inside it.
+	let window: SeriesAggregate['window'] = null;
+	if (typeof settings.window_months === 'number') {
+		const span = settings.window_months;
+		const [y, m] = current.split('-').map(Number);
+		const startIndex = y * 12 + (m - 1) - (span - 1);
+		const first = `${Math.floor(startIndex / 12)}-${String((startIndex % 12) + 1).padStart(2, '0')}`;
+		const inside = rows.filter((row) => {
+			const period = periodOf(row.submittedAt, offset);
+			return period >= first && period <= current;
+		});
+		window = { first, last: current, months: span, results: aggregateResponses(spec, inside, options) };
+	}
+
 	return {
 		settings,
+		window,
 		months: periods.map((period, i) => {
 			const { level, variance, gain } = filtered[i];
 			const half = variance === null ? null : 1.96 * Math.sqrt(variance);
@@ -1265,5 +1312,89 @@ export function aggregateSeries(
 				results: results[i]
 			};
 		})
+	};
+}
+
+// ---------------------------------------------------------------------------
+// The publication floor (index-spec.md §7)
+//
+// Every aggregate above is computed in full; this is the one place that
+// decides what leaves the server. A figure computed from a handful of people
+// is noise, the easiest number to push and the one most likely to be quoted,
+// and a small grid can point at the people in it. So:
+//
+//   - below first_figure_n valid answers in total, only counts are published:
+//     how many answers, per month and in all, and nothing computed from them;
+//   - after it, a month's own figures need min_month_n answers in that month,
+//     and the rolling window needs first_figure_n answers inside it.
+//
+// The filtered monthly level is published once the floor is reached, because
+// a quiet month's level is the earlier months carried forward, not a figure
+// from that month's few answers.
+// ---------------------------------------------------------------------------
+
+export interface PublishedMonth {
+	period: string;
+	closed: boolean;
+	/** Valid, scored answers in the month. Always published. */
+	n: number;
+	index: MonthAggregate['index'];
+	/** The month on its own; null below the month floor or the first-figure floor. */
+	results: WaveAggregate | null;
+}
+
+export interface PublishedSeries {
+	settings: ScoringSeries;
+	months: PublishedMonth[];
+	window: { first: string; last: string; months: number; n: number; results: WaveAggregate | null } | null;
+}
+
+export interface PublicationFloor {
+	/** Valid, scored answers in total. */
+	n: number;
+	first_figure_n: number;
+	month_n: number;
+	/** True once n has reached first_figure_n: figures are published. */
+	reached: boolean;
+}
+
+export interface Published {
+	floor: PublicationFloor;
+	/** Every valid answer pooled; null until the floor is reached. */
+	results: WaveAggregate | null;
+	series: PublishedSeries | null;
+}
+
+const NO_LEVEL: MonthAggregate['index'] = { level: null, ci95: [null, null], band: null, gain: null };
+
+export function applyPublicationFloor(
+	spec: ScoringSpec,
+	all: WaveAggregate,
+	series: SeriesAggregate | null
+): Published {
+	const monthN = spec.series?.min_month_n ?? 0;
+	const firstN = spec.series?.first_figure_n ?? monthN;
+	const floor: PublicationFloor = { n: all.n, first_figure_n: firstN, month_n: monthN, reached: all.n >= firstN };
+	if (series === null) return { floor, results: floor.reached ? all : null, series: null };
+	return {
+		floor,
+		results: floor.reached ? all : null,
+		series: {
+			settings: series.settings,
+			months: series.months.map((m) => ({
+				period: m.period,
+				closed: m.closed,
+				n: m.results.n,
+				index: floor.reached ? m.index : NO_LEVEL,
+				results: floor.reached && m.results.n >= monthN ? m.results : null
+			})),
+			window: series.window && {
+				first: series.window.first,
+				last: series.window.last,
+				months: series.window.months,
+				n: series.window.results.n,
+				results: floor.reached && series.window.results.n >= firstN ? series.window.results : null
+			}
+		}
 	};
 }
