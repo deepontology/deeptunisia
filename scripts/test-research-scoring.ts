@@ -16,7 +16,11 @@ import { fileURLToPath } from 'node:url';
 import { parse as parseYaml } from 'yaml';
 import {
 	aggregateResponses,
+	aggregateSeries,
 	applyExclusions,
+	localLevelFilter,
+	periodOf,
+	periodsBetween,
 	evaluateCondition,
 	scoreResponse,
 	validateScoringSpec,
@@ -46,6 +50,7 @@ interface InstrumentItem {
 	id: string;
 	response: string;
 	options?: string[];
+	required?: boolean;
 }
 
 const INSTRUMENT = join(ROOT, 'research', 'portal', 'study-002', 'instrument-v0.yaml');
@@ -351,13 +356,29 @@ console.log('\n  ── spec validation ──\n');
 	const gapViolations = validateScoringSpec(withBandGap, itemIds, itemMeta);
 	ok('a band gap is reported', has(gapViolations, 'gap'), gapViolations.join('; '));
 
+	const withBadSeries = structuredClone(spec);
+	withBadSeries.series = { ...withBadSeries.series!, process_sd: 0, min_month_n: 1 };
+	const seriesViolations = validateScoringSpec(withBadSeries, itemIds, itemMeta);
+	ok(
+		'a series with no drift or a one-person month floor is reported',
+		has(seriesViolations, 'process_sd') && has(seriesViolations, 'min_month_n'),
+		seriesViolations.join('; ')
+	);
 	const withRegionTwice = structuredClone(spec);
-	withRegionTwice.regions.groups.north_east = [...withRegionTwice.regions.groups.north_east, 'tunis'];
+	withRegionTwice.regions!.groups.north_east = [...withRegionTwice.regions!.groups.north_east, 'tunis'];
 	const regionViolations = validateScoringSpec(withRegionTwice, itemIds, itemMeta);
 	ok(
 		'an option in two region groups is reported',
 		has(regionViolations, 'sits in both region groups'),
 		regionViolations.join('; ')
+	);
+	const withoutRegions = structuredClone(spec);
+	delete withoutRegions.regions;
+	ok('a spec with no regional split is valid', validateScoringSpec(withoutRegions, itemIds, itemMeta).length === 0);
+	ok(
+		'the only question about the respondent is the optional governorate',
+		[...itemIds].filter((id) => id.startsWith('demo_')).join() === 'demo_governorate' &&
+			document.items.find((item) => item.id === 'demo_governorate')?.required === false
 	);
 
 	const withZeroWeight = structuredClone(spec);
@@ -440,8 +461,7 @@ console.log('\n  ── wave aggregation ──\n');
 				pti_e1: 'yes',
 				pti_e3: 5,
 				pti_e4: ['none'],
-				pti_e5: ['none'],
-				demo_governorate: 'tunis'
+				pti_e5: ['none']
 			}
 		});
 	}
@@ -458,8 +478,7 @@ console.log('\n  ── wave aggregation ──\n');
 				pti_g3: 5,
 				pti_g4: 5,
 				pti_g5: 5,
-				pti_e1: 'no',
-				demo_governorate: 'sfax'
+				pti_e1: 'no'
 			}
 		});
 	}
@@ -472,8 +491,7 @@ console.log('\n  ── wave aggregation ──\n');
 			pti_g3: 5,
 			pti_g4: 5,
 			pti_g5: 5,
-			pti_e1: 'yes',
-			demo_governorate: 'tunis'
+			pti_e1: 'yes'
 		}
 	});
 
@@ -515,19 +533,26 @@ console.log('\n  ── wave aggregation ──\n');
 		first.items.pti_e4.counts?.none === 20 && first.items.pti_e4.skipped === 4
 	);
 	ok(
-		'a region cell at the floor is shown',
-		first.splits.regions.grand_tunis.n === 20 && first.splits.regions.grand_tunis.suppressed === false
+		'a contact cell at the floor is shown',
+		first.splits.contact.yes.n === 20 && first.splits.contact.yes.suppressed === false
 	);
 	ok(
-		'a region cell below the floor is suppressed and hides n',
-		first.splits.regions.centre_east.suppressed === true &&
-			first.splits.regions.centre_east.n === null &&
-			first.splits.regions.centre_east.mean === null
+		'a contact cell below the floor is suppressed and hides n',
+		first.splits.contact.no.suppressed === true &&
+			first.splits.contact.no.n === null &&
+			first.splits.contact.no.mean === null
 	);
 	ok(
-		'contact splits by the cases item',
-		first.splits.contact.yes.n === 20 && first.splits.contact.no.suppressed === true
+		'nobody answered the optional region, so every region cell is suppressed',
+		Object.values(first.splits.regions ?? {}).every((cell) => cell.suppressed && cell.n === null)
 	);
+	const withRegion = rows.map((row, i) => ({ answers: { ...row.answers, ...(i < 20 ? { demo_governorate: i % 2 ? 'tunis' : 'ariana' } : {}) } }));
+	const regional = aggregateResponses(spec, withRegion, { seed: 1, resamples: 50 });
+	ok(
+		'governorates are counted only as their region, shown once it reaches the floor',
+		regional.splits.regions?.grand_tunis.n === 20 && regional.splits.regions?.centre_east.suppressed === true
+	);
+	ok('the index carries its SD', first.index.sd !== null && first.index.sd > 0, String(first.index.sd));
 
 	// With the instrument's display conditions, a respondent who had no contact
 	// never saw the abuse checklist: counted as not shown, never as a skip.
@@ -552,6 +577,124 @@ console.log('\n  ── wave aggregation ──\n');
 				(c.items ?? []).includes('pti_c1') || c.item === 'pti_c1'
 			)
 	);
+}
+
+// ---------------------------------------------------------------------------
+// The monthly series
+// ---------------------------------------------------------------------------
+{
+	console.log('\n  ── monthly series ──\n');
+
+	// The filter, by hand: 50 then 60, each with variance 4, drift SD 2.5.
+	// Predicted variance 4 + 6.25 = 10.25, gain 10.25 / 14.25.
+	const two = localLevelFilter(
+		[
+			{ mean: 50, variance: 4 },
+			{ mean: 60, variance: 4 }
+		],
+		2.5
+	);
+	const gain = 10.25 / 14.25;
+	ok('the first observed month starts the series at its own mean', two[0].level === 50 && two[0].gain === 1);
+	ok(
+		'the next month moves by its gain toward its own mean',
+		Math.abs((two[1].level ?? 0) - (50 + gain * 10)) < 1e-9 && Math.abs((two[1].gain ?? 0) - gain) < 1e-9,
+		`${two[1].level} gain ${two[1].gain}`
+	);
+	ok('the filtered variance shrinks below the prediction', Math.abs((two[1].variance ?? 0) - (1 - gain) * 10.25) < 1e-9);
+
+	// The point of the filter: a big month moves the index further than a small one.
+	const big = localLevelFilter([{ mean: 50, variance: 0.4 }, { mean: 60, variance: 0.4 }], 2.5)[1];
+	const small = localLevelFilter([{ mean: 50, variance: 0.4 }, { mean: 60, variance: 2 }], 2.5)[1];
+	ok(
+		'a month of 1,000 answers counts for more than a month of 200',
+		(big.gain ?? 0) > (small.gain ?? 0) && (big.level ?? 0) > (small.level ?? 0),
+		`gain ${big.gain?.toFixed(3)} vs ${small.gain?.toFixed(3)}`
+	);
+
+	const gap = localLevelFilter(
+		[
+			{ mean: null, variance: null },
+			{ mean: 40, variance: 1 },
+			{ mean: null, variance: null },
+			{ mean: 44, variance: 1 }
+		],
+		2.5
+	);
+	ok('months before the first observation have no level', gap[0].level === null && gap[0].gain === null);
+	ok(
+		'an unobserved month carries the level and widens its uncertainty',
+		gap[2].level === 40 && gap[2].gain === null && Math.abs((gap[2].variance ?? 0) - (1 + 6.25)) < 1e-9
+	);
+	ok('the level is clamped to the index range', localLevelFilter([{ mean: 104, variance: 1 }], 2.5)[0].level === 100);
+
+	ok(
+		'months are drawn in Tunisia time: 23:30 UTC on 31 October is November',
+		periodOf(Date.UTC(2026, 9, 31, 23, 30), 60) === '2026-11' && periodOf(Date.UTC(2026, 9, 31, 22, 30), 60) === '2026-10'
+	);
+	ok(
+		'the month list crosses a year and keeps every month',
+		periodsBetween('2026-11', '2027-02').join() === '2026-11,2026-12,2027-01,2027-02'
+	);
+
+	// A series from rows: two closed months and the current one. November is
+	// big, December is below the month floor, January is the month in progress.
+	const at = (y: number, m: number, d: number) => Date.UTC(y, m - 1, d, 12);
+	const answersFor = (t: number, g: number) => ({
+		pti_t1: t, pti_t2: t, pti_t3: t, pti_t4: t, pti_t5: t,
+		pti_g1: g, pti_g2: 10 - g, pti_g3: g, pti_g4: g, pti_g5: g,
+		pti_e1: 'no', pti_e5: ['none']
+	});
+	const seriesRows = [
+		...Array.from({ length: 60 }, (_, i) => ({ submittedAt: at(2026, 11, 1 + (i % 28)), answers: answersFor(3 + (i % 3), 6 + (i % 3)) })),
+		...Array.from({ length: 10 }, (_, i) => ({ submittedAt: at(2026, 12, 1 + i), answers: answersFor(8, 2) })),
+		...Array.from({ length: 40 }, (_, i) => ({ submittedAt: at(2027, 1, 1 + (i % 9)), answers: answersFor(5 + (i % 2), 5) }))
+	];
+	const now = at(2027, 1, 10);
+	const series = aggregateSeries(spec, seriesRows, { seed: 1, resamples: 200, now, firstPeriod: '2026-10' });
+	ok('a spec with a series block aggregates a series', series !== null);
+	if (series) {
+		const months = series.months;
+		ok(
+			'the series runs from the first fielding month to this one, empty months included',
+			months.map((m) => m.period).join() === '2026-10,2026-11,2026-12,2027-01',
+			months.map((m) => m.period).join()
+		);
+		ok('past months are closed and this one is provisional', months.map((m) => m.closed).join() === 'true,true,true,false');
+		ok('a month before any answer has no level', months[0].index.level === null);
+		ok(
+			'the first observed month publishes its own mean',
+			months[1].results.n === 60 && Math.abs((months[1].index.level ?? 0) - (months[1].results.index.mean ?? -1)) < 1e-9
+		);
+		ok(
+			'a month under the floor carries the level forward, its own figures still shown',
+			months[2].results.n === 10 && months[2].index.gain === null && months[2].index.level === months[1].index.level
+		);
+		ok(
+			'the current month is filtered on what has arrived so far',
+			months[3].results.n === 40 && months[3].index.gain !== null && months[3].index.gain < 1
+		);
+		ok(
+			'each month carries a band and an interval around its level',
+			months.slice(1).every(
+				(m) => m.index.band !== null && m.index.ci95[0]! <= m.index.level! && m.index.level! <= m.index.ci95[1]!
+			)
+		);
+		const later = aggregateSeries(spec, [...seriesRows, { submittedAt: at(2027, 1, 9), answers: answersFor(10, 0) }], {
+			seed: 1, resamples: 200, now, firstPeriod: '2026-10'
+		});
+		ok(
+			'a new answer this month never changes a closed month',
+			JSON.stringify(later?.months.slice(0, 3)) === JSON.stringify(months.slice(0, 3))
+		);
+		const future = aggregateSeries(spec, [{ submittedAt: at(2027, 3, 1), answers: answersFor(5, 5) }], {
+			seed: 1, resamples: 50, now, firstPeriod: '2027-01'
+		});
+		ok('a row dated after now is not counted', future?.months.length === 1 && future.months[0].results.n_total === 0);
+	}
+	const noSeries = structuredClone(spec);
+	delete noSeries.series;
+	ok('a spec without a series block returns none', aggregateSeries(noSeries, seriesRows, { seed: 1, resamples: 10, now }) === null);
 }
 
 console.log(
