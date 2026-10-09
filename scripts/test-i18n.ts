@@ -235,7 +235,10 @@ const IDENTICAL_IS_FINE = new Set([
 	'ev.tab.contra',
 	// A proper noun: the basemap's dataset name, identical in every language
 	// by design (the map credits the same source everywhere).
-	'map.basemap'
+	'map.basemap',
+	// Only placeholders and the brand name: the words arrive through {wave} and {month}.
+	'index.stamp.ring',
+	'index.series.pointAria'
 ]);
 
 for (const l of locales.filter((x) => x !== 'en')) {

@@ -2,7 +2,11 @@
  * Freeze an instrument for fielding (portal README §3, rule R4).
  *
  *   npm run studies:freeze -- --study dt-research-002 --version 1.0.0 \
- *     --open 2026-10-20 --close 2027-01-20 [--dry-run]
+ *     --open 2026-11-01 [--close 2027-10-31] [--dry-run]
+ *
+ * `--close` is required for a one-off wave. An instrument with a monthly series
+ * (scoring.series) fields continuously, so its close is optional: without one
+ * the window is recorded open-ended, and its first month must start on the 1st.
  *
  * Freezing is the moment an instrument's content stops being a draft and
  * becomes the thing respondents answer. One command does every part of it, so
@@ -49,13 +53,13 @@ function die(message: string): never {
 	process.exit(1);
 }
 
-if (!studyId || !version || !open || !close) {
-	die('usage: --study <id> --version <x.y.z> --open <YYYY-MM-DD> --close <YYYY-MM-DD> [--dry-run]');
+if (!studyId || !version || !open) {
+	die('usage: --study <id> --version <x.y.z> --open <YYYY-MM-DD> [--close <YYYY-MM-DD>] [--dry-run]');
 }
 if (!/^\d+\.\d+\.\d+$/.test(version)) die(`version "${version}" is not x.y.z; a frozen version carries no draft suffix`);
 const isDate = (d: string) => /^\d{4}-\d{2}-\d{2}$/.test(d) && !Number.isNaN(Date.parse(`${d}T00:00:00Z`));
-if (!isDate(open) || !isDate(close)) die('--open and --close must be real YYYY-MM-DD dates');
-if (close <= open) die('the fielding window closes before it opens');
+if (!isDate(open) || (close !== null && !isDate(close))) die('--open and --close must be real YYYY-MM-DD dates');
+if (close !== null && close <= open) die('the fielding window closes before it opens');
 
 // ---- registry: find the study and its draft instrument ---------------------
 
@@ -106,6 +110,9 @@ function parseInstrument(text: string, label: string): InstrumentDoc {
 	return parsed.data;
 }
 const preHash = parseInstrument(setInstrumentKey(frozenText, 'content_hash', '"pending"'), 'the frozen instrument');
+const monthly = (preHash as { scoring?: { series?: unknown } }).scoring?.series !== undefined;
+if (!monthly && close === null) die('a one-off wave needs --close; only a monthly series may be open-ended');
+if (monthly && !open.endsWith('-01')) die('a monthly series opens on the 1st, so its first month is a whole month');
 const violations = validateInstrument(preHash).filter((v) => !v.includes('content_hash'));
 if (violations.length) die(`the instrument is not ready to freeze:\n    - ${violations.join('\n    - ')}`);
 
@@ -140,7 +147,7 @@ setBlock(/^( {6}version: ).*$/m, `$1${version}`, 'instrument version line');
 setBlock(/^( {6}hash: ).*$/m, `$1"${hash}"`, 'instrument hash line');
 setBlock(/^( {6}source: ).*$/m, `$1${frozenRel}`, 'instrument source line');
 setBlock(/^( {6}frozen: ).*$/m, '$1true', 'instrument frozen line');
-setBlock(/^( {2}fielding_window: ).*$/m, `$1{ start: ${open}, end: ${close} }`, 'fielding_window line');
+setBlock(/^( {2}fielding_window: ).*$/m, `$1{ start: ${open}, end: ${close ?? 'null'} }`, 'fielding_window line');
 setBlock(/^( {2}updated: ).*$/m, `$1${today}`, 'updated line');
 const registryText = registry.text.slice(0, start) + block + registry.text.slice(end);
 
@@ -155,7 +162,10 @@ if (prereg) {
 	preregText = prereg.text
 		.replace(/(\*\*Version:\*\* )recorded at freeze/, `$1${version}`)
 		.replace(/(\*\*Instrument hash \(sha256\):\*\* )`RECORDED AT FREEZE`/, `$1\`${hash}\``)
-		.replace(/(\*\*Fielding window:\*\* )`RECORDED AT FREEZE` \(opens\) to `RECORDED AT FREEZE` \(closes\)/, `$1${open} (opens) to ${close} (closes)`)
+		.replace(
+			/(\*\*Fielding window:\*\* )`RECORDED AT FREEZE` \(opens\) to `RECORDED AT FREEZE` \(closes\)/,
+			`$1${open} (opens) to ${close ?? 'no fixed date; monthly until a later version replaces it'} (closes)`
+		)
 		.replace(/(\*\*Registered:\*\* )`RECORDED AT FREEZE`/, `$1${today}`);
 	if (preregText.includes(marker)) die('a RECORDED AT FREEZE field in the pre-registration was not recognised');
 }
@@ -165,7 +175,7 @@ if (prereg) {
 console.log(`\n  ${dryRun ? 'DRY RUN — nothing written' : 'FREEZING'}  ${studyId}`);
 console.log(`  instrument   ${instrumentId}@${version}`);
 console.log(`  hash         ${hash}`);
-console.log(`  window       ${open} → ${close}`);
+console.log(`  window       ${open} → ${close ?? 'open-ended (monthly series)'}`);
 console.log(`  frozen copy  ${frozenRel}`);
 console.log(`  registry     instrument_versions[0] → frozen, hash, source; fielding_window; updated ${today}`);
 console.log(`  prereg       ${preregText ? 'version, hash, window and date filled' : 'none found next to the draft'}`);

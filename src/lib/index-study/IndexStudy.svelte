@@ -8,6 +8,7 @@
 	import Barcode from './Barcode.svelte';
 	import Stamp from './Stamp.svelte';
 	import Grid from './Grid.svelte';
+	import MonthlyChart from './MonthlyChart.svelte';
 	import Content from '$lib/ui/Content.svelte';
 	import type { LiveResults } from './live';
 
@@ -71,13 +72,43 @@
 		return () => clearInterval(timer);
 	});
 
-	const results = $derived(live?.results ?? null);
+	// The monthly series: the page reads one month at a time, the month in
+	// progress by default. Every panel below the chart shows the chosen month.
+	const months = $derived(live?.series?.months ?? []);
+	let chosen = $state<string | null>(null);
+	const month = $derived(
+		months.find((m) => m.period === chosen) ?? (months.length ? months[months.length - 1] : null)
+	);
+	const monthIndex = $derived(month ? months.indexOf(month) : -1);
+	const previous = $derived.by(() => {
+		for (let i = monthIndex - 1; i >= 0; i--) if (months[i].index.level !== null) return months[i];
+		return null;
+	});
+
+	const results = $derived(month?.results ?? live?.results ?? null);
 	const index = $derived(results?.index ?? null);
-	const shown = Tween.of(() => index?.mean ?? 0, { duration: 900, easing: cubicOut });
-	const hasIndex = $derived(index !== null && index.mean !== null && (results?.n ?? 0) > 0);
+	/** The headline: the month's published level, or the plain mean without a series. */
+	const headline = $derived(month ? month.index.level : (index?.mean ?? null));
+	const headlineCi = $derived(month ? month.index.ci95 : (index?.ci95 ?? [null, null]));
+	const shown = Tween.of(() => headline ?? 0, { duration: 900, easing: cubicOut });
+	const hasIndex = $derived(headline !== null);
+	const change = $derived(
+		hasIndex && previous?.index.level != null ? headline! - previous.index.level : null
+	);
 
 	const open = $derived(liveStatus === 'fielding');
-	const waveLabel = $derived(tf('index.wave', { n: '01' }));
+
+	function monthLabel(period: string, short = false): string {
+		const [y, m] = period.split('-').map(Number);
+		return new Intl.DateTimeFormat(locale === 'ar' ? 'ar-TN' : locale, {
+			month: short ? 'short' : 'long',
+			year: short ? '2-digit' : 'numeric',
+			timeZone: 'UTC'
+		}).format(new Date(Date.UTC(y, m - 1, 1)));
+	}
+	const waveLabel = $derived(
+		tf('index.wave', { month: month ? monthLabel(month.period) : monthLabel(new Date().toISOString().slice(0, 7)) })
+	);
 
 	function bandLabel(id: string | null | undefined): string {
 		const band = spec.bands.find((b) => b.id === id);
@@ -92,7 +123,7 @@
 		);
 	}
 	const currentBand = $derived(
-		hasIndex ? spec.bands.find((b) => index!.mean! >= b.min && (index!.mean! < b.max || b.max === 100)) : null
+		hasIndex ? spec.bands.find((b) => headline! >= b.min && (headline! < b.max || b.max === 100)) : null
 	);
 
 	const fmt = (v: number | null | undefined, digits = 0) =>
@@ -134,7 +165,7 @@
 	const hourly = $derived(live?.submissions_per_hour.counts ?? []);
 	const hourlyMax = $derived(Math.max(1, ...hourly));
 
-	const regionKeys = ['grand_tunis', 'north_east', 'north_west', 'centre_east', 'centre_west', 'south_east', 'south_west'];
+	const regionKeys = $derived(Object.keys(spec.regions?.groups ?? {}));
 </script>
 
 <!-- The shell is a fixed window; a document page owns its own scroll. -->
@@ -154,7 +185,7 @@
 	<section class="hero">
 		<div class="numeral" aria-live="polite">
 			{#if hasIndex}
-				<span class="digits mono" aria-label={tf('index.headline.aria', { value: fmt(index!.mean) })}>
+				<span class="digits mono" aria-label={tf('index.headline.aria', { value: fmt(headline) })}>
 					{Math.round(shown.current)}
 				</span>
 			{:else}
@@ -167,10 +198,20 @@
 			<p class="readout mono">
 				{#if hasIndex}
 					{tf('index.headline.readout', {
+						state: t(month && month.closed ? 'index.series.closed' : 'index.series.provisional'),
 						n: fmt(results!.n),
-						lo: fmt(index!.ci95?.[0]),
-						hi: fmt(index!.ci95?.[1])
+						lo: fmt(headlineCi[0]),
+						hi: fmt(headlineCi[1])
 					})}
+					{#if change !== null}
+						<span class="change" class:up={change > 0.05} class:down={change < -0.05}>
+							{change > 0.05 ? '▲' : change < -0.05 ? '▼' : '■'}
+							{tf('index.series.change', {
+								delta: (change > 0 ? '+' : '') + fmt(change, 1),
+								month: monthLabel(previous!.period)
+							})}
+						</span>
+					{/if}
 				{:else if open}
 					{t('index.headline.waiting')}
 				{:else}
@@ -180,14 +221,14 @@
 
 			<!-- The scale itself: five bands from police state to guardian, with the
 			     wave's position marked when there is one. -->
-			<div class="scale" role="img" aria-label={hasIndex ? tf('index.scale.aria', { value: fmt(index!.mean), band: bandLabel(currentBand?.id) }) : t('index.scale.ariaEmpty')}>
+			<div class="scale" role="img" aria-label={hasIndex ? tf('index.scale.aria', { value: fmt(headline), band: bandLabel(currentBand?.id) }) : t('index.scale.ariaEmpty')}>
 				<div class="bands">
 					{#each spec.bands as b, i (b.id)}
 						<span class="band" class:on={currentBand?.id === b.id} style:background="var(--index-band-{i + 1})"></span>
 					{/each}
 				</div>
 				{#if hasIndex}
-					<span class="marker" style:inset-inline-start="{Math.min(100, Math.max(0, index!.mean!))}%"></span>
+					<span class="marker" style:inset-inline-start="{Math.min(100, Math.max(0, headline!))}%"></span>
 				{/if}
 				<div class="ends">
 					<span>0 · {bandLabel(spec.bands[0]?.id)}</span>
@@ -197,7 +238,7 @@
 
 			<p class="tagline">{t('index.tagline.one')}<br />{t('index.tagline.two')}</p>
 			{#if open}
-				<a class="cta" href="/research/{study.slug}/participate">{t('index.cta')}</a>
+				<a class="cta" href="/research/{study.slug}/participate">{tf('index.cta', { n: fmt(instrument.estimatedMinutes) })}</a>
 			{/if}
 		</div>
 
@@ -210,6 +251,72 @@
 			/>
 		</div>
 	</section>
+
+	{#if months.length}
+		<section class="block series">
+			<div class="series-head">
+				<h2>{t('index.series.title')}</h2>
+				<p class="note">{tf('index.series.lede', { min: live?.series?.settings.min_month_n ?? 30 })}</p>
+			</div>
+			<MonthlyChart
+				{months}
+				bands={spec.bands}
+				selected={month?.period ?? null}
+				onselect={(period) => (chosen = period)}
+				{monthLabel}
+				{fmt}
+			/>
+			{#if month}
+				<div class="month-readout" aria-live="polite">
+					<p class="month-name">
+						<strong>{monthLabel(month.period)}</strong>
+						<span class="tag" class:live={!month.closed}>{t(month.closed ? 'index.series.closed' : 'index.series.provisional')}</span>
+					</p>
+					<p>
+						{#if month.results.n === 0}
+							{t('index.series.noData')}
+						{:else}
+							{tf('index.series.own', { mean: fmt(month.results.index.mean), n: fmt(month.results.n) })}
+						{/if}
+					</p>
+					<p class="note">
+						{#if month.index.gain !== null}
+							{tf('index.series.weight', { w: fmt(month.index.gain * 100) })}
+						{:else if month.index.level !== null}
+							{tf('index.series.carried', { n: fmt(month.results.n), min: live?.series?.settings.min_month_n ?? 30 })}
+						{/if}
+					</p>
+				</div>
+			{/if}
+			<details class="table-alt">
+				<summary>{t('index.table.show')}</summary>
+				<table>
+					<thead>
+						<tr>
+							<th>{t('index.table.month')}</th>
+							<th>{t('index.table.level')}</th>
+							<th>{t('index.table.interval')}</th>
+							<th>{t('index.table.own')}</th>
+							<th>{t('index.table.n')}</th>
+							<th>{t('index.table.weight')}</th>
+						</tr>
+					</thead>
+					<tbody>
+						{#each months as m (m.period)}
+							<tr>
+								<td>{monthLabel(m.period)}{m.closed ? '' : ` · ${t('index.series.provisional')}`}</td>
+								<td class="mono">{fmt(m.index.level, 1)}</td>
+								<td class="mono" dir="ltr">{m.index.level === null ? '—' : `${fmt(m.index.ci95[0], 1)}–${fmt(m.index.ci95[1], 1)}`}</td>
+								<td class="mono">{fmt(m.results.index.mean, 1)}</td>
+								<td class="mono">{fmt(m.results.n)}</td>
+								<td class="mono">{m.index.gain === null ? '—' : `${fmt(m.index.gain * 100)}%`}</td>
+							</tr>
+						{/each}
+					</tbody>
+				</table>
+			</details>
+		</section>
+	{/if}
 
 	<section class="panel-row">
 		<!-- The three components as one vertical meter, like the swatch column in
@@ -393,6 +500,7 @@
 					{/each}
 				</tbody>
 			</table>
+			{#if results?.splits?.regions}
 			<table>
 				<caption>{t('index.splits.region')}</caption>
 				<thead><tr><th></th><th>{t('index.table.n')}</th><th>{t('index.table.mean')}</th></tr></thead>
@@ -407,7 +515,9 @@
 					{/each}
 				</tbody>
 			</table>
+			{/if}
 		</div>
+		{#if spec.regions}<p class="note">{t('index.splits.regionOptional')}</p>{/if}
 	</section>
 
 	<section class="block">
@@ -522,6 +632,59 @@
 		color: var(--text-secondary);
 		font-size: 0.9rem;
 		margin: 0 0 0.9rem;
+	}
+	.change {
+		display: inline-block;
+		margin-inline-start: 0.5rem;
+		color: var(--text-secondary);
+		white-space: nowrap;
+	}
+	.change.up {
+		color: var(--index-band-5);
+	}
+	.change.down {
+		color: var(--index-band-1);
+	}
+
+	/* ---- the monthly series -------------------------------------------- */
+	.series-head {
+		margin-bottom: 1rem;
+	}
+	.month-readout {
+		margin-top: 1rem;
+		padding: 0.9rem 1rem;
+		border-radius: 0.5rem;
+		border: 1px solid var(--border-subtle);
+		border-inline-start: 3px solid var(--accent);
+	}
+	.month-readout p {
+		margin: 0 0 0.35rem;
+	}
+	.month-readout p:last-child {
+		margin-bottom: 0;
+	}
+	.month-name {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		flex-wrap: wrap;
+	}
+	.tag {
+		font-size: 0.6875rem;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		padding: 0.15rem 0.5rem;
+		border-radius: 999px;
+		border: 1px solid var(--border-strong);
+		color: var(--text-secondary);
+	}
+	.tag.live {
+		border-color: var(--accent);
+		background: var(--accent);
+		color: var(--accent-text);
+	}
+	.rtl .tag {
+		letter-spacing: 0;
 	}
 	.scale {
 		position: relative;

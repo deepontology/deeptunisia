@@ -106,9 +106,29 @@ export interface ScoringBand {
 	description_ar?: string;
 }
 
+/**
+ * Optional regional split. The region item is optional for the respondent, and
+ * only these groups are ever published, each under the cell floor.
+ */
 export interface ScoringRegions {
 	item: string;
 	groups: Record<string, string[]>;
+}
+
+/**
+ * The monthly series (index-spec.md §8). Responses are grouped by calendar
+ * month in a fixed UTC offset, and the published index for a month is the
+ * level of a local-level model filtered through that month: every past month's
+ * answers count, each weighted by how much it actually tells us.
+ */
+export interface ScoringSeries {
+	period: 'month';
+	/** Minutes east of UTC that month boundaries are drawn in (Tunisia: +60, no DST). */
+	utc_offset_minutes: number;
+	/** SD, in index points, of how far the true level may move in one month. */
+	process_sd: number;
+	/** A month with fewer scored respondents carries the previous level forward. */
+	min_month_n: number;
 }
 
 /**
@@ -129,8 +149,9 @@ export interface ScoringSpec {
 	plane: { x: string; y: string };
 	anchors: Record<string, Record<string, number>>;
 	bands: ScoringBand[];
-	regions: ScoringRegions;
+	regions?: ScoringRegions;
 	cell_floor: number;
+	series?: ScoringSeries;
 	exclusions?: ScoringExclusions;
 	/** Scale items published as distributions alongside the index, never scored. */
 	report_items?: string[];
@@ -645,7 +666,9 @@ export function validateScoringSpec(
 	// Regions: every grouped option is a declared option of the region item, and
 	// an option belongs to exactly one group.
 	const rawRegions = root.regions;
-	if (!isRecord(rawRegions)) {
+	if (rawRegions === undefined) {
+		// No regional split: nothing to check.
+	} else if (!isRecord(rawRegions)) {
 		violations.push('regions is not an object');
 	} else {
 		const regionItem = rawRegions.item;
@@ -681,6 +704,27 @@ export function validateScoringSpec(
 						placement.set(option, group);
 					}
 				}
+			}
+		}
+	}
+
+	// The monthly series: every setting is a positive number the filter can use.
+	const rawSeries = root.series;
+	if (rawSeries !== undefined) {
+		if (!isRecord(rawSeries)) {
+			violations.push('series is not an object');
+		} else {
+			if (rawSeries.period !== 'month') violations.push('series.period must be "month"');
+			const offset = rawSeries.utc_offset_minutes;
+			if (typeof offset !== 'number' || !Number.isInteger(offset) || Math.abs(offset) > 14 * 60) {
+				violations.push('series.utc_offset_minutes is not a whole number of minutes within ±14 h');
+			}
+			if (typeof rawSeries.process_sd !== 'number' || !(rawSeries.process_sd > 0)) {
+				violations.push('series.process_sd is not a positive number');
+			}
+			const minN = rawSeries.min_month_n;
+			if (typeof minN !== 'number' || !Number.isInteger(minN) || minN < 2) {
+				violations.push('series.min_month_n is not a whole number of at least 2');
 			}
 		}
 	}
@@ -736,6 +780,8 @@ export interface WaveAggregate {
 	index: {
 		mean: number | null;
 		median: number | null;
+		/** Sample SD of the respondent indices; null below two respondents. */
+		sd: number | null;
 		ci95: [number | null, number | null];
 	};
 	components: Record<string, ComponentSummary>;
@@ -744,7 +790,8 @@ export interface WaveAggregate {
 	plane: number[][];
 	items: Record<string, ItemSummary>;
 	splits: {
-		regions: Record<string, SplitCell>;
+		/** Present only when the spec declares an optional regional split. */
+		regions?: Record<string, SplitCell>;
 		contact: Record<string, SplitCell>;
 	};
 }
@@ -824,6 +871,13 @@ function mean(values: number[]): number {
 	let sum = 0;
 	for (const value of values) sum += value;
 	return sum / values.length;
+}
+
+function sampleSd(values: number[]): number {
+	const m = mean(values);
+	let sum = 0;
+	for (const value of values) sum += (value - m) ** 2;
+	return Math.sqrt(sum / (values.length - 1));
 }
 
 function median(values: number[]): number {
@@ -991,10 +1045,12 @@ export function aggregateResponses(
 		items[id] = { counts, skipped, not_shown: notShown };
 	}
 
-	// Splits: region through the spec's grouping, contact through the item the
-	// first cases branch reads. Only scored respondents enter a cell.
+	// Splits: contact through the item the first cases branch reads, and region
+	// through the spec's grouping when it declares one. Only scored respondents
+	// enter a cell; a respondent who skipped the optional region question is in
+	// no region cell.
 	const regionOf = new Map<string, string>();
-	for (const [group, options] of Object.entries(spec.regions.groups)) {
+	for (const [group, options] of Object.entries(spec.regions?.groups ?? {})) {
 		for (const option of options) regionOf.set(option, group);
 	}
 	const contactItem = contactItemOf(spec);
@@ -1003,9 +1059,9 @@ export function aggregateResponses(
 	for (let i = 0; i < rows.length; i++) {
 		const index = scored[i].index;
 		if (index === null) continue;
-		const region = rows[i].answers[spec.regions.item];
-		if (typeof region === 'string') {
-			const group = regionOf.get(region);
+		if (spec.regions) {
+			const region = rows[i].answers[spec.regions.item];
+			const group = typeof region === 'string' ? regionOf.get(region) : undefined;
 			if (group !== undefined) push(regionBuckets, group, index);
 		}
 		if (contactItem !== null) {
@@ -1023,6 +1079,7 @@ export function aggregateResponses(
 		index: {
 			mean: indices.length ? mean(indices) : null,
 			median: indices.length ? median(indices) : null,
+			sd: indices.length > 1 ? sampleSd(indices) : null,
 			ci95
 		},
 		components,
@@ -1030,8 +1087,183 @@ export function aggregateResponses(
 		plane,
 		items,
 		splits: {
-			regions: cells(regionBuckets, Object.keys(spec.regions.groups), spec.cell_floor),
+			...(spec.regions
+				? { regions: cells(regionBuckets, Object.keys(spec.regions.groups), spec.cell_floor) }
+				: {}),
 			contact: cells(contactBuckets, [...contactBuckets.keys()], spec.cell_floor)
 		}
+	};
+}
+
+// ---------------------------------------------------------------------------
+// The monthly series (index-spec.md §8)
+//
+// A month's own mean is noisy in proportion to how few people answered it. The
+// published index is therefore the level of a local-level model: the true level
+// drifts by a random step each month (SD = process_sd), and each month's mean
+// is a measurement of it with variance sd² / n. A Kalman filter combines the
+// two, so a month of 1,000 answers moves the index almost all the way to its
+// own mean, and a month of 200 moves it part of the way, the rest carried from
+// every earlier month. It filters forward only: a month's published value uses
+// that month and the months before it, and never changes once the month closes.
+//
+// What it does not do: correct for WHO answered. A month that draws a different
+// crowd moves the index as if opinion had changed. The instrument asks nothing
+// about who respondents are, so there is nothing to reweight against; the page
+// publishes each month's n and gain so a reader can see how much a month rests on.
+// ---------------------------------------------------------------------------
+
+/** One month's measurement: its mean and sampling variance, or none. */
+export interface SeriesObservation {
+	mean: number | null;
+	/** Sampling variance of the mean (sd² / n); null when the month is not observed. */
+	variance: number | null;
+}
+
+export interface SeriesLevel {
+	/** The filtered level, clamped to the index range for display. */
+	level: number | null;
+	/** Variance of the filtered level. */
+	variance: number | null;
+	/** The weight this month's own mean received, 0..1; null when not observed. */
+	gain: number | null;
+}
+
+/**
+ * The local-level Kalman filter. The first observed month starts the series at
+ * its own mean (a diffuse start); a month with no observation carries the level
+ * forward and lets its uncertainty grow by one month of drift.
+ */
+export function localLevelFilter(observations: SeriesObservation[], processSd: number): SeriesLevel[] {
+	const q = processSd * processSd;
+	const out: SeriesLevel[] = [];
+	let level: number | null = null;
+	let variance: number | null = null;
+	for (const obs of observations) {
+		const observed = obs.mean !== null && obs.variance !== null && obs.variance >= 0;
+		if (level === null || variance === null) {
+			if (!observed) {
+				out.push({ level: null, variance: null, gain: null });
+				continue;
+			}
+			level = obs.mean!;
+			variance = obs.variance!;
+			out.push({ level: clampIndex(level), variance, gain: 1 });
+			continue;
+		}
+		const predicted: number = variance + q;
+		if (!observed) {
+			variance = predicted;
+			out.push({ level: clampIndex(level), variance, gain: null });
+			continue;
+		}
+		const gain = predicted === 0 && obs.variance === 0 ? 1 : predicted / (predicted + obs.variance!);
+		level = level + gain * (obs.mean! - level);
+		variance = (1 - gain) * predicted;
+		out.push({ level: clampIndex(level), variance, gain });
+	}
+	return out;
+}
+
+function clampIndex(value: number): number {
+	return Math.max(0, Math.min(100, value));
+}
+
+/** "YYYY-MM" of a timestamp, with month boundaries drawn at the given UTC offset. */
+export function periodOf(ms: number, utcOffsetMinutes: number): string {
+	const shifted = new Date(ms + utcOffsetMinutes * 60_000);
+	return `${shifted.getUTCFullYear()}-${String(shifted.getUTCMonth() + 1).padStart(2, '0')}`;
+}
+
+/** Every "YYYY-MM" from `first` to `last` inclusive, so an empty month still has a slot. */
+export function periodsBetween(first: string, last: string): string[] {
+	const out: string[] = [];
+	let [year, month] = first.split('-').map(Number);
+	const [lastYear, lastMonth] = last.split('-').map(Number);
+	while (year < lastYear || (year === lastYear && month <= lastMonth)) {
+		out.push(`${year}-${String(month).padStart(2, '0')}`);
+		month++;
+		if (month > 12) {
+			month = 1;
+			year++;
+		}
+	}
+	return out;
+}
+
+export interface SeriesRow extends AggregateRow {
+	submittedAt: number;
+}
+
+export interface MonthAggregate {
+	period: string;
+	/** False for the month still being collected: its figures are provisional. */
+	closed: boolean;
+	/** The published index for the month: the filtered level and its 95% interval. */
+	index: { level: number | null; ci95: [number | null, number | null]; band: string | null; gain: number | null };
+	/** The month taken on its own. */
+	results: WaveAggregate;
+}
+
+export interface SeriesAggregate {
+	settings: ScoringSeries;
+	months: MonthAggregate[];
+}
+
+/**
+ * Aggregate kept rows month by month and run the filter across the months.
+ * `firstPeriod` pins the start (the fielding window's first month), so a quiet
+ * opening month is a visible gap rather than a silently shorter series.
+ */
+export function aggregateSeries(
+	spec: ScoringSpec,
+	rows: SeriesRow[],
+	options: AggregateOptions & { now: number; firstPeriod?: string }
+): SeriesAggregate | null {
+	const settings = spec.series;
+	if (settings === undefined) return null;
+	const offset = settings.utc_offset_minutes;
+	const current = periodOf(options.now, offset);
+	const byPeriod = new Map<string, SeriesRow[]>();
+	for (const row of rows) {
+		const period = periodOf(row.submittedAt, offset);
+		if (period > current) continue;
+		const bucket = byPeriod.get(period);
+		if (bucket) bucket.push(row);
+		else byPeriod.set(period, [row]);
+	}
+	const seen = [...byPeriod.keys()].sort();
+	const first = options.firstPeriod ?? seen[0] ?? current;
+	const periods = periodsBetween(first < current ? first : current, current);
+
+	const results = periods.map((period) => aggregateResponses(spec, byPeriod.get(period) ?? [], options));
+	const filtered = localLevelFilter(
+		results.map((month) =>
+			month.n >= settings.min_month_n && month.index.mean !== null && month.index.sd !== null
+				? { mean: month.index.mean, variance: (month.index.sd * month.index.sd) / month.n }
+				: { mean: null, variance: null }
+		),
+		settings.process_sd
+	);
+	return {
+		settings,
+		months: periods.map((period, i) => {
+			const { level, variance, gain } = filtered[i];
+			const half = variance === null ? null : 1.96 * Math.sqrt(variance);
+			return {
+				period,
+				closed: period < current,
+				index: {
+					level,
+					ci95:
+						level === null || half === null
+							? [null, null]
+							: [clampIndex(level - half), clampIndex(level + half)],
+					band: level === null ? null : bandOf(spec.bands, level),
+					gain
+				},
+				results: results[i]
+			};
+		})
 	};
 }

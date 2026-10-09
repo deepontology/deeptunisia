@@ -1,11 +1,11 @@
-# Pre-registration: Study 002, Tunisia Police Index, Wave 01
+# Pre-registration: Study 002, Tunisia Police Index, monthly series
 
 **Study:** `dt-research-002` · **Instrument:** `dt002-police-index` · **Version:** recorded at freeze
 **Instrument hash (sha256):** `RECORDED AT FREEZE`
 **Fielding window:** `RECORDED AT FREEZE` (opens) to `RECORDED AT FREEZE` (closes)
 **Registered:** `RECORDED AT FREEZE`
 
-This document is fixed before the first response is collected. The hash above is the content hash of the instrument as fielded. It covers every question's wording in English, French and Arabic, every response option and scale label, the display conditions, and the whole scoring block: the formula, bands, exclusions, regions and cell floor. Any change to any of those produces a different hash and a new instrument version, and the change is logged under §11. This document is committed to the public repository next to the instrument, and the commit date is the registration date.
+This document is fixed before the first response is collected. The hash above is the content hash of the instrument as fielded. It covers every question's wording in English, French and Arabic, every response option and scale label, the display conditions, and the whole scoring block: the formula, bands, exclusions, regions, cell floor and the monthly series settings. Any change to any of those produces a different hash and a new instrument version, which starts a new series, and the change is logged under §11. This document is committed to the public repository next to the instrument, and the commit date is the registration date.
 
 ---
 
@@ -21,9 +21,11 @@ One construct: **how strongly respondents sense that they live under a police st
 
 Two context items (pti_c1, compared with before 2011; pti_c2, change in trust over a year) are reported beside the index and never enter it.
 
+**Nothing about the respondent.** The instrument asks no age, gender or residence. Its only question about the respondent is an optional governorate, offered last, with "I live outside Tunisia" and "prefer not to answer" among its options. It is published only as the seven INS regions, under the cell floor.
+
 ## 2. Population and sampling
 
-Open, self-selected online participation by adults (18 and over), recruited through DeepTunisia's channels and whatever links others share. There is no probability of selection. Every number is reported as describing **respondents**, never Tunisians as a population. The registry's population statement is: *"Among respondents to an open, self-selected online survey of adults. Results describe the people who took part, not Tunisians as a whole."*
+Open, self-selected online participation by adults (18 and over, confirmed by a consent statement, never by asking an age), recruited through DeepTunisia's channels and whatever links others share. There is no probability of selection, and because the instrument collects no demographics there is nothing to weight by. Every number is reported as describing **respondents**, never Tunisians as a population. The registry's population statement is: *"Among respondents to an open, self-selected online survey of adults. Results describe the people who took part, not Tunisians as a whole."*
 
 ## 3. Scoring
 
@@ -52,8 +54,8 @@ These are refused at submission and never stored:
 
 ## 5. Estimands and analysis
 
-**Headline:**
-- the mean I over valid respondents, with a percentile bootstrap 95% interval (seeded; 1,000 resamples live, 2,000 at close);
+**Headline:** the monthly index (§7a), with its 95% interval and its band. Beside it, for each month on its own:
+- the mean I over valid respondents, with a percentile bootstrap 95% interval (seeded; 1,000 resamples);
 - the median;
 - band counts.
 
@@ -66,49 +68,63 @@ These are refused at submission and never stored:
 
 **Splits:**
 - police contact in the last 12 months (yes / no);
-- region (the seven INS regions).
+- region (the seven INS regions), over the respondents who chose to answer the optional governorate question.
 
 A cell with fewer than 20 respondents is suppressed, and its size is not shown.
 
-**Weighting:** the headline is unweighted. At close, an estimate raked to INS 2024 margins (age band, gender, region) is published beside it and labelled as weighted.
+**Weighting:** none. The instrument collects no age or gender, so no estimate is raked to population margins. Every figure is labelled as describing respondents.
+
+## 7a. The monthly series
+
+The index is a series, published once per calendar month. Months are drawn in Tunisia's time (UTC+1, no daylight saving).
+
+- **A month's own figures** are the estimands above, computed over the valid responses submitted in that month.
+- **The published index for a month** is the level of a local-level model run through that month by a Kalman filter. The true level is assumed to drift by a random step each month with SD 2.5 index points (`process_sd`); each month's mean is a measurement of it with variance sd² / n. The first observed month starts the series at its own mean. Each later month moves the level toward its own mean by its gain: P / (P + sd²/n), where P is the previous level's variance plus 2.5². A month of 1,000 answers therefore moves the index further than a month of 200, and every earlier month still counts.
+- **A month with fewer than 30 scored respondents** (`min_month_n`) is not used as a measurement. The previous level carries forward, and its interval widens by one month of drift.
+- **The filter runs forward only.** A month's published value uses that month and the months before it, so it never changes once the month has closed.
+- **The month in progress** is shown live and labelled provisional. It becomes final when the month ends.
+
+What the filter does not do is correct for who answered. A month that draws a different crowd moves the index as if opinion had changed. Each month's n and gain are published so a reader can see how much a month rests on. As a sensitivity check, at each 12-month review the series is also published with `process_sd` 1.5 and 5.
 
 ## 6. Hypotheses
 
-These are registered before data. They are directional, and each is tested once at close:
+These are registered before data. They are directional, and each is tested once, at the first 12-month review, over every valid response to that date:
 
 - **H1:** Respondents who report police contact in the last 12 months have a lower mean I than those who report none. Test: difference in means with a bootstrap 95% interval excluding 0.
-- **H2:** T and G are negatively correlated (Pearson r below −0.3). If they are not, the two-axis model is reported as unsupported for this wave.
-- **H3:** The trust items and the grip items each form a reliable scale (Cronbach's alpha ≥ 0.70). If either falls short, the wave says so beside its headline.
+- **H2:** T and G are negatively correlated (Pearson r below −0.3). If they are not, the two-axis model is reported as unsupported for this series.
+- **H3:** The trust items and the grip items each form a reliable scale (Cronbach's alpha ≥ 0.70). If either falls short, the page says so beside the headline.
 
 Everything else on the results page is descriptive. A pattern noticed after the data comes in is reported as exploratory.
 
 ## 7. Live publication
 
-Results are published live during fielding (a departure, §10). The live page shows only aggregates computed from the current instrument hash. To make attempts to move the number visible, it also shows submissions per hour for the last 72 hours, including excluded ones, and the exclusion counts by rule. At close, the live endpoint is frozen and the final figures are recomputed offline from the exported data with the same code. The final figures are the published wave result.
+Results are published live during fielding (a departure, §10). The live page shows only aggregates computed from the current instrument hash, month by month. To make attempts to move the number visible, it also shows submissions per hour for the last 72 hours, including excluded ones, and the exclusion counts by rule. When a month ends, its figures are recomputed offline from the exported data with the same code and committed to the repository. Those committed figures are the published result for that month.
 
 ## 8. Release at close
 
-- **Aggregates:** committed as `results.yaml` and rendered with their n and the population statement.
-- **Microdata:**
-  - region instead of governorate;
-  - age bands only;
-  - dates no finer than the day;
+- **Aggregates:** committed month by month and rendered with their n and the population statement.
+- **Microdata** (at each 12-month review):
+  - region instead of governorate, for those who answered it;
+  - dates no finer than the month;
   - no receipt codes;
   - no recruitment channel codes.
 
   Licence CC BY 4.0, deposited with a DOI.
 - **Raw rows:** deleted after the release is verified to reproduce the published tables.
 
-## 9. Close and stopping
+## 9. Months, deletion and stopping
 
-The wave closes at the end of the fielding window. It closes early only for a security incident that puts respondents or the data at risk. An early close, and its reason, is published.
+A receipt deletes its answers only during the month they were given in. Once a month closes, its answers are fixed, so its published figure can be reproduced.
+
+The series runs until a later instrument version replaces it, with a public review every 12 months. It stops early only for a security incident that puts respondents or the data at risk. An early stop, and its reason, is published.
 
 ## 10. Departures from the platform's own rules
 
-- **Live results.** The platform's default is counts only until close. This wave publishes results live, with the integrity record described in §7.
-- **Interim translations.** The French and Arabic were prepared by the project and reviewed by its editor. They are not the independent human translation, back-translation and cognitive interviewing the platform requires. They will be replaced before a later wave.
+- **Live results.** The platform's default is counts only until close. This series publishes results live, with the integrity record described in §7.
+- **A continuous series.** The platform's default is a wave with a fixed close. This study fields continuously and publishes monthly (§7a).
+- **Interim translations.** The French and Arabic were prepared by the project and reviewed by its editor. They are not the independent human translation, back-translation and cognitive interviewing the platform requires. They will be replaced in a later instrument version.
 - **No external ethics review.** The protections published on the study page are the project's own.
 
 ## 11. Changes after registration
 
-None yet. Any change to the instrument after this document is fixed produces a new version and hash, and is listed here with its date and reason. A change during fielding starts a new wave.
+None yet. Any change to the instrument after this document is fixed produces a new version and hash, and is listed here with its date and reason. A change during fielding starts a new series, and the page shows where one series ends and the next begins.

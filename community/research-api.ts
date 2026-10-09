@@ -36,7 +36,7 @@ import {
 	type RuntimeInstrument,
 	type StudiesRegistry
 } from './research-contract.ts';
-import { aggregateResponses, applyExclusions } from './research-scoring.ts';
+import { aggregateResponses, aggregateSeries, applyExclusions, periodOf } from './research-scoring.ts';
 
 /** What the research handler needs from its caller, per request. */
 export interface ResearchContext {
@@ -92,6 +92,10 @@ async function liveResults(db: Db, study: StudySummary, instrument: RuntimeInstr
 		.bind(study.id, instrument.hash)
 		.all<{ answers: string; completion_ms: number; submitted_at: number }>();
 
+	const conditions = Object.fromEntries(
+		instrument.items.filter((item) => item.showIf !== undefined).map((item) => [item.id, item.showIf!])
+	);
+	const aggregate = { seed: LIVE_SEED, resamples: LIVE_RESAMPLES, conditions };
 	const rows = (results ?? []).map((r) => ({
 		answers: safeAnswers(r.answers),
 		completionMs: r.completion_ms,
@@ -115,12 +119,13 @@ async function liveResults(db: Db, study: StudySummary, instrument: RuntimeInstr
 		received: rows.length,
 		exclusions,
 		submissions_per_hour: { start: new Date(firstHour * HOUR_MS).toISOString(), counts: perHour },
-		results: aggregateResponses(spec, kept, {
-			seed: LIVE_SEED,
-			resamples: LIVE_RESAMPLES,
-			conditions: Object.fromEntries(
-				instrument.items.filter((item) => item.showIf !== undefined).map((item) => [item.id, item.showIf!])
-			)
+		results: aggregateResponses(spec, kept, aggregate),
+		// The monthly index: every month from the first month of fielding to
+		// this one, each with its own figures and the filtered level.
+		series: aggregateSeries(spec, kept, {
+			...aggregate,
+			now,
+			firstPeriod: study.fielding_start ? study.fielding_start.slice(0, 7) : undefined
 		})
 	};
 }
@@ -146,6 +151,8 @@ interface StudySummary {
 	status: string;
 	title_en: string;
 	instrument_versions: Array<{ id: string; version: string }>;
+	/** First day of fielding (YYYY-MM-DD), when the registry records one. */
+	fielding_start: string | null;
 }
 
 function asStudy(value: unknown): StudySummary | null {
@@ -168,8 +175,16 @@ function asStudy(value: unknown): StudySummary | null {
 		slug: s.slug,
 		status: s.status,
 		title_en: typeof s.title_en === 'string' ? s.title_en : s.id,
-		instrument_versions: versions
+		instrument_versions: versions,
+		fielding_start: fieldingStart(s.fielding_window)
 	};
+}
+
+function fieldingStart(window: unknown): string | null {
+	if (!window || typeof window !== 'object' || Array.isArray(window)) return null;
+	const start = (window as Record<string, unknown>).start;
+	if (start instanceof Date) return start.toISOString().slice(0, 10);
+	return typeof start === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(start) ? start : null;
 }
 
 function findStudy(registry: StudiesRegistry, slug: string): StudySummary | null {
@@ -750,6 +765,23 @@ export async function handleResearch(
 				throw new ResearchError('this study is not open, so a response cannot be deleted', 409);
 			}
 			if (!env.RESEARCH_DB) throw new ResearchError('research storage is not configured', 503);
+			// In a monthly series a month's index is published when the month
+			// ends, and it never changes afterwards, so an answer can be deleted
+			// only during the month it was given in. The consent text says so.
+			const instrument = instrumentFor(env.STUDIES, study);
+			const series = instrument?.scoring?.series;
+			if (series) {
+				const row = await env.RESEARCH_DB.prepare(
+					'SELECT submitted_at FROM research_responses WHERE receipt = ? AND study_id = ?'
+				)
+					.bind(receipt, study.id)
+					.first<{ submitted_at: number }>();
+				if (!row) return json({ deleted: false });
+				const offset = series.utc_offset_minutes;
+				if (periodOf(row.submitted_at, offset) !== periodOf(ctx.now, offset)) {
+					throw new ResearchError('that month has closed, so its answers can no longer be deleted', 409);
+				}
+			}
 			const out = await env.RESEARCH_DB.prepare(
 				'DELETE FROM research_responses WHERE receipt = ? AND study_id = ?'
 			)

@@ -22,6 +22,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { createHmac } from 'node:crypto';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { parse as parseYaml } from 'yaml';
 import { handle, type Env } from '../community/api.ts';
 import { localDb } from '../community/db-local.ts';
 import {
@@ -776,6 +777,70 @@ console.log('\n  ── the response rate limit ──\n');
 	const receipt = (await allRows(env))[0].receipt as string;
 	const clean = await post(env, '/api/studies/fixture/withdraw', { receipt });
 	ok('the response limit does not block withdraw', clean.status === 200 && clean.body.deleted === true);
+}
+
+console.log('\n  ── the monthly live index ──\n');
+
+{
+	// The real study-002 instrument on a fielding fixture study, with rows
+	// written straight to storage so they can sit in a month that has closed.
+	const policeDoc = parseYaml(
+		readFileSync(join(HERE, '..', 'research', 'portal', 'study-002', 'instrument-v0.yaml'), 'utf8')
+	) as InstrumentDocument;
+	const police = compileInstrument(policeDoc);
+	const registry: StudiesRegistry = {
+		meta: { generated: 'fixture', count: 1, schemaVersion: 1 },
+		studies: [{ ...study('index', 'fielding', 'dt-research-002', police), fielding_window: { start: '2026-01-01', end: null } }],
+		instruments: { [`${police.id}@${police.version}`]: police }
+	};
+	const env = researchEnv({ STUDIES: registry });
+	const now = Date.now();
+	const answers = (t: number) =>
+		JSON.stringify({
+			pti_t1: t, pti_t2: t, pti_t3: t, pti_t4: t, pti_t5: t,
+			pti_g1: 6, pti_g2: 4, pti_g3: 6, pti_g4: 6, pti_g5: 6,
+			pti_e1: 'no', pti_e5: ['none']
+		});
+	const insert = (receipt: string, submittedAt: number, t: number) =>
+		env.RESEARCH_DB!.prepare(
+			`INSERT INTO research_responses
+			 (receipt, study_id, instrument_id, instrument_version, instrument_hash, locale, channel,
+			  consent_version, started_at, submitted_at, completion_ms, answers, created_at)
+			 VALUES (?, 'dt-research-002', ?, ?, ?, 'en', 'test', 'v1', ?, ?, 90000, ?, ?)`
+		)
+			.bind(receipt, police.id, police.version, police.hash, submittedAt - 90_000, submittedAt, answers(t), submittedAt)
+			.run();
+	const earlier = now - 40 * 86_400_000;
+	for (let i = 0; i < 40; i++) await insert(`old-${i}`, earlier + i * 1000, 3 + (i % 4));
+	for (let i = 0; i < 5; i++) await insert(`new-${i}`, now - 60_000 - i * 1000, 7);
+
+	const live = await get(env, '/api/studies/index/live');
+	const months = live.body.series?.months ?? [];
+	ok('the live results carry a monthly series', live.status === 200 && months.length >= 2, `${months.length} months`);
+	ok(
+		'the series starts at the first fielding month',
+		months[0]?.period === '2026-01',
+		months[0]?.period ?? ''
+	);
+	const last = months[months.length - 1];
+	ok('the last month is the current one, provisional', last?.closed === false && last?.results.n === 5);
+	const observed = months.find((m: any) => m.results.n === 40);
+	ok('a closed month with enough answers publishes a level', observed?.closed === true && observed?.index.level !== null);
+	ok(
+		'a current month under the floor carries the closed level forward',
+		last?.index.gain === null && last?.index.level === observed?.index.level
+	);
+	ok(
+		'no row, receipt or timestamp leaves the endpoint',
+		!JSON.stringify(live.body).includes('old-0') && !JSON.stringify(live.body).includes(String(earlier))
+	);
+
+	const closedMonth = await post(env, '/api/studies/index/withdraw', { receipt: 'old-0' });
+	ok('an answer from a closed month cannot be deleted', closedMonth.status === 409, closedMonth.body.error ?? '');
+	const thisMonth = await post(env, '/api/studies/index/withdraw', { receipt: 'new-0' });
+	ok('an answer from this month can be deleted', thisMonth.status === 200 && thisMonth.body.deleted === true);
+	const unknown = await post(env, '/api/studies/index/withdraw', { receipt: 'nobody' });
+	ok('an unknown receipt reports false, not a month error', unknown.status === 200 && unknown.body.deleted === false);
 }
 
 console.log('\n  ── the real registry ──\n');

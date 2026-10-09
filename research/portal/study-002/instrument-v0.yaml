@@ -2,7 +2,14 @@
 # DT Research 002: instrument v0.1.0-draft
 #
 # "Tunisia Police Index" (working names PTI / PLHI; the name is decided with the
-# design). Wave 01.
+# design). A monthly series: one frozen instrument, fielded continuously, with
+# the index published once per calendar month (scoring.series).
+#
+# Anonymity is a design rule: the instrument asks nothing about who the
+# respondent is, except one optional question, the governorate, for those who
+# want their region counted. It can be skipped like any other, it is published
+# only as the seven INS regions under the cell floor, and there is no age or
+# gender item, so there is nothing to reweight by and the figures say so.
 #
 # Status: draft. Not frozen. Not fielded. English is the source.
 #
@@ -28,7 +35,7 @@ instrument:
   content_hash: null
   source_locale: en
   locales: [en, fr, ar]
-  estimated_minutes: 4
+  estimated_minutes: 3
   completion_target_minutes_max: 6
   pretest_required: true
   response_scale_note: >-
@@ -104,11 +111,22 @@ modules:
     label_ar: بين الأمس واليوم
     items: [pti_c1, pti_c2]
 
-  - id: about
-    label: About you
-    label_fr: À propos de vous
-    label_ar: معلومات عنك
-    items: [demo_age_band, demo_gender, demo_residence, demo_governorate]
+  - id: where
+    label: Your region (optional)
+    label_fr: Votre région (facultatif)
+    label_ar: جهتك (اختياري)
+    intro_en: >-
+      This last question is optional. Answer it only if you want your region to be
+      counted. We publish regions, never a governorate on its own, and never a
+      group of fewer than 20 people.
+    intro_fr: >-
+      Cette dernière question est facultative. N'y répondez que si vous souhaitez
+      que votre région soit comptée. Nous publions des régions, jamais un
+      gouvernorat isolé, et jamais un groupe de moins de 20 personnes.
+    intro_ar: >-
+      هذا السؤال الأخير اختياري. أجب عنه فقط إن أردت أن تُحتسب جهتك. ننشر النتائج
+      حسب الجهات، لا حسب ولاية بمفردها، ولا ننشر أبدًا مجموعة تضمّ أقلّ من 20 شخصًا.
+    items: [demo_governorate]
 
 items:
   # ---------------------------------------------------------------------------
@@ -130,9 +148,9 @@ items:
     tier: core
     construct: consent
     provenance: project
-    text_en: "I take part voluntarily. I can stop at any time before submitting, and I can delete my answers later with the receipt code I will receive, until this wave closes."
-    text_fr: "Je participe volontairement. Je peux m'arrêter à tout moment avant d'envoyer mes réponses, et je pourrai les supprimer ensuite avec le code de reçu que je recevrai, jusqu'à la clôture de cette vague."
-    text_ar: "أشارك بمحض إرادتي. يمكنني التوقّف في أيّ وقت قبل الإرسال، ويمكنني حذف إجاباتي لاحقًا برمز الإيصال الذي سأحصل عليه، إلى حين إغلاق هذه الدورة."
+    text_en: "I take part voluntarily. I can stop at any time before submitting, and I can delete my answers later with the receipt code I will receive, until the end of the month in which I answer."
+    text_fr: "Je participe volontairement. Je peux m'arrêter à tout moment avant d'envoyer mes réponses, et je pourrai les supprimer ensuite avec le code de reçu que je recevrai, jusqu'à la fin du mois où je réponds."
+    text_ar: "أشارك بمحض إرادتي. يمكنني التوقّف في أيّ وقت قبل الإرسال، ويمكنني حذف إجاباتي لاحقًا برمز الإيصال الذي سأحصل عليه، إلى نهاية الشهر الذي أجبت فيه."
     response: consent
     required: true
 
@@ -471,73 +489,24 @@ items:
       ar: { low: "تراجعت كثيرًا", mid: "لم تتغيّر", high: "ازدادت كثيرًا" }
 
   # ---------------------------------------------------------------------------
-  # About you
+  # Region (optional)
   # ---------------------------------------------------------------------------
-  - id: demo_age_band
-    module: about
-    tier: core
-    construct: demographics
-    provenance: project
-    text_en: "How old are you?"
-    text_fr: "Quel âge avez-vous ?"
-    text_ar: "كم عمرك؟"
-    response: single_choice
-    required: true
-    options: [18_24, 25_34, 35_44, 45_59, 60_plus, prefer_not_to_say]
-    option_labels:
-      en: { 18_24: "18–24", 25_34: "25–34", 35_44: "35–44", 45_59: "45–59", 60_plus: "60 or older", prefer_not_to_say: "Prefer not to answer" }
-      fr: { 18_24: "18–24 ans", 25_34: "25–34 ans", 35_44: "35–44 ans", 45_59: "45–59 ans", 60_plus: "60 ans ou plus", prefer_not_to_say: "Je préfère ne pas répondre" }
-      ar: { 18_24: "18–24", 25_34: "25–34", 35_44: "35–44", 45_59: "45–59", 60_plus: "60 أو أكثر", prefer_not_to_say: "أفضّل عدم الإجابة" }
-
-  - id: demo_gender
-    module: about
-    tier: core
-    construct: demographics
-    provenance: project
-    text_en: "Are you…"
-    text_fr: "Vous êtes…"
-    text_ar: "هل أنت…"
-    response: single_choice
-    required: true
-    options: [woman, man, prefer_not_to_say]
-    option_labels:
-      en: { woman: "A woman", man: "A man", prefer_not_to_say: "Prefer not to answer" }
-      fr: { woman: "Une femme", man: "Un homme", prefer_not_to_say: "Je préfère ne pas répondre" }
-      ar: { woman: "امرأة", man: "رجل", prefer_not_to_say: "أفضّل عدم الإجابة" }
-
-  - id: demo_residence
-    module: about
-    tier: core
-    construct: demographics
-    provenance: project
-    text_en: "Where do you live?"
-    text_fr: "Où vivez-vous ?"
-    text_ar: "أين تقيم؟"
-    response: single_choice
-    required: true
-    options: [inside_tunisia, outside_tunisia, prefer_not_to_say]
-    option_labels:
-      en: { inside_tunisia: "In Tunisia", outside_tunisia: "Outside Tunisia", prefer_not_to_say: "Prefer not to answer" }
-      fr: { inside_tunisia: "En Tunisie", outside_tunisia: "À l'étranger", prefer_not_to_say: "Je préfère ne pas répondre" }
-      ar: { inside_tunisia: "في تونس", outside_tunisia: "خارج تونس", prefer_not_to_say: "أفضّل عدم الإجابة" }
-
   - id: demo_governorate
-    module: about
+    module: where
     tier: core
     construct: demographics
     provenance: project
-    text_en: "In which governorate?"
-    text_fr: "Dans quel gouvernorat ?"
-    text_ar: "في أيّ ولاية؟"
+    text_en: "Which governorate do you live in?"
+    text_fr: "Dans quel gouvernorat vivez-vous ?"
+    text_ar: "في أيّ ولاية تقيم؟"
     response: single_choice
     required: false
-    show_if: demo_residence == inside_tunisia
-    notes: "Published only as the seven INS regions (scoring.regions) until a governorate reaches the map floor at wave close."
-    options: [tunis, ariana, ben_arous, manouba, nabeul, zaghouan, bizerte, beja, jendouba, kef, siliana, sousse, monastir, mahdia, sfax, kairouan, kasserine, sidi_bouzid, gabes, medenine, tataouine, gafsa, tozeur, kebili, prefer_not_to_say]
+    notes: "Optional. Published only as the seven INS regions (scoring.regions), each under the cell floor."
+    options: [tunis, ariana, ben_arous, manouba, nabeul, zaghouan, bizerte, beja, jendouba, kef, siliana, sousse, monastir, mahdia, sfax, kairouan, kasserine, sidi_bouzid, gabes, medenine, tataouine, gafsa, tozeur, kebili, outside_tunisia, prefer_not_to_say]
     option_labels:
-      en: { tunis: "Tunis", ariana: "Ariana", ben_arous: "Ben Arous", manouba: "Manouba", nabeul: "Nabeul", zaghouan: "Zaghouan", bizerte: "Bizerte", beja: "Béja", jendouba: "Jendouba", kef: "Le Kef", siliana: "Siliana", sousse: "Sousse", monastir: "Monastir", mahdia: "Mahdia", sfax: "Sfax", kairouan: "Kairouan", kasserine: "Kasserine", sidi_bouzid: "Sidi Bouzid", gabes: "Gabès", medenine: "Médenine", tataouine: "Tataouine", gafsa: "Gafsa", tozeur: "Tozeur", kebili: "Kébili", prefer_not_to_say: "Prefer not to answer" }
-      fr: { tunis: "Tunis", ariana: "Ariana", ben_arous: "Ben Arous", manouba: "La Manouba", nabeul: "Nabeul", zaghouan: "Zaghouan", bizerte: "Bizerte", beja: "Béja", jendouba: "Jendouba", kef: "Le Kef", siliana: "Siliana", sousse: "Sousse", monastir: "Monastir", mahdia: "Mahdia", sfax: "Sfax", kairouan: "Kairouan", kasserine: "Kasserine", sidi_bouzid: "Sidi Bouzid", gabes: "Gabès", medenine: "Médenine", tataouine: "Tataouine", gafsa: "Gafsa", tozeur: "Tozeur", kebili: "Kébili", prefer_not_to_say: "Je préfère ne pas répondre" }
-      ar: { tunis: "تونس", ariana: "أريانة", ben_arous: "بن عروس", manouba: "منوبة", nabeul: "نابل", zaghouan: "زغوان", bizerte: "بنزرت", beja: "باجة", jendouba: "جندوبة", kef: "الكاف", siliana: "سليانة", sousse: "سوسة", monastir: "المنستير", mahdia: "المهدية", sfax: "صفاقس", kairouan: "القيروان", kasserine: "القصرين", sidi_bouzid: "سيدي بوزيد", gabes: "قابس", medenine: "مدنين", tataouine: "تطاوين", gafsa: "قفصة", tozeur: "توزر", kebili: "قبلي", prefer_not_to_say: "أفضّل عدم الإجابة" }
+      en: { tunis: "Tunis", ariana: "Ariana", ben_arous: "Ben Arous", manouba: "Manouba", nabeul: "Nabeul", zaghouan: "Zaghouan", bizerte: "Bizerte", beja: "Béja", jendouba: "Jendouba", kef: "Le Kef", siliana: "Siliana", sousse: "Sousse", monastir: "Monastir", mahdia: "Mahdia", sfax: "Sfax", kairouan: "Kairouan", kasserine: "Kasserine", sidi_bouzid: "Sidi Bouzid", gabes: "Gabès", medenine: "Médenine", tataouine: "Tataouine", gafsa: "Gafsa", tozeur: "Tozeur", kebili: "Kébili", outside_tunisia: "I live outside Tunisia", prefer_not_to_say: "Prefer not to answer" }
+      fr: { tunis: "Tunis", ariana: "Ariana", ben_arous: "Ben Arous", manouba: "La Manouba", nabeul: "Nabeul", zaghouan: "Zaghouan", bizerte: "Bizerte", beja: "Béja", jendouba: "Jendouba", kef: "Le Kef", siliana: "Siliana", sousse: "Sousse", monastir: "Monastir", mahdia: "Mahdia", sfax: "Sfax", kairouan: "Kairouan", kasserine: "Kasserine", sidi_bouzid: "Sidi Bouzid", gabes: "Gabès", medenine: "Médenine", tataouine: "Tataouine", gafsa: "Gafsa", tozeur: "Tozeur", kebili: "Kébili", outside_tunisia: "Je vis hors de Tunisie", prefer_not_to_say: "Je préfère ne pas répondre" }
+      ar: { tunis: "تونس", ariana: "أريانة", ben_arous: "بن عروس", manouba: "منوبة", nabeul: "نابل", zaghouan: "زغوان", bizerte: "بنزرت", beja: "باجة", jendouba: "جندوبة", kef: "الكاف", siliana: "سليانة", sousse: "سوسة", monastir: "المنستير", mahdia: "المهدية", sfax: "صفاقس", kairouan: "القيروان", kasserine: "القصرين", sidi_bouzid: "سيدي بوزيد", gabes: "قابس", medenine: "مدنين", tataouine: "تطاوين", gafsa: "قفصة", tozeur: "توزر", kebili: "قبلي", outside_tunisia: "أقيم خارج تونس", prefer_not_to_say: "أفضّل عدم الإجابة" }
 
 # -----------------------------------------------------------------------------
 # Scoring. Hashed with the instrument. Every value in [0, 1] before scaling.
@@ -639,6 +608,17 @@ scoring:
       south_east: [gabes, medenine, tataouine]
       south_west: [gafsa, tozeur, kebili]
   cell_floor: 20
+  # The monthly series (index-spec.md §8). Months are calendar months in
+  # Tunisia's time (UTC+1, no daylight saving). The published index for a month
+  # is a local-level Kalman filter over every month so far: the true level may
+  # drift by about process_sd points a month, and each month's mean counts in
+  # proportion to how precisely it was measured. A month with fewer than
+  # min_month_n scored respondents carries the previous level forward.
+  series:
+    period: month
+    utc_offset_minutes: 60
+    process_sd: 2.5
+    min_month_n: 30
   # Context items: published as distributions beside the index, never scored.
   report_items: [pti_c1, pti_c2]
   # Pre-registered exclusions, applied before any aggregate and counted per rule
