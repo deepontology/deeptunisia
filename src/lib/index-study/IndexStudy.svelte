@@ -224,7 +224,7 @@
 
 <!-- The shell is a fixed window; a document page owns its own scroll. The
      ruler sits beside the scroll, not inside it, so it never moves. -->
-<div class="frame" class:rtl={locale === 'ar'}>
+<div class="frame research-type" class:rtl={locale === 'ar'}>
 <div class="scroll" bind:this={scrollEl}>
 	<!-- The section bar: the one place the page says where the reader is. -->
 	<div class="secbar mono">
@@ -246,7 +246,23 @@
 		class="plate-hero"
 		label="{t('index.fig.label')} 01"
 		caption={t('index.fig.one')}
-	/>
+	>
+		<!-- The cover: what this is, before the number. Always light on the
+		     artwork's black, whatever the page theme. -->
+		<div class="cover">
+			<p class="cover-kicker mono">{t('index.kicker')} · {t('research.hub.kind.monthly')}</p>
+			<h1 class="cover-title">{titleOf(study, locale)}</h1>
+			<p class="cover-line">{t('index.cover.line')}</p>
+			<p class="cover-meta mono">
+				<span class="cover-tag" class:live={open}>
+					{#if open}<span class="pulse" aria-hidden="true"></span>{/if}
+					{t(open ? 'research.stage.live' : 'research.stage.development')}
+				</span>
+				{#if month}<span>{monthLabel(month.period)}</span>{/if}
+				{#if hasIndex}<span>PSI {fmt(headline)}</span><span>n = {fmt(results?.n)}</span>{/if}
+			</p>
+		</div>
+	</Plate>
 
 	<!-- The title band: the number and its name on one full-width plate. -->
 	<div class="title-band">
@@ -272,7 +288,6 @@
 		</div>
 
 		<div class="title">
-			<h1>{titleOf(study, locale)}</h1>
 			<p class="readout mono">
 				{#if hasIndex}
 					{tf('index.headline.readout', {
@@ -426,7 +441,7 @@
 		name="psi-6"
 		width={1920}
 		height={1080}
-		focus="50% 60%"
+		focus="50% 45%"
 		class="plate-strip"
 		label="{t('index.fig.label')} 02"
 		caption={t('index.fig.two')}
@@ -725,7 +740,7 @@
 		height: 2.25rem;
 		padding-inline: 1rem;
 		border-bottom: 1px solid var(--border-subtle);
-		background: color-mix(in oklch, var(--surface-base) 86%, transparent);
+		background: color-mix(in oklab, var(--surface-base) 86%, transparent);
 		backdrop-filter: blur(8px);
 		font-size: 0.6875rem;
 		letter-spacing: 0.14em;
@@ -785,7 +800,7 @@
 		--plate-h: min(74vh, 56cqw);
 	}
 	.pti :global(.plate-strip) {
-		--plate-h: clamp(13rem, 36vh, 24rem);
+		--plate-h: clamp(20rem, 64vh, 42rem);
 		margin-top: 4rem;
 	}
 	.pti :global(.plate-closing) {
@@ -799,14 +814,99 @@
 		margin-inline: calc(50% - 50cqw);
 		margin-top: 1.5rem;
 		padding: 1.6rem max(1rem, calc((100cqw - 72rem) / 2 + 1rem)) 2.4rem;
-		background: color-mix(in oklch, var(--accent) 13%, var(--surface-base));
-		border-block: 1px solid color-mix(in oklch, var(--accent) 35%, transparent);
+		background: color-mix(in oklab, var(--accent) 13%, var(--surface-base));
+		border-block: 1px solid color-mix(in oklab, var(--accent) 35%, transparent);
 	}
 	.title-band .masthead {
-		border-bottom-color: color-mix(in oklch, var(--accent) 35%, transparent);
+		border-bottom-color: color-mix(in oklab, var(--accent) 35%, transparent);
 	}
 	.title-band .kicker {
 		color: var(--accent);
+	}
+
+	/* ---- the cover on plate 01 ------------------------------------------- */
+	.cover {
+		/* The cover always sits on the artwork's black, so it takes the dark
+		   theme's accent lightness whatever the page theme is. */
+		--cover-accent: oklch(78% 0.13 var(--accent-h));
+		position: absolute;
+		inset: auto 0 0 0;
+		padding: 7rem max(1rem, calc((100cqw - 72rem) / 2 + 1rem)) 1.8rem;
+		background: linear-gradient(to top, rgb(0 0 0 / 0.9) 30%, rgb(0 0 0 / 0.55) 65%, rgb(0 0 0 / 0));
+		color: #f4f4f2;
+	}
+	.cover-kicker {
+		margin: 0 0 0.7rem;
+		font-size: 0.6875rem;
+		letter-spacing: 0.2em;
+		text-transform: uppercase;
+		color: var(--cover-accent);
+	}
+	.cover-title {
+		margin: 0;
+		max-width: 16ch;
+		font-size: clamp(2.2rem, 5.6vw, 4.8rem);
+		line-height: 0.98;
+		font-weight: 700;
+		letter-spacing: -0.01em;
+		text-transform: uppercase;
+	}
+	.cover-line {
+		margin: 0.9rem 0 1.1rem;
+		max-width: 46ch;
+		font-family: var(--font-serif);
+		font-size: clamp(1.05rem, 1.7vw, 1.3rem);
+		line-height: 1.4;
+		color: rgb(244 244 242 / 0.88);
+	}
+	.cover-meta {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.4rem 1.1rem;
+		margin: 0;
+		font-size: 0.6875rem;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: rgb(244 244 242 / 0.75);
+	}
+	.cover-tag {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
+		padding: 0.3rem 0.6rem;
+		border: 1px solid rgb(244 244 242 / 0.45);
+		color: #f4f4f2;
+	}
+	.cover-tag.live {
+		background: var(--cover-accent);
+		border-color: var(--cover-accent);
+		color: #0b0b0b;
+	}
+	.pulse {
+		width: 0.45rem;
+		height: 0.45rem;
+		border-radius: 50%;
+		background: currentColor;
+		animation: pulse 1.6s ease-in-out infinite;
+	}
+	@keyframes pulse {
+		50% {
+			opacity: 0.25;
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.pulse {
+			animation: none;
+		}
+	}
+	.rtl .cover-kicker,
+	.rtl .cover-meta,
+	.rtl .cover-title {
+		letter-spacing: 0;
+	}
+	.rtl .cover-line {
+		font-family: var(--font-sans);
 	}
 
 	/* ---- the close ------------------------------------------------------ */
@@ -904,13 +1004,6 @@
 	}
 	.digits.empty {
 		color: var(--text-faint);
-	}
-	.title h1 {
-		font-size: clamp(1.4rem, 2.6vw, 2rem);
-		font-weight: 600;
-		letter-spacing: 0.02em;
-		text-transform: uppercase;
-		margin: 0.4rem 0 0.3rem;
 	}
 	.readout {
 		color: var(--text-secondary);
@@ -1205,8 +1298,8 @@
 		height: 2.1rem;
 		background: var(--surface-sunken);
 		background-image: linear-gradient(
-			color-mix(in oklch, var(--index-band-5) calc(var(--share) * 100%), transparent),
-			color-mix(in oklch, var(--index-band-5) calc(var(--share) * 100%), transparent)
+			color-mix(in oklab, var(--accent) calc(var(--share) * 100%), transparent),
+			color-mix(in oklab, var(--accent) calc(var(--share) * 100%), transparent)
 		);
 		border-radius: 2px;
 	}
@@ -1323,8 +1416,28 @@
 		.pti :global(.plate-hero) {
 			--plate-h: 58vh;
 		}
-		.pti :global(.plate-closing) {
-			--plate-h: 82vh;
+		/* On a phone the barrier and the street are shown whole, at their
+		   own 16:9, instead of a tall crop of a wide scene. The closing copy
+		   moves under the street, on the plate's black, so it covers nothing. */
+		.pti :global(.plate-strip) {
+			--plate-h: auto;
+			--plate-ar: 16 / 9;
+			margin-top: 3rem;
+		}
+		.pti :global(.plate-closing .plate-frame) {
+			height: auto;
+		}
+		.pti :global(.plate-closing picture) {
+			height: auto;
+			aspect-ratio: 16 / 9;
+		}
+		.pti :global(.plate-closing .plate-over) {
+			position: static;
+		}
+		.closing-copy {
+			position: static;
+			padding: 1.4rem 1rem 1.6rem;
+			background: none;
 		}
 		.panel-row,
 		.facts {

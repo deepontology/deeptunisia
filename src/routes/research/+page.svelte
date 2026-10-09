@@ -101,7 +101,7 @@
 	{#if s}<p class="kicker mono"><span class="k-num">{s.num}</span><span class="k-slash">/</span>{s.label}</p>{/if}
 {/snippet}
 
-<div class="frame" class:rtl={locale === 'ar'}>
+<div class="frame research-type" class:rtl={locale === 'ar'}>
 <div class="scroll" bind:this={scrollEl}>
 <div class="hub">
 	<Plate
@@ -267,8 +267,8 @@
 		margin-inline: calc(50% - 50cqw);
 		margin-top: 1.5rem;
 		padding: 2.2rem max(1rem, calc((100cqw - 72rem) / 2 + 1rem)) 2.4rem;
-		background: color-mix(in oklch, var(--accent) 13%, var(--surface-base));
-		border-block: 1px solid color-mix(in oklch, var(--accent) 35%, transparent);
+		background: color-mix(in oklab, var(--accent) 13%, var(--surface-base));
+		border-block: 1px solid color-mix(in oklab, var(--accent) 35%, transparent);
 	}
 	.band-kicker {
 		margin: 0 0 0.6rem;
@@ -300,14 +300,14 @@
 		display: grid;
 		grid-template-columns: repeat(3, minmax(0, 1fr));
 		margin: 0;
-		border-top: 1px solid color-mix(in oklch, var(--accent) 35%, transparent);
+		border-top: 1px solid color-mix(in oklab, var(--accent) 35%, transparent);
 	}
 	.stats div {
 		padding: 0.8rem 1rem 0 0;
 	}
 	.stats div + div {
 		padding-inline-start: 1rem;
-		border-inline-start: 1px solid color-mix(in oklch, var(--accent) 25%, transparent);
+		border-inline-start: 1px solid color-mix(in oklab, var(--accent) 25%, transparent);
 	}
 	.stats dt {
 		font-size: 0.6875rem;
@@ -645,7 +645,7 @@
 		.stats div + div {
 			padding: 0.7rem 0;
 			border-inline-start: 0;
-			border-bottom: 1px solid color-mix(in oklch, var(--accent) 25%, transparent);
+			border-bottom: 1px solid color-mix(in oklab, var(--accent) 25%, transparent);
 			display: flex;
 			justify-content: space-between;
 			align-items: baseline;

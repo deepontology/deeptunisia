@@ -359,7 +359,7 @@
 		padding: 0;
 		border-radius: 2px;
 		cursor: pointer;
-		background: color-mix(in oklch, var(--accent) calc(10% + var(--w) * 90%), var(--surface-base));
+		background: color-mix(in oklab, var(--accent) calc(10% + var(--w) * 90%), var(--surface-base));
 		transform: scale(calc(1 + var(--lift) * 0.1));
 		filter: brightness(calc(1 + var(--lift) * 0.15));
 		transition:
@@ -377,10 +377,10 @@
 		background: var(--surface-base);
 	}
 	.tile.q-policeState.zero {
-		background: color-mix(in oklch, var(--index-band-1) 8%, var(--surface-base));
+		background: color-mix(in oklab, var(--index-band-1) 8%, var(--surface-base));
 	}
 	.tile.q-guardian.zero {
-		background: color-mix(in oklch, var(--index-band-5) 8%, var(--surface-base));
+		background: color-mix(in oklab, var(--index-band-5) 8%, var(--surface-base));
 	}
 	.tile.line {
 		outline-color: var(--border-strong);
@@ -435,10 +435,10 @@
 	@keyframes breathe {
 		0%,
 		100% {
-			box-shadow: 0 0 0 2px color-mix(in oklch, var(--text-primary) 18%, transparent);
+			box-shadow: 0 0 0 2px color-mix(in oklab, var(--text-primary) 18%, transparent);
 		}
 		50% {
-			box-shadow: 0 0 0 6px color-mix(in oklch, var(--text-primary) 0%, transparent);
+			box-shadow: 0 0 0 6px color-mix(in oklab, var(--text-primary) 0%, transparent);
 		}
 	}
 	.empty {

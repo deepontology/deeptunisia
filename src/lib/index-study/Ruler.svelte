@@ -129,7 +129,7 @@
 		inset-inline-end: 0;
 		width: var(--w);
 		border-inline-start: 1px solid var(--border-subtle);
-		background: color-mix(in oklch, var(--surface-base) 88%, transparent);
+		background: color-mix(in oklab, var(--surface-base) 88%, transparent);
 		backdrop-filter: blur(6px);
 		cursor: crosshair;
 		touch-action: none;

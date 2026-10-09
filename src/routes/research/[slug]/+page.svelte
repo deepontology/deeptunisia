@@ -36,7 +36,7 @@
 	<IndexStudy {study} {instrument} />
 {:else}
 <!-- The shell is a fixed window; a document page owns its own scroll. -->
-<div class="scroll">
+<div class="scroll research-type">
 <div class="wrap">
 	<header class="prose hero">
 		<p class="eyebrow">

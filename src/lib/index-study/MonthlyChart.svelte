@@ -159,8 +159,8 @@
 	.bands span {
 		position: absolute;
 		inset-inline: 0;
-		background: color-mix(in oklch, var(--c) 9%, transparent);
-		border-top: 1px dashed color-mix(in oklch, var(--c) 30%, transparent);
+		background: color-mix(in oklab, var(--c) 9%, transparent);
+		border-top: 1px dashed color-mix(in oklab, var(--c) 30%, transparent);
 	}
 	.bands span:last-child {
 		border-top: 0;
@@ -182,7 +182,7 @@
 		overflow: visible;
 	}
 	.ci {
-		fill: color-mix(in oklch, var(--accent) 16%, transparent);
+		fill: color-mix(in oklab, var(--accent) 16%, transparent);
 	}
 	.line {
 		fill: none;
@@ -237,11 +237,11 @@
 	}
 	.point.on .dot {
 		transform: scale(1.45);
-		box-shadow: 0 0 0 3px var(--surface-sunken), 0 0 0 5px color-mix(in oklch, var(--accent) 45%, transparent);
+		box-shadow: 0 0 0 3px var(--surface-sunken), 0 0 0 5px color-mix(in oklab, var(--accent) 45%, transparent);
 	}
 	.point.provisional.on .dot {
 		box-shadow: inset 0 0 0 2.5px var(--accent), 0 0 0 3px var(--surface-sunken),
-			0 0 0 5px color-mix(in oklch, var(--accent) 45%, transparent);
+			0 0 0 5px color-mix(in oklab, var(--accent) 45%, transparent);
 	}
 	@media (hover: hover) {
 		.point:hover .dot {
@@ -299,7 +299,7 @@
 	.k-ci {
 		width: 1.1rem;
 		height: 0.6rem;
-		background: color-mix(in oklch, var(--accent) 16%, transparent);
+		background: color-mix(in oklab, var(--accent) 16%, transparent);
 	}
 	@media (prefers-reduced-motion: reduce) {
 		.dot {
