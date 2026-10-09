@@ -814,8 +814,30 @@ console.log('\n  ── the monthly live index ──\n');
 	for (let i = 0; i < 40; i++) await insert(`old-${i}`, earlier + i * 1000, 3 + (i % 4));
 	for (let i = 0; i < 5; i++) await insert(`new-${i}`, now - 60_000 - i * 1000, 7);
 
+	// Below the first-figure floor (100 valid answers): counts only.
+	const early = await get(env, '/api/studies/index/live');
+	const earlyMonths = early.body.series?.months ?? [];
+	ok(
+		'below the first-figure floor only counts are published',
+		early.status === 200 &&
+			early.body.floor?.reached === false &&
+			early.body.floor?.n === 45 &&
+			early.body.floor?.first_figure_n === 100 &&
+			early.body.results === null &&
+			earlyMonths.every((m: any) => m.results === null && m.index.level === null) &&
+			early.body.series?.window?.results === null,
+		JSON.stringify(early.body.floor)
+	);
+	ok(
+		'and the counts are there: per month and in all',
+		earlyMonths.reduce((sum: number, m: any) => sum + m.n, 0) === 45 && early.body.series?.window?.n === 45
+	);
+
+	// Past it: figures appear, and each month still needs 30 of its own.
+	for (let i = 40; i < 100; i++) await insert(`old-${i}`, earlier + i * 1000, 3 + (i % 4));
 	const live = await get(env, '/api/studies/index/live');
 	const months = live.body.series?.months ?? [];
+	ok('past the floor the figures are published', live.body.floor?.reached === true && live.body.results?.n === 105);
 	ok('the live results carry a monthly series', live.status === 200 && months.length >= 2, `${months.length} months`);
 	ok(
 		'the series starts at the first fielding month',
@@ -823,12 +845,21 @@ console.log('\n  ── the monthly live index ──\n');
 		months[0]?.period ?? ''
 	);
 	const last = months[months.length - 1];
-	ok('the last month is the current one, provisional', last?.closed === false && last?.results.n === 5);
-	const observed = months.find((m: any) => m.results.n === 40);
-	ok('a closed month with enough answers publishes a level', observed?.closed === true && observed?.index.level !== null);
+	ok(
+		'the current month under the month floor publishes its count, not its figures',
+		last?.closed === false && last?.n === 5 && last?.results === null
+	);
+	const observed = months.find((m: any) => m.n === 100);
+	ok('a closed month with enough answers publishes a level and its own figures', observed?.closed === true && observed?.index.level !== null && observed?.results?.n === 100);
 	ok(
 		'a current month under the floor carries the closed level forward',
 		last?.index.gain === null && last?.index.level === observed?.index.level
+	);
+	const window = live.body.series?.window;
+	ok(
+		'the live results carry the 12-month window, every recent answer in it',
+		window?.months === 12 && window?.last === last?.period && window?.results?.n_total === 105,
+		`${window?.first}..${window?.last} n_total ${window?.results?.n_total}`
 	);
 	ok(
 		'no row, receipt or timestamp leaves the endpoint',

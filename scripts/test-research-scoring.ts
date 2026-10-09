@@ -18,6 +18,7 @@ import {
 	aggregateResponses,
 	aggregateSeries,
 	applyExclusions,
+	applyPublicationFloor,
 	localLevelFilter,
 	periodOf,
 	periodsBetween,
@@ -692,6 +693,58 @@ console.log('\n  ── wave aggregation ──\n');
 		});
 		ok('a row dated after now is not counted', future?.months.length === 1 && future.months[0].results.n_total === 0);
 	}
+	// The rolling window: a 2-month window on 10 January 2027 holds December
+	// and January, and leaves November out.
+	const windowed = structuredClone(spec);
+	windowed.series = { ...windowed.series!, window_months: 2 };
+	const w = aggregateSeries(windowed, seriesRows, { seed: 1, resamples: 50, now, firstPeriod: '2026-10' })?.window;
+	ok(
+		'the window runs back window_months from this month',
+		w?.first === '2026-12' && w?.last === '2027-01' && w?.months === 2,
+		`${w?.first}..${w?.last}`
+	);
+	ok('the window pools every kept answer inside it, counted equally', w?.results.n_total === 50, String(w?.results.n_total));
+	const wide = structuredClone(spec);
+	wide.series = { ...wide.series!, window_months: 12 };
+	ok(
+		'a window longer than the series holds everything so far',
+		aggregateSeries(wide, seriesRows, { seed: 1, resamples: 50, now })?.window?.results.n_total === seriesRows.length
+	);
+	const noWindow = structuredClone(spec);
+	delete noWindow.series!.window_months;
+	ok('a series without window_months has no window', aggregateSeries(noWindow, seriesRows, { seed: 1, resamples: 50, now })?.window === null);
+	const badWindow = structuredClone(spec);
+	badWindow.series = { ...badWindow.series!, window_months: 0 };
+	ok(
+		'a window of zero months is reported',
+		validateScoringSpec(badWindow, itemIds, itemMeta).some((v) => v.includes('window_months'))
+	);
+
+	// The publication floor: below first_figure_n only counts leave.
+	const floored = structuredClone(spec);
+	floored.series = { ...floored.series!, first_figure_n: 200 };
+	const full = aggregateSeries(floored, seriesRows, { seed: 1, resamples: 50, now, firstPeriod: '2026-10' });
+	const allRows = aggregateResponses(floored, seriesRows, { seed: 1, resamples: 50 });
+	const below = applyPublicationFloor(floored, allRows, full);
+	ok(
+		'below the first-figure floor nothing computed is published',
+		below.floor.reached === false &&
+			below.results === null &&
+			below.series!.months.every((m) => m.results === null && m.index.level === null)
+	);
+	ok('but every month keeps its count', below.series!.months.map((m) => m.n).join() === '0,60,10,40');
+	floored.series.first_figure_n = 100;
+	const above = applyPublicationFloor(floored, allRows, full);
+	ok('at the floor the figures are published', above.floor.reached === true && above.results?.n === allRows.n);
+	ok(
+		'a month under min_month_n keeps its level but not its own figures',
+		above.series!.months[2].n === 10 && above.series!.months[2].results === null && above.series!.months[2].index.level !== null
+	);
+	ok('a month over it publishes its own figures', above.series!.months[1].results?.n === 60);
+	const badFloor = structuredClone(spec);
+	badFloor.series = { ...badFloor.series!, first_figure_n: 0 };
+	ok('a first-figure floor of zero is reported', validateScoringSpec(badFloor, itemIds, itemMeta).some((v) => v.includes('first_figure_n')));
+
 	const noSeries = structuredClone(spec);
 	delete noSeries.series;
 	ok('a spec without a series block returns none', aggregateSeries(noSeries, seriesRows, { seed: 1, resamples: 10, now }) === null);
