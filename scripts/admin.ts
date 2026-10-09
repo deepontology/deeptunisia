@@ -970,7 +970,7 @@ function card(i) {
       <button class="plain" data-open type="button">Record review</button>
     </div>
     <form>
-      <input name="by" placeholder="your name" required value="\${esc(localStorage.getItem('admin:by') || '')}">
+      <select name="by" required title="Reviews are recorded under a role label, not a name"><option>maintainer</option><option>JORT verification pass</option></select>
       <input name="date" type="date" required value="\${new Date().toISOString().slice(0,10)}">
       <input name="method" class="method" placeholder="what you actually checked, and against what">
       <button type="submit">Save</button>
@@ -990,7 +990,6 @@ async function submit(e) {
     date: form.date.value,
     method: form.method.value
   };
-  localStorage.setItem('admin:by', body.by);
 
   const res = await fetch('/api/review', {
     method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body)

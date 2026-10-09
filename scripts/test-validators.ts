@@ -163,7 +163,7 @@ const co = (over: Record<string, unknown> = {}) => ({
 
 /** A well-formed review; the V23/V28 suites override one field at a time. */
 const review = (over: Record<string, unknown> = {}) => ({
-	by: 'reviewer',
+	by: 'maintainer',
 	date: '2026-07-26',
 	method: 'source-check',
 	...over
@@ -205,7 +205,7 @@ rejectsWith(
 		basis: 'documented',
 		attributed_to: 'Some Observer',
 		basis_override_reason: 'The decree text is primary evidence for the officeholding.',
-		review: { by: 'fixture reviewer', date: '2026-09-10', method: 'source-check' }
+		review: { by: 'maintainer', date: '2026-09-10', method: 'source-check' }
 	}),
 	'V27: an override missing required reasoning fails and names the rule',
 	'V27'
@@ -219,7 +219,7 @@ accepts(
 		attributed_to: 'Some Observer',
 		reasoning: 'The decree establishes the office; the D grade covered the earlier circulating account.',
 		basis_override_reason: 'The decree text is primary; the D grade reflected the pre-decree reporting.',
-		review: { by: 'fixture reviewer', date: '2026-09-10', method: 'source-check' }
+		review: { by: 'maintainer', date: '2026-09-10', method: 'source-check' }
 	}),
 	'V27: a documented-over-unsubstantiated override with review, reasoning and reason parses'
 );
@@ -232,7 +232,7 @@ rejectsWith(
 		attributed_to: 'Some Observer',
 		reasoning: 'Reasoned from the decree structure.',
 		falsifiable_by: 'A later decree reversing the structure.',
-		review: { by: 'fixture reviewer', date: '2026-09-10', method: 'source-check' }
+		review: { by: 'maintainer', date: '2026-09-10', method: 'source-check' }
 	}),
 	'V27: an inferred-to-documented override without basis_override_reason is rejected',
 	'basis_override_reason'
@@ -261,7 +261,7 @@ accepts(
 		reasoning: 'Reasoned from the decree structure.',
 		falsifiable_by: 'A later decree reversing the structure.',
 		basis_override_reason: 'The primary decree is the claim; the grade reflects the missing secondary literature.',
-		review: { by: 'fixture reviewer', date: '2026-09-10', method: 'source-check' }
+		review: { by: 'maintainer', date: '2026-09-10', method: 'source-check' }
 	}),
 	'V27: a full inferred-to-documented override parses'
 );
@@ -833,9 +833,13 @@ rejectsWith(
 );
 
 // V23 — whitespace reviewer names and dispute fields are missing fields too.
-rejectsWith(ReviewSchema, review({ by: ' ' }), 'V23: a whitespace reviewer name is rejected', 'non-blank');
-rejectsWith(ReviewSchema, review({ by: '\t\n ' }), 'V23: a tab/newline reviewer name is rejected', 'non-blank');
-rejectsWith(ReviewSchema, review({ by: '' }), 'V23: an empty reviewer name is rejected', 'non-blank');
+rejectsWith(ReviewSchema, review({ by: ' ' }), 'V23: a whitespace reviewer is rejected', 'role label');
+rejectsWith(ReviewSchema, review({ by: '\t\n ' }), 'V23: a tab/newline reviewer is rejected', 'role label');
+rejectsWith(ReviewSchema, review({ by: '' }), 'V23: an empty reviewer is rejected', 'role label');
+rejectsWith(ReviewSchema, review({ by: 'Jane Doe' }), 'V23: a personal name is rejected as a reviewer', 'role label');
+rejectsWith(ReviewSchema, review({ by: 'maintainer ' }), 'V23: a padded role label is rejected', 'role label');
+accepts(ReviewSchema, review({ by: 'Research pass 2026-10-09' }), 'V23: a dated research pass is a valid reviewer label');
+accepts(ReviewSchema, review({ by: 'JORT verification pass' }), 'V23: a named verification pass is a valid reviewer label');
 rejectsWith(
 	DisputeSchema,
 	{ claim: ' ', held_by: 'somebody' },

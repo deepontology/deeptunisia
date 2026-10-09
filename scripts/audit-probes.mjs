@@ -194,7 +194,7 @@ const probes = [
 		(dir) =>
 			update(dir, 'positions.yaml', (rows) => {
 				rows[0].review = {
-					by: 'Example reviewer',
+					by: 'maintainer',
 					date: '2026-09-09',
 					method: 'source-check',
 					outcome: 'refuted'
@@ -219,7 +219,7 @@ for (const [name, fn] of probes) {
 // --- schema-level probe (no build) --------------------------------------
 
 const nestedReview = schema.ReviewSchema.safeParse({
-	by: 'Example reviewer',
+	by: 'maintainer',
 	date: '2026-09-09',
 	method: 'source-check',
 	outcome: 'refuted'

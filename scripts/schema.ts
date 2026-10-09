@@ -347,8 +347,19 @@ export const NO_RAW_MACHINE = new Set(['hypotheses', 'eras']);
  */
 export const ReviewMethod = z.enum(['source-check', 'dedup', 'attribute', 'accept-reject', 'judge']);
 
+/**
+ * A reviewer is recorded as a role or a named pass, never as a person: the record
+ * says what kind of check was made and when, which is what a reader can audit.
+ */
+export const REVIEWER_LABEL = /^(maintainer|Initial compilation|JORT verification pass|Research pass \d{4}-\d{2}-\d{2})$/;
+
 export const ReviewSchema = z.strictObject({
-	by: z.string().refine((v) => nonBlank(v, 2), 'reviewer name must be at least 2 non-blank characters (V23)'),
+	by: z
+		.string()
+		.regex(
+			REVIEWER_LABEL,
+			'reviewer must be a role label: maintainer, Initial compilation, JORT verification pass, or Research pass YYYY-MM-DD (V23)'
+		),
 	/** Calendar-valid ISO date. (V23) */
 	date: z
 		.string()
