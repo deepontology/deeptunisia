@@ -988,11 +988,11 @@ export function aggregateResponses(
 		.map((score) => score.index)
 		.filter((value): value is number => value !== null);
 
-	// The plane axes plus the harm component: the three the headline is read
-	// against (index-spec.md §5).
+	// The plane axes plus every part of the index: the components the headline
+	// is read against (index-spec.md §5).
 	const declared = new Set(spec.components.map((component) => component.id));
 	const summaryIds: string[] = [];
-	for (const id of [spec.plane.x, spec.plane.y, 'H']) {
+	for (const id of [spec.plane.x, spec.plane.y, ...spec.index.parts.map((part) => part.ref)]) {
 		if (declared.has(id) && !summaryIds.includes(id)) summaryIds.push(id);
 	}
 	const components: Record<string, ComponentSummary> = {};
