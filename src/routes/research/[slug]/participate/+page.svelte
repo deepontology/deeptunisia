@@ -385,7 +385,7 @@
 </svelte:head>
 
 <!-- The shell is a fixed window; a document page owns its own scroll. -->
-<div class="scroll">
+<div class="scroll research-type">
 	{#if !open}
 		<div class="wrap">
 			<header class="prose">
@@ -799,7 +799,7 @@
 	.option.on,
 	.consent.on {
 		border-color: var(--accent);
-		background: color-mix(in oklch, var(--accent) 14%, var(--surface-raised));
+		background: color-mix(in oklab, var(--accent) 14%, var(--surface-raised));
 		box-shadow: inset 0 0 0 1px var(--accent);
 	}
 	.option.quiet {

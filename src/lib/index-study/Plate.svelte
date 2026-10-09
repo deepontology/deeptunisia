@@ -68,6 +68,9 @@
 	.plate-frame {
 		position: relative;
 		height: var(--plate-h, 60vh);
+		/* With --plate-h: auto, the plate takes the artwork's own proportions,
+		   so the whole scene shows; a parent sets --plate-ar to match it. */
+		aspect-ratio: var(--plate-ar, auto);
 		background: #000;
 		overflow: hidden;
 	}
