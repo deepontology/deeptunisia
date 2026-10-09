@@ -97,7 +97,7 @@ modules:
     label: Freedom
     label_fr: Liberté
     label_ar: الحرية
-    items: [pti_g1, pti_g2, pti_g3, pti_g4, pti_g5]
+    items: [pti_g1, pti_g2, pti_g3, pti_g4, pti_g6, pti_g5]
 
   - id: encounters
     label: Encounters
@@ -222,6 +222,9 @@ items:
     text_en: "When a police officer abuses their power, how likely is it that they will be held accountable?"
     text_fr: "Quand un agent de police abuse de son pouvoir, quelle est la probabilité qu'il ait à en rendre compte ?"
     text_ar: "عندما يتجاوز عون أمن حدود سلطته، ما مدى احتمال أن يُحاسَب على ذلك؟"
+    help_en: "Held accountable means, for example, being disciplined, dismissed or prosecuted."
+    help_fr: "Rendre des comptes signifie, par exemple, être sanctionné, révoqué ou poursuivi en justice."
+    help_ar: "المساءلة تعني مثلًا التأديب أو العزل أو الملاحقة أمام القضاء."
     response: scale_0_10
     required: false
     anchors:
@@ -237,6 +240,9 @@ items:
     text_en: "In your view, the police mainly serve the interests of…"
     text_fr: "Selon vous, la police sert surtout les intérêts…"
     text_ar: "حسب رأيك، تخدم الشرطة أساسًا مصالح…"
+    help_en: "0 means they mainly protect those in power; 10 means they mainly serve ordinary citizens."
+    help_fr: "0 signifie qu'elle protège surtout ceux qui détiennent le pouvoir ; 10, qu'elle sert surtout les citoyens ordinaires."
+    help_ar: "0 يعني أنّها تحمي أساسًا أصحاب السلطة، و10 يعني أنّها تخدم أساسًا المواطنين العاديين."
     response: scale_0_10
     required: false
     anchors:
@@ -255,6 +261,9 @@ items:
     text_en: "How worried are you about being stopped or held by the police without a reason?"
     text_fr: "À quel point craignez-vous d'être contrôlé(e) ou interpellé(e) par la police sans raison ?"
     text_ar: "إلى أيّ مدى تخشى أن تستوقفك الشرطة أو تحتجزك دون سبب؟"
+    help_en: "Stopped means stopped in the street, on the road or at a checkpoint. Held means kept by the police, for example at a station."
+    help_fr: "Contrôlé : arrêté dans la rue, sur la route ou à un barrage. Interpellé : retenu par la police, par exemple dans un poste."
+    help_ar: "الاستيقاف: أن يوقفك أعوان الأمن في الشارع أو على الطريق أو في «باراج». الاحتجاز: أن تبقيك الشرطة لديها، مثلًا في مركز."
     response: scale_0_10
     required: false
     anchors:
@@ -286,6 +295,9 @@ items:
     text_en: "How closely do you think the police watch what ordinary people say, online or in private?"
     text_fr: "Selon vous, à quel point la police surveille-t-elle ce que disent les gens ordinaires, sur Internet ou en privé ?"
     text_ar: "حسب رأيك، إلى أيّ مدى تراقب الشرطة ما يقوله المواطنون العاديون، على الإنترنت أو في أحاديثهم الخاصة؟"
+    help_en: "This asks what you believe, not what you know for certain."
+    help_fr: "La question porte sur ce que vous pensez, pas sur ce que vous savez avec certitude."
+    help_ar: "يتعلّق السؤال بما تعتقده، لا بما تعرفه يقينًا."
     response: scale_0_10
     required: false
     anchors:
@@ -298,9 +310,27 @@ items:
     tier: core
     construct: grip:avoidance
     provenance: project
-    text_en: "How often do you stay away from places or gatherings, or hold back from posting online, because of the police?"
-    text_fr: "À quelle fréquence évitez-vous certains lieux ou rassemblements, ou renoncez-vous à publier en ligne, à cause de la police ?"
-    text_ar: "كم مرّة تتجنّب أماكن أو تجمّعات، أو تمتنع عن النشر على الإنترنت، بسبب الشرطة؟"
+    text_en: "How often do you stay away from places or gatherings because of the police?"
+    text_fr: "À quelle fréquence évitez-vous certains lieux ou rassemblements à cause de la police ?"
+    text_ar: "كم مرّة تتجنّب أماكن أو تجمّعات بسبب الشرطة؟"
+    response: scale_0_10
+    required: false
+    anchors:
+      en: { low: "Never", high: "All the time" }
+      fr: { low: "Jamais", high: "Tout le temps" }
+      ar: { low: "أبدًا", high: "طوال الوقت" }
+
+  - id: pti_g6
+    module: grip
+    tier: core
+    construct: grip:self-censorship
+    provenance: project
+    text_en: "How often do you hold back from posting or commenting online because of the police?"
+    text_fr: "À quelle fréquence renoncez-vous à publier ou à commenter en ligne à cause de la police ?"
+    text_ar: "كم مرّة تمتنع عن النشر أو التعليق على الإنترنت بسبب الشرطة؟"
+    help_en: "Posting includes comments, shares, and messages in public groups."
+    help_fr: "Publier comprend les commentaires, les partages et les messages dans des groupes publics."
+    help_ar: "يشمل النشر التعليقات والمشاركات والرسائل في المجموعات العامّة."
     response: scale_0_10
     required: false
     anchors:
@@ -313,9 +343,12 @@ items:
     tier: core
     construct: grip:impunity
     provenance: project
-    text_en: "Where you live, the police can do whatever they want and nobody can stop them."
-    text_fr: "Là où vous vivez, la police peut faire ce qu'elle veut sans que personne ne puisse l'en empêcher."
-    text_ar: "في المكان الذي تعيش فيه، تستطيع الشرطة أن تفعل ما تشاء دون أن يقدر أحد على ردعها."
+    text_en: "Where you live, the police can do whatever they want."
+    text_fr: "Là où vous vivez, la police peut faire tout ce qu'elle veut."
+    text_ar: "في المكان الذي تعيش فيه، تستطيع الشرطة أن تفعل ما تشاء."
+    help_en: "This asks whether, where you live, rules and the law hold the police back."
+    help_fr: "La question est de savoir si, là où vous vivez, les règles et la loi retiennent la police."
+    help_ar: "يتعلّق السؤال بما إذا كانت القواعد والقانون تكبح الشرطة في المكان الذي تعيش فيه."
     response: scale_0_10
     required: false
     anchors:
@@ -334,6 +367,9 @@ items:
     text_en: "In the last 12 months, have you had any contact with the police?"
     text_fr: "Au cours des 12 derniers mois, avez-vous eu un contact avec la police ?"
     text_ar: "خلال الأشهر الاثني عشر الماضية، هل كان لك أيّ تعامل مع الشرطة؟"
+    help_en: "Any contact counts: being stopped or checked, reporting something, paperwork at a station, being questioned or being held."
+    help_fr: "Tout contact compte : être contrôlé, signaler quelque chose, une démarche dans un poste, être interrogé ou retenu."
+    help_ar: "يُحتسب أيّ تعامل: الاستيقاف أو التثبّت من الهويّة، أو الإبلاغ عن أمر ما، أو إجراء إداري في مركز، أو الاستجواب، أو الاحتجاز."
     response: single_choice
     required: true
     options: [yes, no, prefer_not_to_say]
@@ -391,9 +427,9 @@ items:
     tier: core
     construct: harm:treatment
     provenance: project
-    text_en: "Thinking of your most recent contact, how were you treated?"
-    text_fr: "En pensant à votre contact le plus récent, comment avez-vous été traité(e) ?"
-    text_ar: "بالنظر إلى آخر تعامل لك مع الشرطة، كيف عوملت؟"
+    text_en: "Thinking of your most recent contact in the last 12 months, how were you treated?"
+    text_fr: "En pensant à votre contact le plus récent au cours des 12 derniers mois, comment avez-vous été traité(e) ?"
+    text_ar: "بالنظر إلى آخر تعامل لك مع الشرطة خلال الأشهر الاثني عشر الماضية، كيف عوملت؟"
     response: scale_0_10
     required: false
     show_if: pti_e1 == yes
@@ -410,6 +446,9 @@ items:
     text_en: "During any contact in the last 12 months, did any of these happen to you? Choose all that apply."
     text_fr: "Lors d'un contact au cours des 12 derniers mois, vous est-il arrivé l'une de ces choses ? Cochez tout ce qui s'applique."
     text_ar: "خلال أيّ تعامل في الأشهر الاثني عشر الماضية، هل حدث لك أيّ ممّا يلي؟ اختر كلّ ما ينطبق."
+    help_en: "Nothing you tick here is linked to you. It is only counted together with everyone else's answers."
+    help_fr: "Rien de ce que vous cochez ici n'est relié à vous. C'est seulement compté avec les réponses de tous les autres."
+    help_ar: "لا يُربط أيّ شيء تختاره هنا بك. يُحتسب فقط مع إجابات الآخرين."
     response: multi_choice
     required: false
     show_if: pti_e1 == yes
@@ -449,6 +488,9 @@ items:
     text_en: "In the last 12 months, did any of these happen to someone close to you (family or friends) with the police? Choose all that apply."
     text_fr: "Au cours des 12 derniers mois, l'une de ces choses est-elle arrivée à un proche (famille ou amis) avec la police ? Cochez tout ce qui s'applique."
     text_ar: "خلال الأشهر الاثني عشر الماضية، هل حدث أيّ ممّا يلي لشخص قريب منك (من العائلة أو الأصدقاء) مع الشرطة؟ اختر كلّ ما ينطبق."
+    help_en: "Nothing you tick here is linked to you or to them. It is only counted together with everyone else's answers."
+    help_fr: "Rien de ce que vous cochez ici n'est relié à vous ni à vos proches. C'est seulement compté avec les réponses de tous les autres."
+    help_ar: "لا يُربط أيّ شيء تختاره هنا بك ولا بالمقرّبين منك. يُحتسب فقط مع إجابات الآخرين."
     response: multi_choice
     required: false
     options: [money, insult, threat, force, phone, held_unexplained, none]
@@ -527,7 +569,7 @@ scoring:
   scale_max: 10
   components:
     - { id: T, kind: mean, items: [pti_t1, pti_t2, pti_t3, pti_t4, pti_t5], min_answered: 3 }
-    - { id: G, kind: mean, items: [pti_g1, pti_g2, pti_g3, pti_g4, pti_g5], reverse: [pti_g2], min_answered: 3 }
+    - { id: G, kind: mean, items: [pti_g1, pti_g2, pti_g3, pti_g4, pti_g6, pti_g5], reverse: [pti_g2], min_answered: 4 }
     - { id: D_treat, kind: scale, item: pti_e3, reverse: true }
     - { id: D_abuse, kind: count, item: pti_e4, ignore: [none], saturate: 3 }
     - { id: D, kind: blend, parts: [{ ref: D_treat, weight: 1 }, { ref: D_abuse, weight: 1 }] }
@@ -632,4 +674,4 @@ scoring:
   # on the results page. A row may trip more than one rule.
   exclusions:
     min_completion_seconds: 40
-    straightline_items: [pti_t1, pti_t2, pti_t3, pti_t4, pti_t5, pti_g1, pti_g2, pti_g3, pti_g4, pti_g5]
+    straightline_items: [pti_t1, pti_t2, pti_t3, pti_t4, pti_t5, pti_g1, pti_g2, pti_g3, pti_g4, pti_g6, pti_g5]

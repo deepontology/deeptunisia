@@ -248,7 +248,11 @@ export const ItemSchema = z.strictObject({
 		.strictObject({ en: optionLabelMap.optional(), fr: optionLabelMap.optional(), ar: optionLabelMap.optional() })
 		.optional(),
 	/** multi_choice options that cannot be combined with another ("none"). */
-	exclusive: z.array(z.string().min(1)).optional()
+	exclusive: z.array(z.string().min(1)).optional(),
+	/** A short explanation shown under the question, per locale. */
+	help_en: z.string().min(1).optional(),
+	help_fr: z.string().min(1).optional(),
+	help_ar: z.string().min(1).optional()
 });
 export type Item = z.infer<typeof ItemSchema>;
 
@@ -523,6 +527,10 @@ export function validateInstrument(doc: InstrumentDoc): string[] {
 				}
 				if (item.option_labels !== undefined && !item.option_labels[locale]) {
 					violations.push(`frozen instrument item "${item.id}" has no ${locale} option labels`);
+				}
+				const hasHelp = item.help_en ?? item.help_fr ?? item.help_ar;
+				if (hasHelp && !nonBlank(item[`help_${locale}` as 'help_en'])) {
+					violations.push(`frozen instrument item "${item.id}" has no ${locale} explanation`);
 				}
 			}
 			const translatedModules = doc.modules.some((m) => m.label_fr ?? m.label_ar);

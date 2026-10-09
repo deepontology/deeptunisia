@@ -12,13 +12,15 @@ Aucun nom, adresse e-mail, numéro de téléphone, compte, adresse IP, empreinte
 
 Deux choses concernent votre connexion sans être conservées avec vos réponses. Pour empêcher une même machine d'inonder l'enquête, le serveur compte les envois par adresse à l'aide d'une empreinte salée de l'adresse, qui change chaque jour ; l'adresse elle-même n'est jamais écrite. Et le site est hébergé par Cloudflare qui, comme tout hébergeur, voit passer les connexions ; ses journaux ne conservent qu'une requête sur cent et ne sont jamais reliés aux réponses.
 
-Votre code de reçu est le seul moyen de supprimer vos réponses. Il fonctionne jusqu'à la fin du mois où vous avez répondu. L'indice est publié une fois par mois et le chiffre d'un mois ne change plus après sa clôture : les réponses de ce mois sont alors figées. Les données publiées plus tard indiquent des régions plutôt que des gouvernorats, aucune date plus précise que le mois et aucun code de reçu.
+Votre code de reçu est le seul moyen de supprimer vos réponses. Il fonctionne jusqu'à la fin du mois où vous avez répondu. Si vous le perdez, vos réponses ne peuvent plus être supprimées, ni par vous ni par nous, car rien d'autre ne les relie à vous. L'indice est publié une fois par mois et le chiffre d'un mois ne change plus après sa clôture : les réponses de ce mois sont alors figées. Les données publiées plus tard indiquent des régions plutôt que des gouvernorats, aucune date plus précise que le mois et aucun code de reçu.
 
 ## Ce que l'indice peut dire, et ce qu'il ne peut pas dire {#limits}
 
 L'indice décrit les personnes qui ont répondu. Tout le monde peut participer, si bien que les répondants ne forment pas un échantillon aléatoire de la Tunisie : ils sont en ligne, ils ont trouvé le lien et ils ont choisi de répondre. C'est pourquoi les chiffres sont présentés « parmi les répondants » et jamais comme l'opinion des Tunisiens en général.
 
 On l'appelle indice de satisfaction, mais la satisfaction n'y est pas une simple note donnée à un service. Le chiffre combine la confiance envers la police, la liberté que l'on ressent en sa présence et ce qui s'est passé lors des rencontres avec elle.
+
+L'intervalle à 95 % affiché à côté de chaque chiffre ne couvre que l'incertitude liée au nombre de réponses. Il ne couvre pas l'écart entre les personnes qui ont choisi de répondre et l'ensemble des autres, qui peut être bien plus grand.
 
 L'indice mesure à quel point les gens se sentent encadrés par la police, pas la façon dont la police se comporte. Un score bas est un constat sur la confiance, la peur et l'expérience. Ce n'est pas une preuve d'abus, et un score élevé n'est pas la preuve de leur absence.
 
