@@ -236,9 +236,9 @@ const IDENTICAL_IS_FINE = new Set([
 	// A proper noun: the basemap's dataset name, identical in every language
 	// by design (the map credits the same source everywhere).
 	'map.basemap',
-	// Only placeholders and the brand name: the words arrive through {wave} and {month}.
-	'index.stamp.ring',
-	'index.series.pointAria'
+	// Only placeholders: the words arrive through {month} and {value}.
+	'index.series.pointAria',
+	'research.hub.latest'
 ]);
 
 for (const l of locales.filter((x) => x !== 'en')) {
