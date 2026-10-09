@@ -6,7 +6,9 @@ translated_by: model-reviewed
 
 DT Research is a program of open, pre-registered studies about Tunisia and the people who live in it. Each study publishes its questionnaire, its method, its data and its analysis, and states the limits of its sample on the same page as its results. Nothing here is a poll claiming to speak for the country. It is a record of what the people who took part said, in a form anyone can check.
 
-The first study asks what democracy means to Tunisians. If a country is going to be built, the words used to describe what we want should be examined first. Tunisians argue about democracy constantly, but the word does not carry one meaning: for some it is elections, for others courts that can check power, a press that can publish, schools and clinics that work, or order and a leader who gets things done. A survey that reports support for democracy has measured agreement on a word, not on a programme. This program exists to make that difference visible.
+The Police Satisfaction Index asks, every month, how people experience the police: whether they trust them, whether they feel watched and unfree around them, and what happened when they met them. It is published as a monthly series, so a change shows as a change.
+
+Another study asks what democracy means to Tunisians. If a country is going to be built, the words used to describe what we want should be examined first. Tunisians argue about democracy constantly, but the word does not carry one meaning: for some it is elections, for others courts that can check power, a press that can publish, schools and clinics that work, or order and a leader who gets things done. A survey that reports support for democracy has measured agreement on a word, not on a programme. This program exists to make that difference visible.
 
 ## Why this study {#why}
 

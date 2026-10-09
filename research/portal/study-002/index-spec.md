@@ -1,4 +1,4 @@
-# Study 002: Tunisia Police Index (working name PTI / PLHI)
+# Study 002: Police Satisfaction Index (PSI)
 
 **Status:** draft v0.1, 2026-10-07. English source only. Nothing fielded.
 **Platform:** runs on the research portal as `dt-research-002`. No new routes beyond the live results surface (§7).

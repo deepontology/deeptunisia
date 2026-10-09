@@ -1,9 +1,9 @@
 # -----------------------------------------------------------------------------
 # DT Research 002: instrument v0.1.0-draft
 #
-# "Tunisia Police Index" (working names PTI / PLHI; the name is decided with the
-# design). A monthly series: one frozen instrument, fielded continuously, with
-# the index published once per calendar month (scoring.series).
+# "Police Satisfaction Index" (PSI). A monthly series: one frozen instrument,
+# fielded continuously, with the index published once per calendar month
+# (scoring.series).
 #
 # Anonymity is a design rule: the instrument asks nothing about who the
 # respondent is, except one optional question, the governorate, for those who

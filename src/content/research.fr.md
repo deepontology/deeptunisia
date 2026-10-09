@@ -6,7 +6,9 @@ translated_by: model-reviewed
 
 DT Research est un programme d'études ouvertes et pré-enregistrées sur la Tunisie et ses habitants. Chaque étude publie son questionnaire, sa méthode, ses données et son analyse, et indique les limites de son échantillon sur la même page que ses résultats. Rien ici n'est un sondage prétendant parler au nom du pays. C'est le relevé de ce que les personnes participantes ont dit, sous une forme que chacun peut vérifier.
 
-La première étude demande ce que la démocratie signifie pour les Tunisiens. Si l'on veut bâtir un pays, il faut d'abord examiner les mots avec lesquels on décrit ce que l'on veut. Les Tunisiens débattent sans cesse de la démocratie, mais ce mot ne porte pas un seul sens : pour certains, ce sont les élections ; pour d'autres, des tribunaux capables de contrôler le pouvoir, une presse qui peut publier, des écoles et des hôpitaux qui fonctionnent, ou encore l'ordre et un dirigeant qui décide. Un sondage qui mesure le soutien à la démocratie a mesuré l'accord sur un mot, non sur un programme. Ce programme existe pour rendre cet écart visible.
+L'Indice de satisfaction envers la police demande, chaque mois, comment les gens vivent la police : s'ils lui font confiance, s'ils se sentent surveillés et privés de liberté en sa présence, et ce qui s'est passé lorsqu'ils l'ont rencontrée. Il est publié sous forme de série mensuelle, si bien qu'un changement apparaît comme un changement.
+
+Une autre étude demande ce que la démocratie signifie pour les Tunisiens. Si l'on veut bâtir un pays, il faut d'abord examiner les mots avec lesquels on décrit ce que l'on veut. Les Tunisiens débattent sans cesse de la démocratie, mais ce mot ne porte pas un seul sens : pour certains, ce sont les élections ; pour d'autres, des tribunaux capables de contrôler le pouvoir, une presse qui peut publier, des écoles et des hôpitaux qui fonctionnent, ou encore l'ordre et un dirigeant qui décide. Un sondage qui mesure le soutien à la démocratie a mesuré l'accord sur un mot, non sur un programme. Ce programme existe pour rendre cet écart visible.
 
 ## Pourquoi cette étude {#why}
 

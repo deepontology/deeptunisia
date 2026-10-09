@@ -8,8 +8,8 @@
 - id: dt-research-001
   slug: democracy
   title_en: "What Does Democracy Mean to Tunisians?"
-  title_fr: null
-  title_ar: null
+  title_fr: "Que signifie la démocratie pour les Tunisiens ?"
+  title_ar: "ماذا تعني الديمقراطية للتونسيين؟"
   status: design
   design_type: cross-sectional-online
   population: open-online-18-plus
@@ -37,9 +37,9 @@
 
 - id: dt-research-002
   slug: police
-  title_en: "Tunisia Police Index"
-  title_fr: "Indice tunisien de la police"
-  title_ar: "المؤشّر التونسي للشرطة"
+  title_en: "Police Satisfaction Index"
+  title_fr: "Indice de satisfaction envers la police"
+  title_ar: "مؤشّر الرضا عن الشرطة"
   status: design
   design_type: repeated-cross-sectional-online
   population: open-online-18-plus
