@@ -74,29 +74,66 @@
 		return () => clearInterval(timer);
 	});
 
-	// The monthly series: the page reads one month at a time, the month in
-	// progress by default. Every panel below the chart shows the chosen month.
+	// Three readings of the same answers (index-spec.md §8):
+	//   now     the latest month's blended level, the registered headline;
+	//   window  every kept answer from the last window_months, counted equally;
+	//   all     every kept answer since the start, counted equally.
+	// The big number shows one of them, "now" unless the reader picks another.
+	// The panels below it (components, grid, bands, questions, breakdowns)
+	// always read the window, and the month chart reads one month at a time.
 	const months = $derived(live?.series?.months ?? []);
-	let chosen = $state<string | null>(null);
-	const month = $derived(
-		months.find((m) => m.period === chosen) ?? (months.length ? months[months.length - 1] : null)
-	);
-	const monthIndex = $derived(month ? months.indexOf(month) : -1);
+	const latest = $derived(months.length ? months[months.length - 1] : null);
 	const previous = $derived.by(() => {
-		for (let i = monthIndex - 1; i >= 0; i--) if (months[i].index.level !== null) return months[i];
+		for (let i = months.length - 2; i >= 0; i--) if (months[i].index.level !== null) return months[i];
 		return null;
 	});
+	let chosen = $state<string | null>(null);
+	/** The month the chart has selected; it drives only the month card. */
+	const month = $derived(months.find((m) => m.period === chosen) ?? latest);
 
-	const results = $derived(month?.results ?? live?.results ?? null);
-	const index = $derived(results?.index ?? null);
-	/** The headline: the month's published level, or the plain mean without a series. */
-	const headline = $derived(month ? month.index.level : (index?.mean ?? null));
-	const headlineCi = $derived(month ? month.index.ci95 : (index?.ci95 ?? [null, null]));
+	const windowAgg = $derived(live?.series?.window ?? null);
+	const allTime = $derived(live?.results ?? null);
+	const results = $derived(windowAgg?.results ?? allTime);
+	const windowMonths = $derived(windowAgg?.months ?? 12);
+
+	// The publication floor (index-spec.md §7). Below it the server sends only
+	// counts, and the page shows a counter in place of the number.
+	const floor = $derived(live?.floor ?? null);
+	const published = $derived(floor?.reached ?? false);
+
+	// The readings arrive in stages, as soon as each can say something the
+	// others do not:
+	//   one figure      from the first-figure floor: every answer so far;
+	//   now + since     once two months have a level, the monthly reading
+	//                   differs from the pooled one;
+	//   all three       once the series is longer than the window, the last
+	//                   window_months differ from all time.
+	const levelMonths = $derived(months.filter((m) => m.index.level !== null).length);
+	const outgrown = $derived(months.length > windowMonths);
+	type ReadingId = 'now' | 'window' | 'all';
+	type Reading = { id: ReadingId; value: number | null; ci: [number | null, number | null]; n: number };
+	const readings = $derived.by((): Reading[] => {
+		if (!published || !allTime) return [];
+		const all: Reading = { id: 'all', value: allTime.index.mean, ci: allTime.index.ci95, n: allTime.n };
+		if (levelMonths < 2 || !latest || latest.index.level === null) return [all];
+		const now: Reading = { id: 'now', value: latest.index.level, ci: latest.index.ci95, n: latest.n };
+		const win = windowAgg?.results;
+		if (!outgrown || !win) return [now, all];
+		return [now, { id: 'window', value: win.index.mean, ci: win.index.ci95, n: win.n }, all];
+	});
+	let reading = $state<ReadingId | null>(null);
+	const active = $derived(readings.find((r) => r.id === reading) ?? readings[0] ?? null);
+	const headline = $derived(active?.value ?? null);
+	const headlineCi = $derived(active?.ci ?? [null, null]);
 	const shown = Tween.of(() => headline ?? 0, { duration: 900, easing: cubicOut });
-	const hasIndex = $derived(headline !== null);
+	const hasIndex = $derived(published && headline !== null);
+	/** Month-on-month change belongs to the monthly reading only. */
 	const change = $derived(
-		hasIndex && previous?.index.level != null ? headline! - previous.index.level : null
+		active?.id === 'now' && hasIndex && previous?.index.level != null ? headline! - previous.index.level : null
 	);
+	/** Until the series outgrows the window, "all time" is simply "since launch". */
+	const readingKey = (id: ReadingId) => (id === 'all' && !outgrown ? 'since' : id);
+	const readingName = (id: ReadingId) => tf(`index.reading.${readingKey(id)}`, { m: windowMonths });
 
 	const open = $derived(liveStatus === 'fielding');
 
@@ -109,7 +146,7 @@
 		}).format(new Date(Date.UTC(y, m - 1, 1)));
 	}
 	const waveLabel = $derived(
-		tf('index.wave', { month: month ? monthLabel(month.period) : monthLabel(new Date().toISOString().slice(0, 7)) })
+		tf('index.wave', { month: latest ? monthLabel(latest.period) : monthLabel(new Date().toISOString().slice(0, 7)) })
 	);
 
 	function bandLabel(id: string | null | undefined): string {
@@ -191,11 +228,12 @@
 	const sections = $derived(
 		[
 			{ id: 'index', key: 'index.section.index' },
-			...(months.length ? [{ id: 'months', key: 'index.section.months' }] : []),
-			{ id: 'grid', key: 'index.section.grid' },
+			// Data sections exist only once the first figure is published.
+			...(published ? [{ id: 'grid', key: 'index.section.grid' }] : []),
+			...(published && months.length ? [{ id: 'months', key: 'index.section.months' }] : []),
 			{ id: 'method', key: 'index.section.method' },
 			{ id: 'questions', key: 'index.section.questions' },
-			{ id: 'splits', key: 'index.section.splits' },
+			...(published ? [{ id: 'splits', key: 'index.section.splits' }] : []),
 			{ id: 'integrity', key: 'index.section.integrity' },
 			{ id: 'record', key: 'index.section.record' },
 			{ id: 'answer', key: 'index.section.answer' }
@@ -231,6 +269,20 @@
 		};
 	});
 </script>
+
+{#snippet scope()}
+	{#if windowAgg && published}
+		<p class="scope mono">
+			{tf('index.window.scope', {
+				m: windowMonths,
+				// A window older than the series starts where the data starts.
+				from: monthLabel(months.length && months[0].period > windowAgg.first ? months[0].period : windowAgg.first),
+				to: monthLabel(windowAgg.last),
+				n: fmt(windowAgg.n)
+			})}
+		</p>
+	{/if}
+{/snippet}
 
 {#snippet kicker(id: string)}
 	{@const s = sectionOf(id)}
@@ -273,7 +325,8 @@
 					{#if open}<span class="pulse" aria-hidden="true"></span>{/if}
 					{t(open ? 'research.stage.live' : 'research.stage.development')}
 				</span>
-				{#if month}<span>{monthLabel(month.period)}</span>{/if}
+				{#if latest}<span>{monthLabel(latest.period)}</span>{/if}
+				{#if open && floor && !published}<span>{fmt(floor.n)} / {fmt(floor.first_figure_n)}</span>{/if}
 			</p>
 		</div>
 	</Plate>
@@ -287,6 +340,13 @@
 				<span class="digits mono" aria-label={tf('index.headline.aria', { value: fmt(headline) })}>
 					{Math.round(shown.current)}
 				</span>
+			{:else if open && floor}
+				<!-- The counter: one square per answer, until the first figure. -->
+				<div class="counter" role="img" aria-label={tf('index.counter.aria', { n: fmt(floor.n), N: fmt(floor.first_figure_n) })}>
+					{#each Array.from({ length: Math.min(100, floor.first_figure_n) }, (_, i) => i) as i (i)}
+						<span class:on={i < Math.round((floor.n / floor.first_figure_n) * Math.min(100, floor.first_figure_n))}></span>
+					{/each}
+				</div>
 			{:else}
 				<span class="digits mono empty" aria-label={t('index.headline.none')}>––</span>
 			{/if}
@@ -296,8 +356,11 @@
 			<p class="readout mono">
 				{#if hasIndex}
 					{tf('index.headline.readout', {
-						state: t(month && month.closed ? 'index.series.closed' : 'index.series.provisional'),
-						n: fmt(results!.n),
+						state:
+							active?.id === 'now'
+								? t(latest && latest.closed ? 'index.series.closed' : 'index.series.provisional')
+								: readingName(active?.id ?? 'all'),
+						n: fmt(active?.n),
 						lo: fmt(headlineCi[0]),
 						hi: fmt(headlineCi[1])
 					})}
@@ -310,8 +373,8 @@
 							})}
 						</span>
 					{/if}
-				{:else if open}
-					{t('index.headline.waiting')}
+				{:else if open && floor}
+					{tf('index.counter.line', { n: fmt(floor.n), N: fmt(floor.first_figure_n) })}
 				{:else}
 					{t('index.headline.notOpen')}
 				{/if}
@@ -334,84 +397,50 @@
 				</div>
 			</div>
 
+			{#if open && floor && !published}
+				<p class="counter-why">{t('index.counter.why')}</p>
+			{/if}
 			<p class="tagline">{t('index.tagline.one')}<br />{t('index.tagline.two')}</p>
 			{#if open}
-				<a class="cta" href="/research/{study.slug}/participate">{tf('index.cta', { n: fmt(instrument.estimatedMinutes) })}</a>
+				<a class="cta" href="/research/{study.slug}/participate">
+					{floor && !published
+						? tf('index.cta.first', { N: fmt(floor.first_figure_n), n: fmt(instrument.estimatedMinutes) })
+						: tf('index.cta', { n: fmt(instrument.estimatedMinutes) })}
+				</a>
 			{/if}
 		</div>
 
 	</section>
+
+	<!-- The three readings. The big number shows the chosen one. -->
+	{#if readings.length > 1}
+	<div class="readings" role="radiogroup" aria-label={t('index.reading.aria')} style:--count={readings.length}>
+		{#each readings as r (r.id)}
+			<button
+				type="button"
+				role="radio"
+				aria-checked={active?.id === r.id}
+				class="reading"
+				class:on={active?.id === r.id}
+				onclick={() => (reading = r.id)}
+			>
+				<span class="r-top">
+					<span class="r-label mono">{readingName(r.id)}</span>
+					<span class="r-value mono">{r.value === null ? '––' : fmt(r.value)}</span>
+				</span>
+				<span class="r-desc">{tf(`index.reading.${readingKey(r.id)}.desc`, { m: windowMonths })}</span>
+				<span class="r-n mono">n = {fmt(r.n)}</span>
+			</button>
+		{/each}
+	</div>
+	{/if}
 	</div>
 
-	{#if months.length}
-		<section class="block series" id="months">
-			{@render kicker('months')}
-			<div class="series-head">
-				<h2>{t('index.series.title')}</h2>
-				<p class="note">{tf('index.series.lede', { min: live?.series?.settings.min_month_n ?? 30 })}</p>
-			</div>
-			<MonthlyChart
-				{months}
-				bands={spec.bands}
-				selected={month?.period ?? null}
-				onselect={(period) => (chosen = period)}
-				{monthLabel}
-				{fmt}
-			/>
-			{#if month}
-				<div class="month-readout" aria-live="polite">
-					<p class="month-name">
-						<strong>{monthLabel(month.period)}</strong>
-						<span class="tag" class:live={!month.closed}>{t(month.closed ? 'index.series.closed' : 'index.series.provisional')}</span>
-					</p>
-					<p>
-						{#if month.results.n === 0}
-							{t('index.series.noData')}
-						{:else}
-							{tf('index.series.own', { mean: fmt(month.results.index.mean), n: fmt(month.results.n) })}
-						{/if}
-					</p>
-					<p class="note">
-						{#if month.index.gain !== null}
-							{tf('index.series.weight', { w: fmt(month.index.gain * 100) })}
-						{:else if month.index.level !== null}
-							{tf('index.series.carried', { n: fmt(month.results.n), min: live?.series?.settings.min_month_n ?? 30 })}
-						{/if}
-					</p>
-				</div>
-			{/if}
-			<details class="table-alt">
-				<summary>{t('index.table.show')}</summary>
-				<table>
-					<thead>
-						<tr>
-							<th>{t('index.table.month')}</th>
-							<th>{t('index.table.level')}</th>
-							<th>{t('index.table.interval')}</th>
-							<th>{t('index.table.own')}</th>
-							<th>{t('index.table.n')}</th>
-							<th>{t('index.table.weight')}</th>
-						</tr>
-					</thead>
-					<tbody>
-						{#each months as m (m.period)}
-							<tr>
-								<td>{monthLabel(m.period)}{m.closed ? '' : ` · ${t('index.series.provisional')}`}</td>
-								<td class="mono">{fmt(m.index.level, 1)}</td>
-								<td class="mono" dir="ltr">{m.index.level === null ? '—' : `${fmt(m.index.ci95[0], 1)}–${fmt(m.index.ci95[1], 1)}`}</td>
-								<td class="mono">{fmt(m.results.index.mean, 1)}</td>
-								<td class="mono">{fmt(m.results.n)}</td>
-								<td class="mono">{m.index.gain === null ? '—' : `${fmt(m.index.gain * 100)}%`}</td>
-							</tr>
-						{/each}
-					</tbody>
-				</table>
-			</details>
-		</section>
-	{/if}
 
+	{#if published}
 	<div class="sec" id="grid">
 	{@render kicker('grid')}
+	{@render scope()}
 	<section class="panel-row">
 		<!-- The three components as one vertical meter, like the swatch column in
 		     the reference. Grip and harm count against the index, so their bars
@@ -440,6 +469,76 @@
 
 	<p class="population">{t('index.population')}</p>
 	</div>
+	{/if}
+
+	{#if months.length && published}
+		<section class="block series" id="months">
+			{@render kicker('months')}
+			<div class="series-head">
+				<h2>{t('index.series.title')}</h2>
+				<p class="note">{tf('index.series.lede', { min: live?.series?.settings.min_month_n ?? 30 })}</p>
+			</div>
+			<MonthlyChart
+				{months}
+				bands={spec.bands}
+				selected={month?.period ?? null}
+				onselect={(period) => (chosen = period)}
+				{monthLabel}
+				{fmt}
+			/>
+			{#if month}
+				<div class="month-readout" aria-live="polite">
+					<p class="month-name">
+						<strong>{monthLabel(month.period)}</strong>
+						<span class="tag" class:live={!month.closed}>{t(month.closed ? 'index.series.closed' : 'index.series.provisional')}</span>
+					</p>
+					<p>
+						{#if month.n === 0}
+							{t('index.series.noData')}
+						{:else if month.results}
+							{tf('index.series.own', { mean: fmt(month.results.index.mean), n: fmt(month.n) })}
+						{:else}
+							{tf('index.series.few', { n: fmt(month.n), min: fmt(live?.series?.settings.min_month_n ?? 30) })}
+						{/if}
+					</p>
+					<p class="note">
+						{#if month.index.gain !== null}
+							{tf('index.series.weight', { w: fmt(month.index.gain * 100) })}
+						{:else if month.index.level !== null}
+							{tf('index.series.carried', { n: fmt(month.n), min: live?.series?.settings.min_month_n ?? 30 })}
+						{/if}
+					</p>
+				</div>
+			{/if}
+			<details class="table-alt">
+				<summary>{t('index.table.show')}</summary>
+				<table>
+					<thead>
+						<tr>
+							<th>{t('index.table.month')}</th>
+							<th>{t('index.table.level')}</th>
+							<th>{t('index.table.interval')}</th>
+							<th>{t('index.table.own')}</th>
+							<th>{t('index.table.n')}</th>
+							<th>{t('index.table.weight')}</th>
+						</tr>
+					</thead>
+					<tbody>
+						{#each months as m (m.period)}
+							<tr>
+								<td>{monthLabel(m.period)}{m.closed ? '' : ` · ${t('index.series.provisional')}`}</td>
+								<td class="mono">{fmt(m.index.level, 1)}</td>
+								<td class="mono" dir="ltr">{m.index.level === null ? '—' : `${fmt(m.index.ci95[0], 1)}–${fmt(m.index.ci95[1], 1)}`}</td>
+								<td class="mono">{fmt(m.results?.index.mean, 1)}</td>
+								<td class="mono">{fmt(m.n)}</td>
+								<td class="mono">{m.index.gain === null ? '—' : `${fmt(m.index.gain * 100)}%`}</td>
+							</tr>
+						{/each}
+					</tbody>
+				</table>
+			</details>
+		</section>
+	{/if}
 
 	<!-- Plate 02: a barrier, edge to edge, between the readings and the method. -->
 	<Plate
@@ -485,6 +584,7 @@
 
 	<section class="block">
 		<h2>{t('index.bands.title')}</h2>
+		{@render scope()}
 		<ol class="band-list">
 			{#each spec.bands as b, i (b.id)}
 				<li class:on={currentBand?.id === b.id}>
@@ -493,7 +593,7 @@
 					<strong>{bandLabel(b.id)}</strong>
 					<span class="band-desc">{bandDescription(b)}</span>
 					{#if results?.bands}
-						<span class="band-n mono">{tf('index.bands.count', { n: fmt(results.bands[b.id] ?? 0), month: month ? monthLabel(month.period) : '' })}</span>
+						<span class="band-n mono">{tf('index.bands.count', { n: fmt(results.bands[b.id] ?? 0) })}</span>
 					{/if}
 				</li>
 			{/each}
@@ -510,6 +610,7 @@
 			<p class="q-text">{itemText(id)}</p>
 			<!-- Each strip is scaled to its own fullest answer: the strip shows the
 			     shape of one question's answers, and the table carries the counts. -->
+			{#if hist}
 			<div class="strip" dir="ltr" role="img" aria-label={t('index.questions.stripAria')}>
 				{#each Array.from({ length: (spec.scale_max ?? 10) + 1 }, (_, v) => v) as v (v)}
 					<span class="cell" style:--share={hist ? hist[v] / peak : 0} title="{v}: {hist ? fmt(hist[v]) : '—'}">
@@ -523,6 +624,7 @@
 					{#if ends.mid}<span>{ends.mid}</span>{/if}
 					<span>{ends.high}</span>
 				</div>
+			{/if}
 			{/if}
 			{#if hist}
 				<details class="table-alt">
@@ -547,6 +649,7 @@
 
 	<section class="block">
 		<h2>{t('index.questions.title')}</h2>
+		{@render scope()}
 		<p class="note">{t('index.questions.lede')}</p>
 		<!-- In the order the formula reads them: what raises the index, then
 		     what lowers it. -->
@@ -583,8 +686,6 @@
 							{/if}
 						</tbody>
 					</table>
-				{:else}
-					<p class="note">—</p>
 				{/if}
 			</div>
 		{/each}
@@ -601,9 +702,11 @@
 	{/if}
 	</div>
 
+	{#if published}
 	<section class="block" id="splits">
 		{@render kicker('splits')}
 		<h2>{t('index.splits.title')}</h2>
+		{@render scope()}
 		<p class="note">{tf('index.splits.floor', { n: spec.cell_floor ?? 20 })}</p>
 		<div class="splits">
 			<table>
@@ -639,6 +742,7 @@
 		</div>
 		{#if spec.regions}<p class="note">{t('index.splits.regionOptional')}</p>{/if}
 	</section>
+	{/if}
 
 	<section class="block" id="integrity">
 		{@render kicker('integrity')}
@@ -1000,6 +1104,112 @@
 	}
 	.change.down {
 		color: var(--index-band-1);
+	}
+
+	/* ---- the counter, before the first figure --------------------------- */
+	.counter {
+		display: grid;
+		grid-template-columns: repeat(10, 1fr);
+		gap: 3px;
+		width: clamp(8rem, 15vw, 11.5rem);
+		aspect-ratio: 1;
+	}
+	.counter span {
+		background: color-mix(in oklab, var(--accent) 10%, var(--surface-sunken));
+		box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--accent) 22%, transparent);
+	}
+	.counter span.on {
+		background: var(--accent);
+		box-shadow: none;
+	}
+	.counter-why {
+		max-width: 42ch;
+		margin: 0 0 1rem;
+		font-size: 0.9rem;
+		line-height: 1.5;
+		color: var(--text-secondary);
+	}
+
+	/* ---- the three readings ------------------------------------------- */
+	.readings {
+		display: grid;
+		/* As many columns as there are readings at this stage: two, then three. */
+		grid-template-columns: repeat(var(--count, 3), minmax(0, 1fr));
+		gap: 1px;
+		margin-top: 2rem;
+		background: color-mix(in oklab, var(--accent) 30%, transparent);
+		border: 1px solid color-mix(in oklab, var(--accent) 30%, transparent);
+	}
+	.reading {
+		display: flex;
+		flex-direction: column;
+		gap: 0.45rem;
+		padding: 0.9rem 1rem 0.85rem;
+		border: 0;
+		background: color-mix(in oklab, var(--accent) 6%, var(--surface-base));
+		color: var(--text-primary);
+		text-align: start;
+		font: inherit;
+		cursor: pointer;
+		position: relative;
+		-webkit-tap-highlight-color: transparent;
+	}
+	.reading.on {
+		background: color-mix(in oklab, var(--accent) 18%, var(--surface-base));
+	}
+	.reading.on::before {
+		content: '';
+		position: absolute;
+		inset: 0 0 auto 0;
+		height: 3px;
+		background: var(--accent);
+	}
+	@media (hover: hover) {
+		.reading:hover {
+			background: color-mix(in oklab, var(--accent) 12%, var(--surface-base));
+		}
+	}
+	.reading:focus-visible {
+		outline: 2px solid var(--accent);
+		outline-offset: -2px;
+	}
+	.r-top {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 0.5rem;
+	}
+	.r-label {
+		font-size: 0.6875rem;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: var(--text-secondary);
+	}
+	.reading.on .r-label {
+		color: var(--text-primary);
+		font-weight: 600;
+	}
+	.r-value {
+		font-size: 1.6rem;
+		line-height: 1;
+	}
+	.r-desc {
+		font-size: 0.82rem;
+		line-height: 1.45;
+		color: var(--text-secondary);
+	}
+	.r-n {
+		font-size: 0.625rem;
+		color: var(--text-faint);
+	}
+	.rtl .r-label {
+		letter-spacing: 0;
+	}
+	.scope {
+		margin: -0.4rem 0 1rem;
+		font-size: 0.6875rem;
+		letter-spacing: 0.06em;
+		color: var(--text-faint);
 	}
 
 	/* ---- the monthly series -------------------------------------------- */
@@ -1400,6 +1610,9 @@
 	@media (max-width: 760px) {
 		.frame {
 			--ruler: 0.9rem;
+		}
+		.readings {
+			grid-template-columns: 1fr;
 		}
 		.secbar-id {
 			display: none;

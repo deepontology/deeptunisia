@@ -36,7 +36,7 @@ import {
 	type RuntimeInstrument,
 	type StudiesRegistry
 } from './research-contract.ts';
-import { aggregateResponses, aggregateSeries, applyExclusions, periodOf } from './research-scoring.ts';
+import { aggregateResponses, aggregateSeries, applyExclusions, applyPublicationFloor, periodOf } from './research-scoring.ts';
 
 /** What the research handler needs from its caller, per request. */
 export interface ResearchContext {
@@ -119,14 +119,19 @@ async function liveResults(db: Db, study: StudySummary, instrument: RuntimeInstr
 		received: rows.length,
 		exclusions,
 		submissions_per_hour: { start: new Date(firstHour * HOUR_MS).toISOString(), counts: perHour },
-		results: aggregateResponses(spec, kept, aggregate),
-		// The monthly index: every month from the first month of fielding to
-		// this one, each with its own figures and the filtered level.
-		series: aggregateSeries(spec, kept, {
-			...aggregate,
-			now,
-			firstPeriod: study.fielding_start ? study.fielding_start.slice(0, 7) : undefined
-		})
+		// Everything is computed, then the publication floor decides what leaves:
+		// below it only counts do (research-scoring.ts, applyPublicationFloor).
+		...applyPublicationFloor(
+			spec,
+			aggregateResponses(spec, kept, aggregate),
+			// The monthly index: every month from the first month of fielding to
+			// this one, each with its own figures and the filtered level.
+			aggregateSeries(spec, kept, {
+				...aggregate,
+				now,
+				firstPeriod: study.fielding_start ? study.fielding_start.slice(0, 7) : undefined
+			})
+		)
 	};
 }
 

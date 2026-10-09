@@ -39,7 +39,11 @@
 	const LIFE = ['design', 'freeze', 'fielding', 'results', 'data'] as const;
 
 	let serverStatus = $state<Record<string, string>>({});
-	let latest = $state<Record<string, { level: number; period: string; n: number } | null>>({});
+	/** Per index: its counter below the publication floor, or the page's headline figure. */
+	type Latest =
+		| { kind: 'counting'; n: number; of: number }
+		| { kind: 'figure'; level: number; label: string; n: number };
+	let latest = $state<Record<string, Latest | null>>({});
 	const statusOf = (s: StudyRecord) => serverStatus[s.slug] ?? s.status;
 
 	// Indexes (studies with a scoring block) first, then the rest.
@@ -60,12 +64,23 @@
 			void fetch(`/api/studies/${s.slug}/live`)
 				.then((r) => (r.ok ? r.json() : null))
 				.then((body: LiveResults | null) => {
-					const months = body?.series?.months ?? [];
-					const last = [...months].reverse().find((m) => m.index.level !== null);
-					latest = {
-						...latest,
-						[s.slug]: last ? { level: last.index.level!, period: last.period, n: last.results.n } : null
-					};
+					if (!body) return;
+					let entry: Latest | null = null;
+					if (!body.floor.reached) {
+						entry = { kind: 'counting', n: body.floor.n, of: body.floor.first_figure_n };
+					} else {
+						// The same headline the study page opens on: the monthly level once
+						// two months have one, every answer so far before that.
+						const months = body.series?.months ?? [];
+						const levelled = months.filter((m) => m.index.level !== null);
+						const last = levelled[levelled.length - 1];
+						if (levelled.length >= 2 && last) {
+							entry = { kind: 'figure', level: last.index.level!, label: monthLabel(last.period), n: last.n };
+						} else if (body.results?.index.mean != null) {
+							entry = { kind: 'figure', level: body.results.index.mean, label: t('index.reading.since'), n: body.results.n };
+						}
+					}
+					latest = { ...latest, [s.slug]: entry };
 				})
 				.catch(() => {});
 		}
@@ -159,13 +174,18 @@
 								<span>{t(isIndex ? 'research.hub.kind.monthly' : 'research.hub.kind.wave')}</span>
 							</p>
 							<h2 dir="auto">{titleOf(s, locale)}</h2>
-							{#if isIndex && last}
+							{#if isIndex && last?.kind === 'figure'}
 								<p class="figure">
 									<span class="figure-n mono">{fmt(last.level)}</span>
 									<span class="figure-meta mono">
 										<span>{t('research.hub.latestLabel')}</span>
-										<span>{tf('research.hub.latest', { month: monthLabel(last.period), n: fmt(last.n) })}</span>
+										<span>{tf('research.hub.latest', { month: last.label, n: fmt(last.n) })}</span>
 									</span>
+								</p>
+							{:else if isIndex && last?.kind === 'counting'}
+								<p class="counting mono">
+									<span class="count-bar" aria-hidden="true"><i style:width="{Math.min(100, (last.n / last.of) * 100)}%"></i></span>
+									{tf('research.hub.counting', { n: fmt(last.n), N: fmt(last.of) })}
 								</p>
 							{:else if stage === 'development'}
 								<p class="card-note">{t('research.hub.dev')}</p>
@@ -489,6 +509,25 @@
 		text-transform: uppercase;
 		letter-spacing: 0.1em;
 		color: var(--text-faint);
+	}
+	.counting {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		margin: 0.4rem 0 0;
+		font-size: 0.75rem;
+		color: var(--text-secondary);
+	}
+	.count-bar {
+		display: block;
+		height: 0.4rem;
+		background: var(--surface-sunken);
+		box-shadow: inset 0 0 0 1px var(--border-subtle);
+	}
+	.count-bar i {
+		display: block;
+		height: 100%;
+		background: var(--accent);
 	}
 	.card-note {
 		margin: 0;

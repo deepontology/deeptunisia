@@ -54,7 +54,13 @@ These are refused at submission and never stored:
 
 ## 5. Estimands and analysis
 
-**Headline:** the monthly index (§7a), with its 95% interval and its band. Beside it, for each month on its own:
+**Headline:** the monthly index (§7a), with its 95% interval and its band. It is the registered headline. Two further readings of the same answers are published beside it, and a reader may show either in its place:
+- **the last 12 months:** every valid response from the current calendar month and the 11 before it, pooled and counted equally (`series.window_months`), with a percentile bootstrap 95% interval;
+- **all time:** every valid response since the series began, pooled and counted equally, with the same interval.
+
+The components, the T × G grid, the band counts, the item distributions and the splits are shown over the last 12 months. Each month's own figures are shown in the series.
+
+For each month on its own:
 - the mean I over valid respondents, with a percentile bootstrap 95% interval (seeded; 1,000 resamples);
 - the median;
 - band counts.
@@ -73,6 +79,17 @@ These are refused at submission and never stored:
 A cell with fewer than 20 respondents is suppressed, and its size is not shown.
 
 **Weighting:** none. The instrument collects no age or gender, so no estimate is raked to population margins. Every figure is labelled as describing respondents.
+
+## 6a. The publication floor
+
+No figure is published from too few answers. A figure from a handful of people is noise, it is the easiest number to push, it is the one most likely to be quoted, and a small grid can point at the people in it.
+
+- **Until 100 valid answers in total** (`series.first_figure_n`), the live results publish counts only: how many answers there are, in all and per month, the submissions per hour and the exclusion counts. No index, component, distribution, band count, grid or split is published.
+- **After that,** a month's own figures need 30 valid answers in that month (`series.min_month_n`), and the 12-month reading needs 100 answers inside its window. Splits keep their cell floor of 20.
+- **The server enforces the floor.** Below it the figures are not sent at all, so they cannot be read from the page or the API.
+- **Each respondent sees their own score at once,** with their square on the T × G grid, from the first answer. It is computed in their browser from their own answers and never sent or published.
+
+**The readings arrive in stages.** At the floor, one figure is shown: every answer so far. Once two months have a level, the monthly reading (§7a) becomes the headline, with "since launch" beside it. Once the series is longer than 12 months, the last 12 months and all time are shown separately.
 
 ## 7a. The monthly series
 

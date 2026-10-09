@@ -7,6 +7,8 @@
 	import { cubicOut } from 'svelte/easing';
 	import Input from '$lib/ui/Input.svelte';
 	import Textarea from '$lib/ui/Textarea.svelte';
+	import Grid from '$lib/index-study/Grid.svelte';
+	import type { LiveResults } from '$lib/index-study/live';
 	import type { RuntimeInstrument, RuntimeItem, StudyRecord } from '$lib/research';
 	import { startProofOfWork, type ProofOfWork } from '$lib/pow';
 	import { evaluateCondition, scoreResponse } from '../../../../../community/research-scoring.ts';
@@ -266,6 +268,12 @@
 
 	/** The respondent's own result, computed here and never sent anywhere. */
 	let ownScore = $state<ReturnType<typeof scoreResponse> | null>(null);
+	/**
+	 * The crowd to place the respondent's own square against: the published
+	 * aggregates, or only the counts while the index is below its first-figure
+	 * floor. Nothing about this respondent is sent to fetch it.
+	 */
+	let crowd = $state<LiveResults | null>(null);
 
 	function setPair(setId: string, side: 'most' | 'least', itemId: string) {
 		pairs[setId] = { ...(pairs[setId] ?? {}), [side]: itemId };
@@ -359,7 +367,13 @@
 				const body = (await res.json()) as { receipt?: string };
 				receipt = body.receipt ?? null;
 				if (!receipt) errorKey = 'research.participate.error';
-				else if (instrument.scoring) ownScore = scoreResponse(instrument.scoring, payloadAnswers);
+				else if (instrument.scoring) {
+					ownScore = scoreResponse(instrument.scoring, payloadAnswers);
+					void fetch(`/api/studies/${study.slug}/live`)
+						.then((r) => (r.ok ? r.json() : null))
+						.then((body: LiveResults | null) => (crowd = body))
+						.catch(() => {});
+				}
 			} else if (res.status === 409) {
 				errorKey = 'research.study.notOpen';
 			} else {
@@ -408,6 +422,21 @@
 							<p class="own-index mono">{Math.round(ownScore.index)}<span>/100</span></p>
 							{#if band}
 								<p class="own-band">{(band as unknown as Record<string, string | undefined>)[`label_${locale}`] ?? band.label_en}</p>
+							{/if}
+							{#if ownScore.plane}
+								{@const plane = crowd?.series?.window?.results?.plane ?? crowd?.results?.plane ?? null}
+								{@const pending = crowd ? !crowd.floor.reached : false}
+								<div class="own-grid">
+									<p class="eyebrow">{t('research.own.grid')}</p>
+									<Grid
+										grid={plane}
+										you={ownScore.plane}
+										emptyNote={pending && crowd
+											? format(locale, 'research.own.gridPending', { n: crowd.floor.n, N: crowd.floor.first_figure_n })
+											: null}
+									/>
+									{#if plane}<p class="note">{t('research.own.gridLive')}</p>{/if}
+								</div>
 							{/if}
 							<a class="back" href="/research/{study.slug}">{t('research.own.compare')}</a>
 						{:else}
@@ -967,6 +996,9 @@
 	}
 
 	/* ---- receipt and own result ---------------------------------------------- */
+	.own-grid {
+		margin: 1.5rem 0 1rem;
+	}
 	.own {
 		border: 1px solid var(--border-default);
 		border-radius: var(--r-md);
