@@ -72,6 +72,8 @@ inventory:
     note: User-visible content pages. Frontmatter translated_by is a separate population resolved under content-translation; historical facts about Tunisia are not product claims.
     exclude:
       - '\b(?:18|19|20)\d{2}\b'
+      # A fixed suppression rule from a hashed instrument (the cell floor), not a current-state count.
+      - '\bfewer than 20 people\b'
   - path: src/lib/i18n.ts
     rule: generated-template
     note: Application chrome. Current figures are interpolated from typed state at render; any literal count in this file must be declared.

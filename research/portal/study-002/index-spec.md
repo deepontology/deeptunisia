@@ -64,11 +64,11 @@ T1 follows the European Social Survey trust-in-police wording (0 to 10), so the 
 
 C1 is the "again" question. It stays outside the index so the index is not built on a comparison with the past.
 
-### About you
+### Your region (optional)
 
-Age band (18–24, 25–34, 35–44, 45–59, 60+), gender (woman, man, prefer not to say), governorate (published only as one of seven regions), living in Tunisia or abroad. Recruitment channel is recorded from the link, not asked.
+Anonymity is a design rule: nothing is asked about who the respondent is. There is no age, gender or residence question. The one exception is optional and comes last: which governorate the respondent lives in, with "I live outside Tunisia" and "prefer not to answer" among the options. It is published only as one of the seven INS regions, under the cell floor. Recruitment channel is recorded from the link, not asked.
 
-About 20 screens, roughly three minutes.
+About 15 screens, roughly three minutes.
 
 ## 3. Scoring one respondent
 
@@ -114,19 +114,19 @@ Equal weights are the pre-registered headline. Following the Rankings view, read
 
 The band names and their meanings are published with the formula before any data comes in.
 
-## 5. Scoring the wave
+## 5. Scoring a month
 
-- **Headline:** mean I across valid respondents, with a 95% bootstrap confidence interval (2,000 resamples). The median is shown alongside.
+- **Headline:** the month's published index (§8), with its interval. Beside it, the month on its own: mean I across its valid respondents, with a 95% bootstrap interval (1,000 resamples), and the median.
 - **Components:** mean T, G and H, each with an interval, so a move in the index can be traced to its source.
 - **The plane:** each respondent is a point at (T, G). The quadrants are Guardian (high T, low G), Strong state (high T, high G), Absent (low T, low G) and Police state (low T, high G). A density map of all respondents is drawn on it.
-- **Splits:** contact versus no contact, age band, gender, region, in Tunisia versus abroad. A split with fewer than 20 respondents in a cell is not shown.
+- **Splits:** contact versus no contact, and region over those who chose to answer it. A split with fewer than 20 respondents in a cell is not shown.
 - **Per item:** the full 0 to 10 distribution for every item, plus how many skipped it.
-- **Weighting:** unweighted is the headline. A version raked to INS 2024 margins (age, gender, region) is shown beside it, labelled as such.
+- **Weighting:** none. With no demographics collected there is nothing to rake to, and every figure says "among respondents".
 
-## 6. Validity checks published with every wave
+## 6. Validity checks published at every review
 
-- Cronbach's alpha and item-total correlations for T and G. If either alpha falls below 0.7, the wave says so.
-- The correlation between T and G. If they are nearly the same thing, two axes are the wrong model, and the wave says that too.
+- Cronbach's alpha and item-total correlations for T and G. If either alpha falls below 0.7, the page says so.
+- The correlation between T and G. If they are nearly the same thing, two axes are the wrong model, and the page says that too.
 - Exclusions, by rule: completion time under 40 seconds, identical answers on all ten index items (straight-lining), honeypot field filled, rate-limit refusals.
 
 ## 7. Live results
@@ -139,11 +139,19 @@ What keeps live honest:
 - **Submissions per hour** chart on the same page, so a flood is visible to everyone.
 - The **exclusion counts** update live too.
 - A first-party proof-of-work check (no third-party script; a puzzle solved in the background while the respondent answers, each one usable once), the salted rate limit and the honeypot stay on.
-- At wave close the numbers are frozen. The final results are recomputed offline from the exported data, and the published wave result is the frozen one.
+- When a month ends its numbers are final. They are recomputed offline from the exported data and committed, and the committed figures are that month's published result.
 
-## 8. Waves
+## 8. The monthly series
 
-Wave 01 opens when the instrument is frozen. Waves are three months apart, and trend items (T1–T5, G1–G5, E1–E5, C1) are frozen across waves. A wording change becomes a new instrument version, and the series is marked as broken at that point.
+The index is a series like a market index: fielded continuously, published once per calendar month (Tunisia time, UTC+1).
+
+- **The month on its own** is every estimand in §5 over the answers submitted that month.
+- **The published index** is a local-level Kalman filter run through the months. The true level may drift each month by a random step with SD `process_sd` = 2.5 points; each month's mean measures it with variance sd²/n. Each month moves the level toward its own mean by its gain, P / (P + sd²/n). A month of 1,000 answers moves the index almost all the way to its own mean. A month of 200 moves it part of the way, with the rest carried from every earlier month.
+- **A month under `min_month_n` = 30** scored respondents carries the previous level forward, and its interval widens.
+- **Forward only:** a closed month's figure never changes. Receipts delete answers only during the month they were given in.
+- **What it cannot fix:** who answered. A month that draws a different crowd moves the index as if opinion had changed. The page publishes each month's n and gain so a reader can judge, and each 12-month review publishes the series with `process_sd` 1.5 and 5 as a sensitivity check.
+
+The series opens on the 1st of the month after the instrument is frozen. Trend items stay fixed for as long as the series runs. A wording change becomes a new instrument version, and the series is marked as broken at that point.
 
 ## 9. Respondent's own result
 
@@ -153,6 +161,6 @@ After submitting, the respondent sees their own I, their band and their dot on t
 
 1. H uses a contact-dependent formula. The alternative is to drop H from the index and use contact only as a split. Keep H?
 2. Should C1 (compared with before 2011) be the headline companion to the index on the results page?
-3. Should governorate be published at all, or only the seven regions?
+3. ~~Should governorate be published at all, or only the seven regions?~~ Only the seven regions, and the question is optional.
 4. Weights: equal thirds, or Trust ½ with Grip and Harm ¼ each?
 5. Should the bands be named in the three languages first and then tested with readers?
