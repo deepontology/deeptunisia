@@ -1,4 +1,4 @@
-# Pre-registration: Study 002, Tunisia Police Index, monthly series
+# Pre-registration: Study 002, Police Satisfaction Index (PSI), monthly series
 
 **Study:** `dt-research-002` · **Instrument:** `dt002-police-index` · **Version:** recorded at freeze
 **Instrument hash (sha256):** `RECORDED AT FREEZE`

@@ -6,7 +6,9 @@
 	import { app } from '$lib/state.svelte';
 	import { titleOf, type RuntimeInstrument, type StudyRecord } from '$lib/research';
 	import Barcode from './Barcode.svelte';
-	import Stamp from './Stamp.svelte';
+	import Plate from './Plate.svelte';
+	import Ruler from './Ruler.svelte';
+	import { fade } from 'svelte/transition';
 	import Grid from './Grid.svelte';
 	import MonthlyChart from './MonthlyChart.svelte';
 	import Content from '$lib/ui/Content.svelte';
@@ -166,12 +168,88 @@
 	const hourlyMax = $derived(Math.max(1, ...hourly));
 
 	const regionKeys = $derived(Object.keys(spec.regions?.groups ?? {}));
+
+	// ---- the page as a numbered record -------------------------------------
+	// Each section has a number and a short name. The ruler notches them, and
+	// the section bar names the one being read; nothing else announces it.
+	let scrollEl = $state<HTMLElement | null>(null);
+	const sections = $derived(
+		[
+			{ id: 'index', key: 'index.section.index' },
+			...(months.length ? [{ id: 'months', key: 'index.section.months' }] : []),
+			{ id: 'grid', key: 'index.section.grid' },
+			{ id: 'method', key: 'index.section.method' },
+			{ id: 'questions', key: 'index.section.questions' },
+			{ id: 'splits', key: 'index.section.splits' },
+			{ id: 'integrity', key: 'index.section.integrity' },
+			{ id: 'record', key: 'index.section.record' },
+			{ id: 'answer', key: 'index.section.answer' }
+		].map((s, i) => ({ id: s.id, num: String(i + 1).padStart(2, '0'), label: t(s.key) }))
+	);
+	const sectionOf = (id: string) => sections.find((s) => s.id === id);
+	let currentId = $state('index');
+	const current = $derived(sectionOf(currentId) ?? sections[0]);
+
+	$effect(() => {
+		const el = scrollEl;
+		if (!el) return;
+		let frame = 0;
+		const update = () => {
+			frame = 0;
+			// The section whose top has passed a line a third of the way down.
+			const line = el.getBoundingClientRect().top + el.clientHeight * 0.33;
+			let id = sections[0]?.id ?? 'index';
+			for (const s of sections) {
+				const node = el.querySelector<HTMLElement>(`#${s.id}`);
+				if (node && node.getBoundingClientRect().top <= line) id = s.id;
+			}
+			currentId = id;
+		};
+		const onScroll = () => {
+			if (!frame) frame = requestAnimationFrame(update);
+		};
+		el.addEventListener('scroll', onScroll, { passive: true });
+		update();
+		return () => {
+			cancelAnimationFrame(frame);
+			el.removeEventListener('scroll', onScroll);
+		};
+	});
 </script>
 
-<!-- The shell is a fixed window; a document page owns its own scroll. -->
-<div class="scroll">
+{#snippet kicker(id: string)}
+	{@const s = sectionOf(id)}
+	{#if s}<p class="sec-kicker mono"><span class="sec-num">{s.num}</span><span class="sec-slash">/</span>{s.label}</p>{/if}
+{/snippet}
+
+<!-- The shell is a fixed window; a document page owns its own scroll. The
+     ruler sits beside the scroll, not inside it, so it never moves. -->
+<div class="frame" class:rtl={locale === 'ar'}>
+<div class="scroll" bind:this={scrollEl}>
+	<!-- The section bar: the one place the page says where the reader is. -->
+	<div class="secbar mono">
+		{#key current?.id}
+			<span class="secbar-now" in:fade={{ duration: 160 }}>
+				<span class="sec-num">{current?.num}</span><span class="sec-slash">/</span>{current?.label}
+			</span>
+		{/key}
+		<span class="secbar-id">PSI · {waveLabel}</span>
+	</div>
 <article class="pti" class:rtl={locale === 'ar'}>
-	<!-- Masthead: the volume line from the reference, carrying the wave. -->
+	<!-- Plate 01, edge to edge: the subject before the number. -->
+	<Plate
+		name="psi-5"
+		width={1540}
+		height={1026}
+		eager
+		focus="50% 30%"
+		class="plate-hero"
+		label="{t('index.fig.label')} 01"
+		caption={t('index.fig.one')}
+	/>
+
+	<!-- The title band: the number and its name on one full-width plate. -->
+	<div class="title-band">
 	<header class="masthead">
 		<span class="kicker">{t('index.kicker')}</span>
 		<span class="wave mono">
@@ -182,7 +260,7 @@
 		</span>
 	</header>
 
-	<section class="hero">
+	<section class="hero" id="index">
 		<div class="numeral" aria-live="polite">
 			{#if hasIndex}
 				<span class="digits mono" aria-label={tf('index.headline.aria', { value: fmt(headline) })}>
@@ -242,18 +320,12 @@
 			{/if}
 		</div>
 
-		<div class="seal">
-			<Stamp
-				ring={tf('index.stamp.ring', { wave: waveLabel })}
-				center={t('index.stamp.center')}
-				live={liveState === 'live' && open}
-				joined={locale === 'ar'}
-			/>
-		</div>
 	</section>
+	</div>
 
 	{#if months.length}
-		<section class="block series">
+		<section class="block series" id="months">
+			{@render kicker('months')}
 			<div class="series-head">
 				<h2>{t('index.series.title')}</h2>
 				<p class="note">{tf('index.series.lede', { min: live?.series?.settings.min_month_n ?? 30 })}</p>
@@ -318,6 +390,8 @@
 		</section>
 	{/if}
 
+	<div class="sec" id="grid">
+	{@render kicker('grid')}
 	<section class="panel-row">
 		<!-- The three components as one vertical meter, like the swatch column in
 		     the reference. Grip and harm count against the index, so their bars
@@ -345,6 +419,21 @@
 	</section>
 
 	<p class="population">{t('index.population')}</p>
+	</div>
+
+	<!-- Plate 02: a barrier, edge to edge, between the readings and the method. -->
+	<Plate
+		name="psi-6"
+		width={1920}
+		height={1080}
+		focus="50% 60%"
+		class="plate-strip"
+		label="{t('index.fig.label')} 02"
+		caption={t('index.fig.two')}
+	/>
+
+	<div class="sec" id="method">
+	{@render kicker('method')}
 
 	<section class="facts">
 		<div class="fact">
@@ -390,6 +479,7 @@
 			{/each}
 		</ol>
 	</section>
+	</div>
 
 	{#snippet strip(id: string)}
 		{@const summary = results?.items?.[id] ?? null}
@@ -432,6 +522,8 @@
 		</div>
 	{/snippet}
 
+	<div class="sec" id="questions">
+	{@render kicker('questions')}
 	{#if (spec.report_items ?? []).length}
 		<section class="block">
 			<h2>{t('index.context.title')}</h2>
@@ -481,8 +573,10 @@
 			</div>
 		{/each}
 	</section>
+	</div>
 
-	<section class="block">
+	<section class="block" id="splits">
+		{@render kicker('splits')}
 		<h2>{t('index.splits.title')}</h2>
 		<p class="note">{tf('index.splits.floor', { n: spec.cell_floor ?? 20 })}</p>
 		<div class="splits">
@@ -520,7 +614,8 @@
 		{#if spec.regions}<p class="note">{t('index.splits.regionOptional')}</p>{/if}
 	</section>
 
-	<section class="block">
+	<section class="block" id="integrity">
+		{@render kicker('integrity')}
 		<h2>{t('index.integrity.title')}</h2>
 		<p class="note">{t('index.integrity.lede')}</p>
 		<div class="hourly" dir="ltr" role="img" aria-label={t('index.integrity.hourlyAria')}>
@@ -547,31 +642,212 @@
 	<!-- Long-form statements live in content files (src/content/police-index.*.md),
 	     where each locale's provenance is recorded in its front matter. #data is
 	     the anchor the consent screen links to. -->
+	<div class="sec" id="record">
+	{@render kicker('record')}
 	{#each ['data', 'limits', 'deviations'] as id (id)}
 		<section class="block prose-block" id={id}>
 			<Content view="police-index" section={id} />
 		</section>
 	{/each}
+	</div>
 
 	{#if liveState === 'offline'}
 		<p class="note">{t('index.offline')}</p>
 	{/if}
+
+	<!-- The close: Fig. 03 under the one action the page asks for. -->
+	<section class="closing" id="answer">
+		{@render kicker('answer')}
+		<Plate
+			name="psi-9"
+			width={1280}
+			height={720}
+			focus="60% 35%"
+			class="plate-closing"
+			label="{t('index.fig.label')} 03"
+			caption={t('index.fig.three')}
+		>
+			<div class="closing-copy">
+				<p class="closing-line">{t('index.closing.line')}</p>
+				{#if open}
+					<a class="cta cta-solid" href="/research/{study.slug}/participate">{tf('index.cta', { n: fmt(instrument.estimatedMinutes) })}</a>
+					<p class="closing-note mono">{t('index.closing.note')}</p>
+				{:else}
+					<p class="closing-note mono">{t('index.headline.notOpen')}</p>
+				{/if}
+			</div>
+		</Plate>
+	</section>
 </article>
+</div>
+<Ruler scroller={scrollEl} sections={sections} label={t('index.ruler.aria')} />
 </div>
 
 <style>
+	.frame {
+		--ruler: 3.25rem;
+		position: relative;
+		flex: 1;
+		min-height: 0;
+		display: flex;
+	}
 	.scroll {
 		flex: 1;
 		min-height: 0;
 		overflow-y: auto;
 		overflow-x: hidden;
+		padding-inline-end: var(--ruler);
+		scroll-behavior: smooth;
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.scroll {
+			scroll-behavior: auto;
+		}
 	}
 	.pti {
 		--rule: var(--border-default);
 		max-width: 72rem;
 		margin-inline: auto;
-		padding: 1.5rem 1rem 4rem;
+		/* No top padding: plate 01 sits flush under the section bar. */
+		padding: 0 1rem 4rem;
 		color: var(--text-primary);
+	}
+
+	/* ---- the section bar ------------------------------------------------ */
+	.secbar {
+		position: sticky;
+		top: 0;
+		z-index: 4;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 1rem;
+		height: 2.25rem;
+		padding-inline: 1rem;
+		border-bottom: 1px solid var(--border-subtle);
+		background: color-mix(in oklch, var(--surface-base) 86%, transparent);
+		backdrop-filter: blur(8px);
+		font-size: 0.6875rem;
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		color: var(--text-secondary);
+	}
+	.secbar-now {
+		display: inline-flex;
+		align-items: baseline;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	.secbar-id {
+		color: var(--text-faint);
+		white-space: nowrap;
+	}
+	.sec-num {
+		color: var(--text-primary);
+		font-weight: 600;
+	}
+	.sec-slash {
+		margin-inline: 0.55em;
+		color: var(--text-faint);
+	}
+	.sec-kicker {
+		display: flex;
+		align-items: baseline;
+		margin: 3.5rem 0 1.25rem;
+		padding-top: 0.65rem;
+		border-top: 1px solid var(--rule);
+		font-size: 0.6875rem;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		color: var(--text-secondary);
+	}
+	.rtl .secbar,
+	.rtl .sec-kicker {
+		letter-spacing: 0;
+	}
+	/* The kicker carries the section's rule; the block under it does not repeat it. */
+	.block:has(> .sec-kicker),
+	.sec-kicker + .block,
+	.sec-kicker + .facts {
+		border-top: 0;
+		margin-top: 0;
+		padding-top: 0;
+	}
+
+	/* ---- plates and the title band ----------------------------------- */
+	/* The page is a size container so a plate can run edge to edge from
+	   inside the reading column (Plate.svelte uses cqw). */
+	.scroll {
+		container-type: inline-size;
+	}
+	.pti :global(.plate-hero) {
+		--plate-h: min(74vh, 56cqw);
+	}
+	.pti :global(.plate-strip) {
+		--plate-h: clamp(13rem, 36vh, 24rem);
+		margin-top: 4rem;
+	}
+	.pti :global(.plate-closing) {
+		--plate-h: min(86vh, 60cqw);
+		margin-top: 1.25rem;
+	}
+	/* The band carries the number: the theme colour, mixed into the page,
+	   edge to edge like the plates above and below it. */
+	.title-band {
+		width: 100cqw;
+		margin-inline: calc(50% - 50cqw);
+		margin-top: 1.5rem;
+		padding: 1.6rem max(1rem, calc((100cqw - 72rem) / 2 + 1rem)) 2.4rem;
+		background: color-mix(in oklch, var(--accent) 13%, var(--surface-base));
+		border-block: 1px solid color-mix(in oklch, var(--accent) 35%, transparent);
+	}
+	.title-band .masthead {
+		border-bottom-color: color-mix(in oklch, var(--accent) 35%, transparent);
+	}
+	.title-band .kicker {
+		color: var(--accent);
+	}
+
+	/* ---- the close ------------------------------------------------------ */
+	/* Over the artwork the copy is always light on dark: the plate is black
+	   in both themes, so the text does not follow the page theme here. */
+	.closing-copy {
+		position: absolute;
+		inset: auto 0 0 0;
+		padding: 6rem max(1rem, calc((100cqw - 72rem) / 2 + 1rem)) 2rem;
+		background: linear-gradient(to top, rgb(0 0 0 / 0.92) 40%, rgb(0 0 0 / 0));
+		color: #f4f4f2;
+	}
+	.closing-line {
+		font-family: var(--font-serif);
+		font-size: clamp(1.5rem, 3.6vw, 2.4rem);
+		line-height: 1.15;
+		max-width: 30ch;
+		margin: 0 0 1.1rem;
+		color: #f4f4f2;
+	}
+	.rtl .closing-line {
+		font-family: var(--font-sans);
+		font-weight: 600;
+	}
+	.closing-note {
+		margin: 0.8rem 0 0;
+		font-size: 0.6875rem;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: rgb(244 244 242 / 0.72);
+	}
+	.cta.cta-solid {
+		border-color: #f4f4f2;
+		background: #f4f4f2;
+		color: #0b0b0b;
+		padding: 0.75rem 1.2rem;
+	}
+	.cta.cta-solid:hover {
+		background: var(--accent);
+		border-color: var(--accent);
+		color: var(--accent-text);
 	}
 
 	/* ---- masthead ------------------------------------------------------- */
@@ -604,10 +880,18 @@
 	/* ---- hero ----------------------------------------------------------- */
 	.hero {
 		display: grid;
-		grid-template-columns: auto 1fr auto;
-		gap: 2rem;
+		grid-template-columns: auto minmax(0, 1fr);
+		grid-template-areas: 'num title';
+		column-gap: 3rem;
+		row-gap: 0.5rem;
 		align-items: start;
-		padding: 1.8rem 0 1.4rem;
+		padding: 2rem 0 0;
+	}
+	.numeral {
+		grid-area: num;
+	}
+	.title {
+		grid-area: title;
 	}
 	.digits {
 		display: block;
@@ -744,9 +1028,6 @@
 	}
 	.cta:hover {
 		background: var(--surface-hover);
-	}
-	.seal {
-		width: 9.5rem;
 	}
 
 	/* ---- the panel row -------------------------------------------------- */
@@ -1020,17 +1301,30 @@
 
 	/* ---- phone ---------------------------------------------------------- */
 	@media (max-width: 760px) {
+		.frame {
+			--ruler: 0.9rem;
+		}
+		.masthead {
+			flex-wrap: wrap;
+			row-gap: 0.4rem;
+		}
+		.masthead > span {
+			white-space: nowrap;
+		}
+		.secbar-id {
+			display: none;
+		}
 		.hero {
 			grid-template-columns: 1fr;
-			gap: 1rem;
+			grid-template-areas: 'num' 'title';
+			row-gap: 1rem;
+			padding-top: 1.25rem;
 		}
-		.seal {
-			position: absolute;
-			inset-inline-end: 1rem;
-			width: 6rem;
+		.pti :global(.plate-hero) {
+			--plate-h: 58vh;
 		}
-		.hero {
-			position: relative;
+		.pti :global(.plate-closing) {
+			--plate-h: 82vh;
 		}
 		.panel-row,
 		.facts {

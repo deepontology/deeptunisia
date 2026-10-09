@@ -1,7 +1,7 @@
 # Study 002 companion: police stories
 
 **Status:** design draft, 2026-10-09. Nothing built. Not fielded.
-**Belongs to:** the Tunisia Police Index (`dt-research-002`). It is a second door into the same study: the index asks everyone the same questions, and this section lets someone who has something to tell tell it.
+**Belongs to:** the Police Satisfaction Index (`dt-research-002`). It is a second door into the same study: the index asks everyone the same questions, and this section lets someone who has something to tell tell it.
 
 ---
 
