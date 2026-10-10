@@ -3837,6 +3837,7 @@ if (!FIXTURE_MODE) {
 		'/map',
 		'/agora',
 		'/feed',
+		'/research',
 		'/evidence',
 		'/methodology',
 		'/corrections',

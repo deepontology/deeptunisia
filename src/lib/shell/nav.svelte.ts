@@ -1,21 +1,29 @@
 /**
  * The navigation model.
  *
- * THREE BUBBLES, NOT A FLAT TAB BAR
+ * FOUR BUBBLES, NOT A FLAT TAB BAR
  *
- * Graph, Media and Agora are not three equal epistemic silos. Graph and Media
- * belong to the record; Agora is the argument about it, and it gets its own
- * slot because crossing that line should be cheap and visible.
+ * Graph, Media, Agora and Research are not four equal epistemic silos. Graph and
+ * Media belong to the record; Research collects structured observations from
+ * people; Agora is the argument about the record, and it gets its own slot
+ * because crossing that line should be cheap and visible.
  *
  * Graph = the sourced record (instrument views)
  * Media = the reading surfaces: in-house investigations, and the third-party
  *         headline feed
+ * Research = open, pre-registered studies: the instrument, the method and the
+ *            released data, with the population statement attached to every number
  * Agora = the community layer: discussion, proposed changes, reports
  *
  * Media is architecturally connected to Graph: entities link to the graph,
  * sources are graph sources, the evidence vocabulary is shared. It is not a
  * separate epistemic world; it is a different rendering of the same evidence
  * system, with editorial judgement and narrative framing added.
+ *
+ * Research is separate by construction: its data are observations about people
+ * who chose to take part, never claims about the country, and nothing under it
+ * may render in the register of a sourced graph claim. That distinction is why
+ * it gets a first-tier slot rather than a link buried under Graph.
  *
  * The feed sits here rather than under Agora for two reasons. Agora's three
  * tabs share identity, moderation and a gate (`AGORA_OPEN`), and the feed shares
@@ -31,7 +39,7 @@
 
 import { AGORA_OPEN } from '$lib/agora-gate';
 
-export type BubbleId = 'graph' | 'media' | 'agora';
+export type BubbleId = 'graph' | 'media' | 'agora' | 'research';
 
 export interface NavItem {
 	href: string;
@@ -107,12 +115,22 @@ export const BUBBLES: Bubble[] = [
 			{ href: '/agora?tab=proposals', key: 'proposals', tab: 'proposals' },
 			{ href: '/agora?tab=reported', key: 'reported', tab: 'reported' }
 		]
+	},
+	{
+		id: 'research',
+		key: 'research',
+		home: '/research',
+		// The label comes from `nav.research` (the same key the guide row uses);
+		// the one item below is the program overview. Study pages hang off it, and
+		// the nested-path rule keeps the item current on every child route.
+		items: [{ href: '/research', key: 'research.overview' }]
 	}
 ];
 
-/** Routes that belong to Media or Agora. Everything else is Graph. */
+/** Routes that belong to Media, Agora or Research. Everything else is Graph. */
 const MEDIA_PATHS = new Set(['/media', '/feed']);
 const AGORA_PATHS = new Set(['/agora']);
+const RESEARCH_PATHS = new Set(['/research']);
 
 export function bubbleFor(pathname: string): Bubble {
 	if (MEDIA_PATHS.has(pathname) || pathname.startsWith('/media/')) {
@@ -121,7 +139,25 @@ export function bubbleFor(pathname: string): Bubble {
 	if (AGORA_PATHS.has(pathname)) {
 		return BUBBLES.find((b) => b.id === 'agora')!;
 	}
+	if (RESEARCH_PATHS.has(pathname) || pathname.startsWith('/research/')) {
+		return BUBBLES.find((b) => b.id === 'research')!;
+	}
 	return BUBBLES.find((b) => b.id === 'graph')!;
+}
+
+/**
+ * Routes whose child paths keep the parent item current.
+ *
+ * `/world` and `/research` are single destinations in the strip even though
+ * they have child routes, so walking into `/world/tunisia` or
+ * `/research/democracy/participate` must not blank the indicator. A set rather
+ * than a boolean per route: the next such section adds one word here, not
+ * another near-identical branch in both functions below.
+ */
+const NESTED_PATHS = new Set(['/world', '/research']);
+
+function inNestedPath(path: string, pathname: string): boolean {
+	return NESTED_PATHS.has(path) && pathname.startsWith(`${path}/`);
 }
 
 /**
@@ -134,8 +170,7 @@ export function activeIndex(bubble: Bubble, pathname: string, tab: string | null
 	const all = [...bubble.items, ...(bubble.docs ?? [])];
 	return all.findIndex((item) => {
 		const [path] = item.href.split('?');
-		const nestedWorld = path === '/world' && pathname.startsWith('/world/');
-		if (path !== pathname && !nestedWorld) return false;
+		if (path !== pathname && !inNestedPath(path, pathname)) return false;
 		if (!item.tab) return true;
 		// No tab in the URL means the section's default, which is its first tab.
 		return tab ? item.tab === tab : item.tab === bubble.items[0]?.tab;
@@ -144,8 +179,7 @@ export function activeIndex(bubble: Bubble, pathname: string, tab: string | null
 
 export function isActive(item: NavItem, pathname: string, tab: string | null): boolean {
 	const [path] = item.href.split('?');
-	const nestedWorld = path === '/world' && pathname.startsWith('/world/');
-	if (path !== pathname && !nestedWorld) return false;
+	if (path !== pathname && !inNestedPath(path, pathname)) return false;
 	if (!item.tab) return true;
 	// No tab in the URL means the section's default, which is its first tab. The
 	// owner is resolved from the path; this used to read BUBBLES[1], which stopped
@@ -168,7 +202,8 @@ export function isActive(item: NavItem, pathname: string, tab: string | null): b
 export const lastPath = $state<Record<BubbleId, string>>({
 	graph: '/',
 	media: '/media',
-	agora: '/agora'
+	agora: '/agora',
+	research: '/research'
 });
 
 /** The href a bubble should navigate to: where you left it, or its home. */

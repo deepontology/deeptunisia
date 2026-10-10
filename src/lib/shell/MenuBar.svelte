@@ -10,18 +10,21 @@
 	import Tooltip from '$lib/ui/Tooltip.svelte';
 
 	/**
-	 * The menu bar — tier one.
+	 * The menu bar, tier one.
 	 *
-	 * Three bubbles: Graph (the sourced record), Media (the reading surfaces:
+	 * Four bubbles: Graph (the sourced record), Media (the reading surfaces:
 	 * investigations and the third-party feed), Agora (discussion and proposed
-	 * changes). Media is architecturally connected to Graph — investigations are a
-	 * narrative interface over the same evidence system — but gets its own
-	 * navigation slot because the reading experience is fundamentally different
-	 * from the instrument. See nav.svelte.ts.
+	 * changes), and Research (open studies and their released data). Media is
+	 * architecturally connected to Graph: investigations are a narrative interface
+	 * over the same evidence system. Research is separate by construction: its
+	 * data are observations from people who chose to take part, never graph
+	 * claims, so it gets its own slot instead of a link under Graph. See
+	 * nav.svelte.ts.
 	 *
 	 * Everything narrower than the bubbles collapses: the wordmark first, then the
 	 * search label, then the language switcher into Settings. The bubbles themselves
-	 * never collapse — a phone reader has to be able to cross that line too.
+	 * never collapse, but on a phone the strip tightens its padding and type so all
+	 * four stay reachable at 390px.
 	 */
 
 	const current = $derived(bubbleFor(page.url.pathname));
@@ -212,7 +215,7 @@
 		color: var(--text-primary);
 	}
 
-	/* --- tier one: the two bubbles --- */
+	/* --- tier one: the four bubbles --- */
 
 	.bubbles {
 		position: relative;
@@ -276,7 +279,7 @@
 		top: 3px;
 		bottom: 3px;
 		inset-inline-start: 3px;
-		width: calc((100% - 6px) / 3);
+		width: calc((100% - 6px) / 4);
 		transform: translateX(calc(var(--i) * 100%));
 		background: var(--surface-overlay);
 		border: 1px solid var(--border-default);
@@ -446,10 +449,10 @@
 	}
 	/* ORDER MATTERS: the touch-target block (900px) must come BEFORE the
 	   compact-budget block (640px). Both apply on a phone, same specificity,
-	   so the later one wins - and the compact budget is the one that knows
-	   how three bubbles plus the right cluster fit 390px. The 900px block
-	   sat after it once and its 12px link padding silently re-flooded the
-	   budget, overflowing every route 26px at 390px. */
+   so the later one wins - and the compact budget is the one that knows
+   how four bubbles plus the right cluster fit 390px. The 900px block
+   sat after it once and its 12px link padding silently re-flooded the
+   budget, overflowing every route 26px at 390px. */
 	@media (max-width: 900px) {
 		/* Touch targets. The bubbles are the one control on this bar that a phone
 		   reader definitely needs, so they grow while everything else holds — to
@@ -482,7 +485,7 @@
 	}
 	@media (max-width: 640px) {
 		/*
-		 * The compact budget. Three bubbles plus brand plus the right cluster must
+		 * The compact budget. Four bubbles plus brand plus the right cluster must
 		 * sum to less than 390px of min-content, or the whole fixed shell pans
 		 * sideways the next time anything focuses an off-screen control. The things
 		 * that do not shrink are load-bearing: the dots say record vs not, the soon
@@ -505,9 +508,18 @@
 			gap: var(--s-2);
 		}
 		.bubbles a {
-			padding: 0 var(--s-2);
-			gap: var(--s-2);
+			padding: 0 var(--s-1);
+			gap: var(--s-1);
 			font-size: var(--t-sm);
+		}
+		/*
+		 * The Guide shortcut steps out of the phone budget. Four bubbles plus the
+		 * right cluster need its 44px, and the same link sits in the graph docs
+		 * strip on every route, so nothing becomes unreachable. It returns as soon
+		 * as there is room for it, above 640px.
+		 */
+		.help {
+			display: none;
 		}
 		.soon {
 			display: inline-block;

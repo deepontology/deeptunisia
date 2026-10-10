@@ -45,6 +45,8 @@ import {
 	INSTITUTION_TYPES,
 	LAYERS
 } from '../src/lib/taxonomy.ts';
+import { handleResearch } from './research-api.ts';
+import type { StudiesRegistry } from './research-contract.ts';
 
 export interface Env {
 	DB: Db;
@@ -65,6 +67,30 @@ export interface Env {
 	 * format only (spec §15.3 R4).
 	 */
 	ENTITY_IDS?: Set<string>;
+	// ---- research (contract §6). Every field optional; every absence fails closed.
+
+	/** Compiled studies registry, loaded from src/generated/studies.json. */
+	STUDIES?: StudiesRegistry;
+	/** Research response storage. Absent → research endpoints needing storage answer 503. */
+	RESEARCH_DB?: Db;
+	/** '1' accepts research submissions. Absent or any other value → 403. */
+	RESEARCH_OPEN?: string;
+	/**
+	 * Secret for signing arm assignments (contract §10). Falls back to
+	 * RATE_PEPPER when unset; both are stable secrets on either side.
+	 */
+	ASSIGNMENT_SECRET?: string;
+	/**
+	 * LOCAL DEVELOPMENT ONLY. Names one study by slug or id: the API treats it as
+	 * fielding and accepts its submissions without a bot challenge (see
+	 * community/server.ts for the startup warning). Nothing in production sets
+	 * this variable; the Worker never reads it.
+	 */
+	RESEARCH_DEV_STUDY?: string;
+	/** Worker secret: enables the Turnstile siteverify call for research submissions. */
+	TURNSTILE_SECRET?: string;
+	/** Tests only: injected bot-challenge verifier, never set in production. */
+	TURNSTILE_VERIFY?: (token: string, address: string) => Promise<boolean>;
 }
 
 const REPORT_REASONS = [
@@ -387,17 +413,33 @@ export async function handle(request: Request, env: Env): Promise<Response> {
 	const path = url.pathname.replace(/\/+$/, '') || '/';
 	const now = Date.now();
 
-	/*
-	 * The mode gate runs before the router and before any database access. In
-	 * `off` nothing below this line is reached, so no route can read, write,
-	 * verify a signature, spend a nonce or touch moderation. `read-only` admits
-	 * the public reads and refuses everything else with the same response.
-	 */
-	const mode = env.mode ?? 'off';
-	if (mode === 'off') return modeUnavailable();
-	if (mode === 'read-only' && !isPublicRead(request.method, path)) return modeUnavailable();
-
 	try {
+		// ---- research: its own refusal ladder (contract §4). Research is a
+		// separate product with its own fail-closed gate: a study must be fielding
+		// and RESEARCH_OPEN must be '1' before any write is accepted. The community
+		// mode governs Agora and does not close research, so this branch runs ahead
+		// of the mode gate. It never touches Agora tables; the DB binding is used
+		// only for the salted rate-limit buckets. Instrument reads stay
+		// unauthenticated and unlimited; the address only derives a bucket.
+		if (path === '/api/studies' || path.startsWith('/api/studies/')) {
+			return await handleResearch(request, env, {
+				clientAddress: clientAddress(request),
+				bucketStore: bucketStore(env.DB),
+				now
+			});
+		}
+
+		/*
+		 * The mode gate runs before the Agora router and before any Agora
+		 * database access. In `off` nothing below this line is reached, so no
+		 * Agora route can read, write, verify a signature, spend a nonce or touch
+		 * moderation. `read-only` admits the public reads and refuses everything
+		 * else with the same response.
+		 */
+		const mode = env.mode ?? 'off';
+		if (mode === 'off') return modeUnavailable();
+		if (mode === 'read-only' && !isPublicRead(request.method, path)) return modeUnavailable();
+
 		// ---- reads: no identity, no rate limit, nothing recorded -------------
 
 		if (request.method === 'GET' && path === '/api/threads') {
