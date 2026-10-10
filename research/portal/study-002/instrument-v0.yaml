@@ -835,5 +835,5 @@ scoring:
   # Pre-registered exclusions, applied before any aggregate and counted per rule
   # on the results page. A row may trip more than one rule.
   exclusions:
-    min_completion_seconds: 40
+    min_completion_seconds: 70
     straightline_items: [pti_t1, pti_t2, pti_t3, pti_t4, pti_t5, pti_s1, pti_s2, pti_s3, pti_s4, pti_g1, pti_g2, pti_g3, pti_g4, pti_g6, pti_g5]

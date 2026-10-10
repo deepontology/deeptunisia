@@ -12,7 +12,7 @@
 	import type { LiveResults } from '$lib/index-study/live';
 	import type { RuntimeInstrument, RuntimeItem, StudyRecord } from '$lib/research';
 	import { startProofOfWork, type ProofOfWork } from '$lib/pow';
-	import { evaluateCondition, scoreResponse } from '../../../../../community/research-scoring.ts';
+	import { evaluateCondition, periodOf, scoreResponse } from '../../../../../community/research-scoring.ts';
 
 	/**
 	 * The survey runner: one question per screen.
@@ -88,6 +88,7 @@
 			proof = startProofOfWork(data.study.slug);
 		}
 		restoreSession();
+		readAnsweredMonth();
 	});
 
 	const locale = $derived(app.locale);
@@ -331,6 +332,46 @@
 		}
 	});
 
+	// ---- answered this month ----------------------------------------------------
+
+	const answeredKey = $derived(`deeptunisia:research:${study.slug}:answered`);
+
+	/**
+	 * The calendar month in Tunisia time (UTC+1, no daylight saving), as
+	 * YYYY-MM. The offset is the one the series counts its months in, and the
+	 * engine's own `periodOf` draws the boundary, so what this browser writes is
+	 * the month the index will publish the answer in.
+	 */
+	function tunisiaMonth(): string {
+		return periodOf(Date.now(), 60);
+	}
+
+	/**
+	 * The month this browser last answered in, and nothing else about it: no
+	 * receipt, no date, no answers. The index asks for one answer per person a
+	 * calendar month, so the notice is how a second visit is told that; a phone
+	 * is shared, so it never blocks anything.
+	 */
+	let answeredMonth = $state<string | null>(null);
+	const answeredThisMonth = $derived(answeredMonth !== null && answeredMonth === tunisiaMonth());
+
+	function readAnsweredMonth() {
+		try {
+			answeredMonth = localStorage.getItem(answeredKey);
+		} catch {
+			/* Private mode: no notice, and nothing else breaks. */
+		}
+	}
+
+	/** Written on a successful submit, and removed by the withdrawal page. */
+	function markAnswered() {
+		try {
+			localStorage.setItem(answeredKey, tunisiaMonth());
+		} catch {
+			/* Private mode or a full quota: the notice simply never appears. */
+		}
+	}
+
 	// ---- submit ------------------------------------------------------------------
 
 	async function submit() {
@@ -371,13 +412,17 @@
 			if (res.ok) {
 				const body = (await res.json()) as { receipt?: string };
 				receipt = body.receipt ?? null;
-				if (!receipt) errorKey = 'research.participate.error';
-				else if (instrument.scoring) {
-					ownScore = scoreResponse(instrument.scoring, payloadAnswers);
-					void fetch(`/api/studies/${study.slug}/live`)
-						.then((r) => (r.ok ? r.json() : null))
-						.then((body: LiveResults | null) => (crowd = body))
-						.catch(() => {});
+				if (!receipt) {
+					errorKey = 'research.participate.error';
+				} else {
+					markAnswered();
+					if (instrument.scoring) {
+						ownScore = scoreResponse(instrument.scoring, payloadAnswers);
+						void fetch(`/api/studies/${study.slug}/live`)
+							.then((r) => (r.ok ? r.json() : null))
+							.then((body: LiveResults | null) => (crowd = body))
+							.catch(() => {});
+					}
 				}
 			} else if (res.status === 409) {
 				errorKey = 'research.study.notOpen';
@@ -476,6 +521,15 @@
 					{/if}
 
 					{#if current.kind === 'consent'}
+						{#if answeredThisMonth}
+							<!-- A shared phone answers twice. The second person is told the index
+							     asks for one answer a month, and the survey stays fully usable. -->
+							<div class="answered">
+								<p>{t('research.participate.alreadyAnswered')}</p>
+								<p>{t('research.participate.sharedDevice')}</p>
+								<p><a class="back" href="/research/{study.slug}">{t('research.participate.seeIndex')}</a></p>
+							</div>
+						{/if}
 						<h1 tabindex="-1">{t('research.participate.consent')}</h1>
 						<!-- What the first consent statement refers to, opened over the
 						     survey so it keeps its place. -->
@@ -646,6 +700,7 @@
 		<ul class="stored-short">
 			<li class="yes"><span class="mark mono" aria-hidden="true">+</span><span>{t('research.store.kept')}</span></li>
 			<li class="no"><span class="mark mono" aria-hidden="true">×</span><span>{t('research.store.never')}</span></li>
+			<li class="local"><span class="mark mono" aria-hidden="true">~</span><span>{t('research.store.device')}</span></li>
 			{#if instrument?.scoring?.series}
 				<li><span class="mark mono" aria-hidden="true">#</span><span>{t('research.store.receipt')}</span></li>
 			{/if}
@@ -741,6 +796,23 @@
 		border-inline-start: 2px solid var(--accent);
 		padding: 0.7rem 0.9rem;
 		margin: 0 0 1.4rem;
+	}
+	/* The month this browser last answered: stated, never enforced. */
+	.answered {
+		border: 1px solid var(--border-default);
+		border-radius: var(--r-md);
+		background: var(--surface-sunken);
+		padding: 0.8rem 1rem;
+		margin: 0 0 1.4rem;
+		font-size: 0.92rem;
+		line-height: 1.5;
+		color: var(--text-secondary);
+	}
+	.answered p {
+		margin: 0 0 0.4rem;
+	}
+	.answered p:last-child {
+		margin-bottom: 0;
 	}
 	.screen h1 {
 		font-size: clamp(1.35rem, 4.6vw, 1.8rem);
@@ -1240,8 +1312,11 @@
 		.runner {
 			padding: 0 1rem;
 		}
+		/* Eleven cells on one row: a gap is a pixel off every button, and a
+		   320px-wide phone has none to spare. The row stays one row and each
+		   cell keeps its own border, so the scale still reads as a line. */
 		.scale {
-			gap: 0.2rem;
+			gap: 0;
 		}
 		.cell {
 			min-height: 3rem;

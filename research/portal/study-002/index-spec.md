@@ -168,7 +168,7 @@ The band names and their meanings are published with the formula before any data
 - Cronbach's alpha and item-total correlations for T, G and the service view (S1–S4). If any alpha falls below 0.7, the page says so.
 - The correlation between T and G. If they are nearly the same thing, two axes are the wrong model, and the page says that too.
 - The correlation between T and S. Trust and satisfaction with the job are expected to move together (in large police surveys they typically correlate around 0.5 to 0.7). If the correlation exceeds 0.8, they are measuring one thing; the page says so, and the next version of the instrument merges them.
-- Exclusions, by rule: completion time under 40 seconds, identical answers on all fifteen index items (straight-lining), honeypot field filled, rate-limit refusals.
+- Exclusions, by rule: completion time under 70 seconds, identical answers on all fifteen index items (straight-lining), honeypot field filled, rate-limit refusals.
 
 ## 7. Live results
 

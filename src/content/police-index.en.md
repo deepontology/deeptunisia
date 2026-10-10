@@ -10,6 +10,8 @@ The questionnaire asks nothing about who you are: no age, no gender, no address.
 
 No name, email address, phone number, account, IP address, browser fingerprint, device identifier or location is stored with your answers. There is no field that could hold one. The site sets no tracking cookies and loads nothing from other companies on the study pages.
 
+One thing is kept in this browser instead of with your answers: the month you last answered. It stays on this device, it is never sent to us, and it is removed when you withdraw your answers from this browser.
+
 Two things touch your connection without being stored with your answers. To stop one machine from flooding the survey, the server counts submissions per address using a salted fingerprint of the address that changes every day; the address itself is never written down. And the site runs on Cloudflare, which, like any host, sees connections pass through; its logs are sampled at one request in a hundred and are not joined to answers.
 
 Your receipt code is the only way to delete your answers. It works until the end of the month in which you answered. If you lose it, your answers can no longer be deleted, by you or by us, because nothing else links them to you. The index is published once a month, and a month's figure never changes after it closes, so that month's answers are fixed from then on. Any data released later has regions instead of governorates, no date finer than the month and no receipt codes.

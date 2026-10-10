@@ -43,7 +43,7 @@ The formula is the instrument's `scoring` block, which is hashed. In words:
 
 These are applied before any aggregate and published live with their counts:
 
-1. **Speed:** completion in under 40 seconds.
+1. **Speed:** completion in under 70 seconds.
 2. **Straight-lining:** the identical answer on all fifteen index items (pti_t1 to pti_t5, pti_s1 to pti_s4, pti_g1 to pti_g6). Because pti_s4 and pti_g2 are reverse-keyed, an honest extreme respondent does not trip this rule.
 
 These are refused at submission and never stored:
