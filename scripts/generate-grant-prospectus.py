@@ -482,7 +482,7 @@ EN = {
         "A meaningful outcome is that a reader can trace a claim to its sources, distinguish what is known from what is inferred, and submit a better record without that submission becoming a fact by default."
     ],
     "appendix": [
-        "Repository reviewed: github.com/deeptunisiaorg/deep-tunisia (private during this advisory phase; public from 1 September 2026).",
+        "Repository reviewed: https://github.com/deepontology/deeptunisia.",
         "Public site: deeptunisia.org (registration pending; the atlas currently runs under restricted testing access on a temporary deployment). Project materials reviewed for this concept note: README.md; AGENTS.md; DESIGN.md; routes for About, Methodology, Evidence, Open Data and Agora; community schema and deployment materials; privacy, anonymity, capacity and legal-design documentation.",
         f"Quantitative snapshot: generated dataset.json, {built_label('en')} build output. Counts are intentionally time-stamped because the graph changes as records are added, corrected and re-reviewed.",
         "This document is a project prospectus, not legal advice. It does not replace local legal counsel, an organisational due-diligence process or a final grant budget."
@@ -578,7 +578,7 @@ FR = {
         "Un résultat utile est qu'un lecteur puisse remonter d'une affirmation à ses sources, distinguer ce qui est établi de ce qui est inféré, et proposer un meilleur dossier sans que sa proposition devienne un fait par défaut."
     ],
     "appendix": [
-        "Dépôt étudié: github.com/deeptunisiaorg/deep-tunisia (privé pendant cette phase consultative; public à partir du 1er septembre 2026).",
+        "Dépôt étudié: https://github.com/deepontology/deeptunisia.",
         "Site public: deeptunisia.org (inscription en attente; l'atlas tourne actuellement en accès de test restreint sur un déploiement temporaire). Eléments examinés pour cette note: README.md; AGENTS.md; DESIGN.md; pages A propos, Méthode, Preuves, Données ouvertes et Agora; schéma communautaire et documentation de déploiement; documents de confidentialité, d'anonymat, de capacité et de conception juridique.",
         f"Instantané quantitatif: dataset.json généré le {built_label('fr')}. Les chiffres sont datés car le graphe évolue avec les ajouts, corrections et nouvelles revues.",
         "Ce document est un prospectus de projet et non un avis juridique. Il ne remplace ni un conseil local, ni une procédure de diligence d'une organisation, ni un budget final de subvention."
@@ -673,7 +673,7 @@ AR = {
         "النتيجة ذات المعنى هي أن يستطيع القارئ تتبع ادعاء إلى مصادره، والتمييز بين ما ثبت وما استنتج، واقتراح سجل أفضل من دون أن يتحول الاقتراح إلى واقعة تلقائيا."
     ],
     "appendix": [
-        "المستودع المراجع: github.com/deeptunisiaorg/deep-tunisia، وهو خاص خلال هذه المرحلة الاستشارية وسيصبح عاما في 1 سبتمبر 2026.",
+        "المستودع المراجع: https://github.com/deepontology/deeptunisia.",
         "الموقع العام: deeptunisia.org (تسجيل النطاق قيد الانتظار؛ يعمل الأطلس حاليا بوصول اختباري مقيد على نشر مؤقت). شملت المواد المراجعة لهذه المذكرة README.md وAGENTS.md وDESIGN.md وصفحات عن المنهج والدليل والبيانات المفتوحة وأغورا، ومخطط المجتمع ووثائق النشر ووثائق الخصوصية وإخفاء الهوية والقدرة والتصميم القانوني.",
         f"اللقطة الكمية: dataset.json المولد في {built_label('ar')}. الأرقام مؤرخة لأن الرسم يتغير مع الإضافات والتصحيحات والمراجعات الجديدة.",
         "هذه الوثيقة عرض مشروع وليست استشارة قانونية. ولا تحل محل رأي قانوني محلي أو إجراءات عناية واجبة مؤسسية أو ميزانية منحة نهائية."

@@ -88,7 +88,7 @@ const FLOWS_DIR = join(ROOT, 'flows');
  * fetcher.
  */
 const USER_AGENT =
-	'DeepTunisiaTradeBot/1.0 (+https://deeptunisia.org; bilateral trade archive; contact via https://github.com/deeptunisia)';
+	'DeepTunisiaTradeBot/1.0 (+https://deeptunisia.org; bilateral trade archive; contact via https://deeptunisia.org)';
 
 const FETCH_TIMEOUT_MS = 90_000;
 

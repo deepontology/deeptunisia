@@ -26,7 +26,7 @@ const OUT_DIR = join(FLOWS, 'worldbank');
 const MANIFEST = join(FLOWS, 'manifest.json');
 
 const USER_AGENT =
-	'DeepTunisiaTradeBot/1.0 (+https://deeptunisia.org; country indicators archive; contact via https://github.com/deeptunisia)';
+	'DeepTunisiaTradeBot/1.0 (+https://deeptunisia.org; country indicators archive; contact via https://deeptunisia.org)';
 const COUNTRY = 'TUN';
 const API = 'https://api.worldbank.org/v2/country/TUN/indicator';
 

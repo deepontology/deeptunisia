@@ -55,7 +55,7 @@ const FEED_FILE = join(FEED_DIR, 'feed.json');
  * log can find out who is asking and complain to a human if they want to.
  */
 const USER_AGENT =
-	'DeepTunisiaFeedBot/1.0 (+https://deeptunisia.org; news headline archive; contact via https://github.com/deeptunisia)';
+	'DeepTunisiaFeedBot/1.0 (+https://deeptunisia.org; news headline archive; contact via https://deeptunisia.org)';
 
 /** The product token robots.txt groups are matched against. */
 const UA_PRODUCT_TOKEN = 'DeepTunisiaFeedBot';
