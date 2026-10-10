@@ -29,6 +29,7 @@
  */
 import type { Env } from './api.ts';
 import type { Db } from './db.ts';
+import type { LiveCache, LiveCacheEntry } from './live-cache.ts';
 import { bucketKey, consume, RateLimitError, type BucketStore } from './ratelimit.ts';
 import { checkHoneypot, AbuseError } from './abuse.ts';
 import {
@@ -75,10 +76,28 @@ const json = (body: unknown, status = 200, headers: Record<string, string> = {})
 // currently fields, so a wave is exactly one instrument version. The bootstrap
 // seed is fixed, so the same rows always give the same interval and a reader
 // refreshing the page never sees the numbers jitter without new data.
+//
+// The computed payload is then shared rather than recomputed per request: one
+// computation per study and instrument hash per LIVE_MAX_AGE_SECONDS, stored
+// through the injected cache (community/live-cache.ts), and the stored body is
+// served byte for byte so a cached read is the same response a computed one
+// would have been.
 // ---------------------------------------------------------------------------
 
 const LIVE_STATUSES = new Set(['fielding', 'closed', 'analyzed', 'published']);
-const LIVE_MAX_AGE_SECONDS = 30;
+/**
+ * How long one computed live payload is reused, in seconds, and the age the
+ * response header advertises with it.
+ *
+ * Reading and scoring every response row for the current instrument hash is
+ * the most expensive thing this API does, and the cost grows with the answers:
+ * at thousands of rows a recompute is a fraction of a second, at tens of
+ * thousands it spends a Worker's CPU limit and a share of the D1 daily read
+ * quota, per request. Sharing the payload makes it one computation per study
+ * per minute instead of one per reader, and a figure up to a minute old is
+ * what a live page means here.
+ */
+const LIVE_MAX_AGE_SECONDS = 60;
 const LIVE_SEED = 20261007;
 const LIVE_RESAMPLES = 1000;
 const HOUR_MS = 3_600_000;
@@ -146,6 +165,48 @@ function safeAnswers(raw: string): Record<string, unknown> {
 		return isRecord(parsed) ? parsed : {};
 	} catch {
 		return {};
+	}
+}
+
+/**
+ * The live response, byte for byte: a computed body, or the cached one.
+ *
+ * The header carries the same age the cache entry is kept for, so the browser
+ * and the Worker agree on how old a figure may be before it is fetched again.
+ */
+const livePayload = (body: string) =>
+	new Response(body, {
+		status: 200,
+		headers: {
+			'content-type': 'application/json; charset=utf-8',
+			'cache-control': `public, max-age=${LIVE_MAX_AGE_SECONDS}`
+		}
+	});
+
+/**
+ * The payload stored under a key, or null when nothing fresh is there.
+ *
+ * A cache that cannot be read counts as a cache with nothing in it: the
+ * recompute that follows is what this endpoint did before the entry existed,
+ * so a failing cache costs a read and never a wrong answer.
+ */
+async function cachedEntry(cache: LiveCache | undefined, key: string): Promise<LiveCacheEntry | null> {
+	if (!cache) return null;
+	try {
+		return await cache.get(key);
+	} catch {
+		return null;
+	}
+}
+
+/** Store one computed payload; a cache that refuses the write is left behind. */
+async function storeEntry(cache: LiveCache | undefined, key: string, entry: LiveCacheEntry): Promise<void> {
+	if (!cache) return;
+	try {
+		await cache.put(key, entry);
+	} catch {
+		// The next reader recomputes, exactly as every reader did before the
+		// entry existed.
 	}
 }
 
@@ -611,9 +672,23 @@ export async function handleResearch(
 			const status = effectiveStatus(env, study);
 			if (!LIVE_STATUSES.has(status)) throw new ResearchError('this study is not collecting responses', 409);
 			if (!env.RESEARCH_DB) throw new ResearchError('research storage is not configured', 503);
-			return json(await liveResults(env.RESEARCH_DB, study, instrument, ctx.now), 200, {
-				'cache-control': `public, max-age=${LIVE_MAX_AGE_SECONDS}`
-			});
+			// One computation per study and instrument hash per LIVE_MAX_AGE_SECONDS,
+			// so the rows are read once a minute rather than once per reader. The
+			// key carries the study and the instrument hash, so one study is never
+			// served another's figures and a new wave is never served the old
+			// one's. Only a computed payload reaches this line, every refusal above
+			// having been thrown, so no error and no "not open" answer is ever what
+			// the next reader is served.
+			//
+			// A submission or a withdrawal leaves the entry alone: a figure up to
+			// a minute old is fine, and an entry a write could bust is an entry
+			// the cheapest write could use to rerun the most expensive read.
+			const key = `${study.id}:${instrument.hash}`;
+			const cached = await cachedEntry(env.LIVE_CACHE, key);
+			if (cached && cached.expires_at > ctx.now) return livePayload(cached.body);
+			const body = JSON.stringify(await liveResults(env.RESEARCH_DB, study, instrument, ctx.now));
+			await storeEntry(env.LIVE_CACHE, key, { body, expires_at: ctx.now + LIVE_MAX_AGE_SECONDS * 1000 });
+			return livePayload(body);
 		}
 
 		// ---- submissions ------------------------------------------------------

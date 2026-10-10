@@ -26,6 +26,7 @@ import { fileURLToPath } from 'node:url';
 import { localDb } from './db-local.ts';
 import { migrate } from './migrate.ts';
 import { handle, localRequest, type Env } from './api.ts';
+import { memoryLiveCache } from './live-cache.ts';
 import { resolveMode } from './mode.ts';
 import type { StudiesRegistry } from './research-contract.ts';
 
@@ -131,6 +132,10 @@ const env: Env = {
 	RESEARCH_DB: researchDb,
 	RESEARCH_OPEN,
 	RESEARCH_DEV_STUDY,
+	// The live results' shared store. The Worker has the platform's edge cache
+	// for this (worker.ts); Node has no Cache API, so a Map with an expiry
+	// stands in, and a live figure here is never more than a minute old either.
+	LIVE_CACHE: memoryLiveCache(),
 	// The assignment secret (contract §10). Falls back to the pepper inside the
 	// API when unset; both are local secrets a restarted server keeps.
 	ASSIGNMENT_SECRET: process.env.ASSIGNMENT_SECRET,

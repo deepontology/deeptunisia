@@ -47,6 +47,7 @@ import {
 } from '../src/lib/taxonomy.ts';
 import { handleResearch } from './research-api.ts';
 import type { StudiesRegistry } from './research-contract.ts';
+import type { LiveCache } from './live-cache.ts';
 
 export interface Env {
 	DB: Db;
@@ -91,6 +92,15 @@ export interface Env {
 	TURNSTILE_SECRET?: string;
 	/** Tests only: injected bot-challenge verifier, never set in production. */
 	TURNSTILE_VERIFY?: (token: string, address: string) => Promise<boolean>;
+	/**
+	 * Where a computed live payload is shared for a minute, so the live route
+	 * reads its response rows once per reader burst instead of once per reader
+	 * (community/live-cache.ts). Injected because the Worker has the platform's
+	 * edge cache and the local server has none: the Worker wires the former,
+	 * the local server and the tests an in-memory store. Absent means every
+	 * live read recomputes, which is correct and merely expensive.
+	 */
+	LIVE_CACHE?: LiveCache;
 }
 
 const REPORT_REASONS = [
