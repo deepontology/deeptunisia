@@ -1462,7 +1462,10 @@ const en: Dict = {
 	'world.geoLoading': 'Loading the world geometry…',
 	'world.geoError': 'World geometry failed to load — the ledger still has every number.',
 	// redesign 2026-10 (UI-1)
-	'plate.fig': 'FIG. {n}'
+	'plate.fig': 'FIG. {n}',
+	// redesign 2026-10 (CH-3)
+	'chronicle.vertical.level': '{n} px per year',
+	'chronicle.vertical.clearfocus': 'Clear focus'
 };
 
 const fr: Dict = {
@@ -2855,7 +2858,10 @@ const fr: Dict = {
 	'world.geoLoading': 'Chargement de la géographie mondiale…',
 	'world.geoError': 'La géographie mondiale n\'a pas pu être chargée — le tableau contient toujours tous les chiffres.',
 	// redesign 2026-10 (UI-1)
-	'plate.fig': 'FIG. {n}'
+	'plate.fig': 'FIG. {n}',
+	// redesign 2026-10 (CH-3)
+	'chronicle.vertical.level': '{n} px par an',
+	'chronicle.vertical.clearfocus': 'Effacer le focus'
 };
 
 
@@ -4243,7 +4249,10 @@ const ar: Dict = {
 	'world.geoLoading': 'جارٍ تحميل جغرافية العالم…',
 	'world.geoError': 'تعذّر تحميل جغرافية العالم — السجل ما زال يحمل كل الأرقام.',
 	// redesign 2026-10 (UI-1)
-	'plate.fig': 'شكل {n}'
+	'plate.fig': 'شكل {n}',
+	// redesign 2026-10 (CH-3)
+	'chronicle.vertical.level': '{n} بكسل في السنة',
+	'chronicle.vertical.clearfocus': 'إلغاء التركيز'
 };
 
 
