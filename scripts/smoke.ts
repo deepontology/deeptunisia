@@ -1446,10 +1446,10 @@ if (runSection('chronicle events expanded')) {
 
 	const rows = await page.locator('.ev-row-line').count();
 	const marks = await page.locator('.ev-mark.clickable').count();
-	const labels = await page.locator('.ev-label').count();
+	const labels = await page.locator('.exp-gl').count();
 	ok('the expanded filter bar appears', (await page.locator('.events-bar').count()) === 1);
 	ok('expanded mode stacks events into rows', rows >= 4 && marks > 0, `${rows} rows / ${marks} marks`);
-	ok('expanded rows carry labels', labels > 0, `${labels} labels`);
+	ok('the gutter names every expanded row', labels > 0 && labels === rows, `${labels} labels / ${rows} rows`);
 
 	const clusterBadge = page.locator('.ev-mark.clickable').filter({ has: page.locator('.ev-cluster') }).first();
 	ok('dense expanded events aggregate into cluster badges', (await clusterBadge.count()) > 0);
@@ -1470,16 +1470,16 @@ if (runSection('chronicle events expanded')) {
 	const firstTick = await page.locator('.plot .tick-label').first().textContent();
 	ok('expanding lands on a readable window', Number(firstTick) > 1980, `first tick ${firstTick}`);
 
-	// Labels must not sit on top of the marks they describe.
+	// Row labels live in the gutter and must never sit on top of a mark.
 	const overlaps = await page.evaluate(`(() => {
-		const labels = Array.from(document.querySelectorAll('.ev-label')).map((l) => l.getBoundingClientRect());
+		const labels = Array.from(document.querySelectorAll('.exp-gl text')).map((l) => l.getBoundingClientRect());
 		const marks = Array.from(document.querySelectorAll('.ev-mark.clickable .ev-dot, .ev-mark.clickable .ev-pill, .ev-mark.clickable .ev-diamond, .ev-mark.clickable .ev-spanbar')).map((el) => el.getBoundingClientRect());
 		const hit = (a, b) => !(a.right <= b.left || a.left >= b.right || a.bottom <= b.top || a.top >= b.bottom);
 		let n = 0;
 		for (const l of labels) if (marks.some((m) => hit(l, m))) n++;
 		return n;
 	})()`) as number;
-	ok('no expanded label overlaps a mark', overlaps === 0, `${overlaps} overlaps`);
+	ok('no gutter label overlaps a mark', overlaps === 0, `${overlaps} overlaps`);
 
 	// Clicking a mark opens the record.
 	await page.locator('.ev-mark.clickable').first().click();
@@ -1511,6 +1511,89 @@ if (runSection('chronicle events expanded')) {
 	ok('collapsing returns the inline overview', (await page.locator('.events-bar').count()) === 0 && (await page.locator('.ev-cluster').count()) > 0);
 
 	ok('expanded events console clean', problems.length === 0, problems.slice(0, 3).join(' | '));
+	await context.close();
+}
+
+// --- Chronicle on a phone ------------------------------------------------------
+/*
+ * Below the compact breakpoint the Chronicle turns on its side: time runs down a
+ * sticky spine and each post is a column under a sticky header. The failure this
+ * guards is labels scrolling out of reach, so the headers are measured after a
+ * long scroll rather than at rest.
+ */
+if (runSection('chronicle phone')) {
+	console.log('\n  ── chronicle phone ──');
+	const context = await browser.newContext({
+		viewport: { width: 390, height: 844 },
+		isMobile: true,
+		hasTouch: true,
+		colorScheme: 'dark'
+	});
+	await context.addInitScript(TOUR_SEEN_INIT);
+	const page = await context.newPage();
+	const problems: string[] = [];
+	page.on('pageerror', (e) => problems.push(`[pageerror] ${e.message}`));
+	page.on('console', (m: ConsoleMessage) => {
+		if ((m.type() === 'error' || m.type() === 'warning') && !isIgnorable(m.text())) {
+			problems.push(`[${m.type()}] ${m.text()}`);
+		}
+	});
+
+	await page.goto(BASE + '/chronicle', { waitUntil: 'networkidle' });
+	await settle(page);
+
+	ok('the phone chronicle is the vertical layout', (await page.locator('.cv-strip').count()) === 1);
+	const overflow = (await page.evaluate(
+		`document.documentElement.scrollWidth - window.innerWidth`
+	)) as number;
+	ok('the phone chronicle does not overflow the page', overflow <= 0, `${overflow}px`);
+
+	const painted = (await page.evaluate(`(() => {
+		let n = 0;
+		for (const r of document.querySelectorAll('.cv .tb-svg rect')) {
+			const b = r.getBoundingClientRect();
+			if (b.width > 0 && b.height > 0) n++;
+		}
+		return n;
+	})()`)) as number;
+	ok('at least one tenure block is painted', painted > 0, `${painted} blocks`);
+
+	// Scroll the strip a long way down; every header must still sit at its top.
+	const heads = (await page.evaluate(`(async () => {
+		const strip = document.querySelector('.cv-strip');
+		strip.scrollTop = 1500;
+		await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+		const top = strip.getBoundingClientRect().top;
+		const hs = Array.from(document.querySelectorAll('.cv-col-head'));
+		const off = hs.map((h) => Math.round(h.getBoundingClientRect().top - top));
+		return { scrolled: strip.scrollTop, n: hs.length, worst: Math.max(...off.map(Math.abs)) };
+	})()`)) as { scrolled: number; n: number; worst: number };
+	ok(
+		'column headers stay pinned after a long scroll',
+		heads.scrolled >= 1500 && heads.n > 0 && heads.worst <= 1,
+		`scrolled ${heads.scrolled}px, ${heads.n} headers, worst offset ${heads.worst}px`
+	);
+
+	// Tapping an event on the spine opens its record.
+	const picked = (await page.evaluate(`(() => {
+		const strip = document.querySelector('.cv-strip').getBoundingClientRect();
+		const marks = Array.from(document.querySelectorAll('.cv-mark[aria-label]:not([aria-haspopup])'));
+		const vis = marks.find((m) => {
+			const v = m.querySelector('.cv-mark-vis').getBoundingClientRect();
+			return v.top > strip.top + 80 && v.bottom < strip.bottom - 40;
+		});
+		if (!vis) return false;
+		vis.setAttribute('data-smoke', 'pick');
+		return true;
+	})()`)) as boolean;
+	ok('an event dot is in view on the spine', picked);
+	if (picked) {
+		await page.locator('[data-smoke=pick] .cv-mark-vis').tap();
+		await page.waitForTimeout(600);
+		ok('tapping an event dot opens the inspector', (await page.locator('.inspector').count()) === 1);
+	}
+
+	ok('phone chronicle console clean', problems.length === 0, problems.slice(0, 3).join(' | '));
 	await context.close();
 }
 
