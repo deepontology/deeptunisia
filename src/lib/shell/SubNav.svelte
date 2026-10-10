@@ -290,17 +290,10 @@
 		}
 	}
 
+	/* Compact: the menu bar's view button and its sheet replace this strip. */
 	@media (max-width: 900px) {
-		a {
-			padding: 0 var(--s-4);
-		}
 		.subnav {
-			padding-inline: calc(var(--s-3) + var(--safe-l)) calc(var(--s-3) + var(--safe-r));
-		}
-		/* A fading edge, so a strip with more items off-screen looks scrollable
-		   rather than truncated. */
-		.strip {
-			mask-image: linear-gradient(to right, transparent 0, black 12px);
+			display: none;
 		}
 	}
 
