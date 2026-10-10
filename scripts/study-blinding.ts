@@ -18,6 +18,7 @@ import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync } from 
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
+import { findGradeLeaks, stringsIn } from './study-leaks.ts';
 
 // ---------------------------------------------------------------------------
 // CLI
@@ -114,14 +115,29 @@ for (const p of prompts as Record<string, unknown>[]) {
 			leakage++;
 		}
 	}
-	// Check that no source leaks a grade via publisher trick (not needed — just ensure no confidence string in prompt's string values beyond known values)
-	// Spot-check: if prompt has a string "documented"/"reported"/etc as a grade field, it would be a key check above; free text mentioning the words is fine (claim text may contain them).
+	// Free text: the project's own notes and reasoning sometimes state the grade
+	// ("confidence B", "No upgrade possible"). A field-level check cannot see that.
+	for (const s of stringsIn(p)) {
+		for (const l of findGradeLeaks(s.text)) {
+			console.error(`  FAIL  leakage: prompt ${studyId} ${s.path} names a grade (${l.pattern}: "${l.match}")`);
+			leakage++;
+		}
+	}
 }
 
 if (leakage > 0) {
 	fail(`blinding broken: ${leakage} leak(s) in blinded sample — raters would see grades. Fix the sampler's buildBlindedPrompt.`);
 }
-ok(`blinded sample contains no grade fields (${prompts.length} prompts checked)`);
+ok(`blinded sample contains no grade fields and no grade-naming text (${prompts.length} prompts checked)`);
+
+// The record id addresses the public record, and the public record shows its
+// grade. The rater workbench drops the field; the CSV and JSON views carry it.
+// Claim prose can still name a subject the site can be searched for, so this is
+// hygiene: blinding against the public site rests on raters not consulting it.
+const withId = (prompts as Record<string, unknown>[]).filter((p) => p.id).length;
+if (withId > 0) {
+	console.log(`  warn  ${withId} prompt(s) carry the record id field, a direct address on the public site. The workbench (scripts/study-workbench.ts) drops it.`);
+}
 
 // Check study_id uniqueness and format
 const ids = (prompts as Record<string, unknown>[]).map((p) => String(p.study_id));

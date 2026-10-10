@@ -26,6 +26,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 import { execSync } from 'node:child_process';
+import { redactGradeLeaks } from './study-leaks.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
@@ -581,6 +582,18 @@ const fullRecords = combined.map((r, i) => ({
 	raw: r.raw,
 }));
 
+// Notes, reasoning and excerpts are the project's own prose and sometimes state
+// the grade ("No upgrade possible", "confidence B"). Those sentences are withheld
+// with a visible marker. The claim itself is never redacted: a claim that names
+// its grade is a data problem, and study-blinding --verify fails on it.
+let redactedSentences = 0;
+function withheld(text: string | undefined): string | undefined {
+	if (text === undefined) return undefined;
+	const r = redactGradeLeaks(text);
+	redactedSentences += r.redacted;
+	return r.text;
+}
+
 const blindedPrompts = combined.map((r, i) => {
 	const p = buildBlindedPrompt(r, studyIds[i]);
 	// Strip verification from blinded dates per protocol strict blinding — keep only start/end for the claim
@@ -589,9 +602,9 @@ const blindedPrompts = combined.map((r, i) => {
 		kind: p.kind,
 		id: p.id,
 		claim: p.claim,
-		context: p.context,
+		context: withheld(p.context),
 		dates: { start: p.dates.start, end: p.dates.end }, // no verification
-		sources: p.sources,
+		sources: p.sources.map((s) => ({ ...s, excerpt: withheld(s.excerpt) })),
 	};
 });
 
@@ -614,6 +627,8 @@ const meta = {
 		confidenceCounts: ds.meta?.confidenceCounts ?? confCounts,
 	},
 	population: pool.length,
+	/** Sentences withheld from blinded prompts because they named a grade. */
+	redactedSentences,
 	bucketPopulations: popByBucket,
 	bucketTargets: targets,
 	bucketActuals: Object.fromEntries(BUCKET_ORDER.map((b) => [b, bucketSamples.get(b)?.length ?? 0])),
