@@ -57,7 +57,7 @@ const ROOT = join(HERE, '..');
 const FLOWS_DIR = join(ROOT, 'flows');
 
 const USER_AGENT =
-	'DeepTunisiaTradeBot/1.0 (+https://deeptunisia.org; external debt archive; contact via https://github.com/deeptunisia)';
+	'DeepTunisiaTradeBot/1.0 (+https://deeptunisia.org; external debt archive; contact via https://deeptunisia.org)';
 
 const FETCH_TIMEOUT_MS = 120_000;
 

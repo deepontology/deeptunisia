@@ -8,7 +8,7 @@
  *
  * The public history was squashed at 8584e09 (2026-08-26), so `git log -- data/`
  * on a public clone shows only 4 commits. The 49 pre-squash data commits live on
- * the private mirror (deeptunisiaorg/deep-tunisia private/master). This script
+ * the private mirror. This script
  * replays them into a committed synthetic file so the public build can still
  * render /corrections ("nobody decides which changes are flattering enough to
  * appear") without requiring a deep clone.
@@ -79,7 +79,7 @@ try {
 const entries = parseRaw(raw);
 const out = {
 	_note:
-		'Synthetic replay of pre-squash data history. Source: private mirror deeptunisiaorg/deep-tunisia private/master (266 commits ahead) — extracted via `git log private/master -- data/` and committed so the public build can render /corrections without a deep git history. Regenerate by re-running: node scripts/generate-synthetic-changelog.mjs (or see scripts/build-data.ts header). This file is the fallback the build reads when `git log -- data/` is shallow (post-squash public history has only 4 commits). When the private mirror is unavailable, this committed snapshot keeps /corrections honest; replace with a fresh extraction when available. Dates are author dates (%aI), hashes truncated to 9. Synthetic replay of pre-squash data history.',
+		'Synthetic replay of pre-squash data history. Source: an earlier private mirror (266 commits ahead) — extracted via `git log private/master -- data/` and committed so the public build can render /corrections without a deep git history. Regenerate by re-running: node scripts/generate-synthetic-changelog.mjs (or see scripts/build-data.ts header). This file is the fallback the build reads when `git log -- data/` is shallow (post-squash public history has only 4 commits). When the private mirror is unavailable, this committed snapshot keeps /corrections honest; replace with a fresh extraction when available. Dates are author dates (%aI), hashes truncated to 9. Synthetic replay of pre-squash data history.',
 	generated: new Date().toISOString(),
 	source: branch,
 	count: entries.length,
