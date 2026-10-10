@@ -42,6 +42,7 @@
         "community": "tsx community/server.ts",
         "proposals": "tsx scripts/apply-proposals.ts",
         "smoke": "tsx scripts/smoke.ts",
+        "ui:snapshots": "tsx scripts/ui-snapshots.ts",
         "deploy": "npm run build && wrangler deploy",
         "agents:discover": "tsx scripts/agents.ts",
         "agents:outbox": "tsx scripts/agents.ts --list",
