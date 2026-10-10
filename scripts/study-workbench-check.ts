@@ -4,9 +4,9 @@
  * test-study.ts pins what reaches the page. This drives the page the way a
  * rater would and checks what leaves it: grading by keyboard, progress that
  * survives a reload, an export that study-kappa.ts reads without loss, an
- * import that refuses another instrument's rows, and a page that cannot make a
- * network request. Like `npm run smoke`, it needs a browser and is not part of
- * `npm run test`.
+ * import that refuses another instrument's rows, keyboard activation of the
+ * controls, and a page that cannot make a network request. Like `npm run
+ * smoke`, it needs a browser and is not part of `npm run test`.
  *
  * Usage:
  *   npx tsx scripts/study-workbench-check.ts
@@ -39,7 +39,7 @@ function ok(name: string, condition: boolean, detail = '') {
 }
 
 const work = mkdtempSync(join(tmpdir(), 'dt-workbench-'));
-const raw = JSON.parse(readFileSync(SAMPLE, 'utf8')) as { prompts: { study_id: string }[] };
+const raw = JSON.parse(readFileSync(SAMPLE, 'utf8')) as { prompts: { study_id: string; claim: string; [k: string]: unknown }[] };
 const built = buildWorkbench({ prompts: raw.prompts, rater: 'Rater B', rubricMd: readFileSync(RUBRIC, 'utf8') });
 const page = join(work, 'rater-b.html');
 writeFileSync(page, built.html);
@@ -108,16 +108,56 @@ if (SHOTS) {
 await tab.reload();
 ok('progress survives a reload', (await tab.locator('#count').innerText()) === `${N} / ${N} graded`);
 
+// Keyboard access: Enter belongs to the focused control. On the Rubric button
+// it opens the drawer; on the drawer's Close button it closes it. The page-wide
+// Enter shortcut must not run instead.
+await tab.locator('#open-rubric').focus();
+await tab.keyboard.press('Enter');
+await tab.waitForTimeout(100);
+ok('Enter opens the rubric from its button', (await tab.locator('#drawer.open').count()) === 1);
+await tab.keyboard.press('Enter');
+await tab.waitForTimeout(100);
+ok('Enter closes the rubric from its button', (await tab.locator('#drawer.open').count()) === 0);
+
 const [download] = await Promise.all([tab.waitForEvent('download'), tab.click('#export')]);
 const csvPath = join(work, download.suggestedFilename());
 await download.saveAs(csvPath);
 const csv = readFileSync(csvPath, 'utf8');
 const lines = csv.trim().split('\n');
 ok('the export is named for the rater and the instrument', download.suggestedFilename() === `rater-b-${built.fingerprint}.csv`, download.suggestedFilename());
-ok('the export has a header and one row per record', lines[0] === 'study_id,kind,confidence,basis,notes' && lines.length === N + 1, `${lines.length} lines`);
+ok('the export has a header and one row per record', lines[0] === 'study_id,kind,confidence,basis,notes,instrument' && lines.length === N + 1, `${lines.length} lines`);
+ok('every exported row carries the page instrument fingerprint', lines.slice(1).every((l) => l.endsWith(',' + built.fingerprint)), built.fingerprint);
 ok('a note with a newline stays on one row', !csv.includes('\nsecond line'));
 ok('unsure is written as unsure', lines.some((l) => /^S\d+,[^,]+,unsure,/.test(l)));
 ok('the export carries no record id', !raw.prompts.some((p) => csv.includes(String((p as Record<string, unknown>).id))));
+
+// Enter on the focused Export button downloads; the shortcut must not move records.
+let keyboardExport = '';
+try {
+	const [kbd] = await Promise.all([
+		tab.waitForEvent('download', { timeout: 3000 }),
+		(async () => { await tab.locator('#export').focus(); await tab.keyboard.press('Enter'); })()
+	]);
+	keyboardExport = kbd.suggestedFilename();
+} catch {
+	/* no download within the timeout: reported below */
+}
+ok('Enter activates the focused Export button', keyboardExport === `rater-b-${built.fingerprint}.csv`, keyboardExport || 'no download');
+
+// A rebuilt page under a revised rubric must not restore grades made under the
+// old one. Seed the revised page's storage with the old instrument's saved
+// state, then load it: only a fingerprint that covers the rubric ignores it.
+const revisedRubric = readFileSync(RUBRIC, 'utf8') + '\n\n**Revision for the check.**\n';
+const revisedBuild = buildWorkbench({ prompts: raw.prompts, rater: 'Rater B', rubricMd: revisedRubric });
+const revisedPage = join(work, 'rater-b-revised-rubric.html');
+writeFileSync(revisedPage, revisedBuild.html);
+const tab3 = await context.newPage();
+await tab3.goto(pathToFileURL(revisedPage).href);
+const oldState = await tab.evaluate((key) => localStorage.getItem(key), `dt-study:${built.fingerprint}:Rater B`);
+await tab3.evaluate((s) => localStorage.setItem(s.key, s.value), { key: `dt-study:${built.fingerprint}:Rater B`, value: oldState ?? '' });
+await tab3.reload();
+ok('a revised rubric does not restore the old page\'s progress', (await tab3.locator('#count').innerText()) === `0 / ${N} graded`, (await tab3.locator('#count').innerText()));
+await tab3.close();
 
 // study-kappa reads it: run it on the export against a copy with one grade changed.
 const other = join(work, 'other.csv');
@@ -135,10 +175,39 @@ ok('study-kappa reads the export', /: 10 rows/.test(kappaOut) && kappa !== null,
 await tab.evaluate((key) => localStorage.removeItem(key), `dt-study:${built.fingerprint}:Rater B`);
 await tab.reload();
 const foreign = join(work, 'foreign.csv');
-writeFileSync(foreign, 'study_id,kind,confidence,basis,notes\nS999,position,A,documented,\n');
+writeFileSync(foreign, 'study_id,kind,confidence,basis,notes,instrument\nS999,position,A,documented,,0123456789ab\n');
 await tab.setInputFiles('#import-file', foreign);
 await tab.waitForTimeout(200);
-ok('a CSV from another instrument is refused', /refused/i.test(await tab.locator('#status').innerText()) && (await tab.locator('#count').innerText()) === `0 / ${N} graded`);
+ok('a CSV stamped with another instrument is refused', /refused/i.test(await tab.locator('#status').innerText()) && (await tab.locator('#count').innerText()) === `0 / ${N} graded`);
+
+// An export from before the instrument column existed cannot be matched to any
+// page, so it is refused rather than applied to whatever claims share its ids.
+const legacy = join(work, 'legacy.csv');
+writeFileSync(legacy, [lines[0].replace(',instrument', '')].concat(lines.slice(1).map((l) => l.replace(/,[0-9a-f]{12}$/, ''))).join('\n') + '\n');
+await tab.setInputFiles('#import-file', legacy);
+await tab.waitForTimeout(200);
+ok('an export without the instrument column is refused', /refused/i.test(await tab.locator('#status').innerText()) && (await tab.locator('#count').innerText()) === `0 / ${N} graded`);
+
+// Two different samples both start at S001, so their ids overlap; the
+// fingerprint, not the ids, decides whether the grades belong to this page.
+const otherPrompts = raw.prompts.map((p, i) => ({ ...p, claim: `Sample two, record ${i + 1}: ${p.claim}` }));
+const built2 = buildWorkbench({ prompts: otherPrompts, rater: 'Rater B', rubricMd: readFileSync(RUBRIC, 'utf8') });
+ok('two samples with the same study_ids are different instruments', built2.fingerprint !== built.fingerprint, `${built.fingerprint} vs ${built2.fingerprint}`);
+const page2 = join(work, 'rater-b-sample-two.html');
+writeFileSync(page2, built2.html);
+const tab2 = await context.newPage();
+await tab2.goto(pathToFileURL(page2).href);
+await tab2.setInputFiles('#import-file', csvPath);
+await tab2.waitForTimeout(200);
+ok('an export from the overlapping sample is refused', /refused/i.test(await tab2.locator('#status').innerText()) && (await tab2.locator('#count').innerText()) === `0 / ${N} graded`);
+await tab2.close();
+
+// Enter still reaches the page shortcut when no control has focus.
+await tab.evaluate(() => { document.body.tabIndex = -1; document.body.focus(); });
+await tab.keyboard.press('Enter');
+await tab.waitForTimeout(100);
+ok('Enter on the page moves to the next ungraded record', /^2 of /.test(await tab.locator('#position').innerText()), await tab.locator('#position').innerText());
+
 await tab.setInputFiles('#import-file', csvPath);
 await tab.waitForTimeout(200);
 ok('the rater can resume from an exported CSV', (await tab.locator('#count').innerText()) === `${N} / ${N} graded`);
