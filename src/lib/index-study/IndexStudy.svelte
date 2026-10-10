@@ -924,7 +924,13 @@
 					<span>{tf('index.integrity.linked', { p: pct(links.linked_share) })}</span>
 					<span>{tf('index.integrity.largest', { p: pct(links.largest_link_share) })}</span>
 					{#if links.index_without_largest !== null && windowMean !== null}
-						<span>{tf('index.integrity.without', { without: fmt(links.index_without_largest), with: fmt(windowMean) })}</span>
+						<!-- Equal once rounded is a finding in itself: the link moved nothing
+						     a reader could see, and "55 instead of 55" would hide that. -->
+						{#if fmt(links.index_without_largest) === fmt(windowMean)}
+							<span>{tf('index.integrity.withoutSame', { with: fmt(windowMean) })}</span>
+						{:else}
+							<span>{tf('index.integrity.without', { without: fmt(links.index_without_largest), with: fmt(windowMean) })}</span>
+						{/if}
 					{/if}
 				{/if}
 			</p>
