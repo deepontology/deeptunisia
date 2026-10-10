@@ -1477,7 +1477,10 @@ const en: Dict = {
 	'chronicle.vertical.marked': 'Linked to the focused event',
 	// redesign 2026-10 (CH-5)
 	'chronicle.vertical.spine.cluster': '{n} events, {range}',
-	'chronicle.vertical.spine.close': 'Close'
+	'chronicle.vertical.spine.close': 'Close',
+	// redesign 2026-10 (CH-8)
+	'chronicle.vertical.list.caption': 'Every post in this layer, oldest first',
+	'chronicle.vertical.list.empty': 'No post in this layer meets the evidence filter.'
 };
 
 const fr: Dict = {
@@ -2885,7 +2888,10 @@ const fr: Dict = {
 	'chronicle.vertical.marked': 'Lié à l\'événement ciblé',
 	// redesign 2026-10 (CH-5)
 	'chronicle.vertical.spine.cluster': '{n} événements, {range}',
-	'chronicle.vertical.spine.close': 'Fermer'
+	'chronicle.vertical.spine.close': 'Fermer',
+	// redesign 2026-10 (CH-8)
+	'chronicle.vertical.list.caption': 'Tous les postes de cette couche, du plus ancien au plus récent',
+	'chronicle.vertical.list.empty': 'Aucun poste de cette couche ne satisfait le filtre de preuve.'
 };
 
 
@@ -4288,7 +4294,10 @@ const ar: Dict = {
 	'chronicle.vertical.marked': 'مرتبط بالحدث المحدد',
 	// redesign 2026-10 (CH-5)
 	'chronicle.vertical.spine.cluster': '{n} أحداث، {range}',
-	'chronicle.vertical.spine.close': 'إغلاق'
+	'chronicle.vertical.spine.close': 'إغلاق',
+	// redesign 2026-10 (CH-8)
+	'chronicle.vertical.list.caption': 'كل المناصب في هذه الطبقة، من الأقدم إلى الأحدث',
+	'chronicle.vertical.list.empty': 'لا يستوفي أي منصب في هذه الطبقة مرشّح الأدلة.'
 };
 
 
