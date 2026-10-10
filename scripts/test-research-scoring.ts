@@ -611,6 +611,11 @@ console.log('\n  ── wave aggregation ──\n');
 			first.n_total
 	);
 	ok(
+		'a scale answered is the histogram total',
+		first.items.pti_t3.answered === (first.items.pti_t3.histogram ?? []).reduce((sum, count) => sum + count, 0),
+		String(first.items.pti_t3.answered)
+	);
+	ok(
 		'a count item tallies its options',
 		first.items.pti_e4.counts?.none === 20 && first.items.pti_e4.skipped === 4
 	);
@@ -651,6 +656,31 @@ console.log('\n  ── wave aggregation ──\n');
 		'answered, skipped and not shown together cover every row',
 		e4Total + e4.skipped + e4.not_shown === conditioned.n_total,
 		`${e4Total} + ${e4.skipped} + ${e4.not_shown} vs ${conditioned.n_total}`
+	);
+	// The multi-choice share denominator counts people, not ticks: one person who
+	// ticks two options is one respondent, so `answered` stays below the sum of the
+	// counts. A share taken against the total instead would understate every option.
+	const multi = aggregateResponses(
+		spec,
+		[
+			{ answers: { pti_e1: 'yes', pti_e4: ['money', 'insult'] } },
+			{ answers: { pti_e1: 'yes', pti_e4: ['threat'] } },
+			{ answers: { pti_e1: 'yes' } },
+			{ answers: { pti_e1: 'no' } }
+		],
+		{ seed: 1, resamples: 50, conditions: { pti_e4: 'pti_e1 == yes' } }
+	);
+	const multiE4 = multi.items.pti_e4;
+	const multiTicks = Object.values(multiE4.counts ?? {}).reduce((a, b) => a + b, 0);
+	ok(
+		'a count answered is people, not ticks',
+		multiE4.answered === 2 && multiTicks === 3,
+		`answered ${multiE4.answered}, ticks ${multiTicks}`
+	);
+	ok(
+		'answered, skipped and not shown cover every row for the counts too',
+		multiE4.answered + multiE4.skipped + multiE4.not_shown === multi.n_total,
+		`${multiE4.answered} + ${multiE4.skipped} + ${multiE4.not_shown} vs ${multi.n_total}`
 	);
 	ok(
 		'report-only items are distributed but never scored',

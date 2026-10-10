@@ -184,6 +184,16 @@
 	};
 	const componentKey = (id: string) => COMPONENT_KEY[id] ?? id;
 
+	/**
+	 * The plain noun each part carries in the questions section, by component id.
+	 * Only the parts a reverse-keyed item can sit under need one; the reverse
+	 * note reads "a higher answer lowers {part}".
+	 */
+	const COMPONENT_NOUN_KEY: Record<string, string> = {
+		S: 'index.questions.part.service',
+		G: 'index.questions.part.grip'
+	};
+
 	/** Component readouts, in the order the formula reads them. */
 	const components = $derived(
 		spec.index.parts.map((part) => ({
@@ -268,6 +278,18 @@
 	};
 
 	const countItems = $derived(spec.components.flatMap((c) => (c.kind === 'count' && c.item ? [c.item] : [])));
+	/**
+	 * The items keyed the other way, read from the scoring block's `reverse`
+	 * arrays, so the page can never name one by hand. A mean component lists
+	 * them; the questions section marks each and explains which way it counts.
+	 */
+	const reverseItems = $derived.by(() => {
+		const ids = new Set<string>();
+		for (const component of spec.components) {
+			if (component.kind === 'mean') for (const id of component.reverse ?? []) ids.add(id);
+		}
+		return ids;
+	});
 	/**
 	 * The questions grouped by the part of the index they feed, in the order the
 	 * formula reads them, each group in questionnaire order. An item belongs to
@@ -720,20 +742,29 @@
 	</section>
 	</div>
 
-	{#snippet strip(id: string)}
+	{#snippet strip(id: string, groupId?: string)}
 		{@const summary = results?.items?.[id] ?? null}
 		{@const hist = summary?.histogram ?? null}
 		{@const peak = hist ? Math.max(1, ...hist) : 1}
 		{@const ends = anchors(id)}
+		{@const h = hist ?? []}
+		{@const answered = h.reduce((sum, count) => sum + count, 0)}
+		{@const mid = Math.floor((spec.scale_max ?? 10) / 2)}
+		{@const avg = answered ? h.reduce((s, count, v) => s + count * v, 0) / answered : null}
+		{@const low = answered ? h.slice(0, mid).reduce((s, count) => s + count, 0) / answered : null}
+		{@const high = answered ? h.slice(mid + 1).reduce((s, count) => s + count, 0) / answered : null}
+		{@const reversed = reverseItems.has(id)}
+		{@const nounKey = reversed ? COMPONENT_NOUN_KEY[groupId ?? ''] : undefined}
 		<div class="question">
-			<p class="q-text">{itemText(id)}</p>
+			<p class="q-text">{itemText(id)}{#if reversed}<sup class="q-rev" aria-hidden="true">↺</sup>{/if}</p>
 			{#if itemHelp(id)}<p class="q-help">{itemHelp(id)}</p>{/if}
+			{#if nounKey}<p class="q-note">{tf('index.questions.reverse', { part: t(nounKey) })}</p>{/if}
 			<!-- Each strip is scaled to its own fullest answer: the strip shows the
 			     shape of one question's answers, and the table carries the counts. -->
 			{#if hist}
 			<div class="strip" dir="ltr" role="img" aria-label={t('index.questions.stripAria')}>
 				{#each Array.from({ length: (spec.scale_max ?? 10) + 1 }, (_, v) => v) as v (v)}
-					<span class="cell" style:--share={hist ? hist[v] / peak : 0} title="{v}: {hist ? fmt(hist[v]) : '—'}">
+					<span class="cell" class:full={hist ? hist[v] / peak > 0.55 : false} style:--share={hist ? hist[v] / peak : 0} title="{v}: {hist ? fmt(hist[v]) : '—'}">
 						<span class="cell-v mono">{v}</span>
 					</span>
 				{/each}
@@ -744,6 +775,9 @@
 					{#if ends.mid}<span>{ends.mid}</span>{/if}
 					<span>{ends.high}</span>
 				</div>
+			{/if}
+			{#if answered}
+				<p class="q-summary mono">{tf('index.questions.summary', { avg: fmt(avg, 1), low: fmt((low ?? 0) * 100), high: fmt((high ?? 0) * 100) })}</p>
 			{/if}
 			{/if}
 			{#if hist}
@@ -776,7 +810,7 @@
 		{#each questionGroups as group (group.id)}
 			<h3 class="q-group"><span class="q-group-key mono">{group.id}</span>{t(group.key)}</h3>
 			{#each group.items as id (id)}
-				{#if countItems.includes(id)}{@render options(id, group.against)}{:else}{@render strip(id)}{/if}
+				{#if countItems.includes(id)}{@render options(id, group.against)}{:else}{@render strip(id, group.id)}{/if}
 			{/each}
 		{/each}
 	</section>
@@ -784,7 +818,7 @@
 	{#snippet options(id: string, against: boolean)}
 		{@const summary = results?.items?.[id] ?? null}
 		{@const counts = summary?.counts ?? null}
-		{@const asked = summary ? (results?.n_total ?? 0) - summary.not_shown - summary.skipped : 0}
+		{@const asked = summary?.answered ?? 0}
 		<div class="question">
 			<p class="q-text">{itemText(id)}</p>
 			{#if itemHelp(id)}<p class="q-help">{itemHelp(id)}</p>{/if}
@@ -799,7 +833,7 @@
 							<tr>
 								<td>{optionText(id, option)}</td>
 								<td class="bar-cell"><span class="bar" class:good={!against} class:neutral={exclusiveOf(id).includes(option)} style:width="{asked ? (n / asked) * 100 : 0}%"></span></td>
-								<td class="mono">{fmt(n)}</td>
+								<td class="mono">{fmt(n)}{#if asked}<span class="opt-share"> · {fmt((n / asked) * 100)}%</span>{/if}</td>
 							</tr>
 						{/each}
 						<tr class="aside"><td>{t('index.table.skipped')}</td><td></td><td class="mono">{fmt(summary?.skipped ?? 0)}</td></tr>
@@ -808,6 +842,7 @@
 						{/if}
 					</tbody>
 				</table>
+				<p class="q-note">{t('index.questions.multipleNote')}</p>
 			{/if}
 		</div>
 	{/snippet}
@@ -1681,7 +1716,13 @@
 		bottom: 0.15rem;
 		inset-inline-start: 0.25rem;
 		font-size: 0.62rem;
-		color: var(--text-faint);
+		color: var(--text-primary);
+	}
+	/* Past about half strength the fill is dark enough that surface text sinks
+	   into it, so the numeral switches to the text-on-accent token. A switch,
+	   not a blend: a blend passes through the fill's own tone on the way. */
+	.cell.full .cell-v {
+		color: var(--accent-text);
 	}
 	.strip-ends {
 		display: flex;
@@ -1690,6 +1731,25 @@
 		font-size: 0.74rem;
 		color: var(--text-faint);
 		margin-top: 0.25rem;
+	}
+	/* The one-line read of a strip: the average and the share of answers in the
+	   lower and upper halves of the scale, over everyone who answered it. */
+	.q-summary {
+		margin: 0.3rem 0 0;
+		max-width: 36rem;
+		font-size: 0.82rem;
+		color: var(--text-secondary);
+	}
+	.q-note {
+		margin: 0.2rem 0 0.4rem;
+		max-width: 42rem;
+		font-size: 0.82rem;
+		line-height: 1.45;
+		color: var(--text-secondary);
+	}
+	.q-rev {
+		margin-inline-start: 0.15em;
+		color: var(--accent);
 	}
 	.table-alt {
 		margin-top: 0.4rem;
@@ -1736,6 +1796,9 @@
 		background: var(--text-faint);
 	}
 	.options .aside td {
+		color: var(--text-faint);
+	}
+	.opt-share {
 		color: var(--text-faint);
 	}
 	.splits {
