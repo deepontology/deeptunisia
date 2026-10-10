@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/state';
+	import { browser } from '$app/environment';
 	import { app } from '$lib/state.svelte';
 	import { theme } from '$lib/design/theme.svelte';
 	import { t } from '$lib/t.svelte';
@@ -38,7 +39,8 @@
 	 */
 	const viewName = $derived.by(() => {
 		const path = page.url.pathname === '/chronicle' ? '/' : page.url.pathname;
-		const tab = page.url.searchParams.get('tab');
+		// Prerendering forbids reading the query; the tab only refines Agora's name.
+		const tab = browser ? page.url.searchParams.get('tab') : null;
 		const item = [...current.items, ...(current.docs ?? [])].find((i) => isActive(i, path, tab));
 		return t(`nav.${(item ?? current).key}`);
 	});
