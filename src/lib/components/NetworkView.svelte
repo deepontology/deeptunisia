@@ -12,6 +12,7 @@ import Chip from '$lib/ui/Chip.svelte';
 	import Segmented from '$lib/ui/Segmented.svelte';
 	import ConnectionCard from './ConnectionCard.svelte';
 	import { compact } from '$lib/design/media.svelte';
+	import { MediaQuery } from 'svelte/reactivity';
 	import { Camera } from '$lib/viz/camera.svelte';
 	import { navigable } from '$lib/viz/gestures';
 	import { placeLabels, type LabelDir } from '$lib/viz/place';
@@ -1594,6 +1595,12 @@ import Chip from '$lib/ui/Chip.svelte';
 
 	const soloed = $derived(app.activeLayers.size === 1);
 	const wide = $derived(!compact.current);
+	/*
+	 * Wide enough that the fitted map leaves the legend's 160px gutter clear of
+	 * the first lane. Below this the legend starts folded above the minimap, one
+	 * click away, instead of open over the Security lane's names.
+	 */
+	const roomy = new MediaQuery('(min-width: 1400px)', false);
 
 	/**
 	 * Group headers, positioned in world space but lifted into the overlay so they
@@ -1900,6 +1907,12 @@ import Chip from '$lib/ui/Chip.svelte';
 	// "where am I", so it reads as a control and a readout at once.
 	const MINI_W = 100;
 	const MINI_H = (H / W) * MINI_W;
+	/*
+	 * The minimap's rendered height: a 132px box (3px padding, 1px border) whose
+	 * svg keeps the world's aspect. The legend stacks on top of it at the
+	 * bottom-left, so it has to know where the minimap ends.
+	 */
+	const MINI_BOX_H = Math.round(((132 - 8) * MINI_H) / MINI_W + 8);
 
 	const miniView = $derived.by(() => {
 		const wx = -cam.x / cam.k;
@@ -2679,11 +2692,11 @@ import Chip from '$lib/ui/Chip.svelte';
 
 		<!--
 			The legend is a reference, not a control, so on a small screen it folds away
-			rather than covering a third of the map. Open by default on a wide one, where
-			there is room and where a reader meeting dashed lines for the first time
-			needs to be told what they mean without hunting for a toggle.
+			rather than covering a third of the map. Open by default where the left
+			gutter can hold it beside the first lane, so a reader meeting dashed lines
+			for the first time is told what they mean without hunting for a toggle.
 		-->
-		<details class="legend" open={wide}>
+		<details class="legend" open={wide && roomy.current} style:--mini-h="{MINI_BOX_H}px">
 			<summary aria-label={t('network.legend')}>
 				<svg viewBox="0 0 14 14" width="12" height="12" aria-hidden="true">
 					<path d="M2 4h10M2 7h10M2 10h6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" />
@@ -3609,15 +3622,23 @@ import Chip from '$lib/ui/Chip.svelte';
 		color: var(--accent-hover);
 	}
 
+	/*
+	   Bottom-left, stacked on the minimap. At the bottom-right it sat over the
+	   Foreign lane's list of states, the one part of the map that is text; the
+	   left edge holds the minimap and the start of the first lane instead. Its
+	   height is capped to the room above the minimap and it scrolls inside that.
+	*/
 	.legend {
 		position: absolute;
-		inset-inline-end: var(--s-6);
-		bottom: var(--s-6);
+		inset-inline-start: var(--s-6);
+		bottom: calc(var(--s-6) + var(--mini-h) + var(--s-3));
 		z-index: 2;
-		/* Compact by design: a reference strip, not a panel. The content is the
-		   same (basis strokes, focused-state colours, bridges) but at instrument
-		   density — two-column swatch grids and 9.5px labels. */
-		max-width: 244px;
+		max-height: calc(100% - var(--mini-h) - var(--s-6) * 3);
+		overflow-y: auto;
+		/* Compact by design: a reference strip, not a panel. One column as wide as
+		   the minimap's gutter, so it stands beside the first lane rather than on
+		   it; labels wrap instead of truncating. */
+		width: 160px;
 		padding: var(--s-3) var(--s-4);
 		background: color-mix(in oklch, var(--surface-panel) 88%, transparent);
 		border: 1px solid var(--border-subtle);
@@ -3674,16 +3695,18 @@ import Chip from '$lib/ui/Chip.svelte';
 	.lsec + .lrow {
 		margin-top: var(--s-1);
 	}
-	/* The two-column swatch grids: basis strokes, relationship types, bridges. */
+	/* The swatch lists: basis strokes, relationship types, bridges. One column,
+	   each label free to wrap under its swatch. */
 	.lgrid {
 		display: grid;
-		grid-template-columns: 1fr 1fr;
-		column-gap: var(--s-4);
+		grid-template-columns: 1fr;
 		margin-top: var(--s-1);
 	}
 	.lgrid .lrow {
-		overflow: hidden;
-		text-overflow: ellipsis;
+		align-items: baseline;
+		white-space: normal;
+		line-height: var(--lh-snug);
+		padding-block: 2px;
 	}
 	.lgrid svg {
 		flex-shrink: 0;
@@ -3724,6 +3747,8 @@ import Chip from '$lib/ui/Chip.svelte';
 			inset-inline-start: var(--s-4);
 			inset-inline-end: auto;
 			bottom: var(--s-4);
+			/* No minimap on a phone, so nothing to stack on. */
+			max-height: calc(100% - var(--s-4) * 2);
 			padding: var(--s-3) var(--s-4);
 		}
 		/* On a phone the map IS the screen; a minimap over it is a second map. */
