@@ -763,6 +763,12 @@ export function validateScoringSpec(
 
 export interface AggregateRow {
 	answers: Record<string, unknown>;
+	/**
+	 * The link the respondent arrived from, as the `?src=` code was stored;
+	 * `organic` when there was none. Only ever read as a count (the link check
+	 * below), never returned.
+	 */
+	channel?: string;
 }
 
 export interface AggregateOptions {
@@ -1136,6 +1142,90 @@ export function aggregateResponses(
 }
 
 // ---------------------------------------------------------------------------
+// The link check
+//
+// An open index on a charged topic is a target, and the cheapest way to move it
+// is for one group to mass-answer through a single shared link. The row records
+// the `?src=` code the respondent arrived from, so a window of kept answers can
+// be asked how much of it one link brought, and what the index is without it.
+//
+// The codes themselves are never published. A code is free text anyone can
+// invent, and one handed out to a few people could point at them, so what leaves
+// this module is three shares and a counterfactual figure, and no name. The
+// counterfactual answers to the cell floor as well as the first-figure floor:
+// it would otherwise hand a small group's own mean to anyone with the published
+// window mean. Nothing here excludes a row or moves a published number: it is a
+// check a reader can apply to their own judgement (index-spec.md §6).
+// ---------------------------------------------------------------------------
+
+/** The channel a respondent with no `?src=` code is stored under. */
+const ORGANIC_CHANNEL = 'organic';
+
+/**
+ * The number of answers a figure needs before it may be published: the first
+ * figure floor, falling back to the month floor when the spec sets none.
+ */
+function firstFigureN(spec: ScoringSpec): number {
+	return spec.series?.first_figure_n ?? spec.series?.min_month_n ?? 0;
+}
+
+export interface LinkCheck {
+	/** Share of the rows that arrived through a shared link rather than directly. */
+	linked_share: number;
+	/** Share of the rows from the single largest shared link; 0 when there is none. */
+	largest_link_share: number;
+	/**
+	 * The mean index with that one link's rows taken out, computed by the same
+	 * aggregate over the same rows; null when there is no link channel, when
+	 * that link is smaller than the cell floor, or when fewer than
+	 * first_figure_n rows would remain to publish a figure.
+	 */
+	index_without_largest: number | null;
+}
+
+export function linkCheck(spec: ScoringSpec, rows: AggregateRow[], options: AggregateOptions): LinkCheck {
+	const perChannel = new Map<string, number>();
+	for (const row of rows) {
+		const channel = row.channel ?? ORGANIC_CHANNEL;
+		if (channel === ORGANIC_CHANNEL) continue;
+		perChannel.set(channel, (perChannel.get(channel) ?? 0) + 1);
+	}
+	const linked = [...perChannel.values()].reduce((sum, count) => sum + count, 0);
+	let largest = 0;
+	let largestChannel: string | null = null;
+	for (const [channel, count] of perChannel) {
+		if (count > largest) {
+			largest = count;
+			// Held only to filter the rows below: the name is a key into this
+			// local map and is never a field of the returned object.
+			largestChannel = channel;
+		}
+	}
+
+	// Two floors stand between this figure and a small group's own mean. The link
+	// itself must be big enough to describe, at the cell floor every published
+	// group answers to: a counterfactual read beside the window mean would let
+	// anyone solve out the mean of the answers it removed, and one link written
+	// for one person would publish that person's score. And enough answers must
+	// remain to publish a figure at all, the window's own first-figure floor.
+	let indexWithoutLargest: number | null = null;
+	if (largestChannel !== null && largest >= (spec.cell_floor ?? 20)) {
+		const without = aggregateResponses(
+			spec,
+			rows.filter((row) => (row.channel ?? ORGANIC_CHANNEL) !== largestChannel),
+			options
+		);
+		indexWithoutLargest = without.n >= firstFigureN(spec) ? without.index.mean : null;
+	}
+
+	return {
+		linked_share: rows.length ? linked / rows.length : 0,
+		largest_link_share: rows.length ? largest / rows.length : 0,
+		index_without_largest: indexWithoutLargest
+	};
+}
+
+// ---------------------------------------------------------------------------
 // The monthly series (index-spec.md §8)
 //
 // A month's own mean is noisy in proportion to how few people answered it. The
@@ -1252,7 +1342,14 @@ export interface SeriesAggregate {
 	 * The rolling window: every kept answer from `first` to `last` (this month)
 	 * pooled and counted equally. Null when the spec sets no window_months.
 	 */
-	window: { first: string; last: string; months: number; results: WaveAggregate } | null;
+	window: {
+		first: string;
+		last: string;
+		months: number;
+		results: WaveAggregate;
+		/** The link check over exactly the window's rows. */
+		links: LinkCheck;
+	} | null;
 }
 
 /**
@@ -1303,7 +1400,13 @@ export function aggregateSeries(
 			const period = periodOf(row.submittedAt, offset);
 			return period >= first && period <= current;
 		});
-		window = { first, last: current, months: span, results: aggregateResponses(spec, inside, options) };
+		window = {
+			first,
+			last: current,
+			months: span,
+			results: aggregateResponses(spec, inside, options),
+			links: linkCheck(spec, inside, options)
+		};
 	}
 
 	return {
@@ -1361,7 +1464,15 @@ export interface PublishedMonth {
 export interface PublishedSeries {
 	settings: ScoringSeries;
 	months: PublishedMonth[];
-	window: { first: string; last: string; months: number; n: number; results: WaveAggregate | null } | null;
+	window: {
+		first: string;
+		last: string;
+		months: number;
+		n: number;
+		results: WaveAggregate | null;
+		/** The link check, published beside the figures it qualifies. */
+		links: LinkCheck | null;
+	} | null;
 }
 
 export interface PublicationFloor {
@@ -1388,7 +1499,7 @@ export function applyPublicationFloor(
 	series: SeriesAggregate | null
 ): Published {
 	const monthN = spec.series?.min_month_n ?? 0;
-	const firstN = spec.series?.first_figure_n ?? monthN;
+	const firstN = firstFigureN(spec);
 	const floor: PublicationFloor = { n: all.n, first_figure_n: firstN, month_n: monthN, reached: all.n >= firstN };
 	if (series === null) return { floor, results: floor.reached ? all : null, series: null };
 	return {
@@ -1403,13 +1514,16 @@ export function applyPublicationFloor(
 				index: floor.reached ? m.index : NO_LEVEL,
 				results: floor.reached && m.results.n >= monthN ? m.results : null
 			})),
-			window: series.window && {
-				first: series.window.first,
-				last: series.window.last,
-				months: series.window.months,
-				n: series.window.results.n,
-				results: floor.reached && series.window.results.n >= firstN ? series.window.results : null
-			}
+		window: series.window && {
+			first: series.window.first,
+			last: series.window.last,
+			months: series.window.months,
+			n: series.window.results.n,
+			// The link check rides with the window's own figures: it is read
+			// against that mean, so it says nothing below the floor either.
+			results: floor.reached && series.window.results.n >= firstN ? series.window.results : null,
+			links: floor.reached && series.window.results.n >= firstN ? series.window.links : null
+		}
 		}
 	};
 }
