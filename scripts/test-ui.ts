@@ -453,6 +453,37 @@ ok(
 	}
 }
 
+console.log('\n  ── shell: phone frame, words over codes, identity first ──\n');
+
+{
+	const SHELL = join(HERE, '..', 'src', 'lib', 'shell');
+	const MENUBAR = readFileSync(join(SHELL, 'MenuBar.svelte'), 'utf8');
+	const SHEET = readFileSync(join(SHELL, 'ViewsSheet.svelte'), 'utf8');
+	const DOCK = readFileSync(join(SHELL, 'TimeDock.svelte'), 'utf8');
+	const INSPECTOR = readFileSync(join(SHELL, 'Inspector.svelte'), 'utf8');
+	const TOKENS = readFileSync(join(HERE, '..', 'src', 'lib', 'design', 'tokens.css'), 'utf8');
+	const compactBlock = TOKENS.slice(TOKENS.indexOf('@media (max-width: 900px)'));
+	ok(
+		'compact chrome is one bar and one pill',
+		/--menubar-h:\s*var\(--bar-h\)/.test(compactBlock) &&
+			/--subnav-h:\s*0px/.test(compactBlock) &&
+			/--dock-h:\s*var\(--pill-h\)/.test(compactBlock)
+	);
+	ok(
+		'the Views sheet and the bubble slots are driven by BUBBLES, not a count',
+		SHEET.includes('{#each BUBBLES as b') && MENUBAR.includes('style:--n={BUBBLES.length}') && !MENUBAR.includes('/ 3)')
+	);
+	ok(
+		'the evidence dial and layer chips speak words, not codes',
+		!/'DOC'|'\+REP'|'\+INF'|'\+UNS'/.test(DOCK) && DOCK.includes('basis.dial.') && DOCK.includes('lchip-word')
+	);
+	ok('the speed control is labelled', DOCK.includes("t('ctl.speed')"));
+	ok(
+		'reading notes are built from edges, never from the audit reason',
+		!INSPECTOR.includes('.reason') && INSPECTOR.includes("tf('inspector.notes'") && INSPECTOR.includes('relationshipById')
+	);
+}
+
 console.log('\n  ── V29 origins: the derived origin count on claim cards ──\n');
 
 const ORIGINS_CHIP = readFileSync(join(HERE, '..', 'src', 'lib', 'ui', 'OriginsChip.svelte'), 'utf8');

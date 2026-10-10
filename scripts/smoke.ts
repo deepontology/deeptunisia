@@ -190,8 +190,10 @@ const CHECKS: Check[] = [
 			['.subnav', 1],
 			['.subnav .strip a', 6],
 			['.dock', 1],
-			['.track .playhead', 1],
-			['.era-band', 7],
+			// The Chronicle draws and scrubs its own time axis, so the dock drops
+			// its track here; the track is pinned on /network instead.
+			['.dock.no-track', 1],
+			['.axis-scrub', 1],
 			['.chronicle svg', 1],
 			['.bar', 20]
 		],
@@ -207,6 +209,8 @@ const CHECKS: Check[] = [
 		name: 'network',
 		expect: [
 			['.dock', 1],
+			['.track .playhead', 1],
+			['.era-band', 7],
 			// Lane headers and names are HTML over the canvas now, not SVG text — see
 			// src/lib/viz/labels.css. Asserting on .vlabel is what catches the label
 			// placement pass silently suppressing everything, which would leave a
@@ -749,10 +753,10 @@ console.log('\n  ── interaction ──');
 		if (m.type() === 'error' && !isIgnorable(m.text())) problems.push(m.text());
 	});
 
-	await page.goto(BASE + '/chronicle', { waitUntil: 'networkidle' });
+	// Scrub the dock's track and confirm the readout changed. On a view that has
+	// the track: /chronicle scrubs its own axis instead (chronicle navigation).
+	await page.goto(BASE + '/network', { waitUntil: 'networkidle' });
 	await settle(page);
-
-	// Scrub the timeline and confirm the readout changed.
 	const before = await page.locator('.readout .date').innerText();
 	const box = await page.locator('.track').boundingBox();
 	if (box) {
@@ -764,6 +768,9 @@ console.log('\n  ── interaction ──');
 	await page.waitForTimeout(400);
 	const after = await page.locator('.readout .date').innerText();
 	ok('scrubbing the dock changes the date', before !== after, `${before} -> ${after}`);
+
+	await page.goto(BASE + '/chronicle', { waitUntil: 'networkidle' });
+	await settle(page);
 
 	// Evidence threshold must actually change what is drawn.
 	const barsBefore = await page.locator('.bar').count();
@@ -994,7 +1001,8 @@ if (runSection('timeline')) {
 console.log('\n  ── timeline ──');
 	const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
 	const page = await context.newPage();
-	await page.goto(BASE + '/chronicle', { waitUntil: 'networkidle' });
+	// The dock's track, on a view that shows it (the Chronicle drops it).
+	await page.goto(BASE + '/network', { waitUntil: 'networkidle' });
 	await settle(page);
 
 	/*
@@ -2527,11 +2535,12 @@ console.log('\n  ── deep-link round trips ──');
 
 // --- Captions ---------------------------------------------------------------
 /*
- * Every route in the views table answers one sentence: Viewport.svelte reads
- * answerKeyFor(pathname) and renders the .caption line, from the same
- * guide.<key>.answer keys the /guide table displays in full. A route outside
- * the table — /guide is the nearest non-view route that shares the shell
- * chrome — must have no caption at all.
+ * Every route in the views table answers one sentence, from the same
+ * guide.<key>.answer keys the /guide table displays in full. It lives in "About
+ * this view": inside the view's toolbar where it has one (/rankings), otherwise
+ * as Viewport's own row (/map). Open on a wide screen, so the answer is on
+ * screen. A route outside the table — /guide is the nearest non-view route that
+ * shares the shell chrome — has no About at all.
  */
 if (runSection('captions')) {
 console.log('\n  ── captions ──');
@@ -2541,11 +2550,12 @@ console.log('\n  ── captions ──');
 		const page = await context.newPage();
 		await page.goto(BASE + path, { waitUntil: 'networkidle', timeout: 30_000 });
 		await settle(page);
-		const n = await page.locator('.caption').count();
-		const text = n ? (await page.locator('.caption').innerText()).trim() : '';
+		const n = await page.locator('.about').count();
+		const answer = page.locator('.about .answer');
+		const text = (await answer.count()) ? (await answer.innerText()).trim() : '';
 		ok(
-			`caption on ${path} is present and non-empty`,
-			n === 1 && text.length > 0,
+			`one About on ${path}, open, with its answer`,
+			n === 1 && (await answer.isVisible()) && text.length > 0,
 			JSON.stringify(text.slice(0, 60))
 		);
 		await page.close();
@@ -2555,8 +2565,70 @@ console.log('\n  ── captions ──');
 		await page.goto(BASE + '/guide', { waitUntil: 'networkidle', timeout: 30_000 });
 		await settle(page);
 		ok(
-			'caption is absent on /guide (outside the views table)',
-			(await page.locator('.caption').count()) === 0
+			'no About on /guide (outside the views table)',
+			(await page.locator('.about').count()) === 0
+		);
+		await page.close();
+	}
+	await context.close();
+}
+
+// --- Phone chrome budget -----------------------------------------------------
+/*
+ * On a 390x844 phone the standing chrome is the 48px top bar and the 44px time
+ * pill, nothing else: the section bubbles and the tab strip live in the Views
+ * sheet, the track and filters in the pill's sheet. Measured, because a row
+ * that creeps back in costs every view its height and no other check notices.
+ */
+if (runSection('phone budget')) {
+console.log('\n  ── phone budget ──');
+	const context = await browser.newContext({
+		viewport: { width: 390, height: 844 },
+		isMobile: true,
+		hasTouch: true
+	});
+	await context.addInitScript(TOUR_SEEN_INIT);
+	for (const path of ['/now', '/network', '/chronicle']) {
+		const page = await context.newPage();
+		await page.goto(BASE + path, { waitUntil: 'networkidle', timeout: 30_000 });
+		await settle(page);
+		const m = (await page.evaluate(`(() => {
+			const h = (sel) => {
+				const el = document.querySelector(sel);
+				return el ? Math.round(el.getBoundingClientRect().height) : -1;
+			};
+			return { bar: h('.menubar'), dock: h('.dock'), subnav: h('.subnav') };
+		})()`)) as { bar: number; dock: number; subnav: number };
+		ok(
+			`${path}: phone top bar is 48px or less`,
+			m.bar > 0 && m.bar <= 48,
+			`${m.bar}px`
+		);
+		ok(
+			`${path}: phone dock at rest is 44px or less`,
+			m.dock > 0 && m.dock <= 44,
+			`${m.dock}px`
+		);
+		ok(`${path}: no tab strip at rest on a phone`, m.subnav <= 0, `${m.subnav}px`);
+		await page.close();
+	}
+
+	// Every view is two taps away: the view button, then the view.
+	{
+		const page = await context.newPage();
+		await page.goto(BASE + '/now', { waitUntil: 'networkidle', timeout: 30_000 });
+		await settle(page);
+		await page.locator('.viewbtn').tap();
+		await page.waitForTimeout(400);
+		const rows = await page.locator('.vs-row').count();
+		ok('the view button opens the Views sheet', rows >= 10, `${rows} views listed`);
+		await page.locator('.vs-row[href="/network"]').tap();
+		await page.waitForURL('**/network', { timeout: 10_000 }).catch(() => {});
+		await page.waitForSelector('.vs', { state: 'detached', timeout: 2_000 }).catch(() => {});
+		ok(
+			'a view in the sheet is the second tap',
+			page.url().endsWith('/network') && (await page.locator('.vs').count()) === 0,
+			page.url().replace(BASE, '')
 		);
 		await page.close();
 	}
@@ -3167,7 +3239,23 @@ console.log('\n  ── phone chrome ──');
 
 	// Selecting a record opens the sheet, and the timeline must stay usable beneath
 	// it: keeping selection and time-travel simultaneous is the premise of the app.
-	await page.locator('.bar').first().click();
+	// On a phone the Chronicle is vertical: tap a tenure block already in view
+	// (letting the test scroll one into view would itself pan the shell). The
+	// filter sheet's scrim must be gone first, or it is what every point hits.
+	await page.waitForSelector('.pop', { state: 'detached', timeout: 2_000 }).catch(() => {});
+	await page.evaluate(`(() => {
+		const strip = document.querySelector('.cv-strip').getBoundingClientRect();
+		// In view, and its centre lands on the block itself, not on a rupture
+		// chip or a header drawn over it.
+		const tb = Array.from(document.querySelectorAll('.cv .tb')).find((b) => {
+			const r = b.getBoundingClientRect();
+			if (!(r.height > 20 && r.top > strip.top + 60 && r.bottom < strip.bottom && r.left >= 0 && r.right <= window.innerWidth)) return false;
+			const hit = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+			return Boolean(hit && b.contains(hit));
+		});
+		if (tb) tb.setAttribute('data-smoke', 'tb');
+	})()`);
+	await page.locator('[data-smoke=tb]').tap();
 	await page.waitForTimeout(600);
 	const sheet = await page.evaluate(`(() => {
 		const s = document.querySelector('.inspector');
@@ -3267,7 +3355,7 @@ console.log('\n  ── phone chrome ──');
 	// descendants) inside .dock, and never to a node inside .inspector.
 	const dockHits = (await page.evaluate(`(() => {
 		const out = [];
-		for (const sel of ['.filter-btn', '.transport button', '.track']) {
+		for (const sel of ['.filter-btn', '.transport button', '.readout-btn']) {
 			const el = document.querySelector(sel);
 			if (!el) { out.push({ sel, missing: true }); continue; }
 			const r = el.getBoundingClientRect();

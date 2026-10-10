@@ -78,6 +78,8 @@ import { tour, tourSeen } from '$lib/shell/tour.svelte';
 	function finishBoot() {
 		booted = true;
 		try {
+			// The first-paint placeholder, when the boot never ran to remove it.
+			document.getElementById('static-boot')?.remove();
 			sessionStorage.setItem('deeptunisia:booted', '1');
 			document.documentElement.dataset.boot = 'ready';
 		} catch {}
