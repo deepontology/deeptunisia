@@ -49,7 +49,7 @@ These are applied before any aggregate and published live with their counts:
 These are refused at submission and never stored:
 
 - a completion under 20 seconds;
-- more than five submissions per address per hour, counted by a salted, daily-rotating hash of the address;
+- more than twenty submissions per address per hour, counted by a salted, daily-rotating hash of the address;
 - a submission without a solved first-party bot check;
 - answers to questions that were not shown;
 - an answer outside the declared options.

@@ -336,6 +336,19 @@ async function verifyHuman(env: Env, token: string, address: string): Promise<bo
 	return null;
 }
 
+/**
+ * The public Turnstile site key to hand the survey page, or null when the human
+ * check is off. The switch is on only when BOTH the secret (which lets the
+ * server verify a token) and this site key (which lets the page render the
+ * widget) are set. A secret with no site key turns verification on while the page
+ * still renders no widget, so every respondent is refused; that is why the secret
+ * alone is not treated as "on", and why submit refuses rather than falls back to
+ * the proof of work when only the secret is present.
+ */
+function turnstileSiteKey(env: Env): string | null {
+	return env.TURNSTILE_SITEKEY && env.TURNSTILE_SECRET ? env.TURNSTILE_SITEKEY : null;
+}
+
 // ---------------------------------------------------------------------------
 // The first-party bot check (contract §4)
 //
@@ -658,7 +671,18 @@ export async function handleResearch(
 				env.ASSIGNMENT_SECRET ?? env.RATE_PEPPER,
 				`${study.id}|${salt}|${POW_DIFFICULTY}|${expires}`
 			);
-			return json({ salt, difficulty: POW_DIFFICULTY, expires, sig });
+			// The human check, when the operator has flipped it on, is announced here:
+			// the public site key rides the same challenge the runner already fetches,
+			// so the page learns to render the widget with no second request. When the
+			// check is off the field is absent and the runner contacts no other origin.
+			const siteKey = turnstileSiteKey(env);
+			return json({
+				salt,
+				difficulty: POW_DIFFICULTY,
+				expires,
+				sig,
+				...(siteKey ? { turnstileSiteKey: siteKey } : {})
+			});
 		}
 
 		if (request.method === 'GET' && slug && action === 'live') {
@@ -742,7 +766,7 @@ export async function handleResearch(
 					await verifyProofOfWork(env, study, payload.pow, db, ctx.now);
 				}
 			}
-			// 8. five responses an hour per address, counted from a salted hash.
+			// 8. twenty responses an hour per address, counted from a salted hash.
 			const key = await bucketKey(ctx.clientAddress, env.RATE_PEPPER, ctx.now);
 			await consume(ctx.bucketStore, key, 'response', ctx.now);
 			// 9. the compiled instrument, needed by the assignment and completion
