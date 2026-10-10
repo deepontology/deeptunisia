@@ -79,7 +79,7 @@ export const STEPS: TourStep[] = [
 	/* Two selectors, one step: on a wide dock the dial is on screen, on a narrow
 	   one it lives inside a popover and the button that opens it stands in. */
 	{ id: 'evidence', n: 5, target: '[data-tour="evidence"],[data-tour="filters"]', place: 'top' },
-	{ id: 'layers', n: 6, target: '[data-tour="layers"]', place: 'top' },
+	{ id: 'layers', n: 6, target: '[data-tour="layers"],[data-tour="filters"]', place: 'top' },
 	{ id: 'time', n: 7, target: '[data-tour="time"]', place: 'top' },
 	{ id: 'chrome', n: 8, target: '[data-tour="chrome"]', place: 'bottom' },
 	{ id: 'done', n: 9 }

@@ -1483,7 +1483,17 @@ const en: Dict = {
 	'chronicle.vertical.list.empty': 'No post in this layer meets the evidence filter.',
 	// redesign 2026-10 (SH-1)
 	'nav.views.title': 'Views',
-	'nav.views.close': 'Close the list of views'
+	'nav.views.close': 'Close the list of views',
+	// redesign 2026-10 (SH-2)
+	'basis.dial.documented': 'Documented only',
+	'basis.dial.reported': '+\u00a0Reported',
+	'basis.dial.inferred': '+\u00a0Inferred',
+	'basis.dial.unsubstantiated': '+\u00a0Unsubstantiated',
+	'ctl.speed': 'Speed',
+	// redesign 2026-10 (SH-2)
+	'ctl.layers.some': '{n} of {total}',
+	// redesign 2026-10 (SH-2)
+	'ctl.layers.all': 'All'
 };
 
 const fr: Dict = {
@@ -2897,7 +2907,17 @@ const fr: Dict = {
 	'chronicle.vertical.list.empty': 'Aucun poste de cette couche ne satisfait le filtre de preuve.',
 	// redesign 2026-10 (SH-1)
 	'nav.views.title': 'Vues',
-	'nav.views.close': 'Fermer la liste des vues'
+	'nav.views.close': 'Fermer la liste des vues',
+	// redesign 2026-10 (SH-2)
+	'basis.dial.documented': 'Documenté seulement',
+	'basis.dial.reported': '+\u00a0Rapporté',
+	'basis.dial.inferred': '+\u00a0Déduit',
+	'basis.dial.unsubstantiated': '+\u00a0Non étayé',
+	'ctl.speed': 'Vitesse',
+	// redesign 2026-10 (SH-2)
+	'ctl.layers.some': '{n} sur {total}',
+	// redesign 2026-10 (SH-2)
+	'ctl.layers.all': 'Toutes'
 };
 
 
@@ -4306,7 +4326,17 @@ const ar: Dict = {
 	'chronicle.vertical.list.empty': 'لا يستوفي أي منصب في هذه الطبقة مرشّح الأدلة.',
 	// redesign 2026-10 (SH-1)
 	'nav.views.title': 'العروض',
-	'nav.views.close': 'إغلاق قائمة العروض'
+	'nav.views.close': 'إغلاق قائمة العروض',
+	// redesign 2026-10 (SH-2)
+	'basis.dial.documented': 'موثّق فقط',
+	'basis.dial.reported': '+\u00a0منقول',
+	'basis.dial.inferred': '+\u00a0مستنتج',
+	'basis.dial.unsubstantiated': '+\u00a0غير مدعوم',
+	'ctl.speed': 'السرعة',
+	// redesign 2026-10 (SH-2)
+	'ctl.layers.some': '{n} من {total}',
+	// redesign 2026-10 (SH-2)
+	'ctl.layers.all': 'الكل'
 };
 
 
