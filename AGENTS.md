@@ -6,6 +6,8 @@ Agora budget/hold is specified-not-wired (`community/budget.ts` not imported; wi
 
 Public-facing text (pull request titles, pull request bodies, review comments, issue comments and commit messages) states what changed in the artifact and what gate verifies it. It does not describe internal process, tooling, workspace layout, local paths, branch names or security-review framing. Write for a reader checking the change, not a reader watching the work.
 
+Tracked files, commit metadata and built files carry no local path, username or personal name or handle. Commits are authored as `DeepOntology Collective`. `npm run test` enforces the file side.
+
 Every agent-written pull request body and comment ends with:
 
 ---
