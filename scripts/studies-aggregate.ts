@@ -37,7 +37,12 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { stringify as stringifyYaml } from 'yaml';
-import type { RuntimeInstrument, RuntimeItem, StudiesRegistry } from '../community/research-contract.ts';
+import {
+	gapAnswerKey,
+	type RuntimeInstrument,
+	type RuntimeItem,
+	type StudiesRegistry
+} from '../community/research-contract.ts';
 import type { StudyResults } from './research-schema.ts';
 import { EXPORT_COLUMNS } from './studies-export.ts';
 
@@ -222,7 +227,11 @@ function tally(values: string[]): Record<string, number> {
 }
 
 function isAnswered(answers: Record<string, unknown>, itemId: string): boolean {
-	return answers[itemId] !== undefined && answers[itemId] !== null;
+	// A presence rating is an answer to that item, under the block's own key.
+	return (
+		(answers[itemId] !== undefined && answers[itemId] !== null) ||
+		(answers[gapAnswerKey(itemId)] !== undefined && answers[gapAnswerKey(itemId)] !== null)
+	);
 }
 
 function answerNumber(answers: Record<string, unknown>, itemId: string): number | null {
@@ -429,10 +438,12 @@ export function aggregateResponses(
 		}
 	}
 
-	// Gap presence: one block per item, mean over answerers.
+	// Gap presence: one block per item, mean over answerers. The presence
+	// rating is stored under the block's own key, so it never stands in for the
+	// item's essentiality rating read above.
 	for (const item of gapItems(instrument)) {
 		const scores = included
-			.map((row) => answerNumber(row.answers, item.id))
+			.map((row) => answerNumber(row.answers, gapAnswerKey(item.id)))
 			.filter((value): value is number => value !== null);
 		if (!scores.length) continue;
 		blocks.push(

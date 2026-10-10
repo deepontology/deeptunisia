@@ -10,7 +10,7 @@ The questionnaire asks nothing about who you are: no age, no gender, no address.
 
 No name, email address, phone number, account, IP address, browser fingerprint, device identifier or location is stored with your answers. There is no field that could hold one. The site sets no tracking cookies and loads nothing from other companies on the study pages, except Cloudflare's human check, which is switched on only during an attack and says so on the page.
 
-One thing is kept in this browser instead of with your answers: the month you last answered. It stays on this device, it is never sent to us, and it is removed when you withdraw your answers from this browser.
+Two things are kept in this browser instead of with your answers: the month you last answered, and your unfinished answers. Both stay on this device, and neither is ever sent to us. Unfinished answers are kept until you submit, until you clear them with the button in the survey, or until 24 hours pass with no activity; they are never sent to anyone until you submit. The month you last answered is removed when you withdraw your answers from this browser.
 
 Two things touch your connection without being stored with your answers. To stop one machine from flooding the survey, the server counts submissions per address using a salted fingerprint of the address that changes every day; the address itself is never written down. And the site runs on Cloudflare, which, like any host, sees connections pass through; its logs are sampled at one request in a hundred and are not joined to answers.
 

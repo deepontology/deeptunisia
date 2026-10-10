@@ -1159,7 +1159,25 @@ export function aggregateResponses(
 // ---------------------------------------------------------------------------
 
 /** The channel a respondent with no `?src=` code is stored under. */
-const ORGANIC_CHANNEL = 'organic';
+export const ORGANIC_CHANNEL = 'organic';
+
+/** The shape the server accepts a channel code in: lowercase, 1 to 32 characters. */
+export const CHANNEL_PATTERN = /^[a-z0-9_-]{1,32}$/;
+
+/**
+ * The `?src=` code as the server stores it.
+ *
+ * The one rule every reader of a shared link follows. The index page hands the
+ * code it arrived with to the participation link and the runner reads the code
+ * back off its own URL, so a link keeps its code through that hand-off instead
+ * of answering as `organic` and vanishing from the link check. A code the
+ * server would refuse — `?src=Facebook`, a long campaign code, nothing at all —
+ * falls back here rather than being answered past.
+ */
+export function channelCode(raw: string): string {
+	const code = raw.toLowerCase();
+	return CHANNEL_PATTERN.test(code) ? code : ORGANIC_CHANNEL;
+}
 
 /**
  * The number of answers a figure needs before it may be published: the first

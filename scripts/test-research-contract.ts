@@ -19,6 +19,7 @@ import { parse as parseYaml } from 'yaml';
 import {
 	compileInstrument,
 	computeInstrumentHash,
+	gapAnswerKey,
 	validateSubmission,
 	type InstrumentDocument,
 	type RuntimeInstrument
@@ -173,6 +174,46 @@ const maxdiffInstrument: RuntimeInstrument = compileInstrument(fixtureDoc(true))
 // The same block, still waiting on its design: the state the draft instrument
 // is in until the freeze step generates it.
 const ungeneratedMaxdiffInstrument: RuntimeInstrument = compileInstrument(fixtureDoc(true, 'to-generate'));
+
+/**
+ * The presence block, on the real instrument's shape: a module whose block
+ * re-asks items an earlier block already asked, one of them here, so the two
+ * ratings of the same item can be submitted side by side. The block's response
+ * type is deliberately not the items' own — the real one is `scale_present`
+ * against items declared `scale_essential` — so a value for a presence key is
+ * checked against the block's type and nothing else.
+ */
+const presenceFixtureDoc = (): InstrumentDocument => ({
+	...fixtureDoc(false),
+	instrument: { ...fixtureDoc(false).instrument, id: 'it-fixture-presence' },
+	modules: [
+		...fixtureDoc(false).modules,
+		{ id: 'presence', label: 'Present today', block: 'gap_fixture' }
+	],
+	items: [
+		...fixtureDoc(false).items,
+		{
+			id: 'presence_only_fix',
+			module: 'presence',
+			tier: 'extended',
+			response: 'scale_present',
+			required: false,
+			text_en: 'Present or not.',
+			text_fr: null,
+			text_ar: null
+		}
+	],
+	gap_block: {
+		id: 'gap_fixture',
+		response: 'agree_4',
+		instruction_en: 'How present is this today?',
+		text_fr: null,
+		text_ar: null,
+		items: ['scale_fix', 'presence_only_fix']
+	}
+});
+
+const presenceInstrument: RuntimeInstrument = compileInstrument(presenceFixtureDoc());
 
 const payload = (over: Record<string, unknown> = {}) => ({
 	instrumentHash: fixtureInstrument.hash,
@@ -430,6 +471,81 @@ console.log('\n  ── submission validation: accepted ──\n');
 	ok(
 		'the compiled MaxDiff carries setCount and the sets',
 		maxdiffInstrument.maxdiff?.setCount === 2 && maxdiffInstrument.maxdiff?.sets.length === 2
+	);
+}
+
+console.log('\n  ── presence answers: the item\'s own rating and its second one ──\n');
+
+{
+	const base = {
+		...payload(),
+		instrumentHash: presenceInstrument.hash,
+		// The block's own type is agree_4 here, so a valid presence answer is
+		// 1..4 whatever the item's own type is.
+		answers: { consent_fix: true, scale_fix: 7 }
+	};
+	const both = validateSubmission(presenceInstrument, {
+		...base,
+		answers: { ...base.answers, [gapAnswerKey('scale_fix')]: 3 }
+	});
+	ok(
+		'a presence answer is accepted beside the item\'s own answer',
+		both.ok && both.answers?.['scale_fix'] === 7 && both.answers?.[gapAnswerKey('scale_fix')] === 3,
+		both.ok ? JSON.stringify(both.answers) : (both as { code: string }).code
+	);
+	ok(
+		'the presence key and the item key are different keys',
+		gapAnswerKey('scale_fix') !== 'scale_fix' && gapAnswerKey('scale_fix') in (both.ok ? both.answers : {}),
+		gapAnswerKey('scale_fix')
+	);
+	const onlyPresence = validateSubmission(presenceInstrument, {
+		...base,
+		answers: { ...base.answers, [gapAnswerKey('presence_only_fix')]: 2 }
+	});
+	ok(
+		'an item the presence block alone asks is answered under the same prefix',
+		onlyPresence.ok && onlyPresence.answers?.[gapAnswerKey('presence_only_fix')] === 2,
+		onlyPresence.ok ? JSON.stringify(onlyPresence.answers) : (onlyPresence as { code: string }).code
+	);
+	const skipped = validateSubmission(presenceInstrument, {
+		...base,
+		answers: { ...base.answers, [gapAnswerKey('scale_fix')]: null }
+	});
+	ok('a skipped presence answer is a skip, not an error', skipped.ok);
+
+	const rejectPresence = (answers: Record<string, unknown>, name: string, code: string) =>
+		rejectsCode(presenceInstrument, { ...base, answers }, name, code);
+	rejectPresence(
+		{ ...base.answers, [gapAnswerKey('scale_fix')]: 7 },
+		'a presence value outside the block\'s own type is refused',
+		'invalid-answer'
+	);
+	rejectPresence(
+		{ ...base.answers, [gapAnswerKey('scale_fix')]: '3' },
+		'a string for a presence answer is refused',
+		'invalid-answer'
+	);
+	rejectPresence(
+		{ ...base.answers, [gapAnswerKey('no_such_item')]: 3 },
+		'a presence key the block does not name is refused',
+		'unknown-item'
+	);
+	rejectPresence(
+		{ ...base.answers, [gapAnswerKey('auto_fix')]: 'en' },
+		'a platform-recorded item has no presence answer',
+		'unknown-item'
+	);
+	rejectPresence(
+		{ ...base.answers, [gapAnswerKey('presence')]: 3 },
+		'an empty id under the prefix is refused',
+		'unknown-item'
+	);
+	// The same key on an instrument with no presence block is nothing at all.
+	rejectsCode(
+		fixtureInstrument,
+		{ ...payload(), answers: { consent_fix: true, scale_fix: 7, [gapAnswerKey('scale_fix')]: 3 } },
+		'a presence key on an instrument with no presence block is refused',
+		'unknown-item'
 	);
 }
 

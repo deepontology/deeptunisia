@@ -561,7 +561,113 @@ for (const loc of ['en', 'fr', 'ar'] as const) {
 	);
 }
 
+console.log('\n  ── the survey runner: resume, re-entry, shared links, presence ──\n');
+
+/*
+ * The survey runner and the index page are browser code, so what is pinned here
+ * is the source contracts a refactor could drop while every rendered page still
+ * looked right: a save that overwrites the session it is about to restore, a
+ * re-entered page that never renders its human check, a participation link that
+ * drops the code it arrived with, and a presence block whose answers land on
+ * the essentiality ratings they were asked beside.
+ */
+const PARTICIPATE = readFileSync(
+	join(HERE, '..', 'src', 'routes', 'research', '[slug]', 'participate', '+page.svelte'),
+	'utf8'
+);
+const INDEX_STUDY = readFileSync(join(HERE, '..', 'src', 'lib', 'index-study', 'IndexStudy.svelte'), 'utf8');
+const SCORING = readFileSync(join(HERE, '..', 'community', 'research-scoring.ts'), 'utf8');
+const CONTRACT = readFileSync(join(HERE, '..', 'community', 'research-contract.ts'), 'utf8');
+
+// A shared link keeps its code: one pattern, one helper, both readers of it.
+ok(
+	'the channel pattern is defined once, in the shared engine',
+	SCORING.includes('export const CHANNEL_PATTERN = /^[a-z0-9_-]{1,32}$/') &&
+		!CONTRACT.includes('const CHANNEL_PATTERN = /^[a-z0-9_-]'),
+	'the server validates with the engine\'s pattern'
+);
+ok(
+	'the runner reads the code through the shared helper, with no regex of its own',
+	PARTICIPATE.includes('channelCode(new URLSearchParams(location.search)') && !PARTICIPATE.includes('a-z0-9_-')
+);
+ok(
+	'the index page hands its own code to the participation link',
+	INDEX_STUDY.includes("channelCode(page.url.searchParams.get('src')") &&
+		(INDEX_STUDY.match(/href=\{participate\}/g) ?? []).length === 2 &&
+		!INDEX_STUDY.includes('href="/research/{study.slug}/participate"'),
+	'the hero link and the closing link both carry it'
+);
+
+// A re-entered survey still solves its human check.
+ok(
+	'an API already in the document marks the human check ready',
+	PARTICIPATE.includes('if (turnstileApi()) {') && PARTICIPATE.includes('turnstileLoaded = true;'),
+	'a page left and re-entered keeps the API it loaded'
+);
+ok(
+	'a script still loading is waited on rather than appended twice',
+	PARTICIPATE.includes("existing.addEventListener('load'")
+);
+
+// A reload restores the saved session instead of overwriting it.
+ok(
+	'nothing is saved until the saved session has been read',
+	PARTICIPATE.includes('let restored = $state(false)') &&
+		PARTICIPATE.includes('restored = true;') &&
+		PARTICIPATE.includes('if (!instrument || !restored) return;'),
+	'the save effect is gated on restoration'
+);
+ok(
+	'the saved session carries the assignment it was given',
+	PARTICIPATE.includes('savedAssignment') && PARTICIPATE.includes('savedAt: Date.now()'),
+	'a resumed respondent keeps the arms they answered under'
+);
+
+// The saved progress expires, and can be dropped now.
+ok(
+	'saved progress expires after a day without activity',
+	PARTICIPATE.includes('const SESSION_MAX_AGE_MS =') && PARTICIPATE.includes('savedAt'),
+	'24 hours'
+);
+ok(
+	'the survey offers a control that clears the saved answers',
+	PARTICIPATE.includes("t('research.participate.clearSaved')") &&
+		PARTICIPATE.includes('localStorage.removeItem(sessionKey)') &&
+		PARTICIPATE.includes('localStorage.removeItem(answeredKey)'),
+	'both the session and the answered-month key'
+);
+
+// The presence block asks its own question and keeps its own answer key.
+ok(
+	'the presence block renders its own scale and wording, not the item\'s',
+	PARTICIPATE.includes('const response = current.gap?.response ?? item.response') &&
+		PARTICIPATE.includes('intro ?? presenceIntro')
+);
+ok(
+	'the presence answers are keyed so the first rating survives',
+	PARTICIPATE.includes('gapAnswerKey') && PARTICIPATE.includes('GAP_ANSWER_PREFIX')
+);
+
+// The disclosure the privacy text has to make, in all three languages.
+for (const loc of ['en', 'fr', 'ar'] as const) {
+	ok(
+		`${loc} discloses the saved progress on the privacy sheet`,
+		/unfinished|inachev|غير المكتملة/.test(translate(loc, 'research.store.device')) &&
+			translate(loc, 'research.participate.clearSaved') !== 'research.participate.clearSaved',
+		translate(loc, 'research.store.device').slice(0, 60)
+	);
+	const content = readFileSync(
+		join(HERE, '..', 'src', 'content', `police-index.${loc}.md`),
+		'utf8'
+	);
+	ok(
+		`${loc} discloses the saved progress in the what-is-stored text`,
+		content.includes('24') && /submit|envoy|إرسال/.test(content),
+		'the browser copy states the expiry and that nothing is sent early'
+	);
+}
+
 console.log(`
-  ${checks - failures}/${checks} checks passed${failures ? `, ${failures} FAILED` : ''}
+   ${checks - failures}/${checks} checks passed${failures ? `, ${failures} FAILED` : ''}
 `);
 if (failures) process.exit(1);

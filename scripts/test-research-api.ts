@@ -29,6 +29,7 @@ import { localDb } from '../community/db-local.ts';
 import { memoryLiveCache, type LiveCache } from '../community/live-cache.ts';
 import {
 	compileInstrument,
+	gapAnswerKey,
 	type InstrumentDocument,
 	type RuntimeInstrument,
 	type StudiesRegistry
@@ -184,6 +185,27 @@ const maxdiffGeneratedDoc = (): InstrumentDocument => {
 
 const maxdiffGeneratedInstrument: RuntimeInstrument = compileInstrument(maxdiffGeneratedDoc());
 
+/**
+ * The same instrument with a presence block that re-asks an item an earlier
+ * block already asked, the way the real instrument's does, so one submission
+ * can carry both ratings of it. The API must store both keys, not the last.
+ */
+const presenceFixtureDoc = (): InstrumentDocument => ({
+	...fixtureDoc(),
+	instrument: { ...fixtureDoc().instrument, id: 'it-fixture-presence' },
+	modules: [...fixtureDoc().modules, { id: 'presence', label: 'Present today', block: 'gap_block' }],
+	gap_block: {
+		id: 'gap_block',
+		response: 'scale_present',
+		instruction_en: 'How present is this today?',
+		text_fr: null,
+		text_ar: null,
+		items: ['scale_fix']
+	}
+});
+
+const presenceInstrument: RuntimeInstrument = compileInstrument(presenceFixtureDoc());
+
 const study = (
 	slug: string,
 	status: string,
@@ -212,12 +234,15 @@ const FIXTURE_REGISTRY: StudiesRegistry = {
 		study('fixture-maxdiff-design', 'design', 'dt-fixture-004', maxdiffFixtureInstrument),
 		// A generated block on a fielding study: the payload must carry every set
 		// and the choices have to reach storage.
-		study('fixture-maxdiff-generated', 'fielding', 'dt-fixture-005', maxdiffGeneratedInstrument)
+		study('fixture-maxdiff-generated', 'fielding', 'dt-fixture-005', maxdiffGeneratedInstrument),
+		// A presence block re-asking an earlier block's item, on a fielding study.
+		study('fixture-presence', 'fielding', 'dt-fixture-006', presenceInstrument)
 	],
 	instruments: {
 		[`${fixtureInstrument.id}@${fixtureInstrument.version}`]: fixtureInstrument,
 		[`${maxdiffFixtureInstrument.id}@${maxdiffFixtureInstrument.version}`]: maxdiffFixtureInstrument,
-		[`${maxdiffGeneratedInstrument.id}@${maxdiffGeneratedInstrument.version}`]: maxdiffGeneratedInstrument
+		[`${maxdiffGeneratedInstrument.id}@${maxdiffGeneratedInstrument.version}`]: maxdiffGeneratedInstrument,
+		[`${presenceInstrument.id}@${presenceInstrument.version}`]: presenceInstrument
 	}
 };
 
@@ -358,7 +383,7 @@ console.log('\n  ── reads: unauthenticated, unlimited ──\n');
 {
 	const env = researchEnv();
 	const list = await get(env, '/api/studies');
-	ok('the registry lists studies', list.status === 200 && Array.isArray(list.body.studies) && list.body.studies.length === 5);
+	ok('the registry lists studies', list.status === 200 && Array.isArray(list.body.studies) && list.body.studies.length === 6);
 	ok('a study reads as id, slug, status, title_en', JSON.stringify(list.body.studies[0]) === JSON.stringify({ id: 'dt-fixture-001', slug: 'fixture', status: 'fielding', title_en: 'Fixture Study' }));
 
 	const one = await get(env, '/api/studies/fixture');
@@ -492,6 +517,37 @@ console.log('\n  ── a valid submission is stored, and names nobody ──\n'
 	const buckets = (await env.DB.prepare('SELECT * FROM rate_buckets').all<any>()).results;
 	const bucketKey0 = buckets[0]?.key.split(':') ?? [];
 	ok('the rate bucket is a hash, not an address', buckets.length === 1 && bucketKey0[0] === 'response' && /^[0-9a-f]{64}$/.test(bucketKey0[1] ?? '') && !JSON.stringify(buckets).includes('203.0.113'));
+}
+
+console.log('\n  ── a re-asked item keeps both ratings ──\n');
+
+{
+	const env = researchEnv();
+	const answers = { consent_fix: true, scale_fix: 7, [gapAnswerKey('scale_fix')]: 3 };
+	const sent = await submitAssigned(env, 'fixture-presence', {
+		instrumentHash: presenceInstrument.hash,
+		answers
+	});
+	ok(
+		'a submission carrying both ratings of one item is accepted',
+		sent.status === 200,
+		sent.status === 200 ? '' : sent.body.error ?? ''
+	);
+	const stored = JSON.parse((await allRows(env))[0].answers) as Record<string, unknown>;
+	ok(
+		'the row stores the item rating and the presence rating under different keys',
+		stored['scale_fix'] === 7 && stored[gapAnswerKey('scale_fix')] === 3,
+		JSON.stringify(stored)
+	);
+	const badValue = await submitAssigned(env, 'fixture-presence', {
+		instrumentHash: presenceInstrument.hash,
+		answers: { consent_fix: true, scale_fix: 7, [gapAnswerKey('scale_fix')]: 11 }
+	});
+	ok(
+		'a presence value outside the block\'s own type is refused 400',
+		badValue.status === 400 && String(badValue.body.error ?? '').includes('invalid-answer'),
+		badValue.body.error ?? ''
+	);
 }
 
 console.log('\n  ── withdraw, count ──\n');
