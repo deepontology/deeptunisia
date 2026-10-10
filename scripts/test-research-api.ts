@@ -24,7 +24,9 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parse as parseYaml } from 'yaml';
 import { handle, type Env } from '../community/api.ts';
+import type { Db } from '../community/db.ts';
 import { localDb } from '../community/db-local.ts';
+import { memoryLiveCache, type LiveCache } from '../community/live-cache.ts';
 import {
 	compileInstrument,
 	type InstrumentDocument,
@@ -952,6 +954,143 @@ console.log('\n  ── the monthly live index ──\n');
 			moved?.index_without_largest === grownWindow?.links?.index_without_largest,
 		JSON.stringify(moved)
 	);
+}
+
+console.log('\n  ── the live payload is computed once a minute ──\n');
+
+{
+	// The real study-002 instrument and the same instrument one version
+	// earlier: the cache key is the study and the instrument hash, so a new
+	// wave must never be served the previous wave's payload.
+	const policeDoc = parseYaml(
+		readFileSync(join(HERE, '..', 'research', 'portal', 'study-002', 'instrument-v0.yaml'), 'utf8')
+	) as InstrumentDocument;
+	const police = compileInstrument(policeDoc);
+	const prior = compileInstrument({ ...policeDoc, instrument: { ...policeDoc.instrument, version: '0.1.0' } });
+	ok('the two instrument versions hash differently', police.hash !== prior.hash);
+
+	const registry: StudiesRegistry = {
+		meta: { generated: 'fixture', count: 3, schemaVersion: 1 },
+		studies: [
+			{ ...study('index', 'fielding', 'dt-research-002', police), fielding_window: { start: '2026-01-01', end: null } },
+			{ ...study('index-prior', 'fielding', 'dt-research-002', prior), fielding_window: { start: '2026-01-01', end: null } },
+			study('index-design', 'design', 'dt-research-002', police)
+		],
+		instruments: {
+			[`${police.id}@${police.version}`]: police,
+			[`${prior.id}@${prior.version}`]: prior
+		}
+	};
+
+	// Queries counted through the storage interface, so a read served from the
+	// cache is visible as a query that never ran.
+	const researchDb = localDb(':memory:');
+	void researchDb.exec(RESEARCH_SCHEMA);
+	let queries = 0;
+	const db: Db = {
+		prepare(sql: string) {
+			queries++;
+			return researchDb.prepare(sql);
+		},
+		exec: (sql: string) => researchDb.exec(sql),
+		batch: (statements) => researchDb.batch(statements)
+	};
+
+	// The cache carries its own clock, so a lifetime can pass in a test without
+	// the test sleeping through a minute.
+	let clock = Date.now();
+	const inner = memoryLiveCache(() => clock);
+	const touched: Array<{ op: 'get' | 'put'; key: string }> = [];
+	const cache: LiveCache = {
+		async get(key) {
+			touched.push({ op: 'get', key });
+			return inner.get(key);
+		},
+		async put(key, entry) {
+			touched.push({ op: 'put', key });
+			return inner.put(key, entry);
+		}
+	};
+
+	const env = researchEnv({ STUDIES: registry, RESEARCH_DB: db, LIVE_CACHE: cache });
+	const liveRead = async (target: Env, slug: string) => {
+		const res = await handle(new Request(`https://community.example/api/studies/${slug}/live`), target);
+		const text = await res.text();
+		return { status: res.status, text, body: JSON.parse(text) as any, age: res.headers.get('cache-control') };
+	};
+	const puts = () => touched.filter((t) => t.op === 'put').map((t) => t.key);
+
+	const now = Date.now();
+	const answers = (t: number) =>
+		JSON.stringify({
+			pti_t1: t, pti_t2: t, pti_t3: t, pti_t4: t, pti_t5: t,
+			pti_g1: 6, pti_g2: 4, pti_g3: 6, pti_g4: 6, pti_g5: 6,
+			pti_e1: 'no', pti_e5: ['none']
+		});
+	const insert = (receipt: string, submittedAt: number, t: number, instrument: RuntimeInstrument) =>
+		db
+			.prepare(
+				`INSERT INTO research_responses
+				 (receipt, study_id, instrument_id, instrument_version, instrument_hash, locale, channel,
+				  consent_version, started_at, submitted_at, completion_ms, answers, created_at)
+				 VALUES (?, 'dt-research-002', ?, ?, ?, 'en', 'organic', 'v1', ?, ?, 90000, ?, ?)`
+			)
+			.bind(receipt, instrument.id, instrument.version, instrument.hash, submittedAt - 90_000, submittedAt, answers(t), submittedAt)
+			.run();
+	for (let i = 0; i < 3; i++) await insert(`cur-${i}`, now - 30_000 - i * 1000, 4 + i, police);
+	for (let i = 0; i < 2; i++) await insert(`old-${i}`, now - 20_000 - i * 1000, 6, prior);
+
+	const before = queries;
+	const first = await liveRead(env, 'index');
+	ok('the first live read computes the payload and stores it', first.status === 200 && queries === before + 1, `${queries - before} queries`);
+	ok('and the response advertises the age the entry is kept for', first.age === 'public, max-age=60', first.age ?? '');
+
+	const second = await liveRead(env, 'index');
+	ok('a second read inside the minute runs no query', second.status === 200 && queries === before + 1, `${queries - before} queries`);
+	ok('and it serves the stored payload byte for byte', second.text === first.text);
+	ok('without rewriting the entry', puts().length === 1, puts().join(' '));
+
+	const wave = await liveRead(env, 'index-prior');
+	ok('a read for the other instrument hash recomputes', wave.status === 200 && queries === before + 2, `${queries - before} queries`);
+	ok(
+		'and the two waves never share an entry',
+		first.body.instrument.hash === police.hash &&
+			first.body.received === 3 &&
+			wave.body.instrument.hash === prior.hash &&
+			wave.body.received === 2,
+		`${first.body.received} against ${wave.body.received}`
+	);
+	const waveAgain = await liveRead(env, 'index-prior');
+	ok('the second wave is served from its own entry', waveAgain.status === 200 && waveAgain.text === wave.text && queries === before + 2);
+
+	clock += 61_000;
+	const later = await liveRead(env, 'index');
+	ok('a read after the minute recomputes', later.status === 200 && queries === before + 3, `${queries - before} queries`);
+	// The seed is fixed, so the same rows give the same figures; only the stamp
+	// moves, and the stamp is the one field a recomputation owns.
+	const withoutStamp = (body: any) => JSON.stringify({ ...body, generated_at: null });
+	ok('and the recomputation gives the same figures', withoutStamp(later.body) === withoutStamp(first.body));
+
+	const stored = puts();
+	const notOpen = await liveRead(env, 'index-design');
+	ok('a study not collecting responses is refused 409', notOpen.status === 409, notOpen.body?.error ?? '');
+	const unknown = await liveRead(env, 'no-such-study');
+	ok('an unknown study is refused 404', unknown.status === 404);
+	ok(
+		'and no refusal is ever stored, so nothing cached can be an error',
+		JSON.stringify(puts()) === JSON.stringify(stored) && queries === before + 3,
+		puts().join(' ')
+	);
+
+	// A cache that cannot be written must not take the endpoint down with it:
+	// the read recomputes and answers, exactly as every read did before.
+	const broken = researchEnv({
+		STUDIES: registry,
+		RESEARCH_DB: db,
+		LIVE_CACHE: { get: async () => null, put: async () => { throw new Error('the edge is not interested'); } }
+	});
+	const unwritten = await liveRead(broken, 'index');
+	ok('an unwritable cache does not fail the live read', unwritten.status === 200 && unwritten.body.received === 3, unwritten.body?.error ?? '');
 }
 
 console.log('\n  ── the real registry ──\n');
