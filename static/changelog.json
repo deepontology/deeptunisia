@@ -1,5 +1,40 @@
 [
   {
+    "hash": "f314686ef",
+    "date": "2026-10-10T13:59:21+01:00",
+    "subject": "Data: merge the 2026-10-10 sweep (six events) and advance the research cutoff (#51)",
+    "kind": "revision",
+    "added": 1157,
+    "removed": 6,
+    "files": [
+      {
+        "file": "data/contrib/daily-2026-10-10.yaml",
+        "added": 775,
+        "removed": 0
+      },
+      {
+        "file": "data/events.yaml",
+        "added": 253,
+        "removed": 0
+      },
+      {
+        "file": "data/parameters.yaml",
+        "added": 7,
+        "removed": 1
+      },
+      {
+        "file": "data/public-claims.yaml",
+        "added": 5,
+        "removed": 5
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 117,
+        "removed": 0
+      }
+    ]
+  },
+  {
     "hash": "bcc8c2437",
     "date": "2026-10-05T21:09:15+01:00",
     "subject": "Data: merge the 2026-10-05 sweep (Chebbi hunger strike) and advance the research cutoff (#49)",
