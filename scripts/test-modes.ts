@@ -237,5 +237,35 @@ console.log('\n  ── beta: the gate opens ──\n');
 	ok('the refusal is an authentication failure', unsigned.status === 401, String(unsigned.status));
 }
 
+// ── research is outside the community mode ──────────────────────────────────
+//
+// Research routes have their own fail-closed ladder (contract §4) and run ahead
+// of the mode gate, so closing Agora does not close a study. The ladder must
+// still refuse before the database: a study that is not fielding is refused
+// whatever RESEARCH_OPEN says, and the trap proves nothing was read.
+
+console.log('\n  ── research: its own gate, not the community mode ──\n');
+{
+	const studies = JSON.parse(readFileSync(join(HERE, '..', 'src', 'generated', 'studies.json'), 'utf8'));
+	const design = studies.studies.find((s: { status: string }) => s.status === 'design');
+	ok('the registry has a study in design to probe', Boolean(design));
+	for (const open of [undefined, '1']) {
+		const env: Env = { ...envFor('off', trapDb), STUDIES: studies, RESEARCH_OPEN: open };
+		const submit = await request(env, 'POST', `/api/studies/${design.slug}/submit`, {});
+		ok(
+			`off does not answer a research submit with the uniform 404 (RESEARCH_OPEN=${open})`,
+			submit.status !== 404,
+			String(submit.status)
+		);
+		ok(
+			`a study in design refuses the submit before the database (RESEARCH_OPEN=${open})`,
+			submit.status === 409 && !/D1 ACCESSED/.test(submit.text),
+			`${submit.status} ${submit.text}`
+		);
+		const agora = await request(env, 'GET', '/api/threads');
+		ok(`Agora stays closed beside it (RESEARCH_OPEN=${open})`, agora.status === 404 && agora.body?.error === 'not found');
+	}
+}
+
 console.log(`\n  ${checks - failures}/${checks} mode-contract checks passed\n`);
 if (failures) process.exit(1);

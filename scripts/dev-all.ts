@@ -15,12 +15,17 @@
  * each other's generated modules, which the browser reports as 500s and "failed to
  * fetch dynamically imported module" — a failure that looks like a code bug and is
  * not. Failing loudly on a busy port is the fix.
+ *
+ * The atlas stays on 5173. The API port comes from PORT (default 5200) and is
+ * handed to Vite as DT_API_PORT so its /api proxy follows, which is what lets
+ * parallel worktrees each run their own pair.
  */
 import { spawn, type ChildProcess } from 'node:child_process';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
+const API_PORT = process.env.PORT ?? '5200';
 
 const children: ChildProcess[] = [];
 
@@ -76,9 +81,9 @@ start(
 	'atlas',
 	[join(ROOT, 'node_modules', 'vite', 'bin', 'vite.js'), 'dev', '--port', '5173', '--strictPort'],
 	'36',
-	{ VITE_COMMUNITY_MODE: process.env.VITE_COMMUNITY_MODE ?? communityMode }
+	{ VITE_COMMUNITY_MODE: process.env.VITE_COMMUNITY_MODE ?? communityMode, DT_API_PORT: API_PORT }
 );
 
 console.log('\n  atlas   http://localhost:5173');
-console.log('  agora   the tab in that app; its API is on 5200\n');
+console.log(`  agora   the tab in that app; its API is on ${API_PORT}\n`);
 console.log('  Ctrl-C stops both.\n');

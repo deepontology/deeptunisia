@@ -16,6 +16,8 @@
 import { handle, type Env as ApiEnv } from './api.ts';
 import { resolveMode } from './mode.ts';
 import type { Db, Prepared } from './db.ts';
+import type { StudiesRegistry } from './research-contract.ts';
+import studiesJson from '../src/generated/studies.json';
 
 interface WorkerEnv {
 	/** D1 binding, configured in wrangler.toml. */
@@ -31,7 +33,26 @@ interface WorkerEnv {
 	COMMUNITY_MODE?: string;
 	/** Static assets binding — the built atlas. */
 	ASSETS: Fetcher;
+	/**
+	 * Separate D1 binding for research responses (contract §5). Created by the
+	 * operator and wired in wrangler.toml; until then, research endpoints that
+	 * need storage answer 503.
+	 */
+	RESEARCH_DB?: D1Database;
+	/** Worker var. '1' opens research submissions; absent or anything else fails closed. */
+	RESEARCH_OPEN?: string;
+	/** Turnstile secret for the research bot challenge (contract §4). */
+	TURNSTILE_SECRET?: string;
 }
+
+/**
+ * The compiled studies registry, bundled at build time. `npm run build` always
+ * runs the studies build first, so a deploy cannot ship without it. The JSON
+ * module's inferred type cannot express the runtime unions in
+ * RuntimeInstrument, so the registry is asserted once here — the shape itself
+ * is validated by scripts/build-studies.ts before the file is emitted.
+ */
+const studies = studiesJson as unknown as StudiesRegistry;
 
 /**
  * D1 already presents the interface db.ts declares, so this is a cast rather than
@@ -51,7 +72,14 @@ export default {
 				DB: asDb(env.DB),
 				RATE_PEPPER: env.RATE_PEPPER,
 				MODERATORS: env.MODERATORS,
-				mode: resolveMode(env.COMMUNITY_MODE)
+				mode: resolveMode(env.COMMUNITY_MODE),
+				// Research (contract §6). No RESEARCH_DB binding → storage endpoints
+				// answer 503; no RESEARCH_OPEN var, or anything but '1' → submissions
+				// are closed. Both absences are the safe direction.
+				RESEARCH_DB: env.RESEARCH_DB ? asDb(env.RESEARCH_DB) : undefined,
+				RESEARCH_OPEN: env.RESEARCH_OPEN,
+				STUDIES: studies,
+				TURNSTILE_SECRET: env.TURNSTILE_SECRET
 				// ENTITY_IDS is deliberately absent here until an asset binding is
 				// wired (spec §15.3 R4): typed thread targets are then accepted by
 				// format only, and the client's own index check remains the guard.

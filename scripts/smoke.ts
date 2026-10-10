@@ -183,10 +183,10 @@ const CHECKS: Check[] = [
 		name: 'chronicle',
 		expect: [
 			['.menubar', 1],
-			// Tier one and tier two of the navigation. Two bubbles exactly: if a third
-			// section ever appears here it is a decision to be made deliberately, not a
-			// thing that should slip in.
-			['.bubbles a', 2],
+			// Tier one and tier two of the navigation. Four bubbles exactly: a new
+			// section here is a decision to be made deliberately, not a thing that
+			// should slip in.
+			['.bubbles a', 4],
 			['.subnav', 1],
 			['.subnav .strip a', 6],
 			['.dock', 1],
@@ -360,7 +360,7 @@ const CHECKS: Check[] = [
 		name: 'guide',
 		expect: [
 			['.page-head h1', 1],
-			['table.views tbody tr', 15],
+			['table.views tbody tr', 16],
 			['.bases .base', 4],
 			['a.help', 1],
 			['a.help[href="/guide"]', 1]

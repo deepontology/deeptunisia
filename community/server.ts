@@ -27,13 +27,15 @@ import { localDb } from './db-local.ts';
 import { migrate } from './migrate.ts';
 import { handle, localRequest, type Env } from './api.ts';
 import { resolveMode } from './mode.ts';
+import type { StudiesRegistry } from './research-contract.ts';
 
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
-const PORT = 5200;
+const PORT = Number(process.env.PORT ?? 5200);
 const DATA_DIR = join(ROOT, '.community');
 const DB_PATH = join(DATA_DIR, 'community.sqlite');
+const RESEARCH_DB_PATH = join(DATA_DIR, 'research.sqlite');
 
 if (!existsSync(DATA_DIR)) mkdirSync(DATA_DIR, { recursive: true });
 
@@ -53,6 +55,16 @@ const fresh = !existsSync(DB_PATH);
 const db = localDb(DB_PATH);
 await db.exec(readFileSync(join(HERE, 'schema.sql'), 'utf8'));
 if (fresh) console.log('  created a new database at .community/community.sqlite');
+
+/*
+ * Research responses live in their own database file, for the same reason they
+ * get their own D1 binding in production: they are personal data of a different
+ * kind and sensitivity from the community layer, and the research schema —
+ * with no identifier column of any kind — is applied on every start, exactly
+ * like the community schema above.
+ */
+const researchDb = localDb(RESEARCH_DB_PATH);
+await researchDb.exec(readFileSync(join(HERE, 'research-schema.sql'), 'utf8'));
 
 /*
  * `CREATE TABLE IF NOT EXISTS` cannot add a column to a table that already exists,
@@ -80,6 +92,24 @@ if (existsSync(PEPPER_PATH)) {
 	console.log('  generated a rate-limit pepper in .community/pepper');
 }
 
+/*
+ * The research gate. '1' opens submissions; anything else — including an unset
+ * variable — is closed. Fail closed, and say so at startup so an operator who
+ * meant to open the study notices before respondents do.
+ */
+const RESEARCH_OPEN = process.env.RESEARCH_OPEN === '1' ? '1' : '0';
+
+/*
+ * LOCAL DEVELOPMENT ONLY: the dev fielding override.
+ *
+ * When set to a study's slug or id, the API treats that study as fielding and
+ * accepts its submissions without a bot challenge, so the runner can be
+ * answered end to end before the canonical registry leaves `design`. Nothing
+ * in production sets it: the Worker never reads the variable, and this server
+ * prints a warning at startup whenever it is on. Unset is the deployed state.
+ */
+const RESEARCH_DEV_STUDY = process.env.RESEARCH_DEV_STUDY;
+
 const env: Env = {
 	DB: db,
 	RATE_PEPPER: pepper,
@@ -93,8 +123,35 @@ const env: Env = {
 	// The built entity index, used to validate thread graph targets (spec §15.3 R4).
 	// Absent on the Worker until an asset binding is wired; locally it is the real
 	// dataset the site is built from.
-	ENTITY_IDS: loadEntityIds()
+	ENTITY_IDS: loadEntityIds(),
+	// Research (contract §6): the compiled registry, the response store, and the
+	// gate. TURNSTILE_SECRET stays unwired locally — with the gate open and no
+	// challenge configured, submissions are refused 503 rather than let through,
+	// except for the one study RESEARCH_DEV_STUDY names.
+	RESEARCH_DB: researchDb,
+	RESEARCH_OPEN,
+	RESEARCH_DEV_STUDY,
+	// The assignment secret (contract §10). Falls back to the pepper inside the
+	// API when unset; both are local secrets a restarted server keeps.
+	ASSIGNMENT_SECRET: process.env.ASSIGNMENT_SECRET,
+	STUDIES: loadStudies()
 };
+
+/**
+ * The compiled studies registry from the studies build. A missing or unreadable
+ * file takes the research endpoints down, not the server: the community API
+ * must not fall over because a study build has not run.
+ */
+function loadStudies(): StudiesRegistry | undefined {
+	try {
+		return JSON.parse(
+			readFileSync(join(ROOT, 'src', 'generated', 'studies.json'), 'utf8')
+		) as StudiesRegistry;
+	} catch {
+		console.log('  research: no studies registry at src/generated/studies.json — study endpoints will report it missing');
+		return undefined;
+	}
+}
 
 /**
  * Ids of every graph entity, from the built dataset. Failure to read it (a build
@@ -149,5 +206,21 @@ server.listen(PORT, '127.0.0.1', () => {
 			? `  moderators: ${env.MODERATORS.split(',').length} key(s)`
 			: '  no moderators configured — set COMMUNITY_MODERATORS to your public key'
 	);
+	console.log('  research database: .community/research.sqlite');
+	console.log(
+		RESEARCH_OPEN === '1'
+			? '  research: submissions OPEN (RESEARCH_OPEN=1)'
+			: '  research: submissions closed (RESEARCH_OPEN=0)'
+	);
+	if (RESEARCH_DEV_STUDY) {
+		console.log('');
+		console.log('  ============================================================');
+		console.log('  !!! DEV FIELDING OVERRIDE ACTIVE !!!');
+		console.log(`  study: ${RESEARCH_DEV_STUDY}`);
+		console.log('  submissions are accepted without a bot challenge');
+		console.log('  LOCAL DEVELOPMENT ONLY. Never set RESEARCH_DEV_STUDY in production.');
+		console.log('  ============================================================');
+		console.log('');
+	}
 	console.log('\n  This is the local stand-in. The same handler runs on Workers.\n');
 });

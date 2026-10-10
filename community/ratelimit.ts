@@ -75,7 +75,10 @@ export const LIMITS: Record<string, Limit> = {
 	report: { max: 10, windowMs: 3_600_000 },
 	identity: { max: 5, windowMs: 86_400_000 },
 	// Proposals cost a reviewer's attention, which is the scarcest thing here.
-	pr: { max: 10, windowMs: 86_400_000 }
+	pr: { max: 10, windowMs: 86_400_000 },
+	// Survey submissions: five an hour is more than any person completing a
+	// twelve-minute instrument needs, and far less than a farm needs (contract §4).
+	response: { max: 5, windowMs: 3_600_000 }
 };
 
 export interface BucketStore {
