@@ -364,11 +364,6 @@
 		return { x0, x1 };
 	}
 
-	/** Ruptures are the anchors of the record, so their label space is reserved. */
-	function ruptureReserve(e: EventRec): number {
-		return e.rupture ? Math.min(220, eventTitle(e).length * 6.2 + 16) : 0;
-	}
-
 	function clusterBadgeW(n: number): number {
 		return Math.max(18, Math.min(38, 14 + String(n).length * 7));
 	}
@@ -422,10 +417,10 @@
 				// Keep the badge inside the plot: a dense pile at the right edge
 				// (2026) would otherwise be drawn half off the clip.
 				const cx = Math.min(Math.max(raw, w / 2), Math.max(w / 2, plotW - w / 2));
-				return { id, x0: cx - w / 2, x1: cx + w / 2, occ: cx + w / 2 };
+				return { id, x0: cx - w / 2, x1: cx + w / 2 };
 			}
 			const { x0, x1 } = eventXRange(n.event, domain[0], domain[1]);
-			return { id, x0, x1, occ: x1 + ruptureReserve(n.event) };
+			return { id, x0, x1 };
 		});
 		// One row per event or cluster, in date order: the gutter carries each
 		// row's label, so a row never holds two things to name.
@@ -449,14 +444,6 @@
 	 * labels are). The full title stays in the native tooltip.
 	 */
 	const GL_X = 14;
-	function fitTitle(title: string, avail: number): string {
-		if (fits(title, avail, ROW_LABEL_TYPE, 0)) return title;
-		for (let n = title.length - 1; n > 0; n--) {
-			const cand = title.slice(0, n).trimEnd() + '…';
-			if (fits(cand, avail, ROW_LABEL_TYPE, 0)) return cand;
-		}
-		return '…';
-	}
 	const expGutter = $derived.by(() => {
 		const rows: {
 			key: string;
@@ -471,12 +458,12 @@
 		for (const it of expandedLayout.items) {
 			const date = formatDate(it.event.interval.startEarliest, 'month');
 			const full = eventTitle(it.event);
-			rows.push({ key: 'e-' + it.event.id, y: it.y, date, title: fitTitle(full, avail(date)), full, event: it.event, members: null });
+			rows.push({ key: 'e-' + it.event.id, y: it.y, date, title: fitText(full, avail(date), ROW_LABEL_TYPE) || '…', full, event: it.event, members: null });
 		}
 		for (const c of expandedLayout.clusters) {
 			const date = formatDate(Math.min(...c.members.map((m) => m.interval.startEarliest)), 'month');
 			const full = tf('chronicle.vertical.spine.cluster', { n: c.members.length, range: clusterRange(c.members) });
-			rows.push({ key: 'c-' + c.members[0].id, y: c.y, date, title: fitTitle(full, avail(date)), full, event: null, members: c.members });
+			rows.push({ key: 'c-' + c.members[0].id, y: c.y, date, title: fitText(full, avail(date), ROW_LABEL_TYPE) || '…', full, event: null, members: c.members });
 		}
 		return rows;
 	});
@@ -516,8 +503,6 @@
 		if (sp >= lo * 0.55) cut = cut.slice(0, sp);
 		return cut + ell;
 	}
-
-	const TYPE = { size: 10, family: 'JetBrains Mono, monospace' };
 
 	/** Switch between the slim timeline and the expanded events view. */
 	function setView(v: string) {
