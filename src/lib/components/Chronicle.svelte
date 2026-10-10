@@ -30,6 +30,7 @@
 		type Layer,
 		type Position
 	} from '$lib/model';
+	import { buildGroups, visiblePositions, type ChronRow } from '$lib/chronicle/rows';
 
 	/**
 	 * A layered Gantt of officeholding, 1956-2026.
@@ -193,13 +194,8 @@
 	// stable while the evidence dial moves is what lets the reader perceive edges
 	// appearing and vanishing instead of watching the whole chart reflow.
 
-	interface Row {
+	interface Row extends ChronRow {
 		kind: 'row';
-		roleId: string;
-		title: string;
-		layer: Layer;
-		authority: number;
-		positions: Position[];
 		y: number;
 	}
 	interface Group {
@@ -214,40 +210,25 @@
 		const items: (Row | Group)[] = [];
 		let y = PAD_T + laneH;
 
-		const insts = [...ds.institutions]
-			.filter((i) => app.activeLayers.has(i.layer as Layer))
-			.sort((a, b) => a.order - b.order);
+		const groups = buildGroups({
+			institutions: ds.institutions,
+			roles: ds.roles,
+			positions: ds.positions,
+			activeLayers: app.activeLayers,
+			nameOf
+		});
 
-		for (const inst of insts) {
-			const roles = ds.roles.filter((r) => r.institution === inst.id);
-			const rows: Row[] = [];
-			for (const role of roles) {
-				const positions = ds.positions.filter((p) => p.role === role.id);
-				if (positions.length === 0) continue;
-				rows.push({
-					kind: 'row',
-					roleId: role.id,
-					title: nameOf(role),
-					layer: inst.layer as Layer,
-					authority: role.authority,
-					positions,
-					y: 0
-				});
-			}
-			if (rows.length === 0) continue;
-			rows.sort((a, b) => b.authority - a.authority);
-
+		for (const group of groups) {
 			items.push({
 				kind: 'group',
-				id: inst.id,
-				label: nameOf(inst),
-				layer: inst.layer as Layer,
+				id: group.institutionId,
+				label: group.label,
+				layer: group.layer,
 				y
 			});
 			y += GROUP_H;
-			for (const row of rows) {
-				row.y = y;
-				items.push(row);
+			for (const row of group.rows) {
+				items.push({ kind: 'row', ...row, y });
 				y += ROW_H;
 			}
 			y += 6;
@@ -923,10 +904,6 @@
 		};
 	}
 
-	function visible(pos: Position) {
-		return meetsBasis(pos.basis as Basis, app.basisFloor);
-	}
-
 	function isFocused(pos: Position) {
 		return app.selected === pos.holder || app.hovered === pos.holder;
 	}
@@ -1512,7 +1489,7 @@
 
 							<g clip-path="url(#plot-clip)">
 								<g transform="translate({GUTTER},0)">
-									{#each item.positions.filter(visible) as pos (pos.id)}
+									{#each visiblePositions(item, app.basisFloor) as pos (pos.id)}
 										{@const b = barGeometry(pos)}
 										{@const act = activity(pos.interval, app.t)}
 										{@const focus = isFocused(pos)}
@@ -1790,7 +1767,7 @@
 			</thead>
 			<tbody>
 				{#each layout.items.filter((i) => i.kind === 'row') as row (row.roleId)}
-					{#each (row as Row).positions.filter(visible) as pos (pos.id)}
+					{#each visiblePositions(row as Row, app.basisFloor) as pos (pos.id)}
 						<tr>
 							<td>{(row as Row).title}</td>
 							<td>{nameOf(personById.get(pos.holder))}</td>
