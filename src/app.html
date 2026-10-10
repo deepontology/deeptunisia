@@ -84,11 +84,16 @@
 			// server-rendered UI (booted=true) paints for one frame before
 			// the client's onMount flips it to false and the boot overlay
 			// appears — the flash testers reported.
+			// The boot only greets a reader arriving at the Chronicle itself. A
+			// deep link (?id=) or any other first route opens directly; the same
+			// rule is in +layout.svelte.
+			var _skip =
+				location.pathname.replace(/\/$/, '') !== '/chronicle' || /[?&]id=/.test(location.search);
 			try {
 				var _b = sessionStorage.getItem('deeptunisia:booted');
-				document.documentElement.dataset.boot = _b === '1' ? 'ready' : 'pending';
+				document.documentElement.dataset.boot = _b === '1' || _skip ? 'ready' : 'pending';
 			} catch (e) {
-				document.documentElement.dataset.boot = 'pending';
+				document.documentElement.dataset.boot = _skip ? 'ready' : 'pending';
 			}
 		</script>
 		<style>
