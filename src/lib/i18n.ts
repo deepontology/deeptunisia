@@ -1471,7 +1471,10 @@ const en: Dict = {
 	'investigate.picker.topHint': 'The {n} institutions this dataset names most often.',
 	'investigate.picker.records': '{n} records',
 	'investigate.picker.none': 'No other institution matches.',
-	'investigate.picker.remove': 'Remove {name}'
+	'investigate.picker.remove': 'Remove {name}',
+	// redesign 2026-10 (CH-6)
+	'chronicle.vertical.posts': '{n} posts',
+	'chronicle.vertical.marked': 'Linked to the focused event'
 };
 
 const fr: Dict = {
@@ -2873,7 +2876,10 @@ const fr: Dict = {
 	'investigate.picker.topHint': 'Les {n} institutions les plus souvent citées dans cette base de données.',
 	'investigate.picker.records': '{n} fiches',
 	'investigate.picker.none': 'Aucune autre institution ne correspond.',
-	'investigate.picker.remove': 'Retirer {name}'
+	'investigate.picker.remove': 'Retirer {name}',
+	// redesign 2026-10 (CH-6)
+	'chronicle.vertical.posts': '{n} postes',
+	'chronicle.vertical.marked': 'Lié à l\'événement ciblé'
 };
 
 
@@ -4270,7 +4276,10 @@ const ar: Dict = {
 	'investigate.picker.topHint': 'المؤسسات الـ{n} الأكثر ذكرًا في قاعدة البيانات هذه.',
 	'investigate.picker.records': '{n} سجلات',
 	'investigate.picker.none': 'لا توجد مؤسسة أخرى مطابقة.',
-	'investigate.picker.remove': 'إزالة {name}'
+	'investigate.picker.remove': 'إزالة {name}',
+	// redesign 2026-10 (CH-6)
+	'chronicle.vertical.posts': '{n} منصب',
+	'chronicle.vertical.marked': 'مرتبط بالحدث المحدد'
 };
 
 
