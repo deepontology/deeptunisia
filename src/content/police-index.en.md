@@ -8,7 +8,7 @@ When you submit, one row is written. It holds your answers, the language you ans
 
 The questionnaire asks nothing about who you are: no age, no gender, no address. Its last question, which governorate you live in, is optional, and you can skip it or answer "prefer not to answer". If you answer it, only your region is ever published, and never for a group of fewer than 20 people.
 
-No name, email address, phone number, account, IP address, browser fingerprint, device identifier or location is stored with your answers. There is no field that could hold one. The site sets no tracking cookies and loads nothing from other companies on the study pages.
+No name, email address, phone number, account, IP address, browser fingerprint, device identifier or location is stored with your answers. There is no field that could hold one. The site sets no tracking cookies and loads nothing from other companies on the study pages, except Cloudflare's human check, which is switched on only during an attack and says so on the page.
 
 One thing is kept in this browser instead of with your answers: the month you last answered. It stays on this device, it is never sent to us, and it is removed when you withdraw your answers from this browser.
 

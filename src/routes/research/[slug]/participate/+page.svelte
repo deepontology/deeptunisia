@@ -11,7 +11,7 @@
 	import Content from '$lib/ui/Content.svelte';
 	import type { LiveResults } from '$lib/index-study/live';
 	import type { RuntimeInstrument, RuntimeItem, StudyRecord } from '$lib/research';
-	import { startProofOfWork, type ProofOfWork } from '$lib/pow';
+	import { startProofOfWork, type BotCheck } from '$lib/pow';
 	import { evaluateCondition, periodOf, scoreResponse } from '../../../../../community/research-scoring.ts';
 
 	/**
@@ -38,6 +38,17 @@
 	 * is saved only in this browser so a reload does not lose it.
 	 */
 	let { data } = $props();
+
+	/**
+	 * The slice of Cloudflare's Turnstile API this page uses, and the only way it
+	 * is reached: `window.turnstile` exists once the widget script has loaded,
+	 * which happens on demand and only while the human check is switched on.
+	 */
+	interface Turnstile {
+		render(container: HTMLElement, options: { sitekey: string; callback?: (token: string) => void }): string;
+		reset(widgetId?: string): void;
+	}
+	const turnstileApi = (): Turnstile | undefined => (window as Window & { turnstile?: Turnstile }).turnstile;
 
 	interface Assignment {
 		blockOrder: 'core_first' | 'extended_first';
@@ -84,8 +95,14 @@
 		// solves in a worker while the respondent reads, so by the last screen
 		// the promise has almost always resolved and submit only waits if it has
 		// not. A failed fetch starts nothing; the server gate decides either way.
+		// The same challenge carries the Turnstile site key when the human check
+		// is switched on; it is read once here so the widget can render.
 		if ((live?.study.status ?? data.study.status) === 'fielding') {
-			proof = startProofOfWork(data.study.slug);
+			const pending = startProofOfWork(data.study.slug);
+			check = pending;
+			void pending.then((c) => {
+				if (turnstileSiteKey === null) turnstileSiteKey = c.turnstileSiteKey;
+			});
 		}
 		restoreSession();
 		readAnsweredMonth();
@@ -105,11 +122,59 @@
 	let openedAt = $state(Date.now());
 
 	/**
-	 * The proof of work, started in the background and awaited only at submit.
-	 * A promise rather than a value so the runner never blocks on the solve
-	 * before the last screen; null when the challenge could not be fetched.
+	 * The background bot check, started when the study is known to be fielding
+	 * and awaited only at submit. A promise rather than a value so the runner
+	 * never blocks on the solve before the last screen; it carries the solved
+	 * proof of work and, when the human check is on, the site key for its widget.
 	 */
-	let proof: Promise<ProofOfWork | null> | null = null;
+	let check: Promise<BotCheck> | null = null;
+
+	/**
+	 * The human check, present only while the operator has it switched on. The
+	 * site key arrives once with the challenge and is null whenever the check is
+	 * off, in which case this page loads no script from Cloudflare and makes no
+	 * request to any other origin. The token is filled by the widget and sent at
+	 * submit; `widgetInto` tracks the container the widget was last rendered into
+	 * so a re-entered last screen re-renders it, and `tokenReady` lets submit
+	 * wait on the widget's next token.
+	 */
+	let turnstileSiteKey = $state<string | null>(null);
+	let turnstileToken = $state<string | null>(null);
+	let turnstileBox = $state<HTMLDivElement | null>(null);
+	let widgetId = $state<string | null>(null);
+	let widgetInto = $state<HTMLDivElement | null>(null);
+	let turnstileLoaded = $state(false);
+	let tokenReady: (() => void) | null = null;
+
+	// Load Cloudflare's widget script once, and only while the human check is on.
+	// The site key arrives with the bot challenge, so with the switch off this
+	// runs nothing and the page contacts no origin but its own.
+	$effect(() => {
+		if (!turnstileSiteKey || turnstileApi()) return;
+		if (document.querySelector('script[data-turnstile]')) return;
+		const script = document.createElement('script');
+		script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+		script.dataset.turnstile = '';
+		script.async = true;
+		script.addEventListener('load', () => (turnstileLoaded = true));
+		document.head.append(script);
+	});
+
+	// Render the widget into the container currently on screen, once the API is
+	// ready. Re-rendering into a fresh container keeps it correct when the last
+	// screen is left and re-entered; the callback holds the token until submit.
+	$effect(() => {
+		if (!turnstileLoaded || !turnstileSiteKey || !turnstileBox || widgetInto === turnstileBox) return;
+		widgetId = turnstileApi()!.render(turnstileBox, {
+			sitekey: turnstileSiteKey,
+			callback: (token) => {
+				turnstileToken = token;
+				tokenReady?.();
+				tokenReady = null;
+			}
+		});
+		widgetInto = turnstileBox;
+	});
 
 	/**
 	 * Whether an item is shown, given the answers so far. The server applies the
@@ -397,7 +462,18 @@
 			// The solve has had the whole run to finish; if this is the rare slow
 			// one, submitting stays true and the button shows the submitting state
 			// while it completes.
-			const pow = proof ? await proof : null;
+			const bot = check ? await check : null;
+			const pow = bot?.proof ?? null;
+			// The human check, when it is on, must hand over a token the server can
+			// verify. Reuse the one the widget already produced; if none has arrived
+			// yet (a submit pressed faster than the widget solves), wait briefly for
+			// the callback rather than send an empty token and be refused for it.
+			if (turnstileSiteKey && widgetId !== null && turnstileToken === null) {
+				await new Promise<void>((resolve) => {
+					tokenReady = resolve;
+					setTimeout(resolve, 5000);
+				});
+			}
 			const payloadAnswers: Record<string, boolean | number | string | string[] | null> = {};
 			const byId = new Map(instrument.items.map((i) => [i.id, i]));
 			for (const [k, v] of Object.entries(answers)) {
@@ -421,6 +497,7 @@
 					answers: payloadAnswers,
 					...(maxdiff ? { maxdiff } : {}),
 					...(pow ? { pow } : {}),
+					...(turnstileSiteKey ? { turnstileToken: turnstileToken ?? '' } : {}),
 					...(assignment ? { assignment } : {})
 				})
 			});
@@ -449,7 +526,13 @@
 		} finally {
 			// A solved challenge is spent the moment the server checks it, and it
 			// expires after two hours; a retry after any failure needs a fresh one.
-			if (!receipt && open) proof = startProofOfWork(study.slug);
+			if (!receipt && open) check = startProofOfWork(study.slug);
+			// A token the server has verified is single-use; reset the widget so a
+			// retry carries a fresh one rather than the one already spent.
+			if (turnstileSiteKey && widgetId !== null) {
+				turnstileApi()?.reset(widgetId);
+				turnstileToken = null;
+			}
 			submitting = false;
 		}
 	}
@@ -670,6 +753,13 @@
 					{/if}
 				</section>
 			{/key}
+
+			{#if onLast && turnstileSiteKey}
+				<!-- Cloudflare's human check, only while the operator has it on. The
+				     script loads on demand above; with the check off none of this exists. -->
+				<div class="turnstile" bind:this={turnstileBox}></div>
+				<p class="note">{t('research.participate.turnstile')}</p>
+			{/if}
 
 			<!-- Back and Next, pinned to the bottom of the screen on a phone. -->
 			<nav class="dock" aria-label={t('research.participate.eyebrow')}>
@@ -1244,6 +1334,11 @@
 		background: var(--accent);
 		border-color: var(--accent);
 		color: var(--accent-text);
+	}
+
+	/* Cloudflare's human check, shown above the dock only while it is switched on. */
+	.turnstile {
+		margin-top: 1.25rem;
 	}
 
 	/* The dock: Back and Next, sticky at the bottom on every screen size. */
