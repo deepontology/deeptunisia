@@ -36,7 +36,16 @@
 	let liveState = $state<'loading' | 'live' | 'closed' | 'offline'>('loading');
 	/** The status the server reports; the build-time registry until it answers. */
 	let serverStatus = $state<string | null>(null);
+	/** Whether the server is taking responses; unknown until its study read answers. */
+	let serverAccepting = $state<boolean | null>(null);
 	const liveStatus = $derived(serverStatus ?? study.status);
+	/**
+	 * Whether the study is taking responses right now. The server's own flag
+	 * once it answers, because the submission gate and the storage are its to
+	 * know and the registry status does not carry them; the declared status is
+	 * the honest fallback until then.
+	 */
+	const accepting = $derived(serverAccepting ?? liveStatus === 'fielding');
 
 	const POLL_MS = 30_000;
 
@@ -66,6 +75,7 @@
 			.then((r) => (r.ok ? r.json() : null))
 			.then((body) => {
 				if (body?.study?.status) serverStatus = body.study.status;
+				if (typeof body?.study?.accepting === 'boolean') serverAccepting = body.study.accepting;
 			})
 			.catch(() => {});
 		// Poll while the tab is visible; a hidden tab costs the Worker nothing.
@@ -506,7 +516,7 @@
 				<p class="counter-why">{t('index.counter.why')}</p>
 			{/if}
 			<p class="tagline">{t('index.tagline.one')}<br />{t('index.tagline.two')}</p>
-			{#if open}
+			{#if accepting}
 				<a class="cta" href="/research/{study.slug}/participate">
 					{floor && !published
 						? tf('index.cta.first', { N: fmt(floor.first_figure_n), n: fmt(instrument.estimatedMinutes) })
@@ -980,7 +990,7 @@
 		>
 			<div class="closing-copy">
 				<p class="closing-line">{t('index.closing.line')}</p>
-				{#if open}
+				{#if accepting}
 					<a class="cta cta-solid" href="/research/{study.slug}/participate">{tf('index.cta', { n: fmt(instrument.estimatedMinutes) })}</a>
 					<p class="closing-note mono">{t('index.closing.note')}</p>
 				{:else}

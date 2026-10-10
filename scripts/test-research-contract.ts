@@ -225,7 +225,7 @@ console.log('\n  ── instrument hash ──\n');
 	} as InstrumentDocument;
 	ok(
 		'hash: the implementation matches its pin',
-		computeInstrumentHash(pinDoc) === 'a1dc02b793939cb107eafeb63f2091052ef5ff69f0fec65935fed6bfd67dc20a'
+		computeInstrumentHash(pinDoc) === 'c6c433132a42088653815a4ac2028a28c8f36d50275e1b84945a5abc533b9969'
 	);
 
 	const doc = fixtureDoc(false);
@@ -241,6 +241,29 @@ console.log('\n  ── instrument hash ──\n');
 		computeInstrumentHash({
 			...doc,
 			items: doc.items.map((it) => (it.id === 'choice_fix' ? { ...it, response: 'multi_choice' } : it))
+		}) !== hash
+	);
+	// What the runner shows is instrument content: a module's items in the
+	// order it shows them, and a module that renders a block (MaxDiff, gap)
+	// rather than its own items.
+	ok('hash: the module item order moves the hash',
+		computeInstrumentHash({
+			...doc,
+			modules: [{ ...doc.modules[0], items: [...(doc.modules[0].items ?? [])].reverse() }]
+		}) !== hash
+	);
+	ok('hash: a module block moves the hash',
+		computeInstrumentHash({
+			...doc,
+			modules: [{ ...doc.modules[0], block: 'maxdiff_priority', items: [] }]
+		}) !== hash
+	);
+	// A text answer is capped by the item's limit, so the limit decides what
+	// the instrument accepts and not only how it reads.
+	ok('hash: a changed text limit moves the hash',
+		computeInstrumentHash({
+			...doc,
+			items: doc.items.map((it) => (it.id === 'text_fix' ? { ...it, max_chars: 80 } : it))
 		}) !== hash
 	);
 	// The generated sets are instrument content: what the respondent was shown.

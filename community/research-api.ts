@@ -171,15 +171,19 @@ function safeAnswers(raw: string): Record<string, unknown> {
 /**
  * The live response, byte for byte: a computed body, or the cached one.
  *
- * The header carries the same age the cache entry is kept for, so the browser
- * and the Worker agree on how old a figure may be before it is fetched again.
+ * The header carries the seconds the body may still be served for. An entry was
+ * computed at most LIVE_MAX_AGE_SECONDS before, so advertising the whole
+ * lifetime again would let a browser hold a figure it fetched just before the
+ * entry expired for nearly twice as long as this endpoint promises: the
+ * remaining lifetime is what is left, and never less than a second, so a body
+ * that is about to be recomputed is still usable for a moment.
  */
-const livePayload = (body: string) =>
+const livePayload = (body: string, secondsLeft = LIVE_MAX_AGE_SECONDS) =>
 	new Response(body, {
 		status: 200,
 		headers: {
 			'content-type': 'application/json; charset=utf-8',
-			'cache-control': `public, max-age=${LIVE_MAX_AGE_SECONDS}`
+			'cache-control': `public, max-age=${Math.max(1, Math.ceil(secondsLeft))}`
 		}
 	});
 
@@ -208,6 +212,40 @@ async function storeEntry(cache: LiveCache | undefined, key: string, entry: Live
 		// The next reader recomputes, exactly as every reader did before the
 		// entry existed.
 	}
+}
+
+/**
+ * The computations running right now, by cache key.
+ *
+ * Readers that miss the cache together would otherwise each read and score the
+ * whole table before the first of them stored anything, which is the burst
+ * this endpoint cannot afford. The first miss starts the work and the rest wait
+ * on its promise, so one isolate computes a payload once per key. Across
+ * instances the edge cache is what bounds it to one computation per instance
+ * per minute, exactly as it already does for the stored entry.
+ */
+const liveInFlight = new Map<string, Promise<string>>();
+
+/**
+ * The serialized payload for one cache key, computed once per burst of readers.
+ *
+ * The promise leaves the map as soon as it settles, so a reader arriving after
+ * the work is done finds the stored entry rather than a finished promise, and a
+ * computation that fails costs one recompute instead of wedging the key for the
+ * rest of the minute.
+ */
+function computeLive(key: string, compute: () => Promise<string>): Promise<string> {
+	const running = liveInFlight.get(key);
+	if (running) return running;
+	const pending = compute();
+	const release = () => {
+		if (liveInFlight.get(key) === pending) liveInFlight.delete(key);
+	};
+	// Both outcomes: a computation that fails releases its key as well, so the
+	// next reader recomputes rather than waiting on a rejected promise.
+	pending.then(release, release);
+	liveInFlight.set(key, pending);
+	return pending;
 }
 
 // ---------------------------------------------------------------------------
@@ -290,6 +328,20 @@ function isDevFielding(env: Env, study: StudySummary): boolean {
  */
 function effectiveStatus(env: Env, study: StudySummary): string {
 	return isDevFielding(env, study) ? 'fielding' : study.status;
+}
+
+/**
+ * Is this study taking responses right now?
+ *
+ * The status a page shows and the gate a respondent meets are different facts:
+ * a submission needs the study fielding, the submission gate open, and storage
+ * to put the answer in. The registry carries only the first, so a paused or
+ * unconfigured study reads as `fielding` and refuses the respondent only once
+ * every question is answered. This is the flag the survey runner and the
+ * participation links decide on instead, and it names no reason to anyone.
+ */
+function acceptingResponses(env: Env, study: StudySummary): boolean {
+	return effectiveStatus(env, study) === 'fielding' && env.RESEARCH_OPEN === '1' && env.RESEARCH_DB !== undefined;
 }
 
 /** Parse and cap the body once, for every route that takes one (contract §4). */
@@ -630,14 +682,15 @@ export async function handleResearch(
 			const instrument = instrumentFor(env.STUDIES, study);
 			if (!instrument) throw new ResearchError('no instrument is published for this study', 404);
 			// The raw entry goes back as it is, with one field replaced by the status
-			// this API acts on. findStudy and the lookup below share the same
-			// predicate, so the cast is safe, and the registry object is never
-			// modified: a copy is what goes out.
+			// this API acts on and one added for whether it is taking responses.
+			// findStudy and the lookup below share the same predicate, so the cast
+			// is safe, and the registry object is never modified: a copy is what
+			// goes out.
 			const raw = env.STUDIES.studies.find((entry) => asStudy(entry)?.slug === slug) as
 				| Record<string, unknown>
 				| undefined;
 			return json({
-				study: raw ? { ...raw, status: effectiveStatus(env, study) } : null,
+				study: raw ? { ...raw, status: effectiveStatus(env, study), accepting: acceptingResponses(env, study) } : null,
 				instrument,
 				assignment: await makeAssignment(env, study, instrument)
 			});
@@ -707,10 +760,18 @@ export async function handleResearch(
 			// A submission or a withdrawal leaves the entry alone: a figure up to
 			// a minute old is fine, and an entry a write could bust is an entry
 			// the cheapest write could use to rerun the most expensive read.
+			//
+			// Readers that miss together share the computation in flight, so a
+			// burst arriving on an expired entry costs one read, not one per
+			// reader.
 			const key = `${study.id}:${instrument.hash}`;
 			const cached = await cachedEntry(env.LIVE_CACHE, key);
-			if (cached && cached.expires_at > ctx.now) return livePayload(cached.body);
-			const body = JSON.stringify(await liveResults(env.RESEARCH_DB, study, instrument, ctx.now));
+			if (cached && cached.expires_at > ctx.now) {
+				return livePayload(cached.body, (cached.expires_at - ctx.now) / 1000);
+			}
+			const body = await computeLive(key, () =>
+				liveResults(env.RESEARCH_DB, study, instrument, ctx.now).then((payload) => JSON.stringify(payload))
+			);
 			await storeEntry(env.LIVE_CACHE, key, { body, expires_at: ctx.now + LIVE_MAX_AGE_SECONDS * 1000 });
 			return livePayload(body);
 		}
