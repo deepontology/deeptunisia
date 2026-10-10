@@ -1,0 +1,775 @@
+# daily-2026-10-10, daily dataset sweep (full mode), consolidated outbox
+#
+# Window swept: 2026-10-05T15:32:57Z to 2026-10-10 (117 new feed items). Feed
+#   refreshed 2026-10-10: 1200 archived, +123 new, 123 aged out.
+# Sources swept: African Manager, Kapitalis, Nawaat, Inkyfada. The websearch
+#   provider was retried this run and fell back to direct webfetch on the
+#   outlet URLs named in the worklist.
+# Web-verified 2026-10-10 by direct fetch: Nawaat (March of Dignity 10-05,
+#   hunger-strike video 10-06, SNJT editorial 10-07, Yakine 10-08), Inkyfada
+#   (prison deaths 10-05), African Manager (Saied audiences 10-09, Tunisia-Libya
+#   10-09, Tunisia-China 10-08, Tunisia-World Bank 10-08, Hemissi/UPAP 10-09,
+#   Chaabouni conviction 10-09, CMF/UADH 10-08), Kapitalis (CATG Guinea 10-10,
+#   R. Stahl 10-10).
+# Coverage gap: fetch-feed.ts keeps only the 10 newest items per outlet, so any
+#   outlet's 6-9 October surplus beyond the newest ten is unrecoverable through
+#   the feed. Nothing graph-relevant from that gap is known this run.
+# Entity checks requested by the worklist were re-run against data/*.yaml:
+#   UADH, CMF, Guinea, R. Stahl, Melia, ARSAM, BFSU, Yakine, Salah Hdider and
+#   Hemissi are NOT in the graph (the worklist said UADH and Guinea were;
+#   neither is). ahmed-nejib-chebbi, bensedrine, nafti, snjt, ltdh, steg,
+#   presidency, legislature, cnrd, judiciary, china, libya, world-bank,
+#   la-poste-tunisienne, conseil-superieur-education, kais-saied,
+#   brahim-bouderbala, imed-derbali, khaled-nouri, mohamed-ali-boughdiri and
+#   yassine-faria ARE.
+# FAILURE VOCABULARY (must not be collapsed):
+#   - "rendering of accounts" / "reddition des comptes" is a presidency framing
+#     relayed by African Manager; it is not an audit, a prosecution or a court
+#     finding.
+#   - the prison-death counts are not reconciled and never averaged: LTDH
+#     "more than 20", Intersection "near 30", an earlier AFP/Kapitalis count
+#     "at least 23", young-doctors' national estimate "150-200 heat deaths"
+#     (all hospital causes, not prison-only), health ministry "633 heat-related
+#     consultations" with no death toll.
+#   - the March of Dignity demand is "activation of law no. 18" as the marchers
+#     state it; no text of the law was fetched and no official response found.
+#   - the SNJT congress and the 8 September 2026 "press emergency" rest on a
+#     signed editorial by an SNJT executive member, a partisan source graded
+#     C, not on a union communiqué.
+#   - "Sofien Hemissi" (communication technologies), "Yassine Friâa"
+#     (La Poste PDG) and "Hatem Chaabouni" are press spellings; only Friâa maps
+#     to a graph person (yassine-faria, la-poste-pdg, confidence A) and that
+#     mapping is a transliteration judgement, not a sourced identity.
+#   - R. Stahl, Melia, ARSAM, BFSU, CATG, Djeneba Keita Hann, Salah Hdider and
+#     Amina Srarfi have no graph record, so their items are notes, not records.
+# Cutoff: this file carries events dated up to 2026-10-10, past the current
+#   time.cutoff (2026-10-05) in data/parameters.yaml. Whoever merges must
+#   advance the cutoff to 2026-10-10 in the same edit and update the pinned
+#   defaults in scripts/parameters.ts and scripts/test-parameters.ts. No cutoff
+#   was advanced here: proposals only.
+# CANDIDATES ARE PROPOSALS, NOT GRAPH DATA. Nothing canonical was changed;
+#   humans dispose (P4).
+
+# DISPOSITION 2026-10-10 (maintainer review): six of the seven events merged into
+#   data/events.yaml (ev-march-of-dignity, ev-prison-heat-deaths,
+#   ev-saied-carthage-audiences, ev-tunisia-libya-security,
+#   ev-tunisia-china-investment-wg, ev-tunisia-worldbank-cpf) with the seven
+#   sources they cite. ev-snjt-congress was demoted to a note: the press
+#   emergency it leans on is already recorded in ev-yousfi-detention-2026-09, and
+#   its only new content is a congress forward-dated past the research cutoff.
+#   The five C events carry basis inferred (the house mapping for a grade-C claim
+#   with no primary source). Entity gaps left open by design: UADH, the CMF, the
+#   TABC, Guinea and R. Stahl are not in the graph and were not added; each is a
+#   research task, not a merge task.
+sources:
+  - id: nawaat-marche-dignite-2026-10-05
+    title: "بعد 9 أيام مشيا على الأقدام، مسيرة الكرامة تطل على العاصمة"
+    publisher: Nawaat
+    date: 2026-10-05
+    url: https://nawaat.org/2026/10/05/%d8%a8%d8%b9%d8%af-9-%d8%a3%d9%8a%d8%a7%d9%85-%d9%85%d8%b4%d9%8a%d8%a7-%d8%b9%d9%84%d9%89-%d8%a7%d9%84%d8%a3%d9%82%d8%af%d8%a7%d9%85%d8%8c-%d9%85%d8%b3%d9%8a%d8%b1%d8%a9-%d8%a7%d9%84%d9%83%d8%b1%d8%a7/
+    tier: 3
+    lang: ar
+    excerpt: >-
+      تواصل مسيرة الكرامة لحاملي الشهادات المعطلين عن العمل طريقها نحو العاصمة،
+      بعد انطلاقها يوم 27 سبتمبر من منزل بوزيان بسيدي بوزيد للمطالبة بتفعيل
+      القانون عدد 18 القاضي بتشغيلهم. وبعد قضاء ليلة في قرمبالية، استأنف
+      المشاركون صباح 5 اكتوبر مسيرهم قبل التوقف مساء في منطقة برج السدرية على
+      تخوم العاصمة للتشاور حول مواصلة الطريق نحو قصر قرطاج.
+    note: >-
+      Video report by Malek Ben Dekhil, reviewed by Aymen Rezgui and Chaker
+      Jahmi. Names no organising body or leader.
+
+  - id: inkyfada-prisons-deces-chaleur-2026-10-05
+    title: "Décès dans les prisons durant l'été 2026 : chaleur record et opacité sur les causes"
+    publisher: Inkyfada
+    date: 2026-10-05
+    url: https://inkyfada.com/fr/2026/10/05/deces-dans-les-prisons-durant-lete-2026/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      En juillet et août 2026, la Tunisie a connu des températures record ...
+      Selon la Ligue tunisienne des droits de l'Homme, plus de 20 décès liés à
+      la hausse des températures ont été recensés, tandis que le juge
+      d'instruction du 11ème bureau du tribunal de première instance de Tunis
+      s'est saisi de 16 dossiers à ce sujet ... le nombre approximatif de décès
+      suspects dans les prisons tunisiennes s'élève à près de 30 cas, dont la
+      plupart à la prison de Mornaguia ... les autorités restent silencieuses sur
+      le bilan officiel des décès.
+    note: >-
+      Reportage by Jihen Nasri, collaboration Manel Lassoued. Names families,
+      lawyers and NGOs; cause of each death not medically established and
+      forensic reports withheld.
+
+  - id: nawaat-snjt-congres-2026-10-07
+    title: "حتى تبقى أسوار نقابة الصحفيين عالية عصيّة"
+    publisher: Nawaat
+    date: 2026-10-07
+    url: https://nawaat.org/2026/10/07/%d8%ad%d8%aa%d9%89-%d8%aa%d8%a8%d9%82%d9%89-%d8%a3%d8%b3%d9%88%d8%a7%d8%b1-%d9%86%d9%82%d8%a7%d8%a8%d8%a9-%d8%a7%d9%84%d8%b5%d8%ad%d9%81%d9%8a%d9%8a%d9%86-%d8%b9%d8%a7%d9%84%d9%8a%d8%a9-%d8%b9%d8%b5/
+    tier: 4
+    lang: ar
+    excerpt: >-
+      تعقد النقابة الوطنية للصحفيين التونسيين يومي 10 و 11 أكتوبر 2026 مؤتمرها
+      السابع كنقابة حرة مستقلة منذ مؤتمرها التأسيسي في 2008 ... بإعلان النقابة
+      الوطنية يوم 8 سبتمبر الماضي حالة الطوارئ الصحفية، بعد الزج بالصحفي محمد
+      اليوسفي في السجن، ليلتحق بزملائه منخرطي النقابة خلف القضبان زياد الهاني
+      ومراد الزغيدي إضافة إلى الإعلامي برهان بسيس.
+    note: >-
+      Signed editorial (افتتاحية) by Aymen Rezgui, SNJT executive member from
+      2011 to 2014. Opinion, not reporting; partisan source graded C.
+
+  - id: african-manager-saied-reddition-comptes-2026-10-09
+    title: "Saïed : Rendre des comptes, une « revendication légitime »"
+    publisher: African Manager
+    date: 2026-10-09
+    url: https://africanmanager.com/le-president-saied-la-reddition-des-comptes-une-revendication-legitime/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      Le président de la République, Kaïs Saïed, a reçu, jeudi, 8 octobre
+      courant, au palais de Carthage, le président de l'Assemblée des
+      représentants du peuple (ARP), Brahim Bouderbala, et le président du
+      Conseil national des régions et des districts (CNRD), Imed Derbali ...
+      le caractère légitime de la reddition des comptes, loin de toute forme de
+      règlement de comptes ... toute la vérité sera dévoilée, sans nulle
+      immunité ou exception pour qui que ce soit.
+    note: "Relays a presidency communiqué; no independent confirm."
+
+  - id: african-manager-saied-egalite-chances-2026-10-09
+    title: "Le président Saïed appelle à l'égalité des chances"
+    publisher: African Manager
+    date: 2026-10-09
+    url: https://africanmanager.com/education-nationale-le-president-saied-appelle-a-legalite-des-chances-pour-tous/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      Le président de la République, Kaïs Saïed, a reçu, jeudi, 8 octobre
+      courant, au palais de Carthage, la ministre des Affaires culturelles,
+      Amina Srarfi, et le secrétaire général du Conseil supérieur de l'éducation
+      et de l'enseignement, Mohamed Ali Boughdiri ... l'éducation et
+      l'enseignement sont partie intégrante de la sécurité nationale ...
+      instaurer un système éducatif national garantissant l'égalité pour tous.
+    note: "Relays a presidency communiqué."
+
+  - id: african-manager-tunisie-libye-securitaire-2026-10-09
+    title: "Tunisie-Libye: La coopération sécuritaire à l'examen"
+    publisher: African Manager
+    date: 2026-10-09
+    url: https://africanmanager.com/tunisie-libye-la-cooperation-securitaire-a-lexamen/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      Le ministre de l'Intérieur, Khaled Nouri, et son homologue libyen, le
+      général de division Imad Mustafa Trabelsi, ont affirmé jeudi, à Tripoli,
+      la volonté commune de renforcer davantage la coopération sécuritaire et de
+      la hisser à des niveaux supérieurs ... les moyens de faciliter le passage
+      aux frontières et la circulation des voyageurs.
+    note: "Relays the Tunisian interior ministry communiqué."
+
+  - id: african-manager-tunisie-chine-investissement-2026-10-08
+    title: "Tunisie-Chine : vers l'accélération de la mise en œuvre d'un groupe de travail pour booster les investissements chinois en Tunisie"
+    publisher: African Manager
+    date: 2026-10-08
+    url: https://africanmanager.com/tunisie-chine-vers-lacceleration-de-la-mise-en-oeuvre-dun-groupe-de-travail-pour-booster-les-investissements-chinois-en-tunisie/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      Le ministre de l'Économie et de la Planification, Samir Abdelhafidh, et
+      l'ambassadeur de Chine en Tunisie, Wan Li, ont souligné la nécessité
+      d'accélérer la mise en œuvre du mémorandum d'entente relatif à
+      l'instauration d'un groupe de travail conjoint chargé d'examiner les
+      moyens de booster les investissements chinois en Tunisie.
+    note: "Relays an economy and planning ministry communiqué."
+
+  - id: african-manager-tunisie-bm-cpp-2026-10-08
+    title: "Tunisie-BM : vers une accélération des projets financés"
+    publisher: African Manager
+    date: 2026-10-08
+    url: https://africanmanager.com/tunisie-banque-mondiale-vers-un-renforcement-de-la-cooperation-et-une-acceleration-des-projets-finances/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      Le renforcement de la coopération entre la Tunisie et le Groupe de la
+      Banque mondiale (BM) ... ont été au centre d'une rencontre tenue mercredi
+      entre le ministre de l'Économie et de la Planification, Samir
+      Abdelhafidh, et le nouveau directeur du bureau du Groupe de la BM en
+      Tunisie, Alex Kremer ... dans le cadre du futur « Cadre de partenariat
+      pays » (CPP), actuellement en cours d'élaboration.
+    note: "Relays an economy and planning ministry communiqué."
+
+  - id: kapitalis-catg-guinee-2026-10-10
+    title: "Conakry | Création d'un Conseil d'affaires tuniso-guinéen"
+    publisher: Kapitalis
+    date: 2026-10-10
+    url: https://kapitalis.com/tunisie/2026/10/10/conakry-creation-dun-conseil-daffaires-tuniso-guineen/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      En marge de la mission économique multisectorielle qu'il conduit en
+      Guinée, du 6 au 11 octobre 2026, le Tunisia Africa Business Council
+      (TABC) a annoncé, le 9 octobre à Conakry, la création du Conseil
+      d'affaires tuniso-guinéen (CATG) ... Le CATG, présidé par Djeneba Keita
+      Hann, compte plusieurs opérateurs économiques guinéens ... notamment
+      Simandou 2040.
+    note: >-
+      Note-only source: CATG, TABC, Guinea and Djeneba Keita Hann are all absent
+      from the graph, so no record is proposed.
+
+  - id: kapitalis-r-stahl-2026-10-10
+    title: "R. Stahl ouvre un bureau à Tunis"
+    publisher: Kapitalis
+    date: 2026-10-10
+    url: https://kapitalis.com/tunisie/2026/10/10/r-stahl-ouvre-un-bureau-a-tunis/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      R. Stahl, groupe spécialisé dans la protection antidéflagrante, ouvre son
+      bureau tunisien à l'IQ Smart Building & Business Center, Boulevard Qualité
+      de la Vie, Le Kram, Tunis. Le bureau sera inauguré au cours d'une
+      cérémonie officielle le lundi 12 octobre 2026 ... en présence de Tobias
+      Popp, vice-président et directeur commercial du groupe qui compte des
+      filiales dans 20 pays.
+    note: >-
+      Note-only source: R. Stahl and AHK Tunisie have no graph record; the
+      consolidated 2025 revenue of €313.0m (down 9.1% on 2024's €344.1m) is a
+      company figure reported by one outlet.
+
+  - id: african-manager-cmf-uadh-2026-10-08
+    title: "CMF : Plainte pour fuite des états financiers d'UADH"
+    publisher: African Manager
+    date: 2026-10-08
+    url: https://africanmanager.com/le-cmf-saisit-la-justice-apres-la-diffusion-prematuree-des-etats-financiers-duadh/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      Le Conseil du Marché Financier (CMF) a saisi le ministère public près le
+      Tribunal de première instance de Tunis à la suite de la diffusion non
+      autorisée, sur la page « InfoBourse TN », des états financiers de la
+      société cotée Universal Auto Distributors Holding (UADH) avant leur
+      publication officielle ... une fuite susceptible de constituer une
+      infraction pénale au sens de l'article 81 de la loi n° 94-117 du
+      14 novembre 1994.
+    note: >-
+      Note-only source: UADH and the CMF have no graph record (re-checked this
+      run), so no regulatory event can be proposed.
+
+  - id: african-manager-hemissi-upap-2026-10-09
+    title: "Hemissi s'entretient de la coopération avec l'UAPAP"
+    publisher: African Manager
+    date: 2026-10-09
+    url: https://africanmanager.com/le-ministre-des-technologies-de-la-communication-sentretient-avec-le-sg-de-lunion-panafricaine-des-postes/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      Le ministre des Technologies de la communication, Sofien Hemissi, s'est
+      entretenu jeudi soir, au siège du ministère, avec le secrétaire général de
+      l'Union panafricaine des postes (UPAP), Sifundo Chief Moyo ... Ont pris
+      part à cette rencontre, le PDG de la Poste tunisienne, Yassine Friâa.
+    note: >-
+      Note-only source: the ministry, Hemissi and the UPAP have no graph
+      record; la-poste-tunisienne does. "Yassine Friâa" matches the graph's
+      la-poste-pdg holder yassine-faria (confidence A, from 2026-04-27).
+
+  - id: african-manager-chaabouni-15-ans-2026-10-09
+    title: "Crédits sans garanties : 15 ans de prison contre un homme d'affaires"
+    publisher: African Manager
+    date: 2026-10-09
+    url: https://africanmanager.com/credits-sans-garanties-15-ans-de-prison-contre-un-homme-daffaires/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      La chambre criminelle spécialisée dans les affaires de corruption
+      financière près le tribunal de première instance de Tunis a condamné, tard
+      dans la nuit du jeudi, l'homme d'affaires Hatem Chaabouni à 15 ans de
+      prison. Des peines de 11 ans d'emprisonnement ont également été
+      prononcées à l'encontre de plusieurs cadres d'une banque publique ...
+      Hatem Chaabouni [avait été remis] en liberté sous caution, moyennant une
+      garantie financière de 60 millions de dinars, selon mosaique fm.
+    note: >-
+      Note-only source: Hatem Chaabouni has no graph record and the public bank
+      is unnamed, so no event can reference him; the mosaic.fm bail figure is a
+      second-hand quote inside this piece.
+
+  - id: nawaat-yakine-2026-10-08
+    title: "Violences sexuelles en Tunisie: Ce que révèle l'affaire Yakine"
+    publisher: Nawaat
+    date: 2026-10-08
+    url: https://nawaat.org/2026/10/08/violences-sexuelles-en-tunisie-ce-que-revele-laffaire-yakine/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      Hospitalisée après un viol collectif présumé à Mellassine, l'adolescente
+      est déjà jugée sur les réseaux ... L'étude d'Aswat Nissa intitulée « Les
+      violences sexuelles en Tunisie : droit, mobilisation et lutte pour la
+      justice », publiée en mars 2026, a analysé plus de 1000 de ces
+      témoignages. 34,5 % relèvent du harcèlement, 19,3 % de l'inceste, 19,3 %
+      du viol et 12,6 % de rapports conjugaux non consentis.
+    note: >-
+      Note-only source: the victim is a minor with no record (and should not
+      get one); ATFD is in the graph, Aswat Nissa and its March 2026 study are
+      not.
+
+  - id: nawaat-chebbi-1969-2026-10-06
+    title: "نواة في دقيقة: إضراب الجوع الرياضة الأولى في تونس"
+    publisher: Nawaat
+    date: 2026-10-06
+    url: https://nawaat.org/2026/10/06/%d9%86%d9%88%d8%a7%d8%a9-%d9%81%d9%8a-%d8%af%d9%82%d9%8a%d9%82%d8%a9-%d8%a5%d8%b6%d8%b1%d8%a7%d8%a8-%d8%a7%d9%84%d8%ac%d9%88%d8%b9-%d8%a7%d9%84%d8%b1%d9%8a%d8%a7%d8%b6%d8%a9-%d8%a7%d9%84%d8%a3%d9%88/
+    tier: 4
+    lang: ar
+    excerpt: >-
+      أكثر من نصف قرن تفصل بين أول إضراب جوع خاضه نجيب الشابي سنة 1969 وإضرابه
+      الأخير داخل السجن. وبينهما، حمل معارضون ومعتقلون آخرون السلاح نفسه:
+      معتقلو قضية التآمر وأسطول الصمود وغيرهم.
+    note: >-
+      One-minute video commentary; corroborates the Chebbi hunger strike and
+      adds the 1969 first-strike detail. No new fact beyond the graph's
+      ev-chebbi-hunger-strike-2026-10-01.
+
+events:
+  - id: ev-march-of-dignity-2026-10-05
+    date: "2026-09-27"
+    date_end: "2026-10-05"
+    title_en: "March of Dignity: unemployed graduates walk to Tunis for law 18"
+    title_fr: "Marche de la Dignité : les diplômés chômeurs marchent vers Tunis pour la loi 18"
+    title_ar: "مسيرة الكرامة: حاملو الشهادات المعطلون عن العمل يسيرون نحو العاصمة"
+    category: protest
+    subcategory: employment
+    location: [gov-sidi-bouzid, gov-tunis]
+    actors: []
+    institutions: []
+    causes: []
+    consequences: []
+    summary: >-
+      The March of Dignity (مسيرة الكرامة) of unemployed higher-education
+      graduates set off on 27 September 2026 from Menzel Bouzaiane, Sidi Bouzid,
+      to demand activation of law no. 18 on their employment. It reached the
+      edge of the capital on 5 October 2026: after a night in Grombalia the
+      marchers resumed in the morning and stopped in the evening at Borj Cedria,
+      on the capital's outskirts, to decide whether to continue to the Carthage
+      Palace. Nawaat reported the march on 5 October 2026, its ninth day. The
+      report names no organising body and no leader. Nothing links it to the
+      Nafas collective (see ev-nafas-protest-2026-08-20), whose August march was
+      a broad anti-government mobilisation; this one is a graduates' employment
+      march.
+    confidence: C
+    basis: reported
+    verification: needs-primary-source
+    attributed_to: "Nawaat (5 October 2026)"
+    reasoning: >-
+      Single outlet, and the piece is a short video report; the start date,
+      route and demand are as Nawaat states them. The marchers are a collective
+      of unemployed graduates with no graph entity, so no actor or institution
+      is attributed and the record rests on the outlet alone.
+    falsifiable_by: >-
+      The march's own communiqués, an Interior Ministry statement, or a second
+      outlet's account would confirm or correct the 27 September start, the
+      route and the law-18 demand; a report that the march was rerouted or
+      called off would correct it.
+    sources:
+      - nawaat-marche-dignite-2026-10-05
+
+  - id: ev-prison-heat-deaths-2026-summer
+    date: "2026-07-01"
+    date_end: "2026-08-31"
+    title_en: "Summer 2026 prison deaths: record heat and opacity on the causes"
+    title_fr: "Décès dans les prisons à l'été 2026 : chaleur record et opacité sur les causes"
+    title_ar: "وفيات السجون في صيف 2026: حرارة قياسية وغموض حول الأسباب"
+    category: legal
+    subcategory: detention-death
+    actors: []
+    institutions: [ltdh, ministry-health, steg]
+    summary: >-
+      In July and August 2026 Tunisia recorded record heat (up to 50°C in places;
+      July 2026 ranked second-hottest July since 1950; Kairouan hit 49.8°C on
+      26 July), and Inkyfada reported on 5 October 2026 that prisons recorded
+      deaths and health deterioration tied to heat, electricity cuts,
+      overcrowding and gaps in medical care. Named cases include Sami Arbi
+      Ayadi, 52, held at Mornaguia in a bank-offence case, who died around
+      28 August 2026 after a transfer to Charles-Nicolle hospital per his sister
+      Faten Ayadi; a Gafsa prison detainee whose death from cardiac arrest the
+      LTDH Gafsa section announced on 26 August, its president Afef Zarrouk
+      putting the prison at about 200% occupancy (around 700 for a capacity
+      under 400); Hamza Dridi, 33, who died on 22 July after more than a year and
+      nine months in detention without a ruling, per the association
+      Intersection; and Mohamed Ali Ben Khemis, 31, who died on 26 August at
+      Mornaguia, his family saying he had been treated at Razi hospital and
+      reporting suspected violence marks, with no forensic report obtained. The
+      Tunisian young doctors' organisation said on 29 August that deaths and
+      emergency admissions from heat stroke were up "unprecedentedly"; its
+      president Wajih Dhakar gave a 150-200 national heat-death estimate on
+      23 July from more than 30 hospitals; the health ministry counted 633
+      heat-related consultations between 1 July and 29 August but published no
+      death toll. The LTDH counted more than 20 heat-linked deaths and said the
+      investigating judge of the 11th bureau of the Tunis Court of First
+      Instance had taken up 16 files; Intersection's Ghaylen Jlassi put
+      suspicious deaths near 30, mostly at Mornaguia, plus Monastir, Gabès and
+      Sfax. LTDH president Bassem Trifi said some facilities exceeded 300%
+      occupancy and likened the conditions to cruel and humiliating treatment
+      meeting the definition of torture. An earlier AFP/Kapitalis report of
+      13 September said at least 23 prisoners had died and that the authorities
+      answered that no prison death could be attributed to heat without forensic
+      confirmation, while publishing no figure. Families reported delayed
+      notification and withheld forensic reports; the Directorate-General of
+      Prisons and the Justice Ministry are described as silent. STEG's Faycel
+      Tarifa attributed the cuts to air-conditioning load; President Saïed said
+      the cuts were deliberate attacks (see ev-sabotage-declaration-2026-08-26).
+      The counts are kept as reported and never averaged.
+    confidence: B
+    basis: reported
+    verification: needs-primary-source
+    contested:
+      - framing: "More than 20 to 30 prison deaths are linked to the summer heat, overcrowding and power cuts"
+        held_by: "LTDH, Intersection pour les droits et les libertés, the Tunisian young doctors' organisation and OMCT (relayed by Inkyfada)"
+        source: inkyfada-prisons-deces-chaleur-2026-10-05
+      - framing: "No prison death can be attributed to the heat without forensic confirmation; no official figure is published"
+        held_by: "Tunisian authorities (prison administration and Justice Ministry), as reported"
+        source: kapitalis-prisons-deces-chaleur-2026-09-13
+    falsifiable_by: >-
+      The forensic and judicial files (the 16 cases before the 11th bureau), an
+      official death toll, or the prison administration's records would confirm
+      or correct the counts and the causes of each death.
+    sources:
+      - inkyfada-prisons-deces-chaleur-2026-10-05
+      - kapitalis-prisons-deces-chaleur-2026-09-13
+
+  - id: ev-snjt-congress-2026-10-10
+    date: "2026-10-10"
+    date_end: "2026-10-11"
+    title_en: "SNJT holds its 7th congress amid a declared press emergency"
+    title_fr: "La SNJT tient son 7e congrès sous état d'urgence journalistique"
+    title_ar: "النقابة الوطنية للصحفيين التونسيين تعقد مؤتمرها السابع"
+    category: political
+    subcategory: union-affairs
+    actors: []
+    institutions: [snjt]
+    summary: >-
+      The National Union of Tunisian Journalists (SNJT) holds its 7th congress
+      on 10-11 October 2026, its gathering as a free independent union since the
+      2008 founding congress. A Nawaat editorial of 7 October 2026 by executive
+      member Aymen Rezgui frames it: the union declared a "press emergency" on
+      8 September 2026 after the jailing of journalist Mohamed Yousfi, joining
+      imprisoned members Zied El Heni and Mourad Zghidi and media figure Borhane
+      Bssais; other journalists are between hiding and exile. The editorial calls
+      for honorary union presidency for the imprisoned founding member Zied El
+      Heni and for a new committee on imprisoned and prosecuted journalists, and
+      notes 15 candidates for the executive bureau. It also mentions the police
+      abduction of Nawaat's young "نواة" team days earlier.
+    confidence: C
+    basis: reported
+    verification: needs-primary-source
+    attributed_to: "Aymen Rezgui, SNJT executive member, in a signed Nawaat editorial (7 October 2026)"
+    reasoning: >-
+      The congress date and the 8 September press-emergency declaration are
+      stated in a signed editorial by an SNJT executive member. It is a partisan
+      source, so the record states them with attribution and at grade C rather
+      than B. The union's own communiqués would raise the grade.
+    falsifiable_by: >-
+      SNJT communiqués or congress minutes, or a second outlet's report, would
+      confirm the congress dates and the press-emergency declaration and correct
+      the details.
+    sources:
+      - nawaat-snjt-congres-2026-10-07
+
+  - id: ev-saied-carthage-audiences-2026-10-08
+    date: "2026-10-08"
+    title_en: "Saïed holds Carthage audiences; calls accountability a 'legitimate demand'"
+    title_fr: "Saïed reçoit au palais de Carthage ; la reddition des comptes, une « revendication légitime »"
+    title_ar: "سعيد يستقبل في قصر قرطاج ويعتبر المحاسبة «مطلبًا مشروعًا»"
+    category: political
+    subcategory: presidential-declaration
+    actors: [kais-saied, brahim-bouderbala, imed-derbali, mohamed-ali-boughdiri]
+    institutions: [presidency, legislature, cnrd, conseil-superieur-education]
+    summary: >-
+      President Kaïs Saïed received at the Carthage Palace on Thursday
+      8 October 2026 the ARP speaker Brahim Bouderbala and the CNRD president
+      Imed Derbali, and separately the culture minister Amina Srarfi with
+      Mohamed Ali Boughdiri, secretary-general of the Higher Council of
+      Education and Teaching, ahead of the council's inaugural session. Per the
+      presidency communiqué relayed by African Manager, Saïed said the obstacles
+      to the state's work were many, "habitual or provoked", and that
+      accountability was a "legitimate demand" distinct from score-settling,
+      that "all the truth will be revealed, with no immunity or exception for
+      anyone", and that Tunisia was passing through "historic moments". On
+      education he said the council's constitutional inscription flowed from the
+      conviction that education and teaching are part of national security,
+      called for a system guaranteeing equality for all and for cultural clubs
+      and school transport, meals, lodging, clothing and supplies, and called
+      past reform attempts "biased manoeuvres". Amina Srarfi has no graph
+      record and is named but not an actor.
+    confidence: C
+    basis: reported
+    verification: needs-primary-source
+    attributed_to: "Presidency of the Republic communiqués, as relayed by African Manager (9 October 2026)"
+    reasoning: >-
+      One outlet relaying the presidency's own communiqués for two audiences the
+      same day; the quotes are as African Manager prints them. Grade C with
+      attribution, matching the graph's treatment of other
+      presidential-declaration records (see ev-sabotage-declaration-2026-08-26).
+    falsifiable_by: >-
+      The presidency's own communiqués or a second outlet's account would
+      confirm the audiences, the participants and the wording.
+    sources:
+      - african-manager-saied-reddition-comptes-2026-10-09
+      - african-manager-saied-egalite-chances-2026-10-09
+
+  - id: ev-tunisia-libya-security-2026-10-08
+    date: "2026-10-08"
+    title_en: "Interior Minister Nouri in Tripoli for security cooperation"
+    title_fr: "Le ministre de l'Intérieur Nouri à Tripoli pour la coopération sécuritaire"
+    title_ar: "وزير الداخلية خالد النوري في طرابلس لبحث التعاون الأمني"
+    category: political
+    subcategory: foreign-relations
+    actors: [khaled-nouri]
+    institutions: [ministry-interior, libya]
+    summary: >-
+      Interior Minister Khaled Nouri met his Libyan counterpart, Major General
+      Imad Mustafa Trabelsi, in Tripoli on Thursday 8 October 2026, on an
+      official visit, per the interior ministry communiqué relayed by African
+      Manager. The two ministers affirmed the will to raise security cooperation
+      further and discussed facilitating border crossings and the movement of
+      travellers and strengthening coordination mechanisms between the two
+      countries' security services. Trabelsi has no person record, so he is
+      named here but not an actor.
+    confidence: C
+    basis: reported
+    verification: needs-primary-source
+    attributed_to: "Tunisian interior ministry communiqué, as relayed by African Manager (9 October 2026)"
+    falsifiable_by: >-
+      The interior ministry communiqué, the Libyan interior ministry, or a
+      second outlet would confirm the visit and its content.
+    sources:
+      - african-manager-tunisie-libye-securitaire-2026-10-09
+
+  - id: ev-tunisia-china-investment-wg-2026-10-08
+    date: "2026-10-08"
+    title_en: "Tunisia and China move to activate the Chinese-investment working group"
+    title_fr: "Tunisie-Chine : accélérer le groupe de travail sur les investissements chinois"
+    title_ar: "تونس والصين: تسريع تفعيل فريق العمل الخاص بالاستثمارات الصينية"
+    category: political
+    subcategory: foreign-relations
+    actors: []
+    institutions: [china]
+    summary: >-
+      Economy and Planning Minister Samir Abdelhafidh and China's ambassador to
+      Tunisia, Wan Li, stressed the need to accelerate implementation of the
+      memorandum of understanding creating a joint working group to boost
+      Chinese investment in Tunisia, at a meeting on Wednesday 8 October 2026
+      per an economy and planning ministry communiqué relayed by African Manager
+      on 9 October. They reviewed bilateral economic cooperation and upcoming
+      events, in particular the Sino-African Forum, and the need to speed up
+      some ongoing projects. Neither the minister nor the ambassador has a graph
+      record, so they are named in the summary but not as actors.
+    confidence: C
+    basis: reported
+    verification: needs-primary-source
+    attributed_to: "Tunisian economy and planning ministry communiqué, as relayed by African Manager (9 October 2026)"
+    falsifiable_by: >-
+      The ministry communiqué or the Chinese embassy would confirm the meeting;
+      the MoU text would confirm the working group's terms.
+    sources:
+      - african-manager-tunisie-chine-investissement-2026-10-08
+
+  - id: ev-tunisia-worldbank-cpf-2026-10-08
+    date: "2026-10-08"
+    title_en: "World Bank's new Tunisia director meets the economy minister"
+    title_fr: "Le nouveau directeur de la Banque mondiale en Tunisie reçu par le ministre de l'Économie"
+    title_ar: "المدير الجديد لمكتب البنك العالمي بتونس يلتقي وزير الاقتصاد"
+    category: political
+    subcategory: foreign-relations
+    actors: []
+    institutions: [world-bank]
+    summary: >-
+      Economy and Planning Minister Samir Abdelhafidh met the new director of
+      the World Bank Group office in Tunisia, Alex Kremer, on Wednesday
+      8 October 2026, per an economy and planning ministry communiqué relayed by
+      African Manager on 8 October. Kremer said he wanted to intensify
+      coordination within the future Country Partnership Framework (CPP) under
+      preparation and reaffirmed the Bank's will to support Tunisia's reforms;
+      Abdelhafidh called for diversifying cooperation and accelerating
+      Bank-financed projects. Kremer supervises the Bank Group's Tunisia
+      institutions (IBRD, IFC and MIGA). The current CPP covers 2023-2027, with
+      priorities of quality jobs, human capital, climate resilience and
+      ecological transition. Neither man has a graph record, so they are named
+      but not actors.
+    confidence: C
+    basis: reported
+    verification: needs-primary-source
+    attributed_to: "Tunisian economy and planning ministry communiqué, as relayed by African Manager (8 October 2026)"
+    falsifiable_by: >-
+      The ministry communiqué, the World Bank office, or a second outlet would
+      confirm the meeting; the CPP document would confirm its content.
+    sources:
+      - african-manager-tunisie-bm-cpp-2026-10-08
+
+notes:
+  - >-
+    Research backlog, priority 1 — prison heat deaths, now recordable: the
+    5 October Inkyfada investigation gives ev-prison-heat-deaths-2026-summer
+    the bodies the 2026-09-25 sweep lacked. It supersedes the note-only lead
+    that rested on kapitalis-prisons-deces-chaleur-2026-09-13 (canonical source,
+    13 September, AFP relay, "at least 23" deaths). Entities absent and needed
+    as ids if a fuller record is wanted: Intersection pour les droits et les
+    libertés, OMCT, Organisation tunisienne des jeunes médecins, Razi hospital,
+    the Directorate-General of Prisons, and a Justice Ministry institution
+    (only ministry-defence, ministry-interior, ministry-finance, ministry-health,
+    ministry-religious-affairs and ministry-equipment-housing exist). Named
+    persons without records: Sami Arbi Ayadi, Hamza Dridi, Mohamed Ali Ben
+    Khemis, Afef Zarrouk, Ghaylen Jlassi, Wajih Dhakar, Faycel Tarifa, Faten
+    Ayadi, Soukaina Jomni. Sources: inkyfada-prisons-deces-chaleur-2026-10-05,
+    kapitalis-prisons-deces-chaleur-2026-09-13.
+  - >-
+    Research backlog, priority 2 — Hatem Chaabouni: businessman sentenced to
+    15 years' firm imprisonment, with 11-year terms against several cadres of an
+    unnamed public bank and heavy fines, by the criminal chamber specialised in
+    financial corruption near the Tunis Court of First Instance, late on
+    Thursday 8 October 2026 (reported 9 October). The case concerns financial
+    corruption and bank credits granted without the legally required guarantees,
+    causing large losses to the public bank. He had earlier been released on
+    bail with a 60-million-dinar guarantee, according to Mosaique FM as quoted
+    in the piece. Chaabouni has no person record and the bank is not named, so
+    no event can be proposed. Source:
+    african-manager-chaabouni-15-ans-2026-10-09.
+  - >-
+    Research backlog, priority 3 — CMF complaint over UADH statements: the
+    Conseil du Marché Financier referred to the Tunis public prosecutor the
+    unauthorised diffusion, on the page "InfoBourse TN", of the financial
+    statements of the listed company Universal Auto Distributors Holding (UADH)
+    before CMF's mandatory prior review and official-bulletin publication,
+    invoking article 81 of law 94-117 of 14 November 1994 and asking for an
+    inquiry to identify the leaker. UADH management said it had sent the
+    statements to shareholders for its ordinary general meeting and did not know
+    who published them (communiqué made public Wednesday 7 October 2026,
+    reported 8 October). Correction to the worklist: neither UADH nor the CMF
+    exists in the graph (rg found only the substring in "Mouadh"), so this is a
+    note, not a NEW RECORD or a CORRECTS. Creating a company record for UADH
+    would need a legal form, capital and RCC number first. Source:
+    african-manager-cmf-uadh-2026-10-08.
+  - >-
+    Research backlog, priority 4 — Tunisian-Guinean business council (CATG):
+    TABC announced in Conakry on 9 October 2026, during its 6-11 October Guinea
+    mission, the creation of the Conseil d'affaires tuniso-guinéen, presided by
+    Djeneba Keita Hann and intended as a standing framework for trade,
+    investment and joint projects, with reference to Guinea's Simandou 2040
+    programme. This is the outcome of the mission flagged in the 2026-10-05
+    sweep's note (kapitalis-tabc-guinee-2026-10-05). TABC, Guinea, the CATG and
+    Djeneba Keita Hann are all absent from the graph — contrary to the worklist,
+    Guinea is not a country entity (countries.yaml only carries the Natural
+    Earth code list, and no institution id matches Guinea/Conakry) — so no
+    record is proposed. First create the TABC and Guinea entities, then the
+    council as a relationship or institution. Source:
+    kapitalis-catg-guinee-2026-10-10.
+  - >-
+    Research backlog, priority 5 — R. Stahl: the German explosion-protection
+    group opens a Tunisian office at the IQ Smart Building & Business Center,
+    Boulevard Qualité de la Vie, Le Kram, Tunis, inaugurated on Monday
+    12 October 2026 in the presence of vice-president and commercial director
+    Tobias Popp, and signs an adhesion agreement with the Tunisian-German
+    Chamber of Industry and Commerce (AHK Tunisie); it plans a software
+    development hub (SaaS) and later a shared-services centre. Reported
+    consolidated 2025 revenue of R. Stahl AG: €313.0m (71.5m in Germany), down
+    9.1% on 2024's €344.1m. R. Stahl and AHK Tunisie have no graph record, so
+    this is a note; the company figures are one outlet's report. Source:
+    kapitalis-r-stahl-2026-10-10.
+  - >-
+    Research backlog, priority 6 — communication technologies and the
+    pan-African postal union: Minister Sofien Hemissi met the secretary-general
+    of the Union panafricaine des postes (UPAP), Sifundo Chief Moyo, at the
+    ministry on the evening of Thursday 8 October 2026, around World Post Day
+    (9 October), on training, capacity-building, African e-commerce and digital
+    financial services; La Poste Tunisienne PDG Yassine Friâa attended. The
+    ministry, Hemissi, the UPAP and Moyo have no graph record, so this is a
+    note; la-poste-tunisienne does exist. Corroboration, not a correction: the
+    press spelling "Yassine Friâa" is the graph's la-poste-pdg holder
+    yassine-faria (confidence A, in post from 2026-04-27). Source:
+    african-manager-hemissi-upap-2026-10-09.
+  - >-
+    Research backlog, priority 7 — "affaire Yakine" and sexual violence: a
+    Nawaat piece of 8 October 2026 reports an adolescent hospitalised after an
+    alleged gang rape in Mellassine and the online "trial" of the victim, and
+    marshals an Aswat Nissa study of March 2026 ("Les violences sexuelles en
+    Tunisie : droit, mobilisation et lutte pour la justice") analysing more than
+    1000 testimonials (34.5% harassment, 19.3% incest, 19.3% rape, 12.6%
+    non-consensual marital relations); it sets out gaps in law 2017-58
+    (prevention spending at 0.27% of public spending, protection orders at 0.5%
+    of judicial decisions, the national observatory created only in February
+    2020, missing decrees) and nine cassation rulings from 2016-2024, including
+    the 1 October 2024 ruling recognising marital rape. The victim is a minor
+    and must not get a record; ATFD is in the graph but Aswat Nissa and its
+    study are not, so this is a note. A related Kapitalis item, "Justice | Du
+    nouveau dans l'affaire du viol de Mellassine" (9 October), is a lead not
+    fetched. Source: nawaat-yakine-2026-10-08.
+  - >-
+    Research backlog, priority 8 — Chebbi's 1969 first hunger strike: a Nawaat
+    one-minute video of 6 October 2026 says more than half a century separates
+    the first hunger strike of Néjib Chebbi in 1969 from his current one in
+    prison, and frames the conspiracy-case and Sumud detainees as taking up the
+    same weapon. It corroborates ev-chebbi-hunger-strike-2026-10-01 and adds a
+    biographical detail (1969) to ahmed-nejib-chebbi that the record does not
+    carry; suggest a patch to the person's summary if a second source for 1969
+    is found. Source: nawaat-chebbi-1969-2026-10-06.
+  - >-
+    Economic and sectoral leads, no record this pass (single outlet, absent
+    entity, or routine): "Le leader ARSAM renforce ses investissements en
+    Tunisie" (African Manager, 9 October; ARSAM absent from the graph);
+    "Melia Hotels ajoute cinq hôtels en Tunisie" (African Manager, 8 October;
+    Melia absent); "Des députés en Pologne pour des accords phosphatiers"
+    (African Manager, 9 October; no Poland entity and no parliament-committee
+    record); "Tunisie-Arabie saoudite : mission d'affaires en novembre"
+    (African Manager, 9 October; saudi-arabia exists but the CCIS/chamber is
+    absent); "MoU entre Université de Tunis et l'université chinoise BFSU"
+    (African Manager, 8 October; both universities absent); "Corridor
+    économique Kasserine-Sfax : l'appel d'offres prévu avant fin 2026"
+    (African Manager, 10 October; no corridor/project entity); "La Tunisie vise
+    35 % de renouvelables d'ici 2030" (African Manager, 10 October; policy
+    target, no dated instrument fetched); "La Tunisie rembourse 10.469 MDT au
+    titre du service de la dette publique à fin juin 2026" (African Manager,
+    9 October; a figure to hold only with a Finance Ministry or BCT document);
+    "Investissement : coopération bilatérale TIA-ICIEC" (African Manager,
+    9 October; TIA and ICIEC absent); "Salah Hdider : dégradation des
+    infrastructures des ports de pêche" (African Manager, 8 October; Hdider
+    absent); "Abdelmalek Ghannem prix d'honneur d'ONU-Habitat" (African
+    Manager, 9 October; person and UN-Habitat absent); "Poste Tunisienne:
+    digitalisation et IA" and "47 millions d'épargnants" (African Manager,
+    9 October; la-poste-tunisienne exists, routine); "Des PL sur le télétravail
+    et l'économie numérique" (African Manager, 9 October; bills not fetched);
+    "Tunisie: plus de 2,221 MDT consacrés aux programmes sociaux" (African
+    Manager, 9 October); "e-CTD pharmaceutique" and "suppression des droits de
+    douane sur le solaire" (African Manager, 8 October); "Cepex : mission
+    d'affaires à Dar Es Salam du 23 au 26 novembre" (African Manager,
+    8 October); "Méthode Kaizen : Conect et la Jica accompagnent 40
+    entreprises" (African Manager, 9 October; conect and jica exist, but
+    routine).
+  - >-
+    No change, foreign and wire items: the whole of the Iran/US/Israel/Gaza
+    cluster (#1, #2 Navi Pillay Nobel, #16-18, #20-22, #24, #46-48, #52, #53,
+    #77-82, #96-98, #101, #104, #111 and the Ukraine item of 9 October), the
+    Ceuta returns (#92), the Dbeibah/Tripoli-adjacent regional items, and the
+    Algeria and Morocco industrial items (#37, #36, #111) name no Tunisian
+    entity the graph holds. Routine domestic notices with no graph entity and
+    no dated instrument: the La Goulette tourist count (#4), the Sfax/Djerba
+    electric-car handover (#6), Tunisia-Spain trade talks (#8), the Finance
+    Ministry growth claim (#9), the CFAD 2026-2030 plan (#10), Zaghouan
+    libraries (#11), Tataouine and Gafsa local items (#12, #13), the screenwriting
+    contest (#14), the CNRD budget review (#15), poultry self-sufficiency (#19),
+    the weather bulletins (#26, #43, #84), the Ariana drug network and Nabeul
+    murder (#27, #28), the green run for organ donation (#30), executive pay
+    (#31), the Tunindex sessions (#33, #90), the African SMEs conclave (#42),
+    digital product passport (#49), the FAO quarantine-list update (#50), the
+    dentists' congress (#55), the Médenine olive harvest (#56), the ATEA Doha
+    forum (#59), US-Civil Protection workshop (#60), the grand-projects
+    commission (#63), the African Championships medals (#64), Ligue 1
+    refereeing (#70), Sfax and Sousse chamber training (#72, #73), Le Kef health
+    projects (#74), CRDA beet irrigation and Kébili dates (#83, #85), Kairouan
+    Ennour II (#89), the Béja Medjerda works (#93), circular economy for women
+    (#94), the conservation conference (#95), regional transport subsidies
+    (#99, #100, #102), the three Tunisian geophysicists (#109), and the tennis
+    and football notices (#112, #61, #65). None names a person, institution,
+    company or event the graph holds or is missing.
+  - >-
+    Failure vocabulary: the websearch provider returned no usable results on
+    this run, so every confirmation is a direct webfetch of the outlet URL; the
+    fetcher's ten-newest-per-outlet rule leaves any outlet's 6-9 October surplus
+    unrecoverable; no JORT issue covers this window, so no tier-1 source was
+    available and every record below is tier 3 or 4; the two CMF/UADH and
+    Guinea entities the worklist expected in the graph are not there; and the
+    prison-death, marriage-rape and heat-death figures are press-relayed NGO or
+    ministry counts, not judicial or forensic records.

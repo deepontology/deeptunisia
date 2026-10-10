@@ -48,9 +48,15 @@ time:
   #   at Mornaguia from 1 October 2026) whose date sat past the previous
   #   horizon. The sweep read the feed through 2026-10-05, so the cutoff takes
   #   the coverage date rather than the single record date.
+  # Advanced again 2026-10-10 when the Sep-30→Oct-10 sweep merged six events
+  #   through 2026-10-08 (March of Dignity, the summer prison heat deaths, the
+  #   Saïed Carthage audiences, Tunisia-Libya security, the Tunisia-China
+  #   investment working group, Tunisia-World Bank CPF) whose dates sat past
+  #   the previous horizon. The sweep read the feed through 2026-10-10, so the
+  #   cutoff takes the coverage date rather than the latest record date.
   # V31 now fails the build on any record interval dated past the cutoff.
   floor: "1956-03-20"
-  cutoff: "2026-10-05"
+  cutoff: "2026-10-10"
   # How far back an open-ended "in post by X" bound may reach. A plausible
   # ceiling for a senior command tenure; the longest documented run in the
   # dataset is about seven and a half years.
