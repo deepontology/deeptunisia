@@ -128,6 +128,10 @@ const rubric = '# Rubric\n\n| a | b |\n|---|---|\n| <img src=x onerror=alert(1)>
 	const again = buildWorkbench({ prompts: fixture, rater: 'Rater A', rubricMd: rubric });
 	const other = buildWorkbench({ prompts: fixture, rater: 'Rater B', rubricMd: rubric });
 	ok('the instrument fingerprint is deterministic and per rater', again.fingerprint === r.fingerprint && other.fingerprint !== r.fingerprint, r.fingerprint);
+	const revised = buildWorkbench({ prompts: fixture, rater: 'Rater A', rubricMd: rubric + '\n\n**Revised rule.**\n' });
+	ok('a revised rubric is a different instrument', revised.fingerprint !== r.fingerprint, `${r.fingerprint} vs ${revised.fingerprint}`);
+	const resampled = buildWorkbench({ prompts: [{ ...fixture[0], claim: 'A different claim under the same study_id' }, fixture[1]], rater: 'Rater A', rubricMd: rubric });
+	ok('a different sample with the same study_ids is a different instrument', resampled.fingerprint !== r.fingerprint);
 }
 
 ok('renderMarkdown escapes headings too', renderMarkdown('## a <script>').includes('&lt;script&gt;'));

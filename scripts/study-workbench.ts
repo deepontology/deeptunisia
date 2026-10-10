@@ -19,7 +19,10 @@
  *
  * The page makes no network request (its Content-Security-Policy forbids it).
  * Progress stays in the rater's browser; grades leave only as the CSV the
- * rater downloads and sends to the coordinator.
+ * rater downloads and sends to the coordinator. Both are keyed to the
+ * instrument fingerprint — the rater, the prompts and the administered rubric —
+ * so an export made against different prompts or a different rubric is refused
+ * rather than applied to claims it did not grade.
  *
  * Usage:
  *   npx tsx scripts/study-workbench.ts --sample research/study/raters/rater-a.json --out research/study/workbench/rater-a.html
@@ -215,7 +218,11 @@ export function buildWorkbench(opts: { prompts: unknown[]; rater: string; rubric
 	const problems = auditPayload(prompts);
 	if (problems.length > 0) throw new WorkbenchError(`blinding would break:\n  ${problems.slice(0, 20).join('\n  ')}`);
 
-	const fingerprint = createHash('sha256').update(JSON.stringify({ rater: opts.rater, prompts })).digest('hex').slice(0, 12);
+	// The instrument is what the rater grades against: their prompts and the
+	// rubric they were given. Browser progress and the export's instrument
+	// column are keyed to this fingerprint, so a revised rubric is a different
+	// instrument and never restores or accepts grades made under the old one.
+	const fingerprint = createHash('sha256').update(JSON.stringify({ rater: opts.rater, prompts, rubricMd: opts.rubricMd })).digest('hex').slice(0, 12);
 	const data = { rater: opts.rater, fingerprint, withheldMark: REDACTION_MARK, prompts };
 	// Inside <script type="application/json"> only "</" can end the element; escape every "<".
 	const json = JSON.stringify(data).replace(/</g, '\\u003c');
