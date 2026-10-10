@@ -1169,10 +1169,6 @@
 					{#each ruptures as ev (ev.id)}
 						{@const rx = x(ev.interval.startEarliest)}
 						<line x1={rx} x2={rx} y1={PAD_T - 10} y2={layout.height} class="rupture-line" />
-						<g class="rupture-tag" transform="translate({rx},{PAD_T - 14})">
-							<title>{formatDate(ev.interval.startEarliest, 'day')} — {nameOf(ev)}</title>
-							<circle r="3" cy="0" class="rupture-dot" />
-						</g>
 					{/each}
 				</g>
 
@@ -2068,18 +2064,13 @@
 		text-transform: uppercase;
 	}
 
+	/* One quiet line per rupture through the rows. The lane diamond is the
+	   rupture's only marker; the line just carries the date down the chart. */
 	.rupture-line {
 		stroke: var(--rupture);
 		stroke-width: 1;
-		stroke-dasharray: 2 4;
-		opacity: 0.5;
+		opacity: var(--dim);
 		pointer-events: none;
-	}
-	.rupture-dot {
-		fill: var(--rupture);
-	}
-	.rupture-tag {
-		cursor: help;
 	}
 
 	/* Events lane. Marks reuse the basis language (opacity) and rupture red;
