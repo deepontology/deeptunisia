@@ -57,7 +57,7 @@
   fielding_window: null
   target_n: 1000
   realized_n: null
-  weighting: raking-ins-2024
+  weighting: null
   data_license: CC-BY-4.0
   funding: null
   pi: null

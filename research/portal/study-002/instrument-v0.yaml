@@ -13,8 +13,8 @@
 #
 # Status: draft. Not frozen. Not fielded. English is the source.
 #
-# French and Arabic are interim translations drafted for the maintainer's review,
-# not the human translation the portal rule R5 requires. They are recorded as
+# French and Arabic are interim translations drafted by the project and not yet
+# reviewed by a person, not the human translation the portal rule R5 requires. They are recorded as
 # such under `translation` below and on the study page, and are replaced by the
 # commissioned human translations before the instrument freezes for a later wave.
 # Arabic is Modern Standard Arabic kept short and plain, using the administrative
@@ -45,8 +45,9 @@ instrument:
 
 translation:
   policy: >-
-    Interim: French and Arabic drafted by the project for Wave 01 and reviewed by
-    the maintainer; published as interim translations. Target: two independent
+    Interim: French and Arabic drafted by the project for Wave 01 and not yet
+    reviewed by a person who reads the language; published as interim
+    translations. Target: two independent
     human translators per locale, reconciliation, back-translation and cognitive
     interviews (portal README R5) before a later wave freezes.
   report: null
