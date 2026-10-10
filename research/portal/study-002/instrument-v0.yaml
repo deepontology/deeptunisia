@@ -352,7 +352,7 @@ items:
     anchors:
       en: { low: "Not worried at all", high: "Extremely worried" }
       fr: { low: "Pas du tout", high: "Énormément" }
-      ar: { low: "لا أخشى ذلك إطلاقًا", high: "أخشى ذلك كثيرًا" }
+      ar: { low: "لا أخشى ذلك إطلاقًا", high: "أخشى ذلك بشدّة" }
 
   - id: pti_g2
     module: grip
@@ -377,7 +377,7 @@ items:
     provenance: project
     text_en: "How closely do you think the police watch what ordinary people say, online or in private?"
     text_fr: "Selon vous, à quel point la police surveille-t-elle ce que disent les gens ordinaires, sur Internet ou en privé ?"
-    text_ar: "حسب رأيك، إلى أيّ مدى تراقب الشرطة ما يقوله المواطنون العاديون، على الإنترنت أو في أحاديثهم الخاصة؟"
+    text_ar: "حسب رأيك، إلى أيّ مدى تراقب الشرطة ما يقوله المواطنون العاديون، على الإنترنت أو على انفراد؟"
     help_en: "This asks what you believe, not what you know for certain."
     help_fr: "La question porte sur ce que vous pensez, pas sur ce que vous savez avec certitude."
     help_ar: "يتعلّق السؤال بما تعتقده، لا بما تعرفه يقينًا."
@@ -486,7 +486,7 @@ items:
         other: "Something else"
       fr:
         traffic_stop: "Contrôle routier"
-        street_check: "Contrôle d'identité ou interpellation dans la rue"
+        street_check: "Contrôle d'identité ou arrêt dans la rue"
         checkpoint: "Barrage"
         reported: "J'ai signalé un délit ou demandé de l'aide"
         administrative: "Démarche administrative (carte d'identité, passeport, attestation)"
@@ -498,7 +498,7 @@ items:
         traffic_stop: "مراقبة مرورية"
         street_check: "التثبّت من الهوية أو الاستيقاف في الشارع"
         checkpoint: "نقطة تفتيش (باراج)"
-        reported: "قدّمت شكوى أو طلبت المساعدة"
+        reported: "أبلغت عن جريمة أو طلبت المساعدة"
         administrative: "إجراء إداري (بطاقة تعريف، جواز سفر، شهادة)"
         protest: "خلال احتجاج أو تجمّع"
         questioned: "استدعاء أو استجواب"
@@ -528,7 +528,7 @@ items:
     provenance: project
     text_en: "Still thinking of that contact, how satisfied are you with how the police handled it?"
     text_fr: "Toujours à propos de ce contact, dans quelle mesure êtes-vous satisfait(e) de la façon dont la police l'a géré ?"
-    text_ar: "دائمًا بخصوص هذا التعامل، ما مدى رضاك عن الطريقة التي تصرّفت بها الشرطة فيه؟"
+    text_ar: "وبخصوص هذا التعامل عينه، ما مدى رضاك عن الطريقة التي تصرّفت بها الشرطة فيه؟"
     help_en: "Handled means what they did: for example, whether your problem was dealt with, or whether the stop was done properly."
     help_fr: "Géré veut dire ce qu'elle a fait : par exemple, si votre problème a été traité, ou si le contrôle s'est fait correctement."
     help_ar: "المقصود ما قامت به الشرطة: مثلًا هل عولجت مشكلتك، أو هل جرى الاستيقاف بشكل سليم."
@@ -763,7 +763,7 @@ scoring:
       label_fr: "État policier"
       label_ar: "دولة بوليسية"
       description_en: "Distrusts the police, sees them fail at the job, feels watched and unfree, and has been harmed or knows people who were."
-      description_fr: "Se méfie de la police, la voit mal faire son travail, se sent surveillé et privé de liberté, et a subi des abus ou connaît des proches qui en ont subi."
+      description_fr: "Se méfie de la police, la voit mal faire son travail, se sent surveillé et pas libre, et a subi des abus ou connaît des proches qui en ont subi."
       description_ar: "لا يثق في الشرطة، ويراها مقصّرة في عملها، ويشعر بأنّه مراقَب وغير حرّ، وتعرّض لتجاوزات أو يعرف مقرّبين تعرّضوا لها."
     - id: coercive
       min: 20
@@ -790,7 +790,7 @@ scoring:
       label_fr: "Redevable"
       label_ar: "خاضع للمساءلة"
       description_en: "Broadly trusts the police, finds they do the job, and feels free around them."
-      description_fr: "Fait globalement confiance à la police, estime qu'elle fait son travail et se sent libre face à elle."
+      description_fr: "Fait globalement confiance à la police, estime qu'elle fait son travail et se sent libre en sa présence."
       description_ar: "يثق عمومًا في الشرطة، ويرى أنّها تقوم بعملها، ويشعر بالحرّية في التعامل معها."
     - id: guardian
       min: 80
