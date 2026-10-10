@@ -374,6 +374,21 @@
 
 	// ---- submit ------------------------------------------------------------------
 
+	/**
+	 * The `?src=` code the respondent arrived from, as the server accepts it.
+	 *
+	 * The server stores the channel only when it matches [a-z0-9_-]{1,32}, and
+	 * a link someone shares can carry anything: `?src=Facebook`, a long campaign
+	 * code, an empty value. Answering the whole survey to be refused at submit
+	 * would be a worse outcome than losing the code, so it is lowercased here and
+	 * falls back to 'organic' when it still does not match. The aggregation
+	 * counts the channel; it never publishes a code.
+	 */
+	function channelFromLocation(): string {
+		const channel = (new URLSearchParams(location.search).get('src') ?? '').toLowerCase();
+		return /^[a-z0-9_-]{1,32}$/.test(channel) ? channel : 'organic';
+	}
+
 	async function submit() {
 		if (!instrument || submitting) return;
 		submitting = true;
@@ -399,7 +414,7 @@
 				body: JSON.stringify({
 					instrumentHash: instrument.hash,
 					locale,
-					channel: new URLSearchParams(location.search).get('src') ?? 'organic',
+					channel: channelFromLocation(),
 					consentVersion: `${instrument.version}+${instrument.hash.slice(0, 12)}`,
 					startedAt: openedAt,
 					completionMs: Date.now() - openedAt,

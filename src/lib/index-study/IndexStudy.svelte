@@ -96,6 +96,11 @@
 	const allTime = $derived(live?.results ?? null);
 	const results = $derived(windowAgg?.results ?? allTime);
 	const windowMonths = $derived(windowAgg?.months ?? 12);
+	// The link check (index-spec.md §6): how much of the window arrived through
+	// one shared link, and the window's mean without it. The codes themselves
+	// never reach the page.
+	const links = $derived(windowAgg?.links ?? null);
+	const windowMean = $derived(windowAgg?.results?.index.mean ?? null);
 
 	// The publication floor (index-spec.md §7). Below it the server sends only
 	// counts, and the page shows a counter in place of the number.
@@ -910,6 +915,20 @@
 			{/each}
 		</div>
 		<p class="axis mono" dir="ltr"><span>−72h</span><span>{t('index.integrity.now')}</span></p>
+		{#if links}
+			<!-- One link, or many: stated, never enforced, and never naming a code. -->
+			<p class="note link-check">
+				{#if links.linked_share === 0}
+					<span>{t('index.integrity.noLinks')}</span>
+				{:else}
+					<span>{tf('index.integrity.linked', { p: pct(links.linked_share) })}</span>
+					<span>{tf('index.integrity.largest', { p: pct(links.largest_link_share) })}</span>
+					{#if links.index_without_largest !== null && windowMean !== null}
+						<span>{tf('index.integrity.without', { without: fmt(links.index_without_largest), with: fmt(windowMean) })}</span>
+					{/if}
+				{/if}
+			</p>
+		{/if}
 		{#if live}
 			<details class="table-alt">
 				<summary>{t('index.table.show')}</summary>
@@ -1830,6 +1849,15 @@
 		font-size: 0.7rem;
 		color: var(--text-faint);
 		margin: 0.3rem 0 0;
+	}
+	/* The link check: one line per claim, so a reader can read any one of them
+	   alone. */
+	.link-check {
+		margin: 0.8rem 0 0;
+		line-height: 1.5;
+	}
+	.link-check span {
+		display: block;
 	}
 
 	.prose-block {

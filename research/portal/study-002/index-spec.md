@@ -169,6 +169,7 @@ The band names and their meanings are published with the formula before any data
 - The correlation between T and G. If they are nearly the same thing, two axes are the wrong model, and the page says that too.
 - The correlation between T and S. Trust and satisfaction with the job are expected to move together (in large police surveys they typically correlate around 0.5 to 0.7). If the correlation exceeds 0.8, they are measuring one thing; the page says so, and the next version of the instrument merges them.
 - Exclusions, by rule: completion time under 70 seconds, identical answers on all fifteen index items (straight-lining), honeypot field filled, rate-limit refusals.
+- **The link check** (published live, §7): over the last 12 months, the share of answers that arrived through a shared link, the share that arrived through the single largest such link, and the 12-month index recomputed with that link's answers removed. The counterfactual is computed exactly like the 12-month index, and only when that link brought at least 20 answers, so no small group's answers can be worked out, and when enough answers remain to publish a figure at all. It excludes nobody and moves no published figure. The link codes themselves are never published: a code is free text anyone can invent, and one written for a few people could point at them. It is published so a reader can judge a campaign from the page rather than take the number on trust.
 
 ## 7. Live results
 
@@ -179,6 +180,7 @@ What is live: n, the headline index with its interval, the T, S, G and H compone
 What keeps live honest:
 - **Submissions per hour** chart on the same page, so a flood is visible to everyone.
 - The **exclusion counts** update live too.
+- The **link check** (§6): how much of the last 12 months arrived through one shared link, and what the index is without it. Only the shares are published, never the link codes.
 - A first-party proof-of-work check (no third-party script; a puzzle solved in the background while the respondent answers, each one usable once), the salted rate limit and the honeypot stay on.
 - When a month ends its numbers are final. They are recomputed offline from the exported data and committed, and the committed figures are that month's published result.
 
