@@ -1,7 +1,7 @@
 /**
  * The shape `GET /api/studies/:slug/live` returns (community/research-api.ts).
- * Aggregates only: the endpoint never returns a row, a receipt or a timestamp
- * finer than an hour.
+ * Aggregates only: the endpoint never returns a row, a receipt, a link code or a
+ * timestamp finer than an hour.
  */
 import type { PublicationFloor, PublishedSeries, WaveAggregate } from '../../../community/research-scoring.ts';
 

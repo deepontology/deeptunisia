@@ -801,18 +801,31 @@ console.log('\n  ── the monthly live index ──\n');
 			pti_g1: 6, pti_g2: 4, pti_g3: 6, pti_g4: 6, pti_g5: 6,
 			pti_e1: 'no', pti_e5: ['none']
 		});
-	const insert = (receipt: string, submittedAt: number, t: number) =>
+	const insert = (receipt: string, submittedAt: number, t: number, channel = 'organic') =>
 		env.RESEARCH_DB!.prepare(
 			`INSERT INTO research_responses
 			 (receipt, study_id, instrument_id, instrument_version, instrument_hash, locale, channel,
 			  consent_version, started_at, submitted_at, completion_ms, answers, created_at)
-			 VALUES (?, 'dt-research-002', ?, ?, ?, 'en', 'test', 'v1', ?, ?, 90000, ?, ?)`
+			 VALUES (?, 'dt-research-002', ?, ?, ?, 'en', ?, 'v1', ?, ?, 90000, ?, ?)`
 		)
-			.bind(receipt, police.id, police.version, police.hash, submittedAt - 90_000, submittedAt, answers(t), submittedAt)
+			.bind(
+				receipt,
+				police.id,
+				police.version,
+				police.hash,
+				channel,
+				submittedAt - 90_000,
+				submittedAt,
+				answers(t),
+				submittedAt
+			)
 			.run();
 	const earlier = now - 40 * 86_400_000;
-	for (let i = 0; i < 40; i++) await insert(`old-${i}`, earlier + i * 1000, 3 + (i % 4));
-	for (let i = 0; i < 5; i++) await insert(`new-${i}`, now - 60_000 - i * 1000, 7);
+	// The channels: three answers through a minor link, five through the one
+	// that carries this month, and the rest direct. The link codes are
+	// distinctive strings so the payload can be searched for them.
+	for (let i = 0; i < 40; i++) await insert(`old-${i}`, earlier + i * 1000, 3 + (i % 4), i < 3 ? 'clip' : 'organic');
+	for (let i = 0; i < 5; i++) await insert(`new-${i}`, now - 60_000 - i * 1000, 7, 'wave');
 
 	// Below the first-figure floor (100 valid answers): counts only.
 	const early = await get(env, '/api/studies/index/live');
@@ -827,6 +840,10 @@ console.log('\n  ── the monthly live index ──\n');
 			earlyMonths.every((m: any) => m.results === null && m.index.level === null) &&
 			early.body.series?.window?.results === null,
 		JSON.stringify(early.body.floor)
+	);
+	ok(
+		'and the link check waits for the floor with every other figure',
+		early.body.series?.window?.links === null
 	);
 	ok(
 		'and the counts are there: per month and in all',
@@ -865,6 +882,57 @@ console.log('\n  ── the monthly live index ──\n');
 		'no row, receipt or timestamp leaves the endpoint',
 		!JSON.stringify(live.body).includes('old-0') && !JSON.stringify(live.body).includes(String(earlier))
 	);
+	ok(
+		'and no link code leaves it either: the channels are read and never sent',
+		!JSON.stringify(live.body).includes('wave') &&
+			!JSON.stringify(live.body).includes('clip') &&
+			!JSON.stringify(live.body).includes('organic'),
+		JSON.stringify(window?.links)
+	);
+	// Eight of the 105 answers came through a link, five of them through the
+	// dominant one. Each of the 100 direct answers scores
+	// I = 100 · (t/10 + 0.4 + 1) / 3, with trust 3, 4, 5 and 6 in equal numbers,
+	// so their mean index is 61.666…, while the five through the dominant link
+	// answer 7 (I = 70), above it.
+	const indexOf = (t: number) => ((t / 10 + 0.4 + 1) / 3) * 100;
+	const directMean = (indexOf(3) + indexOf(4) + indexOf(5) + indexOf(6)) / 4;
+	const links = window?.links;
+	ok(
+		'the payload carries the link check as three numbers',
+		links?.linked_share === 8 / 105 &&
+			links?.largest_link_share === 5 / 105 &&
+			Object.keys(links ?? {}).length === 3,
+		JSON.stringify(links)
+	);
+	ok(
+		'and nothing but those three numbers: no code, no per-channel count',
+		Object.keys(links ?? {}).join() === 'linked_share,largest_link_share,index_without_largest',
+		Object.keys(links ?? {}).join()
+	);
+	// A link of five answers is below the cell floor of 20, so no counterfactual
+	// is published from it: read beside the window mean, it would give that
+	// group's own mean away.
+	ok(
+		'a dominant link under the cell floor publishes its shares and no counterfactual',
+		links?.index_without_largest === null,
+		JSON.stringify(links)
+	);
+
+	// Twenty more through the same link and thirty more direct: the link now
+	// clears the cell floor, and 130 answers remain, so the counterfactual is a
+	// figure. It is the mean over the answers that did not come through it.
+	for (let i = 0; i < 20; i++) await insert(`link-${i}`, now - 30_000 - i * 1000, 7, 'wave');
+	for (let i = 0; i < 30; i++) await insert(`direct-${i}`, now - 30_000 - i * 1000, 7, 'organic');
+	const grown = await get(env, '/api/studies/index/live');
+	const grownWindow = grown.body.series?.window;
+	ok(
+		'a dominant link over the cell floor publishes its counterfactual',
+		grownWindow?.links?.linked_share === 28 / 155 &&
+			grownWindow?.links?.largest_link_share === 25 / 155 &&
+			Math.abs((grownWindow?.links?.index_without_largest ?? 0) - (100 * directMean + 30 * indexOf(7)) / 130) <
+				1e-9,
+		`n_total ${grownWindow?.results?.n_total} ${JSON.stringify(grownWindow?.links)}`
+	);
 
 	const closedMonth = await post(env, '/api/studies/index/withdraw', { receipt: 'old-0' });
 	ok('an answer from a closed month cannot be deleted', closedMonth.status === 409, closedMonth.body.error ?? '');
@@ -872,6 +940,18 @@ console.log('\n  ── the monthly live index ──\n');
 	ok('an answer from this month can be deleted', thisMonth.status === 200 && thisMonth.body.deleted === true);
 	const unknown = await post(env, '/api/studies/index/withdraw', { receipt: 'nobody' });
 	ok('an unknown receipt reports false, not a month error', unknown.status === 200 && unknown.body.deleted === false);
+
+	// The deleted answer was one of the dominant link's, so the shares move and
+	// the same 130 answers remain: the counterfactual stays put.
+	const afterDelete = await get(env, '/api/studies/index/live');
+	const moved = afterDelete.body.series?.window?.links;
+	ok(
+		'a deleted answer moves the shares and leaves the counterfactual alone',
+		moved?.linked_share === 27 / 154 &&
+			moved?.largest_link_share === 24 / 154 &&
+			moved?.index_without_largest === grownWindow?.links?.index_without_largest,
+		JSON.stringify(moved)
+	);
 }
 
 console.log('\n  ── the real registry ──\n');

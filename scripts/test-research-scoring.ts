@@ -19,6 +19,7 @@ import {
 	aggregateSeries,
 	applyExclusions,
 	applyPublicationFloor,
+	linkCheck,
 	localLevelFilter,
 	periodOf,
 	periodsBetween,
@@ -688,6 +689,152 @@ console.log('\n  ── wave aggregation ──\n');
 			!spec.components.some((c: { items?: string[]; item?: string }) =>
 				(c.items ?? []).includes('pti_c1') || c.item === 'pti_c1'
 			)
+	);
+}
+
+// ---------------------------------------------------------------------------
+// The link check: one shared link driving the window, and never its code
+// ---------------------------------------------------------------------------
+
+console.log('\n  ── the link check ──\n');
+
+{
+	// A scored row with the channel it arrived from. T is the mean of five items
+	// at t; G is six items at 5, so the reverse-keyed G2 keeps it at 5; there is
+	// no contact, so S is missing, H is V = 0, and
+	// I = 100 · (t/10 + 0.5 + 1) / 3.
+	const row = (t: number, channel?: string) => ({
+		answers: {
+			pti_t1: t, pti_t2: t, pti_t3: t, pti_t4: t, pti_t5: t,
+			pti_g1: 5, pti_g2: 5, pti_g3: 5, pti_g4: 5, pti_g6: 5, pti_g5: 5,
+			pti_e1: 'no', pti_e5: ['none']
+		},
+		channel
+	});
+	const options = { seed: 20261007, resamples: 200 };
+
+	// No link rows: nothing arrived through a shared link, so there is no
+	// largest one and no index to remove.
+	const organic = Array.from({ length: 12 }, () => row(8, 'organic'));
+	const none = linkCheck(spec, organic, options);
+	ok('no link rows: both shares are zero', none.linked_share === 0 && none.largest_link_share === 0);
+	ok('no link rows: there is no index without one', none.index_without_largest === null);
+
+	// A floor low enough to publish a figure from what would remain: ten
+	// answers direct, twenty through one link and five through another, all of
+	// the linked ones at the same trust. The floor is the spec's own
+	// first_figure_n, lowered here so the check can be read on 35 rows.
+	const lowFloor = structuredClone(spec);
+	lowFloor.series = { ...lowFloor.series!, first_figure_n: 10 };
+	const rows = [
+		...Array.from({ length: 10 }, () => row(8, 'organic')),
+		...Array.from({ length: 20 }, () => row(2, 'wave')),
+		...Array.from({ length: 5 }, () => row(2, 'clip'))
+	];
+	const check = linkCheck(lowFloor, rows, options);
+	ok(
+		'the linked share counts every answer that came through a link',
+		Math.abs(check.linked_share - 25 / 35) < 1e-12,
+		String(check.linked_share)
+	);
+	ok(
+		'the largest link share counts that link alone, not the links together',
+		Math.abs(check.largest_link_share - 20 / 35) < 1e-12,
+		String(check.largest_link_share)
+	);
+	const withoutWave = aggregateResponses(lowFloor, rows.filter((r) => r.channel !== 'wave'), options).index.mean;
+	ok(
+		'the index without the largest link is the aggregate over the rows that remain',
+		check.index_without_largest === withoutWave,
+		String(check.index_without_largest)
+	);
+	ok(
+		'and it sits above the window mean: the link was holding the index down',
+		(check.index_without_largest ?? 0) > (aggregateResponses(lowFloor, rows, options).index.mean ?? 1),
+		`${check.index_without_largest} vs ${aggregateResponses(lowFloor, rows, options).index.mean}`
+	);
+	ok(
+		'the check returns three shares and nothing else',
+		Object.keys(check).join() === 'linked_share,largest_link_share,index_without_largest',
+		Object.keys(check).join()
+	);
+	ok(
+		'no channel name appears anywhere in the returned object',
+		!JSON.stringify(check).includes('wave') && !JSON.stringify(check).includes('clip'),
+		JSON.stringify(check)
+	);
+
+	// At the instrument's own floor of 100, removing 25 of 35 rows leaves fewer
+	// than first_figure_n behind, so no figure is published from what is left.
+	const floored = linkCheck(spec, rows, options);
+	ok(
+		'a removal that would leave fewer than first_figure_n rows publishes no figure',
+		floored.index_without_largest === null,
+		String(floored.index_without_largest)
+	);
+	ok(
+		'the shares still come back: the publication floor decides what leaves',
+		floored.linked_share === check.linked_share && floored.largest_link_share === check.largest_link_share
+	);
+
+	// A row stored with no channel is a direct arrival, exactly as the writer
+	// stores one.
+	const unchannelled = rows.map((r) => ({ answers: r.answers }));
+	ok('a row with no channel counts as organic', linkCheck(lowFloor, unchannelled, options).linked_share === 0);
+
+	// The link itself has to be big enough to describe. A counterfactual read
+	// beside the window mean would give away the mean of the answers it removed,
+	// so a link under the cell floor (20 here) publishes no figure at all: thirty
+	// direct answers would still be plenty to compute one from.
+	const atCellFloor = (size: number) =>
+		linkCheck(
+			lowFloor,
+			[
+				...Array.from({ length: 30 }, () => row(8, 'organic')),
+				...Array.from({ length: size }, () => row(2, 'wave'))
+			],
+			options
+		);
+	const belowCellFloor = atCellFloor((spec.cell_floor ?? 20) - 1);
+	ok(
+		'a largest link under the cell floor publishes no counterfactual',
+		belowCellFloor.index_without_largest === null,
+		`${belowCellFloor.largest_link_share} of the window, cell floor ${spec.cell_floor}`
+	);
+	ok(
+		'but its shares are still published',
+		belowCellFloor.linked_share === 19 / 49 && belowCellFloor.largest_link_share === 19 / 49
+	);
+	ok(
+		'a largest link at the cell floor publishes one',
+		atCellFloor(spec.cell_floor ?? 20).index_without_largest !== null,
+		String(atCellFloor(spec.cell_floor ?? 20).index_without_largest)
+	);
+
+	// The window's own check, and the floor that decides what leaves the server.
+	const dated = rows.map((r, i) => ({ ...r, submittedAt: Date.UTC(2027, 0, 2) + i }));
+	const now = Date.UTC(2027, 0, 3);
+	const lowSeries = aggregateSeries(lowFloor, dated, { ...options, now });
+	ok(
+		'the window carries the link check over its own rows',
+		lowSeries?.window?.links.linked_share === check.linked_share,
+		String(lowSeries?.window?.links.linked_share)
+	);
+	const lowPublished = applyPublicationFloor(
+		lowFloor,
+		aggregateResponses(lowFloor, dated, options),
+		lowSeries!
+	);
+	ok(
+		'the window publishes the link check beside its own figures',
+		lowPublished.series?.window?.links !== null && lowPublished.series?.window?.results !== null
+	);
+	const highSeries = aggregateSeries(spec, dated, { ...options, now });
+	const highPublished = applyPublicationFloor(spec, aggregateResponses(spec, dated, options), highSeries!);
+	ok(
+		'below the window floor the link check is withheld with the figures',
+		highPublished.series?.window?.links === null && highPublished.series?.window?.results === null,
+		JSON.stringify(highPublished.series?.window?.links)
 	);
 }
 

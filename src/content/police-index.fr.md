@@ -4,7 +4,7 @@ translated_by: model-reviewed
 
 ## Ce qui est conservé, et ce qui ne l'est pas {#data}
 
-Quand vous envoyez vos réponses, une seule ligne est enregistrée. Elle contient vos réponses, la langue dans laquelle vous avez répondu, le lien par lequel vous êtes arrivé (par exemple un code propre à une vidéo, jamais votre compte), la version du questionnaire que vous avez vue, l'heure de début et l'heure d'envoi, et un code de reçu aléatoire. C'est tout.
+Quand vous envoyez vos réponses, une seule ligne est enregistrée. Elle contient vos réponses, la langue dans laquelle vous avez répondu, le lien par lequel vous êtes arrivé (par exemple un code propre à une vidéo, jamais votre compte), la version du questionnaire que vous avez vue, l'heure de début et l'heure d'envoi, et un code de reçu aléatoire. C'est tout. Le code du lien n'est jamais publié. Ce qui en est publié, c'est la part des réponses arrivées par un lien partagé, celle arrivée par le lien le plus utilisé, et ce que l'indice vaudrait sans ce lien.
 
 Le questionnaire ne demande rien sur qui vous êtes : ni âge, ni genre, ni adresse. Sa dernière question, le gouvernorat où vous vivez, est facultative : vous pouvez la passer ou répondre « je préfère ne pas répondre ». Si vous y répondez, seule votre région est publiée, et jamais pour un groupe de moins de 20 personnes.
 

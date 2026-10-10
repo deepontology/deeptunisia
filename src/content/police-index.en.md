@@ -4,7 +4,7 @@ translated_by: model-reviewed
 
 ## What is stored, and what is not {#data}
 
-When you submit, one row is written. It holds your answers, the language you answered in, the link you arrived from (for example a code for a particular video, never your account), the questionnaire version you saw, the time you started and the time you submitted, and a random receipt code. That is all.
+When you submit, one row is written. It holds your answers, the language you answered in, the link you arrived from (for example a code for a particular video, never your account), the questionnaire version you saw, the time you started and the time you submitted, and a random receipt code. That is all. The link code itself is never published. What is published from it is the share of answers that arrived through a shared link, the share that arrived through the single most-used link, and what the index would be without that link.
 
 The questionnaire asks nothing about who you are: no age, no gender, no address. Its last question, which governorate you live in, is optional, and you can skip it or answer "prefer not to answer". If you answer it, only your region is ever published, and never for a group of fewer than 20 people.
 

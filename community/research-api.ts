@@ -68,8 +68,10 @@ const json = (body: unknown, status = 200, headers: Record<string, string> = {})
 // ---------------------------------------------------------------------------
 // Live results (study 002 runs fully live; index-spec §7).
 //
-// Aggregates only: no row, receipt, locale, channel or timestamp finer than an
-// hour leaves this function. Rows are read for the instrument hash the study
+// Aggregates only: no row, receipt, locale or timestamp finer than an hour
+// leaves this function. The `src` link codes are read and never sent: they are
+// counted into the three shares of the link check (research-scoring.ts) and the
+// codes themselves stay here. Rows are read for the instrument hash the study
 // currently fields, so a wave is exactly one instrument version. The bootstrap
 // seed is fixed, so the same rows always give the same interval and a reader
 // refreshing the page never sees the numbers jitter without new data.
@@ -86,11 +88,11 @@ async function liveResults(db: Db, study: StudySummary, instrument: RuntimeInstr
 	const spec = instrument.scoring!;
 	const { results } = await db
 		.prepare(
-			`SELECT answers, completion_ms, submitted_at FROM research_responses
+			`SELECT answers, completion_ms, submitted_at, channel FROM research_responses
 			 WHERE study_id = ? AND instrument_hash = ?`
 		)
 		.bind(study.id, instrument.hash)
-		.all<{ answers: string; completion_ms: number; submitted_at: number }>();
+		.all<{ answers: string; completion_ms: number; submitted_at: number; channel: string }>();
 
 	const conditions = Object.fromEntries(
 		instrument.items.filter((item) => item.showIf !== undefined).map((item) => [item.id, item.showIf!])
@@ -99,7 +101,9 @@ async function liveResults(db: Db, study: StudySummary, instrument: RuntimeInstr
 	const rows = (results ?? []).map((r) => ({
 		answers: safeAnswers(r.answers),
 		completionMs: r.completion_ms,
-		submittedAt: r.submitted_at
+		submittedAt: r.submitted_at,
+		// Read by the link check, which returns shares and never a code.
+		channel: r.channel
 	}));
 	const { kept, exclusions } = applyExclusions(spec, rows);
 
