@@ -1460,7 +1460,9 @@ const en: Dict = {
 	'colophon.title': 'How this was made',
 
 	'world.geoLoading': 'Loading the world geometry…',
-	'world.geoError': 'World geometry failed to load — the ledger still has every number.'
+	'world.geoError': 'World geometry failed to load — the ledger still has every number.',
+	// redesign 2026-10 (UI-1)
+	'plate.fig': 'FIG. {n}'
 };
 
 const fr: Dict = {
@@ -2851,7 +2853,9 @@ const fr: Dict = {
 	'colophon.title': 'Comment c\'est fait',
 
 	'world.geoLoading': 'Chargement de la géographie mondiale…',
-	'world.geoError': 'La géographie mondiale n\'a pas pu être chargée — le tableau contient toujours tous les chiffres.'
+	'world.geoError': 'La géographie mondiale n\'a pas pu être chargée — le tableau contient toujours tous les chiffres.',
+	// redesign 2026-10 (UI-1)
+	'plate.fig': 'FIG. {n}'
 };
 
 
@@ -4237,7 +4241,9 @@ const ar: Dict = {
 	'colophon.title': 'كيف صُنع',
 
 	'world.geoLoading': 'جارٍ تحميل جغرافية العالم…',
-	'world.geoError': 'تعذّر تحميل جغرافية العالم — السجل ما زال يحمل كل الأرقام.'
+	'world.geoError': 'تعذّر تحميل جغرافية العالم — السجل ما زال يحمل كل الأرقام.',
+	// redesign 2026-10 (UI-1)
+	'plate.fig': 'شكل {n}'
 };
 
 
