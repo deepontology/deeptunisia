@@ -1,4 +1,5 @@
 <script lang="ts">
+	import AboutView from '$lib/shell/AboutView.svelte';
 	import { app } from '$lib/state.svelte';
 	import InstitutionPicker from '$lib/components/InstitutionPicker.svelte';
 	import SourceList from '$lib/components/SourceList.svelte';
@@ -172,7 +173,7 @@
 <div class="page">
 	<div class="toolbar">
 		<span class="eyebrow">{t('investigate.eyebrow')}</span>
-		<p class="hint">{t('investigate.hint')}</p>
+		<AboutView hint={t('investigate.hint')} />
 	</div>
 
 	<div class="presets">
@@ -371,13 +372,6 @@
 		padding: var(--s-4) var(--s-6);
 		border-bottom: 1px solid var(--border-subtle);
 		flex-wrap: wrap;
-	}
-	.hint {
-		margin: 0;
-		font-size: var(--t-sm);
-		line-height: var(--lh-snug);
-		color: var(--text-secondary);
-		max-width: 68ch;
 	}
 
 	.presets {

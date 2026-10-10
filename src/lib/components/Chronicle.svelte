@@ -1,4 +1,5 @@
 <script lang="ts">
+	import AboutView from '$lib/shell/AboutView.svelte';
 	import { AxisCamera, navigableAxis } from '$lib/viz/axis.svelte';
 	import { fits, textWidth } from '$lib/viz/measure';
 	import { relationshipsByEntity } from '$lib/model';
@@ -980,7 +981,7 @@
 <div class="chronicle">
 	<div class="toolbar">
 		<span class="eyebrow">{t('nav.chronicle')}</span>
-		<p class="hint">{t('chronicle.hint')}</p>
+		<AboutView hint={t('chronicle.hint')} />
 		<div class="era-jump">
 			<!-- These zoom the horizontal DOMAIN, which is a different action from the
 			     dock's era labels: those move the date, these change what span is
@@ -1850,13 +1851,6 @@
 		padding: var(--s-4) var(--s-6);
 		border-bottom: 1px solid var(--border-subtle);
 		flex-wrap: wrap;
-	}
-	.hint {
-		margin: 0;
-		font-size: var(--t-sm);
-		line-height: var(--lh-snug);
-		color: var(--text-secondary);
-		max-width: 52ch;
 	}
 	.era-swatch {
 		width: 6px;

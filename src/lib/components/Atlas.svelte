@@ -1,4 +1,5 @@
 <script lang="ts">
+	import AboutView from '$lib/shell/AboutView.svelte';
 	import { app } from '$lib/state.svelte';
 	import { applyEntityLink } from '$lib/deeplink.svelte';
 	import Button from '$lib/ui/Button.svelte';
@@ -268,7 +269,7 @@
 <div class="atlas">
 	<div class="toolbar">
 		<span class="eyebrow">{t('atlas.eyebrow')}</span>
-		<p class="hint">{t('atlas.hint')}</p>
+		<AboutView hint={t('atlas.hint')} />
 	</div>
 
 	<div class="scroll">
@@ -528,13 +529,6 @@
 		padding: var(--s-4) var(--s-6);
 		border-bottom: 1px solid var(--border-subtle);
 		flex-wrap: wrap;
-	}
-	.hint {
-		margin: 0;
-		font-size: var(--t-sm);
-		line-height: var(--lh-snug);
-		color: var(--text-secondary);
-		max-width: 68ch;
 	}
 	.scroll {
 		flex: 1;

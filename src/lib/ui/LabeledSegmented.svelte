@@ -56,7 +56,7 @@
 
 	$effect(() => {
 		if (!root) return;
-		const ro = new ResizeObserver(place);
+		const ro = new ResizeObserver(() => requestAnimationFrame(place));
 		ro.observe(root);
 		return () => ro.disconnect();
 	});

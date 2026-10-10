@@ -1494,7 +1494,9 @@ const en: Dict = {
 	'inspector.temporal.named': 'This chain joins {first} and {second}, whose time spans do not overlap. A gap means no one could carry influence across it.',
 	'inspector.temporal.plain': 'This chain stitches {edges} links whose time spans do not overlap. A gap means no one could carry influence across it.',
 	'inspector.type.named': 'One link in this chain, {link}, is a “{type}” relationship, not an influence channel. Board, family and funding are different mechanisms; reading them as one channel conflates them.',
-	'inspector.confidence.named': 'The weakest link, {link}, is graded below what a composed path needs (basis: {basis}). A chain is only as strong as its weakest edge.'
+	'inspector.confidence.named': 'The weakest link, {link}, is graded below what a composed path needs (basis: {basis}). A chain is only as strong as its weakest edge.',
+	// redesign 2026-10 (SH-4)
+	'view.about': 'About this view'
 };
 
 const fr: Dict = {
@@ -2919,7 +2921,9 @@ const fr: Dict = {
 	'inspector.temporal.named': 'Cette chaîne relie {first} et {second}, dont les périodes ne se chevauchent pas. Un écart signifie que personne n’a pu y faire passer une influence.',
 	'inspector.temporal.plain': 'Cette chaîne assemble {edges} liens dont les périodes ne se chevauchent pas. Un écart signifie que personne n’a pu y faire passer une influence.',
 	'inspector.type.named': 'Un lien de cette chaîne, {link}, est une relation « {type} », pas un canal d’influence. Conseil, famille et financement sont des mécanismes différents ; les lire comme un seul canal les confond.',
-	'inspector.confidence.named': 'Le maillon le plus faible, {link}, est noté en dessous de ce qu’exige un chemin composé (base : {basis}). Une chaîne ne vaut que par son maillon le plus faible.'
+	'inspector.confidence.named': 'Le maillon le plus faible, {link}, est noté en dessous de ce qu’exige un chemin composé (base : {basis}). Une chaîne ne vaut que par son maillon le plus faible.',
+	// redesign 2026-10 (SH-4)
+	'view.about': 'À propos de cette vue'
 };
 
 
@@ -4339,7 +4343,9 @@ const ar: Dict = {
 	'inspector.temporal.named': 'تربط هذه السلسلة {first} و{second}، ولا تتداخل فترتاهما الزمنيتان. والفجوة تعني أن أحدًا لم يكن بوسعه نقل النفوذ عبرها.',
 	'inspector.temporal.plain': 'تجمع هذه السلسلة {edges} روابط لا تتداخل فتراتها الزمنية. والفجوة تعني أن أحدًا لم يكن بوسعه نقل النفوذ عبرها.',
 	'inspector.type.named': 'أحد روابط هذه السلسلة، {link}، علاقة من نوع «{type}» وليس قناة نفوذ. فمجالس الإدارة والعائلة والتمويل آليات مختلفة، وقراءتها كقناة واحدة تخلط بينها.',
-	'inspector.confidence.named': 'أضعف رابط، {link}، مصنَّف دون ما يتطلبه مسار مركَّب (الأساس: {basis}). والسلسلة لا تقوى إلا بقدر أضعف حلقاتها.'
+	'inspector.confidence.named': 'أضعف رابط، {link}، مصنَّف دون ما يتطلبه مسار مركَّب (الأساس: {basis}). والسلسلة لا تقوى إلا بقدر أضعف حلقاتها.',
+	// redesign 2026-10 (SH-4)
+	'view.about': 'حول هذا العرض'
 };
 
 
