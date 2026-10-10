@@ -41,6 +41,9 @@
 		const path = page.url.pathname === '/chronicle' ? '/' : page.url.pathname;
 		// Prerendering forbids reading the query; the tab only refines Agora's name.
 		const tab = browser ? page.url.searchParams.get('tab') : null;
+		// A section with one view is named by the section ("Research", not its
+		// lone "Overview").
+		if (current.items.length === 1 && !current.docs) return t(`nav.${current.key}`);
 		const item = [...current.items, ...(current.docs ?? [])].find((i) => isActive(i, path, tab));
 		return t(`nav.${(item ?? current).key}`);
 	});
