@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Nothing on this page talks to a network. Grades leave this machine only as the CSV the rater downloads. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data:; connect-src 'none'; form-action 'none'; base-uri 'none'">
+<meta name="referrer" content="no-referrer">
+<title>Study Workbench</title>
+<style>
+:root {
+	--bg: #f7f6f3; --surface: #ffffff; --surface-2: #efede8; --text: #1d1c1a; --muted: #6b6862;
+	--border: #dcd8d0; --accent: #1f5f8b; --accent-text: #ffffff; --done: #2e7d4f; --warn: #a2551b;
+	--mark: #fff1c2; --focus: #1f5f8b;
+	color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme="light"]) {
+		--bg: #151514; --surface: #1e1e1c; --surface-2: #272724; --text: #ecebe7; --muted: #a29f97;
+		--border: #3a3935; --accent: #6fb0dd; --accent-text: #0e1b24; --done: #6cc391; --warn: #e3a066;
+		--mark: #4a3f1a; --focus: #6fb0dd;
+		color-scheme: dark;
+	}
+}
+:root[data-theme="dark"] {
+	--bg: #151514; --surface: #1e1e1c; --surface-2: #272724; --text: #ecebe7; --muted: #a29f97;
+	--border: #3a3935; --accent: #6fb0dd; --accent-text: #0e1b24; --done: #6cc391; --warn: #e3a066;
+	--mark: #4a3f1a; --focus: #6fb0dd;
+	color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+	background: var(--bg); color: var(--text);
+	font: 16px/1.55 system-ui, -apple-system, "Segoe UI", "Noto Sans", "Noto Sans Arabic", sans-serif;
+}
+button, textarea, input { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.top {
+	position: sticky; top: 0; z-index: 5; background: var(--surface); border-bottom: 1px solid var(--border);
+	display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; padding: 10px 16px;
+}
+.top h1 { font-size: 15px; margin: 0; font-weight: 600; }
+.top .who { color: var(--muted); font-size: 13px; }
+.progress { flex: 1 1 160px; min-width: 120px; display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
+.bar { flex: 1; height: 6px; background: var(--surface-2); border-radius: 3px; overflow: hidden; }
+.bar > span { display: block; height: 100%; background: var(--done); width: 0; }
+.actions { display: flex; gap: 6px; flex-wrap: wrap; }
+.btn {
+	border: 1px solid var(--border); background: var(--surface); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 14px;
+}
+.btn:hover { background: var(--surface-2); }
+.btn.primary { background: var(--accent); color: var(--accent-text); border-color: var(--accent); }
+.layout { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 0; max-width: 1280px; margin: 0 auto; }
+.index { border-right: 1px solid var(--border); height: calc(100vh - 57px); position: sticky; top: 57px; overflow: auto; padding: 10px; }
+.index .filter { display: flex; gap: 4px; margin-bottom: 8px; }
+.index .filter button { flex: 1; font-size: 12px; padding: 4px; }
+.index .filter button[aria-pressed="true"] { background: var(--surface-2); font-weight: 600; }
+.index ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
+.index li button {
+	width: 100%; font-size: 12px; padding: 4px 0; border-radius: 4px; border: 1px solid var(--border); background: var(--surface); cursor: pointer;
+	font-variant-numeric: tabular-nums;
+}
+.index li button.done { border-color: var(--done); color: var(--done); }
+.index li button.partial { border-color: var(--warn); color: var(--warn); }
+.index li button[aria-current="true"] { background: var(--accent); color: var(--accent-text); border-color: var(--accent); }
+main { padding: 20px 24px 120px; min-width: 0; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px 22px; }
+.meta { display: flex; gap: 8px; align-items: center; color: var(--muted); font-size: 13px; margin-bottom: 10px; flex-wrap: wrap; }
+.pill { border: 1px solid var(--border); border-radius: 999px; padding: 1px 9px; font-size: 12px; background: var(--surface-2); }
+.claim { font-size: 20px; line-height: 1.45; margin: 0 0 12px; font-weight: 500; overflow-wrap: anywhere; }
+.dates { font-size: 14px; color: var(--muted); margin-bottom: 14px; font-variant-numeric: tabular-nums; }
+.dates code { font-size: 13px; background: var(--surface-2); padding: 1px 5px; border-radius: 4px; color: var(--text); }
+.context { white-space: pre-wrap; font-size: 14px; background: var(--surface-2); border-radius: 8px; padding: 10px 12px; margin: 0 0 16px; overflow-wrap: anywhere; }
+.withheld { background: var(--mark); border-radius: 3px; padding: 0 3px; font-style: italic; }
+h2.section { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 18px 0 8px; font-weight: 600; }
+.sources { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.sources li { border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; }
+.src-head { display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+.tier { font-weight: 700; font-size: 12px; border-radius: 4px; padding: 1px 6px; background: var(--surface-2); border: 1px solid var(--border); white-space: nowrap; }
+.src-title { font-weight: 600; overflow-wrap: anywhere; }
+.src-pub { color: var(--muted); font-size: 14px; }
+.excerpt { margin: 8px 0 4px; padding: 2px 0 2px 12px; border-inline-start: 3px solid var(--border); font-size: 14px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.src-url { font-size: 13px; overflow-wrap: anywhere; color: var(--accent); }
+.empty { color: var(--muted); font-style: italic; }
+.grade { margin-top: 18px; display: grid; gap: 14px; }
+.field { display: grid; gap: 6px; }
+.field > span { font-size: 13px; font-weight: 600; }
+.choices { display: flex; flex-wrap: wrap; gap: 6px; }
+.choice {
+	border: 1px solid var(--border); background: var(--surface); border-radius: 8px; padding: 8px 12px; cursor: pointer; min-width: 52px;
+	display: inline-flex; gap: 8px; align-items: center; justify-content: center;
+}
+.choice kbd { font: 11px ui-monospace, monospace; color: var(--muted); border: 1px solid var(--border); border-radius: 3px; padding: 0 4px; }
+.choice[aria-pressed="true"] { background: var(--accent); color: var(--accent-text); border-color: var(--accent); }
+.choice[aria-pressed="true"] kbd { color: inherit; border-color: currentColor; }
+.choice.unsure[aria-pressed="true"] { background: var(--warn); border-color: var(--warn); color: var(--accent-text); }
+textarea { width: 100%; min-height: 70px; border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; background: var(--surface); resize: vertical; }
+.nav { display: flex; gap: 8px; justify-content: space-between; margin-top: 16px; flex-wrap: wrap; }
+.hint { font-size: 12px; color: var(--muted); margin-top: 10px; }
+.status { font-size: 12px; color: var(--muted); }
+.status.bad { color: var(--warn); font-weight: 600; }
+.banner { border: 1px solid var(--done); color: var(--done); border-radius: 8px; padding: 10px 14px; margin-bottom: 14px; display: none; }
+.banner.show { display: block; }
+.drawer {
+	position: fixed; inset: 0 0 0 auto; width: min(720px, 100%); background: var(--surface); border-left: 1px solid var(--border);
+	transform: translateX(100%); transition: transform .18s ease; z-index: 10; overflow: auto; padding: 16px 22px 60px;
+}
+.drawer.open { transform: none; }
+.drawer-head { display: flex; justify-content: space-between; align-items: center; position: sticky; top: -16px; background: var(--surface); padding: 8px 0; }
+.rubric { font-size: 14px; }
+.rubric table { border-collapse: collapse; width: 100%; display: block; overflow-x: auto; margin: 10px 0; }
+.rubric th, .rubric td { border: 1px solid var(--border); padding: 4px 8px; text-align: start; vertical-align: top; }
+.rubric pre { background: var(--surface-2); padding: 10px; border-radius: 6px; overflow-x: auto; font-size: 12.5px; }
+.rubric code { background: var(--surface-2); padding: 0 4px; border-radius: 3px; font-size: 13px; }
+.rubric pre code { background: none; padding: 0; }
+.rubric blockquote { margin: 8px 0; padding-inline-start: 12px; border-inline-start: 3px solid var(--border); color: var(--muted); }
+.rubric h1 { font-size: 20px; } .rubric h2 { font-size: 17px; margin-top: 24px; } .rubric h3 { font-size: 15px; }
+.toggle-index { display: none; }
+@media (max-width: 760px) {
+	.layout { grid-template-columns: 1fr; }
+	.index { display: none; position: static; height: auto; border-right: 0; border-bottom: 1px solid var(--border); }
+	.index.open { display: block; }
+	.toggle-index { display: inline-block; }
+	main { padding: 16px 16px 120px; }
+	.card { padding: 16px; }
+	.claim { font-size: 18px; }
+}
+@media (prefers-reduced-motion: reduce) { .drawer { transition: none; } }
+</style>
+</head>
+<body>
+<header class="top">
+	<div>
+		<h1>Study workbench</h1>
+		<div class="who"><span id="rater"></span> · instrument <code id="fingerprint"></code></div>
+	</div>
+	<div class="progress" aria-live="polite"><div class="bar"><span id="bar"></span></div><span id="count"></span></div>
+	<div class="actions">
+		<button class="btn toggle-index" id="toggle-index" type="button" aria-expanded="false">Records</button>
+		<button class="btn" id="open-rubric" type="button">Rubric <kbd>R</kbd></button>
+		<button class="btn" id="import" type="button">Import CSV</button>
+		<button class="btn primary" id="export" type="button">Export CSV</button>
+		<input id="import-file" type="file" accept=".csv,text/csv" hidden>
+	</div>
+	<div class="status" id="status" role="status"></div>
+</header>
+
+<div class="layout">
+	<nav class="index" id="index" aria-label="Records">
+		<div class="filter" role="group" aria-label="Show">
+			<button class="btn" type="button" data-filter="all" aria-pressed="true">All</button>
+			<button class="btn" type="button" data-filter="todo" aria-pressed="false">To do</button>
+		</div>
+		<ol id="index-list"></ol>
+	</nav>
+
+	<main>
+		<div class="banner" id="banner">Every record has both fields set. Export the CSV and send it to the coordinator through the agreed encrypted channel.</div>
+		<article class="card" id="card" aria-live="polite">
+			<div class="meta"><span class="pill" id="study-id"></span><span class="pill" id="kind"></span><span id="position"></span></div>
+			<p class="claim" id="claim" dir="auto"></p>
+			<div class="dates" id="dates"></div>
+			<h2 class="section" id="context-head">Context</h2>
+			<div class="context" id="context" dir="auto"></div>
+			<h2 class="section">Sources cited for this record</h2>
+			<ol class="sources" id="sources"></ol>
+
+			<form class="grade" id="grade" onsubmit="return false">
+				<div class="field" role="group" aria-labelledby="conf-label">
+					<span id="conf-label">Confidence: how strong is the evidence?</span>
+					<div class="choices" id="conf"></div>
+				</div>
+				<div class="field" role="group" aria-labelledby="basis-label">
+					<span id="basis-label">Basis: what kind of claim is this?</span>
+					<div class="choices" id="basis"></div>
+				</div>
+				<label class="field">
+					<span>Notes <kbd>N</kbd>: edge cases, why you are unsure, falsifier assessment (optional)</span>
+					<textarea id="notes" dir="auto" maxlength="2000"></textarea>
+				</label>
+			</form>
+
+			<div class="nav">
+				<button class="btn" id="prev" type="button">← Previous</button>
+				<button class="btn" id="next-todo" type="button">Next ungraded ⏎</button>
+				<button class="btn" id="next" type="button">Next →</button>
+			</div>
+			<p class="hint">Keys: <kbd>A</kbd>–<kbd>D</kbd> confidence, <kbd>X</kbd> confidence unsure · <kbd>1</kbd>–<kbd>4</kbd> basis, <kbd>0</kbd> basis unsure · <kbd>←</kbd>/<kbd>→</kbd> move · <kbd>Enter</kbd> next ungraded · <kbd>Esc</kbd> leave notes. Grade from the excerpts and tiers shown; do not search for new sources.</p>
+		</article>
+	</main>
+</div>
+
+<aside class="drawer" id="drawer" aria-label="Rubric" aria-hidden="true">
+	<div class="drawer-head"><strong>Rubric</strong><button class="btn" id="close-rubric" type="button">Close <kbd>Esc</kbd></button></div>
+	<div class="rubric" id="rubric-body"><!--RUBRIC--></div>
+</aside>
+
+<script id="study-data" type="application/json">/*DATA*/</script>
+<script>
+(function () {
+	'use strict';
+	var DATA = JSON.parse(document.getElementById('study-data').textContent);
+	var PROMPTS = DATA.prompts;
+	var CONF = ['A', 'B', 'C', 'D'];
+	var BASIS = ['documented', 'reported', 'inferred', 'unsubstantiated'];
+	var CONF_LABEL = { A: 'A · primary', B: 'B · corroborated', C: 'C · single / estimate', D: 'D · circulating' };
+	var KEY = 'dt-study:' + DATA.fingerprint + ':' + DATA.rater;
+	var WITHHELD = DATA.withheldMark;
+
+	var grades = {};
+	var idx = 0;
+	var filter = 'all';
+	var storageOk = true;
+	var dirtySinceExport = false;
+
+	PROMPTS.forEach(function (p) { grades[p.study_id] = { c: '', b: '', n: '' }; });
+
+	function load() {
+		try {
+			var raw = localStorage.getItem(KEY);
+			if (!raw) return;
+			var s = JSON.parse(raw);
+			Object.keys(s.grades || {}).forEach(function (id) { if (grades[id]) grades[id] = s.grades[id]; });
+			if (typeof s.idx === 'number' && s.idx >= 0 && s.idx < PROMPTS.length) idx = s.idx;
+		} catch (e) { storageOk = false; }
+	}
+	function save() {
+		dirtySinceExport = true;
+		try { localStorage.setItem(KEY, JSON.stringify({ grades: grades, idx: idx })); storageOk = true; }
+		catch (e) { storageOk = false; }
+		status();
+	}
+	function status(msg) {
+		var el = document.getElementById('status');
+		if (msg) { el.textContent = msg; el.className = 'status'; return; }
+		if (storageOk) { el.textContent = 'Saved in this browser'; el.className = 'status'; }
+		else { el.textContent = 'Not saved: browser storage is unavailable. Export often.'; el.className = 'status bad'; }
+	}
+
+	function isDone(g) { return g.c !== '' && g.b !== ''; }
+	function isTouched(g) { return g.c !== '' || g.b !== '' || g.n !== ''; }
+
+	function text(el, value) { el.textContent = value == null ? '' : String(value); }
+	// Render prose with the withheld marker highlighted. textContent only, never innerHTML.
+	function prose(el, value) {
+		el.textContent = '';
+		var parts = String(value || '').split(WITHHELD);
+		parts.forEach(function (part, i) {
+			if (i > 0) { var m = document.createElement('span'); m.className = 'withheld'; m.textContent = WITHHELD; el.appendChild(m); }
+			el.appendChild(document.createTextNode(part));
+		});
+	}
+	function safeUrl(u) {
+		try { var x = new URL(u); return (x.protocol === 'https:' || x.protocol === 'http:') ? x.href : null; } catch (e) { return null; }
+	}
+
+	function buildChoices() {
+		var conf = document.getElementById('conf');
+		CONF.forEach(function (c) { conf.appendChild(choice('c', c, CONF_LABEL[c], c)); });
+		conf.appendChild(choice('c', 'unsure', 'unsure', 'X', true));
+		var basis = document.getElementById('basis');
+		BASIS.forEach(function (b, i) { basis.appendChild(choice('b', b, b, String(i + 1))); });
+		basis.appendChild(choice('b', 'unsure', 'unsure', '0', true));
+	}
+	function choice(field, value, label, key, unsure) {
+		var b = document.createElement('button');
+		b.type = 'button'; b.className = 'choice' + (unsure ? ' unsure' : '');
+		b.dataset.field = field; b.dataset.value = value;
+		b.setAttribute('aria-pressed', 'false');
+		var s = document.createElement('span'); s.textContent = label; b.appendChild(s);
+		var k = document.createElement('kbd'); k.textContent = key; b.appendChild(k);
+		b.addEventListener('click', function () { set(field, value); });
+		return b;
+	}
+
+	function set(field, value) {
+		var g = grades[PROMPTS[idx].study_id];
+		g[field] = g[field] === value ? '' : value;
+		save(); renderGrade(); renderIndex(); renderProgress();
+	}
+
+	function renderGrade() {
+		var g = grades[PROMPTS[idx].study_id];
+		document.querySelectorAll('.choice').forEach(function (b) {
+			b.setAttribute('aria-pressed', String(g[b.dataset.field] === b.dataset.value));
+		});
+		var notes = document.getElementById('notes');
+		if (notes.value !== g.n) notes.value = g.n;
+	}
+
+	function render() {
+		var p = PROMPTS[idx];
+		text(document.getElementById('study-id'), p.study_id);
+		text(document.getElementById('kind'), p.kind);
+		text(document.getElementById('position'), (idx + 1) + ' of ' + PROMPTS.length);
+		text(document.getElementById('claim'), p.claim);
+		var d = document.getElementById('dates'); d.textContent = '';
+		if (p.dates && (p.dates.start || p.dates.end)) {
+			d.appendChild(document.createTextNode('Span as recorded: '));
+			var a = document.createElement('code'); a.textContent = p.dates.start || '?'; d.appendChild(a);
+			d.appendChild(document.createTextNode(' → '));
+			var b = document.createElement('code'); b.textContent = p.dates.end || '?'; d.appendChild(b);
+		}
+		var ctx = document.getElementById('context');
+		var hasCtx = p.context && p.context.trim();
+		ctx.hidden = !hasCtx; document.getElementById('context-head').hidden = !hasCtx;
+		if (hasCtx) prose(ctx, p.context.trim());
+
+		var list = document.getElementById('sources'); list.textContent = '';
+		if (!p.sources || p.sources.length === 0) {
+			var e = document.createElement('li'); e.className = 'empty'; e.textContent = 'No source is cited for this record.'; list.appendChild(e);
+		}
+		(p.sources || []).forEach(function (s) {
+			var li = document.createElement('li');
+			var head = document.createElement('div'); head.className = 'src-head';
+			var t = document.createElement('span'); t.className = 'tier'; t.textContent = 'Tier ' + s.tier; head.appendChild(t);
+			var title = document.createElement('span'); title.className = 'src-title'; title.dir = 'auto'; prose(title, s.title); head.appendChild(title);
+			var pub = document.createElement('span'); pub.className = 'src-pub'; pub.dir = 'auto'; pub.textContent = s.publisher; head.appendChild(pub);
+			li.appendChild(head);
+			if (s.excerpt) { var q = document.createElement('blockquote'); q.className = 'excerpt'; q.dir = 'auto'; prose(q, s.excerpt); li.appendChild(q); }
+			else { var n = document.createElement('div'); n.className = 'empty'; n.textContent = 'No excerpt recorded.'; li.appendChild(n); }
+			var href = s.url && safeUrl(s.url);
+			if (href) {
+				var l = document.createElement('a'); l.className = 'src-url'; l.href = href; l.target = '_blank'; l.rel = 'noopener noreferrer';
+				l.textContent = href; li.appendChild(l);
+			}
+			list.appendChild(li);
+		});
+		renderGrade(); renderIndex(); renderProgress();
+	}
+
+	function renderIndex() {
+		var ol = document.getElementById('index-list'); ol.textContent = '';
+		PROMPTS.forEach(function (p, i) {
+			var g = grades[p.study_id];
+			if (filter === 'todo' && isDone(g) && i !== idx) return;
+			var li = document.createElement('li');
+			var b = document.createElement('button'); b.type = 'button'; b.textContent = p.study_id;
+			b.className = isDone(g) ? 'done' : (isTouched(g) ? 'partial' : '');
+			if (i === idx) b.setAttribute('aria-current', 'true');
+			b.setAttribute('aria-label', p.study_id + (isDone(g) ? ', graded' : isTouched(g) ? ', partly graded' : ', not graded'));
+			b.addEventListener('click', function () { go(i); });
+			li.appendChild(b); ol.appendChild(li);
+		});
+	}
+	function renderProgress() {
+		var done = PROMPTS.filter(function (p) { return isDone(grades[p.study_id]); }).length;
+		text(document.getElementById('count'), done + ' / ' + PROMPTS.length + ' graded');
+		document.getElementById('bar').style.width = (100 * done / PROMPTS.length) + '%';
+		document.getElementById('banner').classList.toggle('show', done === PROMPTS.length);
+	}
+
+	function go(i) {
+		if (i < 0 || i >= PROMPTS.length) return;
+		idx = i; save(); render();
+		window.scrollTo(0, 0);
+	}
+	function nextTodo() {
+		for (var k = 1; k <= PROMPTS.length; k++) {
+			var j = (idx + k) % PROMPTS.length;
+			if (!isDone(grades[PROMPTS[j].study_id])) { go(j); return; }
+		}
+		status('Every record is graded.');
+	}
+
+	// CSV in the shape scripts/study-kappa.ts reads: one row per record, header first.
+	function csvCell(v) {
+		var s = String(v == null ? '' : v).replace(/\r?\n/g, ' ');
+		return /[",]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+	}
+	function toCsv() {
+		var rows = ['study_id,kind,confidence,basis,notes'];
+		PROMPTS.forEach(function (p) {
+			var g = grades[p.study_id];
+			rows.push([p.study_id, p.kind, g.c, g.b, g.n].map(csvCell).join(','));
+		});
+		return rows.join('\n') + '\n';
+	}
+	function parseCsvLine(line) {
+		var cols = [], cur = '', q = false;
+		for (var i = 0; i < line.length; i++) {
+			var ch = line[i];
+			if (ch === '"' && line[i + 1] === '"') { cur += '"'; i++; }
+			else if (ch === '"') q = !q;
+			else if (ch === ',' && !q) { cols.push(cur); cur = ''; }
+			else cur += ch;
+		}
+		cols.push(cur);
+		return cols;
+	}
+	function fromCsv(textValue) {
+		var lines = textValue.split(/\r?\n/).filter(function (l) { return l.trim(); });
+		var head = parseCsvLine(lines[0] || '').map(function (h) { return h.trim().toLowerCase(); });
+		var si = head.indexOf('study_id'), ci = head.indexOf('confidence'), bi = head.indexOf('basis'), ni = head.indexOf('notes');
+		if (si < 0 || ci < 0 || bi < 0) throw new Error('The file has no study_id, confidence and basis columns.');
+		var next = {}, unknown = 0, applied = 0;
+		for (var r = 1; r < lines.length; r++) {
+			var c = parseCsvLine(lines[r]); var id = (c[si] || '').trim();
+			if (!grades[id]) { unknown++; continue; }
+			var conf = (c[ci] || '').trim(); var basis = (c[bi] || '').trim().toLowerCase();
+			if (conf.toLowerCase() === 'unsure') conf = 'unsure'; else conf = conf.toUpperCase();
+			if (conf && conf !== 'unsure' && CONF.indexOf(conf) < 0) throw new Error(id + ': confidence "' + conf + '" is not A–D or unsure.');
+			if (basis && basis !== 'unsure' && BASIS.indexOf(basis) < 0) throw new Error(id + ': basis "' + basis + '" is not one of the four bases or unsure.');
+			next[id] = { c: conf, b: basis, n: ni >= 0 ? (c[ni] || '').trim() : '' };
+			applied++;
+		}
+		if (unknown > 0) throw new Error(unknown + ' row(s) belong to a different instrument. Nothing was imported.');
+		Object.keys(next).forEach(function (id) { grades[id] = next[id]; });
+		return applied;
+	}
+
+	function download() {
+		var blob = new Blob([toCsv()], { type: 'text/csv;charset=utf-8' });
+		var a = document.createElement('a');
+		a.href = URL.createObjectURL(blob);
+		a.download = DATA.rater.toLowerCase().replace(/[^a-z0-9]+/g, '-') + '-' + DATA.fingerprint + '.csv';
+		document.body.appendChild(a); a.click(); a.remove();
+		setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+		dirtySinceExport = false;
+		status('Exported ' + a.download);
+	}
+
+	function openRubric(open) {
+		var d = document.getElementById('drawer');
+		d.classList.toggle('open', open); d.setAttribute('aria-hidden', String(!open));
+		if (open) document.getElementById('close-rubric').focus();
+	}
+
+	document.getElementById('prev').addEventListener('click', function () { go(idx - 1); });
+	document.getElementById('next').addEventListener('click', function () { go(idx + 1); });
+	document.getElementById('next-todo').addEventListener('click', nextTodo);
+	document.getElementById('export').addEventListener('click', download);
+	document.getElementById('open-rubric').addEventListener('click', function () { openRubric(true); });
+	document.getElementById('close-rubric').addEventListener('click', function () { openRubric(false); });
+	document.getElementById('import').addEventListener('click', function () { document.getElementById('import-file').click(); });
+	document.getElementById('import-file').addEventListener('change', function (ev) {
+		var f = ev.target.files && ev.target.files[0]; if (!f) return;
+		f.text().then(function (t) {
+			try { var n = fromCsv(t); save(); render(); status('Imported ' + n + ' row(s) from ' + f.name); }
+			catch (e) { status('Import refused: ' + e.message); }
+			ev.target.value = '';
+		});
+	});
+	document.getElementById('toggle-index').addEventListener('click', function (ev) {
+		var open = document.getElementById('index').classList.toggle('open');
+		ev.currentTarget.setAttribute('aria-expanded', String(open));
+	});
+	document.querySelectorAll('[data-filter]').forEach(function (b) {
+		b.addEventListener('click', function () {
+			filter = b.dataset.filter;
+			document.querySelectorAll('[data-filter]').forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+			renderIndex();
+		});
+	});
+	document.getElementById('notes').addEventListener('input', function (ev) {
+		grades[PROMPTS[idx].study_id].n = ev.target.value; save(); renderIndex();
+	});
+
+	document.addEventListener('keydown', function (ev) {
+		if (ev.ctrlKey || ev.metaKey || ev.altKey) return;
+		var inField = ev.target && (ev.target.tagName === 'TEXTAREA' || ev.target.tagName === 'INPUT');
+		if (ev.key === 'Escape') {
+			if (document.getElementById('drawer').classList.contains('open')) openRubric(false);
+			else if (inField) ev.target.blur();
+			return;
+		}
+		if (inField) return;
+		var k = ev.key;
+		if (/^[abcd]$/i.test(k)) { set('c', k.toUpperCase()); ev.preventDefault(); }
+		else if (k === 'x' || k === 'X') { set('c', 'unsure'); ev.preventDefault(); }
+		else if (/^[1-4]$/.test(k)) { set('b', BASIS[Number(k) - 1]); ev.preventDefault(); }
+		else if (k === '0') { set('b', 'unsure'); ev.preventDefault(); }
+		else if (k === 'ArrowRight') { go(idx + 1); ev.preventDefault(); }
+		else if (k === 'ArrowLeft') { go(idx - 1); ev.preventDefault(); }
+		else if (k === 'Enter') { nextTodo(); ev.preventDefault(); }
+		else if (k === 'n' || k === 'N') { document.getElementById('notes').focus(); ev.preventDefault(); }
+		else if (k === 'r' || k === 'R') { openRubric(!document.getElementById('drawer').classList.contains('open')); ev.preventDefault(); }
+	});
+	window.addEventListener('beforeunload', function (ev) {
+		if (!storageOk && dirtySinceExport) { ev.preventDefault(); ev.returnValue = ''; }
+	});
+
+	text(document.getElementById('rater'), DATA.rater);
+	text(document.getElementById('fingerprint'), DATA.fingerprint);
+	buildChoices();
+	load();
+	status();
+	render();
+})();
+</script>
+</body>
+</html>

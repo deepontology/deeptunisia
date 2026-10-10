@@ -54,16 +54,31 @@ npx tsx scripts/study-kappa.ts --raters research/study/dry-run/model-arm/regime-
 npx tsx scripts/study-sampler.ts --n 300 --out research/study --seed <commitSha or fixed>
 npx tsx scripts/study-blinding.ts --verify --sample research/study/sample-300-blinded.json --key research/study/sample-300-key.json
 npx tsx scripts/study-blinding.ts --build --sample research/study/sample-300-blinded.json --key research/study/sample-300-key.json --out research/study/raters
-# distribute raters/rater-{a,b,c}.csv to raters (not the key)
-# collect grades, then:
+# one grading page per rater (see "Rater workbench" below)
+npx tsx scripts/study-workbench.ts --sample research/study/raters/rater-a.json --out research/study/workbench/rater-a.html
+# distribute each rater's page (not the key, not the JSON), collect their exported CSVs, then:
 npx tsx scripts/study-kappa.ts --raters research/study/raters/rater-a.csv,research/study/raters/rater-b.csv,research/study/raters/rater-c.csv --sample research/study/sample-300-blinded.json --out research/study/kappa-report.json
 npx tsx scripts/study-model-arm.ts --sample research/study/sample-300-blinded.json --out research/study/model-arm --prompt both
 ```
+
+## Rater workbench
+
+`scripts/study-workbench.ts` turns one per-rater JSON into a single HTML file. The rater opens it in a browser with no install and no account. It shows one record at a time, with the claim in full, the recorded span, the context, and every cited source with its tier, publisher, excerpt and link. Rubric v2 opens beside it. Grading works by keyboard: `A`–`D` for confidence, `1`–`4` for basis, `X`/`0` for unsure. Progress is kept in the rater's browser, and the export is `<rater>-<instrument>.csv` in the shape `study-kappa.ts` reads. A rater can import that CSV to resume on another machine. A CSV from a different instrument is refused whole.
+
+What the page guarantees, and what checks it:
+
+- **No grade on the page.** Prompts pass through an allowlist, so the record id field, source ids and grade fields are dropped. Sentences in context, titles or excerpts that name a grade ("No upgrade possible", "confidence B", "C-grade") are replaced with a visible `[withheld: names a grade]`. A claim that names its grade fails the build and is never redacted. The assembled page is scanned again before it is written. The free-text check also runs in `study-blinding.ts --verify`, which now fails on the 2026-09-02 300-record sample (14 prompts) and the dry run (1 prompt). From now on the sampler withholds those sentences when it draws a sample.
+- **Nothing leaves the machine except the export.** The page's Content-Security-Policy forbids every connection.
+- **Checked:** `npm run test:study` (part of `npm run test`) pins the blinding. `npm run study:workbench:check` drives the page in a real browser: keyboard grading, reload, export, `study-kappa.ts` on the export, import, the network block, and phone width.
+
+Claim prose can still name a subject that the public site can be searched for. That part of blinding depends on raters not consulting deeptunisia.org while grading.
 
 ## Scripts
 
 - `scripts/study-sampler.ts` — stratified sampler (risk buckets, kind stratification, deterministic PRNG)
 - `scripts/study-blinding.ts` — blinding harness (verify / build per-rater views)
+- `scripts/study-leaks.ts` — free-text grade-leak patterns and redaction, shared by the sampler, the harness and the workbench
+- `scripts/study-workbench.ts` — one self-contained grading page per rater (`study-workbench-check.ts` runs it in a browser)
 - `scripts/study-kappa.ts` — Fleiss κ / Krippendorff α with bootstrap CIs and per-kind breakdown
 - `scripts/study-model-arm.ts` — model-arm runner (two prompt regimes, simulator fallback)
 
