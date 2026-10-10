@@ -1,13 +1,12 @@
 <script lang="ts">
 	import { app } from '$lib/state.svelte';
+	import InstitutionPicker from '$lib/components/InstitutionPicker.svelte';
 	import SourceList from '$lib/components/SourceList.svelte';
 	import Button from '$lib/ui/Button.svelte';
 	import Chip from '$lib/ui/Chip.svelte';
-	import Input from '$lib/ui/Input.svelte';
 	import {
 		BASIS_COLOR,
 		BASIS_SHORT,
-		LAYER_COLOR,
 		ds,
 		institutionById,
 		meetsBasis,
@@ -41,22 +40,8 @@
 	let setA = $state<string[]>(['armed-forces', 'military-security']);
 	let setB = $state<string[]>(['presidential-security', 'presidency']);
 	let subject = $state('ben-ali');
-	let instQuery = $state('');
-	let setAQuery = $state('');
-	let setBQuery = $state('');
 
 	const institutions = $derived([...ds.institutions].sort((a, b) => a.order - b.order));
-
-	function matchesFilter(inst: (typeof institutions)[number], q: string): boolean {
-		const needle = q.trim().toLowerCase();
-		if (!needle) return true;
-		const hay = `${nameOf(inst)} ${inst.abbr ?? ''}`.toLowerCase();
-		return hay.includes(needle);
-	}
-
-	const filteredInst = $derived(institutions.filter((i) => matchesFilter(i, instQuery)));
-	const filteredSetA = $derived(institutions.filter((i) => matchesFilter(i, setAQuery)));
-	const filteredSetB = $derived(institutions.filter((i) => matchesFilter(i, setBQuery)));
 
 	const range = $derived<[number, number]>([
 		Date.UTC(Math.min(fromYear, toYear), 0, 1),
@@ -177,10 +162,6 @@
 			}
 		}
 	];
-
-	function toggle(list: string[], id: string): string[] {
-		return list.includes(id) ? list.filter((x) => x !== id) : [...list, id];
-	}
 </script>
 
 <svelte:head>
@@ -201,82 +182,49 @@
 	</div>
 
 	<div class="builder">
-		<div class="modes">
-			<Button variant="outline" size="xs" active={mode === 'officeholders'} onclick={() => (mode = 'officeholders')}
-				>{t('investigate.officeholders')}</Button
-			>
-			<Button variant="outline" size="xs" active={mode === 'crossings'} onclick={() => (mode = 'crossings')}
-				>{t('investigate.both')}</Button
-			>
-			<Button variant="outline" size="xs" active={mode === 'connections'} onclick={() => (mode = 'connections')}
-				>{t('investigate.connected')}</Button
-			>
-		</div>
+		<div class="modes-row">
+			<div class="modes">
+				<Button variant="outline" size="xs" active={mode === 'officeholders'} onclick={() => (mode = 'officeholders')}
+					>{t('investigate.officeholders')}</Button
+				>
+				<Button variant="outline" size="xs" active={mode === 'crossings'} onclick={() => (mode = 'crossings')}
+					>{t('investigate.both')}</Button
+				>
+				<Button variant="outline" size="xs" active={mode === 'connections'} onclick={() => (mode = 'connections')}
+					>{t('investigate.connected')}</Button
+				>
+			</div>
 
-		<div class="period">
-			<label>
-				<span>{t('investigate.from')}</span>
-				<input type="number" min="1956" max="2026" bind:value={fromYear} />
-			</label>
-			<label>
-				<span>{t('investigate.to')}</span>
-				<input type="number" min="1956" max="2026" bind:value={toYear} />
-			</label>
+			<div class="period">
+				<label>
+					<span>{t('investigate.from')}</span>
+					<input type="number" min="1956" max="2026" bind:value={fromYear} />
+				</label>
+				<label>
+					<span>{t('investigate.to')}</span>
+					<input type="number" min="1956" max="2026" bind:value={toYear} />
+				</label>
+			</div>
 		</div>
 
 		{#if mode === 'officeholders'}
 			<fieldset>
 				<legend>{t('investigate.institutions')} <span class="mono">{instFilter.length || 'any'}</span></legend>
-				<div class="filter-row">
-					<Input bind:value={instQuery} placeholder={t('ctl.search')} size="xs" />
-				</div>
-<div class="chips">
-					{#each filteredInst as i (i.id)}
-						<Button
-							variant="outline"
-							size="xs"
-							active={instFilter.includes(i.id)}
-							tint={LAYER_COLOR[i.layer as Layer]}
-							onclick={() => (instFilter = toggle(instFilter, i.id))}>{i.abbr ?? nameOf(i)}</Button
-						>
-					{/each}
-				</div>
+				<InstitutionPicker
+					bind:ids={instFilter}
+					label={t('investigate.institutions')}
+					id="investigate-inst"
+				/>
 			</fieldset>
 		{:else if mode === 'crossings'}
 			<div class="two-sets">
 				<fieldset>
 					<legend>{t('investigate.setA')} <span class="mono">{setA.length}</span></legend>
-					<div class="filter-row">
-						<Input bind:value={setAQuery} placeholder={t('ctl.search')} size="xs" />
-					</div>
-					<div class="chips">
-						{#each filteredSetA as i (i.id)}
-							<Button
-								variant="outline"
-								size="xs"
-								active={setA.includes(i.id)}
-								tint={LAYER_COLOR[i.layer as Layer]}
-								onclick={() => (setA = toggle(setA, i.id))}>{i.abbr ?? nameOf(i)}</Button
-							>
-						{/each}
-					</div>
+					<InstitutionPicker bind:ids={setA} label={t('investigate.setA')} id="investigate-setA" />
 				</fieldset>
 				<fieldset>
 					<legend>{t('investigate.setB')} <span class="mono">{setB.length}</span></legend>
-					<div class="filter-row">
-						<Input bind:value={setBQuery} placeholder={t('ctl.search')} size="xs" />
-					</div>
-					<div class="chips">
-						{#each filteredSetB as i (i.id)}
-							<Button
-								variant="outline"
-								size="xs"
-								active={setB.includes(i.id)}
-								tint={LAYER_COLOR[i.layer as Layer]}
-								onclick={() => (setB = toggle(setB, i.id))}>{i.abbr ?? nameOf(i)}</Button
-							>
-						{/each}
-					</div>
+					<InstitutionPicker bind:ids={setB} label={t('investigate.setB')} id="investigate-setB" />
 				</fieldset>
 			</div>
 		{:else}
@@ -440,12 +388,23 @@
 		border-bottom: 1px solid var(--border-subtle);
 	}
 	.builder {
-		padding: var(--s-5) var(--s-6);
+		padding: var(--s-4) var(--s-6);
 		border-bottom: 1px solid var(--border-subtle);
 		background: var(--surface-raised);
 		display: flex;
 		flex-direction: column;
+		gap: var(--s-4);
+	}
+	/*
+	 * Modes and the period share one row. Both were full-width rows of their own,
+	 * which with the institution wall below them left the results table below the
+	 * fold on a desktop screen; the wall is gone and what is left fits one line.
+	 */
+	.modes-row {
+		display: flex;
+		align-items: center;
 		gap: var(--s-5);
+		flex-wrap: wrap;
 	}
 	.modes {
 		display: flex;
@@ -453,19 +412,19 @@
 	}
 	.period {
 		display: flex;
-		gap: 14px;
+		gap: var(--s-4);
 	}
 	.period label {
 		display: flex;
 		align-items: center;
-		gap: 6px;
-		font-size: 11px;
+		gap: var(--s-2);
+		font-size: var(--t-2xs);
 		color: var(--text-secondary);
 	}
 	input[type='number'] {
 		width: 74px;
 		font-family: var(--font-mono);
-		font-size: 12px;
+		font-size: var(--t-xs);
 		background: var(--surface-sunken);
 		border: 1px solid var(--border-default);
 		border-radius: var(--r-sm);
@@ -474,12 +433,12 @@
 	}
 	select {
 		font: inherit;
-		font-size: 12.5px;
+		font-size: var(--t-xs);
 		background: var(--surface-sunken);
 		border: 1px solid var(--border-default);
 		border-radius: var(--r-sm);
 		color: var(--text-primary);
-		padding: 4px 7px;
+		padding: var(--s-2) var(--s-3);
 		max-width: 320px;
 	}
 
@@ -491,25 +450,16 @@
 	}
 	legend {
 		font-family: var(--font-mono);
-		font-size: 10px;
+		font-size: var(--t-2xs);
 		letter-spacing: 0.1em;
 		text-transform: uppercase;
 		color: var(--text-faint);
-		padding: 0 0 6px;
+		padding: 0 0 var(--s-2);
 	}
 	.two-sets {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
-		gap: 18px;
-	}
-	.filter-row {
-		max-width: 320px;
-		margin-block-end: var(--s-3);
-	}
-	.chips {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 3px;
+		gap: var(--s-5);
 	}
 	.results {
 		padding: var(--s-6) var(--s-6) 0;

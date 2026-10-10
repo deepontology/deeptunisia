@@ -1465,7 +1465,13 @@ const en: Dict = {
 	'plate.fig': 'FIG. {n}',
 	// redesign 2026-10 (CH-3)
 	'chronicle.vertical.level': '{n} px per year',
-	'chronicle.vertical.clearfocus': 'Clear focus'
+	'chronicle.vertical.clearfocus': 'Clear focus',
+	// redesign 2026-10 (OV-1)
+	'investigate.picker.placeholder': 'Find an institution',
+	'investigate.picker.topHint': 'The {n} institutions this dataset names most often.',
+	'investigate.picker.records': '{n} records',
+	'investigate.picker.none': 'No other institution matches.',
+	'investigate.picker.remove': 'Remove {name}'
 };
 
 const fr: Dict = {
@@ -2861,7 +2867,13 @@ const fr: Dict = {
 	'plate.fig': 'FIG. {n}',
 	// redesign 2026-10 (CH-3)
 	'chronicle.vertical.level': '{n} px par an',
-	'chronicle.vertical.clearfocus': 'Effacer le focus'
+	'chronicle.vertical.clearfocus': 'Effacer le focus',
+	// redesign 2026-10 (OV-1)
+	'investigate.picker.placeholder': 'Trouver une institution',
+	'investigate.picker.topHint': 'Les {n} institutions les plus souvent citées dans cette base de données.',
+	'investigate.picker.records': '{n} fiches',
+	'investigate.picker.none': 'Aucune autre institution ne correspond.',
+	'investigate.picker.remove': 'Retirer {name}'
 };
 
 
@@ -4252,7 +4264,13 @@ const ar: Dict = {
 	'plate.fig': 'شكل {n}',
 	// redesign 2026-10 (CH-3)
 	'chronicle.vertical.level': '{n} بكسل في السنة',
-	'chronicle.vertical.clearfocus': 'إلغاء التركيز'
+	'chronicle.vertical.clearfocus': 'إلغاء التركيز',
+	// redesign 2026-10 (OV-1)
+	'investigate.picker.placeholder': 'ابحث عن مؤسسة',
+	'investigate.picker.topHint': 'المؤسسات الـ{n} الأكثر ذكرًا في قاعدة البيانات هذه.',
+	'investigate.picker.records': '{n} سجلات',
+	'investigate.picker.none': 'لا توجد مؤسسة أخرى مطابقة.',
+	'investigate.picker.remove': 'إزالة {name}'
 };
 
 
