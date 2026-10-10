@@ -30,6 +30,6 @@ Les règles de recherche de DeepTunisia exigent des choses dont cette étude ne 
 
 Les résultats sont affichés en direct pendant la collecte. Par défaut, la plateforme n'affiche que des effectifs jusqu'à la clôture d'une étude, car des chiffres en direct incitent à les pousser. Pour rendre ces tentatives visibles, chaque envoi par heure et chaque exclusion sont publiés en direct sur cette page.
 
-Les questions en français et en arabe sont des traductions provisoires préparées par le projet et relues par sa rédaction. Elles seront remplacées par des traductions humaines indépendantes, vérifiées par rétrotraduction, dans une version ultérieure du questionnaire.
+Les questions en français et en arabe sont des traductions provisoires préparées par le projet. Personne lisant ces langues ne les a encore relues. Elles seront remplacées par des traductions humaines indépendantes, vérifiées par rétrotraduction, dans une version ultérieure du questionnaire.
 
 L'étude n'est pas passée devant un comité d'éthique externe. Les protections décrites ci-dessus sont celles du projet, et ce sont celles qu'il demanderait à un comité de vérifier.

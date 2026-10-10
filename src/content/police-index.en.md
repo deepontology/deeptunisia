@@ -30,6 +30,6 @@ DeepTunisia's research rules ask for things this study does not yet have, and th
 
 Results are shown live while answers come in. The platform's default is to show counts only until a study closes, because live numbers invite people to push them. To make pushing visible, every submission per hour and every exclusion is published live on this page.
 
-The French and Arabic questions are interim translations prepared by the project and reviewed by its editor. They will be replaced by independent human translations, checked by back-translation, in a later version of the questionnaire.
+The French and Arabic questions are interim translations prepared by the project. No one who reads those languages has reviewed them yet. They will be replaced by independent human translations, checked by back-translation, in a later version of the questionnaire.
 
 The study has not been through an external ethics review. The protections above are the project's own, and they are the same ones it would ask a reviewer to check.

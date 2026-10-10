@@ -5,6 +5,9 @@ export default defineConfig({
 	plugins: [sveltekit()],
 	server: {
 		fs: { allow: ['..'] },
+		// The agent-tool folders can link back into the main checkout, and a
+		// worktree inside them makes the watcher loop over the repo again.
+		watch: { ignored: ['**/.claude/**', '**/.opencode/**'] },
 		/*
 		 * Agora is a tab in this app, not a separate site — so its API has to look
 		 * same-origin to the browser.
