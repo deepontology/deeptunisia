@@ -31,6 +31,7 @@
 		type Position
 	} from '$lib/model';
 	import { buildGroups, visiblePositions, type ChronRow } from '$lib/chronicle/rows';
+	import { buildEventLinks } from '$lib/chronicle/links';
 
 	/**
 	 * A layered Gantt of officeholding, 1956-2026.
@@ -631,8 +632,37 @@
 		app.selected ? (eventById.get(app.selected) ?? null) : null
 	);
 
-	/** Selecting an event must not dim the tenure rows: no holder matches. */
-	const eventFocus = $derived(eventSelected !== null);
+	// --- Event <-> post cross-highlight ---------------------------------------
+	// Events name institutions and people; `buildEventLinks` turns those into the
+	// posts each event involves. A hovered or selected event lights its linked rows
+	// and pushes every other bar back; a focused person lights their events in the
+	// lane and pushes the other marks back. Both directions use `--dim`.
+
+	const links = buildEventLinks({
+		events: ds.events,
+		roles: ds.roles,
+		positions: ds.positions,
+		people: ds.people,
+		institutions: ds.institutions,
+		cutoff: CUTOFF
+	});
+
+	/** The lane event under the pointer, if any. Hover previews; selection holds. */
+	let hoverEventId = $state<string | null>(null);
+
+	const focusEventId = $derived(hoverEventId ?? eventSelected?.id ?? null);
+
+	/** Posts the focused event links to, or null when no event is focused. */
+	const focusRoles = $derived<Set<string> | null>(
+		focusEventId ? (links.byEvent.get(focusEventId)?.roleIds ?? new Set<string>()) : null
+	);
+
+	/** Events linked to the focused person, or null when no person is focused. */
+	const personEvents = $derived.by<Set<string> | null>(() => {
+		const who = app.selected ?? app.hovered;
+		if (!who || !personById.has(who)) return null;
+		return new Set(links.eventsByPerson.get(who) ?? []);
+	});
 
 	const linkedEventIds = $derived.by(() => {
 		const sel = eventSelected;
@@ -707,6 +737,7 @@
 
 	function onLaneMove(e: MouseEvent) {
 		const it = lanePick(e.clientX, e.clientY);
+		hoverEventId = it && it.kind !== 'cluster' ? it.event.id : null;
 		const r = plotEl?.getBoundingClientRect();
 		if (!it || !r) {
 			evTip = null;
@@ -731,10 +762,12 @@
 
 	function onLaneLeave() {
 		evTip = null;
+		hoverEventId = null;
 	}
 
 	/** Expanded-mode hover preview: rows separate marks, so a per-mark hover works. */
 	function showEvTip(me: MouseEvent, ev: EventRec) {
+		hoverEventId = ev.id;
 		const r = plotEl?.getBoundingClientRect();
 		if (!r) return;
 		evTip = {
@@ -788,7 +821,8 @@
 	});
 
 	function eventDim(e: EventRec): boolean {
-		return Boolean(eventSelected && e.id !== eventSelected.id && !linkedEventIds.has(e.id));
+		if (eventSelected) return e.id !== eventSelected.id && !linkedEventIds.has(e.id);
+		return personEvents !== null && !personEvents.has(e.id);
 	}
 
 	/**
@@ -1250,7 +1284,7 @@
 						{@const w = Math.max(18, Math.min(36, 14 + String(it.members.length).length * 7))}
 						<g
 							class="ev-mark"
-							class:dim={eventSelected !== null && !membersSel}
+							class:dim={eventSelected !== null ? !membersSel : personEvents !== null && !it.members.some((m) => personEvents.has(m.id))}
 							role="button"
 							tabindex="0"
 							aria-label="{it.members.length} events, {clusterRange(it.members)}"
@@ -1427,7 +1461,7 @@
 						{@const membersSel = c.members.some((m) => m.id === eventSelected?.id)}
 						<g
 							class="ev-mark clickable"
-							class:dim={eventSelected !== null && !membersSel}
+							class:dim={eventSelected !== null ? !membersSel : personEvents !== null && !c.members.some((m) => personEvents.has(m.id))}
 							role="button"
 							tabindex="0"
 							aria-label="{c.members.length} events, {clusterRange(c.members)}"
@@ -1474,7 +1508,7 @@
 						</g>
 					{:else}
 						{@const focusedRow = item.positions.some(isFocused)}
-						{@const tiedRow = !focusedRow && item.positions.some(isConnected)}
+						{@const tiedRow = !focusedRow && (item.positions.some(isConnected) || (focusRoles?.has(item.roleId) ?? false))}
 						<!-- Stagger keyed to vertical position so the chart assembles top-down.
 						     Derived from y rather than an index because rows are interleaved
 						     with group headers, and y is what the eye actually tracks. -->
@@ -1494,10 +1528,12 @@
 										{@const act = activity(pos.interval, app.t)}
 										{@const focus = isFocused(pos)}
 										{@const tied = !focus && isConnected(pos)}
-										{@const dim = anyFocus && !eventFocus && !focus && !tied}
+										{@const evdim = focusRoles !== null && !focusRoles.has(item.roleId)}
+										{@const dim = focusRoles === null && anyFocus && !focus && !tied}
 										<g
 											class="bar"
 											class:dim
+											class:evdim
 											class:focus
 											class:tied
 											style:color={LAYER_COLOR[item.layer]}
@@ -1650,7 +1686,7 @@
 							</g>
 						{:else}
 							{@const focusedRow = item.positions.some(isFocused)}
-							{@const tiedRow = !focusedRow && item.positions.some(isConnected)}
+							{@const tiedRow = !focusedRow && (item.positions.some(isConnected) || (focusRoles?.has(item.roleId) ?? false))}
 							<!-- The single label pass: after the gutter mask, with the row's
 							     own stagger and focus/tied colours applied directly (they used
 							     to be drawn twice — once under the mask, once above — and the
@@ -2312,6 +2348,10 @@
 	}
 	.bar.dim {
 		opacity: 0.24;
+	}
+	/* Under an event focus: rows the event does not involve step back. */
+	.bar.evdim {
+		opacity: var(--dim);
 	}
 	.bar.focus {
 		opacity: 1;
