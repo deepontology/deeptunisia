@@ -4960,3 +4960,256 @@
     reporting the strike would confirm or refute the date and the stated
     grounds; a communiqué withdrawing it would refute the record outright.
   sources: [kapitalis-chebbi-greve-faim-2026-10-01, kapitalis-chebbi-experience-carcerale-2026-10-05]
+
+- id: ev-march-of-dignity-2026-10-05
+  date: "2026-09-27"
+  date_end: "2026-10-05"
+  title_en: "March of Dignity: unemployed graduates walk to Tunis for law 18"
+  title_fr: "Marche de la Dignité : les diplômés chômeurs marchent vers Tunis pour la loi 18"
+  title_ar: "مسيرة الكرامة: حاملو الشهادات المعطلون عن العمل يسيرون نحو العاصمة"
+  category: protest
+  subcategory: employment
+  location: [gov-sidi-bouzid, gov-tunis]
+  actors: []
+  institutions: []
+  causes: []
+  consequences: []
+  summary: >-
+    The March of Dignity (مسيرة الكرامة) of unemployed higher-education
+    graduates set off on 27 September 2026 from Menzel Bouzaiane, Sidi Bouzid,
+    to demand activation of law no. 18 on their employment. It reached the
+    edge of the capital on 5 October 2026: after a night in Grombalia the
+    marchers resumed in the morning and stopped in the evening at Borj Cedria,
+    on the capital's outskirts, to decide whether to continue to the Carthage
+    Palace. Nawaat reported the march on 5 October 2026, its ninth day. The
+    report names no organising body and no leader. Nothing links it to the
+    Nafas collective (see ev-nafas-protest-2026-08-20), whose August march was
+    a broad anti-government mobilisation; this one is a graduates' employment
+    march.
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "Nawaat (5 October 2026)"
+  reasoning: >-
+    Single outlet, and the piece is a short video report; the start date,
+    route and demand are as Nawaat states them. The marchers are a collective
+    of unemployed graduates with no graph entity, so no actor or institution
+    is attributed and the record rests on the outlet alone.
+  falsifiable_by: >-
+    The march's own communiqués, an Interior Ministry statement, or a second
+    outlet's account would confirm or correct the 27 September start, the
+    route and the law-18 demand; a report that the march was rerouted or
+    called off would correct it.
+  sources:
+    - nawaat-marche-dignite-2026-10-05
+
+- id: ev-prison-heat-deaths-2026-summer
+  date: "2026-07-01"
+  date_end: "2026-08-31"
+  title_en: "Summer 2026 prison deaths: record heat and opacity on the causes"
+  title_fr: "Décès dans les prisons à l'été 2026 : chaleur record et opacité sur les causes"
+  title_ar: "وفيات السجون في صيف 2026: حرارة قياسية وغموض حول الأسباب"
+  category: legal
+  subcategory: detention-death
+  actors: []
+  institutions: [ltdh, ministry-health, steg]
+  summary: >-
+    In July and August 2026 Tunisia recorded record heat (up to 50°C in places;
+    July 2026 ranked second-hottest July since 1950; Kairouan hit 49.8°C on
+    26 July), and Inkyfada reported on 5 October 2026 that prisons recorded
+    deaths and health deterioration tied to heat, electricity cuts,
+    overcrowding and gaps in medical care. Named cases include Sami Arbi
+    Ayadi, 52, held at Mornaguia in a bank-offence case, who died around
+    28 August 2026 after a transfer to Charles-Nicolle hospital per his sister
+    Faten Ayadi; a Gafsa prison detainee whose death from cardiac arrest the
+    LTDH Gafsa section announced on 26 August, its president Afef Zarrouk
+    putting the prison at about 200% occupancy (around 700 for a capacity
+    under 400); Hamza Dridi, 33, who died on 22 July after more than a year and
+    nine months in detention without a ruling, per the association
+    Intersection; and Mohamed Ali Ben Khemis, 31, who died on 26 August at
+    Mornaguia, his family saying he had been treated at Razi hospital and
+    reporting suspected violence marks, with no forensic report obtained. The
+    Tunisian young doctors' organisation said on 29 August that deaths and
+    emergency admissions from heat stroke were up "unprecedentedly"; its
+    president Wajih Dhakar gave a 150-200 national heat-death estimate on
+    23 July from more than 30 hospitals; the health ministry counted 633
+    heat-related consultations between 1 July and 29 August but published no
+    death toll. The LTDH counted more than 20 heat-linked deaths and said the
+    investigating judge of the 11th bureau of the Tunis Court of First
+    Instance had taken up 16 files; Intersection's Ghaylen Jlassi put
+    suspicious deaths near 30, mostly at Mornaguia, plus Monastir, Gabès and
+    Sfax. LTDH president Bassem Trifi said some facilities exceeded 300%
+    occupancy and likened the conditions to cruel and humiliating treatment
+    meeting the definition of torture. An earlier AFP/Kapitalis report of
+    13 September said at least 23 prisoners had died and that the authorities
+    answered that no prison death could be attributed to heat without forensic
+    confirmation, while publishing no figure. Families reported delayed
+    notification and withheld forensic reports; the Directorate-General of
+    Prisons and the Justice Ministry are described as silent. STEG's Faycel
+    Tarifa attributed the cuts to air-conditioning load; President Saïed said
+    the cuts were deliberate attacks (see ev-sabotage-declaration-2026-08-26).
+    The counts are kept as reported and never averaged.
+  confidence: B
+  basis: reported
+  verification: needs-primary-source
+  contested:
+    - framing: "More than 20 to 30 prison deaths are linked to the summer heat, overcrowding and power cuts"
+      held_by: "LTDH, Intersection pour les droits et les libertés, the Tunisian young doctors' organisation and OMCT (relayed by Inkyfada)"
+      source: inkyfada-prisons-deces-chaleur-2026-10-05
+    - framing: "No prison death can be attributed to the heat without forensic confirmation; no official figure is published"
+      held_by: "Tunisian authorities (prison administration and Justice Ministry), as reported"
+      source: kapitalis-prisons-deces-chaleur-2026-09-13
+  falsifiable_by: >-
+    The forensic and judicial files (the 16 cases before the 11th bureau), an
+    official death toll, or the prison administration's records would confirm
+    or correct the counts and the causes of each death.
+  sources:
+    - inkyfada-prisons-deces-chaleur-2026-10-05
+    - kapitalis-prisons-deces-chaleur-2026-09-13
+
+- id: ev-saied-carthage-audiences-2026-10-08
+  date: "2026-10-08"
+  title_en: "Saïed holds Carthage audiences; calls accountability a 'legitimate demand'"
+  title_fr: "Saïed reçoit au palais de Carthage ; la reddition des comptes, une « revendication légitime »"
+  title_ar: "سعيد يستقبل في قصر قرطاج ويعتبر المحاسبة «مطلبًا مشروعًا»"
+  category: political
+  subcategory: presidential-declaration
+  actors: [kais-saied, brahim-bouderbala, imed-derbali, mohamed-ali-boughdiri]
+  institutions: [presidency, legislature, cnrd, conseil-superieur-education]
+  summary: >-
+    President Kaïs Saïed received at the Carthage Palace on Thursday
+    8 October 2026 the ARP speaker Brahim Bouderbala and the CNRD president
+    Imed Derbali, and separately the culture minister Amina Srarfi with
+    Mohamed Ali Boughdiri, secretary-general of the Higher Council of
+    Education and Teaching, ahead of the council's inaugural session. Per the
+    presidency communiqué relayed by African Manager, Saïed said the obstacles
+    to the state's work were many, "habitual or provoked", and that
+    accountability was a "legitimate demand" distinct from score-settling,
+    that "all the truth will be revealed, with no immunity or exception for
+    anyone", and that Tunisia was passing through "historic moments". On
+    education he said the council's constitutional inscription flowed from the
+    conviction that education and teaching are part of national security,
+    called for a system guaranteeing equality for all and for cultural clubs
+    and school transport, meals, lodging, clothing and supplies, and called
+    past reform attempts "biased manoeuvres". Amina Srarfi has no graph
+    record and is named but not an actor.
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "Presidency of the Republic communiqués, as relayed by African Manager (9 October 2026)"
+  reasoning: >-
+    One outlet relaying the presidency's own communiqués for two audiences the
+    same day; the quotes are as African Manager prints them. Grade C with
+    attribution, matching the graph's treatment of other
+    presidential-declaration records (see ev-sabotage-declaration-2026-08-26).
+  falsifiable_by: >-
+    The presidency's own communiqués or a second outlet's account would
+    confirm the audiences, the participants and the wording.
+  sources:
+    - african-manager-saied-reddition-comptes-2026-10-09
+    - african-manager-saied-egalite-chances-2026-10-09
+
+- id: ev-tunisia-libya-security-2026-10-08
+  date: "2026-10-08"
+  title_en: "Interior Minister Nouri in Tripoli for security cooperation"
+  title_fr: "Le ministre de l'Intérieur Nouri à Tripoli pour la coopération sécuritaire"
+  title_ar: "وزير الداخلية خالد النوري في طرابلس لبحث التعاون الأمني"
+  category: political
+  subcategory: foreign-relations
+  actors: [khaled-nouri]
+  institutions: [ministry-interior, libya]
+  summary: >-
+    Interior Minister Khaled Nouri met his Libyan counterpart, Major General
+    Imad Mustafa Trabelsi, in Tripoli on Thursday 8 October 2026, on an
+    official visit, per the interior ministry communiqué relayed by African
+    Manager. The two ministers affirmed the will to raise security cooperation
+    further and discussed facilitating border crossings and the movement of
+    travellers and strengthening coordination mechanisms between the two
+    countries' security services. Trabelsi has no person record, so he is
+    named here but not an actor.
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "Tunisian interior ministry communiqué, as relayed by African Manager (9 October 2026)"
+  reasoning: >-
+    One outlet relaying the interior ministry's own communiqué, with no
+    independent confirmation of the visit or its content, so the claim is an
+    inference from a single relayed account rather than a corroborated report.
+    The Libyan counterpart is named but has no graph record.
+  falsifiable_by: >-
+    The interior ministry communiqué, the Libyan interior ministry, or a
+    second outlet would confirm the visit and its content.
+  sources:
+    - african-manager-tunisie-libye-securitaire-2026-10-09
+
+- id: ev-tunisia-china-investment-wg-2026-10-08
+  date: "2026-10-08"
+  title_en: "Tunisia and China move to activate the Chinese-investment working group"
+  title_fr: "Tunisie-Chine : accélérer le groupe de travail sur les investissements chinois"
+  title_ar: "تونس والصين: تسريع تفعيل فريق العمل الخاص بالاستثمارات الصينية"
+  category: political
+  subcategory: foreign-relations
+  actors: []
+  institutions: [china]
+  summary: >-
+    Economy and Planning Minister Samir Abdelhafidh and China's ambassador to
+    Tunisia, Wan Li, stressed the need to accelerate implementation of the
+    memorandum of understanding creating a joint working group to boost
+    Chinese investment in Tunisia, at a meeting on Wednesday 8 October 2026
+    per an economy and planning ministry communiqué relayed by African Manager
+    on 9 October. They reviewed bilateral economic cooperation and upcoming
+    events, in particular the Sino-African Forum, and the need to speed up
+    some ongoing projects. Neither the minister nor the ambassador has a graph
+    record, so they are named in the summary but not as actors.
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "Tunisian economy and planning ministry communiqué, as relayed by African Manager (9 October 2026)"
+  reasoning: >-
+    One outlet relaying the economy and planning ministry's own communiqué,
+    with no independent confirmation; the working group's terms rest on an
+    unfetched memorandum of understanding, so the claim is an inference from a
+    single relayed account. The minister and ambassador have no graph record.
+  falsifiable_by: >-
+    The ministry communiqué or the Chinese embassy would confirm the meeting;
+    the MoU text would confirm the working group's terms.
+  sources:
+    - african-manager-tunisie-chine-investissement-2026-10-08
+
+- id: ev-tunisia-worldbank-cpf-2026-10-08
+  date: "2026-10-08"
+  title_en: "World Bank's new Tunisia director meets the economy minister"
+  title_fr: "Le nouveau directeur de la Banque mondiale en Tunisie reçu par le ministre de l'Économie"
+  title_ar: "المدير الجديد لمكتب البنك العالمي بتونس يلتقي وزير الاقتصاد"
+  category: political
+  subcategory: foreign-relations
+  actors: []
+  institutions: [world-bank]
+  summary: >-
+    Economy and Planning Minister Samir Abdelhafidh met the new director of
+    the World Bank Group office in Tunisia, Alex Kremer, on Wednesday
+    8 October 2026, per an economy and planning ministry communiqué relayed by
+    African Manager on 8 October. Kremer said he wanted to intensify
+    coordination within the future Country Partnership Framework (CPP) under
+    preparation and reaffirmed the Bank's will to support Tunisia's reforms;
+    Abdelhafidh called for diversifying cooperation and accelerating
+    Bank-financed projects. Kremer supervises the Bank Group's Tunisia
+    institutions (IBRD, IFC and MIGA). The current CPP covers 2023-2027, with
+    priorities of quality jobs, human capital, climate resilience and
+    ecological transition. Neither man has a graph record, so they are named
+    but not actors.
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "Tunisian economy and planning ministry communiqué, as relayed by African Manager (8 October 2026)"
+  reasoning: >-
+    One outlet relaying the economy and planning ministry's own communiqué,
+    with no independent confirmation from the World Bank office; the future
+    Country Partnership Framework is described as under preparation, so the
+    claim is an inference from a single relayed account. Neither man has a
+    graph record.
+  falsifiable_by: >-
+    The ministry communiqué, the World Bank office, or a second outlet would
+    confirm the meeting; the CPP document would confirm its content.
+  sources:
+    - african-manager-tunisie-bm-cpp-2026-10-08
