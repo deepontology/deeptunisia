@@ -793,6 +793,13 @@ export interface ItemSummary {
 	histogram?: number[];
 	/** Count items only: option id → number of respondents who selected it. */
 	counts?: Record<string, number>;
+	/**
+	 * Respondents who answered the item: a valid scale value, or a non-empty
+	 * selection. It counts people, not ticks, so on a count item it is not the
+	 * sum of `counts` (a respondent may tick several). It is the denominator a
+	 * per-option or per-range share is taken against.
+	 */
+	answered: number;
 	/** Respondents who saw the item and skipped it (absent, null or an empty selection). */
 	skipped: number;
 	/** Respondents the item was never shown to, because its condition did not hold. */
@@ -1046,11 +1053,17 @@ export function aggregateResponses(
 			if (isScaleValue(value, spec.scale_max)) histogram[value]++;
 			else skipped++;
 		}
-		items[id] = { histogram, skipped, not_shown: notShown };
+		items[id] = {
+			histogram,
+			answered: histogram.reduce((sum, count) => sum + count, 0),
+			skipped,
+			not_shown: notShown
+		};
 	}
 	for (const id of countItems) {
 		if (scaleItems.has(id)) continue;
 		const counts: Record<string, number> = {};
+		let answered = 0;
 		let skipped = 0;
 		let notShown = 0;
 		for (const row of rows) {
@@ -1063,11 +1076,13 @@ export function aggregateResponses(
 				skipped++;
 				continue;
 			}
+			// One respondent who ticks several options is one answer, not several.
+			answered++;
 			for (const option of value) {
 				if (typeof option === 'string') counts[option] = (counts[option] ?? 0) + 1;
 			}
 		}
-		items[id] = { counts, skipped, not_shown: notShown };
+		items[id] = { counts, answered, skipped, not_shown: notShown };
 	}
 
 	// Splits: contact through the item the first cases branch reads, and region
