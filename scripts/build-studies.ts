@@ -106,7 +106,8 @@ function resolveInstrumentPath(source: string): string {
  * rules. `validateInstrument` owns the cross-field checks; the hash comparison
  * covers the freeze: a declared hash that does not match the content is a lie
  * whether or not the instrument is marked frozen, and a frozen version may not
- * omit one.
+ * omit one. The freeze rules themselves run when either declaration says
+ * frozen, so a frozen entry pointing at a draft is held to them as well.
  */
 function checkInstrument(study: Study, instrument: InstrumentVersion): void {
 	const where = `data/studies/studies.yaml [${study.id}] instrument ${instrument.source}`;
@@ -134,7 +135,12 @@ function checkInstrument(study: Study, instrument: InstrumentVersion): void {
 	}
 	const doc = parsed.data;
 
-	for (const violation of validateInstrument(doc)) fail(where, violation);
+	// A freeze is one fact held in two places: this registry entry and the
+	// document it points at. Either one saying frozen makes the frozen rules
+	// apply, so a draft a frozen entry names is held to them here rather than
+	// passing the fielding checks with its locale text still missing.
+	const frozen = instrument.frozen || doc.instrument.frozen;
+	for (const violation of validateInstrument(doc, { frozen })) fail(where, violation);
 
 	const compiled = compileInstrument(doc);
 	const key = `${compiled.id}@${compiled.version}`;
@@ -149,7 +155,6 @@ function checkInstrument(study: Study, instrument: InstrumentVersion): void {
 		);
 	}
 
-	const frozen = instrument.frozen || doc.instrument.frozen;
 	if (frozen && !instrument.hash) {
 		fail(where, 'frozen instrument_version declares no content hash');
 	}

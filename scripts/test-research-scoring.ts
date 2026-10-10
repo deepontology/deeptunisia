@@ -811,6 +811,46 @@ console.log('\n  ── the link check ──\n');
 		String(atCellFloor(spec.cell_floor ?? 20).index_without_largest)
 	);
 
+	// A respondent who consents and stops is a kept row: it trips no exclusion
+	// rule and it is counted in the window's total. It is not scored, and the
+	// published mean and its count are over scored rows only, so the floor has
+	// to count what the counterfactual actually removes. One scored answer
+	// behind nineteen consent-only ones clears twenty rows; read beside the
+	// window mean, the one respondent's own score falls out of it.
+	const consentOnly = { answers: { consent_info: true, consent_voluntary: true, consent_age: true }, channel: 'wave' };
+	const oneScored = linkCheck(
+		spec,
+		[
+			...Array.from({ length: 100 }, () => row(8, 'organic')),
+			row(7, 'wave'),
+			...Array.from({ length: 19 }, () => consentOnly)
+		],
+		options
+	);
+	ok(
+		'a largest link of one scored answer and nineteen consent-only rows publishes no counterfactual',
+		oneScored.index_without_largest === null,
+		`largest link ${oneScored.largest_link_share} of the window`
+	);
+	ok(
+		'though its shares are still published',
+		oneScored.linked_share === 20 / 120 && oneScored.largest_link_share === 20 / 120
+	);
+	// The same link with twenty scored answers behind it, over the hundred that
+	// remain, is a figure: the floor is answered in answers.
+	const twentyScoredRows = [
+		...Array.from({ length: 100 }, () => row(8, 'organic')),
+		...Array.from({ length: 20 }, () => row(2, 'wave'))
+	];
+	const twentyScored = linkCheck(spec, twentyScoredRows, options);
+	ok(
+		'the same link with twenty scored answers publishes one',
+		twentyScored.index_without_largest !== null &&
+			twentyScored.index_without_largest ===
+				aggregateResponses(spec, twentyScoredRows.filter((r) => r.channel !== 'wave'), options).index.mean,
+		String(twentyScored.index_without_largest)
+	);
+
 	// The window's own check, and the floor that decides what leaves the server.
 	const dated = rows.map((r, i) => ({ ...r, submittedAt: Date.UTC(2027, 0, 2) + i }));
 	const now = Date.UTC(2027, 0, 3);

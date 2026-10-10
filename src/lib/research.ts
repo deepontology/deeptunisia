@@ -21,6 +21,13 @@ export interface StudyRecord {
 	title_fr: string | null;
 	title_ar: string | null;
 	status: string;
+	/**
+	 * Whether the server is taking responses for this study right now. It
+	 * arrives with a live study read, and is absent from the build-time
+	 * registry: the submission gate and the storage are the server's to know,
+	 * and the declared status does not carry them.
+	 */
+	accepting?: boolean;
 	design_type: string;
 	population: string;
 	population_statement: string | null;

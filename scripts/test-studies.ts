@@ -478,6 +478,23 @@ rejectsInstrument(
 	'content_hash'
 );
 
+{
+	// The registry entry that names a version can declare it frozen while its
+	// source document is still a draft: the build holds that draft to the freeze
+	// rules, so the missing translations cannot pass the fielding checks on the
+	// flag disagreement alone.
+	const draft = InstrumentSchema.parse(instrumentFixture());
+	const asFrozen = validateInstrument(draft, { frozen: true });
+	ok(
+		'instrument: a draft the caller fields as frozen is held to the freeze rules',
+		asFrozen.some((violation) => violation.includes('has no fr text')),
+		asFrozen.join('; ')
+	);
+	// The override belongs to the caller: read on its own flag the same draft is
+	// still a draft and passes.
+	ok('instrument: and the same draft on its own flag is not', validateInstrument(draft).length === 0);
+}
+
 // ---------------------------------------------------------------------------
 // Instrument hash — immutability of what a respondent saw
 // ---------------------------------------------------------------------------

@@ -376,8 +376,13 @@ export type InstrumentDoc = z.infer<typeof InstrumentSchema>;
  *    items per set, unique set ids, and no unused pool item;
  *  - a frozen instrument has full locale text on displayed items and a non-null
  *    content hash.
+ *
+ * `frozen` overrides the document's own flag for the freeze rules only: the
+ * registry entry that names a version can say frozen while its source document
+ * is still a draft, and the draft must then be held to the frozen rules all the
+ * same. The rest of the rules never depend on it.
  */
-export function validateInstrument(doc: InstrumentDoc): string[] {
+export function validateInstrument(doc: InstrumentDoc, options: { frozen?: boolean } = {}): string[] {
 	const violations: string[] = [];
 	const ids = new Set<string>();
 
@@ -506,7 +511,7 @@ export function validateInstrument(doc: InstrumentDoc): string[] {
 		}
 	}
 
-	if (doc.instrument.frozen) {
+	if (options.frozen ?? doc.instrument.frozen) {
 		if (!nonBlank(doc.instrument.content_hash)) {
 			violations.push('frozen instrument requires a non-null content_hash');
 		}
