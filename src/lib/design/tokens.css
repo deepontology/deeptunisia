@@ -567,10 +567,10 @@
 		/* One phone bar: the view button replaces the bubbles and the tab strip. */
 		--menubar-h: var(--bar-h);
 		--subnav-h: 0px;
-		/* Two rows of 32 + 40. Must match TimeDock's compact block exactly: the
+		/* The resting pill. Must match TimeDock's compact block exactly: the
 		   inspector sheet and every view that reserves bottom space position against
 		   this number, so a dock taller than its token silently covers them. */
-		--dock-h: 72px;
+		--dock-h: var(--pill-h);
 		--inspector-w: 100vw;
 	}
 }

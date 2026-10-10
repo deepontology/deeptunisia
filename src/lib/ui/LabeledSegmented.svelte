@@ -12,6 +12,8 @@
 		value: string;
 		label: string;
 		hint?: string;
+		/** The segment's own colour, for controls whose options are data (a basis). */
+		tint?: string;
 	}
 
 	interface Props {
@@ -20,21 +22,64 @@
 		onchange: (value: string) => void;
 		/** Names the group for screen readers; the options themselves are the labels. */
 		label?: string;
+		/** `xs` fits a 44px toolbar row; `sm` is the standalone size. */
+		size?: 'xs' | 'sm';
+		/** Fill every segment up to the selected one, for threshold-style controls. */
+		cumulative?: boolean;
 	}
 
-	let { options, value, onchange, label }: Props = $props();
+	let { options, value, onchange, label, size = 'sm', cumulative = false }: Props = $props();
 
 	const index = $derived(Math.max(0, options.findIndex((o) => o.value === value)));
+	const activeTint = $derived(options[index]?.tint);
+
+	/*
+	 * Words are not equally long, so segments are not equally wide: the indicator
+	 * is placed on the selected button's measured box rather than at index / n,
+	 * which would leave it straddling two words. Re-measured whenever the control
+	 * resizes, which covers a language change and a font arriving late.
+	 */
+	let root = $state<HTMLDivElement | null>(null);
+	const buttons: HTMLButtonElement[] = $state([]);
+	let box = $state<{ x: number; w: number } | null>(null);
+
+	function place() {
+		const b = buttons[index];
+		if (b) box = { x: b.offsetLeft, w: b.offsetWidth };
+	}
+
+	$effect(() => {
+		void index;
+		void options;
+		place();
+	});
+
+	$effect(() => {
+		if (!root) return;
+		const ro = new ResizeObserver(place);
+		ro.observe(root);
+		return () => ro.disconnect();
+	});
 </script>
 
-<div class="seg" role="radiogroup" aria-label={label} style:--n={options.length}>
-	<span class="indicator" style:--i={index} aria-hidden="true"></span>
-	{#each options as opt (opt.value)}
+<div class="seg s-{size}" role="radiogroup" aria-label={label} bind:this={root}>
+	<span
+		class="indicator"
+		class:placed={box !== null}
+		style:--x="{box?.x ?? 0}px"
+		style:--w="{box?.w ?? 0}px"
+		style:--tint={activeTint}
+		aria-hidden="true"
+	></span>
+	{#each options as opt, i (opt.value)}
 		<button
+			bind:this={buttons[i]}
 			type="button"
 			role="radio"
 			aria-checked={opt.value === value}
 			class:selected={opt.value === value}
+			class:under={cumulative && i < index}
+			style:--tint={opt.tint}
 			onclick={() => onchange(opt.value)}
 		>
 			<span class="word">{opt.label}</span>
@@ -48,7 +93,8 @@
 		position: relative;
 		display: grid;
 		grid-auto-flow: column;
-		grid-auto-columns: 1fr;
+		/* Each word takes what it needs; spare width is shared out evenly. */
+		grid-auto-columns: auto;
 		background: var(--surface-sunken);
 		border: 1px solid var(--border-default);
 		border-radius: var(--r-md);
@@ -56,28 +102,31 @@
 		isolation: isolate;
 	}
 
+	/*
+	   Placed in physical pixels on the selected button's measured box. offsetLeft
+	   is physical in both directions, so the same rule is correct in RTL, where
+	   the grid fills from the right. Hidden until the first measurement, so it
+	   never flashes at the wrong segment.
+	*/
 	.indicator {
 		position: absolute;
 		z-index: 0;
 		top: 2px;
 		bottom: 2px;
-		inset-inline-start: 2px;
-		width: calc((100% - 4px) / var(--n));
-		transform: translateX(calc(var(--i) * 100%));
-		background: var(--accent);
+		left: 0;
+		width: var(--w);
+		transform: translateX(var(--x));
+		opacity: 0;
+		background: var(--tint, var(--accent));
 		border-radius: calc(var(--r-md) - 2px);
 		box-shadow: var(--elev-1);
 		transition:
 			transform var(--dur-normal) var(--ease-spring),
+			width var(--dur-normal) var(--ease-spring),
 			background var(--dur-fast) var(--ease-out);
 	}
-	/* The indicator follows text flow, so its anchor is logical
-	   (inset-inline-start) and the segment index must travel the opposite
-	   direction in RTL: the grid fills from the right there. A physical anchor
-	   with only the transform flipped would leave the thumb at the outer edge,
-	   aligned with no segment. */
-	:global([dir='rtl']) .indicator {
-		transform: translateX(calc(var(--i) * -100%));
+	.indicator.placed {
+		opacity: 1;
 	}
 
 	button {
@@ -125,12 +174,25 @@
 	   honest to anything inspecting computed styles. */
 	button.selected {
 		color: var(--accent-text);
-		background: var(--accent);
+		background: var(--tint, var(--accent));
+	}
+	/* Below the selection in a cumulative control: included, not selected. */
+	button.under {
+		color: var(--tint, var(--accent));
+	}
+
+	.s-xs button {
+		min-height: 24px;
+		padding: 0 var(--s-3);
+	}
+	.s-xs .word {
+		font-size: var(--t-xs);
+		white-space: nowrap;
 	}
 
 	/* A thumb needs 44px and a mouse does not. */
 	@media (pointer: coarse) {
-		button {
+		.s-sm button {
 			min-height: var(--touch);
 		}
 	}
