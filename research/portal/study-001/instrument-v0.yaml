@@ -1,0 +1,930 @@
+# -----------------------------------------------------------------------------
+# DT Research 001: instrument v0.1.0-draft
+#
+# "What Does Democracy Mean to Tunisians?"
+#
+# Status: draft. Not frozen. Not fielded. The English column is the source.
+# French and Modern Standard Arabic are intentionally null: the project rule is
+# that instruments are human-translated, with reconciliation and back-translation
+# (protocol §6). Do not machine-fill text_fr or text_ar. A machine draft may be
+# used only as a post-hoc comprehension check by a native reviewer, and recorded
+# as such in the translation report.
+#
+# Every item carries a construct and a provenance. No item enters the battery
+# without both (portal README, validator rule S2).
+#
+# WVS item numbers refer to the WVS-7 master questionnaire (2017-2021). The
+# wording quoted here is from the master English version; the localization
+# actually administered in Tunisia must be pulled from the WVS Tunisia country
+# questionnaire and cited in the final instrument. Where master versions differ
+# (Q246 appears as "protect people from state oppression" in some printings and
+# "protect people's liberty against oppression" in others), pin the version and
+# say which one was used.
+# -----------------------------------------------------------------------------
+
+instrument:
+  id: dt001-democracy
+  study: dt-research-001
+  version: 0.1.0-draft
+  status: draft
+  frozen: false
+  content_hash: null
+  source_locale: en
+  locales: [en, fr, ar]
+  estimated_minutes: 12
+  completion_target_minutes_max: 15
+  pretest_required: true
+  response_scale_note: >-
+    Essentiality items use 0-10 where the explicit 0 is "it is against democracy",
+    1 is "not at all an essential characteristic" and 10 is "definitely an
+    essential characteristic", plus a skip option. Present-in-Tunisia items use
+    0-10 where 0 is "not at all present" and 10 is "fully present", plus skip.
+    The explicit 0 option is a deviation from interviewer administration: WVS
+    codes "against democracy" only when volunteered. The deviation is published.
+
+translation:
+  policy: >-
+    Two independent translators per locale working from the English source and the
+    construct definitions; reconciliation; back-translation by a third translator;
+    resolution; cognitive interviews with 12 to 15 respondents per locale; freeze
+    with the instrument hash. No machine translation at any step.
+  report: null
+  locales:
+    en:
+      status: source
+    fr:
+      status: pending-human-translation
+      translator_a: null
+      translator_b: null
+      back_translator: null
+      cognitive_interviews: 0
+    ar:
+      status: pending-human-translation
+      translator_a: null
+      translator_b: null
+      back_translator: null
+      cognitive_interviews: 0
+      register: Modern Standard Arabic
+      note: >-
+        Tunisian Arabic (derja) is accepted in open_definition but is not a written
+        instrument locale in v1. Rationale in protocol §6.
+
+response_types:
+  consent: boolean required, recorded with consent version
+  scale_essential: integer 0-10 plus skip; 0 means "against democracy"
+  scale_present: integer 0-10 plus skip; 0 means "not at all present"
+  agree_4: integer 1-4 (strongly disagree to strongly agree) plus skip
+  scale_0_10: integer 0-10 plus skip
+  single_choice: one option plus prefer-not-to-say where stated
+  multi_choice: zero or more options
+  text_short: free text, maximum 500 characters
+  auto: recorded by the platform, not shown
+
+modules:
+  - id: consent
+    label: Consent and age
+    items: [consent_read, consent_voluntary, consent_withdrawal, consent_age]
+  - id: essentiality_core
+    label: Essential characteristics of democracy (WVS core)
+    items: [ess_core_elections, ess_core_civil_rights, ess_core_women, ess_core_tax_rich, ess_core_unemployment_aid, ess_core_incomes_equal, ess_core_religious_law, ess_core_army_takeover, ess_core_obey, ess_core_strong_leader]
+  - id: essentiality_extended
+    label: Essential characteristics of democracy (extended)
+    items: [ess_ext_electoral_commission, ess_ext_electoral_choice, ess_ext_courts, ess_ext_equality_law, ess_ext_press, ess_ext_speech, ess_ext_minorities, ess_ext_no_torture, ess_ext_protest, ess_ext_referendums, ess_ext_local_power, ess_ext_civil_society, ess_ext_consultation, ess_ext_informed_debate, ess_ext_basic_needs, ess_ext_no_poverty, ess_ext_anti_corruption, ess_ext_regional_equality, tun_civil_state, tun_army_politics, tun_transitional_justice]
+  - id: maxdiff_priority
+    label: Prioritization (MaxDiff)
+    block: maxdiff_priority
+  - id: presence_tunisia
+    label: Present in Tunisia today
+    block: gap_block
+  - id: support_regime
+    label: Support and regime evaluation
+    items: [sup_democracy_preferable, sup_democracy_best, sup_strong_leader, sup_govt_economy_unimportant, sup_govt_order_unimportant, sup_satisfaction_democracy, sup_tunisia_democratic_rating]
+  - id: safety_mode
+    label: Safety and response environment
+    items: [saf_comfort, saf_screen, mod_face_to_face]
+  - id: open_text
+    label: Own words
+    items: [open_definition]
+  - id: demographics
+    label: About you
+    items: [demo_residence, demo_governorate, demo_abroad_region, demo_age_band, demo_sex, demo_education, demo_employment, demo_finance, demo_political_interest, demo_religiosity, demo_language_completion, demo_prev_survey]
+  - id: design
+    label: Design variables (not shown)
+    items: [exp_block_order, exp_scale_direction]
+
+items:
+  # ---------------------------------------------------------------------------
+  # Consent
+  # ---------------------------------------------------------------------------
+  - id: consent_read
+    module: consent
+    tier: core
+    construct: consent
+    provenance: project
+    text_en: "I have read the study information and the participant protections."
+    text_fr: null
+    text_ar: null
+    response: consent
+    required: true
+
+  - id: consent_voluntary
+    module: consent
+    tier: core
+    construct: consent
+    provenance: project
+    text_en: "I understand that participation is voluntary, that there is no payment, and that I may stop at any point before submitting."
+    text_fr: null
+    text_ar: null
+    response: consent
+    required: true
+
+  - id: consent_withdrawal
+    module: consent
+    tier: core
+    construct: consent
+    provenance: project
+    text_en: "I understand that I will receive a random receipt code, that I can use it to delete my response while the study is open, and that after the study closes my response cannot be deleted because the dataset is frozen."
+    text_fr: null
+    text_ar: null
+    response: consent
+    required: true
+
+  - id: consent_age
+    module: consent
+    tier: core
+    construct: consent
+    provenance: project
+    text_en: "I confirm that I am 18 years old or older."
+    text_fr: null
+    text_ar: null
+    response: consent
+    required: true
+    routing: if false, end the session and store nothing
+
+  # ---------------------------------------------------------------------------
+  # Essentiality: WVS-7 core (quoted)
+  # ---------------------------------------------------------------------------
+  - id: ess_core_elections
+    module: essentiality_core
+    tier: core
+    construct: electoral
+    provenance: wvs7:Q243
+    text_en: "People choose their leaders in free elections."
+    text_fr: null
+    text_ar: null
+    response: scale_essential
+    required: true
+
+  - id: ess_core_civil_rights
+    module: essentiality_core
+    tier: core
+    construct: liberal
+    provenance: wvs7:Q246
+    text_en: "Civil rights protect people from state oppression."
+    text_fr: null
+    text_ar: null
+    response: scale_essential
+    required: true
+    notes: "Master versions differ; pin the version used and record it."
+
+  - id: ess_core_women
+    module: essentiality_core
+    tier: core
+    construct: liberal
+    provenance: wvs7:Q249
+    text_en: "Women have the same rights as men."
+    text_fr: null
+    text_ar: null
+    response: scale_essential
+    required: true
+
+  - id: ess_core_tax_rich
+    module: essentiality_core
+    tier: core
+    construct: distributive
+    provenance: wvs7:Q241
+    text_en: "Governments tax the rich and subsidize the poor."
+    text_fr: null
+    text_ar: null
+    response: scale_essential
+    required: true
+
+  - id: ess_core_unemployment_aid
+    module: essentiality_core
+    tier: core
+    construct: distributive
+    provenance: wvs7:Q244
+    text_en: "People receive state aid for unemployment."
+    text_fr: null
+    text_ar: null
+    response: scale_essential
+    required: true
+
+  - id: ess_core_incomes_equal
+    module: essentiality_core
+    tier: core
+    construct: distributive
+    provenance: wvs7:Q247
+    text_en: "The state makes people's incomes equal."
+    text_fr: null
+    text_ar: null
+    response: scale_essential
+    required: true
+
+  - id: ess_core_religious_law
+    module: essentiality_core
+    tier: core
+    construct: anti-democratic:religious
+    provenance: wvs7:Q242
+    text_en: "Religious authorities ultimately interpret the laws."
+    text_fr: null
+    text_ar: null
+    response: scale_essential
+    required: true
+
+  - id: ess_core_army_takeover
+    module: essentiality_core
+    tier: core
+    construct: anti-democratic:military
+    provenance: wvs7:Q245
+    text_en: "The army takes over when government is incompetent."
+    text_fr: null
+    text_ar: null
+    response: scale_essential
+    required: true
+
+  - id: ess_core_obey
+    module: essentiality_core
+    tier: core
+    construct: anti-democratic:authoritarian
+    provenance: wvs7:Q248
+    text_en: "People obey their rulers."
+    text_fr: null
+    text_ar: null
+    response: scale_essential
+    required: true
+
+  - id: ess_core_strong_leader
+    module: essentiality_core
+    tier: core
+    construct: anti-democratic:strongman
+    provenance: adapted:wvs7-political-systems+arab-barometer
+    text_en: "A strong leader who does not have to bother with parliament and elections."
+    text_fr: null
+    text_ar: null
+    response: scale_essential
+    required: true
+    notes: "Verify the exact source item number in WVS-7 and in Arab Barometer before freezing; the item is used in both projects' political-systems batteries."
+
+  # ---------------------------------------------------------------------------
+  # Essentiality: extended, V-Dem families
+  # ---------------------------------------------------------------------------
+  - id: ess_ext_electoral_commission
+    module: essentiality_extended
+    tier: extended
+    construct: electoral
+    provenance: project
+    text_en: "Elections are run by a commission that is independent of the government."
+    text_fr: null
+    text_ar: null
+    response: scale_essential
+    required: true
+
+  - id: ess_ext_electoral_choice
+    module: essentiality_extended
+    tier: optional
+    construct: electoral
+    provenance: project
+    text_en: "Voters have a real choice between different parties and candidates."
+    text_fr: null
+    text_ar: null
+    response: scale_essential
+    required: false
+
+  - id: ess_ext_courts
+    module: essentiality_extended
+    tier: extended
+    construct: liberal
+    provenance: project
+    text_en: "Courts decide cases without pressure from the government."
+    text_fr: null
+    text_ar: null
+    response: scale_essential
+    required: true
+
+  - id: ess_ext_equality_law
+    module: essentiality_extended
+    tier: extended
+    construct: liberal
+    provenance: project
+    text_en: "Everyone is equal before the law, including those in power."
+    text_fr: null
+    text_ar: null
+    response: scale_essential
+    required: true
+
+  - id: ess_ext_press
+    module: essentiality_extended
+    tier: extended
+    construct: liberal
+    provenance: project
+    text_en: "The press can criticize the government without being punished."
+    text_fr: null
+    text_ar: null
+    response: scale_essential
+    required: true
+
+  - id: ess_ext_speech
+    module: essentiality_extended
+    tier: extended
+    construct: liberal
+    provenance: project
+    text_en: "People can criticize the government publicly without fear."
+    text_fr: null
+    text_ar: null
+    response: scale_essential
+    required: true
+
+  - id: ess_ext_minorities
+    module: essentiality_extended
+    tier: extended
+    construct: liberal
+    provenance: project
+    text_en: "The rights of ethnic and religious minorities are protected."
+    text_fr: null
+    text_ar: null
+    response: scale_essential
+    required: true
+
+  - id: ess_ext_no_torture
+    module: essentiality_extended
+    tier: extended
+    construct: liberal
+    provenance: project
+    text_en: "Police and security forces do not torture or abuse people in custody."
+    text_fr: null
+    text_ar: null
+    response: scale_essential
+    required: true
+
+  - id: ess_ext_protest
+    module: essentiality_extended
+    tier: extended
+    construct: participatory
+    provenance: project
+    text_en: "People can protest peacefully against government decisions."
+    text_fr: null
+    text_ar: null
+    response: scale_essential
+    required: true
+
+  - id: ess_ext_referendums
+    module: essentiality_extended
+    tier: extended
+    construct: participatory
+    provenance: project
+    text_en: "Citizens vote directly on major laws in referendums."
+    text_fr: null
+    text_ar: null
+    response: scale_essential
+    required: true
+
+  - id: ess_ext_local_power
+    module: essentiality_extended
+    tier: extended
+    construct: participatory
+    provenance: project
+    text_en: "Local and regional councils have real decision-making power."
+    text_fr: null
+    text_ar: null
+    response: scale_essential
+    required: true
+
+  - id: ess_ext_civil_society
+    module: essentiality_extended
+    tier: optional
+    construct: participatory
+    provenance: project
+    text_en: "Civil society organizations can form and operate freely."
+    text_fr: null
+    text_ar: null
+    response: scale_essential
+    required: false
+
+  - id: ess_ext_consultation
+    module: essentiality_extended
+    tier: extended
+    construct: deliberative
+    provenance: project
+    text_en: "The government consults the public and experts before major decisions."
+    text_fr: null
+    text_ar: null
+    response: scale_essential
+    required: true
+
+  - id: ess_ext_informed_debate
+    module: essentiality_extended
+    tier: optional
+    construct: deliberative
+    provenance: project
+    text_en: "Public decisions are made after open debate with honest information."
+    text_fr: null
+    text_ar: null
+    response: scale_essential
+    required: false
+
+  - id: ess_ext_basic_needs
+    module: essentiality_extended
+    tier: extended
+    construct: egalitarian
+    provenance: project
+    text_en: "The state guarantees access to health care and education for everyone."
+    text_fr: null
+    text_ar: null
+    response: scale_essential
+    required: true
+
+  - id: ess_ext_no_poverty
+    module: essentiality_extended
+    tier: optional
+    construct: egalitarian
+    provenance: project
+    text_en: "No one in the country lives in extreme poverty."
+    text_fr: null
+    text_ar: null
+    response: scale_essential
+    required: false
+
+  - id: ess_ext_anti_corruption
+    module: essentiality_extended
+    tier: extended
+    construct: egalitarian
+    provenance: project
+    text_en: "Corruption is punished regardless of a person's rank or connections."
+    text_fr: null
+    text_ar: null
+    response: scale_essential
+    required: true
+
+  - id: ess_ext_regional_equality
+    module: essentiality_extended
+    tier: extended
+    construct: egalitarian
+    provenance: project
+    text_en: "Regions outside the capital receive an equal share of public investment."
+    text_fr: null
+    text_ar: null
+    response: scale_essential
+    required: true
+
+  # ---------------------------------------------------------------------------
+  # Essentiality: Tunisia module (exploratory)
+  # ---------------------------------------------------------------------------
+  - id: tun_civil_state
+    module: essentiality_extended
+    tier: extended
+    construct: tunisia
+    provenance: project
+    text_en: "The state stays neutral in religious matters."
+    text_fr: null
+    text_ar: null
+    response: scale_essential
+    required: true
+
+  - id: tun_army_politics
+    module: essentiality_extended
+    tier: extended
+    construct: tunisia
+    provenance: project
+    text_en: "The army stays out of politics."
+    text_fr: null
+    text_ar: null
+    response: scale_essential
+    required: true
+
+  - id: tun_transitional_justice
+    module: essentiality_extended
+    tier: extended
+    construct: tunisia
+    provenance: project
+    text_en: "There is truth and accountability for abuses committed by past governments."
+    text_fr: null
+    text_ar: null
+    response: scale_essential
+    required: true
+
+  # ---------------------------------------------------------------------------
+  # Support and regime evaluation
+  # ---------------------------------------------------------------------------
+  - id: sup_democracy_preferable
+    module: support_regime
+    tier: core
+    construct: support
+    provenance: wvs7:Q250-companion+arab-barometer
+    text_en: "Democracy is always preferable to any other kind of government."
+    text_fr: null
+    text_ar: null
+    response: agree_4
+    required: true
+    notes: "Verify item numbers and exact wording in WVS-7 and Arab Barometer before freezing."
+
+  - id: sup_democracy_best
+    module: support_regime
+    tier: core
+    construct: support
+    provenance: arab-barometer
+    text_en: "Democracies may have problems, but they are better than any other form of government."
+    text_fr: null
+    text_ar: null
+    response: agree_4
+    required: true
+
+  - id: sup_strong_leader
+    module: support_regime
+    tier: core
+    construct: support:authoritarian
+    provenance: wvs7-political-systems+arab-barometer
+    text_en: "We need a strong leader who does not have to bother with parliament and elections."
+    text_fr: null
+    text_ar: null
+    response: agree_4
+    required: true
+
+  - id: sup_govt_economy_unimportant
+    module: support_regime
+    tier: core
+    construct: support:outcome
+    provenance: arab-barometer
+    text_en: "The type of government does not matter as long as it can solve the country's economic problems."
+    text_fr: null
+    text_ar: null
+    response: agree_4
+    required: true
+
+  - id: sup_govt_order_unimportant
+    module: support_regime
+    tier: core
+    construct: support:outcome
+    provenance: arab-barometer
+    text_en: "The type of government does not matter as long as it maintains order and security."
+    text_fr: null
+    text_ar: null
+    response: agree_4
+    required: true
+
+  - id: sup_satisfaction_democracy
+    module: support_regime
+    tier: core
+    construct: support:satisfaction
+    provenance: wvs7-companion+arab-barometer
+    text_en: "How satisfied are you with the way democracy works in Tunisia today?"
+    text_fr: null
+    text_ar: null
+    response: scale_0_10
+    required: true
+
+  - id: sup_tunisia_democratic_rating
+    module: support_regime
+    tier: core
+    construct: support:regime-rating
+    provenance: project
+    text_en: "How democratic is Tunisia today?"
+    text_fr: null
+    text_ar: null
+    response: scale_0_10
+    required: true
+
+  # ---------------------------------------------------------------------------
+  # Safety and mode probes
+  # ---------------------------------------------------------------------------
+  - id: saf_comfort
+    module: safety_mode
+    tier: extended
+    construct: safety
+    provenance: project
+    text_en: "How comfortable did you feel answering these questions?"
+    text_fr: null
+    text_ar: null
+    response: scale_0_10
+    required: false
+
+  - id: saf_screen
+    module: safety_mode
+    tier: extended
+    construct: safety
+    provenance: project
+    text_en: "While you were answering, who else could see your screen?"
+    text_fr: null
+    text_ar: null
+    response: single_choice
+    required: false
+    options: [alone, family, friends, other, prefer_not_to_say]
+
+  - id: mod_face_to_face
+    module: safety_mode
+    tier: extended
+    construct: mode
+    provenance: project
+    text_en: "If this survey had been conducted face-to-face in your home, would your answers have been the same, more cautious, or more open?"
+    text_fr: null
+    text_ar: null
+    response: single_choice
+    required: false
+    options: [same, more_cautious, more_open, prefer_not_to_say]
+
+  # ---------------------------------------------------------------------------
+  # Open text
+  # ---------------------------------------------------------------------------
+  - id: open_definition
+    module: open_text
+    tier: extended
+    construct: definition-open
+    provenance: project
+    text_en: "In one sentence, what does democracy mean to you?"
+    text_fr: null
+    text_ar: null
+    response: text_short
+    required: false
+    max_chars: 500
+    notes: "Accepted in Tunisian Arabic, Modern Standard Arabic, French or English. Coding scheme derived from the first 100 responses by two independent coders, frozen, published with an agreement statistic."
+
+  # ---------------------------------------------------------------------------
+  # Demographics
+  # ---------------------------------------------------------------------------
+  - id: demo_residence
+    module: demographics
+    tier: core
+    construct: demographics
+    provenance: project
+    text_en: "Where do you live?"
+    text_fr: null
+    text_ar: null
+    response: single_choice
+    required: true
+    options: [inside_tunisia, outside_tunisia, prefer_not_to_say]
+
+  - id: demo_governorate
+    module: demographics
+    tier: core
+    construct: demographics
+    provenance: project
+    text_en: "Which governorate do you live in?"
+    text_fr: null
+    text_ar: null
+    response: single_choice
+    required: false
+    show_if: demo_residence == inside_tunisia
+    options: [ariana, beja, ben_arous, bizerte, gabes, gafsa, jendouba, kairouan, kasserine, kebili, kef, mahdia, manouba, medenine, monastir, nabeul, sfax, sidi_bouzid, siliana, sousse, tataouine, tozeur, tunis, zaghouan, prefer_not_to_say]
+
+  - id: demo_abroad_region
+    module: demographics
+    tier: core
+    construct: demographics
+    provenance: project
+    text_en: "Which region do you live in?"
+    text_fr: null
+    text_ar: null
+    response: single_choice
+    required: false
+    show_if: demo_residence == outside_tunisia
+    options: [europe, north_america, gulf, other_arab_country, sub_saharan_africa, other, prefer_not_to_say]
+
+  - id: demo_age_band
+    module: demographics
+    tier: core
+    construct: demographics
+    provenance: project
+    text_en: "How old are you?"
+    text_fr: null
+    text_ar: null
+    response: single_choice
+    required: true
+    options: [18_24, 25_34, 35_44, 45_54, 55_64, 65_plus, prefer_not_to_say]
+    notes: "Bands to be aligned with the INS 2024 census publication before freezing."
+
+  - id: demo_sex
+    module: demographics
+    tier: core
+    construct: demographics
+    provenance: project
+    text_en: "What is your sex?"
+    text_fr: null
+    text_ar: null
+    response: single_choice
+    required: true
+    options: [male, female, other, prefer_not_to_say]
+    notes: "Census margins cover male/female; the other and prefer-not-to-say categories are reported but cannot be weighted to the census."
+
+  - id: demo_education
+    module: demographics
+    tier: core
+    construct: demographics
+    provenance: project
+    text_en: "What is the highest level of education you have completed?"
+    text_fr: null
+    text_ar: null
+    response: single_choice
+    required: true
+    options: [none, primary, preparatory, secondary, higher, prefer_not_to_say]
+
+  - id: demo_employment
+    module: demographics
+    tier: extended
+    construct: demographics
+    provenance: project
+    text_en: "What is your current employment situation?"
+    text_fr: null
+    text_ar: null
+    response: single_choice
+    required: false
+    options: [employed, self_employed, unemployed, student, retired, homemaker, other, prefer_not_to_say]
+
+  - id: demo_finance
+    module: demographics
+    tier: extended
+    construct: demographics
+    provenance: adapted:arab-barometer
+    text_en: "How would you describe your household's financial situation?"
+    text_fr: null
+    text_ar: null
+    response: single_choice
+    required: false
+    options: [very_good, good, bad, very_bad, prefer_not_to_say]
+
+  - id: demo_political_interest
+    module: demographics
+    tier: extended
+    construct: demographics
+    provenance: adapted:wvs7
+    text_en: "How interested are you in politics?"
+    text_fr: null
+    text_ar: null
+    response: single_choice
+    required: false
+    options: [very_interested, somewhat_interested, not_very_interested, not_at_all_interested, prefer_not_to_say]
+
+  - id: demo_religiosity
+    module: demographics
+    tier: extended
+    construct: demographics
+    provenance: adapted:arab-barometer
+    text_en: "How religious would you say you are?"
+    text_fr: null
+    text_ar: null
+    response: single_choice
+    required: false
+    options: [very_religious, somewhat_religious, not_religious, prefer_not_to_say]
+
+  - id: demo_language_completion
+    module: demographics
+    tier: core
+    construct: demographics
+    provenance: platform
+    text_en: null
+    text_fr: null
+    text_ar: null
+    response: auto
+    required: true
+    notes: "Locale in which the instrument was completed; recorded by the platform."
+
+  - id: demo_prev_survey
+    module: demographics
+    tier: optional
+    construct: demographics
+    provenance: project
+    text_en: "Have you taken part in a political opinion survey before?"
+    text_fr: null
+    text_ar: null
+    response: single_choice
+    required: false
+    options: [yes, no, prefer_not_to_say]
+
+  # ---------------------------------------------------------------------------
+  # Design variables
+  # ---------------------------------------------------------------------------
+  - id: exp_block_order
+    module: design
+    tier: core
+    construct: design
+    provenance: platform
+    text_en: null
+    text_fr: null
+    text_ar: null
+    response: auto
+    required: true
+    arms: [core_first, extended_first]
+
+  - id: exp_scale_direction
+    module: design
+    tier: core
+    construct: design
+    provenance: platform
+    text_en: null
+    text_fr: null
+    text_ar: null
+    response: auto
+    required: true
+    arms: [ascending, descending]
+
+# -----------------------------------------------------------------------------
+# Blocks
+# -----------------------------------------------------------------------------
+
+maxdiff_priority:
+  id: maxdiff_priority
+  task: most_and_least
+  items_per_set: 4
+  sets: 8
+  pool:
+    - ess_core_elections
+    - ess_core_civil_rights
+    - ess_core_women
+    - ess_core_tax_rich
+    - ess_core_religious_law
+    - ess_core_army_takeover
+    - ess_core_obey
+    - ess_core_strong_leader
+    - ess_ext_courts
+    - ess_ext_equality_law
+    - ess_ext_press
+    - ess_ext_protest
+    - ess_ext_local_power
+    - ess_ext_basic_needs
+    - ess_ext_anti_corruption
+  design:
+    status: generated
+    constraints:
+      - each item appears in 2 or 3 sets
+      - position frequency balanced
+      - pair frequency near-balanced
+    frozen_with_instrument: true
+    sets:
+      - id: mds1
+        items: [ess_ext_anti_corruption, ess_core_women, ess_core_strong_leader, ess_core_army_takeover]
+      - id: mds2
+        items: [ess_ext_courts, ess_ext_anti_corruption, ess_ext_basic_needs, ess_core_civil_rights]
+      - id: mds3
+        items: [ess_core_women, ess_ext_equality_law, ess_ext_press, ess_ext_local_power]
+      - id: mds4
+        items: [ess_ext_protest, ess_core_tax_rich, ess_core_elections, ess_core_obey]
+      - id: mds5
+        items: [ess_ext_equality_law, ess_ext_protest, ess_ext_anti_corruption, ess_core_religious_law]
+      - id: mds6
+        items: [ess_core_tax_rich, ess_ext_courts, ess_core_religious_law, ess_core_women]
+      - id: mds7
+        items: [ess_core_strong_leader, ess_ext_basic_needs, ess_core_obey, ess_ext_press]
+      - id: mds8
+        items: [ess_core_army_takeover, ess_core_civil_rights, ess_ext_local_power, ess_core_elections]
+  instruction_en: "Which of these four is MOST essential to democracy, and which is LEAST essential?"
+  text_fr: null
+  text_ar: null
+
+gap_block:
+  id: gap_block
+  response: scale_present
+  instruction_en: "For each of these, how much is it a reality in Tunisia today?"
+  text_fr: null
+  text_ar: null
+  items:
+    - ess_core_elections
+    - ess_core_civil_rights
+    - ess_core_women
+    - ess_ext_courts
+    - ess_ext_equality_law
+    - ess_ext_press
+    - ess_ext_speech
+    - ess_ext_protest
+    - ess_ext_local_power
+    - ess_ext_basic_needs
+    - ess_ext_anti_corruption
+    - ess_ext_regional_equality
+  excluded_note: >-
+    The anti-democratic items (religious law, army takeover, obey rulers, strong
+    leader) are excluded from the presence block by design: asking how present
+    military rule is does not measure a democratic deficit.
+
+experiments:
+  - id: exp_block_order
+    factor: essentiality block order
+    arms: [core_first, extended_first]
+    allocation: simple randomization, 50/50
+    analysis: section 10.7 of the protocol
+  - id: exp_scale_direction
+    factor: visible scale anchor direction
+    arms: [ascending, descending]
+    allocation: simple randomization, 50/50
+    analysis: section 10.7 of the protocol
+
+tiers:
+  core: always fielded; required
+  extended: fielded in v1; required
+  optional: fielded in v1 only if pretest median completion stays under the protocol target; droppable by a pre-registered rule, never dropped after fielding begins
+
+# -----------------------------------------------------------------------------
+# Storage payload (per response; see portal README for the platform contract)
+# -----------------------------------------------------------------------------
+# study_id, instrument_id, instrument_version, content_hash, locale,
+# consent_version, channel_code, started_at, submitted_at, completion_ms,
+# receipt_id, exp_block_order, exp_scale_direction, answers (item_id -> value),
+# flags (honeypot, turnstile, exclusions). Nothing else. No IP, no user agent,
+# no device identifier, no email.
