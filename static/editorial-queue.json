@@ -1,6 +1,6 @@
 {
-  "generated": "2026-10-05T20:10:36.997Z",
-  "total": 985,
+  "generated": "2026-10-10T12:51:25.459Z",
+  "total": 991,
   "reviewed": 38,
   "queue": [
     {
@@ -454,6 +454,16 @@
       "title": "Court of Cassation rejects Abir Moussi's appeals in three cases"
     },
     {
+      "kind": "event",
+      "id": "ev-saied-carthage-audiences-2026-10-08",
+      "confidence": "C",
+      "basis": "inferred",
+      "risk": 1,
+      "sources": 2,
+      "reviewed": false,
+      "title": "Saïed holds Carthage audiences; calls accountability a 'legitimate demand'"
+    },
+    {
       "kind": "licence",
       "id": "lic-cpg-phosphate-concession",
       "confidence": "C",
@@ -795,6 +805,16 @@
     },
     {
       "kind": "event",
+      "id": "ev-march-of-dignity-2026-10-05",
+      "confidence": "C",
+      "basis": "inferred",
+      "risk": 1,
+      "sources": 1,
+      "reviewed": false,
+      "title": "March of Dignity: unemployed graduates walk to Tunis for law 18"
+    },
+    {
+      "kind": "event",
       "id": "ev-military-industry-conference-2026-09-22",
       "confidence": "C",
       "basis": "inferred",
@@ -855,6 +875,16 @@
     },
     {
       "kind": "event",
+      "id": "ev-tunisia-china-investment-wg-2026-10-08",
+      "confidence": "C",
+      "basis": "inferred",
+      "risk": 1,
+      "sources": 1,
+      "reviewed": false,
+      "title": "Tunisia and China move to activate the Chinese-investment working group"
+    },
+    {
+      "kind": "event",
       "id": "ev-tunisia-germany-accords-2026-08-31",
       "confidence": "C",
       "basis": "reported",
@@ -862,6 +892,26 @@
       "sources": 1,
       "reviewed": false,
       "title": "Tunisia–Germany cooperation accords above EUR 100m"
+    },
+    {
+      "kind": "event",
+      "id": "ev-tunisia-libya-security-2026-10-08",
+      "confidence": "C",
+      "basis": "inferred",
+      "risk": 1,
+      "sources": 1,
+      "reviewed": false,
+      "title": "Interior Minister Nouri in Tripoli for security cooperation"
+    },
+    {
+      "kind": "event",
+      "id": "ev-tunisia-worldbank-cpf-2026-10-08",
+      "confidence": "C",
+      "basis": "inferred",
+      "risk": 1,
+      "sources": 1,
+      "reviewed": false,
+      "title": "World Bank's new Tunisia director meets the economy minister"
     },
     {
       "kind": "event",
@@ -3122,6 +3172,16 @@
       "sources": 2,
       "reviewed": false,
       "title": "Nafas march in Tunis against President Saied"
+    },
+    {
+      "kind": "event",
+      "id": "ev-prison-heat-deaths-2026-summer",
+      "confidence": "B",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 2,
+      "reviewed": false,
+      "title": "Summer 2026 prison deaths: record heat and opacity on the causes"
     },
     {
       "kind": "event",
