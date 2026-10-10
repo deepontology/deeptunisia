@@ -417,6 +417,9 @@
 		position: absolute;
 		inset: 0;
 		overflow: auto;
+		/* Columns come to rest on their own edge, beside the sticky spine. */
+		scroll-snap-type: x mandatory;
+		scroll-padding-inline-start: var(--cv-spine-w);
 		overscroll-behavior: contain;
 	}
 
