@@ -1323,14 +1323,8 @@ const en: Dict = {
 	'inspector.weakChain.body':
 		'{edges} inferred or unsubstantiated influence edges connect this person into a chain of {depth} steps. Every step is a claim the evidence has not established.',
 	'inspector.temporal.title': 'Gap in time — links do not overlap',
-	'inspector.temporal.body':
-		'This chain stitches {edges} links whose time spans do not overlap — {reason}. A gap means no one could carry influence across it.',
 	'inspector.type.title': 'Mixed mechanisms — not one influence channel',
-	'inspector.type.body':
-		'This chain mixes {reason}. Board, family and funding are different mechanisms; reading them as one influence channel conflates them.',
 	'inspector.confidence.title': 'Weak link — chain inherits its lowest grade',
-	'inspector.confidence.body':
-		'The weakest link ({reason}) is below the grade a composed path needs. A chain is only as strong as its weakest edge.',
 	'data.eyebrow': 'Open data',
 	'data.title': 'Take the graph',
 	'data.dl.dataset': 'The complete graph: entities, positions, relationships, events, sources, gradings.',
@@ -1493,7 +1487,14 @@ const en: Dict = {
 	// redesign 2026-10 (SH-2)
 	'ctl.layers.some': '{n} of {total}',
 	// redesign 2026-10 (SH-2)
-	'ctl.layers.all': 'All'
+	'ctl.layers.all': 'All',
+	// redesign 2026-10 (SH-3)
+	'inspector.notes': 'Reading notes ({n})',
+	'inspector.note.link': '{from} – {to}',
+	'inspector.temporal.named': 'This chain joins {first} and {second}, whose time spans do not overlap. A gap means no one could carry influence across it.',
+	'inspector.temporal.plain': 'This chain stitches {edges} links whose time spans do not overlap. A gap means no one could carry influence across it.',
+	'inspector.type.named': 'One link in this chain, {link}, is a “{type}” relationship, not an influence channel. Board, family and funding are different mechanisms; reading them as one channel conflates them.',
+	'inspector.confidence.named': 'The weakest link, {link}, is graded below what a composed path needs (basis: {basis}). A chain is only as strong as its weakest edge.'
 };
 
 const fr: Dict = {
@@ -2746,14 +2747,8 @@ const fr: Dict = {
 	'inspector.weakChain.body':
 		"{edges} liens d'influence déduits ou non étayés relient cette personne à une chaîne de {depth} étapes. Chaque étape est une affirmation que les preuves n'ont pas établie.",
 	'inspector.temporal.title': 'Trou temporel — les liens ne se chevauchent pas',
-	'inspector.temporal.body':
-		'Cette chaîne enchaîne {edges} liens dont les périodes ne se chevauchent pas — {reason}. Une interruption signifie que personne n’a pu porter l’influence à travers elle.',
 	'inspector.type.title': 'Mécanismes mélangés — pas un seul canal d’influence',
-	'inspector.type.body':
-		'Cette chaîne mélange {reason}. Conseil d’administration, famille et financement sont des mécanismes différents ; les lire comme un seul canal d’influence les confond.',
 	'inspector.confidence.title': 'Maillon faible — la chaîne vaut son plus faible grade',
-	'inspector.confidence.body':
-		'Le maillon le plus faible ({reason}) est sous le grade qu’exige un chemin composé. Une chaîne ne vaut que son maillon le plus faible.',
 	'data.eyebrow': 'Données ouvertes',
 	'data.title': 'Emportez le graphe',
 	'data.dl.dataset': 'Le graphe complet : entités, postes, relations, événements, sources, gradations.',
@@ -2917,7 +2912,14 @@ const fr: Dict = {
 	// redesign 2026-10 (SH-2)
 	'ctl.layers.some': '{n} sur {total}',
 	// redesign 2026-10 (SH-2)
-	'ctl.layers.all': 'Toutes'
+	'ctl.layers.all': 'Toutes',
+	// redesign 2026-10 (SH-3)
+	'inspector.notes': 'Notes de lecture ({n})',
+	'inspector.note.link': '{from} – {to}',
+	'inspector.temporal.named': 'Cette chaîne relie {first} et {second}, dont les périodes ne se chevauchent pas. Un écart signifie que personne n’a pu y faire passer une influence.',
+	'inspector.temporal.plain': 'Cette chaîne assemble {edges} liens dont les périodes ne se chevauchent pas. Un écart signifie que personne n’a pu y faire passer une influence.',
+	'inspector.type.named': 'Un lien de cette chaîne, {link}, est une relation « {type} », pas un canal d’influence. Conseil, famille et financement sont des mécanismes différents ; les lire comme un seul canal les confond.',
+	'inspector.confidence.named': 'Le maillon le plus faible, {link}, est noté en dessous de ce qu’exige un chemin composé (base : {basis}). Une chaîne ne vaut que par son maillon le plus faible.'
 };
 
 
@@ -4165,14 +4167,8 @@ const ar: Dict = {
 	'inspector.weakChain.body':
 		'{edges} روابط تأثير مستنتجة أو غير مدعومة تربط هذا الشخص بسلسلة من {depth} خطوات. كل خطوة ادعاء لم تثبته الأدلة.',
 	'inspector.temporal.title': 'فجوة زمنية — الروابط لا تتداخل',
-	'inspector.temporal.body':
-		'تجمع هذه السلسلة {edges} روابط لا تتداخل فتراتها — {reason}. الفجوة تعني أن لا أحد كان قادرًا على نقل النفوذ عبرها.',
 	'inspector.type.title': 'آليات مختلطة — ليست قناة نفوذ واحدة',
-	'inspector.type.body':
-		'تخلط هذه السلسلة {reason}. مجلس الإدارة والعائلة والتمويل آليات مختلفة؛ قراءتها كقناة نفوذ واحدة تخلط بينها.',
 	'inspector.confidence.title': 'حلقة ضعيفة — السلسلة على قدر أضعف حلقاتها',
-	'inspector.confidence.body':
-		'الحلقة الأضعف ({reason}) دون الدرجة التي يتطلبها مسار مركّب. السلسلة لا تتجاوز قوة أضعف حلقاتها.',
 	'data.eyebrow': 'بيانات مفتوحة',
 	'data.title': 'خذ الرسم البياني',
 	'data.dl.dataset': 'الرسم البياني الكامل: الكيانات والمناصب والعلاقات والأحداث والمصادر والدرجات.',
@@ -4336,7 +4332,14 @@ const ar: Dict = {
 	// redesign 2026-10 (SH-2)
 	'ctl.layers.some': '{n} من {total}',
 	// redesign 2026-10 (SH-2)
-	'ctl.layers.all': 'الكل'
+	'ctl.layers.all': 'الكل',
+	// redesign 2026-10 (SH-3)
+	'inspector.notes': 'ملاحظات القراءة ({n})',
+	'inspector.note.link': '{from} – {to}',
+	'inspector.temporal.named': 'تربط هذه السلسلة {first} و{second}، ولا تتداخل فترتاهما الزمنيتان. والفجوة تعني أن أحدًا لم يكن بوسعه نقل النفوذ عبرها.',
+	'inspector.temporal.plain': 'تجمع هذه السلسلة {edges} روابط لا تتداخل فتراتها الزمنية. والفجوة تعني أن أحدًا لم يكن بوسعه نقل النفوذ عبرها.',
+	'inspector.type.named': 'أحد روابط هذه السلسلة، {link}، علاقة من نوع «{type}» وليس قناة نفوذ. فمجالس الإدارة والعائلة والتمويل آليات مختلفة، وقراءتها كقناة واحدة تخلط بينها.',
+	'inspector.confidence.named': 'أضعف رابط، {link}، مصنَّف دون ما يتطلبه مسار مركَّب (الأساس: {basis}). والسلسلة لا تقوى إلا بقدر أضعف حلقاتها.'
 };
 
 

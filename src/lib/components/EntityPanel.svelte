@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { Snippet } from 'svelte';
 	import { app } from '$lib/state.svelte';
 	import { format } from '$lib/i18n';
 	import { t, tf, describeInterval, durationLabel, formatDate, layerLabel, relLabel, confidenceLabel, basisLabel, nameOf, entityName} from '$lib/t.svelte';
@@ -37,8 +38,15 @@
 	let {
 		id,
 		embedded = false,
-		onselect
-	}: { id: string; embedded?: boolean; onselect?: (id: string) => void } = $props();
+		onselect,
+		notes
+	}: {
+		id: string;
+		embedded?: boolean;
+		onselect?: (id: string) => void;
+		/** Reading notes from the host, placed under the name: identity first. */
+		notes?: Snippet;
+	} = $props();
 
 	/**
 	 * Inline use (the Agora record rail) must not fight the shell Inspector for
@@ -295,6 +303,8 @@
 			{/if}
 		</div>
 	</header>
+
+	{#if notes}<div class="notes">{@render notes()}</div>{/if}
 
 	<!--
 		The two affordances the community extension is built around. Plain links, not
@@ -676,6 +686,10 @@
 		page — a discussion link styled like a primary action would imply the two
 		carry the same standing.
 	*/
+	/* The host's reading notes: a disclosure that spans the card. */
+	.notes {
+		flex-shrink: 0;
+	}
 	.community {
 		display: flex;
 		gap: 6px;
