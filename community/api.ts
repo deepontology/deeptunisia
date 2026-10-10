@@ -90,6 +90,14 @@ export interface Env {
 	RESEARCH_DEV_STUDY?: string;
 	/** Worker secret: enables the Turnstile siteverify call for research submissions. */
 	TURNSTILE_SECRET?: string;
+	/**
+	 * Public (non-secret) Turnstile site key, a plain Worker variable. The human
+	 * check is on only when this and TURNSTILE_SECRET are both set: this key lets
+	 * the survey page render the widget, the secret lets the server verify its
+	 * token. The secret on its own would verify tokens the page cannot produce, so
+	 * that combination is not treated as switched on.
+	 */
+	TURNSTILE_SITEKEY?: string;
 	/** Tests only: injected bot-challenge verifier, never set in production. */
 	TURNSTILE_VERIFY?: (token: string, address: string) => Promise<boolean>;
 	/**

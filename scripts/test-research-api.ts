@@ -659,7 +659,7 @@ console.log('\n  ── the dev fielding override (local only) ──\n');
 
 	const limited = researchEnv({ RESEARCH_DEV_STUDY: 'fixture-design', TURNSTILE_VERIFY: undefined });
 	const codes: number[] = [];
-	for (let i = 0; i < 6; i++) {
+	for (let i = 0; i < 21; i++) {
 		const r = await post(
 			limited,
 			'/api/studies/fixture-design/submit',
@@ -669,7 +669,7 @@ console.log('\n  ── the dev fielding override (local only) ──\n');
 	}
 	ok(
 		'the response rate limit still applies under the override',
-		codes.slice(0, 5).every((s) => s === 200) && codes[5] === 429,
+		codes.slice(0, 20).every((s) => s === 200) && codes[20] === 429,
 		codes.join(',')
 	);
 }
@@ -768,12 +768,12 @@ console.log('\n  ── the response rate limit ──\n');
 	const env = researchEnv();
 	const assignment = await assignmentFor(env, 'fixture');
 	const statuses: number[] = [];
-	for (let i = 0; i < 6; i++) {
+	for (let i = 0; i < 21; i++) {
 		const r = await post(env, '/api/studies/fixture/submit', submitPayload({ assignment, channel: `wave${i}` }));
 		statuses.push(r.status);
 	}
-	ok('five submissions from one address pass inside the window', statuses.slice(0, 5).every((s) => s === 200), statuses.join(','));
-	ok('the sixth is refused 429', statuses[5] === 429);
+	ok('twenty submissions from one address pass inside the window', statuses.slice(0, 20).every((s) => s === 200), statuses.join(','));
+	ok('the twenty-first is refused 429', statuses[20] === 429);
 
 	// The limit is per action, so the same address can still withdraw.
 	const receipt = (await allRows(env))[0].receipt as string;
@@ -1272,6 +1272,66 @@ console.log('\n  ── Turnstile and the dev override are unchanged ──\n');
 	const dev = researchEnv({ RESEARCH_DEV_STUDY: 'fixture', TURNSTILE_VERIFY: undefined });
 	const waived = await post(dev, '/api/studies/fixture/submit', submitPayload());
 	ok('the dev override still skips the check', waived.status === 200, waived.body.error ?? '');
+}
+
+console.log('\n  ── the Turnstile site-key switch ──\n');
+
+{
+	const SECRET = 'a-secret-value-that-is-not-a-real-key';
+	const SITEKEY = 'a-public-site-key-that-is-not-a-real-key';
+
+	// Off: no site key travels, and the only check is the first-party proof of work.
+	const off = researchEnv({ TURNSTILE_VERIFY: undefined });
+	const offChallenge = await get(off, '/api/studies/fixture/challenge');
+	ok(
+		'with neither variable set the challenge carries no site key',
+		offChallenge.status === 200 && !('turnstileSiteKey' in offChallenge.body),
+		Object.keys(offChallenge.body).join(', ')
+	);
+
+	// Secret only, behaving exactly as today: verification runs, but the site key
+	// the widget needs is absent, so the page renders no widget and every
+	// submission is refused. The site key is required for the switch to be usable;
+	// with only the secret there is nothing to render, so the switch cannot open.
+	const secretOnly = researchEnv({ TURNSTILE_SECRET: SECRET });
+	const secretChallenge = await get(secretOnly, '/api/studies/fixture/challenge');
+	ok(
+		'with only the secret set the switch stays closed, because the site key is required',
+		secretChallenge.status === 200 && !('turnstileSiteKey' in secretChallenge.body),
+		Object.keys(secretChallenge.body).join(', ')
+	);
+
+	// Both set: the server announces the check to the page. The injected verifier
+	// stands in for Cloudflare's siteverify so the test makes no network call.
+	const bothOn = researchEnv({
+		TURNSTILE_SITEKEY: SITEKEY,
+		TURNSTILE_SECRET: SECRET,
+		TURNSTILE_VERIFY: async () => false
+	});
+	const onChallenge = await get(bothOn, '/api/studies/fixture/challenge');
+	ok(
+		'with both set the challenge carries the site key',
+		onChallenge.status === 200 && onChallenge.body.turnstileSiteKey === SITEKEY,
+		String(onChallenge.body.turnstileSiteKey ?? '')
+	);
+
+	const assignment = await assignmentFor(bothOn, 'fixture');
+	const noToken = await post(bothOn, '/api/studies/fixture/submit', submitPayload({ assignment }));
+	ok(
+		'with the check on a submission without a valid token is refused 403',
+		noToken.status === 403 && noToken.body.error === 'the bot challenge failed',
+		noToken.body.error ?? ''
+	);
+
+	// And a valid token still lands, under both variables set.
+	const bothPass = researchEnv({
+		TURNSTILE_SITEKEY: SITEKEY,
+		TURNSTILE_SECRET: SECRET,
+		TURNSTILE_VERIFY: async () => true
+	});
+	const passAssignment = await assignmentFor(bothPass, 'fixture');
+	const accepted = await post(bothPass, '/api/studies/fixture/submit', submitPayload({ assignment: passAssignment }));
+	ok('a valid token is accepted with the check on', accepted.status === 200, accepted.body.error ?? '');
 }
 
 console.log(

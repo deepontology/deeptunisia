@@ -8,7 +8,7 @@ Quand vous envoyez vos réponses, une seule ligne est enregistrée. Elle contien
 
 Le questionnaire ne demande rien sur qui vous êtes : ni âge, ni genre, ni adresse. Sa dernière question, le gouvernorat où vous vivez, est facultative : vous pouvez la passer ou répondre « je préfère ne pas répondre ». Si vous y répondez, seule votre région est publiée, et jamais pour un groupe de moins de 20 personnes.
 
-Aucun nom, adresse e-mail, numéro de téléphone, compte, adresse IP, empreinte de navigateur, identifiant d'appareil ni localisation n'est conservé avec vos réponses. Aucun champ ne pourrait en contenir. Le site ne pose aucun cookie de suivi et ne charge rien provenant d'autres entreprises sur les pages de l'étude.
+Aucun nom, adresse e-mail, numéro de téléphone, compte, adresse IP, empreinte de navigateur, identifiant d'appareil ni localisation n'est conservé avec vos réponses. Aucun champ ne pourrait en contenir. Le site ne pose aucun cookie de suivi et ne charge rien provenant d'autres entreprises sur les pages de l'étude, à l'exception de la vérification humaine de Cloudflare, qui n'est activée qu'en cas d'attaque et l'indique sur la page.
 
 Une chose est conservée dans ce navigateur plutôt qu'avec vos réponses : le mois de votre dernière réponse. Elle reste sur cet appareil, elle ne nous est jamais envoyée, et elle est supprimée lorsque vous retirez vos réponses depuis ce navigateur.
 

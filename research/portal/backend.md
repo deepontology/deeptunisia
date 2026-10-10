@@ -97,7 +97,7 @@ The community store's `rate_buckets` table is shared for rate limiting across bo
 | 5 | Research store is bound | 503 |
 | 6 | Honeypot fields empty | 400 |
 | 7 | Bot challenge (skipped only under dev override) | 403 / 503 |
-| 8 | Rate limit: 5 submissions per address per hour | 429 |
+| 8 | Rate limit: twenty submissions per address per hour | 429 |
 | 9 | Full `validateSubmission`: hash match, declared locale, channel format, consent true, unknown ids refused, ranges and options checked, text length capped | 400 |
 | 10 | Receipt generated, row inserted | 500 on storage error |
 
@@ -126,7 +126,36 @@ To put research in production, four changes, each mechanical:
 1. Create the research D1 database and add the `RESEARCH_DB` binding (a commented example sits in `wrangler.toml`).
 2. Apply `community/research-schema.sql` to it (`wrangler d1 execute`).
 3. Set `RESEARCH_OPEN=1` for the fielding window and remove it at close.
-4. Set `TURNSTILE_SECRET` as a Worker secret. Without a challenge configured and writes open, submissions return 503 rather than accepting unchallenged writes.
+4. The human-check switch is off by default; run on the first-party proof of work by leaving both Turnstile variables unset, and switch it on for an attack as described below.
+
+**The human-check switch (Cloudflare Turnstile).** Off by default; the default is the first-party proof-of-work puzzle, with no request to any other company. The switch opens only when BOTH a secret and a public site key are set, and it is meant for the duration of an attack, off again afterwards.
+
+To turn it **on**:
+
+```bash
+wrangler secret put TURNSTILE_SECRET
+```
+
+`TURNSTILE_SITEKEY` is public (not a secret), so it is a Worker var. Add it under `[vars]` in `wrangler.toml`, near the `TURNSTILE_SECRET` example already there, then deploy:
+
+```toml
+[vars]
+TURNSTILE_SITEKEY = "<the public site key from the Cloudflare dashboard>"
+```
+
+```bash
+wrangler deploy
+```
+
+To turn it **off**, remove both and redeploy:
+
+```bash
+wrangler secret delete TURNSTILE_SECRET
+# and delete TURNSTILE_SITEKEY from [vars], then:
+wrangler deploy
+```
+
+Off means removing both: leaving only the secret refuses everyone (the page can no longer render a widget), and leaving only the site key does nothing (verification never runs). While it is on, the survey runner loads the widget from `challenges.cloudflare.com` and shows a line saying so, and the Content-Security-Policy for the participate route alone is widened to that origin in `static/_headers`; every other route keeps the strict policy. The proof-of-work puzzle is required in both modes, and the twenty-per-hour address limit is unchanged either way.
 
 `RESEARCH_DEV_STUDY` is never set in the Worker. `AGORA_OPEN` stays a separate switch for the discussion layer. The release command chain is `npm run build && wrangler deploy`, and the build order guarantees the Worker bundles the compiled registry before deployment.
 
@@ -168,7 +197,7 @@ Backups: export D1 snapshots while a window is open; never commit a database fil
 
 The build path is ready; the fielding path is not. Before anyone outside the team answers a question:
 
-- Turnstile secret wired and verified; the dev challenge waiver is gone.
+- The dev challenge waiver is gone; in production the first-party proof of work runs, with the Turnstile switch (secret and site key) available for an attack.
 - Research D1 binding created; response storage no longer local.
 - Minimum-completion threshold replaced with the pretest median (the provisional formula is enforced today; the dev waiver skips it).
 - Retention and purge jobs scheduled rather than manual.

@@ -44,6 +44,11 @@ interface WorkerEnv {
 	RESEARCH_OPEN?: string;
 	/** Turnstile secret for the research bot challenge (contract §4). */
 	TURNSTILE_SECRET?: string;
+	/**
+	 * Public Turnstile site key (non-secret Worker var). Passed to the handler so
+	 * the bot challenge can hand it to the survey page once the secret is set too.
+	 */
+	TURNSTILE_SITEKEY?: string;
 }
 
 /**
@@ -133,6 +138,7 @@ export default {
 				RESEARCH_OPEN: env.RESEARCH_OPEN,
 				STUDIES: studies,
 				TURNSTILE_SECRET: env.TURNSTILE_SECRET,
+				TURNSTILE_SITEKEY: env.TURNSTILE_SITEKEY,
 				// The live results' shared store, so the endpoint reads its rows
 				// once a minute per study rather than once per reader.
 				LIVE_CACHE: edgeLiveCache(url.origin)
