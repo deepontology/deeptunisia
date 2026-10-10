@@ -15,7 +15,7 @@
  * instead of deleting them, so a future instrument key enters the hash only by a
  * deliberate edit here, and a text or response change always moves the hash.
  */
-import { evaluateCondition, type ScoringSpec } from './research-scoring.ts';
+import { evaluateCondition, CHANNEL_PATTERN, type ScoringSpec } from './research-scoring.ts';
 
 export type Locale = 'en' | 'fr' | 'ar';
 
@@ -85,6 +85,38 @@ export interface RuntimeGap {
 	instruction: RuntimeText;
 	items: string[];
 	response: string;
+}
+
+/**
+ * The prefix a presence answer's key carries, and the key itself.
+ *
+ * An instrument's presence block re-asks items an earlier block already asked,
+ * so its answers are stored under a key of their own: one `answers` map keyed
+ * by item id can hold one rating per item, and the presence rating overwriting
+ * the essentiality one leaves nothing to measure a gap against. The runner
+ * builds the key with `gapAnswerKey`, the server accepts the same keys here,
+ * and the aggregation reads them (scripts/studies-aggregate.ts).
+ */
+export const GAP_ANSWER_PREFIX = 'gap:';
+
+export function gapAnswerKey(itemId: string): string {
+	return `${GAP_ANSWER_PREFIX}${itemId}`;
+}
+
+/**
+ * The item and response type a presence answer key refers to, or null when the
+ * key is not one this instrument declares: the block's own response type is
+ * what the value is checked against, not the item's.
+ */
+function presenceAnswer(
+	instrument: RuntimeInstrument,
+	key: string
+): { item: RuntimeItem; response: string } | null {
+	if (!key.startsWith(GAP_ANSWER_PREFIX)) return null;
+	const id = key.slice(GAP_ANSWER_PREFIX.length);
+	const item = instrument.items.find((i) => i.id === id);
+	if (!item || !item.displayed || !instrument.gap?.items.includes(id)) return null;
+	return { item, response: instrument.gap.response };
 }
 
 export interface RuntimeInstrument {
@@ -501,7 +533,9 @@ export function compileInstrument(doc: InstrumentDocument): RuntimeInstrument {
 // maxdiff-not-generated the block's design has not been generated yet (refused
 //                       even where SubmissionOptions allows an omitted block)
 //
-// Missing keys are skips, never errors; only consent has to be present.
+// Missing keys are skips, never errors; only consent has to be present. The
+// presence block's answers arrive under their own `gap:` keys alongside the
+// item's own, so one submission carries both ratings the protocol measures.
 // ---------------------------------------------------------------------------
 
 export type SubmissionResult =
@@ -530,7 +564,6 @@ export interface SubmissionOptions {
 	allowMissingMaxdiff?: boolean;
 }
 
-const CHANNEL_PATTERN = /^[a-z0-9_-]{1,32}$/;
 const DEFAULT_MAX_CHARS = 500;
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -542,8 +575,8 @@ function invalid(code: string, error: string): SubmissionResult {
 }
 
 /** Why a value is not acceptable for its item, or null when it is. */
-function answerProblem(item: RuntimeItem, value: unknown): string | null {
-	switch (item.response) {
+function answerProblem(item: RuntimeItem, value: unknown, response = item.response): string | null {
+	switch (response) {
 		case 'scale_essential':
 		case 'scale_present':
 		case 'scale_0_10':
@@ -653,6 +686,17 @@ export function validateSubmission(
 	}
 
 	for (const key of Object.keys(answers)) {
+		// A presence answer is a second rating of an item the respondent already
+		// rated, so it keeps its own key and is checked against the presence
+		// block's response type.
+		const presence = presenceAnswer(instrument, key);
+		if (presence) {
+			const value = answers[key];
+			if (value === null) continue; // an explicit skip is always allowed
+			const problem = answerProblem(presence.item, value, presence.response);
+			if (problem) return invalid('invalid-answer', `"${key}": ${problem}`);
+			continue;
+		}
 		const item = byId.get(key);
 		if (!item || !item.displayed) {
 			return invalid('unknown-item', `"${key}" is not a displayed item on this instrument`);

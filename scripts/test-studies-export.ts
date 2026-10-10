@@ -25,6 +25,7 @@ import { parse as parseYaml } from 'yaml';
 import { localDb } from '../community/db-local.ts';
 import type { Db } from '../community/db.ts';
 import {
+	gapAnswerKey,
 	compileInstrument,
 	type InstrumentDocument,
 	type RuntimeInstrument
@@ -94,8 +95,7 @@ const fixtureDoc = (): InstrumentDocument => {
 			text_fr: null,
 			text_ar: null
 		});
-	}
-	items.push(
+	}	items.push(
 		{
 			id: 's1',
 			module: 'support_regime',
@@ -113,26 +113,6 @@ const fixtureDoc = (): InstrumentDocument => {
 			response: 'scale_0_10',
 			required: true,
 			text_en: 'Support two.',
-			text_fr: null,
-			text_ar: null
-		},
-		{
-			id: 'g1',
-			module: 'presence_tunisia',
-			tier: 'extended',
-			response: 'scale_present',
-			required: true,
-			text_en: 'Present one.',
-			text_fr: null,
-			text_ar: null
-		},
-		{
-			id: 'g2',
-			module: 'presence_tunisia',
-			tier: 'extended',
-			response: 'scale_present',
-			required: true,
-			text_en: 'Present two.',
 			text_fr: null,
 			text_ar: null
 		}
@@ -177,13 +157,16 @@ const fixtureDoc = (): InstrumentDocument => {
 			text_fr: null,
 			text_ar: null
 		},
+		// The presence block re-asks two items the essentiality blocks already
+		// asked, as the real instrument's does, so a row can hold both ratings
+		// of one item and neither is lost.
 		gap_block: {
 			id: 'gap_block',
 			response: 'scale_present',
 			instruction_en: 'How present?',
 			text_fr: null,
 			text_ar: null,
-			items: ['g1', 'g2']
+			items: ['e1', 'e2']
 		},
 		experiments: []
 	};
@@ -200,14 +183,16 @@ type FixtureRow = {
 	maxdiff: Array<{ set: string; most: string; least: string }> | null;
 };
 
-/** 21 keys: consent plus all 20 displayed items, varied values. */
+/** 20 keys: consent, all 18 displayed items, and the two presence ratings. */
 function completeAnswers(offset: number): Record<string, unknown> {
 	const answers: Record<string, unknown> = { consent_ok: true };
 	for (let i = 1; i <= 16; i++) answers[`e${i}`] = (i + offset) % 11;
 	answers.s1 = 1 + (offset % 4);
 	answers.s2 = (offset * 3) % 11;
-	answers.g1 = (offset + 4) % 11;
-	answers.g2 = (offset + 8) % 11;
+	// The presence ratings of e1 and e2, under the presence block's own keys:
+	// the same items the essentiality ratings above are keyed by.
+	answers[gapAnswerKey('e1')] = (offset + 3) % 11;
+	answers[gapAnswerKey('e2')] = (offset + 7) % 11;
 	return answers;
 }
 
@@ -223,9 +208,9 @@ const maxdiffB = [
 const cleanA = completeAnswers(0);
 const cleanB = completeAnswers(1);
 
-// C: 16 keys, 15 displayed items answered (75%), all essentiality answers 5.
+// C: 12 keys, 12 of 18 displayed items answered (67%), all essentiality answers 5.
 const incompleteStraight: Record<string, unknown> = { consent_ok: true };
-for (let i = 1; i <= 13; i++) incompleteStraight[`e${i}`] = 5;
+for (let i = 1; i <= 11; i++) incompleteStraight[`e${i}`] = 5;
 incompleteStraight.s1 = 2;
 incompleteStraight.s2 = 3;
 
@@ -462,10 +447,42 @@ ok(
 	JSON.stringify(maxdiffSet?.values)
 );
 
-ok(
-	'the gap block carries the mean presence',
-	typeof results.blocks.find((block) => block.id === 'g1')?.values.mean === 'number'
-);
+{
+	// The presence block re-asks e1 and e2, so one row carries both ratings and
+	// the document can hold both: an aggregate that lost one of them could not
+	// measure the gap between importance and reality.
+	const presenceOf = (id: string) =>
+		results.blocks.find((block) => block.id === id && block.metric === 'gap_presence');
+	ok(
+		'the presence blocks read the presence keys, one per re-asked item',
+		['e1', 'e2'].every((id) => typeof presenceOf(id)?.values.mean === 'number'),
+		['e1', 'e2'].map((id) => `${id}=${presenceOf(id)?.values.mean}`).join(' ')
+	);
+	const included = [cleanA, cleanB, nearB];
+	const presenceMean = (id: string) => Number(presenceOf(id)!.values.mean);
+	// The aggregate rounds to two decimals, so the expectation is rounded too.
+	const expected = (id: string) =>
+		Math.round((included.reduce((sum, answers) => sum + (answers[gapAnswerKey(id)] as number), 0) / included.length) * 100) / 100;
+	ok(
+		'the presence mean is the mean of the presence ratings',
+		presenceMean('e1') === expected('e1') && presenceMean('e2') === expected('e2'),
+		`e1 ${presenceMean('e1')} vs ${expected('e1')}, e2 ${presenceMean('e2')} vs ${expected('e2')}`
+	);
+	const essentialityMean = (id: string) =>
+		results.blocks.find((block) => block.id === id && block.metric === 'essentiality')!.values.mean as number;
+	ok(
+		'the presence rating never stands in for the item\'s own rating',
+		essentialityMean('e1') !== presenceMean('e1') && essentialityMean('e2') !== presenceMean('e2'),
+		`e1 ${essentialityMean('e1')} vs ${presenceMean('e1')}, e2 ${essentialityMean('e2')} vs ${presenceMean('e2')}`
+	);
+	ok(
+		'both ratings of the same item are published, each under its own metric',
+		results.blocks.filter((block) => block.id === 'e1').length === 2 &&
+			results.blocks.filter((block) => block.id === 'e1').map((block) => block.metric).join(',') ===
+				'essentiality,gap_presence',
+		results.blocks.filter((block) => block.id === 'e1').map((block) => block.metric).join(',')
+	);
+}
 
 const channelBlock = results.blocks.find((block) => block.id === 'count_by_channel');
 ok(

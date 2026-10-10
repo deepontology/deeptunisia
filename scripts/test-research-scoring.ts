@@ -19,6 +19,8 @@ import {
 	aggregateSeries,
 	applyExclusions,
 	applyPublicationFloor,
+	channelCode,
+	CHANNEL_PATTERN,
 	linkCheck,
 	localLevelFilter,
 	periodOf,
@@ -689,6 +691,52 @@ console.log('\n  ── wave aggregation ──\n');
 			!spec.components.some((c: { items?: string[]; item?: string }) =>
 				(c.items ?? []).includes('pti_c1') || c.item === 'pti_c1'
 			)
+	);
+}
+
+// ---------------------------------------------------------------------------
+// The channel code: one rule for every reader of a shared link
+//
+// The index page hands the code a reader arrived with to the participation
+// link, and the runner reads the code back off its own URL. Both call the one
+// helper below, so a link keeps its code through that hand-off instead of
+// answering as organic and vanishing from the link check — and a code the
+// server would refuse is dropped here rather than answered past.
+// ---------------------------------------------------------------------------
+
+console.log('\n  ── the channel code ──\n');
+
+{
+	ok('a valid code survives unchanged', channelCode('wave') === 'wave', channelCode('wave'));
+	ok('a code is lowercased', channelCode('Wave-02') === 'wave-02', channelCode('Wave-02'));
+	ok('an empty code is organic', channelCode('') === 'organic', channelCode(''));
+	ok('a code with no src is organic', channelCode('organic') === 'organic');
+	ok('a full-length code survives', channelCode('a'.repeat(32)) === 'a'.repeat(32));
+	ok('a code one character over the limit is organic', channelCode('a'.repeat(33)) === 'organic');
+	ok('a space in a code is organic', channelCode('wave 2') === 'organic', channelCode('wave 2'));
+	ok('a unicode lookalike in a code is organic', channelCode('wàve') === 'organic', channelCode('wàve'));
+	ok(
+		'every code the helper returns is one the server accepts',
+		[
+			'wave',
+			'Wave',
+			'',
+			'x'.repeat(33),
+			'ok-code_9',
+			'slash/ed',
+			'emoji-✓'
+		].every((raw) => CHANNEL_PATTERN.test(channelCode(raw))),
+		[
+			'wave',
+			'Wave',
+			'',
+			'x'.repeat(33),
+			'ok-code_9',
+			'slash/ed',
+			'emoji-✓'
+		]
+			.map((raw) => channelCode(raw))
+			.join(', ')
 	);
 }
 
