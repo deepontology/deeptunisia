@@ -29,6 +29,15 @@
 			if (res.ok) {
 				const body = (await res.json()) as { deleted?: boolean };
 				phase = body.deleted ? 'done' : 'notfound';
+				// The month this browser recorded goes with the answers it recorded:
+				// a person who withdraws must not still be told they answered.
+				if (body.deleted) {
+					try {
+						localStorage.removeItem(`deeptunisia:research:${study.slug}:answered`);
+					} catch {
+						/* Private mode: nothing was stored to remove. */
+					}
+				}
 			} else {
 				phase = 'error';
 			}
