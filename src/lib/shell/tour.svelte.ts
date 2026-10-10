@@ -72,8 +72,9 @@ export interface TourStep {
 
 export const STEPS: TourStep[] = [
 	{ id: 'welcome', n: 1 },
-	{ id: 'bubbles', n: 2, target: '[data-tour="bubbles"]', place: 'bottom' },
-	{ id: 'views', n: 3, target: '[data-tour="views"]', place: 'bottom' },
+	/* On a phone the bubbles and the tab strip are one button, the view menu. */
+	{ id: 'bubbles', n: 2, target: '[data-tour="bubbles"],[data-tour="viewmenu"]', place: 'bottom' },
+	{ id: 'views', n: 3, target: '[data-tour="views"],[data-tour="viewmenu"]', place: 'bottom' },
 	{ id: 'canvas', n: 4, target: '[data-tour="canvas"]', place: 'bottom' },
 	/* Two selectors, one step: on a wide dock the dial is on screen, on a narrow
 	   one it lives inside a popover and the button that opens it stands in. */

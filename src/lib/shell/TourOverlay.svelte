@@ -46,7 +46,12 @@
 			dockTop = false;
 			return;
 		}
-		const el = document.querySelector(step.target);
+		// The first match that is laid out: a step may name a desktop control and
+		// its compact stand-in, and only one of them is displayed at a time.
+		const el = [...document.querySelectorAll(step.target)].find((e) => {
+			const b = e.getBoundingClientRect();
+			return b.width > 0 || b.height > 0;
+		});
 		if (!el) {
 			rect = null;
 			card = null;

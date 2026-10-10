@@ -564,8 +564,9 @@
 
 @media (max-width: 900px) {
 	:root {
-		--menubar-h: 52px;
-		--subnav-h: 42px;
+		/* One phone bar: the view button replaces the bubbles and the tab strip. */
+		--menubar-h: var(--bar-h);
+		--subnav-h: 0px;
 		/* Two rows of 32 + 40. Must match TimeDock's compact block exactly: the
 		   inspector sheet and every view that reserves bottom space position against
 		   this number, so a dock taller than its token silently covers them. */
@@ -587,7 +588,6 @@
 @media (max-width: 900px) and (max-height: 520px) {
 	:root {
 		--menubar-h: 44px;
-		--subnav-h: 34px;
 	}
 }
 
