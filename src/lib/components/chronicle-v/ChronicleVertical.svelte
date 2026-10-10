@@ -67,6 +67,7 @@
 	   ========================================================================= */
 
 	import { app } from '$lib/state.svelte';
+	import AboutView from '$lib/shell/AboutView.svelte';
 	import { layerLabel, nameOf, t, tf } from '$lib/t.svelte';
 	import {
 		CUTOFF,
@@ -250,6 +251,7 @@
 	<div class="cv-head">
 		<LayerTabs layers={tabLayers} active={layer} onchange={(l) => (layer = l)} />
 		<div class="cv-tools">
+			<AboutView hint={t('chronicle.hint')} />
 			<div class="cv-zoom" role="group" aria-label={tf('chronicle.vertical.level', { n: pxPerYear })}>
 				<button
 					type="button"
@@ -347,9 +349,10 @@
 
 	.cv-tools {
 		display: flex;
+		flex-wrap: wrap;
 		align-items: center;
 		justify-content: space-between;
-		gap: var(--s-4);
+		gap: 0 var(--s-4);
 	}
 
 	.cv-zoom {

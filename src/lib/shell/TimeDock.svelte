@@ -274,7 +274,9 @@
 		layersFolded = false;
 		neededW = 0;
 		tick().then(measureRow);
-		const ro = new ResizeObserver(() => measureRow());
+		// Next frame: folding changes the row's content inside the observer's own
+		// callback otherwise, which the browser reports as a resize loop.
+		const ro = new ResizeObserver(() => requestAnimationFrame(measureRow));
 		ro.observe(el);
 		return () => ro.disconnect();
 	});

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import AboutView from '$lib/shell/AboutView.svelte';
 	import { app } from '$lib/state.svelte';
 	import { applyEntityLink } from '$lib/deeplink.svelte';
 	import { t, nameOf, layerLabel } from '$lib/t.svelte';
@@ -127,7 +128,7 @@
 <div class="rankings">
 	<div class="toolbar">
 		<span class="eyebrow">{t('rankings.eyebrow')}</span>
-		<p class="hint">{t('rankings.hint')}</p>
+		<AboutView hint={t('rankings.hint')} />
 		<div class="modes">
 			<Button variant="outline" size="xs" active={!app.allTime} onclick={() => (app.allTime = false)}>
 				{format(app.locale, 'rankings.asof', { date: formatDate(app.t, 'year') })}
@@ -341,13 +342,6 @@
 		padding: var(--s-4) var(--s-6);
 		border-bottom: 1px solid var(--border-subtle);
 		flex-wrap: wrap;
-	}
-	.hint {
-		margin: 0;
-		font-size: var(--t-sm);
-		line-height: var(--lh-snug);
-		color: var(--text-secondary);
-		max-width: 68ch;
 	}
 	.modes {
 		display: flex;

@@ -1,4 +1,5 @@
 <script lang="ts">
+import AboutView from '$lib/shell/AboutView.svelte';
 import { untrack } from 'svelte';
 import { page } from '$app/state';
 import { goto } from '$app/navigation';
@@ -2006,7 +2007,7 @@ import Chip from '$lib/ui/Chip.svelte';
 <div class="network">
 	<div class="toolbar">
 		<span class="eyebrow">{t('nav.network')}</span>
-		<p class="hint">{t('network.hint')}</p>
+		<AboutView hint={t('network.hint')} />
 		<div class="stats mono">
 			<span>{stats.nodes} {t('network.live')}</span>
 			<!--
@@ -2948,13 +2949,6 @@ import Chip from '$lib/ui/Chip.svelte';
 		border-bottom: 1px solid var(--border-subtle);
 		flex-wrap: wrap;
 	}
-	.hint {
-		margin: 0;
-		font-size: var(--t-sm);
-		line-height: var(--lh-snug);
-		color: var(--text-secondary);
-		max-width: 68ch;
-	}
 	.stats {
 		display: flex;
 		gap: var(--s-5);
@@ -3713,9 +3707,6 @@ import Chip from '$lib/ui/Chip.svelte';
 			sentence you read once, and it is still in the aria-label and on the wide
 			layout.
 		*/
-		.hint {
-			display: none;
-		}
 		.toolbar {
 			gap: var(--s-5);
 			padding: var(--s-4) var(--s-5);

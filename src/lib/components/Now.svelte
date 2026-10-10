@@ -1,4 +1,5 @@
 <script lang="ts">
+	import AboutView from '$lib/shell/AboutView.svelte';
 	import { onMount } from 'svelte';
 	import { app } from '$lib/state.svelte';
 	import { applyEntityLink } from '$lib/deeplink.svelte';
@@ -193,9 +194,7 @@
 <div class="now">
 	<div class="toolbar">
 		<span class="eyebrow">{t('now.eyebrow')}</span>
-		<p class="hint">
-			{format(app.locale, 'now.hint', { asOf })}
-		</p>
+		<AboutView hint={format(app.locale, 'now.hint', { asOf })} />
 		{#if scrubbedAway}
 			<span class="pinned">
 				{format(app.locale, 'now.pinned', { asOf })}
@@ -310,11 +309,6 @@
 		padding: var(--s-4) var(--s-6);
 		border-bottom: 1px solid var(--border-subtle);
 		flex-wrap: wrap;
-	}
-	.hint {
-		margin: 0;
-		font-size: var(--t-xs);
-		color: var(--text-muted);
 	}
 	.pinned {
 		display: inline-flex;
