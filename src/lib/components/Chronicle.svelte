@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { AxisCamera, navigableAxis } from '$lib/viz/axis.svelte';
-	import { fits } from '$lib/viz/measure';
+	import { fits, textWidth } from '$lib/viz/measure';
 	import { relationshipsByEntity } from '$lib/model';
 	import { app } from '$lib/state.svelte';
 	import { applyEntityLink } from '$lib/deeplink.svelte';
-	import { t, describeInterval, durationLabel, eventTitle, formatDate, nameOf} from '$lib/t.svelte';
+	import { t, tf, describeInterval, durationLabel, eventTitle, formatDate, nameOf} from '$lib/t.svelte';
 	import { dateFormatter } from '$lib/i18n';
 	import Button from '$lib/ui/Button.svelte';
 	import Chip from '$lib/ui/Chip.svelte';
@@ -330,7 +330,7 @@
 	// the clusters back into individual marks. The tenure rows follow below and
 	// the whole plot scrolls.
 	const EXP_ROW_H = 20;
-	const EXP_PAD_T = 24;
+	const EXP_PAD_T = 44;
 	const EXP_PAD_B = 10;
 	const EXP_MIN_W = 6;
 	const EXP_CLUSTER_PX = 14;
@@ -352,23 +352,6 @@
 		clusters: ExpCluster[];
 		height: number;
 		byEvent: Map<string, ExpItem>;
-	}
-
-	/** Greedy interval packing: each entry gets the first row it fits in. */
-	function packRows(source: { id: string; x0: number; x1: number; occ: number }[]) {
-		const rowEnds: number[] = [];
-		const placed: { id: string; x0: number; x1: number; row: number }[] = [];
-		for (const it of [...source].sort((a, b) => a.x0 - b.x0)) {
-			let r = rowEnds.findIndex((end) => end + 4 <= it.x0);
-			if (r === -1) {
-				rowEnds.push(it.occ);
-				r = rowEnds.length - 1;
-			} else {
-				rowEnds[r] = it.occ;
-			}
-			placed.push({ id: it.id, x0: it.x0, x1: it.x1, row: r });
-		}
-		return { placed, rows: Math.max(1, rowEnds.length) };
 	}
 
 	function eventXRange(e: EventRec, d0: number, d1: number): { x0: number; x1: number } {
@@ -444,7 +427,10 @@
 			const { x0, x1 } = eventXRange(n.event, domain[0], domain[1]);
 			return { id, x0, x1, occ: x1 + ruptureReserve(n.event) };
 		});
-		const { placed, rows } = packRows(packable);
+		// One row per event or cluster, in date order: the gutter carries each
+		// row's label, so a row never holds two things to name.
+		const placed = [...packable].sort((a, b) => a.x0 - b.x0).map((p, row) => ({ ...p, row }));
+		const rows = Math.max(1, placed.length);
 		const items: ExpItem[] = [];
 		const clusters: ExpCluster[] = [];
 		for (const p of placed) {
@@ -457,6 +443,49 @@
 		return { items, clusters, height, byEvent: new Map(items.map((i) => [i.event.id, i])) };
 	});
 
+	/**
+	 * Gutter labels for the expanded view, one per row: the date in mono, then the
+	 * title, shortened with "…" to what the gutter affords (measured, as the row
+	 * labels are). The full title stays in the native tooltip.
+	 */
+	const GL_X = 14;
+	function fitTitle(title: string, avail: number): string {
+		if (fits(title, avail, ROW_LABEL_TYPE, 0)) return title;
+		for (let n = title.length - 1; n > 0; n--) {
+			const cand = title.slice(0, n).trimEnd() + '…';
+			if (fits(cand, avail, ROW_LABEL_TYPE, 0)) return cand;
+		}
+		return '…';
+	}
+	const expGutter = $derived.by(() => {
+		const rows: {
+			key: string;
+			y: number;
+			date: string;
+			title: string;
+			full: string;
+			event: EventRec | null;
+			members: EventRec[] | null;
+		}[] = [];
+		const avail = (date: string) => GUTTER - GL_X - 10 - textWidth(date, EV_LABEL_TYPE) - 8;
+		for (const it of expandedLayout.items) {
+			const date = formatDate(it.event.interval.startEarliest, 'month');
+			const full = eventTitle(it.event);
+			rows.push({ key: 'e-' + it.event.id, y: it.y, date, title: fitTitle(full, avail(date)), full, event: it.event, members: null });
+		}
+		for (const c of expandedLayout.clusters) {
+			const date = formatDate(Math.min(...c.members.map((m) => m.interval.startEarliest)), 'month');
+			const full = tf('chronicle.vertical.spine.cluster', { n: c.members.length, range: clusterRange(c.members) });
+			rows.push({ key: 'c-' + c.members[0].id, y: c.y, date, title: fitTitle(full, avail(date)), full, event: null, members: c.members });
+		}
+		return rows;
+	});
+
+	function pickGutter(row: { event: EventRec | null; members: EventRec[] | null }, clientX: number, clientY: number) {
+		if (row.event) app.select(row.event.id);
+		else if (row.members) openCluster(row.members, clientX, clientY);
+	}
+
 	/** Distinct lane centres, for the horizontal rules between rows. */
 	const laneYs = $derived([
 		...new Set([
@@ -468,45 +497,6 @@
 	/** The band height: slim overview normally, the row stack when expanded. */
 	const laneH = $derived(expanded ? expandedLayout.height : LANE_H);
 
-	/** Labels in expanded mode: room-aware per lane; the selected event always reads. */
-	const expLabels = $derived.by(() => {
-		const out = new Map<string, { x: number; text: string }>();
-		// Lanes hold both individual marks and cluster badges, so a label never
-		// runs under a badge sitting beside it.
-		interface LaneNode {
-			x0: number;
-			x1: number;
-			y: number;
-			event: EventRec | null;
-		}
-		const laneNodes: LaneNode[] = [
-			...expandedLayout.items.map((i) => ({ x0: i.x0, x1: i.x1, y: i.y, event: i.event })),
-			...expandedLayout.clusters.map((c) => ({ x0: c.x0, x1: c.x1, y: c.y, event: null }))
-		];
-		const byLane = new Map<number, LaneNode[]>();
-		for (const it of laneNodes) {
-			const key = Math.round(it.y);
-			const list = byLane.get(key) ?? [];
-			list.push(it);
-			byLane.set(key, list);
-		}
-		for (const list of byLane.values()) {
-			list.sort((a, b) => a.x0 - b.x0);
-			for (let i = 0; i < list.length; i++) {
-				const it = list[i];
-				if (!it.event) continue;
-				const start = it.x1 + 6;
-				const next = i + 1 < list.length ? list[i + 1].x0 : plotW;
-				let room = next - start - 6;
-				const isSel = eventSelected?.id === it.event.id;
-				if (isSel) room = Math.max(room, 180);
-				if (room < 40) continue;
-				const text = fitText(eventTitle(it.event), room, EV_LABEL_TYPE);
-				if (text) out.set(it.event.id, { x: start, text });
-			}
-		}
-		return out;
-	});
 
 	/** Longest prefix of `text` (plus an ellipsis) that fits in `room` px. */
 	function fitText(text: string, room: number, m: { size: number; family?: string }): string {
@@ -1385,7 +1375,6 @@
 						{@const cy = it.y}
 						{@const isSel = eventSelected?.id === e.id}
 						{@const w = Math.max(0, it.x1 - it.x0)}
-						{@const lx = expLabels.get(e.id)}
 						<g
 							class="ev-mark clickable"
 							class:dim={eventDim(e)}
@@ -1450,9 +1439,6 @@
 							{/if}
 							{#if isSel}
 								<circle cx={it.x0} cy={cy} r="9" class="ev-selring" />
-							{/if}
-							{#if lx !== undefined}
-								<text x={lx.x} y={cy + 3.5} class="ev-label">{lx.text}</text>
 							{/if}
 						</g>
 					{/each}
@@ -1678,6 +1664,37 @@
 						{/if}
 					</g>
 				</g>
+				{#if expanded}
+					{#each expGutter as gl (gl.key)}
+						{@const sel = gl.event !== null && eventSelected?.id === gl.event.id}
+						<g
+							class="exp-gl"
+							class:sel
+							class:rupture={gl.event?.rupture ?? false}
+							class:dim={gl.event ? eventDim(gl.event) : false}
+							data-no-pan
+							role="button"
+							tabindex="0"
+							aria-label="{gl.full}, {gl.date}"
+							onclick={(me) => pickGutter(gl, me.clientX, me.clientY)}
+							onmouseenter={() => (hoverEventId = gl.event?.id ?? null)}
+							onmouseleave={() => (hoverEventId = null)}
+							onkeydown={(ke) => {
+								if (ke.key === 'Enter' || ke.key === ' ') {
+									ke.preventDefault();
+									const r = (ke.currentTarget as Element).getBoundingClientRect();
+									pickGutter(gl, r.left + r.width / 2, r.top + r.height / 2);
+								}
+							}}
+						>
+							<title>{gl.date} · {gl.full}</title>
+							<rect x="2" y={gl.y - EXP_ROW_H / 2} width={GUTTER - 6} height={EXP_ROW_H} class="exp-gl-hit" />
+							<text x={GL_X} y={gl.y + 3.5}
+								><tspan class="exp-gl-date">{gl.date}</tspan><tspan dx="8" class="exp-gl-title">{gl.title}</tspan></text
+							>
+						</g>
+					{/each}
+				{/if}
 				{#each layout.items as item (item.kind === 'group' ? 'lg-' + item.id : 'lr-' + item.roleId)}
 						{#if item.kind === 'group'}
 							<g transform="translate(0,{item.y})">
@@ -2123,6 +2140,43 @@
 		stroke: var(--border-subtle);
 		stroke-width: 1;
 		pointer-events: none;
+	}
+	/* Expanded view: the gutter names each event row. */
+	.exp-gl {
+		cursor: pointer;
+	}
+	.exp-gl-hit {
+		fill: transparent;
+	}
+	.exp-gl:hover .exp-gl-hit,
+	.exp-gl:focus-visible .exp-gl-hit {
+		fill: var(--surface-hover);
+	}
+	.exp-gl:focus-visible {
+		outline: none;
+	}
+	.exp-gl-date {
+		font-family: var(--font-mono);
+		font-size: 10px;
+		fill: var(--text-faint);
+	}
+	.exp-gl-title {
+		font-size: 11px;
+		fill: var(--text-secondary);
+	}
+	.exp-gl.rupture .exp-gl-title {
+		fill: var(--text-primary);
+		font-weight: 500;
+	}
+	.exp-gl:hover .exp-gl-title,
+	.exp-gl.sel .exp-gl-title {
+		fill: var(--text-primary);
+	}
+	.exp-gl.sel .exp-gl-date {
+		fill: var(--accent);
+	}
+	.exp-gl.dim {
+		opacity: var(--dim);
 	}
 	.ev-mark.dim {
 		opacity: 0.3;
