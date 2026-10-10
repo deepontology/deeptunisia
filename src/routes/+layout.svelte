@@ -76,9 +76,12 @@ import { tour, tourSeen } from '$lib/shell/tour.svelte';
 	}
 
 	/** Reference pages are documents: no time controls, and they scroll normally. */
-	const DOC_PAGES = ['/evidence', '/methodology', '/corrections', '/about', '/data', '/guide', '/colophon'];
+	const DOC_PAGES = ['/evidence', '/methodology', '/corrections', '/about', '/data', '/guide', '/colophon', '/research'];
+	/** Prefixes whose child routes are documents too: media articles, research studies. */
+	const DOC_PREFIXES = ['/media', '/research'];
 	const isDoc = $derived(
-		DOC_PAGES.includes(page.url.pathname) || page.url.pathname.startsWith('/media')
+		DOC_PAGES.includes(page.url.pathname) ||
+			DOC_PREFIXES.some((prefix) => page.url.pathname.startsWith(prefix))
 	);
 
 	/**

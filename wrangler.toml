@@ -29,7 +29,8 @@ not_found_handling = "404-page"
 # by community/mode.ts. An absent or unrecognised value is `off`, so this value
 # being present, absent or typo'd all leave the API closed.
 #
-#   off        every /api/* route answers the uniform 404 before any D1 access.
+#   off        every Agora /api/* route answers the uniform 404 before any D1 access.
+#              Research (/api/studies/*) has its own gate, RESEARCH_OPEN below.
 #   read-only  public GET reads only; every write and identity action refused.
 #   beta       the signed API, still with no budget or hold wired.
 #
@@ -42,6 +43,23 @@ COMMUNITY_MODE = "off"
 binding = "DB"
 database_name = "deeptunisia-db"
 database_id = "cc16abcd-1ff5-4f64-8ed7-cdb1770bc9f8"
+
+# Research responses live in a SEPARATE D1 database (m2 contract §5): they are
+# personal data of a different kind from the community layer. An operator creates
+# it with `wrangler d1 create deeptunisia-research`, applies
+# community/research-schema.sql to it, then uncomments this block with the REAL
+# database_id. A placeholder id must never ship. Until the binding exists, the
+# Worker runs without it and every research endpoint that needs storage answers 503.
+#
+# [[d1_databases]]
+# binding = "RESEARCH_DB"
+# database_name = "deeptunisia-research"
+# database_id = "<real id from `wrangler d1 create deeptunisia-research`>"
+#
+# The submissions gate is a Worker var and the bot challenge a Worker secret —
+# both operator-set, never committed:
+#   [vars] is where RESEARCH_OPEN = "1" goes when the study opens (absent = closed)
+#   wrangler secret put TURNSTILE_SECRET    # required before submissions can pass the challenge
 
 [observability]
 enabled = true

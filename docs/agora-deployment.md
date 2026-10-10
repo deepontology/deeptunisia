@@ -15,10 +15,12 @@ a live database. So the interface reports the mode and the handler enforces it.
 | `read-only` | The public `GET` routes only | None | no |
 | `beta` | Yes | Yes (signed API) | no |
 
-`off` returns the same `404` for every `/api/*` route, with `cache-control:
+`off` returns the same `404` for every Agora `/api/*` route, with `cache-control:
 no-store`, before any D1 query, signature check, nonce write, or moderation
 action. A path that does not exist and a path that does are indistinguishable
-from outside.
+from outside. Research routes under `/api/studies/` are a separate product and
+are not governed by this mode: they answer through their own refusal ladder,
+which is closed unless a study is fielding and `RESEARCH_OPEN` is `1`.
 
 An absent or unrecognised value resolves to `off`. There is deliberately no
 ambient default anywhere: `community/mode.ts` is the only resolver, and it is
@@ -106,7 +108,7 @@ The second argument is the mode being claimed. Verification never proceeds
 against the mode someone hoped for: if the deployment runs `off` and the command
 asks for `beta`, the checks fail.
 
-- [ ] Every probed `/api/*` route returns the uniform `404` (in `off`)
+- [ ] Every probed Agora `/api/*` route returns the uniform `404` (in `off`)
 - [ ] The refusals are byte-identical and not cacheable
 - [ ] `/agora` renders the closed banner, and the live client does not render
 - [ ] Identity minting, thread creation, mentions and moderation are unreachable

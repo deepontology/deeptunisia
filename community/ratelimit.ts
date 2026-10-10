@@ -75,7 +75,14 @@ export const LIMITS: Record<string, Limit> = {
 	report: { max: 10, windowMs: 3_600_000 },
 	identity: { max: 5, windowMs: 86_400_000 },
 	// Proposals cost a reviewer's attention, which is the scarcest thing here.
-	pr: { max: 10, windowMs: 86_400_000 }
+	pr: { max: 10, windowMs: 86_400_000 },
+	// Survey submissions. In Tunisia one address is often shared (carriers put
+	// customers behind a shared address, and so do universities and cafés), so a
+	// tight cap would refuse a genuine respondent at a busy hour. Each answer
+	// already costs the sender the proof-of-work solve (contract §4), so the
+	// address bucket is a backstop against a farm rather than the thing holding a
+	// flood; twenty an hour is that ceiling.
+	response: { max: 20, windowMs: 3_600_000 }
 };
 
 export interface BucketStore {

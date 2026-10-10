@@ -5,6 +5,9 @@ export default defineConfig({
 	plugins: [sveltekit()],
 	server: {
 		fs: { allow: ['..'] },
+		// The agent-tool folders can link back into the main checkout, and a
+		// worktree inside them makes the watcher loop over the repo again.
+		watch: { ignored: ['**/.claude/**', '**/.opencode/**'] },
 		/*
 		 * Agora is a tab in this app, not a separate site — so its API has to look
 		 * same-origin to the browser.
@@ -22,7 +25,9 @@ export default defineConfig({
 		 */
 		proxy: {
 			'/api': {
-				target: 'http://127.0.0.1:5200',
+				// DT_API_PORT lets a second worktree run its own API beside the
+				// first: scripts/dev-all.ts passes its API port through here.
+				target: `http://127.0.0.1:${process.env.DT_API_PORT ?? '5200'}`,
 				changeOrigin: false
 			}
 		}

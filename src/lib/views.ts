@@ -37,6 +37,7 @@ export const VIEWS: ViewEntry[] = [
 	{ route: '/corrections', key: 'corrections' },
 	{ route: '/data', key: 'data' },
 	{ route: '/about', key: 'about' },
+	{ route: '/research', key: 'research' },
 	{ route: '/agora', key: 'agora' },
 	{ route: '/feed', key: 'feed' }
 ];

@@ -1,0 +1,839 @@
+# -----------------------------------------------------------------------------
+# DT Research 002: instrument v0.1.0-draft
+#
+# "Police Satisfaction Index" (PSI). A monthly series: one frozen instrument,
+# fielded continuously, with the index published once per calendar month
+# (scoring.series).
+#
+# Anonymity is a design rule: the instrument asks nothing about who the
+# respondent is, except one optional question, the governorate, for those who
+# want their region counted. It can be skipped like any other, it is published
+# only as the seven INS regions under the cell floor, and there is no age or
+# gender item, so there is nothing to reweight by and the figures say so.
+#
+# Status: draft. Not frozen. Not fielded. English is the source.
+#
+# French and Arabic are interim translations drafted by the project and not yet
+# reviewed by a person, not the human translation the portal rule R5 requires. They are recorded as
+# such under `translation` below and on the study page, and are replaced by the
+# commissioned human translations before the instrument freezes for a later wave.
+# Arabic is Modern Standard Arabic kept short and plain, using the administrative
+# terms Tunisians meet in practice (عون أمن، الاحتفاظ، باراج). Tunisian Arabic
+# (derja) is planned as a later locale.
+#
+# Scoring (the `scoring` block at the end) is part of the instrument, so it is
+# covered by the content hash: the formula cannot change without the hash moving.
+# The human-readable statement of the formula is index-spec.md §3 and §4.
+# -----------------------------------------------------------------------------
+
+instrument:
+  id: dt002-police-index
+  study: dt-research-002
+  version: 0.1.0-draft
+  status: draft
+  frozen: false
+  content_hash: null
+  source_locale: en
+  locales: [en, fr, ar]
+  estimated_minutes: 4
+  completion_target_minutes_max: 6
+  pretest_required: true
+  response_scale_note: >-
+    Every attitude item uses 0 to 10 with item-specific labelled endpoints and a
+    visible "prefer not to answer". Items listed under `reverse` in the scoring
+    block are keyed in the opposite direction and reversed before scoring.
+
+translation:
+  policy: >-
+    Interim: French and Arabic drafted by the project for Wave 01 and not yet
+    reviewed by a person who reads the language; published as interim
+    translations. Target: two independent
+    human translators per locale, reconciliation, back-translation and cognitive
+    interviews (portal README R5) before a later wave freezes.
+  report: null
+  locales:
+    en:
+      status: source
+    fr:
+      status: interim-project-translation
+      reviewer: null
+    ar:
+      status: interim-project-translation
+      reviewer: null
+      register: Modern Standard Arabic, plain
+      note: >-
+        Masculine generic second person, as in most Arabic questionnaires. A
+        derja locale is planned and will be recorded as its own locale.
+
+response_types:
+  consent: boolean required, recorded with consent version
+  scale_0_10: integer 0-10 plus skip; endpoints labelled per item
+  single_choice: one option
+  multi_choice: zero or more options
+
+modules:
+  - id: consent
+    label: Before you begin
+    label_fr: Avant de commencer
+    label_ar: قبل أن تبدأ
+    items: [consent_info, consent_voluntary, consent_age]
+
+  - id: trust
+    label: Trust
+    label_fr: Confiance
+    label_ar: الثقة
+    intro_en: >-
+      By "the police" we mean every Interior Ministry security agent you might deal
+      with: the national police, the national guard and other security agents.
+    intro_fr: >-
+      Par « la police », nous entendons tous les agents de sécurité du ministère de
+      l'Intérieur auxquels vous pouvez avoir affaire : la police nationale, la garde
+      nationale et les autres agents de sécurité.
+    intro_ar: >-
+      نقصد بـ«الشرطة» كلّ أعوان الأمن التابعين لوزارة الداخلية الذين قد تتعامل معهم:
+      الشرطة الوطنية والحرس الوطني وغيرهم من أعوان الأمن.
+    items: [pti_t1, pti_t2, pti_t3, pti_t4, pti_t5]
+
+  - id: service
+    label: Service
+    label_fr: Service
+    label_ar: الخدمة
+    intro_en: >-
+      These questions ask how well the police do their job where you live.
+    intro_fr: >-
+      Ces questions portent sur la façon dont la police fait son travail là où vous
+      vivez.
+    intro_ar: >-
+      تتعلّق هذه الأسئلة بمدى قيام الشرطة بعملها حيث تسكن.
+    items: [pti_s1, pti_s2, pti_s3, pti_s4]
+
+  - id: grip
+    label: Freedom
+    label_fr: Liberté
+    label_ar: الحرية
+    items: [pti_g1, pti_g2, pti_g3, pti_g4, pti_g6, pti_g5]
+
+  - id: encounters
+    label: Encounters
+    label_fr: Rencontres
+    label_ar: التعامل مع الشرطة
+    items: [pti_e1, pti_e2, pti_e3, pti_s5, pti_e4, pti_e5, pti_s6]
+
+  - id: context
+    label: Then and now
+    label_fr: Avant et maintenant
+    label_ar: بين الأمس واليوم
+    items: [pti_c1, pti_c2]
+
+  - id: where
+    label: Your region (optional)
+    label_fr: Votre région (facultatif)
+    label_ar: جهتك (اختياري)
+    intro_en: >-
+      This last question is optional. Answer it only if you want your region to be
+      counted. We publish regions, never a governorate on its own, and never a
+      group of fewer than 20 people.
+    intro_fr: >-
+      Cette dernière question est facultative. N'y répondez que si vous souhaitez
+      que votre région soit comptée. Nous publions des régions, jamais un
+      gouvernorat isolé, et jamais un groupe de moins de 20 personnes.
+    intro_ar: >-
+      هذا السؤال الأخير اختياري. أجب عنه فقط إن أردت أن تُحتسب جهتك. ننشر النتائج
+      حسب الجهات، لا حسب ولاية بمفردها، ولا ننشر أبدًا مجموعة تضمّ أقلّ من 20 شخصًا.
+    items: [demo_governorate]
+
+items:
+  # ---------------------------------------------------------------------------
+  # Consent
+  # ---------------------------------------------------------------------------
+  - id: consent_info
+    module: consent
+    tier: core
+    construct: consent
+    provenance: project
+    text_en: "I have read how my answers are stored. No name, email, IP address or device information is kept with them."
+    text_fr: "J'ai lu comment mes réponses sont conservées. Aucun nom, aucune adresse e-mail, aucune adresse IP ni aucune information sur mon appareil n'est conservé avec elles."
+    text_ar: "اطّلعت على طريقة حفظ إجاباتي. لا يُحفظ معها أيّ اسم أو بريد إلكتروني أو عنوان IP أو معلومات عن جهازي."
+    response: consent
+    required: true
+
+  - id: consent_voluntary
+    module: consent
+    tier: core
+    construct: consent
+    provenance: project
+    text_en: "I take part voluntarily. I can stop at any time before submitting, and I can delete my answers later with the receipt code I will receive, until the end of the month in which I answer."
+    text_fr: "Je participe volontairement. Je peux m'arrêter à tout moment avant d'envoyer mes réponses, et je pourrai les supprimer ensuite avec le code de reçu que je recevrai, jusqu'à la fin du mois où je réponds."
+    text_ar: "أشارك بمحض إرادتي. يمكنني التوقّف في أيّ وقت قبل الإرسال، ويمكنني حذف إجاباتي لاحقًا برمز الإيصال الذي سأحصل عليه، إلى نهاية الشهر الذي أجبت فيه."
+    response: consent
+    required: true
+
+  - id: consent_age
+    module: consent
+    tier: core
+    construct: consent
+    provenance: project
+    text_en: "I am 18 years old or older."
+    text_fr: "J'ai 18 ans ou plus."
+    text_ar: "عمري 18 سنة أو أكثر."
+    response: consent
+    required: true
+    routing: if false, end the session and store nothing
+
+  # ---------------------------------------------------------------------------
+  # Trust (T)
+  # ---------------------------------------------------------------------------
+  - id: pti_t1
+    module: trust
+    tier: core
+    construct: trust
+    provenance: "adapted:ess:trust-in-police"
+    text_en: "How much do you personally trust the police?"
+    text_fr: "Dans quelle mesure faites-vous personnellement confiance à la police ?"
+    text_ar: "إلى أيّ مدى تثق أنت شخصيًّا في الشرطة؟"
+    response: scale_0_10
+    required: false
+    anchors:
+      en: { low: "No trust at all", high: "Complete trust" }
+      fr: { low: "Aucune confiance", high: "Confiance totale" }
+      ar: { low: "لا أثق فيها إطلاقًا", high: "أثق فيها تمامًا" }
+
+  - id: pti_t2
+    module: trust
+    tier: core
+    construct: trust:procedural-fairness
+    provenance: project
+    text_en: "The police treat everyone equally, whoever they are and whoever they know."
+    text_fr: "La police traite tout le monde de la même manière, quelle que soit la personne et quelles que soient ses relations."
+    text_ar: "تعامل الشرطة الجميع بالتساوي، مهما كانت هويّة الشخص ومهما كانت علاقاته."
+    response: scale_0_10
+    required: false
+    anchors:
+      en: { low: "Strongly disagree", high: "Strongly agree" }
+      fr: { low: "Pas du tout d'accord", high: "Tout à fait d'accord" }
+      ar: { low: "لا أوافق إطلاقًا", high: "أوافق تمامًا" }
+
+  - id: pti_t3
+    module: trust
+    tier: core
+    construct: trust:help-seeking
+    provenance: project
+    text_en: "If you were the victim of a theft, an assault or another crime, how comfortable would you feel going to the police?"
+    text_fr: "Si vous étiez victime d'un vol, d'une agression ou d'un autre délit, à quel point seriez-vous à l'aise pour vous adresser à la police ?"
+    text_ar: "لو تعرّضت لسرقة أو اعتداء أو جريمة أخرى، إلى أيّ مدى ستشعر بالارتياح للتوجّه إلى الشرطة؟"
+    response: scale_0_10
+    required: false
+    anchors:
+      en: { low: "Not at all comfortable", high: "Completely comfortable" }
+      fr: { low: "Pas du tout à l'aise", high: "Tout à fait à l'aise" }
+      ar: { low: "غير مرتاح إطلاقًا", high: "مرتاح تمامًا" }
+
+  - id: pti_t4
+    module: trust
+    tier: core
+    construct: trust:accountability
+    provenance: project
+    text_en: "When a police officer abuses their power, how likely is it that they will be held accountable?"
+    text_fr: "Quand un agent de police abuse de son pouvoir, quelle est la probabilité qu'il ait à en rendre compte ?"
+    text_ar: "عندما يتجاوز عون أمن حدود سلطته، ما مدى احتمال أن يُحاسَب على ذلك؟"
+    help_en: "Held accountable means, for example, being disciplined, dismissed or prosecuted."
+    help_fr: "Rendre des comptes signifie, par exemple, être sanctionné, révoqué ou poursuivi en justice."
+    help_ar: "المساءلة تعني مثلًا التأديب أو العزل أو الملاحقة أمام القضاء."
+    response: scale_0_10
+    required: false
+    anchors:
+      en: { low: "Not at all likely", high: "Certain" }
+      fr: { low: "Aucune chance", high: "C'est certain" }
+      ar: { low: "مستبعد تمامًا", high: "مؤكّد" }
+
+  - id: pti_t5
+    module: trust
+    tier: core
+    construct: trust:independence
+    provenance: project
+    text_en: "In your view, the police mainly serve the interests of…"
+    text_fr: "Selon vous, la police sert surtout les intérêts…"
+    text_ar: "حسب رأيك، تخدم الشرطة أساسًا مصالح…"
+    help_en: "0 means they mainly protect those in power; 10 means they mainly serve ordinary citizens."
+    help_fr: "0 signifie qu'elle protège surtout ceux qui détiennent le pouvoir ; 10, qu'elle sert surtout les citoyens ordinaires."
+    help_ar: "0 يعني أنّها تحمي أساسًا أصحاب السلطة، و10 يعني أنّها تخدم أساسًا المواطنين العاديين."
+    response: scale_0_10
+    required: false
+    anchors:
+      en: { low: "…those in power", high: "…ordinary citizens" }
+      fr: { low: "…de ceux qui sont au pouvoir", high: "…des citoyens ordinaires" }
+      ar: { low: "…أصحاب السلطة", high: "…المواطنين العاديين" }
+
+  # ---------------------------------------------------------------------------
+  # Service (S): how well the police do the job
+  # ---------------------------------------------------------------------------
+  - id: pti_s1
+    module: service
+    tier: core
+    construct: service:overall
+    provenance: project
+    text_en: "Overall, how good a job do the police do where you live?"
+    text_fr: "Dans l'ensemble, la police fait-elle bien son travail là où vous vivez ?"
+    text_ar: "عمومًا، إلى أيّ حدّ تقوم الشرطة بعملها جيّدًا حيث تسكن؟"
+    response: scale_0_10
+    required: false
+    anchors:
+      en: { low: "A very bad job", high: "A very good job" }
+      fr: { low: "Très mal", high: "Très bien" }
+      ar: { low: "بشكل سيّئ جدًّا", high: "بشكل جيّد جدًّا" }
+
+  - id: pti_s2
+    module: service
+    tier: core
+    construct: service:response
+    provenance: project
+    text_en: "If you called the police in an emergency, how likely is it that they would come in time?"
+    text_fr: "Si vous appeliez la police en cas d'urgence, quelle est la probabilité qu'elle arrive à temps ?"
+    text_ar: "لو اتّصلت بالشرطة في حالة طارئة، ما مدى احتمال أن تصل في الوقت المناسب؟"
+    help_en: "An emergency means, for example, a break-in, a fight or a road accident."
+    help_fr: "Une urgence, par exemple : un cambriolage, une bagarre ou un accident de la route."
+    help_ar: "الحالة الطارئة مثلًا: سرقة منزل، أو شجار، أو حادث مرور."
+    response: scale_0_10
+    required: false
+    anchors:
+      en: { low: "Not at all likely", high: "Very likely" }
+      fr: { low: "Pas du tout probable", high: "Très probable" }
+      ar: { low: "غير محتمل إطلاقًا", high: "محتمل جدًّا" }
+
+  - id: pti_s3
+    module: service
+    tier: core
+    construct: service:crime
+    provenance: project
+    text_en: "How well do the police deal with everyday crime where you live, such as theft and break-ins?"
+    text_fr: "La police traite-t-elle bien la délinquance du quotidien là où vous vivez, comme les vols et les cambriolages ?"
+    text_ar: "إلى أيّ حدّ تتصدّى الشرطة جيّدًا للجرائم اليومية حيث تسكن، مثل السرقة والسطو على المنازل؟"
+    response: scale_0_10
+    required: false
+    anchors:
+      en: { low: "Very badly", high: "Very well" }
+      fr: { low: "Très mal", high: "Très bien" }
+      ar: { low: "بشكل سيّئ جدًّا", high: "بشكل جيّد جدًّا" }
+
+  - id: pti_s4
+    module: service
+    tier: core
+    construct: service:integrity
+    provenance: project
+    text_en: "Where you live, how common is it for the police to ask for money or favours?"
+    text_fr: "Là où vous vivez, est-il courant que la police demande de l'argent ou des services ?"
+    text_ar: "حيث تسكن، ما مدى شيوع أن يطلب أعوان الأمن مالًا أو خدمات؟"
+    help_en: "This asks what you believe happens around you, not only what happened to you."
+    help_fr: "Il s'agit de ce que vous pensez qu'il se passe autour de vous, pas seulement de ce qui vous est arrivé."
+    help_ar: "يسأل هذا عمّا تعتقد أنّه يحدث من حولك، لا فقط عمّا حدث لك."
+    response: scale_0_10
+    required: false
+    anchors:
+      en: { low: "It never happens", high: "Very common" }
+      fr: { low: "Cela n'arrive jamais", high: "Très courant" }
+      ar: { low: "لا يحدث أبدًا", high: "شائع جدًّا" }
+
+  # ---------------------------------------------------------------------------
+  # Grip (G)
+  # ---------------------------------------------------------------------------
+  - id: pti_g1
+    module: grip
+    tier: core
+    construct: grip:fear
+    provenance: project
+    text_en: "How worried are you about being stopped or held by the police without a reason?"
+    text_fr: "À quel point craignez-vous d'être contrôlé(e) ou interpellé(e) par la police sans raison ?"
+    text_ar: "إلى أيّ مدى تخشى أن تستوقفك الشرطة أو تحتجزك دون سبب؟"
+    help_en: "Stopped means stopped in the street, on the road or at a checkpoint. Held means kept by the police, for example at a station."
+    help_fr: "Contrôlé : arrêté dans la rue, sur la route ou à un barrage. Interpellé : retenu par la police, par exemple dans un poste."
+    help_ar: "الاستيقاف: أن يوقفك أعوان الأمن في الشارع أو على الطريق أو في «باراج». الاحتجاز: أن تبقيك الشرطة لديها، مثلًا في مركز."
+    response: scale_0_10
+    required: false
+    anchors:
+      en: { low: "Not worried at all", high: "Extremely worried" }
+      fr: { low: "Pas du tout", high: "Énormément" }
+      ar: { low: "لا أخشى ذلك إطلاقًا", high: "أخشى ذلك بشدّة" }
+
+  - id: pti_g2
+    module: grip
+    tier: core
+    construct: grip:expression
+    provenance: project
+    text_en: "How free do you feel to criticise the police in public or online?"
+    text_fr: "À quel point vous sentez-vous libre de critiquer la police en public ou sur Internet ?"
+    text_ar: "إلى أيّ مدى تشعر بأنّك حرّ في انتقاد الشرطة علنًا أو على الإنترنت؟"
+    response: scale_0_10
+    required: false
+    anchors:
+      en: { low: "Not free at all", high: "Completely free" }
+      fr: { low: "Pas du tout libre", high: "Totalement libre" }
+      ar: { low: "لست حرًّا إطلاقًا", high: "حرّ تمامًا" }
+    notes: "Reverse-keyed (scoring.reverse)."
+
+  - id: pti_g3
+    module: grip
+    tier: core
+    construct: grip:surveillance
+    provenance: project
+    text_en: "How closely do you think the police watch what ordinary people say, online or in private?"
+    text_fr: "Selon vous, à quel point la police surveille-t-elle ce que disent les gens ordinaires, sur Internet ou en privé ?"
+    text_ar: "حسب رأيك، إلى أيّ مدى تراقب الشرطة ما يقوله المواطنون العاديون، على الإنترنت أو على انفراد؟"
+    help_en: "This asks what you believe, not what you know for certain."
+    help_fr: "La question porte sur ce que vous pensez, pas sur ce que vous savez avec certitude."
+    help_ar: "يتعلّق السؤال بما تعتقده، لا بما تعرفه يقينًا."
+    response: scale_0_10
+    required: false
+    anchors:
+      en: { low: "Not at all", high: "Constantly" }
+      fr: { low: "Pas du tout", high: "En permanence" }
+      ar: { low: "لا تراقب إطلاقًا", high: "تراقب باستمرار" }
+
+  - id: pti_g4
+    module: grip
+    tier: core
+    construct: grip:avoidance
+    provenance: project
+    text_en: "How often do you stay away from places or gatherings because of the police?"
+    text_fr: "À quelle fréquence évitez-vous certains lieux ou rassemblements à cause de la police ?"
+    text_ar: "كم مرّة تتجنّب أماكن أو تجمّعات بسبب الشرطة؟"
+    response: scale_0_10
+    required: false
+    anchors:
+      en: { low: "Never", high: "All the time" }
+      fr: { low: "Jamais", high: "Tout le temps" }
+      ar: { low: "أبدًا", high: "طوال الوقت" }
+
+  - id: pti_g6
+    module: grip
+    tier: core
+    construct: grip:self-censorship
+    provenance: project
+    text_en: "How often do you hold back from posting or commenting online because of the police?"
+    text_fr: "À quelle fréquence renoncez-vous à publier ou à commenter en ligne à cause de la police ?"
+    text_ar: "كم مرّة تمتنع عن النشر أو التعليق على الإنترنت بسبب الشرطة؟"
+    help_en: "Posting includes comments, shares, and messages in public groups."
+    help_fr: "Publier comprend les commentaires, les partages et les messages dans des groupes publics."
+    help_ar: "يشمل النشر التعليقات والمشاركات والرسائل في المجموعات العامّة."
+    response: scale_0_10
+    required: false
+    anchors:
+      en: { low: "Never", high: "All the time" }
+      fr: { low: "Jamais", high: "Tout le temps" }
+      ar: { low: "أبدًا", high: "طوال الوقت" }
+
+  - id: pti_g5
+    module: grip
+    tier: core
+    construct: grip:impunity
+    provenance: project
+    text_en: "Where you live, the police can do whatever they want."
+    text_fr: "Là où vous vivez, la police peut faire tout ce qu'elle veut."
+    text_ar: "في المكان الذي تعيش فيه، تستطيع الشرطة أن تفعل ما تشاء."
+    help_en: "This asks whether, where you live, rules and the law hold the police back."
+    help_fr: "La question est de savoir si, là où vous vivez, les règles et la loi retiennent la police."
+    help_ar: "يتعلّق السؤال بما إذا كانت القواعد والقانون تكبح الشرطة في المكان الذي تعيش فيه."
+    response: scale_0_10
+    required: false
+    anchors:
+      en: { low: "Strongly disagree", high: "Strongly agree" }
+      fr: { low: "Pas du tout d'accord", high: "Tout à fait d'accord" }
+      ar: { low: "لا أوافق إطلاقًا", high: "أوافق تمامًا" }
+
+  # ---------------------------------------------------------------------------
+  # Encounters (S and H)
+  # ---------------------------------------------------------------------------
+  - id: pti_e1
+    module: encounters
+    tier: core
+    construct: harm:contact
+    provenance: project
+    text_en: "In the last 12 months, have you had any contact with the police?"
+    text_fr: "Au cours des 12 derniers mois, avez-vous eu un contact avec la police ?"
+    text_ar: "خلال الأشهر الاثني عشر الماضية، هل كان لك أيّ تعامل مع الشرطة؟"
+    help_en: "Any contact counts: being stopped or checked, reporting something, paperwork at a station, being questioned or being held."
+    help_fr: "Tout contact compte : être contrôlé, signaler quelque chose, une démarche dans un poste, être interrogé ou retenu."
+    help_ar: "يُحتسب أيّ تعامل: الاستيقاف أو التثبّت من الهويّة، أو الإبلاغ عن أمر ما، أو إجراء إداري في مركز، أو الاستجواب، أو الاحتجاز."
+    response: single_choice
+    required: true
+    options: [yes, no, prefer_not_to_say]
+    option_labels:
+      en: { yes: "Yes", no: "No", prefer_not_to_say: "Prefer not to answer" }
+      fr: { yes: "Oui", no: "Non", prefer_not_to_say: "Je préfère ne pas répondre" }
+      ar: { yes: "نعم", no: "لا", prefer_not_to_say: "أفضّل عدم الإجابة" }
+
+  - id: pti_e2
+    module: encounters
+    tier: core
+    construct: harm:contact-type
+    provenance: project
+    text_en: "What kind of contact was it? Choose all that apply."
+    text_fr: "De quel type de contact s'agissait-il ? Cochez tout ce qui s'applique."
+    text_ar: "ما نوع هذا التعامل؟ اختر كلّ ما ينطبق."
+    response: multi_choice
+    required: false
+    show_if: pti_e1 == yes
+    options: [traffic_stop, street_check, checkpoint, reported, administrative, protest, questioned, held, other]
+    option_labels:
+      en:
+        traffic_stop: "Traffic stop"
+        street_check: "Identity check or stop in the street"
+        checkpoint: "Checkpoint"
+        reported: "I reported a crime or asked for help"
+        administrative: "Paperwork (ID card, passport, certificate)"
+        protest: "At a protest or gathering"
+        questioned: "Summoned or questioned"
+        held: "Arrested or held in custody"
+        other: "Something else"
+      fr:
+        traffic_stop: "Contrôle routier"
+        street_check: "Contrôle d'identité ou arrêt dans la rue"
+        checkpoint: "Barrage"
+        reported: "J'ai signalé un délit ou demandé de l'aide"
+        administrative: "Démarche administrative (carte d'identité, passeport, attestation)"
+        protest: "Lors d'une manifestation ou d'un rassemblement"
+        questioned: "Convocation ou interrogatoire"
+        held: "Arrestation ou garde à vue"
+        other: "Autre chose"
+      ar:
+        traffic_stop: "مراقبة مرورية"
+        street_check: "التثبّت من الهوية أو الاستيقاف في الشارع"
+        checkpoint: "نقطة تفتيش (باراج)"
+        reported: "أبلغت عن جريمة أو طلبت المساعدة"
+        administrative: "إجراء إداري (بطاقة تعريف، جواز سفر، شهادة)"
+        protest: "خلال احتجاج أو تجمّع"
+        questioned: "استدعاء أو استجواب"
+        held: "إيقاف أو احتفاظ"
+        other: "شيء آخر"
+
+  - id: pti_e3
+    module: encounters
+    tier: core
+    construct: service:treatment
+    provenance: project
+    text_en: "Thinking of your most recent contact in the last 12 months, how were you treated?"
+    text_fr: "En pensant à votre contact le plus récent au cours des 12 derniers mois, comment avez-vous été traité(e) ?"
+    text_ar: "بالنظر إلى آخر تعامل لك مع الشرطة خلال الأشهر الاثني عشر الماضية، كيف عوملت؟"
+    response: scale_0_10
+    required: false
+    show_if: pti_e1 == yes
+    anchors:
+      en: { low: "Very badly", high: "Very well" }
+      fr: { low: "Très mal", high: "Très bien" }
+      ar: { low: "بشكل سيّئ جدًّا", high: "بشكل جيّد جدًّا" }
+
+  - id: pti_s5
+    module: encounters
+    tier: core
+    construct: service:contact
+    provenance: project
+    text_en: "Still thinking of that contact, how satisfied are you with how the police handled it?"
+    text_fr: "Toujours à propos de ce contact, dans quelle mesure êtes-vous satisfait(e) de la façon dont la police l'a géré ?"
+    text_ar: "وبخصوص هذا التعامل عينه، ما مدى رضاك عن الطريقة التي تصرّفت بها الشرطة فيه؟"
+    help_en: "Handled means what they did: for example, whether your problem was dealt with, or whether the stop was done properly."
+    help_fr: "Géré veut dire ce qu'elle a fait : par exemple, si votre problème a été traité, ou si le contrôle s'est fait correctement."
+    help_ar: "المقصود ما قامت به الشرطة: مثلًا هل عولجت مشكلتك، أو هل جرى الاستيقاف بشكل سليم."
+    response: scale_0_10
+    required: false
+    show_if: pti_e1 == yes
+    anchors:
+      en: { low: "Not at all satisfied", high: "Completely satisfied" }
+      fr: { low: "Pas du tout satisfait(e)", high: "Entièrement satisfait(e)" }
+      ar: { low: "غير راضٍ إطلاقًا", high: "راضٍ تمامًا" }
+
+  - id: pti_e4
+    module: encounters
+    tier: core
+    construct: harm:direct
+    provenance: project
+    text_en: "During any contact in the last 12 months, did any of these happen to you? Choose all that apply."
+    text_fr: "Lors d'un contact au cours des 12 derniers mois, vous est-il arrivé l'une de ces choses ? Cochez tout ce qui s'applique."
+    text_ar: "خلال أيّ تعامل في الأشهر الاثني عشر الماضية، هل حدث لك أيّ ممّا يلي؟ اختر كلّ ما ينطبق."
+    help_en: "Nothing you tick here is linked to you. It is only counted together with everyone else's answers."
+    help_fr: "Rien de ce que vous cochez ici n'est relié à vous. C'est seulement compté avec les réponses de tous les autres."
+    help_ar: "لا يُربط أيّ شيء تختاره هنا بك. يُحتسب فقط مع إجابات الآخرين."
+    response: multi_choice
+    required: false
+    show_if: pti_e1 == yes
+    options: [money, insult, threat, force, phone, held_unexplained, none]
+    exclusive: [none]
+    option_labels: &abuse_labels
+      en:
+        money: "A demand for money or a favour"
+        insult: "Insults or humiliation"
+        threat: "Threats"
+        force: "Physical force"
+        phone: "Phone searched, or forced to unlock it"
+        held_unexplained: "Held without being told why"
+        none: "None of these"
+      fr:
+        money: "Une demande d'argent ou de service"
+        insult: "Des insultes ou une humiliation"
+        threat: "Des menaces"
+        force: "L'usage de la force physique"
+        phone: "Une fouille du téléphone, ou l'obligation de le déverrouiller"
+        held_unexplained: "Une rétention sans explication"
+        none: "Rien de tout cela"
+      ar:
+        money: "طلب مال أو خدمة"
+        insult: "شتم أو إهانة"
+        threat: "تهديد"
+        force: "استعمال القوة الجسدية"
+        phone: "تفتيش الهاتف أو الإجبار على فتحه"
+        held_unexplained: "احتجاز دون ذكر السبب"
+        none: "لا شيء من هذا"
+
+  - id: pti_e5
+    module: encounters
+    tier: core
+    construct: harm:vicarious
+    provenance: project
+    text_en: "In the last 12 months, did any of these happen to someone close to you (family or friends) with the police? Choose all that apply."
+    text_fr: "Au cours des 12 derniers mois, l'une de ces choses est-elle arrivée à un proche (famille ou amis) avec la police ? Cochez tout ce qui s'applique."
+    text_ar: "خلال الأشهر الاثني عشر الماضية، هل حدث أيّ ممّا يلي لشخص قريب منك (من العائلة أو الأصدقاء) مع الشرطة؟ اختر كلّ ما ينطبق."
+    help_en: "Nothing you tick here is linked to you or to them. It is only counted together with everyone else's answers."
+    help_fr: "Rien de ce que vous cochez ici n'est relié à vous ni à vos proches. C'est seulement compté avec les réponses de tous les autres."
+    help_ar: "لا يُربط أيّ شيء تختاره هنا بك ولا بالمقرّبين منك. يُحتسب فقط مع إجابات الآخرين."
+    response: multi_choice
+    required: false
+    options: [money, insult, threat, force, phone, held_unexplained, none]
+    exclusive: [none]
+    option_labels: *abuse_labels
+
+  - id: pti_s6
+    module: encounters
+    tier: core
+    construct: service:good-moments
+    provenance: project
+    text_en: "In the last 12 months, have you yourself seen or experienced any of these? Choose all that apply."
+    text_fr: "Au cours des 12 derniers mois, avez-vous vous-même vu ou vécu l'une de ces choses ? Cochez tout ce qui s'applique."
+    text_ar: "خلال الأشهر الاثني عشر الماضية، هل رأيت بنفسك أو عشت أيًّا ممّا يلي؟ اختر كلّ ما ينطبق."
+    help_en: "Count only what you saw or lived in person, not what you saw online or heard about."
+    help_fr: "Ne comptez que ce que vous avez vu ou vécu en personne, pas ce que vous avez vu en ligne ou entendu raconter."
+    help_ar: "احتسب فقط ما رأيته أو عشته شخصيًّا، لا ما شاهدته على الإنترنت أو سمعت عنه."
+    response: multi_choice
+    required: false
+    options: [helped, respectful, explained, came_quickly, dealt_with, none]
+    exclusive: [none]
+    option_labels:
+      en:
+        helped: "An officer helped me or someone near me"
+        respectful: "An officer was respectful at a stop or checkpoint"
+        explained: "An officer clearly explained why I was stopped or what would happen next"
+        came_quickly: "The police came quickly when called"
+        dealt_with: "The police dealt with something I reported"
+        none: "None of these"
+      fr:
+        helped: "Un agent m'a aidé(e), moi ou quelqu'un près de moi"
+        respectful: "Un agent a été respectueux lors d'un contrôle ou à un barrage"
+        explained: "Un agent m'a clairement expliqué pourquoi j'étais contrôlé(e) ou ce qui allait se passer"
+        came_quickly: "La police est venue rapidement après un appel"
+        dealt_with: "La police a traité quelque chose que j'avais signalé"
+        none: "Rien de tout cela"
+      ar:
+        helped: "ساعدني عون أمن أو ساعد شخصًا قريبًا منّي"
+        respectful: "تعامل معي عون أمن باحترام عند الاستيقاف أو في باراج"
+        explained: "شرح لي عون أمن بوضوح سبب استيقافي أو ما سيحدث بعد ذلك"
+        came_quickly: "وصلت الشرطة بسرعة عند الاتّصال بها"
+        dealt_with: "عالجت الشرطة أمرًا أبلغت عنه"
+        none: "لا شيء من هذا"
+
+  # ---------------------------------------------------------------------------
+  # Context (not in the index)
+  # ---------------------------------------------------------------------------
+  - id: pti_c1
+    module: context
+    tier: core
+    construct: context:then-now
+    provenance: project
+    text_en: "Compared with the years before 2011, how present are the police in daily life today? If you do not remember that time, choose \"prefer not to answer\"."
+    text_fr: "Par rapport aux années d'avant 2011, la police est-elle aujourd'hui plus ou moins présente dans la vie quotidienne ? Si vous ne vous souvenez pas de cette période, choisissez « je préfère ne pas répondre »."
+    text_ar: "مقارنةً بالسنوات التي سبقت 2011، ما مدى حضور الشرطة في الحياة اليومية اليوم؟ إن كنت لا تتذكّر تلك الفترة، اختر «أفضّل عدم الإجابة»."
+    response: scale_0_10
+    required: false
+    anchors:
+      en: { low: "Much less present", mid: "About the same", high: "Much more present" }
+      fr: { low: "Beaucoup moins présente", mid: "À peu près pareil", high: "Beaucoup plus présente" }
+      ar: { low: "أقلّ حضورًا بكثير", mid: "تقريبًا كما كانت", high: "أكثر حضورًا بكثير" }
+
+  - id: pti_c2
+    module: context
+    tier: core
+    construct: context:trust-change
+    provenance: project
+    text_en: "Compared with a year ago, has your trust in the police changed?"
+    text_fr: "Par rapport à il y a un an, votre confiance dans la police a-t-elle changé ?"
+    text_ar: "مقارنةً بما كانت عليه قبل عام، هل تغيّرت ثقتك في الشرطة؟"
+    response: scale_0_10
+    required: false
+    anchors:
+      en: { low: "Much lower", mid: "No change", high: "Much higher" }
+      fr: { low: "Beaucoup plus faible", mid: "Inchangée", high: "Beaucoup plus forte" }
+      ar: { low: "تراجعت كثيرًا", mid: "لم تتغيّر", high: "ازدادت كثيرًا" }
+
+  # ---------------------------------------------------------------------------
+  # Region (optional)
+  # ---------------------------------------------------------------------------
+  - id: demo_governorate
+    module: where
+    tier: core
+    construct: demographics
+    provenance: project
+    text_en: "Which governorate do you live in?"
+    text_fr: "Dans quel gouvernorat vivez-vous ?"
+    text_ar: "في أيّ ولاية تقيم؟"
+    response: single_choice
+    required: false
+    notes: "Optional. Published only as the seven INS regions (scoring.regions), each under the cell floor."
+    options: [tunis, ariana, ben_arous, manouba, nabeul, zaghouan, bizerte, beja, jendouba, kef, siliana, sousse, monastir, mahdia, sfax, kairouan, kasserine, sidi_bouzid, gabes, medenine, tataouine, gafsa, tozeur, kebili, outside_tunisia, prefer_not_to_say]
+    option_labels:
+      en: { tunis: "Tunis", ariana: "Ariana", ben_arous: "Ben Arous", manouba: "Manouba", nabeul: "Nabeul", zaghouan: "Zaghouan", bizerte: "Bizerte", beja: "Béja", jendouba: "Jendouba", kef: "Le Kef", siliana: "Siliana", sousse: "Sousse", monastir: "Monastir", mahdia: "Mahdia", sfax: "Sfax", kairouan: "Kairouan", kasserine: "Kasserine", sidi_bouzid: "Sidi Bouzid", gabes: "Gabès", medenine: "Médenine", tataouine: "Tataouine", gafsa: "Gafsa", tozeur: "Tozeur", kebili: "Kébili", outside_tunisia: "I live outside Tunisia", prefer_not_to_say: "Prefer not to answer" }
+      fr: { tunis: "Tunis", ariana: "Ariana", ben_arous: "Ben Arous", manouba: "La Manouba", nabeul: "Nabeul", zaghouan: "Zaghouan", bizerte: "Bizerte", beja: "Béja", jendouba: "Jendouba", kef: "Le Kef", siliana: "Siliana", sousse: "Sousse", monastir: "Monastir", mahdia: "Mahdia", sfax: "Sfax", kairouan: "Kairouan", kasserine: "Kasserine", sidi_bouzid: "Sidi Bouzid", gabes: "Gabès", medenine: "Médenine", tataouine: "Tataouine", gafsa: "Gafsa", tozeur: "Tozeur", kebili: "Kébili", outside_tunisia: "Je vis hors de Tunisie", prefer_not_to_say: "Je préfère ne pas répondre" }
+      ar: { tunis: "تونس", ariana: "أريانة", ben_arous: "بن عروس", manouba: "منوبة", nabeul: "نابل", zaghouan: "زغوان", bizerte: "بنزرت", beja: "باجة", jendouba: "جندوبة", kef: "الكاف", siliana: "سليانة", sousse: "سوسة", monastir: "المنستير", mahdia: "المهدية", sfax: "صفاقس", kairouan: "القيروان", kasserine: "القصرين", sidi_bouzid: "سيدي بوزيد", gabes: "قابس", medenine: "مدنين", tataouine: "تطاوين", gafsa: "قفصة", tozeur: "توزر", kebili: "قبلي", outside_tunisia: "أقيم خارج تونس", prefer_not_to_say: "أفضّل عدم الإجابة" }
+
+# -----------------------------------------------------------------------------
+# Scoring. Hashed with the instrument. Every value in [0, 1] before scaling.
+#
+#   mean   mean of item/10 over answered items (reverse items: 1 - item/10);
+#          missing when fewer than min_answered are answered.
+#   scale  one item/10 (or 1 - item/10 when reverse); missing when skipped.
+#   count  min(1, ticked / saturate) over a multi_choice, not counting the
+#          options in `ignore`; missing when the item was skipped. Choosing
+#          only "none" is an answer, and it scores zero.
+#   blend  weighted mean of parts; a part with invert uses 1 - value. Parts that
+#          are missing drop out and the remaining weights renormalise, unless
+#          the part is listed in `requires`, in which case the blend is missing.
+#   cases  the first case whose `when` holds; `when` uses the show_if grammar.
+#          Missing when no case holds.
+# -----------------------------------------------------------------------------
+scoring:
+  id: pti
+  scale_max: 10
+  components:
+    - { id: T, kind: mean, items: [pti_t1, pti_t2, pti_t3, pti_t4, pti_t5], min_answered: 3 }
+    # Service: the view everyone gives of the job (S1-S4), how the most recent
+    # contact went for those who had one, and good moments seen in person. The
+    # view carries most of the weight; having seen no good moment pulls only a
+    # little, since many people rarely meet the police at all.
+    - { id: S_view, kind: mean, items: [pti_s1, pti_s2, pti_s3, pti_s4], reverse: [pti_s4], min_answered: 3 }
+    - { id: S_treat, kind: scale, item: pti_e3 }
+    - { id: S_handled, kind: scale, item: pti_s5 }
+    - { id: S_seen, kind: blend, parts: [{ ref: S_treat, weight: 1 }, { ref: S_handled, weight: 1 }] }
+    - id: S_contact
+      kind: cases
+      cases:
+        - { when: pti_e1 == yes, ref: S_seen }
+    - { id: S_good, kind: count, item: pti_s6, ignore: [none], saturate: 2 }
+    - id: S
+      kind: blend
+      requires: [S_view]
+      parts:
+        - { ref: S_view, weight: 3 }
+        - { ref: S_contact, weight: 2 }
+        - { ref: S_good, weight: 1 }
+    - { id: G, kind: mean, items: [pti_g1, pti_g2, pti_g3, pti_g4, pti_g6, pti_g5], reverse: [pti_g2], min_answered: 4 }
+    # Harm: what was done, never offset. Good moments raise S; they do not
+    # cancel abuse here.
+    - { id: D, kind: count, item: pti_e4, ignore: [none], saturate: 3 }
+    - { id: V, kind: count, item: pti_e5, ignore: [none], saturate: 3 }
+    - id: H
+      kind: cases
+      cases:
+        - { when: pti_e1 == yes, ref: H_contact }
+        - { when: always, ref: V }
+    - { id: H_contact, kind: blend, parts: [{ ref: D, weight: 2 }, { ref: V, weight: 1 }] }
+  index:
+    id: I
+    kind: blend
+    scale: 100
+    requires: [T, G]
+    parts:
+      - { ref: T, weight: 1 }
+      - { ref: S, weight: 1 }
+      - { ref: G, weight: 1, invert: true }
+      - { ref: H, weight: 1, invert: true }
+  plane: { x: T, y: G }
+  anchors:
+    guardian: { T: 1, S: 1, G: 0, H: 0, I: 100 }
+    police_state: { T: 0, S: 0, G: 1, H: 1, I: 0 }
+  bands:
+    - id: police_state
+      min: 0
+      max: 20
+      label_en: "Police state"
+      label_fr: "État policier"
+      label_ar: "دولة بوليسية"
+      description_en: "Distrusts the police, sees them fail at the job, feels watched and unfree, and has been harmed or knows people who were."
+      description_fr: "Se méfie de la police, la voit mal faire son travail, se sent surveillé et pas libre, et a subi des abus ou connaît des proches qui en ont subi."
+      description_ar: "لا يثق في الشرطة، ويراها مقصّرة في عملها، ويشعر بأنّه مراقَب وغير حرّ، وتعرّض لتجاوزات أو يعرف مقرّبين تعرّضوا لها."
+    - id: coercive
+      min: 20
+      max: 40
+      label_en: "Coercive"
+      label_fr: "Coercitif"
+      label_ar: "قمعي"
+      description_en: "Mostly distrust and fear. The police are something to avoid, not someone to call."
+      description_fr: "Surtout de la méfiance et de la peur. La police est à éviter, pas à appeler."
+      description_ar: "يغلب انعدام الثقة والخوف. الشرطة شيء يُتجنَّب، لا جهة يُلجأ إليها."
+    - id: divided
+      min: 40
+      max: 60
+      label_en: "Divided"
+      label_fr: "Partagé"
+      label_ar: "منقسم"
+      description_en: "Mixed. Some trust, some fear, and service and experiences that cut both ways."
+      description_fr: "Mitigé. Un peu de confiance, un peu de peur, et un service et des expériences dans les deux sens."
+      description_ar: "مواقف متباينة: شيء من الثقة وشيء من الخوف، وخدمة وتجارب في الاتجاهين."
+    - id: accountable
+      min: 60
+      max: 80
+      label_en: "Accountable"
+      label_fr: "Redevable"
+      label_ar: "خاضع للمساءلة"
+      description_en: "Broadly trusts the police, finds they do the job, and feels free around them."
+      description_fr: "Fait globalement confiance à la police, estime qu'elle fait son travail et se sent libre en sa présence."
+      description_ar: "يثق عمومًا في الشرطة، ويرى أنّها تقوم بعملها، ويشعر بالحرّية في التعامل معها."
+    - id: guardian
+      min: 80
+      max: 100
+      label_en: "Guardian"
+      label_fr: "Protecteur"
+      label_ar: "حامٍ"
+      description_en: "The police are trusted, do the job well, are restrained and safe to approach."
+      description_fr: "La police inspire confiance, fait bien son travail, sait se retenir et peut être sollicitée sans crainte."
+      description_ar: "الشرطة موضع ثقة، تقوم بعملها جيّدًا، منضبطة، ويمكن اللجوء إليها دون خوف."
+  regions:
+    item: demo_governorate
+    groups:
+      grand_tunis: [tunis, ariana, ben_arous, manouba]
+      north_east: [nabeul, zaghouan, bizerte]
+      north_west: [beja, jendouba, kef, siliana]
+      centre_east: [sousse, monastir, mahdia, sfax]
+      centre_west: [kairouan, kasserine, sidi_bouzid]
+      south_east: [gabes, medenine, tataouine]
+      south_west: [gafsa, tozeur, kebili]
+  cell_floor: 20
+  # The monthly series (index-spec.md §8). Months are calendar months in
+  # Tunisia's time (UTC+1, no daylight saving). The published index for a month
+  # is a local-level Kalman filter over every month so far: the true level may
+  # drift by about process_sd points a month, and each month's mean counts in
+  # proportion to how precisely it was measured. A month with fewer than
+  # min_month_n scored respondents carries the previous level forward.
+  series:
+    period: month
+    utc_offset_minutes: 60
+    process_sd: 2.5
+    min_month_n: 30
+    # The rolling reading beside the headline: every kept answer from the last
+    # 12 calendar months, counted equally (index-spec.md §8).
+    window_months: 12
+    # The first figure waits for 100 valid answers in total; until then only
+    # counts are published (index-spec.md §7). Each respondent sees their own
+    # score at once: it is computed in their browser and never published.
+    first_figure_n: 100
+  # Context items: published as distributions beside the index, never scored.
+  report_items: [pti_c1, pti_c2]
+  # Pre-registered exclusions, applied before any aggregate and counted per rule
+  # on the results page. A row may trip more than one rule.
+  exclusions:
+    min_completion_seconds: 70
+    straightline_items: [pti_t1, pti_t2, pti_t3, pti_t4, pti_t5, pti_s1, pti_s2, pti_s3, pti_s4, pti_g1, pti_g2, pti_g3, pti_g4, pti_g6, pti_g5]
