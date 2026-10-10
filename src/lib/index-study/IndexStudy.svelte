@@ -1801,6 +1801,10 @@
 	.opt-share {
 		color: var(--text-faint);
 	}
+	/* A count and its share read as one figure, so they never part at a wrap. */
+	.options td.mono {
+		white-space: nowrap;
+	}
 	.splits {
 		align-items: start;
 		display: grid;
