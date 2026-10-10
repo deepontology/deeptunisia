@@ -384,6 +384,36 @@ console.log('\n  ── reads: unauthenticated, unlimited ──\n');
 	ok('a missing registry is 503 on reads', (await get(none, '/api/studies')).status === 503);
 }
 
+console.log('\n  ── the accepting flag on the study read ──\n');
+
+{
+	// A study at fielding with the gate open and storage present is taking
+	// responses; the page reads this instead of the declared status, which
+	// cannot see the gate or the storage.
+	const open = await get(researchEnv(), '/api/studies/fixture');
+	ok('a fielding study with the gate open accepts responses', open.body.study.accepting === true, String(open.body.study.accepting));
+
+	const gated = await get(researchEnv({ RESEARCH_OPEN: '0' }), '/api/studies/fixture');
+	ok('with the gate shut the same study accepts nothing', gated.body.study.accepting === false, String(gated.body.study.accepting));
+	ok('though it still reads by its declared status', gated.body.study.status === 'fielding', gated.body.study.status);
+
+	const storageless = await get(researchEnv({ RESEARCH_DB: undefined }), '/api/studies/fixture');
+	ok('with no storage the study accepts nothing either', storageless.body.study.accepting === false, String(storageless.body.study.accepting));
+
+	const design = await get(researchEnv(), '/api/studies/fixture-design');
+	ok('a study in design accepts nothing', design.body.study.accepting === false, String(design.body.study.accepting));
+
+	// The override is local only, and it is the one path where a design study
+	// accepts: a submission against it would be stored, so the flag follows the
+	// same gate rather than the registry status.
+	const dev = await get(researchEnv({ RESEARCH_DEV_STUDY: 'fixture-design' }), '/api/studies/fixture-design');
+	ok(
+		'the dev override makes a design study fielding and accepting',
+		dev.body.study.status === 'fielding' && dev.body.study.accepting === true,
+		JSON.stringify({ status: dev.body.study.status, accepting: dev.body.study.accepting })
+	);
+}
+
 console.log('\n  ── the refusal ladder, in order ──\n');
 
 {
@@ -1091,6 +1121,47 @@ console.log('\n  ── the live payload is computed once a minute ──\n');
 	});
 	const unwritten = await liveRead(broken, 'index');
 	ok('an unwritable cache does not fail the live read', unwritten.status === 200 && unwritten.body.received === 3, unwritten.body?.error ?? '');
+
+	// Readers that miss together share the computation in flight, so a burst on
+	// an expired entry costs one read of the table rather than one per reader.
+	clock += 61_000;
+	const burstBefore = queries;
+	const burst = await Promise.all([liveRead(env, 'index'), liveRead(env, 'index'), liveRead(env, 'index')]);
+	ok(
+		'a burst of concurrent misses runs one computation',
+		queries === burstBefore + 1,
+		`${queries - burstBefore} queries`
+	);
+	ok(
+		'and every reader in the burst is answered with the same body',
+		burst.every((r) => r.status === 200 && r.text === burst[0].text),
+		burst.map((r) => r.status).join(',')
+	);
+	// The shared work is released the moment it settles: the next burst
+	// recomputes once rather than being handed the finished promise again.
+	const again = await Promise.all([liveRead(env, 'index'), liveRead(env, 'index'), liveRead(env, 'index')]);
+	ok(
+		'a later burst recomputes once instead of reusing the settled promise',
+		queries === burstBefore + 2 && again.every((r) => r.text !== burst[0].text),
+		`${queries - burstBefore} queries`
+	);
+
+	// A body read from storage advertises what is left of its entry, so a
+	// browser cannot hold a figure for two lifetimes by fetching at the end of
+	// the first.
+	const nearlyGone: LiveCache = {
+		async get() {
+			return { body: '{"stored":true}', expires_at: Date.now() + 3_000 };
+		},
+		async put() {}
+	};
+	const aged = researchEnv({ STUDIES: registry, RESEARCH_DB: db, LIVE_CACHE: nearlyGone });
+	const agedRead = await liveRead(aged, 'index');
+	ok(
+		'a stored body advertises the lifetime it has left',
+		agedRead.status === 200 && agedRead.text === '{"stored":true}' && agedRead.age === 'public, max-age=3',
+		agedRead.age ?? ''
+	);
 }
 
 console.log('\n  ── the real registry ──\n');

@@ -347,26 +347,31 @@ export function computeInstrumentHash(doc: InstrumentDocument): string {
 			if (item.anchors !== undefined) projected.anchors = item.anchors;
 			if (item.show_if !== undefined) projected.show_if = item.show_if;
 			if (item.exclusive !== undefined) projected.exclusive = item.exclusive;
+			// A text answer is capped here, so the limit decides what the
+			// instrument accepts rather than only how it reads.
+			if (item.max_chars !== undefined) projected.max_chars = item.max_chars;
 			// An explanation is shown text: it changes what a respondent reads.
 			if (item.help_en !== undefined || item.help_fr !== undefined || item.help_ar !== undefined) {
 				projected.help = { en: item.help_en ?? null, fr: item.help_fr ?? null, ar: item.help_ar ?? null };
 			}
 			return projected;
 		}),
-		// Module headings and intros are shown text once they are translated.
-		...(doc.modules.some((m) => m.label_fr ?? m.label_ar ?? m.intro_en ?? m.intro_fr ?? m.intro_ar)
-			? {
-					modules: doc.modules.map((m) => ({
-						id: m.id,
-						label: m.label,
-						label_fr: m.label_fr ?? null,
-						label_ar: m.label_ar ?? null,
-						intro_en: m.intro_en ?? null,
-						intro_fr: m.intro_fr ?? null,
-						intro_ar: m.intro_ar ?? null
-					}))
-				}
-			: {}),
+		// Module headings, intros and block assignments are shown text, and the
+		// item order inside a module is the order the respondent answers them,
+		// so the modules are projected whole whether or not they are translated
+		// yet: an instrument that carries none of this still declares its
+		// modules, and an edit to either has to move the hash.
+		modules: doc.modules.map((m) => ({
+			id: m.id,
+			label: m.label,
+			label_fr: m.label_fr ?? null,
+			label_ar: m.label_ar ?? null,
+			intro_en: m.intro_en ?? null,
+			intro_fr: m.intro_fr ?? null,
+			intro_ar: m.intro_ar ?? null,
+			items: m.items ?? [],
+			block: m.block ?? null
+		})),
 		// How a response is scored is instrument content: the formula cannot
 		// change without the hash moving.
 		...(doc.scoring ? { scoring: doc.scoring } : {}),

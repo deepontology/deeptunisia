@@ -59,7 +59,8 @@
 	/*
 	 * The live study, fetched on mount. The static page carries the build-time
 	 * registry so it renders instantly and works with no API; the runner follows
-	 * the server's status once it answers, and the server enforces it either way.
+	 * the server's answer on whether it is taking responses once it arrives, and
+	 * the server enforces the gate either way.
 	 */
 	let live = $state<{
 		study: StudyRecord;
@@ -91,13 +92,13 @@
 		} catch {
 			/* No API: the build-time registry stays the source and the gate applies. */
 		}
-		// The bot check starts the moment the study is known to be fielding and
-		// solves in a worker while the respondent reads, so by the last screen
-		// the promise has almost always resolved and submit only waits if it has
-		// not. A failed fetch starts nothing; the server gate decides either way.
-		// The same challenge carries the Turnstile site key when the human check
-		// is switched on; it is read once here so the widget can render.
-		if ((live?.study.status ?? data.study.status) === 'fielding') {
+		// The bot check starts the moment the study is known to be taking
+		// responses and solves in a worker while the respondent reads, so by the
+		// last screen the promise has almost always resolved and submit only waits
+		// if it has not. A failed fetch starts nothing; the server gate decides
+		// either way. The same challenge carries the Turnstile site key when the
+		// human check is switched on; it is read once here so the widget can render.
+		if (accepting) {
 			const pending = startProofOfWork(data.study.slug);
 			check = pending;
 			void pending.then((c) => {
@@ -111,6 +112,13 @@
 	const locale = $derived(app.locale);
 	const open = $derived(study.status === 'fielding');
 	const inDesign = $derived(['proposed', 'design', 'ethics-review', 'frozen'].includes(study.status));
+	/**
+	 * Whether the server is taking responses. Its own flag once it has answered,
+	 * because the submission gate and the storage belong to it and the registry
+	 * status does not carry them; until then the declared status is the honest
+	 * fallback, and the gate is the server's to enforce either way.
+	 */
+	const accepting = $derived(live?.study.accepting ?? open);
 
 	// ---- answers ---------------------------------------------------------------
 
@@ -120,6 +128,14 @@
 	let errorKey = $state<string | null>(null);
 	let submitting = $state(false);
 	let openedAt = $state(Date.now());
+
+	/**
+	 * Whether the survey is on screen. A study that is not fielding says so, and
+	 * so does one the server has stopped taking responses for: otherwise the
+	 * runner asks every question and refuses the answer at the end. A receipt
+	 * already earned stays on screen whatever happens to the gate after it.
+	 */
+	const closed = $derived(!open || (!receipt && !accepting));
 
 	/**
 	 * The background bot check, started when the study is known to be fielding
@@ -526,7 +542,7 @@
 		} finally {
 			// A solved challenge is spent the moment the server checks it, and it
 			// expires after two hours; a retry after any failure needs a fresh one.
-			if (!receipt && open) check = startProofOfWork(study.slug);
+			if (!receipt && accepting) check = startProofOfWork(study.slug);
 			// A token the server has verified is single-use; reset the widget so a
 			// retry carries a fresh one rather than the one already spent.
 			if (turnstileSiteKey && widgetId !== null) {
@@ -548,7 +564,7 @@
 
 <!-- The shell is a fixed window; a document page owns its own scroll. -->
 <div class="scroll research-type">
-	{#if !open}
+	{#if closed}
 		<div class="wrap">
 			<header class="prose">
 				<p class="eyebrow">{t('research.participate.eyebrow')}</p>
