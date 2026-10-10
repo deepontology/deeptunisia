@@ -46,7 +46,7 @@
 	                 reader's evidence floor, oldest first, for the marks the spine
 	                 carries.
 
-	     RuptureRule { event: EventRec; scale: VScale }
+	     RuptureRule { event: EventRec; scale: VScale; onpick(eventIds: string[]): void }
 	                 One rupture, spanning the whole strip, at the date its sources
 	                 give it. Colour comes from the rupture token.
 
@@ -300,7 +300,7 @@
 						<div class="cv-focus" style:top="{vscale.y(focusEvent.interval.startEarliest)}px"></div>
 					{/if}
 					{#each ruptureEvents as ev (ev.id)}
-						<RuptureRule event={ev} scale={vscale} />
+						<RuptureRule event={ev} scale={vscale} onpick={pickEvents} />
 					{/each}
 					{#each rows as row (row.roleId)}
 						<Column
@@ -322,6 +322,9 @@
 
 <style>
 	.cv {
+		/* Its own stacking context: the spine, headers and rules layer among
+		   themselves and never above the app's sheets and dock. */
+		isolation: isolate;
 		display: flex;
 		flex-direction: column;
 		flex: 1;

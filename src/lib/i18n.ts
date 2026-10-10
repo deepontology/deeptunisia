@@ -1474,7 +1474,10 @@ const en: Dict = {
 	'investigate.picker.remove': 'Remove {name}',
 	// redesign 2026-10 (CH-6)
 	'chronicle.vertical.posts': '{n} posts',
-	'chronicle.vertical.marked': 'Linked to the focused event'
+	'chronicle.vertical.marked': 'Linked to the focused event',
+	// redesign 2026-10 (CH-5)
+	'chronicle.vertical.spine.cluster': '{n} events, {range}',
+	'chronicle.vertical.spine.close': 'Close'
 };
 
 const fr: Dict = {
@@ -2879,7 +2882,10 @@ const fr: Dict = {
 	'investigate.picker.remove': 'Retirer {name}',
 	// redesign 2026-10 (CH-6)
 	'chronicle.vertical.posts': '{n} postes',
-	'chronicle.vertical.marked': 'Lié à l\'événement ciblé'
+	'chronicle.vertical.marked': 'Lié à l\'événement ciblé',
+	// redesign 2026-10 (CH-5)
+	'chronicle.vertical.spine.cluster': '{n} événements, {range}',
+	'chronicle.vertical.spine.close': 'Fermer'
 };
 
 
@@ -4279,7 +4285,10 @@ const ar: Dict = {
 	'investigate.picker.remove': 'إزالة {name}',
 	// redesign 2026-10 (CH-6)
 	'chronicle.vertical.posts': '{n} منصب',
-	'chronicle.vertical.marked': 'مرتبط بالحدث المحدد'
+	'chronicle.vertical.marked': 'مرتبط بالحدث المحدد',
+	// redesign 2026-10 (CH-5)
+	'chronicle.vertical.spine.cluster': '{n} أحداث، {range}',
+	'chronicle.vertical.spine.close': 'إغلاق'
 };
 
 
