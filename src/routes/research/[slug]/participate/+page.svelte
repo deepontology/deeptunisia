@@ -12,7 +12,8 @@
 	import type { LiveResults } from '$lib/index-study/live';
 	import type { RuntimeInstrument, RuntimeItem, StudyRecord } from '$lib/research';
 	import { startProofOfWork, type BotCheck } from '$lib/pow';
-	import { evaluateCondition, periodOf, scoreResponse } from '../../../../../community/research-scoring.ts';
+	import { channelCode, evaluateCondition, periodOf, scoreResponse } from '../../../../../community/research-scoring.ts';
+	import { gapAnswerKey, GAP_ANSWER_PREFIX } from '../../../../../community/research-contract.ts';
 
 	/**
 	 * The survey runner: one question per screen.
@@ -35,7 +36,8 @@
 	 * The embedded experiments arrive as a signed assignment from the API and
 	 * control block order and visible scale direction; the runner never
 	 * randomizes on its own. Nothing reaches a server until submission; progress
-	 * is saved only in this browser so a reload does not lose it.
+	 * is saved only in this browser, for a day without activity, so a reload
+	 * does not lose it.
 	 */
 	let { data } = $props();
 
@@ -70,7 +72,13 @@
 
 	const study = $derived(live?.study ?? data.study);
 	const instrument = $derived(live?.instrument ?? data.instrument);
-	const assignment = $derived(live?.assignment ?? null);
+	/*
+	 * The arms a resumed session was assigned: the saved one wins, because the
+	 * answers being restored were given under it, and a mid-survey change of
+	 * scale direction would show the same answers the other way round.
+	 */
+	let savedAssignment = $state<Assignment | null>(null);
+	const assignment = $derived(savedAssignment ?? live?.assignment ?? null);
 
 	onMount(async () => {
 		try {
@@ -166,8 +174,21 @@
 	// The site key arrives with the bot challenge, so with the switch off this
 	// runs nothing and the page contacts no origin but its own.
 	$effect(() => {
-		if (!turnstileSiteKey || turnstileApi()) return;
-		if (document.querySelector('script[data-turnstile]')) return;
+		if (!turnstileSiteKey) return;
+		// Leaving the survey and coming back through the site keeps the script
+		// and the API it defines, and this instance starts with
+		// `turnstileLoaded` false either way: an API that is already there is
+		// ready, and a script that is still loading is waited on, because
+		// neither state can be created twice.
+		if (turnstileApi()) {
+			turnstileLoaded = true;
+			return;
+		}
+		const existing = document.querySelector<HTMLScriptElement>('script[data-turnstile]');
+		if (existing) {
+			existing.addEventListener('load', () => (turnstileLoaded = true));
+			return;
+		}
 		const script = document.createElement('script');
 		script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
 		script.dataset.turnstile = '';
@@ -206,7 +227,11 @@
 		// An answer that hides a later item takes that item's answer with it, so
 		// nothing is submitted for a question the respondent no longer sees.
 		for (const item of instrument?.items ?? []) {
-			if (item.showIf !== undefined && item.id in answers && !isShown(item)) delete answers[item.id];
+			if (item.showIf !== undefined && !isShown(item)) {
+				if (item.id in answers) delete answers[item.id];
+				const presenceKey = gapAnswerKey(item.id);
+				if (presenceKey in answers) delete answers[presenceKey];
+			}
 		}
 	}
 
@@ -219,6 +244,13 @@
 		/** The module intro, shown on the first screen of its module only. */
 		intro: string | null;
 		items: RuntimeItem[];
+		/**
+		 * A block that re-asks items an earlier block already asked, the way the
+		 * presence block re-asks the essentiality ones. Its answers are keyed
+		 * under the prefix so the first rating survives, and it declares its own
+		 * response type, which is the wording and the scale the respondent reads.
+		 */
+		gap?: { keyPrefix: string; response: string };
 	}
 
 	const screens = $derived.by((): Screen[] => {
@@ -240,7 +272,12 @@
 				if (inst.maxdiff?.sets?.length) out.push({ id: m.id, kind: 'maxdiff', section, intro, items: [] });
 				continue;
 			}
-			const ids = m.block && inst.gap && m.block === inst.gap.id ? inst.gap.items : (m.items ?? []);
+			const presence = m.block !== undefined && inst.gap !== null && m.block === inst.gap.id ? inst.gap : null;
+			// The block's own instruction leads its first screen: the items carry
+			// the earlier block's wording, and without it a statement on a
+			// presence scale reads as the essentiality question again.
+			const presenceIntro = presence ? (presence.instruction[locale] ?? presence.instruction.en ?? null) : null;
+			const ids = presence ? presence.items : (m.items ?? []);
 			const items = ids.map((id) => byId.get(id)).filter((i): i is RuntimeItem => Boolean(i) && i!.displayed);
 			if (!items.length) continue;
 			if (items.some((i) => i.response === 'consent')) {
@@ -250,7 +287,14 @@
 			let first = true;
 			for (const item of items) {
 				if (!isShown(item)) continue;
-				out.push({ id: `${m.id}:${item.id}`, kind: 'item', section, intro: first ? intro : null, items: [item] });
+				out.push({
+					id: `${m.id}:${item.id}`,
+					kind: 'item',
+					section,
+					intro: first ? (intro ?? presenceIntro) : null,
+					items: [item],
+					...(presence ? { gap: { keyPrefix: GAP_ANSWER_PREFIX, response: presence.response } } : {})
+				});
 				first = false;
 			}
 		}
@@ -298,9 +342,9 @@
 	 * mind on a screen already answered.
 	 */
 	let pending: ReturnType<typeof setTimeout> | null = null;
-	function answerAndAdvance(item: RuntimeItem, value: number | string) {
-		const was = answers[item.id];
-		setAnswer(item.id, value);
+	function answerAndAdvance(item: RuntimeItem, value: number | string, key = item.id) {
+		const was = answers[key];
+		setAnswer(key, value);
 		if (pending) clearTimeout(pending);
 		if (onLast || (was !== undefined && was !== null)) return;
 		const here = cursor;
@@ -309,20 +353,20 @@
 		}, 320);
 	}
 
-	function skip(item: RuntimeItem) {
-		setAnswer(item.id, null);
+	function skip(item: RuntimeItem, key = item.id) {
+		setAnswer(key, null);
 		if (!onLast) next();
 	}
 
-	function toggleOption(item: RuntimeItem, option: string) {
-		const prior = Array.isArray(answers[item.id]) ? (answers[item.id] as string[]) : [];
+	function toggleOption(item: RuntimeItem, option: string, key = item.id) {
+		const prior = Array.isArray(answers[key]) ? (answers[key] as string[]) : [];
 		const exclusive = item.exclusive ?? [];
 		let nextValue: string[];
 		if (prior.includes(option)) nextValue = prior.filter((o) => o !== option);
 		// "None of these" clears the rest, and any other choice clears "none".
 		else if (exclusive.includes(option)) nextValue = [option];
 		else nextValue = [...prior.filter((o) => !exclusive.includes(o)), option];
-		setAnswer(item.id, nextValue.length ? nextValue : null);
+		setAnswer(key, nextValue.length ? nextValue : null);
 	}
 
 	// ---- presentation helpers ----------------------------------------------------
@@ -370,24 +414,53 @@
 
 	const sessionKey = $derived(`deeptunisia:research:${study.slug}`);
 
+	/**
+	 * How long saved progress stays in this browser. Unfinished political
+	 * answers are the most sensitive thing on the device, so a session nobody
+	 * has touched for a day is dropped rather than carried on.
+	 */
+	const SESSION_MAX_AGE_MS = 24 * 60 * 60 * 1000;
+
+	/**
+	 * Whether the saved session has been read yet. The save effect writes
+	 * nothing until it has: `data.instrument` is available before the study
+	 * fetch answers, so an ungated save would overwrite the saved progress with
+	 * an empty session before restoration could read it.
+	 */
+	let restored = $state(false);
+
 	/** Resume where this browser left off, but only for the same instrument hash. */
 	function restoreSession() {
+		restored = true;
 		if (!instrument) return;
 		try {
 			const raw = localStorage.getItem(sessionKey);
 			if (!raw) return;
 			const saved = JSON.parse(raw) as {
 				hash?: string;
+				savedAt?: number;
 				cursor?: string;
 				answers?: typeof answers;
 				pairs?: typeof pairs;
 				openedAt?: number;
+				assignment?: Assignment | null;
 			};
 			if (saved.hash !== instrument.hash) return;
+			// Drops, never repairs: a save with no timestamp is a save this
+			// runner did not write, and a day-old one is finished with.
+			if (typeof saved.savedAt !== 'number' || Date.now() - saved.savedAt > SESSION_MAX_AGE_MS) {
+				try {
+					localStorage.removeItem(sessionKey);
+				} catch {
+					/* Private mode: nothing was stored to remove. */
+				}
+				return;
+			}
 			answers = saved.answers ?? {};
 			pairs = saved.pairs ?? {};
 			cursor = saved.cursor ?? null;
 			openedAt = saved.openedAt ?? openedAt;
+			savedAssignment = saved.assignment ?? null;
 		} catch {
 			/* A broken or stale save is ignored, never repaired. */
 		}
@@ -402,11 +475,11 @@
 			}
 			return;
 		}
-		if (!instrument) return;
+		if (!instrument || !restored) return;
 		try {
 			localStorage.setItem(
 				sessionKey,
-				JSON.stringify({ hash: instrument.hash, cursor, answers, pairs, openedAt })
+				JSON.stringify({ hash: instrument.hash, savedAt: Date.now(), cursor, answers, pairs, openedAt, assignment })
 			);
 		} catch {
 			/* Private mode or a full quota: the survey still works without resume. */
@@ -453,21 +526,55 @@
 		}
 	}
 
+	/**
+	 * Drop everything this browser holds about the survey: the saved progress
+	 * and the month this browser last answered, with the runner back at its
+	 * first screen. A person who wants their unfinished answers gone should not
+	 * have to wait a day for it.
+	 */
+	function clearSaved() {
+		try {
+			localStorage.removeItem(sessionKey);
+			localStorage.removeItem(answeredKey);
+		} catch {
+			/* Private mode: nothing was stored to remove. */
+		}
+		answers = {};
+		pairs = {};
+		cursor = null;
+		savedAssignment = null;
+		answeredMonth = null;
+		openedAt = Date.now();
+		errorKey = null;
+	}
+
 	// ---- submit ------------------------------------------------------------------
 
 	/**
 	 * The `?src=` code the respondent arrived from, as the server accepts it.
 	 *
-	 * The server stores the channel only when it matches [a-z0-9_-]{1,32}, and
-	 * a link someone shares can carry anything: `?src=Facebook`, a long campaign
-	 * code, an empty value. Answering the whole survey to be refused at submit
-	 * would be a worse outcome than losing the code, so it is lowercased here and
-	 * falls back to 'organic' when it still does not match. The aggregation
-	 * counts the channel; it never publishes a code.
+	 * The index page hands a shared link's code to this URL, and the same
+	 * helper both sides share (research-scoring.ts) is what decides whether it
+	 * survived: lowercased, and `organic` when it still does not match what the
+	 * server stores. Answering the whole survey to be refused at submit would be
+	 * a worse outcome than losing the code, and the aggregation counts the
+	 * channel without ever publishing a code.
 	 */
 	function channelFromLocation(): string {
-		const channel = (new URLSearchParams(location.search).get('src') ?? '').toLowerCase();
-		return /^[a-z0-9_-]{1,32}$/.test(channel) ? channel : 'organic';
+		return channelCode(new URLSearchParams(location.search).get('src') ?? '');
+	}
+
+	/**
+	 * The item an answer key belongs to: an item's own key, or a presence key
+	 * the instrument's own presence block names. Anything else is not an answer
+	 * to anything this respondent was shown, and is not submitted.
+	 */
+	function itemForKey(key: string): RuntimeItem | null {
+		const prefixed = key.startsWith(GAP_ANSWER_PREFIX);
+		const id = prefixed ? key.slice(GAP_ANSWER_PREFIX.length) : key;
+		const item = instrument?.items.find((i) => i.id === id) ?? null;
+		if (prefixed && !instrument?.gap?.items.includes(id)) return null;
+		return item;
 	}
 
 	async function submit() {
@@ -491,9 +598,8 @@
 				});
 			}
 			const payloadAnswers: Record<string, boolean | number | string | string[] | null> = {};
-			const byId = new Map(instrument.items.map((i) => [i.id, i]));
 			for (const [k, v] of Object.entries(answers)) {
-				const item = byId.get(k);
+				const item = itemForKey(k);
 				if (v !== undefined && item && isShown(item)) payloadAnswers[k] = v;
 			}
 			const sets = instrument.maxdiff?.sets ?? [];
@@ -626,6 +732,9 @@
 					<span class="section">{current.section}</span>
 					<span class="count mono">{index + 1} / {screens.length}</span>
 				</p>
+				<!-- What this browser keeps while the survey is unfinished, and the
+				     way to drop it now instead of waiting out the day. -->
+				<button class="clear" type="button" onclick={clearSaved}>{t('research.participate.clearSaved')}</button>
 			</div>
 
 			{#key current.id}
@@ -690,76 +799,78 @@
 								</div>
 							{/each}
 						</div>
-					{:else}
-						{@const item = current.items[0]}
-						{@const anchors = anchorsOf(item)}
-						{@const caption = anchors ? null : captionKey(item.response)}
-						<h1 tabindex="-1">{textOf(item)}</h1>
-						{#if helpOf(item)}<p class="help" id="help-{item.id}">{helpOf(item)}</p>{/if}
-						{#if caption}<p class="caption">{t(caption)}</p>{/if}
+				{:else}
+					{@const item = current.items[0]}
+					{@const response = current.gap?.response ?? item.response}
+					{@const key = current.gap ? `${current.gap.keyPrefix}${item.id}` : item.id}
+					{@const anchors = anchorsOf(item)}
+					{@const caption = anchors ? null : captionKey(response)}
+					<h1 tabindex="-1">{textOf(item)}</h1>
+					{#if helpOf(item)}<p class="help" id="help-{item.id}">{helpOf(item)}</p>{/if}
+					{#if caption}<p class="caption">{t(caption)}</p>{/if}
 
-						{#if isScale(item.response)}
-							{@const values = scaleValues(item.response)}
-							<div class="scale" role="radiogroup" aria-label={textOf(item)} aria-describedby={helpOf(item) ? `help-${item.id}` : undefined} style:--n={values.length}>
-								{#each values as v (v)}
-									<label class="cell" class:on={answers[item.id] === v}>
-										<input
-											type="radio"
-											name={item.id}
-											value={v}
-											checked={answers[item.id] === v}
-											onchange={() => answerAndAdvance(item, v)}
-											aria-label={anchors && v === 0 ? `0, ${anchors.low}` : anchors && v === 10 ? `10, ${anchors.high}` : undefined}
-										/>
-										<span class="mono">{item.response === 'scale_essential' && v === 0 ? t('research.participate.against') : v}</span>
-									</label>
-								{/each}
+					{#if isScale(response)}
+						{@const values = scaleValues(response)}
+						<div class="scale" role="radiogroup" aria-label={textOf(item)} aria-describedby={helpOf(item) ? `help-${item.id}` : undefined} style:--n={values.length}>
+							{#each values as v (v)}
+								<label class="cell" class:on={answers[key] === v}>
+									<input
+										type="radio"
+										name={key}
+										value={v}
+										checked={answers[key] === v}
+										onchange={() => answerAndAdvance(item, v, key)}
+										aria-label={anchors && v === 0 ? `0, ${anchors.low}` : anchors && v === 10 ? `10, ${anchors.high}` : undefined}
+									/>
+									<span class="mono">{response === 'scale_essential' && v === 0 ? t('research.participate.against') : v}</span>
+								</label>
+							{/each}
+						</div>
+						{#if anchors}
+							<div class="ends" class:reversed={scaleDescending} aria-hidden="true">
+								<span>{anchors.low}</span>
+								{#if anchors.mid}<span class="mid">{anchors.mid}</span>{/if}
+								<span>{anchors.high}</span>
 							</div>
-							{#if anchors}
-								<div class="ends" class:reversed={scaleDescending} aria-hidden="true">
-									<span>{anchors.low}</span>
-									{#if anchors.mid}<span class="mid">{anchors.mid}</span>{/if}
-									<span>{anchors.high}</span>
-								</div>
-							{/if}
-						{:else if item.response === 'single_choice'}
-							<div class="options" role="radiogroup" aria-label={textOf(item)} aria-describedby={helpOf(item) ? `help-${item.id}` : undefined}>
-								{#each item.options ?? [] as opt (opt)}
-									<label class="option" class:on={answers[item.id] === opt} class:quiet={opt === 'prefer_not_to_say'}>
-										<input type="radio" name={item.id} value={opt} checked={answers[item.id] === opt} onchange={() => answerAndAdvance(item, opt)} />
-										<span class="dot" aria-hidden="true"></span>
-										<span>{optionLabel(item, opt)}</span>
-									</label>
-								{/each}
-							</div>
-						{:else if item.response === 'multi_choice'}
-							<div class="options" role="group" aria-label={textOf(item)} aria-describedby={helpOf(item) ? `help-${item.id}` : undefined}>
-								{#each item.options ?? [] as opt (opt)}
-									{@const on = Array.isArray(answers[item.id]) && (answers[item.id] as string[]).includes(opt)}
-									<label class="option multi" class:on class:quiet={(item.exclusive ?? []).includes(opt)}>
-										<input type="checkbox" value={opt} checked={on} onchange={() => toggleOption(item, opt)} />
-										<span class="box" aria-hidden="true"></span>
-										<span>{optionLabel(item, opt)}</span>
-									</label>
-								{/each}
-							</div>
-						{:else if item.response === 'text_short'}
-							<Textarea
-								value={String(answers[item.id] ?? '')}
-								maxlength={item.maxChars ?? 500}
-								limit={item.maxChars ?? 500}
-								rows={4}
-								aria-label={textOf(item)}
-								oninput={(e) => setAnswer(item.id, (e.currentTarget as HTMLTextAreaElement).value)}
-							/>
 						{/if}
-
-						<!-- An item that offers "prefer not to say" as an answer already has
-						     its skip; a second control would ask the same thing twice. -->
-						{#if !(item.options ?? []).includes('prefer_not_to_say')}
-							<button class="skip" type="button" onclick={() => skip(item)}>{t('research.participate.skip')}</button>
-						{/if}
+					{:else if response === 'single_choice'}
+						<div class="options" role="radiogroup" aria-label={textOf(item)} aria-describedby={helpOf(item) ? `help-${item.id}` : undefined}>
+							{#each item.options ?? [] as opt (opt)}
+								<label class="option" class:on={answers[key] === opt} class:quiet={opt === 'prefer_not_to_say'}>
+									<input type="radio" name={key} value={opt} checked={answers[key] === opt} onchange={() => answerAndAdvance(item, opt, key)} />
+									<span class="dot" aria-hidden="true"></span>
+									<span>{optionLabel(item, opt)}</span>
+								</label>
+							{/each}
+						</div>
+					{:else if response === 'multi_choice'}
+						<div class="options" role="group" aria-label={textOf(item)} aria-describedby={helpOf(item) ? `help-${item.id}` : undefined}>
+							{#each item.options ?? [] as opt (opt)}
+								{@const on = Array.isArray(answers[key]) && (answers[key] as string[]).includes(opt)}
+								<label class="option multi" class:on class:quiet={(item.exclusive ?? []).includes(opt)}>
+									<input type="checkbox" value={opt} checked={on} onchange={() => toggleOption(item, opt, key)} />
+									<span class="box" aria-hidden="true"></span>
+									<span>{optionLabel(item, opt)}</span>
+								</label>
+							{/each}
+						</div>
+					{:else if response === 'text_short'}
+						<Textarea
+							value={String(answers[key] ?? '')}
+							maxlength={item.maxChars ?? 500}
+							limit={item.maxChars ?? 500}
+							rows={4}
+							aria-label={textOf(item)}
+							oninput={(e) => setAnswer(key, (e.currentTarget as HTMLTextAreaElement).value)}
+						/>
 					{/if}
+
+					<!-- An item that offers "prefer not to say" as an answer already has
+					     its skip; a second control would ask the same thing twice. -->
+					{#if !(item.options ?? []).includes('prefer_not_to_say')}
+						<button class="skip" type="button" onclick={() => skip(item, key)}>{t('research.participate.skip')}</button>
+					{/if}
+				{/if}
 
 					{#if errorKey}
 						<p class="error" role="alert">{t(errorKey)}</p>
@@ -903,6 +1014,22 @@
 	}
 	.count {
 		letter-spacing: 0.04em;
+	}
+	/* The clear control: quiet, and above every screen, because the saved answers
+	   it drops are kept on every screen too. */
+	.clear {
+		display: block;
+		margin: 0.35rem 0 0;
+		padding: 0.25rem 0;
+		background: none;
+		border: none;
+		color: var(--text-faint);
+		font: inherit;
+		font-size: 0.82rem;
+		text-align: start;
+		text-decoration: underline;
+		text-underline-offset: 3px;
+		cursor: pointer;
 	}
 
 	.screen {

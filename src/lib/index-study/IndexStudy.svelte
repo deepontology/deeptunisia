@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { page } from '$app/state';
 	import { Tween } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
 	import { t, tf } from '$lib/t.svelte';
@@ -13,7 +14,7 @@
 	import MonthlyChart from './MonthlyChart.svelte';
 	import Content from '$lib/ui/Content.svelte';
 	import type { LiveResults } from './live';
-	import { scoreResponse } from '../../../community/research-scoring.ts';
+	import { channelCode, ORGANIC_CHANNEL, scoreResponse } from '../../../community/research-scoring.ts';
 
 	/**
 	 * The index study page: a live public instrument, not an article.
@@ -152,6 +153,18 @@
 	const readingName = (id: ReadingId) => tf(`index.reading.${readingKey(id)}`, { m: windowMonths });
 
 	const open = $derived(liveStatus === 'fielding');
+
+	/**
+	 * The participation URL, carrying the `?src=` code this reader arrived
+	 * through. The runner reads the code off its own URL, so a link handed on
+	 * from here that dropped it would answer as `organic` and vanish from the
+	 * link check on the integrity section. Only a code the server accepts is
+	 * carried; the same helper the runner reads it with decides that.
+	 */
+	const srcCode = $derived(channelCode(page.url.searchParams.get('src') ?? ''));
+	const participate = $derived(
+		`/research/${study.slug}/participate${srcCode === ORGANIC_CHANNEL ? '' : `?src=${srcCode}`}`
+	);
 
 	function monthLabel(period: string, short = false): string {
 		const [y, m] = period.split('-').map(Number);
@@ -517,7 +530,7 @@
 			{/if}
 			<p class="tagline">{t('index.tagline.one')}<br />{t('index.tagline.two')}</p>
 			{#if accepting}
-				<a class="cta" href="/research/{study.slug}/participate">
+				<a class="cta" href={participate}>
 					{floor && !published
 						? tf('index.cta.first', { N: fmt(floor.first_figure_n), n: fmt(instrument.estimatedMinutes) })
 						: tf('index.cta', { n: fmt(instrument.estimatedMinutes) })}
@@ -991,7 +1004,7 @@
 			<div class="closing-copy">
 				<p class="closing-line">{t('index.closing.line')}</p>
 				{#if accepting}
-					<a class="cta cta-solid" href="/research/{study.slug}/participate">{tf('index.cta', { n: fmt(instrument.estimatedMinutes) })}</a>
+					<a class="cta cta-solid" href={participate}>{tf('index.cta', { n: fmt(instrument.estimatedMinutes) })}</a>
 					<p class="closing-note mono">{t('index.closing.note')}</p>
 				{:else}
 					<p class="closing-note mono">{t('index.headline.notOpen')}</p>
