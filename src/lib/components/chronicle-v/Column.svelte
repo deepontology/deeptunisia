@@ -1,13 +1,26 @@
 <script lang="ts">
 	import { type Basis } from '$lib/model';
-	import { type ChronRow } from '$lib/chronicle/rows';
+	import { type ChronRow, visiblePositions } from '$lib/chronicle/rows';
 	import type { VScale } from '$lib/chronicle/vscale';
+	import TenureBlock from '$lib/components/chronicle-v/TenureBlock.svelte';
 
 	/**
-	 * One column, one post — PLACEHOLDER. The wave that owns this component replaces
-	 * it. What is already decided: the column is a fixed minimum width on a track of
-	 * full canvas height, and its header is the part that sticks to the top of the
-	 * canvas while the timeline scrolls under it.
+	 * One post, one column of the vertical Chronicle.
+	 *
+	 * The header is the part that sticks to the top of the canvas while the
+	 * timeline scrolls under it: the role title clamped to two lines, the
+	 * institution beneath it in mono. It overlays the body rather than pushing
+	 * it, and it never takes a tap — so a block sitting under it stays reachable.
+	 *
+	 * The body is the column's height, from the canvas top, so a block positioned
+	 * by `scale.y` lines up with the spine and every rupture rule to the pixel.
+	 * Each visible officeholding — the positions that clear the reader's evidence
+	 * floor — becomes one TenureBlock.
+	 *
+	 * `focus` is the event cross-highlight: 'linked' marks the column as one the
+	 * focused event reaches, 'dim' fades it when the event reaches elsewhere. The
+	 * outline paints above the reading line; the panels behind it keep their own
+	 * z-index token above `--z-view` for exactly this reason.
 	 */
 	interface Props {
 		row: ChronRow;
@@ -17,18 +30,88 @@
 		onselect(personId: string): void;
 	}
 
-	let { scale }: Props = $props();
+	let { row, scale, focus, basisFloor, onselect }: Props = $props();
+
+	const visible = $derived(visiblePositions(row, basisFloor));
 </script>
 
-<div class="cv-col" style:height="{scale.height}px"></div>
+<div class="cv-col" class:linked={focus === 'linked'} class:dim={focus === 'dim'}>
+	<header class="cv-col-head">
+		<div class="cv-col-title">{row.title}</div>
+		<div class="cv-col-inst">{row.institutionName}</div>
+	</header>
+	<div class="cv-col-body" style:height="{scale.height}px">
+		{#each visible as pos (pos.id)}
+			<TenureBlock {pos} {scale} layer={row.layer} {onselect} />
+		{/each}
+	</div>
+</div>
 
 <style>
 	.cv-col {
+		position: relative;
 		flex: 1 0 var(--cv-col-min);
 		min-width: var(--cv-col-min);
 		border-inline-start: var(--rule);
-		/* A wash, so the skeleton's column tracks are visible before the tenures
-		   land. The wave that owns this component paints the tenures instead. */
-		background: var(--surface-hover);
+		transition: opacity var(--dur-fast) var(--ease-out);
+	}
+	/*
+	   A linked column runs two accent rails down its full height, so the mark is
+	   still visible however far the reader has scrolled from the event.
+	 */
+	.cv-col.linked {
+		outline: 2px solid var(--accent);
+		outline-offset: -2px;
+	}
+	.cv-col.dim {
+		opacity: var(--dim);
+	}
+	.cv-col-head {
+		position: sticky;
+		top: 0;
+		z-index: var(--z-sheet);
+		height: var(--cv-head-h);
+		display: flex;
+		flex-direction: column;
+		gap: 1px;
+		padding: var(--s-2) var(--s-3);
+		overflow: hidden;
+		background: var(--surface-base);
+		border-block-end: var(--rule);
+		pointer-events: none;
+	}
+	.cv-col-title {
+		font-size: var(--t-xs);
+		font-weight: 600;
+		line-height: 1.2;
+		color: var(--text-primary);
+		display: -webkit-box;
+		line-clamp: 2;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+	.cv-col-inst {
+		font-family: var(--font-mono);
+		font-size: var(--t-2xs);
+		color: var(--text-muted);
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	/*
+	   Absolute and anchored to the column's own top: blocks are placed by
+	   `scale.y` from here, the same origin the spine and ruptures use, so the
+	   years line up. The header stays sticky in flow and floats over this.
+	 */
+	.cv-col-body {
+		position: absolute;
+		inset-inline: 0;
+		top: 0;
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.cv-col {
+			transition: none;
+		}
 	}
 </style>
