@@ -1387,9 +1387,3 @@
   owner: RESEARCH
   deadline: 2026-12-09
   reason: Grade A cites tier 3. A primary or institutional source, or a deliberate grade correction, is owed before the deadline (V25).
-- rule: no-source
-  kind: person
-  id: mouna-siala
-  owner: RESEARCH
-  deadline: 2026-10-10
-  reason: Kept unsourced under rule 6. The record itself states the good-faith search found no support for the identification; RESEARCH owns sourcing it or retiring it before the deadline.

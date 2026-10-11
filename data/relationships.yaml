@@ -2384,9 +2384,19 @@
   description_fr_by: model-reviewed
   description_ar: صحفية في جريدة لا براس دي تونس.
   description_ar_by: model-reviewed
-  confidence: C
-  basis: reported
-  attributed_to: Wikipedia FR — Mouna Siala
+  confidence: D
+  basis: unsubstantiated
+  attributed_to: Initial compilation (no located source supports the employment claim)
+  review:
+    by: maintainer
+    date: "2026-10-11"
+    method: source-check
+    note: >-
+      The cited source is the Wikipedia (FR) article on La Presse de Tunisie,
+      not on Mouna Siala; no page naming a journalist of that name was located,
+      and the person record search found only the visual artist
+      منى سيالة الجمل and a pastry chef. Kept as unsubstantiated per rule 6, not
+      deleted.
   sources:
     - wikipedia-la-presse
 - id: rel-rafaa-ben-achour-judiciary-appointment

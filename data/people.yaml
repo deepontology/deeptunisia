@@ -9364,8 +9364,8 @@
   summary_ar: >-
     صحفية تونسية تعمل في الصحافة المكتوبة والرقمية.
   summary_ar_by: model-reviewed
-  confidence: C
-  basis: reported
+  confidence: D
+  basis: unsubstantiated
   reasoning: >-
     Searches in French and Arabic (Latin and Arabic script) found NO record of a
     Tunisian journalist named "Mouna Siala" / « منى سيالة ». The identifiable
@@ -9406,6 +9406,17 @@
       babnet؛ (ج) إلغاء البطاقة إذا كانت خطأ في التجميع. يجب أن تظل الخريطة تُظهر الادعاء
       كغير مدعوم (القاعدة 6) حتى يُختار أحد هذه الخيارات.
   notes_ar_by: model-reviewed
+  review:
+    by: maintainer
+    date: "2026-10-11"
+    method: source-check
+    note: >-
+      Re-checked under the expired no-source exception: no source for a
+      journalist named Mouna Siala / منى سيالة was located (French and Arabic,
+      Latin and Arabic script). The only Tunisia-relevant figures under the
+      name are the visual artist منى سيالة الجمل and a pastry chef; the
+      babnet article is the name-collision evidence, not support.
+  sources: [babnet-siala-jemel]
 
 # ===========================================================================
 # JUDICIAL PEOPLE
