@@ -726,7 +726,7 @@ claims:
     claim: Reviewable records, the editorial-note denominator.
     surfaces:
       - path: landing/index.html
-        locator: '<span class="v">46 / (\d+)</span>'
+        locator: '<span class="v">48 / (\d+)</span>'
     resolver: { source: review, key: editorial-notes-denominator }
     format: plain
     population: reviewable records (the denominator for editorial notes)
