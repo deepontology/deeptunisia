@@ -82,7 +82,7 @@ const URL = process.env.LANDING_URL || 'http://localhost:4810/landing/index.html
   pre.forEach(m => { fail++; console.log(m); });
   const ok = (c, n) => { c ? pass++ : (fail++, console.log('FAIL: ' + n)); };
 
-  ok(await page.title() === 'Deep Tunisia — where memory fades, power escapes', 'title');
+  ok(await page.title() === 'Deep Tunisia: where memory fades, power escapes', 'title');
   ok((await page.locator('h1').innerText()).includes('Where memory fades'), 'h1');
   /* The page's own arrays, read from its source: the expectations below follow
      the graph rather than constants that drift every time the data grows. */
