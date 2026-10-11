@@ -205,6 +205,19 @@
 
 	let detent = $state<'peek' | 'full'>('peek');
 
+	/**
+	 * TUCKED: the sheet steps aside without closing.
+	 *
+	 * At the peek height the sheet still covers almost half a phone, and it stayed
+	 * there while the reader went back to the canvas, so the record they had
+	 * finished with sat over the thing they were now reading. Touching or
+	 * scrolling anything behind the sheet now tucks it down to its title bar: the
+	 * record is one tap away, and the canvas is the reader's again. Selecting
+	 * something else brings the sheet back at the peek height.
+	 */
+	let tucked = $state(false);
+	let asideEl = $state<HTMLElement | null>(null);
+
 	/*
 	 * A new selection always opens at the peek height. Leaving a sheet expanded from
 	 * the previous entity means tapping a node buries the map you tapped it on.
@@ -213,6 +226,28 @@
 	$effect(() => {
 		void app.selected;
 		detent = 'peek';
+		tucked = false;
+	});
+
+	/** The chrome the reader uses alongside the sheet; touching it is not leaving the record. */
+	const KEEPS_SHEET = '.dock, .menubar, [role="dialog"], .pop, .vs';
+
+	$effect(() => {
+		if (!compact.current || panelId === null) return;
+		const away = (e: Event) => {
+			if (tucked || detent !== 'peek' || closing) return;
+			const target = e.target as Element | null;
+			if (!target || !(target instanceof Element)) return;
+			if (asideEl?.contains(target) || target.closest(KEEPS_SHEET)) return;
+			tucked = true;
+			asideEl?.querySelector('.sheet-scroll')?.scrollTo({ top: 0 });
+		};
+		document.addEventListener('pointerdown', away, { capture: true, passive: true });
+		document.addEventListener('wheel', away, { capture: true, passive: true });
+		return () => {
+			document.removeEventListener('pointerdown', away, { capture: true });
+			document.removeEventListener('wheel', away, { capture: true });
+		};
 	});
 
 	/**
@@ -220,7 +255,7 @@
 	 * gesture time, so a stale object can never settle the wrong detent.
 	 */
 	const dragParams: SheetDragParams = {
-		enabled: () => compact.current && panelId !== null,
+		enabled: () => compact.current && panelId !== null && !tucked,
 		detent: () => detent,
 		setDetent: (d) => (detent = d),
 		dismiss: () => (app.selected = null),
@@ -230,7 +265,19 @@
 
 	/** Tapping the handle is the keyboard- and precision-friendly equivalent. */
 	function toggle() {
+		if (tucked) {
+			tucked = false;
+			return;
+		}
 		detent = detent === 'peek' ? 'full' : 'peek';
+	}
+
+	/** A tucked sheet comes back on any tap, not only on its handle. */
+	function untuck(e: MouseEvent) {
+		if (!tucked) return;
+		e.preventDefault();
+		e.stopPropagation();
+		tucked = false;
 	}
 </script>
 
@@ -255,10 +302,14 @@
 		role="presentation"
 	></div>
 
+	<!-- svelte-ignore a11y_click_events_have_key_events -->
 	<aside
 		class="inspector d-{detent}"
 		class:closing
+		class:tucked
 		aria-label="Entity inspector"
+		bind:this={asideEl}
+		onclickcapture={untuck}
 		use:sheetDrag={dragParams}
 	>
 		{#if compact.current}
@@ -271,8 +322,8 @@
 			<button
 				class="handle sheet-handle"
 				onclick={toggle}
-				aria-expanded={detent === 'full'}
-				aria-label={detent === 'full' ? 'Collapse panel' : 'Expand panel'}
+				aria-expanded={!tucked && detent === 'full'}
+				aria-label={detent === 'full' && !tucked ? 'Collapse panel' : 'Expand panel'}
 			>
 				<span class="grip sheet-grip"></span>
 			</button>
@@ -455,7 +506,9 @@
 			width: auto;
 			/* Landscape notch: the sheet spans the screen, its content does not. */
 			padding-inline: var(--safe-l) var(--safe-r);
-			--sheet-peek: 46dvh;
+			--sheet-peek: 42dvh;
+			/* Tucked: the handle and the record's sticky title bar, nothing more. */
+			--sheet-mini: 104px;
 			--sheet-full: calc(100dvh - var(--chrome-h) - var(--dock-h) - var(--s-4));
 			height: calc(var(--sheet-peek) + (var(--sheet-full) - var(--sheet-peek)) * var(--sheet-p, 0));
 			flex-direction: column;
@@ -483,6 +536,14 @@
 		}
 		.d-full {
 			--sheet-p: 1;
+		}
+		.inspector.tucked {
+			height: var(--sheet-mini);
+			cursor: pointer;
+		}
+		/* Tucked, the body does not scroll under the finger that is about to open it. */
+		.inspector.tucked .inner {
+			overflow: hidden;
 		}
 		/* Leaving: the card slides all the way down, under the dock. */
 		.inspector.closing {
