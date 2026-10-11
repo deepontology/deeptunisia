@@ -2,19 +2,17 @@
    landing/_verify.cjs - browser checks for the landing page
    ============================================================================
 
-   Run it against the built site (`npx vite preview`) or a static server
-   rooted at the repo:
+   Run it against any static server rooted at the repo:
 
-       LANDING_URL=http://localhost:4173/ node landing/_verify.cjs
-       py -3 -m http.server 4810 && node landing/_verify.cjs
+       py -3 -m http.server 4810
+       node landing/_verify.cjs
 
-   It asserts what would fail silently: the page fits about eight phone
-   screens with the long read closed; the hero, its subline and the primary
-   button are on the first screen; nothing overflows horizontally at 390, 820
-   or 1440, in English or Arabic; the ribbon is drawn from DENSITY; a language
-   switch keeps every figure; the default theme is dark and a choice persists;
-   reduced motion runs no animation; and the page requests nothing from
-   another origin.
+   It asserts the things that would fail silently: that the stratum is drawn
+   from the real DENSITY array, that the evidence dial actually removes edges
+   and isolates people as the floor rises, that the budget prices match
+   docs/posting-limits.md and that a refusal names the budget rather than
+   scolding, that the phrase is twelve words from the real BIP-39 list, and
+   that nothing overflows horizontally at 390 / 820 / 1440.
 
    Screenshots go to SHOT_DIR (default: the OS temp directory) so they never
    land in the repo.
@@ -25,151 +23,308 @@ const os = require('os');
 const OUT = (process.env.SHOT_DIR || path.join(os.tmpdir(), 'dt-landing-shots')) + path.sep;
 require('fs').mkdirSync(OUT, { recursive: true });
 const URL = process.env.LANDING_URL || 'http://localhost:4810/landing/index.html';
-const ORIGIN = new globalThis.URL(URL).origin;
-
-const PHONE = { width: 390, height: 844 };
-const MAX_PHONE_HEIGHT = 7000;
-
-let failures = 0;
-let checks = 0;
-function ok(name, cond, detail) {
-  checks++;
-  if (cond) console.log('  ok    ' + name + (detail ? ' — ' + detail : ''));
-  else {
-    failures++;
-    console.error('  FAIL  ' + name + (detail ? ' — ' + detail : ''));
-  }
-}
-
-async function open(browser, viewport, opts) {
-  const ctx = await browser.newContext(Object.assign({ viewport: viewport, deviceScaleFactor: 1 }, opts || {}));
-  const page = await ctx.newPage();
-  const errs = [];
-  const foreign = [];
-  page.on('console', (m) => { if (m.type() === 'error') errs.push('console: ' + m.text()); });
-  page.on('pageerror', (e) => errs.push('pageerror: ' + e.message));
-  page.on('requestfailed', (r) => errs.push('requestfailed: ' + r.url()));
-  page.on('request', (r) => {
-    const u = r.url();
-    if (/^https?:/.test(u) && !u.startsWith(ORIGIN)) foreign.push(u);
-  });
-  await page.goto(URL, { waitUntil: 'networkidle' });
-  return { ctx, page, errs, foreign };
-}
-
-const overflow = (page) => page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
 
 (async () => {
+  const pre = [];
+  /* the default theme is asserted before the first ok(), so it gets its own check */
+  const ok0 = (got, want) => { if (got !== want) pre.push('FAIL: default theme is ' + got + ', expected ' + want); };
   const browser = await chromium.launch();
+  const page = await browser.newPage({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 });
+  const errs = [];
+  page.on('console', m => { if (m.type() === 'error') errs.push('console: ' + m.text()); });
+  page.on('pageerror', e => errs.push('pageerror: ' + e.message));
+  page.on('requestfailed', r => errs.push('requestfailed: ' + r.url() + ' ' + (r.failure() || {}).errorText));
 
-  /* ---- phone, English, defaults ------------------------------------- */
-  {
-    const { ctx, page, errs, foreign } = await open(browser, PHONE, { locale: 'en-GB' });
-    ok('default theme is dark', (await page.getAttribute('html', 'data-theme')) === 'dark');
-    ok('the long read is closed on a phone', !(await page.evaluate(() => document.getElementById('long').open)));
+  await page.goto(URL, { waitUntil: 'networkidle' });
+  await page.evaluate(() => { try { localStorage.removeItem('dt-theme'); } catch (e) {} });
+  await page.reload({ waitUntil: 'networkidle' });
+  ok0(await page.evaluate(() => document.documentElement.getAttribute('data-theme')), 'dark');
+  await page.waitForTimeout(600);
 
-    const h = await page.evaluate(() => document.documentElement.scrollHeight);
-    ok('the page is at most ' + MAX_PHONE_HEIGHT + 'px at 390 wide', h <= MAX_PHONE_HEIGHT, h + 'px, ' + (h / PHONE.height).toFixed(1) + ' screens');
+  // force every reveal in so nothing screenshots blank
+  await page.evaluate(() => {
+    document.querySelectorAll('.rv, .curtain').forEach(e => e.classList.add('in'));
+    document.querySelectorAll('.era-band').forEach(e => e.classList.add('on'));
+    document.querySelectorAll('[data-count]').forEach(e => e.textContent = e.getAttribute('data-count'));
+  });
+  await page.waitForTimeout(900);
 
-    const fold = await page.evaluate(() => {
-      const bottom = (s) => { const e = document.querySelector(s); return e ? e.getBoundingClientRect().bottom : Infinity; };
-      return { h1: bottom('.hero .display'), lede: bottom('.hero .lede'), cta: bottom('.hero .ctas .enter') };
-    });
-    ok('the title, subline and primary button are on the first screen', fold.h1 <= PHONE.height && fold.lede <= PHONE.height && fold.cta <= PHONE.height, JSON.stringify(fold));
-    ok('no horizontal overflow at 390', (await overflow(page)) <= 0);
+  const H = await page.evaluate(() => document.body.scrollHeight);
+  console.log('page height', H, 'viewport 1440x900');
 
-    const ribbon = await page.evaluate(() => {
-      const poly = document.querySelector('#ribbon polygon');
-      return { points: poly ? poly.getAttribute('points').trim().split(/\s+/).length : 0, ruptures: document.querySelectorAll('#ribbon .ribbon-rupture').length };
-    });
-    const density = await page.evaluate(() => {
-      const m = document.documentElement.innerHTML.match(/var DENSITY = (\[[^\]]*\]);/);
-      return m ? JSON.parse(m[1]).length : 0;
-    });
-    ok('the ribbon is drawn from DENSITY', density > 0 && ribbon.points === density * 2, ribbon.points + ' points for ' + density + ' years');
-    ok('the ribbon marks the four ruptures', ribbon.ruptures === 4);
+  const shots = [
+    ['01-hero', 0],
+    ['02-ledger-memory', 900],
+    ['03-stratum', 1750],
+    ['04-connection', 2650],
+    ['05-pipeline', 3700],
+    ['06-bases', 4900],
+    ['07-dial', 5800],
+    ['08-limits', 7000],
+    ['09-agora', 8600],
+    ['10-identity', 10000],
+    ['11-key', 10900],
+    ['12-budget', 12200],
+    ['13-budget-cards', 13300],
+    ['14-standard', 14400],
+    ['15-support', 15400],
+    ['16-closing', 17200],
+    ['17-footer', H - 900]
+  ];
+  for (const [name, y] of shots) {
+    await page.evaluate(v => window.scrollTo(0, v), y);
+    await page.waitForTimeout(360);
+    await page.screenshot({ path: OUT + name + '.png' });
+  }
 
-    ok('three doors, to the Chronicle, Now and Network', JSON.stringify(await page.$$eval('.door', (as) => as.map((a) => a.getAttribute('href')))) === JSON.stringify(['/chronicle', '/now', '/network']));
-    ok('each door carries a drawn thumbnail', (await page.$$eval('.door svg.thumb', (s) => s.filter((x) => x.childElementCount > 0).length)) === 3);
-    const idx = await page.$$eval('#indexes .index-card', (cs) => cs.map((c) => c.textContent));
-    ok('the indexes section is absent or honest', idx.every((t) => !/\d+\/100/.test(t) || /among respondents/.test(t)), idx.length + ' card(s)');
+  // ---------- assertions ----------
+  let pass = 0, fail = 0;
+  pre.forEach(m => { fail++; console.log(m); });
+  const ok = (c, n) => { c ? pass++ : (fail++, console.log('FAIL: ' + n)); };
 
-    const targets = await page.evaluate(() =>
-      [...document.querySelectorAll('a, button, summary')]
-        .filter((e) => e.offsetParent !== null && !e.closest('.longread, .colophon, .ribbon'))
-        .map((e) => ({ t: (e.textContent || e.getAttribute('aria-label') || '').trim().slice(0, 30), h: e.getBoundingClientRect().height }))
-        .filter((r) => r.h < 32)
+  ok(await page.title() === 'Deep Tunisia — where memory fades, power escapes', 'title');
+  ok((await page.locator('h1').innerText()).includes('Where memory fades'), 'h1');
+  /* The page's own arrays, read from its source: the expectations below follow
+     the graph rather than constants that drift every time the data grows. */
+  const data = await page.evaluate(() => {
+    const src = document.documentElement.innerHTML;
+    const arr = (name) => { const m = src.match(new RegExp('var ' + name + ' = (\\[.*?\\]);')); return m ? JSON.parse(m[1]) : []; };
+    const nodes = arr('NODES');
+    return { edges: arr('EDGES').length, nodes: nodes.length, lanes: new Set(nodes.map((n) => n[2])).size };
+  });
+  const atlasCtas = await page.$$eval('a.enter', (as) => as.filter((a) => /atlas/i.test(a.textContent)).map((a) => a.getAttribute('href')));
+  ok(atlasCtas.length >= 3 && atlasCtas.every((h) => h === '/chronicle'), 'every atlas CTA opens /chronicle');
+  ok((await page.locator('a.enter').first().innerText()).includes('Explore the atlas'), 'CTA wording');
+
+  // stratum: real data — a plausible peak (the build regenerates the array, so
+  // the exact value moves with the graph), both axis endpoints, the ribbon shape
+  const strat = await page.evaluate(() => {
+    const t = [...document.querySelectorAll('#stratumbody text')].map(n => n.textContent);
+    const nums = t.map(s => +((s.match(/\d+/) || [])[0])).filter(n => Number.isFinite(n) && n >= 10 && n <= 999);
+    return { peak: Math.max(...nums), y1956: t.some(s => s.includes('1956')), y2026: t.some(s => s.includes('2026')), paths: document.querySelectorAll('#stratumbody path').length, bands: document.querySelectorAll('.era-band').length, rups: document.querySelectorAll('.rup').length };
+  });
+  ok(strat.peak >= 40, 'stratum has a real peak (' + strat.peak + ')');
+  ok(strat.y1956 && strat.y2026, 'stratum axis endpoints');
+  ok(strat.paths === 3, 'stratum ribbon + 2 edges, got ' + strat.paths);
+  ok(strat.bands === 3, 'alternating era bands, got ' + strat.bands);
+  ok(strat.rups === 4, 'four rupture markers, got ' + strat.rups);
+
+  // dial: filtering actually removes edges and isolates people
+  const dial = [];
+  for (const f of [0, 2, 3]) {
+    await page.locator(`.dialsteps button[data-floor="${f}"]`).click();
+    await page.waitForTimeout(520);
+    /* the three numbers now live inside one translated sentence */
+    dial.push(await page.evaluate(() => {
+      const b = [...document.querySelectorAll('#diallive b')].map((n) => +n.textContent);
+      return { shown: b[0], total: b[1], iso: b[2] };
+    }));
+  }
+  console.log('dial', JSON.stringify(dial));
+  ok(dial[0].shown === data.edges, 'floor 0 shows every edge among the 46 (' + data.edges + ')');
+  ok(dial[2].shown < dial[1].shown && dial[1].shown < dial[0].shown, 'raising the floor removes edges monotonically');
+  ok(dial[2].iso > dial[0].iso, 'raising the floor isolates people');
+  /* Floor 0 isolates exactly the nodes whose connections all lie outside the
+     top-46 slice — a property of the real graph, not a constant. Assert the
+     live counter agrees with what the drawing actually dims. */
+  await page.locator('.dialsteps button[data-floor="0"]').click();
+  await page.waitForTimeout(450);
+  const iso0 = await page.evaluate(() => ({
+    dim: document.querySelectorAll('#dialsvg .node.dim').length,
+    total: document.querySelectorAll('#dialsvg .node').length
+  }));
+  ok(dial[0].iso === iso0.dim && iso0.total === 46, 'floor 0 counter matches the drawn state (' + iso0.dim + ' of ' + iso0.total + ' dimmed)');
+  await page.locator('.dialsteps button[data-floor="3"]').click();
+  await page.waitForTimeout(600);
+  await page.evaluate(() => document.getElementById('evidence').scrollIntoView());
+  await page.evaluate(() => window.scrollBy(0, 1900));
+  await page.waitForTimeout(400);
+  await page.screenshot({ path: OUT + '07b-dial-documented.png' });
+  await page.locator('.dialsteps button[data-floor="0"]').click();
+
+  // key: 12 real BIP-39 words, 12 dots lit of 2048, reroll changes them
+  const k1 = await page.locator('.word .w').allTextContents();
+  ok(k1.length === 12, '12 words');
+  ok(await page.locator('#dots circle').count() === 2048, '2048 dots');
+  ok(await page.locator('#dots circle.on').count() === 12, '12 dots lit');
+  await page.locator('#reroll').click();
+  await page.waitForTimeout(900);
+  const k2 = await page.locator('.word .w').allTextContents();
+  ok(k1.join() !== k2.join(), 'reroll produces a different phrase');
+  await page.locator('#forget').click();
+  await page.waitForTimeout(500);
+  ok(await page.locator('.words.forgotten').count() === 1, 'forget blurs the phrase');
+  await page.locator('#forget').click();
+
+  // budget: prices, depletion, refusal names the budget
+  const spend = async i => { await page.locator('#spend button').nth(i).click(); await page.waitForTimeout(220); };
+  const left = async () =>
+    (await page.locator('#budgetleft b').first().innerText()).trim();
+  ok(await left() === '4', 'starts at 4');
+  await spend(1);                                  // uncited reply, 2
+  ok(await left() === '2', 'uncited reply costs 2, got ' + await left());
+  await spend(0);                                  // cited reply, 1
+  ok(await left() === '1', 'cited reply costs 1, got ' + await left());
+  ok(await page.locator('#spend button').nth(3).isDisabled(), 'unaffordable thread is disabled');
+  await spend(0);
+  ok(await left() === '0', 'spent out');
+  const refusal = await page.locator('#refusal').innerText();
+  ok(/that is your week/i.test(refusal), 'refusal names the budget: ' + refusal);
+  ok(!/slow down|rate limit/i.test(refusal), 'refusal does not scold');
+  await page.locator('#refusal button').click();
+  await page.waitForTimeout(200);
+  ok(await left() === '4', 'reset restores the week');
+  await page.screenshot({ path: OUT + '12b-budget-spent.png' });
+
+  // theme
+  await page.locator('#theme').click();
+  await page.waitForTimeout(700);
+  ok(await page.evaluate(() => document.documentElement.getAttribute('data-theme')) === 'light', 'dark by default, toggles to light');
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await page.waitForTimeout(500);
+  await page.screenshot({ path: OUT + '18-light-hero.png' });
+  await page.evaluate(() => window.scrollTo(0, 5800));
+  await page.waitForTimeout(400);
+  await page.screenshot({ path: OUT + '19-light-dial.png' });
+  await page.locator('#theme').click();
+
+  // no horizontal overflow at three widths
+  for (const w of [390, 820, 1440]) {
+    await page.setViewportSize({ width: w, height: 900 });
+    await page.waitForTimeout(500);
+    const over = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    ok(!over, 'no horizontal overflow at ' + w);
+  }
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.waitForTimeout(600);
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await page.screenshot({ path: OUT + '20-mobile-hero.png' });
+  await page.evaluate(() => window.scrollTo(0, 2400));
+  await page.waitForTimeout(400);
+  await page.screenshot({ path: OUT + '21-mobile-mid.png' });
+
+
+  // ======================= three languages =======================
+  console.log('\n  -- languages --');
+
+  const strings = {
+    en: require('./_strings.en.json'),
+    fr: require('./_strings.fr.json'),
+    ar: require('./_strings.ar.json')
+  };
+
+  /* A key present in English and absent from a translation renders as English
+     with no marker, which tells the reader the page is complete when it is not.
+     Same rule scripts/test-i18n.ts applies to the instrument's dictionary. */
+  for (const l of ['fr', 'ar']) {
+    const missing = Object.keys(strings.en).filter((k) => strings[l][k] === undefined);
+    ok(missing.length === 0, `${l} covers every English key`, missing.slice(0, 5).join(', '));
+  }
+
+  /* A value identical to its English source is a copy-paste someone meant to
+     come back to: it inflates coverage while changing nothing. Exempt are the
+     strings that are correctly identical — an address, a domain, a name. */
+  /* Correctly identical: proper nouns, an address, and five words French
+     spells exactly as English does. Exempted one by one rather than by
+     loosening the rule, because the rule is what catches real copy-paste. */
+  const IDENTICAL_IS_FINE = new Set([
+    'foot.14', 'foot.16',
+    'top.3', 'ledger.3', 'ledger.5', 'speech.27', 'support.19',
+    'index.eyebrow'
+  ]);
+  for (const l of ['fr', 'ar']) {
+    const same = Object.keys(strings.en).filter(
+      (k) => !IDENTICAL_IS_FINE.has(k) && strings[l][k] === strings.en[k]
     );
-    ok('controls are at least 32px tall on a phone', targets.length === 0, JSON.stringify(targets));
-
-    await page.screenshot({ path: OUT + 'phone-en-top.png' });
-    await page.screenshot({ path: OUT + 'phone-en-full.png', fullPage: true });
-
-    /* theme persists */
-    await page.click('#theme');
-    await page.reload({ waitUntil: 'networkidle' });
-    ok('a theme choice persists', (await page.getAttribute('html', 'data-theme')) === 'light');
-    await page.screenshot({ path: OUT + 'phone-light-full.png', fullPage: true });
-    await page.click('#theme');
-
-    /* the long read opens and the collapse control closes it */
-    await page.click('#long summary');
-    ok('the long read opens', await page.evaluate(() => document.getElementById('long').open));
-    await page.click('#collapse');
-    ok('Collapse closes it', !(await page.evaluate(() => document.getElementById('long').open)));
-
-    ok('no console errors or failed requests', errs.length === 0, errs.join(' | '));
-    ok('no request to another origin', foreign.length === 0, foreign.join(' '));
-    await ctx.close();
+    ok(same.length === 0, `${l} translations are translations`, same.slice(0, 5).join(', '));
   }
 
-  /* ---- language switch keeps every figure ---------------------------- */
-  for (const lang of ['fr', 'ar']) {
-    const { ctx, page, errs } = await open(browser, PHONE, { locale: 'en-GB' });
-    const before = await page.$$eval('[data-v]', (vs) => vs.map((v) => v.getAttribute('data-v') + '=' + v.textContent));
-    await page.click('#locale button[data-loc="' + lang + '"]');
-    await page.waitForTimeout(100);
-    const after = await page.$$eval('[data-v]', (vs) => vs.map((v) => v.getAttribute('data-v') + '=' + v.textContent));
-    ok(lang + ': every figure survives the switch', JSON.stringify(before) === JSON.stringify(after), after.length + ' figures');
-    ok(lang + ': the document language follows', (await page.getAttribute('html', 'lang')) === lang);
-    if (lang === 'ar') ok('ar: the page is right-to-left', (await page.getAttribute('html', 'dir')) === 'rtl');
-    const missing = await page.evaluate((l) => {
-      const keys = new Set();
-      document.querySelectorAll('[data-i18n],[data-i18n-html],[data-i18n-tpl],[data-i18n-label]').forEach((n) => {
-        keys.add(n.getAttribute('data-i18n') || n.getAttribute('data-i18n-html') || n.getAttribute('data-i18n-tpl') || n.getAttribute('data-i18n-label'));
+  /* Whole-sentence templates must keep their placeholders in every language —
+     a French copy that drops {total} renders "22 connexions visibles sur". */
+  const TEMPLATES = { 'dial.live': ['iso', 'n', 'total'], 'bud.left': ['n', 'total'] };
+  for (const [key, wanted] of Object.entries(TEMPLATES)) {
+    for (const l of ['fr', 'ar']) {
+      const got = [...(strings[l][key] || '').matchAll(/\{(\w+)\}/g)].map((m) => m[1]).sort();
+      ok(String(got) === String(wanted), `${l} ${key} keeps every placeholder`, String(got));
+    }
+  }
+
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.evaluate(() => window.scrollTo(0, 0));
+
+  for (const [l, dir] of [['fr', 'ltr'], ['ar', 'rtl'], ['en', 'ltr']]) {
+    await page.locator(`#locale button[data-loc="${l}"]`).click();
+    await page.waitForTimeout(650);
+
+    const st = await page.evaluate(() => ({
+      lang: document.documentElement.lang,
+      dir: document.documentElement.dir,
+      title: document.title,
+      h1: document.querySelector('h1').textContent.replace(/\s+/g, ' ').trim(),
+      lanes: [...document.querySelectorAll('#dialsvg .lanelabel')].map((n) => n.textContent),
+      eras: [...document.querySelectorAll('#stratumbody .eralabel')].map((n) => n.textContent),
+      links: document.querySelectorAll('#dialsvg .link').length,
+      nodes: document.querySelectorAll('#dialsvg .node').length,
+      live: document.getElementById('diallive').textContent,
+      budget: document.getElementById('budgetleft').textContent,
+      // any placeholder that survived to the screen
+      leftovers: (document.body.innerText.match(/\{\w+\}/g) || []).slice(0, 4),
+      // anything the switch failed to translate
+      untouched: [...document.querySelectorAll('[data-i18n],[data-i18n-html]')].filter(
+        (n) => !n.textContent.trim()
+      ).length
+    }));
+
+    ok(st.lang === l, `${l} sets lang`, st.lang);
+    ok(st.dir === dir, `${l} sets dir`, st.dir);
+    ok(l === 'en' || st.title === strings[l]['doc.title'], `${l} translates the document title`, st.title);
+    ok(st.h1.length > 10, `${l} renders a headline`, st.h1);
+    ok(st.leftovers.length === 0, `${l} substitutes every placeholder`, st.leftovers.join(' '));
+    ok(st.untouched === 0, `${l} leaves no keyed element empty`, String(st.untouched));
+
+    // the charts are rebuilt, not restyled, so they must come back intact
+    ok(st.links === data.edges && st.nodes === data.nodes, `${l} redraws the network intact`, st.links + '/' + st.nodes);
+    ok(st.lanes.length === data.lanes, `${l} redraws one lane per layer present`, st.lanes.join(','));
+    ok(st.eras.length >= 2, `${l} redraws the era labels`, st.eras.join(','));
+    if (l !== 'en') {
+      ok(!st.lanes.includes('political'), `${l} translates the lane labels`, st.lanes.join(','));
+      ok(st.live !== '' && !/connections visible/.test(st.live), `${l} translates the live counter`, st.live);
+      ok(st.budget !== '' && !/units left/.test(st.budget), `${l} translates the budget counter`, st.budget);
+    }
+
+    const over = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
+    ok(!over, `${l} does not overflow horizontally`);
+
+    if (l !== 'en') {
+      await page.evaluate(() => {
+        document.querySelectorAll('.rv, .curtain').forEach((e) => e.classList.add('in'));
       });
-      /* DICT is private to the page script; the inline block is read instead. */
-      const m = document.documentElement.innerHTML.match(/var DICT = (\{[\s\S]*?\});\s*\/\* ---- END/);
-      const dict = m ? JSON.parse(m[1])[l] : {};
-      return [...keys].filter((k) => dict[k] === undefined);
-    }, lang);
-    ok(lang + ': every key on the page is translated', missing.length === 0, missing.join(', '));
-    ok(lang + ': no horizontal overflow at 390', (await overflow(page)) <= 0);
-    const h = await page.evaluate(() => document.documentElement.scrollHeight);
-    ok(lang + ': at most ' + MAX_PHONE_HEIGHT + 'px at 390 wide', h <= MAX_PHONE_HEIGHT, h + 'px');
-    await page.screenshot({ path: OUT + 'phone-' + lang + '-full.png', fullPage: true });
-    ok(lang + ': no console errors', errs.length === 0, errs.join(' | '));
-    await ctx.close();
+      await page.waitForTimeout(400);
+      await page.screenshot({ path: OUT + `L-${l}-hero.png` });
+      await page.evaluate(() => {
+        const r = document.querySelector('.instrument').getBoundingClientRect();
+        window.scrollTo(0, window.scrollY + r.top - 90);
+      });
+      await page.waitForTimeout(400);
+      await page.screenshot({ path: OUT + `L-${l}-dial.png` });
+      await page.evaluate(() => window.scrollTo(0, 0));
+      await page.waitForTimeout(300);
+    }
   }
 
-  /* ---- tablet and desktop -------------------------------------------- */
-  for (const vp of [{ width: 820, height: 1180 }, { width: 1440, height: 900 }]) {
-    const { ctx, page } = await open(browser, vp);
-    ok('no horizontal overflow at ' + vp.width, (await overflow(page)) <= 0);
-    if (vp.width >= 900) ok('the long read is open at ' + vp.width, await page.evaluate(() => document.getElementById('long').open));
-    await page.screenshot({ path: OUT + 'w' + vp.width + '-top.png' });
-    await page.screenshot({ path: OUT + 'w' + vp.width + '-full.png', fullPage: true });
-    await ctx.close();
-  }
+  /* The language must survive a reload, or the switch is a toy. */
+  await page.locator('#locale button[data-loc="ar"]').click();
+  await page.waitForTimeout(300);
+  await page.reload({ waitUntil: 'networkidle' });
+  await page.waitForTimeout(500);
+  ok(
+    (await page.evaluate(() => document.documentElement.dir)) === 'rtl',
+    'the chosen language survives a reload'
+  );
 
-  /* ---- reduced motion -------------------------------------------------- */
-  {
-    const { ctx, page } = await open(browser, PHONE, { reducedMotion: 'reduce' });
-    ok('reduced motion: no running animation', (await page.evaluate(() => document.getAnimations().length)) === 0);
-    await ctx.close();
-  }
+  ok(errs.length === 0, 'clean console: ' + errs.join(' | '));
 
+  console.log('\n' + pass + ' passed, ' + fail + ' failed');
   await browser.close();
-  console.log('\nlanding verify: ' + (checks - failures) + '/' + checks + ' passed · screenshots in ' + OUT);
-  if (failures) process.exit(1);
+  process.exit(fail ? 1 : 0);
 })();

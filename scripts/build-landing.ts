@@ -21,9 +21,9 @@
  *     docs/anonymity-audit.md imposes on the atlas and the reason the fonts are
  *     self-hosted at all
  *   - it does not silently overwrite a prerendered route
- *   - the DENSITY ribbon, the "Start here" doors and the study cards are
- *     regenerated from src/generated/ at every build, because the page claims
- *     "Nothing is illustrative"; none of them is ever hand-edited
+ *   - the DENSITY / NODES / EDGES visuals are regenerated from
+ *     src/generated/dataset.json at every build, because the page claims
+ *     "Nothing is illustrative" — the arrays are never hand-edited
  *
  * Any of those failing is a hard exit. A landing page that 404s its own fonts
  * looks broken to precisely the audience it exists for.
@@ -33,7 +33,6 @@ import { createHash } from 'node:crypto';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { certainlyActive } from '../src/lib/model';
-import { renderDoors, type Dataset as DoorDataset } from './landing/doors.ts';
 import { renderIndexes } from './landing/indexes.ts';
 import { loadPublicClaims, loadClaimContext, validateClaims } from './public-claims.ts';
 
@@ -106,13 +105,13 @@ function withFreshDictionaries(html: string): string {
 html = withFreshDictionaries(html);
 
 /* ---------------------------------------------------------------------------
-   THE VISUALS ARE THE GRAPH. The DENSITY ribbon is a baked snapshot, and the
-   page claims "Nothing is illustrative", so the array is recomputed here from
-   the built graph with the site's own interval predicate (certainlyActive,
-   imported from src/lib/model.ts), and the page is rewritten in both the build
-   copy and the source, so the committed file stays the true snapshot. The same
-   holds for the doors and study cards below. If any of them ever looks
-   hand-edited, it was: run `npm run build`, which overwrites them.
+   THE VISUALS ARE THE GRAPH. The DENSITY ribbon and the evidence-dial demo are
+   baked snapshots, and the page claims "Nothing is illustrative" — so the three
+   arrays are recomputed here from the built graph with the site's own interval
+   predicate (certainlyActive, imported from src/lib/model.ts), and the page is
+   rewritten in both the build copy and the source, so the committed file stays
+   the true snapshot. If the arrays in landing/index.html ever look hand-edited,
+   they were: run `npm run build`, which overwrites them.
    --------------------------------------------------------------------------- */
 const GRAPH = join(ROOT, 'src', 'generated', 'dataset.json');
 
@@ -120,6 +119,8 @@ function computeVisuals() {
 	if (!existsSync(GRAPH)) fail('src/generated/dataset.json is missing — run `npm run data` first');
 	const d = JSON.parse(readFileSync(GRAPH, 'utf8')) as {
 		positions?: { interval?: { startEarliest: number; startLatest: number; endEarliest: number | null; endLatest: number | null } }[];
+		relationships?: { from: string; to: string; basis?: string }[];
+		people?: { id: string; name_en?: string; layers?: string[] }[];
 	};
 
 	/* DENSITY: positions certainly active per calendar year, 1956–2026,
@@ -131,12 +132,38 @@ function computeVisuals() {
 		(d.positions || []).filter((p) => p.interval && certainlyActive(p.interval, new Date(y, 6, 1).getTime())).length
 	);
 
-	return { DENSITY };
+	/* The 46 most-connected people by global relationship degree, with their
+	   real primary layer and real degree — what the demo's lane layout eats. */
+	const deg = new Map<string, number>();
+	for (const r of d.relationships || []) {
+		if (!r.from || !r.to) continue;
+		deg.set(r.from, (deg.get(r.from) || 0) + 1);
+		deg.set(r.to, (deg.get(r.to) || 0) + 1);
+	}
+	const people = new Map((d.people || []).map((p) => [p.id, p]));
+	const top = [...deg.entries()]
+		.filter(([id]) => people.has(id))
+		.sort((a, b) => b[1] - a[1] || (a[0] < b[0] ? -1 : 1))
+		.slice(0, 46);
+	const inTop = new Set(top.map(([id]) => id));
+	const NODES = top.map(([id, dg]) => {
+		const p = people.get(id)!;
+		return [id, p.name_en || id, (p.layers && p.layers[0]) || 'political', dg];
+	});
+	const EDGES = (d.relationships || [])
+		.filter((r) => r.from && r.to && inTop.has(r.from) && inTop.has(r.to))
+		.map((r) => [r.from, r.to, r.basis || 'reported']);
+
+	return { DENSITY, NODES, EDGES };
 }
 
 type Visuals = ReturnType<typeof computeVisuals>;
 
-const VISUAL_PREFIXES: [keyof Visuals, string][] = [['DENSITY', 'var DENSITY = ']];
+const VISUAL_PREFIXES: [keyof Visuals, string][] = [
+	['DENSITY', 'var DENSITY = '],
+	['NODES', 'var NODES = '],
+	['EDGES', 'var EDGES = ']
+];
 
 function withFreshVisuals(html: string, v: Visuals): string {
 	let out = html;
@@ -172,7 +199,31 @@ function checkDatasetHash(html: string, hash: string): void {
 	if (!m) fail('landing/index.html missing dataset-hash comment — run `npm run build`');
 	else if (m[1] !== hash) {
 		fail(
-			`landing dataset-hash ${m[1]} does not match dataset.json hash ${hash.slice(0, 8)}… — run \`npm run build\` (stale DENSITY)`
+			`landing dataset-hash ${m[1]} does not match dataset.json hash ${hash.slice(0, 8)}… — run \`npm run build\` (stale DENSITY/NODES/EDGES)`
+		);
+	}
+}
+
+/* The demo's caption states how many of the 46 are stranded at the
+   documented-only floor — a number the arrays imply. If the copy drifts from
+   the computed value, the page is quietly wrong about its own demo, and the
+   build refuses to ship that. */
+function checkFloorNote(html: string, v: Visuals): void {
+	const documentedEndpoints = new Set<string>();
+	for (const e of v.EDGES) {
+		if (e[2] === 'documented') {
+			documentedEndpoints.add(e[0]);
+			documentedEndpoints.add(e[1]);
+		}
+	}
+	const stranded = v.NODES.length - documentedEndpoints.size;
+	const m = html.match(/strands (\d+) of these 46 people/);
+	if (!m) fail('could not find the evidence-floor note ("strands N of these 46 people") in landing/index.html');
+	if (+m[1] !== stranded) {
+		fail(
+			`the evidence-floor note says ${m[1]} of these 46 people are stranded at the documented floor, ` +
+				`but the current graph implies ${stranded}. Update evidence.38 in landing/index.html and in ` +
+				`landing/_strings.{fr,ar}.json, then rebuild.`
 		);
 	}
 }
@@ -195,17 +246,11 @@ function checkClaims(): void {
 	}
 }
 /* ---------------------------------------------------------------------------
-   GENERATED SECTIONS. "Start here" (scripts/landing/doors.ts) and the study
-   cards (scripts/landing/indexes.ts) are rendered between comment markers and
-   written into the source as well as the build, like the arrays above, so the
-   committed page is what ships and the claim registry can check its figures.
-   The study registry is optional: without src/generated/studies.json the
-   indexes region is empty and the section is not on the page.
+   DT RESEARCH. One card per study in src/generated/studies.json, rendered by
+   scripts/landing/indexes.ts between the landing:indexes markers and written
+   into the source as well as the build, like the arrays above. The registry is
+   optional: without it the region is empty and the page has no such section.
    --------------------------------------------------------------------------- */
-function loadDataset(): DoorDataset {
-	return JSON.parse(readFileSync(GRAPH, 'utf8')) as DoorDataset;
-}
-
 function loadStudies(): unknown | null {
 	const file = join(ROOT, 'src', 'generated', 'studies.json');
 	return existsSync(file) ? JSON.parse(readFileSync(file, 'utf8')) : null;
@@ -228,11 +273,10 @@ const visuals = computeVisuals();
 // even when the graph is unchanged, which would make `npm run data && npm run test`
 // spuriously fail. The arrays are the contract; the hash is the manifest tie.
 // This marker is NOT the graph identity (dataset.json meta.datasetHash is): it ties
-// the committed DENSITY array to the dataset they were computed from.
+// the committed DENSITY/NODES/EDGES arrays to the dataset they were computed from.
 const datasetHash = createHash('sha256').update(JSON.stringify(visuals)).digest('hex').slice(0, 16);
 let fresh = withFreshVisuals(html, visuals);
 fresh = withFreshHash(fresh, datasetHash);
-fresh = withRegion(fresh, 'doors', renderDoors(loadDataset()));
 fresh = withRegion(fresh, 'indexes', renderIndexes(loadStudies(), 'en', (p) => existsSync(join(BUILD, p))));
 if (fresh !== original) {
 	/* the source stays the true snapshot — the same rule as the build's own
@@ -240,6 +284,7 @@ if (fresh !== original) {
 	writeFileSync(SRC, fresh, 'utf8');
 	html = fresh;
 }
+checkFloorNote(html, visuals);
 checkDatasetHash(html, datasetHash);
 checkClaims();
 
