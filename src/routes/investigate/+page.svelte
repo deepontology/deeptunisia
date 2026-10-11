@@ -7,7 +7,6 @@
 	import Chip from '$lib/ui/Chip.svelte';
 	import {
 		BASIS_COLOR,
-		BASIS_SHORT,
 		ds,
 		institutionById,
 		meetsBasis,
@@ -19,7 +18,7 @@
 		type Basis,
 		type Layer
 	} from '$lib/model';
-	import { describeInterval, durationLabel, nameOf, entityName, relLabel, t } from '$lib/t.svelte';
+	import { basisLabel, describeInterval, durationLabel, nameOf, entityName, relLabel, t } from '$lib/t.svelte';
 	import { format } from '$lib/i18n';
 
 	/**
@@ -268,12 +267,12 @@
 								<td class="who">
 									<button onclick={() => app.select(p.holder)}>{entityName(p.holder)}</button>
 								</td>
-								<td>{nameOf(roleById.get(p.role)) || p.roleTitle}</td>
+								<td class="post">{nameOf(roleById.get(p.role)) || p.roleTitle}</td>
 								<td class="inst">{nameOf(institutionById.get(p.institution))}</td>
 								<td class="span mono">{describeInterval(p.interval)}</td>
 								<td class="num mono">{durationLabel(p.years)}</td>
-								<td>
-									<Chip size="xs" tint={BASIS_COLOR[p.basis as Basis]}>{BASIS_SHORT[p.basis as Basis]}</Chip>
+								<td class="basis">
+									<Chip size="xs" tint={BASIS_COLOR[p.basis as Basis]}>{basisLabel(p.basis as Basis)}</Chip>
 								</td>
 							</tr>
 						{/each}
@@ -332,7 +331,7 @@
 						<li>
 							<strong>{nameOf(roleById.get(p.role)) || p.roleTitle}</strong>
 							<span class="mono">{describeInterval(p.interval)}</span>
-							<Chip size="xs" tint={BASIS_COLOR[p.basis as Basis]}>{BASIS_SHORT[p.basis as Basis]}</Chip>
+							<Chip size="xs" tint={BASIS_COLOR[p.basis as Basis]}>{basisLabel(p.basis as Basis)}</Chip>
 						</li>
 					{/each}
 				</ul>
@@ -345,7 +344,7 @@
 						<li>
 							<button onclick={() => app.select(other)}>{entityName(other)}</button>
 							<span class="rtype">{relLabel(r.type)}</span>
-							<Chip size="xs" tint={BASIS_COLOR[r.basis as Basis]}>{BASIS_SHORT[r.basis as Basis]}</Chip>
+							<Chip size="xs" tint={BASIS_COLOR[r.basis as Basis]}>{basisLabel(r.basis as Basis)}</Chip>
 							{#if relKind(r.type) !== 'documented' && r.attributed_to}
 								<span class="attrib">{format(app.locale, 'investigate.claimedBy', { who: r.attributed_to })}</span>
 							{/if}
@@ -617,6 +616,57 @@
 		.two-sets,
 		.two {
 			grid-template-columns: 1fr;
+		}
+
+		/*
+		   Six columns do not fit 390px: each wrapped a word per line. On a phone a
+		   row is a small card instead: who and on what basis, the post and its
+		   institution, then the span and the time held. The header row is kept
+		   for screen readers and hidden from view, since each value now sits
+		   where its meaning is obvious.
+		*/
+		table,
+		tbody,
+		tr,
+		td {
+			display: block;
+		}
+		thead {
+			position: absolute;
+			width: 1px;
+			height: 1px;
+			overflow: hidden;
+			clip-path: inset(50%);
+		}
+		tr {
+			display: grid;
+			grid-template-columns: 1fr auto;
+			gap: 2px var(--s-3);
+			padding-block: var(--s-3);
+			border-bottom: 1px solid var(--border-subtle);
+		}
+		td {
+			padding: 0;
+			border: 0;
+		}
+		td.who {
+			grid-column: 1;
+			grid-row: 1;
+			font-size: var(--t-md);
+		}
+		td.basis {
+			grid-column: 2;
+			grid-row: 1;
+		}
+		td.post,
+		td.inst {
+			grid-column: 1 / -1;
+		}
+		td.span {
+			grid-column: 1;
+		}
+		td.num {
+			grid-column: 2;
 		}
 	}
 </style>

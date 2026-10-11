@@ -9,7 +9,6 @@
 	import Content from '$lib/ui/Content.svelte';
 	import {
 		BASIS_COLOR,
-		BASIS_SHORT,
 		CUTOFF,
 		LAYER_COLOR,
 		ds,
@@ -20,7 +19,7 @@
 		type Basis,
 		type Layer
 	} from '$lib/model';
-	import { t, durationLabel, formatDate, nameOf } from '$lib/t.svelte';
+	import { t, basisLabel, durationLabel, formatDate, nameOf } from '$lib/t.svelte';
 	import { format } from '$lib/i18n';
 	import { currencyOf, elapsedYears, monthsSince, tenureByRole, type Currency } from '$lib/tenure';
 
@@ -184,10 +183,15 @@
 		if (!deepLinked && applyEntityLink()) deepLinked = true;
 	});
 
+	/**
+	 * Elapsed against the office's usual term, as one sentence. The word and the
+	 * median used to sit apart ("past" over "median 4y 7m"), which read as two
+	 * codes; whole sentences also let French and Arabic order them naturally.
+	 */
 	function ratioLabel(r: Row): string {
 		if (r.ratio === null || r.median === null) return '';
 		const key = r.ratio >= 1.6 ? 'wellpast' : r.ratio >= 1.15 ? 'past' : r.ratio <= 0.4 ? 'early' : 'around';
-		return format(app.locale, 'now.ratio.' + key);
+		return format(app.locale, 'now.vs.' + key, { duration: durationLabel(r.median) });
 	}
 </script>
 
@@ -245,15 +249,14 @@
 								</span>
 
 								<span class="basis">
-									<Chip tint={BASIS_COLOR[r.basis]} dot size="xs">{BASIS_SHORT[r.basis]}</Chip>
+									<Chip tint={BASIS_COLOR[r.basis]} dot size="xs">{basisLabel(r.basis)}</Chip>
 								</span>
 
-								<span class="elapsed">{durationLabel(r.elapsed)}</span>
+								<span class="elapsed">{format(app.locale, 'now.inoffice', { duration: durationLabel(r.elapsed) })}</span>
 
 								<span class="vs">
 									{#if r.median !== null}
 										<span class="vs-word">{ratioLabel(r)}</span>
-										<span class="vs-num">{format(app.locale, 'now.median', { duration: durationLabel(r.median) })}</span>
 									{:else}
 										<Tooltip content={t('now.nomedian')}>
 											<span class="vs-none">—</span>
@@ -469,7 +472,6 @@
 		font-size: var(--t-2xs);
 		color: var(--text-secondary);
 	}
-	.vs-num,
 	.vs-none {
 		font-family: var(--font-mono);
 		font-variant-numeric: tabular-nums;
@@ -527,21 +529,40 @@
 		color: var(--text-muted);
 	}
 
+	/*
+	   Phone: who and on what basis, then the office, then one quiet line of
+	   figures (time in office · against the usual term · last verified), so a
+	   row reads top to bottom instead of as a stack of loose labels.
+	*/
 	@media (max-width: 900px) {
 		.holders li {
-			grid-template-columns: 1fr auto;
-			row-gap: var(--s-2);
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			gap: var(--s-2) var(--s-3);
 			padding: var(--s-4) var(--s-5);
 		}
-		.office {
-			grid-column: 1 / -1;
-			margin-top: var(--s-2);
-			padding-top: var(--s-3);
-			border-top: 1px solid var(--border-subtle);
+		.who {
+			flex: 1 1 auto;
+			min-width: 0;
 		}
+		.office {
+			flex: 1 1 100%;
+		}
+		/* The figures wrap as whole phrases, each on the line it fits, with no
+		   separator characters left stranded at a line end. */
+		.elapsed,
 		.vs,
 		.stale {
-			grid-column: 1 / -1;
+			flex: 0 1 auto;
+			font-size: var(--t-xs);
+			text-align: start;
+		}
+		.vs .vs-word {
+			font-size: inherit;
+		}
+		.stale:empty {
+			display: none;
 		}
 	}
 </style>
