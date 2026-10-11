@@ -2,6 +2,12 @@
 translated_by: model-reviewed
 ---
 
+## Who runs this, and why you should not take our word for it {#who}
+
+This study is run by DeepOntology Collective, as part of DeepTunisia, an open-source public-interest research project. It is not run by a named person, a party or a company, and you have no way to check who is behind a web page. So the page asks for no trust and shows you what can be checked instead. The questionnaire, its scoring, the rules for excluding answers and the code of this site are public in the [project repository](https://github.com/deepontology/deeptunisia), and every change to them is a dated, attributable entry in its history. A change to a question changes its fingerprint, and each answer is stored against the fingerprint of the questionnaire its author saw, so everyone who answers a given version saw the same questions. The [About page](/about) lists every funder with amount and purpose; at the time of writing the list is empty.
+
+The answers are used for this index and for the open dataset described below. They are not sold, not given to any political party, and not passed to an advertising system. The index exists because Tunisia has no public, repeatable and checkable measure of how people live with the police: anyone can say it is fine or that it is not, and no one can recompute either claim. This page is meant to be the record that can be recomputed.
+
 ## What is stored, and what is not {#data}
 
 When you submit, one row is written. It holds your answers, the language you answered in, the link you arrived from (for example a code for a particular video, never your account), the questionnaire version you saw, the time you started and the time you submitted, and a random receipt code. That is all. The link code itself is never published. What is published from it is the share of answers that arrived through a shared link, the share that arrived through the single most-used link, and what the index would be without that link.
@@ -10,9 +16,11 @@ The questionnaire asks nothing about who you are: no age, no gender, no address.
 
 No name, email address, phone number, account, IP address, browser fingerprint, device identifier or location is stored with your answers. There is no field that could hold one. The site sets no tracking cookies and loads nothing from other companies on the study pages, except Cloudflare's human check, which is switched on only during an attack and says so on the page.
 
-Two things are kept in this browser instead of with your answers: the month you last answered, and your unfinished answers. Both stay on this device, and neither is ever sent to us. Unfinished answers are kept until you submit, until you clear them with the button in the survey, or until 24 hours pass with no activity; they are never sent to anyone until you submit. The month you last answered is removed when you withdraw your answers from this browser.
+Two things are kept in this browser instead of with your answers: the month you last answered, and your unfinished answers. Both stay on this device, and neither is ever sent to us. Unfinished answers are kept until you submit or clear them with the button in the survey. If you open the survey again more than 24 hours after you last touched it, they are removed then. If you never come back, they stay on this device until you clear this site's data in your browser, so on a shared device press the clear button before you leave. They are never sent to anyone until you submit. The month you last answered is removed when you withdraw your answers from this browser.
 
 Two things touch your connection without being stored with your answers. To stop one machine from flooding the survey, the server counts submissions per address using a salted fingerprint of the address that changes every day; the address itself is never written down. And the site runs on Cloudflare, which, like any host, sees connections pass through; its logs are sampled at one request in a hundred and are not joined to answers.
+
+A third thing is outside our reach. As with any website, your internet provider and anyone watching your network can see that you visited this site. The site cannot prevent that. A VPN or Tor Browser hides the visit from your provider, and the answers you send are not tied to you either way.
 
 Your receipt code is the only way to delete your answers. It works until the end of the month in which you answered. If you lose it, your answers can no longer be deleted, by you or by us, because nothing else links them to you. The index is published once a month, and a month's figure never changes after it closes, so that month's answers are fixed from then on. Any data released later has regions instead of governorates, no date finer than the month and no receipt codes.
 
