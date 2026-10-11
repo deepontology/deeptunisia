@@ -242,10 +242,10 @@ const papers = new Map<string, string>();
 // "published statistics match the graph" assertion, which covers README,
 // AGENTS, DESIGN and static/llms.txt. This suite owns the papers.
 
-// 3. Landing drift guard — the DENSITY array tied to dataset.json hash.
+// 3. Landing drift guard — DENSITY/NODES/EDGES tied to dataset.json hash.
 //
-// The landing page claims "Nothing is illustrative" and its DENSITY
-// array is rewritten from src/generated/dataset.json at every build
+// The landing page claims "Nothing is illustrative" and its DENSITY/NODES/EDGES
+// arrays are rewritten from src/generated/dataset.json at every build
 // (scripts/build-landing.ts). A data change without `npm run build` must fail
 // here rather than ship stale visuals. The tie is twofold: the JS arrays must
 // equal the computed visuals, and the embedded dataset-hash comment must match
@@ -267,6 +267,8 @@ const papers = new Map<string, string>();
 		// a graph change does not spuriously fail.
 		const d = JSON.parse(datasetRaw) as {
 			positions?: { interval?: { startEarliest: number; startLatest: number; endEarliest: number | null; endLatest: number | null } }[];
+			relationships?: { from: string; to: string; basis?: string }[];
+			people?: { id: string; name_en?: string; layers?: string[] }[];
 		};
 
 		const years: number[] = [];
@@ -275,9 +277,27 @@ const papers = new Map<string, string>();
 			(y) => (d.positions || []).filter((p) => p.interval && certainlyActive(p.interval as never, new Date(y, 6, 1).getTime())).length
 		);
 
-		// The page draws only the ribbon now; the doors are rendered whole by
-		// scripts/landing/doors.ts and checked by test-landing-doors.
-		const expectedVisuals = { DENSITY: expectedDENSITY };
+		const deg = new Map<string, number>();
+		for (const r of d.relationships || []) {
+			if (!r.from || !r.to) continue;
+			deg.set(r.from, (deg.get(r.from) || 0) + 1);
+			deg.set(r.to, (deg.get(r.to) || 0) + 1);
+		}
+		const people = new Map((d.people || []).map((p) => [p.id, p]));
+		const top = [...deg.entries()]
+			.filter(([id]) => people.has(id))
+			.sort((a, b) => b[1] - a[1] || (a[0] < b[0] ? -1 : 1))
+			.slice(0, 46);
+		const inTop = new Set(top.map(([id]) => id));
+		const expectedNODES = top.map(([id, dg]) => {
+			const p = people.get(id)!;
+			return [id, p.name_en || id, (p.layers && p.layers[0]) || 'political', dg];
+		});
+		const expectedEDGES = (d.relationships || [])
+			.filter((r) => r.from && r.to && inTop.has(r.from) && inTop.has(r.to))
+			.map((r) => [r.from, r.to, r.basis || 'reported']);
+
+		const expectedVisuals = { DENSITY: expectedDENSITY, NODES: expectedNODES, EDGES: expectedEDGES };
 		const datasetHash = createHash('sha256').update(JSON.stringify(expectedVisuals)).digest('hex').slice(0, 16);
 		const landedHash = landing.match(/\/\* dataset-hash: ([0-9a-f]+) \*\//)?.[1] ?? null;
 		ok(
@@ -298,11 +318,23 @@ const papers = new Map<string, string>();
 		};
 
 		const landedDENSITY = extract('DENSITY', 'var DENSITY = ');
+		const landedNODES = extract('NODES', 'var NODES = ');
+		const landedEDGES = extract('EDGES', 'var EDGES = ');
 
 		ok(
 			'landing DENSITY is fresh (matches dataset.json)',
 			JSON.stringify(landedDENSITY) === JSON.stringify(expectedDENSITY),
 			landedDENSITY ? `${(landedDENSITY as unknown[]).length} values` : 'DENSITY not found — has array syntax changed?'
+		);
+		ok(
+			'landing NODES is fresh (matches dataset.json)',
+			JSON.stringify(landedNODES) === JSON.stringify(expectedNODES),
+			landedNODES ? `${(landedNODES as unknown[]).length} nodes` : 'NODES not found'
+		);
+		ok(
+			'landing EDGES is fresh (matches dataset.json)',
+			JSON.stringify(landedEDGES) === JSON.stringify(expectedEDGES),
+			landedEDGES ? `${(landedEDGES as unknown[]).length} edges` : 'EDGES not found'
 		);
 
 		// The manifest-checked list: landing/index.html must be covered. A data
