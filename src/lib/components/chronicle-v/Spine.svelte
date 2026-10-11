@@ -16,12 +16,12 @@
 	 *
 	 * WHAT IS DRAWN, AND WHAT IS NOT
 	 *
-	 * Every non-rupture event clearing the reader's evidence floor gets a mark, in
-	 * the basis language the rest of the site speaks: colour, opacity and dash from
+	 * Every event clearing the reader's evidence floor gets a mark, in the basis
+	 * language the rest of the site speaks: colour, opacity and dash from
 	 * `BASIS_COLOR`, `BASIS_OPACITY` and `DASH`, never a style of this component's
-	 * own. Ruptures are absent on purpose — they are drawn as full-width rules by
-	 * `RuptureRule`, so a rupture appears exactly once on the canvas rather than
-	 * twice in two idioms.
+	 * own. A rupture's mark is a diamond in the rupture colour: the spine is where a
+	 * rupture is tapped, and `RuptureRule` only draws its quiet line across the
+	 * columns, with no label over them.
 	 *
 	 * CLUSTERS
 	 *
@@ -75,7 +75,7 @@
 
 	const marks = $derived.by<Mark[]>(() => {
 		const drawn = events
-			.filter((e) => !e.rupture && meetsBasis(e.basis, app.basisFloor))
+			.filter((e) => meetsBasis(e.basis, app.basisFloor))
 			.map((e) => ({ event: e, y: scale.y(e.interval.startEarliest) }))
 			.sort((a, b) => a.y - b.y || (a.event.id < b.event.id ? -1 : 1));
 
@@ -202,6 +202,11 @@
 					onclick={() => pick([ev.id])}
 				>
 					<span class="cv-mark-vis" style:top="{m.y - m.top}px">
+						{#if ev.rupture}
+							<svg class="cv-dot" viewBox="0 0 12 12" width="11" height="11" aria-hidden="true">
+								<path d="M6 1 L11 6 L6 11 L1 6 Z" fill="var(--rupture)" />
+							</svg>
+						{:else}
 						<svg class="cv-dot" viewBox="0 0 12 12" width="10" height="10" aria-hidden="true">
 							<circle
 								cx="6"
@@ -214,6 +219,7 @@
 								stroke-dasharray={DASH[ev.basis]}
 							/>
 						</svg>
+						{/if}
 					</span>
 				</button>
 			{:else if m.kind === 'badge' && m.members}
@@ -229,7 +235,7 @@
 					onclick={() => (openKey = openKey === m.key ? null : m.key)}
 				>
 					<span class="cv-mark-vis" style:top="{m.y - m.top}px">
-						<span class="cv-badge mono">{members.length}</span>
+						<span class="cv-badge mono" class:rupture={members.some((e) => e.rupture)}>{members.length}</span>
 					</span>
 				</button>
 			{/if}
@@ -348,6 +354,10 @@
 		font-size: var(--t-2xs);
 		line-height: 1;
 		color: var(--text-secondary);
+	}
+	/* A cluster holding a rupture says so before it is opened. */
+	.cv-badge.rupture {
+		border-color: var(--rupture);
 	}
 	.cv-mark:hover .cv-badge {
 		border-color: var(--text-muted);

@@ -36,7 +36,7 @@ export interface VScale {
 	y(t: number): number;
 	/** The instant at a pixel distance from the top of the canvas. */
 	t(y: number): number;
-	/** Pixels from the top of the canvas to the end of the domain. */
+	/** The canvas height: the domain plus the room before and after it. */
 	height: number;
 	ticks(): VTick[];
 	domain: [number, number];
@@ -73,7 +73,20 @@ export function stepLevel(pxPerYear: number, dir: 1 | -1): number {
 	return V_LEVELS[Math.min(V_LEVELS.length - 1, Math.max(0, i + dir))];
 }
 
-export function makeVScale(domain: [number, number], pxPerYear: number): VScale {
+/**
+ * Room before the first instant and after the last, in pixels.
+ *
+ * A reading line that sits partway down the window can only reach the first
+ * instant if the canvas starts that far above it, and the last instant if it
+ * runs on that far below. Without the room the browser's scroll limit stops the
+ * line short of both ends, and the date it reports is not the date under it.
+ */
+export interface VPad {
+	before: number;
+	after: number;
+}
+
+export function makeVScale(domain: [number, number], pxPerYear: number, pad: VPad = { before: 0, after: 0 }): VScale {
 	const ppy = Math.max(1, pxPerYear);
 	const step = tickStep(ppy);
 	const startYear = new Date(domain[0]).getUTCFullYear();
@@ -84,12 +97,12 @@ export function makeVScale(domain: [number, number], pxPerYear: number): VScale 
 	return {
 		domain,
 		pxPerYear: ppy,
-		height: ((domain[1] - domain[0]) / YEAR_MS) * ppy,
+		height: pad.before + ((domain[1] - domain[0]) / YEAR_MS) * ppy + pad.after,
 		y(t) {
-			return ((t - domain[0]) / YEAR_MS) * ppy;
+			return pad.before + ((t - domain[0]) / YEAR_MS) * ppy;
 		},
 		t(y) {
-			return domain[0] + (y / ppy) * YEAR_MS;
+			return domain[0] + ((y - pad.before) / ppy) * YEAR_MS;
 		},
 		ticks() {
 			const out: VTick[] = [];
