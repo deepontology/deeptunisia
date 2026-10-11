@@ -94,8 +94,20 @@ export const tour = $state({
 	 * reader who replays the tour from /about must not be shown three spotlights
 	 * pointing at nothing.
 	 */
-	steps: [] as TourStep[]
+	steps: [] as TourStep[],
+	/**
+	 * On a phone the tour is offered, not imposed. A modal walkthrough on a 390px
+	 * screen sits over the very controls it describes and blocks the page until it
+	 * is finished or skipped, so a first visit there shows a one-line invitation
+	 * instead (TourInvite.svelte), which never blocks and leaves on its own.
+	 */
+	invite: false
 });
+
+/** The compact breakpoint, read at the moment the tour would start. */
+function isPhone(): boolean {
+	return browser && window.matchMedia('(max-width: 900px)').matches;
+}
 
 export function tourSeen(): boolean {
 	if (!browser) return true;
@@ -130,6 +142,12 @@ export function startTour(force = false) {
 	// leave the flag alone so the next arrival gets a real one.
 	if (live.length < 4) return;
 
+	if (!force && isPhone()) {
+		tour.invite = true;
+		return;
+	}
+
+	tour.invite = false;
 	tour.steps = live;
 	tour.i = 0;
 	tour.open = true;
@@ -147,5 +165,11 @@ export function prevStep() {
 /** Skip and finish are the same act, deliberately: both mean "do not show me this again". */
 export function endTour() {
 	tour.open = false;
+	markSeen();
+}
+
+/** The invitation was declined, ignored or left behind: same as skipping. */
+export function dismissInvite() {
+	tour.invite = false;
 	markSeen();
 }

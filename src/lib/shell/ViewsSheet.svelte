@@ -4,6 +4,7 @@
 	import { browser } from '$app/environment';
 	import { t } from '$lib/t.svelte';
 	import { BUBBLES, isActive, type NavItem } from './nav.svelte';
+	import { startTour } from './tour.svelte';
 
 	/**
 	 * Every view, on one sheet: the phone's replacement for the section bubbles and
@@ -67,18 +68,56 @@
 		return null;
 	}
 
+	/*
+	 * A modal sheet keeps focus inside itself and gives it back when it closes.
+	 * The element that had focus when it opened (the view button) is where the
+	 * reader returns, so a keyboard or screen-reader user is never left on a
+	 * control the sheet removed, or behind it on the page.
+	 */
+	let opener: HTMLElement | null = null;
+
 	$effect(() => {
 		if (!open || !panel) return;
+		opener = document.activeElement instanceof HTMLElement ? document.activeElement : null;
 		const here = panel.querySelector<HTMLElement>('[aria-current="page"]');
 		(here ?? panel.querySelector<HTMLElement>('button') ?? panel).focus({ preventScroll: true });
 		here?.scrollIntoView({ block: 'nearest' });
+		return () => {
+			if (opener?.isConnected) opener.focus({ preventScroll: true });
+			opener = null;
+		};
 	});
+
+	function focusables(): HTMLElement[] {
+		return panel
+			? [...panel.querySelectorAll<HTMLElement>('a[href], button:not([disabled])')].filter((el) => el.offsetParent !== null)
+			: [];
+	}
 
 	function onKey(e: KeyboardEvent) {
 		if (e.key === 'Escape') {
 			e.stopPropagation();
 			onclose();
+			return;
 		}
+		if (e.key !== 'Tab') return;
+		const items = focusables();
+		if (items.length === 0) return;
+		const first = items[0];
+		const last = items[items.length - 1];
+		const active = document.activeElement;
+		if (e.shiftKey && (active === first || active === panel)) {
+			e.preventDefault();
+			last.focus();
+		} else if (!e.shiftKey && active === last) {
+			e.preventDefault();
+			first.focus();
+		}
+	}
+
+	function takeTour() {
+		onclose();
+		startTour(true);
 	}
 
 	function portal(node: HTMLElement) {
@@ -153,6 +192,9 @@
 					{/if}
 				</section>
 			{/each}
+			<div class="vs-foot">
+				<button type="button" class="vs-doc" onclick={takeTour}>{t('tour.label')}</button>
+			</div>
 		</nav>
 	</div>
 {/if}
@@ -308,6 +350,11 @@
 		font-size: var(--t-sm);
 		line-height: var(--lh-snug);
 		color: var(--text-muted);
+	}
+
+	.vs-foot {
+		border-top: var(--rule);
+		padding: var(--s-3) var(--s-3) 0;
 	}
 
 	/* Reference pages: demoted to a wrap of plain links, as in the strip. */

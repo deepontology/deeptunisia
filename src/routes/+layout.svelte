@@ -20,6 +20,7 @@ import { tour, tourSeen } from '$lib/shell/tour.svelte';
 	import Cursor from '$lib/shell/Cursor.svelte';
 	import SearchPalette from '$lib/components/SearchPalette.svelte';
 	import TourOverlay from '$lib/shell/TourOverlay.svelte';
+	import TourInvite from '$lib/shell/TourInvite.svelte';
 	import { startTour } from '$lib/shell/tour.svelte';
 
 	let { children } = $props();
@@ -67,7 +68,7 @@ import { tour, tourSeen } from '$lib/shell/tour.svelte';
 					try {
 						if (document.documentElement.dataset.boot === 'ready') {
 							startTour(force);
-							if (tour.open || tourSeen()) clearInterval(iv);
+							if (tour.open || tour.invite || tourSeen()) clearInterval(iv);
 						}
 					} catch {}
 				}, 120);
@@ -287,6 +288,7 @@ import { tour, tourSeen } from '$lib/shell/tour.svelte';
 
 <Cursor />
 <TourOverlay />
+<TourInvite />
 
 <style>
 	/* The application window. Fixed height, no page scroll — panes scroll
