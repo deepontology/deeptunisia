@@ -1605,6 +1605,135 @@ if (runSection('chronicle phone')) {
 	await context.close();
 }
 
+/*
+ * The phone review: what a reader on a 390px screen must never meet again.
+ * Labels over the columns, a record sheet that will not step aside, a tour
+ * that blocks the page, a shared link that opens nothing, a reading line that
+ * cannot reach the ends, a modal that lets focus escape.
+ */
+if (runSection('phone review')) {
+	console.log('\n  ── phone review ──');
+	const phone = { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true };
+	const ds = GRAPH_SNAPSHOT as unknown as {
+		meta: { cutoff: number };
+		eras: { interval: { startEarliest: number } }[];
+		events: { id: string; rupture?: boolean; basis: string; interval: { startEarliest: number } }[];
+	};
+	const firstYear = new Date(Math.min(...ds.eras.map((e) => e.interval.startEarliest))).getUTCFullYear();
+	const lastYear = new Date(ds.meta.cutoff).getUTCFullYear();
+	const rupture = ds.events
+		.filter((e) => e.rupture && (e.basis === 'documented' || e.basis === 'reported'))
+		.sort((a, b) => b.interval.startEarliest - a.interval.startEarliest)[0];
+
+	const context = await browser.newContext(phone);
+	await context.addInitScript(TOUR_SEEN_INIT);
+	const page = await context.newPage();
+	const problems: string[] = [];
+	page.on('pageerror', (e) => problems.push(`[pageerror] ${e.message}`));
+
+	// A shared event link opens its record and focuses it.
+	await page.goto(BASE + '/chronicle?id=' + rupture.id, { waitUntil: 'networkidle' });
+	await settle(page);
+	await page.waitForTimeout(600);
+	ok('a shared event link opens its record on a phone', (await page.locator('.inspector').count()) === 1, rupture.id);
+	ok('a shared event link focuses the event on the canvas', (await page.locator('.cv-focus').count()) === 1);
+	await page.keyboard.press('Escape');
+	await page.waitForTimeout(500);
+
+	// Nothing is labelled over the columns; rupture lines cross every column.
+	ok('no rupture label sits over the columns', (await page.locator('.cv-rupture-chip').count()) === 0);
+	const widths = (await page.evaluate(`(() => {
+		const strip = document.querySelector('.cv-strip');
+		const rule = document.querySelector('.cv-rupture');
+		return { track: strip.scrollWidth, rule: rule ? Math.round(rule.getBoundingClientRect().width) : 0 };
+	})()`)) as { track: number; rule: number };
+	ok('a rupture line spans every column', widths.rule >= widths.track - 1, `${widths.rule}px of ${widths.track}px`);
+
+	// The reading line reaches both ends of the record.
+	const year = async (top: 'start' | 'end') => {
+		await page.evaluate(`(() => { const s = document.querySelector('.cv-strip'); s.scrollTop = ${top === 'start' ? 0 : 's.scrollHeight'}; })()`);
+		await page.waitForTimeout(500);
+		const text = (await page.locator('.readout-btn').first().innerText()) || '';
+		return Number((text.match(/\d{4}/) || ['0'])[0]);
+	};
+	const atStart = await year('start');
+	const atEnd = await year('end');
+	ok('the reading line reaches the first year', atStart === firstYear, `${atStart} vs ${firstYear}`);
+	ok('the reading line reaches the last year', atEnd === lastYear, `${atEnd} vs ${lastYear}`);
+	await page.waitForTimeout(1900);
+	ok('the date chip fades once the canvas stops', (await page.locator('.cv-rl-chip.on').count()) === 0);
+
+	// The record sheet steps aside when the reader goes back to the canvas.
+	await page.evaluate(`(() => { const s = document.querySelector('.cv-strip'); s.scrollTop = s.scrollHeight / 2; })()`);
+	await page.waitForTimeout(400);
+	const block = (await page.evaluate(`(() => {
+		const strip = document.querySelector('.cv-strip').getBoundingClientRect();
+		const b = Array.from(document.querySelectorAll('.cv .tb')).find((el) => {
+			const r = el.getBoundingClientRect();
+			const x = r.left + r.width / 2, y = r.top + Math.min(r.height / 2, 20);
+			return r.width > 0 && y > strip.top + 70 && y < strip.top + 300 && document.elementFromPoint(x, y)?.closest('.tb') === el;
+		});
+		if (!b) return false;
+		b.setAttribute('data-smoke', 'tb');
+		return true;
+	})()`)) as boolean;
+	ok('a tenure block is tappable in view', block);
+	if (block) {
+		const r = await page.locator('[data-smoke=tb]').boundingBox();
+		await page.touchscreen.tap(r!.x + r!.width / 2, r!.y + Math.min(r!.height / 2, 20));
+		await page.waitForTimeout(700);
+		ok('tapping a post opens its record', (await page.locator('.inspector:not(.tucked)').count()) === 1);
+		await page.touchscreen.tap(30, 160);
+		await page.waitForTimeout(700);
+		const tucked = (await page.evaluate(`(() => {
+			const el = document.querySelector('.inspector.tucked');
+			return el ? Math.round(el.getBoundingClientRect().height) : 0;
+		})()`)) as number;
+		ok('touching the canvas tucks the record to its title bar', tucked > 0 && tucked <= 120, `${tucked}px`);
+		await page.locator('.inspector').tap();
+		await page.waitForTimeout(600);
+		ok('tapping the tucked record brings it back', (await page.locator('.inspector:not(.tucked)').count()) === 1);
+		await page.keyboard.press('Escape');
+		await page.waitForTimeout(500);
+	}
+
+	// One standing row, and its options behind one button.
+	await page.locator('.cv-opts').tap();
+	await page.waitForTimeout(500);
+	ok('the view options hold the scale and the list', (await page.locator('.cv-sheet .cv-zoom').count()) === 1 && (await page.locator('.cv-sheet .cv-toggle').count()) === 1);
+	await page.keyboard.press('Escape');
+	await page.waitForTimeout(500);
+
+	// The Views sheet keeps focus and gives it back.
+	await page.locator('.viewbtn').tap();
+	await page.waitForTimeout(500);
+	let escaped = 0;
+	for (let i = 0; i < 40; i++) {
+		await page.keyboard.press('Tab');
+		if (!(await page.evaluate(`!!document.activeElement?.closest('.vs')`))) escaped++;
+	}
+	ok('focus stays inside the open Views sheet', escaped === 0, `${escaped} of 40 tabs escaped`);
+	await page.keyboard.press('Escape');
+	await page.waitForTimeout(400);
+	ok('closing the Views sheet returns focus to its button', (await page.evaluate(`!!document.activeElement?.classList.contains('viewbtn')`)) as boolean);
+
+	ok('phone review console clean', problems.length === 0, problems.slice(0, 3).join(' | '));
+	await context.close();
+
+	// A first visit on a phone is invited to the tour, never blocked by it.
+	const fresh = await browser.newContext(phone);
+	await fresh.addInitScript(`(() => { try { sessionStorage.setItem('deeptunisia:booted', '1'); } catch {} })()`);
+	const first = await fresh.newPage();
+	await first.goto(BASE + '/chronicle', { waitUntil: 'networkidle' });
+	await first.waitForTimeout(1500);
+	ok('a first phone visit shows the tour invitation', (await first.locator('.tour-invite').count()) === 1);
+	ok('a first phone visit is not blocked by the tour', (await first.locator('.catch').count()) === 0);
+	await first.touchscreen.tap(200, 400);
+	await first.waitForTimeout(400);
+	ok('using the page retires the invitation', (await first.locator('.tour-invite').count()) === 0);
+	await fresh.close();
+}
+
 // --- Connections are records ------------------------------------------------
 /*
  * A relationship used to be a hover tooltip in the corner of the canvas: the only
