@@ -978,7 +978,7 @@
 	     the anchor the consent screen links to. -->
 	<div class="sec" id="record">
 	{@render kicker('record')}
-	{#each ['data', 'limits', 'deviations'] as id (id)}
+	{#each ['who', 'data', 'limits', 'deviations'] as id (id)}
 		<section class="block prose-block" id={id}>
 			<Content view="police-index" section={id} />
 		</section>

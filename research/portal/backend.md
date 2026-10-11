@@ -1,6 +1,6 @@
 # Platform backend and data handling
 
-**Status:** working document, 2026-09-15. Describes what exists in code today and what changes before real participants.
+**Status:** working document, 2026-10-11. Describes what exists in code today and what changes before real participants. The submit ladder and the live results below cover every study; study 002 (the Police Satisfaction Index) is the first to use the live results.
 **Audience:** the maintainer, future contributors, and anyone who needs to know exactly where a response goes.
 **Companions:** `m2-contract.md` (the frozen API contract), `study-001/protocol.md` §7 (capture and protections), `study-001/participant-protections.md`.
 
@@ -96,10 +96,14 @@ The community store's `rate_buckets` table is shared for rate limiting across bo
 | 4 | `RESEARCH_OPEN === '1'` | 403 |
 | 5 | Research store is bound | 503 |
 | 6 | Honeypot fields empty | 400 |
-| 7 | Bot challenge (skipped only under dev override) | 403 / 503 |
+| 7 | Bot challenge: the first-party proof of work by default, or the Cloudflare human check when both its keys are set (skipped only under dev override) | 403 / 503 |
 | 8 | Rate limit: twenty submissions per address per hour | 429 |
-| 9 | Full `validateSubmission`: hash match, declared locale, channel format, consent true, unknown ids refused, ranges and options checked, text length capped | 400 |
-| 10 | Receipt generated, row inserted | 500 on storage error |
+| 9 | Arm assignment verified against its signed token | 400 |
+| 10 | Completion floor: below half of the study's pre-registered speed threshold (40% of the estimated time when it has none) is refused; between that and the threshold the row is kept and counted in the published exclusion | 400 |
+| 11 | Full `validateSubmission`: hash match, declared locale, channel format, consent true, unknown ids refused, ranges and options checked, text length capped | 400 |
+| 12 | Receipt generated, row inserted | 500 on storage error |
+
+**Live results** (`GET /api/studies/:slug/live`) returns the published figures for a study whose scoring block asks for them, while the study is collecting responses. The payload is computed from the stored rows at most once a minute per study and instrument version, shared through the edge cache, and never cached when it is an error. It carries the index only above the publication floor, groups only at or above the cell floor, the submissions per hour and exclusions by rule, and the link-share figures; link codes are never in it. Study 002's rules are in `study-002/index-spec.md`.
 
 **Withdraw** (`POST /api/studies/:slug/withdraw`) deletes by receipt while the study is fielding. **Count** (`GET /api/studies/:slug/count`) returns the number of completed responses for the study, never individual rows. Reads of the instrument are unauthenticated and unlimited; throttling readers would mean identifying them.
 

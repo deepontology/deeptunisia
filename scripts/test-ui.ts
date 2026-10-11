@@ -625,7 +625,7 @@ ok(
 
 // The saved progress expires, and can be dropped now.
 ok(
-	'saved progress expires after a day without activity',
+	'saved progress is dropped on a visit more than a day after its last activity',
 	PARTICIPATE.includes('const SESSION_MAX_AGE_MS =') && PARTICIPATE.includes('savedAt'),
 	'24 hours'
 );
