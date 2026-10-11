@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, untrack } from 'svelte';
 	import { page } from '$app/state';
 	import { t } from '$lib/t.svelte';
 	import { compact } from '$lib/design/media.svelte';
@@ -28,9 +28,11 @@
 		hint?: string;
 		/** A row of its own above the view, for routes without a toolbar. */
 		standalone?: boolean;
+		/** Open on every screen size: for a menu the reader opened to read it. */
+		expanded?: boolean;
 	}
 
-	let { hint, standalone = false }: Props = $props();
+	let { hint, standalone = false, expanded = false }: Props = $props();
 
 	/* The Chronicle lives at /chronicle; the views table names it by the root route. */
 	const answerKey = $derived(answerKeyFor(page.url.pathname === '/chronicle' ? '/' : page.url.pathname));
@@ -41,10 +43,10 @@
 	 * Until the component mounts, a phone hides the text with CSS, so the closed
 	 * state does not arrive as a flash of an open one.
 	 */
-	let open = $state(!compact.current);
+	let open = $state(untrack(() => expanded) || !compact.current);
 	let mounted = $state(false);
 	onMount(() => {
-		open = !compact.current;
+		open = expanded || !compact.current;
 		mounted = true;
 	});
 

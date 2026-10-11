@@ -1156,15 +1156,10 @@ const en: Dict = {
 	'corr.kind.expansion.blurb': 'Records were added; nothing existing was altered.',
 	'corr.kind.retraction.label': 'retraction',
 	'corr.kind.retraction.blurb': 'More was removed than added — a claim was withdrawn.',
-	'now.median': 'median {duration}',
 	'now.nomedian': 'Fewer than 4 recorded holders — no median',
 	'now.verified': 'verified {n}mo ago',
 	'now.select': 'Select {person}',
 	'now.silent': 'Offices with nobody currently recorded',
-	'now.ratio.wellpast': 'well past',
-	'now.ratio.past': 'past',
-	'now.ratio.early': 'early in',
-	'now.ratio.around': 'around',
 	'rankings.eyebrow': 'Rankings',
 	'rankings.hint': 'Six indices, computed separately. There is deliberately no single power score: the columns measure different things and disagree with each other, which is the finding rather than a defect.',
 	'rankings.limit.title': 'This ranking is not stable enough to read as a league table',
@@ -1459,7 +1454,6 @@ const en: Dict = {
 	'plate.fig': 'FIG. {n}',
 	// redesign 2026-10 (CH-3)
 	'chronicle.vertical.level': '{n} px per year',
-	'chronicle.vertical.clearfocus': 'Clear focus',
 	// redesign 2026-10 (OV-1)
 	'investigate.picker.placeholder': 'Find an institution',
 	'investigate.picker.topHint': 'The {n} institutions this dataset names most often.',
@@ -1496,7 +1490,18 @@ const en: Dict = {
 	'inspector.type.named': 'One link in this chain, {link}, is a “{type}” relationship, not an influence channel. Board, family and funding are different mechanisms; reading them as one channel conflates them.',
 	'inspector.confidence.named': 'The weakest link, {link}, is graded below what a composed path needs (basis: {basis}). A chain is only as strong as its weakest edge.',
 	// redesign 2026-10 (SH-4)
-	'view.about': 'About this view'
+	'view.about': 'About this view',
+	// redesign 2026-10 (PH-1)
+	'chronicle.vertical.options': 'View options',
+	'chronicle.vertical.scale': 'Scale',
+	'tour.invite': 'New here? A one-minute tour of the controls.',
+	'tour.invite.take': 'Take the tour',
+	// redesign 2026-10 (PH-2)
+	'now.inoffice': '{duration} in office',
+	'now.vs.wellpast': 'Well past the usual term ({duration})',
+	'now.vs.past': 'Past the usual term ({duration})',
+	'now.vs.early': 'Early in the usual term ({duration})',
+	'now.vs.around': 'Around the usual term ({duration})'
 };
 
 const fr: Dict = {
@@ -2585,15 +2590,10 @@ const fr: Dict = {
 	'corr.kind.expansion.blurb': 'Des enregistrements ont été ajoutés ; rien d\'existant n\'a été modifié.',
 	'corr.kind.retraction.label': 'rétractation',
 	'corr.kind.retraction.blurb': 'Plus a été retiré qu\'ajouté — une affirmation a été retirée.',
-	'now.median': 'médiane {duration}',
 	'now.nomedian': 'Moins de 4 titulaires enregistrés — pas de médiane',
 	'now.verified': 'vérifié il y a {n} mois',
 	'now.select': 'Sélectionner {person}',
 	'now.silent': 'Postes sans titulaire actuellement enregistré',
-	'now.ratio.wellpast': 'bien au-delà',
-	'now.ratio.past': 'au-delà',
-	'now.ratio.early': 'en début de',
-	'now.ratio.around': 'environ',
 	'rankings.eyebrow': 'Classements',
 	'rankings.hint': "Six indices, calculés séparément. Il n'y a volontairement pas de score de pouvoir unique : les colonnes mesurent des choses différentes et se contredisent parfois, ce qui est le résultat plutôt qu'un défaut.",
 	'rankings.limit.title': 'Ce classement n’est pas assez stable pour être lu comme un classement de championnat',
@@ -2886,7 +2886,6 @@ const fr: Dict = {
 	'plate.fig': 'FIG. {n}',
 	// redesign 2026-10 (CH-3)
 	'chronicle.vertical.level': '{n} px par an',
-	'chronicle.vertical.clearfocus': 'Effacer le focus',
 	// redesign 2026-10 (OV-1)
 	'investigate.picker.placeholder': 'Trouver une institution',
 	'investigate.picker.topHint': 'Les {n} institutions les plus souvent citées dans cette base de données.',
@@ -2923,7 +2922,18 @@ const fr: Dict = {
 	'inspector.type.named': 'Un lien de cette chaîne, {link}, est une relation « {type} », pas un canal d’influence. Conseil, famille et financement sont des mécanismes différents ; les lire comme un seul canal les confond.',
 	'inspector.confidence.named': 'Le maillon le plus faible, {link}, est noté en dessous de ce qu’exige un chemin composé (base : {basis}). Une chaîne ne vaut que par son maillon le plus faible.',
 	// redesign 2026-10 (SH-4)
-	'view.about': 'À propos de cette vue'
+	'view.about': 'À propos de cette vue',
+	// redesign 2026-10 (PH-1)
+	'chronicle.vertical.options': 'Options d\'affichage',
+	'chronicle.vertical.scale': 'Échelle',
+	'tour.invite': 'Première visite ? Une visite d\'une minute des commandes.',
+	'tour.invite.take': 'Faire la visite',
+	// redesign 2026-10 (PH-2)
+	'now.inoffice': '{duration} en fonction',
+	'now.vs.wellpast': 'Bien au-delà du mandat habituel ({duration})',
+	'now.vs.past': 'Au-delà du mandat habituel ({duration})',
+	'now.vs.early': 'Au début du mandat habituel ({duration})',
+	'now.vs.around': 'Dans la durée habituelle ({duration})'
 };
 
 
@@ -4008,15 +4018,10 @@ const ar: Dict = {
 	'corr.kind.expansion.blurb': 'أُضيفت سجلات؛ ولم يُغيَّر أي شيء قائم.',
 	'corr.kind.retraction.label': 'سحب',
 	'corr.kind.retraction.blurb': 'أُزيل أكثر مما أُضيف — سُحب ادعاء.',
-	'now.median': 'الوسيط {duration}',
 	'now.nomedian': 'أقل من 4 شاغلين مسجّلين — لا وسيط',
 	'now.verified': 'تحقّق قبل {n} شهرًا',
 	'now.select': 'اختر {person}',
 	'now.silent': 'مناصب لا يُسجَّل لها شاغل حالي',
-	'now.ratio.wellpast': 'تجاوز بكثير',
-	'now.ratio.past': 'تجاوز',
-	'now.ratio.early': 'في بداية',
-	'now.ratio.around': 'حوالي',
 	'rankings.eyebrow': 'الترتيب',
 	'rankings.hint': 'ستة مؤشرات تُحسب منفصلة. لا يوجد عمدًا درجة قوة واحدة: الأعمدة تقيس أشياء مختلفة وقد تتعارض، وهذا هو النتيجة لا عيب.',
 	'rankings.limit.title': 'هذا الترتيب ليس مستقرًا بما يكفي لقراءته كجدول ترتيب',
@@ -4308,7 +4313,6 @@ const ar: Dict = {
 	'plate.fig': 'شكل {n}',
 	// redesign 2026-10 (CH-3)
 	'chronicle.vertical.level': '{n} بكسل في السنة',
-	'chronicle.vertical.clearfocus': 'إلغاء التركيز',
 	// redesign 2026-10 (OV-1)
 	'investigate.picker.placeholder': 'ابحث عن مؤسسة',
 	'investigate.picker.topHint': 'المؤسسات الـ{n} الأكثر ذكرًا في قاعدة البيانات هذه.',
@@ -4345,7 +4349,18 @@ const ar: Dict = {
 	'inspector.type.named': 'أحد روابط هذه السلسلة، {link}، علاقة من نوع «{type}» وليس قناة نفوذ. فمجالس الإدارة والعائلة والتمويل آليات مختلفة، وقراءتها كقناة واحدة تخلط بينها.',
 	'inspector.confidence.named': 'أضعف رابط، {link}، مصنَّف دون ما يتطلبه مسار مركَّب (الأساس: {basis}). والسلسلة لا تقوى إلا بقدر أضعف حلقاتها.',
 	// redesign 2026-10 (SH-4)
-	'view.about': 'حول هذا العرض'
+	'view.about': 'حول هذا العرض',
+	// redesign 2026-10 (PH-1)
+	'chronicle.vertical.options': 'خيارات العرض',
+	'chronicle.vertical.scale': 'المقياس',
+	'tour.invite': 'أول زيارة؟ جولة من دقيقة واحدة على أدوات التحكم.',
+	'tour.invite.take': 'ابدأ الجولة',
+	// redesign 2026-10 (PH-2)
+	'now.inoffice': '{duration} في المنصب',
+	'now.vs.wellpast': 'تجاوز المدة المعتادة بكثير ({duration})',
+	'now.vs.past': 'تجاوز المدة المعتادة ({duration})',
+	'now.vs.early': 'في بداية المدة المعتادة ({duration})',
+	'now.vs.around': 'في حدود المدة المعتادة ({duration})'
 };
 
 

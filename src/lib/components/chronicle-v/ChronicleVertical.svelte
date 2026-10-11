@@ -67,7 +67,9 @@
 	   ========================================================================= */
 
 	import { app } from '$lib/state.svelte';
+	import { applyEntityLink } from '$lib/deeplink.svelte';
 	import AboutView from '$lib/shell/AboutView.svelte';
+	import Popover from '$lib/ui/Popover.svelte';
 	import { layerLabel, nameOf, t, tf } from '$lib/t.svelte';
 	import {
 		CUTOFF,
@@ -173,7 +175,12 @@
 	const rows = $derived(rowsByLayer.get(layer)?.rows ?? []);
 	const layerGroups = $derived(rowsByLayer.get(layer)?.groups ?? []);
 
-	const vscale = $derived<VScale>(makeVScale(domain, pxPerYear));
+	/** The stage's height. The canvas runs on past both ends of the domain by the
+	 *  room the reading line needs to reach the first and last instants. */
+	let stageH = $state(0);
+	const vscale = $derived<VScale>(
+		makeVScale(domain, pxPerYear, { before: stageH * LINE_AT, after: stageH * (1 - LINE_AT) })
+	);
 
 	/** Every event clearing the reader's evidence floor, oldest first. */
 	const spineEvents = $derived(
@@ -237,6 +244,34 @@
 		app.select(ids[0]);
 	}
 
+	/*
+	 * The focus belongs to the open record. Closing the sheet, or opening another
+	 * record, ends it, so there is no separate control to clear it and no state
+	 * left standing after the reader has moved on.
+	 */
+	$effect(() => {
+		if (focusEventId !== null && app.selected !== focusEventId) focusEventId = null;
+	});
+
+	/*
+	 * A shared link (`/chronicle?id=…`) opens its record here as it does on the
+	 * wide chart. An event link also focuses the event and brings its date under
+	 * the reading line, so the reader lands where the link points.
+	 */
+	let deepLinked = false;
+	$effect(() => {
+		if (deepLinked || !applyEntityLink()) return;
+		deepLinked = true;
+		const ev = app.selected ? eventById.get(app.selected) : undefined;
+		if (ev) {
+			focusEventId = ev.id;
+			app.t = ev.interval.startEarliest;
+		}
+	});
+
+	/** View options: about, scale and the list. One button on the standing row. */
+	let optionsOpen = $state(false);
+
 	function focusFor(row: ChronRow): 'none' | 'linked' | 'dim' {
 		if (focusRoles) return focusRoles.has(row.roleId) ? 'linked' : 'dim';
 		const key = app.selected ?? app.hovered;
@@ -249,43 +284,65 @@
 	<!-- The standing head. The tabs do not scroll away, because they are the
 	     reader's only way through the layer they are in. -->
 	<div class="cv-head">
-		<LayerTabs layers={tabLayers} active={layer} onchange={(l) => (layer = l)} />
-		<div class="cv-tools">
-			<AboutView hint={t('chronicle.hint')} />
-			<div class="cv-zoom" role="group" aria-label={tf('chronicle.vertical.level', { n: pxPerYear })}>
-				<button
-					type="button"
-					class="cv-btn cv-num"
-					aria-label={t('view.zoomout')}
-					disabled={stepLevel(pxPerYear, -1) === pxPerYear}
-					onclick={() => zoom(-1)}
-				>
-					&#8722;
-				</button>
-				<span class="cv-level mono">{pxPerYear}</span>
-				<button
-					type="button"
-					class="cv-btn cv-num"
-					aria-label={t('view.zoomin')}
-					disabled={stepLevel(pxPerYear, 1) === pxPerYear}
-					onclick={() => zoom(1)}
-				>
-					+
-				</button>
-			</div>
-			{#if focusEventId}
-				<button type="button" class="cv-btn cv-toggle" onclick={() => (focusEventId = null)}>
-					{t('chronicle.vertical.clearfocus')}
-				</button>
-			{/if}
+		<div class="cv-tabs">
+			<LayerTabs layers={tabLayers} active={layer} onchange={(l) => (layer = l)} />
+		</div>
+		<div class="anchor">
 			<button
 				type="button"
-				class="cv-btn cv-toggle"
-				aria-pressed={listMode}
-				onclick={() => (listMode = !listMode)}
+				class="cv-btn cv-opts"
+				class:on={listMode}
+				aria-label={t('chronicle.vertical.options')}
+				aria-expanded={optionsOpen}
+				onclick={() => (optionsOpen = !optionsOpen)}
 			>
-				{t('timeline.viewlist')}
+				<svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true">
+					<path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+					<circle cx="5" cy="4" r="1.6" fill="var(--surface-sunken)" stroke="currentColor" stroke-width="1.3" />
+					<circle cx="11" cy="8" r="1.6" fill="var(--surface-sunken)" stroke="currentColor" stroke-width="1.3" />
+					<circle cx="7" cy="12" r="1.6" fill="var(--surface-sunken)" stroke="currentColor" stroke-width="1.3" />
+				</svg>
 			</button>
+			<Popover bind:open={optionsOpen} onclose={() => (optionsOpen = false)} label={t('chronicle.vertical.options')}>
+				<div class="cv-sheet">
+					<AboutView hint={t('chronicle.hint')} expanded />
+					<div class="cv-sheet-row">
+						<span class="cv-sheet-label">{t('chronicle.vertical.scale')}</span>
+						<div class="cv-zoom" role="group" aria-label={tf('chronicle.vertical.level', { n: pxPerYear })}>
+							<button
+								type="button"
+								class="cv-btn cv-num"
+								aria-label={t('view.zoomout')}
+								disabled={listMode || stepLevel(pxPerYear, -1) === pxPerYear}
+								onclick={() => zoom(-1)}
+							>
+								&#8722;
+							</button>
+							<span class="cv-level mono">{tf('chronicle.vertical.level', { n: pxPerYear })}</span>
+							<button
+								type="button"
+								class="cv-btn cv-num"
+								aria-label={t('view.zoomin')}
+								disabled={listMode || stepLevel(pxPerYear, 1) === pxPerYear}
+								onclick={() => zoom(1)}
+							>
+								+
+							</button>
+						</div>
+					</div>
+					<button
+						type="button"
+						class="cv-btn cv-toggle"
+						aria-pressed={listMode}
+						onclick={() => {
+							listMode = !listMode;
+							optionsOpen = false;
+						}}
+					>
+						{t('timeline.viewlist')}
+					</button>
+				</div>
+			</Popover>
 		</div>
 	</div>
 
@@ -294,7 +351,7 @@
 			<TenureList groups={layerGroups} basisFloor={app.basisFloor} />
 		</div>
 	{:else}
-		<div class="cv-stage" style:--cv-h="{vscale.height}px">
+		<div class="cv-stage" style:--cv-h="{vscale.height}px" style:--cv-n={rows.length} bind:clientHeight={stageH}>
 			<div class="cv-strip" bind:this={stripEl}>
 				<ColumnStrip>
 					<Spine scale={vscale} events={spineEvents} onpick={pickEvents} />
@@ -302,7 +359,7 @@
 						<div class="cv-focus" style:top="{vscale.y(focusEvent.interval.startEarliest)}px"></div>
 					{/if}
 					{#each ruptureEvents as ev (ev.id)}
-						<RuptureRule event={ev} scale={vscale} onpick={pickEvents} />
+						<RuptureRule event={ev} scale={vscale} />
 					{/each}
 					{#each rows as row (row.roleId)}
 						<Column
@@ -316,7 +373,7 @@
 				</ColumnStrip>
 			</div>
 			<div class="cv-line">
-				<ReadingLine scale={vscale} scroller={stripEl} />
+				<ReadingLine scale={vscale} scroller={stripEl} events={spineEvents} />
 			</div>
 		</div>
 	{/if}
@@ -336,23 +393,44 @@
 		overflow: hidden;
 	}
 
+	/* One standing row: the layers, and one button for everything else. */
 	.cv-head {
 		flex: 0 0 auto;
 		display: flex;
-		flex-direction: column;
+		align-items: center;
 		gap: var(--s-2);
-		padding: var(--s-3) calc(var(--s-4) + var(--safe-r)) var(--s-3)
-			calc(var(--s-4) + var(--safe-l));
+		padding: var(--s-2) calc(var(--s-3) + var(--safe-r)) var(--s-2) calc(var(--s-3) + var(--safe-l));
 		border-bottom: var(--rule);
 		background: var(--surface-base);
 	}
+	.cv-tabs {
+		flex: 1;
+		min-width: 0;
+	}
+	.anchor {
+		position: relative;
+		flex: 0 0 auto;
+	}
+	.cv-opts.on {
+		color: var(--accent);
+		border-color: var(--accent-border);
+	}
 
-	.cv-tools {
+	.cv-sheet {
 		display: flex;
-		flex-wrap: wrap;
+		flex-direction: column;
+		gap: var(--s-4);
+		padding: var(--s-2) var(--s-1) var(--s-4);
+	}
+	.cv-sheet-row {
+		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		gap: 0 var(--s-4);
+		gap: var(--s-4);
+	}
+	.cv-sheet-label {
+		font-size: var(--t-sm);
+		color: var(--text-secondary);
 	}
 
 	.cv-zoom {
@@ -400,7 +478,7 @@
 	}
 
 	.cv-level {
-		min-width: var(--cv-spine-w);
+		min-width: 7.5em;
 		display: inline-flex;
 		align-items: baseline;
 		justify-content: center;
@@ -417,6 +495,14 @@
 		flex: 1;
 		min-width: 0;
 		min-height: 0;
+		/*
+		   The width of every column together, for the lines that cross them all
+		   (ruptures, the focused event). The track is only one window wide and the
+		   columns run past it, so "100%" would stop a line at the window's edge.
+		   Same formula as ColumnStrip's columns; the percentage resolves where the
+		   property is used, against the track.
+		*/
+		--cv-track-w: calc(var(--cv-spine-w) + var(--cv-n, 0) * max(var(--cv-col-min), (100% - var(--cv-spine-w)) / 3));
 	}
 
 	.cv-strip {
@@ -450,7 +536,8 @@
 	 */
 	.cv-focus {
 		position: absolute;
-		inset-inline: 0;
+		inset-inline-start: 0;
+		width: max(100%, var(--cv-track-w));
 		height: 2px;
 		z-index: var(--z-sheet);
 		background: var(--accent);

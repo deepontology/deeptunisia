@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { app } from '$lib/state.svelte';
-	import { formatDate } from '$lib/t.svelte';
+	import { eventTitle, formatDate } from '$lib/t.svelte';
+	import type { EventRec } from '$lib/model';
 	import type { VScale } from '$lib/chronicle/vscale';
 
 	/**
@@ -26,13 +27,53 @@
 	 * dispatched would let the clamp drag the shared date backwards.
 	 *
 	 * `scroller` is the element the parent scrolls, not the page.
+	 *
+	 * THE CHIP IS A READOUT OF MOVEMENT, NOT A FIXTURE
+	 *
+	 * The dock already shows the date at rest, so the chip on the line only shows
+	 * while the canvas moves (a scroll, play, a date set elsewhere) and fades a
+	 * moment after it stops. While it shows, it names the event passing under the
+	 * line, which is how the canvas labels events without drawing a label over the
+	 * columns. At rest only the hairline remains.
 	 */
 	interface Props {
 		scale: VScale;
 		scroller: HTMLElement;
+		/** The events on the spine, for the one passing under the line. */
+		events?: EventRec[];
 	}
 
-	let { scale, scroller }: Props = $props();
+	let { scale, scroller, events = [] }: Props = $props();
+
+	/** How long the chip stays after the canvas stops moving. */
+	const LINGER_MS = 1400;
+	/** An event this close to the line, in pixels, is the one under it. */
+	const NEAR_PX = 22;
+
+	let moving = $state(false);
+	let lineY = $state(0);
+	let idle: ReturnType<typeof setTimeout> | undefined;
+
+	function poke() {
+		lineY = scroller.scrollTop + scroller.clientHeight * LINE_AT;
+		moving = true;
+		clearTimeout(idle);
+		idle = setTimeout(() => (moving = false), LINGER_MS);
+	}
+
+	const nearEvent = $derived.by(() => {
+		if (!moving) return null;
+		let best: EventRec | null = null;
+		let bestD = NEAR_PX;
+		for (const e of events) {
+			const d = Math.abs(scale.y(e.interval.startEarliest) - lineY);
+			if (d <= bestD) {
+				best = e;
+				bestD = d;
+			}
+		}
+		return best;
+	});
 
 	/** The reading line rides this far into the scroller's height. */
 	const LINE_AT = 0.4;
@@ -60,6 +101,7 @@
 			}
 			programmatic = -1;
 			app.t = instantAtLine();
+			poke();
 		});
 	}
 
@@ -72,6 +114,7 @@
 		}
 		const before = scroller.scrollTop;
 		scroller.scrollTop = want;
+		if (scroller.scrollTop !== before) poke();
 		// A write that changed nothing fires no scroll event, so there is no echo
 		// to guard. A changed write's echo must match the clamped value the browser
 		// kept, so record what was accepted rather than what was asked for.
@@ -95,6 +138,7 @@
 			scroller.removeEventListener('scroll', onScroll);
 			ro.disconnect();
 			if (frame) cancelAnimationFrame(frame);
+			clearTimeout(idle);
 		};
 	});
 
@@ -107,29 +151,59 @@
 </script>
 
 <div class="cv-rl" aria-hidden="true">
-	<span class="cv-rl-chip mono">{formatDate(app.t, 'day')}</span>
+	<span class="cv-rl-chip" class:on={moving}>
+		<span class="cv-rl-date mono">{formatDate(app.t, 'day')}</span>
+		{#if nearEvent}
+			<span class="cv-rl-event" class:rupture={nearEvent.rupture} dir="auto">{eventTitle(nearEvent)}</span>
+		{/if}
+	</span>
 </div>
 
 <style>
 	.cv-rl {
 		position: relative;
 		height: 1px;
-		background: var(--text-primary);
-		opacity: 0.5;
+		background: color-mix(in oklch, var(--text-primary) 30%, transparent);
 	}
 	.cv-rl-chip {
 		position: absolute;
-		inset-inline-end: calc(var(--s-4) + var(--safe-r));
+		inset-inline-end: calc(var(--s-3) + var(--safe-r));
 		top: 50%;
-		transform: translateY(-50%);
+		max-width: min(78vw, 320px);
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
 		padding: var(--s-1) var(--s-2);
 		border: 1px solid var(--border-strong);
 		border-radius: var(--r-sm);
 		background: var(--surface-overlay);
 		color: var(--text-primary);
+		box-shadow: var(--elev-2);
+		opacity: 0;
+		transform: translateY(-50%) scale(0.98);
+		transition:
+			opacity var(--dur-normal) var(--ease-out),
+			transform var(--dur-normal) var(--ease-out);
+	}
+	.cv-rl-chip.on {
+		opacity: 1;
+		transform: translateY(-50%);
+		transition-duration: var(--dur-fast);
+	}
+	.cv-rl-date {
 		font-size: var(--t-xs);
-		line-height: 1;
+		line-height: 1.1;
+	}
+	.cv-rl-event {
+		overflow: hidden;
+		text-overflow: ellipsis;
 		white-space: nowrap;
-		box-shadow: var(--elev-1);
+		font-size: var(--t-xs);
+		line-height: 1.25;
+		color: var(--text-secondary);
+	}
+	.cv-rl-event.rupture::before {
+		content: '\25C6\00a0';
+		color: var(--rupture);
 	}
 </style>
