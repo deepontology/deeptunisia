@@ -226,12 +226,8 @@ function tally(values: string[]): Record<string, number> {
 	return sortedRecord(counts);
 }
 
-function isAnswered(answers: Record<string, unknown>, itemId: string): boolean {
-	// A presence rating is an answer to that item, under the block's own key.
-	return (
-		(answers[itemId] !== undefined && answers[itemId] !== null) ||
-		(answers[gapAnswerKey(itemId)] !== undefined && answers[gapAnswerKey(itemId)] !== null)
-	);
+function isAnswered(answers: Record<string, unknown>, key: string): boolean {
+	return answers[key] !== undefined && answers[key] !== null;
 }
 
 function answerNumber(answers: Record<string, unknown>, itemId: string): number | null {
@@ -264,6 +260,10 @@ function nearIdentical(a: Record<string, unknown>, b: Record<string, unknown>): 
 export function evaluateExclusions(rows: ParsedResponse[], instrument: RuntimeInstrument): ExclusionOutcome {
 	const displayed = instrument.items.filter((item) => item.displayed && item.response !== 'consent');
 	const essentiality = instrument.items.filter((item) => item.response === 'scale_essential');
+	// Each presence rating is a question of its own: it counts beside the item
+	// questions, never in place of one.
+	const presenceKeys = gapItems(instrument).map((item) => gapAnswerKey(item.id));
+	const questionCount = displayed.length + presenceKeys.length;
 	const speedFloor = instrument.estimatedMinutes * 60_000 * SPEED_SHARE;
 
 	const rules: Record<ExclusionRuleId, number> = {
@@ -278,8 +278,10 @@ export function evaluateExclusions(rows: ParsedResponse[], instrument: RuntimeIn
 		const row = rows[index];
 		const tripped: ExclusionRuleId[] = [];
 
-		const answered = displayed.filter((item) => isAnswered(row.answers, item.id)).length;
-		if (answered < displayed.length * INCOMPLETE_SHARE) tripped.push('incomplete');
+		const answered =
+			displayed.filter((item) => isAnswered(row.answers, item.id)).length +
+			presenceKeys.filter((key) => isAnswered(row.answers, key)).length;
+		if (answered < questionCount * INCOMPLETE_SHARE) tripped.push('incomplete');
 
 		const scores = essentiality
 			.map((item) => answerNumber(row.answers, item.id))

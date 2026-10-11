@@ -35,6 +35,7 @@ import { EXPORT_COLUMNS, exportResponses } from './studies-export.ts';
 import {
 	aggregateCsv,
 	DRAFT_POPULATION_STATEMENT,
+	evaluateExclusions,
 	parseResponses,
 	resultsToYaml,
 	type ParsedResponse
@@ -355,6 +356,20 @@ const { results } = outcome;
 const exclusions = results.exclusions!;
 
 ok('the clean rows trip no rule', rulesFor(outcome, 'r-a').length === 0 && rulesFor(outcome, 'r-b').length === 0);
+// e1 to e5 skipped, e1 and e2 still carrying a presence rating: 13 of 18 item
+// answers plus 2 presence ratings is 15 of 20 questions (75%), not 15 of 18.
+// A presence rating must never stand in for a skipped item rating.
+const presenceCannotStandIn = completeAnswers(0);
+for (let i = 1; i <= 5; i++) delete presenceCannotStandIn[`e${i}`];
+ok(
+	'presence ratings do not stand in for skipped item ratings',
+	evaluateExclusions(
+		[{ ...parseResponses(csvText)[0], receipt: 'r-presence', answers: presenceCannotStandIn }],
+		fixtureInstrument
+	)
+		.perRow.get('r-presence')
+		?.includes('incomplete') === true
+);
 ok('the near-identical row below the threshold trips no rule', rulesFor(outcome, 'r-g').length === 0, rulesFor(outcome, 'r-g').join(','));
 ok(
 	'the incomplete row also straight-lines',
