@@ -3053,13 +3053,23 @@ import Chip from '$lib/ui/Chip.svelte';
 
 	@media (max-width: 900px) {
 		.toolbar {
-			gap: var(--s-4);
-			padding: var(--s-3) var(--s-4);
+			gap: var(--s-2) var(--s-4);
+			padding: var(--s-2) var(--s-4);
 		}
+		/* The top bar already names the view. */
+		.toolbar > .eyebrow {
+			display: none;
+		}
+		/* One line that scrolls sideways, at a size a phone can read, rather than
+		   two wrapped lines of 9px figures above the map. */
 		.stats {
-			gap: var(--s-3);
-			font-size: 9px;
-			flex-wrap: wrap;
+			order: 3;
+			width: 100%;
+			margin-inline-start: 0;
+			gap: var(--s-4);
+			font-size: var(--t-2xs);
+			overflow-x: auto;
+			scrollbar-width: none;
 		}
 		.modes {
 			width: 100%;
