@@ -183,7 +183,7 @@ claims:
       - path: landing/_strings.en.json
         locator: 'Drawn from (\d+) tenures'
       - path: landing/_strings.fr.json
-        locator: 'Établi à partir de (\d+) mandats'
+        locator: 'Tirés de (\d+) mandats'
       - path: landing/_strings.ar.json
         locator: 'مستخرجة من (\d+) فترة'
     resolver: { source: stats, key: positions }
@@ -318,9 +318,9 @@ claims:
       - path: landing/_strings.en.json
         locator: '<strong>(\d+) succession gaps</strong>'
       - path: landing/_strings.fr.json
-        locator: '<strong>(\d+) ruptures de succession</strong>'
+        locator: '<strong>(\d+) lacunes de succession</strong>'
       - path: landing/_strings.ar.json
-        locator: '<strong>(\d+) انقطاعاً في التعاقب</strong>'
+        locator: '<strong>(\d+) فجوة في التعاقب</strong>'
     resolver: { source: stats, key: successionGaps }
     format: plain
     population: derived succession gaps, all published
@@ -341,7 +341,7 @@ claims:
       - path: landing/_strings.fr.json
         locator: '<strong>(\d+) mandats qui se chevauchent</strong>'
       - path: landing/_strings.ar.json
-        locator: '<strong>(\d+) فترات متداخلة</strong>'
+        locator: '<strong>(\d+) من الفترات المتداخلة</strong>'
     resolver: { source: stats, key: successionOverlaps }
     format: plain
     population: derived overlapping tenures, all published
@@ -478,7 +478,7 @@ claims:
       - path: landing/_strings.fr.json
         locator: '"evidence\.28": "(\d+) affirmations'
       - path: landing/_strings.ar.json
-        locator: '"evidence\.28": "(\d+) ادعاءات'
+        locator: '"evidence\.28": "(\d+) ادعاءً'
     resolver: { source: stats, key: unsubstantiated }
     format: plain
     population: claim-bearing records with basis=unsubstantiated
@@ -493,9 +493,9 @@ claims:
     claim: Sources at tier 1 (decree or gazette entry).
     surfaces:
       - path: landing/index.html
-        locator: '— (\d+) at tier 1,'
+        locator: '(\d+) at tier 1,'
       - path: landing/_strings.en.json
-        locator: '— (\d+) at tier 1,'
+        locator: '(\d+) at tier 1,'
       - path: landing/_strings.fr.json
         locator: '(\d+) au niveau 1'
       - path: landing/_strings.ar.json
@@ -663,11 +663,11 @@ claims:
     claim: Public export payload, in megabytes.
     surfaces:
       - path: landing/index.html
-        locator: 'roughly (\d+\.\d+) MB'
+        locator: '[Rr]oughly (\d+\.\d+) MB'
       - path: landing/_strings.en.json
-        locator: 'roughly (\d+\.\d+) MB'
+        locator: '[Rr]oughly (\d+\.\d+) MB'
       - path: landing/_strings.fr.json
-        locator: 'environ (\d+,\d+) Mo'
+        locator: '[Ee]nviron (\d+,\d+) Mo'
         format: mb1-fr
       - path: landing/_strings.ar.json
         locator: 'نحو (\d+[٫.]\d+) ميغابايت'
@@ -705,11 +705,11 @@ claims:
       - path: landing/index.html
         locator: '<span class="v">(\d+) / 1768</span>'
       - path: landing/index.html
-        locator: 'all (\d+) review notes'
+        locator: '[Aa]ll (\d+) review notes'
       - path: landing/_strings.en.json
-        locator: 'all (\d+) review notes'
+        locator: '[Aa]ll (\d+) review notes'
       - path: landing/_strings.fr.json
-        locator: 'les (\d+) notes de relecture'
+        locator: 'Les (\d+) notes de relecture'
       - path: landing/_strings.ar.json
         locator: 'ملاحظات المراجعة الـ(\d+)'
     resolver: { source: review, key: editorial-notes }
@@ -799,7 +799,7 @@ claims:
       - path: landing/_strings.fr.json
         locator: 'les (\d+) affirmations non étayées'
       - path: landing/_strings.ar.json
-        locator: '(\d+) ادعاءً غير مُسنَد'
+        locator: 'الـ(\d+) ادعاءً غير المُسنَد'
     resolver: { source: review, key: flag-unsubstantiated }
     format: plain
     population: records flagged unsubstantiated (flags overlap)
@@ -818,9 +818,9 @@ claims:
       - path: landing/_strings.en.json
         locator: 'the (\d+) that name a source'
       - path: landing/_strings.fr.json
-        locator: 'les (\d+) qui nomment une source'
+        locator: 'les (\d+) qui citent une source'
       - path: landing/_strings.ar.json
-        locator: 'و(\d+) ادعاءات تسمّي مصدرًا'
+        locator: 'و(\d+) يسمّون مصدراً'
     resolver: { source: review, key: flag-attributed }
     format: plain
     population: records flagged attributed (flags overlap)
@@ -839,9 +839,9 @@ claims:
       - path: landing/_strings.en.json
         locator: 'the (\d+) inferences'
       - path: landing/_strings.fr.json
-        locator: 'les (\d+) déductions'
+        locator: 'les (\d+) inférences'
       - path: landing/_strings.ar.json
-        locator: 'و(\d+) استنتاجًا'
+        locator: 'و(\d+) استنتاجاً'
     resolver: { source: review, key: flag-inferred }
     format: plain
     population: records flagged inferred (flags overlap)
@@ -940,7 +940,7 @@ claims:
       - path: landing/_strings.fr.json
         locator: 'Les (\d+) relations consignées'
       - path: landing/_strings.ar.json
-        locator: 'السجلات الـ(\d+) للعلاقات'
+        locator: '(\d+) علاقة مسجّلة'
     resolver: { source: dataset, key: contested-about-people }
     format: plain
     population: relationships whose basis is reported, inferred or unsubstantiated and whose endpoints include at least one person
@@ -1074,9 +1074,9 @@ claims:
       - path: landing/_strings.en.json
         locator: '(\d+) human-translated'
       - path: landing/_strings.fr.json
-        locator: '(\d+) traduites par un humain'
+        locator: 'dont (\d+) traduites par des humains'
       - path: landing/_strings.ar.json
-        locator: 'و(\d+) مترجمة بيد بشر'
+        locator: 'منها (\d+) مترجمة بشرياً'
     resolver: { source: data-translation, key: fr-human }
     format: plain
     population: dataset prose strings with translated_by=human in French (Arabic human count is a separate population)
