@@ -3715,6 +3715,23 @@ const lockHashValue = (() => {
 	}
 })();
 
+// The landing page's door and strip figures. "In post" is the Now view's set
+// (currencyOf in src/lib/tenure.ts: ongoing, last-verified or unknown), and
+// "recent" is a `verified:` date at most 12 months before the cutoff, measured
+// as monthsSince measures it, so the landing's count and the view's stale
+// markers can never disagree. Roles held are the Chronicle's rows: roles with
+// at least one recorded tenure.
+const cutoffMs = Date.parse(`${parameters.time.cutoff}T00:00:00Z`);
+const inPostPositions = resolvedPositions.filter((p) =>
+	['ongoing', 'last-verified', 'unknown'].includes(p.interval.status)
+);
+const inPostRecent = inPostPositions.filter((p) => {
+	const m = /^verified:(\d{4})(?:-(\d{2}))?(?:-(\d{2}))?$/.exec(p.interval.raw.end ?? '');
+	if (!m) return false;
+	const t = Date.UTC(Number(m[1]), m[2] ? Number(m[2]) - 1 : 0, m[3] ? Number(m[3]) : 1);
+	return Math.max(0, Math.round((cutoffMs - t) / (30.44 * 86_400_000))) <= 12;
+}).length;
+
 const stats: Record<string, string> = {
 	sources: String(sources.length),
 	sourcesCited: String(sources.length - uncitedSources.length),
@@ -3787,6 +3804,11 @@ const stats: Record<string, string> = {
 	familyEdges: String(familyEdges),
 	researchQueue: String(cardWorklist.length),
 	intervalTrims: String(intervalTrims.length),
+	rolesHeld: String(new Set(resolvedPositions.map((p) => p.role)).size),
+	inPost: String(inPostPositions.length),
+	inPostRecent: String(inPostRecent),
+	// The /corrections page's total, so the landing's counted link and the page agree.
+	corrections: String(changelog.length),
 	...Object.fromEntries(
 		principalCoverage.flatMap((p) => [
 			[`edges-${p.id}`, String(p.total)],
@@ -3901,6 +3923,7 @@ if (!FIXTURE_MODE) {
 	const STAT_TAG = /<!--stat:([A-Za-z][A-Za-z0-9-]*)-->([\s\S]*?)<!--\/stat-->/g;
 	const STAT_DOCS = [
 		'README.md',
+		'landing/index.html',
 		'AGENTS.md',
 		'DESIGN.md',
 		'static/llms.txt',
