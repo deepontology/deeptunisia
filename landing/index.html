@@ -51,6 +51,10 @@
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2316150f'/%3E%3Ccircle cx='16' cy='16' r='4.5' fill='%23d8b45a'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%23d8b45a' stroke-opacity='.42' stroke-width='1'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="../static/fonts/fonts.css">
+<!-- The reveal animations hide text until the page script shows it. Without
+     JavaScript nothing would show it, so the hidden starting state applies
+     only once this line has run. -->
+<script>document.documentElement.classList.add('js');</script>
 <style>
 /* ==========================================================================
    1 · TOKENS
@@ -738,7 +742,8 @@ html[dir='rtl'] .path-arrow { transform: scaleX(-1); }
 }
 .basis:hover { background: var(--surface-raised); }
 .basis .spec { height: 22px; }
-.basis .spec line { stroke: var(--c); stroke-width: 2.5; stroke-linecap: round; }
+/* Butt caps, as in the atlas: round caps lengthen every dash and close the gaps. */
+.basis .spec line { stroke: var(--c); stroke-width: 2.5; stroke-linecap: butt; }
 .basis .name {
   font-family: var(--font-strong); font-weight: 600;
   font-size: 0.9rem; color: var(--c); letter-spacing: 0.005em;
@@ -1036,13 +1041,15 @@ footer a:hover { color: var(--accent); }
 /* ==========================================================================
    18 · REVEAL
    ========================================================================== */
-.rv { opacity: 0; transform: translateY(22px); transition: opacity 900ms var(--ease-out), transform 900ms var(--ease-out); }
-.rv.in { opacity: 1; transform: none; }
+/* Only with the page script running (html.js): without it the text simply shows. */
+html.js .rv { opacity: 0; transform: translateY(22px); transition: opacity 900ms var(--ease-out), transform 900ms var(--ease-out); }
+html.js .rv.in { opacity: 1; transform: none; }
 
 /* Line-by-line curtain for display type. */
 .curtain { display: block; overflow: hidden; }
-.curtain > span { display: block; transform: translateY(105%); transition: transform 1100ms var(--ease-out); }
-.in .curtain > span, .curtain.in > span { transform: none; }
+.curtain > span { display: block; }
+html.js .curtain > span { transform: translateY(105%); transition: transform 1100ms var(--ease-out); }
+html.js .in .curtain > span, html.js .curtain.in > span { transform: none; }
 
 @media (prefers-reduced-motion: reduce) {
   .rv, .curtain > span { opacity: 1 !important; transform: none !important; transition: none !important; }
@@ -1188,7 +1195,7 @@ footer a:hover { color: var(--accent); }
     <!-- ---------- the stratum ---------- -->
     <figure class="stratum rv" id="stratum">
       <div class="readout" id="readout"></div>
-      <svg id="stratumsvg" viewBox="0 0 1200 300" role="img" data-i18n-label="viz.stratumAlt" aria-label="Number of recorded offices held in Tunisia in each year from 1956 to 2026, rising from 5 in 1956 to a peak of 57 in 2016 and standing at 32 in 2026.">
+      <svg id="stratumsvg" viewBox="0 0 1200 300" role="img" aria-label="Number of recorded offices held in Tunisia in each year since 1956.">
         <defs>
           <linearGradient id="ribbonfill" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.30"></stop>
@@ -1349,25 +1356,25 @@ footer a:hover { color: var(--accent); }
     <h3 class="sub rv" style="margin-block-start:clamp(3rem,6vw,5rem)" data-i18n="evidence.16">The four bases, and the strokes that carry them</h3>
     <div class="bases rv">
       <div class="basis" data-b="documented">
-        <svg class="spec" viewBox="0 0 120 22" aria-hidden="true"><line x1="2" y1="11" x2="118" y2="11"></line></svg>
+        <svg class="spec" viewBox="0 0 120 22" aria-hidden="true"><line x1="2" y1="11" x2="118" y2="11" data-basis="documented" stroke-opacity="1"></line></svg>
         <span class="name" data-i18n="evidence.17">Documented</span>
         <p class="def" data-i18n="evidence.18">An official record, decree or gazette entry states it.</p>
         <span class="count" data-i18n="evidence.19">199 claims &nbsp;·&nbsp; solid</span>
       </div>
       <div class="basis" data-b="reported">
-        <svg class="spec" viewBox="0 0 120 22" aria-hidden="true"><line x1="2" y1="11" x2="118" y2="11" stroke-dasharray="9 6"></line></svg>
+        <svg class="spec" viewBox="0 0 120 22" aria-hidden="true"><line x1="2" y1="11" x2="118" y2="11" data-basis="reported" stroke-dasharray="5 3" stroke-opacity="0.82"></line></svg>
         <span class="name" data-i18n="evidence.20">Reported</span>
         <p class="def" data-i18n="evidence.21">Credible publications report it, with attribution.</p>
         <span class="count" data-i18n="evidence.22">691 claims &nbsp;·&nbsp; dashed</span>
       </div>
       <div class="basis" data-b="inferred">
-        <svg class="spec" viewBox="0 0 120 22" aria-hidden="true"><line x1="2" y1="11" x2="118" y2="11" stroke-dasharray="1.5 5.5"></line></svg>
+        <svg class="spec" viewBox="0 0 120 22" aria-hidden="true"><line x1="2" y1="11" x2="118" y2="11" data-basis="inferred" stroke-dasharray="2 3" stroke-opacity="0.6"></line></svg>
         <span class="name" data-i18n="evidence.23">Inferred</span>
         <p class="def" data-i18n="evidence.24">Nobody states it. Reasoned from documented structure — and it must publish what would prove it wrong.</p>
         <span class="count" data-i18n="evidence.25">39 claims &nbsp;·&nbsp; dotted</span>
       </div>
       <div class="basis" data-b="unsubstantiated">
-        <svg class="spec" viewBox="0 0 120 22" aria-hidden="true"><line x1="2" y1="11" x2="118" y2="11" stroke-dasharray="10 4 1.5 4"></line></svg>
+        <svg class="spec" viewBox="0 0 120 22" aria-hidden="true"><line x1="2" y1="11" x2="118" y2="11" data-basis="unsubstantiated" stroke-dasharray="1 3 6 3" stroke-opacity="0.45"></line></svg>
         <span class="name" data-i18n="evidence.26">Unsubstantiated</span>
         <p class="def" data-i18n="evidence.27">It circulates without reliable evidence. Recorded, attributed, and off by default.</p>
         <span class="count" data-i18n="evidence.28">12 claims &nbsp;·&nbsp; dot-dash</span>
@@ -1958,6 +1965,12 @@ footer a:hover { color: var(--accent); }
   var DENSITY = [4,5,7,6,6,7,5,6,5,6,7,6,7,7,8,9,9,8,6,7,7,7,8,8,8,8,9,9,11,13,13,14,11,14,14,17,16,17,17,17,16,13,17,14,17,17,17,19,18,22,24,24,26,27,26,32,37,41,44,43,46,48,49,50,48,49,42,37,34,30,14];
   var Y0 = 1956;
 
+  /* The atlas's basis grammar: DASH and BASIS_OPACITY from src/lib/model.ts,
+     mirrored so the demo and the legend draw a claim the way every view does.
+     scripts/test-paper.ts fails if the two drift apart. */
+  var BASIS_DASH = { documented: '', reported: '5 3', inferred: '2 3', unsubstantiated: '1 3 6 3' };
+  var BASIS_OPACITY = { documented: 1, reported: 0.82, inferred: 0.6, unsubstantiated: 0.45 };
+
   /* the seven periods the project divides the era into */
   var ERAS = [
     { a: 1956, b: 1987, id: 'bourguiba' },
@@ -2041,7 +2054,8 @@ footer a:hover { color: var(--accent); }
     'viz.rup.1987': 'Ben Ali',
     'viz.rup.2011': 'Revolution',
     'viz.rup.2021': '25 July',
-    'viz.stratumAlt': 'Number of recorded offices held in Tunisia in each year from 1956 to 2026, rising from 4 in 1956 to a peak of 59 in 2021 and standing at 47 in 2026.',
+    /* A template: drawStratum fills it from DENSITY, so the description is the chart. */
+    'viz.stratumAlt': 'Number of recorded offices held in Tunisia in each year from {y0} to {y1}: {first} in {y0}, a peak of {peak} in {peakYear}, and {last} in {y1}.',
     'viz.dialAlt': 'A network of the 46 most-connected people in the graph, arranged in a fixed lane per layer, with a control to raise the minimum evidence standard.',
     'viz.lane.judicial': 'judicial',
     'viz.lane.civil': 'civil'
@@ -2171,38 +2185,38 @@ footer a:hover { color: var(--accent); }
   "speech.1": "L'économie de la parole",
   "speech.2": "<span class=\"curtain\"><span>Quatre messages par</span></span> <span class=\"curtain\"><span>semaine. Spécifié, pas mis en œuvre.</span></span>",
   "speech.3": "Une affirmation sans source est une facture envoyée au lecteur. Une affirmation sourcée arrive avec son reçu.",
-  "speech.4": "Toutes les autres limitations de ce projet existent pour arrêter un attaquant. Celle-ci, non. Elle existe parce qu'un message écrit en quarante secondes et un message écrit en quarante minutes s'affichent aujourd'hui à l'identique — et que tout ce projet plaide que <strong>des choses de valeur différente ne doivent jamais se ressembler</strong>.",
-  "speech.5": "La rareté est l'instrument. Qui dispose de deux messages par semaine les dépense sur quelque chose de réfléchi, parce qu'il en sent le coût. Qui en a soixante à l'heure réagit. Aucun conseil affiché dans l'éditeur ne produit le premier comportement ; un budget le produit sans dire un mot.",
-  "speech.6": "Et le budget pèse sur l'<em>affirmation</em>, pas sur la preuve. <strong>Un message portant une source qui se résout coûte la moitié du même message sans source</strong> — non parce que les messages sourcés seraient vrais, mais parce que le coût d'un message doit suivre la quantité de travail qu'il transfère à tous les autres.",
-  "speech.7": "Réponse, avec source",
-  "speech.8": "1 unité",
-  "speech.9": "Réponse, sans source",
-  "speech.10": "2 unités",
-  "speech.11": "Nouveau fil, avec source",
-  "speech.12": "3 unités",
-  "speech.13": "Nouveau fil, sans source",
-  "speech.14": "4 unités",
-  "speech.15": "Niveau 0 · nouveau",
-  "speech.16": "À la création d'une clé. Deux messages sans source, ou un fil, ou quatre messages sourcés.",
-  "speech.17": "Niveau 1 · initié",
-  "speech.18": "Sept jours et trois messages. Atteint vers le onzième jour.",
-  "speech.19": "Niveau 2 · établi",
-  "speech.20": "Soixante jours, douze messages et une proposition acceptée. C'est ce qui débloque la modification du graphe.",
-  "speech.21": "Niveau 3 · de confiance",
-  "speech.22": "Accordé par un humain. Hors d'atteinte automatiquement, et cela ne représente que 5× l'échelon du bas.",
-  "speech.23": "Les corrections ne coûtent rien et sont limitées à une par message. Le retrait pendant la retenue est remboursé intégralement, sans condition. Voter, signaler et lire sont gratuits et le resteront.",
-  "speech.24": "La retenue",
-  "speech.25": "Dix minutes qui vous appartiennent",
-  "speech.26": "Un message soumis attend dix minutes avant de paraître. Pendant ce délai, vous seul le voyez : modifiez-le librement, ou retirez-le et récupérez chaque unité. La retenue n'est pas de la modération et rien n'y est relu. Elle fait la seule chose qu'un budget ne peut pas faire — elle sépare la décision d'écrire de la décision de publier. La plupart des messages que l'on regrette, on les regrette dans les dix minutes.",
+  "speech.4": "Toutes les autres limitations de ce projet existent pour arrêter un attaquant. Selon la spécification, celle-ci ne le ferait pas — elle existerait parce qu'un message écrit en quarante secondes et un message écrit en quarante minutes s'affichent aujourd'hui à l'identique — et tout ce projet plaide que <strong>des choses de valeur différente ne doivent jamais se ressembler</strong>. (Spécifié, pas encore mis en œuvre.)",
+  "speech.5": "Selon la spécification, la rareté serait l'instrument. Qui disposerait de deux messages par semaine les dépenserait sur quelque chose de réfléchi, parce qu'il en sentirait le coût. Qui en a soixante à l'heure réagit. Aucun conseil affiché dans l'éditeur ne produit le premier comportement ; selon la spécification, un budget le produirait sans dire un mot. (Spécifié, pas encore mis en œuvre.)",
+  "speech.6": "Et le budget — spécifié, pas encore mis en œuvre — pèserait sur l'<em>affirmation</em>, pas sur la preuve. <strong>Selon la spécification, un message portant une source qui se résout coûterait la moitié du même message sans source</strong> — non parce que les messages sourcés seraient vrais, mais parce que le coût d'un message doit suivre la quantité de travail qu'il transfère à tous les autres. (Spécifié, pas encore mis en œuvre.)",
+  "speech.7": "Réponse, avec source (selon la spécification)",
+  "speech.8": "1 unité — spécifié",
+  "speech.9": "Réponse, sans source (selon la spécification)",
+  "speech.10": "2 unités — spécifié",
+  "speech.11": "Nouveau fil, avec source (selon la spécification)",
+  "speech.12": "3 unités — spécifié",
+  "speech.13": "Nouveau fil, sans source (selon la spécification)",
+  "speech.14": "4 unités — spécifié",
+  "speech.15": "Niveau 0 · nouveau — selon la spécification",
+  "speech.16": "Selon la spécification : à la création d'une clé — deux messages sans source, ou un fil, ou quatre messages sourcés. (Pas encore mis en œuvre.)",
+  "speech.17": "Niveau 1 · initié — selon la spécification",
+  "speech.18": "Selon la spécification : sept jours et trois messages. Atteint vers le onzième jour. (Pas encore mis en œuvre.)",
+  "speech.19": "Niveau 2 · établi — selon la spécification",
+  "speech.20": "Selon la spécification : soixante jours, douze messages et une proposition acceptée. C'est ce qui débloquerait la modification du graphe. (Pas encore mis en œuvre.)",
+  "speech.21": "Niveau 3 · de confiance — selon la spécification",
+  "speech.22": "Selon la spécification : accordé par un humain. Hors d'atteinte automatiquement, et cela ne représente que 5× l'échelon du bas. (Pas encore mis en œuvre.)",
+  "speech.23": "Selon la spécification, les corrections ne coûteraient rien et seraient limitées à une par message. Le retrait pendant la retenue serait remboursé intégralement, sans condition. Voter, signaler et lire seraient gratuits, et le resteront toujours. (Spécifié, pas encore mis en œuvre.)",
+  "speech.24": "La retenue — spécifiée, pas encore mise en œuvre",
+  "speech.25": "Dix minutes qui vous appartiendraient — spécifié, pas encore mis en œuvre",
+  "speech.26": "Selon la spécification, un message soumis attendrait dix minutes avant de paraître. Pendant ce délai, vous seul pourriez le voir : le modifier librement, ou le retirer et récupérer chaque unité. La retenue ne serait pas de la modération et rien n'y serait relu. Elle ferait la seule chose qu'un budget ne peut pas faire — elle séparerait la décision d'écrire de la décision de publier. La plupart des messages que l'on regrette, on les regrette dans les dix minutes. (Spécifié, pas encore mis en œuvre.)",
   "speech.27": "Corrections",
-  "speech.28": "Un message publié ne peut pas être modifié",
-  "speech.29": "Il peut porter exactement une correction, gratuite, ajoutée sous l'original avec les deux horodatages. Elle atteint les personnes qui lisent déjà ce message et personne d'autre, ce qui est précisément le public d'une correction. Un message modifié en silence est une archive qui ment sur elle-même.",
+  "speech.28": "Selon la spécification, un message publié ne pourrait pas être modifié",
+  "speech.29": "Selon la spécification, il pourrait porter exactement une correction, gratuite, ajoutée sous l'original avec les deux horodatages. Elle atteindrait les personnes qui lisent déjà ce message et personne d'autre, ce qui est précisément le public d'une correction. Un message modifié en silence est une archive qui ment sur elle-même. (Spécifié, pas encore mis en œuvre.)",
   "speech.30": "Jamais un score",
   "speech.31": "Le statut achète de la portée, jamais du volume",
-  "speech.32": "Pas de séries, pas de compteur à côté d'un pseudonyme, rien de visible pour quiconque en dehors du compte lui-même. Un budget de messages public serait un affichage de réputation sous un autre nom. Le même plafond s'applique aux modérateurs et à l'exploitant, car une voix illimitée domine la salle.",
+  "speech.32": "Pas de séries, pas de compteur à côté d'un pseudonyme, rien de visible pour quiconque en dehors du compte lui-même. Un budget de messages public serait un affichage de réputation sous un autre nom. Selon la spécification, le même plafond s'appliquerait aux modérateurs et à l'exploitant, car une voix illimitée domine la salle. (Spécifié, pas encore mis en œuvre.)",
   "speech.33": "Les refus",
   "speech.34": "« C'est votre semaine » est une information",
-  "speech.35": "Un refus nomme le budget au lieu de vous sermonner. « Limite atteinte » n'apprend rien ; savoir que vous avez dépensé votre semaine, et quand elle se recharge, enseigne la norme. Le budget est affiché dans l'éditeur avant que vous n'écriviez, et le prix du message se met à jour en direct dès qu'une source le rend moins cher.",
+  "speech.35": "Selon la spécification, un refus nommerait le budget au lieu de vous sermonner. « Limite atteinte » n'apprend rien ; savoir que vous avez dépensé votre semaine, et quand elle se recharge, enseigne la norme. Selon la spécification, le budget serait affiché dans l'éditeur avant que vous n'écriviez, et le prix du message se mettrait à jour en direct dès qu'une source le rend moins cher. (Spécifié, pas encore mis en œuvre.)",
   "standard.1": "Une seule règle",
   "standard.2": "Tout le monde dans ce graphe est soumis aux mêmes règles.",
   "standard.3": "Bourguiba, Ben Ali, Saïed, Ennahdha, l'opposition, l'armée, la police, les familles d'affaires, les syndicats, l'UE, la France, l'Italie, l'Algérie, les États-Unis, la Russie, la Banque mondiale et les ONG internationales sont tous consignés selon des règles identiques. <strong>Un atlas du pouvoir tunisien ne contenant que des Tunisiens se lit comme un réquisitoire contre les Tunisiens.</strong>",
@@ -2292,7 +2306,7 @@ footer a:hover { color: var(--accent); }
   "viz.rup.1987": "Ben Ali",
   "viz.rup.2011": "Révolution",
   "viz.rup.2021": "25 juillet",
-  "viz.stratumAlt": "Nombre de mandats recensés en Tunisie pour chaque année de 1956 à 2026, passant de 4 en 1956 à un maximum de 59 en 2021, et s'établissant à 47 en 2026.",
+  "viz.stratumAlt": "Nombre de mandats recensés en Tunisie pour chaque année de {y0} à {y1} : {first} en {y0}, un maximum de {peak} en {peakYear}, et {last} en {y1}.",
   "viz.dialAlt": "Un réseau des 46 personnes les plus connectées du graphe, disposées selon une voie fixe par couche, avec un contrôle permettant de relever le niveau de preuve exigé.",
   "index.eyebrow": "DT Research",
   "index.title": "Indices",
@@ -2425,38 +2439,38 @@ footer a:hover { color: var(--accent); }
   "speech.1": "اقتصاد الكلام",
   "speech.2": "<span class=\"curtain\"><span>أربعة منشورات في</span></span> <span class=\"curtain\"><span>الأسبوع. محدّدة في المواصفات، وغير مفعّلة.</span></span>",
   "speech.3": "الادعاء بلا مصدر فاتورة تُرسَل إلى القارئ. أما المسنَد فيأتي ومعه إيصاله.",
-  "speech.4": "كل حدّ معدل آخر في هذا المشروع موجود لإيقاف مهاجم. أما هذا فلا. إنه موجود لأن منشوراً استغرق أربعين ثانية ومنشوراً استغرق أربعين دقيقة يظهران اليوم متطابقين — وهذا المشروع كله حجّة على أن <strong>ما تختلف قيمته يجب ألا يبدو أبداً متشابهاً</strong>.",
-  "speech.5": "الندرة هي الأداة. من لديه منشوران في الأسبوع ينفقهما على شيء فكّر فيه، لأنه يشعر بالكلفة. ومن لديه ستون في الساعة يكتفي بردّ الفعل. ولا قدر من الإرشاد داخل محرر الكتابة ينتج السلوك الأول؛ أما الميزانية فتنتجه دون أن تنطق بكلمة.",
-  "speech.6": "والميزانية تقع على <em>الادعاء</em> لا على الدليل. <strong>المنشور الذي يحمل مصدراً صالحاً يكلّف نصف ما يكلّفه المنشور نفسه بلا مصدر</strong> — لا لأن المنشورات المسنَدة صادقة، بل لأن كلفة المنشور يجب أن تتبع مقدار العمل الذي يحمّله للآخرين جميعاً.",
-  "speech.7": "رد، مع مصدر",
-  "speech.8": "وحدة واحدة",
-  "speech.9": "رد، بلا مصدر",
-  "speech.10": "وحدتان",
-  "speech.11": "خيط جديد، مع مصدر",
-  "speech.12": "3 وحدات",
-  "speech.13": "خيط جديد، بلا مصدر",
-  "speech.14": "4 وحدات",
-  "speech.15": "المستوى 0 · جديد",
-  "speech.16": "عند إنشاء مفتاح. منشوران بلا مصدر، أو خيط واحد، أو أربعة منشورات مسنَدة.",
-  "speech.17": "المستوى 1 · مبتدئ",
-  "speech.18": "سبعة أيام وثلاثة منشورات. يُبلَغ نحو اليوم الحادي عشر.",
-  "speech.19": "المستوى 2 · راسخ",
-  "speech.20": "ستون يوماً واثنا عشر منشوراً واقتراح مقبول. وهذا ما يفتح إمكانية تعديل المبيان.",
-  "speech.21": "المستوى 3 · موثوق",
-  "speech.22": "يمنحه إنسان. لا يُبلَغ تلقائياً، وهو لا يتجاوز خمسة أضعاف الدرجة الأدنى.",
-  "speech.23": "التصويبات مجانية ومحدودة بواحدة لكل منشور. والسحب أثناء فترة الإمهال يُردّ كاملاً وبلا شروط. أما التصويت والإبلاغ والقراءة فمجانية وستبقى كذلك.",
-  "speech.24": "فترة الإمهال",
-  "speech.25": "عشر دقائق تخصّك وحدك",
-  "speech.26": "ينتظر المنشور المُرسَل عشر دقائق قبل أن يُنشر. وفي هذه المهلة أنت وحدك من يراه: عدّله كما تشاء، أو اسحبه فتسترد كل وحدة. وفترة الإمهال ليست إشرافاً ولا يُراجَع فيها شيء. إنها تفعل ما لا تستطيعه الميزانية — تفصل قرار الكتابة عن قرار النشر. فأكثر ما يندم عليه المرء يندم عليه خلال عشر دقائق.",
+  "speech.4": "كل حدّ معدل آخر في هذا المشروع موجود لإيقاف مهاجم. أما هذا، وفق المواصفات، فلن يكون كذلك — سيوجد لأن منشوراً استغرق أربعين ثانية ومنشوراً استغرق أربعين دقيقة يظهران اليوم متطابقين — وهذا المشروع كله حجّة على أن <strong>ما تختلف قيمته يجب ألا يبدو أبداً متشابهاً</strong>. (محدّد في المواصفات، وغير مفعّل بعد.)",
+  "speech.5": "وفق المواصفات، ستكون الندرة هي الأداة. من لديه منشوران في الأسبوع سينفقهما على شيء فكّر فيه، لأنه سيشعر بالكلفة. ومن لديه ستون في الساعة يكتفي بردّ الفعل. ولا قدر من الإرشاد داخل محرر الكتابة ينتج السلوك الأول؛ أما الميزانية، وفق المواصفات، فستنتجه دون أن تنطق بكلمة. (محدّد في المواصفات، وغير مفعّل بعد.)",
+  "speech.6": "والميزانية — المحدّدة في المواصفات وغير المفعّلة بعد — ستقع على <em>الادعاء</em> لا على الدليل. <strong>وفق المواصفات، سيكلّف المنشور الذي يحمل مصدراً صالحاً نصف ما يكلّفه المنشور نفسه بلا مصدر</strong> — لا لأن المنشورات المسنَدة صادقة، بل لأن كلفة المنشور يجب أن تتبع مقدار العمل الذي يحمّله للآخرين جميعاً. (محدّد في المواصفات، وغير مفعّل بعد.)",
+  "speech.7": "ردّ، مع مصدر (وفق المواصفات)",
+  "speech.8": "وحدة واحدة — وفق المواصفات",
+  "speech.9": "ردّ، بلا مصدر (وفق المواصفات)",
+  "speech.10": "وحدتان — وفق المواصفات",
+  "speech.11": "خيط جديد، مع مصدر (وفق المواصفات)",
+  "speech.12": "3 وحدات — وفق المواصفات",
+  "speech.13": "خيط جديد، بلا مصدر (وفق المواصفات)",
+  "speech.14": "4 وحدات — وفق المواصفات",
+  "speech.15": "المستوى 0 · جديد — وفق المواصفات",
+  "speech.16": "وفق المواصفات: عند إنشاء مفتاح — منشوران بلا مصدر، أو خيط واحد، أو أربعة منشورات مسنَدة. (غير مفعّل بعد.)",
+  "speech.17": "المستوى 1 · مبتدئ — وفق المواصفات",
+  "speech.18": "وفق المواصفات: سبعة أيام وثلاثة منشورات. يُبلَغ نحو اليوم الحادي عشر. (غير مفعّل بعد.)",
+  "speech.19": "المستوى 2 · راسخ — وفق المواصفات",
+  "speech.20": "وفق المواصفات: ستون يوماً واثنا عشر منشوراً واقتراح مقبول. وهذا ما سيفتح إمكانية تعديل المبيان. (غير مفعّل بعد.)",
+  "speech.21": "المستوى 3 · موثوق — وفق المواصفات",
+  "speech.22": "وفق المواصفات: يمنحه إنسان. لا يُبلَغ تلقائياً، ولا يتجاوز خمسة أضعاف الدرجة الأدنى. (غير مفعّل بعد.)",
+  "speech.23": "وفق المواصفات، ستكون التصويبات مجانية ومحدودة بتصويب واحد لكل منشور. وسيُردّ السحب أثناء فترة الإمهال كاملاً وبلا شروط. وسيكون التصويت والإبلاغ والقراءة مجانية، وستبقى كذلك دائماً. (محدّد في المواصفات، وغير مفعّل بعد.)",
+  "speech.24": "فترة الإمهال — محدّدة في المواصفات، وغير مفعّلة بعد",
+  "speech.25": "عشر دقائق ستخصّك وحدك — محدّدة في المواصفات، وغير مفعّلة بعد",
+  "speech.26": "وفق المواصفات، سينتظر المنشور المُرسَل عشر دقائق قبل أن يُنشر. وفي هذه المهلة لن يراه أحد سواك: تعدّله كما تشاء، أو تسحبه فتسترد كل وحدة. ولن تكون فترة الإمهال إشرافاً، ولن يُراجَع فيها شيء. ستفعل ما لا تستطيعه الميزانية — ستفصل قرار الكتابة عن قرار النشر. فأكثر ما يندم عليه المرء يندم عليه خلال عشر دقائق. (محدّد في المواصفات، وغير مفعّل بعد.)",
   "speech.27": "التصويبات",
-  "speech.28": "المنشور بعد نشره لا يُعدَّل",
-  "speech.29": "يمكنه أن يحمل تصويباً واحداً بالضبط، مجاناً، مُلحقاً تحت الأصل بتوقيتَيهما معاً. ويصل إلى من يقرؤون ذلك المنشور فعلاً ولا يصل إلى سواهم، وهذا بالضبط جمهور التصويب. أما المنشور المعدَّل في صمت فسجلٌّ يكذب على نفسه.",
+  "speech.28": "وفق المواصفات، لن يكون المنشور قابلاً للتعديل بعد نشره",
+  "speech.29": "وفق المواصفات، يمكنه أن يحمل تصويباً واحداً بالضبط، مجاناً، مُلحقاً تحت الأصل بتوقيتَيهما معاً. وسيصل إلى من يقرؤون ذلك المنشور فعلاً ولا يصل إلى سواهم، وهذا بالضبط جمهور التصويب. أما المنشور المعدَّل في صمت فسجلٌّ يكذب على نفسه. (محدّد في المواصفات، وغير مفعّل بعد.)",
   "speech.30": "ليست نقاطاً أبداً",
   "speech.31": "المكانة تشتري نطاقاً لا حجماً",
-  "speech.32": "لا سلاسل مواظبة، ولا عدّاد بجانب اسم، ولا شيء ظاهر لأحد سوى صاحب الحساب. فميزانية نشر معلنة ليست إلا عرضاً للسمعة باسم آخر. والسقف نفسه يسري على المشرفين وعلى المشغّل، لأن الصوت غير المحدود يهيمن على القاعة.",
+  "speech.32": "لا سلاسل مواظبة، ولا عدّاد بجانب اسم، ولا شيء ظاهر لأحد سوى صاحب الحساب. فميزانية نشر معلنة ليست إلا عرضاً للسمعة باسم آخر. ووفق المواصفات، سيسري السقف نفسه على المشرفين وعلى المشغّل، لأن الصوت غير المحدود يهيمن على القاعة. (محدّد في المواصفات، وغير مفعّل بعد.)",
   "speech.33": "الرفض",
   "speech.34": "«هذا أسبوعك» معلومة",
-  "speech.35": "الرفض يسمّي الميزانية بدل أن يوبّخك كي تتمهّل. عبارة «تجاوزت الحد» لا تعلّم شيئاً؛ أما أن تعرف أنك أنفقت أسبوعك ومتى يتجدد، فذلك يعلّم القاعدة. والميزانية معروضة في محرر الكتابة قبل أن تكتب، وسعر المنشور يتحدّث لحظياً كلما جعله المصدر أرخص.",
+  "speech.35": "وفق المواصفات، سيسمّي الرفض الميزانية بدل أن يوبّخك كي تتمهّل. عبارة «تجاوزت الحد» لا تعلّم شيئاً؛ أما أن تعرف أنك أنفقت أسبوعك ومتى يتجدد، فذلك يعلّم القاعدة. ووفق المواصفات، ستُعرض الميزانية في محرر الكتابة قبل أن تكتب، وسيتحدّث سعر المنشور لحظياً كلما جعله المصدر أرخص. (محدّد في المواصفات، وغير مفعّل بعد.)",
   "standard.1": "معيار واحد",
   "standard.2": "كل من في هذا المبيان يخضع للقواعد نفسها.",
   "standard.3": "بورقيبة وبن علي وسعيّد والنهضة والمعارضة والجيش والشرطة والعائلات المالية والنقابات والاتحاد الأوروبي وفرنسا وإيطاليا والجزائر والولايات المتحدة وروسيا والبنك الدولي والمنظمات غير الحكومية الدولية، كلهم مسجَّلون وفق قواعد متطابقة. <strong>فأطلس للسلطة في تونس لا يضم إلا التونسيين يُقرأ كلائحة اتهام للتونسيين.</strong>",
@@ -2546,7 +2560,7 @@ footer a:hover { color: var(--accent); }
   "viz.rup.1987": "بن علي",
   "viz.rup.2011": "الثورة",
   "viz.rup.2021": "25 جويلية",
-  "viz.stratumAlt": "عدد المناصب المسجّلة في تونس في كل سنة من 1956 إلى 2026، مرتفعاً من 4 سنة 1956 إلى ذروة 59 سنة 2021، وواقفاً عند 47 سنة 2026.",
+  "viz.stratumAlt": "عدد المناصب المسجّلة في تونس في كل سنة من {y0} إلى {y1}: {first} سنة {y0}، وذروة {peak} سنة {peakYear}، و{last} سنة {y1}.",
   "viz.dialAlt": "شبكة للأشخاص الستة والأربعين الأكثر ارتباطاً في المبيان، مرتّبين بمسار ثابت لكل طبقة، مع أداة لرفع الحد الأدنى المطلوب من الدليل.",
   "index.eyebrow": "DT Research",
   "index.title": "المؤشرات",
@@ -2830,6 +2844,16 @@ footer a:hover { color: var(--accent); }
   function drawStratum() {
     var g = document.getElementById('stratumbody');
     if (!g) return;
+
+    /* The description is computed from the same array the chart draws, in the
+       reader's language, so a screen reader hears the figures on screen. */
+    var svgEl = document.getElementById('stratumsvg');
+    if (svgEl && DENSITY.length) {
+      var peakAt = 0;
+      for (var pi = 1; pi < DENSITY.length; pi++) if (DENSITY[pi] > DENSITY[peakAt]) peakAt = pi;
+      var vals = { y0: Y0, y1: Y0 + DENSITY.length - 1, first: DENSITY[0], last: DENSITY[DENSITY.length - 1], peak: DENSITY[peakAt], peakYear: Y0 + peakAt };
+      svgEl.setAttribute('aria-label', T('viz.stratumAlt').replace(/\{(\w+)\}/g, function (m, k) { return vals[k] === undefined ? m : String(vals[k]); }));
+    }
     g.textContent = '';   /* redrawn whenever the language changes */
     var VW = 1200, VH = 300, PAD_L = 6, PAD_R = 6, MID = 155, AMP = 100;
     var n = DENSITY.length;
@@ -3015,11 +3039,11 @@ footer a:hover { color: var(--accent); }
         d: 'M' + a.x + ',' + a.y + 'Q' + ((a.x + b.x) / 2) + ',' + midY + ' ' + b.x + ',' + b.y,
         class: 'link' + (bridge ? ' bridge' : ''),
         stroke: bridge ? 'var(--bridge)' : 'var(--basis-' + e[2] + ')',
-        'stroke-dasharray': e[2] === 'reported' ? '6 4' : (e[2] === 'inferred' ? '1.5 4' : (e[2] === 'unsubstantiated' ? '8 3 1.5 3' : null)),
-        opacity: 0.72
+        'stroke-dasharray': BASIS_DASH[e[2]] || null,
+        opacity: BASIS_OPACITY[e[2]] || BASIS_OPACITY.reported
       });
       svg.appendChild(p);
-      linkEls.push({ el: p, rank: RANK[e[2]], a: e[0], b: e[1] });
+      linkEls.push({ el: p, rank: RANK[e[2]], a: e[0], b: e[1], op: BASIS_OPACITY[e[2]] || BASIS_OPACITY.reported });
     });
 
     /* nodes */
@@ -3047,7 +3071,7 @@ footer a:hover { color: var(--accent); }
       var attached = {}, shown = 0;
       linkEls.forEach(function (l) {
         var on = l.rank >= floor;
-        l.el.style.opacity = on ? 0.72 : 0;
+        l.el.style.opacity = on ? l.op : 0;
         l.el.style.strokeWidth = on ? 1.1 : 0.4;
         if (on) { shown++; attached[l.a] = true; attached[l.b] = true; }
       });

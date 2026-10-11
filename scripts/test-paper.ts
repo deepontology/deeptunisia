@@ -32,7 +32,7 @@ import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { certainlyActive } from '../src/lib/model.ts';
+import { certainlyActive, DASH, BASIS_OPACITY, BASIS_ORDER } from '../src/lib/model.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 
@@ -336,6 +336,18 @@ const papers = new Map<string, string>();
 			JSON.stringify(landedEDGES) === JSON.stringify(expectedEDGES),
 			landedEDGES ? `${(landedEDGES as unknown[]).length} edges` : 'EDGES not found'
 		);
+
+		// The basis grammar. The landing's demo and legend draw claims with the
+		// atlas's own DASH and BASIS_OPACITY, so a reader learns one set of styles.
+		for (const b of BASIS_ORDER) {
+			const dash = landing.match(new RegExp(`var BASIS_DASH = \\{[^}]*\\b${b}: '([^']*)'`))?.[1];
+			const op = landing.match(new RegExp(`var BASIS_OPACITY = \\{[^}]*\\b${b}: ([\\d.]+)`))?.[1];
+			ok(`landing demo draws ${b} with DASH`, dash === DASH[b], `"${dash}" vs "${DASH[b]}"`);
+			ok(`landing demo draws ${b} with BASIS_OPACITY`, Number(op) === BASIS_OPACITY[b], `${op} vs ${BASIS_OPACITY[b]}`);
+			const line = landing.match(new RegExp(`<line[^>]*data-basis="${b}"[^>]*>`))?.[0] ?? '';
+			ok(`landing legend draws ${b} with DASH`, (line.match(/stroke-dasharray="([^"]*)"/)?.[1] ?? '') === DASH[b], line);
+			ok(`landing legend draws ${b} with BASIS_OPACITY`, Number(line.match(/stroke-opacity="([^"]*)"/)?.[1]) === BASIS_OPACITY[b]);
+		}
 
 		// The manifest-checked list: landing/index.html must be covered. A data
 		// change that does not rebuild the landing leaves the hash stale; the

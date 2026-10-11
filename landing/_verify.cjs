@@ -146,6 +146,8 @@ const URL = process.env.LANDING_URL || 'http://localhost:4810/landing/index.html
   const k1 = await page.locator('.word .w').allTextContents();
   ok(k1.length === 12, '12 words');
   ok(await page.locator('#dots circle').count() === 2048, '2048 dots');
+  /* The phrase lights its dots one after another; wait for the sequence, not a frame of it. */
+  await page.waitForFunction(() => document.querySelectorAll('#dots circle.on').length === 12, null, { timeout: 4000 }).catch(() => {});
   ok(await page.locator('#dots circle.on').count() === 12, '12 dots lit');
   await page.locator('#reroll').click();
   await page.waitForTimeout(900);
@@ -241,12 +243,42 @@ const URL = process.env.LANDING_URL || 'http://localhost:4810/landing/index.html
 
   /* Whole-sentence templates must keep their placeholders in every language —
      a French copy that drops {total} renders "22 connexions visibles sur". */
-  const TEMPLATES = { 'dial.live': ['iso', 'n', 'total'], 'bud.left': ['n', 'total'] };
+  const TEMPLATES = {
+    'dial.live': ['iso', 'n', 'total'],
+    'bud.left': ['n', 'total'],
+    'viz.stratumAlt': ['first', 'last', 'peak', 'peakYear', 'y0', 'y1']
+  };
   for (const [key, wanted] of Object.entries(TEMPLATES)) {
     for (const l of ['fr', 'ar']) {
-      const got = [...(strings[l][key] || '').matchAll(/\{(\w+)\}/g)].map((m) => m[1]).sort();
+      const got = [...new Set([...(strings[l][key] || '').matchAll(/\{(\w+)\}/g)].map((m) => m[1]))].sort();
       ok(String(got) === String(wanted), `${l} ${key} keeps every placeholder`, String(got));
     }
+  }
+
+  /* The chart's description is computed from the array it draws. */
+  const alt = await page.evaluate(() => {
+    const src = document.documentElement.innerHTML;
+    const d = JSON.parse(src.match(/var DENSITY = (\[.*?\]);/)[1]);
+    return { label: document.getElementById('stratumsvg').getAttribute('aria-label'), peak: Math.max(...d), last: d[d.length - 1] };
+  });
+  ok(alt.label.includes(String(alt.peak)) && alt.label.includes(String(alt.last)) && !/\{\w+\}/.test(alt.label), 'the stratum description states the drawn peak and last value');
+
+  /* Without JavaScript nothing reveals the page, so nothing may start hidden. */
+  {
+    const ctx = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
+    const p = await ctx.newPage();
+    await p.goto(URL, { waitUntil: 'load' });
+    const hidden = await p.evaluate(() => {
+      const els = [...document.querySelectorAll('h1, h2, .lede, a.enter')];
+      return els.filter((e) => {
+        const cs = getComputedStyle(e);
+        const span = e.querySelector('.curtain > span');
+        const moved = span && getComputedStyle(span).transform !== 'none';
+        return +cs.opacity < 0.5 || moved;
+      }).length;
+    });
+    ok(hidden === 0, 'with JavaScript off, headings and buttons are visible');
+    await ctx.close();
   }
 
   await page.setViewportSize({ width: 1440, height: 900 });
