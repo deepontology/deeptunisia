@@ -30,7 +30,9 @@
 	];
 
 	const TOTAL = STAGES.reduce((s, x) => s + x.n, 0);
-	const DURATION = 1750;
+	/** The count, then the exit: 900ms in all, measured from first frame. */
+	const DURATION = 600;
+	const EXIT_MS = 300;
 
 	let count = $state(0);
 	let stageIndex = $state(0);
@@ -75,7 +77,7 @@
 			} else {
 				count = TOTAL;
 				leaving = true;
-				setTimeout(onDone, 520);
+				setTimeout(onDone, EXIT_MS);
 			}
 		};
 		raf = requestAnimationFrame(frame);
@@ -127,9 +129,10 @@
 		display: grid;
 		place-items: center;
 		background: var(--surface-base);
+		/* Inside EXIT_MS, so the overlay has faded before it unmounts. */
 		transition:
-			opacity var(--dur-slower) var(--ease-in-out),
-			filter var(--dur-slower) var(--ease-in-out);
+			opacity var(--dur-normal) var(--ease-in-out),
+			filter var(--dur-normal) var(--ease-in-out);
 	}
 	.boot.leaving {
 		opacity: 0;

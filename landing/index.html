@@ -42,15 +42,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Deep Tunisia — where memory fades, power escapes</title>
-<meta name="description" content="An open, source-backed public record of the people, institutions and networks that shape Tunisia, 1956–2026. Every claim traceable. Every conclusion challengeable. No accounts, no trackers, no permission required.">
+<title>Deep Tunisia: where memory fades, power escapes</title>
+<meta name="description" content="An open, source-backed public record of the people, institutions and networks that shape Tunisia, 1956 to 2026. Every claim traceable. Every conclusion challengeable. No accounts, no trackers, no permission required.">
 <meta name="theme-color" content="#16150f">
 <meta name="color-scheme" content="dark light">
-<meta property="og:title" content="Deep Tunisia — a public record of power">
+<meta property="og:title" content="Deep Tunisia: a public record of power">
 <meta property="og:description" content="458 people. 427 offices held. 362 documented relationships. 1380 sources. Seventy years of Tunisian power, drawn to scale and open to challenge.">
 <meta property="og:type" content="website">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2316150f'/%3E%3Ccircle cx='16' cy='16' r='4.5' fill='%23d8b45a'/%3E%3Ccircle cx='16' cy='16' r='10' fill='none' stroke='%23d8b45a' stroke-opacity='.42' stroke-width='1'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="../static/fonts/fonts.css">
+<!-- The reveal animations hide text until the page script shows it. Without
+     JavaScript nothing would show it, so the hidden starting state applies
+     only once this line has run. -->
+<script>document.documentElement.classList.add('js');</script>
 <style>
 /* ==========================================================================
    1 · TOKENS
@@ -738,7 +742,8 @@ html[dir='rtl'] .path-arrow { transform: scaleX(-1); }
 }
 .basis:hover { background: var(--surface-raised); }
 .basis .spec { height: 22px; }
-.basis .spec line { stroke: var(--c); stroke-width: 2.5; stroke-linecap: round; }
+/* Butt caps, as in the atlas: round caps lengthen every dash and close the gaps. */
+.basis .spec line { stroke: var(--c); stroke-width: 2.5; stroke-linecap: butt; }
 .basis .name {
   font-family: var(--font-strong); font-weight: 600;
   font-size: 0.9rem; color: var(--c); letter-spacing: 0.005em;
@@ -965,6 +970,21 @@ html[dir='rtl'] .path-arrow { transform: scaleX(-1); }
 }
 .neg::before { content: '\00d7\00a0\00a0'; color: var(--rupture); }
 
+/* DT Research (generated). Sits between the ledger and the first movement,
+   in the card grid's own voice; unnumbered, because it is not a movement. */
+#indexes { padding-block: clamp(4rem, 9vw, 8rem); border-block-start: 1px solid var(--border-subtle); }
+#indexes .sec-head, #indexes .cards { width: calc(100% - 2 * var(--gutter)); max-width: calc(1360px - 2 * var(--gutter)); margin-inline: auto; }
+#indexes .sec-head .eyebrow { font-family: var(--font-mono); font-size: var(--micro); letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--accent); margin-block-end: 1rem; }
+#indexes .sec-title { font-family: var(--font-serif); font-weight: 400; font-size: var(--d3); letter-spacing: -0.02em; line-height: 1.1; }
+#indexes .cards { list-style: none; padding: 0; }
+#indexes .card-link { display: grid; gap: 0.6rem; text-decoration: none; color: inherit; }
+#indexes .plate { width: 100%; aspect-ratio: 1.78; object-fit: cover; border-radius: 6px; margin-block-end: 0.6rem; }
+#indexes .card-title { font-family: var(--font-serif); font-size: 1.35rem; letter-spacing: -0.02em; }
+#indexes .card-status { font-size: 0.94rem; color: var(--text-secondary); line-height: 1.65; }
+#indexes .idx-value { font-family: var(--font-mono); font-weight: 500; color: var(--text-primary); }
+#indexes .card-cta { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--accent); }
+html[lang='ar'] #indexes .sec-title, html[lang='ar'] #indexes .card-title { font-family: var(--font-ar); }
+
 /* ==========================================================================
    17 · CLOSING + FOOTER
    ========================================================================== */
@@ -1021,13 +1041,15 @@ footer a:hover { color: var(--accent); }
 /* ==========================================================================
    18 · REVEAL
    ========================================================================== */
-.rv { opacity: 0; transform: translateY(22px); transition: opacity 900ms var(--ease-out), transform 900ms var(--ease-out); }
-.rv.in { opacity: 1; transform: none; }
+/* Only with the page script running (html.js): without it the text simply shows. */
+html.js .rv { opacity: 0; transform: translateY(22px); transition: opacity 900ms var(--ease-out), transform 900ms var(--ease-out); }
+html.js .rv.in { opacity: 1; transform: none; }
 
 /* Line-by-line curtain for display type. */
 .curtain { display: block; overflow: hidden; }
-.curtain > span { display: block; transform: translateY(105%); transition: transform 1100ms var(--ease-out); }
-.in .curtain > span, .curtain.in > span { transform: none; }
+.curtain > span { display: block; }
+html.js .curtain > span { transform: translateY(105%); transition: transform 1100ms var(--ease-out); }
+html.js .in .curtain > span, html.js .curtain.in > span { transform: none; }
 
 @media (prefers-reduced-motion: reduce) {
   .rv, .curtain > span { opacity: 1 !important; transform: none !important; transition: none !important; }
@@ -1080,7 +1102,7 @@ footer a:hover { color: var(--accent); }
 <section class="hero" id="surface">
   <canvas id="field" aria-hidden="true" width="1280" height="856"></canvas>
   <div class="wrap">
-    <p class="micro eyebrow rv" data-i18n="surface.1" style="">An open public record &nbsp;·&nbsp; Tunisia &nbsp;·&nbsp; 1956 — 2026</p>
+    <p class="micro eyebrow rv" data-i18n="surface.1" style="">An open public record &nbsp;·&nbsp; Tunisia &nbsp;·&nbsp; 1956 to 2026</p>
 
     <h1 class="display rv" data-i18n-html="surface.2" style="">
       <span class="curtain"><span>Where memory fades,</span></span>
@@ -1088,9 +1110,7 @@ footer a:hover { color: var(--accent); }
     </h1>
 
     <p class="lede rv" data-i18n="surface.3" style="">
-      Deep Tunisia is a living public record of the people, institutions, companies and
-      networks that shape a nation. Every claim traceable to its source. Every conclusion
-      open to challenge. Nothing here asks your permission to be read.
+      Deep Tunisia is a public record of the people, institutions, companies and networks that shape a nation, updated as the evidence changes. Every claim traces to its source. Every conclusion stays open to challenge. Nothing here asks your permission to be read.
     </p>
 
     <div class="hero-foot rv">
@@ -1107,7 +1127,7 @@ footer a:hover { color: var(--accent); }
       </a>
       <a class="ghostlink" href="#memory" data-i18n="surface.4">Read the argument</a>
     </div>
-    <p class="hero-hint rv" data-i18n="surface.6" style="margin-block-start:1.4rem; color:var(--text-muted); max-width:38rem; line-height:1.65">This page is the argument — the atlas is the instrument. Chronicle, Network, Map &amp; World, 1956–2026, every claim sourced. Opens instantly. No account, no tracker.</p>
+    <p class="hero-hint rv" data-i18n="surface.6" style="margin-block-start:1.4rem; color:var(--text-muted); max-width:38rem; line-height:1.65">This page is the argument. The atlas is the instrument. Chronicle, Network, Map &amp; World, 1956 to 2026, every claim sourced. Opens instantly. No account, no tracker.</p>
   </div>
 
   <div class="scrollcue" aria-hidden="true">
@@ -1131,6 +1151,12 @@ footer a:hover { color: var(--accent); }
   </div>
 </section>
 
+<!-- DT Research: one card per study, rendered by scripts/build-landing.ts from
+     src/generated/studies.json (scripts/landing/indexes.ts). Empty until the
+     registry exists, and then the section is simply not on the page. -->
+<!--landing:indexes-->
+<!--/landing:indexes-->
+
 <!-- ======================= II · MEMORY ======================= -->
 <section class="movement" id="memory">
   <div class="wrap">
@@ -1146,20 +1172,13 @@ footer a:hover { color: var(--accent); }
       <div class="prose rv">
         <p data-i18n-html="memory.3"><em>Memory is made of records. Records are made of information.</em></p>
         <p data-i18n="memory.4">
-          For centuries the excuse was scarcity. Records were incomplete, decisions were
-          taken behind closed doors, and power was difficult to understand and harder to
-          challenge. That excuse is gone. More information is produced in a single day
-          than entire generations once created in a lifetime.
+          For centuries the excuse was scarcity. Records were incomplete, decisions were taken behind closed doors, and power was hard to understand and harder to challenge. That excuse is gone. More information is produced in a single day than whole generations once created in a lifetime.
         </p>
         <p data-i18n-html="memory.5">
-          And yet understanding is more fragmented than it has ever been. Facts scatter.
-          Records disappear. Connections stay invisible. Public memory fades — and
-          <strong>wherever memory fades, power escapes accountability.</strong>
+          And yet understanding is more fragmented than it has ever been. Facts scatter. Records disappear. Connections stay invisible. Public memory fades, and <strong>wherever memory fades, power escapes accountability.</strong>
         </p>
         <p data-i18n="memory.6">
-          Deep Tunisia exists so that Tunisia remembers: seventy years of appointments,
-          institutions, ruptures and relationships, held in one place, in the open, in a
-          form anyone can audit.
+          Deep Tunisia exists so that Tunisia remembers. Seventy years of appointments, institutions, ruptures and relationships, held in one place, in the open, in a form anyone can audit.
         </p>
       </div>
     </div>
@@ -1167,7 +1186,7 @@ footer a:hover { color: var(--accent); }
     <!-- ---------- the stratum ---------- -->
     <figure class="stratum rv" id="stratum">
       <div class="readout" id="readout"></div>
-      <svg id="stratumsvg" viewBox="0 0 1200 300" role="img" data-i18n-label="viz.stratumAlt" aria-label="Number of recorded offices held in Tunisia in each year from 1956 to 2026, rising from 5 in 1956 to a peak of 57 in 2016 and standing at 32 in 2026.">
+      <svg id="stratumsvg" viewBox="0 0 1200 300" role="img" aria-label="Number of recorded offices held in Tunisia in each year since 1956.">
         <defs>
           <linearGradient id="ribbonfill" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.30"></stop>
@@ -1178,11 +1197,7 @@ footer a:hover { color: var(--accent); }
         <g id="stratumbody"></g>
       </svg>
       <figcaption class="figcap" style="margin-block-start:1rem" data-i18n-html="memory.7">
-        Recorded offices held, per year, 1956–2026. Drawn from 427 tenures in
-        <span style="color:var(--text-secondary)">data/positions.yaml</span>; none is dropped for an uncertain
-        date — the uncertainty is drawn rather than hidden. The rise
-        after 2011 is partly the state opening and partly this record getting better at
-        recent decades — the graph does not pretend to know how much of each.
+        Recorded offices held, per year, 1956 to 2026. Drawn from 427 tenures in <span style="color:var(--text-secondary)">data/positions.yaml</span>. None is dropped for an uncertain date. The uncertainty is drawn rather than hidden. The rise after 2011 is partly the state opening up and partly this record getting better at recent decades. The graph does not pretend to know how much of each.
       </figcaption>
     </figure>
   </div>
@@ -1207,22 +1222,13 @@ footer a:hover { color: var(--accent); }
           those fragments into a public understanding that no single document can provide.
         </p>
         <p data-i18n-html="connection.5">
-          The join that makes this possible is deliberately unglamorous. A <strong>position</strong>
-          is <em>(role · holder · start · end)</em> — an interval, not a fact about a person.
-          You cannot ask <em>who held power in 1994</em> from a list of people. You can only ask
-          it from a set of intervals.
+          The join that makes this possible is deliberately unglamorous. A <strong>position</strong> is <em>a role, a holder, a start and an end</em>. It is an interval, not a fact about a person. You cannot ask <em>who held power in 1994</em> from a list of people. You can only ask it from a set of intervals.
         </p>
         <p data-i18n="connection.6">
-          Dates are ranges, never points: earliest and latest start, earliest and latest end,
-          plus a status. The timeline draws the documented core solid and the uncertain
-          envelope hatched, so a span nobody has confirmed can never quietly pass for one
-          that has been.
+          Dates are ranges, never points. Each one has an earliest and latest start, an earliest and latest end, and a status. The timeline draws the documented core solid and the uncertain envelope hatched, so a span nobody has confirmed can never quietly pass for one that has been.
         </p>
         <p data-i18n-html="connection.7">
-          Successions are <strong>derived, not asserted</strong> — computed from the intervals
-          themselves, so a hole in the record shows up as a hole. There are currently
-          <strong>43 succession gaps</strong> and <strong>2 overlapping tenures</strong>, and
-          all of them are published.
+          Successions are <strong>derived, not asserted</strong>. They are computed from the intervals themselves, so a hole in the record shows up as a hole. There are currently <strong>43 succession gaps</strong> and <strong>2 overlapping tenures</strong>, and all of them are published.
         </p>
       </div>
     </div>
@@ -1245,15 +1251,10 @@ footer a:hover { color: var(--accent); }
       </div>
       <div class="prose rv">
         <p data-i18n="evidence.3">
-          No language model writes claims into this graph. Knowledge enters through one
-          door, in a fixed order, and the build refuses anything that arrives out of order.
-          Models draft translations and research candidates — flagged and gated.
-          See <a href="/colophon">how this was made</a>.
+          No language model writes claims into this graph. Knowledge enters through one door, in a fixed order, and the build refuses anything that arrives out of order. Models draft translations and research candidates, flagged and gated. See <a href="/colophon">how this was made</a>.
         </p>
         <p data-i18n-html="evidence.4">
-          <strong>The rule that matters most: an inference is never allowed to become a
-          fact.</strong> Every claim is filed under one of four bases, and no two of them
-          are ever drawn the same way.
+          <strong>An inference is never allowed to become a fact. That is the rule that matters most.</strong> Every claim is filed under one of four bases, and no two of them are ever drawn the same way.
         </p>
       </div>
     </div>
@@ -1265,9 +1266,7 @@ footer a:hover { color: var(--accent); }
         <div>
           <h4 data-i18n="evidence.5">The citation comes first</h4>
           <p data-i18n="evidence.6">
-            A source is added before the claim it supports, and tiered 1 to 5. Tier 1 is a
-            decree or gazette entry. Tier 5 is a lead that needs corroborating and is never
-            sufficient on its own. The current library is 1380 sources — 164 at tier 1, 219 at tier 2, 505 at tier 3, 414 at tier 4, 78 at tier 5.
+            A source is added before the claim it supports, and tiered 1 to 5. Tier 1 is a decree or gazette entry. Tier 5 is a lead that needs corroborating and is never sufficient on its own. The current library is 1380 sources: 164 at tier 1, 219 at tier 2, 505 at tier 3, 414 at tier 4, 78 at tier 5.
           </p>
         </div>
       </div>
@@ -1276,11 +1275,7 @@ footer a:hover { color: var(--accent); }
         <div>
           <h4 data-i18n="evidence.7">The claim is attached to it</h4>
           <p data-i18n-html="evidence.8">
-            Nothing is entered free-floating. A position, a relationship, an event — each
-            references the source ids that hold it up. 50 of the 1380 sources currently back
-            no claim at all; they are kept as staged reading and <em>excluded from the
-            published count</em>, because a bibliography entry that holds nothing up is not
-            evidence.
+            Nothing is entered free-floating. A position, a relationship or an event each references the source ids that hold it up. 50 of the 1380 sources currently back no claim at all. They are kept as staged reading and <em>excluded from the published count</em>, because a bibliography entry that holds nothing up is not evidence.
           </p>
         </div>
       </div>
@@ -1289,11 +1284,7 @@ footer a:hover { color: var(--accent); }
         <div>
           <h4 data-i18n="evidence.9">The basis is declared, and it changes how it looks</h4>
           <p data-i18n="evidence.10">
-            Documented, reported, inferred, unsubstantiated. The basis describes the claim,
-            not its dates — “X held this post” and “between these dates” are separable
-            claims that routinely have different standing, so they carry separate flags. A
-            reader can raise the evidence floor at any time and watch weaker claims leave
-            the map.
+            Documented, reported, inferred, unsubstantiated. The basis describes the claim, not its dates. "X held this post" and "between these dates" are separate claims, and they routinely have different standing, so each carries its own flag. A reader can raise the evidence floor at any time and watch weaker claims leave the map.
           </p>
         </div>
       </div>
@@ -1302,10 +1293,7 @@ footer a:hover { color: var(--accent); }
         <div>
           <h4 data-i18n="evidence.11">The build refuses the rest</h4>
           <p data-i18n-html="evidence.12">
-            An <em>inferred</em> claim must state its reasoning and what would falsify it.
-            A grade C or D claim must name who is making it. These are not lint warnings —
-            they fail the build. There is no way to slip an unattributed insinuation into
-            this dataset.
+            An <em>inferred</em> claim must state its reasoning and what would falsify it. A grade C or D claim must name who is making it. These are not lint warnings. They fail the build. There is no way to slip an unattributed insinuation into this dataset.
           </p>
           <span class="hard" data-i18n="evidence.13">Hard failure, not a warning</span>
         </div>
@@ -1315,10 +1303,7 @@ footer a:hover { color: var(--accent); }
         <div>
           <h4 data-i18n="evidence.14">Change is a record too</h4>
           <p data-i18n-html="evidence.15">
-            The data is plain text under version control, so every factual change is a
-            dated, attributable diff. That history is published in full and
-            <strong>generated, not curated</strong> — nobody gets to decide which corrections
-            were flattering enough to appear.
+            The data is plain text under version control, so every factual change is a dated, attributable diff. That history is published in full and <strong>generated, not curated</strong>. Nobody gets to decide which corrections were flattering enough to appear.
           </p>
         </div>
       </div>
@@ -1328,25 +1313,25 @@ footer a:hover { color: var(--accent); }
     <h3 class="sub rv" style="margin-block-start:clamp(3rem,6vw,5rem)" data-i18n="evidence.16">The four bases, and the strokes that carry them</h3>
     <div class="bases rv">
       <div class="basis" data-b="documented">
-        <svg class="spec" viewBox="0 0 120 22" aria-hidden="true"><line x1="2" y1="11" x2="118" y2="11"></line></svg>
+        <svg class="spec" viewBox="0 0 120 22" aria-hidden="true"><line x1="2" y1="11" x2="118" y2="11" data-basis="documented" stroke-opacity="1"></line></svg>
         <span class="name" data-i18n="evidence.17">Documented</span>
         <p class="def" data-i18n="evidence.18">An official record, decree or gazette entry states it.</p>
         <span class="count" data-i18n="evidence.19">199 claims &nbsp;·&nbsp; solid</span>
       </div>
       <div class="basis" data-b="reported">
-        <svg class="spec" viewBox="0 0 120 22" aria-hidden="true"><line x1="2" y1="11" x2="118" y2="11" stroke-dasharray="9 6"></line></svg>
+        <svg class="spec" viewBox="0 0 120 22" aria-hidden="true"><line x1="2" y1="11" x2="118" y2="11" data-basis="reported" stroke-dasharray="5 3" stroke-opacity="0.82"></line></svg>
         <span class="name" data-i18n="evidence.20">Reported</span>
         <p class="def" data-i18n="evidence.21">Credible publications report it, with attribution.</p>
         <span class="count" data-i18n="evidence.22">690 claims &nbsp;·&nbsp; dashed</span>
       </div>
       <div class="basis" data-b="inferred">
-        <svg class="spec" viewBox="0 0 120 22" aria-hidden="true"><line x1="2" y1="11" x2="118" y2="11" stroke-dasharray="1.5 5.5"></line></svg>
+        <svg class="spec" viewBox="0 0 120 22" aria-hidden="true"><line x1="2" y1="11" x2="118" y2="11" data-basis="inferred" stroke-dasharray="2 3" stroke-opacity="0.6"></line></svg>
         <span class="name" data-i18n="evidence.23">Inferred</span>
-        <p class="def" data-i18n="evidence.24">Nobody states it. Reasoned from documented structure — and it must publish what would prove it wrong.</p>
+        <p class="def" data-i18n="evidence.24">Nobody states it. It is reasoned from documented structure, and it must publish what would prove it wrong.</p>
         <span class="count" data-i18n="evidence.25">43 claims &nbsp;·&nbsp; dotted</span>
       </div>
       <div class="basis" data-b="unsubstantiated">
-        <svg class="spec" viewBox="0 0 120 22" aria-hidden="true"><line x1="2" y1="11" x2="118" y2="11" stroke-dasharray="10 4 1.5 4"></line></svg>
+        <svg class="spec" viewBox="0 0 120 22" aria-hidden="true"><line x1="2" y1="11" x2="118" y2="11" data-basis="unsubstantiated" stroke-dasharray="1 3 6 3" stroke-opacity="0.45"></line></svg>
         <span class="name" data-i18n="evidence.26">Unsubstantiated</span>
         <p class="def" data-i18n="evidence.27">It circulates without reliable evidence. Recorded, attributed, and off by default.</p>
         <span class="count" data-i18n="evidence.28">13 claims &nbsp;·&nbsp; dot-dash</span>
@@ -1354,21 +1339,13 @@ footer a:hover { color: var(--accent); }
     </div>
 
     <p class="prose rv" style="margin-block-start:2rem; max-width:52rem" data-i18n-html="evidence.29">
-      <strong>Unsubstantiated claims are recorded, not deleted.</strong> Deleting a widely-held
-      claim does not make it go away — it only removes the map's ability to show anyone
-      <em>why</em> the popular account is wrong. Several on record here are contradicted by
-      this project's own data: the claim that the army secretly governs Tunisia sits directly
-      beside the record of the tri-service command going unfilled for two decades.
+      <strong>Unsubstantiated claims are recorded, not deleted.</strong> Deleting a widely held claim does not make it go away. It only removes the map's ability to show anyone <em>why</em> the popular account is wrong. Several on record here are contradicted by this project's own data. The claim that the army secretly governs Tunisia sits directly beside the record of the tri-service command going unfilled for two decades.
     </p>
 
     <!-- ---------- the evidence dial ---------- -->
     <h3 class="sub rv" style="margin-block-start:clamp(3rem,6vw,5rem)" data-i18n="evidence.30">Raise the floor. Watch the map dissolve.</h3>
     <p class="prose rv" style="margin-block-start:1rem" data-i18n="evidence.31">
-      Below is a real slice of the graph: the 46 most-connected people and the relationships
-      recorded between them, each carrying its actual basis. Drag the floor upward and the
-      weaker evidence leaves. This is the most informative interaction on the site, and it is
-      the one most projects would never build — because it shows you how much of the picture
-      rests on something short of proof.
+      Below is a real slice of the graph. It shows the 46 most-connected people and the relationships recorded between them, each with its actual basis. Drag the floor upward and the weaker evidence leaves. This is the most informative interaction on the site. Most projects would never build it, because it shows how much of the picture rests on something short of proof.
     </p>
 
     <div class="instrument rv">
@@ -1394,14 +1371,7 @@ footer a:hover { color: var(--accent); }
       </div>
     </div>
     <p class="figcap rv" style="margin-block-start:1rem" data-i18n="evidence.38">
-      Gold edges cross between layers — a security figure tied to an economic one, for
-      instance. Those are the connections the project most wants you to check, and they are
-      also the ones most likely to thin out when you raise the floor. A high connection count
-      is not evidence of wrongdoing, coordination or hidden control; it records that this
-      dataset knows about a lot of links. Note what the last step costs: demanding an official
-      record leaves fewer than half the connections standing and strands 21 of these 46 people
-      with nothing attached to them at all — and those are the best-documented people in the
-      entire graph.
+      Gold edges cross between layers, a security figure tied to an economic one, for instance. Those are the connections the project most wants you to check. They are also the ones most likely to thin out when you raise the floor. A high connection count is not evidence of wrongdoing, coordination or hidden control. It records that this dataset knows about a lot of links. Note what the last step costs. Demanding an official record leaves fewer than half the connections standing and strands 21 of these 46 people with nothing attached to them at all. Those are the best-documented people in the entire graph.
     </p>
   </div>
 </section>
@@ -1417,18 +1387,10 @@ footer a:hover { color: var(--accent); }
       </div>
       <div class="prose rv">
         <p data-i18n="limits.3">
-          The stated architecture of this project is that machines propose and humans verify.
-          Almost nothing has yet been through a second pair of eyes, and the honest number is
-          published on the site rather than kept in a drawer — because that is the only way
-          the commitment means anything.
+          The stated architecture of this project is that machines propose and humans verify. Almost nothing has yet been through a second pair of eyes. The honest number is published on the site rather than kept in a drawer, because that is the only way the commitment means anything.
         </p>
         <p data-i18n-html="limits.4">
-          Worse than the total: <strong>all 48 review notes so far come from the
-          compilation and research passes, and none records an independent check.</strong>
-          Of the 21 unsubstantiated claims, the 327 that name a source, and the 55
-          inferences, none of the records most capable of harming a named person has had
-          an independent review. That is the single highest-value work outstanding, and it
-          is why funding this project buys verification before it buys anything else.
+          The worse number is the one that matters. <strong>All 48 review notes so far come from the compilation and research passes, and none records an independent check.</strong> Of the 21 unsubstantiated claims, the 327 that name a source, and the 55 inferences, none of the records most capable of harming a named person has had an independent review. That is the highest-value work outstanding. It is why funding this project buys verification before anything else.
         </p>
       </div>
     </div>
@@ -1440,7 +1402,7 @@ footer a:hover { color: var(--accent); }
       </div>
       <div class="limit">
         <span class="v">230</span>
-        <span class="d" data-i18n-html="limits.6">records are <b>awaiting a primary source</b> — currently resting on secondary reporting, and listed individually rather than summarised.</span>
+        <span class="d" data-i18n-html="limits.6">records are <b>awaiting a primary source</b>. They currently rest on secondary reporting, and they are listed individually rather than summarised.</span>
       </div>
       <div class="limit">
         <span class="v">43 · 2</span>
@@ -1448,29 +1410,23 @@ footer a:hover { color: var(--accent); }
       </div>
       <div class="limit">
         <span class="v">67</span>
-        <span class="d" data-i18n-html="limits.8"><b>unresolved source contradictions.</b> Where outlets disagree, both versions are stored with who holds each. In one case five different sentence lengths circulated for overlapping proceedings, and the dataset declines to guess how many cases there were.</span>
+        <span class="d" data-i18n-html="limits.8"><b>unresolved source contradictions.</b> Where outlets disagree, both versions are stored with the outlet that holds each. In one case five different sentence lengths circulated for overlapping proceedings, and the dataset declines to guess how many cases there were.</span>
       </div>
       <div class="limit">
         <span class="v">12</span>
-        <span class="d" data-i18n-html="limits.9"><b>human-translated entries</b> of 3,070 translatable strings. The interface is trilingual; the long-form analytical prose is deliberately not machine-translated, because a machine-translated epistemology page would undermine the point of having one.</span>
+        <span class="d" data-i18n-html="limits.9"><b>human-translated entries</b> of 3,070 translatable strings. The interface is trilingual. Long-form analytical prose is deliberately not machine-translated, because a machine-translated epistemology page would undermine the point of having one.</span>
       </div>
       <div class="limit">
         <span class="v">ANRSD</span>
-        <span class="d" data-i18n-html="limits.10">defence intelligence has <b>no primary sourcing at all</b> — statute, appointment date and current status all unestablished. It is the largest hole in the security map and it is named on the front page of the evidence view.</span>
+        <span class="d" data-i18n-html="limits.10">defence intelligence has <b>no primary sourcing at all</b>. Statute, appointment date and current status are all unestablished. It is the largest hole in the security map, and it is named on the front page of the evidence view.</span>
       </div>
     </div>
 
     <p class="aphorism rv" style="margin-block-start:clamp(3rem,6vw,4.5rem)" data-i18n="limits.11">
-      This is not a website exposing a deep state. That framing presupposes its own
-      conclusion — and a project that begins from a conclusion cannot be trusted to test it.
+      This is not a website exposing a deep state. That framing presupposes its own conclusion, and a project that begins from a conclusion cannot be trusted to test it.
     </p>
     <p class="prose rv" style="margin-block-start:1.6rem" data-i18n-html="limits.12">
-      The narrower question is answerable: which institutions, individuals and economic groups
-      retain influence when the formal regime changes, and which relationships are genuinely
-      continuous rather than reconstructed after each rupture. Six hypotheses are published
-      with their falsifiers attached. <strong>Two of them currently come out badly</strong> —
-      including the strong version of the deep state thesis. You can watch the data refuse
-      the question it was built to ask.
+      The narrower question can be answered. It asks which institutions, individuals and economic groups retain influence when the formal regime changes, and which relationships are genuinely continuous rather than reconstructed after each rupture. Six hypotheses are published, each with its falsifiers attached. <strong>Two of them currently come out badly</strong>, including the strong version of the deep state thesis. You can watch the data refuse the question it was built to ask.
     </p>
   </div>
 </section>
@@ -1489,25 +1445,11 @@ footer a:hover { color: var(--accent); }
         </h2>
       </div>
       <div class="prose rv">
-        <p data-i18n="agora.3">
-          A nation also needs a place where its people can think together. Deep Tunisia is
-          more than an archive — it includes Tunisia's digital Agora: a discussion layer
-          where citizens can understand institutions, question them, and improve the public
-          record together. Not a replacement for institutions, but a space for holding them
-          to account.
-        </p>
+        <p data-i18n="agora.3">A nation also needs a place where its people can think together. So Deep Tunisia is designed to be more than an archive. It is Tunisia's digital Agora, built and not yet open. It is not a place to replace institutions. It is a place where citizens can understand them, question them, and improve the public record together.</p>
         <p data-i18n-html="agora.4">
-          The difference from every other forum is one design decision:
-          <strong>the conversation is anchored to the record, with the record still in
-          view.</strong> You are not transported to a generic thread and expected to remember
-          what you were discussing. The entity's trajectory, offices, documented connections
-          and sources stay beside you while you argue about them.
+          Every other forum differs from this one on a single design decision. <strong>The conversation is anchored to the record, and the record stays in view.</strong> You are not transported to a generic thread and expected to remember what you were discussing. The entity's trajectory, offices, documented connections and sources stay beside you while you argue about them.
         </p>
-        <p data-i18n="agora.5">
-          Elsewhere you get an opinion. Here the discussion has an object — and if you think
-          the object is wrong, there is a mechanism for saying so that ends in the graph
-          changing.
-        </p>
+        <p data-i18n="agora.5">Elsewhere you get an opinion. Here the discussion has an object. If you think the object is wrong, there is a way of saying so that ends in the graph changing.</p>
       </div>
     </div>
 
@@ -1515,27 +1457,27 @@ footer a:hover { color: var(--accent); }
       <div class="stop">
         <span class="n">01</span>
         <h4 data-i18n="agora.6">Discuss</h4>
-        <p class="say" data-i18n="agora.7">“Let's talk about this.”</p>
+        <p class="say" data-i18n="agora.7">"Let's talk about this."</p>
         <p data-i18n="agora.8">Anchored to a specific record. The entity stays on screen while you argue about it.</p>
       </div>
       <div class="stop">
         <span class="n">02</span>
         <h4 data-i18n="agora.9">Propose</h4>
-        <p class="say" data-i18n="agora.10">“I think the record is wrong.”</p>
-        <p data-i18n="agora.11">A change to the graph, carrying a named source. Reviewed by a human, and it fails the build if the claim arrives ungraded.</p>
+        <p class="say" data-i18n="agora.10">"I think the record is wrong."</p>
+        <p data-i18n="agora.11">A change to the graph, carrying a named source. A human reviews it, and it fails the build if the claim arrives ungraded.</p>
       </div>
       <div class="stop">
         <span class="n">03</span>
         <h4 data-i18n="agora.12">Report</h4>
-        <p class="say" data-i18n="agora.13">“Something here needs attention.”</p>
-        <p data-i18n="agora.14">A human moderation path. Removed posts keep their place, their thread, their timestamp and the reason — the body is nulled, the removal stays visible.</p>
+        <p class="say" data-i18n="agora.13">"Something here needs attention."</p>
+        <p data-i18n="agora.14">A human moderation path. Removed posts keep their place, their thread, their timestamp and the reason. The body is nulled, and the removal stays visible.</p>
       </div>
       <div class="stop future">
         <span class="soon" data-i18n="agora.15">Not built</span>
         <span class="n">04</span>
         <h4 data-i18n="agora.16">Petition</h4>
-        <p class="say" data-i18n="agora.17">“Enough of us want something.”</p>
-        <p data-i18n="agora.18">Collective demand, where the count means something because each signature is one verified person — and the project still cannot tell you who they are.</p>
+        <p class="say" data-i18n="agora.17">"Enough of us want something."</p>
+        <p data-i18n="agora.18">Collective demand, where the count means something because each signature is one verified person. The project still cannot tell you who they are.</p>
       </div>
     </div>
   </div>
@@ -1552,23 +1494,13 @@ footer a:hover { color: var(--accent); }
       </div>
       <div class="prose rv">
         <p data-i18n-html="identity.3">
-          Citizens should never be forced to choose between participation and personal
-          safety. So there is no account here. Your identity is a keypair, and the only
-          thing that can rebuild it is <strong>twelve words generated on your device</strong>.
+          Citizens should never be forced to choose between participation and personal safety. So there is no account here. Your identity is a keypair. The only thing that can rebuild it is <strong>twelve words generated on your device</strong>.
         </p>
         <p data-i18n-html="identity.4">
-          The words are <em>generated, never chosen</em>, and that is the load-bearing
-          decision. Because a public key is public, anyone can attack every identity on the
-          site at once, offline, with no rate limit to hide behind. A phrase a human invents
-          carries perhaps 20–30 bits of real entropy and falls in hours.
-          <strong>Twelve words drawn from a 2,048-word list carry 128 bits.</strong> It does
-          not fall.
+          The words are <em>generated, never chosen</em>. That is the decision everything else depends on. A public key is public, so anyone can attack every identity on the site at once, offline, with no rate limit to hide behind. A phrase a human invents carries perhaps 20 to 30 bits of real entropy, and it falls in hours. <strong>Twelve words drawn from a 2,048-word list carry 128 bits.</strong> It does not fall.
         </p>
         <p data-i18n="identity.5">
-          They are shown once. Never transmitted, never stored, never permitted into a URL —
-          which is why recovery can never be a link someone emails you. The same twelve words
-          rebuild the same identity on any device, forever. There is no recovery process,
-          because there is nothing on any server to recover from.
+          They are shown once. They are never transmitted, never stored, and never permitted into a URL. That is why recovery can never be a link someone emails you. The same twelve words rebuild the same identity on any device, forever. There is no recovery process, because there is nothing on any server to recover from.
         </p>
       </div>
     </div>
@@ -1582,7 +1514,7 @@ footer a:hover { color: var(--accent); }
       <div class="keybar">
         <button class="chip" type="button" id="reroll" data-i18n="identity.7">Generate another</button>
         <button class="chip" type="button" id="forget" data-i18n="identity.8">Shown once</button>
-        <span class="note" data-i18n="identity.9">Drawn in your browser with crypto.getRandomValues, from the real BIP-39 list. Illustration only — this is not an identity.</span>
+        <span class="note" data-i18n="identity.9">Drawn in your browser with crypto.getRandomValues, from the real BIP-39 list. Illustration only. This is not an identity.</span>
       </div>
     </div>
 
@@ -1591,29 +1523,19 @@ footer a:hover { color: var(--accent); }
         <span class="tag" data-i18n="identity.10">The honest cost</span>
         <h4 data-i18n="identity.11">Durability is what deanonymises people</h4>
         <p data-i18n="identity.12">
-          A persistent pseudonym leaks through its own writing — posting hours, register,
-          vocabulary, which of three languages, which people it cares about. Cryptography
-          does nothing whatsoever about that. Recovery makes an identity more persistent, so
-          it is opt-in, explained at the moment of choosing, and never the default.
+          A persistent pseudonym leaks through its own writing: posting hours, register, vocabulary, which of three languages, which people it cares about. Cryptography does nothing whatsoever about that. Recovery makes an identity more persistent, so it is opt-in, explained at the moment of choosing, and never the default.
         </p>
       </div>
       <div class="card">
         <span class="tag" data-i18n="identity.13">The default</span>
         <h4 data-i18n="identity.14">A key that dies with your browser</h4>
-        <p data-i18n="identity.15">
-          Open the Agora and post, and you get a key your browser made, held where it cannot
-          be exported, that vanishes when the browser is cleared. Burn identities — used once
-          and discarded — stay one click away and will not be buried once recovery exists.
-        </p>
+        <p data-i18n="identity.15">When the Agora opens, a post will start from a key your browser made. That key is held where it cannot be exported, and it vanishes when the browser is cleared. Burn identities, used once and discarded, will stay one click away. They will not be hidden away once recovery exists.</p>
       </div>
       <div class="card">
         <span class="tag" data-i18n="identity.16">The threat model</span>
         <h4 data-i18n="identity.17">Stated plainly, not promised</h4>
         <p data-i18n="identity.18">
-          We cannot see who you are. But this runs on ordinary hosting, and like every host
-          the service receives your connection. If you post under one identity for a long
-          time, how you write can identify you no matter how good the cryptography is. Every
-          layer that cannot hold is named on the page rather than hidden in fine print.
+          We cannot see who you are. But this runs on ordinary hosting, and like every host, the service receives your connection. If you post under one identity for a long time, how you write can identify you, however good the cryptography is. Every layer that cannot hold is named on the page rather than hidden in fine print.
         </p>
       </div>
     </div>
@@ -1627,32 +1549,20 @@ footer a:hover { color: var(--accent); }
 
     <div class="grid2">
       <div>
-        <h2 class="statement rv" data-i18n-html="speech.2">
-          <span class="curtain"><span>Four posts a</span></span>
-          <span class="curtain"><span>week. On purpose — as specified.</span></span>
-        </h2>
+        <h2 class="statement rv" data-i18n-html="speech.2"><span class="curtain"><span>Four posts a</span></span> <span class="curtain"><span>week. Specified, not wired.</span></span></h2>
         <p class="aphorism rv" style="margin-block-start:2.4rem" data-i18n="speech.3">
           An uncited assertion is a bill sent to the reader. A cited one comes with its own receipt.
         </p>
       </div>
       <div class="prose rv">
         <p data-i18n-html="speech.4">
-          Every other rate limit in this project exists to stop an attacker. As specified,
-          this one would not — it would exist because a post that took forty seconds and a
-          post that took forty minutes currently render identically — and this whole project
-          is an argument that <strong>things of different standing must never look the same</strong>.
-          (Specified, not yet wired — wiring is deferred pending counsel review.)
+          Every other rate limit in this project exists to stop an attacker. As specified, this one would not. It would exist because a post that took forty seconds and a post that took forty minutes currently render identically. This whole project is an argument that <strong>things of different standing must never look the same</strong>. Specified, not yet wired. Wiring is deferred pending counsel review.
         </p>
         <p data-i18n="speech.5">
-          As specified, scarcity would be the instrument. A person with two posts a week
-          would spend them on something they have thought about, because they could feel the
-          cost. A person with sixty an hour reacts. No amount of guidance in the composer
-          produces the first behaviour; as specified, a budget would produce it without
-          saying a word. (Specified, not yet wired.)
+          As specified, scarcity would be the instrument. A person with two posts a week would spend them on something they had thought about, because they could feel the cost. A person with sixty an hour reacts. No amount of guidance in the composer produces the first behaviour. As specified, a budget would produce it without saying a word. Specified, not yet wired.
         </p>
         <p data-i18n-html="speech.6">
-          And the budget — as specified, not yet wired — would fall on <em>assertion</em>, not
-          on evidence. <strong>As specified, a post carrying a source that resolves costs half of what the same post costs without one</strong> — not because cited posts are true, but because the cost of a post should track how much work it hands to everyone else. (Specified, not wired — wiring is deferred pending counsel review, parked behind counsel review.)
+          And the budget, as specified, would fall on <em>assertion</em>, not on evidence. <strong>As specified, a post carrying a source that resolves costs half of what the same post costs without one.</strong> Not because cited posts are true, but because the cost of a post should track how much work it hands to everyone else. Specified, not wired. Wiring is deferred pending counsel review.
         </p>
       </div>
     </div>
@@ -1668,67 +1578,49 @@ footer a:hover { color: var(--accent); }
         </div>
       </div>
       <div class="spend" id="spend">
-        <button type="button" data-cost="1"><span class="act" data-i18n="speech.7">Reply, with a citation (as specified)</span><span class="cost" data-i18n="speech.8">1 unit — specified</span></button>
-        <button type="button" data-cost="2"><span class="act" data-i18n="speech.9">Reply, no citation (as specified)</span><span class="cost" data-i18n="speech.10">2 units — specified</span></button>
-        <button type="button" data-cost="3"><span class="act" data-i18n="speech.11">New thread, with a citation (as specified)</span><span class="cost" data-i18n="speech.12">3 units — specified</span></button>
-        <button type="button" data-cost="4"><span class="act" data-i18n="speech.13">New thread, no citation (as specified)</span><span class="cost" data-i18n="speech.14">4 units — specified</span></button>
+        <button type="button" data-cost="1"><span class="act" data-i18n="speech.7">Reply, with a citation, as specified</span><span class="cost" data-i18n="speech.8">1 unit, specified</span></button>
+        <button type="button" data-cost="2"><span class="act" data-i18n="speech.9">Reply, no citation, as specified</span><span class="cost" data-i18n="speech.10">2 units, specified</span></button>
+        <button type="button" data-cost="3"><span class="act" data-i18n="speech.11">New thread, with a citation, as specified</span><span class="cost" data-i18n="speech.12">3 units, specified</span></button>
+        <button type="button" data-cost="4"><span class="act" data-i18n="speech.13">New thread, no citation, as specified</span><span class="cost" data-i18n="speech.14">4 units, specified</span></button>
       </div>
       <div class="ladder">
-        <div class="rung"><div class="lv" data-i18n="speech.15">Level 0 · new — as specified</div><div class="amt">4</div><div class="how" data-i18n="speech.16">As specified: on minting a key — two uncited posts, or one thread, or four cited ones. (Not yet wired.)</div></div>
-        <div class="rung"><div class="lv" data-i18n="speech.17">Level 1 · basic — as specified</div><div class="amt">8</div><div class="how" data-i18n="speech.18">As specified: seven days and three posts. Would be reached around day eleven. (Not yet wired.)</div></div>
-        <div class="rung"><div class="lv" data-i18n="speech.19">Level 2 · established — as specified</div><div class="amt">14</div><div class="how" data-i18n="speech.20">As specified: sixty days, twelve posts, and an accepted proposal. This is what would unlock changing the graph. (Not yet wired.)</div></div>
-        <div class="rung"><div class="lv" data-i18n="speech.21">Level 3 · trusted — as specified</div><div class="amt">20</div><div class="how" data-i18n="speech.22">As specified: granted by a human. Unreachable automatically, and it is only 5× the bottom rung. (Not yet wired.)</div></div>
+        <div class="rung"><div class="lv" data-i18n="speech.15">Level 0, new, as specified</div><div class="amt">4</div><div class="how" data-i18n="speech.16">As specified, on minting a key: two uncited posts, or one thread, or four cited ones. Not yet wired.</div></div>
+        <div class="rung"><div class="lv" data-i18n="speech.17">Level 1, basic, as specified</div><div class="amt">8</div><div class="how" data-i18n="speech.18">As specified: seven days and three posts. That would be reached around day eleven. Not yet wired.</div></div>
+        <div class="rung"><div class="lv" data-i18n="speech.19">Level 2, established, as specified</div><div class="amt">14</div><div class="how" data-i18n="speech.20">As specified: sixty days, twelve posts, and an accepted proposal. This is what would unlock changing the graph. Not yet wired.</div></div>
+        <div class="rung"><div class="lv" data-i18n="speech.21">Level 3, trusted, as specified</div><div class="amt">20</div><div class="how" data-i18n="speech.22">As specified, granted by a human. Unreachable automatically. It is only 5× the bottom rung. Not yet wired.</div></div>
       </div>
     </div>
     <p class="figcap rv" style="margin-block-start:1rem" data-i18n="speech.23">
-      As specified, corrections would cost nothing and be capped at one per post. Withdrawal
-      during the hold would be refunded in full, unconditionally. Votes, reports and reading
-      would be free and always will be. (Specified, not yet wired.)
+      As specified, corrections would cost nothing and be capped at one per post. Withdrawal during the hold would be refunded in full, unconditionally. Votes, reports and reading would be free, and always will be. Specified, not yet wired.
     </p>
 
     <div class="cards rv">
       <div class="card">
-        <span class="tag" data-i18n="speech.24">The hold — as specified, not yet wired</span>
-        <h4 data-i18n="speech.25">Ten minutes that would belong to you — as specified, not yet wired</h4>
+        <span class="tag" data-i18n="speech.24">The hold. Specified, not yet wired.</span>
+        <h4 data-i18n="speech.25">Ten minutes that would belong to you</h4>
         <p data-i18n="speech.26">
-          As specified, a submitted post would wait ten minutes before it publishes. In that
-          window only you could see it: edit it freely, or withdraw it and get every unit
-          back. The hold would not be moderation and nothing in it would be reviewed. It
-          would do the one thing a budget cannot — it would separate the decision to write
-          from the decision to publish. Most posts a person regrets are regretted within ten
-          minutes. (Specified, not yet wired — wiring is deferred pending counsel review, parked behind
-          counsel review.)
+          As specified, a submitted post would wait ten minutes before it publishes. In that window only you could see it. You could edit it freely, or withdraw it and get every unit back. The hold would not be moderation, and nothing in it would be reviewed. It would do the one thing a budget cannot. It would separate the decision to write from the decision to publish. Most posts a person regrets are regretted within ten minutes. Wiring is deferred pending counsel review.
         </p>
       </div>
       <div class="card">
         <span class="tag" data-i18n="speech.27">Corrections</span>
         <h4 data-i18n="speech.28">As specified, a published post could not be edited</h4>
         <p data-i18n="speech.29">
-          As specified, it could carry exactly one correction, free, appended beneath the
-          original with both timestamps. It would reach the people already reading that post
-          and nobody else, which is exactly the audience a correction is for. A silently
-          edited post is a record that lies about itself. (Specified, not yet wired.)
+          As specified, it could carry exactly one correction, free, appended beneath the original with both timestamps. It would reach the people already reading that post and nobody else, which is exactly the audience a correction is for. A silently edited post is a record that lies about itself. Specified, not yet wired.
         </p>
       </div>
       <div class="card">
         <span class="tag" data-i18n="speech.30">Never a score</span>
         <h4 data-i18n="speech.31">Standing buys scope, never volume</h4>
         <p data-i18n="speech.32">
-          No streaks, no counter beside a handle, nothing visible to anyone but the account
-          itself. A public post budget would be a reputation display with a different name.
-          As specified, the same ceiling would apply to moderators and to the operator,
-          because an unlimited voice dominates the room. (Specified, not yet wired.)
+          No streaks, no counter beside a handle, nothing visible to anyone but the account itself. A public post budget would be a reputation display under a different name. As specified, the same ceiling would apply to moderators and to the operator, because an unlimited voice dominates the room. Specified, not yet wired.
         </p>
       </div>
       <div class="card">
         <span class="tag" data-i18n="speech.33">Refusals</span>
         <h4 data-i18n="speech.34">“That is your week” is information</h4>
         <p data-i18n="speech.35">
-          As specified, a refusal would name the budget rather than scolding you to slow
-          down. “Rate limited” teaches nothing; knowing you have spent your week, and when
-          it resets, teaches the norm. As specified, the budget would be shown at the
-          composer before you write, with the price of the post updating live as a citation
-          makes it cheaper. (Specified, not yet wired.)
+          As specified, a refusal would name the budget rather than scold you to slow down. "Rate limited" teaches nothing. Knowing you have spent your week, and when it resets, teaches the norm. As specified, the budget would show at the composer before you write, and the price of the post would update live as a citation makes it cheaper. Specified, not yet wired.
         </p>
       </div>
     </div>
@@ -1745,11 +1637,7 @@ footer a:hover { color: var(--accent); }
       </div>
       <div class="prose rv">
         <p data-i18n-html="standard.3">
-          Bourguiba, Ben Ali, Saied, Ennahda, the opposition, the army, the police, the
-          business families, the unions, the EU, France, Italy, Algeria, the United States,
-          Russia, the World Bank and the international NGOs are all recorded under identical
-          rules. <strong>An atlas of Tunisian power containing only Tunisians reads as an
-          indictment of Tunisians.</strong>
+          Bourguiba, Ben Ali, Saied, Ennahda, the opposition, the army, the police, the business families, the unions, the EU, France, Italy, Algeria, the United States, Russia, the World Bank and the international NGOs are all recorded under identical rules. <strong>An atlas of Tunisian power containing only Tunisians reads as an indictment of Tunisians.</strong>
         </p>
         <p data-i18n="standard.4">
           This is not neutrality for its own sake. It is the project's only real protection.
@@ -1758,11 +1646,7 @@ footer a:hover { color: var(--accent); }
           reproducible does not.
         </p>
         <p data-i18n="standard.5">
-          A prison sentence is a documented fact; the allegations behind it and the criticism
-          of the proceedings are contested, and both framings are stored with attribution
-          rather than adjudicated here. Wealth is not corruption — the dataset distinguishes
-          business families that predate a regime from ones that regime created, because
-          collapsing that distinction is the most common error in popular accounts.
+          A prison sentence is a documented fact. The allegations behind it, and the criticism of the proceedings, are contested. Both framings are stored with attribution rather than adjudicated here. Wealth is not corruption. The dataset distinguishes business families that predate a regime from ones that regime created, because collapsing that distinction is the most common error in popular accounts.
         </p>
       </div>
     </div>
@@ -1780,20 +1664,13 @@ footer a:hover { color: var(--accent); }
       </div>
       <div class="prose rv">
         <p data-i18n="support.3">
-          Deep Tunisia belongs to no party, no government and no ideology. It is open source
-          under version control, its exports are downloadable in full, and its methodology,
-          corrections history and funding are published on the site rather than described in
-          a brochure.
+          Deep Tunisia belongs to no party, no government and no ideology. It is open source under version control. Its exports are downloadable in full. Its methodology, corrections history and funding are published on the site rather than described in a brochure.
         </p>
         <p data-i18n="support.4">
-          It is built so that it survives its authors. There is no database to seize, no
-          account table to subpoena and no private archive to lose: roughly 8.6 MB of data
-          ships with the page, and the canonical record is plain text anyone can fork.
+          It is built to survive its authors. There is no database to seize, no account table to subpoena and no private archive to lose. Roughly 8.6 MB of data ships with the page, and the canonical record is plain text that anyone can fork.
         </p>
         <p data-i18n-html="support.5">
-          <strong>The binding constraint is not data. It is verification capacity.</strong>
-          Adding records is cheap and getting cheaper; a second pair of human eyes is neither.
-          Support is spent against that, in this order.
+          <strong>The binding constraint is not data. It is verification capacity.</strong> Adding records is cheap and getting cheaper. A second pair of human eyes is neither. Support is spent against that, in this order.
         </p>
       </div>
     </div>
@@ -1803,54 +1680,42 @@ footer a:hover { color: var(--accent); }
         <span class="tag" data-i18n="support.6">Priority one</span>
         <h4 data-i18n="support.7">Human verification</h4>
         <p data-i18n="support.8">
-          The 212 recorded relationships that rest on something less than an official
-          document and touch a named person, none of which has been independently
-          checked. This is the number on the site that most needs to move, and it moves only with paid attention.
+          The 212 recorded relationships that rest on something less than an official document and touch a named person. None has been independently checked. This is the number on the site that most needs to move, and it moves only with paid attention.
         </p>
       </div>
       <div class="card">
         <span class="tag" data-i18n="support.9">Priority two</span>
         <h4 data-i18n="support.10">Primary sources</h4>
         <p data-i18n="support.11">
-          Gazette appointment decrees give exact dates, which is what the entire timeline
-          depends on. The gazette's full text sits behind a login and 22,395 documents; the
-          workable design is to index rather than extract, then have a human read the one
-          that matters.
+          Gazette appointment decrees give exact dates, which is what the entire timeline depends on. The gazette's full text sits behind a login, across 22,395 documents. The workable design is to index rather than extract, then have a human read the one that matters.
         </p>
       </div>
       <div class="card">
         <span class="tag" data-i18n="support.12">Priority three</span>
         <h4 data-i18n="support.13">Human translation</h4>
         <p data-i18n="support.14">
-          Arabic and French, done by people. 3,070 translatable strings, 12 human-translated
-          today. A public record that most of its public reads in translation-by-machine is
-          only half a public record.
+          Arabic and French, done by people. 3,070 translatable strings, 12 human-translated today. A public record that most of its public reads in machine translation is only half a public record.
         </p>
       </div>
       <div class="card">
         <span class="tag" data-i18n="support.15">Priority four</span>
         <h4 data-i18n="support.16">Legal review</h4>
         <p data-i18n="support.17">
-          The exposure of publishing a named-entity graph in this jurisdiction, assessed
-          properly rather than guessed at. It gates the public launch of the discussion layer.
+          The exposure of publishing a named-entity graph in this jurisdiction, assessed properly rather than guessed at. It gates the public launch of the discussion layer.
         </p>
       </div>
       <div class="card">
         <span class="tag" data-i18n="support.18">Priority five</span>
         <h4 data-i18n="support.19">Infrastructure</h4>
         <p data-i18n="support.20">
-          Static hosting, archival snapshots of every cited URL, and mirrors. Deliberately
-          modest: the architecture is chosen so that running it is cheap and losing it is hard.
+          Static hosting, archival snapshots of every cited URL, and mirrors. Deliberately modest. The architecture is chosen so that running it is cheap and losing it is hard.
         </p>
       </div>
       <div class="card">
         <span class="tag" data-i18n="support.21">Not on the list</span>
         <h4 data-i18n="support.22">An AI research layer</h4>
         <p data-i18n="support.23">
-          Designed and deliberately not built. The automatable parts are the easy parts, and
-          building volume before verification capacity exists would produce exactly the
-          failure this project was made to correct. When it comes, it must traverse the graph
-          and cite records — never generate the answer.
+          Designed and deliberately not built. The automatable parts are the easy parts, and building volume before verification capacity exists would produce exactly the failure this project was made to correct. When it comes, it must traverse the graph and cite records. It must never generate the answer.
         </p>
       </div>
     </div>
@@ -1906,9 +1771,7 @@ footer a:hover { color: var(--accent); }
     <div>
       <h5 data-i18n="foot.1">What this is</h5>
       <p data-i18n="foot.2">
-        An open-source, source-backed public record of political, institutional, economic and
-        historical power in Tunisia, 1956–2026. The website is a window; the knowledge graph
-        is the project, and it is downloadable in full.
+        An open-source, source-backed public record of political, institutional, economic and historical power in Tunisia, 1956 to 2026. The website is a window. The knowledge graph is the project, and it is downloadable in full.
       </p>
     </div>
     <div>
@@ -1916,7 +1779,7 @@ footer a:hover { color: var(--accent); }
       <ul>
         <li data-i18n="foot.4">Not an exposé, and not a conclusion in search of evidence.</li>
         <li data-i18n="foot.5">Not a news site. Headlines carry no basis and are never counted in any figure published here.</li>
-        <li data-i18n="foot.6">Not neutral by assertion — only by making the reasoning inspectable.</li>
+        <li data-i18n="foot.6">Not neutral by assertion. It is neutral only by making its reasoning inspectable.</li>
         <li data-i18n="foot.7">Not affiliated with any party, government, or funder's editorial line.</li>
       </ul>
     </div>
@@ -1953,6 +1816,12 @@ footer a:hover { color: var(--accent); }
   /* positions active per calendar year, 1956 … 2026 (71 values) */
   var DENSITY = [4,5,7,6,6,7,5,6,5,6,7,6,7,7,8,9,9,8,6,7,7,7,8,8,8,8,9,9,11,13,13,14,11,14,14,17,16,17,17,17,16,13,17,14,17,17,17,19,18,22,24,24,26,27,26,32,37,41,44,43,46,48,49,50,48,49,42,37,34,31,15];
   var Y0 = 1956;
+
+  /* The atlas's basis grammar: DASH and BASIS_OPACITY from src/lib/model.ts,
+     mirrored so the demo and the legend draw a claim the way every view does.
+     scripts/test-paper.ts fails if the two drift apart. */
+  var BASIS_DASH = { documented: '', reported: '5 3', inferred: '2 3', unsubstantiated: '1 3 6 3' };
+  var BASIS_OPACITY = { documented: 1, reported: 0.82, inferred: 0.6, unsubstantiated: 0.45 };
 
   /* the seven periods the project divides the era into */
   var ERAS = [
@@ -2010,15 +1879,15 @@ footer a:hover { color: var(--accent); }
   /* Strings that appear in no element: chart labels drawn into SVG, the two
      counter sentences, and the controls whose text depends on state. */
   var EXTRA_EN = {
-    'doc.title': 'Deep Tunisia — where memory fades, power escapes',
-    'doc.desc': 'An open, source-backed public record of the people, institutions and networks that shape Tunisia, 1956–2026. Every claim traceable. Every conclusion challengeable. No accounts, no trackers, no permission required.',
+    'doc.title': 'Deep Tunisia: where memory fades, power escapes',
+    'doc.desc': 'An open, source-backed public record of the people, institutions and networks that shape Tunisia, 1956 to 2026. Every claim traceable. Every conclusion challengeable. No accounts, no trackers, no permission required.',
     'ui.theme': 'Switch between dark and light',
     'ui.lang': 'Language',
     'ui.sections': 'Sections',
     'dial.live': '{n} of {total} connections visible · {iso} people left isolated',
     'bud.left': '{n} of {total} units left this week',
     'bud.rolling': 'Rolling seven days, never a calendar day',
-    'bud.refusal': 'That is your week — it resets on a rolling seven days, not at midnight.',
+    'bud.refusal': 'That is your week. It resets on a rolling seven days, not at midnight.',
     'bud.reset': 'Reset',
     'key.show': 'Show again',
     'viz.offices': 'OFFICES HELD',
@@ -2037,7 +1906,8 @@ footer a:hover { color: var(--accent); }
     'viz.rup.1987': 'Ben Ali',
     'viz.rup.2011': 'Revolution',
     'viz.rup.2021': '25 July',
-    'viz.stratumAlt': 'Number of recorded offices held in Tunisia in each year from 1956 to 2026, rising from 4 in 1956 to a peak of 59 in 2021 and standing at 47 in 2026.',
+    /* A template: drawStratum fills it from DENSITY, so the description is the chart. */
+    'viz.stratumAlt': 'Number of recorded offices held in Tunisia in each year from {y0} to {y1}: {first} in {y0}, a peak of {peak} in {peakYear}, and {last} in {y1}.',
     'viz.dialAlt': 'A network of the 46 most-connected people in the graph, arranged in a fixed lane per layer, with a control to raise the minimum evidence standard.',
     'viz.lane.judicial': 'judicial',
     'viz.lane.civil': 'civil'
@@ -2052,11 +1922,13 @@ footer a:hover { color: var(--accent); }
   "top.3": "Agora",
   "top.4": "Identité",
   "top.5": "Soutenir",
-  "surface.1": "Un registre public ouvert · Tunisie · 1956 — 2026",
-  "surface.2": "<span class=\"curtain\"><span>Là où la mémoire</span></span> <span class=\"curtain\"><span>s'efface, le <span class=\"lit\">pouvoir</span></span></span> <span class=\"curtain\"><span>échappe.</span></span>",
-  "surface.3": "Deep Tunisia est un registre public vivant des personnes, des institutions, des entreprises et des réseaux qui façonnent un pays. Chaque affirmation remonte à sa source. Chaque conclusion reste contestable. Rien ici ne demande votre permission pour être lu.",
+  "surface.1": "Un registre public ouvert · Tunisie · 1956 à 2026",
+  "surface.2": "<span class=\"curtain\"><span>Là où la mémoire s'efface,</span></span> <span class=\"curtain\"><span><span class=\"lit\">le pouvoir</span> s'échappe.</span></span>",
+  "surface.3": "Deep Tunisia est un registre public des personnes, des institutions, des entreprises et des réseaux qui façonnent un pays, mis à jour au fil des preuves. Chaque affirmation remonte à sa source. Chaque conclusion reste ouverte à la contestation. Rien ici ne demande votre permission pour être lu.",
   "surface.4": "Lire l'argument",
   "surface.5": "Descendre",
+  "cta.enter": "Entrer dans l'atlas",
+  "cta.paper": "Lire le document",
   "ledger.1": "Personnes",
   "ledger.2": "Mandats",
   "ledger.3": "Institutions",
@@ -2066,208 +1938,216 @@ footer a:hover { color: var(--accent); }
   "ledger.7": "Années",
   "memory.1": "Mémoire",
   "memory.2": "<span class=\"curtain\"><span>Toute société repose</span></span> <span class=\"curtain\"><span>sur sa mémoire.</span></span>",
-  "memory.3": "<em>La mémoire est faite d'archives. Les archives sont faites d'information.</em>",
-  "memory.4": "Pendant des siècles, l'excuse fut la rareté. Les archives étaient lacunaires, les décisions se prenaient à huis clos, et le pouvoir était difficile à comprendre et plus difficile encore à contester. Cette excuse a disparu. On produit aujourd'hui plus d'information en une journée que des générations entières n'en créaient en une vie.",
-  "memory.5": "Et pourtant la compréhension n'a jamais été aussi fragmentée. Les faits se dispersent. Les archives disparaissent. Les liens restent invisibles. La mémoire publique s'efface — et <strong>là où la mémoire s'efface, le pouvoir échappe à toute reddition de comptes.</strong>",
-  "memory.6": "Deep Tunisia existe pour que la Tunisie se souvienne : soixante-dix ans de nominations, d'institutions, de ruptures et de relations, réunis en un seul endroit, à découvert, sous une forme que n'importe qui peut vérifier.",
-  "memory.7": "Mandats recensés, par année, 1956–2026. Établi à partir de 427 mandats dans <span style=\"color:var(--text-secondary)\">data/positions.yaml</span> ; aucune n'est dépourvue de dates publiées. La hausse après 2011 tient en partie à l'ouverture de l'État et en partie au fait que ce registre couvre mieux les décennies récentes — le graphique ne prétend pas savoir dans quelle proportion.",
+  "memory.3": "<em>La mémoire est faite de registres. Les registres sont faits d'informations.</em>",
+  "memory.4": "Pendant des siècles, l'excuse était la rareté. Les archives étaient incomplètes, les décisions se prenaient à huis clos, et le pouvoir était difficile à comprendre et plus difficile encore à contester. Cette excuse n'existe plus. Une seule journée produit aujourd'hui plus d'informations que des générations entières n'en créaient en une vie.",
+  "memory.5": "Pourtant, la compréhension n'a jamais été aussi morcelée. Les faits se dispersent. Les archives disparaissent. Les liens restent invisibles. La mémoire publique s'efface, et <strong>partout où la mémoire s'efface, le pouvoir échappe à l'obligation de rendre des comptes.</strong>",
+  "memory.6": "Deep Tunisia existe pour que la Tunisie se souvienne. Soixante-dix ans de nominations, d'institutions, de ruptures et de relations, réunis en un seul lieu, au grand jour, sous une forme que chacun peut vérifier.",
+  "memory.7": "Mandats recensés, par année, de 1956 à 2026. Tirés de 427 mandats dans <span style=\"color:var(--text-secondary)\">data/positions.yaml</span>. Aucun n'est écarté pour une date incertaine. L'incertitude est dessinée plutôt que cachée. La hausse après 2011 tient en partie à l'ouverture de l'État, et en partie à ce que ce registre décrit mieux les dernières décennies. Le graphe ne prétend pas savoir quelle part revient à chacun.",
   "connection.1": "Pourquoi un graphe",
-  "connection.2": "Une nomination isolée ne dit presque rien tant qu'elle n'est pas rattachée à une institution.",
+  "connection.2": "Une nomination isolée ne dit pas grand-chose tant qu'elle n'est pas rattachée à une institution.",
   "connection.3": "Le site est une fenêtre. Le graphe de connaissance est le projet.",
-  "connection.4": "Une entreprise ne dit presque rien tant que son actionnariat reste opaque. Une décision ne dit presque rien tant qu'elle n'est pas replacée dans l'époque qui l'a produite. Deep Tunisia existe pour relier ces fragments en une compréhension publique qu'aucun document isolé ne peut offrir.",
-  "connection.5": "La jointure qui rend cela possible est délibérément sans éclat. Un <strong>mandat</strong> s'écrit <em>(fonction · titulaire · début · fin)</em> — un intervalle, et non un fait attaché à une personne. On ne peut pas demander <em>qui détenait le pouvoir en 1994</em> à une liste de personnes. On ne peut le demander qu'à un ensemble d'intervalles.",
-  "connection.6": "Les dates sont des fourchettes, jamais des points : début au plus tôt et au plus tard, fin au plus tôt et au plus tard, plus un statut. La chronologie trace le noyau documenté en plein et l'enveloppe incertaine en hachuré, afin qu'une période que personne n'a confirmée ne puisse jamais passer discrètement pour une période établie.",
-  "connection.7": "Les successions sont <strong>déduites, non affirmées</strong> — calculées à partir des intervalles eux-mêmes, si bien qu'un trou dans le registre apparaît comme un trou. On compte actuellement <strong>43 ruptures de succession</strong> et <strong>2 mandats qui se chevauchent</strong>, tous publiés.",
+  "connection.4": "Une entreprise ne dit pas grand-chose tant qu'on ne comprend pas qui la possède. Une décision ne dit pas grand-chose tant qu'on ne la replace pas dans l'époque qui l'a produite. Deep Tunisia existe pour relier ces fragments en une compréhension publique qu'aucun document isolé ne peut fournir.",
+  "connection.5": "L'articulation qui rend tout cela possible est volontairement peu spectaculaire. Une <strong>position</strong> est <em>un rôle, un titulaire, un début et une fin</em>. C'est un intervalle, pas un fait sur une personne. On ne peut pas demander <em>qui détenait le pouvoir en 1994</em> à partir d'une liste de personnes. On ne peut le demander qu'à partir d'un ensemble d'intervalles.",
+  "connection.6": "Les dates sont des plages, jamais des points. Chacune a un début au plus tôt et un début au plus tard, une fin au plus tôt et une fin au plus tard, et un statut. La frise trace le noyau documenté en plein et l'enveloppe incertaine en hachures, de sorte qu'une période que personne n'a confirmée ne puisse jamais passer discrètement pour une période avérée.",
+  "connection.7": "Les successions sont <strong>dérivées, non affirmées</strong>. Elles sont calculées à partir des intervalles eux-mêmes, si bien qu'un trou dans le registre apparaît comme un trou. Il existe actuellement <strong>43 lacunes de succession</strong> et <strong>2 mandats qui se chevauchent</strong>, et toutes sont publiées.",
   "evidence.1": "Comment le savoir est collecté",
-  "evidence.2": "<span class=\"curtain\"><span>Chaque affirmation</span></span> <span class=\"curtain\"><span>est traçable. Chaque</span></span> <span class=\"curtain\"><span>conclusion est</span></span> <span class=\"curtain\"><span>contestable.</span></span>",
-  "evidence.3": "Aucun modèle de langage n'écrit d'affirmations dans ce graphe. Le savoir entre par une seule porte, dans un ordre fixe, et la compilation refuse tout ce qui arrive hors de cet ordre. Les modèles rédigent des brouillons de traduction et des candidats de recherche — signalés et contrôlés. Voir <a href=\"/colophon\">comment c'est fait</a>.",
-  "evidence.4": "<strong>La règle qui compte le plus : une déduction n'a jamais le droit de devenir un fait.</strong> Chaque affirmation est classée sous l'une de quatre bases, et jamais deux d'entre elles ne se dessinent de la même façon.",
+  "evidence.2": "<span class=\"curtain\"><span>Chaque affirmation est</span></span> <span class=\"curtain\"><span>traçable. Chaque</span></span> <span class=\"curtain\"><span>conclusion peut</span></span> <span class=\"curtain\"><span>être contestée.</span></span>",
+  "evidence.3": "Aucun modèle de langage n'écrit d'affirmations dans ce graphe. Le savoir entre par une seule porte, dans un ordre fixe, et la compilation refuse tout ce qui arrive dans le désordre. Les modèles rédigent des traductions et des pistes de recherche, signalées et contrôlées. Voir <a href=\"/colophon\">comment cela a été fait</a>.",
+  "evidence.4": "<strong>Une inférence ne devient jamais un fait. C'est la règle la plus importante.</strong> Chaque affirmation relève de l'une des quatre bases, et deux bases ne sont jamais dessinées de la même façon.",
   "evidence.5": "La citation vient d'abord",
-  "evidence.6": "La source est ajoutée avant l'affirmation qu'elle soutient, et classée de 1 à 5. Le niveau 1 est un décret ou une parution au journal officiel. Le niveau 5 est une piste à corroborer, jamais suffisante à elle seule. La bibliothèque compte aujourd'hui 1380 sources — 164 au niveau 1, 219 au niveau 2, 505 au niveau 3, 414 au niveau 4, 78 au niveau 5.",
+  "evidence.6": "Une source est ajoutée avant l'affirmation qu'elle soutient, et classée de 1 à 5. Le niveau 1 est un décret ou une parution au journal officiel. Le niveau 5 est une piste à corroborer, qui ne suffit jamais seule. La bibliothèque compte aujourd'hui 1380 sources : 164 au niveau 1, 219 au niveau 2, 505 au niveau 3, 414 au niveau 4, 78 au niveau 5.",
   "evidence.7": "L'affirmation y est rattachée",
-  "evidence.8": "Rien n'est saisi en l'air. Un mandat, une relation, un événement — chacun renvoie aux identifiants des sources qui le soutiennent. 50 des 1380 sources n'appuient aujourd'hui aucune affirmation ; elles sont conservées comme lectures en attente et <em>exclues du décompte publié</em>, car une entrée bibliographique qui ne soutient rien n'est pas une preuve.",
+  "evidence.8": "Rien n'est saisi sans attache. Un mandat, une relation ou un événement renvoie aux identifiants des sources qui le soutiennent. 50 des 1380 sources n'appuient aujourd'hui aucune affirmation. Elles sont conservées comme lectures en attente et <em>exclues du décompte publié</em>, car une entrée bibliographique qui ne soutient rien n'est pas une preuve.",
   "evidence.9": "La base est déclarée, et elle change l'apparence",
-  "evidence.10": "Documenté, rapporté, déduit, non étayé. La base qualifie l'affirmation, non ses dates — « X a occupé ce poste » et « entre telles dates » sont deux affirmations distinctes dont la solidité diffère couramment, elles portent donc des indicateurs séparés. Le lecteur peut relever à tout moment le seuil de preuve et voir les affirmations les plus faibles quitter la carte.",
+  "evidence.10": "Documenté, rapporté, déduit, non étayé. La base qualifie l'affirmation, pas ses dates. « X a occupé ce poste » et « entre ces dates » sont deux affirmations distinctes, qui ont souvent une solidité différente. Chacune porte donc son propre indicateur. Le lecteur peut relever le seuil de preuve à tout moment et voir les affirmations les plus faibles quitter la carte.",
   "evidence.11": "La compilation refuse le reste",
-  "evidence.12": "Une affirmation <em>déduite</em> doit énoncer son raisonnement et ce qui la réfuterait. Une affirmation de grade C ou D doit nommer qui la formule. Ce ne sont pas des avertissements — elles font échouer la compilation. Il n'existe aucun moyen de glisser une insinuation non attribuée dans ce jeu de données.",
+  "evidence.12": "Une affirmation <em>déduite</em> doit énoncer son raisonnement et ce qui la réfuterait. Une affirmation de rang C ou D doit nommer celui qui la formule. Ce ne sont pas des avertissements de lint : elles font échouer la compilation. Aucune insinuation sans attribution ne peut se glisser dans ce jeu de données.",
   "evidence.13": "Échec bloquant, pas un avertissement",
   "evidence.14": "Le changement est lui aussi une archive",
-  "evidence.15": "Les données sont du texte brut sous gestion de versions : chaque changement factuel est donc un écart daté et attribuable. Cet historique est publié intégralement et <strong>généré, non trié</strong> — personne ne décide quelles corrections étaient assez flatteuses pour paraître.",
+  "evidence.15": "Les données sont du texte brut sous contrôle de version, si bien que chaque changement factuel est un écart daté et attribuable. Cet historique est publié en entier et <strong>généré, non trié à la main</strong>. Personne ne décide quelles corrections étaient assez flatteuses pour apparaître.",
   "evidence.16": "Les quatre bases, et les traits qui les portent",
   "evidence.17": "Documenté",
   "evidence.18": "Un acte officiel, un décret ou une parution au journal officiel l'énonce.",
-  "evidence.19": "199 affirmations · plein",
+  "evidence.19": "199 affirmations · trait plein",
   "evidence.20": "Rapporté",
   "evidence.21": "Des publications crédibles le rapportent, avec attribution.",
   "evidence.22": "690 affirmations · tirets",
   "evidence.23": "Déduit",
-  "evidence.24": "Personne ne l'énonce. Raisonné à partir d'une structure documentée — et il doit publier ce qui le réfuterait.",
+  "evidence.24": "Personne ne l'énonce. Raisonné à partir d'une structure documentée, il doit publier ce qui le réfuterait.",
   "evidence.25": "43 affirmations · pointillé",
   "evidence.26": "Non étayé",
-  "evidence.27": "Circule sans preuve fiable. Consigné, attribué, et masqué par défaut.",
-  "evidence.28": "13 affirmations · point-tiret",
-  "evidence.29": "<strong>Les affirmations non étayées sont consignées, pas supprimées.</strong> Supprimer une affirmation largement répandue ne la fait pas disparaître — cela retire seulement à la carte la capacité de montrer <em>pourquoi</em> le récit populaire est faux. Plusieurs de celles consignées ici sont contredites par les données mêmes du projet : l'idée que l'armée gouvernerait secrètement la Tunisie voisine directement avec le constat d'un commandement interarmées resté vacant pendant vingt ans.",
+  "evidence.27": "Il circule sans preuve fiable. Consigné, attribué et masqué par défaut.",
+  "evidence.28": "13 affirmations · points et tirets",
+  "evidence.29": "<strong>Les affirmations non étayées sont consignées, non supprimées.</strong> Supprimer une affirmation largement répandue ne la fait pas disparaître. Cela retire seulement à la carte la capacité de montrer <em>pourquoi</em> le récit populaire est faux. Plusieurs de celles consignées ici sont contredites par les données mêmes du projet. L'idée que l'armée gouverne secrètement le pays se place directement à côté du constat d'un commandement interarmées resté vacant pendant vingt ans.",
   "evidence.30": "Relevez le seuil. Regardez la carte se dissoudre.",
-  "evidence.31": "Voici une tranche réelle du graphe : les 46 personnes les plus connectées et les relations consignées entre elles, chacune portant sa base réelle. Relevez le seuil et les preuves les plus faibles s'en vont. C'est l'interaction la plus instructive du site, et celle que la plupart des projets ne construiraient jamais — car elle montre quelle part du tableau repose sur autre chose qu'une preuve.",
+  "evidence.31": "Voici une tranche réelle du graphe. Elle montre les 46 personnes les plus connectées et les relations consignées entre elles, chacune avec sa base réelle. Relevez le seuil et les preuves les plus faibles s'en vont. C'est l'interaction la plus instructive du site. La plupart des projets ne la construiraient jamais, car elle montre quelle part du tableau repose sur autre chose qu'une preuve.",
   "evidence.32": "Réseau · seuil de preuve",
   "evidence.33": "46 personnes · une voie fixe par couche",
   "evidence.34": "Afficher les affirmations reposant sur",
   "evidence.35": "Tout le consigné",
   "evidence.36": "Rapporté et au-dessus",
   "evidence.37": "Documenté seulement",
-  "evidence.38": "Les liens dorés traversent les couches — une figure sécuritaire liée à une figure économique, par exemple. Ce sont les connexions que le projet souhaite le plus vous voir vérifier, et aussi celles qui s'éclaircissent le plus vite quand on relève le seuil. Un nombre élevé de connexions n'est pas la preuve d'une faute, d'une coordination ou d'un contrôle occulte ; il indique que ce jeu de données connaît beaucoup de liens. Notez le coût de la dernière étape : exiger un acte officiel laisse debout moins de la moitié des connexions et laisse 21 de ces 46 personnes sans le moindre lien — et ce sont les personnes les mieux documentées de tout le graphe.",
+  "evidence.38": "Les arêtes dorées relient des couches différentes, par exemple une donnée de sécurité liée à une donnée économique. Ce sont les liens que le projet tient le plus à voir vérifiés, et aussi ceux qui s'éclaircissent le plus quand on relève le seuil. Un grand nombre de liens n'est pas une preuve de méfait, de coordination ou de contrôle caché. Il indique seulement que ce jeu de données connaît beaucoup de liens. Regardez ce que coûte la dernière étape : exiger un acte officiel laisse moins de la moitié des liens debout et prive 21 de ces 46 personnes de tout lien. Ce sont pourtant les personnes les mieux documentées de tout le graphe.",
   "limits.1": "Ce que nous ignorons",
   "limits.2": "Un registre qui ne publie que ses forces fait de la publicité.",
-  "limits.3": "L'architecture annoncée de ce projet est que les machines proposent et que les humains vérifient. Presque rien n'est encore passé sous un second regard, et le chiffre honnête est publié sur le site plutôt que rangé dans un tiroir — parce que c'est la seule façon pour que l'engagement veuille dire quelque chose.",
-  "limits.4": "Pire que le total : <strong>à ce jour, les 48 notes de relecture viennent toutes des passes de compilation et de recherche, et aucune ne consigne de vérification indépendante.</strong> Sur les 21 affirmations non étayées, les 327 qui nomment une source et les 55 déductions, aucune des fiches les plus susceptibles de nuire à une personne nommée n'a fait l'objet d'une relecture indépendante. C'est le travail restant à plus forte valeur, et c'est pourquoi financer ce projet achète d'abord de la vérification.",
-  "limits.5": "fiches portent une <b>note de relecture humaine</b>. Les indicateurs de risque se recoupent, si bien que la ventilation ne peut pas se lire comme les parties d'un tout, et aucune note ne consigne encore de vérification indépendante.",
-  "limits.6": "fiches <b>attendent une source primaire</b> — elles reposent aujourd'hui sur de la presse secondaire, et sont listées une à une plutôt que résumées.",
-  "limits.7": "<b>ruptures de succession et mandats qui se chevauchent</b>, relevés automatiquement par la compilation. Un trou dans la chronologie s'affiche comme un trou.",
-  "limits.8": "<b>contradictions de sources non résolues.</b> Quand les médias divergent, les deux versions sont conservées avec l'auteur de chacune. Dans un cas, cinq durées de peine différentes ont circulé pour des procédures qui se recoupent, et le jeu de données refuse de deviner combien d'affaires distinctes il y avait.",
-  "limits.9": "<b>entrées traduites par des humains</b> sur 3 070 chaînes traduisibles. L'interface est trilingue ; la prose analytique longue n'est délibérément pas traduite par machine, car une page d'épistémologie traduite automatiquement ruinerait l'intérêt d'en avoir une.",
-  "limits.10": "le renseignement de défense n'a <b>aucune source primaire</b> — statut, date de nomination et situation actuelle, rien n'est établi. C'est le plus grand trou de la carte sécuritaire, et il est nommé en tête de la page des preuves.",
-  "limits.11": "Ce n'est pas un site qui dénonce un État profond. Ce cadrage présuppose sa propre conclusion — et un projet qui part d'une conclusion ne peut être digne de confiance pour la tester.",
-  "limits.12": "La question plus étroite, elle, admet une réponse : quelles institutions, quels individus et quels groupes économiques conservent leur influence quand le régime formel change, et quelles relations sont réellement continues plutôt que reconstruites après chaque rupture. Six hypothèses sont publiées avec leurs critères de réfutation. <strong>Deux d'entre elles s'en sortent aujourd'hui mal</strong> — dont la version forte de la thèse de l'État profond. Vous pouvez voir les données refuser la question pour laquelle elles ont été réunies.",
+  "limits.3": "L'architecture affichée de ce projet veut que les machines proposent et que les humains vérifient. Presque rien n'est encore passé par un second regard. Le chiffre honnête est publié sur le site plutôt que gardé au fond d'un tiroir, car c'est la seule façon dont l'engagement a un sens.",
+  "limits.4": "Le chiffre le plus grave est celui qui compte. <strong>Les 48 notes de relecture produites à ce jour viennent toutes des passes de compilation et de recherche, et aucune ne consigne de vérification indépendante.</strong> Sur les 21 affirmations non étayées, les 327 qui citent une source et les 55 inférences, aucune des fiches les plus susceptibles de nuire à une personne nommée n'a fait l'objet d'une relecture indépendante. C'est le travail le plus précieux qui reste à faire. C'est pourquoi financer ce projet permet d'abord de vérifier, avant tout le reste.",
+  "limits.5": "fiches portent une <b>note de relecture humaine</b>. Les indicateurs de risque se recoupent, si bien que la répartition ne peut pas se lire comme les parties d'un tout, et aucune note ne consigne encore de vérification indépendante.",
+  "limits.6": "fiches <b>attendent une source primaire</b>. Elles reposent actuellement sur une presse de seconde main, et sont listées une à une plutôt que résumées.",
+  "limits.7": "<b>lacunes de succession et mandats qui se chevauchent</b>, relevés automatiquement par la compilation. Un trou dans la chronologie s'affiche comme un trou.",
+  "limits.8": "<b>contradictions de sources non résolues.</b> Lorsque des médias divergent, les deux versions sont conservées avec le média qui porte chacune. Dans un cas, cinq durées de peine différentes ont circulé pour des procédures qui se recoupent, et le jeu de données refuse de deviner combien d'affaires il y a eu.",
+  "limits.9": "<b>entrées traduites par des humains</b> sur 3 070 chaînes traduisibles. L'interface est trilingue. La prose analytique longue n'est volontairement pas traduite par machine, car une page d'épistémologie traduite par machine saperait la raison même d'en avoir une.",
+  "limits.10": "Le renseignement de défense n'a <b>aucune source primaire</b>. Le texte juridique, la date de nomination et le statut actuel restent non établis. C'est le plus grand trou de la carte de la sécurité, et il est signalé en tête de la vue des preuves.",
+  "limits.11": "Ce n'est pas un site qui dénonce un État profond. Ce cadrage présuppose sa propre conclusion, et un projet qui part d'une conclusion ne peut pas être cru lorsqu'il prétend la tester.",
+  "limits.12": "La question plus étroite peut recevoir une réponse. Elle demande quelles institutions, quels individus et quels groupes économiques conservent leur influence quand le régime formel change, et quelles relations sont réellement continues plutôt que reconstruites après chaque rupture. Six hypothèses sont publiées, chacune avec ce qui la réfuterait. <strong>Deux d'entre elles ressortent mal</strong>, y compris la version forte de la thèse de l'État profond. Vous pouvez voir les données refuser la question pour laquelle elles ont été construites.",
   "agora.1": "L'Agora",
-  "agora.2": "<span class=\"curtain\"><span>L'information seule</span></span> <span class=\"curtain\"><span>ne fait pas une</span></span> <span class=\"curtain\"><span>société libre.</span></span>",
-  "agora.3": "Un pays a aussi besoin d'un lieu où ses habitants peuvent penser ensemble. Deep Tunisia est plus qu’une archive — il comprend l’Agora numérique de la Tunisie : un espace de discussion où les citoyens peuvent comprendre les institutions, les interroger et améliorer ensemble le registre public. Non pas un remplacement des institutions, mais un lieu pour les rendre comptables.",
-  "agora.4": "La différence avec tout autre forum tient à une seule décision de conception : <strong>la conversation est ancrée au registre, le registre restant visible.</strong> On ne vous transporte pas dans un fil générique en attendant que vous vous rappeliez de quoi vous parliez. La trajectoire de l'entité, ses fonctions, ses liens documentés et ses sources restent à côté de vous pendant que vous en débattez.",
-  "agora.5": "Ailleurs, vous obtenez un avis. Ici, la discussion a un objet — et si vous pensez que cet objet est faux, il existe un mécanisme pour le dire qui aboutit à une modification du graphe.",
+  "agora.2": "<span class=\"curtain\"><span>L'information seule</span></span> <span class=\"curtain\"><span>ne crée pas une</span></span> <span class=\"curtain\"><span>société libre.</span></span>",
+  "agora.3": "Une nation a aussi besoin d'un lieu où ses habitants peuvent penser ensemble. Deep Tunisia est donc conçu pour être plus qu'une archive. C'est l'Agora numérique de la Tunisie, construite et pas encore ouverte. Elle n'a pas vocation à remplacer les institutions. Elle doit permettre aux citoyens de les comprendre, de les interroger et d'améliorer ensemble le registre public.",
+  "agora.4": "Chaque autre forum se distingue de celui-ci par une seule décision de conception. <strong>La conversation est ancrée à la fiche, et la fiche reste visible.</strong> On ne vous transporte pas dans un fil générique en attendant que vous vous souveniez de ce dont vous parliez. La trajectoire de l'entité, ses mandats, ses liens documentés et ses sources restent à vos côtés pendant que vous en débattez.",
+  "agora.5": "Ailleurs, on obtient une opinion. Ici, la discussion a un objet. Si vous jugez cet objet faux, il existe une façon de le dire qui aboutit à une modification du graphe.",
   "agora.6": "Discuter",
   "agora.7": "« Parlons-en. »",
   "agora.8": "Ancré à une fiche précise. L'entité reste à l'écran pendant que vous en débattez.",
   "agora.9": "Proposer",
-  "agora.10": "« Je pense que le registre se trompe. »",
-  "agora.11": "Une modification du graphe, portant une source nommée. Relue par un humain, et elle fait échouer la compilation si l'affirmation arrive sans grade.",
+  "agora.10": "« Je pense que la fiche est fausse. »",
+  "agora.11": "Une modification du graphe, qui porte une source nommée. Un humain la relit, et la compilation échoue si l'affirmation arrive sans note.",
   "agora.12": "Signaler",
   "agora.13": "« Quelque chose ici mérite attention. »",
-  "agora.14": "Une voie de modération humaine. Les messages retirés conservent leur place, leur fil, leur horodatage et le motif — le corps est vidé, le retrait reste visible.",
+  "agora.14": "Un chemin de modération humaine. Les messages retirés gardent leur place, leur fil, leur horodatage et le motif. Le texte est vidé, et le retrait reste visible.",
   "agora.15": "Non construit",
   "agora.16": "Pétitionner",
   "agora.17": "« Nous sommes assez nombreux à vouloir quelque chose. »",
-  "agora.18": "Demande collective, où le décompte a un sens parce que chaque signature est une personne vérifiée — et où le projet reste incapable de vous dire qui elle est.",
+  "agora.18": "Demande collective, où le décompte a du sens parce que chaque signature correspond à une personne vérifiée. Le projet ne peut toujours pas dire qui elles sont.",
   "identity.1": "Douze mots",
   "identity.2": "Pas de nom. Pas d'e-mail. Pas de mot de passe. Rien à saisir.",
-  "identity.3": "Aucun citoyen ne devrait avoir à choisir entre participer et sa propre sécurité. Il n'y a donc pas de compte ici. Votre identité est une paire de clés, et la seule chose qui puisse la reconstruire, ce sont <strong>douze mots générés sur votre appareil</strong>.",
-  "identity.4": "Les mots sont <em>générés, jamais choisis</em>, et c'est la décision porteuse. Parce qu'une clé publique est publique, n'importe qui peut attaquer d'un coup toutes les identités du site, hors ligne, sans aucune limitation de débit derrière laquelle s'abriter. Une phrase inventée par un humain porte peut-être 20 à 30 bits d'entropie réelle et tombe en quelques heures. <strong>Douze mots tirés d'une liste de 2 048 mots portent 128 bits.</strong> Elle ne tombe pas.",
-  "identity.5": "Ils sont affichés une seule fois. Jamais transmis, jamais stockés, jamais admis dans une URL — c'est pourquoi la récupération ne pourra jamais être un lien qu'on vous envoie par e-mail. Les mêmes douze mots reconstruisent la même identité sur n'importe quel appareil, indéfiniment. Il n'y a pas de procédure de récupération, parce qu'il n'y a rien à récupérer sur aucun serveur.",
+  "identity.3": "Les citoyens ne devraient jamais avoir à choisir entre participer et protéger leur sécurité personnelle. Il n'y a donc pas de compte ici. Votre identité est une paire de clés. Le seul moyen de la reconstituer est <strong>douze mots générés sur votre appareil</strong>.",
+  "identity.4": "Les mots sont <em>générés, jamais choisis</em>. C'est la décision dont dépend tout le reste. Une clé publique est publique : n'importe qui peut attaquer toutes les identités du site à la fois, hors ligne, sans limite de débit pour le freiner. Une phrase inventée par un humain porte peut-être 20 à 30 bits d'entropie réelle, et elle tombe en quelques heures. <strong>Douze mots tirés d'une liste de 2 048 mots portent 128 bits.</strong> Cette phrase ne tombe pas.",
+  "identity.5": "Ils ne sont montrés qu'une fois. Ils ne sont jamais transmis, jamais stockés, et jamais glissés dans une URL. C'est pourquoi la récupération ne peut jamais être un lien qu'on vous envoie par e-mail. Les mêmes douze mots reconstituent la même identité sur n'importe quel appareil, pour toujours. Il n'existe aucune procédure de récupération, car il n'y a rien sur un serveur à récupérer.",
   "identity.6": "2 048 mots · 12 tirés · 128 bits",
   "identity.7": "En générer d'autres",
   "identity.8": "Affichés une fois",
-  "identity.9": "Tirés dans votre navigateur avec crypto.getRandomValues, depuis la véritable liste BIP-39. Illustration seulement — ce n'est pas une identité.",
+  "identity.9": "Tirés dans votre navigateur avec crypto.getRandomValues, à partir de la vraie liste BIP-39. Illustration uniquement. Ce n'est pas une identité.",
   "identity.10": "Le coût, honnêtement",
   "identity.11": "C'est la durabilité qui désanonymise",
-  "identity.12": "Un pseudonyme persistant fuit par son écriture même — heures de publication, registre, vocabulaire, laquelle des trois langues, quelles personnes l'intéressent. La cryptographie n'y peut absolument rien. La récupération rend une identité plus persistante : elle est donc optionnelle, expliquée au moment du choix, et jamais activée par défaut.",
+  "identity.12": "Un pseudonyme persistant fuit par ses propres écrits : heures de publication, registre, vocabulaire, laquelle des trois langues, les personnes dont il s'occupe. La cryptographie n'y change strictement rien. La récupération rend une identité plus durable, donc elle est facultative, expliquée au moment du choix, et jamais le comportement par défaut.",
   "identity.13": "Le comportement par défaut",
   "identity.14": "Une clé qui meurt avec votre navigateur",
-  "identity.15": "Ouvrez l'Agora et publiez : vous obtenez une clé fabriquée par votre navigateur, conservée là où elle ne peut être exportée, et qui disparaît quand le navigateur est vidé. Les identités jetables — utilisées une fois puis abandonnées — restent à un clic et ne seront pas enterrées une fois la récupération disponible.",
+  "identity.15": "Quand l'Agora ouvrira, une publication partira d'une clé créée par votre navigateur, conservée là où elle ne peut pas être exportée, et qui disparaît quand le navigateur est effacé. Les identités éphémères, utilisées une fois puis jetées, resteront à un clic, et elles ne seront pas enfouies une fois la récupération en place.",
   "identity.16": "Le modèle de menace",
-  "identity.17": "Énoncé clairement, et non promis",
-  "identity.18": "Nous ne pouvons pas voir qui vous êtes. Mais tout ceci tourne sur un hébergement ordinaire et, comme tout hébergeur, le service reçoit votre connexion. Si vous publiez longtemps sous une même identité, votre façon d'écrire peut vous identifier quelle que soit la qualité de la cryptographie. Chaque couche qui ne tient pas est nommée sur la page plutôt que cachée en petits caractères.",
+  "identity.17": "Énoncé clairement, non promis",
+  "identity.18": "Nous ne voyons pas qui vous êtes. Mais ce service tourne sur un hébergement ordinaire, et comme tout hébergeur, il reçoit votre connexion. Si vous publiez longtemps sous une même identité, votre manière d'écrire peut vous identifier, quelle que soit la qualité de la cryptographie. Chaque couche qui ne tiendrait pas est nommée sur la page, au lieu d'être cachée dans les petits caractères.",
   "speech.1": "L'économie de la parole",
-  "speech.2": "<span class=\"curtain\"><span>Quatre messages par</span></span> <span class=\"curtain\"><span>semaine. À dessein.</span></span>",
-  "speech.3": "Une affirmation sans source est une facture envoyée au lecteur. Une affirmation sourcée arrive avec son reçu.",
-  "speech.4": "Toutes les autres limitations de ce projet existent pour arrêter un attaquant. Celle-ci, non. Elle existe parce qu'un message écrit en quarante secondes et un message écrit en quarante minutes s'affichent aujourd'hui à l'identique — et que tout ce projet plaide que <strong>des choses de valeur différente ne doivent jamais se ressembler</strong>.",
-  "speech.5": "La rareté est l'instrument. Qui dispose de deux messages par semaine les dépense sur quelque chose de réfléchi, parce qu'il en sent le coût. Qui en a soixante à l'heure réagit. Aucun conseil affiché dans l'éditeur ne produit le premier comportement ; un budget le produit sans dire un mot.",
-  "speech.6": "Et le budget pèse sur l'<em>affirmation</em>, pas sur la preuve. <strong>Un message portant une source qui se résout coûte la moitié du même message sans source</strong> — non parce que les messages sourcés seraient vrais, mais parce que le coût d'un message doit suivre la quantité de travail qu'il transfère à tous les autres.",
-  "speech.7": "Réponse, avec source",
-  "speech.8": "1 unité",
-  "speech.9": "Réponse, sans source",
-  "speech.10": "2 unités",
-  "speech.11": "Nouveau fil, avec source",
-  "speech.12": "3 unités",
-  "speech.13": "Nouveau fil, sans source",
-  "speech.14": "4 unités",
-  "speech.15": "Niveau 0 · nouveau",
-  "speech.16": "À la création d'une clé. Deux messages sans source, ou un fil, ou quatre messages sourcés.",
-  "speech.17": "Niveau 1 · initié",
-  "speech.18": "Sept jours et trois messages. Atteint vers le onzième jour.",
-  "speech.19": "Niveau 2 · établi",
-  "speech.20": "Soixante jours, douze messages et une proposition acceptée. C'est ce qui débloque la modification du graphe.",
-  "speech.21": "Niveau 3 · de confiance",
-  "speech.22": "Accordé par un humain. Hors d'atteinte automatiquement, et cela ne représente que 5× l'échelon du bas.",
-  "speech.23": "Les corrections ne coûtent rien et sont limitées à une par message. Le retrait pendant la retenue est remboursé intégralement, sans condition. Voter, signaler et lire sont gratuits et le resteront.",
-  "speech.24": "La retenue",
-  "speech.25": "Dix minutes qui vous appartiennent",
-  "speech.26": "Un message soumis attend dix minutes avant de paraître. Pendant ce délai, vous seul le voyez : modifiez-le librement, ou retirez-le et récupérez chaque unité. La retenue n'est pas de la modération et rien n'y est relu. Elle fait la seule chose qu'un budget ne peut pas faire — elle sépare la décision d'écrire de la décision de publier. La plupart des messages que l'on regrette, on les regrette dans les dix minutes.",
+  "speech.2": "<span class=\"curtain\"><span>Quatre messages par</span></span> <span class=\"curtain\"><span>semaine. Spécifié, pas encore mis en œuvre.</span></span>",
+  "speech.3": "Une affirmation sans source est une facture envoyée au lecteur. Une affirmation sourcée arrive avec son propre reçu.",
+  "speech.4": "Toutes les autres limitations de débit de ce projet existent pour arrêter un attaquant. Selon la spécification, celle-ci ne le ferait pas. Elle existerait parce qu'un message écrit en quarante secondes et un message écrit en quarante minutes s'affichent aujourd'hui de façon identique. Et ce projet tout entier plaide que <strong>des choses de valeur différente ne doivent jamais se ressembler</strong>. Spécifié, pas encore mis en œuvre. La mise en œuvre attend un avis juridique.",
+  "speech.5": "Selon la spécification, la rareté serait l'instrument. Une personne qui dispose de deux messages par semaine les utiliserait pour dire ce qu'elle a réfléchi, parce qu'elle sentirait le coût. Une personne qui en dispose de soixante par heure réagit. Aucune aide à la rédaction dans le compositeur ne produit le premier comportement. Selon la spécification, un budget le produirait sans un mot. Spécifié, pas encore mis en œuvre.",
+  "speech.6": "Selon la spécification, le budget porterait sur <em>l'affirmation</em>, et non sur la preuve. <strong>Selon la spécification, un message qui porte une source vérifiable coûte la moitié de ce que coûterait le même message sans source.</strong> Non parce que les messages sourcés sont vrais, mais parce que le coût d'un message doit suivre le travail qu'il impose à tous les autres. Spécifié, pas encore mis en œuvre. La mise en œuvre attend un avis juridique.",
+  "speech.7": "Réponse, avec une source, selon la spécification",
+  "speech.8": "1 unité, spécifié",
+  "speech.9": "Réponse, sans source, selon la spécification",
+  "speech.10": "2 unités, spécifié",
+  "speech.11": "Nouveau fil, avec une source, selon la spécification",
+  "speech.12": "3 unités, spécifié",
+  "speech.13": "Nouveau fil, sans source, selon la spécification",
+  "speech.14": "4 unités, spécifié",
+  "speech.15": "Niveau 0 · nouveau, selon la spécification",
+  "speech.16": "Selon la spécification, à la création d'une clé : deux messages sans source, ou un fil, ou quatre messages sourcés. Pas encore mis en œuvre.",
+  "speech.17": "Niveau 1 · initié, selon la spécification",
+  "speech.18": "Selon la spécification : sept jours et trois messages. Atteint vers le onzième jour. Pas encore mis en œuvre.",
+  "speech.19": "Niveau 2 · établi, selon la spécification",
+  "speech.20": "Selon la spécification : soixante jours, douze messages et une proposition acceptée. C'est ce qui débloquerait la modification du graphe. Pas encore mis en œuvre.",
+  "speech.21": "Niveau 3 · de confiance, selon la spécification",
+  "speech.22": "Selon la spécification, accordé par un humain. Impossible à atteindre automatiquement. Il ne représente que 5× l'échelon le plus bas. Pas encore mis en œuvre.",
+  "speech.23": "Selon la spécification, les corrections ne coûteraient rien et seraient limitées à une par message. Un retrait pendant le délai serait remboursé intégralement, sans condition. Les votes, les signalements et la lecture seraient gratuits, et le resteraient. Spécifié, pas encore mis en œuvre.",
+  "speech.24": "Le délai. Spécifié, pas encore mis en œuvre.",
+  "speech.25": "Dix minutes qui vous appartiendraient",
+  "speech.26": "Selon la spécification, un message soumis attendrait dix minutes avant d'être publié. Pendant ce laps de temps, vous seul pourriez le voir : le modifier librement, ou le retirer et récupérer toutes vos unités. Ce délai ne serait pas une modération, et personne ne le relirait. Il ferait la seule chose qu'un budget ne peut pas faire : séparer la décision d'écrire de la décision de publier. La plupart des messages qu'on regrette le sont dans les dix minutes. La mise en œuvre attend un avis juridique.",
   "speech.27": "Corrections",
-  "speech.28": "Un message publié ne peut pas être modifié",
-  "speech.29": "Il peut porter exactement une correction, gratuite, ajoutée sous l'original avec les deux horodatages. Elle atteint les personnes qui lisent déjà ce message et personne d'autre, ce qui est précisément le public d'une correction. Un message modifié en silence est une archive qui ment sur elle-même.",
-  "speech.30": "Jamais un score",
-  "speech.31": "Le statut achète de la portée, jamais du volume",
-  "speech.32": "Pas de séries, pas de compteur à côté d'un pseudonyme, rien de visible pour quiconque en dehors du compte lui-même. Un budget de messages public serait un affichage de réputation sous un autre nom. Le même plafond s'applique aux modérateurs et à l'exploitant, car une voix illimitée domine la salle.",
-  "speech.33": "Les refus",
+  "speech.28": "Selon la spécification, un message publié ne pourrait pas être modifié",
+  "speech.29": "Selon la spécification, il pourrait porter une seule correction, gratuite, ajoutée sous l'original avec les deux horodatages. Elle atteindrait les personnes qui lisent déjà ce message et personne d'autre, ce qui correspond exactement au public d'une correction. Un message modifié en silence est un enregistrement qui ment sur lui-même. Spécifié, pas encore mis en œuvre.",
+  "speech.30": "Jamais de score",
+  "speech.31": "Le statut achète la portée, jamais le volume",
+  "speech.32": "Pas de séries, pas de compteur à côté d'un pseudonyme, rien de visible pour qui que ce soit d'autre que le compte lui-même. Un budget public des messages serait un affichage de réputation sous un autre nom. Selon la spécification, le même plafond s'appliquerait aux modérateurs et à l'opérateur, car une voix sans limite écrase la salle. Spécifié, pas encore mis en œuvre.",
+  "speech.33": "Refus",
   "speech.34": "« C'est votre semaine » est une information",
-  "speech.35": "Un refus nomme le budget au lieu de vous sermonner. « Limite atteinte » n'apprend rien ; savoir que vous avez dépensé votre semaine, et quand elle se recharge, enseigne la norme. Le budget est affiché dans l'éditeur avant que vous n'écriviez, et le prix du message se met à jour en direct dès qu'une source le rend moins cher.",
-  "standard.1": "Une seule règle",
-  "standard.2": "Tout le monde dans ce graphe est soumis aux mêmes règles.",
-  "standard.3": "Bourguiba, Ben Ali, Saïed, Ennahdha, l'opposition, l'armée, la police, les familles d'affaires, les syndicats, l'UE, la France, l'Italie, l'Algérie, les États-Unis, la Russie, la Banque mondiale et les ONG internationales sont tous consignés selon des règles identiques. <strong>Un atlas du pouvoir tunisien ne contenant que des Tunisiens se lit comme un réquisitoire contre les Tunisiens.</strong>",
-  "standard.4": "Ce n'est pas de la neutralité pour la neutralité. C'est la seule protection réelle du projet. Une crédibilité qui repose sur l'accord des gens avec les conclusions s'effondre dès qu'ils cessent d'être d'accord. Une crédibilité qui repose sur des preuves accessibles et reproductibles, non.",
-  "standard.5": "Une condamnation est un fait documenté ; les accusations qui la fondent et les critiques de la procédure sont contestées, et les deux cadrages sont conservés avec attribution plutôt que tranchés ici. La richesse n'est pas la corruption — le jeu de données distingue les familles d'affaires antérieures à un régime de celles que ce régime a créées, car effacer cette distinction est l'erreur la plus fréquente des récits populaires.",
+  "speech.35": "Selon la spécification, un refus nommerait le budget au lieu de vous gronder pour ralentir. « Limite de débit atteinte » n'apprend rien. Savoir que vous avez épuisé votre semaine, et quand elle se réinitialise, enseigne la norme. Selon la spécification, le budget s'afficherait dans le compositeur avant que vous n'écriviez, et le prix du message se mettrait à jour en direct : une source le rend moins cher. Spécifié, pas encore mis en œuvre.",
+  "standard.1": "Une seule norme",
+  "standard.2": "Chacun dans ce graphe est soumis aux mêmes règles.",
+  "standard.3": "Bourguiba, Ben Ali, Saïed, Ennahdha, l'opposition, l'armée, la police, les familles d'affaires, les syndicats, l'UE, la France, l'Italie, l'Algérie, les États-Unis, la Russie, la Banque mondiale et les ONG internationales sont tous consignés selon les mêmes règles. <strong>Un atlas du pouvoir tunisien qui ne contiendrait que des Tunisiens se lirait comme un acte d'accusation contre les Tunisiens.</strong>",
+  "standard.4": "Ce n'est pas de la neutralité pour elle-même. C'est la seule vraie protection du projet. Une crédibilité qui dépend de l'accord des lecteurs avec les conclusions s'effondre dès qu'ils ne sont pas d'accord. Une crédibilité qui dépend de preuves accessibles et reproductibles, non.",
+  "standard.5": "Une peine de prison est un fait documenté. Les accusations qui la sous-tendent et les critiques de la procédure sont contestées. Les deux lectures sont conservées avec leur attribution, sans être tranchées ici. La richesse n'est pas la corruption. Le jeu de données distingue les familles d'affaires antérieures à un régime de celles que ce régime a créées, car confondre les deux est l'erreur la plus fréquente dans les récits populaires.",
   "support.1": "Pour les institutions et les bailleurs",
   "support.2": "La tentative de mémoire collective de l'État a été scellée. Celle-ci ne peut pas l'être.",
-  "support.3": "Deep Tunisia n'appartient à aucun parti, aucun gouvernement et aucune idéologie. Le code est ouvert et versionné, les exports sont téléchargeables intégralement, et la méthodologie, l'historique des corrections et le financement sont publiés sur le site plutôt que décrits dans une plaquette.",
-  "support.4": "Il est bâti pour survivre à ses auteurs. Il n'y a pas de base de données à saisir, pas de table de comptes à réquisitionner et pas d'archive privée à perdre : environ 8,6 Mo de données accompagnent la page, et le registre de référence est du texte brut que n'importe qui peut copier.",
-  "support.5": "<strong>La contrainte n'est pas la donnée. C'est la capacité de vérification.</strong> Ajouter des fiches coûte peu et coûtera de moins en moins ; un second regard humain, non. Le soutien est dépensé contre cela, dans cet ordre.",
-  "support.6": "Priorité une",
+  "support.3": "Deep Tunisia n'appartient à aucun parti, à aucun gouvernement, à aucune idéologie. Il est open source, sous contrôle de version. Ses exports sont téléchargeables en entier. Sa méthodologie, son historique de corrections et son financement sont publiés sur le site, au lieu d'être décrits dans une plaquette.",
+  "support.4": "Il est conçu pour survivre à ses auteurs. Il n'y a ni base de données à saisir, ni table de comptes à réquisitionner, ni archive privée à perdre. Environ 8,6 Mo de données accompagnent la page, et le registre de référence est du texte brut que chacun peut copier.",
+  "support.5": "<strong>La contrainte déterminante n'est pas la donnée. C'est la capacité de vérification.</strong> Ajouter des fiches est peu coûteux, et l'est de moins en moins. Un second regard humain ne l'est pas. Le soutien est dépensé en fonction de cela, dans cet ordre.",
+  "support.6": "Priorité un",
   "support.7": "Vérification humaine",
-  "support.8": "Les 212 relations consignées qui reposent sur autre chose qu'un document officiel et touchent une personne nommée, dont aucune n'a été vérifiée de façon indépendante. C'est le chiffre du site qui a le plus besoin de bouger, et il ne bouge qu'avec de l'attention rémunérée.",
+  "support.8": "Les 212 relations consignées qui reposent sur quelque chose de moins qu'un acte officiel et touchent une personne nommée. Aucune n'a été vérifiée de façon indépendante. C'est le chiffre du site qui doit le plus bouger, et il ne bouge qu'avec une attention rémunérée.",
   "support.9": "Priorité deux",
   "support.10": "Sources primaires",
-  "support.11": "Les décrets de nomination au journal officiel donnent des dates exactes, ce dont dépend toute la chronologie. Le texte intégral du journal officiel est derrière une authentification et compte 22 395 documents ; la conception praticable consiste à indexer plutôt qu'à extraire, puis à faire lire par un humain celui qui compte.",
+  "support.11": "Les décrets de nomination publiés au journal officiel donnent des dates exactes, et toute la chronologie en dépend. Le texte intégral du journal reste derrière une connexion, sur 22 395 documents. La méthode praticable consiste à indexer plutôt qu'à extraire, puis à faire lire par un humain celui qui compte.",
   "support.12": "Priorité trois",
   "support.13": "Traduction humaine",
-  "support.14": "L'arabe et le français, faits par des personnes. 3 070 chaînes traduisibles, 12 traduites par un humain à ce jour. Un registre public dont l'essentiel du public lit une traduction automatique n'est qu'à moitié un registre public.",
+  "support.14": "Arabe et français, faits par des personnes. 3 070 chaînes traduisibles, dont 12 traduites par des humains aujourd'hui. Un registre public dont la plupart des lecteurs lisent une traduction automatique n'est qu'à moitié public.",
   "support.15": "Priorité quatre",
   "support.16": "Examen juridique",
-  "support.17": "L'exposition que représente la publication d'un graphe d'entités nommées dans cette juridiction, évaluée correctement plutôt que devinée. C'est ce qui conditionne l'ouverture publique de la couche de discussion.",
+  "support.17": "L'exposition liée à la publication d'un graphe d'entités nommées dans cette juridiction, évaluée sérieusement plutôt que devinée. Elle conditionne le lancement public de la couche de discussion.",
   "support.18": "Priorité cinq",
   "support.19": "Infrastructure",
-  "support.20": "Hébergement statique, instantanés d'archive de chaque URL citée, et miroirs. Volontairement modeste : l'architecture est choisie pour que le faire tourner coûte peu et que le perdre soit difficile.",
-  "support.21": "Pas sur la liste",
-  "support.22": "Une couche de recherche assistée par IA",
-  "support.23": "Conçue et délibérément non construite. Les parties automatisables sont les parties faciles, et produire du volume avant d'avoir la capacité de vérification produirait exactement l'échec que ce projet vise à corriger. Le jour venu, elle devra parcourir le graphe et citer des fiches — jamais générer la réponse.",
-  "support.24": "Sans comptes",
-  "support.25": "Sans publicité",
-  "support.26": "Sans traceurs",
-  "support.27": "Sans polices tierces",
-  "support.28": "Sans modèle de langage dans le circuit des données",
-  "support.29": "Sans score de pouvoir unique",
-  "support.30": "Sans péage",
-  "support.31": "Remonter à la surface",
-  "end.1": "Un pays qui se souvient se manipule moins facilement.",
-  "end.2": "Un pays qui comprend ne se gouverne pas par la confusion.",
-  "end.3": "Un pays qui se connaît est bien plus difficile à tromper.",
+  "support.20": "Hébergement statique, instantanés d'archives de chaque URL citée, et miroirs. Volontairement modeste : l'architecture est choisie pour que la faire tourner soit peu coûteux et la perdre difficile.",
+  "support.21": "Hors liste",
+  "support.22": "Une couche de recherche par IA",
+  "support.23": "Conçue, et volontairement non construite. Les parties automatisables sont les plus faciles, et bâtir du volume avant que la capacité de vérification n'existe reproduirait exactement l'échec que ce projet doit corriger. Le jour venu, elle devra parcourir le graphe et citer des fiches. Elle ne devra jamais produire la réponse.",
+  "support.24": "Pas de comptes",
+  "support.25": "Pas de publicité",
+  "support.26": "Pas de traceurs",
+  "support.27": "Pas de polices tierces",
+  "support.28": "Pas de modèle de langage dans le circuit des données",
+  "support.29": "Pas de score de pouvoir unique",
+  "support.30": "Pas de paywall",
+  "support.31": "Retour à la surface",
+  "end.1": "Une nation qui se souvient ne peut pas être manipulée aussi facilement.",
+  "end.2": "Une nation qui comprend ne peut pas être gouvernée par la confusion.",
+  "end.3": "Une nation qui se connaît est beaucoup plus difficile à tromper.",
   "end.4": "C'est pour cela que Deep Tunisia existe.",
   "foot.1": "Ce que c'est",
-  "foot.2": "Un registre public à code ouvert et adossé à ses sources, portant sur le pouvoir politique, institutionnel, économique et historique en Tunisie, 1956–2026. Le site est une fenêtre ; le graphe de connaissance est le projet, et il est téléchargeable intégralement.",
+  "foot.2": "Un registre public open source, fondé sur des sources, du pouvoir politique, institutionnel, économique et historique en Tunisie, de 1956 à 2026. Le site est une fenêtre. Le graphe de connaissance est le projet, et il est téléchargeable en entier.",
   "foot.3": "Ce que ce n'est pas",
-  "foot.4": "Pas une révélation, et pas une conclusion en quête de preuves.",
-  "foot.5": "Pas un site d'actualité. Les titres de presse ne portent aucune base et ne sont comptés dans aucun chiffre publié ici.",
-  "foot.6": "Pas neutre par déclaration — seulement en rendant le raisonnement inspectable.",
-  "foot.7": "Sans affiliation à un parti, à un gouvernement ou à la ligne éditoriale d'un bailleur.",
+  "foot.4": "Ni un scoop, ni une conclusion en quête de preuves.",
+  "foot.5": "Pas un site d'actualité. Les titres n'ont aucune base et ne sont jamais comptés dans aucun chiffre publié ici.",
+  "foot.6": "Pas neutre par affirmation. Il ne l'est qu'en rendant son raisonnement vérifiable.",
+  "foot.7": "Non affilié à un parti, à un gouvernement ou à la ligne éditoriale d'un bailleur.",
   "foot.8": "Ouvert par conception",
-  "foot.9": "<a href=\"/data\">Le graphe complet, à télécharger</a>",
+  "foot.9": "<a href=\"/data\">Le graphe complet, téléchargeable</a>",
   "foot.10": "<a href=\"/methodology\">Méthodologie</a>",
-  "foot.11": "<a href=\"/corrections\">Chaque correction, générée depuis le versionnement</a>",
-  "foot.12": "<a href=\"/evidence\">Hypothèses, critères de réfutation et questions ouvertes</a>",
+  "foot.11": "<a href=\"/corrections\">Chaque correction, générée depuis le contrôle de version</a>",
+  "foot.12": "<a href=\"/evidence\">Hypothèses, falsifications et questions ouvertes</a>",
   "foot.13": "<a href=\"https://github.com/deepontology/deeptunisia\">Code source</a>",
-  "foot.17": "<a href=\"/colophon\">Comment c'est fait</a>",
+  "foot.17": "<a href=\"/colophon\">Comment cela a été fait</a>",
   "foot.14": "Deep Tunisia · deeptunisia.org",
   "foot.15": "Chaque chiffre de cette page est généré par la compilation. Rien n'est illustratif.",
   "foot.16": "contact@deeptunisia.org",
-  "cta.enter": "Entrer dans l'atlas",
-  "cta.paper": "Lire le document",
+  "index.eyebrow": "DT Research",
+  "index.title": "Indices",
+  "index.read": "Lire l'étude",
+  "index.design": "En cours de conception. Les questions et la formule sont publiées avant la première réponse.",
+  "index.fielding": "Collecte des réponses pour",
+  "index.frozen": "Le questionnaire est arrêté. La collecte n'a pas commencé.",
+  "index.closed": "La collecte est close. Les résultats sont sur la page de l'étude.",
+  "index.among": "parmi les personnes ayant répondu à une enquête en ligne ouverte",
+  "surface.6": "Cette page est l'argument. L'atlas est l'instrument. Chronique, réseau, carte et monde, de 1956 à 2026, chaque affirmation sourcée. Il s'ouvre immédiatement. Pas de compte, pas de traceur.",
+  "cta.enterHeader": "Explorer l'atlas",
   "cta.talk": "Parlons-en",
-  "doc.title": "Deep Tunisia — là où la mémoire s'efface, le pouvoir échappe",
-  "doc.desc": "Un registre public ouvert et sourcé des personnes, institutions et réseaux qui façonnent la Tunisie, 1956–2026. Chaque affirmation traçable. Chaque conclusion contestable. Sans comptes, sans traceurs, sans autorisation à demander.",
+  "bud.rolling": "Sept jours glissants, jamais un jour calendaire",
+  "doc.title": "Deep Tunisia : là où la mémoire s'efface, le pouvoir échappe",
+  "doc.desc": "Un registre public ouvert et sourcé des personnes, des institutions et des réseaux qui façonnent la Tunisie, de 1956 à 2026. Chaque affirmation est traçable. Chaque conclusion peut être contestée. Sans comptes, sans traceurs, sans permission à demander.",
   "ui.theme": "Basculer entre le thème sombre et le thème clair",
   "ui.lang": "Langue",
   "ui.sections": "Sections",
-  "dial.live": "Connexions visibles : {n} sur {total} · Personnes laissées sans lien : {iso}",
+  "dial.live": "Connexions visibles : {n} sur {total} · personnes laissées sans lien : {iso}",
   "bud.left": "Unités restantes cette semaine : {n} sur {total}",
-  "bud.rolling": "Sept jours glissants, jamais un jour calendaire",
-  "bud.refusal": "C'est votre semaine — elle se recharge sur sept jours glissants, pas à minuit.",
+  "bud.refusal": "C'est votre semaine. Elle se renouvelle sur sept jours glissants, et non à minuit.",
   "bud.reset": "Réinitialiser",
   "key.show": "Afficher de nouveau",
   "viz.offices": "MANDATS RECENSÉS",
@@ -2280,7 +2160,7 @@ footer a:hover { color: var(--accent); }
   "viz.era.bourguiba": "Bourguiba",
   "viz.era.ben-ali-consolidation": "Consolidation",
   "viz.era.police-state": "L'État policier installé",
-  "viz.era.transition": "Révolution & transition",
+  "viz.era.transition": "Révolution et transition",
   "viz.era.pluralism": "Pluralisme des élites",
   "viz.era.fragmentation": "Fragmentation",
   "viz.era.recentralisation": "Recentralisation",
@@ -2288,7 +2168,7 @@ footer a:hover { color: var(--accent); }
   "viz.rup.1987": "Ben Ali",
   "viz.rup.2011": "Révolution",
   "viz.rup.2021": "25 juillet",
-  "viz.stratumAlt": "Nombre de mandats recensés en Tunisie pour chaque année de 1956 à 2026, passant de 4 en 1956 à un maximum de 59 en 2021, et s'établissant à 47 en 2026.",
+  "viz.stratumAlt": "Nombre de mandats recensés en Tunisie pour chaque année de {y0} à {y1} : {first} en {y0}, un maximum de {peak} en {peakYear}, et {last} en {y1}.",
   "viz.dialAlt": "Un réseau des 46 personnes les plus connectées du graphe, disposées selon une voie fixe par couche, avec un contrôle permettant de relever le niveau de preuve exigé."
  },
  "ar": {
@@ -2298,11 +2178,13 @@ footer a:hover { color: var(--accent); }
   "top.3": "الأغورا",
   "top.4": "الهوية",
   "top.5": "الدعم",
-  "surface.1": "سجل عمومي مفتوح · تونس · 1956 — 2026",
-  "surface.2": "<span class=\"curtain\"><span>حيث تخبو الذاكرة،</span></span> <span class=\"curtain\"><span>تفلت <span class=\"lit\">السلطة</span>.</span></span>",
-  "surface.3": "«ديب تونيزيا» سجل عمومي حيّ للأشخاص والمؤسسات والشركات والشبكات التي تصوغ بلداً. كل ادعاء يمكن تتبّعه إلى مصدره. كل استنتاج قابل للطعن. ولا شيء هنا يستأذن أحداً كي يُقرأ.",
+  "surface.1": "سجل عمومي مفتوح · تونس · 1956 إلى 2026",
+  "surface.2": "<span class=\"curtain\"><span>حيث تخبو الذاكرة،</span></span> <span class=\"curtain\"><span><span class=\"lit\">السلطة</span> تفلت.</span></span>",
+  "surface.3": "«ديب تونيزيا» سجل عمومي للأشخاص والمؤسسات والشركات والشبكات التي تصوغ بلداً، يُحدَّث كلما تغيّرت الأدلة. كل ادعاء يمكن تتبّعه إلى مصدره. وكل استنتاج يبقى قابلاً للطعن. ولا شيء هنا يستأذن أحداً كي يُقرأ.",
   "surface.4": "اقرأ الحجّة",
   "surface.5": "انزل",
+  "cta.enter": "ادخل إلى الأطلس",
+  "cta.paper": "اقرأ الورقة البحثية",
   "ledger.1": "أشخاص",
   "ledger.2": "مناصب مشغولة",
   "ledger.3": "مؤسسات",
@@ -2312,211 +2194,219 @@ footer a:hover { color: var(--accent); }
   "ledger.7": "سنة",
   "memory.1": "الذاكرة",
   "memory.2": "<span class=\"curtain\"><span>كل مجتمع قائم</span></span> <span class=\"curtain\"><span>على ذاكرته.</span></span>",
-  "memory.3": "<em>الذاكرة مصنوعة من السجلات. والسجلات مصنوعة من المعلومات.</em>",
-  "memory.4": "طوال قرون كان العذر هو الندرة. كانت السجلات ناقصة، والقرارات تُتخذ خلف الأبواب المغلقة، وكانت السلطة صعبة الفهم وأصعب على المساءلة. لم يعد ذلك العذر قائماً. فما يُنتج من معلومات في يوم واحد اليوم يفوق ما أنتجته أجيال كاملة في عمر بأكمله.",
-  "memory.5": "ومع ذلك لم يكن الفهم يوماً أكثر تشتتاً مما هو عليه الآن. تتبعثر الوقائع. تختفي السجلات. تبقى الصلات غير مرئية. تخبو الذاكرة العامة — و<strong>حيث تخبو الذاكرة، تفلت السلطة من المساءلة.</strong>",
-  "memory.6": "وُجد «ديب تونيزيا» كي تتذكّر تونس: سبعون عاماً من التعيينات والمؤسسات والانقطاعات والعلاقات، مجموعة في مكان واحد، في العلن، وبصيغة يستطيع أي شخص تدقيقها.",
-  "memory.7": "المناصب المسجّلة في كل سنة، 1956–2026. مستخرجة من 427 فترة تولٍّ في <span style=\"color:var(--text-secondary)\">data/positions.yaml</span>؛ ولا واحدة منها بلا تواريخ منشورة. الارتفاع بعد 2011 يعود جزئياً إلى انفتاح الدولة وجزئياً إلى أن هذا السجل يغطي العقود الأخيرة تغطية أفضل — والرسم لا يدّعي معرفة نسبة كل منهما.",
+  "memory.3": "<em>الذاكرة مصنوعة من السجلات، والسجلات مصنوعة من المعلومات.</em>",
+  "memory.4": "طوال قرون كان العذر هو الندرة. كانت السجلات ناقصة، وتُتخذ القرارات خلف الأبواب المغلقة، وكانت السلطة عسيرة الفهم وأعسر في المساءلة. وقد زال هذا العذر. فما يُنتَج من معلومات في يوم واحد اليوم يفوق ما أنتجته أجيال كاملة في عمر بأكمله.",
+  "memory.5": "ومع ذلك صار الفهم أشد تشظياً من أي وقت مضى. الوقائع تتبعثر، والسجلات تضيع، والصلات تبقى خفية. تخبو الذاكرة العامة، و<strong>حيثما تخبو الذاكرة، تفلت السلطة من المساءلة.</strong>",
+  "memory.6": "وُجد «ديب تونيزيا» كي تتذكّر تونس. سبعون عاماً من التعيينات والمؤسسات والقطائع والعلاقات، مجموعة في مكان واحد، على الملأ، وفي صورة يستطيع أي أحد تدقيقها.",
+  "memory.7": "مناصب مشغولة مسجّلة، لكل سنة، من 1956 إلى 2026. مستخرجة من 427 فترة ولاية في <span style=\"color:var(--text-secondary)\">data/positions.yaml</span>. لا يُسقَط أيٌّ منها لتاريخ غير مؤكد، فالشكّ يُرسم ولا يُخفى. والارتفاع بعد 2011 يعود جزئياً إلى انفتاح الدولة، وجزئياً إلى أن هذا السجل صار أدق في العقود الأخيرة. والرسم البياني لا يدّعي معرفة نسبة كل منهما.",
   "connection.1": "لماذا مبيان معرفي",
-  "connection.2": "التعيين وحده لا يعني الكثير ما لم يُربط بمؤسسة.",
+  "connection.2": "التعيين الواحد لا يعني الكثير ما لم يُربط بمؤسسة.",
   "connection.3": "الموقع نافذة. أما المشروع فهو المبيان المعرفي.",
-  "connection.4": "الشركة لا تعني الكثير ما لم تُفهم ملكيتها. والقرار لا يعني الكثير ما لم يوضع في الحقبة التي أنتجته. وُجد «ديب تونيزيا» ليصل هذه الشظايا في فهم عمومي لا يستطيع أي وثيقة منفردة أن توفّره.",
-  "connection.5": "الوصلة التي تجعل ذلك ممكناً متواضعة عن قصد. <strong>المنصب</strong> هو <em>(الوظيفة · شاغلها · البداية · النهاية)</em> — أي مجال زمني، لا واقعة ملتصقة بشخص. لا يمكنك أن تسأل <em>من كان يملك السلطة سنة 1994</em> قائمةَ أشخاص. لا يمكنك أن تسألها إلا مجموعةَ مجالات زمنية.",
-  "connection.6": "التواريخ مجالات لا نقاط: أبكر بداية وأحدثها، أبكر نهاية وأحدثها، إضافة إلى حالة. تَرسم الخطية الزمنية النواة الموثّقة خطاً متصلاً والغلاف غير المؤكد تظليلاً، حتى لا تمرّ فترة لم يؤكدها أحد بهدوء على أنها فترة مؤكدة.",
-  "connection.7": "التعاقبات <strong>مستنتَجة لا مُقرَّرة</strong> — تُحسب من المجالات الزمنية نفسها، فتظهر الثغرة في السجل ثغرةً. يوجد حالياً <strong>43 انقطاعاً في التعاقب</strong> و<strong>2 فترات متداخلة</strong>، وكلها منشورة.",
+  "connection.4": "الشركة لا تعني الكثير ما لم تُفهم ملكيتها. والقرار لا يعني الكثير ما لم يوضع في الحقبة التي أنتجته. و«ديب تونيزيا» وُجد ليصل هذه الأجزاء المتفرقة إلى فهم عام لا تقدر عليه وثيقة واحدة.",
+  "connection.5": "الوصلة التي تجعل ذلك ممكناً غير لامعة عن قصد. <strong>المنصب</strong> هو <em>دور وشاغل وبداية ونهاية</em>. وهو فترة زمنية، لا حقيقة عن شخص. لا يمكنك أن تسأل <em>من كان يملك السلطة في 1994</em> من قائمة أشخاص. لا تسأله إلا من مجموعة فترات زمنية.",
+  "connection.6": "التواريخ نطاقات لا نقاط. لكل منها أبكر بداية وأحدث بداية، وأبكر نهاية وأحدث نهاية، وحالة. يرسم الجدول الزمني النواة الموثّقة بخط متصل، والمغلّف غير المؤكد بخطوط مائلة، حتى لا تمرّ فترة لم يؤكدها أحد كأنها مؤكدة.",
+  "connection.7": "التعاقبات <strong>مُستنتَجة لا مُقرَّرة</strong>. تُحسب من الفترات نفسها، فتظهر الثغرة في السجل ثغرةً. وهناك حالياً <strong>43 فجوة في التعاقب</strong> و<strong>2 من الفترات المتداخلة</strong>، وكلها منشورة.",
   "evidence.1": "كيف تُجمع المعرفة",
   "evidence.2": "<span class=\"curtain\"><span>كل ادعاء قابل</span></span> <span class=\"curtain\"><span>للتتبّع. وكل</span></span> <span class=\"curtain\"><span>استنتاج قابل</span></span> <span class=\"curtain\"><span>للطعن.</span></span>",
-  "evidence.3": "لا يكتب أي نموذج لغوي ادعاءات في هذا المبيان. تدخل المعرفة من باب واحد وبترتيب ثابت، وترفض عملية البناء كل ما يصل خارج هذا الترتيب. النماذج تصيغ مسودات ترجمة ومرشحي بحث — موسومة ومحكومة. انظر <a href=\"/colophon\">كيف صُنع</a>.",
-  "evidence.4": "<strong>القاعدة الأهم: لا يُسمح للاستنتاج أبداً بأن يصير واقعة.</strong> يُصنَّف كل ادعاء تحت واحد من أربعة أسس، ولا يُرسم أيّ اثنين منها بالطريقة نفسها.",
+  "evidence.3": "لا يكتب أي نموذج لغوي ادعاءات في هذا المبيان. تدخل المعرفة من باب واحد، وبترتيب ثابت، وعملية البناء ترفض كل ما يصل خارج الترتيب. تقترح النماذج ترجمات وأفكاراً بحثية، وتُعلَّم وتُضبط. انظر <a href=\"/colophon\">كيف أُنجز هذا</a>.",
+  "evidence.4": "<strong>الاستنتاج لا يصير حقيقة أبداً. وهذه أهم قاعدة.</strong> يُصنَّف كل ادعاء تحت واحد من أربعة أسس، ولا يُرسم أي أساسين منها بالطريقة نفسها.",
   "evidence.5": "المصدر أولاً",
-  "evidence.6": "يُضاف المصدر قبل الادعاء الذي يسنده، ويُصنَّف من 1 إلى 5. المستوى 1 أمر أو نشر في الرائد الرسمي. والمستوى 5 خيط يحتاج إلى إسناد ولا يكفي وحده أبداً. تضم المكتبة اليوم 1380 مصدراً — 164 في المستوى 1، و219 في المستوى 2، و505 في المستوى 3، و414 في المستوى 4، و78 في المستوى 5.",
+  "evidence.6": "يُضاف المصدر قبل الادعاء الذي يسنده، ويُصنَّف من 1 إلى 5. المستوى 1 قرار أو نشر في الرائد الرسمي. والمستوى 5 خيط يحتاج إلى تأكيد، ولا يكفي وحده أبداً. تضم المكتبة اليوم 1380 مصدراً: 164 في المستوى 1، و219 في المستوى 2، و505 في المستوى 3، و414 في المستوى 4، و78 في المستوى 5.",
   "evidence.7": "ثم يُربط الادعاء به",
-  "evidence.8": "لا شيء يُدخَل معلّقاً في الهواء. المنصب والعلاقة والحدث — كلٌّ منها يحيل إلى معرّفات المصادر التي تسنده. و50 من المصادر الـ1380 لا تسند اليوم أي ادعاء؛ تُحفظ بوصفها قراءات مؤجّلة و<em>تُستبعد من العدد المنشور</em>، لأن مدخلاً ببليوغرافياً لا يسند شيئاً ليس دليلاً.",
+  "evidence.8": "لا شيء يُدخَل معلّقاً في الهواء. كل منصب وعلاقة وحدث يشير إلى معرّفات المصادر التي تسنده. و50 من المصادر الـ1380 لا تسند حالياً أي ادعاء. تُحفظ بوصفها قراءة معلّقة و<em>تُستبعد من العدد المنشور</em>، لأن قيداً ببليوغرافياً لا يسند شيئاً لا يكون دليلاً.",
   "evidence.9": "ثم يُعلَن الأساس، وهو يغيّر الشكل",
-  "evidence.10": "موثّق، منقول، مستنتَج، غير مُسنَد. الأساس يصف الادعاء لا تواريخه — «شغل فلان هذا المنصب» و«بين هذين التاريخين» ادعاءان منفصلان يختلف رسوخهما عادةً، ولذلك يحمل كلٌّ منهما مؤشره الخاص. ويستطيع القارئ في أي لحظة أن يرفع عتبة الدليل فيرى الادعاءات الأضعف تغادر الخريطة.",
+  "evidence.10": "موثّق، ومنقول، ومستنتَج، وغير مُسنَد. يصف الأساس الادعاء لا تواريخه. فـ«فلان تولّى هذا المنصب» و«بين هذين التاريخين» ادعاءان منفصلان، ولكل منهما في العادة مكانة مختلفة، لذلك يحمل كل منهما علامته الخاصة. ويستطيع القارئ في أي وقت رفع عتبة الدليل، فيرى الادعاءات الأضعف تغادر الخريطة.",
   "evidence.11": "وعملية البناء ترفض ما تبقّى",
-  "evidence.12": "على الادعاء <em>المستنتَج</em> أن يذكر تعليله وما الذي يدحضه. وعلى ادعاء الدرجة C أو D أن يسمّي من يقوله. وهذه ليست تنبيهات — بل تُفشل عملية البناء. لا سبيل إلى تمرير تلميح بلا نسبة داخل هذه البيانات.",
+  "evidence.12": "يجب أن يذكر الادعاء <em>المستنتَج</em> استدلاله، وما الذي يُفنّده. ويجب أن يسمّي الادعاء من الدرجة C أو D صاحبه. هذه ليست تحذيرات لغوية، بل تُفشل عملية البناء. ولا توجد طريقة لإدخال إيحاء غير منسوب إلى قائله في هذه البيانات.",
   "evidence.13": "فشل قاطع لا تنبيه",
   "evidence.14": "والتغيير سجل أيضاً",
-  "evidence.15": "البيانات نص صِرف تحت إدارة إصدارات، فكل تغيير وقائعي هو فارق مؤرَّخ ومنسوب إلى صاحبه. ويُنشر هذا التاريخ كاملاً و<strong>يُولَّد آلياً لا يُنتقى</strong> — فلا أحد يقرر أيّ التصويبات كانت مُرضية بما يكفي كي تظهر.",
+  "evidence.15": "البيانات نص عادي تحت التحكم في النسخ، فكل تغيير في الوقائع فرق مؤرخ منسوب إلى صاحبه. وهذا السجل منشور كاملاً، و<strong>مولَّد لا منتقى</strong>. لا يقرر أحد أي التصويبات كان مُجمِّلاً بما يكفي ليظهر.",
   "evidence.16": "الأسس الأربعة، والخطوط التي تحملها",
   "evidence.17": "موثّق",
-  "evidence.18": "وثيقة رسمية أو أمر أو نشر في الرائد الرسمي ينص عليه.",
+  "evidence.18": "يذكره سجل رسمي أو قرار أو نشر في الرائد الرسمي.",
   "evidence.19": "199 ادعاءً · خط متصل",
   "evidence.20": "منقول",
-  "evidence.21": "منشورات ذات مصداقية تنقله، مع نسبته إلى قائله.",
+  "evidence.21": "تنقله منشورات ذات مصداقية، مع نسبته إلى قائله.",
   "evidence.22": "690 ادعاءً · خط متقطّع",
   "evidence.23": "مستنتَج",
-  "evidence.24": "لا أحد ينص عليه. مُستدَلٌّ عليه من بنية موثّقة — وعليه أن ينشر ما يمكن أن يثبت خطأه.",
-  "evidence.25": "43 ادعاءً · نقطي",
+  "evidence.24": "لا أحد يذكره. مُستدَل عليه من بنية موثّقة، وعليه أن ينشر ما يثبت خطأه.",
+  "evidence.25": "43 ادعاءً · خط منقّط",
   "evidence.26": "غير مُسنَد",
   "evidence.27": "يتداوله الناس بلا دليل موثوق. يُسجَّل ويُنسب، ويكون مخفياً افتراضياً.",
-  "evidence.28": "13 ادعاءات · نقطة وشرطة",
-  "evidence.29": "<strong>الادعاءات غير المُسنَدة تُسجَّل ولا تُحذف.</strong> حذف ادعاء واسع الانتشار لا يجعله يزول — بل يسلب الخريطة وحدها القدرة على أن تُري أحداً <em>لماذا</em> الرواية الشائعة خاطئة. وعدد من المسجَّل هنا تناقضه بيانات المشروع نفسه: فالقول إن الجيش يحكم تونس سراً يجاور مباشرةً سجلّ قيادة الأركان المشتركة التي بقيت شاغرة عقدين.",
+  "evidence.28": "13 ادعاءً · نقطة وشرطة",
+  "evidence.29": "<strong>الادعاءات غير المُسنَدة تُسجَّل، ولا تُحذف.</strong> حذف ادعاء شائع لا يجعله يختفي، بل يحرم الخريطة من القدرة على أن تُظهر لأحد <em>لماذا</em> الرواية الشائعة خاطئة. وعدد من الادعاءات المسجّلة هنا تناقضه بيانات المشروع نفسه. فالقول إن الجيش يحكم تونس سراً يقع مباشرة بجوار سجل قيادة مشتركة بين القوات الثلاث بقيت شاغرة عشرين عاماً.",
   "evidence.30": "ارفع العتبة. وشاهد الخريطة تتفكك.",
-  "evidence.31": "في الأسفل شريحة حقيقية من المبيان: الأشخاص الستة والأربعون الأكثر ارتباطاً والعلاقات المسجَّلة بينهم، وكل علاقة تحمل أساسها الفعلي. ارفع العتبة فتغادر الأدلة الأضعف. هذا أكثر تفاعل مفيد في الموقع، وهو التفاعل الذي لن تبنيه أغلب المشاريع — لأنه يريك أي قدر من الصورة يقوم على ما هو دون الإثبات.",
+  "evidence.31": "هذه شريحة حقيقية من المبيان: الأشخاص الأكثر ارتباطاً، وعددهم 46، والعلاقات المسجّلة بينهم، ولكل منها أساسه الفعلي. ارفع العتبة فتغادر الأدلة الأضعف. وهذا أكثر ما في الموقع إفادة، وهو تفاعل قلّما تبنيه المشاريع، لأنه يُظهر مقدار الصورة القائم على شيء دون الإثبات.",
   "evidence.32": "الشبكة · عتبة الدليل",
   "evidence.33": "46 شخصاً · مسار ثابت لكل طبقة",
   "evidence.34": "أظهر الادعاءات القائمة على",
   "evidence.35": "كل ما هو مسجَّل",
   "evidence.36": "المنقول فما فوق",
   "evidence.37": "الموثّق فقط",
-  "evidence.38": "الوصلات الذهبية تعبر بين الطبقات — شخصية أمنية مرتبطة بأخرى اقتصادية مثلاً. وهي الصلات التي يريد المشروع منك التحقق منها أكثر من غيرها، وهي أيضاً الأسرع تلاشياً حين ترفع العتبة. وارتفاع عدد الصلات ليس دليلاً على مخالفة أو تنسيق أو سيطرة خفية؛ إنما يسجّل أن هذه البيانات تعرف صلات كثيرة. وانتبه إلى كلفة الخطوة الأخيرة: اشتراط وثيقة رسمية يُبقي أقل من نصف الصلات قائمة ويترك 21 من هؤلاء الـ46 بلا أي صلة على الإطلاق — وهؤلاء هم الأفضل توثيقاً في المبيان كله.",
+  "evidence.38": "الحواف الذهبية تعبر بين الطبقات، كأن يرتبط رقم أمني برقم اقتصادي مثلاً. وهي الروابط التي يحرص المشروع أكثر من غيرها على مراجعتها، وهي أيضاً الأكثر عرضة للتلاشي حين ترفع العتبة. وكثرة الروابط لا تُعدّ دليلاً على مخالفة أو تنسيق أو سيطرة خفية، بل تعني أن هذه البيانات تعرف روابط كثيرة. لاحظ كلفة الخطوة الأخيرة: إذ يُبقي طلب السجل الرسمي أقل من نصف الروابط قائماً، ويترك 21 من هؤلاء الـ46 دون أي صلة مرتبطة بهم. وهؤلاء هم الأشخاص الأوثق توثيقاً في المبيان كله.",
   "limits.1": "ما لا نعرفه",
   "limits.2": "السجل الذي لا ينشر إلا مواطن قوته إعلانٌ لا سجل.",
-  "limits.3": "البنية المعلنة لهذا المشروع أن الآلات تقترح والبشر يتحققون. ولم يمرّ حتى الآن إلا القليل جداً على عين ثانية، والرقم الصادق منشور على الموقع لا محفوظ في درج — لأن ذلك هو السبيل الوحيد كي يعني الالتزام شيئاً.",
-  "limits.4": "والأسوأ من المجموع: <strong>ملاحظات المراجعة الـ48 كلها حتى الآن صادرة عن مرحلتي البناء والبحث، ولا واحدة منها تسجّل تحققًا مستقلًا.</strong> ومن بين 21 ادعاءً غير مُسنَد، و327 ادعاءات تسمّي مصدرًا، و55 استنتاجًا، لم تخضع أي من السجلات الأقدر على الإضرار بشخص مُسمّى لمراجعة مستقلة. هذا أعلى عمل متبقٍّ قيمةً، ولذلك فإن تمويل هذا المشروع يشتري التحقق قبل أن يشتري أي شيء آخر.",
-  "limits.5": "سجلاً يحمل <b>ملاحظة مراجعة بشرية</b>. تتداخل مؤشرات الخطر، فلا يمكن قراءة التفصيل كأجزاء من كل واحد، ولا تسجّل أي ملاحظة حتى الآن تحققًا مستقلًا.",
-  "limits.6": "سجلاً <b>ينتظر مصدراً أولياً</b> — يقوم اليوم على نقل صحفي ثانوي، ومُدرَج واحداً واحداً لا مُلخَّصاً.",
-  "limits.7": "<b>انقطاعاً في التعاقب وفترات متداخلة</b>، ترصدها عملية البناء تلقائياً. والثغرة في التسلسل الزمني تُعرَض ثغرةً.",
-  "limits.8": "<b>تناقضاً بين المصادر لم يُحسم.</b> حين تختلف المنابر، تُحفظ الروايتان مع اسم صاحب كل منهما. في حالة واحدة تداولت المنابر خمس مدد عقوبة مختلفة عن إجراءات متداخلة، وترفض البيانات أن تخمّن كم قضية منفصلة كانت هناك.",
-  "limits.9": "<b>مدخلاً مترجماً بيد بشر</b> من أصل 3٬070 سلسلة قابلة للترجمة. الواجهة ثلاثية اللغة؛ أما النثر التحليلي الطويل فلا يُترجم آلياً عن قصد، لأن صفحة معرفية مترجمة بالآلة تُفرغ من معناها ذات الغرض الذي وُجدت من أجله.",
-  "limits.10": "استخبارات الدفاع بلا <b>أي مصدر أولي إطلاقاً</b> — لا النظام الأساسي ولا تاريخ التعيين ولا الوضع الحالي شيء منها ثابت. وهي أكبر ثغرة في الخريطة الأمنية، ومسمّاة في صدر صفحة الأدلة.",
-  "limits.11": "هذا ليس موقعاً يفضح دولة عميقة. فذلك التأطير يفترض مسبقاً نتيجته — والمشروع الذي ينطلق من نتيجة لا يمكن الوثوق به لاختبارها.",
-  "limits.12": "أما السؤال الأضيق فله جواب: أي المؤسسات والأفراد والمجموعات الاقتصادية تحتفظ بنفوذها حين يتغير النظام الرسمي، وأي العلاقات متصلة فعلاً لا مُعاد بناؤها بعد كل انقطاع. وقد نُشرت ست فرضيات مرفقة بمعايير دحضها. <strong>واثنتان منها تخرجان اليوم بنتيجة سيئة</strong> — ومنها الصيغة القوية لأطروحة الدولة العميقة. يمكنك أن ترى البيانات ترفض السؤال الذي جُمعت من أجله.",
+  "limits.3": "البنية المعلنة لهذا المشروع أن تقترح الآلات ويتحقق البشر. ولم يمرّ بعدُ إلا القليل على عين ثانية. والرقم الصادق منشور على الموقع بدلاً من أن يبقى في درج، لأن هذه هي الطريقة الوحيدة التي يكون بها للالتزام معنى.",
+  "limits.4": "الرقم الأسوأ هو الذي يهم. <strong>كل ملاحظات المراجعة الـ48 حتى الآن صادرة عن مرحلتي التجميع والبحث، ولا تسجّل أي واحدة منها تحققاً مستقلاً.</strong> ومن بين الـ21 ادعاءً غير المُسنَد، و327 يسمّون مصدراً، و55 استنتاجاً، لم تخضع أي من السجلات الأقدر على الإضرار بشخص مسمّى لمراجعة مستقلة. وهذا أعلى العمل قيمةً مما تبقّى. ولهذا يشتري تمويل المشروع التحقق قبل أي شيء آخر.",
+  "limits.5": "سجلاً يحمل <b>ملاحظة مراجعة بشرية</b>. تتداخل مؤشرات الخطر، فلا يمكن قراءة التفصيل على أنه أجزاء من كل واحد، ولا تسجّل أي ملاحظة حتى الآن تحققاً مستقلاً.",
+  "limits.6": "سجلات <b>تنتظر مصدراً أولياً</b>. وهي تعتمد حالياً على تغطية ثانوية، وتُدرج فرادى لا مجمّعة.",
+  "limits.7": "<b>فجوات في التعاقب وفترات متداخلة</b>، تُرصد تلقائياً عند البناء. والثغرة في التسلسل الزمني تظهر ثغرةً.",
+  "limits.8": "<b>تناقضات غير محسومة بين المصادر.</b> حيث تختلف المنافذ الإعلامية تُحفظ الروايتان مع المنفذ الذي يتبنى كل منهما. وفي حالة واحدة تداولت المنافذ خمس مدد أحكام مختلفة لمحاكمات متداخلة، ويرفض مجموعة البيانات أن يخمّن كم كانت القضايا.",
+  "limits.9": "<b>مداخل مترجمة بشرياً</b> من أصل 3٬070 سلسلة قابلة للترجمة. الواجهة ثلاثية اللغات. أما النص التحليلي الطويل فلا يُترجم آلياً عن قصد، لأن صفحة معرفية مترجمة آلياً تُفسد الغاية من وجودها.",
+  "limits.10": "للاستخبارات الدفاعية <b>لا توجد أي مصادر أولية</b>. النص القانوني وتاريخ التعيين والوضع الحالي كلها غير ثابتة. وهي أكبر ثغرة في خريطة الأمن، وهي مُعلنة في الصفحة الأولى من عرض الأدلة.",
+  "limits.11": "هذا ليس موقعاً يفضح دولة عميقة. فهذا التأطير يفترض نتيجته مسبقاً، والمشروع الذي ينطلق من نتيجة لا يُوثق باختباره لها.",
+  "limits.12": "السؤال الأضيق يمكن الإجابة عنه. يسأل: أي المؤسسات والأفراد والمجموعات الاقتصادية تحتفظ بنفوذها حين يتغير النظام الرسمي، وأي العلاقات مستمرة فعلاً لا معاد بناؤها بعد كل قطيعة. وتُنشر ست فرضيات، ولكل منها ما يفنّدها. <strong>اثنتان منها تخرجان بنتيجة سيئة حالياً</strong>، ومنها النسخة القوية لأطروحة الدولة العميقة. وبإمكانك أن ترى البيانات ترفض السؤال الذي بُنيت لتطرحه.",
   "agora.1": "الأغورا",
-  "agora.2": "<span class=\"curtain\"><span>المعلومة وحدها</span></span> <span class=\"curtain\"><span>لا تصنع مجتمعاً</span></span> <span class=\"curtain\"><span>حراً.</span></span>",
-  "agora.3": "الموضع السياسي وحده يحتاج أن يستطيع الناس التونسية فكرها معا. Deep Tunisia ليس محفظة فقط — يتضمن أغورا تونسية للتونس : موقع محاورة يتمكن المواطن من الفهم في المعلومات، وتسؤلها وتحسين معا السجل العام. ليست بدايلًا عن المواطن، بل مكانًا لمحاسبتها.",
-  "agora.4": "الفارق عن أي منتدى آخر قرارُ تصميم واحد: <strong>النقاش مرساة في السجل، والسجل يبقى ماثلاً أمامك.</strong> لا تُنقل إلى خيط عام ويُنتظر منك أن تتذكر عمّاذا كنت تتحدث. مسار الكيان ومناصبه وصلاته الموثّقة ومصادره تبقى إلى جانبك وأنت تجادل فيها.",
-  "agora.5": "في غير هذا المكان تحصل على رأي. هنا للنقاش موضوع — وإن رأيت أن الموضوع خاطئ، فثمة آلية لقول ذلك تنتهي بتغيّر المبيان.",
-  "agora.6": "ناقش",
+  "agora.2": "<span class=\"curtain\"><span>المعلومات وحدها</span></span> <span class=\"curtain\"><span>لا تصنع</span></span> <span class=\"curtain\"><span>مجتمعاً حراً.</span></span>",
+  "agora.3": "تحتاج الأمة أيضاً إلى مكان يفكّر فيه أهلها معاً. لذلك صُمّم «ديب تونيزيا» ليكون أكثر من أرشيف. وهو أغورا تونس الرقمية، مبنيّة ولم تُفتح بعد. وليس مكاناً يحلّ محلّ المؤسسات، بل مكان يستطيع فيه المواطنون أن يفهموها ويسائلوها ويحسّنوا السجل العام معاً.",
+  "agora.4": "يختلف هذا المنتدى عن كل منتدى آخر في قرار تصميم واحد. <strong>الحوار مرتبط بالسجل، والسجل يبقى في مرمى النظر.</strong> لا يُنقل المستخدم إلى خيط عام ويُطلب منه أن يتذكر ما كان يناقشه. يبقى مسار الكيان ومناصبه وصلاته الموثّقة ومصادره إلى جانبه وهو يجادل فيه.",
+  "agora.5": "في أماكن أخرى تحصل على رأي. أما هنا فللنقاش موضوع. وإن رأيت أن الموضوع خاطئ، فثمة طريقة للقول ذلك تنتهي بتغيير المبيان.",
+  "agora.6": "ناقِش",
   "agora.7": "«لنتحدث في هذا.»",
-  "agora.8": "مرساة في سجل بعينه. يبقى الكيان على الشاشة وأنت تجادل فيه.",
-  "agora.9": "اقترح",
-  "agora.10": "«أرى أن السجل مخطئ.»",
-  "agora.11": "تعديل على المبيان يحمل مصدراً مُسمّى. يراجعه إنسان، وتفشل عملية البناء إن وصل الادعاء بلا درجة.",
-  "agora.12": "أبلغ",
+  "agora.8": "مرتبط بسجل بعينه. يبقى الكيان على الشاشة وأنت تجادل فيه.",
+  "agora.9": "اقترِح",
+  "agora.10": "«أرى أن السجل خاطئ.»",
+  "agora.11": "تعديل على المبيان يحمل مصدراً مُسمّى. يراجعه إنسان، وتفشل عملية البناء إذا وصل الادعاء دون تصنيف.",
+  "agora.12": "أبلِغ",
   "agora.13": "«هنا شيء يحتاج إلى انتباه.»",
-  "agora.14": "مسار إشراف بشري. المنشورات المحذوفة تحتفظ بموضعها وخيطها وتوقيتها وسبب الحذف — يُفرَّغ المتن ويبقى أثر الحذف ظاهراً.",
+  "agora.14": "مسار إشراف بشري. تحتفظ المنشورات المحذوفة بمكانها وخيطها وتوقيتها وسبب حذفها. يُفرَّغ المتن، ويبقى أثر الحذف ظاهراً.",
   "agora.15": "غير مُنجَز",
-  "agora.16": "التمس",
-  "agora.17": "«عددنا يكفي لطلب شيء ما.»",
-  "agora.18": "مطلب جماعي يكون فيه العدد ذا معنى لأن كل توقيع شخص واحد متحقَّق منه — ويظل المشروع عاجزاً عن إخبارك من هو.",
+  "agora.16": "التمِس",
+  "agora.17": "«عددنا يكفي لنطلب شيئاً.»",
+  "agora.18": "مطلب جماعي يكتسب فيه العدد معنى، لأن كل توقيع يمثل شخصاً واحداً متحقَّقاً منه. ويظل المشروع عاجزاً عن أن يخبرك من هم.",
   "identity.1": "اثنتا عشرة كلمة",
-  "identity.2": "بلا اسم. بلا بريد. بلا كلمة سر. ولا شيء يمكن مصادرته.",
-  "identity.3": "لا ينبغي أن يُجبر مواطن يوماً على الاختيار بين المشاركة وسلامته الشخصية. لذلك لا حساب هنا. هويتك زوج مفاتيح، والشيء الوحيد القادر على إعادة بنائها هو <strong>اثنتا عشرة كلمة تُولَّد على جهازك</strong>.",
-  "identity.4": "الكلمات <em>مُولَّدة لا مختارة</em>، وهذا هو القرار الحامل. فلأن المفتاح العلني علني، يستطيع أي شخص مهاجمة كل هويات الموقع دفعةً واحدة، دون اتصال، وبلا أي حدّ معدل يحتمي به. العبارة التي يخترعها إنسان تحمل ربما 20 إلى 30 بتاً من العشوائية الحقيقية وتسقط في ساعات. <strong>أما اثنتا عشرة كلمة مسحوبة من قائمة من 2٬048 كلمة فتحمل 128 بتاً.</strong> وهي لا تسقط.",
-  "identity.5": "تُعرَض مرة واحدة. لا تُرسَل ولا تُخزَّن ولا يُسمح لها بالدخول في رابط — ولهذا لا يمكن للاستعادة أن تكون يوماً رابطاً يُرسله إليك أحد بالبريد. الكلمات الاثنتا عشرة نفسها تعيد بناء الهوية نفسها على أي جهاز، إلى الأبد. ولا توجد عملية استعادة، لأنه لا يوجد على أي خادم شيء يُستعاد.",
+  "identity.2": "بلا اسم. بلا بريد إلكتروني. بلا كلمة مرور. ولا شيء يمكن مصادرته.",
+  "identity.3": "لا ينبغي أبداً أن يُجبَر المواطنون على الاختيار بين المشاركة والسلامة الشخصية. لذلك لا يوجد حساب هنا. هويتك زوج مفاتيح. والشيء الوحيد القادر على إعادة بنائها هو <strong>اثنتا عشرة كلمة تُولَّد على جهازك</strong>.",
+  "identity.4": "الكلمات <em>مُولَّدة، لا مختارة أبداً</em>، وهذا هو القرار الذي تستند إليه بقية القرارات. فالمفتاح العام علني، ويستطيع أي أحد مهاجمة كل الهويات على الموقع دفعة واحدة، دون اتصال، ودون حد لعدد المحاولات يقف في طريقه. والعبارة التي يخترعها إنسان تحمل ربما 20 إلى 30 بتاً من العشوائية الحقيقية، وتسقط في ساعات. <strong>أما اثنتا عشرة كلمة مسحوبة من قائمة من 2٬048 كلمة فتحمل 128 بتاً.</strong> وهذه العبارة لا تسقط.",
+  "identity.5": "تُعرَض مرة واحدة. لا تُرسَل أبداً، ولا تُخزَّن أبداً، ولا تُدرَج في عنوان URL أبداً. ولهذا لا يمكن أن تكون الاستعادة رابطاً يرسله إليك أحد بالبريد. وتعيد الكلمات الاثنتا عشرة بناء الهوية نفسها على أي جهاز، إلى الأبد. لا توجد عملية استعادة، لأنه لا يوجد على أي خادم شيء يُستعاد منه.",
   "identity.6": "2٬048 كلمة · 12 مسحوبة · 128 بتاً",
   "identity.7": "ولّد غيرها",
   "identity.8": "تُعرَض مرة واحدة",
-  "identity.9": "مسحوبة داخل متصفحك بواسطة crypto.getRandomValues من قائمة BIP-39 الحقيقية. للتوضيح فقط — هذه ليست هوية.",
+  "identity.9": "تُسحب في متصفحك بواسطة crypto.getRandomValues من قائمة BIP-39 الحقيقية. للتوضيح فقط، وهذه ليست هوية.",
   "identity.10": "الكلفة بصراحة",
   "identity.11": "الاستمرارية هي ما يكشف هوية الناس",
-  "identity.12": "الاسم المستعار الدائم يتسرّب من كتابته نفسها — ساعات النشر، ومستوى اللغة، والمفردات، وأي اللغات الثلاث، وبمن يهتم. والتعمية لا تفعل شيئاً حيال ذلك. والاستعادة تجعل الهوية أكثر ديمومة، ولذلك فهي اختيارية، ومشروحة لحظة الاختيار، وليست الوضع الافتراضي أبداً.",
+  "identity.12": "الاسم المستعار الدائم يتسرّب عبر كتابته: ساعات النشر، والأسلوب، والمفردات، واللغة من بين الثلاث، والأشخاص الذين يهتم بهم. والتشفير لا يفعل شيئاً إزاء ذلك. الاستعادة تجعل الهوية أكثر ثباتاً، لذلك فهي اختيارية، وتُشرح لحظة الاختيار، ولا تكون أبداً الخيار الافتراضي.",
   "identity.13": "الوضع الافتراضي",
   "identity.14": "مفتاح يموت مع متصفحك",
-  "identity.15": "افتح الأغورا وانشر، فتحصل على مفتاح صنعه متصفحك، محفوظ حيث لا يمكن تصديره، ويزول حين يُمسح المتصفح. والهويات العابرة — تُستعمل مرة ثم تُترك — تبقى على بُعد نقرة ولن تُدفن حين تتوفر الاستعادة.",
+  "identity.15": "حين تُفتح الأغورا، سينطلق المنشور من مفتاح صنعه متصفحك، ويُحفظ حيث لا يمكن تصديره، ويختفي حين يُمسح المتصفح. أما الهويات العابرة، التي تُستعمل مرة ثم تُتلف، فستبقى على بعد نقرة واحدة، ولن تُدفن بعد أن تتوفر الاستعادة.",
   "identity.16": "نموذج التهديد",
-  "identity.17": "مذكور بصراحة لا موعود به",
-  "identity.18": "لا نستطيع أن نرى من أنت. لكن هذا يعمل على استضافة عادية، وكأي مستضيف يتلقى الخادم اتصالك. وإن نشرت طويلاً تحت هوية واحدة، فقد تكشفك طريقتك في الكتابة مهما بلغت جودة التعمية. وكل طبقة لا تصمد مذكورة على الصفحة لا مخبّأة في الحواشي الدقيقة.",
+  "identity.17": "مذكور بصراحة، غير موعود به",
+  "identity.18": "لا نرى من أنت. لكن هذا المشروع يعمل على استضافة عادية، وكأي مستضيف يستقبل الخدمة اتصالك. وإن نشرت طويلاً تحت هوية واحدة، فإن طريقة كتابتك قد تكشفك مهما بلغت جودة التشفير. وكل طبقة لا تصمد مذكورة على الصفحة، لا مخبأة في حاشية صغيرة.",
   "speech.1": "اقتصاد الكلام",
-  "speech.2": "<span class=\"curtain\"><span>أربعة منشورات في</span></span> <span class=\"curtain\"><span>الأسبوع. عن قصد.</span></span>",
-  "speech.3": "الادعاء بلا مصدر فاتورة تُرسَل إلى القارئ. أما المسنَد فيأتي ومعه إيصاله.",
-  "speech.4": "كل حدّ معدل آخر في هذا المشروع موجود لإيقاف مهاجم. أما هذا فلا. إنه موجود لأن منشوراً استغرق أربعين ثانية ومنشوراً استغرق أربعين دقيقة يظهران اليوم متطابقين — وهذا المشروع كله حجّة على أن <strong>ما تختلف قيمته يجب ألا يبدو أبداً متشابهاً</strong>.",
-  "speech.5": "الندرة هي الأداة. من لديه منشوران في الأسبوع ينفقهما على شيء فكّر فيه، لأنه يشعر بالكلفة. ومن لديه ستون في الساعة يكتفي بردّ الفعل. ولا قدر من الإرشاد داخل محرر الكتابة ينتج السلوك الأول؛ أما الميزانية فتنتجه دون أن تنطق بكلمة.",
-  "speech.6": "والميزانية تقع على <em>الادعاء</em> لا على الدليل. <strong>المنشور الذي يحمل مصدراً صالحاً يكلّف نصف ما يكلّفه المنشور نفسه بلا مصدر</strong> — لا لأن المنشورات المسنَدة صادقة، بل لأن كلفة المنشور يجب أن تتبع مقدار العمل الذي يحمّله للآخرين جميعاً.",
-  "speech.7": "رد، مع مصدر",
-  "speech.8": "وحدة واحدة",
-  "speech.9": "رد، بلا مصدر",
-  "speech.10": "وحدتان",
-  "speech.11": "خيط جديد، مع مصدر",
-  "speech.12": "3 وحدات",
-  "speech.13": "خيط جديد، بلا مصدر",
-  "speech.14": "4 وحدات",
-  "speech.15": "المستوى 0 · جديد",
-  "speech.16": "عند إنشاء مفتاح. منشوران بلا مصدر، أو خيط واحد، أو أربعة منشورات مسنَدة.",
-  "speech.17": "المستوى 1 · مبتدئ",
-  "speech.18": "سبعة أيام وثلاثة منشورات. يُبلَغ نحو اليوم الحادي عشر.",
-  "speech.19": "المستوى 2 · راسخ",
-  "speech.20": "ستون يوماً واثنا عشر منشوراً واقتراح مقبول. وهذا ما يفتح إمكانية تعديل المبيان.",
-  "speech.21": "المستوى 3 · موثوق",
-  "speech.22": "يمنحه إنسان. لا يُبلَغ تلقائياً، وهو لا يتجاوز خمسة أضعاف الدرجة الأدنى.",
-  "speech.23": "التصويبات مجانية ومحدودة بواحدة لكل منشور. والسحب أثناء فترة الإمهال يُردّ كاملاً وبلا شروط. أما التصويت والإبلاغ والقراءة فمجانية وستبقى كذلك.",
-  "speech.24": "فترة الإمهال",
-  "speech.25": "عشر دقائق تخصّك وحدك",
-  "speech.26": "ينتظر المنشور المُرسَل عشر دقائق قبل أن يُنشر. وفي هذه المهلة أنت وحدك من يراه: عدّله كما تشاء، أو اسحبه فتسترد كل وحدة. وفترة الإمهال ليست إشرافاً ولا يُراجَع فيها شيء. إنها تفعل ما لا تستطيعه الميزانية — تفصل قرار الكتابة عن قرار النشر. فأكثر ما يندم عليه المرء يندم عليه خلال عشر دقائق.",
+  "speech.2": "<span class=\"curtain\"><span>أربعة منشورات في</span></span> <span class=\"curtain\"><span>الأسبوع. محدّدة في المواصفات، وغير مفعّلة.</span></span>",
+  "speech.3": "الادعاء بلا مصدر فاتورة تُرسل إلى القارئ. والمُسنَد يأتي معه إيصاله.",
+  "speech.4": "كل حدّ آخر للمعدل في هذا المشروع موجود لإيقاف مهاجم. أما هذا، وفق المواصفات، فلن يفعل ذلك. سيوجد لأن منشوراً استغرق أربعين ثانية ومنشوراً استغرق أربعين دقيقة يظهران اليوم متطابقين. وهذا المشروع كله حجّة على أن <strong>ما تختلف قيمته لا يجب أبداً أن يبدو متشابهاً</strong>. محدّد في المواصفات، وغير مفعّل بعد. والتفعيل مرهون بمراجعة قانونية.",
+  "speech.5": "وفق المواصفات، ستكون الندرة هي الأداة. من يملك منشورين في الأسبوع سينفقهما على ما فكّر فيه، لأنه يشعر بالكلفة. ومن يملك ستين في الساعة يتفاعل. ولا قدر من الإرشاد داخل المحرر ينتج السلوك الأول. ووفق المواصفات، سينتجه الحد دون أن ينطق بكلمة. محدّد في المواصفات، وغير مفعّل بعد.",
+  "speech.6": "وفق المواصفات، سيقع الحد على <em>الادعاء</em> لا على الدليل. <strong>وفق المواصفات، المنشور الذي يحمل مصدراً قابلاً للتحقق يكلّف نصف ما يكلّفه المنشور نفسه بلا مصدر.</strong> ليس لأن المنشورات المسنَدة صحيحة، بل لأن كلفة المنشور ينبغي أن تتبع مقدار العمل الذي يحمّله للآخرين. محدّد في المواصفات، وغير مفعّل بعد. والتفعيل مرهون بمراجعة قانونية.",
+  "speech.7": "رد، مع مصدر، وفق المواصفات",
+  "speech.8": "وحدة واحدة، محدّدة",
+  "speech.9": "رد، بلا مصدر، وفق المواصفات",
+  "speech.10": "وحدتان، محدّدتان",
+  "speech.11": "خيط جديد، مع مصدر، وفق المواصفات",
+  "speech.12": "3 وحدات، محدّدة",
+  "speech.13": "خيط جديد، بلا مصدر، وفق المواصفات",
+  "speech.14": "4 وحدات، محدّدة",
+  "speech.15": "المستوى 0 · جديد، وفق المواصفات",
+  "speech.16": "وفق المواصفات، عند إنشاء مفتاح: منشوران بلا مصدر، أو خيط واحد، أو أربعة منشورات مُسنَدة. غير مفعّل بعد.",
+  "speech.17": "المستوى 1 · أساسي، وفق المواصفات",
+  "speech.18": "وفق المواصفات: سبعة أيام وثلاثة منشورات. يُبلغ ذلك نحو اليوم الحادي عشر. غير مفعّل بعد.",
+  "speech.19": "المستوى 2 · راسخ، وفق المواصفات",
+  "speech.20": "وفق المواصفات: ستون يوماً واثنا عشر منشوراً واقتراح مقبول. وهذا ما سيفتح تعديل المبيان. غير مفعّل بعد.",
+  "speech.21": "المستوى 3 · موثوق، وفق المواصفات",
+  "speech.22": "وفق المواصفات، يمنحه إنسان. لا يُبلغ تلقائياً. وهو لا يتجاوز خمسة أضعاف الدرجة الأدنى. غير مفعّل بعد.",
+  "speech.23": "وفق المواصفات، ستكون التصويبات بلا كلفة، وتقتصر على واحدة لكل منشور. ويُرَدّ الانسحاب خلال فترة الإمهال كاملاً ودون شرط. أما التصويت والإبلاغ والقراءة فستكون مجانية، وستبقى كذلك. محدّد في المواصفات، وغير مفعّل بعد.",
+  "speech.24": "فترة الإمهال. محدّدة في المواصفات، وغير مفعّلة بعد.",
+  "speech.25": "عشر دقائق ستكون لك وحدك",
+  "speech.26": "وفق المواصفات، ينتظر المنشور المُرسَل عشر دقائق قبل أن ينشر. وخلال هذه النافذة لن يراه غيرك: تحرّره كما تشاء، أو تسحبه فتسترد كل وحداتك. ولن تكون هذه الفترة إشرافاً، ولن يُراجَع شيء فيها. وستفعل ما لا يقدر عليه أي حد: تفصل قرار الكتابة عن قرار النشر. وأغلب المنشورات التي يندم عليها الإنسان يندم عليها خلال عشر دقائق. والتفعيل مرهون بمراجعة قانونية.",
   "speech.27": "التصويبات",
-  "speech.28": "المنشور بعد نشره لا يُعدَّل",
-  "speech.29": "يمكنه أن يحمل تصويباً واحداً بالضبط، مجاناً، مُلحقاً تحت الأصل بتوقيتَيهما معاً. ويصل إلى من يقرؤون ذلك المنشور فعلاً ولا يصل إلى سواهم، وهذا بالضبط جمهور التصويب. أما المنشور المعدَّل في صمت فسجلٌّ يكذب على نفسه.",
-  "speech.30": "ليست نقاطاً أبداً",
-  "speech.31": "المكانة تشتري نطاقاً لا حجماً",
-  "speech.32": "لا سلاسل مواظبة، ولا عدّاد بجانب اسم، ولا شيء ظاهر لأحد سوى صاحب الحساب. فميزانية نشر معلنة ليست إلا عرضاً للسمعة باسم آخر. والسقف نفسه يسري على المشرفين وعلى المشغّل، لأن الصوت غير المحدود يهيمن على القاعة.",
+  "speech.28": "وفق المواصفات، لا يمكن تعديل منشور بعد نشره",
+  "speech.29": "وفق المواصفات، يحمل تصويباً واحداً بالضبط، مجاناً، يُلحق أسفل الأصل مع التاريخين. ويصل إلى من يقرأون المنشور أصلاً دون غيرهم، وهذا بالضبط الجمهور الذي تُكتب له التصويبة. والمنشور المعدّل خفيةً سجلٌّ يكذب على نفسه. محدّد في المواصفات، وغير مفعّل بعد.",
+  "speech.30": "لا درجات أبداً",
+  "speech.31": "المكانة تشتري النطاق، لا الحجم",
+  "speech.32": "لا سلاسل متتالية، ولا عدّاد بجوار اسم، ولا شيء يُرى لأحد غير الحساب نفسه. وحدّ المنشورات العام سيكون عرضاً للسمعة باسم آخر. وفق المواصفات، ينطبق السقف نفسه على المشرفين وعلى المُشغِّل، لأن الصوت غير المحدود يطغى على الغرفة. محدّد في المواصفات، وغير مفعّل بعد.",
   "speech.33": "الرفض",
   "speech.34": "«هذا أسبوعك» معلومة",
-  "speech.35": "الرفض يسمّي الميزانية بدل أن يوبّخك كي تتمهّل. عبارة «تجاوزت الحد» لا تعلّم شيئاً؛ أما أن تعرف أنك أنفقت أسبوعك ومتى يتجدد، فذلك يعلّم القاعدة. والميزانية معروضة في محرر الكتابة قبل أن تكتب، وسعر المنشور يتحدّث لحظياً كلما جعله المصدر أرخص.",
+  "speech.35": "وفق المواصفات، سيذكر الرفض الحد لا أن يوبّخك لتتمهّل. «تجاوزت الحد المسموح» لا يعلّم شيئاً. أما أن تعرف أنك استنفدت أسبوعك، ومتى يتجدد، فيعلّمك العرف. وفق المواصفات، سيظهر الحد عند المحرر قبل أن تكتب، ويتحدث سعر المنشور مباشرة كلما صار الاستشهاد يجعله أرخص. محدّد في المواصفات، وغير مفعّل بعد.",
   "standard.1": "معيار واحد",
-  "standard.2": "كل من في هذا المبيان يخضع للقواعد نفسها.",
-  "standard.3": "بورقيبة وبن علي وسعيّد والنهضة والمعارضة والجيش والشرطة والعائلات المالية والنقابات والاتحاد الأوروبي وفرنسا وإيطاليا والجزائر والولايات المتحدة وروسيا والبنك الدولي والمنظمات غير الحكومية الدولية، كلهم مسجَّلون وفق قواعد متطابقة. <strong>فأطلس للسلطة في تونس لا يضم إلا التونسيين يُقرأ كلائحة اتهام للتونسيين.</strong>",
-  "standard.4": "وهذا ليس حياداً لذاته. إنه الحماية الحقيقية الوحيدة للمشروع. فالمصداقية القائمة على موافقة الناس للنتائج تنهار لحظة اختلافهم. أما المصداقية القائمة على أدلة متاحة وقابلة لإعادة الإنتاج فلا تنهار.",
-  "standard.5": "الحكم بالسجن واقعة موثّقة؛ أما الاتهامات التي وراءه والانتقادات الموجهة للإجراءات فمتنازع فيها، والتأطيران محفوظان مع نسبة كلٍّ منهما إلى قائله بدل الفصل بينهما هنا. والثروة ليست فساداً — تميّز البيانات بين العائلات المالية السابقة لنظام ما والعائلات التي أنشأها ذلك النظام، لأن طمس هذا التمييز أشيع خطأ في الروايات الشائعة.",
+  "standard.2": "يخضع الجميع في هذا المبيان للقواعد نفسها.",
+  "standard.3": "بورقيبة، وبن علي، وسعيّد، والنهضة، والمعارضة، والجيش، والشرطة، وعائلات الأعمال، والنقابات، والاتحاد الأوروبي، وفرنسا، وإيطاليا، والجزائر، والولايات المتحدة، وروسيا، والبنك الدولي، والمنظمات غير الحكومية الدولية، كلهم مسجّلون بالقواعد نفسها. <strong>أطلس للسلطة التونسية لا يضم إلا تونسيين يُقرأ كلائحة اتهام ضد التونسيين.</strong>",
+  "standard.4": "هذا ليس حياداً من أجل الحياد. إنه الحماية الحقيقية الوحيدة للمشروع. فالمصداقية التي تعتمد على موافقة الناس على الاستنتاجات تنهار حين لا يوافقون. أما المصداقية التي تعتمد على أدلة متاحة وقابلة لإعادة الإنتاج، فلا تنهار.",
+  "standard.5": "الحكم بالسجن واقعة موثّقة. أما الاتهامات التي يقوم عليها، وانتقادات الإجراءات، فمتنازع عليها. وتُحفظ الروايتان مع النسبة إلى قائليهما دون أن يُفصل بينهما هنا. الثراء ليس فساداً. ويميّز مجموعة البيانات بين عائلات أعمال سبقت نظاماً ما، وأخرى أنشأها ذلك النظام، لأن الخلط بينهما هو أكثر الأخطاء شيوعاً في الروايات الشعبية.",
   "support.1": "للمؤسسات والممولين",
-  "support.2": "محاولة الدولة لبناء ذاكرة جماعية أُغلقت. وهذه لا يمكن إغلاقها.",
-  "support.3": "«ديب تونيزيا» لا ينتمي إلى حزب ولا حكومة ولا أيديولوجيا. شفرته مفتوحة وتحت إدارة إصدارات، ومخرجاته قابلة للتنزيل كاملة، ومنهجيته وتاريخ تصويباته وتمويله منشورة على الموقع لا موصوفة في كتيّب.",
-  "support.4": "وهو مبني ليبقى بعد مؤلفيه. لا قاعدة بيانات تُصادَر، ولا جدول حسابات يُستدعى قضائياً، ولا أرشيف خاص يُفقَد: نحو 8٫6 ميغابايت من البيانات تُشحن مع الصفحة، والسجل المرجعي نص صِرف يستطيع أي شخص نسخه.",
-  "support.5": "<strong>القيد ليس البيانات. القيد هو طاقة التحقق.</strong> إضافة السجلات رخيصة وتزداد رخصاً؛ أما عين بشرية ثانية فلا. والدعم يُنفق في مواجهة ذلك، وبهذا الترتيب.",
+  "support.2": "محاولة الدولة لصنع ذاكرة جماعية أُغلقت. أما هذه فلا يمكن إغلاقها.",
+  "support.3": "«ديب تونيزيا» لا ينتمي إلى حزب ولا إلى حكومة ولا إلى أيديولوجيا. وهو مفتوح المصدر تحت التحكم في النسخ، وصادراته قابلة للتنزيل كاملة. ومنهجيته وسجل تصويباته وتمويله منشورة على الموقع، لا موصوفة في كتيّب.",
+  "support.4": "صُمّم ليبقى بعد مؤلفيه. لا توجد قاعدة بيانات تُصادَر، ولا جدول حسابات يُستدعى قضائياً، ولا أرشيف خاص يُفقَد. نحو 8٫6 ميغابايت من البيانات تُشحن مع الصفحة، والسجل المرجعي نص صِرف يستطيع أي أحد نسخه.",
+  "support.5": "<strong>القيد الحاسم ليس البيانات. إنه طاقة التحقق.</strong> إضافة السجلات رخيصة وتزداد رخصاً. أما العين البشرية الثانية فليست كذلك. والدعم يُنفق وفق هذا، بهذا الترتيب.",
   "support.6": "الأولوية الأولى",
   "support.7": "التحقق البشري",
-  "support.8": "السجلات الـ212 للعلاقات التي تقوم على ما هو دون وثيقة رسمية وتمسّ شخصاً مُسمّى، ولم يُراجَع أي منها مراجعة مستقلة. هذا هو الرقم الأحوج إلى التحرك في الموقع كله، ولا يتحرك إلا بانتباه مدفوع الأجر.",
+  "support.8": "212 علاقة مسجّلة تستند إلى شيء أدنى من وثيقة رسمية وتمسّ شخصاً مسمّى، ولم يُتحقق من أي منها بصورة مستقلة. هذا هو الرقم الذي يحتاج أكثر من غيره إلى التحرك على الموقع، ولا يتحرك إلا بانتباه مدفوع.",
   "support.9": "الأولوية الثانية",
   "support.10": "المصادر الأولية",
-  "support.11": "أوامر التعيين في الرائد الرسمي تعطي تواريخ دقيقة، وعليها تقوم الخطية الزمنية كلها. والنص الكامل للرائد خلف تسجيل دخول وفي 22٬395 وثيقة؛ والتصميم العملي أن نفهرس لا أن نستخرج، ثم يقرأ إنسان الوثيقة التي تهم.",
+  "support.11": "قرارات التعيين المنشورة في الجريدة الرسمية تعطي التواريخ الدقيقة، وعليها يقوم الجدول الزمني كله. ونص الجريدة الكامل خلف تسجيل دخول، عبر 22٬395 وثيقة. والتصميم العملي هو الفهرسة لا الاستخراج، ثم يقرأ إنسان الوثيقة التي تهم.",
   "support.12": "الأولوية الثالثة",
   "support.13": "الترجمة البشرية",
-  "support.14": "العربية والفرنسية، بأيدي أشخاص. 3٬070 سلسلة قابلة للترجمة، و12 مترجمة بيد بشر حتى اليوم. والسجل العمومي الذي يقرأ معظم جمهوره ترجمةً آلية ليس إلا نصف سجل عمومي.",
+  "support.14": "العربية والفرنسية، بأيدي أشخاص. 3٬070 سلسلة قابلة للترجمة، منها 12 مترجمة بشرياً اليوم. والسجل العام الذي يقرأ معظم جمهوره ترجمة آلية ليس إلا نصف سجل عام.",
   "support.15": "الأولوية الرابعة",
   "support.16": "المراجعة القانونية",
-  "support.17": "تقدير الانكشاف الناجم عن نشر مبيان كيانات مُسمّاة في هذه الولاية القضائية، تقديراً سليماً لا تخميناً. وهو شرط لإطلاق طبقة النقاش للعموم.",
+  "support.17": "مخاطر نشر مبيان للكيانات المسمّاة في هذا النطاق القضائي، تُقيَّم بجدية لا تُخمَّن. وهي تتوقف عليها الإطلاقة العامة لطبقة النقاش.",
   "support.18": "الأولوية الخامسة",
   "support.19": "البنية التحتية",
-  "support.20": "استضافة ساكنة، ولقطات أرشيفية لكل رابط مذكور، ومرايا. متواضعة عن قصد: اختيرت البنية كي يكون تشغيلها رخيصاً وفقدانها صعباً.",
-  "support.21": "ليست على القائمة",
+  "support.20": "استضافة ثابتة، ولقطات أرشيفية لكل رابط مُستشهد به، ومرايا. وهي متواضعة عن قصد: فالبنية اختيرت بحيث يكون تشغيلها رخيصاً وفقدانها صعباً.",
+  "support.21": "خارج القائمة",
   "support.22": "طبقة بحث بالذكاء الاصطناعي",
-  "support.23": "مصمَّمة وغير مبنية عن قصد. فالأجزاء القابلة للأتمتة هي الأجزاء السهلة، وبناء الكمّ قبل توفر طاقة التحقق سينتج بالضبط الإخفاق الذي وُجد هذا المشروع لتصحيحه. وحين تأتي، عليها أن تجوب المبيان وتستشهد بالسجلات — لا أن تولّد الجواب أبداً.",
+  "support.23": "مُصمَّمة وغير مبنية عن قصد. فالأجزاء القابلة للأتمتة هي الأسهل، وبناء الحجم قبل وجود طاقة التحقق سيُنتج بالضبط الإخفاق الذي وُجد هذا المشروع لتصحيحه. وحين يأتي وقتها، يجب أن تجتاز المبيان وتستشهد بالسجلات. ولا يجوز لها أبداً أن تولّد الجواب.",
   "support.24": "بلا حسابات",
   "support.25": "بلا إعلانات",
-  "support.26": "بلا متعقّبات",
+  "support.26": "بلا متتبّعات",
   "support.27": "بلا خطوط من طرف ثالث",
   "support.28": "بلا نموذج لغوي في مسار البيانات",
-  "support.29": "بلا مؤشر سلطة واحد",
-  "support.30": "بلا اشتراك مدفوع",
-  "support.31": "العودة إلى السطح",
-  "end.1": "الأمة التي تتذكّر لا يسهل التلاعب بها.",
-  "end.2": "والأمة التي تفهم لا تُحكم بالتشويش.",
-  "end.3": "والأمة التي تعرف نفسها أصعب كثيراً على الخداع.",
+  "support.29": "بلا درجة قوة واحدة",
+  "support.30": "بلا جدار دفع",
+  "support.31": "العودة إلى الواجهة",
+  "end.1": "أمة تتذكر لا يسهل التلاعب بها.",
+  "end.2": "أمة تفهم لا يمكن أن تُحكَم بالتشويش.",
+  "end.3": "أمة تعرف نفسها أصعب كثيراً أن تُخدع.",
   "end.4": "لهذا وُجد «ديب تونيزيا».",
   "foot.1": "ما هذا",
-  "foot.2": "سجل عمومي مفتوح المصدر ومُسنَد إلى مصادره، للسلطة السياسية والمؤسسية والاقتصادية والتاريخية في تونس، 1956–2026. الموقع نافذة؛ والمشروع هو المبيان المعرفي، وهو قابل للتنزيل كاملاً.",
+  "foot.2": "سجل عام مفتوح المصدر ومسنَد إلى مصادره، عن السلطة السياسية والمؤسسية والاقتصادية والتاريخية في تونس، من 1956 إلى 2026. الموقع نافذة. أما المشروع فهو المبيان المعرفي، وهو قابل للتنزيل كاملاً.",
   "foot.3": "ما ليس هذا",
-  "foot.4": "ليس فضيحة، ولا نتيجة تبحث عن أدلة.",
-  "foot.5": "ليس موقعاً إخبارياً. عناوين الصحف لا تحمل أي أساس ولا تُحتسب في أي رقم يُنشر هنا.",
-  "foot.6": "ليس محايداً بالإعلان — بل بجعل التعليل قابلاً للفحص.",
-  "foot.7": "لا يرتبط بأي حزب أو حكومة أو خط تحريري لممول.",
-  "foot.8": "مفتوح بحكم التصميم",
-  "foot.9": "<a href=\"/data\">المبيان كاملاً، للتنزيل</a>",
+  "foot.4": "ليس فضحاً، وليس استنتاجاً يبحث عن أدلة.",
+  "foot.5": "ليس موقعاً إخبارياً. العناوين لا تحمل أساساً، ولا تُحتسب أبداً في أي رقم منشور هنا.",
+  "foot.6": "ليس محايداً بالادعاء. إنما يكون محايداً بجعل استدلاله قابلاً للفحص.",
+  "foot.7": "غير منتسب إلى أي حزب أو حكومة أو خط تحريري لممول.",
+  "foot.8": "مفتوح بالتصميم",
+  "foot.9": "<a href=\"/data\">المبيان كاملاً، قابلاً للتنزيل</a>",
   "foot.10": "<a href=\"/methodology\">المنهجية</a>",
-  "foot.11": "<a href=\"/corrections\">كل تصويب، مُولَّد من إدارة الإصدارات</a>",
-  "foot.12": "<a href=\"/evidence\">الفرضيات ومعايير الدحض والأسئلة المفتوحة</a>",
-  "foot.13": "<a href=\"https://github.com/deepontology/deeptunisia\">الشفرة المصدرية</a>",
-  "foot.17": "<a href=\"/colophon\">كيف صُنع</a>",
+  "foot.11": "<a href=\"/corrections\">كل تصويب، مولَّد من التحكم في النسخ</a>",
+  "foot.12": "<a href=\"/evidence\">الفرضيات وشروط تفنيدها والأسئلة المفتوحة</a>",
+  "foot.13": "<a href=\"https://github.com/deepontology/deeptunisia\">الشيفرة المصدرية</a>",
+  "foot.17": "<a href=\"/colophon\">كيف أُنجز هذا</a>",
   "foot.14": "ديب تونيزيا · deeptunisia.org",
-  "foot.15": "كل رقم على هذه الصفحة مُولَّد من عملية البناء. لا شيء هنا للتوضيح فقط.",
+  "foot.15": "كل رقم في هذه الصفحة مولّد من عملية البناء. لا شيء فيها توضيحي.",
   "foot.16": "contact@deeptunisia.org",
-  "cta.enter": "ادخل إلى الأطلس",
-  "cta.paper": "اقرأ الورقة البحثية",
+  "index.eyebrow": "DT Research",
+  "index.title": "المؤشرات",
+  "index.read": "اقرأ الدراسة",
+  "index.design": "قيد الإعداد. تُنشر الأسئلة والمعادلة قبل أول إجابة.",
+  "index.fielding": "جمع الإجابات لشهر",
+  "index.frozen": "الاستبيان مُثبَّت. لم يبدأ جمع الإجابات بعد.",
+  "index.closed": "انتهى جمع الإجابات. النتائج في صفحة الدراسة.",
+  "index.among": "بين المستجيبين لاستطلاع مفتوح عبر الإنترنت",
+  "surface.6": "هذه الصفحة هي الحجّة، والأطلس هو الأداة. المخطط الزمني والشبكة والخريطة والعالم، من 1956 إلى 2026، وكل ادعاء مُسنَد. تُفتح فوراً. بلا حساب، بلا متتبّع.",
+  "cta.enterHeader": "استكشف الأطلس",
   "cta.talk": "تحدّث إلينا",
-  "doc.title": "ديب تونيزيا — حيث تخبو الذاكرة، تفلت السلطة",
-  "doc.desc": "سجل عمومي مفتوح ومُسنَد للأشخاص والمؤسسات والشبكات التي تصوغ تونس، 1956–2026. كل ادعاء قابل للتتبّع. كل استنتاج قابل للطعن. بلا حسابات، بلا متعقّبات، وبلا إذن.",
+  "bud.rolling": "سبعة أيام متدحرجة، لا يوماً تقويمياً",
+  "doc.title": "ديب تونيزيا: حيث تخبو الذاكرة، تفلت السلطة",
+  "doc.desc": "سجل عمومي مفتوح ومُسنَد للأشخاص والمؤسسات والشبكات التي تصوغ تونس، من 1956 إلى 2026. كل ادعاء قابل للتتبّع. كل استنتاج قابل للطعن. بلا حسابات، ولا متتبّعات، ولا إذن مطلوب.",
   "ui.theme": "التبديل بين المظهر الداكن والفاتح",
   "ui.lang": "اللغة",
   "ui.sections": "الأقسام",
   "dial.live": "الصلات الظاهرة: {n} من {total} · أشخاص بلا أي صلة: {iso}",
   "bud.left": "الوحدات المتبقية هذا الأسبوع: {n} من {total}",
-  "bud.rolling": "سبعة أيام متدحرجة، لا يوماً تقويمياً",
-  "bud.refusal": "هذا أسبوعك — يتجدد على سبعة أيام متدحرجة، لا عند منتصف الليل.",
-  "bud.reset": "إعادة",
-  "key.show": "أظهرها ثانية",
-  "viz.offices": "مناصب مشغولة",
+  "bud.refusal": "هذا أسبوعك. يتجدد على سبعة أيام متدحرجة، لا عند منتصف الليل.",
+  "bud.reset": "إعادة الضبط",
+  "key.show": "أظهرها مرة أخرى",
+  "viz.offices": "المناصب المشغولة",
   "viz.lane.political": "سياسي",
   "viz.lane.security": "أمني",
   "viz.lane.economic": "اقتصادي",
@@ -2529,12 +2419,12 @@ footer a:hover { color: var(--accent); }
   "viz.era.transition": "الثورة والانتقال",
   "viz.era.pluralism": "تعددية النخب",
   "viz.era.fragmentation": "التشظّي",
-  "viz.era.recentralisation": "إعادة التمركز",
+  "viz.era.recentralisation": "إعادة المركزية",
   "viz.rup.1956": "الاستقلال",
   "viz.rup.1987": "بن علي",
   "viz.rup.2011": "الثورة",
   "viz.rup.2021": "25 جويلية",
-  "viz.stratumAlt": "عدد المناصب المسجّلة في تونس في كل سنة من 1956 إلى 2026، مرتفعاً من 4 سنة 1956 إلى ذروة 59 سنة 2021، وواقفاً عند 47 سنة 2026.",
+  "viz.stratumAlt": "عدد المناصب المسجّلة في تونس في كل سنة من {y0} إلى {y1}: {first} سنة {y0}، وذروة {peak} سنة {peakYear}، و{last} سنة {y1}.",
   "viz.dialAlt": "شبكة للأشخاص الستة والأربعين الأكثر ارتباطاً في المبيان، مرتّبين بمسار ثابت لكل طبقة، مع أداة لرفع الحد الأدنى المطلوب من الدليل."
  }
 };
@@ -2602,6 +2492,11 @@ footer a:hover { color: var(--accent); }
     });
     document.querySelectorAll('[data-i18n-label]').forEach(function (n) {
       n.setAttribute('aria-label', T(n.getAttribute('data-i18n-label')));
+    });
+    /* Study cards carry their titles and months in each language, written by the build.
+       A language without its own text keeps the English. */
+    document.querySelectorAll('[data-l10n-en]').forEach(function (n) {
+      n.textContent = n.getAttribute('data-l10n-' + next) || n.getAttribute('data-l10n-en');
     });
 
     document.querySelectorAll('#locale button').forEach(function (b) {
@@ -2810,6 +2705,16 @@ footer a:hover { color: var(--accent); }
   function drawStratum() {
     var g = document.getElementById('stratumbody');
     if (!g) return;
+
+    /* The description is computed from the same array the chart draws, in the
+       reader's language, so a screen reader hears the figures on screen. */
+    var svgEl = document.getElementById('stratumsvg');
+    if (svgEl && DENSITY.length) {
+      var peakAt = 0;
+      for (var pi = 1; pi < DENSITY.length; pi++) if (DENSITY[pi] > DENSITY[peakAt]) peakAt = pi;
+      var vals = { y0: Y0, y1: Y0 + DENSITY.length - 1, first: DENSITY[0], last: DENSITY[DENSITY.length - 1], peak: DENSITY[peakAt], peakYear: Y0 + peakAt };
+      svgEl.setAttribute('aria-label', T('viz.stratumAlt').replace(/\{(\w+)\}/g, function (m, k) { return vals[k] === undefined ? m : String(vals[k]); }));
+    }
     g.textContent = '';   /* redrawn whenever the language changes */
     var VW = 1200, VH = 300, PAD_L = 6, PAD_R = 6, MID = 155, AMP = 100;
     var n = DENSITY.length;
@@ -2995,11 +2900,11 @@ footer a:hover { color: var(--accent); }
         d: 'M' + a.x + ',' + a.y + 'Q' + ((a.x + b.x) / 2) + ',' + midY + ' ' + b.x + ',' + b.y,
         class: 'link' + (bridge ? ' bridge' : ''),
         stroke: bridge ? 'var(--bridge)' : 'var(--basis-' + e[2] + ')',
-        'stroke-dasharray': e[2] === 'reported' ? '6 4' : (e[2] === 'inferred' ? '1.5 4' : (e[2] === 'unsubstantiated' ? '8 3 1.5 3' : null)),
-        opacity: 0.72
+        'stroke-dasharray': BASIS_DASH[e[2]] || null,
+        opacity: BASIS_OPACITY[e[2]] || BASIS_OPACITY.reported
       });
       svg.appendChild(p);
-      linkEls.push({ el: p, rank: RANK[e[2]], a: e[0], b: e[1] });
+      linkEls.push({ el: p, rank: RANK[e[2]], a: e[0], b: e[1], op: BASIS_OPACITY[e[2]] || BASIS_OPACITY.reported });
     });
 
     /* nodes */
@@ -3015,7 +2920,7 @@ footer a:hover { color: var(--accent); }
       label.textContent = d.deg >= 3 ? d.name : '';
       gEl.appendChild(label);
       var title = el('title');
-      title.textContent = d.name + ' — ' + T('viz.lane.' + d.layer) + ', ' + d.deg;
+      title.textContent = d.name + ', ' + T('viz.lane.' + d.layer) + ', ' + d.deg;
       gEl.appendChild(title);
       svg.appendChild(gEl);
       nodeEls[n[0]] = gEl;
@@ -3027,7 +2932,7 @@ footer a:hover { color: var(--accent); }
       var attached = {}, shown = 0;
       linkEls.forEach(function (l) {
         var on = l.rank >= floor;
-        l.el.style.opacity = on ? 0.72 : 0;
+        l.el.style.opacity = on ? l.op : 0;
         l.el.style.strokeWidth = on ? 1.1 : 0.4;
         if (on) { shown++; attached[l.a] = true; attached[l.b] = true; }
       });

@@ -1,16 +1,17 @@
 <script lang="ts">
+	import AboutView from '$lib/shell/AboutView.svelte';
 	import { AxisCamera, navigableAxis } from '$lib/viz/axis.svelte';
-	import { fits } from '$lib/viz/measure';
+	import { fits, textWidth } from '$lib/viz/measure';
 	import { relationshipsByEntity } from '$lib/model';
 	import { app } from '$lib/state.svelte';
 	import { applyEntityLink } from '$lib/deeplink.svelte';
-	import { t, describeInterval, durationLabel, eventTitle, formatDate, nameOf} from '$lib/t.svelte';
+	import { t, tf, basisLabel, describeInterval, durationLabel, eventTitle, formatDate, nameOf} from '$lib/t.svelte';
 	import { dateFormatter } from '$lib/i18n';
 	import Button from '$lib/ui/Button.svelte';
 	import Chip from '$lib/ui/Chip.svelte';
 	import Segmented from '$lib/ui/Segmented.svelte';
 	import Tooltip from '$lib/ui/Tooltip.svelte';
-	import { BASIS_COLOR, BASIS_SHORT } from '$lib/model';
+	import { BASIS_COLOR } from '$lib/model';
 	import {
 		CUTOFF,
 		DASH,
@@ -30,6 +31,8 @@
 		type Layer,
 		type Position
 	} from '$lib/model';
+	import { buildGroups, visiblePositions, type ChronRow } from '$lib/chronicle/rows';
+	import { buildEventLinks } from '$lib/chronicle/links';
 
 	/**
 	 * A layered Gantt of officeholding, 1956-2026.
@@ -193,13 +196,8 @@
 	// stable while the evidence dial moves is what lets the reader perceive edges
 	// appearing and vanishing instead of watching the whole chart reflow.
 
-	interface Row {
+	interface Row extends ChronRow {
 		kind: 'row';
-		roleId: string;
-		title: string;
-		layer: Layer;
-		authority: number;
-		positions: Position[];
 		y: number;
 	}
 	interface Group {
@@ -214,40 +212,25 @@
 		const items: (Row | Group)[] = [];
 		let y = PAD_T + laneH;
 
-		const insts = [...ds.institutions]
-			.filter((i) => app.activeLayers.has(i.layer as Layer))
-			.sort((a, b) => a.order - b.order);
+		const groups = buildGroups({
+			institutions: ds.institutions,
+			roles: ds.roles,
+			positions: ds.positions,
+			activeLayers: app.activeLayers,
+			nameOf
+		});
 
-		for (const inst of insts) {
-			const roles = ds.roles.filter((r) => r.institution === inst.id);
-			const rows: Row[] = [];
-			for (const role of roles) {
-				const positions = ds.positions.filter((p) => p.role === role.id);
-				if (positions.length === 0) continue;
-				rows.push({
-					kind: 'row',
-					roleId: role.id,
-					title: nameOf(role),
-					layer: inst.layer as Layer,
-					authority: role.authority,
-					positions,
-					y: 0
-				});
-			}
-			if (rows.length === 0) continue;
-			rows.sort((a, b) => b.authority - a.authority);
-
+		for (const group of groups) {
 			items.push({
 				kind: 'group',
-				id: inst.id,
-				label: nameOf(inst),
-				layer: inst.layer as Layer,
+				id: group.institutionId,
+				label: group.label,
+				layer: group.layer,
 				y
 			});
 			y += GROUP_H;
-			for (const row of rows) {
-				row.y = y;
-				items.push(row);
+			for (const row of group.rows) {
+				items.push({ kind: 'row', ...row, y });
 				y += ROW_H;
 			}
 			y += 6;
@@ -348,7 +331,7 @@
 	// the clusters back into individual marks. The tenure rows follow below and
 	// the whole plot scrolls.
 	const EXP_ROW_H = 20;
-	const EXP_PAD_T = 24;
+	const EXP_PAD_T = 44;
 	const EXP_PAD_B = 10;
 	const EXP_MIN_W = 6;
 	const EXP_CLUSTER_PX = 14;
@@ -372,23 +355,6 @@
 		byEvent: Map<string, ExpItem>;
 	}
 
-	/** Greedy interval packing: each entry gets the first row it fits in. */
-	function packRows(source: { id: string; x0: number; x1: number; occ: number }[]) {
-		const rowEnds: number[] = [];
-		const placed: { id: string; x0: number; x1: number; row: number }[] = [];
-		for (const it of [...source].sort((a, b) => a.x0 - b.x0)) {
-			let r = rowEnds.findIndex((end) => end + 4 <= it.x0);
-			if (r === -1) {
-				rowEnds.push(it.occ);
-				r = rowEnds.length - 1;
-			} else {
-				rowEnds[r] = it.occ;
-			}
-			placed.push({ id: it.id, x0: it.x0, x1: it.x1, row: r });
-		}
-		return { placed, rows: Math.max(1, rowEnds.length) };
-	}
-
 	function eventXRange(e: EventRec, d0: number, d1: number): { x0: number; x1: number } {
 		const span = d1 - d0 || 1;
 		const x0 = ((e.interval.startEarliest - d0) / span) * plotW;
@@ -397,11 +363,6 @@
 			(((e.interval.endLatest ?? e.interval.endEarliest ?? e.interval.startEarliest) - d0) / span) * plotW
 		);
 		return { x0, x1 };
-	}
-
-	/** Ruptures are the anchors of the record, so their label space is reserved. */
-	function ruptureReserve(e: EventRec): number {
-		return e.rupture ? Math.min(220, eventTitle(e).length * 6.2 + 16) : 0;
 	}
 
 	function clusterBadgeW(n: number): number {
@@ -457,12 +418,15 @@
 				// Keep the badge inside the plot: a dense pile at the right edge
 				// (2026) would otherwise be drawn half off the clip.
 				const cx = Math.min(Math.max(raw, w / 2), Math.max(w / 2, plotW - w / 2));
-				return { id, x0: cx - w / 2, x1: cx + w / 2, occ: cx + w / 2 };
+				return { id, x0: cx - w / 2, x1: cx + w / 2 };
 			}
 			const { x0, x1 } = eventXRange(n.event, domain[0], domain[1]);
-			return { id, x0, x1, occ: x1 + ruptureReserve(n.event) };
+			return { id, x0, x1 };
 		});
-		const { placed, rows } = packRows(packable);
+		// One row per event or cluster, in date order: the gutter carries each
+		// row's label, so a row never holds two things to name.
+		const placed = [...packable].sort((a, b) => a.x0 - b.x0).map((p, row) => ({ ...p, row }));
+		const rows = Math.max(1, placed.length);
 		const items: ExpItem[] = [];
 		const clusters: ExpCluster[] = [];
 		for (const p of placed) {
@@ -475,6 +439,41 @@
 		return { items, clusters, height, byEvent: new Map(items.map((i) => [i.event.id, i])) };
 	});
 
+	/**
+	 * Gutter labels for the expanded view, one per row: the date in mono, then the
+	 * title, shortened with "…" to what the gutter affords (measured, as the row
+	 * labels are). The full title stays in the native tooltip.
+	 */
+	const GL_X = 14;
+	const expGutter = $derived.by(() => {
+		const rows: {
+			key: string;
+			y: number;
+			date: string;
+			title: string;
+			full: string;
+			event: EventRec | null;
+			members: EventRec[] | null;
+		}[] = [];
+		const avail = (date: string) => GUTTER - GL_X - 10 - textWidth(date, EV_LABEL_TYPE) - 8;
+		for (const it of expandedLayout.items) {
+			const date = formatDate(it.event.interval.startEarliest, 'month');
+			const full = eventTitle(it.event);
+			rows.push({ key: 'e-' + it.event.id, y: it.y, date, title: fitText(full, avail(date), ROW_LABEL_TYPE) || '…', full, event: it.event, members: null });
+		}
+		for (const c of expandedLayout.clusters) {
+			const date = formatDate(Math.min(...c.members.map((m) => m.interval.startEarliest)), 'month');
+			const full = tf('chronicle.vertical.spine.cluster', { n: c.members.length, range: clusterRange(c.members) });
+			rows.push({ key: 'c-' + c.members[0].id, y: c.y, date, title: fitText(full, avail(date), ROW_LABEL_TYPE) || '…', full, event: null, members: c.members });
+		}
+		return rows;
+	});
+
+	function pickGutter(row: { event: EventRec | null; members: EventRec[] | null }, clientX: number, clientY: number) {
+		if (row.event) app.select(row.event.id);
+		else if (row.members) openCluster(row.members, clientX, clientY);
+	}
+
 	/** Distinct lane centres, for the horizontal rules between rows. */
 	const laneYs = $derived([
 		...new Set([
@@ -486,45 +485,6 @@
 	/** The band height: slim overview normally, the row stack when expanded. */
 	const laneH = $derived(expanded ? expandedLayout.height : LANE_H);
 
-	/** Labels in expanded mode: room-aware per lane; the selected event always reads. */
-	const expLabels = $derived.by(() => {
-		const out = new Map<string, { x: number; text: string }>();
-		// Lanes hold both individual marks and cluster badges, so a label never
-		// runs under a badge sitting beside it.
-		interface LaneNode {
-			x0: number;
-			x1: number;
-			y: number;
-			event: EventRec | null;
-		}
-		const laneNodes: LaneNode[] = [
-			...expandedLayout.items.map((i) => ({ x0: i.x0, x1: i.x1, y: i.y, event: i.event })),
-			...expandedLayout.clusters.map((c) => ({ x0: c.x0, x1: c.x1, y: c.y, event: null }))
-		];
-		const byLane = new Map<number, LaneNode[]>();
-		for (const it of laneNodes) {
-			const key = Math.round(it.y);
-			const list = byLane.get(key) ?? [];
-			list.push(it);
-			byLane.set(key, list);
-		}
-		for (const list of byLane.values()) {
-			list.sort((a, b) => a.x0 - b.x0);
-			for (let i = 0; i < list.length; i++) {
-				const it = list[i];
-				if (!it.event) continue;
-				const start = it.x1 + 6;
-				const next = i + 1 < list.length ? list[i + 1].x0 : plotW;
-				let room = next - start - 6;
-				const isSel = eventSelected?.id === it.event.id;
-				if (isSel) room = Math.max(room, 180);
-				if (room < 40) continue;
-				const text = fitText(eventTitle(it.event), room, EV_LABEL_TYPE);
-				if (text) out.set(it.event.id, { x: start, text });
-			}
-		}
-		return out;
-	});
 
 	/** Longest prefix of `text` (plus an ellipsis) that fits in `room` px. */
 	function fitText(text: string, room: number, m: { size: number; family?: string }): string {
@@ -544,8 +504,6 @@
 		if (sp >= lo * 0.55) cut = cut.slice(0, sp);
 		return cut + ell;
 	}
-
-	const TYPE = { size: 10, family: 'JetBrains Mono, monospace' };
 
 	/** Switch between the slim timeline and the expanded events view. */
 	function setView(v: string) {
@@ -650,8 +608,37 @@
 		app.selected ? (eventById.get(app.selected) ?? null) : null
 	);
 
-	/** Selecting an event must not dim the tenure rows: no holder matches. */
-	const eventFocus = $derived(eventSelected !== null);
+	// --- Event <-> post cross-highlight ---------------------------------------
+	// Events name institutions and people; `buildEventLinks` turns those into the
+	// posts each event involves. A hovered or selected event lights its linked rows
+	// and pushes every other bar back; a focused person lights their events in the
+	// lane and pushes the other marks back. Both directions use `--dim`.
+
+	const links = buildEventLinks({
+		events: ds.events,
+		roles: ds.roles,
+		positions: ds.positions,
+		people: ds.people,
+		institutions: ds.institutions,
+		cutoff: CUTOFF
+	});
+
+	/** The lane event under the pointer, if any. Hover previews; selection holds. */
+	let hoverEventId = $state<string | null>(null);
+
+	const focusEventId = $derived(hoverEventId ?? eventSelected?.id ?? null);
+
+	/** Posts the focused event links to, or null when no event is focused. */
+	const focusRoles = $derived<Set<string> | null>(
+		focusEventId ? (links.byEvent.get(focusEventId)?.roleIds ?? new Set<string>()) : null
+	);
+
+	/** Events linked to the focused person, or null when no person is focused. */
+	const personEvents = $derived.by<Set<string> | null>(() => {
+		const who = app.selected ?? app.hovered;
+		if (!who || !personById.has(who)) return null;
+		return new Set(links.eventsByPerson.get(who) ?? []);
+	});
 
 	const linkedEventIds = $derived.by(() => {
 		const sel = eventSelected;
@@ -726,6 +713,7 @@
 
 	function onLaneMove(e: MouseEvent) {
 		const it = lanePick(e.clientX, e.clientY);
+		hoverEventId = it && it.kind !== 'cluster' ? it.event.id : null;
 		const r = plotEl?.getBoundingClientRect();
 		if (!it || !r) {
 			evTip = null;
@@ -750,10 +738,12 @@
 
 	function onLaneLeave() {
 		evTip = null;
+		hoverEventId = null;
 	}
 
 	/** Expanded-mode hover preview: rows separate marks, so a per-mark hover works. */
 	function showEvTip(me: MouseEvent, ev: EventRec) {
+		hoverEventId = ev.id;
 		const r = plotEl?.getBoundingClientRect();
 		if (!r) return;
 		evTip = {
@@ -772,16 +762,47 @@
 		return y0 === y1 ? String(y0) : `${y0}–${y1}`;
 	}
 
+	/** Width of the cluster card, in step with `.ev-pop` below. */
+	const POP_W = 340;
+
 	function openCluster(members: EventRec[], clientX: number, clientY: number) {
 		const r = plotEl?.getBoundingClientRect();
 		if (!r) return;
 		clusterPop = {
-			x: Math.max(8, Math.min(clientX - r.left, width - 300)),
+			x: Math.max(8, Math.min(clientX - r.left, width - POP_W - 8)),
 			y: clientY - r.top + 14,
 			members: [...members].sort((a, b) => a.interval.startEarliest - b.interval.startEarliest)
 		};
 		evTip = null;
 	}
+
+	/*
+	 * A popover closes on a press anywhere outside it, and on Escape. The lane's
+	 * own click only covers the events lane, so without this the card stayed open
+	 * for a click on the tenure rows, the header or the page. A press on another
+	 * cluster is left alone: its click reopens the card on that group.
+	 */
+	$effect(() => {
+		if (!clusterPop) return;
+		const away = (e: PointerEvent) => {
+			const el = e.target as Element | null;
+			if (el?.closest?.('.ev-pop') || el?.closest?.('[aria-label*=" events, "]')) return;
+			clusterPop = null;
+		};
+		const esc = (e: KeyboardEvent) => {
+			// The card takes the key, so the shell's Escape does not also close the open record.
+			if (e.key === 'Escape') {
+				e.stopPropagation();
+				clusterPop = null;
+			}
+		};
+		document.addEventListener('pointerdown', away, true);
+		document.addEventListener('keydown', esc);
+		return () => {
+			document.removeEventListener('pointerdown', away, true);
+			document.removeEventListener('keydown', esc);
+		};
+	});
 
 	/** Fit the camera to a cluster so its members separate in place. */
 	function zoomToCluster(members: EventRec[]) {
@@ -807,7 +828,8 @@
 	});
 
 	function eventDim(e: EventRec): boolean {
-		return Boolean(eventSelected && e.id !== eventSelected.id && !linkedEventIds.has(e.id));
+		if (eventSelected) return e.id !== eventSelected.id && !linkedEventIds.has(e.id);
+		return personEvents !== null && !personEvents.has(e.id);
 	}
 
 	/**
@@ -923,10 +945,6 @@
 		};
 	}
 
-	function visible(pos: Position) {
-		return meetsBasis(pos.basis as Basis, app.basisFloor);
-	}
-
 	function isFocused(pos: Position) {
 		return app.selected === pos.holder || app.hovered === pos.holder;
 	}
@@ -994,7 +1012,7 @@
 <div class="chronicle">
 	<div class="toolbar">
 		<span class="eyebrow">{t('nav.chronicle')}</span>
-		<p class="hint">{t('chronicle.hint')}</p>
+		<AboutView hint={t('chronicle.hint')} />
 		<div class="era-jump">
 			<!-- These zoom the horizontal DOMAIN, which is a different action from the
 			     dock's era labels: those move the date, these change what span is
@@ -1168,10 +1186,6 @@
 					{#each ruptures as ev (ev.id)}
 						{@const rx = x(ev.interval.startEarliest)}
 						<line x1={rx} x2={rx} y1={PAD_T - 10} y2={layout.height} class="rupture-line" />
-						<g class="rupture-tag" transform="translate({rx},{PAD_T - 14})">
-							<title>{formatDate(ev.interval.startEarliest, 'day')} — {nameOf(ev)}</title>
-							<circle r="3" cy="0" class="rupture-dot" />
-						</g>
 					{/each}
 				</g>
 
@@ -1273,7 +1287,7 @@
 						{@const w = Math.max(18, Math.min(36, 14 + String(it.members.length).length * 7))}
 						<g
 							class="ev-mark"
-							class:dim={eventSelected !== null && !membersSel}
+							class:dim={eventSelected !== null ? !membersSel : personEvents !== null && !it.members.some((m) => personEvents.has(m.id))}
 							role="button"
 							tabindex="0"
 							aria-label="{it.members.length} events, {clusterRange(it.members)}"
@@ -1374,7 +1388,6 @@
 						{@const cy = it.y}
 						{@const isSel = eventSelected?.id === e.id}
 						{@const w = Math.max(0, it.x1 - it.x0)}
-						{@const lx = expLabels.get(e.id)}
 						<g
 							class="ev-mark clickable"
 							class:dim={eventDim(e)}
@@ -1440,9 +1453,6 @@
 							{#if isSel}
 								<circle cx={it.x0} cy={cy} r="9" class="ev-selring" />
 							{/if}
-							{#if lx !== undefined}
-								<text x={lx.x} y={cy + 3.5} class="ev-label">{lx.text}</text>
-							{/if}
 						</g>
 					{/each}
 					{#each expandedLayout.clusters as c (c.members[0].id)}
@@ -1450,7 +1460,7 @@
 						{@const membersSel = c.members.some((m) => m.id === eventSelected?.id)}
 						<g
 							class="ev-mark clickable"
-							class:dim={eventSelected !== null && !membersSel}
+							class:dim={eventSelected !== null ? !membersSel : personEvents !== null && !c.members.some((m) => personEvents.has(m.id))}
 							role="button"
 							tabindex="0"
 							aria-label="{c.members.length} events, {clusterRange(c.members)}"
@@ -1497,7 +1507,7 @@
 						</g>
 					{:else}
 						{@const focusedRow = item.positions.some(isFocused)}
-						{@const tiedRow = !focusedRow && item.positions.some(isConnected)}
+						{@const tiedRow = !focusedRow && (item.positions.some(isConnected) || (focusRoles?.has(item.roleId) ?? false))}
 						<!-- Stagger keyed to vertical position so the chart assembles top-down.
 						     Derived from y rather than an index because rows are interleaved
 						     with group headers, and y is what the eye actually tracks. -->
@@ -1512,15 +1522,17 @@
 
 							<g clip-path="url(#plot-clip)">
 								<g transform="translate({GUTTER},0)">
-									{#each item.positions.filter(visible) as pos (pos.id)}
+									{#each visiblePositions(item, app.basisFloor) as pos (pos.id)}
 										{@const b = barGeometry(pos)}
 										{@const act = activity(pos.interval, app.t)}
 										{@const focus = isFocused(pos)}
 										{@const tied = !focus && isConnected(pos)}
-										{@const dim = anyFocus && !eventFocus && !focus && !tied}
+										{@const evdim = focusRoles !== null && !focusRoles.has(item.roleId)}
+										{@const dim = focusRoles === null && anyFocus && !focus && !tied}
 										<g
 											class="bar"
 											class:dim
+											class:evdim
 											class:focus
 											class:tied
 											style:color={LAYER_COLOR[item.layer]}
@@ -1665,6 +1677,37 @@
 						{/if}
 					</g>
 				</g>
+				{#if expanded}
+					{#each expGutter as gl (gl.key)}
+						{@const sel = gl.event !== null && eventSelected?.id === gl.event.id}
+						<g
+							class="exp-gl"
+							class:sel
+							class:rupture={gl.event?.rupture ?? false}
+							class:dim={gl.event ? eventDim(gl.event) : false}
+							data-no-pan
+							role="button"
+							tabindex="0"
+							aria-label="{gl.full}, {gl.date}"
+							onclick={(me) => pickGutter(gl, me.clientX, me.clientY)}
+							onmouseenter={() => (hoverEventId = gl.event?.id ?? null)}
+							onmouseleave={() => (hoverEventId = null)}
+							onkeydown={(ke) => {
+								if (ke.key === 'Enter' || ke.key === ' ') {
+									ke.preventDefault();
+									const r = (ke.currentTarget as Element).getBoundingClientRect();
+									pickGutter(gl, r.left + r.width / 2, r.top + r.height / 2);
+								}
+							}}
+						>
+							<title>{gl.date} · {gl.full}</title>
+							<rect x="2" y={gl.y - EXP_ROW_H / 2} width={GUTTER - 6} height={EXP_ROW_H} class="exp-gl-hit" />
+							<text x={GL_X} y={gl.y + 3.5}
+								><tspan class="exp-gl-date">{gl.date}</tspan><tspan dx="8" class="exp-gl-title">{gl.title}</tspan></text
+							>
+						</g>
+					{/each}
+				{/if}
 				{#each layout.items as item (item.kind === 'group' ? 'lg-' + item.id : 'lr-' + item.roleId)}
 						{#if item.kind === 'group'}
 							<g transform="translate(0,{item.y})">
@@ -1673,7 +1716,7 @@
 							</g>
 						{:else}
 							{@const focusedRow = item.positions.some(isFocused)}
-							{@const tiedRow = !focusedRow && item.positions.some(isConnected)}
+							{@const tiedRow = !focusedRow && (item.positions.some(isConnected) || (focusRoles?.has(item.roleId) ?? false))}
 							<!-- The single label pass: after the gutter mask, with the row's
 							     own stagger and focus/tied colours applied directly (they used
 							     to be drawn twice — once under the mask, once above — and the
@@ -1722,7 +1765,7 @@
 						<!-- Basis, not the raw confidence letter. What kind of claim this is
 						     matters more to a reader than an internal grading code. -->
 						<Chip tint={BASIS_COLOR[tip.pos.basis as Basis]} dot>
-							{BASIS_SHORT[tip.pos.basis as Basis]}
+							{basisLabel(tip.pos.basis as Basis)}
 						</Chip>
 						<span class="mono">{durationLabel(tip.pos.years)}</span>
 						{#if tip.pos.datesInferred}
@@ -1747,8 +1790,10 @@
 			{/if}
 
 			{#if clusterPop}
+				<!-- data-no-pan: the card scrolls its own rows, so its wheel must not zoom the chart. -->
 				<div
 					class="ev-pop"
+					data-no-pan
 					style:left="{clusterPop.x}px"
 					style:top="{clusterPop.y}px"
 					role="dialog"
@@ -1790,7 +1835,7 @@
 			</thead>
 			<tbody>
 				{#each layout.items.filter((i) => i.kind === 'row') as row (row.roleId)}
-					{#each (row as Row).positions.filter(visible) as pos (pos.id)}
+					{#each visiblePositions(row as Row, app.basisFloor) as pos (pos.id)}
 						<tr>
 							<td>{(row as Row).title}</td>
 							<td>{nameOf(personById.get(pos.holder))}</td>
@@ -1839,13 +1884,6 @@
 		padding: var(--s-4) var(--s-6);
 		border-bottom: 1px solid var(--border-subtle);
 		flex-wrap: wrap;
-	}
-	.hint {
-		margin: 0;
-		font-size: var(--t-sm);
-		line-height: var(--lh-snug);
-		color: var(--text-secondary);
-		max-width: 52ch;
 	}
 	.era-swatch {
 		width: 6px;
@@ -1943,6 +1981,14 @@
 		flex: 1;
 		min-height: 0;
 		overflow: auto;
+		/*
+		   The timeline is several screens tall and its scrollbar is the way down for
+		   anyone who cannot use the wheel here. The global thin, faint bar disappears
+		   against this chart, so this container draws its own at full width.
+		*/
+		scrollbar-width: auto;
+		scrollbar-color: var(--text-faint) transparent;
+		scrollbar-gutter: stable;
 	}
 	.plot {
 		position: relative;
@@ -2038,18 +2084,13 @@
 		text-transform: uppercase;
 	}
 
+	/* One quiet line per rupture through the rows. The lane diamond is the
+	   rupture's only marker; the line just carries the date down the chart. */
 	.rupture-line {
 		stroke: var(--rupture);
 		stroke-width: 1;
-		stroke-dasharray: 2 4;
-		opacity: 0.5;
+		opacity: var(--dim);
 		pointer-events: none;
-	}
-	.rupture-dot {
-		fill: var(--rupture);
-	}
-	.rupture-tag {
-		cursor: help;
 	}
 
 	/* Events lane. Marks reuse the basis language (opacity) and rupture red;
@@ -2110,6 +2151,43 @@
 		stroke: var(--border-subtle);
 		stroke-width: 1;
 		pointer-events: none;
+	}
+	/* Expanded view: the gutter names each event row. */
+	.exp-gl {
+		cursor: pointer;
+	}
+	.exp-gl-hit {
+		fill: transparent;
+	}
+	.exp-gl:hover .exp-gl-hit,
+	.exp-gl:focus-visible .exp-gl-hit {
+		fill: var(--surface-hover);
+	}
+	.exp-gl:focus-visible {
+		outline: none;
+	}
+	.exp-gl-date {
+		font-family: var(--font-mono);
+		font-size: 10px;
+		fill: var(--text-faint);
+	}
+	.exp-gl-title {
+		font-size: 11px;
+		fill: var(--text-secondary);
+	}
+	.exp-gl.rupture .exp-gl-title {
+		fill: var(--text-primary);
+		font-weight: 500;
+	}
+	.exp-gl:hover .exp-gl-title,
+	.exp-gl.sel .exp-gl-title {
+		fill: var(--text-primary);
+	}
+	.exp-gl.sel .exp-gl-date {
+		fill: var(--accent);
+	}
+	.exp-gl.dim {
+		opacity: var(--dim);
 	}
 	.ev-mark.dim {
 		opacity: 0.3;
@@ -2224,8 +2302,8 @@
 	.ev-pop {
 		position: absolute;
 		z-index: 30;
-		width: 296px;
-		max-height: 320px;
+		width: 340px;
+		max-height: min(60vh, 480px);
 		overflow-y: auto;
 		background: var(--surface-panel);
 		border: 1px solid var(--border-strong);
@@ -2335,6 +2413,10 @@
 	}
 	.bar.dim {
 		opacity: 0.24;
+	}
+	/* Under an event focus: rows the event does not involve step back. */
+	.bar.evdim {
+		opacity: var(--dim);
 	}
 	.bar.focus {
 		opacity: 1;

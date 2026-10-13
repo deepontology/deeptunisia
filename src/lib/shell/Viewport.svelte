@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import type { Snippet } from 'svelte';
-	import { t } from '$lib/t.svelte';
-	import { answerKeyFor } from '$lib/views';
+	import { ABOUT_IN_TOOLBAR, answerKeyFor } from '$lib/views';
+	import AboutView from './AboutView.svelte';
 
 	/**
 	 * The window body.
@@ -12,21 +12,24 @@
 	 * domain, Investigate's query) and remounting gives each a clean slate rather
 	 * than leaking one view's state into the next.
 	 *
-	 * The caption line is the view's one-sentence answer ("Who held which post,
-	 * when, drawn to scale") — the same source the /guide table renders, so the
-	 * two can never disagree. It is a sibling of the view, not chrome: the view
-	 * owns its scroll and flexes to fill whatever the caption does not take.
+	 * The view's one-sentence answer ("Who held which post, when, drawn to scale")
+	 * comes from the same source the /guide table renders, so the two can never
+	 * disagree. It lives in "About this view": inside the view's own toolbar where
+	 * the view has one, otherwise as a row here, a sibling of the view rather than
+	 * chrome, so the view still owns its scroll and flexes to fill the rest.
 	 */
 	let { children }: { children: Snippet } = $props();
 
-	const captionKey = $derived(answerKeyFor(page.url.pathname));
+	const aboutRow = $derived(
+		answerKeyFor(page.url.pathname) !== null && !ABOUT_IN_TOOLBAR.has(page.url.pathname)
+	);
 </script>
 
 <main class="viewport" id="view" tabindex="-1" data-tour="canvas">
 	{#key page.url.pathname}
 		<div class="view">
-			{#if captionKey}
-				<p class="caption">{t(captionKey)}</p>
+			{#if aboutRow}
+				<AboutView standalone />
 			{/if}
 			<div class="body">
 				{@render children()}
@@ -65,38 +68,6 @@
 		display: flex;
 		flex-direction: column;
 		animation: view-in var(--dur-normal) var(--ease-out);
-	}
-
-	/*
-		The one-sentence answer for the current view. A quiet line, not chrome:
-		it is a sibling of the view, so the instrument flexes to fill the rest and
-		owns its own scroll as before. Mono and faint so it never competes with
-		the view's own toolbar.
-	*/
-	.caption {
-		flex: 0 0 auto;
-		margin: 0;
-		padding: 6px calc(var(--s-5) + var(--safe-l)) 6px calc(var(--s-5) + var(--safe-r));
-		font-family: var(--font-mono);
-		font-size: var(--t-2xs);
-		letter-spacing: var(--track-wide);
-		text-transform: uppercase;
-		color: var(--text-faint);
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		border-bottom: 1px solid var(--border-subtle);
-	}
-
-	/*
-	   A landscape phone keeps the canvas, not the caption. At that height the
-	   one-sentence answer is the only standing text between the chrome and the
-	   view, and the view needs the pixels more.
-	*/
-	@media (max-width: 900px) and (max-height: 520px) {
-		.caption {
-			display: none;
-		}
 	}
 
 	.body {

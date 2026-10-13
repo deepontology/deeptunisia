@@ -1,4 +1,5 @@
 <script lang="ts">
+	import AboutView from '$lib/shell/AboutView.svelte';
 	import { app } from '$lib/state.svelte';
 	import { nameOf, t, formatDate } from '$lib/t.svelte';
 	import { format } from '$lib/i18n';
@@ -128,12 +129,11 @@
 <div class="feed">
 	<div class="toolbar">
 		<span class="eyebrow">{t('feed.eyebrow')}</span>
-		<p class="hint">
-			{t('feed.hint')}
-			{#if newest}
-				{format(app.locale, 'feed.latest', { date: when(newest) })}
-			{/if}
-		</p>
+		<AboutView
+			hint={newest
+				? `${t('feed.hint')} ${format(app.locale, 'feed.latest', { date: when(newest) })}`
+				: t('feed.hint')}
+		/>
 	</div>
 
 	<div class="scroll">
@@ -234,13 +234,6 @@
 		padding: var(--s-4) var(--s-6);
 		border-bottom: 1px solid var(--border-subtle);
 		flex-wrap: wrap;
-	}
-	.hint {
-		margin: 0;
-		font-size: var(--t-sm);
-		line-height: var(--lh-snug);
-		color: var(--text-secondary);
-		max-width: 68ch;
 	}
 	.scroll {
 		flex: 1;

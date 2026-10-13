@@ -12,6 +12,11 @@
 	 * the four-basis legend (from BASIS_ORDER + basis.desc keys) and the views
 	 * table (from src/lib/views.ts + guide.* keys — the same source the caption
 	 * line in Viewport.svelte reads).
+	 *
+	 * ARCHIVE REGISTER. One column, reading face, measure. The h2 headings belong
+	 * to the markdown, so their numbers are CSS counters on the section
+	 * container rather than props on a component — a count that follows the
+	 * document cannot drift from it.
 	 */
 
 	const BASES = BASIS_ORDER.map((b) => ({
@@ -31,13 +36,14 @@
 </svelte:head>
 
 <div class="page">
-	<header class="page-head">
-		<span class="eyebrow">{t('guide.eyebrow')}</span>
-		<h1>{t('guide.title')}</h1>
-		<div class="lede"><Content view="guide" section="intro" /></div>
-	</header>
+	<div class="column">
+		<header class="page-head">
+			<span class="eyebrow">{t('guide.eyebrow')}</span>
+			<h1>{t('guide.title')}</h1>
+			<div class="lede"><Content view="guide" section="intro" /></div>
+		</header>
 
-	<div class="prose">
+		<div class="prose">
 		<Content view="guide" section="rule" />
 
 		<!-- The legend rendered live, so the four bases and their descriptions can
@@ -82,6 +88,7 @@
 		</table>
 
 		<Content view="guide" section="correct" />
+		</div>
 	</div>
 </div>
 
@@ -91,37 +98,130 @@
 		min-height: 0;
 		overflow-y: auto;
 	}
-	.page-head {
-		max-width: 76ch;
+
+	/* ARCHIVE REGISTER, one column. The reading face and the body size are set
+	   HERE, with the measure, because the measure is in `ch`: it only comes out as
+	   one width across the whole column in the face and at the size the prose is
+	   set in. Everything inside — head, sections, legend, table — is measured
+	   against this one box.
+
+	   --font-read carries every script on the page: Libron has no Arabic glyphs, so
+	   Arabic falls through to the Plex Arabic fallback in the same stack. */
+	.column {
+		max-width: var(--measure);
 		margin-inline: auto;
-		padding: var(--s-8) var(--s-6) var(--s-3);
+		padding: 0 var(--s-6) var(--s-12);
+		font-family: var(--font-read);
+		font-size: var(--step-0);
+		line-height: var(--lh-relaxed);
+		color: var(--text-secondary);
+	}
+
+	.page-head {
+		padding: var(--s-9) 0 var(--s-5);
 	}
 	.page-head .eyebrow {
 		font-family: var(--font-mono);
 		font-size: var(--t-2xs);
 		letter-spacing: var(--track-caps);
 		text-transform: uppercase;
-		color: var(--text-faint);
+		color: var(--text-muted);
+	}
+	/* Arabic has no letter case and its script does not track. */
+	:global([dir='rtl']) .page-head .eyebrow {
+		letter-spacing: 0;
 	}
 	.page-head h1 {
 		margin: var(--s-3) 0 var(--s-4);
-		font-family: var(--font-serif);
-		font-size: var(--t-4xl);
-		font-weight: 400;
+		font-family: var(--font-read);
+		font-size: var(--step-4);
+		font-weight: 500;
+		line-height: var(--lh-snug);
 		letter-spacing: var(--track-tight);
 		color: var(--text-primary);
 	}
-	.page-head :global(.lede p) {
+	.lede :global(.content p) {
 		margin: 0;
-		font-size: var(--t-lg);
-		line-height: 1.6;
+		font-size: var(--step-1);
+		line-height: var(--lh-relaxed);
 		color: var(--text-secondary);
 	}
 
+	.prose :global(.content p),
+	.prose :global(.content ul),
+	.prose :global(.content ol),
+	.prose :global(.content li),
+	.prose :global(.content blockquote) {
+		font-family: var(--font-read);
+		font-size: var(--step-0);
+	}
+	.prose :global(.content p) {
+		margin: 0 0 var(--s-5);
+	}
+	.prose :global(.content ul),
+	.prose :global(.content ol) {
+		margin: 0 0 var(--s-5);
+		padding-inline-start: var(--s-6);
+	}
+	.prose :global(.content li) {
+		margin-bottom: var(--s-2);
+	}
+	.prose :global(.content blockquote) {
+		border-inline-start: 2px solid var(--border-default);
+		color: var(--text-muted);
+	}
+	.prose :global(.content a) {
+		color: var(--accent);
+	}
+	.prose :global(.content strong) {
+		color: var(--text-primary);
+	}
+
+	/* The column owns the measure and the body size, so the long-form block in
+	   app.css — which sets its own on `.prose` — is overridden here. */
 	.prose {
-		max-width: 76ch;
-		margin-inline: auto;
-		padding: var(--s-3) var(--s-6) var(--s-12);
+		max-width: none;
+		font-size: inherit;
+	}
+
+	/* The section number. The heading text is the markdown's; the count comes
+	   from the document order, so adding a section renumbers the rest for free. */
+	.prose {
+		counter-reset: section;
+	}
+	.prose :global(.content h2) {
+		counter-increment: section;
+		margin: var(--s-9) 0 var(--s-4);
+		font-family: var(--font-read);
+		font-size: var(--step-2);
+		font-weight: 500;
+		line-height: var(--lh-snug);
+		letter-spacing: var(--track-tight);
+		color: var(--text-primary);
+	}
+	/* The eyebrow SectionHeader wears: mono, capped, tracked, number in the
+	   accent with a faint slash. */
+	.prose :global(.content h2)::before {
+		content: counter(section, decimal-leading-zero) ' /';
+		display: block;
+		margin-bottom: var(--s-2);
+		font-family: var(--font-mono);
+		font-size: var(--t-2xs);
+		font-weight: 400;
+		letter-spacing: var(--track-caps);
+		text-transform: uppercase;
+		color: var(--accent);
+	}
+	:global([dir='rtl']) .prose :global(.content h2)::before {
+		letter-spacing: 0;
+	}
+	.prose :global(.content h3) {
+		margin: var(--s-6) 0 var(--s-3);
+		font-family: var(--font-read);
+		font-size: var(--step-1);
+		font-weight: 500;
+		line-height: var(--lh-snug);
+		color: var(--text-primary);
 	}
 
 	/* The four-basis legend: chip + label + description, one row each. The chip
@@ -152,21 +252,24 @@
 	}
 	.base strong {
 		display: block;
-		font-size: var(--t-base);
+		font-size: var(--step--1);
 		color: var(--text-primary);
 	}
 	.base p {
-		margin: 2px 0 0;
-		font-size: var(--t-sm);
-		line-height: 1.55;
+		margin: var(--s-1) 0 0;
+		font-size: var(--step--1);
+		line-height: var(--lh-normal);
 		color: var(--text-muted);
 	}
 
+	/* The table fills the reading column, in the reading face: the measure it
+	   wraps at is the measure the prose is set to. */
 	.views {
-		width: 100%;
 		border-collapse: collapse;
+		width: 100%;
 		margin: var(--s-5) 0 var(--s-8);
-		font-size: var(--t-sm);
+		font-family: var(--font-read);
+		font-size: var(--step--1);
 	}
 	.views th {
 		text-align: start;
@@ -183,7 +286,7 @@
 		border-bottom: 1px solid var(--border-subtle);
 		vertical-align: top;
 		color: var(--text-secondary);
-		line-height: 1.55;
+		line-height: var(--lh-normal);
 	}
 	.views .name {
 		white-space: nowrap;

@@ -33,6 +33,7 @@ import { createHash } from 'node:crypto';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { certainlyActive } from '../src/lib/model';
+import { renderIndexes } from './landing/indexes.ts';
 import { loadPublicClaims, loadClaimContext, validateClaims } from './public-claims.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -244,6 +245,28 @@ function checkClaims(): void {
 		);
 	}
 }
+/* ---------------------------------------------------------------------------
+   DT RESEARCH. One card per study in src/generated/studies.json, rendered by
+   scripts/landing/indexes.ts between the landing:indexes markers and written
+   into the source as well as the build, like the arrays above. The registry is
+   optional: without it the region is empty and the page has no such section.
+   --------------------------------------------------------------------------- */
+function loadStudies(): unknown | null {
+	const file = join(ROOT, 'src', 'generated', 'studies.json');
+	return existsSync(file) ? JSON.parse(readFileSync(file, 'utf8')) : null;
+}
+
+function withRegion(html: string, name: string, body: string): string {
+	const open = `<!--landing:${name}-->`;
+	const close = `<!--/landing:${name}-->`;
+	const a = html.indexOf(open);
+	const b = html.indexOf(close);
+	if (a === -1 || b === -1 || b < a) fail(`landing/index.html is missing the ${open} … ${close} markers`);
+	const eol = html.includes('\r\n') ? '\r\n' : '\n';
+	const inner = body ? eol + body.split('\n').join(eol) + eol : eol;
+	return html.slice(0, a + open.length) + inner + html.slice(b);
+}
+
 const visuals = computeVisuals();
 // Stable hash tied to the visuals themselves (derived from dataset.json), not the
 // file's timestamp — otherwise every `npm run data` would invalidate the landing
@@ -254,6 +277,7 @@ const visuals = computeVisuals();
 const datasetHash = createHash('sha256').update(JSON.stringify(visuals)).digest('hex').slice(0, 16);
 let fresh = withFreshVisuals(html, visuals);
 fresh = withFreshHash(fresh, datasetHash);
+fresh = withRegion(fresh, 'indexes', renderIndexes(loadStudies(), 'en', (p) => existsSync(join(BUILD, p))));
 if (fresh !== original) {
 	/* the source stays the true snapshot — the same rule as the build's own
 	   published statistics, which rewrite the docs that carry them */

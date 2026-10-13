@@ -2,9 +2,11 @@
 	import { untrack } from 'svelte';
 	import { app } from '$lib/state.svelte';
 	import { compact } from '$lib/design/media.svelte';
-	import { ds, institutionById, personById } from '$lib/model';
-	import { t } from '$lib/t.svelte';
+	import { ds, institutionById, personById, relationshipById } from '$lib/model';
+	import { basisLabel, entityName, relLabel, t, tf } from '$lib/t.svelte';
 	import { format } from '$lib/i18n';
+	import { INFLUENCE_CARRYING_TYPES, intervalsOverlap } from '$lib/interpretation';
+	import Disclosure from '$lib/ui/Disclosure.svelte';
 	import EntityPanel from '$lib/components/EntityPanel.svelte';
 	import RecordPanel from '$lib/components/RecordPanel.svelte';
 	import { sheetDrag, type SheetDragParams } from '$lib/ui/sheet-drag';
@@ -92,6 +94,89 @@
 	);
 
 	/**
+	 * The advisories as reading notes, in names rather than record ids.
+	 *
+	 * The audit stores each chain's edges and a `reason` written for the build log,
+	 * which names edges by id and grades by code. A reader needs the people at either
+	 * end of the link and the word for what it rests on, so each note is rebuilt here
+	 * from the chain's own edges: the first pair that does not overlap in time, the
+	 * first link that is not an influence channel, the weakest link and its basis.
+	 * The notes sit under the entity's name, folded into one disclosure: identity
+	 * first, then how to read the chains it sits in.
+	 */
+	type NoteKind = 'weak' | 'temporal' | 'type' | 'confidence';
+	interface Note {
+		kind: NoteKind;
+		title: string;
+		body: string;
+	}
+
+	function link(id: string | undefined): string {
+		const r = id ? relationshipById.get(id) : undefined;
+		return r ? tf('inspector.note.link', { from: entityName(r.from), to: entityName(r.to) }) : '';
+	}
+
+	const notes = $derived.by<Note[]>(() => {
+		const out: Note[] = [];
+		if (weakChain) {
+			out.push({
+				kind: 'weak',
+				title: t('inspector.weakChain.title'),
+				body: format(app.locale, 'inspector.weakChain.body', {
+					edges: weakChain.edges.length,
+					depth: weakChain.depth
+				})
+			});
+		}
+		if (temporalChain) {
+			const rels = temporalChain.edges.map((id) => relationshipById.get(id));
+			let i = 0;
+			while (i < rels.length - 1) {
+				const a = rels[i];
+				const b = rels[i + 1];
+				if (a && b && !intervalsOverlap(a.interval, b.interval)) break;
+				i++;
+			}
+			const pair = i < rels.length - 1 ? [rels[i], rels[i + 1]] : null;
+			out.push({
+				kind: 'temporal',
+				title: t('inspector.temporal.title'),
+				body: pair
+					? tf('inspector.temporal.named', { first: link(pair[0]?.id), second: link(pair[1]?.id) })
+					: tf('inspector.temporal.plain', { edges: temporalChain.edges.length })
+			});
+		}
+		if (typeChain) {
+			const off = typeChain.edges
+				.map((id) => relationshipById.get(id))
+				.find((r) => r && !INFLUENCE_CARRYING_TYPES.has(r.type));
+			if (off) {
+				out.push({
+					kind: 'type',
+					title: t('inspector.type.title'),
+					body: tf('inspector.type.named', { link: link(off.id), type: relLabel(off.type) })
+				});
+			}
+		}
+		if (confidenceChain) {
+			const weak = confidenceChain.edges
+				.map((id) => relationshipById.get(id))
+				.find(
+					(r) =>
+						r && (r.confidence === 'D' || (r.confidence === 'C' && r.verification === 'needs-primary-source'))
+				);
+			if (weak) {
+				out.push({
+					kind: 'confidence',
+					title: t('inspector.confidence.title'),
+					body: tf('inspector.confidence.named', { link: link(weak.id), basis: basisLabel(weak.basis) })
+				});
+			}
+		}
+		return out;
+	});
+
+	/**
 	 * The inspector pane.
 	 *
 	 * Docked rather than floating on a wide screen: it takes width from the viewport
@@ -120,6 +205,19 @@
 
 	let detent = $state<'peek' | 'full'>('peek');
 
+	/**
+	 * TUCKED: the sheet steps aside without closing.
+	 *
+	 * At the peek height the sheet still covers almost half a phone, and it stayed
+	 * there while the reader went back to the canvas, so the record they had
+	 * finished with sat over the thing they were now reading. Touching or
+	 * scrolling anything behind the sheet now tucks it down to its title bar: the
+	 * record is one tap away, and the canvas is the reader's again. Selecting
+	 * something else brings the sheet back at the peek height.
+	 */
+	let tucked = $state(false);
+	let asideEl = $state<HTMLElement | null>(null);
+
 	/*
 	 * A new selection always opens at the peek height. Leaving a sheet expanded from
 	 * the previous entity means tapping a node buries the map you tapped it on.
@@ -128,6 +226,28 @@
 	$effect(() => {
 		void app.selected;
 		detent = 'peek';
+		tucked = false;
+	});
+
+	/** The chrome the reader uses alongside the sheet; touching it is not leaving the record. */
+	const KEEPS_SHEET = '.dock, .menubar, [role="dialog"], .pop, .vs';
+
+	$effect(() => {
+		if (!compact.current || panelId === null) return;
+		const away = (e: Event) => {
+			if (tucked || detent !== 'peek' || closing) return;
+			const target = e.target as Element | null;
+			if (!target || !(target instanceof Element)) return;
+			if (asideEl?.contains(target) || target.closest(KEEPS_SHEET)) return;
+			tucked = true;
+			asideEl?.querySelector('.sheet-scroll')?.scrollTo({ top: 0 });
+		};
+		document.addEventListener('pointerdown', away, { capture: true, passive: true });
+		document.addEventListener('wheel', away, { capture: true, passive: true });
+		return () => {
+			document.removeEventListener('pointerdown', away, { capture: true });
+			document.removeEventListener('wheel', away, { capture: true });
+		};
 	});
 
 	/**
@@ -135,7 +255,7 @@
 	 * gesture time, so a stale object can never settle the wrong detent.
 	 */
 	const dragParams: SheetDragParams = {
-		enabled: () => compact.current && panelId !== null,
+		enabled: () => compact.current && panelId !== null && !tucked,
 		detent: () => detent,
 		setDetent: (d) => (detent = d),
 		dismiss: () => (app.selected = null),
@@ -145,9 +265,33 @@
 
 	/** Tapping the handle is the keyboard- and precision-friendly equivalent. */
 	function toggle() {
+		if (tucked) {
+			tucked = false;
+			return;
+		}
 		detent = detent === 'peek' ? 'full' : 'peek';
 	}
+
+	/** A tucked sheet comes back on any tap, not only on its handle. */
+	function untuck(e: MouseEvent) {
+		if (!tucked) return;
+		e.preventDefault();
+		e.stopPropagation();
+		tucked = false;
+	}
 </script>
+
+{#snippet readingNotes()}
+	<Disclosure>
+		{#snippet summary()}{tf('inspector.notes', { n: notes.length })}{/snippet}
+		{#each notes as note (note.kind)}
+			<div class="weakchain {note.kind}" role="note">
+				<span class="wc-label">{note.title}</span>
+				<span>{note.body}</span>
+			</div>
+		{/each}
+	</Disclosure>
+{/snippet}
 
 {#if panelId}
 	<!-- svelte-ignore a11y_no_static_element_interactions -->
@@ -158,10 +302,14 @@
 		role="presentation"
 	></div>
 
+	<!-- svelte-ignore a11y_click_events_have_key_events -->
 	<aside
 		class="inspector d-{detent}"
 		class:closing
+		class:tucked
 		aria-label="Entity inspector"
+		bind:this={asideEl}
+		onclickcapture={untuck}
 		use:sheetDrag={dragParams}
 	>
 		{#if compact.current}
@@ -174,8 +322,8 @@
 			<button
 				class="handle sheet-handle"
 				onclick={toggle}
-				aria-expanded={detent === 'full'}
-				aria-label={detent === 'full' ? 'Collapse panel' : 'Expand panel'}
+				aria-expanded={!tucked && detent === 'full'}
+				aria-label={detent === 'full' && !tucked ? 'Collapse panel' : 'Expand panel'}
 			>
 				<span class="grip sheet-grip"></span>
 			</button>
@@ -184,49 +332,7 @@
 		<div class="inner sheet-scroll">
 			{#if panelSel}
 			{#if personById.has(panelSel) || institutionById.has(panelSel)}
-				{#if weakChain}
-					<div class="weakchain" role="note">
-						<span class="wc-label">{t('inspector.weakChain.title')}</span>
-						<span
-							>{format(app.locale, 'inspector.weakChain.body', {
-								edges: weakChain.edges.length,
-								depth: weakChain.depth
-							})}</span
-						>
-					</div>
-				{/if}
-				{#if temporalChain}
-					<div class="weakchain temporal" role="note">
-						<span class="wc-label">{t('inspector.temporal.title')}</span>
-						<span
-							>{format(app.locale, 'inspector.temporal.body', {
-								edges: temporalChain.edges.length,
-								reason: temporalChain.reason ?? ''
-							})}</span
-						>
-					</div>
-				{/if}
-				{#if typeChain}
-					<div class="weakchain type" role="note">
-						<span class="wc-label">{t('inspector.type.title')}</span>
-						<span
-							>{format(app.locale, 'inspector.type.body', {
-								reason: typeChain.reason ?? ''
-							})}</span
-						>
-					</div>
-				{/if}
-				{#if confidenceChain}
-					<div class="weakchain confidence" role="note">
-						<span class="wc-label">{t('inspector.confidence.title')}</span>
-						<span
-							>{format(app.locale, 'inspector.confidence.body', {
-								reason: confidenceChain.reason ?? ''
-							})}</span
-						>
-					</div>
-				{/if}
-				<EntityPanel id={panelSel} />
+				<EntityPanel id={panelSel} notes={notes.length ? readingNotes : undefined} />
 			{:else}
 				<!-- v0.0.2 records (contracts, licences, declarations, education,
 				     events, companies) get their own card; a selection that is
@@ -257,12 +363,12 @@
 		min-height: 0;
 	}
 
-	/* W4 + L3 — interpretation advisories. Same quiet tint family; each
-	   variant keeps its own accent so the kind is visible at a glance but
-	   none shouts — they are notes above the record, not verdicts on it. */
+	/* W4 + L3 — interpretation advisories, inside the reading-notes disclosure.
+	   Same quiet tint family; each variant keeps its own accent so the kind is
+	   visible at a glance but none shouts — they are notes on how to read the
+	   record, not verdicts on it. */
 	.weakchain {
-		margin: var(--s-4);
-		margin-block-end: 0;
+		margin: 0 0 var(--s-3);
 		padding: var(--s-3) var(--s-4);
 		border-inline-start: 2px solid var(--basis-inferred);
 		background: color-mix(in oklch, var(--basis-inferred) 6%, transparent);
@@ -400,7 +506,9 @@
 			width: auto;
 			/* Landscape notch: the sheet spans the screen, its content does not. */
 			padding-inline: var(--safe-l) var(--safe-r);
-			--sheet-peek: 46dvh;
+			--sheet-peek: 42dvh;
+			/* Tucked: the handle and the record's sticky title bar, nothing more. */
+			--sheet-mini: 104px;
 			--sheet-full: calc(100dvh - var(--chrome-h) - var(--dock-h) - var(--s-4));
 			height: calc(var(--sheet-peek) + (var(--sheet-full) - var(--sheet-peek)) * var(--sheet-p, 0));
 			flex-direction: column;
@@ -428,6 +536,14 @@
 		}
 		.d-full {
 			--sheet-p: 1;
+		}
+		.inspector.tucked {
+			height: var(--sheet-mini);
+			cursor: pointer;
+		}
+		/* Tucked, the body does not scroll under the finger that is about to open it. */
+		.inspector.tucked .inner {
+			overflow: hidden;
 		}
 		/* Leaving: the card slides all the way down, under the dock. */
 		.inspector.closing {
