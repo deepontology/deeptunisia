@@ -1468,6 +1468,7 @@ const en: Dict = {
 	'chronicle.vertical.spine.close': 'Close',
 	// redesign 2026-10 (CH-8)
 	'chronicle.vertical.list.caption': 'Every post in this layer, oldest first',
+	'chronicle.vertical.list.events': 'Every event on the spine, oldest first',
 	'chronicle.vertical.list.empty': 'No post in this layer meets the evidence filter.',
 	// redesign 2026-10 (SH-1)
 	'nav.views.title': 'Views',
@@ -2900,6 +2901,7 @@ const fr: Dict = {
 	'chronicle.vertical.spine.close': 'Fermer',
 	// redesign 2026-10 (CH-8)
 	'chronicle.vertical.list.caption': 'Tous les postes de cette couche, du plus ancien au plus récent',
+	'chronicle.vertical.list.events': 'Chaque événement de la frise, du plus ancien au plus récent',
 	'chronicle.vertical.list.empty': 'Aucun poste de cette couche ne satisfait le filtre de preuve.',
 	// redesign 2026-10 (SH-1)
 	'nav.views.title': 'Vues',
@@ -4327,6 +4329,7 @@ const ar: Dict = {
 	'chronicle.vertical.spine.close': 'إغلاق',
 	// redesign 2026-10 (CH-8)
 	'chronicle.vertical.list.caption': 'كل المناصب في هذه الطبقة، من الأقدم إلى الأحدث',
+	'chronicle.vertical.list.events': 'كل حدث على الخط الزمني، من الأقدم إلى الأحدث',
 	'chronicle.vertical.list.empty': 'لا يستوفي أي منصب في هذه الطبقة مرشّح الأدلة.',
 	// redesign 2026-10 (SH-1)
 	'nav.views.title': 'العروض',

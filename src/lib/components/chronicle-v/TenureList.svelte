@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { app } from '$lib/state.svelte';
-	import { BASIS_COLOR, BASIS_OPACITY, CUTOFF, DASH, personById, type Basis, type Position } from '$lib/model';
-	import { basisLabel, describeInterval, durationLabel, nameOf, t } from '$lib/t.svelte';
+	import { BASIS_COLOR, BASIS_OPACITY, CUTOFF, DASH, personById, type Basis, type EventRec, type Position } from '$lib/model';
+	import { basisLabel, describeInterval, durationLabel, eventTitle, nameOf, t } from '$lib/t.svelte';
 	import { visiblePositions, type ChronGroup } from '$lib/chronicle/rows';
 
 	/**
@@ -17,9 +17,11 @@
 	interface Props {
 		groups: ChronGroup[];
 		basisFloor: Basis;
+		/** The spine's events, oldest first, already past the evidence floor. */
+		events: EventRec[];
 	}
 
-	let { groups, basisFloor }: Props = $props();
+	let { groups, basisFloor, events }: Props = $props();
 
 	const YEAR_MS = 365.2425 * 24 * 3600 * 1000;
 
@@ -57,9 +59,7 @@
 	}
 </script>
 
-{#if entries.length === 0}
-	<p class="tl-empty">{t('chronicle.vertical.list.empty')}</p>
-{:else}
+{#if entries.length > 0}
 	<ol class="tl" aria-label={t('chronicle.vertical.list.caption')}>
 		{#each entries as e (e.pos.id)}
 			{@const b = e.pos.basis as Basis}
@@ -98,6 +98,35 @@
 			</li>
 		{/each}
 	</ol>
+{/if}
+
+{#if events.length > 0}
+	<ol class="tl" aria-label={t('chronicle.vertical.list.events')}>
+		{#each events as ev (ev.id)}
+			{@const b = ev.basis as Basis}
+			<li>
+				<button
+					type="button"
+					class="tl-row"
+					class:selected={app.selected === ev.id}
+					onclick={() => app.select(ev.id)}
+				>
+					<span class="tl-role">{eventTitle(ev)}</span>
+					<span class="tl-span mono">{describeInterval(ev.interval)}</span>
+					<span class="tl-basis" style:color={BASIS_COLOR[b]}>
+						<svg width="22" height="6" viewBox="0 0 22 6" aria-hidden="true">
+							<line x1="1" y1="3" x2="21" y2="3" stroke="currentColor" stroke-width="2" stroke-opacity={BASIS_OPACITY[b]} stroke-dasharray={DASH[b]} />
+						</svg>
+						<span class="tl-basis-word">{basisLabel(b)}</span>
+					</span>
+				</button>
+			</li>
+		{/each}
+	</ol>
+{/if}
+
+{#if entries.length === 0 && events.length === 0}
+	<p class="tl-empty">{t('chronicle.vertical.list.empty')}</p>
 {/if}
 
 <style>

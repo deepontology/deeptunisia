@@ -339,7 +339,7 @@
 
 	{#if listMode}
 		<div class="cv-list">
-			<TenureList groups={layerGroups} basisFloor={app.basisFloor} />
+			<TenureList groups={layerGroups} basisFloor={app.basisFloor} events={spineEvents} />
 		</div>
 	{:else}
 		<div class="cv-stage" style:--cv-h="{vscale.height}px" style:--cv-n={rows.length} bind:clientHeight={stageH}>
