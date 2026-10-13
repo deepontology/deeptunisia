@@ -1,7 +1,7 @@
 {
-  "generated": "2026-10-10T13:02:44.644Z",
-  "total": 991,
-  "reviewed": 38,
+  "generated": "2026-10-13T13:22:49.666Z",
+  "total": 995,
+  "reviewed": 39,
   "queue": [
     {
       "kind": "relationship",
@@ -102,6 +102,16 @@
       "sources": 1,
       "reviewed": false,
       "title": "Doctorate in constitutional law (circulating claim, refuted by fr.wiki) — kais-saied"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-mouna-siala-la-presse-tunisie-institutional",
+      "confidence": "D",
+      "basis": "unsubstantiated",
+      "risk": 0,
+      "sources": 1,
+      "reviewed": true,
+      "title": "institutional: mouna-siala → la-presse-tunisie"
     },
     {
       "kind": "relationship",
@@ -462,6 +472,16 @@
       "sources": 2,
       "reviewed": false,
       "title": "Saïed holds Carthage audiences; calls accountability a 'legitimate demand'"
+    },
+    {
+      "kind": "event",
+      "id": "ev-zouari-mining-energy-interview-2026-10-12",
+      "confidence": "C",
+      "basis": "inferred",
+      "risk": 1,
+      "sources": 2,
+      "reviewed": false,
+      "title": "Zouari: phosphate output to 10 Mt, a gas pivot to 2030 and a forthcoming hydrocarbons code"
     },
     {
       "kind": "licence",
@@ -855,6 +875,16 @@
     },
     {
       "kind": "event",
+      "id": "ev-saied-evacuation-pardon-2026-10-13",
+      "confidence": "C",
+      "basis": "inferred",
+      "risk": 1,
+      "sources": 1,
+      "reviewed": false,
+      "title": "Saïed pardons 2,288 prisoners on the 63rd Evacuation Day"
+    },
+    {
+      "kind": "event",
       "id": "ev-sehli-anderson-meeting-2026-09-16",
       "confidence": "C",
       "basis": "inferred",
@@ -875,6 +905,16 @@
     },
     {
       "kind": "event",
+      "id": "ev-sumud-activists-verdict-2026-10-12",
+      "confidence": "C",
+      "basis": "inferred",
+      "risk": 1,
+      "sources": 1,
+      "reviewed": false,
+      "title": "Suspended sentences for three activists arrested after the 19 September Sumud rally"
+    },
+    {
+      "kind": "event",
       "id": "ev-tunisia-china-investment-wg-2026-10-08",
       "confidence": "C",
       "basis": "inferred",
@@ -892,6 +932,16 @@
       "sources": 1,
       "reviewed": false,
       "title": "Tunisia–Germany cooperation accords above EUR 100m"
+    },
+    {
+      "kind": "event",
+      "id": "ev-tunisia-germany-health-forum-2026-10-13",
+      "confidence": "C",
+      "basis": "inferred",
+      "risk": 1,
+      "sources": 1,
+      "reviewed": false,
+      "title": "Ferjani and the German Health Alliance agree a health forum and a 2027 investors' visit"
     },
     {
       "kind": "event",
@@ -1415,16 +1465,6 @@
     },
     {
       "kind": "relationship",
-      "id": "rel-mouna-siala-la-presse-tunisie-institutional",
-      "confidence": "C",
-      "basis": "reported",
-      "risk": 1,
-      "sources": 1,
-      "reviewed": false,
-      "title": "institutional: mouna-siala → la-presse-tunisie"
-    },
-    {
-      "kind": "relationship",
       "id": "rel-mourad-ben-othman-mosaique-fm-institutional",
       "confidence": "C",
       "basis": "reported",
@@ -1785,6 +1825,16 @@
     },
     {
       "kind": "position",
+      "id": "p-party-upr-mraihi",
+      "confidence": "B",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 5,
+      "reviewed": false,
+      "title": "Leader of the Republican People's Union — Lotfi Mraihi"
+    },
+    {
+      "kind": "position",
       "id": "p-poulina-bouzguenda",
       "confidence": "B",
       "basis": "reported",
@@ -2022,16 +2072,6 @@
       "sources": 4,
       "reviewed": false,
       "title": "Director-General Commander of the National Guard — Mounir Ksiksi"
-    },
-    {
-      "kind": "position",
-      "id": "p-party-upr-mraihi",
-      "confidence": "B",
-      "basis": "reported",
-      "risk": 3,
-      "sources": 4,
-      "reviewed": false,
-      "title": "Leader of the Republican People's Union — Lotfi Mraihi"
     },
     {
       "kind": "position",
