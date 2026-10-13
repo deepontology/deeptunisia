@@ -762,16 +762,43 @@
 		return y0 === y1 ? String(y0) : `${y0}–${y1}`;
 	}
 
+	/** Width of the cluster card, in step with `.ev-pop` below. */
+	const POP_W = 340;
+
 	function openCluster(members: EventRec[], clientX: number, clientY: number) {
 		const r = plotEl?.getBoundingClientRect();
 		if (!r) return;
 		clusterPop = {
-			x: Math.max(8, Math.min(clientX - r.left, width - 300)),
+			x: Math.max(8, Math.min(clientX - r.left, width - POP_W - 8)),
 			y: clientY - r.top + 14,
 			members: [...members].sort((a, b) => a.interval.startEarliest - b.interval.startEarliest)
 		};
 		evTip = null;
 	}
+
+	/*
+	 * A popover closes on a press anywhere outside it, and on Escape. The lane's
+	 * own click only covers the events lane, so without this the card stayed open
+	 * for a click on the tenure rows, the header or the page. A press on another
+	 * cluster is left alone: its click reopens the card on that group.
+	 */
+	$effect(() => {
+		if (!clusterPop) return;
+		const away = (e: PointerEvent) => {
+			const el = e.target as Element | null;
+			if (el?.closest?.('.ev-pop') || el?.closest?.('[aria-label*=" events, "]')) return;
+			clusterPop = null;
+		};
+		const esc = (e: KeyboardEvent) => {
+			if (e.key === 'Escape') clusterPop = null;
+		};
+		document.addEventListener('pointerdown', away, true);
+		document.addEventListener('keydown', esc);
+		return () => {
+			document.removeEventListener('pointerdown', away, true);
+			document.removeEventListener('keydown', esc);
+		};
+	});
 
 	/** Fit the camera to a cluster so its members separate in place. */
 	function zoomToCluster(members: EventRec[]) {
@@ -1759,8 +1786,10 @@
 			{/if}
 
 			{#if clusterPop}
+				<!-- data-no-pan: the card scrolls its own rows, so its wheel must not zoom the chart. -->
 				<div
 					class="ev-pop"
+					data-no-pan
 					style:left="{clusterPop.x}px"
 					style:top="{clusterPop.y}px"
 					role="dialog"
@@ -1948,6 +1977,14 @@
 		flex: 1;
 		min-height: 0;
 		overflow: auto;
+		/*
+		   The timeline is several screens tall and its scrollbar is the way down for
+		   anyone who cannot use the wheel here. The global thin, faint bar disappears
+		   against this chart, so this container draws its own at full width.
+		*/
+		scrollbar-width: auto;
+		scrollbar-color: var(--text-faint) transparent;
+		scrollbar-gutter: stable;
 	}
 	.plot {
 		position: relative;
@@ -2261,8 +2298,8 @@
 	.ev-pop {
 		position: absolute;
 		z-index: 30;
-		width: 296px;
-		max-height: 320px;
+		width: 340px;
+		max-height: min(60vh, 480px);
 		overflow-y: auto;
 		background: var(--surface-panel);
 		border: 1px solid var(--border-strong);
