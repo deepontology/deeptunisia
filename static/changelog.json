@@ -35,6 +35,36 @@
     ]
   },
   {
+    "hash": "fc3fa79ec",
+    "date": "2026-10-11T18:08:55+01:00",
+    "subject": "Landing: plainer prose in every language, and translations for the strings that fell back to English",
+    "kind": "revision",
+    "added": 21,
+    "removed": 21,
+    "files": [
+      {
+        "file": "data/public-claims.yaml",
+        "added": 21,
+        "removed": 21
+      }
+    ]
+  },
+  {
+    "hash": "197749db4",
+    "date": "2026-10-11T17:30:24+01:00",
+    "subject": "Landing: keep the corrected review and basis figures",
+    "kind": "revision",
+    "added": 1,
+    "removed": 1,
+    "files": [
+      {
+        "file": "data/public-claims.yaml",
+        "added": 1,
+        "removed": 1
+      }
+    ]
+  },
+  {
     "hash": "11e24b3f8",
     "date": "2026-10-11T14:14:14+01:00",
     "subject": "data: resolve the expired mouna-siala source exception",
@@ -61,6 +91,51 @@
         "file": "data/source-exceptions.yaml",
         "added": 0,
         "removed": 6
+      }
+    ]
+  },
+  {
+    "hash": "80f9b06b9",
+    "date": "2026-10-11T12:34:52+01:00",
+    "subject": "Landing: restore the full manifesto page, with honest Agora lines and the indexes slot",
+    "kind": "revision",
+    "added": 266,
+    "removed": 85,
+    "files": [
+      {
+        "file": "data/public-claims.yaml",
+        "added": 266,
+        "removed": 85
+      }
+    ]
+  },
+  {
+    "hash": "4fa11d028",
+    "date": "2026-10-11T11:47:55+01:00",
+    "subject": "Claims: register the landing figures and retire the old surfaces",
+    "kind": "retraction",
+    "added": 85,
+    "removed": 266,
+    "files": [
+      {
+        "file": "data/public-claims.yaml",
+        "added": 85,
+        "removed": 266
+      }
+    ]
+  },
+  {
+    "hash": "0966e511b",
+    "date": "2026-10-10T17:20:25+01:00",
+    "subject": "Research: the study platform and the Police Satisfaction Index",
+    "kind": "expansion",
+    "added": 36,
+    "removed": 0,
+    "files": [
+      {
+        "file": "data/studies/studies.yaml",
+        "added": 36,
+        "removed": 0
       }
     ]
   },
@@ -95,6 +170,81 @@
       {
         "file": "data/sources.yaml",
         "added": 117,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "8fe5c1ed6",
+    "date": "2026-10-10T12:29:11+01:00",
+    "subject": "Research: state that the index translations are unreviewed, and drop its weighting claim",
+    "kind": "revision",
+    "added": 1,
+    "removed": 1,
+    "files": [
+      {
+        "file": "data/studies/studies.yaml",
+        "added": 1,
+        "removed": 1
+      }
+    ]
+  },
+  {
+    "hash": "6517f9506",
+    "date": "2026-10-09T03:21:09+01:00",
+    "subject": "Research: the Police Satisfaction Index, full-width artwork, and a research front page",
+    "kind": "revision",
+    "added": 5,
+    "removed": 5,
+    "files": [
+      {
+        "file": "data/studies/studies.yaml",
+        "added": 5,
+        "removed": 5
+      }
+    ]
+  },
+  {
+    "hash": "a9acffc15",
+    "date": "2026-10-09T01:32:51+01:00",
+    "subject": "Research: the police index as a monthly series, with no demographics but an optional region",
+    "kind": "expansion",
+    "added": 2,
+    "removed": 0,
+    "files": [
+      {
+        "file": "data/public-claims.yaml",
+        "added": 2,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "1953fbbd8",
+    "date": "2026-10-07T23:35:05+01:00",
+    "subject": "Research: one-question survey, first-party bot check, and the freeze path",
+    "kind": "revision",
+    "added": 1,
+    "removed": 1,
+    "files": [
+      {
+        "file": "data/studies/studies.yaml",
+        "added": 1,
+        "removed": 1
+      }
+    ]
+  },
+  {
+    "hash": "91438c38e",
+    "date": "2026-10-07T21:44:32+01:00",
+    "subject": "Research: the Tunisia Police Index (study 002) with live results",
+    "kind": "expansion",
+    "added": 30,
+    "removed": 0,
+    "files": [
+      {
+        "file": "data/studies/studies.yaml",
+        "added": 30,
         "removed": 0
       }
     ]
