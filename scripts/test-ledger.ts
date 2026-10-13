@@ -24,6 +24,14 @@ import { closedEntry, verifyLedger, verifyRelease, type LedgerEntry } from './le
 import { aggregateScored } from './studies-aggregate.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
+/** The paths at which two JSON values differ, for a readable failure. */
+function differences(a: unknown, b: unknown, path = ''): string[] {
+	if (typeof a !== 'object' || a === null || typeof b !== 'object' || b === null) {
+		return a === b ? [] : [`${path}: ${JSON.stringify(a)} vs ${JSON.stringify(b)}`];
+	}
+	const keys = new Set([...Object.keys(a), ...Object.keys(b)]);
+	return [...keys].flatMap((k) => differences((a as any)[k], (b as any)[k], `${path}.${k}`));
+}
 let checks = 0;
 let failures = 0;
 function ok(name: string, condition: boolean, detail = '') {
@@ -240,6 +248,25 @@ console.log('\n  ── the offline release of a scored study ──\n');
 	ok('the release applies the registered speed rule', release.exclusions.rules.speed === 1 && release.exclusions.rows_excluded === 1);
 	ok('its index is the one the engine publishes live', release.published.results?.index.mean === live.results?.index.mean, `${release.published.results?.index.mean} vs ${live.results?.index.mean}`);
 	ok('it carries no link code', !JSON.stringify(release).includes('secret-code-for-five'));
+	const reversed = await aggregateScored([...exported].reverse(), police, { studyId: 'dt-research-002', now, generatedAt: new Date(now).toISOString() });
+	ok(
+		'the same answers in reverse order give the same release, intervals included',
+		JSON.stringify(reversed.published) === JSON.stringify(release.published),
+		differences(reversed.published, release.published).slice(0, 3).join('; ')
+	);
+	let refusedForeign = false;
+	try {
+		await aggregateScored(exported.map((r) => ({ ...r, study_id: 'dt-research-001' })), police, { studyId: 'dt-research-002', now, generatedAt: '' });
+	} catch {
+		refusedForeign = true;
+	}
+	let refusedEmpty = false;
+	try {
+		await aggregateScored(exported.map((r) => ({ ...r, instrument_hash: 'f'.repeat(64) })), police, { studyId: 'dt-research-002', now, generatedAt: '' });
+	} catch {
+		refusedEmpty = true;
+	}
+	ok('another study\'s export is refused, and so is one with no row for this questionnaire', refusedForeign && refusedEmpty);
 	const period = periodOf(now - 100_000, 60);
 	const ledgerSide = await monthDigest(
 		exported.map((r) => releaseRow(spec, { period, instrument_hash: r.instrument_hash, locale: r.locale, revision: r.revision, completion_ms: r.completion_ms, answers: r.answers }))

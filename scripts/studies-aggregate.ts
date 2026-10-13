@@ -589,8 +589,14 @@ export async function aggregateScored(
 ): Promise<ScoredRelease> {
 	const spec = instrument.scoring;
 	if (!spec) throw new Error('this instrument has no scoring block; use the study 001 path');
+	// Another study's export is refused, not released under this study's name.
+	const foreign = rows.filter((row) => row.study_id !== options.studyId).length;
+	if (foreign) throw new Error(`${foreign} row(s) belong to another study; export ${options.studyId} on its own`);
 	const otherVersions = rows.filter((row) => row.instrument_hash !== instrument.hash).length;
 	const own = rows.filter((row) => row.instrument_hash === instrument.hash);
+	if (!own.length) {
+		throw new Error(`no rows answered instrument ${instrument.hash.slice(0, 12)}; ${otherVersions} answered another version`);
+	}
 	const scoringRows = own.map((row) => ({
 		answers: row.answers,
 		completionMs: row.completion_ms,
