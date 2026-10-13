@@ -130,6 +130,8 @@ The build never reads the database. The path is deliberately offline:
 
 This is why `src/generated/studies.json` can be committed as build output while no response ever is.
 
+**Scored studies (the police index).** `studies:aggregate` sees the instrument's scoring block and takes a different path: it recomputes exactly what the live endpoint publishes, from the export alone (same exclusions, aggregates, monthly series and publication floors, from `community/research-scoring.ts`), writes `data/studies/<study>/published.json`, and prints each month's released-row fingerprint. A closed month's fingerprint must equal its closed entry in `ledger/` (`scripts/ledger-verify.ts`). No channel is tallied on this path; the link check publishes shares only.
+
 ## 6. Deployment topology
 
 `wrangler.toml` today: one Worker (`community/worker.ts`), the static `build/` directory as assets, one D1 binding (`DB`) for the community store, a small observability sample rate.
