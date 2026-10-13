@@ -48,7 +48,9 @@ database_id = "cc16abcd-1ff5-4f64-8ed7-cdb1770bc9f8"
 # personal data of a different kind from the community layer, and they share no
 # table, key or join with it. Created with
 #   wrangler d1 create deeptunisia-research --jurisdiction eu
-# so the answers are stored and processed inside the EU only, and its schema is
+# so the database stores and processes the answers inside the EU only. That
+# covers D1 alone: the Worker that receives a submission still runs at whichever
+# Cloudflare location serves the request before it writes here. Its schema is
 # community/research-schema.sql (applied with `wrangler d1 execute
 # deeptunisia-research --remote --file community/research-schema.sql`).
 [[d1_databases]]
