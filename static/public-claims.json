@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-13T13:22:51.841Z",
+  "generatedAt": "2026-10-13T17:16:16.623Z",
   "cutoff": "2026-10-13",
   "counts": {
     "claims": 82,
@@ -86,7 +86,7 @@
         },
         {
           "path": "landing/_strings.fr.json",
-          "locator": "Établi à partir de (\\d+) mandats",
+          "locator": "Tirés de (\\d+) mandats",
           "format": "plain"
         },
         {
@@ -356,12 +356,12 @@
         },
         {
           "path": "landing/_strings.fr.json",
-          "locator": "<strong>(\\d+) ruptures de succession</strong>",
+          "locator": "<strong>(\\d+) lacunes de succession</strong>",
           "format": "plain"
         },
         {
           "path": "landing/_strings.ar.json",
-          "locator": "<strong>(\\d+) انقطاعاً في التعاقب</strong>",
+          "locator": "<strong>(\\d+) فجوة في التعاقب</strong>",
           "format": "plain"
         }
       ]
@@ -404,7 +404,7 @@
         },
         {
           "path": "landing/_strings.ar.json",
-          "locator": "<strong>(\\d+) فترات متداخلة</strong>",
+          "locator": "<strong>(\\d+) من الفترات المتداخلة</strong>",
           "format": "plain"
         }
       ]
@@ -675,7 +675,7 @@
         },
         {
           "path": "landing/_strings.ar.json",
-          "locator": "\"evidence\\.28\": \"(\\d+) ادعاءات",
+          "locator": "\"evidence\\.28\": \"(\\d+) ادعاءً",
           "format": "plain"
         }
       ]
@@ -703,12 +703,12 @@
       "surfaces": [
         {
           "path": "landing/index.html",
-          "locator": "— (\\d+) at tier 1,",
+          "locator": "(\\d+) at tier 1,",
           "format": "plain"
         },
         {
           "path": "landing/_strings.en.json",
-          "locator": "— (\\d+) at tier 1,",
+          "locator": "(\\d+) at tier 1,",
           "format": "plain"
         },
         {
@@ -1028,17 +1028,17 @@
       "surfaces": [
         {
           "path": "landing/index.html",
-          "locator": "roughly (\\d+\\.\\d+) MB",
+          "locator": "[Rr]oughly (\\d+\\.\\d+) MB",
           "format": "mb1"
         },
         {
           "path": "landing/_strings.en.json",
-          "locator": "roughly (\\d+\\.\\d+) MB",
+          "locator": "[Rr]oughly (\\d+\\.\\d+) MB",
           "format": "mb1"
         },
         {
           "path": "landing/_strings.fr.json",
-          "locator": "environ (\\d+,\\d+) Mo",
+          "locator": "[Ee]nviron (\\d+,\\d+) Mo",
           "format": "mb1-fr"
         },
         {
@@ -1104,17 +1104,17 @@
         },
         {
           "path": "landing/index.html",
-          "locator": "all (\\d+) review notes",
+          "locator": "[Aa]ll (\\d+) review notes",
           "format": "plain"
         },
         {
           "path": "landing/_strings.en.json",
-          "locator": "all (\\d+) review notes",
+          "locator": "[Aa]ll (\\d+) review notes",
           "format": "plain"
         },
         {
           "path": "landing/_strings.fr.json",
-          "locator": "les (\\d+) notes de relecture",
+          "locator": "Les (\\d+) notes de relecture",
           "format": "plain"
         },
         {
@@ -1278,7 +1278,7 @@
         },
         {
           "path": "landing/_strings.ar.json",
-          "locator": "(\\d+) ادعاءً غير مُسنَد",
+          "locator": "الـ(\\d+) ادعاءً غير المُسنَد",
           "format": "plain"
         }
       ]
@@ -1316,12 +1316,12 @@
         },
         {
           "path": "landing/_strings.fr.json",
-          "locator": "les (\\d+) qui nomment une source",
+          "locator": "les (\\d+) qui citent une source",
           "format": "plain"
         },
         {
           "path": "landing/_strings.ar.json",
-          "locator": "و(\\d+) ادعاءات تسمّي مصدرًا",
+          "locator": "و(\\d+) يسمّون مصدراً",
           "format": "plain"
         }
       ]
@@ -1359,12 +1359,12 @@
         },
         {
           "path": "landing/_strings.fr.json",
-          "locator": "les (\\d+) déductions",
+          "locator": "les (\\d+) inférences",
           "format": "plain"
         },
         {
           "path": "landing/_strings.ar.json",
-          "locator": "و(\\d+) استنتاجًا",
+          "locator": "و(\\d+) استنتاجاً",
           "format": "plain"
         }
       ]
@@ -1539,7 +1539,7 @@
         },
         {
           "path": "landing/_strings.ar.json",
-          "locator": "السجلات الـ(\\d+) للعلاقات",
+          "locator": "(\\d+) علاقة مسجّلة",
           "format": "plain"
         }
       ]
@@ -1777,12 +1777,12 @@
         },
         {
           "path": "landing/_strings.fr.json",
-          "locator": "(\\d+) traduites par un humain",
+          "locator": "dont (\\d+) traduites par des humains",
           "format": "plain"
         },
         {
           "path": "landing/_strings.ar.json",
-          "locator": "و(\\d+) مترجمة بيد بشر",
+          "locator": "منها (\\d+) مترجمة بشرياً",
           "format": "plain"
         }
       ]
@@ -1879,8 +1879,8 @@
       "id": "landing-dictionary-keys-en",
       "kind": "translation-state",
       "claim": "Keys in the English landing dictionary.",
-      "value": 212,
-      "display": "212",
+      "value": 224,
+      "display": "224",
       "format": "plain",
       "population": "landing/_strings.en.json key set (the extraction source, not a live dictionary)",
       "lifecycle": "current",
@@ -1901,8 +1901,8 @@
       "id": "landing-dictionary-keys-fr",
       "kind": "translation-state",
       "claim": "Keys in the French landing dictionary.",
-      "value": 244,
-      "display": "244",
+      "value": 254,
+      "display": "254",
       "format": "plain",
       "population": "landing/_strings.fr.json key set",
       "lifecycle": "current",
@@ -1923,8 +1923,8 @@
       "id": "landing-dictionary-keys-ar",
       "kind": "translation-state",
       "claim": "Keys in the Arabic landing dictionary.",
-      "value": 244,
-      "display": "244",
+      "value": 254,
+      "display": "254",
       "format": "plain",
       "population": "landing/_strings.ar.json key set",
       "lifecycle": "current",
@@ -2213,8 +2213,8 @@
       "id": "world-snapshot",
       "kind": "metric",
       "claim": "World snapshot generation date.",
-      "value": "2026-10-13T13:22:50.156Z",
-      "display": "2026-10-13T13:22:50.156Z",
+      "value": "2026-10-13T17:16:15.050Z",
+      "display": "2026-10-13T17:16:15.050Z",
       "format": "iso-date",
       "population": "src/generated/world.json snapshot",
       "lifecycle": "current",
