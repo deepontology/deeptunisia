@@ -623,6 +623,12 @@ ok(
 	'a resumed respondent keeps the arms they answered under'
 );
 
+ok(
+	'nothing can be answered until the study read and the saved session are in',
+	PARTICIPATE.includes('{:else if instrument && current && !restored}'),
+	'the arms are fixed before the first screen'
+);
+
 // The saved progress expires, and can be dropped now.
 ok(
 	'saved progress is dropped on a visit more than a day after its last activity',

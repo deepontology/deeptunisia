@@ -19,7 +19,7 @@ import {
 	releaseRow,
 	type ReleaseRow
 } from '../community/research-commitment.ts';
-import { aggregateSeries, periodOf, repeatCheck } from '../community/research-scoring.ts';
+import { aggregateResponses, aggregateSeries, applyPublicationFloor, periodOf, repeatCheck } from '../community/research-scoring.ts';
 import { closedEntry, verifyLedger, verifyRelease, type LedgerEntry } from './ledger-verify.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -112,6 +112,23 @@ const rewritten = [
 ];
 ok('a closed month recorded differently later is reported', verifyLedger(rewritten).some((p) => p.includes('recorded differently')));
 
+const loweredAtClose = [
+	...good,
+	await entry('2026-12-01T23:20:00Z', month('2026-12', false, 0, 0, 0, []), month('2026-11', true, 2, 0, 0, [rowA, rowB]))
+];
+ok('a counter that falls when the month closes is reported', verifyLedger(loweredAtClose).some((p) => p.includes('when the month closed')));
+
+const swapped = [
+	await entry('2026-12-01T23:20:00Z', month('2026-12', false, 0, 0, 0, []), month('2026-11', true, 4, 1, 1, [rowA, rowB])),
+	await entry('2026-12-02T23:20:00Z', month('2026-12', false, 0, 0, 0, []), month('2026-11', true, 4, 1, 1, [rowA, rowB]).then((m) => ({ ...m, withdrawn: 1, replaced: 1 })))
+];
+ok('an identical closed month passes', verifyLedger(swapped).length === 0, verifyLedger(swapped).join('; '));
+const swappedBad = [
+	swapped[0],
+	await entry('2026-12-02T23:20:00Z', month('2026-12', false, 0, 0, 0, []), month('2026-11', true, 4, 2, 0, [rowA, rowB]))
+];
+ok('withdrawn and replaced swapped in a later closed entry is reported', verifyLedger(swappedBad).some((p) => p.includes('recorded differently')));
+
 console.log('\n  ── a release against its closed month ──\n');
 
 const final = closedEntry(rewritten, '2026-11')!;
@@ -168,6 +185,25 @@ ok(
 	ok(
 		'with twenty such answers both are published',
 		safe.window!.links.index_without_largest !== null && safe.window!.repeats.index_without_repeats !== null
+	);
+}
+
+// Months against the totals (Greptile's case): 100 answers last month and one
+// this month. The month's own figures beside the all-time ones would give the
+// one, so the month withholds them until the rest reaches the cell floor.
+{
+	const now = Date.now();
+	const lastMonth = now - 35 * 86_400_000;
+	const old = Array.from({ length: 100 }, (_, i) => ({ answers: answers(4 + (i % 3)), submittedAt: lastMonth }));
+	const publish = (rows: any[]) =>
+		applyPublicationFloor(spec, aggregateResponses(spec, rows, options), aggregateSeries(spec, rows, { ...options, now }));
+	const one = publish([...old, { answers: answers(9), submittedAt: now }]);
+	const fullMonth = one.series!.months.find((m) => m.n === 100);
+	ok('a month whose remainder is one answer withholds its own figures', fullMonth !== undefined && fullMonth.results === null && one.results !== null);
+	const twenty = publish([...old, ...Array.from({ length: 20 }, () => ({ answers: answers(9), submittedAt: now }))]);
+	ok(
+		'once the rest reaches the cell floor the month shows them',
+		twenty.series!.months.find((m) => m.n === 100)?.results !== null
 	);
 }
 

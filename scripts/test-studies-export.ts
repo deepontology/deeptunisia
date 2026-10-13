@@ -342,6 +342,18 @@ try {
 	missingTable = true;
 }
 ok('a missing table is an error, not an empty CSV', missingTable);
+{
+	// A scored study is excluded by its own registered rules: the police index
+	// registers a 70 s speed floor and nothing about incompleteness.
+	const scored = { ...fixtureInstrument, scoring: { exclusions: { min_completion_seconds: 70 } } } as unknown as typeof fixtureInstrument;
+	const rowsForScored = parseResponses(csvText).map((row, i) => ({ ...row, completion_ms: i === 0 ? 60_000 : 80_000, answers: i === 1 ? { consent_ok: true } : row.answers }));
+	const ex = evaluateExclusions(rowsForScored, scored);
+	ok(
+		'a scored study uses its registered rules, not study 001\'s',
+		ex.rules.speed === 1 && ex.rules.incomplete === 0 && ex.rules.duplicates === 0,
+		JSON.stringify(ex.rules)
+	);
+}
 ok('the export carries the revision mark', csvText.split(/\r?\n/)[0].split(',').includes('revision'));
 {
 	const parsedRows = parseResponses(csvText);

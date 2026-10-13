@@ -55,11 +55,29 @@ export function verifyLedger(entries: LedgerEntry[]): string[] {
 			}
 			if (month.closed) {
 				const seen = closed.get(month.period);
-				if (seen && (seen.digest !== month.digest || seen.stored !== month.stored || seen.received !== month.received)) {
+				const fields = ['received', 'withdrawn', 'replaced', 'stored', 'digest', 'balanced'] as const;
+				if (seen && fields.some((field) => seen[field] !== month[field])) {
 					problems.push(`${entry.recorded_at} ${month.period}: a closed month was recorded differently than before`);
 				}
-				if (!seen) closed.set(month.period, month);
+				if (!seen) {
+					// The closing entry continues the open ones: no counter may fall
+					// across the close any more than within the month.
+					const before = lastOpen.get(month.period);
+					if (before) {
+						for (const counter of ['received', 'withdrawn', 'replaced'] as const) {
+							if (month[counter] < before[counter]) {
+								problems.push(
+									`${entry.recorded_at} ${month.period}: ${counter} fell from ${before[counter]} to ${month[counter]} when the month closed`
+								);
+							}
+						}
+					}
+					closed.set(month.period, month);
+				}
 			} else {
+				if (closed.has(month.period)) {
+					problems.push(`${entry.recorded_at} ${month.period}: recorded as open after it was recorded closed`);
+				}
 				const before = lastOpen.get(month.period);
 				if (before) {
 					for (const counter of ['received', 'withdrawn', 'replaced'] as const) {
