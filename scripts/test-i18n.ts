@@ -223,6 +223,8 @@ console.log('\n  ── translations are translations ──\n');
  */
 const IDENTICAL_IS_FINE = new Set([
 	'interval.range',
+	// The two ends of a relationship: parameters around a dash, nothing to translate.
+	'inspector.note.link',
 	'brand.name',
 	'agora.title',
 	'agora.reason.spam',

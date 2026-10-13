@@ -1,36 +1,52 @@
 <script lang="ts">
 	import { page } from '$app/state';
+	import { browser } from '$app/environment';
 	import { app } from '$lib/state.svelte';
 	import { theme } from '$lib/design/theme.svelte';
 	import { t } from '$lib/t.svelte';
 	import { LOCALES, localeCoverage, type Locale } from '$lib/i18n';
-	import { BUBBLES, bubbleFor, bubbleHref } from './nav.svelte';
+	import { BUBBLES, bubbleFor, bubbleHref, isActive } from './nav.svelte';
 	import Settings from './Settings.svelte';
+	import ViewsSheet from './ViewsSheet.svelte';
 	import Popover from '$lib/ui/Popover.svelte';
 	import Tooltip from '$lib/ui/Tooltip.svelte';
 
 	/**
-	 * The menu bar, tier one.
+	 * The menu bar — tier one.
 	 *
-	 * Four bubbles: Graph (the sourced record), Media (the reading surfaces:
+	 * Three bubbles: Graph (the sourced record), Media (the reading surfaces:
 	 * investigations and the third-party feed), Agora (discussion and proposed
-	 * changes), and Research (open studies and their released data). Media is
-	 * architecturally connected to Graph: investigations are a narrative interface
-	 * over the same evidence system. Research is separate by construction: its
-	 * data are observations from people who chose to take part, never graph
-	 * claims, so it gets its own slot instead of a link under Graph. See
-	 * nav.svelte.ts.
+	 * changes). Media is architecturally connected to Graph — investigations are a
+	 * narrative interface over the same evidence system — but gets its own
+	 * navigation slot because the reading experience is fundamentally different
+	 * from the instrument. See nav.svelte.ts.
 	 *
 	 * Everything narrower than the bubbles collapses: the wordmark first, then the
 	 * search label, then the language switcher into Settings. The bubbles themselves
-	 * never collapse, but on a phone the strip tightens its padding and type so all
-	 * four stay reachable at 390px.
+	 * never collapse — a phone reader has to be able to cross that line too.
 	 */
 
 	const current = $derived(bubbleFor(page.url.pathname));
 	const activeBubble = $derived(BUBBLES.findIndex((b) => b.id === current.id));
 
 	let settingsOpen = $state(false);
+	let viewsOpen = $state(false);
+
+	/*
+	 * The phone bar names the view the reader is on, not the section: the name is
+	 * the button that opens every other view. The Chronicle lives at /chronicle,
+	 * which the navigation model names by the root route.
+	 */
+	const viewName = $derived.by(() => {
+		const path = page.url.pathname === '/chronicle' ? '/' : page.url.pathname;
+		// Prerendering forbids reading the query; the tab only refines Agora's name.
+		const tab = browser ? page.url.searchParams.get('tab') : null;
+		// A section with one view is named by the section ("Research", not its
+		// lone "Overview").
+		if (current.items.length === 1 && !current.docs) return t(`nav.${current.key}`);
+		const item = [...current.items, ...(current.docs ?? [])].find((i) => isActive(i, path, tab));
+		return t(`nav.${(item ?? current).key}`);
+	});
 </script>
 
 <header class="menubar" data-tour="chrome">
@@ -49,7 +65,31 @@
 		<span class="word">Deep<b>Tunisia</b></span>
 	</a>
 
-	<nav class="bubbles" aria-label="Sections" style:--i={activeBubble} data-tour="bubbles">
+	<!-- Compact only: one button carries the view's name and opens every view.
+	     It replaces the bubbles and the tab strip, which cost a phone two rows. -->
+	<button
+		type="button"
+		class="viewbtn"
+		data-tour="viewmenu"
+		aria-haspopup="dialog"
+		aria-expanded={viewsOpen}
+		onclick={() => (viewsOpen = !viewsOpen)}
+	>
+		<span class="viewbtn-name">{viewName}</span>
+		<svg viewBox="0 0 10 10" width="9" height="9" aria-hidden="true" class:flip={viewsOpen}>
+			<path d="M2 4 L5 7 L8 4" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />
+		</svg>
+		<span class="sr">{t('nav.views.title')}</span>
+	</button>
+	<ViewsSheet open={viewsOpen} onclose={() => (viewsOpen = false)} />
+
+	<nav
+		class="bubbles"
+		aria-label="Sections"
+		style:--i={activeBubble}
+		style:--n={BUBBLES.length}
+		data-tour="bubbles"
+	>
 		<span class="pill" aria-hidden="true"></span>
 		{#each BUBBLES as b (b.id)}
 			<a
@@ -215,7 +255,7 @@
 		color: var(--text-primary);
 	}
 
-	/* --- tier one: the four bubbles --- */
+	/* --- tier one: the two bubbles --- */
 
 	.bubbles {
 		position: relative;
@@ -279,7 +319,8 @@
 		top: 3px;
 		bottom: 3px;
 		inset-inline-start: 3px;
-		width: calc((100% - 6px) / 4);
+		/* One slot per section, however many BUBBLES holds. */
+		width: calc((100% - 6px) / var(--n));
 		transform: translateX(calc(var(--i) * 100%));
 		background: var(--surface-overlay);
 		border: 1px solid var(--border-default);
@@ -435,109 +476,100 @@
 			display: none;
 		}
 	}
-	@media (max-width: 820px) {
+	@media (max-width: 900px) {
 		.search span,
 		kbd {
 			display: none;
 		}
+		/* An icon among icons: no field chrome once the label has gone. */
 		.search {
 			width: 44px;
 			height: 44px;
 			padding: 0;
 			justify-content: center;
+			background: none;
+			border-color: transparent;
 		}
 	}
-	/* ORDER MATTERS: the touch-target block (900px) must come BEFORE the
-	   compact-budget block (640px). Both apply on a phone, same specificity,
-   so the later one wins - and the compact budget is the one that knows
-   how four bubbles plus the right cluster fit 390px. The 900px block
-   sat after it once and its 12px link padding silently re-flooded the
-   budget, overflowing every route 26px at 390px. */
+	/* The view button exists for the compact bar only. */
+	.viewbtn {
+		display: none;
+	}
+	.sr {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
+	}
+
+	/*
+	 * The compact bar: mark, the current view's name, search and settings, in one
+	 * row of --menubar-h (which tokens.css sets to --bar-h here). The section
+	 * bubbles and the tab strip give way to the view button and its sheet, which
+	 * lists every view with what it answers; the Guide link is in that sheet too.
+	 * Settings stays rather than a bare theme toggle because it also carries the
+	 * language, which has nowhere else to go on a phone. Every control keeps the
+	 * full 44px target.
+	 */
 	@media (max-width: 900px) {
-		/* Touch targets. The bubbles are the one control on this bar that a phone
-		   reader definitely needs, so they grow while everything else holds — to
-		   a minimum tappable size rather than the desktop height. Icon-only
-		   controls get the full 44px target (WCAG 2.5.5); text bubbles get 42px. */
+		.menubar {
+			gap: var(--s-2);
+			padding-inline: calc(var(--s-3) + var(--safe-l)) calc(var(--s-3) + var(--safe-r));
+		}
 		.brand {
 			/* The mark is 20px of glyphs; pad it to a real target without moving
 			   its visual position (negative margin cancels the padding). */
-			padding-inline: var(--s-5);
-			margin-inline-start: calc(-1 * var(--s-5));
+			padding-inline: var(--s-4);
+			margin-inline-start: calc(-1 * var(--s-3));
 		}
-		.bubbles a {
-			height: 42px;
-			padding: 0 var(--s-5);
-		}
-		.pill {
-			top: 3px;
-			bottom: 3px;
-		}
-		.gear,
-		.help,
-		.search {
-			width: 44px;
-			height: 44px;
-		}
-		.locale button {
-			min-width: 44px;
-			height: 44px;
-		}
-	}
-	@media (max-width: 640px) {
-		/*
-		 * The compact budget. Four bubbles plus brand plus the right cluster must
-		 * sum to less than 390px of min-content, or the whole fixed shell pans
-		 * sideways the next time anything focuses an off-screen control. The things
-		 * that do not shrink are load-bearing: the dots say record vs not, the soon
-		 * marker still says announced-but-not-open, and every control keeps its
-		 * 44px target. What gives is chrome padding — link padding, label size,
-		 * gaps, and the badge's word, which in French alone costs 51px and collapses
-		 * to the dashed provisional dot while staying readable out loud.
-		 */
-		.word {
-			display: none;
-		}
-		.menubar {
-			gap: var(--s-2);
-			padding-inline: var(--s-3);
-		}
-		.right {
-			gap: var(--s-2);
-		}
-		.anchor {
-			gap: var(--s-2);
-		}
-		.bubbles a {
-			padding: 0 var(--s-1);
-			gap: var(--s-1);
-			font-size: var(--t-sm);
-		}
-		/*
-		 * The Guide shortcut steps out of the phone budget. Four bubbles plus the
-		 * right cluster need its 44px, and the same link sits in the graph docs
-		 * strip on every route, so nothing becomes unreachable. It returns as soon
-		 * as there is room for it, above 640px.
-		 */
+		.bubbles,
 		.help {
 			display: none;
 		}
-		.soon {
-			display: inline-block;
-			width: 9px;
-			height: 9px;
-			padding: 0;
-			background: none;
-			border: 1px dashed var(--text-faint);
-			border-radius: var(--r-full);
+		.viewbtn {
+			display: inline-flex;
+			align-items: center;
+			gap: var(--s-3);
+			flex: 1 1 auto;
+			min-width: 0;
+			height: var(--tap);
+			padding: 0 var(--s-4);
+			font-size: var(--t-md);
+			font-weight: 560;
+			color: var(--text-primary);
+			border-radius: var(--r-md);
 		}
-		/* Out of sight, still read aloud — the standard clip recipe. */
-		.soon-word {
-			position: absolute;
-			width: 1px;
-			height: 1px;
+		.viewbtn:hover,
+		.viewbtn[aria-expanded='true'] {
+			background: var(--surface-hover);
+		}
+		.viewbtn-name {
 			overflow: hidden;
-			clip-path: inset(50%);
 			white-space: nowrap;
+			text-overflow: ellipsis;
+		}
+		.viewbtn svg {
+			flex: 0 0 auto;
+			color: var(--text-muted);
+			transition: transform var(--dur-fast) var(--ease-out);
+		}
+		.viewbtn svg.flip {
+			transform: rotate(180deg);
+		}
+		.right,
+		.anchor {
+			gap: var(--s-1);
+		}
+		.gear {
+			width: var(--tap);
+			height: var(--tap);
+		}
+	}
+	@media (max-width: 640px) {
+		.word {
+			display: none;
 		}
 	}
 	@media (pointer: coarse) {

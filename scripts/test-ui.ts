@@ -239,7 +239,7 @@ ok('wheel zoom is smoothed, with direct fallback', (() => {
 	return G.includes('zoomSmoothTo') && G.includes('else cam.zoomAt') && C.includes('zoomSmoothTo(');
 })());
 
-console.log('\n  ── §14.4: the chronicle events timeline (docs/plans/chronicle-events-timeline-v2.md) ──\n');
+console.log('\n  ── §14.4: the chronicle events timeline ──\n');
 
 // Geometry over the graph, not decoration: the lane iterates ds.events and the
 // marks read the basis language. v2 reworked the interaction model, so these
@@ -257,7 +257,16 @@ ok(
 	'the lane iterates the dataset, nothing hardcoded',
 	CHRONICLE.includes('[...ds.events]') && CHRONICLE.includes('{#each laneItems as it')
 );
-ok('existing rupture lines/dots are untouched', CHRONICLE.includes('class="rupture-line"') && CHRONICLE.includes('class="rupture-dot"'));
+// A rupture has one marker, the lane diamond, plus one quiet line through the
+// rows. The old axis dot and floating tag were a second and third marker.
+ok(
+	'a rupture is one diamond plus one quiet line, with no axis dot or tag',
+	CHRONICLE.includes('class="rupture-line"') &&
+		CHRONICLE.includes('class="ev-diamond"') &&
+		!CHRONICLE.includes('rupture-dot') &&
+		!CHRONICLE.includes('rupture-tag') &&
+		/\.rupture-line\s*\{[^}]*opacity:\s*var\(--dim\)/.test(CHRONICLE)
+);
 ok('lane marks read BASIS_OPACITY, not a hand-picked alpha', LANE.includes('BASIS_OPACITY'));
 
 // v2 #1: shape is decided by RENDERED width, not by "has an end" — every event
@@ -333,7 +342,16 @@ ok(
 	'pointer picking is measured against the lane rect, never the clicked mark',
 	CHRONICLE.includes('laneBg.getBoundingClientRect()') && CHRONICLE.includes('function lanePick')
 );
-ok('selecting an event never dims the tenure bars', CHRONICLE.includes('anyFocus && !eventFocus'));
+// Cross-highlighting: an event and the posts it involves light together, from
+// the shared link index, and the uninvolved bars step back to --dim.
+ok(
+	'event focus reads the shared link index, not its own matching',
+	CHRONICLE.includes("from '$lib/chronicle/links'") && CHRONICLE.includes('buildEventLinks(')
+);
+ok(
+	'focusing an event dims the bars it does not involve',
+	CHRONICLE.includes('focusRoles') && CHRONICLE.includes('class:evdim') && /\.bar\.evdim\s*\{[^}]*opacity:\s*var\(--dim\)/.test(CHRONICLE)
+);
 ok(
 	'marks are keyboard-reachable buttons with spoken labels',
 	LANE.includes('class="ev-mark"') && LANE.includes('role="button"') && LANE.includes('tabindex="0"') && LANE.includes('aria-label')
@@ -358,12 +376,19 @@ ok(
 	/class="lane-head"[\s\S]{0,260}role="button"[\s\S]{0,120}tabindex="0"[\s\S]{0,220}aria-label=/.test(CHRONICLE)
 );
 ok(
-	'expanded mode stacks overlapping events into rows on one linear axis',
-	CHRONICLE.includes('expandedLayout') && CHRONICLE.includes('function packRows') && CHRONICLE.includes('laneYs')
+	'expanded mode gives each event or cluster its own row on one linear axis',
+	CHRONICLE.includes('expandedLayout') && !CHRONICLE.includes('function packRows') && CHRONICLE.includes('laneYs')
 );
 ok(
-	'rows reserve label room for ruptures so the anchors always read',
-	CHRONICLE.includes('function ruptureReserve') && CHRONICLE.includes('occ:')
+	'the gutter names every expanded row with its date and title',
+	CHRONICLE.includes('const expGutter') &&
+		CHRONICLE.includes('class="exp-gl"') &&
+		CHRONICLE.includes('exp-gl-date') &&
+		CHRONICLE.includes('function pickGutter') &&
+		!CHRONICLE.slice(
+			CHRONICLE.indexOf('{#each expandedLayout.items'),
+			CHRONICLE.indexOf('{#each expandedLayout.clusters')
+		).includes('ev-label')
 );
 ok(
 	'expanded events aggregate into counted clusters on one axis',
@@ -385,11 +410,10 @@ ok(
 		CHRONICLE.includes('headX')
 );
 ok(
-	'expanded labels truncate to the gap with metrics matching the render',
+	'gutter titles truncate to the gutter with metrics matching the render',
 	CHRONICLE.includes('function fitText') &&
-		CHRONICLE.includes('fitText(eventTitle') &&
-		CHRONICLE.includes('const EV_LABEL_TYPE') &&
-		/\.ev-label\s*\{[^}]*font-size:\s*10px/.test(CHRONICLE)
+		CHRONICLE.includes('fitText(full, avail(date), ROW_LABEL_TYPE)') &&
+		CHRONICLE.includes('const EV_LABEL_TYPE')
 );
 ok(
 	'expanding lands on a readable window rather than full range',
@@ -427,6 +451,37 @@ ok(
 			translate(loc, 'timeline.lane.event')
 		);
 	}
+}
+
+console.log('\n  ── shell: phone frame, words over codes, identity first ──\n');
+
+{
+	const SHELL = join(HERE, '..', 'src', 'lib', 'shell');
+	const MENUBAR = readFileSync(join(SHELL, 'MenuBar.svelte'), 'utf8');
+	const SHEET = readFileSync(join(SHELL, 'ViewsSheet.svelte'), 'utf8');
+	const DOCK = readFileSync(join(SHELL, 'TimeDock.svelte'), 'utf8');
+	const INSPECTOR = readFileSync(join(SHELL, 'Inspector.svelte'), 'utf8');
+	const TOKENS = readFileSync(join(HERE, '..', 'src', 'lib', 'design', 'tokens.css'), 'utf8');
+	const compactBlock = TOKENS.slice(TOKENS.indexOf('@media (max-width: 900px)'));
+	ok(
+		'compact chrome is one bar and one pill',
+		/--menubar-h:\s*var\(--bar-h\)/.test(compactBlock) &&
+			/--subnav-h:\s*0px/.test(compactBlock) &&
+			/--dock-h:\s*var\(--pill-h\)/.test(compactBlock)
+	);
+	ok(
+		'the Views sheet and the bubble slots are driven by BUBBLES, not a count',
+		SHEET.includes('{#each BUBBLES as b') && MENUBAR.includes('style:--n={BUBBLES.length}') && !MENUBAR.includes('/ 3)')
+	);
+	ok(
+		'the evidence dial and layer chips speak words, not codes',
+		!/'DOC'|'\+REP'|'\+INF'|'\+UNS'/.test(DOCK) && DOCK.includes('basis.dial.') && DOCK.includes('lchip-word')
+	);
+	ok('the speed control is labelled', DOCK.includes("t('ctl.speed')"));
+	ok(
+		'reading notes are built from edges, never from the audit reason',
+		!INSPECTOR.includes('.reason') && INSPECTOR.includes("tf('inspector.notes'") && INSPECTOR.includes('relationshipById')
+	);
 }
 
 console.log('\n  ── V29 origins: the derived origin count on claim cards ──\n');

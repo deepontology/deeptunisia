@@ -189,6 +189,8 @@ export function navigable(node: HTMLElement | SVGElement, params: { cam: Navigab
 
 	function onWheel(e: WheelEvent) {
 		if (!enabled()) return;
+		// A control or panel over the map owns its own wheel (see the pointer path).
+		if ((e.target as Element)?.closest?.('[data-no-pan]')) return;
 		e.preventDefault();
 		ensureMeasured();
 		cam.stop();
