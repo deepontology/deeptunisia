@@ -1641,6 +1641,12 @@ export interface PublishedMonth {
 	index: MonthAggregate['index'];
 	/** The month on its own; null below the month floor or the first-figure floor. */
 	results: WaveAggregate | null;
+	/**
+	 * True when the month has enough answers for figures of its own but
+	 * withholds them so the answers outside the shown months cannot be solved
+	 * for (overlapSafeMonths). A reader is told that, not that the month is short.
+	 */
+	withheld: boolean;
 }
 
 export interface PublishedSeries {
@@ -1748,7 +1754,8 @@ export function applyPublicationFloor(
 				closed: m.closed,
 				n: m.results.n,
 				index: floor.reached ? m.index : NO_LEVEL,
-				results: monthShown[i] ? m.results : null
+				results: monthShown[i] ? m.results : null,
+				withheld: !monthShown[i] && floor.reached && m.results.n >= monthN
 			})),
 		window: series.window && {
 			first: series.window.first,
