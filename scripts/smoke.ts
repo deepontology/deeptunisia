@@ -1640,6 +1640,26 @@ if (runSection('phone review')) {
 	await page.keyboard.press('Escape');
 	await page.waitForTimeout(500);
 
+	// Following a cause or consequence moves the record, and the highlight moves with it.
+	const chained = (ds.events as { id: string; basis: string; causes?: string[]; consequences?: string[] }[]).find(
+		(e) =>
+			(e.basis === 'documented' || e.basis === 'reported') &&
+			[...(e.causes ?? []), ...(e.consequences ?? [])].some((id) =>
+				ds.events.some((x) => x.id === id && (x.basis === 'documented' || x.basis === 'reported'))
+			)
+	);
+	ok('the dataset has an event with a linked event', chained !== undefined);
+	if (chained) {
+		await page.goto(BASE + '/chronicle?id=' + chained.id, { waitUntil: 'networkidle' });
+		await settle(page);
+		await page.waitForTimeout(600);
+		await page.locator('.inspector .refs button.ref').first().click();
+		await page.waitForTimeout(600);
+		ok('following a linked event keeps the event highlighted', (await page.locator('.cv-focus').count()) === 1, chained.id);
+		await page.keyboard.press('Escape');
+		await page.waitForTimeout(500);
+	}
+
 	// Nothing is labelled over the columns; rupture lines cross every column.
 	ok('no rupture label sits over the columns', (await page.locator('.cv-rupture-chip').count()) === 0);
 	const widths = (await page.evaluate(`(() => {
