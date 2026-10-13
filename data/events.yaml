@@ -5213,3 +5213,138 @@
     confirm the meeting; the CPP document would confirm its content.
   sources:
     - african-manager-tunisie-bm-cpp-2026-10-08
+- id: ev-saied-evacuation-pardon-2026-10-13
+  date: "2026-10-13"
+  title_en: "Saïed pardons 2,288 prisoners on the 63rd Evacuation Day"
+  title_fr: "Saïed gracie 2 288 détenus à l'occasion du 63e anniversaire de la fête de l'Évacuation"
+  category: political
+  subcategory: pardon
+  actors: [kais-saied]
+  institutions: [presidency]
+  summary: >-
+    The Presidency of the Republic announced on 13 October 2026 that President
+    Kaïs Saïed had granted a pardon to 2,288 people sentenced to prison on the
+    occasion of the 63rd anniversary of Evacuation Day, allowing the release of
+    1,573 detainees, and had ordered conditional release for a further 424
+    detainees. Evacuation Day marks the departure of the last French troops
+    (15 October 1963); the figures are as the Presidency communiqué relayed by
+    African Manager states them.
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "Presidency of the Republic communiqué, as relayed by African Manager (13 October 2026)"
+  reasoning: >-
+    One outlet relaying the Presidency's own communiqué, with no independent
+    confirmation and no JORT text available, so the counts and the act are an
+    inference from a single relayed account.
+  falsifiable_by: >-
+    The Presidency communiqué, the JORT text of the pardon, or the
+    Directorate-General of Prisons' release figures would confirm or correct
+    the counts and the date.
+  sources:
+    - am-saied-grace-evacuation-2026-10-13
+
+- id: ev-tunisia-germany-health-forum-2026-10-13
+  date: "2026-10-13"
+  title_en: "Ferjani and the German Health Alliance agree a health forum and a 2027 investors' visit"
+  title_fr: "Ferjani et l'Alliance allemande pour la santé conviennent d'un forum et d'une visite d'investisseurs en 2027"
+  category: economic
+  subcategory: investment
+  actors: [mustapha-ferjani]
+  institutions: [ministry-health, germany]
+  summary: >-
+    Health Minister Mustapha Ferjani met Roland Göhde, president of the German
+    Health Alliance, on the margin of the World Health Summit in Berlin
+    (11-13 October 2026), as reported by African Manager on 13 October from a
+    Ministry of Health communiqué. The two agreed to organise a Tunisian-German
+    health forum on joint investment projects and a 2027 visit to Tunisia by a
+    German economic delegation including makers of medicines, medical equipment
+    and medical technology; the communiqué emphasises German investment,
+    technology and know-how transfer for pharmaceutical sovereignty, and
+    Tunisia's digital-hospital experience. The output stated is a forum and a
+    delegation, not a signed instrument. Göhde has no graph record and is named
+    but not an actor.
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "Ministry of Health communiqué, as relayed by African Manager (13 October 2026)"
+  reasoning: >-
+    One outlet relaying one ministry communiqué, with no independent
+    confirmation and no signed instrument in hand, so the agreed forum and the
+    planned 2027 delegation are an inference from a single relayed account.
+  falsifiable_by: >-
+    The Ministry of Health communiqué, a joint statement with the German Health
+    Alliance, or a second outlet's report would confirm the forum and the 2027
+    delegation and correct the details.
+  sources:
+    - am-tunisie-allemagne-sante-2026-10-13
+
+- id: ev-sumud-activists-verdict-2026-10-12
+  date: "2026-10-12"
+  title_en: "Suspended sentences for three activists arrested after the 19 September Sumud rally"
+  title_fr: "Peines avec sursis pour trois activistes arrêtés après le rassemblement du 19 septembre"
+  category: legal
+  subcategory: conviction
+  location: [gov-tunis]
+  actors: []
+  institutions: [judiciary]
+  summary: >-
+    On 12 October 2026 the correctional chamber of the Tunis Court of First
+    Instance ruled in the case against the activists Kais Bouzouzia, Khalil
+    Laabidi and Thouraya Chtiba, arrested after the 19 September 2026 rally in
+    support of the detained Al-Sumud flotilla organisers (see
+    ev-sumud-march-arrests-2026-09-19). Kapitalis, relaying the activists'
+    comrades and families citing the defence committee, reports suspended
+    sentences of 12 months for Kais Bouzouzia and 8 months each for Khalil
+    Laabidi and Thouraya Chtiba, and that the three could return home that
+    evening. No court record was fetched and the three defendants have no graph
+    record, so none is an actor.
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "Kapitalis (12 October 2026), relaying the activists' comrades and families citing the defence committee"
+  reasoning: >-
+    The verdict and the suspended terms come from one outlet relaying the
+    defence committee, not from a court record, so they are an inference from a
+    single relayed account; the three defendants have no graph entity.
+  falsifiable_by: >-
+    The court's judgment or minutes, or a second outlet's report from the
+    hearing, would confirm the sentences and the suspended terms.
+  sources:
+    - kapitalis-sumud-verdict-2026-10-12
+
+- id: ev-zouari-mining-energy-interview-2026-10-12
+  date: "2026-10-12"
+  title_en: "Zouari: phosphate output to 10 Mt, a gas pivot to 2030 and a forthcoming hydrocarbons code"
+  title_fr: "Zouari : production de phosphate à 10 Mt, cap sur le gaz jusqu'en 2030 et un nouveau code des hydrocarbures"
+  category: economic
+  subcategory: mining-energy
+  actors: [salah-zouari]
+  institutions: [ministry-equipment-housing]
+  summary: >-
+    Slah Zouari, Minister of Equipment and Housing charged with the Industry,
+    Mines and Energy portfolio, gave an interview to the platform Attaqa.net
+    relayed by African Manager on 12 and 13 October 2026. He said Tunisia
+    intends to raise annual phosphate production to ten million tonnes and to
+    transform 60 to 70 percent of extracted material into value-added products,
+    with works under way to rehabilitate production sites; and that Tunisia
+    will bet on gas over 2026-2030, strengthening partnerships with foreign
+    investors, with a new hydrocarbons code about to be promulgated to set a
+    legal framework for public-private investment and partnership. These are
+    stated targets and intentions, not achieved output or enacted law.
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "Slah Zouari, Minister of Equipment and Housing charged with Industry, Mines and Energy, interviewed by Attaqa.net and relayed by African Manager (12-13 October 2026)"
+  reasoning: >-
+    One minister's interview, relayed by one outlet in two items resting on the
+    same Attaqa.net text; targets and a forthcoming code are attributed to the
+    minister and stated as intentions, so the record is an inference from a
+    single relayed account.
+  falsifiable_by: >-
+    The Attaqa.net interview text, ministry production statistics, or the JORT
+    text of the hydrocarbons code would confirm the target, the 60-70 percent
+    transformation share and the timing of the code.
+  sources:
+    - am-phosphates-10mt-2026-10-12
+    - am-hydrocarbures-code-2026-10-13
