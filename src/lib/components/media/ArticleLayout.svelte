@@ -36,6 +36,22 @@
 
 	let { investigation }: Props = $props();
 
+	/**
+	 * A narrative link is rendered as a link only when its scheme is http(s).
+	 * The narrative parser stores whatever href the source YAML carries, so a
+	 * `javascript:` or `data:` value would otherwise execute on click. Rejecting
+	 * it here makes the anchor inert rather than dangerous.
+	 */
+	function webHref(url: string | null | undefined): string | undefined {
+		if (!url) return undefined;
+		try {
+			const parsed = new URL(url);
+			return parsed.protocol === 'http:' || parsed.protocol === 'https:' ? url : undefined;
+		} catch {
+			return undefined;
+		}
+	}
+
 	const meta = $derived(investigation.meta);
 	const evidence = $derived(investigation.evidence);
 	const sources = $derived(investigation.sources);
@@ -307,7 +323,7 @@
 	{:else if node.t === 'em'}
 		<em>{#each (node.children ?? []) as c, ci (ci)}{@render inlineNode(c)}{/each}</em>
 	{:else if node.t === 'link'}
-		<a href={node.href}>{node.label}</a>
+		<a href={webHref(node.href)}>{node.label}</a>
 	{:else if node.t === 'claim_ref'}
 		{@const claim = findClaim(node.claim_id ?? '')}
 		{#if claim}
