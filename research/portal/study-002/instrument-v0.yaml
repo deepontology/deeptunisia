@@ -45,9 +45,11 @@ instrument:
 
 translation:
   policy: >-
-    Interim: French and Arabic drafted by the project for Wave 01 and not yet
-    reviewed by a person who reads the language; published as interim
-    translations. Target: two independent
+    Interim: French and Arabic drafted by the project for Wave 01, then checked
+    by the project against the English on 2026-10-13 for meaning and for neutral
+    wording (stems that leaned towards one answer were made neutral, ambiguous
+    terms replaced). Not yet reviewed by an independent person who reads the
+    language; published as interim translations. Target: two independent
     human translators per locale, reconciliation, back-translation and cognitive
     interviews (portal README R5) before a later wave freezes.
   report: null
@@ -273,8 +275,8 @@ items:
     construct: service:overall
     provenance: project
     text_en: "Overall, how good a job do the police do where you live?"
-    text_fr: "Dans l'ensemble, la police fait-elle bien son travail là où vous vivez ?"
-    text_ar: "عمومًا، إلى أيّ حدّ تقوم الشرطة بعملها جيّدًا حيث تسكن؟"
+    text_fr: "Dans l'ensemble, comment la police fait-elle son travail là où vous vivez ?"
+    text_ar: "عمومًا، كيف تقوم الشرطة بعملها حيث تسكن؟"
     response: scale_0_10
     required: false
     anchors:
@@ -306,8 +308,8 @@ items:
     construct: service:crime
     provenance: project
     text_en: "How well do the police deal with everyday crime where you live, such as theft and break-ins?"
-    text_fr: "La police traite-t-elle bien la délinquance du quotidien là où vous vivez, comme les vols et les cambriolages ?"
-    text_ar: "إلى أيّ حدّ تتصدّى الشرطة جيّدًا للجرائم اليومية حيث تسكن، مثل السرقة والسطو على المنازل؟"
+    text_fr: "Comment la police fait-elle face à la délinquance du quotidien là où vous vivez, comme les vols et les cambriolages ?"
+    text_ar: "كيف تتصدّى الشرطة للجرائم اليومية حيث تسكن، مثل السرقة والسطو على المنازل؟"
     response: scale_0_10
     required: false
     anchors:
@@ -321,8 +323,8 @@ items:
     construct: service:integrity
     provenance: project
     text_en: "Where you live, how common is it for the police to ask for money or favours?"
-    text_fr: "Là où vous vivez, est-il courant que la police demande de l'argent ou des services ?"
-    text_ar: "حيث تسكن، ما مدى شيوع أن يطلب أعوان الأمن مالًا أو خدمات؟"
+    text_fr: "Là où vous vivez, est-il courant que la police demande de l'argent ou des faveurs ?"
+    text_ar: "حيث تسكن، ما مدى شيوع أن يطلب أعوان الأمن مالًا أو خدمات شخصية؟"
     help_en: "This asks what you believe happens around you, not only what happened to you."
     help_fr: "Il s'agit de ce que vous pensez qu'il se passe autour de vous, pas seulement de ce qui vous est arrivé."
     help_ar: "يسأل هذا عمّا تعتقد أنّه يحدث من حولك، لا فقط عمّا حدث لك."
@@ -342,10 +344,10 @@ items:
     construct: grip:fear
     provenance: project
     text_en: "How worried are you about being stopped or held by the police without a reason?"
-    text_fr: "À quel point craignez-vous d'être contrôlé(e) ou interpellé(e) par la police sans raison ?"
+    text_fr: "À quel point craignez-vous d'être contrôlé(e) ou retenu(e) par la police sans raison ?"
     text_ar: "إلى أيّ مدى تخشى أن تستوقفك الشرطة أو تحتجزك دون سبب؟"
     help_en: "Stopped means stopped in the street, on the road or at a checkpoint. Held means kept by the police, for example at a station."
-    help_fr: "Contrôlé : arrêté dans la rue, sur la route ou à un barrage. Interpellé : retenu par la police, par exemple dans un poste."
+    help_fr: "Contrôlé : arrêté dans la rue, sur la route ou à un barrage. Retenu : gardé par la police, par exemple dans un poste."
     help_ar: "الاستيقاف: أن يوقفك أعوان الأمن في الشارع أو على الطريق أو في «باراج». الاحتجاز: أن تبقيك الشرطة لديها، مثلًا في مركز."
     response: scale_0_10
     required: false
@@ -377,7 +379,7 @@ items:
     provenance: project
     text_en: "How closely do you think the police watch what ordinary people say, online or in private?"
     text_fr: "Selon vous, à quel point la police surveille-t-elle ce que disent les gens ordinaires, sur Internet ou en privé ?"
-    text_ar: "حسب رأيك، إلى أيّ مدى تراقب الشرطة ما يقوله المواطنون العاديون، على الإنترنت أو على انفراد؟"
+    text_ar: "حسب رأيك، إلى أيّ مدى تراقب الشرطة ما يقوله المواطنون العاديون، على الإنترنت أو في أحاديثهم الخاصّة؟"
     help_en: "This asks what you believe, not what you know for certain."
     help_fr: "La question porte sur ce que vous pensez, pas sur ce que vous savez avec certitude."
     help_ar: "يتعلّق السؤال بما تعتقده، لا بما تعرفه يقينًا."
@@ -430,7 +432,7 @@ items:
     text_fr: "Là où vous vivez, la police peut faire tout ce qu'elle veut."
     text_ar: "في المكان الذي تعيش فيه، تستطيع الشرطة أن تفعل ما تشاء."
     help_en: "This asks whether, where you live, rules and the law hold the police back."
-    help_fr: "La question est de savoir si, là où vous vivez, les règles et la loi retiennent la police."
+    help_fr: "La question est de savoir si, là où vous vivez, les règles et la loi imposent des limites à la police."
     help_ar: "يتعلّق السؤال بما إذا كانت القواعد والقانون تكبح الشرطة في المكان الذي تعيش فيه."
     response: scale_0_10
     required: false
@@ -495,7 +497,7 @@ items:
         held: "Arrestation ou garde à vue"
         other: "Autre chose"
       ar:
-        traffic_stop: "مراقبة مرورية"
+        traffic_stop: "إيقاف من شرطة المرور"
         street_check: "التثبّت من الهوية أو الاستيقاف في الشارع"
         checkpoint: "نقطة تفتيش (باراج)"
         reported: "أبلغت عن جريمة أو طلبت المساعدة"
@@ -566,15 +568,15 @@ items:
         held_unexplained: "Held without being told why"
         none: "None of these"
       fr:
-        money: "Une demande d'argent ou de service"
+        money: "Une demande d'argent ou de faveur"
         insult: "Des insultes ou une humiliation"
         threat: "Des menaces"
         force: "L'usage de la force physique"
         phone: "Une fouille du téléphone, ou l'obligation de le déverrouiller"
-        held_unexplained: "Une rétention sans explication"
+        held_unexplained: "Être retenu(e) sans qu'on vous dise pourquoi"
         none: "Rien de tout cela"
       ar:
-        money: "طلب مال أو خدمة"
+        money: "طلب مال أو خدمة شخصية"
         insult: "شتم أو إهانة"
         threat: "تهديد"
         force: "استعمال القوة الجسدية"
@@ -787,7 +789,7 @@ scoring:
       min: 60
       max: 80
       label_en: "Accountable"
-      label_fr: "Redevable"
+      label_fr: "Responsable"
       label_ar: "خاضع للمساءلة"
       description_en: "Broadly trusts the police, finds they do the job, and feels free around them."
       description_fr: "Fait globalement confiance à la police, estime qu'elle fait son travail et se sent libre en sa présence."
