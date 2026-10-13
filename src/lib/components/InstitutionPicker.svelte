@@ -109,6 +109,12 @@
 	/* Clamped rather than reset: a shrinking list must not strand the cursor. */
 	const active = $derived(suggestions.length === 0 ? 0 : Math.min(cursor, suggestions.length - 1));
 
+	/* Focus stays in the input, so the keyboard moves the cursor and the menu follows it. */
+	$effect(() => {
+		if (!open) return;
+		document.getElementById(`${id}-opt-${active}`)?.scrollIntoView({ block: 'nearest' });
+	});
+
 	function onKey(e: KeyboardEvent) {
 		if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
 			e.preventDefault();
