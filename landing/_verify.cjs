@@ -82,10 +82,19 @@ const URL = process.env.LANDING_URL || 'http://localhost:4810/landing/index.html
   pre.forEach(m => { fail++; console.log(m); });
   const ok = (c, n) => { c ? pass++ : (fail++, console.log('FAIL: ' + n)); };
 
-  ok(await page.title() === 'Deep Tunisia — where memory fades, power escapes', 'title');
+  ok(await page.title() === 'Deep Tunisia: where memory fades, power escapes', 'title');
   ok((await page.locator('h1').innerText()).includes('Where memory fades'), 'h1');
-  ok(await page.locator('a.enter').count() === 4, 'four CTAs');
-  ok((await page.locator('a.enter').first().innerText()).includes('Enter the atlas'), 'CTA wording');
+  /* The page's own arrays, read from its source: the expectations below follow
+     the graph rather than constants that drift every time the data grows. */
+  const data = await page.evaluate(() => {
+    const src = document.documentElement.innerHTML;
+    const arr = (name) => { const m = src.match(new RegExp('var ' + name + ' = (\\[.*?\\]);')); return m ? JSON.parse(m[1]) : []; };
+    const nodes = arr('NODES');
+    return { edges: arr('EDGES').length, nodes: nodes.length, lanes: new Set(nodes.map((n) => n[2])).size };
+  });
+  const atlasCtas = await page.$$eval('a.enter', (as) => as.filter((a) => /atlas/i.test(a.textContent)).map((a) => a.getAttribute('href')));
+  ok(atlasCtas.length >= 3 && atlasCtas.every((h) => h === '/chronicle'), 'every atlas CTA opens /chronicle');
+  ok((await page.locator('a.enter').first().innerText()).includes('Explore the atlas'), 'CTA wording');
 
   // stratum: real data — a plausible peak (the build regenerates the array, so
   // the exact value moves with the graph), both axis endpoints, the ribbon shape
@@ -112,7 +121,7 @@ const URL = process.env.LANDING_URL || 'http://localhost:4810/landing/index.html
     }));
   }
   console.log('dial', JSON.stringify(dial));
-  ok(dial[0].shown === 46, 'floor 0 shows all 46 edges');
+  ok(dial[0].shown === data.edges, 'floor 0 shows every edge among the 46 (' + data.edges + ')');
   ok(dial[2].shown < dial[1].shown && dial[1].shown < dial[0].shown, 'raising the floor removes edges monotonically');
   ok(dial[2].iso > dial[0].iso, 'raising the floor isolates people');
   /* Floor 0 isolates exactly the nodes whose connections all lie outside the
@@ -137,6 +146,8 @@ const URL = process.env.LANDING_URL || 'http://localhost:4810/landing/index.html
   const k1 = await page.locator('.word .w').allTextContents();
   ok(k1.length === 12, '12 words');
   ok(await page.locator('#dots circle').count() === 2048, '2048 dots');
+  /* The phrase lights its dots one after another; wait for the sequence, not a frame of it. */
+  await page.waitForFunction(() => document.querySelectorAll('#dots circle.on').length === 12, null, { timeout: 4000 }).catch(() => {});
   ok(await page.locator('#dots circle.on').count() === 12, '12 dots lit');
   await page.locator('#reroll').click();
   await page.waitForTimeout(900);
@@ -220,7 +231,8 @@ const URL = process.env.LANDING_URL || 'http://localhost:4810/landing/index.html
      loosening the rule, because the rule is what catches real copy-paste. */
   const IDENTICAL_IS_FINE = new Set([
     'foot.14', 'foot.16',
-    'top.3', 'ledger.3', 'ledger.5', 'speech.27', 'support.19'
+    'top.3', 'ledger.3', 'ledger.5', 'speech.27', 'support.19',
+    'index.eyebrow'
   ]);
   for (const l of ['fr', 'ar']) {
     const same = Object.keys(strings.en).filter(
@@ -231,12 +243,42 @@ const URL = process.env.LANDING_URL || 'http://localhost:4810/landing/index.html
 
   /* Whole-sentence templates must keep their placeholders in every language —
      a French copy that drops {total} renders "22 connexions visibles sur". */
-  const TEMPLATES = { 'dial.live': ['iso', 'n', 'total'], 'bud.left': ['n', 'total'] };
+  const TEMPLATES = {
+    'dial.live': ['iso', 'n', 'total'],
+    'bud.left': ['n', 'total'],
+    'viz.stratumAlt': ['first', 'last', 'peak', 'peakYear', 'y0', 'y1']
+  };
   for (const [key, wanted] of Object.entries(TEMPLATES)) {
     for (const l of ['fr', 'ar']) {
-      const got = [...(strings[l][key] || '').matchAll(/\{(\w+)\}/g)].map((m) => m[1]).sort();
+      const got = [...new Set([...(strings[l][key] || '').matchAll(/\{(\w+)\}/g)].map((m) => m[1]))].sort();
       ok(String(got) === String(wanted), `${l} ${key} keeps every placeholder`, String(got));
     }
+  }
+
+  /* The chart's description is computed from the array it draws. */
+  const alt = await page.evaluate(() => {
+    const src = document.documentElement.innerHTML;
+    const d = JSON.parse(src.match(/var DENSITY = (\[.*?\]);/)[1]);
+    return { label: document.getElementById('stratumsvg').getAttribute('aria-label'), peak: Math.max(...d), last: d[d.length - 1] };
+  });
+  ok(alt.label.includes(String(alt.peak)) && alt.label.includes(String(alt.last)) && !/\{\w+\}/.test(alt.label), 'the stratum description states the drawn peak and last value');
+
+  /* Without JavaScript nothing reveals the page, so nothing may start hidden. */
+  {
+    const ctx = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
+    const p = await ctx.newPage();
+    await p.goto(URL, { waitUntil: 'load' });
+    const hidden = await p.evaluate(() => {
+      const els = [...document.querySelectorAll('h1, h2, .lede, a.enter')];
+      return els.filter((e) => {
+        const cs = getComputedStyle(e);
+        const span = e.querySelector('.curtain > span');
+        const moved = span && getComputedStyle(span).transform !== 'none';
+        return +cs.opacity < 0.5 || moved;
+      }).length;
+    });
+    ok(hidden === 0, 'with JavaScript off, headings and buttons are visible');
+    await ctx.close();
   }
 
   await page.setViewportSize({ width: 1440, height: 900 });
@@ -273,8 +315,8 @@ const URL = process.env.LANDING_URL || 'http://localhost:4810/landing/index.html
     ok(st.untouched === 0, `${l} leaves no keyed element empty`, String(st.untouched));
 
     // the charts are rebuilt, not restyled, so they must come back intact
-    ok(st.links === 46 && st.nodes === 46, `${l} redraws the network intact`, st.links + '/' + st.nodes);
-    ok(st.lanes.length === 6, `${l} redraws six lanes`, st.lanes.join(','));
+    ok(st.links === data.edges && st.nodes === data.nodes, `${l} redraws the network intact`, st.links + '/' + st.nodes);
+    ok(st.lanes.length === data.lanes, `${l} redraws one lane per layer present`, st.lanes.join(','));
     ok(st.eras.length >= 2, `${l} redraws the era labels`, st.eras.join(','));
     if (l !== 'en') {
       ok(!st.lanes.includes('political'), `${l} translates the lane labels`, st.lanes.join(','));

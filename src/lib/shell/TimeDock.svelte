@@ -1,8 +1,10 @@
 <script lang="ts">
+	import { tick } from 'svelte';
 	import { Spring } from 'svelte/motion';
+	import { page } from '$app/state';
 	import { app } from '$lib/state.svelte';
 	import { theme } from '$lib/design/theme.svelte';
-	import { t, nameOf} from '$lib/t.svelte';
+	import { t, tf, nameOf } from '$lib/t.svelte';
 	import {
 		CUTOFF,
 		FLOOR,
@@ -20,6 +22,7 @@
 	import { compact } from '$lib/design/media.svelte';
 	import { fits } from '$lib/viz/measure';
 	import Segmented from '$lib/ui/Segmented.svelte';
+	import LabeledSegmented from '$lib/ui/LabeledSegmented.svelte';
 	import Button from '$lib/ui/Button.svelte';
 	import Popover from '$lib/ui/Popover.svelte';
 	import Tooltip from '$lib/ui/Tooltip.svelte';
@@ -199,14 +202,21 @@
 		}
 	}
 
+	/* Words, not codes: "Documented only", then each tier the floor adds. */
 	const basisOptions = $derived(
-		BASIS_ORDER.map((b, i) => ({
+		BASIS_ORDER.map((b) => ({
 			value: b,
-			label: ['DOC', '+REP', '+INF', '+UNS'][i],
-			title: t(`basis.floor.${b}`),
+			label: t(`basis.dial.${b}`),
 			tint: `var(--basis-${b})`
 		}))
 	);
+
+	/**
+	 * The Chronicle draws its own time axis and scrubs it, so a track under it
+	 * would be a second copy of time on one screen. There the dock keeps its
+	 * controls row and drops the track.
+	 */
+	const showTrack = $derived(page.url.pathname !== '/chronicle');
 
 	const SPEEDS = [
 		{ value: '0.5', label: '½×' },
@@ -215,16 +225,67 @@
 	];
 
 	/**
-	 * On a phone the evidence dial and the seven layer chips do not fit beside the
-	 * date, and letting them overflow put half the layer palette off the screen edge —
-	 * silently, because the document itself never overflowed. They move behind one
-	 * button instead.
+	 * On a phone the dock rests as one pill: play, the date, and Filters. The track,
+	 * the speed, the evidence dial and the seven layers open together as a sheet
+	 * from either the date or Filters. Letting them sit in the dock cost a phone a
+	 * second row, and letting them overflow once put half the layer palette off the
+	 * screen edge, silently, because the document itself never overflowed.
 	 *
 	 * Rendered from a snippet so there is exactly one copy of the markup: two
 	 * hand-maintained versions of the app's most important filter is how the two drift
 	 * apart, and this control is the single most informative interaction on the site.
 	 */
 	let filtersOpen = $state(false);
+
+	/**
+	 * Wide screens: the layer chips fold into one button when the row cannot hold
+	 * them beside the dial.
+	 *
+	 * Measured, not a breakpoint, because the words are translated: French layer
+	 * names run longer than English ones, so a width that fits one locale overflows
+	 * another. The row folds when its content overflows, remembers how wide it
+	 * needed to be, and unfolds when it is that wide again. A language change
+	 * starts the measurement over.
+	 */
+	let controlsEl = $state<HTMLDivElement | null>(null);
+	let layersFolded = $state(false);
+	let layersOpen = $state(false);
+	let neededW = 0;
+
+	function measureRow() {
+		const el = controlsEl;
+		if (!el || compact.current) return;
+		if (!layersFolded) {
+			if (el.scrollWidth > el.clientWidth + 1) {
+				neededW = el.scrollWidth;
+				layersFolded = true;
+			}
+		} else if (el.clientWidth >= neededW) {
+			layersFolded = false;
+			// Unfolded on a remembered width; check the real one once it renders.
+			tick().then(measureRow);
+		}
+	}
+
+	$effect(() => {
+		const el = controlsEl;
+		void app.locale;
+		if (!el || compact.current) return;
+		layersFolded = false;
+		neededW = 0;
+		tick().then(measureRow);
+		// Next frame: folding changes the row's content inside the observer's own
+		// callback otherwise, which the browser reports as a resize loop.
+		const ro = new ResizeObserver(() => requestAnimationFrame(measureRow));
+		ro.observe(el);
+		return () => ro.disconnect();
+	});
+
+	const layerSummary = $derived(
+		app.activeLayers.size === LAYERS.length
+			? t('ctl.layers.all')
+			: tf('ctl.layers.some', { n: app.activeLayers.size, total: LAYERS.length })
+	);
 
 	/** How far the reader has moved from the default standard of evidence. */
 	const filtersDirty = $derived(
@@ -235,11 +296,11 @@
 {#snippet evidenceDial()}
 	<div class="group" data-tour="evidence">
 		<span class="eyebrow">{t('ctl.evidence')}</span>
-		<Segmented
+		<LabeledSegmented
 			options={basisOptions}
 			value={app.basisFloor}
 			onchange={(v) => (app.basisFloor = v as Basis)}
-			size="xs"
+			size={compact.current ? 'sm' : 'xs'}
 			cumulative
 			label={t('ctl.evidence')}
 		/>
@@ -255,6 +316,7 @@
 		<div class="layers">
 			{#each LAYERS as layer (layer)}
 				<Tooltip content="{layerLabel(layer)} — click to toggle, alt-click to isolate">
+					<!-- Swatch and word: a colour is never the only name a layer has. -->
 					<button
 						class="lchip"
 						class:on={app.activeLayers.has(layer)}
@@ -264,6 +326,9 @@
 						onclick={(e) => (e.altKey ? app.soloLayer(layer) : app.toggleLayer(layer))}
 					>
 						<i></i>
+						<span class="lchip-word" aria-hidden="true"
+							>{layer === 'foreign' ? t('layer.foreign.short') : layerLabel(layer)}</span
+						>
 					</button>
 				</Tooltip>
 			{/each}
@@ -276,102 +341,22 @@
 	</div>
 {/snippet}
 
-<footer class="dock" id="timeline" tabindex="-1" aria-label="Timeline controls">
-	<!-- Row 1: transport and filters -->
-	<div class="row controls">
-		<div class="transport">
-			<Button
-				variant="solid"
-				size="md"
-				icon
-				aria-label={app.playing ? t('ctl.pause') : t('ctl.play')}
-				onclick={() => (app.playing = !app.playing)}
-			>
-				{#if app.playing}
-					<svg viewBox="0 0 12 12" width="11" height="11" aria-hidden="true">
-						<rect x="2.5" y="1.5" width="2.8" height="9" rx="0.7" fill="currentColor" />
-						<rect x="6.7" y="1.5" width="2.8" height="9" rx="0.7" fill="currentColor" />
-					</svg>
-				{:else}
-					<svg viewBox="0 0 12 12" width="11" height="11" aria-hidden="true">
-						<path d="M3.2 1.7 L10.2 6 L3.2 10.3 Z" fill="currentColor" />
-					</svg>
-				{/if}
-			</Button>
-
-			<div class="readout">
-				<span class="date mono">{formatDate(app.t, 'day')}</span>
-				<span class="meta">
-					{#if currentEra}
-						<i class="era-dot" style:background={currentEra.accent}></i>
-						<span class="era">{currentEra.label_en}</span>
-					{/if}
-					<span class="sep">·</span>
-					<!--
-						Named, because "18 live" beside an unlabelled curve does not tell the
-						reader that the two are the same number. The tooltip carries the part
-						that matters most and is easiest to leave unsaid: the curve is thin
-						before 1987 because the archive is thin.
-					-->
-					<Tooltip content={t('ctl.coverage.hint')}>
-						<span class="live mono">{liveCount} {t('ctl.coverage')}</span>
-					</Tooltip>
-				</span>
-			</div>
-
-			<div class="speed">
-				<Segmented
-					options={SPEEDS}
-					value={String(app.playSpeed)}
-					onchange={(v) => (app.playSpeed = Number(v))}
-					size="xs"
-					label="Playback speed"
-				/>
-			</div>
-		</div>
-
-		{#if compact.current}
-			<div class="anchor">
-				<button
-					class="filter-btn"
-					class:dirty={filtersDirty}
-					class:on={filtersOpen}
-					aria-expanded={filtersOpen}
-					aria-haspopup="dialog"
-					data-tour="filters"
-					onclick={() => (filtersOpen = !filtersOpen)}
-				>
-					<svg viewBox="0 0 14 14" width="13" height="13" aria-hidden="true">
-						<path
-							d="M1.5 3.5h11M3.5 7h7M5.5 10.5h3"
-							stroke="currentColor"
-							stroke-width="1.4"
-							stroke-linecap="round"
-						/>
-					</svg>
-					<span>{t('ctl.filters')}</span>
-				</button>
-
-				<Popover
-					bind:open={filtersOpen}
-					onclose={() => (filtersOpen = false)}
-					label={t('ctl.filters')}
-				>
-					<div class="filter-sheet">
-						{@render evidenceDial()}
-						{@render layerChips()}
-					</div>
-				</Popover>
-			</div>
-		{:else}
-			<div class="filters">
-				{@render evidenceDial()}
-				{@render layerChips()}
-			</div>
-		{/if}
+{#snippet speedControl()}
+	<div class="group speed">
+		<span class="eyebrow">{t('ctl.speed')}</span>
+		<Segmented
+			options={SPEEDS}
+			value={String(app.playSpeed)}
+			onchange={(v) => (app.playSpeed = Number(v))}
+			size="xs"
+			label={t('ctl.speed')}
+		/>
 	</div>
+{/snippet}
 
-	<!-- Row 2: the timeline itself -->
+{#snippet timelineRow()}
+	<!-- The track: density, eras, ruptures and the playhead. In the dock on wide
+	     screens, in the sheet on a phone. -->
 	<div class="row timeline">
 		<div
 			class="track"
@@ -530,6 +515,141 @@
 			</div>
 		</div>
 	</div>
+{/snippet}
+
+<footer
+	class="dock"
+	class:no-track={!compact.current && !showTrack}
+	id="timeline"
+	tabindex="-1"
+	aria-label="Timeline controls"
+>
+	<!-- Row 1: transport and filters -->
+	<div class="row controls" bind:this={controlsEl}>
+		<div class="transport">
+			<Button
+				variant="solid"
+				size="md"
+				icon
+				aria-label={app.playing ? t('ctl.pause') : t('ctl.play')}
+				onclick={() => (app.playing = !app.playing)}
+			>
+				{#if app.playing}
+					<svg viewBox="0 0 12 12" width="11" height="11" aria-hidden="true">
+						<rect x="2.5" y="1.5" width="2.8" height="9" rx="0.7" fill="currentColor" />
+						<rect x="6.7" y="1.5" width="2.8" height="9" rx="0.7" fill="currentColor" />
+					</svg>
+				{:else}
+					<svg viewBox="0 0 12 12" width="11" height="11" aria-hidden="true">
+						<path d="M3.2 1.7 L10.2 6 L3.2 10.3 Z" fill="currentColor" />
+					</svg>
+				{/if}
+			</Button>
+
+			{#if compact.current}
+				<!-- The date opens the same sheet as Filters: it is where the track is. -->
+				<button
+					class="readout readout-btn"
+					data-tour="time"
+					aria-haspopup="dialog"
+					aria-expanded={filtersOpen}
+					aria-label="{t('ctl.date')}: {formatDate(app.t, 'day')}"
+					onclick={() => (filtersOpen = !filtersOpen)}
+				>
+					<span class="date mono">{formatDate(app.t, 'day')}</span>
+				</button>
+			{:else}
+				<div class="readout">
+					<span class="date mono">{formatDate(app.t, 'day')}</span>
+					<span class="meta">
+						{#if currentEra}
+							<i class="era-dot" style:background={currentEra.accent}></i>
+							<span class="era">{currentEra.label_en}</span>
+						{/if}
+						<span class="sep">·</span>
+						<!--
+							Named, because "18 live" beside an unlabelled curve does not tell the
+							reader that the two are the same number. The tooltip carries the part
+							that matters most and is easiest to leave unsaid: the curve is thin
+							before 1987 because the archive is thin.
+						-->
+						<Tooltip content={t('ctl.coverage.hint')}>
+							<span class="live mono">{liveCount} {t('ctl.coverage')}</span>
+						</Tooltip>
+					</span>
+				</div>
+
+				{@render speedControl()}
+			{/if}
+		</div>
+
+		{#if compact.current}
+			<div class="anchor">
+				<button
+					class="filter-btn"
+					class:dirty={filtersDirty}
+					class:on={filtersOpen}
+					aria-expanded={filtersOpen}
+					aria-haspopup="dialog"
+					data-tour="filters"
+					onclick={() => (filtersOpen = !filtersOpen)}
+				>
+					<svg viewBox="0 0 14 14" width="13" height="13" aria-hidden="true">
+						<path
+							d="M1.5 3.5h11M3.5 7h7M5.5 10.5h3"
+							stroke="currentColor"
+							stroke-width="1.4"
+							stroke-linecap="round"
+						/>
+					</svg>
+					<span>{t('ctl.filters')}</span>
+				</button>
+
+				<Popover
+					bind:open={filtersOpen}
+					onclose={() => (filtersOpen = false)}
+					label={t('ctl.filters')}
+				>
+					<div class="filter-sheet">
+						{@render timelineRow()}
+						{@render speedControl()}
+						{@render evidenceDial()}
+						{@render layerChips()}
+					</div>
+				</Popover>
+			</div>
+		{:else}
+			<div class="filters">
+				{@render evidenceDial()}
+				{#if layersFolded}
+					<div class="group anchor" data-tour="layers">
+						<span class="eyebrow">{t('ctl.layers')}</span>
+						<button
+							class="filter-btn layers-btn"
+							class:dirty={app.activeLayers.size < LAYERS.length}
+							class:on={layersOpen}
+							aria-expanded={layersOpen}
+							aria-haspopup="dialog"
+							onclick={() => (layersOpen = !layersOpen)}
+						>
+							{layerSummary}
+						</button>
+						<Popover bind:open={layersOpen} onclose={() => (layersOpen = false)} label={t('ctl.layers')}>
+							<div class="filter-sheet">
+								{@render layerChips()}
+							</div>
+						</Popover>
+					</div>
+				{:else}
+					{@render layerChips()}
+				{/if}
+			</div>
+		{/if}
+	</div>
+
+	{#if !compact.current && showTrack}
+		{@render timelineRow()}
+	{/if}
 </footer>
 
 <style>
@@ -644,10 +764,11 @@
 		gap: var(--s-2);
 	}
 	.lchip {
-		display: grid;
-		place-items: center;
-		width: 22px;
-		height: 22px;
+		display: inline-flex;
+		align-items: center;
+		gap: var(--s-2);
+		height: 24px;
+		padding: 0 var(--s-3);
 		border-radius: var(--r-sm);
 		border: 1px solid var(--border-subtle);
 		background: var(--surface-sunken);
@@ -671,6 +792,14 @@
 	.lchip.on i {
 		opacity: 1;
 		transform: scale(1.1);
+	}
+	.lchip-word {
+		font-size: var(--t-xs);
+		white-space: nowrap;
+		color: var(--text-faint);
+	}
+	.lchip.on .lchip-word {
+		color: var(--text-secondary);
 	}
 	.lchip:hover {
 		transform: translateY(-1px);
@@ -987,7 +1116,7 @@
 		display: flex;
 		align-items: center;
 		gap: var(--s-3);
-		height: 30px;
+		height: 34px;
 		padding: 0 var(--s-5);
 		font-size: var(--t-sm);
 		color: var(--text-secondary);
@@ -995,16 +1124,25 @@
 		border: 1px solid var(--border-default);
 		border-radius: var(--r-md);
 	}
-	/*
-	   Thumb slop, horizontal only. The controls row is 32px and the track below
-	   it needs its full height for scrubbing, so a taller invisible target would
-	   steal drags from the timeline. Widening costs nothing and catches the near
-	   misses the 30px button produced.
-	*/
+	/* Thumb slop out to the full pill height and a little sideways: the target
+	   is --touch even though the visible button is smaller. */
 	.filter-btn::before {
 		content: '';
 		position: absolute;
-		inset: 0 calc(-1 * var(--s-4));
+		inset: calc((34px - var(--touch)) / 2) calc(-1 * var(--s-3));
+	}
+	/* The pill's date: a button onto the same sheet, with a full-height target. */
+	.readout-btn {
+		justify-content: center;
+		min-height: var(--touch);
+		padding: 0 var(--s-3);
+		border-radius: var(--r-md);
+		color: inherit;
+		text-align: start;
+	}
+	.readout-btn:hover,
+	.readout-btn[aria-expanded='true'] {
+		background: var(--surface-hover);
 	}
 	.filter-btn:hover,
 	.filter-btn.on {
@@ -1020,6 +1158,15 @@
 		border-radius: 50%;
 		background: var(--accent);
 	}
+	/* The folded layers control sits in the 44px row at the row's own scale. */
+	.layers-btn {
+		height: 26px;
+		padding: 0 var(--s-4);
+		font-size: var(--t-xs);
+	}
+	.layers-btn::before {
+		content: none;
+	}
 	.filter-sheet {
 		display: flex;
 		flex-direction: column;
@@ -1033,13 +1180,33 @@
 		gap: var(--s-4);
 	}
 	.filter-sheet .layers {
-		gap: var(--s-4);
+		flex-wrap: wrap;
+		gap: var(--s-3);
 	}
-	/* Thumb-sized in the sheet. The 22px version is a pointer-precision control and
+	/* Thumb-sized in the sheet. The 24px version is a pointer-precision control and
 	   has no business being the only way to change a layer on a phone. */
 	.filter-sheet .lchip {
-		width: 34px;
-		height: 34px;
+		height: var(--touch);
+		padding: 0 var(--s-4);
+	}
+	.filter-sheet .lchip-word {
+		font-size: var(--t-sm);
+	}
+	/* The track in the sheet: room above for the grip and below for the year. */
+	.filter-sheet .timeline {
+		padding: var(--s-4) var(--s-2) var(--s-5);
+	}
+
+	/*
+	   /chronicle: the controls row is the whole dock. The token follows, because
+	   the inspector and the views position themselves against --dock-h.
+	*/
+	.dock.no-track .controls {
+		flex: 1;
+		border-bottom: none;
+	}
+	:global(:root:has(.dock.no-track)) {
+		--dock-h: var(--pill-h);
 	}
 	.filter-sheet .lchip i {
 		width: 13px;
@@ -1056,15 +1223,18 @@
 	}
 
 	/*
-		Phones. The dock keeps a fixed two-row height that matches --dock-h, because the
-		Inspector sheet and the views both position themselves against that token — a
-		dock that grows by wrapping silently overlaps whatever trusted it.
+		Phones. The dock rests as one pill row exactly --dock-h tall (--pill-h here),
+		because the Inspector sheet and the views both position themselves against
+		that token: a dock that grows by wrapping silently overlaps whatever trusted
+		it. Everything else lives in the sheet.
 	*/
 	@media (max-width: 900px) {
 		.controls {
-			height: 32px;
+			flex: 1;
+			height: auto;
 			gap: var(--s-4);
-			padding: 0 var(--s-5);
+			padding: 0 var(--s-3);
+			border-bottom: none;
 		}
 		.timeline {
 			padding: 0 var(--s-4);
@@ -1082,9 +1252,6 @@
 		/* The era name and live count are the first things to go: the era is already
 		   named on the track itself, directly under the playhead. */
 		.meta {
-			display: none;
-		}
-		.speed {
 			display: none;
 		}
 		.track {

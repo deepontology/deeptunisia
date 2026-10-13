@@ -9,6 +9,29 @@ export default defineConfig({
 		// worktree inside them makes the watcher loop over the repo again.
 		watch: { ignored: ['**/.claude/**', '**/.opencode/**'] },
 		/*
+		 * Local tool and build state is not source. Some of these directories can
+		 * hold symlinks back into the checkout, and the watcher follows symlinks:
+		 * without these globs it can recurse through such a loop until the dev
+		 * server runs out of heap on the first request. The list mirrors the
+		 * local-state entries in .gitignore. Vite adds its own defaults (.git,
+		 * node_modules, test-results).
+		 */
+		watch: {
+			ignored: [
+				'**/.claude/**',
+				'**/.opencode/**',
+				'**/.reasonix/**',
+				'**/.mimocode/**',
+				'**/.freebuff/**',
+				'**/.gstack/**',
+				'**/.ula/**',
+				'**/.smoke/**',
+				'**/.wrangler/**',
+				'**/.community/**',
+				'**/build/**'
+			]
+		},
+		/*
 		 * Agora is a tab in this app, not a separate site — so its API has to look
 		 * same-origin to the browser.
 		 *
