@@ -14,6 +14,7 @@
 	import MonthlyChart from './MonthlyChart.svelte';
 	import OfficerNote from './OfficerNote.svelte';
 	import Content from '$lib/ui/Content.svelte';
+	import { content as contentDoc, type ContentInline } from '$lib/content';
 	import type { LiveResults } from './live';
 	import { channelCode, ORGANIC_CHANNEL, scoreResponse } from '../../../community/research-scoring.ts';
 
@@ -208,6 +209,38 @@
 					maximumFractionDigits: digits,
 					minimumFractionDigits: digits
 				}).format(v);
+	/** What the empty graph says until the floor is reached. */
+	const firstN = $derived(floor?.first_figure_n ?? spec.series?.first_figure_n ?? 100);
+	const pendingNote = $derived(
+		floor && liveStatus === 'fielding'
+			? tf('index.grid.pending', { N: fmt(firstN), n: fmt(floor.n) })
+			: tf('index.grid.pendingClosed', { N: fmt(firstN) })
+	);
+
+	/** A content section's heading as plain text, for a collapsible section's summary. */
+	function sectionTitle(id: string): string {
+		const head = contentDoc('police-index', app.locale).section(id)[0];
+		if (!head || (head.t !== 'h2' && head.t !== 'h3')) return id;
+		const flat = (nodes: ContentInline[]): string =>
+			nodes.map((n) => (n.t === 'text' || n.t === 'code' ? n.v : n.t === 'link' ? n.label : flat(n.v))).join('');
+		return flat(head.v);
+	}
+
+	/**
+	 * The long sections start closed so the page reads as figures first, and a
+	 * link to one of them (the consent screen links to #data) opens it.
+	 */
+	let openSection = $state<string | null>(null);
+	onMount(() => {
+		const follow = () => {
+			const id = location.hash.slice(1);
+			if (['who', 'data', 'limits', 'deviations'].includes(id)) openSection = id;
+		};
+		follow();
+		addEventListener('hashchange', follow);
+		return () => removeEventListener('hashchange', follow);
+	});
+
 	const pct = (v: number | null | undefined) => (v === null || v === undefined ? '—' : fmt(v * 100));
 
 	/** The name of each part of the index, by component id. */
@@ -572,11 +605,13 @@
 	</div>
 
 
-	{#if published}
+	<!-- Below the floor the section keeps its shape, empty: the meters and the
+	     grid with no data in them and a line saying when they fill. Drawing
+	     anything from fewer answers would publish what those few people said. -->
 	<div class="sec" id="grid">
 	{@render kicker('grid')}
 	{@render scope()}
-	<section class="panel-row">
+	<section class="panel-row" class:pending={!published}>
 		<!-- The components as one vertical meter, like the swatch column in
 		     the reference. Grip and harm count against the index, so their bars
 		     are labelled with the direction they pull. -->
@@ -594,17 +629,17 @@
 
 		<figure class="plane-figure">
 			<Grid
-				grid={results?.plane ?? null}
-				meanX={results?.components?.T?.mean ?? null}
-				meanY={results?.components?.G?.mean ?? null}
+				grid={published ? (results?.plane ?? null) : null}
+				meanX={published ? (results?.components?.T?.mean ?? null) : null}
+				meanY={published ? (results?.components?.G?.mean ?? null) : null}
+				emptyNote={published ? null : pendingNote}
 			/>
 			<figcaption>{t('index.plane.caption')}</figcaption>
 		</figure>
 	</section>
 
-	<p class="population">{t('index.population')}</p>
+	{#if published}<p class="population">{t('index.population')}</p>{/if}
 	</div>
-	{/if}
 
 	{#if months.length && published}
 		<section class="block series" id="months">
@@ -1017,9 +1052,10 @@
 	<div class="sec" id="record">
 	{@render kicker('record')}
 	{#each ['who', 'data', 'limits', 'deviations'] as id (id)}
-		<section class="block prose-block" id={id}>
-			<Content view="police-index" section={id} />
-		</section>
+		<details class="block prose-block record" id={id} open={openSection === id}>
+			<summary><h2>{sectionTitle(id)}</h2></summary>
+			<Content view="police-index" section={id} skipHeading />
+		</details>
 	{/each}
 	</div>
 
@@ -1936,6 +1972,35 @@
 
 	.prose-block {
 		max-width: 46rem;
+	}
+	.record summary {
+		cursor: pointer;
+		list-style: none;
+		display: flex;
+		align-items: baseline;
+		gap: 0.6rem;
+	}
+	.record summary::-webkit-details-marker {
+		display: none;
+	}
+	.record summary::after {
+		content: '+';
+		margin-inline-start: auto;
+		font-family: var(--font-mono, monospace);
+		color: var(--text-secondary);
+	}
+	.record[open] summary::after {
+		content: '−';
+	}
+	.record summary :global(h2),
+	.record summary h2 {
+		margin: 0;
+	}
+	.record[open] summary {
+		margin-block-end: 0.8rem;
+	}
+	.panel-row.pending .meter {
+		opacity: 0.55;
 	}
 	/* The content files' headings take the same register as every other
 	   section heading on the page. */

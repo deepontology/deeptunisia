@@ -20,12 +20,20 @@
 		 * a visible hole, not a silent one.
 		 */
 		params?: Record<string, string | number>;
+		/**
+		 * Drop the section's own heading, for a page that renders it elsewhere
+		 * (a collapsible section's summary line).
+		 */
+		skipHeading?: boolean;
 	}
 
-	let { view, section, compact = false, params = {} }: Props = $props();
+	let { view, section, compact = false, params = {}, skipHeading = false }: Props = $props();
 
 	const doc = $derived(content(view, app.locale));
-	const blocks = $derived(section ? doc.section(section) : doc.blocks);
+	const sliced = $derived(section ? doc.section(section) : doc.blocks);
+	const blocks = $derived(
+		skipHeading && (sliced[0]?.t === 'h2' || sliced[0]?.t === 'h3') ? sliced.slice(1) : sliced
+	);
 
 	function text(v: string): string {
 		return v.replace(/\{([A-Za-z][A-Za-z0-9]*)\}/g, (m, k: string) => {
