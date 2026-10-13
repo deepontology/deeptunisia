@@ -167,7 +167,11 @@ export async function verifyAction(
 	if (!action.pubkey || !action.signature || !action.nonce) {
 		throw new IdentityError('action is missing pubkey, nonce or signature');
 	}
-	if (Math.abs(now - action.issued_at) > MAX_SKEW_MS) {
+	// The integer test is load-bearing, not belt-and-braces: a non-numeric
+	// issued_at makes the subtraction NaN, and every comparison against NaN is
+	// false, so the freshness window would silently pass. The nonce primary key
+	// still bounds replay, but the skew check must not be the hole.
+	if (!Number.isInteger(action.issued_at) || Math.abs(now - action.issued_at) > MAX_SKEW_MS) {
 		throw new IdentityError('action is stale or its clock is far out of step');
 	}
 	if (await seen(action.nonce)) {
