@@ -83,7 +83,6 @@
 		[...ds.institutions]
 			.filter((i) => (namedBy.get(i.id) ?? 0) > 0)
 			.sort((a, b) => (namedBy.get(b.id) ?? 0) - (namedBy.get(a.id) ?? 0) || a.order - b.order)
-			.slice(0, SUGGESTED)
 	);
 
 	/*
@@ -93,12 +92,13 @@
 	 */
 	const suggestions = $derived.by(() => {
 		const q = query.trim();
+		// Chosen institutions are dropped before the limit, so a full set never hides the matches behind it.
+		const added = new Set(ids);
 		const pool = q
-			? search(q, { kinds: ['institution'], limit: 16 })
+			? search(q, { kinds: ['institution'], limit: SUGGESTED + added.size })
 					.map((hit) => institutionById.get(hit.id))
 					.filter((i): i is Institution => Boolean(i))
 			: mostNamed;
-		const added = new Set(ids);
 		return pool.filter((i) => !added.has(i.id)).slice(0, SUGGESTED);
 	});
 
