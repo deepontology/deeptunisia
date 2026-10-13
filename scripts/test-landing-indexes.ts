@@ -185,7 +185,11 @@ console.log('\n  ── the cover still ──\n');
 	};
 	const protoOut = render(registry(study({ slug: 'constructor' })), 'en', protoSpy);
 	check('a prototype-named slug is not mistaken for a cover', proto.length === 0 && !protoOut.includes('<img'));
-	check('a non-police slug falls back to its localized title as the label', render(registry(study({ slug: 'other', outputs: [validResult] }))).includes('<span class="idx-label">Police Satisfaction Index</span>'));
+	check('a non-police slug falls back to its localized title as the label', render(registry(study({ slug: 'other', outputs: [validResult] }))).includes('<span class="idx-label" data-l10n-en="Police Satisfaction Index" data-l10n-fr="Indice de satisfaction envers la police"'));
+	const translatedLabel = render(registry(study({ slug: 'other', title_fr: 'Indice de satisfaction', outputs: [validResult] })));
+	check('a non-police label carries its French title for the language switch', translatedLabel.includes('data-l10n-fr="Indice de satisfaction"'));
+	const frMonth = render(registry(study({ status: 'design', outputs: [validResult] })));
+	check('the month carries every language for the language switch', frMonth.includes('data-l10n-fr="octobre 2026"') && frMonth.includes('data-l10n-en="October 2026"'));
 }
 
 console.log('\n  ── escaping ──\n');

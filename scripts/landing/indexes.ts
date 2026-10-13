@@ -113,15 +113,44 @@ function fieldingMonth(window: unknown): string | null {
 	return parseYearMonth(ym) ? ym : null;
 }
 
-function timeTag(ym: string, locale: Locale): string {
-	const { year, month } = parseYearMonth(ym)!;
-	return `<time datetime="${ym}" data-month="${ym}">${esc(monthText(year, month, locale))}</time>`;
+// The same text in each language. The page swaps it when the reader changes language.
+interface Texts {
+	en: string;
+	fr: string | null;
+	ar: string | null;
 }
 
-function valueLine(slug: string, title: string, v: MonthlyValue, locale: Locale): string {
-	const label = own(SHORT_LABEL, slug) ?? title;
+function textIn(texts: Texts, locale: Locale): string {
+	return texts[locale] ?? texts.en;
+}
+
+function l10nAttrs(texts: Texts): string {
+	let out = '';
+	for (const l of ['en', 'fr', 'ar'] as const) {
+		const text = texts[l];
+		if (text) out += ` data-l10n-${l}="${esc(text)}"`;
+	}
+	return out;
+}
+
+function timeTag(ym: string, locale: Locale): string {
+	const { year, month } = parseYearMonth(ym)!;
+	const texts: Texts = {
+		en: monthText(year, month, 'en'),
+		fr: monthText(year, month, 'fr'),
+		ar: monthText(year, month, 'ar')
+	};
+	return `<time datetime="${ym}" data-month="${ym}"${l10nAttrs(texts)}>${esc(textIn(texts, locale))}</time>`;
+}
+
+function valueLine(slug: string, titles: Texts, v: MonthlyValue, locale: Locale): string {
+	const short = own(SHORT_LABEL, slug);
+	const label =
+		short !== undefined
+			? `<span class="idx-label">${esc(short)}</span>`
+			: `<span class="idx-label"${l10nAttrs(titles)}>${esc(textIn(titles, locale))}</span>`;
 	return (
-		`<b class="idx-value"><span class="idx-label">${esc(label)}</span> ${timeTag(v.month, locale)}: ` +
+		`<b class="idx-value">${label} ${timeTag(v.month, locale)}: ` +
 		`<span class="idx-v">${v.value}</span>/100</b> · n = <span class="idx-n">${v.n}</span> · ` +
 		`<span data-i18n="index.among">${esc(INDEX_STRINGS['index.among'])}</span>`
 	);
@@ -131,9 +160,9 @@ function statusSpan(key: string): string {
 	return `<span data-i18n="${key}">${esc(INDEX_STRINGS[key])}</span>`;
 }
 
-function statusLine(study: Json, slug: string, title: string, locale: Locale): string {
+function statusLine(study: Json, slug: string, titles: Texts, locale: Locale): string {
 	const value = publishedValue(study.outputs);
-	if (value) return valueLine(slug, title, value, locale);
+	if (value) return valueLine(slug, titles, value, locale);
 
 	const status = typeof study.status === 'string' ? study.status : '';
 	if (status === 'fielding') {
@@ -152,28 +181,24 @@ function renderCard(study: Json, locale: Locale, assetExists: (path: string) => 
 	const titleEn = nonEmpty(study.title_en);
 	if (!titleEn) return null;
 
-	const titleFr = nonEmpty(study.title_fr);
-	const titleAr = nonEmpty(study.title_ar);
-	let shown = titleEn;
-	if (locale === 'fr' && titleFr) shown = titleFr;
-	if (locale === 'ar' && titleAr) shown = titleAr;
+	const titles: Texts = {
+		en: titleEn,
+		fr: nonEmpty(study.title_fr),
+		ar: nonEmpty(study.title_ar)
+	};
 
 	const cover = own(COVER, slug);
 	const img =
 		cover !== undefined && assetExists(cover)
 			? `\n\t\t\t<img class="plate" src="${esc(cover)}" alt="" loading="lazy" decoding="async">`
 			: '';
-	const l10n =
-		` data-l10n-en="${esc(titleEn)}"` +
-		(titleFr ? ` data-l10n-fr="${esc(titleFr)}"` : '') +
-		(titleAr ? ` data-l10n-ar="${esc(titleAr)}"` : '');
 	const status = typeof study.status === 'string' ? study.status : 'unknown';
 
 	return [
 		`\t\t<li class="card index-card" data-status="${esc(status)}">`,
 		`\t\t\t<a class="card-link" href="/research/${esc(slug)}">${img}`,
-		`\t\t\t\t<span class="card-title"${l10n}>${esc(shown)}</span>`,
-		`\t\t\t\t<span class="card-status">${statusLine(study, slug, shown, locale)}</span>`,
+		`\t\t\t\t<span class="card-title"${l10nAttrs(titles)}>${esc(textIn(titles, locale))}</span>`,
+		`\t\t\t\t<span class="card-status">${statusLine(study, slug, titles, locale)}</span>`,
 		`\t\t\t\t<span class="card-cta" data-i18n="index.read">${esc(INDEX_STRINGS['index.read'])}</span>`,
 		`\t\t\t</a>`,
 		`\t\t</li>`
