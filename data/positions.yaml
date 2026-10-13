@@ -12063,7 +12063,7 @@
   role: party-leader-upr
   holder: lotfi-mraihi
   start: "2011-04-22"
-  end: verified:2024-07
+  end: verified:2026-10
   confidence: B
   notes:
     - >-
@@ -12082,7 +12082,7 @@
       مؤسس الاتحاد الشعبي الجمهوري وأمينه العام؛ أول لقاء عمومي للحزب كان يوم 18 فيفري 2011
       وتمت شرعنته يوم 22 أفريل 2011. وما يزال يوصف كرئيس للحزب عند اعتقاله في جويلية 2024.
   notes_ar_by: model-reviewed
-  sources: [aa-mraihi-2024, kapitalis-mraihi-2024, wikipedia-upr, upr-notre-histoire]
+  sources: [aa-mraihi-2024, kapitalis-mraihi-2024, wikipedia-upr, upr-notre-histoire, kapitalis-upr-marche-17-octobre-2026-10-13]
 
 - id: p-party-karama-makhlouf
   role: party-leader-karama
