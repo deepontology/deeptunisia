@@ -63,7 +63,7 @@ institution,judiciary,37,37,1,0,0,0,46,1
 institution,kallel-family,1,1,0,0,0,0,2,1
 institution,karama-coalition,1,1,0,0,0,0,3,1
 institution,la-poste-tunisienne,4,4,0,0,0,0,3,1
-institution,la-presse-tunisie,2,2,0,0,0,0,2,1
+institution,la-presse-tunisie,2,2,1,0,0,0,2,1
 institution,land-forces,5,5,0,0,0,0,12,1
 institution,leaders-tunisie,2,2,0,0,0,0,4,1
 institution,legislature,19,19,0,1,1,1,16,1
@@ -111,7 +111,7 @@ institution,quintacom,1,1,0,0,0,0,4,1
 institution,radio-zaytouna,3,3,0,0,0,0,7,1
 institution,rcd,2,2,0,0,0,0,4,1
 institution,republican-party,2,2,0,0,0,0,3,1
-institution,republican-people-union,1,1,0,0,0,0,4,1
+institution,republican-people-union,1,1,0,0,0,0,5,1
 institution,russia,1,1,0,0,0,0,1,1
 institution,saied-family-clan-network,3,3,0,0,0,0,3,1
 institution,sncft,6,6,0,0,0,0,4,1
@@ -140,19 +140,19 @@ institution,wifak-bank,1,1,0,0,0,0,1,1
 institution,world-bank,1,1,0,0,0,0,3,1
 institution,zitouna-bank,2,2,0,0,0,0,4,1
 institution,zitouna-tv,3,3,0,0,0,0,3,1
-era,ben-ali-consolidation,188,188,11,1,1,1,186,1
-era,bourguiba,218,218,19,1,1,1,173,1
-era,fragmentation,324,324,12,3,3,3,382,0
-era,pluralism,362,362,8,1,1,1,376,1
-era,police-state,266,266,13,2,2,2,262,1
-era,recentralisation,468,468,15,6,6,6,547,0
-era,transition,366,366,11,2,2,2,359,1
+era,ben-ali-consolidation,188,188,12,1,1,1,186,1
+era,bourguiba,218,218,20,1,1,1,173,1
+era,fragmentation,324,324,13,3,3,3,383,0
+era,pluralism,362,362,9,1,1,1,377,1
+era,police-state,266,266,14,2,2,2,262,1
+era,recentralisation,468,468,16,6,6,6,548,0
+era,transition,366,366,12,2,2,2,360,1
 source_family,africa business,3,2,0,0,0,2,3,1
 source_family,africa intelligence,2,2,0,0,0,2,2,1
 source_family,africa intelligence accessed via blackfacts aggregator original is paywalled,1,0,0,0,0,0,1,1
 source_family,africa intelligence maghreb confidential,1,1,0,0,0,1,1,1
 source_family,african development bank,4,1,0,0,0,1,4,1
-source_family,african manager,56,45,0,0,0,45,56,0
+source_family,african manager,60,49,0,0,0,49,60,0
 source_family,african manager en,1,0,0,0,0,0,1,1
 source_family,african union,1,0,0,0,0,0,1,1
 source_family,africanews,2,2,0,0,0,2,2,1
@@ -329,7 +329,7 @@ source_family,journal officiel de la republique tunisienne via cnudst sommaire s
 source_family,journal officiel de la republique tunisienne via legislation securite tn dcaf,2,2,0,0,0,2,2,1
 source_family,jurisitetunisie base de textes legaux tunisiens,1,0,0,0,0,0,1,1
 source_family,jurist,1,1,0,0,0,1,1,1
-source_family,kapitalis,82,65,0,0,0,65,82,0
+source_family,kapitalis,84,67,0,0,0,67,84,0
 source_family,kapitalis avec tap,1,0,0,0,0,0,1,1
 source_family,kuna,1,0,0,0,0,0,1,1
 source_family,l economiste maghrebin,18,8,0,0,0,8,18,0
@@ -503,7 +503,7 @@ source_family,zoom tunisia,1,1,0,0,0,1,1,1
 source_family,ويكيبيديا (العربية),1,0,0,0,0,0,1,1
 language,ar,69,40,0,0,0,40,69,0
 language,en,459,193,0,0,0,193,459,0
-language,fr,842,626,0,0,0,626,842,0
+language,fr,848,632,0,0,0,632,848,0
 language,it,4,1,0,0,0,1,4,1
 office,administrative-court-president,4,4,0,0,0,0,5,1
 office,agriculture-minister,1,1,0,0,0,0,1,1
@@ -581,7 +581,7 @@ office,party-leader-republican,2,2,0,0,0,0,3,1
 office,party-leader-tahya,1,1,0,0,0,0,1,1
 office,party-leader-tayyar,4,4,0,0,0,0,6,1
 office,party-leader-upl,1,1,0,0,0,0,5,1
-office,party-leader-upr,1,1,0,0,0,0,4,1
+office,party-leader-upr,1,1,0,0,0,0,5,1
 office,poulina-chairman,2,2,0,0,0,0,7,1
 office,president,7,7,1,0,0,0,13,1
 office,presidential-cabinet-director,3,3,0,0,0,0,6,1
