@@ -16,6 +16,9 @@
 import { handle, type Env as ApiEnv } from './api.ts';
 import { resolveMode } from './mode.ts';
 import type { Db, Prepared } from './db.ts';
+import type { StudiesRegistry } from './research-contract.ts';
+import type { LiveCache, LiveCacheEntry } from './live-cache.ts';
+import studiesJson from '../src/generated/studies.json';
 
 interface WorkerEnv {
 	/** D1 binding, configured in wrangler.toml. */
@@ -31,7 +34,31 @@ interface WorkerEnv {
 	COMMUNITY_MODE?: string;
 	/** Static assets binding — the built atlas. */
 	ASSETS: Fetcher;
+	/**
+	 * Separate D1 binding for research responses (contract §5). Created by the
+	 * operator and wired in wrangler.toml; until then, research endpoints that
+	 * need storage answer 503.
+	 */
+	RESEARCH_DB?: D1Database;
+	/** Worker var. '1' opens research submissions; absent or anything else fails closed. */
+	RESEARCH_OPEN?: string;
+	/** Turnstile secret for the research bot challenge (contract §4). */
+	TURNSTILE_SECRET?: string;
+	/**
+	 * Public Turnstile site key (non-secret Worker var). Passed to the handler so
+	 * the bot challenge can hand it to the survey page once the secret is set too.
+	 */
+	TURNSTILE_SITEKEY?: string;
 }
+
+/**
+ * The compiled studies registry, bundled at build time. `npm run build` always
+ * runs the studies build first, so a deploy cannot ship without it. The JSON
+ * module's inferred type cannot express the runtime unions in
+ * RuntimeInstrument, so the registry is asserted once here — the shape itself
+ * is validated by scripts/build-studies.ts before the file is emitted.
+ */
+const studies = studiesJson as unknown as StudiesRegistry;
 
 /**
  * D1 already presents the interface db.ts declares, so this is a cast rather than
@@ -40,6 +67,58 @@ interface WorkerEnv {
  */
 function asDb(d1: D1Database): Db {
 	return d1 as unknown as Db;
+}
+
+/**
+ * `caches.default` as the live results' shared store.
+ *
+ * Reading and scoring every response row for the current instrument hash is
+ * the most expensive thing the handler does, and it grows with the answers:
+ * recomputed per request, the page spends the CPU limit and the D1 read quota
+ * one reader at a time, and anyone reloading it can exhaust both. So the
+ * platform's edge cache holds the computed payload per study and instrument
+ * hash for a minute (community/live-cache.ts).
+ *
+ * An entry is a JSON response stored under a synthetic request whose URL
+ * carries the cache key. The URL is on the site's own origin, because the
+ * platform keeps a Worker's cache per zone and a foreign hostname would make
+ * every put a silent no-op; its path is one no route serves. The platform
+ * expires the entry on the clock the response's `cache-control` header gives
+ * it, derived from the expiry the entry itself carries, so the edge and the
+ * handler agree on when a figure has gone stale.
+ */
+function edgeLiveCache(origin: string): LiveCache {
+	const store = caches.default;
+	const liveCacheUrl = (key: string) => new Request(`${origin}/__live-cache/${encodeURIComponent(key)}`);
+	return {
+		async get(key) {
+			const hit = await store.match(liveCacheUrl(key));
+			if (!hit) return null;
+			try {
+				const entry: unknown = JSON.parse(await hit.text());
+				return isCacheEntry(entry) ? entry : null;
+			} catch {
+				return null;
+			}
+		},
+		async put(key, entry) {
+			const seconds = Math.max(1, Math.ceil((entry.expires_at - Date.now()) / 1000));
+			await store.put(
+				liveCacheUrl(key),
+				new Response(JSON.stringify(entry), {
+					headers: {
+						'content-type': 'application/json; charset=utf-8',
+						'cache-control': `public, max-age=${seconds}`
+					}
+				})
+			);
+		}
+	};
+}
+
+function isCacheEntry(value: unknown): value is LiveCacheEntry {
+	const entry = value as Partial<LiveCacheEntry> | null;
+	return typeof entry?.body === 'string' && typeof entry?.expires_at === 'number';
 }
 
 export default {
@@ -51,7 +130,18 @@ export default {
 				DB: asDb(env.DB),
 				RATE_PEPPER: env.RATE_PEPPER,
 				MODERATORS: env.MODERATORS,
-				mode: resolveMode(env.COMMUNITY_MODE)
+				mode: resolveMode(env.COMMUNITY_MODE),
+				// Research (contract §6). No RESEARCH_DB binding → storage endpoints
+				// answer 503; no RESEARCH_OPEN var, or anything but '1' → submissions
+				// are closed. Both absences are the safe direction.
+				RESEARCH_DB: env.RESEARCH_DB ? asDb(env.RESEARCH_DB) : undefined,
+				RESEARCH_OPEN: env.RESEARCH_OPEN,
+				STUDIES: studies,
+				TURNSTILE_SECRET: env.TURNSTILE_SECRET,
+				TURNSTILE_SITEKEY: env.TURNSTILE_SITEKEY,
+				// The live results' shared store, so the endpoint reads its rows
+				// once a minute per study rather than once per reader.
+				LIVE_CACHE: edgeLiveCache(url.origin)
 				// ENTITY_IDS is deliberately absent here until an asset binding is
 				// wired (spec §15.3 R4): typed thread targets are then accepted by
 				// format only, and the client's own index check remains the guard.
@@ -74,4 +164,11 @@ interface D1Database {
 }
 interface Fetcher {
 	fetch(request: Request): Promise<Response>;
+}
+// The slice of the Workers Cache API `edgeLiveCache` uses, present on the
+// platform and ambient here for the same reason the shapes above are.
+declare const caches: { default: EdgeCache };
+interface EdgeCache {
+	match(request: Request): Promise<Response | undefined>;
+	put(request: Request, response: Response): Promise<void>;
 }

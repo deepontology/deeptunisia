@@ -14,6 +14,8 @@ import type { Db, Prepared } from './db.ts';
 export function localDb(path = ':memory:'): Db {
 	const db = new DatabaseSync(path);
 	db.exec('PRAGMA foreign_keys = ON');
+	/** The batch running now, so the next one waits for it (see batch below). */
+	let queue: Promise<unknown> = Promise.resolve();
 
 	const prepare = (sql: string): Prepared => {
 		let bound: unknown[] = [];
@@ -48,19 +50,26 @@ export function localDb(path = ':memory:'): Db {
 		async exec(sql: string) {
 			db.exec(sql);
 		},
-		async batch(statements: Prepared[]) {
+		batch(statements: Prepared[]) {
 			// node:sqlite has no batch; a transaction provides the atomicity callers
-			// actually depend on.
-			db.exec('BEGIN');
-			try {
-				const out = [];
-				for (const s of statements) out.push(await s.run());
-				db.exec('COMMIT');
-				return out;
-			} catch (e) {
-				db.exec('ROLLBACK');
-				throw e;
-			}
+			// actually depend on. Batches are queued one after another, as D1 runs
+			// them: two overlapping requests would otherwise try to open a second
+			// transaction inside the first.
+			const run = async () => {
+				db.exec('BEGIN');
+				try {
+					const out = [];
+					for (const s of statements) out.push(await s.run());
+					db.exec('COMMIT');
+					return out;
+				} catch (e) {
+					db.exec('ROLLBACK');
+					throw e;
+				}
+			};
+			const next = queue.then(run, run);
+			queue = next.catch(() => undefined);
+			return next;
 		}
 	};
 }

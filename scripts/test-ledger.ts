@@ -1,0 +1,279 @@
+/**
+ * The daily commitment and its verifier (community/research-commitment.ts,
+ * scripts/ledger-verify.ts): what goes into a fingerprint, what does not, and
+ * that the checks a reader runs catch what they claim to catch.
+ *
+ * Usage: `npx tsx scripts/test-ledger.ts`
+ */
+import { readFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { parse as parseYaml } from 'yaml';
+import { compileInstrument, type InstrumentDocument } from '../community/research-contract.ts';
+import {
+	canonicalJson,
+	commitMonth,
+	monthDigest,
+	periodStart,
+	previousPeriod,
+	releaseRow,
+	type ReleaseRow
+} from '../community/research-commitment.ts';
+import { aggregateResponses, aggregateSeries, applyPublicationFloor, periodOf, repeatCheck } from '../community/research-scoring.ts';
+import { closedEntry, verifyLedger, verifyRelease, type LedgerEntry } from './ledger-verify.ts';
+import { aggregateScored } from './studies-aggregate.ts';
+
+const HERE = dirname(fileURLToPath(import.meta.url));
+/** The paths at which two JSON values differ, for a readable failure. */
+function differences(a: unknown, b: unknown, path = ''): string[] {
+	if (typeof a !== 'object' || a === null || typeof b !== 'object' || b === null) {
+		return a === b ? [] : [`${path}: ${JSON.stringify(a)} vs ${JSON.stringify(b)}`];
+	}
+	const keys = new Set([...Object.keys(a), ...Object.keys(b)]);
+	return [...keys].flatMap((k) => differences((a as any)[k], (b as any)[k], `${path}.${k}`));
+}
+let checks = 0;
+let failures = 0;
+function ok(name: string, condition: boolean, detail = '') {
+	checks++;
+	if (!condition) failures++;
+	console.log(`  ${condition ? 'ok  ' : 'FAIL'}  ${name}${detail ? ` — ${detail}` : ''}`);
+}
+
+const police = compileInstrument(
+	parseYaml(
+		readFileSync(join(HERE, '..', 'research', 'portal', 'study-002', 'instrument-v0.yaml'), 'utf8')
+	) as InstrumentDocument
+);
+const spec = police.scoring!;
+
+console.log('\n  ── the released form ──\n');
+
+const stored = {
+	period: '2026-11',
+	instrument_hash: police.hash,
+	locale: 'ar',
+	revision: null,
+	completion_ms: 241_987,
+	answers: { pti_t1: 4, demo_governorate: 'kasserine' }
+};
+const released = releaseRow(spec, stored);
+ok('the governorate leaves as its region', released.answers.demo_governorate === 'centre_west');
+ok('the completion time leaves in whole seconds', released.completion_s === 241);
+ok(
+	'nothing finer than the month, and no receipt or link code, is in the released form',
+	JSON.stringify(Object.keys(released).sort()) ===
+		JSON.stringify(['answers', 'completion_s', 'instrument_hash', 'locale', 'period', 'revision'])
+);
+ok(
+	'an answer outside every region group is kept as given',
+	releaseRow(spec, { ...stored, answers: { demo_governorate: 'abroad' } }).answers.demo_governorate === 'abroad'
+);
+ok('the stored row is not modified', stored.answers.demo_governorate === 'kasserine');
+ok('canonical JSON ignores key order', canonicalJson({ b: 1, a: [{ d: 2, c: 3 }] }) === canonicalJson({ a: [{ c: 3, d: 2 }], b: 1 }));
+
+console.log('\n  ── the month fingerprint ──\n');
+
+const rowA = releaseRow(spec, stored);
+const rowB = releaseRow(spec, { ...stored, answers: { pti_t1: 9 } });
+const base = await monthDigest([rowA, rowB]);
+ok('the fingerprint does not depend on storage order', base === (await monthDigest([rowB, rowA])));
+ok('one changed answer changes it', base !== (await monthDigest([rowA, releaseRow(spec, { ...stored, answers: { pti_t1: 8 } })])));
+ok('an added row changes it', base !== (await monthDigest([rowA, rowB, rowB])));
+ok('a removed row changes it', base !== (await monthDigest([rowA])));
+ok('two identical answers are two rows, not one', (await monthDigest([rowA])) !== (await monthDigest([rowA, rowA])));
+
+console.log('\n  ── months and their boundaries ──\n');
+
+ok('the month before January is December', previousPeriod('2027-01') === '2026-12');
+ok(
+	'a month starts at midnight Tunisia time',
+	periodOf(periodStart('2026-11', 60), 60) === '2026-11' && periodOf(periodStart('2026-11', 60) - 1, 60) === '2026-10'
+);
+
+console.log('\n  ── the ledger checks ──\n');
+
+const month = (period: string, closed: boolean, received: number, withdrawn: number, replaced: number, rows: ReleaseRow[]) =>
+	commitMonth(period, closed, { received, withdrawn, replaced }, rows);
+const entry = async (recorded_at: string, current: Promise<any>, previous: Promise<any>): Promise<LedgerEntry> => ({
+	recorded_at,
+	study: 'dt-research-002',
+	current: await current,
+	previous: await previous
+});
+const october = await month('2026-10', true, 0, 0, 0, []);
+const good = [
+	await entry('2026-11-01T23:20:00Z', month('2026-11', false, 1, 0, 0, [rowA]), Promise.resolve(october)),
+	await entry('2026-11-02T23:20:00Z', month('2026-11', false, 3, 1, 0, [rowA, rowB]), Promise.resolve(october))
+];
+ok('a consistent ledger passes', verifyLedger(good).length === 0, verifyLedger(good).join('; '));
+
+const vanished = [...good, await entry('2026-11-03T23:20:00Z', month('2026-11', false, 3, 1, 0, [rowA]), Promise.resolve(october))];
+ok('a row gone without a withdrawal breaks the sum', verifyLedger(vanished).some((p) => p.includes('received - withdrawn - replaced')));
+
+const shrunk = [...good, await entry('2026-11-03T23:20:00Z', month('2026-11', false, 2, 0, 0, [rowA, rowB]), Promise.resolve(october))];
+ok('a counter that goes down is reported', verifyLedger(shrunk).some((p) => p.includes('received went down')));
+
+const novemberClosed = await month('2026-11', true, 3, 1, 0, [rowA, rowB]);
+const rewritten = [
+	await entry('2026-12-01T23:20:00Z', month('2026-12', false, 0, 0, 0, []), Promise.resolve(novemberClosed)),
+	await entry('2026-12-02T23:20:00Z', month('2026-12', false, 0, 0, 0, []), month('2026-11', true, 4, 1, 0, [rowA, rowB, rowB]))
+];
+ok('a closed month recorded differently later is reported', verifyLedger(rewritten).some((p) => p.includes('recorded differently')));
+
+const loweredAtClose = [
+	...good,
+	await entry('2026-12-01T23:20:00Z', month('2026-12', false, 0, 0, 0, []), month('2026-11', true, 2, 0, 0, [rowA, rowB]))
+];
+ok('a counter that falls when the month closes is reported', verifyLedger(loweredAtClose).some((p) => p.includes('when the month closed')));
+
+const swapped = [
+	await entry('2026-12-01T23:20:00Z', month('2026-12', false, 0, 0, 0, []), month('2026-11', true, 4, 1, 1, [rowA, rowB])),
+	await entry('2026-12-02T23:20:00Z', month('2026-12', false, 0, 0, 0, []), month('2026-11', true, 4, 1, 1, [rowA, rowB]).then((m) => ({ ...m, withdrawn: 1, replaced: 1 })))
+];
+ok('an identical closed month passes', verifyLedger(swapped).length === 0, verifyLedger(swapped).join('; '));
+const swappedBad = [
+	swapped[0],
+	await entry('2026-12-02T23:20:00Z', month('2026-12', false, 0, 0, 0, []), month('2026-11', true, 4, 2, 0, [rowA, rowB]))
+];
+ok('withdrawn and replaced swapped in a later closed entry is reported', verifyLedger(swappedBad).some((p) => p.includes('recorded differently')));
+
+console.log('\n  ── a release against its closed month ──\n');
+
+const final = closedEntry(rewritten, '2026-11')!;
+ok('the closed entry is found', final !== null && final.stored === 2);
+ok('the released rows match their month', (await verifyRelease([rowB, rowA], final)).length === 0);
+ok('a row added to the release is caught', (await verifyRelease([rowA, rowB, rowB], final)).length > 0);
+ok(
+	'a changed answer in the release is caught',
+	(await verifyRelease([rowA, releaseRow(spec, { ...stored, answers: { pti_t1: 1 } })], final)).some((p) => p.includes('fingerprint'))
+);
+
+console.log('\n  ── the repeat check ──\n');
+
+const answers = (t: number) => ({
+	pti_t1: t, pti_t2: t, pti_t3: t, pti_t4: t, pti_t5: t,
+	pti_s1: 5, pti_s2: 5, pti_s3: 5, pti_s4: 5,
+	pti_g1: 6, pti_g2: 4, pti_g3: 6, pti_g4: 6, pti_g5: 6, pti_g6: 6,
+	pti_e1: 'no', pti_e5: ['none'], pti_s6: ['none']
+});
+const options = { seed: 1, resamples: 50 };
+const few = [
+	...Array.from({ length: 100 }, () => ({ answers: answers(5), revision: null })),
+	...Array.from({ length: 5 }, () => ({ answers: answers(9), revision: 'update' })),
+	{ answers: answers(9), revision: 'replaced' }
+];
+const fewCheck = repeatCheck(spec, few, options);
+ok('each kind is counted', fewCheck.replaced === 1 && fewCheck.updated === 5 && fewCheck.same_device === 0, JSON.stringify(fewCheck));
+ok('below the cell floor there is no figure without them', fewCheck.index_without_repeats === null);
+const many = [...few, ...Array.from({ length: 20 }, () => ({ answers: answers(9), revision: 'same-device' }))];
+const manyCheck = repeatCheck(spec, many, options);
+ok(
+	'at the cell floor the index without possible repeats is published',
+	manyCheck.index_without_repeats !== null && manyCheck.same_device === 20,
+	JSON.stringify(manyCheck)
+);
+
+// The two counterfactuals read together (Greptile's case): 100 ordinary answers,
+// 20 updates through the largest link, and one organic same-device answer. Each
+// passes its own floor, but the two "without" figures would differ by exactly
+// that one answer, so the repeat figure is withheld.
+{
+	const now = Date.now();
+	const ordinary = Array.from({ length: 100 }, (_, i) => ({ answers: answers(4 + (i % 3)), channel: 'organic', revision: null, submittedAt: now - 1000 }));
+	const viaLink = Array.from({ length: 20 }, () => ({ answers: answers(9), channel: 'wave', revision: 'update', submittedAt: now - 1000 }));
+	const lone = { answers: answers(1), channel: 'organic', revision: 'same-device', submittedAt: now - 1000 };
+	const series = aggregateSeries(spec, [...ordinary, ...viaLink, lone], { ...options, now })!;
+	ok(
+		'two counterfactuals that differ by one answer do not both publish',
+		series.window!.links.index_without_largest !== null && series.window!.repeats.index_without_repeats === null,
+		JSON.stringify({ links: series.window!.links.index_without_largest, repeats: series.window!.repeats })
+	);
+	const many = Array.from({ length: 20 }, () => ({ ...lone }));
+	const safe = aggregateSeries(spec, [...ordinary, ...viaLink, ...many], { ...options, now })!;
+	ok(
+		'with twenty such answers both are published',
+		safe.window!.links.index_without_largest !== null && safe.window!.repeats.index_without_repeats !== null
+	);
+}
+
+// Months against the totals (Greptile's case): 100 answers last month and one
+// this month. The month's own figures beside the all-time ones would give the
+// one, so the month withholds them until the rest reaches the cell floor.
+{
+	const now = Date.now();
+	const lastMonth = now - 35 * 86_400_000;
+	const old = Array.from({ length: 100 }, (_, i) => ({ answers: answers(4 + (i % 3)), submittedAt: lastMonth }));
+	const publish = (rows: any[]) =>
+		applyPublicationFloor(spec, aggregateResponses(spec, rows, options), aggregateSeries(spec, rows, { ...options, now }));
+	const one = publish([...old, { answers: answers(9), submittedAt: now }]);
+	const fullMonth = one.series!.months.find((m) => m.n === 100);
+	ok('a month whose remainder is one answer withholds its own figures, and says so', fullMonth !== undefined && fullMonth.results === null && fullMonth.withheld === true && one.results !== null);
+	const twenty = publish([...old, ...Array.from({ length: 20 }, () => ({ answers: answers(9), submittedAt: now }))]);
+	ok(
+		'once the rest reaches the cell floor the month shows them',
+		twenty.series!.months.find((m) => m.n === 100)?.results !== null
+	);
+}
+
+console.log('\n  ── the offline release of a scored study ──\n');
+
+{
+	const now = Date.now();
+	const exported = Array.from({ length: 130 }, (_, i) => ({
+		receipt: `r-${i}`,
+		study_id: 'dt-research-002',
+		instrument_id: police.id,
+		instrument_version: police.version,
+		instrument_hash: police.hash,
+		locale: 'ar',
+		channel: i < 30 ? 'secret-code-for-five' : 'organic',
+		consent_version: 'v',
+		started_at: now - 200_000,
+		submitted_at: now - 100_000 - i,
+		completion_ms: i === 0 ? 30_000 : 120_000,
+		block_order: null,
+		scale_direction: null,
+		answers: answers(3 + (i % 5)) as Record<string, unknown>,
+		maxdiff: null,
+		revision: null,
+		created_at: now
+	}));
+	const release = await aggregateScored(exported, police, { studyId: 'dt-research-002', now, generatedAt: new Date(now).toISOString() });
+	const live = applyPublicationFloor(
+		spec,
+		aggregateResponses(spec, exported.slice(1).map((r) => ({ answers: r.answers, channel: r.channel, revision: null })), { seed: 20261007, resamples: 1000, conditions: Object.fromEntries(police.items.filter((it) => it.showIf !== undefined).map((it) => [it.id, it.showIf!])) }),
+		null
+	);
+	ok('the release applies the registered speed rule', release.exclusions.rules.speed === 1 && release.exclusions.rows_excluded === 1);
+	ok('its index is the one the engine publishes live', release.published.results?.index.mean === live.results?.index.mean, `${release.published.results?.index.mean} vs ${live.results?.index.mean}`);
+	ok('it carries no link code', !JSON.stringify(release).includes('secret-code-for-five'));
+	const reversed = await aggregateScored([...exported].reverse(), police, { studyId: 'dt-research-002', now, generatedAt: new Date(now).toISOString() });
+	ok(
+		'the same answers in reverse order give the same release, intervals included',
+		JSON.stringify(reversed.published) === JSON.stringify(release.published),
+		differences(reversed.published, release.published).slice(0, 3).join('; ')
+	);
+	let refusedForeign = false;
+	try {
+		await aggregateScored(exported.map((r) => ({ ...r, study_id: 'dt-research-001' })), police, { studyId: 'dt-research-002', now, generatedAt: '' });
+	} catch {
+		refusedForeign = true;
+	}
+	let refusedEmpty = false;
+	try {
+		await aggregateScored(exported.map((r) => ({ ...r, instrument_hash: 'f'.repeat(64) })), police, { studyId: 'dt-research-002', now, generatedAt: '' });
+	} catch {
+		refusedEmpty = true;
+	}
+	ok('another study\'s export is refused, and so is one with no row for this questionnaire', refusedForeign && refusedEmpty);
+	const period = periodOf(now - 100_000, 60);
+	const ledgerSide = await monthDigest(
+		exported.map((r) => releaseRow(spec, { period, instrument_hash: r.instrument_hash, locale: r.locale, revision: r.revision, completion_ms: r.completion_ms, answers: r.answers }))
+	);
+	const mine = release.fingerprints.find((f) => f.period === period);
+	ok('its month fingerprint is the one the ledger computes', mine?.digest === ledgerSide && mine?.stored === 130);
+}
+
+console.log(`\n   ${checks - failures}/${checks} checks passed${failures ? `, ${failures} FAILED` : ''}\n`);
+if (failures) process.exit(1);

@@ -41,7 +41,7 @@ moderator-pub.pem
 output/
 docs/
 design-plans/
-research/
+/research/
 data/contrib/
 tmp
 uncited.txt

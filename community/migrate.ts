@@ -56,12 +56,31 @@ async function columns(db: Db, table: string): Promise<Set<string>> {
 	}
 }
 
+/** The research store's steps, run after `research-schema.sql`. */
+const RESEARCH_STEPS: Step[] = [
+	{
+		table: 'research_responses',
+		column: 'revision',
+		definition: "TEXT CHECK (revision IS NULL OR revision IN ('replaced', 'update', 'same-device'))",
+		why: 'whether an answer updates or may repeat an earlier one (index-spec.md §6)'
+	}
+];
+
 /** Run after `schema.sql`. Returns what it changed, so a caller can log it. */
-export async function migrate(db: Db): Promise<string[]> {
+export function migrate(db: Db): Promise<string[]> {
+	return applySteps(db, STEPS);
+}
+
+/** Run after `research-schema.sql`. */
+export function migrateResearch(db: Db): Promise<string[]> {
+	return applySteps(db, RESEARCH_STEPS);
+}
+
+async function applySteps(db: Db, steps: Step[]): Promise<string[]> {
 	const applied: string[] = [];
 	const seen = new Map<string, Set<string>>();
 
-	for (const step of STEPS) {
+	for (const step of steps) {
 		if (!seen.has(step.table)) seen.set(step.table, await columns(db, step.table));
 		const have = seen.get(step.table)!;
 		if (have.size === 0 || have.has(step.column)) continue;
