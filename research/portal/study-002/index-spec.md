@@ -170,6 +170,7 @@ The band names and their meanings are published with the formula before any data
 - The correlation between T and S. Trust and satisfaction with the job are expected to move together (in large police surveys they typically correlate around 0.5 to 0.7). If the correlation exceeds 0.8, they are measuring one thing; the page says so, and the next version of the instrument merges them.
 - Exclusions, by rule: completion time under 70 seconds, identical answers on all fifteen index items (straight-lining), honeypot field filled, rate-limit refusals.
 - **The link check** (published live, §7): over the last 12 months, the share of answers that arrived through a shared link, the share that arrived through the single largest such link, and the 12-month index recomputed with that link's answers removed. The counterfactual is computed exactly like the 12-month index, and only when that link brought at least 20 answers that carry a score of their own, so no small group's answers can be worked out, and when enough answers remain to publish a figure at all. It excludes nobody and moves no published figure. The link codes themselves are never published: a code is free text anyone can invent, and one written for a few people could point at them. It is published so a reader can judge a campaign from the page rather than take the number on trust.
+- **The repeat check** (published live, §7): the index asks for one answer per person a month and cannot enforce it without identifying people, so it asks. An answer stores one word, or nothing, about how it relates to an earlier one: `replaced` (an update that carried the earlier receipt, whose row was deleted in the same write, so the person counts once), `update` (an update without a usable receipt; the earlier row stays) or `same-device` (an answer from a browser that had already answered this month, whether the same person or someone sharing the phone). Over the last 12 months the page publishes how many of each it holds, and the 12-month index without the `update` and `same-device` answers, under the same two floors as the link check. It excludes nobody and moves no published figure.
 
 ## 7. Live results
 
@@ -181,6 +182,16 @@ What keeps live honest:
 - **Submissions per hour** chart on the same page, so a flood is visible to everyone.
 - The **exclusion counts** update live too.
 - The **link check** (§6): how much of the last 12 months arrived through one shared link, and what the index is without it. Only the shares are published, never the link codes.
+- The **repeat check** (§6): how many answers were updates or came from a browser that had already answered, and what the index is without the ones that may count a person twice.
+- The **daily commitment** (§7a): this month's counters (received, withdrawn, replaced, stored) and a fingerprint of its stored rows, copied once a day into `ledger/police-index.jsonl`. Counts only, so they are published from the first answer, below every floor.
+
+### 7a. The daily commitment
+
+For each calendar month (Tunisia time) the live endpoint publishes `received`, `withdrawn` and `replaced`, kept as counters beside the rows (`research_tally`), the number of rows `stored`, and a SHA-256 `digest` over the month's stored rows. Each row is first reduced to the form it will be released in (`releaseRow` in `community/research-commitment.ts`: the governorate replaced by its region, the completion time in whole seconds, the month instead of timestamps, no receipt and no link code), fingerprinted, and the sorted row fingerprints are hashed together. `stored = received − withdrawn − replaced` must hold at every reading.
+
+A scheduled job (`.github/workflows/ledger.yml`) appends the reading to `ledger/police-index.jsonl` once a day, twenty minutes after Tunisian midnight, and runs `scripts/ledger-verify.ts` over the whole file after committing, so a reading that fails the check is recorded and the job fails in public. A month cannot change once it ends: withdrawal ends with the month and new answers belong to the next. The entry written the night a month closes is therefore final, and when that month's rows are released, `scripts/ledger-verify.ts --release` recomputes the fingerprint and the counts from the released rows alone.
+
+What it shows: that the released rows of a month are the rows that were stored when it closed, that no row was added, removed or altered afterwards, and how the month filled up day by day. What it does not show: that the rows came from real people. It fixes the record; it does not vouch for what entered it.
 - A first-party proof-of-work check (no third-party script; a puzzle solved in the background while the respondent answers, each one usable once), the salted rate limit and the honeypot stay on.
 - When a month ends its numbers are final. They are recomputed offline from the exported data and committed, and the committed figures are that month's published result.
 

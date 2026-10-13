@@ -769,6 +769,12 @@ export interface AggregateRow {
 	 * below), never returned.
 	 */
 	channel?: string;
+	/**
+	 * How the answer relates to an earlier one, as stored: null for a first
+	 * answer, or 'replaced', 'update' or 'same-device' (research-schema.sql).
+	 * Only ever read as a count (the repeat check below).
+	 */
+	revision?: string | null;
 }
 
 export interface AggregateOptions {
@@ -1253,6 +1259,67 @@ export function linkCheck(spec: ScoringSpec, rows: AggregateRow[], options: Aggr
 }
 
 // ---------------------------------------------------------------------------
+// The repeat check
+//
+// The index asks for one answer per person a month and cannot enforce it
+// without identifying people, so it asks instead. A respondent who comes back
+// to change their answers says so, and their earlier row is deleted when they
+// bring its receipt ('replaced': they count once). Without the receipt the new
+// row is marked 'update' and the earlier one stays. A browser that already
+// answered this month marks the next answer 'same-device', whether it is the
+// same person or someone sharing the phone. The last two can count one person
+// twice, so the window publishes how many it holds of each and what the index
+// is without them, under the same two floors as the link check, and excludes
+// nothing on this field.
+// ---------------------------------------------------------------------------
+
+/** The revisions that may leave an earlier answer from the same person standing. */
+export const POSSIBLE_REPEATS = new Set(['update', 'same-device']);
+
+export interface RepeatCheck {
+	/** Updates that replaced the earlier answer; the person counts once. */
+	replaced: number;
+	/** Updates without a usable receipt; the earlier answer is still stored. */
+	updated: number;
+	/** Answers from a browser that had already answered this month. */
+	same_device: number;
+	/**
+	 * The mean index without the 'update' and 'same-device' rows; null when they
+	 * hold fewer scored answers than the cell floor, or fewer than
+	 * first_figure_n rows would remain.
+	 */
+	index_without_repeats: number | null;
+}
+
+export function repeatCheck(spec: ScoringSpec, rows: AggregateRow[], options: AggregateOptions): RepeatCheck {
+	let replaced = 0;
+	let updated = 0;
+	let sameDevice = 0;
+	let scoredRepeats = 0;
+	for (const row of rows) {
+		if (row.revision === 'replaced') replaced++;
+		else if (row.revision === 'update') updated++;
+		else if (row.revision === 'same-device') sameDevice++;
+		if (row.revision && POSSIBLE_REPEATS.has(row.revision) && scoreResponse(spec, row.answers).index !== null) {
+			scoredRepeats++;
+		}
+	}
+	let indexWithoutRepeats: number | null = null;
+	// The same reasoning as the link check: the removed group must be big enough
+	// to describe at the cell floor, or the counterfactual would solve out its
+	// own mean, and enough must remain to publish a figure at all.
+	if (scoredRepeats >= (spec.cell_floor ?? 20)) {
+		const without = aggregateResponses(
+			spec,
+			rows.filter((row) => !(row.revision && POSSIBLE_REPEATS.has(row.revision))),
+			options
+		);
+		indexWithoutRepeats = without.n >= firstFigureN(spec) ? without.index.mean : null;
+	}
+	return { replaced, updated, same_device: sameDevice, index_without_repeats: indexWithoutRepeats };
+}
+
+// ---------------------------------------------------------------------------
 // The monthly series (index-spec.md §8)
 //
 // A month's own mean is noisy in proportion to how few people answered it. The
@@ -1376,6 +1443,8 @@ export interface SeriesAggregate {
 		results: WaveAggregate;
 		/** The link check over exactly the window's rows. */
 		links: LinkCheck;
+		/** The repeat check over exactly the window's rows. */
+		repeats: RepeatCheck;
 	} | null;
 }
 
@@ -1432,7 +1501,8 @@ export function aggregateSeries(
 			last: current,
 			months: span,
 			results: aggregateResponses(spec, inside, options),
-			links: linkCheck(spec, inside, options)
+			links: linkCheck(spec, inside, options),
+			repeats: repeatCheck(spec, inside, options)
 		};
 	}
 
@@ -1499,6 +1569,8 @@ export interface PublishedSeries {
 		results: WaveAggregate | null;
 		/** The link check, published beside the figures it qualifies. */
 		links: LinkCheck | null;
+		/** The repeat check, published beside the figures it qualifies. */
+		repeats: RepeatCheck | null;
 	} | null;
 }
 
@@ -1549,7 +1621,8 @@ export function applyPublicationFloor(
 			// The link check rides with the window's own figures: it is read
 			// against that mean, so it says nothing below the floor either.
 			results: floor.reached && series.window.results.n >= firstN ? series.window.results : null,
-			links: floor.reached && series.window.results.n >= firstN ? series.window.links : null
+			links: floor.reached && series.window.results.n >= firstN ? series.window.links : null,
+			repeats: floor.reached && series.window.results.n >= firstN ? series.window.repeats : null
 		}
 		}
 	};

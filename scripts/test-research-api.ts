@@ -501,7 +501,7 @@ console.log('\n  ── a valid submission is stored, and names nobody ──\n'
 	const expectedColumns = [
 		'receipt', 'study_id', 'instrument_id', 'instrument_version', 'instrument_hash',
 		'locale', 'channel', 'consent_version', 'started_at', 'submitted_at',
-		'completion_ms', 'block_order', 'scale_direction', 'answers', 'maxdiff', 'created_at'
+		'completion_ms', 'block_order', 'scale_direction', 'answers', 'maxdiff', 'revision', 'created_at'
 	];
 	ok('the row carries exactly the contract columns and no identifier column', JSON.stringify(Object.keys(row)) === JSON.stringify(expectedColumns), Object.keys(row).join(', '));
 	ok('the row records the study, instrument and hash', row.study_id === 'dt-fixture-001' && row.instrument_id === fixtureInstrument.id && row.instrument_hash === fixtureInstrument.hash);
@@ -573,6 +573,57 @@ console.log('\n  ── withdraw, count ──\n');
 
 	const badBody = await post(env, '/api/studies/fixture/withdraw', {});
 	ok('withdraw without a receipt is refused 400', badBody.status === 400);
+}
+
+console.log('\n  ── updates, repeats and the month counters ──\n');
+
+{
+	const env = researchEnv();
+	const tally = async () =>
+		(await env.RESEARCH_DB!.prepare('SELECT received, withdrawn, replaced FROM research_tally').all<any>()).results;
+
+	const first = await submitAssigned(env, 'fixture');
+	const firstReceipt = first.body.receipt as string;
+	ok('a first answer carries no revision', (await allRows(env))[0].revision === null && first.body.replaced === undefined);
+
+	const replaced = await submitAssigned(env, 'fixture', { revision: 'update', replaces: firstReceipt });
+	const afterReplace = await allRows(env);
+	ok(
+		'an update with the earlier receipt replaces that row in the same write',
+		replaced.status === 200 &&
+			replaced.body.replaced === true &&
+			afterReplace.length === 1 &&
+			afterReplace[0].receipt === replaced.body.receipt &&
+			afterReplace[0].revision === 'replaced',
+		JSON.stringify(afterReplace.map((r: any) => r.revision))
+	);
+
+	const unknown = await submitAssigned(env, 'fixture', { revision: 'update', replaces: 'not-a-receipt' });
+	ok(
+		'an update whose receipt matches nothing is kept and marked as an update',
+		unknown.status === 200 && unknown.body.replaced === false && (await allRows(env)).some((r: any) => r.revision === 'update')
+	);
+
+	const shared = await submitAssigned(env, 'fixture', { revision: 'same-device' });
+	ok('a browser that already answered marks the next answer same-device', shared.status === 200 && (await allRows(env)).some((r: any) => r.revision === 'same-device'));
+
+	const invented = await submitAssigned(env, 'fixture', { revision: 'third' });
+	ok('any other revision is refused 400', invented.status === 400);
+
+	const withdrawn = await post(env, '/api/studies/fixture/withdraw', { receipt: shared.body.receipt });
+	ok('a withdrawal still deletes', withdrawn.status === 200 && withdrawn.body.deleted === true);
+
+	const [counts] = await tally();
+	const stored = (await allRows(env)).length;
+	ok(
+		'the counters balance: stored = received - withdrawn - replaced',
+		counts.received === 4 && counts.withdrawn === 1 && counts.replaced === 1 && stored === 2,
+		JSON.stringify({ ...counts, stored })
+	);
+
+	const missing = await post(env, '/api/studies/fixture/withdraw', { receipt: shared.body.receipt });
+	const [unchanged] = await tally();
+	ok('a withdrawal that deletes nothing counts nothing', missing.body.deleted === false && unchanged.withdrawn === 1);
 }
 
 console.log('\n  ── the arm assignment ──\n');
@@ -938,6 +989,27 @@ console.log('\n  ── the monthly live index ──\n');
 		earlyMonths.reduce((sum: number, m: any) => sum + m.n, 0) === 45 && early.body.series?.window?.n === 45
 	);
 
+	// The commitment. These rows were written past the API, so no counter saw
+	// them: exactly the case the ledger exists to expose.
+	const commitments = early.body.commitments;
+	ok(
+		'the payload carries this month and last month, last month closed',
+		commitments?.current?.closed === false &&
+			commitments?.previous?.closed === true &&
+			commitments.current.period > commitments.previous.period &&
+			/^[0-9a-f]{64}$/.test(commitments.current.digest)
+	);
+	ok(
+		'rows that no counter saw arrive show as an unbalanced month',
+		commitments.current.stored === 5 && commitments.current.received === 0 && commitments.current.balanced === false,
+		JSON.stringify(commitments.current)
+	);
+	const commitmentText = JSON.stringify(commitments);
+	ok(
+		'the commitment carries no receipt and no link code',
+		!commitmentText.includes('new-') && !commitmentText.includes('wave') && !commitmentText.includes('clip')
+	);
+
 	// Past it: figures appear, and each month still needs 30 of its own.
 	for (let i = 40; i < 100; i++) await insert(`old-${i}`, earlier + i * 1000, 3 + (i % 4));
 	const live = await get(env, '/api/studies/index/live');
@@ -1068,14 +1140,16 @@ console.log('\n  ── the live payload is computed once a minute ──\n');
 		}
 	};
 
-	// Queries counted through the storage interface, so a read served from the
-	// cache is visible as a query that never ran.
+	// Computations counted through the storage interface, so a read served from
+	// the cache is visible as a computation that never ran. One computation
+	// reads the month counters exactly once (beside the rows it scores and the
+	// rows it fingerprints), so that read is what is counted.
 	const researchDb = localDb(':memory:');
 	void researchDb.exec(RESEARCH_SCHEMA);
 	let queries = 0;
 	const db: Db = {
 		prepare(sql: string) {
-			queries++;
+			if (sql.includes('FROM research_tally')) queries++;
 			return researchDb.prepare(sql);
 		},
 		exec: (sql: string) => researchDb.exec(sql),
@@ -1207,7 +1281,9 @@ console.log('\n  ── the live payload is computed once a minute ──\n');
 	// the first.
 	const nearlyGone: LiveCache = {
 		async get() {
-			return { body: '{"stored":true}', expires_at: Date.now() + 3_000 };
+			// 2.5 s rather than 3: the request's clock is read a moment before this
+			// entry is, and a whole-second ceiling must not turn that moment into 4.
+			return { body: '{"stored":true}', expires_at: Date.now() + 2_500 };
 		},
 		async put() {}
 	};

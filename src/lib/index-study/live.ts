@@ -3,6 +3,7 @@
  * Aggregates only: the endpoint never returns a row, a receipt, a link code or a
  * timestamp finer than an hour.
  */
+import type { MonthCommitment } from '../../../community/research-commitment.ts';
 import type { PublicationFloor, PublishedSeries, WaveAggregate } from '../../../community/research-scoring.ts';
 
 export interface LiveResults {
@@ -14,6 +15,8 @@ export interface LiveResults {
 	exclusions: { rows_excluded: number; rules: Record<string, number> };
 	/** Hourly submission counts for the last 72 hours, excluded rows included. */
 	submissions_per_hour: { start: string; counts: number[] };
+	/** This month's counters and fingerprint, and last month's final ones (the daily ledger). */
+	commitments?: { current: MonthCommitment; previous: MonthCommitment };
 	/** Where the publication floor stands: below it only counts are published. */
 	floor: PublicationFloor;
 	/** Every response this instrument has kept, all months together; null below the floor. */

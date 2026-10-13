@@ -30,6 +30,18 @@ CREATE TABLE IF NOT EXISTS research_responses (
   -- Validated MaxDiff choices, JSON array of { set, most, least }; null when the
   -- instrument has no block or the local dev waiver let the block be omitted.
   maxdiff TEXT,
+  -- How this answer relates to an earlier one from the same person, as the
+  -- respondent or their browser said so, and nothing else about it:
+  --   null          a first answer;
+  --   'replaced'    an update that carried the earlier receipt, whose row was
+  --                 deleted in the same write, so the person counts once;
+  --   'update'      an update without a usable receipt, the earlier row still
+  --                 stored, so the person may count twice;
+  --   'same-device' a different person, or the same one, answering on a browser
+  --                 that had already answered this month.
+  -- The live page publishes how many of each it holds and the index without the
+  -- last two; nothing is excluded on this field (index-spec.md §6).
+  revision TEXT CHECK (revision IS NULL OR revision IN ('replaced', 'update', 'same-device')),
   created_at INTEGER NOT NULL
 );
 CREATE INDEX IF NOT EXISTS idx_responses_study ON research_responses (study_id, submitted_at DESC);
@@ -42,4 +54,19 @@ CREATE INDEX IF NOT EXISTS idx_responses_study ON research_responses (study_id, 
 CREATE TABLE IF NOT EXISTS research_pow_used (
   salt TEXT PRIMARY KEY,
   expires INTEGER NOT NULL
+);
+
+-- What arrived and what left, per study and calendar month (Tunisia time), as
+-- three counters and nothing else. The rows themselves are deleted on withdrawal
+-- and on replacement, so without these a reader of the daily ledger could not
+-- tell a withdrawal from a row that quietly disappeared. The invariant the
+-- ledger publishes and the verifier checks: rows stored for the month =
+-- received - withdrawn - replaced.
+CREATE TABLE IF NOT EXISTS research_tally (
+  study_id TEXT NOT NULL,
+  period TEXT NOT NULL,
+  received INTEGER NOT NULL DEFAULT 0,
+  withdrawn INTEGER NOT NULL DEFAULT 0,
+  replaced INTEGER NOT NULL DEFAULT 0,
+  PRIMARY KEY (study_id, period)
 );
