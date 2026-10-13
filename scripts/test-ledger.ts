@@ -199,7 +199,7 @@ ok(
 		applyPublicationFloor(spec, aggregateResponses(spec, rows, options), aggregateSeries(spec, rows, { ...options, now }));
 	const one = publish([...old, { answers: answers(9), submittedAt: now }]);
 	const fullMonth = one.series!.months.find((m) => m.n === 100);
-	ok('a month whose remainder is one answer withholds its own figures', fullMonth !== undefined && fullMonth.results === null && one.results !== null);
+	ok('a month whose remainder is one answer withholds its own figures, and says so', fullMonth !== undefined && fullMonth.results === null && fullMonth.withheld === true && one.results !== null);
 	const twenty = publish([...old, ...Array.from({ length: 20 }, () => ({ answers: answers(9), submittedAt: now }))]);
 	ok(
 		'once the rest reaches the cell floor the month shows them',

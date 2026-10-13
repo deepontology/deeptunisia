@@ -678,6 +678,8 @@
 							{t('index.series.noData')}
 						{:else if month.results}
 							{tf('index.series.own', { mean: fmt(month.results.index.mean), n: fmt(month.n) })}
+						{:else if month.withheld}
+							{tf('index.series.withheld', { n: fmt(month.n), floor: fmt(spec.cell_floor ?? 20) })}
 						{:else}
 							{tf('index.series.few', { n: fmt(month.n), min: fmt(live?.series?.settings.min_month_n ?? 30) })}
 						{/if}
