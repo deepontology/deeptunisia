@@ -47,6 +47,16 @@
   # certain every subdomain is HTTPS — preload is effectively irreversible.
   Strict-Transport-Security: max-age=63072000; includeSubDomains
 
+# The survey runner is the only page permitted to contact Cloudflare's challenge
+# host, and it only does so while the operator has switched the human check on
+# for an attack (see research-api.ts, turnstileSiteKey). The inherited policy is dropped (the `! ` line) and replaced
+# with the same policy plus challenges.cloudflare.com for its script, its iframe
+# and its challenge calls; every other route keeps the strict policy above, so the
+# switch is scoped to this one path and nothing else.
+/research/*/participate
+  ! Content-Security-Policy
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://challenges.cloudflare.com; media-src 'none'; object-src 'none'; frame-src https://challenges.cloudflare.com; worker-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
+
 # Fonts and the generated data exports are content-addressed by nothing, but they
 # change only when the build changes, and the build changes their bytes rather
 # than their names. A day is the compromise: long enough that a reader browsing

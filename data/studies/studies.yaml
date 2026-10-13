@@ -1,0 +1,66 @@
+# DeepTunisia research registry (portal README §3).
+#
+# One entry per study. Validated by scripts/build-studies.ts against
+# scripts/research-schema.ts; those files, not this comment, are the schema.
+# Instrument drafts live under research/portal/<study>/ until they freeze, when
+# the frozen instrument and its hash are recorded here.
+
+- id: dt-research-001
+  slug: democracy
+  title_en: "What Does Democracy Mean to Tunisians?"
+  title_fr: "Que signifie la démocratie pour les Tunisiens ?"
+  title_ar: "ماذا تعني الديمقراطية للتونسيين؟"
+  status: design
+  design_type: cross-sectional-online
+  population: open-online-18-plus
+  population_statement: null
+  locales: [en, fr, ar]
+  ethics_review: null
+  data_protection_review: null
+  preregistration: null
+  instrument_versions:
+    - id: dt001-democracy
+      version: 0.1.0-draft
+      hash: null
+      source: research/portal/study-001/instrument-v0.yaml
+      frozen: false
+  fielding_window: null
+  target_n: 1500
+  realized_n: null
+  weighting: raking-ins-2024
+  data_license: CC-BY-4.0
+  funding: null
+  pi: null
+  outputs: []
+  created: 2026-09-14
+  updated: 2026-09-14
+
+- id: dt-research-002
+  slug: police
+  title_en: "Police Satisfaction Index"
+  title_fr: "Indice de satisfaction envers la police"
+  title_ar: "مؤشّر الرضا عن الشرطة"
+  status: design
+  design_type: repeated-cross-sectional-online
+  population: open-online-18-plus
+  population_statement: "Among respondents to an open, self-selected online survey of adults. Results describe the people who took part, not Tunisians as a whole."
+  locales: [en, fr, ar]
+  ethics_review: null
+  data_protection_review: null
+  preregistration: null
+  instrument_versions:
+    - id: dt002-police-index
+      version: 0.1.0-draft
+      hash: null
+      source: research/portal/study-002/instrument-v0.yaml
+      frozen: false
+  fielding_window: null
+  target_n: 1000
+  realized_n: null
+  weighting: null
+  data_license: CC-BY-4.0
+  funding: null
+  pi: null
+  outputs: []
+  created: 2026-10-07
+  updated: 2026-10-07

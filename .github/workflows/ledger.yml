@@ -1,0 +1,82 @@
+# Copies the police index's daily commitment into ledger/police-index.jsonl.
+#
+# The live page publishes counts and figures computed from rows nobody else can
+# see. This job copies, once a day, the month's counters and fingerprint from the
+# public live endpoint into this repository, where git history dates every line
+# and nobody can rewrite one quietly. A month's entry written after it closes is
+# final, and a release of that month is checked against it with
+# scripts/ledger-verify.ts (community/research-commitment.ts explains the
+# fingerprint).
+#
+# The job reads only the public endpoint any reader can call, holds no database
+# credential, and does nothing while the study is not collecting: any answer
+# other than 200 with a commitment in it is skipped, not recorded.
+
+name: Police index ledger
+
+# 23:20 UTC is 00:20 in Tunisia, twenty minutes after each Tunisian midnight, so
+# the run on the first of a month records the month that just closed as final.
+# Off the hour on purpose: scheduled jobs on the hour queue behind everyone's.
+on:
+  schedule:
+    - cron: '20 23 * * *'
+  workflow_dispatch:
+
+# Pushes to main are gated by the "Protect main" ruleset; GITHUB_TOKEN cannot
+# bypass it, so checkout uses the same admin PAT as the feed job (feed.yml).
+permissions:
+  contents: write
+
+concurrency:
+  group: police-ledger
+  cancel-in-progress: false
+
+jobs:
+  record:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.FEED_PAT }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - run: npm ci --ignore-scripts
+
+      - name: Read the commitment from the live endpoint
+        id: read
+        run: |
+          set -euo pipefail
+          status=$(curl -sS -o live.json -w '%{http_code}' https://deeptunisia.org/api/studies/police/live || echo 000)
+          if [ "$status" != "200" ] || ! node -e "const b=require('./live.json'); if(!b.commitments) process.exit(1)"; then
+            echo "live endpoint answered $status without a commitment; nothing recorded"
+            echo "skip=1" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          node -e "
+            const b = require('./live.json');
+            const line = { recorded_at: new Date().toISOString(), study: b.study, current: b.commitments.current, previous: b.commitments.previous };
+            require('fs').appendFileSync('ledger/police-index.jsonl', JSON.stringify(line) + '\n');
+          "
+
+      - name: Commit the new line
+        if: steps.read.outputs.skip != '1'
+        run: |
+          set -euo pipefail
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- ledger/police-index.jsonl
+          period=$(node -e "const l=require('fs').readFileSync('ledger/police-index.jsonl','utf8').trim().split('\n').pop(); const e=JSON.parse(l); process.stdout.write(e.current.period+' '+e.current.stored+' stored')")
+          git commit -m "Ledger: police index commitment for ${period}" -m "Copied from the public live endpoint; checked with scripts/ledger-verify.ts." -m "[skip ci]"
+          git push
+
+      # After the push, never before it: a line that fails the check is exactly
+      # what the ledger exists to show, so it is recorded first and the job then
+      # fails in public instead of quietly dropping it.
+      - name: Check the whole ledger
+        if: steps.read.outputs.skip != '1'
+        run: npx --no-install tsx scripts/ledger-verify.ts --ledger ledger/police-index.jsonl

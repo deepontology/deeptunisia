@@ -8,7 +8,7 @@
  *
  * Three modes, and the default is the closed one:
  *
- *   off        every `/api/*` route returns the same 404 before any database
+ *   off        every Agora `/api/*` route returns the same 404 before any database
  *              access, signature check, nonce write, or moderation action.
  *              This is the production mode for v0.1.3.
  *   read-only  the public GET reads are served; every write and every identity
