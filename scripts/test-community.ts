@@ -30,9 +30,11 @@ import {
 	capabilitiesFor,
 	earnedLevel,
 	payloadOf,
+	toB64u,
 	TRUST,
 	IdentityError,
-	type Identity
+	type Identity,
+	type SignedAction
 } from '../community/identity.ts';
 import { bucketKey, consume, saltForDay, RateLimitError, type Bucket } from '../community/ratelimit.ts';
 import { score, rank, reportPressure, MIN_EFFECTIVE_SCORE } from '../community/ranking.ts';
@@ -186,6 +188,42 @@ console.log('\n  ── identity ──\n');
 	await rejects(
 		'a stale action is refused',
 		() => verifyAction(action, now + 10 * 60 * 1000, notSeen),
+		'stale'
+	);
+
+	/*
+	 * The freshness comparison must reject a malformed issued_at, not wave it
+	 * through. `Math.abs(now - x) > MAX_SKEW_MS` is false for any NaN, so a
+	 * non-numeric or fractional value slips the whole window if the integer test is
+	 * removed. The malformed values are signed, so a bad signature cannot mask the
+	 * check these assertions exist to protect.
+	 */
+	async function actionWithIssued(issued: unknown): Promise<SignedAction> {
+		const unsigned: Omit<SignedAction, 'signature'> = {
+			pubkey,
+			nonce: toB64u(crypto.getRandomValues(new Uint8Array(12))),
+			issued_at: issued as number,
+			body: 'a post about a named official'
+		};
+		const signature = toB64u(
+			new Uint8Array(
+				await crypto.subtle.sign(
+					{ name: 'Ed25519' },
+					keys.privateKey,
+					new TextEncoder().encode(payloadOf(unsigned))
+				)
+			)
+		);
+		return { ...unsigned, signature };
+	}
+	await rejects(
+		'a non-numeric issued_at is refused',
+		async () => verifyAction(await actionWithIssued('not-a-number'), now, notSeen),
+		'stale'
+	);
+	await rejects(
+		'a fractional issued_at is refused',
+		async () => verifyAction(await actionWithIssued(now + 0.5), now, notSeen),
 		'stale'
 	);
 
