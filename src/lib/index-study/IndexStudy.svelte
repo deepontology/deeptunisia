@@ -5,13 +5,14 @@
 	import { cubicOut } from 'svelte/easing';
 	import { t, tf } from '$lib/t.svelte';
 	import { app } from '$lib/state.svelte';
-	import { titleOf, type RuntimeInstrument, type StudyRecord } from '$lib/research';
+	import { LEDGER_URL, titleOf, type RuntimeInstrument, type StudyRecord } from '$lib/research';
 	import Barcode from './Barcode.svelte';
 	import Plate from './Plate.svelte';
 	import Ruler from './Ruler.svelte';
 	import { fade } from 'svelte/transition';
 	import Grid from './Grid.svelte';
 	import MonthlyChart from './MonthlyChart.svelte';
+	import OfficerNote from './OfficerNote.svelte';
 	import Content from '$lib/ui/Content.svelte';
 	import type { LiveResults } from './live';
 	import { channelCode, ORGANIC_CHANNEL, scoreResponse } from '../../../community/research-scoring.ts';
@@ -111,6 +112,12 @@
 	// one shared link, and the window's mean without it. The codes themselves
 	// never reach the page.
 	const links = $derived(windowAgg?.links ?? null);
+	// The repeat check: updates and answers from a browser that already answered
+	// this month, and the window's mean without the ones that may count twice.
+	const repeats = $derived(windowAgg?.repeats ?? null);
+	// The daily commitment: this month's counters and fingerprint, as the public
+	// ledger records them once a day.
+	const commitment = $derived(live?.commitments?.current ?? null);
 	const windowMean = $derived(windowAgg?.results?.index.mean ?? null);
 
 	// The publication floor (index-spec.md §7). Below it the server sends only
@@ -958,6 +965,37 @@
 				{/if}
 			</p>
 		{/if}
+		{#if repeats}
+			<p class="note link-check">
+				{#if repeats.replaced + repeats.updated + repeats.same_device === 0}
+					<span>{t('index.integrity.noRepeats')}</span>
+				{:else}
+					<span>{tf('index.integrity.repeats', { replaced: fmt(repeats.replaced), updated: fmt(repeats.updated), same: fmt(repeats.same_device) })}</span>
+					{#if repeats.index_without_repeats !== null && windowMean !== null}
+						{#if fmt(repeats.index_without_repeats) === fmt(windowMean)}
+							<span>{tf('index.integrity.withoutRepeatsSame', { with: fmt(windowMean) })}</span>
+						{:else}
+							<span>{tf('index.integrity.withoutRepeats', { without: fmt(repeats.index_without_repeats), with: fmt(windowMean) })}</span>
+						{/if}
+					{/if}
+				{/if}
+			</p>
+		{/if}
+		{#if commitment}
+			<!-- Counts, not figures: published from the first answer, below every
+			     floor, because a count says nothing about anyone's answers. -->
+			<p class="note link-check ledger">
+				<span>{tf('index.integrity.ledger', {
+					received: fmt(commitment.received),
+					withdrawn: fmt(commitment.withdrawn),
+					replaced: fmt(commitment.replaced),
+					stored: fmt(commitment.stored),
+					digest: commitment.digest.slice(0, 16)
+				})}</span>
+				{#if !commitment.balanced}<span class="warn">{t('index.integrity.unbalanced')}</span>{/if}
+				<a href={LEDGER_URL} rel="noopener" target="_blank">{t('index.integrity.ledgerLink')}</a>
+			</p>
+		{/if}
 		{#if live}
 			<details class="table-alt">
 				<summary>{t('index.table.show')}</summary>
@@ -1011,6 +1049,7 @@
 				{/if}
 			</div>
 		</Plate>
+		<div class="officer-wrap"><OfficerNote /></div>
 	</section>
 </article>
 </div>
@@ -1881,6 +1920,12 @@
 	}
 	/* The link check: one line per claim, so a reader can read any one of them
 	   alone. */
+	.officer-wrap {
+		padding-inline: var(--gutter, 16px);
+	}
+	.ledger .warn {
+		color: var(--basis-unsubstantiated);
+	}
 	.link-check {
 		margin: 0.8rem 0 0;
 		line-height: 1.5;

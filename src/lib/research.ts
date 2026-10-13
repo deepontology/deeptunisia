@@ -51,6 +51,15 @@ export interface StudyRecord {
 
 const registry = raw as unknown as StudiesRegistry;
 
+/**
+ * The public ledger of daily commitments (ledger/README.md). The folder, not the
+ * file, so the link works before the first entry is written.
+ */
+export const LEDGER_URL = 'https://github.com/deepontology/deeptunisia/tree/main/ledger';
+
+/** Where a police officer with a story to tell is asked to write. */
+export const STORIES_EMAIL = 'contact@deeptunisia.org';
+
 export const studies: StudyRecord[] = (registry.studies ?? []) as StudyRecord[];
 
 export const instruments: Record<string, RuntimeInstrument> = registry.instruments ?? {};

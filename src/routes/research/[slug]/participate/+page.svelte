@@ -9,6 +9,7 @@
 	import Textarea from '$lib/ui/Textarea.svelte';
 	import Grid from '$lib/index-study/Grid.svelte';
 	import Content from '$lib/ui/Content.svelte';
+	import OfficerNote from '$lib/index-study/OfficerNote.svelte';
 	import type { LiveResults } from '$lib/index-study/live';
 	import type { RuntimeInstrument, RuntimeItem, StudyRecord } from '$lib/research';
 	import { startProofOfWork, type BotCheck } from '$lib/pow';
@@ -517,6 +518,27 @@
 		}
 	}
 
+	// ---- an update, or a repeat from this browser --------------------------------
+
+	/**
+	 * What the respondent said about an earlier answer. 'update' is their own
+	 * change of mind; 'other' is a different person on a browser that already
+	 * answered. The receipt is never kept on the device (a phone that is taken
+	 * would then point at the answers), so an update that should replace the
+	 * earlier row asks for the code to be pasted.
+	 */
+	let chose = $state<'update' | 'other' | null>(null);
+	let replacesCode = $state('');
+	/** After an update: true when the earlier answers were replaced, false when the code matched nothing. */
+	let replacedResult = $state<boolean | null>(null);
+	/**
+	 * What the server is told, as one word and nothing else: an update; or, on a
+	 * browser that already answered this month, that fact; or nothing.
+	 */
+	const revision = $derived<'update' | 'same-device' | null>(
+		chose === 'update' ? 'update' : answeredThisMonth ? 'same-device' : null
+	);
+
 	/** Written on a successful submit, and removed by the withdrawal page. */
 	function markAnswered() {
 		try {
@@ -620,12 +642,15 @@
 					...(maxdiff ? { maxdiff } : {}),
 					...(pow ? { pow } : {}),
 					...(turnstileSiteKey ? { turnstileToken: turnstileToken ?? '' } : {}),
-					...(assignment ? { assignment } : {})
+					...(assignment ? { assignment } : {}),
+					...(revision ? { revision } : {}),
+					...(revision === 'update' && replacesCode.trim() ? { replaces: replacesCode.trim() } : {})
 				})
 			});
 			if (res.ok) {
-				const body = (await res.json()) as { receipt?: string };
+				const body = (await res.json()) as { receipt?: string; replaced?: boolean };
 				receipt = body.receipt ?? null;
+				replacedResult = typeof body.replaced === 'boolean' ? body.replaced : null;
 				if (!receipt) {
 					errorKey = 'research.participate.error';
 				} else {
@@ -684,6 +709,9 @@
 			<header class="prose">
 				<p class="eyebrow">{t('research.participate.eyebrow')}</p>
 				<h1>{t('research.participate.thanks')}</h1>
+				{#if replacedResult !== null}
+					<p class="note">{t(replacedResult ? 'research.participate.replacedDone' : 'research.participate.replacedNone')}</p>
+				{/if}
 				{#if instrument?.scoring && ownScore}
 					{@const band = instrument.scoring.bands.find((b) => b.id === ownScore?.band)}
 					<section class="own" aria-labelledby="own-title">
@@ -746,11 +774,28 @@
 					{#if current.kind === 'consent'}
 						{#if answeredThisMonth}
 							<!-- A shared phone answers twice. The second person is told the index
-							     asks for one answer a month, and the survey stays fully usable. -->
+							     asks for one answer a month, the survey stays fully usable, and
+							     the answer carries one mark saying the browser had answered. -->
 							<div class="answered">
 								<p>{t('research.participate.alreadyAnswered')}</p>
-								<p>{t('research.participate.sharedDevice')}</p>
+								{#if chose !== 'update'}<p>{t('research.participate.sharedDevice')}</p>{/if}
+								<div class="choices">
+									<button type="button" class="choice" aria-pressed={chose === 'update'} onclick={() => (chose = 'update')}>{t('research.participate.updateMine')}</button>
+									<button type="button" class="choice" aria-pressed={chose !== 'update'} onclick={() => (chose = 'other')}>{t('research.participate.someoneElse')}</button>
+								</div>
 								<p><a class="back" href="/research/{study.slug}">{t('research.participate.seeIndex')}</a></p>
+							</div>
+						{:else if chose !== 'update'}
+							<button type="button" class="update-offer" onclick={() => (chose = 'update')}>{t('research.participate.updateOffer')}</button>
+						{/if}
+						{#if chose === 'update'}
+							<div class="answered">
+								<p>{t('research.participate.updateLede')}</p>
+								<Input bind:value={replacesCode} placeholder={t('research.participate.updateCode')} mono size="md" aria-label={t('research.participate.updateCode')} />
+								<p>{t('research.participate.updateMarked')}</p>
+								{#if !answeredThisMonth}
+									<button type="button" class="update-offer" onclick={() => { chose = null; replacesCode = ''; }}>{t('research.participate.updateCancel')}</button>
+								{/if}
 							</div>
 						{/if}
 						<h1 tabindex="-1">{t('research.participate.consent')}</h1>
@@ -761,6 +806,7 @@
 							<span>{t('research.participate.howStored')}</span>
 							<span class="stored-go" aria-hidden="true">{locale === 'ar' ? '←' : '→'}</span>
 						</button>
+						<OfficerNote />
 						<div class="consents">
 							{#each current.items as item (item.id)}
 								<label class="consent" class:on={answers[item.id] === true}>
@@ -1046,6 +1092,38 @@
 		margin: 0 0 1.4rem;
 	}
 	/* The month this browser last answered: stated, never enforced. */
+	.choices {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin: 0.6rem 0;
+	}
+	.choice {
+		font: inherit;
+		font-size: 0.9rem;
+		padding: 0.45rem 0.8rem;
+		border: 1px solid var(--border-default);
+		border-radius: var(--r-md);
+		background: transparent;
+		color: inherit;
+		cursor: pointer;
+	}
+	.choice[aria-pressed='true'] {
+		border-color: var(--accent-border);
+		background: var(--accent-muted);
+	}
+	.update-offer {
+		font: inherit;
+		font-size: 0.9rem;
+		background: none;
+		border: none;
+		padding: 0;
+		margin: 0 0 1rem;
+		color: var(--text-secondary);
+		text-decoration: underline;
+		text-underline-offset: 3px;
+		cursor: pointer;
+	}
 	.answered {
 		border: 1px solid var(--border-default);
 		border-radius: var(--r-md);

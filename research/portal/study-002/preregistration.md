@@ -122,6 +122,10 @@ Results are published live during fielding (a departure, §10). The live page sh
 
 The live page also carries the **link check**: over the same 12-month window the "last 12 months" reading uses, the share of answers that arrived through a shared link, the share that arrived through the single largest such link, and the 12-month index recomputed with that link's answers removed. It excludes no answer and moves no published figure; it is there so a reader can judge a campaign from the page. The link codes are never published, and neither are per-channel figures: a code is free text anyone can invent, and one written for a few people could point at them. The counterfactual is published only when that link brought at least 20 answers that carry a score of their own, so no small group's answers can be worked out, and only when first_figure_n answers remain in the window once that link is removed. Like every other computed figure the check stays under the publication floor of §6a.
 
+The live page also carries the **repeat check**. Each answer stores one word, or nothing, about an earlier answer from the same person: `replaced` when an update carried the earlier receipt and that row was deleted in the same write, `update` when it did not, and `same-device` when the browser had already answered that month. Over the same 12-month window the page publishes the count of each and the 12-month index without the `update` and `same-device` answers, under the same two floors as the link check. No answer is excluded on this field.
+
+The month's counters and fingerprint (index-spec §7a) are published live and copied once a day into the public ledger; the entry written after a month closes is the one its release is checked against (§8).
+
 When a month ends, its figures are recomputed offline from the exported data with the same code and committed to the repository. Those committed figures are the published result for that month.
 
 ## 8. Release at close
@@ -132,6 +136,7 @@ When a month ends, its figures are recomputed offline from the exported data wit
   - dates no finer than the month;
   - no receipt codes;
   - no recruitment channel codes.
+  - each row in exactly the form the daily commitment fingerprints (index-spec §7a): the month, the questionnaire hash, the language, the completion time in whole seconds, the revision word and the answers, so every released month can be checked against its closed ledger entry.
 
   Licence CC BY 4.0, deposited with a DOI.
 - **Raw rows:** deleted after the release is verified to reproduce the published tables.

@@ -67,7 +67,13 @@ CREATE TABLE research_responses (
   scale_direction    TEXT,               -- signed experiment arm, server-assigned
   answers            TEXT NOT NULL,      -- JSON object, item id -> value | null
   maxdiff            TEXT,               -- JSON array of { set, most, least } or null
+  revision           TEXT,               -- null | replaced | update | same-device
   created_at         INTEGER NOT NULL
+);
+
+CREATE TABLE research_tally (           -- per study and month: three counters, nothing else
+  study_id TEXT, period TEXT,           -- period is YYYY-MM in Tunisia time
+  received INTEGER, withdrawn INTEGER, replaced INTEGER
 );
 ```
 
@@ -78,6 +84,8 @@ Column by column, the reasons that matter:
 - **`answers`** is a JSON object of `item id -> value`. Values are integers (scales, agreement), strings (single choice), arrays (multi choice), booleans (consent), or `null` for an explicit skip. Unknown item ids and out-of-range values are refused at the door; nothing is coerced silently.
 - **`block_order` / `scale_direction`** are the embedded experiment arms, assigned server-side 50/50 when the instrument is fetched, returned with an HMAC-signed token, and verified at submit (`m2-contract.md` §10). They are null only when a local dev-override submission arrives without an assignment.
 - **`maxdiff`** holds the forced-choice answers as a JSON array with one `{ set, most, least }` entry per generated set. The runner renders the eight sets, the API requires every set when the design is generated, and what it validates is what it stores.
+- **`revision`** is one word the respondent or their browser supplied, or null: `replaced` (an update that carried the earlier receipt; that row is deleted in the same batch), `update` (no usable receipt; the earlier row stays) or `same-device` (the browser had already answered this month). The receipt itself is never stored on the device, so an update that replaces asks for the code to be pasted.
+- **`research_tally`** counts what arrived and what left per month, so the daily ledger can show that `stored = received − withdrawn − replaced`. Submit, withdraw and replace write the row change and the counter in one batch.
 - **No column can hold** an address, user agent, fingerprint, email, name, account or location. That is not a policy that could be forgotten; there is nowhere to put it. The connection address is seen transiently by the server for one purpose, and the rate limiter stores only `sha256(address | daily salt | secret)`, with the salt rotating daily.
 
 The community store's `rate_buckets` table is shared for rate limiting across both layers, keyed by that salted hash. Losing the database still reveals no address.
@@ -101,11 +109,12 @@ The community store's `rate_buckets` table is shared for rate limiting across bo
 | 9 | Arm assignment verified against its signed token | 400 |
 | 10 | Completion floor: below half of the study's pre-registered speed threshold (40% of the estimated time when it has none) is refused; between that and the threshold the row is kept and counted in the published exclusion | 400 |
 | 11 | Full `validateSubmission`: hash match, declared locale, channel format, consent true, unknown ids refused, ranges and options checked, text length capped | 400 |
-| 12 | Receipt generated, row inserted | 500 on storage error |
+| 12 | Revision: `update`, with an optional earlier receipt that replaces its row when it matches this study and month, or `same-device`; anything else refused | 400 |
+| 13 | Receipt generated; row, month counter and any replacement written in one batch | 503 on storage error |
 
-**Live results** (`GET /api/studies/:slug/live`) returns the published figures for a study whose scoring block asks for them, while the study is collecting responses. The payload is computed from the stored rows at most once a minute per study and instrument version, shared through the edge cache, and never cached when it is an error. It carries the index only above the publication floor, groups only at or above the cell floor, the submissions per hour and exclusions by rule, and the link-share figures; link codes are never in it. Study 002's rules are in `study-002/index-spec.md`.
+**Live results** (`GET /api/studies/:slug/live`) returns the published figures for a study whose scoring block asks for them, while the study is collecting responses. The payload is computed from the stored rows at most once a minute per study and instrument version, shared through the edge cache, and never cached when it is an error. It carries this month's and last month's counters and fingerprint (`study-002/index-spec.md` §7a), the index only above the publication floor, groups only at or above the cell floor, the submissions per hour and exclusions by rule, and the link-share figures; link codes are never in it. Study 002's rules are in `study-002/index-spec.md`.
 
-**Withdraw** (`POST /api/studies/:slug/withdraw`) deletes by receipt while the study is fielding. **Count** (`GET /api/studies/:slug/count`) returns the number of completed responses for the study, never individual rows. Reads of the instrument are unauthenticated and unlimited; throttling readers would mean identifying them.
+**Withdraw** (`POST /api/studies/:slug/withdraw`) deletes by receipt while the study is fielding, and raises the month's `withdrawn` counter in the same batch. **Count** (`GET /api/studies/:slug/count`) returns the number of completed responses for the study, never individual rows. Reads of the instrument are unauthenticated and unlimited; throttling readers would mean identifying them.
 
 ## 5. From responses to published results
 

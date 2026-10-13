@@ -24,7 +24,7 @@ import { readFileSync, existsSync, mkdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { localDb } from './db-local.ts';
-import { migrate } from './migrate.ts';
+import { migrate, migrateResearch } from './migrate.ts';
 import { handle, localRequest, type Env } from './api.ts';
 import { memoryLiveCache } from './live-cache.ts';
 import { resolveMode } from './mode.ts';
@@ -73,7 +73,7 @@ await researchDb.exec(readFileSync(join(HERE, 'research-schema.sql'), 'utf8'));
  * that is "no such column"; on D1 after launch it is an outage. See migrate.ts —
  * additive only, and it asks each table what it already has.
  */
-const applied = await migrate(db);
+const applied = [...(await migrate(db)), ...(await migrateResearch(researchDb))];
 if (applied.length) console.log(`  migrated: ${applied.join(', ')}`);
 
 /*

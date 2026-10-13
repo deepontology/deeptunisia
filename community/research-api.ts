@@ -38,6 +38,14 @@ import {
 	type StudiesRegistry
 } from './research-contract.ts';
 import { aggregateResponses, aggregateSeries, applyExclusions, applyPublicationFloor, periodOf } from './research-scoring.ts';
+import {
+	commitMonth,
+	periodStart,
+	previousPeriod,
+	releaseRow,
+	type MonthCommitment,
+	type Tally
+} from './research-commitment.ts';
 
 /** What the research handler needs from its caller, per request. */
 export interface ResearchContext {
@@ -107,11 +115,11 @@ async function liveResults(db: Db, study: StudySummary, instrument: RuntimeInstr
 	const spec = instrument.scoring!;
 	const { results } = await db
 		.prepare(
-			`SELECT answers, completion_ms, submitted_at, channel FROM research_responses
+			`SELECT answers, completion_ms, submitted_at, channel, revision FROM research_responses
 			 WHERE study_id = ? AND instrument_hash = ?`
 		)
 		.bind(study.id, instrument.hash)
-		.all<{ answers: string; completion_ms: number; submitted_at: number; channel: string }>();
+		.all<{ answers: string; completion_ms: number; submitted_at: number; channel: string; revision: string | null }>();
 
 	const conditions = Object.fromEntries(
 		instrument.items.filter((item) => item.showIf !== undefined).map((item) => [item.id, item.showIf!])
@@ -122,7 +130,9 @@ async function liveResults(db: Db, study: StudySummary, instrument: RuntimeInstr
 		completionMs: r.completion_ms,
 		submittedAt: r.submitted_at,
 		// Read by the link check, which returns shares and never a code.
-		channel: r.channel
+		channel: r.channel,
+		// Read by the repeat check, which returns counts.
+		revision: r.revision ?? null
 	}));
 	const { kept, exclusions } = applyExclusions(spec, rows);
 
@@ -142,6 +152,9 @@ async function liveResults(db: Db, study: StudySummary, instrument: RuntimeInstr
 		received: rows.length,
 		exclusions,
 		submissions_per_hour: { start: new Date(firstHour * HOUR_MS).toISOString(), counts: perHour },
+		// The month's counters and fingerprint, and last month's final ones, as
+		// the daily ledger records them (research-commitment.ts).
+		commitments: await commitments(db, study, instrument, now),
 		// Everything is computed, then the publication floor decides what leaves:
 		// below it only counts do (research-scoring.ts, applyPublicationFloor).
 		...applyPublicationFloor(
@@ -156,6 +169,82 @@ async function liveResults(db: Db, study: StudySummary, instrument: RuntimeInstr
 			})
 		)
 	};
+}
+
+/** The UTC offset a study counts its months in: the series' own, or Tunisia time. */
+function tallyOffset(instrument: RuntimeInstrument | null | undefined): number {
+	return instrument?.scoring?.series?.utc_offset_minutes ?? 60;
+}
+
+/**
+ * This month's commitment and last month's. Every stored row of the study in
+ * those two months is read, whatever instrument version it answered, because
+ * the fingerprint is over what the month holds, not over one wave. Last month is
+ * closed, so its entry no longer changes: it is the one a release is checked
+ * against.
+ */
+async function commitments(
+	db: Db,
+	study: StudySummary,
+	instrument: RuntimeInstrument,
+	now: number
+): Promise<{ current: MonthCommitment; previous: MonthCommitment }> {
+	const offset = tallyOffset(instrument);
+	const current = periodOf(now, offset);
+	const previous = previousPeriod(current);
+	const { results } = await db
+		.prepare(
+			`SELECT answers, completion_ms, submitted_at, locale, instrument_hash, revision FROM research_responses
+			 WHERE study_id = ? AND submitted_at >= ?`
+		)
+		.bind(study.id, periodStart(previous, offset))
+		.all<{
+			answers: string;
+			completion_ms: number;
+			submitted_at: number;
+			locale: string;
+			instrument_hash: string;
+			revision: string | null;
+		}>();
+	const tallies = await db
+		.prepare('SELECT period, received, withdrawn, replaced FROM research_tally WHERE study_id = ? AND period IN (?, ?)')
+		.bind(study.id, current, previous)
+		.all<Tally & { period: string }>();
+	const byPeriod = new Map<string, ReturnType<typeof releaseRow>[]>([
+		[current, []],
+		[previous, []]
+	]);
+	for (const r of results ?? []) {
+		const period = periodOf(r.submitted_at, offset);
+		byPeriod.get(period)?.push(
+			releaseRow(instrument.scoring, {
+				period,
+				instrument_hash: r.instrument_hash,
+				locale: r.locale,
+				revision: r.revision ?? null,
+				completion_ms: r.completion_ms,
+				answers: safeAnswers(r.answers)
+			})
+		);
+	}
+	const tallyOf = (period: string): Tally => {
+		const row = (tallies.results ?? []).find((t) => t.period === period);
+		return { received: row?.received ?? 0, withdrawn: row?.withdrawn ?? 0, replaced: row?.replaced ?? 0 };
+	};
+	return {
+		current: await commitMonth(current, false, tallyOf(current), byPeriod.get(current)!),
+		previous: await commitMonth(previous, true, tallyOf(previous), byPeriod.get(previous)!)
+	};
+}
+
+/** One counter of a month's tally, raised by one. */
+function bumpTally(db: Db, studyId: string, period: string, counter: 'received' | 'withdrawn' | 'replaced') {
+	return db
+		.prepare(
+			`INSERT INTO research_tally (study_id, period, ${counter}) VALUES (?, ?, 1)
+			 ON CONFLICT (study_id, period) DO UPDATE SET ${counter} = ${counter} + 1`
+		)
+		.bind(studyId, period);
 }
 
 /** A stored answers column that fails to parse counts as an empty response. */
@@ -874,16 +963,44 @@ export async function handleResearch(
 				}
 				throw new ResearchError(`${result.code}: ${result.error}`, 400);
 			}
-			// 13. a receipt nobody chose, for a row that names nobody.
+			// 13. how this answer relates to an earlier one, as the respondent or
+			//     their browser said. An update that brings the earlier receipt
+			//     replaces that row in the same write, so the person counts once;
+			//     a receipt that matches nothing in this study and this month is
+			//     not an error the respondent could fix after answering everything,
+			//     so the answer is kept and marked as an update without one.
+			const period = periodOf(ctx.now, tallyOffset(instrument));
+			let revision: 'replaced' | 'update' | 'same-device' | null = null;
+			let replaces: string | null = null;
+			if (payload.revision === 'update') {
+				revision = 'update';
+				const earlier = payload.replaces;
+				if (typeof earlier === 'string' && earlier.trim().length > 0 && earlier.length <= MAX_RECEIPT) {
+					const row = await db
+						.prepare('SELECT submitted_at FROM research_responses WHERE receipt = ? AND study_id = ?')
+						.bind(earlier.trim(), study.id)
+						.first<{ submitted_at: number }>();
+					if (row && periodOf(row.submitted_at, tallyOffset(instrument)) === period) {
+						revision = 'replaced';
+						replaces = earlier.trim();
+					}
+				}
+			} else if (payload.revision === 'same-device') {
+				revision = 'same-device';
+			} else if (payload.revision !== undefined && payload.revision !== null) {
+				throw new ResearchError('revision must be "update" or "same-device"', 400);
+			}
+			// 14. a receipt nobody chose, for a row that names nobody, written with
+			//     the month's counters in one batch so they can never disagree.
 			const receipt = crypto.randomUUID();
 			try {
-				await db
+				const insert = db
 					.prepare(
 						`INSERT INTO research_responses
 						 (receipt, study_id, instrument_id, instrument_version, instrument_hash,
 						  locale, channel, consent_version, started_at, submitted_at, completion_ms,
-						  block_order, scale_direction, answers, maxdiff, created_at)
-						 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+						  block_order, scale_direction, answers, maxdiff, revision, created_at)
+						 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
 					)
 					.bind(
 						receipt,
@@ -904,14 +1021,24 @@ export async function handleResearch(
 						arms.scaleDirection,
 						JSON.stringify(result.answers),
 						result.maxdiff ? JSON.stringify(result.maxdiff) : null,
+						revision,
 						ctx.now
-					)
-					.run();
+					);
+				const statements = [insert, bumpTally(db, study.id, period, 'received')];
+				if (replaces !== null) {
+					statements.push(
+						db
+							.prepare('DELETE FROM research_responses WHERE receipt = ? AND study_id = ?')
+							.bind(replaces, study.id),
+						bumpTally(db, study.id, period, 'replaced')
+					);
+				}
+				await db.batch(statements);
 			} catch (e) {
 				console.error(`  research: insert failed — ${(e as Error).message}`);
 				throw new ResearchError('the response could not be stored', 503);
 			}
-			return json({ receipt });
+			return json({ receipt, ...(revision === 'update' || revision === 'replaced' ? { replaced: revision === 'replaced' } : {}) });
 		}
 
 		if (request.method === 'POST' && slug && action === 'withdraw') {
@@ -951,12 +1078,22 @@ export async function handleResearch(
 					throw new ResearchError('that month has closed, so its answers can no longer be deleted', 409);
 				}
 			}
-			const out = await env.RESEARCH_DB.prepare(
-				'DELETE FROM research_responses WHERE receipt = ? AND study_id = ?'
+			const found = await env.RESEARCH_DB.prepare(
+				'SELECT submitted_at FROM research_responses WHERE receipt = ? AND study_id = ?'
 			)
 				.bind(receipt, study.id)
-				.run();
-			return json({ deleted: out.meta.changes > 0 });
+				.first<{ submitted_at: number }>();
+			if (!found) return json({ deleted: false });
+			// The deletion and its counter in one batch: the ledger's sum holds
+			// because a withdrawal is never a row that simply went missing.
+			const [out] = (await env.RESEARCH_DB.batch([
+				env.RESEARCH_DB.prepare('DELETE FROM research_responses WHERE receipt = ? AND study_id = ?').bind(
+					receipt,
+					study.id
+				),
+				bumpTally(env.RESEARCH_DB, study.id, periodOf(found.submitted_at, tallyOffset(instrument)), 'withdrawn')
+			])) as { meta?: { changes?: number } }[];
+			return json({ deleted: (out?.meta?.changes ?? 1) > 0 });
 		}
 
 		return json({ error: 'not found' }, 404);
