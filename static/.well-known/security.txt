@@ -1,0 +1,5 @@
+Contact: https://github.com/deepontology/deeptunisia/security/advisories/new
+Expires: 2027-10-13T00:00:00.000Z
+Preferred-Languages: en, fr, ar
+Canonical: https://deeptunisia.org/.well-known/security.txt
+Policy: https://deeptunisia.org/about
