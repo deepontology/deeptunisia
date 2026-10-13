@@ -917,17 +917,24 @@ export function applyExclusions<T extends ExcludableRow>(
 	return { kept, exclusions: { rows_excluded: rowsExcluded, rules: counts } };
 }
 
-function mean(values: number[]): number {
+/**
+ * Sums are taken in sorted order. Floating-point addition is not associative,
+ * so the same answers read in a different order (the live query and the export
+ * order rows differently) could differ in the last digit; a release has to
+ * reproduce the live figures exactly.
+ */
+function sortedSum(values: number[]): number {
 	let sum = 0;
-	for (const value of values) sum += value;
-	return sum / values.length;
+	for (const value of [...values].sort((a, b) => a - b)) sum += value;
+	return sum;
+}
+function mean(values: number[]): number {
+	return sortedSum(values) / values.length;
 }
 
 function sampleSd(values: number[]): number {
 	const m = mean(values);
-	let sum = 0;
-	for (const value of values) sum += (value - m) ** 2;
-	return Math.sqrt(sum / (values.length - 1));
+	return Math.sqrt(sortedSum(values.map((value) => (value - m) ** 2)) / (values.length - 1));
 }
 
 function median(values: number[]): number {
@@ -948,7 +955,11 @@ function mulberry32(seed: number): () => number {
 	};
 }
 
-function bootstrapCi95(values: number[], options: AggregateOptions): [number, number] {
+function bootstrapCi95(input: number[], options: AggregateOptions): [number, number] {
+	// Sorted first, so the interval depends on the answers and never on the
+	// order the rows were read in: the live query and the export order them
+	// differently, and a release must reproduce the live figures exactly.
+	const values = [...input].sort((a, b) => a - b);
 	const random = mulberry32(options.seed);
 	const means = new Array<number>(options.resamples);
 	for (let i = 0; i < options.resamples; i++) {
