@@ -765,6 +765,11 @@
 				<p><a class="back" href="/research/{study.slug}">{t('research.participate.back')}</a></p>
 			</header>
 		</div>
+	{:else if instrument && current && !restored}
+		<!-- Nothing to answer until the study read and the saved session are in:
+		     a respondent who started on the default order would otherwise be
+		     stored under the arms the server returns a moment later. -->
+		<div class="runner" aria-busy="true"></div>
 	{:else if instrument && current}
 		<div class="runner">
 			<!-- Progress: a thin bar and the count, always in view. -->

@@ -1677,6 +1677,57 @@ export interface Published {
 
 const NO_LEVEL: MonthAggregate['index'] = { level: null, ci95: [null, null], band: null, gain: null };
 
+/**
+ * Which months may show their own figures, with complementary suppression
+ * across the overlapping totals.
+ *
+ * The all-time figures, the window's and each shown month's are all published,
+ * so the answers in none of the shown months (all-time minus the shown months;
+ * the window minus its shown months; and, with a window, all-time minus the
+ * window minus the shown months outside it) form groups anyone can solve for.
+ * Each such group must be empty or at least the cell floor; while one is not,
+ * its smallest shown month is hidden too. With 100 answers in one month and 1
+ * in the next, neither month shows its own figures, only the total.
+ */
+function overlapSafeMonths(
+	spec: ScoringSpec,
+	all: WaveAggregate,
+	series: SeriesAggregate,
+	reached: boolean,
+	monthN: number,
+	firstN: number
+): boolean[] {
+	const months = series.months;
+	const shown = months.map((m) => reached && m.results.n >= monthN);
+	const cell = spec.cell_floor ?? 20;
+	const window = series.window;
+	const windowShown = reached && window !== null && window.results.n >= firstN;
+	const inWindow = (period: string) => window !== null && period >= window.first && period <= window.last;
+	const groups: Array<{ total: number; members: number[] }> = [
+		{ total: all.n, members: months.map((_, i) => i) }
+	];
+	if (windowShown) {
+		const inside = months.map((m, i) => (inWindow(m.period) ? i : -1)).filter((i) => i >= 0);
+		const outside = months.map((m, i) => (inWindow(m.period) ? -1 : i)).filter((i) => i >= 0);
+		groups.push({ total: window!.results.n, members: inside }, { total: all.n - window!.results.n, members: outside });
+	}
+	for (let changed = true; changed; ) {
+		changed = false;
+		for (const group of groups) {
+			const covered = group.members.reduce((sum, i) => sum + (shown[i] ? months[i].results.n : 0), 0);
+			const rest = group.total - covered;
+			if (rest > 0 && rest < cell) {
+				const candidates = group.members.filter((i) => shown[i]).sort((a, b) => months[a].results.n - months[b].results.n);
+				if (candidates.length) {
+					shown[candidates[0]] = false;
+					changed = true;
+				}
+			}
+		}
+	}
+	return shown;
+}
+
 export function applyPublicationFloor(
 	spec: ScoringSpec,
 	all: WaveAggregate,
@@ -1686,17 +1737,18 @@ export function applyPublicationFloor(
 	const firstN = firstFigureN(spec);
 	const floor: PublicationFloor = { n: all.n, first_figure_n: firstN, month_n: monthN, reached: all.n >= firstN };
 	if (series === null) return { floor, results: floor.reached ? all : null, series: null };
+	const monthShown = overlapSafeMonths(spec, all, series, floor.reached, monthN, firstN);
 	return {
 		floor,
 		results: floor.reached ? all : null,
 		series: {
 			settings: series.settings,
-			months: series.months.map((m) => ({
+			months: series.months.map((m, i) => ({
 				period: m.period,
 				closed: m.closed,
 				n: m.results.n,
 				index: floor.reached ? m.index : NO_LEVEL,
-				results: floor.reached && m.results.n >= monthN ? m.results : null
+				results: monthShown[i] ? m.results : null
 			})),
 		window: series.window && {
 			first: series.window.first,

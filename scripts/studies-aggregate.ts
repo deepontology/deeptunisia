@@ -43,6 +43,7 @@ import {
 	type RuntimeItem,
 	type StudiesRegistry
 } from '../community/research-contract.ts';
+import { applyExclusions } from '../community/research-scoring.ts';
 import type { StudyResults } from './research-schema.ts';
 import { EXPORT_COLUMNS } from './studies-export.ts';
 
@@ -261,6 +262,12 @@ function nearIdentical(a: Record<string, unknown>, b: Record<string, unknown>): 
  * earlier rows in CSV order, which the export fixed as submitted_at, receipt.
  */
 export function evaluateExclusions(rows: ParsedResponse[], instrument: RuntimeInstrument): ExclusionOutcome {
+	// A study that registers its own exclusion rules in its scoring block (the
+	// police index) is excluded by exactly those, through the same engine the
+	// live results use, so the offline figures and the live ones agree. The
+	// rules below are study 001's protocol §8.
+	if (instrument.scoring?.exclusions) return scoringExclusions(rows, instrument);
+
 	const displayed = instrument.items.filter((item) => item.displayed && item.response !== 'consent');
 	const essentiality = instrument.items.filter((item) => item.response === 'scale_essential');
 	// Each presence rating is a question of its own: it counts beside the item
@@ -311,6 +318,27 @@ export function evaluateExclusions(rows: ParsedResponse[], instrument: RuntimeIn
 		byChannel[row.channel] = (byChannel[row.channel] ?? 0) + 1;
 	}
 
+	return { rules, byChannel: sortedRecord(byChannel), rowsExcluded, perRow };
+}
+
+function scoringExclusions(rows: ParsedResponse[], instrument: RuntimeInstrument): ExclusionOutcome {
+	const spec = instrument.scoring!;
+	const rules: Record<ExclusionRuleId, number> = { incomplete: 0, 'straight-lining': 0, speed: 0, duplicates: 0 };
+	const perRow = new Map<string, ExclusionRuleId[]>();
+	const byChannel: Record<string, number> = {};
+	let rowsExcluded = 0;
+	for (const row of rows) {
+		const one = applyExclusions(spec, [{ answers: row.answers, completionMs: row.completion_ms }]);
+		const tripped = Object.entries(one.exclusions.rules)
+			.filter(([, n]) => n > 0)
+			.map(([rule]) => rule as ExclusionRuleId);
+		for (const rule of tripped) rules[rule]++;
+		perRow.set(row.receipt, tripped);
+		if (tripped.length) {
+			rowsExcluded++;
+			byChannel[row.channel] = (byChannel[row.channel] ?? 0) + 1;
+		}
+	}
 	return { rules, byChannel: sortedRecord(byChannel), rowsExcluded, perRow };
 }
 

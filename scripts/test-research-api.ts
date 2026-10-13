@@ -1044,7 +1044,13 @@ console.log('\n  ── the monthly live index ──\n');
 		last?.closed === false && last?.n === 5 && last?.results === null
 	);
 	const observed = months.find((m: any) => m.n === 100);
-	ok('a closed month with enough answers publishes a level and its own figures', observed?.closed === true && observed?.index.level !== null && observed?.results?.n === 100);
+	// 100 last month and 5 this month: the month's own figures beside the
+	// all-time ones would give the 5, so the month keeps its level and its count
+	// and withholds its figures (test-ledger covers the month showing them).
+	ok(
+		'a closed month publishes its level, and withholds its own figures while the rest is under the cell floor',
+		observed?.closed === true && observed?.index.level !== null && observed?.n === 100 && observed?.results === null
+	);
 	ok(
 		'a current month under the floor carries the closed level forward',
 		last?.index.gain === null && last?.index.level === observed?.index.level
