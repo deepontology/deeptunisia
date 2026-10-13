@@ -71,19 +71,78 @@ const csp = glob?.headers.get('content-security-policy') ?? '';
 
 ok('a /* block exists', Boolean(glob));
 ok('Content-Security-Policy is present', csp.length > 0);
-for (const directive of [
-	"default-src 'self'",
-	"object-src 'none'",
-	"base-uri 'self'",
-	"frame-ancestors 'none'",
-	"form-action 'self'",
-	"connect-src 'self'",
-	"font-src 'self'",
-	"media-src 'none'"
-]) {
-	ok(`CSP carries ${directive}`, csp.includes(directive));
+
+/**
+ * The exact policy, as directive to allowed sources. Comparison is a set test per
+ * directive, not a substring test: `connect-src 'self'` must NOT pass when the
+ * value is `connect-src 'self' https://example.com`. Every source that could reach
+ * a third party or run code is listed here on purpose, so weakening one is a
+ * failing check rather than a passing substring.
+ */
+const EXPECTED_CSP: Record<string, string[]> = {
+	'default-src': ["'self'"],
+	'script-src': ["'self'", "'unsafe-inline'"],
+	'style-src': ["'self'", "'unsafe-inline'"],
+	'img-src': ["'self'", 'data:'],
+	'font-src': ["'self'"],
+	'connect-src': ["'self'"],
+	'media-src': ["'none'"],
+	'object-src': ["'none'"],
+	'frame-src': ["'none'"],
+	'worker-src': ["'self'"],
+	'manifest-src': ["'self'"],
+	'base-uri': ["'self'"],
+	'form-action': ["'self'"],
+	'frame-ancestors': ["'none'"]
+};
+// Directives that carry no source list.
+const FLAG_DIRECTIVES = new Set(['upgrade-insecure-requests']);
+
+/** Every problem with a policy: a missing directive, an altered source list, an
+ *  added source, or an unexpected directive. Empty means it is exactly the one
+ *  reviewed in this file. */
+function cspProblems(policy: string): string[] {
+	const problems: string[] = [];
+	const seen = new Map<string, string[]>();
+	for (const part of policy.split(';')) {
+		const tokens = part.trim().split(/\s+/).filter(Boolean);
+		if (!tokens.length) continue;
+		seen.set(tokens[0], tokens.slice(1).sort());
+	}
+	for (const [directive, sources] of Object.entries(EXPECTED_CSP)) {
+		const actual = seen.get(directive);
+		if (!actual) {
+			problems.push(`${directive} is missing`);
+			continue;
+		}
+		const want = [...sources].sort();
+		if (actual.join(' ') !== want.join(' ')) {
+			problems.push(`${directive} = ${actual.join(' ')} (expected ${want.join(' ')})`);
+		}
+	}
+	for (const directive of seen.keys()) {
+		if (!(directive in EXPECTED_CSP) && !FLAG_DIRECTIVES.has(directive)) {
+			problems.push(`unexpected directive ${directive}`);
+		}
+	}
+	return problems;
 }
-ok("CSP does not allow 'unsafe-eval'", !csp.includes('unsafe-eval'));
+
+const problems = cspProblems(csp);
+ok('the policy is exactly the reviewed set of directives and sources', problems.length === 0, problems.join('; '));
+
+// Fixtures: the check must reject a weakened policy, not just describe a good one.
+// An added external origin on connect-src is what would let an injected script
+// exfiltrate off-origin; 'unsafe-eval' is what would let it run a string.
+ok(
+	'fixture: an added external connect-src origin is rejected',
+	cspProblems(csp.replace("connect-src 'self'", "connect-src 'self' https://example.com")).length > 0
+);
+ok(
+	"fixture: an added 'unsafe-eval' in script-src is rejected",
+	cspProblems(csp.replace("script-src 'self' 'unsafe-inline'", "script-src 'self' 'unsafe-inline' 'unsafe-eval'"))
+		.length > 0
+);
 
 ok(
 	'X-Content-Type-Options is nosniff',
