@@ -129,8 +129,12 @@
 	let layer = $state<Layer>('political');
 	/** Pixels per year, one of `V_LEVELS`. */
 	let pxPerYear = $state(V_DEFAULT);
-	/** The event the reader picked from the spine, if any. */
-	let focusEventId = $state<string | null>(null);
+	/*
+	 * The focused event is the open record, when the open record is an event. Following
+	 * a cause or consequence moves the record, so the highlight moves with it. Closing the
+	 * sheet or opening a person ends the focus, with no separate state to clear.
+	 */
+	const focusEventId = $derived(app.selected && eventById.has(app.selected) ? app.selected : null);
 	/** The chart is a chart; the list is its table alternative. */
 	let listMode = $state(false);
 
@@ -237,21 +241,11 @@
 		}
 	});
 
-	/** A picked event is focused here and opened in the record panel. */
+	/** A picked event is opened in the record panel, which focuses it here. */
 	function pickEvents(ids: string[]) {
 		if (ids.length !== 1) return;
-		focusEventId = ids[0];
 		app.select(ids[0]);
 	}
-
-	/*
-	 * The focus belongs to the open record. Closing the sheet, or opening another
-	 * record, ends it, so there is no separate control to clear it and no state
-	 * left standing after the reader has moved on.
-	 */
-	$effect(() => {
-		if (focusEventId !== null && app.selected !== focusEventId) focusEventId = null;
-	});
 
 	/*
 	 * A shared link (`/chronicle?id=…`) opens its record here as it does on the
@@ -263,10 +257,7 @@
 		if (deepLinked || !applyEntityLink()) return;
 		deepLinked = true;
 		const ev = app.selected ? eventById.get(app.selected) : undefined;
-		if (ev) {
-			focusEventId = ev.id;
-			app.t = ev.interval.startEarliest;
-		}
+		if (ev) app.t = ev.interval.startEarliest;
 	});
 
 	/** View options: about, scale and the list. One button on the standing row. */
