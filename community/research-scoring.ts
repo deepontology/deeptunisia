@@ -816,6 +816,12 @@ export interface ItemSummary {
 	skipped: number;
 	/** Respondents the item was never shown to, because its condition did not hold. */
 	not_shown: number;
+	/**
+	 * True when fewer respondents than the cell floor answered the item: the
+	 * histogram or counts are withheld, because a distribution of a handful of
+	 * answers is those people's answers.
+	 */
+	suppressed?: boolean;
 }
 
 export interface WaveAggregate {
@@ -964,14 +970,35 @@ function push(buckets: Map<string, number[]>, key: string, value: number): void 
 	else buckets.set(key, [value]);
 }
 
-function cells(buckets: Map<string, number[]>, keys: string[], floor: number): Record<string, SplitCell> {
+/**
+ * One split's cells under the cell floor, with complementary suppression.
+ *
+ * Hiding a small cell is not enough on its own: the overall mean and count are
+ * published, so everyone outside the published cells (the suppressed cells and
+ * the respondents in no cell at all) forms a group whose mean anyone can solve
+ * for. That remainder must therefore be empty or at least as large as the floor
+ * itself. While it is not, the smallest published cell is suppressed too, so a
+ * split with one small group and one large one publishes neither.
+ */
+function cells(
+	buckets: Map<string, number[]>,
+	keys: string[],
+	floor: number,
+	scoredTotal: number
+): Record<string, SplitCell> {
+	const sizes = new Map(keys.map((key) => [key, (buckets.get(key) ?? []).length]));
+	const published = new Set(keys.filter((key) => sizes.get(key)! >= floor));
+	const remainder = () => scoredTotal - [...published].reduce((sum, key) => sum + sizes.get(key)!, 0);
+	while (published.size > 0 && remainder() > 0 && remainder() < floor) {
+		const smallest = [...published].sort((a, b) => sizes.get(a)! - sizes.get(b)!)[0];
+		published.delete(smallest);
+	}
 	const out: Record<string, SplitCell> = {};
 	for (const key of keys) {
 		const values = buckets.get(key) ?? [];
-		out[key] =
-			values.length < floor
-				? { n: null, mean: null, suppressed: true }
-				: { n: values.length, mean: mean(values), suppressed: false };
+		out[key] = published.has(key)
+			? { n: values.length, mean: mean(values), suppressed: false }
+			: { n: null, mean: null, suppressed: true };
 	}
 	return out;
 }
@@ -1072,6 +1099,16 @@ export function aggregateResponses(
 			not_shown: notShown
 		};
 	}
+	// Below the cell floor an item's distribution is withheld; the counts of who
+	// answered, skipped and never saw it stay, because they say nothing about
+	// what anyone answered.
+	const itemFloor = spec.cell_floor ?? 0;
+	for (const id of scaleItems) {
+		const summary = items[id];
+		if (summary.answered > 0 && summary.answered < itemFloor) {
+			items[id] = { answered: summary.answered, skipped: summary.skipped, not_shown: summary.not_shown, suppressed: true };
+		}
+	}
 	for (const id of countItems) {
 		if (scaleItems.has(id)) continue;
 		const counts: Record<string, number> = {};
@@ -1094,7 +1131,10 @@ export function aggregateResponses(
 				if (typeof option === 'string') counts[option] = (counts[option] ?? 0) + 1;
 			}
 		}
-		items[id] = { counts, answered, skipped, not_shown: notShown };
+		items[id] =
+			answered > 0 && answered < itemFloor
+				? { answered, skipped, not_shown: notShown, suppressed: true }
+				: { counts, answered, skipped, not_shown: notShown };
 	}
 
 	// Splits: contact through the item the first cases branch reads, and region
@@ -1140,9 +1180,9 @@ export function aggregateResponses(
 		items,
 		splits: {
 			...(spec.regions
-				? { regions: cells(regionBuckets, Object.keys(spec.regions.groups), spec.cell_floor) }
+				? { regions: cells(regionBuckets, Object.keys(spec.regions.groups), spec.cell_floor, indices.length) }
 				: {}),
-			contact: cells(contactBuckets, [...contactBuckets.keys()], spec.cell_floor)
+			contact: cells(contactBuckets, [...contactBuckets.keys()], spec.cell_floor, indices.length)
 		}
 	};
 }
@@ -1317,6 +1357,49 @@ export function repeatCheck(spec: ScoringSpec, rows: AggregateRow[], options: Ag
 		indexWithoutRepeats = without.n >= firstFigureN(spec) ? without.index.mean : null;
 	}
 	return { replaced, updated, same_device: sameDevice, index_without_repeats: indexWithoutRepeats };
+}
+
+/**
+ * The two counterfactuals read together. Each passes its own floors, but with
+ * the window mean, the mean without the largest link (set A) and the mean
+ * without possible repeats (set B), anyone can solve for the answers in one set
+ * and not the other. So when both are published, A∖B and B∖A must each hold no
+ * scored answer or at least the cell floor of them; otherwise the repeat figure
+ * is withheld and the link figure, the older of the two, stays.
+ */
+function jointlySafe(spec: ScoringSpec, rows: AggregateRow[], links: LinkCheck, repeats: RepeatCheck): RepeatCheck {
+	if (links.index_without_largest === null || repeats.index_without_repeats === null) return repeats;
+	const largest = largestLinkChannel(rows);
+	const floor = spec.cell_floor ?? 20;
+	let onlyLink = 0;
+	let onlyRepeat = 0;
+	for (const row of rows) {
+		if (scoreResponse(spec, row.answers).index === null) continue;
+		const inLink = largest !== null && (row.channel ?? ORGANIC_CHANNEL) === largest;
+		const inRepeat = Boolean(row.revision && POSSIBLE_REPEATS.has(row.revision));
+		if (inLink && !inRepeat) onlyLink++;
+		if (inRepeat && !inLink) onlyRepeat++;
+	}
+	const unsafe = (n: number) => n > 0 && n < floor;
+	return unsafe(onlyLink) || unsafe(onlyRepeat) ? { ...repeats, index_without_repeats: null } : repeats;
+}
+
+/** The single most-used shared link in a set of rows, by row count; never returned to a reader. */
+function largestLinkChannel(rows: AggregateRow[]): string | null {
+	const perChannel = new Map<string, number>();
+	for (const row of rows) {
+		const channel = row.channel ?? ORGANIC_CHANNEL;
+		if (channel !== ORGANIC_CHANNEL) perChannel.set(channel, (perChannel.get(channel) ?? 0) + 1);
+	}
+	let best: string | null = null;
+	let bestCount = 0;
+	for (const [channel, count] of perChannel) {
+		if (count > bestCount) {
+			best = channel;
+			bestCount = count;
+		}
+	}
+	return best;
 }
 
 // ---------------------------------------------------------------------------
@@ -1496,13 +1579,15 @@ export function aggregateSeries(
 			const period = periodOf(row.submittedAt, offset);
 			return period >= first && period <= current;
 		});
+		const links = linkCheck(spec, inside, options);
+		const repeats = repeatCheck(spec, inside, options);
 		window = {
 			first,
 			last: current,
 			months: span,
 			results: aggregateResponses(spec, inside, options),
-			links: linkCheck(spec, inside, options),
-			repeats: repeatCheck(spec, inside, options)
+			links,
+			repeats: jointlySafe(spec, inside, links, repeats)
 		};
 	}
 

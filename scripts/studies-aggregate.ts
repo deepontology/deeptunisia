@@ -77,6 +77,8 @@ export interface ParsedResponse {
 	scale_direction: string | null;
 	answers: Record<string, unknown>;
 	maxdiff: Array<{ set: string; most: string; least: string }> | null;
+	/** null, 'replaced', 'update' or 'same-device' (research-schema.sql). */
+	revision: string | null;
 	created_at: number;
 }
 
@@ -192,6 +194,7 @@ export function parseResponses(csv: string): ParsedResponse[] {
 				scale_direction: get('scale_direction') || null,
 				answers: answers as Record<string, unknown>,
 				maxdiff: Array.isArray(maxdiff) ? maxdiff : null,
+				revision: get('revision') || null,
 				created_at: numbers.created_at
 			};
 		});
@@ -327,6 +330,8 @@ export interface AggregateOutcome {
 	included: ParsedResponse[];
 	/** Receipt to the rules it tripped, for the stdout report and the tests. */
 	perRow: Map<string, ExclusionRuleId[]>;
+	/** Rows set aside because they answered another questionnaire version. */
+	otherVersions: number;
 }
 
 function round(value: number, digits = 2): number {
@@ -395,6 +400,15 @@ export function aggregateResponses(
 	instrument: RuntimeInstrument,
 	options: AggregateOptions
 ): AggregateOutcome {
+	// One questionnaire version per results document: the document is labelled
+	// with this instrument's hash, and an answer to other wording is not an
+	// answer to these questions. The export carries every version, so the rest
+	// are set aside here and counted in the report.
+	const otherVersions = rows.filter((row) => row.instrument_hash !== instrument.hash).length;
+	rows = rows.filter((row) => row.instrument_hash === instrument.hash);
+	if (!rows.length) {
+		throw new Error(`no rows answered instrument ${instrument.hash.slice(0, 12)}; ${otherVersions} answered another version`);
+	}
 	const exclusions = evaluateExclusions(rows, instrument);
 	const included = rows.filter((row) => (exclusions.perRow.get(row.receipt) ?? []).length === 0);
 	if (!included.length) {
@@ -494,7 +508,7 @@ export function aggregateResponses(
 			by_channel: exclusions.byChannel
 		}
 	};
-	return { results, included, perRow: exclusions.perRow };
+	return { results, included, perRow: exclusions.perRow, otherVersions };
 }
 
 /** Parse the working CSV and aggregate it. */
@@ -528,6 +542,9 @@ function report(studyId: string, outcome: AggregateOutcome, outPath: string) {
 	const total = results.n + excluded.rows_excluded;
 	console.log(`\n  studies aggregate: ${studyId}`);
 	console.log(`  rows: ${total} read, ${excluded.rows_excluded} excluded, ${results.n} included`);
+	if (outcome.otherVersions) {
+		console.log(`  ${outcome.otherVersions} row(s) answered another questionnaire version and were set aside`);
+	}
 	console.log('  exclusions by rule (a row may trip more than one):');
 	for (const rule of EXCLUSION_RULE_IDS) {
 		console.log(`    ${rule.padEnd(16)} ${excluded.rules[rule] ?? 0}`);

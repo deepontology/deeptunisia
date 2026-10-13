@@ -623,9 +623,20 @@ console.log('\n  ── wave aggregation ──\n');
 		first.items.pti_e4.counts?.none === 20 && first.items.pti_e4.skipped === 4
 	);
 	ok(
-		'a contact cell at the floor is shown',
-		first.splits.contact.yes.n === 20 && first.splits.contact.yes.suppressed === false
+		'a contact cell at the floor is hidden while the rest is too small to hide behind it',
+		first.splits.contact.yes.suppressed === true && first.splits.contact.yes.n === null,
+		'20 with contact and 3 without: the overall mean minus the 20 would give the 3'
 	);
+	{
+		// Twenty more without contact: both groups reach the floor and both show.
+		const more = [...rows, ...rows.slice(0, 20).map((row) => ({ answers: { ...row.answers, pti_e1: 'no' } }))];
+		const both = aggregateResponses(spec, more, { seed: 1, resamples: 50 });
+		ok(
+			'with both contact groups at the floor, both are shown',
+			both.splits.contact.yes.suppressed === false && both.splits.contact.no.suppressed === false,
+			JSON.stringify(both.splits.contact)
+		);
+	}
 	ok(
 		'a contact cell below the floor is suppressed and hides n',
 		first.splits.contact.no.suppressed === true &&
@@ -639,9 +650,23 @@ console.log('\n  ── wave aggregation ──\n');
 	const withRegion = rows.map((row, i) => ({ answers: { ...row.answers, ...(i < 20 ? { demo_governorate: i % 2 ? 'tunis' : 'ariana' } : {}) } }));
 	const regional = aggregateResponses(spec, withRegion, { seed: 1, resamples: 50 });
 	ok(
-		'governorates are counted only as their region, shown once it reaches the floor',
-		regional.splits.regions?.grand_tunis.n === 20 && regional.splits.regions?.centre_east.suppressed === true
+		'a region at the floor stays hidden while the respondents outside it are too few to hide',
+		regional.splits.regions?.grand_tunis.suppressed === true,
+		'20 in grand_tunis and 3 with no region: the overall mean would give the 3'
 	);
+	{
+		// The 20 in grand_tunis and 20 in sfax, and nobody outside a region.
+		const spread = [
+			...withRegion.slice(0, 20),
+			...rows.slice(0, 20).map((row) => ({ answers: { ...row.answers, demo_governorate: 'sfax' } }))
+		];
+		const regions = aggregateResponses(spec, spread, { seed: 1, resamples: 50 }).splits.regions!;
+		ok(
+			'governorates are counted only as their region, shown once it and the rest reach the floor',
+			regions.grand_tunis.n === 20 && regions.centre_east.n === 20 && regions.south_west.suppressed === true,
+			JSON.stringify({ gt: regions.grand_tunis, ce: regions.centre_east })
+		);
+	}
 	ok('the index carries its SD', first.index.sd !== null && first.index.sd > 0, String(first.index.sd));
 
 	// With the instrument's display conditions, a respondent who had no contact
@@ -663,8 +688,9 @@ console.log('\n  ── wave aggregation ──\n');
 	// The multi-choice share denominator counts people, not ticks: one person who
 	// ticks two options is one respondent, so `answered` stays below the sum of the
 	// counts. A share taken against the total instead would understate every option.
+	// Floor 0 here: this is about the denominator, not suppression.
 	const multi = aggregateResponses(
-		spec,
+		{ ...spec, cell_floor: 0 },
 		[
 			{ answers: { pti_e1: 'yes', pti_e4: ['money', 'insult'] } },
 			{ answers: { pti_e1: 'yes', pti_e4: ['threat'] } },
@@ -680,6 +706,22 @@ console.log('\n  ── wave aggregation ──\n');
 		multiE4.answered === 2 && multiTicks === 3,
 		`answered ${multiE4.answered}, ticks ${multiTicks}`
 	);
+	{
+		const sparse = aggregateResponses(
+			spec,
+			[{ answers: { pti_e1: 'yes', pti_e4: ['money'], pti_t1: 3 } }, { answers: { pti_e1: 'yes' } }],
+			{ seed: 1, resamples: 50 }
+		);
+		ok(
+			'an item answered by fewer than the cell floor withholds its distribution',
+			sparse.items.pti_e4.suppressed === true &&
+				sparse.items.pti_e4.counts === undefined &&
+				sparse.items.pti_e4.answered === 1 &&
+				sparse.items.pti_t1.suppressed === true &&
+				sparse.items.pti_t1.histogram === undefined,
+			JSON.stringify(sparse.items.pti_e4)
+		);
+	}
 	ok(
 		'answered, skipped and not shown cover every row for the counts too',
 		multiE4.answered + multiE4.skipped + multiE4.not_shown === multi.n_total,

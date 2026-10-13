@@ -624,6 +624,23 @@ console.log('\n  ── updates, repeats and the month counters ──\n');
 	const missing = await post(env, '/api/studies/fixture/withdraw', { receipt: shared.body.receipt });
 	const [unchanged] = await tally();
 	ok('a withdrawal that deletes nothing counts nothing', missing.body.deleted === false && unchanged.withdrawn === 1);
+	// Two withdrawals of one receipt at once: both may find the row before either
+	// deletes it, and only the one whose batch still finds it may count.
+	const raced = await submitAssigned(env, 'fixture');
+	const [a, b] = await Promise.all([
+		post(env, '/api/studies/fixture/withdraw', { receipt: raced.body.receipt }),
+		post(env, '/api/studies/fixture/withdraw', { receipt: raced.body.receipt })
+	]);
+	const [afterRace] = await tally();
+	const storedAfterRace = (await allRows(env)).length;
+	ok(
+		'overlapping withdrawals of one receipt count it once',
+		[a.body.deleted, b.body.deleted].filter((d) => d === true).length === 1 &&
+			[a.body.deleted, b.body.deleted].includes(false) &&
+			afterRace.withdrawn === 2 &&
+			afterRace.received - afterRace.withdrawn - afterRace.replaced === storedAfterRace,
+		JSON.stringify({ a: a.body, b: b.body, ...afterRace, stored: storedAfterRace })
+	);
 }
 
 console.log('\n  ── the arm assignment ──\n');

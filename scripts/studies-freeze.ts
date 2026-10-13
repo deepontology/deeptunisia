@@ -158,8 +158,19 @@ let prereg: { text: string; eol: string } | null = existsSync(preregPath) ? read
 let preregText: string | null = null;
 if (prereg) {
 	const marker = 'RECORDED AT FREEZE';
-	if (!prereg.text.includes(marker)) die('the pre-registration has no RECORDED AT FREEZE fields left; it was already frozen');
+	// Two placeholder styles exist: the `RECORDED AT FREEZE` fields (study 002)
+	// and bracketed ones such as [VERSION] and [SHA256] (study 001). A document
+	// with neither has already been frozen.
+	const BRACKETS = ['[VERSION]', '[SHA256]', '[START]', '[END]', '[DATE]'];
+	if (!prereg.text.includes(marker) && !BRACKETS.some((b) => prereg!.text.includes(b))) {
+		die('the pre-registration has no freeze placeholders left; it was already frozen');
+	}
 	preregText = prereg.text
+		.replaceAll('[VERSION]', version)
+		.replaceAll('[SHA256]', `\`${hash}\``)
+		.replaceAll('[START]', open)
+		.replaceAll('[END]', close ?? 'no fixed date')
+		.replaceAll('[DATE]', today)
 		.replace(/(\*\*Version:\*\* )recorded at freeze/, `$1${version}`)
 		.replace(/(\*\*Instrument hash \(sha256\):\*\* )`RECORDED AT FREEZE`/, `$1\`${hash}\``)
 		.replace(
@@ -168,6 +179,10 @@ if (prereg) {
 		)
 		.replace(/(\*\*Registered:\*\* )`RECORDED AT FREEZE`/, `$1${today}`);
 	if (preregText.includes(marker)) die('a RECORDED AT FREEZE field in the pre-registration was not recognised');
+	// What is left in brackets is a decision only the maintainer can record
+	// (the registration platform, the channels, a threshold): listed, not guessed.
+	const left = [...new Set(preregText.match(/\[[A-Za-z][^\]\n]{0,80}\]/g) ?? [])].filter((m) => !m.startsWith('[!'));
+	if (left.length) console.log(`  prereg       still to fill by hand: ${left.join(', ')}`);
 }
 
 // ---- report, then write -----------------------------------------------------

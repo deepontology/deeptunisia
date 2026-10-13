@@ -192,24 +192,34 @@ async function commitments(
 	const offset = tallyOffset(instrument);
 	const current = periodOf(now, offset);
 	const previous = previousPeriod(current);
-	const { results } = await db
+	// The rows and the counters in ONE statement, so both are read from the same
+	// moment: two queries would let a submission land between them and publish a
+	// correct month as unbalanced, which the daily job would then record forever.
+	const { results: both } = await db
 		.prepare(
-			`SELECT answers, completion_ms, submitted_at, locale, instrument_hash, revision FROM research_responses
-			 WHERE study_id = ? AND submitted_at >= ?`
+			`SELECT 'row' AS kind, answers, completion_ms, submitted_at, locale, instrument_hash, revision,
+			        NULL AS period, NULL AS received, NULL AS withdrawn, NULL AS replaced
+			   FROM research_responses WHERE study_id = ? AND submitted_at >= ?
+			 UNION ALL
+			 SELECT 'tally', NULL, NULL, NULL, NULL, NULL, NULL, period, received, withdrawn, replaced
+			   FROM research_tally WHERE study_id = ? AND period IN (?, ?)`
 		)
-		.bind(study.id, periodStart(previous, offset))
+		.bind(study.id, periodStart(previous, offset), study.id, current, previous)
 		.all<{
+			kind: 'row' | 'tally';
 			answers: string;
 			completion_ms: number;
 			submitted_at: number;
 			locale: string;
 			instrument_hash: string;
 			revision: string | null;
+			period: string;
+			received: number;
+			withdrawn: number;
+			replaced: number;
 		}>();
-	const tallies = await db
-		.prepare('SELECT period, received, withdrawn, replaced FROM research_tally WHERE study_id = ? AND period IN (?, ?)')
-		.bind(study.id, current, previous)
-		.all<Tally & { period: string }>();
+	const results = (both ?? []).filter((r) => r.kind === 'row');
+	const tallies = { results: (both ?? []).filter((r) => r.kind === 'tally') };
 	const byPeriod = new Map<string, ReturnType<typeof releaseRow>[]>([
 		[current, []],
 		[previous, []]
@@ -245,6 +255,28 @@ function bumpTally(db: Db, studyId: string, period: string, counter: 'received' 
 			 ON CONFLICT (study_id, period) DO UPDATE SET ${counter} = ${counter} + 1`
 		)
 		.bind(studyId, period);
+}
+
+/**
+ * Raise a counter only if the row is still there, in the batch that deletes it
+ * (and before the delete). A batch is one transaction, so of two overlapping
+ * withdrawals or replacements of the same receipt only the first finds the row:
+ * the second counts nothing and deletes nothing, and the month's sum holds.
+ */
+function bumpTallyIfStored(
+	db: Db,
+	studyId: string,
+	period: string,
+	counter: 'withdrawn' | 'replaced',
+	receipt: string
+) {
+	return db
+		.prepare(
+			`INSERT INTO research_tally (study_id, period, ${counter})
+			 SELECT ?, ?, 1 WHERE EXISTS (SELECT 1 FROM research_responses WHERE receipt = ? AND study_id = ?)
+			 ON CONFLICT (study_id, period) DO UPDATE SET ${counter} = ${counter} + 1`
+		)
+		.bind(studyId, period, receipt, studyId);
 }
 
 /** A stored answers column that fails to parse counts as an empty response. */
@@ -1027,10 +1059,10 @@ export async function handleResearch(
 				const statements = [insert, bumpTally(db, study.id, period, 'received')];
 				if (replaces !== null) {
 					statements.push(
+						bumpTallyIfStored(db, study.id, period, 'replaced', replaces),
 						db
 							.prepare('DELETE FROM research_responses WHERE receipt = ? AND study_id = ?')
-							.bind(replaces, study.id),
-						bumpTally(db, study.id, period, 'replaced')
+							.bind(replaces, study.id)
 					);
 				}
 				await db.batch(statements);
@@ -1086,14 +1118,20 @@ export async function handleResearch(
 			if (!found) return json({ deleted: false });
 			// The deletion and its counter in one batch: the ledger's sum holds
 			// because a withdrawal is never a row that simply went missing.
-			const [out] = (await env.RESEARCH_DB.batch([
+			const [, out] = (await env.RESEARCH_DB.batch([
+				bumpTallyIfStored(
+					env.RESEARCH_DB,
+					study.id,
+					periodOf(found.submitted_at, tallyOffset(instrument)),
+					'withdrawn',
+					receipt
+				),
 				env.RESEARCH_DB.prepare('DELETE FROM research_responses WHERE receipt = ? AND study_id = ?').bind(
 					receipt,
 					study.id
-				),
-				bumpTally(env.RESEARCH_DB, study.id, periodOf(found.submitted_at, tallyOffset(instrument)), 'withdrawn')
+				)
 			])) as { meta?: { changes?: number } }[];
-			return json({ deleted: (out?.meta?.changes ?? 1) > 0 });
+			return json({ deleted: (out?.meta?.changes ?? 0) > 0 });
 		}
 
 		return json({ error: 'not found' }, 404);

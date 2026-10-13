@@ -34,6 +34,7 @@ import { StudyResultsSchema, validateResults } from './research-schema.ts';
 import { EXPORT_COLUMNS, exportResponses } from './studies-export.ts';
 import {
 	aggregateCsv,
+	aggregateResponses as aggregateParsed,
 	DRAFT_POPULATION_STATEMENT,
 	evaluateExclusions,
 	parseResponses,
@@ -341,6 +342,16 @@ try {
 	missingTable = true;
 }
 ok('a missing table is an error, not an empty CSV', missingTable);
+ok('the export carries the revision mark', csvText.split(/\r?\n/)[0].split(',').includes('revision'));
+{
+	const parsedRows = parseResponses(csvText);
+	const mixed = [...parsedRows, { ...parsedRows[0], receipt: 'r-old-version', instrument_hash: 'f'.repeat(64) }];
+	const outcome = aggregateParsed(mixed, fixtureInstrument, { populationStatement: null, generatedAt: NOW });
+	ok(
+		'rows that answered another questionnaire version are set aside and counted',
+		outcome.otherVersions === 1 && !outcome.included.some((row) => row.receipt === 'r-old-version')
+	);
+}
 
 // ---------------------------------------------------------------------------
 // Exclusions

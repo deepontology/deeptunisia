@@ -19,7 +19,7 @@ import {
 	releaseRow,
 	type ReleaseRow
 } from '../community/research-commitment.ts';
-import { periodOf, repeatCheck } from '../community/research-scoring.ts';
+import { aggregateSeries, periodOf, repeatCheck } from '../community/research-scoring.ts';
 import { closedEntry, verifyLedger, verifyRelease, type LedgerEntry } from './ledger-verify.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -147,6 +147,29 @@ ok(
 	manyCheck.index_without_repeats !== null && manyCheck.same_device === 20,
 	JSON.stringify(manyCheck)
 );
+
+// The two counterfactuals read together (Greptile's case): 100 ordinary answers,
+// 20 updates through the largest link, and one organic same-device answer. Each
+// passes its own floor, but the two "without" figures would differ by exactly
+// that one answer, so the repeat figure is withheld.
+{
+	const now = Date.now();
+	const ordinary = Array.from({ length: 100 }, (_, i) => ({ answers: answers(4 + (i % 3)), channel: 'organic', revision: null, submittedAt: now - 1000 }));
+	const viaLink = Array.from({ length: 20 }, () => ({ answers: answers(9), channel: 'wave', revision: 'update', submittedAt: now - 1000 }));
+	const lone = { answers: answers(1), channel: 'organic', revision: 'same-device', submittedAt: now - 1000 };
+	const series = aggregateSeries(spec, [...ordinary, ...viaLink, lone], { ...options, now })!;
+	ok(
+		'two counterfactuals that differ by one answer do not both publish',
+		series.window!.links.index_without_largest !== null && series.window!.repeats.index_without_repeats === null,
+		JSON.stringify({ links: series.window!.links.index_without_largest, repeats: series.window!.repeats })
+	);
+	const many = Array.from({ length: 20 }, () => ({ ...lone }));
+	const safe = aggregateSeries(spec, [...ordinary, ...viaLink, ...many], { ...options, now })!;
+	ok(
+		'with twenty such answers both are published',
+		safe.window!.links.index_without_largest !== null && safe.window!.repeats.index_without_repeats !== null
+	);
+}
 
 console.log(`\n   ${checks - failures}/${checks} checks passed${failures ? `, ${failures} FAILED` : ''}\n`);
 if (failures) process.exit(1);

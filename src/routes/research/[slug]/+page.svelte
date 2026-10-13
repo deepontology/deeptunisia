@@ -46,7 +46,7 @@
 		<p class="status">{t(statusKey)}</p>
 		{#if open}
 			<p>
-				<a class="cta" href="/research/{study.slug}/participate">{t('research.study.participate')}</a>
+				<a class="cta" href="/research/{study.slug}/participate" data-sveltekit-reload>{t('research.study.participate')}</a>
 			</p>
 		{:else}
 			<p class="note">{inDesign ? t('research.study.inDesign') : t('research.study.notOpen')}</p>
@@ -59,7 +59,7 @@
 
 	{#if open}
 		<p class="prose">
-			<a class="cta" href="/research/{study.slug}/participate">{t('research.study.participate')}</a>
+			<a class="cta" href="/research/{study.slug}/participate" data-sveltekit-reload>{t('research.study.participate')}</a>
 		</p>
 	{/if}
 

@@ -43,6 +43,7 @@ export const EXPORT_COLUMNS = [
 	'scale_direction',
 	'answers',
 	'maxdiff',
+	'revision',
 	'created_at'
 ] as const;
 
