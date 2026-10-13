@@ -790,7 +790,11 @@
 			clusterPop = null;
 		};
 		const esc = (e: KeyboardEvent) => {
-			if (e.key === 'Escape') clusterPop = null;
+			// The card takes the key, so the shell's Escape does not also close the open record.
+			if (e.key === 'Escape') {
+				e.stopPropagation();
+				clusterPop = null;
+			}
 		};
 		document.addEventListener('pointerdown', away, true);
 		document.addEventListener('keydown', esc);
