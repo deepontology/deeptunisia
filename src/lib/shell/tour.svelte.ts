@@ -72,13 +72,14 @@ export interface TourStep {
 
 export const STEPS: TourStep[] = [
 	{ id: 'welcome', n: 1 },
-	{ id: 'bubbles', n: 2, target: '[data-tour="bubbles"]', place: 'bottom' },
-	{ id: 'views', n: 3, target: '[data-tour="views"]', place: 'bottom' },
+	/* On a phone the bubbles and the tab strip are one button, the view menu. */
+	{ id: 'bubbles', n: 2, target: '[data-tour="bubbles"],[data-tour="viewmenu"]', place: 'bottom' },
+	{ id: 'views', n: 3, target: '[data-tour="views"],[data-tour="viewmenu"]', place: 'bottom' },
 	{ id: 'canvas', n: 4, target: '[data-tour="canvas"]', place: 'bottom' },
 	/* Two selectors, one step: on a wide dock the dial is on screen, on a narrow
 	   one it lives inside a popover and the button that opens it stands in. */
 	{ id: 'evidence', n: 5, target: '[data-tour="evidence"],[data-tour="filters"]', place: 'top' },
-	{ id: 'layers', n: 6, target: '[data-tour="layers"]', place: 'top' },
+	{ id: 'layers', n: 6, target: '[data-tour="layers"],[data-tour="filters"]', place: 'top' },
 	{ id: 'time', n: 7, target: '[data-tour="time"]', place: 'top' },
 	{ id: 'chrome', n: 8, target: '[data-tour="chrome"]', place: 'bottom' },
 	{ id: 'done', n: 9 }
@@ -93,8 +94,20 @@ export const tour = $state({
 	 * reader who replays the tour from /about must not be shown three spotlights
 	 * pointing at nothing.
 	 */
-	steps: [] as TourStep[]
+	steps: [] as TourStep[],
+	/**
+	 * On a phone the tour is offered, not imposed. A modal walkthrough on a 390px
+	 * screen sits over the very controls it describes and blocks the page until it
+	 * is finished or skipped, so a first visit there shows a one-line invitation
+	 * instead (TourInvite.svelte), which never blocks and leaves on its own.
+	 */
+	invite: false
 });
+
+/** The compact breakpoint, read at the moment the tour would start. */
+function isPhone(): boolean {
+	return browser && window.matchMedia('(max-width: 900px)').matches;
+}
 
 export function tourSeen(): boolean {
 	if (!browser) return true;
@@ -129,6 +142,12 @@ export function startTour(force = false) {
 	// leave the flag alone so the next arrival gets a real one.
 	if (live.length < 4) return;
 
+	if (!force && isPhone()) {
+		tour.invite = true;
+		return;
+	}
+
+	tour.invite = false;
 	tour.steps = live;
 	tour.i = 0;
 	tour.open = true;
@@ -146,5 +165,11 @@ export function prevStep() {
 /** Skip and finish are the same act, deliberately: both mean "do not show me this again". */
 export function endTour() {
 	tour.open = false;
+	markSeen();
+}
+
+/** The invitation was declined, ignored or left behind: same as skipping. */
+export function dismissInvite() {
+	tour.invite = false;
 	markSeen();
 }

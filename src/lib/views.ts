@@ -41,6 +41,21 @@ export const VIEWS: ViewEntry[] = [
 	{ route: '/feed', key: 'feed' }
 ];
 
+/**
+ * Routes whose view places "About this view" in its own toolbar, beside its
+ * eyebrow and controls. Every other captioned route gets it from Viewport as a
+ * row of its own, so no route loses its answer line.
+ */
+export const ABOUT_IN_TOOLBAR = new Set([
+	'/chronicle',
+	'/now',
+	'/network',
+	'/atlas',
+	'/rankings',
+	'/investigate',
+	'/feed'
+]);
+
 const BY_ROUTE = new Map(VIEWS.map((v) => [v.route, v]));
 
 /** The entry for a pathname, or null when the route has no caption. */

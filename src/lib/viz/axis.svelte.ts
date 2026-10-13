@@ -134,12 +134,10 @@ export interface AxisGestureParams {
  * Bind pointers, pinch and wheel to an AxisCamera.
  *
  * Mirrors `navigable` in gestures.ts as closely as a one-dimensional control can:
- * plain wheel pans, ctrl/cmd wheel zooms about the cursor, two fingers pinch.
- *
- * One deliberate difference. A vertical wheel over this element zooms rather than
- * pans, because the element is taller than the window and the reader's vertical
- * scroll has to keep working — claiming it would trap them inside the chart. That is
- * also why `deltaY` is only intercepted when it dominates `deltaX`.
+ * ctrl/cmd wheel zooms about the cursor, sideways wheel or shift pans, two fingers
+ * pinch. A plain vertical wheel is not claimed. The chart sits in a scroll container
+ * far taller than the window, and claiming that axis left the reader only the
+ * scrollbar to reach the rows below.
  */
 export function navigableAxis(node: HTMLElement, params: AxisGestureParams) {
 	let { axis } = params;
@@ -252,16 +250,25 @@ export function navigableAxis(node: HTMLElement, params: AxisGestureParams) {
 	}
 
 	function onWheel(e: WheelEvent) {
-		// Let a genuinely vertical scroll pass through to the page: this chart is
-		// taller than the window, and swallowing that traps the reader inside it.
-		if (!e.ctrlKey && !e.metaKey && Math.abs(e.deltaY) < Math.abs(e.deltaX)) {
+		// A control or panel inside the plot owns its own wheel: it scrolls, or does nothing,
+		// and the chart stays where it is. Same contract as the pointer path above.
+		if ((e.target as Element)?.closest?.('[data-no-pan]')) return;
+		// Ctrl or cmd with the wheel, or a trackpad pinch, zooms about the cursor.
+		if (e.ctrlKey || e.metaKey) {
 			e.preventDefault();
-			axis.panByPixels(-e.deltaX, width());
+			axis.stop();
+			axis.zoomAt(Math.exp(e.deltaY * 0.0016), localX(e.clientX), width());
 			return;
 		}
-		e.preventDefault();
-		axis.stop();
-		axis.zoomAt(Math.exp(e.deltaY * 0.0016), localX(e.clientX), width());
+		// Sideways scroll, or shift with the wheel, pans along the time axis.
+		if (Math.abs(e.deltaX) > Math.abs(e.deltaY) || e.shiftKey) {
+			e.preventDefault();
+			axis.panByPixels(-(e.deltaX || e.deltaY), width());
+			return;
+		}
+		// Plain vertical scroll is left alone, so the browser scrolls the chart's own
+		// container. The chart is far taller than the window, and zooming on it trapped
+		// the reader: the rows below could only be reached with the scrollbar.
 	}
 
 	node.addEventListener('pointerdown', onDown as EventListener);

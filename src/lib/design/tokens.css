@@ -115,6 +115,12 @@
 	--border-default: oklch(100% 0 0 / 0.11);
 	--border-strong: oklch(100% 0 0 / 0.18);
 
+	/* A hairline rule, for dividers and section edges. There is no border-width
+	   token in the system, so this is the one hairline rule and it is built from
+	   --border-subtle; every theme and palette retunes that colour and the rule
+	   follows. */
+	--rule: 1px solid var(--border-subtle);
+
 	/* Text */
 	--text-primary: var(--n-50);
 	--text-secondary: var(--n-300);
@@ -393,6 +399,9 @@
 
 :root {
 	--font-sans: 'Inter', 'IBM Plex Sans Arabic', system-ui, -apple-system, sans-serif;
+	/* Reading prose. Libron ships no Arabic glyphs, so Arabic falls through to
+	   the Plex Arabic fallback in the same stack. */
+	--font-read: 'Libron', 'IBM Plex Sans Arabic', Georgia, serif;
 	--font-serif: 'Newsreader', 'IBM Plex Serif', Georgia, serif;
 	--font-mono: 'JetBrains Mono', 'IBM Plex Mono', ui-monospace, monospace;
 
@@ -409,6 +418,29 @@
 	--t-3xl: 28px;
 	--t-4xl: 36px;
 
+	/* Fluid steps for reading pages: 1.2 at a 390px viewport, 1.25 at 1440px, with
+	   --step-0 at 16px on a phone. The middle term of each clamp is the straight
+	   line between those two widths, so no two steps ever cross. The --t-* scale
+	   above is the instrument panel's and stays fixed; these are the ones that
+	   size a column of prose. */
+	--step--1: clamp(13.33px, calc(12.93px + 0.1019vw), 14.4px);
+	--step-0: clamp(16px, calc(15.26px + 0.1905vw), 18px);
+	--step-1: clamp(19.2px, calc(17.97px + 0.3143vw), 22.5px);
+	--step-2: clamp(23.04px, calc(21.15px + 0.4848vw), 28.13px);
+	--step-3: clamp(27.65px, calc(24.86px + 0.7152vw), 35.16px);
+	--step-4: clamp(33.18px, calc(29.18px + 1.0257vw), 43.95px);
+	--step-5: clamp(39.81px, calc(34.19px + 1.44vw), 54.93px);
+
+	/* Longest line a reading column runs to before the measure wraps. */
+	--measure: 68ch;
+
+	/* Artwork plates are always ink, in both themes and every palette: a plate
+	   frames the artwork as made, so its ground never follows the reader's theme.
+	   Literal values on purpose, since the neutral ramp retunes per palette. */
+	--plate-bg: oklch(14% 0.01 60);
+	/* Paper-coloured text on a plate (FIG. captions), fixed for the same reason. */
+	--plate-ink: oklch(95% 0.008 85);
+
 	--lh-tight: 1.25;
 	--lh-snug: 1.45;
 	--lh-normal: 1.6;
@@ -418,6 +450,11 @@
 	--track-normal: 0;
 	--track-wide: 0.04em;
 	--track-caps: 0.11em;
+
+	/* Opacity for material that is present but not load-bearing. The basis ramp
+	   is a separate thing and lives in model.ts: it has four distinct values and
+	   must never be flattened into this. */
+	--dim: 0.35;
 
 	/* 4px base spacing scale */
 	--s-1: 2px;
@@ -465,9 +502,24 @@
 	--dock-h: 92px;
 	--inspector-w: 400px;
 
+	/* Phone top bar: logo, view menu, search and theme in one row. */
+	--bar-h: 48px;
+	/* Phone time pill: the resting dock (play, date, filters). Bar plus pill is
+	   the whole phone chrome budget at rest. */
+	--pill-h: 44px;
+	/* Vertical Chronicle (phone): width of the year spine. */
+	--cv-spine-w: 48px;
+	/* Vertical Chronicle: narrowest a post column may be. */
+	--cv-col-min: 96px;
+	/* Vertical Chronicle: height of the sticky column header. */
+	--cv-head-h: 56px;
+
 	/* Minimum comfortable touch target. Pointer-precision controls may be smaller;
 	   anything a thumb is expected to hit on a phone may not. */
 	--tap: 44px;
+
+	/* Same floor as --tap, named for the control rather than for the limit. */
+	--touch: 44px;
 
 	/* Notch and home-indicator insets, zero on hardware that has none. Every piece
 	   of fixed chrome adds these rather than hard-coding a phone-shaped guess. */
@@ -512,12 +564,13 @@
 
 @media (max-width: 900px) {
 	:root {
-		--menubar-h: 52px;
-		--subnav-h: 42px;
-		/* Two rows of 32 + 40. Must match TimeDock's compact block exactly: the
+		/* One phone bar: the view button replaces the bubbles and the tab strip. */
+		--menubar-h: var(--bar-h);
+		--subnav-h: 0px;
+		/* The resting pill. Must match TimeDock's compact block exactly: the
 		   inspector sheet and every view that reserves bottom space position against
 		   this number, so a dock taller than its token silently covers them. */
-		--dock-h: 72px;
+		--dock-h: var(--pill-h);
 		--inspector-w: 100vw;
 	}
 }
@@ -535,7 +588,6 @@
 @media (max-width: 900px) and (max-height: 520px) {
 	:root {
 		--menubar-h: 44px;
-		--subnav-h: 34px;
 	}
 }
 

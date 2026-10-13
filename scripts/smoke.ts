@@ -190,8 +190,10 @@ const CHECKS: Check[] = [
 			['.subnav', 1],
 			['.subnav .strip a', 6],
 			['.dock', 1],
-			['.track .playhead', 1],
-			['.era-band', 7],
+			// The Chronicle draws and scrubs its own time axis, so the dock drops
+			// its track here; the track is pinned on /network instead.
+			['.dock.no-track', 1],
+			['.axis-scrub', 1],
 			['.chronicle svg', 1],
 			['.bar', 20]
 		],
@@ -207,6 +209,8 @@ const CHECKS: Check[] = [
 		name: 'network',
 		expect: [
 			['.dock', 1],
+			['.track .playhead', 1],
+			['.era-band', 7],
 			// Lane headers and names are HTML over the canvas now, not SVG text — see
 			// src/lib/viz/labels.css. Asserting on .vlabel is what catches the label
 			// placement pass silently suppressing everything, which would leave a
@@ -749,10 +753,10 @@ console.log('\n  ── interaction ──');
 		if (m.type() === 'error' && !isIgnorable(m.text())) problems.push(m.text());
 	});
 
-	await page.goto(BASE + '/chronicle', { waitUntil: 'networkidle' });
+	// Scrub the dock's track and confirm the readout changed. On a view that has
+	// the track: /chronicle scrubs its own axis instead (chronicle navigation).
+	await page.goto(BASE + '/network', { waitUntil: 'networkidle' });
 	await settle(page);
-
-	// Scrub the timeline and confirm the readout changed.
 	const before = await page.locator('.readout .date').innerText();
 	const box = await page.locator('.track').boundingBox();
 	if (box) {
@@ -764,6 +768,9 @@ console.log('\n  ── interaction ──');
 	await page.waitForTimeout(400);
 	const after = await page.locator('.readout .date').innerText();
 	ok('scrubbing the dock changes the date', before !== after, `${before} -> ${after}`);
+
+	await page.goto(BASE + '/chronicle', { waitUntil: 'networkidle' });
+	await settle(page);
 
 	// Evidence threshold must actually change what is drawn.
 	const barsBefore = await page.locator('.bar').count();
@@ -994,7 +1001,8 @@ if (runSection('timeline')) {
 console.log('\n  ── timeline ──');
 	const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
 	const page = await context.newPage();
-	await page.goto(BASE + '/chronicle', { waitUntil: 'networkidle' });
+	// The dock's track, on a view that shows it (the Chronicle drops it).
+	await page.goto(BASE + '/network', { waitUntil: 'networkidle' });
 	await settle(page);
 
 	/*
@@ -1446,10 +1454,10 @@ if (runSection('chronicle events expanded')) {
 
 	const rows = await page.locator('.ev-row-line').count();
 	const marks = await page.locator('.ev-mark.clickable').count();
-	const labels = await page.locator('.ev-label').count();
+	const labels = await page.locator('.exp-gl').count();
 	ok('the expanded filter bar appears', (await page.locator('.events-bar').count()) === 1);
 	ok('expanded mode stacks events into rows', rows >= 4 && marks > 0, `${rows} rows / ${marks} marks`);
-	ok('expanded rows carry labels', labels > 0, `${labels} labels`);
+	ok('the gutter names every expanded row', labels > 0 && labels === rows, `${labels} labels / ${rows} rows`);
 
 	const clusterBadge = page.locator('.ev-mark.clickable').filter({ has: page.locator('.ev-cluster') }).first();
 	ok('dense expanded events aggregate into cluster badges', (await clusterBadge.count()) > 0);
@@ -1470,16 +1478,16 @@ if (runSection('chronicle events expanded')) {
 	const firstTick = await page.locator('.plot .tick-label').first().textContent();
 	ok('expanding lands on a readable window', Number(firstTick) > 1980, `first tick ${firstTick}`);
 
-	// Labels must not sit on top of the marks they describe.
+	// Row labels live in the gutter and must never sit on top of a mark.
 	const overlaps = await page.evaluate(`(() => {
-		const labels = Array.from(document.querySelectorAll('.ev-label')).map((l) => l.getBoundingClientRect());
+		const labels = Array.from(document.querySelectorAll('.exp-gl text')).map((l) => l.getBoundingClientRect());
 		const marks = Array.from(document.querySelectorAll('.ev-mark.clickable .ev-dot, .ev-mark.clickable .ev-pill, .ev-mark.clickable .ev-diamond, .ev-mark.clickable .ev-spanbar')).map((el) => el.getBoundingClientRect());
 		const hit = (a, b) => !(a.right <= b.left || a.left >= b.right || a.bottom <= b.top || a.top >= b.bottom);
 		let n = 0;
 		for (const l of labels) if (marks.some((m) => hit(l, m))) n++;
 		return n;
 	})()`) as number;
-	ok('no expanded label overlaps a mark', overlaps === 0, `${overlaps} overlaps`);
+	ok('no gutter label overlaps a mark', overlaps === 0, `${overlaps} overlaps`);
 
 	// Clicking a mark opens the record.
 	await page.locator('.ev-mark.clickable').first().click();
@@ -1512,6 +1520,238 @@ if (runSection('chronicle events expanded')) {
 
 	ok('expanded events console clean', problems.length === 0, problems.slice(0, 3).join(' | '));
 	await context.close();
+}
+
+// --- Chronicle on a phone ------------------------------------------------------
+/*
+ * Below the compact breakpoint the Chronicle turns on its side: time runs down a
+ * sticky spine and each post is a column under a sticky header. The failure this
+ * guards is labels scrolling out of reach, so the headers are measured after a
+ * long scroll rather than at rest.
+ */
+if (runSection('chronicle phone')) {
+	console.log('\n  ── chronicle phone ──');
+	const context = await browser.newContext({
+		viewport: { width: 390, height: 844 },
+		isMobile: true,
+		hasTouch: true,
+		colorScheme: 'dark'
+	});
+	await context.addInitScript(TOUR_SEEN_INIT);
+	const page = await context.newPage();
+	const problems: string[] = [];
+	page.on('pageerror', (e) => problems.push(`[pageerror] ${e.message}`));
+	page.on('console', (m: ConsoleMessage) => {
+		if ((m.type() === 'error' || m.type() === 'warning') && !isIgnorable(m.text())) {
+			problems.push(`[${m.type()}] ${m.text()}`);
+		}
+	});
+
+	await page.goto(BASE + '/chronicle', { waitUntil: 'networkidle' });
+	await settle(page);
+
+	ok('the phone chronicle is the vertical layout', (await page.locator('.cv-strip').count()) === 1);
+	const overflow = (await page.evaluate(
+		`document.documentElement.scrollWidth - window.innerWidth`
+	)) as number;
+	ok('the phone chronicle does not overflow the page', overflow <= 0, `${overflow}px`);
+
+	const painted = (await page.evaluate(`(() => {
+		let n = 0;
+		for (const r of document.querySelectorAll('.cv .tb-svg rect')) {
+			const b = r.getBoundingClientRect();
+			if (b.width > 0 && b.height > 0) n++;
+		}
+		return n;
+	})()`)) as number;
+	ok('at least one tenure block is painted', painted > 0, `${painted} blocks`);
+
+	// Scroll the strip a long way down; every header must still sit at its top.
+	const heads = (await page.evaluate(`(async () => {
+		const strip = document.querySelector('.cv-strip');
+		strip.scrollTop = 1500;
+		await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+		const top = strip.getBoundingClientRect().top;
+		const hs = Array.from(document.querySelectorAll('.cv-col-head'));
+		const off = hs.map((h) => Math.round(h.getBoundingClientRect().top - top));
+		return { scrolled: strip.scrollTop, n: hs.length, worst: Math.max(...off.map(Math.abs)) };
+	})()`)) as { scrolled: number; n: number; worst: number };
+	ok(
+		'column headers stay pinned after a long scroll',
+		heads.scrolled >= 1500 && heads.n > 0 && heads.worst <= 1,
+		`scrolled ${heads.scrolled}px, ${heads.n} headers, worst offset ${heads.worst}px`
+	);
+
+	// Tapping an event on the spine opens its record.
+	const picked = (await page.evaluate(`(() => {
+		const strip = document.querySelector('.cv-strip').getBoundingClientRect();
+		const marks = Array.from(document.querySelectorAll('.cv-mark[aria-label]:not([aria-haspopup])'));
+		const vis = marks.find((m) => {
+			const v = m.querySelector('.cv-mark-vis').getBoundingClientRect();
+			return v.top > strip.top + 80 && v.bottom < strip.bottom - 40;
+		});
+		if (!vis) return false;
+		vis.setAttribute('data-smoke', 'pick');
+		return true;
+	})()`)) as boolean;
+	ok('an event dot is in view on the spine', picked);
+	if (picked) {
+		await page.locator('[data-smoke=pick] .cv-mark-vis').tap();
+		await page.waitForTimeout(600);
+		ok('tapping an event dot opens the inspector', (await page.locator('.inspector').count()) === 1);
+	}
+
+	ok('phone chronicle console clean', problems.length === 0, problems.slice(0, 3).join(' | '));
+	await context.close();
+}
+
+/*
+ * The phone review: what a reader on a 390px screen must never meet again.
+ * Labels over the columns, a record sheet that will not step aside, a tour
+ * that blocks the page, a shared link that opens nothing, a reading line that
+ * cannot reach the ends, a modal that lets focus escape.
+ */
+if (runSection('phone review')) {
+	console.log('\n  ── phone review ──');
+	const phone = { viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true };
+	const ds = GRAPH_SNAPSHOT as unknown as {
+		meta: { cutoff: number };
+		eras: { interval: { startEarliest: number } }[];
+		events: { id: string; rupture?: boolean; basis: string; interval: { startEarliest: number } }[];
+	};
+	const firstYear = new Date(Math.min(...ds.eras.map((e) => e.interval.startEarliest))).getUTCFullYear();
+	const lastYear = new Date(ds.meta.cutoff).getUTCFullYear();
+	const rupture = ds.events
+		.filter((e) => e.rupture && (e.basis === 'documented' || e.basis === 'reported'))
+		.sort((a, b) => b.interval.startEarliest - a.interval.startEarliest)[0];
+
+	const context = await browser.newContext(phone);
+	await context.addInitScript(TOUR_SEEN_INIT);
+	const page = await context.newPage();
+	const problems: string[] = [];
+	page.on('pageerror', (e) => problems.push(`[pageerror] ${e.message}`));
+
+	// A shared event link opens its record and focuses it.
+	await page.goto(BASE + '/chronicle?id=' + rupture.id, { waitUntil: 'networkidle' });
+	await settle(page);
+	await page.waitForTimeout(600);
+	ok('a shared event link opens its record on a phone', (await page.locator('.inspector').count()) === 1, rupture.id);
+	ok('a shared event link focuses the event on the canvas', (await page.locator('.cv-focus').count()) === 1);
+	await page.keyboard.press('Escape');
+	await page.waitForTimeout(500);
+
+	// Following a cause or consequence moves the record, and the highlight moves with it.
+	const chained = (ds.events as { id: string; basis: string; causes?: string[]; consequences?: string[] }[]).find(
+		(e) =>
+			(e.basis === 'documented' || e.basis === 'reported') &&
+			[...(e.causes ?? []), ...(e.consequences ?? [])].some((id) =>
+				ds.events.some((x) => x.id === id && (x.basis === 'documented' || x.basis === 'reported'))
+			)
+	);
+	ok('the dataset has an event with a linked event', chained !== undefined);
+	if (chained) {
+		await page.goto(BASE + '/chronicle?id=' + chained.id, { waitUntil: 'networkidle' });
+		await settle(page);
+		await page.waitForTimeout(600);
+		await page.locator('.inspector .refs button.ref').first().click();
+		await page.waitForTimeout(600);
+		ok('following a linked event keeps the event highlighted', (await page.locator('.cv-focus').count()) === 1, chained.id);
+		await page.keyboard.press('Escape');
+		await page.waitForTimeout(500);
+	}
+
+	// Nothing is labelled over the columns; rupture lines cross every column.
+	ok('no rupture label sits over the columns', (await page.locator('.cv-rupture-chip').count()) === 0);
+	const widths = (await page.evaluate(`(() => {
+		const strip = document.querySelector('.cv-strip');
+		const rule = document.querySelector('.cv-rupture');
+		return { track: strip.scrollWidth, rule: rule ? Math.round(rule.getBoundingClientRect().width) : 0 };
+	})()`)) as { track: number; rule: number };
+	ok('a rupture line spans every column', widths.rule >= widths.track - 1, `${widths.rule}px of ${widths.track}px`);
+
+	// The reading line reaches both ends of the record.
+	const year = async (top: 'start' | 'end') => {
+		await page.evaluate(`(() => { const s = document.querySelector('.cv-strip'); s.scrollTop = ${top === 'start' ? 0 : 's.scrollHeight'}; })()`);
+		await page.waitForTimeout(500);
+		const text = (await page.locator('.readout-btn').first().innerText()) || '';
+		return Number((text.match(/\d{4}/) || ['0'])[0]);
+	};
+	const atStart = await year('start');
+	const atEnd = await year('end');
+	ok('the reading line reaches the first year', atStart === firstYear, `${atStart} vs ${firstYear}`);
+	ok('the reading line reaches the last year', atEnd === lastYear, `${atEnd} vs ${lastYear}`);
+	await page.waitForTimeout(1900);
+	ok('the date chip fades once the canvas stops', (await page.locator('.cv-rl-chip.on').count()) === 0);
+
+	// The record sheet steps aside when the reader goes back to the canvas.
+	await page.evaluate(`(() => { const s = document.querySelector('.cv-strip'); s.scrollTop = s.scrollHeight / 2; })()`);
+	await page.waitForTimeout(400);
+	const block = (await page.evaluate(`(() => {
+		const strip = document.querySelector('.cv-strip').getBoundingClientRect();
+		const b = Array.from(document.querySelectorAll('.cv .tb')).find((el) => {
+			const r = el.getBoundingClientRect();
+			const x = r.left + r.width / 2, y = r.top + Math.min(r.height / 2, 20);
+			return r.width > 0 && y > strip.top + 70 && y < strip.top + 300 && document.elementFromPoint(x, y)?.closest('.tb') === el;
+		});
+		if (!b) return false;
+		b.setAttribute('data-smoke', 'tb');
+		return true;
+	})()`)) as boolean;
+	ok('a tenure block is tappable in view', block);
+	if (block) {
+		const r = await page.locator('[data-smoke=tb]').boundingBox();
+		await page.touchscreen.tap(r!.x + r!.width / 2, r!.y + Math.min(r!.height / 2, 20));
+		await page.waitForTimeout(700);
+		ok('tapping a post opens its record', (await page.locator('.inspector:not(.tucked)').count()) === 1);
+		await page.touchscreen.tap(30, 160);
+		await page.waitForTimeout(700);
+		const tucked = (await page.evaluate(`(() => {
+			const el = document.querySelector('.inspector.tucked');
+			return el ? Math.round(el.getBoundingClientRect().height) : 0;
+		})()`)) as number;
+		ok('touching the canvas tucks the record to its title bar', tucked > 0 && tucked <= 120, `${tucked}px`);
+		await page.locator('.inspector').tap();
+		await page.waitForTimeout(600);
+		ok('tapping the tucked record brings it back', (await page.locator('.inspector:not(.tucked)').count()) === 1);
+		await page.keyboard.press('Escape');
+		await page.waitForTimeout(500);
+	}
+
+	// One standing row, and its options behind one button.
+	await page.locator('.cv-opts').tap();
+	await page.waitForTimeout(500);
+	ok('the view options hold the scale and the list', (await page.locator('.cv-sheet .cv-zoom').count()) === 1 && (await page.locator('.cv-sheet .cv-toggle').count()) === 1);
+	await page.keyboard.press('Escape');
+	await page.waitForTimeout(500);
+
+	// The Views sheet keeps focus and gives it back.
+	await page.locator('.viewbtn').tap();
+	await page.waitForTimeout(500);
+	let escaped = 0;
+	for (let i = 0; i < 40; i++) {
+		await page.keyboard.press('Tab');
+		if (!(await page.evaluate(`!!document.activeElement?.closest('.vs')`))) escaped++;
+	}
+	ok('focus stays inside the open Views sheet', escaped === 0, `${escaped} of 40 tabs escaped`);
+	await page.keyboard.press('Escape');
+	await page.waitForTimeout(400);
+	ok('closing the Views sheet returns focus to its button', (await page.evaluate(`!!document.activeElement?.classList.contains('viewbtn')`)) as boolean);
+
+	ok('phone review console clean', problems.length === 0, problems.slice(0, 3).join(' | '));
+	await context.close();
+
+	// A first visit on a phone is invited to the tour, never blocked by it.
+	const fresh = await browser.newContext(phone);
+	await fresh.addInitScript(`(() => { try { sessionStorage.setItem('deeptunisia:booted', '1'); } catch {} })()`);
+	const first = await fresh.newPage();
+	await first.goto(BASE + '/chronicle', { waitUntil: 'networkidle' });
+	await first.waitForTimeout(1500);
+	ok('a first phone visit shows the tour invitation', (await first.locator('.tour-invite').count()) === 1);
+	ok('a first phone visit is not blocked by the tour', (await first.locator('.catch').count()) === 0);
+	await first.touchscreen.tap(200, 400);
+	await first.waitForTimeout(400);
+	ok('using the page retires the invitation', (await first.locator('.tour-invite').count()) === 0);
+	await fresh.close();
 }
 
 // --- Connections are records ------------------------------------------------
@@ -2444,11 +2684,12 @@ console.log('\n  ── deep-link round trips ──');
 
 // --- Captions ---------------------------------------------------------------
 /*
- * Every route in the views table answers one sentence: Viewport.svelte reads
- * answerKeyFor(pathname) and renders the .caption line, from the same
- * guide.<key>.answer keys the /guide table displays in full. A route outside
- * the table — /guide is the nearest non-view route that shares the shell
- * chrome — must have no caption at all.
+ * Every route in the views table answers one sentence, from the same
+ * guide.<key>.answer keys the /guide table displays in full. It lives in "About
+ * this view": inside the view's toolbar where it has one (/rankings), otherwise
+ * as Viewport's own row (/map). Open on a wide screen, so the answer is on
+ * screen. A route outside the table — /guide is the nearest non-view route that
+ * shares the shell chrome — has no About at all.
  */
 if (runSection('captions')) {
 console.log('\n  ── captions ──');
@@ -2458,11 +2699,12 @@ console.log('\n  ── captions ──');
 		const page = await context.newPage();
 		await page.goto(BASE + path, { waitUntil: 'networkidle', timeout: 30_000 });
 		await settle(page);
-		const n = await page.locator('.caption').count();
-		const text = n ? (await page.locator('.caption').innerText()).trim() : '';
+		const n = await page.locator('.about').count();
+		const answer = page.locator('.about .answer');
+		const text = (await answer.count()) ? (await answer.innerText()).trim() : '';
 		ok(
-			`caption on ${path} is present and non-empty`,
-			n === 1 && text.length > 0,
+			`one About on ${path}, open, with its answer`,
+			n === 1 && (await answer.isVisible()) && text.length > 0,
 			JSON.stringify(text.slice(0, 60))
 		);
 		await page.close();
@@ -2472,8 +2714,70 @@ console.log('\n  ── captions ──');
 		await page.goto(BASE + '/guide', { waitUntil: 'networkidle', timeout: 30_000 });
 		await settle(page);
 		ok(
-			'caption is absent on /guide (outside the views table)',
-			(await page.locator('.caption').count()) === 0
+			'no About on /guide (outside the views table)',
+			(await page.locator('.about').count()) === 0
+		);
+		await page.close();
+	}
+	await context.close();
+}
+
+// --- Phone chrome budget -----------------------------------------------------
+/*
+ * On a 390x844 phone the standing chrome is the 48px top bar and the 44px time
+ * pill, nothing else: the section bubbles and the tab strip live in the Views
+ * sheet, the track and filters in the pill's sheet. Measured, because a row
+ * that creeps back in costs every view its height and no other check notices.
+ */
+if (runSection('phone budget')) {
+console.log('\n  ── phone budget ──');
+	const context = await browser.newContext({
+		viewport: { width: 390, height: 844 },
+		isMobile: true,
+		hasTouch: true
+	});
+	await context.addInitScript(TOUR_SEEN_INIT);
+	for (const path of ['/now', '/network', '/chronicle']) {
+		const page = await context.newPage();
+		await page.goto(BASE + path, { waitUntil: 'networkidle', timeout: 30_000 });
+		await settle(page);
+		const m = (await page.evaluate(`(() => {
+			const h = (sel) => {
+				const el = document.querySelector(sel);
+				return el ? Math.round(el.getBoundingClientRect().height) : -1;
+			};
+			return { bar: h('.menubar'), dock: h('.dock'), subnav: h('.subnav') };
+		})()`)) as { bar: number; dock: number; subnav: number };
+		ok(
+			`${path}: phone top bar is 48px or less`,
+			m.bar > 0 && m.bar <= 48,
+			`${m.bar}px`
+		);
+		ok(
+			`${path}: phone dock at rest is 44px or less`,
+			m.dock > 0 && m.dock <= 44,
+			`${m.dock}px`
+		);
+		ok(`${path}: no tab strip at rest on a phone`, m.subnav <= 0, `${m.subnav}px`);
+		await page.close();
+	}
+
+	// Every view is two taps away: the view button, then the view.
+	{
+		const page = await context.newPage();
+		await page.goto(BASE + '/now', { waitUntil: 'networkidle', timeout: 30_000 });
+		await settle(page);
+		await page.locator('.viewbtn').tap();
+		await page.waitForTimeout(400);
+		const rows = await page.locator('.vs-row').count();
+		ok('the view button opens the Views sheet', rows >= 10, `${rows} views listed`);
+		await page.locator('.vs-row[href="/network"]').tap();
+		await page.waitForURL('**/network', { timeout: 10_000 }).catch(() => {});
+		await page.waitForSelector('.vs', { state: 'detached', timeout: 2_000 }).catch(() => {});
+		ok(
+			'a view in the sheet is the second tap',
+			page.url().endsWith('/network') && (await page.locator('.vs').count()) === 0,
+			page.url().replace(BASE, '')
 		);
 		await page.close();
 	}
@@ -3084,7 +3388,23 @@ console.log('\n  ── phone chrome ──');
 
 	// Selecting a record opens the sheet, and the timeline must stay usable beneath
 	// it: keeping selection and time-travel simultaneous is the premise of the app.
-	await page.locator('.bar').first().click();
+	// On a phone the Chronicle is vertical: tap a tenure block already in view
+	// (letting the test scroll one into view would itself pan the shell). The
+	// filter sheet's scrim must be gone first, or it is what every point hits.
+	await page.waitForSelector('.pop', { state: 'detached', timeout: 2_000 }).catch(() => {});
+	await page.evaluate(`(() => {
+		const strip = document.querySelector('.cv-strip').getBoundingClientRect();
+		// In view, and its centre lands on the block itself, not on a rupture
+		// chip or a header drawn over it.
+		const tb = Array.from(document.querySelectorAll('.cv .tb')).find((b) => {
+			const r = b.getBoundingClientRect();
+			if (!(r.height > 20 && r.top > strip.top + 60 && r.bottom < strip.bottom && r.left >= 0 && r.right <= window.innerWidth)) return false;
+			const hit = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+			return Boolean(hit && b.contains(hit));
+		});
+		if (tb) tb.setAttribute('data-smoke', 'tb');
+	})()`);
+	await page.locator('[data-smoke=tb]').tap();
 	await page.waitForTimeout(600);
 	const sheet = await page.evaluate(`(() => {
 		const s = document.querySelector('.inspector');
@@ -3184,7 +3504,7 @@ console.log('\n  ── phone chrome ──');
 	// descendants) inside .dock, and never to a node inside .inspector.
 	const dockHits = (await page.evaluate(`(() => {
 		const out = [];
-		for (const sel of ['.filter-btn', '.transport button', '.track']) {
+		for (const sel of ['.filter-btn', '.transport button', '.readout-btn']) {
 			const el = document.querySelector(sel);
 			if (!el) { out.push({ sel, missing: true }); continue; }
 			const r = el.getBoundingClientRect();

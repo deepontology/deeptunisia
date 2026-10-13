@@ -1,13 +1,12 @@
 <script lang="ts">
+	import AboutView from '$lib/shell/AboutView.svelte';
 	import { app } from '$lib/state.svelte';
+	import InstitutionPicker from '$lib/components/InstitutionPicker.svelte';
 	import SourceList from '$lib/components/SourceList.svelte';
 	import Button from '$lib/ui/Button.svelte';
 	import Chip from '$lib/ui/Chip.svelte';
-	import Input from '$lib/ui/Input.svelte';
 	import {
 		BASIS_COLOR,
-		BASIS_SHORT,
-		LAYER_COLOR,
 		ds,
 		institutionById,
 		meetsBasis,
@@ -19,7 +18,7 @@
 		type Basis,
 		type Layer
 	} from '$lib/model';
-	import { describeInterval, durationLabel, nameOf, entityName, relLabel, t } from '$lib/t.svelte';
+	import { basisLabel, describeInterval, durationLabel, nameOf, entityName, relLabel, t } from '$lib/t.svelte';
 	import { format } from '$lib/i18n';
 
 	/**
@@ -41,22 +40,8 @@
 	let setA = $state<string[]>(['armed-forces', 'military-security']);
 	let setB = $state<string[]>(['presidential-security', 'presidency']);
 	let subject = $state('ben-ali');
-	let instQuery = $state('');
-	let setAQuery = $state('');
-	let setBQuery = $state('');
 
 	const institutions = $derived([...ds.institutions].sort((a, b) => a.order - b.order));
-
-	function matchesFilter(inst: (typeof institutions)[number], q: string): boolean {
-		const needle = q.trim().toLowerCase();
-		if (!needle) return true;
-		const hay = `${nameOf(inst)} ${inst.abbr ?? ''}`.toLowerCase();
-		return hay.includes(needle);
-	}
-
-	const filteredInst = $derived(institutions.filter((i) => matchesFilter(i, instQuery)));
-	const filteredSetA = $derived(institutions.filter((i) => matchesFilter(i, setAQuery)));
-	const filteredSetB = $derived(institutions.filter((i) => matchesFilter(i, setBQuery)));
 
 	const range = $derived<[number, number]>([
 		Date.UTC(Math.min(fromYear, toYear), 0, 1),
@@ -177,10 +162,6 @@
 			}
 		}
 	];
-
-	function toggle(list: string[], id: string): string[] {
-		return list.includes(id) ? list.filter((x) => x !== id) : [...list, id];
-	}
 </script>
 
 <svelte:head>
@@ -191,7 +172,7 @@
 <div class="page">
 	<div class="toolbar">
 		<span class="eyebrow">{t('investigate.eyebrow')}</span>
-		<p class="hint">{t('investigate.hint')}</p>
+		<AboutView hint={t('investigate.hint')} />
 	</div>
 
 	<div class="presets">
@@ -201,82 +182,49 @@
 	</div>
 
 	<div class="builder">
-		<div class="modes">
-			<Button variant="outline" size="xs" active={mode === 'officeholders'} onclick={() => (mode = 'officeholders')}
-				>{t('investigate.officeholders')}</Button
-			>
-			<Button variant="outline" size="xs" active={mode === 'crossings'} onclick={() => (mode = 'crossings')}
-				>{t('investigate.both')}</Button
-			>
-			<Button variant="outline" size="xs" active={mode === 'connections'} onclick={() => (mode = 'connections')}
-				>{t('investigate.connected')}</Button
-			>
-		</div>
+		<div class="modes-row">
+			<div class="modes">
+				<Button variant="outline" size="xs" active={mode === 'officeholders'} onclick={() => (mode = 'officeholders')}
+					>{t('investigate.officeholders')}</Button
+				>
+				<Button variant="outline" size="xs" active={mode === 'crossings'} onclick={() => (mode = 'crossings')}
+					>{t('investigate.both')}</Button
+				>
+				<Button variant="outline" size="xs" active={mode === 'connections'} onclick={() => (mode = 'connections')}
+					>{t('investigate.connected')}</Button
+				>
+			</div>
 
-		<div class="period">
-			<label>
-				<span>{t('investigate.from')}</span>
-				<input type="number" min="1956" max="2026" bind:value={fromYear} />
-			</label>
-			<label>
-				<span>{t('investigate.to')}</span>
-				<input type="number" min="1956" max="2026" bind:value={toYear} />
-			</label>
+			<div class="period">
+				<label>
+					<span>{t('investigate.from')}</span>
+					<input type="number" min="1956" max="2026" bind:value={fromYear} />
+				</label>
+				<label>
+					<span>{t('investigate.to')}</span>
+					<input type="number" min="1956" max="2026" bind:value={toYear} />
+				</label>
+			</div>
 		</div>
 
 		{#if mode === 'officeholders'}
 			<fieldset>
 				<legend>{t('investigate.institutions')} <span class="mono">{instFilter.length || 'any'}</span></legend>
-				<div class="filter-row">
-					<Input bind:value={instQuery} placeholder={t('ctl.search')} size="xs" />
-				</div>
-<div class="chips">
-					{#each filteredInst as i (i.id)}
-						<Button
-							variant="outline"
-							size="xs"
-							active={instFilter.includes(i.id)}
-							tint={LAYER_COLOR[i.layer as Layer]}
-							onclick={() => (instFilter = toggle(instFilter, i.id))}>{i.abbr ?? nameOf(i)}</Button
-						>
-					{/each}
-				</div>
+				<InstitutionPicker
+					bind:ids={instFilter}
+					label={t('investigate.institutions')}
+					id="investigate-inst"
+				/>
 			</fieldset>
 		{:else if mode === 'crossings'}
 			<div class="two-sets">
 				<fieldset>
 					<legend>{t('investigate.setA')} <span class="mono">{setA.length}</span></legend>
-					<div class="filter-row">
-						<Input bind:value={setAQuery} placeholder={t('ctl.search')} size="xs" />
-					</div>
-					<div class="chips">
-						{#each filteredSetA as i (i.id)}
-							<Button
-								variant="outline"
-								size="xs"
-								active={setA.includes(i.id)}
-								tint={LAYER_COLOR[i.layer as Layer]}
-								onclick={() => (setA = toggle(setA, i.id))}>{i.abbr ?? nameOf(i)}</Button
-							>
-						{/each}
-					</div>
+					<InstitutionPicker bind:ids={setA} label={t('investigate.setA')} id="investigate-setA" />
 				</fieldset>
 				<fieldset>
 					<legend>{t('investigate.setB')} <span class="mono">{setB.length}</span></legend>
-					<div class="filter-row">
-						<Input bind:value={setBQuery} placeholder={t('ctl.search')} size="xs" />
-					</div>
-					<div class="chips">
-						{#each filteredSetB as i (i.id)}
-							<Button
-								variant="outline"
-								size="xs"
-								active={setB.includes(i.id)}
-								tint={LAYER_COLOR[i.layer as Layer]}
-								onclick={() => (setB = toggle(setB, i.id))}>{i.abbr ?? nameOf(i)}</Button
-							>
-						{/each}
-					</div>
+					<InstitutionPicker bind:ids={setB} label={t('investigate.setB')} id="investigate-setB" />
 				</fieldset>
 			</div>
 		{:else}
@@ -319,12 +267,12 @@
 								<td class="who">
 									<button onclick={() => app.select(p.holder)}>{entityName(p.holder)}</button>
 								</td>
-								<td>{nameOf(roleById.get(p.role)) || p.roleTitle}</td>
+								<td class="post">{nameOf(roleById.get(p.role)) || p.roleTitle}</td>
 								<td class="inst">{nameOf(institutionById.get(p.institution))}</td>
 								<td class="span mono">{describeInterval(p.interval)}</td>
 								<td class="num mono">{durationLabel(p.years)}</td>
-								<td>
-									<Chip size="xs" tint={BASIS_COLOR[p.basis as Basis]}>{BASIS_SHORT[p.basis as Basis]}</Chip>
+								<td class="basis">
+									<Chip size="xs" tint={BASIS_COLOR[p.basis as Basis]}>{basisLabel(p.basis as Basis)}</Chip>
 								</td>
 							</tr>
 						{/each}
@@ -383,7 +331,7 @@
 						<li>
 							<strong>{nameOf(roleById.get(p.role)) || p.roleTitle}</strong>
 							<span class="mono">{describeInterval(p.interval)}</span>
-							<Chip size="xs" tint={BASIS_COLOR[p.basis as Basis]}>{BASIS_SHORT[p.basis as Basis]}</Chip>
+							<Chip size="xs" tint={BASIS_COLOR[p.basis as Basis]}>{basisLabel(p.basis as Basis)}</Chip>
 						</li>
 					{/each}
 				</ul>
@@ -396,7 +344,7 @@
 						<li>
 							<button onclick={() => app.select(other)}>{entityName(other)}</button>
 							<span class="rtype">{relLabel(r.type)}</span>
-							<Chip size="xs" tint={BASIS_COLOR[r.basis as Basis]}>{BASIS_SHORT[r.basis as Basis]}</Chip>
+							<Chip size="xs" tint={BASIS_COLOR[r.basis as Basis]}>{basisLabel(r.basis as Basis)}</Chip>
 							{#if relKind(r.type) !== 'documented' && r.attributed_to}
 								<span class="attrib">{format(app.locale, 'investigate.claimedBy', { who: r.attributed_to })}</span>
 							{/if}
@@ -424,13 +372,6 @@
 		border-bottom: 1px solid var(--border-subtle);
 		flex-wrap: wrap;
 	}
-	.hint {
-		margin: 0;
-		font-size: var(--t-sm);
-		line-height: var(--lh-snug);
-		color: var(--text-secondary);
-		max-width: 68ch;
-	}
 
 	.presets {
 		display: flex;
@@ -440,12 +381,23 @@
 		border-bottom: 1px solid var(--border-subtle);
 	}
 	.builder {
-		padding: var(--s-5) var(--s-6);
+		padding: var(--s-4) var(--s-6);
 		border-bottom: 1px solid var(--border-subtle);
 		background: var(--surface-raised);
 		display: flex;
 		flex-direction: column;
+		gap: var(--s-4);
+	}
+	/*
+	 * Modes and the period share one row. Both were full-width rows of their own,
+	 * which with the institution wall below them left the results table below the
+	 * fold on a desktop screen; the wall is gone and what is left fits one line.
+	 */
+	.modes-row {
+		display: flex;
+		align-items: center;
 		gap: var(--s-5);
+		flex-wrap: wrap;
 	}
 	.modes {
 		display: flex;
@@ -453,19 +405,19 @@
 	}
 	.period {
 		display: flex;
-		gap: 14px;
+		gap: var(--s-4);
 	}
 	.period label {
 		display: flex;
 		align-items: center;
-		gap: 6px;
-		font-size: 11px;
+		gap: var(--s-2);
+		font-size: var(--t-2xs);
 		color: var(--text-secondary);
 	}
 	input[type='number'] {
 		width: 74px;
 		font-family: var(--font-mono);
-		font-size: 12px;
+		font-size: var(--t-xs);
 		background: var(--surface-sunken);
 		border: 1px solid var(--border-default);
 		border-radius: var(--r-sm);
@@ -474,12 +426,12 @@
 	}
 	select {
 		font: inherit;
-		font-size: 12.5px;
+		font-size: var(--t-xs);
 		background: var(--surface-sunken);
 		border: 1px solid var(--border-default);
 		border-radius: var(--r-sm);
 		color: var(--text-primary);
-		padding: 4px 7px;
+		padding: var(--s-2) var(--s-3);
 		max-width: 320px;
 	}
 
@@ -491,25 +443,16 @@
 	}
 	legend {
 		font-family: var(--font-mono);
-		font-size: 10px;
+		font-size: var(--t-2xs);
 		letter-spacing: 0.1em;
 		text-transform: uppercase;
 		color: var(--text-faint);
-		padding: 0 0 6px;
+		padding: 0 0 var(--s-2);
 	}
 	.two-sets {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
-		gap: 18px;
-	}
-	.filter-row {
-		max-width: 320px;
-		margin-block-end: var(--s-3);
-	}
-	.chips {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 3px;
+		gap: var(--s-5);
 	}
 	.results {
 		padding: var(--s-6) var(--s-6) 0;
@@ -673,6 +616,57 @@
 		.two-sets,
 		.two {
 			grid-template-columns: 1fr;
+		}
+
+		/*
+		   Six columns do not fit 390px: each wrapped a word per line. On a phone a
+		   row is a small card instead: who and on what basis, the post and its
+		   institution, then the span and the time held. The header row is kept
+		   for screen readers and hidden from view, since each value now sits
+		   where its meaning is obvious.
+		*/
+		table,
+		tbody,
+		tr,
+		td {
+			display: block;
+		}
+		thead {
+			position: absolute;
+			width: 1px;
+			height: 1px;
+			overflow: hidden;
+			clip-path: inset(50%);
+		}
+		tr {
+			display: grid;
+			grid-template-columns: 1fr auto;
+			gap: 2px var(--s-3);
+			padding-block: var(--s-3);
+			border-bottom: 1px solid var(--border-subtle);
+		}
+		td {
+			padding: 0;
+			border: 0;
+		}
+		td.who {
+			grid-column: 1;
+			grid-row: 1;
+			font-size: var(--t-md);
+		}
+		td.basis {
+			grid-column: 2;
+			grid-row: 1;
+		}
+		td.post,
+		td.inst {
+			grid-column: 1 / -1;
+		}
+		td.span {
+			grid-column: 1;
+		}
+		td.num {
+			grid-column: 2;
 		}
 	}
 </style>
