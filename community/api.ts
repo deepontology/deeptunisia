@@ -1531,7 +1531,11 @@ export async function handle(request: Request, env: Env): Promise<Response> {
 		if (e instanceof RateLimitError) {
 			return json({ error: e.message, retry_after_ms: e.retryAfterMs }, 429);
 		}
-		return json({ error: (e as Error).message }, 500);
+		// Log server-side, answer generically. A driver or runtime error can carry
+		// internals (constraint names, SQL fragments, stack detail) to an
+		// unauthenticated caller, so the response never echoes it.
+		console.error('api handler error:', e instanceof Error ? e.message : String(e));
+		return json({ error: 'internal error' }, 500);
 	}
 }
 
