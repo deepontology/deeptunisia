@@ -2559,7 +2559,7 @@ import Chip from '$lib/ui/Chip.svelte';
 			accessible names and the table below is the complete equivalent. Announcing
 			these too would read every entity out twice.
 		-->
-		<div class="vlayer" aria-hidden="true">
+		<div class="vlayer" data-no-pan aria-hidden="true">
 			{#each laneHeaders as h (h.layer)}
 				<!--
 					tabindex -1 because this whole layer is aria-hidden, and a focusable
@@ -2696,7 +2696,7 @@ import Chip from '$lib/ui/Chip.svelte';
 			gutter can hold it beside the first lane, so a reader meeting dashed lines
 			for the first time is told what they mean without hunting for a toggle.
 		-->
-		<details class="legend" open={wide && roomy.current} style:--mini-h="{MINI_BOX_H}px">
+		<details class="legend" data-no-pan open={wide && roomy.current} style:--mini-h="{MINI_BOX_H}px">
 			<summary aria-label={t('network.legend')}>
 				<svg viewBox="0 0 14 14" width="12" height="12" aria-hidden="true">
 					<path d="M2 4h10M2 7h10M2 10h6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" />
