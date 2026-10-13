@@ -2493,6 +2493,11 @@ html.js .in .curtain > span, html.js .curtain.in > span { transform: none; }
     document.querySelectorAll('[data-i18n-label]').forEach(function (n) {
       n.setAttribute('aria-label', T(n.getAttribute('data-i18n-label')));
     });
+    /* Study cards carry their titles and months in each language, written by the build.
+       A language without its own text keeps the English. */
+    document.querySelectorAll('[data-l10n-en]').forEach(function (n) {
+      n.textContent = n.getAttribute('data-l10n-' + next) || n.getAttribute('data-l10n-en');
+    });
 
     document.querySelectorAll('#locale button').forEach(function (b) {
       b.setAttribute('aria-checked', String(b.getAttribute('data-loc') === next));
