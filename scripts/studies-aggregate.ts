@@ -43,7 +43,14 @@ import {
 	type RuntimeItem,
 	type StudiesRegistry
 } from '../community/research-contract.ts';
-import { applyExclusions } from '../community/research-scoring.ts';
+import {
+	aggregateResponses as scoreAggregate,
+	aggregateSeries,
+	applyExclusions,
+	applyPublicationFloor,
+	periodOf
+} from '../community/research-scoring.ts';
+import { monthDigest, releaseRow } from '../community/research-commitment.ts';
 import type { StudyResults } from './research-schema.ts';
 import { EXPORT_COLUMNS } from './studies-export.ts';
 
@@ -550,11 +557,101 @@ export function resultsToYaml(results: StudyResults): string {
 }
 
 // ---------------------------------------------------------------------------
+// Scored studies (the police index)
+//
+// A study whose instrument carries a scoring block is released as exactly what
+// the live endpoint publishes, recomputed from the export alone: the same
+// exclusions, aggregates, monthly series and publication floors, from the same
+// engine (community/research-scoring.ts). Link codes never leave: the link
+// check publishes shares, and nothing here tallies channels. Each month also
+// gets its released-row fingerprint, to be checked against its closed ledger
+// entry (scripts/ledger-verify.ts).
+// ---------------------------------------------------------------------------
+
+export interface ScoredRelease {
+	study: string;
+	instrument: { id: string; version: string; hash: string };
+	generated_at: string;
+	/** Stored rows that answered this instrument, before exclusions. */
+	received: number;
+	/** Rows set aside because they answered another questionnaire version. */
+	other_versions: number;
+	exclusions: { rows_excluded: number; rules: Record<string, number> };
+	published: ReturnType<typeof applyPublicationFloor>;
+	/** Per month: the rows it holds and their fingerprint in released form. */
+	fingerprints: Array<{ period: string; stored: number; digest: string }>;
+}
+
+export async function aggregateScored(
+	rows: ParsedResponse[],
+	instrument: RuntimeInstrument,
+	options: { studyId: string; now: number; generatedAt: string; firstPeriod?: string }
+): Promise<ScoredRelease> {
+	const spec = instrument.scoring;
+	if (!spec) throw new Error('this instrument has no scoring block; use the study 001 path');
+	const otherVersions = rows.filter((row) => row.instrument_hash !== instrument.hash).length;
+	const own = rows.filter((row) => row.instrument_hash === instrument.hash);
+	const scoringRows = own.map((row) => ({
+		answers: row.answers,
+		completionMs: row.completion_ms,
+		submittedAt: row.submitted_at,
+		channel: row.channel,
+		revision: row.revision
+	}));
+	const conditions = Object.fromEntries(
+		instrument.items.filter((item) => item.showIf !== undefined).map((item) => [item.id, item.showIf!])
+	);
+	// The live endpoint's seed and resamples, so the intervals match it exactly.
+	const aggregate = { seed: 20261007, resamples: 1000, conditions };
+	const { kept, exclusions } = applyExclusions(spec, scoringRows);
+	const published = applyPublicationFloor(
+		spec,
+		scoreAggregate(spec, kept, aggregate),
+		aggregateSeries(spec, kept, { ...aggregate, now: options.now, firstPeriod: options.firstPeriod })
+	);
+	// Fingerprints are over every stored row of a month, whatever the version,
+	// exactly as the ledger computes them.
+	const offset = spec.series?.utc_offset_minutes ?? 60;
+	const byPeriod = new Map<string, ReturnType<typeof releaseRow>[]>();
+	for (const row of rows) {
+		const period = periodOf(row.submitted_at, offset);
+		const list = byPeriod.get(period) ?? [];
+		list.push(
+			releaseRow(spec, {
+				period,
+				instrument_hash: row.instrument_hash,
+				locale: row.locale,
+				revision: row.revision,
+				completion_ms: row.completion_ms,
+				answers: row.answers
+			})
+		);
+		byPeriod.set(period, list);
+	}
+	const fingerprints = [];
+	for (const period of [...byPeriod.keys()].sort()) {
+		const list = byPeriod.get(period)!;
+		fingerprints.push({ period, stored: list.length, digest: await monthDigest(list) });
+	}
+	return {
+		study: options.studyId,
+		instrument: { id: instrument.id, version: instrument.version, hash: instrument.hash },
+		generated_at: options.generatedAt,
+		received: own.length,
+		other_versions: otherVersions,
+		exclusions,
+		published,
+		fingerprints
+	};
+}
+
+// ---------------------------------------------------------------------------
 // CLI
 // ---------------------------------------------------------------------------
 
 interface RegistryStudy {
 	id: string;
+	fielding_window?: { start?: string | null } | null;
 	population_statement?: string | null;
 	instrument_versions?: Array<{ id: string; version: string }>;
 }
@@ -613,6 +710,28 @@ async function main() {
 	if (!instrument) {
 		console.error(`  aggregate failed: no compiled instrument for study ${studyId}`);
 		process.exit(1);
+	}
+
+	if (instrument.scoring) {
+		const scoredOut = arg(args, '--out') ?? join(DEFAULT_OUT_DIR, studyId, 'published.json');
+		try {
+			const release = await aggregateScored(parseResponses(readFileSync(inPath, 'utf8')), instrument, {
+				studyId,
+				now: Date.parse(now),
+				generatedAt: now,
+				firstPeriod: study.fielding_window?.start ? study.fielding_window.start.slice(0, 7) : undefined
+			});
+			mkdirSync(dirname(scoredOut), { recursive: true });
+			writeFileSync(scoredOut, JSON.stringify(release, null, '\t') + '\n', 'utf8');
+			console.log(`\n  studies aggregate (scored): ${studyId}`);
+			console.log(`  rows: ${release.received} for this instrument, ${release.exclusions.rows_excluded} excluded, ${release.other_versions} from other versions set aside`);
+			for (const f of release.fingerprints) console.log(`  ${f.period}  ${f.stored} rows  ${f.digest}`);
+			console.log(`  wrote ${scoredOut}; check each closed month with scripts/ledger-verify.ts\n`);
+		} catch (e) {
+			console.error(`  aggregate failed: ${(e as Error).message}`);
+			process.exit(1);
+		}
+		return;
 	}
 
 	try {

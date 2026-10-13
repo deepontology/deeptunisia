@@ -467,9 +467,33 @@ function acceptingResponses(env: Env, study: StudySummary): boolean {
 
 /** Parse and cap the body once, for every route that takes one (contract §4). */
 async function readBody(request: Request): Promise<Record<string, unknown>> {
-	const raw = await request.arrayBuffer();
-	if (raw.byteLength > MAX_BODY) {
-		throw new ResearchError(`the request body is larger than ${MAX_BODY} bytes`, 400);
+	const tooLarge = () => new ResearchError(`the request body is larger than ${MAX_BODY} bytes`, 400);
+	// A declared length over the cap is refused before a byte is read.
+	const declared = Number(request.headers.get('content-length'));
+	if (Number.isFinite(declared) && declared > MAX_BODY) throw tooLarge();
+	// The body is read in chunks and abandoned the moment it passes the cap, so
+	// an unauthenticated caller cannot make the Worker hold a body of any size
+	// (the length header is optional and can lie).
+	const chunks: Uint8Array[] = [];
+	let size = 0;
+	const reader = request.body?.getReader();
+	if (reader) {
+		for (;;) {
+			const { done, value } = await reader.read();
+			if (done) break;
+			size += value.byteLength;
+			if (size > MAX_BODY) {
+				await reader.cancel().catch(() => {});
+				throw tooLarge();
+			}
+			chunks.push(value);
+		}
+	}
+	const raw = new Uint8Array(size);
+	let offset = 0;
+	for (const chunk of chunks) {
+		raw.set(chunk, offset);
+		offset += chunk.byteLength;
 	}
 	try {
 		const parsed: unknown = JSON.parse(new TextDecoder().decode(raw));

@@ -575,6 +575,42 @@ console.log('\n  ── withdraw, count ──\n');
 	ok('withdraw without a receipt is refused 400', badBody.status === 400);
 }
 
+console.log('\n  ── the body cap ──\n');
+
+{
+	const env = researchEnv();
+	// A streamed body with no length header: refused once it passes the cap,
+	// without the whole thing being read.
+	let pulled = 0;
+	const stream = new ReadableStream<Uint8Array>({
+		pull(controller) {
+			pulled++;
+			if (pulled > 100) return controller.close();
+			controller.enqueue(new Uint8Array(5_000).fill(32));
+		}
+	});
+	const big = await handle(
+		new Request('https://community.example/api/studies/fixture/submit', {
+			method: 'POST',
+			headers: { 'content-type': 'application/json', 'cf-connecting-ip': ADDRESS },
+			body: stream,
+			duplex: 'half'
+		} as RequestInit),
+		env
+	);
+	ok('a streamed body over the cap is refused 400', big.status === 400);
+	ok('and reading stops near the cap instead of draining the stream', pulled < 10, `${pulled} chunks pulled`);
+	const declared = await handle(
+		new Request('https://community.example/api/studies/fixture/withdraw', {
+			method: 'POST',
+			headers: { 'content-type': 'application/json', 'content-length': '999999', 'cf-connecting-ip': ADDRESS },
+			body: '{}'
+		}),
+		env
+	);
+	ok('a declared length over the cap is refused before reading', declared.status === 400);
+}
+
 console.log('\n  ── updates, repeats and the month counters ──\n');
 
 {

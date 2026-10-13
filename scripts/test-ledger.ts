@@ -21,6 +21,7 @@ import {
 } from '../community/research-commitment.ts';
 import { aggregateResponses, aggregateSeries, applyPublicationFloor, periodOf, repeatCheck } from '../community/research-scoring.ts';
 import { closedEntry, verifyLedger, verifyRelease, type LedgerEntry } from './ledger-verify.ts';
+import { aggregateScored } from './studies-aggregate.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 let checks = 0;
@@ -205,6 +206,46 @@ ok(
 		'once the rest reaches the cell floor the month shows them',
 		twenty.series!.months.find((m) => m.n === 100)?.results !== null
 	);
+}
+
+console.log('\n  ── the offline release of a scored study ──\n');
+
+{
+	const now = Date.now();
+	const exported = Array.from({ length: 130 }, (_, i) => ({
+		receipt: `r-${i}`,
+		study_id: 'dt-research-002',
+		instrument_id: police.id,
+		instrument_version: police.version,
+		instrument_hash: police.hash,
+		locale: 'ar',
+		channel: i < 30 ? 'secret-code-for-five' : 'organic',
+		consent_version: 'v',
+		started_at: now - 200_000,
+		submitted_at: now - 100_000 - i,
+		completion_ms: i === 0 ? 30_000 : 120_000,
+		block_order: null,
+		scale_direction: null,
+		answers: answers(3 + (i % 5)) as Record<string, unknown>,
+		maxdiff: null,
+		revision: null,
+		created_at: now
+	}));
+	const release = await aggregateScored(exported, police, { studyId: 'dt-research-002', now, generatedAt: new Date(now).toISOString() });
+	const live = applyPublicationFloor(
+		spec,
+		aggregateResponses(spec, exported.slice(1).map((r) => ({ answers: r.answers, channel: r.channel, revision: null })), { seed: 20261007, resamples: 1000, conditions: Object.fromEntries(police.items.filter((it) => it.showIf !== undefined).map((it) => [it.id, it.showIf!])) }),
+		null
+	);
+	ok('the release applies the registered speed rule', release.exclusions.rules.speed === 1 && release.exclusions.rows_excluded === 1);
+	ok('its index is the one the engine publishes live', release.published.results?.index.mean === live.results?.index.mean, `${release.published.results?.index.mean} vs ${live.results?.index.mean}`);
+	ok('it carries no link code', !JSON.stringify(release).includes('secret-code-for-five'));
+	const period = periodOf(now - 100_000, 60);
+	const ledgerSide = await monthDigest(
+		exported.map((r) => releaseRow(spec, { period, instrument_hash: r.instrument_hash, locale: r.locale, revision: r.revision, completion_ms: r.completion_ms, answers: r.answers }))
+	);
+	const mine = release.fingerprints.find((f) => f.period === period);
+	ok('its month fingerprint is the one the ledger computes', mine?.digest === ledgerSide && mine?.stored === 130);
 }
 
 console.log(`\n   ${checks - failures}/${checks} checks passed${failures ? `, ${failures} FAILED` : ''}\n`);
