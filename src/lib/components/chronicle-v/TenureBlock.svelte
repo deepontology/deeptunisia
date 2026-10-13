@@ -14,18 +14,21 @@
 	 * envelope are hatched, exactly as the horizontal Chronicle hatches them.
 	 *
 	 * It is a button: the whole block is the tap target for opening the person in
-	 * the inspector, and a short block still grows to the 44px touch floor so a
-	 * thin tenure on a phone is reachable.
+	 * the inspector. A short block grows its touch area toward the 44px floor, but
+	 * never past the top of the next block in its column, so a thin tenure cannot
+	 * cover the tap target of the holder that follows it.
 	 */
 	interface Props {
 		pos: Position;
 		scale: VScale;
 		/** The post's layer: blocks take the layer colour, as the horizontal bars do. */
 		layer: Layer;
+		/** Pixels from this block's top to the next block's top in the column. */
+		room: number;
 		onselect(holder: string): void;
 	}
 
-	let { pos, scale, layer, onselect }: Props = $props();
+	let { pos, scale, layer, room, onselect }: Props = $props();
 
 	const basis = $derived(pos.basis as Basis);
 	/* Layer colour, like the horizontal bars; the basis is carried by the dash and
@@ -41,6 +44,9 @@
 	const iv = $derived(pos.interval);
 	const top = $derived(scale.y(iv.startEarliest));
 	const height = $derived(scale.y(iv.endLatest ?? CUTOFF) - top);
+	/* The touch area: the drawn height, or the 44px floor where the room before the next block allows. */
+	const TAP = 44;
+	const hit = $derived(Math.max(height, Math.min(TAP, room)));
 
 	/*
 	 * The certain core sits between startLatest and endEarliest. The span either
@@ -85,7 +91,7 @@
 	type="button"
 	class="tb"
 	style:top="{top}px"
-	style:height="{height}px"
+	style:height="{hit}px"
 	aria-label={aria}
 	onclick={() => onselect(pos.holder)}
 >
@@ -131,7 +137,6 @@
 		position: absolute;
 		inset-inline-start: 0;
 		width: 100%;
-		min-height: var(--tap);
 		min-width: var(--tap);
 		margin: 0;
 		padding: 0;

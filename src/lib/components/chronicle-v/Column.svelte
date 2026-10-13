@@ -33,6 +33,14 @@
 	let { row, scale, focus, basisFloor, onselect }: Props = $props();
 
 	const visible = $derived(visiblePositions(row, basisFloor));
+	/* Where each block starts on the scale, so a block knows the room below it. */
+	const tops = $derived(visible.map((p) => scale.y(p.interval.startEarliest)));
+	/* Pixels from `top` to the next block's top in this column; infinite for the last one. */
+	function roomBelow(top: number) {
+		let room = Infinity;
+		for (const t of tops) if (t > top && t - top < room) room = t - top;
+		return room;
+	}
 </script>
 
 <div class="cv-col" class:linked={focus === 'linked'} class:dim={focus === 'dim'}>
@@ -42,7 +50,7 @@
 	</header>
 	<div class="cv-col-body" style:height="{scale.height}px">
 		{#each visible as pos (pos.id)}
-			<TenureBlock {pos} {scale} layer={row.layer} {onselect} />
+			<TenureBlock {pos} {scale} layer={row.layer} room={roomBelow(scale.y(pos.interval.startEarliest))} {onselect} />
 		{/each}
 	</div>
 </div>
