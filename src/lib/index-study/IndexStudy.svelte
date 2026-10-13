@@ -107,7 +107,10 @@
 
 	const windowAgg = $derived(live?.series?.window ?? null);
 	const allTime = $derived(live?.results ?? null);
-	const results = $derived(windowAgg?.results ?? allTime);
+	// The window's own figures when the series has a window, even when they are
+	// null: falling back to all-time figures would show old answers under the
+	// window's "last 12 months" label once the window drops below its floor.
+	const results = $derived(windowAgg ? windowAgg.results : allTime);
 	const windowMonths = $derived(windowAgg?.months ?? 12);
 	// The link check (index-spec.md §6): how much of the window arrived through
 	// one shared link, and the window's mean without it. The codes themselves
@@ -170,6 +173,10 @@
 	 * carried; the same helper the runner reads it with decides that.
 	 */
 	const srcCode = $derived(channelCode(page.url.searchParams.get('src') ?? ''));
+	// Every link into the runner is a full page load (data-sveltekit-reload on
+	// each): the runner's route carries its own security policy, the one that
+	// admits the human check, and a client-side navigation would keep this
+	// page's stricter one.
 	const participate = $derived(
 		`/research/${study.slug}/participate${srcCode === ORGANIC_CHANNEL ? '' : `?src=${srcCode}`}`
 	);
@@ -211,10 +218,14 @@
 				}).format(v);
 	/** What the empty graph says until the floor is reached. */
 	const firstN = $derived(floor?.first_figure_n ?? spec.series?.first_figure_n ?? 100);
+	/** Figures exist for the reading the section is labelled with. */
+	const figuresShown = $derived(published && results !== null);
 	const pendingNote = $derived(
-		floor && liveStatus === 'fielding'
-			? tf('index.grid.pending', { N: fmt(firstN), n: fmt(floor.n) })
-			: tf('index.grid.pendingClosed', { N: fmt(firstN) })
+		published
+			? tf('index.grid.pendingWindow', { N: fmt(firstN), m: windowMonths })
+			: floor && liveStatus === 'fielding'
+				? tf('index.grid.pending', { N: fmt(firstN), n: fmt(floor.n) })
+				: tf('index.grid.pendingClosed', { N: fmt(firstN) })
 	);
 
 	/** A content section's heading as plain text, for a collapsible section's summary. */
@@ -570,7 +581,7 @@
 			{/if}
 			<p class="tagline">{t('index.tagline.one')}<br />{t('index.tagline.two')}</p>
 			{#if accepting}
-				<a class="cta" href={participate}>
+				<a class="cta" href={participate} data-sveltekit-reload>
 					{floor && !published
 						? tf('index.cta.first', { N: fmt(floor.first_figure_n), n: fmt(instrument.estimatedMinutes) })
 						: tf('index.cta', { n: fmt(instrument.estimatedMinutes) })}
@@ -611,7 +622,7 @@
 	<div class="sec" id="grid">
 	{@render kicker('grid')}
 	{@render scope()}
-	<section class="panel-row" class:pending={!published}>
+	<section class="panel-row" class:pending={!figuresShown}>
 		<!-- The components as one vertical meter, like the swatch column in
 		     the reference. Grip and harm count against the index, so their bars
 		     are labelled with the direction they pull. -->
@@ -629,16 +640,16 @@
 
 		<figure class="plane-figure">
 			<Grid
-				grid={published ? (results?.plane ?? null) : null}
-				meanX={published ? (results?.components?.T?.mean ?? null) : null}
-				meanY={published ? (results?.components?.G?.mean ?? null) : null}
-				emptyNote={published ? null : pendingNote}
+				grid={figuresShown ? (results?.plane ?? null) : null}
+				meanX={figuresShown ? (results?.components?.T?.mean ?? null) : null}
+				meanY={figuresShown ? (results?.components?.G?.mean ?? null) : null}
+				emptyNote={figuresShown ? null : pendingNote}
 			/>
 			<figcaption>{t('index.plane.caption')}</figcaption>
 		</figure>
 	</section>
 
-	{#if published}<p class="population">{t('index.population')}</p>{/if}
+	{#if figuresShown}<p class="population">{t('index.population')}</p>{/if}
 	</div>
 
 	{#if months.length && published}
@@ -829,6 +840,7 @@
 			<p class="q-text">{itemText(id)}{#if reversed}<sup class="q-rev" aria-hidden="true">↺</sup>{/if}</p>
 			{#if itemHelp(id)}<p class="q-help">{itemHelp(id)}</p>{/if}
 			{#if nounKey}<p class="q-note">{tf('index.questions.reverse', { part: t(nounKey) })}</p>{/if}
+			{#if summary?.suppressed}<p class="q-note">{tf('index.questions.suppressed', { n: spec.cell_floor ?? 20 })}</p>{/if}
 			<!-- Each strip is scaled to its own fullest answer: the strip shows the
 			     shape of one question's answers, and the table carries the counts. -->
 			{#if hist}
@@ -892,6 +904,7 @@
 		<div class="question">
 			<p class="q-text">{itemText(id)}</p>
 			{#if itemHelp(id)}<p class="q-help">{itemHelp(id)}</p>{/if}
+			{#if summary?.suppressed}<p class="q-note">{tf('index.questions.suppressed', { n: spec.cell_floor ?? 20 })}</p>{/if}
 			{#if counts}
 				<!-- Every option in the order the questionnaire shows it, zeros
 				     included. A bar is the share of the people who were asked and
@@ -1078,7 +1091,7 @@
 			<div class="closing-copy">
 				<p class="closing-line">{t('index.closing.line')}</p>
 				{#if accepting}
-					<a class="cta cta-solid" href={participate}>{tf('index.cta', { n: fmt(instrument.estimatedMinutes) })}</a>
+					<a class="cta cta-solid" href={participate} data-sveltekit-reload>{tf('index.cta', { n: fmt(instrument.estimatedMinutes) })}</a>
 					<p class="closing-note mono">{t('index.closing.note')}</p>
 				{:else}
 					<p class="closing-note mono">{t('index.headline.notOpen')}</p>

@@ -107,16 +107,23 @@
 		// if it has not. A failed fetch starts nothing; the server gate decides
 		// either way. The same challenge carries the Turnstile site key when the
 		// human check is switched on; it is read once here so the widget can render.
-		if (accepting) {
-			const pending = startProofOfWork(data.study.slug);
-			check = pending;
-			void pending.then((c) => {
-				if (turnstileSiteKey === null) turnstileSiteKey = c.turnstileSiteKey;
-			});
-		}
+		if (accepting) startCheck();
 		restoreSession();
 		readAnsweredMonth();
 	});
+
+	/**
+	 * A fresh challenge, and the Turnstile site key it carries. Used at the start
+	 * and after every failed submit, so a first challenge that failed to load
+	 * does not leave the human check missing from every retry.
+	 */
+	function startCheck() {
+		const pending = startProofOfWork(data.study.slug);
+		check = pending;
+		void pending.then((c) => {
+			if (turnstileSiteKey === null) turnstileSiteKey = c.turnstileSiteKey;
+		});
+	}
 
 	const locale = $derived(app.locale);
 	const open = $derived(study.status === 'fielding');
@@ -445,6 +452,7 @@
 				pairs?: typeof pairs;
 				openedAt?: number;
 				assignment?: Assignment | null;
+				chose?: string | null;
 			};
 			if (saved.hash !== instrument.hash) return;
 			// Drops, never repairs: a save with no timestamp is a save this
@@ -462,6 +470,7 @@
 			cursor = saved.cursor ?? null;
 			openedAt = saved.openedAt ?? openedAt;
 			savedAssignment = saved.assignment ?? null;
+			chose = saved.chose === 'update' || saved.chose === 'other' ? saved.chose : null;
 		} catch {
 			/* A broken or stale save is ignored, never repaired. */
 		}
@@ -480,7 +489,9 @@
 		try {
 			localStorage.setItem(
 				sessionKey,
-				JSON.stringify({ hash: instrument.hash, savedAt: Date.now(), cursor, answers, pairs, openedAt, assignment })
+				// `chose` is one word ('update' or 'other'); the earlier receipt a
+				// respondent pasted is never saved, so a reload asks for it again.
+				JSON.stringify({ hash: instrument.hash, savedAt: Date.now(), cursor, answers, pairs, openedAt, assignment, chose })
 			);
 		} catch {
 			/* Private mode or a full quota: the survey still works without resume. */
@@ -565,6 +576,11 @@
 		pairs = {};
 		cursor = null;
 		savedAssignment = null;
+		// A pasted receipt deletes the answer it names: it must not survive a
+		// clear, or the next person on a shared phone would carry it.
+		chose = null;
+		replacesCode = '';
+		replacedResult = null;
 		answeredMonth = null;
 		openedAt = Date.now();
 		errorKey = null;
@@ -673,7 +689,7 @@
 		} finally {
 			// A solved challenge is spent the moment the server checks it, and it
 			// expires after two hours; a retry after any failure needs a fresh one.
-			if (!receipt && accepting) check = startProofOfWork(study.slug);
+			if (!receipt && accepting) startCheck();
 			// A token the server has verified is single-use; reset the widget so a
 			// retry carries a fresh one rather than the one already spent.
 			if (turnstileSiteKey && widgetId !== null) {
@@ -926,6 +942,15 @@
 					{/if}
 				</section>
 			{/key}
+
+			{#if onLast && chose === 'update'}
+				<!-- The receipt is asked for again here: it is never saved, so after a
+				     reload this is where an update can still name the answer it replaces. -->
+				<div class="answered">
+					<p>{t('research.participate.updateLede')}</p>
+					<Input bind:value={replacesCode} placeholder={t('research.participate.updateCode')} mono size="md" aria-label={t('research.participate.updateCode')} />
+				</div>
+			{/if}
 
 			{#if onLast && turnstileSiteKey}
 				<!-- Cloudflare's human check, only while the operator has it on. The
