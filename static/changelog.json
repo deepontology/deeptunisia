@@ -1,5 +1,30 @@
 [
   {
+    "hash": "e7e3fee8e",
+    "date": "2026-10-19T09:26:48+01:00",
+    "subject": "Data: add the BH Bank H1 2026 provision correction",
+    "kind": "revision",
+    "added": 29,
+    "removed": 9,
+    "files": [
+      {
+        "file": "data/events.yaml",
+        "added": 7,
+        "removed": 5
+      },
+      {
+        "file": "data/public-claims.yaml",
+        "added": 4,
+        "removed": 4
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 18,
+        "removed": 0
+      }
+    ]
+  },
+  {
     "hash": "26967fa1d",
     "date": "2026-10-19T09:13:45+01:00",
     "subject": "Data: merge the 2026-10-19 sweep (four events)",

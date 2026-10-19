@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-19T08:25:19.466Z",
+  "generated": "2026-10-19T08:29:42.366Z",
   "total": 999,
   "reviewed": 39,
   "queue": [
@@ -885,7 +885,7 @@
     },
     {
       "kind": "event",
-      "id": "ev-saied-bizerte-evacuation-naval-2026-10-16",
+      "id": "ev-saied-bizerte-evacuation-naval-2026-10-15",
       "confidence": "C",
       "basis": "inferred",
       "risk": 1,
