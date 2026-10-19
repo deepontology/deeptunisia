@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T08:09:10.136Z",
+  "generatedAt": "2026-10-19T08:25:21.621Z",
   "cutoff": "2026-10-18",
   "counts": {
     "claims": 82,
@@ -161,8 +161,8 @@
       "id": "sources-total",
       "kind": "metric",
       "claim": "Sources defined in the library.",
-      "value": "1384",
-      "display": "1384",
+      "value": "1385",
+      "display": "1385",
       "format": "plain",
       "population": "sources defined in data/sources.yaml",
       "lifecycle": "current",
@@ -234,8 +234,8 @@
       "id": "sources-cited",
       "kind": "metric",
       "claim": "Sources that back at least one claim.",
-      "value": "1334",
-      "display": "1334",
+      "value": "1335",
+      "display": "1335",
       "format": "plain",
       "population": "sources defined in data/sources.yaml that back at least one claim",
       "lifecycle": "current",
@@ -275,22 +275,22 @@
       "surfaces": [
         {
           "path": "landing/index.html",
-          "locator": "(\\d+) of the 1384 sources currently back",
+          "locator": "(\\d+) of the 1385 sources currently back",
           "format": "plain"
         },
         {
           "path": "landing/_strings.en.json",
-          "locator": "(\\d+) of the 1384 sources currently back",
+          "locator": "(\\d+) of the 1385 sources currently back",
           "format": "plain"
         },
         {
           "path": "landing/_strings.fr.json",
-          "locator": "(\\d+) des 1384 sources n.appuient",
+          "locator": "(\\d+) des 1385 sources n.appuient",
           "format": "plain"
         },
         {
           "path": "landing/_strings.ar.json",
-          "locator": "و(\\d+) من المصادر الـ1384",
+          "locator": "و(\\d+) من المصادر الـ1385",
           "format": "plain"
         }
       ]
@@ -770,8 +770,8 @@
       "id": "source-tier-3",
       "kind": "metric",
       "claim": "Sources at tier 3.",
-      "value": 509,
-      "display": "509",
+      "value": 510,
+      "display": "510",
       "format": "plain",
       "population": "sources with tier=3",
       "lifecycle": "current",
@@ -899,8 +899,8 @@
       "id": "graph-hash",
       "kind": "metric",
       "claim": "Canonical graph hash (the release identity).",
-      "value": "bb295c89a30204a79e34f7c9af6ce4aec8c4fa7fdc59ba95d0ab600a7accd175",
-      "display": "bb295c89a30204a79e34f7c9af6ce4aec8c4fa7fdc59ba95d0ab600a7accd175",
+      "value": "05bf959fc09afc29d62bf8ff9810d620b84060a77027a189cd2adbb5b8a1c052",
+      "display": "05bf959fc09afc29d62bf8ff9810d620b84060a77027a189cd2adbb5b8a1c052",
       "format": "text",
       "population": "the stable projection of the emitted bundle — NOT the landing visuals marker, which ties DENSITY/NODES/EDGES to dataset.json and is never production graph identity",
       "lifecycle": "current",
@@ -987,8 +987,8 @@
       "id": "payload-shipped",
       "kind": "metric",
       "claim": "Public export payload size.",
-      "value": 8820,
-      "display": "8820",
+      "value": 8830,
+      "display": "8830",
       "format": "plain",
       "population": "the public exports on disk (dataset, CSVs, geometry, changelog, topology)",
       "lifecycle": "current",
@@ -1009,7 +1009,7 @@
       "id": "payload-shipped-mb",
       "kind": "metric",
       "claim": "Public export payload, in megabytes.",
-      "value": "8820",
+      "value": "8830",
       "display": "8.6",
       "format": "mb1",
       "population": "the public exports on disk, rendered in MB",
@@ -1052,7 +1052,7 @@
       "id": "dataset-export-size",
       "kind": "metric",
       "claim": "Canonical bundle size.",
-      "value": 6788,
+      "value": 6790,
       "display": "6.6",
       "format": "mb1",
       "population": "static/dataset.json on disk, rounded to the nearest KB",
@@ -2213,8 +2213,8 @@
       "id": "world-snapshot",
       "kind": "metric",
       "claim": "World snapshot generation date.",
-      "value": "2026-10-19T08:09:08.550Z",
-      "display": "2026-10-19T08:09:08.550Z",
+      "value": "2026-10-19T08:25:19.949Z",
+      "display": "2026-10-19T08:25:19.949Z",
       "format": "iso-date",
       "population": "src/generated/world.json snapshot",
       "lifecycle": "current",

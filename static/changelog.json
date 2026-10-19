@@ -1,5 +1,35 @@
 [
   {
+    "hash": "26967fa1d",
+    "date": "2026-10-19T09:13:45+01:00",
+    "subject": "Data: merge the 2026-10-19 sweep (four events)",
+    "kind": "revision",
+    "added": 228,
+    "removed": 6,
+    "files": [
+      {
+        "file": "data/events.yaml",
+        "added": 146,
+        "removed": 0
+      },
+      {
+        "file": "data/parameters.yaml",
+        "added": 7,
+        "removed": 1
+      },
+      {
+        "file": "data/public-claims.yaml",
+        "added": 5,
+        "removed": 5
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 70,
+        "removed": 0
+      }
+    ]
+  },
+  {
     "hash": "c0ca30344",
     "date": "2026-10-13T14:10:25+01:00",
     "subject": "Data: merge the 2026-10-13 sweep (four events, one re-verification)",

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-19T08:09:08.090Z",
+  "generated": "2026-10-19T08:25:19.466Z",
   "total": 999,
   "reviewed": 39,
   "queue": [
@@ -435,6 +435,16 @@
     },
     {
       "kind": "event",
+      "id": "ev-bh-bank-h1-2026-auditors",
+      "confidence": "C",
+      "basis": "inferred",
+      "risk": 1,
+      "sources": 2,
+      "reviewed": false,
+      "title": "BH Bank H1 2026 statements published with four auditors' reservations"
+    },
+    {
+      "kind": "event",
       "id": "ev-chebbi-hunger-strike-2026-10-01",
       "confidence": "C",
       "basis": "inferred",
@@ -792,16 +802,6 @@
       "sources": 1,
       "reviewed": false,
       "title": "Council awards A1 renewal and A2 motorway concessions to Tunisie Autoroutes"
-    },
-    {
-      "kind": "event",
-      "id": "ev-bh-bank-h1-2026-auditors",
-      "confidence": "C",
-      "basis": "inferred",
-      "risk": 1,
-      "sources": 1,
-      "reviewed": false,
-      "title": "BH Bank H1 2026 statements published with four auditors' reservations"
     },
     {
       "kind": "event",

@@ -3,7 +3,7 @@
   "project": "deeptunisia",
   "origin": "https://deeptunisia.org",
   "license": "CC-BY-4.0",
-  "generatedAt": "2026-10-19T08:09:10.136Z",
+  "generatedAt": "2026-10-19T08:25:21.621Z",
   "release": {
     "packageVersion": "0.1.0",
     "currentTag": "v0.1.2-C1",
@@ -14,14 +14,14 @@
     "node": "v26.7.0"
   },
   "graph": {
-    "datasetHash": "bb295c89a30204a79e34f7c9af6ce4aec8c4fa7fdc59ba95d0ab600a7accd175",
-    "generated": "2026-10-19T08:09:08.139Z",
+    "datasetHash": "05bf959fc09afc29d62bf8ff9810d620b84060a77027a189cd2adbb5b8a1c052",
+    "generated": "2026-10-19T08:25:19.519Z",
     "cutoff": "2026-10-18",
     "floor": "1956-03-20",
     "graphKB": 4980,
-    "shippedKB": 8820,
+    "shippedKB": 8830,
     "counts": {
-      "sources": 1384,
+      "sources": 1385,
       "people": 458,
       "positions": 427,
       "relationships": 362,

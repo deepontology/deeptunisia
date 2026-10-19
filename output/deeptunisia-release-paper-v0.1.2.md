@@ -30,7 +30,7 @@ The review treated the paper the way the paper treats the data: every checkable 
 - **C12 — Tables 2 and 5 quoted a cutoff the parameter file had moved.** The paper's own rule is that modelling constants are published as data; the cutoff advanced from 2026-07-26 to 2026-09-10 across the daily sweeps, and the prose did not follow because the value was not a tag. `floor` and `cutoff` are now emitted stats, both tables are tagged, and the successor gate requires the keys.
 - **C13 — Table 2's kind counts were hand-typed and had drifted.** Agreements read 7 against the emitted 23, companies 8 against 25, places 12 against 44, education 21 against 25, and the others by smaller margins; only the seven original scale rows carried tags. All ten kind counts are now emitted stats and tagged, so the table cannot drift again. Three stale spots in this release were found by the claim matrix rather than by the tag gate, and that is the matrix doing its job: the gate can only check the tags that exist.
 
-**Reproducibility block.** Built from commit <!--stat:commitSha--><!--/stat--> — <!--stat:sources-->1384<!--/stat--> sources (<!--stat:sourcesCited-->1334<!--/stat--> cited), <!--stat:people-->458<!--/stat--> people, <!--stat:positions-->427<!--/stat--> positions, <!--stat:relationships-->362<!--/stat--> relationships, <!--stat:events-->150<!--/stat--> events. Every dataset figure in this file is a stat tag rewritten by the build; `scripts/test-paper.ts` fails the suite on drift; the frozen artifact is the PDF exported at release.
+**Reproducibility block.** Built from commit <!--stat:commitSha--><!--/stat--> — <!--stat:sources-->1385<!--/stat--> sources (<!--stat:sourcesCited-->1335<!--/stat--> cited), <!--stat:people-->458<!--/stat--> people, <!--stat:positions-->427<!--/stat--> positions, <!--stat:relationships-->362<!--/stat--> relationships, <!--stat:events-->150<!--/stat--> events. Every dataset figure in this file is a stat tag rewritten by the build; `scripts/test-paper.ts` fails the suite on drift; the frozen artifact is the PDF exported at release.
 
 **Keywords:** knowledge graphs · evidence grading · provenance · build-time validation · epistemic basis · fuzzy temporal intervals · computational social science · verifiability
 
@@ -69,7 +69,7 @@ The paper's contributions are four, and each is stated at the level of what the 
 3. **Honest self-measurement as a design property** (§8): published statistics that the build itself rewrites from the graph, risk-bucketed review coverage, per-tier translation coverage, and coverage audits that surface what the map does *not* contain — so the project's prose cannot drift from its data, and its shortfalls are published rather than hidden.
 4. **A portable epistemic infrastructure, not a Tunisia database** (§5.9, §9): the enforcement layer is jurisdiction-agnostic — a new deployment (DeepMorocco, DeepCalifornia, DeepLagos) forks the repository, replaces the canonical dataset and jurisdiction-specific ontology, and retains the evidence envelope, validators, build gate, audit machinery and community layer, independently operated and independently responsible for its evidentiary judgments. The design is portable; the demonstration is planned rather than performed, and the paper says so (§9, §10.2 item 6). The Agora completes the loop: the graph creates the discussion, the discussion proposes changes, and only the compiler changes the graph — with discussion anchored to records, identity designed so a server compromise impersonates nobody, votes that rank but never grade, and petitions whose honesty rules are fixed before the feature exists. The loop is the architecture: the compiler admits, the community warrants, and only recompilation changes the record.
 
-The system is source-available and runnable (`npm run data && npm run test`), and the full dataset ships as downloadable JSON and CSV beside the site. Licensing status is stated precisely in the availability section — this paper deliberately does not use the term "open source" until a license is in force, because a paper whose thesis is that an unenforced claim must not pass as an enforced one should not make an unenforced licensing claim itself. At the time of writing, the graph holds <!--stat:sources-->1384<!--/stat--> sources, <!--stat:institutions-->211<!--/stat--> institutions, <!--stat:roles-->119<!--/stat--> roles, <!--stat:people-->458<!--/stat--> people, <!--stat:positions-->427<!--/stat--> positions, <!--stat:relationships-->362<!--/stat--> relationships and <!--stat:events-->150<!--/stat--> events, plus first records in the corporate and documentary layers [4].
+The system is source-available and runnable (`npm run data && npm run test`), and the full dataset ships as downloadable JSON and CSV beside the site. Licensing status is stated precisely in the availability section — this paper deliberately does not use the term "open source" until a license is in force, because a paper whose thesis is that an unenforced claim must not pass as an enforced one should not make an unenforced licensing claim itself. At the time of writing, the graph holds <!--stat:sources-->1385<!--/stat--> sources, <!--stat:institutions-->211<!--/stat--> institutions, <!--stat:roles-->119<!--/stat--> roles, <!--stat:people-->458<!--/stat--> people, <!--stat:positions-->427<!--/stat--> positions, <!--stat:relationships-->362<!--/stat--> relationships and <!--stat:events-->150<!--/stat--> events, plus first records in the corporate and documentary layers [4].
 
 ## 2. Background and requirements
 
@@ -109,7 +109,7 @@ The ontology grows additively: new record kinds compose the same claim envelope 
 
 | Record kind | Count | Claim-bearing | Notes |
 |---|---|---|---|
-| sources | <!--stat:sources-->1384<!--/stat--> (<!--stat:sourcesCited-->1334<!--/stat--> cited) | — | tier 1–5, archive URLs |
+| sources | <!--stat:sources-->1385<!--/stat--> (<!--stat:sourcesCited-->1335<!--/stat--> cited) | — | tier 1–5, archive URLs |
 | institutions | <!--stat:institutions-->211<!--/stat--> | yes | incl. corporate-like |
 | roles | <!--stat:roles-->119<!--/stat--> | — | canonical offices with authority weights |
 | people | <!--stat:people-->458<!--/stat--> | yes | trilingual, aliases |
@@ -604,8 +604,8 @@ DeepTunisia is an attempt to make a specific promise machine-checkable: that a d
 
 This appendix exists to make the `test-paper.ts` gate's requirement visible: every dataset number the corrections release rests on is tagged and build-rewritten. Values are the live graph at build time.
 
-- sources: <!--stat:sources-->1384<!--/stat-->
-- sourcesCited: <!--stat:sourcesCited-->1334<!--/stat-->
+- sources: <!--stat:sources-->1385<!--/stat-->
+- sourcesCited: <!--stat:sourcesCited-->1335<!--/stat-->
 - people: <!--stat:people-->458<!--/stat-->
 - positions: <!--stat:positions-->427<!--/stat-->
 - relationships: <!--stat:relationships-->362<!--/stat-->
