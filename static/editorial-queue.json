@@ -1,6 +1,6 @@
 {
-  "generated": "2026-10-13T17:16:14.596Z",
-  "total": 995,
+  "generated": "2026-10-19T08:09:08.090Z",
+  "total": 999,
   "reviewed": 39,
   "queue": [
     {
@@ -825,6 +825,16 @@
     },
     {
       "kind": "event",
+      "id": "ev-march-17-october-2026",
+      "confidence": "C",
+      "basis": "inferred",
+      "risk": 1,
+      "sources": 1,
+      "reviewed": false,
+      "title": "Thousands march in Tunis against repression, poverty and the cost of living"
+    },
+    {
+      "kind": "event",
       "id": "ev-march-of-dignity-2026-10-05",
       "confidence": "C",
       "basis": "inferred",
@@ -872,6 +882,16 @@
       "sources": 1,
       "reviewed": false,
       "title": "Saïed calls water and power cuts 'planned sabotage'"
+    },
+    {
+      "kind": "event",
+      "id": "ev-saied-bizerte-evacuation-naval-2026-10-16",
+      "confidence": "C",
+      "basis": "inferred",
+      "risk": 1,
+      "sources": 1,
+      "reviewed": false,
+      "title": "Saïed marks Evacuation Day in Bizerte and inaugurates a Tunisian-built naval patrol boat"
     },
     {
       "kind": "event",
@@ -965,6 +985,16 @@
     },
     {
       "kind": "event",
+      "id": "ev-turki-appeal-convictions-2026-10-17",
+      "confidence": "C",
+      "basis": "inferred",
+      "risk": 1,
+      "sources": 1,
+      "reviewed": false,
+      "title": "Appeal court confirms a four-year sentence on Khayam Turki, alongside a separate 14-year corruption verdict"
+    },
+    {
+      "kind": "event",
       "id": "ev-ugtt-strike-instance-2026-09-10",
       "confidence": "C",
       "basis": "reported",
@@ -972,6 +1002,16 @@
       "sources": 1,
       "reviewed": false,
       "title": "UGTT administrative instance to rule on general strike"
+    },
+    {
+      "kind": "event",
+      "id": "ev-uib-auditors-revelation-2026-03-11",
+      "confidence": "C",
+      "basis": "inferred",
+      "risk": 1,
+      "sources": 1,
+      "reviewed": false,
+      "title": "UIB statutory auditors report savings-account manipulations to the prosecutor"
     },
     {
       "kind": "event",

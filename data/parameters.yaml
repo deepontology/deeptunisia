@@ -60,9 +60,15 @@ time:
   #   mining-energy interview) and re-verified the UPR leadership position to
   #   2026-10. The sweep read the feed through 2026-10-13, so the cutoff takes
   #   the coverage date rather than the latest record date.
+  # Advanced again 2026-10-18 when the Oct-13 to Oct-19 sweep merged four events
+  #   (the Khayam Turki appeal convictions, the Saïed Bizerte Evacuation-Day
+  #   ceremony and naval launch, the 17 October march in Tunis, and the UIB
+  #   statutory auditors' revelation of 11 March 2026) whose dates sat past the
+  #   previous horizon. The sweep read the feed through 2026-10-18, so the cutoff
+  #   takes the coverage date rather than the latest record date.
   # V31 now fails the build on any record interval dated past the cutoff.
   floor: "1956-03-20"
-  cutoff: "2026-10-13"
+  cutoff: "2026-10-18"
   # How far back an open-ended "in post by X" bound may reach. A plausible
   # ceiling for a senior command tenure; the longest documented run in the
   # dataset is about seven and a half years.

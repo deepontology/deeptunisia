@@ -5348,3 +5348,149 @@
   sources:
     - am-phosphates-10mt-2026-10-12
     - am-hydrocarbures-code-2026-10-13
+
+- id: ev-turki-appeal-convictions-2026-10-17
+  date: "2026-10-17"
+  title_en: "Appeal court confirms a four-year sentence on Khayam Turki, alongside a separate 14-year corruption verdict"
+  title_fr: "La cour d'appel confirme quatre ans de prison contre Khayam Turki, aux côtés d'une condamnation distincte à 14 ans pour corruption"
+  title_ar: "محكمة الاستئناف تؤكد الحكم بأربع سنوات سجنا ضد خيام التركي إلى جانب حكم آخر بـ14 سنة"
+  category: legal
+  subcategory: sentencing
+  location: [gov-tunis]
+  actors: [khayam-turki]
+  institutions: [judiciary]
+  summary: >-
+    The Tunis Court of Appeal confirmed on Saturday 17 October 2026 a sentence of
+    four years' firm imprisonment and a 200,000-dinar fine against the political
+    activist and businessman Khayam Turki, in fraud and tax cases, per a source
+    cited by Mosaïque FM as relayed by Kapitalis. In parallel, the criminal
+    chamber specialised in financial-corruption cases near the Tunis Court of
+    First Instance sentenced him to 14 years' firm imprisonment and a fine for
+    money laundering, fraud and illegal exploitation of his professional and
+    social activities, with five years' administrative surveillance after the
+    sentence and confiscation of all his assets held at Tunisian financial
+    institutions. Turki is the Ettakatol leader and Front de Salut national
+    coordinator detained in the February 2023 arrests. Neither the appeal ruling
+    nor the criminal-chamber judgment was retrieved; both rest on the relayed
+    Mosaïque FM attribution.
+  confidence: C
+  verification: needs-primary-source
+  attributed_to: "Kapitalis, citing Mosaïque FM (17 October 2026)"
+  reasoning: >-
+    One outlet quoting a second outlet; the two sentences, their terms and the
+    confiscation are as relayed. The graph holds no earlier record of these
+    convictions, so this is a new legal event referencing the existing person
+    rather than a correction.
+  falsifiable_by: >-
+    The appeal ruling and the criminal-chamber judgment, or a second outlet's
+    independent account, would confirm the four-year and 14-year terms, the fine,
+    the surveillance and the asset confiscation.
+  sources:
+    - kapitalis-turki-appel-2026-10-17
+
+- id: ev-saied-bizerte-evacuation-naval-2026-10-16
+  date: "2026-10-16"
+  title_en: "Saïed marks Evacuation Day in Bizerte and inaugurates a Tunisian-built naval patrol boat"
+  title_fr: "Saïed célèbre à Bizerte l'anniversaire de l'évacuation et inaugure un patrouilleur fabriqué en Tunisie"
+  title_ar: "سعيد يحيي ذكرى عيد الجلاء ببنزرت ويدشن زورق دورية عسكريا صناعة تونسية"
+  category: political
+  subcategory: presidential-declaration
+  location: [gov-bizerte]
+  actors: [kais-saied]
+  institutions: [presidency, ministry-defence]
+  summary: >-
+    President Kaïs Saïed went to the Martyrs' square in Bizerte on Thursday
+    16 October 2026 for the 63rd anniversary of Evacuation Day, saluted the flag,
+    reviewed a detachment of the three services, laid a wreath and met veterans
+    of the July 1961 Bizerte fighting, per a presidency communiqué relayed by
+    African Manager. He said Tunisia would stay "head high" and that "our
+    sovereignty is not negotiated". He then inaugurated at the Bizerte naval base
+    a military patrol boat built in Tunisia by national skills, saying this would
+    open the way to building other military equipment and announcing further
+    naval-sector achievements. The Defence Minister and members of the Supreme
+    Council of the Armed Forces took part. The communiqué is a single origin; no
+    independent corroboration was found.
+  confidence: C
+  verification: needs-primary-source
+  attributed_to: "Presidency of the Republic communiqué, as relayed by African Manager (16 October 2026)"
+  reasoning: >-
+    One outlet relaying the presidency's own communiqué; the quotes and the
+    patrol-boat inauguration are as reported. Recorded at grade C with
+    attribution, matching the graph's treatment of other presidential-declaration
+    records.
+  falsifiable_by: >-
+    The presidency's own communiqué and video, the Defence Ministry, or a second
+    outlet's account would confirm the ceremony, the quotes and the patrol-boat
+    inauguration; a Defence Ministry statement would name the vessel.
+  sources:
+    - african-manager-saied-bizerte-2026-10-16
+
+- id: ev-march-17-october-2026
+  date: "2026-10-17"
+  title_en: "Thousands march in Tunis against repression, poverty and the cost of living"
+  title_fr: "Des milliers de personnes marchent à Tunis contre la répression, la pauvreté et la cherté de la vie"
+  title_ar: "مسيرة حاشدة بالعاصمة ضد سياسات القمع والتفقير"
+  category: protest
+  subcategory: cost-of-living
+  location: [gov-tunis]
+  institutions: [ugtt, onat, ltdh, snjt]
+  summary: >-
+    Thousands of Tunisians demonstrated in the capital on Saturday
+    17 October 2026 against the deterioration of economic and social conditions,
+    the cost of living, the shrinking space for freedoms and rising human-rights
+    violations, per a Nawaat video report. The march raised slogans rejecting a
+    return of the police state and the generalisation of repression, and cited
+    soaring prices and rising poverty and unemployment. Nawaat calls it the first
+    of its kind, called by a coordination framework (الإطار التنسيقي) bringing
+    together the UGTT, the National Order of Lawyers, the LTDH, the SNJT and
+    other youth organisations, with political forces and social movements joining
+    under the slogan "work, freedom, national dignity". The report names no
+    individual leader; the coordinating body has no graph id, so only the
+    component institutions are attributed.
+  confidence: C
+  verification: needs-primary-source
+  attributed_to: "Nawaat (17 October 2026)"
+  reasoning: >-
+    Single outlet, a video report; the date, the demands and the composition of
+    the calling framework are as Nawaat states them. The constituent
+    organisations exist in the graph; the umbrella framework itself has no id and
+    is named in the summary only.
+  falsifiable_by: >-
+    A joint communiqué of the coordination framework, an Interior Ministry or
+    news-agency account, or a second outlet would confirm the turnout, the date
+    and the composition of the calling coalition.
+  sources:
+    - nawaat-marche-17-octobre-2026-10-17
+
+- id: ev-uib-auditors-revelation-2026-03-11
+  date: "2026-03-11"
+  title_en: "UIB statutory auditors report savings-account manipulations to the prosecutor"
+  title_fr: "Les commissaires aux comptes de l'UIB révèlent des faits délictueux au procureur"
+  title_ar: "مراقبو حسابات الاتحاد الدولي للبنوك يبلغون النيابة العامة بوقائع جرمية"
+  category: legal
+  subcategory: banking
+  location: [gov-tunis]
+  institutions: [uib, judiciary]
+  summary: >-
+    Under article 270 of the Commercial Companies Code, the statutory auditors of
+    the Union Internationale de Banques (UIB) filed a "révélation de faits
+    délictueux" with the public prosecutor on 11 March 2026 after discovering
+    manipulations on clients' savings accounts, per a bank-communiqué extract
+    relayed by African Manager on 18 October 2026. The bank also filed a
+    complaint; the amounts involved were put at about 557 thousand dinars. The
+    filing itself was not retrieved and only one outlet relays it, so the act is
+    recorded as reported rather than documented.
+  confidence: C
+  verification: needs-primary-source
+  attributed_to: "UIB communiqué extract, as relayed by African Manager (18 October 2026)"
+  reasoning: >-
+    One outlet relaying a bank-communiqué extract; the date, the provision cited
+    (article 270 CSC) and the amount are as reported. The underlying filing and
+    the bank's own communiqué were not retrieved, so the record is an inference
+    from a single relayed account.
+  falsifiable_by: >-
+    UIB's communiqué, the public prosecutor's file, or a second outlet would
+    confirm the 11 March 2026 revelation, the article 270 basis and the 557
+    thousand-dinar figure.
+  sources:
+    - african-manager-uib-revelation-2026-10-18

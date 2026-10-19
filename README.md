@@ -45,9 +45,9 @@ halves of the dev loop as `beta` so the Agora tab is reachable during
 development; a reader on deeptunisia.org never touches it. The mode contract is
 `docs/agora-deployment.md`.
 
-The complete graph is <!--stat:graphKB-->4960<!--/stat--> KB as the internal
+The complete graph is <!--stat:graphKB-->4980<!--/stat--> KB as the internal
 bundle, and the public exports (dataset, CSVs, geographic layers, changelog)
-ship at <!--stat:shippedKB-->8800<!--/stat--> KB — both are computed by the
+ship at <!--stat:shippedKB-->8820<!--/stat--> KB — both are computed by the
 build, and `npm run test` fails if the README ever disagrees with them.
 
 ## Reproducibility
@@ -189,15 +189,15 @@ This is not neutrality for its own sake — it is the project's only real protec
 
 ## Known limits
 
-- **<!--stat:reviewed-->48<!--/stat--> of <!--stat:reviewable-->1772<!--/stat--> records carry an editorial review note, and independent human verification is <!--stat:independent-->0<!--/stat-->.** The stated architecture is that machines propose and humans verify; almost nothing has been through a second pair of eyes. The real numbers are published on `/about` because that is the only way the commitment means anything.
+- **<!--stat:reviewed-->48<!--/stat--> of <!--stat:reviewable-->1776<!--/stat--> records carry an editorial review note, and independent human verification is <!--stat:independent-->0<!--/stat-->.** The stated architecture is that machines propose and humans verify; almost nothing has been through a second pair of eyes. The real numbers are published on `/about` because that is the only way the commitment means anything.
 - **Defence intelligence (ANRSD) has no primary sourcing at all** — statute, appointment date, current status all unestablished. Largest hole in the security map.
 - **Pre-2011 police chronology is the weakest area**, resting largely on secondary sources.
 - **The 2014–2019 police succession does not fit its endpoints.** Three reported tenures cannot fit between two firmly dated ones; recorded as an unresolved contradiction rather than smoothed over.
 - **`<=` bounds use an 8-year window.** Stated modelling assumption, not a fact.
 - **UI is translated for chrome only.** Arabic, French and English navigation, controls and labels, with RTL. Entity names are trilingual in the data and all three are searchable. Long-form analytical prose is deliberately *not* machine-translated — a machine-translated epistemology page would undermine the point.
 - **<!--stat:needsPrimarySource-->230<!--/stat--> records await a primary source.** Listed in full on `/evidence`.
-- **Human review is not merely thin, it is not independent.** Independent checks stand at <!--stat:independent-->0<!--/stat--> in every category, and the editorial notes that do exist are unevenly spread: <!--stat:reviewed-unsubstantiated-->18<!--/stat--> of <!--stat:reviewable-unsubstantiated-->21<!--/stat--> unsubstantiated claims, <!--stat:reviewed-attributed-->21<!--/stat--> of <!--stat:reviewable-attributed-->327<!--/stat--> that name a source and <!--stat:reviewed-inferred-->2<!--/stat--> of <!--stat:reviewable-inferred-->55<!--/stat--> inferences carry one. The breakdown is on `/about`.
-- **<!--stat:sourcesUncited-->50<!--/stat--> of <!--stat:sources-->1380<!--/stat--> sources back no claim.** Staged reading, kept in the file but excluded from the published count of <!--stat:sourcesCited-->1330<!--/stat--> — a bibliography entry that holds nothing up is not evidence.
+- **Human review is not merely thin, it is not independent.** Independent checks stand at <!--stat:independent-->0<!--/stat--> in every category, and the editorial notes that do exist are unevenly spread: <!--stat:reviewed-unsubstantiated-->18<!--/stat--> of <!--stat:reviewable-unsubstantiated-->21<!--/stat--> unsubstantiated claims, <!--stat:reviewed-attributed-->21<!--/stat--> of <!--stat:reviewable-attributed-->331<!--/stat--> that name a source and <!--stat:reviewed-inferred-->2<!--/stat--> of <!--stat:reviewable-inferred-->59<!--/stat--> inferences carry one. The breakdown is on `/about`.
+- **<!--stat:sourcesUncited-->50<!--/stat--> of <!--stat:sources-->1384<!--/stat--> sources back no claim.** Staged reading, kept in the file but excluded from the published count of <!--stat:sourcesCited-->1334<!--/stat--> — a bibliography entry that holds nothing up is not evidence.
 
 ## Deliberately not built yet
 
