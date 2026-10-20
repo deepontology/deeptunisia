@@ -52,6 +52,18 @@ export function buildFlowId(kind: string, year: number, iso2: string): string {
 	return `${kind}:${year}:${iso2}`;
 }
 
+/**
+ * Canonical public URL for a study page.
+ *
+ * Never build this from `location.href`: a reader who arrived through a
+ * campaign link carries that link's `?src=` code, and handing it on would
+ * attribute every recipient's answer to a campaign they never saw. The study
+ * page has one public address, and a share is not a recruitment channel.
+ */
+export function studyShareUrl(slug: string): string {
+	return `https://deeptunisia.org/research/${encodeURIComponent(slug)}`;
+}
+
 export async function copyText(text: string): Promise<boolean> {
 	if (!text) return false;
 	try {
@@ -124,14 +136,24 @@ export function canNativeShare(url: string): boolean {
 	}
 }
 
-export function platformShareUrls(url: string, title?: string): { x: string; facebook: string; whatsapp: string; telegram: string; email: string } {
+export function platformShareUrls(
+	url: string,
+	title?: string,
+	text?: string
+): { x: string; facebook: string; whatsapp: string; telegram: string; email: string } {
 	const eu = encodeURIComponent(url);
 	const et = encodeURIComponent(title ?? url);
+	// A message with the link beside it, rather than a bare URL. WhatsApp is the
+	// channel that matters here and it renders the text field, not the title;
+	// without this an invitation arrives as an unexplained link.
+	const message = text ? `${text} ${url}` : url;
+	const em = encodeURIComponent(message);
+	const body = encodeURIComponent(text ?? title ?? url);
 	return {
-		x: `https://twitter.com/intent/tweet?url=${eu}&text=${et}`,
+		x: `https://twitter.com/intent/tweet?url=${eu}&text=${body}`,
 		facebook: `https://www.facebook.com/sharer/sharer.php?u=${eu}`,
-		whatsapp: `https://wa.me/?text=${eu}`,
-		telegram: `https://t.me/share/url?url=${eu}&text=${et}`,
-		email: `mailto:?subject=${et}&body=${eu}`
+		whatsapp: `https://wa.me/?text=${em}`,
+		telegram: `https://t.me/share/url?url=${eu}&text=${body}`,
+		email: `mailto:?subject=${et}&body=${em}`
 	};
 }

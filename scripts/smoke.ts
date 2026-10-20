@@ -4252,6 +4252,57 @@ if (runSection('layout')) for (const vp of VIEWPORTS) {
 	await context.close();
 }
 
+/*
+ * The study page. Its share control is the same ShareMenu the cards use, but
+ * the link must be the study's own address: a reader who arrived through a
+ * campaign link must not hand that code to everyone they share with.
+ */
+{
+	const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+	const page = await context.newPage();
+	await page.goto(`${BASE}/research/police?src=smoke-share`, { waitUntil: 'networkidle', timeout: 30_000 });
+	const meta = await page.evaluate(() => ({
+		image: document.querySelector('meta[property="og:image"]')?.getAttribute('content') ?? '',
+		canonical: document.querySelector('link[rel="canonical"]')?.getAttribute('href') ?? ''
+	}));
+	ok(
+		'the study page carries a preview card',
+		meta.image === 'https://deeptunisia.org/og/police.png',
+		meta.image
+	);
+	ok(
+		'the study page canonical drops the campaign code',
+		meta.canonical === 'https://deeptunisia.org/research/police',
+		meta.canonical
+	);
+	const triggers = page.locator('button[aria-label="Share this page"]');
+	ok('the study page offers share before and after reading', (await triggers.count()) === 2);
+	await triggers.first().click();
+	await page.locator('.pop').waitFor({ state: 'visible' });
+	const link = await page.locator('input[aria-label="Link"]').inputValue();
+	ok(
+		'the shared link is the study page, not the campaign URL',
+		link === 'https://deeptunisia.org/research/police',
+		link
+	);
+	await context.close();
+}
+
+{
+	const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
+	const page = await context.newPage();
+	await page.goto(`${BASE}/research/police`, { waitUntil: 'networkidle', timeout: 30_000 });
+	await page.locator('.secbar button[aria-label="Share this page"]').click();
+	await page.locator('.pop').waitFor({ state: 'visible' });
+	const box = await page.locator('.pop').boundingBox();
+	ok(
+		'the share panel becomes a bottom sheet on a phone',
+		Boolean(box && box.y > 300),
+		box ? `${Math.round(box.y)}px from the top` : 'no panel'
+	);
+	await context.close();
+}
+
 await browser.close();
 
 console.log(

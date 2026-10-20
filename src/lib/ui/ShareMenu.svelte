@@ -10,9 +10,11 @@
 		/** compact icon in card header; default ghost */
 		variant?: 'icon' | 'compact';
 		label?: string;
+		/** Panel heading. A graph record and a study page are not the same thing. */
+		heading?: string;
 	}
 
-	let { url, title, text, variant = 'icon', label }: Props = $props();
+	let { url, title, text, variant = 'icon', label, heading }: Props = $props();
 
 	let open = $state(false);
 	let copied = $state(false);
@@ -20,7 +22,7 @@
 	let toastTimer: number | null = null;
 
 	const native = $derived(canNativeShare(url));
-	const platforms = $derived(platformShareUrls(url, title));
+	const platforms = $derived(platformShareUrls(url, title, text));
 
 	function close() {
 		open = false;
@@ -72,10 +74,10 @@
 		{/if}
 	</button>
 
-	<Popover bind:open onclose={close} label={t('share.title')} align="end">
-		<div class="panel" role="dialog" aria-label={t('share.title')}>
+	<Popover bind:open onclose={close} label={heading ?? t('share.title')} align="end">
+		<div class="panel" role="dialog" aria-label={heading ?? t('share.title')}>
 			<div class="head">
-				<span class="eyebrow">{t('share.title')}</span>
+				<span class="eyebrow">{heading ?? t('share.title')}</span>
 				<button class="close" onclick={close} aria-label={t('panel.close')}>×</button>
 			</div>
 

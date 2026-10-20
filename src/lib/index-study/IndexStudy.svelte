@@ -14,6 +14,8 @@
 	import MonthlyChart from './MonthlyChart.svelte';
 	import OfficerNote from './OfficerNote.svelte';
 	import Content from '$lib/ui/Content.svelte';
+	import ShareMenu from '$lib/ui/ShareMenu.svelte';
+	import { studyShareUrl } from '$lib/share';
 	import { content as contentDoc, type ContentInline } from '$lib/content';
 	import type { LiveResults } from './live';
 	import { channelCode, ORGANIC_CHANNEL, scoreResponse } from '../../../community/research-scoring.ts';
@@ -34,6 +36,18 @@
 
 	const spec = $derived(instrument.scoring!);
 	const locale = $derived(app.locale);
+
+	/**
+	 * The preview card. A scoring study gets its own artwork when one ships;
+	 * until then the default keeps the preview honest rather than borrowing
+	 * another study's card.
+	 */
+	const OG_IMAGE = $derived(
+		study.slug === 'police'
+			? 'https://deeptunisia.org/og/police.png'
+			: 'https://deeptunisia.org/og/default.png'
+	);
+	const OG_URL = $derived(studyShareUrl(study.slug));
 
 	let live = $state<LiveResults | null>(null);
 	let liveState = $state<'loading' | 'live' | 'closed' | 'offline'>('loading');
@@ -468,6 +482,29 @@
 	{#if s}<p class="sec-kicker mono"><span class="sec-num">{s.num}</span><span class="sec-slash">/</span>{s.label}</p>{/if}
 {/snippet}
 
+<svelte:head>
+	<!-- The page had a title and nothing else for a crawler to read, so a
+	     shared link arrived as a bare URL. The description is the page's own
+	     cover line, which describes the instrument and makes no claim about
+	     a figure. The canonical drops any ?src= campaign code. -->
+	<meta name="description" content={t('index.share.text')} />
+	<link rel="canonical" href={OG_URL} />
+	<meta property="og:type" content="article" />
+	<meta property="og:site_name" content="DeepTunisia" />
+	<meta property="og:title" content={`${titleOf(study, locale)} · DeepTunisia`} />
+	<meta property="og:description" content={t('index.share.text')} />
+	<meta property="og:url" content={OG_URL} />
+	<meta property="og:image" content={OG_IMAGE} />
+	<meta property="og:image:alt" content="Police Satisfaction Index, a DeepTunisia research study." />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="630" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content={`${titleOf(study, locale)} · DeepTunisia`} />
+	<meta name="twitter:description" content={t('index.share.text')} />
+	<meta name="twitter:image" content={OG_IMAGE} />
+	<meta name="twitter:image:alt" content="Police Satisfaction Index, a DeepTunisia research study." />
+</svelte:head>
+
 <!-- The shell is a fixed window; a document page owns its own scroll. The
      ruler sits beside the scroll, not inside it, so it never moves. -->
 <div class="frame research-type" class:rtl={locale === 'ar'}>
@@ -479,7 +516,20 @@
 				<span class="sec-num">{current?.num}</span><span class="sec-slash">/</span>{current?.label}
 			</span>
 		{/key}
-		<span class="secbar-id">PSI · {waveLabel}</span>
+		<span class="secbar-end">
+			<span class="secbar-id">PSI · {waveLabel}</span>
+			<!-- Share the page, never the current location: a reader who arrived
+			     through a campaign link would otherwise hand its code on. -->
+			<ShareMenu
+				url={OG_URL}
+				title={titleOf(study, locale)}
+				text={accepting
+					? tf('index.share.invite', { n: fmt(instrument.estimatedMinutes) })
+					: t('index.share.text')}
+				heading={t('index.share.heading')}
+				label={t('index.share.heading')}
+			/>
+		</span>
 	</div>
 <article class="pti" class:rtl={locale === 'ar'}>
 	<!-- Plate 01, edge to edge: the subject before the number. -->
@@ -1100,6 +1150,22 @@
 				{/if}
 			</div>
 		</Plate>
+		<!-- The same action for a reader who reached the end. It sits on the
+		     page surface rather than on the artwork, where the card trigger
+		     would fight the closing copy for contrast. -->
+		<div class="closing-share">
+			<ShareMenu
+				url={OG_URL}
+				title={titleOf(study, locale)}
+				text={accepting
+					? tf('index.share.invite', { n: fmt(instrument.estimatedMinutes) })
+					: t('index.share.text')}
+				heading={t('index.share.heading')}
+				label={t('index.share.heading')}
+				variant="compact"
+			/>
+			<p class="note">{t('index.share.note')}</p>
+		</div>
 		<div class="officer-wrap"><OfficerNote /></div>
 	</section>
 </article>
@@ -1162,6 +1228,12 @@
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
+	}
+	.secbar-end {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.6rem;
+		min-width: 0;
 	}
 	.secbar-id {
 		color: var(--text-faint);
@@ -1351,6 +1423,18 @@
 		background: var(--accent);
 		border-color: var(--accent);
 		color: var(--accent-text);
+	}
+	.closing-share {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
+		gap: var(--s-3);
+		padding: 1rem 1.25rem 0;
+	}
+	.closing-share .note {
+		margin: 0;
+		font-size: 0.78rem;
 	}
 
 
