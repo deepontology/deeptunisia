@@ -14,6 +14,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { BASIS_ORDER, BASIS_COLOR, BASIS_OPACITY, DASH, LAYERS, REL_KIND } from '../src/lib/model.ts';
 import { translate } from '../src/lib/i18n.ts';
+import { studyShareMessage } from '../src/lib/share.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const NETWORK = readFileSync(join(HERE, '..', 'src', 'lib', 'components', 'NetworkView.svelte'), 'utf8');
@@ -666,11 +667,18 @@ ok(
 	'a reader\'s ?src= code is not handed to strangers'
 );
 ok(
-	'the invitation waits until the study is taking answers',
-	INDEX_STUDY.includes("tf('index.share.invite'") &&
-		INDEX_STUDY.includes("t('index.share.text')") &&
-		INDEX_STUDY.includes('accepting'),
-	'design-stage readers are asked to share the page, not to answer'
+	'the share message is chosen from the server\'s accepting flag',
+	INDEX_STUDY.includes('studyShareMessage(') &&
+		INDEX_STUDY.includes('accepting,') &&
+		INDEX_STUDY.includes("tf('index.share.invite'") &&
+		INDEX_STUDY.includes("t('index.share.text')"),
+	'both resolved strings are passed to the choice'
+);
+ok(
+	'the invitation is used only while the study is accepting',
+	studyShareMessage(true, 'invite', 'closed') === 'invite' &&
+		studyShareMessage(false, 'invite', 'closed') === 'closed',
+	'a design-stage reader gets the description, not an invitation'
 );
 ok(
 	'the share panel can name a page and carry a message',

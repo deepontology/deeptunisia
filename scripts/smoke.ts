@@ -4252,6 +4252,8 @@ if (runSection('layout')) for (const vp of VIEWPORTS) {
 	await context.close();
 }
 
+if (runSection('study page')) {
+console.log('\n  ── study page ──');
 /*
  * The study page. Its share control is the same ShareMenu the cards use, but
  * the link must be the study's own address: a reader who arrived through a
@@ -4301,6 +4303,7 @@ if (runSection('layout')) for (const vp of VIEWPORTS) {
 		box ? `${Math.round(box.y)}px from the top` : 'no panel'
 	);
 	await context.close();
+}
 }
 
 await browser.close();

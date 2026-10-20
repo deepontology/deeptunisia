@@ -64,6 +64,17 @@ export function studyShareUrl(slug: string): string {
 	return `https://deeptunisia.org/research/${encodeURIComponent(slug)}`;
 }
 
+/**
+ * The message that travels with a study link. The invitation is only true
+ * while the study is taking answers; a design-stage page describes the
+ * instrument instead, because asking people to answer a closed survey is a
+ * false claim. Both branches are resolved by the caller, in the reader's
+ * language, so this stays a plain choice between two strings.
+ */
+export function studyShareMessage(accepting: boolean, invite: string, closed: string): string {
+	return accepting ? invite : closed;
+}
+
 export async function copyText(text: string): Promise<boolean> {
 	if (!text) return false;
 	try {

@@ -15,7 +15,7 @@
 	import OfficerNote from './OfficerNote.svelte';
 	import Content from '$lib/ui/Content.svelte';
 	import ShareMenu from '$lib/ui/ShareMenu.svelte';
-	import { studyShareUrl } from '$lib/share';
+	import { studyShareMessage, studyShareUrl } from '$lib/share';
 	import { content as contentDoc, type ContentInline } from '$lib/content';
 	import type { LiveResults } from './live';
 	import { channelCode, ORGANIC_CHANNEL, scoreResponse } from '../../../community/research-scoring.ts';
@@ -523,9 +523,11 @@
 			<ShareMenu
 				url={OG_URL}
 				title={titleOf(study, locale)}
-				text={accepting
-					? tf('index.share.invite', { n: fmt(instrument.estimatedMinutes) })
-					: t('index.share.text')}
+				text={studyShareMessage(
+					accepting,
+					tf('index.share.invite', { n: fmt(instrument.estimatedMinutes) }),
+					t('index.share.text')
+				)}
 				heading={t('index.share.heading')}
 				label={t('index.share.heading')}
 			/>
@@ -1157,9 +1159,11 @@
 			<ShareMenu
 				url={OG_URL}
 				title={titleOf(study, locale)}
-				text={accepting
-					? tf('index.share.invite', { n: fmt(instrument.estimatedMinutes) })
-					: t('index.share.text')}
+				text={studyShareMessage(
+					accepting,
+					tf('index.share.invite', { n: fmt(instrument.estimatedMinutes) }),
+					t('index.share.text')
+				)}
 				heading={t('index.share.heading')}
 				label={t('index.share.heading')}
 				variant="compact"
