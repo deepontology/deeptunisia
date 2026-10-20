@@ -14,6 +14,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { BASIS_ORDER, BASIS_COLOR, BASIS_OPACITY, DASH, LAYERS, REL_KIND } from '../src/lib/model.ts';
 import { translate } from '../src/lib/i18n.ts';
+import { studyShareMessage } from '../src/lib/share.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const NETWORK = readFileSync(join(HERE, '..', 'src', 'lib', 'components', 'NetworkView.svelte'), 'utf8');
@@ -631,6 +632,8 @@ const PARTICIPATE = readFileSync(
 	'utf8'
 );
 const INDEX_STUDY = readFileSync(join(HERE, '..', 'src', 'lib', 'index-study', 'IndexStudy.svelte'), 'utf8');
+const SHARE_MENU = readFileSync(join(HERE, '..', 'src', 'lib', 'ui', 'ShareMenu.svelte'), 'utf8');
+const SHARE = readFileSync(join(HERE, '..', 'src', 'lib', 'share.ts'), 'utf8');
 const SCORING = readFileSync(join(HERE, '..', 'community', 'research-scoring.ts'), 'utf8');
 const CONTRACT = readFileSync(join(HERE, '..', 'community', 'research-contract.ts'), 'utf8');
 
@@ -651,6 +654,38 @@ ok(
 		(INDEX_STUDY.match(/href=\{participate\}/g) ?? []).length === 2 &&
 		!INDEX_STUDY.includes('href="/research/{study.slug}/participate"'),
 	'the hero link and the closing link both carry it'
+);
+
+// Sharing the page is not recruiting through the sharer's campaign. The link
+// is the study's own address, and the invitation copy is only used while the
+// server says the study is taking answers.
+ok(
+	'the index shares its canonical page, not the address it was opened at',
+	SHARE.includes('export function studyShareUrl') &&
+		INDEX_STUDY.includes('url={OG_URL}') &&
+		!INDEX_STUDY.includes('shareUrl()'),
+	'a reader\'s ?src= code is not handed to strangers'
+);
+ok(
+	'the share message is chosen from the server\'s accepting flag',
+	INDEX_STUDY.includes('studyShareMessage(') &&
+		INDEX_STUDY.includes('accepting,') &&
+		INDEX_STUDY.includes("tf('index.share.invite'") &&
+		INDEX_STUDY.includes("t('index.share.text')"),
+	'both resolved strings are passed to the choice'
+);
+ok(
+	'the invitation is used only while the study is accepting',
+	studyShareMessage(true, 'invite', 'closed') === 'invite' &&
+		studyShareMessage(false, 'invite', 'closed') === 'closed',
+	'a design-stage reader gets the description, not an invitation'
+);
+ok(
+	'the share panel can name a page and carry a message',
+	SHARE_MENU.includes('heading?: string') &&
+		SHARE_MENU.includes('platformShareUrls(url, title, text)') &&
+		SHARE.includes('message = text ? `${text} ${url}` : url'),
+	'WhatsApp receives the invitation, not a bare link'
 );
 
 // A re-entered survey still solves its human check.

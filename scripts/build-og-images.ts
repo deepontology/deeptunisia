@@ -1,5 +1,5 @@
 /**
- * Build OG images — single default and per-entity variants using the wordmark.
+ * Build OG images: the default card, a study card, and the wordmark assets.
  *
  * The provided wordmark SVG (dark theme: accent #ddb049, text #f0eeec) is the
  * source. We wrap it in a 1200×630 canvas (Twitter large card) with a dark
@@ -47,6 +47,55 @@ function buildSvg(bg: string, text: string, sub: string, accent: string): string
 </svg>`;
 }
 
+/**
+ * The study card. A crop of the index's own artwork over a solid panel, so the
+ * title stays legible whatever the crop does. No figure is baked in: the page
+ * is rebuilt at deploy time, and a number in an image outlives the month it
+ * describes.
+ */
+function buildStudySvg(): string {
+	return `<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Police Satisfaction Index, a research study by DeepTunisia">
+  <defs>
+    <linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#11100e" stop-opacity="0"/>
+      <stop offset="1" stop-color="#11100e" stop-opacity="1"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="220" width="1200" height="140" fill="url(#fade)"/>
+  <rect x="0" y="0" width="1200" height="3" fill="#ddb049" opacity="0.55"/>
+  <rect x="72" y="404" width="56" height="2" fill="#ddb049"/>
+  <text x="72" y="438" font-family="'JetBrains Mono', 'IBM Plex Mono', monospace" font-size="15" letter-spacing="0.16em" fill="#b9b4aa">RESEARCH 002 · POLICE SATISFACTION INDEX</text>
+  <text x="72" y="498" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="50" font-weight="700" fill="#f0eeec">Police Satisfaction Index</text>
+  <text x="72" y="538" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="19" fill="#b9b4aa">Trust, service, fear and harm, measured every month in the open.</text>
+  <text x="72" y="592" font-family="'JetBrains Mono', 'IBM Plex Mono', monospace" font-size="14" fill="#ddb049">deeptunisia.org/research/police</text>
+  <text x="1128" y="592" text-anchor="end" font-family="'Inter', 'Helvetica Neue', Arial, sans-serif" font-size="15" font-weight="600" letter-spacing="0.08em" fill="#f0eeec" opacity="0.75">DEEPTUNISIA</text>
+</svg>`;
+}
+
+async function renderStudyCard(outPath: string) {
+	const art = join(ROOT, 'static', 'research', 'media', 'psi-5.webp');
+	if (!existsSync(art)) {
+		console.warn(`  og  skipped ${outPath.replace(ROOT + '/', '')} (artwork missing)`);
+		return;
+	}
+	const strip = await sharp(art)
+		.resize(1200, 360, { fit: 'cover', position: 'north' })
+		.toBuffer();
+	const png = await sharp({
+		create: { width: 1200, height: 630, channels: 4, background: '#11100e' }
+	})
+		.composite([
+			{ input: strip, left: 0, top: 0 },
+			{ input: Buffer.from(buildStudySvg()), left: 0, top: 0 }
+		])
+		.png({ compressionLevel: 9 })
+		.toBuffer();
+	mkdirSync(dirname(outPath), { recursive: true });
+	writeFileSync(outPath, png);
+	console.log(`  og  ${outPath.replace(ROOT + '/', '')}  ${Math.round(png.length / 1024)}KB`);
+}
+
 async function render(svg: string, outPath: string) {
 	const png = await sharp(Buffer.from(svg)).png({ compressionLevel: 9 }).toBuffer();
 	mkdirSync(dirname(outPath), { recursive: true });
@@ -72,6 +121,10 @@ async function main() {
 	// Keep an SVG source for auditing / fallback
 	writeFileSync(join(OUT_DIR, 'default.svg'), buildSvg(darkBg, darkText, SUBLINE, accent));
 	console.log('  og  default.svg (source) written');
+
+	// A scoring study's preview card. One per study that ships one; the page
+	// falls back to the default for any study without artwork.
+	await renderStudyCard(join(OUT_DIR, 'police.png'));
 }
 
 main().catch((e) => {
