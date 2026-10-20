@@ -4275,11 +4275,11 @@ if (runSection('layout')) for (const vp of VIEWPORTS) {
 		meta.canonical === 'https://deeptunisia.org/research/police',
 		meta.canonical
 	);
-	const triggers = page.locator('button[aria-label="Share this page"]');
+	const triggers = page.locator('.secbar button[aria-haspopup="dialog"], .closing-share button[aria-haspopup="dialog"]');
 	ok('the study page offers share before and after reading', (await triggers.count()) === 2);
 	await triggers.first().click();
 	await page.locator('.pop').waitFor({ state: 'visible' });
-	const link = await page.locator('input[aria-label="Link"]').inputValue();
+	const link = await page.locator('.pop input').first().inputValue();
 	ok(
 		'the shared link is the study page, not the campaign URL',
 		link === 'https://deeptunisia.org/research/police',
@@ -4292,7 +4292,7 @@ if (runSection('layout')) for (const vp of VIEWPORTS) {
 	const context = await browser.newContext({ viewport: { width: 390, height: 844 } });
 	const page = await context.newPage();
 	await page.goto(`${BASE}/research/police`, { waitUntil: 'networkidle', timeout: 30_000 });
-	await page.locator('.secbar button[aria-label="Share this page"]').click();
+	await page.locator('.secbar button[aria-haspopup="dialog"]').click();
 	await page.locator('.pop').waitFor({ state: 'visible' });
 	const box = await page.locator('.pop').boundingBox();
 	ok(
