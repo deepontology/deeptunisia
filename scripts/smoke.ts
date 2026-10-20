@@ -4277,6 +4277,18 @@ console.log('\n  ── study page ──');
 		meta.canonical === 'https://deeptunisia.org/research/police',
 		meta.canonical
 	);
+	const bar = await page.evaluate(() => {
+		const s = document.querySelector('.secbar') as HTMLElement;
+		const t = document.querySelector('.secbar .trigger') as HTMLElement;
+		const sr = s.getBoundingClientRect();
+		const tr = t.getBoundingClientRect();
+		return { top: tr.top - sr.top, bottom: sr.bottom - tr.bottom };
+	});
+	ok(
+		'the share control sits inside the section bar',
+		bar.top >= 1 && bar.bottom >= 1,
+		`${bar.top.toFixed(2)}px top / ${bar.bottom.toFixed(2)}px bottom`
+	);
 	const triggers = page.locator('.secbar button[aria-haspopup="dialog"], .closing-share button[aria-haspopup="dialog"]');
 	ok('the study page offers share before and after reading', (await triggers.count()) === 2);
 	await triggers.first().click();

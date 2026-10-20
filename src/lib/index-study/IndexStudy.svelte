@@ -1216,7 +1216,13 @@
 		justify-content: space-between;
 		align-items: center;
 		gap: 1rem;
-		height: 2.25rem;
+		/* The share control is a fixed 28px. This page's root font makes
+		   `2.25rem` a 28.125px bar including its border, so a fixed height
+		   left the control overflowing its content box by half a pixel at
+		   each edge. A minimum plus block padding lets the bar fit the
+		   control instead of clipping it. */
+		min-height: 2.25rem;
+		padding-block: 0.25rem;
 		padding-inline: 1rem;
 		border-bottom: 1px solid var(--border-subtle);
 		background: color-mix(in oklab, var(--surface-base) 86%, transparent);
