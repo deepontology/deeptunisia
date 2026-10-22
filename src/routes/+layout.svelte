@@ -113,8 +113,8 @@ import { tour, tourSeen } from '$lib/shell/tour.svelte';
 	const hasDock = $derived(!isDoc && !TIMELESS.includes(page.url.pathname));
 	const dir = $derived(dirFor(app.locale));
 
-	/** Pages that write their own preview tags: studies and the share shells. */
-	const ownsPreview = $derived(/^\/(share\/|research\/[^/]+)/.test(page.url.pathname));
+	/** Pages that write their own preview tags: the police study page (IndexStudy) and the share shells. Other study pages and the participate and withdraw pages take the default. */
+	const ownsPreview = $derived(/^\/(share\/|research\/police\/?$)/.test(page.url.pathname));
 
 	// OG preview — dynamic per selection/rel/flow, client-enhanced (crawlers use prerendered /share shells).
 	// Prerender cannot access searchParams (SvelteKit forbids it); guard with browser so build succeeds.
