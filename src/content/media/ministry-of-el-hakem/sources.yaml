@@ -1062,3 +1062,13 @@ sources:
   date_consulted: '2026-10-20'
   access: live
   archive_url: null
+- id: s123
+  citation:
+    en: 'DeepTunisia position records (data/positions.yaml): dated holders of the Interior Ministry, the
+      national police, the National Guard and presidential security. Each record carries its own sources,
+      among them JORT decrees 2021-123, 2021-124 and 2022-546, Leaders, Kapitalis, Reuters and Le Monde.'
+  url: null
+  tier: null
+  date_consulted: '2026-10-22'
+  access: dataset
+  archive_url: null

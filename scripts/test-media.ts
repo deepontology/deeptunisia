@@ -452,6 +452,25 @@ try {
 		].join('\n')
 	);
 
+	// (g) Figures: a marker with no record, a record placed nowhere, and a
+	//     record citing a claim the ledger does not hold.
+	appendBlock(BAD_TREE, join('narrative', 'en.md'), '\n[[figure:ghost]]\n');
+	writeFileSync(
+		join(BAD_TREE, 'figures.yaml'),
+		[
+			'figures:',
+			'  - id: fixture-unplaced',
+			'    kind: compare',
+			'    title: "Fixture"',
+			'    caption: "Fixture figure injected by the media suite."',
+			'    columns: ["A", "B"]',
+			'    rows:',
+			'      - label: "Row"',
+			'        cells: ["Cites a claim that does not exist [C999].", "Plain."]'
+		].join('\n') + '\n',
+		'utf8'
+	);
+
 	// (f) Two contradicting editorial states at once: meta.yaml still says
 	//     "published" while editorial.yaml is moved to a status the vocabulary
 	//     does not define. Both must be refused; neither may win silently.
@@ -473,6 +492,9 @@ try {
 		['Interpretation I5 exists in interpretations.yaml but no [I5] reference', 'an unreferenced interpretation record is rejected'],
 		['malformed interpretation block', 'a ">"-prefixed paragraph without [I#] is fatal'],
 		['absolutes lint', 'a long absolute-bearing paragraph without a claim reference is rejected'],
+		['Narrative places [[figure:ghost]] but figures.yaml has no such figure', 'a figure marker with no record is rejected'],
+		['Figure fixture-unplaced exists in figures.yaml but no [[figure:fixture-unplaced]] marker', 'a figure placed nowhere is rejected'],
+		['Figure fixture-unplaced cites C999 but no such claim', 'a figure citing an unknown claim is rejected'],
 		['editorial state disagrees: meta.yaml says status "published"', 'a status contradicting meta.yaml is rejected'],
 		['unknown editorial status "review"', 'a status outside the vocabulary is rejected']
 	];

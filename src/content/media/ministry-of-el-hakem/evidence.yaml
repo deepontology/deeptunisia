@@ -1495,3 +1495,20 @@ claims:
   disputed: false
   text_note: 'Release gate: the study is not yet live in the registry. Do not describe participation as
     open until it is.'
+- id: C130
+  text:
+    en: 'DeepTunisia''s dated position records give these holders: Interior Ministry, Tawfik Charfeddine
+      from 11 October 2021 to 17 March 2023, Kamel Feki to 25 May 2024, Khaled Nouri since; national police,
+      Zouhair Seddik from 17 September 2020 to 18 August 2021, Sami Hichri to 31 May 2022, Mourad Saidane
+      since; National Guard, Mohamed Ali Ben Khaled from 20 February 2019 to 18 August 2021, Chokri Riahi
+      to 28 July 2022, Fadhel Guezguez to 24 May 2023, Hossein Gharbi since; presidential security, Khaled
+      Yahyaoui since 30 October 2019.'
+  grade: reported
+  sources:
+  - s123
+  entities: []
+  sections:
+  - S07
+  disputed: false
+  text_note: Dates are those of the position records. Holders marked verified are confirmed to the date
+    shown in the record, not necessarily beyond it.

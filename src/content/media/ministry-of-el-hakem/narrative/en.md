@@ -141,9 +141,11 @@ title: "The faces stop changing"
 type: narrative
 ---
 
-From 2022 the rotation stopped. @mourad-saidane took up the national police on 31 May 2022 and was still described in the role in October 2025 [C070]. Hossein Gharbi has commanded the National Guard since May 2023 and was presented as its current commander in September 2026 [C071]. Above them, Khaled Yahyaoui has directed presidential security since 2019 [C072]. In June 2024 Africa Intelligence headlined him as the security chief who makes and breaks ministers, which is press reporting, not an official statement [C073].
+From 2022 the rotation slowed to a stop at the top of the two forces. @mourad-saidane took up the national police on 31 May 2022 and was still described in the role in October 2025 [C070]. The National Guard changed hands in July 2022 and again in May 2023, and Hossein Gharbi, who has commanded it since, was presented as its current commander in September 2026 [C071][C130]. Above them, Khaled Yahyaoui has directed presidential security since 2019 [C072]. In June 2024 Africa Intelligence headlined him as the security chief who makes and breaks ministers, which is press reporting, not an official statement [C073].
 
 The ministers kept rotating. Five have held the ministry since July 2021 [C074]. On the day @khaled-nouri came in, in May 2024, a post that existed under Ben Ali was brought back: secretary of state to the interior minister for the national police, given to Sofiane Bessadok. Under Ben Ali the same post was held by Ganzoui [C075]. The presidency has published readouts of meetings between the president, the minister and the two commanders [C076].
+
+[[figure:tenures]]
 
 > [I12]
 
@@ -159,6 +161,8 @@ Ben Ali had a party. Saied does not. In the December 2022 elections candidates r
 If there is no party, what takes its place? Our reading is five arms.
 
 > [I13]
+
+[[figure:compare]]
 
 To see them work together, look at one week. On 16 September 2022 Decree-Law 54 was published. Its Article 24 punished spreading false news on communication networks with five years in prison and a fine, doubled if the target is a public official [C080]. On 20 September the provisional judicial council lifted the immunity of @anas-hmaidi, the head of the judges' association [C081]. On 23 September the military court in Sfax issued warrants against eight police union leaders [C082].
 
@@ -284,7 +288,7 @@ title: "The Index"
 type: narrative
 ---
 
-If this ministry is what makes dictatorships and what everyone fights over the moment democracy appears, then the people need a way to measure their relationship with it. That is the Police Satisfaction Index, DeepTunisia's study 002. Its instrument takes about four minutes and asks for no name or email, and its method is published on the site [C129].
+If this ministry is what makes dictatorships and what everyone fights over the moment democracy appears, then the people need a way to measure their relationship with it. That is the [Police Satisfaction Index](/research/police), DeepTunisia's study 002. Its instrument takes about four minutes and asks for no name or email, and its method is published on [its page on this site](/research/police) [C129].
 
 Participation is not described as open in this draft. That sentence is added only when the study goes live.
 

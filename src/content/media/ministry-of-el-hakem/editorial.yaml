@@ -7,7 +7,7 @@ revisions:
     date: 2026-10-22
     notes: "First draft, written from the film's locked script and its evidence layer. English only; the French and Arabic titles are machine translations pending human review. Statements in the film that the source files do not carry are left out and listed in the last section and in exclusions.yaml."
     supersedes: null
-    claims_added: 129
+    claims_added: 130
     claims_changed: 0
     claims_removed: 0
 license: CC-BY-4.0
