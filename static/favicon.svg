@@ -1,13 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-	<rect width="32" height="32" rx="4" fill="#0e0f11" />
-	<g stroke="#c9a227" stroke-width="1.6" fill="none" stroke-linecap="round">
-		<path d="M16 5v7" />
-		<path d="M8 27v-8" />
-		<path d="M24 27v-8" />
-		<path d="M8 19h16" />
-		<path d="M16 12v7" />
-	</g>
-	<circle cx="16" cy="4.5" r="2.6" fill="#c9a227" />
-	<circle cx="8" cy="27.5" r="2.2" fill="#b4553f" />
-	<circle cx="24" cy="27.5" r="2.2" fill="#4f8a6e" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Deep Tunisia">
+	<rect width="64" height="64" rx="12" fill="#11100e" />
+	<circle cx="32" cy="32" r="22" fill="none" stroke="#ddb049" stroke-opacity="0.8" stroke-width="4.5" />
+	<circle cx="32" cy="32" r="8.5" fill="#ddb049" />
 </svg>
