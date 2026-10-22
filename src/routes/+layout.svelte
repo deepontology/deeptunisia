@@ -239,6 +239,9 @@ import { tour, tourSeen } from '$lib/shell/tour.svelte';
 </script>
 
 <svelte:head>
+	{#if !ownsPreview}
+		<link rel="canonical" href={`https://deeptunisia.org${page.url.pathname.replace(/\/$/, '')}`} />
+	{/if}
 	{#if og}
 		<title>{og.title}</title>
 		<meta property="og:title" content={og.title} />

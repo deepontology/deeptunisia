@@ -11,6 +11,9 @@
 			content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content"
 		/>
 		<meta name="color-scheme" content="dark light" />
+		<!-- The browser bar follows the device until the reader picks a theme; the script below and theme.svelte.ts then set both to that theme. -->
+		<meta name="theme-color" content="#fcfaf7" media="(prefers-color-scheme: light)" />
+		<meta name="theme-color" content="#05080c" media="(prefers-color-scheme: dark)" />
 		<script>
 			// Resolve theme AND language before first paint. Without this the app renders
 			// dark and left-to-right, then flips — the single most noticeable defect a
@@ -58,6 +61,12 @@
 				var mode = pick ? modes[pick] : sysDark ? 'dark' : 'light';
 				document.documentElement.dataset.theme = mode;
 				document.documentElement.dataset.palette = pick || (sysDark ? 'midnight' : 'paper');
+				if (pick) {
+					/* Browser-bar colours, one per palette: the page background. Mirror of THEME_COLOR in theme.svelte.ts. */
+					var bars = { paper: '#fcfaf7', porcelain: '#fafcfe', daylight: '#ffffff', midnight: '#05080c', ember: '#0b0503', eclipse: '#000000' };
+					var tcs = document.querySelectorAll('meta[name="theme-color"]');
+					for (var i = 0; i < tcs.length; i++) tcs[i].setAttribute('content', bars[pick]);
+				}
 			} catch (e) {
 				document.documentElement.dataset.theme = 'dark';
 				document.documentElement.dataset.palette = 'midnight';
