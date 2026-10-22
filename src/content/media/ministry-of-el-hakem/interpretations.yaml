@@ -4,14 +4,16 @@ interpretations:
 - id: I01
   section: S01
   statement:
-    en: Under Ben Ali the weapon was a charge written to measure and a police officer to enforce it.
+    en: 'In both eras the instrument is the same: a charge broad enough to fit, and a police officer to
+      enforce it.'
   attributed_to: DeepTunisia editors
   reasoning:
-    en: 'The two Yahyaoui cases follow one pattern: a vague charge (an unaccepted letter, false news)
-      and an arrest by plainclothes officers. Two cases show a pattern, they do not measure its frequency.'
+    en: Zouhair Yahyaoui in 2002 and Saber Ben Chouchane in 2025 were both charged with spreading false
+      news over online speech, and the first was arrested by plainclothes officers. Two cases do not measure
+      frequency, and the 2025 case ended in a pardon.
   falsifier:
-    en: A systematic review of Ben Ali era cases in which the same kinds of charge were not enforced by
-      the police in this way.
+    en: A systematic comparison showing that false-news charges were not, in either period, a routine
+      tool against critics, or that they were enforced without the police in one of them.
 - id: I02
   section: S02
   statement:
@@ -142,18 +144,19 @@ interpretations:
     en: A change of the two commanders or of the head of presidential security that does not come from
       a presidential decision.
 - id: I13
-  section: S08
+  section: S07
   statement:
-    en: 'Today''s system resembles Ben Ali''s but lacks a party. The party''s place is taken by five arms:
-      the judiciary, the police unions, lawyers and civil society, military justice and Decree-Law 54.'
+    en: 'Today''s system has no ruling party. In its place, control of five institutions that once limited
+      the police: the judiciary, the police unions, lawyers and civil society, military justice and the
+      speech law.'
   attributed_to: DeepTunisia editors
   reasoning:
     en: Security chiefs who stay, a presidential guard at the centre and a returned secretary of state
-      for security resemble the earlier model. The octopus is the film's metaphor, and the arm lengths
-      are illustrative.
+      for security resemble the earlier model. The five institutions are those the sections below describe.
+      The count of five is our grouping, not a legal category.
   falsifier:
-    en: A sixth arm that explains more of the evidence than one of these five, or a showing that the arms
-      were not coordinated or were reversible.
+    en: A sixth institution that explains more of the evidence than one of these five, or a showing that
+      the five were not acted on in a connected way or were reversed.
 - id: I14
   section: S08
   statement:
@@ -166,7 +169,7 @@ interpretations:
   falsifier:
     en: A published account showing these decisions were taken independently and for unrelated reasons.
 - id: I15
-  section: S09
+  section: S08
   statement:
     en: Judges were a barrier against police abuse, and the first arm was breaking that barrier.
   attributed_to: DeepTunisia editors
@@ -176,7 +179,7 @@ interpretations:
   falsifier:
     en: Evidence that the judiciary did not act as a constraint on police conduct before 2022.
 - id: I16
-  section: S10
+  section: S08
   statement:
     en: The force that threatened the state after the revolution is back under the boot.
   attributed_to: DeepTunisia editors
@@ -186,7 +189,7 @@ interpretations:
   falsifier:
     en: Evidence that the police unions today bargain or protest with freedom comparable to 2018.
 - id: I17
-  section: S16
+  section: S09
   statement:
     en: In 2003 Zouhair Yahyaoui went on hunger strike in prison and in 2026 opposition leaders have returned
       to the same weapon.
@@ -197,7 +200,7 @@ interpretations:
   falsifier:
     en: Reports that the 2026 hunger strikes did not occur as stated.
 - id: I18
-  section: S17
+  section: S10
   statement:
     en: Ben Ali's police state was a small octopus of a party, a political police and reports. Today there
       is no party, but the octopus has grown. By the definitions we can draw from the evidence we have
@@ -210,7 +213,7 @@ interpretations:
     en: A fuller account in which the ministry's coercive reach in 2026 is smaller than in 2010, for instance
       in numbers of political prisoners, surveillance or sentences, compared on the same basis.
 - id: I19
-  section: S17
+  section: S10
   statement:
     en: The referee who blows the whistle is now picked by one of the players.
   attributed_to: DeepTunisia editors
@@ -222,7 +225,7 @@ interpretations:
     en: The decree's composition table showing the three presidential picks cannot decide outcomes in
       the commission.
 - id: I20
-  section: S17
+  section: S10
   statement:
     en: If the chair in Carthage were empty one day, the first question would not be who sits in the palace.
       It would be whose orders the building on Avenue Bourguiba takes.
@@ -233,7 +236,7 @@ interpretations:
   falsifier:
     en: Evidence that the head of presidential security has no influence on the ministry's chain of command.
 - id: I21
-  section: S17
+  section: S10
   statement:
     en: Every change that replaces the ruler in the palace but leaves the Interior Ministry as it is leaves
       the backbone in place for the next dictator.

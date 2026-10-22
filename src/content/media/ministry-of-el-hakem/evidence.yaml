@@ -70,6 +70,7 @@ claims:
   - s006
   entities: []
   sections:
+  - S00
   - S01
   disputed: false
   text_note: The travel ban rests on his own account (Legal Agenda, 2015).
@@ -96,6 +97,7 @@ claims:
   entities: []
   sections:
   - S01
+  - S07
   disputed: false
 - id: C009
   text:
@@ -150,6 +152,7 @@ claims:
   - s012
   entities: []
   sections:
+  - S02
   - S03
   disputed: false
 - id: C014
@@ -162,6 +165,7 @@ claims:
   entities: []
   sections:
   - S03
+  - S07
   disputed: false
   text_note: The month is not given.
 - id: C015
@@ -173,7 +177,9 @@ claims:
   - s014
   entities: []
   sections:
+  - S02
   - S03
+  - S07
   disputed: false
 - id: C016
   text:
@@ -184,7 +190,10 @@ claims:
   - s015
   entities: []
   sections:
+  - S00
+  - S02
   - S03
+  - S07
   disputed: false
 - id: C017
   text:
@@ -208,6 +217,7 @@ claims:
   entities: []
   sections:
   - S03
+  - S07
   disputed: false
 - id: C019
   text:
@@ -219,7 +229,10 @@ claims:
   - s020
   entities: []
   sections:
+  - S02
   - S03
+  - S10
+  - S07
   disputed: false
   text_note: The cell count is graded C in the film's evidence layer.
 - id: C020
@@ -232,6 +245,7 @@ claims:
   entities: []
   sections:
   - S03
+  - S10
   disputed: false
   text_note: '''Every move'' is the film''s wording, not a sourced phrase.'
 - id: C021
@@ -256,6 +270,7 @@ claims:
   entities: []
   sections:
   - S03
+  - S07
   disputed: false
 - id: C023
   text:
@@ -267,6 +282,7 @@ claims:
   entities: []
   sections:
   - S03
+  - S07
   disputed: false
   text_note: Paraphrase, not a quotation. The film says 'during his rule and after'.
 - id: C024
@@ -390,7 +406,9 @@ claims:
   - s032
   entities: []
   sections:
+  - S02
   - S04
+  - S07
   disputed: false
 - id: C035
   text:
@@ -411,6 +429,7 @@ claims:
   - s034
   entities: []
   sections:
+  - S02
   - S04
   disputed: false
   text_note: Not graded in the film's files.
@@ -422,6 +441,7 @@ claims:
   - s035
   entities: []
   sections:
+  - S00
   - S04
   disputed: false
 - id: C038
@@ -500,6 +520,7 @@ claims:
   entities: []
   sections:
   - S04
+  - S07
   disputed: false
 - id: C045
   text:
@@ -510,7 +531,9 @@ claims:
   - s041
   entities: []
   sections:
+  - S02
   - S05
+  - S10
   disputed: false
   text_note: Some dates are approximate.
 - id: C046
@@ -601,6 +624,7 @@ claims:
   entities: []
   sections:
   - S05
+  - S10
   disputed: false
 - id: C054
   text:
@@ -623,6 +647,7 @@ claims:
   entities: []
   sections:
   - S05
+  - S10
   disputed: false
 - id: C056
   text:
@@ -670,6 +695,7 @@ claims:
   - s054
   entities: []
   sections:
+  - S02
   - S06
   disputed: false
   text_note: The film reads 'civilian armed forces' as the internal security forces.
@@ -693,6 +719,7 @@ claims:
   - s055
   entities: []
   sections:
+  - S02
   - S06
   disputed: false
 - id: C062
@@ -730,6 +757,7 @@ claims:
   entities: []
   sections:
   - S06
+  - S07
   disputed: false
 - id: C065
   text:
@@ -741,6 +769,8 @@ claims:
   entities: []
   sections:
   - S06
+  - S10
+  - S07
   disputed: false
 - id: C066
   text:
@@ -766,6 +796,7 @@ claims:
   entities: []
   sections:
   - S06
+  - S07
   disputed: false
 - id: C068
   text:
@@ -776,7 +807,9 @@ claims:
   - s062
   entities: []
   sections:
+  - S02
   - S06
+  - S07
   disputed: false
 - id: C069
   text:
@@ -787,6 +820,7 @@ claims:
   - s063
   entities: []
   sections:
+  - S02
   - S06
   disputed: false
 - id: C070
@@ -801,6 +835,7 @@ claims:
   entities: []
   sections:
   - S07
+  - S12
   disputed: false
   text_note: The film's chip gave 31 May for the decree; the decree's own title gives 17 June and the
     31 May date is when he took office.
@@ -837,6 +872,7 @@ claims:
   entities: []
   sections:
   - S07
+  - S10
   disputed: false
   text_note: Headline only, the article is paywalled. Press reporting, not official statements.
 - id: C074
@@ -850,6 +886,7 @@ claims:
   - s069
   entities: []
   sections:
+  - S02
   - S07
   disputed: false
 - id: C075
@@ -884,7 +921,7 @@ claims:
   - s072
   entities: []
   sections:
-  - S08
+  - S07
   disputed: false
 - id: C078
   text:
@@ -895,7 +932,8 @@ claims:
   - s073
   entities: []
   sections:
-  - S08
+  - S02
+  - S07
   disputed: false
 - id: C079
   text:
@@ -906,7 +944,7 @@ claims:
   - s074
   entities: []
   sections:
-  - S08
+  - S07
   disputed: false
 - id: C080
   text:
@@ -918,7 +956,10 @@ claims:
   - s075
   entities: []
   sections:
+  - S01
   - S08
+  - S10
+  - S07
   disputed: false
   text_note: Rewritten on 30 September 2026.
 - id: C081
@@ -932,6 +973,7 @@ claims:
   entities: []
   sections:
   - S08
+  - S10
   disputed: false
 - id: C082
   text:
@@ -943,6 +985,7 @@ claims:
   entities: []
   sections:
   - S08
+  - S10
   disputed: false
 - id: C083
   text:
@@ -953,7 +996,7 @@ claims:
   - s078
   entities: []
   sections:
-  - S09
+  - S08
   disputed: false
 - id: C084
   text:
@@ -963,7 +1006,7 @@ claims:
   - s079
   entities: []
   sections:
-  - S09
+  - S08
   disputed: false
 - id: C085
   text:
@@ -974,7 +1017,7 @@ claims:
   - s080
   entities: []
   sections:
-  - S09
+  - S08
   disputed: false
 - id: C086
   text:
@@ -986,7 +1029,7 @@ claims:
   - s081
   entities: []
   sections:
-  - S09
+  - S08
   disputed: false
 - id: C087
   text:
@@ -997,7 +1040,7 @@ claims:
   - s082
   entities: []
   sections:
-  - S09
+  - S08
   disputed: false
   text_note: Paraphrase of the film's rendering.
 - id: C088
@@ -1009,7 +1052,7 @@ claims:
   - s083
   entities: []
   sections:
-  - S09
+  - S08
   disputed: false
 - id: C089
   text:
@@ -1021,7 +1064,7 @@ claims:
   - s084
   entities: []
   sections:
-  - S09
+  - S08
   disputed: false
 - id: C090
   text:
@@ -1032,7 +1075,7 @@ claims:
   - s085
   entities: []
   sections:
-  - S10
+  - S08
   disputed: false
 - id: C091
   text:
@@ -1044,7 +1087,7 @@ claims:
   - s077
   entities: []
   sections:
-  - S10
+  - S08
   disputed: false
   text_note: Grade C.
 - id: C092
@@ -1056,7 +1099,7 @@ claims:
   - s086
   entities: []
   sections:
-  - S10
+  - S08
   disputed: false
   text_note: The film summarises it as banning political activity and political opinions except where
     the law allows; the summary is not the text.
@@ -1069,7 +1112,7 @@ claims:
   - s087
   entities: []
   sections:
-  - S10
+  - S08
   disputed: false
 - id: C094
   text:
@@ -1080,7 +1123,7 @@ claims:
   - s088
   entities: []
   sections:
-  - S11
+  - S08
   disputed: false
 - id: C095
   text:
@@ -1093,7 +1136,7 @@ claims:
   - s089
   entities: []
   sections:
-  - S11
+  - S08
   disputed: false
   text_note: The film says 13 May; that date is not in the source files and is left out.
 - id: C096
@@ -1104,7 +1147,7 @@ claims:
   - s090
   entities: []
   sections:
-  - S11
+  - S08
   disputed: false
   negative: true
   text_note: 'Documented negative: a statement about our search, not about the world.'
@@ -1118,7 +1161,7 @@ claims:
   - s091
   entities: []
   sections:
-  - S11
+  - S08
   disputed: false
 - id: C098
   text:
@@ -1129,7 +1172,8 @@ claims:
   - s092
   entities: []
   sections:
-  - S12
+  - S08
+  - S07
   disputed: false
 - id: C099
   text:
@@ -1140,7 +1184,7 @@ claims:
   - s093
   entities: []
   sections:
-  - S12
+  - S08
   disputed: false
 - id: C100
   text:
@@ -1152,7 +1196,7 @@ claims:
   - s094
   entities: []
   sections:
-  - S12
+  - S08
   disputed: false
 - id: C101
   text:
@@ -1163,7 +1207,7 @@ claims:
   - s095
   entities: []
   sections:
-  - S13
+  - S08
   disputed: false
 - id: C102
   text:
@@ -1175,7 +1219,7 @@ claims:
   - s096
   entities: []
   sections:
-  - S13
+  - S08
   disputed: false
 - id: C103
   text:
@@ -1186,7 +1230,7 @@ claims:
   - s097
   entities: []
   sections:
-  - S13
+  - S08
   disputed: false
 - id: C104
   text:
@@ -1197,7 +1241,7 @@ claims:
   - s098
   entities: []
   sections:
-  - S13
+  - S08
   disputed: false
   text_note: Grade C.
 - id: C105
@@ -1210,7 +1254,8 @@ claims:
   - s099
   entities: []
   sections:
-  - S13
+  - S01
+  - S08
   disputed: false
 - id: C106
   text:
@@ -1221,7 +1266,8 @@ claims:
   - s100
   entities: []
   sections:
-  - S13
+  - S01
+  - S08
   disputed: false
 - id: C107
   text:
@@ -1232,7 +1278,8 @@ claims:
   - s100
   entities: []
   sections:
-  - S13
+  - S08
+  - S10
   disputed: false
 - id: C108
   text:
@@ -1244,7 +1291,7 @@ claims:
   - s101
   entities: []
   sections:
-  - S14
+  - S08
   disputed: false
 - id: C109
   text:
@@ -1255,7 +1302,7 @@ claims:
   - s102
   entities: []
   sections:
-  - S14
+  - S08
   disputed: false
 - id: C110
   text:
@@ -1266,7 +1313,7 @@ claims:
   - s103
   entities: []
   sections:
-  - S14
+  - S08
   disputed: false
 - id: C111
   text:
@@ -1277,7 +1324,7 @@ claims:
   - s104
   entities: []
   sections:
-  - S14
+  - S08
   disputed: false
 - id: C112
   text:
@@ -1288,7 +1335,7 @@ claims:
   - s086
   entities: []
   sections:
-  - S15
+  - S08
   disputed: false
 - id: C113
   text:
@@ -1299,7 +1346,7 @@ claims:
   - s105
   entities: []
   sections:
-  - S15
+  - S08
   disputed: false
   negative: true
   text_note: 'Documented negative: a statement about our search, not about the world.'
@@ -1312,7 +1359,7 @@ claims:
   - s106
   entities: []
   sections:
-  - S15
+  - S08
   disputed: false
 - id: C115
   text:
@@ -1323,7 +1370,7 @@ claims:
   - s107
   entities: []
   sections:
-  - S15
+  - S08
   disputed: false
 - id: C116
   text:
@@ -1337,7 +1384,7 @@ claims:
   - s110
   entities: []
   sections:
-  - S16
+  - S09
   disputed: false
 - id: C117
   text:
@@ -1349,7 +1396,7 @@ claims:
   - s111
   entities: []
   sections:
-  - S16
+  - S09
   disputed: false
 - id: C118
   text:
@@ -1363,7 +1410,9 @@ claims:
   - s114
   entities: []
   sections:
-  - S16
+  - S09
+  - S10
+  - S07
   disputed: false
 - id: C119
   text:
@@ -1375,7 +1424,7 @@ claims:
   - s115
   entities: []
   sections:
-  - S16
+  - S09
   disputed: false
 - id: C120
   text:
@@ -1386,7 +1435,7 @@ claims:
   - s116
   entities: []
   sections:
-  - S16
+  - S09
   disputed: false
 - id: C121
   text:
@@ -1399,7 +1448,7 @@ claims:
   - s117
   entities: []
   sections:
-  - S16
+  - S09
   disputed: false
   text_note: The Chebbi report is graded C.
 - id: C122
@@ -1411,7 +1460,8 @@ claims:
   - s118
   entities: []
   sections:
-  - S16
+  - S09
+  - S10
   disputed: false
   text_note: Paraphrased, not quoted. Grade C.
 - id: C123
@@ -1424,7 +1474,9 @@ claims:
   - s119
   entities: []
   sections:
-  - S16
+  - S09
+  - S10
+  - S07
   disputed: false
   text_note: The comparison is ours.
 - id: C124
@@ -1436,7 +1488,7 @@ claims:
   - s100
   entities: []
   sections:
-  - S17
+  - S10
   disputed: false
 - id: C125
   text:
@@ -1447,7 +1499,7 @@ claims:
   - s120
   entities: []
   sections:
-  - S17
+  - S10
   disputed: false
 - id: C126
   text:
@@ -1458,7 +1510,7 @@ claims:
   - s112
   entities: []
   sections:
-  - S17
+  - S10
   disputed: false
 - id: C127
   text:
@@ -1470,7 +1522,8 @@ claims:
   - s058
   entities: []
   sections:
-  - S17
+  - S10
+  - S07
   disputed: false
   text_note: Grade C.
 - id: C128
@@ -1481,7 +1534,7 @@ claims:
   - s121
   entities: []
   sections:
-  - S17
+  - S10
   disputed: false
 - id: C129
   text:
@@ -1491,7 +1544,7 @@ claims:
   - s122
   entities: []
   sections:
-  - S18
+  - S11
   disputed: false
   text_note: 'Release gate: the study is not yet live in the registry. Do not describe participation as
     open until it is.'
@@ -1508,6 +1561,7 @@ claims:
   - s123
   entities: []
   sections:
+  - S02
   - S07
   disputed: false
   text_note: Dates are those of the position records. Holders marked verified are confirmed to the date
