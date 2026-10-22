@@ -44,8 +44,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Deep Tunisia: where memory fades, power escapes</title>
 <meta name="description" content="An open, source-backed public record of the people, institutions and networks that shape Tunisia, 1956 to 2026. Every claim traceable. Every conclusion challengeable. No accounts, no trackers, no permission required.">
-<meta name="theme-color" content="#16150f" media="(prefers-color-scheme: dark)">
-<meta name="theme-color" content="#fcfbfa" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#16150f">
 <link rel="canonical" href="https://deeptunisia.org/">
 <meta name="color-scheme" content="dark light">
 <meta property="og:title" content="Deep Tunisia: a public record of power">
@@ -2540,15 +2539,22 @@ html.js .in .curtain > span, html.js .curtain.in > span { transform: none; }
      are composed against near-black. Light is fully supported and persists
      once chosen; it is just not what an unprepared visitor is shown. */
   var root = document.documentElement;
+  /* The browser bar follows the page theme, which starts dark whatever the device says. */
+  function paintBar() {
+    var bar = document.querySelector('meta[name="theme-color"]');
+    if (bar) bar.setAttribute('content', root.getAttribute('data-theme') === 'light' ? '#fcfbfa' : '#16150f');
+  }
   try {
     var saved = localStorage.getItem('dt-theme');
     if (saved === 'light' || saved === 'dark') root.setAttribute('data-theme', saved);
   } catch (e) {}
+  paintBar();
 
   document.getElementById('theme').addEventListener('click', function () {
     var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
     root.setAttribute('data-theme', next);
     try { localStorage.setItem('dt-theme', next); } catch (e) {}
+    paintBar();
     paintField(true);
   });
 
