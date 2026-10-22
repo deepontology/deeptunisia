@@ -195,6 +195,16 @@ function applyAccent(hue: number) {
 	document.documentElement.style.setProperty('--accent-hue', String(hue));
 }
 
+/** The page background of each theme, for the browser bar. Mirror of `bars` in app.html. */
+const THEME_COLOR: Record<ThemeId, string> = {
+	paper: '#fcfaf7',
+	porcelain: '#fafcfe',
+	daylight: '#ffffff',
+	midnight: '#05080c',
+	ember: '#0b0503',
+	eclipse: '#000000'
+};
+
 /**
  * Write both attributes the cascade hangs off. Always set both: app.html always
  * sets both too, so an absent attribute never becomes a second source of truth.
@@ -211,6 +221,9 @@ function applyTheme(choice: ThemeChoice) {
 			: themeById(choice);
 	document.documentElement.dataset.theme = def.mode;
 	document.documentElement.dataset.palette = def.id;
+	for (const meta of document.querySelectorAll('meta[name="theme-color"]')) {
+		meta.setAttribute('content', THEME_COLOR[def.id]);
+	}
 }
 
 /**

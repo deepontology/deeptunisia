@@ -3843,7 +3843,14 @@ if (!FIXTURE_MODE) {
 		'/corrections',
 		'/data',
 		'/about',
-		'/guide'
+		'/guide',
+		'/colophon',
+		'/media',
+		'/media/bot-farm',
+		'/media/chemical-century',
+		'/research/police',
+		'/research/police/participate',
+		'/research/democracy'
 	];
 	const lastmod = new Date().toISOString().slice(0, 10);
 	const sitemap =
