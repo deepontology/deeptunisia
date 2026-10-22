@@ -3,7 +3,7 @@
   "project": "deeptunisia",
   "origin": "https://deeptunisia.org",
   "license": "CC-BY-4.0",
-  "generatedAt": "2026-10-19T08:29:44.521Z",
+  "generatedAt": "2026-10-22T19:21:07.110Z",
   "release": {
     "packageVersion": "0.1.0",
     "currentTag": "v0.1.2-C1",
@@ -14,8 +14,8 @@
     "node": "v26.7.0"
   },
   "graph": {
-    "datasetHash": "a43fcefbf6768f798abd32079d1a40f0a004f470c8162e300a78e5d31a80fca4",
-    "generated": "2026-10-19T08:29:42.423Z",
+    "datasetHash": "e3785625ada25d7bf7145f4869b17bad4b7164aea3d0559947982531c2fcb970",
+    "generated": "2026-10-22T19:21:05.038Z",
     "cutoff": "2026-10-18",
     "floor": "1956-03-20",
     "graphKB": 4980,

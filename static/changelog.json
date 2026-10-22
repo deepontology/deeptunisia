@@ -1,6 +1,21 @@
 [
   {
-    "hash": "e7e3fee8e",
+    "hash": "04cf6d06a",
+    "date": "2026-10-19T09:30:14+01:00",
+    "subject": "Data: date the Saied Bizerte ceremony to 15 October",
+    "kind": "revision",
+    "added": 3,
+    "removed": 3,
+    "files": [
+      {
+        "file": "data/events.yaml",
+        "added": 3,
+        "removed": 3
+      }
+    ]
+  },
+  {
+    "hash": "450f1f755",
     "date": "2026-10-19T09:26:48+01:00",
     "subject": "Data: add the BH Bank H1 2026 provision correction",
     "kind": "revision",
@@ -25,7 +40,7 @@
     ]
   },
   {
-    "hash": "26967fa1d",
+    "hash": "94717e850",
     "date": "2026-10-19T09:13:45+01:00",
     "subject": "Data: merge the 2026-10-19 sweep (four events)",
     "kind": "revision",
@@ -55,7 +70,7 @@
     ]
   },
   {
-    "hash": "c0ca30344",
+    "hash": "e49ca4313",
     "date": "2026-10-13T14:10:25+01:00",
     "subject": "Data: merge the 2026-10-13 sweep (four events, one re-verification)",
     "kind": "revision",
@@ -90,7 +105,7 @@
     ]
   },
   {
-    "hash": "fc3fa79ec",
+    "hash": "6e3274270",
     "date": "2026-10-11T18:08:55+01:00",
     "subject": "Landing: plainer prose in every language, and translations for the strings that fell back to English",
     "kind": "revision",
@@ -105,7 +120,7 @@
     ]
   },
   {
-    "hash": "197749db4",
+    "hash": "fcdbf85cc",
     "date": "2026-10-11T17:30:24+01:00",
     "subject": "Landing: keep the corrected review and basis figures",
     "kind": "revision",
@@ -120,7 +135,7 @@
     ]
   },
   {
-    "hash": "11e24b3f8",
+    "hash": "045246e2d",
     "date": "2026-10-11T14:14:14+01:00",
     "subject": "data: resolve the expired mouna-siala source exception",
     "kind": "revision",
@@ -150,7 +165,7 @@
     ]
   },
   {
-    "hash": "80f9b06b9",
+    "hash": "9b7664fde",
     "date": "2026-10-11T12:34:52+01:00",
     "subject": "Landing: restore the full manifesto page, with honest Agora lines and the indexes slot",
     "kind": "revision",
@@ -165,7 +180,7 @@
     ]
   },
   {
-    "hash": "4fa11d028",
+    "hash": "60c7b9679",
     "date": "2026-10-11T11:47:55+01:00",
     "subject": "Claims: register the landing figures and retire the old surfaces",
     "kind": "retraction",
@@ -180,7 +195,7 @@
     ]
   },
   {
-    "hash": "0966e511b",
+    "hash": "e20c2c6d0",
     "date": "2026-10-10T17:20:25+01:00",
     "subject": "Research: the study platform and the Police Satisfaction Index",
     "kind": "expansion",
@@ -195,7 +210,7 @@
     ]
   },
   {
-    "hash": "21313fda3",
+    "hash": "6d5cfa921",
     "date": "2026-10-10T13:59:21+01:00",
     "subject": "Data: merge the 2026-10-10 sweep (six events) and advance the research cutoff (#51)",
     "kind": "revision",
@@ -230,7 +245,7 @@
     ]
   },
   {
-    "hash": "8fe5c1ed6",
+    "hash": "37e050b9a",
     "date": "2026-10-10T12:29:11+01:00",
     "subject": "Research: state that the index translations are unreviewed, and drop its weighting claim",
     "kind": "revision",
@@ -245,7 +260,7 @@
     ]
   },
   {
-    "hash": "6517f9506",
+    "hash": "f07e117df",
     "date": "2026-10-09T03:21:09+01:00",
     "subject": "Research: the Police Satisfaction Index, full-width artwork, and a research front page",
     "kind": "revision",
@@ -260,7 +275,7 @@
     ]
   },
   {
-    "hash": "a9acffc15",
+    "hash": "ac6ba9645",
     "date": "2026-10-09T01:32:51+01:00",
     "subject": "Research: the police index as a monthly series, with no demographics but an optional region",
     "kind": "expansion",
@@ -275,7 +290,7 @@
     ]
   },
   {
-    "hash": "1953fbbd8",
+    "hash": "76e511b7d",
     "date": "2026-10-07T23:35:05+01:00",
     "subject": "Research: one-question survey, first-party bot check, and the freeze path",
     "kind": "revision",
@@ -290,7 +305,7 @@
     ]
   },
   {
-    "hash": "91438c38e",
+    "hash": "b956e1161",
     "date": "2026-10-07T21:44:32+01:00",
     "subject": "Research: the Tunisia Police Index (study 002) with live results",
     "kind": "expansion",
@@ -305,7 +320,7 @@
     ]
   },
   {
-    "hash": "c3592d2fa",
+    "hash": "e0c4b3c22",
     "date": "2026-10-05T21:09:15+01:00",
     "subject": "Data: merge the 2026-10-05 sweep (Chebbi hunger strike) and advance the research cutoff (#49)",
     "kind": "revision",
@@ -340,7 +355,7 @@
     ]
   },
   {
-    "hash": "3891f5775",
+    "hash": "48e8905ba",
     "date": "2026-10-01T11:47:15+01:00",
     "subject": "Data: merge the 2026-10-01 re-verification batch (15 state officeholders)",
     "kind": "revision",
@@ -375,7 +390,7 @@
     ]
   },
   {
-    "hash": "7ff62c2f6",
+    "hash": "c3a94d184",
     "date": "2026-10-01T09:31:28+01:00",
     "subject": "Build: V31 fails the build on records dated past the research cutoff",
     "kind": "expansion",
@@ -390,7 +405,7 @@
     ]
   },
   {
-    "hash": "759f52240",
+    "hash": "2ab6c6d31",
     "date": "2026-10-01T07:51:59+01:00",
     "subject": "Data: advance the research cutoff to 2026-09-30",
     "kind": "revision",
@@ -405,7 +420,7 @@
     ]
   },
   {
-    "hash": "7012e06ea",
+    "hash": "8e03fe455",
     "date": "2026-09-30T18:55:08+01:00",
     "subject": "Data: 2026-09-30 sweep, JORT n° 96 decrees and Decree-Law 54 amendment",
     "kind": "revision",
@@ -435,7 +450,7 @@
     ]
   },
   {
-    "hash": "7ef0fa4f8",
+    "hash": "6b2e7c2f9",
     "date": "2026-09-27T03:06:55+01:00",
     "subject": "data, build: compile public figures through a claim registry (#44)",
     "kind": "expansion",
@@ -450,7 +465,7 @@
     ]
   },
   {
-    "hash": "aa3962a85",
+    "hash": "2676b73b3",
     "date": "2026-09-26T03:48:26+01:00",
     "subject": "Data: 2026-09-25 sweep — JORT worklist corrections and sourced records (#40)",
     "kind": "revision",
@@ -510,7 +525,7 @@
     ]
   },
   {
-    "hash": "41c203dce",
+    "hash": "5f854f2bd",
     "date": "2026-09-26T02:37:46+01:00",
     "subject": "data, build: correct the narrative record and check it against the graph (#39)",
     "kind": "revision",
@@ -535,7 +550,7 @@
     ]
   },
   {
-    "hash": "0d3394039",
+    "hash": "05d13a774",
     "date": "2026-09-26T00:17:57+01:00",
     "subject": "data: correct the Bennour date conflict and the stale tiering counts (#38)",
     "kind": "revision",
@@ -555,7 +570,7 @@
     ]
   },
   {
-    "hash": "c0868cd58",
+    "hash": "530ed88f2",
     "date": "2026-09-15T12:35:08+01:00",
     "subject": "JORT primary records for 20 needs-primary-source positions (candidates for review) (#34)",
     "kind": "expansion",
@@ -570,7 +585,7 @@
     ]
   },
   {
-    "hash": "f93d047f5",
+    "hash": "a51225d27",
     "date": "2026-09-14T16:08:06+01:00",
     "subject": "Claim-level evidence in the graph, derived origins, and the origins chip (#28)",
     "kind": "revision",
@@ -610,7 +625,7 @@
     ]
   },
   {
-    "hash": "6890c357f",
+    "hash": "863a38fc4",
     "date": "2026-09-11T11:26:46+01:00",
     "subject": "data: resolve the kind review, source two JORT appointments (#24)",
     "kind": "revision",
@@ -645,7 +660,7 @@
     ]
   },
   {
-    "hash": "582c98175",
+    "hash": "106412b5d",
     "date": "2026-09-11T10:47:58+01:00",
     "subject": "Separate claim kind from evidence strength (V26) (#23)",
     "kind": "expansion",
@@ -670,7 +685,7 @@
     ]
   },
   {
-    "hash": "ed49ba4a5",
+    "hash": "90510fcf1",
     "date": "2026-09-11T00:30:02+01:00",
     "subject": "Phase 2: one temporal implementation with a certainty horizon (#17)",
     "kind": "expansion",
@@ -685,7 +700,7 @@
     ]
   },
   {
-    "hash": "bd65dbec2",
+    "hash": "345e50903",
     "date": "2026-09-10T23:49:04+01:00",
     "subject": "Harden the evidence contract (V25, V27, V28) and baseline the closed probes (#16)",
     "kind": "revision",
@@ -705,7 +720,7 @@
     ]
   },
   {
-    "hash": "d22fe7976",
+    "hash": "2ffa8893a",
     "date": "2026-09-10T11:30:11+01:00",
     "subject": "Daily sweep 2026-09-10: 12 events, 6 people, CPG correction, cutoff advance",
     "kind": "revision",
@@ -735,7 +750,7 @@
     ]
   },
   {
-    "hash": "ddd0d4a9e",
+    "hash": "e5ef253df",
     "date": "2026-09-03T00:16:08+01:00",
     "subject": "chore: review remaining unsubstantiated records — 10 source-check reviews, bucket 2/12→12/12",
     "kind": "expansion",
@@ -770,7 +785,7 @@
     ]
   },
   {
-    "hash": "524387ead",
+    "hash": "dab667f43",
     "date": "2026-09-02T23:58:25+01:00",
     "subject": "feat: verification pass — five risk-bucket source-check reviews, signed-tag release workflow with Zenodo deposit, Agora schema/API drift fixes",
     "kind": "expansion",
@@ -795,7 +810,7 @@
     ]
   },
   {
-    "hash": "7f7400915",
+    "hash": "9b7a02af5",
     "date": "2026-08-28T04:07:16+01:00",
     "subject": "feat(cards-richness): enrich 10 emptiest cards with tier-1 decrees (#3)",
     "kind": "revision",
@@ -830,7 +845,7 @@
     ]
   },
   {
-    "hash": "46dea0024",
+    "hash": "5174170ae",
     "date": "2026-08-28T04:05:17+01:00",
     "subject": "feat(media): bot-farm investigation — counting fakes 2016–2026 (draft) (#1)",
     "kind": "expansion",
@@ -870,7 +885,7 @@
     ]
   },
   {
-    "hash": "2eb5ad6d9",
+    "hash": "e2a0e9dbc",
     "date": "2026-08-27T04:14:57+01:00",
     "subject": "fix(data): integrity pass — ministries and grouping",
     "kind": "revision",
@@ -895,7 +910,7 @@
     ]
   },
   {
-    "hash": "75baa203e",
+    "hash": "6255f25af",
     "date": "2026-08-26T18:21:23+01:00",
     "subject": "DeepTunisia: source-backed atlas of power in Tunisia, 1956–2026",
     "kind": "expansion",

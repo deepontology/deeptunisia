@@ -369,7 +369,7 @@
   confidence: C
   basis: inferred
   verification: needs-primary-source
-  attributed_to: "DeepTunisia dt-research agent (proxy point; no registry record of the basin as a feature — see reasoning)"
+  attributed_to: "DeepTunisia (proxy point; no registry record of the basin as a feature — see reasoning)"
   reasoning: >-
     No registry record exists for the Gafsa phosphate basin as a single feature.
     Wikidata has no item (searches for "bassin minier de Gafsa" and "Gafsa
@@ -1355,7 +1355,7 @@
   confidence: C
   basis: inferred
   verification: needs-primary-source
-  attributed_to: "DeepTunisia dt-research agent (proxy anchor — the only registry feature naming the zone is its post office node; the zone boundary itself is not mapped)"
+  attributed_to: "DeepTunisia (proxy anchor — the only registry feature naming the zone is its post office node; the zone boundary itself is not mapped)"
   reasoning: >-
     No registry record exists for the Bizerte free zone as a feature (no
     Wikidata item, no OSM boundary/landuse). The adopted point is the OSM node
@@ -1674,7 +1674,7 @@
   confidence: C
   basis: inferred
   verification: needs-primary-source
-  attributed_to: "DeepTunisia dt-research agent (proxy anchor — no registry record of the Sehib mine as a feature; the point of the OSM railway station 'Sehib' anchors it — see reasoning)"
+  attributed_to: "DeepTunisia (proxy anchor — no registry record of the Sehib mine as a feature; the point of the OSM railway station 'Sehib' anchors it — see reasoning)"
   reasoning: >-
     No registry record exists for the Sehib mine complex as a feature (no
     Wikidata item for the mine or the town, no OSM quarry/mine feature in the

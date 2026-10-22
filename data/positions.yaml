@@ -735,7 +735,7 @@
         (2023-03-17) is adopted; the fr.wikipedia date stays open pending the JORT
         decree number.
       status: open
-      resolved_by: Research pass 2026-08-08 (JORT)
+      resolved_by: Checked against the JORT, 2026-08-08
       resolved_at: "2026-08-08"
     - claim: Feki's appointment decree is "décret n° 2023-268".
       held_by: Earlier research lead
@@ -837,7 +837,7 @@
         the immediate predecessor. Both versions recorded; the tenure dates are
         unaffected.
       status: open
-      resolved_by: Merge pass 2026-08-08 (khalil-sehili → khaled-shili)
+      resolved_by: Duplicate person records merged, 2026-08-08 (khalil-sehili → khaled-shili)
       resolved_at: "2026-08-08"
   sources: [legislation-decret-2024-465, pm-gov-shili, espacemanager-shili-2026, mondafrique-armee-legitimite-2026]
 
@@ -2539,7 +2539,7 @@
         Wikipedia police list gives Guizani exactly 11 decembre 2019 - 17
         septembre 2020. p-dgsn-guizani's end corrected to 2020-09-17 the same day.
       status: rejected
-      resolved_by: DeepTunisia dt-research agent (TAP / Kapitalis / L'Economiste Maghrebin / arwiki, 2026-08-11)
+      resolved_by: Checked against TAP, Kapitalis, L'Economiste Maghrebin and Arabic Wikipedia, 2026-08-11
       resolved_at: "2026-08-11"
     - claim: Zouhair Seddik was appointed DGSN in September 2020.
       held_by: This record (wikipedia-seddik-fr)
@@ -2550,7 +2550,7 @@
         Interior Ministry; the appointment "fait suite a l'affectation de Kamel
         Guizani comme ambassadeur". Start pinned to 2020-09-17.
       status: adopted
-      resolved_by: DeepTunisia dt-research agent (TAP / Kapitalis / L'Economiste Maghrebin, 2026-08-11)
+      resolved_by: Checked against TAP, Kapitalis and L'Economiste Maghrebin, 2026-08-11
       resolved_at: "2026-08-11"
   sources: [wikipedia-seddik-fr, jort-2021-123, tap-seddik-2020, kapitalis-seddik-2020, leconomistemaghrebin-seddik-2020, arwiki-police-list]
 
@@ -3900,7 +3900,7 @@
         the Leaders version is treated as authoritative for the record's own
         source. The people.yaml summary is left visible, not silently rewritten.
       status: open
-      resolved_by: Research pass 2026-08-08 (question-answers flag qa-flag-belhajali-amb)
+      resolved_by: Checked against the cited sources, 2026-08-08
       resolved_at: "2026-08-08"
   sources: [leaders-belhajali-2015, arwiki-police-list]
 
@@ -5186,7 +5186,7 @@
         the appointment to 27 July 1988; the "7 novembre" date on the frwiki bio
         is likely a misdate. The decree version is ADOPTED.
       status: adopted
-      resolved_by: Research pass 2026-08-08 (JORT)
+      resolved_by: Checked against the JORT, 2026-08-08
       resolved_at: "2026-08-08"
   sources: [jort-1988-1392, frwiki-baccouche2, latimes-escheikh-1988, wikipedia-escheikh, frwiki-mae-list, leaders-escheikh-2014]
 
@@ -5705,7 +5705,7 @@
         A 2-day handover gap to p-foreign-abdessalem (ends 13 March) is therefore
         recorded, not hidden.
       status: open
-      resolved_by: Research pass 2026-08-08 (JORT)
+      resolved_by: Checked against the JORT, 2026-08-08
       resolved_at: "2026-08-08"
   sources: [legislation-securite-2013-1372, nawaat-larayedh-gov-2013, lematin-jerandi-2013, frwiki-mae-list]
 
@@ -8033,7 +8033,7 @@
         ladder; 15 Feb retained here as disputed ceremony date.
       status: open
       source: jort-2024-122-nouri
-      resolved_by: Hunt bct-and-orphan 2026-08-28 + incumbents 2026-08-28
+      resolved_by: Checked against JORT décret 2024-122, 2026-08-28
       resolved_at: "2026-08-28"
   sources: [jort-2024-122-nouri, bct-gov-conseil-2024, bct-cv-nouri-fr, frwiki-bct, ilboursa-nouri-2024, jeuneafrique-nouri-2024, leaders-nouri-35646, le-quotidien-nouri-2024-02-15, wmc-nouri-2024-02-15, africanmanager-nouri-bio-2024, lapresse-bct-nouri-2026-09-25]
 
@@ -12920,7 +12920,7 @@
         1985 via JORT n°65/1985, with Essoussi holding the post 1967-1976).
         Rejected on tier-1 dating; kept here per rule 5.
       status: rejected
-      resolved_by: maintainer review, 2026-08-25/26 daily-sweep merge session
+      resolved_by: Maintainer review, 2026-08-25/26
   sources:
     - arwiki-air-chief-list
     - jort-1985-1115
