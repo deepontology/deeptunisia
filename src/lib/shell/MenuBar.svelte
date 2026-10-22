@@ -52,14 +52,9 @@
 <header class="menubar" data-tour="chrome">
 	<a class="brand" href="/" aria-label="DeepTunisia home">
 		<span class="mark" aria-hidden="true">
-			<svg viewBox="0 0 32 32" width="20" height="20">
-				<g stroke="var(--accent)" stroke-width="1.7" fill="none" stroke-linecap="round">
-					<path d="M16 6.5v6" /><path d="M8.5 26v-7" /><path d="M23.5 26v-7" />
-					<path d="M8.5 19h15" />
-				</g>
-				<circle cx="16" cy="5" r="2.7" fill="var(--accent)" />
-				<circle cx="8.5" cy="26.5" r="2.3" fill="var(--layer-security)" />
-				<circle cx="23.5" cy="26.5" r="2.3" fill="var(--layer-economic)" />
+			<svg viewBox="0 0 64 64" width="20" height="20">
+				<circle cx="32" cy="32" r="28" fill="none" stroke="var(--accent)" stroke-opacity="0.6" stroke-width="4.5" />
+				<circle cx="32" cy="32" r="10" fill="var(--accent)" />
 			</svg>
 		</span>
 		<span class="word">Deep<b>Tunisia</b></span>
@@ -241,7 +236,7 @@
 		transition: transform var(--dur-slow) var(--ease-spring);
 	}
 	.brand:hover .mark {
-		transform: rotate(-8deg) scale(1.08);
+		transform: scale(1.08);
 	}
 	.word {
 		font-size: var(--t-md);

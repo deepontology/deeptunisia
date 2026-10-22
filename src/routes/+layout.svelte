@@ -113,6 +113,9 @@ import { tour, tourSeen } from '$lib/shell/tour.svelte';
 	const hasDock = $derived(!isDoc && !TIMELESS.includes(page.url.pathname));
 	const dir = $derived(dirFor(app.locale));
 
+	/** Pages that write their own preview tags: the police study page (IndexStudy) and the share shells. Other study pages and the participate and withdraw pages take the default. */
+	const ownsPreview = $derived(/^\/(share\/|research\/police\/?$)/.test(page.url.pathname));
+
 	// OG preview — dynamic per selection/rel/flow, client-enhanced (crawlers use prerendered /share shells).
 	// Prerender cannot access searchParams (SvelteKit forbids it); guard with browser so build succeeds.
 	const og = $derived.by(() => {
@@ -247,6 +250,19 @@ import { tour, tourSeen } from '$lib/shell/tour.svelte';
 		<meta name="twitter:title" content={og.title} />
 		<meta name="twitter:description" content={og.desc} />
 		<meta name="twitter:image" content={og.image} />
+	{:else if !ownsPreview}
+		<!-- Prerendered default, so a link to any page that sets no card of its own still
+		     previews with the mark. Study and share pages set their own. -->
+		<meta property="og:site_name" content="DeepTunisia" />
+		<meta property="og:title" content="DeepTunisia: a public record of power" />
+		<meta property="og:description" content="An open, source-backed public record of the people, institutions and networks that shape Tunisia, 1956 to 2026." />
+		<meta property="og:type" content="website" />
+		<meta property="og:image" content="https://deeptunisia.org/og/default.png" />
+		<meta property="og:image:alt" content="DeepTunisia: the circle and dot mark beside the name and the line Power, institutions and evidence, 1956 to 2026." />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:image" content="https://deeptunisia.org/og/default.png" />
 	{/if}
 </svelte:head>
 
