@@ -29,6 +29,7 @@
 	import EntityMention from './EntityMention.svelte';
 	import InterpretationPanel from './InterpretationPanel.svelte';
 	import SidebarTimeline from './SidebarTimeline.svelte';
+	import ArticleFigure from './ArticleFigure.svelte';
 
 	interface Props {
 		investigation: InvestigationBundle;
@@ -45,6 +46,8 @@
 	function webHref(url: string | null | undefined): string | undefined {
 		if (!url) return undefined;
 		try {
+			// A site-relative path stays on this origin; a protocol-relative "//host" does not.
+			if (url.startsWith('/') && !url.startsWith('//')) return url;
 			const parsed = new URL(url);
 			return parsed.protocol === 'http:' || parsed.protocol === 'https:' ? url : undefined;
 		} catch {
@@ -305,6 +308,19 @@
 				</li>
 			{/each}
 		</ol>
+	{:else if block.t === 'figure'}
+		{@const figure = (investigation.figures ?? []).find((f) => f.id === block.ref)}
+		{#if figure}
+			<ArticleFigure {figure} {findClaim} {expandedClaim} {toggleClaim} inline={inlineNode} />
+			{#if expandedClaim && !inIntro}
+				{@const claim = findClaim(expandedClaim)}
+				{#if claim && JSON.stringify(figure).includes(expandedClaim)}
+					<ClaimExpansion {claim} sources={findSources((claim.sources as string[]) ?? [])} onclose={() => (expandedClaim = null)} />
+				{/if}
+			{/if}
+		{:else}
+			<span class="missing-ref">[[figure:{block.ref}]]</span>
+		{/if}
 	{:else if block.t === 'interp'}
 		{@const reading = findInterp(block.ref)}
 		{#if reading}

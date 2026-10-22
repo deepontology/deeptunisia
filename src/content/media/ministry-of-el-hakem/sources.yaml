@@ -1,0 +1,1074 @@
+# Ministry of El Hakem: source registry
+# Links were checked on 2026-10-20. Sources named in the film without a link are kept with url null.
+
+sources:
+- id: s001
+  citation:
+    en: 'Location and outline: OpenStreetMap relation 5623629, Ministry of the Interior, Avenue Habib
+      Bourguiba (© OpenStreetMap contributors, ODbL). City blocks illustrative. (openstreetmap.org)'
+  url: https://www.openstreetmap.org/relation/5623629
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s002
+  citation:
+    en: 'Photograph: Citizen59, 19 Oct 2014, CC BY 3.0, Wikimedia Commons: lattice masts, microwave dishes,
+      antennas. It shows the equipment, not its use. (commons.wikimedia.org)'
+  url: https://commons.wikimedia.org/wiki/File:MinistereInterieurTunisie_Oct2014.JPG
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s003
+  citation:
+    en: 'Named on screen in the film, without a link: UN Working Group on Arbitrary Detention, Opinion
+      15/2003, para 8: "held in a holding cell in the basement of the Ministry of the Interior". Testimony;
+      cells drawn dashed.'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s004
+  citation:
+    en: Open Letter of 6 July 2001 (fidh.org)
+  url: https://www.fidh.org/fr/regions/maghreb-moyen-orient/tunisie/LE-JUGE-YAHIAOUI-DESTITUE-POUR
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s005
+  citation:
+    en: 'Named on screen in the film, without a link: Legal Agenda, 23 Nov 2015: "it had returned to him
+      marked ''no address''"; Les Semeurs. Written on the letter: no source mentions a stamp.'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s006
+  citation:
+    en: 'Named on screen in the film, without a link: Suspension 14 July 2001; removal by the disciplinary
+      council 29 Dec 2001 (Legal Agenda; Les Semeurs). Ten-year travel ban: his own account (Legal Agenda,
+      2015).'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s007
+  citation:
+    en: RSF 2002 (callback to Zouhair Yahyaoui 1-year sentence) (rsf.org)
+  url: https://rsf.org/fr/un-cyberdissident-tunisien-condamn%C3%A9-%C3%A0-deux-ans-et-quatre-mois-de-prison
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s008
+  citation:
+    en: 'Named on screen in the film, without a link: UN WGAD Opinion 15/2003: arrested at Ben Arous on
+      4 June 2002 by six plainclothes officers in the cybercafé. 28 months (20 June), two years on appeal
+      (10 July 2002), false news (CPJ, RSF).'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s009
+  citation:
+    en: RSF · 18 Nov 2003 (release) (rsf.org)
+  url: https://rsf.org/fr/lib%C3%A9ration-du-cyberdissident-zouha%C3%AFr-yahyaoui
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s010
+  citation:
+    en: 'Named on screen in the film, without a link: Max Weber, "Politics as a Vocation" (Politik als
+      Beruf), lecture of 1919: the state claims the monopoly of the legitimate use of physical force within
+      a territory.'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s011
+  citation:
+    en: 'Named on screen in the film, without a link: Military security post: Le Monde diplomatique, April
+      2011 ("more than ten years", "twice" at the national police). Interior minister, 28 April 1986:
+      Carnegie Endowment (2016).'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s012
+  citation:
+    en: 'Named on screen in the film, without a link: Medical report signed by seven doctors: Le Monde,
+      8 Nov 1987. Takeover, 7 Nov 1987: Carnegie Endowment (2016).'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s013
+  citation:
+    en: 'Named on screen in the film, without a link: Jeune Afrique (2014): appointed in 1991 to head
+      the national police (Sûreté nationale). The month is not given.'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s014
+  citation:
+    en: HRW · 5 Jul 2012 (presidential security from 1 Sep 2001 to 14 Jan 2011) (hrw.org)
+  url: https://www.hrw.org/ar/news/2012/07/05/246863
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s015
+  citation:
+    en: Decree 88-250 · JORT n° 15 · 1 Mar 1988 (+ Decree 90-1953) (leaders.com.tn)
+  url: https://www.leaders.com.tn/article/28330-voyage-au-coeur-de-la-presidence-qui-tient-la-maison
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s016
+  citation:
+    en: Leaders · Jeune Afrique (1987–2001) (leaders.com.tn)
+  url: https://www.leaders.com.tn/article/18555-qui-est-abderrahmane-belhaj-ali-nouveau-directeur-general-de-la-surete-nationale
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s017
+  citation:
+    en: Decree 2005-3047 (Ganzoui Secretary of State for Security) (fr.wikipedia.org)
+  url: https://fr.wikipedia.org/wiki/Mohamed_Ali_Ganzoui
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s018
+  citation:
+    en: Decree 2005-3047 (Ganzoui Secretary of State for Security) (kapitalis.com)
+  url: https://www.kapitalis.com/archive/190-politik/3801-tunisie-mohamed-ali-ganzoui-derriere-les-barreaux
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s019
+  citation:
+    en: Le Monde · France 24 (claimed 2M+ members) (lemonde.fr)
+  url: https://www.lemonde.fr/afrique/article/2011/01/24/rcd-la-fin-incertaine-d-un-parti-etat_1469929_3212.html
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s020
+  citation:
+    en: Le Monde · France 24 (claimed 2M+ members) (france24.com)
+  url: https://www.france24.com/fr/20110309-tunisie-rassemblement-democratique-constitutionnel-justice-dissolution-le-parti-ben-ali
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s021
+  citation:
+    en: Crisis Group 2015 (State Security Directorate) (leaders.com.tn)
+  url: https://www.leaders.com.tn/article/4384-suppression-de-la-police-politique-et-de-la-direction-de-la-surete-de-l-etat
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s022
+  citation:
+    en: HRW · 3 May 2012 (Barraket Essahel torture) (hrw.org)
+  url: https://www.hrw.org/fr/news/2012/05/03/tunisie-pour-juger-les-crimes-du-pass-il-faut-r-former-le-cadre-juridique
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s023
+  citation:
+    en: Amnesty · HRW 1992 (279 tried, 265 convicted) (amnesty.org)
+  url: https://www.amnesty.org/en/documents/mde30/023/1992/en/
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s024
+  citation:
+    en: 1959 Constitution, Art. 41, as amended by the 2002 referendum (sudd.ch). Paraphrase in this film,
+      not a quotation. (sudd.ch)
+  url: https://www.sudd.ch/event.php?id=tn012002&lang=de
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s025
+  citation:
+    en: Law 2003-75 · JORT n° 99 (legislation-securite.tn)
+  url: https://legislation-securite.tn/wp-content/uploads/sites/5/2023/11/Loi-n°-2003-75-du-10-Decembre-2003-Fr.pdf
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s026
+  citation:
+    en: 'Named on screen in the film, without a link: UN Special Rapporteur Scheinin, A/HRC/16/51/Add.2:
+      1,123 prosecuted, 2004 to 2009 (official figures). UN estimate of about 3,000 cited by Amnesty International
+      (2017).'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s027
+  citation:
+    en: 'Named on screen in the film, without a link: Protest in front of the Interior Ministry, 14 Jan
+      2011. Video: Free Tunisian, 14 Jan 2011, CC BY 3.0, Wikimedia Commons. Crowd size not sourced; figures
+      illustrative.'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s028
+  citation:
+    en: Jeune Afrique 2014 · Business News 2011 (Seriati arrested after 27 min) (jeuneafrique.com)
+  url: https://www.jeuneafrique.com/133683/politique/tunisie-ali-seriati-gagnant-en-appel/
+  tier: null
+  date_consulted: '2026-10-20'
+  access: unreachable-to-automated-check
+  archive_url: null
+- id: s029
+  citation:
+    en: Al Jazeera · 19 Jul 2012 · Jeune Afrique · Kapitalis · 17 May 2014 (Seriati verdicts) (aljazeera.net)
+  url: https://www.aljazeera.net/news/2012/7/19/%D8%A7%D9%84%D9%85%D8%A4%D8%A8%D8%AF-%D8%BA%D9%8A%D8%A7%D8%A8%D9%8A%D8%A7-%D9%84%D8%A8%D9%86-%D8%B9%D9%84%D9%8A-%D9%81%D9%8A-%D8%AA%D9%88%D9%86%D8%B3
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s030
+  citation:
+    en: Al Jazeera · 19 Jul 2012 · Jeune Afrique · Kapitalis · 17 May 2014 (Seriati verdicts) (kapitalis.com)
+  url: https://www.kapitalis.com/archive/190-politik/22335-tunisie-politique-ali-seriati-libere-samedi-apres-3-ans-deprison.html
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s031
+  citation:
+    en: HRW · 3 May 2012 · AFP · Business News · 7 Apr 2012 (Kallel appeal) (businessnews.com.tn)
+  url: https://businessnews.com.tn/2012/04/07/article-1103641/1103641/
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s032
+  citation:
+    en: 'Named on screen in the film, without a link: Tunis Court of First Instance, 9 March 2011: the
+      RCD dissolved and its assets liquidated. Dots illustrative, one per cell.'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s033
+  citation:
+    en: 'Named on screen in the film, without a link: Interior Ministry spokesman, 7 March 2011: political
+      police and State Security dissolved (Al Jazeera).'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s034
+  citation:
+    en: 'Named on screen in the film, without a link: Nawaat, May 2011: no legal text followed in the
+      Official Gazette (JORT). Not graded in our files.'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s035
+  citation:
+    en: 'Named on screen in the film, without a link: Snipers firing on protesters, January 2011: talked
+      about, not proven. Rooftop figures drawn dashed.'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s036
+  citation:
+    en: 'Named on screen in the film, without a link: JusticeInfo, 13 Jan 2016: a member of the fact-finding
+      commission said there was not enough credible testimony about snipers.'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s037
+  citation:
+    en: New Lines Magazine · Apr 2011 sworn testimony of Rachid Ammar (newlinesmag.com)
+  url: https://newlinesmag.com/essays/how-disinformation-fueled-the-tunisian-revolution/
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s038
+  citation:
+    en: 'Named on screen in the film, without a link: Our search: no prosecution of Ayari for the rumour
+      found.'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s039
+  citation:
+    en: 'Named on screen in the film, without a link: Abdessattar Bennour, appointed director general
+      of the national police on 2 March 2011 (Jeune Afrique; Webdo; TAP).'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s040
+  citation:
+    en: 'Named on screen in the film, without a link: Webdo: Bennour held the same post in 2005.'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s041
+  citation:
+    en: 'Named on screen in the film, without a link: Our count of directors general of the national police,
+      2011 to July 2021, from appointment decrees and press (DeepTunisia positions). At least eleven;
+      some dates approximate.'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s042
+  citation:
+    en: Réalités · DeepTunisia dataset (12 interior ministers 2011–2021) (realites.com.tn)
+  url: https://realites.com.tn/fr/depuis-2011-12-ministres-de-linterieur-une-moyenne-de-10-mois-par-ministre/
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s043
+  citation:
+    en: 'Named on screen in the film, without a link: The post abolished in March 2015: Kapitalis, 9 Jul
+      2015.'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s044
+  citation:
+    en: 'Named on screen in the film, without a link: Secretary of state Rafik Chelly removed and the
+      post restored, December 2015: Le Courrier de l''Atlas / North Africa Post (1 Dec 2015).'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s045
+  citation:
+    en: 'Named on screen in the film, without a link: Arab Reform Initiative (Audrey Pluta, 7 Apr 2023):
+      the first police mobilisations for a union date from 15 January 2011; the Sfax meeting.'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s046
+  citation:
+    en: 'Named on screen in the film, without a link: Decree-Law 2011-42, Official Gazette (JORT), 31
+      May 2011.'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s047
+  citation:
+    en: 'Named on screen in the film, without a link: Union claim: 62,000 members (SNFSI). Crisis Group:
+      about 8,000. Arab Reform Initiative, 2023. One square = 100 members.'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s048
+  citation:
+    en: Ben Arous courthouse siege · 26 Feb 2018 · Legal Agenda · VOA (english.legal-agenda.com)
+  url: https://english.legal-agenda.com/tunisia-from-a-police-state-to-a-state-of-police-unions/
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s049
+  citation:
+    en: 'Named on screen in the film, without a link: AFP via L''Orient-Le Jour, 27 Feb 2018: "Selon le
+      parquet… les policiers ont été libérés lundi soir".'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s050
+  citation:
+    en: '2014 Constitution, Art. 89: the president asks the party or coalition with the most seats to
+      form a government (constituteproject.org). (constituteproject.org)'
+  url: https://www.constituteproject.org/constitution/Tunisia_2014
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s051
+  citation:
+    en: 'Named on screen in the film, without a link: Lotfi Brahem, interior minister September 2017 (DeepTunisia
+      records); dismissed by Youssef Chahed, June 2018 (Leaders).'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s052
+  citation:
+    en: 'Named on screen in the film, without a link: Kapitalis, 5 Jan 2021: Mechichi dismisses Charfeddine;
+      6 Jan 2021: says all Charfeddine''s appointments and transfers in the police and Guard are cancelled.
+      No reason given.'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s053
+  citation:
+    en: 'Named on screen in the film, without a link: EU programme PARMSS, €23M, November 2015. Arab Reform
+      Initiative, April 2023: about €15M to border command centres; more than €1.5M on the ethics body;
+      neither the body nor the code saw the light; closed end 2020. 1 square = €100,000.'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s054
+  citation:
+    en: 'Named on screen in the film, without a link: Reuters, 18 April 2021 (speech text). Mechichi as
+      acting interior minister: Kapitalis, 5 Jan 2021.'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s055
+  citation:
+    en: Reuters · Jeune Afrique (25 July self-coup) (voanews.com)
+  url: https://www.voanews.com/a/africa_tunisian-president-sacks-premier-suspends-parliament/6208718.html
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s056
+  citation:
+    en: HRW · 27 Jul 2021 (street demonstrations Avenue Bourguiba) (hrw.org)
+  url: https://www.hrw.org/news/2021/07/27/tunisia-presidents-seizure-powers-threatens-rights
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s057
+  citation:
+    en: 'Named on screen in the film, without a link: AFP video at Bardo, about 3 a.m.: Ghannouchi kept
+      out, followed by Chaouachi. The exchange as summarised in this film; TV snippets differ slightly.'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s058
+  citation:
+    en: Tunisie Tribune · 26 Jul 2021 ("colonel-major Khaled Yahyaoui") (tunisie-tribune.com)
+  url: https://www.tunisie-tribune.com/2021/07/26/le-colonel-major-khaled-yahyaoui-prend-les-commandes-du-ministere-de-linterieur/
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s059
+  citation:
+    en: 'Al Jazeera · CPJ · 26 Jul 2021 (journalists: no warrant produced) (aljazeera.com)'
+  url: https://www.aljazeera.com/news/2021/7/26/tunisia-police-storm-al-jazeera-office-in-tunis
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s060
+  citation:
+    en: 'Al Jazeera · CPJ · 26 Jul 2021 (journalists: no warrant produced) (cpj.org)'
+  url: https://cpj.org/2021/07/tunisian-authorities-raid-al-jazeera-bureau-amid-political-turmoil/
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s061
+  citation:
+    en: 'Decree 2021-81, 29 July 2021 (JORT): Ridha Gharsallaoui in charge of the Interior Ministry. La
+      Libre, 30 Jul 2021: a police commissioner who became the president''s national security adviser.
+      (legislation-securite.tn)'
+  url: https://legislation-securite.tn/latest-laws/decret-presidentiel-n-2021-81-du-29-juillet-2021-portant-nomination-dun-charge-du-ministere-de-linterieur/
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s062
+  citation:
+    en: Decrees 2021-123 & 124 · JORT n° 98 · 25 Sep 2021 (Hichri & Riahi) (lake.jort.tn)
+  url: https://lake.jort.tn/journal-officiel/fr/2021/098.pdf
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s063
+  citation:
+    en: Presidential Decree 2021-117 · JORT n° 86 · 22 Sep 2021 (icnl.org)
+  url: https://www.icnl.org/resources/library/presidential-decree-no-2021-117-relating-to-exceptional-measures
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s064
+  citation:
+    en: Decree 2022-546 · JORT n° 71 · 31 May 2022 (Saidane appointment) (9anoun.tn)
+  url: https://9anoun.tn/fr/kb/jorts/jort-2022-071-e293f/decret-presidentiel-ndeg-2022-546-du-17-juin-2022-portant-nomination-d-un-directeur-general-de-la-surete-nationale-12
+  tier: null
+  date_consulted: '2026-10-20'
+  access: unreachable-to-automated-check
+  archive_url: null
+- id: s065
+  citation:
+    en: Decree 2022-546 · JORT n° 71 · 31 May 2022 (Saidane appointment) (lapresse.tn)
+  url: https://www.lapresse.tn/2025/10/01/quand-securite-rime-avec-equite-la-strategie-de-kais-saied/
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s066
+  citation:
+    en: Jawhara FM · 4 Sep 2026 (spokesman confirms Gharbi in post) (jawharafm.net)
+  url: https://www.jawharafm.net/ar/article/--%D8%A7%D9%84%D8%A3%D9%85%D8%A7%D9%86%D8%A9..-%D8%B1%D8%AD%D9%84%D8%A9-%D8%B3%D8%A8%D8%B9%D9%8A%D9%86-%D8%B3%D9%86%D8%A9-%D9%84%D9%84%D8%AD%D8%B1%D8%B3-%D8%A7%D9%84%D9%88%D8%B7%D9%86%D9%8A-%D9%81%D9%8A-%D9%81%D9%8A%D9%84%D9%85/105/298583
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s067
+  citation:
+    en: fr.wikipedia · Business News (in post since 2019) (fr.wikipedia.org)
+  url: https://fr.wikipedia.org/wiki/Khaled_Yahyaoui
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s068
+  citation:
+    en: Africa Intelligence · 4 Jun 2024 ("makes and breaks ministerial careers") (africaintelligence.com)
+  url: https://www.africaintelligence.com/north-africa/2024/06/04/khaled-yahyaoui-the-carthage-palace-security-chief-who-makes-and-breaks-ministerial-careers,110242437-art
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s069
+  citation:
+    en: 'Named on screen in the film, without a link: Decrees 2021-81 (29 July 2021) and 2024-336 (25
+      May 2024), JORT. Charfeddine back in October 2021: Leaders, 20 Oct 2021. Feki, former governor of
+      Tunis: Webdo; Tuniscope.'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s070
+  citation:
+    en: Decree 2024-339 · JORT n° 65 · 25 May 2024 (Bessadok appointment) (9anoun.tn)
+  url: https://www.9anoun.tn/kb/jorts/jort-2024-065-df3c7/decret-ndeg-2024-339-du-25-mai-2024-portant-nomination-dun-membre-du-gouvernement-6
+  tier: null
+  date_consulted: '2026-10-20'
+  access: unreachable-to-automated-check
+  archive_url: null
+- id: s071
+  citation:
+    en: 'Named on screen in the film, without a link: Carthage presidency readouts, 6 and 13 March 2024
+      and 22 Sept 2025 (carthage.tn). Others exist; the count is not stated.'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s072
+  citation:
+    en: 'Named on screen in the film, without a link: The RCD was Ben Ali''s ruling party until the Tunis
+      Court of First Instance dissolved it on 9 March 2011. Figures illustrative.'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s073
+  citation:
+    en: 'Named on screen in the film, without a link: No ruling party: candidates ran as individuals under
+      Decree-Law 2022-55 (DeepTunisia dataset).'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s074
+  citation:
+    en: 'Named on screen in the film, without a link: ISIE, Dec 2022: 8.8% at the close of polls (France
+      24, 17 Dec 2022), revised to 11.22% as a preliminary figure (AFP via Hespress, 19–20 Dec 2022).'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s075
+  citation:
+    en: JORT n° 103 · 16 Sep 2022 (legislation-securite.tn)
+  url: https://legislation-securite.tn/latest-laws/decret-loi-n-2022-54-du-13-septembre-2022-relatif-a-la-lutte-contre-les-infractions-se-rapportant-aux-systemes-dinformation-et-de-communication/
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s076
+  citation:
+    en: Temporary Judicial Council · 20 Sep 2022 · HRW (immunity lifted) (hrw.org)
+  url: https://www.hrw.org/fr/news/2023/08/21/tunisie-il-faut-mettre-fin-au-harcelement-judiciaire-du-president-de-lassociation
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s077
+  citation:
+    en: Sfax military court committal warrants against 8 union leaders · 23 Sep 2022 (kapitalis.com)
+  url: https://kapitalis.com/tunisie/2022/09/23/tunisie-mandats-de-depot-contre-huit-syndicalistes-securitaires-de-sfax/
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s078
+  citation:
+    en: 'Named on screen in the film, without a link: Video of the night of 5–6 Feb 2022: La Libre/AFP,
+      France 24, Al Jazeera. Council seat shut on 7 Feb 2022.'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s079
+  citation:
+    en: Decree-Law 2022-11 · JORT n° 16 · 12 Feb 2022 (dissolution of CSM) (legislation-securite.tn)
+  url: https://legislation-securite.tn/latest-laws/decret-loi-n-2022-11-du-12-fevrier-2022-relatif-a-la-creation-du-conseil-superieur-provisoire-de-la-magistrature/
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s080
+  citation:
+    en: Decree-Law 2022-35 & Decree 2022-516 · JORT n° 63 · 1 Jun 2022 (57 judges dismissed) (legislation-securite.tn)
+  url: https://legislation-securite.tn/latest-laws/decret-loi-n-2022-35-du-1er-juin-2022-completant-le-decret-loi-n-2022-11-du-12-fevrier-2022-relatif-a-la-creation-du-conseil-superieur-provisoire-de-la-magistrature/
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s081
+  citation:
+    en: Administrative Court suspends dismissal of 49 judges · 10 Aug 2022 (hrw.org)
+  url: https://www.hrw.org/fr/news/2023/02/27/tunisie-le-president-intensifie-les-attaques-contre-lindependance-judiciaire
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s082
+  citation:
+    en: BBC Arabic · Inkyfada · 22 Feb 2023 ("من يتجرأ على تبرئتهم فهو شريك لهم") (bbc.com)
+  url: https://www.bbc.com/arabic/middleeast-64752200
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s083
+  citation:
+    en: 'Named on screen in the film, without a link: Referral under Art. 136 of the penal code (obstructing
+      the freedom to work): Legal Agenda; Al-Araby Al-Jadeed, July 2026.'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s084
+  citation:
+    en: 'Named on screen in the film, without a link: Appeal court, July 2026: one year, immediate effect,
+      in absentia (Business News, 2 Jul 2026). AMT statement (Business News): left legally for an urgent
+      medical condition. Judges for Judges, 14 Aug 2026: left before the verdict.'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s085
+  citation:
+    en: Taoufik Charfeddine suspends 40M DT union dues · 29 Aug 2022 (leconomistemaghrebin.com)
+  url: https://www.leconomistemaghrebin.com/2022/09/01/taoufik-charfeddine-syndicats-securitaires-effectuent-des-prelevements-illegaux/
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s086
+  citation:
+    en: 'Government order 2023-240, 16 March 2023: code of conduct for the internal security forces. Summary
+      on screen, not the text. (legislation-securite.tn)'
+  url: https://legislation-securite.tn/latest-laws/decret-n-2023-240-du-16-mars-2023-portant-approbation-du-code-de-conduite-des-forces-de-securite-interieure-relevant-du-ministere-de-linterieur/
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s087
+  citation:
+    en: Business News · 21 Oct 2025 (SNFSI SG Nabil Ayari sentenced to 4 years) (businessnews.com.tn)
+  url: https://businessnews.com.tn/2025/10/21/corruption-au-sein-du-syndicat-des-forces-de-securite-interieure-lourdes-peines-prononcees/1368638/
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s088
+  citation:
+    en: 'Named on screen in the film, without a link: France 24, live, 11 May 2024: Sonia Dahmani arrested
+      at the Maison de l''Avocat; Al Jazeera, 12 May 2024, for the Carthage Plus remark. Building illustrative.'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s089
+  citation:
+    en: ICJ · OHCHR 31 May 2024 · Reuters 16 May 2024 (Mehdi Zagrouba torture marks & ministry denial)
+      (icj.org)
+  url: https://www.icj.org/tunisia-authorities-must-conduct-a-credible-investigation-into-suspected-torture-of-lawyer-mehdi-zagrouba/
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s090
+  citation:
+    en: 'Named on screen in the film, without a link: Our search: no published outcome of an investigation
+      into Zagrouba''s complaint.'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s091
+  citation:
+    en: 'Named on screen in the film, without a link: LTDH suspended for one month: Business News, 24
+      Apr 2026; challenged in court: Kapitalis, 6 May 2026. Nobel Peace Prize 2015 (the Quartet).'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s092
+  citation:
+    en: Amnesty · 10 Nov 2021 (at least 10 civilians before military courts) (amnesty.org)
+  url: https://www.amnesty.org/en/latest/news/2021/11/tunisia-alarming-increase-in-number-of-civilians-facing-military-courts/
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s093
+  citation:
+    en: Yassine Ayari jailed 28 Jul 2021 · Amnesty (amnesty.org)
+  url: https://www.amnesty.org/en/documents/mde30/4718/2021/en/
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s094
+  citation:
+    en: Chaima Issa military conviction Dec 2023 (1y suspended) · Amnesty · HRW (amnesty.org)
+  url: https://www.amnesty.org/en/latest/news/2023/12/tunisia-quash-military-court-conviction-against-prominent-activist-chaima-issa/
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s095
+  citation:
+    en: HRW · end-2023 (~20 investigated under Decree 54) (hrw.org)
+  url: https://www.hrw.org/world-report/2024/country-chapters/tunisia
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s096
+  citation:
+    en: 'Named on screen in the film, without a link: The journalists'' union reading the Court of Cassation
+      ruling of 3 Feb 2025 (Business News; L''Economiste Maghrébin). Union monitoring unit, 29 Jan 2026:
+      28 files (Babnet).'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s097
+  citation:
+    en: Sonia Dahmani released 27 Nov 2025 · CPJ · Reuters (cpj.org)
+  url: https://cpj.org/2025/11/tunisia-frees-prominent-commentator-sonia-dahmani/
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s098
+  citation:
+    en: 'Named on screen in the film, without a link: Zied El Heni, May 2026: one year under Art. 86 of
+      the Telecommunications Code, for remarks at an academic seminar (Nawaat; Amnesty UA 68/26; CPJ).'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s099
+  citation:
+    en: 'Named on screen in the film, without a link: Saber Ben Chouchane, 51: Human Rights Watch, 8 Oct
+      2025; Al Jazeera and AFP, 7 Oct 2025. Arrested January 2024, on his way to a medical appointment
+      according to his family.'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s100
+  citation:
+    en: HRW · 8 Oct 2025 · Al Jazeera · AFP · 7 Oct 2025 (Saber Ben Chouchane death sentence) (hrw.org)
+  url: https://www.hrw.org/news/2025/10/08/tunisia-death-sentence-for-facebook-posts
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s101
+  citation:
+    en: 'Named on screen in the film, without a link: HRW, 24 Feb 2023: arrests of 11–24 February 2023;
+      Chaouachi 24 or 25 Feb (Webdo; Business News). Ghannouchi arrested 17 April 2023 (Al Jazeera, 20
+      Apr 2023).'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s102
+  citation:
+    en: Inkyfada · Case dossier analysis (anonymous witnesses XX & XXX) (inkyfada.com)
+  url: https://inkyfada.com/en/2023/03/24/conspiracy-state-security-opposition-tunisia/
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s103
+  citation:
+    en: Court of Cassation upholds conspiracy sentences · 3 Sep 2026 (aljazeera.com)
+  url: https://www.aljazeera.com/news/2026/9/3/tunisias-top-court-upholds-conviction-of-opposition-figures-activists
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s104
+  citation:
+    en: 'Named on screen in the film, without a link: Kapitalis, 9 Jul 2025: Kamel Guizani sentenced in
+      absentia to 35 years (8 July 2025).'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s105
+  citation:
+    en: 'Named on screen in the film, without a link: Our search found no published sanction under the
+      code. Not proof of absence.'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s106
+  citation:
+    en: 'Named on screen in the film, without a link: OMCT and SANAD, via Nawaat, 26 Jun 2025: 21 police
+      assaults, June 2024 to May 2025. One square = one assault.'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s107
+  citation:
+    en: 'Named on screen in the film, without a link: Webdo, 12 Jul 2024: twelve officers, one year suspended,
+      in the case of Omar Abidi (drowned near the Radès stadium, 2018).'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s108
+  citation:
+    en: Inkyfada · Al Jazeera · RFI · Sep 2026 (kapitalis.com)
+  url: https://kapitalis.com/tunisie/2026/09/08/mandat-de-depot-contre-mohamed-yousfi-le-snjt-tire-la-sonnette-dalarme/
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s109
+  citation:
+    en: Inkyfada · Al Jazeera · RFI · Sep 2026 (inkyfada.com)
+  url: https://inkyfada.com/fr/2026/09/14/affaire-mohamed-yousfi-des-publications-facebook-au-coeur-dun-dossier-pour-blanchiment-et-terrorisme/
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s110
+  citation:
+    en: Inkyfada · Al Jazeera · RFI · Sep 2026 (aljazeera.com)
+  url: https://www.aljazeera.com/news/2026/9/4/tunisia-arrests-journalist-amid-crackdown-on-government-critics
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s111
+  citation:
+    en: 'Named on screen in the film, without a link: Al Jazeera, 20 Sep 2026: protesters demand the release
+      of the Sumud flotilla activists. Night arrests, 20–21 Sep: about fifteen arrested, including a high-school
+      student who is a minor (defence committee; Business News, 25 Sep 2026; Le Courrier de l''Atlas);
+      warrants against several (LTDH president).'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s112
+  citation:
+    en: Decree 2026-1 · JORT n° 96 · 30 Sep 2026 (Art. 24 amended) (lake.jort.tn)
+  url: https://lake.jort.tn/journal-officiel/ar/2026/096.pdf
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s113
+  citation:
+    en: Decree 2026-1 · JORT n° 96 · 30 Sep 2026 (Art. 24 amended) (tunisienumerique.com)
+  url: https://www.tunisienumerique.com/tunisie-ce-qui-change-dans-larticle-24-du-decret-54/
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s114
+  citation:
+    en: Decree 2026-1 · JORT n° 96 · 30 Sep 2026 (Art. 24 amended) (businessnews.com.tn)
+  url: https://businessnews.com.tn/2026/09/24/decret-54-deux-ans-et-demi-apres-son-depot-mohamed-ali-affirme-que-lamendement-se-heurte-toujours-a-un-mur-au-parlement/1419889/
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s115
+  citation:
+    en: 'Named on screen in the film, without a link: AFP via Kapitalis, 13 Sep 2026: at least 23 prisoners
+      reportedly died of heat; the authorities say no death can be attributed without forensic confirmation,
+      and give no figure.'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s116
+  citation:
+    en: 'Named on screen in the film, without a link: LTDH via Inkyfada, 5 Oct 2026: more than 20 heat-linked
+      deaths; an investigating judge (11th bureau, Tunis) took up 16 files.'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s117
+  citation:
+    en: 'Named on screen in the film, without a link: Kapitalis, 8 Sep 2026; African Manager: Lazhar Sta
+      died in detention; his daughter''s allegation is attributed. Hunger strikes: Abir Moussi from 23
+      Sep (her lawyer; Kapitalis, 24 Sep), Ahmed Nejib Chebbi from 1 Oct (his statement; Kapitalis, 1
+      Oct, C).'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s118
+  citation:
+    en: 'Named on screen in the film, without a link: Presidency communiqué via African Manager, 9 Oct
+      2026. Paraphrased on air, not quoted.'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s119
+  citation:
+    en: '2022 Constitution, Art. 110. Art. 41: 1959 Constitution as amended by the 2002 referendum. The
+      comparison is ours. (constituteproject.org)'
+  url: https://www.constituteproject.org/constitution/Tunisia_2022
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s120
+  citation:
+    en: HRW Q&A · 14 Jul 2022 (2014 Art. 75 lock removed) (hrw.org)
+  url: https://www.hrw.org/news/2022/07/14/qa-tunisias-constitutional-referendum
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s121
+  citation:
+    en: 'Named on screen in the film, without a link: Ben Ali leaves, 14 January 2011 (Jeune Afrique;
+      Business News 2011). Crowd illustrative.'
+  url: null
+  tier: null
+  date_consulted: '2026-10-20'
+  access: named-only
+  archive_url: null
+- id: s122
+  citation:
+    en: 'Index study 002, instrument and spec: about four minutes; no name or email; the method is published.
+      (deeptunisia.org)'
+  url: https://deeptunisia.org/research/police
+  tier: null
+  date_consulted: '2026-10-20'
+  access: live
+  archive_url: null
+- id: s123
+  citation:
+    en: 'DeepTunisia position records (data/positions.yaml): dated holders of the Interior Ministry, the
+      national police, the National Guard and presidential security. Each record carries its own sources,
+      among them JORT decrees 2021-123, 2021-124 and 2022-546, Leaders, Kapitalis, Reuters and Le Monde.'
+  url: null
+  tier: null
+  date_consulted: '2026-10-22'
+  access: dataset
+  archive_url: null
