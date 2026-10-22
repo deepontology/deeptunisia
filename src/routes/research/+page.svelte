@@ -126,8 +126,6 @@
 		eager
 		focus="50% 55%"
 		class="hub-plate"
-		label="{t('index.fig.label')} 01"
-		caption={t('research.hub.fig')}
 	/>
 
 	<!-- The masthead band: what this is, in one line, with the counts that are true today. -->
