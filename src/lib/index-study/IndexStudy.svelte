@@ -542,8 +542,6 @@
 		eager
 		focus="50% 30%"
 		class="plate-hero"
-		label="{t('index.fig.label')} 01"
-		caption={t('index.fig.one')}
 	>
 		<!-- The cover: what this is, before the number. Always light on the
 		     artwork's black, whatever the page theme. -->
@@ -782,8 +780,6 @@
 		height={1080}
 		focus="50% 35%"
 		class="plate-strip"
-		label="{t('index.fig.label')} 02"
-		caption={t('index.fig.two')}
 	/>
 
 	<div class="sec" id="method">
@@ -1139,8 +1135,6 @@
 			height={720}
 			focus="60% 35%"
 			class="plate-closing"
-			label="{t('index.fig.label')} 03"
-			caption={t('index.fig.three')}
 		>
 			<div class="closing-copy">
 				<p class="closing-line">{t('index.closing.line')}</p>

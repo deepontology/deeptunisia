@@ -10,8 +10,7 @@
 	 * beyond the browser fitting it to the screen. A reader who asks for
 	 * reduced motion gets the first frame as a still.
 	 *
-	 * The plate is decorative (empty alt): what it shows is said in the caption
-	 * under it, which a screen reader reads as text.
+	 * The plate is decorative, so its alt text is empty.
 	 */
 	let {
 		name,
@@ -20,8 +19,6 @@
 		/** object-position, for where the crop holds on narrow screens. */
 		focus = '50% 50%',
 		eager = false,
-		label,
-		caption,
 		children,
 		class: klass = ''
 	}: {
@@ -30,8 +27,6 @@
 		height: number;
 		focus?: string;
 		eager?: boolean;
-		label: string;
-		caption: string;
 		children?: Snippet;
 		class?: string;
 	} = $props();
@@ -54,7 +49,6 @@
 		</picture>
 		{#if children}<div class="plate-over">{@render children()}</div>{/if}
 	</div>
-	<figcaption class="plate-cap mono"><span>{label}</span>{caption}</figcaption>
 </figure>
 
 <style>
@@ -86,24 +80,5 @@
 	.plate-over {
 		position: absolute;
 		inset: 0;
-	}
-	.plate-cap {
-		display: flex;
-		gap: 0.9em;
-		max-width: 72rem;
-		margin: 0 auto;
-		padding: 0.55rem 1rem 0;
-		font-size: 0.625rem;
-		line-height: 1.5;
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-		color: var(--text-faint);
-	}
-	.plate-cap span {
-		flex: none;
-		color: var(--text-secondary);
-	}
-	:global(.rtl) .plate-cap {
-		letter-spacing: 0;
 	}
 </style>
