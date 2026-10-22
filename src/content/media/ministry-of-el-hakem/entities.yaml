@@ -1,0 +1,163 @@
+entities:
+- id: ben-ali
+  name:
+    en: Ben Ali
+  role: primary_subject
+  mention_count: 1
+  graph_link: /network?entity=ben-ali
+  description:
+    en: President of Tunisia 1987 to 2011, previously interior minister
+  graph_id: ben-ali
+- id: kais-saied
+  name:
+    en: Kais Saied
+  role: primary_subject
+  mention_count: 1
+  graph_link: /network?entity=kais-saied
+  description:
+    en: President of Tunisia since 2019
+  graph_id: kais-saied
+- id: ali-seriati
+  name:
+    en: Ali Seriati
+  role: identified
+  mention_count: 1
+  graph_link: /network?entity=ali-seriati
+  description:
+    en: Head of the national police from 1991 and of presidential security from 2001 to 2011
+  graph_id: ali-seriati
+- id: abdallah-kallel
+  name:
+    en: Abdallah Kallel
+  role: identified
+  mention_count: 1
+  graph_link: /network?entity=abdallah-kallel
+  description:
+    en: Interior minister at the time of the Barraket Essahel arrests
+  graph_id: abdallah-kallel
+- id: rachid-ammar
+  name:
+    en: Rachid Ammar
+  role: identified
+  mention_count: 1
+  graph_link: /network?entity=rachid-ammar
+  description:
+    en: Chief of staff of the land army in 2011
+  graph_id: rachid-ammar
+- id: khaled-yahyaoui
+  name:
+    en: Khaled Yahyaoui
+  role: identified
+  mention_count: 1
+  graph_link: /network?entity=khaled-yahyaoui
+  description:
+    en: Director general of presidential security since 2019
+  graph_id: khaled-yahyaoui
+- id: hichem-mechichi
+  name:
+    en: Hichem Mechichi
+  role: identified
+  mention_count: 1
+  graph_link: /network?entity=hichem-mechichi
+  description:
+    en: Head of government until 25 July 2021 and acting interior minister from January 2021
+  graph_id: hichem-mechichi
+- id: anas-hmaidi
+  name:
+    en: Anas Hamadi
+  role: identified
+  mention_count: 1
+  graph_link: /network?entity=anas-hmaidi
+  description:
+    en: President of the Association of Tunisian Judges in 2022
+  graph_id: anas-hmaidi
+- id: abderrahmane-belhaj-ali
+  name:
+    en: Abderrahmane Belhaj Ali
+  role: identified
+  mention_count: 1
+  graph_link: /network?entity=abderrahmane-belhaj-ali
+  description:
+    en: Head of Ben Ali's security and later director general of the national police
+  graph_id: abderrahmane-belhaj-ali
+- id: mohamed-ali-ganzoui
+  name:
+    en: Mohamed Ali Ganzoui
+  role: identified
+  mention_count: 1
+  graph_link: /network?entity=mohamed-ali-ganzoui
+  description:
+    en: Secretary of state for security under Ben Ali
+  graph_id: mohamed-ali-ganzoui
+- id: rached-ghannouchi
+  name:
+    en: Rached Ghannouchi
+  role: identified
+  mention_count: 1
+  graph_link: /network?entity=rached-ghannouchi
+  description:
+    en: Parliament speaker in 2021, arrested April 2023
+  graph_id: rached-ghannouchi
+- id: chaima-issa
+  name:
+    en: Chaima Issa
+  role: identified
+  mention_count: 1
+  graph_link: /network?entity=chaima-issa
+  description:
+    en: Opposition figure tried before a military court
+  graph_id: chaima-issa
+- id: kamel-guizani
+  name:
+    en: Kamel Guizani
+  role: identified
+  mention_count: 1
+  graph_link: /network?entity=kamel-guizani
+  description:
+    en: Former director general of the national police
+  graph_id: kamel-guizani
+- id: mourad-saidane
+  name:
+    en: Mourad Saidane
+  role: identified
+  mention_count: 1
+  graph_link: /network?entity=mourad-saidane
+  description:
+    en: Director general of the national police since 2022
+  graph_id: mourad-saidane
+- id: khaled-nouri
+  name:
+    en: Khaled Nouri
+  role: identified
+  mention_count: 1
+  graph_link: /network?entity=khaled-nouri
+  description:
+    en: Interior minister since May 2024
+  graph_id: khaled-nouri
+- id: abir-moussi
+  name:
+    en: Abir Moussi
+  role: identified
+  mention_count: 1
+  graph_link: /network?entity=abir-moussi
+  description:
+    en: Opposition leader in detention
+  graph_id: abir-moussi
+- id: zied-el-heni
+  name:
+    en: Zied El Heni
+  role: identified
+  mention_count: 1
+  graph_link: /network?entity=zied-el-heni
+  description:
+    en: Journalist sentenced in May 2026
+  graph_id: zied-el-heni
+- id: lotfi-brahem
+  name:
+    en: Lotfi Brahem
+  role: identified
+  mention_count: 1
+  graph_link: /network?entity=lotfi-brahem
+  description:
+    en: Interior minister from September 2017 to June 2018
+  graph_id: lotfi-brahem

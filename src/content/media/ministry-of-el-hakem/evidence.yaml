@@ -1,0 +1,1497 @@
+# Ministry of El Hakem: evidence layer
+# One claim per non-reading evidence chip of the film, plus three documented negatives from our own searches.
+# Generated from the film chip list; chip anchor is kept in text_note-free form in the build notes, not here.
+
+claims:
+- id: C001
+  text:
+    en: The Ministry of the Interior stands on Avenue Habib Bourguiba in Tunis (OpenStreetMap relation
+      5623629).
+  grade: reported
+  sources:
+  - s001
+  entities: []
+  sections:
+  - S01
+  disputed: false
+- id: C002
+  text:
+    en: A 2014 photograph of the Interior Ministry building shows lattice masts, microwave dishes and
+      antennas on the roof. It shows the equipment, not what it is used for.
+  grade: documented
+  sources:
+  - s002
+  entities: []
+  sections:
+  - S01
+  disputed: false
+- id: C003
+  text:
+    en: The UN Working Group on Arbitrary Detention (Opinion 15/2003, para. 8) records a detainee held
+      in a holding cell in the basement of the Ministry of the Interior.
+  grade: reported
+  sources:
+  - s003
+  entities: []
+  sections:
+  - S01
+  disputed: false
+  text_note: Testimony recorded by the Working Group; the film draws the cells dashed.
+- id: C004
+  text:
+    en: On 6 July 2001 the judge Mokhtar Yahyaoui sent an open letter to President Ben Ali saying the
+      judiciary was no longer independent and that judges handed down rulings dictated by the political
+      power, under fear, suspicion and denunciation.
+  grade: reported
+  sources:
+  - s004
+  entities: []
+  sections:
+  - S01
+  disputed: false
+- id: C005
+  text:
+    en: The letter came back to its sender marked 'no address' (Legal Agenda, 23 Nov 2015; Les Semeurs).
+  grade: reported
+  sources:
+  - s005
+  entities: []
+  sections:
+  - S01
+  disputed: false
+  text_note: No source mentions a stamp; the film's red stamp is not used here.
+- id: C006
+  text:
+    en: Yahyaoui was suspended on 14 July 2001 and removed from the bench by the disciplinary council
+      on 29 December 2001. His salary was cut before that. By his own account he was then banned from
+      travel for ten years.
+  grade: reported
+  sources:
+  - s006
+  entities: []
+  sections:
+  - S01
+  disputed: false
+  text_note: The travel ban rests on his own account (Legal Agenda, 2015).
+- id: C007
+  text:
+    en: Zouhair Yahyaoui, the judge's nephew, ran the opposition site TUNeZINE, where the letter was published
+      (RSF).
+  grade: reported
+  sources:
+  - s007
+  entities: []
+  sections:
+  - S01
+  disputed: false
+  text_note: The chip cites RSF for TUNeZINE; the family relation is as stated in the film script.
+- id: C008
+  text:
+    en: On 4 June 2002 six plainclothes officers arrested Zouhair Yahyaoui in the internet café in Ben
+      Arous where he worked (UN WGAD Opinion 15/2003). On 20 June he was sentenced to 28 months, cut to
+      two years on appeal on 10 July 2002, on a charge of spreading false news (CPJ; RSF).
+  grade: reported
+  sources:
+  - s008
+  entities: []
+  sections:
+  - S01
+  disputed: false
+- id: C009
+  text:
+    en: Zouhair Yahyaoui went on three hunger strikes in 2003, was released in November 2003 and died
+      of a heart attack in March 2005, aged 37 (RSF).
+  grade: reported
+  sources:
+  - s009
+  entities: []
+  sections:
+  - S01
+  disputed: false
+- id: C010
+  text:
+    en: In his 1919 lecture 'Politics as a Vocation', Max Weber defined the state as the claim to the
+      monopoly of the legitimate use of physical force within a territory.
+  grade: documented
+  sources:
+  - s010
+  entities: []
+  sections:
+  - S02
+  disputed: false
+- id: C011
+  text:
+    en: The ministry's address is Avenue Habib Bourguiba, Tunis (OpenStreetMap relation 5623629).
+  grade: reported
+  sources:
+  - s001
+  entities: []
+  sections:
+  - S02
+  disputed: false
+- id: C012
+  text:
+    en: Ben Ali spent more than ten years in military security and twice headed the national police before
+      becoming interior minister on 28 April 1986 (Le Monde diplomatique, April 2011; Carnegie Endowment,
+      2016).
+  grade: reported
+  sources:
+  - s011
+  entities: []
+  sections:
+  - S03
+  disputed: false
+- id: C013
+  text:
+    en: On 7 November 1987 Ben Ali took the presidency on the strength of a medical report signed by seven
+      doctors declaring Bourguiba unfit (Le Monde, 8 Nov 1987; Carnegie Endowment, 2016).
+  grade: reported
+  sources:
+  - s012
+  entities: []
+  sections:
+  - S03
+  disputed: false
+- id: C014
+  text:
+    en: Ali Seriati was appointed head of the national police, the Sûreté nationale, in 1991 (Jeune Afrique,
+      2014).
+  grade: reported
+  sources:
+  - s013
+  entities: []
+  sections:
+  - S03
+  disputed: false
+  text_note: The month is not given.
+- id: C015
+  text:
+    en: Ali Seriati headed presidential security from 1 September 2001 to 14 January 2011 (Human Rights
+      Watch, 5 July 2012).
+  grade: reported
+  sources:
+  - s014
+  entities: []
+  sections:
+  - S03
+  disputed: false
+- id: C016
+  text:
+    en: Decree 88-250 of 26 February 1988 (JORT no. 15, 1 March 1988) attached presidential security to
+      the presidency.
+  grade: documented
+  sources:
+  - s015
+  entities: []
+  sections:
+  - S03
+  disputed: false
+- id: C017
+  text:
+    en: Abderrahmane Belhaj Ali headed President Ben Ali's security (Leaders; Jeune Afrique).
+  grade: reported
+  sources:
+  - s016
+  entities: []
+  sections:
+  - S03
+  disputed: false
+  text_note: The sources give no dates for the post.
+- id: C018
+  text:
+    en: Mohamed Ali Ganzoui was secretary of state for security from 24 January 1995 to 5 September 2002
+      (Kapitalis, 5 May 2011).
+  grade: reported
+  sources:
+  - s017
+  - s018
+  entities: []
+  sections:
+  - S03
+  disputed: false
+- id: C019
+  text:
+    en: The ruling RCD claimed more than two million members (Le Monde, 24 Jan 2011; France 24, 9 Mar
+      2011) and between 7,500 and about 9,000 cells (Le Monde, 24 Jan 2011).
+  grade: reported
+  sources:
+  - s019
+  - s020
+  entities: []
+  sections:
+  - S03
+  disputed: false
+  text_note: The cell count is graded C in the film's evidence layer.
+- id: C020
+  text:
+    en: The Interior Ministry had about 100,000 uniformed police in January 2011 (MERIP). The Directorate
+      of State Security was its political police (Crisis Group, 2015, via Leaders).
+  grade: reported
+  sources:
+  - s021
+  entities: []
+  sections:
+  - S03
+  disputed: false
+  text_note: '''Every move'' is the film''s wording, not a sourced phrase.'
+- id: C021
+  text:
+    en: In 1991, in the Barraket Essahel affair, 244 military men were arrested over an alleged coup plot.
+      The victims call the charge fabricated. Victims and Human Rights Watch (3 May 2012) say many were
+      tortured in the Interior Ministry basements. Abdallah Kallel was interior minister at the time.
+  grade: reported
+  sources:
+  - s022
+  entities: []
+  sections:
+  - S03
+  disputed: false
+- id: C022
+  text:
+    en: In the summer of 1992 military courts tried 279 people accused of belonging to Ennahda and convicted
+      265. Amnesty International said the trials breached international fair-trial standards.
+  grade: reported
+  sources:
+  - s023
+  entities: []
+  sections:
+  - S03
+  disputed: false
+- id: C023
+  text:
+    en: The 2002 referendum removed the limit on presidential terms and added immunity for the president
+      under Article 41 of the 1959 constitution, for acts done in office.
+  grade: documented
+  sources:
+  - s024
+  entities: []
+  sections:
+  - S03
+  disputed: false
+  text_note: Paraphrase, not a quotation. The film says 'during his rule and after'.
+- id: C024
+  text:
+    en: Law 2003-75 of 10 December 2003 (JORT no. 99) defines terrorism broadly enough to reach disturbing
+      public order (Art. 4).
+  grade: documented
+  sources:
+  - s025
+  entities: []
+  sections:
+  - S03
+  disputed: false
+  text_note: Summary of the film's reading of the text.
+- id: C025
+  text:
+    en: Official figures given to the UN Special Rapporteur (A/HRC/16/51/Add.2) count 1,123 people prosecuted
+      under the 2003 law between 2004 and 2009. A UN estimate of about 3,000 is cited by Amnesty International
+      (2017).
+  grade: reported
+  sources:
+  - s026
+  entities: []
+  sections:
+  - S03
+  disputed: false
+- id: C026
+  text:
+    en: Tunisians protested in front of the Interior Ministry on 14 January 2011.
+  grade: reported
+  sources:
+  - s027
+  entities: []
+  sections:
+  - S04
+  disputed: false
+  text_note: Crowd size is not sourced.
+- id: C027
+  text:
+    en: Ali Seriati escorted Ben Ali and his family to the foot of the plane on 14 January 2011, 27 minutes
+      before his own arrest (Jeune Afrique, 2014).
+  grade: reported
+  sources:
+  - s028
+  entities: []
+  sections:
+  - S04
+  disputed: false
+- id: C028
+  text:
+    en: Seriati was arrested on the order of defence minister Ridha Grira, who suspected a coup plot (Jeune
+      Afrique, 2014, attributed).
+  grade: reported
+  sources:
+  - s028
+  entities: []
+  sections:
+  - S04
+  disputed: false
+- id: C029
+  text:
+    en: In July 2012 the military court in Tunis sentenced Seriati to twenty years in the case of the
+      revolution's martyrs (Al Jazeera, 19 Jul 2012).
+  grade: reported
+  sources:
+  - s029
+  entities: []
+  sections:
+  - S04
+  disputed: false
+- id: C030
+  text:
+    en: On appeal in April 2014 Seriati's sentence was cut to three years (Kapitalis, 17 May 2014).
+  grade: reported
+  sources:
+  - s030
+  entities: []
+  sections:
+  - S04
+  disputed: false
+  text_note: The reduced charge named on air, failure to assist a person in danger, is not in the source
+    files and is left out here.
+- id: C031
+  text:
+    en: Seriati was released on 17 May 2014 (Kapitalis, 17 May 2014).
+  grade: reported
+  sources:
+  - s030
+  entities: []
+  sections:
+  - S04
+  disputed: false
+- id: C032
+  text:
+    en: Abdallah Kallel was interior minister from 1991 to 1995 (DeepTunisia positions). The Barraket
+      Essahel arrests are documented by Human Rights Watch (3 May 2012).
+  grade: reported
+  sources:
+  - s022
+  entities: []
+  sections:
+  - S04
+  disputed: false
+- id: C033
+  text:
+    en: Kallel was sentenced to four years, cut to two on appeal in April 2012 (Business News, 7 Apr 2012;
+      AFP; Human Rights Watch, 3 May 2012).
+  grade: reported
+  sources:
+  - s022
+  - s031
+  entities: []
+  sections:
+  - S04
+  disputed: false
+- id: C034
+  text:
+    en: On 9 March 2011 the Tunis Court of First Instance dissolved the RCD and ordered its assets liquidated.
+  grade: documented
+  sources:
+  - s032
+  entities: []
+  sections:
+  - S04
+  disputed: false
+- id: C035
+  text:
+    en: On 7 March 2011 an Interior Ministry spokesman said the political police and State Security had
+      been dissolved (Al Jazeera).
+  grade: reported
+  sources:
+  - s033
+  entities: []
+  sections:
+  - S04
+  disputed: false
+- id: C036
+  text:
+    en: Nawaat reported in May 2011 that no legal text followed in the Official Gazette (JORT).
+  grade: reported
+  sources:
+  - s034
+  entities: []
+  sections:
+  - S04
+  disputed: false
+  text_note: Not graded in the film's files.
+- id: C037
+  text:
+    en: That snipers fired on protesters in January 2011 is talked about but not proven.
+  grade: unsubstantiated
+  sources:
+  - s035
+  entities: []
+  sections:
+  - S04
+  disputed: false
+- id: C038
+  text:
+    en: A member of the fact-finding commission said there was not enough credible testimony to prove
+      the sniper accounts (JusticeInfo, 13 Jan 2016).
+  grade: reported
+  sources:
+  - s036
+  entities: []
+  sections:
+  - S04
+  disputed: false
+- id: C039
+  text:
+    en: The story that General Rachid Ammar refused Ben Ali's order to fire on protesters is unsubstantiated
+      (New Lines Magazine).
+  grade: unsubstantiated
+  sources:
+  - s037
+  entities: []
+  sections:
+  - S04
+  disputed: false
+- id: C040
+  text:
+    en: The Ammar story began with a Facebook post. Its author, Yassine Ayari, admitted in July 2011 that
+      he made it up (New Lines Magazine).
+  grade: reported
+  sources:
+  - s037
+  entities: []
+  sections:
+  - S04
+  disputed: false
+- id: C041
+  text:
+    en: In April 2011 Ammar told the military court, under oath, that no order to fire reached him (New
+      Lines Magazine).
+  grade: reported
+  sources:
+  - s037
+  entities: []
+  sections:
+  - S04
+  disputed: false
+- id: C042
+  text:
+    en: We found no prosecution of Yassine Ayari for the Ammar rumour.
+  grade: documented
+  sources:
+  - s038
+  entities: []
+  sections:
+  - S04
+  disputed: false
+  negative: true
+  text_note: 'Documented negative: a statement about our search, not about the world.'
+- id: C043
+  text:
+    en: Abdessattar Bennour was appointed director general of the national police on 2 March 2011 (Jeune
+      Afrique; Webdo; TAP).
+  grade: reported
+  sources:
+  - s039
+  entities: []
+  sections:
+  - S04
+  disputed: false
+- id: C044
+  text:
+    en: Bennour held the same post in 2005 (Webdo).
+  grade: reported
+  sources:
+  - s040
+  entities: []
+  sections:
+  - S04
+  disputed: false
+- id: C045
+  text:
+    en: From 2011 to July 2021 there were at least eleven directors general of the national police (DeepTunisia
+      count from appointment decrees and press).
+  grade: reported
+  sources:
+  - s041
+  entities: []
+  sections:
+  - S05
+  disputed: false
+  text_note: Some dates are approximate.
+- id: C046
+  text:
+    en: Réalités counts twelve interior ministers from 2011 to January 2021.
+  grade: reported
+  sources:
+  - s042
+  entities: []
+  sections:
+  - S05
+  disputed: false
+  text_note: A count, not placed on a timeline.
+- id: C047
+  text:
+    en: The post of director general of the national police was abolished in March 2015 (Kapitalis, 9
+      Jul 2015).
+  grade: reported
+  sources:
+  - s043
+  entities: []
+  sections:
+  - S05
+  disputed: false
+- id: C048
+  text:
+    en: In December 2015 secretary of state Rafik Chelly was removed and the post restored (Le Courrier
+      de l'Atlas / North Africa Post, 1 Dec 2015).
+  grade: reported
+  sources:
+  - s044
+  entities: []
+  sections:
+  - S05
+  disputed: false
+- id: C049
+  text:
+    en: Abderrahmane Belhaj Ali, former head of presidential security, was named director general in December
+      2015 and resigned on 15 December 2016 (Leaders; North Africa Post; Webdo).
+  grade: reported
+  sources:
+  - s016
+  entities: []
+  sections:
+  - S05
+  disputed: false
+- id: C050
+  text:
+    en: The first police mobilisations for a union date from 15 January 2011, with a meeting in Sfax (Arab
+      Reform Initiative, 7 Apr 2023).
+  grade: reported
+  sources:
+  - s045
+  entities: []
+  sections:
+  - S05
+  disputed: false
+- id: C051
+  text:
+    en: Decree-Law 2011-42 was published in the Official Gazette on 31 May 2011.
+  grade: documented
+  sources:
+  - s046
+  entities: []
+  sections:
+  - S05
+  disputed: false
+  text_note: The film describes it as making security unions legal.
+- id: C052
+  text:
+    en: The National Union of Internal Security Forces claimed 62,000 members. Crisis Group estimated
+      about 8,000 (Arab Reform Initiative, 2023).
+  grade: reported
+  sources:
+  - s047
+  entities: []
+  sections:
+  - S05
+  disputed: false
+- id: C053
+  text:
+    en: On 26 February 2018, at the Ben Arous court, five officers accused of torture were questioned
+      and three placed in detention while a large crowd of police, some armed, gathered outside (AFP via
+      L'Orient-Le Jour, 27 Feb 2018; Legal Agenda).
+  grade: reported
+  sources:
+  - s048
+  entities: []
+  sections:
+  - S05
+  disputed: false
+- id: C054
+  text:
+    en: According to the prosecution, the three officers were released that evening (AFP via L'Orient-Le
+      Jour, 27 Feb 2018).
+  grade: reported
+  sources:
+  - s049
+  entities: []
+  sections:
+  - S05
+  disputed: false
+- id: C055
+  text:
+    en: Under Article 89 of the 2014 constitution the president asks the party or coalition with the most
+      seats to form the government (constituteproject.org).
+  grade: documented
+  sources:
+  - s050
+  entities: []
+  sections:
+  - S05
+  disputed: false
+- id: C056
+  text:
+    en: Lotfi Brahem became interior minister in September 2017 (DeepTunisia records) and was dismissed
+      by Youssef Chahed in June 2018 (Leaders).
+  grade: reported
+  sources:
+  - s051
+  entities: []
+  sections:
+  - S05
+  disputed: false
+- id: C057
+  text:
+    en: On 5 January 2021 Hichem Mechichi dismissed his interior minister Taoufik Charfeddine. On 6 January
+      he said all of Charfeddine's appointments and transfers in the police and the Guard were cancelled.
+      No reason was given (Kapitalis).
+  grade: reported
+  sources:
+  - s052
+  entities: []
+  sections:
+  - S05
+  disputed: false
+- id: C058
+  text:
+    en: In November 2015 the EU set aside €23 million for the PARMSS security-reform programme. About
+      €15 million went to border command centres and more than €1.5 million to an ethics body project.
+      Neither the independent ethics body nor the code of conduct was created, and the programme closed
+      at the end of 2020 (Arab Reform Initiative, April 2023).
+  grade: reported
+  sources:
+  - s053
+  entities: []
+  sections:
+  - S05
+  disputed: false
+- id: C059
+  text:
+    en: On 18 April 2021 Kais Saied said the president is supreme commander of the armed forces, military
+      and civilian (Reuters, 18 Apr 2021). Hichem Mechichi was then acting interior minister (Kapitalis,
+      5 Jan 2021).
+  grade: reported
+  sources:
+  - s054
+  entities: []
+  sections:
+  - S06
+  disputed: false
+  text_note: The film reads 'civilian armed forces' as the internal security forces.
+- id: C060
+  text:
+    en: Articles 77, 78 and 92 of the 2014 constitution contain no explicit text placing the police under
+      the government or the president (constituteproject.org).
+  grade: documented
+  sources:
+  - s050
+  entities: []
+  sections:
+  - S06
+  disputed: false
+- id: C061
+  text:
+    en: On 25 July 2021 Saied invoked Article 80, froze parliament and dismissed the head of government
+      (Reuters; Jeune Afrique; VOA).
+  grade: reported
+  sources:
+  - s055
+  entities: []
+  sections:
+  - S06
+  disputed: false
+- id: C062
+  text:
+    en: Forces barred MPs from the Bardo (Human Rights Watch, 27 Jul 2021). Le Courrier de l'Atlas (26
+      Jul 2021) reported that the army had locked the entrances and an armoured vehicle in the courtyard
+      moved up to block access.
+  grade: reported
+  sources:
+  - s056
+  entities: []
+  sections:
+  - S06
+  disputed: false
+- id: C063
+  text:
+    en: AFP video at the Bardo around 3 a.m. shows Rached Ghannouchi kept out, followed by Samira Chaouachi,
+      who tells an officer they are guardians of the constitution. The officer answers that they are guardians
+      of the nation following orders.
+  grade: reported
+  sources:
+  - s057
+  entities: []
+  sections:
+  - S06
+  disputed: false
+  text_note: As summarised in the film; television snippets differ slightly. Grade C.
+- id: C064
+  text:
+    en: Mechichi had been acting interior minister since January 2021, so with his removal the ministry
+      had no minister (Kapitalis, 5 Jan 2021; Human Rights Watch, 27 Jul 2021).
+  grade: reported
+  sources:
+  - s056
+  entities: []
+  sections:
+  - S06
+  disputed: false
+- id: C065
+  text:
+    en: Colonel major Khaled Yahyaoui was head of presidential security (Business News, 26 Jul 2021).
+      Tunisie Tribune (26 Jul 2021) reported that he took command of the Interior Ministry.
+  grade: reported
+  sources:
+  - s058
+  entities: []
+  sections:
+  - S06
+  disputed: false
+- id: C066
+  text:
+    en: On 26 July 2021 plainclothes police raided and closed Al Jazeera's Tunis office (Al Jazeera).
+      Journalists said no warrant was shown (CPJ, 26 Jul 2021); the officers' account is attributed to
+      them.
+  grade: reported
+  sources:
+  - s059
+  - s060
+  entities: []
+  sections:
+  - S06
+  disputed: false
+- id: C067
+  text:
+    en: Decree 2021-81 of 29 July 2021 (JORT) put Ridha Gharsallaoui in charge of the Interior Ministry.
+      He was a police commissioner who had become the president's national security adviser (La Libre,
+      30 Jul 2021).
+  grade: documented
+  sources:
+  - s061
+  entities: []
+  sections:
+  - S06
+  disputed: false
+- id: C068
+  text:
+    en: A presidency communiqué of 18 August 2021 changed the commanders. Decrees 2021-123 and 2021-124
+      (JORT no. 98, 25 Sept 2021) name Sami Hichri and Chokri Riahi.
+  grade: documented
+  sources:
+  - s062
+  entities: []
+  sections:
+  - S06
+  disputed: false
+- id: C069
+  text:
+    en: Presidential Decree 2021-117 (JORT no. 86, 22 Sept 2021) provides that legislation takes the form
+      of decree-laws. Article 7 says decree-laws cannot be challenged for annulment (ICNL).
+  grade: documented
+  sources:
+  - s063
+  entities: []
+  sections:
+  - S06
+  disputed: false
+- id: C070
+  text:
+    en: Mourad Saidane took up his duties as director general of the national police on 31 May 2022 (Kapitalis).
+      The appointing decree, 2022-546, is dated 17 June 2022 (JORT no. 71). La Presse still named him
+      in the role in October 2025.
+  grade: documented
+  sources:
+  - s064
+  - s065
+  entities: []
+  sections:
+  - S07
+  disputed: false
+  text_note: The film's chip gave 31 May for the decree; the decree's own title gives 17 June and the
+    31 May date is when he took office.
+- id: C071
+  text:
+    en: Hossein Gharbi was named National Guard commander in May 2023 (Gnet, 25 May 2023; Business News,
+      26 May 2023). The Guard's spokesman presented him as its current commander on 4 September 2026 (Jawhara
+      FM).
+  grade: reported
+  sources:
+  - s066
+  entities: []
+  sections:
+  - S07
+  disputed: false
+- id: C072
+  text:
+    en: Khaled Yahyaoui has been director general of presidential security since 2019 (Decree 2019-207;
+      Business News).
+  grade: documented
+  sources:
+  - s067
+  entities: []
+  sections:
+  - S07
+  disputed: false
+- id: C073
+  text:
+    en: In June 2024 Africa Intelligence headlined Yahyaoui as the Carthage security chief who makes and
+      breaks ministers.
+  grade: reported
+  sources:
+  - s068
+  entities: []
+  sections:
+  - S07
+  disputed: false
+  text_note: Headline only, the article is paywalled. Press reporting, not official statements.
+- id: C074
+  text:
+    en: 'Five ministers have held the Interior Ministry since July 2021: Yahyaoui at the start, Gharsallaoui
+      (Decree 2021-81), Taoufik Charfeddine again from October 2021 (Leaders, 20 Oct 2021), Kamel Feki,
+      a former governor of Tunis, and since May 2024 Khaled Nouri, a former governor of Ariana (Decree
+      2024-336).'
+  grade: documented
+  sources:
+  - s069
+  entities: []
+  sections:
+  - S07
+  disputed: false
+- id: C075
+  text:
+    en: On 25 May 2024 Decree 2024-339 (JORT no. 65) named Sofiane Bessadok, previously advocate general
+      at the Court of Cassation, to the post of secretary of state to the interior minister. Mohamed Ali
+      Ganzoui held the post under Ben Ali.
+  grade: documented
+  sources:
+  - s070
+  entities: []
+  sections:
+  - S07
+  disputed: false
+- id: C076
+  text:
+    en: The Carthage presidency published readouts of meetings of the president with the interior minister
+      and the two commanders on 6 and 13 March 2024 and 22 September 2025 (carthage.tn).
+  grade: documented
+  sources:
+  - s071
+  entities: []
+  sections:
+  - S07
+  disputed: false
+  text_note: Others exist; the count is not stated.
+- id: C077
+  text:
+    en: The RCD was Ben Ali's ruling party until it was dissolved on 9 March 2011.
+  grade: documented
+  sources:
+  - s072
+  entities: []
+  sections:
+  - S08
+  disputed: false
+- id: C078
+  text:
+    en: In the December 2022 elections candidates ran as individuals, without parties, under Decree-Law
+      2022-55.
+  grade: documented
+  sources:
+  - s073
+  entities: []
+  sections:
+  - S08
+  disputed: false
+- id: C079
+  text:
+    en: The electoral commission's first-round turnout was 8.8 percent at the close of polls (France 24,
+      17 Dec 2022), later given as 11.22 percent, a preliminary figure (AFP via Hespress, 19-20 Dec 2022).
+  grade: documented
+  sources:
+  - s074
+  entities: []
+  sections:
+  - S08
+  disputed: false
+- id: C080
+  text:
+    en: Decree-Law 2022-54 (JORT no. 103, 16 Sept 2022), Article 24 as then in force, punished spreading
+      false news with five years in prison and a fine of 50,000 dinars, doubled if the target is a public
+      official.
+  grade: documented
+  sources:
+  - s075
+  entities: []
+  sections:
+  - S08
+  disputed: false
+  text_note: Rewritten on 30 September 2026.
+- id: C081
+  text:
+    en: On 20 September 2022 the provisional Supreme Judicial Council lifted the immunity of Anas Hamadi,
+      president of the judges' association. Human Rights Watch says he co-organised the strike against
+      the dismissal of judges.
+  grade: documented
+  sources:
+  - s076
+  entities: []
+  sections:
+  - S08
+  disputed: false
+- id: C082
+  text:
+    en: On 23 September 2022 the military court in Sfax issued committal warrants against eight police
+      union leaders. A sit-in tent had been removed in early September (Kapitalis).
+  grade: reported
+  sources:
+  - s077
+  entities: []
+  sections:
+  - S08
+  disputed: false
+- id: C083
+  text:
+    en: On the night of 5 February 2022 Saied declared on video that the Supreme Judicial Council was
+      a thing of the past (La Libre/AFP; France 24; Al Jazeera). Its seat was shut on 7 February.
+  grade: reported
+  sources:
+  - s078
+  entities: []
+  sections:
+  - S09
+  disputed: false
+- id: C084
+  text:
+    en: Decree-Law 2022-11 (JORT no. 16, 12 Feb 2022) dissolved the Supreme Judicial Council.
+  grade: documented
+  sources:
+  - s079
+  entities: []
+  sections:
+  - S09
+  disputed: false
+- id: C085
+  text:
+    en: Decree-Law 2022-35 and Presidential Order 2022-516 (JORT no. 63, 1 June 2022) dismissed 57 judges
+      and prosecutors.
+  grade: documented
+  sources:
+  - s080
+  entities: []
+  sections:
+  - S09
+  disputed: false
+- id: C086
+  text:
+    en: On 10 August 2022 the Administrative Court suspended the dismissal of 49 of them (Amnesty; AFP
+      via Le360). The ruling was not carried out, and by February 2023 none had been reinstated (Human
+      Rights Watch).
+  grade: reported
+  sources:
+  - s081
+  entities: []
+  sections:
+  - S09
+  disputed: false
+- id: C087
+  text:
+    en: On 22 February 2023, speaking of the political detainees, Saied told judges that whoever acquits
+      them is their accomplice (BBC Arabic; Inkyfada).
+  grade: reported
+  sources:
+  - s082
+  entities: []
+  sections:
+  - S09
+  disputed: false
+  text_note: Paraphrase of the film's rendering.
+- id: C088
+  text:
+    en: Anas Hamadi was referred to trial under Article 136 of the penal code, obstructing the freedom
+      to work (Legal Agenda; Al-Araby Al-Jadeed, July 2026).
+  grade: reported
+  sources:
+  - s083
+  entities: []
+  sections:
+  - S09
+  disputed: false
+- id: C089
+  text:
+    en: In July 2026 an appeal court upheld a one-year sentence against Hamadi, enforceable immediately,
+      in absentia (Business News, 2 Jul 2026). The judges' association says he left the country legally
+      for an urgent medical condition; Judges for Judges (14 Aug 2026) says he left before the verdict.
+  grade: reported
+  sources:
+  - s084
+  entities: []
+  sections:
+  - S09
+  disputed: false
+- id: C090
+  text:
+    en: On 29 August 2022 Charfeddine stopped the automatic deduction of union dues from officers' salaries,
+      worth 40 million dinars a year by his own estimate (L'Economiste Maghrébin, 1 Sept 2022).
+  grade: reported
+  sources:
+  - s085
+  entities: []
+  sections:
+  - S10
+  disputed: false
+- id: C091
+  text:
+    en: Police unions held a sit-in in Sfax in early September 2022. Security forces removed the tent
+      and there were clashes with tear gas (Kapitalis, 2 Sept 2022). The Sfax military court then issued
+      warrants against eight union leaders.
+  grade: reported
+  sources:
+  - s077
+  entities: []
+  sections:
+  - S10
+  disputed: false
+  text_note: Grade C.
+- id: C092
+  text:
+    en: Government order 2023-240 of 16 March 2023 issued a code of conduct for the internal security
+      forces.
+  grade: documented
+  sources:
+  - s086
+  entities: []
+  sections:
+  - S10
+  disputed: false
+  text_note: The film summarises it as banning political activity and political opinions except where
+    the law allows; the summary is not the text.
+- id: C093
+  text:
+    en: Nabil Ayari, former secretary general of the internal security forces union, was sentenced to
+      four years in a case about union funds (Business News, 21 Oct 2025).
+  grade: reported
+  sources:
+  - s087
+  entities: []
+  sections:
+  - S10
+  disputed: false
+- id: C094
+  text:
+    en: On 11 May 2024 the lawyer and commentator Sonia Dahmani was arrested at the Maison de l'Avocat
+      in Tunis, live on France 24, over a remark on Carthage Plus (France 24; Al Jazeera, 12 May 2024).
+  grade: reported
+  sources:
+  - s088
+  entities: []
+  sections:
+  - S11
+  disputed: false
+- id: C095
+  text:
+    en: The lawyer Mehdi Zagrouba was arrested in a second raid on the same building. The ICJ page says
+      he reportedly showed physical signs of torture (OHCHR, 31 May 2024). His lawyers say he lost consciousness.
+      The Interior Ministry says the order concerned a physical and verbal assault on two officers and
+      denies torture (Reuters, 16 May 2024).
+  grade: reported
+  sources:
+  - s089
+  entities: []
+  sections:
+  - S11
+  disputed: false
+  text_note: The film says 13 May; that date is not in the source files and is left out.
+- id: C096
+  text:
+    en: We found no published outcome of an investigation into Mehdi Zagrouba's complaint.
+  grade: documented
+  sources:
+  - s090
+  entities: []
+  sections:
+  - S11
+  disputed: false
+  negative: true
+  text_note: 'Documented negative: a statement about our search, not about the world.'
+- id: C097
+  text:
+    en: In April 2026 the Tunisian League for Human Rights was notified of a one-month suspension (Business
+      News, 24 Apr 2026) and challenged it in court (Kapitalis, 6 May 2026). The League was part of the
+      2015 Nobel Peace Prize quartet.
+  grade: reported
+  sources:
+  - s091
+  entities: []
+  sections:
+  - S11
+  disputed: false
+- id: C098
+  text:
+    en: Amnesty International recorded at least ten civilians before military courts in the three months
+      after 25 July 2021, against six cases from 2011 to 2018 (Amnesty, 10 Nov 2021).
+  grade: reported
+  sources:
+  - s092
+  entities: []
+  sections:
+  - S12
+  disputed: false
+- id: C099
+  text:
+    en: Yassine Ayari was jailed on 28 July 2021 to serve a 2018 military sentence over Facebook posts
+      (Amnesty).
+  grade: reported
+  sources:
+  - s093
+  entities: []
+  sections:
+  - S12
+  disputed: false
+- id: C100
+  text:
+    en: In December 2023 a military court gave the opposition figure Chaima Issa a one-year suspended
+      sentence. Amnesty lists Article 24 of Decree-Law 54, Article 67 of the penal code and Article 81
+      of the military code (Amnesty; Human Rights Watch).
+  grade: reported
+  sources:
+  - s094
+  entities: []
+  sections:
+  - S12
+  disputed: false
+- id: C101
+  text:
+    en: About twenty people were under criminal investigation under Decree 54 at the end of 2023 (Human
+      Rights Watch). People, not cases.
+  grade: reported
+  sources:
+  - s095
+  entities: []
+  sections:
+  - S13
+  disputed: false
+- id: C102
+  text:
+    en: In February 2025 the journalists' union read a Court of Cassation ruling of 3 February as limiting
+      the decree to publishing cases (Business News; L'Economiste Maghrébin). Its monitoring unit counted
+      28 files on 29 January 2026 (Babnet).
+  grade: reported
+  sources:
+  - s096
+  entities: []
+  sections:
+  - S13
+  disputed: false
+- id: C103
+  text:
+    en: Sonia Dahmani was released on 27 November 2025 (CPJ; Reuters). In May 2026 a Tunis court of first
+      instance sentenced her to two years over remarks about prisons (Business News; Al Jazeera/AFP; CPJ).
+  grade: reported
+  sources:
+  - s097
+  entities: []
+  sections:
+  - S13
+  disputed: false
+- id: C104
+  text:
+    en: In May 2026 the journalist Zied El Heni was sentenced to a year under Article 86 of the Telecommunications
+      Code for remarks at an academic seminar (Nawaat; Amnesty UA 68/26; CPJ).
+  grade: reported
+  sources:
+  - s098
+  entities: []
+  sections:
+  - S13
+  disputed: false
+  text_note: Grade C.
+- id: C105
+  text:
+    en: Saber Ben Chouchane, 51, was arrested in January 2024, on his way to a medical appointment according
+      to his family. In early October 2025 a Nabeul court sentenced him to death over Facebook posts (Human
+      Rights Watch, 8 Oct 2025; Al Jazeera and AFP, 7 Oct 2025).
+  grade: reported
+  sources:
+  - s099
+  entities: []
+  sections:
+  - S13
+  disputed: false
+- id: C106
+  text:
+    en: One of the charges was spreading false news under Article 24 of Decree-Law 54 (Human Rights Watch,
+      8 Oct 2025).
+  grade: reported
+  sources:
+  - s100
+  entities: []
+  sections:
+  - S13
+  disputed: false
+- id: C107
+  text:
+    en: Ben Chouchane was pardoned and released on 7 October 2025 (Al Jazeera; AFP). Human Rights Watch
+      called it the first known death sentence in Tunisia over peaceful expression.
+  grade: reported
+  sources:
+  - s100
+  entities: []
+  sections:
+  - S13
+  disputed: false
+- id: C108
+  text:
+    en: Between 11 and 24 February 2023 police arrested opposition figures in the state-security conspiracy
+      cases (Human Rights Watch, 24 Feb 2023); Ghazi Chaouachi on 24 or 25 February (Webdo; Business News).
+      Rached Ghannouchi was arrested on 17 April 2023 (Al Jazeera, 20 Apr 2023).
+  grade: reported
+  sources:
+  - s101
+  entities: []
+  sections:
+  - S14
+  disputed: false
+- id: C109
+  text:
+    en: Inkyfada (24 Mar 2023) wrote that questioning was based on anonymous testimonies coded 'XX' and
+      'XXX'.
+  grade: reported
+  sources:
+  - s102
+  entities: []
+  sections:
+  - S14
+  disputed: false
+- id: C110
+  text:
+    en: On 3 September 2026 the Court of Cassation rejected the final appeals, with sentences of up to
+      45 years (Al Jazeera).
+  grade: reported
+  sources:
+  - s103
+  entities: []
+  sections:
+  - S14
+  disputed: false
+- id: C111
+  text:
+    en: Kamel Guizani, a former director general of the national police, was sentenced in absentia to
+      35 years on 8 July 2025 (Kapitalis, 9 Jul 2025).
+  grade: reported
+  sources:
+  - s104
+  entities: []
+  sections:
+  - S14
+  disputed: false
+- id: C112
+  text:
+    en: Article 29 of the code of conduct of 16 March 2023 absolutely prohibits torture (Government order
+      2023-240).
+  grade: documented
+  sources:
+  - s086
+  entities: []
+  sections:
+  - S15
+  disputed: false
+- id: C113
+  text:
+    en: We found no published case of an officer sanctioned under the code of conduct. This is not proof
+      that none exists.
+  grade: documented
+  sources:
+  - s105
+  entities: []
+  sections:
+  - S15
+  disputed: false
+  negative: true
+  text_note: 'Documented negative: a statement about our search, not about the world.'
+- id: C114
+  text:
+    en: The World Organisation Against Torture and SANAD documented 21 police assaults from June 2024
+      to May 2025 (via Nawaat, 26 Jun 2025).
+  grade: reported
+  sources:
+  - s106
+  entities: []
+  sections:
+  - S15
+  disputed: false
+- id: C115
+  text:
+    en: On 12 July 2024 an appeal court sentenced twelve officers to one year, suspended, in the case
+      of Omar Abidi, who drowned near the Radès stadium in 2018 (Webdo, 12 Jul 2024).
+  grade: reported
+  sources:
+  - s107
+  entities: []
+  sections:
+  - S15
+  disputed: false
+- id: C116
+  text:
+    en: Mohamed Yousfi, editor-in-chief of Al Katiba, was arrested on 4 September 2026 and a detention
+      order was issued on 8 September. Inkyfada (14 Sep 2026) reports the charges rest on a Facebook post
+      and a comment, and that his name is not in them.
+  grade: reported
+  sources:
+  - s108
+  - s109
+  - s110
+  entities: []
+  sections:
+  - S16
+  disputed: false
+- id: C117
+  text:
+    en: On the nights of 20 and 21 September 2026 about fifteen people were arrested after a demonstration
+      for the Sumud flotilla activists, among them a minor high-school student, according to the defence
+      committee (Business News, 25 Sep 2026). Detention warrants followed against several of them.
+  grade: reported
+  sources:
+  - s111
+  entities: []
+  sections:
+  - S16
+  disputed: false
+- id: C118
+  text:
+    en: 'Decree n° 1 in JORT no. 96 of 30 September 2026 amended Article 24 of Decree-Law 54: a fine of
+      10,000 to 20,000 dinars, with six months in prison only for repeat offences (Tunisie Numérique;
+      Business News).'
+  grade: documented
+  sources:
+  - s112
+  - s113
+  - s114
+  entities: []
+  sections:
+  - S16
+  disputed: false
+- id: C119
+  text:
+    en: AFP reported on 13 September 2026 that at least 23 prisoners had reportedly died of heat. The
+      authorities say no death can be attributed to heat without forensic confirmation, and they have
+      published no figure (Kapitalis).
+  grade: reported
+  sources:
+  - s115
+  entities: []
+  sections:
+  - S16
+  disputed: false
+- id: C120
+  text:
+    en: The Tunisian League for Human Rights counts more than twenty heat-linked deaths, and an investigating
+      judge in Tunis took up sixteen files (Inkyfada, 5 Oct 2026).
+  grade: reported
+  sources:
+  - s116
+  entities: []
+  sections:
+  - S16
+  disputed: false
+- id: C121
+  text:
+    en: The businessman Lazhar Sta died in detention on 8 September 2026; his daughter alleges medical
+      neglect (Kapitalis; African Manager). Abir Moussi has been on hunger strike since 23 September according
+      to her lawyer (Kapitalis, 24 Sep). Ahmed Nejib Chebbi has been on hunger strike since 1 October
+      according to a statement on his page (Kapitalis, 1 Oct).
+  grade: reported
+  sources:
+  - s117
+  entities: []
+  sections:
+  - S16
+  disputed: false
+  text_note: The Chebbi report is graded C.
+- id: C122
+  text:
+    en: On 8 October 2026 a presidency communiqué said accountability is legitimate and the whole truth
+      will come out, with no immunity and no exception (African Manager, 9 Oct 2026).
+  grade: reported
+  sources:
+  - s118
+  entities: []
+  sections:
+  - S16
+  disputed: false
+  text_note: Paraphrased, not quoted. Grade C.
+- id: C123
+  text:
+    en: Article 110 of the 2022 constitution says the president cannot be held accountable for acts done
+      in the course of his duties. Article 41 of the 1959 constitution, as amended in 2002, gave Ben Ali
+      immunity.
+  grade: documented
+  sources:
+  - s119
+  entities: []
+  sections:
+  - S16
+  disputed: false
+  text_note: The comparison is ours.
+- id: C124
+  text:
+    en: In 2002 Zouhair Yahyaoui was jailed on a false-news charge (RSF; UN WGAD 15/2003). In October
+      2025 Saber Ben Chouchane was sentenced to death over Facebook posts (Human Rights Watch, 8 Oct 2025).
+  grade: reported
+  sources:
+  - s100
+  entities: []
+  sections:
+  - S17
+  disputed: false
+- id: C125
+  text:
+    en: Article 90 of the 2022 constitution limits the presidency to two terms. Human Rights Watch (14
+      Jul 2022) notes the 2014 lock in Article 75 on amendments extending terms was removed.
+  grade: documented
+  sources:
+  - s120
+  entities: []
+  sections:
+  - S17
+  disputed: false
+- id: C126
+  text:
+    en: Decree 2026-3 (JORT no. 96, 30 Sept 2026) sets the composition of the electoral commission; the
+      president chooses three members directly.
+  grade: documented
+  sources:
+  - s112
+  entities: []
+  sections:
+  - S17
+  disputed: false
+- id: C127
+  text:
+    en: Tunisie Tribune reported that Khaled Yahyaoui took command of the ministry on the night of 25
+      July 2021; Decree 2021-81 put Gharsallaoui in charge on 29 July. Mondafrique (23 Aug 2026) says
+      Yahyaoui is still head of presidential security.
+  grade: reported
+  sources:
+  - s058
+  entities: []
+  sections:
+  - S17
+  disputed: false
+  text_note: Grade C.
+- id: C128
+  text:
+    en: Ben Ali left Tunisia on 14 January 2011 (Jeune Afrique; Business News, 2011).
+  grade: reported
+  sources:
+  - s121
+  entities: []
+  sections:
+  - S17
+  disputed: false
+- id: C129
+  text:
+    en: Study 002's instrument takes about four minutes and asks for no name or email; the method is published.
+  grade: documented
+  sources:
+  - s122
+  entities: []
+  sections:
+  - S18
+  disputed: false
+  text_note: 'Release gate: the study is not yet live in the registry. Do not describe participation as
+    open until it is.'

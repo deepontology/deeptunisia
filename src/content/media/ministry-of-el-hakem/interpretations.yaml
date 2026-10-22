@@ -1,0 +1,246 @@
+# Editor readings, kept apart from graded claims.
+
+interpretations:
+- id: I01
+  section: S01
+  statement:
+    en: Under Ben Ali the weapon was a charge written to measure and a police officer to enforce it.
+  attributed_to: DeepTunisia editors
+  reasoning:
+    en: 'The two Yahyaoui cases follow one pattern: a vague charge (an unaccepted letter, false news)
+      and an arrest by plainclothes officers. Two cases show a pattern, they do not measure its frequency.'
+  falsifier:
+    en: A systematic review of Ben Ali era cases in which the same kinds of charge were not enforced by
+      the police in this way.
+- id: I02
+  section: S02
+  statement:
+    en: Under Ben Ali the monopoly of force sat in one hand and the ministry was its instrument. In the
+      decade after 2011 it was contested. Today it is back in one hand.
+  attributed_to: DeepTunisia editors
+  reasoning:
+    en: The reading rests on the appointments, decrees and cases set out in the sections below. It is
+      the thesis of the film and of this article, to be tested against them, not a measurement.
+  falsifier:
+    en: A period since 1987 in which a ruler lost control of the Interior Ministry and kept power, or
+      one in which the ministry's leadership changed without the president's leave.
+- id: I03
+  section: S03
+  statement:
+    en: The guard in Carthage answered to the president directly and the ministry was held by trusted
+      men, so the palace and the ministry worked as one machine.
+  attributed_to: DeepTunisia editors
+  reasoning:
+    en: Decree 88-250 moved presidential security under the presidency, while long tenures at the national
+      police and the secretary of state post kept the ministry stable under the same ruler.
+  falsifier:
+    en: Records showing the ministry's leadership acting against the presidency's wishes, or presidential
+      security answering to the ministry, during Ben Ali's rule.
+- id: I04
+  section: S03
+  statement:
+    en: After 1991 Ben Ali sidelined the army, and the army learned that the building on Avenue Bourguiba
+      was stronger than it.
+  attributed_to: DeepTunisia editors
+  reasoning:
+    en: The 1991 arrests were carried out and detained in the ministry's own cells, not the army's. The
+      lesson drawn is an inference. Our dataset has no appointment of a chief of staff after 1991, but
+      we do not state how long the post stayed empty.
+  falsifier:
+    en: A source documenting the army's position within the security command in the 1990s that contradicts
+      the sidelining, such as a continuing active role in internal security.
+- id: I05
+  section: S03
+  statement:
+    en: 'With one ministry Ben Ali reached total control: tamed judges, an army made to fear, a population
+      under the eye of the party and the political police.'
+  attributed_to: DeepTunisia editors
+  reasoning:
+    en: This summarises the model the sources above describe. 'Total' is a judgement about their combined
+      weight, not a measured quantity.
+  falsifier:
+    en: Evidence of a substantial domain of public life under Ben Ali outside the reach of the party,
+      the political police and the courts.
+- id: I06
+  section: S04
+  statement:
+    en: The party fell but the building did not.
+  attributed_to: DeepTunisia editors
+  reasoning:
+    en: The RCD was dissolved by a court in March 2011. The ministry announced the dissolution of the
+      political police but no gazetted text followed, and Seriati and Kallel received light outcomes.
+  falsifier:
+    en: Gazetted texts dissolving the State Security directorate, or evidence that its staff and functions
+      were closed rather than moved.
+- id: I07
+  section: S05
+  statement:
+    en: The police did not come to the Ben Arous court to watch. They came to frighten the judiciary,
+      and the release suggests it worked.
+  attributed_to: DeepTunisia editors
+  reasoning:
+    en: A large, partly armed crowd gathered outside a court while officers accused of torture were detained,
+      and the prosecution says they were released that evening. We do not have the prosecutor's reasoning.
+  falsifier:
+    en: A published account from the prosecution or the court that the release was decided on procedural
+      grounds independent of the gathering.
+- id: I08
+  section: S05
+  statement:
+    en: The reform money reached the borders. Reform did not reach the machine.
+  attributed_to: DeepTunisia editors
+  reasoning:
+    en: About €15 million went to border command centres while the body meant to receive citizens' complaints
+      and the code of conduct were not created before the programme closed.
+  falsifier:
+    en: A fuller accounting of PARMSS showing the ethics body or the code operating in some form, or the
+      border spending not being what the Arab Reform Initiative describes.
+- id: I09
+  section: S06
+  statement:
+    en: The speech of 18 April 2021 was a political message about who would control the machine, not a
+      legal finding.
+  attributed_to: DeepTunisia editors
+  reasoning:
+    en: The constitution has no explicit text placing the police under the president. The sentence was
+      spoken in front of the head of government and the speaker of parliament.
+  falsifier:
+    en: A constitutional text or court ruling placing the police under the president, which would make
+      the remark a statement of existing law.
+- id: I10
+  section: S06
+  statement:
+    en: Whoever holds the machine does not want the cameras there.
+  attributed_to: DeepTunisia editors
+  reasoning:
+    en: The raid on Al Jazeera came the day after 25 July and the journalists say no warrant was shown.
+      We do not know who ordered it.
+  falsifier:
+    en: A judicial order for the raid that was shown, or a published account attributing it to a decision
+      made outside the security command.
+- id: I11
+  section: S06
+  statement:
+    en: By autumn 2021 the ministry, the security command and the law were all in the president's hands.
+  attributed_to: DeepTunisia editors
+  reasoning:
+    en: The ministry was placed under a presidential adviser, the commanders were replaced by presidential
+      communiqué, and legislation moved to decree-laws that cannot be challenged for annulment.
+  falsifier:
+    en: Evidence that a body outside the presidency still had real power over appointments or over challenges
+      to decree-laws after September 2021.
+- id: I12
+  section: S07
+  statement:
+    en: The ministers rotate and the commanders stay.
+  attributed_to: DeepTunisia editors
+  reasoning:
+    en: Five ministers since July 2021, against a single director general of the national police since
+      2022, a single National Guard commander since 2023 and a single head of presidential security since
+      2019.
+  falsifier:
+    en: A change of the two commanders or of the head of presidential security that does not come from
+      a presidential decision.
+- id: I13
+  section: S08
+  statement:
+    en: 'Today''s system resembles Ben Ali''s but lacks a party. The party''s place is taken by five arms:
+      the judiciary, the police unions, lawyers and civil society, military justice and Decree-Law 54.'
+  attributed_to: DeepTunisia editors
+  reasoning:
+    en: Security chiefs who stay, a presidential guard at the centre and a returned secretary of state
+      for security resemble the earlier model. The octopus is the film's metaphor, and the arm lengths
+      are illustrative.
+  falsifier:
+    en: A sixth arm that explains more of the evidence than one of these five, or a showing that the arms
+      were not coordinated or were reversible.
+- id: I14
+  section: S08
+  statement:
+    en: The three events of one September week are linked by a shared weapon, though the link is an inference
+      and not a documented chain of orders.
+  attributed_to: DeepTunisia editors
+  reasoning:
+    en: A speech law, an immunity lifted and union leaders sent to a military court fell within seven
+      days. We found no document tying them together.
+  falsifier:
+    en: A published account showing these decisions were taken independently and for unrelated reasons.
+- id: I15
+  section: S09
+  statement:
+    en: Judges were a barrier against police abuse, and the first arm was breaking that barrier.
+  attributed_to: DeepTunisia editors
+  reasoning:
+    en: The barrier role follows from judges' power to release or convict. The film cites the Ben Arous
+      case as an example of that role, and the steps in the section show the barrier's removal.
+  falsifier:
+    en: Evidence that the judiciary did not act as a constraint on police conduct before 2022.
+- id: I16
+  section: S10
+  statement:
+    en: The force that threatened the state after the revolution is back under the boot.
+  attributed_to: DeepTunisia editors
+  reasoning:
+    en: The unions lost their dues, their leaders faced a military court and a code of conduct arrived.
+      We do not know the unions' current organised strength.
+  falsifier:
+    en: Evidence that the police unions today bargain or protest with freedom comparable to 2018.
+- id: I17
+  section: S16
+  statement:
+    en: In 2003 Zouhair Yahyaoui went on hunger strike in prison and in 2026 opposition leaders have returned
+      to the same weapon.
+  attributed_to: DeepTunisia editors
+  reasoning:
+    en: The comparison is ours. RSF documents Zouhair's hunger strikes in 2003, and the 2026 strikes are
+      reported by lawyers and by the detainee's own statement.
+  falsifier:
+    en: Reports that the 2026 hunger strikes did not occur as stated.
+- id: I18
+  section: S17
+  statement:
+    en: Ben Ali's police state was a small octopus of a party, a political police and reports. Today there
+      is no party, but the octopus has grown. By the definitions we can draw from the evidence we have
+      seen, this is a police state bigger and more precise than the one Tunisians knew.
+  attributed_to: DeepTunisia editors
+  reasoning:
+    en: The judgement weighs the arms in the sections above. It is not a finding of a court or an international
+      body. 'Police state' is defined here by the monopoly of force used against dissent through the ministry.
+  falsifier:
+    en: A fuller account in which the ministry's coercive reach in 2026 is smaller than in 2010, for instance
+      in numbers of political prisoners, surveillance or sentences, compared on the same basis.
+- id: I19
+  section: S17
+  statement:
+    en: The referee who blows the whistle is now picked by one of the players.
+  attributed_to: DeepTunisia editors
+  reasoning:
+    en: The decree of 30 September 2026 lets the president choose three members of the electoral commission.
+      The size of the commission and the weight of those three seats are in the decree and not summarised
+      here.
+  falsifier:
+    en: The decree's composition table showing the three presidential picks cannot decide outcomes in
+      the commission.
+- id: I20
+  section: S17
+  statement:
+    en: If the chair in Carthage were empty one day, the first question would not be who sits in the palace.
+      It would be whose orders the building on Avenue Bourguiba takes.
+  attributed_to: DeepTunisia editors
+  reasoning:
+    en: The post of head of presidential security has been held by the same person since 2019, and he
+      took command of the ministry on the night of 25 July 2021 according to one report.
+  falsifier:
+    en: Evidence that the head of presidential security has no influence on the ministry's chain of command.
+- id: I21
+  section: S17
+  statement:
+    en: Every change that replaces the ruler in the palace but leaves the Interior Ministry as it is leaves
+      the backbone in place for the next dictator.
+  attributed_to: DeepTunisia editors
+  reasoning:
+    en: 'This is the argument of the film. It rests on 2011: the president left and the ministry''s machinery
+      remained, and the next ruler found it ready.'
+  falsifier:
+    en: A case since 1956 in which a new ruler took power, left the ministry's leadership and structure
+      intact, and did not come to use it as the instrument of control.
