@@ -2,7 +2,7 @@
 
 ## Build-gate enforcement of evidential standards in an evidence-graded historical knowledge graph
 
-*DeepOntology Collective & DeepEpisteme Research Group, deeptunisia.org · deepontology.org*
+*DeepOntology Collective & DeepEpisteme Research Group, deeptunisia.org*
 
 **Release V0.1.2 — corrections and coverage release.** This release supersedes V0.1.1 and continues the corrections series without consuming the V0.2 reservation. V0.1 remains available unmodified for citation continuity. The V0.1.1 numbers already auto-rewrite from the build; this release corrects the mechanism claims that the review-coverage, claim-evidence and continuity work made stale, and it documents the capabilities shipped since V0.1.1: claim-level evidence and derived origins (V29), review coverage as overlapping flags with per-kind denominators, the network continuity probe behind H1, coverage by slice, removal and snapshot sensitivity, and the rankings limitation banner. Corrections C7–C13 below name the text, the evidence and the fix. Every dataset number in this file is a `&lt;!--stat:key--&gt;value&lt;!--/stat--&gt;` tag rewritten by the build at every `npm run data`; `scripts/test-paper.ts` gates this source and the one it supersedes. The citable, frozen form of a release is the accompanying PDF, exported from a specific commit; this markdown file is the live form, tracking the graph.
 

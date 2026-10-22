@@ -1,7 +1,7 @@
 # daily-2026-09-25 — daily dataset sweep (full mode), consolidated outbox
 # Window swept: 2026-09-10T00:00:00Z → 2026-09-25T21:13:09Z (806 feed items;
 # feed refreshed 2026-09-25: 1200 archived, +7 new, 7 aged out).
-# Run by the maintainer with four @dt-research workstreams:
+# Four workstreams:
 #   daily-2026-09-25-politics.yaml  — rule of law / detention / labour
 #   daily-2026-09-25-security.yaml  — defence / security / diplomacy / migration
 #   daily-2026-09-25-economy.yaml   — economy / companies / energy / finance
