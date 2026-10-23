@@ -1,6 +1,6 @@
 {
-  "generated": "2026-10-22T20:02:18.464Z",
-  "total": 999,
+  "generated": "2026-10-23T10:57:58.195Z",
+  "total": 1004,
   "reviewed": 39,
   "queue": [
     {
@@ -485,6 +485,16 @@
     },
     {
       "kind": "event",
+      "id": "ev-uib-competition-fine-2024-05-29",
+      "confidence": "C",
+      "basis": "inferred",
+      "risk": 1,
+      "sources": 2,
+      "reviewed": false,
+      "title": "Competition Council fines UIB 9,009,258 dinars over COVID deferred-maturity interest"
+    },
+    {
+      "kind": "event",
       "id": "ev-zouari-mining-energy-interview-2026-10-12",
       "confidence": "C",
       "basis": "inferred",
@@ -795,6 +805,16 @@
     },
     {
       "kind": "event",
+      "id": "ev-arp-cnrd-budget-2027-examination-2026-10-21",
+      "confidence": "C",
+      "basis": "inferred",
+      "risk": 1,
+      "sources": 1,
+      "reviewed": false,
+      "title": "ARP and CNRD budget committees open the 2027 budget examination and set the minister's hearing"
+    },
+    {
+      "kind": "event",
       "id": "ev-autoroutes-a1-a2-concessions-2026",
       "confidence": "C",
       "basis": "reported",
@@ -1012,6 +1032,16 @@
       "sources": 1,
       "reviewed": false,
       "title": "UIB statutory auditors report savings-account manipulations to the prosecutor"
+    },
+    {
+      "kind": "event",
+      "id": "ev-unrest-ettadhamen-jebiniana-2026-10-22",
+      "confidence": "C",
+      "basis": "inferred",
+      "risk": 1,
+      "sources": 1,
+      "reviewed": false,
+      "title": "Rare unrest in Ettadhamen and Jebiniana after two deaths linked to the police"
     },
     {
       "kind": "event",
@@ -3225,6 +3255,16 @@
     },
     {
       "kind": "event",
+      "id": "ev-hamdi-military-court-sentence-2026-10-21",
+      "confidence": "B",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 2,
+      "reviewed": false,
+      "title": "Military court sentences Olfa Hamdi to four years in two cases"
+    },
+    {
+      "kind": "event",
       "id": "ev-knauf-tataouine-2026-09-17",
       "confidence": "B",
       "basis": "reported",
@@ -3282,6 +3322,16 @@
       "sources": 2,
       "reviewed": false,
       "title": "Businessman Lazhar Sta dies in detention"
+    },
+    {
+      "kind": "event",
+      "id": "ev-uget-sfax-strike-2026-10-22",
+      "confidence": "B",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 2,
+      "reviewed": false,
+      "title": "UGET calls a general strike in Sfax after a student's death at the Sidi Mansour residence"
     },
     {
       "kind": "event",
