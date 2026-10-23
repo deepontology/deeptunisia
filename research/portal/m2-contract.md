@@ -54,7 +54,7 @@ Functions:
 
 Payload: `{ instrumentHash, locale, channel, consentVersion, startedAt, completionMs, answers, maxdiff?, turnstileToken? }`.
 
-Required and type-checked: hash equals `instrument.hash`; locale is declared; channel matches `/^[a-z0-9_-]{1,32}$/`; consent version non-empty; timestamps and completion are finite numbers. `answers` keys must be ids of displayed items; unknown keys are rejected. Every `response: 'consent'` item must be present and `true`. For every other answer, `null` means skip and is always allowed; otherwise:
+Required and type-checked: hash equals `instrument.hash`; locale is declared; channel is a string, stored as one of `reddit`, `youtube`, `instagram`, `facebook`, `x`, `direct`, `other` (an empty value as `direct`, anything unlisted as `other`); consent version non-empty; timestamps and completion are finite numbers. `answers` keys must be ids of displayed items; unknown keys are rejected. Every `response: 'consent'` item must be present and `true`. For every other answer, `null` means skip and is always allowed; otherwise:
 
 | response | accepted value |
 |---|---|

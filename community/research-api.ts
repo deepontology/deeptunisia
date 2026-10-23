@@ -37,7 +37,7 @@ import {
 	type RuntimeInstrument,
 	type StudiesRegistry
 } from './research-contract.ts';
-import { aggregateResponses, aggregateSeries, applyExclusions, applyPublicationFloor, periodOf } from './research-scoring.ts';
+import { aggregateResponses, aggregateSeries, applyExclusions, applyPublicationFloor, channelCode, periodOf } from './research-scoring.ts';
 import {
 	commitMonth,
 	periodStart,
@@ -78,9 +78,8 @@ const json = (body: unknown, status = 200, headers: Record<string, string> = {})
 // Live results (study 002 runs fully live; index-spec §7).
 //
 // Aggregates only: no row, receipt, locale or timestamp finer than an hour
-// leaves this function. The `src` link codes are read and never sent: they are
-// counted into the three shares of the link check (research-scoring.ts) and the
-// codes themselves stay here. Rows are read for the instrument hash the study
+// leaves this function. The channels are read and never sent: they are counted
+// into the three shares of the link check (research-scoring.ts) and stay here. Rows are read for the instrument hash the study
 // currently fields, so a wave is exactly one instrument version. The bootstrap
 // seed is fixed, so the same rows always give the same interval and a reader
 // refreshing the page never sees the numbers jitter without new data.
@@ -1071,7 +1070,8 @@ export async function handleResearch(
 						instrument.version,
 						instrument.hash,
 						String(payload.locale),
-						String(payload.channel),
+						// One of CHANNELS: the kind of link, never the raw `?src=` value.
+						channelCode(String(payload.channel)),
 						// The consent version is the instrument's own (version and short
 						// hash), which validation has already tied to this submission. The
 						// client's string is checked but never stored: it is free text, and

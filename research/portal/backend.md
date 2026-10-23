@@ -58,7 +58,7 @@ CREATE TABLE research_responses (
   instrument_version TEXT NOT NULL,      -- 0.1.0-draft
   instrument_hash    TEXT NOT NULL,      -- sha256 of what the respondent was shown
   locale             TEXT NOT NULL,      -- ar | fr | en
-  channel            TEXT NOT NULL,      -- reddit | instagram | organic | ...
+  channel            TEXT NOT NULL,      -- reddit | youtube | instagram | facebook | x | direct | other
   consent_version    TEXT NOT NULL,      -- version + short hash
   started_at         INTEGER NOT NULL,   -- ms epoch
   submitted_at       INTEGER NOT NULL,   -- ms epoch
@@ -108,7 +108,7 @@ The community store's `rate_buckets` table is shared for rate limiting across bo
 | 8 | Rate limit: twenty submissions per address per hour | 429 |
 | 9 | Arm assignment verified against its signed token | 400 |
 | 10 | Completion floor: below half of the study's pre-registered speed threshold (40% of the estimated time when it has none) is refused; between that and the threshold the row is kept and counted in the published exclusion | 400 |
-| 11 | Full `validateSubmission`: hash match, declared locale, channel format, consent true, unknown ids refused, ranges and options checked, text length capped | 400 |
+| 11 | Full `validateSubmission`: hash match, declared locale, channel normalised to the fixed list, consent true, unknown ids refused, ranges and options checked, text length capped | 400 |
 | 12 | Revision: `update`, with an optional earlier receipt that replaces its row when it matches this study and month, or `same-device`; anything else refused | 400 |
 | 13 | Receipt generated; row, month counter and any replacement written in one batch | 503 on storage error |
 

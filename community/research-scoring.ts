@@ -764,8 +764,8 @@ export function validateScoringSpec(
 export interface AggregateRow {
 	answers: Record<string, unknown>;
 	/**
-	 * The link the respondent arrived from, as the `?src=` code was stored;
-	 * `organic` when there was none. Only ever read as a count (the link check
+	 * The kind of link the respondent arrived through, one of CHANNELS;
+	 * `direct` when there was none. Only ever read as a count (the link check
 	 * below), never returned.
 	 */
 	channel?: string;
@@ -1203,37 +1203,41 @@ export function aggregateResponses(
 //
 // An open index on a charged topic is a target, and the cheapest way to move it
 // is for one group to mass-answer through a single shared link. The row records
-// the `?src=` code the respondent arrived from, so a window of kept answers can
-// be asked how much of it one link brought, and what the index is without it.
+// which kind of link the respondent arrived through, so a window of kept answers
+// can be asked how much of it one kind of link brought, and what the index is
+// without it.
 //
-// The codes themselves are never published. A code is free text anyone can
-// invent, and one handed out to a few people could point at them, so what leaves
-// this module is three shares and a counterfactual figure, and no name. The
-// counterfactual answers to the cell floor as well as the first-figure floor:
-// it would otherwise hand a small group's own mean to anyone with the published
-// window mean. Nothing here excludes a row or moves a published number: it is a
-// check a reader can apply to their own judgement (index-spec.md §6).
+// The kind is one of a fixed list. A free-text code could be written for one
+// person and stored next to their answers, so any `?src=` value outside the list
+// is stored as `other`. What leaves this module is still three shares and a
+// counterfactual figure, and no per-channel figure. The counterfactual answers
+// to the cell floor as well as the first-figure floor: it would otherwise hand a
+// small group's own mean to anyone with the published window mean. Nothing here
+// excludes a row or moves a published number: it is a check a reader can apply
+// to their own judgement (index-spec.md §6).
 // ---------------------------------------------------------------------------
 
-/** The channel a respondent with no `?src=` code is stored under. */
-export const ORGANIC_CHANNEL = 'organic';
+/** Every value the channel column can hold. */
+export const CHANNELS = ['reddit', 'youtube', 'instagram', 'facebook', 'x', 'direct', 'other'] as const;
 
-/** The shape the server accepts a channel code in: lowercase, 1 to 32 characters. */
-export const CHANNEL_PATTERN = /^[a-z0-9_-]{1,32}$/;
+/** The channel a respondent with no `?src=` code is stored under. */
+export const DIRECT_CHANNEL = 'direct';
+
+/** The channel any `?src=` value outside the list is stored under. */
+export const OTHER_CHANNEL = 'other';
 
 /**
- * The `?src=` code as the server stores it.
+ * The `?src=` value as the server stores it: one of CHANNELS.
  *
  * The one rule every reader of a shared link follows. The index page hands the
- * code it arrived with to the participation link and the runner reads the code
- * back off its own URL, so a link keeps its code through that hand-off instead
- * of answering as `organic` and vanishing from the link check. A code the
- * server would refuse — `?src=Facebook`, a long campaign code, nothing at all —
- * falls back here rather than being answered past.
+ * value it arrived with to the participation link and the runner reads it back
+ * off its own URL, so a link keeps its kind through that hand-off. No value is
+ * `direct`; a listed value in any case is itself; anything else is `other`.
  */
 export function channelCode(raw: string): string {
-	const code = raw.toLowerCase();
-	return CHANNEL_PATTERN.test(code) ? code : ORGANIC_CHANNEL;
+	const code = raw.trim().toLowerCase();
+	if (code === '') return DIRECT_CHANNEL;
+	return (CHANNELS as readonly string[]).includes(code) ? code : OTHER_CHANNEL;
 }
 
 /**
@@ -1262,8 +1266,8 @@ export function linkCheck(spec: ScoringSpec, rows: AggregateRow[], options: Aggr
 	const perChannel = new Map<string, number>();
 	const scoredPerChannel = new Map<string, number>();
 	for (const row of rows) {
-		const channel = row.channel ?? ORGANIC_CHANNEL;
-		if (channel === ORGANIC_CHANNEL) continue;
+		const channel = row.channel ?? DIRECT_CHANNEL;
+		if (channel === DIRECT_CHANNEL) continue;
 		perChannel.set(channel, (perChannel.get(channel) ?? 0) + 1);
 		// Counted in scored answers, not rows: the counterfactual below is over
 		// scored answers, so the floor is in the unit of what it removes.
@@ -1296,7 +1300,7 @@ export function linkCheck(spec: ScoringSpec, rows: AggregateRow[], options: Aggr
 	if (largestChannel !== null && (scoredPerChannel.get(largestChannel) ?? 0) >= (spec.cell_floor ?? 20)) {
 		const without = aggregateResponses(
 			spec,
-			rows.filter((row) => (row.channel ?? ORGANIC_CHANNEL) !== largestChannel),
+			rows.filter((row) => (row.channel ?? DIRECT_CHANNEL) !== largestChannel),
 			options
 		);
 		indexWithoutLargest = without.n >= firstFigureN(spec) ? without.index.mean : null;
@@ -1386,7 +1390,7 @@ function jointlySafe(spec: ScoringSpec, rows: AggregateRow[], links: LinkCheck, 
 	let onlyRepeat = 0;
 	for (const row of rows) {
 		if (scoreResponse(spec, row.answers).index === null) continue;
-		const inLink = largest !== null && (row.channel ?? ORGANIC_CHANNEL) === largest;
+		const inLink = largest !== null && (row.channel ?? DIRECT_CHANNEL) === largest;
 		const inRepeat = Boolean(row.revision && POSSIBLE_REPEATS.has(row.revision));
 		if (inLink && !inRepeat) onlyLink++;
 		if (inRepeat && !inLink) onlyRepeat++;
@@ -1399,8 +1403,8 @@ function jointlySafe(spec: ScoringSpec, rows: AggregateRow[], links: LinkCheck, 
 function largestLinkChannel(rows: AggregateRow[]): string | null {
 	const perChannel = new Map<string, number>();
 	for (const row of rows) {
-		const channel = row.channel ?? ORGANIC_CHANNEL;
-		if (channel !== ORGANIC_CHANNEL) perChannel.set(channel, (perChannel.get(channel) ?? 0) + 1);
+		const channel = row.channel ?? DIRECT_CHANNEL;
+		if (channel !== DIRECT_CHANNEL) perChannel.set(channel, (perChannel.get(channel) ?? 0) + 1);
 	}
 	let best: string | null = null;
 	let bestCount = 0;
