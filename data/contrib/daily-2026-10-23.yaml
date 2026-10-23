@@ -1,0 +1,878 @@
+# daily-2026-10-23, daily dataset sweep (full mode), consolidated outbox
+#
+# MISSION: sweep the news window 2026-10-19 to 2026-10-23, which has never been
+#   merged. time.cutoff in data/parameters.yaml is 2026-10-18 (V31 fails the
+#   build on any record dated past it), so nothing in this window exists in the
+#   graph. This file is the candidate batch for that window and nothing else.
+# SOURCES USED (all fetched and read in full this run, 2026-10-23):
+#   - Al Jazeera English, "Rare unrest flares in Tunisian capital as police clash
+#     with protesters", 2026-10-23 (AFP and Reuters), tier 3, en
+#     https://www.aljazeera.com/news/2026/10/23/rare-unrest-flares-in-tunisian-capital-as-police-clash-with-protesters
+#   - Al Jazeera English, "Tunisia jails opposition politician for four years
+#     over social media posts", 2026-10-21 (AFP and Reuters), tier 3, en
+#     https://www.aljazeera.com/news/2026/10/21/tunisia-jails-opposition-politician-for-four-years-over-social-media-posts
+#   - African Manager, 2026-10-21 and 2026-10-22, tier 3, fr (eleven items; URLs
+#     on each source row below). African Manager carries no byline beyond its
+#     house account, so "African Manager" is the attributing party throughout.
+#   - Kapitalis, 2026-10-22, tier 3, fr (signed "Y. N.")
+#   - Nawaat, 2026-10-19, 2026-10-21 and 2026-10-22, tier 3/4, ar
+#   No tier-1 or tier-2 source was available for this window: no JORT issue was
+#   fetched, and no court, ministry or registry record was retrieved. Every
+#   record below rests on tier-3/4 reporting.
+# WORKSPACE NOTE: feed/feed.json in this worktree is stale (latest item
+#   2026-10-10T10:40Z, 1200 items, no 19-23 October material). The triage was
+#   done on the checkout's feed/feed.json (latest item
+#   2026-10-23T00:51:40Z, 119 items dated 2026-10-18 or later). If the worktree
+#   feed is not refreshed before the next sweep, this file's window cannot be
+#   reproduced from it.
+# COVERAGE GAP, Inkyfada: the feed fetch for that outlet FAILED on 2026-10-23
+#   (timeout), so it contributed no item to the triage list. Checked directly:
+#   the French front page's "Les derniers articles" block on 2026-10-23 leads
+#   with the 5 October 2026 prison-heat-deaths report, followed by 24 September,
+#   14 September and 12 September items — no 19-23 October publication surfaced.
+#   That is a front-page check, not an archive check, so treat Inkyfada 19-23
+#   October as unverified rather than as empty.
+# ENTITY CHECKS (every id cited below re-checked with rg against data/*.yaml):
+#   CITED AND PRESENT: judiciary, legislature, cnrd, ministry-interior, uib,
+#     gov-tunis, gov-sfax, olfa-hamdi (created by this batch). Named but not
+#     cited as ids because they have no record: salah-zouari IS present
+#     (p-equipment-zouari) and is named in the notes only, because no meeting
+#     record is proposed; mohamed-yousfi IS present and is the target of the
+#     flag below.
+#   ABSENT, contrary to the worklist: bilel-sahnoun has NO person record, no
+#     bvmt-dg role and no position (the worklist said the graph has him). UGET
+#     has no institution record (confirmed). Olfa Hamdi had no person record
+#     (confirmed) although a canonical 2024 event already names her. Also absent:
+#     ministry-economy/planning, ministry-agriculture, ministry-industry-energy,
+#     the Competition Council, the permanent military tribunal of Tunis, AFCM,
+#     SFBT, BTK Bank, the universities and institutes named, and Hela Ben Salem.
+#     CNSS does exist (institutions.yaml:3542) and is named in a note, not cited.
+# FAILURE VOCABULARY (must not be collapsed):
+#   - "condamnée à 4 ans" is two two-year terms in two cases plus 80,000 dinars
+#     in fines, per the defence lawyer; it is not one four-year sentence, and no
+#     outlet says whether the judgment is appealable or an appeal was lodged.
+#   - the 22 October flare-ups are NOT the 17 October march. Al Jazeera frames
+#     them as coinciding with it ("coincide with"), attributes them to two
+#     deaths in police custody or pursuit, names no organising body and gives no
+#     crowd figure, no arrest count and no demand. No source asserts continuity
+#     of mobilisation; none is recorded here.
+#   - "une amende de plus de 9 MDT du Conseil de la Concurrence" is a 22 October
+#     2026 disclosure of a judgment of 29 May 2024 in the UIB statutory
+#     auditors' report on the 2025 accounts. The decision is dated 2024, not
+#     October 2026; the 9,009,258 dinars is the auditors' transcription of it.
+#   - "mise en demeure de la SFBT par la CNSS" concerns a notification of
+#     6 July 2026, not an October act; the piece also carries a second, older
+#     notification of 8 July 2024 for what the text prints as ".592.742 DT".
+#   - the 3,300 km SoutH2 figure, ">40% of the EU's 2030 hydrogen import target"
+#     and ">4 Mt a year" are Businessfront's, relayed by African Manager, which
+#     relays them without a Tunisian signatory, ministry or date.
+#   - "re-elected to the AFCM board" is the Bourse de Tunis (BVMT) keeping a
+#     seat, not Bilel Sahnoun being re-elected to anything personal: the AFCM
+#     board announced on 21 October 2026 is chaired by Abdulla Alnuaimi of the
+#     Abu Dhabi Securities Exchange, so Sahnoun is no longer its president.
+#   - "Zouari" in the two 20-21 October items is Slah/Salah Zouari, equipment
+#     and housing minister, described as holding the industry, mines and energy
+#     portfolio in caretaker form ("chargé de la gestion"); the graph records
+#     only the equipment portfolio.
+#   - the 11,846 MDT subsidy total is a figure in the 2027 budget-project
+#     document as obtained by TAP and relayed by African Manager: a document
+#     figure, not an appropriation voted or executed.
+# CANDIDATES ARE PROPOSALS, NOT GRAPH DATA. Nothing canonical was changed; no
+#   cutoff was advanced. Whoever merges must move time.cutoff to 2026-10-23 in
+#   the same edit and update the pinned defaults in scripts/parameters.ts and
+#   scripts/test-parameters.ts. Humans dispose (P4).
+
+sources:
+  - id: aljazeera-tunisia-unrest-2026-10-23
+    title: "Rare unrest flares in Tunisian capital as police clash with protesters"
+    publisher: Al Jazeera English
+    date: 2026-10-23
+    url: https://www.aljazeera.com/news/2026/10/23/rare-unrest-flares-in-tunisian-capital-as-police-clash-with-protesters
+    tier: 3
+    lang: en
+    excerpt: >-
+      Tunisian police have clashed with protesters in rare unrest in the capital
+      city of Tunis, as well as in the southern town of Jebiniana, over recent
+      deaths linked to the police. Police forces fired tear gas on Thursday to
+      disperse protesters in Ettadhamen, a suburb of the capital, following the
+      death of a man detained on suspicion of drug dealing.
+    note: >-
+      Credited "By AFP and Reuters", so the piece is wire copy published by one
+      outlet; the two agencies are treated as one publication here, not as two
+      independent confirmations.
+
+  - id: aljazeera-hamdi-verdict-2026-10-21
+    title: "Tunisia jails opposition politician for four years over social media posts"
+    publisher: Al Jazeera English
+    date: 2026-10-21
+    url: https://www.aljazeera.com/news/2026/10/21/tunisia-jails-opposition-politician-for-four-years-over-social-media-posts
+    tier: 3
+    lang: en
+    excerpt: >-
+      A Tunisian military court has sentenced an opposition leader to four years
+      in prison on charges of plotting against state security and inciting the
+      military to disobey orders, her lawyer has said. The charges against Olfa
+      Hamdi, a dual Tunisian and United States national, stemmed from social
+      media posts, her lawyer Akram Moussa said on Wednesday.
+    note: >-
+      AFP and Reuters copy. Also the only source here for the biography: 2024
+      candidacy rejected on the 40-year age minimum, February detention at Tunis
+      airport, earlier spell as head of Tunisair.
+
+  - id: african-manager-hamdi-verdict-2026-10-21
+    title: "Olfa Hamdi condamnée à 4 ans de prison"
+    publisher: African Manager
+    date: 2026-10-21
+    url: https://africanmanager.com/olfa-hamdi-condamnee-a-4-ans-de-prison/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      Le Tribunal militaire permanent de Tunis a condamné Olfa Hamdi, présidente
+      du parti « La Troisième République », à quatre ans de prison et à une
+      amende de 80 mille dinars dans le cadre de deux affaires engagées à son
+      encontre. Son avocat, Akram Moussa, a précisé qu'elle a écopé de deux ans
+      de prison et de 40 mille dinars d'amende dans chacune des deux affaires.
+    note: >-
+      Names the court (permanent military tribunal of Tunis), which Al Jazeera
+      does not. Adds the March 2026 two-year sentence in a similar case.
+
+  - id: kapitalis-uget-sfax-greve-2026-10-22
+    title: "Drame au foyer universitaire de Sidi Mansour | Grève générale à l'appel de l'Uget"
+    publisher: Kapitalis
+    date: 2026-10-22
+    url: https://kapitalis.com/tunisie/2026/10/22/drame-au-foyer-universitaire-de-sidi-mansour-greve-generale-a-lappel-de-luget/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      L'Union générale des étudiants de Tunisie (Uget) a annoncé une grève
+      générale ce vendredi 23 octobre 2026 dans l'ensemble des facultés et
+      instituts supérieurs du gouvernorat de Sfax, suite du décès tragique de
+      l'étudiante Rahma Dziri, survenu au sein du foyer universitaire de Sidi
+      Mansour.
+    note: >-
+      Signed "Y. N."; relays the UGET communiqué. The ambulance-delay account is
+      "d'après les témoignages de ses camarades" — classmates' testimony, not an
+      emergency-service record.
+
+  - id: african-manager-uib-concurrence-2026-10-22
+    title: "Une amende de plus de 9 MDT, du Conseil de la Concurrence"
+    publisher: African Manager
+    date: 2026-10-22
+    url: https://africanmanager.com/une-amende-de-plus-de-9-mdt-du-conseil-de-la-concurrence/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      Selon les CC, en vertu d'un jugement rendu le 29 mai 2024, le Conseil de la
+      Concurrence a jugé que le processus de traitement ayant trait aux intérêts
+      intercalaires au titre du report d'échéances durant la période du Covid est
+      contraire aux dispositions de la loi relative à la concurrence et aux prix.
+      Il a condamné, à ce titre, l'UIB au paiement d'une amende de Neuf Millions
+      Neuf Mille Deux Cent Cinquante Huit Dinars (9.009.258 DT).
+    note: >-
+      The passage is a quotation from the UIB statutory auditors' report on the
+      2025 accounts ("Ces informations sont tirées du rapport des Commissaires
+      aux Comptes de l'UIB"), not a report of a court sitting. The judgment date
+      is 29 May 2024.
+
+  - id: african-manager-btk-menaces-2026-10-22
+    title: "Une banque sous menaces, sociale, fiscale, douanière et du Conseil de la Concurrence"
+    publisher: African Manager
+    date: 2026-10-22
+    url: https://africanmanager.com/une-banque-sous-menaces-sociale-fiscale-douaniere-et-du-conseil-de-la-concurrence/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      Une affaire a été intentée par le Conseil de la Concurrence (CC) à
+      l'encontre de la Banque, portant sur le traitement du report des échéances
+      durant la période de la pandémie de COVID-19. À la date du présent rapport,
+      aucune décision ni notification n'a été reçue par la Banque.
+    note: >-
+      Companion piece to the UIB item and about a different bank: BTK Bank. Its
+      Competition Council case has no decision yet, so the two items are not the
+      same proceeding and must not be merged.
+
+  - id: african-manager-sfbt-cnss-2026-10-21
+    title: "La SFBT mise en demeure par la CNSS pour 1.592.742 DT"
+    publisher: African Manager
+    date: 2026-10-21
+    url: https://africanmanager.com/la-sfbt-mise-en-demeure-par-la-cnss-pour-1-592-742-dt/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      Le 6 juillet 2026, la société a été notifiée d'une mise en demeure pour le
+      montant de 1 592 742 dinars tunisiens. Pour rappel, la SFBT avait été
+      soumise, depuis 2023, à un contrôle CNSS au titre des exercices 2020, 2021
+      et 2022.
+    note: >-
+      Draws on SFBT's own first-half 2026 financial statements. The customs
+      penalty of 11,517,790 dinars and the conciliation tranches are company
+      figures as quoted in the piece.
+
+  - id: african-manager-hydrogene-south2-2026-10-22
+    title: "La Tunisie et l'Algérie partenaires du gazoduc d'hydrogène de 3 300 km vers l'Europe"
+    publisher: African Manager
+    date: 2026-10-22
+    url: https://africanmanager.com/la-tunisie-et-lalgerie-partenaires-du-gazoduc-dhydrogene-de-3-300-km-vers-leurope/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      Une déclaration politique entre cinq pays fait progresser le projet de
+      gazoduc d'hydrogène vert reliant l'Afrique du Nord à l'Europe. La Tunisie
+      et l'Algérie se sont assurées le soutien politique de l'Italie, de
+      l'Autriche et de l'Allemagne pour le corridor SoutH2, un gazoduc
+      d'exportation d'hydrogène de 3 300 kilomètres.
+    note: >-
+      A rewrite of a Businessfront item ("précise le website africain
+      Businessfront"); no Tunisian signatory, ministry or signature date is
+      named, and the distance and volume figures are Businessfront's.
+
+  - id: african-manager-arp-cnrd-budget-2027-2026-10-22
+    title: "ARP-CNDR : Abdelhafidh audtionné sur le projet du BE 27"
+    publisher: African Manager
+    date: 2026-10-22
+    url: https://africanmanager.com/arp-cndr-audition-mercredi-du-ministre-de-leconomie-sur-le-projet-de-budget-economique-2027/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      Les commissions des finances et du budget de l'Assemblée des représentants
+      du peuple (ARP) et du Conseil national des districts et des régions (CNDR)
+      tiendront, le mercredi 28 octobre 2026, une réunion conjointe pour
+      auditionner le ministre de l'Économie et de la Planification au sujet du
+      projet de budget économique (BE) pour l'année 2027.
+    note: >-
+      Headline misspells "audtionné". No ARP or CNRD communiqué retrieved; the
+      substance is the piece's account of the two committees' meeting.
+
+  - id: african-manager-subventions-2027-2026-10-22
+    title: "Budget de l'Etat 2027 : 11.846 MDT iront en subvention"
+    publisher: African Manager
+    date: 2026-10-22
+    url: https://africanmanager.com/projet-de-budget-de-letat-2027-11846-md-seront-consacres-aux-depenses-de-subvention/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      Le projet de budget de l'Etat pour l'exercice 2027 prévoit une enveloppe de
+      11846 millions de dinars (MD) au titre des dépenses de subvention, selon le
+      document du projet de budget obtenu par l'Agence TAP.
+    note: >-
+      Figures reproduced from the budget-project document TAP obtained; the
+      breakdown, the Brent assumption (80 USD against 63.3 USD for 2026) and the
+      end-August execution figure (4,496 MD) are all the document's.
+
+  - id: african-manager-saied-autosuffisance-2026-10-22
+    title: "Le président Saïed : « Pas de souveraineté sans autosuffisance alimentaire »"
+    publisher: African Manager
+    date: 2026-10-22
+    url: https://africanmanager.com/le-president-saied-pas-de-souverainete-sans-autosuffisance-alimentaire/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      Le président de la République, Kais Saïed, a reçu, mercredi, au palais de
+      Carthage, le ministre de l'Agriculture, des Ressources hydrauliques et de
+      la Pêche, Ezzedine Ben Cheikh, a indiqué un communiqué de la présidence de
+      la République.
+    note: >-
+      Relays a presidency communiqué; no independent account of the audience.
+
+  - id: african-manager-zouari-scatec-2026-10-21
+    title: "Zouari examine avec Scatec, Aeolus, la coopération en ER"
+    publisher: African Manager
+    date: 2026-10-21
+    url: https://africanmanager.com/zouari-examine-avec-des-investisseurs-etrangers-le-renforcement-de-la-cooperation-dans-les-energies-renouvelables/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      Le ministre de l'Équipement et de l'Habitat, chargé de la gestion du
+      ministère de l'Industrie, des Mines et de l'Énergie, Slah Zouari, a examiné
+      mardi avec une délégation du groupe norvégien Scatec et de la société
+      Aeolus, relevant du groupe japonais Toyota Tsusho, les perspectives de
+      renforcement de la coopération.
+    note: >-
+      Relays a ministry communiqué issued "mardi soir" (20 October 2026).
+
+  - id: african-manager-zouari-onu-habitat-2026-10-22
+    title: "La coopération dans le logement au menu de Zouari avec Hedia"
+    publisher: African Manager
+    date: 2026-10-22
+    url: https://africanmanager.com/le-ministre-de-lequipement-examine-avec-onu-habitat-le-renforcement-de-la-cooperation-dans-le-secteur-du-logement/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      Le ministre de l'Équipement et de l'Habitat, chargé de la gestion du
+      ministère de l'Industrie, des Mines et de l'Énergie, Slah Zouari, a examiné
+      mercredi avec la directrice régionale des États arabes du Programme des
+      Nations unies pour les établissements humains (ONU-Habitat), Rania Hedia,
+      les moyens de renforcer la coopération.
+    note: >-
+      Relays a ministry communiqué. "Cette rencontre [...] s'inscrit dans le
+      cadre des préparatifs du plan d'action conjoint [...] pour l'année 2027".
+
+  - id: african-manager-bvmt-afcm-2026-10-22
+    title: "Bilel Sahnoun membre du CA de l'AFCM jusqu'à 2028"
+    publisher: African Manager
+    date: 2026-10-22
+    url: https://africanmanager.com/la-bourse-de-tunis-reelue-membre-du-conseil-dadministration-de-lafcm-pour-la-periode-2026-2028/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      La Bourse de Tunis a été réélue membre du Conseil d'Administration (CA) de
+      la Fédération arabe des marchés de capitaux (AFCM) pour la période
+      2026-2028. [...] Le 21 octobre 2026, l'AFCM a annoncé son nouveau conseil
+      d'administration [...]. Le conseil d'administration est présidé par le
+      Directeur général du groupe Abu Dhabi Securities Exchange, Abdulla
+      Alnuaimi, selon un communiqué publié par l'AFCM.
+    note: >-
+      Relays an AFCM communiqué. Says Sahnoun was designated AFCM board president
+      in 2025, after the 13-14 May 2025 annual conference in Tunis — and that the
+      board is now chaired by Alnuaimi.
+
+  - id: nawaat-yousfi-hela-ben-salem-2026-10-22
+    title: "محاكمة محمد اليوسفي محاكمة للصحافة الحرة، حوار مع هالة بن سالم"
+    publisher: Nawaat
+    date: 2026-10-22
+    url: https://nawaat.org/2026/10/22/%d9%85%d8%ad%d8%a7%d9%83%d9%85%d8%a9-%d9%85%d8%ad%d9%85%d8%af-%d8%a7%d9%84%d9%8a%d9%88%d8%b3%d9%81%d9%8a-%d9%85%d8%ad%d8%a7%d9%83%d9%85%d8%a9-%d9%84%d9%84%d8%b5%d8%ad%d8%a7%d9%81%d8%a9-%d8%a7%d9%84/
+    tier: 3
+    lang: ar
+    excerpt: >-
+      منذ إيقاف الصحفي محمد اليوسفي في 4 سبتمبر 2026، لم يمثل أمام قاضي التحقيق
+      لاستنطاقه في التهم الموجهة اليه من إثراء غير مشروع وغسل أموال.
+    note: >-
+      Interview with Yousfi's lawyer Hela Ben Salem; the published page carries
+      only the introduction to the interview (video item). No hearing or trial
+      date appears in it.
+
+  - id: nawaat-matsaddeqsh-2026-10-19
+    title: "نواة في دقيقة: لا أحد يصدّق الظلم، كلنا ”متصدقش“"
+    publisher: Nawaat
+    date: 2026-10-19
+    url: https://nawaat.org/2026/10/19/%d9%86%d9%88%d8%a7%d8%a9-%d9%81%d9%8a-%d8%af%d9%82%d9%8a%d9%82%d8%a9-%d9%84%d8%a7-%d8%a3%d8%ad%d8%af-%d9%8a%d8%b5%d8%af%d9%91%d9%82-%d8%a7%d9%84%d8%b8%d9%84%d9%85%d8%8c-%d9%83%d9%84%d9%86%d8%a7/
+    tier: 4
+    lang: ar
+    excerpt: >-
+      سعيا منها لحجب الحقيقة، أقدمت السلطات في مصر على اعتقال كامل فريق تحرير
+      منصة ”متصدقش“ المتكون من 6 صحفيين.
+    note: >-
+      One-minute video commentary (النواة format); the platform and the arrests
+      are Egyptian, not Tunisian.
+
+  - id: nawaat-matsaddeqsh-solidarite-2026-10-21
+    title: "أرادوا اسكات ”متصدقش“، فصاروا حديث العالم أجمع"
+    publisher: Nawaat
+    date: 2026-10-21
+    url: https://nawaat.org/2026/10/21/%d8%a3%d8%b1%d8%a7%d8%af%d9%88%d8%a7-%d8%a7%d8%b3%d9%83%d8%a7%d8%aa-%d9%85%d8%aa%d8%b5%d8%af%d9%82%d8%b4%d8%8c-%d9%81%d8%b5%d8%a7%d8%b1%d9%88%d8%a7-%d8%ad%d8%af%d9%8a%d8%ab-%d8%a7%d9%84%d8%b9/
+    tier: 4
+    lang: ar
+    excerpt: >-
+      تضامنا مع صحفيي منصة ”متصدقش“ المعتقلين في مصر، أطلقت ثماني مؤسسات إعلامية
+      من بينها نواة غرفة أخبار مشتركة تحت عنوان ”لحد ما يرجعوا .. التحقق مستمر“.
+    note: >-
+      Reports a joint fact-checking newsroom launched by eight outlets from
+      Egypt, Syria and Lebanon plus Nawaat, and an IFJ statement demanding the
+      journalists' release.
+
+events:
+  - id: ev-hamdi-military-court-sentence-2026-10-21
+    date: "2026-10-21"
+    title_en: "Military court sentences Olfa Hamdi to four years in two cases"
+    title_fr: "Le tribunal militaire condamne Olfa Hamdi à quatre ans de prison dans deux affaires"
+    category: legal
+    subcategory: military-court-sentence
+    location: [gov-tunis]
+    actors: [olfa-hamdi]
+    institutions: [judiciary]
+    causes: []
+    consequences: []
+    summary: >-
+      The permanent military tribunal of Tunis sentenced Olfa Hamdi, president
+      of the Third Republic party (La Troisième République), to four years in
+      prison and 80,000 dinars in fines on Wednesday 21 October 2026, in two
+      cases brought against her. Her lawyer Akram Moussa told Agence
+      France-Presse that the four years are two separate two-year terms, each
+      with a 40,000-dinar fine, and that the charges — plotting against state
+      security and inciting the military to disobey orders — arose from social
+      media posts; Al Jazeera, carrying AFP and Reuters copy, reports the same
+      composition of the sentence and the same 80,000 dinars. African Manager,
+      reporting the same day, names the court and adds "other military offences"
+      to the charges, and recalls a two-year sentence against her in March 2026
+      in a similar case. Al Jazeera describes Hamdi as a dual Tunisian and
+      United States national who ran in the 2024 presidential election and was
+      excluded for not meeting the 40-year age minimum, and who was detained at
+      Tunis airport in February (the year is implied by the piece) after living
+      abroad. Neither outlet states whether the judgment is appealable or
+      whether an appeal has been lodged; a United States State Department
+      spokesperson told AFP that Washington was "closely tracking the
+      situation". No judgment text, court communiqué or defence filing was
+      retrieved, and the permanent military tribunal of Tunis has no graph id,
+      so the record cites the judiciary.
+    confidence: B
+    basis: reported
+    verification: needs-primary-source
+    attributed_to: "Agence France-Presse and Reuters, via Al Jazeera (21 October 2026), and African Manager (21 October 2026), reporting the defence lawyer's account"
+    reasoning: >-
+      Two outlets publishing the same day, one of them wire copy from two
+      agencies, agree on the court, the four years, the 2+2 structure, the
+      80,000 dinars and the two charges; that is enough for B on the sentence.
+      The charge wording differs slightly ("and other military offences" in
+      African Manager) and neither source says whether the judgment can be
+      appealed, so those points are stated as reported and left open. The
+      biography is Al Jazeera's alone and is marked as its account.
+    falsifiable_by: >-
+      The judgment itself, a military-court or defence communiqué, or the case
+      file would confirm the two case numbers, the charges and the 2+2 years and
+      settle whether the judgment is appealable; a defence statement that an
+      appeal was lodged would add the procedural fact this record lacks.
+    sources:
+      - aljazeera-hamdi-verdict-2026-10-21
+      - african-manager-hamdi-verdict-2026-10-21
+
+  - id: ev-unrest-ettadhamen-jebiniana-2026-10-22
+    date: "2026-10-22"
+    title_en: "Rare unrest in Ettadhamen and Jebiniana after two deaths linked to the police"
+    title_fr: "Troubles à Ettadhamen et Jebiniana après deux décès liés à la police"
+    category: protest
+    subcategory: police-violence
+    location: [gov-tunis, gov-sfax]
+    actors: []
+    institutions: [ministry-interior]
+    causes: []
+    consequences: []
+    summary: >-
+      On Thursday 22 October 2026 police fired tear gas at protesters in
+      Ettadhamen, a suburb of Tunis, after the death of a man detained on
+      suspicion of drug dealing, and clashed with protesters in Jebiniana, in
+      Sfax governorate, after the death of a man whose relatives said he died
+      while being chased by security forces, per Agence France-Presse and
+      Reuters copy published by Al Jazeera on 23 October 2026. In Ettadhamen the
+      dead man's family said he died from abuse by police officers and called
+      for the circumstances to be clarified and those responsible held to
+      account, while local media reported that he died after swallowing drugs;
+      protesters blocked roads, burned tyres and threw stones, and security
+      forces fired tear gas while seeking to secure a National Guard station
+      (Reuters, as carried by Al Jazeera). In Jebiniana protesters set a vehicle
+      ablaze and burned tyres and police used tear gas. Separately in Sfax city,
+      students protested the death of a female student who had a cardiac
+      problem, her colleagues blaming an ambulance delay and a lack of medical
+      facilities and calling for a strike in Sfax University's faculties on
+      Friday. The piece gives no crowd figure, no arrest count and no demand,
+      and names no organising body. It does not present these gatherings as a
+      continuation of the 17 October 2026 march (see
+      ev-march-17-october-2026): it says only that the flare-ups "coincide with"
+      the deepening crisis and mentions the 17 October protest as a separate
+      event. No source found in this sweep asserts that the 22 October
+      gatherings were called by the 17 October coordination framework, so no
+      continuity is recorded.
+    confidence: C
+    verification: needs-primary-source
+    attributed_to: "Agence France-Presse and Reuters, via Al Jazeera English (23 October 2026)"
+    reasoning: >-
+      A single published outlet carrying two agencies' copy. The deaths, the
+      locations, the tear gas and the two competing accounts of the Ettadhamen
+      death are as the wire copy states them; nothing about them rests on a
+      second published outlet. Because the piece gives no number, no arrest
+      count and no caller, the record carries none. The "distinct from the 17
+      October march" reading is an inference from what the piece does and does
+      not say, and is flagged as such rather than asserted: the two events are
+      ten days apart, on different triggers, with a named caller for one and
+      none for the other.
+    falsifiable_by: >-
+      An interior ministry or National Guard statement, an arrest count, a
+      forensic or judicial finding on either death, or a second outlet's account
+      would confirm or correct the sequence; a statement by the 17 October
+      coordination framework, or reporting that its networks called the 22
+      October gatherings, would refute the "distinct mobilisation" reading and
+      require a cause link to ev-march-17-october-2026.
+    sources:
+      - aljazeera-tunisia-unrest-2026-10-23
+
+  - id: ev-uget-sfax-strike-2026-10-22
+    date: "2026-10-22"
+    title_en: "UGET calls a general strike in Sfax after a student's death at the Sidi Mansour residence"
+    title_fr: "L'UGET appelle à une grève générale à Sfax après la mort d'une étudiante au foyer de Sidi Mansour"
+    category: protest
+    subcategory: student-strike
+    location: [gov-sfax]
+    actors: []
+    institutions: []
+    causes: []
+    consequences: []
+    summary: >-
+      The Union générale des étudiants de Tunisie (UGET) called a general strike
+      for Friday 23 October 2026 in all faculties and higher institutes of the
+      Sfax governorate, after the death of the student Rahma Dziri at the Sidi
+      Mansour university residence, per Kapitalis on 22 October 2026 relaying
+      the union's communiqué. Dziri was enrolled at the Institut supérieur des
+      études technologiques (ISET) of Sfax and fell ill in the night of
+      Wednesday 21 October 2026; according to her classmates' testimony, as the
+      piece reports it, the ambulance reached the residence more than an hour
+      after the first emergency call. The UGET communiqué demands permanent
+      medical structures inside university residences and urgent measures from
+      the supervisory authorities to guarantee immediate access to care. Al
+      Jazeera's wire account of 23 October reports the same death and the call
+      for a strike in Sfax University's faculties without naming the UGET,
+      attributing the ambulance-delay account to the student's colleagues and
+      their complaint to "a lack of medical facilities". Neither source gives a
+      cause of death, and no emergency-service, hospital or university record
+      was retrieved. The UGET has no institution record, so the record cites no
+      institution and names the union in the summary only.
+    confidence: B
+    basis: reported
+    verification: needs-primary-source
+    attributed_to: "UGET communiqué, as relayed by Kapitalis (22 October 2026); the death and the strike call also reported by Agence France-Presse and Reuters via Al Jazeera (23 October 2026)"
+    reasoning: >-
+      Two outlets published independently on the death and on a strike call in
+      Sfax's faculties, which is what raises this above a single report. They do
+      not agree on everything: only Kapitalis names the UGET as the caller and
+      names the student, and only Kapitalis gives the "more than an hour" delay,
+      so those details rest on one outlet relaying the union's own communiqué.
+      The cause of death is not stated by either and is not inferred here.
+    falsifiable_by: >-
+      The UGET communiqué itself, a university or residence administration
+      statement, the emergency-service call log or a hospital record would
+      confirm the dates, the delay and the cause, and a statement that the
+      strike was called off or limited to one faculty would correct the scope.
+    sources:
+      - kapitalis-uget-sfax-greve-2026-10-22
+      - aljazeera-tunisia-unrest-2026-10-23
+
+  - id: ev-arp-cnrd-budget-2027-examination-2026-10-21
+    date: "2026-10-21"
+    title_en: "ARP and CNRD budget committees open the 2027 budget examination and set the minister's hearing"
+    title_fr: "Les commissions du budget de l'ARP et du CNRD ouvrent l'examen du budget 2027 et fixent l'audition du ministre"
+    category: political
+    subcategory: budget-process
+    location: [gov-tunis]
+    actors: []
+    institutions: [legislature, cnrd]
+    causes: []
+    consequences: []
+    summary: >-
+      The finance and budget committees of the Assembly of the Representatives
+      of the People (ARP) and of the National Council of Regions and Districts
+      (CNRD) held a joint preparatory meeting at ARP headquarters on Wednesday
+      21 October 2026, chaired by the two committees' presidents Ali Hassoumi
+      Bayouli and Maher Kettari, to fix their common working calendar for the
+      2027 economic budget (budget économique) and the 2027 finance bill, per
+      African Manager on 22 October 2026. The two committees decided to hold a
+      joint hearing of the economy and planning minister on Wednesday
+      28 October 2026 — after this sweep's window — and a further joint hearing
+      of the finance minister in the following week, with the date to be
+      confirmed. Members' interventions, as the piece reports them, concerned
+      the need to deepen the figures and indicators in the two texts, a joint
+      assessment of the 2026 budget and its execution in the light of the supply
+      difficulties of summer 2026, and the non-issuance of the implementing
+      decrees needed to make a number of 2026 finance-law measures effective.
+      No ARP or CNRD communiqué, agenda or minutes were retrieved; the minister
+      of economy and planning has no person record and his ministry no
+      institution record, so neither is cited.
+    confidence: C
+    verification: needs-primary-source
+    attributed_to: "African Manager (22 October 2026), reporting the two committees' joint meeting"
+    reasoning: >-
+      One outlet, no parliamentary document. The meeting, its date, the two
+      chairing members and the scheduled 28 October hearing are as the piece
+      states them; the members' stated concerns are its summary of their
+      interventions, not a record of the sitting. The 28 October audition is
+      forward-dated, so the record dates the preparatory meeting and reports the
+      audition as scheduled rather than held.
+    falsifiable_by: >-
+      The ARP or CNRD committee agenda, minutes or communiqué, or the published
+      hearing schedule, would confirm the 21 October meeting and the 28 October
+      date; a postponement or a different date would correct it.
+    sources:
+      - african-manager-arp-cnrd-budget-2027-2026-10-22
+
+  - id: ev-uib-competition-fine-2024-05-29
+    date: "2024-05-29"
+    title_en: "Competition Council fines UIB 9,009,258 dinars over COVID deferred-maturity interest"
+    title_fr: "Le Conseil de la Concurrence condamne l'UIB à 9 009 258 dinars sur les intérêts intercalaires du report d'échéances Covid"
+    category: economic
+    subcategory: competition-ruling
+    location: [gov-tunis]
+    actors: []
+    institutions: [uib]
+    causes: []
+    consequences: []
+    summary: >-
+      By a judgment of 29 May 2024, the Competition Council held that the Union
+      Internationale de Banques (UIB), the Tunisian subsidiary of Société
+      Générale, had processed the intercalary interest on deferred instalments
+      during the COVID-19 period in breach of the law on competition and prices,
+      and fined it 9,009,258 dinars, per the bank's statutory auditors' report on
+      the 2025 accounts as quoted by African Manager on 22 October 2026. The
+      auditors state that the judgment carried no provisional execution, so an
+      appeal would be suspensive of execution, and that the risk cannot be
+      precisely assessed at this stage; the report does not say whether an appeal
+      has been lodged. This record is a backfill, not an October 2026 event: the
+      22 October item is a disclosure inside the 2025 audit report, and African
+      Manager's headline ("Une amende de plus de 9 MDT") does not date the
+      decision. The judgment, the Competition Council's decision and any appeal
+      filing were not retrieved, and the Council has no graph id.
+    confidence: C
+    verification: needs-primary-source
+    attributed_to: "UIB statutory auditors' report on the 2025 accounts, as quoted by African Manager (22 October 2026)"
+    reasoning: >-
+      The decision date, the practice and the amount come from one document, the
+      auditors' report, quoted verbatim by one outlet; the judgment itself was
+      not obtained. The 9,009,258 dinars is the auditors' transcription of the
+      fine, not a figure read off the ruling. The date is 29 May 2024 because
+      the auditors date the judgment; dating it to October 2026 would attribute
+      to the press item a decision it merely discloses.
+    falsifiable_by: >-
+      The Competition Council's decision of 29 May 2024, the court file, the
+      bank's own annual report, or a filing showing an appeal lodged within the
+      deadline would confirm the amount, the practice and the procedural
+      position, and would show whether the fine is final.
+    sources:
+      - african-manager-uib-concurrence-2026-10-22
+      - african-manager-btk-menaces-2026-10-22
+
+people:
+  - id: olfa-hamdi
+    name_en: Olfa Hamdi
+    name_fr: Olfa Hamdi
+    aliases: []
+    layers: [political]
+    tagline: "President of the Third Republic party; 2024 presidential candidate; sentenced to four years by a military court in October 2026"
+    summary: >-
+      President of the Third Republic party (La Troisième République) and a
+      candidate in the 2024 presidential election, whose candidacy was rejected
+      for not meeting the 40-year age minimum. Per Al Jazeera she is a dual
+      Tunisian and United States national who lived abroad and ran a consulting
+      firm in the United States after briefly heading Tunisair, and who was
+      detained at Tunis airport in February (the year is implied by the piece) on
+      returning. On 21 October 2026 the permanent military tribunal of Tunis
+      sentenced her to four years' imprisonment and 80,000 dinars in fines in two
+      cases, on charges of plotting against state security and inciting the
+      military to disobey orders, which her lawyer Akram Moussa said arose from
+      social media posts (see ev-hamdi-military-court-sentence-2026-10-21); she
+      had been sentenced to two years in a similar case in March 2026. The graph
+      had no person record for her although a canonical event already named her
+      as excluded from the 2024 race on the age rule.
+    confidence: B
+    basis: reported
+    verification: needs-primary-source
+    attributed_to: "Agence France-Presse and Reuters via Al Jazeera (21 October 2026) and African Manager (21 October 2026); the biography is Al Jazeera's account alone"
+    reasoning: >-
+      Her identity, party and the sentence rest on two outlets publishing the
+      same day, one of them wire copy; the pre-2026 biography — Tunisair, the
+      consulting firm, the February detention, the 2024 exclusion on the age
+      rule — rests on Al Jazeera alone and is labelled as its account rather than
+      merged into the graph's voice. No birth date is recorded because none was
+      sourced: the only age datum is the 2024 piece's "then 36".
+    falsifiable_by: >-
+      ISIE's 2024 candidacy file would confirm the age-rule exclusion; a
+      Tunisair appointment record would confirm the airline tenure; the military
+      court's judgment or a defence communiqué would confirm the sentence and the
+      charges.
+    sources:
+      - aljazeera-hamdi-verdict-2026-10-21
+      - african-manager-hamdi-verdict-2026-10-21
+
+flags:
+  - kind: flag
+    id: ev-yousfi-detention-2026-09
+    note: >-
+      CONTESTED DETAIL, no date change proposed. The canonical summary says the
+      investigating judge of the Tunis economic-financial pole issued the dépôt
+      warrant on 8 September 2026 "after questioning". Nawaat's 22 October 2026
+      interview with defence counsel Hela Ben Salem states the opposite on the
+      interrogation point: "منذ إيقاف الصحفي محمد اليوسفي في 4 سبتمبر 2026، لم
+      يمثل أمام قاضي التحقيق لاستنطاقه في التهم الموجهة اليه من إثراء غير مشروع
+      وغسل أموال" — paraphrased, that since his arrest on 4 September 2026 he has
+      not appeared before the investigating judge to be interrogated on the
+      charges of illicit enrichment and money laundering. Two readings are open
+      and this flag does not choose between them: either the 8 September
+      questioning was by another officer (the warrant is issued by the
+      investigating judge but questioning can precede him), in which case
+      "after questioning" is imprecise but not false, or Yousfi has not been
+      interrogated at all, in which case the clause should be removed. What the
+      Nawaat item adds that the record does not carry: as of 22 October 2026 he
+      had still not been interrogated by the investigating judge, seven weeks
+      after arrest; the charges are named by the defence as illicit enrichment
+      and money laundering (the record already carries these); and the piece
+      frames the case as a trial of the free press. What it does not add: any
+      hearing or trial date — the headline's "محاكمة" (trial) is the framing, not
+      a scheduled session — and any new document. Suggested wording if a human
+      accepts it: "a dépôt warrant of 8 September 2026; per defence counsel on
+      22 October 2026 he had not yet been interrogated by the investigating
+      judge". The person record's closing sentence "Person and detention absent
+      from the graph" is also stale and should be removed when this is handled.
+    sources:
+      - nawaat-yousfi-hela-ben-salem-2026-10-22
+
+notes:
+  - >-
+    Note, not a record — UGET is absent from the graph but its strike IS
+    recorded above: ev-uget-sfax-strike-2026-10-22 cites no institution because
+    uget has no id (rg against data/institutions.yaml returns nothing, unlike
+    ugtt at institutions.yaml:1534). If a human imports the event without first
+    creating the UGET record, the union will exist only as a name in a summary,
+    which is the silent dangling reference the house rule forbids — so create
+    the institution first, or accept the summary-only form deliberately. Same
+    gap for the Institut supérieur des études technologiques de Sfax, the
+    university residence (no place row for Sidi Mansour), and the student Rahma
+    Dziri, who is named but gets no person record (a death in a public service
+    failure, no public role).
+  - >-
+    Note — SFBT / CNSS: the 1,592,742-dinar mise en demeure was notified on
+    6 July 2026, not in the October window; the CNSS had been auditing SFBT
+    since 2023 over the 2020, 2021 and 2022 exercises, and the piece also
+    recalls a notification of 8 July 2024 for what its text prints as ".592.742
+    DT", which looks like a typographical loss of the leading 1 but is left as
+    printed rather than corrected silently. Same piece, same company: a customs
+    penalty of 11,517,790 dinars over the repatriation of export receipts for
+    2000-2024, a conciliation request of 4 December 2025 accepted on 26 December
+    2025, immediate payment of 10% plus a first tranche of 545,570 dinars on
+    13 March 2026, and on 27 April 2026 a request to update the file in order to
+    pay the whole amount. SFBT has no company record, so the item cannot be an
+    event; every figure is the outlet's quotation of the company's own first-half
+    2026 statements. Source: african-manager-sfbt-cnss-2026-10-21.
+  - >-
+    Note — BTK Bank, the second bank behind the "Conseil de la Concurrence"
+    headline: its 2025 statements (board of 31 March 2026) show equity of
+    226,067 KDT and net profit of 15,126 KDT, and the auditors flag a social
+    (CNSS-type) verification for 2018-2020 with a preliminary notification of
+    10 December 2021 on a 3,003 KDT redressement and an 800 KDT provision; a
+    customs investigation opened in 2019 on exchange-regulation breaches, with a
+    judgment of 16 October 2024 confirming certain facts, an appeal filed and a
+    352 KDT provision; a deep fiscal audit notified in December 2025 for
+    2021-2024, still open; a pro-forma restatement raising opening equity by
+    8,784 KDT; and a Competition Council case over the treatment of deferred
+    instalments during COVID in which, at the report's date, "aucune décision ni
+    notification n'a été reçue par la Banque" and no provision was taken. That
+    last point matters: the two 22 October African Manager pieces are about two
+    different banks, and only UIB has a Competition Council judgment. BTK Bank
+    has no graph record, so no event. Source:
+    african-manager-btk-menaces-2026-10-22.
+  - >-
+    Note — SoutH2 hydrogen corridor: African Manager relays Businessfront for a
+    project it says is "de 3 300 kilomètres", designed to carry "plus de quatre
+    millions de tonnes" of renewable hydrogen a year and to supply "plus de 40 %
+    de l'objectif d'importation d'hydrogène de l'Union européenne pour 2030",
+    with "plus de 65 %" of the pipeline reusing existing gas infrastructure and
+    operations "au début des années 2030". The instrument is a political
+    declaration by five states — Tunisia, Algeria, Italy, Austria and Germany —
+    which the piece says follows an initial agreement signed in Rome in January
+    2025; a secretariat hosted by UNIDO was launched in Rome on 25 September
+    (the piece does not give the year). The commercial vehicle named is the
+    Alliance Algérie-Europe pour l'hydrogène: Sonatrach and Sonelgaz with Snam,
+    SeaCorridor, VERBUND and VNG; the stage is "études de faisabilité
+    préliminaires". No Tunisian signatory, ministry, company or signature date
+    is named, and no Tunisian entity is a party to the consortium, so there is
+    nothing to attach the record to: this is a note, and the 3,300 km and >40%
+    figures stay Businessfront's claims as relayed, not graph facts. A Tunisian
+    signature would make it an agreement or an event. Source:
+    african-manager-hydrogene-south2-2026-10-22.
+  - >-
+    Note — the "متصدقش" (Matsaddeqsh) campaign is Egyptian, not Tunisian. Nawaat's
+    19 October video says the Egyptian authorities arrested the platform's entire
+    six-journalist editorial team to block its fact-checking of official claims;
+    its 21 October piece reports that eight outlets from Egypt, Syria and Lebanon
+    plus Nawaat launched a joint newsroom ("لحد ما يرجعوا .. التحقق مستمر") to
+    keep verifying Egyptian official statements, and that the International
+    Federation of Journalists issued a solidarity statement demanding the
+    journalists' release. There is no Tunisian state action in either piece — no
+    prosecution, summons or blocking — and Nawaat appears as a participant in a
+    solidarity action, not as a subject. Opinion/solidarity material with no
+    Tunisian act: a note. Sources: nawaat-matsaddeqsh-2026-10-19,
+    nawaat-matsaddeqsh-solidarite-2026-10-21.
+  - >-
+    Note — Saïed on food sovereignty: at Carthage on Wednesday 21 October 2026
+    the president received the agriculture, water-resources and fisheries
+    minister Ezzedine Ben Cheikh, per a presidency communiqué relayed by African
+    Manager on 22 October. He called agriculture a pillar of national security
+    and sovereignty, asked for cheap credit lines and a reference price for
+    small olive growers and more storage capacity at the Office national de
+    l'huile, denounced intermediaries depressing date prices, pressed the CRDA
+    on plant-health protection (olive diseases, red palm weevil), asked for fair
+    and timely fertiliser distribution and for reconstituting the national herd,
+    and said there can be no full sovereignty while the people depend on
+    imported food; the communiqué also refers to the creation of an "Office Rjim
+    Maatoug pour le développement du Sud et du Sahara". No decision, decree or
+    instrument: a speech, so a note. Entity gaps it exposes: no
+    ministry-agriculture, no ministry-industry-energy, no institution for the
+    Office national de l'huile, the Office de l'élevage, the CRDA network or the
+    Rjim Maatoug office, and no person record for Ben Cheikh. Source:
+    african-manager-saied-autosuffisance-2026-10-22.
+  - >-
+    Note — 2027 budget subsidy figures: the budget-project document obtained by
+    TAP puts subsidy spending at 11,846 MD, split hydrocarbons 59.8%, basic
+    products 34.1%, transport 6.1%; 7,090 MD of it for hydrocarbons and
+    electricity (3,676 MD for STEG, 3,414 MD for STIR, including about 500 MD of
+    STEG arrears for 2017-2023 and 320 MD of STIR arrears for 2022 and 2024); a
+    Brent assumption of 80 USD a barrel against 63.3 USD in the 2026 budget;
+    4,036 MD for basic products; 720 MD for transport; execution to end-August
+    2026 at 4,496 MD, up 6% year on year, 46% of the forecast; and a 75% subsidy
+    on domestic gas bottles (cost 35 DT, public price 8.8 DT). These are document
+    figures relayed by one outlet, not an appropriation voted or executed, and
+    the graph holds no 2027 budget event at all — so the first record to open is
+    the deposit of the finance bill, which this piece does not date. A note until
+    that instrument is sourced. Source:
+    african-manager-subventions-2027-2026-10-22.
+  - >-
+    Note — Zouari's two meetings, nothing decided: on Tuesday 20 October 2026 the
+    equipment and housing minister, holding the industry, mines and energy
+    portfolio in caretaker form, met a Scatec delegation led by its chief
+    executive Terje Pilskog together with Aeolus (of the Japanese Toyota Tsusho
+    group), in the presence of the secretary of state for energy transition Wael
+    Chouchane and STEG chief executive Fayçal Trifa, on solar and wind projects,
+    storage and the ~120 MW "Sidi Bouzid 2" photovoltaic plant; on Wednesday
+    21 October he met Rania Hedia, UN-Habitat's regional director for the Arab
+    states, on the 2027 joint action plan, an Alwaleed Philanthropies agreement
+    on housing access for persons with disabilities, the SNIT "Jalon" pilot and
+    the revision of the national housing strategy. Both are courtesy/preparatory
+    meetings with no decision, signature or tender, so no events. The
+    position gap they expose is real and worth a record of its own: the graph
+    has p-equipment-zouari (salah-zouari, equipment-minister, from 2025-03-20)
+    but no industry, mines and energy role and no position for the caretaker
+    holding of that portfolio, which is the portfolio that receives Scatec.
+    Sources: african-manager-zouari-scatec-2026-10-21,
+    african-manager-zouari-onu-habitat-2026-10-22.
+  - >-
+    Note — BVMT at the AFCM, and a correction to the headline reading: the
+    Bourse de Tunis was re-elected to the board of the Arab Federation of
+    Capital Markets (AFCM) for 2026-2028, and the AFCM announced its new board on
+    21 October 2026 after its general assembly, per its own communiqué relayed by
+    African Manager. The board is chaired by Abdulla Alnuaimi, chief executive of
+    the Abu Dhabi Securities Exchange group — which means Bilel Sahnoun, BVMT's
+    chief executive and AFCM board president since the federation's 13-14 May
+    2025 conference in Tunis, is no longer its president. So "Bilel Sahnoun
+    réélu" is not what happened: the exchange kept a seat, and the chair moved.
+    Entity gaps: contrary to the worklist, the graph has NO bilel-sahnoun person
+    record, no bvmt chief-executive role in data/roles.yaml and no position row
+    (rg for sahnoun and bvmt-dg across data/ returns nothing); bvmt exists at
+    institutions.yaml:1489 and bvmt itself is the seat-holder here, so an event
+    could cite bvmt alone — but a governance record needs the person and the
+    role first. AFCM has no institution record either. Source:
+    african-manager-bvmt-afcm-2026-10-22.
+  - >-
+    Note — Ghardimaou security campaign: the item exists in the feed
+    ("Ghardimaou : Vaste campagne sécuritaire et plusieurs arrestations",
+    African Manager, 2026-10-22) but could not be read. The URL in the feed
+    (https://africanmanager.com/ghardimaou-vaste-campagne-securitaire-et-plusieurs-arrestations/)
+    returns a 301 to https://africanmanager.com/ghardimaou-vaste-c/, which 301s
+    back, so a client that follows redirects loops; curl stops after 50 hops,
+    the Wayback availability API reports no snapshot for either slug, and the
+    Arabic edition's site search for "غاردماو" returns no matching item. Headline
+    only: no date of the operation, no authority, no arrest count, and no text to
+    grade. It therefore stays a lead, not a record — and it is exactly the kind
+    of item the next sweep should re-fetch before the slug is fixed or the piece
+    is dropped.
+  - >-
+    Outside the twelve signals, one item in the window touches a graph person
+    and is noted rather than proposed: Kapitalis reported on 21 October 2026
+    that Zied El-Heni's trial was postponed to 27 October 2026 and that his
+    support committee demanded his release. His person record exists
+    (zied-el-heni, people.yaml:15464); no hearing event was proposed because the
+    27 October date falls outside this window and the postponement itself is a
+    procedural step the piece reports without a court document. Worth a record
+    once the 27 October session has a source.
+  - >-
+    Failure vocabulary for this batch: no tier-1 or tier-2 source was retrieved
+    for the window, so every record is tier 3; Al Jazeera's two items are AFP and
+    Reuters wire copy published once, which is one publication and not two
+    confirmations; African Manager carries no byline beyond its house account;
+    the Ghardimaou item is unreadable through a redirect loop; the worktree's
+    feed/feed.json is stale at 2026-10-10 and the triage was done on the
+    checkout's copy; and the Inkyfada fetch failed, with a front-page check
+    finding nothing later than 5 October 2026 rather than an empty window.
