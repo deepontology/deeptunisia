@@ -619,7 +619,9 @@
 							})}
 						</span>
 					{/if}
-				{:else if open && floor}
+				{:else if open && floor && (accepting || floor.n > 0)}
+					<!-- A fielding study whose gate is still closed, with nothing in yet,
+					     is not collecting: it says so rather than count to 100. -->
 					{tf('index.counter.line', { n: fmt(floor.n), N: fmt(floor.first_figure_n) })}
 				{:else}
 					{t('index.headline.notOpen')}

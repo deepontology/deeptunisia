@@ -647,6 +647,38 @@ ok(
 		RESEARCH_API.includes('channelCode(String(payload.channel))'),
 	'the server stores only a listed kind, never the raw ?src= value'
 );
+// What the privacy text says is what the code and the config do.
+const INSTRUMENT_002 = readFileSync(join(HERE, '..', 'research', 'portal', 'study-002', 'instrument-v0.yaml'), 'utf8');
+const WRANGLER = readFileSync(join(HERE, '..', 'wrangler.toml'), 'utf8');
+const PAGE_EN = readFileSync(join(HERE, '..', 'src', 'content', 'police-index.en.md'), 'utf8');
+const HUB = readFileSync(join(HERE, '..', 'src', 'routes', 'research', '+page.svelte'), 'utf8');
+ok(
+	'the consent box names the one-word repeat mark and claims no absence of device information',
+	INSTRUMENT_002.includes('No name, email, IP address or device identifier is kept with them. If this browser has already answered this month, one word saying so is kept') &&
+		!INSTRUMENT_002.includes('device information')
+);
+// Bot Fight Mode stays on, and on the free plan its browser check comes with
+// it: the consent box, the privacy sheet and the page all say so.
+const I18N_SRC = readFileSync(join(HERE, '..', 'src', 'lib', 'i18n.ts'), 'utf8');
+ok(
+	'the Cloudflare security cookie is disclosed in the consent box, the privacy sheet and the page',
+	INSTRUMENT_002.includes('Cloudflare, which protects the site, runs a check in my browser and sets a security cookie that holds none of my answers.') &&
+		I18N_SRC.includes('Cloudflare, which protects the site, runs a check in your browser and sets a security cookie for up to a year; it holds none of your answers.') &&
+		PAGE_EN.includes('it runs a short check in your browser on every visit and sets a security cookie that lasts up to a year') &&
+		!PAGE_EN.includes('sets no tracking cookies')
+);
+ok(
+	'request logs are off, as the page says',
+	/\[observability\.logs\][^\[]*invocation_logs = false/.test(WRANGLER) &&
+		PAGE_EN.includes('The server that receives your answers keeps no log of the requests it receives') &&
+		!PAGE_EN.includes('one request in a hundred')
+);
+ok(
+	'a fielding study with its gate closed reads as not collecting, on the page and in the hub',
+	INDEX_STUDY.includes('{:else if open && floor && (accepting || floor.n > 0)}') &&
+		HUB.includes("if (status === 'fielding') return accepting === false ? 'paused' : 'live';") &&
+		HUB.includes('serverAccepting = { ...serverAccepting, [s.slug]: body.study.accepting }')
+);
 // No completion time is stated until a pretest has measured one.
 ok('the study page states no completion time', !INDEX_STUDY.includes('estimatedMinutes'), 'the counts come from the instrument instead');
 // Arrow keys select every value they pass; an arrow answer never moves on, and

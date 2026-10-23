@@ -153,9 +153,9 @@ items:
     tier: core
     construct: consent
     provenance: project
-    text_en: "I have read how my answers are stored. No name, email, IP address or device information is kept with them."
-    text_fr: "J'ai lu comment mes réponses sont conservées. Aucun nom, aucune adresse e-mail, aucune adresse IP ni aucune information sur mon appareil n'est conservé avec elles."
-    text_ar: "اطّلعت على طريقة حفظ إجاباتي. لا يُحفظ معها أيّ اسم أو بريد إلكتروني أو عنوان IP أو معلومات عن جهازي."
+    text_en: "I have read how my answers are stored. No name, email, IP address or device identifier is kept with them. If this browser has already answered this month, one word saying so is kept, to spot repeat answers from the same device. Cloudflare, which protects the site, runs a check in my browser and sets a security cookie that holds none of my answers."
+    text_fr: "J'ai lu comment mes réponses sont conservées. Aucun nom, aucune adresse e-mail, aucune adresse IP ni aucun identifiant d'appareil n'est conservé avec elles. Si ce navigateur a déjà répondu ce mois-ci, un seul mot l'indiquant est conservé, pour repérer les réponses répétées depuis le même appareil. Cloudflare, qui protège le site, effectue une vérification dans mon navigateur et pose un cookie de sécurité qui ne contient aucune de mes réponses."
+    text_ar: "اطّلعت على طريقة حفظ إجاباتي. لا يُحفظ معها أيّ اسم أو بريد إلكتروني أو عنوان IP أو معرّف لجهازي. وإذا كان هذا المتصفّح قد أجاب هذا الشهر، تُحفظ كلمة واحدة تفيد بذلك لرصد الإجابات المتكرّرة من الجهاز نفسه. وتُجري Cloudflare، التي تحمي الموقع، تحقّقًا في متصفّحي وتضع ملفّ تعريف ارتباط أمنيًّا لا يحمل أيًّا من إجاباتي."
     response: consent
     required: true
 

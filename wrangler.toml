@@ -72,6 +72,13 @@ enabled = true
 # the same as the log not existing.
 head_sampling_rate = 0.01
 
+# No log line per request. A survey answer stores its time to the millisecond, so
+# a logged request could be matched to the answer it carried. What the code itself
+# writes with console.* (one line on a failed insert, with the database's message
+# and no request data) is still kept.
+[observability.logs]
+invocation_logs = false
+
 # There is no staging environment.
 #
 # One existed here and its D1 binding pointed at the production database above

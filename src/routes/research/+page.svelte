@@ -21,9 +21,13 @@
 
 	const locale = $derived(app.locale);
 
-	type Stage = 'live' | 'development' | 'closed' | 'published';
-	function stageOf(status: string): Stage {
-		if (status === 'fielding') return 'live';
+	type Stage = 'live' | 'paused' | 'development' | 'closed' | 'published';
+	/**
+	 * A fielding study is collecting only while the server accepts answers: a
+	 * study whose gate is closed reads as not collecting, never as ongoing.
+	 */
+	function stageOf(status: string, accepting?: boolean): Stage {
+		if (status === 'fielding') return accepting === false ? 'paused' : 'live';
 		if (status === 'closed' || status === 'analyzed') return 'closed';
 		if (status === 'published' || status === 'archived') return 'published';
 		return 'development';
@@ -39,6 +43,7 @@
 	const LIFE = ['design', 'freeze', 'fielding', 'results', 'data'] as const;
 
 	let serverStatus = $state<Record<string, string>>({});
+	let serverAccepting = $state<Record<string, boolean>>({});
 	/** Per index: its counter below the publication floor, or the page's headline figure. */
 	type Latest =
 		| { kind: 'counting'; n: number; of: number }
@@ -50,7 +55,8 @@
 	const ordered = $derived(
 		[...studies].sort((a, b) => Number(!!instrumentFor(b)?.scoring) - Number(!!instrumentFor(a)?.scoring))
 	);
-	const liveCount = $derived(studies.filter((s) => stageOf(statusOf(s)) === 'live').length);
+	const stageFor = (s: StudyRecord) => stageOf(statusOf(s), serverAccepting[s.slug]);
+	const liveCount = $derived(studies.filter((s) => stageFor(s) === 'live').length);
 
 	onMount(() => {
 		for (const s of studies) {
@@ -58,6 +64,7 @@
 				.then((r) => (r.ok ? r.json() : null))
 				.then((body) => {
 					if (body?.study?.status) serverStatus = { ...serverStatus, [s.slug]: body.study.status };
+					if (typeof body?.study?.accepting === 'boolean') serverAccepting = { ...serverAccepting, [s.slug]: body.study.accepting };
 				})
 				.catch(() => {});
 			if (!instrumentFor(s)?.scoring) continue;
@@ -144,7 +151,7 @@
 		{@render kicker('studies')}
 		<ul class="cards">
 			{#each ordered as s (s.id)}
-				{@const stage = stageOf(statusOf(s))}
+				{@const stage = stageFor(s)}
 				{@const isIndex = !!instrumentFor(s)?.scoring}
 				{@const last = latest[s.slug]}
 				<li class="card" class:index={isIndex}>
@@ -228,7 +235,7 @@
 					<p>{t(`research.life.${step}.body`)}</p>
 					<div class="here">
 						{#each ordered.filter((s) => stepOf(statusOf(s)) === i) as s (s.id)}
-							<a class="here-chip mono" class:live={stageOf(statusOf(s)) === 'live'} href="/research/{s.slug}">{shortName(s)}</a>
+							<a class="here-chip mono" class:live={stageFor(s) === 'live'} href="/research/{s.slug}">{shortName(s)}</a>
 						{/each}
 					</div>
 				</li>
