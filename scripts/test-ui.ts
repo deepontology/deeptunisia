@@ -647,6 +647,28 @@ ok(
 		RESEARCH_API.includes('channelCode(String(payload.channel))'),
 	'the server stores only a listed kind, never the raw ?src= value'
 );
+// What the privacy text says is what the code and the config do.
+const INSTRUMENT_002 = readFileSync(join(HERE, '..', 'research', 'portal', 'study-002', 'instrument-v0.yaml'), 'utf8');
+const WRANGLER = readFileSync(join(HERE, '..', 'wrangler.toml'), 'utf8');
+const PAGE_EN = readFileSync(join(HERE, '..', 'src', 'content', 'police-index.en.md'), 'utf8');
+const HUB = readFileSync(join(HERE, '..', 'src', 'routes', 'research', '+page.svelte'), 'utf8');
+ok(
+	'the consent box names the one-word repeat mark and claims no absence of device information',
+	INSTRUMENT_002.includes('No name, email, IP address or device identifier is kept with them. If this browser has already answered this month, one word saying so is kept') &&
+		!INSTRUMENT_002.includes('device information')
+);
+ok(
+	'request logs are off, as the page says',
+	/\[observability\.logs\][^\[]*invocation_logs = false/.test(WRANGLER) &&
+		PAGE_EN.includes('The server that receives your answers keeps no log of the requests it receives') &&
+		!PAGE_EN.includes('one request in a hundred')
+);
+ok(
+	'a fielding study with its gate closed reads as not collecting, on the page and in the hub',
+	INDEX_STUDY.includes('{:else if open && floor && (accepting || floor.n > 0)}') &&
+		HUB.includes("if (status === 'fielding') return accepting === false ? 'paused' : 'live';") &&
+		HUB.includes('serverAccepting = { ...serverAccepting, [s.slug]: body.study.accepting }')
+);
 // No completion time is stated until a pretest has measured one.
 ok('the study page states no completion time', !INDEX_STUDY.includes('estimatedMinutes'), 'the counts come from the instrument instead');
 // Arrow keys select every value they pass; a keyboard answer never moves on.

@@ -154,6 +154,7 @@ The series runs until a later instrument version replaces it, with a public revi
 - **A continuous series.** The platform's default is a wave with a fixed close. This study fields continuously and publishes monthly (§7a).
 - **Interim translations.** The French and Arabic were prepared by the project and reviewed by its editor. They are not the independent human translation, back-translation and cognitive interviewing the platform requires. They will be replaced in a later instrument version.
 - **No external ethics review.** The protections published on the study page are the project's own.
+- **No external data-protection review.** The design has been reviewed only by the project's maintainers and the AI tools they work with. Reviewers are invited to examine the questionnaire, the code and the protections, and what they find is published and acted on.
 
 ## 11. Changes after registration
 
