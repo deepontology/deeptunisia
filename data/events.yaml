@@ -4342,6 +4342,12 @@
       held_by: "Yousfi defence counsel Hela Ben Salem, per Inkyfada"
       source: inkyfada-yousfi-dossier-2026-09-14
   falsifiable_by: TAP dispatch of 8 September 2026 or the judicial-pole charging order
+  disputes:
+    - claim: "Whether Yousfi was interrogated by the investigating judge before the 8 September 2026 dépôt warrant, as the summary's 'after questioning' states, or had still not been interrogated by that judge on 22 October 2026, as his counsel states"
+      held_by: "Defence counsel Hela Ben Salem, interviewed by Nawaat on 22 October 2026"
+      source: nawaat-yousfi-hela-ben-salem-2026-10-22
+      assessment: "Kept open. Questioning before the warrant may have been conducted by another officer, which would make 'after questioning' imprecise rather than false; counsel speaks specifically of the investigating judge. Neither reading is adopted and no date changes."
+      status: open
   sources:
     - aljazeera-yousfi-arrest-2026-09-04
     - rfi-yousfi-rally-2026-09-09
@@ -5496,3 +5502,115 @@
     thousand-dinar figure.
   sources:
     - african-manager-uib-revelation-2026-10-18
+- id: ev-hamdi-military-court-sentence-2026-10-21
+  date: 2026-10-21
+  title_en: Military court sentences Olfa Hamdi to four years in two cases
+  title_fr: Le tribunal militaire condamne Olfa Hamdi à quatre ans de prison dans deux affaires
+  category: legal
+  subcategory: military-court-sentence
+  location:
+    - gov-tunis
+  actors:
+    - olfa-hamdi
+  institutions:
+    - judiciary
+  causes: []
+  consequences: []
+  summary: The permanent military tribunal of Tunis sentenced Olfa Hamdi, president of the Third Republic party (La Troisième République), to four years in prison and 80,000 dinars in fines on Wednesday 21 October 2026, in two cases brought against her. Her lawyer Akram Moussa told Agence France-Presse that the four years are two separate two-year terms, each with a 40,000-dinar fine, and that the charges — plotting against state security and inciting the military to disobey orders — arose from social media posts; Al Jazeera, carrying AFP and Reuters copy, reports the same composition of the sentence and the same 80,000 dinars. African Manager, reporting the same day, names the court and adds "other military offences" to the charges, and recalls a two-year sentence against her in March 2026 in a similar case. Al Jazeera describes Hamdi as a dual Tunisian and United States national who ran in the 2024 presidential election and was excluded for not meeting the 40-year age minimum, and who was detained at Tunis airport in February (the year is implied by the piece) after living abroad. Neither outlet states whether the judgment is appealable or whether an appeal has been lodged; a United States State Department spokesperson told AFP that Washington was "closely tracking the situation". No judgment text, court communiqué or defence filing was retrieved, and the permanent military tribunal of Tunis has no graph id, so the record cites the judiciary.
+  confidence: B
+  basis: reported
+  verification: needs-primary-source
+  attributed_to: Agence France-Presse and Reuters, via Al Jazeera (21 October 2026), and African Manager (21 October 2026), reporting the defence lawyer's account
+  reasoning: Two outlets publishing the same day, one of them wire copy from two agencies, agree on the court, the four years, the 2+2 structure, the 80,000 dinars and the two charges; that is enough for B on the sentence. The charge wording differs slightly ("and other military offences" in African Manager) and neither source says whether the judgment can be appealed, so those points are stated as reported and left open. The biography is Al Jazeera's alone and is marked as its account.
+  falsifiable_by: The judgment itself, a military-court or defence communiqué, or the case file would confirm the two case numbers, the charges and the 2+2 years and settle whether the judgment is appealable; a defence statement that an appeal was lodged would add the procedural fact this record lacks.
+  sources:
+    - aljazeera-hamdi-verdict-2026-10-21
+    - african-manager-hamdi-verdict-2026-10-21
+- id: ev-unrest-ettadhamen-jebiniana-2026-10-22
+  date: 2026-10-22
+  title_en: Rare unrest in Ettadhamen and Jebiniana after two deaths linked to the police
+  title_fr: Troubles à Ettadhamen et Jebiniana après deux décès liés à la police
+  category: protest
+  subcategory: police-violence
+  location:
+    - gov-tunis
+    - gov-sfax
+  actors: []
+  institutions:
+    - ministry-interior
+  causes: []
+  consequences: []
+  summary: "On Thursday 22 October 2026 police fired tear gas at protesters in Ettadhamen, a suburb of Tunis, after the death of a man detained on suspicion of drug dealing, and clashed with protesters in Jebiniana, in Sfax governorate, after the death of a man whose relatives said he died while being chased by security forces, per Agence France-Presse and Reuters copy published by Al Jazeera on 23 October 2026. In Ettadhamen the dead man's family said he died from abuse by police officers and called for the circumstances to be clarified and those responsible held to account, while local media reported that he died after swallowing drugs; protesters blocked roads, burned tyres and threw stones, and security forces fired tear gas while seeking to secure a National Guard station (Reuters, as carried by Al Jazeera). In Jebiniana protesters set a vehicle ablaze and burned tyres and police used tear gas. Separately in Sfax city, students protested the death of a female student who had a cardiac problem, her colleagues blaming an ambulance delay and a lack of medical facilities and calling for a strike in Sfax University's faculties on Friday. The piece gives no crowd figure, no arrest count and no demand, and names no organising body. It does not present these gatherings as a continuation of the 17 October 2026 march (see ev-march-17-october-2026): it says only that the flare-ups \"coincide with\" the deepening crisis and mentions the 17 October protest as a separate event. No source found in this sweep asserts that the 22 October gatherings were called by the 17 October coordination framework, so no continuity is recorded."
+  confidence: C
+  verification: needs-primary-source
+  attributed_to: Agence France-Presse and Reuters, via Al Jazeera English (23 October 2026)
+  reasoning: "A single published outlet carrying two agencies' copy. The deaths, the locations, the tear gas and the two competing accounts of the Ettadhamen death are as the wire copy states them; nothing about them rests on a second published outlet. Because the piece gives no number, no arrest count and no caller, the record carries none. The \"distinct from the 17 October march\" reading is an inference from what the piece does and does not say, and is flagged as such rather than asserted: the two events are ten days apart, on different triggers, with a named caller for one and none for the other."
+  falsifiable_by: An interior ministry or National Guard statement, an arrest count, a forensic or judicial finding on either death, or a second outlet's account would confirm or correct the sequence; a statement by the 17 October coordination framework, or reporting that its networks called the 22 October gatherings, would refute the "distinct mobilisation" reading and require a cause link to ev-march-17-october-2026.
+  sources:
+    - aljazeera-tunisia-unrest-2026-10-23
+- id: ev-uget-sfax-strike-2026-10-22
+  date: 2026-10-22
+  title_en: UGET calls a general strike in Sfax after a student's death at the Sidi Mansour residence
+  title_fr: L'UGET appelle à une grève générale à Sfax après la mort d'une étudiante au foyer de Sidi Mansour
+  category: protest
+  subcategory: student-strike
+  location:
+    - gov-sfax
+  actors: []
+  institutions: []
+  causes: []
+  consequences: []
+  summary: The Union générale des étudiants de Tunisie (UGET) called a general strike for Friday 23 October 2026 in all faculties and higher institutes of the Sfax governorate, after the death of the student Rahma Dziri at the Sidi Mansour university residence, per Kapitalis on 22 October 2026 relaying the union's communiqué. Dziri was enrolled at the Institut supérieur des études technologiques (ISET) of Sfax and fell ill in the night of Wednesday 21 October 2026; according to her classmates' testimony, as the piece reports it, the ambulance reached the residence more than an hour after the first emergency call. The UGET communiqué demands permanent medical structures inside university residences and urgent measures from the supervisory authorities to guarantee immediate access to care. Al Jazeera's wire account of 23 October reports the same death and the call for a strike in Sfax University's faculties without naming the UGET, attributing the ambulance-delay account to the student's colleagues and their complaint to "a lack of medical facilities". Neither source gives a cause of death, and no emergency-service, hospital or university record was retrieved. The UGET has no institution record, so the record cites no institution and names the union in the summary only.
+  confidence: B
+  basis: reported
+  verification: needs-primary-source
+  attributed_to: UGET communiqué, as relayed by Kapitalis (22 October 2026); the death and the strike call also reported by Agence France-Presse and Reuters via Al Jazeera (23 October 2026)
+  reasoning: "Two outlets published independently on the death and on a strike call in Sfax's faculties, which is what raises this above a single report. They do not agree on everything: only Kapitalis names the UGET as the caller and names the student, and only Kapitalis gives the \"more than an hour\" delay, so those details rest on one outlet relaying the union's own communiqué. The cause of death is not stated by either and is not inferred here."
+  falsifiable_by: The UGET communiqué itself, a university or residence administration statement, the emergency-service call log or a hospital record would confirm the dates, the delay and the cause, and a statement that the strike was called off or limited to one faculty would correct the scope.
+  sources:
+    - kapitalis-uget-sfax-greve-2026-10-22
+    - aljazeera-tunisia-unrest-2026-10-23
+- id: ev-arp-cnrd-budget-2027-examination-2026-10-21
+  date: 2026-10-21
+  title_en: ARP and CNRD budget committees open the 2027 budget examination and set the minister's hearing
+  title_fr: Les commissions du budget de l'ARP et du CNRD ouvrent l'examen du budget 2027 et fixent l'audition du ministre
+  category: political
+  subcategory: budget-process
+  location:
+    - gov-tunis
+  actors: []
+  institutions:
+    - legislature
+    - cnrd
+  causes: []
+  consequences: []
+  summary: The finance and budget committees of the Assembly of the Representatives of the People (ARP) and of the National Council of Regions and Districts (CNRD) held a joint preparatory meeting at ARP headquarters on Wednesday 21 October 2026, chaired by the two committees' presidents Ali Hassoumi Bayouli and Maher Kettari, to fix their common working calendar for the 2027 economic budget (budget économique) and the 2027 finance bill, per African Manager on 22 October 2026. The two committees decided to hold a joint hearing of the economy and planning minister on Wednesday 28 October 2026 — after this sweep's window — and a further joint hearing of the finance minister in the following week, with the date to be confirmed. Members' interventions, as the piece reports them, concerned the need to deepen the figures and indicators in the two texts, a joint assessment of the 2026 budget and its execution in the light of the supply difficulties of summer 2026, and the non-issuance of the implementing decrees needed to make a number of 2026 finance-law measures effective. No ARP or CNRD communiqué, agenda or minutes were retrieved; the minister of economy and planning has no person record and his ministry no institution record, so neither is cited.
+  confidence: C
+  verification: needs-primary-source
+  attributed_to: African Manager (22 October 2026), reporting the two committees' joint meeting
+  reasoning: One outlet, no parliamentary document. The meeting, its date, the two chairing members and the scheduled 28 October hearing are as the piece states them; the members' stated concerns are its summary of their interventions, not a record of the sitting. The 28 October audition is forward-dated, so the record dates the preparatory meeting and reports the audition as scheduled rather than held.
+  falsifiable_by: The ARP or CNRD committee agenda, minutes or communiqué, or the published hearing schedule, would confirm the 21 October meeting and the 28 October date; a postponement or a different date would correct it.
+  sources:
+    - african-manager-arp-cnrd-budget-2027-2026-10-22
+- id: ev-uib-competition-fine-2024-05-29
+  date: 2024-05-29
+  title_en: Competition Council fines UIB 9,009,258 dinars over COVID deferred-maturity interest
+  title_fr: Le Conseil de la Concurrence condamne l'UIB à 9 009 258 dinars sur les intérêts intercalaires du report d'échéances Covid
+  category: economic
+  subcategory: competition-ruling
+  location:
+    - gov-tunis
+  actors: []
+  institutions:
+    - uib
+  causes: []
+  consequences: []
+  summary: "By a judgment of 29 May 2024, the Competition Council held that the Union Internationale de Banques (UIB), the Tunisian subsidiary of Société Générale, had processed the intercalary interest on deferred instalments during the COVID-19 period in breach of the law on competition and prices, and fined it 9,009,258 dinars, per the bank's statutory auditors' report on the 2025 accounts as quoted by African Manager on 22 October 2026. The auditors state that the judgment carried no provisional execution, so an appeal would be suspensive of execution, and that the risk cannot be precisely assessed at this stage; the report does not say whether an appeal has been lodged. This record is a backfill, not an October 2026 event: the 22 October item is a disclosure inside the 2025 audit report, and African Manager's headline (\"Une amende de plus de 9 MDT\") does not date the decision. The judgment, the Competition Council's decision and any appeal filing were not retrieved, and the Council has no graph id."
+  confidence: C
+  verification: needs-primary-source
+  attributed_to: UIB statutory auditors' report on the 2025 accounts, as quoted by African Manager (22 October 2026)
+  reasoning: The decision date, the practice and the amount come from one document, the auditors' report, quoted verbatim by one outlet; the judgment itself was not obtained. The 9,009,258 dinars is the auditors' transcription of the fine, not a figure read off the ruling. The date is 29 May 2024 because the auditors date the judgment; dating it to October 2026 would attribute to the press item a decision it merely discloses.
+  falsifiable_by: The Competition Council's decision of 29 May 2024, the court file, the bank's own annual report, or a filing showing an appeal lodged within the deadline would confirm the amount, the practice and the procedural position, and would show whether the fine is final.
+  sources:
+    - african-manager-uib-concurrence-2026-10-22
+    - african-manager-btk-menaces-2026-10-22
