@@ -1468,6 +1468,16 @@ console.log('\n  ── the real registry ──\n');
 	const env = researchEnv({ STUDIES: real, TURNSTILE_VERIFY: async () => true });
 	const refused = await post(env, `/api/studies/${realStudy.slug}/submit`, submitPayload());
 	ok('a submit against the real registry is refused 409', refused.status === 409, refused.body.error ?? '');
+
+	// The police index is fielding once its instrument is frozen, and the
+	// submission gate is what keeps it closed until a deployment opens it.
+	const police = real.studies.find((entry) => (entry as { slug: string }).slug === 'police') as { slug: string; status: string } | undefined;
+	ok('the real police index is fielding', police?.status === 'fielding', police?.status);
+	const closedEnv = researchEnv({ STUDIES: real, RESEARCH_OPEN: undefined, TURNSTILE_VERIFY: async () => true });
+	const closed = await post(closedEnv, '/api/studies/police/submit', submitPayload());
+	ok('with RESEARCH_OPEN unset the fielding police index refuses a submit 403', closed.status === 403, `${closed.status} ${closed.body.error ?? ''}`);
+	const read = await get(closedEnv, '/api/studies/police');
+	ok('and reads as not accepting', read.body.study?.accepting === false && read.body.study?.status === 'fielding');
 }
 
 console.log('\n  ── the first-party proof of work ──\n');
