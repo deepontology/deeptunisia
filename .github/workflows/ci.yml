@@ -3,6 +3,14 @@ name: CI
 # The fresh-clone gate. Every command below is the sequence the README
 # documents, run on a clean runner with no prior SvelteKit state. If a new
 # contributor cannot reproduce this order, this job fails first.
+#
+# Full history is required, not incidental: the dataset changelog is extracted
+# from `git log -- data/` at build time, and the shipped-payload statistic that
+# the landing page publishes is computed from it. A shallow checkout renders a
+# shorter changelog, so the same tree resolves a different payload size and the
+# public-claim check fails on a number that is correct in every deep checkout,
+# including the one a deploy is built from. Checking out the full history makes
+# the gate measure what ships.
 
 on:
   push:
@@ -16,6 +24,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "22"
@@ -31,6 +41,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "22"
