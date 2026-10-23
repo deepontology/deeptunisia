@@ -1,9 +1,9 @@
 # Pre-registration: Study 002, Police Satisfaction Index (PSI), monthly series
 
-**Study:** `dt-research-002` · **Instrument:** `dt002-police-index` · **Version:** recorded at freeze
-**Instrument hash (sha256):** `RECORDED AT FREEZE`
-**Fielding window:** `RECORDED AT FREEZE` (opens) to `RECORDED AT FREEZE` (closes)
-**Registered:** `RECORDED AT FREEZE`
+**Study:** `dt-research-002` · **Instrument:** `dt002-police-index` · **Version:** 1.0.0
+**Instrument hash (sha256):** `4aa29ab4340ea0a9e0b7bdc987388ab282e78b22d629843ccffbcc2897a8bfd6`
+**Fielding window:** 2026-10-23 (opens) to no fixed date; monthly until a later version replaces it (closes)
+**Registered:** 2026-10-23
 
 This document is fixed before the first response is collected. The hash above is the content hash of the instrument as fielded. It covers every question's wording in English, French and Arabic, every response option and scale label, the display conditions, and the whole scoring block: the formula, bands, exclusions, regions, cell floor and the monthly series settings. Any change to any of those produces a different hash and a new instrument version, which starts a new series, and the change is logged under §11. This document is committed to the public repository next to the instrument, and the commit date is the registration date.
 

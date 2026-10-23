@@ -40,21 +40,36 @@
   title_en: "Police Satisfaction Index"
   title_fr: "Indice de satisfaction envers la police"
   title_ar: "مؤشّر الرضا عن الشرطة"
-  status: design
+  status: fielding
   design_type: repeated-cross-sectional-online
   population: open-online-18-plus
   population_statement: "Among respondents to an open, self-selected online survey of adults. Results describe the people who took part, not Tunisians as a whole."
   locales: [en, fr, ar]
-  ethics_review: null
-  data_protection_review: null
-  preregistration: null
+  ethics_review: >-
+    None. No external ethics review has taken place. DeepTunisia is a young,
+    independent and unfunded project, and approaching an ethics board or an
+    accredited auditor is not yet possible for us. The study has been reviewed
+    only by the project's maintainers and the AI tools they work with.
+    Reviewers are invited to examine the instrument, the code and the
+    participant protections, and we will publish and act on what they find.
+  data_protection_review: >-
+    None. No external data-protection review has taken place, for the same
+    reasons. Only the project's maintainers and the AI tools they work with
+    have reviewed the design. The privacy text describes exactly what is
+    stored. The code is open, so anyone can check those statements against
+    it, and we will correct them if they are wrong.
+  preregistration: >-
+    This study's own preregistration document, frozen and timestamped before
+    the first answer, including the dated amendment that makes October 2026 a
+    partial first month. Commit 1d11ee9792f0d87bfd421a98cf03d9946ad52194,
+    23 October 2026.
   instrument_versions:
     - id: dt002-police-index
-      version: 0.1.0-draft
-      hash: null
-      source: research/portal/study-002/instrument-v0.yaml
-      frozen: false
-  fielding_window: null
+      version: 1.0.0
+      hash: "4aa29ab4340ea0a9e0b7bdc987388ab282e78b22d629843ccffbcc2897a8bfd6"
+      source: data/studies/dt-research-002/dt002-police-index-v1.0.0.yaml
+      frozen: true
+  fielding_window: { start: 2026-10-23, end: null }
   target_n: 1000
   realized_n: null
   weighting: null
@@ -63,4 +78,4 @@
   pi: null
   outputs: []
   created: 2026-10-07
-  updated: 2026-10-07
+  updated: 2026-10-23
