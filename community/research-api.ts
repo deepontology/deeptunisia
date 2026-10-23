@@ -973,8 +973,14 @@ export async function handleResearch(
 				}
 			}
 			// 8. twenty responses an hour per address, counted from a salted hash.
+			//    The bucket expires at the end of the clock hour, not an hour after
+			//    this request: `now + 1 h` would be the stored row's submitted_at
+			//    plus an hour, and would tie the answer to the hashed address.
+			//    Expired buckets are deleted first, so none outlives its hour by
+			//    more than the gap to the next submission.
+			await ctx.bucketStore.sweep?.(ctx.now);
 			const key = await bucketKey(ctx.clientAddress, env.RATE_PEPPER, ctx.now);
-			await consume(ctx.bucketStore, key, 'response', ctx.now);
+			await consume(ctx.bucketStore, key, 'response', ctx.now, { aligned: true });
 			// 9. the compiled instrument, needed by the assignment and completion
 			//    gates below and by validation after them.
 			const instrument = instrumentFor(env.STUDIES, study);
@@ -1066,7 +1072,11 @@ export async function handleResearch(
 						instrument.hash,
 						String(payload.locale),
 						String(payload.channel),
-						String(payload.consentVersion),
+						// The consent version is the instrument's own (version and short
+						// hash), which validation has already tied to this submission. The
+						// client's string is checked but never stored: it is free text, and
+						// a stored free-text field is a field that could hold a name.
+						`${instrument.version}+${instrument.hash.slice(0, 12)}`,
 						payload.startedAt,
 						ctx.now,
 						payload.completionMs,

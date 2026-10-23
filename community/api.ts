@@ -221,6 +221,9 @@ function bucketStore(db: Db): BucketStore {
 				)
 				.bind(bucket.key, bucket.count, bucket.expires_at)
 				.run();
+		},
+		async sweep(now) {
+			await db.prepare('DELETE FROM rate_buckets WHERE expires_at <= ?').bind(now).run();
 		}
 	};
 }

@@ -505,7 +505,12 @@ console.log('\n  ── a valid submission is stored, and names nobody ──\n'
 	];
 	ok('the row carries exactly the contract columns and no identifier column', JSON.stringify(Object.keys(row)) === JSON.stringify(expectedColumns), Object.keys(row).join(', '));
 	ok('the row records the study, instrument and hash', row.study_id === 'dt-fixture-001' && row.instrument_id === fixtureInstrument.id && row.instrument_hash === fixtureInstrument.hash);
-	ok('the row records locale, channel and consent version', row.locale === 'en' && row.channel === 'test' && row.consent_version === 'consent-v1');
+	ok('the row records locale and channel', row.locale === 'en' && row.channel === 'test');
+	ok(
+		'the consent version stored is the instrument\'s own, never the string the client sent',
+		row.consent_version === `${fixtureInstrument.version}+${fixtureInstrument.hash.slice(0, 12)}` && row.consent_version !== 'consent-v1',
+		String(row.consent_version)
+	);
 	ok(
 		'the row records the assigned arms',
 		row.block_order === sent.assignment.blockOrder && row.scale_direction === sent.assignment.scaleDirection,
@@ -517,6 +522,40 @@ console.log('\n  ── a valid submission is stored, and names nobody ──\n'
 	const buckets = (await env.DB.prepare('SELECT * FROM rate_buckets').all<any>()).results;
 	const bucketKey0 = buckets[0]?.key.split(':') ?? [];
 	ok('the rate bucket is a hash, not an address', buckets.length === 1 && bucketKey0[0] === 'response' && /^[0-9a-f]{64}$/.test(bucketKey0[1] ?? '') && !JSON.stringify(buckets).includes('203.0.113'));
+}
+
+console.log('\n  ── a rate bucket records the hour, never the moment ──\n');
+
+{
+	const env = researchEnv();
+	const realNow = Date.now;
+	// Twenty-three minutes into the hour, so an hour after the request and the
+	// end of the hour are different instants.
+	let clock = Date.UTC(2026, 10, 3, 9, 23, 17, 451);
+	Date.now = () => clock;
+	try {
+		const first = await submitAssigned(env, 'fixture', { consentVersion: 'Synthetic Name, +216 00 000 000' });
+		ok('a submission mid-hour is accepted', first.status === 200, first.body.error ?? '');
+		const [row] = await allRows(env);
+		ok('a free-text consent version is not stored', row.consent_version === `${fixtureInstrument.version}+${fixtureInstrument.hash.slice(0, 12)}`, String(row.consent_version));
+		const bucket = (await env.DB.prepare('SELECT * FROM rate_buckets').all<any>()).results[0];
+		ok('the bucket expires at the end of the clock hour', bucket?.expires_at === Date.UTC(2026, 10, 3, 10, 0, 0, 0), String(bucket?.expires_at));
+		ok('the bucket expiry is not the stored answer\'s time plus an hour', bucket?.expires_at !== row.submitted_at + 3_600_000);
+
+		clock += 60_000;
+		await submitAssigned(env, 'fixture');
+		const same = (await env.DB.prepare('SELECT * FROM rate_buckets').all<any>()).results;
+		ok('a second answer in the same hour counts in the same bucket, expiry unchanged', same.length === 1 && same[0].count === 2 && same[0].expires_at === bucket.expires_at, JSON.stringify(same));
+
+		// Two hours on, an answer from another address: the expired bucket goes.
+		clock += 2 * 3_600_000;
+		const later = await post(env, '/api/studies/fixture/submit', submitPayload({ assignment: await assignmentFor(env, 'fixture') }), '198.51.100.9');
+		ok('a later answer from another address is accepted', later.status === 200, later.body.error ?? '');
+		const left = (await env.DB.prepare('SELECT * FROM rate_buckets').all<any>()).results;
+		ok('the expired bucket is deleted by the next submission', left.length === 1 && left[0].expires_at === Date.UTC(2026, 10, 3, 12, 0, 0, 0), JSON.stringify(left.map((b: any) => b.expires_at)));
+	} finally {
+		Date.now = realNow;
+	}
 }
 
 console.log('\n  ── a re-asked item keeps both ratings ──\n');
