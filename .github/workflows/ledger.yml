@@ -8,9 +8,13 @@
 # scripts/ledger-verify.ts (community/research-commitment.ts explains the
 # fingerprint).
 #
-# The job reads only the public endpoint any reader can call, holds no database
-# credential, and does nothing while the study is not collecting: any answer
-# other than 200 with a commitment in it is skipped, not recorded.
+# The job reads only the public endpoint any reader can call and holds no
+# database credential. The site's bot check answers requests from hosted runners
+# with a challenge, so the job reads the same Worker at its own address, kept in
+# the LEDGER_LIVE_HOST secret; without the secret it reads the site and fails.
+# A 409, the study not collecting, is skipped and nothing is recorded. Any other
+# answer that is not 200 with a commitment in it fails the job, so a day the
+# ledger missed shows as a failed run.
 
 name: Police index ledger
 
@@ -49,13 +53,19 @@ jobs:
 
       - name: Read the commitment from the live endpoint
         id: read
+        env:
+          LIVE_HOST: ${{ secrets.LEDGER_LIVE_HOST }}
         run: |
           set -euo pipefail
-          status=$(curl -sS -o live.json -w '%{http_code}' https://deeptunisia.org/api/studies/police/live || echo 000)
-          if [ "$status" != "200" ] || ! node -e "const b=require('./live.json'); if(!b.commitments) process.exit(1)"; then
-            echo "live endpoint answered $status without a commitment; nothing recorded"
+          status=$(curl -sS --max-time 30 --retry 2 --retry-delay 5 -o live.json -w '%{http_code}' "https://${LIVE_HOST:-deeptunisia.org}/api/studies/police/live" || true)
+          if [ "$status" = "409" ]; then
+            echo "the study is not collecting responses; nothing recorded"
             echo "skip=1" >> "$GITHUB_OUTPUT"
             exit 0
+          fi
+          if [ "$status" != "200" ] || ! node -e "const b=require('./live.json'); if(!b.commitments) process.exit(1)"; then
+            echo "::error::live endpoint answered $status without a commitment; nothing recorded"
+            exit 1
           fi
           node -e "
             const b = require('./live.json');
