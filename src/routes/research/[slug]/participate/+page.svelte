@@ -349,18 +349,27 @@
 	 * submitting stays a deliberate act, and not when the answer was a change of
 	 * mind on a screen already answered.
 	 *
-	 * A choice made with the keyboard does not move on. Arrow keys select each
-	 * value they pass through, so a keyboard answer that advanced would record
-	 * the first value passed, not the one meant; it stays until Next.
+	 * A choice made with the arrow keys does not move on. Arrow keys select each
+	 * value they pass through, so an answer that advanced would record the first
+	 * value passed, not the one meant; it stays until Next. Space and a tap or a
+	 * click choose exactly one value, so they move on.
 	 */
 	let pending: ReturnType<typeof setTimeout> | null = null;
-	/** Set by a key that selects a choice (an arrow or the space bar), cleared by any other key and by the answer it causes. */
-	let keyChoice = false;
-	const keyChoiceFrom = (e: KeyboardEvent) => (keyChoice = e.key.startsWith('Arrow') || e.key === ' ');
+	/**
+	 * When an arrow key last moved a selection. The change it causes arrives
+	 * within the same key press, so only an answer that close to it counts as
+	 * an arrow choice; a mark that outlives its key press can never hold back a
+	 * later click.
+	 */
+	let arrowAt = -Infinity;
+	const ARROW_WINDOW_MS = 100;
+	const keyChoiceFrom = (e: KeyboardEvent) => {
+		if (e.key.startsWith('Arrow')) arrowAt = performance.now();
+	};
 	function answerAndAdvance(item: RuntimeItem, value: number | string, key = item.id) {
 		const was = answers[key];
-		const byKey = keyChoice;
-		keyChoice = false;
+		const byKey = performance.now() - arrowAt < ARROW_WINDOW_MS;
+		arrowAt = -Infinity;
 		setAnswer(key, value);
 		if (pending) clearTimeout(pending);
 		if (onLast || byKey || (was !== undefined && was !== null)) return;
