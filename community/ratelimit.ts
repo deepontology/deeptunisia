@@ -88,6 +88,16 @@ export const LIMITS: Record<string, Limit> = {
 export interface BucketStore {
 	get(key: string): Promise<Bucket | null>;
 	put(bucket: Bucket): Promise<void>;
+	/** Delete every bucket whose window has ended. */
+	sweep?(now: number): Promise<void>;
+}
+
+/**
+ * The end of the clock window `now` falls in: the end of the current hour for an
+ * hourly limit. Every bucket opened in the same window carries the same expiry.
+ */
+export function windowEnd(now: number, windowMs: number): number {
+	return (Math.floor(now / windowMs) + 1) * windowMs;
 }
 
 /**
@@ -95,12 +105,18 @@ export interface BucketStore {
  *
  * The counter is keyed by action as well as by client, so a flood of votes cannot
  * exhaust somebody's ability to report abuse.
+ *
+ * With `aligned`, a new bucket expires at the end of the clock window rather than
+ * one window after this request. An expiry of `now + windowMs` records the moment
+ * of the request to the millisecond; aligned, it records only the window, so the
+ * bucket cannot be matched to anything else written at that moment.
  */
 export async function consume(
 	store: BucketStore,
 	clientKey: string,
 	action: keyof typeof LIMITS | string,
-	now: number
+	now: number,
+	options: { aligned?: boolean } = {}
 ): Promise<void> {
 	const limit = LIMITS[action];
 	if (!limit) throw new RateLimitError(`no rate limit defined for "${action}"`, 0);
@@ -109,7 +125,8 @@ export async function consume(
 	const existing = await store.get(key);
 
 	if (!existing || existing.expires_at <= now) {
-		await store.put({ key, count: 1, expires_at: now + limit.windowMs });
+		const expires = options.aligned ? windowEnd(now, limit.windowMs) : now + limit.windowMs;
+		await store.put({ key, count: 1, expires_at: expires });
 		return;
 	}
 	if (existing.count >= limit.max) {

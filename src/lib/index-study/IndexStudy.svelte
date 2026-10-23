@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { page } from '$app/state';
+	import { query } from '$lib/query.svelte';
 	import { Tween } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
 	import { t, tf } from '$lib/t.svelte';
@@ -184,9 +184,11 @@
 	 * through. The runner reads the code off its own URL, so a link handed on
 	 * from here that dropped it would answer as `organic` and vanish from the
 	 * link check on the integrity section. Only a code the server accepts is
-	 * carried; the same helper the runner reads it with decides that.
+	 * carried; the same helper the runner reads it with decides that. The page
+	 * is prerendered, so the code is read through query(): the built link has
+	 * no code and hydration adds the one this reader arrived with.
 	 */
-	const srcCode = $derived(channelCode(page.url.searchParams.get('src') ?? ''));
+	const srcCode = $derived(channelCode(query().get('src') ?? ''));
 	// Every link into the runner is a full page load (data-sveltekit-reload on
 	// each): the runner's route carries its own security policy, the one that
 	// admits the human check, and a client-side navigation would keep this

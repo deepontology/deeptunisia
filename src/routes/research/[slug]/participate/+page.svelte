@@ -348,13 +348,22 @@
 	 * a beat long enough to see the choice land. Not on the last screen, where
 	 * submitting stays a deliberate act, and not when the answer was a change of
 	 * mind on a screen already answered.
+	 *
+	 * A choice made with the keyboard does not move on. Arrow keys select each
+	 * value they pass through, so a keyboard answer that advanced would record
+	 * the first value passed, not the one meant; it stays until Next.
 	 */
 	let pending: ReturnType<typeof setTimeout> | null = null;
+	/** Set by a key that selects a choice (an arrow or the space bar), cleared by any other key and by the answer it causes. */
+	let keyChoice = false;
+	const keyChoiceFrom = (e: KeyboardEvent) => (keyChoice = e.key.startsWith('Arrow') || e.key === ' ');
 	function answerAndAdvance(item: RuntimeItem, value: number | string, key = item.id) {
 		const was = answers[key];
+		const byKey = keyChoice;
+		keyChoice = false;
 		setAnswer(key, value);
 		if (pending) clearTimeout(pending);
-		if (onLast || (was !== undefined && was !== null)) return;
+		if (onLast || byKey || (was !== undefined && was !== null)) return;
 		const here = cursor;
 		pending = setTimeout(() => {
 			if (cursor === here) next();
@@ -886,6 +895,7 @@
 										name={key}
 										value={v}
 										checked={answers[key] === v}
+										onkeydown={keyChoiceFrom}
 										onchange={() => answerAndAdvance(item, v, key)}
 										aria-label={anchors && v === 0 ? `0, ${anchors.low}` : anchors && v === 10 ? `10, ${anchors.high}` : undefined}
 									/>
@@ -904,7 +914,7 @@
 						<div class="options" role="radiogroup" aria-label={textOf(item)} aria-describedby={helpOf(item) ? `help-${item.id}` : undefined}>
 							{#each item.options ?? [] as opt (opt)}
 								<label class="option" class:on={answers[key] === opt} class:quiet={opt === 'prefer_not_to_say'}>
-									<input type="radio" name={key} value={opt} checked={answers[key] === opt} onchange={() => answerAndAdvance(item, opt, key)} />
+									<input type="radio" name={key} value={opt} checked={answers[key] === opt} onkeydown={keyChoiceFrom} onchange={() => answerAndAdvance(item, opt, key)} />
 									<span class="dot" aria-hidden="true"></span>
 									<span>{optionLabel(item, opt)}</span>
 								</label>

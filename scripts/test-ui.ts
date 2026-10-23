@@ -644,13 +644,24 @@ ok(
 		!CONTRACT.includes('const CHANNEL_PATTERN = /^[a-z0-9_-]'),
 	'the server validates with the engine\'s pattern'
 );
+// Arrow keys select every value they pass; a keyboard answer never moves on.
+ok(
+	'a keyboard answer never advances the survey by itself',
+	PARTICIPATE.includes('if (onLast || byKey ||') &&
+		PARTICIPATE.includes("(keyChoice = e.key.startsWith('Arrow') || e.key === ' ')") &&
+		(PARTICIPATE.match(/onkeydown=\{keyChoiceFrom\}/g) ?? []).length === 2,
+	'the scale and the single choice both mark keyboard choices'
+);
 ok(
 	'the runner reads the code through the shared helper, with no regex of its own',
 	PARTICIPATE.includes('channelCode(new URLSearchParams(location.search)') && !PARTICIPATE.includes('a-z0-9_-')
 );
 ok(
 	'the index page hands its own code to the participation link',
-	INDEX_STUDY.includes("channelCode(page.url.searchParams.get('src')") &&
+	INDEX_STUDY.includes("channelCode(query().get('src')") &&
+		// The page is prerendered: reading page.url.searchParams directly throws
+		// at build time once the participation links render (a fielding study).
+		!INDEX_STUDY.includes('page.url.searchParams') &&
 		(INDEX_STUDY.match(/href=\{participate\}/g) ?? []).length === 2 &&
 		!INDEX_STUDY.includes('href="/research/{study.slug}/participate"'),
 	'the hero link and the closing link both carry it'
