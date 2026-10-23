@@ -50,11 +50,11 @@
   preregistration: null
   instrument_versions:
     - id: dt002-police-index
-      version: 0.1.0-draft
-      hash: null
-      source: research/portal/study-002/instrument-v0.yaml
-      frozen: false
-  fielding_window: null
+      version: 1.0.0
+      hash: "4aa29ab4340ea0a9e0b7bdc987388ab282e78b22d629843ccffbcc2897a8bfd6"
+      source: data/studies/dt-research-002/dt002-police-index-v1.0.0.yaml
+      frozen: true
+  fielding_window: { start: 2026-10-23, end: null }
   target_n: 1000
   realized_n: null
   weighting: null
@@ -63,4 +63,4 @@
   pi: null
   outputs: []
   created: 2026-10-07
-  updated: 2026-10-07
+  updated: 2026-10-23
