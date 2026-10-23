@@ -1,5 +1,45 @@
 [
   {
+    "hash": "ea635461b",
+    "date": "2026-10-23T11:35:14+01:00",
+    "subject": "Data: merge the 2026-10-23 sweep (five events), record one dispute, advance the research cutoff",
+    "kind": "revision",
+    "added": 231,
+    "removed": 7,
+    "files": [
+      {
+        "file": "data/contrib/daily-2026-10-23.yaml",
+        "added": 10,
+        "removed": 0
+      },
+      {
+        "file": "data/events.yaml",
+        "added": 118,
+        "removed": 0
+      },
+      {
+        "file": "data/parameters.yaml",
+        "added": 8,
+        "removed": 1
+      },
+      {
+        "file": "data/people.yaml",
+        "added": 18,
+        "removed": 1
+      },
+      {
+        "file": "data/public-claims.yaml",
+        "added": 5,
+        "removed": 5
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 72,
+        "removed": 0
+      }
+    ]
+  },
+  {
     "hash": "2277160e7",
     "date": "2026-10-23T07:02:01+01:00",
     "subject": "Research: candidates for the 2026-10-19 to 2026-10-23 sweep window",
