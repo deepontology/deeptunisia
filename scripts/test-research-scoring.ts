@@ -20,7 +20,7 @@ import {
 	applyExclusions,
 	applyPublicationFloor,
 	channelCode,
-	CHANNEL_PATTERN,
+	CHANNELS,
 	linkCheck,
 	localLevelFilter,
 	periodOf,
@@ -742,44 +742,31 @@ console.log('\n  ── wave aggregation ──\n');
 // The index page hands the code a reader arrived with to the participation
 // link, and the runner reads the code back off its own URL. Both call the one
 // helper below, so a link keeps its code through that hand-off instead of
-// answering as organic and vanishing from the link check — and a code the
-// server would refuse is dropped here rather than answered past.
+// answering as direct and vanishing from the link check. The value is one of
+// a fixed list: a code written for one person is stored as `other`.
 // ---------------------------------------------------------------------------
 
 console.log('\n  ── the channel code ──\n');
 
 {
-	ok('a valid code survives unchanged', channelCode('wave') === 'wave', channelCode('wave'));
-	ok('a code is lowercased', channelCode('Wave-02') === 'wave-02', channelCode('Wave-02'));
-	ok('an empty code is organic', channelCode('') === 'organic', channelCode(''));
-	ok('a code with no src is organic', channelCode('organic') === 'organic');
-	ok('a full-length code survives', channelCode('a'.repeat(32)) === 'a'.repeat(32));
-	ok('a code one character over the limit is organic', channelCode('a'.repeat(33)) === 'organic');
-	ok('a space in a code is organic', channelCode('wave 2') === 'organic', channelCode('wave 2'));
-	ok('a unicode lookalike in a code is organic', channelCode('wàve') === 'organic', channelCode('wàve'));
+	ok('a listed kind survives unchanged', channelCode('reddit') === 'reddit', channelCode('reddit'));
+	ok('a listed kind is lowercased', channelCode('YouTube') === 'youtube', channelCode('YouTube'));
+	ok('surrounding spaces are ignored', channelCode(' x ') === 'x', channelCode(' x '));
+	ok('no code is direct', channelCode('') === 'direct', channelCode(''));
+	ok('an explicit direct is direct', channelCode('direct') === 'direct');
+	ok('an unlisted code is other', channelCode('wave') === 'other', channelCode('wave'));
+	ok('a code written for one person is other', channelCode('u-0042-recipient') === 'other', channelCode('u-0042-recipient'));
+	ok('a long code is other', channelCode('a'.repeat(200)) === 'other');
+	ok('a unicode lookalike of a listed kind is other', channelCode('rèddit') === 'other', channelCode('rèddit'));
+	ok('the old no-link value is other', channelCode('organic') === 'other');
 	ok(
-		'every code the helper returns is one the server accepts',
-		[
-			'wave',
-			'Wave',
-			'',
-			'x'.repeat(33),
-			'ok-code_9',
-			'slash/ed',
-			'emoji-✓'
-		].every((raw) => CHANNEL_PATTERN.test(channelCode(raw))),
-		[
-			'wave',
-			'Wave',
-			'',
-			'x'.repeat(33),
-			'ok-code_9',
-			'slash/ed',
-			'emoji-✓'
-		]
+		'every value the helper returns is on the list',
+		['reddit', 'Facebook', '', 'x'.repeat(33), 'ok-code_9', 'slash/ed', 'emoji-✓', 'other', 'INSTAGRAM']
 			.map((raw) => channelCode(raw))
-			.join(', ')
+			.every((code) => (CHANNELS as readonly string[]).includes(code)),
+		['reddit', 'Facebook', '', 'x'.repeat(33), 'ok-code_9', 'slash/ed', 'emoji-✓', 'other', 'INSTAGRAM'].map((raw) => channelCode(raw)).join(', ')
 	);
+	ok('the list is exactly the seven kinds', JSON.stringify(CHANNELS) === JSON.stringify(['reddit', 'youtube', 'instagram', 'facebook', 'x', 'direct', 'other']));
 }
 
 // ---------------------------------------------------------------------------
@@ -805,8 +792,8 @@ console.log('\n  ── the link check ──\n');
 
 	// No link rows: nothing arrived through a shared link, so there is no
 	// largest one and no index to remove.
-	const organic = Array.from({ length: 12 }, () => row(8, 'organic'));
-	const none = linkCheck(spec, organic, options);
+	const direct = Array.from({ length: 12 }, () => row(8, 'direct'));
+	const none = linkCheck(spec, direct, options);
 	ok('no link rows: both shares are zero', none.linked_share === 0 && none.largest_link_share === 0);
 	ok('no link rows: there is no index without one', none.index_without_largest === null);
 
@@ -817,7 +804,7 @@ console.log('\n  ── the link check ──\n');
 	const lowFloor = structuredClone(spec);
 	lowFloor.series = { ...lowFloor.series!, first_figure_n: 10 };
 	const rows = [
-		...Array.from({ length: 10 }, () => row(8, 'organic')),
+		...Array.from({ length: 10 }, () => row(8, 'direct')),
 		...Array.from({ length: 20 }, () => row(2, 'wave')),
 		...Array.from({ length: 5 }, () => row(2, 'clip'))
 	];
@@ -870,7 +857,7 @@ console.log('\n  ── the link check ──\n');
 	// A row stored with no channel is a direct arrival, exactly as the writer
 	// stores one.
 	const unchannelled = rows.map((r) => ({ answers: r.answers }));
-	ok('a row with no channel counts as organic', linkCheck(lowFloor, unchannelled, options).linked_share === 0);
+	ok('a row with no channel counts as direct', linkCheck(lowFloor, unchannelled, options).linked_share === 0);
 
 	// The link itself has to be big enough to describe. A counterfactual read
 	// beside the window mean would give away the mean of the answers it removed,
@@ -880,7 +867,7 @@ console.log('\n  ── the link check ──\n');
 		linkCheck(
 			lowFloor,
 			[
-				...Array.from({ length: 30 }, () => row(8, 'organic')),
+				...Array.from({ length: 30 }, () => row(8, 'direct')),
 				...Array.from({ length: size }, () => row(2, 'wave'))
 			],
 			options
@@ -911,7 +898,7 @@ console.log('\n  ── the link check ──\n');
 	const oneScored = linkCheck(
 		spec,
 		[
-			...Array.from({ length: 100 }, () => row(8, 'organic')),
+			...Array.from({ length: 100 }, () => row(8, 'direct')),
 			row(7, 'wave'),
 			...Array.from({ length: 19 }, () => consentOnly)
 		],
@@ -929,7 +916,7 @@ console.log('\n  ── the link check ──\n');
 	// The same link with twenty scored answers behind it, over the hundred that
 	// remain, is a figure: the floor is answered in answers.
 	const twentyScoredRows = [
-		...Array.from({ length: 100 }, () => row(8, 'organic')),
+		...Array.from({ length: 100 }, () => row(8, 'direct')),
 		...Array.from({ length: 20 }, () => row(2, 'wave'))
 	];
 	const twentyScored = linkCheck(spec, twentyScoredRows, options);

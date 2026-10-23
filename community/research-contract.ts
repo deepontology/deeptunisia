@@ -15,7 +15,7 @@
  * instead of deleting them, so a future instrument key enters the hash only by a
  * deliberate edit here, and a text or response change always moves the hash.
  */
-import { evaluateCondition, CHANNEL_PATTERN, type ScoringSpec } from './research-scoring.ts';
+import { evaluateCondition, type ScoringSpec } from './research-scoring.ts';
 
 export type Locale = 'en' | 'fr' | 'ar';
 
@@ -520,7 +520,8 @@ export function compileInstrument(doc: InstrumentDocument): RuntimeInstrument {
 // invalid-body          payload is not a JSON object, or a field has the wrong shape
 // hash-mismatch         built against a different instrument version
 // locale-not-declared   locale the instrument does not administer
-// bad-channel           channel outside [a-z0-9_-]{1,32}
+// bad-channel           channel is not a string (any string is stored as one of
+//                       CHANNELS: unknown values as `other`)
 // bad-consent-version   consent version missing or blank
 // bad-timestamp         startedAt is not a finite number
 // bad-completion        completionMs is not a finite number
@@ -644,9 +645,8 @@ export function validateSubmission(
 	if (typeof locale !== 'string' || !(instrument.locales as string[]).includes(locale)) {
 		return invalid('locale-not-declared', `locale "${String(locale)}" is not declared by this instrument`);
 	}
-	const channel = payload.channel;
-	if (typeof channel !== 'string' || !CHANNEL_PATTERN.test(channel)) {
-		return invalid('bad-channel', 'channel must match [a-z0-9_-]{1,32}');
+	if (typeof payload.channel !== 'string') {
+		return invalid('bad-channel', 'channel must be a string');
 	}
 	const consentVersion = payload.consentVersion;
 	if (typeof consentVersion !== 'string' || consentVersion.trim().length === 0) {

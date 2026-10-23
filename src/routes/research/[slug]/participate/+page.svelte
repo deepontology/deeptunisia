@@ -607,14 +607,13 @@
 	// ---- submit ------------------------------------------------------------------
 
 	/**
-	 * The `?src=` code the respondent arrived from, as the server accepts it.
+	 * The kind of link the respondent arrived through, as the server stores it.
 	 *
-	 * The index page hands a shared link's code to this URL, and the same
-	 * helper both sides share (research-scoring.ts) is what decides whether it
-	 * survived: lowercased, and `organic` when it still does not match what the
-	 * server stores. Answering the whole survey to be refused at submit would be
-	 * a worse outcome than losing the code, and the aggregation counts the
-	 * channel without ever publishing a code.
+	 * The index page hands a shared link's `?src=` value to this URL, and the
+	 * helper both sides share (research-scoring.ts) maps it onto the fixed list:
+	 * `direct` with no value, a listed kind as itself, anything else `other`.
+	 * The server applies the same mapping, so nothing outside the list is ever
+	 * stored, and the aggregation counts kinds without publishing one.
 	 */
 	function channelFromLocation(): string {
 		return channelCode(new URLSearchParams(location.search).get('src') ?? '');

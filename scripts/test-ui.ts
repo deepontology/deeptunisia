@@ -637,13 +637,18 @@ const SHARE = readFileSync(join(HERE, '..', 'src', 'lib', 'share.ts'), 'utf8');
 const SCORING = readFileSync(join(HERE, '..', 'community', 'research-scoring.ts'), 'utf8');
 const CONTRACT = readFileSync(join(HERE, '..', 'community', 'research-contract.ts'), 'utf8');
 
-// A shared link keeps its code: one pattern, one helper, both readers of it.
+// A shared link keeps its kind: one fixed list, one helper, every reader of it.
+const RESEARCH_API = readFileSync(join(HERE, '..', 'community', 'research-api.ts'), 'utf8');
 ok(
-	'the channel pattern is defined once, in the shared engine',
-	SCORING.includes('export const CHANNEL_PATTERN = /^[a-z0-9_-]{1,32}$/') &&
-		!CONTRACT.includes('const CHANNEL_PATTERN = /^[a-z0-9_-]'),
-	'the server validates with the engine\'s pattern'
+	'the channel is one of a fixed list, defined once in the shared engine',
+	SCORING.includes("export const CHANNELS = ['reddit', 'youtube', 'instagram', 'facebook', 'x', 'direct', 'other'] as const") &&
+		!SCORING.includes('CHANNEL_PATTERN') &&
+		!CONTRACT.includes('CHANNEL_PATTERN') &&
+		RESEARCH_API.includes('channelCode(String(payload.channel))'),
+	'the server stores only a listed kind, never the raw ?src= value'
 );
+// No completion time is stated until a pretest has measured one.
+ok('the study page states no completion time', !INDEX_STUDY.includes('estimatedMinutes'), 'the counts come from the instrument instead');
 // Arrow keys select every value they pass; an arrow answer never moves on, and
 // the mark lasts only for the key press that set it, so it cannot hold back a
 // later click.

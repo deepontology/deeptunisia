@@ -18,7 +18,7 @@
 	import { studyShareMessage, studyShareUrl } from '$lib/share';
 	import { content as contentDoc, type ContentInline } from '$lib/content';
 	import type { LiveResults } from './live';
-	import { channelCode, ORGANIC_CHANNEL, scoreResponse } from '../../../community/research-scoring.ts';
+	import { channelCode, DIRECT_CHANNEL, scoreResponse } from '../../../community/research-scoring.ts';
 
 	/**
 	 * The index study page: a live public instrument, not an article.
@@ -194,8 +194,23 @@
 	// admits the human check, and a client-side navigation would keep this
 	// page's stricter one.
 	const participate = $derived(
-		`/research/${study.slug}/participate${srcCode === ORGANIC_CHANNEL ? '' : `?src=${srcCode}`}`
+		`/research/${study.slug}/participate${srcCode === DIRECT_CHANNEL ? '' : `?src=${srcCode}`}`
 	);
+
+	/**
+	 * The counts the share message states, read from the instrument so they
+	 * cannot drift from it: the questions every respondent sees, the total once
+	 * every condition holds (police contact), and the consent boxes. No time is
+	 * stated until a pretest has measured one.
+	 */
+	const shareCounts = $derived.by(() => {
+		const questions = instrument.items.filter((item) => item.displayed && item.response !== 'consent');
+		return {
+			q: fmt(questions.filter((item) => item.showIf === undefined).length),
+			qc: fmt(questions.length),
+			c: fmt(instrument.items.filter((item) => item.displayed && item.response === 'consent').length)
+		};
+	});
 
 	function monthLabel(period: string, short = false): string {
 		const [y, m] = period.split('-').map(Number);
@@ -527,7 +542,7 @@
 				title={titleOf(study, locale)}
 				text={studyShareMessage(
 					accepting,
-					tf('index.share.invite', { n: fmt(instrument.estimatedMinutes) }),
+					tf('index.share.invite', shareCounts),
 					t('index.share.text')
 				)}
 				heading={t('index.share.heading')}
@@ -635,8 +650,8 @@
 			{#if accepting}
 				<a class="cta" href={participate} data-sveltekit-reload>
 					{floor && !published
-						? tf('index.cta.first', { N: fmt(floor.first_figure_n), n: fmt(instrument.estimatedMinutes) })
-						: tf('index.cta', { n: fmt(instrument.estimatedMinutes) })}
+						? tf('index.cta.first', { N: fmt(floor.first_figure_n) })
+						: t('index.cta')}
 				</a>
 			{/if}
 		</div>
@@ -1141,7 +1156,7 @@
 			<div class="closing-copy">
 				<p class="closing-line">{t('index.closing.line')}</p>
 				{#if accepting}
-					<a class="cta cta-solid" href={participate} data-sveltekit-reload>{tf('index.cta', { n: fmt(instrument.estimatedMinutes) })}</a>
+					<a class="cta cta-solid" href={participate} data-sveltekit-reload>{t('index.cta')}</a>
 					<p class="closing-note mono">{t('index.closing.note')}</p>
 				{:else}
 					<p class="closing-note mono">{t('index.headline.notOpen')}</p>
@@ -1157,7 +1172,7 @@
 				title={titleOf(study, locale)}
 				text={studyShareMessage(
 					accepting,
-					tf('index.share.invite', { n: fmt(instrument.estimatedMinutes) }),
+					tf('index.share.invite', shareCounts),
 					t('index.share.text')
 				)}
 				heading={t('index.share.heading')}

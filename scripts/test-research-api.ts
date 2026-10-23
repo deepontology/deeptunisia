@@ -505,7 +505,7 @@ console.log('\n  ── a valid submission is stored, and names nobody ──\n'
 	];
 	ok('the row carries exactly the contract columns and no identifier column', JSON.stringify(Object.keys(row)) === JSON.stringify(expectedColumns), Object.keys(row).join(', '));
 	ok('the row records the study, instrument and hash', row.study_id === 'dt-fixture-001' && row.instrument_id === fixtureInstrument.id && row.instrument_hash === fixtureInstrument.hash);
-	ok('the row records locale and channel', row.locale === 'en' && row.channel === 'test');
+	ok('the row records locale, and an unlisted channel as other', row.locale === 'en' && row.channel === 'other', String(row.channel));
 	ok(
 		'the consent version stored is the instrument\'s own, never the string the client sent',
 		row.consent_version === `${fixtureInstrument.version}+${fixtureInstrument.hash.slice(0, 12)}` && row.consent_version !== 'consent-v1',
@@ -522,6 +522,18 @@ console.log('\n  ── a valid submission is stored, and names nobody ──\n'
 	const buckets = (await env.DB.prepare('SELECT * FROM rate_buckets').all<any>()).results;
 	const bucketKey0 = buckets[0]?.key.split(':') ?? [];
 	ok('the rate bucket is a hash, not an address', buckets.length === 1 && bucketKey0[0] === 'response' && /^[0-9a-f]{64}$/.test(bucketKey0[1] ?? '') && !JSON.stringify(buckets).includes('203.0.113'));
+}
+
+console.log('\n  ── the channel is stored as a listed kind ──\n');
+
+{
+	const env = researchEnv();
+	const cases: Array<[string, string]> = [['Reddit', 'reddit'], ['', 'direct'], ['u-0042-recipient', 'other'], ['x', 'x']];
+	for (const [sent] of cases) await submitAssigned(env, 'fixture', { channel: sent });
+	const stored = (await allRows(env)).map((r: any) => r.channel).sort();
+	ok('Reddit, nothing, a per-person code and x are stored as reddit, direct, other and x', JSON.stringify(stored) === JSON.stringify(cases.map(([, kind]) => kind).sort()), JSON.stringify(stored));
+	const raw = await post(env, '/api/studies/fixture/submit', submitPayload({ channel: 7, assignment: await assignmentFor(env, 'fixture') }));
+	ok('a channel that is not a string is refused 400', raw.status === 400, raw.body.error ?? '');
 }
 
 console.log('\n  ── a rate bucket records the hour, never the moment ──\n');
@@ -1032,7 +1044,7 @@ console.log('\n  ── the monthly live index ──\n');
 			pti_g1: 6, pti_g2: 4, pti_g3: 6, pti_g4: 6, pti_g5: 6,
 			pti_e1: 'no', pti_e5: ['none']
 		});
-	const insert = (receipt: string, submittedAt: number, t: number, channel = 'organic') =>
+	const insert = (receipt: string, submittedAt: number, t: number, channel = 'direct') =>
 		env.RESEARCH_DB!.prepare(
 			`INSERT INTO research_responses
 			 (receipt, study_id, instrument_id, instrument_version, instrument_hash, locale, channel,
@@ -1055,7 +1067,7 @@ console.log('\n  ── the monthly live index ──\n');
 	// The channels: three answers through a minor link, five through the one
 	// that carries this month, and the rest direct. The link codes are
 	// distinctive strings so the payload can be searched for them.
-	for (let i = 0; i < 40; i++) await insert(`old-${i}`, earlier + i * 1000, 3 + (i % 4), i < 3 ? 'clip' : 'organic');
+	for (let i = 0; i < 40; i++) await insert(`old-${i}`, earlier + i * 1000, 3 + (i % 4), i < 3 ? 'clip' : 'direct');
 	for (let i = 0; i < 5; i++) await insert(`new-${i}`, now - 60_000 - i * 1000, 7, 'wave');
 
 	// Below the first-figure floor (100 valid answers): counts only.
@@ -1144,7 +1156,7 @@ console.log('\n  ── the monthly live index ──\n');
 		'and no link code leaves it either: the channels are read and never sent',
 		!JSON.stringify(live.body).includes('wave') &&
 			!JSON.stringify(live.body).includes('clip') &&
-			!JSON.stringify(live.body).includes('organic'),
+			!JSON.stringify(live.body).includes('"direct"'),
 		JSON.stringify(window?.links)
 	);
 	// Eight of the 105 answers came through a link, five of them through the
@@ -1180,7 +1192,7 @@ console.log('\n  ── the monthly live index ──\n');
 	// clears the cell floor, and 130 answers remain, so the counterfactual is a
 	// figure. It is the mean over the answers that did not come through it.
 	for (let i = 0; i < 20; i++) await insert(`link-${i}`, now - 30_000 - i * 1000, 7, 'wave');
-	for (let i = 0; i < 30; i++) await insert(`direct-${i}`, now - 30_000 - i * 1000, 7, 'organic');
+	for (let i = 0; i < 30; i++) await insert(`direct-${i}`, now - 30_000 - i * 1000, 7, 'direct');
 	const grown = await get(env, '/api/studies/index/live');
 	const grownWindow = grown.body.series?.window;
 	ok(
@@ -1291,7 +1303,7 @@ console.log('\n  ── the live payload is computed once a minute ──\n');
 				`INSERT INTO research_responses
 				 (receipt, study_id, instrument_id, instrument_version, instrument_hash, locale, channel,
 				  consent_version, started_at, submitted_at, completion_ms, answers, created_at)
-				 VALUES (?, 'dt-research-002', ?, ?, ?, 'en', 'organic', 'v1', ?, ?, 90000, ?, ?)`
+				 VALUES (?, 'dt-research-002', ?, ?, ?, 'en', 'direct', 'v1', ?, ?, 90000, ?, ?)`
 			)
 			.bind(receipt, instrument.id, instrument.version, instrument.hash, submittedAt - 90_000, submittedAt, answers(t), submittedAt)
 			.run();

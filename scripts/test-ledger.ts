@@ -175,14 +175,14 @@ ok(
 );
 
 // The two counterfactuals read together (Greptile's case): 100 ordinary answers,
-// 20 updates through the largest link, and one organic same-device answer. Each
+// 20 updates through the largest link, and one direct same-device answer. Each
 // passes its own floor, but the two "without" figures would differ by exactly
 // that one answer, so the repeat figure is withheld.
 {
 	const now = Date.now();
-	const ordinary = Array.from({ length: 100 }, (_, i) => ({ answers: answers(4 + (i % 3)), channel: 'organic', revision: null, submittedAt: now - 1000 }));
+	const ordinary = Array.from({ length: 100 }, (_, i) => ({ answers: answers(4 + (i % 3)), channel: 'direct', revision: null, submittedAt: now - 1000 }));
 	const viaLink = Array.from({ length: 20 }, () => ({ answers: answers(9), channel: 'wave', revision: 'update', submittedAt: now - 1000 }));
-	const lone = { answers: answers(1), channel: 'organic', revision: 'same-device', submittedAt: now - 1000 };
+	const lone = { answers: answers(1), channel: 'direct', revision: 'same-device', submittedAt: now - 1000 };
 	const series = aggregateSeries(spec, [...ordinary, ...viaLink, lone], { ...options, now })!;
 	ok(
 		'two counterfactuals that differ by one answer do not both publish',
@@ -227,7 +227,7 @@ console.log('\n  ── the offline release of a scored study ──\n');
 		instrument_version: police.version,
 		instrument_hash: police.hash,
 		locale: 'ar',
-		channel: i < 30 ? 'secret-code-for-five' : 'organic',
+		channel: i < 30 ? 'secret-code-for-five' : 'direct',
 		consent_version: 'v',
 		started_at: now - 200_000,
 		submitted_at: now - 100_000 - i,
