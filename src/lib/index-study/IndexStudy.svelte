@@ -212,6 +212,26 @@
 		};
 	});
 
+	/**
+	 * The day the series opened when it opened mid-month: its first month is a
+	 * partial month, labelled with that day (index-spec §8). Null when the
+	 * series opened on the 1st or has not opened.
+	 */
+	const partialStart = $derived.by(() => {
+		const start = study.fielding_window?.start ? String(study.fielding_window.start).slice(0, 10) : null;
+		return start && /^\d{4}-\d{2}-\d{2}$/.test(start) && !start.endsWith('-01') ? start : null;
+	});
+	const isPartial = (period: string) => partialStart !== null && period === partialStart.slice(0, 7);
+	function partialLabel(): string {
+		const [y, m, d] = partialStart!.split('-').map(Number);
+		const date = new Intl.DateTimeFormat(locale === 'ar' ? 'ar-TN' : locale === 'en' ? 'en-GB' : locale, {
+			day: 'numeric',
+			month: 'short',
+			timeZone: 'UTC'
+		}).format(new Date(Date.UTC(y, m - 1, d)));
+		return tf('index.series.partial', { date });
+	}
+
 	function monthLabel(period: string, short = false): string {
 		const [y, m] = period.split('-').map(Number);
 		return new Intl.DateTimeFormat(locale === 'ar' ? 'ar-TN' : locale, {
@@ -741,6 +761,7 @@
 					<p class="month-name">
 						<strong>{monthLabel(month.period)}</strong>
 						<span class="tag" class:live={!month.closed}>{t(month.closed ? 'index.series.closed' : 'index.series.provisional')}</span>
+						{#if isPartial(month.period)}<span class="tag">{partialLabel()}</span>{/if}
 					</p>
 					<p>
 						{#if month.n === 0}
@@ -778,7 +799,7 @@
 					<tbody>
 						{#each months as m (m.period)}
 							<tr>
-								<td>{monthLabel(m.period)}{m.closed ? '' : ` · ${t('index.series.provisional')}`}</td>
+								<td>{monthLabel(m.period)}{isPartial(m.period) ? ` · ${partialLabel()}` : ''}{m.closed ? '' : ` · ${t('index.series.provisional')}`}</td>
 								<td class="mono">{fmt(m.index.level, 1)}</td>
 								<td class="mono" dir="ltr">{m.index.level === null ? '—' : `${fmt(m.index.ci95[0], 1)}–${fmt(m.index.ci95[1], 1)}`}</td>
 								<td class="mono">{fmt(m.results?.index.mean, 1)}</td>

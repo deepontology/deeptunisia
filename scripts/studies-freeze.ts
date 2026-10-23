@@ -6,7 +6,9 @@
  *
  * `--close` is required for a one-off wave. An instrument with a monthly series
  * (scoring.series) fields continuously, so its close is optional: without one
- * the window is recorded open-ended, and its first month must start on the 1st.
+ * the window is recorded open-ended. A series opens on the 1st, except in its
+ * first period: a study's first opening may fall mid-month, and that month is
+ * published as a partial month (index-spec §8).
  *
  * Freezing is the moment an instrument's content stops being a draft and
  * becomes the thing respondents answer. One command does every part of it, so
@@ -33,7 +35,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parse as parseYaml } from 'yaml';
 import { compileInstrument } from '../community/research-contract.ts';
-import { InstrumentSchema, validateInstrument, type InstrumentDoc } from './research-schema.ts';
+import { InstrumentSchema, monthlyOpeningProblem, validateInstrument, type InstrumentDoc } from './research-schema.ts';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const REGISTRY = join(ROOT, 'data', 'studies', 'studies.yaml');
@@ -112,7 +114,9 @@ function parseInstrument(text: string, label: string): InstrumentDoc {
 const preHash = parseInstrument(setInstrumentKey(frozenText, 'content_hash', '"pending"'), 'the frozen instrument');
 const monthly = (preHash as { scoring?: { series?: unknown } }).scoring?.series !== undefined;
 if (!monthly && close === null) die('a one-off wave needs --close; only a monthly series may be open-ended');
-if (monthly && !open.endsWith('-01')) die('a monthly series opens on the 1st, so its first month is a whole month');
+const openingProblem = monthly ? monthlyOpeningProblem(open, study) : null;
+if (openingProblem) die(openingProblem);
+const partialFirst = monthly && !open.endsWith('-01');
 const violations = validateInstrument(preHash).filter((v) => !v.includes('content_hash'));
 if (violations.length) die(`the instrument is not ready to freeze:\n    - ${violations.join('\n    - ')}`);
 
@@ -191,6 +195,7 @@ console.log(`\n  ${dryRun ? 'DRY RUN — nothing written' : 'FREEZING'}  ${study
 console.log(`  instrument   ${instrumentId}@${version}`);
 console.log(`  hash         ${hash}`);
 console.log(`  window       ${open} → ${close ?? 'open-ended (monthly series)'}`);
+if (partialFirst) console.log(`  first month  ${open.slice(0, 7)} is a partial month, from ${open}`);
 console.log(`  frozen copy  ${frozenRel}`);
 console.log(`  registry     instrument_versions[0] → frozen, hash, source; fielding_window; updated ${today}`);
 console.log(`  prereg       ${preregText ? 'version, hash, window and date filled' : 'none found next to the draft'}`);

@@ -1022,6 +1022,54 @@ console.log('\n  ── the response rate limit ──\n');
 	ok('the response limit does not block withdraw', clean.status === 200 && clean.body.deleted === true);
 }
 
+console.log('\n  ── a partial first month counts like any month ──\n');
+
+{
+	// The real instrument opening on 23 October 2026. The clock is held at 25
+	// October, so the check reads the same on any day it is run.
+	const pmDoc = parseYaml(
+		readFileSync(join(HERE, '..', 'research', 'portal', 'study-002', 'instrument-v0.yaml'), 'utf8')
+	) as InstrumentDocument;
+	const pmPolice = compileInstrument(pmDoc);
+	const registry: StudiesRegistry = {
+		meta: { generated: 'fixture', count: 1, schemaVersion: 1 },
+		studies: [{ ...study('index', 'fielding', 'dt-research-002', pmPolice), fielding_window: { start: '2026-10-23', end: null } }],
+		instruments: { [`${pmPolice.id}@${pmPolice.version}`]: pmPolice }
+	};
+	const env = researchEnv({ STUDIES: registry });
+	const realNow = Date.now;
+	const clock = Date.UTC(2026, 9, 25, 11, 0, 0);
+	Date.now = () => clock;
+	try {
+		for (let i = 0; i < 120; i++) {
+			await env.RESEARCH_DB!.prepare(
+				`INSERT INTO research_responses
+				 (receipt, study_id, instrument_id, instrument_version, instrument_hash, locale, channel,
+				  consent_version, started_at, submitted_at, completion_ms, answers, created_at)
+				 VALUES (?, 'dt-research-002', ?, ?, ?, 'en', 'direct', 'v1', ?, ?, 90000, ?, ?)`
+			)
+				.bind(
+					`partial-${i}`, pmPolice.id, pmPolice.version, pmPolice.hash, clock - 90_000 - i * 1000, clock - i * 1000,
+					JSON.stringify({
+						pti_t1: 3 + (i % 5), pti_t2: 4, pti_t3: 5, pti_t4: 3, pti_t5: 4,
+						pti_g1: 6, pti_g2: 4, pti_g3: 6, pti_g4: 6, pti_g6: 5, pti_g5: 6,
+						pti_e1: 'no', pti_e5: ['none']
+					}),
+					clock - i * 1000
+				)
+				.run();
+		}
+		const live = await get(env, '/api/studies/index/live');
+		const months = live.body.series?.months ?? [];
+		ok('the series opens with October 2026, the partial first month', live.status === 200 && months.length === 1 && months[0].period === '2026-10', JSON.stringify(months.map((m: any) => m.period)));
+		ok('the partial first month starts the monthly level at its own mean', months[0]?.n === 120 && months[0]?.index.level !== null && Math.abs(months[0].index.level - (months[0].results?.index.mean ?? -1)) < 1e-9);
+		ok('it counts in the 12-month reading', live.body.series?.window?.n === 120, String(live.body.series?.window?.n));
+		ok('it counts toward the first-figure floor and the since-launch figure', live.body.floor?.n === 120 && live.body.floor?.reached === true && live.body.results?.n === 120);
+	} finally {
+		Date.now = realNow;
+	}
+}
+
 console.log('\n  ── the monthly live index ──\n');
 
 {
