@@ -16107,7 +16107,7 @@
     of 8 September 2026 from the Tunis economic-financial judicial pole; the
     SNJT and press unions describe the case as targeting his journalism,
     while the relayed judicial charges cite illicit enrichment and money
-    laundering. Person and detention absent from the graph.
+    laundering.
   confidence: B
   basis: reported
   sources:
@@ -16291,3 +16291,20 @@
   verification: needs-primary-source
   sources: [webdo-selmi-ugtt-sg-2026-03-29, elwatan-selmi-ugtt-2026-03-29, hivos-eusee-ugtt-bureau-2026-04-16, businessnews-selmi-ugtt-2026-09-20]
   notes: ["Successor of Noureddine Taboubi at the 26th UGTT congress (Monastir, March 2026); led the « Stabilité et Défi » list that swept the new 15-member executive bureau. Transliterations vary across outlets (Slaheddine / Salaheddine / Salah Eddine); name_ar not carried by the fetched sources, so it is left empty rather than guessed."]
+- id: olfa-hamdi
+  name_en: Olfa Hamdi
+  name_fr: Olfa Hamdi
+  aliases: []
+  layers:
+    - political
+  tagline: President of the Third Republic party; 2024 presidential candidate; sentenced to four years by a military court in October 2026
+  summary: President of the Third Republic party (La Troisième République) and a candidate in the 2024 presidential election, whose candidacy was rejected for not meeting the 40-year age minimum. Per Al Jazeera she is a dual Tunisian and United States national who lived abroad and ran a consulting firm in the United States after briefly heading Tunisair, and who was detained at Tunis airport in February (the year is implied by the piece) on returning. On 21 October 2026 the permanent military tribunal of Tunis sentenced her to four years' imprisonment and 80,000 dinars in fines in two cases, on charges of plotting against state security and inciting the military to disobey orders, which her lawyer Akram Moussa said arose from social media posts (see ev-hamdi-military-court-sentence-2026-10-21); she had been sentenced to two years in a similar case in March 2026. The graph had no person record for her although a canonical event already named her as excluded from the 2024 race on the age rule.
+  confidence: B
+  basis: reported
+  verification: needs-primary-source
+  attributed_to: Agence France-Presse and Reuters via Al Jazeera (21 October 2026) and African Manager (21 October 2026); the biography is Al Jazeera's account alone
+  reasoning: "Her identity, party and the sentence rest on two outlets publishing the same day, one of them wire copy; the pre-2026 biography — Tunisair, the consulting firm, the February detention, the 2024 exclusion on the age rule — rests on Al Jazeera alone and is labelled as its account rather than merged into the graph's voice. No birth date is recorded because none was sourced: the only age datum is the 2024 piece's \"then 36\"."
+  falsifiable_by: ISIE's 2024 candidacy file would confirm the age-rule exclusion; a Tunisair appointment record would confirm the airline tenure; the military court's judgment or a defence communiqué would confirm the sentence and the charges.
+  sources:
+    - aljazeera-hamdi-verdict-2026-10-21
+    - african-manager-hamdi-verdict-2026-10-21

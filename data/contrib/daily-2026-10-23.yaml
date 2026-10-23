@@ -81,6 +81,16 @@
 #   cutoff was advanced. Whoever merges must move time.cutoff to 2026-10-23 in
 #   the same edit and update the pinned defaults in scripts/parameters.ts and
 #   scripts/test-parameters.ts. Humans dispose (P4).
+#
+# DISPOSITION 2026-10-23 (maintainer merge): the five events and the person merged
+#   into data/events.yaml and data/people.yaml, with eight of the seventeen
+#   sources: the seven the records cite plus the Nawaat interview the new dispute
+#   cites. The other nine stay here beside the notes they support and become
+#   canonical when a record cites them. The flag on ev-yousfi-detention-2026-09
+#   was disposed as an open dispute on the interrogation point: no date changed,
+#   neither reading adopted, and the stale sentence in mohamed-yousfi's summary
+#   was removed. The research cutoff moved to 2026-10-23. Arabic titles for the
+#   five events are still owed; the interface falls back to English meanwhile.
 
 sources:
   - id: aljazeera-tunisia-unrest-2026-10-23

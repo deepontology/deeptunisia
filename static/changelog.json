@@ -1,5 +1,20 @@
 [
   {
+    "hash": "2277160e7",
+    "date": "2026-10-23T07:02:01+01:00",
+    "subject": "Research: candidates for the 2026-10-19 to 2026-10-23 sweep window",
+    "kind": "expansion",
+    "added": 878,
+    "removed": 0,
+    "files": [
+      {
+        "file": "data/contrib/daily-2026-10-23.yaml",
+        "added": 878,
+        "removed": 0
+      }
+    ]
+  },
+  {
     "hash": "ca8c9d125",
     "date": "2026-10-22T20:22:32+01:00",
     "subject": "Site: regenerate the corrections list for the current history, state provenance notes as what was checked, drop a dead domain from the paper source",
