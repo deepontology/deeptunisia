@@ -649,13 +649,17 @@ ok(
 );
 // No completion time is stated until a pretest has measured one.
 ok('the study page states no completion time', !INDEX_STUDY.includes('estimatedMinutes'), 'the counts come from the instrument instead');
-// Arrow keys select every value they pass; a keyboard answer never moves on.
+// Arrow keys select every value they pass; an arrow answer never moves on, and
+// the mark lasts only for the key press that set it, so it cannot hold back a
+// later click.
 ok(
-	'a keyboard answer never advances the survey by itself',
+	'an arrow-key answer never advances the survey by itself, and its mark expires',
 	PARTICIPATE.includes('if (onLast || byKey ||') &&
-		PARTICIPATE.includes("(keyChoice = e.key.startsWith('Arrow') || e.key === ' ')") &&
+		PARTICIPATE.includes("if (e.key.startsWith('Arrow')) arrowAt = performance.now();") &&
+		PARTICIPATE.includes('const byKey = performance.now() - arrowAt < ARROW_WINDOW_MS;') &&
+		PARTICIPATE.includes('arrowAt = -Infinity;') &&
 		(PARTICIPATE.match(/onkeydown=\{keyChoiceFrom\}/g) ?? []).length === 2,
-	'the scale and the single choice both mark keyboard choices'
+	'the scale and the single choice both mark arrow choices'
 );
 ok(
 	'the runner reads the code through the shared helper, with no regex of its own',
