@@ -335,7 +335,7 @@ async function storeEntry(cache: LiveCache | undefined, key: string, entry: Live
 }
 
 /**
- * The computations running right now, by cache key.
+ * The computations running right now, by cache key, with the moment each began.
  *
  * Readers that miss the cache together would otherwise each read and score the
  * whole table before the first of them stored anything, which is the burst
@@ -344,7 +344,31 @@ async function storeEntry(cache: LiveCache | undefined, key: string, entry: Live
  * instances the edge cache is what bounds it to one computation per instance
  * per minute, exactly as it already does for the stored entry.
  */
-const liveInFlight = new Map<string, Promise<string>>();
+const liveInFlight = new Map<string, { started: number; pending: Promise<string> }>();
+
+/**
+ * How long a reader waits on a computation another request started, in
+ * milliseconds, before running its own.
+ *
+ * The shared work belongs to the request that started it. When that request is
+ * cancelled, because its reader closed the page, the runtime may drop the work,
+ * and its promise then never settles and is never released: without a limit,
+ * every later miss on the isolate would wait on it for as long as the isolate
+ * lives. A computation takes a few seconds at most, so a reader stops waiting
+ * once the shared one is ten seconds old and computes the payload itself,
+ * and a computation already that old when a reader arrives is not waited on
+ * at all.
+ */
+const LIVE_SHARED_WAIT_MS = 10_000;
+
+/** The shared payload, or null once `ms` have passed without it. */
+function waitFor(pending: Promise<string>, ms: number): Promise<string | null> {
+	let timer: ReturnType<typeof setTimeout> | undefined;
+	const deadline = new Promise<null>((resolve) => {
+		timer = setTimeout(() => resolve(null), ms);
+	});
+	return Promise.race([pending, deadline]).finally(() => clearTimeout(timer));
+}
 
 /**
  * The serialized payload for one cache key, computed once per burst of readers.
@@ -352,20 +376,34 @@ const liveInFlight = new Map<string, Promise<string>>();
  * The promise leaves the map as soon as it settles, so a reader arriving after
  * the work is done finds the stored entry rather than a finished promise, and a
  * computation that fails costs one recompute instead of wedging the key for the
- * rest of the minute.
+ * rest of the minute. A computation that never settles costs a reader at most
+ * `waitMs`: the reader that gives up on it takes the key over, so the readers
+ * after it share the new computation instead of the lost one.
  */
-function computeLive(key: string, compute: () => Promise<string>): Promise<string> {
+export async function computeLive(
+	key: string,
+	compute: () => Promise<string>,
+	waitMs = LIVE_SHARED_WAIT_MS
+): Promise<string> {
 	const running = liveInFlight.get(key);
-	if (running) return running;
-	const pending = compute();
+	if (running) {
+		const left = waitMs - (Date.now() - running.started);
+		if (left > 0) {
+			const shared = await waitFor(running.pending, left);
+			if (shared !== null) return shared;
+		}
+	}
+	const entry = { started: Date.now(), pending: compute() };
 	const release = () => {
-		if (liveInFlight.get(key) === pending) liveInFlight.delete(key);
+		if (liveInFlight.get(key) === entry) liveInFlight.delete(key);
 	};
 	// Both outcomes: a computation that fails releases its key as well, so the
-	// next reader recomputes rather than waiting on a rejected promise.
-	pending.then(release, release);
-	liveInFlight.set(key, pending);
-	return pending;
+	// next reader recomputes rather than waiting on a rejected promise. A lost
+	// computation that settles after a reader took its key over releases
+	// nothing, because the key is no longer its own.
+	entry.pending.then(release, release);
+	liveInFlight.set(key, entry);
+	return entry.pending;
 }
 
 // ---------------------------------------------------------------------------
@@ -907,7 +945,7 @@ export async function handleResearch(
 			//
 			// Readers that miss together share the computation in flight, so a
 			// burst arriving on an expired entry costs one read, not one per
-			// reader.
+			// reader, and none of them waits on it past LIVE_SHARED_WAIT_MS.
 			const key = `${study.id}:${instrument.hash}`;
 			const cached = await cachedEntry(env.LIVE_CACHE, key);
 			if (cached && cached.expires_at > ctx.now) {

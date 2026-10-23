@@ -27,6 +27,7 @@ import { handle, type Env } from '../community/api.ts';
 import type { Db } from '../community/db.ts';
 import { localDb } from '../community/db-local.ts';
 import { memoryLiveCache, type LiveCache } from '../community/live-cache.ts';
+import { computeLive } from '../community/research-api.ts';
 import {
 	compileInstrument,
 	gapAnswerKey,
@@ -1432,6 +1433,56 @@ console.log('\n  ── the live payload is computed once a minute ──\n');
 		'a later burst recomputes once instead of reusing the settled promise',
 		queries === burstBefore + 2 && again.every((r) => r.text !== burst[0].text),
 		`${queries - burstBefore} queries`
+	);
+
+	// A shared computation can be lost: the request that started it is
+	// cancelled, its promise never settles and is never released. Readers wait
+	// on it for a bounded time and then compute for themselves, and the reader
+	// that takes the key over is the one later readers share. Called directly,
+	// with a wait of 50 ms instead of the endpoint's ten seconds.
+	const WAIT = 50;
+	const elapsed = async (run: () => Promise<string>) => {
+		const t0 = Date.now();
+		const value = await run();
+		return { value, ms: Date.now() - t0 };
+	};
+	const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+	void computeLive('test:lost', () => new Promise<string>(() => {}), WAIT);
+	const rescued = await elapsed(() => computeLive('test:lost', async () => 'own', WAIT));
+	ok(
+		'a reader behind a computation that never settles is answered by its own',
+		rescued.value === 'own' && rescued.ms >= WAIT - 10 && rescued.ms < 1000,
+		`${rescued.value} after ${rescued.ms} ms`
+	);
+	void computeLive('test:old', () => new Promise<string>(() => {}), WAIT);
+	await sleep(WAIT + 20);
+	const late = await elapsed(() => computeLive('test:old', async () => 'fresh', WAIT));
+	ok(
+		'a reader arriving after the wait has passed does not wait at all',
+		late.value === 'fresh' && late.ms < WAIT,
+		`${late.value} after ${late.ms} ms`
+	);
+	let runs = 0;
+	let begun!: () => void;
+	let finish!: (body: string) => void;
+	const begin = new Promise<void>((resolve) => (begun = resolve));
+	void computeLive('test:taken', () => new Promise<string>(() => {}), WAIT);
+	const takeover = computeLive(
+		'test:taken',
+		() => {
+			runs++;
+			begun();
+			return new Promise<string>((resolve) => (finish = resolve));
+		},
+		WAIT
+	);
+	await begin;
+	const behind = computeLive('test:taken', async () => { runs++; return 'third'; }, WAIT);
+	finish('taken over');
+	ok(
+		'and the reader that took the key over is the one later readers share',
+		(await takeover) === 'taken over' && (await behind) === 'taken over' && runs === 1,
+		`${await behind}, ${runs} computations`
 	);
 
 	// A body read from storage advertises what is left of its entry, so a
