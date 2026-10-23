@@ -32,6 +32,8 @@ The index describes the people who answered. Anyone can take part, so the people
 
 It is called a satisfaction index, and part of it is a rating of the service: how well people think the police do the job, how their last contact was handled, and the good moments they saw in person. The number combines that with trust in the police, how free people feel around them, and what was done to them when they met them. Good moments raise the service score; they never cancel out abuse.
 
+The first month, October 2026, is a partial month: the questionnaire opened on 23 October, and most of its answers are expected to come from the audience of the film that launched the index. It may not resemble a normal month, so the change from October to November may partly reflect who took part rather than a change in how people see the police.
+
 The 95% interval shown beside each figure covers only the uncertainty that comes from the number of answers. It does not cover the difference between the people who chose to answer and everyone else, which can be much larger.
 
 The checks against fake answers stop crude attempts: one machine sending many answers, a script racing through the questions, a crowd sent through one shared link. They do not stop a patient campaign by many people or many devices spread over many links, and nothing short of identifying people could. What this page does instead is make such a campaign hard to hide: submissions per hour, the share of answers from each kind of link, and answers that may repeat an earlier one are published as they arrive. If we find a campaign, we will say so on this page, mark the months it touched, and publish the index with and without the answers we believe it sent.

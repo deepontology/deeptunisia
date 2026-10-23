@@ -103,6 +103,7 @@ The index is a series, published once per calendar month. Months are drawn in Tu
 - **A month with fewer than 30 scored respondents** (`min_month_n`) is not used as a measurement. The previous level carries forward, and its interval widens by one month of drift.
 - **The filter runs forward only.** A month's published value uses that month and the months before it, so it never changes once the month has closed.
 - **The month in progress** is shown live and labelled provisional. It becomes final when the month ends.
+- **A partial first month (amendment, 23 October 2026).** The questionnaire opens on 23 October 2026, so the first month, October 2026, covers 23 to 31 October and is labelled as a partial month. It is counted like any other month: in the monthly level, the 12-month reading, the first-figure floor and the since-launch figure. If it reaches the month floor, its mean starts the series. It is expected to draw mostly the audience of the film that launched the index, so the change from October to November may partly reflect who took part. Every later month is a whole calendar month.
 
 What the filter does not do is correct for who answered. A month that draws a different crowd moves the index as if opinion had changed. Each month's n and gain are published so a reader can see how much a month rests on. As a sensitivity check, at each 12-month review the series is also published with `process_sd` 1.5 and 5.
 
@@ -152,6 +153,7 @@ The series runs until a later instrument version replaces it, with a public revi
 
 - **Live results.** The platform's default is counts only until close. This series publishes results live, with the integrity record described in §7.
 - **A continuous series.** The platform's default is a wave with a fixed close. This study fields continuously and publishes monthly (§7a).
+- **A partial first month.** A monthly series opens on the 1st. This one opens on 23 October 2026, so its first month is partial (§7a).
 - **Interim translations.** The French and Arabic were prepared by the project and reviewed by its editor. They are not the independent human translation, back-translation and cognitive interviewing the platform requires. They will be replaced in a later instrument version.
 - **No external ethics review.** The protections published on the study page are the project's own.
 - **No external data-protection review.** The design has been reviewed only by the project's maintainers and the AI tools they work with. Reviewers are invited to examine the questionnaire, the code and the protections, and what they find is published and acted on.

@@ -679,6 +679,13 @@ ok(
 		HUB.includes("if (status === 'fielding') return accepting === false ? 'paused' : 'live';") &&
 		HUB.includes('serverAccepting = { ...serverAccepting, [s.slug]: body.study.accepting }')
 );
+// A series that opened mid-month labels its first month as partial (index-spec §8).
+ok(
+	'the first month of a series opened mid-month is labelled partial, in the readout and the table',
+	INDEX_STUDY.includes("{#if isPartial(month.period)}<span class=\"tag\">{partialLabel()}</span>{/if}") &&
+		INDEX_STUDY.includes("{isPartial(m.period) ? ` · ${partialLabel()}` : ''}") &&
+		INDEX_STUDY.includes('study.fielding_window?.start')
+);
 // No completion time is stated until a pretest has measured one.
 ok('the study page states no completion time', !INDEX_STUDY.includes('estimatedMinutes'), 'the counts come from the instrument instead');
 // Arrow keys select every value they pass; an arrow answer never moves on, and

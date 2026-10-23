@@ -143,6 +143,24 @@ const LIFECYCLE_GATED: readonly StudyStatus[] = [
 const LIFECYCLE_CLOSED: readonly StudyStatus[] = ['closed', 'analyzed', 'published', 'archived'];
 
 /**
+ * Why a monthly series may not open on `open`, or null when it may.
+ *
+ * Every month of a series is a whole calendar month, except its first. A
+ * study's first opening may fall mid-month, and that month is published as a
+ * partial month (index-spec §8, amendment of 23 October 2026). A study that has
+ * fielded before, or already holds a frozen instrument version, opens on the 1st.
+ */
+export function monthlyOpeningProblem(
+	open: string,
+	study: { fielding_window?: { start?: string | null } | null; instrument_versions?: Array<{ frozen?: boolean }> }
+): string | null {
+	if (open.endsWith('-01')) return null;
+	const firstOpening = !nonBlank(study.fielding_window?.start) && !(study.instrument_versions ?? []).some((v) => v.frozen);
+	if (firstOpening) return null;
+	return 'a monthly series opens mid-month only in its first period; every later opening is on the 1st, so every later month is a whole month';
+}
+
+/**
  * The lifecycle gates from portal README §3, expressed as required fields per
  * status. Returns violations, never throws: the build reports them together.
  */

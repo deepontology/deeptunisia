@@ -22,6 +22,7 @@ import {
 	StudyResultsSchema,
 	StudySchema,
 	computeInstrumentHash,
+	monthlyOpeningProblem,
 	validateInstrument,
 	validateResults,
 	validateStudyLifecycle,
@@ -639,6 +640,20 @@ ok(
 		'build-studies.ts does not import the graph build',
 		!/from '\.\/(build-data|schema)\.ts'/.test(studiesSrc)
 	);
+}
+
+// ---------------------------------------------------------------------------
+// When a monthly series may open (index-spec §8, amendment of 23 October 2026)
+// ---------------------------------------------------------------------------
+{
+	const firstTime = { fielding_window: null, instrument_versions: [{ frozen: false }] };
+	const fieldedBefore = { fielding_window: { start: '2026-10-23' }, instrument_versions: [{ frozen: true }, { frozen: false }] };
+	const frozenBefore = { fielding_window: null, instrument_versions: [{ frozen: true }, { frozen: false }] };
+	ok('a first opening mid-month is allowed: the partial first month', monthlyOpeningProblem('2026-10-23', firstTime) === null);
+	ok('a first opening on the 1st is allowed', monthlyOpeningProblem('2026-11-01', firstTime) === null);
+	ok('a later opening mid-month is refused', /mid-month only in its first period/.test(monthlyOpeningProblem('2026-11-05', fieldedBefore) ?? ''));
+	ok('a mid-month opening after a frozen version is refused', monthlyOpeningProblem('2027-03-15', frozenBefore) !== null);
+	ok('a later opening on the 1st is allowed', monthlyOpeningProblem('2026-12-01', fieldedBefore) === null);
 }
 
 console.log(
