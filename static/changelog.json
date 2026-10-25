@@ -1,5 +1,40 @@
 [
   {
+    "hash": "2d9672749",
+    "date": "2026-10-23T12:27:52+01:00",
+    "subject": "Research: the police index moves to fielding, with its review statements",
+    "kind": "revision",
+    "added": 19,
+    "removed": 4,
+    "files": [
+      {
+        "file": "data/studies/studies.yaml",
+        "added": 19,
+        "removed": 4
+      }
+    ]
+  },
+  {
+    "hash": "1d11ee979",
+    "date": "2026-10-23T12:26:15+01:00",
+    "subject": "Research: freeze the police index instrument at 1.0.0 and register its pre-registration",
+    "kind": "revision",
+    "added": 849,
+    "removed": 6,
+    "files": [
+      {
+        "file": "data/studies/dt-research-002/dt002-police-index-v1.0.0.yaml",
+        "added": 843,
+        "removed": 0
+      },
+      {
+        "file": "data/studies/studies.yaml",
+        "added": 6,
+        "removed": 6
+      }
+    ]
+  },
+  {
     "hash": "ea635461b",
     "date": "2026-10-23T11:35:14+01:00",
     "subject": "Data: merge the 2026-10-23 sweep (five events), record one dispute, advance the research cutoff",
