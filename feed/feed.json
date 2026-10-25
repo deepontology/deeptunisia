@@ -3,6 +3,56 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:african-manager:cf056bd40b0c9a7b",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Alkimia, la créance indienne qui ne meurt jamais",
+      "link": "https://africanmanager.com/alkimia-la-creance-indienne-qui-ne-meurt-jamais/",
+      "published": "2026-10-25T13:44:44Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:fd0e08ce962e2af5",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Maher Ketari, le député rebelle",
+      "link": "https://africanmanager.com/maher-ketari-le-depute-rebelle/",
+      "published": "2026-10-25T13:43:15Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:399488872d8504d1",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Le député Boussema tire sur le PLF 2027 à rafales de chiffres",
+      "link": "https://africanmanager.com/le-depute-boussema-tire-sur-le-plf-2027-a-rafales-de-chiffres/",
+      "published": "2026-10-25T13:41:45Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:7d9864b71f31cd93",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Des semences à moitié, une récolte au tiers",
+      "link": "https://africanmanager.com/des-semences-a-moitie-une-recolte-au-tiers/",
+      "published": "2026-10-25T13:27:22Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:0fca7e33b856d598",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "À Paris le capital, à Tunis les créances douteuses",
+      "link": "https://africanmanager.com/a-paris-le-capital-a-tunis-les-creances-douteuses/",
+      "published": "2026-10-25T13:19:54Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
       "id": "feed:african-manager:0724a1eece3cf025",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -11941,56 +11991,6 @@
       "title": "Tunis | Démantèlement d’un réseau de trafic de cocaïne dirigé par un rappeur",
       "link": "https://kapitalis.com/tunisie/2026/09/14/tunis-demantelement-dun-reseau-de-trafic-de-cocaine-dirige-par-un-rappeur/",
       "published": "2026-09-14T09:56:22Z",
-      "lang": "fr",
-      "author": "webmaster kapitalis"
-    },
-    {
-      "id": "feed:african-manager:4be3b002bd2914ff",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Karaté – Championnats d’Afrique : la Tunisie termine avec un total de 18 médailles dont 5 or",
-      "link": "https://africanmanager.com/kumite-elles-ont-ete-remportees-par-ranim-ben-hassan/",
-      "published": "2026-09-14T09:46:13Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:72f00530056dcd9b",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Championnat Elite (2e journée) : SC Moknine – EM Mahdia (28-27)",
-      "link": "https://africanmanager.com/sc-moknine-a-battu-lem-mahdia-28-27-lors-du-dernier-match-de-la-deuxieme-journee/",
-      "published": "2026-09-14T09:41:06Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:38049e19c65cbb6d",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Liga : le FC Barcelone s’impose face à Levante (4-2)",
-      "link": "https://africanmanager.com/liga-le-fc-barcelone-simpose-face-a-levante-4-2/",
-      "published": "2026-09-14T09:39:23Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:2f8c0e0ac5dd379d",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Ligue 1 (4e journée) : L’Espérance de Tunis nouveau leader",
-      "link": "https://africanmanager.com/ligue-1-4e-journee-lesperance-de-tunis-nouveau-leader/",
-      "published": "2026-09-14T09:36:47Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:kapitalis:3b923416f92a38a5",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "TABC | Nouveau bureau, nouvelle feuille de route",
-      "link": "https://kapitalis.com/tunisie/2026/09/14/tabc-nouveau-bureau-nouvelle-feuille-de-route/",
-      "published": "2026-09-14T09:33:21Z",
       "lang": "fr",
       "author": "webmaster kapitalis"
     }
