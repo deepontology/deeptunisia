@@ -51,6 +51,12 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           token: ${{ secrets.FEED_PAT }}
+          # Load-bearing for the shipped-payload measurement: the payload size
+          # is derived from the dataset changelog, which is rebuilt from
+          # `git log -- data/`. A shallow clone collapses that log to a single
+          # root commit, so the build under-measures the payload and the
+          # public-claims gate rejects the correct published figure.
+          fetch-depth: 0
 
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
