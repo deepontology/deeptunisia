@@ -3,6 +3,16 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:african-manager:0614bd8223848c4c",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Tebboune reçoit Nafti en marge d’une réunion sur la Libye",
+      "link": "https://africanmanager.com/le-president-algerien-recoit-le-ministre-tunisien-des-affaires-etrangeres-en-marge-de-la-reunion-tripartite-sur-la-libye/",
+      "published": "2026-10-25T17:31:49Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
       "id": "feed:african-manager:cf056bd40b0c9a7b",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -49,6 +59,16 @@
       "title": "À Paris le capital, à Tunis les créances douteuses",
       "link": "https://africanmanager.com/a-paris-le-capital-a-tunis-les-creances-douteuses/",
       "published": "2026-10-25T13:19:54Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:3408965464be5387",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "La Tunisie 89e au niveau mondial dans l’indice de l’état de droit 2026",
+      "link": "https://africanmanager.com/la-tunisie-89e-au-niveau-mondial-dans-lindice-de-letat-de-droit-2026/",
+      "published": "2026-10-25T13:10:00Z",
       "lang": "fr",
       "author": "African Manager"
     },
@@ -11973,26 +11993,6 @@
       "published": "2026-09-14T10:30:05Z",
       "lang": "fr",
       "author": "Africanmanager"
-    },
-    {
-      "id": "feed:inkyfada:1a1d7fa3fba8aaa5",
-      "outlet": "Inkyfada",
-      "outletId": "inkyfada",
-      "title": "Affaire Mohamed Yousfi : des publications Facebook au cœur d’un dossier pour blanchiment et terrorisme",
-      "link": "https://inkyfada.com/fr/2026/09/14/affaire-mohamed-yousfi-des-publications-facebook-au-coeur-dun-dossier-pour-blanchiment-et-terrorisme/",
-      "published": "2026-09-14T10:18:55Z",
-      "lang": "fr",
-      "author": "Manel Lassoued"
-    },
-    {
-      "id": "feed:kapitalis:fc1e11b784ec1af6",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Tunis | Démantèlement d’un réseau de trafic de cocaïne dirigé par un rappeur",
-      "link": "https://kapitalis.com/tunisie/2026/09/14/tunis-demantelement-dun-reseau-de-trafic-de-cocaine-dirige-par-un-rappeur/",
-      "published": "2026-09-14T09:56:22Z",
-      "lang": "fr",
-      "author": "webmaster kapitalis"
     }
   ]
 }
