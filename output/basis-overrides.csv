@@ -23,6 +23,7 @@ wael-naouar,person,C,inferred,reported,no
 nabil-channoufi,person,C,inferred,reported,no
 ghassan-henchiri,person,C,inferred,reported,no
 ghassan-boughdiri,person,C,inferred,reported,no
+abdelkarim-harouni,person,C,inferred,reported,yes
 p-dgsn-dabbabi,position,C,inferred,reported,no
 p-dgsn-rajhi,position,C,inferred,reported,no
 p-dgsn-bettaieb,position,B,reported,documented,no
@@ -75,6 +76,9 @@ ev-sabotage-declaration-2026-08-26,event,C,inferred,reported,no
 ev-arp-petition-2026-08-29,event,C,inferred,reported,no
 ev-solar-309-authorisations-2026-09,event,C,inferred,reported,no
 ev-ugtt-strike-instance-2026-09-10,event,C,inferred,reported,no
+ev-harouni-frikha-appeal-confirmed-2026-10-23,event,C,inferred,reported,yes
+ev-nafti-algiers-libya-tripartite-2026-10-25,event,C,inferred,reported,yes
+ev-shili-dtra-meeting-2026-10-22,event,C,inferred,reported,yes
 gafta,agreement,B,reported,documented,no
 agadir-agreement,agreement,B,reported,documented,no
 bit-germany-1963,agreement,B,reported,documented,no

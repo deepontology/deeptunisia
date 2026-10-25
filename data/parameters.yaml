@@ -73,9 +73,16 @@ time:
   #   competition ruling dated 2024-05-29 that a 22 October item disclosed. The
   #   sweep read the feed through 2026-10-23, so the cutoff takes the coverage
   #   date rather than the latest record date.
+  # Advanced again 2026-10-25 when the Oct-23 to Oct-25 sweep merged ten events
+  #   and one contract, two of them dated past the previous horizon: the EU
+  #   delegation's announcement of a forthcoming 80 M€ budget-support agreement
+  #   (24 October) and the foreign minister's participation in the Algiers
+  #   tripartite meeting on Libya (25 October). The sweep read the feed through
+  #   2026-10-25, so the cutoff takes the coverage date rather than the latest
+  #   record date.
   # V31 now fails the build on any record interval dated past the cutoff.
   floor: "1956-03-20"
-  cutoff: "2026-10-23"
+  cutoff: "2026-10-25"
   # How far back an open-ended "in post by X" bound may reach. A plausible
   # ceiling for a senior command tenure; the longest documented run in the
   # dataset is about seven and a half years.

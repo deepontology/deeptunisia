@@ -1,7 +1,7 @@
 {
-  "generated": "2026-10-25T06:55:48.264Z",
-  "total": 1004,
-  "reviewed": 39,
+  "generated": "2026-10-25T14:36:46.814Z",
+  "total": 1015,
+  "reviewed": 42,
   "queue": [
     {
       "kind": "relationship",
@@ -465,6 +465,16 @@
     },
     {
       "kind": "event",
+      "id": "ev-harouni-frikha-appeal-confirmed-2026-10-23",
+      "confidence": "C",
+      "basis": "reported",
+      "risk": 1,
+      "sources": 2,
+      "reviewed": true,
+      "title": "Tunis appeal chamber confirms two years for Harouni and seven for Frikha in the airline and oil company case"
+    },
+    {
+      "kind": "event",
       "id": "ev-moussi-cassation-rejet-2026-09-29",
       "confidence": "C",
       "basis": "inferred",
@@ -695,6 +705,16 @@
     },
     {
       "kind": "contract",
+      "id": "ctr-otc-fodder-maize-tender-2026-10",
+      "confidence": "C",
+      "basis": "inferred",
+      "risk": 1,
+      "sources": 1,
+      "reviewed": false,
+      "title": "Office des Céréales international tender for 26,500 tonnes of fodder maize"
+    },
+    {
+      "kind": "contract",
       "id": "ctr-sncft-attijari-locomotives-2017",
       "confidence": "C",
       "basis": "reported",
@@ -815,6 +835,16 @@
     },
     {
       "kind": "event",
+      "id": "ev-attijari-ci-rating-2026-10-21",
+      "confidence": "C",
+      "basis": "inferred",
+      "risk": 1,
+      "sources": 1,
+      "reviewed": false,
+      "title": "Capital Intelligence affirms Attijari Bank at C+/C and flags BCT-funded Treasury purchases"
+    },
+    {
+      "kind": "event",
       "id": "ev-autoroutes-a1-a2-concessions-2026",
       "confidence": "C",
       "basis": "reported",
@@ -832,6 +862,16 @@
       "sources": 1,
       "reviewed": false,
       "title": "Bizerte Maritime Centre of Excellence under construction with US funding"
+    },
+    {
+      "kind": "event",
+      "id": "ev-eu-budget-support-announcement-2026-10-24",
+      "confidence": "C",
+      "basis": "inferred",
+      "risk": 1,
+      "sources": 1,
+      "reviewed": false,
+      "title": "EU delegation announces a forthcoming 80 million euro budget-support agreement with Tunisia"
     },
     {
       "kind": "event",
@@ -875,6 +915,16 @@
     },
     {
       "kind": "event",
+      "id": "ev-nafti-algiers-libya-tripartite-2026-10-25",
+      "confidence": "C",
+      "basis": "reported",
+      "risk": 1,
+      "sources": 1,
+      "reviewed": true,
+      "title": "Nafti attends the tripartite consultation on Libya in Algiers"
+    },
+    {
+      "kind": "event",
       "id": "ev-nafti-iom-voluntary-returns-2026-09-22",
       "confidence": "C",
       "basis": "inferred",
@@ -892,6 +942,16 @@
       "sources": 1,
       "reviewed": false,
       "title": "Migrant boat breaks up near the Hasdrubal platform: 28 rescued, 2 dead, 6 missing"
+    },
+    {
+      "kind": "event",
+      "id": "ev-olive-sector-council-2026-10-23",
+      "confidence": "C",
+      "basis": "inferred",
+      "risk": 1,
+      "sources": 1,
+      "reviewed": false,
+      "title": "Restricted ministerial council adopts an olive-oil support package, 150 MDT for the Office national de l'huile"
     },
     {
       "kind": "event",
@@ -932,6 +992,16 @@
       "sources": 1,
       "reviewed": false,
       "title": "Defence minister Khaled Shili receives US 6th Fleet commander Jeffrey Anderson in Tunis"
+    },
+    {
+      "kind": "event",
+      "id": "ev-shili-dtra-meeting-2026-10-22",
+      "confidence": "C",
+      "basis": "reported",
+      "risk": 1,
+      "sources": 1,
+      "reviewed": true,
+      "title": "Defence minister Shili meets the US Defense Threat Reduction Agency"
     },
     {
       "kind": "event",
@@ -1032,6 +1102,16 @@
       "sources": 1,
       "reviewed": false,
       "title": "UIB statutory auditors report savings-account manipulations to the prosecutor"
+    },
+    {
+      "kind": "event",
+      "id": "ev-uib-cnss-expert-2025-12",
+      "confidence": "C",
+      "basis": "inferred",
+      "risk": 1,
+      "sources": 1,
+      "reviewed": false,
+      "title": "Tunis appeal court appoints a judicial expert in the UIB–CNSS social-contribution dispute"
     },
     {
       "kind": "event",
@@ -3262,6 +3342,16 @@
       "sources": 2,
       "reviewed": false,
       "title": "Military court sentences Olfa Hamdi to four years in two cases"
+    },
+    {
+      "kind": "event",
+      "id": "ev-jebeniana-death-aoun-salhi-2026-10-21",
+      "confidence": "B",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 2,
+      "reviewed": false,
+      "title": "Aoun al-Salhi, 24, dies in Jebiniana after a police pursuit, and the town clashes for two days"
     },
     {
       "kind": "event",
@@ -9312,6 +9402,26 @@
       "sources": 1,
       "reviewed": false,
       "title": "Decree 2026-4 published: a new municipal-councils text"
+    },
+    {
+      "kind": "event",
+      "id": "ev-el-menzah-concession-transfer-2026-10-23",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "Acting industry minister authorises the transfer of the El Menzah oil concession to EXXOIL SA"
+    },
+    {
+      "kind": "event",
+      "id": "ev-siphat-compulsory-retirements-2026-10-21",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "Seven SIPHAT employees compulsorily retired by decree"
     },
     {
       "kind": "event",
