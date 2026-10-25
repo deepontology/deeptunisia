@@ -3,6 +3,16 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:african-manager:2884cdf225e6a0aa",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "La femme qui gère, par intérim, un CA de 2,1 Mds DT, et toutes les hydrocarbures",
+      "link": "https://africanmanager.com/la-femme-qui-gere-par-interim-un-ca-de-21-mds-dt-et-toutes-les-hydrocarbures/",
+      "published": "2026-10-25T20:10:58Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
       "id": "feed:african-manager:0614bd8223848c4c",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -11983,16 +11993,6 @@
       "published": "2026-09-14T10:37:18Z",
       "lang": "fr",
       "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:58a2247a2c2df9ad",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Maroc: Opération de retour volontaire de migrants soudanais",
-      "link": "https://africanmanager.com/maroc-operation-de-retour-volontaire-de-migrants-soudanais/",
-      "published": "2026-09-14T10:30:05Z",
-      "lang": "fr",
-      "author": "Africanmanager"
     }
   ]
 }
