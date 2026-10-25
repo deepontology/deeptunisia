@@ -86,7 +86,7 @@ export const DEFAULT_PARAMETERS: Parameters = {
 	},
 	time: {
 		floor: '1956-03-20',
-		cutoff: '2026-10-23',
+		cutoff: '2026-10-25',
 		beforeWindowYears: 8,
 		approxSlackDays: { year: 365, month: 92 }
 	},

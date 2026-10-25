@@ -1543,7 +1543,7 @@ console.log('\n  ── three review populations, never summed ──\n');
 	ok('independent verification is a collection of its own in the graph', Array.isArray(ds.verifications));
 	ok('with its own count beside the others', typeof ds.meta.counts.verifications === 'number', `counts.verifications=${ds.meta.counts.verifications}`);
 	ok('the collection carries the same count as its meta', ds.meta.counts.verifications === verifications.length);
-	ok('it is empty today, so the published independent count is zero', verifications.length === 0 && ds.meta.review.reviewed === 48, `verifications=${verifications.length} reviewed=${ds.meta.review.reviewed}`);
+	ok('it is empty today, so the published independent count is zero', verifications.length === 0 && ds.meta.review.reviewed === 52, `verifications=${verifications.length} reviewed=${ds.meta.review.reviewed}`);
 	ok('the editorial queue keeps its own denominator', queue.total > ds.meta.review.reviewed, `${queue.total} queued vs ${ds.meta.review.reviewed} reviewed`);
 	ok(
 		'the three populations are three distinct numbers',

@@ -779,3 +779,49 @@
   falsifiable_by: The published concession contract or its JORT notice
   sources:
     - kapitalis-autoroutes-a1-a2-2026
+
+- id: ctr-otc-fodder-maize-tender-2026-10
+  title_en: "Office des Céréales international tender for 26,500 tonnes of fodder maize"
+  title_fr: "Appel d'offres international de l'Office des Céréales pour 26 500 tonnes de maïs fourrager"
+  institution: office-des-cereales
+  kind: procurement
+  procurement: { mechanism: international-open-tender, advertised: "?" }
+  status: advertised
+  confidence: C
+  verification: needs-primary-source
+  attributed_to: "African Manager (23 October 2026), reporting the tender notice"
+  reasoning: >-
+    One outlet reporting a tender notice that was not retrieved from the
+    office's own publication. The quantity, the commodity, the closing date and
+    the shipping windows are as the piece states them; the buyer's name is the
+    press's ("Office tunisien des céréales") rather than the graph's ("Office
+    des Céréales"). No basis is authored: at grade C with no primary source the
+    envelope derives "inferred", and that is what this record is — a reading of
+    a notice through one outlet, not the notice.
+  falsifiable_by: >-
+    The Office des Céréales' own tender notice or its award decision would
+    confirm the quantity, the closing date and the shipping windows and would
+    add the advertisement date, the awarded supplier and the price; a cancelled
+    or re-tendered call, or an award to a different volume, would correct the
+    record.
+  notes:
+    - >-
+      Closing date 23 October 2026. Shipping windows are stated by origin:
+      10-20 December for eastern Europe, the Black Sea and the Mediterranean,
+      5-15 December for western Europe, and 25 November-5 December for the
+      United States, Canada, Brazil and Argentina.
+    - >-
+      The advertisement date is not printed and no price, estimate, value or
+      supplier is given, so the record carries no `award` and `advertised` stays
+      "?" rather than being inferred from the closing date.
+    - >-
+      The piece names the buyer "l'Office tunisien des céréales". The graph's
+      record (institutions.yaml:1379) is "Office des Céréales" (OC, مكتب
+      الحبوب), the grain authority under the agriculture ministry. Treated as
+      the same body on that reading; a reviewer who disagrees should reject the
+      record rather than silently re-point `institution`.
+    - >-
+      Notice of a tender, not an award: nothing here says the office bought, at
+      what price, or from whom.
+  sources:
+    - african-manager-cereals-tender-2026-10-23

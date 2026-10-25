@@ -5590,6 +5590,18 @@
   attributed_to: African Manager (22 October 2026), reporting the two committees' joint meeting
   reasoning: One outlet, no parliamentary document. The meeting, its date, the two chairing members and the scheduled 28 October hearing are as the piece states them; the members' stated concerns are its summary of their interventions, not a record of the sitting. The 28 October audition is forward-dated, so the record dates the preparatory meeting and reports the audition as scheduled rather than held.
   falsifiable_by: The ARP or CNRD committee agenda, minutes or communiqué, or the published hearing schedule, would confirm the 21 October meeting and the 28 October date; a postponement or a different date would correct it.
+  disputes:
+    - claim: "The 21 October 2026 session was a joint ARP and CNRD meeting co-chaired by Ali Hassoumi Bayouli and Maher Kettari."
+      held_by: "African Manager (23 October 2026)"
+      source: african-manager-bouderbala-2026-10-23
+      assessment: >-
+        The same outlet, one day later, describes the same session under a single chair —
+        the ARP finance and budget committee president Maher Ketari — with the committee
+        vice-president Dhafer Sghiri and the rapporteur Zina Jaballah present, and mentions
+        no CNRD participation and no Ali Hassoumi Bayouli. Both descriptions are African
+        Manager's. The dataset keeps the joint account and records the competing one here
+        rather than choosing between them; a committee agenda or minutes would settle it.
+      status: open
   sources:
     - african-manager-arp-cnrd-budget-2027-2026-10-22
 - id: ev-uib-competition-fine-2024-05-29
@@ -5614,3 +5626,567 @@
   sources:
     - african-manager-uib-concurrence-2026-10-22
     - african-manager-btk-menaces-2026-10-22
+
+- id: ev-harouni-frikha-appeal-confirmed-2026-10-23
+  date: "~2026-10-23"
+  title_en: "Tunis appeal chamber confirms two years for Harouni and seven for Frikha in the airline and oil company case"
+  title_fr: "La chambre criminelle de la Cour d'appel de Tunis confirme deux ans pour Harouni et sept ans pour Frikha dans l'affaire de la compagnie aérienne et de la société pétrolière publique"
+  category: legal
+  subcategory: appeal-ruling
+  location: [gov-tunis]
+  actors: [abdelkarim-harouni]
+  institutions: [judiciary, ennahda]
+  causes: []
+  consequences: []
+  summary: >-
+    The criminal chamber specialised in financial corruption cases at the Tunis
+    Court of Appeal confirmed the first-instance judgment against the businessman
+    Mohamed Frikha, the former transport minister and Ennahdha leader Abdelkarim
+    Harouni and other defendants, per African Manager on 23 October 2026. On the
+    outlet's account of the first-instance sentences, Harouni received two years,
+    two former executives of a public oil company six years each and Frikha seven
+    years, with financial penalties imposed on all defendants. The case concerns
+    commercial transactions between an airline owned by Frikha and a public oil
+    company, a description the earlier of the two pieces attributes to Mosaïque
+    FM. The later piece adds that the public prosecutor at the Tunis court of
+    first instance had appealed the initial judgment and that Harouni, detained in
+    this case since 2023, should leave prison after serving his sentence; its
+    headline states that he has left. Neither piece states the date of the appeal
+    ruling, whether a further appeal is open, or whether the fines have been paid.
+    The airline is not named in either body text. No judgment, court communiqué,
+    defence statement or JORT publication was retrieved, and the specialised
+    chamber has no graph id, so the record cites the judiciary.
+  confidence: C
+  basis: reported
+  basis_override_reason: >-
+    The claim is a publication's report of what an appeal chamber did, not an
+    inference drawn by this batch. Grade C marks the single-outlet ceiling and
+    the missing judgment, and the basis is the report itself.
+  review:
+    by: Research pass 2026-10-25
+    date: "2026-10-25"
+    method: source-check
+    note: >-
+      Both same-day African Manager pieces fetched and read in full; no judgment,
+      court file, defence statement or second outlet consulted. The note records
+      what the outlet reports, not an inference about what the chamber did.
+  verification: needs-primary-source
+  attributed_to: "African Manager (23 October 2026), two pieces the same day; the case description in the earlier piece is attributed there to Mosaïque FM. One outlet, not two."
+  reasoning: >-
+    The two pieces are one publication, so the second cannot confirm the first.
+    What they agree on is the appeal chamber's confirmation of the first-instance
+    sentences, the four lengths (two years, six, six and seven), fines for all and
+    the subject of the case; nothing else in the sweep reports the ruling, so a
+    single outlet's account is the ceiling and the grade is C. The ruling date is not stated, so
+    the record is dated to the day of publication and marked approximate rather
+    than assigning the ruling to a day the paper does not give. The release is
+    recorded as the later piece states it, with the difference between its
+    headline and its body left visible.
+  falsifiable_by: >-
+    The judgment of the criminal chamber or the first-instance file would confirm
+    the case numbers, the four sentences, the fines and the ruling date; a defence
+    or court statement that Harouni remains detained, or that an appeal in
+    cassation is pending, would correct the release and the procedural position;
+    naming the airline as Syphax in a second outlet would confirm what the related
+    links merely suggest.
+  sources:
+    - african-manager-harouni-verdict-2026-10-23
+    - african-manager-harouni-liberation-2026-10-23
+
+- id: ev-jebeniana-death-aoun-salhi-2026-10-21
+  date: "2026-10-21"
+  title_en: "Aoun al-Salhi, 24, dies in Jebiniana after a police pursuit, and the town clashes for two days"
+  title_fr: "Aoun al-Salhi, 24 ans, meurt à Jebiniana après une course-poursuite policière, et la ville s'affronte pendant deux jours"
+  category: security
+  subcategory: police-violence
+  location: [gov-sfax]
+  actors: []
+  institutions: [ministry-interior]
+  causes: []
+  consequences: []
+  summary: >-
+    Aoun al-Salhi (عون الصالحي, transliterated here by the candidate), 24, from
+    the Drabla area of Jebiniana delegation in Sfax governorate, died on Wednesday
+    21 October 2026 after a police pursuit while he was riding a motorcycle, per
+    Nawaat on 23 October 2026. Witnesses who spoke to Nawaat said the public-order
+    vehicle chasing him touched the motorcycle from behind, that he lost his
+    balance, fell and was run over, and that he died at the scene; the family and
+    health sources in the area confirmed to the outlet that the body bore serious
+    injuries. Relatives and friends told Nawaat he had been wanted for some time
+    over drug-trafficking accusations, which they deny. Agence France-Presse and
+    Reuters copy carried by Al Jazeera on 23 October reported the same death and
+    the relatives' account that he died while being chased by security forces,
+    without naming him (aljazeera-tunisia-unrest-2026-10-23, defined in
+    daily-2026-10-23.yaml). Nawaat records no arrest count and no crowd figure,
+    names no organising body, and reports the demands raised as a serious
+    investigation conducted under media scrutiny, to establish responsibility and
+    hold those responsible to account. He was buried on the afternoon of Thursday
+    22 October, after the clashes subsided. The outlet also recalls the December
+    2018 death of Oussama al-Aatar, 19, in the Jelalba area after a similar
+    pursuit, the protests that followed, and, reprinting its own piece of 30
+    December 2022, that the police were charged with manslaughter and released and
+    that no verdict had been issued by the session of 28 December 2022.
+  confidence: B
+  basis: reported
+  verification: needs-primary-source
+  attributed_to: "Nawaat (23 October 2026) for the name, age, date, mechanism and demands, on eyewitness, family and local health sources; Agence France-Presse and Reuters via Al Jazeera (23 October 2026) for the death after a security-force chase"
+  reasoning: >-
+    Two independent publications carry the core fact: a man died in Jebiniana
+    after being chased by security forces, one as wire copy and one as original
+    reporting with named witnesses. That is enough for B on the death. Everything
+    that makes the record specific (the name, the age, the delegation, the
+    motorcycle being struck from behind, the injuries, the drug-trafficking
+    accusation and the family's denial, the burial) rests on Nawaat alone and is
+    attributed. The outlet is advocacy adjacent and its framing is argumentative,
+    so the framing is not carried into the record. No autopsy, interior ministry
+    or judicial finding was found, and none is inferred.
+  falsifiable_by: >-
+    An interior ministry or National Guard statement, a prosecutor's communiqué,
+    an autopsy or a judicial investigation would confirm or displace the sequence
+    and the mechanism; a finding that the motorcycle was not struck, or that the
+    pursuit was not the cause of death, would refute the witnesses' account; a
+    second outlet naming the victim independently would raise the identification
+    above one source.
+  sources:
+    - nawaat-jebeniana-2026-10-23
+    - aljazeera-tunisia-unrest-2026-10-23
+
+- id: ev-el-menzah-concession-transfer-2026-10-23
+  date: "2026-10-23"
+  title_en: "Acting industry minister authorises the transfer of the El Menzah oil concession to EXXOIL SA"
+  title_fr: "Le ministre chargé de l'industrie autorise la cession de la concession pétrolière El Menzah à EXXOIL SA"
+  category: economic
+  subcategory: mining-energy
+  location: []
+  actors: [salah-zouari]
+  institutions: [etap]
+  causes: []
+  consequences: []
+  documents:
+    - "Arrêté du ministre chargé à titre temporaire de diriger le ministère de l'industrie, des mines et de l'énergie du 23 octobre 2026, portant autorisation de cession totale des droits et des obligations dans la concession d'exploitation des hydrocarbures dite concession d'exploitation « El Menzah », JORT n° 103 du 23 octobre 2026, p. 2321"
+    - https://lake.jort.tn/journal-officiel/fr/2026/103.pdf
+  summary: >-
+    JORT n° 103 of 23 October 2026 (p. 2321) publishes an arrêté of 23 October
+    2026, signed by Slah Zouari as minister temporarily in charge of the ministry
+    of industry, mines and energy, authorising the total transfer of the rights
+    and obligations of the Entreprise tunisienne d'activités pétrolières (ETAP)
+    and of Ecumed Petroleum Grombalia Limited in the El Menzah hydrocarbon
+    exploitation concession to EXXOIL SA, which becomes holder of the concession
+    at 100%. The recitals record that ETAP agreed on 3 September 2024 to EXXOIL
+    SA's request to rectify the arrêté of the industry minister of 18 November
+    2000 that instituted the concession so that the concession be attributed to
+    EXXOIL in full, and that ETAP decided not to take part in development and
+    production operations on the concession; the Hydrocarbons Consultative
+    Committee gave a favourable opinion at its meeting of 27 September 2024. The
+    instrument cites the Grombalia permit convention ratified by law 91-60, the
+    hydrocarbons code (law 99-93), decree 2000-713 on the consultative committee
+    and the 1996 letter by which Marathon Petroleum Grombalia notified its change
+    of name to Ecumed Petroleum Grombalia. It does not state a price, a
+    consideration or a work programme, and gives no date of effect beyond
+    publication.
+  confidence: A
+  basis: documented
+  verification: verified
+  reasoning: >-
+    The instrument is read from the gazette itself, on the page the sommaire
+    assigns it, and the candidate transcribes what the arrêté says. The reading
+    that a concession is transferred rather than created, and that ETAP exits,
+    follows the operative article ("cession totale ... au profit de la société
+    EXXOIL SA ... à hauteur de 100%") and the recital of ETAP's decision not to
+    participate in development and production. No interpretation of why, or of
+    the commercial terms, is offered, because the text carries none.
+  falsifiable_by: >-
+    A re-read of JORT n° 103 p. 2321 would confirm the parties and the 100%
+    figure; the arrêté of 18 November 2000 and the concession convention would
+    establish what was transferred; an EXXOIL or ETAP statement, or a later
+    arrêté, would show the price, the effective date and any condition the
+    instrument does not carry.
+  sources:
+    - jort-2026-103
+
+- id: ev-siphat-compulsory-retirements-2026-10-21
+  date: "2026-10-21"
+  title_en: "Seven SIPHAT employees compulsorily retired by decree"
+  title_fr: "Sept salariés de la SIPHAT mis à la retraite d'office par décret"
+  category: economic
+  subcategory: state-company-staffing
+  location: []
+  actors: []
+  institutions: []
+  causes: []
+  consequences: []
+  documents:
+    - "Décrets n° 2026-258 à 2026-264 du 21 octobre 2026 portant mise à la retraite d'office à la Société des industries pharmaceutiques de Tunisie, JORT n° 103 du 23 octobre 2026, p. 2310"
+    - https://lake.jort.tn/journal-officiel/fr/2026/103.pdf
+  summary: >-
+    JORT n° 103 of 23 October 2026 (p. 2310) publishes seven decrees, numbered
+    2026-258 to 2026-264 and all dated 21 October 2026, each putting one named
+    employee of the Société des industries pharmaceutiques de Tunisie (SIPHAT)
+    on compulsory retirement (mise à la retraite d'office): three cadres de
+    direction générale, two assistants de direction, one pharmacist assistant de
+    direction and one attaché technique. The gazette text gives the names and the
+    grades and states no reason. No outlet in this window reports the seven
+    decrees, and no SIPHAT, ministry or union statement explaining them was
+    found. The same issue carries decree 2026-265, a Béja land-delimitation
+    decree signed by the President of the Republic, but the signature blocks of
+    2026-258 to 2026-264 were not reproduced in the text this candidate was read
+    from, so the record does not assert who signed them.
+  confidence: A
+  basis: documented
+  verification: verified
+  reasoning: >-
+    The seven instruments, their numbers, their date, the employer and the grades
+    of the seven staff are read directly from the gazette page. Nothing further
+    is inferred: the record does not call this a purge, a rationalisation or a
+    retirement campaign, because the gazette gives no reason and no outlet has
+    reported one. The names are in the gazette and are deliberately not
+    reproduced here, because none of the seven is a public office-holder and the
+    record's subject is the instrument, not the individuals.
+  falsifiable_by: >-
+    A re-read of JORT n° 103 p. 2310 would confirm the decree numbers and the
+    seven grades; a SIPHAT or supervisory-ministry statement, or a press report,
+    would supply the reason the gazette withholds and could show that the
+    instrument is routine application of the retirement age rather than anything
+    else.
+  sources:
+    - jort-2026-103
+
+- id: ev-nafti-algiers-libya-tripartite-2026-10-25
+  date: "2026-10-25"
+  title_en: "Nafti attends the tripartite consultation on Libya in Algiers"
+  title_fr: "Nafti participe à Alger à la réunion tripartite de concertation sur la Libye"
+  category: political
+  subcategory: diplomacy
+  location: []
+  actors: [mohamed-ali-nafti]
+  institutions: []
+  causes: []
+  consequences: []
+  summary: >-
+    The foreign minister Mohamed Ali Nafti was to take part in Algiers on Sunday
+    25 October 2026 in a meeting of the tripartite consultation mechanism on
+    Libya, on the instructions of President Kaïs Saïed, with the Algerian
+    minister of state for foreign affairs Ahmed Attaf and the Egyptian foreign
+    minister Badr Abdelatty, per a communiqué relayed by African Manager on
+    25 October 2026. The communiqué places the meeting in the three states'
+    wish to support a Libyan settlement under United Nations auspices, resting on
+    inter-Libyan dialogue and consensus among Libya's components and preserving
+    its unity, sovereignty, resources and territorial integrity. The piece is
+    forward-looking: it reports the meeting as to be held and gives no outcome,
+    no agenda beyond the communiqué wording and no bilateral Tunisian-Libyan
+    item. The ministry of foreign affairs has no graph record, so no institution
+    is cited; the counterparts have no records either and are named only.
+  confidence: C
+  basis: reported
+  basis_override_reason: >-
+    The claim is a ministry communiqué relayed by one outlet, which is a
+    reported claim, not an inference. Grade C marks the absence of a second
+    account and of the meeting's outcome, not a weaker basis.
+  review:
+    by: Research pass 2026-10-25
+    date: "2026-10-25"
+    method: source-check
+    note: >-
+      The African Manager item fetched and read in full; no foreign ministry page,
+      Algerian or Egyptian read-out, or second outlet consulted. The meeting is
+      reported as scheduled, not as held.
+  verification: needs-primary-source
+  attributed_to: "Ministry of Foreign Affairs communiqué, as relayed by African Manager (25 October 2026)"
+  reasoning: >-
+    One outlet relaying the ministry's own communiqué, with no second account and
+    no foreign ministry page retrieved. The date needs a note: the piece carries
+    a 25 October dateline and writes "demain, dimanche 25 octobre". Sunday is
+    25 October 2026, so the day the text names is taken and the "demain" is read
+    as copy written the previous day and published late. The record reports a
+    scheduled meeting, not a held one, and the wording of the aims is the
+    communiqué's.
+  falsifiable_by: >-
+    The foreign ministry communiqué or its page, an Algerian or Egyptian
+    read-out, or a report of the meeting's outcome would confirm the date and
+    show what was decided; a postponement or a lower-level representation would
+    correct the record.
+  sources:
+    - african-manager-nafti-alger-2026-10-25
+
+- id: ev-shili-dtra-meeting-2026-10-22
+  date: "2026-10-22"
+  title_en: "Defence minister Shili meets the US Defense Threat Reduction Agency"
+  title_fr: "Le ministre de la Défense Shili s'entretient avec la Defense Threat Reduction Agency américaine"
+  category: security
+  subcategory: military-cooperation
+  location: []
+  actors: [khaled-shili]
+  institutions: [ministry-defence]
+  causes: []
+  consequences: []
+  summary: >-
+    The defence minister Khaled Shili met on Thursday 22 October 2026 the head of
+    the US Defense Threat Reduction Agency (DTRA), named in the piece as Laura
+    Gross and, later in the same text, Laura Goss, in the presence of the US
+    ambassador to Tunis, Bill Bazzi, per a defence ministry communiqué relayed by
+    African Manager on 23 October 2026. On the communiqué's account the talks
+    covered military cooperation and its reinforcement and diversification,
+    border surveillance and securing, cross-border crime, counter-terrorism, the
+    neutralisation of drone systems, technology transfer, technical assistance,
+    specialised training, and the exploration of regional cooperation with
+    African countries. Shili is reported to have said that the frequency of
+    senior US visits shows the depth of the relationship and that the United
+    States supports the Tunisian armed forces. No agreement, signature, programme
+    or figure is reported, and no US read-out was retrieved.
+  confidence: C
+  basis: reported
+  basis_override_reason: >-
+    The claim is the defence ministry's own communiqué as relayed by one outlet:
+    a reported account of a meeting, not an inference. Grade C marks the single
+    outlet and the missing US read-out.
+  review:
+    by: Research pass 2026-10-25
+    date: "2026-10-25"
+    method: source-check
+    note: >-
+      The African Manager item fetched and read in full; the ministry page and the
+      US read-out were not retrieved, and no second outlet was found.
+  verification: needs-primary-source
+  attributed_to: "Ministry of National Defence communiqué, as relayed by African Manager (23 October 2026)"
+  reasoning: >-
+    One outlet relaying one ministry communiqué, and the outlet is summarizing
+    the minister's own framing. The meeting is recorded because a named minister
+    received a named US agency official and the ministry published an account;
+    the substance is left as the communiqué states it, with no reading of what
+    the encounter changes. The name of the US official is recorded as printed,
+    with the internal inconsistency noted rather than resolved.
+  falsifiable_by: >-
+    The defence ministry's own page, a DTRA or US embassy statement, or a US
+    read-out would confirm the date, the official's name and what was agreed; a
+    report that the meeting concerned a specific pending programme would correct
+    the "no agreement" statement.
+  sources:
+    - african-manager-shili-dtra-2026-10-23
+
+- id: ev-attijari-ci-rating-2026-10-21
+  date: "2026-10-21"
+  title_en: "Capital Intelligence affirms Attijari Bank at C+/C and flags BCT-funded Treasury purchases"
+  title_fr: "Capital Intelligence confirme la note d'Attijari bank à C+/C et pointe les achats de titres d'État financés par la BCT"
+  category: economic
+  subcategory: bank-rating
+  location: []
+  actors: []
+  institutions: [attijari-bank, bct]
+  causes: []
+  consequences: []
+  summary: >-
+    Capital Intelligence affirmed Attijari bank's long- and short-term foreign
+    currency ratings at C+ and C with a stable outlook on 21 October 2026, in a
+    rating the agency initiated itself after meeting management without access
+    to internal documents, per African Manager on 23 October 2026. The agency
+    says the ratings are constrained by its assessment of Tunisian sovereign
+    risk, which it calls timidly stabilising but still high, and it judges the
+    support of the parent Attijariwafa bank (rated BBB-) moderate and worth no
+    notch. The finding the outlet headlines is what the agency calls a
+    "strategic" and "profitable" move: at end-2025 the bank had borrowed from
+    the Banque centrale de Tunisie the equivalent of 3.9% of its assets,
+    against nothing a year earlier, to buy Tunisian Treasury securities, which
+    rose to 16% of assets or 1.8 times equity; the agency calls that a
+    concentration risk on the sovereign and says the securities are barely
+    liquid for want of a developed secondary market. It puts claims on the
+    state at about 21% of bank assets sector-wide and says Attijari's
+    central-bank borrowing had fallen back to 1.5% of assets by mid-2026. The
+    remaining figures are the agency's readings, not graph facts: solvency
+    ratio 12.5%, common equity tier one 11.8% against a 10% regulatory minimum,
+    which it calls only a limited capacity to absorb shocks; dividend payout of
+    75-90% in recent years; the 40 MDT capital increase of 2025; gross loans
+    down 7% in 2025 and net loans down a further 4% in the first half of 2026;
+    a net interest margin of 3.0%, slightly below peers; and first-half 2026
+    profit up 6% to 123 MDT, with the revenue growth attributed to interest on
+    state securities. The agency's own report, and the bank's accounts behind
+    it, were not retrieved.
+  confidence: C
+  verification: needs-primary-source
+  attributed_to: "Capital Intelligence, as relayed by African Manager (23 October 2026)"
+  reasoning: >-
+    One outlet quoting one agency report that was not obtained. The rating
+    action, its date, the two notches and the outlook are stated plainly in the
+    piece and are the kind of fact an agency publishes; they are still second
+    hand here, which is why the record is C and not B. The balance-sheet
+    percentages are the agency's reading of Attijari's own accounts at a stated
+    date (end-2025) and mid-2026, not a central-bank statistic, and the ~21%
+    claims-on-state figure is the agency's sector estimate with no stated
+    method in the piece. Nothing in the item says an issuance, a borrowing
+    facility or a policy change happened in October 2026: the only October act
+    is the rating affirmation.
+  falsifiable_by: >-
+    Capital Intelligence's own rating report or action page of 21 October 2026
+    would confirm the notches, the outlook and the ratios; Attijari bank's 2025
+    annual accounts and 2026 half-year accounts would confirm or correct the
+    BCT borrowing at 3.9% of assets and the Treasury-securities share at 16%;
+    BCT statistics would confirm or correct the ~21% sector-wide claims-on-state
+    figure.
+  sources:
+    - african-manager-attijari-ci-2026-10-23
+
+- id: ev-olive-sector-council-2026-10-23
+  date: "2026-10-23"
+  title_en: "Restricted ministerial council adopts an olive-oil support package, 150 MDT for the Office national de l'huile"
+  title_fr: "Un conseil ministériel restreint adopte un dispositif de soutien à la filière oléicole, 150 MDT pour l'Office national de l'huile"
+  category: economic
+  subcategory: agriculture-support
+  location: []
+  actors: [sara-zaafarani]
+  institutions: [head-of-government]
+  causes: []
+  consequences: []
+  summary: >-
+    A restricted ministerial council chaired by the head of government, Sarra
+    Zaafrani Zenzri, on Friday 23 October 2026 adopted a package for the
+    2026-2027 olive campaign, per a government-presidency communiqué relayed by
+    African Manager on 24 October 2026. The centrepiece is 150 million dinars
+    mobilised through public and private banks for the Office national de
+    l'huile to buy domestic production, so that the office can regulate the
+    market and support growers; 20 MDT of preferential credit for small farmers
+    through the Banque tunisienne de solidarité; and, in the 2027 finance bill,
+    a 100 MD line for 2027-2030 of seasonal and investment credit at
+    preferential rates through the Banque nationale agricole, plus a special
+    Treasury account ("Compte de la filière huile d'olive") to fund storage
+    premiums and the upkeep of the office's warehouses and tanks. The office may
+    store up to 60,000 tonnes with sector operators for three months, with
+    storage premiums and additional aid capped at 20 MDT in total. The maritime
+    transport premium on packaged oil rises from 50% to 60%, export transport
+    aid is maintained through 2027, and the export premium is to be extended to
+    packages of up to five litres. The council also ordered a strategic study of
+    the sector and a restructuring plan for the office, and asked the central
+    bank to help banks finance and reschedule growers' debts. The piece's own
+    split is preserved: the 150 MDT, the 20 MDT of farm credit, the storage
+    programme with its 20 MDT cap and the rise in the transport premium are
+    measures the council adopted; the 100 MD line for 2027-2030 and the special
+    Treasury account are what the piece says the 2027 finance bill "prévoit",
+    and that bill has not been voted. No communiqué text, decree or minutes were
+    retrieved. Of the bodies this decision names, the Office national de
+    l'huile, the Banque tunisienne de solidarité and the olive-sector Treasury
+    account have no graph record; the Banque nationale agricole and the central
+    bank do, but neither is the actor of the decision, so neither is cited.
+  confidence: C
+  verification: needs-primary-source
+  attributed_to: "Government presidency communiqué, as relayed by African Manager (24 October 2026)"
+  reasoning: >-
+    One outlet relaying one communiqué. The council, its chair, its date and the
+    two mobilised amounts are as the piece states them and are the reason this
+    is a record rather than a note: a restricted ministerial council is a
+    decision, not a speech. The split between what the council decided (the two
+    credit envelopes, the storage programme, the premium change) and what is
+    merely written into the 2027 bill (the 100 MD line, the special Treasury
+    account) is the piece's own and is preserved rather than flattened. The date
+    is the Friday before the Saturday publication; the piece names no place for
+    the meeting, so no location is given.
+  falsifiable_by: >-
+    The presidency's communiqué text or the council's minutes would confirm the
+    measures and the amounts; the 2027 finance bill as deposited would confirm
+    or correct the 100 MD line and the special Treasury account; an Office
+    national de l'huile announcement of its purchasing programme would confirm
+    or correct the 150 MDT and the 60,000-tonne storage plan.
+  sources:
+    - african-manager-olive-council-2026-10-24
+
+- id: ev-eu-budget-support-announcement-2026-10-24
+  date: "2026-10-24"
+  title_en: "EU delegation announces a forthcoming 80 million euro budget-support agreement with Tunisia"
+  title_fr: "La délégation de l'UE annonce un prochain accord de soutien budgétaire de 80 millions d'euros"
+  category: economic
+  subcategory: external-budget-support
+  location: []
+  actors: []
+  institutions: [european-union]
+  causes: []
+  consequences: []
+  summary: >-
+    The European Union delegation in Tunisia announced on Saturday 24 October
+    2026, in a post on its official Facebook page relayed by African Manager the
+    same day, that a new financial agreement will be concluded soon with
+    Tunisia under the Union's social-inclusion support programme, granting 80
+    million euros — which the outlet converts to 269.3 million dinars — in
+    support of the state budget. The delegation quotes its ambassador Giuseppe
+    Perrone saying the Union is ready to open a comprehensive dialogue and
+    constructive negotiations on revising the trade rules of the EU-Tunisia
+    Association Agreement, signed on 17 July 1995 and in force since 1 March
+    1998, and naming the Tunisia-Italy ELMED electricity interconnection as a
+    priority for energy cooperation. No agreement, memorandum of understanding,
+    signature date, disbursement schedule or conditionality is reported: the
+    piece records an intention to conclude, in the delegation's own words
+    "prochainement", not a concluded instrument, and no Tunisian ministry is
+    quoted on the Tunisian side. The delegation's post itself was not retrieved
+    beyond the outlet's quotation.
+  confidence: C
+  verification: needs-primary-source
+  attributed_to: "European Union delegation in Tunisia, as relayed by African Manager (24 October 2026)"
+  reasoning: >-
+    A dated public announcement by an institution that has a graph record, about
+    a stated amount and a stated purpose. It is recorded as an announcement and
+    not as an agreement: the record's title, summary and this reasoning all say
+    the instrument does not exist yet. The amount is the delegation's, the dinar
+    conversion is the outlet's, and the Association Agreement dates are the
+    piece's recital rather than new reporting. Because nothing was signed, the
+    record will need superseding — not editing into an agreement — when the
+    financing agreement is concluded.
+  falsifiable_by: >-
+    The delegation's Facebook post, an EU press release or the signed financing
+    agreement would confirm the amount, the programme and the date; a decision to
+    postpone, reduce or reallocate the tranche, or a Tunisian finance ministry
+    statement that no agreement is under negotiation, would refute the record as
+    framed.
+  sources:
+    - african-manager-ue-budget-80m-2026-10-24
+
+- id: ev-uib-cnss-expert-2025-12
+  date: "~2025-12"
+  title_en: "Tunis appeal court appoints a judicial expert in the UIB–CNSS social-contribution dispute"
+  title_fr: "La cour d'appel de Tunis désigne un expert judiciaire dans le litige UIB–CNSS sur les cotisations sociales"
+  category: economic
+  subcategory: social-contribution-dispute
+  location: []
+  actors: []
+  institutions: [uib, cnss]
+  causes: []
+  consequences: []
+  summary: >-
+    The Tunis court of appeal designated a judicial expert in December 2025 to
+    report on the thirteen cases between the Union Internationale de Banques
+    and the CNSS over the social-contribution redressement for the 2019, 2020
+    and 2021 exercises, and designated the same expert in February 2026 for two
+    remaining cases, per UIB's statutory auditors' report on the 2025 accounts
+    as quoted by African Manager on 23 October 2026. The report's account of the
+    dispute: a social control covering 1 January 2019 to 31 December 2021, whose
+    last results were notified on 23 January 2023, claimed a further 7,400
+    thousand dinars of social contribution, of which 2,065 thousand dinars in
+    penalties; the bank contested part of the redressement; in December 2023 the
+    CNSS made a saisie-arrêt of 5,335 thousand dinars on the bank's account at
+    the BCT, annulled by a judgment of 6 March 2024; in August and October 2024
+    the bank received fifteen further états de liquidation totalling 5,335
+    thousand dinars, which it did not accept, and a second action was brought;
+    on 30 January 2025 the CNSS made a further saisie-arrêt of 4,602 thousand
+    dinars, which required a 2,327 thousand dinars top-up of provision charged
+    to the 2024 result; and in January and February 2026 the bank met the
+    expert to present its position, its legal authorities and its grounds
+    against each head of redressement. This record is a backfill, not an October
+    2026 event: the 23 October item is a disclosure inside the 2025 audit report
+    and dates none of the underlying acts to October. No court order, judgment
+    text or CNSS statement was retrieved.
+  confidence: C
+  verification: needs-primary-source
+  attributed_to: "UIB statutory auditors' report on the 2025 accounts, quoted by African Manager (23 October 2026)"
+  reasoning: >-
+    The dates, the amounts and the procedural steps all come from one document —
+    the auditors' report — quoted verbatim by one outlet, and neither the report
+    nor any court paper was obtained. The record is dated ~2025-12 because that
+    is the precision the report itself gives ("en décembre 2025"); naming a day
+    would be invention. The February 2026 designation for the two remaining
+    cases is the same procedural thread and is reported in the summary rather
+    than as a second record. The 6 March 2024 judgment annulling the first
+    saisie-arrêt is earlier still and is also carried in the summary: the
+    dispute's only fixed judicial date, and the reason not to date the record to
+    it. The 7,400 and 5,335 thousand dinars are the auditors' transcriptions.
+  falsifiable_by: >-
+    The Tunis court of appeal's designation order, the CNSS files for the
+    2019-2021 control, the judgment of 6 March 2024, or UIB's own annual report
+    would confirm the amounts, the saisies and the procedural state, and would
+    show whether the expert's report was filed and what it concluded.
+  sources:
+    - african-manager-uib-cnss-2026-10-23

@@ -16308,3 +16308,59 @@
   sources:
     - aljazeera-hamdi-verdict-2026-10-21
     - african-manager-hamdi-verdict-2026-10-21
+
+- id: abdelkarim-harouni
+  name_en: Abdelkarim Harouni
+  name_fr: Abdelkarim Harouni
+  aliases:
+    - Abdelkrim Harouni
+  layers: [political]
+  tagline: "Former transport minister and Ennahdha leader; two-year sentence confirmed on appeal in October 2026, then released"
+  summary: >-
+    Former Tunisian transport minister and a leader of the Ennahdha movement.
+    African Manager describes him on 23 October 2026 as "l'ancien ministre du
+    Transport et dirigeant du mouvement Ennahdha". The criminal chamber
+    specialised in financial corruption cases at the Tunis Court of Appeal
+    confirmed on or shortly before 23 October 2026 the first-instance sentence of
+    two years' imprisonment against him, with a fine, in a case concerning
+    commercial transactions between an airline owned by the businessman Mohamed
+    Frikha and a public oil company; Frikha's seven-year sentence and the
+    six-year sentences of two former executives of the same public oil company
+    were confirmed in the same ruling (see
+    ev-harouni-frikha-appeal-confirmed-2026-10-23). He had been detained in this
+    case since 2023, and the same outlet reported the same day that he had left
+    prison after serving his sentence. No start or end date is given for his
+    ministerial tenure, no ministry of transport record exists in the graph, and
+    no judgment text was retrieved.
+  confidence: C
+  basis: reported
+  basis_override_reason: >-
+    What the record says about him is a publication's report of a court ruling
+    and of a release, not an inference by this batch. Grade C marks one outlet
+    and the missing judgment, not an inferred basis.
+  review:
+    by: Research pass 2026-10-25
+    date: "2026-10-25"
+    method: attribute
+    note: >-
+      Attribute check: the office ("ancien ministre du Transport"), the party role
+      and the two name spellings are as the two same-day African Manager pieces
+      print them. No JORT decree, ministry page or second outlet was found for the
+      ministerial tenure.
+  verification: needs-primary-source
+  attributed_to: "African Manager (23 October 2026), two pieces the same day"
+  reasoning: >-
+    One outlet, one day, two pieces: the office he held, his party role, the
+    sentence and the release are as that outlet states them and are not
+    independently confirmed. No birth date, no ministerial tenure dates and no
+    Arabic spelling are recorded, because none was sourced; the Arabic spelling
+    of the name is owed with the other Arabic fields. "Abdelkrim" is kept as an
+    alias because the same outlet uses both spellings within the two pieces.
+  falsifiable_by: >-
+    A JORT appointment decree would date the transport ministry tenure; the
+    appeal chamber's judgment or a court communiqué would confirm the sentence,
+    the fine and the ruling date; a prison administration or defence statement
+    would confirm the release and its date.
+  sources:
+    - african-manager-harouni-verdict-2026-10-23
+    - african-manager-harouni-liberation-2026-10-23
