@@ -3,6 +3,56 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:f61fc5f9f683b91d",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Jendouba & le Kef | Une nouvelle vague d’«Integrity guardians » en marche",
+      "link": "https://kapitalis.com/tunisie/2026/10/26/jendouba-le-kef-une-nouvelle-vague-dintegrity-guardians-en-marche/",
+      "published": "2026-10-26T19:17:33Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:b42a4375c4cae7f4",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Tunisie | Météo : Quel temps pour cette nuit ?",
+      "link": "https://kapitalis.com/tunisie/2026/10/26/tunisie-meteo-quel-temps-pour-cette-nuit/",
+      "published": "2026-10-26T18:25:22Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:african-manager:3dcce5686cab276f",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "COMAR Assurances : un savoir-faire reconnu pour assurer la pérennité des entreprises",
+      "link": "https://africanmanager.com/comar-assurances-un-savoir-faire-reconnu-pour-assurer-la-perennite-des-entreprises-2/",
+      "published": "2026-10-26T18:03:06Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:8857b7a05f4f5a19",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Moscou disposée à négocier des projets énergétiques",
+      "link": "https://africanmanager.com/tunisie-russie-moscou-disposee-a-negocier-des-projets-de-cooperation-dans-le-domaine-energetique/",
+      "published": "2026-10-26T16:19:24Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:9e5a051b9cd94344",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "-40 % d’énergie grâce réseau de chaleur et de froid à Bab Saadoun",
+      "link": "https://africanmanager.com/eneune-economie-de-40-attendue-grace-au-projet-de-reseau-de-chaleur-et-de-froid-pour-la-colline-sanitaire-de-bab-saadoun/",
+      "published": "2026-10-26T15:19:58Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
       "id": "feed:african-manager:dffb1f67e6c83f7a",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -19,6 +69,16 @@
       "title": "L’étudiant entrepreneur, huit fois moins doté que les Commuautaires",
       "link": "https://africanmanager.com/letudiant-entrepreneur-huit-fois-moins-dote-que-les-commuautaires/",
       "published": "2026-10-26T15:12:00Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:fdb940f13a7ce035",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Banques : Un sans équivalent taux de débits automatiques",
+      "link": "https://africanmanager.com/banques-un-sans-equivalent-taux-de-debits-automatiques/",
+      "published": "2026-10-26T15:10:00Z",
       "lang": "fr",
       "author": "African Manager"
     },
@@ -11931,66 +11991,6 @@
       "title": "Rentrée scolaire : 2 millions d’élèves retrouvent les bancs de l’école",
       "link": "https://africanmanager.com/rentree-scolaire-2-millions-deleves-retrouvent-les-bancs-de-lecole/",
       "published": "2026-09-15T08:19:50Z",
-      "lang": "fr",
-      "author": "Africanmanager"
-    },
-    {
-      "id": "feed:african-manager:61d41a134e886036",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Projet d’élaboration du Plan d’action national du froid",
-      "link": "https://africanmanager.com/lancement-du-projet-delaboration-du-plan-daction-national-du-froid/",
-      "published": "2026-09-15T08:18:13Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:1d5c4d1b40e004ab",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Foot – Stade Tunisien : le Nigérien Youssouf Oumarou retrouve le club du Bardo",
-      "link": "https://africanmanager.com/foot-stade-tunisien-le-nigerien-youssouf-oumarou-retrouve-le-club-du-bardo/",
-      "published": "2026-09-15T08:18:03Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:9cbf65e61c73d296",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Enseignement secondaire : la rentrée démarre sous tension",
-      "link": "https://africanmanager.com/enseignement-secondaire-la-rentree-demarre-sous-tension/",
-      "published": "2026-09-15T08:17:36Z",
-      "lang": "fr",
-      "author": "Africanmanager"
-    },
-    {
-      "id": "feed:african-manager:ded9f23bf1223367",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "« Taamir » pour le dépôt et le suivi des permis de construire",
-      "link": "https://africanmanager.com/lancement-de-la-plateforme-numerique-taamir-pour-le-depot-et-le-suivi-des-dossiers-de-permis-de-construire/",
-      "published": "2026-09-15T08:16:40Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:f91954ccbcfcfd63",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Reprise du trafic sur la ligne Tunis/Annaba",
-      "link": "https://africanmanager.com/transport-reprise-du-trafic-sur-la-ligne-de-train-internationale-tunis-annaba/",
-      "published": "2026-09-15T08:15:13Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:c91c4d03c53c8b71",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Chutes de grêle : les agriculteurs appelés à protéger leurs cultures",
-      "link": "https://africanmanager.com/chutes-de-grele-les-agriculteurs-appeles-a-proteger-leurs-cultures/",
-      "published": "2026-09-15T08:14:22Z",
       "lang": "fr",
       "author": "Africanmanager"
     }
