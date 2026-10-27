@@ -15,12 +15,15 @@
 	} from '$lib/world/countries';
 	import { loadTopology } from '$lib/world/topology';
 	import { scaleSqrt } from 'd3-scale';
-	import Segmented from '$lib/ui/Segmented.svelte';
-	import { Globe, pathFor, TUNISIA } from '$lib/world/globe.svelte';
+	import { Globe, pathFor, TUNISIA, TN_SPAN } from '$lib/world/globe.svelte';
 	import { navigable } from '$lib/viz/gestures';
 	import { placeLabels, type LabelCandidate } from '$lib/viz/place';
 	import NavControls from '$lib/viz/NavControls.svelte';
 	import FlowCard, { type FlowSelection } from './FlowCard.svelte';
+	import GovernorateCard from './GovernorateCard.svelte';
+	import { loadGovernorates, loadRegion, type Governorate, type Region } from '$lib/world/governorates';
+	import { notYet } from '$lib/civic';
+	import { replaceState } from '$app/navigation';
 	import { cssVar } from '$lib/design/theme.svelte';
 	import { compact } from '$lib/design/media.svelte';
 	import { app } from '$lib/state.svelte';
@@ -134,7 +137,192 @@
 	});
 	const graticule = geoGraticule10();
 
-	const globe = new Globe();
+	/*
+	 * Zoom reaches country scale. At the fitted radius Tunisia is a few pixels
+	 * tall; 48 times that fills a phone with it, which is where the governorates
+	 * take over from the countries (see `country` below).
+	 */
+	const globe = new Globe({ maxScale: 48 });
+
+	/**
+	 * How far the reader has zoomed from the world into the country, 0..1.
+	 *
+	 * ONE SURFACE, TWO SCALES
+	 *
+	 * The globe and the governorate map used to be two pages with two
+	 * projections, and the step between them was a page load. They are one
+	 * surface now: the governorates are drawn through the same orthographic
+	 * projection as the coastline, which at Tunisia's size is indistinguishable
+	 * from a flat map, so there is no seam to hide. `kCountry` is the zoom at
+	 * which Tunisia fills about four fifths of the view, and the world layer
+	 * (arcs, country dots) hands over to the governorates across the band
+	 * before it. Rotate Tunisia off the near face and the hand-over undoes.
+	 */
+	const kCountry = $derived(
+		Math.max(
+			4,
+			Math.min(
+				globe.maxScale,
+				(0.8 * globe.vh) / (globe.baseRadius * TN_SPAN[1]),
+				(0.8 * globe.vw) / (globe.baseRadius * TN_SPAN[0])
+			)
+		)
+	);
+	const country = $derived(
+		globe.visible(TUNISIA[0], TUNISIA[1])
+			? Math.max(0, Math.min(1, (globe.k - 0.3 * kCountry) / (0.35 * kCountry))) * globe.facing(TUNISIA[0], TUNISIA[1])
+			: 0
+	);
+
+	let govs = $state<Governorate[]>([]);
+	let govSel = $state<string | null>(null);
+	let govHover = $state<string | null>(null);
+	const govSelected = $derived(govs.find((g) => g.id === govSel) ?? null);
+
+	let region = $state<Region | null>(null);
+
+	// Fetched the first time the reader zooms toward the country, not on arrival:
+	// most visits to the world view never need 300 KB of provincial borders.
+	$effect(() => {
+		if (country > 0 && govs.length === 0) loadGovernorates().then((g) => (govs = g));
+		if (country > 0 && !region) loadRegion().then((r) => (region = r));
+	});
+
+	// The region lands after the frame that asked for it; paint once it does.
+	$effect(() => {
+		if (region) untrack(redraw);
+	});
+
+	/** Governorate outlines and label anchors, projected for this frame. */
+	const govShapes = $derived.by(() => {
+		if (country <= 0 || govs.length === 0) return [];
+		const proj = globe.projection;
+		const path = pathFor(proj);
+		return govs.map((g) => {
+			const a = proj(g.anchor);
+			return { g, d: path(g.feature) ?? '', x: a?.[0] ?? NaN, y: a?.[1] ?? NaN, before: notYet(g.id, app.t) };
+		});
+	});
+
+	const govLabels = $derived.by(() => {
+		if (country < 0.6) return [];
+		const space = { vw: globe.vw, vh: globe.vh, k: 1, worldToScreen: (x: number, y: number) => ({ x, y }) };
+		return placeLabels(
+			govShapes
+				.filter((s) => Number.isFinite(s.x))
+				.map((s) => ({
+					id: s.g.id,
+					x: s.x,
+					y: s.y,
+					text: nameOf(s.g),
+					priority: govSel === s.g.id ? 100 : 50,
+					pinned: govSel === s.g.id,
+					r: 0,
+					data: { ...s.g, before: s.before }
+				})),
+			space,
+			{ limit: 24, majorAt: 101 }
+		);
+	});
+
+	function pickGov(id: string) {
+		govSel = govSel === id ? null : id;
+		if (!govSel) return;
+		closeFlow();
+		const g = govs.find((x) => x.id === id);
+		if (!g) return;
+		/*
+		 * Bring it into view beside the card. On a phone the card is a sheet over
+		 * the lower half, so the governorate is lifted a quarter of the screen; on
+		 * a wide screen the card is docked at the inline end, so the governorate
+		 * moves half a card's width the other way. Both are offsets of the view
+		 * centre, in degrees at the target zoom.
+		 */
+		const k = Math.max(globe.k, kCountry * 1.4);
+		const perDeg = (globe.baseRadius * k * Math.PI) / 180;
+		const rtl = document.dir === 'rtl' ? -1 : 1;
+		const dLat = compact.current ? (0.25 * globe.vh) / perDeg : 0;
+		const dLon = compact.current ? 0 : (rtl * 190) / perDeg;
+		globe.flyTo(g.anchor[0] + dLon, g.anchor[1] - dLat, k, 620);
+	}
+
+	function toWorld() {
+		govSel = null;
+		globe.flyTo(TUNISIA[0], TUNISIA[1], 1, 820);
+	}
+
+	function toCountry() {
+		govSel = null;
+		globe.flyTo(TUNISIA[0], TUNISIA[1], kCountry, 820);
+	}
+
+	/*
+	 * Arrival: `?at=tunisia` opens at country scale (the old /map lands here),
+	 * and `?region=<governorate>` selects one. Read once, like the flow links.
+	 */
+	let arrived = false;
+	$effect(() => {
+		if (arrived || globe.vw < 2) return;
+		arrived = true;
+		const params = page.url.searchParams;
+		// Stepping back out of the parliament or the government lands on the map,
+		// not on the world: the reader is still inside the country.
+		const back = untrack(() => world.openInside);
+		if (back) world.openInside = false;
+		if (back || params.get('at') === 'tunisia' || params.get('region')) {
+			untrack(() => globe.flyTo(TUNISIA[0], TUNISIA[1], kCountry, 0));
+			// Selected at once, checked when the outlines land: setting it only after
+			// the fetch let the URL sync below run in between and strip the link.
+			const want = params.get('region');
+			if (want) {
+				govSel = want;
+				loadGovernorates().then((g) => {
+					if (govSel === want && !g.some((x) => x.id === want)) govSel = null;
+				});
+			}
+		}
+	});
+
+	// The page's toolbar and trail follow which side of the zoom the globe is on.
+	$effect(() => {
+		world.globeInside = country >= 0.5;
+	});
+	$effect(() => {
+		world.region = country >= 0.5 ? govSel : null;
+	});
+	// Leaving the globe for another view: the page decides the scale from the view.
+	$effect(() => () => {
+		world.globeInside = false;
+		world.region = null;
+	});
+
+	/**
+	 * Camera moves asked for by the page: the trail's World and Tunisia, and the
+	 * flight to a building before a lens opens. A point is approached at twice
+	 * the country zoom, which is close enough to read as "going in there".
+	 */
+	$effect(() => {
+		const f = world.fly;
+		if (!f) return;
+		untrack(() => {
+			world.fly = null;
+			if (f.to === 'world') toWorld();
+			else if (f.to === 'tunisia') toCountry();
+			else if (f.lon !== undefined && f.lat !== undefined) {
+				govSel = null;
+				globe.flyTo(f.lon, f.lat, Math.min(globe.maxScale, kCountry * 2.6), 700);
+			}
+		});
+	});
+
+	// Keep ?region= in step with the selection, without adding history entries.
+	$effect(() => {
+		if (!arrived || govs.length === 0) return;
+		const u = new URL(page.url.href);
+		if (govSel) u.searchParams.set('region', govSel);
+		else u.searchParams.delete('region');
+		if (u.href !== page.url.href) untrack(() => replaceState(u, ''));
+	});
 
 	let canvas = $state<HTMLCanvasElement | null>(null);
 
@@ -307,19 +495,20 @@
 	 *
 	 * Held in the shared world store rather than locally: the ledger reads the same
 	 * family, so switching views keeps the reader on the quantity they were looking
-	 * at. A local `$effect` follows external changes (the ledger's family switcher),
-	 * and local changes are written back out.
+	 * at. The switch itself lives in the page toolbar, beside the figures it
+	 * reorders; this view reads the store and writes deep-link changes back to it.
 	 */
-	type Family = 'trade' | 'debt' | 'energy';
-	let family = $state<Family>(world.family as Family);
+	type Family = WorldFamily;
+	const family = $derived(world.family);
+
+	// A card for one family cannot survive into another: a trade card over debt
+	// arcs describes lines that are no longer drawn.
 	$effect(() => {
-		if (world.family !== family) family = world.family as Family;
+		const f = family;
+		untrack(() => {
+			if (picked && picked.kind !== 'agreement' && picked.kind !== f) picked = null;
+		});
 	});
-	const families = $derived([
-		{ value: 'trade', label: t('world.trade') },
-		{ value: 'energy', label: t('world.energy') },
-		{ value: 'debt', label: t('world.debt') }
-	]);
 
 	/** Non-country lenders, which have no place on the globe. See loadDebt. */
 	const offGlobe = $derived(family === 'debt' ? institutionalDebtIn(year).slice(0, 6) : []);
@@ -768,7 +957,7 @@
 						('institutionId' in a.select && a.select.institutionId === iso2))
 			);
 			if (drawn) {
-				family = kind as Family;
+				world.setFamily(kind as Family);
 				pick(drawn.select);
 				return;
 			}
@@ -776,7 +965,7 @@
 			const countryName = c ? (c.names[app.locale] ?? c.names.en) : iso2;
 			if (kind === 'debt') {
 				const row = debtIn(linkYear).find((r) => r.iso2 === iso2 || r.institutionId === iso2);
-				family = 'debt';
+				world.setFamily('debt');
 				pick({
 					kind: 'debt',
 					iso2: row?.iso2 ?? iso2,
@@ -786,7 +975,7 @@
 				});
 				return;
 			}
-			family = kind as Family;
+			world.setFamily(kind as Family);
 			pick({ kind, iso2, countryName, year: linkYear });
 		});
 	});
@@ -945,6 +1134,11 @@
 
 		if (!landShapes) return;
 
+		// The world at 1:110m, handing over to the region at 1:50m as the reader
+		// zooms into the country (see `region`). A cross-fade rather than a cut,
+		// so the coastline sharpens instead of jumping.
+		const fine = region ? country : 0;
+		ctx.globalAlpha = 1 - fine;
 		ctx.beginPath();
 		path(countries);
 		ctx.fillStyle = land;
@@ -965,6 +1159,25 @@
 		ctx.lineWidth = 0.75;
 		ctx.stroke();
 
+		if (region && fine > 0) {
+			ctx.globalAlpha = fine;
+			ctx.beginPath();
+			path(region.land);
+			ctx.fillStyle = land;
+			ctx.fill();
+			ctx.beginPath();
+			path(region.borders);
+			ctx.strokeStyle = line;
+			ctx.lineWidth = 0.75;
+			ctx.stroke();
+			ctx.beginPath();
+			path(region.coast);
+			ctx.strokeStyle = edge;
+			ctx.lineWidth = 1;
+			ctx.stroke();
+		}
+		ctx.globalAlpha = 1;
+
 		// Tunisia, filled in the accent. This is the atlas's subject; on a globe of
 		// 175 equally-grey countries it has to be findable without reading a label.
 		const tn = countries.features.find((f) => String(f.id) === '788');
@@ -972,7 +1185,29 @@
 			ctx.beginPath();
 			path(tn);
 			ctx.fillStyle = accent;
+			// The world topology is coarse; at country scale the governorates,
+			// which are not, take over the fill entirely.
+			ctx.globalAlpha = 1 - country;
 			ctx.fill();
+			ctx.globalAlpha = 1;
+		}
+
+		// Shade toward the limb, lit from the upper left. A flat disc reads as a
+		// map cut into a circle; the falloff is what reads as a sphere. It fades
+		// out at country scale, where the surface is flat.
+		const [cx, cy] = globe.centre;
+		const R = globe.radius;
+		if (country < 1 && R > 0) {
+			const shade = ctx.createRadialGradient(cx - R * 0.35, cy - R * 0.4, R * 0.1, cx, cy, R * 1.02);
+			shade.addColorStop(0, 'rgba(0,0,0,0)');
+			shade.addColorStop(0.65, 'rgba(0,0,0,0)');
+			shade.addColorStop(1, edge);
+			ctx.beginPath();
+			path({ type: 'Sphere' });
+			ctx.globalAlpha = 0.35 * (1 - country);
+			ctx.fillStyle = shade;
+			ctx.fill();
+			ctx.globalAlpha = 1;
 		}
 
 		// The limb. Drawn last so it sits over the land rather than under it —
@@ -1024,6 +1259,13 @@
 		</div>
 	{/if}
 
+	<!--
+		Not drawn until the surface has been measured. Server-rendered and before
+		the scripts start, the camera is 1×1 pixel, and in a 1×1 viewBox every mark
+		is drawn hundreds of times its size: Tunisia's marker filled the whole stage
+		with orange for as long as the page took to start.
+	-->
+	{#if globe.vw > 2 && globe.vh > 2}
 	<svg viewBox="0 0 {globe.vw} {globe.vh}" role="presentation">
 		<!--
 			Agreement arcs, drawn first so every node and label sits above them.
@@ -1038,6 +1280,10 @@
 			are the discrete events drawn over it. Reversed, the thick arcs would bury
 			the thin ones.
 		-->
+		<!-- Unmounted, not just hidden, once the country has the screen: its
+		     buttons must leave the tab order and its arcs stop costing a frame. -->
+		{#if country < 0.95}
+		<g class="worldlayer" style:opacity={1 - country} class:off={country > 0.5}>
 		<g class="trades" class:debt={family === 'debt'} class:energy={family === 'energy'}>
 			{#each trade as f (f.key)}
 				{#if f.wide > f.w + 0.15}
@@ -1159,11 +1405,48 @@
 			{/each}
 		{/if}
 
+		</g>
+		{/if}
+
 		{#each labels as l (l.id)}
 			<text class="clabel" class:major={l.tier !== 'minor'} x={l.sx} y={l.sy + 12}>{l.text}</text>
 		{/each}
 
-		{#if tunis}
+		{#if govShapes.length}
+			<!--
+				The governorates. Each is a button that opens its card; the fill only
+				appears on hover and selection, so the coastline and the borders do
+				the drawing and the colour carries the state.
+			-->
+			<g class="govs" style:opacity={country}>
+				{#each govShapes as s (s.g.id)}
+					<path
+						class="gov"
+						class:on={govSel === s.g.id}
+						class:hover={govHover === s.g.id}
+						class:before={s.before}
+						d={s.d}
+						role="button"
+						tabindex={country > 0.5 ? 0 : -1}
+						aria-label="{nameOf(s.g)} ({s.g.code})"
+						onclick={() => pickGov(s.g.id)}
+						onkeydown={(e) => {
+							if (e.key === 'Enter' || e.key === ' ') {
+								e.preventDefault();
+								pickGov(s.g.id);
+							}
+						}}
+						onmouseenter={() => (govHover = s.g.id)}
+						onmouseleave={() => (govHover = null)}
+					></path>
+				{/each}
+				{#each govLabels as l (l.id)}
+					<text class="glabel" class:on={govSel === l.id} class:before={l.data?.before} x={l.sx} y={l.sy}>{l.text}</text>
+				{/each}
+			</g>
+		{/if}
+
+		{#if tunis && country < 0.3}
 			<!-- Tunisia is the subject, not a foreign state: it has no institution record
 			     to open, so it is a marker rather than a button. -->
 			<g class="tunis" transform="translate({tunis[0]} {tunis[1]})">
@@ -1172,23 +1455,8 @@
 			</g>
 		{/if}
 	</svg>
-
-	{#if flows || debt}
-		<div class="family" data-no-pan>
-			<Segmented
-				options={families}
-				value={family}
-				onchange={(v) => {
-					family = v as Family;
-					world.setFamily(v as WorldFamily);
-					// A debt card cannot survive into trade; cleared where the change is
-					// caused rather than in an effect that watches for it.
-					picked = null;
-				}}
-				label={t('world.family')}
-			/>
-		</div>
 	{/if}
+
 
 	<!--
 		Lenders with no place on a globe of countries.
@@ -1199,7 +1467,7 @@
 		are listed rather than drawn because an institution has no centroid — giving one
 		an arc means giving it a seat, which is a sourced fact and a separate job.
 	-->
-	{#if offGlobe.length}
+	{#if offGlobe.length && country < 0.5}
 		<div class="offglobe" data-no-pan>
 			<h2>{t('world.notonmap')}</h2>
 			<ul>
@@ -1207,6 +1475,12 @@
 					<li><span class="who">{lenderName(l.name)}</span><span class="how-much">{money(l.stock)}</span></li>
 				{/each}
 			</ul>
+		</div>
+	{/if}
+
+	{#if govSelected && country > 0.5}
+		<div class="govcard" data-no-pan>
+			<GovernorateCard gov={govSelected} onclose={() => (govSel = null)} />
 		</div>
 	{/if}
 
@@ -1400,16 +1674,89 @@
 			pointer-events: auto;
 		}
 	}
+	/* The world layer stops taking clicks once the country has the screen. */
+	.worldlayer.off {
+		pointer-events: none;
+	}
+	.worldlayer.off :global(*) {
+		pointer-events: none;
+	}
+	.gov {
+		fill: var(--surface-raised);
+		stroke: var(--border-strong);
+		stroke-width: 0.75;
+		cursor: pointer;
+		/* The overlay switches pointer events off; each mark opts back in. A press
+		   still bubbles to the globe, so a drag that starts on a governorate pans. */
+		pointer-events: visiblePainted;
+		transition: fill var(--dur-fast) var(--ease-out);
+	}
+	.gov.hover {
+		fill: var(--surface-hover);
+	}
+	/* Not yet a governorate on the cursor date: the territory belonged to a
+	   neighbour, so it is drawn as an outline in waiting, not as a province. */
+	.gov.before {
+		fill: transparent;
+		stroke-dasharray: 3 3;
+		stroke: var(--border-default);
+	}
+	.glabel.before {
+		fill: var(--text-faint);
+	}
+	.gov.on {
+		fill: var(--accent-muted);
+		stroke: var(--accent);
+		stroke-width: 1.5;
+	}
+	.gov:focus-visible {
+		outline: none;
+		stroke: var(--accent);
+		stroke-width: 2;
+	}
+	.glabel {
+		font-size: var(--t-2xs);
+		fill: var(--text-secondary);
+		text-anchor: middle;
+		dominant-baseline: middle;
+		pointer-events: none;
+		paint-order: stroke;
+		stroke: var(--surface-base);
+		stroke-width: 3px;
+	}
+	.glabel.on {
+		fill: var(--text-primary);
+		font-weight: 600;
+	}
 	.trades.debt .disputed {
 		stroke: var(--layer-judicial);
 	}
 
-	.family {
+	/* Docked at the inline end on a wide screen, clear of the zoom controls. */
+	.govcard {
 		position: absolute;
 		top: var(--s-4);
-		/* Physical: screen furniture, not text flow. Same rule as .viewnav below. */
-		left: var(--s-4);
+		inset-inline-end: var(--s-4);
+		bottom: calc(var(--s-4) + 120px);
+		z-index: 2;
+		display: flex;
+		flex-direction: column;
+		pointer-events: none;
 	}
+	.govcard :global(.card) {
+		pointer-events: auto;
+	}
+	@media (max-width: 900px) {
+		/* The sheet stops at the lower three fifths, so the governorate lifted
+		   above it (see pickGov) stays on screen however long the list is. */
+		.govcard {
+			inset-inline: max(var(--s-4), var(--safe-l)) max(var(--s-4), var(--safe-r));
+			top: 40%;
+			bottom: var(--s-4);
+			justify-content: flex-end;
+		}
+	}
+
 
 	.offglobe {
 		position: absolute;

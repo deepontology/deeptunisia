@@ -36,8 +36,9 @@
 			// the map. Same route the entity panel's rows use.
 			void goto(`/network?rel=${encodeURIComponent(r.id)}`);
 		} else if (r.kind === 'place' || r.kind === 'region') {
-			// Geographic records live on the map, not in the entity panel.
-			void goto('/map');
+			// Geographic records live on the map, not in the entity panel: a
+			// governorate opens its card, anything else lands at country scale.
+			void goto(r.id.startsWith('gov-') ? `/world?region=${encodeURIComponent(r.id)}` : '/world?at=tunisia');
 		} else {
 			// People, institutions, and the v0.0.2 records (contracts, licences,
 			// declarations, education) all open their card in the Inspector.

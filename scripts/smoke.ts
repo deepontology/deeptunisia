@@ -235,7 +235,7 @@ const CHECKS: Check[] = [
 		expect: [
 			['.worldpage', 1],
 			['.totals', 1],
-			['.viewbar', 1],
+			['.toolbar', 1],
 			['.world', 1]
 		]
 	},
@@ -286,12 +286,12 @@ const CHECKS: Check[] = [
 		path: '/map',
 		name: 'map',
 		expect: [
-			// The map shell renders immediately; the basemap and governorates arrive
-			// with the client-side fetch. A hydrated map shows at least the 24
-			// governorate polygons and the table alternative.
-			['.map-view', 1],
-			['.canvas', 1],
-			['.table-alt', 1]
+			// The governorate map is the world view at country scale now. This route
+			// stays for old links and forwards into it, so the landing is the world
+			// toolbar and stage, not a separate map shell.
+			['.worldpage', 1],
+			['.toolbar', 1],
+			['.stage', 1]
 		]
 	},
 	// The three currency tiers must all render. Merging them would be the page's one
@@ -364,7 +364,8 @@ const CHECKS: Check[] = [
 		name: 'guide',
 		expect: [
 			['.page-head h1', 1],
-			['table.views tbody tr', 16],
+			// World and map are one view now, so the list is one row shorter.
+			['table.views tbody tr', 15],
 			['.bases .base', 4],
 			['a.help', 1],
 			['a.help[href="/guide"]', 1]
@@ -516,6 +517,10 @@ if (runSection('theme matrix')) for (const themeName of ['dark', 'light'] as con
 		});
 		page.on('pageerror', (e) => problems.push(`[pageerror] ${e.message}`));
 		page.on('requestfailed', (r) => {
+			// A request the page itself cancelled is not a missing file. The /map
+			// route forwards into the world view on mount, and the router drops the
+			// imports it had started; the reader only ever sees the world view.
+			if (r.failure()?.errorText === 'net::ERR_ABORTED') return;
 			if (!isIgnorable(r.url())) problems.push(`[404] ${r.url()}`);
 		});
 

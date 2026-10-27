@@ -965,7 +965,10 @@ const KIND_TO_DATASET: Record<string, string> = {
 // touching them gets a timeline; items are ordered by start, every ref resolves,
 // and every position the person held appears.
 {
-	const people = ds.people as { id: string; positionIds: string[]; timeline: { kind: string; ref: { kind: string; id: string }; interval: { startEarliest: number } }[] }[];
+	// The bundled graph omits timelines; they ship in static/timelines.json.
+	type TlItem = { kind: string; ref: { kind: string; id: string }; interval: { startEarliest: number } };
+	const tlIndex = JSON.parse(readFileSync(join(HERE, '..', 'static', 'timelines.json'), 'utf8')) as Record<string, TlItem[]>;
+	const people = (ds.people as { id: string; positionIds: string[] }[]).map((p) => ({ ...p, timeline: tlIndex[p.id] ?? [] }));
 	const kinds = new Set(['position', 'relationship', 'event', 'contract', 'licence', 'education', 'declaration']);
 	const badKind: string[] = [];
 	const badRef: string[] = [];
@@ -1288,8 +1291,11 @@ const KIND_TO_DATASET: Record<string, string> = {
 		successionGaps: { role: string; after: string; before: string; gapYears: number }[];
 		successionMeta: { gapYears: number; overlapYears: number; exemption: string };
 	};
+	// Seated roles (legislative terms) have no succession chain: the same rule as the build.
+	const seated = new Set(ds.roles.filter((r: { seats?: number }) => r.seats !== undefined).map((r: { id: string }) => r.id));
 	const byRole = new Map<string, Pos[]>();
 	for (const p of ds.positions) {
+		if (seated.has(p.role)) continue;
 		const list = byRole.get(p.role) ?? [];
 		list.push(p);
 		byRole.set(p.role, list);

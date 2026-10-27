@@ -303,7 +303,44 @@ export function initTheme(): () => void {
 export function cssVar(name: string, fallback = '#888'): string {
 	if (typeof window === 'undefined') return fallback;
 	const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
-	return v || fallback;
+	return v ? resolveColor(v) : fallback;
+}
+
+/*
+ * A custom property reads back exactly as written, and some tokens are written
+ * with arithmetic inside the colour (`oklch(95% calc(.004 * 1.5) 80)`). CSS
+ * accepts that; a canvas does not, in every engine that has shipped so far: the
+ * `fillStyle` assignment is silently ignored and the next fill uses whatever
+ * colour was set before it, which on the globe made the ocean black. So a value
+ * that needs the style engine to finish it is finished there, by asking an
+ * element what its computed `color` is, which is always plain numbers.
+ *
+ * The answer depends only on the string, so it is cached by the string. That is
+ * not the theme cache the note below warns about: a theme change changes the
+ * string `getPropertyValue` returns, which is a different key.
+ */
+const NEEDS_ENGINE = /calc\(|color-mix\(|var\(|light-dark\(|env\(/;
+const resolved = new Map<string, string>();
+let probe: HTMLElement | null = null;
+
+function resolveColor(raw: string): string {
+	if (!NEEDS_ENGINE.test(raw)) return raw;
+	const hit = resolved.get(raw);
+	if (hit) return hit;
+	probe ??= (() => {
+		const e = document.createElement('span');
+		e.setAttribute('aria-hidden', 'true');
+		e.style.display = 'none';
+		document.body.appendChild(e);
+		return e;
+	})();
+	probe.style.color = '';
+	probe.style.color = raw;
+	// An unparsable value leaves the property empty, and the computed colour would
+	// then be inherited from the page: a plausible wrong answer, so it is refused.
+	const out = probe.style.color ? getComputedStyle(probe).color : '';
+	resolved.set(raw, out || raw);
+	return out || raw;
 }
 
 /*

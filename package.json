@@ -5,7 +5,7 @@
     "type": "module",
     "description": "deeptunisia.org - an open-source, source-backed atlas of political, military, security and economic power in Tunisia, 1956-2026",
     "scripts": {
-        "data": "tsx scripts/build-data.ts && tsx scripts/network-continuity.ts && tsx scripts/build-media.ts && tsx scripts/build-og-images.ts && tsx scripts/build-public-claims.ts && tsx scripts/build-studies.ts",
+        "data": "tsx scripts/build-data.ts && tsx scripts/build-region.ts && tsx scripts/network-continuity.ts && tsx scripts/build-media.ts && tsx scripts/build-og-images.ts && tsx scripts/build-public-claims.ts && tsx scripts/build-studies.ts",
         "data:watch": "tsx watch scripts/build-data.ts",
         "studies:build": "tsx scripts/build-studies.ts",
         "studies:export": "tsx scripts/studies-export.ts",
@@ -81,6 +81,7 @@
     "dependencies": {
         "@noble/ed25519": "3.1.0",
         "@scure/bip39": "2.2.0",
+        "@types/three": "^0.181.0",
         "d3-array": "3.2.4",
         "d3-geo": "3.1.1",
         "d3-scale": "4.0.2",
@@ -89,6 +90,7 @@
         "graphology": "0.26.0",
         "graphology-metrics": "2.4.0",
         "minisearch": "7.2.0",
+        "three": "^0.181.2",
         "topojson-client": "3.1.0",
         "world-atlas": "2.0.2",
         "yaml": "2.9.0",
