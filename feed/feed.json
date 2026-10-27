@@ -3,6 +3,46 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:b486b357e931d794",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Jaou Tunis | Charles Brecard présente son solo primé « Il pleut, il plaint, il rage » au 4ème Art",
+      "link": "https://kapitalis.com/tunisie/2026/10/27/jaou-tunis-charles-brecard-presente-son-solo-prime-il-pleut-il-plaint-il-rage-au-4eme-art/",
+      "published": "2026-10-27T00:12:46Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:3992eac472486960",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Grandes surfaces : Transformez votre passage en caisse en acte de solidarité avec SOS Villages d’Enfants",
+      "link": "https://kapitalis.com/tunisie/2026/10/27/grandes-surfaces-transformez-votre-passage-en-caisse-en-acte-de-solidarite-avec-sos-villages-denfants/",
+      "published": "2026-10-26T23:43:54Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:c6474e9236d0727c",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Coopération Tunisie-ONU | Présentation du cadre stratégique 2027-2031",
+      "link": "https://kapitalis.com/tunisie/2026/10/26/cooperation-tunisie-onu-presentation-du-cadre-strategique-2027-2031/",
+      "published": "2026-10-26T21:45:03Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:20728ee373491082",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Hommage au Pr Fadhel Mrad | Une empreinte indélébile dans la médecine tunisienne",
+      "link": "https://kapitalis.com/tunisie/2026/10/26/hommage-au-pr-fadhel-mrad-une-empreinte-indelebile-dans-la-medecine-tunisienne/",
+      "published": "2026-10-26T21:19:32Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
       "id": "feed:kapitalis:f61fc5f9f683b91d",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -11953,46 +11993,6 @@
       "published": "2026-09-15T08:31:20Z",
       "lang": "fr",
       "author": "webmaster kapitalis"
-    },
-    {
-      "id": "feed:african-manager:ef6a7766915526ce",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Le stress Pro impacte la vie des femmes du privé en Tunisie",
-      "link": "https://africanmanager.com/une-etude-revele-limpact-du-stress-professionnel-sur-la-qualite-de-vie-des-femmes-travaillant-dans-le-secteur-prive-en-tunisie/",
-      "published": "2026-09-15T08:23:39Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:1552cf394b374954",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Volley – La CAN-2026 (seniors hommes) : la Tunisie dans le groupe A avec le Ghana et le Kenya",
-      "link": "https://africanmanager.com/volley-la-can-2026-seniors-hommes-la-tunisie-dans-le-groupe-a-avec-le-ghana-et-le-kenya/",
-      "published": "2026-09-15T08:22:13Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:cf4586464b99a498",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Hand – C.Africain : trois nouveaux joueurs en renforts",
-      "link": "https://africanmanager.com/hand-c-africain-trois-nouveaux-joueurs-en-renforts/",
-      "published": "2026-09-15T08:19:56Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:f73f2b651eb47faf",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Rentrée scolaire : 2 millions d’élèves retrouvent les bancs de l’école",
-      "link": "https://africanmanager.com/rentree-scolaire-2-millions-deleves-retrouvent-les-bancs-de-lecole/",
-      "published": "2026-09-15T08:19:50Z",
-      "lang": "fr",
-      "author": "Africanmanager"
     }
   ]
 }
