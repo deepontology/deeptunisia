@@ -3,6 +3,116 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:nawaat:4a1aefd4c3a3861a",
+      "outlet": "Nawaat",
+      "outletId": "nawaat",
+      "title": "ارتفاع أسعار الدواء وفقدانه: مسكنات جنيسة للسلطة",
+      "link": "https://nawaat.org/2026/10/27/%d8%a7%d8%b1%d8%aa%d9%81%d8%a7%d8%b9-%d8%a3%d8%b3%d8%b9%d8%a7%d8%b1-%d8%a7%d9%84%d8%af%d9%88%d8%a7%d8%a1-%d9%88%d9%81%d9%82%d8%af%d8%a7%d9%86%d9%87-%d9%85%d8%b3%d9%83%d9%86%d8%a7%d8%aa-%d8%ac%d9%86/",
+      "published": "2026-10-27T19:32:13Z",
+      "lang": "ar",
+      "author": "Najla Ben Salah"
+    },
+    {
+      "id": "feed:kapitalis:79456c2469d23189",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Suspension du site de l’ATCT | Les canaux alternatifs",
+      "link": "https://kapitalis.com/tunisie/2026/10/27/suspension-du-site-de-latct-les-canaux-alternatifs/",
+      "published": "2026-10-27T19:22:51Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:0a6649835e7902e9",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Lancement de la 7ᵉ édition des Journées CinéMakna des films poétiques",
+      "link": "https://kapitalis.com/tunisie/2026/10/27/lancement-de-la-7%e1%b5%89-edition-des-journees-cinemakna-des-films-poetiques/",
+      "published": "2026-10-27T18:17:37Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:fddb592dcc00d574",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Tunisie | La météo pour cette nuit",
+      "link": "https://kapitalis.com/tunisie/2026/10/27/tunisie-la-meteo-pour-cette-nuit-3/",
+      "published": "2026-10-27T18:08:45Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:african-manager:a102206d8075e00a",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Boussema rappelle le gouvernement à l’ordre !",
+      "link": "https://africanmanager.com/boussema-rappelle-le-gouvernement-a-lordre/",
+      "published": "2026-10-27T15:48:50Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:f13a4791294505e5",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Budget économique 2027 : Des lettres pour 2027 et des chiffres pour 2026",
+      "link": "https://africanmanager.com/budget-economique-2027-des-lettres-pour-2027-et-des-chiffres-pour-2026/",
+      "published": "2026-10-27T15:46:00Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:16bbcf022a324441",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Bourse de Tunis: Le Tunindex clôture mardi sur une note quasi-stable",
+      "link": "https://africanmanager.com/bourse-de-tunis-le-tunindex-cloture-mardi-sur-une-note-quasi-stable/",
+      "published": "2026-10-27T15:04:11Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:ebb7ea11c48d8a23",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Attijari-Attijariwafa bank : Des conventions réglementées tout en charges, sans un dinar de produit",
+      "link": "https://africanmanager.com/attijari-attijariwafa-bank-des-conventions-reglementees-tout-en-charges-sans-un-dinar-de-produit/",
+      "published": "2026-10-27T14:50:00Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:6596d6b9b379ee7d",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Israël : Le taux de participation électorale atteint 44,9 %",
+      "link": "https://africanmanager.com/israel-le-taux-de-participation-electorale-atteint-449/",
+      "published": "2026-10-27T14:44:13Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:10a973e446e473e4",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "La droite attise les craintes d’une forte participation des citoyens palestiniens",
+      "link": "https://africanmanager.com/la-droite-attise-les-craintes-dune-forte-participation-des-citoyens-palestiniens/",
+      "published": "2026-10-27T14:43:23Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:275e6d95937d5880",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Tourisme-Afrique du Nord : Les Britanniques se bousculent au portillon !",
+      "link": "https://africanmanager.com/tourisme-afrique-du-nord-les-britanniques-se-bousculent-au-portillon/",
+      "published": "2026-10-27T14:17:00Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
       "id": "feed:african-manager:6abc22e5a1dc9dde",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -11881,116 +11991,6 @@
       "title": "Premier Forum d’affaires tuniso-allemand pour promouvoir les secteurs stratégiques",
       "link": "https://africanmanager.com/premier-forum-daffaires-tuniso-allemand-pour-promouvoir-les-secteurs-strategiques/",
       "published": "2026-09-16T12:40:00Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:c21cfaca3a4d283c",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "La Chine ne souhaite pas que les tensions régionales s’étendent au Yémen et à la mer Rouge",
-      "link": "https://africanmanager.com/la-chine-ne-souhaite-pas-que-les-tensions-regionales-setendent-au-yemen-et-a-la-mer-rouge/",
-      "published": "2026-09-16T12:03:44Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:kapitalis:58cb37871dc0abf9",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Tunisie | Lancement officiel du Prix Kamel Labidi pour les médias",
-      "link": "https://kapitalis.com/tunisie/2026/09/16/tunisie-lancement-officiel-du-prix-kamel-labidi-pour-les-medias/",
-      "published": "2026-09-16T11:51:20Z",
-      "lang": "fr",
-      "author": "webmaster kapitalis"
-    },
-    {
-      "id": "feed:nawaat:38c20f7647421743",
-      "outlet": "Nawaat",
-      "outletId": "nawaat",
-      "title": "قدماء اتحاد الطلبة: قيس سعيد مسؤول عما حصل وما سيحصل لسجناء الصمود",
-      "link": "https://nawaat.org/2026/09/16/%d9%82%d8%af%d9%85%d8%a7%d8%a1-%d8%a7%d8%aa%d8%ad%d8%a7%d8%af-%d8%a7%d9%84%d8%b7%d9%84%d8%a8%d8%a9-%d9%82%d9%8a%d8%b3-%d8%b3%d8%b9%d9%8a%d8%af-%d9%85%d8%b3%d8%a4%d9%88%d9%84-%d8%b9%d9%85%d8%a7-%d8%ad/",
-      "published": "2026-09-16T11:09:23Z",
-      "lang": "ar",
-      "author": "Mahdi Jlassi"
-    },
-    {
-      "id": "feed:african-manager:6c973686a52489cf",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "La Tunisie prête à exporter son expertise en cuir pour l’Afrique",
-      "link": "https://africanmanager.com/la-tunisie-appuie-le-developpement-du-secteur-du-cuir-dans-les-pays-africains-les-moins-avances/",
-      "published": "2026-09-16T10:51:44Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:42f6146b8f4daa63",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Toyota France intensifie la production de son crossover hybride phare",
-      "link": "https://africanmanager.com/toyota-france-intensifie-la-production-de-son-crossover-hybride-phare/",
-      "published": "2026-09-16T10:46:03Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:4d66033421149741",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Budget 2027: L’ARP n’approuvera pas de nouvelles taxes",
-      "link": "https://africanmanager.com/budget-2027-larp-napprouvera-pas-de-nouvelles-taxes/",
-      "published": "2026-09-16T09:38:55Z",
-      "lang": "fr",
-      "author": "Africanmanager"
-    },
-    {
-      "id": "feed:african-manager:badc030630597ac1",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Google veut investir 13 milliards d’euros dans des projets liés à l’IA",
-      "link": "https://africanmanager.com/google-veut-investir-13-milliards-deuros-dans-des-projets-lies-a-lia/",
-      "published": "2026-09-16T09:29:09Z",
-      "lang": "fr",
-      "author": "Africanmanager"
-    },
-    {
-      "id": "feed:african-manager:2db53fc3583bd3ec",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Détournement d’argent: Arrestation d’un cadre bancaire",
-      "link": "https://africanmanager.com/detournement-dargent-arrestation-dun-cadre-bancaire/",
-      "published": "2026-09-16T09:24:08Z",
-      "lang": "fr",
-      "author": "Africanmanager"
-    },
-    {
-      "id": "feed:african-manager:ac183c1a67d862de",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Algérie : Air Algérie ouvre une nouvelle liaison entre Alger et Berlin",
-      "link": "https://africanmanager.com/algerie-air-algerie-ouvre-une-nouvelle-liaison-entre-alger-et-berlin/",
-      "published": "2026-09-16T09:20:59Z",
-      "lang": "fr",
-      "author": "Africanmanager"
-    },
-    {
-      "id": "feed:african-manager:5849417a6940bf34",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Maroc : Près de 20 000 touristes israéliens attendus d’ici fin 2026",
-      "link": "https://africanmanager.com/maroc-pres-de-20-000-touristes-israeliens-attendus-dici-fin-2026/",
-      "published": "2026-09-16T09:13:01Z",
-      "lang": "fr",
-      "author": "Africanmanager"
-    },
-    {
-      "id": "feed:african-manager:a30e7737fe6e3f2c",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Rencontres B to B pour l’Agriculture et l’Élevage, à Abuja",
-      "link": "https://africanmanager.com/tunisie-nigeria-le-cepex-organise-des-rencontres-daffaires-dediees-a-lagriculture-et-lelevage-a-abuja/",
-      "published": "2026-09-16T09:12:44Z",
       "lang": "fr",
       "author": "African Manager"
     }
