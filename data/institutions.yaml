@@ -4933,3 +4933,1447 @@
   verification: needs-primary-source
   attributed_to: Kapitalis and African Manager
   sources: [kapitalis-eurostat-tunisie-2026-09-15, african-manager-eurostat-tunisie-2026-09-16]
+
+
+# ===========================================================================
+# Governors, the current government and the 2023 Assembly (October 2026).
+# Imported from data/contrib/governors-cabinet-2026-10-19.yaml and
+# data/contrib/arp-2023-members-2026-10-19.yaml after review.
+# ===========================================================================
+
+- id: arp-2023
+  name_en: Assembly of the Representatives of the People, 2023 term
+  name_fr: Assemblée des représentants du peuple, législature 2023
+  name_ar: مجلس نواب الشعب، المدة النيابية 2023-2027
+  type: legislature
+  layer: political
+  parent: legislature
+  active:
+    start: '2023-03-13'
+    end: ongoing
+  summary: 'The chamber elected on 17 December 2022 and 29 January 2023 under decree-law 2022-55: 161
+    single-member seats, 151 in Tunisia and 10 abroad. Seven abroad seats drew no candidate and have stayed
+    empty. One record per term, so each hemicycle has its own seat count.'
+  confidence: A
+  sources:
+  - arp-deputies-list
+  - isie-2022-legislative
+  - lapresse-arp-inaugurale-2023-03-14
+- id: arp23-voix-de-la-republique
+  name_en: Voice of the Republic group
+  name_fr: Voix de la République
+  name_ar: كتلة صوت الجمهورية
+  type: parliamentary-group
+  layer: political
+  parent: arp-2023
+  active:
+    start: 2023-05
+    end: ongoing
+  confidence: A
+  sources:
+  - arp-parliamentary-groups
+  - arp-deputy-details
+- id: arp23-bloc-national-independant
+  name_en: Independent National Bloc
+  name_fr: Bloc national indépendant
+  name_ar: الكتلة الوطنية المستقلة
+  type: parliamentary-group
+  layer: political
+  parent: arp-2023
+  active:
+    start: 2023-05
+    end: ongoing
+  confidence: A
+  sources:
+  - arp-parliamentary-groups
+  - arp-deputy-details
+- id: arp23-amana-wa-amal
+  name_en: Honesty and Work group
+  name_fr: Honnêteté et travail (Al-Amana wal-Amal)
+  name_ar: كتلة الأمانة والعمل
+  type: parliamentary-group
+  layer: political
+  parent: arp-2023
+  active:
+    start: 2023-05
+    end: ongoing
+  confidence: A
+  sources:
+  - arp-parliamentary-groups
+  - arp-deputy-details
+- id: arp23-al-ahrar
+  name_en: Al Ahrar (The Free) group
+  name_fr: Al Ahrar (Les Libres)
+  name_ar: كتلة الأحرار
+  type: parliamentary-group
+  layer: political
+  parent: arp-2023
+  active:
+    start: 2023-05
+    end: ongoing
+  confidence: A
+  sources:
+  - arp-parliamentary-groups
+  - arp-deputy-details
+- id: arp23-pour-que-le-peuple-triomphe
+  name_en: So That the People Triumph group
+  name_fr: Pour que le peuple triomphe
+  name_ar: كتلة لينتصر الشعب
+  type: parliamentary-group
+  layer: political
+  parent: arp-2023
+  active:
+    start: 2023-05
+    end: ongoing
+  confidence: A
+  sources:
+  - arp-parliamentary-groups
+  - arp-deputy-details
+- id: arp23-ligne-nationale-souveraine
+  name_en: Sovereign National Line group
+  name_fr: Ligne nationale souveraine (Echaâb-Watad)
+  name_ar: كتلة الخط الوطني السيادي
+  type: parliamentary-group
+  layer: political
+  parent: arp-2023
+  active:
+    start: 2023-05
+    end: ongoing
+  confidence: A
+  sources:
+  - arp-parliamentary-groups
+  - arp-deputy-details
+
+
+# ===========================================================================
+# Parliaments 2011-2019 and governments 2011-2025, imported from data/contrib after review.
+# ===========================================================================
+
+- id: initiative-nationale-destourienne
+  name_en: Destourian National Initiative
+  type: party
+  layer: political
+  parent: null
+  confidence: B
+  sources:
+  - frwiki-nca-list-2011
+  name_fr: Initiative nationale destourienne
+- id: parti-des-travailleurs
+  name_en: Workers’ Party
+  type: party
+  layer: political
+  parent: null
+  confidence: B
+  sources:
+  - frwiki-nca-list-2011
+  name_fr: Parti des travailleurs
+- id: parti-lutte-progressiste
+  name_en: Progressive Struggle Party
+  type: party
+  layer: political
+  parent: null
+  confidence: B
+  sources:
+  - frwiki-nca-list-2011
+  name_fr: Parti de la lutte progressiste
+- id: parti-republicain-maghrebin
+  name_en: Maghrebi Republican Party
+  type: party
+  layer: political
+  parent: null
+  confidence: B
+  sources:
+  - frwiki-nca-list-2011
+  name_fr: Parti républicain maghrébin
+- id: parti-democrate-social-nation
+  name_en: Social Democratic Nation Party
+  type: party
+  layer: political
+  parent: null
+  confidence: B
+  sources:
+  - frwiki-nca-list-2011
+  name_fr: Parti démocrate-social de la nation
+- id: parti-unifie-patriotes-democrates
+  name_en: Unified Party of Democratic Patriots
+  type: party
+  layer: political
+  parent: null
+  confidence: B
+  sources:
+  - frwiki-nca-list-2011
+  name_fr: Parti unifié des patriotes démocrates
+- id: parti-nation-culturel-unioniste
+  name_en: Cultural and Unionist Nation Party
+  type: party
+  layer: political
+  parent: null
+  confidence: B
+  sources:
+  - frwiki-nca-list-2011
+  name_fr: Parti de la nation culturel et unioniste
+- id: parti-equite-egalite
+  name_en: Equity and Equality Party
+  type: party
+  layer: political
+  parent: null
+  confidence: B
+  sources:
+  - frwiki-nca-list-2011
+  name_fr: Parti de l’équité et de l’égalité
+- id: voix-agriculteurs
+  name_en: Farmers' Voice Party
+  type: party
+  layer: political
+  parent: null
+  confidence: C
+  sources:
+  - frwiki-arp-2019-members
+  name_fr: Parti de la voix des agriculteurs
+  attributed_to: Wikipédia (fr), liste des députés par circonscription
+- id: ligue-verte
+  name_en: Green League
+  type: party
+  layer: political
+  parent: null
+  confidence: C
+  sources:
+  - frwiki-arp-2019-members
+  name_fr: Ligue verte
+  attributed_to: Wikipédia (fr), liste des députés par circonscription
+- id: retour-aux-sources
+  name_en: Return to the Roots
+  type: party
+  layer: political
+  parent: null
+  confidence: C
+  sources:
+  - frwiki-arp-2019-members
+  name_fr: Retour aux sources
+  attributed_to: Wikipédia (fr), liste des députés par circonscription
+- id: parti-socialiste-destourien-2019
+  name_en: Socialist Destourian Party (2019)
+  type: party
+  layer: political
+  parent: null
+  confidence: C
+  sources:
+  - frwiki-arp-2019-members
+  name_fr: Parti socialiste destourien
+  attributed_to: Wikipédia (fr), liste des députés par circonscription
+- id: excellence
+  name_en: Excellence Party
+  type: party
+  layer: political
+  parent: null
+  confidence: C
+  sources:
+  - frwiki-arp-2019-members
+  name_fr: L'Excellence
+  attributed_to: Wikipédia (fr), liste des députés par circonscription
+- id: courant-amour
+  name_en: Current of Love
+  type: party
+  layer: political
+  parent: null
+  confidence: C
+  sources:
+  - frwiki-arp-2019-members
+  name_fr: Courant de l'amour
+  attributed_to: Wikipédia (fr), liste des députés par circonscription
+- id: citoyennete-developpement
+  name_en: Citizenship and Development
+  type: party
+  layer: political
+  parent: null
+  confidence: C
+  sources:
+  - frwiki-arp-2019-members
+  name_fr: Citoyenneté et développement
+  attributed_to: Wikipédia (fr), liste des députés par circonscription
+- id: espoir-travail
+  name_en: Hope and Work
+  type: party
+  layer: political
+  parent: null
+  confidence: C
+  sources:
+  - frwiki-arp-2019-members
+  name_fr: Espoir et travail
+  attributed_to: Wikipédia (fr), liste des députés par circonscription
+- id: bkolna-tounes
+  name_en: B'kolna Tounes
+  type: party
+  layer: political
+  parent: null
+  confidence: C
+  sources:
+  - frwiki-arp-2019-members
+  name_fr: B'kolna Tounes
+  attributed_to: Wikipédia (fr), liste des députés par circonscription
+- id: rad-al-iitibar
+  name_en: Rad Al Iitibar
+  type: party
+  layer: political
+  parent: null
+  confidence: C
+  sources:
+  - frwiki-arp-2014-members
+  name_fr: Rad Al Iitibar
+  attributed_to: Wikipédia (fr), liste des députés par circonscription
+- id: al-amal-2014
+  name_en: Al Amal
+  type: party
+  layer: political
+  parent: null
+  confidence: C
+  sources:
+  - frwiki-arp-2014-members
+  name_fr: Al Amal
+  attributed_to: Wikipédia (fr), liste des députés par circonscription
+- id: front-salut
+  name_en: National Salvation Front
+  type: party
+  layer: political
+  parent: null
+  confidence: C
+  sources:
+  - frwiki-arp-2014-members
+  name_fr: Front national du salut
+  attributed_to: Wikipédia (fr), liste des députés par circonscription
+- id: majed-al-djerid
+  name_en: Majed Al Djerid
+  type: party
+  layer: political
+  parent: null
+  confidence: C
+  sources:
+  - frwiki-arp-2014-members
+  name_fr: Majed Al Djerid
+  attributed_to: Wikipédia (fr), liste des députés par circonscription
+- id: nca-2011
+  name_en: National Constituent Assembly (2011-2014)
+  name_fr: Assemblée nationale constituante (2011-2014)
+  name_ar: المجلس الوطني التأسيسي (2011-2014)
+  type: legislature
+  layer: political
+  parent: legislature
+  active:
+    start: '2011-11-22'
+    end: '2014-12-02'
+  confidence: B
+  sources:
+  - frwiki-nca-2011
+  - frwiki-2011-election
+  - frwiki-arp-2014-legislature
+  - arwiki-nca-2011
+- id: arp-2019
+  name_en: Assembly of the Representatives of the People, second legislature (2019-2022)
+  name_fr: IIe législature de l'Assemblée des représentants du peuple
+  name_ar: مجلس نواب الشعب
+  type: legislature
+  layer: political
+  parent: legislature
+  active:
+    start: '2019-11-13'
+    end: '2022-03-30'
+  summary: Activities suspended on 2021-07-25; the suspension was extended on 2021-09-22 and 2021-12-13.
+    The Assembly was dissolved on 2022-03-30; seat spans use that date as their end.
+  confidence: B
+  sources:
+  - frwiki-arp-2019-legislature
+  - frwiki-arp-2019-members
+- id: arp-2014
+  name_en: Assembly of the Representatives of the People, first legislature (2014-2019)
+  name_fr: Ire législature de l'Assemblée des représentants du peuple
+  name_ar: مجلس نواب الشعب
+  type: legislature
+  layer: political
+  parent: legislature
+  active:
+    start: '2014-12-02'
+    end: '2019-11-13'
+  confidence: B
+  sources:
+  - frwiki-arp-2014-legislature
+  - frwiki-arp-2014-members
+- id: cabinet-ghannouchi-2
+  name_en: Second Ghannouchi government
+  name_fr: Second gouvernement Ghannouchi
+  type: government
+  layer: political
+  parent: head-of-government
+  active:
+    start: '2011-01-17'
+    end: '2011-02-27'
+  summary: Headed by Mohamed Ghannouchi.
+  confidence: B
+  sources:
+  - wikipedia-ghannouchi-ii
+- id: cabinet-caid-essebsi
+  name_en: Caïd Essebsi government
+  name_fr: Gouvernement Caïd Essebsi
+  type: government
+  layer: political
+  parent: head-of-government
+  active:
+    start: '2011-02-27'
+    end: '2011-12-24'
+  summary: Headed by Beji Caid Essebsi.
+  confidence: B
+  sources:
+  - frwiki-gouvernement-essebsi
+- id: cabinet-jebali
+  name_en: Jebali government
+  name_fr: Gouvernement Jebali
+  type: government
+  layer: political
+  parent: head-of-government
+  active:
+    start: '2011-12-24'
+    end: '2013-03-13'
+  summary: Headed by Hamadi Jebali.
+  confidence: B
+  sources:
+  - frwiki-gov-jebali
+- id: cabinet-larayedh
+  name_en: Larayedh government
+  name_fr: Gouvernement Larayedh
+  type: government
+  layer: political
+  parent: head-of-government
+  active:
+    start: '2013-03-13'
+    end: '2014-01-29'
+  summary: Headed by Ali Laarayedh.
+  confidence: B
+  sources:
+  - frwiki-gov-larayedh
+- id: cabinet-jomaa
+  name_en: Jomaa government
+  name_fr: Gouvernement Jomaa
+  type: government
+  layer: political
+  parent: head-of-government
+  active:
+    start: '2014-01-29'
+    end: '2015-02-06'
+  summary: Headed by Mehdi Jomaa.
+  confidence: B
+  sources:
+  - frwiki-gov-jomaa
+- id: cabinet-essid-1
+  name_en: Essid I government
+  name_fr: Gouvernement Habib Essid (I)
+  type: government
+  layer: political
+  parent: head-of-government
+  active:
+    start: '2015-02-06'
+    end: '2016-01-12'
+  summary: Headed by Habib Essid.
+  confidence: B
+  sources:
+  - frwiki-gov-essid
+- id: cabinet-essid-2
+  name_en: Essid II government
+  name_fr: Gouvernement Habib Essid (II)
+  type: government
+  layer: political
+  parent: head-of-government
+  active:
+    start: '2016-01-12'
+    end: '2016-08-27'
+  summary: Headed by Habib Essid.
+  confidence: B
+  sources:
+  - frwiki-gov-essid
+- id: cabinet-chahed-1
+  name_en: Chahed I government
+  name_fr: Gouvernement Youssef Chahed (I)
+  type: government
+  layer: political
+  parent: head-of-government
+  active:
+    start: '2016-08-27'
+    end: '2017-09-06'
+  summary: Headed by Youssef Chahed.
+  confidence: B
+  sources:
+  - frwiki-gov-chahed
+- id: cabinet-chahed-2
+  name_en: Chahed II government
+  name_fr: Gouvernement Youssef Chahed (II)
+  type: government
+  layer: political
+  parent: head-of-government
+  active:
+    start: '2017-09-06'
+    end: '2020-02-27'
+  summary: Headed by Youssef Chahed.
+  confidence: B
+  sources:
+  - frwiki-gov-chahed
+- id: cabinet-fakhfakh
+  name_en: Fakhfakh government
+  name_fr: Gouvernement Elyes Fakhfakh
+  type: government
+  layer: political
+  parent: head-of-government
+  active:
+    start: '2020-02-27'
+    end: '2020-09-02'
+  summary: Headed by Elyes Fakhfakh.
+  confidence: B
+  sources:
+  - frwiki-gov-fakhfakh
+- id: cabinet-mechichi
+  name_en: Mechichi government
+  name_fr: Gouvernement Hichem Mechichi
+  type: government
+  layer: political
+  parent: head-of-government
+  active:
+    start: '2020-09-02'
+    end: '2021-07-25'
+  summary: Headed by Hichem Mechichi.
+  confidence: B
+  sources:
+  - frwiki-gov-mechichi
+- id: cabinet-bouden
+  name_en: Bouden government
+  name_fr: Gouvernement Najla Bouden
+  type: government
+  layer: political
+  parent: head-of-government
+  active:
+    start: '2021-10-11'
+    end: '2023-08-01'
+  summary: Headed by Najla Bouden.
+  confidence: B
+  sources:
+  - frwiki-gov-bouden-hachani-madouri-zaafrani
+- id: cabinet-hachani
+  name_en: Hachani government
+  name_fr: Gouvernement Ahmed Hachani
+  type: government
+  layer: political
+  parent: head-of-government
+  active:
+    start: '2023-08-01'
+    end: '2024-08-07'
+  summary: Headed by Ahmed Hachani.
+  confidence: B
+  sources:
+  - frwiki-gov-bouden-hachani-madouri-zaafrani
+- id: cabinet-madouri
+  name_en: Madouri government
+  name_fr: Gouvernement Kamel Madouri
+  type: government
+  layer: political
+  parent: head-of-government
+  active:
+    start: '2024-08-07'
+    end: '2025-03-20'
+  summary: Headed by Kamel Madouri.
+  confidence: B
+  sources:
+  - frwiki-gov-bouden-hachani-madouri-zaafrani
+- id: cabinet-zenzri
+  name_en: Zaafrani (Zenzri) government
+  name_fr: Gouvernement Sarra Zaafrani
+  type: government
+  layer: political
+  parent: head-of-government
+  active:
+    start: '2025-03-20'
+    end: ongoing
+  summary: Headed by Sara Zaafarani.
+  confidence: B
+  sources:
+  - frwiki-gov-bouden-hachani-madouri-zaafrani
+- id: neo-destour-2011
+  name_en: Neo-Destour Party (2011)
+  name_fr: Parti du Néo-Destour (2011)
+  type: party
+  layer: political
+  parent: null
+  summary: A party founded after the 2011 revolution under the historic name. It is a separate organisation from the Neo-Destour of 1934 to 1964, and won one seat in the 2011 Constituent Assembly.
+  confidence: B
+  sources: [frwiki-nca-list-2011]
+- id: front-national-1956
+  name_en: National Front (1956 list)
+  name_fr: Front national (liste de 1956)
+  type: party
+  layer: political
+  parent: null
+  confidence: C
+  sources:
+  - frwiki-anc-1956
+  summary: The list on which the deputies of the 1956 Constituent Assembly were elected.
+  attributed_to: Wikipédia (fr)
+- id: pup
+  name_en: Popular Unity Party
+  name_fr: Parti de l'unité populaire
+  type: party
+  layer: political
+  parent: null
+  confidence: C
+  sources:
+  - frwiki-cdd-xii
+  summary: Party named in the party column of the 2009 Chamber of Deputies member list.
+  attributed_to: Wikipédia (fr)
+- id: udu
+  name_en: Democratic Unionist Union
+  name_fr: Union démocratique unioniste
+  type: party
+  layer: political
+  parent: null
+  confidence: C
+  sources:
+  - frwiki-cdd-xii
+  summary: Party named in the party column of the 2009 Chamber of Deputies member list.
+  attributed_to: Wikipédia (fr)
+- id: psl
+  name_en: Social Liberal Party
+  name_fr: Parti social-libéral
+  type: party
+  layer: political
+  parent: null
+  confidence: C
+  sources:
+  - frwiki-cdd-xii
+  summary: Party named in the party column of the 2009 Chamber of Deputies member list.
+  attributed_to: Wikipédia (fr)
+- id: pvp
+  name_en: Greens Party for Progress
+  name_fr: Parti des verts pour le progrès
+  type: party
+  layer: political
+  parent: null
+  confidence: C
+  sources:
+  - frwiki-cdd-xii
+  summary: Party named in the party column of the 2009 Chamber of Deputies member list.
+  attributed_to: Wikipédia (fr)
+- id: ettajdid
+  name_en: Ettajdid Movement
+  name_fr: Mouvement Ettajdid
+  type: party
+  layer: political
+  parent: null
+  confidence: C
+  sources:
+  - frwiki-cdd-xii
+  summary: Party named in the party column of the 2009 Chamber of Deputies member list.
+  attributed_to: Wikipédia (fr)
+- id: anc-1956
+  name_en: National Constituent Assembly
+  name_fr: Assemblée nationale constituante
+  name_ar: المجلس القومي التأسيسي التونسي
+  type: legislature
+  layer: political
+  parent: legislature
+  active:
+    start: '1956-03-25'
+    end: '1959-06-01'
+  confidence: B
+  sources:
+  - frwiki-anc-1956
+  - enwiki-speakers
+  summary: '98 seats. Seats by party: Front national 98, Parti communiste tunisien 0, Indépendants 0.'
+- id: cdd-i
+  name_en: National Assembly (Chamber of Deputies, 1st legislature)
+  name_fr: Assemblée nationale (Chambre des députés, Ire législature)
+  type: legislature
+  layer: political
+  parent: legislature
+  active:
+    start: '1959-11-08'
+    end: '1964-11-08'
+  confidence: B
+  seat_split:
+  - party: neo-destour
+    seats: 90
+  sources:
+  - enwiki-election-1959
+  - enwiki-speakers
+  - frwiki-cdd
+  summary: '90 seats. Seats by party: Neo Destour 90, Tunisian Communist Party 0.'
+- id: cdd-ii
+  name_en: National Assembly (Chamber of Deputies, 2nd legislature)
+  name_fr: Assemblée nationale (Chambre des députés, IIe législature)
+  type: legislature
+  layer: political
+  parent: legislature
+  active:
+    start: '1964-11-08'
+    end: '1969-11-02'
+  confidence: B
+  seat_split:
+  - party: psd
+    seats: 101
+  sources:
+  - enwiki-election-1964
+  - enwiki-speakers
+  - frwiki-cdd
+  summary: '101 seats. Seats by party: Socialist Destourian Party 101.'
+- id: cdd-iii
+  name_en: National Assembly (Chamber of Deputies, 3rd legislature)
+  name_fr: Assemblée nationale (Chambre des députés, IIIe législature)
+  type: legislature
+  layer: political
+  parent: legislature
+  active:
+    start: '1969-11-02'
+    end: '1974-11-03'
+  confidence: B
+  seat_split:
+  - party: psd
+    seats: 101
+  sources:
+  - enwiki-election-1969
+  - enwiki-speakers
+  - frwiki-cdd
+  summary: '101 seats. Seats by party: Socialist Destourian Party 101.'
+- id: cdd-iv
+  name_en: National Assembly (Chamber of Deputies, 4th legislature)
+  name_fr: Assemblée nationale (Chambre des députés, IVe législature)
+  type: legislature
+  layer: political
+  parent: legislature
+  active:
+    start: '1974-11-03'
+    end: '1979-11-04'
+  confidence: B
+  seat_split:
+  - party: psd
+    seats: 112
+  sources:
+  - enwiki-election-1974
+  - enwiki-speakers
+  - frwiki-cdd
+  summary: '112 seats. Seats by party: Socialist Destourian Party 112.'
+- id: cdd-v
+  name_en: National Assembly (Chamber of Deputies, 5th legislature)
+  name_fr: Assemblée nationale (Chambre des députés, Ve législature)
+  type: legislature
+  layer: political
+  parent: legislature
+  active:
+    start: '1979-11-04'
+    end: '1981-11-01'
+  confidence: C
+  seat_split:
+  - party: psd
+    seats: 121
+  sources:
+  - frwiki-cdd
+  - enwiki-speakers
+  summary: '121 seats. Seats by party: Socialist Destourian Party 121.'
+  attributed_to: Wikipédia (fr)
+- id: cdd-vi
+  name_en: National Assembly (Chamber of Deputies, 6th legislature)
+  name_fr: Assemblée nationale (Chambre des députés, VIe législature)
+  type: legislature
+  layer: political
+  parent: legislature
+  active:
+    start: '1981-11-01'
+    end: '1986-11-10'
+  confidence: C
+  seat_split:
+  - party: front-national-1981
+    seats: 136
+  sources:
+  - frwiki-cdd
+  - enwiki-speakers
+  summary: '136 seats. Seats by party: Front national 136, Mouvement des démocrates socialistes 0, Parti de l''unité
+    populaire 0, Parti communiste tunisien 0.'
+  attributed_to: Wikipédia (fr)
+- id: cdd-vii
+  name_en: Chamber of Deputies (7th legislature)
+  name_fr: Chambre des députés (VIIe législature)
+  type: legislature
+  layer: political
+  parent: legislature
+  active:
+    start: '1986-11-10'
+    end: '1989-04-09'
+  confidence: B
+  seat_split:
+  - party: psd
+    seats: 125
+  sources:
+  - frwiki-cdd-vii
+  - frwiki-cdd
+  - enwiki-speakers
+  summary: '125 seats. Seats by party: Parti socialiste destourien 125. Elected 1986-11-02.'
+- id: cdd-viii
+  name_en: Chamber of Deputies (8th legislature)
+  name_fr: Chambre des députés (VIIIe législature)
+  type: legislature
+  layer: political
+  parent: legislature
+  active:
+    start: '1989-04-09'
+    end: '1994-04-09'
+  confidence: B
+  seat_split:
+  - party: rcd
+    seats: 141
+  sources:
+  - frwiki-cdd-viii
+  - frwiki-cdd
+  - enwiki-speakers
+  summary: '141 seats. Seats by party: Rassemblement constitutionnel démocratique 141. Elected 1989-04-02.'
+- id: cdd-ix
+  name_en: Chamber of Deputies (9th legislature)
+  name_fr: Chambre des députés (IXe législature)
+  type: legislature
+  layer: political
+  parent: legislature
+  active:
+    start: '1994-04-09'
+    end: '1999-11-15'
+  confidence: B
+  seat_split:
+  - party: rcd
+    seats: 144
+  - party: mds
+    seats: 10
+  - party: ettajdid
+    seats: 4
+  - party: udu
+    seats: 3
+  - party: pup
+    seats: 2
+  sources:
+  - frwiki-cdd-ix
+  - frwiki-cdd
+  - enwiki-speakers
+  summary: '163 seats. Seats by party: Rassemblement constitutionnel démocratique 144, Mouvement des démocrates
+    socialistes 10, Mouvement Ettajdid 4, Union démocratique unioniste 3, Parti de l''unité populaire 2. Elected
+    1994-03-20.'
+- id: cdd-x
+  name_en: Chamber of Deputies (10th legislature)
+  name_fr: Chambre des députés (Xe législature)
+  type: legislature
+  layer: political
+  parent: legislature
+  active:
+    start: '1999-11-15'
+    end: '2004-11-17'
+  confidence: B
+  seat_split:
+  - party: rcd
+    seats: 148
+  - party: mds
+    seats: 13
+  - party: pup
+    seats: 7
+  - party: udu
+    seats: 7
+  - party: ettajdid
+    seats: 5
+  - party: psl
+    seats: 2
+  sources:
+  - frwiki-cdd-x
+  - frwiki-cdd
+  - enwiki-speakers
+  summary: '182 seats. Seats by party: Rassemblement constitutionnel démocratique 148, Mouvement des démocrates
+    socialistes 13, Parti de l''unité populaire 7, Union démocratique unioniste 7, Mouvement Ettajdid 5, Parti social-libéral
+    2. Elected 1999-10-24.'
+- id: cdd-xi
+  name_en: Chamber of Deputies (11th legislature)
+  name_fr: Chambre des députés (XIe législature)
+  type: legislature
+  layer: political
+  parent: legislature
+  active:
+    start: '2004-11-17'
+    end: '2009-11-11'
+  confidence: B
+  seat_split:
+  - party: rcd
+    seats: 152
+  - party: mds
+    seats: 14
+  - party: pup
+    seats: 11
+  - party: udu
+    seats: 7
+  - party: ettajdid
+    seats: 3
+  - party: psl
+    seats: 1
+  - party: pvp
+    seats: 1
+  sources:
+  - frwiki-cdd-xi
+  - frwiki-cdd
+  - enwiki-speakers
+  summary: '189 seats. Seats by party: Rassemblement constitutionnel démocratique 152, Mouvement des démocrates
+    socialistes 14, Parti de l''unité populaire 11, Union démocratique unioniste 7, Mouvement Ettajdid 3, Parti
+    social-libéral 1, Parti des verts pour le progrès 1. Elected 2004-10-24.'
+- id: cdd-xii
+  name_en: Chamber of Deputies (12th legislature)
+  name_fr: Chambre des députés (XIIe législature)
+  type: legislature
+  layer: political
+  parent: legislature
+  active:
+    start: '2009-11-11'
+    end: '2011-02-09'
+  confidence: B
+  sources:
+  - frwiki-cdd-xii
+  - frwiki-cdd
+  - frwiki-deputes-xii
+  - enwiki-speakers
+  summary: '214 seats. Seats by party: Rassemblement constitutionnel démocratique 161, Mouvement des démocrates
+    socialistes 16, Parti de l''unité populaire 12, Union démocratique unioniste 9, Parti social-libéral 8, Parti
+    des verts pour le progrès 6, Mouvement Ettajdid 2. Elected 2009-10-25.'
+- id: chambre-conseillers-2005
+  name_en: Chamber of Advisors
+  name_fr: Chambre des conseillers
+  name_ar: مجلس المستشارين
+  type: legislature
+  layer: political
+  parent: null
+  active:
+    start: '2005-07-03'
+    end: '2011-03-23'
+  confidence: B
+  sources:
+  - frwiki-conseillers
+  - enwiki-speakers
+  summary: '126 seats. Seats by party: Organisations professionnelles (UGTT, UTICA, UTAP) 42, Élus locaux (échelle
+    régionale) 43, Personnalités et compétences nationales (désignées par le président) 41.'
+- id: grp-anc-2011-ennahdha
+  name_en: Ennahdha
+  name_fr: Ennahdha
+  name_ar: كتلة حركة النهضة
+  type: parliamentary-group
+  layer: political
+  parent: nca-2011
+  active:
+    start: '2012-02-01'
+    end: '2014-12-02'
+  confidence: B
+  sources:
+  - c26-s-leaders
+  - c26-s-anc-fr
+  - c26-s-anc-ar
+  summary: 'Size at formation: 89.'
+- id: grp-anc-2011-groupe-democratique
+  name_en: Groupe démocratique
+  name_fr: Groupe démocratique
+  name_ar: الكتلة الديمقراطية
+  type: parliamentary-group
+  layer: political
+  parent: nca-2011
+  active:
+    start: '2012-02-01'
+    end: '2014-12-02'
+  confidence: B
+  sources:
+  - c26-s-leaders
+  - c26-s-anc-fr
+  - c26-s-anc-ar
+  summary: 'Size at formation: 30.'
+- id: grp-anc-2011-groupe-congres
+  name_en: Groupe du Congrès (Congrès pour la République)
+  name_fr: Groupe du Congrès (Congrès pour la République)
+  name_ar: كتلة المؤتمر من أجل الجمهورية
+  type: parliamentary-group
+  layer: political
+  parent: nca-2011
+  active:
+    start: '2012-02-01'
+    end: '2014-12-02'
+  confidence: B
+  sources:
+  - c26-s-leaders
+  - c26-s-anc-fr
+  - c26-s-anc-ar
+  summary: 'Size at formation: 29.'
+- id: grp-anc-2011-groupe-ettakatol
+  name_en: Groupe d'Ettakatol
+  name_fr: Groupe d'Ettakatol
+  name_ar: كتلة التكتل
+  type: parliamentary-group
+  layer: political
+  parent: nca-2011
+  active:
+    start: '2012-02-01'
+    end: '2014-12-02'
+  confidence: B
+  sources:
+  - c26-s-leaders
+  - c26-s-anc-fr
+  - c26-s-anc-ar
+  summary: 'Size at formation: 22.'
+- id: grp-anc-2011-liberte-democratie
+  name_en: Groupe de la Liberté et de la Démocratie
+  name_fr: Groupe de la Liberté et de la Démocratie
+  name_ar: كتلة الحرية والديقمراطية
+  type: parliamentary-group
+  layer: political
+  parent: nca-2011
+  active:
+    start: '2012-02-01'
+    end: '2014-12-02'
+  confidence: B
+  sources:
+  - c26-s-leaders
+  - c26-s-anc-fr
+  - c26-s-anc-ar
+  summary: 'Size at formation: 13. The source marks the group as dissolved without giving a date.'
+- id: grp-anc-2011-liberte-dignite
+  name_en: Groupe de la Liberté et de la Dignité
+  name_fr: Groupe de la Liberté et de la Dignité
+  name_ar: كتلة الحرية والكرامة
+  type: parliamentary-group
+  layer: political
+  parent: nca-2011
+  active:
+    start: '2012-02-01'
+    end: '2014-12-02'
+  confidence: B
+  sources:
+  - c26-s-leaders
+  - c26-s-anc-fr
+  - c26-s-anc-ar
+  summary: 'Size at formation: 12. The source marks the group as dissolved without giving a date.'
+- id: grp-anc-2011-petition-populaire
+  name_en: Groupe de la Pétition El Aridha (Pétition populaire)
+  name_fr: Groupe de la Pétition El Aridha (Pétition populaire)
+  name_ar: كتلة العريضة الشعبية
+  type: parliamentary-group
+  layer: political
+  parent: nca-2011
+  active:
+    start: '2012-02-01'
+    end: '2014-12-02'
+  confidence: B
+  sources:
+  - c26-s-leaders
+  - c26-s-anc-fr
+  - c26-s-anc-ar
+  summary: 'Size at formation: 11. The source marks the group as dissolved without giving a date.'
+- id: grp-anc-2011-wafa
+  name_en: Mouvement Wafa (Wafa)
+  name_fr: Mouvement Wafa (Wafa)
+  name_ar: كتلة حركة وفاء
+  type: parliamentary-group
+  layer: political
+  parent: nca-2011
+  active:
+    start: '2011-11-22'
+    end: '2014-12-02'
+  confidence: C
+  sources:
+  - c26-s-anc-fr
+  - c26-s-anc-ar
+  summary: 'Size at formation: 9.'
+  attributed_to: Wikipédia (fr)
+- id: grp-anc-2011-alliance-democratique
+  name_en: Alliance démocratique
+  name_fr: Alliance démocratique
+  name_ar: كتلة التحالف الديمقراطي
+  type: parliamentary-group
+  layer: political
+  parent: nca-2011
+  active:
+    start: '2011-11-22'
+    end: '2014-12-02'
+  confidence: C
+  sources:
+  - c26-s-anc-fr
+  - c26-s-anc-ar
+  summary: 'Size at formation: 10.'
+  attributed_to: Wikipédia (fr)
+- id: grp-anc-2011-transition-democratique
+  name_en: Transition démocratique
+  name_fr: Transition démocratique
+  name_ar: كتلة الانتقال الديمقراطي
+  type: parliamentary-group
+  layer: political
+  parent: nca-2011
+  active:
+    start: '2011-11-22'
+    end: '2014-12-02'
+  confidence: C
+  sources:
+  - c26-s-anc-fr
+  - c26-s-anc-ar
+  summary: 'Size at formation: 14.'
+  attributed_to: Wikipédia (fr)
+- id: grp-anc-2011-independants-libres
+  name_en: Indépendants libres
+  name_fr: Indépendants libres
+  name_ar: كتلة المستقلين الأحرار
+  type: parliamentary-group
+  layer: political
+  parent: nca-2011
+  active:
+    start: '2012-11-08'
+    end: '2014-12-02'
+  confidence: C
+  sources:
+  - c26-s-anc-fr
+  - c26-s-anc-ar
+  summary: 'Size at formation: 10. The source marks the group as dissolved without giving a date.'
+  attributed_to: Wikipédia (fr)
+- id: grp-arp-2014-nidaa-tounes
+  name_en: Nidaa Tounes
+  name_fr: Nidaa Tounes
+  name_ar: نداء تونس
+  type: parliamentary-group
+  layer: political
+  parent: arp-2014
+  active:
+    start: 2014-12
+    end: '2019-11-13'
+  confidence: C
+  sources:
+  - c26-s-arp-i
+  summary: 'Size at formation: 86. Size by year in the source: 2014: 86, 2016: 63, 2017: 67, 2018: 47, 2019: 26.'
+  attributed_to: Wikipédia (fr)
+- id: grp-arp-2014-ennahdha
+  name_en: Ennahdha
+  name_fr: Ennahdha
+  name_ar: حركة النهضة
+  type: parliamentary-group
+  layer: political
+  parent: arp-2014
+  active:
+    start: 2014-12
+    end: '2019-11-13'
+  confidence: C
+  sources:
+  - c26-s-arp-i
+  summary: 'Size at formation: 69. Size by year in the source: 2014: 69, 2016: 69, 2017: 69, 2018: 68, 2019: 68.'
+  attributed_to: Wikipédia (fr)
+- id: grp-arp-2014-upl
+  name_en: Union patriotique libre
+  name_fr: Union patriotique libre
+  name_ar: الاتحاد الوطني الحر
+  type: parliamentary-group
+  layer: political
+  parent: arp-2014
+  active:
+    start: 2014-12
+    end: '2019-11-13'
+  confidence: C
+  sources:
+  - c26-s-arp-i
+  summary: 'Size at formation: 16. Size by year in the source: 2014: 16, 2016: 12, 2017: 11.'
+  attributed_to: Wikipédia (fr)
+- id: grp-arp-2014-front-populaire
+  name_en: Front populaire
+  name_fr: Front populaire
+  name_ar: الجبهة الشعبية
+  type: parliamentary-group
+  layer: political
+  parent: arp-2014
+  active:
+    start: 2014-12
+    end: '2019-11-13'
+  confidence: C
+  sources:
+  - c26-s-arp-i
+  summary: 'Size at formation: 15. Size by year in the source: 2014: 15, 2016: 15, 2017: 15, 2018: 15.'
+  attributed_to: Wikipédia (fr)
+- id: grp-arp-2014-afek-tounes
+  name_en: Afek Tounes
+  name_fr: Afek Tounes
+  name_ar: آفاق تونس
+  type: parliamentary-group
+  layer: political
+  parent: arp-2014
+  active:
+    start: 2014-12
+    end: '2019-11-13'
+  confidence: C
+  sources:
+  - c26-s-arp-i
+  summary: 'Size at formation: 8. Size by year in the source: 2014: 8, 2016: 10, 2017: 10.'
+  attributed_to: Wikipédia (fr)
+- id: grp-arp-2014-bloc-democrate
+  name_en: Bloc social-démocrate, puis Bloc démocrate
+  name_fr: Bloc social-démocrate, puis Bloc démocrate
+  name_ar: الكتلة الديمقراطية
+  type: parliamentary-group
+  layer: political
+  parent: arp-2014
+  active:
+    start: 2014-12
+    end: '2019-11-13'
+  confidence: C
+  sources:
+  - c26-s-arp-i
+  - c26-s-arp-ii-ar
+  summary: 'Size at formation: 8. Size by year in the source: 2014: 8, 2016: 7, 2017: 12, 2018: 12, 2019: 12.'
+  attributed_to: Wikipédia (fr)
+- id: grp-arp-2014-bloc-al-horra
+  name_en: Bloc Al Horra du mouvement Machrouu Tounes
+  name_fr: Bloc Al Horra du mouvement Machrouu Tounes
+  name_ar: كتلة الحرّة لمشروع تونس
+  type: parliamentary-group
+  layer: political
+  parent: arp-2014
+  active:
+    start: '2016'
+    end: '2019-11-13'
+  confidence: C
+  sources:
+  - c26-s-arp-i
+  summary: 'Size at formation: 25. Size by year in the source: 2016: 25, 2017: 21, 2018: 15, 2019: 15.'
+  attributed_to: Wikipédia (fr)
+- id: grp-arp-2014-coalition-nationale
+  name_en: Coalition nationale (Tahya Tounes)
+  name_fr: Coalition nationale (Tahya Tounes)
+  name_ar: التحيا الوطني
+  type: parliamentary-group
+  layer: political
+  parent: arp-2014
+  active:
+    start: '2018'
+    end: '2019-11-13'
+  confidence: C
+  sources:
+  - c26-s-arp-i
+  summary: 'Size at formation: 44. Size by year in the source: 2018: 44, 2019: 43.'
+  attributed_to: Wikipédia (fr)
+- id: grp-arp-2014-allegeance-patrie
+  name_en: Allégeance à la patrie
+  name_fr: Allégeance à la patrie
+  name_ar: الولاء للوطن
+  type: parliamentary-group
+  layer: political
+  parent: arp-2014
+  active:
+    start: '2018'
+    end: '2019-11-13'
+  confidence: C
+  sources:
+  - c26-s-arp-i
+  summary: 'Size at formation: 11. Size by year in the source: 2018: 11, 2019: 10.'
+  attributed_to: Wikipédia (fr)
+- id: grp-arp-2014-hors-groupe
+  name_en: Aucun bloc / Hors groupe
+  name_fr: Aucun bloc / Hors groupe
+  name_ar: غير المنتمين إلى كتل
+  type: parliamentary-group
+  layer: political
+  parent: arp-2014
+  active:
+    start: 2014-12
+    end: '2019-11-13'
+  confidence: C
+  sources:
+  - c26-s-arp-i
+  - c26-s-arp-tn
+  summary: 'Size at formation: 15. Size by year in the source: 2014: 15, 2016: 16, 2017: 12, 2018: 5, 2019: 34.'
+  attributed_to: Wikipédia (fr)
+- id: grp-arp-2019-ennahdha
+  name_en: Ennahdha
+  name_fr: Ennahdha
+  name_ar: حركة النهضة
+  type: parliamentary-group
+  layer: political
+  parent: arp-2019
+  active:
+    start: '2019-11-27'
+    end: '2022-03-30'
+  confidence: B
+  sources:
+  - c26-s-arp-ii
+  - c26-s-arp-ii-ar
+  - c26-s-list-arp-ii
+  summary: 'Size at formation: 54. Size by year in the source: 2019: 54, 2020: 54, 2021: 53.'
+- id: grp-arp-2019-bloc-democrate
+  name_en: Bloc démocrate
+  name_fr: Bloc démocrate
+  name_ar: الكتلة الديمقراطية
+  type: parliamentary-group
+  layer: political
+  parent: arp-2019
+  active:
+    start: '2019-11-27'
+    end: '2022-03-30'
+  confidence: B
+  sources:
+  - c26-s-arp-ii
+  - c26-s-arp-ii-ar
+  - c26-s-list-arp-ii
+  summary: 'Size at formation: 41. Size by year in the source: 2019: 41, 2020: 38, 2021: 38.'
+- id: grp-arp-2019-coeur-tunisie
+  name_en: Au cœur de la Tunisie
+  name_fr: Au cœur de la Tunisie
+  name_ar: حزب قلب تونس
+  type: parliamentary-group
+  layer: political
+  parent: arp-2019
+  active:
+    start: '2019-11-27'
+    end: '2022-03-30'
+  confidence: B
+  sources:
+  - c26-s-arp-ii
+  - c26-s-arp-ii-ar
+  - c26-s-list-arp-ii
+  summary: 'Size at formation: 38. Size by year in the source: 2019: 38, 2020: 30, 2021: 28.'
+- id: grp-arp-2019-coalition-dignite
+  name_en: Coalition de la dignité
+  name_fr: Coalition de la dignité
+  name_ar: ائتلاف الكرامة
+  type: parliamentary-group
+  layer: political
+  parent: arp-2019
+  active:
+    start: '2019-11-27'
+    end: '2022-03-30'
+  confidence: B
+  sources:
+  - c26-s-arp-ii
+  - c26-s-arp-ii-ar
+  - c26-s-list-arp-ii
+  summary: 'Size at formation: 21. Size by year in the source: 2019: 21, 2020: 18, 2021: 18.'
+- id: grp-arp-2019-parti-destourien-libre
+  name_en: Parti destourien libre
+  name_fr: Parti destourien libre
+  name_ar: الحزب الدستوري الحر
+  type: parliamentary-group
+  layer: political
+  parent: arp-2019
+  active:
+    start: '2019-11-27'
+    end: '2022-03-30'
+  confidence: B
+  sources:
+  - c26-s-arp-ii
+  - c26-s-arp-ii-ar
+  - c26-s-list-arp-ii
+  summary: 'Size at formation: 17. Size by year in the source: 2019: 17, 2020: 16, 2021: 16.'
+- id: grp-arp-2019-reforme
+  name_en: La Réforme (Réforme nationale)
+  name_fr: La Réforme (Réforme nationale)
+  name_ar: كتلة الإصلاح الوطني
+  type: parliamentary-group
+  layer: political
+  parent: arp-2019
+  active:
+    start: '2019-11-27'
+    end: '2022-03-30'
+  confidence: B
+  sources:
+  - c26-s-arp-ii
+  - c26-s-arp-ii-ar
+  - c26-s-list-arp-ii
+  summary: 'Size at formation: 15. Size by year in the source: 2019: 15, 2020: 16, 2021: 16.'
+- id: grp-arp-2019-tahya-tounes
+  name_en: Tahya Tounes
+  name_fr: Tahya Tounes
+  name_ar: تحيا تونس
+  type: parliamentary-group
+  layer: political
+  parent: arp-2019
+  active:
+    start: '2019-11-27'
+    end: '2022-03-30'
+  confidence: B
+  sources:
+  - c26-s-arp-ii
+  - c26-s-arp-ii-ar
+  - c26-s-list-arp-ii
+  summary: 'Size at formation: 14. Size by year in the source: 2019: 14, 2020: 10, 2021: 10.'
+- id: grp-arp-2019-al-moustakbal
+  name_en: Al Moustakbal
+  name_fr: Al Moustakbal
+  name_ar: كتلة المستقبل
+  type: parliamentary-group
+  layer: political
+  parent: arp-2019
+  active:
+    start: '2019-11-27'
+    end: '2022-03-30'
+  confidence: B
+  sources:
+  - c26-s-arp-ii
+  - c26-s-arp-ii-ar
+  - c26-s-list-arp-ii
+  summary: 'Size at formation: 9. Size by year in the source: 2019: 9, 2020: 9, 2021: 9.'
+- id: grp-arp-2019-hors-groupe
+  name_en: Hors groupe
+  name_fr: Hors groupe
+  name_ar: بدون كتلة
+  type: parliamentary-group
+  layer: political
+  parent: arp-2019
+  active:
+    start: '2019-11-27'
+    end: '2022-03-30'
+  confidence: B
+  sources:
+  - c26-s-arp-ii
+  - c26-s-arp-ii-ar
+  - c26-s-arp-tn
+  summary: 'Size at formation: 8. Size by year in the source: 2019: 8, 2020: 26, 2021: 27.'
+- id: grp-arp-2021-bloc-national
+  name_en: Bloc national
+  name_fr: Bloc national
+  name_ar: الكتلة الوطنية
+  type: parliamentary-group
+  layer: political
+  parent: arp-2019
+  active:
+    start: '2021'
+    end: '2022-03-30'
+  confidence: C
+  sources:
+  - c26-s-arp-ii
+  - c26-s-arp-ii-ar
+  - c26-s-list-arp-ii
+  summary: 'Size at formation: 9. Size by year in the source: 2021: 9.'
+  attributed_to: Wikipédia (fr)
+- id: psd
+  name_en: Socialist Destourian Party
+  name_fr: Parti socialiste destourien
+  type: party
+  layer: political
+  parent: null
+  confidence: C
+  attributed_to: Wikipédia (fr)
+  sources:
+  - frwiki-cdd
+  - enwiki-election-1964
+  summary: Party named as holding every seat in the Chamber of Deputies tables of 1964 to 1986.
+- id: front-national-1981
+  name_en: National Front (1981 list)
+  name_fr: Front national (liste de 1981)
+  type: party
+  layer: political
+  parent: null
+  confidence: C
+  attributed_to: Wikipédia (fr)
+  sources:
+  - frwiki-cdd
+  summary: The list that won every seat in the 1981 Chamber of Deputies election, as the source names it.
+- id: grp-nca-2011-hors-groupe
+  name_en: No group
+  name_fr: Hors groupe
+  type: parliamentary-group
+  layer: political
+  parent: nca-2011
+  active:
+    start: '2012-02-01'
+    end: '2014-12-02'
+  confidence: B
+  sources:
+  - fr-wiki-anc-2011
+  - fr-wiki-anc-2011-list
+  - letunizien-com-hichem-hosni-president-du-part

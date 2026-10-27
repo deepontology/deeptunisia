@@ -59,6 +59,13 @@ export interface Navigable {
 	 * flight with a sudden jump.
 	 */
 	skipResizePan?: boolean;
+	/**
+	 * The surface keeps its own centre on resize, so the gesture layer's
+	 * recentre-pan must never run. True for the globe, whose projection is
+	 * translated to the middle of the viewport: a pan there is a rotation, and
+	 * the recentre-pan turned the world away from the reader on every resize.
+	 */
+	readonly centresItself?: boolean;
 	fit(): void;
 	/** Cancel any animation or momentum. Called on every new user gesture. */
 	stop(): void;

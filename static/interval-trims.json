@@ -169,6 +169,1413 @@
     }
   },
   {
+    "kind": "position",
+    "id": "p-gov-kairouan-aljia",
+    "start": "1964",
+    "end": "1964",
+    "interval": {
+      "startEarliest": -189388800000,
+      "startLatest": -157766401000,
+      "endEarliest": -157766401000,
+      "endLatest": -157766401000,
+      "startPrecision": "year",
+      "endPrecision": "year",
+      "status": "ended",
+      "lastObserved": -157766401000,
+      "trimmed": true,
+      "raw": {
+        "start": "1964",
+        "end": "1964"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-gov-kairouan-ben-hassen",
+    "start": "2011-02-02",
+    "end": "2011",
+    "interval": {
+      "startEarliest": 1296604800000,
+      "startLatest": 1296604800000,
+      "endEarliest": 1296604800000,
+      "endLatest": 1325375999000,
+      "startPrecision": "day",
+      "endPrecision": "year",
+      "status": "ended",
+      "lastObserved": 1296604800000,
+      "trimmed": true,
+      "raw": {
+        "start": "2011-02-02",
+        "end": "2011"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-gov-sfax-mohamed-boughzala",
+    "start": "1980",
+    "end": "1980",
+    "interval": {
+      "startEarliest": 315532800000,
+      "startLatest": 347155199000,
+      "endEarliest": 347155199000,
+      "endLatest": 347155199000,
+      "startPrecision": "year",
+      "endPrecision": "year",
+      "status": "ended",
+      "lastObserved": 347155199000,
+      "trimmed": true,
+      "raw": {
+        "start": "1980",
+        "end": "1980"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-gov-sfax-hamadi-amara",
+    "start": "1982",
+    "end": "1982",
+    "interval": {
+      "startEarliest": 378691200000,
+      "startLatest": 410227199000,
+      "endEarliest": 410227199000,
+      "endLatest": 410227199000,
+      "startPrecision": "year",
+      "endPrecision": "year",
+      "status": "ended",
+      "lastObserved": 410227199000,
+      "trimmed": true,
+      "raw": {
+        "start": "1982",
+        "end": "1982"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-gov-mahdia-amor-jebbari",
+    "start": "2011",
+    "end": "2011",
+    "interval": {
+      "startEarliest": 1293840000000,
+      "startLatest": 1325375999000,
+      "endEarliest": 1325375999000,
+      "endLatest": 1325375999000,
+      "startPrecision": "year",
+      "endPrecision": "year",
+      "status": "ended",
+      "lastObserved": 1325375999000,
+      "trimmed": true,
+      "raw": {
+        "start": "2011",
+        "end": "2011"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-gov-sidi-bouzid-mohamed-belghith",
+    "start": "2001",
+    "end": "2001",
+    "interval": {
+      "startEarliest": 978307200000,
+      "startLatest": 1009843199000,
+      "endEarliest": 1009843199000,
+      "endLatest": 1009843199000,
+      "startPrecision": "year",
+      "endPrecision": "year",
+      "status": "ended",
+      "lastObserved": 1009843199000,
+      "trimmed": true,
+      "raw": {
+        "start": "2001",
+        "end": "2001"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-gov-gafsa-mahmoud-lajnef",
+    "start": "1994",
+    "end": "1994",
+    "interval": {
+      "startEarliest": 757382400000,
+      "startLatest": 788918399000,
+      "endEarliest": 788918399000,
+      "endLatest": 788918399000,
+      "startPrecision": "year",
+      "endPrecision": "year",
+      "status": "ended",
+      "lastObserved": 788918399000,
+      "trimmed": true,
+      "raw": {
+        "start": "1994",
+        "end": "1994"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-gov-tozeur-abdelhamid-ghanmi",
+    "start": "2011",
+    "end": "2011",
+    "interval": {
+      "startEarliest": 1293840000000,
+      "startLatest": 1325375999000,
+      "endEarliest": 1325375999000,
+      "endLatest": 1325375999000,
+      "startPrecision": "year",
+      "endPrecision": "year",
+      "status": "ended",
+      "lastObserved": 1325375999000,
+      "trimmed": true,
+      "raw": {
+        "start": "2011",
+        "end": "2011"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-gov-tozeur-houcine-ben-frej",
+    "start": "2011",
+    "end": "2011",
+    "interval": {
+      "startEarliest": 1293840000000,
+      "startLatest": 1325375999000,
+      "endEarliest": 1325375999000,
+      "endLatest": 1325375999000,
+      "startPrecision": "year",
+      "endPrecision": "year",
+      "status": "ended",
+      "lastObserved": 1325375999000,
+      "trimmed": true,
+      "raw": {
+        "start": "2011",
+        "end": "2011"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-gov-tozeur-samir-rouihem",
+    "start": "2012",
+    "end": "2012-08-27",
+    "interval": {
+      "startEarliest": 1325376000000,
+      "startLatest": 1346025600000,
+      "endEarliest": 1346025600000,
+      "endLatest": 1346025600000,
+      "startPrecision": "year",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1346025600000,
+      "startClamped": true,
+      "raw": {
+        "start": "2012",
+        "end": "2012-08-27"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-gov-kebili-badreddine-habil",
+    "start": "2011-02",
+    "end": "2011-02",
+    "interval": {
+      "startEarliest": 1296518400000,
+      "startLatest": 1298937599000,
+      "endEarliest": 1298937599000,
+      "endLatest": 1298937599000,
+      "startPrecision": "month",
+      "endPrecision": "month",
+      "status": "ended",
+      "lastObserved": 1298937599000,
+      "trimmed": true,
+      "raw": {
+        "start": "2011-02",
+        "end": "2011-02"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-gov-kebili-mounir-amami",
+    "start": "2011-02",
+    "end": "2011-02",
+    "interval": {
+      "startEarliest": 1296518400000,
+      "startLatest": 1298937599000,
+      "endEarliest": 1298937599000,
+      "endLatest": 1298937599000,
+      "startPrecision": "month",
+      "endPrecision": "month",
+      "status": "ended",
+      "lastObserved": 1298937599000,
+      "trimmed": true,
+      "raw": {
+        "start": "2011-02",
+        "end": "2011-02"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-gov-gabes-abdelhamid-melki",
+    "start": "1973",
+    "end": "1973",
+    "interval": {
+      "startEarliest": 94694400000,
+      "startLatest": 126230399000,
+      "endEarliest": 126230399000,
+      "endLatest": 126230399000,
+      "startPrecision": "year",
+      "endPrecision": "year",
+      "status": "ended",
+      "lastObserved": 126230399000,
+      "trimmed": true,
+      "raw": {
+        "start": "1973",
+        "end": "1973"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-gov-gabes-chokri-necib",
+    "start": "2011",
+    "end": "2011",
+    "interval": {
+      "startEarliest": 1293840000000,
+      "startLatest": 1325375999000,
+      "endEarliest": 1325375999000,
+      "endLatest": 1325375999000,
+      "startPrecision": "year",
+      "endPrecision": "year",
+      "status": "ended",
+      "lastObserved": 1325375999000,
+      "trimmed": true,
+      "raw": {
+        "start": "2011",
+        "end": "2011"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-gov-gabes-moncef-khemiri",
+    "start": "2011",
+    "end": "2011",
+    "interval": {
+      "startEarliest": 1293840000000,
+      "startLatest": 1325375999000,
+      "endEarliest": 1325375999000,
+      "endLatest": 1325375999000,
+      "startPrecision": "year",
+      "endPrecision": "year",
+      "status": "ended",
+      "lastObserved": 1325375999000,
+      "trimmed": true,
+      "raw": {
+        "start": "2011",
+        "end": "2011"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-gov-gabes-omar-chahbani",
+    "start": "2012",
+    "end": "2012",
+    "interval": {
+      "startEarliest": 1325376000000,
+      "startLatest": 1356998399000,
+      "endEarliest": 1356998399000,
+      "endLatest": 1356998399000,
+      "startPrecision": "year",
+      "endPrecision": "year",
+      "status": "ended",
+      "lastObserved": 1356998399000,
+      "trimmed": true,
+      "raw": {
+        "start": "2012",
+        "end": "2012"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-gov-gabes-nabil-zarrouk",
+    "start": "2015",
+    "end": "2015",
+    "interval": {
+      "startEarliest": 1420070400000,
+      "startLatest": 1451606399000,
+      "endEarliest": 1451606399000,
+      "endLatest": 1451606399000,
+      "startPrecision": "year",
+      "endPrecision": "year",
+      "status": "ended",
+      "lastObserved": 1451606399000,
+      "trimmed": true,
+      "raw": {
+        "start": "2015",
+        "end": "2015"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-nca2011-warda-turki",
+    "start": "~2013",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": 1325462400000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "approx",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "~2013",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-nca2011-abdelkrim-harouni",
+    "start": "2011-11-22",
+    "end": "~2012",
+    "interval": {
+      "startEarliest": 1321920000000,
+      "startLatest": 1321920000000,
+      "endEarliest": 1321920000000,
+      "endLatest": 1388534399000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1321920000000,
+      "trimmed": true,
+      "raw": {
+        "start": "2011-11-22",
+        "end": "~2012"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-nca2011-mohamed-mondher-berrahal",
+    "start": "~2013",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": 1325462400000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "approx",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "~2013",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-nca2011-noureddine-bhiri",
+    "start": "2011-11-22",
+    "end": "~2012",
+    "interval": {
+      "startEarliest": 1321920000000,
+      "startLatest": 1321920000000,
+      "endEarliest": 1321920000000,
+      "endLatest": 1388534399000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1321920000000,
+      "trimmed": true,
+      "raw": {
+        "start": "2011-11-22",
+        "end": "~2012"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-nca2011-samir-dilou",
+    "start": "2011-11-22",
+    "end": "~2012",
+    "interval": {
+      "startEarliest": 1321920000000,
+      "startLatest": 1321920000000,
+      "endEarliest": 1321920000000,
+      "endLatest": 1388534399000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1321920000000,
+      "trimmed": true,
+      "raw": {
+        "start": "2011-11-22",
+        "end": "~2012"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-nca2011-monia-ben-nasr-ayadi",
+    "start": "~2014",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": 1356998400000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "approx",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "~2014",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-nca2011-mohamed-abbou",
+    "start": "2011-11-22",
+    "end": "~2012",
+    "interval": {
+      "startEarliest": 1321920000000,
+      "startLatest": 1321920000000,
+      "endEarliest": 1321920000000,
+      "endLatest": 1388534399000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1321920000000,
+      "trimmed": true,
+      "raw": {
+        "start": "2011-11-22",
+        "end": "~2012"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-nca2011-selma-znaidi",
+    "start": "~2014",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": 1356998400000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "approx",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "~2014",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-nca2011-moncef-marzouki",
+    "start": "2011-11-22",
+    "end": "~2011",
+    "interval": {
+      "startEarliest": 1321920000000,
+      "startLatest": 1321920000000,
+      "endEarliest": 1321920000000,
+      "endLatest": 1356911999000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1321920000000,
+      "trimmed": true,
+      "raw": {
+        "start": "2011-11-22",
+        "end": "~2011"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-nca2011-mohamed-ben-salem-zaghouan",
+    "start": "2011-11-22",
+    "end": "~2012",
+    "interval": {
+      "startEarliest": 1321920000000,
+      "startLatest": 1321920000000,
+      "endEarliest": 1321920000000,
+      "endLatest": 1388534399000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1321920000000,
+      "trimmed": true,
+      "raw": {
+        "start": "2011-11-22",
+        "end": "~2012"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-nca2011-abdellatif-mekki",
+    "start": "2011-11-22",
+    "end": "~2012",
+    "interval": {
+      "startEarliest": 1321920000000,
+      "startLatest": 1321920000000,
+      "endEarliest": 1321920000000,
+      "endLatest": 1388534399000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1321920000000,
+      "trimmed": true,
+      "raw": {
+        "start": "2011-11-22",
+        "end": "~2012"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-nca2011-said-mechichi",
+    "start": "2011-11-22",
+    "end": "~2012",
+    "interval": {
+      "startEarliest": 1321920000000,
+      "startLatest": 1321920000000,
+      "endEarliest": 1321920000000,
+      "endLatest": 1388534399000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1321920000000,
+      "trimmed": true,
+      "raw": {
+        "start": "2011-11-22",
+        "end": "~2012"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-nca2011-hamadi-jebali",
+    "start": "2011-11-22",
+    "end": "~2011",
+    "interval": {
+      "startEarliest": 1321920000000,
+      "startLatest": 1321920000000,
+      "endEarliest": 1321920000000,
+      "endLatest": 1356911999000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1321920000000,
+      "trimmed": true,
+      "raw": {
+        "start": "2011-11-22",
+        "end": "~2011"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-nca2011-fadhel-saghraoui",
+    "start": "~2013",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": 1325462400000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "approx",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "~2013",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-nca2011-manel-kadri",
+    "start": "~2013",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": 1325462400000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "approx",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "~2013",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-nca2011-moncef-ben-salem",
+    "start": "2011-11-22",
+    "end": "~2011",
+    "interval": {
+      "startEarliest": 1321920000000,
+      "startLatest": 1321920000000,
+      "endEarliest": 1321920000000,
+      "endLatest": 1356911999000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1321920000000,
+      "trimmed": true,
+      "raw": {
+        "start": "2011-11-22",
+        "end": "~2011"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-nca2011-imed-daimi",
+    "start": "2011-11-22",
+    "end": "~2011",
+    "interval": {
+      "startEarliest": 1321920000000,
+      "startLatest": 1321920000000,
+      "endEarliest": 1321920000000,
+      "endLatest": 1356911999000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1321920000000,
+      "trimmed": true,
+      "raw": {
+        "start": "2011-11-22",
+        "end": "~2011"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-nca2011-hedi-ben-abbes",
+    "start": "2011-11-22",
+    "end": "~2012",
+    "interval": {
+      "startEarliest": 1321920000000,
+      "startLatest": 1321920000000,
+      "endEarliest": 1321920000000,
+      "endLatest": 1388534399000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1321920000000,
+      "trimmed": true,
+      "raw": {
+        "start": "2011-11-22",
+        "end": "~2012"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-nca2011-mohamed-zrig",
+    "start": "~2013",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": 1325462400000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "approx",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "~2013",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-arp-2019-boubaker-zkhama",
+    "start": "2019-11-13",
+    "end": "~2020",
+    "interval": {
+      "startEarliest": 1573603200000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1640995199000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "trimmed": true,
+      "raw": {
+        "start": "2019-11-13",
+        "end": "~2020"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-arp-2019-ghazi-chaouachi",
+    "start": "2019-11-13",
+    "end": "~2020",
+    "interval": {
+      "startEarliest": 1573603200000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1640995199000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "trimmed": true,
+      "raw": {
+        "start": "2019-11-13",
+        "end": "~2020"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-arp-2019-hajer-bouhleli",
+    "start": "~2021",
+    "end": "2022-03-30",
+    "interval": {
+      "startEarliest": 1577923200000,
+      "startLatest": 1648598400000,
+      "endEarliest": 1648598400000,
+      "endLatest": 1648598400000,
+      "startPrecision": "approx",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1648598400000,
+      "startClamped": true,
+      "raw": {
+        "start": "~2021",
+        "end": "2022-03-30"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-arp-2019-mongia-boughanmi",
+    "start": "~2021",
+    "end": "2022-03-30",
+    "interval": {
+      "startEarliest": 1577923200000,
+      "startLatest": 1648598400000,
+      "endEarliest": 1648598400000,
+      "endLatest": 1648598400000,
+      "startPrecision": "approx",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1648598400000,
+      "startClamped": true,
+      "raw": {
+        "start": "~2021",
+        "end": "2022-03-30"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-arp-2019-ahmed-gaaloul",
+    "start": "2019-11-13",
+    "end": "~2020",
+    "interval": {
+      "startEarliest": 1573603200000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1640995199000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "trimmed": true,
+      "raw": {
+        "start": "2019-11-13",
+        "end": "~2020"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-arp-2019-meherzia-labidi-maiza",
+    "start": "~2020",
+    "end": "~2021",
+    "interval": {
+      "startEarliest": 1546300800000,
+      "startLatest": 1640995199000,
+      "endEarliest": 1640995199000,
+      "endLatest": 1672531199000,
+      "startPrecision": "approx",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1640995199000,
+      "trimmed": true,
+      "raw": {
+        "start": "~2020",
+        "end": "~2021"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-arp-2019-toumi-hamrouni",
+    "start": "~2021",
+    "end": "2022-03-30",
+    "interval": {
+      "startEarliest": 1577923200000,
+      "startLatest": 1648598400000,
+      "endEarliest": 1648598400000,
+      "endLatest": 1648598400000,
+      "startPrecision": "approx",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1648598400000,
+      "startClamped": true,
+      "raw": {
+        "start": "~2021",
+        "end": "2022-03-30"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-arp-2019-ali-hafsi-jeddi",
+    "start": "2019-11-13",
+    "end": "~2020",
+    "interval": {
+      "startEarliest": 1573603200000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1640995199000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "trimmed": true,
+      "raw": {
+        "start": "2019-11-13",
+        "end": "~2020"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-arp-2014-lazhar-akremi",
+    "start": "2014-12-02",
+    "end": "~2015",
+    "interval": {
+      "startEarliest": 1417478400000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1483142399000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "trimmed": true,
+      "raw": {
+        "start": "2014-12-02",
+        "end": "~2015"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-arp-2014-taher-battikh",
+    "start": "~2015",
+    "end": "~2017",
+    "interval": {
+      "startEarliest": 1388534400000,
+      "startLatest": 1483142399000,
+      "endEarliest": 1483142399000,
+      "endLatest": 1546300799000,
+      "startPrecision": "approx",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1483142399000,
+      "trimmed": true,
+      "raw": {
+        "start": "~2015",
+        "end": "~2017"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-arp-2014-hayet-kebaier",
+    "start": "2014-12-02",
+    "end": "~2015",
+    "interval": {
+      "startEarliest": 1417478400000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1483142399000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "trimmed": true,
+      "raw": {
+        "start": "2014-12-02",
+        "end": "~2015"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-arp-2014-maroua-bouazzi",
+    "start": "~2018",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": 1483228800000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "approx",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "~2018",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-arp-2014-nesrine-laamari",
+    "start": "~2018",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": 1483228800000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "approx",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "~2018",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-arp-2014-yassine-brahim",
+    "start": "2014-12-02",
+    "end": "~2015",
+    "interval": {
+      "startEarliest": 1417478400000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1483142399000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "trimmed": true,
+      "raw": {
+        "start": "2014-12-02",
+        "end": "~2015"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-arp-2014-hajer-triki",
+    "start": "~2018",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": 1483228800000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "approx",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "~2018",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-arp-2014-boutheina-ben-yaghlane",
+    "start": "2014-12-02",
+    "end": "~2015",
+    "interval": {
+      "startEarliest": 1417478400000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1483142399000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "trimmed": true,
+      "raw": {
+        "start": "2014-12-02",
+        "end": "~2015"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-arp-2014-noomane-fehri",
+    "start": "2014-12-02",
+    "end": "~2015",
+    "interval": {
+      "startEarliest": 1417478400000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1483142399000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "trimmed": true,
+      "raw": {
+        "start": "2014-12-02",
+        "end": "~2015"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-arp-2014-selma-elloumi",
+    "start": "2014-12-02",
+    "end": "~2015",
+    "interval": {
+      "startEarliest": 1417478400000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1483142399000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "trimmed": true,
+      "raw": {
+        "start": "2014-12-02",
+        "end": "~2015"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-arp-2014-touhami-abdouli",
+    "start": "2014-12-02",
+    "end": "~2015",
+    "interval": {
+      "startEarliest": 1417478400000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1483142399000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "trimmed": true,
+      "raw": {
+        "start": "2014-12-02",
+        "end": "~2015"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-arp-2014-faten-oueslati",
+    "start": "~2016",
+    "end": "~2017",
+    "interval": {
+      "startEarliest": 1420070400000,
+      "startLatest": 1514764799000,
+      "endEarliest": 1514764799000,
+      "endLatest": 1546300799000,
+      "startPrecision": "approx",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1514764799000,
+      "trimmed": true,
+      "raw": {
+        "start": "~2016",
+        "end": "~2017"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-arp-2014-hamdi-guezguez",
+    "start": "2014-12-02",
+    "end": "~2015",
+    "interval": {
+      "startEarliest": 1417478400000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1483142399000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "trimmed": true,
+      "raw": {
+        "start": "2014-12-02",
+        "end": "~2015"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-arp-2014-zied-ladhari",
+    "start": "2014-12-02",
+    "end": "~2015",
+    "interval": {
+      "startEarliest": 1417478400000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1483142399000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "trimmed": true,
+      "raw": {
+        "start": "2014-12-02",
+        "end": "~2015"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-arp-2014-jihen-abbadi",
+    "start": "~2018",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": 1483228800000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "approx",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "~2018",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-arp-2014-said-aidi",
+    "start": "2014-12-02",
+    "end": "~2015",
+    "interval": {
+      "startEarliest": 1417478400000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1483142399000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "trimmed": true,
+      "raw": {
+        "start": "2014-12-02",
+        "end": "~2015"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-gov-sadok-ben-jemaa-equipment",
+    "start": "1983-11-25",
+    "end": "~1984",
+    "interval": {
+      "startEarliest": 438566400000,
+      "startLatest": 438566400000,
+      "endEarliest": 438566400000,
+      "endLatest": 504921599000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 438566400000,
+      "trimmed": true,
+      "raw": {
+        "start": "1983-11-25",
+        "end": "~1984"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-gov-noureddine-hached-social-affairs",
+    "start": "1985-10-23",
+    "end": "~1986",
+    "interval": {
+      "startEarliest": 498873600000,
+      "startLatest": 498873600000,
+      "endEarliest": 498873600000,
+      "endLatest": 567993599000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 498873600000,
+      "trimmed": true,
+      "raw": {
+        "start": "1985-10-23",
+        "end": "~1986"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-gov-ridha-hamza-social-affairs",
+    "start": "1985-10-23",
+    "end": "~1986",
+    "interval": {
+      "startEarliest": 498873600000,
+      "startLatest": 498873600000,
+      "endEarliest": 498873600000,
+      "endLatest": 567993599000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 498873600000,
+      "trimmed": true,
+      "raw": {
+        "start": "1985-10-23",
+        "end": "~1986"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-gov-mohamed-ben-rejeb-interior",
+    "start": "1997-01-22",
+    "end": "~1997",
+    "interval": {
+      "startEarliest": 853891200000,
+      "startLatest": 853891200000,
+      "endEarliest": 853891200000,
+      "endLatest": 915148799000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 853891200000,
+      "trimmed": true,
+      "raw": {
+        "start": "1997-01-22",
+        "end": "~1997"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-gov-mabrouk-bahri-agriculture",
+    "start": "1997-01-22",
+    "end": "~1997",
+    "interval": {
+      "startEarliest": 853891200000,
+      "startLatest": 853891200000,
+      "endEarliest": 853891200000,
+      "endLatest": 915148799000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 853891200000,
+      "trimmed": true,
+      "raw": {
+        "start": "1997-01-22",
+        "end": "~1997"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-gov-abderrahim-zouari-tourism",
+    "start": "2004-01-14",
+    "end": "~2004",
+    "interval": {
+      "startEarliest": 1074038400000,
+      "startLatest": 1074038400000,
+      "endEarliest": 1074038400000,
+      "endLatest": 1136073599000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1074038400000,
+      "trimmed": true,
+      "raw": {
+        "start": "2004-01-14",
+        "end": "~2004"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-conseillers-president-mekki-aloui",
+    "start": "2011",
+    "end": "2011-03-23",
+    "interval": {
+      "startEarliest": 1293840000000,
+      "startLatest": 1300838400000,
+      "endEarliest": 1300838400000,
+      "endLatest": 1300838400000,
+      "startPrecision": "year",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1300838400000,
+      "startClamped": true,
+      "raw": {
+        "start": "2011",
+        "end": "2011-03-23"
+      }
+    }
+  },
+  {
     "kind": "relationship",
     "id": "rel-youssef-chahed-lotfi-brahem-political-conflict",
     "start": "2018",
@@ -390,6 +1797,3177 @@
       "raw": {
         "start": "?",
         "end": "2026-06-01"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-warda-turki-ennahda-nca-2011-member",
+    "start": "~2013",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": 1325462400000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "approx",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "~2013",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-abdelkrim-harouni-ennahda-nca-2011-member",
+    "start": "2011-11-22",
+    "end": "~2012",
+    "interval": {
+      "startEarliest": 1321920000000,
+      "startLatest": 1321920000000,
+      "endEarliest": 1321920000000,
+      "endLatest": 1388534399000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1321920000000,
+      "trimmed": true,
+      "raw": {
+        "start": "2011-11-22",
+        "end": "~2012"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-mohamed-mondher-berrahal-ettakatol-nca-2011-member",
+    "start": "~2013",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": 1325462400000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "approx",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "~2013",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-noureddine-bhiri-ennahda-nca-2011-member",
+    "start": "2011-11-22",
+    "end": "~2012",
+    "interval": {
+      "startEarliest": 1321920000000,
+      "startLatest": 1321920000000,
+      "endEarliest": 1321920000000,
+      "endLatest": 1388534399000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1321920000000,
+      "trimmed": true,
+      "raw": {
+        "start": "2011-11-22",
+        "end": "~2012"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-samir-dilou-ennahda-nca-2011-member",
+    "start": "2011-11-22",
+    "end": "~2012",
+    "interval": {
+      "startEarliest": 1321920000000,
+      "startLatest": 1321920000000,
+      "endEarliest": 1321920000000,
+      "endLatest": 1388534399000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1321920000000,
+      "trimmed": true,
+      "raw": {
+        "start": "2011-11-22",
+        "end": "~2012"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-monia-ben-nasr-ayadi-ettakatol-nca-2011-member",
+    "start": "~2014",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": 1356998400000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "approx",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "~2014",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-mohamed-abbou-cpr-nca-2011-member",
+    "start": "2011-11-22",
+    "end": "~2012",
+    "interval": {
+      "startEarliest": 1321920000000,
+      "startLatest": 1321920000000,
+      "endEarliest": 1321920000000,
+      "endLatest": 1388534399000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1321920000000,
+      "trimmed": true,
+      "raw": {
+        "start": "2011-11-22",
+        "end": "~2012"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-selma-znaidi-ettakatol-nca-2011-member",
+    "start": "~2014",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": 1356998400000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "approx",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "~2014",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-moncef-marzouki-cpr-nca-2011-member",
+    "start": "2011-11-22",
+    "end": "~2011",
+    "interval": {
+      "startEarliest": 1321920000000,
+      "startLatest": 1321920000000,
+      "endEarliest": 1321920000000,
+      "endLatest": 1356911999000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1321920000000,
+      "trimmed": true,
+      "raw": {
+        "start": "2011-11-22",
+        "end": "~2011"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-mohamed-ben-salem-zaghouan-ennahda-nca-2011-member",
+    "start": "2011-11-22",
+    "end": "~2012",
+    "interval": {
+      "startEarliest": 1321920000000,
+      "startLatest": 1321920000000,
+      "endEarliest": 1321920000000,
+      "endLatest": 1388534399000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1321920000000,
+      "trimmed": true,
+      "raw": {
+        "start": "2011-11-22",
+        "end": "~2012"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-abdellatif-mekki-ennahda-nca-2011-member",
+    "start": "2011-11-22",
+    "end": "~2012",
+    "interval": {
+      "startEarliest": 1321920000000,
+      "startLatest": 1321920000000,
+      "endEarliest": 1321920000000,
+      "endLatest": 1388534399000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1321920000000,
+      "trimmed": true,
+      "raw": {
+        "start": "2011-11-22",
+        "end": "~2012"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-said-mechichi-ettakatol-nca-2011-member",
+    "start": "2011-11-22",
+    "end": "~2012",
+    "interval": {
+      "startEarliest": 1321920000000,
+      "startLatest": 1321920000000,
+      "endEarliest": 1321920000000,
+      "endLatest": 1388534399000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1321920000000,
+      "trimmed": true,
+      "raw": {
+        "start": "2011-11-22",
+        "end": "~2012"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-hamadi-jebali-ennahda-nca-2011-member",
+    "start": "2011-11-22",
+    "end": "~2011",
+    "interval": {
+      "startEarliest": 1321920000000,
+      "startLatest": 1321920000000,
+      "endEarliest": 1321920000000,
+      "endLatest": 1356911999000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1321920000000,
+      "trimmed": true,
+      "raw": {
+        "start": "2011-11-22",
+        "end": "~2011"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-fadhel-saghraoui-people-movement-nca-2011-member",
+    "start": "~2013",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": 1325462400000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "approx",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "~2013",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-manel-kadri-mds-nca-2011-member",
+    "start": "~2013",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": 1325462400000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "approx",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "~2013",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-moncef-ben-salem-ennahda-nca-2011-member",
+    "start": "2011-11-22",
+    "end": "~2011",
+    "interval": {
+      "startEarliest": 1321920000000,
+      "startLatest": 1321920000000,
+      "endEarliest": 1321920000000,
+      "endLatest": 1356911999000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1321920000000,
+      "trimmed": true,
+      "raw": {
+        "start": "2011-11-22",
+        "end": "~2011"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-imed-daimi-cpr-nca-2011-member",
+    "start": "2011-11-22",
+    "end": "~2011",
+    "interval": {
+      "startEarliest": 1321920000000,
+      "startLatest": 1321920000000,
+      "endEarliest": 1321920000000,
+      "endLatest": 1356911999000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1321920000000,
+      "trimmed": true,
+      "raw": {
+        "start": "2011-11-22",
+        "end": "~2011"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-hedi-ben-abbes-cpr-nca-2011-member",
+    "start": "2011-11-22",
+    "end": "~2012",
+    "interval": {
+      "startEarliest": 1321920000000,
+      "startLatest": 1321920000000,
+      "endEarliest": 1321920000000,
+      "endLatest": 1388534399000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1321920000000,
+      "trimmed": true,
+      "raw": {
+        "start": "2011-11-22",
+        "end": "~2012"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-mohamed-zrig-ennahda-nca-2011-member",
+    "start": "~2013",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": 1325462400000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "approx",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "~2013",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-boubaker-zkhama-pdl-arp-2019-member",
+    "start": "2019-11-13",
+    "end": "~2020",
+    "interval": {
+      "startEarliest": 1573603200000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1640995199000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "trimmed": true,
+      "raw": {
+        "start": "2019-11-13",
+        "end": "~2020"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-ghazi-chaouachi-tayyar-dimocrati-arp-2019-member",
+    "start": "2019-11-13",
+    "end": "~2020",
+    "interval": {
+      "startEarliest": 1573603200000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1640995199000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "trimmed": true,
+      "raw": {
+        "start": "2019-11-13",
+        "end": "~2020"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-mongia-boughanmi-ennahda-arp-2019-member",
+    "start": "~2021",
+    "end": "2022-03-30",
+    "interval": {
+      "startEarliest": 1577923200000,
+      "startLatest": 1648598400000,
+      "endEarliest": 1648598400000,
+      "endLatest": 1648598400000,
+      "startPrecision": "approx",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1648598400000,
+      "startClamped": true,
+      "raw": {
+        "start": "~2021",
+        "end": "2022-03-30"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-ahmed-gaaloul-2-ennahda-arp-2019-member",
+    "start": "2019-11-13",
+    "end": "~2020",
+    "interval": {
+      "startEarliest": 1573603200000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1640995199000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "trimmed": true,
+      "raw": {
+        "start": "2019-11-13",
+        "end": "~2020"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-meherzia-labidi-maiza-2-ennahda-arp-2019-member",
+    "start": "~2020",
+    "end": "~2021",
+    "interval": {
+      "startEarliest": 1546300800000,
+      "startLatest": 1640995199000,
+      "endEarliest": 1640995199000,
+      "endLatest": 1672531199000,
+      "startPrecision": "approx",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1640995199000,
+      "trimmed": true,
+      "raw": {
+        "start": "~2020",
+        "end": "~2021"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-toumi-hamrouni-ennahda-arp-2019-member",
+    "start": "~2021",
+    "end": "2022-03-30",
+    "interval": {
+      "startEarliest": 1577923200000,
+      "startLatest": 1648598400000,
+      "endEarliest": 1648598400000,
+      "endLatest": 1648598400000,
+      "startPrecision": "approx",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1648598400000,
+      "startClamped": true,
+      "raw": {
+        "start": "~2021",
+        "end": "2022-03-30"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-ali-hafsi-jeddi-2-nidaa-tounes-arp-2019-member",
+    "start": "2019-11-13",
+    "end": "~2020",
+    "interval": {
+      "startEarliest": 1573603200000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1640995199000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "trimmed": true,
+      "raw": {
+        "start": "2019-11-13",
+        "end": "~2020"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-lazhar-akremi-nidaa-tounes-arp-2014-member",
+    "start": "2014-12-02",
+    "end": "~2015",
+    "interval": {
+      "startEarliest": 1417478400000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1483142399000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "trimmed": true,
+      "raw": {
+        "start": "2014-12-02",
+        "end": "~2015"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-taher-battikh-nidaa-tounes-arp-2014-member",
+    "start": "~2015",
+    "end": "~2017",
+    "interval": {
+      "startEarliest": 1388534400000,
+      "startLatest": 1483142399000,
+      "endEarliest": 1483142399000,
+      "endLatest": 1546300799000,
+      "startPrecision": "approx",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1483142399000,
+      "trimmed": true,
+      "raw": {
+        "start": "~2015",
+        "end": "~2017"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-hayet-kebaier-nidaa-tounes-arp-2014-member",
+    "start": "2014-12-02",
+    "end": "~2015",
+    "interval": {
+      "startEarliest": 1417478400000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1483142399000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "trimmed": true,
+      "raw": {
+        "start": "2014-12-02",
+        "end": "~2015"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-maroua-bouazzi-nidaa-tounes-arp-2014-member",
+    "start": "~2018",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": 1483228800000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "approx",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "~2018",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-nesrine-laamari-nidaa-tounes-arp-2014-member",
+    "start": "~2018",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": 1483228800000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "approx",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "~2018",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-yassine-brahim-2-afek-tounes-arp-2014-member",
+    "start": "2014-12-02",
+    "end": "~2015",
+    "interval": {
+      "startEarliest": 1417478400000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1483142399000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "trimmed": true,
+      "raw": {
+        "start": "2014-12-02",
+        "end": "~2015"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-hajer-triki-ennahda-arp-2014-member",
+    "start": "~2018",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": 1483228800000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "approx",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "~2018",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-boutheina-ben-yaghlane-ennahda-arp-2014-member",
+    "start": "2014-12-02",
+    "end": "~2015",
+    "interval": {
+      "startEarliest": 1417478400000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1483142399000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "trimmed": true,
+      "raw": {
+        "start": "2014-12-02",
+        "end": "~2015"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-noomane-fehri-2-afek-tounes-arp-2014-member",
+    "start": "2014-12-02",
+    "end": "~2015",
+    "interval": {
+      "startEarliest": 1417478400000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1483142399000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "trimmed": true,
+      "raw": {
+        "start": "2014-12-02",
+        "end": "~2015"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-selma-elloumi-nidaa-tounes-arp-2014-member",
+    "start": "2014-12-02",
+    "end": "~2015",
+    "interval": {
+      "startEarliest": 1417478400000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1483142399000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "trimmed": true,
+      "raw": {
+        "start": "2014-12-02",
+        "end": "~2015"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-touhami-abdouli-front-salut-arp-2014-member",
+    "start": "2014-12-02",
+    "end": "~2015",
+    "interval": {
+      "startEarliest": 1417478400000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1483142399000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "trimmed": true,
+      "raw": {
+        "start": "2014-12-02",
+        "end": "~2015"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-faten-oueslati-republican-party-arp-2014-member",
+    "start": "~2016",
+    "end": "~2017",
+    "interval": {
+      "startEarliest": 1420070400000,
+      "startLatest": 1514764799000,
+      "endEarliest": 1514764799000,
+      "endLatest": 1546300799000,
+      "startPrecision": "approx",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1514764799000,
+      "trimmed": true,
+      "raw": {
+        "start": "~2016",
+        "end": "~2017"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-hamdi-guezguez-nidaa-tounes-arp-2014-member",
+    "start": "2014-12-02",
+    "end": "~2015",
+    "interval": {
+      "startEarliest": 1417478400000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1483142399000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "trimmed": true,
+      "raw": {
+        "start": "2014-12-02",
+        "end": "~2015"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-zied-ladhari-2-ennahda-arp-2014-member",
+    "start": "2014-12-02",
+    "end": "~2015",
+    "interval": {
+      "startEarliest": 1417478400000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1483142399000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "trimmed": true,
+      "raw": {
+        "start": "2014-12-02",
+        "end": "~2015"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-jihen-abbadi-nidaa-tounes-arp-2014-member",
+    "start": "~2018",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": 1483228800000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "approx",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "~2018",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-said-aidi-2-nidaa-tounes-arp-2014-member",
+    "start": "2014-12-02",
+    "end": "~2015",
+    "interval": {
+      "startEarliest": 1417478400000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1483142399000,
+      "startPrecision": "day",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "trimmed": true,
+      "raw": {
+        "start": "2014-12-02",
+        "end": "~2015"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-rached-khiari-grp-arp-2019-coalition-dignite",
+    "start": "2019-11-27",
+    "end": "2019",
+    "interval": {
+      "startEarliest": 1574812800000,
+      "startLatest": 1574812800000,
+      "endEarliest": 1574812800000,
+      "endLatest": 1577836799000,
+      "startPrecision": "day",
+      "endPrecision": "year",
+      "status": "ended",
+      "lastObserved": 1574812800000,
+      "trimmed": true,
+      "raw": {
+        "start": "2019-11-27",
+        "end": "2019"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-miled-ben-dali-grp-arp-2019-coalition-dignite",
+    "start": "2019-11-27",
+    "end": "2019",
+    "interval": {
+      "startEarliest": 1574812800000,
+      "startLatest": 1574812800000,
+      "endEarliest": 1574812800000,
+      "endLatest": 1577836799000,
+      "startPrecision": "day",
+      "endPrecision": "year",
+      "status": "ended",
+      "lastObserved": 1574812800000,
+      "trimmed": true,
+      "raw": {
+        "start": "2019-11-27",
+        "end": "2019"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-karim-helali-grp-arp-2014-coalition-nationale",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-leila-hamrouni-grp-arp-2014-coalition-nationale",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-sabrine-goubantini-grp-arp-2014-coalition-nationale",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-youssef-jouini-grp-arp-2014-nidaa-tounes",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-issam-matoussi-grp-arp-2014-coalition-nationale",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-mohamed-troudi-grp-arp-2014-bloc-al-horra",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-olfa-soukri-grp-arp-2014-hors-groupe",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-taoufik-jemli-grp-arp-2014-allegeance-patrie",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-ali-belakhoua-grp-arp-2014-nidaa-tounes",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-brahim-nacef-grp-arp-2014-bloc-al-horra",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-taoufik-ouali-grp-arp-2014-bloc-al-horra",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-lamia-dridi-grp-arp-2014-coalition-nationale",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-hassouna-nasfi-grp-arp-2014-bloc-al-horra",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-sabri-dekhil-grp-arp-2014-bloc-democrate",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-belgacem-dkhili-grp-arp-2014-bloc-al-horra",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-jihen-aouichi-grp-arp-2014-coalition-nationale",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-mohamed-ennaceur-jbira-grp-arp-2014-coalition-nationale",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-souhail-alouini-grp-arp-2014-coalition-nationale",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-ikram-moulahi-grp-arp-2014-coalition-nationale",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-mabrouk-hrizi-2-grp-arp-2014-bloc-democrate",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-mohamed-rachdi-bouguerra-grp-arp-2014-coalition-nationale",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-maroua-bouazzi-grp-arp-2014-coalition-nationale",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-ibrahim-ben-said-grp-arp-2014-bloc-democrate",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-mohamed-nejib-torjmane-grp-arp-2014-bloc-al-horra",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-mondher-belhaj-ali-grp-arp-2014-hors-groupe",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-nesrine-laamari-grp-arp-2014-bloc-al-horra",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-rabha-ben-hassine-grp-arp-2014-bloc-al-horra",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-souad-zaouali-grp-arp-2014-coalition-nationale",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-bechir-ben-amor-grp-arp-2014-coalition-nationale",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-imed-daimi-2-grp-arp-2014-bloc-democrate",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-tahar-fdhil-grp-arp-2014-coalition-nationale",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-ali-bennour-grp-arp-2014-coalition-nationale",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-hela-omrane-grp-arp-2014-coalition-nationale",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-lotfi-nabli-grp-arp-2014-coalition-nationale",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-mohamed-jalel-ghedira-grp-arp-2014-coalition-nationale",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-mohamed-saidane-grp-arp-2014-coalition-nationale",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-sameh-bouhaouel-grp-arp-2014-nidaa-tounes",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-lilia-younes-ksibi-grp-arp-2014-coalition-nationale",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-nadia-zangar-grp-arp-2014-bloc-al-horra",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-abdelkader-ben-dhifallah-grp-arp-2014-nidaa-tounes",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-meriem-boujbel-grp-arp-2014-bloc-al-horra",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-walid-jalled-grp-arp-2014-coalition-nationale",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-mohamed-hedi-gueddich-grp-arp-2014-hors-groupe",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-heger-laaroussi-grp-arp-2014-bloc-al-horra",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-ismail-ben-mahmoud-grp-arp-2014-coalition-nationale",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-mohamed-anouar-adhar-grp-arp-2014-coalition-nationale",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-moncef-sellami-grp-arp-2014-coalition-nationale",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-abir-abdelli-grp-arp-2014-coalition-nationale",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-noureddine-mrabti-2-grp-arp-2014-nidaa-tounes",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-salah-bargaoui-grp-arp-2014-bloc-al-horra",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-sana-salhi-grp-arp-2014-coalition-nationale",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-ahmed-saidi-grp-arp-2014-coalition-nationale",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-hafedh-zouari-grp-arp-2014-coalition-nationale",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-zohra-driss-grp-arp-2014-coalition-nationale",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-abderraouf-chebbi-grp-arp-2014-nidaa-tounes",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-jihen-abbadi-grp-arp-2014-bloc-al-horra",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-abdennaceur-chouikh-grp-arp-2014-allegeance-patrie",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-ibtissem-jebabli-grp-arp-2014-coalition-nationale",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-leila-ouled-ali-grp-arp-2014-coalition-nationale",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-olfa-jouini-grp-arp-2014-nidaa-tounes",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-nadhir-ben-ammou-grp-arp-2014-allegeance-patrie",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-bochra-belhaj-hmida-grp-arp-2014-coalition-nationale",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-leila-bougatef-grp-arp-2014-coalition-nationale",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-mustapha-ben-ahmed-grp-arp-2014-coalition-nationale",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-hager-ben-cheikh-ahmed-grp-arp-2014-coalition-nationale",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-sahbi-ben-fraj-grp-arp-2014-coalition-nationale",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-houda-slim-grp-arp-2014-coalition-nationale",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-leila-zahaf-grp-arp-2014-bloc-al-horra",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-naceur-channoufi-grp-arp-2014-coalition-nationale",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-ridha-zghondi-grp-arp-2014-hors-groupe",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-lamia-mlayah-grp-arp-2014-hors-groupe",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-khaoula-ben-aicha-grp-arp-2014-bloc-al-horra",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-marouan-felfel-grp-arp-2014-coalition-nationale",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-mohamed-ghannem-grp-arp-2014-coalition-nationale",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-najia-ben-abdelhafidh-grp-arp-2014-coalition-nationale",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-abderraouf-el-may-grp-arp-2014-coalition-nationale",
+    "start": "?",
+    "end": "2019-11-13",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1573603200000,
+      "endEarliest": 1573603200000,
+      "endLatest": 1573603200000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1573603200000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2019-11-13"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-abdelaziz-kotti-grp-nca-2011-hors-groupe",
+    "start": "?",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-monia-ben-nasr-ayadi-grp-anc-2011-groupe-democratique",
+    "start": "?",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-selma-znaidi-grp-nca-2011-ettakatol",
+    "start": "2014",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": 1388534400000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "year",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "2014",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-nacer-brahmi-grp-nca-2011-hors-groupe",
+    "start": "?",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-ali-bechrifa-grp-anc-2011-groupe-democratique",
+    "start": "?",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-rabii-abdi-grp-nca-2011-wafa",
+    "start": "?",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-hatem-ben-abdallah-kelai-grp-nca-2011-hors-groupe",
+    "start": "?",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-chokri-arfaoui-grp-anc-2011-transition-democratique",
+    "start": "?",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-rabeh-khraifi-grp-nca-2011-hors-groupe",
+    "start": "?",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-dhamir-mannai-grp-nca-2011-hors-groupe",
+    "start": "?",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-romdhane-doghmani-grp-anc-2011-transition-democratique",
+    "start": "?",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-nizar-makhloufi-grp-nca-2011-wafa",
+    "start": "?",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-tahar-hmila-grp-nca-2011-hors-groupe",
+    "start": "?",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-salah-chouaib-grp-nca-2011-hors-groupe",
+    "start": "?",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-abdelmonem-krir-grp-nca-2011-hors-groupe",
+    "start": "?",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-rafik-tlili-grp-nca-2011-wafa",
+    "start": "?",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-farah-ncibi-grp-nca-2011-hors-groupe",
+    "start": "?",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-kamel-saadaoui-grp-nca-2011-hors-groupe",
+    "start": "?",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-rabiaa-najlaoui-grp-nca-2011-hors-groupe",
+    "start": "?",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-el-hasni-badri-grp-nca-2011-hors-groupe",
+    "start": "?",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-hassen-radhouani-grp-nca-2011-hors-groupe",
+    "start": "?",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-mohamed-khila-grp-nca-2011-hors-groupe",
+    "start": "?",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-hanene-sassi-grp-anc-2011-transition-democratique",
+    "start": "?",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-mohamed-karray-jerbi-grp-nca-2011-wafa",
+    "start": "?",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-moez-kammoun-grp-anc-2011-transition-democratique",
+    "start": "?",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-naoufel-ghribi-grp-nca-2011-congres-pour-la-republique",
+    "start": "?",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-mouldi-zidi-grp-nca-2011-hors-groupe",
+    "start": "?",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-saad-bouich-grp-anc-2011-transition-democratique",
+    "start": "?",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-hasna-marsit-grp-nca-2011-hors-groupe",
+    "start": "?",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-selim-ben-abdesselem-grp-nca-2011-hors-groupe",
+    "start": "?",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2014-12-02"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-abdessattar-dhifi-grp-nca-2011-wafa",
+    "start": "?",
+    "end": "2014-12-02",
+    "interval": {
+      "startEarliest": -435024000000,
+      "startLatest": 1417478400000,
+      "endEarliest": 1417478400000,
+      "endLatest": 1417478400000,
+      "startPrecision": "unknown",
+      "endPrecision": "day",
+      "status": "ended",
+      "lastObserved": 1417478400000,
+      "startClamped": true,
+      "raw": {
+        "start": "?",
+        "end": "2014-12-02"
       }
     }
   },

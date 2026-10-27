@@ -1399,3 +1399,752 @@
   institution: onpf
   authority: 35
   sources: [jort-2026-091]
+
+
+# ===========================================================================
+# Governors, the current government and the 2023 Assembly (October 2026).
+# Imported from data/contrib/governors-cabinet-2026-10-19.yaml and
+# data/contrib/arp-2023-members-2026-10-19.yaml after review.
+# ===========================================================================
+
+- id: governor-tunis
+  title_en: Governor of Tunis
+  title_fr: Gouverneur de Tunis
+  title_ar: والي تونس
+  institution: ministry-interior
+  authority: 30
+  region: gov-tunis
+  row: governors
+  sources:
+  - webdo-gouverneurs-2024
+  - frwiki-gouverneurs
+- id: governor-ariana
+  title_en: Governor of Ariana
+  title_fr: Gouverneur de l'Ariana
+  title_ar: والي أريانة
+  institution: ministry-interior
+  authority: 30
+  region: gov-ariana
+  row: governors
+  sources:
+  - webdo-gouverneurs-2024
+  - frwiki-gouverneurs
+- id: governor-ben-arous
+  title_en: Governor of Ben Arous
+  title_fr: Gouverneur de Ben Arous
+  title_ar: والي بن عروس
+  institution: ministry-interior
+  authority: 30
+  region: gov-ben-arous
+  row: governors
+  sources:
+  - webdo-gouverneurs-2024
+  - frwiki-gouverneurs
+- id: governor-manouba
+  title_en: Governor of Manouba
+  title_fr: Gouverneur de la Manouba
+  title_ar: والي منوبة
+  institution: ministry-interior
+  authority: 30
+  region: gov-manouba
+  row: governors
+  sources:
+  - webdo-gouverneurs-2024
+  - frwiki-gouverneurs
+- id: governor-nabeul
+  title_en: Governor of Nabeul
+  title_fr: Gouverneur de Nabeul
+  title_ar: والي نابل
+  institution: ministry-interior
+  authority: 30
+  region: gov-nabeul
+  row: governors
+  sources:
+  - webdo-gouverneurs-2024
+  - frwiki-gouverneurs
+- id: governor-zaghouan
+  title_en: Governor of Zaghouan
+  title_fr: Gouverneur de Zaghouan
+  title_ar: والي زغوان
+  institution: ministry-interior
+  authority: 30
+  region: gov-zaghouan
+  row: governors
+  sources:
+  - webdo-gouverneurs-2024
+  - frwiki-gouverneurs
+- id: governor-bizerte
+  title_en: Governor of Bizerte
+  title_fr: Gouverneur de Bizerte
+  title_ar: والي بنزرت
+  institution: ministry-interior
+  authority: 30
+  region: gov-bizerte
+  row: governors
+  sources:
+  - webdo-gouverneurs-2024
+  - frwiki-gouverneurs
+- id: governor-beja
+  title_en: Governor of Béja
+  title_fr: Gouverneur de Béja
+  title_ar: والي باجة
+  institution: ministry-interior
+  authority: 30
+  region: gov-beja
+  row: governors
+  sources:
+  - webdo-gouverneurs-2024
+  - frwiki-gouverneurs
+- id: governor-jendouba
+  title_en: Governor of Jendouba
+  title_fr: Gouverneur de Jendouba
+  title_ar: والي جندوبة
+  institution: ministry-interior
+  authority: 30
+  region: gov-jendouba
+  row: governors
+  sources:
+  - webdo-jendouba-2025
+  - frwiki-gouverneurs
+- id: governor-kef
+  title_en: Governor of Kef
+  title_fr: Gouverneur du Kef
+  title_ar: والي الكاف
+  institution: ministry-interior
+  authority: 30
+  region: gov-kef
+  row: governors
+  sources:
+  - webdo-gouverneurs-2024
+  - frwiki-gouverneurs
+- id: governor-siliana
+  title_en: Governor of Siliana
+  title_fr: Gouverneur de Siliana
+  title_ar: والي سليانة
+  institution: ministry-interior
+  authority: 30
+  region: gov-siliana
+  row: governors
+  sources:
+  - webdo-gouverneurs-2024
+  - frwiki-gouverneurs
+- id: governor-kairouan
+  title_en: Governor of Kairouan
+  title_fr: Gouverneur de Kairouan
+  title_ar: والي القيروان
+  institution: ministry-interior
+  authority: 30
+  region: gov-kairouan
+  row: governors
+  sources:
+  - webdo-gouverneurs-2024
+  - frwiki-gouverneurs
+- id: governor-kasserine
+  title_en: Governor of Kasserine
+  title_fr: Gouverneur de Kasserine
+  title_ar: والي القصرين
+  institution: ministry-interior
+  authority: 30
+  region: gov-kasserine
+  row: governors
+  sources:
+  - webdo-gouverneurs-2024
+  - frwiki-gouverneurs
+- id: governor-sidi-bouzid
+  title_en: Governor of Sidi Bouzid
+  title_fr: Gouverneur de Sidi Bouzid
+  title_ar: والي سيدي بوزيد
+  institution: ministry-interior
+  authority: 30
+  region: gov-sidi-bouzid
+  row: governors
+  sources:
+  - webdo-gouverneurs-2024
+  - frwiki-gouverneurs
+- id: governor-sousse
+  title_en: Governor of Sousse
+  title_fr: Gouverneur de Sousse
+  title_ar: والي سوسة
+  institution: ministry-interior
+  authority: 30
+  region: gov-sousse
+  row: governors
+  sources:
+  - webdo-gouverneurs-2024
+  - frwiki-gouverneurs
+- id: governor-monastir
+  title_en: Governor of Monastir
+  title_fr: Gouverneur de Monastir
+  title_ar: والي المنستير
+  institution: ministry-interior
+  authority: 30
+  region: gov-monastir
+  row: governors
+  sources:
+  - webdo-gouverneurs-2024
+  - frwiki-gouverneurs
+- id: governor-mahdia
+  title_en: Governor of Mahdia
+  title_fr: Gouverneur de Mahdia
+  title_ar: والي المهدية
+  institution: ministry-interior
+  authority: 30
+  region: gov-mahdia
+  row: governors
+  sources:
+  - webdo-gouverneurs-2024
+  - frwiki-gouverneurs
+- id: governor-sfax
+  title_en: Governor of Sfax
+  title_fr: Gouverneur de Sfax
+  title_ar: والي صفاقس
+  institution: ministry-interior
+  authority: 30
+  region: gov-sfax
+  row: governors
+  sources:
+  - webdo-gouverneurs-2024
+  - frwiki-gouverneurs
+- id: governor-gafsa
+  title_en: Governor of Gafsa
+  title_fr: Gouverneur de Gafsa
+  title_ar: والي قفصة
+  institution: ministry-interior
+  authority: 30
+  region: gov-gafsa
+  row: governors
+  sources:
+  - webdo-gouverneurs-2024
+  - frwiki-gouverneurs
+- id: governor-tozeur
+  title_en: Governor of Tozeur
+  title_fr: Gouverneur de Tozeur
+  title_ar: والي توزر
+  institution: ministry-interior
+  authority: 30
+  region: gov-tozeur
+  row: governors
+  sources:
+  - webdo-gouverneurs-2024
+  - frwiki-gouverneurs
+- id: governor-kebili
+  title_en: Governor of Kébili
+  title_fr: Gouverneur de Kébili
+  title_ar: والي قبلي
+  institution: ministry-interior
+  authority: 30
+  region: gov-kebili
+  row: governors
+  sources:
+  - webdo-gouverneurs-2024
+  - frwiki-gouverneurs
+- id: governor-gabes
+  title_en: Governor of Gabès
+  title_fr: Gouverneur de Gabès
+  title_ar: والي قابس
+  institution: ministry-interior
+  authority: 30
+  region: gov-gabes
+  row: governors
+  sources:
+  - webdo-gouverneurs-2024
+  - frwiki-gouverneurs
+- id: governor-medenine
+  title_en: Governor of Médenine
+  title_fr: Gouverneur de Médenine
+  title_ar: والي مدنين
+  institution: ministry-interior
+  authority: 30
+  region: gov-medenine
+  row: governors
+  sources:
+  - webdo-gouverneurs-2024
+  - frwiki-gouverneurs
+- id: governor-tataouine
+  title_en: Governor of Tataouine
+  title_fr: Gouverneur de Tataouine
+  title_ar: والي تطاوين
+  institution: ministry-interior
+  authority: 30
+  region: gov-tataouine
+  row: governors
+  sources:
+  - webdo-gouverneurs-2024
+  - frwiki-gouverneurs
+- id: economy-minister
+  title_en: Minister of Economy and Planning
+  title_fr: Ministre de l'Économie et de la Planification
+  title_ar: وزير الاقتصاد والتخطيط
+  institution: head-of-government
+  authority: 45
+  sources:
+  - jort-2024-465-gov
+  - pm-gov-composition-2026
+- id: social-affairs-minister
+  title_en: Minister of Social Affairs
+  title_fr: Ministre des Affaires Sociales
+  title_ar: وزير الشؤون الاجتماعية
+  institution: head-of-government
+  authority: 40
+  sources:
+  - jort-2024-465-gov
+  - pm-gov-composition-2026
+- id: industry-minister
+  title_en: Minister of Industry, Mines and Energy
+  title_fr: Ministre de l'Industrie, des Mines et de l'Énergie
+  title_ar: وزير الصناعة والمناجم والطاقة
+  institution: head-of-government
+  authority: 42
+  sources:
+  - jort-2026-043-juridoc
+  - lapresse-thabet-2026
+- id: environment-minister
+  title_en: Minister of the Environment
+  title_fr: Ministre de l'Environnement
+  title_ar: وزير البيئة
+  institution: head-of-government
+  authority: 33
+  sources:
+  - jort-2024-465-gov
+  - pm-gov-composition-2026
+- id: transport-minister
+  title_en: Minister of Transport
+  title_fr: Ministre du Transport
+  title_ar: وزير النقل
+  institution: head-of-government
+  authority: 35
+  sources:
+  - jort-2024-465-gov
+  - pm-gov-composition-2026
+- id: ict-minister
+  title_en: Minister of Communication Technologies
+  title_fr: Ministre des Technologies de la Communication
+  title_ar: وزير تكنولوجيات الاتصال
+  institution: head-of-government
+  authority: 35
+  sources:
+  - jort-2024-465-gov
+  - pm-gov-composition-2026
+- id: education-minister
+  title_en: Minister of Education
+  title_fr: Ministre de l'Éducation
+  title_ar: وزير التربية
+  institution: head-of-government
+  authority: 45
+  sources:
+  - jort-2024-465-gov
+  - pm-gov-composition-2026
+- id: higher-education-minister
+  title_en: Minister of Higher Education and Scientific Research
+  title_fr: Ministre de l'Enseignement Supérieur et de la Recherche Scientifique
+  title_ar: وزير التعليم العالي والبحث العلمي
+  institution: head-of-government
+  authority: 40
+  sources:
+  - jort-2024-465-gov
+  - pm-gov-composition-2026
+- id: youth-sports-minister
+  title_en: Minister of Youth and Sports
+  title_fr: Ministre de la Jeunesse et des Sports
+  title_ar: وزير الشباب والرياضة
+  institution: head-of-government
+  authority: 30
+  sources:
+  - jort-2024-465-gov
+  - pm-gov-composition-2026
+- id: employment-minister
+  title_en: Minister of Employment and Vocational Training
+  title_fr: Ministre de l'Emploi et de la Formation Professionnelle
+  title_ar: وزير التشغيل والتكوين المهني
+  institution: head-of-government
+  authority: 38
+  sources:
+  - jort-2024-465-gov
+  - pm-gov-composition-2026
+- id: family-women-minister
+  title_en: Minister of the Family, Women, Children and the Elderly
+  title_fr: Ministre de la Famille, de la Femme, de l'Enfance et des Personnes Âgées
+  title_ar: وزيرة الأسرة والمرأة والطفولة وكبار السن
+  institution: head-of-government
+  authority: 30
+  sources:
+  - jort-2024-465-gov
+  - pm-gov-composition-2026
+- id: culture-minister
+  title_en: Minister of Cultural Affairs
+  title_fr: Ministre des Affaires Culturelles
+  title_ar: وزيرة الشؤون الثقافية
+  institution: head-of-government
+  authority: 30
+  sources:
+  - jort-2024-465-gov
+  - pm-gov-composition-2026
+- id: secretary-of-state-interior
+  title_en: Secretary of State to the Minister of the Interior
+  title_fr: Secrétaire d'État auprès du ministre de l'Intérieur
+  institution: ministry-interior
+  authority: 22
+  sources:
+  - pm-gov-composition-2026
+- id: secretary-of-state-foreign
+  title_en: Secretary of State to the Minister of Foreign Affairs
+  title_fr: Secrétaire d'État auprès du ministre des Affaires étrangères
+  title_ar: كاتب دولة لدى وزير الشؤون الخارجية
+  institution: head-of-government
+  authority: 22
+  sources:
+  - jort-2024-465-gov
+  - pm-gov-composition-2026
+- id: secretary-of-state-agriculture-water
+  title_en: Secretary of State to the Minister of Agriculture, in charge of water
+  title_fr: Secrétaire d'État auprès du ministre de l'Agriculture, chargé des ressources hydriques
+  title_ar: كاتب دولة لدى وزير الفلاحة مكلفا بالمياه
+  institution: head-of-government
+  authority: 20
+  sources:
+  - jort-2024-465-gov
+  - pm-gov-composition-2026
+- id: secretary-of-state-industry-transition
+  title_en: Secretary of State to the Minister of Industry, in charge of the energy transition
+  title_fr: Secrétaire d'État auprès du ministre de l'Industrie, chargé de la transition énergétique
+  institution: head-of-government
+  authority: 20
+  sources:
+  - pm-gov-composition-2026
+- id: secretary-of-state-employment-communities
+  title_en: Secretary of State to the Minister of Employment, in charge of community companies
+  title_fr: Secrétaire d'État auprès du ministre de l'Emploi, chargée des sociétés communautaires
+  title_ar: كاتبة دولة لدى وزير التشغيل والتكوين المهني مكلفة بالشركات الأهلية
+  institution: head-of-government
+  authority: 20
+  sources:
+  - jort-2024-465-gov
+  - pm-gov-composition-2026
+- id: arp-2023-member
+  title_en: Member of the Assembly of the Representatives of the People (2023 term)
+  title_fr: Député à l'Assemblée des représentants du peuple
+  title_ar: نائب بمجلس نواب الشعب
+  institution: arp-2023
+  authority: 20
+  seats: 161
+  sources:
+  - arp-deputies-list
+  - isie-2022-legislative
+  - lapresse-arp-inaugurale-2023-03-14
+  - universnews-arp-composition-2023-02-26
+
+
+# ===========================================================================
+# Parliaments 2011-2019 and governments 2011-2025, imported from data/contrib after review.
+# ===========================================================================
+
+- id: nca-2011-member
+  title_en: Member of the National Constituent Assembly (2011-2014)
+  title_fr: Membre de l’Assemblée nationale constituante (2011-2014)
+  title_ar: عضو المجلس الوطني التأسيسي (2011-2014)
+  institution: nca-2011
+  authority: 20
+  seats: 217
+  sources:
+  - frwiki-nca-list-2011
+  - arwiki-nca-list-2011
+  - frwiki-nca-2011
+- id: administrative-reform-minister
+  title_en: Minister in charge of Administrative Reform
+  title_fr: Ministre chargé de la Réforme administrative
+  institution: head-of-government
+  authority: 28
+  sources:
+  - frwiki-gov-bouden-hachani-madouri-zaafrani
+- id: development-minister
+  title_en: Minister of Development and Regional Planning
+  title_fr: Ministre du Développement et de la Planification régionale
+  institution: head-of-government
+  authority: 40
+  sources:
+  - frwiki-gov-bouden-hachani-madouri-zaafrani
+- id: economic-affairs-minister
+  title_en: Minister in charge of Economic Affairs and Coordination
+  title_fr: Ministre chargé de la Coordination et des Affaires économiques
+  institution: head-of-government
+  authority: 35
+  sources:
+  - frwiki-gov-bouden-hachani-madouri-zaafrani
+- id: government-secretariat-minister
+  title_en: Minister in charge of the General Secretariat of the Government
+  title_fr: Ministre auprès du chef du gouvernement chargé du secrétariat général du gouvernement
+  institution: head-of-government
+  authority: 28
+  sources:
+  - frwiki-gov-bouden-hachani-madouri-zaafrani
+- id: investment-minister
+  title_en: Minister of Investment and International Cooperation
+  title_fr: Ministre de l'Investissement et de la Coopération internationale
+  institution: head-of-government
+  authority: 40
+  sources:
+  - frwiki-gov-bouden-hachani-madouri-zaafrani
+- id: local-affairs-minister
+  title_en: Minister of Local Affairs
+  title_fr: Ministre des Affaires locales
+  institution: head-of-government
+  authority: 35
+  sources:
+  - frwiki-gov-bouden-hachani-madouri-zaafrani
+- id: major-projects-minister
+  title_en: Minister in charge of Major National Projects
+  title_fr: Ministre chargée des Grands projets nationaux
+  institution: head-of-government
+  authority: 28
+  sources:
+  - frwiki-gov-bouden-hachani-madouri-zaafrani
+- id: migration-minister
+  title_en: Minister in charge of Migration and Tunisians Abroad
+  title_fr: Ministre chargé de l'Émigration et des Tunisiens à l'étranger
+  institution: head-of-government
+  authority: 28
+  sources:
+  - frwiki-gov-bouden-hachani-madouri-zaafrani
+- id: minister-delegate
+  title_en: Minister Delegate
+  title_fr: Ministre délégué
+  institution: head-of-government
+  authority: 25
+  sources:
+  - frwiki-gov-bouden-hachani-madouri-zaafrani
+- id: planning-minister
+  title_en: Minister of Planning and International Cooperation
+  title_fr: Ministre de la Planification et de la Coopération internationale
+  institution: head-of-government
+  authority: 38
+  sources:
+  - frwiki-gov-bouden-hachani-madouri-zaafrani
+- id: public-service-minister
+  title_en: Minister of Public Service and Governance
+  title_fr: Ministre de la Fonction publique et de la Gouvernance
+  institution: head-of-government
+  authority: 35
+  sources:
+  - frwiki-gov-bouden-hachani-madouri-zaafrani
+- id: relations-parliament-minister
+  title_en: Minister Delegate in charge of Relations with Parliament
+  title_fr: Ministre auprès du chef du gouvernement chargé des Relations avec le Parlement
+  institution: head-of-government
+  authority: 30
+  sources:
+  - frwiki-gov-bouden-hachani-madouri-zaafrani
+- id: security-minister
+  title_en: Minister Delegate in charge of National Security
+  title_fr: Ministre délégué chargé de la Sécurité nationale
+  institution: head-of-government
+  authority: 30
+  sources:
+  - frwiki-gov-bouden-hachani-madouri-zaafrani
+- id: social-economy-minister
+  title_en: Minister in charge of the Social and Solidarity Economy
+  title_fr: Ministre chargé de l'Économie sociale et solidaire
+  institution: head-of-government
+  authority: 25
+  sources:
+  - frwiki-gov-bouden-hachani-madouri-zaafrani
+- id: arp-2019-member
+  title_en: Member of the Assembly of the Representatives of the People (2019 term)
+  title_fr: Député à l'Assemblée des représentants du peuple
+  title_ar: نائب بمجلس نواب الشعب
+  institution: arp-2019
+  authority: 20
+  seats: 217
+  sources:
+  - frwiki-arp-2019-legislature
+  - frwiki-arp-2019-members
+- id: arp-2014-member
+  title_en: Member of the Assembly of the Representatives of the People (2014 term)
+  title_fr: Député à l'Assemblée des représentants du peuple
+  title_ar: نائب بمجلس نواب الشعب
+  institution: arp-2014
+  authority: 20
+  seats: 217
+  sources:
+  - frwiki-arp-2014-legislature
+  - frwiki-arp-2014-members
+- id: communication-minister
+  title_en: Minister of Communication
+  title_fr: Ministre de la Communication
+  institution: head-of-government
+  authority: 40
+- id: state-minister
+  title_en: Minister of State
+  title_fr: Ministre d'État
+  institution: head-of-government
+  authority: 50
+- id: anc-1956-member
+  title_en: Member of the National Constituent Assembly
+  title_fr: 'Membre : Assemblée nationale constituante'
+  institution: anc-1956
+  authority: 20
+  seats: 98
+  sources:
+  - frwiki-anc-1956
+  - enwiki-speakers
+- id: cdd-i-member
+  title_en: Member of the National Assembly (Chamber of Deputies, 1st legislature)
+  title_fr: 'Membre : Assemblée nationale (Chambre des députés, Ire législature)'
+  institution: cdd-i
+  authority: 20
+  seats: 90
+  sources:
+  - enwiki-election-1959
+  - enwiki-speakers
+  - frwiki-cdd
+- id: cdd-ii-member
+  title_en: Member of the National Assembly (Chamber of Deputies, 2nd legislature)
+  title_fr: 'Membre : Assemblée nationale (Chambre des députés, IIe législature)'
+  institution: cdd-ii
+  authority: 20
+  seats: 101
+  sources:
+  - enwiki-election-1964
+  - enwiki-speakers
+  - frwiki-cdd
+- id: cdd-iii-member
+  title_en: Member of the National Assembly (Chamber of Deputies, 3rd legislature)
+  title_fr: 'Membre : Assemblée nationale (Chambre des députés, IIIe législature)'
+  institution: cdd-iii
+  authority: 20
+  seats: 101
+  sources:
+  - enwiki-election-1969
+  - enwiki-speakers
+  - frwiki-cdd
+- id: cdd-iv-member
+  title_en: Member of the National Assembly (Chamber of Deputies, 4th legislature)
+  title_fr: 'Membre : Assemblée nationale (Chambre des députés, IVe législature)'
+  institution: cdd-iv
+  authority: 20
+  seats: 112
+  sources:
+  - enwiki-election-1974
+  - enwiki-speakers
+  - frwiki-cdd
+- id: cdd-v-member
+  title_en: Member of the National Assembly (Chamber of Deputies, 5th legislature)
+  title_fr: 'Membre : Assemblée nationale (Chambre des députés, Ve législature)'
+  institution: cdd-v
+  authority: 20
+  seats: 121
+  sources:
+  - frwiki-cdd
+  - enwiki-speakers
+- id: cdd-vi-member
+  title_en: Member of the National Assembly (Chamber of Deputies, 6th legislature)
+  title_fr: 'Membre : Assemblée nationale (Chambre des députés, VIe législature)'
+  institution: cdd-vi
+  authority: 20
+  seats: 136
+  sources:
+  - frwiki-cdd
+  - enwiki-speakers
+- id: cdd-vii-member
+  title_en: Member of the Chamber of Deputies (7th legislature)
+  title_fr: 'Membre : Chambre des députés (VIIe législature)'
+  institution: cdd-vii
+  authority: 20
+  seats: 125
+  sources:
+  - frwiki-cdd-vii
+  - frwiki-cdd
+  - enwiki-speakers
+- id: cdd-viii-member
+  title_en: Member of the Chamber of Deputies (8th legislature)
+  title_fr: 'Membre : Chambre des députés (VIIIe législature)'
+  institution: cdd-viii
+  authority: 20
+  seats: 141
+  sources:
+  - frwiki-cdd-viii
+  - frwiki-cdd
+  - enwiki-speakers
+- id: cdd-ix-member
+  title_en: Member of the Chamber of Deputies (9th legislature)
+  title_fr: 'Membre : Chambre des députés (IXe législature)'
+  institution: cdd-ix
+  authority: 20
+  seats: 163
+  sources:
+  - frwiki-cdd-ix
+  - frwiki-cdd
+  - enwiki-speakers
+- id: cdd-x-member
+  title_en: Member of the Chamber of Deputies (10th legislature)
+  title_fr: 'Membre : Chambre des députés (Xe législature)'
+  institution: cdd-x
+  authority: 20
+  seats: 182
+  sources:
+  - frwiki-cdd-x
+  - frwiki-cdd
+  - enwiki-speakers
+- id: cdd-xi-member
+  title_en: Member of the Chamber of Deputies (11th legislature)
+  title_fr: 'Membre : Chambre des députés (XIe législature)'
+  institution: cdd-xi
+  authority: 20
+  seats: 189
+  sources:
+  - frwiki-cdd-xi
+  - frwiki-cdd
+  - enwiki-speakers
+- id: cdd-xii-member
+  title_en: Member of the Chamber of Deputies (12th legislature)
+  title_fr: 'Membre : Chambre des députés (XIIe législature)'
+  institution: cdd-xii
+  authority: 20
+  seats: 214
+  sources:
+  - frwiki-cdd-xii
+  - frwiki-cdd
+  - frwiki-deputes-xii
+  - enwiki-speakers
+- id: chambre-conseillers-2005-member
+  title_en: Member of the Chamber of Advisors
+  title_fr: 'Membre : Chambre des conseillers'
+  institution: chambre-conseillers-2005
+  authority: 20
+  seats: 126
+  sources:
+  - frwiki-conseillers
+  - enwiki-speakers
+- id: chambre-conseillers-president
+  title_en: President of the Chamber of Advisors
+  title_fr: Président de la Chambre des conseillers
+  institution: chambre-conseillers-2005
+  authority: 45
+  sources:
+  - frwiki-conseillers
+  - enwiki-speakers
+- id: cnrd-member
+  title_en: Member of the National Council of Regions and Districts
+  title_fr: Membre du Conseil national des régions et des districts
+  title_ar: عضو المجلس الوطني للجهات والأقاليم
+  institution: cnrd
+  authority: 20
+  seats: 77
+  sources:
+  - cnrd-portal-members
+  - presidential-order-196-2024
+- id: cnrd-first-vice-president
+  title_en: First Vice-President of the National Council of Regions and Districts
+  title_fr: Premier vice-président du Conseil national des régions et des districts
+  institution: cnrd
+  authority: 35
+  sources:
+  - fr-wiki-cnrd
+  - en-wiki-cnrd
+- id: cnrd-second-vice-president
+  title_en: Second Vice-President of the National Council of Regions and Districts
+  title_fr: Deuxième vice-président du Conseil national des régions et des districts
+  institution: cnrd
+  authority: 35
+  sources:
+  - fr-wiki-cnrd
+  - en-wiki-cnrd

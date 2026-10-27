@@ -487,7 +487,9 @@ export const InstitutionType = z.enum([
 	'sovereign-fund',
 	'cooperative',
 	'utility',
-	'port-authority'
+	'port-authority',
+	// a caucus inside one legislative term; its parent is the term
+	'parliamentary-group'
 ]);
 
 export const RelationshipType = z.enum([
@@ -667,6 +669,12 @@ export const InstitutionSchema = withClaimEnvelope(
 	name_fr: z.string().optional(),
 	name_ar: z.string().optional(),
 	abbr: z.string().optional(),
+	/**
+	 * How the seats of a legislative term divide between parties where the
+	 * members are not named: the party's institution id and its seat count.
+	 * The members' own records replace it wherever they exist.
+	 */
+	seat_split: z.array(z.strictObject({ party: slug, seats: z.number().int().positive() })).optional(),
 	aliases: z.array(z.string()).default([]),
 	notes: z.array(z.string()).default([]),
 	...translatable('notes', 'list'),
@@ -730,6 +738,18 @@ export const RoleSchema = z.strictObject({
 	 * pretending the ranking is objective.
 	 */
 	authority: z.number().min(0).max(100),
+	/**
+	 * The region or governorate the office covers, for territorial offices such
+	 * as a governor. One role per governorate keeps successions derivable per
+	 * territory with no extra machinery. Must resolve in regions.yaml.
+	 */
+	region: slug.optional(),
+	/**
+	 * Concurrent seats in a collegial body (a legislative term). Holders of a
+	 * seated role do not succeed one another, so no succession chain is derived
+	 * for it: 161 members sitting at once is not 160 overlaps.
+	 */
+	seats: z.number().int().min(2).optional(),
 	/** Chronicle row grouping; defaults to the institution. */
 	row: slug.optional(),
 	summary: z.string().optional(),
@@ -805,6 +825,21 @@ export const PositionSchema = withClaimEnvelope(
 	end: dateToken.optional(),
 	/** Interim/acting appointment, rendered differently on the Chronicle. */
 	acting: z.boolean().default(false),
+	/**
+	 * The seat this position fills, for a role with `seats`. `id` names the
+	 * constituency within the term; `region` places it on the map. An abroad
+	 * constituency carries no region.
+	 */
+	constituency: z
+		.strictObject({
+			id: slug,
+			name_en: z.string().min(2),
+			name_fr: z.string().optional(),
+			name_ar: z.string().optional(),
+			region: slug.optional(),
+			abroad: z.boolean().default(false)
+		})
+		.optional(),
 	/** Explicit predecessor override. Otherwise derived from the role's sequence. */
 	predecessor: slug.nullable().optional(),
 	/** This position supersedes another record of the same kind (spec §13.4). */
@@ -1770,6 +1805,12 @@ export const RegionSchema = z.strictObject({
 	parent: slug.optional(),
 	/** Official code where one exists (governorates: ISO 3166-2:TN, e.g. "TN-11"). */
 	code: z.string().optional(),
+	/**
+	 * When the unit came into existence. Governorates were created over decades
+	 * (14 in 1956, 24 by 2000), so an office over one cannot predate this date
+	 * and the map shows the territory as not yet a governorate before it.
+	 */
+	created: dateToken.optional(),
 	confidence: Confidence.default('A'),
 	verification: Verification.default('verified'),
 	sources: z.array(slug).min(1, 'every region needs at least one source'),

@@ -14049,3 +14049,3139 @@
     Notice of a tender, not an award: no price, no value, no supplier and no
     advertisement date. The body is named "Office tunisien des céréales"; the
     graph's record for the grain authority is "Office des Céréales" (OC).
+
+# ===========================================================================
+# Governors, the current government and the 2023 Assembly (October 2026).
+# Imported from data/contrib/governors-cabinet-2026-10-19.yaml and
+# data/contrib/arp-2023-members-2026-10-19.yaml after review.
+# ===========================================================================
+
+- id: pm-gov-composition-2026
+  title: Composition du gouvernement
+  publisher: Portail de la Présidence du Gouvernement (Tunisie)
+  date: '2026-10-16'
+  url: https://pm.gov.tn/fr/membres-du-gouvernement
+  tier: 1
+  lang: fr
+  excerpt: '"Sarra Zaafrani Zenzri — Cheffe du Gouvernement — Depuis 21.03.2025"; "Leila Jaffel — Ministre
+    de la justice — Depuis 11.10.2021"; "Khaled Ennouri — Ministre de l''Intérieur — Depuis 25.05.2024";
+    "Samir Abdelhafidh — Ministre de l''économie et de la planification — Depuis 24.01.2024"; "Slah Zouari
+    — Chargé de la gestion du ministère de l''Industrie, des Mines et de l''Energie — Depuis 27.04.2026";
+    "Sofiane Ben Sadek — Secrétaire d''État auprès du Ministre de l''Intérieur — Depuis 25.05.2024"; "Wael
+    Chouchane — Secrétaire d''État auprès de la ministre de l''Industrie, des Mines et de l''Énergie,
+    chargé de la Transition énergétique — Depuis 24.01.2024"; "Hasna Jiballah — Secrétaire d''Etat, auprès
+    du ministre de l''Emploi… — Depuis 25.08.2024". Page footer: "Dernière mise à jour : الجمعة 16 أكتوبر
+    2026" (updated 16 October 2026).'
+  note: Three paginated views read (base, ?page=1, ?page=2); the roster has 25 entries incl. the head
+    of government. The portal date column is a "depuis" (since) date, not a decree number.
+- id: jort-2024-465-gov
+  title: Décret n° 2024-465 du 25 août 2024, portant nomination des membres du Gouvernement
+  publisher: JORT n° 104 du 26 août 2024 (texte via DCAF legislation-securite.tn)
+  date: '2024-08-25'
+  url: https://legislation-securite.tn/latest-laws/decret-n-2024-465-du-25-aout-2024-portant-nomination-des-membres-du-gouvernement/
+  tier: 1
+  lang: fr
+  excerpt: '"Article premier – Sont nommés membres du Gouvernement Mesdames et Messieurs: Khaled Shili
+    : ministre de la défense nationale; Mohamed Ali Nafti : ministre des affaires étrangères, de la migration
+    et des tunisiens à l''étranger; Mustapha Ferjani : ministre de la santé; Samir Abdelhafidh : ministre
+    de l''économie et de la planification; Issam Lahmer : ministre des affaires sociales; Samir Abid :
+    ministre du commerce et du développement des exportations; Ezzeddine Ben Cheikh : ministre de l''agriculture,
+    des ressources hydrauliques et de la pêche maritime; Noureddine Nouri : ministre de l''éducation;
+    Mondher Belaid : ministre de l''enseignement supérieur et de la recherche scientifique; Sadok Morali
+    : ministre de la jeunesse et des sports; Sofiene Hemissi : ministre des technologies de la communication;
+    Rachid Amri : ministre des transports; Wajdi Hedhili : ministre des domaines de l''Etat et des affaires
+    foncières; Habib Abid : ministre de l''environnement; Sofiane Tekaya : ministre du tourisme; Ahmed
+    Bouhali : ministre des affaires religieuses; Asma Jabri : ministre de la famille, de la femme, de
+    l''enfance et des personnes âgées; Amina Srarfi : ministre des affaires culturelles; Riadh Chaoued
+    : ministre de l''emploi et de la formation professionnelle; Mohamed Ben Ayed : secrétaire d''Etat
+    auprès du ministre des affaires étrangères…; Hamadi Habaib : secrétaire d''Etat auprès du ministre
+    de l''agriculture… chargé des ressources hydriques; Hasna Jib Allah : secrétaire d''Etat auprès du
+    ministre de l''emploi… chargée des sociétés citoyennes." FR and AR texts both read; "Date du texte:
+    2024-08-25", "N° JORT: 104", "Date du JORT: 2024-08-26".'
+- id: jort-2026-043-juridoc
+  title: 'Journal officiel n° 43 du 28 avril 2026 (sommaire): Décret n° 2026-59 portant cessation de fonctions
+    d''un membre du Gouvernement; Décret n° 2026-60 chargeant le ministre de l''équipement et de l''habitat
+    à titre temporaire de diriger le ministère de l''industrie, des mines et de l''énergie'
+  publisher: JORT n° 43 du 28 avril 2026 (sommaire via Juridoc)
+  date: '2026-04-28'
+  url: https://www.juridoc.tn/fr/document/journal-officiel-de-la-republique-tunisienne-n--43-du-28-avril-2026/128594
+  tier: 1
+  lang: fr
+  excerpt: '"Présidence de la République — Décret n° 2026-59 du 27 avril 2026, portant cessation de fonctions
+    d''un membre du Gouvernement; Décret n° 2026-60 du 27 avril 2026, chargeant le ministre de l''équipement
+    et de l''habitat à titre temporaire de diriger le ministère de l''industrie, des mines et de l''énergie."
+    Arabic sommaire alongside: "أمـر عـدد 59 لسنة 2026 مؤرخ في 27 أفريل 2026 يتعلق بإنهاء مهام عضو بالحكومة"
+    / "أمـر عـدد 60 … بتكليف وزير التجهيز والإسكان بتسيير وزارة الصناعة والمناجم والطاقة بصفة وقتية".'
+  note: The sommaire names the act but not the person; the person is named by La Presse (lapresse-thabet-2026).
+- id: lapresse-thabet-2026
+  title: Fatma Thabet Chiboub relevée de ses fonctions
+  publisher: La Presse de Tunisie
+  date: '2026-04-28'
+  url: https://www.lapresse.tn/2026/04/28/fatma-thabet-chiboub-relevee-de-ses-fonctions/
+  tier: 3
+  lang: fr
+  excerpt: '"Le président de la République, Kaïs Saïed, a décidé de mettre fin aux fonctions de la ministre
+    de l''Industrie, des Mines et de l''Énergie, Fatma Thabet Chiboub… L''actuel ministre de l''Équipement
+    et de l''Habitat, Salah Zouari, a été chargé de la gestion du département par intérim, a précisé la
+    même source."'
+- id: webdo-gouverneurs-2024
+  title: 'Tunisie : Mouvement dans le corps des gouverneurs'
+  publisher: Webdo
+  date: '2024-09-09'
+  url: https://www.webdo.tn/fr/actualite/national/tunisie-mouvement-dans-le-corps-des-gouverneurs/216260/
+  tier: 3
+  lang: fr
+  excerpt: '"Le Président de la République, Kais Saied, a procédé dimanche 8 septembre 2024, à un mouvement
+    dans le corps des gouverneurs comme suit : Imed Boukhris : Gouverneur de Tunis; Walid Sandid : Gouverneur
+    de l''Ariana; Wissam Meraïdi : Gouverneur de Ben Arous, en remplacement de Ezzeddine Chelbi; Mahmoud
+    Chouaib : Gouverneur de La Manouba, en remplacement de Mohamed Cheikh Rouhou; Hana Chouchani : Gouverneure
+    de Nabeul, en remplacement de Sabah Mallak; Salem Ben Yacoub : Gouverneur de Bizerte, en remplacement
+    de Samir Abdellaoui; Karim Beranji : Gouverneur de Zaghouan, en remplacement de Mohamed Laâch; Ahmed
+    Ben Kharrat : Gouverneur de Béja; Hichem Hassoumi : Gouverneur de Jendouba, en remplacement de Samir
+    Kouka; Walid Kabbia : Gouverneur du Kef; Khaled Ouaari : Gouverneur de Siliana, en remplacement de
+    Walid Abbassi; Dhaker Bargaoui : Gouverneur de Kairouan; Sofiane Tanfouri : Gouverneur de Sousse,
+    en remplacement de Nabil Ferjani; Issa Moussa : Gouverneur de Monastir; Anis Laadhari : Gouverneur
+    de Mahdia; Mohamed Hajri : Gouverneur de Sfax; Faycel Bessaoudi : Gouverneur de Sidi Bouzid, en remplacement
+    de Abdelhalim Hamdi; Zied Trabelsi : Gouverneur de Kasserine, en remplacement de Ridha Rkebani; Slim
+    Frouja : Gouverneur de Gafsa, en remplacement de Nader Hamdouni; Radhouane Nsibi : Gouverneur de Gabès;
+    Chahine Zribi : Gouverneur de Tozeur, en remplacement de Aymen Bejaoui; Moez Laabidi : Gouverneur
+    de Kébili, en remplacement de Mohamed Taieb Khalifi; Walid Tabboubi : Gouverneur de Médenine, en remplacement
+    de Saïd Ben Zayed; Amir Gabsi : Gouverneur de Tataouine, en remplacement de Hafedh Fitouri."'
+- id: webdo-ben-arous-2025
+  title: Kaïs Saïed remplace le gouverneur de Ben Arous après une visite inopinée
+  publisher: Webdo
+  date: '2025-05-12'
+  url: https://www.webdo.tn/fr/actualite/national/kais-saied-remplace-le-gouverneur-de-ben-arous-apres-une-visite-inopinee/221901/
+  tier: 3
+  lang: fr
+  excerpt: '"Le président de la République, Kaïs Saïed, a opéré un changement à la tête du gouvernorat
+    de Ben Arous, à la suite d''une visite non annoncée… dans la soirée du dimanche 11 mai 2025. Cette
+    tournée… a conduit à la révocation du gouverneur en poste, Wissem Mraidi… Abdelhamid Boukadida, haut
+    cadre de l''administration tunisienne, a été nommé pour prendre la relève… Wissem Mraidi occupait
+    cette fonction depuis le 8 septembre 2024."'
+- id: webdo-jendouba-2025
+  title: 'Tunisie : Kais Saied démet Hichem Hsoumi et nomme Taieb Dridi gouverneur de Jendouba'
+  publisher: Webdo
+  date: '2025-05-27'
+  url: https://www.webdo.tn/fr/actualite/national/tunisie-kais-saied-demet-hichem-hsoumi-et-nomme-taieb-dridi-gouverneur-de-jendouba/222209/
+  tier: 3
+  lang: fr
+  excerpt: '"Dans un communiqué publié ce matin, la présidence de la République a annoncé la nomination
+    de Taieb Dridi au poste de gouverneur de Jendouba, en remplacement de Hichem Hsoumi, qui était en
+    poste depuis le 8 septembre 2024."'
+- id: frwiki-gouverneurs
+  title: Liste des dirigeants des gouvernorats tunisiens
+  publisher: Wikipédia (fr)
+  date: '2025-08-13'
+  url: https://fr.wikipedia.org/wiki/Liste_des_dirigeants_des_gouvernorats_tunisiens
+  tier: 3
+  lang: fr
+  excerpt: '"Gouvernorat | Nom | Nomination — Ariana Walid Sandid 8 septembre 2024; Béja Ahmed Ben Kharrat
+    8 septembre 2024; Ben Arous Abdelhamid Boukadida 12 mai 2025; Bizerte Salem Ben Yacoub 8 septembre
+    2024; Gabès Radhouane Nsibi 8 septembre 2024; Gafsa Slim Frouja 8 septembre 2024; Jendouba Taieb Dridi
+    27 mai 2025; Kairouan Dhaker Bargaoui 8 septembre 2024; Kasserine Zied Trabelsi 8 septembre 2024;
+    Kébili Moez Laabidi 8 septembre 2024; Le Kef Walid Kabbia 8 septembre 2024; Mahdia Anis Laadhari 8
+    septembre 2024; La Manouba Mahmoud Chouaib 8 septembre 2024; Médenine Walid Tabboubi 8 septembre 2024;
+    Monastir Issa Moussa 8 septembre 2024; Nabeul Hana Chouchani 8 septembre 2024; Sfax Mohamed Hajri
+    8 septembre 2024; Sidi Bouzid Faycel Bessaoudi 8 septembre 2024; Siliana Khaled Ouaari 8 septembre
+    2024; Sousse Sofiane Tanfouri 8 septembre 2024; Tataouine Amir Gabsi 8 septembre 2024; Tozeur Chahine
+    Zribi 8 septembre 2024; Tunis Imed Boukhris 8 septembre 2024; Zaghouan Karim Beranji 8 septembre 2024."'
+  note: 'Compilation. Page footer: "La dernière modification de cette page a été faite le 13 août 2025".
+    Its own references are webdo.tn (8 Sep 2024, Ben Arous 12 May 2025) and Mosaïque FM (Jendouba 27 May
+    2025).'
+- id: arwiki-wulat-tunis
+  title: قائمة ولاة ولايات تونس
+  publisher: ويكيبيديا (ar)
+  date: '2026-05-09'
+  url: https://ar.wikipedia.org/wiki/%D9%82%D8%A7%D8%A6%D9%85%D8%A9_%D9%88%D9%84%D8%A7%D8%A9_%D9%88%D9%84%D8%A7%D9%8A%D8%A7%D8%AA_%D8%AA%D9%88%D9%86%D8%B3
+  tier: 3
+  lang: ar
+  excerpt: '"ولاية أريانة — وليد صنديد — 8 سبتمبر 2024; ولاية باجة — أحمد بن خرّاط; ولاية بنزرت — سالم
+    بن يعقوب; ولاية بن عروس — عبد الحميد بوقديدة — 12 ماي 2025; ولاية تطاوين — أمير القابسي; ولاية توزر
+    — شاهين الزريبي; ولاية تونس — عماد بوخريص; ولاية جندوبة — الطيب الدريدي — 27 ماي 2025; ولاية زغوان
+    — كريم البرنجي; ولاية سليانة — خالد الواعري; ولاية سوسة — سفيان التنفوري; ولاية سيدي بوزيد — فيصل
+    بالسعودي; ولاية صفاقس — محمد الحجري; ولاية قابس — رضوان النصيبي; ولاية قبلي — معز العبيدي; ولاية القصرين
+    — زياد الطرابلسي; ولاية قفصة — سليم فروجة; ولاية القيروان — ذاكر البرقاوي; ولاية الكاف — وليد كعبية;
+    ولاية مدنين — وليد الطبوبي; ولاية المنستير — عيسى موسى; ولاية منوبة — محمود شعيب; ولاية المهدية —
+    أنيس العذاري; ولاية نابل — هناء شوشاني."'
+  note: 'Compilation. Page footer: "آخر تعديل لهذه الصفحة كان يوم 9 مايو 2026".'
+- id: arp-deputies-list
+  title: Assemblée des représentants du peuple — قائمة النواب (list of members)
+  publisher: Assemblée des représentants du peuple (ARP)
+  date: 2026-10
+  url: https://www.arp.tn/deputies
+  tier: 2
+  lang: ar
+  excerpt: المدة النيابية 2023-2027 ... المباشرون / غير المباشرون ... أعضاء المجلس ... مقاعد النواب في
+    الجلسات العامة الإسم و اللقب الدائرة الكتلة
+  note: Fetched 2026-10-19; the member table is the authoritative list of sitting members, its bloc names
+    and its constituency names.
+- id: arp-deputy-details
+  title: ARP — بطاقة نائب (member card), example /deputy/details/745
+  publisher: Assemblée des représentants du peuple (ARP)
+  date: 2026-10
+  url: https://www.arp.tn/deputy/details/745
+  tier: 2
+  lang: ar
+  excerpt: 'المدة النيابية 2023-2027 الكتلة: كتلة صوت الجمهورية (عضو) : من 2023-05-11 11:04:13 إلى الآن
+    الدائرة الإنتخابية: الحرائرية'
+  note: All 155 detail pages /deputy/details/<id> listed in arp.tn sitemap were fetched 2026-10-19; each
+    position's note gives its own URL.
+- id: arp-parliamentary-groups
+  title: ARP — الكتل النيابية (parliamentary groups)
+  publisher: Assemblée des représentants du peuple (ARP)
+  date: 2026-10
+  url: https://www.arp.tn/parlementaire/groupes
+  tier: 2
+  lang: ar
+  excerpt: غير المنتمين إلى كتل — كتلة الأمانة والعمل — كتلة صوت الجمهورية — كتلة الأحرار — كتلة لينتصر
+    الشعب — كتلة الوطنية المستقلة — كتلة الخط الوطني السيادي
+  note: Fetched 2026-10-19.
+- id: arp-vote-details-finance-2024
+  title: ARP — تفاصيل نتائج التصويت خلال الجلسة العامة ليوم الأربعاء 06 ديسمبر 2023 (vote on the 2024
+    Finance Law, bill 33/2023)
+  publisher: Assemblée des représentants du peuple (ARP)
+  date: '2023-12-06'
+  url: https://www.arp.tn/ar_SY/document/download/96394
+  tier: 2
+  lang: ar
+  excerpt: تفاصيل نتائج التصويت خلال الجلسة العامة ليوم الأربعاء 06 ديسمبر 2023 ... الاسم واللقب الكتلة
+    الموافقة الرفض الاحتفاظ لم يصوت ملاحظة ... إبراهيم بودربالة رئيس مجلس نواب الشعب X تصويت ألكتروني
+  note: PDF fetched 2026-10-19; 6 pages, per-member nominal vote for the transfer-to-article-by-article
+    debate on the 2024 Finance Law.
+- id: isie-2022-legislative
+  title: 2022 Parliamentary Elections — results summary
+  publisher: Instance Supérieure Indépendante pour les Élections (ISIE)
+  date: '2025-04-02'
+  url: https://www.isie.tn/en/elections_en/2022-parliamentary-elections/
+  tier: 2
+  lang: en
+  excerpt: Winners of the First Round 23 ... Winners of the Second Round 131 ... Registered Voters 9.136.502
+    ... Turnout Rate 11,22 % ... 1055 approved candidates
+  note: Fetched 2026-10-19.
+- id: arwiki-tn-2022-legislative-results
+  title: الانتخابات التشريعية التونسية 2022 (results by constituency)
+  publisher: Arabic Wikipedia
+  date: 2026-10
+  url: https://ar.wikipedia.org/wiki/%D8%A7%D9%84%D8%A7%D9%86%D8%AA%D8%AE%D8%A7%D8%A8%D8%A7%D8%AA_%D8%A7%D9%84%D8%AA%D8%B4%D8%B1%D9%8A%D8%B9%D9%8A%D8%A9_%D8%A7%D9%84%D8%AA%D9%88%D9%86%D8%B3%D9%8A%D8%A9_2022
+  tier: 3
+  lang: ar
+  excerpt: الولاية | الدائرة الانتخابية | عدد المترشحين | عدد الناخبين المسجلين | إسم المرشح(ة) الفائز(ة)
+    | الأصوات | النسبة — الدور الأوّل / الدور الثاني
+  note: Fetched 2026-10-19. Living page; used only for the per-constituency round (first vs second round)
+    cross-check.
+- id: universnews-arp-composition-2023-02-26
+  title: 'Composition du Parlement: 154 élus… en attendant les 7 autres'
+  publisher: Univers News
+  date: '2023-02-26'
+  url: https://universnews.tn/composition-du-parlement-154-elus-en-attendant-les-7-autres/
+  tier: 4
+  lang: fr
+  excerpt: 'la liste définitive des 154 membres de l''Assemblée des représentants du peuple ... Gouvernorat
+    de l''Ariana : Circonscription d''Ariana ville : Najla Lahiani ... Par ailleurs, 7 circonscriptions
+    à l''étranger n''ont pas tenu d''élections'
+  note: Fetched 2026-10-19; reproduces the ISIE final list. Used for the French constituency and member
+    names (tier-4 outlet).
+- id: africanmanager-arp-composition-2023-02-26
+  title: Composition de l'Assemblée des représentants du peuple
+  publisher: African Manager
+  date: '2023-02-26'
+  url: https://africanmanager.com/composition-de-lassemblee-des-representants-du-peuple/
+  tier: 4
+  lang: fr
+  excerpt: L'Instance supérieure indépendante pour les élections a annoncé samedi, la composition définitive
+    de l'Assemblée des représentants du peuple ... Le Parlement sera composé de 154 sièges.
+  note: Fetched 2026-10-19; corroborates Univers News and supplies the Siliana entries.
+- id: lapresse-arp-inaugurale-2023-03-14
+  title: 'Séance plénière inaugurale de l''ARP : La vie reprend au Bardo'
+  publisher: La Presse de Tunisie
+  date: '2023-03-14'
+  url: https://www.lapresse.tn/2023/03/14/seance-pleniere-inaugurale-de-larp-la-vie-reprend-au-bardo/
+  tier: 3
+  lang: fr
+  excerpt: Le nombre de députés à l'ARP a été réduit de 217 à 161, sauf que sept sièges sont toujours
+    vacants ... un nouvel élu a été arrêté ... Le député Wajdi Ghaoui a été exclu de la plénière inaugurale
+    ... arrêté par des agents de police à l'intérieur même du parlement
+  note: Fetched 2026-10-19.
+- id: lapresse-2e-tour-2023-01-29
+  title: '2ème tour des Législatives anticipées : L’abstention toujours de mise !'
+  publisher: La Presse de Tunisie
+  date: '2023-01-29'
+  url: https://www.lapresse.tn/2023/01/29/150254/
+  tier: 3
+  lang: fr
+  excerpt: 131 circonscriptions électorales étaient concernées par ce 2ème tour, alors que 23 candidats
+    dont 3 femmes ont remporté des sièges parlementaires dès le 1er tour.
+  note: Fetched 2026-10-19.
+- id: lapresse-sami-essayed-deces-2025-03-13
+  title: Décès du député Sami Essayed, représentant de Bizerte à l’ARP
+  publisher: La Presse de Tunisie
+  date: '2025-03-13'
+  url: https://www.lapresse.tn/2025/03/13/deces-du-depute-sami-essayed-representant-de-bizerte-a-larp/
+  tier: 3
+  lang: fr
+  excerpt: Le député Sami Essayed, élu à l’Assemblée des représentants du peuple (ARP) pour le gouvernorat
+    de Bizerte, est décédé ce jeudi 13 mars 2025
+  note: Fetched 2026-10-19.
+- id: arp-blog-thabet-deces-2025-05-12
+  title: النواب يتلون الفاتحة ترحّما على روح الفقيد نبيه ثابت
+  publisher: Assemblée des représentants du peuple (ARP)
+  date: '2025-05-12'
+  url: https://www.arp.tn/blog/arp-blog-1/post/9028
+  tier: 2
+  lang: ar
+  excerpt: تلاوة الفاتحة ترحّما على روح الفقيد النائب السيد نبيه ثابت الذي وفاه الأجل المحتوم يوم الجمعة
+    9 ماي 2025 ... النائب عن ولاية توزر، دائرة دقاش-حامة الجريد-تمغزة
+  note: Fetched 2026-10-19.
+- id: lapresse-bizerte-decret-2025-03-29
+  title: Le décret de convocation des électeurs de Bizerte Nord pour les législatives partielles publié
+  publisher: La Presse de Tunisie
+  date: '2025-03-29'
+  url: https://www.lapresse.tn/2025/03/29/le-decret-de-convocation-des-electeurs-de-bizerte-nord-pour-les-legislatives-partielles-publie/
+  tier: 3
+  lang: fr
+  excerpt: En vertu du décret n°167 du 28 mars 2025, les électeurs inscrits dans la circonscription de
+    Bizerte Nord sont convoqués à participer aux élections législatives partielles qui se tiendront le
+    dimanche 29 juin 2025
+  note: Fetched 2026-10-19.
+- id: tunisienumerique-adnan-allouch-2025-07-21
+  title: L'ISIE valide l'élection du député Adnan Allouch sur la circonscription de Bizerte-Nord
+  publisher: Tunisie Numérique
+  date: '2025-07-21'
+  url: https://www.tunisienumerique.com/tunisie-lisie-valide-lelection-du-depute-adnan-allouch-sur-la-circonscription-de-bizerte-nord/
+  tier: 3
+  lang: fr
+  excerpt: Adnan Allouch a remporté le siège de député avec 50,43 % des suffrages exprimés ... succédant
+    ainsi à feu Sami Al-Sayed
+  note: Fetched 2026-10-19.
+- id: kapitalis-deux-deputes-serment-2025-10-07
+  title: Tunisie | Deux nouveaux députés prêtent serment à l'Assemblée
+  publisher: Kapitalis
+  date: '2025-10-07'
+  url: https://kapitalis.com/tunisie/2025/10/07/tunisie-deux-nouveaux-deputes-pretent-serment-a-lassemblee/
+  tier: 3
+  lang: fr
+  excerpt: l'entrée en fonction de deux nouveaux députés élus de la circonscription de Bizerte-Nord et
+    celle de Degache ... Adnene Allouche ... Hamza Ben Othman Beldhiaf ... ont tous les deux prêté serment
+    au début de la séance plénière de ce mardi
+  note: Fetched 2026-10-19.
+- id: enwiki-fatma-thabet
+  title: Fatma Thabet
+  publisher: Wikipedia (en)
+  date: '2026-10'
+  url: https://en.wikipedia.org/wiki/Fatma_Thabet
+  tier: 3
+  lang: en
+  excerpt: On 24 January 2024, she was appointed Minister of Industry, Energy and Mines in the government of Ahmed Hachani. On 27 April 2026, she was dismissed as minister by President Kaïs Saïed.
+
+
+# ===========================================================================
+# Governors 1956-2024, imported from data/contrib/governors-history-*-2026-10-19.yaml.
+# ===========================================================================
+
+- id: frwiki-gov-tunis
+  title: Gouvernorat de Tunis
+  publisher: Wikipédia (fr)
+  date: '2026-05-04'
+  url: https://fr.wikipedia.org/wiki/Gouvernorat_de_Tunis
+  tier: 3
+  lang: fr
+  excerpt: '* Ahmed Zaouche (juin 1956-septembre 1959)
+
+    * Mohsen Nouira (septembre 1959-octobre 1961)
+
+    * Mohamed Zine El Abidine Mohsen (octobre 1961-août 1962)'
+- id: frwiki-gov-ariana
+  title: Gouvernorat de l'Ariana
+  publisher: Wikipédia (fr)
+  date: '2026-10-13'
+  url: https://fr.wikipedia.org/wiki/Gouvernorat_de_l%27Ariana
+  tier: 3
+  lang: fr
+  excerpt: '* Ahmed Ben Jemiaâ (mars 1983-juillet 1984)
+
+    * Kamel Haj Sassi (juillet 1984-février 1988)
+
+    * Abdallah Kaâbi (février 1988-octobre 1990)'
+- id: frwiki-gov-ben-arous
+  title: Gouvernorat de Ben Arous
+  publisher: Wikipédia (fr)
+  date: '2026-05-24'
+  url: https://fr.wikipedia.org/wiki/Gouvernorat_de_Ben_Arous
+  tier: 3
+  lang: fr
+  excerpt: '* Abdelkrim Azaïez (mars 1983-juillet 1987)
+
+    * Ahmed Ridha Ouaja (juillet 1986-août 1987)
+
+    * Ameur Kriâa (août 1987-décembre 1988)'
+- id: frwiki-gov-manouba
+  title: Gouvernorat de la Manouba
+  publisher: Wikipédia (fr)
+  date: '2026-05-24'
+  url: https://fr.wikipedia.org/wiki/Gouvernorat_de_la_Manouba
+  tier: 3
+  lang: fr
+  excerpt: '* Mohamed Tounsi (juillet 2000-avril 2003)
+
+    * Youssef Néji (avril 2003-novembre 2004)
+
+    * Moncef Haddad (novembre 2004-août 2007)'
+- id: frwiki-gov-nabeul
+  title: Gouvernorat de Nabeul
+  publisher: Wikipédia (fr)
+  date: '2026-07-06'
+  url: https://fr.wikipedia.org/wiki/Gouvernorat_de_Nabeul
+  tier: 3
+  lang: fr
+  excerpt: '* Salah Ayeche (1956-1958)
+
+    * Ameur Mokni (1958-1959)
+
+    * Mohamed Besbes (1959-1962)'
+- id: frwiki-gov-zaghouan
+  title: Gouvernorat de Zaghouan
+  publisher: Wikipédia (fr)
+  date: '2026-05-04'
+  url: https://fr.wikipedia.org/wiki/Gouvernorat_de_Zaghouan
+  tier: 3
+  lang: fr
+  excerpt: '* Ahmed Bennour (1973-1974)
+
+    * Mohamed Abbes (1974-1979)
+
+    * Chedly Maâmouri (1979-1980)'
+- id: frwiki-gov-bizerte
+  title: Gouvernorat de Bizerte
+  publisher: Wikipédia (fr)
+  date: '2026-05-24'
+  url: https://fr.wikipedia.org/wiki/Gouvernorat_de_Bizerte
+  tier: 3
+  lang: fr
+  excerpt: '* Mohsen Nouira (1956-1959)
+
+    * Mohamed Belamine (1959-1961)
+
+    * Naceur Ben Jaafar (1961-1964)'
+- id: frwiki-gov-beja
+  title: Gouvernorat de Béja
+  publisher: Wikipédia (fr)
+  date: '2026-10-01'
+  url: https://fr.wikipedia.org/wiki/Gouvernorat_de_Béja
+  tier: 3
+  lang: fr
+  excerpt: '* Béchir Bellagha (1956-1957)
+
+    * Ahmed Bellalouna (1957-1959)
+
+    * Taher Abdelkefi (1959-1961)'
+- id: frwiki-gov-jendouba
+  title: Gouvernorat de Jendouba
+  publisher: Wikipédia (fr)
+  date: '2026-08-19'
+  url: https://fr.wikipedia.org/wiki/Gouvernorat_de_Jendouba
+  tier: 3
+  lang: fr
+  excerpt: '* Naceur Ben Jaafar (1956-1960)
+
+    * Béchir Bellagha (1960-1962)
+
+    * Habib Ben Mohamed Lahbib (1962-1964)'
+- id: frwiki-gov-kef
+  title: Gouvernorat du Kef
+  publisher: Wikipédia (fr)
+  date: '2026-05-04'
+  url: https://fr.wikipedia.org/wiki/Gouvernorat_du_Kef
+  tier: 3
+  lang: fr
+  excerpt: '* Ahmed Bellalouna (1956-1957)
+
+    * Béchir Bellagha (1957-1960)
+
+    * Hédi Mabrouk (1960-1961)'
+- id: frwiki-gov-siliana
+  title: Gouvernorat de Siliana
+  publisher: Wikipédia (fr)
+  date: '2026-05-04'
+  url: https://fr.wikipedia.org/wiki/Gouvernorat_de_Siliana
+  tier: 3
+  lang: fr
+  excerpt: '* Mohsen Haddad (1974-1977)
+
+    * Youssef Saïbi (1977-22 avril 1980)
+
+    * Tahar Sraieb (22 avril 1980-10 décembre 1980)'
+- id: frwiki-gov-kairouan
+  title: Gouvernorat de Kairouan
+  publisher: Wikipédia (fr)
+  date: '2026-10-11'
+  url: https://fr.wikipedia.org/wiki/Gouvernorat_de_Kairouan
+  tier: 3
+  lang: fr
+  excerpt: '* 1956-1964 : Amor Chachia
+
+    * 1964 : Mohsen Bel Aljia
+
+    * 1964-1969 : Mongi Fekih'
+- id: kapitalis-gouverneurs-2011-02-02
+  title: Tunisie. La liste des nouveaux gouverneurs
+  publisher: Kapitalis
+  date: '2011-02-02'
+  url: https://kapitalis.com/archive/190-politik/2559-tunisie-la-liste-des-nouveaux-gouverneurs
+  tier: 3
+  lang: fr
+  excerpt: Le ministre de l’Intérieur a annoncé, mercredi, que le président de la République intérimaire
+    a décidé de nommer les nouveaux gouverneurs des différentes régions de la république. Les postes se
+    répartissent comme suit… • Adel Ben Hassen, à Tunis ; • Nizar Kharbeche, à l’Ariana ; • Moncef Omrani,
+    à la Manouba ; • Kamel Charabi, à Ben Arous ; • Chokri Ben Hassen, à Bizerte ; • Hatem Hamzaoui, à
+    Béja ; • Béchir Kthiri, à Jendouba ; • Néjib Tlijani,au Kef ; • Abdessatar Rabhi, à Siliana ; • Slaheddine
+    Amouchi, à Kasserine ; • Khaled Younsi, à Sidi Bouzid ; • Mohamed Gouider, à Gafsa ; • Abdelhamid
+    Ghanmi, à Tozeur ; • Badreddine Habil, à Kébili ; • Youssef Hidri, à Tataouine ; • Hamadi Chtioui,
+    à Médenine ; • Chokri Ncib, à Gabès ; • Mohamed Ali Jendouba, à Sfax ; • Abdeljelil Ben Hassen, à
+    Kairouan ; • Amor Jabbari, à Mahdia ; • Hichem Fourati, à Monastir ; • Khemaïes Argoubi, à Sousse
+    ; • Fethi Bdira, à Zaghouan ; • Ali Ben Malek, à Nabeul.
+- id: kapitalis-gouverneurs-2012-02-22
+  title: Tunisie. Remaniement dans le corps des gouverneurs
+  publisher: Kapitalis
+  date: '2012-02-22'
+  url: https://kapitalis.com/archive/190-politik/8445-tunisie-remaniement-dans-le-corps-des-gouverneurs
+  tier: 3
+  lang: fr
+  excerpt: 'Le ministre de l’Intérieur Ali Laârayedh a annoncé mercredi un remaniement dans le corps des
+    gouverneurs. Mutation, nomination et fin de mission. Mutés dans les mêmes fonctions : - Baheddine
+    Bakari, du gouvernorat de Béja à celui de l’Ariana ; - Nabil Nsiri, de Sidi Bouzid à Bizerte. Nouvellement
+    nommés : - Mohamed Sidhoum à Jendouba ; - Nasr Temimi à Béja ; - Ahmed Zine Mahjoubi à Siliana ; -
+    Mohamed Néjib Mansouri à Sidi Bouzid ; - Brahim Hamdaoui à Gafsa ; - Samir Rouihem à Tozeur ; - Mourad
+    Achour à Tataouine. Fin de la mission : - Nizar Kharbech à l’Ariana ; - Mohamed Hefdhi M’rabet à Bizerte
+    ; - Béchir Khethiri à Jendouba ; - Moncef Khemiri à Siliana ; - Moncef Héni à Gafsa ; - Abderrahmane
+    Lamine Zouari à Tozeur ; - Néjib Ghali à Tataouine.'
+- id: directinfo-gouverneurs-2013-08-24
+  title: 'Tunisie – Politique : Un mouvement partiel dans le corps des gouverneurs'
+  publisher: Directinfo (avec TAP)
+  date: '2013-08-24'
+  url: https://directinfo.webmanagercenter.com/2013/08/24/tunisie-politique-un-mouvement-partiel-dans-le-corps-des-gouverneurs/
+  tier: 3
+  lang: fr
+  excerpt: 'Le ministère de l’Intérieur a annoncé, samedi 24 août, dans un communiqué, que le chef du
+    gouvernement provisoire, Ali Laarayedh, a décidé d’effectuer un mouvement partiel dans le corps des
+    gouverneurs. Il s’agit de: – la mutation de Abderrazak Ben Khalifa du gouvernorat de Bizerte au gouvernorat
+    de Tunis en remplacement de Adel Ben Hassen. – la nomination de Abdennaceur Ellefi au gouvernorat
+    de Kairouan en remplacement de Abdelmajid Laghouane. – la Nomination de Abdessatar Toumi au gouvernorat
+    de Nabeul en remplacement de Mahmoud Jaballah. – la nomination de Hamdi Jerbi au gouvernorat de Zaghouan
+    en remplacement de Nabil Haouiji. – la nomination de Néjib Khabouchi au gouvernorat de Jendouba en
+    remplacement de Samir Rouihem. – la nomination de Ridha Lahoual au gouvernorat de Bizerte en remplacement
+    de Abderrazak Ben Khalifa.'
+- id: businessnews-gouverneurs-2014-02-28
+  title: Tunisie - Liste des nouveaux gouverneurs nommés par Mehdi Jomâa
+  publisher: Business News
+  date: '2014-02-28'
+  url: https://businessnews.com.tn/2014/02/28/article-1117778/1117778/
+  tier: 3
+  lang: fr
+  excerpt: 'Le ministre de l’Intérieur, Lotfi Ben Jeddou, a annoncé, aujourd’hui vendredi 28 février 2014
+    que le chef du gouvernement, Mehdi Jomâa a décidé un mouvement au sein du corps des gouverneurs. Les
+    nouveaux gouverneurs, nommés, sont : – Hamed Abid gouverneur à Tunis – Abdellatif Missaoui gouverneur
+    à Ben Arous – Mohamed Ridha Saâdi gouverneur à Manouba – Kamel Salmani gouverneur à Béja – Tahar Matmati
+    gouverneur au Kef – Noureddine Ghannouchi gouverneur à Siliana – Hichem Akrimi gouverneur à Zaghouan
+    – Mohamed Akermi Hamdi gouverneur à Nabeul – Mohsen Mansouri gouverneur au Kairouan'
+- id: directinfo-gouverneurs-2015-08-22
+  title: 'Tunisie: Mouvement dans le corps des gouverneurs'
+  publisher: Directinfo (avec TAP)
+  date: '2015-08-22'
+  url: https://directinfo.webmanagercenter.com/2015/08/22/tunisie-mouvement-dans-le-corps-des-gouverneurs-2/
+  tier: 3
+  lang: fr
+  excerpt: 'Le chef du gouvernement, Habib Essid, a décidé, samedi, d’opérer un mouvement dans le corps
+    des gouverneurs, selon un communiqué du ministère de l’Intérieur. En vertu de ce mouvement, les nouveaux
+    gouverneurs sont : – Fakher Gafsi, gouverneur de Tunis, – Omar Ben Mansour, gouverneur de l’Ariana,
+    – Ahmed Semaoui, gouverneur de la Manouba, – Samir Rouihom, gouverneur de Nabeul, – Slim Tissaoui,
+    gouverneur de Siliana, – Mourad Mahjoubi, gouverneur de Sidi Bouzid, – Radhouan Ayara, gouverneur
+    du Kef, – Chedly Bouallègue, gouverneur de Kasserine, – Ahmed Lamine Ansari, gouverneur de Gabès,
+    – Lotfi Sassi, gouverneur de Tozeur.'
+- id: businessnews-gouverneurs-2016-09-16
+  title: Nomination de 12 nouveaux gouverneurs, dont une femme !
+  publisher: Business News
+  date: '2016-09-16'
+  url: https://businessnews.com.tn/2016/09/16/article-1140088/1140088/
+  tier: 3
+  lang: fr
+  excerpt: 'Le chef du gouvernement a décidé, aujourd’hui, vendredi 16 septembre 2016, d’effectuer un
+    mouvement partiel dans le corps des gouverneurs. Ainsi, selon un communiqué de la Kasbah, ce mouvement
+    se présente comme suit et concerne 12 gouverneurs : Saloua Khiari : gouverneur de l’Ariana Omar Mansour
+    : gouverneur de Tunis Mohamed Gouider : gouverneur de Bizerte Taoufik Ouertatni : gouverneur de Kairouan
+    Akrem Sebri : gouverneur de Jendouba Chedly Bouallegue : gouverneur du Kef Mnaouar Ouertani : gouverneur
+    de Nabeul Mounir Hamdi : gouverneur de Tozeur Hassen Khedimi : gouverneur de Kasserine Mohamed Bouden
+    : gouverneur de Mahdia'
+- id: webdo-gouverneurs-2017-05-18
+  title: 'Tunisie : Remaniement dans le corps des gouverneurs'
+  publisher: Webdo
+  date: '2017-05-18'
+  url: https://www.webdo.tn/fr/actualite/national/mouvement-partiel-dans-le-corps-des-gouverneurs/159637/
+  tier: 3
+  lang: fr
+  excerpt: 'Le chef du gouvernement, Youssef Chahed, a décidé, ce jeudi 18 mai, d’opérer un remaniement
+    partiel dans le corps des gouverneurs en vertu duquel le gouverneur de Tozeur Mounir Hamdi a été muté
+    à Kairouan. Selon un communiqué de la présidence du gouvernement, il a été également décidé la nomination
+    des nouveaux gouverneurs suivants : * Adel Chlioui, gouverneur de Sousse * Sami Ghabi, gouverneur
+    de Kébili * Saleh Mtiraoui, gouverneur de Tozeur'
+- id: businessnews-gouverneurs-2017-10-29
+  title: 'Mouvement dans le corps des gouverneurs: Départ de Amor Mansour'
+  publisher: Business News
+  date: '2017-10-29'
+  url: https://businessnews.com.tn/2017/10/29/article-1148737/1148737/
+  tier: 3
+  lang: fr
+  excerpt: 'Le ministre de l’Intérieur, Lotfi Brahem a décidé, aujourd’hui, dimanche 29 octobre 2017,
+    un mouvement partiel dans le corps des gouverneurs. Les mutations suivantes ont été annoncées : Chedly
+    Bouallegue : gouverneur à Tunis en remplacement de Amor Mansour Mnaouer Ouertani : gouverneur au Kef
+    en remplacement de Chedly Bouallegue Saloua Khiari : gouverneur à Nabeul en remplacement de Mnaouer
+    Ouertani Slim Tissaoui : gouverneur à Béja en remplacement de Houcine Hamdi ... Ali Marmouri : gouverneur
+    de Zaghouan en remplacement de Anis Dhifallah Mohamed Sedki Bouaoun : gouverneur de Jendouba en remplacement
+    de Akrem Sebri Mokhtar Nefzi : gouverneur de l’Ariana en remplacement de Saloua Khiari Habib Chaouat
+    : gouverneur de Médenine en remplacement de Tahar Matmati'
+- id: directinfo-gouverneurs-2019-11-22
+  title: 'Tunisie : Mouvement partiel dans le corps des gouverneurs'
+  publisher: Directinfo (avec TAP)
+  date: '2019-11-22'
+  url: https://directinfo.webmanagercenter.com/2019/11/22/tunisie-mouvement-partiel-dans-le-corps-des-gouverneurs-5/
+  tier: 3
+  lang: fr
+  excerpt: 'Le ministère de l’Intérieur a annoncé, dans un communiqué rendu public, vendredi, un mouvement
+    partiel dans le corps des gouverneurs. En vertu de ce mouvement, il a été décidé : – de démettre de
+    ses fonctions le gouverneur du Kef, Mnaouer Ouertani – de muter au Kef le gouverneur de l’Ariana,
+    Mokhtar Nefzi – de nommer Samir Abdeljaoued gouverneur de l’Ariana – de nommer Mohamed Ridha Mlika
+    gouverneur de Nabeul, et ce, suite à la démission de Saloua Khiari.'
+- id: webdo-beja-mili-2019-12-27
+  title: Mohsen Moez Milli, nouveau gouverneur de Béja
+  publisher: Webdo
+  date: '2019-12-27'
+  url: https://www.webdo.tn/fr/actualite/national/mohsen-moez-milli-nouveau-gouverneur-de-beja/146597/
+  tier: 3
+  lang: fr
+  excerpt: Le ministère de l’Intérieur a annoncé la nomination de Mohsen Moez Milli au poste de gouverneur
+    de Béja, succèdant ainsi au gouverneur démissionnaire, Slim Tissaoui. Ce dernier avait quitté son
+    poste au début du mois, sur fond de drame après la catastrophe de l’accident de bus survenu dans la
+    vallée d’Ain Senousi, dans la région d’Amdoun.
+- id: kapitalis-bizerte-2021-08-12
+  title: 'Tunisie : Le gouverneur de Bizerte démis de ses fonctions et remplacé par Samir Abdellaoui'
+  publisher: Kapitalis
+  date: '2021-08-12'
+  url: https://kapitalis.com/tunisie/2021/08/12/tunisie-le-gouverneur-de-bizerte-demis-de-ses-fonctions-et-remplace-par-samir-abdellaoui/
+  tier: 3
+  lang: fr
+  excerpt: Le président de la République Kaïs Saïed a décidé, par décret présidentiel, de mettre fin aux
+    fonctions du gouverneur de Bizerte, Mohamed Gouider. Cette décision a été publiée dans le Journal
+    officiel de la république tunisienne (Jort), dans son édition du jeudi 12 août 2021, où a également
+    été publiée la nomination de Samir Abdellaoui au poste de gouverneur de Bizerte
+- id: africanmanager-gouverneurs-2022-06-06
+  title: Saied décide un vaste mouvement dans le corps des gouverneurs
+  publisher: African Manager
+  date: '2022-06-06'
+  url: https://africanmanager.com/saied-decide-un-vaste-mouvement-dans-le-corps-des-gouverneurs/
+  tier: 3
+  lang: fr
+  excerpt: 'Le président de la République a décidé un mouvement dans le corps des gouverneurs comme suit
+    : – Mondher Sik Ali, gouverneur de Monastir, – Khaled Ennouri, gouverneur de l’Ariana, – Mohamed El
+    Ech, gouverneur de Zaghouan, – Nabil Ferjani, gouverneur de Sousse, – Samir Kouka, gouverneur de Jendouba,
+    – Sabah Mallek, gouverneur de Nabeul, – Walid Abbasi, gouverneur de Siliana'
+- id: kapitalis-gouverneurs-2022-06-06
+  title: 'Tunisie- Présidence : Nomination de 13 nouveaux gouverneurs'
+  publisher: Kapitalis
+  date: '2022-06-06'
+  url: https://kapitalis.com/tunisie/2022/06/06/tunisie-presidence-nomination-de-13-nouveaux-gouverneurs/
+  tier: 3
+  lang: fr
+  excerpt: 'Dans son communiqué, Carthage annonce la nomination des 13 gouverneurs suivants, (dont une
+    seule femme) : Mondher Sik Ali, gouverneur de Monastir ; Khaled Nouri à l’ Ariana ; Mohammed El-Euch
+    à Zaghouan ; Nabil Ferjani à Sousse ; Samir Kouka à Jendouba ; Mme Sabeh Malek à Nabeul ; Walid Abbasi
+    à Siliana'
+- id: kapitalis-beja-2022-08-30
+  title: 'Présidence-Tunisie : Le gouverneur de Béja démis de ses fonctions'
+  publisher: Kapitalis
+  date: '2022-08-30'
+  url: https://kapitalis.com/tunisie/2022/08/30/presidence-tunisie-le-gouverneur-de-beja-demis-de-ses-fonctions/
+  tier: 3
+  lang: fr
+  excerpt: Le président de la république Kaïs Saïed a décidé de mettre fin aux fonctions du gouverneur
+    de Béja, Mohsen Moez Mili. C’est ce qu’annonce la présidence de la république dans un communiqué publié,
+    ce mardi 30 août 2022, en précisant que le chef de l’État a émis, à cet effet, un décret présidentiel.
+    Mohsen Moez Mili avait été nommé à ce poste en décembre 2019 et avait prêté serment au Palais de Carthage
+    le 8 janvier 2020.
+- id: webdo-kef-2022-10-30
+  title: Le gouverneur du Kef démis de ses fonctions
+  publisher: Webdo
+  date: '2022-10-30'
+  url: https://www.webdo.tn/fr/actualite/regions/le-gouverneur-du-kef-demit-de-ses-fonctions/198250/
+  tier: 3
+  lang: fr
+  excerpt: Le président de la République, kais Saied, a décidé de limoger le gouverneur du Kef, Mokhtar
+    Nefzi, selon un communiqué de la présidence de la République. La présidence de la Répubmique n’a pas
+    donné les raisons de ce limogeage dans son bref communiqué, publié ce dimanche 30 octobre 2022.
+- id: webdo-tunis-interim-2023-04-19
+  title: Fares Mejri, gouverneur de Tunis par intérim
+  publisher: Webdo
+  date: '2023-04-19'
+  url: https://www.webdo.tn/fr/actualite/national/fares-mejri-gouverneur-de-tunis-par-interim/205005/
+  tier: 3
+  lang: fr
+  excerpt: Le ministre de l’Intérieur, Kamel Feki, a chargé le premier délégué, Fares Mejri, de gérer
+    à titre provisoire les affaires du gouvernorat de Tunis et ce, à partir de ce mercredi 19 avril 2023,
+    a indiqué un communiqué du gouvernorat de Tunis. Fares Mejri assurera l’intérim en attendant la nomination
+    par le président de la République, Kaïs Saïed d’un nouveau gouverneur après avoir nommé Kamel Feki,
+    ancien gouverneur de Tunis, au poste de ministre de l’Intérieur.
+- id: webdo-kairouan-2023-08-22
+  title: Kais Saied limoge le gouverneur de Kairouan
+  publisher: Webdo
+  date: '2023-08-22'
+  url: https://www.webdo.tn/fr/actualite/national/kais-saied-limoge-le-gouverneur-de-kairouan/208104/
+  tier: 3
+  lang: fr
+  excerpt: Le chef de l’État, Kaïs Saïed a limogé, ce mardi 22 août 2023, le gouverneur de Kairouan, Mohamed
+    Bourguiba, d’après le communiqué publié par la présidence de la République. En poste depuis le 24
+    juillet 2019, Mohamed Bourguiba a été donc limogé au lendemain d’une réunion, portant sur le projet
+    de l’Hôpital universitaire Roi Salman à Kairouan, à laquelle il a pris part en compagnie d’autres
+    cadres de l’administration tunisienne et des ministres.
+- id: africanmanager-kairouan-2024-03-28
+  title: 'Kairouan : Le premier délégué démis de ses fonctions'
+  publisher: African Manager
+  date: '2024-03-28'
+  url: https://africanmanager.com/kairouan-le-premier-delegue-demis-de-ses-fonctions/
+  tier: 3
+  lang: fr
+  excerpt: Le ministère de l’Intérieur a annoncé, jeudi 28 mars 2024, que le premier délégué du gouvernorat
+    de Kairouan, Chedly Jhinaoui, a été démis de ses fonctions et remplacé par Sami Ayadi, secrétaire
+    général du gouvernorat. Kairouan connaît une vacance au poste de gouverneur, après que le président
+    de la République, Kais Saïed, a décidé, le 22 août 2023, de mettre fin à la mission de Mohamed Bourguiba.
+- id: aa-feki-2023-03-18
+  title: 'Tunisie: le gouverneur de Tunis, Kamel Fekih, nommé à la tête du ministère de l’Intérieur'
+  publisher: Anadolu Agency
+  date: '2023-03-18'
+  url: https://www.aa.com.tr/fr/monde/tunisie-le-gouverneur-de-tunis-kamel-fekih-nomm%C3%A9-%C3%A0-la-t%C3%AAte-du-minist%C3%A8re-de-lint%C3%A9rieur-/2849144
+  tier: 3
+  lang: fr
+  excerpt: Le président tunisien Kais Saïed a émis, vendredi, un décret nommant le gouverneur de Tunis,
+    Kamel Fekih à la tête du ministère de l’Intérieur succédant à Taoufik Charfeddine. ... Fekih avait
+    occupé plusieurs postes, dont celui du gouverneur de Tunis, depuis le 30 décembre 2021.
+- id: frwiki-bio-zaouche
+  title: Ahmed Zaouche
+  publisher: Wikipédia (fr)
+  date: '2025-08-03'
+  url: https://fr.wikipedia.org/wiki/Ahmed_Zaouche
+  tier: 3
+  lang: fr
+  excerpt: Une fois l'indépendance proclamée, Ahmed Zaouche devient, le 21 juin 1956, le premier gouverneur
+    de Tunis et occupe dans le même temps la charge de maire de la capitale jusqu'en 1957
+- id: frwiki-bio-khouini
+  title: Hamadi Khouini
+  publisher: Wikipédia (fr)
+  date: '2025-10-21'
+  url: https://fr.wikipedia.org/wiki/Hamadi_Khouini
+  tier: 3
+  lang: fr
+  excerpt: Sa carrière professionnelle l'éloigne toutefois du club, lui permettant cependant plus d'implication
+    lorsqu'il se retrouve nommé gouverneur de Sousse, d'avril 1980 à mars 1983, puis gouverneur de Tunis
+    à deux reprises, de mars 1983 à décembre 1986 et d'août 1989 à octobre 1990.
+- id: frwiki-bio-baccouche
+  title: Hédi Baccouche
+  publisher: Wikipédia (fr)
+  date: '2026-10-12'
+  url: https://fr.wikipedia.org/wiki/H%C3%A9di_Baccouche
+  tier: 3
+  lang: fr
+  excerpt: Durant les années 1960, il est nommé gouverneur et secrétaire du comité de coordination de
+    Bizerte, ce qui fait de lui un membre de droit du comité central du Parti socialiste destourien après
+    le congrès du Destin qui se tient à Bizerte en 1964 puis il devient successivement gouverneur de Sfax
+    et de Gabès.
+- id: frwiki-bio-neffati
+  title: Chédli Neffati
+  publisher: Wikipédia (fr)
+  date: '2025-10-21'
+  url: https://fr.wikipedia.org/wiki/Ch%C3%A9dli_Neffati
+  tier: 3
+  lang: fr
+  excerpt: Il commence sa carrière dans le secteur public et devient délégué principal puis secrétaire
+    général du gouvernorat de Kairouan. En juin 1982, il devient gouverneur de Kairouan puis de Béja en
+    juillet 1984. Il est ensuite nommé directeur général des affaires régionales au ministère de l'intérieur
+    en août 1987.
+- id: frwiki-bio-mabrouk
+  title: Hédi Mabrouk
+  publisher: Wikipédia (fr)
+  date: '2026-06-21'
+  url: https://fr.wikipedia.org/wiki/H%C3%A9di_Mabrouk
+  tier: 3
+  lang: fr
+  excerpt: Une fois l'indépendance de la Tunisie obtenue en 1956, il est nommé gouverneur, successivement
+    à Sbeïtla (1956), Gafsa (1958) et Le Kef (1960), puis assure de 1962 à 1966 la fonction de PDG de
+    la Compagnie tunisienne de navigation.
+- id: frwiki-bio-mebazaa
+  title: Fouad Mebazaa
+  publisher: Wikipédia (fr)
+  date: '2026-08-23'
+  url: https://fr.wikipedia.org/wiki/Fouad_Mebazaa
+  tier: 3
+  lang: fr
+  excerpt: Au niveau municipal, il a été maire-gouverneur de Tunis (de 1969 à 1973), de La Marsa (de 1975
+    à 1980) et de Carthage (de 1995 à 1998).
+- id: realites-manouba-2020-04-14
+  title: Deux nouveaux gouverneurs pour Sousse et La Manouba
+  publisher: Réalités
+  date: '2020-04-14'
+  url: https://realites.com.tn/fr/deux-nouveaux-gouverneurs-pour-sousse-et-la-manouba/
+  tier: 3
+  lang: fr
+  excerpt: Il y a du nouveau dans le corps des gouverneurs. Un mouvement partiel a été annoncé ce mardi
+    14 avril 2020 par le ministère de l'Intérieur. Ainsi, Mohamed Cheikhrouhou, a été nommé gouverneur
+    de La Manouba, remplaçant ainsi Raja Trabelsi.
+- id: frwiki-bio-lahouel
+  title: Ridha Lahouel
+  publisher: Wikipédia (fr)
+  date: '2026-05-01'
+  url: https://fr.wikipedia.org/wiki/Ridha_Lahouel
+  tier: 3
+  lang: fr
+  excerpt: Le 24 août 2013, il est nommé gouverneur de Bizerte en remplacement d'Abderrazak Ben Khelifa,
+    fonction qu'il occupe jusqu'au 14 février 2015.
+- id: frwiki-bio-nouri
+  title: Khaled Nouri
+  publisher: Wikipédia (fr)
+  date: '2025-09-13'
+  url: https://fr.wikipedia.org/wiki/Khaled_Nouri
+  tier: 3
+  lang: fr
+  excerpt: Nommé gouverneur de l'Ariana le 6 juin 2022, il prête serment comme ministre de l'Intérieur
+    le 25 mai 2024.
+- id: frwiki-bio-feki
+  title: Kamel Feki
+  publisher: Wikipédia (fr)
+  date: '2026-07-10'
+  url: https://fr.wikipedia.org/wiki/Kamel_Feki
+  tier: 3
+  lang: fr
+  excerpt: Homme de confiance de ce dernier, il est nommé gouverneur de Tunis le 30 décembre 2021 après
+    la destitution de Chedly Bouallegue. Il reste à ce poste jusqu'à sa nomination comme ministre de l'Intérieur
+    le 17 mars 2023.
+- id: frwiki-bio-ben-hassen
+  title: Adel Ben Hassen
+  publisher: Wikipédia (fr)
+  date: '2026-09-10'
+  url: https://fr.wikipedia.org/wiki/Adel_Ben_Hassen
+  tier: 3
+  lang: fr
+  excerpt: Il est nommé gouverneur de Tunis le 2 février 2011. Il prête serment le jour même de sa nomination
+    devant le président de la République par intérim, Fouad Mebazaa ... Il est remplacé par Abderrazak
+    Ben Khelifa le 24 août 2013.
+- id: frwiki-bio-ben-khelifa
+  title: Abderrazak Ben Khelifa
+  publisher: Wikipédia (fr)
+  date: '2025-08-17'
+  url: https://fr.wikipedia.org/wiki/Abderrazak_Ben_Khelifa
+  tier: 3
+  lang: fr
+  excerpt: Entre août 2012 et août 2013, il est gouverneur de Bizerte avant de devenir, à cette date,
+    gouverneur de Tunis.
+- id: frwiki-bio-bouallegue
+  title: Chedly Bouallegue
+  publisher: Wikipédia (fr)
+  date: '2026-05-19'
+  url: https://fr.wikipedia.org/wiki/Chedly_Bouallegue
+  tier: 3
+  lang: fr
+  excerpt: il est délégué d'El Jem avant 2015 puis est nommé gouverneur de Kasserine jusqu'au 16 septembre
+    2016, avant d'être muté comme gouverneur du Kef.
+- id: frwiki-bio-belhassen
+  title: Chokri Belhassen
+  publisher: Wikipédia (fr)
+  date: '2026-08-19'
+  url: https://fr.wikipedia.org/wiki/Chokri_Belhassen
+  tier: 3
+  lang: fr
+  excerpt: Le 2 février 2011, en pleine révolution tunisienne, il est nommé gouverneur de Bizerte, mais
+    il est empêché d'exercer ce rôle. ... il est nommé gouverneur de Kairouan le 9 avril 2015 ... Belhassen
+    prête finalement serment le 14 avril et reste gouverneur jusqu'au 16 septembre 2016.
+- id: frwiki-sfax-gov
+  title: Gouvernorat de Sfax
+  publisher: Wikipédia (fr)
+  date: '2026-08-05'
+  url: https://fr.wikipedia.org/wiki/Gouvernorat_de_Sfax
+  tier: 3
+  lang: fr
+  excerpt: 'Le gouvernorat de Sfax est dirigé par un gouverneur dont la liste depuis l''indépendance est
+    la suivante : * Mohamed Zinelabidine Mohsen (1956-1960) * Naceur Ben Jaafar (1960-1961) * Mohamed
+    Bellamine (1961-1964) * Mehrez Bellamine (1964-1967) * Hédi Baccouche (1967-1969) * Zakaria Ben Mustapha
+    (1969-1970) * Hédi Mkaddem (1970-1971) * Kacem Bousnina (1971-1973) * Rachid Badri (1973-1974) * Ameur
+    Ghedira (1974-1978) * Habib Tounsi (1978-1980) * Mohamed Boughzala (1980) * Tahar Sraieb (1980-1981)
+    * Hamadi Amara (1982, 13 jours) * Abdelkader Zitouna (1982-1984) * Abdelkader N''siri (1984-1986)
+    * Amor Latiri (1986-1988) * Mohamed Fadhel Khelil (1988-1990) * Mohamed Ben Saad (1990-1992) * Mohamed
+    Rachdi (1992-1995) * Mohamed Soudani (1995-1996) * Mohamed Sahbi Basly (1996-1998) * Mohamed Lamine
+    Abed (1998-2002) * Ali Trabelsi (2002-2003) * Mohamed Tounsi (2003-2004) * Ali Ksiksi (2004-2006)
+    * Kamel Someï (2006-2007) * Mohamed Ben Salem (2007-2011) * Mohamed Ali Jendoubi (2011-2012) * Fathi
+    Derbali (2012-2013) * Samir Rouihem (2013-2014) * Mehdi Chelbi (2014-2015) * Habib Chaouat (2015-2016)
+    * Slim Tissaoui (2016-2017) * Adel Khabthani (2017-2019) * Anis Oueslati (2019-2021) * Faouzi Mrad
+    (2021-2022) * Fakher Fakhfakh (2022-2023) * Mohamed Hajri (depuis 2024)'
+  note: 'Page footer: La dernière modification de cette page a été faite le 5 août 2026 à 21:15.'
+- id: frwiki-sousse-gov
+  title: Gouvernorat de Sousse
+  publisher: Wikipédia (fr)
+  date: '2026-09-18'
+  url: https://fr.wikipedia.org/wiki/Gouvernorat_de_Sousse
+  tier: 3
+  lang: fr
+  excerpt: 'Le gouvernorat de Sousse est dirigé par un gouverneur dont la liste depuis l''indépendance
+    est la suivante : * Mohamed Makni (21 juin 1956-1er octobre 1957) * Abelhamid El Kadhi (1er octobre
+    1957-1er septembre 1962) * Amor Chachia (1er septembre 1962-8 septembre 1969) * Abdessalem Ghédira
+    (8 septembre 1969-27 août 1970) * Ahmed Bellalouna (27 août 1970-7 septembre 1972) * Mohamed Ennaceur
+    (7 septembre 1972-8 juin 1973) * Ahmed Bennour (8 juin 1973-5 mars 1974) * Mansour Skhiri (5 mars
+    1974-10 mars 1977) * Nouredine Fennich (10 mars 1977-22 avril 1980) * Hamadi Khouini (22 avril 1980-16
+    mars 1983) * Kantaoui Morjane (16 mars 1983-26 juillet 1986) * Brahim Jameleddine (26 juillet 1986-1er
+    avril 1988) * Habib Daldoul (1er avril 1988-25 octobre 1990) * Rafaâ Dekhil (25 octobre 1990-5 août
+    1991) * Abdelbaki Bacha (5 août 1991-10 octobre 1992) * Amor N''sairi (10 octobre 1992-22 juillet
+    1996) * Mabrouk Bahri (22 juillet 1996-3 février 1997) * Mohamed Soudani (3 février 1997-6 juillet
+    1998) * Abderahmen Limam (6 juillet 1998-12 juillet 2006) * Taïeb Ragoubi (12 juillet 2006-2 février
+    2011) * Khemaïes Argoubi (2-19 février 2011) * Fawzi Jaoui (19 février 2011-27 août 2012) * Mokhles
+    Jemal (27 août 2012-28 février 2014) * Abdelmalak Sellami (28 février 2014-4 juillet 2015) * Fethi
+    Bdira (4 juillet 2015-18 mai 2017) * Adel Chlioui (18 mai 2017-14 avril 2020) * Raja Trabelsi (14
+    avril 2020-29 mars 2022) * Nabil Ferjani (6 juin 2022-8 septembre 2024) * Sofiane Tanfouri (depuis
+    le 8 septembre 2024)'
+  note: 'Page footer: La dernière modification de cette page a été faite le 18 septembre 2026 à 22:46.'
+- id: frwiki-monastir-gov
+  title: Gouvernorat de Monastir
+  publisher: Wikipédia (fr)
+  date: '2026-05-04'
+  url: https://fr.wikipedia.org/wiki/Gouvernorat_de_Monastir
+  tier: 3
+  lang: fr
+  excerpt: 'Voici la liste des gouverneurs de Monastir depuis la création du gouvernorat : * Hédi Attia
+    (9 mars 1974-5 mars 1977) * Mansour Skhiri (5 mars 1977-20 septembre 1985) * Mohamed Ben Nasr (20
+    septembre 1985-3 février 1988) * Abdelaziz Chaâbane (3 février 1988-25 juillet 1995) * Mohamed Ben
+    Nasr (25 juillet 1995-11 septembre 1996) * Mohamed Lahbib Brahem (11 septembre 1996-25 juillet 2000)
+    * Mondher Friji (25 juillet 2000-4 août 2005) * Khelifa Jebeniani (4 août 2005-2 février 2011) * Hichem
+    Fourati (2 février 2011-24 mars 2012) * Habib Sethom (24 mars 2012-28 février 2014) * Taïeb Nefzi
+    (28 février 2014-22 août 2015) * Adel Khabthani (22 août 2015-29 octobre 2017) * Akrem Sebri (29 octobre
+    2017-5 août 2021) * Mondher Ben Sik Ali (6 juin 2022-13 mars 2024) * Issa Moussa (depuis le 8 septembre
+    2024)'
+  note: 'Page footer: La dernière modification de cette page a été faite le 4 mai 2026 à 21:35.'
+- id: frwiki-mahdia-gov
+  title: Gouvernorat de Mahdia
+  publisher: Wikipédia (fr)
+  date: '2026-06-10'
+  url: https://fr.wikipedia.org/wiki/Gouvernorat_de_Mahdia
+  tier: 3
+  lang: fr
+  excerpt: 'Voici la liste des gouverneurs de Mahdia depuis la création du gouvernorat : * Ezzedine Salâani
+    (1974-1976) * Noureddine Hached (1976-1978) * Ameur Ghedira (1978-1979) * Néjib Drissi (1979-1980)
+    * Moncef Ben Gharbia (1980-1982) * Amor Latiri (1982-1986) * Abdelwaheb Jemal (1986-1988) * Mohamed
+    Ben Nasr (1988-1990) * Mohamed Ridha Mokrani (1990-1993) * Hédi Ayèche (1993-1997) * Mohamed Hechmi
+    Gouadria (1997-2000) * Kamel Ben Ali (2000-2002) * Mohamed Lamine Abed (2002-2005) * Kamel Labassi
+    (2005-2006) * Taieb Aloui (2006-2009) * Hichem Ben Ahmed (2010-2011) * Amor Jebbari (2011) * Mohamed
+    Najem Gharsalli (2011-2015) * Faouzi Ghrab (2015-2016) * Mohamed Bouden (2016-2019) * Abdelfattah
+    Chakchouk (2019-2024) * Anis Laadhari (depuis 2024)'
+  note: 'Page footer: La dernière modification de cette page a été faite le 10 juin 2026 à 20:33. The
+    article also states the governorate was créé par le décret du 9 mars 1974 après avoir fait partie
+    du gouvernorat de Sousse while its infobox gives 5 June 1974.'
+- id: frwiki-kasserine-gov
+  title: Gouvernorat de Kasserine
+  publisher: Wikipédia (fr)
+  date: '2026-09-08'
+  url: https://fr.wikipedia.org/wiki/Gouvernorat_de_Kasserine
+  tier: 3
+  lang: fr
+  excerpt: 'Voici la liste des gouverneurs de Kasserine depuis la création du gouvernorat : * Mustapha
+    El Khabthani (1956-1957) * Hédi Mabrouk (1957-1958) * Ahmed Bellalouna (1959-1960) * Mehrez Bellamine
+    (1960-1961) * Mohamed Besbes (1961-1964) * Mohamed Bellamine (1964-1966) * Mohamed Triki (1966-1969)
+    * Abdessalem Kallel (1969-1970) * Taoufik Essid (1970-1973) * Hédi Jédidi (1973-1978) * Néjib Drissi
+    (1978-1979) * Romdhane Rahli (1979-1980) * Abderahmen Mokrani (1980-1981) * Kantaoui Morjane (1981-1983)
+    * Sadok Marzouk (1983-1984) * Mohamed Mekki (1984-1986) * Abdelkrim Azaïez (1986-1987) * Mohamed Ben
+    Saad (1987-1988) * Hédi Ayèche (1988-1990) * Mabrouk Bahri (1990-1993) * Salah Kacem (août-décembre
+    1993) * Béchir Jamaï (1993-1994) * Mohamed Lamine El Abed (1994-1998) * Habib Hadded (1998-2000) *
+    Slaheddine El Abed (2000-2001) * Mahmoud Mehiri (2001-2003) * Mohamed Laïd Kidoussi (2003-2005) *
+    Hassen Lajri (2005-2010) * Mohamed Hafedh Cherif (2010-2011) * Slaheddine Amouchi (2 février 2011,
+    empêché d''exercer) * Omar Belhaj Slimen (19 février-5 août 2011) * Béchir El Bedoui (5 août 2011-27
+    août 2012) * Mohamed Sidhom (27 août 2012-28 février 2014) * Atef Boughatas (28 février 2014-22 août
+    2015) * Chedly Bouallegue (22 août 2015-16 septembre 2016) * Hassen Khedimi (16 septembre 2016-21
+    juin 2017) * Samir Boukadida (21 juin 2017-24 juillet 2019) * Mohamed Samcha (24 juillet 2019-13 octobre
+    2020) * Adel Mabrouk (2 novembre 2020-6 juin 2022) * Ridha Rokbani (6 juin 2022-8 septembre 2024)
+    * Zied Trabelsi (depuis le 8 septembre 2024)'
+  note: 'Page footer: La dernière modification de cette page a été faite le 8 septembre 2026 à 20:50.
+    The article states the governorate was created on 21 June 1956 et d''abord appelé gouvernorat de Sbeïtla.'
+- id: frwiki-sidi-bouzid-gov
+  title: Gouvernorat de Sidi Bouzid
+  publisher: Wikipédia (fr)
+  date: '2026-09-30'
+  url: https://fr.wikipedia.org/wiki/Gouvernorat_de_Sidi_Bouzid
+  tier: 3
+  lang: fr
+  excerpt: 'Voici la liste des gouverneurs de Sidi Bouzid depuis la création du gouvernorat : * Mokhtar
+    Chouari (1973-1974) * Abderrazak Ladab (1974-1977) * Hechmi Amri (1977-1978) * Salah Bhouri (1978-1979)
+    * Mohamed Hédi Bellakhoua (1979-8 mai 1980) * Mohamed Ben Rejeb (8 mai 1980-24 juillet 1986) * Najih
+    Drissi (24 juillet 1986-1990) * Boubaker Ben Kraiem (1990-1991) * Mohamed Soudani (1991-1993) * Mohamed
+    Louati (1993-1995) * Habib Ben Gamra (1995-1996) * Mohamed Ghariani (1996-2001) * Mohamed Belghith
+    (2001) * Mohamed Ben Salem (2002-2005) * Mohamed Faouzi Ben Arab (août 2005-2010) * Tajeddine Bekri
+    (2001-2002) * Mourad Ben Jelloul (28 juillet 2010-28 décembre 2010) * Abdelhamid Aloui (30 décembre
+    2010-2 février 2011) * Khaled Younsi (2 février 2011, a refusé le poste) * Mabrouk Amri (3 février
+    2011, a démissionné) * Abdelkader Hamdouni (15 février 2011, nomination annoncée et annulée le même
+    jour) * Hassen Ftouhi (19 février 2011, a démissionné) * Nabil Nsiri (13 avril 2011-22 février 2012)
+    * Mohamed Néjib Mansouri (22 février 2012-7 octobre 2012) * Amara Tlijani (7 octobre 2012-4 septembre
+    2013) * Ammar Khabbabi (4 septembre 2013-22 août 2015) * Mourad Mahjoubi (22 août 2015-29 octobre
+    2017) * Anis Dhifallah (29 octobre 2017-13 février 2019) * Mohamed Sedki Bououn (13 février 2019-25
+    novembre 2021) * Abdelhalim Hamdi (6 juin 2022-8 septembre 2024) * Faycel Bessaoudi (depuis le 8 septembre
+    2024)'
+  note: 'Page footer: La dernière modification de cette page a été faite le 30 septembre 2026 à 18:31.
+    The table prints the Tajeddine Bekri (2001-2002) row after the 2005-2010 row.'
+- id: frwiki-gafsa-gov
+  title: Gouvernorat de Gafsa
+  publisher: Wikipédia (fr)
+  date: '2026-10-17'
+  url: https://fr.wikipedia.org/wiki/Gouvernorat_de_Gafsa
+  tier: 3
+  lang: fr
+  excerpt: 'Le gouvernorat de Gafsa est dirigé par un gouverneur dont la liste depuis l''indépendance
+    est la suivante : * Béchir Achoura (1956-1957) * Tahar Debaya (1957-1959) * Hédi Mabrouk (1959-1960)
+    * Mahmoud Belhassine (1960-1962) * Abdessalem Ghédira (1962-1969) * Mohamed Triki (1969-1971) * Tahar
+    Boussemma (1971-1972) * Mezri Chekir (1972-1973) * Salem Ben Hejal (1973-1974) * Mokhtar Chouari (1974-1979)
+    * Mohamed Abbes (1979-1980) * Mohamed Letayef (1980-1984) * Fayçal Chahdoura (1984-13 février 1988)
+    * Mohamed Ben Rejeb (13 février 1988-2 juillet 1991) * Mohamed Habib Braham (2 juillet 1991-1994)
+    * Mahmoud Lajnef (1994) * Mustapha Karbia (1994-1996) * Salah Zoghlami (1996-1998) * Mohamed Ridha
+    Mokrani (1998-2001) * Mohamed Aouinti (2001-2004) * Jomâa Chaouch (2004-2005) * Mohamed Laïd Kidoussi
+    (2005-2008) * Mohamed Chaïeb (2008-2011) * Mohamed Gouider (2 février 2011, empêché d''exercer) *
+    Taoufik Khalfallah (15 février-5 août 2011) * Moncef El Hani (5 août 2011-22 février 2012) * Brahim
+    Hamdaoui (22 février 2012-28 février 2014) * Mustapha Ben Moussa (28 février 2014-9 avril 2015) *
+    Taïeb Ezzaraii (9 avril 2015-14 mars 2016) * Mondher Aribi (14 mars 2016-18 juin 2020) * Sami Ghabi
+    (18 juin 2020-21 octobre 2021) * Nader Hamdouni (26 novembre 2021-8 septembre 2024)'
+  note: 'Page footer: La dernière modification de cette page a été faite le 17 octobre 2026 à 15:09. The
+    table lists Nader Hamdouni twice, once to 8 September 2024 and once depuis le 8 septembre 2024.'
+- id: frwiki-tozeur-gov
+  title: Gouvernorat de Tozeur
+  publisher: Wikipédia (fr)
+  date: '2026-05-04'
+  url: https://fr.wikipedia.org/wiki/Gouvernorat_de_Tozeur
+  tier: 3
+  lang: fr
+  excerpt: 'Voici la liste des gouverneurs de Tozeur depuis l''indépendance : * Abdelhamid El Kadhi (1956-1957)
+    * Mustapha Khabthani (1957-1958) * Tahar Ben Hejal (1980-1986) * Mohamed Mâalej (1986-1987) * Ahmed
+    Ridha Ouaja (1987-1988) * Faouzi El Aouem (1988-1991) * Mohamed Belghith (1991-1993) * Brahim Fridhi
+    (1993-1995) * Youssef Ajlani (1995-1996) * Ali Ksiksi (1996-2000) * Chabib Daly (2000-2002) * Mohamed
+    Sghaïer Mâali (2002-2005) * Yassine Barbouche (2005-2007) * Slaheddine Ben Romdhane (2007-2011) *
+    Abdelhamid Ghanmi (2011, a démissionné) * Houcine Ben Frej (2011, a démissionné) * Abderrahmane Lamine
+    Zouari (2011-2012) * Samir Rouihem (2012-27 août 2012) * Noureddine Kamoun (27 août 2012-28 février
+    2014) * Mohamed Mansouri (28 février 2014-22 août 2015) * Lotfi Sassi (22 août 2015-16 septembre 2016)
+    * Mounir Hamdi (16 septembre 2016-18 mai 2017) * Salah Mtiraoui (18 mai 2017-13 février 2019) * Mohamed
+    Aymen Béjaoui (13 février 2019-8 septembre 2024) * Chahine Zribi (depuis le 8 septembre 2024)'
+  note: 'Page footer: La dernière modification de cette page a été faite le 4 mai 2026 à 21:36. No governor
+    is listed between 1958 and 1980.'
+- id: frwiki-kebili-gov
+  title: Gouvernorat de Kébili
+  publisher: Wikipédia (fr)
+  date: '2026-02-22'
+  url: https://fr.wikipedia.org/wiki/Gouvernorat_de_K%C3%A9bili
+  tier: 3
+  lang: fr
+  excerpt: 'Voici la liste des gouverneurs depuis la création du gouvernorat : 1 | Mohamed Hafsa | septembre
+    1981 - septembre 1984 | 2 | Ameur Kriaa | septembre 1984 - août 1987 | 3 | Mabrouk Bahri | août 1987
+    - octobre 1990 | 4 | Barhoumi Laabidi | octobre 1990 - mai 1991 | 5 | Moncef Ben Tmessek | mai 1991
+    - janvier 1992 | 6 | Mohamed Laabidi | janvier 1992 - décembre 1992 | 7 | Abdelaziz Bouallègue | décembre
+    1992 - avril 1997 | 8 | Abdeljelil Zaddem | avril 1997 - janvier 2001 | 9 | Mohamed Akrimi | janvier
+    2001 - juillet 2002 | 10 | Mohamed Faouzi Ben Arab | juillet 2001 - août 2005 | 11 | Taïeb Ragoubi
+    | août 2005 - juillet 2006 | 12 | Brahim Briki | juillet 2006 - juillet 2010 | 13 | Mahmoud Saied
+    | juillet 2010 - février 2011 | 14 | Badreddine Habil | février 2011 | empêché d''exercer | 15 | Mounir
+    Amami | février 2011 | démissionnaire | 16 | Saleh Sabii | février 2011 - mai 2012 | 17 | Amara Tlijani
+    | mai 2012 - octobre 2012 | 18 | Habib Jerdi | octobre 2012 - février 2014 | 19 | Amara Tlijani |
+    février 2014 - juin 2015 | 20 | Hachem Hmidi | juin 2015 - septembre 2016 | 21 | Walid Louguini |
+    septembre 2016 - mai 2017 | 22 | Sami Ghabi | mai 2017 - juin 2020 | 23 | Moncef Chleghmia | juillet
+    2020 - novembre 2021 | 24 | Mohamed Taieb Khelifi | juin 2022 - septembre 2024 | 25 | Moez Laabidi
+    | depuis septembre 2024'
+  note: 'Page footer: La dernière modification de cette page a été faite le 22 février 2026 à 12:57. The
+    article states the governorate was créé en septembre 1981.'
+- id: frwiki-gabes-gov
+  title: Gouvernorat de Gabès
+  publisher: Wikipédia (fr)
+  date: '2026-05-04'
+  url: https://fr.wikipedia.org/wiki/Gouvernorat_de_Gab%C3%A8s
+  tier: 3
+  lang: fr
+  excerpt: 'Le gouvernorat de Gabès est dirigé par un gouverneur dont la liste depuis l''indépendance
+    est la suivante : Habib Ben Mohamed Lahbib (1956-1958) Mohamed Bellamine (1958-1959) Youssef Jedaï
+    (1959-1961) Ahmed Bellalouna (1961-1967) Zakaria Ben Mustapha (1967-1969) Hédi Baccouche (1969-1970)
+    Rachid Badri (1970-1973) Abdelhamid Melki (1973) Ameur Ghedira (1973-1974) Abderrahim Zouari (1974-1978)
+    Abderrazak Yazid (1978-1979) Mohamed Jegham (1979-1980) Ahmed Ben Jemiaâ (1980-1983) Mohamed Habib
+    Gharbi (1983-1984) Abdelhak Lassoued (1984-1986) Mohamed Essid (1986-1988) Naceur El Gharbi (1988-1990)
+    Moncef Louati (1990-1993) Slaheddine El Abed (1993-1996) Hassène Smaoui (1996-1998) Ali Trabelsi (1998-2000)
+    Sadok Marzouk (2000-2002) Kamel Ben Ali (2002-2005) Brahim Briki (2005-juillet 2006) Abdelkrim Mosbah
+    (2006-2009) Mokdad Missaoui (2009-2011) Chokri Necib (2011, empêché d''exercer) Moncef Khemiri (2011,
+    a démissionné) Mondher Yedas (2011-2012) Omar Chahbani (2012) Houcine Jrad (2012-2015) Nabil Zarrouk
+    (2015) Ahmed Lamine Lansari (2015-2016) Mongi Thameur (2016-2021) Mosbah Kardamin (2022-2023) Radhouane
+    Nsibi (depuis 2024)'
+  note: 'Page footer: La dernière modification de cette page a été faite le 4 mai 2026 à 21:33. The article
+    states the governorate was créé en 1956.'
+- id: frwiki-medenine-gov
+  title: Gouvernorat de Médenine
+  publisher: Wikipédia (fr)
+  date: '2026-05-24'
+  url: https://fr.wikipedia.org/wiki/Gouvernorat_de_M%C3%A9denine
+  tier: 3
+  lang: fr
+  excerpt: 'Voici la liste des gouverneurs de Médenine depuis l''indépendance : Mohamed Bellamine (1956-1958)
+    Habib Ben Mohamed Lahbib (1958-1962) Abdelhamid Kadhi (1962-1965) Abdelaziz Beltaïef (1965-1967) Mimoun
+    Chatti (1967-1969) Frej Jabbes (1969-1970) Mehrez Bellamine (1970-1971) Salem Ben H''jal (1971-1973)
+    Mahmoud El Ghoul (1973-1974) Salem Boumiza (1974-1978) Mohamed Hédi Bellakhoua (1978-1979) Salah Bhouri
+    (1979-1987) Ali Chaouch (1987-1989) Mohamed Moncef Ayadi (1989-1990) Mohsen Harbi (1990-1991) Noureddine
+    Naïja (1991-1992) Mohamed Sahbi Basly (1992-1993) Abderrahmane Limam (1993-6 juillet 1998) Frej Souissi
+    (1998-2000) Mohamed Ben Salem (2000-2002) Jamaleddine Bouslimi (2002-2005) Kamel Ben Ali (2005-2007)
+    Néjib Barkallah (2007-2008) Mourad Ben Jelloul (2008-2010) Brahim Briki (2010-2011) Hamadi Chetioui
+    (2 février 2011, empêché d''exercer) Nabil Ferjani (2011-24 mars 2012) Hamadi Mayara (24 mars 2012-28
+    février 2014) Habib Chaouat (28 février 2014-22 août 2015) Taher Matmati (22 août 2015-29 octobre
+    2017) Habib Chaouat (29 octobre 2017-5 août 2021) Saied Ben Zayed (26 novembre 2021-8 septembre 2024)
+    Walid Tabboubi (depuis le 8 septembre 2024)'
+  note: 'Page footer: La dernière modification de cette page a été faite le 24 mai 2026 à 10:00. The article
+    states the governorate was créé le 21 juin 1956.'
+- id: frwiki-tataouine-gov
+  title: Gouvernorat de Tataouine
+  publisher: Wikipédia (fr)
+  date: '2026-05-04'
+  url: https://fr.wikipedia.org/wiki/Gouvernorat_de_Tataouine
+  tier: 3
+  lang: fr
+  excerpt: 'Le gouvernorat de Tataouine est dirigé par un gouverneur dont la liste depuis l''indépendance
+    est la suivante : * Fayçal Chahdoura (1981-1984) * Abderrazak Ayoub (juillet-décembre 1984) * Othman
+    Naghmouchi (1985-1988) * Mohamed Essid (1988-1990) * Mohamed Marzouki (1990-1991) * Mohamed Lajnef
+    (1991-1992) * Béchir Ben Thabet (1992-1993) * Hassen Alaya (1993-1996) * Mohamed Ben Salem (1996-2000)
+    * Mohamed Laïd Kidoussi (2000-2003) * Fethi Boussoffara (2003-2007) * Mohamed Ridha Belhaj (2007-2009)
+    * Nouri Ben Saïd (2009-2011) * Youssef Hidri (2 février 2011, empêché d''exercer) * Amor Chouchène
+    (19 février-5 août 2011) * Nejib El Ghali (5 août 2011-22 février 2012) * Mourad Achour (22 février
+    2012-28 février 2014) * Saber Mednini (28 février 2014-9 avril 2015) * Mohsen Ben Ali (9 avril 2015-29
+    avril 2017) * Mohamed Ali Barhoumi (29 avril-24 mai 2017) * Adel Ouerghi (2 juin 2017-6 juin 2022)
+    * Hafedh Fitouri (6 juin 2022-8 septembre 2024) * Amir Gabsi (depuis le 8 septembre 2024)'
+  note: 'Page footer: La dernière modification de cette page a été faite le 4 mai 2026 à 21:36. The article
+    states the governorate was créé le 2 mars 1981 par une scission du gouvernorat de Médenine.'
+- id: arwiki-kasserine-gov
+  title: ولاية القصرين
+  publisher: ويكيبيديا (ar)
+  date: '2026-10-09'
+  url: https://ar.wikipedia.org/wiki/%D9%88%D9%84%D8%A7%D9%8A%D8%A9_%D8%A7%D9%84%D9%82%D8%B5%D8%B1%D9%8A%D9%86
+  tier: 3
+  lang: ar
+  excerpt: 'الولاة: 1956 - 1957: مصطفى الخطباني 1957 - 1958: الهادي المبروك 1959 - 1960: أحمد بلالونة
+    1960 - 1961: محرز بالأمين 1961 - 1964: محمد بسباس 1964 - 1966: محمد بالأمين 1966 - 1969: محمد تريكي
+    1969 - 1970: عبد السلام القلال 1970 - 1973: توفيق الصيد 1973 - 1978: الهادي الجديدي 1978 - 1979: نجيب
+    الدريسي 1979 - 1980: رمضان راحلي 1980 - 1981: عبد الرحان مكراني 1981 - 1983: قنطاوي مرجان 1983 - 1984:
+    الصادق مرزوق 1984 - 1986: محمد المكي 1986 - 1987: عبد الكريم عزيز 1987 - 1988: محمد بن سعد 1988 -
+    1990: الهادي عياش 1990 - 1993: مبروك البحري أغسطس - ديسمبر 1993: صالح القاسم 1993 - 1994: بشير الجمعي
+    1994 - 1998: محمد لمين العابد 1998 - 2000: الحبيب الحداد 2000 - 2001: صلاح الدين العابد 2001 - 2003:
+    محمود المهيري 2003 - 2005: محمد العيد قيدوسي 2005 - 2010: حسن الاجري 2010 - 2011: محمد الحافظ الشريف
+    2 فبراير 2011: صلاح الدين عموشي (منع من العمل) 19 فبراير - 5 أغسطس 2011: عمر الحاج سليمان 5 أغسطس
+    2011 - 27 أغسطس 2012: بشير البدوي 27 أغسطس 2012 - 28 فبراير 2014: محمد سيدهم 28 فبراير 2014 - 22 أغسطس
+    2015: عاطف بوغطاس 22 أغسطس 2015 - 16 سبتمبر 2016: الشاذلي بوعلاق 17 سبتمبر 2016 - 21 يونيو 2017: حسن
+    الخديمي 21 يونيو 2017 - الأن: سمير بوقديدة 1 أوت 2019 - الآن: محمد شمسه'
+  note: 'Page footer: آخر تعديل لهذه الصفحة كان يوم 9 أكتوبر 2026، الساعة 07:58. The list runs past the
+    2017 appointment without closing Samir Boukadida''s tenure.'
+- id: arwiki-tataouine-gov
+  title: ولاية تطاوين
+  publisher: ويكيبيديا (ar)
+  date: '2026-10-09'
+  url: https://ar.wikipedia.org/wiki/%D9%88%D9%84%D8%A7%D9%8A%D8%A9_%D8%AA%D8%B7%D8%A7%D9%88%D9%8A%D9%86
+  tier: 3
+  lang: ar
+  excerpt: 'أسفله يوجد قائمة الولاة منذ إعلان تأسيس الولاية: 1981 - 1984: فيصل شهدورة. يوليو - ديسمبر
+    1984: عبد الرزاق أيوب. 1985 - 1988: عثمان نغموشي. 1988 - 1990: محمد الصيد. 1990 - 1991: محمد المرزوقي.
+    1991 - 1992: محمد لجنف. 1992 - 1993: البشير بن ثابت. 1993 - 1996: حسن علاية. 1996 - 2000: محمد بن
+    سالم. 2000 - 2003: محمد العيد كدوسي. 2003 - 2007: فتحي بوصفارة. 2007 - 2009: محمد رضا بالحاج. 2009
+    - 2011: النوري بن سعيد. 2 فبراير 2011: يوسف حيدري (منع من العمل). 19 فبراير 2011 - 5 أغسطس 2011: عمر
+    شوشان. 5 أغسطس 2011 - 22 فبراير 2012: نجيب الغالي. 22 فبراير 2012 - 28 فبراير 2014: مراد عاشور. 28
+    فبراير 2014 - 9 أبريل 2015: صابر المدنيني. 9 أبريل 2015 - 29 أبريل 2017: محسن بن علية. 29 أبريل 2017
+    -2 يونيو 2017: محمد علي البرهومي. 2 يونيو 2017 - الآن: عادل الورغي.'
+  note: 'Page footer: آخر تعديل لهذه الصفحة كان يوم 9 أكتوبر 2026، الساعة 12:03.'
+- id: mosaique-gouverneurs-2022-06-06
+  title: Mouvement parmi les gouverneurs
+  publisher: Mosaïque FM
+  date: '2022-06-06'
+  url: https://www.mosaiquefm.net/fr/actualite-national-tunisie/1055498/mouvement-parmi-les-gouverneurs
+  tier: 3
+  lang: fr
+  excerpt: En marge de la réunion entre Le président de la République, Kais Saied, tenue ce lundi 6 juin
+    2022, avec la cheffe du gouvernement Najla Bouden et le ministre de l'Intérieur Tawfik Charfeddine,
+    le chef de l'Etat a annoncé un mouvement parmi les gouverneurs. Mondher Sik Ali, gouverneur de Monastir;
+    Khaled Nouri, Gouverneur de l'Ariana; Mohammed Al Euch, Gouverneur de Zaghouan; NabilFarjani, Gouverneur
+    de Sousse; Reda Rakbani, Gouverneur de Kasserine; Hafidh Fitouri, Gouverneur de Tatouine; Abdelhalim
+    Hamdi, Gouverneur de Sidi Bouzid; Samir Koka, gouverneur de Jandouba; Sabeh Malak, Gouverneur de Nabeul;
+    Mosbah Kardamin, gouverneur de Gabes; Walid Abbasi, gouverneur de Seliana; Fakher Fakhfakh, Gouverneur
+    de Sfax; Mohamed Tayeb Khalifi, gouverneur de Kebili.
+- id: mosaique-nominations-2021-11-26
+  title: Nomination de quatre nouveaux gouverneurs
+  publisher: Mosaïque FM
+  date: '2021-11-26'
+  url: https://www.mosaiquefm.net/fr/actualite-national-tunisie/989321/nomination-de-quatre-nouveaux-gouverneurs
+  tier: 3
+  lang: fr
+  excerpt: 'Le président de la République, Kaïs Saïed, a nommé, ce vendredi 24 novembre 2021, quatre nouveaux
+    gouverneurs. Voici la liste: -Saïed Ben Zayed: Gouverneur de Médenine -Ezzedine Chalbi: Gouverneur
+    de Ben Arous -Fouzi Mrad: Gouverneur de Sfax -Nader Hamdouni: Gouverneur de Gafsa'
+  note: The page carries a publication timestamp of 2021-11-26 20:28 while its text says ce vendredi 24
+    novembre 2021; 24 November 2021 was a Wednesday, so the date inside the text is wrong. The fr.wikipedia
+    lists use 26 November 2021.
+- id: mosaique-sidi-bouzid-kebili-2021-11-25
+  title: Les gouverneurs de Sidi Bouzid et de Kébili limogés
+  publisher: Mosaïque FM
+  date: '2021-11-25'
+  url: https://www.mosaiquefm.net/fr/actualite-national-tunisie/988901/les-gouverneurs-de-sidi-bouzid-et-de-kebili-limoges
+  tier: 3
+  lang: fr
+  excerpt: Kais Saïed, président de la République, a décidé, ce jeudi 25 novembre 2021, de mettre fin
+    à la mission de Mohamed Sedki Bououn, gouverneur de Sidi Bouzid et de Moncef Chelaghmia, gouverneur
+    de Kébili, a indiqué la présidence de la République dans un communiqué.
+- id: mosaique-gabes-dismissal-2021-10-07
+  title: Le gouverneur de Gabès démis de ses fonctions
+  publisher: Mosaïque FM
+  date: '2021-10-07'
+  url: https://www.mosaiquefm.net/fr/actualite-national-tunisie/969803/le-gouverneur-de-gabes-demis-de-ses-fonctions
+  tier: 3
+  lang: fr
+  excerpt: La présidence de la République a annoncé, ce jeudi soir, que le gouverneur de Gabès, Mongi
+    Thameur, a été démis de ses fonctions.
+- id: mosaique-gafsa-dismissal-2021-10-21
+  title: Le gouverneur de Gafsa démis de ses fonctions
+  publisher: Mosaïque FM
+  date: '2021-10-21'
+  url: https://www.mosaiquefm.net/fr/actualite-national-tunisie/975815/le-gouverneur-de-gafsa-demis-de-ses-fonctions
+  tier: 3
+  lang: fr
+  excerpt: Le président de la République, Kais Saïed, a décidé, ce jeudi 21 octobre 2021, de démettre
+    le gouverneur de Gafsa, Sami Ghabi, de ses fonctions.
+- id: mosaique-gafsa-ghabi-2020-06-18
+  title: 'MI : mouvement partiel dans le corps des gouverneurs'
+  publisher: Mosaïque FM
+  date: '2020-06-18'
+  url: https://www.mosaiquefm.net/fr/communiques-de-presse-tunisie/757441/mi-mouvement-partiel-dans-le-corps-des-gouverneurs
+  tier: 3
+  lang: fr
+  excerpt: Le ministère de l'Intérieur a annoncé ce jeudi 18 juin 2020 dans un communiqué que le chef
+    du gouvernement a décidé de faire un mouvement partiel dans le corps des gouverneurs. Ainsi, Sami
+    Ghabi, gouverneur de Kébili a été désigné gouverneur de Gafsa, a indiqué le même communiqué sans donner
+    d'autres précisions.
+- id: mosaique-kasserine-mabrouk-2020-11-02
+  title: Adel Mabrouk, nouveau gouverneur de Kasserine
+  publisher: Mosaïque FM
+  date: '2020-11-02'
+  url: https://www.mosaiquefm.net/fr/actualite-national-tunisie/817124/adel-mabrouk-nouveau-gouverneur-de-kasserine
+  tier: 3
+  lang: fr
+  excerpt: Le ministre de l'Intérieur a annoncé, ce lundi 2 novembre 2020, que le chef du gouvernement
+    a annoncé la nomination de Adel Mabrouk au poste de gouverneur de Kasserine.
+- id: mosaique-gafsa-aribi-2016-03-14
+  title: Mondher Aribi, nouveau gouverneur de Gafsa
+  publisher: Mosaïque FM
+  date: '2016-03-14'
+  url: https://www.mosaiquefm.net/fr/national-tunisie/7580/mondher-aribi-nouveau-gouverneur-de-gafsa
+  tier: 3
+  lang: fr
+  excerpt: Habib Essid, Chef du gouvernement, a décidé aujourd'hui, lundi 14 mars 2016 de nommer Mondher
+    Aribi au poste de gouverneur de Gafsa, a annoncé un communiqué de la présidence du gouvernement. Mondher
+    Aribi prend la place de Taieb Zarai.
+- id: mosaique-kasserine-boukadida-2017-06-21
+  title: Samir Boukadida, nouveau gouverneur de Kasserine
+  publisher: Mosaïque FM
+  date: '2017-06-21'
+  url: https://www.mosaiquefm.net/fr/actualite-regional-tunisie/159848/samir-boukadida-nouveau-gouverneur-kasserine
+  tier: 3
+  lang: fr
+  excerpt: Le ministère de l'intérieur a annoncé dans un communiqué, que le chef du gouvernement, Youssef
+    Chahed a décidé de nommer Samir Boukadida en tant que gouverneur de Kasserine. Samir Boukadida succède
+    ainsi à l'ex-gouverneur Hassen Khedimi, qui était en exercice depuis le 16 septembre 2016.
+- id: mosaique-tataouine-ouerghi-2017-06-02
+  title: Adel Ouerghi nommé gouverneur de Tataouine
+  publisher: Mosaïque FM
+  date: '2017-06-02'
+  url: https://www.mosaiquefm.net/fr/actualite-regional-tunisie/149909/adel-ouerghi-nomme-gouverneur-de-tataouine
+  tier: 3
+  lang: fr
+  excerpt: Le Chef du Gouvernement Youssef Chahed a décidé de nommer Adel Ouerghi au poste de Gouverneur
+    de Tataouine selon un communiqué publié par la Présidence du Gouvernement. Adel Ouerghi remplace Mohamed
+    Ali Barhoumi qui avait démissionné le 29 avril dernier pour des raisons personnelles.
+- id: mosaique-monastir-mahdia-2024-03-13
+  title: Les gouverneurs de Monastir et de Mahdia limogés
+  publisher: Mosaïque FM
+  date: '2024-03-13'
+  url: https://www.mosaiquefm.net/fr/actualite-national-tunisie/1250117/les-gouverneurs-de-monastir-et-de-mahdia-limoges
+  tier: 3
+  lang: fr
+  excerpt: La présidence de la République a annoncé, sur sa page Facebook, que le chef de l'Etat, Kais
+    Saïed a démis Mondher Ben Sik Ali, gouverneur de Monastir et Abdelfattah Chakchouk, gouverneur de
+    Mahdia de leurs fonctions.
+- id: businessnews-sfax-delegue-2024-03-28
+  title: 'Sfax : limogeage du premier délégué'
+  publisher: Business News
+  date: '2024-03-28'
+  url: https://businessnews.com.tn/2024/03/28/article-1205165/1205165/
+  tier: 3
+  lang: fr
+  excerpt: Le ministère de l'Intérieur a annoncé, tard le soir du 28 mars 2024, le limogeage du premier
+    délégué de Sfax, Habib Balghouthi, en poste depuis le 4 juillet 2022 et chargé depuis janvier 2023
+    de la gestion du gouvernorat de Sfax. Le ministère a indiqué, dans la même annonce, que Mohamed Nafti
+    Gdouda lui succèdera. Ce dernier occupait la fonction de délégué de Menzel Chaker du gouvernorat de
+    Sfax.
+- id: kapitalis-gabes-2023-03-30
+  title: 'Tunisie : Le gouverneur de Gabès démis de ses fonctions'
+  publisher: Kapitalis
+  date: '2023-03-30'
+  url: https://kapitalis.com/tunisie/2023/03/30/tunisie-le-gouverneur-de-gabes-demis-de-ses-fonctions/
+  tier: 3
+  lang: fr
+  excerpt: La présidence de la république a annoncé dans la soirée de ce jeudi 30 mars 2023, que le gouverneur
+    de Gabès Mosbah Kardamin a été démis de ses fonctions. Cette décision de limogeage, dont les raisons
+    n'ont pas été précisées, a été prise par décret présidentiel émis par el chef de l'État Kaïs Saïed,
+    ajoute le communiqué. Notons que Mosbah Kardamin avait été nommé à la tête du gouvernorat de Gabès,
+    en juin 2022.
+- id: tunisienumerique-sfax-2023-01-06
+  title: 'Tunisie : Limogeage du gouverneur de Sfax'
+  publisher: Tunisie Numérique
+  date: '2023-01-06'
+  url: https://www.tunisienumerique.com/tunisie-derniere-minute-limogeage-du-gouverneur-de-sfax-2/
+  tier: 3
+  lang: fr
+  excerpt: La page officielle de la présidence de la République a annoncé que le président Kaïs Saïed
+    a décidé, à l'issue de son entretien avec la cheffe du gouvernement de limoger le gouverneur de Sfax.
+- id: frwiki-jegham
+  title: Mohamed Jegham
+  publisher: Wikipédia (fr)
+  date: '2026-10-08'
+  url: https://fr.wikipedia.org/wiki/Mohamed_Jegham
+  tier: 3
+  lang: fr
+  excerpt: Jegham est successivement nommé délégué à Béja, Gafsa et Jendouba, premier délégué de la délégation
+    de Tunis-Sud, secrétaire général du gouvernorat de Bizerte et enfin gouverneur de Gabès. Nommé président-directeur
+    général (PDG) des Ateliers mécaniques du Sahel en 1980.
+  note: 'Page footer: La dernière modification de cette page a été faite le 8 octobre 2026 à 23:19. Places
+    the Gabès governorship immediately before a 1980 appointment, consistent with 1979-1980.'
+
+
+# ===========================================================================
+# Parliaments 2011-2019 and governments 2011-2025, imported from data/contrib after review.
+# ===========================================================================
+
+- id: frwiki-nca-list-2011
+  title: Liste des membres de l'Assemblée constituante tunisienne de 2011
+  publisher: Wikipédia (fr)
+  date: '2026-02-21'
+  url: https://fr.wikipedia.org/wiki/Liste_des_membres_de_l%27Assembl%C3%A9e_constituante_tunisienne_de_2011
+  tier: 3
+  lang: fr
+  excerpt: Cet article donne la liste des membres de l'Assemblée constituante tunisienne de 2011 par circonscription.
+- id: arwiki-nca-list-2011
+  title: قائمة أعضاء المجلس الوطني التأسيسي التونسي 2011-2014
+  publisher: ويكيبيديا (ar)
+  date: '2026-02-20'
+  url: https://ar.wikipedia.org/wiki/%D9%82%D8%A7%D8%A6%D9%85%D8%A9_%D8%A3%D8%B9%D8%B6%D8%A7%D8%A1_%D8%A7%D9%84%D9%85%D8%AC%D9%84%D8%B3_%D8%A7%D9%84%D9%88%D8%B7%D9%86%D9%8A_%D8%A7%D9%84%D8%AA%D8%A3%D8%B3%D9%8A%D8%B3%D9%8A_%D8%A7%D9%84%D8%AA%D9%88%D9%86%D8%B3%D9%8A_2011-2014
+  tier: 3
+  lang: ar
+  excerpt: تحتوي هذه المقالة على قائمة أعضاء المجلس الوطني التأسيسي التونسي 2011-2014 حسب الدوائر الانتخابية
+    والذي يبلغ عددهم 217 نائب.
+- id: frwiki-nca-2011
+  title: Assemblée nationale constituante tunisienne de 2011
+  publisher: Wikipédia (fr)
+  date: '2026-03-23'
+  url: https://fr.wikipedia.org/wiki/Assembl%C3%A9e_nationale_constituante_tunisienne_de_2011
+  tier: 3
+  lang: fr
+  excerpt: L'Assemblée nationale constituante tunisienne de 2011 ou ANC (المجلس الوطني التأسيسي التونسي)
+    est une assemblée constituante de 217 membres élue le 23 octobre 2011 par les électeurs tunisiens.
+- id: frwiki-2011-election
+  title: Élections constituantes tunisiennes de 2011
+  publisher: Wikipédia (fr)
+  date: '2026-09-04'
+  url: https://fr.wikipedia.org/wiki/%C3%89lections_constituantes_tunisiennes_de_2011
+  tier: 3
+  lang: fr
+  excerpt: Les élections constituantes tunisiennes de 2011, connues pour être les premières élections
+    démocratiques en Tunisie, permettent de désigner 217 membres chargés de rédiger et adopter une nouvelle
+    Constitution.
+- id: frwiki-arp-2014-legislature
+  title: Ire législature de l'Assemblée des représentants du peuple
+  publisher: Wikipédia (fr)
+  date: '2026-07-02'
+  url: https://fr.wikipedia.org/wiki/Ire_l%C3%A9gislature_de_l%27Assembl%C3%A9e_des_repr%C3%A9sentants_du_peuple
+  tier: 3
+  lang: fr
+  excerpt: Le 2 décembre 2014, la séance inaugurale s'ouvre comme prévu... Ben Jaafar ... annonce la clôture
+    officielle des travaux de l'Assemblée constituante.
+- id: arwiki-nca-2011
+  title: المجلس الوطني التأسيسي التونسي (2011-2014)
+  publisher: ويكيبيديا (ar)
+  date: '2026-08-21'
+  url: https://ar.wikipedia.org/wiki/%D8%A7%D9%84%D9%85%D8%AC%D9%84%D8%B3_%D8%A7%D9%84%D9%88%D8%B7%D9%86%D9%8A_%D8%A7%D9%84%D8%AA%D8%A3%D8%B3%D9%8A%D8%B3%D9%8A_%D8%A7%D9%84%D8%AA%D9%88%D9%86%D8%B3%D9%8A_(2011-2014)
+  tier: 3
+  lang: ar
+  excerpt: وعقد المجلس آخر جلساته الخميس 20 نوفمبر 2014.
+- id: frwiki-gov-bouden-hachani-madouri-zaafrani
+  title: Gouvernement Bouden/Hachani/Madouri/Zaafrani
+  publisher: Wikipédia (fr)
+  date: '2026-07-17'
+  url: https://fr.wikipedia.org/wiki/Gouvernement_Bouden/Hachani/Madouri/Zaafrani
+  tier: 3
+  lang: fr
+  excerpt: Le gouvernement Bouden, Hachani, Madouri puis Zaafrani est le gouvernement de la Tunisie depuis
+    le 11 octobre 2021. Il est dirigé par Najla Bouden puis par Ahmed Hachani à partir du 1 août 2023,
+    par Kamel Madouri à partir du 8 août 2024 et enfin par Sarra Zaafrani à partir du 21 mars 2025.
+- id: frwiki-gov-chahed
+  title: Gouvernement Chahed
+  publisher: Wikipédia (fr)
+  date: '2026-09-28'
+  url: https://fr.wikipedia.org/wiki/Gouvernement_Chahed
+  tier: 3
+  lang: fr
+  excerpt: Le gouvernement Chahed est le gouvernement de la Tunisie du 27 août 2016 au 27 février 2020.
+    Il succède à celui de Habib Essid.
+- id: frwiki-gov-essid
+  title: Gouvernement Essid
+  publisher: Wikipédia (fr)
+  date: '2026-09-28'
+  url: https://fr.wikipedia.org/wiki/Gouvernement_Essid
+  tier: 3
+  lang: fr
+  excerpt: Le gouvernement Habib Essid est le gouvernement de la Tunisie du 6 février 2015 au 27 août
+    2016. Succédant à celui de Mehdi Jomaa à l'issue des élections législatives et présidentielle de l'automne
+    2014, il est renversé le 30 juillet 2016 lors d'un vote de confiance à l'Assemblée des représentants
+    du peuple.
+- id: frwiki-gov-fakhfakh
+  title: Gouvernement Fakhfakh
+  publisher: Wikipédia (fr)
+  date: '2026-04-12'
+  url: https://fr.wikipedia.org/wiki/Gouvernement_Fakhfakh
+  tier: 3
+  lang: fr
+  excerpt: Le gouvernement Fakhfakh est le gouvernement de la Tunisie du 27 février 2020 au 2 septembre
+    2020. Il succède à celui de Youssef Chahed.
+- id: frwiki-gov-jebali
+  title: Gouvernement Jebali
+  publisher: Wikipédia (fr)
+  date: '2026-05-19'
+  url: https://fr.wikipedia.org/wiki/Gouvernement_Jebali
+  tier: 3
+  lang: fr
+  excerpt: Le gouvernement Jebali est le gouvernement de la Tunisie entre le 24 décembre 2011 et le 13
+    mars 2013. Il succède à celui de Béji Caïd Essebsi après l'élection de l'Assemblée constituante du
+    23 octobre 2011.
+- id: frwiki-gov-jomaa
+  title: Gouvernement Jomaa
+  publisher: Wikipédia (fr)
+  date: '2026-08-04'
+  url: https://fr.wikipedia.org/wiki/Gouvernement_Jomaa
+  tier: 3
+  lang: fr
+  excerpt: Le gouvernement Jomaa est le gouvernement de la Tunisie du 29 janvier 2014 au 6 février 2015.
+    Succédant à celui d'Ali Larayedh à l'initiative du dialogue national, il est remplacé par celui de
+    Habib Essid à l'issue des élections législatives et présidentielle de l'automne 2014.
+- id: frwiki-gov-larayedh
+  title: Gouvernement Larayedh
+  publisher: Wikipédia (fr)
+  date: '2026-04-12'
+  url: https://fr.wikipedia.org/wiki/Gouvernement_Larayedh
+  tier: 3
+  lang: fr
+  excerpt: Le gouvernement Larayedh est le gouvernement de la Tunisie du 13 mars 2013 au 29 janvier 2014,
+    succédant à celui de Hamadi Jebali à la suite du meurtre de Chokri Belaïd et à la tentative infructueuse
+    de création d'un gouvernement de technocrates.
+- id: frwiki-gov-mechichi
+  title: Gouvernement Mechichi
+  publisher: Wikipédia (fr)
+  date: '2026-08-04'
+  url: https://fr.wikipedia.org/wiki/Gouvernement_Mechichi
+  tier: 3
+  lang: fr
+  excerpt: Le gouvernement Mechichi est le gouvernement de la Tunisie du 2 septembre 2020 au 25 juillet
+    2021. Il succède à celui d'Elyes Fakhfakh.
+- id: frwiki-arp-2019-members
+  title: Liste des députés de la IIe législature de l'Assemblée des représentants du peuple
+  publisher: Wikipédia (fr)
+  date: '2026-10-19'
+  url: https://fr.wikipedia.org/wiki/Liste_des_d%C3%A9put%C3%A9s_de_la_IIe_l%C3%A9gislature_de_l%27Assembl%C3%A9e_des_repr%C3%A9sentants_du_peuple
+  tier: 3
+  lang: fr
+  excerpt: Cet article donne la liste des députés de la IIe législature de l'Assemblée des représentants
+    du peuple par circonscription.
+- id: frwiki-arp-2014-members
+  title: Liste des députés de la Ire législature de l'Assemblée des représentants du peuple
+  publisher: Wikipédia (fr)
+  date: '2026-10-19'
+  url: https://fr.wikipedia.org/wiki/Liste_des_d%C3%A9put%C3%A9s_de_la_Ire_l%C3%A9gislature_de_l%27Assembl%C3%A9e_des_repr%C3%A9sentants_du_peuple
+  tier: 3
+  lang: fr
+  excerpt: Cet article donne la liste des députés de la Ire législature de l'Assemblée des représentants
+    du peuple, en Tunisie, par circonscription.
+- id: frwiki-arp-2019-legislature
+  title: IIe législature de l'Assemblée des représentants du peuple
+  publisher: Wikipédia (fr)
+  date: '2026-10-19'
+  url: https://fr.wikipedia.org/wiki/IIe_l%C3%A9gislature_de_l%27Assembl%C3%A9e_des_repr%C3%A9sentants_du_peuple
+  tier: 3
+  lang: fr
+  excerpt: La IIe législature de l'Assemblée des représentants du peuple s'ouvre le 13 novembre 2019 et
+    se clôt de facto après que le président Kaïs Saïed a décidé de suspendre les activités de l'assemblée
+    et de prolonger à deux reprises cette suspension, la dernière ayant lieu le 13 décembre 2021. Le 30
+    mars 2022, le président dissout le parlement.
+
+
+# Primary documents for the 2011-2025 officials and seats, imported from data/contrib/evidence-*.
+
+- id: jort-2014-094
+  title: قرار الهيئة العليا المستقلة للانتخابات عدد 34 مؤرخ في 21 نوفمبر 2014 يتعلق بالتصريح بالنتائج
+    النهائية للانتخابات التشريعية 2014
+  publisher: Journal Officiel de la République Tunisienne (Imprimerie Officielle de la République Tunisienne)
+  date: '2014-11-21'
+  url: https://lake.jort.tn/journal-officiel/ar/2014/094.pdf
+  tier: 1
+  lang: ar
+  excerpt: قرار الهيئة العليا المستقلة للانتخابات عدد 34 مؤرخ في 21 نوفمبر 2014 يتعلق بالتصريح بالنتائج
+    النهائية للانتخابات التشريعية 2014.
+- id: jort-2019-091
+  title: قرار الهيئة العليا المستقلة للانتخابات عدد 30 لسنة 2019 مؤرخ في 8 نوفمبر 2019 يتعلق بالتصريح
+    بالنتائج النهائية للانتخابات التشريعية لسنة 2019
+  publisher: Journal Officiel de la République Tunisienne (Imprimerie Officielle de la République Tunisienne)
+  date: '2019-11-08'
+  url: https://lake.jort.tn/journal-officiel/ar/2019/091.pdf
+  tier: 1
+  lang: ar
+  excerpt: قرار الهيئة العليا المستقلة للانتخابات عدد 30 لسنة 2019 مؤرخ في 8 نوفمبر 2019 يتعلق بالتصريح
+    بالنتائج النهائية للانتخابات التشريعية لسنة 2019.
+- id: jort-2011-087-fr
+  title: Arrêté du comité central de l’instance supérieure indépendante pour les élections du 13 novembre
+    2011, relatif à la proclamation des résultats définitifs des élections de l’assemblée nationale constituante
+  publisher: Journal Officiel de la République Tunisienne (Imprimerie Officielle de la République Tunisienne)
+  date: '2011-11-13'
+  url: https://lake.jort.tn/journal-officiel/fr/2011/087.pdf
+  tier: 1
+  lang: fr
+  excerpt: 'Arrêté du comité central de l’instance supérieure indépendante pour les élections du 13 novembre
+    2011, relatif à la proclamation des résultats définitifs des élections de l’assemblée nationale constituante.
+
+    (Le texte est publié uniquement en langue arabe).'
+- id: jort-2020-84-b
+  title: Décret présidentiel n° 2020-84 du 2 septembre 2020, portant nomination du Chef du Gouvernement
+    et de ses membres
+  publisher: Journal Officiel de la République Tunisienne (texte intégral via legislation-securite.tn,
+    DCAF)
+  date: '2020-09-02'
+  url: https://legislation-securite.tn/latest-laws/decret-presidentiel-n-2020-84-du-2-septembre-2020-portant-nomination-du-chef-du-gouvernement-et-de-ses-membres/
+  tier: 1
+  lang: fr
+  excerpt: 'Article premier – Monsieur Hichem Mechichi est nommé Chef du Gouvernement. Art. 2 – Sont nommés
+    Mesdames et Messieurs : Brahim Bertégi : ministre de la Défense nationale, ... Ali Hafsi : ministre
+    auprès du Chef du Gouvernement chargé des Relations avec l’Assemblée des représentants du peuple.
+    ... Tunis, le 2 septembre 2020.'
+- id: jort-2018-125
+  title: Décret présidentiel n° 2018-125 du 14 novembre 2018, portant nomination des membres du gouvernement
+  publisher: Journal Officiel de la République Tunisienne (texte intégral via legislation-securite.tn,
+    DCAF)
+  date: '2018-11-14'
+  url: https://legislation-securite.tn/latest-laws/decret-presidentiel-n-2018-125-du-14-novembre-2018-portant-nomination-des-membres-du-gouvernement/
+  tier: 1
+  lang: ar
+  excerpt: 'الفصل الأول - يسمّى السيدات والسادة: محمد كريم الجموسي: وزيرا للعدل، ... شكري بن حسن: وزيرا
+    لدى رئيس الحكومة مكلفا بالاقتصاد الاجتماعي والتضامني. تونس في 14 نوفمبر 2018.'
+- id: jort-2017-124
+  title: Décret présidentiel n° 2017-124 du 12 septembre 2017, portant nomination des membres du gouvernement
+  publisher: Journal Officiel de la République Tunisienne (texte intégral via legislation-securite.tn,
+    DCAF)
+  date: '2017-09-12'
+  url: https://legislation-securite.tn/latest-laws/decret-presidentiel-n-2017-124-du-12-septembre-2017-portant-nomination-des-membres-du-gouvernement/
+  tier: 1
+  lang: fr
+  excerpt: 'Article premier – Sont nommés Messieurs : Abdelkarim Zbidi : ministre de la défense nationale,
+    Lotfi Brahem : ministre de l''intérieur, Mohamed Ridha Chalghoum : ministre des finances, ... Tunis,
+    le 12 septembre 2017.'
+- id: jort-2017-43
+  title: Décret présidentiel n° 2017-43 du 17 mars 2017, portant nomination de deux membres du Gouvernement
+  publisher: Journal Officiel de la République Tunisienne (texte intégral via legislation-securite.tn,
+    DCAF)
+  date: '2017-03-17'
+  url: https://legislation-securite.tn/latest-laws/decret-presidentiel-n-2017-43-du-17-mars-2017-portant-nomination-de-deux-membres-du-gouvernement/
+  tier: 1
+  lang: fr
+  excerpt: 'Article premier – Monsieur Ahmed Adhoum : ministre des affaires religieuses, Monsieur Abdellatif
+    Hmam : secrétaire d’Etat auprès du ministre de l’industrie et du commerce, chargé du commerce.'
+- id: jort-2014-413
+  title: Décret n° 2014-413 du 3 février 2014, portant nomination des membres du gouvernement
+  publisher: Journal Officiel de la République Tunisienne (archive officielle, ocr.jort.tn / lake.jort.tn)
+  date: '2014-02-03'
+  url: https://ocr.jort.tn/journal-officiel/fr/2014/010.md
+  tier: 1
+  lang: fr
+  excerpt: 'Article premier - sont nommés : - Monsieur Hafedh Ben Salah : ministre de la justice, des
+    droits de l''Homme et de la justice transitionnelle, ... Madame Amel Karboul : ministre du tourisme,
+    ... Monsieur Ridha Sfar : ministre délégué auprès du ministre de l''intérieur, chargé de la sécurité.
+    ... Art. 2 - Le présent décret sera publié au Journal Officiel de la République Tunisienne et entrera
+    en vigueur le 29 janvier 2014.'
+  note: The decree is dated 3 February 2014 and, by its Article 2, took effect on 29 January 2014.
+- id: jort-2013-1372
+  title: Décret n° 2013-1372 du 15 mars 2013, portant nomination des membres du gouvernement, et Arrêté
+    républicain n° 2013-43 du 14 mars 2013 nommant Ali Larayedh chef du gouvernement
+  publisher: Journal Officiel de la République Tunisienne (archive officielle, ocr.jort.tn / lake.jort.tn)
+  date: '2013-03-15'
+  url: https://ocr.jort.tn/journal-officiel/fr/2013/023.md
+  tier: 1
+  lang: fr
+  excerpt: 'Arrêté Républicain n° 2013-43 du 14 mars 2013 ... Article premier - Monsieur Ali Larayedh
+    est nommé chef du gouvernement. ... Décret n° 2013-1372 du 15 mars 2013, portant nomination des membres
+    du gouvernement. ... Article premier – Sont nommés : - Monsieur Rachid Sabbagh : ministre de la défense
+    nationale, ... Monsieur Mehdi Jomaa : ministre de l''industrie, ...'
+- id: jort-2011-159
+  title: Décret n° 2011-159 du 29 janvier 2011, portant nomination des membres du gouvernement
+  publisher: Journal Officiel de la République Tunisienne (archive officielle, ocr.jort.tn / lake.jort.tn)
+  date: '2011-01-29'
+  url: https://ocr.jort.tn/journal-officiel/fr/2011/009.md
+  tier: 1
+  lang: fr
+  excerpt: 'Article premier : Sont nommés : - Monsieur Ahmed Ouneies : ministre des affaires étrangères,
+    - Monsieur Lazhar Karoui Chebbi : ministre de la justice, ... - Monsieur Mohamed Aloulou : ministre
+    de la jeunesse et des sports ... Art. 2 - Le présent décret sera publié au Journal Officiel de la
+    République Tunisienne et prend effet à compter du 27 janvier 2011.'
+- id: jort-2011-263
+  title: Décret n° 2011-263 du 10 mars 2011, portant nomination des membres du gouvernement
+  publisher: Journal Officiel de la République Tunisienne (archive officielle, ocr.jort.tn / lake.jort.tn)
+  date: '2011-03-10'
+  url: https://ocr.jort.tn/journal-officiel/fr/2011/016.md
+  tier: 1
+  lang: fr
+  excerpt: 'Article premier - Sont nommés : - Monsieur Lazhar Karoui Chebbi : ministre de la justice,
+    ... - Monsieur Abderrazak Zouari : ministre du développement régional ... Art. 2 - Le présent décret
+    sera publié au Journal Officiel de la République Tunisienne et prend effet à compter du 7 mars 2011.'
+- id: jort-2011-187
+  title: Décret n° 2011-187 du 27 février 2011, portant nomination du Premier ministre
+  publisher: Journal Officiel de la République Tunisienne (archive officielle, ocr.jort.tn / lake.jort.tn)
+  date: '2011-02-27'
+  url: https://ocr.jort.tn/journal-officiel/fr/2011/013.md
+  tier: 1
+  lang: fr
+  excerpt: Décret n° 2011-187 du 27 février 2011, portant nomination du Premier ministre. ... Article
+    premier - Monsieur Béji Caïd Essebsi est nommé Premier ministre.
+- id: jort-2024-75-77
+  title: Décrets n° 2024-75, 2024-76 et 2024-77 du 24 janvier 2024, portant nomination d'un membre du
+    Gouvernement
+  publisher: Journal Officiel de la République Tunisienne (archive officielle, ocr.jort.tn / lake.jort.tn)
+  date: '2024-01-24'
+  url: https://ocr.jort.tn/journal-officiel/fr/2024/014.md
+  tier: 1
+  lang: fr
+  excerpt: Décret n° 2024-75 ... Article premier - Madame Feryel Ouerghi épouse Sebai est nommée ministre
+    de l'économie et de la planification. Décret n° 2024-76 ... Article premier - Madame Fatma Thabet
+    épouse Chiboub est nommée ministre de l'industrie, des mines et de l'énergie. Décret n° 2024-77 ...
+    Article premier - Monsieur Lotfi Dhiab est nommé ministre de l'emploi et de la formation professionnelle.
+- id: jort-2011-099
+  title: Arrêté Républicain n° 2011-2 du 24 décembre 2011, portant nomination du chef du gouvernement
+    (Hamadi Jebali), JORT n° 99 du 30 décembre 2011
+  publisher: Journal Officiel de la République Tunisienne (archive officielle, ocr.jort.tn / lake.jort.tn)
+  date: '2011-12-24'
+  url: https://ocr.jort.tn/journal-officiel/fr/2011/099.md
+  tier: 1
+  lang: fr
+  excerpt: Arrêté Républicain n° 2011-2 du 24 décembre 2011, portant nomination du chef du gouvernement.
+    ... Article premier - Monsieur Hamadi Jebali est nommé chef du gouvernement.
+- id: jort-2014-009
+  title: Arrêté Républicain n° 2014-32 du 29 janvier 2014, portant nomination du chef du gouvernement
+    (Mehdi Jomaa), JORT n° 9 de 2014
+  publisher: Journal Officiel de la République Tunisienne (archive officielle, ocr.jort.tn / lake.jort.tn)
+  date: '2014-01-29'
+  url: https://ocr.jort.tn/journal-officiel/fr/2014/009.md
+  tier: 1
+  lang: fr
+  excerpt: Arrêté Républicain n° 2014-32 du 29 janvier 2014, portant nomination du chef du gouvernement.
+    ... Article premier - Monsieur Mehdi Jomaa est nommé chef du gouvernement. ... Carthage, le 29 janvier
+    2014.
+- id: jort-2023-550
+  title: Décret n° 2023-550 du 1er août 2023, portant nomination du Chef du Gouvernement
+  publisher: Journal Officiel de la République Tunisienne (archive officielle, ocr.jort.tn / lake.jort.tn)
+  date: '2023-08-01'
+  url: https://ocr.jort.tn/journal-officiel/fr/2023/085.md
+  tier: 1
+  lang: fr
+  excerpt: Article premier - Monsieur Ahmed Hachani est nommé Chef du Gouvernement. ... Tunis, le 1er
+    août 2023.
+- id: jort-2024-451
+  title: Décret n° 2024-451 du 7 août 2024, portant nomination du Chef du Gouvernement
+  publisher: Journal Officiel de la République Tunisienne (archive officielle, ocr.jort.tn / lake.jort.tn)
+  date: '2024-08-07'
+  url: https://ocr.jort.tn/journal-officiel/fr/2024/097.md
+  tier: 1
+  lang: fr
+  excerpt: Article premier - Monsieur Kamel Maddouri est nommé Chef du Gouvernement. ... Tunis, le 7 août
+    2024.
+- id: jort-2025-165
+  title: Décret n° 2025-165 du 20 mars 2025, portant nomination de la Cheffe du Gouvernement
+  publisher: Journal Officiel de la République Tunisienne (archive officielle, ocr.jort.tn / lake.jort.tn)
+  date: '2025-03-20'
+  url: https://ocr.jort.tn/journal-officiel/fr/2025/033.md
+  tier: 1
+  lang: fr
+  excerpt: Article premier - Madame Sarra Zaafrani Zenzri est nommée Cheffe du Gouvernement.
+- id: jort-2025-109
+  title: Décret n° 2025-109 du 5 février 2025, portant nomination d'un membre du Gouvernement
+  publisher: Journal Officiel de la République Tunisienne (archive officielle, ocr.jort.tn / lake.jort.tn)
+  date: '2025-02-05'
+  url: https://ocr.jort.tn/journal-officiel/fr/2025/016.md
+  tier: 1
+  lang: fr
+  excerpt: Décret n° 2025-109 du 5 février 2025, portant nomination d'un membre du Gouvernement. ... Article
+    premier - Madame Michket Slama khaldi est nommée ministre des finances. ... Tunis, le 5 février 2025
+- id: jort-2023-268
+  title: Décret n° 2023-268 du 17 mars 2023, portant nomination d'un membre du Gouvernement
+  publisher: Journal Officiel de la République Tunisienne (archive officielle, ocr.jort.tn / lake.jort.tn)
+  date: '2023-03-17'
+  url: https://ocr.jort.tn/journal-officiel/fr/2023/029.md
+  tier: 1
+  lang: fr
+  excerpt: Décret n° 2023-268 du 17 mars 2023, portant nomination d'un membre du gouvernement. ... Article
+    premier - Monsieur Kamel Fekih est nommé ministre de l'intérieur.
+- id: jort-2026-60
+  title: Décret n° 2026-60 du 27 avril 2026, chargeant le ministre de l'équipement et de l'habitat à titre
+    temporaire de diriger le ministère de l'industrie, des mines et de l'énergie
+  publisher: Journal Officiel de la République Tunisienne (archive officielle, ocr.jort.tn / lake.jort.tn)
+  date: '2026-04-27'
+  url: https://ocr.jort.tn/journal-officiel/fr/2026/043.md
+  tier: 1
+  lang: fr
+  excerpt: Article premier - Monsieur Slah Zouari, le ministre de l'équipement et de l'habitat, est chargé
+    à titre temporaire de diriger le ministère de l'industrie, des mines et de l'énergie.
+- id: jort-2012-026
+  title: Nominations de gouverneurs, JORT n° 26 de 2012 (décrets du 22 février 2012)
+  publisher: Journal Officiel de la République Tunisienne (archive officielle, ocr.jort.tn / lake.jort.tn)
+  date: '2012-04-03'
+  url: https://ocr.jort.tn/journal-officiel/fr/2012/026.md
+  tier: 1
+  lang: fr
+  excerpt: Monsieur Mohamed Sidhom est chargé des fonctions de gouverneur au gouvernorat de Jendouba,
+    à compter du 22 février 2012. ... Monsieur Nasr Temimi est chargé des fonctions de gouverneur au gouvernorat
+    de Béja, à compter du 22 février 2012.
+- id: jort-2013-048
+  title: Nomination de gouverneurs, JORT n° 48 de 2013
+  publisher: Journal Officiel de la République Tunisienne (archive officielle, ocr.jort.tn / lake.jort.tn)
+  date: '2013-06-14'
+  url: https://ocr.jort.tn/journal-officiel/fr/2013/048.md
+  tier: 1
+  lang: fr
+  excerpt: Monsieur Montassar Jarray est chargé des fonctions de gouverneur au gouvernorat de Siliana,
+    à compter du 27 décembre 2012.
+- id: jort-2013-097
+  title: Nomination de gouverneurs, JORT n° 97 de 2013 (décrets du 24 août 2013)
+  publisher: Journal Officiel de la République Tunisienne (archive officielle, ocr.jort.tn / lake.jort.tn)
+  date: '2013-12-06'
+  url: https://ocr.jort.tn/journal-officiel/fr/2013/097.md
+  tier: 1
+  lang: fr
+  excerpt: Monsieur Ridha Lahouel est chargé des fonctions de gouverneur au gouvernorat de Bizerte, à
+    compter du 24 août 2013. ... Monsieur Nejib Khabouchi est chargé des fonctions de gouverneur au gouvernorat
+    de Jendouba, à compter du 24 août 2013.
+- id: jort-2013-098
+  title: Nomination de gouverneurs, JORT n° 98 de 2013 (décret du 4 septembre 2013)
+  publisher: Journal Officiel de la République Tunisienne (archive officielle, ocr.jort.tn / lake.jort.tn)
+  date: '2013-12-10'
+  url: https://ocr.jort.tn/journal-officiel/fr/2013/098.md
+  tier: 1
+  lang: fr
+  excerpt: Monsieur Ammar Khababi est chargé des fonctions de gouverneur au gouvernorat de Sidi Bouzid,
+    à compter du 4 septembre 2013.
+- id: jort-2014-029
+  title: Nomination de gouverneurs, JORT n° 29 de 2014 (décrets du 28 février 2014)
+  publisher: Journal Officiel de la République Tunisienne (archive officielle, ocr.jort.tn / lake.jort.tn)
+  date: '2014-04-11'
+  url: https://ocr.jort.tn/journal-officiel/fr/2014/029.md
+  tier: 1
+  lang: fr
+  excerpt: Monsieur Hamed Abid est chargé des fonctions de gouverneur au gouvernorat de Tunis, à compter
+    du 28 février 2014. ... Monsieur Mohamed Ridha Saadi est chargé des fonctions de gouverneur au gouvernorat
+    de la Manouba, à compter du 28 février 2014.
+- id: jort-2016-106
+  title: Nomination de gouverneurs, JORT n° 106 de 2016 (décrets du 16 septembre 2016)
+  publisher: Journal Officiel de la République Tunisienne (archive officielle, ocr.jort.tn / lake.jort.tn)
+  date: '2016-12-30'
+  url: https://ocr.jort.tn/journal-officiel/fr/2016/106.md
+  tier: 1
+  lang: fr
+  excerpt: Monsieur Mounir Hamdi est chargé des fonctions de gouverneur au gouvernorat de Tozeur, à compter
+    du 16 septembre 2016. ... Madame Saloua Kefi est chargée des fonctions de gouverneur au gouvernorat
+    de l'Ariana, à compter du 16 septembre 2016.
+- id: jort-2017-001
+  title: Nomination de gouverneurs, JORT n° 1 de 2017 (décrets du 16 septembre 2016)
+  publisher: Journal Officiel de la République Tunisienne (archive officielle, ocr.jort.tn / lake.jort.tn)
+  date: '2017-01-03'
+  url: https://ocr.jort.tn/journal-officiel/fr/2017/001.md
+  tier: 1
+  lang: fr
+  excerpt: Monsieur Amor Mansour est chargé des fonctions de gouverneur au gouvernorat de Tunis, à compter
+    du 16 septembre 2016. ... Monsieur Walid Elouguini est chargé des fonctions de gouverneur au gouvernorat
+    de Kébili, à compter du 16 septembre 2016.
+- id: jort-2017-048
+  title: Nomination de gouverneurs, JORT n° 48 de 2017 (décrets du 18 mai 2017 et du 29 avril 2017)
+  publisher: Journal Officiel de la République Tunisienne (archive officielle, ocr.jort.tn / lake.jort.tn)
+  date: '2017-06-16'
+  url: https://ocr.jort.tn/journal-officiel/fr/2017/048.md
+  tier: 1
+  lang: fr
+  excerpt: Monsieur Sami Ghabi est chargé des fonctions de gouverneur au gouvernorat de Kébili, à compter
+    du 18 mai 2017. ... Monsieur Mohamed Ali Barhoumi est chargé des fonctions de gouverneur au gouvernorat
+    de Tataouine, à compter du 29 avril 2017.
+- id: jort-2017-095
+  title: Nomination de gouverneurs, JORT n° 95 de 2017 (décrets du 21 juin et du 2 juin 2017)
+  publisher: Journal Officiel de la République Tunisienne (archive officielle, ocr.jort.tn / lake.jort.tn)
+  date: '2017-11-28'
+  url: https://ocr.jort.tn/journal-officiel/fr/2017/095.md
+  tier: 1
+  lang: fr
+  excerpt: Monsieur Samir Boukadida est chargé des fonctions de gouverneur au gouvernorat de Kasserine,
+    à compter du 21 juin 2017. ... Monsieur Adel Ouirghi est chargé des fonctions de gouverneur au gouvernorat
+    de Tataouine, à compter du 2 juin 2017.
+- id: jort-2018-008
+  title: Nomination de gouverneurs, JORT n° 8 de 2018 (décrets du 29 octobre 2017)
+  publisher: Journal Officiel de la République Tunisienne (archive officielle, ocr.jort.tn / lake.jort.tn)
+  date: '2018-01-26'
+  url: https://ocr.jort.tn/journal-officiel/fr/2018/008.md
+  tier: 1
+  lang: fr
+  excerpt: Monsieur Habib Chouat est chargé des fonctions de gouverneur au gouvernorat de Médenine, à
+    compter du 29 octobre 2017. ... Monsieur Mokhtar Nefzi est chargé des fonctions de gouverneur au gouvernorat
+    de l'Ariana, à compter du 29 octobre 2017.
+- id: jort-2019-092
+  title: Nomination de gouverneurs, JORT n° 92 de 2019 (décrets du 24 juillet et du 17 août 2019)
+  publisher: Journal Officiel de la République Tunisienne (archive officielle, ocr.jort.tn / lake.jort.tn)
+  date: '2019-11-15'
+  url: https://ocr.jort.tn/journal-officiel/fr/2019/092.md
+  tier: 1
+  lang: fr
+  excerpt: Monsieur Mohamed Samcha est chargé des fonctions de gouverneur au gouvernorat de Kasserine,
+    à compter du 24 juillet 2019. ... Monsieur Anis Oueslati est chargé des fonctions de gouverneur au
+    gouvernorat de Sfax, à compter du 17 août 2019.
+- id: jort-2020-088
+  title: Nominations de gouverneurs, JORT n° 88 de 2020
+  publisher: Journal Officiel de la République Tunisienne (archive officielle, ocr.jort.tn / lake.jort.tn)
+  date: '2020-09-01'
+  url: https://ocr.jort.tn/journal-officiel/fr/2020/088.md
+  tier: 1
+  lang: fr
+  excerpt: Monsieur Mohsen Moez Mili est chargé des fonctions de gouverneur au gouvernorat de Béja à compter
+    du 27 décembre 2019. ... Monsieur Mohamed Cheikh Rouhou est chargé des fonctions de gouverneur au
+    gouvernorat de la Manouba à compter du 14 avril 2020.
+- id: jort-2024-472
+  title: Décret n° 2024-472 du 8 septembre 2024, portant nomination des gouverneurs
+  publisher: Journal Officiel de la République Tunisienne (archive officielle, ocr.jort.tn / lake.jort.tn)
+  date: '2024-09-09'
+  url: https://ocr.jort.tn/journal-officiel/fr/2024/110.md
+  tier: 1
+  lang: fr
+  excerpt: 'Par décret n° 2024-472 du 8 septembre 2024. Madame et Messieurs dont les noms suivent sont
+    nommés : - Imed Boukhris : Gouverneur de Tunis. - Walid Sendid : Gouverneur de l''Ariana. ... - Amir
+    Gabsi : Gouverneur de Tataouine en remplacement de Monsieur Hafedh Fitouri.'
+- id: jort-2012-056
+  title: Nominations de gouverneurs, JORT n° 56 de 2012 (décrets n° 2012-775 à 2012-781 du 11 juillet
+    2012)
+  publisher: Journal Officiel de la République Tunisienne (archive officielle, ocr.jort.tn / lake.jort.tn)
+  date: '2012-07-17'
+  url: https://ocr.jort.tn/journal-officiel/fr/2012/056.md
+  tier: 1
+  lang: fr
+  excerpt: Monsieur Abderrazak Ben Elhadef est chargé des fonctions de gouverneur au gouvernorat de Zaghouan,
+    à compter du 14 avril 2012. ... Monsieur Hammadi Mayara est chargé des fonctions de gouverneur au
+    gouvernorat de Médenine, à compter du 24 mars 2012.
+- id: fr-wiki-bourguiba-i
+  title: Gouvernement Bourguiba I
+  publisher: Wikipédia (français)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Gouvernement_Bourguiba_I
+  tier: 3
+  lang: fr
+  excerpt: Le premier gouvernement Bourguiba est le premier gouvernement tunisien formé après l'indépendance de
+    la Tunisie, à la suite de la nomination du leader du Néo-Destour, Habib Bourguiba, en tant que Premier ministre,
+    le 11 avril 1956.
+- id: fr-wiki-ladgham
+  title: Gouvernement Ladgham
+  publisher: Wikipédia (français)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Gouvernement_Ladgham
+  tier: 3
+  lang: fr
+  excerpt: Son chef, Bahi Ladgham, est nommé Premier ministre le 7 novembre 1969 et assure sa fonction jusqu'au
+    2 novembre 1970, date à laquelle Hédi Nouira est nommé pour lui succéder.
+- id: fr-wiki-nouira
+  title: Gouvernement Nouira
+  publisher: Wikipédia (français)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Gouvernement_Nouira
+  tier: 3
+  lang: fr
+  excerpt: Son chef, Hédi Nouira, est nommé Premier ministre par intérim le 9 octobre 1970, en raison de l'absence
+    de Bahi Ladgham retenu au Caire depuis le 21 septembre 1970 par les tentatives de conciliation relatives à la
+    crise de Septembre noir.
+- id: fr-wiki-mzali
+  title: Gouvernement Mohamed Mzali
+  publisher: Wikipédia (français)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Gouvernement_Mohamed_Mzali
+  tier: 3
+  lang: fr
+  excerpt: La composition officielle est annoncée par le décret n° 80-480 du 25 avril 1980 portant nomination des
+    membres du gouvernement. Le même jour, les membres du cabinet entrent en fonction succédant au gouvernement
+    Nouira.
+- id: fr-wiki-sfar
+  title: Gouvernement Sfar
+  publisher: Wikipédia (français)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Gouvernement_Sfar
+  tier: 3
+  lang: fr
+  excerpt: Son chef, Rachid Sfar, est nommé Premier ministre le 8 juillet 1986 et assure sa fonction jusqu'au 2
+    octobre 1987, date à laquelle Zine el-Abidine Ben Ali est nommé pour lui succéder.
+- id: fr-wiki-ben-ali
+  title: Gouvernement Ben Ali
+  publisher: Wikipédia (français)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Gouvernement_Ben_Ali
+  tier: 3
+  lang: fr
+  excerpt: Son chef, Zine el-Abidine Ben Ali, est nommé Premier ministre le 2 octobre 1987 et assure sa fonction
+    jusqu'au 7 novembre 1987, date à laquelle il accède à la présidence de la République grâce à un coup d'État.
+- id: fr-wiki-baccouche-i
+  title: Gouvernement Hédi Baccouche I
+  publisher: Wikipédia (français)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Gouvernement_Hédi_Baccouche_I
+  tier: 3
+  lang: fr
+  excerpt: Son chef, Hédi Baccouche, est nommé Premier ministre le 7 novembre 1987 et annonce la composition de
+    son gouvernement le 8 novembre 1987.
+- id: fr-wiki-baccouche-ii
+  title: Gouvernement Hédi Baccouche II
+  publisher: Wikipédia (français)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Gouvernement_Hédi_Baccouche_II
+  tier: 3
+  lang: fr
+  excerpt: Le 27 juillet 1988, le président Zine el-Abidine Ben Ali renouvelle sa confiance en Baccouche et le nomme
+    à nouveau Premier ministre, annonçant la composition de son gouvernement.
+- id: fr-wiki-baccouche-iii
+  title: Gouvernement Hédi Baccouche III
+  publisher: Wikipédia (français)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Gouvernement_Hédi_Baccouche_III
+  tier: 3
+  lang: fr
+  excerpt: 'Le 11 avril 1989, un nouveau remaniement gouvernemental est opéré : le président Zine el-Abidine Ben
+    Ali charge à nouveau Hédi Baccouche de présider le gouvernement et annonce la composition de son gouvernement.'
+- id: fr-wiki-karoui
+  title: Gouvernement Karoui
+  publisher: Wikipédia (français)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Gouvernement_Karoui
+  tier: 3
+  lang: fr
+  excerpt: Son chef, Hamed Karoui, est nommé Premier ministre le 27 septembre 1989 et assure sa fonction jusqu'au
+    17 novembre 1999, date à laquelle Mohamed Ghannouchi est nommé pour lui succéder.
+- id: jort-1997-007
+  title: Journal officiel de la République tunisienne, n° 7 du 24 janvier 1997, p. 115-116
+  publisher: Journal officiel de la République tunisienne (JORT)
+  date: '1997-01-24'
+  url: https://lake.jort.tn/journal-officiel/fr/1997/007.pdf
+  tier: 1
+  lang: fr
+  excerpt: 'Décret n° 97-123 du 22 janvier 1997 : Article premier. - Monsieur Mohamed Jegham, est nommé ministre-directeur
+    du cabinet présidentiel. Décret n° 97-124 : Monsieur Abdallah Kallal, est nommé ministre de la justice. Décret
+    n° 97-125 : Monsieur Habib Ben Yahia, est nommé ministre de la défense nationale. Décret n° 97-127 : Monsieur
+    Mohamed Ben Rejeb, est nommé ministre de l''intérieur. Décret n° 97-128 : Monsieur Mohamed Jeri, est nommé ministre
+    des finances. Décret n° 97-129 : Monsieur Ahmed Friaâ, est nommé ministre des communications. Décret n° 97-130
+    : Monsieur Raouf Najjar, est nommé ministre de la jeunesse et de l''enfance.'
+- id: jort-1999-034
+  title: Journal officiel de la République tunisienne, n° 34 du 27 avril 1999, p. 635-636
+  publisher: Journal officiel de la République tunisienne (JORT)
+  date: '1999-04-27'
+  url: https://lake.jort.tn/journal-officiel/fr/1999/034.pdf
+  tier: 1
+  lang: fr
+  excerpt: Décret n° 99-900 du 23 avril 1999, portant nomination du ministre des finances. Décret n° 99-901 du 23
+    avril 1999, portant nomination du ministre des domaines de l'Etat et des affaires foncières. Décret n° 99-902
+    du 23 avril 1999, portant nomination du ministre de l'environnement et de l'aménagement du territoire. Décret
+    n° 99-903 du 23 avril 1999, portant nomination du ministre du développement économique. Décret n° 99-904 du
+    23 avril 1999, portant nomination du secrétaire général du gouvernement.
+- id: fr-wiki-ghannouchi-i
+  title: Gouvernement Ghannouchi I
+  publisher: Wikipédia (français)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Gouvernement_Ghannouchi_I
+  tier: 3
+  lang: fr
+  excerpt: Le premier gouvernement Mohamed Ghannouchi est le dernier gouvernement tunisien formé presque exclusivement
+    de membres du Rassemblement constitutionnel démocratique. Investi le 17 novembre 1999, Mohamed Ghannouchi en
+    prend la tête en remplacement d'Hamed Karoui.
+- id: jort-2011-001
+  title: Journal officiel de la République tunisienne, n° 1 du 4 janvier 2011, p. 8
+  publisher: Journal officiel de la République tunisienne (JORT)
+  date: '2011-01-04'
+  url: https://lake.jort.tn/journal-officiel/fr/2011/001.pdf
+  tier: 1
+  lang: fr
+  excerpt: 'Décret n° 2010-3464 du 29 décembre 2010, portant nomination de membres du gouvernement. Article premier
+    : Sont nommés : - ministre des affaires religieuses : Monsieur Kamel Omrane, - ministre du commerce et de l''artisanat
+    : Monsieur Slimane Ourak, - ministre de la jeunesse, des sports et de l''éducation physique : Monsieur Abdelhamid
+    Slama, - ministre de la communication : Monsieur Samir Labidi, - secrétaire d''Etat auprès du ministre des affaires
+    étrangères chargé des affaires européennes : Abdelwaheb Jmal.'
+- id: frwiki-anc-1956
+  title: Assemblée nationale constituante tunisienne de 1956
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Assembl%C3%A9e_nationale_constituante_tunisienne_de_1956
+  tier: 3
+  lang: fr
+  excerpt: 'L''Assemblée nationale constituante tunisienne de 1956 (arabe : المجلس القومي التأسيسي التونسي) est
+    une assemblée constituante de 98 membres élue le 25 mars 1956, cinq jours après la proclamation de l''indépendance
+    de la Tunisie.'
+- id: frwiki-cdd
+  title: Chambre des députés (Tunisie)
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Chambre_des_d%C3%A9put%C3%A9s_(Tunisie)
+  tier: 3
+  lang: fr
+  excerpt: Fondée en vertu de la Constitution du 1er juin 1959 sous l'appellation d'« Assemblée nationale », elle
+    est rebaptisée « Chambre des députés » par la loi constitutionnelle n°81-47 du 9 juin 1981.
+- id: frwiki-cdd-vii
+  title: VIIe législature de la Chambre des députés (Tunisie)
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/VIIe_l%C3%A9gislature_de_la_Chambre_des_d%C3%A9put%C3%A9s_(Tunisie)
+  tier: 3
+  lang: fr
+  excerpt: La VIIe législature tunisienne est une législature ouverte le 10 novembre 1986 et close le 9 avril 1989.
+- id: frwiki-cdd-viii
+  title: VIIIe législature de la Chambre des députés (Tunisie)
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/VIIIe_l%C3%A9gislature_de_la_Chambre_des_d%C3%A9put%C3%A9s_(Tunisie)
+  tier: 3
+  lang: fr
+  excerpt: La VIIIe législature de la Chambre tunisienne des députés est une législature ouverte le 9 avril 1989
+    et close le 9 avril 1994.
+- id: frwiki-cdd-ix
+  title: IXe législature de la Chambre des députés (Tunisie)
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/IXe_l%C3%A9gislature_de_la_Chambre_des_d%C3%A9put%C3%A9s_(Tunisie)
+  tier: 3
+  lang: fr
+  excerpt: La IXe législature de la Chambre tunisienne des députés est une législature ouverte le 9 avril 1994 et
+    close le 15 novembre 1999.
+- id: frwiki-cdd-x
+  title: Xe législature de la Chambre des députés (Tunisie)
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Xe_l%C3%A9gislature_de_la_Chambre_des_d%C3%A9put%C3%A9s_(Tunisie)
+  tier: 3
+  lang: fr
+  excerpt: La Xe législature de la Chambre tunisienne des députés est une législature ouverte le 15 novembre 1999
+    et close le 17 novembre 2004.
+- id: frwiki-cdd-xi
+  title: XIe législature de la Chambre des députés (Tunisie)
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/XIe_l%C3%A9gislature_de_la_Chambre_des_d%C3%A9put%C3%A9s_(Tunisie)
+  tier: 3
+  lang: fr
+  excerpt: La XIe législature de la Chambre tunisienne des députés est une législature ouverte le 17 novembre 2004
+    et close le 11 novembre 2009.
+- id: frwiki-cdd-xii
+  title: XIIe législature de la Chambre des députés (Tunisie)
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/XIIe_l%C3%A9gislature_de_la_Chambre_des_d%C3%A9put%C3%A9s_(Tunisie)
+  tier: 3
+  lang: fr
+  excerpt: La XIIe législature de la Chambre tunisienne des députés est une législature ouverte le 11 novembre 2009
+    et close le 9 février 2011 en vertu d'une loi votée par la Chambre des députés et la Chambre des conseillers.
+- id: frwiki-conseillers
+  title: Chambre des conseillers (Tunisie)
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Chambre_des_conseillers_(Tunisie)
+  tier: 3
+  lang: fr
+  excerpt: Introduite par la réforme constitutionnelle du 1er juin 2002, elle comporte 126 membres, un nombre révisable
+    tous les six ans mais limité aux deux-tiers du nombre des membres de la Chambre des députés.
+- id: frwiki-deputes-xii
+  title: Liste des députés de la XIIe législature de la Chambre des députés (Tunisie)
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Liste_des_d%C3%A9put%C3%A9s_de_la_XIIe_l%C3%A9gislature_de_la_Chambre_des_d%C3%A9put%C3%A9s_(Tunisie)
+  tier: 3
+  lang: fr
+  excerpt: La liste des députés de la XIIe législature de la Chambre tunisienne des députés est subdivisée par circonscription
+    électorale.
+- id: enwiki-speakers
+  title: Speaker of the Assembly of the Representatives of the People
+  publisher: Wikipedia (en)
+  date: '2026-10-20'
+  url: https://en.wikipedia.org/wiki/Speaker_of_the_Assembly_of_the_Representatives_of_the_People
+  tier: 3
+  lang: en
+  excerpt: From 1956 to 1959, the Tunisian legislature was called the National Constituent Assembly, from 1959 to
+    1981 the National Assembly, from 1981 to 2011 the Chamber of Deputies and from 2011 to 2014 the Constituent
+    Assembly.
+- id: enwiki-election-1959
+  title: 1959 Tunisian general election
+  publisher: Wikipedia (en)
+  date: '2026-10-20'
+  url: https://en.wikipedia.org/wiki/1959_Tunisian_general_election
+  tier: 3
+  lang: en
+  excerpt: In the parliamentary elections, Bourguiba's Neo Destour won all 90 seats in the Chamber of Deputies,
+    with only the Tunisian Communist Party running against them in Tunis and Gafsa.
+- id: enwiki-election-1964
+  title: 1964 Tunisian general election
+  publisher: Wikipedia (en)
+  date: '2026-10-20'
+  url: https://en.wikipedia.org/wiki/1964_Tunisian_general_election
+  tier: 3
+  lang: en
+  excerpt: In the Chamber election, voters were presented with a single list from the PSD, which won all 101 seats.
+- id: enwiki-election-1969
+  title: 1969 Tunisian general election
+  publisher: Wikipedia (en)
+  date: '2026-10-20'
+  url: https://en.wikipedia.org/wiki/1969_Tunisian_general_election
+  tier: 3
+  lang: en
+  excerpt: In the Chamber election, the PSD put forward a single list of candidates in each constituency.
+- id: enwiki-election-1974
+  title: 1974 Tunisian general election
+  publisher: Wikipedia (en)
+  date: '2026-10-20'
+  url: https://en.wikipedia.org/wiki/1974_Tunisian_general_election
+  tier: 3
+  lang: en
+  excerpt: In the Chamber election, the PSD put forward a single list of candidates in each constituency.
+- id: c26-s-anc-fr
+  title: Assemblée nationale constituante tunisienne de 2011
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Assembl%C3%A9e_nationale_constituante_tunisienne_de_2011
+  tier: 3
+  lang: fr
+  excerpt: Le 1er février 2012, les groupes parlementaires suivants sont constitués sur la base de l'article 19
+    du règlement intérieur.
+- id: c26-s-leaders
+  title: 'Tunisie, ANC : constitution de sept groupes parlementaires'
+  publisher: Leaders (Tunisie)
+  date: '2012-02-01'
+  url: http://www.leaders.com.tn/article/anc-constitution-de-sept-groupes-parlementaires?id=7581
+  tier: 4
+  lang: fr
+  excerpt: 'Les groupes parlementaires de l''ANC ont été constitués mercredi après midi conformément à l''article
+    19 du règlement intérieur. Au nombre de sept, ces groupes sont les suivants : Ennahdha (89 membres, président
+    Sahbi Attig), Le Groupe Démocratique (30 membres, président : Mohamed Hamdi), Groupe du Congrès (29 membres,
+    président : Samir Ben Amor), Groupe d''Ettakatol (22 membres, président : Mouldi Riahi), Groupe de la Liberté
+    et de la Démocratie (13 membres, président : Abdelmonem Krir), Groupe de la Liberté et de la Dignité (12 membres,
+    président : Mohamed Najib Hasni), Groupe de la Pétition El Aridha (11 membres, président : Mohamed Hamdi).'
+- id: c26-s-anc-ar
+  title: المجلس الوطني التأسيسي التونسي (2011-2014)
+  publisher: ويكيبيديا (ar)
+  date: '2026-10-20'
+  url: https://ar.wikipedia.org/wiki/%D8%A7%D9%84%D9%85%D8%AC%D9%84%D8%B3_%D8%A7%D9%84%D9%88%D8%B7%D9%86%D9%8A_%D8%A7%D9%84%D8%AA%D8%A3%D8%B3%D9%8A%D8%B3%D9%8A_%D8%A7%D9%84%D8%AA%D9%88%D9%86%D8%B3%D9%8A_(2011-2014)
+  tier: 3
+  lang: ar
+  excerpt: كتلة حركة النهضة || 89 || 87 ... الكتلة الديمقراطية || 30 || 18 ... كتلة العريضة الشعبية || 26 || - ||
+    تم حلها ... كتلة الحرية والكرامة || 12 || - || تم حلها
+- id: c26-s-arp-i
+  title: Ire législature de l'Assemblée des représentants du peuple
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Ire_l%C3%A9gislature_de_l%27Assembl%C3%A9e_des_repr%C3%A9sentants_du_peuple
+  tier: 3
+  lang: fr
+  excerpt: La Ire législature de l'Assemblée des représentants du peuple s'ouvre le 2 décembre 2014 et se clôt le
+    13 novembre 2019.
+- id: c26-s-arp-ii
+  title: IIe législature de l'Assemblée des représentants du peuple
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/IIe_l%C3%A9gislature_de_l%27Assembl%C3%A9e_des_repr%C3%A9sentants_du_peuple
+  tier: 3
+  lang: fr
+  excerpt: La constitution des groupes parlementaires est annoncée le 27 novembre 2019.
+- id: c26-s-list-arp-ii
+  title: Liste des députés de la IIe législature de l'Assemblée des représentants du peuple
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Liste_des_d%C3%A9put%C3%A9s_de_la_IIe_l%C3%A9gislature_de_l%27Assembl%C3%A9e_des_repr%C3%A9sentants_du_peuple
+  tier: 3
+  lang: fr
+  excerpt: Cet article donne la liste des députés de la IIe législature de l'Assemblée des représentants du peuple
+    par circonscription.
+- id: c26-s-arp-ii-ar
+  title: المدة النيابية الثانية لمجلس نواب الشعب التونسي
+  publisher: ويكيبيديا (ar)
+  date: '2026-10-20'
+  url: https://ar.wikipedia.org/wiki/%D8%A7%D9%84%D9%85%D8%AF%D8%A9_%D8%A7%D9%84%D9%86%D9%8A%D8%A7%D8%A8%D9%8A%D8%A9_%D8%A7%D9%84%D8%AB%D8%A7%D9%86%D9%8A%D8%A9_%D9%84%D9%85%D8%AC%D9%84%D8%B3_%D9%86%D9%88%D8%A7%D8%A8_%D8%A7%D9%84%D8%B4%D8%B9%D8%A8_%D8%A7%D9%84%D8%AA%D9%88%D9%86%D8%B3%D9%8A
+  tier: 3
+  lang: ar
+  excerpt: الكتلة الديمقراطية || 41 ... كتلة الإصلاح الوطني || 15 ... كتلة المستقبل || 9 ... بدون كتلة || 8 ...
+    الكتلة الوطنية || 11
+- id: c26-s-arp-tn
+  title: موقع واب مجلس نواب الشعب - الكتل النيابية
+  publisher: مجلس نواب الشعب (Assemblée des représentants du peuple)
+  date: '2026-10-20'
+  url: https://www.arp.tn/parlementaire/groupes
+  tier: 1
+  lang: ar
+  excerpt: الكتل النيابية ... غير المنتمين إلى كتل
+- id: fr-wiki-arp-2014-list
+  title: Liste des députés de la Ire législature de l'Assemblée des représentants du peuple
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Liste_des_d%C3%A9put%C3%A9s_de_la_Ire_l%C3%A9gislature_de_l%27Assembl%C3%A9e_des_repr%C3%A9sentants_du_peuple
+  tier: 3
+  lang: fr
+  excerpt: Chaque circonscription est présentée dans un tableau à colonnes Image, Nom, Parti et Groupe parlementaire.
+- id: fr-wiki-arp-2014-legislature
+  title: Ire législature de l'Assemblée des représentants du peuple
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Ire_l%C3%A9gislature_de_l%27Assembl%C3%A9e_des_repr%C3%A9sentants_du_peuple
+  tier: 3
+  lang: fr
+  excerpt: La Ire législature de l'Assemblée des représentants du peuple s'ouvre le 2 décembre 2014 et se clôt le
+    13 novembre 2019.
+- id: fr-wiki-anc-2011-list
+  title: Liste des membres de l'Assemblée constituante tunisienne de 2011
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Liste_des_membres_de_l%27Assembl%C3%A9e_constituante_tunisienne_de_2011
+  tier: 3
+  lang: fr
+  excerpt: Chaque circonscription est présentée dans un tableau à colonnes Image, Nom, Parti et Groupe parlementaire.
+- id: fr-wiki-anc-2011
+  title: Assemblée nationale constituante tunisienne de 2011
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Assembl%C3%A9e_nationale_constituante_tunisienne_de_2011
+  tier: 3
+  lang: fr
+  excerpt: Le 1er février 2012, les groupes parlementaires suivants sont constitués sur la base de l'article 19
+    du règlement intérieur. En août 2014, la répartition se présente comme suit, sachant que 53 membres ne font
+    pas partie de groupes parlementaires.
+- id: letunizien-com-hichem-hosni-president-du-part
+  title: 'Hichem Hosni, président du Parti populaire progressiste : le gouvernement Laârayedh cherche à se protéger'
+  publisher: letunizien.com
+  date: '2026-10-20'
+  url: http://www.letunizien.com/2013/12/hichem-hosni-president-du-parti.html
+  tier: 4
+  lang: fr
+  excerpt: headline of the article the fetched page cites for this date; the article itself was not fetched in this
+    run
+- id: assabah-news-ref
+  title: 'النائب العربي عبيد: من حركة "وفاء" الى التكتل'
+  publisher: Assabah News
+  date: '2026-10-20'
+  url: http://www.assabahnews.tn/details.php?ID_art=15867&ID_rub=1
+  tier: 4
+  lang: fr
+  excerpt: headline of the article the fetched page cites for this date; the article itself was not fetched in this
+    run
+- id: la-presse-de-tunisie-le-constituant-ali-houiji-rejo
+  title: Le constituant Ali Houiji rejoint le groupe du mouvement Wafa
+  publisher: La Presse de Tunisie
+  date: '2026-10-20'
+  url: http://www.lapresse.tn/09112012/57900/le-constituant-ali-houiji-rejoint-le-groupe-du-mouvement-wafa.html
+  tier: 4
+  lang: fr
+  excerpt: headline of the article the fetched page cites for this date; the article itself was not fetched in this
+    run
+- id: leaders-tunisie-nidaa-tounes-annonce-la-compos
+  title: Nidaa Tounes annonce la composition de ses comités exécutif et élargi
+  publisher: Leaders (Tunisie)
+  date: '2026-10-20'
+  url: http://www.leaders.com.tn/article/nidaa-tounes-annonce-la-composition-de-ses-comites-executif-et-elargi?id=9342
+  tier: 4
+  lang: fr
+  excerpt: headline of the article the fetched page cites for this date; the article itself was not fetched in this
+    run
+- id: la-presse-de-tunisie-karima-souid-et-selma-mabrouk
+  title: Karima Souid et Selma Mabrouk rejoignent Al-Massar
+  publisher: La Presse de Tunisie
+  date: '2026-10-20'
+  url: http://www.lapresse.tn/26032013/64678/karima-souid-et-selma-mabrouk-rejoignent-al-massar.html
+  tier: 4
+  lang: fr
+  excerpt: headline of the article the fetched page cites for this date; the article itself was not fetched in this
+    run
+- id: businessnews-com-tn-la-deputee-souhir-dardouri-ann
+  title: La députée Souhir Dardouri annonce sa démission du CPR
+  publisher: businessnews.com.tn
+  date: '2026-10-20'
+  url: http://www.businessnews.com.tn/details_article.php?t=520&a=36369&temp=3&lang=
+  tier: 4
+  lang: fr
+  excerpt: headline of the article the fetched page cites for this date; the article itself was not fetched in this
+    run
+- id: businessnews-com-tn-demission-de-deux-deputes-d-en
+  title: Démission de deux députés d'Ennahdha
+  publisher: businessnews.com.tn
+  date: '2026-10-20'
+  url: http://www.businessnews.com.tn/tunisie-demission-de-deux-deputes-dennahdha,520,45769,3
+  tier: 4
+  lang: fr
+  excerpt: headline of the article the fetched page cites for this date; the article itself was not fetched in this
+    run
+- id: tunivisions-accueil-de-m-tarek-labidi-au-s
+  title: Accueil de M. Tarek Labidi au sein de groupe parlementaire Ettakatol
+  publisher: Tunivisions
+  date: '2026-10-20'
+  url: http://www.tunivisions.net/www.tunivisions.net/40111/151/149/tunisie-partis-accueil-de-mtarek-labidi-au-sein-de-groupe-parlementaire-ettakatol.html
+  tier: 4
+  lang: fr
+  excerpt: headline of the article the fetched page cites for this date; the article itself was not fetched in this
+    run
+- id: tuniscope-le-depute-abdelkader-ben-khemi
+  title: Le député Abdelkader Ben Khemir rejoint Al Massar
+  publisher: Tuniscope
+  date: '2026-10-20'
+  url: http://www.tuniscope.com/index.php/article/31207/actualites/politique/khemis-543422
+  tier: 4
+  lang: fr
+  excerpt: headline of the article the fetched page cites for this date; the article itself was not fetched in this
+    run
+- id: babnet-net-4
+  title: التأسيسي:4 نواب من حزب الأمان يجمدون نشاطهم على خلفية أحكام القضا ء العسكري
+  publisher: babnet.net
+  date: '2026-10-20'
+  url: http://www.babnet.net/rttdetail-83585.asp/
+  tier: 4
+  lang: fr
+  excerpt: headline of the article the fetched page cites for this date; the article itself was not fetched in this
+    run
+- id: webdo-tn-l-alliance-democratique-quitte
+  title: L'Alliance démocratique quitte le bloc démocratique
+  publisher: webdo.tn
+  date: '2026-10-20'
+  url: http://www.webdo.tn/2014/03/05/anc-lalliance-democratique-quitte-nida-tounes-al-massar-al-joumhouri/
+  tier: 4
+  lang: fr
+  excerpt: headline of the article the fetched page cites for this date; the article itself was not fetched in this
+    run
+- id: mosaique-fm-tunisie-ibrahim-kassas-demissionne-de
+  title: Ibrahim Kassas démissionne de Nidaa Tounes
+  publisher: Mosaïque FM (Tunisie)
+  date: '2026-10-20'
+  url: http://www.mosaiquefm.net/fr/index/a/ActuDetail/Element/28415-ibrahim-kassas-demissionne-de-nidaa-tounes
+  tier: 4
+  lang: fr
+  excerpt: headline of the article the fetched page cites for this date; the article itself was not fetched in this
+    run
+- id: tuniscope-exclusif-karima-souid-rejoint
+  title: 'Exclusif : Karima Souid rejoint le parti Al Massar'
+  publisher: Tuniscope
+  date: '2026-10-20'
+  url: http://www.tuniscope.com/index.php/article/23058/actualites/politique/souid-503919
+  tier: 4
+  lang: fr
+  excerpt: headline of the article the fetched page cites for this date; the article itself was not fetched in this
+    run
+- id: cnrd-portal-members
+  title: قائمة النواب (list of members)
+  publisher: المجلس الوطني للجهات والأقاليم (CNRD portal)
+  date: '2026-10-20'
+  url: https://www.cnrd.tn/%d9%82%d8%a7%d8%a6%d9%85%d8%a9-%d8%a7%d9%84%d9%86%d9%88%d8%a7%d8%a8/
+  tier: 1
+  lang: ar
+  excerpt: 'قائمة نواب المجلس الوطني للجهات والأقاليم: الاسم واللقب، الولاية، الإقليم'
+- id: cnrd-portal-sessions
+  title: نشاط الجلسات العامة (record of the general sessions)
+  publisher: CNRD portal
+  date: '2026-10-20'
+  url: https://www.cnrd.tn/%d8%a7%d9%84%d8%ac%d9%84%d8%b3%d8%a7%d8%aa-%d8%a7%d9%84%d8%b9%d8%a7%d9%85%d8%a9/
+  tier: 1
+  lang: ar
+  excerpt: يؤدّي أعضاء المجلس الوطني للجهات والأقاليم اليمين التالية بصورة جماعيّة (the members take the oath collectively)
+- id: cnrd-portal-rules
+  title: هياكل المجلس (structures of the council)
+  publisher: CNRD portal
+  date: '2026-10-20'
+  url: https://www.cnrd.tn/%d9%87%d9%8a%d8%a7%d9%83%d9%84-%d8%a7%d9%84%d9%85%d8%ac%d9%84%d8%b3/
+  tier: 1
+  lang: ar
+  excerpt: 'الفصل 43: لجنة إحصاء الأصوات ومراقبة عمليات التصويت التي تمّ انتخابها خلال الجلسة العامة المنعقدة بتاريخ
+    19 أفريل 2024'
+- id: presidential-order-196-2024
+  title: أمر عدد 196 لسنة 2024 مؤرخ في 16 أفريل 2024 يتعلق بدعوة أعضاء المجلس الوطني للجهات والأقاليم لحضور جلسته
+    العامة الافتتاحية
+  publisher: Journal officiel de la République tunisienne (text on legislation-securite.tn)
+  date: '2026-10-20'
+  url: https://legislation-securite.tn/ar/latest-laws/%D8%A3%D9%85%D8%B1-%D8%B9%D8%AF%D8%AF-196-%D9%84%D8%B3%D9%86%D8%A9-2024-%D9%85%D8%A4%D8%B1%D8%AE-%D9%81%D9%8A-16-%D8%A3%D9%81%D8%B1%D9%8A%D9%84-2024-%D9%8A%D8%AA%D8%B9%D9%84%D9%82-%D8%A8%D8%AF%D8%B9/
+  tier: 1
+  lang: ar
+  excerpt: 'الفصل الأول: يدعى أعضاء المجلس الوطني للجهات والأقاليم لحضور جلسته العامة الافتتاحية يوم الجمعة 19 أفريل
+    2024 ... الفصل 4: يؤدي أعضاء المجلس الوطني للجهات والأقاليم اليمين التالية بصورة جماعية'
+- id: isie-results-2024
+  title: 'انتخابات المجلس الوطني للجهات والأقاليم 2024 (results: 77 elected, ISIE decision 539 of 3 April 2024)'
+  publisher: Instance Supérieure Indépendante pour les Élections (ISIE)
+  date: '2026-10-20'
+  url: https://www.isie.tn/ar/%D8%A7%D9%84%D8%A7%D9%86%D8%AA%D8%AE%D8%A7%D8%A8%D8%A7%D8%AA/%D9%84%D9%84%D8%AC%D9%87%D8%A7%D8%AA-%D9%88%D8%A7%D9%84%D8%A3%D9%82%D8%A7%D9%84%D9%8A%D9%85-2024/
+  tier: 2
+  lang: ar
+  excerpt: قرار الهيئة العليا المستقلة للانتخابات عدد 539 لسنة 2024 مؤرخ في 03 أفريل 2024 ... عدد الفائزين 77
+- id: tunisie-tribune-composition
+  title: La composition finale du Conseil régional et territorial
+  publisher: Tunisie Tribune
+  date: '2026-10-20'
+  url: https://www.tunisie-tribune.com/2024/04/04/la-composition-finale-du-conseil-regional-et-territorial/
+  tier: 4
+  lang: fr
+  excerpt: Cette deuxième chambre législative est composée de 77 membres, dont 72 issus des 24 gouvernorats et cinq
+    des districts ... Ci-après la composition
+- id: leconomistemaghrebin-composition
+  title: Composition du CNRD
+  publisher: L'Economiste Maghrébin
+  date: '2026-10-20'
+  url: https://www.leconomistemaghrebin.com/2024/04/18/composition-du-conseil-national-des-regions-et-des-districts-encadre/
+  tier: 4
+  lang: fr
+  excerpt: Le Conseil national des régions et des districts se compose de 77 membres dont dix femmes et quatre membres
+    parmi les personnes porteuses de handicap.
+- id: lepointtn-session
+  title: 'الجمعة 19 أفريل: مجلس الجهات والأقاليم يعقد جلسته الافتتاحية'
+  publisher: Lepoint TN
+  date: '2026-10-20'
+  url: https://lepointtn.com/58358/
+  tier: 4
+  lang: ar
+  excerpt: صدر اليوم الثلاثاء، في الرائد الرسمي للجمهورية التونسية، الأمر الرئاسي عدد 196 المؤرخ في 16 أفريل الجاري،
+    المتعلق بدعوة أعضاء المجلس الوطني للجهات والأقاليم، الى حضور الجلسة العامة الافتتاحية للمجلس، يوم الجمعة 19
+    افريل الجاري
+- id: yenisafak-tap-session
+  title: لأول مرة.. انطلاق أعمال الغرفة الثانية للبرلمان التونسي
+  publisher: Yeni Şafak (cité par l'agence TAP)
+  date: '2026-10-20'
+  url: https://ar.yenisafak.com/world/4057988
+  tier: 4
+  lang: ar
+  excerpt: ور选修 ترأست الجلسة الافتتاحية النائبة فوزية الناوي، باعتبارها الأكبر سنا (70 سنة) وهي مترشحة عن المجلس
+    الجهوي بمنوبة
+- id: fr-wiki-cnrd
+  title: Conseil national des régions et des districts
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Conseil_national_des_r%C3%A9gions_et_des_districts
+  tier: 3
+  lang: fr
+  excerpt: 'La composition du bureau du Conseil national des régions et des districts à la suite de l''élection
+    du 19 avril 2024 : Président : Imed Derbali ; Vice-présidents : Youssef Bargaoui et Zakia Maaroufi.'
+- id: en-wiki-cnrd
+  title: National Council of Regions and Districts
+  publisher: Wikipedia (en)
+  date: '2026-10-20'
+  url: https://en.wikipedia.org/wiki/National_Council_of_Regions_and_Districts
+  tier: 3
+  lang: en
+  excerpt: 'President of the National Council of Provinces and Territories: Imed Derbali, independent since 19 April
+    2024; First Vice President: Zakiya Maaroufi; Second Vice President: Youssef Barkaoui'
+- id: jurisitetunisie-constitution-2022
+  title: La fonction législative - Le Conseil national des régions et des districts - Constitution de la République
+    Tunisienne 2022
+  publisher: Jurisite Tunisie
+  date: '2026-10-20'
+  url: https://www.jurisitetunisie.com/tunisie/codes/Constitution_2022/const1025p.htm
+  tier: 2
+  lang: fr
+  excerpt: Les membres de chaque conseil régional élisent parmi eux trois membres pour représenter leurs régions
+    au sein du Conseil national des régions et des districts. Les membres élus des conseils régionaux de chaque
+    district élisent parmi eux un député pour représenter le district.
+- id: wipo-lex-constitution-1959-originale
+  title: Constitution du 1er juin 1959 (texte original de la République tunisienne, promulgée par la loi n° 59-57
+    du 1er juin 1959)
+  publisher: WIPO Lex, copy held by the African Child Policy Forum
+  date: '2026-10-20'
+  url: https://clr.africanchildforum.org/Legislation%20Per%20Country/Tunisia/tunisia_constitution_1959_fr.pdf
+  tier: 3
+  lang: fr
+  excerpt: Article 38 - Le Président de la République exerce le pouvoir exécutif conformément à la Constitution.
+    Il veille au respect de la Constitution. Article 43 - Le Président de la République arrête la politique générale
+    du Gouvernement, veille à son application et informe l'Assemblée nationale de son évolution. Il choisit les
+    membres de son gouvernement qui sont responsables devant lui.
+- id: dcaf-constitution-1959-consolidee
+  title: Loi n° 59-57 du 1er juin 1959, portant promulgation de la Constitution (texte consolidé avec les mentions
+    de modification)
+  publisher: DCAF, base de données juridiques du secteur de la sécurité, Tunis
+  date: '2026-10-20'
+  url: https://legislation-securite.tn/latest-laws/loi-n-59-57-du-1er-juin-1959-portant-promulgation-de-la-constitution/
+  tier: 2
+  lang: fr
+  excerpt: Art. 37 - Le pouvoir exécutif est exercé par le Président de la République assisté d'un gouvernement
+    dirigé par un Premier Ministre. Art. 50 - Le Président de la République nomme le Premier ministre et, sur proposition
+    de celui-ci, les autres membres du gouvernement. Art. 59 - Le Gouvernement est responsable de sa gestion devant
+    le Président de la République.
+- id: jurisitetunisie-constitution-1959-versions
+  title: Constitution de la République Tunisienne 1959, versions consolidées article par article (ajouts et suppressions
+    signalés)
+  publisher: Jurisite Tunisie
+  date: '2026-10-20'
+  url: https://www.jurisitetunisie.com/tunisie/codes/constitution/const1020p.htm
+  tier: 3
+  lang: fr
+  excerpt: Article 51 (nouveau). [*] Article abrogé et remplacé par premier de la loi constitutionnelle n° 69-63
+    du 31 décembre 1969, portant modification de l'article 51 de la constitution. ... En cas d'empêchement provisoire,
+    le Président de la République peut déléguer tout ou partie de ses attributions au Premier Ministre. Il en informe
+    le Président de L'Assemblée Nationale.
+- id: jurisitetunisie-chronologie-1959
+  title: Constitution de la République 1959, Table Chronologique des lois de révision
+  publisher: Jurisite Tunisie
+  date: '2026-10-20'
+  url: https://www.jurisitetunisie.com/tunisie/codes/constitution/const2000.htm
+  tier: 3
+  lang: fr
+  excerpt: 31 décembre 1969 - Loi constitutionnelle n° 69-63 modifiant l'article 51 de la Constitution. (JORT n°
+    57 des 30 et 31 décembre 1969 page 1500). 8 avril 1976 - Loi constitutionnelle n° 76-37 modifiant et complétant
+    la Constitution du 1er juin 1959. (JORT n° 26 des 9 et 13 avril 1976 page 858). 25 juillet 1988 - Loi constitutionnelle
+    n° 88-88 modifiant la Constitution. (JORT n° 50 du 26 juillet 1988 page 1066).
+- id: dcaf-loi-constitutionnelle-2002-51
+  title: Loi constitutionnelle n° 2002-51 du 1er juin 2002, portant modification de certaines dispositions de la
+    Constitution
+  publisher: DCAF, base de données juridiques du secteur de la sécurité, Tunis
+  date: '2026-10-20'
+  url: https://legislation-securite.tn/latest-laws/loi-constitutionnelle-n-2002-51-du-1-juin-2002-portant-modification-de-certaines-dispositions-de-la-constitution/
+  tier: 2
+  lang: fr
+  excerpt: Art. 53 (nouveau) - Le Président de la République veille à l'exécution des lois, exerce le pouvoir réglementaire
+    général et peut en déléguer une partie au Premier ministre. Art. 55 (paragraphe 2) - Le Président de la République
+    peut déléguer au Premier ministre le pouvoir de nomination à certains de ces emplois.
+- id: dcaf-loi-constituante-2011-6
+  title: Loi constituante n° 2011-6 du 16 décembre 2011, portant sur l'organisation provisoire des pouvoirs publics
+  publisher: DCAF, base de données juridiques du secteur de la sécurité, Tunis
+  date: '2026-10-20'
+  url: https://legislation-securite.tn/latest-laws/loi-constituante-n-2011-6-du-16-decembre-2011-portant-sur-lorganisation-provisoire-des-pouvoirs-publics/
+  tier: 2
+  lang: fr
+  excerpt: Art. 17 - Le Gouvernement exerce le pouvoir exécutif, à l'exception des attributions conférées au président
+    de la République. ... Il préside le Conseil des ministres. ... Il crée, réaménage ou supprime les ministères
+    et les secrétariats d'État ; il en détermine les attributions et le champ de compétence après délibération en
+    Conseil des ministres et information du président de la République. Art. 18 - ... chaque ministre veille, selon
+    son domaine de compétence, à la direction de l'administration centrale ... sous l'autorité du Chef du Gouvernement.
+- id: dri-loi-2011-6-traduction-fr
+  title: Loi constituante n° 2011-6 du 16 décembre 2011, relative à l'organisation provisoire des pouvoirs publics
+    (traduction non officielle)
+  publisher: Democracy Reporting International
+  date: '2026-10-20'
+  url: https://www.fichier-pdf.fr/2013/02/07/l-2011-6-organisation-provisoire-des-pouvoirs-publics-fr-dri-2/l-2011-6-organisation-provisoire-des-pouvoirs-publics-fr-dri-2.pdf
+  tier: 4
+  lang: fr
+  excerpt: Article 17 - Le Gouvernement exerce le pouvoir exécutif, à l'exception de ce qui a été attribué au Président
+    de la République. ... 1- Pour présider le conseil des ministres.
+- id: constituteproject-tunisia-2014
+  title: Tunisia 2014 Constitution (adopted 27 January 2014), translated by UNDP and reviewed by International IDEA
+  publisher: Constitute Project
+  date: '2026-10-20'
+  url: https://www.constituteproject.org/constitution/Tunisia_2014
+  tier: 2
+  lang: en
+  excerpt: Article 71 - Executive authority is exercised by the President of the Republic and by a government which
+    is presided over by the head of the government. Article 89 - The government shall be composed of a Head of Government,
+    Ministers, and secretaries of state selected by the Head of Government, and in the case of the Ministers of
+    Foreign Affairs and Defence, in consultation with the President of the Republic.
+- id: constituteproject-tunisia-2022
+  title: Tunisia 2022 Constitution (approved by referendum of 25 July 2022)
+  publisher: Constitute Project
+  date: '2026-10-20'
+  url: https://www.constituteproject.org/constitution/Tunisia_2022
+  tier: 2
+  lang: en
+  excerpt: 'Article One Hundred and One: The President of the Republic appoints the Head of Government, as well
+    as appoints the rest of the members of the Government based on a proposal from its Head. Article One Hundred
+    and Twelve: The Government is accountable for its conduct before the President of the Republic.'
+- id: dcaf-decret-presidentiel-2021-117
+  title: Décret Présidentiel n° 2021-117 du 22 septembre 2021, relatif aux mesures exceptionnelles
+  publisher: DCAF, base de données juridiques du secteur de la sécurité, Tunis
+  date: '2026-10-20'
+  url: https://legislation-securite.tn/latest-laws/decret-presidentiel-n-2021-117-du-22-septembre-2021-relatif-aux-mesures-exceptionnelles/
+  tier: 2
+  lang: fr
+  excerpt: Art. 8 - Le pouvoir exécutif est exercé par le Président de la République assisté d'un Gouvernement dirigé
+    par un Chef du Gouvernement. Art. 16 - Le Gouvernement se compose du Chef du Gouvernement, de ministres et de
+    secrétaires d'Etat nommés par le Président de la République. Art. 18 - Le Gouvernement est responsable de ses
+    actes devant le Président de la République.
+- id: jort-2021-n86-decret-117
+  title: Journal Officiel de la République Tunisienne n° 86 du 22 septembre 2021, page 2196, Décret Présidentiel
+    n° 2021-117 du 22 septembre 2021
+  publisher: Imprimerie Officielle de la République Tunisienne
+  date: '2026-10-20'
+  url: https://lake.lois.tn/614c1f5f7e13f740455087.pdf
+  tier: 1
+  lang: fr
+  excerpt: Décret Présidentiel n° 2021-117 du 22 septembre 2021, relatif aux mesures exceptionnelles. ... Art. 18
+    - Le Gouvernement est responsable de ses actes devant le Président de la République. ... Tunis, le 15 Safar
+    al Khayr 1443. Le 22 septembre 2021. Le Président de la République Kaïs Saïed.
+- id: dcaf-decret-beylical-1956-08-03
+  title: Décret beylical du 3 août 1956, modifiant le décret du 21 septembre 1955 relatif à l'organisation provisoire
+    des pouvoirs publics (JORT n° 62 du 3 août 1956)
+  publisher: DCAF, base de données juridiques du secteur de la sécurité, Tunis
+  date: '2026-10-20'
+  url: https://legislation-securite.tn/latest-laws/decret-beylical-du-3-aout-1956-modifiant-le-decret-du-21-septembre-1955-relatif-a-lorganisation-provisoire-des-pouvoirs-publics/
+  tier: 2
+  lang: fr
+  excerpt: Nous, Mohamed Lamine Pacha Bey, possesseur du Royaume de Tunisie, Vu notre décret du 21 septembre 1955,
+    relatif à l'organisation provisoire des pouvoirs publics, Vu l'avis du conseil des ministres, Sur proposition
+    de notre premier ministre, président du conseil, Avons pris le décret suivant. Art. 3 (nouveau) - Tout décret
+    à caractère réglementaire ou décret simple contresigné par le ou le ministres intéressés, est pris par le premier
+    Ministre, président du conseil.
+- id: dcaf-loi-1957-1-1957-07-29
+  title: Loi n° 57-1 du 29 juillet 1957, modifiant le décret du 21 septembre 1955 portant organisation provisoire
+    des pouvoirs publics (JORT n° 02 du 30 juillet 1957)
+  publisher: DCAF, base de données juridiques du secteur de la sécurité, Tunis
+  date: '2026-10-20'
+  url: https://legislation-securite.tn/latest-laws/loi-n-57-1-du-29-juillet-1957-modifiant-le-decret-du-21-septembre-1955-portant-organisation-provisoire-des-pouvoirs-publics/
+  tier: 2
+  lang: fr
+  excerpt: Art. 2 (nouveau) - La loi adoptée par un Conseil de Cabinet groupant les secrétaires d'Etat intéressés,
+    est promulguée par le président de la République Tunisienne et publiée au Journal Officiel de la République
+    Tunisienne. Art. 2 - L'article 6 du décret susvisé du 21 septembre 1955 est abrogé.
+- id: mjp-republique-tunisie-chronologie
+  title: République de Tunisie, chronologie constitutionnelle (Digithèque MJP)
+  publisher: Digithèque MJP, Université de Perpignan
+  date: '2026-10-20'
+  url: https://mjp.univ-perp.fr/constit/tn.htm
+  tier: 2
+  lang: fr
+  excerpt: une Constitution promulguée par la loi n° 59-57 du 1er juin 1959 (H 1378) et parue au JORT n° 3 du 1er
+    juin 1959 ... Une nouvelle Constitution est adoptée le 26 janvier 2014 et promulguée le lendemain.
+- id: minjustice-proclamation-republique-1957
+  title: Ministère de la Justice, Proclamation de la République, 25 juillet 1957
+  publisher: Ministère de la Justice, République tunisienne
+  date: '2026-10-20'
+  url: https://www.justice.gov.tn/index.php?L=3&id=437
+  tier: 2
+  lang: fr
+  excerpt: Un décret beylical du 3 août 1956 modifiant le décret du 21 septembre 1955 relatif à l'organisation provisoire
+    des pouvoirs publics a retiré le pouvoir exécutif du bey en l'accordant au profit de premier ministre ... L'Assemblée
+    Nationale Constituante a décidé le 25 juillet 1957 l'abolition totale du régime monarchique et la proclamation
+    de la République.
+- id: leaders-chronologie-2022-08
+  title: Chronologie, Leaders n° 136, septembre 2022 (promulgation et publication de la Constitution du 25 juillet
+    2022)
+  publisher: Leaders, revue d'information économique tunisienne
+  date: '2026-10-20'
+  url: https://www.leaders.com.tn/uploads/mensuel/pdf/20220915152903__leaders-n-136-septembre-tt.pdf
+  tier: 3
+  lang: fr
+  excerpt: 17 août 2022 - Décision de l'Instance supérieure indépendante des élections n° 2022-22 du 16 août 2022
+    relative à la proclamation des résultats définitifs du référendum sur un projet d'une nouvelle Constitution
+    ... Le président de la République Kaïs Saïed promulgue la nouvelle Constitution. 18 août 2022 - Publication
+    au Journal officiel, en édition spéciale, du décret présidentiel n° 2022-691 du 17 août 2022, portant promulgation
+    de la Constitution de la République tunisienne.
+- id: jort-1963-decret-loi-nationalite
+  title: Décret-loi n° 63-6 du 28 février 1963 portant refonte du Code de la Nationalité tunisienne (JORT n° 11
+    du 5 mars 1963), préambule
+  publisher: Imprimerie Officielle de la République Tunisienne, copy held by ecoi.net
+  date: '2026-10-20'
+  url: https://www.ecoi.net/en/file/local/2022022/5e00d4e64.pdf
+  tier: 1
+  lang: fr
+  excerpt: 'Vu l''avis des secrétaires d''Etat à la Présidence, aux affaires étrangères, à la justice, à l''intérieur
+    et au plan et aux finances. (*) ... (*) Lire : Premier ministre ou Ministre selon le cas.'
+- id: fr-wp-interieur
+  title: Ministère de l'Intérieur (Tunisie)
+  publisher: Wikipédia (français)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Minist%C3%A8re_de_l%27Int%C3%A9rieur_(Tunisie)
+  tier: 3
+  lang: fr
+  excerpt: 'Liste des ministres : Béji Caïd Essebsi | 29 juin 1965 | 8 septembre 1969 ; Driss Guiga | 1 mars 1980
+    | 7 janvier 1984 ; Mohamed Mzali | 7 janvier 1984 | 28 avril 1986 ; Ali Chaouch | 9 octobre 1997 | 17 novembre
+    1999 ; Abdallah Kallel | 17 novembre 1999 | 23 janvier 2001.'
+- id: ar-wp-interieur
+  title: وزارة الداخلية (تونس)
+  publisher: ويكيبيديا (العربية)
+  date: '2026-10-20'
+  url: https://ar.wikipedia.org/wiki/%D9%88%D8%B2%D8%A7%D8%B1%D8%A9_%D8%A7%D9%84%D8%AF%D8%A7%D8%AE%D9%84%D9%8A%D8%A9_(%D8%AA%D9%88%D9%86%D8%B3)
+  tier: 3
+  lang: ar
+  excerpt: الباجي قائد السبسي 29 يونيو 1965 – 8 سبتمبر 1969 ; إدريس قيقة 1 مارس 1980 – 7 جانفي 1984 ; محمد مزالي
+    7 جانفي 1984 – 28 أفريل 1986 ; علي الشاوش 9 أكتوبر 1997 – 17 نوفمبر 1999.
+- id: fr-wp-tourisme
+  title: Ministère du Tourisme (Tunisie)
+  publisher: Wikipédia (français)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Minist%C3%A8re_du_Tourisme_(Tunisie)
+  tier: 3
+  lang: fr
+  excerpt: Mondher Ben Ammar | 8 septembre 1969 | 6 novembre 1970 ; Ezzeddine Chelbi | 18 juin 1983 | 19 juillet
+    1986 ; Abderrazak Kéfi | 7 novembre 1987 | 27 juillet 1988 ; Mohamed Jegham | 27 juillet 1988 | 25 janvier 1995
+    ; Slaheddine Maaoui | 25 janvier 1995 | 24 janvier 2001 ; Mondher Zenaidi | 24 janvier 2001 | 22 mars 2004.
+- id: ar-wp-tourisme
+  title: وزارة السياحة (تونس)
+  publisher: ويكيبيديا (العربية)
+  date: '2026-10-20'
+  url: https://ar.wikipedia.org/wiki/%D9%88%D8%B2%D8%A7%D8%B1%D8%A9_%D8%A7%D9%84%D8%B3%D9%8A%D8%A7%D8%AD%D8%A9_(%D8%AA%D9%88%D9%86%D8%B3)
+  tier: 3
+  lang: ar
+  excerpt: عز الدين الشلبي 18 يونيو 1983 – 19 يوليو 1986 ; عبد الرزاق الكافي 7 نوفمبر 1987 – 27 يوليو 1988 ; محمد
+    جغام 27 يوليو 1988 – 25 يناير 1995 ; صلاح الدين معاوي 25 يناير 1995 – 24 يناير 2001 ; المنذر الزنايدي 24 يناير
+    2001 – 22 مارس 2004.
+- id: fr-wp-finances
+  title: Ministère des Finances (Tunisie)
+  publisher: Wikipédia (français)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Minist%C3%A8re_des_Finances_(Tunisie)
+  tier: 3
+  lang: fr
+  excerpt: Hédi Nouira | 15 avril 1956 | 30 septembre 1958 ; Bahi Ladgham | 30 septembre 1958 | 30 décembre 1958
+    ; Ahmed Mestiri | 30 décembre 1958 | 2 août 1960 ; Bahi Ladgham | 2 août 1960 | 4 octobre 1960 ; Hédi Khefacha
+    | 4 octobre 1960 | 30 janvier 1961 ; Ahmed Ben Salah | 30 janvier 1961 | 8 septembre 1969.
+- id: ar-wp-finances
+  title: وزارة المالية (تونس)
+  publisher: ويكيبيديا (العربية)
+  date: '2026-10-20'
+  url: https://ar.wikipedia.org/wiki/%D9%88%D8%B2%D8%A7%D8%B1%D8%A9_%D8%A7%D9%84%D9%85%D8%A7%D9%84%D9%8A%D8%A9_(%D8%AA%D9%88%D9%86%D8%B3)
+  tier: 3
+  lang: ar
+  excerpt: الباهي الأدغم 1958 ; أحمد المستيري 1958 – 1960 ; الباهي الأدغم 1960 ; الهادي خفشة 1960 – 1961 ; أحمد
+    بن صالح 1961 – 1969.
+- id: fr-wp-justice
+  title: Ministère de la Justice (Tunisie)
+  publisher: Wikipédia (français)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Minist%C3%A8re_de_la_Justice_(Tunisie)
+  tier: 3
+  lang: fr
+  excerpt: Ahmed Mestiri | 15 avril 1956 | 30 décembre 1958 ; Hédi Khefacha | 30 décembre 1958 | 5 septembre 1966
+    ; Mongi Slim | 5 septembre 1966 | 6 septembre 1969 ; Mohamed Snoussi | 6 septembre 1969 | 12 juin 1970 ; Abdallah
+    Kallel | 22 janvier 1997 | 17 novembre 1999 ; Béchir Tekkari | 17 novembre 1999 | 15 janvier 2010.
+- id: ar-wp-justice
+  title: وزارة العدل (تونس)
+  publisher: ويكيبيديا (العربية)
+  date: '2026-10-20'
+  url: https://ar.wikipedia.org/wiki/%D9%88%D8%B2%D8%A7%D8%B1%D8%A9_%D8%A7%D9%84%D8%B9%D8%AF%D9%84_(%D8%AA%D9%88%D9%86%D8%B3)
+  tier: 3
+  lang: ar
+  excerpt: الهادي خفشة 30 ديسمبر 1958 – 5 سبتمبر 1966 ; المنجي سليم 5 سبتمبر 1966 – 6 سبتمبر 1969 ; عبد الله القلال
+    22 جانفي 1997 – 17 نوفمبر 1999 ; البشير التكاري 17 نوفمبر 1999 – 15 جانفي 2010.
+- id: ar-wp-domaines
+  title: وزارة أملاك الدولة (تونس)
+  publisher: ويكيبيديا (العربية)
+  date: '2026-10-20'
+  url: https://ar.wikipedia.org/wiki/%D9%88%D8%B2%D8%A7%D8%B1%D8%A9_%D8%A3%D9%85%D9%84%D8%A7%D9%83_%D8%A7%D9%84%D8%AF%D9%88%D9%84%D8%A9_(%D8%AA%D9%88%D9%86%D8%B3)
+  tier: 3
+  lang: ar
+  excerpt: 'مصطفى بوعزيز 3 مارس 1990 – 22 أبريل 1999 ; رضا قريرة 22 أبريل 1999 – 14 يناير 2010 ; سليم بن حميدان
+    24 ديسمبر 2011 – 29 يناير 2014 ; حاتم العشي 6 فبراير 2015 – 27 أغسطس 2016 ; كتاب الدولة: 29 يناير 2014 - 6 فبراير
+    2015: محمد كريم الجموسي ; 27 أغسطس 2016 - 6 سبتمبر 2017: مبروك كرشيد (كاتب دولة لدى وزير المالية مكلف بأملاك
+    الدولة والشؤون العقارية).'
+- id: fr-wp-commerce
+  title: Ministère du Commerce (Tunisie)
+  publisher: Wikipédia (français)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Minist%C3%A8re_du_Commerce_(Tunisie)
+  tier: 3
+  lang: fr
+  excerpt: Slaheddine Ben Mbarek | 26 décembre 1977 | 24 avril 1980 ; Slaheddine Ben Mbarek (Industrie et Commerce)
+    | 28 avril 1986 | 27 juillet 1988 ; Moncef Belaïd (Industrie et Commerce puis Économie) | 27 juillet 1988 |
+    3 mars 1990 ; Mohamed Ghannouchi (Économie) | 3 mars 1990 | 20 février 1991 ; Sadok Rabah (Économie nationale)
+    | 20 février 1991 | 10 mars 1995 ; Mondher Zenaidi | 13 juin 1996 | 25 janvier 2001 ; Tahar Sioud | 25 janvier
+    2001 | 5 septembre 2002 ; Mondher Zenaidi | 5 septembre 2002 | 3 septembre 2007 ; Zied Ladhari | 27 août 2016
+    | 6 septembre 2017.
+- id: ar-wp-commerce
+  title: وزارة التجارة وتنمية الصادرات (تونس)
+  publisher: ويكيبيديا (العربية)
+  date: '2026-10-20'
+  url: https://ar.wikipedia.org/wiki/%D9%88%D8%B2%D8%A7%D8%B1%D8%A9_%D8%A7%D9%84%D8%AA%D8%AC%D8%A7%D8%B1%D8%A9_%D9%88%D8%AA%D9%86%D9%85%D9%8A%D8%A9_%D8%A7%D9%84%D8%B5%D8%A7%D8%AF%D8%A7%D8%AA_(%D8%AA%D9%88%D9%86%D8%B3)
+  tier: 3
+  lang: ar
+  excerpt: صلاح الدين بن مبارك 26 ديسمبر 1977 – 24 أبريل 1980 ; 28 أبريل 1986 – 27 يوليو 1988 ; المنصف بلعيد 27
+    يوليو 1988 – 3 مارس 1990 ; محمد الغنوشي 3 مارس 1990 – 20 فبراير 1991 ; الصادق رابح 20 فبراير 1991 – مارس 1995
+    ; الطاهر صيود 25 يناير 2001 – 5 سبتمبر 2002 ; المنذر الزنايدي 5 سبتمبر 2002 – 3 سبتمبر 2007 ; زياد العذاري 27
+    أغسطس 2016 – 6 سبتمبر 2017.
+- id: fr-wp-sante
+  title: Ministère de la Santé (Tunisie)
+  publisher: Wikipédia (français)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Minist%C3%A8re_de_la_Sant%C3%A9_(Tunisie)
+  tier: 3
+  lang: fr
+  excerpt: Mahmoud El Materi | 15 avril 1956 | 29 juillet 1957 ; Ahmed Ben Salah | 29 juillet 1957 | 3 janvier 1961
+    ; Mondher Ben Ammar | 3 janvier 1961 | 11 novembre 1964 ; Fathi Zouhir | 11 novembre 1964 | 5 mai 1966 ; Hédi
+    Khefacha | 5 mai 1966 | 8 septembre 1969 ; Driss Guiga | 8 septembre 1969 | 17 mars 1973 ; Souad Lyagoubi |
+    20 janvier 1984 | 26 juillet 1988 ; Dali Jazi | 11 avril 1989 | 31 juillet 1992 ; Hédi M'henni | 31 juillet
+    1992 | 23 janvier 2001.
+- id: ar-wp-sante
+  title: وزارة الصحة (تونس)
+  publisher: ويكيبيديا (العربية)
+  date: '2026-10-20'
+  url: https://ar.wikipedia.org/wiki/%D9%88%D8%B2%D8%A7%D8%B1%D8%A9_%D8%A7%D9%84%D8%B5%D8%AD%D8%A9_(%D8%AA%D9%88%D9%86%D8%B3)
+  tier: 3
+  lang: ar
+  excerpt: محمود الماطري 15 أبريل 1956 – 29 يوليو 1957 ; أحمد بن صالح 29 يوليو 1957 – 3 جانفي 1961 ; المنذر بن عمار
+    3 جانفي 1961 – 11 نوفمبر 1964 ; فتحي زهير 11 نوفمبر 1964 – 5 ماي 1966 ; الهادي خفشة 5 ماي 1966 – 8 سبتمبر 1969
+    ; إدريس قيقة 8 سبتمبر 1969 – 17 مارس 1973 ; سعاد اليعقوبي 20 جانفي 1984 – 26 جويلية 1988 ; الدالي الجازي 11
+    أفريل 1989 – 31 جويلية 1992 ; الهادي مهني 31 جويلية 1992 – 23 جانفي 2001.
+- id: fr-wp-droits-homme
+  title: Ministère des Droits de l'homme et de la Justice transitoire
+  publisher: Wikipédia (français)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Minist%C3%A8re_des_Droits_de_l%27homme_et_de_la_Justice_transitoire
+  tier: 3
+  lang: fr
+  excerpt: Samir Dilou | 24 décembre 2011 | 29 janvier 2014 ; Hafedh Ben Salah | 29 janvier 2014 | 6 février 2015.
+- id: ar-wp-droits-homme
+  title: وزارة حقوق الإنسان والعدالة الانتقالية (تونس)
+  publisher: ويكيبيديا (العربية)
+  date: '2026-10-20'
+  url: https://ar.wikipedia.org/wiki/%D9%88%D8%B2%D8%A7%D8%B1%D8%A9_%D8%AD%D9%82%D9%88%D9%82_%D8%A7%D9%84%D8%A5%D9%86%D8%B3%D8%A7%D9%86_%D9%88%D8%A7%D9%84%D8%B9%D8%AF%D9%84%D8%A9_%D8%A7%D9%84%D8%A7%D9%86%D8%AA%D9%82%D8%A7%D9%84%D9%8A%D8%A9_(%D8%AA%D9%88%D9%86%D8%B3)
+  tier: 3
+  lang: ar
+  excerpt: سمير ديلو 24 ديسمبر 2011 – 29 يناير 2014 ; حافظ بن صالح 29 يناير 2014 – 6 فبراير 2015 ; حل = 6 فبراير
+    2015.
+- id: fr-wp-agriculture
+  title: Ministère de l'Agriculture (Tunisie)
+  publisher: Wikipédia (français)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Minist%C3%A8re_de_l%27Agriculture_(Tunisie)
+  tier: 3
+  lang: fr
+  excerpt: Mustapha Filali | 15 avril 1956 | 1 octobre 1957 ; Mahmoud Khiari | 1 octobre 1957 | 30 décembre 1958
+    ; Abdesselem Knani | 30 décembre 1958 | 3 avril 1962 ; Abdelmajid Chaker | 3 avril 1962 | 12 novembre 1964 ;
+    Mohamed Jeddi | 12 novembre 1964 | 26 juillet 1967 ; Lassaad Ben Osman | 26 juillet 1967 | 8 septembre 1969
+    ; Abdallah Farhat | 8 septembre 1969 | 29 octobre 1971 ; Dhaoui Hannablia | 29 octobre 1971 | 25 septembre 1974
+    ; Hassen Belkhodja | 25 septembre 1974 | 7 novembre 1979 ; Nouri Zorgati | 11 avril 1989 | 20 février 1991 ;
+    Mouldi Zouaoui | 20 février 1991 | 15 juin 1993 ; Sadok Rabah | 9 octobre 1997 | 5 septembre 2002.
+- id: ar-wp-agriculture
+  title: وزارة الفلاحة (تونس)
+  publisher: ويكيبيديا (العربية)
+  date: '2026-10-20'
+  url: https://ar.wikipedia.org/wiki/%D9%88%D8%B2%D8%A7%D8%B1%D8%A9_%D8%A7%D9%84%D9%81%D9%84%D8%A7%D8%AD%D8%A9_(%D8%AA%D9%88%D9%86%D8%B3)
+  tier: 3
+  lang: ar
+  excerpt: مصطفى الفيلالي 15 أبريل 1956 – 1 أكتوبر 1957 ; محمود الخياري 1 أكتوبر 1957 – 30 ديسمبر 1958 ; عبد السلام
+    الكناني 30 ديسمبر 1958 – 3 أفريل 1962 ; عبد المجيد شاكر 3 أفريل 1962 – 12 نوفمبر 1964 ; محمد الجدي 12 نوفمبر
+    1964 – 26 جويلية 1967 ; الأسعد بن عصمان 26 جويلية 1967 – 8 سبتمبر 1969 ; عبد الله فرحات 8 سبتمبر 1969 – 29 أكتوبر
+    1971 ; الضاوي حنابلية 29 أكتوبر 1971 – 25 سبتمبر 1974 ; حسان بلخوجة 25 سبتمبر 1974 – 7 نوفمبر 1979 ; النوري
+    الزرقاطي 11 أفريل 1989 – 20 فيفري 1991 ; المولدي الزواوي 20 فيفري 1991 – 15 جوان 1993 ; الصادق رابح 9 أكتوبر
+    1997 – 5 سبتمبر 2002.
+- id: fr-wp-equipement
+  title: Ministère de l'Équipement (Tunisie)
+  publisher: Wikipédia (français)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Minist%C3%A8re_de_l%27%C3%89quipement_(Tunisie)
+  tier: 3
+  lang: fr
+  excerpt: Ezzeddine Abassi | 7 septembre 1955 | 29 juillet 1957 ; Ahmed Noureddine (Travaux publics et Habitat)
+    | 30 décembre 1958 | 7 novembre 1969 ; Tijani Chelli | 7 novembre 1969 | 6 novembre 1970 ; Lassaad Ben Osman
+    | 6 novembre 1970 | 29 octobre 1971 ; Lassaad Ben Osman | 25 septembre 1974 | 7 novembre 1979 ; Mohamed Ali
+    Souissi | 7 novembre 1979 | 15 avril 1980 ; Mohamed Sayah | 15 avril 1980 | 25 novembre 1983 ; Sadok Ben Jemâa
+    | 25 novembre 1983 | 25 août 1984 ; Mansour Skhiri | 16 mai 1987 | 7 novembre 1987 ; Ahmed Friaâ | 11 avril
+    1989 | 9 juin 1992 ; Ali Chaouch | 15 juin 1993 | 9 octobre 1997 ; Samira Khayach Belhaj | 10 novembre 2004
+    | 29 août 2008.
+- id: fr-wp-industrie
+  title: Ministère de l'Industrie (Tunisie)
+  publisher: Wikipédia (français)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Minist%C3%A8re_de_l%27Industrie_(Tunisie)
+  tier: 3
+  lang: fr
+  excerpt: Ferjani Bel Haj Ammar (Économie) | 15 avril 1956 | 29 juillet 1957 ; Ahmed Ben Salah (Plan et Économie
+    nationale) | 12 novembre 1961 | 24 octobre 1968 ; Abderrazak Rassaa | 24 octobre 1968 | 8 septembre 1969 ; Hassen
+    Belkhodja (Affaires économiques) | 8 septembre 1969 | 12 juin 1970 ; Abdelaziz Lasram (Économie nationale) |
+    25 septembre 1974 | 26 décembre 1977 ; Rachid Sfar | 26 décembre 1977 | 27 novembre 1979 ; Amor Rourou (Industrie,
+    Mines et Énergie) | 27 novembre 1979 | 25 avril 1980 ; Abdelaziz Lasram (Économie nationale) | 25 avril 1980
+    | 14 octobre 1983 ; Rachid Sfar (Économie nationale) | 14 octobre 1983 | 28 avril 1986 ; Sadok Rabah (Économie
+    nationale) | 20 février 1991 | 25 janvier 1995 ; Zakaria Hamad | 6 février 2015 | 27 août 2016.
+- id: fr-wp-economie-planification
+  title: Ministère de l'Économie et de la Planification
+  publisher: Wikipédia (français)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Minist%C3%A8re_de_l%27%C3%89conomie_et_de_la_Planification
+  tier: 3
+  lang: fr
+  excerpt: Samir Saïed | 17 octobre 2021 | 17 octobre 2023 ; Sihem Boughdiri (intérim) | 17 octobre 2023 | 24 janvier
+    2024 ; Feryel Ouerghi | 24 janvier 2024 | 25 août 2024.
+- id: fr-wp-affaires-sociales
+  title: Ministère des Affaires sociales (Tunisie)
+  publisher: Wikipédia (français)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Minist%C3%A8re_des_Affaires_sociales_(Tunisie)
+  tier: 3
+  lang: fr
+  excerpt: Mohamed Chakroun | 14 avril 1956 | 6 mai 1958 ; Ahmed Ben Salah | 6 mai 1958 | 3 janvier 1961 ; Mondher
+    Ben Ammar | 3 janvier 1961 | 8 septembre 1969 ; Driss Guiga | 8 septembre 1969 | 7 novembre 1969 ; Sadok Ben
+    Jemâa | 7 novembre 1969 | 29 octobre 1971 ; Farhat Dachraoui | 29 octobre 1971 | 14 janvier 1974 ; Mohamed Ennaceur
+    | 7 novembre 1979 | 23 octobre 1985 ; Noureddine Hached (Travail) | 23 octobre 1985 | 23 juin 1986 ; Abdelaziz
+    Ben Dhia | 30 juillet 1986 | 4 avril 1987 ; Hédi Baccouche | 4 avril 1987 | 7 novembre 1987 ; Taoufik Cheikhrouhou
+    | 7 novembre 1987 | 27 septembre 1989 ; Moncer Rouissi | 27 septembre 1989 | 20 février 1991 ; Ahmed Smaoui
+    | 20 février 1991 | 3 août 1992.
+- id: ar-wp-affaires-sociales
+  title: وزارة الشؤون الاجتماعية (تونس)
+  publisher: ويكيبيديا (العربية)
+  date: '2026-10-20'
+  url: https://ar.wikipedia.org/wiki/%D9%88%D8%B2%D8%A7%D8%B1%D8%A9_%D8%A7%D9%84%D8%B4%D8%A4%D9%88%D9%86_%D8%A7%D9%84%D8%A7%D8%AC%D8%AA%D9%85%D8%A7%D8%B9%D9%8A%D8%A9_(%D8%AA%D9%88%D9%86%D8%B3)
+  tier: 3
+  lang: ar
+  excerpt: محمد شقرون 14 أبريل 1956 – 6 مايو 1958 ; أحمد بن صالح 6 مايو 1958 – 3 جانفي 1961 ; المنذر بن عمار 3 جانفي
+    1961 – 8 سبتمبر 1969 ; إدريس قيقة 8 سبتمبر 1969 – 7 نوفمبر 1969 ; الصادق بن جمعة 7 نوفمبر 1969 – 29 أكتوبر 1971
+    ; فرحات الدشراوي 29 أكتوبر 1971 – 14 جانفي 1974 ; محمد الناصر 7 نوفمبر 1979 – 23 أكتوبر 1985 ; نور الدين حشاد
+    23 أكتوبر 1985 – 23 جوان 1986 ; عبد العزيز بن ضياء 30 جويلية 1986 – 4 أفريل 1987 ; الهادي البكوش 4 أفريل 1987
+    – 7 نوفمبر 1987 ; توفيق شيخ روحه 7 نوفمبر 1987 – 27 سبتمبر 1989 ; منصر الرويسي 27 سبتمبر 1989 – 20 فيفري 1991
+    ; أحمد السماوي 20 فيفري 1991 – 3 أوت 1992.
+- id: fr-wp-abdelaziz-lasram
+  title: Abdelaziz Lasram
+  publisher: Wikipédia (français)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Abdelaziz_Lasram
+  tier: 3
+  lang: fr
+  excerpt: fonction1 = Ministre tunisien de l'Économie nationale ; l'ancien ministre de l'Economie et président
+    du Club africain laisse un grand souvenir.
+- id: c26-fr-wp-industrie
+  title: Ministère de l'Industrie (Tunisie)
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Ministère_de_l%27Industrie_(Tunisie)
+  tier: 3
+  lang: fr
+  excerpt: 'Liste des ministres: Sadok Rabah (Économie nationale), RCD, Gouvernement Karoui, début 20 février 1991,
+    fin 25 janvier 1995; Amor Rourou (Industrie, Mines et Énergie), PSD, Gouvernement Nouira, début 27 novembre
+    1979, fin 25 avril 1980.'
+- id: c26-fr-wp-agriculture
+  title: Ministère de l'Agriculture (Tunisie)
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Ministère_de_l%27Agriculture_(Tunisie)
+  tier: 3
+  lang: fr
+  excerpt: 'Liste des ministres: Sadok Rabah, RCD, gouvernements Karoui et Ghannouchi I, début 9 octobre 1997, fin
+    5 septembre 2002; Habib Haddad, RCD, Gouvernement Ghannouchi I, début 5 septembre 2002, fin 29 août 2008.'
+- id: fr-wp-environnement
+  title: Ministère de l'Environnement (Tunisie)
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Ministère_de_l%27Environnement_(Tunisie)
+  tier: 3
+  lang: fr
+  excerpt: 'Liste des ministres: Habib Haddad (également chargé de l''Agriculture), RCD, Gouvernement Ghannouchi
+    I, début 5 septembre 2002, fin 11 novembre 2004; Mohamed Salmane, Ennahdha, Gouvernement Larayedh, début 13
+    mars 2013, fin 29 janvier 2014.'
+- id: fr-wp-transport
+  title: Ministère du Transport (Tunisie)
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Ministère_du_Transport_(Tunisie)
+  tier: 3
+  lang: fr
+  excerpt: 'Liste des ministres: Sadok Rabah (regroupement des ministères du Transport et des Communications), RCD,
+    Gouvernement Ghannouchi I, début 5 septembre 2002, fin 10 novembre 2004; Houcine Chouk, RCD, gouvernements Karoui
+    et Ghannouchi I, début 9 octobre 1997, fin 5 septembre 2002.'
+- id: fr-wp-tic
+  title: Ministère des Technologies de la communication
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Ministère_des_Technologies_de_la_communication
+  tier: 3
+  lang: fr
+  excerpt: 'Liste des ministres: Montasser Ouaïli, RCD, Gouvernement Ghannouchi I, début 10 novembre 2004, fin 3
+    septembre 2007; le ministère est créé le 10 novembre 2004.'
+- id: fr-wp-education
+  title: Ministère de l'Éducation (Tunisie)
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Ministère_de_l%27Éducation_(Tunisie)
+  tier: 3
+  lang: fr
+  excerpt: 'Liste des ministres: Mohamed Charfi, RCD, gouvernements Hédi Baccouche III et Karoui, début 11 avril
+    1989, fin 1 juin 1994; Ridha Ferchiou, RCD, Gouvernement Karoui, début 9 octobre 1997, fin 15 février 1999.'
+- id: fr-wp-enssup
+  title: Ministère de l'Enseignement supérieur et de la Recherche scientifique (Tunisie)
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Ministère_de_l%27Enseignement_supérieur_et_de_la_Recherche_scientifique_(Tunisie)
+  tier: 3
+  lang: fr
+  excerpt: 'Liste des ministres: Mohamed Charfi (aussi chargé de l''Éducation, puis de l''Éducation et des Sciences),
+    indépendant, début 11 avril 1989, fin 1 juin 1994; Ahmed Friaâ (aussi chargé de l''Éducation et des Sciences),
+    RCD, début 1 juin 1994, fin 16 novembre 1994.'
+- id: fr-wp-sadok-rabah
+  title: Sadok Rabah
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Sadok_Rabah
+  tier: 3
+  lang: fr
+  excerpt: Ministre tunisien de l'Énergie et des Mines de 27 juillet 1988 au 11 avril 1989; ministre tunisien de
+    l'Économie nationale du 20 février 1991 au 13 juin 1996; ministre tunisien du Transport du 13 juin 1996 au 9
+    octobre 1997; ministre tunisien de l'Agriculture du 9 octobre 1997 au 5 septembre 2002; ministre tunisien du
+    Transport et des Communications du 5 septembre 2002 au 10 novembre 2004.
+- id: fr-wp-mohamed-charfi
+  title: Mohamed Charfi (personnalité tunisienne)
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Mohamed_Charfi_(personnalité_tunisienne)
+  tier: 3
+  lang: fr
+  excerpt: Ministre tunisien de l'Éducation, de l'Enseignement supérieur et de la Recherche scientifique, du 11
+    avril 1989 au 1 juin 1994; le 30 mai 1994 le président met fin à ses fonctions et le remplace par Ahmed Friaâ.
+- id: ar-wp-tic
+  title: وزارة تكنولوجيا المعلومات والاتصال (تونس)
+  publisher: Wikipédia (ar)
+  date: '2026-10-20'
+  url: https://ar.wikipedia.org/wiki/وزارة_تكنولوجيا_المعلومات_والاتصال_(تونس)
+  tier: 3
+  lang: ar
+  excerpt: 'وزارة البريد والبرق والهاتف: محمود الخياري 15 أبريل 1956 - 29 يوليو 1957، الرشيد إدريس 29 يوليو 1957
+    - 12 نوفمبر 1964، عبد الله فرحات 12 نوفمبر 1964 - 8 سبتمبر 1969، منصور معلى 8 سبتمبر 1969 - 12 يونيو 1970، الحبيب
+    بن الشيخ 29 أكتوبر 1971 - 30 نوفمبر 1973؛ وزارة تكنولوجيا المعلومات والاتصال: منجي مرزوق 24 ديسمبر 2011 - 29
+    يناير 2014، توفيق الجلاصي 29 يناير 2014 - 6 فبراير 2015، نعمان الفهري 6 فبراير 2015 - 27 أغسطس 2016، أنور معروف
+    27 أغسطس 2016 - 27 فبراير 2020.'
+- id: fr-wp-gvt-ladgham
+  title: Gouvernement Ladgham
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Gouvernement_Ladgham
+  tier: 3
+  lang: fr
+  excerpt: 'Composition du 7 novembre 1969: Ministre des Postes, des Télégraphes et des Téléphones, Mansour Moalla.
+    Remaniement du 12 juin 1970: Ministre des Travaux publics et des Communications, Tijani Chelli. Remaniement
+    du 17 juin 1970: Secrétaire d''État auprès du ministre des Travaux publics et des Communications, chargé des
+    Postes, télégraphes et téléphones, Habib Ben Cheikh.'
+- id: fr-wp-gvt-nouira
+  title: Gouvernement Nouira
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Gouvernement_Nouira
+  tier: 3
+  lang: fr
+  excerpt: 'Composition du 6 novembre 1970: Ministre de l''Économie nationale, Tijani Chelli; Secrétaire d''État
+    aux Postes, Télégraphes et Téléphones, Habib Ben Cheikh. Remaniement du 29 octobre 1971: Ministre des Postes,
+    Télégraphes et Téléphones, Habib Ben Cheikh. Remaniement du 28 novembre 1973: Ministre des Transports et des
+    Communications, Lassaad Ben Osman. Remaniement du 7 novembre 1979: Ministre des Transports et des Communications,
+    Hassen Belkhodja. Remaniement du 20 septembre 1978: Ministre de l''Enseignement supérieur, Abdelaziz Ben Dhia.'
+- id: fr-wp-rachid-driss
+  title: Rachid Driss
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Rachid_Driss
+  tier: 3
+  lang: fr
+  excerpt: Après l'indépendance, il devient ministre des PTT dans le premier gouvernement formé par Habib Bourguiba.
+- id: fr-wp-habib-ammar-homonymie
+  title: Habib Ammar (homonymie)
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Habib_Ammar
+  tier: 3
+  lang: fr
+  excerpt: Habib Ammar (1936), général, diplomate et homme politique tunisien; Habib Ammar (1967), homme politique
+    tunisien.
+- id: frwiki-jeunesse-sports
+  title: Ministère de la Jeunesse et des Sports (Tunisie)
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Minist%C3%A8re_de_la_Jeunesse_et_des_Sports_(Tunisie)
+  tier: 3
+  lang: fr
+  excerpt: Kamel Deguiche (Jeunesse, Sports et Intégration professionnelle) 2 septembre 2020 - 15 février 2021 ;
+    Sihem Ayadi (Jeunesse, Sports et Intégration professionnelle, intérim) 15 février 2021 - 13 septembre 2021
+- id: frwiki-mfpe
+  title: Ministère de la Formation professionnelle et de l'Emploi
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Minist%C3%A8re_de_la_Formation_professionnelle_et_de_l%27Emploi
+  tier: 3
+  lang: fr
+  excerpt: Du 2 septembre 2020 au 11 octobre 2021, c'est le ministre de la Jeunesse et des Sports qui est chargé
+    du portefeuille
+- id: frwiki-famille-femme
+  title: Ministère de la Famille, de la Femme, de l'Enfance et des Seniors
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Minist%C3%A8re_de_la_Famille,_de_la_Femme,_de_l%27Enfance_et_des_Seniors
+  tier: 3
+  lang: fr
+  excerpt: Sihem Badi 24 décembre 2011 - 29 janvier 2014 ; Samira Merai 6 février 2015 - 27 août 2016
+- id: frwiki-dev-coop
+  title: Ministère du Développement et de la Coopération internationale
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Minist%C3%A8re_du_D%C3%A9veloppement_et_de_la_Coop%C3%A9ration_internationale
+  tier: 3
+  lang: fr
+  excerpt: 'Lamine Doghri 13 mars 2013 - 29 janvier 2014 ; Yassine Brahim 6 février 2015 - 27 août 2016 ; secrétaires
+    d''État : 2014-2015 Noureddine Zekri'
+- id: frwiki-affaires-locales
+  title: Ministère des Affaires locales
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Minist%C3%A8re_des_Affaires_locales
+  tier: 3
+  lang: fr
+  excerpt: Riadh Mouakher 27 août 2016 - 14 novembre 2018 ; Mokhtar Hammami 14 novembre 2018 - 27 février 2020 ;
+    Lotfi Zitoun 27 février 2020 - 15 juillet 2020
+- id: arwiki-communication
+  title: وزارة الاتصال (تونس)
+  publisher: Wikipedia (ar)
+  date: '2026-10-20'
+  url: https://ar.wikipedia.org/wiki/%D9%88%D8%B2%D8%A7%D8%B1%D8%A9_%D8%A7%D9%84%D8%A7%D8%AA%D8%B5%D8%A7%D9%84_(%D8%AA%D9%88%D9%86%D8%B3)
+  tier: 3
+  lang: ar
+  excerpt: رافع دخيل (الاتصال والعلاقة مع البرلمان) 17 أغسطس 2005 - 10 أكتوبر 2009 ؛ أسامة الرمضاني 10 أكتوبر 2009
+    - 29 ديسمبر 2010
+- id: frwiki-gvt-jomaa
+  title: Gouvernement Jomaa
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Gouvernement_Jomaa
+  tier: 3
+  lang: fr
+  excerpt: 'Ministre de la Jeunesse, des Sports, de la Femme, de l''Enfance et des Personnes âgées : Saber Bouatay
+    ; Secrétaire d''État au Développement et à la Coopération internationale : Noureddine Zekri'
+- id: frwiki-gvt-ghannouchi-i
+  title: Gouvernement Ghannouchi I
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Gouvernement_Ghannouchi_I
+  tier: 3
+  lang: fr
+  excerpt: 'Remaniement du 25 janvier 2007 : le ministère de la Recherche scientifique est supprimé et son activité
+    rattachée au ministère de l''Enseignement supérieur ; remaniement du 11 novembre 2004 : Ministre de l''Enseignement
+    supérieur Lazhar Bououni'
+- id: frwiki-gvt-karoui
+  title: Gouvernement Karoui
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Gouvernement_Karoui
+  tier: 3
+  lang: fr
+  excerpt: 'Composition du 20 février 1991 : Ministre des Communications : Habib Lazreg ; Ministre de la Jeunesse,
+    de l''Enfance : Mohamed Saâd ; remaniement du 25 janvier 1995 : Ministre des Communications : Habib Ammar'
+- id: frwiki-gvt-jebali
+  title: Gouvernement Jebali
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Gouvernement_Jebali
+  tier: 3
+  lang: fr
+  excerpt: 'Ministre chargé de la Réforme administrative : Mohamed Abbou ; Ministre chargé des Relations avec l''Assemblée
+    nationale constituante : Abderrazak Kilani ; Secrétaire d''État chargé de la Réforme : Saïd Mechichi'
+- id: frwiki-gvt-nouira
+  title: Gouvernement Nouira
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Gouvernement_Nouira
+  tier: 3
+  lang: fr
+  excerpt: 'Remaniement du 29 octobre 1971 : Ministre d''État : Taïeb Slim ; Ministre du Plan : Mansour Moalla ;
+    remaniement du 25 septembre 1974 : Ministre du Plan : Chedly Ayari ; remaniement du 19 février 1975 : Ministre
+    délégué auprès du Premier ministre, chargé du Plan : Mustapha Zaânouni'
+- id: frwiki-gvt-mzali
+  title: Gouvernement Mohamed Mzali
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Gouvernement_Mohamed_Mzali
+  tier: 3
+  lang: fr
+  excerpt: 'Remaniement du 18 juin 1983 : Ministre du Plan : Ismaïl Khelil ; composition du 23 avril 1980 : Ministre
+    des Finances et du Plan : Mansour Moalla ; Ministre de l''Économie et du Plan : Abdelaziz Lasram'
+- id: frwiki-gvt-chahed
+  title: Gouvernement Chahed
+  publisher: Wikipédia (fr)
+  date: '2026-10-20'
+  url: https://fr.wikipedia.org/wiki/Gouvernement_Chahed
+  tier: 3
+  lang: fr
+  excerpt: 'Ministre de la Fonction publique, de la Gouvernance et de la Lutte contre la corruption : Abid Briki
+    ; le 3 mars 2017, suppression du ministère de la Fonction publique et de la Gouvernance ; remaniement du 5 novembre
+    2018 : Ministre de la Fonction publique et de la Modernisation de l''administration et des politiques publiques
+    : Kamel Morjane'

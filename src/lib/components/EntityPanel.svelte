@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { loadTimelines, type TimelineItems } from '$lib/timelines';
 	import type { Snippet } from 'svelte';
 	import { app } from '$lib/state.svelte';
 	import { format } from '$lib/i18n';
@@ -124,7 +125,15 @@
 	// Spec §9 — the derived per-entity timeline. Items come from the build
 	// (buildTimeline in build-data.ts), never authored; rendering lives in
 	// EntityTimeline (one axis, undated counted rather than drawn).
-	const timeline = $derived((person ?? institution)?.timeline ?? []);
+	let timelineIndex = $state<Record<string, TimelineItems>>({});
+	$effect(() => {
+		let live = true;
+		void loadTimelines().then((x) => {
+			if (live) timelineIndex = x;
+		});
+		return () => (live = false);
+	});
+	const timeline = $derived(timelineIndex[id] ?? []);
 
 	/**
 	 * Trade, debt and energy figures for a foreign-state institution, so the
