@@ -3,12 +3,122 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:8e571f7adcd4e542",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Jendouba | Treize blessés dans le dérapage d’un camion à Bulla Regia",
+      "link": "https://kapitalis.com/tunisie/2026/10/28/jendouba-treize-blesses-dans-le-derapage-dun-camion-a-bulla-regia/",
+      "published": "2026-10-28T21:08:27Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:195988144bf6f417",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Le CNCI au cœur des festivités des 70 ans de relations tuniso-japonaises",
+      "link": "https://kapitalis.com/tunisie/2026/10/28/le-cnci-au-coeur-des-festivites-des-70-ans-de-relations-tuniso-japonaises/",
+      "published": "2026-10-28T20:34:11Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:071c13aa0c51a3e0",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Institut Pasteur de Tunis | le Dr Monia Ardhaoui primée à la conférence IPVS 2026 à Athènes",
+      "link": "https://kapitalis.com/tunisie/2026/10/28/institut-pasteur-de-tunis-le-dr-monia-ardhaoui-primee-a-la-conference-ipvs-2026-a-athenes/",
+      "published": "2026-10-28T20:17:15Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:7203d2644f9f381f",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Tunis | Verdict dans l’affaire du viol d’un enfant souffrant d’un handicap",
+      "link": "https://kapitalis.com/tunisie/2026/10/28/tunis-verdict-dans-laffaire-du-viol-dun-enfant-souffrant-dun-handicap/",
+      "published": "2026-10-28T20:01:32Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:nawaat:b8b7cc0f8c010fb4",
+      "outlet": "Nawaat",
+      "outletId": "nawaat",
+      "title": "نواة في دقيقة: ميزانية لكتابة الشعارات وأخرى للتنفيذ",
+      "link": "https://nawaat.org/2026/10/28/%d9%86%d9%88%d8%a7%d8%a9-%d9%81%d9%8a-%d8%af%d9%82%d9%8a%d9%82%d8%a9-%d9%85%d9%8a%d8%b2%d8%a7%d9%86%d9%8a%d8%a9-%d9%84%d9%83%d8%aa%d8%a7%d8%a8%d8%a9-%d8%a7%d9%84%d8%b4%d8%b9%d8%a7%d8%b1%d8%a7%d8%aa/",
+      "published": "2026-10-28T18:54:09Z",
+      "lang": "ar",
+      "author": "Samih Beji Okkez"
+    },
+    {
+      "id": "feed:african-manager:70fdb9bea110c8a6",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "L’économie nationale fait preuve d’une résilience relative face aux chocs mondiaux",
+      "link": "https://africanmanager.com/leconomie-nationale-fait-preuve-dune-resilience-relative-face-aux-chocs-mondiaux/",
+      "published": "2026-10-28T16:35:21Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:5f01b0bca7f63612",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Le taux d’inclusion financière des femmes reste faible dans sept gouvernorats",
+      "link": "https://africanmanager.com/le-taux-dinclusion-financiere-des-femmes-reste-faible-dans-sept-gouvernorats/",
+      "published": "2026-10-28T16:32:16Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:08c41ee8d543ff6d",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Bourse de Tunis: Le Tunindex clôture mercredi dans le rouge",
+      "link": "https://africanmanager.com/bourse-de-tunis-le-tunindex-cloture-mercredi-dans-le-rouge/",
+      "published": "2026-10-28T16:32:03Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:4052615a73d11c27",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Ouverture des candidatures aux bourses de master et de doctorat à l’étranger pour l’année universitaire 2027-2028",
+      "link": "https://africanmanager.com/ouverture-des-candidatures-aux-bourses-de-master-et-de-doctorat-a-letranger-pour-lannee-universitaire-2027-2028/",
+      "published": "2026-10-28T16:28:11Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:bf9d0d34d416502e",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "La Tunisie vise une croissance de 3,1 % en 2027",
+      "link": "https://africanmanager.com/la-tunisie-vise-une-croissance-de-31-en-2027/",
+      "published": "2026-10-28T15:45:32Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
       "id": "feed:african-manager:c7c83b34d7940051",
       "outlet": "African Manager",
       "outletId": "african-manager",
       "title": "Les ventes de voitures accélèrent, leurs prix calent",
       "link": "https://africanmanager.com/les-ventes-de-voitures-accelerent-leurs-prix-calent/",
       "published": "2026-10-28T14:56:00Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:a83c62e6a37529d9",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Tunisie-UE : Lancement de la plateforme d’investissement T-MED",
+      "link": "https://africanmanager.com/tunisie-ue-lancement-de-la-plateforme-dinvestissement-t-med/",
+      "published": "2026-10-28T14:55:00Z",
       "lang": "fr",
       "author": "African Manager"
     },
@@ -11884,115 +11994,6 @@
       "published": "2026-09-18T06:52:48Z",
       "lang": "fr",
       "author": "webmaster kapitalis"
-    },
-    {
-      "id": "feed:al-jazeera:4cd1f1fc2e4d8f2d",
-      "outlet": "Al Jazeera",
-      "outletId": "al-jazeera",
-      "title": "Tunisia floods disrupt capital as heavy rain traps motorists and residents",
-      "link": "https://www.aljazeera.com/news/2026/9/18/tunisia-floods-disrupt-capital-as-heavy-rain-traps-motorists-and-residents?traffic_source=rss",
-      "published": "2026-09-18T00:49:24Z",
-      "lang": "en"
-    },
-    {
-      "id": "feed:kapitalis:52f862af88b3f2ca",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "La CTN au salon professionnel du tourisme IFTM à Paris",
-      "link": "https://kapitalis.com/tunisie/2026/09/18/la-ctn-au-salon-professionnel-du-tourisme-iftm-a-paris/",
-      "published": "2026-09-17T23:23:55Z",
-      "lang": "fr",
-      "author": "Yusra NY"
-    },
-    {
-      "id": "feed:kapitalis:d12018f8defd120e",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Marche à Tunis pour exiger la libération des détenus d’Al-Soumoud",
-      "link": "https://kapitalis.com/tunisie/2026/09/17/marche-a-tunis-pour-exiger-la-liberation-des-detenus-dal-soumoud/",
-      "published": "2026-09-17T22:10:48Z",
-      "lang": "fr",
-      "author": "Yusra NY"
-    },
-    {
-      "id": "feed:kapitalis:46661d3b2e506762",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "​Attaques en Arabie Saoudite | La Tunisie condamne et appelle au dialogue",
-      "link": "https://kapitalis.com/tunisie/2026/09/17/attaques-en-arabie-saoudite-la-tunisie-condamne-et-appelle-au-dialogue/",
-      "published": "2026-09-17T20:46:35Z",
-      "lang": "fr",
-      "author": "Yusra NY"
-    },
-    {
-      "id": "feed:kapitalis:818dfe1e3f656f50",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Série de vols dans des voitures à Tunis | Le suspect arrêté",
-      "link": "https://kapitalis.com/tunisie/2026/09/17/serie-de-vols-dans-des-voitures-a-tunis-le-suspect-arrete/",
-      "published": "2026-09-17T19:32:27Z",
-      "lang": "fr",
-      "author": "Yusra NY"
-    },
-    {
-      "id": "feed:african-manager:9a03d562f3011004",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "La Tunisie réinscrite au « Vert Michelin » après 10 ans",
-      "link": "https://africanmanager.com/la-tunisie-retrouve-son-guide-vert-michelin-apres-dix-ans-dabsence/",
-      "published": "2026-09-17T18:43:50Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:kapitalis:0cd1e82201e36f2d",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Le Canada et la Tunisie échangent sur des priorités communes dans les secteurs agricole et hydrique",
-      "link": "https://kapitalis.com/tunisie/2026/09/17/le-canada-et-la-tunisie-echangent-sur-des-priorites-communes-dans-les-secteurs-agricole-et-hydrique/",
-      "published": "2026-09-17T18:39:23Z",
-      "lang": "fr",
-      "author": "Yusra NY"
-    },
-    {
-      "id": "feed:kapitalis:b467f301deb75c74",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Alerte météo | Pluies orageuses et vents forts pour cette nuit",
-      "link": "https://kapitalis.com/tunisie/2026/09/17/alerte-meteo-pluies-orageuses-et-vents-forts-pour-cette-nuit/",
-      "published": "2026-09-17T18:25:54Z",
-      "lang": "fr",
-      "author": "Yusra NY"
-    },
-    {
-      "id": "feed:african-manager:8af1f12ec6ea52dd",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Tunis attaché à l’ouverture de sa politique commerciale",
-      "link": "https://africanmanager.com/la-mission-permanente-a-geneve-souligne-lattachement-de-la-tunisie-a-consacrer-son-approche-nationale-fondee-sur-louverture-de-sa-politique-commerciale/",
-      "published": "2026-09-17T13:24:42Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:1d7a27d4bf10c80d",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Tunis a les RH qualifiées nécessaires selon le DG de l’OMC",
-      "link": "https://africanmanager.com/la-tunisie-possede-des-ressources-humaines-qualifiees-lui-permettant-de-tirer-profit-des-transformations-en-cours-au-niveau-des-chaines-de-valeur-mondiales/",
-      "published": "2026-09-17T13:19:13Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:d9d193a1be0a7b47",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "La petite réponse à une grosse question, et qui se trompe de maillon",
-      "link": "https://africanmanager.com/la-petite-reponse-a-une-grosse-question-et-qui-se-trompe-de-maillon/",
-      "published": "2026-09-17T13:16:00Z",
-      "lang": "fr",
-      "author": "African Manager"
     }
   ]
 }
