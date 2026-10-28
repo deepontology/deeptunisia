@@ -240,6 +240,23 @@ const CHECKS: Check[] = [
 		]
 	},
 	{
+		path: '/world?view=parliament',
+		name: 'world-parliament',
+		expect: [
+			['.parliament', 1],
+			['.chamber', 1],
+			['.terms', 1]
+		]
+	},
+	{
+		path: '/world?view=government',
+		name: 'world-government',
+		expect: [
+			['.government', 1],
+			['.slot', 3]
+		]
+	},
+	{
 		path: '/world/france',
 		name: 'world-dossier',
 		expect: [
@@ -420,6 +437,20 @@ const CHECKS: Check[] = [
 
 /** Noise we accept: browser-level requests we do not control. */
 function isIgnorable(text: string) {
+	/*
+	 * The 3D chamber falls back to software WebGL in a headless browser, and the
+	 * driver says so on the console. Those lines describe the test machine, not
+	 * the page: a real GPU does not emit them, and silencing them here would be
+	 * wrong for any other warning. Scoped to the three messages Chromium emits
+	 * for this fallback.
+	 */
+	if (
+		text.includes('Automatic fallback to software WebGL') ||
+		text.includes('GPU stall due to ReadPixels') ||
+		text.includes('GroupMarkerNotSet')
+	) {
+		return true;
+	}
 	return text.includes('favicon') || text.includes('Download the React DevTools');
 }
 
@@ -472,9 +503,16 @@ async function settle(page: Page) {
 
 const failures: string[] = [];
 let checksRun = 0;
+/**
+ * The last check that ran. A section that throws ends the run at that check, so
+ * the abort line names where it stopped instead of leaving the reader to guess
+ * which sections never executed.
+ */
+let lastCheck = '';
 
 function ok(name: string, pass: boolean, detail = '') {
 	checksRun++;
+	lastCheck = name;
 	if (pass) console.log(`  ok    ${name}${detail ? ` — ${detail}` : ''}`);
 	else {
 		failures.push(name);
@@ -493,6 +531,15 @@ const browser = await chromium.launch(
 		? { executablePath: process.env.SMOKE_CHROMIUM }
 		: undefined,
 );
+
+/*
+ * Everything after the browser launch runs inside one guard. A thrown timeout
+ * used to kill the process before the summary, so the checks after the throw
+ * never ran and nothing said so: a run could end at the chronicle section and
+ * still look like a short list of unrelated failures. Now the abort is recorded
+ * as a failure, the summary still prints, and the last check names the place.
+ */
+try {
 
 if (runSection('theme matrix')) for (const themeName of ['dark', 'light'] as const) {
 	console.log(`\n  ── ${themeName} ──`);
@@ -2489,11 +2536,10 @@ console.log('\n  ── deep-link round trips ──');
 	}
 
 	/*
-	 * The Map's selection is local to TunisiaMap and arrives with the async geo
-	 * payload, so the card and the selected highlight can only appear after
-	 * /geo.json + /tn-adm.geojson resolve. gov-tunis is a real governorate id
-	 * from the build's geo.json, and the contract is that ?region= stays in the
-	 * URL — the selection is supposed to BE the URL, not merely be shown.
+	 * The governorate map is the world view at country scale now, so this route
+	 * forwards instead of rendering its own shell. The contract is that an old
+	 * link still lands on the unified view; the region parameter is asserted
+	 * separately in the world section, where the URL contract is pinned.
 	 */
 	{
 		const page = await context.newPage();
@@ -2501,19 +2547,13 @@ console.log('\n  ── deep-link round trips ──');
 		await settle(page);
 		await page.waitForTimeout(2000);
 		ok(
-			'deep-link /map?region=gov-tunis renders the selected governorate',
-			(await page.locator('path.selected').count()) === 1 &&
-				(await page.locator('.gov-card').count()) === 1
-		);
-		ok(
-			'deep-link /map?region=gov-tunis names it in the card',
-			((await page.locator('.gov-card h2').innerText()) || '').includes('Tunis'),
-			await page.locator('.gov-card h2').innerText()
-		);
-		ok(
-			'deep-link /map?region=gov-tunis keeps the region in the URL',
-			page.url().includes('region=gov-tunis'),
+			'deep-link /map forwards into the world view',
+			/\/world/.test(page.url()) && (await page.locator('.worldpage').count()) === 1,
 			page.url().replace(BASE, '')
+		);
+		ok(
+			'deep-link /map keeps the toolbar',
+			(await page.locator('.toolbar').count()) === 1
 		);
 		await page.close();
 	}
@@ -4323,10 +4363,19 @@ console.log('\n  ── study page ──');
 }
 }
 
-await browser.close();
+} catch (err) {
+	const message = err instanceof Error ? err.message.split('\n')[0] : String(err);
+	failures.push(`[aborted] ${message}`);
+	console.error(`\n  ABORTED after ${checksRun} checks, at: ${lastCheck || 'startup'}`);
+	console.error(`  ${message}`);
+	console.error('  Every check after that point did not run.\n');
+} finally {
+	await browser.close();
+}
 
 console.log(
 	`\n  ${checksRun - failures.length}/${checksRun} checks passed${failures.length ? `, ${failures.length} FAILED` : ''}`
 );
+console.log(`  stopped after: ${lastCheck || 'startup'}`);
 console.log(`  screenshots: .smoke/\n`);
 process.exit(failures.length ? 1 : 0);
