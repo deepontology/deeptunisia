@@ -121,9 +121,13 @@
 		if (!chamber) return 0;
 		// The chamber withholds seats below the floor, so this count must too,
 		// or the toolbar disagrees with the tally on the same screen.
-		const named = membersAt(chamber, app.t).filter(
-			(m) => m.at === 2 && meetsBasis(m.position.basis, app.basisFloor)
-		).length;
+		const visible = membersAt(chamber, app.t).filter((m) =>
+			meetsBasis(m.position.basis, app.basisFloor)
+		);
+		// Mirror the chamber's own rule: possibly-active members are seated only
+		// while they fit, so the toolbar cannot disagree with the tally beside it.
+		const named = (visible.length > chamber.seats ? visible.filter((m) => m.at === 2) : visible)
+			.length;
 		const split = chamber.institution.seat_split;
 		// Where no member is named the seats are counted by party instead.
 		return named || !split ? named : split.reduce((n, x) => n + x.seats, 0);

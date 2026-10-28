@@ -273,6 +273,8 @@ export function createChamber(
 
 	function update(seats: ChamberSeat[]) {
 		seatsIn = seats;
+		// A term change changes the chamber, so the spoken name has to move with it.
+		el.setAttribute('aria-label', opts.label());
 		const m = Math.min(MAX, seats.length);
 		const radii = [...new Set(seats.map((s) => +s.r.toFixed(4)))].sort((a, b) => a - b);
 		if (radii.length) rebuildTiers(radii);
