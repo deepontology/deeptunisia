@@ -75,7 +75,12 @@ function chairGeometry(): THREE.BufferGeometry {
 
 export function createChamber(
 	host: HTMLElement,
-	opts: { onhover: (i: number | null) => void; onpick: (i: number) => void; reduced: () => boolean }
+	opts: {
+		onhover: (i: number | null) => void;
+		onpick: (i: number) => void;
+		reduced: () => boolean;
+		label: () => string;
+	}
 ) {
 	const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'low-power' });
 	renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
@@ -109,6 +114,48 @@ export function createChamber(
 	bench.position.set(0, 0.06, 0.2);
 	scene.add(bench);
 
+	/*
+	 * THE ROOM AROUND THE ROOM
+	 *
+	 * The first build was a hemicycle of chairs standing in the dark: a diagram
+	 * with depth, not a place. Five primitives turn it into a chamber. A back wall
+	 * closes the far side behind the last tier, a carpet grounds the floor, a
+	 * platform raises the speaker, and a ring marks the chair under the pointer.
+	 * All of it is cheap: one cylinder, one torus, three boxes, one ring.
+	 */
+	const wallMat = new THREE.MeshStandardMaterial({ roughness: 0.95, side: THREE.DoubleSide });
+	const wall = new THREE.Mesh(
+		new THREE.CylinderGeometry(R * 1.52, R * 1.52, 2.4, 96, 1, true, Math.PI / 2, Math.PI),
+		wallMat
+	);
+	wall.position.y = 1.2;
+	scene.add(wall);
+
+	// A cornice on the wall's top edge, so the wall reads as built rather than cut.
+	const corniceMat = new THREE.MeshStandardMaterial({ roughness: 0.6 });
+	const cornice = new THREE.Mesh(new THREE.TorusGeometry(R * 1.52, 0.055, 8, 96, Math.PI), corniceMat);
+	cornice.rotation.x = -Math.PI / 2;
+	cornice.position.y = 2.4;
+	scene.add(cornice);
+
+	const carpetMat = new THREE.MeshStandardMaterial({ roughness: 1 });
+	const carpet = new THREE.Mesh(new THREE.CircleGeometry(R * 1.2, 96), carpetMat);
+	carpet.rotation.x = -Math.PI / 2;
+	carpet.position.y = 0.008;
+	scene.add(carpet);
+
+	const platformMat = new THREE.MeshStandardMaterial({ roughness: 0.8 });
+	const platform = new THREE.Mesh(new THREE.BoxGeometry(2.6, 0.14, 1.2), platformMat);
+	platform.position.set(0, 0.07, 0.85);
+	scene.add(platform);
+	const step = new THREE.Mesh(new THREE.BoxGeometry(2.2, 0.07, 0.34), platformMat);
+	step.position.set(0, 0.035, 1.52);
+	scene.add(step);
+	const accentMat = new THREE.MeshStandardMaterial({ roughness: 0.5 });
+	const strip = new THREE.Mesh(new THREE.BoxGeometry(2.6, 0.02, 0.05), accentMat);
+	strip.position.set(0, 0.145, 1.44);
+	scene.add(strip);
+
 	// --- seats ---------------------------------------------------------------
 	const chair = chairGeometry();
 	const filledMat = new THREE.MeshStandardMaterial({ roughness: 0.55 });
@@ -118,6 +165,17 @@ export function createChamber(
 	filled.count = 0;
 	empty.count = 0;
 	scene.add(filled, empty);
+
+	/*
+	 * The chair under the pointer gets a ring. Hover already told the readout who
+	 * sits there; the ring says which chair the sentence is about, which the room
+	 * could not do on its own once two hundred chairs were in view.
+	 */
+	const ringMat = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0.9, side: THREE.DoubleSide });
+	const hoverRing = new THREE.Mesh(new THREE.RingGeometry(0.13, 0.18, 40), ringMat);
+	hoverRing.rotation.x = -Math.PI / 2;
+	hoverRing.visible = false;
+	scene.add(hoverRing);
 
 	// Per seat: current, start and target position and colour, for the glide.
 	let n = 0;
@@ -247,7 +305,7 @@ export function createChamber(
 			 * the group, so the basis rides on saturation rather than hue.
 			 */
 			const fade = BASIS_OPACITY[s.basis ?? 'documented'];
-			if (fade < 1) base.lerp(new THREE.Color(0.5, 0.5, 0.5), 1 - fade);
+			if (fade < 1) base.lerp(floorColor, 1 - fade);
 			const target = s.dim ? base.clone().lerp(dimTo, 0.78) : base;
 			cFrom[i] = fresh || !cCur[i] ? target.clone() : cCur[i].clone();
 			cTo[i] = target;
@@ -354,13 +412,32 @@ export function createChamber(
 	// --- theme -----------------------------------------------------------------
 	function retheme() {
 		colors.clear();
-		const get = (v: string, fb: string) => colors.color(getComputedStyle(document.documentElement).getPropertyValue(v).trim() || fb);
-		floorColor = get('--surface-sunken', '#e9e6df');
+		const css = (name: string) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+		// Every tone comes from a token; the last resort is neutral, never a theme's hex.
+		const get = (v: string, fb: string) => colors.color(css(v) || css(fb) || '#888888');
+		floorColor = get('--surface-sunken', '--surface');
 		floorMat.color.copy(floorColor);
-		tierMat.color.copy(get('--surface-raised', '#f4f1ea'));
-		daisMat.color.copy(get('--surface-overlay', '#ffffff'));
-		emptyMat.color.copy(get('--border-strong', '#999999'));
-		const dark = document.documentElement.getAttribute('data-theme') === 'dark' || floorColor.getHSL({ h: 0, s: 0, l: 0 }).l < 0.3;
+		carpetMat.color.copy(floorColor);
+		tierMat.color.copy(get('--surface-raised', '--surface'));
+		daisMat.color.copy(get('--surface-overlay', '--surface-raised'));
+		platformMat.color.copy(get('--surface-raised', '--surface'));
+		const dark =
+			document.documentElement.getAttribute('data-theme') === 'dark' ||
+			(() => {
+				const hsl = { h: 0, s: 0, l: 0 };
+				floorColor.getHSL(hsl);
+				return hsl.l < 0.3;
+			})();
+		/*
+		 * The wall is the one tone the palette cannot give us: it has to sit behind
+		 * the room in both themes, so it is the floor darkened in light and lifted in
+		 * dark. Derived, not a hex, so a theme change moves it with everything else.
+		 */
+		wallMat.color.copy(floorColor).multiplyScalar(dark ? 1.7 : 0.32);
+		corniceMat.color.copy(floorColor).multiplyScalar(dark ? 2.4 : 0.55);
+		accentMat.color.copy(get('--accent', '--text-secondary'));
+		ringMat.color.copy(get('--text-secondary', '--text'));
+		emptyMat.color.copy(get('--border-strong', '--border-subtle'));
 		hemi.intensity = dark ? 1.1 : 1.6;
 		sun.intensity = dark ? 1.0 : 1.4;
 		if (seatsIn.length) update(seatsIn);
@@ -406,6 +483,14 @@ export function createChamber(
 		if (i === hover) return;
 		hover = i;
 		placeInstances();
+		if (i !== null) {
+			hoverRing.position.set(cur[i * 3], cur[i * 3 + 1] + 0.005, cur[i * 3 + 2]);
+			hoverRing.scale.setScalar(scale);
+			ringMat.color.copy(isFilled[i] ? cCur[i] : emptyMat.color);
+			hoverRing.visible = true;
+		} else {
+			hoverRing.visible = false;
+		}
 		opts.onhover(i);
 		renderer.domElement.style.cursor = i !== null ? 'pointer' : 'grab';
 		invalidate();
@@ -448,6 +533,38 @@ export function createChamber(
 	el.addEventListener('pointerleave', () => {
 		if (!dragging) setHover(null);
 	});
+
+	/*
+	 * the room had no keyboard path: a canvas that only answered a pointer.
+	 * Arrow keys walk the hemicycle in seat order, Home and End jump to the ends,
+	 * Enter opens the person and Escape clears. The readout is aria-live, so the
+	 * name is spoken as the ring moves; the ring is what the sighted reader sees.
+	 */
+	el.tabIndex = 0;
+	el.setAttribute('role', 'application');
+	el.setAttribute('aria-label', opts.label());
+	let focusIdx: number | null = null;
+	el.addEventListener('keydown', (e) => {
+		if (e.key === 'ArrowRight' || e.key === 'ArrowLeft' || e.key === 'Home' || e.key === 'End') {
+			e.preventDefault();
+			if (!n) return;
+			if (e.key === 'Home') focusIdx = 0;
+			else if (e.key === 'End') focusIdx = n - 1;
+			else if (focusIdx === null) focusIdx = 0;
+			else focusIdx = (focusIdx + (e.key === 'ArrowRight' ? 1 : -1) + n) % n;
+			setHover(focusIdx);
+		} else if (e.key === 'Enter' || e.key === ' ') {
+			e.preventDefault();
+			if (focusIdx !== null && isFilled[focusIdx]) opts.onpick(focusIdx);
+		} else if (e.key === 'Escape') {
+			focusIdx = null;
+			setHover(null);
+		}
+	});
+	el.addEventListener('blur', () => {
+		focusIdx = null;
+		setHover(null);
+	});
 	el.addEventListener(
 		'wheel',
 		(e) => {
@@ -475,7 +592,7 @@ export function createChamber(
 				const m = o as THREE.Mesh;
 				m.geometry?.dispose?.();
 			});
-			[floorMat, tierMat, daisMat, filledMat, emptyMat].forEach((m) => m.dispose());
+			[floorMat, tierMat, daisMat, filledMat, emptyMat, wallMat, corniceMat, carpetMat, platformMat, accentMat, ringMat].forEach((m) => m.dispose());
 			renderer.dispose();
 			renderer.domElement.remove();
 		}

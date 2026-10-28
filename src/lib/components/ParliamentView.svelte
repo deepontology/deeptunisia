@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { t, tf, nameOf, formatDate } from '$lib/t.svelte';
 	import { app } from '$lib/state.svelte';
-	import { personById, institutionById, ds, meetsBasis, DASH, BASIS_ORDER, type Basis } from '$lib/model';
+	import { personById, institutionById, ds, meetsBasis, BASIS_ORDER, type Basis } from '$lib/model';
 	import { terms, termAt, membersAt, affiliation, type Term, type Holding } from '$lib/civic';
 	import { world } from '$lib/world/store.svelte';
 	import { compact } from '$lib/design/media.svelte';
@@ -24,6 +24,22 @@
 	 * ordering is a claim this dataset does not make, so the largest group takes
 	 * the first wedge in reading order and the legend names every colour.
 	 */
+
+	/**
+	 * Ring patterns as fractions of the seat's circumference.
+	 *
+	 * `DASH` in model.ts is in user units, sized for a stroke on a chart a few
+	 * hundred units across. A seat here is about 0.008 units in radius, so those
+	 * values were longer than the whole circle and every weaker basis drew solid:
+	 * the vocabulary existed in the key and not on the seats. Each circle sets
+	 * pathLength=1, so these are fractions and a dash is a dash at any seat size.
+	 */
+	const RING_DASH: Record<Basis, string> = {
+		documented: '',
+		reported: '0.30 0.14',
+		inferred: '0.05 0.12',
+		unsubstantiated: '0.28 0.07 0.03 0.07'
+	};
 
 	/** Which chamber is shown; the upper one exists only in some years. */
 	let chamber = $state<'lower' | 'upper'>('lower');
@@ -269,6 +285,7 @@
 				<Chamber3D
 					seats={chamberSeats}
 					termKey={term.role.id}
+					label={tf('parl.aria', { name: nameOf(term.institution), n: members.length, seats: term.seats })}
 					onhover={(i) => (hover = i === null ? null : seats[i])}
 					onpick={(i) => {
 						const h = seats[i]?.holder;
@@ -287,10 +304,11 @@
 							class:empty={!s.holder && !s.key}
 							class:dim={dim(s)}
 							data-basis={s.basis ?? undefined}
+							pathLength={1}
 							style:fill={s.holder || s.key ? s.color : 'none'}
 							stroke={s.basis && s.basis !== 'documented' ? 'var(--text-secondary)' : 'none'}
-							stroke-width={s.basis && s.basis !== 'documented' ? geometry.r * 0.28 : 0}
-							stroke-dasharray={s.basis && s.basis !== 'documented' ? DASH[s.basis] : undefined}
+							stroke-width={s.basis && s.basis !== 'documented' ? geometry.r * 0.34 : 0}
+							stroke-dasharray={s.basis && s.basis !== 'documented' ? RING_DASH[s.basis] : undefined}
 						/>
 					{/each}
 				</svg>
@@ -379,7 +397,7 @@
 					{#each BASIS_ORDER.filter((b) => b !== 'documented' && seats.some((s) => s.basis === b)) as b (b)}
 						<li data-basis={b}>
 							<svg viewBox="-1 -1 2 2" width="12" height="12" aria-hidden="true">
-								<circle r="0.72" fill="none" stroke="currentColor" stroke-width="0.22" stroke-dasharray={DASH[b]} />
+								<circle r="0.72" pathLength={1} fill="none" stroke="currentColor" stroke-width="0.22" stroke-dasharray={RING_DASH[b]} />
 							</svg>
 							{t('basis.' + b)}
 						</li>
