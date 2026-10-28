@@ -30,7 +30,7 @@
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import { app } from '$lib/state.svelte';
-	import { ds, personById, positionsByRole, activity } from '$lib/model';
+	import { ds, personById, positionsByRole, activity, meetsBasis } from '$lib/model';
 	import { termAt, membersAt } from '$lib/civic';
 	import { prefersReducedMotion } from 'svelte/motion';
 	import { untrack } from 'svelte';
@@ -119,7 +119,11 @@
 	const chamber = $derived(termAt(app.t));
 	const seated = $derived.by(() => {
 		if (!chamber) return 0;
-		const named = membersAt(chamber, app.t).filter((m) => m.at === 2).length;
+		// The chamber withholds seats below the floor, so this count must too,
+		// or the toolbar disagrees with the tally on the same screen.
+		const named = membersAt(chamber, app.t).filter(
+			(m) => m.at === 2 && meetsBasis(m.position.basis, app.basisFloor)
+		).length;
 		const split = chamber.institution.seat_split;
 		// Where no member is named the seats are counted by party instead.
 		return named || !split ? named : split.reduce((n, x) => n + x.seats, 0);
@@ -164,12 +168,16 @@
 	 * steps out of a lens the way it steps out of a page; a date or family change
 	 * replaces, because scrubbing the dock should not fill the history.
 	 */
+	let pushNext = false;
+
 	function writeUrl(push: boolean) {
 		const url = new URL(page.url);
 		url.searchParams.set('view', world.view);
 		url.searchParams.set('t', isoDay(app.t));
 		if (world.family === 'trade') url.searchParams.delete('family');
 		else url.searchParams.set('family', world.family);
+		if (world.view === 'globe' && world.globeInside) url.searchParams.set('at', 'tunisia');
+		else url.searchParams.delete('at');
 		if (url.href === page.url.href) return;
 		void goto(url, { replaceState: !push, keepFocus: true, noScroll: true });
 	}
@@ -178,19 +186,21 @@
 		// Track only what this page owns; region is written by the map itself.
 		void world.view;
 		void world.family;
+		void world.globeInside;
 		void app.t;
-		untrack(() => writeUrl(false));
+		const push = pushNext;
+		pushNext = false;
+		untrack(() => writeUrl(push));
 	});
 
 	function setView(v: string) {
-		const mode = v as WorldViewMode;
-		world.setView(mode);
-		writeUrl(true);
+		// The effect writes; the flag only decides whether it pushes.
+		pushNext = true;
+		world.setView(v as WorldViewMode);
 	}
 
 	function setFamily(v: string) {
 		world.setFamily(v as WorldFamily);
-		writeUrl(false);
 	}
 </script>
 
@@ -407,7 +417,9 @@
 	}
 	@media (prefers-reduced-motion: reduce) {
 		.stage :global(.world),
-		.stage :global(.ledger) {
+		.stage :global(.ledger),
+		.stage :global(.parliament),
+		.stage :global(.government) {
 			animation: none;
 		}
 	}
