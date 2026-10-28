@@ -86,13 +86,34 @@
 			return setView('globe');
 		}
 		const lensTarget = target as 'parliament' | 'government';
-		// From the map, fly to the building first; from another lens, cut across.
-		if (world.view === 'globe' && world.globeInside && !prefersReducedMotion.current) {
+		/*
+		 * Fly to the building first, then open the lens. From the world that is one
+		 * long dive, so it gets more time than a hop across the country; the pill row
+		 * on the globe can start it without the reader having to come down to the map
+		 * first.
+		 */
+		if (world.view === 'globe' && !prefersReducedMotion.current) {
 			const [lon, lat] = PLACES[lensTarget];
-			world.flyTo('point', lon, lat);
-			pending = setTimeout(() => setView(lensTarget), FLIGHT_MS);
+			const longDive = !world.globeInside;
+			world.flyTo('point', lon, lat, longDive ? 900 : 520);
+			pending = setTimeout(() => setView(lensTarget), longDive ? 900 : FLIGHT_MS);
 		} else {
 			setView(lensTarget);
+		}
+	}
+
+	/**
+	 * One step out of the scale. A lens goes back to the country map, and the
+	 * country map goes back to the world; the control hides only when the globe is
+	 * whole again, so there is always a way up without hunting for the trail.
+	 */
+	function back() {
+		clearTimeout(pending);
+		if (world.view !== 'globe') {
+			world.openInside = true;
+			setView('globe');
+		} else if (world.globeInside) {
+			toWorld();
 		}
 	}
 
@@ -291,20 +312,32 @@
 	<div class="stage">
 		{#if world.view === 'globe'}
 			<WorldView />
-			{#if !world.inside}
-				<!--
-					The one obvious next move from the globe. Without it the country
-					is only reachable by knowing that the trail's second crumb or the
-					wheel does it.
-				-->
+		{/if}
+		{#if !world.inside && world.view === 'globe'}
+			<!--
+				The obvious next moves from the globe. Without them the country and the
+				chamber are only reachable by knowing the trail or the wheel.
+			-->
+			<div class="dives">
 				<button class="dive" onclick={() => enter('map')}>
 					<span>{t('world.dive')}</span>
 					<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
 						<path d="M8 3v9M3.5 8.5 8 13l4.5-4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
 					</svg>
 				</button>
-			{/if}
-		{:else if world.view === 'parliament'}
+				<button class="dive ghost" onclick={() => enter('parliament')}>{t('world.dive.parliament')}</button>
+				<button class="dive ghost" onclick={() => enter('government')}>{t('world.dive.government')}</button>
+			</div>
+		{/if}
+		{#if world.inside}
+			<button class="step-back" onclick={back}>
+				<svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true">
+					<path d="M8 13V4M3.5 8.5 8 4l4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+				</svg>
+				<span>{t('world.zoomout')}</span>
+			</button>
+		{/if}
+		{#if world.view === 'parliament'}
 			<ParliamentView />
 		{:else if world.view === 'government'}
 			<GovernmentView />
@@ -434,16 +467,23 @@
 		position: relative;
 		overflow: hidden;
 	}
-	.dive {
+	.dives {
 		position: absolute;
-		top: var(--s-5);
+		top: var(--s-4);
 		left: 50%;
 		translate: -50% 0;
 		z-index: 4;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: var(--s-2);
+		max-width: calc(100% - 2 * var(--s-4));
+	}
+	.dive {
 		display: inline-flex;
 		align-items: center;
 		gap: var(--s-2);
-		min-height: 40px;
+		min-height: 38px;
 		padding: var(--s-2) var(--s-4);
 		border-radius: 999px;
 		background: var(--accent);
@@ -453,8 +493,34 @@
 		box-shadow: var(--shadow-md, 0 8px 24px rgb(0 0 0 / 0.18));
 		transition: transform var(--dur-fast) var(--ease-out);
 	}
+	.dive.ghost {
+		background: var(--surface-panel);
+		color: var(--text-primary);
+		border: 1px solid var(--border-default);
+		box-shadow: var(--shadow-sm, 0 2px 8px rgb(0 0 0 / 0.12));
+	}
 	.dive:hover {
 		transform: translateY(-1px);
+	}
+	.step-back {
+		position: absolute;
+		top: var(--s-3);
+		inset-inline-start: var(--s-3);
+		z-index: 4;
+		display: inline-flex;
+		align-items: center;
+		gap: var(--s-2);
+		min-height: 34px;
+		padding: var(--s-1) var(--s-3);
+		border-radius: 999px;
+		background: var(--surface-panel);
+		color: var(--text-secondary);
+		border: 1px solid var(--border-default);
+		font-size: var(--t-xs);
+		box-shadow: var(--shadow-sm, 0 2px 8px rgb(0 0 0 / 0.12));
+	}
+	.step-back:hover {
+		color: var(--text-primary);
 	}
 	@media (prefers-reduced-motion: reduce) {
 		.dive {
