@@ -1042,6 +1042,9 @@ const en: Dict = {
 	// and the view switch. All three locales land together — never a key in one.
 	'world.page.title': 'World · DeepTunisia',
 	'world.dive': 'Dive in',
+	'world.dive.parliament': 'See parliament',
+	'world.dive.government': 'See government',
+	'world.zoomout': 'Zoom out',
 	'world.page.description': 'Tunisia’s relations with every country, lender and institution on a globe, and then Tunisia from the inside: governorates, parliament and government on any date.',
 	'world.provenance': '{source} · retrieved {date}',
 	'world.inforce.date': 'In force from {date}',
@@ -2869,6 +2872,9 @@ const fr: Dict = {
 	// totaux et le sélecteur de vue. Les trois langues arrivent ensemble.
 	'world.page.title': 'Monde · DeepTunisia',
 	'world.dive': 'Entrer',
+	'world.dive.parliament': 'Voir le parlement',
+	'world.dive.government': 'Voir le gouvernement',
+	'world.zoomout': 'Dézoomer',
 	'world.page.description': 'Les relations de la Tunisie avec chaque pays, prêteur et institution sur un globe, puis la Tunisie vue de l\'intérieur : gouvernorats, parlement et gouvernement à n\'importe quelle date.',
 	'world.provenance': '{source} · récupéré le {date}',
 	'world.inforce.date': 'En vigueur depuis le {date}',
@@ -4691,6 +4697,9 @@ const ar: Dict = {
 	// عرض العالم v2 (docs/plans/world-rebuild-v2.md): السجل، شريط المجاميع، ومبدّل العرض.
 	'world.page.title': 'العالم · DeepTunisia',
 	'world.dive': 'ادخل إلى البلاد',
+	'world.dive.parliament': 'إلى البرلمان',
+	'world.dive.government': 'إلى الحكومة',
+	'world.zoomout': 'تصغير',
 	'world.page.description': 'علاقات تونس مع كل دولة ومُقرض ومؤسسة على كرة أرضية، ثم تونس من الداخل: الولايات والبرلمان والحكومة في أي تاريخ.',
 	'world.provenance': '{source} · تاريخ الاسترجاع: {date}',
 	'world.inforce.date': 'ساري المفعول منذ {date}',

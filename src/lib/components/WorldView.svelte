@@ -314,7 +314,7 @@
 			else if (f.to === 'tunisia') toCountry();
 			else if (f.lon !== undefined && f.lat !== undefined) {
 				govSel = null;
-				globe.flyTo(f.lon, f.lat, Math.min(globe.maxScale, kCountry * 2.6), dur(520));
+				globe.flyTo(f.lon, f.lat, Math.min(globe.maxScale, kCountry * 2.6), dur(f.ms ?? 520));
 			}
 		});
 	});

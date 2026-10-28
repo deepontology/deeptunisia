@@ -2573,6 +2573,33 @@ console.log('\n  ── deep-link round trips ──');
 	}
 
 	/*
+	 * The globe's own routes in and out: a pill straight into the government, and
+	 * a step-back that climbs one scale at a time until the world is whole.
+	 */
+	{
+		const page = await context.newPage();
+		await page.goto(BASE + '/world', { waitUntil: 'networkidle', timeout: 30_000 });
+		await settle(page);
+		await page.waitForTimeout(1500);
+		await page.locator('.dives .dive').nth(2).click();
+		await page.waitForTimeout(1800);
+		ok('the globe offers a government pill and it opens the lens', (await page.locator('.government').count()) === 1);
+		await page.locator('.step-back').click();
+		await page.waitForTimeout(1400);
+		ok(
+			'the step-back returns to the country map',
+			(await page.locator('.toolbar.inside').count()) === 1 && (await page.locator('.government').count()) === 0
+		);
+		await page.locator('.step-back').click();
+		await page.waitForTimeout(1600);
+		ok(
+			'and again to the world, where the pills return',
+			(await page.locator('.toolbar.inside').count()) === 0 && (await page.locator('.dives').count()) === 1
+		);
+		await page.close();
+	}
+
+	/*
 	 * The lens switch is a click path, not a URL load. The read-back effect once
 	 * subscribed to the view it was writing, so every click on Parliament or
 	 * Government was overwritten with the globe a moment later. Load the map,

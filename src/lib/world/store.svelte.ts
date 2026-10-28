@@ -51,7 +51,14 @@ class WorldState {
 	 * or to a point in it (the Bardo before the parliament opens, Carthage before
 	 * the government). Consumed by the globe, which clears it.
 	 */
-	fly = $state<{ to: 'world' | 'tunisia' | 'point'; lon?: number; lat?: number; id: number } | null>(null);
+	fly = $state<{
+		to: 'world' | 'tunisia' | 'point';
+		lon?: number;
+		lat?: number;
+		/** Flight time in ms; the caller knows whether it is a hop or a dive. */
+		ms?: number;
+		id: number;
+	} | null>(null);
 	/** Open the globe already zoomed into the country, as when stepping back out of a lens. */
 	openInside = $state(false);
 
@@ -60,8 +67,8 @@ class WorldState {
 	}
 
 	/** Ask the globe for a camera move. */
-	flyTo(to: 'world' | 'tunisia' | 'point', lon?: number, lat?: number) {
-		this.fly = { to, lon, lat, id: Date.now() };
+	flyTo(to: 'world' | 'tunisia' | 'point', lon?: number, lat?: number, ms?: number) {
+		this.fly = { to, lon, lat, ms, id: Date.now() };
 	}
 
 	setFamily(family: WorldFamily) {
