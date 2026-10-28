@@ -132,6 +132,12 @@
 		// Where no member is named the seats are counted by party instead.
 		return named || !split ? named : split.reduce((n, x) => n + x.seats, 0);
 	});
+	/** A term counted by party has no named member to say "sitting". */
+	const countedByParty = $derived.by(() => {
+		if (!chamber) return false;
+		const named = membersAt(chamber, app.t).filter((m) => m.at === 2).length;
+		return !named && !!chamber.institution.seat_split?.length;
+	});
 	const regionName = $derived(world.region ? nameOf(ds.regions.find((r) => r.id === world.region)) : '');
 	const familyOptions = $derived([
 		{ value: 'trade', label: t('world.trade') },
@@ -262,7 +268,7 @@
 				{#if premier}<span class="dot" aria-hidden="true">·</span><button onclick={() => app.select(premier!)}>{nameOf(personById.get(premier))}</button>{/if}
 				{#if president || premier}<span class="dot" aria-hidden="true">·</span>{/if}
 				{#if chamber}
-					<button onclick={() => enter('parliament')}>{tf('world.ctx.chamber', { n: seated })}</button>
+					<button onclick={() => enter('parliament')}>{tf(countedByParty ? 'world.ctx.chamber.split' : 'world.ctx.chamber', { n: seated })}</button>
 				{:else}
 					<span class="muted">{t('world.ctx.nochamber')}</span>
 				{/if}
