@@ -155,16 +155,21 @@
 	}
 
 	$effect(() => {
+		// Only the URL is a dependency. Reading world.view or app.t here would
+		// subscribe to them, so a lens click would re-run this effect and apply the
+		// URL's *previous* value back over the click: the lens snapped to the globe.
 		const p = page.url.searchParams;
-		const v = p.get('view');
-		if (v && (VIEWS as string[]).includes(v) && world.view !== v) world.setView(v as WorldViewMode);
-		const f = p.get('family');
-		if (f && (FAMILIES as string[]).includes(f) && world.family !== f) world.setFamily(f as WorldFamily);
-		const t = p.get('t');
-		if (t) {
-			const ms = Date.parse(t);
-			if (!Number.isNaN(ms) && Math.abs(app.t - ms) > 1000) app.t = ms;
-		}
+		untrack(() => {
+			const v = p.get('view');
+			if (v && (VIEWS as string[]).includes(v) && world.view !== v) world.setView(v as WorldViewMode);
+			const f = p.get('family');
+			if (f && (FAMILIES as string[]).includes(f) && world.family !== f) world.setFamily(f as WorldFamily);
+			const t = p.get('t');
+			if (t) {
+				const ms = Date.parse(t);
+				if (!Number.isNaN(ms) && Math.abs(app.t - ms) > 1000) app.t = ms;
+			}
+		});
 	});
 
 	/**

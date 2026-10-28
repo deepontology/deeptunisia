@@ -2573,6 +2573,27 @@ console.log('\n  ── deep-link round trips ──');
 	}
 
 	/*
+	 * The lens switch is a click path, not a URL load. The read-back effect once
+	 * subscribed to the view it was writing, so every click on Parliament or
+	 * Government was overwritten with the globe a moment later. Load the map,
+	 * click through, and assert that the lens and the URL both moved.
+	 */
+	{
+		const page = await context.newPage();
+		await page.goto(BASE + '/world?at=tunisia', { waitUntil: 'networkidle', timeout: 30_000 });
+		await settle(page);
+		await page.waitForTimeout(1500);
+		await page.getByRole('radio', { name: /parliament/i }).first().click();
+		await page.waitForTimeout(1800);
+		ok('a lens click opens the parliament', (await page.locator('.parliament').count()) === 1);
+		ok('a lens click writes the lens to the URL', page.url().includes('view=parliament'), page.url().replace(BASE, ''));
+		await page.getByRole('radio', { name: /government/i }).first().click();
+		await page.waitForTimeout(1800);
+		ok('a second lens click opens the government', (await page.locator('.government').count()) === 1);
+		await page.close();
+	}
+
+	/*
 	 * A dated civic link has to open on that date, and a claim the record itself
 	 * grades unsubstantiated has to sit below the default floor rather than draw
 	 * as a holder. 15 February 2011 has one: the interior minister of the time.
