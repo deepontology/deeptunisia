@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-28T17:12:29.689Z",
+  "generatedAt": "2026-10-28T17:20:50.266Z",
   "cutoff": "2026-10-25",
   "counts": {
     "claims": 82,
@@ -2213,8 +2213,8 @@
       "id": "world-snapshot",
       "kind": "metric",
       "claim": "World snapshot generation date.",
-      "value": "2026-10-28T17:12:25.599Z",
-      "display": "2026-10-28T17:12:25.599Z",
+      "value": "2026-10-28T17:20:47.294Z",
+      "display": "2026-10-28T17:20:47.294Z",
       "format": "iso-date",
       "population": "src/generated/world.json snapshot",
       "lifecycle": "current",
