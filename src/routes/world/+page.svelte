@@ -75,7 +75,7 @@
 		parliament: [10.134, 36.8094], // the Bardo, seat of the Assembly
 		government: [10.3319, 36.8546] // Carthage, seat of the Presidency
 	};
-	const FLIGHT_MS = 720;
+	const FLIGHT_MS = 520;
 	let pending: ReturnType<typeof setTimeout> | undefined;
 
 	function enter(target: string) {
