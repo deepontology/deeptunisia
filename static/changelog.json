@@ -1,6 +1,6 @@
 [
   {
-    "hash": "dbdbc7dee",
+    "hash": "6bb592716",
     "date": "2026-10-28T12:50:56+01:00",
     "subject": "Landing: say the relationships are graded, not documented",
     "kind": "revision",
@@ -15,7 +15,7 @@
     ]
   },
   {
-    "hash": "b46deff48",
+    "hash": "ec872ebce",
     "date": "2026-10-28T00:13:01+01:00",
     "subject": "World: unify the world and map views, and add the civic scale",
     "kind": "revision",
