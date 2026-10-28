@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-28T11:41:44.845Z",
+  "generatedAt": "2026-10-28T11:48:11.913Z",
   "cutoff": "2026-10-25",
   "counts": {
     "claims": 82,
@@ -127,7 +127,7 @@
     {
       "id": "relationships-total",
       "kind": "metric",
-      "claim": "Documented relationships recorded in the published graph.",
+      "claim": "Relationships recorded in the published graph, each carrying a basis.",
       "value": "2121",
       "display": "2121",
       "format": "plain",
@@ -147,7 +147,7 @@
       "surfaces": [
         {
           "path": "landing/index.html",
-          "locator": "(\\d+) documented relationships\\.",
+          "locator": "(\\d+) relationships, each graded\\.",
           "format": "plain"
         },
         {
@@ -2213,8 +2213,8 @@
       "id": "world-snapshot",
       "kind": "metric",
       "claim": "World snapshot generation date.",
-      "value": "2026-10-28T11:41:42.317Z",
-      "display": "2026-10-28T11:41:42.317Z",
+      "value": "2026-10-28T11:48:09.505Z",
+      "display": "2026-10-28T11:48:09.505Z",
       "format": "iso-date",
       "population": "src/generated/world.json snapshot",
       "lifecycle": "current",
