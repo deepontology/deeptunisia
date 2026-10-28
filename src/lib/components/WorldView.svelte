@@ -1141,7 +1141,15 @@
 		// The world at 1:110m, handing over to the region at 1:50m as the reader
 		// zooms into the country (see `region`). A cross-fade rather than a cut,
 		// so the coastline sharpens instead of jumping.
-		const fine = region ? country : 0;
+		/*
+		 * The 50m coastline is a bridge at the hand-over, not a second country.
+		 * It used to stay under the governorates to full country scale, and its
+		 * Tunisia is a different dataset from the governorate polygons: the two
+		 * edges never coincided, so the borders drifted off the coast as you
+		 * zoomed. By mid-country the fine layer is gone and the governorates are
+		 * the land, which is the only way the outline and the fill can agree.
+		 */
+		const fine = region ? Math.max(0, 1 - country / 0.55) : 0;
 		ctx.globalAlpha = 1 - fine;
 		ctx.beginPath();
 		path(countries);
@@ -1686,7 +1694,8 @@
 		pointer-events: none;
 	}
 	.gov {
-		fill: var(--surface-raised);
+		/* The governorate union is Tunisia's land at country scale. */
+		fill: var(--surface-base);
 		stroke: var(--border-strong);
 		stroke-width: 0.75;
 		cursor: pointer;
