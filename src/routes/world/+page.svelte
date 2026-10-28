@@ -33,6 +33,7 @@
 	import { ds, personById, positionsByRole, activity } from '$lib/model';
 	import { termAt, membersAt } from '$lib/civic';
 	import { prefersReducedMotion } from 'svelte/motion';
+	import { untrack } from 'svelte';
 
 	/*
 	 * WHY ONE TOOLBAR
@@ -130,22 +131,66 @@
 		{ value: 'debt', label: t('world.debt') }
 	]);
 
-	// Consume the parameter. Only the two known values count; anything else —
-	// including an absent parameter — leaves the store's default alone.
+	/*
+	 * THE URL IS THE STATE
+	 *
+	 * A lens, a family, a governorate and a date are what a reader means by "this
+	 * view", so all four live in the query and all four are read back. Only known
+	 * values count; anything else leaves the store's default alone, so a typo
+	 * degrades to the default rather than a half-set view.
+	 */
+	const VIEWS: WorldViewMode[] = ['globe', 'parliament', 'government', 'ledger'];
+	const FAMILIES: WorldFamily[] = ['trade', 'energy', 'debt'];
+
+	function isoDay(ms: number): string {
+		return new Date(ms).toISOString().slice(0, 10);
+	}
+
 	$effect(() => {
-		const v = page.url.searchParams.get('view');
-		if (v === 'globe' || v === 'parliament' || v === 'government' || v === 'ledger') {
-			if (world.view !== v) world.setView(v);
+		const p = page.url.searchParams;
+		const v = p.get('view');
+		if (v && (VIEWS as string[]).includes(v) && world.view !== v) world.setView(v as WorldViewMode);
+		const f = p.get('family');
+		if (f && (FAMILIES as string[]).includes(f) && world.family !== f) world.setFamily(f as WorldFamily);
+		const t = p.get('t');
+		if (t) {
+			const ms = Date.parse(t);
+			if (!Number.isNaN(ms) && Math.abs(app.t - ms) > 1000) app.t = ms;
 		}
+	});
+
+	/**
+	 * Write the shareable state back. A lens change is a history entry, so Back
+	 * steps out of a lens the way it steps out of a page; a date or family change
+	 * replaces, because scrubbing the dock should not fill the history.
+	 */
+	function writeUrl(push: boolean) {
+		const url = new URL(page.url);
+		url.searchParams.set('view', world.view);
+		url.searchParams.set('t', isoDay(app.t));
+		if (world.family === 'trade') url.searchParams.delete('family');
+		else url.searchParams.set('family', world.family);
+		if (url.href === page.url.href) return;
+		void goto(url, { replaceState: !push, keepFocus: true, noScroll: true });
+	}
+
+	$effect(() => {
+		// Track only what this page owns; region is written by the map itself.
+		void world.view;
+		void world.family;
+		void app.t;
+		untrack(() => writeUrl(false));
 	});
 
 	function setView(v: string) {
 		const mode = v as WorldViewMode;
 		world.setView(mode);
-		// Write it back so the URL is shareable state, not a leftover.
-		const url = new URL(page.url);
-		url.searchParams.set('view', mode);
-		goto(url, { replaceState: true, keepFocus: true, noScroll: true });
+		writeUrl(true);
+	}
+
+	function setFamily(v: string) {
+		world.setFamily(v as WorldFamily);
+		writeUrl(false);
 	}
 </script>
 
@@ -184,7 +229,7 @@
 					<Segmented
 						options={familyOptions}
 						value={world.family}
-						onchange={(v) => world.setFamily(v as WorldFamily)}
+						onchange={setFamily}
 						label={t('world.family')}
 					/>
 				{/if}

@@ -2560,6 +2560,42 @@ console.log('\n  ── deep-link round trips ──');
 			'deep-link /map keeps the toolbar',
 			(await page.locator('.toolbar').count()) === 1
 		);
+		ok(
+			'deep-link /map keeps the region in the URL',
+			page.url().includes('region=gov-tunis'),
+			page.url().replace(BASE, '')
+		);
+		ok(
+			'deep-link /map names the governorate in the trail',
+			(await page.locator('.trail').innerText()).includes('Tunis')
+		);
+		await page.close();
+	}
+
+	/*
+	 * A dated civic link has to open on that date, and a claim the record itself
+	 * grades unsubstantiated has to sit below the default floor rather than draw
+	 * as a holder. 15 February 2011 has one: the interior minister of the time.
+	 */
+	{
+		const page = await context.newPage();
+		await page.goto(BASE + '/world?view=government&t=2011-02-15', {
+			waitUntil: 'networkidle',
+			timeout: 30_000
+		});
+		await settle(page);
+		await page.waitForTimeout(1500);
+		const dateLine = (await page.locator('.head .mono').first().innerText()) || '';
+		ok('a dated government link opens on its date', dateLine.includes('2011'), dateLine.replace(/\n/g, ' '));
+		ok(
+			'an unsubstantiated post waits below the default floor',
+			(await page.locator('.slot.below').count()) >= 1
+		);
+		ok(
+			'and the tree names the floor on it',
+			((await page.locator('.slot.below .dash').first().innerText()) || '').length > 0,
+			await page.locator('.slot.below .dash').first().innerText()
+		);
 		await page.close();
 	}
 
