@@ -270,6 +270,7 @@
 			<summary>{t('govt.caveat.short')}</summary>
 			<div class="pop">
 			<p>{t('govt.caveat')}</p>
+			<p>{t('govt.caveat.secstate')}</p>
 			{#if regime}
 				<section class="regime">
 					<h3>{nameOf(regime.event) || regime.event.title_en}</h3>

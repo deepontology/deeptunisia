@@ -266,5 +266,29 @@ console.log('\n  ── ongoing and last-verified against the cutoff ──\n');
 	ok('no verified: token anywhere in the graph sits after the cutoff', future.length === 0, future.slice(0, 3).join('; '));
 }
 
+/*
+ * The regime panel reads its six answers out of an event's summary by their
+ * English prefixes. A reworded summary would not crash: it would silently drop a
+ * row, leaving a label with no answer. Pin the prefixes so a rewrite fails here
+ * instead of degrading in front of a reader.
+ */
+{
+	const QUESTIONS = [
+		'Who heads the government',
+		'Who appoints the head of government',
+		'Who appoints and dismisses ministers',
+		'To whom ministers answer',
+		'Powers kept by the head of state',
+		'Secretaries of state and delegated ministers'
+	];
+	const regimes = ds().events.filter((e: { subcategory?: string }) => e.subcategory === 'executive-regime');
+	ok('the graph carries the constitutional regimes', regimes.length >= 10, `${regimes.length} events`);
+	const missing: string[] = [];
+	for (const e of regimes) {
+		for (const q of QUESTIONS) if (!String(e.summary ?? '').includes(`${q}: `)) missing.push(`${e.id}: ${q}`);
+	}
+	ok('every regime summary answers all six questions', missing.length === 0, missing.slice(0, 3).join('; '));
+}
+
 console.log(`\n  ${checks - failures}/${checks} consistency checks passed\n`);
 if (failures) process.exit(1);
