@@ -3,6 +3,36 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:33e140f561400502",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "La Suisse soutient l’inclusion économique et l’entrepreneuriat dans les oasis du sud tunisien",
+      "link": "https://kapitalis.com/tunisie/2026/10/28/la-suisse-soutient-linclusion-economique-et-lentrepreneuriat-dans-les-oasis-du-sud-tunisien/",
+      "published": "2026-10-27T23:18:08Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:4da680a7a387c667",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Msaken | Un dealer arrêté, son complice recherché et 8.000 comprimés saisis",
+      "link": "https://kapitalis.com/tunisie/2026/10/28/msaken-un-dealer-arrete-son-complice-recherche-et-8-000-comprimes-saisis/",
+      "published": "2026-10-27T23:00:38Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:f6b774a431702a7c",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Tunisie | Nouvelle condamnation pour le journaliste Zied El-Heni",
+      "link": "https://kapitalis.com/tunisie/2026/10/27/tunisie-nouvelle-condamnation-pour-le-journaliste-zied-el-heni/",
+      "published": "2026-10-27T22:53:49Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
       "id": "feed:nawaat:4a1aefd4c3a3861a",
       "outlet": "Nawaat",
       "outletId": "nawaat",
@@ -11961,36 +11991,6 @@
       "title": "Mesures pour l’approvisionnement urgent en médicaments",
       "link": "https://africanmanager.com/des-mesures-urgentes-pour-renforcer-lapprovisionnement-en-medicaments/",
       "published": "2026-09-16T12:53:26Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:b0d40ead7fa4ad18",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Hyundai reprend la tête, Kia recule et pointe la Chine",
-      "link": "https://africanmanager.com/hyundai-reprend-la-tete-kia-recule-et-pointe-la-chine/",
-      "published": "2026-09-16T12:50:21Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:501ea62aa529a767",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "La caisse fait un bond et SMG prépare une augmentation du capital",
-      "link": "https://africanmanager.com/la-caisse-fait-un-bond-et-smg-prepare-une-augmentation-du-capital/",
-      "published": "2026-09-16T12:46:33Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:685eaca4712d766b",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Premier Forum d’affaires tuniso-allemand pour promouvoir les secteurs stratégiques",
-      "link": "https://africanmanager.com/premier-forum-daffaires-tuniso-allemand-pour-promouvoir-les-secteurs-strategiques/",
-      "published": "2026-09-16T12:40:00Z",
       "lang": "fr",
       "author": "African Manager"
     }
