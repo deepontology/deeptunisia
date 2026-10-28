@@ -30,6 +30,10 @@
 	import { ds, LAYER_COLOR } from '$lib/model';
 	import { t, tf, nameOf } from '$lib/t.svelte';
 	import { world, type WorldFamily } from '$lib/world/store.svelte';
+	import { prefersReducedMotion } from 'svelte/motion';
+
+	/** A flight the reader asked for, unless they asked for no motion. */
+	const dur = (ms: number) => (prefersReducedMotion.current ? 0 : ms);
 
 	/**
 	 * The world view: Tunisia's external relations on a globe.
@@ -243,17 +247,17 @@
 		const rtl = document.dir === 'rtl' ? -1 : 1;
 		const dLat = compact.current ? (0.25 * globe.vh) / perDeg : 0;
 		const dLon = compact.current ? 0 : (rtl * 190) / perDeg;
-		globe.flyTo(g.anchor[0] + dLon, g.anchor[1] - dLat, k, 620);
+		globe.flyTo(g.anchor[0] + dLon, g.anchor[1] - dLat, k, dur(620));
 	}
 
 	function toWorld() {
 		govSel = null;
-		globe.flyTo(TUNISIA[0], TUNISIA[1], 1, 820);
+		globe.flyTo(TUNISIA[0], TUNISIA[1], 1, dur(820));
 	}
 
 	function toCountry() {
 		govSel = null;
-		globe.flyTo(TUNISIA[0], TUNISIA[1], kCountry, 820);
+		globe.flyTo(TUNISIA[0], TUNISIA[1], kCountry, dur(820));
 	}
 
 	/*
@@ -310,7 +314,7 @@
 			else if (f.to === 'tunisia') toCountry();
 			else if (f.lon !== undefined && f.lat !== undefined) {
 				govSel = null;
-				globe.flyTo(f.lon, f.lat, Math.min(globe.maxScale, kCountry * 2.6), 700);
+				globe.flyTo(f.lon, f.lat, Math.min(globe.maxScale, kCountry * 2.6), dur(700));
 			}
 		});
 	});

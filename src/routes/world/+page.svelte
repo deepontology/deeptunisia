@@ -180,6 +180,8 @@
 		url.searchParams.set('t', isoDay(app.t));
 		if (world.family === 'trade') url.searchParams.delete('family');
 		else url.searchParams.set('family', world.family);
+		// `at` describes the globe's scale only; the other inside lenses imply the
+		// same place by their own name, and WorldView reads it once on arrival.
 		if (world.view === 'globe' && world.globeInside) url.searchParams.set('at', 'tunisia');
 		else url.searchParams.delete('at');
 		if (url.href === page.url.href) return;

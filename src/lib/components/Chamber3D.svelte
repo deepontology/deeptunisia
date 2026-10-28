@@ -48,10 +48,12 @@
 		onpick: (i: number) => void;
 		/** Spoken name for the room, so its canvas is not an unlabelled box. */
 		label: string;
+		/** Id of the hidden instructions the canvas points at. */
+		describedby?: string;
 		onfail?: () => void;
 	}
 
-	let { seats, termKey, onhover, onpick, label, onfail }: Props = $props();
+	let { seats, termKey, onhover, onpick, label, describedby, onfail }: Props = $props();
 
 	let host: HTMLDivElement;
 	let api: {
@@ -70,7 +72,8 @@
 					onhover: (i) => onhover(i),
 					onpick: (i) => onpick(i),
 					reduced: () => prefersReducedMotion.current,
-					label: () => label
+					label: () => label,
+					describedby
 				});
 				api.update(seats);
 				api.arrive();
