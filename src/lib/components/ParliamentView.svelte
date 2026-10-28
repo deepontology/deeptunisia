@@ -285,7 +285,6 @@
 			{#if !flat}
 				<Chamber3D
 					seats={chamberSeats}
-					termKey={term.role.id}
 					label={tf('parl.aria', { name: nameOf(term.institution), n: members.length, seats: term.seats })}
 					describedby="chamber-help"
 					onhover={(i) => (hover = i === null ? null : seats[i])}
