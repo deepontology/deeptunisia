@@ -304,11 +304,11 @@
 							class:empty={!s.holder && !s.key}
 							class:dim={dim(s)}
 							data-basis={s.basis ?? undefined}
-							pathLength={1}
+							pathLength={s.basis && s.basis !== 'documented' ? 1 : undefined}
 							style:fill={s.holder || s.key ? s.color : 'none'}
-							stroke={s.basis && s.basis !== 'documented' ? 'var(--text-secondary)' : 'none'}
-							stroke-width={s.basis && s.basis !== 'documented' ? geometry.r * 0.34 : 0}
-							stroke-dasharray={s.basis && s.basis !== 'documented' ? RING_DASH[s.basis] : undefined}
+							style:stroke={s.basis && s.basis !== 'documented' ? 'var(--text-secondary)' : undefined}
+							style:stroke-width={s.basis && s.basis !== 'documented' ? geometry.r * 0.34 : undefined}
+							style:stroke-dasharray={s.basis && s.basis !== 'documented' ? RING_DASH[s.basis] : undefined}
 						/>
 					{/each}
 				</svg>
@@ -517,6 +517,16 @@
 		overflow: hidden;
 		pointer-events: none;
 	}
+	@media (max-width: 640px) {
+		.readout {
+			white-space: normal;
+			line-height: 1.3;
+			height: auto;
+			min-height: 36px;
+			padding-block: var(--s-2);
+			text-align: center;
+		}
+	}
 	.readout strong {
 		color: var(--text-primary);
 		font-weight: 600;
@@ -524,6 +534,12 @@
 	.readout .g,
 	.readout .hint {
 		color: var(--text-muted);
+		/* A flex child that does not shrink overflows from both ends under
+		   justify-content: center, which cut the hint's first and last words off
+		   on a phone. Let it shrink, then let it wrap. */
+		min-width: 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 
 	.panel {

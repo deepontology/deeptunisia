@@ -215,7 +215,7 @@
 			{#key s.position?.holder ?? ''}
 				<span class="swap" in:fade={{ duration: motion ? 220 : 0 }}>
 					{#if below}
-						<span class="dash" title={t('govt.belowfloor')}>{t('govt.belowfloor')}</span>
+						<span class="dash" title={t('govt.belowfloor')}>{t('govt.belowfloor.short')}</span>
 					{:else if s.position}
 						<button class="who" title={who(s)} onclick={() => app.select(s.position!.holder)}>{who(s)}</button>
 					{:else}
@@ -475,13 +475,18 @@
 		border-color: var(--accent-border) !important;
 		text-align: center;
 		align-items: center;
+		/* Two slots can share the apex (a president and a cabinet director); the
+		   large name line left the second slot touching the first. */
+		row-gap: var(--s-2);
 	}
 	/* The rail: one line down from the apex, one across the three branches. */
 	.row {
 		position: relative;
 		width: 100%;
 		display: grid;
-		grid-template-columns: 1fr 2fr 1fr;
+		/* minmax(0, …): a long institution name must wrap, not widen its column and
+		   push the services branch past the right edge of the chart. */
+		grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) minmax(0, 1fr);
 		gap: var(--s-5);
 		margin-top: var(--s-6);
 		padding-top: var(--s-5);
