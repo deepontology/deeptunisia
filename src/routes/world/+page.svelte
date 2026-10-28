@@ -75,7 +75,7 @@
 		parliament: [10.134, 36.8094], // the Bardo, seat of the Assembly
 		government: [10.3319, 36.8546] // Carthage, seat of the Presidency
 	};
-	const FLIGHT_MS = 520;
+	const FLIGHT_MS = 460;
 	let pending: ReturnType<typeof setTimeout> | undefined;
 
 	function enter(target: string) {
@@ -95,8 +95,8 @@
 		if (world.view === 'globe' && !prefersReducedMotion.current) {
 			const [lon, lat] = PLACES[lensTarget];
 			const longDive = !world.globeInside;
-			world.flyTo('point', lon, lat, longDive ? 900 : 520);
-			pending = setTimeout(() => setView(lensTarget), longDive ? 900 : FLIGHT_MS);
+			world.flyTo('point', lon, lat, longDive ? 780 : 460);
+			pending = setTimeout(() => setView(lensTarget), longDive ? 780 : FLIGHT_MS);
 		} else {
 			setView(lensTarget);
 		}
@@ -109,6 +109,7 @@
 	 */
 	function back() {
 		clearTimeout(pending);
+		clearTimeout(pendingSwap);
 		if (world.view !== 'globe') {
 			world.openInside = true;
 			setView('globe');
@@ -240,11 +241,34 @@
 		untrack(() => writeUrl(push));
 	});
 
+	/**
+	 * Swap the scale under a fade.
+	 *
+	 * The incoming view already fades in, but the outgoing one used to vanish on
+	 * the same frame, so the stage blinked through the page background between
+	 * them. A short fade-out first turns the blink into a dissolve.
+	 */
+	let swapping = $state(false);
+	let pendingSwap: ReturnType<typeof setTimeout> | undefined;
+
 	function setView(v: string) {
-		// The effect writes; the flag only decides whether it pushes.
-		pushNext = true;
-		world.setView(v as WorldViewMode);
+		const mode = v as WorldViewMode;
+		clearTimeout(pendingSwap);
+		if (mode === world.view) return;
+		if (prefersReducedMotion.current) {
+			pushNext = true;
+			world.setView(mode);
+			return;
+		}
+		swapping = true;
+		pendingSwap = setTimeout(() => {
+			swapping = false;
+			// The effect writes; the flag only decides whether it pushes.
+			pushNext = true;
+			world.setView(mode);
+		}, SWAP_MS);
 	}
+	const SWAP_MS = 140;
 
 	function setFamily(v: string) {
 		world.setFamily(v as WorldFamily);
@@ -309,7 +333,7 @@
 		{/if}
 	</div>
 
-	<div class="stage">
+	<div class="stage" class:swapping>
 		{#if world.view === 'globe'}
 			<WorldView />
 		{/if}
@@ -538,6 +562,13 @@
 	.stage :global(.government),
 	.stage :global(.ledger) {
 		animation: world-in var(--dur-normal) var(--ease-out);
+	}
+	.stage.swapping :global(.world),
+	.stage.swapping :global(.parliament),
+	.stage.swapping :global(.government),
+	.stage.swapping :global(.ledger) {
+		opacity: 0;
+		transition: opacity 140ms var(--ease-out);
 	}
 	@keyframes world-in {
 		from {
