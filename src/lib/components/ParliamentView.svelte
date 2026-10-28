@@ -281,11 +281,13 @@
 <div class="parliament">
 	{#if term}
 		<div class="stage">
+			<p id="chamber-help" class="sr">{t('parl.hint3d')}</p>
 			{#if !flat}
 				<Chamber3D
 					seats={chamberSeats}
 					termKey={term.role.id}
 					label={tf('parl.aria', { name: nameOf(term.institution), n: members.length, seats: term.seats })}
+					describedby="chamber-help"
 					onhover={(i) => (hover = i === null ? null : seats[i])}
 					onpick={(i) => {
 						const h = seats[i]?.holder;
@@ -669,6 +671,14 @@
 		font-size: var(--t-2xs);
 		letter-spacing: var(--track-wide);
 		text-transform: uppercase;
+	}
+	.sr {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
 	}
 	.basis-key {
 		display: flex;

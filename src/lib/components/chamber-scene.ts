@@ -80,6 +80,7 @@ export function createChamber(
 		onpick: (i: number) => void;
 		reduced: () => boolean;
 		label: () => string;
+		describedby?: string;
 	}
 ) {
 	const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'low-power' });
@@ -545,6 +546,7 @@ export function createChamber(
 	el.tabIndex = 0;
 	el.setAttribute('role', 'application');
 	el.setAttribute('aria-label', opts.label());
+	if (opts.describedby) el.setAttribute('aria-describedby', opts.describedby);
 	let focusIdx: number | null = null;
 	el.addEventListener('keydown', (e) => {
 		if (e.key === 'ArrowRight' || e.key === 'ArrowLeft' || e.key === 'Home' || e.key === 'End') {
