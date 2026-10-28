@@ -138,6 +138,15 @@
 		const named = membersAt(chamber, app.t).filter((m) => m.at === 2).length;
 		return !named && !!chamber.institution.seat_split?.length;
 	});
+	/**
+	 * The name follows the scale. "World" is the entry point, not the name of a
+	 * country lens: once the reader is inside, the title says where they are.
+	 */
+	const pageTitle = $derived(
+		world.inside
+			? `${lens === 'map' ? t('world.tunisia') : t('world.view.' + lens)} · ${t('world.page.title')}`
+			: t('world.page.title')
+	);
 	const regionName = $derived(world.region ? nameOf(ds.regions.find((r) => r.id === world.region)) : '');
 	const familyOptions = $derived([
 		{ value: 'trade', label: t('world.trade') },
@@ -222,7 +231,7 @@
 </script>
 
 <svelte:head>
-	<title>{t('world.page.title')}</title>
+	<title>{pageTitle}</title>
 	<meta name="description" content={t('world.page.description')} />
 </svelte:head>
 
@@ -282,6 +291,19 @@
 	<div class="stage">
 		{#if world.view === 'globe'}
 			<WorldView />
+			{#if !world.inside}
+				<!--
+					The one obvious next move from the globe. Without it the country
+					is only reachable by knowing that the trail's second crumb or the
+					wheel does it.
+				-->
+				<button class="dive" onclick={() => enter('map')}>
+					<span>{t('world.dive')}</span>
+					<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+						<path d="M8 3v9M3.5 8.5 8 13l4.5-4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+					</svg>
+				</button>
+			{/if}
 		{:else if world.view === 'parliament'}
 			<ParliamentView />
 		{:else if world.view === 'government'}
@@ -411,6 +433,33 @@
 		min-height: 0;
 		position: relative;
 		overflow: hidden;
+	}
+	.dive {
+		position: absolute;
+		top: var(--s-5);
+		left: 50%;
+		translate: -50% 0;
+		z-index: 4;
+		display: inline-flex;
+		align-items: center;
+		gap: var(--s-2);
+		min-height: 40px;
+		padding: var(--s-2) var(--s-4);
+		border-radius: 999px;
+		background: var(--accent);
+		color: var(--accent-text);
+		font-size: var(--t-sm);
+		font-weight: 600;
+		box-shadow: var(--shadow-md, 0 8px 24px rgb(0 0 0 / 0.18));
+		transition: transform var(--dur-fast) var(--ease-out);
+	}
+	.dive:hover {
+		transform: translateY(-1px);
+	}
+	@media (prefers-reduced-motion: reduce) {
+		.dive {
+			transition: none;
+		}
 	}
 
 	/*

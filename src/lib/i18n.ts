@@ -1041,6 +1041,7 @@ const en: Dict = {
 	// World view v2 (docs/plans/world-rebuild-v2.md): the ledger, the totals strip
 	// and the view switch. All three locales land together — never a key in one.
 	'world.page.title': 'World · DeepTunisia',
+	'world.dive': 'Dive in',
 	'world.page.description': 'Tunisia’s relations with every country, lender and institution on a globe, and then Tunisia from the inside: governorates, parliament and government on any date.',
 	'world.provenance': '{source} · retrieved {date}',
 	'world.inforce.date': 'In force from {date}',
@@ -2867,6 +2868,7 @@ const fr: Dict = {
 	// Vue Monde v2 (docs/plans/world-rebuild-v2.md) : le registre, la bande des
 	// totaux et le sélecteur de vue. Les trois langues arrivent ensemble.
 	'world.page.title': 'Monde · DeepTunisia',
+	'world.dive': 'Entrer',
 	'world.page.description': 'Les relations de la Tunisie avec chaque pays, prêteur et institution sur un globe, puis la Tunisie vue de l\'intérieur : gouvernorats, parlement et gouvernement à n\'importe quelle date.',
 	'world.provenance': '{source} · récupéré le {date}',
 	'world.inforce.date': 'En vigueur depuis le {date}',
@@ -4688,6 +4690,7 @@ const ar: Dict = {
 	'world.twobooks': 'بيانات المرآة غير متاحة — جانب واحد من التجارة معروض فقط',
 	// عرض العالم v2 (docs/plans/world-rebuild-v2.md): السجل، شريط المجاميع، ومبدّل العرض.
 	'world.page.title': 'العالم · DeepTunisia',
+	'world.dive': 'ادخل إلى البلاد',
 	'world.page.description': 'علاقات تونس مع كل دولة ومُقرض ومؤسسة على كرة أرضية، ثم تونس من الداخل: الولايات والبرلمان والحكومة في أي تاريخ.',
 	'world.provenance': '{source} · تاريخ الاسترجاع: {date}',
 	'world.inforce.date': 'ساري المفعول منذ {date}',
