@@ -27,9 +27,10 @@
 	 * arrives from straight above, where the chamber reads exactly as the flat
 	 * diagram and the map it came from, then tilts down into the room. That one
 	 * move is the transition from the map to the institution, and it is the only
-	 * animation that plays on its own. Everything else moves because the reader
-	 * moved it: a term change glides the seats to their new places, a drag turns
-	 * the room a little.
+	 * animation that plays on its own, and it plays once, when the room is first
+	 * opened. A date or term change glides the chairs to their new places and
+	 * leaves the camera where the reader left it: replaying the arrival on every
+	 * scrub made a date change look like a page reload.
 	 *
 	 * WHY IT RENDERS ON DEMAND
 	 *
@@ -42,8 +43,6 @@
 
 	interface Props {
 		seats: ChamberSeat[];
-		/** Changes when the term changes, so the arrival plays again. */
-		termKey: string;
 		onhover: (i: number | null) => void;
 		onpick: (i: number) => void;
 		/** Spoken name for the room, so its canvas is not an unlabelled box. */
@@ -53,7 +52,7 @@
 		onfail?: () => void;
 	}
 
-	let { seats, termKey, onhover, onpick, label, describedby, onfail }: Props = $props();
+	let { seats, onhover, onpick, label, describedby, onfail }: Props = $props();
 
 	let host: HTMLDivElement;
 	let api: {
@@ -95,12 +94,6 @@
 		api?.update(s);
 	});
 
-	let lastTerm = '';
-	$effect(() => {
-		const k = termKey;
-		if (lastTerm && k !== lastTerm) api?.arrive();
-		lastTerm = k;
-	});
 </script>
 
 <div class="chamber" bind:this={host}></div>
