@@ -4,6 +4,7 @@
 	import { personById, institutionById, ds, meetsBasis, DASH, BASIS_ORDER, type Basis } from '$lib/model';
 	import { terms, termAt, membersAt, affiliation, type Term, type Holding } from '$lib/civic';
 	import { world } from '$lib/world/store.svelte';
+	import { compact } from '$lib/design/media.svelte';
 	import Chamber3D, { type ChamberSeat } from './Chamber3D.svelte';
 
 	/**
@@ -392,7 +393,7 @@
 			{/if}
 
 			{#if !split}
-			<details class="table-alt">
+			<details class="table-alt" open={compact.current}>
 				<summary>{t('parl.table')}</summary>
 				<table>
 					<thead><tr><th>{t('parl.col.member')}</th><th>{t('parl.col.constituency')}</th><th>{t('parl.col.group')}</th></tr></thead>
@@ -404,6 +405,27 @@
 								<td>{groups.find((g) => g.id === s.key)?.name ?? ''}</td>
 							</tr>
 						{/each}
+					</tbody>
+				</table>
+			</details>
+			{:else}
+			<!--
+				A term counted by party instead of by member still needs the table.
+				The chart is a chart; without this the only text was the legend, and
+				a reader on a phone with no pointer could not reach the counts.
+			-->
+			<details class="table-alt" open={compact.current}>
+				<summary>{t('parl.table')}</summary>
+				<table>
+					<caption>{t('parl.splittable')}</caption>
+					<thead><tr><th>{t('parl.col.party')}</th><th>{t('parl.col.seats')}</th></tr></thead>
+					<tbody>
+						{#each groups as g (g.id)}
+							<tr><th scope="row">{g.name}</th><td>{g.n}</td></tr>
+						{/each}
+						{#if empty}
+							<tr><th scope="row">{t('parl.unfilled')}</th><td>{empty}</td></tr>
+						{/if}
 					</tbody>
 				</table>
 			</details>
