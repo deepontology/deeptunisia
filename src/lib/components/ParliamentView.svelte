@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { t, tf, nameOf, formatDate } from '$lib/t.svelte';
 	import { app } from '$lib/state.svelte';
-	import { personById, institutionById, ds } from '$lib/model';
+	import { personById, institutionById, ds, meetsBasis, DASH, BASIS_ORDER, type Basis } from '$lib/model';
 	import { terms, termAt, membersAt, affiliation, type Term, type Holding } from '$lib/civic';
 	import { world } from '$lib/world/store.svelte';
 	import Chamber3D, { type ChamberSeat } from './Chamber3D.svelte';
@@ -39,10 +39,18 @@
 	 * are counted in words rather than drawn in seats that do not exist.
 	 */
 	const everyone = $derived(term ? membersAt(term, app.t) : []);
+	/**
+	 * The evidence floor is the same control every other view honours. A member
+	 * whose seat rests on a claim below the floor is not seated: the chair stays
+	 * hollow, which is the same language the view already uses for a seat the
+	 * record does not fill, and the count says how many were withheld.
+	 */
+	const visible = $derived(everyone.filter((m) => meetsBasis(m.position.basis, app.basisFloor)));
+	const withheld = $derived(everyone.length - visible.length);
 	const members = $derived(
-		term && everyone.length > term.seats ? everyone.filter((m) => m.at === 2) : everyone
+		term && visible.length > term.seats ? visible.filter((m) => m.at === 2) : visible
 	);
-	const uncertain = $derived(everyone.length - members.length);
+	const uncertain = $derived(visible.length - members.length);
 
 	/**
 	 * Where no member of a term is named but the source gives seats by party,
@@ -62,6 +70,8 @@
 		key: string | null;
 		color: string;
 		region: string | null;
+		/** The basis of the claim that puts someone here, so a seat can carry it. */
+		basis: Basis | null;
 	}
 
 	/** Groups present on the date, largest first, with their palette slot. */
@@ -151,7 +161,7 @@
 			const pts = rtl ? [...geometry.pts].reverse() : geometry.pts;
 			return pts.map((p, i) => {
 				const key = queue[i] ?? null;
-				return { x: p.x, y: p.y, r: p.r, holder: null, key, color: groups.find((g) => g.id === key)?.color ?? 'none', region: null };
+				return { x: p.x, y: p.y, r: p.r, holder: null, key, color: groups.find((g) => g.id === key)?.color ?? 'none', region: null, basis: null };
 			});
 		}
 		const order = new Map(groups.map((g, i) => [g.id, i]));
@@ -173,7 +183,8 @@
 				holder: m,
 				key,
 				color: g?.color ?? 'none',
-				region: m?.position.constituency?.region ?? (m?.position.constituency?.abroad ? 'abroad' : null)
+				region: m?.position.constituency?.region ?? (m?.position.constituency?.abroad ? 'abroad' : null),
+				basis: m?.position.basis ?? null
 			};
 		});
 	});
@@ -185,7 +196,7 @@
 	let flat = $state(false);
 
 	const chamberSeats = $derived<ChamberSeat[]>(
-		seats.map((s) => ({ x: s.x, y: s.y, r: s.r, color: s.holder || s.key ? s.color : null, dim: dim(s), key: s.holder?.position.id ?? `${s.key ?? 'empty'}:${s.x.toFixed(3)}:${s.y.toFixed(3)}` }))
+		seats.map((s) => ({ x: s.x, y: s.y, r: s.r, color: s.holder || s.key ? s.color : null, dim: dim(s), basis: s.basis, key: s.holder?.position.id ?? `${s.key ?? 'empty'}:${s.x.toFixed(3)}:${s.y.toFixed(3)}` }))
 	);
 	let picked = $state<string | null>(null);
 
@@ -267,7 +278,19 @@
 			{:else}
 				<svg class="flat" viewBox="-1.06 -1.06 2.12 1.12" role="img" aria-label={tf('parl.aria', { name: nameOf(term.institution), n: members.length, seats: term.seats })}>
 					{#each seats as s, i (i)}
-						<circle cx={s.x} cy={s.y} r={geometry.r} class="seat" class:empty={!s.holder && !s.key} class:dim={dim(s)} style:fill={s.holder || s.key ? s.color : 'none'} />
+						<circle
+							cx={s.x}
+							cy={s.y}
+							r={geometry.r}
+							class="seat"
+							class:empty={!s.holder && !s.key}
+							class:dim={dim(s)}
+							data-basis={s.basis ?? undefined}
+							style:fill={s.holder || s.key ? s.color : 'none'}
+							stroke={s.basis && s.basis !== 'documented' ? 'var(--text-secondary)' : 'none'}
+							stroke-width={s.basis && s.basis !== 'documented' ? geometry.r * 0.28 : 0}
+							stroke-dasharray={s.basis && s.basis !== 'documented' ? DASH[s.basis] : undefined}
+						/>
 					{/each}
 				</svg>
 			{/if}
@@ -278,6 +301,9 @@
 					<strong>{memberName(hover.holder)}</strong>
 					<span>{nameOf(hover.holder.position.constituency)}</span>
 					<span class="g">{groups.find((g) => g.id === hover?.key)?.name ?? ''}</span>
+					{#if hover.basis && hover.basis !== 'documented'}
+						<span class="b" data-basis={hover.basis}>{t('basis.' + hover.basis)}</span>
+					{/if}
 				{:else if hover?.key}
 					<strong>{groups.find((g) => g.id === hover?.key)?.name ?? ''}</strong>
 					<span>{t('parl.splitseat')}</span>
@@ -307,7 +333,7 @@
 				<!-- One line, fixed height: the uncertain count rides on it rather than
 				     opening a row of its own and pushing the legend down. -->
 				<p class="mono when" title={uncertain ? tf('parl.uncertain', { n: uncertain }) : undefined}>
-					{span(term)}{#if uncertain}{' · '}<span class="unc">{tf('parl.uncertainShort', { n: uncertain })}</span>{/if}
+					{span(term)}{#if uncertain}{' · '}<span class="unc">{tf('parl.uncertainShort', { n: uncertain })}</span>{/if}{#if withheld}{' · '}<span class="unc">{tf('parl.withheldShort', { n: withheld })}</span>{/if}
 				</p>
 				<dl class="tally mono">
 					<div><dt>{t('parl.t.held')}</dt><dd>{held}</dd></div>
@@ -347,6 +373,18 @@
 					<li class="hollow"><span><i></i><span class="name">{t('parl.unfilled')}</span><span class="n mono">{empty}</span></span></li>
 				{/if}
 			</ul>
+			{#if seats.some((s) => s.basis && s.basis !== 'documented')}
+				<ul class="basis-key" aria-label={t('parl.basiskey')}>
+					{#each BASIS_ORDER.filter((b) => b !== 'documented' && seats.some((s) => s.basis === b)) as b (b)}
+						<li data-basis={b}>
+							<svg viewBox="-1 -1 2 2" width="12" height="12" aria-hidden="true">
+								<circle r="0.72" fill="none" stroke="currentColor" stroke-width="0.22" stroke-dasharray={DASH[b]} />
+							</svg>
+							{t('basis.' + b)}
+						</li>
+					{/each}
+				</ul>
+			{/if}
 			{#if split}
 				<p class="note">{t('parl.splitnote')}</p>
 			{:else if groups.some((g) => g.kind === 'list')}
@@ -569,6 +607,27 @@
 		width: 28px;
 		height: 28px;
 		border-radius: var(--r-full);
+	}
+	.readout .b {
+		color: var(--text-secondary);
+		font-size: var(--t-2xs);
+		letter-spacing: var(--track-wide);
+		text-transform: uppercase;
+	}
+	.basis-key {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--s-2) var(--s-3);
+		margin: var(--s-2) 0 0;
+		padding: 0;
+		list-style: none;
+		color: var(--text-secondary);
+		font-size: var(--t-2xs);
+	}
+	.basis-key li {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--s-1);
 	}
 	.legend {
 		list-style: none;

@@ -76,6 +76,7 @@
 	<li>
 		<button class="who" onclick={() => app.select(p.holder)}>{holder(p)}</button>
 		<span class="when mono">{describeInterval(p.interval)}</span>
+		{#if p.basis !== 'documented'}<i class="chip basis" data-basis={p.basis} title={t('basis.' + p.basis)}>{t('basis.' + p.basis)}</i>{/if}
 		{#if p.acting}<i class="chip">{t('gov.acting')}</i>{/if}
 		{#if tag}<i class="chip">{tag.key === 'verified' && tag.date ? tf('gov.verified', { date: formatDate(tag.date, 'month') }) : t(`gov.${tag.key}`)}</i>{/if}
 	</li>

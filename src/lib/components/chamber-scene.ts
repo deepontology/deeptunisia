@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
+import { BASIS_OPACITY } from '$lib/model';
 import type { ChamberSeat } from './Chamber3D.svelte';
 
 /**
@@ -239,6 +240,14 @@ export function createChamber(
 			to[i * 3 + 1] = ty;
 			to[i * 3 + 2] = tz;
 			const base = s.color ? colors.color(s.color) : new THREE.Color(0.5, 0.5, 0.5);
+			/*
+			 * The same four bases the flat diagram draws as rings, carried into the
+			 * room as a wash toward neutral: documented keeps full colour, reported
+			 * fades a little, inferred more, unsubstantiated most. Colour still means
+			 * the group, so the basis rides on saturation rather than hue.
+			 */
+			const fade = BASIS_OPACITY[s.basis ?? 'documented'];
+			if (fade < 1) base.lerp(new THREE.Color(0.5, 0.5, 0.5), 1 - fade);
 			const target = s.dim ? base.clone().lerp(dimTo, 0.78) : base;
 			cFrom[i] = fresh || !cCur[i] ? target.clone() : cCur[i].clone();
 			cTo[i] = target;
