@@ -46,10 +46,12 @@
 		termKey: string;
 		onhover: (i: number | null) => void;
 		onpick: (i: number) => void;
+		/** Spoken name for the room, so its canvas is not an unlabelled box. */
+		label: string;
 		onfail?: () => void;
 	}
 
-	let { seats, termKey, onhover, onpick, onfail }: Props = $props();
+	let { seats, termKey, onhover, onpick, label, onfail }: Props = $props();
 
 	let host: HTMLDivElement;
 	let api: {
@@ -67,7 +69,8 @@
 				api = createChamber(host, {
 					onhover: (i) => onhover(i),
 					onpick: (i) => onpick(i),
-					reduced: () => prefersReducedMotion.current
+					reduced: () => prefersReducedMotion.current,
+					label: () => label
 				});
 				api.update(seats);
 				api.arrive();
@@ -105,6 +108,11 @@
 		inset: 0;
 		touch-action: none;
 		cursor: grab;
+	}
+	.chamber :global(canvas:focus-visible) {
+		outline: 2px solid var(--accent);
+		outline-offset: -2px;
+		border-radius: var(--r-md);
 	}
 	.chamber :global(canvas) {
 		display: block;
