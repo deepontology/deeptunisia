@@ -355,7 +355,7 @@
 					{span(term)}{#if uncertain}{' · '}<span class="unc">{tf('parl.uncertainShort', { n: uncertain })}</span>{/if}{#if withheld}{' · '}<span class="unc">{tf('parl.withheldShort', { n: withheld })}</span>{/if}
 				</p>
 				<dl class="tally mono">
-					<div><dt>{t('parl.t.held')}</dt><dd>{held}</dd></div>
+					<div><dt>{t(split ? 'parl.t.partyseats' : 'parl.t.held')}</dt><dd>{held}</dd></div>
 					<div><dt>{t('parl.t.seats')}</dt><dd>{term.seats}</dd></div>
 					<div><dt>{t('parl.t.empty')}</dt><dd>{empty}</dd></div>
 				</dl>
