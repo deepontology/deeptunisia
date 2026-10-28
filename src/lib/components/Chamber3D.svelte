@@ -7,6 +7,8 @@
 		/** A CSS colour (a var() is fine), or null for a seat with no recorded holder. */
 		color: string | null;
 		dim: boolean;
+		/** The basis of the claim that seats this person, carried into the room. */
+		basis: 'documented' | 'reported' | 'inferred' | 'unsubstantiated' | null;
 		key: string;
 	}
 </script>

@@ -3,7 +3,7 @@
 	import { prefersReducedMotion } from 'svelte/motion';
 	import { t, tf, nameOf, formatDate } from '$lib/t.svelte';
 	import { app } from '$lib/state.svelte';
-	import { ds, personById, institutionById, activity, type Institution, type Position, type Role } from '$lib/model';
+	import { ds, personById, institutionById, activity, meetsBasis, type Institution, type Position, type Role } from '$lib/model';
 	import { termAt, membersAt, tenureTag } from '$lib/civic';
 	import { world } from '$lib/world/store.svelte';
 	import { goto } from '$app/navigation';
@@ -203,7 +203,9 @@
 
 {#snippet slot(s: Slot, lead: boolean)}
 	{@const tag = s.position ? tenureTag(s.position, s.at) : null}
-	<div class="slot" class:lead class:vacant={!s.position}>
+	{@const basis = s.position?.basis ?? null}
+	{@const below = basis ? !meetsBasis(basis, app.basisFloor) : false}
+	<div class="slot" class:lead class:vacant={!s.position} class:below data-basis={below ? undefined : basis ?? undefined}>
 		<span class="role">{nameOf(s.role)}</span>
 		<!-- The status chips sit on the name's own line, in short form, so a card
 		     never changes height when a holder has one and the next does not: a
@@ -212,13 +214,20 @@
 		<span class="name">
 			{#key s.position?.holder ?? ''}
 				<span class="swap" in:fade={{ duration: motion ? 220 : 0 }}>
-					{#if s.position}
+					{#if below}
+						<span class="dash" title={t('govt.belowfloor')}>{t('govt.belowfloor')}</span>
+					{:else if s.position}
 						<button class="who" title={who(s)} onclick={() => app.select(s.position!.holder)}>{who(s)}</button>
 					{:else}
 						<span class="dash" title={t('govt.vacant')}>—</span>
 					{/if}
 				</span>
 			{/key}
+			{#if basis === 'unsubstantiated' && !below}
+				<i class="chip basis" data-basis={basis} title={t('basis.' + basis)}>{t('basis.' + basis)}</i>
+			{:else if basis && basis !== 'documented' && !below}
+				<span class="sr">{t('basis.' + basis)}</span>
+			{/if}
 			{#if s.position?.acting}<i class="chip" title={t('gov.acting')}>{t('gov.acting')}</i>{/if}
 			{#if tag}
 				{@const full = tag.key === 'verified' && tag.date ? tf('gov.verified', { date: formatDate(tag.date, 'month') }) : t(`gov.${tag.key}`)}
@@ -278,6 +287,8 @@
 			</div>
 		</details>
 	</header>
+
+	<p class="basis-key">{t('govt.basiskey')}</p>
 
 	{#if root}
 		<div class="chart">
@@ -494,6 +505,39 @@
 	}
 	.row.no-right::after {
 		inset-inline-end: 50%;
+	}
+	.slot.below .role,
+	.slot.below .dash {
+		color: var(--text-muted);
+	}
+	.basis-key {
+		margin: 0 0 var(--s-3);
+		color: var(--text-secondary);
+		font-size: var(--t-2xs);
+	}
+	.slot.below {
+		border-style: dashed;
+	}
+	.chip.basis {
+		letter-spacing: var(--track-wide);
+		text-transform: uppercase;
+	}
+	.slot[data-basis='reported'] {
+		border-style: dashed;
+	}
+	.slot[data-basis='inferred'] {
+		border-style: dotted;
+	}
+	.slot[data-basis='unsubstantiated'] {
+		border-color: var(--border-strong);
+	}
+	.sr {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
 	}
 	.partial {
 		font-size: var(--t-xs);

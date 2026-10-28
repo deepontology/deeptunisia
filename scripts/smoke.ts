@@ -253,7 +253,12 @@ const CHECKS: Check[] = [
 		name: 'world-government',
 		expect: [
 			['.government', 1],
-			['.slot', 3]
+			['.slot', 3],
+			// Every post carries the basis of the claim that fills it, and the key
+			// names the vocabulary. Without this, a reported or unsubstantiated
+			// holder draws exactly like a documented one.
+			['.slot[data-basis]', 1],
+			['.basis-key', 1]
 		]
 	},
 	{
