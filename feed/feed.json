@@ -3,6 +3,26 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:409b8471dcf2cf09",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Le Cnot annonce la tenue du Forum des athlètes autour des enjeux de mobilité et d’appartenance",
+      "link": "https://kapitalis.com/tunisie/2026/10/28/le-cnot-annonce-la-tenue-du-forum-des-athletes-autour-des-enjeux-de-mobilite-et-dappartenance/",
+      "published": "2026-10-28T22:56:08Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:4954c0948a52e835",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Le film « 13ème Round » récompensé à Djerba",
+      "link": "https://kapitalis.com/tunisie/2026/10/28/le-film-13eme-round-recompense-a-djerba/",
+      "published": "2026-10-28T21:43:31Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
       "id": "feed:kapitalis:8e571f7adcd4e542",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -11974,26 +11994,6 @@
       "published": "2026-09-18T07:28:26Z",
       "lang": "fr",
       "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:05f70c24fbb78689",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Trump dit se trouver « à un tournant décisif » dans la guerre contre l’Iran",
-      "link": "https://africanmanager.com/trump-dit-se-trouver-a-un-tournant-decisif-dans-la-guerre-contre-liran/",
-      "published": "2026-09-18T07:27:33Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:kapitalis:f3933ccc0fbeac5e",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Phosphate | Washington lorgne le Maroc et la Tunisie",
-      "link": "https://kapitalis.com/tunisie/2026/09/18/phosphate-washington-lorgne-le-maroc-et-la-tunisie/",
-      "published": "2026-09-18T06:52:48Z",
-      "lang": "fr",
-      "author": "webmaster kapitalis"
     }
   ]
 }
