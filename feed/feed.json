@@ -3,6 +3,106 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:63852b1209ab6370",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Msaken | Arrestation d’un délinquant, objet de 13 avis de recherche",
+      "link": "https://kapitalis.com/tunisie/2026/10/29/msaken-arrestation-dun-delinquant-objet-de-13-avis-de-recherche/",
+      "published": "2026-10-29T21:08:53Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:30bb068e5b10ccc6",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "L’ANMPS représente la Tunisie à la semaine inaugurale de l’Agence africaine du médicament à Kigali",
+      "link": "https://kapitalis.com/tunisie/2026/10/29/lanmps-represente-la-tunisie-a-la-semaine-inaugurale-de-lagence-africaine-du-medicament-a-kigali/",
+      "published": "2026-10-29T20:12:12Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:nawaat:0db9f51fa04927c9",
+      "outlet": "Nawaat",
+      "outletId": "nawaat",
+      "title": "Crise en Tunisie et black-out informationnel, qui éclaire le citoyen ?",
+      "link": "https://nawaat.org/2026/10/29/crise-en-tunisie-et-black-out-informationnel-qui-eclaire-le-citoyen/",
+      "published": "2026-10-29T19:33:14Z",
+      "lang": "fr",
+      "author": "Aida Fitouri"
+    },
+    {
+      "id": "feed:african-manager:b2609f2b8e8346c8",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Bourse de Tunis: Le Tunindex clôture jeudi en territoire positif",
+      "link": "https://africanmanager.com/bourse-de-tunis-le-tunindex-cloture-jeudi-en-territoire-positif/",
+      "published": "2026-10-29T16:12:58Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:b3f5253bd88926f1",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Moscou : l’Afreximbank pour mieux d’échanges avec l’Afrique",
+      "link": "https://africanmanager.com/moscou-veut-integrer-a-part-entiere-lafreximbank-pour-fluidifier-ses-echanges-avec-lafrique/",
+      "published": "2026-10-29T16:12:26Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:2b9a80b78df87776",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Les jeux de hasard, autre vache à lait du fisc",
+      "link": "https://africanmanager.com/les-jeux-de-hasard-autre-vache-a-lait-du-fisc/",
+      "published": "2026-10-29T16:07:45Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:4e12db8e7a958827",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "La Tunisie 110ème mondiale dans l’indice mondial du capitalisme 2025",
+      "link": "https://africanmanager.com/la-tunisie-110eme-mondiale-dans-lindice-mondial-du-capitalisme-2025/",
+      "published": "2026-10-29T16:01:00Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:54ee9cec6d09118c",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Les Américains lorgnent le phosphate tunisien",
+      "link": "https://africanmanager.com/tunisie-etats-unis-lancement-dun-projet-commun-pour-promouvoir-linvestissement-dans-le-secteur-du-phosphate/",
+      "published": "2026-10-29T15:48:13Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:34416177666ce0a8",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Voici ce qu’a dit Vance dans sa lettre à Téhéran",
+      "link": "https://africanmanager.com/voici-ce-qua-dit-vance-dans-sa-lettre-a-teheran/",
+      "published": "2026-10-29T15:28:42Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:4fe85844693e6bea",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "La Tunisie à l’avant-garde de la lutte contre les engins explosifs improvisés",
+      "link": "https://africanmanager.com/la-tunisie-a-lavant-garde-de-la-lutte-contre-les-engins-explosifs-improvises/",
+      "published": "2026-10-29T15:00:00Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
       "id": "feed:african-manager:fe60112761bc9d1f",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -11894,106 +11994,6 @@
       "published": "2026-09-19T05:45:09Z",
       "lang": "fr",
       "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:0d819ee22076319e",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Le bloc de Netanyahu chute à 51 sièges",
-      "link": "https://africanmanager.com/le-bloc-de-netanyahu-chute-a-51-sieges/",
-      "published": "2026-09-19T05:43:13Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:05f45d9c7515998b",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Des « négociations urgentes » réclamées pour éviter une grève du transport des carburants",
-      "link": "https://africanmanager.com/des-negociations-urgentes-reclamees-pour-eviter-une-greve-du-transport-des-carburants/",
-      "published": "2026-09-19T05:37:05Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:89d5853238449c95",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Trump promulgue une loi imposant de nouvelles sanctions visant la Russie",
-      "link": "https://africanmanager.com/trump-promulgue-une-loi-imposant-de-nouvelles-sanctions-visant-la-russie/",
-      "published": "2026-09-19T05:33:40Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:01d28385b143714e",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Trump annonce avoir obtenu un « contrôle permanent » sur la sécurité du Groenland !",
-      "link": "https://africanmanager.com/trump-annonce-avoir-obtenu-un-controle-permanent-sur-la-securite-du-groenland/",
-      "published": "2026-09-19T05:31:57Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:ad019497ddc7df73",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Le nombre de soldats américains tués en Iran est supérieur à celui annoncé par le Pentagone",
-      "link": "https://africanmanager.com/le-nombre-de-soldats-americains-tues-en-iran-est-superieur-a-celui-annonce-par-le-pentagone/",
-      "published": "2026-09-19T05:30:22Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:kapitalis:19ffd004902509a8",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "L’INM prévoit un samedi pluvieux sur toute la Tunisie",
-      "link": "https://kapitalis.com/tunisie/2026/09/18/linm-prevoit-un-samedi-pluvieux-sur-toute-la-tunisie/",
-      "published": "2026-09-18T22:45:19Z",
-      "lang": "fr",
-      "author": "Yusra NY"
-    },
-    {
-      "id": "feed:kapitalis:590e790e8df1d784",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Siliana | Un enfant de 8 ans meurt emporté par les eaux d’un oued en crue",
-      "link": "https://kapitalis.com/tunisie/2026/09/18/siliana-un-enfant-de-8-ans-meurt-emporte-par-les-eaux-dun-oued-en-crue/",
-      "published": "2026-09-18T22:18:57Z",
-      "lang": "fr",
-      "author": "Yusra NY"
-    },
-    {
-      "id": "feed:kapitalis:42c3730b89ef7492",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Harouni et Frikha devant la Cour d’appel en octobre",
-      "link": "https://kapitalis.com/tunisie/2026/09/18/harouni-et-frikha-devant-la-cour-dappel-en-octobre/",
-      "published": "2026-09-18T21:37:10Z",
-      "lang": "fr",
-      "author": "Yusra NY"
-    },
-    {
-      "id": "feed:kapitalis:22acd20bd81c6807",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Trafic de cocaïne | Visé par 16 avis de recherche, un dealer arrêté à la Soukra",
-      "link": "https://kapitalis.com/tunisie/2026/09/18/trafic-de-cocaine-vise-par-16-avis-de-recherche-un-dealer-arrete-a-la-soukra/",
-      "published": "2026-09-18T21:01:10Z",
-      "lang": "fr",
-      "author": "Yusra NY"
-    },
-    {
-      "id": "feed:kapitalis:2fce6c1e700d96b2",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "En solidarité avec Wael Nawar, Ayachi Hammami entre en grève de la faim",
-      "link": "https://kapitalis.com/tunisie/2026/09/18/en-solidarite-avec-wael-nawar-ayachi-hammami-entre-en-greve-de-la-faim/",
-      "published": "2026-09-18T18:47:25Z",
-      "lang": "fr",
-      "author": "Yusra NY"
     }
   ]
 }
