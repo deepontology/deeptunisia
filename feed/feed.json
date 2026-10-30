@@ -3,6 +3,46 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:cb64fb4b42a3c212",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Programme du Japan Festival à la Cité de la culture de Tunis",
+      "link": "https://kapitalis.com/tunisie/2026/10/29/programme-du-japan-festival-a-la-cite-de-la-culture-de-tunis/",
+      "published": "2026-10-29T22:43:19Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:4c92b014b28e1684",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Tunisie | Bac 2027 : Le calendrier des inscriptions dévoilé",
+      "link": "https://kapitalis.com/tunisie/2026/10/29/tunisie-bac-2027-le-calendrier-des-inscriptions-devoile/",
+      "published": "2026-10-29T22:29:08Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:b9a92dc5098eea09",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Liberté de la presse et des droits | Le SNJT et l’ATFD réaffirment leur engagement commun",
+      "link": "https://kapitalis.com/tunisie/2026/10/29/liberte-de-la-presse-et-des-droits-le-snjt-et-latfd-reaffirment-leur-engagement-commun/",
+      "published": "2026-10-29T21:51:14Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:france24:662c105a2e052ba5",
+      "outlet": "France 24",
+      "outletId": "france24",
+      "title": "Tunisians drawn into Russia's war in Ukraine",
+      "link": "https://www.france24.com/en/tunisians-drawn-into-russia-s-war-in-ukraine",
+      "published": "2026-10-29T21:48:35Z",
+      "lang": "en",
+      "author": "Clarisse FORTUNÉ"
+    },
+    {
       "id": "feed:kapitalis:63852b1209ab6370",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -11952,46 +11992,6 @@
       "title": "Sousse : Réunion sur l’assurance décennale des chantiers publics",
       "link": "https://africanmanager.com/sousse-reunion-sur-lassurance-decennale-des-chantiers-publics/",
       "published": "2026-09-19T06:36:26Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:684fd0d35618ab9d",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Gabès : Interventions de terrain pour sécuriser les routes",
-      "link": "https://africanmanager.com/gabes-interventions-de-terrain-pour-securiser-les-routes/",
-      "published": "2026-09-19T06:24:04Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:643d74d9a17b854a",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Les bâtiments de Sfax seront équipés en panneaux solaires",
-      "link": "https://africanmanager.com/sfax-suivi-du-programme-dequipement-des-batiments-municipaux-en-panneaux-photovoltaiques/",
-      "published": "2026-09-19T06:23:52Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:7463d6586e646b51",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Tataouine : Raccordements aux réseaux publics",
-      "link": "https://africanmanager.com/tataouine-reunion-sur-les-autorisations-exceptionnelles-de-raccordement-aux-reseaux-publics/",
-      "published": "2026-09-19T06:20:14Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:a4150b7c6c119be3",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Guterres « regrette profondément » le refus de visa américain à Abbas pour l’AG de l’ONU",
-      "link": "https://africanmanager.com/guterres-regrette-profondement-le-refus-de-visa-americain-a-abbas-pour-lag-de-lonu/",
-      "published": "2026-09-19T05:45:09Z",
       "lang": "fr",
       "author": "African Manager"
     }
