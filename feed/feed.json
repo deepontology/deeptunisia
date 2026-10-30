@@ -3,6 +3,106 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:20dfcd3f5a6f6262",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "La FIJ lance une pétition pour la libération de Zied El-Heni",
+      "link": "https://kapitalis.com/tunisie/2026/10/30/la-fij-lance-une-petition-pour-la-liberation-de-zied-el-heni/",
+      "published": "2026-10-30T20:37:26Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:f1f6d6bbde7e43ee",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Trafic de drogue | Huit suspects arrêtés à Carthage",
+      "link": "https://kapitalis.com/tunisie/2026/10/30/trafic-de-drogue-huit-suspects-arretes-a-carthage/",
+      "published": "2026-10-30T20:09:26Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:da47b72e35933940",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Théâtre tunisien | La 4e édition des « Saisons de la Création » célèbre Mohamed Driss et Taoufik Jebali",
+      "link": "https://kapitalis.com/tunisie/2026/10/30/theatre-tunisien-la-4e-edition-des-saisons-de-la-creation-celebre-mohamed-driss-et-taoufik-jebali/",
+      "published": "2026-10-30T19:30:19Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:african-manager:bb93465d93ed9cd3",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Bourse de Tunis:Le Tunindex clôture la semaine boursière sur une note haussière",
+      "link": "https://africanmanager.com/bourse-de-tunisle-tunindex-cloture-la-semaine-boursiere-sur-une-note-haussiere/",
+      "published": "2026-10-30T17:20:35Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:7b85ef4cfc0b6144",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "CCITF-AFD : un partenariat renforcé au service des entreprises tunisiennes",
+      "link": "https://africanmanager.com/ccitf-afd-un-partenariat-renforce-au-service-des-entreprises-tunisiennes/",
+      "published": "2026-10-30T17:19:07Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:99b34cdcabd16cf5",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Le département des études de l’UGTT examine les défis du système éducatif et les réformes envisageables",
+      "link": "https://africanmanager.com/le-departement-des-etudes-de-lugtt-examine-les-defis-du-systeme-educatif-et-les-reformes-envisageables/",
+      "published": "2026-10-30T17:17:30Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:bb6cfd9716a59925",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Viandes rouges : Examen des mesures d’approvisionnement du marché et de reconstitution du cheptel",
+      "link": "https://africanmanager.com/viandes-rouges-examen-des-mesures-dapprovisionnement-du-marche-et-de-reconstitution-du-cheptel/",
+      "published": "2026-10-30T17:16:00Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:fbb5b1d8ceb0560d",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Tourisme : Les 5 préconisations de l’IACE",
+      "link": "https://africanmanager.com/tourisme-les-5-preconisations-de-liace/",
+      "published": "2026-10-30T15:36:00Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:8685345db2aedcc5",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Décote du cours mondial de l’orge fourragère : Une aubaine pour la Tunisie",
+      "link": "https://africanmanager.com/decote-du-cours-mondial-de-lorge-fourragere-une-aubaine-pour-la-tunisie/",
+      "published": "2026-10-30T15:35:35Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:31071833678d441f",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Tunisie–Sénégal : Vers le renforcement de la coopération et l’exploration de nouvelles opportunités d’investissement",
+      "link": "https://africanmanager.com/tunisie-senegal-vers-le-renforcement-de-la-cooperation-et-lexploration-de-nouvelles-opportunites-dinvestissement/",
+      "published": "2026-10-30T15:19:49Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
       "id": "feed:african-manager:1268d346527a17d4",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -11895,106 +11995,6 @@
       "published": "2026-09-20T11:28:03Z",
       "lang": "fr",
       "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:d9fe9ac1b6e7e718",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Dernier délai pour télédéclarer et les impôts en ligne",
-      "link": "https://africanmanager.com/demain-lundi-dernier-delai-pour-le-depot-de-la-teledeclaration-et-le-paiement-des-impots-en-ligne/",
-      "published": "2026-09-20T11:26:28Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:kapitalis:47b1b3d48fc9851a",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Colloque à Tunis | Les causes de l’infertilité et les moyens d’y remédier",
-      "link": "https://kapitalis.com/tunisie/2026/09/20/colloque-a-tunis-les-causes-de-linfertilite-et-les-moyens-dy-remedier/",
-      "published": "2026-09-20T11:23:28Z",
-      "lang": "fr",
-      "author": "webmaster kapitalis"
-    },
-    {
-      "id": "feed:african-manager:7df82fcafc6890f1",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Crise de l’eau en Tunisie : l’État ne bâtit plus seul, il orchestre",
-      "link": "https://africanmanager.com/crise-de-leau-en-tunisie-letat-ne-batit-plus-seul-il-orchestre/",
-      "published": "2026-09-20T11:04:43Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:kapitalis:360cf28fc1ec9ef5",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Tunisie | Les ventes automobiles en hausse de 14% à fin août 2026",
-      "link": "https://kapitalis.com/tunisie/2026/09/20/tunisie-les-ventes-automobiles-en-hausse-de-14-a-fin-aout-2026/",
-      "published": "2026-09-20T10:49:45Z",
-      "lang": "fr",
-      "author": "webmaster kapitalis"
-    },
-    {
-      "id": "feed:kapitalis:8fc6aa78deb0a880",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Interpol recourt à l’IA pour identifier des terroristes",
-      "link": "https://kapitalis.com/tunisie/2026/09/20/interpol-recourt-a-lia-pour-identifier-des-terroristes/",
-      "published": "2026-09-20T10:32:57Z",
-      "lang": "fr",
-      "author": "webmaster kapitalis"
-    },
-    {
-      "id": "feed:kapitalis:1f3ed4c6648fe396",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "La Tunisie reprend sa place dans les Guides Verts Michelin",
-      "link": "https://kapitalis.com/tunisie/2026/09/20/la-tunisie-reprend-sa-place-dans-les-guides-verts-michelin/",
-      "published": "2026-09-20T10:14:24Z",
-      "lang": "fr",
-      "author": "webmaster kapitalis"
-    },
-    {
-      "id": "feed:kapitalis:3b51c804bf33bb1d",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Colloque à Marseille | Habib Bourguiba, prisonnier au Fort Saint-Nicolas",
-      "link": "https://kapitalis.com/tunisie/2026/09/20/colloque-a-marseille-habib-bourguiba-prisonnier-au-fort-saint-nicolas/",
-      "published": "2026-09-20T09:15:57Z",
-      "lang": "fr",
-      "author": "webmaster kapitalis"
-    },
-    {
-      "id": "feed:kapitalis:9ce323c198775fbf",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "La protection du littoral de Bizerte cherche sa voie",
-      "link": "https://kapitalis.com/tunisie/2026/09/20/la-protection-du-littoral-de-bizerte-cherche-sa-voie/",
-      "published": "2026-09-20T08:35:44Z",
-      "lang": "fr",
-      "author": "webmaster kapitalis"
-    },
-    {
-      "id": "feed:nawaat:ee22ddb725d22e5f",
-      "outlet": "Nawaat",
-      "outletId": "nawaat",
-      "title": "Haythem Mekki: le prix exorbitant de la satire",
-      "link": "https://nawaat.org/2026/09/20/haythem-mekki-le-prix-exorbitant-de-la-satire/",
-      "published": "2026-09-20T08:30:00Z",
-      "lang": "fr",
-      "author": "Mahdi Jlassi"
-    },
-    {
-      "id": "feed:kapitalis:1aa853ee3653cea3",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "La création tunisienne à l’ère des imaginaires numériques",
-      "link": "https://kapitalis.com/tunisie/2026/09/20/la-creation-tunisienne-a-lere-des-imaginaires-numeriques/",
-      "published": "2026-09-20T07:43:19Z",
-      "lang": "fr",
-      "author": "webmaster kapitalis"
     }
   ]
 }
