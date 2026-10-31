@@ -3,6 +3,26 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:623baea1e1f7fe58",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Coupures d’eau à l’Ariana | Retour progressif de la distribution prévu dimanche à midi",
+      "link": "https://kapitalis.com/tunisie/2026/10/31/coupures-deau-a-lariana-retour-progressif-de-la-distribution-prevu-dimanche-a-midi/",
+      "published": "2026-10-31T22:19:04Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:a86d3ca4dbfc62a1",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Paris | La « Saison Méditerranée » s’achève sur une exposition dédiée au cinéma et au Maghreb",
+      "link": "https://kapitalis.com/tunisie/2026/10/31/paris-la-saison-mediterranee-sacheve-sur-une-exposition-dediee-au-cinema-et-au-maghreb/",
+      "published": "2026-10-31T21:25:06Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
       "id": "feed:kapitalis:7ae7be280e9c977c",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -11976,26 +11996,6 @@
       "published": "2026-09-21T11:28:15Z",
       "lang": "fr",
       "author": "African Manager"
-    },
-    {
-      "id": "feed:kapitalis:6cbe91cbc0cca7ef",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Ukraine | Poutine n’est pas isolé et joue la carte du temps long",
-      "link": "https://kapitalis.com/tunisie/2026/09/21/ukraine-poutine-nest-pas-isole-et-joue-la-carte-du-temps-long/",
-      "published": "2026-09-21T10:49:39Z",
-      "lang": "fr",
-      "author": "webmaster kapitalis"
-    },
-    {
-      "id": "feed:kapitalis:f5ea3074e3445e82",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "L’injustice infligée par la santé publique au Dr Jalel Taktak",
-      "link": "https://kapitalis.com/tunisie/2026/09/21/linjustice-infligee-par-la-sante-publique-au-dr-jalel-taktak/",
-      "published": "2026-09-21T09:56:53Z",
-      "lang": "fr",
-      "author": "webmaster kapitalis"
     }
   ]
 }
