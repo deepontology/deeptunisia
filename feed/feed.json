@@ -3,6 +3,116 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:african-manager:2a9324635f75076a",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Les pharmacies d’officine suspendent le dispositif du tiers payant",
+      "link": "https://africanmanager.com/les-pharmacies-dofficine-suspendent-le-dispositif-du-tiers-payant/",
+      "published": "2026-10-30T23:46:00Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:33e01f33f21f3cbf",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Les USA approuvent la vente de missiles Patriot à l’Ukraine pour un montant de 2,1 milliards $",
+      "link": "https://africanmanager.com/les-usa-approuvent-la-vente-de-missiles-patriot-a-lukraine-pour-un-montant-de-21-milliards/",
+      "published": "2026-10-30T23:44:27Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:90ab5e5a8cea0529",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Hegseth sous pression bipartisane pour démissionner en raison de la guerre contre l’Iran",
+      "link": "https://africanmanager.com/hegseth-sous-pression-bipartisane-pour-demissionner-en-raison-de-la-guerre-contre-liran/",
+      "published": "2026-10-30T23:43:35Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:b060b7ba6ce21a8e",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Les Houthis ont ciblé le palais présidentiel et l’aéroport international d’Aden",
+      "link": "https://africanmanager.com/les-houthis-ont-cible-le-palais-presidentiel-et-laeroport-international-daden/",
+      "published": "2026-10-30T23:42:28Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:fae6e8da4ae57b9b",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Le Brent à 118 dollars le baril sur fond de craintes de nouvelles attaques US contre l’Iran",
+      "link": "https://africanmanager.com/le-brent-a-118-dollars-le-baril-sur-fond-de-craintes-de-nouvelles-attaques-us-contre-liran/",
+      "published": "2026-10-30T23:40:54Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:c1cfd0c9076437f1",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Israël : L’opposition remplacera le président de la Knesset dès le premier jour de la session parlementaire",
+      "link": "https://africanmanager.com/israel-lopposition-remplacera-le-president-de-la-knesset-des-le-premier-jour-de-la-session-parlementaire/",
+      "published": "2026-10-30T23:40:14Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:5fd6af84c36d9b04",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Le Pakistan « prudemment optimiste » quant à une médiation entre l’Iran et les États-Unis",
+      "link": "https://africanmanager.com/le-pakistan-prudemment-optimiste-quant-a-une-mediation-entre-liran-et-les-etats-unis/",
+      "published": "2026-10-30T23:36:43Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:8610c67a3ad4e770",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Trump affirme que l’Iran souhaite dialoguer",
+      "link": "https://africanmanager.com/trump-affirme-que-liran-souhaite-dialoguer/",
+      "published": "2026-10-30T23:35:35Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:kapitalis:e320ecdf7a32ef6a",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "La Marsa | Les foulées du Mégara font leur grand retour en mars 2027",
+      "link": "https://kapitalis.com/tunisie/2026/10/31/la-marsa-les-foulees-du-megara-font-leur-grand-retour-en-mars-2027/",
+      "published": "2026-10-30T23:06:19Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:a4a9ed380e03c073",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Tunisiens et Canadiens réunis à Gammarth pour penser l’éducation de demain",
+      "link": "https://kapitalis.com/tunisie/2026/10/30/tunisiens-et-canadiens-reunis-a-gammarth-pour-penser-leducation-de-demain/",
+      "published": "2026-10-30T22:38:04Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:dcc48f2ec3eed730",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Tounes Clean up | Opération de nettoyage au centre historique du Kef",
+      "link": "https://kapitalis.com/tunisie/2026/10/30/tounes-clean-up-operation-de-nettoyage-au-centre-historique-du-kef/",
+      "published": "2026-10-30T22:27:38Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
       "id": "feed:kapitalis:20dfcd3f5a6f6262",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -11886,115 +11996,6 @@
       "published": "2026-09-21T06:55:39Z",
       "lang": "fr",
       "author": "webmaster kapitalis"
-    },
-    {
-      "id": "feed:kapitalis:37205cdaca5ae819",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Sid Ahmed Agoumi | Une figure du cinéma algérien s’éteint",
-      "link": "https://kapitalis.com/tunisie/2026/09/21/sid-ahmed-agoumi-une-figure-du-cinema-algerien-seteint/",
-      "published": "2026-09-21T06:23:43Z",
-      "lang": "fr",
-      "author": "webmaster kapitalis"
-    },
-    {
-      "id": "feed:nawaat:3d99b48764b29fc8",
-      "outlet": "Nawaat",
-      "outletId": "nawaat",
-      "title": "Migration: Tunisians continue to leave, despite growing death toll and tighter controls",
-      "link": "https://nawaat.org/2026/09/20/migration-tunisians-continue-to-leave-despite-growing-death-toll-and-tighter-controls/",
-      "published": "2026-09-20T19:00:00Z",
-      "lang": "en",
-      "author": "Rihab Boukhayatia"
-    },
-    {
-      "id": "feed:al-jazeera:59ef01db2110d9e3",
-      "outlet": "Al Jazeera",
-      "outletId": "al-jazeera",
-      "title": "Hundreds protest in Tunisia for release of jailed Gaza flotilla activists",
-      "link": "https://www.aljazeera.com/video/newsfeed/2026/9/20/hundreds-protest-in-tunisia-for-release-of-jailed-gaza-flotilla-activists?traffic_source=rss",
-      "published": "2026-09-20T14:38:01Z",
-      "lang": "en"
-    },
-    {
-      "id": "feed:african-manager:f168ab9f17f9a409",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Monoprix : Un bénéfice qui vient des filiales, pas des rayons",
-      "link": "https://africanmanager.com/monoprix-un-benefice-qui-vient-des-filiales-pas-des-rayons/",
-      "published": "2026-09-20T13:46:05Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:d1c906814a3c34b3",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "L’Ukraine frappe une raffinerie de pétrole lors d’une attaque massive de drones à Moscou",
-      "link": "https://africanmanager.com/lukraine-frappe-une-raffinerie-de-petrole-lors-dune-attaque-massive-de-drones-a-moscou/",
-      "published": "2026-09-20T13:40:48Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:1e4c055c56883738",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Tunisie : L’Italie n’arrive plus, elle s’enracine",
-      "link": "https://africanmanager.com/tunisie-litalie-narrive-plus-elle-senracine/",
-      "published": "2026-09-20T13:30:00Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:2cdd65eb22bf6c43",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Céréales en Tunisie : Le progrès est réel, l’ordre de grandeur reste dérisoire",
-      "link": "https://africanmanager.com/cereales-en-tunisie-le-progres-est-reel-lordre-de-grandeur-reste-derisoire/",
-      "published": "2026-09-20T12:58:33Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:kapitalis:df90177fd8af2d18",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Tunis | Arrestation de l’agresseur des deux élèves à La Cagna",
-      "link": "https://kapitalis.com/tunisie/2026/09/20/tunis-arrestation-de-lagresseur-des-deux-eleves-a-la-cagna/",
-      "published": "2026-09-20T11:59:06Z",
-      "lang": "fr",
-      "author": "webmaster kapitalis"
-    },
-    {
-      "id": "feed:african-manager:80b691217ae6285d",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Réorganiser le tourisme intérieur et lutter contre les intrus",
-      "link": "https://africanmanager.com/vers-la-creation-dun-comite-mixte-pour-reorganiser-le-tourisme-interieur-et-lutter-contre-les-intrus/",
-      "published": "2026-09-20T11:47:15Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:8afc3cd42352c0d9",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "L’Iran informé que les États-Unis prévoient de reprendre leurs frappes",
-      "link": "https://africanmanager.com/liran-informe-que-les-etats-unis-prevoient-de-reprendre-leurs-frappes/",
-      "published": "2026-09-20T11:29:04Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:cd1c58be578d0b05",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "69.982 véhicules auto commercialisés à fin août 2026",
-      "link": "https://africanmanager.com/marche-automobile-69-982-vehicules-commercialises-a-fin-aout-2026/",
-      "published": "2026-09-20T11:28:03Z",
-      "lang": "fr",
-      "author": "African Manager"
     }
   ]
 }
