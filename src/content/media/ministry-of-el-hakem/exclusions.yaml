@@ -1,0 +1,56 @@
+# Statements in the film that this article leaves out, and why.
+
+exclusions:
+- claim: Yahyaoui was promoted to general in November 2021
+  reason: Not found in any source opened for this piece. Business News (2021) and Webdo (2019) call him
+    colonel major.
+  grade: unsubstantiated
+  sources:
+  - Uncited
+  category: unsourced
+- claim: Seriati's sentence on appeal was reduced to failing to assist a person in danger
+  reason: The sentence reduction to three years is sourced (Kapitalis). The wording of the reduced charge
+    is not in the source files.
+  grade: unsubstantiated
+  sources:
+  - Uncited
+  category: unsourced
+- claim: Kallel's torture charges were dropped by military prosecutors for non-retroactivity
+  reason: Not in the source files. The four-year and two-year sentences are sourced and kept.
+  grade: unsubstantiated
+  sources:
+  - Uncited
+  category: unsourced
+- claim: Ben Chouchane was charged under Articles 67 and 72 of the penal code
+  reason: Only Article 24 of Decree-Law 54 is sourced (Human Rights Watch, 8 Oct 2025). Articles 67 and
+    72 as named on air are not in the source files.
+  grade: unsubstantiated
+  sources:
+  - Uncited
+  category: unsourced
+- claim: Summer 2026 brought record heat and power cuts
+  reason: The AFP report on prisoner deaths from heat is sourced. Record heat and power cuts are not in
+    the source files.
+  grade: unsubstantiated
+  sources:
+  - Uncited
+  category: unsourced
+- claim: The second raid on the Maison de l'Avocat took place on 13 May 2024
+  reason: The date is not in the source files. The raid itself is reported.
+  grade: unsubstantiated
+  sources:
+  - Uncited
+  category: unsourced
+- claim: The returned letter carried a red stamp reading 'no address'
+  reason: Sources say it came back marked 'no address'. None mentions a stamp.
+  grade: reported
+  sources:
+  - Uncited
+  category: wording
+- claim: The post of chief of staff of the armed forces stood vacant for nineteen years
+  reason: Not carried into the final film and not asserted here. Our dataset records no appointment after
+    1991 but cannot establish the length of the vacancy.
+  grade: unsubstantiated
+  sources:
+  - Uncited
+  category: unsourced
