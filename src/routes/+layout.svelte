@@ -229,9 +229,11 @@ import { tour, tourSeen } from '$lib/shell/tour.svelte';
 			if (e.key === ' ') {
 				e.preventDefault();
 				app.playing = !app.playing;
-			} else if (e.key === 'ArrowLeft') {
+			} else if (e.key === 'ArrowLeft' && !e.defaultPrevented) {
+				// The date slider handles its own arrows and prevents the default;
+				// without this check a focused slider stepped the date twice.
 				app.nudge(e.shiftKey ? -5 : -1);
-			} else if (e.key === 'ArrowRight') {
+			} else if (e.key === 'ArrowRight' && !e.defaultPrevented) {
 				app.nudge(e.shiftKey ? 5 : 1);
 			}
 		}

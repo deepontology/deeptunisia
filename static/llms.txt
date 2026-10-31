@@ -33,17 +33,17 @@ span as a date, or an unsubstantiated claim as a finding, misrepresents the sour
 
 ## Known limits, stated by the project
 
-- <!--stat:reviewed-->52<!--/stat--> of <!--stat:reviewable-->1794<!--/stat-->
+- <!--stat:reviewed-->52<!--/stat--> of <!--stat:reviewable-->8308<!--/stat-->
   records carry an editorial review note; independent human verification is
   <!--stat:independent-->0<!--/stat-->.
-- <!--stat:needsPrimarySource-->232<!--/stat--> records await a primary source.
+- <!--stat:needsPrimarySource-->233<!--/stat--> records await a primary source.
 - Defence intelligence (ANRSD) has no primary sourcing at all: statute, appointment
   date and current status are unestablished.
 - The pre-2011 police chronology rests largely on secondary sources.
 - The 2014-2019 police succession does not fit its dated endpoints; recorded as an
   unresolved contradiction rather than smoothed over.
-- <!--stat:successionGaps-->43<!--/stat--> succession gaps and
-  <!--stat:successionOverlaps-->2<!--/stat--> overlapping tenures are detected and
+- <!--stat:successionGaps-->118<!--/stat--> succession gaps and
+  <!--stat:successionOverlaps-->48<!--/stat--> overlapping tenures are detected and
   published; <!--stat:contradictions-->69<!--/stat--> source contradictions are
   recorded unresolved.
 

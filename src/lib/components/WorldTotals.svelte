@@ -41,6 +41,25 @@
 	import Content from '$lib/ui/Content.svelte';
 	import Tooltip from '$lib/ui/Tooltip.svelte';
 	import { sheetDrag, type SheetDragParams } from '$lib/ui/sheet-drag';
+	import type { WorldFamily } from '$lib/world/store.svelte';
+
+	/*
+	 * WHY ONE LINE, ORDERED BY FAMILY
+	 *
+	 * The strip used to be a band of eight cards above the globe, which on a
+	 * phone spent a quarter of the screen before the view began (DESIGN.md §5).
+	 * It is one line of figures in the view's toolbar now, the same shape as the
+	 * Network's counts. Every figure is still there; the family the globe is
+	 * drawing decides which come first, so the numbers in reach are the ones the
+	 * arcs are about. On a narrow screen the line scrolls sideways.
+	 */
+	let { family = 'trade' }: { family?: WorldFamily } = $props();
+
+	const ORDER: Record<WorldFamily, string[]> = {
+		trade: ['exports', 'imports', 'balance', 'reserves', 'debt', 'service', 'remittances-received', 'remittances-paid'],
+		energy: ['imports', 'exports', 'balance', 'reserves', 'debt', 'service', 'remittances-received', 'remittances-paid'],
+		debt: ['debt', 'service', 'reserves', 'remittances-received', 'remittances-paid', 'exports', 'imports', 'balance']
+	};
 
 	const year = $derived(new Date(app.t).getUTCFullYear());
 
@@ -209,29 +228,36 @@ const figures = $derived.by<Figure[]>(() => {
 			}
 		];
 	});
+
+	const ordered = $derived(
+		ORDER[family].map((k) => figures.find((f) => f.key === k)).filter((f): f is Figure => !!f)
+	);
 </script>
 
 <div class="totals" aria-label={t('world.strip.title')}>
-	<div class="year mono" aria-hidden="true">{year}</div>
-	<dl class="grid">
-		{#each figures as f (f.key)}
+	<span class="year mono">{year}</span>
+	<dl class="line">
+		{#each ordered as f (f.key)}
 			<div class="fig">
 				<dt>
-					{f.label}
+					<!-- The label is the door to the explainer: a word to tap, not a
+					     separate "explain" control under every number. -->
+					<button
+						class="why-btn"
+						onclick={() => (openExplain = openExplain === f.key ? null : f.key)}
+						aria-expanded={openExplain === f.key}
+						aria-controls={'explain-' + f.key}
+						title={t('world.strip.explain')}
+					>
+						{f.label}
+					</button>
 					{#if f.sumof}
 						<Tooltip content={t('world.strip.sumof')}><span class="mark mono" aria-label={t('world.strip.sumof')}>Σ</span></Tooltip>
 					{/if}
 				</dt>
 				<dd class="mono">
-					{moneyM(f.value, app.locale)}
-					<span class="unit">{f.value !== null ? t('world.usd') : ''}</span>
+					{moneyM(f.value, app.locale)}{#if f.value !== null}<span class="unit">{t('world.usd')}</span>{/if}
 				</dd>
-				{#if f.sub}<dd class="sub">{f.sub}</dd>{/if}
-				<div class="why">
-					<button class="why-btn" onclick={() => (openExplain = openExplain === f.key ? null : f.key)} aria-expanded={openExplain === f.key} aria-controls={"explain-" + f.key}>
-						{t('world.strip.explain')}
-					</button>
-				</div>
 			</div>
 		{/each}
 	</dl>
@@ -266,6 +292,11 @@ const figures = $derived.by<Figure[]>(() => {
 			<span class="sheet-handle" aria-hidden="true"><i class="sheet-grip"></i></span>
 			<button class="explain-close" onclick={() => (openExplain = null)} aria-label={t('world.strip.explain') + ' — close'}>×</button>
 			<div id={"explain-" + active.key} class="why-pop sheet-scroll">
+				<p class="pop-head">
+					<span class="pop-label">{active.label}</span>
+					<span class="mono">{moneyM(active.value, app.locale)} {active.value !== null ? t('world.usd') : ''}</span>
+					{#if active.sub}<span class="pop-sub">{active.sub}</span>{/if}
+				</p>
 				<Content view="world" section={active.explain} compact />
 			</div>
 		</div>
@@ -275,73 +306,56 @@ const figures = $derived.by<Figure[]>(() => {
 <style>
 	.totals {
 		display: flex;
-		align-items: flex-start;
+		align-items: baseline;
 		gap: var(--s-4);
-		padding: var(--s-4) var(--s-5);
-		border-bottom: 1px solid var(--border-subtle);
-		background: var(--surface-base);
+		min-width: 0;
 	}
 	.year {
-		font-size: var(--t-sm);
-		color: var(--text-faint);
-		padding-top: var(--s-1);
+		font-size: var(--t-xs);
+		font-weight: 600;
+		color: var(--text-primary);
 		flex: none;
 	}
-	.grid {
+	.line {
 		display: flex;
-		gap: var(--s-3);
-		flex: 1;
+		align-items: baseline;
+		gap: var(--s-5);
+		min-width: 0;
 		overflow-x: auto;
-		scroll-snap-type: x proximity;
-		scrollbar-width: thin;
-		scrollbar-color: var(--border-default) transparent;
-		/* Trailing fade advertises that the strip scrolls; clipped without it at 1280px. */
-		mask-image: linear-gradient(to right, black calc(100% - 28px), transparent 100%);
-		-webkit-mask-image: linear-gradient(to right, black calc(100% - 28px), transparent 100%);
+		scrollbar-width: none;
+		/* The trailing fade says the line goes on. */
+		mask-image: linear-gradient(to right, black calc(100% - 24px), transparent 100%);
+		-webkit-mask-image: linear-gradient(to right, black calc(100% - 24px), transparent 100%);
+	}
+	.line::-webkit-scrollbar {
+		display: none;
+	}
+	:global([dir='rtl']) .line {
+		mask-image: linear-gradient(to left, black calc(100% - 24px), transparent 100%);
+		-webkit-mask-image: linear-gradient(to left, black calc(100% - 24px), transparent 100%);
 	}
 	.fig {
-		position: relative;
-		flex: 1 0 160px;
-		min-width: 160px;
-		scroll-snap-align: start;
-		padding: var(--s-2) var(--s-3);
-		border-inline-start: 1px solid var(--border-subtle);
-	}
-	:global([dir='rtl']) .grid {
-		mask-image: linear-gradient(to left, black calc(100% - 28px), transparent 100%);
-		-webkit-mask-image: linear-gradient(to left, black calc(100% - 28px), transparent 100%);
-	}
-	@media (max-width: 900px) {
-		.fig {
-			flex: 0 0 160px;
-			min-width: 160px;
-		}
+		display: flex;
+		align-items: baseline;
+		gap: var(--s-2);
+		flex: none;
+		white-space: nowrap;
 	}
 	.fig dt {
 		display: flex;
-		align-items: center;
-		gap: var(--s-2);
-		font-size: var(--t-2xs);
-		letter-spacing: var(--track-wide);
-		text-transform: uppercase;
-		color: var(--text-muted);
+		align-items: baseline;
+		gap: var(--s-1);
 	}
 	.fig dd {
-		font-size: var(--t-lg);
-		font-weight: 520;
+		margin: 0;
+		font-size: var(--t-xs);
+		font-variant-numeric: tabular-nums;
 		color: var(--text-primary);
-		margin-top: 2px;
 	}
 	.fig .unit {
 		font-size: var(--t-2xs);
 		color: var(--text-faint);
 		margin-inline-start: var(--s-1);
-		font-weight: 400;
-	}
-	.fig .sub {
-		font-size: var(--t-2xs);
-		color: var(--text-faint);
-		margin-top: 1px;
 	}
 	.mark {
 		font-size: var(--t-2xs);
@@ -350,29 +364,40 @@ const figures = $derived.by<Figure[]>(() => {
 		border-radius: var(--r-full);
 		padding: 0 4px;
 	}
-	.why {
-		position: relative;
-		margin-top: var(--s-2);
-		font-size: var(--t-2xs);
-	}
 	.why-btn {
-		color: var(--text-faint);
-		cursor: pointer;
-		list-style: none;
-		display: inline-flex;
-		align-items: center;
-		gap: var(--s-1);
+		font-size: var(--t-2xs);
+		letter-spacing: var(--track-wide);
+		text-transform: uppercase;
+		color: var(--text-muted);
+		cursor: help;
 		background: none;
 		border: none;
 		padding: 0;
-		font: inherit;
+		border-bottom: 1px dotted var(--border-strong);
 	}
-	.why-btn::after {
-		content: '+';
-		margin-inline-start: 2px;
+	.why-btn:hover,
+	.why-btn[aria-expanded='true'] {
+		color: var(--text-primary);
+		border-bottom-color: var(--accent);
 	}
-	.why-btn[aria-expanded='true']::after {
-		content: '−';
+	.pop-head {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: var(--s-1) var(--s-3);
+		margin-bottom: var(--s-4);
+		padding-inline-end: var(--s-8);
+	}
+	.pop-label {
+		font-size: var(--t-2xs);
+		letter-spacing: var(--track-wide);
+		text-transform: uppercase;
+		color: var(--text-muted);
+	}
+	.pop-sub {
+		width: 100%;
+		font-size: var(--t-2xs);
+		color: var(--text-faint);
 	}
 	.why-pop {
 		max-width: 42ch;

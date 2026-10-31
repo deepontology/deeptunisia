@@ -45,9 +45,9 @@ halves of the dev loop as `beta` so the Agora tab is reachable during
 development; a reader on deeptunisia.org never touches it. The mode contract is
 `docs/agora-deployment.md`.
 
-The complete graph is <!--stat:graphKB-->5070<!--/stat--> KB as the internal
+The complete graph is <!--stat:graphKB-->12780<!--/stat--> KB as the internal
 bundle, and the public exports (dataset, CSVs, geographic layers, changelog)
-ship at <!--stat:shippedKB-->8950<!--/stat--> KB — both are computed by the
+ship at <!--stat:shippedKB-->23210<!--/stat--> KB — both are computed by the
 build, and `npm run test` fails if the README ever disagrees with them.
 
 ## Reproducibility
@@ -141,7 +141,7 @@ Six decisions carry most of the weight:
 
 **Basis describes the claim, not its dates.** A position bundles two separable claims — "X held this post" and "between these dates" — which routinely have different standing. A security chief whose office is well reported but whose start date nobody published is a *reported* officeholding with an *inferred* span. `datesInferred` is a separate flag so imprecise dating never looks like speculation.
 
-**Successions are derived, not asserted.** Computed from the position records, so a hole shows up as a hole: currently **<!--stat:successionGaps-->43<!--/stat--> gaps** and **<!--stat:successionOverlaps-->2<!--/stat--> overlapping tenures**, all published.
+**Successions are derived, not asserted.** Computed from the position records, so a hole shows up as a hole: currently **<!--stat:successionGaps-->118<!--/stat--> gaps** and **<!--stat:successionOverlaps-->48<!--/stat--> overlapping tenures**, all published.
 
 **Change is a record too.** The dataset is plain text under version control, so every factual change is a dated, attributable diff. `/corrections` publishes that history — generated, not curated, so nobody decides which changes are flattering enough to appear.
 
@@ -189,15 +189,15 @@ This is not neutrality for its own sake — it is the project's only real protec
 
 ## Known limits
 
-- **<!--stat:reviewed-->52<!--/stat--> of <!--stat:reviewable-->1794<!--/stat--> records carry an editorial review note, and independent human verification is <!--stat:independent-->0<!--/stat-->.** The stated architecture is that machines propose and humans verify; almost nothing has been through a second pair of eyes. The real numbers are published on `/about` because that is the only way the commitment means anything.
+- **<!--stat:reviewed-->52<!--/stat--> of <!--stat:reviewable-->8308<!--/stat--> records carry an editorial review note, and independent human verification is <!--stat:independent-->0<!--/stat-->.** The stated architecture is that machines propose and humans verify; almost nothing has been through a second pair of eyes. The real numbers are published on `/about` because that is the only way the commitment means anything.
 - **Defence intelligence (ANRSD) has no primary sourcing at all** — statute, appointment date, current status all unestablished. Largest hole in the security map.
 - **Pre-2011 police chronology is the weakest area**, resting largely on secondary sources.
 - **The 2014–2019 police succession does not fit its endpoints.** Three reported tenures cannot fit between two firmly dated ones; recorded as an unresolved contradiction rather than smoothed over.
 - **`<=` bounds use an 8-year window.** Stated modelling assumption, not a fact.
 - **UI is translated for chrome only.** Arabic, French and English navigation, controls and labels, with RTL. Entity names are trilingual in the data and all three are searchable. Long-form analytical prose is deliberately *not* machine-translated — a machine-translated epistemology page would undermine the point.
-- **<!--stat:needsPrimarySource-->232<!--/stat--> records await a primary source.** Listed in full on `/evidence`.
-- **Human review is not merely thin, it is not independent.** Independent checks stand at <!--stat:independent-->0<!--/stat--> in every category, and the editorial notes that do exist are unevenly spread: <!--stat:reviewed-unsubstantiated-->18<!--/stat--> of <!--stat:reviewable-unsubstantiated-->21<!--/stat--> unsubstantiated claims, <!--stat:reviewed-attributed-->25<!--/stat--> of <!--stat:reviewable-attributed-->347<!--/stat--> that name a source and <!--stat:reviewed-inferred-->2<!--/stat--> of <!--stat:reviewable-inferred-->67<!--/stat--> inferences carry one. The breakdown is on `/about`.
-- **<!--stat:sourcesUncited-->50<!--/stat--> of <!--stat:sources-->1405<!--/stat--> sources back no claim.** Staged reading, kept in the file but excluded from the published count of <!--stat:sourcesCited-->1355<!--/stat--> — a bibliography entry that holds nothing up is not evidence.
+- **<!--stat:needsPrimarySource-->233<!--/stat--> records await a primary source.** Listed in full on `/evidence`.
+- **Human review is not merely thin, it is not independent.** Independent checks stand at <!--stat:independent-->0<!--/stat--> in every category, and the editorial notes that do exist are unevenly spread: <!--stat:reviewed-unsubstantiated-->18<!--/stat--> of <!--stat:reviewable-unsubstantiated-->22<!--/stat--> unsubstantiated claims, <!--stat:reviewed-attributed-->25<!--/stat--> of <!--stat:reviewable-attributed-->3280<!--/stat--> that name a source and <!--stat:reviewed-inferred-->2<!--/stat--> of <!--stat:reviewable-inferred-->67<!--/stat--> inferences carry one. The breakdown is on `/about`.
+- **<!--stat:sourcesUncited-->64<!--/stat--> of <!--stat:sources-->1689<!--/stat--> sources back no claim.** Staged reading, kept in the file but excluded from the published count of <!--stat:sourcesCited-->1625<!--/stat--> — a bibliography entry that holds nothing up is not evidence.
 
 ## Deliberately not built yet
 

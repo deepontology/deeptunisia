@@ -235,8 +235,30 @@ const CHECKS: Check[] = [
 		expect: [
 			['.worldpage', 1],
 			['.totals', 1],
-			['.viewbar', 1],
+			['.toolbar', 1],
 			['.world', 1]
+		]
+	},
+	{
+		path: '/world?view=parliament',
+		name: 'world-parliament',
+		expect: [
+			['.parliament', 1],
+			['.chamber', 1],
+			['.terms', 1]
+		]
+	},
+	{
+		path: '/world?view=government',
+		name: 'world-government',
+		expect: [
+			['.government', 1],
+			['.slot', 3],
+			// Every post carries the basis of the claim that fills it, and the key
+			// names the vocabulary. Without this, a reported or unsubstantiated
+			// holder draws exactly like a documented one.
+			['.slot[data-basis]', 1],
+			['.basis-key', 1]
 		]
 	},
 	{
@@ -286,12 +308,12 @@ const CHECKS: Check[] = [
 		path: '/map',
 		name: 'map',
 		expect: [
-			// The map shell renders immediately; the basemap and governorates arrive
-			// with the client-side fetch. A hydrated map shows at least the 24
-			// governorate polygons and the table alternative.
-			['.map-view', 1],
-			['.canvas', 1],
-			['.table-alt', 1]
+			// The governorate map is the world view at country scale now. This route
+			// stays for old links and forwards into it, so the landing is the world
+			// toolbar and stage, not a separate map shell.
+			['.worldpage', 1],
+			['.toolbar', 1],
+			['.stage', 1]
 		]
 	},
 	// The three currency tiers must all render. Merging them would be the page's one
@@ -364,7 +386,8 @@ const CHECKS: Check[] = [
 		name: 'guide',
 		expect: [
 			['.page-head h1', 1],
-			['table.views tbody tr', 16],
+			// World and map are one view now, so the list is one row shorter.
+			['table.views tbody tr', 15],
 			['.bases .base', 4],
 			['a.help', 1],
 			['a.help[href="/guide"]', 1]
@@ -419,6 +442,20 @@ const CHECKS: Check[] = [
 
 /** Noise we accept: browser-level requests we do not control. */
 function isIgnorable(text: string) {
+	/*
+	 * The 3D chamber falls back to software WebGL in a headless browser, and the
+	 * driver says so on the console. Those lines describe the test machine, not
+	 * the page: a real GPU does not emit them, and silencing them here would be
+	 * wrong for any other warning. Scoped to the three messages Chromium emits
+	 * for this fallback.
+	 */
+	if (
+		text.includes('Automatic fallback to software WebGL') ||
+		text.includes('GPU stall due to ReadPixels') ||
+		text.includes('GroupMarkerNotSet')
+	) {
+		return true;
+	}
 	return text.includes('favicon') || text.includes('Download the React DevTools');
 }
 
@@ -471,9 +508,16 @@ async function settle(page: Page) {
 
 const failures: string[] = [];
 let checksRun = 0;
+/**
+ * The last check that ran. A section that throws ends the run at that check, so
+ * the abort line names where it stopped instead of leaving the reader to guess
+ * which sections never executed.
+ */
+let lastCheck = '';
 
 function ok(name: string, pass: boolean, detail = '') {
 	checksRun++;
+	lastCheck = name;
 	if (pass) console.log(`  ok    ${name}${detail ? ` — ${detail}` : ''}`);
 	else {
 		failures.push(name);
@@ -492,6 +536,15 @@ const browser = await chromium.launch(
 		? { executablePath: process.env.SMOKE_CHROMIUM }
 		: undefined,
 );
+
+/*
+ * Everything after the browser launch runs inside one guard. A thrown timeout
+ * used to kill the process before the summary, so the checks after the throw
+ * never ran and nothing said so: a run could end at the chronicle section and
+ * still look like a short list of unrelated failures. Now the abort is recorded
+ * as a failure, the summary still prints, and the last check names the place.
+ */
+try {
 
 if (runSection('theme matrix')) for (const themeName of ['dark', 'light'] as const) {
 	console.log(`\n  ── ${themeName} ──`);
@@ -516,6 +569,10 @@ if (runSection('theme matrix')) for (const themeName of ['dark', 'light'] as con
 		});
 		page.on('pageerror', (e) => problems.push(`[pageerror] ${e.message}`));
 		page.on('requestfailed', (r) => {
+			// A request the page itself cancelled is not a missing file. The /map
+			// route forwards into the world view on mount, and the router drops the
+			// imports it had started; the reader only ever sees the world view.
+			if (r.failure()?.errorText === 'net::ERR_ABORTED') return;
 			if (!isIgnorable(r.url())) problems.push(`[404] ${r.url()}`);
 		});
 
@@ -2484,11 +2541,10 @@ console.log('\n  ── deep-link round trips ──');
 	}
 
 	/*
-	 * The Map's selection is local to TunisiaMap and arrives with the async geo
-	 * payload, so the card and the selected highlight can only appear after
-	 * /geo.json + /tn-adm.geojson resolve. gov-tunis is a real governorate id
-	 * from the build's geo.json, and the contract is that ?region= stays in the
-	 * URL — the selection is supposed to BE the URL, not merely be shown.
+	 * The governorate map is the world view at country scale now, so this route
+	 * forwards instead of rendering its own shell. The contract is that an old
+	 * link still lands on the unified view; the region parameter is asserted
+	 * separately in the world section, where the URL contract is pinned.
 	 */
 	{
 		const page = await context.newPage();
@@ -2496,19 +2552,97 @@ console.log('\n  ── deep-link round trips ──');
 		await settle(page);
 		await page.waitForTimeout(2000);
 		ok(
-			'deep-link /map?region=gov-tunis renders the selected governorate',
-			(await page.locator('path.selected').count()) === 1 &&
-				(await page.locator('.gov-card').count()) === 1
+			'deep-link /map forwards into the world view',
+			/\/world/.test(page.url()) && (await page.locator('.worldpage').count()) === 1,
+			page.url().replace(BASE, '')
 		);
 		ok(
-			'deep-link /map?region=gov-tunis names it in the card',
-			((await page.locator('.gov-card h2').innerText()) || '').includes('Tunis'),
-			await page.locator('.gov-card h2').innerText()
+			'deep-link /map keeps the toolbar',
+			(await page.locator('.toolbar').count()) === 1
 		);
 		ok(
-			'deep-link /map?region=gov-tunis keeps the region in the URL',
+			'deep-link /map keeps the region in the URL',
 			page.url().includes('region=gov-tunis'),
 			page.url().replace(BASE, '')
+		);
+		ok(
+			'deep-link /map names the governorate in the trail',
+			(await page.locator('.trail').innerText()).includes('Tunis')
+		);
+		await page.close();
+	}
+
+	/*
+	 * The globe's own routes in and out: a pill straight into the government, and
+	 * a step-back that climbs one scale at a time until the world is whole.
+	 */
+	{
+		const page = await context.newPage();
+		await page.goto(BASE + '/world', { waitUntil: 'networkidle', timeout: 30_000 });
+		await settle(page);
+		await page.waitForTimeout(1500);
+		await page.locator('.dives .dive').nth(2).click();
+		await page.waitForTimeout(1800);
+		ok('the globe offers a government pill and it opens the lens', (await page.locator('.government').count()) === 1);
+		await page.locator('.step-back').click();
+		await page.waitForTimeout(1400);
+		ok(
+			'the step-back returns to the country map',
+			(await page.locator('.toolbar.inside').count()) === 1 && (await page.locator('.government').count()) === 0
+		);
+		await page.locator('.step-back').click();
+		await page.waitForTimeout(1600);
+		ok(
+			'and again to the world, where the pills return',
+			(await page.locator('.toolbar.inside').count()) === 0 && (await page.locator('.dives').count()) === 1
+		);
+		await page.close();
+	}
+
+	/*
+	 * The lens switch is a click path, not a URL load. The read-back effect once
+	 * subscribed to the view it was writing, so every click on Parliament or
+	 * Government was overwritten with the globe a moment later. Load the map,
+	 * click through, and assert that the lens and the URL both moved.
+	 */
+	{
+		const page = await context.newPage();
+		await page.goto(BASE + '/world?at=tunisia', { waitUntil: 'networkidle', timeout: 30_000 });
+		await settle(page);
+		await page.waitForTimeout(1500);
+		await page.getByRole('radio', { name: /parliament/i }).first().click();
+		await page.waitForTimeout(1800);
+		ok('a lens click opens the parliament', (await page.locator('.parliament').count()) === 1);
+		ok('a lens click writes the lens to the URL', page.url().includes('view=parliament'), page.url().replace(BASE, ''));
+		await page.getByRole('radio', { name: /government/i }).first().click();
+		await page.waitForTimeout(1800);
+		ok('a second lens click opens the government', (await page.locator('.government').count()) === 1);
+		await page.close();
+	}
+
+	/*
+	 * A dated civic link has to open on that date, and a claim the record itself
+	 * grades unsubstantiated has to sit below the default floor rather than draw
+	 * as a holder. 15 February 2011 has one: the interior minister of the time.
+	 */
+	{
+		const page = await context.newPage();
+		await page.goto(BASE + '/world?view=government&t=2011-02-15', {
+			waitUntil: 'networkidle',
+			timeout: 30_000
+		});
+		await settle(page);
+		await page.waitForTimeout(1500);
+		const dateLine = (await page.locator('.head .mono').first().innerText()) || '';
+		ok('a dated government link opens on its date', dateLine.includes('2011'), dateLine.replace(/\n/g, ' '));
+		ok(
+			'an unsubstantiated post waits below the default floor',
+			(await page.locator('.slot.below').count()) >= 1
+		);
+		ok(
+			'and the tree names the floor on it',
+			((await page.locator('.slot.below .dash').first().innerText()) || '').length > 0,
+			await page.locator('.slot.below .dash').first().innerText()
 		);
 		await page.close();
 	}
@@ -4318,10 +4452,19 @@ console.log('\n  ── study page ──');
 }
 }
 
-await browser.close();
+} catch (err) {
+	const message = err instanceof Error ? err.message.split('\n')[0] : String(err);
+	failures.push(`[aborted] ${message}`);
+	console.error(`\n  ABORTED after ${checksRun} checks, at: ${lastCheck || 'startup'}`);
+	console.error(`  ${message}`);
+	console.error('  Every check after that point did not run.\n');
+} finally {
+	await browser.close();
+}
 
 console.log(
 	`\n  ${checksRun - failures.length}/${checksRun} checks passed${failures.length ? `, ${failures.length} FAILED` : ''}`
 );
+console.log(`  stopped after: ${lastCheck || 'startup'}`);
 console.log(`  screenshots: .smoke/\n`);
 process.exit(failures.length ? 1 : 0);

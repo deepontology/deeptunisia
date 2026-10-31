@@ -214,10 +214,10 @@ claims:
     validity: cutoff-bound
   - id: relationships-total
     kind: metric
-    claim: Documented relationships recorded in the published graph.
+    claim: Relationships recorded in the published graph, each carrying a basis.
     surfaces:
       - path: landing/index.html
-        locator: '(\d+) documented relationships\.'
+        locator: '(\d+) relationships, each graded\.'
       - path: landing/index.html
         locator: 'data-count="(\d+)">0</div><div class="micro k" data-i18n="ledger\.4"'
     resolver: { source: stats, key: relationships }

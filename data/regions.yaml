@@ -76,7 +76,8 @@
   name_ar: تونس
   parent: region-north-east
   code: "TN-11"
-  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+  created: "1956-06-21"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1, frwiki-gov-tunis]
 
 - id: gov-ariana
   kind: governorate
@@ -85,7 +86,10 @@
   name_ar: أريانة
   parent: region-north-east
   code: "TN-12"
-  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+  created: "1983-03"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1, frwiki-gov-ariana]
+  notes:
+    - "Created in March 1983 from part of the Tunis governorate."
 
 - id: gov-ben-arous
   kind: governorate
@@ -94,7 +98,10 @@
   name_ar: بن عروس
   parent: region-north-east
   code: "TN-13"
-  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+  created: "1983-12-03"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1, frwiki-gov-ben-arous]
+  notes:
+    - "Created on 3 December 1983 from part of the Tunis governorate."
 
 - id: gov-manouba
   kind: governorate
@@ -103,7 +110,10 @@
   name_ar: منوبة
   parent: region-north-east
   code: "TN-14"
-  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+  created: "2000-07-31"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1, frwiki-gov-manouba]
+  notes:
+    - "Created on 31 July 2000 from delegations of the Ariana governorate."
 
 - id: gov-nabeul
   kind: governorate
@@ -112,7 +122,10 @@
   name_ar: نابل
   parent: region-north-east
   code: "TN-21"
-  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+  created: "1956-06-21"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1, frwiki-gov-nabeul]
+  notes:
+    - "Called the Cap-Bon governorate from 25 September 1957 to 17 September 1964."
 
 - id: gov-zaghouan
   kind: governorate
@@ -121,7 +134,10 @@
   name_ar: زغوان
   parent: region-north-east
   code: "TN-22"
-  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+  created: "1976-11"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1, frwiki-gov-zaghouan]
+  notes:
+    - "Created in November 1976."
 
 - id: gov-bizerte
   kind: governorate
@@ -130,7 +146,8 @@
   name_ar: بنزرت
   parent: region-north-east
   code: "TN-23"
-  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+  created: "1956"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1, frwiki-gov-bizerte]
 
 - id: gov-beja
   kind: governorate
@@ -139,7 +156,8 @@
   name_ar: باجة
   parent: region-north-west
   code: "TN-31"
-  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+  created: "1956"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1, frwiki-gov-beja]
 
 - id: gov-jendouba
   kind: governorate
@@ -148,7 +166,10 @@
   name_ar: جندوبة
   parent: region-north-west
   code: "TN-32"
-  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+  created: "1956-06-21"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1, frwiki-gov-jendouba]
+  notes:
+    - "Created as the Souk El Arba governorate and renamed Jendouba on 31 May 1966."
 
 - id: gov-kef
   kind: governorate
@@ -157,7 +178,8 @@
   name_ar: الكاف
   parent: region-north-west
   code: "TN-33"
-  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+  created: "1956-06-21"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1, frwiki-gov-kef]
 
 - id: gov-siliana
   kind: governorate
@@ -166,7 +188,10 @@
   name_ar: سليانة
   parent: region-north-west
   code: "TN-34"
-  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+  created: "1974-06-05"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1, frwiki-gov-siliana]
+  notes:
+    - "Created on 5 June 1974."
 
 - id: gov-kairouan
   kind: governorate
@@ -175,7 +200,8 @@
   name_ar: القيروان
   parent: region-central-west
   code: "TN-41"
-  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+  created: "1956-06-21"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1, frwiki-gov-kairouan]
 
 - id: gov-kasserine
   kind: governorate
@@ -184,7 +210,10 @@
   name_ar: القصرين
   parent: region-central-west
   code: "TN-42"
-  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+  created: "1956-06-21"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1, frwiki-kasserine-gov]
+  notes:
+    - "First called the Sbeïtla governorate, with Sbeïtla as its seat."
 
 - id: gov-sidi-bouzid
   kind: governorate
@@ -193,7 +222,10 @@
   name_ar: سيدي بوزيد
   parent: region-central-west
   code: "TN-43"
-  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+  created: "1973"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1, frwiki-sidi-bouzid-gov]
+  notes:
+    - "Created in 1973."
 
 - id: gov-sousse
   kind: governorate
@@ -202,7 +234,8 @@
   name_ar: سوسة
   parent: region-central-east
   code: "TN-51"
-  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+  created: "1956-06-21"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1, frwiki-sousse-gov]
 
 - id: gov-monastir
   kind: governorate
@@ -211,7 +244,10 @@
   name_ar: المنستير
   parent: region-central-east
   code: "TN-52"
-  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+  created: "1974"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1, frwiki-monastir-gov]
+  notes:
+    - "Created in 1974 with Mahdia, from part of the Sousse governorate. Its article gives 5 June 1974, the first governor's tenure begins on 9 March 1974, and the Mahdia article names a decree of 9 March 1974, so only the year is recorded."
 
 - id: gov-mahdia
   kind: governorate
@@ -220,7 +256,10 @@
   name_ar: المهدية
   parent: region-central-east
   code: "TN-53"
-  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+  created: "1974"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1, frwiki-mahdia-gov]
+  notes:
+    - "Created in 1974 from part of the Sousse governorate. The source gives both 5 June and 9 March 1974, so only the year is recorded."
 
 - id: gov-sfax
   kind: governorate
@@ -229,7 +268,8 @@
   name_ar: صفاقس
   parent: region-central-east
   code: "TN-61"
-  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+  created: "1956-06-21"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1, frwiki-sfax-gov]
 
 - id: gov-gafsa
   kind: governorate
@@ -238,7 +278,8 @@
   name_ar: قفصة
   parent: region-south-west
   code: "TN-71"
-  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+  created: "1956"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1, frwiki-gafsa-gov]
 
 - id: gov-tozeur
   kind: governorate
@@ -247,7 +288,10 @@
   name_ar: توزر
   parent: region-south-west
   code: "TN-72"
-  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+  created: "1956-06-21"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1, frwiki-tozeur-gov]
+  notes:
+    - "The source dates the governorate to 21 June 1956, but the governor lists name no governor from 1958 to 1980; whether it was merged into another governorate in between is not established in the fetched sources."
 
 - id: gov-kebili
   kind: governorate
@@ -256,7 +300,10 @@
   name_ar: قبلي
   parent: region-south-west
   code: "TN-73"
-  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+  created: "1981-09"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1, frwiki-kebili-gov]
+  notes:
+    - "Created in September 1981."
 
 - id: gov-gabes
   kind: governorate
@@ -265,7 +312,8 @@
   name_ar: قابس
   parent: region-south-east
   code: "TN-81"
-  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+  created: "1956"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1, frwiki-gabes-gov]
 
 - id: gov-medenine
   kind: governorate
@@ -274,7 +322,8 @@
   name_ar: مدنين
   parent: region-south-east
   code: "TN-82"
-  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+  created: "1956-06-21"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1, frwiki-medenine-gov]
 
 - id: gov-tataouine
   kind: governorate
@@ -283,7 +332,10 @@
   name_ar: تطاوين
   parent: region-south-east
   code: "TN-83"
-  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1]
+  created: "1981-03-02"
+  sources: [wikipedia-governorates-tunisia, geoboundaries-tun-adm1, frwiki-tataouine-gov]
+  notes:
+    - "Created on 2 March 1981 from part of the Médenine governorate."
 
 # ---- delegations (first pass) ----
 # 53 delegations merged 2026-08-08 from data/contrib/delegations-2026-08-08.yaml

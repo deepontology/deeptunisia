@@ -12,7 +12,7 @@
  * sender never was (the same reasoning as `lastPath` in nav.svelte.ts).
  */
 
-export type WorldViewMode = 'globe' | 'ledger';
+export type WorldViewMode = 'globe' | 'parliament' | 'government' | 'ledger';
 
 export type WorldFamily = 'trade' | 'energy' | 'debt';
 
@@ -25,9 +25,50 @@ class WorldState {
 	 * so the switch opens the table with the selected row expanded.
 	 */
 	entity = $state<string | null>(null);
+	/**
+	 * A governorate the parliament view should bring forward, set when the
+	 * reader comes from a province card: its seats stay lit and the rest dim.
+	 */
+	focusRegion = $state<string | null>(null);
+
+	/**
+	 * The two scales of the page. Outside is Tunisia among states: the globe at
+	 * world scale and the ledger. Inside is the country itself: the governorate
+	 * map (the globe zoomed into Tunisia), the parliament and the government.
+	 * The globe reports which side of the zoom it is on; the other views are
+	 * inside or outside by definition.
+	 */
+	globeInside = $state(false);
+	get inside(): boolean {
+		return this.view === 'parliament' || this.view === 'government' || (this.view === 'globe' && this.globeInside);
+	}
+
+	/** The governorate open on the map, for the trail. */
+	region = $state<string | null>(null);
+
+	/**
+	 * A camera move the page asks the globe for: to the world, to the country,
+	 * or to a point in it (the Bardo before the parliament opens, Carthage before
+	 * the government). Consumed by the globe, which clears it.
+	 */
+	fly = $state<{
+		to: 'world' | 'tunisia' | 'point';
+		lon?: number;
+		lat?: number;
+		/** Flight time in ms; the caller knows whether it is a hop or a dive. */
+		ms?: number;
+		id: number;
+	} | null>(null);
+	/** Open the globe already zoomed into the country, as when stepping back out of a lens. */
+	openInside = $state(false);
 
 	setView(view: WorldViewMode) {
 		this.view = view;
+	}
+
+	/** Ask the globe for a camera move. */
+	flyTo(to: 'world' | 'tunisia' | 'point', lon?: number, lat?: number, ms?: number) {
+		this.fly = { to, lon, lat, ms, id: Date.now() };
 	}
 
 	setFamily(family: WorldFamily) {

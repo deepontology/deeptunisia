@@ -31,7 +31,6 @@ export const VIEWS: ViewEntry[] = [
 	{ route: '/world', key: 'world' },
 	{ route: '/rankings', key: 'rankings' },
 	{ route: '/investigate', key: 'investigate' },
-	{ route: '/map', key: 'map' },
 	{ route: '/evidence', key: 'evidence' },
 	{ route: '/methodology', key: 'method' },
 	{ route: '/corrections', key: 'corrections' },
@@ -54,6 +53,7 @@ export const ABOUT_IN_TOOLBAR = new Set([
 	'/atlas',
 	'/rankings',
 	'/investigate',
+	'/world',
 	'/feed'
 ]);
 

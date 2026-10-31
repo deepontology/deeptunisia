@@ -399,6 +399,33 @@
 }
 
 /* ---------------------------------------------------------------------------
+   Seat palette: parliamentary groups and party lists in the hemicycle.
+   Data colours, not chrome. Categorical and equal in weight, so no group
+   reads as more important than another; a term assigns them by group size,
+   largest first, and the legend always names each one. Lightness follows the
+   theme, as the layer colours do.
+   --------------------------------------------------------------------------- */
+
+:root {
+	--seat-l: 70%;
+	--seat-c: 0.13;
+}
+[data-theme='light'] {
+	--seat-l: 58%;
+	--seat-c: 0.14;
+}
+:root {
+	--seat-1: oklch(var(--seat-l) var(--seat-c) 250);
+	--seat-2: oklch(var(--seat-l) var(--seat-c) 35);
+	--seat-3: oklch(var(--seat-l) var(--seat-c) 150);
+	--seat-4: oklch(var(--seat-l) var(--seat-c) 300);
+	--seat-5: oklch(var(--seat-l) var(--seat-c) 80);
+	--seat-6: oklch(var(--seat-l) var(--seat-c) 195);
+	--seat-7: oklch(var(--seat-l) var(--seat-c) 350);
+	--seat-8: oklch(var(--seat-l) var(--seat-c) 115);
+}
+
+/* ---------------------------------------------------------------------------
    Relationship type palette — theme-independent
    Used when a node is selected: connecting edges recolour by type.
    Chosen so the palette is distinguishable and equally weighted.
