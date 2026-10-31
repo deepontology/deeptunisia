@@ -3,6 +3,56 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:7ae7be280e9c977c",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Violences dans les stades | 12 individus arrêtés à Tunis",
+      "link": "https://kapitalis.com/tunisie/2026/10/31/violences-dans-les-stades-12-individus-arretes-a-tunis/",
+      "published": "2026-10-31T20:06:05Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:b0aa92df9faa4b4f",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Tunisie | Entrée gratuite aux sites et musées ce 1er novembre",
+      "link": "https://kapitalis.com/tunisie/2026/10/31/tunisie-entree-gratuite-aux-sites-et-musees-ce-1er-novembre/",
+      "published": "2026-10-31T18:48:51Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:91211238fb44cc03",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Congrès de la STCCCV | La prise en charge de la mort subite cardiaque au cœur des débats",
+      "link": "https://kapitalis.com/tunisie/2026/10/31/congres-de-la-stcccv-la-prise-en-charge-de-la-mort-subite-cardiaque-au-coeur-des-debats/",
+      "published": "2026-10-31T18:27:10Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:d362561c090ce845",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Météo | Les prévisions pour cette nuit en Tunisie",
+      "link": "https://kapitalis.com/tunisie/2026/10/31/meteo-les-previsions-pour-cette-nuit-en-tunisie-4/",
+      "published": "2026-10-31T18:04:36Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:african-manager:500451813b8d9a4c",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Transports publics : 4 millions DT de dégâts et 362 agents agressés entre 2025 et 2026",
+      "link": "https://africanmanager.com/transports-publics-4-millions-dt-de-degats-et-362-agents-agresses-entre-2025-et-2026/",
+      "published": "2026-10-31T15:45:03Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
       "id": "feed:african-manager:ea0ed7f365952ec0",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -11946,56 +11996,6 @@
       "published": "2026-09-21T09:56:53Z",
       "lang": "fr",
       "author": "webmaster kapitalis"
-    },
-    {
-      "id": "feed:african-manager:a6eee25ca88388cf",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Le Club Africain s’empare de la première place",
-      "link": "https://africanmanager.com/le-club-africain-sempare-de-la-premiere-place/",
-      "published": "2026-09-21T09:31:52Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:816fed9c1eda12c3",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Volley – Championnat d’Afrique (messieurs) : l’Algérie bat le Kenya et se qualifie en quarts",
-      "link": "https://africanmanager.com/volley-championnat-dafrique-messieurs-lalgerie-bat-le-kenya-et-se-qualifie-en-quarts/",
-      "published": "2026-09-21T09:28:55Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:83f57c0ed14f3d09",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Championnat d’Italie : Milan et la Juve se rapprochent de la tête",
-      "link": "https://africanmanager.com/le-real-madrid-de-jose-mourinho-na-pas-tenu-le-choc-dimanche-sur-la-pelouse/",
-      "published": "2026-09-21T09:24:24Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:46b9aad94e60671b",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Championnat d’Espagne : le Real Madrid, surclassé par l’Atlético, laisse filer le Barça",
-      "link": "https://africanmanager.com/nouveau-naufrage-de-larmada-de-stars-madrilene-dominee/",
-      "published": "2026-09-21T09:22:31Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:1a8668c9a5fbb892",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Coupure d’eau à Menzel Temime, Klébia et Hammam El Ghezaz",
-      "link": "https://africanmanager.com/coupure-de-distribution-de-leau-potable-dans-les-delegations-de-menzel-temime-klebia-et-hammam-el-ghezaz/",
-      "published": "2026-09-21T09:20:12Z",
-      "lang": "fr",
-      "author": "African Manager"
     }
   ]
 }
