@@ -45,9 +45,9 @@ halves of the dev loop as `beta` so the Agora tab is reachable during
 development; a reader on deeptunisia.org never touches it. The mode contract is
 `docs/agora-deployment.md`.
 
-The complete graph is <!--stat:graphKB-->13190<!--/stat--> KB as the internal
+The complete graph is <!--stat:graphKB-->13200<!--/stat--> KB as the internal
 bundle, and the public exports (dataset, CSVs, geographic layers, changelog)
-ship at <!--stat:shippedKB-->24020<!--/stat--> KB — both are computed by the
+ship at <!--stat:shippedKB-->24050<!--/stat--> KB — both are computed by the
 build, and `npm run test` fails if the README ever disagrees with them.
 
 ## Reproducibility
@@ -141,7 +141,7 @@ Six decisions carry most of the weight:
 
 **Basis describes the claim, not its dates.** A position bundles two separable claims — "X held this post" and "between these dates" — which routinely have different standing. A security chief whose office is well reported but whose start date nobody published is a *reported* officeholding with an *inferred* span. `datesInferred` is a separate flag so imprecise dating never looks like speculation.
 
-**Successions are derived, not asserted.** Computed from the position records, so a hole shows up as a hole: currently **<!--stat:successionGaps-->127<!--/stat--> gaps** and **<!--stat:successionOverlaps-->53<!--/stat--> overlapping tenures**, all published.
+**Successions are derived, not asserted.** Computed from the position records, so a hole shows up as a hole: currently **<!--stat:successionGaps-->126<!--/stat--> gaps** and **<!--stat:successionOverlaps-->49<!--/stat--> overlapping tenures**, all published.
 
 **Change is a record too.** The dataset is plain text under version control, so every factual change is a dated, attributable diff. `/corrections` publishes that history — generated, not curated, so nobody decides which changes are flattering enough to appear.
 
@@ -196,8 +196,8 @@ This is not neutrality for its own sake — it is the project's only real protec
 - **`<=` bounds use an 8-year window.** Stated modelling assumption, not a fact.
 - **UI is translated for chrome only.** Arabic, French and English navigation, controls and labels, with RTL. Entity names are trilingual in the data and all three are searchable. Long-form analytical prose is deliberately *not* machine-translated — a machine-translated epistemology page would undermine the point.
 - **<!--stat:needsPrimarySource-->233<!--/stat--> records await a primary source.** Listed in full on `/evidence`.
-- **Human review is not merely thin, it is not independent.** Independent checks stand at <!--stat:independent-->0<!--/stat--> in every category, and the editorial notes that do exist are unevenly spread: <!--stat:reviewed-unsubstantiated-->18<!--/stat--> of <!--stat:reviewable-unsubstantiated-->22<!--/stat--> unsubstantiated claims, <!--stat:reviewed-attributed-->25<!--/stat--> of <!--stat:reviewable-attributed-->2839<!--/stat--> that name a source and <!--stat:reviewed-inferred-->2<!--/stat--> of <!--stat:reviewable-inferred-->67<!--/stat--> inferences carry one. The breakdown is on `/about`.
-- **<!--stat:sourcesUncited-->64<!--/stat--> of <!--stat:sources-->2448<!--/stat--> sources back no claim.** Staged reading, kept in the file but excluded from the published count of <!--stat:sourcesCited-->2384<!--/stat--> — a bibliography entry that holds nothing up is not evidence.
+- **Human review is not merely thin, it is not independent.** Independent checks stand at <!--stat:independent-->0<!--/stat--> in every category, and the editorial notes that do exist are unevenly spread: <!--stat:reviewed-unsubstantiated-->18<!--/stat--> of <!--stat:reviewable-unsubstantiated-->22<!--/stat--> unsubstantiated claims, <!--stat:reviewed-attributed-->25<!--/stat--> of <!--stat:reviewable-attributed-->2833<!--/stat--> that name a source and <!--stat:reviewed-inferred-->2<!--/stat--> of <!--stat:reviewable-inferred-->67<!--/stat--> inferences carry one. The breakdown is on `/about`.
+- **<!--stat:sourcesUncited-->64<!--/stat--> of <!--stat:sources-->2465<!--/stat--> sources back no claim.** Staged reading, kept in the file but excluded from the published count of <!--stat:sourcesCited-->2401<!--/stat--> — a bibliography entry that holds nothing up is not evidence.
 
 ## Deliberately not built yet
 

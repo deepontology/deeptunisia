@@ -42,8 +42,8 @@ span as a date, or an unsubstantiated claim as a finding, misrepresents the sour
 - The pre-2011 police chronology rests largely on secondary sources.
 - The 2014-2019 police succession does not fit its dated endpoints; recorded as an
   unresolved contradiction rather than smoothed over.
-- <!--stat:successionGaps-->127<!--/stat--> succession gaps and
-  <!--stat:successionOverlaps-->53<!--/stat--> overlapping tenures are detected and
+- <!--stat:successionGaps-->126<!--/stat--> succession gaps and
+  <!--stat:successionOverlaps-->49<!--/stat--> overlapping tenures are detected and
   published; <!--stat:contradictions-->69<!--/stat--> source contradictions are
   recorded unresolved.
 
