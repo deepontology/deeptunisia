@@ -136,7 +136,7 @@ institution,ministry-defence,29,29,3,0,0,0,32,1
 institution,ministry-equipment-housing,36,36,0,0,0,0,33,1
 institution,ministry-finance,35,35,0,0,0,0,28,1
 institution,ministry-health,41,41,0,0,0,0,35,1
-institution,ministry-interior,729,729,10,0,0,0,148,1
+institution,ministry-interior,729,729,10,0,0,0,907,1
 institution,ministry-religious-affairs,14,14,0,0,0,0,17,1
 institution,mnemty,1,1,0,0,0,0,1,1
 institution,mosaique-fm,5,5,0,0,0,0,8,1
@@ -216,13 +216,13 @@ institution,wifak-bank,1,1,0,0,0,0,1,1
 institution,world-bank,1,1,0,0,0,0,3,1
 institution,zitouna-bank,2,2,0,0,0,0,4,1
 institution,zitouna-tv,3,3,0,0,0,0,3,1
-era,ben-ali-consolidation,461,461,12,1,1,1,240,1
-era,bourguiba,970,970,20,1,1,1,255,1
-era,fragmentation,1755,1755,13,3,3,3,453,0
-era,pluralism,1254,1254,9,1,1,1,466,1
-era,police-state,1197,1197,14,2,2,2,324,1
-era,recentralisation,1616,1616,17,6,6,6,656,0
-era,transition,2384,2384,12,2,2,2,459,1
+era,ben-ali-consolidation,458,458,12,1,1,1,331,1
+era,bourguiba,968,968,20,1,1,1,467,1
+era,fragmentation,1753,1753,13,3,3,3,499,0
+era,pluralism,1254,1254,9,1,1,1,607,1
+era,police-state,1190,1190,14,2,2,2,544,1
+era,recentralisation,1616,1616,17,6,6,6,718,0
+era,transition,2384,2384,12,2,2,2,654,1
 source_family,africa business,3,2,0,0,0,2,3,1
 source_family,africa intelligence,2,2,0,0,0,2,2,1
 source_family,africa intelligence accessed via blackfacts aggregator original is paywalled,1,0,0,0,0,0,1,1
@@ -420,6 +420,7 @@ source_family,journal officiel de la republique tunisienne n 2016 027 via 9anoun
 source_family,journal officiel de la republique tunisienne text on legislation securite tn,1,1,0,0,0,1,1,1
 source_family,journal officiel de la republique tunisienne text via the 9anoun mirror,1,1,0,0,0,1,1,1
 source_family,journal officiel de la republique tunisienne texte integral via legislation securite tn dcaf,4,4,0,0,0,4,4,0
+source_family,journal officiel de la republique tunisienne texte ocr ocr jort tn,759,759,0,0,0,759,759,0
 source_family,journal officiel de la republique tunisienne via 9anoun,11,10,0,0,0,10,11,0
 source_family,journal officiel de la republique tunisienne via ar wiki dcaf,1,0,0,0,0,0,1,1
 source_family,journal officiel de la republique tunisienne via ar wiki footnote,3,3,0,0,0,3,3,0
@@ -612,7 +613,7 @@ source_family,zoom tunisia,1,1,0,0,0,1,1,1
 source_family,ويكيبيديا (العربية),11,10,0,0,0,10,11,0
 language,ar,108,68,0,0,0,68,108,0
 language,en,471,201,0,0,0,201,471,0
-language,fr,1106,867,0,0,0,867,1106,0
+language,fr,1865,1626,0,0,0,1626,1865,0
 language,it,4,1,0,0,0,1,4,1
 office,administrative-court-president,4,4,0,0,0,0,5,1
 office,administrative-reform-minister,4,4,0,0,0,0,4,1
@@ -669,30 +670,30 @@ office,family-women-minister,18,18,0,0,0,0,25,1
 office,finance-minister,35,35,0,0,0,0,28,1
 office,foreign-minister,34,34,4,0,0,0,60,1
 office,government-secretariat-minister,1,1,0,0,0,0,2,1
-office,governor-ariana,20,20,0,0,0,0,15,1
-office,governor-beja,32,32,0,0,0,0,15,1
-office,governor-ben-arous,17,17,0,0,0,0,9,1
-office,governor-bizerte,32,32,0,0,0,0,14,1
-office,governor-gabes,36,36,0,0,0,0,12,1
-office,governor-gafsa,33,33,0,0,0,0,10,1
-office,governor-jendouba,36,36,0,0,0,0,14,1
-office,governor-kairouan,31,31,0,0,0,0,18,1
-office,governor-kasserine,41,41,0,0,0,0,12,1
-office,governor-kebili,25,25,0,0,0,0,10,1
-office,governor-kef,37,37,0,0,0,0,15,1
-office,governor-mahdia,22,22,0,0,0,0,8,1
-office,governor-manouba,10,10,0,0,0,0,10,1
-office,governor-medenine,33,33,0,0,0,0,8,1
-office,governor-monastir,15,15,0,0,0,0,9,1
-office,governor-nabeul,34,34,0,0,0,0,15,1
-office,governor-sfax,41,41,0,0,0,0,12,1
-office,governor-sidi-bouzid,29,29,0,0,0,0,8,1
-office,governor-siliana,26,26,0,0,0,0,12,1
-office,governor-sousse,29,29,0,0,0,0,9,1
-office,governor-tataouine,23,23,0,0,0,0,11,1
-office,governor-tozeur,25,25,0,0,0,0,9,1
-office,governor-tunis,27,27,0,0,0,0,21,1
-office,governor-zaghouan,28,28,0,0,0,0,11,1
+office,governor-ariana,20,20,0,0,0,0,42,1
+office,governor-beja,32,32,0,0,0,0,51,1
+office,governor-ben-arous,17,17,0,0,0,0,27,1
+office,governor-bizerte,32,32,0,0,0,0,44,1
+office,governor-gabes,36,36,0,0,0,0,53,1
+office,governor-gafsa,33,33,0,0,0,0,47,1
+office,governor-jendouba,36,36,0,0,0,0,57,1
+office,governor-kairouan,31,31,0,0,0,0,62,1
+office,governor-kasserine,41,41,0,0,0,0,64,1
+office,governor-kebili,25,25,0,0,0,0,39,1
+office,governor-kef,37,37,0,0,0,0,64,1
+office,governor-mahdia,22,22,0,0,0,0,38,1
+office,governor-manouba,10,10,0,0,0,0,24,1
+office,governor-medenine,33,33,0,0,0,0,44,1
+office,governor-monastir,15,15,0,0,0,0,29,1
+office,governor-nabeul,34,34,0,0,0,0,53,1
+office,governor-sfax,41,41,0,0,0,0,63,1
+office,governor-sidi-bouzid,29,29,0,0,0,0,44,1
+office,governor-siliana,26,26,0,0,0,0,39,1
+office,governor-sousse,29,29,0,0,0,0,44,1
+office,governor-tataouine,23,23,0,0,0,0,46,1
+office,governor-tozeur,25,25,0,0,0,0,41,1
+office,governor-tunis,27,27,0,0,0,0,52,1
+office,governor-zaghouan,28,28,0,0,0,0,47,1
 office,grand-vizier,25,25,0,0,0,0,10,1
 office,hannibal-owner,1,1,0,0,0,0,2,1
 office,haute-instance-president,1,1,0,0,0,0,2,1

@@ -1,6 +1,31 @@
 [
   {
-    "hash": "6bb592716",
+    "hash": "6dbbf03c5",
+    "date": "2026-11-03T15:07:51+01:00",
+    "subject": "wip modern",
+    "kind": "revision",
+    "added": 3892,
+    "removed": 430,
+    "files": [
+      {
+        "file": "data/people.yaml",
+        "added": 6,
+        "removed": 0
+      },
+      {
+        "file": "data/positions.yaml",
+        "added": 688,
+        "removed": 430
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 3198,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "dce814960",
     "date": "2026-10-28T12:50:56+01:00",
     "subject": "Landing: say the relationships are graded, not documented",
     "kind": "revision",
@@ -15,7 +40,7 @@
     ]
   },
   {
-    "hash": "ec872ebce",
+    "hash": "717321ed4",
     "date": "2026-10-28T00:13:01+01:00",
     "subject": "World: unify the world and map views, and add the civic scale",
     "kind": "revision",

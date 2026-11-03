@@ -37,7 +37,7 @@ its source is both `inferred` and `attributed`. Headline: 52 of
 8308 records carry a review note.
 
 - `unsubstantiated`: 18 of 22 carry a review note
-- `attributed`: 25 of 3280 carry a review note
+- `attributed`: 25 of 2839 carry a review note
 - `inferred`: 2 of 67 carry a review note
-- `reported`: 24 of 6488 carry a review note
-- `documented`: 8 of 1447 carry a review note
+- `reported`: 24 of 5995 carry a review note
+- `documented`: 8 of 1940 carry a review note

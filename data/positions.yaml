@@ -16995,22 +16995,25 @@
   role: governor-tunis
   holder: ahmed-zaouche
   start: 1956-06
-  end: 1959-09
+  end: '1959-09-21'
   acting: false
-  confidence: B
+  confidence: A
   sources:
   - frwiki-gov-tunis
   - frwiki-bio-zaouche
+  - jort-arrete-1959-09-18
 - id: p-gov-tunis-nouira
   role: governor-tunis
   holder: mohsen-nouira
   start: 1959-09
   end: 1961-10
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Tunis
+  confidence: A
   sources:
   - frwiki-gov-tunis
+  - jort-arrete-1959-09-21
+  notes:
+  - 'Name check: gazette M. Ben Nouira, Bizerte to Tunis-Banlieue. The gazette spelling is kept as an alias until a second source settles it.'
 - id: p-gov-tunis-el-abidine-mohsen
   role: governor-tunis
   holder: mohamed-zine-el-abidine-mohsen
@@ -17034,135 +17037,148 @@
 - id: p-gov-tunis-ben-ammar
   role: governor-tunis
   holder: hassib-ben-ammar
-  start: 1965-07
+  start: '1965-07-10'
   end: 1969-09
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Tunis
+  confidence: A
   sources:
   - frwiki-gov-tunis
+  - jort-1965-352
+  - jort-1966-214
 - id: p-gov-tunis-mebazaa
   role: governor-tunis
   holder: fouad-mebazaa
   start: 1969-09
   end: 1973-11
   acting: false
-  confidence: B
+  confidence: A
   sources:
   - frwiki-gov-tunis
   - frwiki-bio-mebazaa
+  - jort-1969-317
 - id: p-gov-tunis-melki
   role: governor-tunis
   holder: abdelhamid-melki
-  start: 1973-11
+  start: '1973-12-01'
   end: 1976-09
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Tunis
+  confidence: A
   sources:
   - frwiki-gov-tunis
+  - jort-arrete-1973-11-30
+  notes:
+  - The start was recorded as 1973-11 from secondary lists; the gazette instrument gives 1973-12-01.
 - id: p-gov-tunis-bousnina
   role: governor-tunis
   holder: kacem-bousnina
-  start: 1976-09
+  start: '1976-09-28'
   end: 1978-03
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Tunis
+  confidence: A
   sources:
   - frwiki-gov-tunis
+  - jort-arrete-1976-09-28
+  - jort-1978-299
 - id: p-gov-tunis-mohsen
   role: governor-tunis
   holder: abbes-mohsen
   start: 1978-03
   end: 1980-05
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Tunis
+  confidence: A
   sources:
   - frwiki-gov-tunis
+  - jort-arrete-1978-03-23
 - id: p-gov-tunis-rouissi
   role: governor-tunis
   holder: mhedheb-rouissi
   start: 1980-05
   end: 1983-03
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Tunis
+  confidence: A
   sources:
   - frwiki-gov-tunis
+  - jort-1980-520
 - id: p-gov-tunis-khouini
   role: governor-tunis
   holder: hamadi-khouini
-  start: 1983-03
+  start: '1983-03-16'
   end: 1986-12
   acting: false
-  confidence: B
+  confidence: A
   sources:
   - frwiki-gov-tunis
   - frwiki-bio-khouini
+  - jort-1983-325
 - id: p-gov-tunis-mohsen-1986
   role: governor-tunis
   holder: abbes-mohsen
   start: 1986-12
   end: 1988-06
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Tunis
+  confidence: A
   sources:
   - frwiki-gov-tunis
+  - jort-1986-1319
 - id: p-gov-tunis-belkhodja
   role: governor-tunis
   holder: kamel-belkhodja
-  start: 1988-06
+  start: '1988-06-27'
   end: 1989-08
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Tunis
+  confidence: A
   sources:
   - frwiki-gov-tunis
+  - jort-1988-1376
 - id: p-gov-tunis-khouini-1989
   role: governor-tunis
   holder: hamadi-khouini
   start: 1989-08
   end: 1990-10
   acting: false
-  confidence: B
+  confidence: A
   sources:
   - frwiki-gov-tunis
   - frwiki-bio-khouini
+  - jort-1989-1155
 - id: p-gov-tunis-kaabi
   role: governor-tunis
   holder: abdallah-kaabi
-  start: 1990-10
+  start: '1990-10-25'
   end: 1999-11
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Tunis
+  confidence: A
   notes:
   - The list notes this as the longest tenure of any Tunisian governor (nine years and 25 days).
   sources:
   - frwiki-gov-tunis
+  - jort-arrete-1990-11-22
 - id: p-gov-tunis-ben-mahmoud
   role: governor-tunis
   holder: omar-ben-mahmoud
-  start: 1999-11
-  end: 2003-02
+  start: '1999-11-20'
+  end: '2003-01-29'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Tunis
+  confidence: A
   sources:
   - frwiki-gov-tunis
+  - jort-1999-2667
+  - jort-2003-389
+  notes:
+  - The end was recorded as 2003-02 from secondary lists; the gazette instrument gives 2003-01-29.
 - id: p-gov-tunis-mehiri
   role: governor-tunis
   holder: mahmoud-mehiri
-  start: 2003-02
-  end: 2005-08
+  start: '2003-01-29'
+  end: '2005-08-04'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Tunis
+  confidence: A
   sources:
   - frwiki-gov-tunis
+  - jort-2003-389
+  - jort-2005-2386
+  notes:
+  - The start was recorded as 2003-02 from secondary lists; the gazette instrument gives 2003-01-29.
 - id: p-gov-tunis-friji
   role: governor-tunis
   holder: mondher-friji
@@ -17280,113 +17296,121 @@
 - id: p-gov-ariana-ben-jemiaa
   role: governor-ariana
   holder: ahmed-ben-jemiaa
-  start: 1983-03
+  start: '1983-03-16'
   end: 1984-07
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de l'Ariana
+  confidence: A
   sources:
   - frwiki-gov-ariana
+  - jort-1983-326
+  - jort-1985-133
 - id: p-gov-ariana-sassi
   role: governor-ariana
   holder: kamel-haj-sassi
-  start: 1984-07
+  start: '1988-02-03'
   end: 1988-02
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de l'Ariana
+  confidence: A
   sources:
   - frwiki-gov-ariana
+  - jort-1984-816
+  - jort-arrete-1988-02-25
+  notes:
+  - The start was recorded as 1984-07 from secondary lists; the gazette instrument gives 1988-02-03.
 - id: p-gov-ariana-kaabi
   role: governor-ariana
   holder: abdallah-kaabi
-  start: 1988-02
+  start: '1988-02-03'
   end: 1990-10
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de l'Ariana
+  confidence: A
   sources:
   - frwiki-gov-ariana
+  - jort-1988-168
 - id: p-gov-ariana-bouhrizi
   role: governor-ariana
   holder: abderrahman-bouhrizi
-  start: 1990-10
-  end: 1991-07
+  start: '1990-10-25'
+  end: '1991-07-02'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de l'Ariana
+  confidence: A
   sources:
   - frwiki-gov-ariana
+  - jort-1990-1759
+  - jort-1991-1140
 - id: p-gov-ariana-drissi
   role: governor-ariana
   holder: mohamed-nejib-drissi
   start: 1991-07
-  end: 1994-05
+  end: '1994-05-19'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de l'Ariana
+  confidence: A
   sources:
   - frwiki-gov-ariana
+  - jort-1994-1357
 - id: p-gov-ariana-braham
   role: governor-ariana
   holder: mohamed-lahbib-braham
-  start: 1994-05
+  start: '1994-05-19'
   end: 1996-09
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de l'Ariana
+  confidence: A
   sources:
   - frwiki-gov-ariana
+  - jort-1994-1347
 - id: p-gov-ariana-friji
   role: governor-ariana
   holder: mondher-friji
-  start: 1996-09
+  start: '1996-09-11'
   end: '2000-07-25'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de l'Ariana
+  confidence: A
   sources:
   - frwiki-gov-ariana
+  - jort-1996-1747
 - id: p-gov-ariana-trabelsi
   role: governor-ariana
   holder: ali-trabelsi
-  start: '2000-07-25'
+  start: '2000-07-07'
   end: 2002-07
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de l'Ariana
+  confidence: A
   sources:
   - frwiki-gov-ariana
+  - jort-arrete-2000-07-26
+  notes:
+  - The start was recorded as 2000-07-25 from secondary lists; the gazette instrument gives 2000-07-07.
 - id: p-gov-ariana-ayed
   role: governor-ariana
   holder: faiez-ayed
-  start: 2002-07
+  start: '2002-07-17'
   end: 2006-07
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de l'Ariana
+  confidence: A
   sources:
   - frwiki-gov-ariana
+  - jort-arrete-2002-08-06
 - id: p-gov-ariana-zaddem
   role: governor-ariana
   holder: abdejlil-zaddem
   start: 2006-07
-  end: 2008-09
+  end: '2008-09-19'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de l'Ariana
+  confidence: A
   sources:
   - frwiki-gov-ariana
+  - jort-2008-3276
 - id: p-gov-ariana-mehiri
   role: governor-ariana
   holder: mahmoud-mehiri
-  start: 2008-09
+  start: '2008-09-19'
   end: '2011-02-02'
   acting: false
   confidence: A
   sources:
   - frwiki-gov-ariana
   - jort-2011-199
+  - jort-2008-3275
 - id: p-gov-ariana-kharbeche
   role: governor-ariana
   holder: nizar-kharbeche
@@ -17490,59 +17514,58 @@
 - id: p-gov-ben-arous-azaiez
   role: governor-ben-arous
   holder: abdelkrim-azaiez
-  start: 1983-12
+  start: '1983-03-16'
   end: 1987-07
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Ben Arous
+  confidence: A
   notes:
-  - The governorate list dates this tenure March 1983-July 1987, but Ben Arous was created on 3 December
-    1983; the start is bounded to that creation date, and the March-December 1983 part belongs to Tunis.
+  - The governorate list dates this tenure March 1983-July 1987, but Ben Arous was created on 3 December 1983; the start is bounded to that creation date, and the March-December 1983 part belongs to Tunis.
+  - The start was recorded as 1983-12 from secondary lists; the gazette instrument gives 1983-03-16.
   sources:
   - frwiki-gov-ben-arous
+  - jort-1983-327
 - id: p-gov-ben-arous-ouaja
   role: governor-ben-arous
   holder: ahmed-ridha-ouaja
-  start: 1986-07
+  start: '1986-07-24'
   end: 1987-08
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Ben Arous
+  confidence: A
   notes:
-  - The same list gives Abdelkrim Azaïez from March 1983 to July 1987, which overlaps this tenure; both
-    dates come from one table and are not reconciled.
+  - The same list gives Abdelkrim Azaïez from March 1983 to July 1987, which overlaps this tenure; both dates come from one table and are not reconciled.
   sources:
   - frwiki-gov-ben-arous
+  - jort-1986-794
 - id: p-gov-ben-arous-kriaa
   role: governor-ben-arous
   holder: ameur-kriaa
-  start: 1987-08
+  start: '1987-08-20'
   end: 1988-12
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Ben Arous
+  confidence: A
   sources:
   - frwiki-gov-ben-arous
+  - jort-1987-1101
 - id: p-gov-ben-arous-rachdi
   role: governor-ben-arous
   holder: mohamed-rachdi
   start: 1988-12
   end: 1992-02
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Ben Arous
+  confidence: A
   sources:
   - frwiki-gov-ben-arous
+  - jort-1988-2004
 - id: p-gov-ben-arous-salah
   role: governor-ben-arous
   holder: kacem-salah
-  start: 1992-02
+  start: '1992-02-10'
   end: 1993-08
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Ben Arous
+  confidence: A
   sources:
   - frwiki-gov-ben-arous
+  - jort-1992-459
 - id: p-gov-ben-arous-bahri
   role: governor-ben-arous
   holder: mabrouk-bahri
@@ -17556,43 +17579,47 @@
 - id: p-gov-ben-arous-lasram
   role: governor-ben-arous
   holder: zoubeir-lasram
-  start: 1996-07
+  start: '1996-07-29'
   end: 1997-07
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Ben Arous
+  confidence: A
   sources:
   - frwiki-gov-ben-arous
+  - jort-1996-1356
+  - jort-1997-1519
 - id: p-gov-ben-arous-senoussi
   role: governor-ben-arous
   holder: mohsen-senoussi
-  start: 1997-07
+  start: '1997-07-18'
   end: 2000-07
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Ben Arous
+  confidence: A
   sources:
   - frwiki-gov-ben-arous
+  - jort-1997-1518
 - id: p-gov-ben-arous-belghith
   role: governor-ben-arous
   holder: mohamed-belghith
   start: 2000-07
   end: 2001-01
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Ben Arous
+  confidence: A
   sources:
   - frwiki-gov-ben-arous
+  - jort-arrete-2000-07-26
+  - jort-arrete-2001-03-03
+  notes:
+  - Two gazette instruments give different start dates for this tenure (2000-07-07, 2001-01-26); the recorded start is kept until they are reconciled.
 - id: p-gov-ben-arous-zaddem
   role: governor-ben-arous
   holder: abdejlil-zaddem
-  start: 2001-01
+  start: '2001-01-30'
   end: 2006-07
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Ben Arous
+  confidence: A
   sources:
   - frwiki-gov-ben-arous
+  - jort-arrete-2001-03-03
 - id: p-gov-ben-arous-ayed
   role: governor-ben-arous
   holder: faiez-ayed
@@ -17642,46 +17669,49 @@
 - id: p-gov-manouba-tounsi
   role: governor-manouba
   holder: mohamed-tounsi
-  start: 2000-07
+  start: '2000-08-01'
   end: 2003-04
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de la Manouba
+  confidence: A
   notes:
-  - The governorate was created on 31 July 2000 from delegations previously in Ariana; a July 2000 appointment
-    can only fall at or after that date.
+  - The governorate was created on 31 July 2000 from delegations previously in Ariana; a July 2000 appointment can only fall at or after that date.
+  - The start was recorded as 2000-07 from secondary lists; the gazette instrument gives 2000-08-01.
   sources:
   - frwiki-gov-manouba
+  - jort-2000-1884
 - id: p-gov-manouba-neji
   role: governor-manouba
   holder: youssef-neji
-  start: 2003-04
-  end: 2004-11
+  start: '2003-04-14'
+  end: '2004-11-17'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de la Manouba
+  confidence: A
   sources:
   - frwiki-gov-manouba
+  - jort-2003-1050
+  - jort-2004-2749
 - id: p-gov-manouba-haddad
   role: governor-manouba
   holder: moncef-haddad
-  start: 2004-11
-  end: 2007-08
+  start: '2004-11-22'
+  end: '2007-08-22'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de la Manouba
+  confidence: A
   sources:
   - frwiki-gov-manouba
+  - jort-2004-2742
+  - jort-2007-2293
 - id: p-gov-manouba-ben-ali
   role: governor-manouba
   holder: kamel-ben-ali
-  start: 2007-08
+  start: '2007-08-22'
   end: '2011-02-02'
   acting: false
   confidence: A
   sources:
   - frwiki-gov-manouba
   - jort-2011-197
+  - jort-2007-2293
 - id: p-gov-manouba-omrani
   role: governor-manouba
   holder: moncef-omrani
@@ -17808,122 +17838,131 @@
   role: governor-nabeul
   holder: ridha-azzabi
   start: '1969'
-  end: '1971'
+  end: '1970-12-01'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Nabeul
+  confidence: A
   sources:
   - frwiki-gov-nabeul
+  - jort-1969-318
+  - jort-1971-74
+  notes:
+  - The end was recorded as 1971 from secondary lists; the gazette instrument gives 1970-12-01.
 - id: p-gov-nabeul-zannad
   role: governor-nabeul
   holder: mokhtar-zannad
-  start: '1971'
+  start: '1971-03-12'
   end: '1973'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Nabeul
+  confidence: A
   sources:
   - frwiki-gov-nabeul
+  - jort-arrete-1971-03-12
 - id: p-gov-nabeul-bousnina
   role: governor-nabeul
   holder: kacem-bousnina
-  start: '1973'
+  start: '1973-06-29'
   end: '1976'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Nabeul
+  confidence: A
   sources:
   - frwiki-gov-nabeul
+  - jort-1973-325
 - id: p-gov-nabeul-mohsen
   role: governor-nabeul
   holder: abbes-mohsen
-  start: '1976'
+  start: '1976-09-28'
   end: '1978'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Nabeul
+  confidence: A
   sources:
   - frwiki-gov-nabeul
+  - jort-1976-848
 - id: p-gov-nabeul-zouari
   role: governor-nabeul
   holder: abderrahim-zouari
   start: '1978'
-  end: '1980'
+  end: '1980-05-07'
   acting: false
-  confidence: B
+  confidence: A
   sources:
   - frwiki-gov-nabeul
   - frwiki-abderrahim-zouari
+  - jort-1980-842
 - id: p-gov-nabeul-boulabiar
   role: governor-nabeul
   holder: mohamed-boulabiar
   start: '1980'
-  end: '1981'
+  end: '1981-07-17'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Nabeul
+  confidence: A
   sources:
   - frwiki-gov-nabeul
+  - jort-1980-521
+  - jort-1981-1120
 - id: p-gov-nabeul-lahmidi
   role: governor-nabeul
   holder: bechir-lahmidi
   start: '1981'
   end: '1987'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Nabeul
+  confidence: A
   sources:
   - frwiki-gov-nabeul
+  - jort-1981-974
 - id: p-gov-nabeul-boughazli
   role: governor-nabeul
   holder: mostapha-boughazli
   start: '1987'
-  end: '1990'
+  end: '1990-10-25'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Nabeul
+  confidence: A
   sources:
   - frwiki-gov-nabeul
+  - jort-1990-1963
+  - jort-1987-1453
 - id: p-gov-nabeul-daldoul
   role: governor-nabeul
   holder: habib-daldoul
-  start: '1990'
-  end: '1992'
+  start: '1990-10-25'
+  end: '1992-02-10'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Nabeul
+  confidence: A
   sources:
   - frwiki-gov-nabeul
+  - jort-arrete-1990-11-22
+  - jort-1992-473
 - id: p-gov-nabeul-jemal
   role: governor-nabeul
   holder: abdelwaheb-jemal
-  start: '1992'
-  end: '1995'
+  start: '1992-02-10'
+  end: '1995-07-24'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Nabeul
+  confidence: A
   sources:
   - frwiki-gov-nabeul
+  - jort-1992-460
+  - jort-1995-1487
 - id: p-gov-nabeul-dhaouadi
   role: governor-nabeul
   holder: zouheir-dhaouadi
-  start: '1995'
-  end: '1996'
+  start: '1995-07-24'
+  end: '1996-07-24'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Nabeul
+  confidence: A
   sources:
   - frwiki-gov-nabeul
+  - jort-1995-1482
+  - jort-1996-1363
 - id: p-gov-nabeul-el-abed
   role: governor-nabeul
   holder: slaheddine-el-abed
-  start: '1996'
+  start: '1996-07-24'
   end: '2000'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Nabeul
+  confidence: A
   sources:
   - frwiki-gov-nabeul
+  - jort-arrete-1996-08-03
 - id: p-gov-nabeul-hadded
   role: governor-nabeul
   holder: habib-hadded
@@ -17937,13 +17976,13 @@
 - id: p-gov-nabeul-briki
   role: governor-nabeul
   holder: brahim-briki
-  start: '2002'
+  start: '2002-09-18'
   end: '2005'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Nabeul
+  confidence: A
   sources:
   - frwiki-gov-nabeul
+  - jort-2002-2137
 - id: p-gov-nabeul-el-abed-2005
   role: governor-nabeul
   holder: mohamed-lamine-el-abed
@@ -17957,13 +17996,14 @@
 - id: p-gov-nabeul-zaddem
   role: governor-nabeul
   holder: abdejlil-zaddem
-  start: 2010-01
+  start: '2010-01-27'
   end: '2011-02-02'
   acting: false
   confidence: A
   sources:
   - frwiki-gov-nabeul
   - jort-2011-205
+  - jort-2010-211
 - id: p-gov-nabeul-ben-malek
   role: governor-nabeul
   holder: ali-ben-malek
@@ -18109,32 +18149,34 @@
   role: governor-zaghouan
   holder: chedly-maamouri
   start: '1979'
-  end: '1980'
+  end: '1980-04-17'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Zaghouan
+  confidence: A
   sources:
   - frwiki-gov-zaghouan
+  - jort-1979-987
+  - jort-1980-689
 - id: p-gov-zaghouan-stambouli
   role: governor-zaghouan
   holder: mezri-stambouli
   start: '1980'
-  end: '1981'
+  end: '1981-08-26'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Zaghouan
+  confidence: A
   sources:
   - frwiki-gov-zaghouan
+  - jort-1980-429
+  - jort-1981-1161
 - id: p-gov-zaghouan-lassoued
   role: governor-zaghouan
   holder: abdelhak-lassoued
   start: '1981'
   end: '1983'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Zaghouan
+  confidence: A
   sources:
   - frwiki-gov-zaghouan
+  - jort-1981-1118
 - id: p-gov-zaghouan-khebou
   role: governor-zaghouan
   holder: mohamed-khebou
@@ -18151,100 +18193,104 @@
   start: '1984'
   end: '1986'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Zaghouan
+  confidence: A
   sources:
   - frwiki-gov-zaghouan
+  - jort-1984-817
 - id: p-gov-zaghouan-soudani
   role: governor-zaghouan
   holder: mohamed-soudani
   start: '1986'
   end: '1988'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Zaghouan
+  confidence: A
   sources:
   - frwiki-gov-zaghouan
+  - jort-1986-567
 - id: p-gov-zaghouan-maiz
   role: governor-zaghouan
   holder: dhaou-maiz
-  start: '1988'
-  end: '1992'
+  start: '1988-08-04'
+  end: '1992-02-10'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Zaghouan
+  confidence: A
   sources:
   - frwiki-gov-zaghouan
+  - jort-1988-1496
+  - jort-1992-474
 - id: p-gov-zaghouan-cherigui
   role: governor-zaghouan
   holder: kamel-cherigui
-  start: '1992'
-  end: '1994'
+  start: '1992-02-10'
+  end: '1994-05-19'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Zaghouan
+  confidence: A
   sources:
   - frwiki-gov-zaghouan
+  - jort-1992-461
+  - jort-1994-1356
 - id: p-gov-zaghouan-el-ghaoui
   role: governor-zaghouan
   holder: abdellatif-el-ghaoui
-  start: '1994'
-  end: '1996'
+  start: '1994-05-19'
+  end: '1996-07-24'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Zaghouan
+  confidence: A
   sources:
   - frwiki-gov-zaghouan
+  - jort-1994-1353
+  - jort-1996-1354
 - id: p-gov-zaghouan-alaya
   role: governor-zaghouan
   holder: hassen-alaya
-  start: '1996'
+  start: '1996-07-24'
   end: '1998'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Zaghouan
+  confidence: A
   sources:
   - frwiki-gov-zaghouan
+  - jort-arrete-1996-08-03
 - id: p-gov-zaghouan-ayed
   role: governor-zaghouan
   holder: faiez-ayed
-  start: '1998'
+  start: '1998-07-06'
   end: '2002'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Zaghouan
+  confidence: A
   sources:
   - frwiki-gov-zaghouan
+  - jort-1998-1517
 - id: p-gov-zaghouan-negra
   role: governor-zaghouan
   holder: mohamed-negra
-  start: '2002'
+  start: '2002-07-17'
   end: '2004'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Zaghouan
+  confidence: A
   sources:
   - frwiki-gov-zaghouan
+  - jort-2002-1744
 - id: p-gov-zaghouan-mohsni
   role: governor-zaghouan
   holder: saloua-mohsni
   start: '2004'
   end: '2008'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Zaghouan
+  confidence: A
   sources:
   - frwiki-gov-zaghouan
+  - jort-2004-1183
 - id: p-gov-zaghouan-labbassi
   role: governor-zaghouan
   holder: kamel-labbassi
-  start: '2008'
+  start: '2008-08-21'
   end: '2010-12-30'
   acting: false
   confidence: A
   sources:
   - frwiki-gov-zaghouan
   - jort-2011-216
+  - jort-2008-3059
 - id: p-gov-zaghouan-chouba
   role: governor-zaghouan
   holder: lotfi-chouba
@@ -18402,42 +18448,46 @@
   role: governor-bizerte
   holder: naceur-ben-jaafar
   start: '1961'
-  end: '1964'
+  end: '1964-07-16'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Bizerte
+  confidence: A
   sources:
   - frwiki-gov-bizerte
+  - jort-1964-240
 - id: p-gov-bizerte-baccouche
   role: governor-bizerte
   holder: hedi-baccouche
-  start: '1964'
+  start: '1966-06-01'
   end: '1967'
   acting: false
-  confidence: B
+  confidence: A
   sources:
   - frwiki-gov-bizerte
   - frwiki-bio-baccouche
+  - jort-1964-244
+  - jort-1966-381
+  notes:
+  - The start was recorded as 1964-07-16; the gazette instrument places it at 1966-06-01.
 - id: p-gov-bizerte-kooli
   role: governor-bizerte
   holder: mongi-kooli
-  start: '1967'
+  start: '1967-07-10'
   end: '1969-12-31'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Bizerte
+  confidence: A
   sources:
   - frwiki-gov-bizerte
+  - jort-1967-219
 - id: p-gov-bizerte-mehiri
   role: governor-bizerte
   holder: abdeljelil-mehiri
-  start: 1970-01
+  start: '1970-01-01'
   end: 1970-08
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Bizerte
+  confidence: A
   sources:
   - frwiki-gov-bizerte
+  - jort-1970-10
 - id: p-gov-bizerte-ghedira
   role: governor-bizerte
   holder: abdesselem-ghedira
@@ -18451,13 +18501,13 @@
 - id: p-gov-bizerte-chekir
   role: governor-bizerte
   holder: mezri-chekir
-  start: '1971'
+  start: '1971-11-21'
   end: '1972'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Bizerte
+  confidence: A
   sources:
   - frwiki-gov-bizerte
+  - jort-1971-416
 - id: p-gov-bizerte-aloulou
   role: governor-bizerte
   holder: slim-aloulou
@@ -18472,82 +18522,86 @@
   role: governor-bizerte
   holder: abdelmalek-laarif
   start: '1975'
-  end: '1980'
+  end: '1980-04-22'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Bizerte
+  confidence: A
   sources:
   - frwiki-gov-bizerte
+  - jort-1980-691
 - id: p-gov-bizerte-berrejeb
   role: governor-bizerte
   holder: tahar-berrejeb
-  start: '1980'
+  start: '1980-04-22'
   end: '1981'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Bizerte
+  confidence: A
   sources:
   - frwiki-gov-bizerte
+  - jort-1980-715
 - id: p-gov-bizerte-dekhili
   role: governor-bizerte
   holder: rabah-dekhili
   start: '1981'
   end: '1984'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Bizerte
+  confidence: A
   sources:
   - frwiki-gov-bizerte
+  - jort-1981-1117
 - id: p-gov-bizerte-mansouri
   role: governor-bizerte
   holder: salem-mansouri
   start: '1984'
-  end: '1987'
+  end: '1987-08-20'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Bizerte
+  confidence: A
   sources:
   - frwiki-gov-bizerte
+  - jort-1987-1259
 - id: p-gov-bizerte-sayhi
   role: governor-bizerte
   holder: habib-sayhi
-  start: '1987'
-  end: '1990'
+  start: '1987-08-20'
+  end: '1990-10-25'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Bizerte
+  confidence: A
   sources:
   - frwiki-gov-bizerte
+  - jort-1987-1108
+  - jort-1990-1962
 - id: p-gov-bizerte-rahmani
   role: governor-bizerte
   holder: mohamed-rahmani
-  start: '1990'
+  start: '1990-10-25'
   end: '1991-07-02'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Bizerte
+  confidence: A
   sources:
   - frwiki-gov-bizerte
+  - jort-1990-1765
+  - jort-1991-1139
 - id: p-gov-bizerte-ben-rejeb
   role: governor-bizerte
   holder: mohamed-ben-rejeb
   start: '1991-07-02'
   end: '1993-06-15'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Bizerte
+  confidence: A
   sources:
   - frwiki-gov-bizerte
+  - jort-arrete-1991-07-27
 - id: p-gov-bizerte-soudani
   role: governor-bizerte
   holder: mohamed-soudani
-  start: '1993-06-15'
+  start: '1993-06-17'
   end: '1995'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Bizerte
+  confidence: A
   sources:
   - frwiki-gov-bizerte
+  - jort-1993-1552
+  notes:
+  - The start was recorded as 1993-06-15 from secondary lists; the gazette instrument gives 1993-06-17.
 - id: p-gov-bizerte-mokrani
   role: governor-bizerte
   holder: mohamed-ridha-mokrani
@@ -18561,33 +18615,35 @@
 - id: p-gov-bizerte-marzouk
   role: governor-bizerte
   holder: sadok-marzouk
-  start: '1998'
+  start: '1998-07-06'
   end: '2000'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Bizerte
+  confidence: A
   sources:
   - frwiki-gov-bizerte
+  - jort-arrete-1998-07-29
 - id: p-gov-bizerte-brahem
   role: governor-bizerte
   holder: mohamed-habib-brahem
-  start: '2000'
+  start: '2000-07-07'
   end: '2004'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Bizerte
+  confidence: A
   sources:
   - frwiki-gov-bizerte
+  - jort-arrete-2000-07-26
+  - jort-2004-2750
 - id: p-gov-bizerte-chabbah
   role: governor-bizerte
   holder: mehdi-chabbah
-  start: '2004'
-  end: '2005'
+  start: '2004-11-22'
+  end: '2005-08-04'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Bizerte
+  confidence: A
   sources:
   - frwiki-gov-bizerte
+  - jort-2004-2743
+  - jort-2005-2387
 - id: p-gov-bizerte-jeribi
   role: governor-bizerte
   holder: salem-jeribi
@@ -18708,93 +18764,95 @@
 - id: p-gov-beja-bellalouna
   role: governor-beja
   holder: ahmed-bellalouna
-  start: '1957'
+  start: '1957-10-01'
   end: '1959'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Béja
+  confidence: A
   sources:
   - frwiki-gov-beja
+  - jort-arrete-1957-09-30
 - id: p-gov-beja-abdelkefi
   role: governor-beja
   holder: taher-abdelkefi
-  start: '1959'
+  start: '1959-01-01'
   end: '1961'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Béja
+  confidence: A
   sources:
   - frwiki-gov-beja
+  - jort-1959-21
 - id: p-gov-beja-nouira
   role: governor-beja
   holder: mohsen-nouira
-  start: '1961'
-  end: '1964'
+  start: '1961-08-24'
+  end: '1964-07-16'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Béja
+  confidence: A
   sources:
   - frwiki-gov-beja
+  - jort-1961-306
+  - jort-1964-237
 - id: p-gov-beja-triki
   role: governor-beja
   holder: mohamed-triki
-  start: '1964'
+  start: '1964-07-16'
   end: '1966'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Béja
+  confidence: A
   sources:
   - frwiki-gov-beja
+  - jort-arrete-1964-07-15
 - id: p-gov-beja-kacem
   role: governor-beja
   holder: tahar-kacem
-  start: '1966'
+  start: '1966-10-01'
   end: '1968-12-31'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Béja
+  confidence: A
   sources:
   - frwiki-gov-beja
+  - jort-1966-385
 - id: p-gov-beja-kefi
   role: governor-beja
   holder: abderrazak-kefi
-  start: 1969-01
+  start: '1969-01-24'
   end: 1969-09
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Béja
+  confidence: A
   sources:
   - frwiki-gov-beja
+  - jort-1969-49
 - id: p-gov-beja-ben-mimoun
   role: governor-beja
   holder: romdhan-ben-mimoun
   start: '1969'
   end: '1971'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Béja
+  confidence: A
   sources:
   - frwiki-gov-beja
+  - jort-1969-321
 - id: p-gov-beja-bellakhoua
   role: governor-beja
   holder: mohamed-hedi-bellakhoua
   start: '1971'
   end: '1973'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Béja
+  confidence: A
   sources:
   - frwiki-gov-beja
+  - jort-1971-417
+  - jort-1973-427
 - id: p-gov-beja-fenniche
   role: governor-beja
   holder: noureddine-fenniche
-  start: '1973'
+  start: '1973-09-15'
   end: '1977'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Béja
+  confidence: A
   sources:
   - frwiki-gov-beja
+  - jort-1973-428
 - id: p-gov-beja-ladab
   role: governor-beja
   holder: abderrazak-ladab
@@ -18821,40 +18879,42 @@
   start: '1980'
   end: '1984'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Béja
+  confidence: A
   sources:
   - frwiki-gov-beja
+  - jort-1980-428
 - id: p-gov-beja-neffati
   role: governor-beja
   holder: chedli-neffati
-  start: '1984'
+  start: '1984-07-18'
   end: '1987'
   acting: false
-  confidence: B
+  confidence: A
   sources:
   - frwiki-gov-beja
   - frwiki-bio-neffati
+  - jort-1984-897
 - id: p-gov-beja-ben-jedidia
   role: governor-beja
   holder: moncef-ben-jedidia
-  start: '1987'
-  end: '1990'
+  start: '1987-08-20'
+  end: '1990-10-25'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Béja
+  confidence: A
   sources:
   - frwiki-gov-beja
+  - jort-1987-1109
+  - jort-1990-1964
 - id: p-gov-beja-ayeche
   role: governor-beja
   holder: hedi-ayeche
-  start: '1990'
+  start: '1990-10-25'
   end: '1993'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Béja
+  confidence: A
   sources:
   - frwiki-gov-beja
+  - jort-arrete-1990-11-22
 - id: p-gov-beja-marzouk
   role: governor-beja
   holder: sadok-marzouk
@@ -18868,43 +18928,45 @@
 - id: p-gov-beja-alaya
   role: governor-beja
   holder: hassen-alaya
-  start: '1998'
-  end: '1999'
+  start: '1998-07-06'
+  end: '1999-06-16'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Béja
+  confidence: A
   sources:
   - frwiki-gov-beja
+  - jort-arrete-1998-07-29
+  - jort-1999-1630
 - id: p-gov-beja-belghith
   role: governor-beja
   holder: mohamed-belghith
-  start: '1999'
+  start: '1999-06-16'
   end: '2000'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Béja
+  confidence: A
   sources:
   - frwiki-gov-beja
+  - jort-1999-1472
 - id: p-gov-beja-senoussi
   role: governor-beja
   holder: mohsen-senoussi
-  start: '2000'
-  end: '2001'
+  start: '2000-07-07'
+  end: '2001-08-04'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Béja
+  confidence: A
   sources:
   - frwiki-gov-beja
+  - jort-arrete-2000-07-26
+  - jort-2001-2032
 - id: p-gov-beja-jeribi
   role: governor-beja
   holder: salem-jeribi
-  start: '2001'
+  start: '2001-08-04'
   end: '2005'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Béja
+  confidence: A
   sources:
   - frwiki-gov-beja
+  - jort-2001-2021
 - id: p-gov-beja-ben-salem
   role: governor-beja
   holder: mohamed-ben-salem
@@ -18918,13 +18980,14 @@
 - id: p-gov-beja-somai
   role: governor-beja
   holder: kamel-somai
-  start: '2007'
+  start: '2007-08-22'
   end: '2011-02-02'
   acting: false
   confidence: A
   sources:
   - frwiki-gov-beja
   - jort-2011-201
+  - jort-2007-2293
 - id: p-gov-beja-hamzaoui
   role: governor-beja
   holder: hatem-hamzaoui
@@ -19070,145 +19133,160 @@
 - id: p-gov-jendouba-kooli
   role: governor-jendouba
   holder: mongi-kooli
-  start: '1964'
+  start: '1966-06-01'
   end: '1967'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Jendouba
+  confidence: A
   notes:
   - Souk El Arba name until 31 May 1966, Jendouba afterwards.
+  - The start was recorded as 1964; the gazette instrument places it at 1966-06-01.
   sources:
   - frwiki-gov-jendouba
+  - jort-1966-382
 - id: p-gov-jendouba-beltaief
   role: governor-jendouba
   holder: abdelaziz-beltaief
-  start: '1967'
-  end: '1969'
+  start: '1967-07-10'
+  end: '1970-06-17'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Jendouba
+  confidence: A
   sources:
   - frwiki-gov-jendouba
+  - jort-1967-219
+  - jort-1970-239
+  notes:
+  - The end was recorded as 1969 from secondary lists; the gazette instrument gives 1970-06-17.
 - id: p-gov-jendouba-souyah
   role: governor-jendouba
   holder: mohamed-souyah
-  start: '1969'
+  start: <=1971-09
   end: '1970'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Jendouba
+  confidence: A
   sources:
   - frwiki-gov-jendouba
+  - jort-1971-327
+  notes:
+  - The start was recorded as 1969; the gazette instrument places it at <=1971-09.
 - id: p-gov-jendouba-zannad
   role: governor-jendouba
   holder: mokhtar-zannad
-  start: '1970'
+  start: '1970-07-09'
   end: '1971'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Jendouba
+  confidence: A
   sources:
   - frwiki-gov-jendouba
+  - jort-1970-233
 - id: p-gov-jendouba-louzir
   role: governor-jendouba
   holder: hassen-louzir
-  start: '1971'
+  start: '1971-03-12'
   end: '1973'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Jendouba
+  confidence: A
   sources:
   - frwiki-gov-jendouba
+  - jort-1971-89
 - id: p-gov-jendouba-laarif
   role: governor-jendouba
   holder: abdelmalek-laarif
-  start: '1973'
+  start: '1973-05-24'
   end: '1975'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Jendouba
+  confidence: A
   sources:
   - frwiki-gov-jendouba
+  - jort-1973-241
 - id: p-gov-jendouba-robbana
   role: governor-jendouba
   holder: said-robbana
   start: '1975'
   end: '1978'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Jendouba
+  confidence: A
   sources:
   - frwiki-gov-jendouba
+  - jort-1975-37
+  - jort-1978-296
 - id: p-gov-jendouba-trad
   role: governor-jendouba
   holder: khelil-trad
   start: '1978'
-  end: '1981'
+  end: '1980-04-17'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Jendouba
+  confidence: A
   sources:
   - frwiki-gov-jendouba
+  - jort-1978-306
+  - jort-1980-686
+  notes:
+  - The end was recorded as 1981 from secondary lists; the gazette instrument gives 1980-04-17.
 - id: p-gov-jendouba-kefi
   role: governor-jendouba
   holder: abderrazak-kefi
-  start: '1981'
+  start: <=1980-04
   end: '1982'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Jendouba
+  confidence: A
   sources:
   - frwiki-gov-jendouba
+  - jort-1981-459
+  - jort-1980-425
+  notes:
+  - The start was recorded as 1981; the gazette instrument places it at <=1980-04.
 - id: p-gov-jendouba-ayoub
   role: governor-jendouba
   holder: abderrazak-ayoub
-  start: '1982'
+  start: <=1981-04
   end: '1984'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Jendouba
+  confidence: A
   sources:
   - frwiki-gov-jendouba
+  - jort-1981-435
+  notes:
+  - The start was recorded as 1982; the gazette instrument places it at <=1981-04.
 - id: p-gov-jendouba-khanfir
   role: governor-jendouba
   holder: hamed-khanfir
   start: '1984'
   end: '1987'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Jendouba
+  confidence: A
   sources:
   - frwiki-gov-jendouba
+  - jort-1984-814
 - id: p-gov-jendouba-khelil
   role: governor-jendouba
   holder: mohamed-fadhel-khelil
-  start: '1987'
+  start: '1987-08-20'
   end: '1988'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Jendouba
+  confidence: A
   sources:
   - frwiki-gov-jendouba
+  - jort-1987-1106
 - id: p-gov-jendouba-belhaj
   role: governor-jendouba
   holder: mohamed-belhaj
-  start: '1988'
+  start: '1988-08-04'
   end: '1990'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Jendouba
+  confidence: A
   sources:
   - frwiki-gov-jendouba
+  - jort-1988-1497
 - id: p-gov-jendouba-el-abed
   role: governor-jendouba
   holder: slaheddine-el-abed
-  start: '1990'
+  start: '1990-01-17'
   end: '1993'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Jendouba
+  confidence: A
   sources:
   - frwiki-gov-jendouba
+  - jort-1990-239
 - id: p-gov-jendouba-belghith
   role: governor-jendouba
   holder: mohamed-belghith
@@ -19222,53 +19300,55 @@
 - id: p-gov-jendouba-hadroug
   role: governor-jendouba
   holder: abdallah-hadroug
-  start: '1995'
-  end: '1996'
+  start: '1995-08-12'
+  end: '1996-07-24'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Jendouba
+  confidence: A
   sources:
   - frwiki-gov-jendouba
+  - jort-1995-1726
+  - jort-1996-1355
 - id: p-gov-jendouba-ben-gamra
   role: governor-jendouba
   holder: habib-ben-gamra
-  start: '1996'
+  start: '1996-07-24'
   end: '2000'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Jendouba
+  confidence: A
   sources:
   - frwiki-gov-jendouba
+  - jort-arrete-1996-08-03
 - id: p-gov-jendouba-ksiksi
   role: governor-jendouba
   holder: ali-ksiksi
-  start: '2000'
+  start: '2000-07-07'
   end: '2004'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Jendouba
+  confidence: A
   sources:
   - frwiki-gov-jendouba
+  - jort-arrete-2000-07-26
 - id: p-gov-jendouba-bellalouna
   role: governor-jendouba
   holder: mahmoud-bellalouna
-  start: '2004'
-  end: '2005'
+  start: '2004-11-22'
+  end: '2005-08-04'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Jendouba
+  confidence: A
   sources:
   - frwiki-gov-jendouba
+  - jort-2004-2745
+  - jort-2005-2390
 - id: p-gov-jendouba-slim
   role: governor-jendouba
   holder: hedi-slim
-  start: '2005'
+  start: '2005-08-04'
   end: '2010'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Jendouba
+  confidence: A
   sources:
   - frwiki-gov-jendouba
+  - jort-2005-2384
 - id: p-gov-jendouba-ben-arab
   role: governor-jendouba
   holder: mohamed-faouzi-ben-arab
@@ -19279,6 +19359,7 @@
   sources:
   - frwiki-gov-jendouba
   - jort-2011-218
+  - jort-2010-2046
 - id: p-gov-jendouba-ben-abdallah
   role: governor-jendouba
   holder: mohamed-ben-abdallah
@@ -19405,63 +19486,69 @@
 - id: p-gov-kef-bellagha
   role: governor-kef
   holder: bechir-bellagha
-  start: '1957'
+  start: '1957-10-01'
   end: '1960'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat du Kef
+  confidence: A
   sources:
   - frwiki-gov-kef
+  - jort-arrete-1957-09-30
 - id: p-gov-kef-mabrouk
   role: governor-kef
   holder: hedi-mabrouk
   start: '1960'
-  end: '1961'
+  end: '1961-11-25'
   acting: false
-  confidence: B
+  confidence: A
   sources:
   - frwiki-gov-kef
   - frwiki-bio-mabrouk
+  - jort-1961-419
 - id: p-gov-kef-triki
   role: governor-kef
   holder: mohamed-triki
-  start: '1961'
+  start: '1963-01-01'
   end: '1964'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat du Kef
+  confidence: A
   sources:
   - frwiki-gov-kef
+  - jort-1963-8
+  notes:
+  - The start was recorded as 1961; the gazette instrument places it at 1963-01-01.
 - id: p-gov-kef-kallel
   role: governor-kef
   holder: abdessalem-kallel
-  start: '1964'
+  start: '1966-06-01'
   end: '1969'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat du Kef
+  confidence: A
   sources:
   - frwiki-gov-kef
+  - jort-1966-383
+  - jort-1964-243
+  notes:
+  - The start was recorded as 1964; the gazette instrument places it at 1966-06-01.
 - id: p-gov-kef-el-ghoul
   role: governor-kef
   holder: mahmoud-el-ghoul
   start: '1969'
   end: '1970'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat du Kef
+  confidence: A
   sources:
   - frwiki-gov-kef
+  - jort-1969-319
 - id: p-gov-kef-boussemma
   role: governor-kef
   holder: tahar-boussemma
   start: '1970'
   end: '1971'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat du Kef
+  confidence: A
   sources:
   - frwiki-gov-kef
+  - jort-1970-300
 - id: p-gov-kef-attia
   role: governor-kef
   holder: hedi-attia
@@ -19475,83 +19562,92 @@
 - id: p-gov-kef-belkhiria
   role: governor-kef
   holder: moncef-belkhiria
-  start: '1973'
+  start: <=1974-03
   end: '1979'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat du Kef
+  confidence: A
   sources:
   - frwiki-gov-kef
+  - jort-1974-157
+  notes:
+  - The start was recorded as 1973; the gazette instrument places it at <=1974-03.
 - id: p-gov-kef-laabidi
   role: governor-kef
   holder: mohamed-laabidi
   start: '1979'
-  end: '1980'
+  end: '1980-04-22'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat du Kef
+  confidence: A
   sources:
   - frwiki-gov-kef
+  - jort-1979-986
+  - jort-1980-693
 - id: p-gov-kef-tekaya
   role: governor-kef
   holder: abdelhakim-tekaya
-  start: '1980'
+  start: '1980-04-22'
   end: '1981'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat du Kef
+  confidence: A
   sources:
   - frwiki-gov-kef
+  - jort-1980-714
+  - jort-1981-100
 - id: p-gov-kef-khelil
   role: governor-kef
   holder: mohamed-fadhel-khelil
   start: '1981'
   end: '1982'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat du Kef
+  confidence: A
   sources:
   - frwiki-gov-kef
+  - jort-1981-57
+  - jort-1982-1040
 - id: p-gov-kef-mansouri
   role: governor-kef
   holder: salem-mansouri
   start: '1982'
   end: '1984'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat du Kef
+  confidence: A
   sources:
   - frwiki-gov-kef
+  - jort-1982-967
+  - jort-1984-897
+  notes:
+  - Two gazette instruments give different start dates for this tenure (1982-06-18, 1984-07-18); the recorded start is kept until they are reconciled.
 - id: p-gov-kef-badreddine
   role: governor-kef
   holder: mustapha-badreddine
   start: '1984'
   end: '1986'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat du Kef
+  confidence: A
   sources:
   - frwiki-gov-kef
+  - jort-1984-810
 - id: p-gov-kef-gharbi
   role: governor-kef
   holder: mohamed-habib-gharbi
   start: '1986'
-  end: '1987'
+  end: '1987-08-20'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat du Kef
+  confidence: A
   sources:
   - frwiki-gov-kef
+  - jort-1986-365
+  - jort-1987-1260
 - id: p-gov-kef-ben-gharbia
   role: governor-kef
   holder: moncef-ben-gharbia
-  start: '1987'
+  start: '1987-08-20'
   end: '1988'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat du Kef
+  confidence: A
   sources:
   - frwiki-gov-kef
+  - jort-1987-1105
 - id: p-gov-kef-saad
   role: governor-kef
   holder: mohamed-saad
@@ -19565,93 +19661,98 @@
 - id: p-gov-kef-marzougui
   role: governor-kef
   holder: mohamed-marzougui
-  start: '1989'
+  start: '1989-09-28'
   end: '1990'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat du Kef
+  confidence: A
   sources:
   - frwiki-gov-kef
+  - jort-1989-1516
 - id: p-gov-kef-balti
   role: governor-kef
   holder: moncef-balti
-  start: '1990'
-  end: '1991'
+  start: '1990-10-25'
+  end: '1991-07-02'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat du Kef
+  confidence: A
   sources:
   - frwiki-gov-kef
+  - jort-1990-1760
+  - jort-1991-1136
 - id: p-gov-kef-ben-kraiem
   role: governor-kef
   holder: boubaker-ben-kraiem
-  start: '1991'
-  end: '1992'
+  start: '1991-07-02'
+  end: '1992-02-19'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat du Kef
+  confidence: A
   sources:
   - frwiki-gov-kef
+  - jort-arrete-1991-07-27
+  - jort-1992-614
 - id: p-gov-kef-mejdoub
   role: governor-kef
   holder: bechir-mejdoub
-  start: '1992'
-  end: '1995'
+  start: '1992-02-19'
+  end: '1995-07-24'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat du Kef
+  confidence: A
   sources:
   - frwiki-gov-kef
+  - jort-1992-613
+  - jort-1995-1486
 - id: p-gov-kef-hajji
   role: governor-kef
   holder: saad-hajji
-  start: '1995'
-  end: '1996'
+  start: '1995-07-24'
+  end: '1996-07-24'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat du Kef
+  confidence: A
   sources:
   - frwiki-gov-kef
+  - jort-1995-1483
+  - jort-1996-1364
 - id: p-gov-kef-karbia
   role: governor-kef
   holder: mustapha-karbia
-  start: '1996'
+  start: '1996-07-24'
   end: '2000'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat du Kef
+  confidence: A
   sources:
   - frwiki-gov-kef
+  - jort-arrete-1996-08-03
 - id: p-gov-kef-bouslimi
   role: governor-kef
   holder: jamaleddine-bouslimi
-  start: '2000'
+  start: '2000-07-07'
   end: '2002'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat du Kef
+  confidence: A
   sources:
   - frwiki-gov-kef
+  - jort-arrete-2000-07-26
 - id: p-gov-kef-daly
   role: governor-kef
   holder: chabib-daly
-  start: '2002'
-  end: '2005'
+  start: '2002-07-17'
+  end: '2005-08-04'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat du Kef
+  confidence: A
   sources:
   - frwiki-gov-kef
+  - jort-arrete-2002-08-06
+  - jort-2005-2388
 - id: p-gov-kef-somai
   role: governor-kef
   holder: kamel-somai
-  start: '2005'
+  start: '2005-08-04'
   end: '2006'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat du Kef
+  confidence: A
   sources:
   - frwiki-gov-kef
+  - jort-2005-2385
 - id: p-gov-kef-labbassi
   role: governor-kef
   holder: kamel-labbassi
@@ -19665,23 +19766,25 @@
 - id: p-gov-kef-belkhiria-2008
   role: governor-kef
   holder: mohamed-mzoughi-belkhiria
-  start: '2008'
-  end: '2009'
+  start: '2008-08-21'
+  end: '2009-03-18'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat du Kef
+  confidence: A
   sources:
   - frwiki-gov-kef
+  - jort-2008-2997
+  - jort-2009-1126
 - id: p-gov-kef-laamari
   role: governor-kef
   holder: hatem-laamari
-  start: '2009'
+  start: '2009-03-18'
   end: '2011-02-02'
   acting: false
   confidence: A
   sources:
   - frwiki-gov-kef
   - jort-2011-195
+  - jort-2009-1085
 - id: p-gov-kef-tlijani
   role: governor-kef
   holder: nejib-tlijani
@@ -19777,30 +19880,30 @@
   start: '1974'
   end: '1977'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Siliana
+  confidence: A
   sources:
   - frwiki-gov-siliana
+  - jort-1974-589
 - id: p-gov-siliana-saibi
   role: governor-siliana
   holder: youssef-saibi
-  start: '1977'
+  start: '1977-03-05'
   end: '1980-04-22'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Siliana
+  confidence: A
   sources:
   - frwiki-gov-siliana
+  - jort-1977-207
 - id: p-gov-siliana-sraieb
   role: governor-siliana
   holder: tahar-sraieb
   start: '1980-04-22'
   end: '1980-12-10'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Siliana
+  confidence: A
   sources:
   - frwiki-gov-siliana
+  - jort-1980-1546
 - id: p-gov-siliana-foudhaili
   role: governor-siliana
   holder: moncef-foudhaili
@@ -19827,20 +19930,22 @@
   start: '1986-07-24'
   end: '1988-02-13'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Siliana
+  confidence: A
   sources:
   - frwiki-gov-siliana
+  - jort-1986-792
 - id: p-gov-siliana-karoui
   role: governor-siliana
   holder: chedly-karoui
-  start: '1988-02-13'
+  start: '1988-02-09'
   end: '1988-12-01'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Siliana
+  confidence: A
   sources:
   - frwiki-gov-siliana
+  - jort-1988-235
+  notes:
+  - The start was recorded as 1988-02-13 from secondary lists; the gazette instrument gives 1988-02-09.
 - id: p-gov-siliana-kriaa
   role: governor-siliana
   holder: ameur-kriaa
@@ -19854,13 +19959,13 @@
 - id: p-gov-siliana-marzouk
   role: governor-siliana
   holder: sadok-marzouk
-  start: '1990'
+  start: '1990-09-12'
   end: '1993'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Siliana
+  confidence: A
   sources:
   - frwiki-gov-siliana
+  - jort-1990-1495
 - id: p-gov-siliana-mokrani
   role: governor-siliana
   holder: mohamed-ridha-mokrani
@@ -19874,53 +19979,57 @@
 - id: p-gov-siliana-trabelsi
   role: governor-siliana
   holder: ali-trabelsi
-  start: '1995'
+  start: '1995-07-24'
   end: '1998'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Siliana
+  confidence: A
   sources:
   - frwiki-gov-siliana
+  - jort-1995-1484
 - id: p-gov-siliana-smaoui
   role: governor-siliana
   holder: hassene-smaoui
-  start: '1998'
+  start: '1998-01-22'
   end: '2000-07-07'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Siliana
+  confidence: A
   sources:
   - frwiki-gov-siliana
+  - jort-arrete-1998-02-10
+  - jort-2000-1758
 - id: p-gov-siliana-jebeniani
   role: governor-siliana
   holder: khelifa-jebeniani
   start: '2000-07-07'
   end: '2005-08-04'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Siliana
+  confidence: A
   sources:
   - frwiki-gov-siliana
+  - jort-2000-1757
 - id: p-gov-siliana-ben-jelloul
   role: governor-siliana
   holder: mourad-ben-jelloul
   start: '2005-08-04'
   end: '2008-08-20'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Siliana
+  confidence: A
   sources:
   - frwiki-gov-siliana
+  - jort-2005-2381
 - id: p-gov-siliana-barkallah
   role: governor-siliana
   holder: nejib-barkallah
-  start: '2008-08-20'
+  start: '2008-08-21'
   end: '2011-02-02'
   acting: false
   confidence: A
   sources:
   - frwiki-gov-siliana
   - jort-2011-202
+  - jort-2008-3059
+  notes:
+  - The start was recorded as 2008-08-20 from secondary lists; the gazette instrument gives 2008-08-21.
 - id: p-gov-siliana-rabhi
   role: governor-siliana
   holder: abdessattar-rabhi
@@ -20036,52 +20145,63 @@
   role: governor-kairouan
   holder: amor-chachia
   start: '1956'
-  end: '1964'
+  end: '1964-07-16'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Kairouan
+  confidence: A
   sources:
   - frwiki-gov-kairouan
+  - jort-1962-296
+  - jort-1964-239
+  notes:
+  - The end was recorded as 1964; the gazette instrument places it at 1964-07-16.
 - id: p-gov-kairouan-aljia
   role: governor-kairouan
   holder: mohsen-bel-aljia
   start: '1964'
-  end: '1964'
+  end: '1966-10-01'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Kairouan
+  confidence: A
   sources:
   - frwiki-gov-kairouan
+  - jort-1966-380
+  notes:
+  - The end was recorded as 1964; the gazette instrument places it at 1966-10-01.
 - id: p-gov-kairouan-fekih
   role: governor-kairouan
   holder: mongi-fekih
-  start: '1964'
+  start: '1968-10-01'
   end: '1969'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Kairouan
+  confidence: A
   sources:
   - frwiki-gov-kairouan
+  - jort-1969-292
+  notes:
+  - The start was recorded as 1964; the gazette instrument places it at 1968-10-01.
 - id: p-gov-kairouan-msadek
   role: governor-kairouan
   holder: amor-msadek
-  start: '1969'
+  start: '1970-01-01'
   end: '1970'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Kairouan
+  confidence: A
   sources:
   - frwiki-gov-kairouan
+  - jort-1970-12
+  notes:
+  - The start was recorded as 1969 from secondary lists; the gazette instrument gives 1970-01-01.
 - id: p-gov-kairouan-aloulou
   role: governor-kairouan
   holder: slim-aloulou
   start: '1970'
   end: '1972'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Kairouan
+  confidence: A
   sources:
   - frwiki-gov-kairouan
+  - jort-1970-232
+  notes:
+  - 'Name check: given name Abdessalem in the gazette, Slim in the record. The gazette spelling is kept as an alias until a second source settles it.'
 - id: p-gov-kairouan-boussemma
   role: governor-kairouan
   holder: tahar-boussemma
@@ -20095,153 +20215,162 @@
 - id: p-gov-kairouan-alaya
   role: governor-kairouan
   holder: hedi-alaya
-  start: '1978'
+  start: <=1978-03
   end: '1979'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Kairouan
+  confidence: A
   sources:
   - frwiki-gov-kairouan
+  - jort-1978-304
 - id: p-gov-kairouan-lahmidi
   role: governor-kairouan
   holder: bechir-lahmidi
   start: '1979'
   end: '1981'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Kairouan
+  confidence: A
   sources:
   - frwiki-gov-kairouan
+  - jort-1979-982
 - id: p-gov-kairouan-ben-ammar
   role: governor-kairouan
   holder: abdessalem-ben-ammar
   start: '1981'
   end: '1982'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Kairouan
+  confidence: A
   sources:
   - frwiki-gov-kairouan
+  - jort-1981-1108
+  - jort-1982-1039
 - id: p-gov-kairouan-neffati
   role: governor-kairouan
   holder: chedli-neffati
-  start: '1982'
+  start: '1982-06-18'
   end: '1984'
   acting: false
-  confidence: B
+  confidence: A
   sources:
   - frwiki-gov-kairouan
   - frwiki-bio-neffati
+  - jort-1982-965
 - id: p-gov-kairouan-guezmir
   role: governor-kairouan
   holder: khaled-guezmir
   start: '1984'
-  end: '1987'
+  end: '1987-08-20'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Kairouan
+  confidence: A
   sources:
   - frwiki-gov-kairouan
+  - jort-1984-815
+  - jort-1987-1281
 - id: p-gov-kairouan-belhaj-kacem
   role: governor-kairouan
   holder: rafiq-belhaj-kacem
-  start: '1987'
+  start: '1987-08-20'
   end: '1988'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Kairouan
+  confidence: A
   sources:
   - frwiki-gov-kairouan
+  - jort-1987-1107
 - id: p-gov-kairouan-sassi
   role: governor-kairouan
   holder: kamel-haj-sassi
   start: '1988'
-  end: '1991'
+  end: '1991-08-12'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Kairouan
+  confidence: A
   sources:
   - frwiki-gov-kairouan
+  - jort-1991-1252
 - id: p-gov-kairouan-mekki
   role: governor-kairouan
   holder: salem-mekki
   start: '1991'
-  end: '1992'
+  end: '1992-06-13'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Kairouan
+  confidence: A
   sources:
   - frwiki-gov-kairouan
+  - jort-1991-1251
+  - jort-1992-1205
 - id: p-gov-kairouan-hafsi
   role: governor-kairouan
   holder: noureddine-hafsi
-  start: '1992'
-  end: '1993'
+  start: '1992-06-13'
+  end: '1993-08-11'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Kairouan
+  confidence: A
   sources:
   - frwiki-gov-kairouan
+  - jort-1992-1200
+  - jort-1993-1883
 - id: p-gov-kairouan-jouini
   role: governor-kairouan
   holder: salah-jouini
-  start: '1993'
-  end: '1994'
+  start: '1993-08-11'
+  end: '1994-05-19'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Kairouan
+  confidence: A
   sources:
   - frwiki-gov-kairouan
+  - jort-1993-1881
+  - jort-1994-1358
 - id: p-gov-kairouan-bouslimi
   role: governor-kairouan
   holder: jamel-bouslimi
-  start: '1994'
+  start: '1994-05-19'
   end: '2000'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Kairouan
+  confidence: A
   sources:
   - frwiki-gov-kairouan
+  - jort-1994-1354
 - id: p-gov-kairouan-ben-gamra
   role: governor-kairouan
   holder: habib-ben-gamra
-  start: '2000'
-  end: '2001'
+  start: '2000-07-07'
+  end: '2001-01-30'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Kairouan
+  confidence: A
   sources:
   - frwiki-gov-kairouan
+  - jort-arrete-2000-07-26
+  - jort-2001-654
 - id: p-gov-kairouan-aoual
   role: governor-kairouan
   holder: habib-aoual
-  start: '2001'
-  end: '2004'
+  start: '2001-01-30'
+  end: '2004-11-22'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Kairouan
+  confidence: A
   sources:
   - frwiki-gov-kairouan
+  - jort-2001-652
+  - jort-2004-2752
 - id: p-gov-kairouan-barkallah
   role: governor-kairouan
   holder: nejib-barkallah
-  start: '2004'
+  start: '2004-11-22'
   end: '2007'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Kairouan
+  confidence: A
   sources:
   - frwiki-gov-kairouan
+  - jort-2004-2744
 - id: p-gov-kairouan-barbouche
   role: governor-kairouan
   holder: yassine-barbouche
-  start: '2007'
+  start: '2007-08-22'
   end: '2011-02-02'
   acting: false
   confidence: A
   sources:
   - frwiki-gov-kairouan
   - jort-2011-203
+  - jort-2007-2293
 - id: p-gov-kairouan-ben-hassen
   role: governor-kairouan
   holder: abdeljelil-ben-hassen
@@ -20393,23 +20522,24 @@
 - id: p-gov-sfax-mehrez-bellamine
   role: governor-sfax
   holder: mehrez-bellamine
-  start: '1964'
-  end: '1967'
+  start: '1964-07-16'
+  end: '1967-07-10'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sfax
+  confidence: A
   sources:
   - frwiki-sfax-gov
+  - jort-arrete-1964-07-15
+  - jort-1967-216
 - id: p-gov-sfax-hedi-baccouche
   role: governor-sfax
   holder: hedi-baccouche
-  start: '1967'
+  start: '1967-07-10'
   end: '1969'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sfax
+  confidence: A
   sources:
   - frwiki-sfax-gov
+  - jort-1967-219
 - id: p-gov-sfax-zakaria-ben-mustapha
   role: governor-sfax
   holder: zakaria-ben-mustapha
@@ -20426,30 +20556,33 @@
   start: '1970'
   end: '1971'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sfax
+  confidence: A
   sources:
   - frwiki-sfax-gov
+  - jort-1970-234
+  - jort-arrete-1971-03-12
+  notes:
+  - Two gazette instruments give different start dates for this tenure (1970-07-09, 1971-03-12); the recorded start is kept until they are reconciled.
 - id: p-gov-sfax-kacem-bousnina
   role: governor-sfax
   holder: kacem-bousnina
-  start: '1971'
+  start: '1971-03-12'
   end: '1973'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sfax
+  confidence: A
   sources:
   - frwiki-sfax-gov
+  - jort-1971-88
 - id: p-gov-sfax-rachid-badri
   role: governor-sfax
   holder: rachid-badri
-  start: '1973'
+  start: '1973-05-24'
   end: '1974'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sfax
+  confidence: A
   sources:
   - frwiki-sfax-gov
+  - jort-arrete-1973-05-25
 - id: p-gov-sfax-ameur-ghedira
   role: governor-sfax
   holder: ameur-ghedira
@@ -20463,167 +20596,176 @@
 - id: p-gov-sfax-habib-tounsi
   role: governor-sfax
   holder: habib-tounsi
-  start: '1978'
-  end: '1980'
+  start: <=1978-03
+  end: '1980-04-22'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sfax
+  confidence: A
   sources:
   - frwiki-sfax-gov
+  - jort-1978-300
+  - jort-1980-690
 - id: p-gov-sfax-mohamed-boughzala
   role: governor-sfax
   holder: mohamed-boughzala
-  start: '1980'
-  end: '1980'
+  start: '1980-04-22'
+  end: '1980-12-10'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sfax
+  confidence: A
   notes:
   - The list gives the single year 1980.
   sources:
   - frwiki-sfax-gov
+  - jort-1980-712
+  - jort-1980-1547
 - id: p-gov-sfax-tahar-sraieb
   role: governor-sfax
   holder: tahar-sraieb-sfax
   start: '1980'
   end: '1981'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sfax
+  confidence: A
   sources:
   - frwiki-sfax-gov
+  - jort-1982-203
 - id: p-gov-sfax-hamadi-amara
   role: governor-sfax
   holder: hamadi-amara
-  start: '1982'
+  start: <=1981-12
   end: '1982'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sfax
+  confidence: A
   notes:
   - The list gives "1982, 13 jours" (13 days) without exact dates.
+  - The start was recorded as 1982 from secondary lists; the gazette instrument gives <=1981-12.
+  - 'Name check: gazette Mohamed Ben Amara, record Hamadi Amara; Hamadi is a common short form of Mohamed. The gazette spelling is kept as an alias until a second source settles it.'
   sources:
   - frwiki-sfax-gov
+  - jort-1981-1891
 - id: p-gov-sfax-abdelkader-zitouna
   role: governor-sfax
   holder: abdelkader-zitouna
   start: '1982'
   end: '1984'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sfax
+  confidence: A
   sources:
   - frwiki-sfax-gov
+  - jort-1982-116
 - id: p-gov-sfax-abdelkader-n-siri
   role: governor-sfax
   holder: abdelkader-n-siri
   start: '1984'
   end: '1986'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sfax
+  confidence: A
   sources:
   - frwiki-sfax-gov
+  - jort-1984-811
+  - jort-1986-713
 - id: p-gov-sfax-amor-latiri
   role: governor-sfax
   holder: amor-latiri
-  start: '1986'
+  start: '1986-06-26'
   end: '1988'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sfax
+  confidence: A
   sources:
   - frwiki-sfax-gov
+  - jort-1986-712
 - id: p-gov-sfax-mohamed-fadhel-khelil
   role: governor-sfax
   holder: mohamed-fadhel-khelil-sfax
   start: '1988'
   end: '1990'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sfax
+  confidence: A
   sources:
   - frwiki-sfax-gov
+  - jort-1988-1498
 - id: p-gov-sfax-mohamed-ben-saad
   role: governor-sfax
   holder: mohamed-ben-saad
-  start: '1990'
-  end: '1992'
+  start: '1990-09-12'
+  end: '1992-02-10'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sfax
+  confidence: A
   sources:
   - frwiki-sfax-gov
+  - jort-1990-1496
+  - jort-1992-472
 - id: p-gov-sfax-mohamed-rachdi
   role: governor-sfax
   holder: mohamed-rachdi-sfax
   start: '1992'
   end: '1995'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sfax
+  confidence: A
   sources:
   - frwiki-sfax-gov
+  - jort-1995-1485
 - id: p-gov-sfax-mohamed-soudani
   role: governor-sfax
   holder: mohamed-soudani-sfax
-  start: '1995'
+  start: '1995-07-24'
   end: '1996'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sfax
+  confidence: A
   sources:
   - frwiki-sfax-gov
+  - jort-arrete-1995-08-19
 - id: p-gov-sfax-mohamed-sahbi-basly
   role: governor-sfax
   holder: mohamed-sahbi-basly
   start: '1996'
-  end: '1998'
+  end: '1998-07-06'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sfax
+  confidence: A
   sources:
   - frwiki-sfax-gov
+  - jort-1998-1520
+  - jort-1996-1746
 - id: p-gov-sfax-mohamed-lamine-abed
   role: governor-sfax
   holder: mohamed-lamine-abed
-  start: '1998'
+  start: '1998-07-06'
   end: '2002'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sfax
+  confidence: A
   sources:
   - frwiki-sfax-gov
+  - jort-arrete-1998-07-29
 - id: p-gov-sfax-ali-trabelsi
   role: governor-sfax
   holder: ali-trabelsi-sfax
-  start: '2002'
+  start: '2002-07-17'
   end: '2003'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sfax
+  confidence: A
   sources:
   - frwiki-sfax-gov
+  - jort-arrete-2002-08-06
 - id: p-gov-sfax-mohamed-tounsi
   role: governor-sfax
   holder: mohamed-tounsi-sfax
-  start: '2003'
-  end: '2004'
+  start: '2003-04-14'
+  end: '2004-11-22'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sfax
+  confidence: A
   sources:
   - frwiki-sfax-gov
+  - jort-2003-1053
+  - jort-2004-2751
 - id: p-gov-sfax-ali-ksiksi
   role: governor-sfax
   holder: ali-ksiksi-sfax
-  start: '2004'
-  end: '2006'
+  start: '2004-11-22'
+  end: '2006-07-10'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sfax
+  confidence: A
   sources:
   - frwiki-sfax-gov
+  - jort-2004-2748
+  - jort-2006-2108
 - id: p-gov-sfax-kamel-somei
   role: governor-sfax
   holder: kamel-somei
@@ -20637,13 +20779,14 @@
 - id: p-gov-sfax-mohamed-ben-salem
   role: governor-sfax
   holder: mohamed-ben-salem-sfax
-  start: '2007'
+  start: '2007-08-22'
   end: '2011-02-02'
   acting: false
   confidence: A
   sources:
   - frwiki-sfax-gov
   - jort-2011-209
+  - jort-2007-2293
 - id: p-gov-sfax-mohamed-ali-jendoubi
   role: governor-sfax
   holder: mohamed-ali-jendoubi
@@ -20825,172 +20968,194 @@
   start: '1962-09-01'
   end: '1969-09-08'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sousse
+  confidence: A
   sources:
   - frwiki-sousse-gov
+  - jort-1964-241
 - id: p-gov-sousse-abdessalem-ghedira
   role: governor-sousse
   holder: abdessalem-ghedira
   start: '1969-09-08'
   end: '1970-08-27'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sousse
+  confidence: A
   sources:
   - frwiki-sousse-gov
+  - jort-arrete-1970-07-30
 - id: p-gov-sousse-ahmed-bellalouna
   role: governor-sousse
   holder: ahmed-bellalouna-sousse
-  start: '1970-08-27'
+  start: '1970-07-09'
   end: '1972-09-07'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sousse
+  confidence: A
   sources:
   - frwiki-sousse-gov
+  - jort-1970-231
+  notes:
+  - The start was recorded as 1970-08-27 from secondary lists; the gazette instrument gives 1970-07-09.
 - id: p-gov-sousse-mohamed-ennaceur
   role: governor-sousse
   holder: mohamed-ennaceur
   start: '1972-09-07'
   end: '1973-06-08'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sousse
+  confidence: A
   sources:
   - frwiki-sousse-gov
   - wikipedia-mohamed-ennaceur
+  - jort-1972-216
 - id: p-gov-sousse-ahmed-bennour
   role: governor-sousse
   holder: ahmed-bennour
-  start: '1973-06-08'
+  start: '1973-05-24'
   end: '1974-03-05'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sousse
+  confidence: A
   sources:
   - frwiki-sousse-gov
   - wikipedia-ahmed-bennour-fr
+  - jort-arrete-1973-05-25
+  notes:
+  - The start was recorded as 1973-06-08 from secondary lists; the gazette instrument gives 1973-05-24.
 - id: p-gov-sousse-mansour-skhiri
   role: governor-sousse
   holder: mansour-skhiri
   start: '1974-03-05'
   end: '1977-03-10'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sousse
+  confidence: A
   sources:
   - frwiki-sousse-gov
+  - jort-1974-158
 - id: p-gov-sousse-nouredine-fennich
   role: governor-sousse
   holder: nouredine-fennich
-  start: '1977-03-10'
+  start: '1977-03-05'
   end: '1980-04-22'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sousse
+  confidence: A
   sources:
   - frwiki-sousse-gov
+  - jort-arrete-1977-03-05
+  - jort-1980-692
+  notes:
+  - The start was recorded as 1977-03-10 from secondary lists; the gazette instrument gives 1977-03-05.
 - id: p-gov-sousse-hamadi-khouini
   role: governor-sousse
   holder: hamadi-khouini-sousse
   start: '1980-04-22'
   end: '1983-03-16'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sousse
+  confidence: A
   sources:
   - frwiki-sousse-gov
+  - jort-1980-713
 - id: p-gov-sousse-kantaoui-morjane
   role: governor-sousse
   holder: kantaoui-morjane
   start: '1983-03-16'
   end: '1986-07-26'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sousse
+  confidence: A
   sources:
   - frwiki-sousse-gov
+  - jort-1983-328
 - id: p-gov-sousse-brahim-jameleddine
   role: governor-sousse
   holder: brahim-jameleddine
-  start: '1986-07-26'
+  start: '1986-07-24'
   end: '1988-04-01'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sousse
+  confidence: A
   sources:
   - frwiki-sousse-gov
+  - jort-1986-793
+  notes:
+  - The start was recorded as 1986-07-26 from secondary lists; the gazette instrument gives 1986-07-24.
 - id: p-gov-sousse-habib-daldoul
   role: governor-sousse
   holder: habib-daldoul-sousse
-  start: '1988-04-01'
+  start: '1988-04-12'
   end: '1990-10-25'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sousse
+  confidence: A
   sources:
   - frwiki-sousse-gov
+  - jort-1988-882
+  notes:
+  - The start was recorded as 1988-04-01 from secondary lists; the gazette instrument gives 1988-04-12.
 - id: p-gov-sousse-rafaa-dekhil
   role: governor-sousse
   holder: rafaa-dekhil
   start: '1990-10-25'
   end: '1991-08-05'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sousse
+  confidence: A
   sources:
   - frwiki-sousse-gov
+  - jort-1990-1761
+  - jort-1991-1233
 - id: p-gov-sousse-abdelbaki-bacha
   role: governor-sousse
   holder: abdelbaki-bacha
   start: '1991-08-05'
   end: '1992-10-10'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sousse
+  confidence: A
   sources:
   - frwiki-sousse-gov
+  - jort-1991-1232
 - id: p-gov-sousse-amor-n-sairi
   role: governor-sousse
   holder: amor-n-sairi
-  start: '1992-10-10'
-  end: '1996-07-22'
+  start: '1992-10-09'
+  end: '1996-07-29'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sousse
+  confidence: A
   sources:
   - frwiki-sousse-gov
+  - jort-1992-1998
+  - jort-1996-1362
+  notes:
+  - The start was recorded as 1992-10-10 from secondary lists; the gazette instrument gives 1992-10-09.
+  - The end was recorded as 1996-07-22 from secondary lists; the gazette instrument gives 1996-07-29.
 - id: p-gov-sousse-mabrouk-bahri
   role: governor-sousse
   holder: mabrouk-bahri-sousse
-  start: '1996-07-22'
+  start: '1996-07-29'
   end: '1997-02-03'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sousse
+  confidence: A
   sources:
   - frwiki-sousse-gov
+  - jort-arrete-1996-08-03
+  notes:
+  - The start was recorded as 1996-07-22 from secondary lists; the gazette instrument gives 1996-07-29.
 - id: p-gov-sousse-mohamed-soudani
   role: governor-sousse
   holder: mohamed-soudani-sousse
   start: '1997-02-03'
   end: '1998-07-06'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sousse
+  confidence: A
   sources:
   - frwiki-sousse-gov
+  - jort-1997-347
+  - jort-1998-1519
 - id: p-gov-sousse-abderahmen-limam
   role: governor-sousse
   holder: abderahmen-limam
   start: '1998-07-06'
-  end: '2006-07-12'
+  end: '2006-06-06'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sousse
+  confidence: A
   sources:
   - frwiki-sousse-gov
+  - jort-arrete-1998-07-29
+  - jort-2006-1777
+  notes:
+  - The end was recorded as 2006-07-12 from secondary lists; the gazette instrument gives 2006-06-06.
 - id: p-gov-sousse-taieb-ragoubi
   role: governor-sousse
   holder: taieb-ragoubi
@@ -21017,10 +21182,11 @@
   start: '2011-02-19'
   end: '2012-08-27'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sousse
+  confidence: A
   sources:
   - frwiki-sousse-gov
+  - jort-2011-368
+  - jort-2012-2635
 - id: p-gov-sousse-mokhles-jemal
   role: governor-sousse
   holder: mokhles-jemal
@@ -21087,72 +21253,78 @@
   start: '1974-03-09'
   end: '1977-03-05'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Monastir
+  confidence: A
   sources:
   - frwiki-monastir-gov
+  - jort-arrete-1974-03-09
 - id: p-gov-monastir-mansour-skhiri
   role: governor-monastir
   holder: mansour-skhiri-monastir
   start: '1977-03-05'
   end: '1985-09-20'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Monastir
+  confidence: A
   sources:
   - frwiki-monastir-gov
+  - jort-arrete-1977-03-05
 - id: p-gov-monastir-mohamed-ben-nasr
   role: governor-monastir
   holder: mohamed-ben-nasr
   start: '1985-09-20'
   end: '1988-02-03'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Monastir
+  confidence: A
   sources:
   - frwiki-monastir-gov
+  - jort-1985-1182
 - id: p-gov-monastir-abdelaziz-chaabane
   role: governor-monastir
   holder: abdelaziz-chaabane
   start: '1988-02-03'
-  end: '1995-07-25'
+  end: '1995-07-24'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Monastir
+  confidence: A
   sources:
   - frwiki-monastir-gov
+  - jort-1988-169
+  - jort-1995-1488
+  notes:
+  - The end was recorded as 1995-07-25 from secondary lists; the gazette instrument gives 1995-07-24.
 - id: p-gov-monastir-mohamed-ben-nasr-1995
   role: governor-monastir
   holder: mohamed-ben-nasr
   start: '1995-07-25'
   end: '1996-09-11'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Monastir
+  confidence: A
   notes:
   - Second, non-consecutive tenure of the same holder in Monastir.
   sources:
   - frwiki-monastir-gov
+  - jort-1995-1480
+  - jort-1996-1748
 - id: p-gov-monastir-mohamed-lahbib-brahem
   role: governor-monastir
   holder: mohamed-lahbib-brahem
   start: '1996-09-11'
   end: '2000-07-25'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Monastir
+  confidence: A
   sources:
   - frwiki-monastir-gov
+  - jort-arrete-1996-10-01
 - id: p-gov-monastir-mondher-friji
   role: governor-monastir
   holder: mondher-friji-monastir
-  start: '2000-07-25'
+  start: '2000-07-07'
   end: '2005-08-04'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Monastir
+  confidence: A
   sources:
   - frwiki-monastir-gov
+  - jort-arrete-2000-07-26
+  notes:
+  - The start was recorded as 2000-07-25 from secondary lists; the gazette instrument gives 2000-07-07.
 - id: p-gov-monastir-khelifa-jebeniani
   role: governor-monastir
   holder: khelifa-jebeniani-monastir
@@ -21244,20 +21416,21 @@
   start: '1974'
   end: '1976'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Mahdia
+  confidence: A
   sources:
   - frwiki-mahdia-gov
+  - jort-1974-159
 - id: p-gov-mahdia-noureddine-hached
   role: governor-mahdia
   holder: noureddine-hached
-  start: '1976'
+  start: '1976-04-13'
   end: '1978'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Mahdia
+  confidence: A
   sources:
   - frwiki-mahdia-gov
+  - jort-1976-362
+  - jort-1978-297
 - id: p-gov-mahdia-ameur-ghedira
   role: governor-mahdia
   holder: ameur-ghedira-mahdia
@@ -21272,132 +21445,137 @@
   role: governor-mahdia
   holder: nejib-drissi
   start: '1979'
-  end: '1980'
+  end: '1980-05-07'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Mahdia
+  confidence: A
   sources:
   - frwiki-mahdia-gov
+  - jort-1980-844
 - id: p-gov-mahdia-moncef-ben-gharbia
   role: governor-mahdia
   holder: moncef-ben-gharbia-mahdia
   start: '1980'
   end: '1982'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Mahdia
+  confidence: A
   sources:
   - frwiki-mahdia-gov
+  - jort-1980-522
+  - jort-1982-1041
 - id: p-gov-mahdia-amor-latiri
   role: governor-mahdia
   holder: amor-latiri-mahdia
-  start: '1982'
+  start: '1982-06-18'
   end: '1986'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Mahdia
+  confidence: A
   sources:
   - frwiki-mahdia-gov
+  - jort-1982-966
 - id: p-gov-mahdia-abdelwaheb-jemal
   role: governor-mahdia
   holder: abdelwaheb-jemal-mahdia
-  start: '1986'
-  end: '1988'
+  start: '1986-06-26'
+  end: '1988-02-03'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Mahdia
+  confidence: A
   sources:
   - frwiki-mahdia-gov
+  - jort-1986-711
+  - jort-1988-825
 - id: p-gov-mahdia-mohamed-ben-nasr
   role: governor-mahdia
   holder: mohamed-ben-nasr-mahdia
-  start: '1988'
-  end: '1990'
+  start: '1988-02-03'
+  end: '1990-10-25'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Mahdia
+  confidence: A
   sources:
   - frwiki-mahdia-gov
+  - jort-1990-1961
+  - jort-arrete-1988-02-25
 - id: p-gov-mahdia-mohamed-ridha-mokrani
   role: governor-mahdia
   holder: mohamed-ridha-mokrani-mahdia
   start: '1990'
   end: '1993'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Mahdia
+  confidence: A
   sources:
   - frwiki-mahdia-gov
+  - jort-1990-1763
 - id: p-gov-mahdia-hedi-ayeche
   role: governor-mahdia
   holder: hedi-ayeche-mahdia
   start: '1993'
-  end: '1997'
+  end: '1997-07-18'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Mahdia
+  confidence: A
   sources:
   - frwiki-mahdia-gov
+  - jort-1997-1520
 - id: p-gov-mahdia-mohamed-hechmi-gouadria
   role: governor-mahdia
   holder: mohamed-hechmi-gouadria
-  start: '1997'
-  end: '2000'
+  start: '1997-07-18'
+  end: '2000-07-07'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Mahdia
+  confidence: A
   sources:
   - frwiki-mahdia-gov
+  - jort-1997-1517
+  - jort-2000-1760
 - id: p-gov-mahdia-kamel-ben-ali
   role: governor-mahdia
   holder: kamel-ben-ali-mahdia
-  start: '2000'
+  start: '2000-07-07'
   end: '2002'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Mahdia
+  confidence: A
   sources:
   - frwiki-mahdia-gov
+  - jort-2000-1754
 - id: p-gov-mahdia-mohamed-lamine-abed
   role: governor-mahdia
   holder: mohamed-lamine-abed-mahdia
-  start: '2002'
+  start: '2002-07-17'
   end: '2005'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Mahdia
+  confidence: A
   sources:
   - frwiki-mahdia-gov
+  - jort-arrete-2002-08-06
 - id: p-gov-mahdia-kamel-labassi
   role: governor-mahdia
   holder: kamel-labassi
-  start: '2005'
+  start: '2005-08-04'
   end: '2006'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Mahdia
+  confidence: A
   sources:
   - frwiki-mahdia-gov
+  - jort-2005-2379
 - id: p-gov-mahdia-taieb-aloui
   role: governor-mahdia
   holder: taieb-aloui
-  start: '2006'
+  start: '2006-07-10'
   end: '2009'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Mahdia
+  confidence: A
   sources:
   - frwiki-mahdia-gov
+  - jort-2006-2106
 - id: p-gov-mahdia-hichem-ben-ahmed
   role: governor-mahdia
   holder: hichem-ben-ahmed
-  start: '2010'
+  start: '2010-01-22'
   end: '2011-02-02'
   acting: false
   confidence: A
   sources:
   - frwiki-mahdia-gov
   - jort-2011-208
+  - jort-2010-212
 - id: p-gov-mahdia-amor-jebbari
   role: governor-mahdia
   holder: amor-jebbari
@@ -21499,270 +21677,282 @@
   role: governor-kasserine
   holder: mehrez-bellamine-kasserine
   start: '1960'
-  end: '1961'
+  end: '>=1962-01'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kasserine
+  confidence: A
   sources:
   - frwiki-kasserine-gov
   - arwiki-kasserine-gov
+  - jort-1962-9
+  notes:
+  - The end was recorded as 1961; the gazette instrument places it at >=1962-01.
 - id: p-gov-kasserine-mohamed-besbes
   role: governor-kasserine
   holder: mohamed-besbes-kasserine
   start: '1961'
-  end: '1964'
+  end: '1964-07-16'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kasserine
+  confidence: A
   sources:
   - frwiki-kasserine-gov
   - arwiki-kasserine-gov
+  - jort-1964-238
 - id: p-gov-kasserine-mohamed-bellamine
   role: governor-kasserine
   holder: mohamed-bellamine-kasserine
-  start: '1964'
-  end: '1966'
+  start: '1964-07-16'
+  end: '1966-10-01'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kasserine
+  confidence: A
   sources:
   - frwiki-kasserine-gov
   - arwiki-kasserine-gov
+  - jort-arrete-1964-07-15
+  - jort-1966-379
 - id: p-gov-kasserine-mohamed-triki
   role: governor-kasserine
   holder: mohamed-triki-kasserine
-  start: '1966'
+  start: '1966-10-01'
   end: '1969'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kasserine
+  confidence: A
   sources:
   - frwiki-kasserine-gov
   - arwiki-kasserine-gov
+  - jort-1966-386
 - id: p-gov-kasserine-abdessalem-kallel
   role: governor-kasserine
   holder: abdessalem-kallel-kasserine
   start: '1969'
-  end: '1970'
+  end: '1970-07-09'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kasserine
+  confidence: A
   sources:
   - frwiki-kasserine-gov
   - arwiki-kasserine-gov
+  - jort-1970-263
+  - jort-arrete-1969-09-08
 - id: p-gov-kasserine-taoufik-essid
   role: governor-kasserine
   holder: taoufik-essid
-  start: '1970'
-  end: '1973'
+  start: '1970-07-09'
+  end: '1973-12-01'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kasserine
+  confidence: A
   sources:
   - frwiki-kasserine-gov
   - arwiki-kasserine-gov
+  - jort-1970-252
+  - jort-1973-612
 - id: p-gov-kasserine-hedi-jedidi
   role: governor-kasserine
   holder: hedi-jedidi
-  start: '1973'
+  start: '1973-12-01'
   end: '1978'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kasserine
+  confidence: A
   sources:
   - frwiki-kasserine-gov
   - arwiki-kasserine-gov
+  - jort-1973-611
+  - jort-1978-294
 - id: p-gov-kasserine-nejib-drissi
   role: governor-kasserine
   holder: nejib-drissi-kasserine
   start: '1978'
   end: '1979'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kasserine
+  confidence: A
   sources:
   - frwiki-kasserine-gov
   - arwiki-kasserine-gov
+  - jort-1978-302
 - id: p-gov-kasserine-romdhane-rahli
   role: governor-kasserine
   holder: romdhane-rahli
   start: '1979'
-  end: '1980'
+  end: '1980-04-17'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kasserine
+  confidence: A
   sources:
   - frwiki-kasserine-gov
   - arwiki-kasserine-gov
+  - jort-1979-985
+  - jort-1980-688
 - id: p-gov-kasserine-abderahmen-mokrani
   role: governor-kasserine
   holder: abderahmen-mokrani
   start: '1980'
   end: '1981'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kasserine
+  confidence: A
   sources:
   - frwiki-kasserine-gov
   - arwiki-kasserine-gov
+  - jort-1981-212
 - id: p-gov-kasserine-kantaoui-morjane
   role: governor-kasserine
   holder: kantaoui-morjane-kasserine
   start: '1981'
   end: '1983'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kasserine
+  confidence: A
   sources:
   - frwiki-kasserine-gov
   - arwiki-kasserine-gov
+  - jort-1981-172
 - id: p-gov-kasserine-sadok-marzouk
   role: governor-kasserine
   holder: sadok-marzouk-kasserine
-  start: '1983'
+  start: '1983-03-16'
   end: '1984'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kasserine
+  confidence: A
   sources:
   - frwiki-kasserine-gov
   - arwiki-kasserine-gov
+  - jort-1983-329
 - id: p-gov-kasserine-mohamed-mekki
   role: governor-kasserine
   holder: mohamed-mekki
   start: '1984'
   end: '1986'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kasserine
+  confidence: A
   sources:
   - frwiki-kasserine-gov
   - arwiki-kasserine-gov
+  - jort-1984-818
 - id: p-gov-kasserine-abdelkrim-azaiez
   role: governor-kasserine
   holder: abdelkrim-azaiez-kasserine
-  start: '1986'
+  start: '1986-07-24'
   end: '1987'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kasserine
+  confidence: A
   sources:
   - frwiki-kasserine-gov
   - arwiki-kasserine-gov
+  - jort-1986-791
 - id: p-gov-kasserine-mohamed-ben-saad
   role: governor-kasserine
   holder: mohamed-ben-saad-kasserine
-  start: '1987'
+  start: '1987-08-20'
   end: '1988'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kasserine
+  confidence: A
   sources:
   - frwiki-kasserine-gov
   - arwiki-kasserine-gov
+  - jort-1987-1104
+  - jort-1988-355
 - id: p-gov-kasserine-hedi-ayeche
   role: governor-kasserine
   holder: hedi-ayeche-kasserine
-  start: '1988'
+  start: '1988-03-01'
   end: '1990'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kasserine
+  confidence: A
   sources:
   - frwiki-kasserine-gov
   - arwiki-kasserine-gov
+  - jort-1988-354
 - id: p-gov-kasserine-mabrouk-bahri
   role: governor-kasserine
   holder: mabrouk-bahri-kasserine
-  start: '1990'
+  start: '1990-10-25'
   end: '1993'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kasserine
+  confidence: A
   sources:
   - frwiki-kasserine-gov
   - arwiki-kasserine-gov
+  - jort-arrete-1990-11-22
 - id: p-gov-kasserine-bechir-jamai
   role: governor-kasserine
   holder: bechir-jamai
-  start: '1993'
-  end: '1994'
+  start: '1993-12-02'
+  end: '1994-11-14'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kasserine
+  confidence: A
   sources:
   - frwiki-kasserine-gov
   - arwiki-kasserine-gov
+  - jort-1993-2583
+  - jort-1994-2501
 - id: p-gov-kasserine-mohamed-lamine-el-abed
   role: governor-kasserine
   holder: mohamed-lamine-el-abed-kasserine
-  start: '1994'
+  start: '1994-11-14'
   end: '1998'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kasserine
+  confidence: A
   sources:
   - frwiki-kasserine-gov
   - arwiki-kasserine-gov
+  - jort-1994-2498
 - id: p-gov-kasserine-habib-hadded
   role: governor-kasserine
   holder: habib-hadded-kasserine
-  start: '1998'
+  start: '1998-07-06'
   end: '2000'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kasserine
+  confidence: A
   sources:
   - frwiki-kasserine-gov
   - arwiki-kasserine-gov
+  - jort-1998-1516
+  notes:
+  - 'Name check: gazette Mohamed Haddad, record Habib Hadded. The gazette spelling is kept as an alias until a second source settles it.'
 - id: p-gov-kasserine-slaheddine-el-abed
   role: governor-kasserine
   holder: slaheddine-el-abed-kasserine
-  start: '2000'
-  end: '2001'
+  start: '2000-08-01'
+  end: '2001-08-04'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kasserine
+  confidence: A
   sources:
   - frwiki-kasserine-gov
   - arwiki-kasserine-gov
+  - jort-arrete-2000-08-12
+  - jort-2001-2035
 - id: p-gov-kasserine-mahmoud-mehiri
   role: governor-kasserine
   holder: mahmoud-mehiri-kasserine
-  start: '2001'
+  start: '2001-08-04'
   end: '2003'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kasserine
+  confidence: A
   sources:
   - frwiki-kasserine-gov
   - arwiki-kasserine-gov
+  - jort-2001-2024
 - id: p-gov-kasserine-mohamed-laid-kidoussi
   role: governor-kasserine
   holder: mohamed-laid-kidoussi
-  start: '2003'
+  start: '2003-01-29'
   end: '2005'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kasserine
+  confidence: A
   sources:
   - frwiki-kasserine-gov
   - arwiki-kasserine-gov
+  - jort-2003-389
 - id: p-gov-kasserine-hassen-lajri
   role: governor-kasserine
   holder: hassen-lajri
-  start: '2005'
+  start: '2005-08-04'
   end: '2010'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kasserine
+  confidence: A
   sources:
   - frwiki-kasserine-gov
   - arwiki-kasserine-gov
+  - jort-2005-2380
 - id: p-gov-kasserine-mohamed-hafedh-cherif
   role: governor-kasserine
   holder: mohamed-hafedh-cherif
-  start: '2010'
+  start: '2010-07-28'
   end: '2011-02-02'
   acting: false
   confidence: A
@@ -21770,19 +21960,20 @@
   - frwiki-kasserine-gov
   - arwiki-kasserine-gov
   - jort-2011-204
+  - jort-2010-2030
 - id: p-gov-kasserine-salah-kacem
   role: governor-kasserine
   holder: salah-kacem
   start: 1993-08
   end: 1993-12
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kasserine
+  confidence: A
   notes:
   - The list gives "août-décembre 1993" (August-December 1993).
   sources:
   - frwiki-kasserine-gov
   - arwiki-kasserine-gov
+  - jort-1993-2586
 - id: p-gov-kasserine-slaheddine-amouchi
   role: governor-kasserine
   holder: slaheddine-amouchi
@@ -21933,43 +22124,46 @@
 - id: p-gov-sidi-bouzid-abderrazak-ladab
   role: governor-sidi-bouzid
   holder: abderrazak-ladab-sidi-bouzid
-  start: '1974'
+  start: '1977-03-05'
   end: '1977'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sidi Bouzid
+  confidence: A
   sources:
   - frwiki-sidi-bouzid-gov
+  - jort-1974-008
+  - jort-arrete-1977-03-05
+  notes:
+  - The start was recorded as 1974 from secondary lists; the gazette instrument gives 1977-03-05.
 - id: p-gov-sidi-bouzid-hechmi-amri
   role: governor-sidi-bouzid
   holder: hechmi-amri
-  start: '1977'
+  start: '1977-03-05'
   end: '1978'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sidi Bouzid
+  confidence: A
   sources:
   - frwiki-sidi-bouzid-gov
+  - jort-1977-206
 - id: p-gov-sidi-bouzid-salah-bhouri
   role: governor-sidi-bouzid
   holder: salah-bhouri
   start: '1978'
   end: '1979'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sidi Bouzid
+  confidence: A
   sources:
   - frwiki-sidi-bouzid-gov
+  - jort-1978-305
 - id: p-gov-sidi-bouzid-mohamed-hedi-bellakhoua
   role: governor-sidi-bouzid
   holder: mohamed-hedi-bellakhoua-sidi-bouzid
   start: '1979'
   end: '1980-05-08'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sidi Bouzid
+  confidence: A
   sources:
   - frwiki-sidi-bouzid-gov
+  - jort-1980-845
 - id: p-gov-sidi-bouzid-mohamed-ben-rejeb
   role: governor-sidi-bouzid
   holder: mohamed-ben-rejeb-sidi-bouzid
@@ -21986,85 +22180,85 @@
   start: '1986-07-24'
   end: '1990'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sidi Bouzid
+  confidence: A
   sources:
   - frwiki-sidi-bouzid-gov
+  - jort-1986-795
 - id: p-gov-sidi-bouzid-boubaker-ben-kraiem
   role: governor-sidi-bouzid
   holder: boubaker-ben-kraiem-sidi-bouzid
-  start: '1990'
+  start: '1990-01-26'
   end: '1991'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sidi Bouzid
+  confidence: A
   sources:
   - frwiki-sidi-bouzid-gov
+  - jort-1990-269
 - id: p-gov-sidi-bouzid-mohamed-soudani
   role: governor-sidi-bouzid
   holder: mohamed-soudani-sidi-bouzid
-  start: '1991'
+  start: '1991-07-02'
   end: '1993'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sidi Bouzid
+  confidence: A
   sources:
   - frwiki-sidi-bouzid-gov
+  - jort-1991-1135
 - id: p-gov-sidi-bouzid-mohamed-louati
   role: governor-sidi-bouzid
   holder: mohamed-louati
-  start: '1993'
-  end: '1995'
+  start: '1993-06-17'
+  end: '1995-07-24'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sidi Bouzid
+  confidence: A
   sources:
   - frwiki-sidi-bouzid-gov
+  - jort-1995-1490
+  - jort-1993-1550
 - id: p-gov-sidi-bouzid-habib-ben-gamra
   role: governor-sidi-bouzid
   holder: habib-ben-gamra-sidi-bouzid
-  start: '1995'
+  start: '1995-07-24'
   end: '1996'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sidi Bouzid
+  confidence: A
   sources:
   - frwiki-sidi-bouzid-gov
+  - jort-1995-1479
 - id: p-gov-sidi-bouzid-mohamed-ghariani
   role: governor-sidi-bouzid
   holder: mohamed-ghariani
-  start: '1996'
+  start: '1996-07-24'
   end: '2001'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sidi Bouzid
+  confidence: A
   notes:
-  - The list prints only the name and dates; identity with any other public figure of the same name is
-    not asserted.
+  - The list prints only the name and dates; identity with any other public figure of the same name is not asserted.
   sources:
   - frwiki-sidi-bouzid-gov
+  - jort-1996-1360
 - id: p-gov-sidi-bouzid-mohamed-belghith
   role: governor-sidi-bouzid
   holder: mohamed-belghith-sidi-bouzid
   start: '2001'
-  end: '2001'
+  end: '2001-08-04'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sidi Bouzid
+  confidence: A
   notes:
   - The list gives the single year 2001.
   sources:
   - frwiki-sidi-bouzid-gov
+  - jort-2001-2033
 - id: p-gov-sidi-bouzid-mohamed-ben-salem
   role: governor-sidi-bouzid
   holder: mohamed-ben-salem-sidi-bouzid
-  start: '2002'
+  start: '2002-07-17'
   end: '2005'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sidi Bouzid
+  confidence: A
   sources:
   - frwiki-sidi-bouzid-gov
+  - jort-arrete-2002-08-06
 - id: p-gov-sidi-bouzid-mohamed-faouzi-ben-arab
   role: governor-sidi-bouzid
   holder: mohamed-faouzi-ben-arab-sidi-bouzid
@@ -22087,6 +22281,7 @@
   sources:
   - frwiki-sidi-bouzid-gov
   - jort-2011-217
+  - jort-2010-2046
   notes:
   - The end was recorded as 2010-12-28 from secondary lists; the gazette instrument gives 2010-12-30.
 - id: p-gov-sidi-bouzid-abdelhamid-aloui
@@ -22203,16 +22398,16 @@
 - id: p-gov-sidi-bouzid-tajeddine-bekri
   role: governor-sidi-bouzid
   holder: tajeddine-bekri
-  start: '2001'
-  end: '2002'
+  start: '2001-08-04'
+  end: '2002-07-17'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sidi Bouzid
+  confidence: A
   notes:
-  - The table prints this 2001-2002 row after the 2005-2010 row; kept as printed. It overlaps the Mohamed
-    Belghith (2001) and Mohamed Ben Salem (2002-2005) rows, and the overlap is not resolved here.
+  - The table prints this 2001-2002 row after the 2005-2010 row; kept as printed. It overlaps the Mohamed Belghith (2001) and Mohamed Ben Salem (2002-2005) rows, and the overlap is not resolved here.
   sources:
   - frwiki-sidi-bouzid-gov
+  - jort-2001-2022
+  - jort-2002-1748
 - id: p-gov-sidi-bouzid-mohamed-sedki-bououn
   role: governor-sidi-bouzid
   holder: mohamed-sedki-bououn
@@ -22231,22 +22426,22 @@
   role: governor-gafsa
   holder: bechir-achoura
   start: '1956'
-  end: '1957'
+  end: '1957-10-01'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gafsa
+  confidence: A
   sources:
   - frwiki-gafsa-gov
+  - jort-1957-67
 - id: p-gov-gafsa-tahar-debaya
   role: governor-gafsa
   holder: tahar-debaya
-  start: '1957'
+  start: '1957-10-01'
   end: '1959'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gafsa
+  confidence: A
   sources:
   - frwiki-gafsa-gov
+  - jort-1957-66
 - id: p-gov-gafsa-hedi-mabrouk
   role: governor-gafsa
   holder: hedi-mabrouk
@@ -22270,13 +22465,13 @@
 - id: p-gov-gafsa-abdessalem-ghedira
   role: governor-gafsa
   holder: abdessalem-ghedira-gafsa
-  start: '1962'
+  start: '1962-04-01'
   end: '1969'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gafsa
+  confidence: A
   sources:
   - frwiki-gafsa-gov
+  - jort-1962-176
 - id: p-gov-gafsa-mohamed-triki
   role: governor-gafsa
   holder: mohamed-triki-gafsa
@@ -22290,23 +22485,23 @@
 - id: p-gov-gafsa-tahar-boussemma
   role: governor-gafsa
   holder: tahar-boussemma-gafsa
-  start: '1971'
+  start: '1971-11-21'
   end: '1972'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gafsa
+  confidence: A
   sources:
   - frwiki-gafsa-gov
+  - jort-1971-418
 - id: p-gov-gafsa-mezri-chekir
   role: governor-gafsa
   holder: mezri-chekir-gafsa
   start: '1972'
-  end: '1973'
+  end: '1973-12-01'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gafsa
+  confidence: A
   sources:
   - frwiki-gafsa-gov
+  - jort-1973-613
 - id: p-gov-gafsa-salem-ben-hejal
   role: governor-gafsa
   holder: salem-ben-hejal
@@ -22320,43 +22515,45 @@
 - id: p-gov-gafsa-mokhtar-chouari
   role: governor-gafsa
   holder: mokhtar-chouari-gafsa
-  start: '1974'
+  start: <=1971-11
   end: '1979'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gafsa
+  confidence: A
   sources:
   - frwiki-gafsa-gov
+  - jort-arrete-1971-11-08
+  notes:
+  - The start was recorded as 1974; the gazette instrument places it at <=1971-11.
 - id: p-gov-gafsa-mohamed-abbes
   role: governor-gafsa
   holder: mohamed-abbes-gafsa
   start: '1979'
   end: '1980'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gafsa
+  confidence: A
   sources:
   - frwiki-gafsa-gov
+  - jort-arrete-1980-05-09
 - id: p-gov-gafsa-mohamed-letayef
   role: governor-gafsa
   holder: mohamed-letayef
   start: '1980'
   end: '1984'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gafsa
+  confidence: A
   sources:
   - frwiki-gafsa-gov
+  - jort-1980-524
 - id: p-gov-gafsa-faycal-chahdoura
   role: governor-gafsa
   holder: faycal-chahdoura
-  start: '1984'
+  start: '1984-07-18'
   end: '1988-02-13'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gafsa
+  confidence: A
   sources:
   - frwiki-gafsa-gov
+  - jort-1984-897
 - id: p-gov-gafsa-mohamed-ben-rejeb
   role: governor-gafsa
   holder: mohamed-ben-rejeb-gafsa
@@ -22380,85 +22577,93 @@
 - id: p-gov-gafsa-mahmoud-lajnef
   role: governor-gafsa
   holder: mahmoud-lajnef
-  start: '1994'
-  end: '1994'
+  start: '1994-05-19'
+  end: '1994-11-14'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gafsa
+  confidence: A
   notes:
   - The list gives the single year 1994.
   sources:
   - frwiki-gafsa-gov
+  - jort-1994-1355
+  - jort-1994-2500
 - id: p-gov-gafsa-mustapha-karbia
   role: governor-gafsa
   holder: mustapha-karbia-gafsa
-  start: '1994'
+  start: '1994-11-14'
   end: '1996'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gafsa
+  confidence: A
   sources:
   - frwiki-gafsa-gov
+  - jort-1994-2499
 - id: p-gov-gafsa-salah-zoghlami
   role: governor-gafsa
   holder: salah-zoghlami
-  start: '1996'
-  end: '1998'
+  start: '1996-07-24'
+  end: '1998-07-06'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gafsa
+  confidence: A
   sources:
   - frwiki-gafsa-gov
+  - jort-1996-1359
+  - jort-1998-1518
 - id: p-gov-gafsa-mohamed-ridha-mokrani
   role: governor-gafsa
   holder: mohamed-ridha-mokrani-gafsa
-  start: '1998'
-  end: '2001'
+  start: '1998-07-06'
+  end: '2001-08-04'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gafsa
+  confidence: A
   sources:
   - frwiki-gafsa-gov
+  - jort-arrete-1998-07-29
+  - jort-2001-2034
 - id: p-gov-gafsa-mohamed-aouinti
   role: governor-gafsa
   holder: mohamed-aouinti
   start: '2001'
   end: '2004'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gafsa
+  confidence: A
   sources:
   - frwiki-gafsa-gov
+  - jort-2001-2023
+  - jort-2004-1384
+  notes:
+  - Two gazette instruments give different start dates for this tenure (2001-08-04, 2004-04-30); the recorded start is kept until they are reconciled.
 - id: p-gov-gafsa-jomaa-chaouch
   role: governor-gafsa
   holder: jomaa-chaouch
-  start: '2004'
-  end: '2005'
+  start: '2004-04-30'
+  end: '2005-08-04'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gafsa
+  confidence: A
   sources:
   - frwiki-gafsa-gov
+  - jort-2004-1184
+  - jort-2005-2391
 - id: p-gov-gafsa-mohamed-laid-kidoussi
   role: governor-gafsa
   holder: mohamed-laid-kidoussi-gafsa
   start: '2005'
-  end: '2008'
+  end: '2008-03-18'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gafsa
+  confidence: A
   sources:
   - frwiki-gafsa-gov
+  - jort-2008-1752
 - id: p-gov-gafsa-mohamed-chaieb
   role: governor-gafsa
   holder: mohamed-chaieb
-  start: '2008'
+  start: '2008-03-18'
   end: '2011-02-02'
   acting: false
   confidence: A
   sources:
   - frwiki-gafsa-gov
   - jort-2011-212
+  - jort-2008-1746
 - id: p-gov-gafsa-mohamed-gouider
   role: governor-gafsa
   holder: mohamed-gouider-gafsa
@@ -22599,103 +22804,108 @@
 - id: p-gov-tozeur-mohamed-maalej
   role: governor-tozeur
   holder: mohamed-maalej-tozeur
-  start: '1986'
+  start: '1986-07-24'
   end: '1987'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Tozeur
+  confidence: A
   sources:
   - frwiki-tozeur-gov
+  - jort-1986-790
 - id: p-gov-tozeur-ahmed-ridha-ouaja
   role: governor-tozeur
   holder: ahmed-ridha-ouaja-tozeur
   start: '1987'
   end: '1988'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Tozeur
+  confidence: A
   sources:
   - frwiki-tozeur-gov
+  - jort-1987-1102
 - id: p-gov-tozeur-faouzi-el-aouem
   role: governor-tozeur
   holder: faouzi-el-aouem
-  start: '1988'
-  end: '1991'
+  start: '1988-12-01'
+  end: '1991-06-06'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Tozeur
+  confidence: A
   sources:
   - frwiki-tozeur-gov
+  - jort-1988-2005
+  - jort-1991-988
 - id: p-gov-tozeur-mohamed-belghith
   role: governor-tozeur
   holder: mohamed-belghith-tozeur
-  start: '1991'
+  start: '1991-06-06'
   end: '1993'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Tozeur
+  confidence: A
   sources:
   - frwiki-tozeur-gov
+  - jort-1991-987
 - id: p-gov-tozeur-brahim-fridhi
   role: governor-tozeur
   holder: brahim-fridhi
-  start: '1993'
-  end: '1995'
+  start: '1993-08-11'
+  end: '1995-07-24'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Tozeur
+  confidence: A
   sources:
   - frwiki-tozeur-gov
+  - jort-1993-1882
+  - jort-1995-1489
 - id: p-gov-tozeur-youssef-ajlani
   role: governor-tozeur
   holder: youssef-ajlani
-  start: '1995'
-  end: '1996'
+  start: '1995-07-24'
+  end: '1996-07-24'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Tozeur
+  confidence: A
   sources:
   - frwiki-tozeur-gov
+  - jort-1995-1481
+  - jort-1996-1365
 - id: p-gov-tozeur-ali-ksiksi
   role: governor-tozeur
   holder: ali-ksiksi-tozeur
-  start: '1996'
+  start: '1996-07-24'
   end: '2000'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Tozeur
+  confidence: A
   sources:
   - frwiki-tozeur-gov
+  - jort-1996-1357
 - id: p-gov-tozeur-chabib-daly
   role: governor-tozeur
   holder: chabib-daly-tozeur
-  start: '2000'
-  end: '2002'
+  start: '2000-07-07'
+  end: '2002-07-17'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Tozeur
+  confidence: A
   sources:
   - frwiki-tozeur-gov
+  - jort-2000-1755
+  - jort-arrete-2002-08-06
 - id: p-gov-tozeur-mohamed-sghaier-maali
   role: governor-tozeur
   holder: mohamed-sghaier-maali
-  start: '2002'
-  end: '2005'
+  start: '2002-07-17'
+  end: '2005-08-04'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Tozeur
+  confidence: A
   sources:
   - frwiki-tozeur-gov
+  - jort-2002-1745
+  - jort-2005-2389
 - id: p-gov-tozeur-yassine-barbouche
   role: governor-tozeur
   holder: yassine-barbouche-tozeur
-  start: '2005'
+  start: '2005-08-04'
   end: '2007'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Tozeur
+  confidence: A
   sources:
   - frwiki-tozeur-gov
+  - jort-2005-2383
 - id: p-gov-tozeur-slaheddine-ben-romdhane
   role: governor-tozeur
   holder: slaheddine-ben-romdhane
@@ -22706,18 +22916,19 @@
   sources:
   - frwiki-tozeur-gov
   - jort-2011-213
+  - jort-2007-2291
 - id: p-gov-tozeur-abdelhamid-ghanmi
   role: governor-tozeur
   holder: abdelhamid-ghanmi
-  start: '2011'
+  start: '2011-02-02'
   end: '2011'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Tozeur
+  confidence: A
   notes:
   - The list gives only the year 2011 and says he resigned.
   sources:
   - frwiki-tozeur-gov
+  - jort-2011-371
 - id: p-gov-tozeur-houcine-ben-frej
   role: governor-tozeur
   holder: houcine-ben-frej
@@ -22823,116 +23034,117 @@
   start: 1981-09
   end: 1984-09
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kébili
+  confidence: A
   sources:
   - frwiki-kebili-gov
+  - jort-1981-1119
 - id: p-gov-kebili-ameur-kriaa
   role: governor-kebili
   holder: ameur-kriaa-kebili
   start: 1984-09
   end: 1987-08
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kébili
+  confidence: A
   sources:
   - frwiki-kebili-gov
+  - jort-1984-812
 - id: p-gov-kebili-mabrouk-bahri
   role: governor-kebili
   holder: mabrouk-bahri-kebili
-  start: 1987-08
+  start: '1987-08-20'
   end: 1990-10
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kébili
+  confidence: A
   sources:
   - frwiki-kebili-gov
+  - jort-1987-1103
 - id: p-gov-kebili-barhoumi-laabidi
   role: governor-kebili
   holder: barhoumi-laabidi
   start: 1990-10
   end: 1991-05
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kébili
+  confidence: A
   sources:
   - frwiki-kebili-gov
+  - jort-1990-1762
 - id: p-gov-kebili-moncef-ben-tmessek
   role: governor-kebili
   holder: moncef-ben-tmessek
-  start: 1991-05
+  start: '1991-05-07'
   end: 1992-01
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kébili
+  confidence: A
   sources:
   - frwiki-kebili-gov
+  - jort-1991-703
 - id: p-gov-kebili-mohamed-laabidi
   role: governor-kebili
   holder: mohamed-laabidi-kebili
-  start: 1992-01
-  end: 1992-12
+  start: '1992-01-16'
+  end: '1992-12-21'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kébili
+  confidence: A
   sources:
   - frwiki-kebili-gov
+  - jort-1992-344
+  - jort-1993-50
 - id: p-gov-kebili-abdelaziz-bouallegue
   role: governor-kebili
   holder: abdelaziz-bouallegue
-  start: 1992-12
+  start: '1992-12-21'
   end: 1997-04
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kébili
+  confidence: A
   sources:
   - frwiki-kebili-gov
+  - jort-1993-49
 - id: p-gov-kebili-abdeljelil-zaddem
   role: governor-kebili
   holder: abdeljelil-zaddem
-  start: 1997-04
+  start: '1997-04-15'
   end: 2001-01
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kébili
+  confidence: A
   sources:
   - frwiki-kebili-gov
+  - jort-1997-654
 - id: p-gov-kebili-mohamed-akrimi
   role: governor-kebili
   holder: mohamed-akrimi
-  start: 2001-01
-  end: 2002-07
+  start: '2001-01-30'
+  end: '2002-07-17'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kébili
+  confidence: A
   notes:
-  - The table also lists Mohamed Faouzi Ben Arab from July 2001, so these two entries overlap as printed;
-    the overlap is not resolved here.
+  - The table also lists Mohamed Faouzi Ben Arab from July 2001, so these two entries overlap as printed; the overlap is not resolved here.
   sources:
   - frwiki-kebili-gov
+  - jort-2001-653
+  - jort-2002-1749
 - id: p-gov-kebili-mohamed-faouzi-ben-arab
   role: governor-kebili
   holder: mohamed-faouzi-ben-arab-kebili
-  start: 2001-07
+  start: '2002-07-17'
   end: 2005-08
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kébili
+  confidence: A
   notes:
-  - The table starts this tenure in July 2001 while Mohamed Akrimi is listed to July 2002; kept as printed,
-    overlap unresolved.
+  - The table starts this tenure in July 2001 while Mohamed Akrimi is listed to July 2002; kept as printed, overlap unresolved.
+  - The start was recorded as 2001-07 from secondary lists; the gazette instrument gives 2002-07-17.
   sources:
   - frwiki-kebili-gov
+  - jort-2002-1746
 - id: p-gov-kebili-taieb-ragoubi
   role: governor-kebili
   holder: taieb-ragoubi-kebili
-  start: 2005-08
+  start: '2005-08-04'
   end: 2006-07
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kébili
+  confidence: A
   sources:
   - frwiki-kebili-gov
+  - jort-2005-2382
 - id: p-gov-kebili-brahim-briki
   role: governor-kebili
   holder: brahim-briki-kebili
@@ -22946,13 +23158,14 @@
 - id: p-gov-kebili-mahmoud-saied
   role: governor-kebili
   holder: mahmoud-saied
-  start: 2010-07
+  start: '2010-07-28'
   end: '2011-02-02'
   acting: false
   confidence: A
   sources:
   - frwiki-kebili-gov
   - jort-2011-214
+  - jort-2010-2029
 - id: p-gov-kebili-badreddine-habil
   role: governor-kebili
   holder: badreddine-habil
@@ -23110,157 +23323,160 @@
   role: governor-gabes
   holder: ahmed-bellalouna-gabes
   start: '1961'
-  end: '1967'
+  end: '1967-07-10'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gabès
+  confidence: A
   sources:
   - frwiki-gabes-gov
+  - jort-1967-217
 - id: p-gov-gabes-zakaria-ben-mustapha
   role: governor-gabes
   holder: zakaria-ben-mustapha-gabes
-  start: '1967'
+  start: '1967-07-10'
   end: '1969'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gabès
+  confidence: A
   sources:
   - frwiki-gabes-gov
+  - jort-1967-218
 - id: p-gov-gabes-hedi-baccouche
   role: governor-gabes
   holder: hedi-baccouche
   start: '1969'
-  end: '1970'
+  end: '1970-01-01'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gabès
+  confidence: A
   sources:
   - frwiki-gabes-gov
   - frwiki-bio-baccouche
+  - jort-1970-8
 - id: p-gov-gabes-rachid-badri
   role: governor-gabes
   holder: rachid-badri-gabes
-  start: '1970'
+  start: '1970-01-01'
   end: '1973'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gabès
+  confidence: A
   sources:
   - frwiki-gabes-gov
+  - jort-1970-11
 - id: p-gov-gabes-abdelhamid-melki
   role: governor-gabes
   holder: abdelhamid-melki-gabes
-  start: '1973'
-  end: '1973'
+  start: '1973-05-24'
+  end: '1973-12-01'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gabès
+  confidence: A
   notes:
   - The list gives the single year 1973.
   sources:
   - frwiki-gabes-gov
+  - jort-1973-240
 - id: p-gov-gabes-ameur-ghedira
   role: governor-gabes
   holder: ameur-ghedira-gabes
-  start: '1973'
+  start: '1973-12-01'
   end: '1974'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gabès
+  confidence: A
   sources:
   - frwiki-gabes-gov
+  - jort-1973-609
 - id: p-gov-gabes-abderrahim-zouari
   role: governor-gabes
   holder: abderrahim-zouari
   start: '1974'
   end: '1978'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gabès
+  confidence: A
   sources:
   - frwiki-gabes-gov
   - frwiki-abderrahim-zouari
+  - jort-1974-970
 - id: p-gov-gabes-abderrazak-yazid
   role: governor-gabes
   holder: abderrazak-yazid
   start: '1978'
   end: '1979'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gabès
+  confidence: A
   sources:
   - frwiki-gabes-gov
+  - jort-1978-301
 - id: p-gov-gabes-mohamed-jegham
   role: governor-gabes
   holder: mohamed-jegham
   start: '1979'
-  end: '1980'
+  end: '1980-05-07'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gabès
+  confidence: A
   sources:
   - frwiki-gabes-gov
   - frwiki-jegham
+  - jort-1979-983
+  - jort-1980-843
 - id: p-gov-gabes-ahmed-ben-jemiaa
   role: governor-gabes
   holder: ahmed-ben-jemiaa-gabes
   start: '1980'
   end: '1983'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gabès
+  confidence: A
   sources:
   - frwiki-gabes-gov
+  - jort-1980-523
 - id: p-gov-gabes-mohamed-habib-gharbi
   role: governor-gabes
   holder: mohamed-habib-gharbi-gabes
-  start: '1983'
+  start: '1983-03-16'
   end: '1984'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gabès
+  confidence: A
   sources:
   - frwiki-gabes-gov
+  - jort-1983-330
 - id: p-gov-gabes-abdelhak-lassoued
   role: governor-gabes
   holder: abdelhak-lassoued-gabes
   start: '1984'
   end: '1986'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gabès
+  confidence: A
   sources:
   - frwiki-gabes-gov
+  - jort-1984-813
+  - jort-1986-645
 - id: p-gov-gabes-mohamed-essid
   role: governor-gabes
   holder: mohamed-essid
   start: '1986'
   end: '1988'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gabès
+  confidence: A
   sources:
   - frwiki-gabes-gov
+  - jort-1986-566
 - id: p-gov-gabes-naceur-el-gharbi
   role: governor-gabes
   holder: naceur-el-gharbi
-  start: '1988'
+  start: '1988-04-27'
   end: '1990'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gabès
+  confidence: A
   sources:
   - frwiki-gabes-gov
+  - jort-1988-883
 - id: p-gov-gabes-moncef-louati
   role: governor-gabes
   holder: moncef-louati
-  start: '1990'
-  end: '1993'
+  start: '1990-01-17'
+  end: '1993-08-11'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gabès
+  confidence: A
   sources:
   - frwiki-gabes-gov
+  - jort-1990-238
+  - jort-1993-1884
 - id: p-gov-gabes-slaheddine-el-abed
   role: governor-gabes
   holder: slaheddine-el-abed-gabes
@@ -23274,43 +23490,44 @@
 - id: p-gov-gabes-hassene-smaoui
   role: governor-gabes
   holder: hassene-smaoui-gabes
-  start: '1996'
+  start: '1996-07-24'
   end: '1998'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gabès
+  confidence: A
   sources:
   - frwiki-gabes-gov
+  - jort-1996-1361
 - id: p-gov-gabes-ali-trabelsi
   role: governor-gabes
   holder: ali-trabelsi-gabes
-  start: '1998'
+  start: '1998-01-22'
   end: '2000'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gabès
+  confidence: A
   sources:
   - frwiki-gabes-gov
+  - jort-arrete-1998-02-10
 - id: p-gov-gabes-sadok-marzouk
   role: governor-gabes
   holder: sadok-marzouk-gabes
-  start: '2000'
-  end: '2002'
+  start: '2000-07-07'
+  end: '2002-07-17'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gabès
+  confidence: A
   sources:
   - frwiki-gabes-gov
+  - jort-arrete-2000-07-26
+  - jort-2002-1747
 - id: p-gov-gabes-kamel-ben-ali
   role: governor-gabes
   holder: kamel-ben-ali-gabes
-  start: '2002'
+  start: '2002-07-17'
   end: '2005'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gabès
+  confidence: A
   sources:
   - frwiki-gabes-gov
+  - jort-arrete-2002-08-06
 - id: p-gov-gabes-brahim-briki
   role: governor-gabes
   holder: brahim-briki-gabes
@@ -23324,23 +23541,25 @@
 - id: p-gov-gabes-abdelkrim-mosbah
   role: governor-gabes
   holder: abdelkrim-mosbah
-  start: '2006'
-  end: '2009'
+  start: '2006-07-10'
+  end: '2009-09-29'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gabès
+  confidence: A
   sources:
   - frwiki-gabes-gov
+  - jort-2006-2107
+  - jort-2009-3279
 - id: p-gov-gabes-mokdad-missaoui
   role: governor-gabes
   holder: mokdad-missaoui
-  start: '2009'
+  start: '2009-09-29'
   end: '2011-02-02'
   acting: false
   confidence: A
   sources:
   - frwiki-gabes-gov
   - jort-2011-210
+  - jort-2009-3274
 - id: p-gov-gabes-chokri-necib
   role: governor-gabes
   holder: chokri-necib
@@ -23495,80 +23714,83 @@
   start: '1965'
   end: '1967'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Médenine
+  confidence: A
   sources:
   - frwiki-medenine-gov
+  - jort-1965-67
+  - jort-1966-384
+  notes:
+  - Two gazette instruments give different start dates for this tenure (1965-02-10, 1966-06-01); the recorded start is kept until they are reconciled.
 - id: p-gov-medenine-mimoun-chatti
   role: governor-medenine
   holder: mimoun-chatti
-  start: '1967'
+  start: '1967-07-10'
   end: '1969'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Médenine
+  confidence: A
   sources:
   - frwiki-medenine-gov
+  - jort-1967-219
 - id: p-gov-medenine-frej-jabbes
   role: governor-medenine
   holder: frej-jabbes
   start: '1969'
   end: '1970'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Médenine
+  confidence: A
   sources:
   - frwiki-medenine-gov
+  - jort-1969-320
 - id: p-gov-medenine-mehrez-bellamine
   role: governor-medenine
   holder: mehrez-bellamine-medenine
   start: '1970'
   end: '1971'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Médenine
+  confidence: A
   sources:
   - frwiki-medenine-gov
+  - jort-1970-575
 - id: p-gov-medenine-salem-ben-h-jal
   role: governor-medenine
   holder: salem-ben-h-jal
   start: '1971'
   end: '1973'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Médenine
+  confidence: A
   sources:
   - frwiki-medenine-gov
+  - jort-1971-326
 - id: p-gov-medenine-mahmoud-el-ghoul
   role: governor-medenine
   holder: mahmoud-el-ghoul-medenine
-  start: '1973'
+  start: '1973-12-01'
   end: '1974'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Médenine
+  confidence: A
   sources:
   - frwiki-medenine-gov
+  - jort-1973-610
 - id: p-gov-medenine-salem-boumiza
   role: governor-medenine
   holder: salem-boumiza
   start: '1974'
   end: '1978'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Médenine
+  confidence: A
   sources:
   - frwiki-medenine-gov
+  - jort-1978-298
 - id: p-gov-medenine-mohamed-hedi-bellakhoua
   role: governor-medenine
   holder: mohamed-hedi-bellakhoua-medenine
   start: '1978'
   end: '1979'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Médenine
+  confidence: A
   sources:
   - frwiki-medenine-gov
+  - jort-1978-303
 - id: p-gov-medenine-salah-bhouri
   role: governor-medenine
   holder: salah-bhouri-medenine
@@ -23582,95 +23804,100 @@
 - id: p-gov-medenine-ali-chaouch
   role: governor-medenine
   holder: ali-chaouch
-  start: '1987'
+  start: '1987-11-21'
   end: '1989'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Médenine
+  confidence: A
   sources:
   - frwiki-medenine-gov
+  - jort-1987-1308
 - id: p-gov-medenine-mohamed-moncef-ayadi
   role: governor-medenine
   holder: mohamed-moncef-ayadi
   start: '1989'
   end: '1990'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Médenine
+  confidence: A
   sources:
   - frwiki-medenine-gov
+  - jort-1989-472
+  - jort-1990-1966
 - id: p-gov-medenine-mohsen-harbi
   role: governor-medenine
   holder: mohsen-harbi
-  start: '1990'
-  end: '1991'
+  start: '1990-10-25'
+  end: '1991-07-02'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Médenine
+  confidence: A
   sources:
   - frwiki-medenine-gov
+  - jort-1990-1764
+  - jort-1991-1137
 - id: p-gov-medenine-noureddine-naija
   role: governor-medenine
   holder: noureddine-naija
-  start: '1991'
-  end: '1992'
+  start: '1991-07-02'
+  end: '1992-06-13'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Médenine
+  confidence: A
   sources:
   - frwiki-medenine-gov
+  - jort-1991-1132
+  - jort-1992-1203
 - id: p-gov-medenine-mohamed-sahbi-basly
   role: governor-medenine
   holder: mohamed-sahbi-basly-medenine
   start: '1992'
   end: '1993'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Médenine
+  confidence: A
   sources:
   - frwiki-medenine-gov
+  - jort-1992-1201
+  - jort-1993-2587
 - id: p-gov-medenine-abderrahmane-limam
   role: governor-medenine
   holder: abderrahmane-limam
-  start: '1993'
+  start: '1993-12-02'
   end: '1998-07-06'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Médenine
+  confidence: A
   notes:
   - End is given exactly (6 July 1998) by the list.
   sources:
   - frwiki-medenine-gov
+  - jort-1993-2584
 - id: p-gov-medenine-frej-souissi
   role: governor-medenine
   holder: frej-souissi
-  start: '1998'
-  end: '2000'
+  start: '1998-07-06'
+  end: '2000-07-07'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Médenine
+  confidence: A
   sources:
   - frwiki-medenine-gov
+  - jort-1998-1515
+  - jort-2000-1759
 - id: p-gov-medenine-mohamed-ben-salem
   role: governor-medenine
   holder: mohamed-ben-salem-medenine
-  start: '2000'
+  start: '2000-07-07'
   end: '2002'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Médenine
+  confidence: A
   sources:
   - frwiki-medenine-gov
+  - jort-arrete-2000-07-26
 - id: p-gov-medenine-jamaleddine-bouslimi
   role: governor-medenine
   holder: jamaleddine-bouslimi-medenine
-  start: '2002'
+  start: '2002-07-17'
   end: '2005'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Médenine
+  confidence: A
   sources:
   - frwiki-medenine-gov
+  - jort-arrete-2002-08-06
 - id: p-gov-medenine-kamel-ben-ali
   role: governor-medenine
   holder: kamel-ben-ali-medenine
@@ -23684,33 +23911,34 @@
 - id: p-gov-medenine-nejib-barkallah
   role: governor-medenine
   holder: nejib-barkallah-medenine
-  start: '2007'
+  start: '2007-08-22'
   end: '2008'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Médenine
+  confidence: A
   sources:
   - frwiki-medenine-gov
+  - jort-2007-2293
 - id: p-gov-medenine-mourad-ben-jelloul
   role: governor-medenine
   holder: mourad-ben-jelloul-medenine
-  start: '2008'
+  start: '2008-08-21'
   end: '2010'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Médenine
+  confidence: A
   sources:
   - frwiki-medenine-gov
+  - jort-2008-3059
 - id: p-gov-medenine-brahim-briki
   role: governor-medenine
   holder: brahim-briki-medenine
-  start: '2010'
+  start: '2010-07-28'
   end: '2011-02-02'
   acting: false
   confidence: A
   sources:
   - frwiki-medenine-gov
   - jort-2011-211
+  - jort-2010-2046
 - id: p-gov-medenine-hamadi-chetioui
   role: governor-medenine
   holder: hamadi-chetioui
@@ -23792,138 +24020,148 @@
   start: '1981'
   end: '1984'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Tataouine
+  confidence: A
   sources:
   - frwiki-tataouine-gov
   - arwiki-tataouine-gov
+  - jort-1981-131
 - id: p-gov-tataouine-abderrazak-ayoub
   role: governor-tataouine
   holder: abderrazak-ayoub-tataouine
-  start: 1984-07
+  start: '1984-07-18'
   end: 1984-12
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Tataouine
+  confidence: A
   notes:
   - The list gives "juillet-décembre 1984" (July-December 1984).
   sources:
   - frwiki-tataouine-gov
   - arwiki-tataouine-gov
+  - jort-1984-897
+  - jort-1985-83
 - id: p-gov-tataouine-othman-naghmouchi
   role: governor-tataouine
   holder: othman-naghmouchi
   start: '1985'
   end: '1988'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Tataouine
+  confidence: A
   sources:
   - frwiki-tataouine-gov
   - arwiki-tataouine-gov
+  - jort-1985-38
 - id: p-gov-tataouine-mohamed-essid
   role: governor-tataouine
   holder: mohamed-essid-tataouine
-  start: '1988'
-  end: '1990'
+  start: '1988-04-27'
+  end: '1990-10-19'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Tataouine
+  confidence: A
   sources:
   - frwiki-tataouine-gov
   - arwiki-tataouine-gov
+  - jort-arrete-1988-06-23
+  - jort-1990-1965
 - id: p-gov-tataouine-mohamed-marzouki
   role: governor-tataouine
   holder: mohamed-marzouki
-  start: '1990'
-  end: '1991'
+  start: '1990-10-25'
+  end: '1991-07-02'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Tataouine
+  confidence: A
   sources:
   - frwiki-tataouine-gov
   - arwiki-tataouine-gov
+  - jort-arrete-1990-11-22
+  - jort-1991-1138
 - id: p-gov-tataouine-mohamed-lajnef
   role: governor-tataouine
   holder: mohamed-lajnef
   start: '1991'
   end: '1992'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Tataouine
+  confidence: A
   sources:
   - frwiki-tataouine-gov
   - arwiki-tataouine-gov
+  - jort-1991-1134
+  - jort-1992-1204
+  notes:
+  - 'Name check: given name Mahmoud in the gazette, Mohamed in the record. The gazette spelling is kept as an alias until a second source settles it.'
 - id: p-gov-tataouine-bechir-ben-thabet
   role: governor-tataouine
   holder: bechir-ben-thabet
   start: '1992'
   end: '1993'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Tataouine
+  confidence: A
   sources:
   - frwiki-tataouine-gov
   - arwiki-tataouine-gov
+  - jort-1992-1202
+  - jort-1993-2588
 - id: p-gov-tataouine-hassen-alaya
   role: governor-tataouine
   holder: hassen-alaya-tataouine
-  start: '1993'
+  start: '1993-12-02'
   end: '1996'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Tataouine
+  confidence: A
   sources:
   - frwiki-tataouine-gov
   - arwiki-tataouine-gov
+  - jort-1993-2585
 - id: p-gov-tataouine-mohamed-ben-salem
   role: governor-tataouine
   holder: mohamed-ben-salem-tataouine
-  start: '1996'
+  start: '1996-07-24'
   end: '2000'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Tataouine
+  confidence: A
   sources:
   - frwiki-tataouine-gov
   - arwiki-tataouine-gov
+  - jort-1996-1358
 - id: p-gov-tataouine-mohamed-laid-kidoussi
   role: governor-tataouine
   holder: mohamed-laid-kidoussi-tataouine
-  start: '2000'
+  start: '2000-07-07'
   end: '2003'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Tataouine
+  confidence: A
   sources:
   - frwiki-tataouine-gov
   - arwiki-tataouine-gov
+  - jort-2000-1756
 - id: p-gov-tataouine-fethi-boussoffara
   role: governor-tataouine
   holder: fethi-boussoffara
-  start: '2003'
+  start: '2003-01-29'
   end: '2007'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Tataouine
+  confidence: A
   sources:
   - frwiki-tataouine-gov
   - arwiki-tataouine-gov
+  - jort-2003-374
 - id: p-gov-tataouine-mohamed-ridha-belhaj
   role: governor-tataouine
   holder: mohamed-ridha-belhaj
   start: '2007'
   end: '2009'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Tataouine
+  confidence: A
   sources:
   - frwiki-tataouine-gov
   - arwiki-tataouine-gov
+  - jort-2007-2292
+  - jort-2009-3279
+  notes:
+  - Two gazette instruments give different start dates for this tenure (2007-08-22, 2009-09-29); the recorded start is kept until they are reconciled.
 - id: p-gov-tataouine-nouri-ben-said
   role: governor-tataouine
   holder: nouri-ben-said
-  start: '2009'
+  start: '2009-09-29'
   end: '2011-02-02'
   acting: false
   confidence: A
@@ -23931,6 +24169,7 @@
   - frwiki-tataouine-gov
   - arwiki-tataouine-gov
   - jort-2011-215
+  - jort-2009-3275
 - id: p-gov-tataouine-youssef-hidri
   role: governor-tataouine
   holder: youssef-hidri

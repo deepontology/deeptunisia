@@ -3,7 +3,7 @@
   "project": "deeptunisia",
   "origin": "https://deeptunisia.org",
   "license": "CC-BY-4.0",
-  "generatedAt": "2026-10-28T17:20:50.266Z",
+  "generatedAt": "2026-11-03T14:19:47.300Z",
   "release": {
     "packageVersion": "0.1.0",
     "currentTag": "v0.1.2-C1",
@@ -14,14 +14,14 @@
     "node": "v26.7.0"
   },
   "graph": {
-    "datasetHash": "9539145bd5cdc777158ffb6a696db30890bbfbfc6c93db2abb953b6dd1ff14c3",
-    "generated": "2026-10-28T17:20:46.737Z",
+    "datasetHash": "6c21d93c51ab11212ee85ea1def7dbdd64eb96feb14600cc06a60ef2368721ec",
+    "generated": "2026-11-03T14:19:44.386Z",
     "cutoff": "2026-10-25",
     "floor": "1956-03-20",
-    "graphKB": 12780,
-    "shippedKB": 23210,
+    "graphKB": 13190,
+    "shippedKB": 24020,
     "counts": {
-      "sources": 1689,
+      "sources": 2448,
       "people": 2476,
       "positions": 3055,
       "relationships": 2121,
@@ -39,7 +39,7 @@
     "translation": {
       "dataProse": {
         "fr": {
-          "total": 7797,
+          "total": 7856,
           "done": 2869,
           "tiers": {
             "machine": 18,
@@ -49,7 +49,7 @@
           }
         },
         "ar": {
-          "total": 7797,
+          "total": 7856,
           "done": 2862,
           "tiers": {
             "machine": 30,
