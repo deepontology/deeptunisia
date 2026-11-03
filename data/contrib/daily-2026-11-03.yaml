@@ -1,0 +1,1173 @@
+# daily-2026-11-03: daily dataset sweep (full mode), consolidated outbox
+#
+# Window swept: 2026-10-25T14:12:11Z to 2026-11-03T14:25:07Z (486 feed items).
+#   Feed refreshed 2026-11-03: 1200 archived, +20 new, 20 aged out, 434 KB.
+#   Languages fr 1164 / ar 25 / en 11.
+# Sources swept: African Manager, Kapitalis, Nawaat, Inkyfada, BBC News,
+#   France 24, Al Jazeera. Inkyfada returned seven new items this run; its
+#   5-23 October gap could not be recovered through the 1200-item archive cap.
+# Web-verified by direct fetch: African Manager (Ounissi/El-Heni verdict,
+#   Ben Fadhel verdict, El Menzah stadium contract, FADES loans, Zaafrani at
+#   the Kremlin, Safe Sea 26, ARP wells law, UGTT hydrocarbon notice, Advent/
+#   Vermeg, SONEDE-AfDB ratification, US phosphate project, T-MED, Senegal
+#   chambers, Rania Marzouki/ETAP, SRTGN, Monétique Tunisie), Kapitalis
+#   (Ounissi verdict and CRLDHT communiqué, Ben Fadhel verdict, El-Heni
+#   conviction, Pompeo/Zenith, Tunisians in the Russian army), Nawaat
+#   (Jebeniana follow-up). France 24 returned 403; its 29 October broadcast is
+#   cited only through Kapitalis's account.
+# Failure vocabulary (must not be collapsed):
+#   - The Ounissi/El-Heni verdict rests on an anonymous judicial source cited
+#     to TAP by African Manager and to Diwan FM by Kapitalis, plus the CRLDHT
+#     communiqué. No judgment text, court communiqué or case file was retrieved.
+#   - African Manager prints "Mondher Lounissi" in its 28 October piece; the
+#     person is Mondher Ounissi. The spelling is not silently corrected in the
+#     source row.
+#   - The name "Rafik Bouchlaka" in African Manager and "Rafik Abdessalem" in
+#     Kapitalis are the same person per the CRLDHT communiqué, which gives
+#     "Rafik Abdessalem, également connu sous le nom de Rafik Bouchlaka". This
+#     is an alias, not a source disagreement; no dispute is recorded.
+#   - The number of co-defendants sentenced to nine years alongside Riadh Ben
+#     Fadhel is 28 in African Manager and 18 in Kapitalis. Both figures are
+#     carried; the difference is recorded as an open dispute on the event.
+#   - The El Menzah stadium cost is a reported range (about 520-600 MDT). The
+#     contract value field carries the lower bound and says so in the notes; it
+#     is not a point estimate.
+#   - The FADES figures are African Manager's account of the signing; no loan
+#     agreement, FADES release or JORT text was retrieved.
+#   - The ETAP item establishes that Rania Marzouki was acting PDG on
+#     25 October 2026 and that Dalila Chebbi Bouattour retired in August 2026.
+#     It does not give Marzouki's start date; the position carries "?" and says
+#     so. The predecessor's end is proposed as 2026-08 in a flag, not edited.
+#   - The UGTT hydrocarbon item is a strike notice, not a strike; the 2 May
+#     2019 agreement it invokes was not retrieved.
+#   - The Safe Sea 26 item relays a Defence Ministry communiqué; no
+#     participating countries or independent account were found.
+#   - The Advent/Vermeg transaction is announced, not completed; completion is
+#     expected in the first half of 2027 subject to regulatory approvals.
+#   - The Zenith/Pompeo item is a company statement relayed by one outlet; the
+#     USD 573 million is Zenith's claim, not an adjudicated debt, and the award
+#     is expected in the first quarter of 2027.
+#   - Rania Marzouki, Riadh Ben Fadhel, Vermeg, Advent, ADIA, Charterhouse,
+#     FADES, Zenith, CNQ, ICSID, PhosCo, CrossBoundary, the CCIT, UNCCIAS, SMT
+#     and SRTGN have no graph records. Where a record could not cite them, they
+#     are named in the summary and listed in notes; no dangling id was created.
+# Cutoff: these candidates include records dated through 2026-11-02, past the
+#   current time.cutoff (2026-10-25) in data/parameters.yaml. Whoever merges
+#   must advance the cutoff to the sweep coverage date 2026-11-03 in the same
+#   edit and update the pinned defaults in scripts/parameters.ts and
+#   scripts/test-parameters.ts. No cutoff was advanced here.
+# CANDIDATES ARE PROPOSALS, NOT GRAPH DATA. Nothing canonical was changed;
+#   humans dispose (P4).
+
+sources:
+  - id: am-ounissi-verdict-2026-10-28
+    title: "9 ans pour Ounissi et 4 ans pour Zied El Heni"
+    publisher: African Manager
+    date: "2026-10-28"
+    url: https://africanmanager.com/terrorisme-neuf-ans-de-prison-pour-mondher-ounissi-et-quatre-ans-pour-zied-el-heni/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      La chambre criminelle spécialisée dans les affaires de terrorisme près le
+      tribunal de première instance de Tunis a condamné mardi soir Mondher
+      Ounissi à neuf ans de prison et Zied El Heni à quatre ans de prison, avec
+      exécution immédiate, a indiqué une source judiciaire à l’agence TAP.
+    note: >-
+      Prints "Mondher Lounissi" in parts of the piece; the person is Mondher
+      Ounissi. The judicial source is cited to TAP. The body gives the
+      charges and lists the 25-year co-defendants, including "Rafik
+      Bouchlaka" and "Shahrazad Akacha".
+
+  - id: kapitalis-ounissi-verdict-2026-10-28
+    title: "Tunisie | Des activistes politiques condamnés à des peines de 4 à 25 ans de prison"
+    publisher: Kapitalis
+    date: "2026-10-28"
+    url: https://kapitalis.com/tunisie/2026/10/28/tunisie-des-activistes-politiques-condamnes-a-des-peines-de-4-a-25-ans-de-prison/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      La chambre pénale spécialisée dans les affaires de terrorisme, près le
+      Tribunal de première instance de Tunis, a prononcé, mardi soir,
+      27 octobre 2026, des peines d’emprisonnement allant de 4 à 25 ans dans
+      l’affaire de la fuite d’enregistrements sonores dans laquelle est
+      impliqué, notamment, Dr Mondher Ounissi, haut responsable du mouvement
+      Ennahdha, a indiqué une source judiciaire à Diwan FM.
+    note: >-
+      Cites a judicial source to Diwan FM, not TAP. Reports four charges
+      (terrorist organisation, disclosure of secrets, failure to denounce,
+      foreign contacts) and the case history from September 2023.
+
+  - id: kapitalis-crldht-audio-verdict-2026-10-29
+    title: "Le CRLDHT exige la libération des personnes détenues dans l’affaire dite «des enregistrements audio»"
+    publisher: Kapitalis
+    date: "2026-10-29"
+    url: https://kapitalis.com/tunisie/2026/10/29/le-crldht-exige-la-liberation-des-personnes-detenues-dans-laffaire-dite-des-enregistrements-audio/
+    tier: 4
+    lang: fr
+    excerpt: >-
+      Le Comité pour le respect des libertés et des droits de l’Homme en
+      Tunisie (CRLDHT) condamne avec la plus grande fermeté le jugement rendu
+      le 27 octobre 2026 par la chambre criminelle spécialisée dans les
+      affaires de terrorisme du tribunal de première instance de Tunis, dans
+      l’affaire dite des «enregistrements audio» attribués à Mondher Ounissi.
+    note: >-
+      Republishes the CRLDHT communiqué of 28 October 2026, an advocacy
+      organisation's account rather than a court record. It lists the eleven
+      convicted and notes that "Rafik Abdessalem, également connu sous le nom
+      de Rafik Bouchlaka" is one person. It also gives the procedural history:
+      release request rejected on 10 July 2026, hearing set for 25 September,
+      postponed to 16 October and then to 27 October for lack of quorum.
+
+  - id: am-ben-fadhel-verdict-2026-10-31
+    title: "Riadh Ben Fadhel condamné à 20 ans de prison"
+    publisher: African Manager
+    date: "2026-10-31"
+    url: https://africanmanager.com/riadh-ben-fadhel-condamne-a-20-ans-de-prison-dans-une-affaire-de-corruption-financiere/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      La chambre criminelle spécialisée dans les affaires de corruption
+      financière près le Tribunal de première instance de Tunis a condamné,
+      jeudi soir, Riadh Ben Fadhel à 20 ans de prison, a indiqué vendredi à
+      l’agence TAP une source judiciaire.
+    note: >-
+      Says 28 other defendants were sentenced to nine years each, with fines
+      over 11 million dinars against the accused and 14 companies. The
+      judicial source is cited to TAP.
+
+  - id: kapitalis-ben-fadhel-verdict-2026-10-30
+    title: "Riadh Ben Fadhel condamné à 20 ans de prison | Al-Qotb dénonce «un verdict inique»"
+    publisher: Kapitalis
+    date: "2026-10-30"
+    url: https://kapitalis.com/tunisie/2026/10/30/riadh-ben-fadhel-condamne-a-20-ans-de-prison-al-qotb-denonce-un-verdict-inique/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      A la suite de la condamnation de son coordinateur général, l’homme
+      d’affaires Riadh Ben Fadhel, incarcéré depuis le 14 novembre 2023, à
+      vingt ans de prison, ainsi que 18 autres co-accusés à 9 ans de prison,
+      pour des accusations relevant de délits économiques (blanchiment
+      d’argent, corruption administrative et financière dans la gestion des
+      biens confisqués), le parti Al-Qotb (centre-gauche), a publié, ce
+      vendredi 30 octobre 2026 le communiqué reproduit ci-dessous.
+    note: >-
+      Says 18 co-accused at nine years, against African Manager's 28. The
+      piece reproduces the Al-Qotb communiqué, which calls the verdict a
+      political revenge.
+
+  - id: am-el-menzah-stadium-2026-10-31
+    title: "deux Chinoises reconstruiront le stade d’El Menzah pour 600 MDT"
+    publisher: African Manager
+    date: "2026-10-31"
+    url: https://africanmanager.com/signature-du-contrat-commercial-pour-la-reconstruction-du-stade-olympique-del-menzah/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      La cérémonie de signature du contrat commercial pour la reconstruction du
+      stade olympique d’El Menzah a été tenue jeudi, au siège du ministère de
+      l’Équipement et de l’habitat, entre l’État tunisien, représenté par le
+      ministère de l’Équipement et les représentants du consortium de deux
+      entreprises : China Railway Construction Engineering Group / China CAMC
+      Engineering (CRCEG/CAMCE).
+    note: >-
+      Relays a ministry communiqué of 30 October 2026. Cost given as about
+      520-600 MDT for 30-36 months; the Commission des grands projets decided
+      on 8 October 2026 to award the contract to a Chinese company.
+
+  - id: am-fades-loans-2026-10-27
+    title: "Tunisie- FADES : 2 prêts de 432 MDT pour infrastructures"
+    publisher: African Manager
+    date: "2026-10-27"
+    url: https://africanmanager.com/tunisie-fades-signature-de-deux-accords-de-pret-dune-valeur-de-432-mdt/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      Le ministre de l’Économie et de la Planification, Samir Abdelhafidh, et
+      le directeur général et président du conseil d’administration du Fonds
+      Arabe pour le Développement Economique et Social (FADES), Faouzi Youssef
+      Al-Hunaif, ont signé, mardi, à Tunis, deux accords de prêt d’un montant
+      de 432 millions de dinars tunisiens (MDT).
+    note: >-
+      Gives 288 MDT (30 million Kuwaiti dinars) for the Bou Salem-Fernana
+      motorway and 144 MDT (15 million Kuwaiti dinars) for rural tracks; the
+      components sum to the 432 MDT total. The piece also says the annual
+      meetings of Arab financial institutions will be held in Tunisia on
+      28-29 April 2027.
+
+  - id: am-zaafrani-kremlin-2026-10-29
+    title: "La cheffe du gouvernement reçue au Kremlin par Vladimir Poutine"
+    publisher: African Manager
+    date: "2026-10-29"
+    url: https://africanmanager.com/la-cheffe-du-gouvernement-recue-au-kremlin-par-vladimir-poutine/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      Le président russe, Vladimir Poutine, a reçu mercredi soir au Kremlin la
+      cheffe du gouvernement Sarra Zaâfrani Zenzri, ainsi que plusieurs chefs
+      d’État et de gouvernement participant au troisième sommet Russie-Afrique,
+      organisé à Moscou.
+    note: >-
+      Relays the government's information and communication services. Says the
+      official visit ran from 27 to 29 October 2026 and that the presidency
+      charged her with attending the 28-29 October summit. No bilateral
+      agreement or joint statement is announced.
+
+  - id: am-safe-sea-26-2026-10-27
+    title: "Lancement de l’exercice naval élargi « Safe Sea 26 »"
+    publisher: African Manager
+    date: "2026-10-27"
+    url: https://africanmanager.com/lancement-de-la-3e-edition-de-lexercice-naval-elargi-safe-sea-26/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      La base navale de La Goulette a accueilli, lundi, la cérémonie
+      d’ouverture de la troisième édition de l’exercice naval élargi « Safe Sea
+      26 », organisé par la Marine nationale dans le golfe de Tunis, du 26 au
+      30 octobre, avec la participation des différentes structures nationales
+      concernées par la sécurité et la sûreté maritimes, ainsi que la présence
+      d’observateurs issus des marines de pays frères et amis.
+    note: >-
+      Relays a Ministry of National Defence communiqué. No participating
+      countries are named.
+
+  - id: am-arp-wells-law-2026-10-29
+    title: "ARP: une loi pour régulariser les puits agricoles non autorisés"
+    publisher: African Manager
+    date: "2026-10-29"
+    url: https://africanmanager.com/arp-une-loi-pour-regulariser-les-puits-agricoles-non-autorises/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      L’Assemblée des représentants du peuple (ARP) a adopté, mardi, le projet
+      de loi relatif à la régularisation des puits agricoles non autorisés,
+      avec 79 voix pour, 7 contre et 10 abstentions, selon mosaique fm.
+    note: >-
+      Relays Mosaique FM. The text regularises deep wells drilled before
+      10 December 2024 against a 3,500-dinar fee; applications are due by
+      31 December 2027.
+
+  - id: am-ugtt-hydrocarbon-strike-2026-11-02
+    title: "Hydrocarbures : L’UGTT émet un préavis de grève pour novembre"
+    publisher: African Manager
+    date: "2026-11-02"
+    url: https://africanmanager.com/transport-des-hydrocarbures-lugtt-emet-un-preavis-de-greve-pour-les-23-24-et-25-novembre/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      Le département du secteur privé relevant de l’Union Générale Tunisienne
+      du Travail (UGTT) a publié lundi, un préavis d’une grève sectorielle
+      générale dans les entreprises de transport des hydrocarbures de trois
+      jours (du 23 au 25 novembre 2026) sur l’ensemble du territoire tunisien.
+    note: >-
+      Relays the UGTT communiqué. The notice cites the blocked implementation
+      of a 2 May 2019 agreement and article 377 of the Labour Code; the
+      agreement itself was not retrieved.
+
+  - id: am-advent-vermeg-2026-11-03
+    title: "Badreddine Ouali vend le groupe tunisien Vermeg"
+    publisher: African Manager
+    date: "2026-11-03"
+    url: https://africanmanager.com/advent-annonce-avoir-conclu-un-accord-pour-lacquisition-du-groupe-tunisien-vermeg/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      Le fonds américain de capital-investissement Advent International, a
+      annoncé, lundi, avoir conclu un accord en vue d’acquérir Vermeg, éditeur
+      mondial de logiciels pour les marchés de capitaux et l’assurance-vie,
+      auprès de la société de capital-investissement Charterhouse Capital
+      Partners et de son fondateur, Badreddine Ouali.
+    note: >-
+      Relays the buyer's announcement. Completion is expected in the first half
+      of 2027 subject to regulatory approvals; Ouali retains a stake and will
+      be vice-chairman.
+
+  - id: kapitalis-pompeo-zenith-2026-10-29
+    title: "Mike Pompeo défendra les intérêts de Zenith Energy contre la Tunisie"
+    publisher: Kapitalis
+    date: "2026-10-29"
+    url: https://kapitalis.com/tunisie/2026/10/29/mike-pompeo-defendra-les-interets-de-zenith-energy-contre-la-tunisie/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      La société énergétique Zenith Energy a engagé l’ancien secrétaire d’État
+      américain Mike Pompeo en tant que conseiller stratégique dans le cadre
+      d’un litige arbitral l’opposant à la Tunisie. Le groupe réclame une
+      indemnisation d’environ 573 millions de dollars (près de 1,5 milliard de
+      dinars), soit près de 495 millions d’euros.
+    note: >-
+      With Agenzia Nova. The claim amount is Zenith's, not an adjudicated
+      debt; Tunisia contests the claim; the award is expected in the first
+      quarter of 2027.
+
+  - id: am-etap-marzouki-2026-10-25
+    title: "La femme qui gère, par intérim, un CA de 2,1 Mds DT, et toutes les hydrocarbures"
+    publisher: African Manager
+    date: "2026-10-25"
+    url: https://africanmanager.com/la-femme-qui-gere-par-interim-un-ca-de-21-mds-dt-et-toutes-les-hydrocarbures/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      Issue du ministère tunisien, de l’industrie, des mines et de l’énergie où
+      Salah Zouari assure l’intérim depuis le 28 avril 2026, Rania Marzouki
+      assure l’intérim de Dalila Bouattour, partie à la retraite depuis août
+      dernier de l’ETAP, une entreprise publique qui pèse plus de 2 Mds DT en
+      chiffre d’affaires.
+    note: >-
+      Gives Marzouki's ministry background but not her start date. The piece is
+      largely about the El Menzah concession transfer and is dated
+      25 October 2026.
+
+  - id: am-sonede-afdb-2026-11-03
+    title: "Prêt BAD de 111,5 M€ pour le réseau de la Sonede"
+    publisher: African Manager
+    date: "2026-11-03"
+    url: https://africanmanager.com/examen-en-urgence-dun-projet-de-loi-portant-approbation-dun-pret-de-la-bad-pour-moderniser-le-reseau-de-la-sonede/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      Le bureau de l’Assemblée des représentants du peuple (ARP) a transmis,
+      lors de sa réunion tenue hier lundi, à la commission des finances et du
+      budget, avec demande d’examen en urgence, un projet de loi portant
+      approbation d’une convention de garantie conclue entre la République
+      tunisienne et la Banque africaine de développement d’un montant de
+      111,5 millions d’euros.
+    note: >-
+      The underlying guarantee agreement is already recorded as
+      agr-tunisia-afdb-sonede-gct-2026 (signed 22 September 2026); this item is
+      the parliamentary ratification step. Project total EUR 151.1 million
+      (AfDB 111.5, EU grant 30, SONEDE 9.6), 2026-2031.
+
+  - id: nawaat-jebeniana-followup-2026-11-02
+    title: "Emeutes de Jebeniana : les raisons de la colère"
+    publisher: Nawaat
+    date: "2026-11-02"
+    url: https://nawaat.org/2026/11/02/emeutes-de-jebeniana-les-raisons-de-la-colere/
+    tier: 4
+    lang: fr
+    excerpt: >-
+      Les habitants de la ville de Jebeniana, dans le gouvernorat de Sfax, ont
+      été endeuillés, mercredi 21 octobre 2026, par le décès du jeune Aoun
+      Salhi, âgé de 24 ans, à la suite d’une course-poursuite avec la police,
+      alors qu’il roulait en moto.
+    note: >-
+      Follow-up investigation adding detail and context to the already-recorded
+      ev-jebeniana-death-aoun-salhi-2026-10-21 and
+      ev-unrest-ettadhamen-jebiniana-2026-10-22; no contradiction found.
+
+  - id: kapitalis-tunisians-russia-2026-10-31
+    title: "Ces «soldats» Tunisiens morts sur le front russo-ukrainien"
+    publisher: Kapitalis
+    date: "2026-10-31"
+    url: https://kapitalis.com/tunisie/2026/10/31/ces-soldats-tunisiens-morts-sur-le-front-russo-ukrainien/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      Le 29 octobre 2026, la chaîne France 24 a diffusé une émission consacrée
+      aux familles tunisiennes restées sans nouvelles de leurs enfants enrôlés
+      dans l’armée russe pour aller combattre sur le front avec l’Ukraine.
+    note: >-
+      Relays France 24's 29 October broadcast. No Tunisian official response
+      was retrieved.
+
+  - id: am-us-phosphate-2026-10-29
+    title: "Les Américains lorgnent le phosphate tunisien"
+    publisher: African Manager
+    date: "2026-10-29"
+    url: https://africanmanager.com/tunisie-etats-unis-lancement-dun-projet-commun-pour-promouvoir-linvestissement-dans-le-secteur-du-phosphate/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      L’ambassade des États-Unis à Tunis a annoncé le lancement d’un nouveau
+      projet financé par le gouvernement américain et en collaboration avec la
+      société « CrossBoundary », dans le but de mettre en relation les
+      investisseurs et les entreprises américaines avec le projet de phosphate
+      de la société « PhosCo » dans le Bassin Nord.
+    note: >-
+      No Tunisian state signatory or instrument in the piece; PhosCo,
+      CrossBoundary and the US embassy have no graph records.
+
+  - id: am-tmed-2026-10-28
+    title: "Tunisie-UE : Lancement de la plateforme d’investissement T-MED"
+    publisher: African Manager
+    date: "2026-10-28"
+    url: https://africanmanager.com/tunisie-ue-lancement-de-la-plateforme-dinvestissement-t-med/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      La Commission européenne a lancé la plateforme d’investissement T-MED
+      afin de mobiliser des investissements massifs dans les énergies
+      renouvelables et les technologies propres à travers la Méditerranée.
+    note: >-
+      EU initiative, not a Tunisian state act. In Tunisia it supports two
+      100 MW solar plants with about EUR 92 million and EUR 80 million.
+
+  - id: am-senegal-ccit-2026-11-03
+    title: "Tunisie-Sénégal : Partenariat de coopération commerciale"
+    publisher: African Manager
+    date: "2026-11-03"
+    url: https://africanmanager.com/tunisie-senegal-un-accord-de-partenariat-pour-renforcer-la-cooperation-economique-et-commerciale/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      La Chambre de commerce et d’industrie de Tunis (CCIT) et l’Union
+      nationale des chambres de commerce, d’industrie et d’agriculture du
+      Sénégal (UNCCIAS) ont signé vendredi dernier un accord de partenariat
+      visant à renforcer la coopération économique et commerciale entre les
+      deux pays et à promouvoir l’intégration économique africaine.
+    note: >-
+      Chamber-to-chamber agreement, not a state treaty; CCIT and UNCCIAS have
+      no graph records.
+
+  - id: am-budget-2027-plenaries-2026-11-03
+    title: "Budget 2027 : 1ères plénières pour les 9 et 10 novembre"
+    publisher: African Manager
+    date: "2026-11-03"
+    url: https://africanmanager.com/budget-2027-les-premieres-seances-plenieres-prevues-les-9-et-10-novembre/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      Les premières séances plénières consacrées au projet de budget de l’État
+      pour 2027 se tiendront les 9 et 10 novembre 2026.
+    note: >-
+      Forward-dated parliamentary timetable; no record until the plenaries
+      happen and a text is published.
+
+events:
+  - id: ev-ounissi-audio-case-verdict-2026-10-27
+    date: "2026-10-27"
+    title_en: "Terrorism court sentences Ounissi to nine years and El Heni to four in the audio-recordings case"
+    title_fr: "La chambre antiterroriste condamne Ounissi à neuf ans et El Heni à quatre ans dans l’affaire des enregistrements audio"
+    category: legal
+    subcategory: terrorism-court-verdict
+    location: [gov-tunis]
+    actors: [mondher-ounissi, zied-el-heni]
+    institutions: [judiciary]
+    causes: []
+    consequences: []
+    summary: >-
+      On Tuesday evening 27 October 2026 the criminal chamber specialised in
+      terrorism cases at the Tunis Court of First Instance sentenced Mondher
+      Ounissi, acting president of Ennahdha, to nine years' imprisonment and
+      the journalist Zied El Heni to four years, both with immediate execution,
+      in the case known as the "audio recordings" case. Taher Boubahri and eight
+      other co-defendants were sentenced to 25 years each, several of them in
+      absentia, according to the list published by the CRLDHT; African Manager
+      and Kapitalis give the same 9- and 4-year terms and the 25-year terms but
+      differ on the wording of the charges and on individual co-defendant
+      names. African Manager, citing a judicial source to TAP, reports charges
+      of failing to report information about terrorist acts even where
+      professional secrecy applies, and of contacting foreign-state agents to
+      harm Tunisia's diplomatic position in connection with terrorist crimes;
+      Kapitalis, citing a judicial source to Diwan FM, reports four charges:
+      forming a terrorist organisation, disclosing secrets to it, failing to
+      denounce a terrorist crime, and contacting foreign-state agents to incite
+      them to harm the country. The case began in September 2023 over audio
+      recordings attributed to Ounissi discussing meetings with influential
+      businessmen and alleged Ennahdha financial irregularities; Ounissi
+      contests the attribution and his defence had sought a forensic
+      examination. El Heni, initially heard as a witness, was prosecuted after
+      broadcasting material about the recordings. Both defendants appeared by
+      videoconference from Mornaguia civil prison; their lawyers complained
+      about the remote format. The CRLDHT condemned the verdict on 28 October
+      and demanded the release of the detainees and the annulment of the
+      judgment. No judgment text, court communiqué or case file was retrieved.
+    confidence: B
+    verification: needs-primary-source
+    attributed_to: "An anonymous judicial source cited to TAP by African Manager (28 October 2026) and to Diwan FM by Kapitalis (28 October 2026); the CRLDHT communiqué of 28 October 2026, republished by Kapitalis (29 October 2026)"
+    reasoning: >-
+      Two outlets published the same day with different original recipients
+      (TAP and Diwan FM) and agree on the central sentences (nine years for
+      Ounissi, four for El Heni, 25 for the co-defendants), which supports B on
+      the verdict. They differ on the charge wording and on some co-defendant
+      names; the CRLDHT communiqué supplies a full list and resolves the
+      "Rafik Bouchlaka" / "Rafik Abdessalem" difference as an alias, but it is
+      an advocacy organisation's account, not a court record. The judgment
+      itself was not obtained, so the charge counts and the procedural position
+      (appealability) are left open.
+    falsifiable_by: >-
+      The judgment of the criminal chamber, the case file, a court communiqué,
+      or a defence statement would confirm the charges, the sentence
+      composition, the co-defendant list and whether an appeal has been
+      lodged; a court record showing different terms or a different list would
+      correct the record.
+    disputes:
+      - claim: "The charges on which Ounissi and El Heni were convicted."
+        held_by: "African Manager (28 October 2026) reports failure to report terrorist information and foreign contacts; Kapitalis (28 October 2026) reports four charges including forming a terrorist organisation and disclosing secrets."
+        source: kapitalis-ounissi-verdict-2026-10-28
+        assessment: "The two accounts may summarise different counts of the same judgment rather than contradict each other; the judgment text would settle the exact counts. Recorded open."
+        status: open
+    sources:
+      - am-ounissi-verdict-2026-10-28
+      - kapitalis-ounissi-verdict-2026-10-28
+      - kapitalis-crldht-audio-verdict-2026-10-29
+
+  - id: ev-ben-fadhel-corruption-sentence-2026-10-29
+    date: "2026-10-29"
+    title_en: "Riadh Ben Fadhel sentenced to 20 years in a financial-corruption case"
+    title_fr: "Riadh Ben Fadhel condamné à 20 ans dans une affaire de corruption financière"
+    category: legal
+    subcategory: corruption-verdict
+    location: [gov-tunis]
+    actors: [riadh-ben-fadhel]
+    institutions: [judiciary]
+    causes: []
+    consequences: []
+    summary: >-
+      On Thursday evening 29 October 2026 the criminal chamber specialised in
+      financial-corruption cases at the Tunis Court of First Instance sentenced
+      Riadh Ben Fadhel, coordinator-general of the centre-left party Al-Qotb,
+      to 20 years' imprisonment, according to a judicial source cited to TAP by
+      African Manager and reported by Kapitalis. The same chamber sentenced
+      other co-defendants to nine years each and imposed fines exceeding 11
+      million dinars on the accused and on 14 companies involved in the case,
+      per African Manager; the number of co-defendants sentenced to nine years
+      is given as 28 by African Manager and 18 by Kapitalis. The charges as
+      reported are money laundering by exploiting functions and professional
+      and social activities, criminal association to harm others' property,
+      and tax offences; Kapitalis describes the case as concerning the
+      management of confiscated property. The first hearing was held on
+      9 February 2026. Ben Fadhel had been arrested at Tunis-Carthage airport
+      on 14 November 2023 on returning from abroad; he had earlier been
+      sentenced to four years and six months and a two-million-dinar fine in a
+      customs case, and in April 2025 the appeal chamber declared the public
+      action extinguished after a settlement and annulled the first-instance
+      judgment. Al-Qotb called the verdict a political revenge and published a
+      communiqué on 30 October 2026. No judgment text or court communiqué was
+      retrieved.
+    confidence: B
+    verification: needs-primary-source
+    attributed_to: "An anonymous judicial source cited to TAP by African Manager (31 October 2026); Kapitalis (30 October 2026), which also reproduces the Al-Qotb communiqué"
+    reasoning: >-
+      Two outlets agree on the 20-year sentence, the nine-year co-defendant
+      terms, the fines exceeding 11 million dinars and the case's subject
+      matter, which supports B on the verdict. They disagree on the number of
+      co-defendants sentenced to nine years (28 versus 18); neither gives a
+      court document, and the difference is recorded as an open dispute rather
+      than resolved. The prior customs case and the April 2025 settlement are
+      African Manager's account and are attributed.
+    falsifiable_by: >-
+      The judgment, the case file, a court communiqué or an appeal filing would
+      confirm the sentence, the number of co-defendants, the fines and the
+      companies; a record showing a different sentence or a different
+      co-defendant count would correct the event.
+    disputes:
+      - claim: "The number of co-defendants sentenced to nine years alongside Riadh Ben Fadhel."
+        held_by: "African Manager (31 October 2026) says 28; Kapitalis (30 October 2026) says 18."
+        source: am-ben-fadhel-verdict-2026-10-31
+        assessment: "Both figures are reported; no court document was retrieved. The difference may distinguish all co-defendants from those sentenced to nine years, but neither article says so. Recorded open."
+        status: open
+    sources:
+      - am-ben-fadhel-verdict-2026-10-31
+      - kapitalis-ben-fadhel-verdict-2026-10-30
+
+  - id: ev-zaafrani-russia-africa-summit-2026-10-28
+    date: "2026-10-28"
+    date_end: "2026-10-29"
+    title_en: "Zaafrani attends the third Russia-Africa summit and is received by Putin at the Kremlin"
+    title_fr: "Zaafrani participe au troisième sommet Russie-Afrique et est reçue par Poutine au Kremlin"
+    category: political
+    subcategory: foreign-visit
+    location: []
+    actors: [sara-zaafarani]
+    institutions: [presidency, russia]
+    causes: []
+    consequences: []
+    summary: >-
+      On an official visit to Russia from 27 to 29 October 2026, head of
+      government Sara Zaafarani attended the third Russia-Africa summit in
+      Moscow on 28-29 October and was received by President Vladimir Putin at
+      the Kremlin on the evening of Wednesday 28 October, together with other
+      African heads of state and government, according to a communiqué of the
+      government's information and communication services relayed by African
+      Manager. The same source says she attended the official dinner Putin
+      gave for the African leaders. The presidency charged her with
+      representing Tunisia at the summit. The piece announces no bilateral
+      agreement, signature or joint statement; no Kremlin readout or Tunisian
+      presidency statement was retrieved.
+    confidence: C
+    verification: needs-primary-source
+    attributed_to: "The government's information and communication services, as relayed by African Manager (29 October 2026)"
+    reasoning: >-
+      One outlet relaying a government communiqué. The dates, the Kremlin
+      reception and the official dinner are as the communiqué states them; no
+      independent account, Kremlin readout or joint statement was found, and
+      the record does not infer any bilateral outcome from the visit.
+    falsifiable_by: >-
+      The government communiqué, a Kremlin readout, a joint statement or a
+      Tunisian presidency statement would confirm the visit and any agreement;
+      a statement that the head of government did not attend, or attended a
+      different summit, would correct the record.
+    sources:
+      - am-zaafrani-kremlin-2026-10-29
+
+  - id: ev-safe-sea-26-2026-10-26
+    date: "2026-10-26"
+    date_end: "2026-10-30"
+    title_en: "National navy launches the third Safe Sea exercise in the Gulf of Tunis"
+    title_fr: "La Marine nationale lance la troisième édition de l’exercice Safe Sea dans le golfe de Tunis"
+    category: military
+    subcategory: naval-exercise
+    location: [gov-tunis]
+    actors: []
+    institutions: [ministry-defence, navy]
+    causes: []
+    consequences: []
+    summary: >-
+      The National Navy opened the third edition of the "Safe Sea 26" naval
+      exercise at the La Goulette naval base on Monday 26 October 2026; the
+      exercise ran in the Gulf of Tunis from 26 to 30 October with national
+      maritime-security structures and observers from friendly navies, per a
+      Ministry of National Defence communiqué relayed by African Manager. The
+      programme covered search and rescue, maritime-pollution response,
+      security threats to vessels and, for the first time, protection of
+      underwater cultural heritage, together with workshops and the promotion
+      of the 196 emergency number. The piece names no participating country
+      and no independent account was retrieved.
+    confidence: C
+    verification: needs-primary-source
+    attributed_to: "Ministry of National Defence communiqué, as relayed by African Manager (27 October 2026)"
+    reasoning: >-
+      One outlet relaying a ministry communiqué. The exercise's dates,
+      location and programme are as the communiqué states them; the
+      participating navies are not named, and the record does not infer them.
+      This is a routine national exercise, recorded because it is a dated
+      military activity the graph did not cover.
+    falsifiable_by: >-
+      The Defence Ministry communiqué, an exercise report or a participating
+      navy's statement would confirm the dates, participants and programme; a
+      cancellation or a different date would correct the record.
+    sources:
+      - am-safe-sea-26-2026-10-27
+
+  - id: ev-arp-wells-regularisation-law-2026-10-27
+    date: "2026-10-27"
+    title_en: "Parliament adopts a law regularising unauthorised deep agricultural wells"
+    title_fr: "Le Parlement adopte une loi régularisant les puits agricoles profonds non autorisés"
+    category: political
+    subcategory: legislation
+    location: [gov-tunis]
+    actors: []
+    institutions: [legislature]
+    causes: []
+    consequences: []
+    summary: >-
+      The Assembly of the Representatives of the People adopted on Tuesday
+      27 October 2026 the bill regularising unauthorised agricultural wells by
+      79 votes for, 7 against and 10 abstentions, according to Mosaique FM as
+      relayed by African Manager. The text regularises deep agricultural wells
+      drilled before 10 December 2024 against a fee of 3,500 dinars; applications
+      must be filed by 31 December 2027, and the operators may also benefit
+      from investment and tax incentives. The piece gives no law number and no
+      JORT publication date; no ARP communiqué, minutes or text was retrieved.
+    confidence: C
+    verification: needs-primary-source
+    attributed_to: "Mosaique FM, as relayed by African Manager (29 October 2026)"
+    reasoning: >-
+      One outlet relaying a radio report. The vote count, the cut-off date, the
+      fee and the application deadline are as the piece states them; no
+      parliamentary document or gazette text was obtained, so the record does
+      not carry a law number or an in-force date.
+    falsifiable_by: >-
+      The ARP minutes or communiqué, the published law and its JORT issue would
+      confirm the vote, the cut-off date, the fee and the deadline; a different
+      text or a presidential referral would correct the record.
+    sources:
+      - am-arp-wells-law-2026-10-29
+
+  - id: ev-ugtt-hydrocarbon-strike-notice-2026-11-02
+    date: "2026-11-02"
+    title_en: "UGTT files a three-day strike notice in hydrocarbon transport for 23-25 November"
+    title_fr: "L’UGTT dépose un préavis de grève de trois jours dans le transport des hydrocarbures pour les 23-25 novembre"
+    category: protest
+    subcategory: labour-strike-notice
+    location: []
+    actors: []
+    institutions: [ugtt]
+    causes: []
+    consequences: []
+    summary: >-
+      The private-sector department of the Tunisian General Labour Union
+      (UGTT) published on Monday 2 November 2026 a notice for a three-day
+      sectoral general strike in hydrocarbon-transport companies from 23 to
+      25 November 2026 across Tunisia, per the union communiqué relayed by
+      African Manager. The union says the action protests the blocked
+      implementation of an agreement concluded on 2 May 2019 and the
+      non-respect of the sector's professional and social rights; it demands
+      immediate application of the agreement's provisions: specific bonuses
+      for drivers of fuel and dangerous-goods trucks, recognition of their
+      occupation, regularisation of employment and social-security
+      contributions, and adjustment of companies' profit margins, and cites
+      article 377 of the Labour Code. The 2019 agreement itself was not
+      retrieved, and the notice is not a strike: no confirmation that the
+      action will proceed was found.
+    confidence: C
+    verification: needs-primary-source
+    attributed_to: "UGTT private-sector department communiqué, as relayed by African Manager (2 November 2026)"
+    reasoning: >-
+      One outlet relaying the union's communiqué. The notice's date, the
+      planned strike dates and the demands are as the communiqué states them;
+      the legal effect of the notice and whether the strike will take place
+      are not inferred. The record is dated to the notice, not to the future
+      strike.
+    falsifiable_by: >-
+      The UGTT communiqué, an employer or government response, a cancellation
+      or the actual strike would confirm or correct the notice and its scope;
+      the 2 May 2019 agreement would confirm the demands.
+    sources:
+      - am-ugtt-hydrocarbon-strike-2026-11-02
+
+  - id: ev-fades-infrastructure-loans-2026-10-27
+    date: "2026-10-27"
+    title_en: "Tunisia signs two FADES loan agreements worth 432 million dinars for infrastructure"
+    title_fr: "La Tunisie signe deux accords de prêt FADES de 432 millions de dinars pour les infrastructures"
+    category: economic
+    subcategory: sovereign-borrowing
+    location: [gov-tunis]
+    actors: [samir-abdelhafidh]
+    institutions: []
+    causes: []
+    consequences: []
+    summary: >-
+      Economy and Planning Minister Samir Abdelhafidh and the director-general
+      and board chairman of the Arab Fund for Economic and Social Development
+      (FADES), Faouzi Youssef Al-Hunaif, signed two loan agreements worth
+      432 million Tunisian dinars in Tunis on Tuesday 27 October 2026, per
+      African Manager. The first, 288 million dinars (30 million Kuwaiti
+      dinars), finances the Bou Salem-Fernana motorway, a project with a total
+      cost of about 685 million dinars covering some 40 km, the Jendouba ring
+      road and the doubling of regional road 59; the second, 144 million dinars
+      (15 million Kuwaiti dinars), finances the development of 253 km of rural
+      tracks across 21 governorates, in a project costing 170 million dinars.
+      The piece says FADES has financed 67 projects in Tunisia since 1974 for
+      about 12 billion dinars and that the annual meetings of Arab financial
+      institutions will be held in Tunisia on 28-29 April 2027. No loan
+      agreement, FADES release or JORT ratification text was retrieved, and
+      FADES has no institution record.
+    confidence: C
+    verification: needs-primary-source
+    attributed_to: "African Manager (27 October 2026), reporting the signing"
+    reasoning: >-
+      One outlet reporting the signing. The two loan amounts, their component
+      projects and the totals are as the piece states them, and the components
+      sum to the 432 million total. FADES has no graph record, so the record
+      cites the minister as actor and names the fund in the summary rather than
+      creating a dangling institution id.
+    falsifiable_by: >-
+      The signed loan agreements, a FADES or economy-ministry communiqué, or a
+      JORT ratification law would confirm the amounts, the projects and the
+      terms; a different amount or project list would correct the record.
+    sources:
+      - am-fades-loans-2026-10-27
+
+  - id: ev-advent-vermeg-acquisition-2026-11-02
+    date: "2026-11-02"
+    title_en: "Advent International agrees to acquire Vermeg from Charterhouse and founder Badreddine Ouali"
+    title_fr: "Advent International conclut un accord pour acquérir Vermeg auprès de Charterhouse et de son fondateur Badreddine Ouali"
+    category: economic
+    subcategory: ownership-change
+    location: []
+    actors: [badreddine-ouali]
+    institutions: []
+    causes: []
+    consequences: []
+    summary: >-
+      Advent International announced on Monday 2 November 2026 that it had
+      agreed to acquire Vermeg, a Tunisian-founded global software vendor for
+      capital markets and life insurance, from the private-equity firm
+      Charterhouse Capital Partners and founder Badreddine Ouali, per African
+      Manager. Advent is leading the transaction with a wholly owned
+      subsidiary of the Abu Dhabi Investment Authority (ADIA) as a minority
+      co-investor; Ouali will retain a stake and remain actively involved in
+      strategy and client relations as vice-chairman of the board, and Advent
+      operating partner Mike Ettling will become chairman once the transaction
+      closes. Completion is expected in the first half of 2027, subject to
+      regulatory approvals. The piece describes Vermeg's two businesses:
+      capital-markets post-trade and collateral technology for central banks,
+      clearing houses, central securities depositories, custodians and
+      investment firms, and life-insurance technology mainly in France and the
+      Benelux, and gives Advent's company figures (more than USD 109 billion
+      under management, 460 investments in 45 countries). Vermeg, Advent,
+      ADIA and Charterhouse have no graph records.
+    confidence: C
+    verification: needs-primary-source
+    attributed_to: "Advent International's announcement, as reported by African Manager (3 November 2026)"
+    reasoning: >-
+      One outlet relaying the buyer's announcement. The agreement, the
+      co-investor, Ouali's continuing role and the expected completion window
+      are as the piece states them; the transaction is announced, not
+      completed, and the company figures are Advent's own. No regulatory
+      filing or closing document was retrieved.
+    falsifiable_by: >-
+      Advent's or Vermeg's press release, a regulatory filing or the closing
+      would confirm the transaction and its terms; a statement that the
+      agreement lapsed or that Ouali will not retain a role would correct the
+      record.
+    sources:
+      - am-advent-vermeg-2026-11-03
+
+  - id: ev-zenith-pompeo-arbitration-2026-10-29
+    date: "2026-10-29"
+    title_en: "Zenith Energy engages Mike Pompeo's CNQ Global Advisors in its ICSID arbitration against Tunisia"
+    title_fr: "Zenith Energy engage CNQ Global Advisors de Mike Pompeo dans son arbitrage CIRDI contre la Tunisie"
+    category: legal
+    subcategory: investment-arbitration
+    location: []
+    actors: []
+    institutions: [etap]
+    causes: []
+    consequences: []
+    summary: >-
+      Zenith Energy has engaged former US secretary of state Mike Pompeo and
+      his consultancy CNQ Global Advisors as strategic advisers in its
+      arbitration against Tunisia before the International Centre for
+      Settlement of Investment Disputes (ICSID), per Kapitalis on 29 October
+      2026, citing Agenzia Nova. The company claims about USD 573 million
+      (nearly 1.5 billion dinars, about EUR 495 million) plus accrued interest;
+      the case was initiated in June 2023 by three UK subsidiaries (Zenith
+      Energy Africa Ltd., Zenith Overseas Assets Ltd. and Compagnie du Désert
+      Ltd.) under the 1989 UK-Tunisia bilateral investment treaty. The
+      dispute concerns Zenith's oil investments in the Sidi El Kilani and
+      Ezzaouia concessions; hearings on the merits were held in Paris in April
+      2026, final memorials were filed on 30 September 2026, and the award is
+      expected in the first quarter of 2027. Tunisia contests the claim and the
+      amount is not an adjudicated debt. The piece says the cumulative claims
+      across the group's disputes are about USD 639.7 million and that a
+      separate arbitration awarded Zenith about USD 9.7 million including
+      interest. The article also involves ETAP in the wider dispute. Zenith,
+      CNQ, ICSID and Pompeo have no graph records.
+    confidence: C
+    verification: needs-primary-source
+    attributed_to: "Kapitalis (29 October 2026), citing Agenzia Nova; the claim amount and procedural calendar are Zenith's and its counsel's account"
+    reasoning: >-
+      One outlet relaying a company statement. The engagement, the claim
+      amount, the treaty basis and the procedural calendar are as the piece
+      states them; the USD 573 million is a claim, not a finding, and Tunisia's
+      contest is recorded. No ICSID filing, award or Tunisian government
+      statement was retrieved.
+    falsifiable_by: >-
+      The ICSID case file or award, a Zenith or CNQ statement, or a Tunisian
+      government filing would confirm the amount, the procedural position and
+      the engagement; an award or settlement on different terms would correct
+      the record.
+    sources:
+      - kapitalis-pompeo-zenith-2026-10-29
+
+contracts:
+  - id: ctr-el-menzah-stadium-reconstruction-2026
+    title_en: "Reconstruction of the El Menzah Olympic Stadium by the CRCEG/CAMCE consortium"
+    title_fr: "Reconstruction du stade olympique d’El Menzah par le consortium CRCEG/CAMCE"
+    institution: ministry-equipment-housing
+    kind: construction
+    award:
+      value: "520000000"
+      currency: TND
+      year: 2026
+    status: signed
+    start: "2026-10-29"
+    location: [gov-tunis]
+    notes:
+      - >-
+        The commercial contract was signed on Thursday 29 October 2026 at the
+        Ministry of Equipment and Housing between the Tunisian state,
+        represented by the ministry, and the consortium China Railway
+        Construction Engineering Group / China CAMC Engineering
+        (CRCEG/CAMCE). The ministers of equipment, Salah Zouari, and of youth
+        and sports, Sadok Morali, and the Chinese ambassador, Wan Li, attended.
+        The Commission des grands projets had decided on 8 October 2026 to
+        award the contract to a Chinese company.
+      - >-
+        The reported cost is a range of about 520 to 600 million dinars,
+        including all services, for reconstruction, stands, track and
+        equipment, with a construction period of 30 to 36 months. The
+        award.value field carries the lower bound of that range
+        (520,000,000 TND), not a point estimate; it is not a midpoint or a
+        guess.
+      - >-
+        The winner is a two-company consortium and has no institution or
+        company record in the graph, so winner is left unset rather than
+        pointing at a missing id. No contract text, JORT notice or Commission
+        decision was retrieved.
+    confidence: C
+    verification: needs-primary-source
+    attributed_to: "Ministry of Equipment and Housing communiqué of 30 October 2026, as reported by African Manager (31 October 2026)"
+    reasoning: >-
+      One outlet relaying a ministry communiqué. The signing, the parties, the
+      reported cost range and the construction period are as the piece states
+      them; the value field carries the lower bound and the notes say so. The
+      consortium has no graph record, so the record does not invent a winner
+      id.
+    falsifiable_by: >-
+      The signed contract, the Commission des grands projets decision, a
+      ministry communiqué or a JORT notice would confirm the parties, the value
+      and the timetable; a different consortium or a different value would
+      correct the record.
+    sources:
+      - am-el-menzah-stadium-2026-10-31
+
+people:
+  - id: riadh-ben-fadhel
+    name_en: Riadh Ben Fadhel
+    name_fr: Riadh Ben Fadhel
+    aliases: []
+    layers: [political]
+    tagline: "Coordinator-general of Al-Qotb; sentenced to 20 years in a financial-corruption case in October 2026"
+    summary: >-
+      Tunisian businessman and coordinator-general of the centre-left party
+      Al-Qotb. African Manager and Kapitalis describe him as an "homme
+      d'affaires" and the party's coordinator-general. He was arrested at
+      Tunis-Carthage airport on 14 November 2023 on returning from abroad. On
+      29 October 2026 the criminal chamber specialised in financial-corruption
+      cases at the Tunis Court of First Instance sentenced him to 20 years'
+      imprisonment in a case concerning the acquisition and management of
+      confiscated property, with other co-defendants sentenced to nine years
+      and fines exceeding 11 million dinars imposed on the accused and 14
+      companies; the number of co-defendants sentenced to nine years is given
+      as 28 by African Manager and 18 by Kapitalis (see
+      ev-ben-fadhel-corruption-sentence-2026-10-29). He had earlier been
+      sentenced to four years and six months and a two-million-dinar fine in a
+      customs case; in April 2025 the appeal chamber declared the public action
+      extinguished after a settlement and annulled the first-instance judgment.
+      Al-Qotb called the verdict a political revenge. No birth date, Arabic
+      spelling or detailed biography was carried by the sources; none is
+      invented here.
+    confidence: B
+    verification: needs-primary-source
+    attributed_to: "An anonymous judicial source cited to TAP by African Manager (31 October 2026); Kapitalis (30 October 2026), which also reproduces the Al-Qotb communiqué"
+    reasoning: >-
+      The identity, the party role and the 20-year sentence are consistent
+      across two outlets, which supports B. The number of co-defendants is
+      disputed (28 versus 18) and is recorded on the event, not averaged here.
+      The prior customs case and the April 2025 settlement rest on African
+      Manager's account. The sources give no birth date or Arabic spelling, so
+      those fields are left empty.
+    falsifiable_by: >-
+      A court record, the judgment or an appeal filing would confirm the
+      sentence, the charges and the prior case; a primary record identifying a
+      different person or a different role would correct the identification.
+    sources:
+      - am-ben-fadhel-verdict-2026-10-31
+      - kapitalis-ben-fadhel-verdict-2026-10-30
+
+  - id: rania-marzouki
+    name_en: Rania Marzouki
+    name_fr: Rania Marzouki
+    aliases: []
+    layers: [economic]
+    tagline: "Acting PDG of ETAP as of October 2026"
+    summary: >-
+      Tunisian state-enterprise executive. African Manager reports on
+      25 October 2026 that Rania Marzouki was acting as PDG of ETAP, the
+      national oil and gas company, succeeding Dalila Chebbi Bouattour, who
+      retired in August 2026. The piece says Marzouki came from the ministry
+      of industry, mines and energy, where Salah Zouari had been acting
+      minister since 28 April 2026, and that she had been in the ministry's
+      hydrocarbons directorate. It does not give her start date, birth date,
+      Arabic spelling or fuller biography, and none is invented here. ETAP's
+      PDG position is recorded in the graph as held by Dalila Chebbi Bouattour
+      on an open-ended basis; see the flag on
+      p-soe-etap-dalila-chebbi-bouattour and the proposed position
+      p-soe-etap-rania-marzouki.
+    confidence: C
+    verification: needs-primary-source
+    attributed_to: "African Manager (25 October 2026)"
+    reasoning: >-
+      One outlet names her as acting PDG and gives her ministry background.
+      The acting role is reported, not documented by a JORT decree or an ETAP
+      filing. The start date is not given: the record says "as of October
+      2026" and the position carries an unknown start rather than a guessed
+      one.
+    falsifiable_by: >-
+      A JORT appointment decree, an ETAP corporate filing or a ministry
+      announcement would confirm the acting appointment and its start date; a
+      statement naming a different acting PDG would correct the record.
+    sources:
+      - am-etap-marzouki-2026-10-25
+
+positions:
+  - id: p-soe-etap-rania-marzouki
+    role: etap-pdg
+    holder: rania-marzouki
+    start: "?"
+    end: ongoing
+    acting: true
+    predecessor: p-soe-etap-dalila-chebbi-bouattour
+    confidence: C
+    verification: needs-primary-source
+    attributed_to: "African Manager (25 October 2026)"
+    reasoning: >-
+      African Manager reports that Rania Marzouki was acting as ETAP's PDG on
+      25 October 2026, succeeding Dalila Chebbi Bouattour, who retired in
+      August 2026. The article does not give Marzouki's start date, so the
+      position carries "?" rather than a guessed date. The appointment is
+      described as an interim ("assure l'intérim"), so acting is true.
+    falsifiable_by: >-
+      A JORT appointment decree, an ETAP corporate filing or a ministry
+      announcement would confirm the acting appointment, its start date and
+      its terms; a statement naming a different acting PDG would correct the
+      record.
+    notes:
+      - >-
+        The predecessor's record p-soe-etap-dalila-chebbi-bouattour still
+        carries end: ongoing; the flag on that record proposes closing it at
+        2026-08 on the strength of the same article. The predecessor link is
+        explicit because the successor's start date is unknown.
+    sources:
+      - am-etap-marzouki-2026-10-25
+
+flags:
+  - kind: flag
+    id: mondher-ounissi
+    note: >-
+      STALE SUMMARY, correction proposed. The person record's summary ends
+      "Pre-trial detention, no adjudicated charge." On 27 October 2026 the
+      criminal chamber specialised in terrorism at the Tunis Court of First
+      Instance sentenced Ounissi to nine years' imprisonment with immediate
+      execution in the audio-recordings case (see
+      ev-ounissi-audio-case-verdict-2026-10-27). The tagline "defendant in the
+      audio-recordings case" is also now incomplete. Proposed replacement for
+      the closing sentence: "On 27 October 2026 the criminal chamber specialised
+      in terrorism at the Tunis Court of First Instance sentenced him to nine
+      years' imprisonment with immediate execution in the audio-recordings
+      case; he appeared by videoconference from Mornaguia civil prison." The
+      record's existing sources remain valid for the pre-verdict biography;
+      the new sentence rests on the verdict sources.
+    sources:
+      - am-ounissi-verdict-2026-10-28
+      - kapitalis-ounissi-verdict-2026-10-28
+      - kapitalis-crldht-audio-verdict-2026-10-29
+
+  - kind: flag
+    id: zied-el-heni
+    note: >-
+      STALE SUMMARY, correction proposed. The person record's summary stops at
+      the 7 May 2026 one-year sentence under Article 86 of the
+      Telecommunications Code. On 27 October 2026 the criminal chamber
+      specialised in terrorism at the Tunis Court of First Instance sentenced
+      him to four years' imprisonment with immediate execution in the
+      audio-recordings case; he appeared by videoconference from Mornaguia
+      civil prison and his lawyers complained about the remote format (see
+      ev-ounissi-audio-case-verdict-2026-10-27). The tagline "sentenced in 2026
+      under Article 86" remains true but is incomplete. Proposed addition after
+      the May 2026 sentence: "On 27 October 2026 the criminal chamber
+      specialised in terrorism at the Tunis Court of First Instance sentenced
+      him to four years' imprisonment with immediate execution in the
+      audio-recordings case." The May 2026 record and its sources are
+      unaffected.
+    sources:
+      - am-ounissi-verdict-2026-10-28
+      - kapitalis-ounissi-verdict-2026-10-28
+      - kapitalis-crldht-audio-verdict-2026-10-29
+
+  - kind: flag
+    id: p-soe-etap-dalila-chebbi-bouattour
+    note: >-
+      END DATE, correction proposed. The position record carries end: ongoing
+      on the strength of a Wikipedia infobox and a September 2022 appointment
+      report. African Manager reported on 25 October 2026 that Dalila Chebbi
+      Bouattour retired from ETAP in August 2026 and that Rania Marzouki was
+      acting as PDG. Proposed change: end: "2026-08" (month precision, as the
+      source says "depuis août dernier"), with the African Manager item added
+      as a source; the successor's position is proposed as
+      p-soe-etap-rania-marzouki with an unknown start date. The record's
+      existing reasoning and sources stay; the change is a closure, not a
+      rewrite.
+    sources:
+      - am-etap-marzouki-2026-10-25
+
+notes:
+  - >-
+    Note, not a record: SONEDE-AfDB ratification. On Monday 2 November 2026 the
+    ARP bureau sent to the finance and budget committee, for urgent review, a
+    bill approving the state guarantee agreement between Tunisia and the African
+    Development Bank for EUR 111.5 million for the Greater Tunis drinking-water
+    network project. The underlying guarantee agreement is already recorded as
+    agr-tunisia-afdb-sonede-gct-2026 (signed 22 September 2026); this item is
+    the parliamentary ratification step, not a new agreement. The article gives
+    the project total as EUR 151.1 million (AfDB EUR 111.5 million, EU grant
+    EUR 30 million, SONEDE EUR 9.6 million), a 2026-2031 implementation period,
+    a 20-year loan with a five-year grace period, a six-month Euribor plus 0.8%
+    margin and 0.25% opening and commitment fees. No duplicate record is
+    proposed. Source: am-sonede-afdb-2026-11-03.
+  - >-
+    Note: 2027 budget process. The first plenary sessions on the 2027 finance
+    bill are scheduled for 9-10 November 2026; the ARP bureau returned nine
+    bills to the finance and budget committee; the presidency budget is
+    reported up 8%, justice up 8.43% and finance up 10% to 1,626.6 million
+    dinars, with more than 32,000 recruitments and 49.6 billion dinars of
+    projected tax revenue. These are budget-process and document figures spread
+    across several African Manager items, not a voted appropriation; no record
+    is proposed until the plenaries and the published text. Source:
+    am-budget-2027-plenaries-2026-11-03.
+  - >-
+    Note: Jebeniana follow-up. Nawaat's 2 November 2026 investigation adds
+    detail and context to the already-recorded death of Aoun Salhi on
+    21 October 2026 and the unrest of 22 October
+    (ev-jebeniana-death-aoun-salhi-2026-10-21,
+    ev-unrest-ettadhamen-jebiniana-2026-10-22): the victim was 24, from Drabla,
+    had worked in Italy, had recently married and left a pregnant wife; his
+    family and friends deny the drug-trafficking accusation; no looting or
+    damage to public or private property was reported; schools, shops, cafes
+    and the municipal market closed; calm returned around 14:00 and the funeral
+    was held the same afternoon. The piece also carries the activists' account
+    of Jebeniana as a security laboratory for migration control and of the
+    weakening of civil-society mediation. No contradiction with the canonical
+    records was found, so this is a note, not a correction. Source:
+    nawaat-jebeniana-followup-2026-11-02.
+  - >-
+    Note: Tunisians in the Russian army. France 24 broadcast on 29 October 2026
+    a report on Tunisian families without news of children enlisted in the
+    Russian army to fight in Ukraine; Kapitalis's 31 October account relays it
+    and names two cases, Zied Ben Khedher (a death certificate received seven
+    months after deployment, no information from the foreign ministry or the
+    Russian embassy) and Aymen Dhaouadi (arrested in Russia in 2022, held 19
+    months, then contracted with the military in May 2025 and deployed, now
+    missing). It cites an Amnesty International report on coercive recruitment
+    of foreigners in irregular situations and an Amnesty open letter of
+    27 October 2026. No Tunisian official response, figure or policy document
+    was retrieved, and the foreign ministry, the Russian embassy and Amnesty
+    have no graph records. Research backlog, not a record. Source:
+    kapitalis-tunisians-russia-2026-10-31.
+  - >-
+    Note: US phosphate project. The US embassy in Tunis announced a
+    US-government-funded project with CrossBoundary to connect US investors and
+    companies with PhosCo's phosphate project in the North Basin over the next
+    two years, aiming to mobilise private investment, increase local phosphate
+    production and integrate Tunisian minerals into global supply chains, per
+    African Manager on 29 October 2026. The piece names no Tunisian state
+    signatory or instrument; PhosCo, CrossBoundary and the US embassy have no
+    graph records. Research backlog, not a record. Source:
+    am-us-phosphate-2026-10-29.
+  - >-
+    Note: T-MED. The European Commission launched the T-MED investment
+    platform in Brussels on 28 October 2026, backed by up to EUR 4.5 billion of
+    EU guarantees, to mobilise renewable-energy and clean-technology investment
+    across the Mediterranean. In Tunisia it supports two 100 MW photovoltaic
+    plants and associated transmission infrastructure, with about EUR 92
+    million for one project and EUR 80 million for the other. This is an EU
+    initiative, not a Tunisian state act or a signed project agreement; no
+    record is proposed. Source: am-tmed-2026-10-28.
+  - >-
+    Note: Tunisia-Senegal chambers. The Tunis Chamber of Commerce and Industry
+    (CCIT) and Senegal's national union of chambers of commerce, industry and
+    agriculture (UNCCIAS) signed a partnership agreement on the margins of SIAT
+    2026, in the presence of Senegalese agriculture minister Cheikhou Oumar Ba,
+    and discussed a Tunisian business mission to the Dakar international fair
+    on 19-23 December 2026, per African Manager on 3 November 2026. This is a
+    chamber-to-chamber agreement, not a state treaty; CCIT and UNCCIAS have no
+    graph records. Note, not a record. Source: am-senegal-ccit-2026-11-03.
+  - >-
+    Note: appointments not proposed. African Manager reported on 1 November
+    2026 that Nizar Chaddad, formerly director-general of payments and
+    financial inclusion at the central bank, was appointed director-general of
+    the Société Monétique de Tunisie (SMT), succeeding Bilel Darnaoui, who
+    retired; and on 3 November 2026 that Yahia Chiboub is PDG of the Société
+    régionale de transport du gouvernorat de Nabeul, with a salary of 5,122.296
+    dinars gross per month fixed six months after his April 2025 appointment
+    and an auditor's finding that the PDG is not a shareholder as article 208
+    of the commercial companies code requires. SMT and SRTGN have no
+    institution records, and the SRTGN item is a governance/compensation story
+    rather than a power change; both stay in the research backlog rather than
+    becoming records with dangling references. The items are
+    africanmanager.com/nizar-chaddad-nomme-dg-de-la-societe-monetique-tunisie/
+    and
+    africanmanager.com/srtgn-un-pdg-nomme-en-avril-un-salaire-fixe-en-octobre/.
