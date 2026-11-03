@@ -1,8 +1,33 @@
 [
   {
-    "hash": "6dbbf03c5",
-    "date": "2026-11-03T15:07:51+01:00",
-    "subject": "wip modern",
+    "hash": "4755d21ef",
+    "date": "2026-11-03T15:20:40+01:00",
+    "subject": "Data: grade governor tenures from the gazette, 1957-2010",
+    "kind": "revision",
+    "added": 5533,
+    "removed": 1066,
+    "files": [
+      {
+        "file": "data/people.yaml",
+        "added": 17,
+        "removed": 7
+      },
+      {
+        "file": "data/positions.yaml",
+        "added": 1298,
+        "removed": 1059
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 4218,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "b4d030135",
+    "date": "2026-11-03T15:20:29+01:00",
+    "subject": "Data: grade governor tenures from the gazette, 2011-2026",
     "kind": "revision",
     "added": 3892,
     "removed": 430,
