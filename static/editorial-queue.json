@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-03T14:47:26.543Z",
+  "generated": "2026-11-03T19:03:04.493Z",
   "total": 5412,
   "reviewed": 42,
   "queue": [
@@ -552,6 +552,16 @@
       "sources": 2,
       "reviewed": false,
       "title": "Minister of Communication Technologies — Brahim Khouaja"
+    },
+    {
+      "kind": "position",
+      "id": "p-gov-gafsa-mokhtar-chouari",
+      "confidence": "C",
+      "basis": "reported",
+      "risk": 1,
+      "sources": 2,
+      "reviewed": false,
+      "title": "Governor of Gafsa — Mokhtar Chouari"
     },
     {
       "kind": "position",
@@ -5765,16 +5775,6 @@
     },
     {
       "kind": "position",
-      "id": "p-gov-bizerte-belamine",
-      "confidence": "C",
-      "basis": "reported",
-      "risk": 1,
-      "sources": 1,
-      "reviewed": false,
-      "title": "Governor of Bizerte — Mohamed Belamine"
-    },
-    {
-      "kind": "position",
       "id": "p-gov-bizerte-blouza",
       "confidence": "C",
       "basis": "reported",
@@ -5792,16 +5792,6 @@
       "sources": 1,
       "reviewed": false,
       "title": "Governor of Bizerte — Abdesselem Ghedira"
-    },
-    {
-      "kind": "position",
-      "id": "p-gov-bizerte-mokrani",
-      "confidence": "C",
-      "basis": "reported",
-      "risk": 1,
-      "sources": 1,
-      "reviewed": false,
-      "title": "Governor of Bizerte — Mohamed Ridha Mokrani"
     },
     {
       "kind": "position",
@@ -6382,26 +6372,6 @@
       "sources": 1,
       "reviewed": false,
       "title": "Governor of Gafsa — Mohamed Habib Braham"
-    },
-    {
-      "kind": "position",
-      "id": "p-gov-gafsa-mohamed-triki",
-      "confidence": "C",
-      "basis": "reported",
-      "risk": 1,
-      "sources": 1,
-      "reviewed": false,
-      "title": "Governor of Gafsa — Mohamed Triki"
-    },
-    {
-      "kind": "position",
-      "id": "p-gov-gafsa-salem-ben-hejal",
-      "confidence": "C",
-      "basis": "reported",
-      "risk": 1,
-      "sources": 1,
-      "reviewed": false,
-      "title": "Governor of Gafsa — Salem Ben Hejal"
     },
     {
       "kind": "position",
@@ -7012,16 +6982,6 @@
       "sources": 1,
       "reviewed": false,
       "title": "Minister of Higher Education and Scientific Research — Lazhar Bououni"
-    },
-    {
-      "kind": "position",
-      "id": "p-gov-mahdia-ameur-ghedira",
-      "confidence": "C",
-      "basis": "reported",
-      "risk": 1,
-      "sources": 1,
-      "reviewed": false,
-      "title": "Governor of Mahdia — Ameur Ghedira"
     },
     {
       "kind": "position",
@@ -8752,26 +8712,6 @@
       "sources": 1,
       "reviewed": false,
       "title": "Governor of Sfax — Mohamed Zinelabidine Mohsen"
-    },
-    {
-      "kind": "position",
-      "id": "p-gov-sfax-naceur-ben-jaafar",
-      "confidence": "C",
-      "basis": "reported",
-      "risk": 1,
-      "sources": 1,
-      "reviewed": false,
-      "title": "Governor of Sfax — Naceur Ben Jaafar"
-    },
-    {
-      "kind": "position",
-      "id": "p-gov-sfax-zakaria-ben-mustapha",
-      "confidence": "C",
-      "basis": "reported",
-      "risk": 1,
-      "sources": 1,
-      "reviewed": false,
-      "title": "Governor of Sfax — Zakaria Ben Mustapha"
     },
     {
       "kind": "position",
@@ -38485,6 +38425,16 @@
     },
     {
       "kind": "position",
+      "id": "p-gov-gabes-hedi-baccouche",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 4,
+      "reviewed": false,
+      "title": "Governor of Gabès — Hedi Baccouche"
+    },
+    {
+      "kind": "position",
       "id": "p-gov-gabes-mohamed-jegham",
       "confidence": "A",
       "basis": "documented",
@@ -38805,6 +38755,16 @@
     },
     {
       "kind": "position",
+      "id": "p-gov-kef-mabrouk",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 4,
+      "reviewed": false,
+      "title": "Governor of Kef — Hédi Mabrouk"
+    },
+    {
+      "kind": "position",
       "id": "p-gov-kef-matmati",
       "confidence": "A",
       "basis": "documented",
@@ -38952,6 +38912,16 @@
       "sources": 4,
       "reviewed": false,
       "title": "Governor of Nabeul — Mohamed Ridha Mlika"
+    },
+    {
+      "kind": "position",
+      "id": "p-gov-nabeul-zouari",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 4,
+      "reviewed": false,
+      "title": "Governor of Nabeul — Abderrahim Zouari"
     },
     {
       "kind": "position",
@@ -39725,6 +39695,16 @@
     },
     {
       "kind": "position",
+      "id": "p-gov-ariana-drissi",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 3,
+      "reviewed": false,
+      "title": "Governor of Ariana — Mohamed Néjib Drissi"
+    },
+    {
+      "kind": "position",
       "id": "p-gov-ariana-mansour",
       "confidence": "A",
       "basis": "documented",
@@ -39822,6 +39802,16 @@
       "sources": 3,
       "reviewed": false,
       "title": "Governor of Béja — Atef Boughattas"
+    },
+    {
+      "kind": "position",
+      "id": "p-gov-beja-el-kadri",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 3,
+      "reviewed": false,
+      "title": "Governor of Béja — Lamine El Kadri"
     },
     {
       "kind": "position",
@@ -40025,16 +40015,6 @@
     },
     {
       "kind": "position",
-      "id": "p-gov-gabes-hedi-baccouche",
-      "confidence": "A",
-      "basis": "documented",
-      "risk": 4,
-      "sources": 3,
-      "reviewed": false,
-      "title": "Governor of Gabès — Hedi Baccouche"
-    },
-    {
-      "kind": "position",
       "id": "p-gov-gabes-houcine-jrad",
       "confidence": "A",
       "basis": "documented",
@@ -40042,6 +40022,16 @@
       "sources": 3,
       "reviewed": false,
       "title": "Governor of Gabès — Houcine Jrad"
+    },
+    {
+      "kind": "position",
+      "id": "p-gov-gabes-mohamed-habib-gharbi",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 3,
+      "reviewed": false,
+      "title": "Governor of Gabès — Mohamed Habib Gharbi"
     },
     {
       "kind": "position",
@@ -40715,6 +40705,16 @@
     },
     {
       "kind": "position",
+      "id": "p-gov-kef-bellagha",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 3,
+      "reviewed": false,
+      "title": "Governor of Kef — Béchir Bellagha"
+    },
+    {
+      "kind": "position",
       "id": "p-gov-kef-ben-kraiem",
       "confidence": "A",
       "basis": "documented",
@@ -40792,16 +40792,6 @@
       "sources": 3,
       "reviewed": false,
       "title": "Governor of Kef — Hatem Laâmari"
-    },
-    {
-      "kind": "position",
-      "id": "p-gov-kef-mabrouk",
-      "confidence": "A",
-      "basis": "documented",
-      "risk": 4,
-      "sources": 3,
-      "reviewed": false,
-      "title": "Governor of Kef — Hédi Mabrouk"
     },
     {
       "kind": "position",
@@ -41235,16 +41225,6 @@
     },
     {
       "kind": "position",
-      "id": "p-gov-nabeul-zouari",
-      "confidence": "A",
-      "basis": "documented",
-      "risk": 4,
-      "sources": 3,
-      "reviewed": false,
-      "title": "Governor of Nabeul — Abderrahim Zouari"
-    },
-    {
-      "kind": "position",
       "id": "p-gov-sfax-abdelkader-n-siri",
       "confidence": "A",
       "basis": "documented",
@@ -41532,6 +41512,16 @@
       "sources": 3,
       "reviewed": false,
       "title": "Governor of Sousse — Abderahmen Limam"
+    },
+    {
+      "kind": "position",
+      "id": "p-gov-sousse-abdessalem-ghedira",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 3,
+      "reviewed": false,
+      "title": "Governor of Sousse — Abdessalem Ghédira"
     },
     {
       "kind": "position",
@@ -41925,6 +41915,16 @@
     },
     {
       "kind": "position",
+      "id": "p-gov-tunis-mohsen",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 3,
+      "reviewed": false,
+      "title": "Governor of Tunis — Abbès Mohsen"
+    },
+    {
+      "kind": "position",
       "id": "p-gov-tunis-zaouche",
       "confidence": "A",
       "basis": "documented",
@@ -42022,6 +42022,16 @@
       "sources": 3,
       "reviewed": false,
       "title": "Governor of Zaghouan — Dhaou Maïz"
+    },
+    {
+      "kind": "position",
+      "id": "p-gov-zaghouan-mohsni",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 3,
+      "reviewed": false,
+      "title": "Governor of Zaghouan — Saloua Mohsni"
     },
     {
       "kind": "position",
@@ -47435,16 +47445,6 @@
     },
     {
       "kind": "position",
-      "id": "p-gov-ariana-drissi",
-      "confidence": "A",
-      "basis": "documented",
-      "risk": 4,
-      "sources": 2,
-      "reviewed": false,
-      "title": "Governor of Ariana — Mohamed Néjib Drissi"
-    },
-    {
-      "kind": "position",
       "id": "p-gov-ariana-friji",
       "confidence": "A",
       "basis": "documented",
@@ -47572,16 +47572,6 @@
       "sources": 2,
       "reviewed": false,
       "title": "Governor of Béja — Romdhan Ben Mimoun"
-    },
-    {
-      "kind": "position",
-      "id": "p-gov-beja-el-kadri",
-      "confidence": "A",
-      "basis": "documented",
-      "risk": 4,
-      "sources": 2,
-      "reviewed": false,
-      "title": "Governor of Béja — Lamine El Kadri"
     },
     {
       "kind": "position",
@@ -47715,6 +47705,16 @@
     },
     {
       "kind": "position",
+      "id": "p-gov-bizerte-belamine",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "Governor of Bizerte — Mohamed Belamine"
+    },
+    {
+      "kind": "position",
       "id": "p-gov-bizerte-ben-jaafar",
       "confidence": "A",
       "basis": "documented",
@@ -47822,6 +47822,16 @@
       "sources": 2,
       "reviewed": false,
       "title": "Governor of Bizerte — Abdeljelil Mehiri"
+    },
+    {
+      "kind": "position",
+      "id": "p-gov-bizerte-mokrani",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "Governor of Bizerte — Mohamed Ridha Mokrani"
     },
     {
       "kind": "position",
@@ -48125,16 +48135,6 @@
     },
     {
       "kind": "position",
-      "id": "p-gov-gabes-mohamed-habib-gharbi",
-      "confidence": "A",
-      "basis": "documented",
-      "risk": 4,
-      "sources": 2,
-      "reviewed": false,
-      "title": "Governor of Gabès — Mohamed Habib Gharbi"
-    },
-    {
-      "kind": "position",
       "id": "p-gov-gabes-naceur-el-gharbi",
       "confidence": "A",
       "basis": "documented",
@@ -48235,13 +48235,13 @@
     },
     {
       "kind": "position",
-      "id": "p-gov-gafsa-mokhtar-chouari",
+      "id": "p-gov-gafsa-mohamed-triki",
       "confidence": "A",
       "basis": "documented",
       "risk": 4,
       "sources": 2,
       "reviewed": false,
-      "title": "Governor of Gafsa — Mokhtar Chouari"
+      "title": "Governor of Gafsa — Mohamed Triki"
     },
     {
       "kind": "position",
@@ -48252,6 +48252,16 @@
       "sources": 2,
       "reviewed": false,
       "title": "Governor of Gafsa — Mustapha Karbia"
+    },
+    {
+      "kind": "position",
+      "id": "p-gov-gafsa-salem-ben-hejal",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "Governor of Gafsa — Salem Ben Hejal"
     },
     {
       "kind": "position",
@@ -48965,16 +48975,6 @@
     },
     {
       "kind": "position",
-      "id": "p-gov-kef-bellagha",
-      "confidence": "A",
-      "basis": "documented",
-      "risk": 4,
-      "sources": 2,
-      "reviewed": false,
-      "title": "Governor of Kef — Béchir Bellagha"
-    },
-    {
-      "kind": "position",
       "id": "p-gov-kef-ben-gharbia",
       "confidence": "A",
       "basis": "documented",
@@ -49212,6 +49212,16 @@
       "sources": 2,
       "reviewed": false,
       "title": "Minister of State Properties — Mabrouk Korchid"
+    },
+    {
+      "kind": "position",
+      "id": "p-gov-mahdia-ameur-ghedira",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "Governor of Mahdia — Ameur Ghedira"
     },
     {
       "kind": "position",
@@ -50715,6 +50725,16 @@
     },
     {
       "kind": "position",
+      "id": "p-gov-sfax-naceur-ben-jaafar",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "Governor of Sfax — Naceur Ben Jaafar"
+    },
+    {
+      "kind": "position",
       "id": "p-gov-sfax-rachid-badri",
       "confidence": "A",
       "basis": "documented",
@@ -50742,6 +50762,16 @@
       "sources": 2,
       "reviewed": false,
       "title": "Governor of Sfax — Tahar Sraieb"
+    },
+    {
+      "kind": "position",
+      "id": "p-gov-sfax-zakaria-ben-mustapha",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "Governor of Sfax — Zakaria Ben Mustapha"
     },
     {
       "kind": "position",
@@ -51065,16 +51095,6 @@
     },
     {
       "kind": "position",
-      "id": "p-gov-sousse-abdessalem-ghedira",
-      "confidence": "A",
-      "basis": "documented",
-      "risk": 4,
-      "sources": 2,
-      "reviewed": false,
-      "title": "Governor of Sousse — Abdessalem Ghédira"
-    },
-    {
-      "kind": "position",
       "id": "p-gov-sousse-ahmed-bellalouna",
       "confidence": "A",
       "basis": "documented",
@@ -51345,16 +51365,6 @@
     },
     {
       "kind": "position",
-      "id": "p-gov-tunis-mohsen",
-      "confidence": "A",
-      "basis": "documented",
-      "risk": 4,
-      "sources": 2,
-      "reviewed": false,
-      "title": "Governor of Tunis — Abbès Mohsen"
-    },
-    {
-      "kind": "position",
       "id": "p-gov-tunis-mohsen-1986",
       "confidence": "A",
       "basis": "documented",
@@ -51482,16 +51492,6 @@
       "sources": 2,
       "reviewed": false,
       "title": "Governor of Zaghouan — Abdelhak Lassoued"
-    },
-    {
-      "kind": "position",
-      "id": "p-gov-zaghouan-mohsni",
-      "confidence": "A",
-      "basis": "documented",
-      "risk": 4,
-      "sources": 2,
-      "reviewed": false,
-      "title": "Governor of Zaghouan — Saloua Mohsni"
     },
     {
       "kind": "position",

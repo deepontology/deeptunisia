@@ -17089,6 +17089,7 @@
   sources:
   - frwiki-gov-tunis
   - jort-arrete-1978-03-23
+  - jort-arrete-1980-05-09-abbes-mohsen
 - id: p-gov-tunis-rouissi
   role: governor-tunis
   holder: mhedheb-rouissi
@@ -17341,13 +17342,14 @@
 - id: p-gov-ariana-drissi
   role: governor-ariana
   holder: mohamed-nejib-drissi
-  start: 1991-07
+  start: '1991-07-02'
   end: '1994-05-19'
   acting: false
   confidence: A
   sources:
   - frwiki-gov-ariana
   - jort-1994-1357
+  - jort-arrete-1991-07-27-drissi
 - id: p-gov-ariana-braham
   role: governor-ariana
   holder: mohamed-lahbib-braham
@@ -17515,10 +17517,11 @@
   role: governor-ben-arous
   holder: abdelkrim-azaiez
   start: '1983-03-16'
-  end: 1987-07
+  end: '1986-07-24'
   acting: false
   confidence: A
   notes:
+  - 'The end was recorded as July 1987 from a secondary list. The gazette names Ahmed Ridha Ouaja governor of Ben Arous from 24 July 1986 (jort-1986-794), so the tenure ends then.'
   - The governorate list dates this tenure March 1983-July 1987, but Ben Arous was created on 3 December 1983; the start is bounded to that creation date, and the March-December 1983 part belongs to Tunis.
   - The start was recorded as 1983-12 from secondary lists; the gazette instrument gives 1983-03-16.
   sources:
@@ -17884,10 +17887,13 @@
   end: '1980-05-07'
   acting: false
   confidence: A
+  notes:
+  - 'The start is given to the year: the gazette issue that records it was published in 1978-03, and the instrument itself is not dated.'
   sources:
   - frwiki-gov-nabeul
   - frwiki-abderrahim-zouari
   - jort-1980-842
+  - jort-arrete-1978-03-23-zouari
 - id: p-gov-nabeul-boulabiar
   role: governor-nabeul
   holder: mohamed-boulabiar
@@ -18274,12 +18280,13 @@
   role: governor-zaghouan
   holder: saloua-mohsni
   start: '2004'
-  end: '2008'
+  end: '2008-08-21'
   acting: false
   confidence: A
   sources:
   - frwiki-gov-zaghouan
   - jort-2004-1183
+  - jort-2008-3059-mohsni
 - id: p-gov-zaghouan-labbassi
   role: governor-zaghouan
   holder: kamel-labbassi
@@ -18440,10 +18447,12 @@
   start: '1959'
   end: '1961'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Bizerte
+  confidence: A
+  notes:
+  - 'The start is given to the year: the gazette issue that records it was published in 1959-09, and the instrument itself is not dated.'
   sources:
   - frwiki-gov-bizerte
+  - jort-arrete-1959-09-21-lamina
 - id: p-gov-bizerte-ben-jaafar
   role: governor-bizerte
   holder: naceur-ben-jaafar
@@ -18605,13 +18614,13 @@
 - id: p-gov-bizerte-mokrani
   role: governor-bizerte
   holder: mohamed-ridha-mokrani
-  start: '1995'
+  start: '1995-07-24'
   end: '1998'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Bizerte
+  confidence: A
   sources:
   - frwiki-gov-bizerte
+  - jort-arrete-1995-08-19-mokrani
 - id: p-gov-bizerte-marzouk
   role: governor-bizerte
   holder: sadok-marzouk
@@ -18877,12 +18886,13 @@
   role: governor-beja
   holder: lamine-el-kadri
   start: '1980'
-  end: '1984'
+  end: '1984-07-18'
   acting: false
   confidence: A
   sources:
   - frwiki-gov-beja
   - jort-1980-428
+  - jort-1985-133-kadri
 - id: p-gov-beja-neffati
   role: governor-beja
   holder: chedli-neffati
@@ -19159,14 +19169,16 @@
 - id: p-gov-jendouba-souyah
   role: governor-jendouba
   holder: mohamed-souyah
-  start: <=1971-09
-  end: '1970'
+  start: '1971'
+  end: '1973'
   acting: false
   confidence: A
   sources:
   - frwiki-gov-jendouba
   - jort-1971-327
   notes:
+  - 'The end was recorded as 1970 from a secondary list, before the 1971 appointment. It is set to 1973, the year the next governor of Jendouba, Abdelmalek Laarif, takes office from 24 May (jort-1973-241).'
+  - 'The start is given to the year: the gazette issue that records it was published in 1971-09, and the instrument itself is not dated.'
   - The start was recorded as 1969; the gazette instrument places it at <=1971-09.
 - id: p-gov-jendouba-zannad
   role: governor-jendouba
@@ -19182,9 +19194,11 @@
   role: governor-jendouba
   holder: hassen-louzir
   start: '1971-03-12'
-  end: '1973'
+  end: '1971'
   acting: false
   confidence: A
+  notes:
+  - 'The end was recorded as 1973 from a secondary list. The 1971 decree appointing Mhamed Souyah names him in replacement of Hassen Louzir (jort-1971-327), so the tenure ends in 1971.'
   sources:
   - frwiki-gov-jendouba
   - jort-1971-89
@@ -19225,7 +19239,7 @@
 - id: p-gov-jendouba-kefi
   role: governor-jendouba
   holder: abderrazak-kefi
-  start: <=1980-04
+  start: '1980'
   end: '1982'
   acting: false
   confidence: A
@@ -19234,11 +19248,12 @@
   - jort-1981-459
   - jort-1980-425
   notes:
+  - 'The start is given to the year: the gazette issue that records it was published in 1980-04, and the instrument itself is not dated.'
   - The start was recorded as 1981; the gazette instrument places it at <=1980-04.
 - id: p-gov-jendouba-ayoub
   role: governor-jendouba
   holder: abderrazak-ayoub
-  start: <=1981-04
+  start: '1981'
   end: '1984'
   acting: false
   confidence: A
@@ -19246,6 +19261,7 @@
   - frwiki-gov-jendouba
   - jort-1981-435
   notes:
+  - 'The start is given to the year: the gazette issue that records it was published in 1981-04, and the instrument itself is not dated.'
   - The start was recorded as 1982; the gazette instrument places it at <=1981-04.
 - id: p-gov-jendouba-khanfir
   role: governor-jendouba
@@ -19490,9 +19506,12 @@
   end: '1960'
   acting: false
   confidence: A
+  notes:
+  - 'The end is given to the year: the gazette issue that records it was published in 1960-10, and the instrument itself is not dated.'
   sources:
   - frwiki-gov-kef
   - jort-arrete-1957-09-30
+  - jort-arrete-1960-10-01-lagha
 - id: p-gov-kef-mabrouk
   role: governor-kef
   holder: hedi-mabrouk
@@ -19500,10 +19519,13 @@
   end: '1961-11-25'
   acting: false
   confidence: A
+  notes:
+  - 'The start is given to the year: the gazette issue that records it was published in 1960-10, and the instrument itself is not dated.'
   sources:
   - frwiki-gov-kef
   - frwiki-bio-mabrouk
   - jort-1961-419
+  - jort-arrete-1960-10-01-mabrouk
 - id: p-gov-kef-triki
   role: governor-kef
   holder: mohamed-triki
@@ -19562,7 +19584,7 @@
 - id: p-gov-kef-belkhiria
   role: governor-kef
   holder: moncef-belkhiria
-  start: <=1974-03
+  start: '1974'
   end: '1979'
   acting: false
   confidence: A
@@ -19570,6 +19592,7 @@
   - frwiki-gov-kef
   - jort-1974-157
   notes:
+  - 'The start is given to the year: the gazette issue that records it was published in 1974-03, and the instrument itself is not dated.'
   - The start was recorded as 1973; the gazette instrument places it at <=1974-03.
 - id: p-gov-kef-laabidi
   role: governor-kef
@@ -20215,10 +20238,12 @@
 - id: p-gov-kairouan-alaya
   role: governor-kairouan
   holder: hedi-alaya
-  start: <=1978-03
+  start: '1978'
   end: '1979'
   acting: false
   confidence: A
+  notes:
+  - 'The start is given to the year: the gazette issue that records it was published in 1978-03, and the instrument itself is not dated.'
   sources:
   - frwiki-gov-kairouan
   - jort-1978-304
@@ -20505,10 +20530,12 @@
   start: '1960'
   end: '1961'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sfax
+  confidence: A
+  notes:
+  - 'The start is given to the year: the gazette issue that records it was published in 1960-10, and the instrument itself is not dated.'
   sources:
   - frwiki-sfax-gov
+  - jort-arrete-1960-10-01-jaffar
 - id: p-gov-sfax-mohamed-bellamine
   role: governor-sfax
   holder: mohamed-bellamine
@@ -20546,10 +20573,12 @@
   start: '1969'
   end: '1970'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sfax
+  confidence: A
+  notes:
+  - 'The start is given to the year: the gazette issue that records it was published in 1969-09, and the instrument itself is not dated.'
   sources:
   - frwiki-sfax-gov
+  - jort-arrete-1969-09-08-zakaria
 - id: p-gov-sfax-hedi-mkaddem
   role: governor-sfax
   holder: hedi-mkaddem
@@ -20596,10 +20625,12 @@
 - id: p-gov-sfax-habib-tounsi
   role: governor-sfax
   holder: habib-tounsi
-  start: <=1978-03
+  start: '1978'
   end: '1980-04-22'
   acting: false
   confidence: A
+  notes:
+  - 'The start is given to the year: the gazette issue that records it was published in 1978-03, and the instrument itself is not dated.'
   sources:
   - frwiki-sfax-gov
   - jort-1978-300
@@ -20630,11 +20661,12 @@
 - id: p-gov-sfax-hamadi-amara
   role: governor-sfax
   holder: hamadi-amara
-  start: <=1981-12
+  start: '1981'
   end: '1982'
   acting: false
   confidence: A
   notes:
+  - 'The start is given to the year: the gazette issue that records it was published in 1981-12, and the instrument itself is not dated.'
   - The list gives "1982, 13 jours" (13 days) without exact dates.
   - The start was recorded as 1982 from secondary lists; the gazette instrument gives <=1981-12.
   - 'Name check: gazette Mohamed Ben Amara, record Hamadi Amara; Hamadi is a common short form of Mohamed. The gazette spelling is kept as an alias until a second source settles it.'
@@ -20982,6 +21014,7 @@
   sources:
   - frwiki-sousse-gov
   - jort-arrete-1970-07-30
+  - jort-arrete-1969-09-08-ghedira
 - id: p-gov-sousse-ahmed-bellalouna
   role: governor-sousse
   holder: ahmed-bellalouna-sousse
@@ -21437,10 +21470,12 @@
   start: '1978'
   end: '1979'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Mahdia
+  confidence: A
+  notes:
+  - 'The start is given to the year: the gazette issue that records it was published in 1978-03, and the instrument itself is not dated.'
   sources:
   - frwiki-mahdia-gov
+  - jort-arrete-1978-03-23-ameur-ghedira
 - id: p-gov-mahdia-nejib-drissi
   role: governor-mahdia
   holder: nejib-drissi
@@ -22478,10 +22513,12 @@
   start: '1969'
   end: '1971'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gafsa
+  confidence: A
+  notes:
+  - 'The start is given to the year: the gazette issue that records it was published in 1969-09, and the instrument itself is not dated.'
   sources:
   - frwiki-gafsa-gov
+  - jort-arrete-1969-09-08-triki
 - id: p-gov-gafsa-tahar-boussemma
   role: governor-gafsa
   holder: tahar-boussemma-gafsa
@@ -22505,25 +22542,26 @@
 - id: p-gov-gafsa-salem-ben-hejal
   role: governor-gafsa
   holder: salem-ben-hejal
-  start: '1973'
+  start: '1973-12-01'
   end: '1974'
-  acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gafsa
-  sources:
-  - frwiki-gafsa-gov
-- id: p-gov-gafsa-mokhtar-chouari
-  role: governor-gafsa
-  holder: mokhtar-chouari-gafsa
-  start: <=1971-11
-  end: '1979'
   acting: false
   confidence: A
   sources:
   - frwiki-gafsa-gov
+  - jort-arrete-1973-11-30-hajel
+- id: p-gov-gafsa-mokhtar-chouari
+  role: governor-gafsa
+  holder: mokhtar-chouari-gafsa
+  start: '1974'
+  end: '1979'
+  acting: false
+  confidence: C
+  attributed_to: Wikipédia (fr), list of governors of Gafsa
+  sources:
+  - frwiki-gafsa-gov
   - jort-arrete-1971-11-08
   notes:
-  - The start was recorded as 1974; the gazette instrument places it at <=1971-11.
+  - 'An arrêté published in November 1971 moves Mokhtar Chouari from Sidi Bouzid to Gafsa (jort-arrete-1971-11-08), but the gazette then names Tahar Boussemma (from 21 November 1971), Mezri Choukir (to 1 December 1973) and Salem Hajel (from 1 December 1973) as governors of Gafsa. The 1971 transfer either did not take effect or was brief; the 1974 to 1979 tenure rests on the governor list alone.'
 - id: p-gov-gafsa-mohamed-abbes
   role: governor-gafsa
   holder: mohamed-abbes-gafsa
@@ -23346,10 +23384,13 @@
   end: '1970-01-01'
   acting: false
   confidence: A
+  notes:
+  - 'The start is given to the year: the gazette issue that records it was published in 1969-09, and the instrument itself is not dated.'
   sources:
   - frwiki-gabes-gov
   - frwiki-bio-baccouche
   - jort-1970-8
+  - jort-arrete-1969-09-08-baccouche
 - id: p-gov-gabes-rachid-badri
   role: governor-gabes
   holder: rachid-badri-gabes
@@ -23435,6 +23476,7 @@
   sources:
   - frwiki-gabes-gov
   - jort-1983-330
+  - jort-1985-133-gharbi
 - id: p-gov-gabes-abdelhak-lassoued
   role: governor-gabes
   holder: abdelhak-lassoued-gabes

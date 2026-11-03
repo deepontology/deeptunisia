@@ -191,23 +191,22 @@
   },
   {
     "kind": "position",
-    "id": "p-gov-jendouba-souyah",
-    "start": "<=1971-09",
-    "end": "1970",
+    "id": "p-gov-jendouba-louzir",
+    "start": "1971-03-12",
+    "end": "1971",
     "interval": {
-      "startEarliest": -197332417000,
-      "startLatest": 31535999000,
-      "endEarliest": 31535999000,
-      "endLatest": 31535999000,
-      "startPrecision": "before",
+      "startEarliest": 37584000000,
+      "startLatest": 37584000000,
+      "endEarliest": 37584000000,
+      "endLatest": 63071999000,
+      "startPrecision": "day",
       "endPrecision": "year",
       "status": "ended",
-      "lastObserved": 31535999000,
+      "lastObserved": 37584000000,
       "trimmed": true,
-      "startClamped": true,
       "raw": {
-        "start": "<=1971-09",
-        "end": "1970"
+        "start": "1971-03-12",
+        "end": "1971"
       }
     }
   },
