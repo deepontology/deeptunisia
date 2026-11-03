@@ -45,6 +45,13 @@ import { momentum, type Navigable } from '$lib/viz/camera.svelte';
 export const TUNISIA: [number, number] = [9.5, 34];
 
 /**
+ * Tunisia's extent as angles on the sphere, in radians: about 3.4 degrees of
+ * arc east to west at its latitude and 7.3 north to south. Used to work out the
+ * zoom at which the country fills the view.
+ */
+export const TN_SPAN: [number, number] = [0.06, 0.128];
+
+/**
  * Latitude is clamped short of the poles.
  *
  * At exactly ±90 the projection is looking straight down at a pole, every meridian
@@ -53,6 +60,9 @@ export const TUNISIA: [number, number] = [9.5, 34];
  * short keeps the horizon meaningful at every reachable angle.
  */
 const MAX_PHI = 78;
+
+/** The zoom above which the surface is flat enough to zoom about the pointer. */
+const POINT_ZOOM_K = 4;
 
 const EASE_OUT_CUBIC = (t: number) => 1 - Math.pow(1 - t, 3);
 
@@ -67,6 +77,9 @@ export class Globe implements Navigable {
 	vw = $state(1);
 	vh = $state(1);
 	moving = $state(false);
+
+	/** The projection is translated to the viewport centre; see Navigable. */
+	readonly centresItself = true;
 
 	readonly minScale: number;
 	readonly maxScale: number;
@@ -168,13 +181,26 @@ export class Globe implements Navigable {
 	}
 
 	/**
-	 * Zoom. The screen point is accepted for interface compatibility and ignored:
-	 * zooming about the cursor on a sphere means rotating the grabbed point toward
-	 * the centre as you scale, and doing that on a wheel event moves the map out
-	 * from under the reader. The globe zooms about its own centre.
+	 * Zoom.
+	 *
+	 * At world scale the globe zooms about its own centre: zooming about the
+	 * cursor on a sphere means rotating the grabbed point toward the centre as
+	 * you scale, and on a wheel event that moves the map out from under the
+	 * reader.
+	 *
+	 * Past `POINT_ZOOM_K` the visible surface is a few degrees across and close
+	 * enough to flat that the planar rule holds: a point d pixels from the
+	 * centre lands at d·f after the zoom, so dragging the surface back by
+	 * d·(1 − f) keeps it under the cursor. That is what lets a pinch over one
+	 * governorate stay on it instead of sliding toward the middle of the country.
 	 */
-	zoomAt(factor: number, _sx?: number, _sy?: number) {
+	zoomAt(factor: number, sx?: number, sy?: number) {
+		const k0 = this.k;
 		this.k = Math.min(this.maxScale, Math.max(this.minScale, this.k * factor));
+		if (k0 < POINT_ZOOM_K || sx === undefined || sy === undefined) return;
+		const f = this.k / k0;
+		const [cx, cy] = this.centre;
+		this.panBy((sx - cx) * (1 - f), (sy - cy) * (1 - f));
 	}
 
 	fit() {

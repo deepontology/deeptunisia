@@ -136,11 +136,17 @@ ok(
 // trial — but every Match carries its `rule`, and the feed presentation filters
 // surname-only links out rather than asserting a connection it cannot support.
 
-const besbes = m.find('Besbes: les batteries de stockage marquent une avancée pour le solaire');
+// The fixture surname must stay unique in the graph or the rule never fires.
+// It was Besbes until the governor lists added two more; it is Mebazaa now.
+const lone = m.find('Mebazaa: un restaurant rouvre ses portes à La Marsa');
 ok(
 	'surname-only matches are labelled as such',
-	besbes.length > 0 && besbes.every((x) => x.rule === 'surname'),
-	besbes.map((x) => `${x.id}:${x.rule}`).join(', ') || 'no match'
+	lone.length > 0 && lone.every((x) => x.rule === 'surname'),
+	lone.map((x) => `${x.id}:${x.rule}`).join(', ') || 'no match'
+);
+ok(
+	'a surname shared by several people in the graph does not match on its own',
+	m.find('Besbes: les batteries de stockage marquent une avancée pour le solaire').length === 0
 );
 ok(
 	'filtering the surname rule removes the known false positives',

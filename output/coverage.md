@@ -20,10 +20,10 @@ more than one era and back more than one institution, and the source-family and
 language dimensions count sources rather than claims. This is a coverage table,
 not a partition.
 
-- `institution`: 141 slice(s), 141 sparse
+- `institution`: 217 slice(s), 217 sparse
 - `era`: 7 slice(s), 5 sparse
-- `source_family`: 355 slice(s), 302 sparse
+- `source_family`: 387 slice(s), 324 sparse
 - `language`: 4 slice(s), 1 sparse
-- `office`: 101 slice(s), 101 sparse
+- `office`: 169 slice(s), 169 sparse
 
-550 sparse slice(s) of 608.
+716 sparse slice(s) of 784.

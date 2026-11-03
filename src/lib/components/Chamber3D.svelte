@@ -1,0 +1,118 @@
+<script lang="ts" module>
+	export interface ChamberSeat {
+		/** Unit hemicycle coordinates: x across, y toward the back (negative), r the row radius 0.4..1. */
+		x: number;
+		y: number;
+		r: number;
+		/** A CSS colour (a var() is fine), or null for a seat with no recorded holder. */
+		color: string | null;
+		dim: boolean;
+		/** The basis of the claim that seats this person, carried into the room. */
+		basis: 'documented' | 'reported' | 'inferred' | 'unsubstantiated' | null;
+		key: string;
+	}
+</script>
+
+<script lang="ts">
+	import { onMount } from 'svelte';
+	import { prefersReducedMotion } from 'svelte/motion';
+
+	/**
+	 * The chamber in three dimensions.
+	 *
+	 * WHAT THE DEPTH IS FOR
+	 *
+	 * The flat hemicycle answers "how many seats does each group hold"; the room
+	 * answers "this is a place, and these are people sitting in it". The camera
+	 * arrives from straight above, where the chamber reads exactly as the flat
+	 * diagram and the map it came from, then tilts down into the room. That one
+	 * move is the transition from the map to the institution, and it is the only
+	 * animation that plays on its own, and it plays once, when the room is first
+	 * opened. A date or term change glides the chairs to their new places and
+	 * leaves the camera where the reader left it: replaying the arrival on every
+	 * scrub made a date change look like a page reload.
+	 *
+	 * WHY IT RENDERS ON DEMAND
+	 *
+	 * Most visits are on phones. A loop drawing sixty frames a second of a room
+	 * that is standing still would drain a battery to show nothing, so a frame is
+	 * drawn only while something is moving and the loop stops when it settles.
+	 *
+	 * Three.js is imported when this component mounts, so no other page carries it.
+	 */
+
+	interface Props {
+		seats: ChamberSeat[];
+		onhover: (i: number | null) => void;
+		onpick: (i: number) => void;
+		/** Spoken name for the room, so its canvas is not an unlabelled box. */
+		label: string;
+		/** Id of the hidden instructions the canvas points at. */
+		describedby?: string;
+		onfail?: () => void;
+	}
+
+	let { seats, onhover, onpick, label, describedby, onfail }: Props = $props();
+
+	let host: HTMLDivElement;
+	let api: {
+		update: (s: ChamberSeat[]) => void;
+		arrive: () => void;
+		retheme: () => void;
+		destroy: () => void;
+	} | null = null;
+
+	onMount(() => {
+		let disposed = false;
+		import('./chamber-scene').then(({ createChamber }) => {
+			if (disposed) return;
+			try {
+				api = createChamber(host, {
+					onhover: (i) => onhover(i),
+					onpick: (i) => onpick(i),
+					reduced: () => prefersReducedMotion.current,
+					label: () => label,
+					describedby
+				});
+				api.update(seats);
+				api.arrive();
+			} catch {
+				onfail?.();
+			}
+		}, () => onfail?.());
+		const obs = new MutationObserver(() => api?.retheme());
+		obs.observe(document.documentElement, { attributeFilter: ['data-theme', 'style', 'data-palette'] });
+		return () => {
+			disposed = true;
+			obs.disconnect();
+			api?.destroy();
+		};
+	});
+
+	$effect(() => {
+		const s = seats;
+		api?.update(s);
+	});
+
+</script>
+
+<div class="chamber" bind:this={host}></div>
+
+<style>
+	.chamber {
+		position: absolute;
+		inset: 0;
+		touch-action: none;
+		cursor: grab;
+	}
+	.chamber :global(canvas:focus-visible) {
+		outline: 2px solid var(--accent);
+		outline-offset: -2px;
+		border-radius: var(--r-md);
+	}
+	.chamber :global(canvas) {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+</style>

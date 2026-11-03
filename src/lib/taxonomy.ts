@@ -92,7 +92,8 @@ export const INSTITUTION_TYPES = [
 	'sovereign-fund',
 	'cooperative',
 	'utility',
-	'port-authority'
+	'port-authority',
+	'parliamentary-group'
 ];
 
 export const EVENT_CATEGORIES = [

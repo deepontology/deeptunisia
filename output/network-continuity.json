@@ -43,6 +43,7 @@
       "certain": [
         "abdelhamid-belati",
         "adel-jehane",
+        "brahim-bertagi",
         "hassine-gharbi",
         "hichem-mechichi",
         "iyed-dahmani",
@@ -51,6 +52,7 @@
         "mohamed-el-ghoul",
         "mohamed-habib-dhif",
         "mohamed-hajem",
+        "walid-dhahbi",
         "zouhair-seddik"
       ],
       "watch": [
@@ -65,12 +67,12 @@
     "crossings": []
   },
   "edges": {
-    "total": 150,
+    "total": 226,
     "byKind": {
-      "succession": 64,
+      "succession": 97,
       "appointment": 25,
       "patronage": 1,
-      "co-membership": 60
+      "co-membership": 103
     }
   },
   "paths": {
@@ -219,16 +221,16 @@
     "shuffledCohorts": {
       "trials": 200,
       "min": 0,
-      "median": 2,
+      "median": 3,
       "max": 19,
-      "atLeastReal": 82
+      "atLeastReal": 83
     },
     "randomDates": {
       "trials": 200,
       "min": 0,
       "median": 0,
-      "max": 19,
-      "atLeastReal": 10
+      "max": 32,
+      "atLeastReal": 24
     }
   },
   "review": {

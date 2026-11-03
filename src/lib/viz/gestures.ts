@@ -300,6 +300,8 @@ export function navigable(node: HTMLElement | SVGElement, params: { cam: Navigab
 		if (!fitted) {
 			fitted = true;
 			cam.fit();
+		} else if (cam.centresItself) {
+			// Nothing to keep: the surface is already centred on the viewport.
 		} else if (cam.skipResizePan) {
 			// A flight is about to take the reader somewhere on purpose; the
 			// keep-the-centre pan would be a sudden jump right before it starts.

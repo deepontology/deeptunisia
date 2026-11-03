@@ -594,14 +594,51 @@ for (const role of roles) {
 	if (!institutionById.has(role.institution)) {
 		fail(`role ${role.id}`, `unknown institution "${role.institution}"`);
 	}
+	if (role.region && !regions.some((r) => r.id === role.region)) {
+		fail(`role ${role.id}`, `unknown region "${role.region}"`);
+	}
 }
 for (const person of people) {
 	checkSources(`person ${person.id}`, person.sources);
 }
+// A seat split names parties that exist and cannot exceed the seats of the
+// term it describes.
+for (const inst of institutions) {
+	if (!inst.seat_split) continue;
+	const seatsOf = roles.filter((r) => r.institution === inst.id && r.seats !== undefined).map((r) => r.seats!);
+	let total = 0;
+	for (const s of inst.seat_split) {
+		total += s.seats;
+		if (!institutions.some((i) => i.id === s.party && i.type === 'party')) {
+			fail(`institution ${inst.id}`, `seat_split names "${s.party}", which is not a party institution`);
+		}
+	}
+	if (seatsOf.length && total > Math.max(...seatsOf)) {
+		fail(`institution ${inst.id}`, `seat_split sums to ${total}, more than the ${Math.max(...seatsOf)} seats of the term`);
+	}
+}
+
 for (const pos of positions) {
 	checkSources(`position ${pos.id}`, pos.sources);
 	if (!roleById.has(pos.role)) fail(`position ${pos.id}`, `unknown role "${pos.role}"`);
 	if (!personById.has(pos.holder)) fail(`position ${pos.id}`, `unknown holder "${pos.holder}"`);
+	// A seat belongs to a seated role, and it is either in a region or abroad.
+	const seated = roleById.get(pos.role)?.seats !== undefined;
+	if (pos.constituency && !seated) {
+		fail(`position ${pos.id}`, `constituency on role "${pos.role}", which has no seats`);
+	}
+	if (seated && !pos.constituency) {
+		warn(`position ${pos.id}`, 'seated role with no constituency: no succession can be derived for this seat');
+	}
+	if (pos.constituency) {
+		const c = pos.constituency;
+		if (c.abroad === Boolean(c.region)) {
+			fail(`position ${pos.id}`, 'constituency needs exactly one of `region` or `abroad: true`');
+		}
+		if (c.region && !regions.some((r) => r.id === c.region)) {
+			fail(`position ${pos.id}`, `unknown constituency region "${c.region}"`);
+		}
+	}
 	if (pos.predecessor && !personById.has(pos.predecessor)) {
 		fail(`position ${pos.id}`, `unknown predecessor "${pos.predecessor}"`);
 	}
@@ -1027,8 +1064,14 @@ const SUCCESSION_GAP_YEARS = 1;
 const SUCCESSION_OVERLAP_YEARS = 1;
 const SUCCESSION_EXEMPTION = 'unknown-end and open-ended intervals are excluded from overlap detection';
 
+// Seated roles (legislative terms) have no succession chain. Members sit
+// together rather than replace one another, and from 2011 to 2019 a constituency
+// elected several members from party lists, so even a per-constituency chain
+// would read concurrent colleagues as overlapping holders. A replacement from
+// the list is recorded as its own position with its own dates.
 const byRole = new Map<string, typeof resolvedPositions>();
 for (const pos of resolvedPositions) {
+	if (roleById.get(pos.role)?.seats !== undefined) continue;
 	const list = byRole.get(pos.role) ?? [];
 	list.push(pos);
 	byRole.set(pos.role, list);
@@ -1037,7 +1080,7 @@ for (const pos of resolvedPositions) {
 const successionGaps: { role: string; after: string; before: string; gapYears: number }[] = [];
 const successionOverlaps: { role: string; a: string; b: string; overlapYears: number }[] = [];
 
-for (const [roleId, list] of byRole) {
+for (const list of byRole.values()) {
 	list.sort((a, b) => a.interval.startLatest - b.interval.startLatest);
 	for (let i = 0; i < list.length; i++) {
 		const cur = list[i];
@@ -1052,7 +1095,7 @@ for (const [roleId, list] of byRole) {
 			const gap = (cur.interval.startEarliest - prevEnd) / (365.2425 * 86_400_000);
 			if (gap > SUCCESSION_GAP_YEARS) {
 				successionGaps.push({
-					role: roleId,
+					role: cur.role,
 					after: prev.holder,
 					before: cur.holder,
 					gapYears: Math.round(gap * 10) / 10
@@ -1062,7 +1105,7 @@ for (const [roleId, list] of byRole) {
 			const overlap = (prevLatestEnd - cur.interval.startLatest) / (365.2425 * 86_400_000);
 			if (overlap > SUCCESSION_OVERLAP_YEARS && prev.interval.status === 'ended' && cur.interval.status !== 'unknown') {
 				successionOverlaps.push({
-					role: roleId,
+					role: cur.role,
 					a: prev.holder,
 					b: cur.holder,
 					overlapYears: Math.round(overlap * 10) / 10
@@ -1627,6 +1670,22 @@ for (const r of regions) {
 	}
 }
 
+// A governorate's creation date, resolved to the window it may fall in, so the
+// map and the cards can tell "not yet a governorate" from "no governor known".
+const resolvedRegions = regions.map((r) => {
+	if (!r.created) return r;
+	const iv = safeInterval(`region ${r.id}`, { start: r.created, end: 'ongoing' });
+	return { ...r, createdEarliest: iv.startEarliest, createdLatest: iv.startLatest };
+});
+// An office over a governorate cannot begin before the governorate existed.
+for (const pos of resolvedPositions) {
+	const region = roleById.get(pos.role)?.region;
+	const created = region ? resolvedRegions.find((r) => r.id === region) : undefined;
+	if (created && 'createdEarliest' in created && pos.interval.startLatest < created.createdEarliest) {
+		warn(`position ${pos.id}`, `starts before ${region} was created (${created.created})`);
+	}
+}
+
 const resolvedInstitutions = institutions.map((inst) => ({
 	...inst,
 	...derivedBasisField(inst),
@@ -2034,7 +2093,7 @@ const RAW_BY_TYPE: Record<string, Record<string, unknown>[]> = {
 	hypotheses: hypotheses as unknown as Record<string, unknown>[],
 	agreements: agreements as unknown as Record<string, unknown>[],
 	worldClaims: worldClaims as unknown as Record<string, unknown>[],
-	regions: regions as unknown as Record<string, unknown>[],
+	regions: resolvedRegions as unknown as Record<string, unknown>[],
 	places: places as unknown as Record<string, unknown>[],
 	companies: companies as unknown as Record<string, unknown>[],
 	contracts: contracts as unknown as Record<string, unknown>[],
@@ -2378,7 +2437,7 @@ const dataset = {
 	licences: withOrigins(resolvedLicences),
 	declarations: withOrigins(resolvedDeclarations),
 	education: withOrigins(resolvedEducation),
-	regions,
+	regions: resolvedRegions,
 	places: withOrigins(places),
 	// Independent verification records. A distinct collection with its own
 	// schema, so the three review populations can never be summed (M2).
@@ -2422,7 +2481,25 @@ if (intervalTrims.length) {
 }
 
 mkdirSync(STAGE_OUT, { recursive: true });
-writeFileSync(join(STAGE_OUT, 'dataset.json'), JSON.stringify(dataset), 'utf8');
+// The per-entity timelines are derived from records already in the graph and
+// are a sixth of the payload, so the bundled copy omits them and the entity
+// panel fetches static/timelines.json when a card opens. The published
+// static/dataset.json keeps them; the graph hash is computed without them
+// (scripts/canonical.ts), so both files carry the same hash.
+const timelineIndex: Record<string, unknown[]> = {};
+for (const e of [...dataset.people, ...dataset.institutions] as { id: string; timeline?: unknown[] }[]) {
+	if (e.timeline?.length) timelineIndex[e.id] = e.timeline;
+}
+function withTimelines<T extends { people: unknown[]; institutions: unknown[] }>(ds: T, full: boolean): T {
+	const put = (list: unknown[]) =>
+		list.map((e) => {
+			const { timeline: _drop, ...rest } = e as { id: string; timeline?: unknown[] };
+			return { ...rest, timeline: full ? (timelineIndex[rest.id] ?? []) : [] };
+		});
+	return { ...ds, people: put(ds.people), institutions: put(ds.institutions) };
+}
+writeFileSync(join(STAGE_STATIC, 'timelines.json'), JSON.stringify(timelineIndex), 'utf8');
+writeFileSync(join(STAGE_OUT, 'dataset.json'), JSON.stringify(withTimelines(dataset, false)), 'utf8');
 
 // The world geometry (src/generated/world.json + static/world-topo.json) is
 // compiled by scripts/build-world.ts from Natural Earth + data/countries.yaml.
@@ -2872,6 +2949,8 @@ export interface Institution {
 	name_fr?: string;
 	name_ar?: string;
 	abbr?: string;
+	/** Seats by party for a term whose members are not named. */
+	seat_split?: { party: string; seats: number }[];
 	type: string;
 	layer: Layer;
 	parent: string | null;
@@ -2895,6 +2974,10 @@ export interface Role {
 	title_ar?: string;
 	institution: string;
 	authority: number;
+	/** The region or governorate a territorial office covers. */
+	region?: string;
+	/** Concurrent seats in a collegial body; no succession chain is derived for it. */
+	seats?: number;
 	row?: string;
 	summary?: string;
 	sources: string[];
@@ -2950,6 +3033,15 @@ export interface Position extends ClaimAxes {
 	start?: string;
 	end?: string;
 	acting: boolean;
+	/** The seat a position fills, for a seated role. */
+	constituency?: {
+		id: string;
+		name_en: string;
+		name_fr?: string;
+		name_ar?: string;
+		region?: string;
+		abroad: boolean;
+	};
 	predecessor?: string | null;
 	confidence: Confidence;
 	basis: Basis;
@@ -3414,9 +3506,14 @@ export interface RegionRec {
 	name_ar?: string;
 	parent?: string;
 	code?: string;
+	/** Creation date token, and the window it resolves to. */
+	created?: string;
+	createdEarliest?: number;
+	createdLatest?: number;
 	confidence: Confidence;
 	verification: Verification;
 	sources: string[];
+	notes?: string[];
 }
 
 export interface PlaceRec extends ClaimAxes {
@@ -3690,10 +3787,10 @@ let datasetHashValue = '';
 	if (CANONICAL) {
 		const bytes = canonicalBytes(bundled);
 		writeFileSync(join(STAGE_OUT, 'dataset.json'), bytes, 'utf8');
-		writeFileSync(join(STAGE_STATIC, 'dataset.json'), bytes, 'utf8');
+		writeFileSync(join(STAGE_STATIC, 'dataset.json'), canonicalBytes(withTimelines(bundled, true)), 'utf8');
 	} else {
 		writeFileSync(join(STAGE_OUT, 'dataset.json'), JSON.stringify(bundled), 'utf8');
-		writeFileSync(join(STAGE_STATIC, 'dataset.json'), JSON.stringify(bundled, null, 2), 'utf8');
+		writeFileSync(join(STAGE_STATIC, 'dataset.json'), JSON.stringify(withTimelines(bundled, true), null, 2), 'utf8');
 	}
 }
 

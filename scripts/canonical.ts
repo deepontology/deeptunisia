@@ -42,7 +42,10 @@ function sortKeys(value: unknown): unknown {
  * their own hash; the hash computation removes it before measuring.
  */
 export function canonicalProjection(dataset: unknown): unknown {
-	const copy = structuredClone(dataset) as { meta: Record<string, unknown> };
+	const copy = structuredClone(dataset) as { meta: Record<string, unknown>; people?: { timeline?: unknown }[]; institutions?: { timeline?: unknown }[] };
+	// Timelines are derived from the records the hash already covers, and the
+	// bundled copy omits them, so they are left out of the projection.
+	for (const e of [...(copy.people ?? []), ...(copy.institutions ?? [])]) delete e.timeline;
 	copy.meta.generated = CANONICAL_GENERATED;
 	delete copy.meta.shippedKB;
 	delete copy.meta.datasetKB;
