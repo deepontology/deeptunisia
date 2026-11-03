@@ -3,6 +3,66 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:61713eb0656a2eee",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Human screen festival | Le cinéma au service des droits humains",
+      "link": "https://kapitalis.com/tunisie/2026/11/02/human-screen-festival-le-cinema-au-service-des-droits-humains/",
+      "published": "2026-11-02T22:01:00Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:03bc99cf6a3a55df",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Sécurité routière 2026 | Bilan de l’ONSR de janvier à fin octobre",
+      "link": "https://kapitalis.com/tunisie/2026/11/02/securite-routiere-2026-bilan-de-lonsr-de-janvier-a-fin-octobre/",
+      "published": "2026-11-02T21:38:39Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:cc261599a57535fe",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Quand la céramique tisse des liens entre la Suisse et la Tunisie",
+      "link": "https://kapitalis.com/tunisie/2026/11/02/quand-la-ceramique-tisse-des-liens-entre-la-suisse-et-la-tunisie/",
+      "published": "2026-11-02T21:01:54Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:a1d20783dc56d4cb",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Féminicide à Jebel Jelloud | Prise en charge des enfants et appel à la protection de leur identité",
+      "link": "https://kapitalis.com/tunisie/2026/11/02/feminicide-a-jebel-jelloud-prise-en-charge-des-enfants-et-appel-a-la-protection-de-leur-identite/",
+      "published": "2026-11-02T20:44:29Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:african-manager:9b997480bff18c86",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Le marché boursier poursuit, lundi, sa lancée positive",
+      "link": "https://africanmanager.com/le-marche-boursier-poursuit-lundi-sa-lancee-positive/",
+      "published": "2026-11-02T20:30:31Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:kapitalis:bcf403e8214f21dd",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Tunisie | L’Égypte invitée d’honneur de la 37ᵉ édition des JCC",
+      "link": "https://kapitalis.com/tunisie/2026/11/02/tunisie-legypte-invitee-dhonneur-de-la-37%e1%b5%89-edition-des-jcc/",
+      "published": "2026-11-02T20:24:13Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
       "id": "feed:african-manager:ccd95ff62fcd6afc",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -51,6 +111,16 @@
       "published": "2026-11-02T15:48:13Z",
       "lang": "ar",
       "author": "Mahdi Jlassi"
+    },
+    {
+      "id": "feed:inkyfada:5680f896cd6303a2",
+      "outlet": "Inkyfada",
+      "outletId": "inkyfada",
+      "title": "Altreconomia | Dhaoui Lassoued, trois alertes médicales avant une mort en centre de rétention en Italie",
+      "link": "https://inkyfada.com/fr/2026/11/02/dhaoui-lassoued-mort-en-centre-de-retention-en-italie/",
+      "published": "2026-11-02T15:20:52Z",
+      "lang": "fr",
+      "author": "Luca Rondi"
     },
     {
       "id": "feed:african-manager:1cda69622250e1d4",
@@ -11924,76 +11994,6 @@
       "title": "A New York Nafti parle investissement, climat et Afrique",
       "link": "https://africanmanager.com/nafti-a-new-york-investissement-climat-et-cooperation-africaine-au-menu-des-entretiens-bilateraux/",
       "published": "2026-09-23T07:51:55Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:a7bb4b6b3139a4dd",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Dérèglement climatique : l’UTAP réunit les céréaliculteurs",
-      "link": "https://africanmanager.com/face-au-dereglement-climatique-lutap-reunit-les-acteurs-de-le-secteur-cerealier/",
-      "published": "2026-09-23T07:51:48Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:b6f09bbe68d43364",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "La Tunisie-Tanzanie : Des programmes sanitaires concrets",
-      "link": "https://africanmanager.com/une-seule-sante-la-tunisie-et-la-tanzanie-sengagent-sur-des-programmes-concrets/",
-      "published": "2026-09-23T07:47:35Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:258bd4eb6f7ce0d0",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "229 mille ha de grandes cultures programmés au Kef",
-      "link": "https://africanmanager.com/le-kef-229-mille-ha-de-grandes-cultures-programmes-pour-la-saison-2026-2027/",
-      "published": "2026-09-23T07:47:28Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:bd5e013c1f6f096f",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Suspension de la grève générale des banquiers",
-      "link": "https://africanmanager.com/suspension-de-la-greve-generale-des-banquiers/",
-      "published": "2026-09-23T07:47:23Z",
-      "lang": "fr",
-      "author": "Africanmanager"
-    },
-    {
-      "id": "feed:african-manager:8e3656155e58c7fe",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Bizerte : Le nouveau centre de gynécologie-pédiatrie entre en service bientôt",
-      "link": "https://africanmanager.com/bizerte-le-nouveau-centre-de-gynecologie-pediatrie-entre-en-service-bientot/",
-      "published": "2026-09-23T07:45:41Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:660a75d6408d2306",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "La Chine s’oppose aux sanctions américaines « illégales » imposées aux compagnies aériennes iraniennes",
-      "link": "https://africanmanager.com/la-chine-soppose-aux-sanctions-americaines-illegales-imposees-aux-compagnies-aeriennes-iraniennes/",
-      "published": "2026-09-23T07:44:23Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:f4b0bc19f68925d6",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "L’Iran redirige les vols à destination de Bagdad vers Najaf",
-      "link": "https://africanmanager.com/liran-redirige-les-vols-a-destination-de-bagdad-vers-najaf/",
-      "published": "2026-09-23T07:34:01Z",
       "lang": "fr",
       "author": "African Manager"
     }
