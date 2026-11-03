@@ -170,22 +170,44 @@
   },
   {
     "kind": "position",
-    "id": "p-gov-kairouan-aljia",
-    "start": "1964",
-    "end": "1964",
+    "id": "p-gov-ariana-sassi",
+    "start": "1988-02-03",
+    "end": "1988-02",
     "interval": {
-      "startEarliest": -189388800000,
-      "startLatest": -157766401000,
-      "endEarliest": -157766401000,
-      "endLatest": -157766401000,
-      "startPrecision": "year",
-      "endPrecision": "year",
+      "startEarliest": 570844800000,
+      "startLatest": 570844800000,
+      "endEarliest": 570844800000,
+      "endLatest": 573177599000,
+      "startPrecision": "day",
+      "endPrecision": "month",
       "status": "ended",
-      "lastObserved": -157766401000,
+      "lastObserved": 570844800000,
       "trimmed": true,
       "raw": {
-        "start": "1964",
-        "end": "1964"
+        "start": "1988-02-03",
+        "end": "1988-02"
+      }
+    }
+  },
+  {
+    "kind": "position",
+    "id": "p-gov-jendouba-souyah",
+    "start": "<=1971-09",
+    "end": "1970",
+    "interval": {
+      "startEarliest": -197332417000,
+      "startLatest": 31535999000,
+      "endEarliest": 31535999000,
+      "endLatest": 31535999000,
+      "startPrecision": "before",
+      "endPrecision": "year",
+      "status": "ended",
+      "lastObserved": 31535999000,
+      "trimmed": true,
+      "startClamped": true,
+      "raw": {
+        "start": "<=1971-09",
+        "end": "1970"
       }
     }
   },
@@ -212,64 +234,22 @@
   },
   {
     "kind": "position",
-    "id": "p-gov-sfax-mohamed-boughzala",
-    "start": "1980",
-    "end": "1980",
+    "id": "p-gov-sidi-bouzid-abderrazak-ladab",
+    "start": "1977-03-05",
+    "end": "1977",
     "interval": {
-      "startEarliest": 315532800000,
-      "startLatest": 347155199000,
-      "endEarliest": 347155199000,
-      "endLatest": 347155199000,
-      "startPrecision": "year",
+      "startEarliest": 226368000000,
+      "startLatest": 226368000000,
+      "endEarliest": 226368000000,
+      "endLatest": 252460799000,
+      "startPrecision": "day",
       "endPrecision": "year",
       "status": "ended",
-      "lastObserved": 347155199000,
+      "lastObserved": 226368000000,
       "trimmed": true,
       "raw": {
-        "start": "1980",
-        "end": "1980"
-      }
-    }
-  },
-  {
-    "kind": "position",
-    "id": "p-gov-sfax-hamadi-amara",
-    "start": "1982",
-    "end": "1982",
-    "interval": {
-      "startEarliest": 378691200000,
-      "startLatest": 410227199000,
-      "endEarliest": 410227199000,
-      "endLatest": 410227199000,
-      "startPrecision": "year",
-      "endPrecision": "year",
-      "status": "ended",
-      "lastObserved": 410227199000,
-      "trimmed": true,
-      "raw": {
-        "start": "1982",
-        "end": "1982"
-      }
-    }
-  },
-  {
-    "kind": "position",
-    "id": "p-gov-mahdia-amor-jebbari",
-    "start": "2011",
-    "end": "2011",
-    "interval": {
-      "startEarliest": 1293840000000,
-      "startLatest": 1325375999000,
-      "endEarliest": 1325375999000,
-      "endLatest": 1325375999000,
-      "startPrecision": "year",
-      "endPrecision": "year",
-      "status": "ended",
-      "lastObserved": 1325375999000,
-      "trimmed": true,
-      "raw": {
-        "start": "2011",
-        "end": "2011"
+        "start": "1977-03-05",
+        "end": "1977"
       }
     }
   },
@@ -277,61 +257,40 @@
     "kind": "position",
     "id": "p-gov-sidi-bouzid-mohamed-belghith",
     "start": "2001",
-    "end": "2001",
+    "end": "2001-08-04",
     "interval": {
       "startEarliest": 978307200000,
-      "startLatest": 1009843199000,
-      "endEarliest": 1009843199000,
-      "endLatest": 1009843199000,
+      "startLatest": 996883200000,
+      "endEarliest": 996883200000,
+      "endLatest": 996883200000,
       "startPrecision": "year",
-      "endPrecision": "year",
+      "endPrecision": "day",
       "status": "ended",
-      "lastObserved": 1009843199000,
-      "trimmed": true,
+      "lastObserved": 996883200000,
+      "startClamped": true,
       "raw": {
         "start": "2001",
-        "end": "2001"
-      }
-    }
-  },
-  {
-    "kind": "position",
-    "id": "p-gov-gafsa-mahmoud-lajnef",
-    "start": "1994",
-    "end": "1994",
-    "interval": {
-      "startEarliest": 757382400000,
-      "startLatest": 788918399000,
-      "endEarliest": 788918399000,
-      "endLatest": 788918399000,
-      "startPrecision": "year",
-      "endPrecision": "year",
-      "status": "ended",
-      "lastObserved": 788918399000,
-      "trimmed": true,
-      "raw": {
-        "start": "1994",
-        "end": "1994"
+        "end": "2001-08-04"
       }
     }
   },
   {
     "kind": "position",
     "id": "p-gov-tozeur-abdelhamid-ghanmi",
-    "start": "2011",
+    "start": "2011-02-02",
     "end": "2011",
     "interval": {
-      "startEarliest": 1293840000000,
-      "startLatest": 1325375999000,
-      "endEarliest": 1325375999000,
+      "startEarliest": 1296604800000,
+      "startLatest": 1296604800000,
+      "endEarliest": 1296604800000,
       "endLatest": 1325375999000,
-      "startPrecision": "year",
+      "startPrecision": "day",
       "endPrecision": "year",
       "status": "ended",
-      "lastObserved": 1325375999000,
+      "lastObserved": 1296604800000,
       "trimmed": true,
       "raw": {
-        "start": "2011",
+        "start": "2011-02-02",
         "end": "2011"
       }
     }
@@ -354,27 +313,6 @@
       "raw": {
         "start": "2011",
         "end": "2011"
-      }
-    }
-  },
-  {
-    "kind": "position",
-    "id": "p-gov-tozeur-samir-rouihem",
-    "start": "2012",
-    "end": "2012-08-27",
-    "interval": {
-      "startEarliest": 1325376000000,
-      "startLatest": 1346025600000,
-      "endEarliest": 1346025600000,
-      "endLatest": 1346025600000,
-      "startPrecision": "year",
-      "endPrecision": "day",
-      "status": "ended",
-      "lastObserved": 1346025600000,
-      "startClamped": true,
-      "raw": {
-        "start": "2012",
-        "end": "2012-08-27"
       }
     }
   },
@@ -417,27 +355,6 @@
       "raw": {
         "start": "2011-02",
         "end": "2011-02"
-      }
-    }
-  },
-  {
-    "kind": "position",
-    "id": "p-gov-gabes-abdelhamid-melki",
-    "start": "1973",
-    "end": "1973",
-    "interval": {
-      "startEarliest": 94694400000,
-      "startLatest": 126230399000,
-      "endEarliest": 126230399000,
-      "endLatest": 126230399000,
-      "startPrecision": "year",
-      "endPrecision": "year",
-      "status": "ended",
-      "lastObserved": 126230399000,
-      "trimmed": true,
-      "raw": {
-        "start": "1973",
-        "end": "1973"
       }
     }
   },
@@ -487,41 +404,20 @@
     "kind": "position",
     "id": "p-gov-gabes-omar-chahbani",
     "start": "2012",
-    "end": "2012",
+    "end": "2012-10-31",
     "interval": {
       "startEarliest": 1325376000000,
-      "startLatest": 1356998399000,
-      "endEarliest": 1356998399000,
-      "endLatest": 1356998399000,
+      "startLatest": 1351641600000,
+      "endEarliest": 1351641600000,
+      "endLatest": 1351641600000,
       "startPrecision": "year",
-      "endPrecision": "year",
+      "endPrecision": "day",
       "status": "ended",
-      "lastObserved": 1356998399000,
-      "trimmed": true,
+      "lastObserved": 1351641600000,
+      "startClamped": true,
       "raw": {
         "start": "2012",
-        "end": "2012"
-      }
-    }
-  },
-  {
-    "kind": "position",
-    "id": "p-gov-gabes-nabil-zarrouk",
-    "start": "2015",
-    "end": "2015",
-    "interval": {
-      "startEarliest": 1420070400000,
-      "startLatest": 1451606399000,
-      "endEarliest": 1451606399000,
-      "endLatest": 1451606399000,
-      "startPrecision": "year",
-      "endPrecision": "year",
-      "status": "ended",
-      "lastObserved": 1451606399000,
-      "trimmed": true,
-      "raw": {
-        "start": "2015",
-        "end": "2015"
+        "end": "2012-10-31"
       }
     }
   },

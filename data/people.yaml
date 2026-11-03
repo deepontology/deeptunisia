@@ -16627,6 +16627,8 @@
   - political
   sources:
   - webdo-gouverneurs-2024
+  aliases:
+  - Mohamed Elleuch
 - id: samir-kouka
   name_en: Samir Kouka
   layers:
@@ -18118,6 +18120,8 @@
   - frwiki-gov-tunis
   - frwiki-gov-bizerte
   - frwiki-gov-beja
+  aliases:
+  - Ben Nouira
 - id: mohamed-zine-el-abidine-mohsen
   name_en: Mohamed Zine El Abidine Mohsen
   layers:
@@ -18349,6 +18353,8 @@
   - businessnews-gouverneurs-2017-10-29
   - frwiki-gov-nabeul
   - directinfo-gouverneurs-2019-11-22
+  aliases:
+  - Saloua Kefi
 - id: mokhtar-nefzi
   name_en: Mokthar Nefzi
   layers:
@@ -18967,6 +18973,8 @@
   sources:
   - frwiki-gov-bizerte
   - frwiki-gov-kairouan
+  aliases:
+  - Abdessalem Aloulou
 - id: abdelmalek-laarif
   name_en: Abdelmalek Laarif
   layers:
@@ -19620,9 +19628,9 @@
   sources:
   - frwiki-gov-kef
   notes:
-  - Possibly the same official as chabib-daly-tozeur (Tozeur 2000-2002). The governor lists give the same
-    name in a sequence that fits one career, but no fetched source links the entries, so they are kept
-    apart.
+  - Possibly the same official as chabib-daly-tozeur (Tozeur 2000-2002). The governor lists give the same name in a sequence that fits one career, but no fetched source links the entries, so they are kept apart.
+  aliases:
+  - Mohamed Chebib Dali
 - id: mohamed-mzoughi-belkhiria
   name_en: Mohamed Mzoughi Belkhiria
   layers:
@@ -20039,6 +20047,8 @@
   - political
   sources:
   - frwiki-sfax-gov
+  aliases:
+  - Mohamed Ben Amara
 - id: abdelkader-zitouna
   name_en: Abdelkader Zitouna
   layers:
@@ -20980,8 +20990,9 @@
   - frwiki-kasserine-gov
   - arwiki-kasserine-gov
   notes:
-  - Possibly the same official as habib-hadded (Nabeul 2000-2002). The governor lists give the same name
-    in a sequence that fits one career, but no fetched source links the entries, so they are kept apart.
+  - Possibly the same official as habib-hadded (Nabeul 2000-2002). The governor lists give the same name in a sequence that fits one career, but no fetched source links the entries, so they are kept apart.
+  aliases:
+  - Mohamed Haddad
 - id: slaheddine-el-abed-kasserine
   name_en: Slaheddine El Abed
   name_ar: صلاح الدين العابد
@@ -21297,6 +21308,8 @@
   - political
   sources:
   - frwiki-sidi-bouzid-gov
+  aliases:
+  - Houssine Ftouhi
 - id: nabil-nsiri-sidi-bouzid
   name_en: Nabil Nsiri
   layers:
@@ -21685,8 +21698,9 @@
   sources:
   - frwiki-tozeur-gov
   notes:
-  - Possibly the same official as chabib-daly (Kef 2002-2005). The governor lists give the same name in
-    a sequence that fits one career, but no fetched source links the entries, so they are kept apart.
+  - Possibly the same official as chabib-daly (Kef 2002-2005). The governor lists give the same name in a sequence that fits one career, but no fetched source links the entries, so they are kept apart.
+  aliases:
+  - Mohamed Chebib Dali
 - id: mohamed-sghaier-maali
   name_en: Mohamed Sghaïer Mâali
   layers:
@@ -22555,6 +22569,8 @@
   sources:
   - frwiki-tataouine-gov
   - arwiki-tataouine-gov
+  aliases:
+  - Mahmoud Lajnef
 - id: bechir-ben-thabet
   name_en: Béchir Ben Thabet
   name_ar: البشير بن ثابت
