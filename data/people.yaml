@@ -16627,6 +16627,8 @@
   - political
   sources:
   - webdo-gouverneurs-2024
+  aliases:
+  - Mohamed Elleuch
 - id: samir-kouka
   name_en: Samir Kouka
   layers:
@@ -18349,6 +18351,8 @@
   - businessnews-gouverneurs-2017-10-29
   - frwiki-gov-nabeul
   - directinfo-gouverneurs-2019-11-22
+  aliases:
+  - Saloua Kefi
 - id: mokhtar-nefzi
   name_en: Mokthar Nefzi
   layers:
@@ -21297,6 +21301,8 @@
   - political
   sources:
   - frwiki-sidi-bouzid-gov
+  aliases:
+  - Houssine Ftouhi
 - id: nabil-nsiri-sidi-bouzid
   name_en: Nabil Nsiri
   layers:

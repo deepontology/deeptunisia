@@ -13108,9 +13108,8 @@
   acting: false
   confidence: A
   notes:
-  - 'The post was without a titular governor from 2023-03-17, when the predecessor left, until this appointment; no acting holder is named in the fetched sources.'
-  - Announcement date of the 8 Sep 2024 movement; entry into office 'in the following days' (Gnet, tier
-    4, not fetched).
+  - The post was without a titular governor from 2023-03-17, when the predecessor left, until this appointment; no acting holder is named in the fetched sources.
+  - Announcement date of the 8 Sep 2024 movement; entry into office 'in the following days' (Gnet, tier 4, not fetched).
   sources:
   - webdo-gouverneurs-2024
   - frwiki-gouverneurs
@@ -13134,13 +13133,14 @@
   start: '2025-05-12'
   end: ongoing
   acting: false
-  confidence: B
+  confidence: A
   notes:
   - Replaced Wissem Mraidi after an unannounced presidential visit of 11 May 2025.
   sources:
   - webdo-ben-arous-2025
   - frwiki-gouverneurs
   - arwiki-wulat-tunis
+  - jort-2025-249
 - id: p-gov-manouba-chouaib
   role: governor-manouba
   holder: mahmoud-chouaib
@@ -13197,7 +13197,7 @@
   acting: false
   confidence: A
   notes:
-  - 'The post was without a titular governor from 2022-08-30, when the predecessor left, until this appointment; no acting holder is named in the fetched sources.'
+  - The post was without a titular governor from 2022-08-30, when the predecessor left, until this appointment; no acting holder is named in the fetched sources.
   sources:
   - webdo-gouverneurs-2024
   - frwiki-gouverneurs
@@ -13209,13 +13209,14 @@
   start: '2025-05-27'
   end: ongoing
   acting: false
-  confidence: B
+  confidence: A
   notes:
   - Replaced Hichem Hsoumi; announcement dated 27 May 2025 (a recap gives 26 May).
   sources:
   - webdo-jendouba-2025
   - frwiki-gouverneurs
   - arwiki-wulat-tunis
+  - jort-2025-272
 - id: p-gov-kef-kabbia
   role: governor-kef
   holder: walid-kabbia
@@ -13224,7 +13225,7 @@
   acting: false
   confidence: A
   notes:
-  - 'The post was without a titular governor from 2022-10-30, when the predecessor left, until this appointment; no acting holder is named in the fetched sources.'
+  - The post was without a titular governor from 2022-10-30, when the predecessor left, until this appointment; no acting holder is named in the fetched sources.
   sources:
   - webdo-gouverneurs-2024
   - frwiki-gouverneurs
@@ -13250,7 +13251,7 @@
   acting: false
   confidence: A
   notes:
-  - 'The post was without a titular governor from 2023-08-22, when the predecessor left, until this appointment; no acting holder is named in the fetched sources.'
+  - The post was without a titular governor from 2023-08-22, when the predecessor left, until this appointment; no acting holder is named in the fetched sources.
   sources:
   - webdo-gouverneurs-2024
   - frwiki-gouverneurs
@@ -13264,8 +13265,7 @@
   acting: false
   confidence: A
   notes:
-  - Local elected officials publicly demanded his revocation (Webdo, 21 Oct 2025, not fetched); no revocation
-    decree located.
+  - Local elected officials publicly demanded his revocation (Webdo, 21 Oct 2025, not fetched); no revocation decree located.
   sources:
   - webdo-gouverneurs-2024
   - frwiki-gouverneurs
@@ -13327,8 +13327,7 @@
   acting: false
   confidence: A
   notes:
-  - Named as governor of Sfax in September 2026 coverage of the regional council installation (Tunisie
-    Numérique, 8 Sep 2026, not fetched).
+  - Named as governor of Sfax in September 2026 coverage of the regional council installation (Tunisie Numérique, 8 Sep 2026, not fetched).
   sources:
   - webdo-gouverneurs-2024
   - frwiki-gouverneurs
@@ -13418,6 +13417,7 @@
   sources:
   - webdo-ben-arous-2025
   - jort-2024-472
+  - jort-2025-248
 - id: p-gov-jendouba-hsoumi
   role: governor-jendouba
   holder: hichem-hsoumi
@@ -13428,6 +13428,7 @@
   sources:
   - webdo-jendouba-2025
   - jort-2024-472
+  - jort-2025-271
 - id: p-gov-ben-arous-chelbi
   role: governor-ben-arous
   holder: ezzeddine-chelbi
@@ -13435,12 +13436,13 @@
   end: '2024-09-08'
   confidence: A
   notes:
-  - 'Primary document jort-2024-472 is dated 2024-09-08; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2024-472 is dated 2024-09-08; the start date is kept from the earlier record pending review.
   - 'Start to the month only: the governor list dates the appointment to November 2021, citing a Mosaïque FM report whose text could not be fetched.'
   - Predecessor only; his own appointment (2021-2024) not re-sourced in this pass.
   sources:
   - webdo-gouverneurs-2024
   - jort-2024-472
+  - jort-2021-205
 - id: p-gov-manouba-cheikh-rouhou
   role: governor-manouba
   holder: mohamed-cheikh-rouhou
@@ -13448,19 +13450,22 @@
   end: '2024-09-08'
   confidence: A
   notes:
-  - 'Primary document jort-2020-088 is dated 2020-08-19; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2020-088 is dated 2020-08-19; the start date is kept from the earlier record pending review.
   sources:
   - webdo-gouverneurs-2024
   - jort-2020-088
+  - jort-2020-620
 - id: p-gov-nabeul-mallak
   role: governor-nabeul
   holder: sabah-mallak
-  start: '2022-06-06'
+  start: '2022-06-09'
   end: '2024-09-08'
-  confidence: C
-  attributed_to: Webdo
+  confidence: A
   sources:
   - webdo-gouverneurs-2024
+  - jort-2022-567
+  notes:
+  - The start was recorded as 2022-06-06 from secondary lists; the gazette instrument gives 2022-06-09.
 - id: p-gov-bizerte-abdellahoui
   role: governor-bizerte
   holder: samir-abdellahoui
@@ -13475,10 +13480,12 @@
   holder: mohamed-laach
   start: '2022-06-06'
   end: '2024-09-08'
-  confidence: C
-  attributed_to: Webdo
+  confidence: A
   sources:
   - webdo-gouverneurs-2024
+  - jort-2022-570
+  notes:
+  - 'Name check: Elleuch in the gazette, Laâch in the record; effective 2022-06-09 against 2022-06-06. The gazette spelling is kept as an alias until a second source settles it.'
 - id: p-gov-jendouba-kouka
   role: governor-jendouba
   holder: samir-kouka
@@ -13493,43 +13500,49 @@
 - id: p-gov-siliana-abbassi
   role: governor-siliana
   holder: walid-abbassi
-  start: '2022-06-06'
+  start: '2022-06-09'
   end: '2024-09-08'
-  confidence: C
-  attributed_to: Webdo
+  confidence: A
   sources:
   - webdo-gouverneurs-2024
+  - jort-2022-568
+  notes:
+  - The start was recorded as 2022-06-06 from secondary lists; the gazette instrument gives 2022-06-09.
 - id: p-gov-sousse-ferjani
   role: governor-sousse
   holder: nabil-ferjani
-  start: '2022-06-06'
+  start: '2022-06-12'
   end: '2024-09-08'
   confidence: A
   notes:
-  - 'Primary document jort-2024-472 is dated 2024-09-08; the start date is kept from the earlier record pending review.'
+  - The start was recorded as 2022-06-06 from secondary lists; the gazette instrument gives 2022-06-12.
   sources:
   - webdo-gouverneurs-2024
   - jort-2024-472
+  - jort-2022-577
 - id: p-gov-sidi-bouzid-hamdi
   role: governor-sidi-bouzid
   holder: abdelhalim-hamdi
-  start: '2022-06-06'
+  start: '2022-06-09'
   end: '2024-09-08'
   confidence: A
   notes:
-  - 'Primary document jort-2024-472 is dated 2024-09-08; the start date is kept from the earlier record pending review.'
+  - The start was recorded as 2022-06-06 from secondary lists; the gazette instrument gives 2022-06-09.
   sources:
   - webdo-gouverneurs-2024
   - jort-2024-472
+  - jort-2022-571
 - id: p-gov-kasserine-rkebani
   role: governor-kasserine
   holder: ridha-rkebani
-  start: '2022-06-06'
+  start: '2022-06-09'
   end: '2024-09-08'
-  confidence: C
-  attributed_to: Webdo
+  confidence: A
   sources:
   - webdo-gouverneurs-2024
+  - jort-2022-565
+  notes:
+  - The start was recorded as 2022-06-06 from secondary lists; the gazette instrument gives 2022-06-09.
 - id: p-gov-gafsa-hamdouni
   role: governor-gafsa
   holder: nader-hamdouni
@@ -13537,10 +13550,11 @@
   end: '2024-09-08'
   confidence: A
   notes:
-  - 'Primary document jort-2024-472 is dated 2024-09-08; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2024-472 is dated 2024-09-08; the start date is kept from the earlier record pending review.
   sources:
   - webdo-gouverneurs-2024
   - jort-2024-472
+  - jort-2021-207
 - id: p-gov-tozeur-bejaoui
   role: governor-tozeur
   holder: aymen-bejaoui
@@ -13548,19 +13562,22 @@
   end: '2024-09-08'
   confidence: A
   notes:
-  - 'Primary document jort-2024-472 is dated 2024-09-08; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2024-472 is dated 2024-09-08; the start date is kept from the earlier record pending review.
   sources:
   - webdo-gouverneurs-2024
   - jort-2024-472
+  - jort-2019-505
 - id: p-gov-kebili-khalifi
   role: governor-kebili
   holder: mohamed-taieb-khalifi
-  start: '2022-06-06'
+  start: '2022-06-10'
   end: '2024-09-08'
-  confidence: C
-  attributed_to: Webdo
+  confidence: A
   sources:
   - webdo-gouverneurs-2024
+  - jort-2022-576
+  notes:
+  - The start was recorded as 2022-06-06 from secondary lists; the gazette instrument gives 2022-06-10.
 - id: p-gov-medenine-ben-zayed
   role: governor-medenine
   holder: said-ben-zayed
@@ -13568,21 +13585,23 @@
   end: '2024-09-08'
   confidence: A
   notes:
-  - 'Primary document jort-2024-472 is dated 2024-09-08; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2024-472 is dated 2024-09-08; the start date is kept from the earlier record pending review.
   sources:
   - webdo-gouverneurs-2024
   - jort-2024-472
+  - jort-2021-204
 - id: p-gov-tataouine-fitouri
   role: governor-tataouine
   holder: hafedh-fitouri
-  start: '2022-06-06'
+  start: '2022-06-09'
   end: '2024-09-08'
   confidence: A
   notes:
-  - 'Primary document jort-2024-472 is dated 2024-09-08; the start date is kept from the earlier record pending review.'
+  - The start was recorded as 2022-06-06 from secondary lists; the gazette instrument gives 2022-06-09.
   sources:
   - webdo-gouverneurs-2024
   - jort-2024-472
+  - jort-2022-569
 - id: p-economy-abdelhafidh
   role: economy-minister
   holder: samir-abdelhafidh
@@ -17150,32 +17169,35 @@
   start: 2005-08
   end: '2011-02-02'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Tunis
+  confidence: A
   sources:
   - frwiki-gov-tunis
+  - jort-2011-200
 - id: p-gov-tunis-ben-hassen
   role: governor-tunis
   holder: adel-ben-hassen
   start: '2011-02-02'
   end: '2013-08-24'
   acting: false
-  confidence: B
+  confidence: A
   sources:
   - frwiki-gov-tunis
   - kapitalis-gouverneurs-2011-02-02
   - directinfo-gouverneurs-2013-08-24
   - frwiki-bio-ben-hassen
+  - jort-2011-349
+  - jort-2013-4770
 - id: p-gov-tunis-ben-khelifa
   role: governor-tunis
   holder: abderrazak-ben-khelifa
   start: '2013-08-24'
   end: '2014-02-28'
   acting: false
-  confidence: B
+  confidence: A
   sources:
   - frwiki-gov-tunis
   - frwiki-bio-ben-khelifa
+  - jort-arrete-2013-11-25
 - id: p-gov-tunis-abid
   role: governor-tunis
   holder: hamed-abid
@@ -17184,21 +17206,25 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2014-029 is dated 2014-04-07; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2014-029 is dated 2014-04-07; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-gov-tunis
   - businessnews-gouverneurs-2014-02-28
   - jort-2014-029
+  - jort-2014-1092
+  - jort-2015-1652
 - id: p-gov-tunis-gafsi
   role: governor-tunis
   holder: fakher-gafsi
   start: '2015-08-22'
   end: '2016-09-16'
   acting: false
-  confidence: B
+  confidence: A
   sources:
   - frwiki-gov-tunis
   - directinfo-gouverneurs-2015-08-22
+  - jort-2015-1635
+  - jort-2016-1411
 - id: p-gov-tunis-mansour
   role: governor-tunis
   holder: omar-mansour
@@ -17207,32 +17233,37 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2017-001 is dated 2016-12-28; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2017-001 is dated 2016-12-28; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-gov-tunis
   - businessnews-gouverneurs-2016-09-16
   - jort-2017-001
+  - jort-2016-1438
+  - jort-2018-85
 - id: p-gov-tunis-bouallegue
   role: governor-tunis
   holder: chedly-bouallegue
   start: '2017-10-29'
   end: '2021-12-30'
   acting: false
-  confidence: B
+  confidence: A
   sources:
   - frwiki-gov-tunis
   - businessnews-gouverneurs-2017-10-29
+  - jort-arrete-2018-01-22
+  - jort-2021-257
 - id: p-gov-tunis-feki
   role: governor-tunis
   holder: kamel-feki
   start: '2021-12-30'
   end: '2023-03-17'
   acting: false
-  confidence: B
+  confidence: A
   sources:
   - frwiki-gov-tunis
   - aa-feki-2023-03-18
   - frwiki-bio-feki
+  - jort-2021-258
 - id: p-gov-tunis-mejri-acting
   role: governor-tunis
   holder: fares-mejri
@@ -17352,61 +17383,70 @@
   start: 2008-09
   end: '2011-02-02'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de l'Ariana
+  confidence: A
   sources:
   - frwiki-gov-ariana
+  - jort-2011-199
 - id: p-gov-ariana-kharbeche
   role: governor-ariana
   holder: nizar-kharbeche
   start: '2011-02-02'
   end: '2012-02-22'
   acting: false
-  confidence: B
+  confidence: A
   sources:
   - frwiki-gov-ariana
   - kapitalis-gouverneurs-2011-02-02
+  - jort-2011-350
+  - jort-2012-121
 - id: p-gov-ariana-bakari
   role: governor-ariana
   holder: baheddine-bakari
   start: '2012-02-22'
   end: '2015-08-22'
   acting: false
-  confidence: B
+  confidence: A
   sources:
   - frwiki-gov-ariana
   - kapitalis-gouverneurs-2012-02-22
+  - jort-arrete-2012-04-02
+  - jort-2015-1653
 - id: p-gov-ariana-mansour
   role: governor-ariana
   holder: omar-mansour
   start: '2015-08-22'
   end: '2016-01-19'
   acting: false
-  confidence: B
+  confidence: A
   sources:
   - frwiki-gov-ariana
   - directinfo-gouverneurs-2015-08-22
+  - jort-2015-1634
 - id: p-gov-ariana-zaoui
   role: governor-ariana
   holder: mehdi-zaoui
   start: '2016-01-19'
   end: '2016-09-16'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de l'Ariana
+  confidence: A
   sources:
   - frwiki-gov-ariana
+  - jort-arrete-2016-05-25
+  - jort-2016-1412
 - id: p-gov-ariana-khiari
   role: governor-ariana
   holder: saloua-khiari
   start: '2016-09-16'
   end: '2017-10-29'
   acting: false
-  confidence: B
+  confidence: A
   sources:
   - frwiki-gov-ariana
   - businessnews-gouverneurs-2016-09-16
   - businessnews-gouverneurs-2017-10-29
+  - jort-2016-1408
+  notes:
+  - 'Name check: surname Kefi in the gazette, Khiari in the record. The gazette spelling is kept as an alias until a second source settles it.'
 - id: p-gov-ariana-nefzi
   role: governor-ariana
   holder: mokhtar-nefzi
@@ -17415,32 +17455,38 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2018-008 is dated 2018-01-22; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2018-008 is dated 2018-01-22; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-gov-ariana
   - jort-2018-008
+  - jort-2018-81
 - id: p-gov-ariana-abdeljaoued
   role: governor-ariana
   holder: samir-abdeljaoued
   start: '2019-11-22'
   end: '2022-06-06'
   acting: false
-  confidence: B
+  confidence: A
   sources:
   - frwiki-gov-ariana
   - directinfo-gouverneurs-2019-11-22
+  - jort-2019-1199
+  - jort-2022-560
 - id: p-gov-ariana-nouri
   role: governor-ariana
   holder: khaled-nouri
-  start: '2022-06-06'
+  start: '2022-06-09'
   end: '2024-05-25'
   acting: false
-  confidence: B
+  confidence: A
   sources:
   - frwiki-gov-ariana
   - africanmanager-gouverneurs-2022-06-06
   - kapitalis-gouverneurs-2022-06-06
   - frwiki-bio-nouri
+  - jort-2022-575
+  notes:
+  - The start was recorded as 2022-06-06 from secondary lists; the gazette instrument gives 2022-06-09.
 - id: p-gov-ben-arous-azaiez
   role: governor-ben-arous
   holder: abdelkrim-azaiez
@@ -17551,45 +17597,48 @@
   role: governor-ben-arous
   holder: faiez-ayed
   start: 2006-07
-  end: 2011-02
+  end: '2011-02-02'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Ben Arous
+  confidence: A
   sources:
   - frwiki-gov-ben-arous
+  - jort-2011-198
 - id: p-gov-ben-arous-charabi
   role: governor-ben-arous
   holder: kamel-charabi
-  start: 2011-02
+  start: '2011-02-02'
   end: 2014-02
   acting: false
-  confidence: B
+  confidence: A
   sources:
   - frwiki-gov-ben-arous
   - kapitalis-gouverneurs-2011-02-02
+  - jort-2011-352
 - id: p-gov-ben-arous-missaoui
   role: governor-ben-arous
   holder: abdellatif-missaoui
-  start: 2014-02
+  start: '2014-02-28'
   end: 2019-04
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2014-029 is dated 2014-04-07; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2014-029 is dated 2014-04-07; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-gov-ben-arous
   - businessnews-gouverneurs-2014-02-28
   - jort-2014-029
+  - jort-2014-1094
 - id: p-gov-ben-arous-said
   role: governor-ben-arous
   holder: ali-said
-  start: 2019-04
+  start: '2019-04-20'
   end: 2021-08
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Ben Arous
+  confidence: A
   sources:
   - frwiki-gov-ben-arous
+  - jort-arrete-2019-12-27
+  - jort-2021-106
 - id: p-gov-manouba-tounsi
   role: governor-manouba
   holder: mohamed-tounsi
@@ -17627,57 +17676,65 @@
   role: governor-manouba
   holder: kamel-ben-ali
   start: 2007-08
-  end: 2011-02
+  end: '2011-02-02'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de la Manouba
+  confidence: A
   sources:
   - frwiki-gov-manouba
+  - jort-2011-197
 - id: p-gov-manouba-omrani
   role: governor-manouba
   holder: moncef-omrani
-  start: 2011-02
-  end: 2014-02
+  start: '2011-02-02'
+  end: '2014-02-28'
   acting: false
-  confidence: B
+  confidence: A
   sources:
   - frwiki-gov-manouba
   - kapitalis-gouverneurs-2011-02-02
+  - jort-2011-351
+  - jort-2014-1111
 - id: p-gov-manouba-saadi
   role: governor-manouba
   holder: mohamed-ridha-saadi
-  start: 2014-02
-  end: 2015-08
+  start: '2014-02-28'
+  end: '2015-08-22'
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2014-029 is dated 2014-04-07; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2014-029 is dated 2014-04-07; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-gov-manouba
   - businessnews-gouverneurs-2014-02-28
   - jort-2014-029
+  - jort-2014-1093
+  - jort-2015-1651
 - id: p-gov-manouba-smaoui
   role: governor-manouba
   holder: ahmed-smaoui
-  start: 2015-08
-  end: 2019-02
+  start: '2015-08-22'
+  end: '2019-07-24'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de la Manouba
+  confidence: A
   sources:
   - frwiki-gov-manouba
+  - jort-2015-1627
+  - jort-2019-1045
+  notes:
+  - The end was recorded as 2019-02 from secondary lists; the gazette instrument gives 2019-07-24.
 - id: p-gov-manouba-trabelsi
   role: governor-manouba
   holder: raja-trabelsi
-  start: 2019-07
+  start: '2019-07-24'
   end: '2020-04-14'
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2019-092 is dated 2019-11-08; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2019-092 is dated 2019-11-08; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-gov-manouba
   - jort-2019-092
+  - jort-2019-1042
 - id: p-gov-nabeul-ayeche
   role: governor-nabeul
   holder: salah-ayeche
@@ -17901,12 +17958,12 @@
   role: governor-nabeul
   holder: abdejlil-zaddem
   start: 2010-01
-  end: 2011-02
+  end: '2011-02-02'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Nabeul
+  confidence: A
   sources:
   - frwiki-gov-nabeul
+  - jort-2011-205
 - id: p-gov-nabeul-ben-malek
   role: governor-nabeul
   holder: ali-ben-malek
@@ -17926,20 +17983,22 @@
   start: '2011-02-19'
   end: '2011-04-13'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Nabeul
+  confidence: A
   sources:
   - frwiki-gov-nabeul
+  - jort-2011-370
+  - jort-2011-1155
 - id: p-gov-nabeul-touibi
   role: governor-nabeul
   holder: imed-touibi
   start: '2011-04-13'
   end: '2012-03-24'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Nabeul
+  confidence: A
   sources:
   - frwiki-gov-nabeul
+  - jort-2011-948
+  - jort-2012-873
 - id: p-gov-nabeul-jaballah
   role: governor-nabeul
   holder: mahmoud-jaballah
@@ -17948,11 +18007,13 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2012-056 is dated 2012-07-11; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2012-056 is dated 2012-07-11; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-gov-nabeul
   - directinfo-gouverneurs-2013-08-24
   - jort-2012-056
+  - jort-2012-776
+  - jort-2013-4942
 - id: p-gov-nabeul-toumi
   role: governor-nabeul
   holder: abdessattar-toumi
@@ -17961,11 +18022,13 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2013-097 is dated 2013-11-25; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2013-097 is dated 2013-11-25; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-gov-nabeul
   - directinfo-gouverneurs-2013-08-24
   - jort-2013-097
+  - jort-2013-4769
+  - jort-2014-1112
 - id: p-gov-nabeul-hamdi
   role: governor-nabeul
   holder: mohamed-akermi-hamdi
@@ -17974,52 +18037,61 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2014-029 is dated 2014-04-07; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2014-029 is dated 2014-04-07; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-gov-nabeul
   - businessnews-gouverneurs-2014-02-28
   - jort-2014-029
+  - jort-2014-1107
+  - jort-2015-1661
 - id: p-gov-nabeul-rouihem
   role: governor-nabeul
   holder: samir-rouihem
   start: '2015-08-22'
   end: '2016-09-16'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Nabeul
+  confidence: A
   sources:
   - frwiki-gov-nabeul
+  - jort-2015-1631
+  - jort-2016-1413
 - id: p-gov-nabeul-ouertani
   role: governor-nabeul
   holder: mnaouer-ouertani
   start: '2016-09-16'
   end: '2017-10-29'
   acting: false
-  confidence: B
+  confidence: A
   sources:
   - frwiki-gov-nabeul
   - businessnews-gouverneurs-2016-09-16
+  - jort-arrete-2016-11-29
 - id: p-gov-nabeul-khiari
   role: governor-nabeul
   holder: saloua-khiari
   start: '2017-10-29'
   end: '2019-11-22'
   acting: false
-  confidence: B
+  confidence: A
   sources:
   - frwiki-gov-nabeul
   - businessnews-gouverneurs-2017-10-29
   - directinfo-gouverneurs-2019-11-22
+  - jort-arrete-2018-01-22
+  notes:
+  - 'Name check: surname Kefi in the gazette, Khiari in the record. The gazette spelling is kept as an alias until a second source settles it.'
 - id: p-gov-nabeul-mlika
   role: governor-nabeul
   holder: mohamed-ridha-mlika
   start: '2019-11-22'
   end: '2022-06-06'
   acting: false
-  confidence: B
+  confidence: A
   sources:
   - frwiki-gov-nabeul
   - directinfo-gouverneurs-2019-11-22
+  - jort-2019-1200
+  - jort-2022-561
 - id: p-gov-zaghouan-abbes
   role: governor-zaghouan
   holder: mohamed-abbes
@@ -18167,32 +18239,36 @@
   role: governor-zaghouan
   holder: kamel-labbassi
   start: '2008'
-  end: '2010'
+  end: '2010-12-30'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Zaghouan
+  confidence: A
   sources:
   - frwiki-gov-zaghouan
+  - jort-2011-216
 - id: p-gov-zaghouan-chouba
   role: governor-zaghouan
   holder: lotfi-chouba
-  start: '2010-12-31'
+  start: '2010-12-30'
   end: '2011-02-02'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Zaghouan
+  confidence: A
   sources:
   - frwiki-gov-zaghouan
+  - jort-2011-221
+  - jort-2011-224
+  notes:
+  - The start was recorded as 2010-12-31 from secondary lists; the gazette instrument gives 2010-12-30.
 - id: p-gov-zaghouan-bedira
   role: governor-zaghouan
   holder: fethi-bedira
   start: '2011-02-02'
   end: '2012-03-24'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Zaghouan
+  confidence: A
   sources:
   - frwiki-gov-zaghouan
+  - jort-2011-369
+  - jort-2012-872
 - id: p-gov-zaghouan-sahbani
   role: governor-zaghouan
   holder: abdelmonem-sahbani
@@ -18211,20 +18287,23 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2012-056 is dated 2012-07-11; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2012-056 is dated 2012-07-11; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-gov-zaghouan
   - jort-2012-056
+  - jort-2012-775
+  - jort-2012-2633
 - id: p-gov-zaghouan-houiji
   role: governor-zaghouan
   holder: nabil-houiji
   start: '2012-08-27'
   end: '2013-08-24'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Zaghouan
+  confidence: A
   sources:
   - frwiki-gov-zaghouan
+  - jort-2012-2615
+  - jort-2013-4940
 - id: p-gov-zaghouan-jerbi
   role: governor-zaghouan
   holder: hamadi-jerbi
@@ -18233,10 +18312,12 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2013-097 is dated 2013-11-25; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2013-097 is dated 2013-11-25; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-gov-zaghouan
   - jort-2013-097
+  - jort-2013-4768
+  - jort-2014-1113
 - id: p-gov-zaghouan-akrimi
   role: governor-zaghouan
   holder: hichem-akrimi
@@ -18245,31 +18326,34 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2014-029 is dated 2014-04-07; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2014-029 is dated 2014-04-07; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-gov-zaghouan
   - businessnews-gouverneurs-2014-02-28
   - jort-2014-029
+  - jort-2014-1105
+  - jort-2015-826
 - id: p-gov-zaghouan-zaoui
   role: governor-zaghouan
   holder: mehdi-zaoui
   start: '2015-04-09'
   end: '2016-01-19'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Zaghouan
+  confidence: A
   sources:
   - frwiki-gov-zaghouan
+  - jort-2015-822
 - id: p-gov-zaghouan-dhifallah
   role: governor-zaghouan
   holder: anis-dhifallah
   start: '2016-01-19'
   end: '2017-10-29'
   acting: false
-  confidence: B
+  confidence: A
   sources:
   - frwiki-gov-zaghouan
   - businessnews-gouverneurs-2017-10-29
+  - jort-2016-330
 - id: p-gov-zaghouan-marmouri
   role: governor-zaghouan
   holder: ali-marmouri
@@ -18278,21 +18362,22 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2018-008 is dated 2018-01-22; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2018-008 is dated 2018-01-22; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-gov-zaghouan
   - businessnews-gouverneurs-2017-10-29
   - jort-2018-008
+  - jort-2018-83
 - id: p-gov-zaghouan-mtiraoui
   role: governor-zaghouan
   holder: salah-mtiraoui
   start: '2019-02-13'
   end: '2021-08-05'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Zaghouan
+  confidence: A
   sources:
   - frwiki-gov-zaghouan
+  - jort-arrete-2019-03-27
 - id: p-gov-bizerte-nouira
   role: governor-bizerte
   holder: mohsen-nouira
@@ -18507,12 +18592,12 @@
   role: governor-bizerte
   holder: salem-jeribi
   start: '2005'
-  end: '2011'
+  end: '2011-02-02'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Bizerte
+  confidence: A
   sources:
   - frwiki-gov-bizerte
+  - jort-2011-196
 - id: p-gov-bizerte-belhassen
   role: governor-bizerte
   holder: chokri-belhassen
@@ -18543,30 +18628,34 @@
   start: '2011-02-15'
   end: '2012-02-22'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Bizerte
+  confidence: A
   sources:
   - frwiki-gov-bizerte
+  - jort-2011-353
+  - jort-2012-122
 - id: p-gov-bizerte-nsiri
   role: governor-bizerte
   holder: nabil-nsiri
   start: '2012-02-22'
   end: '2012-08-27'
   acting: false
-  confidence: B
+  confidence: A
   sources:
   - frwiki-gov-bizerte
   - kapitalis-gouverneurs-2012-02-22
+  - jort-arrete-2012-04-02
+  - jort-2012-2634
 - id: p-gov-bizerte-ben-khelifa
   role: governor-bizerte
   holder: abderrazak-ben-khelifa
   start: '2012-08-27'
   end: '2013-08-24'
   acting: false
-  confidence: B
+  confidence: A
   sources:
   - frwiki-gov-bizerte
   - frwiki-bio-ben-khelifa
+  - jort-2012-2618
 - id: p-gov-bizerte-lahouel
   role: governor-bizerte
   holder: ridha-lahouel
@@ -18575,21 +18664,22 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2013-097 is dated 2013-11-25; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2013-097 is dated 2013-11-25; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-gov-bizerte
   - frwiki-bio-lahouel
   - jort-2013-097
+  - jort-2013-4765
 - id: p-gov-bizerte-ouertani
   role: governor-bizerte
   holder: mnaouer-ouertani
   start: '2015-02-14'
   end: '2016-09-16'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Bizerte
+  confidence: A
   sources:
   - frwiki-gov-bizerte
+  - jort-2015-825
 - id: p-gov-bizerte-gouider
   role: governor-bizerte
   holder: mohamed-gouider
@@ -18598,12 +18688,13 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2016-106 is dated 2016-12-23; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2016-106 is dated 2016-12-23; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-gov-bizerte
   - businessnews-gouverneurs-2016-09-16
   - kapitalis-bizerte-2021-08-12
   - jort-2016-106
+  - jort-2016-1405
 - id: p-gov-beja-bellagha
   role: governor-beja
   holder: bechir-bellagha
@@ -18828,12 +18919,12 @@
   role: governor-beja
   holder: kamel-somai
   start: '2007'
-  end: '2011'
+  end: '2011-02-02'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Béja
+  confidence: A
   sources:
   - frwiki-gov-beja
+  - jort-2011-201
 - id: p-gov-beja-hamzaoui
   role: governor-beja
   holder: hatem-hamzaoui
@@ -18853,10 +18944,11 @@
   start: '2011-02-19'
   end: '2012-02-22'
   acting: false
-  confidence: B
+  confidence: A
   sources:
   - frwiki-gov-beja
   - kapitalis-gouverneurs-2012-02-22
+  - jort-2011-354
 - id: p-gov-beja-temimi
   role: governor-beja
   holder: nasr-temimi
@@ -18865,11 +18957,13 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2012-026 is dated 2012-04-02; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2012-026 is dated 2012-04-02; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-gov-beja
   - kapitalis-gouverneurs-2012-02-22
   - jort-2012-026
+  - jort-2012-115
+  - jort-2014-1120
 - id: p-gov-beja-salmani
   role: governor-beja
   holder: kamel-salmani
@@ -18878,42 +18972,48 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2014-029 is dated 2014-04-07; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2014-029 is dated 2014-04-07; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-gov-beja
   - businessnews-gouverneurs-2014-02-28
   - jort-2014-029
+  - jort-2014-1097
+  - jort-2015-1655
 - id: p-gov-beja-boughattas
   role: governor-beja
   holder: atef-boughattas
   start: '2015-08-22'
   end: '2015-09-07'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Béja
+  confidence: A
   sources:
   - frwiki-gov-beja
+  - jort-2015-1896
+  - jort-arrete-2015-12-01
 - id: p-gov-beja-hamdi
   role: governor-beja
   holder: houcine-hamdi
   start: '2015-09-07'
   end: '2017-10-29'
   acting: false
-  confidence: B
+  confidence: A
   sources:
   - frwiki-gov-beja
   - businessnews-gouverneurs-2017-10-29
+  - jort-2015-1893
+  - jort-2018-84
 - id: p-gov-beja-tissaoui
   role: governor-beja
   holder: slim-tissaoui
   start: '2017-10-29'
   end: 2019-12
   acting: false
-  confidence: B
+  confidence: A
   sources:
   - frwiki-gov-beja
   - businessnews-gouverneurs-2017-10-29
   - webdo-beja-mili-2019-12-27
+  - jort-arrete-2018-01-22
 - id: p-gov-beja-mili
   role: governor-beja
   holder: mohsen-moez-mili
@@ -18922,12 +19022,14 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2020-088 is dated 2020-08-19; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2020-088 is dated 2020-08-19; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-gov-beja
   - webdo-beja-mili-2019-12-27
   - kapitalis-beja-2022-08-30
   - jort-2020-088
+  - jort-2020-619
+  - jort-2022-703
 - id: p-gov-jendouba-ben-jaafar
   role: governor-jendouba
   holder: naceur-ben-jaafar
@@ -19173,30 +19275,33 @@
   start: '2010-07-28'
   end: '2010-12-30'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Jendouba
+  confidence: A
   sources:
   - frwiki-gov-jendouba
+  - jort-2011-218
 - id: p-gov-jendouba-ben-abdallah
   role: governor-jendouba
   holder: mohamed-ben-abdallah
   start: '2010-12-30'
   end: '2011-02-02'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Jendouba
+  confidence: A
   sources:
   - frwiki-gov-jendouba
+  - jort-2011-220
+  - jort-2011-223
 - id: p-gov-jendouba-kthiri
   role: governor-jendouba
   holder: bechir-kthiri
   start: '2011-02-02'
   end: '2012-02-22'
   acting: false
-  confidence: B
+  confidence: A
   sources:
   - frwiki-gov-jendouba
   - kapitalis-gouverneurs-2011-02-02
+  - jort-2011-355
+  - jort-2012-123
 - id: p-gov-jendouba-sidhom
   role: governor-jendouba
   holder: mohamed-sidhom
@@ -19205,20 +19310,22 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2012-026 is dated 2012-04-02; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2012-026 is dated 2012-04-02; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-gov-jendouba
   - jort-2012-026
+  - jort-2012-114
 - id: p-gov-jendouba-rouihem
   role: governor-jendouba
   holder: samir-rouihem
   start: '2012-08-27'
   end: '2013-08-24'
   acting: false
-  confidence: B
+  confidence: A
   sources:
   - frwiki-gov-jendouba
   - directinfo-gouverneurs-2013-08-24
+  - jort-arrete-2012-10-30
 - id: p-gov-jendouba-khabbouchi
   role: governor-jendouba
   holder: nejib-khabbouchi
@@ -19227,21 +19334,24 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2013-097 is dated 2013-11-25; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2013-097 is dated 2013-11-25; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-gov-jendouba
   - directinfo-gouverneurs-2013-08-24
   - jort-2013-097
+  - jort-2013-4766
+  - jort-2015-827
 - id: p-gov-jendouba-skandrani
   role: governor-jendouba
   holder: habib-skandrani
   start: '2015-04-09'
   end: '2016-09-16'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Jendouba
+  confidence: A
   sources:
   - frwiki-gov-jendouba
+  - jort-2015-823
+  - jort-2016-1417
 - id: p-gov-jendouba-sebri
   role: governor-jendouba
   holder: akrem-sebri
@@ -19250,12 +19360,13 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2016-106 is dated 2016-12-23; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2016-106 is dated 2016-12-23; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-gov-jendouba
   - businessnews-gouverneurs-2016-09-16
   - businessnews-gouverneurs-2017-10-29
   - jort-2016-106
+  - jort-2016-1406
 - id: p-gov-jendouba-bouaoun
   role: governor-jendouba
   holder: mohamed-sedki-bouaoun
@@ -19264,21 +19375,23 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2018-008 is dated 2018-01-22; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2018-008 is dated 2018-01-22; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-gov-jendouba
   - businessnews-gouverneurs-2017-10-29
   - jort-2018-008
+  - jort-2018-82
 - id: p-gov-jendouba-marmouri
   role: governor-jendouba
   holder: ali-marmouri
   start: '2019-02-13'
   end: '2022-03-17'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Jendouba
+  confidence: A
   sources:
   - frwiki-gov-jendouba
+  - jort-arrete-2019-03-27
+  - jort-2022-281
 - id: p-gov-kef-bellalouna
   role: governor-kef
   holder: ahmed-bellalouna
@@ -19563,22 +19676,24 @@
   role: governor-kef
   holder: hatem-laamari
   start: '2009'
-  end: '2011'
+  end: '2011-02-02'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat du Kef
+  confidence: A
   sources:
   - frwiki-gov-kef
+  - jort-2011-195
 - id: p-gov-kef-tlijani
   role: governor-kef
   holder: nejib-tlijani
   start: '2011-02-02'
   end: '2012-03-24'
   acting: false
-  confidence: B
+  confidence: A
   sources:
   - frwiki-gov-kef
   - kapitalis-gouverneurs-2011-02-02
+  - jort-2011-356
+  - jort-2012-870
 - id: p-gov-kef-trabelsi
   role: governor-kef
   holder: abdelkader-trabelsi
@@ -19587,10 +19702,12 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2012-056 is dated 2012-07-11; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2012-056 is dated 2012-07-11; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-gov-kef
   - jort-2012-056
+  - jort-2012-778
+  - jort-2014-1119
 - id: p-gov-kef-matmati
   role: governor-kef
   holder: tahar-matmati
@@ -19599,55 +19716,61 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2014-029 is dated 2014-04-07; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2014-029 is dated 2014-04-07; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-gov-kef
   - businessnews-gouverneurs-2014-02-28
   - jort-2014-029
+  - jort-2014-1098
 - id: p-gov-kef-ayara
   role: governor-kef
   holder: radhouane-ayara
   start: '2015-08-22'
   end: '2016-09-16'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat du Kef
+  confidence: A
   sources:
   - frwiki-gov-kef
+  - jort-2015-1628
 - id: p-gov-kef-bouallegue
   role: governor-kef
   holder: chedly-bouallegue
   start: '2016-09-16'
   end: '2017-10-29'
   acting: false
-  confidence: B
+  confidence: A
   sources:
   - frwiki-gov-kef
   - businessnews-gouverneurs-2016-09-16
   - businessnews-gouverneurs-2017-10-29
   - frwiki-bio-bouallegue
+  - jort-arrete-2016-11-29
 - id: p-gov-kef-ouertani
   role: governor-kef
   holder: mnaouer-ouertani
   start: '2017-10-29'
   end: '2019-11-22'
   acting: false
-  confidence: B
+  confidence: A
   sources:
   - frwiki-gov-kef
   - businessnews-gouverneurs-2017-10-29
   - directinfo-gouverneurs-2019-11-22
+  - jort-arrete-2018-01-22
+  - jort-2019-1202
 - id: p-gov-kef-nefzi
   role: governor-kef
   holder: mokhtar-nefzi
   start: '2019-11-22'
   end: '2022-10-30'
   acting: false
-  confidence: B
+  confidence: A
   sources:
   - frwiki-gov-kef
   - directinfo-gouverneurs-2019-11-22
   - webdo-kef-2022-10-30
+  - jort-arrete-2020-01-21
+  - jort-2022-784
 - id: p-gov-siliana-haddad
   role: governor-siliana
   holder: mohsen-haddad
@@ -19794,10 +19917,10 @@
   start: '2008-08-20'
   end: '2011-02-02'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Siliana
+  confidence: A
   sources:
   - frwiki-gov-siliana
+  - jort-2011-202
 - id: p-gov-siliana-rabhi
   role: governor-siliana
   holder: abdessattar-rabhi
@@ -19817,20 +19940,23 @@
   start: '2011-02-15'
   end: '2011-05-04'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Siliana
+  confidence: A
   sources:
   - frwiki-gov-siliana
+  - jort-2011-357
+  - jort-2011-727
 - id: p-gov-siliana-khemiri
   role: governor-siliana
   holder: moncef-khemiri
   start: '2011-05-04'
   end: '2012-02-22'
   acting: false
-  confidence: B
+  confidence: A
   sources:
   - frwiki-gov-siliana
   - kapitalis-gouverneurs-2012-02-22
+  - jort-2011-783
+  - jort-2012-124
 - id: p-gov-siliana-mahjoubi
   role: governor-siliana
   holder: ahmed-zine-mahjoubi
@@ -19839,11 +19965,13 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2012-026 is dated 2012-04-02; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2012-026 is dated 2012-04-02; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-gov-siliana
   - kapitalis-gouverneurs-2012-02-22
   - jort-2012-026
+  - jort-2012-116
+  - jort-2013-2264
 - id: p-gov-siliana-jarraya
   role: governor-siliana
   holder: montassar-jarraya
@@ -19852,10 +19980,12 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2013-048 is dated 2013-05-28; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2013-048 is dated 2013-05-28; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-gov-siliana
   - jort-2013-048
+  - jort-2013-2266
+  - jort-2014-1118
 - id: p-gov-siliana-ghannouchi
   role: governor-siliana
   holder: noureddine-ghannouchi
@@ -19864,41 +19994,44 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2014-029 is dated 2014-04-07; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2014-029 is dated 2014-04-07; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-gov-siliana
   - businessnews-gouverneurs-2014-02-28
   - jort-2014-029
+  - jort-2014-1099
+  - jort-2015-1654
 - id: p-gov-siliana-tissaoui
   role: governor-siliana
   holder: slim-tissaoui
   start: '2015-08-22'
   end: '2016-12-22'
   acting: false
-  confidence: B
+  confidence: A
   sources:
   - frwiki-gov-siliana
   - directinfo-gouverneurs-2015-08-22
+  - jort-2015-1633
 - id: p-gov-siliana-said
   role: governor-siliana
   holder: ali-said
   start: '2016-12-22'
   end: '2019-04-20'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Siliana
+  confidence: A
   sources:
   - frwiki-gov-siliana
+  - jort-2017-371
 - id: p-gov-siliana-dekhil
   role: governor-siliana
   holder: abderrazak-dekhil
   start: '2019-04-20'
   end: '2022-06-06'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Siliana
+  confidence: A
   sources:
   - frwiki-gov-siliana
+  - jort-2022-562
 - id: p-gov-kairouan-chachia
   role: governor-kairouan
   holder: amor-chachia
@@ -20103,12 +20236,12 @@
   role: governor-kairouan
   holder: yassine-barbouche
   start: '2007'
-  end: '2011'
+  end: '2011-02-02'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Kairouan
+  confidence: A
   sources:
   - frwiki-gov-kairouan
+  - jort-2011-203
 - id: p-gov-kairouan-ben-hassen
   role: governor-kairouan
   holder: abdeljelil-ben-hassen
@@ -20122,25 +20255,28 @@
 - id: p-gov-kairouan-sahraoui
   role: governor-kairouan
   holder: mohamed-sahraoui
-  start: '2011'
-  end: '2012'
+  start: '2011-02-19'
+  end: '2012-03-29'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), Gouvernorat de Kairouan
+  confidence: A
   sources:
   - frwiki-gov-kairouan
+  - jort-2011-365
+  - jort-2012-875
 - id: p-gov-kairouan-laghouen
   role: governor-kairouan
   holder: abdelmajid-laghouen
-  start: '2012'
-  end: '2013'
+  start: '2012-03-29'
+  end: '2013-08-24'
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2012-056 is dated 2012-07-11; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2012-056 is dated 2012-07-11; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-gov-kairouan
   - jort-2012-056
+  - jort-2012-779
+  - jort-2013-4941
 - id: p-gov-kairouan-ellafi
   role: governor-kairouan
   holder: abdennaser-ellafi
@@ -20149,11 +20285,13 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2013-097 is dated 2013-11-25; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2013-097 is dated 2013-11-25; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-gov-kairouan
   - directinfo-gouverneurs-2013-08-24
   - jort-2013-097
+  - jort-2013-4767
+  - jort-2014-1124
 - id: p-gov-kairouan-mansouri
   role: governor-kairouan
   holder: mohsen-mansouri
@@ -20162,21 +20300,24 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2014-029 is dated 2014-04-07; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2014-029 is dated 2014-04-07; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-gov-kairouan
   - businessnews-gouverneurs-2014-02-28
   - jort-2014-029
+  - jort-2014-1095
+  - jort-2015-829
 - id: p-gov-kairouan-belhassen
   role: governor-kairouan
   holder: chokri-belhassen
   start: '2015-04-09'
   end: '2016-09-16'
   acting: false
-  confidence: B
+  confidence: A
   sources:
   - frwiki-gov-kairouan
   - frwiki-bio-belhassen
+  - jort-2015-821
 - id: p-gov-kairouan-ouertani
   role: governor-kairouan
   holder: taoufik-ouertani
@@ -20185,21 +20326,25 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2016-106 is dated 2016-12-23; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2016-106 is dated 2016-12-23; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-gov-kairouan
   - businessnews-gouverneurs-2016-09-16
   - jort-2016-106
+  - jort-2016-1407
+  - jort-2017-734
 - id: p-gov-kairouan-hamdi
   role: governor-kairouan
   holder: mounir-hamdi
   start: '2017-05-18'
   end: '2019-07-24'
   acting: false
-  confidence: B
+  confidence: A
   sources:
   - frwiki-gov-kairouan
   - webdo-gouverneurs-2017-05-18
+  - jort-arrete-2017-06-09
+  - jort-2019-1047
 - id: p-gov-kairouan-bourguiba
   role: governor-kairouan
   holder: mohamed-bourguiba
@@ -20208,11 +20353,13 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2019-092 is dated 2019-11-08; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2019-092 is dated 2019-11-08; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-gov-kairouan
   - webdo-kairouan-2023-08-22
   - jort-2019-092
+  - jort-2019-1041
+  - jort-2023-566
 - id: p-gov-sfax-mohamed-zinelabidine-mohsen
   role: governor-sfax
   holder: mohamed-zinelabidine-mohsen
@@ -20491,126 +20638,138 @@
   role: governor-sfax
   holder: mohamed-ben-salem-sfax
   start: '2007'
-  end: '2011'
+  end: '2011-02-02'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sfax
+  confidence: A
   sources:
   - frwiki-sfax-gov
+  - jort-2011-209
 - id: p-gov-sfax-mohamed-ali-jendoubi
   role: governor-sfax
   holder: mohamed-ali-jendoubi
-  start: '2011'
-  end: '2012'
+  start: '2011-02-02'
+  end: '2012-03-29'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sfax
+  confidence: A
   sources:
   - frwiki-sfax-gov
+  - jort-2011-364
+  - jort-2012-874
 - id: p-gov-sfax-fathi-derbali
   role: governor-sfax
   holder: fathi-derbali
-  start: '2012'
-  end: '2013'
+  start: '2012-03-29'
+  end: '2013-08-24'
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2012-056 is dated 2012-07-11; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2012-056 is dated 2012-07-11; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-sfax-gov
   - jort-2012-056
+  - jort-2012-780
+  - jort-2013-4939
 - id: p-gov-sfax-samir-rouihem
   role: governor-sfax
   holder: samir-rouihem-sfax
-  start: '2013'
-  end: '2014'
+  start: '2013-08-24'
+  end: '2014-02-28'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sfax
+  confidence: A
   sources:
   - frwiki-sfax-gov
+  - jort-arrete-2013-11-25
+  - jort-2014-1121
 - id: p-gov-sfax-mehdi-chelbi
   role: governor-sfax
   holder: mehdi-chelbi
-  start: '2014'
-  end: '2015'
+  start: '2014-02-28'
+  end: '2015-08-22'
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2014-029 is dated 2014-04-07; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2014-029 is dated 2014-04-07; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-sfax-gov
   - jort-2014-029
+  - jort-2014-1104
+  - jort-2015-1658
 - id: p-gov-sfax-habib-chaouat
   role: governor-sfax
   holder: habib-chaouat
-  start: '2015'
-  end: '2016'
+  start: '2015-08-22'
+  end: '2016-12-22'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sfax
+  confidence: A
   sources:
   - frwiki-sfax-gov
+  - jort-arrete-2015-11-03
+  - jort-2017-373
 - id: p-gov-sfax-slim-tissaoui
   role: governor-sfax
   holder: slim-tissaoui-sfax
-  start: '2016'
+  start: '2016-12-22'
   end: '2017'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sfax
+  confidence: A
   sources:
   - frwiki-sfax-gov
+  - jort-arrete-2017-02-09
 - id: p-gov-sfax-adel-khabthani
   role: governor-sfax
   holder: adel-khabthani
-  start: '2017'
-  end: '2019'
+  start: '2017-10-29'
+  end: '2019-08-17'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sfax
+  confidence: A
   sources:
   - frwiki-sfax-gov
+  - jort-arrete-2018-01-22
+  - jort-2019-1044
 - id: p-gov-sfax-anis-oueslati
   role: governor-sfax
   holder: anis-oueslati
-  start: '2019'
-  end: '2021'
+  start: '2019-08-17'
+  end: '2021-08-03'
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2019-092 is dated 2019-11-08; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2019-092 is dated 2019-11-08; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-sfax-gov
   - jort-2019-092
+  - jort-2019-1043
+  - jort-2021-88
 - id: p-gov-sfax-faouzi-mrad
   role: governor-sfax
   holder: faouzi-mrad
   start: '2021-11-26'
   end: '2022-03-29'
   acting: false
-  confidence: B
+  confidence: A
   notes:
-  - 'Named in the November 2021 movement: the report text says "24 novembre" but its timestamp is 26 November
-    and 24 November 2021 was a Wednesday, so 26 November is used. The 29 March 2022 end is the dismissal
-    reported for Sfax and Sousse together (La Presse, cited by the list, not fetched).'
+  - 'Named in the November 2021 movement: the report text says "24 novembre" but its timestamp is 26 November and 24 November 2021 was a Wednesday, so 26 November is used. The 29 March 2022 end is the dismissal reported for Sfax and Sousse together (La Presse, cited by the list, not fetched).'
   sources:
   - mosaique-nominations-2021-11-26
   - frwiki-sfax-gov
+  - jort-2021-206
+  - jort-2022-302
 - id: p-gov-sfax-fakher-fakhfakh
   role: governor-sfax
   holder: fakher-fakhfakh
-  start: '2022-06-06'
+  start: '2022-06-09'
   end: '2023-01-06'
   acting: false
-  confidence: B
+  confidence: A
   notes:
-  - Dismissed by presidential decision announced 6 January 2023. No successor was named before 8 September
-    2024; the governorate was run by the first delegate from January 2023.
+  - Dismissed by presidential decision announced 6 January 2023. No successor was named before 8 September 2024; the governorate was run by the first delegate from January 2023.
+  - The start was recorded as 2022-06-06 from secondary lists; the gazette instrument gives 2022-06-09.
   sources:
   - mosaique-gouverneurs-2022-06-06
   - tunisienumerique-sfax-2023-01-06
   - frwiki-sfax-gov
+  - jort-2022-574
+  - jort-2023-3
 - id: p-gov-sfax-habib-balghouthi
   role: governor-sfax
   holder: habib-balghouthi
@@ -20838,10 +20997,10 @@
   start: '2006-07-12'
   end: '2011-02-02'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sousse
+  confidence: A
   sources:
   - frwiki-sousse-gov
+  - jort-2011-206
 - id: p-gov-sousse-khemaies-argoubi
   role: governor-sousse
   holder: khemaies-argoubi
@@ -20868,10 +21027,11 @@
   start: '2012-08-27'
   end: '2014-02-28'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sousse
+  confidence: A
   sources:
   - frwiki-sousse-gov
+  - jort-2012-2617
+  - jort-2014-1126
 - id: p-gov-sousse-abdelmalak-sellami
   role: governor-sousse
   holder: abdelmalak-sellami
@@ -20880,20 +21040,22 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2014-029 is dated 2014-04-07; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2014-029 is dated 2014-04-07; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-sousse-gov
   - jort-2014-029
+  - jort-2014-1106
+  - jort-2015-1650
 - id: p-gov-sousse-fethi-bdira
   role: governor-sousse
   holder: fethi-bdira
   start: '2015-07-04'
   end: '2017-05-18'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sousse
+  confidence: A
   sources:
   - frwiki-sousse-gov
+  - jort-2015-1630
 - id: p-gov-sousse-adel-chlioui
   role: governor-sousse
   holder: adel-chlioui
@@ -20902,20 +21064,23 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2017-048 is dated 2017-06-09; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2017-048 is dated 2017-06-09; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-sousse-gov
   - jort-2017-048
+  - jort-2017-731
+  - jort-2020-624
 - id: p-gov-sousse-raja-trabelsi
   role: governor-sousse
   holder: raja-trabelsi-sousse
   start: '2020-04-14'
   end: '2022-03-29'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sousse
+  confidence: A
   sources:
   - frwiki-sousse-gov
+  - jort-arrete-2020-08-19
+  - jort-2022-301
 - id: p-gov-monastir-hedi-attia
   role: governor-monastir
   holder: hedi-attia-monastir
@@ -20994,20 +21159,21 @@
   start: '2005-08-04'
   end: '2011-02-02'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Monastir
+  confidence: A
   sources:
   - frwiki-monastir-gov
+  - jort-2011-207
 - id: p-gov-monastir-hichem-fourati
   role: governor-monastir
   holder: hichem-fourati
   start: '2011-02-02'
   end: '2012-03-24'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Monastir
+  confidence: A
   sources:
   - frwiki-monastir-gov
+  - jort-2011-367
+  - jort-2012-871
 - id: p-gov-monastir-habib-sethom
   role: governor-monastir
   holder: habib-sethom
@@ -21016,10 +21182,12 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2012-056 is dated 2012-07-11; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2012-056 is dated 2012-07-11; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-monastir-gov
   - jort-2012-056
+  - jort-2012-777
+  - jort-2014-1125
 - id: p-gov-monastir-taieb-nefzi
   role: governor-monastir
   holder: taieb-nefzi
@@ -21028,44 +21196,48 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2014-029 is dated 2014-04-07; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2014-029 is dated 2014-04-07; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-monastir-gov
   - jort-2014-029
+  - jort-2014-1096
+  - jort-2015-1660
 - id: p-gov-monastir-adel-khabthani
   role: governor-monastir
   holder: adel-khabthani-monastir
   start: '2015-08-22'
   end: '2017-10-29'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Monastir
+  confidence: A
   sources:
   - frwiki-monastir-gov
+  - jort-2015-1626
 - id: p-gov-monastir-akrem-sebri
   role: governor-monastir
   holder: akrem-sebri-monastir
   start: '2017-10-29'
   end: '2021-08-05'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Monastir
+  confidence: A
   sources:
   - frwiki-monastir-gov
+  - jort-arrete-2018-01-22
 - id: p-gov-monastir-mondher-ben-sik-ali
   role: governor-monastir
   holder: mondher-ben-sik-ali
-  start: '2022-06-06'
+  start: '2022-06-08'
   end: '2024-03-13'
   acting: false
-  confidence: B
+  confidence: A
   notes:
-  - Named in the 6 June 2022 movement and dismissed with the governor of Mahdia on 13 March 2024. No successor
-    was named before 8 September 2024.
+  - Named in the 6 June 2022 movement and dismissed with the governor of Mahdia on 13 March 2024. No successor was named before 8 September 2024.
+  - The start was recorded as 2022-06-06 from secondary lists; the gazette instrument gives 2022-06-08.
   sources:
   - mosaique-gouverneurs-2022-06-06
   - mosaique-monastir-mahdia-2024-03-13
   - frwiki-monastir-gov
+  - jort-2022-566
+  - jort-2024-150-ocr
 - id: p-gov-mahdia-ezzedine-salaani
   role: governor-mahdia
   holder: ezzedine-salaani
@@ -21220,56 +21392,60 @@
   role: governor-mahdia
   holder: hichem-ben-ahmed
   start: '2010'
-  end: '2011'
+  end: '2011-02-02'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Mahdia
+  confidence: A
   sources:
   - frwiki-mahdia-gov
+  - jort-2011-208
 - id: p-gov-mahdia-amor-jebbari
   role: governor-mahdia
   holder: amor-jebbari
-  start: '2011'
-  end: '2011'
+  start: '2011-02-02'
+  end: '2011-05-23'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Mahdia
+  confidence: A
   notes:
   - The list gives only the year 2011.
   sources:
   - frwiki-mahdia-gov
+  - jort-2011-366
+  - jort-2011-1156
 - id: p-gov-mahdia-mohamed-najem-gharsalli
   role: governor-mahdia
   holder: mohamed-najem-gharsalli
-  start: '2011'
+  start: '2011-05-23'
   end: '2015'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Mahdia
+  confidence: A
   sources:
   - frwiki-mahdia-gov
+  - jort-2011-950
 - id: p-gov-mahdia-faouzi-ghrab
   role: governor-mahdia
   holder: faouzi-ghrab
-  start: '2015'
-  end: '2016'
+  start: '2015-02-14'
+  end: '2016-09-16'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Mahdia
+  confidence: A
   sources:
   - frwiki-mahdia-gov
+  - jort-2015-824
+  - jort-2016-1416
 - id: p-gov-mahdia-mohamed-bouden
   role: governor-mahdia
   holder: mohamed-bouden
-  start: '2016'
-  end: '2019'
+  start: '2016-09-16'
+  end: '2019-07-24'
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2016-106 is dated 2016-12-23; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2016-106 is dated 2016-12-23; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-mahdia-gov
   - jort-2016-106
+  - jort-2016-1410
+  - jort-2019-1048
 - id: p-gov-mahdia-abdelfattah-chakchouk
   role: governor-mahdia
   holder: abdelfattah-chakchouk
@@ -21278,13 +21454,14 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2019-092 is dated 2019-11-08; the start date is kept from the earlier record pending review.'
-  - Start is the 24 July 2019 movement date given by the list; the HuffPost Maghreb report it cites was
-    not fetched, so the start rests on the list. Dismissed 13 March 2024.
+  - Primary document jort-2019-092 is dated 2019-11-08; the start date is kept from the earlier record pending review.
+  - Start is the 24 July 2019 movement date given by the list; the HuffPost Maghreb report it cites was not fetched, so the start rests on the list. Dismissed 13 March 2024.
   sources:
   - mosaique-monastir-mahdia-2024-03-13
   - frwiki-mahdia-gov
   - jort-2019-092
+  - jort-2019-1040
+  - jort-2024-151
 - id: p-gov-kasserine-mustapha-el-khabthani
   role: governor-kasserine
   holder: mustapha-el-khabthani
@@ -21586,13 +21763,13 @@
   role: governor-kasserine
   holder: mohamed-hafedh-cherif
   start: '2010'
-  end: '2011'
+  end: '2011-02-02'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kasserine
+  confidence: A
   sources:
   - frwiki-kasserine-gov
   - arwiki-kasserine-gov
+  - jort-2011-204
 - id: p-gov-kasserine-salah-kacem
   role: governor-kasserine
   holder: salah-kacem
@@ -21626,33 +21803,36 @@
   start: '2011-02-19'
   end: '2011-08-05'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kasserine
+  confidence: A
   sources:
   - frwiki-kasserine-gov
   - arwiki-kasserine-gov
+  - jort-2011-358
+  - jort-2011-2415
 - id: p-gov-kasserine-bechir-el-bedoui
   role: governor-kasserine
   holder: bechir-el-bedoui
   start: '2011-08-05'
   end: '2012-08-27'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kasserine
+  confidence: A
   sources:
   - frwiki-kasserine-gov
   - arwiki-kasserine-gov
+  - jort-2011-2412
+  - jort-2012-2636
 - id: p-gov-kasserine-mohamed-sidhom
   role: governor-kasserine
   holder: mohamed-sidhom-kasserine
   start: '2012-08-27'
   end: '2014-02-28'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kasserine
+  confidence: A
   sources:
   - frwiki-kasserine-gov
   - arwiki-kasserine-gov
+  - jort-arrete-2012-10-30
+  - jort-2014-1117
 - id: p-gov-kasserine-atef-boughatas
   role: governor-kasserine
   holder: atef-boughatas
@@ -21661,22 +21841,23 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2014-029 is dated 2014-04-07; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2014-029 is dated 2014-04-07; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-kasserine-gov
   - arwiki-kasserine-gov
   - jort-2014-029
+  - jort-2014-1100
 - id: p-gov-kasserine-chedly-bouallegue
   role: governor-kasserine
   holder: chedly-bouallegue-kasserine
   start: '2015-08-22'
   end: '2016-09-16'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kasserine
+  confidence: A
   sources:
   - frwiki-kasserine-gov
   - arwiki-kasserine-gov
+  - jort-2015-1636
 - id: p-gov-kasserine-hassen-khedimi
   role: governor-kasserine
   holder: hassen-khedimi
@@ -21685,11 +21866,13 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2016-106 is dated 2016-12-23; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2016-106 is dated 2016-12-23; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-kasserine-gov
   - arwiki-kasserine-gov
   - jort-2016-106
+  - jort-2016-1409
+  - jort-2017-1278
 - id: p-gov-kasserine-samir-boukadida
   role: governor-kasserine
   holder: samir-boukadida
@@ -21698,15 +21881,15 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2017-095 is dated 2017-11-23; the start date is kept from the earlier record pending review.'
-  - Appointment confirmed by the interior ministry communiqué of 21 June 2017, which also dates Hassen
-    Khedimi's tenure from 16 September 2016. End is the 24 July 2019 movement date given by the French
-    list; the Arabic list leaves him in post.
+  - Primary document jort-2017-095 is dated 2017-11-23; the start date is kept from the earlier record pending review.
+  - Appointment confirmed by the interior ministry communiqué of 21 June 2017, which also dates Hassen Khedimi's tenure from 16 September 2016. End is the 24 July 2019 movement date given by the French list; the Arabic list leaves him in post.
   sources:
   - mosaique-kasserine-boukadida-2017-06-21
   - frwiki-kasserine-gov
   - arwiki-kasserine-gov
   - jort-2017-095
+  - jort-2017-1276
+  - jort-2019-1046
 - id: p-gov-kasserine-mohamed-samcha
   role: governor-kasserine
   holder: mohamed-samcha
@@ -21715,26 +21898,28 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2019-092 is dated 2019-11-08; the start date is kept from the earlier record pending review.'
-  - The Arabic list dates the interior minister's installation ceremony to 1 August 2019; the appointment
-    movement is dated 24 July 2019 by the French list. The 13 October 2020 end comes from the French list
-    alone.
+  - Primary document jort-2019-092 is dated 2019-11-08; the start date is kept from the earlier record pending review.
+  - The Arabic list dates the interior minister's installation ceremony to 1 August 2019; the appointment movement is dated 24 July 2019 by the French list. The 13 October 2020 end comes from the French list alone.
   sources:
   - frwiki-kasserine-gov
   - arwiki-kasserine-gov
   - jort-2019-092
+  - jort-2019-1039
+  - jort-2020-970
 - id: p-gov-kasserine-adel-mabrouk
   role: governor-kasserine
   holder: adel-mabrouk
   start: '2020-11-02'
   end: '2022-06-06'
   acting: false
-  confidence: B
+  confidence: A
   notes:
   - Appointed 2 November 2020; replaced in the 6 June 2022 movement.
   sources:
   - mosaique-kasserine-mabrouk-2020-11-02
   - frwiki-kasserine-gov
+  - jort-2020-968
+  - jort-2022-563
 - id: p-gov-sidi-bouzid-mokhtar-chouari
   role: governor-sidi-bouzid
   holder: mokhtar-chouari
@@ -21896,22 +22081,25 @@
   role: governor-sidi-bouzid
   holder: mourad-ben-jelloul-sidi-bouzid
   start: '2010-07-28'
-  end: '2010-12-28'
+  end: '2010-12-30'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sidi Bouzid
+  confidence: A
   sources:
   - frwiki-sidi-bouzid-gov
+  - jort-2011-217
+  notes:
+  - The end was recorded as 2010-12-28 from secondary lists; the gazette instrument gives 2010-12-30.
 - id: p-gov-sidi-bouzid-abdelhamid-aloui
   role: governor-sidi-bouzid
   holder: abdelhamid-aloui
   start: '2010-12-30'
   end: '2011-02-02'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sidi Bouzid
+  confidence: A
   sources:
   - frwiki-sidi-bouzid-gov
+  - jort-2011-219
+  - jort-2011-222
 - id: p-gov-sidi-bouzid-mabrouk-amri
   role: governor-sidi-bouzid
   holder: mabrouk-amri
@@ -21931,23 +22119,24 @@
   start: '2011-02-19'
   end: '2011-04-13'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sidi Bouzid
+  confidence: A
   notes:
-  - Named 19 February 2011 and resigned per the list; the end shown is the next appointment (13 April
-    2011), not a sourced resignation date.
+  - Named 19 February 2011 and resigned per the list; the end shown is the next appointment (13 April 2011), not a sourced resignation date.
+  - 'Name check: given name Houssine in the gazette, Hassen in the record. The gazette spelling is kept as an alias until a second source settles it.'
   sources:
   - frwiki-sidi-bouzid-gov
+  - jort-2011-373
+  - jort-2011-1157
 - id: p-gov-sidi-bouzid-nabil-nsiri
   role: governor-sidi-bouzid
   holder: nabil-nsiri-sidi-bouzid
   start: '2011-04-13'
   end: '2012-02-22'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sidi Bouzid
+  confidence: A
   sources:
   - frwiki-sidi-bouzid-gov
+  - jort-2011-949
 - id: p-gov-sidi-bouzid-mohamed-nejib-mansouri
   role: governor-sidi-bouzid
   holder: mohamed-nejib-mansouri
@@ -21956,20 +22145,23 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2012-026 is dated 2012-04-02; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2012-026 is dated 2012-04-02; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-sidi-bouzid-gov
   - jort-2012-026
+  - jort-2012-117
+  - jort-2013-131
 - id: p-gov-sidi-bouzid-amara-tlijani
   role: governor-sidi-bouzid
   holder: amara-tlijani
   start: '2012-10-07'
   end: '2013-09-04'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sidi Bouzid
+  confidence: A
   sources:
   - frwiki-sidi-bouzid-gov
+  - jort-arrete-2013-01-04
+  - jort-2013-4938
 - id: p-gov-sidi-bouzid-ammar-khabbabi
   role: governor-sidi-bouzid
   holder: ammar-khabbabi
@@ -21978,30 +22170,36 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2013-098 is dated 2013-11-28; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2013-098 is dated 2013-11-28; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-sidi-bouzid-gov
   - jort-2013-098
+  - jort-2013-4891
+  - jort-2015-1657
 - id: p-gov-sidi-bouzid-mourad-mahjoubi
   role: governor-sidi-bouzid
   holder: mourad-mahjoubi
   start: '2015-08-22'
   end: '2017-10-29'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sidi Bouzid
+  confidence: A
   sources:
   - frwiki-sidi-bouzid-gov
+  - jort-2015-1632
+  - jort-2018-87
 - id: p-gov-sidi-bouzid-anis-dhifallah
   role: governor-sidi-bouzid
   holder: anis-dhifallah-sidi-bouzid
   start: '2017-10-29'
-  end: '2019-02-13'
+  end: '2019-02-04'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Sidi Bouzid
+  confidence: A
   sources:
   - frwiki-sidi-bouzid-gov
+  - jort-arrete-2018-01-22
+  - jort-2019-506
+  notes:
+  - The end was recorded as 2019-02-13 from secondary lists; the gazette instrument gives 2019-02-04.
 - id: p-gov-sidi-bouzid-tajeddine-bekri
   role: governor-sidi-bouzid
   holder: tajeddine-bekri
@@ -22021,12 +22219,14 @@
   start: '2019-02-13'
   end: '2021-11-25'
   acting: false
-  confidence: B
+  confidence: A
   notes:
   - Removed from office on 25 November 2021 by presidential decision.
   sources:
   - mosaique-sidi-bouzid-kebili-2021-11-25
   - frwiki-sidi-bouzid-gov
+  - jort-arrete-2019-03-27
+  - jort-2021-202
 - id: p-gov-gafsa-bechir-achoura
   role: governor-gafsa
   holder: bechir-achoura
@@ -22253,12 +22453,12 @@
   role: governor-gafsa
   holder: mohamed-chaieb
   start: '2008'
-  end: '2011'
+  end: '2011-02-02'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gafsa
+  confidence: A
   sources:
   - frwiki-gafsa-gov
+  - jort-2011-212
 - id: p-gov-gafsa-mohamed-gouider
   role: governor-gafsa
   holder: mohamed-gouider-gafsa
@@ -22278,20 +22478,22 @@
   start: '2011-02-15'
   end: '2011-08-05'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gafsa
+  confidence: A
   sources:
   - frwiki-gafsa-gov
+  - jort-2011-359
+  - jort-2011-2416
 - id: p-gov-gafsa-moncef-el-hani
   role: governor-gafsa
   holder: moncef-el-hani
   start: '2011-08-05'
   end: '2012-02-22'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gafsa
+  confidence: A
   sources:
   - frwiki-gafsa-gov
+  - jort-2011-2414
+  - jort-2012-125
 - id: p-gov-gafsa-brahim-hamdaoui
   role: governor-gafsa
   holder: brahim-hamdaoui
@@ -22300,10 +22502,12 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2012-026 is dated 2012-04-02; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2012-026 is dated 2012-04-02; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-gafsa-gov
   - jort-2012-026
+  - jort-2012-118
+  - jort-2014-1116
 - id: p-gov-gafsa-mustapha-ben-moussa
   role: governor-gafsa
   holder: mustapha-ben-moussa
@@ -22312,46 +22516,54 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2014-029 is dated 2014-04-07; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2014-029 is dated 2014-04-07; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-gafsa-gov
   - jort-2014-029
+  - jort-2014-1101
+  - jort-2015-828
 - id: p-gov-gafsa-taieb-ezzaraii
   role: governor-gafsa
   holder: taieb-ezzaraii
   start: '2015-04-09'
-  end: '2016-03-14'
+  end: '2016-02-11'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gafsa
+  confidence: A
   sources:
   - frwiki-gafsa-gov
+  - jort-2015-818
+  - jort-2016-331
+  notes:
+  - The end was recorded as 2016-03-14 from secondary lists; the gazette instrument gives 2016-02-11.
 - id: p-gov-gafsa-mondher-aribi
   role: governor-gafsa
   holder: mondher-aribi
   start: '2016-03-14'
   end: '2020-06-18'
   acting: false
-  confidence: B
+  confidence: A
   notes:
-  - Appointed 14 March 2016; the appointment report names his predecessor as "Taieb Zarai", the spelling
-    the press used for Taïeb Ezzaraii.
+  - Appointed 14 March 2016; the appointment report names his predecessor as "Taieb Zarai", the spelling the press used for Taïeb Ezzaraii.
   sources:
   - mosaique-gafsa-aribi-2016-03-14
   - frwiki-gafsa-gov
+  - jort-2016-641
 - id: p-gov-gafsa-sami-ghabi
   role: governor-gafsa
   holder: sami-ghabi
   start: '2020-06-18'
-  end: '2021-10-21'
+  end: '2021-10-22'
   acting: false
-  confidence: B
+  confidence: A
   notes:
   - Moved from Kébili to Gafsa on 18 June 2020 and dismissed on 21 October 2021.
+  - The end was recorded as 2021-10-21 from secondary lists; the gazette instrument gives 2021-10-22.
   sources:
   - mosaique-gafsa-ghabi-2020-06-18
   - mosaique-gafsa-dismissal-2021-10-21
   - frwiki-gafsa-gov
+  - jort-arrete-2020-08-19
+  - jort-2021-149
 - id: p-gov-tozeur-abdelhamid-el-kadhi
   role: governor-tozeur
   holder: abdelhamid-el-kadhi
@@ -22490,10 +22702,10 @@
   start: '2007'
   end: '2011'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Tozeur
+  confidence: A
   sources:
   - frwiki-tozeur-gov
+  - jort-2011-213
 - id: p-gov-tozeur-abdelhamid-ghanmi
   role: governor-tozeur
   holder: abdelhamid-ghanmi
@@ -22512,44 +22724,48 @@
   start: '2011'
   end: '2011'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Tozeur
+  confidence: A
   notes:
   - The list gives only the year 2011 and says he resigned.
   sources:
   - frwiki-tozeur-gov
+  - jort-2011-372
+  - jort-2011-726
 - id: p-gov-tozeur-abderrahmane-lamine-zouari
   role: governor-tozeur
   holder: abderrahmane-lamine-zouari
-  start: '2011'
-  end: '2012'
+  start: '2011-05-04'
+  end: '2012-02-22'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Tozeur
+  confidence: A
   sources:
   - frwiki-tozeur-gov
+  - jort-2011-784
+  - jort-2012-126
 - id: p-gov-tozeur-samir-rouihem
   role: governor-tozeur
   holder: samir-rouihem-tozeur
-  start: '2012'
+  start: '2012-02-22'
   end: '2012-08-27'
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2012-026 is dated 2012-04-02; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2012-026 is dated 2012-04-02; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-tozeur-gov
   - jort-2012-026
+  - jort-2012-120
 - id: p-gov-tozeur-noureddine-kamoun
   role: governor-tozeur
   holder: noureddine-kamoun
   start: '2012-08-27'
   end: '2014-02-28'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Tozeur
+  confidence: A
   sources:
   - frwiki-tozeur-gov
+  - jort-2012-2616
+  - jort-2014-1115
 - id: p-gov-tozeur-mohamed-mansouri
   role: governor-tozeur
   holder: mohamed-mansouri
@@ -22558,20 +22774,23 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2014-029 is dated 2014-04-07; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2014-029 is dated 2014-04-07; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-tozeur-gov
   - jort-2014-029
+  - jort-2014-1102
+  - jort-2015-1656
 - id: p-gov-tozeur-lotfi-sassi
   role: governor-tozeur
   holder: lotfi-sassi
   start: '2015-08-22'
   end: '2016-09-16'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Tozeur
+  confidence: A
   sources:
   - frwiki-tozeur-gov
+  - jort-2015-1625
+  - jort-2016-1415
 - id: p-gov-tozeur-mounir-hamdi
   role: governor-tozeur
   holder: mounir-hamdi-tozeur
@@ -22580,10 +22799,11 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2016-106 is dated 2016-12-23; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2016-106 is dated 2016-12-23; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-tozeur-gov
   - jort-2016-106
+  - jort-2016-1403
 - id: p-gov-tozeur-salah-mtiraoui
   role: governor-tozeur
   holder: salah-mtiraoui-tozeur
@@ -22592,10 +22812,11 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2017-048 is dated 2017-06-09; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2017-048 is dated 2017-06-09; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-tozeur-gov
   - jort-2017-048
+  - jort-2017-732
 - id: p-gov-kebili-mohamed-hafsa
   role: governor-kebili
   holder: mohamed-hafsa
@@ -22726,12 +22947,12 @@
   role: governor-kebili
   holder: mahmoud-saied
   start: 2010-07
-  end: 2011-02
+  end: '2011-02-02'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kébili
+  confidence: A
   sources:
   - frwiki-kebili-gov
+  - jort-2011-214
 - id: p-gov-kebili-badreddine-habil
   role: governor-kebili
   holder: badreddine-habil
@@ -22762,30 +22983,32 @@
   start: 2011-02
   end: 2012-05
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kébili
+  confidence: A
   sources:
   - frwiki-kebili-gov
+  - jort-2011-360
+  - jort-2012-889
 - id: p-gov-kebili-amara-tlijani
   role: governor-kebili
   holder: amara-tlijani-kebili
-  start: 2012-05
+  start: '2012-05-14'
   end: 2012-10
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kébili
+  confidence: A
   sources:
   - frwiki-kebili-gov
+  - jort-2012-888
 - id: p-gov-kebili-habib-jerdi
   role: governor-kebili
   holder: habib-jerdi
-  start: 2012-10
-  end: 2014-02
+  start: '2012-10-07'
+  end: '2014-02-28'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kébili
+  confidence: A
   sources:
   - frwiki-kebili-gov
+  - jort-2013-108
+  - jort-2014-1114
 - id: p-gov-kebili-amara-tlijani-2014
   role: governor-kebili
   holder: amara-tlijani-kebili
@@ -22794,60 +23017,65 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2014-029 is dated 2014-04-07; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2014-029 is dated 2014-04-07; the start date is kept from the earlier record pending review.
   - Second, non-consecutive tenure of the same holder in Kébili.
   sources:
   - frwiki-kebili-gov
   - jort-2014-029
+  - jort-2014-1108
+  - jort-2015-1095
 - id: p-gov-kebili-hachem-hmidi
   role: governor-kebili
   holder: hachem-hmidi
-  start: 2015-06
+  start: '2015-06-10'
   end: 2016-09
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Kébili
+  confidence: A
   sources:
   - frwiki-kebili-gov
+  - jort-2015-1094
 - id: p-gov-kebili-walid-louguini
   role: governor-kebili
   holder: walid-louguini
-  start: 2016-09
-  end: 2017-05
+  start: '2016-09-16'
+  end: '2017-05-18'
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2017-001 is dated 2016-12-28; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2017-001 is dated 2016-12-28; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-kebili-gov
   - jort-2017-001
+  - jort-2016-1439
+  - jort-2017-735
 - id: p-gov-kebili-sami-ghabi
   role: governor-kebili
   holder: sami-ghabi-kebili
-  start: 2017-05
+  start: '2017-05-18'
   end: 2020-06
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2017-048 is dated 2017-06-09; the start date is kept from the earlier record pending review.'
   - The Gafsa appointment report of 18 June 2020 states that he was governor of Kébili until that move.
   sources:
   - mosaique-gafsa-ghabi-2020-06-18
   - frwiki-kebili-gov
   - jort-2017-048
+  - jort-2017-730
 - id: p-gov-kebili-moncef-chleghmia
   role: governor-kebili
   holder: moncef-chleghmia
-  start: 2020-07
+  start: '2020-07-03'
   end: '2021-11-25'
   acting: false
-  confidence: B
+  confidence: A
   notes:
-  - Removed from office on 25 November 2021; the French list spells the surname Chleghmia, the Arabic
-    list Chelaghmia.
+  - Removed from office on 25 November 2021; the French list spells the surname Chleghmia, the Arabic list Chelaghmia.
   sources:
   - mosaique-sidi-bouzid-kebili-2021-11-25
   - frwiki-kebili-gov
+  - jort-2020-849
+  - jort-2021-203
 - id: p-gov-gabes-habib-ben-mohamed-lahbib
   role: governor-gabes
   holder: habib-ben-mohamed-lahbib-gabes
@@ -23107,12 +23335,12 @@
   role: governor-gabes
   holder: mokdad-missaoui
   start: '2009'
-  end: '2011'
+  end: '2011-02-02'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gabès
+  confidence: A
   sources:
   - frwiki-gabes-gov
+  - jort-2011-210
 - id: p-gov-gabes-chokri-necib
   role: governor-gabes
   holder: chokri-necib
@@ -23140,85 +23368,97 @@
 - id: p-gov-gabes-mondher-yedas
   role: governor-gabes
   holder: mondher-yedas
-  start: '2011'
-  end: '2012'
+  start: '2011-02-24'
+  end: '2011-12-01'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gabès
+  confidence: A
   sources:
   - frwiki-gabes-gov
+  - jort-2011-363
+  - jort-2012-45
+  notes:
+  - The end was recorded as 2012 from secondary lists; the gazette instrument gives 2011-12-01.
 - id: p-gov-gabes-omar-chahbani
   role: governor-gabes
   holder: omar-chahbani
   start: '2012'
-  end: '2012'
+  end: '2012-10-31'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gabès
+  confidence: A
   notes:
   - The list gives only 2012.
   sources:
   - frwiki-gabes-gov
+  - jort-2012-20
+  - jort-2013-532
 - id: p-gov-gabes-houcine-jrad
   role: governor-gabes
   holder: houcine-jrad
-  start: '2012'
-  end: '2015'
+  start: '2012-10-31'
+  end: '2015-04-09'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gabès
+  confidence: A
   sources:
   - frwiki-gabes-gov
+  - jort-2013-500
+  - jort-2015-831
 - id: p-gov-gabes-nabil-zarrouk
   role: governor-gabes
   holder: nabil-zarrouk
-  start: '2015'
-  end: '2015'
+  start: '2015-04-09'
+  end: '2015-08-22'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gabès
+  confidence: A
   notes:
   - The list gives only 2015.
   sources:
   - frwiki-gabes-gov
+  - jort-2015-820
+  - jort-2015-1659
 - id: p-gov-gabes-ahmed-lamine-lansari
   role: governor-gabes
   holder: ahmed-lamine-lansari
-  start: '2015'
-  end: '2016'
+  start: '2015-08-22'
+  end: '2016-09-16'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Gabès
+  confidence: A
   sources:
   - frwiki-gabes-gov
+  - jort-2015-1629
+  - jort-2016-1414
 - id: p-gov-gabes-mongi-thameur
   role: governor-gabes
   holder: mongi-thameur
   start: '2016-09-16'
-  end: '2021-10-07'
+  end: '2021-10-08'
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2016-106 is dated 2016-12-23; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2016-106 is dated 2016-12-23; the start date is kept from the earlier record pending review.
   - Dismissed by the presidency on 7 October 2021.
+  - The end was recorded as 2021-10-07 from secondary lists; the gazette instrument gives 2021-10-08.
   sources:
   - mosaique-gabes-dismissal-2021-10-07
   - frwiki-gabes-gov
   - jort-2016-106
+  - jort-2016-1404
+  - jort-2021-135
 - id: p-gov-gabes-mosbah-kardamin
   role: governor-gabes
   holder: mosbah-kardamin
-  start: '2022-06-06'
+  start: '2022-06-09'
   end: '2023-03-30'
   acting: false
-  confidence: B
+  confidence: A
   notes:
-  - Named in the 6 June 2022 movement; dismissed by presidential decree announced 30 March 2023. No successor
-    was named before 8 September 2024.
+  - Named in the 6 June 2022 movement; dismissed by presidential decree announced 30 March 2023. No successor was named before 8 September 2024.
+  - The start was recorded as 2022-06-06 from secondary lists; the gazette instrument gives 2022-06-09.
   sources:
   - mosaique-gouverneurs-2022-06-06
   - kapitalis-gabes-2023-03-30
   - frwiki-gabes-gov
+  - jort-2022-573
+  - jort-2023-269
 - id: p-gov-medenine-mohamed-bellamine
   role: governor-medenine
   holder: mohamed-bellamine-medenine
@@ -23465,12 +23705,12 @@
   role: governor-medenine
   holder: brahim-briki-medenine
   start: '2010'
-  end: '2011'
+  end: '2011-02-02'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Médenine
+  confidence: A
   sources:
   - frwiki-medenine-gov
+  - jort-2011-211
 - id: p-gov-medenine-hamadi-chetioui
   role: governor-medenine
   holder: hamadi-chetioui
@@ -23489,10 +23729,11 @@
   start: '2011-02-19'
   end: '2012-03-24'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Médenine
+  confidence: A
   sources:
   - frwiki-medenine-gov
+  - jort-2011-362
+  - jort-2012-876
 - id: p-gov-medenine-hamadi-mayara
   role: governor-medenine
   holder: hamadi-mayara
@@ -23501,10 +23742,12 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2012-056 is dated 2012-07-11; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2012-056 is dated 2012-07-11; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-medenine-gov
   - jort-2012-056
+  - jort-2012-781
+  - jort-2014-1123
 - id: p-gov-medenine-habib-chaouat
   role: governor-medenine
   holder: habib-chaouat-medenine
@@ -23513,20 +23756,22 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2014-029 is dated 2014-04-07; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2014-029 is dated 2014-04-07; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-medenine-gov
   - jort-2014-029
+  - jort-2014-1103
 - id: p-gov-medenine-taher-matmati
   role: governor-medenine
   holder: taher-matmati
   start: '2015-08-22'
   end: '2017-10-29'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Médenine
+  confidence: A
   sources:
   - frwiki-medenine-gov
+  - jort-arrete-2015-11-03
+  - jort-2018-86
 - id: p-gov-medenine-habib-chaouat-2017
   role: governor-medenine
   holder: habib-chaouat-medenine
@@ -23535,11 +23780,12 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2018-008 is dated 2018-01-22; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2018-008 is dated 2018-01-22; the start date is kept from the earlier record pending review.
   - Second, non-consecutive tenure of the same holder in Médenine.
   sources:
   - frwiki-medenine-gov
   - jort-2018-008
+  - jort-2018-80
 - id: p-gov-tataouine-faycal-chahdoura
   role: governor-tataouine
   holder: faycal-chahdoura-tataouine
@@ -23678,13 +23924,13 @@
   role: governor-tataouine
   holder: nouri-ben-said
   start: '2009'
-  end: '2011'
+  end: '2011-02-02'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Tataouine
+  confidence: A
   sources:
   - frwiki-tataouine-gov
   - arwiki-tataouine-gov
+  - jort-2011-215
 - id: p-gov-tataouine-youssef-hidri
   role: governor-tataouine
   holder: youssef-hidri
@@ -23705,22 +23951,24 @@
   start: '2011-02-19'
   end: '2011-08-05'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Tataouine
+  confidence: A
   sources:
   - frwiki-tataouine-gov
   - arwiki-tataouine-gov
+  - jort-2011-361
+  - jort-2011-2848
 - id: p-gov-tataouine-nejib-el-ghali
   role: governor-tataouine
   holder: nejib-el-ghali
   start: '2011-08-05'
   end: '2012-02-22'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Tataouine
+  confidence: A
   sources:
   - frwiki-tataouine-gov
   - arwiki-tataouine-gov
+  - jort-2011-2413
+  - jort-2012-127
 - id: p-gov-tataouine-mourad-achour
   role: governor-tataouine
   holder: mourad-achour
@@ -23729,11 +23977,13 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2012-026 is dated 2012-04-02; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2012-026 is dated 2012-04-02; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-tataouine-gov
   - arwiki-tataouine-gov
   - jort-2012-026
+  - jort-2012-119
+  - jort-2014-1122
 - id: p-gov-tataouine-saber-mednini
   role: governor-tataouine
   holder: saber-mednini
@@ -23742,36 +23992,42 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2014-029 is dated 2014-04-07; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2014-029 is dated 2014-04-07; the start date is kept from the earlier record pending review.
   sources:
   - frwiki-tataouine-gov
   - arwiki-tataouine-gov
   - jort-2014-029
+  - jort-2014-1109
+  - jort-2015-830
 - id: p-gov-tataouine-mohsen-ben-ali
   role: governor-tataouine
   holder: mohsen-ben-ali
   start: '2015-04-09'
   end: '2017-04-29'
   acting: false
-  confidence: C
-  attributed_to: Wikipédia (fr), article Tataouine
+  confidence: A
   sources:
   - frwiki-tataouine-gov
   - arwiki-tataouine-gov
+  - jort-2015-819
+  - jort-2017-736
 - id: p-gov-tataouine-mohamed-ali-barhoumi
   role: governor-tataouine
   holder: mohamed-ali-barhoumi
   start: '2017-04-29'
-  end: '2017-05-24'
+  end: '2017-06-02'
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2017-048 is dated 2017-06-09; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2017-048 is dated 2017-06-09; the start date is kept from the earlier record pending review.
   - Resigned on 24 May 2017 according to the list; the next appointment was 2 June 2017.
+  - The end was recorded as 2017-05-24 from secondary lists; the gazette instrument gives 2017-06-02.
   sources:
   - frwiki-tataouine-gov
   - arwiki-tataouine-gov
   - jort-2017-048
+  - jort-2017-733
+  - jort-2017-1279
 - id: p-gov-tataouine-adel-ouerghi
   role: governor-tataouine
   holder: adel-ouerghi
@@ -23780,13 +24036,15 @@
   acting: false
   confidence: A
   notes:
-  - 'Primary document jort-2017-095 is dated 2017-11-23; the start date is kept from the earlier record pending review.'
+  - Primary document jort-2017-095 is dated 2017-11-23; the start date is kept from the earlier record pending review.
   - Appointed 2 June 2017 after Barhoumi's resignation; replaced in the 6 June 2022 movement.
   sources:
   - mosaique-tataouine-ouerghi-2017-06-02
   - frwiki-tataouine-gov
   - arwiki-tataouine-gov
   - jort-2017-095
+  - jort-2017-1277
+  - jort-2022-564
 
 
 # ===========================================================================
