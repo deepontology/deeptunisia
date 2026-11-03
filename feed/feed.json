@@ -3,6 +3,216 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:african-manager:2e8916804f0f3cfa",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Bourse : Le marché termine la séance de mardi dans le vert",
+      "link": "https://africanmanager.com/bourse-le-marche-termine-la-seance-de-mardi-dans-le-vert/",
+      "published": "2026-11-03T18:32:00Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:386ab3024c02cf9b",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Le budget du Tourisme serait à 176,8 MDT, en hausse de 9,3 %",
+      "link": "https://africanmanager.com/plf-2027-le-budget-de-la-mission-du-tourisme-augmenterait-de-93-pour-atteindre-1768-mdt/",
+      "published": "2026-11-03T16:31:13Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:13f1ee2cc5c7eac6",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Le budget de l’Industrie hausserait de 48,2% à 7.890 MDT",
+      "link": "https://africanmanager.com/plf-2027-hausse-prevue-du-budget-du-ministere-de-lindustrie-de-482-en-2027/",
+      "published": "2026-11-03T16:28:44Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:f81635f457c8a939",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Le contrôle fiscal a rapporté 4,47 Mds DT, en hausse de 2,3 %",
+      "link": "https://africanmanager.com/des-rendements-estimes-a-447-milliards-de-dinars-a-fin-septembre-2026-en-hausse-de-23/",
+      "published": "2026-11-03T15:57:05Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:46da0f730d0422e2",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "La souveraineté hydrique, priorités de l’année 2027",
+      "link": "https://africanmanager.com/la-souverainete-hydrique-au-coeur-des-priorites-du-ministere-de-lagriculture-pour-lannee-2027/",
+      "published": "2026-11-03T15:56:52Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:6798dee8c36eda21",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Clôture anticipée avec succès des souscriptions à l’emprunt obligataire subordonné « STB Subordonné 2026 » de 150 millions de dinars",
+      "link": "https://africanmanager.com/cloture-anticipee-avec-succes-des-souscriptions-a-lemprunt-obligataire-subordonne-stb-subordonne-2026-de-150-millions-de-dinars/",
+      "published": "2026-11-03T15:52:36Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:ecb4406d6e062ced",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Algérie-Sonatrach: l’exploration-production concentre 69% des investissements en 2025",
+      "link": "https://africanmanager.com/algerie-sonatrach-lexploration-production-concentre-69-des-investissements-en-2025/",
+      "published": "2026-11-03T15:16:59Z",
+      "lang": "fr",
+      "author": "Africanmanager"
+    },
+    {
+      "id": "feed:african-manager:467a6056240015eb",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Maroc : Le gouvernement compte encadrer les exportations alimentaires",
+      "link": "https://africanmanager.com/maroc-le-gouvernement-compte-encadrer-les-exportations-alimentaires/",
+      "published": "2026-11-03T15:13:58Z",
+      "lang": "fr",
+      "author": "Africanmanager"
+    },
+    {
+      "id": "feed:african-manager:b391f55655eaa2ff",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Le budget de la Justice en hausse de 8,43 %",
+      "link": "https://africanmanager.com/budget-de-letat-2027-le-budget-du-ministere-de-la-justice-en-hausse-de-843/",
+      "published": "2026-11-03T14:25:07Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:726a77bf4dfd952f",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Trump annonce que les États-Unis cesseront de verser de l’aide à Israël après la fin de l’année",
+      "link": "https://africanmanager.com/trump-annonce-que-les-etats-unis-cesseront-de-verser-de-laide-a-israel-apres-la-fin-de-lannee/",
+      "published": "2026-11-03T14:12:46Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:49b9332210073dcc",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Zouari promet d’éviter les coupures d’électricité durant l’été prochain !",
+      "link": "https://africanmanager.com/zouari-promet-deviter-les-coupures-delectricite-durant-lete-prochain/",
+      "published": "2026-11-03T13:53:21Z",
+      "lang": "fr",
+      "author": "Africanmanager"
+    },
+    {
+      "id": "feed:african-manager:54ce3310eeb294e4",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Communautaires : L’État arrose, le terrain reste encore sec",
+      "link": "https://africanmanager.com/communautaires-letat-arrose-le-terrain-reste-encore-sec/",
+      "published": "2026-11-03T13:33:00Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:10e7ddf64934529d",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "156e sur 176, l’économie tunisienne classée « réprimée »",
+      "link": "https://africanmanager.com/156e-sur-176-leconomie-tunisienne-classee-reprimee/",
+      "published": "2026-11-03T13:29:38Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:7af4dd8fdf1b1924",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Khaldi appelle à l’aide 3 ministères contre l’économie parallèle",
+      "link": "https://africanmanager.com/la-lutte-contre-le-phenomene-de-leconomie-parallele-necessite-une-coordination-entre-les-differentes-institutions-de-letat/",
+      "published": "2026-11-03T13:12:46Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:2f58d56aebd60d2a",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "3 phases de la numérisation de la douane achevées en 2027",
+      "link": "https://africanmanager.com/les-2eme-et-3eme-phases-du-projet-de-numerisation-des-procedures-douanieres-seront-achevees-en-2027/",
+      "published": "2026-11-03T13:10:53Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:7bf96c4921c3c32a",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Qui paie plus ses dirigeants ? Ennakl pour le plus, City Cars pour le mieux",
+      "link": "https://africanmanager.com/qui-paie-plus-ses-dirigeants-ennakl-pour-le-plus-city-cars-pour-le-mieux/",
+      "published": "2026-11-03T13:06:00Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:3a44d7d29b0a159f",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Hausse de 10% du budget des Finances à 1.626,6 MDT",
+      "link": "https://africanmanager.com/hausse-de-10-des-credits-de-la-mission-des-finances-a-16266-mdt/",
+      "published": "2026-11-03T13:03:51Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:f264d6a31d75086b",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Facturation électronique : 1,8 million reçues et 37 mille réglées",
+      "link": "https://africanmanager.com/facturation-electronique-pres-de-18-million-de-factures-recues-et-quelque-37-mille-factures-reglees/",
+      "published": "2026-11-03T12:31:35Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:kapitalis:3ec39458fe43734a",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Biologie clinique | Pr Manel Chaabane élue présidente de la FIFBCML",
+      "link": "https://kapitalis.com/tunisie/2026/11/03/biologie-clinique-pr-manel-chaabane-elue-presidente-de-la-fifbcml/",
+      "published": "2026-11-03T12:27:24Z",
+      "lang": "fr",
+      "author": "webmaster kapitalis"
+    },
+    {
+      "id": "feed:african-manager:3e48834b6e759713",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "L’opposition israélienne se réunit pour décider comment chasser Netanyahu",
+      "link": "https://africanmanager.com/lopposition-israelienne-se-reunit-pour-decider-comment-chasser-netanyahu/",
+      "published": "2026-11-03T12:23:03Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:0df31a02628b7cf6",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Élections de mi-mandat : Un scrutin qui devrait bouleverser la présidence de Trump",
+      "link": "https://africanmanager.com/elections-de-mi-mandat-un-scrutin-que-devrait-bouleverser-la-presidence-de-trump/",
+      "published": "2026-11-03T12:22:45Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
       "id": "feed:african-manager:2bd0ac7baa23af7f",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -11787,216 +11997,6 @@
       "published": "2026-09-24T08:51:20Z",
       "lang": "fr",
       "author": "webmaster kapitalis"
-    },
-    {
-      "id": "feed:african-manager:dbc301280ea2a1d3",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Tunisie: Le fléau de la drogue touche des enfants de 9 ans!",
-      "link": "https://africanmanager.com/tunisie-le-fleau-de-la-drogue-touche-des-enfants-de-9-ans/",
-      "published": "2026-09-24T08:34:47Z",
-      "lang": "fr",
-      "author": "Africanmanager"
-    },
-    {
-      "id": "feed:african-manager:30590272f3cc915e",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Bourse : Le marché clôture la séance de mercredi sur une note baissière",
-      "link": "https://africanmanager.com/bourse-le-marche-cloture-la-seance-de-mercredi-sur-une-note-baissiere/",
-      "published": "2026-09-24T08:28:36Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:3cbf76f8bcd8c2ba",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Lutte contre la corruption: Tunisie veut une coopération arabe accrue",
-      "link": "https://africanmanager.com/lutte-contre-la-corruption-la-tunisie-appelle-a-une-cooperation-arabe-accrue/",
-      "published": "2026-09-24T08:27:23Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:fd3e74ba45680111",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "La BM incluera la Tunisie dans son prochain CPF",
-      "link": "https://africanmanager.com/la-banque-mondiale-reaffirme-son-soutien-aux-projets-de-developpement-en-tunisie/",
-      "published": "2026-09-24T08:27:15Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:kapitalis:c1e22aa3e71f6c66",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Irey Aqua étend l’irrigation intelligente aux cultures maraîchères en Tunisie",
-      "link": "https://kapitalis.com/tunisie/2026/09/24/irey-aqua-etend-lirrigation-intelligente-aux-cultures-maraicheres-en-tunisie/",
-      "published": "2026-09-24T08:25:08Z",
-      "lang": "fr",
-      "author": "webmaster kapitalis"
-    },
-    {
-      "id": "feed:african-manager:6b8e02686faa1d92",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Rencontres Tuniso-Sénégalaises du Numérique, à Dakar",
-      "link": "https://africanmanager.com/le-cepex-lance-un-appel-a-participation-aux-rencontres-tuniso-senegalaises-du-numerique-a-dakar/",
-      "published": "2026-09-24T08:25:03Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:7fc6e8d295a34ac0",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Ariana – infrastructures sportives : des insuffisances à corriger avant la saison 2026-2027",
-      "link": "https://africanmanager.com/ariana-infrastructures-sportives-des-insuffisances-a-corriger-avant-la-saison-2026-2027/",
-      "published": "2026-09-24T08:24:53Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:70aa9347ba3affed",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Saisie de 4,7 tonnes de produits inconsommables saisis",
-      "link": "https://africanmanager.com/mahdia-saisie-de-47-tonnes-de-poulets-et-de-produits-derives-impropres-a-la-consommation/",
-      "published": "2026-09-24T08:03:29Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:257121223bca4f28",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Tunisie-Chine : renforcer commerce, tourisme et université",
-      "link": "https://africanmanager.com/tunisie-chine-vers-un-renforcement-de-la-cooperation-commerciale-touristique-et-universitaire/",
-      "published": "2026-09-24T07:45:56Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:c62d8451fbcdb344",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Le Kef : Le centre de dialyse de Dahmani entre en service au premier semestre 2027",
-      "link": "https://africanmanager.com/le-kef-le-centre-de-dialyse-de-dahmani-entre-en-service-au-premier-semestre-2027/",
-      "published": "2026-09-24T07:36:12Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:a551b9ed1572aa55",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Conférence sur l’investissement en novembre à Tataouine",
-      "link": "https://africanmanager.com/tataouine-conference-regionale-sur-linvestissement-les-5-et-6-novembre-prochain/",
-      "published": "2026-09-24T07:36:01Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:6985315fa8bb9003",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Le président Saïed : « L’État social doit être une réalité »",
-      "link": "https://africanmanager.com/le-president-saied-letat-social-doit-etre-une-realite-pas-un-slogan-constitutionnel/",
-      "published": "2026-09-24T07:32:26Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:8fb0bcbcba2e23d4",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Le bloc anti-Netanyahu reprend l’avantage, selon un sondage",
-      "link": "https://africanmanager.com/le-bloc-anti-netanyahu-reprend-lavantage-selon-un-sondage/",
-      "published": "2026-09-24T07:29:29Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:55af405016feb239",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Rubio : Trump ne pense pas que le monde ait « besoin d’une crise en Cisjordanie » actuellement",
-      "link": "https://africanmanager.com/rubio-trump-ne-pense-pas-que-le-monde-ait-besoin-dune-crise-en-cisjordanie-actuellement/",
-      "published": "2026-09-24T07:28:06Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:8fc13bbee36c6297",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Washington doit mettre fin à la guerre « sur tous les fronts » et accepter un nouvel accord sur le détroit d’Ormuz , exige l’Iran",
-      "link": "https://africanmanager.com/washington-doit-mettre-fin-a-la-guerre-sur-tous-les-fronts-et-accepter-un-nouvel-accord-sur-le-detroit-dormuz-exige-liran/",
-      "published": "2026-09-24T07:27:53Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:9686b833f10134ba",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Les Houthis menacent de s’en prendre aux intérêts américains si les USA rejoignent la guerre au Yémen",
-      "link": "https://africanmanager.com/les-houthis-menacent-de-sen-prendre-aux-interets-americains-si-les-usa-rejoignent-la-guerre-au-yemen/",
-      "published": "2026-09-24T07:26:32Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:3664c83fbcec6fb5",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Liberman propose que la Jordanie contrôle certaines parties de la Cisjordanie",
-      "link": "https://africanmanager.com/liberman-propose-que-la-jordanie-controle-certaines-parties-de-la-cisjordanie/",
-      "published": "2026-09-24T07:25:58Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:99c125522e3ecbe5",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Iran : La moitié de la production du gisement gazier de South Pars a été rétablie",
-      "link": "https://africanmanager.com/iran-la-moitie-de-la-production-du-gisement-gazier-de-south-pars-a-ete-retablie/",
-      "published": "2026-09-24T07:25:18Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:904f4bd764e59dc1",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "L’Iran ne pliera pas sous la pression américaine, affirme son président à l’ONU",
-      "link": "https://africanmanager.com/liran-ne-pliera-pas-sous-la-pression-americaine-affirme-son-president-a-lonu/",
-      "published": "2026-09-24T07:24:25Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:kapitalis:0adbe96d6b7c3916",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Meurtre d’une Tunisienne à Montréal",
-      "link": "https://kapitalis.com/tunisie/2026/09/24/meurtre-dune-tunisienne-a-montreal/",
-      "published": "2026-09-24T07:15:05Z",
-      "lang": "fr",
-      "author": "webmaster kapitalis"
-    },
-    {
-      "id": "feed:kapitalis:80a615dee71d03d6",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Dr. Mokhtar Zaghdoud élu au Conseil départemental de l’Ordre des médecins de Paris",
-      "link": "https://kapitalis.com/tunisie/2026/09/24/dr-mokhtar-zaghdoud-elu-au-conseil-departemental-de-lordre-des-medecins-de-paris/",
-      "published": "2026-09-23T23:29:11Z",
-      "lang": "fr",
-      "author": "Yusra NY"
     }
   ]
 }
