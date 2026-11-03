@@ -18571,10 +18571,10 @@
   sources:
   - frwiki-gov-nabeul
   - frwiki-gov-kairouan
+  - jort-1962-296
+  - frwiki-sousse-gov
   notes:
-  - Possibly the same official as amor-chachia-sousse (Sousse 1962-1969). The governor lists give the
-    same name in a sequence that fits one career, but no fetched source links the entries, so they are
-    kept apart.
+  - Decree of 1962 names Amor Chachia, governor of Kairouan, governor of Sousse and Kairouan from 1 September 1962, so the Kairouan and Sousse tenures are one official. The two records were merged into this one.
 - id: ridha-azzabi
   name_en: Ridha Azzabi
   layers:
@@ -19621,16 +19621,6 @@
   - Possibly the same official as jamaleddine-bouslimi-medenine (Medenine 2002-2005). The governor lists
     give the same name in a sequence that fits one career, but no fetched source links the entries, so
     they are kept apart.
-- id: chabib-daly
-  name_en: Chabib Daly
-  layers:
-  - political
-  sources:
-  - frwiki-gov-kef
-  notes:
-  - Possibly the same official as chabib-daly-tozeur (Tozeur 2000-2002). The governor lists give the same name in a sequence that fits one career, but no fetched source links the entries, so they are kept apart.
-  aliases:
-  - Mohamed Chebib Dali
 - id: mohamed-mzoughi-belkhiria
   name_en: Mohamed Mzoughi Belkhiria
   layers:
@@ -20286,16 +20276,6 @@
   - political
   sources:
   - frwiki-sousse-gov
-- id: amor-chachia-sousse
-  name_en: Amor Chachia
-  layers:
-  - political
-  sources:
-  - frwiki-sousse-gov
-  notes:
-  - Possibly the same official as amor-chachia (Nabeul 1964-1969, Kairouan 1956-1964). The governor lists
-    give the same name in a sequence that fits one career, but no fetched source links the entries, so
-    they are kept apart.
 - id: abdessalem-ghedira
   name_en: Abdessalem Ghédira
   layers:
@@ -21697,8 +21677,10 @@
   - political
   sources:
   - frwiki-tozeur-gov
+  - jort-arrete-2002-08-06
+  - frwiki-gov-kef
   notes:
-  - Possibly the same official as chabib-daly (Kef 2002-2005). The governor lists give the same name in a sequence that fits one career, but no fetched source links the entries, so they are kept apart.
+  - Decree of 2002 moves Mohamed Chebib Dali, governor of Tozeur, to the Kef from 17 July 2002, so the Tozeur and Kef tenures are one official. The two records were merged into this one.
   aliases:
   - Mohamed Chebib Dali
 - id: mohamed-sghaier-maali

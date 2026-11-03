@@ -19734,7 +19734,7 @@
   - jort-arrete-2000-07-26
 - id: p-gov-kef-daly
   role: governor-kef
-  holder: chabib-daly
+  holder: chabib-daly-tozeur
   start: '2002-07-17'
   end: '2005-08-04'
   acting: false
@@ -20964,7 +20964,7 @@
   - frwiki-sousse-gov
 - id: p-gov-sousse-amor-chachia
   role: governor-sousse
-  holder: amor-chachia-sousse
+  holder: amor-chachia
   start: '1962-09-01'
   end: '1969-09-08'
   acting: false
