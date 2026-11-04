@@ -696,6 +696,7 @@ console.log('\n  ── the editorial tool agrees with the build ──\n');
 		'companies',
 		'contracts',
 		'licences',
+		'vacancies',
 		'declarations',
 		'education',
 		'places'

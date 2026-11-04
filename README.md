@@ -189,7 +189,7 @@ This is not neutrality for its own sake — it is the project's only real protec
 
 ## Known limits
 
-- **<!--stat:reviewed-->52<!--/stat--> of <!--stat:reviewable-->8736<!--/stat--> records carry an editorial review note, and independent human verification is <!--stat:independent-->0<!--/stat-->.** The stated architecture is that machines propose and humans verify; almost nothing has been through a second pair of eyes. The real numbers are published on `/about` because that is the only way the commitment means anything.
+- **<!--stat:reviewed-->52<!--/stat--> of <!--stat:reviewable-->8737<!--/stat--> records carry an editorial review note, and independent human verification is <!--stat:independent-->0<!--/stat-->.** The stated architecture is that machines propose and humans verify; almost nothing has been through a second pair of eyes. The real numbers are published on `/about` because that is the only way the commitment means anything.
 - **Defence intelligence (ANRSD) has no primary sourcing at all** — statute, appointment date, current status all unestablished. Largest hole in the security map.
 - **Pre-2011 police chronology is the weakest area**, resting largely on secondary sources.
 - **The 2014–2019 police succession does not fit its endpoints.** Three reported tenures cannot fit between two firmly dated ones; recorded as an unresolved contradiction rather than smoothed over.

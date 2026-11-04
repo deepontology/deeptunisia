@@ -634,7 +634,7 @@ This appendix exists to make the `test-paper.ts` gate's requirement visible: eve
 - intervalTrims: <!--stat:intervalTrims-->255<!--/stat-->
 - contradictions: <!--stat:contradictions-->69<!--/stat-->
 - reviewed: <!--stat:reviewed-->52<!--/stat-->
-- reviewable: <!--stat:reviewable-->8736<!--/stat-->
+- reviewable: <!--stat:reviewable-->8737<!--/stat-->
 - familyEdges: <!--stat:familyEdges-->26<!--/stat-->
 - researchQueue: <!--stat:researchQueue-->23<!--/stat-->
 - kin-kais-saied: <!--stat:kin-kais-saied-->3<!--/stat-->
@@ -645,7 +645,7 @@ This appendix exists to make the `test-paper.ts` gate's requirement visible: eve
 - reviewed-inferred: <!--stat:reviewed-inferred-->2<!--/stat-->
 - reviewed-unsubstantiated: <!--stat:reviewed-unsubstantiated-->18<!--/stat-->
 - reviewable-documented: <!--stat:reviewable-documented-->2376<!--/stat-->
-- reviewable-reported: <!--stat:reviewable-reported-->5987<!--/stat-->
+- reviewable-reported: <!--stat:reviewable-reported-->5988<!--/stat-->
 - reviewable-attributed: <!--stat:reviewable-attributed-->2833<!--/stat-->
 - reviewable-inferred: <!--stat:reviewable-inferred-->67<!--/stat-->
 - reviewable-unsubstantiated: <!--stat:reviewable-unsubstantiated-->22<!--/stat-->

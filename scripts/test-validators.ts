@@ -36,6 +36,7 @@ import {
 	HypothesisSchema,
 	InstitutionSchema,
 	LicenceSchema,
+	VacancySchema,
 	PersonSchema,
 	PlaceSchema,
 	QuestionSchema,
@@ -595,6 +596,14 @@ const licenceRec = (over: Record<string, unknown> = {}) => ({
 	sources: ['s-fixture'],
 	...over
 });
+const vacancyRec = (over: Record<string, unknown> = {}) => ({
+	id: 'vac-fixture',
+	role: 'r-fixture',
+	start: '2020-01-01',
+	end: '2020-06-01',
+	sources: ['s-fixture'],
+	...over
+});
 const declarationRec = (over: Record<string, unknown> = {}) => ({
 	id: 'd-fixture',
 	declarer: null,
@@ -666,6 +675,7 @@ const envelopeFixtures: [string, any, (over?: any) => any][] = [
 	['company', CompanySchema, co],
 	['contract', ContractSchema, contractRec],
 	['licence', LicenceSchema, licenceRec],
+	['vacancy', VacancySchema, vacancyRec],
 	['declaration', DeclarationSchema, declarationRec],
 	['education', EducationSchema, educationRec],
 	['person', PersonSchema, personRec],
@@ -799,6 +809,21 @@ rejectsWith(
 	'V28: an unknown fees key fails',
 	'Unrecognized key'
 );
+// V32 (decision 0007): a vacancy is a claim like any other. It needs a source,
+// and an undeclared key such as an invented holder fails instead of being dropped.
+rejectsWith(
+	VacancySchema,
+	vacancyRec({ sources: [] }),
+	'V32: a vacancy with no source fails',
+	'at least one source'
+);
+rejectsWith(
+	VacancySchema,
+	vacancyRec({ holder: 'someone' }),
+	'V32: a vacancy cannot carry a holder',
+	'Unrecognized key'
+);
+ok('V32: a sourced vacancy with two dates parses', VacancySchema.safeParse(vacancyRec()).success);
 rejectsWith(
 	EventSchema,
 	eventRec({ impact: { layer: ['political'], extra: 'x' } }),
@@ -1252,7 +1277,7 @@ ok(
 	);
 	ok(
 		'Phase 8: every claim kind gets a denominator, including the empty ones',
-		Object.keys(summary.byKind).length === 13 && summary.byKind.event.total === 1,
+		Object.keys(summary.byKind).length === 14 && summary.byKind.event.total === 1,
 		`${Object.keys(summary.byKind).length} kinds`
 	);
 	ok(

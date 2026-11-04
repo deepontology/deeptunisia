@@ -43,6 +43,7 @@ export const REVIEW_KINDS = [
 	'company',
 	'contract',
 	'licence',
+	'vacancy',
 	'declaration',
 	'education',
 	'place'
