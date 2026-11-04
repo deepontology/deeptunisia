@@ -3,6 +3,76 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:344b860ee41e1ca2",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Cnot | Perspectives de coopération prometteuses pour le volleyball tunisien",
+      "link": "https://kapitalis.com/tunisie/2026/11/03/cnot-perspectives-de-cooperation-prometteuses-pour-le-volleyball-tunisien/",
+      "published": "2026-11-03T22:44:31Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:622b5435b1eb514c",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Rassemblement en soutien à Ayachi Hammami devant la prison de Monastir",
+      "link": "https://kapitalis.com/tunisie/2026/11/03/rassemblement-en-soutien-a-ayachi-hammami-devant-la-prison-de-monastir/",
+      "published": "2026-11-03T22:30:44Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:c78f644f5e5b9de1",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Université de Carthage | Hommage à trois enseignants de l’INSAT figurant au classement de Stanford",
+      "link": "https://kapitalis.com/tunisie/2026/11/03/universite-de-carthage-hommage-a-trois-enseignants-de-linsat-figurant-au-classement-de-stanford/",
+      "published": "2026-11-03T20:44:53Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:c8cc10d7bd5eb0cb",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Arrestation d’un étudiant étranger en possession de 2 kg de cannabis à Jendouba",
+      "link": "https://kapitalis.com/tunisie/2026/11/03/arrestation-dun-etudiant-etranger-en-possession-de-2-kg-de-cannabis-a-jendouba/",
+      "published": "2026-11-03T20:29:12Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:dff6c01b611bac4a",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Villarreal vs PSG en live streaming : Ligue des Champions",
+      "link": "https://kapitalis.com/tunisie/2026/11/03/villarreal-vs-psg-en-live-streaming-ligue-des-champions/",
+      "published": "2026-11-03T20:03:26Z",
+      "lang": "fr",
+      "author": "mounir"
+    },
+    {
+      "id": "feed:kapitalis:a03b4547614ef97f",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Tunisie | Adam Selmi s’empare du sommet du classement mondial de taekwondo",
+      "link": "https://kapitalis.com/tunisie/2026/11/03/tunisie-adam-selmi-sempare-du-sommet-du-classement-mondial-de-taekwondo/",
+      "published": "2026-11-03T19:56:58Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:african-manager:ba6d04dcb57c77dc",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Les taxis collectifs casseurs de la grève des individuels à Djerba",
+      "link": "https://africanmanager.com/les-taxis-collectifs-mobilises-pour-assurer-le-transport-pendant-la-greve-des-taxis-individuels-a-djerba/",
+      "published": "2026-11-03T19:52:22Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
       "id": "feed:african-manager:2e8916804f0f3cfa",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -11927,76 +11997,6 @@
       "published": "2026-09-24T10:06:18Z",
       "lang": "fr",
       "author": "Africanmanager"
-    },
-    {
-      "id": "feed:kapitalis:533f99b74b14c121",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Le Game Art Park, un espace de loisirs inclusif à Gammarth",
-      "link": "https://kapitalis.com/tunisie/2026/09/24/le-game-art-park-un-espace-de-loisirs-inclusif-a-gammarth/",
-      "published": "2026-09-24T09:54:26Z",
-      "lang": "fr",
-      "author": "webmaster kapitalis"
-    },
-    {
-      "id": "feed:france24:bbf5c7277a972941",
-      "outlet": "France 24",
-      "outletId": "france24",
-      "title": "A look back at Tunisia's summer of shortages",
-      "link": "https://www.france24.com/en/tv-shows/the-observers/20260924-look-back-tunisiassummer-shortages",
-      "published": "2026-09-24T09:43:31Z",
-      "lang": "en",
-      "author": "The FRANCE 24 Observers"
-    },
-    {
-      "id": "feed:african-manager:e0f9b73dc8583cdb",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "CAN-2027 : coup d’envoi des qualifications pour une édition historique en Afrique de l’Est",
-      "link": "https://africanmanager.com/can-2027-coup-denvoi-des-qualifications-pour-une-edition-historique-en-afrique-de-lest/",
-      "published": "2026-09-24T09:31:48Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:bd7c8c5f1314d3e6",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Ligue 2 : programme de la première journée",
-      "link": "https://africanmanager.com/ligue-2-programme-de-la-premiere-journee-3/",
-      "published": "2026-09-24T09:28:44Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:67f9882383d3c732",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Le Cameroun bat l’Algérie et rejoint la Tunisie en finale",
-      "link": "https://africanmanager.com/le-cameroun-bat-lalgerie-et-rejoint-la-tunisie-en-finale/",
-      "published": "2026-09-24T09:28:32Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:kapitalis:7ce31d0f40bfe09c",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Site 2026 | Pour accélérer la transition énergétique en Tunisie",
-      "link": "https://kapitalis.com/tunisie/2026/09/24/site-2026-pour-accelerer-la-transition-energetique-en-tunisie/",
-      "published": "2026-09-24T09:21:50Z",
-      "lang": "fr",
-      "author": "webmaster kapitalis"
-    },
-    {
-      "id": "feed:kapitalis:113ad96bf8228803",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Forum à Bizerte | Pour une Méditerranée sans plastique",
-      "link": "https://kapitalis.com/tunisie/2026/09/24/forum-a-bizerte-pour-une-mediterranee-sans-plastique/",
-      "published": "2026-09-24T08:51:20Z",
-      "lang": "fr",
-      "author": "webmaster kapitalis"
     }
   ]
 }
