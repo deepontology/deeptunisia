@@ -1,6 +1,6 @@
 {
-  "generated": "2026-11-04T17:17:02.379Z",
-  "total": 5843,
+  "generated": "2026-11-04T17:45:46.758Z",
+  "total": 5854,
   "reviewed": 42,
   "queue": [
     {
@@ -865,6 +865,16 @@
     },
     {
       "kind": "contract",
+      "id": "ctr-el-menzah-stadium-reconstruction-2026",
+      "confidence": "C",
+      "basis": "inferred",
+      "risk": 1,
+      "sources": 1,
+      "reviewed": false,
+      "title": "Reconstruction of the El Menzah Olympic Stadium by the CRCEG/CAMCE consortium"
+    },
+    {
+      "kind": "contract",
       "id": "ctr-gct-gabes-dessalement-2016",
       "confidence": "C",
       "basis": "reported",
@@ -985,6 +995,16 @@
     },
     {
       "kind": "event",
+      "id": "ev-advent-vermeg-acquisition-2026-11-02",
+      "confidence": "C",
+      "basis": "inferred",
+      "risk": 1,
+      "sources": 1,
+      "reviewed": false,
+      "title": "Advent International agrees to acquire Vermeg from Charterhouse and founder Badreddine Ouali"
+    },
+    {
+      "kind": "event",
       "id": "ev-aksa-composites-borj-cedria-2026-09-24",
       "confidence": "C",
       "basis": "inferred",
@@ -1002,6 +1022,16 @@
       "sources": 1,
       "reviewed": false,
       "title": "ARP and CNRD budget committees open the 2027 budget examination and set the minister's hearing"
+    },
+    {
+      "kind": "event",
+      "id": "ev-arp-wells-regularisation-law-2026-10-27",
+      "confidence": "C",
+      "basis": "inferred",
+      "risk": 1,
+      "sources": 1,
+      "reviewed": false,
+      "title": "Parliament adopts a law regularising unauthorised deep agricultural wells"
     },
     {
       "kind": "event",
@@ -1042,6 +1072,16 @@
       "sources": 1,
       "reviewed": false,
       "title": "EU delegation announces a forthcoming 80 million euro budget-support agreement with Tunisia"
+    },
+    {
+      "kind": "event",
+      "id": "ev-fades-infrastructure-loans-2026-10-27",
+      "confidence": "C",
+      "basis": "inferred",
+      "risk": 1,
+      "sources": 1,
+      "reviewed": false,
+      "title": "Tunisia signs two FADES loan agreements worth 432 million dinars for infrastructure"
     },
     {
       "kind": "event",
@@ -1132,6 +1172,16 @@
       "sources": 1,
       "reviewed": false,
       "title": "Saïed calls water and power cuts 'planned sabotage'"
+    },
+    {
+      "kind": "event",
+      "id": "ev-safe-sea-26-2026-10-26",
+      "confidence": "C",
+      "basis": "inferred",
+      "risk": 1,
+      "sources": 1,
+      "reviewed": false,
+      "title": "National navy launches the third Safe Sea exercise in the Gulf of Tunis"
     },
     {
       "kind": "event",
@@ -1255,6 +1305,16 @@
     },
     {
       "kind": "event",
+      "id": "ev-ugtt-hydrocarbon-strike-notice-2026-11-02",
+      "confidence": "C",
+      "basis": "inferred",
+      "risk": 1,
+      "sources": 1,
+      "reviewed": false,
+      "title": "UGTT files a three-day strike notice in hydrocarbon transport for 23-25 November"
+    },
+    {
+      "kind": "event",
       "id": "ev-ugtt-strike-instance-2026-09-10",
       "confidence": "C",
       "basis": "reported",
@@ -1292,6 +1352,26 @@
       "sources": 1,
       "reviewed": false,
       "title": "Rare unrest in Ettadhamen and Jebiniana after two deaths linked to the police"
+    },
+    {
+      "kind": "event",
+      "id": "ev-zaafrani-russia-africa-summit-2026-10-28",
+      "confidence": "C",
+      "basis": "inferred",
+      "risk": 1,
+      "sources": 1,
+      "reviewed": false,
+      "title": "Zaafrani attends the third Russia-Africa summit and is received by Putin at the Kremlin"
+    },
+    {
+      "kind": "event",
+      "id": "ev-zenith-pompeo-arbitration-2026-10-29",
+      "confidence": "C",
+      "basis": "inferred",
+      "risk": 1,
+      "sources": 1,
+      "reviewed": false,
+      "title": "Zenith Energy engages Mike Pompeo's CNQ Global Advisors in its ICSID arbitration against Tunisia"
     },
     {
       "kind": "event",
@@ -9362,6 +9442,16 @@
       "sources": 1,
       "reviewed": false,
       "title": "Advisor at the Ministry of Justice — Makram Jelassi"
+    },
+    {
+      "kind": "position",
+      "id": "p-soe-etap-rania-marzouki",
+      "confidence": "C",
+      "basis": "inferred",
+      "risk": 1,
+      "sources": 1,
+      "reviewed": false,
+      "title": "Président-Directeur Général — Rania Marzouki"
     },
     {
       "kind": "relationship",
@@ -21315,6 +21405,16 @@
     },
     {
       "kind": "event",
+      "id": "ev-ounissi-audio-case-verdict-2026-10-27",
+      "confidence": "B",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 3,
+      "reviewed": false,
+      "title": "Terrorism court sentences Ounissi to nine years and El Heni to four in the audio-recordings case"
+    },
+    {
+      "kind": "event",
       "id": "ev-world-bank-tunisia-monitor-water-2026-09-22",
       "confidence": "B",
       "basis": "reported",
@@ -22452,6 +22552,16 @@
       "sources": 2,
       "reviewed": false,
       "title": "Bechir Akremi given 15 more years for falsification"
+    },
+    {
+      "kind": "event",
+      "id": "ev-ben-fadhel-corruption-sentence-2026-10-29",
+      "confidence": "B",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 2,
+      "reviewed": false,
+      "title": "Riadh Ben Fadhel sentenced to 20 years in a financial-corruption case"
     },
     {
       "kind": "event",
@@ -26722,6 +26832,16 @@
       "sources": 2,
       "reviewed": false,
       "title": "Secretary of State to the Prime Minister for Religious Affairs — Ali Chebbi"
+    },
+    {
+      "kind": "position",
+      "id": "p-soe-etap-dalila-chebbi-bouattour",
+      "confidence": "B",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 2,
+      "reviewed": false,
+      "title": "Président-Directeur Général — Dalila Chebbi Bouattour"
     },
     {
       "kind": "position",
@@ -34762,16 +34882,6 @@
       "sources": 1,
       "reviewed": false,
       "title": "Secretary of State to the Minister of the Interior — Sofiane Ben Sadek"
-    },
-    {
-      "kind": "position",
-      "id": "p-soe-etap-dalila-chebbi-bouattour",
-      "confidence": "B",
-      "basis": "reported",
-      "risk": 3,
-      "sources": 1,
-      "reviewed": false,
-      "title": "Président-Directeur Général — Dalila Chebbi Bouattour"
     },
     {
       "kind": "position",

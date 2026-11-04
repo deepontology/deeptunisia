@@ -825,3 +825,45 @@
       what price, or from whom.
   sources:
     - african-manager-cereals-tender-2026-10-23
+
+# ---------------------------------------------------------------------------
+# Daily sweep 2026-10-25 to 2026-11-03 (data/contrib/daily-2026-11-03.yaml)
+# ---------------------------------------------------------------------------
+- id: ctr-el-menzah-stadium-reconstruction-2026
+  title_en: Reconstruction of the El Menzah Olympic Stadium by the CRCEG/CAMCE consortium
+  title_fr: Reconstruction du stade olympique d’El Menzah par le consortium CRCEG/CAMCE
+  institution: ministry-equipment-housing
+  kind: construction
+  award:
+    value: '520000000'
+    currency: TND
+    year: 2026
+  status: signed
+  start: '2026-10-29'
+  location:
+  - gov-tunis
+  notes:
+  - The commercial contract was signed on Thursday 29 October 2026 at the Ministry of Equipment and Housing
+    between the Tunisian state, represented by the ministry, and the consortium China Railway Construction
+    Engineering Group / China CAMC Engineering (CRCEG/CAMCE). The ministers of equipment, Salah Zouari,
+    and of youth and sports, Sadok Morali, and the Chinese ambassador, Wan Li, attended. The Commission
+    des grands projets had decided on 8 October 2026 to award the contract to a Chinese company.
+  - The reported cost is a range of about 520 to 600 million dinars, including all services, for reconstruction,
+    stands, track and equipment, with a construction period of 30 to 36 months. The award.value field
+    carries the lower bound of that range (520,000,000 TND), not a point estimate; it is not a midpoint
+    or a guess.
+  - The winner is a two-company consortium and has no institution or company record in the graph, so winner
+    is left unset rather than pointing at a missing id. No contract text, JORT notice or Commission decision
+    was retrieved.
+  confidence: C
+  verification: needs-primary-source
+  attributed_to: Ministry of Equipment and Housing communiqué of 30 October 2026, as reported by African
+    Manager (31 October 2026)
+  reasoning: One outlet relaying a ministry communiqué. The signing, the parties, the reported cost range
+    and the construction period are as the piece states them; the value field carries the lower bound
+    and the notes say so. The consortium has no graph record, so the record does not invent a winner id.
+  falsifiable_by: The signed contract, the Commission des grands projets decision, a ministry communiqué
+    or a JORT notice would confirm the parties, the value and the timetable; a different consortium or
+    a different value would correct the record.
+  sources:
+  - am-el-menzah-stadium-2026-10-31

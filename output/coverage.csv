@@ -60,7 +60,7 @@ institution,elloumi-group,4,4,0,0,0,0,7,1
 institution,ennahda,233,233,0,0,0,0,13,1
 institution,errahma,4,4,0,0,0,0,1,1
 institution,espoir-travail,2,2,0,0,0,0,1,1
-institution,etap,2,2,0,0,0,0,2,1
+institution,etap,3,3,0,0,0,0,3,1
 institution,etat-tunisien,12,12,1,0,0,0,17,1
 institution,ett,12,12,0,0,0,0,3,1
 institution,ettajdid,3,3,0,0,0,0,2,1
@@ -216,19 +216,19 @@ institution,wifak-bank,1,1,0,0,0,0,1,1
 institution,world-bank,1,1,0,0,0,0,3,1
 institution,zitouna-bank,2,2,0,0,0,0,4,1
 institution,zitouna-tv,3,3,0,0,0,0,3,1
-era,ben-ali-consolidation,526,526,12,1,1,1,333,1
-era,bourguiba,1115,1115,20,1,1,1,483,1
-era,fragmentation,1783,1783,13,3,3,3,504,0
-era,pluralism,1341,1341,9,1,1,1,607,1
-era,police-state,1303,1303,14,2,2,2,548,1
-era,recentralisation,1661,1661,17,6,6,6,718,0
-era,transition,2384,2384,12,2,2,2,654,1
+era,ben-ali-consolidation,527,527,12,1,1,1,334,1
+era,bourguiba,1116,1116,20,1,1,1,484,1
+era,fragmentation,1784,1784,13,3,3,3,505,0
+era,pluralism,1342,1342,9,1,1,1,608,1
+era,police-state,1304,1304,14,2,2,2,549,1
+era,recentralisation,1662,1662,17,6,6,6,719,0
+era,transition,2385,2385,12,2,2,2,655,1
 source_family,africa business,3,2,0,0,0,2,3,1
 source_family,africa intelligence,2,2,0,0,0,2,2,1
 source_family,africa intelligence accessed via blackfacts aggregator original is paywalled,1,0,0,0,0,0,1,1
 source_family,africa intelligence maghreb confidential,1,1,0,0,0,1,1,1
 source_family,african development bank,4,1,0,0,0,1,4,1
-source_family,african manager,80,65,0,0,0,65,80,0
+source_family,african manager,95,74,0,0,0,74,95,0
 source_family,african manager en,1,0,0,0,0,0,1,1
 source_family,african union,1,0,0,0,0,0,1,1
 source_family,africanews,2,2,0,0,0,2,2,1
@@ -430,7 +430,7 @@ source_family,journal officiel de la republique tunisienne via legislation secur
 source_family,jurisite tunisie,3,2,0,0,0,2,3,1
 source_family,jurisitetunisie base de textes legaux tunisiens,1,0,0,0,0,0,1,1
 source_family,jurist,1,1,0,0,0,1,1,1
-source_family,kapitalis,94,76,0,0,0,76,94,0
+source_family,kapitalis,99,80,0,0,0,80,99,0
 source_family,kapitalis avec tap,1,0,0,0,0,0,1,1
 source_family,kuna,1,0,0,0,0,0,1,1
 source_family,l economiste maghrebin,20,8,0,0,0,8,20,0
@@ -489,7 +489,7 @@ source_family,mondafrique,7,4,0,0,0,4,7,0
 source_family,mosaique fm,22,21,0,0,0,21,22,0
 source_family,mosaique fm tunisie,1,1,0,0,0,1,1,1
 source_family,natural resource governance institute,1,1,0,0,0,1,1,1
-source_family,nawaat,22,17,0,0,0,17,22,0
+source_family,nawaat,23,17,0,0,0,17,23,0
 source_family,nessma tv,1,1,0,0,0,1,1,1
 source_family,news tunisia tunisie numerique,1,1,0,0,0,1,1,1
 source_family,nobel prize committee,1,1,0,0,0,1,1,1
@@ -616,7 +616,7 @@ source_family,zoom tunisia,1,1,0,0,0,1,1,1
 source_family,ويكيبيديا (العربية),11,10,0,0,0,10,11,0
 language,ar,110,69,0,0,0,69,110,0
 language,en,471,201,0,0,0,201,471,0
-language,fr,1916,1644,0,0,0,1644,1916,0
+language,fr,1937,1657,0,0,0,1657,1937,0
 language,it,4,1,0,0,0,1,4,1
 office,administrative-court-president,4,4,0,0,0,0,5,1
 office,administrative-reform-minister,4,4,0,0,0,0,4,1
@@ -668,7 +668,7 @@ office,elloumi-principal,2,2,0,0,0,0,7,1
 office,employment-minister,25,25,0,0,0,0,27,1
 office,environment-minister,16,16,0,0,0,0,21,1
 office,equipment-minister,36,36,0,0,0,0,33,1
-office,etap-pdg,1,1,0,0,0,0,1,1
+office,etap-pdg,2,2,0,0,0,0,2,1
 office,family-women-minister,18,18,0,0,0,0,25,1
 office,finance-minister,35,35,0,0,0,0,28,1
 office,foreign-minister,34,34,4,0,0,0,60,1

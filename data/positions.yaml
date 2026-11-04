@@ -10577,7 +10577,7 @@
   role: etap-pdg
   holder: dalila-chebbi-bouattour
   start: "2022-09"
-  end: ongoing
+  end: "2026-08"
   confidence: B
   verification: needs-primary-source
   reasoning: >-
@@ -10598,7 +10598,9 @@
   falsifiable_by_ar: >-
     مرسوم في الرائد الرسمي أو إيداع مؤسسي للشركة التونسية للأنشطة البترولية يؤكد التعيين.
   falsifiable_by_ar_by: model-reviewed
-  sources: [wikipedia-etap]
+  notes:
+    - African Manager reported on 25 October 2026 that she retired from ETAP in August 2026 and that Rania Marzouki was acting as PDG (p-soe-etap-rania-marzouki).
+  sources: [wikipedia-etap, am-etap-marzouki-2026-10-25]
 
 # ===========================================================================
 # STATE BANK DIRECTORS
@@ -50366,3 +50368,29 @@
     of 27 August 2016 prints a minister for relations with parliament, Iyed Dahmani.'
   sources:
   - frwiki-gvt-jebali
+
+# ---------------------------------------------------------------------------
+# Daily sweep 2026-10-25 to 2026-11-03 (data/contrib/daily-2026-11-03.yaml)
+# ---------------------------------------------------------------------------
+- id: p-soe-etap-rania-marzouki
+  role: etap-pdg
+  holder: rania-marzouki
+  start: '?'
+  end: ongoing
+  acting: true
+  predecessor: dalila-chebbi-bouattour
+  confidence: C
+  verification: needs-primary-source
+  attributed_to: African Manager (25 October 2026)
+  reasoning: African Manager reports that Rania Marzouki was acting as ETAP's PDG on 25 October 2026,
+    succeeding Dalila Chebbi Bouattour, who retired in August 2026. The article does not give Marzouki's
+    start date, so the position carries "?" rather than a guessed date. The appointment is described as
+    an interim ("assure l'intérim"), so acting is true.
+  falsifiable_by: A JORT appointment decree, an ETAP corporate filing or a ministry announcement would
+    confirm the acting appointment, its start date and its terms; a statement naming a different acting
+    PDG would correct the record.
+  notes:
+  - The predecessor's record p-soe-etap-dalila-chebbi-bouattour is closed at 2026-08 on the strength of
+    the same article. The predecessor link is explicit because the successor's start date is unknown.
+  sources:
+  - am-etap-marzouki-2026-10-25
