@@ -80,7 +80,14 @@ ok('holding office is drawn as a seat, not synthesised as an edge', SCENE_TS.inc
 ok('a chamber is one box counted by group, from the shared civic rule', SCENE_TS.includes('seatedAt(term, t, floor)') && SCENE_TS.includes('seatGroups(term'));
 ok('the hemicycle seats members by the same rule', readFileSync(join(HERE, '..', 'src', 'lib', 'components', 'ParliamentView.svelte'), 'utf8').includes('seatedAt(term, app.t, app.basisFloor)'));
 ok('ties route through gutters with interval-coloured tracks', ROUTE_TS.includes('Interval colouring per gutter') && ROUTE_TS.includes('scene.gutters[g]'));
-ok('the card anchors to the routed midpoint', NETWORK.includes('routes.get(pinned.id)?.mid'));
+ok('the card anchors to the midpoint of the line on screen', NETWORK.includes('tiePaths.get(pinned.id)?.mid') && NETWORK.includes('dots ? dots.paths : routes'));
+// The dot view: the same scene as a node-link diagram, posts drawn as spokes.
+const DOTS_TS = readFileSync(join(HERE, '..', 'src', 'lib', 'network', 'dots.ts'), 'utf8');
+ok('the dot view is built from the scene, once per scene', DOTS_TS.includes('export function buildDots(scene: Scene') && DOTS_TS.includes('new WeakMap<Scene'));
+ok('the dot view is a third reading in the switch and the URL', NETWORK.includes("const VIEWS: View[] = ['map', 'dots', 'matrix']") && NETWORK.includes("t('network.view.dots')"));
+ok('the dot view draws posts as spokes and a chamber as a ring of seat colours', NETWORK.includes('dots.spokes') && NETWORK.includes('donutArcs('));
+ok('the legend is the reader\'s to open: no width-driven open attribute', NETWORK.includes('open={legendOpen} ontoggle={onLegendToggle}') && !NETWORK.includes('open={!compact.current'));
+ok('lanes stretch on a wide screen, in steps', NETWORK.includes('Math.floor(w * 8) / 8') && SCENE_TS.includes('export function laneWidth(layer: Layer, widen = 1)'));
 
 // The lens: tie families, honest about what they hold back.
 ok('tie families are URL-addressable and read the older ?mode= links', NETWORK.includes("params.get('ties')") && NETWORK.includes("familiesFromMode(params.get('mode'))") && NETWORK.includes('syncFamiliesUrl'));
@@ -113,7 +120,7 @@ ok(
 	'click-away pops one level: card first, then selection (and compare)',
 	NETWORK.includes('if (pinnedId) pinnedId = null;') && NETWORK.includes('else if (app.selected) {') && NETWORK.includes('compareId = null;')
 );
-ok('a click on a seat, box, line, card or lane is never a dismissal', NETWORK.includes("t.closest('.node, .hit, .box, .vlane, .edgecard, .viewnav, .legend, .minimap, .offmap')"));
+ok('a click on a seat, box, line, card or lane is never a dismissal', NETWORK.includes("t.closest('.node, .hit, .box, .vlane, .edgecard, .viewnav, .legend, .minimap, .offmap, .dlabel')"));
 ok('long-press is the touch hover tier', NETWORK.includes('startPress') && NETWORK.includes('500'));
 ok('a long-press suppresses the click that follows it', NETWORK.includes('if (pressed)'));
 
@@ -233,6 +240,10 @@ ok('wheel zoom is smoothed, with direct fallback', (() => {
 	const G = readFileSync(join(HERE, '..', 'src', 'lib', 'viz', 'gestures.ts'), 'utf8');
 	const C = readFileSync(join(HERE, '..', 'src', 'lib', 'viz', 'camera.svelte.ts'), 'utf8');
 	return G.includes('zoomSmoothTo') && G.includes('else cam.zoomAt') && C.includes('zoomSmoothTo(');
+})());
+ok('one wheel notch zooms by a step, not an e-fold', (() => {
+	const G = readFileSync(join(HERE, '..', 'src', 'lib', 'viz', 'gestures.ts'), 'utf8');
+	return G.includes('Math.max(-0.2, Math.min(0.2, -px * 0.01))') && G.includes('e.deltaMode === 1');
 })());
 
 console.log('\n  ── §14.4: the chronicle events timeline ──\n');

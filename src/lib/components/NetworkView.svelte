@@ -13,7 +13,6 @@
 	import ConnectionCard from './ConnectionCard.svelte';
 	import NetworkMatrix from './network/NetworkMatrix.svelte';
 	import { compact } from '$lib/design/media.svelte';
-	import { MediaQuery } from 'svelte/reactivity';
 	import { Camera } from '$lib/viz/camera.svelte';
 	import { navigable } from '$lib/viz/gestures';
 	import NavControls from '$lib/viz/NavControls.svelte';
@@ -22,6 +21,7 @@
 		BASIS_OPACITY,
 		BASIS_ORDER,
 		DASH,
+		LAYERS,
 		LAYER_COLOR,
 		ds,
 		institutionById,
@@ -34,8 +34,9 @@
 	import { REL_TYPE_COLOR } from '$lib/viz/groups';
 	import { tradeIn, debtIn } from '$lib/world/countries';
 	import { moneyM } from '$lib/world/format';
-	import { sceneAt, GEO, type FlowTie, type Tie, type Unit } from '$lib/network/scene';
+	import { sceneAt, laneFrames, nameWidth, GEO, WIDEN_MAX, type FlowTie, type Tie, type Unit } from '$lib/network/scene';
 	import { routeTies } from '$lib/network/route';
+	import { dotsAt, DOT } from '$lib/network/dots';
 	import {
 		DEFAULT_FAMILIES,
 		FAMILIES,
@@ -105,14 +106,22 @@
 		families = new Set([...families, f]);
 	}
 
-	// --- View: the map, or the layer matrix --------------------------------------
+	// --- View: the map, the dots, or the layer matrix ------------------------------
 
 	/**
+	 * Three readings of one scene. The map seats people in their institutions
+	 * and draws only claims; the dots draw the same record as a node-link
+	 * diagram, posts included; the matrix counts ties between layers.
+	 *
 	 * A phone holds one lane of the map at a time, so it opens on the matrix,
 	 * which shows the whole picture at once; a wide screen opens on the map.
-	 * Either can be chosen, and the choice travels in the URL.
+	 * Any can be chosen, and the choice travels in the URL.
 	 */
-	let view = $state<'map' | 'matrix'>('map');
+	type View = 'map' | 'dots' | 'matrix';
+	const VIEWS: View[] = ['map', 'dots', 'matrix'];
+	let view = $state<View>('map');
+	/** Map and dots share a canvas, a camera and every interaction. */
+	const canvasView = $derived(view !== 'matrix');
 	/**
 	 * The stage renders once the client has chosen the view. The page is
 	 * prerendered at desktop width, so choosing during render would hand a
@@ -125,11 +134,18 @@
 		const v = page.url.searchParams.get('view');
 		untrack(() => {
 			viewLinked = true;
-			view = v === 'matrix' || v === 'map' ? v : compact.current ? 'matrix' : 'map';
+			view = VIEWS.includes(v as View) ? (v as View) : compact.current ? 'matrix' : 'map';
 			ready = true;
 		});
 	});
-	function setView(v: 'map' | 'matrix') {
+	function setView(v: View) {
+		if (v === view) return;
+		// Keep the reader's place when trading map for dots: the same point of
+		// the world under the centre of the screen, at the same zoom.
+		if (v !== 'matrix' && view !== 'matrix' && cam.vw > 2) {
+			const c = cam.screenToWorld(cam.vw / 2, cam.vh / 2);
+			keepAt = { x: c.x / Math.max(1, worldH()), y: c.y / Math.max(1, worldH()), fx: c.x };
+		}
 		view = v;
 		writeUrl((u) => {
 			const deflt = compact.current ? 'matrix' : 'map';
@@ -190,10 +206,42 @@
 	 * between two dates on which nobody took or left a post hands the view the
 	 * same object, so nothing downstream recomputes or re-renders.
 	 */
+	/**
+	 * How much wider than the base the lanes are drawn on this screen.
+	 *
+	 * Fitting the base world to a wide window only magnifies it, so a 2,560
+	 * pixel screen showed the same truncated names as a laptop, larger. Instead
+	 * the lanes stretch until the fitted map sits at about its natural size, and
+	 * the extra pixels become room for names. In eighths, so a window dragged a
+	 * few pixels does not rebuild the scene.
+	 */
+	const widen = $derived.by(() => {
+		if (compact.current || cam.vw < 2) return 1;
+		const base = laneFrames(LAYERS.filter((l) => app.activeLayers.has(l)), 1).width;
+		const w = (cam.vw - PADDING * 2) / (0.95 * base);
+		return Math.min(WIDEN_MAX, Math.max(1, Math.floor(w * 8) / 8));
+	});
+
 	const scene = $derived(
-		sceneAt({ t: app.t, floor: app.basisFloor, layers: app.activeLayers, families, flows, rtl })
+		sceneAt({ t: app.t, floor: app.basisFloor, layers: app.activeLayers, families, flows, rtl, widen })
 	);
 	const routes = $derived(routeTies(scene));
+	/** The dot view of the same scene, built only while it is on screen. */
+	const dots = $derived(view === 'dots' ? dotsAt(scene, rtl) : null);
+	/** Each tie's line in the view on screen: routed on the map, curved in dots. */
+	const tiePaths = $derived(dots ? dots.paths : routes);
+	/** Where an entity is drawn in the view on screen. */
+	function pointOf(id: string): { x: number; y: number } | null {
+		if (dots) {
+			const p = dots.pos.get(id);
+			return p ? { x: p.x, y: p.y } : null;
+		}
+		const a = scene.anchors.get(id);
+		if (!a) return null;
+		const unit = scene.unitOf.get(id);
+		return { x: unit && unit.id === id ? unit.x + unit.w / 2 : (a.xl + a.xr) / 2, y: a.y };
+	}
+	const worldH = () => (dots ? dots.height : scene.height);
 	const tieById = $derived(new Map(scene.ties.map((e) => [e.id, e])));
 
 	/** Ties per family: drawn when the family is on, held back when it is off. */
@@ -221,7 +269,7 @@
 	 */
 	$effect(() => {
 		const w = scene.width;
-		const h = scene.height;
+		const h = dots ? dots.height : scene.height;
 		const vw = cam.vw;
 		const phone = compact.current;
 		untrack(() => {
@@ -238,13 +286,20 @@
 	 * link, or "show on the map" from the matrix).
 	 */
 	let framed = false;
+	/** Where the reader was when they switched between map and dots, as a share of the height. */
+	let keepAt: { x: number; y: number; fx: number } | null = null;
 	$effect(() => {
-		if (cam.vw < 2 || view !== 'map') return;
+		if (cam.vw < 2 || !canvasView) return;
+		void dots;
 		untrack(() => {
 			if (!framed) {
 				framed = true;
 				cam.fit();
 				cam.alignTo(compact.current ? 0 : cam.world.w / 2, 0, compact.current ? 0 : 0.5, 0);
+			} else if (keepAt) {
+				const k = keepAt;
+				keepAt = null;
+				cam.alignTo(k.fx, k.y * worldH(), 0.5, 0.5);
 			}
 			flushPendingFly();
 		});
@@ -451,7 +506,7 @@
 	/** A flight requested before the map was measured (a deep link, the matrix's "show"). */
 	let pendingFly: { x: number; y: number } | null = null;
 	function flyToPoint(x: number, y: number, gentle = false) {
-		if (cam.vw < 2 || view !== 'map') {
+		if (cam.vw < 2 || !canvasView) {
 			pendingFly = { x, y };
 			return;
 		}
@@ -482,11 +537,9 @@
 		untrack(() => {
 			const mode = selectFly;
 			selectFly = 'strong';
-			const a = scene.anchors.get(id);
-			if (!a) return;
-			const unit = scene.unitOf.get(id);
-			const x = unit && unit.id === id ? unit.x + unit.w / 2 : (a.xl + a.xr) / 2;
-			flyToPoint(x, a.y, mode === 'gentle');
+			const p = pointOf(id);
+			if (!p) return;
+			flyToPoint(p.x, p.y, mode === 'gentle');
 		});
 	});
 
@@ -538,7 +591,7 @@
 	const cardAt = $derived.by(() => {
 		if (!pinned) return null;
 		if (view === 'matrix') return { x: Math.max(8, cam.vw - CARD_W - 16), y: 16 };
-		const m = routes.get(pinned.id)?.mid ?? { x: pinned.a.xr, y: pinned.a.y };
+		const m = tiePaths.get(pinned.id)?.mid ?? { x: pinned.a.xr, y: pinned.a.y };
 		const s = cam.worldToScreen(m.x, m.y);
 		return {
 			x: Math.max(8, Math.min(s.x + 16, cam.vw - CARD_W - 8)),
@@ -557,7 +610,7 @@
 		}
 		pinnedId = e.id;
 		if (fly) {
-			const m = routes.get(e.id)?.mid;
+			const m = tiePaths.get(e.id)?.mid;
 			if (m) flyToPoint(m.x, m.y);
 		}
 	}
@@ -635,7 +688,7 @@
 					void goto(u, { replaceState: true });
 					return;
 				}
-				if (view !== 'map') view = 'map';
+				if (view === 'matrix') view = 'map';
 				openTie(e, true);
 				return;
 			}
@@ -647,7 +700,7 @@
 			ensureFamily(familyOf(rel.type));
 			const e = scene.ties.find((x) => x.rel.id === want);
 			if (!e) return;
-			if (view !== 'map') view = 'map';
+			if (view === 'matrix') view = 'map';
 			openTie(e, true);
 		});
 	});
@@ -684,10 +737,19 @@
 	const soloed = $derived(app.activeLayers.size === 1);
 
 	const MINI_W = 110;
-	const miniH = $derived(Math.min(150, (scene.height / scene.width) * MINI_W));
+	const miniH = $derived(Math.min(150, (worldH() / scene.width) * MINI_W));
+	/** What the minimap draws: the map's boxes, or the dots' cells. */
+	const miniRects = $derived(
+		dots
+			? [
+					...dots.clusters.map((c) => ({ key: c.key, x: c.cx - c.R, y: c.cy - c.R, w: 2 * c.R, h: 2 * c.R, layer: c.layer })),
+					...dots.rows.map((r) => ({ key: r.key, x: r.x, y: r.y, w: r.w * 0.6, h: DOT.ROW - 4, layer: r.layer }))
+				]
+			: scene.units.map((u) => ({ key: u.key, x: u.x, y: u.y, w: u.w, h: u.h, layer: u.layer }))
+	);
 	const miniView = $derived.by(() => {
 		const W = scene.width;
-		const H = scene.height;
+		const H = worldH();
 		const wx = -cam.x / cam.k;
 		const wy = -cam.y / cam.k;
 		const x0 = Math.max(0, wx);
@@ -702,21 +764,52 @@
 		if (r.width < 2 || r.height < 2) return;
 		const fx = (e.clientX - r.left) / r.width;
 		const fy = (e.clientY - r.top) / r.height;
-		cam.alignTo(Math.min(scene.width, Math.max(0, fx * scene.width)), Math.min(scene.height, Math.max(0, fy * scene.height)), 0.5, 0.5);
+		cam.alignTo(Math.min(scene.width, Math.max(0, fx * scene.width)), Math.min(worldH(), Math.max(0, fy * worldH())), 0.5, 0.5);
 	}
 
-	/*
-	 * Wide enough that the legend can sit open beside the first lane without
-	 * covering it. Below this it starts folded, one click away.
+	/**
+	 * The legend's open state is the reader's, and only the reader's.
+	 *
+	 * It was an `open` attribute computed from the screen width, and Svelte
+	 * re-applies an element's attributes whenever anything else in that
+	 * element's template changes, so a pan or zoom put back whatever the width
+	 * said and undid the reader's click. It also opened over the first lane on
+	 * any screen 1,800 pixels wide. Now it starts folded, remembers the
+	 * reader's choice, and only a click moves it.
 	 */
-	const roomy = new MediaQuery('(min-width: 1800px)', false);
+	const LEGEND_KEY = 'deeptunisia:network-legend';
+	let legendOpen = $state(false);
+	let legendInit = false;
+	$effect(() => {
+		if (legendInit) return;
+		untrack(() => {
+			legendInit = true;
+			let saved: string | null = null;
+			try {
+				saved = localStorage.getItem(LEGEND_KEY);
+			} catch {
+				/* storage blocked: fall back to the width */
+			}
+			legendOpen = saved === '1';
+		});
+	});
+	function onLegendToggle(e: Event) {
+		const open = (e.currentTarget as HTMLDetailsElement).open;
+		if (open === legendOpen) return;
+		legendOpen = open;
+		try {
+			localStorage.setItem(LEGEND_KEY, open ? '1' : '0');
+		} catch {
+			/* not remembered, still works */
+		}
+	}
 	const LEGEND_REL_TYPES = ['appointment', 'family', 'business', 'prosecution', 'reported-influence', 'party'];
 
 	// --- Click-away: one level of the stack per click ------------------------------------
 
 	function onCanvasBgClick(e: MouseEvent) {
 		const t = e.target as Element | null;
-		if (t && t.closest('.node, .hit, .box, .vlane, .edgecard, .viewnav, .legend, .minimap, .offmap')) return;
+		if (t && t.closest('.node, .hit, .box, .vlane, .edgecard, .viewnav, .legend, .minimap, .offmap, .dlabel')) return;
 		hoverEdge = null;
 		app.hovered = null;
 		if (pinnedId) pinnedId = null;
@@ -756,6 +849,18 @@
 			.map((g) => ({ name: entityName(g.id), n: g.n, color: g.color }));
 	}
 
+	/** A chamber's groups as arcs of its ring: start and share of the circle, largest first. */
+	function donutArcs(ch: NonNullable<Unit['chamber']>, total: number): { key: string; color: string; start: number; share: number }[] {
+		const out: { key: string; color: string; start: number; share: number }[] = [];
+		let at = 0;
+		for (const g of ch.groups) {
+			const share = g.n / total;
+			out.push({ key: g.id || 'none', color: g.color, start: at, share });
+			at += share;
+		}
+		return out;
+	}
+
 	let tableOpen = $state(false);
 
 	const BASIS_RANK: Basis[] = ['documented', 'reported', 'inferred', 'unsubstantiated'];
@@ -781,10 +886,11 @@
 			<Segmented
 				options={[
 					{ value: 'map', label: t('network.view.map'), title: t('network.view.map.hint') },
+					{ value: 'dots', label: t('network.view.dots'), title: t('network.view.dots.hint') },
 					{ value: 'matrix', label: t('network.view.matrix'), title: t('network.view.matrix.hint') }
 				]}
 				value={view}
-				onchange={(v) => setView(v as 'map' | 'matrix')}
+				onchange={(v) => setView(v as View)}
 				size="sm"
 				label={t('network.view')}
 			/>
@@ -838,6 +944,7 @@
 			<!-- svelte-ignore a11y_no_noninteractive_tabindex, a11y_click_events_have_key_events, a11y_no_noninteractive_element_interactions -->
 			<div
 				class="canvas lod-{lod}"
+				class:dotsview={!!dots}
 				class:moving={cam.moving}
 				class:focusing={!!(near || compare)}
 				bind:this={canvasEl}
@@ -852,25 +959,64 @@
 				<!-- Under the boxes: lanes, gutters, every tie at rest, and the hit twins. -->
 				<svg class="layer under" viewBox="0 0 {cam.vw} {cam.vh}" role="presentation">
 					<g transform={cam.transform}>
-						<rect x="0" y="0" width={scene.width} height={scene.height} fill="transparent" class="bg" />
+						<rect x="0" y="0" width={scene.width} height={worldH()} fill="transparent" class="bg" />
 						{#each scene.lanes as layer, i (layer)}
 							<rect
 								x={scene.laneX[i] - 6}
 								y="0"
 								width={scene.laneW[i] + 12}
-								height={scene.height}
+								height={worldH()}
 								rx="10"
 								class="lane-bg"
 								style:--c={LAYER_COLOR[layer]}
 							/>
 						{/each}
-						{#each scene.gutters as gx, gi (gi)}
-							<rect x={gx} y="0" width={GEO.GUT} height={scene.height} class="gutter-strip" />
-						{/each}
+						{#if dots}
+							<!-- Posts: a spoke from each square to the people seated around it,
+							     and a longer curve for a post held as well as a more senior one. -->
+							<g class="spokes">
+								{#each dots.spokes as sp (sp.key)}
+									<path
+										d={sp.d}
+										class="spoke"
+										class:secondary={sp.secondary}
+										class:lit={!!near && (near.has(sp.person) || sp.inst === focus)}
+										class:dim={!!(near || compare) && !(near && (near.has(sp.person) || sp.inst === focus))}
+										stroke={LAYER_COLOR[sp.layer]}
+										stroke-dasharray={sp.secondary ? '3 3' : DASH[sp.basis]}
+									/>
+								{/each}
+							</g>
+							<!-- A chamber's composition: its seat colours as a ring around its square. -->
+							{#each dots.clusters as c (c.key)}
+								{#if c.chamber}
+									{@const total = c.chamber.seats || 1}
+									{@const r = DOT.DONUT + DOT.DONUT_W / 2}
+									{@const circ = 2 * Math.PI * r}
+									<g class="donut" class:dim={dimmed(c.id)} transform="translate({c.cx},{c.cy}) rotate(-90)">
+										<circle {r} class="donut-bg" stroke-width={DOT.DONUT_W} />
+										{#each donutArcs(c.chamber, total) as arc (arc.key)}
+											<circle
+												{r}
+												stroke={arc.color}
+												stroke-width={DOT.DONUT_W}
+												stroke-dasharray="{Math.max(0.6, arc.share * circ - 0.8)} {circ}"
+												stroke-dashoffset={-arc.start * circ}
+												fill="none"
+											/>
+										{/each}
+									</g>
+								{/if}
+							{/each}
+						{:else}
+							{#each scene.gutters as gx, gi (gi)}
+								<rect x={gx} y="0" width={GEO.GUT} height={scene.height} class="gutter-strip" />
+							{/each}
+						{/if}
 						<g class="edges">
 							{#each scene.ties as e (e.id)}
 								{#if !topIds.has(e.id)}
-									{@const r = routes.get(e.id)}
+									{@const r = tiePaths.get(e.id)}
 									{#if r}
 										<path
 											d={r.d}
@@ -895,7 +1041,7 @@
 						-->
 						<g class="hits">
 							{#each scene.ties as e (e.id)}
-								{@const r = routes.get(e.id)}
+								{@const r = tiePaths.get(e.id)}
 								{#if r}
 									<path
 										d={r.d}
@@ -931,7 +1077,7 @@
 					class:rtl
 					style:transform="translate({cam.x}px, {cam.y}px) scale({cam.k})"
 					style:width="{scene.width}px"
-					style:height="{scene.height}px"
+					style:height="{worldH()}px"
 					onpointerover={onWorldOver}
 					onpointerout={onWorldOut}
 					onpointerdown={(e) => {
@@ -942,6 +1088,107 @@
 					onpointercancel={clearPress}
 					role="presentation"
 				>
+					{#if dots}
+					{#each dots.heads as h (h.key)}
+						<div
+							class="ghead"
+							class:outside={!h.group}
+							style:transform="translate({h.x}px, {h.y}px)"
+							style:width="{h.w}px"
+							style:--c={LAYER_COLOR[h.layer]}
+						>
+							<span>{groupLabel(h.layer, h.group)}</span><i class="mono">{h.count}</i>
+						</div>
+					{/each}
+					{#each dots.clusters as c (c.key)}
+						<button
+							class="node dsq"
+							class:chamber={!!c.chamber}
+							class:dim={dimmed(c.id)}
+							class:focus={app.selected === c.id}
+							class:hot={app.hovered === c.id}
+							data-id={c.id}
+							style:transform="translate({c.cx}px, {c.cy}px)"
+							style:--c={LAYER_COLOR[c.layer]}
+							aria-label="{entityName(c.id)} — {layerLabel(c.layer)}"
+							onclick={(e) => selectOnMap(c.id, e)}
+						></button>
+						<button
+							class="node dlabel"
+							class:dim={dimmed(c.id)}
+							class:hot={app.hovered === c.id}
+							data-id={c.id}
+							tabindex="-1"
+							style:transform="translate({c.x}px, {c.cy + c.R + 4}px)"
+							style:width="{c.w}px"
+							onclick={(e) => selectOnMap(c.id, e)}
+						>
+							<span class="title">{entityName(c.id)}</span>
+							<span class="count mono">
+								{#if c.chamber}
+									{tf('network.chamber.short', { n: c.chamber.named, seats: c.chamber.seats })}
+								{:else if c.posts > 1}
+									{c.posts}
+								{/if}
+							</span>
+						</button>
+					{/each}
+					{#each dots.rows as r (r.key)}
+						{#if r.kind === 'outside'}
+							<button
+								class="node drow outside"
+								class:dim={dimmed(r.person!)}
+								class:focus={app.selected === r.person}
+								class:hot={app.hovered === r.person}
+								data-id={r.person}
+								style:transform="translate({r.x}px, {r.y}px)"
+								style:width="{r.w}px"
+								style:--c={LAYER_COLOR[r.layer]}
+								aria-label={entityName(r.person!)}
+								onclick={(e) => selectOnMap(r.person!, e)}
+							>
+								<i class="ph"></i><span class="nm">{entityName(r.person!)}</span>
+							</button>
+						{:else}
+							<button
+								class="node drow k-{r.kind}"
+								class:dim={dimmed(r.id)}
+								class:focus={app.selected === r.id}
+								class:hot={app.hovered === r.id}
+								data-id={r.id}
+								style:transform="translate({r.x}px, {r.y}px)"
+								style:width="{r.w}px"
+								style:--c={LAYER_COLOR[r.layer]}
+								aria-label="{entityName(r.id!)} — {layerLabel(r.layer)}"
+								onclick={(e) => selectOnMap(r.id!, e)}
+							>
+								<i class="sq" class:tied={(tiesOf.get(r.id!) ?? 0) > 0}></i>
+								<span class="nm">{entityName(r.id!)}</span>
+								{#if r.kind === 'register' && tiesOf.get(r.id!)}<b class="mono">{tiesOf.get(r.id!)}</b>{/if}
+							</button>
+						{/if}
+					{/each}
+					{#each dots.people as p (p.id)}
+						{#if !p.outside}
+							<button
+								class="node dp b-{p.basis} side-{p.side}"
+								class:named={tiesOf.has(p.id)}
+								class:dim={dimmed(p.id)}
+								class:lit={!!near?.has(p.id)}
+								class:focus={app.selected === p.id}
+								class:hot={app.hovered === p.id}
+								data-id={p.id}
+								style:transform="translate({p.x}px, {p.y}px)"
+								style:--r="{p.r}px"
+								style:--c={LAYER_COLOR[p.layer]}
+								aria-label={entityName(p.id)}
+								onclick={(e) => selectOnMap(p.id, e)}
+							>
+								<span class="nm">{entityName(p.id)}</span>
+							</button>
+						{/if}
+					{/each}
+					{:else}
 					{#each scene.heads as h (h.key)}
 						<div
 							class="ghead"
@@ -1038,7 +1285,7 @@
 									>
 										<i class="dot"></i>
 										<span class="nm">{entityName(s.person)}</span>
-										{#if s.position && u.cols === 1 && u.kind === 'office'}
+										{#if s.position && u.cols === 1 && u.kind === 'office' && s.w - nameWidth(entityName(s.person)) >= 64}
 											<span class="role">{postTitle(s.position)}</span>
 										{/if}
 									</button>
@@ -1046,6 +1293,7 @@
 							</div>
 						{/if}
 					{/each}
+					{/if}
 				</div>
 
 				<!-- Over the boxes: the ties the reader is looking at, never hidden by a box. -->
@@ -1057,7 +1305,7 @@
 					</defs>
 					<g transform={cam.transform}>
 						{#each topTies as e (e.id)}
-							{@const r = routes.get(e.id)}
+							{@const r = tiePaths.get(e.id)}
 							{#if r}
 								<path d={r.d} class="halo-line" stroke-width={edgeWidth(e) + 3} />
 								<path
@@ -1156,7 +1404,7 @@
 					{/if}
 				</div>
 
-				<details class="legend" data-no-pan open={!compact.current && roomy.current}>
+				<details class="legend" data-no-pan open={legendOpen} ontoggle={onLegendToggle}>
 					<summary aria-label={t('network.legend')}>
 						<svg viewBox="0 0 14 14" width="12" height="12" aria-hidden="true"
 							><path d="M2 4h10M2 7h10M2 10h6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" /></svg
@@ -1165,13 +1413,30 @@
 					</summary>
 
 					<div class="lsec">{t('network.legend.reading')}</div>
-					<div class="lgrid">
-						<span class="lrow"><i class="lg-box"></i>{t('network.legend.box')}</span>
-						<span class="lrow"><i class="lg-dot"></i>{t('network.legend.seat')}</span>
-						<span class="lrow"><i class="lg-dot hollow"></i>{t('network.legend.outside')}</span>
-						<span class="lrow"><i class="lg-bar"></i>{t('network.legend.chamber')}</span>
-						<span class="lrow"><i class="lg-chip"></i>{t('network.legend.chip')}</span>
-					</div>
+					{#if dots}
+						<div class="lgrid">
+							<span class="lrow"><i class="lg-sq"></i>{t('network.legend.box')}</span>
+							<span class="lrow"><i class="lg-dot"></i>{t('network.legend.dots.person')}</span>
+							<span class="lrow"><i class="lg-dot hollow"></i>{t('network.legend.outside')}</span>
+							<span class="lrow"><i class="lg-ring"></i>{t('network.legend.dots.ring')}</span>
+							<span class="lrow">
+								<svg width="22" height="6" aria-hidden="true"><line x1="0" y1="3" x2="22" y2="3" stroke="var(--layer-political)" stroke-opacity="0.6" stroke-width="1" /></svg>
+								{t('network.legend.dots.spoke')}
+							</span>
+							<span class="lrow">
+								<svg width="22" height="6" aria-hidden="true"><line x1="0" y1="3" x2="22" y2="3" stroke="var(--layer-political)" stroke-opacity="0.6" stroke-width="1" stroke-dasharray="3 3" /></svg>
+								{t('network.legend.dots.spoke2')}
+							</span>
+						</div>
+					{:else}
+						<div class="lgrid">
+							<span class="lrow"><i class="lg-box"></i>{t('network.legend.box')}</span>
+							<span class="lrow"><i class="lg-dot"></i>{t('network.legend.seat')}</span>
+							<span class="lrow"><i class="lg-dot hollow"></i>{t('network.legend.outside')}</span>
+							<span class="lrow"><i class="lg-bar"></i>{t('network.legend.chamber')}</span>
+							<span class="lrow"><i class="lg-chip"></i>{t('network.legend.chip')}</span>
+						</div>
+					{/if}
 
 					<div class="lsec">{t('network.legend.basis')}</div>
 					<div class="lgrid">
@@ -1219,12 +1484,12 @@
 							onpointercancel={() => (miniDragging = false)}
 							aria-hidden="true"
 						>
-							{#each scene.units as u (u.key)}
+							{#each miniRects as u (u.key)}
 								<rect
 									x={(u.x / scene.width) * MINI_W}
-									y={(u.y / scene.height) * miniH}
+									y={(u.y / worldH()) * miniH}
 									width={Math.max(0.6, (u.w / scene.width) * MINI_W)}
-									height={Math.max(0.6, (u.h / scene.height) * miniH)}
+									height={Math.max(0.6, (u.h / worldH()) * miniH)}
 									class="mm-unit"
 									style:--c={LAYER_COLOR[u.layer]}
 								/>
@@ -1782,6 +2047,8 @@
 	.seat.secondary .nm {
 		color: var(--text-muted);
 	}
+	/* The name comes first: the post beside it takes what is left, and is only
+	   set at all when the row has room for both. */
 	.seat .nm {
 		font-size: 11.5px;
 		color: var(--text-primary);
@@ -1789,7 +2056,7 @@
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		min-width: 0;
-		flex: 1 1 auto;
+		flex: 0 1 auto;
 	}
 	.seat .role {
 		font-size: 10px;
@@ -1797,8 +2064,8 @@
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
-		flex: 0 1 auto;
-		max-width: 52%;
+		flex: 1 1 0;
+		min-width: 0;
 		text-align: end;
 	}
 	.seatbar {
@@ -1898,6 +2165,222 @@
 		font-size: 10px;
 		font-weight: 500;
 		color: var(--text-muted);
+	}
+
+	/* --- Dots --------------------------------------------------------------------- */
+
+	.spoke {
+		fill: none;
+		stroke-width: 0.9px;
+		stroke-opacity: 0.4;
+		vector-effect: non-scaling-stroke;
+		transition: stroke-opacity var(--dur-fast) var(--ease-out);
+	}
+	.spoke.secondary {
+		stroke-opacity: 0.32;
+	}
+	.spoke.dim {
+		stroke-opacity: 0.06;
+	}
+	.spoke.lit {
+		stroke-opacity: 0.9;
+		stroke-width: 1.4px;
+	}
+	.donut-bg {
+		fill: none;
+		stroke: var(--border-subtle);
+	}
+	.donut.dim {
+		opacity: var(--dim);
+	}
+	.dsq {
+		translate: -50% -50%;
+		width: 12px;
+		height: 12px;
+		border-radius: 3px;
+		background: var(--c);
+		box-shadow: 0 0 0 2px var(--surface-base);
+		transition: opacity var(--dur-fast) var(--ease-out);
+	}
+	.dsq.chamber {
+		width: 13px;
+		height: 13px;
+		background: var(--surface-raised);
+		border: 2px solid var(--c);
+		box-shadow: none;
+	}
+	.dsq.hot,
+	.dsq.focus {
+		box-shadow:
+			0 0 0 2px var(--surface-base),
+			0 0 0 3.5px var(--accent);
+	}
+	.dlabel {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1px;
+		padding: 0 4px;
+		text-align: center;
+		border-radius: 4px;
+	}
+	/* Lines pass under labels in this view, so text wears a halo of the canvas. */
+	.dlabel .title,
+	.dlabel .count,
+	.drow .nm,
+	.drow b {
+		text-shadow:
+			0 0 3px var(--surface-base),
+			0 0 2px var(--surface-base),
+			0 0 1px var(--surface-base);
+	}
+	.dlabel .title {
+		font-size: 10.5px;
+		font-weight: 600;
+		line-height: 1.2;
+		color: var(--text-primary);
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+		overflow-wrap: anywhere;
+	}
+	.dlabel .count {
+		font-size: 9.5px;
+		color: var(--text-muted);
+	}
+	.dlabel.hot {
+		background: var(--surface-hover);
+	}
+	.dp {
+		translate: -50% -50%;
+		width: calc(var(--r) * 2);
+		height: calc(var(--r) * 2);
+		border-radius: 50%;
+		background: var(--c);
+		border: 1.5px solid var(--c);
+		box-shadow: 0 0 0 1.5px var(--surface-base);
+		transition: opacity var(--dur-fast) var(--ease-out);
+	}
+	.dp.b-reported {
+		background: var(--surface-base);
+		border-style: dashed;
+	}
+	.dp.b-inferred,
+	.dp.b-unsubstantiated {
+		background: var(--surface-base);
+		border-style: dotted;
+		opacity: 0.7;
+	}
+	.dp.hot,
+	.dp.focus {
+		z-index: 2;
+		box-shadow:
+			0 0 0 1.5px var(--surface-base),
+			0 0 0 3px var(--accent);
+	}
+	.dp.lit {
+		z-index: 1;
+	}
+	.dp .nm {
+		position: absolute;
+		top: 50%;
+		translate: 0 -50%;
+		white-space: nowrap;
+		font-size: 10.5px;
+		line-height: 1;
+		color: var(--text-primary);
+		pointer-events: none;
+		visibility: hidden;
+		text-shadow:
+			0 0 3px var(--surface-base),
+			0 0 2px var(--surface-base),
+			0 0 1px var(--surface-base);
+	}
+	.dp.side-r .nm {
+		left: calc(100% + 5px);
+	}
+	.dp.side-l .nm {
+		right: calc(100% + 5px);
+	}
+	/* A dot is named when the reader is close enough and a tie names the
+	   person, or whenever it is hovered, chosen, or tied to what is. */
+	.lod-2 .dp.named .nm,
+	.dp.hot .nm,
+	.dp.focus .nm,
+	.focusing .dp.lit .nm {
+		visibility: visible;
+	}
+	.focusing .dp.lit .nm {
+		font-weight: 600;
+	}
+	.drow {
+		height: 20px;
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		padding: 0 4px;
+		border-radius: 4px;
+	}
+	.drow:hover,
+	.drow.hot {
+		background: var(--surface-hover);
+	}
+	.drow.focus {
+		box-shadow: inset 0 0 0 1px var(--accent);
+	}
+	.drow .sq {
+		flex: none;
+		width: 8px;
+		height: 8px;
+		border-radius: 2px;
+		border: 1.5px solid var(--c);
+	}
+	.drow .sq.tied {
+		background: var(--c);
+	}
+	.drow .ph {
+		flex: none;
+		width: 9px;
+		height: 9px;
+		border-radius: 50%;
+		border: 1.5px solid var(--text-muted);
+	}
+	.drow .nm {
+		font-size: 11px;
+		color: var(--text-secondary);
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		min-width: 0;
+		flex: 1;
+	}
+	.drow.outside .nm {
+		color: var(--text-primary);
+	}
+	.drow b {
+		font-size: 10px;
+		font-weight: 500;
+		color: var(--text-muted);
+	}
+	.world.rtl .drow,
+	.world.rtl .dlabel {
+		direction: rtl;
+	}
+	.dsq.dim,
+	.dlabel.dim,
+	.dp.dim,
+	.drow.dim {
+		opacity: var(--dim);
+	}
+	.lod-0 .dlabel,
+	.lod-0 .drow .nm,
+	.lod-0 .drow b {
+		visibility: hidden;
+	}
+	.lod-1 .dlabel .count {
+		visibility: hidden;
 	}
 
 	/* Levels of detail: text too small to read is hidden, never squeezed. */
@@ -2156,6 +2639,23 @@
 		height: 6px;
 		border-radius: 2px;
 		background: linear-gradient(90deg, var(--seat-1) 0 55%, var(--seat-2) 55% 80%, var(--seat-3) 80%);
+	}
+	.lg-sq {
+		flex: none;
+		width: 9px;
+		height: 9px;
+		margin-inline: 4.5px;
+		border-radius: 2px;
+		background: var(--layer-political);
+	}
+	.lg-ring {
+		flex: none;
+		width: 14px;
+		height: 14px;
+		margin-inline: 2px;
+		border-radius: 50%;
+		background: conic-gradient(var(--seat-1) 0 55%, var(--seat-2) 55% 80%, var(--seat-3) 80%);
+		mask: radial-gradient(circle, transparent 3.5px, #000 4px);
 	}
 	.lg-chip {
 		flex: none;

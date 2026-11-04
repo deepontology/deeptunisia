@@ -114,19 +114,46 @@ export const LANE_WEIGHT: Record<Layer, number> = {
 	foreign: 0.95
 };
 
-export function laneWidth(layer: Layer): number {
-	return Math.round(GEO.LANE * LANE_WEIGHT[layer]);
+/**
+ * A lane's width. `widen` stretches every lane on a screen wide enough to
+ * spare the room: text is set in world units, so a wider world at the same
+ * zoom is more room per name rather than larger type. Gutters keep their
+ * width, because their tracks are sized for lines, not words.
+ */
+export function laneWidth(layer: Layer, widen = 1): number {
+	return Math.round(GEO.LANE * LANE_WEIGHT[layer] * widen);
 }
 
-/** Seat columns for `n` seats in a lane of width `w`. */
-function seatCols(n: number, w: number): number {
+/** The widest stretch a lane takes: past this a seat row reads as a table row. */
+export const WIDEN_MAX = 1.75;
+
+/**
+ * Approximate width of a name in the seat type (11.5 units, proportional
+ * sans), with the seat's dot and padding. A layout estimate only: the view
+ * truncates whatever still overflows and the full name is on the hover tip.
+ */
+export function nameWidth(name: string): number {
+	return 24 + name.length * 6.1;
+}
+
+/**
+ * Seat columns for a box of width `w`: as many as the names allow.
+ *
+ * A column is as wide as the box's longer names need (the 80th percentile,
+ * so one unusually long name does not cost the whole box a column), never
+ * narrower than COL_MIN. Up to GEO.LIST seats a box is one list.
+ */
+function seatCols(names: string[], w: number): number {
+	const n = names.length;
 	if (n <= GEO.LIST) return 1;
-	const max = Math.max(1, Math.floor((w - GEO.PAD * 2) / GEO.COL_MIN));
+	const lens = names.map(nameWidth).sort((a, b) => a - b);
+	const need = Math.min(176, Math.max(GEO.COL_MIN, lens[Math.min(n - 1, Math.floor(n * 0.8))]));
+	const max = Math.max(1, Math.floor((w - GEO.PAD * 2) / need));
 	return Math.max(1, Math.min(max, Math.ceil(n / GEO.LIST)));
 }
 
 /** Lane rectangles and gutter edges for an ordered set of lanes. */
-export function laneFrames(lanes: Layer[]): { x: number[]; w: number[]; gutters: number[]; width: number } {
+export function laneFrames(lanes: Layer[], widen = 1): { x: number[]; w: number[]; gutters: number[]; width: number } {
 	const x: number[] = [];
 	const w: number[] = [];
 	const gutters: number[] = [];
@@ -135,8 +162,8 @@ export function laneFrames(lanes: Layer[]): { x: number[]; w: number[]; gutters:
 		gutters.push(cursor);
 		cursor += GEO.GUT;
 		x.push(cursor);
-		w.push(laneWidth(l));
-		cursor += laneWidth(l);
+		w.push(laneWidth(l, widen));
+		cursor += laneWidth(l, widen);
 	}
 	gutters.push(cursor);
 	cursor += GEO.GUT;
@@ -260,6 +287,8 @@ export interface SceneInput {
 	families: ReadonlySet<Family>;
 	flows?: FlowTie[];
 	rtl?: boolean;
+	/** Lane stretch for a wide screen, 1 to WIDEN_MAX (see laneWidth). */
+	widen?: number;
 }
 
 export interface Scene {
@@ -396,6 +425,7 @@ function signature(input: SceneInput): number {
 	mix([...layers].sort().join(','));
 	mix([...families].sort().join(','));
 	mix(input.rtl ? 'rtl' : 'ltr');
+	mix(String(input.widen ?? 1));
 	for (const f of input.flows ?? []) mix(f.id + f.description);
 	for (const p of ds.positions) if (possiblyActive(p.interval, t) && meetsBasis(p.basis as Basis, floor)) mix(p.id);
 	for (const r of ds.relationships) {
@@ -428,7 +458,12 @@ export function buildScene(input: SceneInput): Scene {
 	const lanes = LAYERS.filter((l) => layers.has(l));
 	if (input.rtl) lanes.reverse();
 	const laneOf = new Map(lanes.map((l, i) => [l, i]));
-	const frames = laneFrames(lanes);
+	const frames = laneFrames(lanes, Math.min(WIDEN_MAX, Math.max(1, input.widen ?? 1)));
+	/** A person's name as the reader will see it, for sizing seat columns. */
+	const nameFor = (id: string): string => {
+		const p = personById.get(id) as unknown as { name_en?: string; name_ar?: string } | undefined;
+		return (input.rtl ? p?.name_ar : undefined) || p?.name_en || id;
+	};
 
 	// 1. Who is in post. Chamber membership is read through civic.ts so the
 	//    chamber box seats exactly who the hemicycle seats.
@@ -661,7 +696,10 @@ export function buildScene(input: SceneInput): Scene {
 
 			const place = (f: (typeof filled)[number], bx: number, by: number, bw: number): Unit => {
 				const { inst, chamber, seated } = f;
-				const cols = seatCols(seated.length, bw);
+				const cols = seatCols(
+					seated.map((s) => nameFor(s.person)),
+					bw
+				);
 				const rows = Math.ceil(seated.length / cols);
 				const top = by + GEO.HEAD + (chamber ? GEO.BAR : 0);
 				const h = GEO.HEAD + (chamber ? GEO.BAR : 0) + rows * GEO.ROW + (rows || chamber ? GEO.PAD : 0);
@@ -715,7 +753,9 @@ export function buildScene(input: SceneInput): Scene {
 			}
 			const small = filled.filter((f) => !f.chamber && f.seated.length <= SMALL);
 			if (small.length) {
-				const perRow = Math.max(1, Math.floor(LW / 140));
+				// A card names its institution and its holder on one line each, so it
+				// needs room for both; a lane too narrow for two takes them one a row.
+				const perRow = Math.max(1, Math.floor(LW / 160));
 				const cw = (LW - GEO.CHIP_GAP * (perRow - 1)) / perRow;
 				for (let i = 0; i < small.length; i += perRow) {
 					let rowH = 0;
@@ -729,7 +769,7 @@ export function buildScene(input: SceneInput): Scene {
 
 			if (chipList.length) {
 				const register = layer === 'foreign';
-				const perRow = register ? 1 : Math.max(1, Math.floor(LW / 120));
+				const perRow = register ? 1 : Math.max(1, Math.floor(LW / 140));
 				const pitch = register ? GEO.REG + 2 : GEO.CHIP + GEO.CHIP_GAP;
 				const ch = register ? GEO.REG : GEO.CHIP;
 				const cw = (LW - GEO.CHIP_GAP * (perRow - 1)) / perRow;
@@ -765,7 +805,10 @@ export function buildScene(input: SceneInput): Scene {
 		if (outside.length) {
 			heads.push({ key: layer + ':outside', layer, group: '', x: x0, y, count: outside.length });
 			y += GEO.GROUP;
-			const cols = Math.max(1, Math.floor((LW - GEO.PAD * 2) / GEO.COL_MIN));
+			const cols = seatCols(
+				outside.map(nameFor),
+				LW
+			);
 			const rows = Math.ceil(outside.length / cols);
 			const colW = (LW - GEO.PAD * 2) / cols;
 			const h = rows * GEO.ROW + GEO.PAD * 2;

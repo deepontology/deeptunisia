@@ -15,11 +15,15 @@
  *   - a chamber's rank and file are counted, not drawn;
  *   - the matrix adds up to the map;
  *   - the same inputs always give the same picture;
+ *   - the dot view draws everyone the map seats, once each, with every tie
+ *     between two drawn dots and no two clusters overlapping;
+ *   - a wide screen's stretched lanes keep every one of these promises;
  *   - the scene stays cheap enough to rebuild on every frame of playback.
  *
  *   npx tsx scripts/test-network-scene.ts
  */
-import { buildScene, sceneAt, layerMatrix, GEO, type Scene } from '../src/lib/network/scene.ts';
+import { buildScene, sceneAt, layerMatrix, laneFrames, GEO, WIDEN_MAX, type Scene } from '../src/lib/network/scene.ts';
+import { buildDots, dotsAt } from '../src/lib/network/dots.ts';
 import { routeTies } from '../src/lib/network/route.ts';
 import { DEFAULT_FAMILIES, FAMILIES, familyOf, familiesFromMode, familiesParam, familiesFromParam } from '../src/lib/network/families.ts';
 import { ds, LAYERS, CUTOFF, FLOOR, type Layer } from '../src/lib/model.ts';
@@ -90,9 +94,12 @@ for (const t of dates) {
 	for (const families of [DEFAULT_FAMILIES, EVERY]) {
 		// Every other year of the full lens is laid out right to left, so the
 		// mirrored geometry is held to the same rules.
+		// The other years are laid out on a wide screen's stretched lanes.
 		const rtl = families === EVERY && new Date(t).getUTCFullYear() % 2 === 0;
-		const scene = buildScene({ t, floor: 'reported', layers: ALL, families, rtl });
-		const day = new Date(t).toISOString().slice(0, 10) + (families === EVERY ? ' all' : '') + (rtl ? ' rtl' : '');
+		const widen = families === EVERY && !rtl ? 1.5 : 1;
+		const scene = buildScene({ t, floor: 'reported', layers: ALL, families, rtl, widen });
+		const day =
+			new Date(t).toISOString().slice(0, 10) + (families === EVERY ? ' all' : '') + (rtl ? ' rtl' : '') + (widen > 1 ? ' wide' : '');
 
 		// Boxes inside lanes, seats inside boxes, nothing overlapping.
 		const byLane = new Map<Layer, typeof scene.units>();
@@ -207,6 +214,109 @@ console.log('\n  ── the date readers land on: 14 January 2011 ──\n');
 
 	const rtl = buildScene({ t, floor: 'reported', layers: ALL, families: DEFAULT_FAMILIES, rtl: true });
 	ok('right-to-left reading mirrors the lane order', rtl.lanes[0] === scene.lanes[scene.lanes.length - 1]);
+}
+
+console.log('\n  ── the dot view ──\n');
+{
+	const dOutside: string[] = [];
+	const dOverlap: string[] = [];
+	const dMissing: string[] = [];
+	const dTwice: string[] = [];
+	const dLoose: string[] = [];
+	const dRing: string[] = [];
+	for (const t of dates) {
+		for (const families of [DEFAULT_FAMILIES, EVERY]) {
+			const rtl = families === EVERY && new Date(t).getUTCFullYear() % 2 === 1;
+			const scene = buildScene({ t, floor: 'reported', layers: ALL, families, rtl });
+			const dots = buildDots(scene, rtl);
+			const day = new Date(t).toISOString().slice(0, 10) + (families === EVERY ? ' all' : '') + (rtl ? ' rtl' : '');
+
+			// Cells and rows stay in their lane and never share space.
+			const boxes = [
+				...dots.clusters.map((c) => ({ key: c.key, layer: c.layer, x: c.x, y: c.y, w: c.w, h: c.h })),
+				...dots.rows.map((r) => ({ key: r.key, layer: r.layer, x: r.x, y: r.y, w: r.w, h: 20 }))
+			];
+			for (const b of boxes) {
+				const i = scene.lanes.indexOf(b.layer);
+				if (b.x < scene.laneX[i] - 0.5 || b.x + b.w > scene.laneX[i] + scene.laneW[i] + 0.5) dOutside.push(`${day} ${b.key}`);
+			}
+			for (let a = 0; a < boxes.length; a++) {
+				for (let b = a + 1; b < boxes.length; b++) {
+					const p = boxes[a];
+					const q = boxes[b];
+					if (p.layer !== q.layer) continue;
+					if (p.x < q.x + q.w - 0.5 && q.x < p.x + p.w - 0.5 && p.y < q.y + q.h - 0.5 && q.y < p.y + p.h - 0.5) dOverlap.push(`${day} ${p.key} × ${q.key}`);
+				}
+			}
+			// A person's dot sits on its cluster's rings, inside its cell.
+			const cellOf = new Map(dots.clusters.map((c) => [c.id, c]));
+			for (const p of dots.people) {
+				if (p.outside) continue;
+				const u = scene.unitOf.get(p.id);
+				const c = u?.id ? cellOf.get(u.id) : undefined;
+				if (!c || Math.hypot(p.x - c.cx, p.y - c.cy) > c.R + 0.5 || p.x < c.x || p.x > c.x + c.w) dRing.push(`${day} ${p.id}`);
+			}
+			// Everyone the map seats is a dot, once.
+			const seen = new Map<string, number>();
+			for (const p of dots.people) seen.set(p.id, (seen.get(p.id) ?? 0) + 1);
+			for (const [id, n] of seen) if (n > 1) dTwice.push(`${day} ${id}×${n}`);
+			for (const u of scene.units) {
+				if (u.id && !dots.pos.has(u.id)) dMissing.push(`${day} ${u.id}`);
+				for (const s of u.seats) if (s.primary && !seen.has(s.person)) dMissing.push(`${day} ${s.person}`);
+			}
+			// Every tie and every spoke runs between two drawn dots.
+			for (const e of scene.ties) {
+				if (!dots.paths.has(e.id) || !dots.pos.has(e.rel.from) || !dots.pos.has(e.rel.to)) dLoose.push(`${day} ${e.id}`);
+			}
+			for (const sp of dots.spokes) if (!dots.pos.has(sp.inst) || !dots.pos.has(sp.person)) dLoose.push(`${day} ${sp.key}`);
+		}
+	}
+	ok('dot clusters and rows stay inside their lane', dOutside.length === 0, dOutside.slice(0, 3).join('; '));
+	ok('no two dot cells overlap', dOverlap.length === 0, dOverlap.slice(0, 3).join('; '));
+	ok('each person sits on the rings of the institution of their primary post', dRing.length === 0, dRing.slice(0, 3).join('; '));
+	ok('everyone and every institution the map draws is a dot', dMissing.length === 0, dMissing.slice(0, 3).join('; '));
+	ok('a person is one dot', dTwice.length === 0, dTwice.slice(0, 3).join('; '));
+	ok('every tie and every post runs between two drawn dots', dLoose.length === 0, dLoose.slice(0, 3).join('; '));
+
+	const t = at(2011, 0, 14);
+	const a = buildScene({ t, floor: 'reported', layers: ALL, families: DEFAULT_FAMILIES });
+	const posts = buildDots(a).spokes.filter((sp) => !sp.secondary).length;
+	const seated = a.units.flatMap((u) => u.seats.filter((s) => s.primary && u.kind !== 'actors')).length;
+	ok('every seated person has a spoke to their institution', posts === seated, `${posts} spokes, ${seated} seated`);
+	ok('the dot view is a pure function of the scene', JSON.stringify([...buildDots(a).pos]) === JSON.stringify([...buildDots(a).pos]));
+	ok('the dot view is built once per scene', dotsAt(a) === dotsAt(a));
+	const rtlScene = buildScene({ t, floor: 'reported', layers: ALL, families: DEFAULT_FAMILIES, rtl: true });
+	const rtlDots = buildDots(rtlScene, true);
+	const ltrDots = buildDots(a);
+	/** In the first row holding two clusters, does the first sit to the left of the second? */
+	const firstLeft = (d: typeof ltrDots) => {
+		for (let i = 0; i + 1 < d.clusters.length; i++) {
+			const p = d.clusters[i];
+			const q = d.clusters[i + 1];
+			if (p.layer === q.layer && p.y === q.y) return p.cx < q.cx;
+		}
+		return null;
+	};
+	ok("right to left, a row of clusters starts at the reading start", firstLeft(ltrDots) === true && firstLeft(rtlDots) === false);
+
+	const sample = dates.filter((_, i) => i % 3 === 0).map((d) => buildScene({ t: d, floor: 'reported', layers: ALL, families: DEFAULT_FAMILIES }));
+	const t0 = performance.now();
+	for (const sc of sample) buildDots(sc);
+	const per = (performance.now() - t0) / sample.length;
+	ok('the dot view builds within a frame budget', per < 12, `${per.toFixed(2)} ms per date`);
+}
+
+console.log('\n  ── wide screens ──\n');
+{
+	const t = at(2011, 0, 14);
+	const base = buildScene({ t, floor: 'reported', layers: ALL, families: DEFAULT_FAMILIES });
+	const wide = buildScene({ t, floor: 'reported', layers: ALL, families: DEFAULT_FAMILIES, widen: 1.5 });
+	ok('a wide screen stretches the lanes, not the gutters', wide.width > base.width && wide.gutters.length === base.gutters.length && laneFrames(base.lanes, 1.5).width === wide.width);
+	const cols = (sc: Scene) => sc.units.reduce((n, u) => n + u.cols, 0);
+	ok('stretched lanes give names more room, never less', cols(wide) >= cols(base) || wide.units.every((u) => u.seats.every((s) => s.w >= 110)));
+	const capped = buildScene({ t, floor: 'reported', layers: ALL, families: DEFAULT_FAMILIES, widen: 9 });
+	ok('the stretch is capped', capped.width === laneFrames(base.lanes, WIDEN_MAX).width);
+	ok('a different stretch is a different scene', sceneAt({ t, floor: 'reported', layers: ALL, families: DEFAULT_FAMILIES, widen: 1.25 }) !== sceneAt({ t, floor: 'reported', layers: ALL, families: DEFAULT_FAMILIES }));
 }
 
 console.log('\n  ── cost ──\n');
