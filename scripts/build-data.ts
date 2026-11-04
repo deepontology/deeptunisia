@@ -42,6 +42,7 @@ import {
 	CompanySchema,
 	ContractSchema,
 	LicenceSchema,
+	VacancySchema,
 	DeclarationSchema,
 	EducationSchema,
 	RegionSchema,
@@ -332,6 +333,9 @@ const agreements = loadYaml('agreements.yaml', AgreementSchema);
 const companies = loadYaml('companies.yaml', CompanySchema);
 const contracts = loadYaml('contracts.yaml', ContractSchema);
 const licences = loadYaml('licences.yaml', LicenceSchema);
+// Documented vacancies (decision 0007): an office with no titular holder, as a
+// sourced interval, so it never renders the same way as a row the record lacks.
+const vacancies = loadYaml('vacancies.yaml', VacancySchema);
 const declarations = loadYaml('declarations.yaml', DeclarationSchema);
 const education = loadYaml('education.yaml', EducationSchema);
 const regions = loadYaml('regions.yaml', RegionSchema);
@@ -505,6 +509,7 @@ const claimKindRegistry: [string, any[]][] = [
 	['company', companies],
 	['contract', contracts],
 	['licence', licences],
+	['vacancy', vacancies],
 	['declaration', declarations],
 	['education', education],
 	['region', regions],
@@ -837,6 +842,7 @@ for (const [kind, records] of [
 	['company', companies],
 	['contract', contracts],
 	['licence', licences],
+	['vacancy', vacancies],
 	['declaration', declarations],
 	['education', education],
 	['world-claim', worldClaims]
@@ -864,7 +870,7 @@ for (const [kind, records] of [
 
 for (const source of sources) {
 	const cited =
-		[...institutions, ...roles, ...people, ...positions, ...eras, ...hypotheses, ...agreements, ...worldClaims, ...companies, ...contracts, ...licences, ...declarations, ...education, ...regions, ...places].some(
+		[...institutions, ...roles, ...people, ...positions, ...eras, ...hypotheses, ...agreements, ...worldClaims, ...companies, ...contracts, ...licences, ...vacancies, ...declarations, ...education, ...regions, ...places].some(
 			(r) => r.sources.includes(source.id)
 		) ||
 		relationships.some((r) => r.sources.includes(source.id)) ||
@@ -1551,6 +1557,44 @@ const resolvedLicences = licences.map((l) => ({
 	...l,
 	...basisFields(l)
 }));
+const resolvedVacancies = vacancies.map((v) => ({
+	...v,
+	...basisFields(v),
+	interval: settledInterval(`vacancy ${v.id}`, v, { start: v.start, end: v.end })
+}));
+
+// V32 — a documented vacancy (decision 0007). It names a known office that has a
+// succession (a seated legislative role has members, not holders), and it may
+// not certainly overlap a titular holder of that office, or another vacancy of
+// it: either would be two records saying opposite things about the same days,
+// which is a dispute to record, not a gap to merge. "Certainly" is the strict
+// reading: the latest start of each falls before the earliest end of the other,
+// so a shared handover day or fuzzy year edges do not count as a contradiction.
+// An acting holder may sit inside the interval; that is what an interim is.
+{
+	const certainlyOverlap = (a: ResolvedInterval, b: ResolvedInterval) =>
+		a.startLatest < (b.endEarliest ?? DATASET_CUTOFF) && b.startLatest < (a.endEarliest ?? DATASET_CUTOFF);
+	for (const v of resolvedVacancies) {
+		const where = `vacancy ${v.id}`;
+		checkSources(where, v.sources);
+		const role = roleById.get(v.role);
+		if (!role) {
+			fail(where, `unknown role "${v.role}" (V32)`);
+			continue;
+		}
+		if (role.seats !== undefined) fail(where, `role "${v.role}" is a seated term, which has no single holder to be vacant (V32)`);
+		for (const p of resolvedPositions) {
+			if (p.role !== v.role || p.acting) continue;
+			if (certainlyOverlap(v.interval, p.interval)) {
+				fail(where, `overlaps titular position ${p.id}: the office cannot be both vacant and held (V32)`);
+			}
+		}
+		for (const w of resolvedVacancies) {
+			if (w.id <= v.id || w.role !== v.role) continue;
+			if (certainlyOverlap(v.interval, w.interval)) fail(where, `overlaps vacancy ${w.id} of the same role (V32)`);
+		}
+	}
+}
 const resolvedDeclarations = declarations.map((d) => ({
 	...d,
 	...basisFields(d)
@@ -1607,6 +1651,7 @@ const resolvedEducation = education.map((e) => ({
 	push('event', resolvedEvents.map((e) => ({ ...e, title: e.title_en })));
 	push('contract', resolvedContracts.map((c) => ({ ...c, title: c.title_en })));
 	push('licence', resolvedLicences.map((l) => ({ ...l, title: `${l.kind} — ${l.holder}` })));
+	push('vacancy', resolvedVacancies.map((v) => ({ ...v, title: `vacant — ${roleById.get(v.role)?.title_en ?? v.role}` })));
 	push('declaration', resolvedDeclarations.map((d) => ({ ...d, title: `${d.kind} — ${d.declarer ?? 'regime'}` })));
 	push('education', resolvedEducation.map((e) => ({ ...e, title: `${e.degree_en} — ${e.person}` })));
 	queue.sort((a, b) => a.risk - b.risk || b.sources - a.sources || a.kind.localeCompare(b.kind) || a.id.localeCompare(b.id));
@@ -2040,6 +2085,7 @@ const reviewSections: [
 	['company', resolvedCompanies],
 	['contract', resolvedContracts],
 	['licence', resolvedLicences],
+	['vacancy', resolvedVacancies],
 	['declaration', resolvedDeclarations],
 	['education', resolvedEducation],
 	['place', places]
@@ -2098,6 +2144,7 @@ const RAW_BY_TYPE: Record<string, Record<string, unknown>[]> = {
 	companies: companies as unknown as Record<string, unknown>[],
 	contracts: contracts as unknown as Record<string, unknown>[],
 	licences: licences as unknown as Record<string, unknown>[],
+	vacancies: vacancies as unknown as Record<string, unknown>[],
 	declarations: declarations as unknown as Record<string, unknown>[],
 	education: education as unknown as Record<string, unknown>[],
 	// Sources stay out of the authored-prose counter: `excerpt` is quoted material
@@ -2379,6 +2426,7 @@ const dataset = {
 			companies: companies.length,
 			contracts: contracts.length,
 			licences: licences.length,
+			vacancies: vacancies.length,
 			declarations: declarations.length,
 			education: education.length,
 			regions: regions.length,
@@ -2435,6 +2483,7 @@ const dataset = {
 	companies: withOrigins(resolvedCompanies),
 	contracts: withOrigins(resolvedContracts),
 	licences: withOrigins(resolvedLicences),
+	vacancies: withOrigins(resolvedVacancies),
 	declarations: withOrigins(resolvedDeclarations),
 	education: withOrigins(resolvedEducation),
 	regions: resolvedRegions,
@@ -3428,6 +3477,25 @@ export interface Licence extends ClaimAxes {
 	sources: string[];
 }
 
+/** A documented vacancy: an office with no titular holder (decision 0007). */
+export interface Vacancy extends ClaimAxes {
+	id: string;
+	role: string;
+	start: string;
+	end: string;
+	confidence: Confidence;
+	basis: Basis;
+	verification: Verification;
+	attributed_to?: string;
+	reasoning?: string;
+	falsifiable_by?: string;
+	notes: string[];
+	disputes: Dispute[];
+	review?: Review;
+	sources: string[];
+	interval: Interval;
+}
+
 /** A record about a document, not about the world (spec §4.6). */
 export interface Declaration extends ClaimAxes {
 	id: string;
@@ -3492,6 +3560,7 @@ export interface Dataset {
 	companies: Company[];
 	contracts: Contract[];
 	licences: Licence[];
+	vacancies: Vacancy[];
 	declarations: Declaration[];
 	education: Education[];
 	regions: RegionRec[];

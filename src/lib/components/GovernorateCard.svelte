@@ -1,10 +1,13 @@
 <script lang="ts">
 	import { t, tf, nameOf, formatDate, describeInterval, proseList } from '$lib/t.svelte';
 	import { app } from '$lib/state.svelte';
-	import { ds, personById, institutionById, type Position } from '$lib/model';
+	import { ds, personById, institutionById, meetsBasis, type Basis, type Position } from '$lib/model';
+	import type { Vacancy } from '$data/index';
 	import { compact } from '$lib/design/media.svelte';
 	import { sheetDrag, type SheetDragParams } from '$lib/ui/sheet-drag';
-	import { officesAt, officesOver, hasOffice, seatsAt, createdOf, notYet, tenureTag } from '$lib/civic';
+	import { officesAt, officesOver, vacanciesAt, vacanciesOver, hasOffice, seatsAt, createdOf, notYet, tenureTag } from '$lib/civic';
+	import SourceList from './SourceList.svelte';
+	import Prose from '$lib/ui/Prose.svelte';
 	import type { Governorate } from '$lib/world/governorates';
 	import { world } from '$lib/world/store.svelte';
 	import { goto } from '$app/navigation';
@@ -24,6 +27,10 @@
 	 * blank: "no record" means the dataset has nothing for this office, and
 	 * "no holder on this date" means it has the office but not this stretch of it.
 	 * The two are different gaps and the reader should be able to tell them apart.
+	 * A documented vacancy is a third thing: not a gap at all, but a sourced
+	 * statement that nobody held the office titularly (decision 0007). It gets
+	 * its own line with its basis and sources, and an acting holder, if any, is
+	 * listed under it.
 	 */
 
 	interface Props {
@@ -56,13 +63,28 @@
 		return formatDate(c.earliest, p);
 	}
 	const governors = $derived(officesAt(gov.id, app.t));
-	/** Earlier holders, newest first: the record up to the cursor, not after it. */
+	/** A vacancy honours the basis floor like every other claim; below it, it is not shown. */
+	const shown = (v: Vacancy) => meetsBasis(v.basis as Basis, app.basisFloor);
+	const vacant = $derived(vacanciesAt(gov.id, app.t).filter((s) => shown(s.vacancy)));
+	/**
+	 * Earlier holders and documented vacancies, newest first: the record up to
+	 * the cursor, not after it. A vacancy sits in the succession where it fell.
+	 */
 	const history = $derived.by(() => {
-		const now = new Set(governors.map((h) => h.position.id));
-		return officesOver(gov.id)
-			.filter((p) => !now.has(p.id) && p.interval.startEarliest <= app.t)
-			.reverse();
+		const now = new Set([...governors.map((h) => h.position.id), ...vacant.map((s) => s.vacancy.id)]);
+		const rows: ({ kind: 'held'; p: Position } | { kind: 'vacant'; v: Vacancy })[] = [
+			...officesOver(gov.id).map((p) => ({ kind: 'held' as const, p })),
+			...vacanciesOver(gov.id)
+				.filter(shown)
+				.map((v) => ({ kind: 'vacant' as const, v }))
+		];
+		const start = (r: (typeof rows)[number]) => (r.kind === 'held' ? r.p : r.v).interval.startEarliest;
+		const id = (r: (typeof rows)[number]) => (r.kind === 'held' ? r.p : r.v).id;
+		return rows
+			.filter((r) => !now.has(id(r)) && start(r) <= app.t)
+			.sort((a, b) => start(b) - start(a));
 	});
+	const heldBefore = $derived(history.filter((r) => r.kind === 'held').length);
 	const tracked = $derived(hasOffice(gov.id));
 	const terms = $derived(seatsAt(gov.id, app.t));
 
@@ -70,6 +92,11 @@
 		return nameOf(personById.get(p.holder)) || p.holder;
 	}
 </script>
+
+{#snippet chips(basis: string, at: number)}
+	{#if basis !== 'documented'}<i class="chip basis" data-basis={basis} title={t('basis.' + basis)}>{t('basis.' + basis)}</i>{/if}
+	{#if at === 1}<i class="chip">{t('gov.possibly')}</i>{/if}
+{/snippet}
 
 {#snippet person(p: Position, at: number)}
 	{@const tag = tenureTag(p, at)}
@@ -110,21 +137,47 @@
 			<h3>{t('gov.governor')}</h3>
 			{#if !tracked}
 				<p class="gap">{t('gov.governor.none')}</p>
-			{:else if governors.length === 0}
-				<p class="gap">{t('gov.governor.vacant')}</p>
 			{:else}
-				<ul class="people">
-					{#each governors as h (h.position.id)}
-						{@render person(h.position, h.at)}
-					{/each}
-				</ul>
+				{#each vacant as s (s.vacancy.id)}
+					<div class="vacant" data-basis={s.vacancy.basis}>
+						<p class="vacant-head">
+							<span class="vacant-label">{t('gov.vacant')}</span>
+							<span class="when mono">{describeInterval(s.vacancy.interval)}</span>
+							{@render chips(s.vacancy.basis, s.at)}
+						</p>
+						<p class="vacant-what">{t('gov.vacant.what')}</p>
+						<details>
+							<summary>{t('gov.vacant.why')}</summary>
+							{#if s.vacancy.reasoning}<p class="vacant-why" dir="auto"><Prose record={s.vacancy} field="reasoning" block /></p>{/if}
+							{#each proseList(s.vacancy, 'notes').items as n (n)}<p class="gap" dir="auto">{n}</p>{/each}
+							<SourceList ids={s.vacancy.sources} compact />
+						</details>
+					</div>
+				{/each}
+				{#if governors.length}
+					<ul class="people">
+						{#each governors as h (h.position.id)}
+							{@render person(h.position, h.at)}
+						{/each}
+					</ul>
+				{:else if vacant.length === 0}
+					<p class="gap">{t('gov.governor.unrecorded')}</p>
+				{/if}
 			{/if}
 			{#if history.length}
 				<details>
-					<summary>{tf('gov.history', { n: String(history.length) })}</summary>
+					<summary>{tf('gov.history', { n: String(heldBefore) })}</summary>
 					<ul class="people">
-						{#each history as p (p.id)}
-							{@render person(p, 2)}
+						{#each history as r (r.kind === 'held' ? r.p.id : r.v.id)}
+							{#if r.kind === 'held'}
+								{@render person(r.p, 2)}
+							{:else}
+								<li class="vacant-row">
+									<span class="vacant-label">{t('gov.vacant')}</span>
+									<span class="when mono">{describeInterval(r.v.interval)}</span>
+									{@render chips(r.v.basis, 2)}
+								</li>
+							{/if}
 						{/each}
 					</ul>
 				</details>
@@ -276,6 +329,57 @@
 		padding: var(--s-3) var(--s-4);
 		border: 1px dashed var(--border-strong);
 		border-radius: var(--r-md);
+	}
+	/* A documented vacancy is a sourced fact, so it is framed like one: a solid
+	   rule in the basis colour, unlike the faint text of a gap in the record. */
+	.vacant {
+		display: flex;
+		flex-direction: column;
+		gap: var(--s-2);
+		padding: var(--s-3) var(--s-4);
+		border: 1px solid var(--border-default);
+		border-inline-start: 3px solid var(--basis-reported);
+		border-radius: var(--r-md);
+		margin-bottom: var(--s-3);
+	}
+	.vacant[data-basis='documented'] {
+		border-inline-start-color: var(--basis-documented);
+	}
+	.vacant[data-basis='inferred'] {
+		border-inline-start-style: dashed;
+		border-inline-start-color: var(--basis-inferred);
+	}
+	.vacant-head {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: var(--s-2) var(--s-3);
+	}
+	.vacant-label {
+		font-size: var(--t-sm);
+		font-weight: 600;
+		color: var(--text-primary);
+	}
+	.vacant-row .vacant-label {
+		font-weight: 400;
+		color: var(--text-secondary);
+	}
+	.vacant-what,
+	.vacant-why {
+		font-size: var(--t-xs);
+		line-height: var(--lh-relaxed);
+		color: var(--text-secondary);
+	}
+	/* The shared prose style is sized for panels; here it reads at the card's size. */
+	.vacant-why :global(.prose) {
+		font-size: inherit;
+		line-height: inherit;
+	}
+	.vacant details summary {
+		margin-top: 0;
+	}
+	.vacant details > :global(*:not(summary)) {
+		margin-top: var(--s-2);
 	}
 	.gap,
 	.prov {

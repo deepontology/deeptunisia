@@ -32,6 +32,7 @@ contract,inferred,1,0,0,0,0,0,0
 contract,unsubstantiated,2,0,0,0,0,0,0
 licence,documented,6,0,0,0,0,0,0
 licence,reported,5,0,0,0,0,0,0
+vacancy,reported,1,0,0,0,0,0,0
 declaration,documented,3,0,0,0,0,0,0
 declaration,reported,6,0,0,0,0,0,0
 education,reported,24,0,0,0,0,0,0
