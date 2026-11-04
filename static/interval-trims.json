@@ -4867,6 +4867,48 @@
     }
   },
   {
+    "kind": "relationship",
+    "id": "rel-bourguiba-amor-msadek-appointment-kairouan-1970",
+    "start": "1970-01-08",
+    "end": "1970",
+    "interval": {
+      "startEarliest": 604800000,
+      "startLatest": 604800000,
+      "endEarliest": 604800000,
+      "endLatest": 31535999000,
+      "startPrecision": "day",
+      "endPrecision": "year",
+      "status": "ended",
+      "lastObserved": 604800000,
+      "trimmed": true,
+      "raw": {
+        "start": "1970-01-08",
+        "end": "1970"
+      }
+    }
+  },
+  {
+    "kind": "relationship",
+    "id": "rel-bourguiba-hassen-louzir-appointment-jendouba-1971",
+    "start": "1971-03-12",
+    "end": "1971",
+    "interval": {
+      "startEarliest": 37584000000,
+      "startLatest": 37584000000,
+      "endEarliest": 37584000000,
+      "endLatest": 63071999000,
+      "startPrecision": "day",
+      "endPrecision": "year",
+      "status": "ended",
+      "lastObserved": 37584000000,
+      "trimmed": true,
+      "raw": {
+        "start": "1971-03-12",
+        "end": "1971"
+      }
+    }
+  },
+  {
     "kind": "event",
     "id": "military-security-created",
     "start": "1964",

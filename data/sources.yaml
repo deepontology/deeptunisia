@@ -24762,3 +24762,23 @@
   excerpt: Madame Saloua Labiadh Mohsni, gouverneur de Zaghouan, est mutée en ses mêmes fonctions aux services centraux
     du ministère de l'intérieur et du développement local, à compter du 21 août 2008.
   note: French edition printed as 'traduction française pour information'; OCR text, accents and spellings as printed.
+- id: jort-1959-030-constitution
+  title: Loi n° 59-57 du 1er juin 1959, portant promulgation de la Constitution de la République tunisienne (JORT n° 30 du 1er juin 1959)
+  publisher: Journal Officiel de la République Tunisienne (archive officielle, ocr.jort.tn / lake.jort.tn)
+  date: '1959-06-01'
+  url: https://ocr.jort.tn/journal-officiel/fr/1959/030.md
+  tier: 1
+  lang: ar
+  excerpt: رئيس الجمهورية يسهر على تنفيذ النصوص التشريعيّة وهو الذي يسند الوظائف المدنية والعسكرية
+  excerpt_fr: Le Président de la République veille à l'exécution des textes législatifs et c'est lui qui attribue les fonctions civiles et militaires.
+  excerpt_fr_by: machine
+  note: Article 45 of the original constitution, quoted from the Arabic text this address serves. The OCR text prints this article's heading as the forty-eighth, but it sits between the forty-fourth and the forty-sixth. Cited on governor appointment and dismissal edges from June 1959 to April 1976, because the gazette prints those decrees without a signature; this article is what makes the President in office on the decree date the signing authority.
+- id: jort-1976-026-loi-constitutionnelle-76-37
+  title: Loi constitutionnelle n° 76-37 du 8 avril 1976, modifiant et complétant la Constitution du 1er juin 1959 (JORT n° 26 du 9 au 13 avril 1976)
+  publisher: Journal Officiel de la République Tunisienne (archive officielle, ocr.jort.tn / lake.jort.tn)
+  date: '1976-04-08'
+  url: https://ocr.jort.tn/journal-officiel/fr/1976/026.md
+  tier: 1
+  lang: fr
+  excerpt: Art. 55. — Le Président de la République nomme aux emplois supérieurs civils et militaires, sur proposition du Gouvernement.
+  note: In force until constitutional law 2002-51 of 1 June 2002 rewrote article 55 and allowed the President to delegate some of these appointments to the Prime Minister. Cited on governor appointment and dismissal edges from April 1976 to June 2002, because the gazette prints those decrees without a signature; this article is what makes the President in office on the decree date the signing authority.
