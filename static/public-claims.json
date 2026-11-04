@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-04T17:17:06.173Z",
-  "cutoff": "2026-10-25",
+  "generatedAt": "2026-11-04T17:45:50.567Z",
+  "cutoff": "2026-11-03",
   "counts": {
     "claims": 82,
     "current": 80,
@@ -14,8 +14,8 @@
       "id": "people-total",
       "kind": "metric",
       "claim": "People recorded in the published graph.",
-      "value": "2474",
-      "display": "2474",
+      "value": "2476",
+      "display": "2476",
       "format": "plain",
       "population": "person records in the published graph",
       "lifecycle": "current",
@@ -29,7 +29,7 @@
         "key": "people"
       },
       "basis": "src/generated/stats.json#people",
-      "asOf": "2026-10-25",
+      "asOf": "2026-11-03",
       "surfaces": [
         {
           "path": "landing/index.html",
@@ -47,8 +47,8 @@
       "id": "positions-total",
       "kind": "metric",
       "claim": "Officeholdings recorded in the published graph.",
-      "value": "3055",
-      "display": "3055",
+      "value": "3056",
+      "display": "3056",
       "format": "plain",
       "population": "position records in the published graph",
       "lifecycle": "current",
@@ -62,7 +62,7 @@
         "key": "positions"
       },
       "basis": "src/generated/stats.json#positions",
-      "asOf": "2026-10-25",
+      "asOf": "2026-11-03",
       "surfaces": [
         {
           "path": "landing/index.html",
@@ -115,7 +115,7 @@
         "key": "institutions"
       },
       "basis": "src/generated/stats.json#institutions",
-      "asOf": "2026-10-25",
+      "asOf": "2026-11-03",
       "surfaces": [
         {
           "path": "landing/index.html",
@@ -143,7 +143,7 @@
         "key": "relationships"
       },
       "basis": "src/generated/stats.json#relationships",
-      "asOf": "2026-10-25",
+      "asOf": "2026-11-03",
       "surfaces": [
         {
           "path": "landing/index.html",
@@ -161,8 +161,8 @@
       "id": "sources-total",
       "kind": "metric",
       "claim": "Sources defined in the library.",
-      "value": "2501",
-      "display": "2501",
+      "value": "2522",
+      "display": "2522",
       "format": "plain",
       "population": "sources defined in data/sources.yaml",
       "lifecycle": "current",
@@ -176,7 +176,7 @@
         "key": "sources"
       },
       "basis": "src/generated/stats.json#sources",
-      "asOf": "2026-10-25",
+      "asOf": "2026-11-03",
       "surfaces": [
         {
           "path": "landing/index.html",
@@ -234,8 +234,8 @@
       "id": "sources-cited",
       "kind": "metric",
       "claim": "Sources that back at least one claim.",
-      "value": "2437",
-      "display": "2437",
+      "value": "2451",
+      "display": "2451",
       "format": "plain",
       "population": "sources defined in data/sources.yaml that back at least one claim",
       "lifecycle": "current",
@@ -249,15 +249,15 @@
         "key": "sourcesCited"
       },
       "basis": "src/generated/stats.json#sourcesCited",
-      "asOf": "2026-10-25",
+      "asOf": "2026-11-03",
       "surfaces": []
     },
     {
       "id": "sources-uncited",
       "kind": "metric",
       "claim": "Sources kept as staged reading and excluded from the published count.",
-      "value": "64",
-      "display": "64",
+      "value": "71",
+      "display": "71",
       "format": "plain",
       "population": "sources defined in data/sources.yaml that back no claim",
       "lifecycle": "current",
@@ -271,7 +271,7 @@
         "key": "sourcesUncited"
       },
       "basis": "src/generated/stats.json#sourcesUncited",
-      "asOf": "2026-10-25",
+      "asOf": "2026-11-03",
       "surfaces": [
         {
           "path": "landing/index.html",
@@ -299,8 +299,8 @@
       "id": "events-total",
       "kind": "metric",
       "claim": "Events recorded in the published graph.",
-      "value": "175",
-      "display": "175",
+      "value": "184",
+      "display": "184",
       "format": "plain",
       "population": "event records in the published graph",
       "lifecycle": "current",
@@ -314,7 +314,7 @@
         "key": "events"
       },
       "basis": "src/generated/stats.json#events",
-      "asOf": "2026-10-25",
+      "asOf": "2026-11-03",
       "surfaces": [
         {
           "path": "landing/index.html",
@@ -342,7 +342,7 @@
         "key": "successionGaps"
       },
       "basis": "src/generated/stats.json#successionGaps",
-      "asOf": "2026-10-25",
+      "asOf": "2026-11-03",
       "surfaces": [
         {
           "path": "landing/index.html",
@@ -385,7 +385,7 @@
         "key": "successionOverlaps"
       },
       "basis": "src/generated/stats.json#successionOverlaps",
-      "asOf": "2026-10-25",
+      "asOf": "2026-11-03",
       "surfaces": [
         {
           "path": "landing/index.html",
@@ -413,8 +413,8 @@
       "id": "contradictions",
       "kind": "metric",
       "claim": "Source contradictions recorded unresolved.",
-      "value": "69",
-      "display": "69",
+      "value": "71",
+      "display": "71",
       "format": "plain",
       "population": "unresolved source contradictions in the published graph",
       "lifecycle": "current",
@@ -428,7 +428,7 @@
         "key": "contradictions"
       },
       "basis": "src/generated/stats.json#contradictions",
-      "asOf": "2026-10-25",
+      "asOf": "2026-11-03",
       "surfaces": [
         {
           "path": "landing/index.html",
@@ -441,8 +441,8 @@
       "id": "needs-primary-source",
       "kind": "metric",
       "claim": "Records awaiting a primary source.",
-      "value": "233",
-      "display": "233",
+      "value": "236",
+      "display": "236",
       "format": "plain",
       "population": "records resting on secondary reporting",
       "lifecycle": "current",
@@ -456,7 +456,7 @@
         "key": "needsPrimarySource"
       },
       "basis": "src/generated/stats.json#needsPrimarySource",
-      "asOf": "2026-10-25",
+      "asOf": "2026-11-03",
       "surfaces": [
         {
           "path": "landing/index.html",
@@ -484,7 +484,7 @@
         "key": "hypotheses"
       },
       "basis": "src/generated/stats.json#hypotheses",
-      "asOf": "2026-10-25",
+      "asOf": "2026-11-03",
       "surfaces": [
         {
           "path": "README.md",
@@ -527,7 +527,7 @@
         "key": "documented"
       },
       "basis": "src/generated/stats.json#documented",
-      "asOf": "2026-10-25",
+      "asOf": "2026-11-03",
       "surfaces": [
         {
           "path": "landing/index.html",
@@ -555,8 +555,8 @@
       "id": "basis-reported",
       "kind": "epistemic-state",
       "claim": "Claims whose basis is reported.",
-      "value": "3487",
-      "display": "3487",
+      "value": "3489",
+      "display": "3489",
       "format": "plain",
       "population": "claim-bearing records with basis=reported",
       "lifecycle": "current",
@@ -570,7 +570,7 @@
         "key": "reported"
       },
       "basis": "src/generated/stats.json#reported",
-      "asOf": "2026-10-25",
+      "asOf": "2026-11-03",
       "surfaces": [
         {
           "path": "landing/index.html",
@@ -598,8 +598,8 @@
       "id": "basis-inferred",
       "kind": "epistemic-state",
       "claim": "Claims whose basis is inferred.",
-      "value": "54",
-      "display": "54",
+      "value": "62",
+      "display": "62",
       "format": "plain",
       "population": "claim-bearing records with basis=inferred",
       "lifecycle": "current",
@@ -613,7 +613,7 @@
         "key": "inferred"
       },
       "basis": "src/generated/stats.json#inferred",
-      "asOf": "2026-10-25",
+      "asOf": "2026-11-03",
       "surfaces": [
         {
           "path": "landing/index.html",
@@ -656,7 +656,7 @@
         "key": "unsubstantiated"
       },
       "basis": "src/generated/stats.json#unsubstantiated",
-      "asOf": "2026-10-25",
+      "asOf": "2026-11-03",
       "surfaces": [
         {
           "path": "landing/index.html",
@@ -770,8 +770,8 @@
       "id": "source-tier-3",
       "kind": "metric",
       "claim": "Sources at tier 3.",
-      "value": 747,
-      "display": "747",
+      "value": 766,
+      "display": "766",
       "format": "plain",
       "population": "sources with tier=3",
       "lifecycle": "current",
@@ -813,8 +813,8 @@
       "id": "source-tier-4",
       "kind": "metric",
       "claim": "Sources at tier 4.",
-      "value": 435,
-      "display": "435",
+      "value": 437,
+      "display": "437",
       "format": "plain",
       "population": "sources with tier=4",
       "lifecycle": "current",
@@ -899,8 +899,8 @@
       "id": "graph-hash",
       "kind": "metric",
       "claim": "Canonical graph hash (the release identity).",
-      "value": "dfc1d8a9ffc0b19384ab8807cfdf85c8ea133b87fb042791120f7d6fb4d1554b",
-      "display": "dfc1d8a9ffc0b19384ab8807cfdf85c8ea133b87fb042791120f7d6fb4d1554b",
+      "value": "2ce90732d126878e6f98124bd78a8841495b6168ab7d68c5064994687f8ed837",
+      "display": "2ce90732d126878e6f98124bd78a8841495b6168ab7d68c5064994687f8ed837",
       "format": "text",
       "population": "the stable projection of the emitted bundle — NOT the landing visuals marker, which ties DENSITY/NODES/EDGES to dataset.json and is never production graph identity",
       "lifecycle": "current",
@@ -921,8 +921,8 @@
       "id": "graph-cutoff",
       "kind": "metric",
       "claim": "Dataset cutoff date.",
-      "value": "2026-10-25",
-      "display": "2026-10-25",
+      "value": "2026-11-03",
+      "display": "2026-11-03",
       "format": "iso-date",
       "population": "parameters.time.cutoff",
       "lifecycle": "current",
@@ -965,8 +965,8 @@
       "id": "payload-internal",
       "kind": "metric",
       "claim": "Internal graph bundle size.",
-      "value": "14070",
-      "display": "14070",
+      "value": "14120",
+      "display": "14120",
       "format": "plain",
       "population": "the in-memory graph bundle, rounded to 10 KB",
       "lifecycle": "current",
@@ -980,15 +980,15 @@
         "key": "graphKB"
       },
       "basis": "src/generated/stats.json#graphKB",
-      "asOf": "2026-10-25",
+      "asOf": "2026-11-03",
       "surfaces": []
     },
     {
       "id": "payload-shipped",
       "kind": "metric",
       "claim": "Public export payload size.",
-      "value": 25630,
-      "display": "25630",
+      "value": 25710,
+      "display": "25710",
       "format": "plain",
       "population": "the public exports on disk (dataset, CSVs, geometry, changelog, topology)",
       "lifecycle": "current",
@@ -1009,8 +1009,8 @@
       "id": "payload-shipped-mb",
       "kind": "metric",
       "claim": "Public export payload, in megabytes.",
-      "value": "25630",
-      "display": "25.0",
+      "value": "25710",
+      "display": "25.1",
       "format": "mb1",
       "population": "the public exports on disk, rendered in MB",
       "lifecycle": "current",
@@ -1024,7 +1024,7 @@
         "key": "shippedKB"
       },
       "basis": "src/generated/stats.json#shippedKB",
-      "asOf": "2026-10-25",
+      "asOf": "2026-11-03",
       "surfaces": [
         {
           "path": "landing/index.html",
@@ -1052,8 +1052,8 @@
       "id": "dataset-export-size",
       "kind": "metric",
       "claim": "Canonical bundle size.",
-      "value": 20106,
-      "display": "19.6",
+      "value": 20173,
+      "display": "19.7",
       "format": "mb1",
       "population": "static/dataset.json on disk, rounded to the nearest KB",
       "lifecycle": "current",
@@ -1128,8 +1128,8 @@
       "id": "review-editorial-denominator",
       "kind": "metric",
       "claim": "Reviewable records, the editorial-note denominator.",
-      "value": 8737,
-      "display": "8737",
+      "value": 8750,
+      "display": "8750",
       "format": "plain",
       "population": "reviewable records (the denominator for editorial notes)",
       "lifecycle": "current",
@@ -1171,15 +1171,15 @@
         "key": "reviewed"
       },
       "basis": "src/generated/stats.json#reviewed",
-      "asOf": "2026-10-25",
+      "asOf": "2026-11-03",
       "surfaces": []
     },
     {
       "id": "review-editorial-denominator-stat",
       "kind": "metric",
       "claim": "Reviewable records, as emitted for tagged documents.",
-      "value": "8737",
-      "display": "8737",
+      "value": "8750",
+      "display": "8750",
       "format": "plain",
       "population": "reviewable records (the denominator for editorial notes)",
       "lifecycle": "current",
@@ -1193,7 +1193,7 @@
         "key": "reviewable"
       },
       "basis": "src/generated/stats.json#reviewable",
-      "asOf": "2026-10-25",
+      "asOf": "2026-11-03",
       "surfaces": []
     },
     {
@@ -1215,7 +1215,7 @@
         "key": "independent"
       },
       "basis": "src/generated/stats.json#independent",
-      "asOf": "2026-10-25",
+      "asOf": "2026-11-03",
       "surfaces": []
     },
     {
@@ -1287,8 +1287,8 @@
       "id": "review-flag-attributed",
       "kind": "metric",
       "claim": "Records that name who is making the claim.",
-      "value": 2833,
-      "display": "2833",
+      "value": 2846,
+      "display": "2846",
       "format": "plain",
       "population": "records flagged attributed (flags overlap)",
       "lifecycle": "current",
@@ -1330,8 +1330,8 @@
       "id": "review-flag-inferred",
       "kind": "metric",
       "claim": "Records flagged inferred.",
-      "value": 67,
-      "display": "67",
+      "value": 77,
+      "display": "77",
       "format": "plain",
       "population": "records flagged inferred (flags overlap)",
       "lifecycle": "current",
@@ -1388,7 +1388,7 @@
         "key": "reviewed-unsubstantiated"
       },
       "basis": "src/generated/stats.json#reviewed-unsubstantiated",
-      "asOf": "2026-10-25",
+      "asOf": "2026-11-03",
       "surfaces": []
     },
     {
@@ -1410,7 +1410,7 @@
         "key": "reviewed-attributed"
       },
       "basis": "src/generated/stats.json#reviewed-attributed",
-      "asOf": "2026-10-25",
+      "asOf": "2026-11-03",
       "surfaces": []
     },
     {
@@ -1432,7 +1432,7 @@
         "key": "reviewed-inferred"
       },
       "basis": "src/generated/stats.json#reviewed-inferred",
-      "asOf": "2026-10-25",
+      "asOf": "2026-11-03",
       "surfaces": []
     },
     {
@@ -1454,15 +1454,15 @@
         "key": "reviewable-unsubstantiated"
       },
       "basis": "src/generated/stats.json#reviewable-unsubstantiated",
-      "asOf": "2026-10-25",
+      "asOf": "2026-11-03",
       "surfaces": []
     },
     {
       "id": "review-denominator-attributed",
       "kind": "metric",
       "claim": "Records flagged attributed.",
-      "value": "2833",
-      "display": "2833",
+      "value": "2846",
+      "display": "2846",
       "format": "plain",
       "population": "records flagged attributed",
       "lifecycle": "current",
@@ -1476,15 +1476,15 @@
         "key": "reviewable-attributed"
       },
       "basis": "src/generated/stats.json#reviewable-attributed",
-      "asOf": "2026-10-25",
+      "asOf": "2026-11-03",
       "surfaces": []
     },
     {
       "id": "review-denominator-inferred",
       "kind": "metric",
       "claim": "Records flagged inferred.",
-      "value": "67",
-      "display": "67",
+      "value": "77",
+      "display": "77",
       "format": "plain",
       "population": "records flagged inferred",
       "lifecycle": "current",
@@ -1498,7 +1498,7 @@
         "key": "reviewable-inferred"
       },
       "basis": "src/generated/stats.json#reviewable-inferred",
-      "asOf": "2026-10-25",
+      "asOf": "2026-11-03",
       "surfaces": []
     },
     {
@@ -1548,8 +1548,8 @@
       "id": "editorial-queue-total",
       "kind": "metric",
       "claim": "Records in the editorial queue.",
-      "value": 5843,
-      "display": "5843",
+      "value": 5854,
+      "display": "5854",
       "format": "plain",
       "population": "the editorial queue worklist (separate from review notes and independent checks)",
       "lifecycle": "current",
@@ -1680,8 +1680,8 @@
       "id": "data-prose-strings-total",
       "kind": "translation-state",
       "claim": "Translatable strings in dataset prose.",
-      "value": 8318,
-      "display": "8,318",
+      "value": 8336,
+      "display": "8,336",
       "format": "comma",
       "population": "dataset prose strings requiring translation (French denominator; Arabic is the same set)",
       "lifecycle": "current",
@@ -2213,8 +2213,8 @@
       "id": "world-snapshot",
       "kind": "metric",
       "claim": "World snapshot generation date.",
-      "value": "2026-11-04T17:17:03.514Z",
-      "display": "2026-11-04T17:17:03.514Z",
+      "value": "2026-11-04T17:45:47.906Z",
+      "display": "2026-11-04T17:45:47.906Z",
       "format": "iso-date",
       "population": "src/generated/world.json snapshot",
       "lifecycle": "current",

@@ -25120,3 +25120,276 @@
   excerpt: 'Par arrêté du Secrétaire d''État à la Présidence du 4 juin 1960 (9 dont hidja 1379) : M. Mohsen
     Nouira, Gouverneur de Tunis et Banlieue, est nommé Administrateur de l''O.M.V.V.M., en remplacement
     de M. Ahmed Zaouche.'
+
+# ---------------------------------------------------------------------------
+# Daily sweep 2026-10-25 to 2026-11-03 (data/contrib/daily-2026-11-03.yaml)
+# ---------------------------------------------------------------------------
+- id: am-ounissi-verdict-2026-10-28
+  title: 9 ans pour Ounissi et 4 ans pour Zied El Heni
+  publisher: African Manager
+  date: '2026-10-28'
+  url: https://africanmanager.com/terrorisme-neuf-ans-de-prison-pour-mondher-ounissi-et-quatre-ans-pour-zied-el-heni/
+  tier: 3
+  lang: fr
+  excerpt: La chambre criminelle spécialisée dans les affaires de terrorisme près le tribunal de première
+    instance de Tunis a condamné mardi soir Mondher Ounissi à neuf ans de prison et Zied El Heni à quatre
+    ans de prison, avec exécution immédiate, a indiqué une source judiciaire à l’agence TAP.
+  note: Prints "Mondher Lounissi" in parts of the piece; the person is Mondher Ounissi. The judicial source
+    is cited to TAP. The body gives the charges and lists the 25-year co-defendants, including "Rafik
+    Bouchlaka" and "Shahrazad Akacha".
+- id: kapitalis-ounissi-verdict-2026-10-28
+  title: Tunisie | Des activistes politiques condamnés à des peines de 4 à 25 ans de prison
+  publisher: Kapitalis
+  date: '2026-10-28'
+  url: https://kapitalis.com/tunisie/2026/10/28/tunisie-des-activistes-politiques-condamnes-a-des-peines-de-4-a-25-ans-de-prison/
+  tier: 3
+  lang: fr
+  excerpt: La chambre pénale spécialisée dans les affaires de terrorisme, près le Tribunal de première
+    instance de Tunis, a prononcé, mardi soir, 27 octobre 2026, des peines d’emprisonnement allant de
+    4 à 25 ans dans l’affaire de la fuite d’enregistrements sonores dans laquelle est impliqué, notamment,
+    Dr Mondher Ounissi, haut responsable du mouvement Ennahdha, a indiqué une source judiciaire à Diwan
+    FM.
+  note: Cites a judicial source to Diwan FM, not TAP. Reports four charges (terrorist organisation, disclosure
+    of secrets, failure to denounce, foreign contacts) and the case history from September 2023.
+- id: kapitalis-crldht-audio-verdict-2026-10-29
+  title: Le CRLDHT exige la libération des personnes détenues dans l’affaire dite «des enregistrements
+    audio»
+  publisher: Kapitalis
+  date: '2026-10-29'
+  url: https://kapitalis.com/tunisie/2026/10/29/le-crldht-exige-la-liberation-des-personnes-detenues-dans-laffaire-dite-des-enregistrements-audio/
+  tier: 4
+  lang: fr
+  excerpt: Le Comité pour le respect des libertés et des droits de l’Homme en Tunisie (CRLDHT) condamne
+    avec la plus grande fermeté le jugement rendu le 27 octobre 2026 par la chambre criminelle spécialisée
+    dans les affaires de terrorisme du tribunal de première instance de Tunis, dans l’affaire dite des
+    «enregistrements audio» attribués à Mondher Ounissi.
+  note: 'Republishes the CRLDHT communiqué of 28 October 2026, an advocacy organisation''s account rather
+    than a court record. It lists the eleven convicted and notes that "Rafik Abdessalem, également connu
+    sous le nom de Rafik Bouchlaka" is one person. It also gives the procedural history: release request
+    rejected on 10 July 2026, hearing set for 25 September, postponed to 16 October and then to 27 October
+    for lack of quorum.'
+- id: am-ben-fadhel-verdict-2026-10-31
+  title: Riadh Ben Fadhel condamné à 20 ans de prison
+  publisher: African Manager
+  date: '2026-10-31'
+  url: https://africanmanager.com/riadh-ben-fadhel-condamne-a-20-ans-de-prison-dans-une-affaire-de-corruption-financiere/
+  tier: 3
+  lang: fr
+  excerpt: La chambre criminelle spécialisée dans les affaires de corruption financière près le Tribunal
+    de première instance de Tunis a condamné, jeudi soir, Riadh Ben Fadhel à 20 ans de prison, a indiqué
+    vendredi à l’agence TAP une source judiciaire.
+  note: Says 28 other defendants were sentenced to nine years each, with fines over 11 million dinars
+    against the accused and 14 companies. The judicial source is cited to TAP.
+- id: kapitalis-ben-fadhel-verdict-2026-10-30
+  title: Riadh Ben Fadhel condamné à 20 ans de prison | Al-Qotb dénonce «un verdict inique»
+  publisher: Kapitalis
+  date: '2026-10-30'
+  url: https://kapitalis.com/tunisie/2026/10/30/riadh-ben-fadhel-condamne-a-20-ans-de-prison-al-qotb-denonce-un-verdict-inique/
+  tier: 3
+  lang: fr
+  excerpt: A la suite de la condamnation de son coordinateur général, l’homme d’affaires Riadh Ben Fadhel,
+    incarcéré depuis le 14 novembre 2023, à vingt ans de prison, ainsi que 18 autres co-accusés à 9 ans
+    de prison, pour des accusations relevant de délits économiques (blanchiment d’argent, corruption administrative
+    et financière dans la gestion des biens confisqués), le parti Al-Qotb (centre-gauche), a publié, ce
+    vendredi 30 octobre 2026 le communiqué reproduit ci-dessous.
+  note: Says 18 co-accused at nine years, against African Manager's 28. The piece reproduces the Al-Qotb
+    communiqué, which calls the verdict a political revenge.
+- id: am-el-menzah-stadium-2026-10-31
+  title: deux Chinoises reconstruiront le stade d’El Menzah pour 600 MDT
+  publisher: African Manager
+  date: '2026-10-31'
+  url: https://africanmanager.com/signature-du-contrat-commercial-pour-la-reconstruction-du-stade-olympique-del-menzah/
+  tier: 3
+  lang: fr
+  excerpt: 'La cérémonie de signature du contrat commercial pour la reconstruction du stade olympique
+    d’El Menzah a été tenue jeudi, au siège du ministère de l’Équipement et de l’habitat, entre l’État
+    tunisien, représenté par le ministère de l’Équipement et les représentants du consortium de deux entreprises
+    : China Railway Construction Engineering Group / China CAMC Engineering (CRCEG/CAMCE).'
+  note: Relays a ministry communiqué of 30 October 2026. Cost given as about 520-600 MDT for 30-36 months;
+    the Commission des grands projets decided on 8 October 2026 to award the contract to a Chinese company.
+- id: am-fades-loans-2026-10-27
+  title: 'Tunisie- FADES : 2 prêts de 432 MDT pour infrastructures'
+  publisher: African Manager
+  date: '2026-10-27'
+  url: https://africanmanager.com/tunisie-fades-signature-de-deux-accords-de-pret-dune-valeur-de-432-mdt/
+  tier: 3
+  lang: fr
+  excerpt: Le ministre de l’Économie et de la Planification, Samir Abdelhafidh, et le directeur général
+    et président du conseil d’administration du Fonds Arabe pour le Développement Economique et Social
+    (FADES), Faouzi Youssef Al-Hunaif, ont signé, mardi, à Tunis, deux accords de prêt d’un montant de
+    432 millions de dinars tunisiens (MDT).
+  note: Gives 288 MDT (30 million Kuwaiti dinars) for the Bou Salem-Fernana motorway and 144 MDT (15 million
+    Kuwaiti dinars) for rural tracks; the components sum to the 432 MDT total. The piece also says the
+    annual meetings of Arab financial institutions will be held in Tunisia on 28-29 April 2027.
+- id: am-zaafrani-kremlin-2026-10-29
+  title: La cheffe du gouvernement reçue au Kremlin par Vladimir Poutine
+  publisher: African Manager
+  date: '2026-10-29'
+  url: https://africanmanager.com/la-cheffe-du-gouvernement-recue-au-kremlin-par-vladimir-poutine/
+  tier: 3
+  lang: fr
+  excerpt: Le président russe, Vladimir Poutine, a reçu mercredi soir au Kremlin la cheffe du gouvernement
+    Sarra Zaâfrani Zenzri, ainsi que plusieurs chefs d’État et de gouvernement participant au troisième
+    sommet Russie-Afrique, organisé à Moscou.
+  note: Relays the government's information and communication services. Says the official visit ran from
+    27 to 29 October 2026 and that the presidency charged her with attending the 28-29 October summit.
+    No bilateral agreement or joint statement is announced.
+- id: am-safe-sea-26-2026-10-27
+  title: Lancement de l’exercice naval élargi « Safe Sea 26 »
+  publisher: African Manager
+  date: '2026-10-27'
+  url: https://africanmanager.com/lancement-de-la-3e-edition-de-lexercice-naval-elargi-safe-sea-26/
+  tier: 3
+  lang: fr
+  excerpt: La base navale de La Goulette a accueilli, lundi, la cérémonie d’ouverture de la troisième
+    édition de l’exercice naval élargi « Safe Sea 26 », organisé par la Marine nationale dans le golfe
+    de Tunis, du 26 au 30 octobre, avec la participation des différentes structures nationales concernées
+    par la sécurité et la sûreté maritimes, ainsi que la présence d’observateurs issus des marines de
+    pays frères et amis.
+  note: Relays a Ministry of National Defence communiqué. No participating countries are named.
+- id: am-arp-wells-law-2026-10-29
+  title: 'ARP: une loi pour régulariser les puits agricoles non autorisés'
+  publisher: African Manager
+  date: '2026-10-29'
+  url: https://africanmanager.com/arp-une-loi-pour-regulariser-les-puits-agricoles-non-autorises/
+  tier: 3
+  lang: fr
+  excerpt: L’Assemblée des représentants du peuple (ARP) a adopté, mardi, le projet de loi relatif à la
+    régularisation des puits agricoles non autorisés, avec 79 voix pour, 7 contre et 10 abstentions, selon
+    mosaique fm.
+  note: Relays Mosaique FM. The text regularises deep wells drilled before 10 December 2024 against a
+    3,500-dinar fee; applications are due by 31 December 2027.
+- id: am-ugtt-hydrocarbon-strike-2026-11-02
+  title: 'Hydrocarbures : L’UGTT émet un préavis de grève pour novembre'
+  publisher: African Manager
+  date: '2026-11-02'
+  url: https://africanmanager.com/transport-des-hydrocarbures-lugtt-emet-un-preavis-de-greve-pour-les-23-24-et-25-novembre/
+  tier: 3
+  lang: fr
+  excerpt: Le département du secteur privé relevant de l’Union Générale Tunisienne du Travail (UGTT) a
+    publié lundi, un préavis d’une grève sectorielle générale dans les entreprises de transport des hydrocarbures
+    de trois jours (du 23 au 25 novembre 2026) sur l’ensemble du territoire tunisien.
+  note: Relays the UGTT communiqué. The notice cites the blocked implementation of a 2 May 2019 agreement
+    and article 377 of the Labour Code; the agreement itself was not retrieved.
+- id: am-advent-vermeg-2026-11-03
+  title: Badreddine Ouali vend le groupe tunisien Vermeg
+  publisher: African Manager
+  date: '2026-11-03'
+  url: https://africanmanager.com/advent-annonce-avoir-conclu-un-accord-pour-lacquisition-du-groupe-tunisien-vermeg/
+  tier: 3
+  lang: fr
+  excerpt: Le fonds américain de capital-investissement Advent International, a annoncé, lundi, avoir
+    conclu un accord en vue d’acquérir Vermeg, éditeur mondial de logiciels pour les marchés de capitaux
+    et l’assurance-vie, auprès de la société de capital-investissement Charterhouse Capital Partners et
+    de son fondateur, Badreddine Ouali.
+  note: Relays the buyer's announcement. Completion is expected in the first half of 2027 subject to regulatory
+    approvals; Ouali retains a stake and will be vice-chairman.
+- id: kapitalis-pompeo-zenith-2026-10-29
+  title: Mike Pompeo défendra les intérêts de Zenith Energy contre la Tunisie
+  publisher: Kapitalis
+  date: '2026-10-29'
+  url: https://kapitalis.com/tunisie/2026/10/29/mike-pompeo-defendra-les-interets-de-zenith-energy-contre-la-tunisie/
+  tier: 3
+  lang: fr
+  excerpt: La société énergétique Zenith Energy a engagé l’ancien secrétaire d’État américain Mike Pompeo
+    en tant que conseiller stratégique dans le cadre d’un litige arbitral l’opposant à la Tunisie. Le
+    groupe réclame une indemnisation d’environ 573 millions de dollars (près de 1,5 milliard de dinars),
+    soit près de 495 millions d’euros.
+  note: With Agenzia Nova. The claim amount is Zenith's, not an adjudicated debt; Tunisia contests the
+    claim; the award is expected in the first quarter of 2027.
+- id: am-etap-marzouki-2026-10-25
+  title: La femme qui gère, par intérim, un CA de 2,1 Mds DT, et toutes les hydrocarbures
+  publisher: African Manager
+  date: '2026-10-25'
+  url: https://africanmanager.com/la-femme-qui-gere-par-interim-un-ca-de-21-mds-dt-et-toutes-les-hydrocarbures/
+  tier: 3
+  lang: fr
+  excerpt: Issue du ministère tunisien, de l’industrie, des mines et de l’énergie où Salah Zouari assure
+    l’intérim depuis le 28 avril 2026, Rania Marzouki assure l’intérim de Dalila Bouattour, partie à la
+    retraite depuis août dernier de l’ETAP, une entreprise publique qui pèse plus de 2 Mds DT en chiffre
+    d’affaires.
+  note: Gives Marzouki's ministry background but not her start date. The piece is largely about the El
+    Menzah concession transfer and is dated 25 October 2026.
+- id: am-sonede-afdb-2026-11-03
+  title: Prêt BAD de 111,5 M€ pour le réseau de la Sonede
+  publisher: African Manager
+  date: '2026-11-03'
+  url: https://africanmanager.com/examen-en-urgence-dun-projet-de-loi-portant-approbation-dun-pret-de-la-bad-pour-moderniser-le-reseau-de-la-sonede/
+  tier: 3
+  lang: fr
+  excerpt: Le bureau de l’Assemblée des représentants du peuple (ARP) a transmis, lors de sa réunion tenue
+    hier lundi, à la commission des finances et du budget, avec demande d’examen en urgence, un projet
+    de loi portant approbation d’une convention de garantie conclue entre la République tunisienne et
+    la Banque africaine de développement d’un montant de 111,5 millions d’euros.
+  note: The underlying guarantee agreement is already recorded as agr-tunisia-afdb-sonede-gct-2026 (signed
+    22 September 2026); this item is the parliamentary ratification step. Project total EUR 151.1 million
+    (AfDB 111.5, EU grant 30, SONEDE 9.6), 2026-2031.
+- id: nawaat-jebeniana-followup-2026-11-02
+  title: 'Emeutes de Jebeniana : les raisons de la colère'
+  publisher: Nawaat
+  date: '2026-11-02'
+  url: https://nawaat.org/2026/11/02/emeutes-de-jebeniana-les-raisons-de-la-colere/
+  tier: 4
+  lang: fr
+  excerpt: Les habitants de la ville de Jebeniana, dans le gouvernorat de Sfax, ont été endeuillés, mercredi
+    21 octobre 2026, par le décès du jeune Aoun Salhi, âgé de 24 ans, à la suite d’une course-poursuite
+    avec la police, alors qu’il roulait en moto.
+  note: Follow-up investigation adding detail and context to the already-recorded ev-jebeniana-death-aoun-salhi-2026-10-21
+    and ev-unrest-ettadhamen-jebiniana-2026-10-22; no contradiction found.
+- id: kapitalis-tunisians-russia-2026-10-31
+  title: Ces «soldats» Tunisiens morts sur le front russo-ukrainien
+  publisher: Kapitalis
+  date: '2026-10-31'
+  url: https://kapitalis.com/tunisie/2026/10/31/ces-soldats-tunisiens-morts-sur-le-front-russo-ukrainien/
+  tier: 3
+  lang: fr
+  excerpt: Le 29 octobre 2026, la chaîne France 24 a diffusé une émission consacrée aux familles tunisiennes
+    restées sans nouvelles de leurs enfants enrôlés dans l’armée russe pour aller combattre sur le front
+    avec l’Ukraine.
+  note: Relays France 24's 29 October broadcast. No Tunisian official response was retrieved.
+- id: am-us-phosphate-2026-10-29
+  title: Les Américains lorgnent le phosphate tunisien
+  publisher: African Manager
+  date: '2026-10-29'
+  url: https://africanmanager.com/tunisie-etats-unis-lancement-dun-projet-commun-pour-promouvoir-linvestissement-dans-le-secteur-du-phosphate/
+  tier: 3
+  lang: fr
+  excerpt: L’ambassade des États-Unis à Tunis a annoncé le lancement d’un nouveau projet financé par le
+    gouvernement américain et en collaboration avec la société « CrossBoundary », dans le but de mettre
+    en relation les investisseurs et les entreprises américaines avec le projet de phosphate de la société
+    « PhosCo » dans le Bassin Nord.
+  note: No Tunisian state signatory or instrument in the piece; PhosCo, CrossBoundary and the US embassy
+    have no graph records.
+- id: am-tmed-2026-10-28
+  title: 'Tunisie-UE : Lancement de la plateforme d’investissement T-MED'
+  publisher: African Manager
+  date: '2026-10-28'
+  url: https://africanmanager.com/tunisie-ue-lancement-de-la-plateforme-dinvestissement-t-med/
+  tier: 3
+  lang: fr
+  excerpt: La Commission européenne a lancé la plateforme d’investissement T-MED afin de mobiliser des
+    investissements massifs dans les énergies renouvelables et les technologies propres à travers la Méditerranée.
+  note: EU initiative, not a Tunisian state act. In Tunisia it supports two 100 MW solar plants with about
+    EUR 92 million and EUR 80 million.
+- id: am-senegal-ccit-2026-11-03
+  title: 'Tunisie-Sénégal : Partenariat de coopération commerciale'
+  publisher: African Manager
+  date: '2026-11-03'
+  url: https://africanmanager.com/tunisie-senegal-un-accord-de-partenariat-pour-renforcer-la-cooperation-economique-et-commerciale/
+  tier: 3
+  lang: fr
+  excerpt: La Chambre de commerce et d’industrie de Tunis (CCIT) et l’Union nationale des chambres de
+    commerce, d’industrie et d’agriculture du Sénégal (UNCCIAS) ont signé vendredi dernier un accord de
+    partenariat visant à renforcer la coopération économique et commerciale entre les deux pays et à promouvoir
+    l’intégration économique africaine.
+  note: Chamber-to-chamber agreement, not a state treaty; CCIT and UNCCIAS have no graph records.
+- id: am-budget-2027-plenaries-2026-11-03
+  title: 'Budget 2027 : 1ères plénières pour les 9 et 10 novembre'
+  publisher: African Manager
+  date: '2026-11-03'
+  url: https://africanmanager.com/budget-2027-les-premieres-seances-plenieres-prevues-les-9-et-10-novembre/
+  tier: 3
+  lang: fr
+  excerpt: Les séances plénières consacrées à l'examen du budget de l'État pour l'année 2027 auront lieu
+    les 9 et 10 novembre prochain, a annoncé le bureau de l'Assemblée des représentants du peuple (ARP).
+  note: Forward-dated parliamentary timetable; no record until the plenaries happen and a text is published.

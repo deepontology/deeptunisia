@@ -15538,21 +15538,29 @@
     Veteran Tunisian journalist, arrested in late April 2026 and sentenced on
     7 May 2026 by the Tunis first-instance court to one year under Article 86
     of the Telecommunications Code over remarks at an academic forum commenting
-    on the Khalifa Kasmi case. Identity and profession rest on the Nawaat
+    on the Khalifa Kasmi case. On 27 October 2026 the criminal chamber
+    specialised in terrorism at the Tunis Court of First Instance sentenced him
+    to four years' imprisonment with immediate execution in the
+    audio-recordings case. Identity and profession rest on the Nawaat
     report; a primary record (court judgment, SNJT list) would upgrade it.
   summary_fr: >-
     Journaliste tunisien chevronné, arrêté fin avril 2026 et condamné le 7 mai 2026 par le
     tribunal de première instance de Tunis à un an en vertu de l'article 86 du Code des
     télécommunications pour des propos tenus lors d'un forum académique commentant l'affaire
-    Khalifa Kasmi. L'identité et la profession reposent sur le rapport de Nawaat ; un
-    document primaire (jugement, liste du SNJT) permettrait de la renforcer.
-  summary_fr_by: model-reviewed
+    Khalifa Kasmi. Le 27 octobre 2026, la chambre criminelle spécialisée dans les affaires de
+    terrorisme du tribunal de première instance de Tunis l'a condamné à quatre ans de prison avec
+    exécution immédiate dans l'affaire des enregistrements audio. L'identité et la profession
+    reposent sur le rapport de Nawaat ; un document primaire (jugement, liste du SNJT)
+    permettrait de la renforcer.
+  summary_fr_by: machine
   summary_ar: >-
     صحفي تونسي مخضرم، اعتُقل في أواخر أفريل 2026 وحُكم عليه في 7 ماي 2026 من المحكمة
     الابتدائية بتونس بسنة واحدة بمقتضى الفصل 86 من مجلة الاتصالات بسبب تصريحات أدلى بها في
-    منتدى أكاديمي معلقًا على قضية خليفة القاسمي. الهوية والمهنة مستندان إلى تقرير نواة؛
+    منتدى أكاديمي معلقًا على قضية خليفة القاسمي. وفي 27 أكتوبر 2026 حكمت عليه الدائرة الجنائية
+    المختصة بالنظر في قضايا الإرهاب بالمحكمة الابتدائية بتونس بأربع سنوات سجنًا مع النفاذ العاجل
+    في قضية التسجيلات الصوتية. الهوية والمهنة مستندان إلى تقرير نواة؛
     ومصدر أولي (حكم قضائي أو قائمة النقابة الوطنية للصحفيين التونسيين) يرفع مستوى التوثيق.
-  summary_ar_by: model-reviewed
+  summary_ar_by: machine
   confidence: C
   basis: reported
   verification: needs-primary-source
@@ -15578,7 +15586,7 @@
       arrest he had filed a complaint against President Kais Saied before the
       administrative tribunal over the stalled constitutional court, CSM and
       HAICA. His lawyer calls the file a pretext.
-  sources: [nawaat-zied-el-heni-2026, nawaat-el-heni-prison-2026]
+  sources: [nawaat-zied-el-heni-2026, nawaat-el-heni-prison-2026, am-ounissi-verdict-2026-10-28, kapitalis-ounissi-verdict-2026-10-28, kapitalis-crldht-audio-verdict-2026-10-29]
 
 # ===========================================================================
 # PRESIDENTIAL NETWORKS — documented relatives (merge of 2026-08-13)
@@ -16317,12 +16325,12 @@
   name_fr: Mondher Ounissi
   aliases: [Monder Ounissi]
   layers: [political, civil]
-  tagline: Acting president of Ennahdha; defendant in the audio-recordings case
-  summary: 'Tunisian physician and university professor, and acting president (président par intérim) of the Ennahdha movement per Kapitalis. He is a defendant in the "audio recordings" case opened over leaked recordings attributed to him that discussed a meeting with influential businessmen and financial violations concerning the party. More than ten other defendants, mostly prosecuted in absentia, were referred to the criminal chamber specialised in terrorism cases at the Tunis Court of First Instance; Ounissi appears by videoconference from Mornaguia civil prison. His defence disputes the attribution of the recording and has requested a forensic technical examination. Pre-trial detention, no adjudicated charge.'
+  tagline: Acting president of Ennahdha; sentenced in 2026 in the audio-recordings case
+  summary: 'Tunisian physician and university professor, and acting president (président par intérim) of the Ennahdha movement per Kapitalis. He is a defendant in the "audio recordings" case opened over leaked recordings attributed to him that discussed a meeting with influential businessmen and financial violations concerning the party. More than ten other defendants, mostly prosecuted in absentia, were referred to the criminal chamber specialised in terrorism cases at the Tunis Court of First Instance; Ounissi appears by videoconference from Mornaguia civil prison. His defence disputes the attribution of the recording and has requested a forensic technical examination. On 27 October 2026 the criminal chamber specialised in terrorism at the Tunis Court of First Instance sentenced him to nine years'' imprisonment with immediate execution in the audio-recordings case; he appeared by videoconference from Mornaguia civil prison.'
   confidence: B
   basis: reported
   falsifiable_by: The referral and hearing records would confirm the co-defendant list and the postponement; a forensic report would settle the attribution dispute.
-  sources: [kapitalis-ounissi-report-2026-09-25, tunisienumerique-ounissi-case-2026-07-11]
+  sources: [kapitalis-ounissi-report-2026-09-25, tunisienumerique-ounissi-case-2026-07-11, am-ounissi-verdict-2026-10-28, kapitalis-ounissi-verdict-2026-10-28, kapitalis-crldht-audio-verdict-2026-10-29]
 
 - id: samira-guiza
   name_en: Samira Guiza
@@ -35884,3 +35892,67 @@
   - Minister identified from a ministry list; person record created for the position.
   sources:
   - frwiki-gvt-jebali
+
+# ---------------------------------------------------------------------------
+# Daily sweep 2026-10-25 to 2026-11-03 (data/contrib/daily-2026-11-03.yaml)
+# ---------------------------------------------------------------------------
+- id: riadh-ben-fadhel
+  name_en: Riadh Ben Fadhel
+  name_fr: Riadh Ben Fadhel
+  aliases: []
+  layers:
+  - political
+  tagline: Coordinator-general of Al-Qotb; sentenced to 20 years in a financial-corruption case in October
+    2026
+  summary: Tunisian businessman and coordinator-general of the centre-left party Al-Qotb. African Manager
+    and Kapitalis describe him as an "homme d'affaires" and the party's coordinator-general. He was arrested
+    at Tunis-Carthage airport on 14 November 2023 on returning from abroad. On 29 October 2026 the criminal
+    chamber specialised in financial-corruption cases at the Tunis Court of First Instance sentenced him
+    to 20 years' imprisonment in a case concerning the acquisition and management of confiscated property,
+    with other co-defendants sentenced to nine years and fines exceeding 11 million dinars imposed on
+    the accused and 14 companies; the number of co-defendants sentenced to nine years is given as 28 by
+    African Manager and 18 by Kapitalis (see ev-ben-fadhel-corruption-sentence-2026-10-29). He had earlier
+    been sentenced to four years and six months and a two-million-dinar fine in a customs case; in April
+    2025 the appeal chamber declared the public action extinguished after a settlement and annulled the
+    first-instance judgment. Al-Qotb called the verdict a political revenge. No birth date, Arabic spelling
+    or detailed biography was carried by the sources; none is invented here.
+  confidence: B
+  verification: needs-primary-source
+  attributed_to: An anonymous judicial source cited to TAP by African Manager (31 October 2026); Kapitalis
+    (30 October 2026), which also reproduces the Al-Qotb communiqué
+  reasoning: The identity, the party role and the 20-year sentence are consistent across two outlets,
+    which supports B. The number of co-defendants is disputed (28 versus 18) and is recorded on the event,
+    not averaged here. The prior customs case and the April 2025 settlement rest on African Manager's
+    account. The sources give no birth date or Arabic spelling, so those fields are left empty.
+  falsifiable_by: A court record, the judgment or an appeal filing would confirm the sentence, the charges
+    and the prior case; a primary record identifying a different person or a different role would correct
+    the identification.
+  sources:
+  - am-ben-fadhel-verdict-2026-10-31
+  - kapitalis-ben-fadhel-verdict-2026-10-30
+- id: rania-marzouki
+  name_en: Rania Marzouki
+  name_fr: Rania Marzouki
+  aliases: []
+  layers:
+  - economic
+  tagline: Acting PDG of ETAP as of October 2026
+  summary: Tunisian state-enterprise executive. African Manager reports on 25 October 2026 that Rania
+    Marzouki was acting as PDG of ETAP, the national oil and gas company, succeeding Dalila Chebbi Bouattour,
+    who retired in August 2026. The piece says Marzouki came from the ministry of industry, mines and
+    energy, where Salah Zouari had been acting minister since 28 April 2026, and that she had been in
+    the ministry's hydrocarbons directorate. It does not give her start date, birth date, Arabic spelling
+    or fuller biography, and none is invented here. ETAP's PDG position is recorded in the graph as held
+    by Dalila Chebbi Bouattour on an open-ended basis; see the flag on p-soe-etap-dalila-chebbi-bouattour
+    and the proposed position p-soe-etap-rania-marzouki.
+  confidence: C
+  verification: needs-primary-source
+  attributed_to: African Manager (25 October 2026)
+  reasoning: 'One outlet names her as acting PDG and gives her ministry background. The acting role is
+    reported, not documented by a JORT decree or an ETAP filing. The start date is not given: the record
+    says "as of October 2026" and the position carries an unknown start rather than a guessed one.'
+  falsifiable_by: A JORT appointment decree, an ETAP corporate filing or a ministry announcement would
+    confirm the acting appointment and its start date; a statement naming a different acting PDG would
+    correct the record.
+  sources:
+  - am-etap-marzouki-2026-10-25
