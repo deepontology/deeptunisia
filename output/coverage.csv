@@ -255,7 +255,7 @@ source_family,annales economies societes civilisations persee,1,0,0,0,0,0,1,1
 source_family,ansa,1,1,0,0,0,1,1,1
 source_family,ap news,1,1,0,0,0,1,1,1
 source_family,apa news,1,0,0,0,0,0,1,1
-source_family,ar,7,5,0,0,0,5,7,0
+source_family,ar,8,5,0,0,0,5,8,0
 source_family,arab news reuters,1,1,0,0,0,1,1,1
 source_family,arabi21 ar,1,1,0,0,0,1,1,1
 source_family,arabic wikipedia,10,10,0,0,0,10,10,0
@@ -289,7 +289,7 @@ source_family,bloomberg,1,1,0,0,0,1,1,1
 source_family,bofip impots boi annx 000306,1,0,0,0,0,0,1,1
 source_family,bofip impots direction generale des finances publiques france,1,0,0,0,0,0,1,1
 source_family,bukhatir group official site,1,1,0,0,0,1,1,1
-source_family,business news,30,26,0,0,0,26,30,0
+source_family,business news,31,26,0,0,0,26,31,0
 source_family,business news via web archive org capture 14 07 2018,1,1,0,0,0,1,1,1
 source_family,businessnews com tn,2,2,0,0,0,2,2,1
 source_family,businessnews tunisie,2,2,0,0,0,2,2,1
@@ -332,7 +332,7 @@ source_family,destination tunisie,3,2,0,0,0,2,3,1
 source_family,deutsche welle,3,2,0,0,0,2,3,1
 source_family,diacron group tax and trade compliance briefing,1,0,0,0,0,0,1,1
 source_family,digitheque mjp universite de perpignan,1,1,0,0,0,1,1,1
-source_family,directinfo,2,2,0,0,0,2,2,1
+source_family,directinfo,3,2,0,0,0,2,3,1
 source_family,directinfo avec tap,4,3,0,0,0,3,4,0
 source_family,directinfo via tap agence tunis afrique presse,1,1,0,0,0,1,1,1
 source_family,directinfo webmanagercenter,16,14,0,0,0,14,16,0
@@ -417,10 +417,11 @@ source_family,journal officiel de la republique tunisienne edition arabe officie
 source_family,journal officiel de la republique tunisienne imprimerie officielle de la republique tunisienne,3,2,0,0,0,2,3,1
 source_family,journal officiel de la republique tunisienne jort,3,3,0,0,0,3,3,0
 source_family,journal officiel de la republique tunisienne n 2016 027 via 9anoun tn,3,0,0,0,0,0,3,1
+source_family,journal officiel de la republique tunisienne ocr jort tn,7,0,0,0,0,0,7,1
 source_family,journal officiel de la republique tunisienne text on legislation securite tn,1,1,0,0,0,1,1,1
 source_family,journal officiel de la republique tunisienne text via the 9anoun mirror,1,1,0,0,0,1,1,1
 source_family,journal officiel de la republique tunisienne texte integral via legislation securite tn dcaf,4,4,0,0,0,4,4,0
-source_family,journal officiel de la republique tunisienne texte ocr ocr jort tn,776,776,0,0,0,776,776,0
+source_family,journal officiel de la republique tunisienne texte ocr ocr jort tn,782,776,0,0,0,776,782,0
 source_family,journal officiel de la republique tunisienne via 9anoun,11,10,0,0,0,10,11,0
 source_family,journal officiel de la republique tunisienne via ar wiki dcaf,1,0,0,0,0,0,1,1
 source_family,journal officiel de la republique tunisienne via ar wiki footnote,3,3,0,0,0,3,3,0
@@ -429,10 +430,10 @@ source_family,journal officiel de la republique tunisienne via legislation secur
 source_family,jurisite tunisie,3,2,0,0,0,2,3,1
 source_family,jurisitetunisie base de textes legaux tunisiens,1,0,0,0,0,0,1,1
 source_family,jurist,1,1,0,0,0,1,1,1
-source_family,kapitalis,93,76,0,0,0,76,93,0
+source_family,kapitalis,94,76,0,0,0,76,94,0
 source_family,kapitalis avec tap,1,0,0,0,0,0,1,1
 source_family,kuna,1,0,0,0,0,0,1,1
-source_family,l economiste maghrebin,19,8,0,0,0,8,19,0
+source_family,l economiste maghrebin,20,8,0,0,0,8,20,0
 source_family,l economiste maghrebin tap,1,0,0,0,0,0,1,1
 source_family,l orient le jour afp,1,0,0,0,0,0,1,1
 source_family,la depeche du midi afp,1,1,0,0,0,1,1,1
@@ -445,6 +446,7 @@ source_family,le petit journal tunis,1,1,0,0,0,1,1,1
 source_family,le quotidien,1,1,0,0,0,1,1,1
 source_family,le temps news,1,1,0,0,0,1,1,1
 source_family,leaders,34,28,0,0,0,28,34,0
+source_family,leaders com tn,4,0,0,0,0,0,4,1
 source_family,leaders official site,1,1,0,0,0,1,1,1
 source_family,leaders revue d information economique tunisienne,1,1,0,0,0,1,1,1
 source_family,leaders tunisia,1,0,0,0,0,0,1,1
@@ -507,6 +509,7 @@ source_family,primature pm gov tn,1,1,0,0,0,1,1,1
 source_family,princeton university press,1,1,0,0,0,1,1,1
 source_family,publisud,1,1,0,0,0,1,1,1
 source_family,realites,4,3,0,0,0,3,4,0
+source_family,realites magazine,2,0,0,0,0,0,2,1
 source_family,regulation afrique blogspot com relayant business news,1,0,0,0,0,0,1,1
 source_family,republic of turkiye ministry of trade,1,0,0,0,0,0,1,1
 source_family,reuters,22,17,0,0,0,17,22,0
@@ -586,12 +589,12 @@ source_family,webmanagercenter directinfo,2,2,0,0,0,2,2,1
 source_family,webmanagercenter tap,3,0,0,0,0,0,3,1
 source_family,wifak bank site officiel,1,0,0,0,0,0,1,1
 source_family,wikidata,66,0,0,0,0,0,66,1
-source_family,wikipedia,131,79,0,0,0,79,131,0
+source_family,wikipedia,136,79,0,0,0,79,136,0
 source_family,wikipedia ar,3,2,0,0,0,2,3,1
 source_family,wikipedia en,10,3,0,0,0,3,10,0
 source_family,wikipedia encyclopedie referencee,1,0,0,0,0,0,1,1
 source_family,wikipedia english,19,3,0,0,0,3,19,0
-source_family,wikipedia fr,238,177,0,0,0,177,238,0
+source_family,wikipedia fr,243,177,0,0,0,177,243,0
 source_family,wikipedia francais,46,37,0,0,0,37,46,0
 source_family,wikipedia french,14,13,0,0,0,13,14,0
 source_family,william and mary geolab geoboundaries,1,0,0,0,0,0,1,1
@@ -611,9 +614,9 @@ source_family,zawya,1,0,0,0,0,0,1,1
 source_family,zawya communique de presse,1,1,0,0,0,1,1,1
 source_family,zoom tunisia,1,1,0,0,0,1,1,1
 source_family,ويكيبيديا (العربية),11,10,0,0,0,10,11,0
-language,ar,109,69,0,0,0,69,109,0
+language,ar,110,69,0,0,0,69,110,0
 language,en,471,201,0,0,0,201,471,0
-language,fr,1883,1644,0,0,0,1644,1883,0
+language,fr,1916,1644,0,0,0,1644,1916,0
 language,it,4,1,0,0,0,1,4,1
 office,administrative-court-president,4,4,0,0,0,0,5,1
 office,administrative-reform-minister,4,4,0,0,0,0,4,1

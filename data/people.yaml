@@ -4433,6 +4433,7 @@
 
 - id: abderrahim-zouari
   name_en: Abderrahim Zouari
+  birth: '1944-04-18'
   name_fr: Abderrahim Zouari
   name_ar: عبد الرحيم الزواري
   aliases: [الزواري]
@@ -4445,7 +4446,38 @@
     وزير العدل في عهد بن علي
   tagline_ar_by: model-reviewed
   confidence: B
-  sources: [wikipedia-justice-ministers-detailed]
+  summary: >-
+    Born in Dahmani on 18 April 1944, Abderrahim Zouari holds a private law degree, the lawyer's
+    certificate and a specialised law diploma; he sat on the PSD coordination committee of the Kef
+    from 1969 to 1974 and was mayor of Dahmani from 1970 to 1975. He governed Gabès from 1974 to
+    1978 and Nabeul from 1978 to 1980, then became director of regional administration at the
+    interior ministry and a deputy from 1981 to 1987. He was secretary general of the RCD from 1988
+    to 1991 and again from 1999 to 2000, and from 1991 to 2011 he held the ministries of justice,
+    youth and childhood, foreign affairs, education, sport, tourism and transport, with a posting
+    as ambassador to Morocco. He was the Mouvement destourien candidate in the 2014 presidential
+    election.
+  summary_fr: >-
+    Né à Dahmani le 18 avril 1944, Abderrahim Zouari est titulaire d'une licence de droit privé, du
+    certificat d'aptitude à la profession d'avocat et d'un diplôme d'études spécialisées de droit ;
+    il est membre du comité de coordination du PSD du Kef de 1969 à 1974 et maire de Dahmani de
+    1970 à 1975. Il gouverne Gabès de 1974 à 1978 et Nabeul de 1978 à 1980, puis devient directeur
+    de l'administration régionale au ministère de l'Intérieur et député de 1981 à 1987. Il est
+    secrétaire général du RCD de 1988 à 1991 puis de 1999 à 2000, et de 1991 à 2011 il détient les
+    ministères de la Justice, de la Jeunesse et de l'Enfance, des Affaires étrangères, de
+    l'Éducation, des Sports, du Tourisme et du Transport, avec un poste d'ambassadeur au Maroc. Il
+    est le candidat du Mouvement destourien à l'élection présidentielle de 2014.
+  summary_fr_by: machine
+  summary_ar: >-
+    وُلد عبد الرحيم الزواري في الدهماني يوم 18 أفريل 1944، وهو حاصل على الإجازة في القانون الخاص
+    وشهادة الكفاءة لمهنة المحاماة وشهادة الدراسات المعمقة في القانون؛ كان عضوًا في لجنة تنسيق الحزب
+    الاشتراكي الدستوري بالكاف من 1969 إلى 1974، ورئيسًا لبلدية الدهماني من 1970 إلى 1975. تولّى
+    ولاية قابس من 1974 إلى 1978 وولاية نابل من 1978 إلى 1980، ثم أصبح مديرًا للإدارة الجهوية بوزارة
+    الداخلية ونائبًا من 1981 إلى 1987. كان أمينًا عامًا للتجمع الدستوري الديمقراطي من 1988 إلى 1991
+    ثم من 1999 إلى 2000، وتولّى بين 1991 و2011 وزارات العدل والشباب والطفولة والخارجية والتربية
+    والرياضة والسياحة والنقل، مع تعيينه سفيرًا في المغرب. كان مرشح الحركة الدستورية في الانتخابات
+    الرئاسية سنة 2014.
+  summary_ar_by: machine
+  sources: [wikipedia-justice-ministers-detailed, frwiki-abderrahim-zouari]
 
 - id: sadok-chaabane
   name_en: Sadok Chaabane
@@ -4577,6 +4609,7 @@
 
 - id: omar-mansour
   name_en: Omar Mansour
+  birth: '1958-01-27'
   name_fr: Omar Mansour
   name_ar: عمر منصور
   aliases: [منصور]
@@ -4589,7 +4622,29 @@
     وزير العدل سنة 2016
   tagline_ar_by: model-reviewed
   confidence: B
-  sources: [wikipedia-justice-ministers-detailed]
+  summary: >-
+    Born in Tunis on 27 January 1958, Omar Mansour is a magistrate who was dean of the
+    investigating judges from 2000 to 2008, public prosecutor at the Tunis court of first instance
+    from 2008 to 2014 and a chamber president at the Court of Cassation until August 2015. He was
+    governor of Ariana from August 2015 and minister of justice from 12 January 2016. He was
+    governor of Tunis from 16 September 2016, seconded to the interior ministry from that date,
+    until his dismissal on 29 October 2017.
+  summary_fr: >-
+    Né à Tunis le 27 janvier 1958, Omar Mansour est un magistrat, doyen des juges d'instruction de
+    2000 à 2008, procureur de la République près le tribunal de première instance de Tunis de 2008
+    à 2014 puis président de chambre à la Cour de cassation jusqu'en août 2015. Il est gouverneur
+    de l'Ariana à partir d'août 2015 et ministre de la Justice à partir du 12 janvier 2016. Il est
+    gouverneur de Tunis à partir du 16 septembre 2016, détaché auprès du ministère de l'Intérieur à
+    compter de cette date, jusqu'à son limogeage le 29 octobre 2017.
+  summary_fr_by: machine
+  summary_ar: >-
+    وُلد عمر منصور في تونس يوم 27 جانفي 1958، وهو قاضٍ كان عميدًا لقضاة التحقيق من 2000 إلى 2008،
+    ووكيلًا للجمهورية لدى المحكمة الابتدائية بتونس من 2008 إلى 2014، ثم رئيس دائرة بمحكمة التعقيب
+    إلى أوت 2015. تولّى ولاية أريانة منذ أوت 2015، ثم وزارة العدل منذ 12 جانفي 2016. ثم عُيّن
+    واليًا على تونس منذ 16 سبتمبر 2016، ملحقًا بوزارة الداخلية منذ ذلك التاريخ، إلى إعفائه يوم 29
+    أكتوبر 2017.
+  summary_ar_by: machine
+  sources: [wikipedia-justice-ministers-detailed, frwiki-omar-mansour, jort-2017-001-omar-mansour-tunis]
 
 # ===========================================================================
 # MILITARY
@@ -18116,10 +18171,23 @@
   name_en: Mohsen Nouira
   layers:
   - political
+  summary: >-
+    An order of the Secretary of State to the Presidency of 4 June 1960 named Mohsen Nouira, then
+    governor of Tunis and its suburbs, administrator of the O.M.V.V.M. in place of Ahmed Zaouche.
+  summary_fr: >-
+    Un arrêté du secrétaire d'État à la Présidence du 4 juin 1960 nomme Mohsen Nouira, alors
+    gouverneur de Tunis et Banlieue, administrateur de l'O.M.V.V.M. en remplacement d'Ahmed
+    Zaouche.
+  summary_fr_by: machine
+  summary_ar: >-
+    بقرار من كاتب الدولة للرئاسة مؤرخ في 4 جوان 1960، عُيّن محسن النويرة، وكان آنذاك واليًا على
+    تونس وأحوازها، متصرفًا في O.M.V.V.M.، خلفًا لأحمد الزواش.
+  summary_ar_by: machine
   sources:
   - frwiki-gov-tunis
   - frwiki-gov-bizerte
   - frwiki-gov-beja
+  - jort-1960-028-nouira-omvvm
   aliases:
   - Ben Nouira
 - id: mohamed-zine-el-abidine-mohsen
@@ -18150,11 +18218,52 @@
     kept apart.
 - id: abbes-mohsen
   name_en: Abbès Mohsen
+  name_fr: Abbès Mohsen
+  name_ar: عبّاس محسن
+  birth: '1945-10-25'
   layers:
   - political
+  summary: >-
+    Born in Tunis on 25 October 1945, Abbès Mohsen holds a law degree and studied at the École
+    nationale d'administration; he was first delegate of the Bizerte governorate before governing
+    Cap Bon from 1976 and the district of Tunis from 1978 and again from 1986. He headed the
+    Société hôtelière et touristique de Tunisie from 1981, was director general of local
+    authorities at the interior ministry from 1983 and director general of protocol at the
+    Presidency from 1988. He was ambassador to Yemen from 1992, permanent secretary of the RCD from
+    1995 and ambassador to Brazil from 1997. He was mayor of Tunis from June 2000 until his
+    dismissal on 11 January 2010, sat on the RCD central committee from 2008 and was ambassador to
+    the Netherlands from late 2010.
+  summary_fr: >-
+    Né à Tunis le 25 octobre 1945, Abbès Mohsen est licencié en droit et ancien élève de l'École
+    nationale d'administration ; premier délégué du gouvernorat de Bizerte, il gouverne le Cap Bon
+    à partir de 1976 puis le district de Tunis à partir de 1978 et de nouveau à partir de 1986. Il
+    dirige la Société hôtelière et touristique de Tunisie à partir de 1981, est directeur général
+    des collectivités locales au ministère de l'Intérieur à partir de 1983 et directeur général du
+    protocole à la Présidence à partir de 1988. Il est ambassadeur au Yémen à partir de 1992,
+    secrétaire permanent du RCD à partir de 1995 et ambassadeur au Brésil à partir de 1997. Maire
+    de Tunis de juin 2000 à son limogeage le 11 janvier 2010, membre du comité central du RCD à
+    partir de 2008, il est ambassadeur aux Pays-Bas à partir de la fin de 2010.
+  summary_fr_by: machine
+  summary_ar: >-
+    وُلد عبّاس محسن في تونس يوم 25 أكتوبر 1945، وهو مجاز في الحقوق ودرس بالمدرسة الوطنية للإدارة؛
+    كان معتمدًا أول بولاية بنزرت قبل أن يتولّى ولاية الوطن القبلي منذ 1976، ثم ولاية إقليم تونس منذ
+    1978 ومرة ثانية منذ 1986. ترأس الشركة التونسية للنزل والسياحة منذ 1981، وكان مديرًا عامًا
+    للجماعات المحلية بوزارة الداخلية منذ 1983، ومديرًا عامًا للتشريفات برئاسة الجمهورية منذ 1988.
+    كان سفيرًا في اليمن منذ 1992، وكاتبًا قارًا للتجمع الدستوري الديمقراطي منذ 1995، وسفيرًا في
+    البرازيل منذ 1997. كان رئيسًا لبلدية تونس من جوان 2000 إلى إعفائه يوم 11 جانفي 2010، وعضوًا في
+    اللجنة المركزية للتجمع منذ 2008، ثم سفيرًا في هولندا منذ أواخر 2010.
+  summary_ar_by: machine
+  confidence: B
   sources:
   - frwiki-gov-tunis
   - frwiki-gov-nabeul
+  - frwiki-abbes-mohsen
+  - jort-1988-050-protocole
+  - jort-1992-070-sanaa
+  - jort-1997-083-brasilia
+  - jort-2000-046-maire-tunis
+  - jort-2010-004-revocation
+  - jort-2010-104-lahaye
 - id: mhedheb-rouissi
   name_en: M'hedheb Rouissi
   layers:
@@ -18180,11 +18289,35 @@
   - frwiki-gov-tunis
 - id: abdallah-kaabi
   name_en: Abdallah Kaâbi
+  name_fr: Abdallah Kaâbi
+  name_ar: عبد الله الكعبي
+  birth: '1951-09-26'
   layers:
   - political
+  summary: >-
+    Born in Kairouan on 26 September 1951, Abdallah Kaâbi was active in the Destourian students at
+    the Tunis law faculty and in the Destourian youth. He was governor of Ariana from 3 February
+    1988 to 25 October 1990 and of Tunis until 17 November 1999, when he became secretary general
+    of the government. He was minister of the interior from 23 January 2001 to 27 April 2002 and
+    minister of youth and sports from 10 November 2004 to 29 August 2008.
+  summary_fr: >-
+    Né à Kairouan le 26 septembre 1951, Abdallah Kaâbi milite parmi les étudiants destouriens à la
+    faculté de droit de Tunis et dans la jeunesse destourienne. Il est gouverneur de l'Ariana du 3
+    février 1988 au 25 octobre 1990 puis de Tunis jusqu'au 17 novembre 1999, date à laquelle il
+    devient secrétaire général du gouvernement. Il est ministre de l'Intérieur du 23 janvier 2001
+    au 27 avril 2002 et ministre de la Jeunesse et des Sports du 10 novembre 2004 au 29 août 2008.
+  summary_fr_by: machine
+  summary_ar: >-
+    وُلد عبد الله الكعبي في القيروان يوم 26 سبتمبر 1951، وناضل في صفوف الطلبة الدستوريين بكلية
+    الحقوق بتونس وفي الشبيبة الدستورية. كان واليًا على أريانة من 3 فيفري 1988 إلى 25 أكتوبر 1990،
+    ثم على تونس إلى 17 نوفمبر 1999، تاريخ تعيينه كاتبًا عامًا للحكومة. تولّى وزارة الداخلية من 23
+    جانفي 2001 إلى 27 أفريل 2002، ووزارة الشباب والرياضة من 10 نوفمبر 2004 إلى 29 أوت 2008.
+  summary_ar_by: machine
+  confidence: B
   sources:
   - frwiki-gov-tunis
   - frwiki-gov-ariana
+  - frwiki-abdallah-kaabi
 - id: omar-ben-mahmoud
   name_en: Omar Ben Mahmoud
   layers:
@@ -18193,15 +18326,44 @@
   - frwiki-gov-tunis
 - id: mahmoud-mehiri
   name_en: Mahmoud Méhiri
+  name_fr: Mahmoud Méhiri
+  birth: '1959-07-04'
   layers:
   - political
+  summary: >-
+    Born in Tunis on 4 July 1959, Mahmoud Méhiri holds a licence and a DEA in public law; he taught
+    as maître assistant at the École supérieure de commerce de Tunis and joined the bar in 1986. He
+    was governor of Kasserine from 2001 and of Tunis from 2003, then senior adviser to the
+    President of the Republic from August 2005. In the RCD he was deputy secretary general for
+    youth, education and culture from January 2007 and for external relations from September 2007,
+    sat on its central committee and presided over the association Avocats sans frontières, before
+    being named governor of Ariana on 19 September 2008.
+  summary_fr: >-
+    Né à Tunis le 4 juillet 1959, Mahmoud Méhiri est titulaire d'une licence et d'un DEA en droit
+    public ; maître assistant à l'École supérieure de commerce de Tunis, il entre au barreau en
+    1986. Il est gouverneur de Kasserine à partir de 2001 et de Tunis à partir de 2003, puis
+    conseiller principal auprès du Président de la République à partir d'août 2005. Au RCD, il est
+    secrétaire général adjoint chargé de la jeunesse, de l'éducation et de la culture à partir de
+    janvier 2007 puis des relations extérieures à partir de septembre 2007, membre du comité
+    central et président de l'association Avocats sans frontières, avant d'être nommé gouverneur de
+    l'Ariana le 19 septembre 2008.
+  summary_fr_by: machine
+  summary_ar: >-
+    وُلد محمود المهيري في تونس يوم 4 جويلية 1959، وهو حاصل على الإجازة وشهادة الدراسات المعمقة في
+    القانون العام؛ درّس كمساعد بالمدرسة العليا للتجارة بتونس والتحق بسلك المحاماة سنة 1986. كان
+    واليًا على القصرين منذ 2001 وعلى تونس منذ 2003، ثم مستشارًا أول لدى رئيس الجمهورية منذ أوت
+    2005. في التجمع الدستوري الديمقراطي كان أمينًا عامًا مساعدًا مكلفًا بالشباب والتربية والثقافة
+    منذ جانفي 2007، ثم بالعلاقات الخارجية منذ سبتمبر 2007، وعضوًا في لجنته المركزية، ورئيسًا لجمعية
+    محامين بلا حدود، قبل تعيينه واليًا على أريانة يوم 19 سبتمبر 2008.
+  summary_ar_by: machine
+  confidence: B
   sources:
   - frwiki-gov-tunis
   - frwiki-gov-ariana
+  - businessnews-mehiri-2008-09-20
   notes:
-  - Possibly the same official as mahmoud-mehiri-kasserine (Kasserine 2001-2003). The governor lists give
-    the same name in a sequence that fits one career, but no fetched source links the entries, so they
-    are kept apart.
+  - Business News (businessnews-mehiri-2008-09-20) names him governor of Kasserine from 2001 and of
+    Tunis from 2003, which ties this entry to mahmoud-mehiri-kasserine. The entries are not merged yet.
 - id: mondher-friji
   name_en: Mondher Friji
   layers:
@@ -18224,12 +18386,42 @@
   - frwiki-bio-ben-hassen
 - id: abderrazak-ben-khelifa
   name_en: Abderrazak Ben Khelifa
+  name_fr: Abderrazak Ben Khelifa
+  name_ar: عبد الرزاق بن خليفة
+  birth: '1966-06-28'
   layers:
   - political
+  summary: >-
+    Born on 28 June 1966, at El Hencha according to Leaders and in Sfax according to French
+    Wikipedia, Abderrazak Ben Khelifa obtained the lawyer's certificate in 1992 and a master's in
+    public law in 1993. He was a secretary at the foreign ministry from April 1992 to June 1997, an
+    administrative judge from June 1997 to June 2011 and second vice-president of the Conseil du
+    marché financier from June 2011 to August 2012. After governing Bizerte from August 2012 and
+    Tunis from August 2013, he was named secretary of state for local authorities and regional
+    administration in January 2014, and he has been a lawyer in Tunis since 2015.
+  summary_fr: >-
+    Né le 28 juin 1966, à El Hencha selon Leaders et à Sfax selon Wikipédia en français, Abderrazak
+    Ben Khelifa obtient le certificat d'aptitude à la profession d'avocat en 1992 et un master de
+    droit public en 1993. Il est secrétaire au ministère des Affaires étrangères d'avril 1992 à
+    juin 1997, juge administratif de juin 1997 à juin 2011 et deuxième vice-président du Conseil du
+    marché financier de juin 2011 à août 2012. Après les gouvernorats de Bizerte à partir d'août
+    2012 et de Tunis à partir d'août 2013, il est nommé secrétaire d'État aux Collectivités locales
+    et à l'Administration régionale en janvier 2014, et il est avocat à Tunis depuis 2015.
+  summary_fr_by: machine
+  summary_ar: >-
+    وُلد عبد الرزاق بن خليفة يوم 28 جوان 1966، بالحنشة حسب Leaders وبصفاقس حسب ويكيبيديا الفرنسية،
+    وتحصّل على شهادة الكفاءة لمهنة المحاماة سنة 1992 وعلى الماجستير في القانون العام سنة 1993. كان
+    كاتبًا بوزارة الشؤون الخارجية من أفريل 1992 إلى جوان 1997، وقاضيًا إداريًا من جوان 1997 إلى
+    جوان 2011، ونائبًا ثانيًا لرئيس هيئة السوق المالية من جوان 2011 إلى أوت 2012. بعد ولايتي بنزرت
+    منذ أوت 2012 وتونس منذ أوت 2013، عُيّن كاتب دولة للجماعات المحلية والإدارة الجهوية في جانفي
+    2014، وهو محامٍ بتونس منذ 2015.
+  summary_ar_by: machine
+  confidence: B
   sources:
   - frwiki-gov-tunis
   - frwiki-bio-ben-khelifa
   - frwiki-gov-bizerte
+  - leaders-ben-khelifa
 - id: hamed-abid
   name_en: Hamed Abid
   layers:
@@ -18246,19 +18438,40 @@
   - directinfo-gouverneurs-2015-08-22
 - id: chedly-bouallegue
   name_en: Chedly Bouallegue
+  name_fr: Chedly Bouallegue
+  birth: '1973-07-31'
   name_ar: الشادلي بوعلاق
   layers:
   - political
+  summary: >-
+    Born in Tunis on 31 July 1973, Chedly Bouallegue holds a master's in employment sciences and a
+    postgraduate diploma in social sciences. He was delegate of El Jem and then of Mahdia city
+    before being named governor of Kasserine in 2015, of the Kef in 2016 and of Tunis on 29 October
+    2017, a post from which he was dismissed by presidential order on 30 December 2021.
+  summary_fr: >-
+    Né à Tunis le 31 juillet 1973, Chedly Bouallegue est titulaire d'une maîtrise en sciences de
+    l'emploi et d'un diplôme de troisième cycle en sciences sociales. Il est délégué d'El Jem puis
+    de Mahdia ville avant d'être nommé gouverneur de Kasserine en 2015, du Kef en 2016 et de Tunis
+    le 29 octobre 2017, poste dont il est démis par arrêté présidentiel le 30 décembre 2021.
+  summary_fr_by: machine
+  summary_ar: >-
+    وُلد الشادلي بوعلاق في تونس يوم 31 جويلية 1973، وهو حاصل على الأستاذية في علوم الشغل وعلى شهادة
+    من المرحلة الثالثة في العلوم الاجتماعية. كان معتمدًا بالجم ثم بمدينة المهدية قبل أن يُعيَّن
+    واليًا على القصرين سنة 2015، وعلى الكاف سنة 2016، وعلى تونس يوم 29 أكتوبر 2017، وهو المنصب الذي
+    أُعفي منه بأمر رئاسي يوم 30 ديسمبر 2021.
+  summary_ar_by: machine
+  confidence: B
   sources:
   - frwiki-gov-tunis
   - businessnews-gouverneurs-2017-10-29
   - frwiki-gov-kef
   - businessnews-gouverneurs-2016-09-16
   - frwiki-bio-bouallegue
+  - realites-bouallegue-2017-10-30
   notes:
-  - Possibly the same official as chedly-bouallegue-kasserine (Kasserine 2015-2016). The governor lists
-    give the same name in a sequence that fits one career, but no fetched source links the entries, so
-    they are kept apart.
+  - French Wikipedia (frwiki-bio-bouallegue) and Réalités (realites-bouallegue-2017-10-30) give one
+    career covering Kasserine from 2015, the Kef from 2016 and Tunis from 2017, which ties this entry
+    to chedly-bouallegue-kasserine. The entries are not merged yet.
 - id: ahmed-ben-jemiaa
   name_en: Ahmed Ben Jemiaâ
   layers:
@@ -18271,11 +18484,43 @@
     kept apart.
 - id: kamel-haj-sassi
   name_en: Kamel Haj Sassi
+  name_fr: Kamel Hadj Sassi
+  birth: '1947'
+  aliases:
+  - Kamel Hadj Sassi
   layers:
   - political
+  summary: >-
+    Born in Sfax in 1947, Kamel Hadj Sassi holds a law degree and the lawyer's certificate. He was
+    national secretary general of the school youth, led the Union tunisienne des organisations de
+    jeunesse and presided over the Organisation tunisienne de l'éducation et de la famille. Besides
+    governing Ariana and Kairouan, he was secretary of state for culture and the national
+    solidarity fund, for youth and for social affairs, ambassador in Prague and a member of the
+    National Assembly, and on 6 August 2018 he was named adviser to head of government Youssef
+    Chahed.
+  summary_fr: >-
+    Né à Sfax en 1947, Kamel Hadj Sassi est titulaire d'un diplôme en droit et du certificat
+    d'aptitude à la profession d'avocat. Il est secrétaire général national de la jeunesse
+    scolaire, dirige l'Union tunisienne des organisations de jeunesse et préside l'Organisation
+    tunisienne de l'éducation et de la famille. Outre les gouvernorats de l'Ariana et de Kairouan,
+    il est secrétaire d'État à la Culture et au Fonds de solidarité nationale, à la Jeunesse et aux
+    Affaires sociales, ambassadeur à Prague et membre de l'Assemblée nationale, et le 6 août 2018
+    il est nommé conseiller du chef du gouvernement Youssef Chahed.
+  summary_fr_by: machine
+  summary_ar: >-
+    وُلد كمال الحاج ساسي في صفاقس سنة 1947، وهو حاصل على شهادة في الحقوق وعلى شهادة الكفاءة لمهنة
+    المحاماة. كان أمينًا عامًا وطنيًا للشبيبة المدرسية، وقاد الاتحاد التونسي لمنظمات الشباب، وترأس
+    المنظمة التونسية للتربية والأسرة. إلى جانب ولايتي أريانة والقيروان، كان كاتب دولة للثقافة
+    وصندوق التضامن الوطني، ثم للشباب، ثم للشؤون الاجتماعية، وسفيرًا في براغ وعضوًا في مجلس النواب،
+    وعُيّن يوم 6 أوت 2018 مستشارًا لرئيس الحكومة يوسف الشاهد.
+  summary_ar_by: machine
+  confidence: B
   sources:
   - frwiki-gov-ariana
   - frwiki-gov-kairouan
+  - leaders-haj-sassi-2018-08-06
+  - realites-haj-sassi-2018-08-06
+  - kapitalis-haj-sassi-2018-08-06
 - id: abderrahman-bouhrizi
   name_en: Abderrahman Bouhrizi
   layers:
@@ -18315,12 +18560,47 @@
   - frwiki-gov-zaghouan
 - id: abdejlil-zaddem
   name_en: Abdejlil Zaddem
+  name_fr: Abdeljelil Zaddem
+  birth: '1956-07-02'
+  aliases:
+  - Abdeljelil Zaddem
   layers:
   - political
+  summary: >-
+    Born on 2 July 1956 at Kalaat Senan in the Kef governorate, Abdeljelil Zaddem is a civil
+    engineer who began at the ministry of culture in 1979, became a regional director of housing in
+    1981 and was director of works at the Kef municipality from 1986 to 1991. He presided over the
+    Kalaat Sinan municipality from 1985 to 1995, sat on the Economic and Social Council from 1988
+    to 1991, was a deputy from 1991 to 1994 and in 1993 became secretary general of the RCD
+    coordination committee of the Kef. He was governor of Kebili from April 1997, Ben Arous from
+    January 2001 and Ariana from July 2006, then deputy secretary general of the RCD from September
+    2008 until he was named governor of Nabeul in January 2010.
+  summary_fr: >-
+    Né le 2 juillet 1956 à Kalaat Senan, dans le gouvernorat du Kef, Abdeljelil Zaddem est un
+    ingénieur en génie civil qui débute au ministère de la Culture en 1979, devient directeur
+    régional de l'habitat en 1981 et est directeur des travaux à la municipalité du Kef de 1986 à
+    1991. Il préside la municipalité de Kalaat Sinan de 1985 à 1995, siège au Conseil économique et
+    social de 1988 à 1991, est député de 1991 à 1994 et devient en 1993 secrétaire général du
+    comité de coordination du RCD du Kef. Il est gouverneur de Kébili à partir d'avril 1997, de Ben
+    Arous à partir de janvier 2001 et de l'Ariana à partir de juillet 2006, puis secrétaire général
+    adjoint du RCD de septembre 2008 jusqu'à sa nomination comme gouverneur de Nabeul en janvier
+    2010.
+  summary_fr_by: machine
+  summary_ar: >-
+    وُلد عبد الجليل الزدام يوم 2 جويلية 1956 بقلعة سنان من ولاية الكاف، وهو مهندس في الهندسة
+    المدنية بدأ مسيرته بوزارة الثقافة سنة 1979، وأصبح مديرًا جهويًا للإسكان سنة 1981، ومديرًا
+    للأشغال ببلدية الكاف من 1986 إلى 1991. ترأس بلدية قلعة سنان من 1985 إلى 1995، وكان عضوًا في
+    المجلس الاقتصادي والاجتماعي من 1988 إلى 1991، ونائبًا من 1991 إلى 1994، وأصبح سنة 1993 كاتبًا
+    عامًا للجنة تنسيق التجمع بالكاف. كان واليًا على قبلي منذ أفريل 1997، وعلى بن عروس منذ جانفي
+    2001، وعلى أريانة منذ جويلية 2006، ثم أمينًا عامًا مساعدًا للتجمع من سبتمبر 2008 إلى تعيينه
+    واليًا على نابل في جانفي 2010.
+  summary_ar_by: machine
+  confidence: B
   sources:
   - frwiki-gov-ariana
   - frwiki-gov-ben-arous
   - frwiki-gov-nabeul
+  - leaders-zaddem-2010-01-28
 - id: nizar-kharbeche
   name_en: Nizar Kharbeche
   layers:
@@ -18338,11 +18618,28 @@
   - frwiki-gov-beja
 - id: mehdi-zaoui
   name_en: Mehdi Zaoui
+  name_fr: Mehdi Zaoui
+  birth: '1979-08-07'
   layers:
   - political
+  summary: >-
+    Born in Tunis on 7 August 1979, Mehdi Zaoui holds a master's in international river law and is
+    a lawyer who ran a law office in Bizerte until his appointment as governor of Zaghouan in April
+    2015.
+  summary_fr: >-
+    Né à Tunis le 7 août 1979, Mehdi Zaoui est titulaire d'un master en droit international fluvial
+    ; avocat, il dirige un cabinet à Bizerte jusqu'à sa nomination comme gouverneur de Zaghouan en
+    avril 2015.
+  summary_fr_by: machine
+  summary_ar: >-
+    وُلد مهدي الزاوي في تونس يوم 7 أوت 1979، وهو حاصل على الماجستير في القانون الدولي للأنهار،
+    ومحامٍ كان يدير مكتبًا ببنزرت إلى حين تعيينه واليًا على زغوان في أفريل 2015.
+  summary_ar_by: machine
+  confidence: B
   sources:
   - frwiki-gov-ariana
   - frwiki-gov-zaghouan
+  - directinfo-zaoui-2015-04-12
 - id: saloua-khiari
   name_en: Saloua Khiari
   layers:
@@ -18566,13 +18863,43 @@
   - frwiki-gov-nabeul
 - id: amor-chachia
   name_en: Amor Chachia
+  name_fr: Amor Chachia
+  name_ar: عمر شاشية
+  birth: '1929-08-25'
+  death: '2007-01-09'
+  aliases:
+  - Amor Chéchia
   layers:
   - political
+  summary: >-
+    Born in Béni Khalled on 25 August 1929, Amor Chachia studied at the Zitouna in Tunis and in
+    1956 sided with Habib Bourguiba in the struggle against Salah Ben Youssef. He governed Kairouan
+    from 1 July 1956 and also Sousse from 1 September 1962. On 24 May 1970 he was sentenced to ten
+    years of hard labour in the cooperatives affair and was released by presidential pardon on 24
+    July 1974; he was later director general of prisons from 1981 to 1985 and ambassador to Qatar
+    from 1985. He died on 9 January 2007.
+  summary_fr: >-
+    Né à Béni Khalled le 25 août 1929, Amor Chachia étudie à la Zitouna de Tunis et prend parti en
+    1956 pour Habib Bourguiba dans sa lutte contre Salah Ben Youssef. Il gouverne Kairouan à partir
+    du 1er juillet 1956 et aussi Sousse à partir du 1er septembre 1962. Le 24 mai 1970, il est
+    condamné à dix ans de travaux forcés dans l'affaire des coopératives, puis libéré par grâce
+    présidentielle le 24 juillet 1974 ; il est ensuite directeur général des prisons de 1981 à 1985
+    et ambassadeur au Qatar à partir de 1985. Il meurt le 9 janvier 2007.
+  summary_fr_by: machine
+  summary_ar: >-
+    وُلد عمر شاشية في بني خلاد يوم 25 أوت 1929، ودرس بجامع الزيتونة بتونس، وانحاز سنة 1956 إلى
+    الحبيب بورقيبة في صراعه مع صالح بن يوسف. تولّى ولاية القيروان منذ 1 جويلية 1956، وولاية سوسة
+    أيضًا منذ 1 سبتمبر 1962. حُكم عليه يوم 24 ماي 1970 بعشر سنوات أشغالًا شاقة في قضية التعاضد،
+    وأُفرج عنه بعفو رئاسي يوم 24 جويلية 1974؛ ثم كان مديرًا عامًا للسجون من 1981 إلى 1985، وسفيرًا
+    في قطر منذ 1985. توفي يوم 9 جانفي 2007.
+  summary_ar_by: machine
+  confidence: B
   sources:
   - frwiki-gov-nabeul
   - frwiki-gov-kairouan
   - jort-1962-296
   - frwiki-sousse-gov
+  - frwiki-amor-chachia
   notes:
   - Decree of 1962 names Amor Chachia, governor of Kairouan, governor of Sousse and Kairouan from 1 September 1962, so the Kairouan and Sousse tenures are one official. The two records were merged into this one.
 - id: ridha-azzabi
@@ -18928,22 +19255,85 @@
   - frwiki-gov-bizerte
 - id: naceur-ben-jaafar
   name_en: Naceur Ben Jaafar
+  name_fr: Naceur Ben Jaafar
+  birth: '1923-06-15'
+  death: '1970-09-22'
   layers:
   - political
+  summary: >-
+    Born in Tunis on 15 June 1923, Naceur Ben Jaafar joined the Neo-Destour in 1938 and was elected
+    to the executive committee of the UGTT in April 1949, and he was detained several times between
+    1952 and 1954. Elected to the Constituent Assembly on 20 March 1956, he governed Souk El Arba,
+    now Jendouba, from June 1956, Sfax from October 1960 and Bizerte from October 1961. He was
+    elected deputy for Tunis-Nord in November 1964, re-elected on 2 November 1969, and died on 22
+    September 1970.
+  summary_fr: >-
+    Né à Tunis le 15 juin 1923, Naceur Ben Jaafar adhère au Néo-Destour en 1938 et est élu au
+    comité exécutif de l'UGTT en avril 1949, et il est détenu à plusieurs reprises entre 1952 et
+    1954. Élu à l'Assemblée constituante le 20 mars 1956, il gouverne Souk El Arba, l'actuelle
+    Jendouba, à partir de juin 1956, Sfax à partir d'octobre 1960 et Bizerte à partir d'octobre
+    1961. Il est élu député de Tunis-Nord en novembre 1964, réélu le 2 novembre 1969, et meurt le
+    22 septembre 1970.
+  summary_fr_by: machine
+  summary_ar: >-
+    وُلد ناصر بن جعفر في تونس يوم 15 جوان 1923، وانخرط في الحزب الحر الدستوري الجديد سنة 1938،
+    وانتُخب عضوًا في الهيئة الإدارية للاتحاد العام التونسي للشغل في أفريل 1949، واعتُقل مرات عدة
+    بين 1952 و1954. انتُخب عضوًا في المجلس القومي التأسيسي يوم 20 مارس 1956، ثم تولّى ولاية سوق
+    الأربعاء، جندوبة حاليًا، منذ جوان 1956، وصفاقس منذ أكتوبر 1960، وبنزرت منذ أكتوبر 1961. انتُخب
+    نائبًا عن تونس الشمالية في نوفمبر 1964، وأُعيد انتخابه يوم 2 نوفمبر 1969، وتوفي يوم 22 سبتمبر
+    1970.
+  summary_ar_by: machine
+  confidence: B
   sources:
   - frwiki-gov-bizerte
   - frwiki-gov-jendouba
+  - frwiki-naceur-ben-jaafar
   notes:
-  - Possibly the same official as naceur-ben-jaafar-sfax (Sfax 1960-1961). The governor lists give the
-    same name in a sequence that fits one career, but no fetched source links the entries, so they are
-    kept apart.
+  - French Wikipedia (frwiki-naceur-ben-jaafar) gives one career covering Souk El Arba from June 1956,
+    Sfax from October 1960 and Bizerte from October 1961, which ties this entry to
+    naceur-ben-jaafar-sfax. The entries are not merged yet.
 - id: mongi-kooli
   name_en: Mongi Kooli
+  name_fr: Mongi Kooli
+  name_ar: منجي الكعلي
+  birth: '1930-03-15'
+  death: '2018-06-14'
   layers:
   - political
+  summary: >-
+    Born in Ksar Hellal on 15 March 1930, Mongi Kooli studied at the Collège Sadiki and graduated
+    from the Paris law faculty, and in August 1959 was elected secretary general of the Union
+    générale des étudiants de Tunisie. After governing Jendouba and Bizerte he was director of
+    national security, secretary of state for foreign affairs and minister of public health from 31
+    May 1976 to 26 December 1977, and he sat as deputy for Monastir. From 25 April 1980 to 13 March
+    1984 he was minister delegate to the prime minister and director of the Parti socialiste
+    destourien, then the president's personal representative until 21 January 1986, and he served
+    as ambassador to Spain and to Czechoslovakia. He died at Gammarth on 14 June 2018.
+  summary_fr: >-
+    Né à Ksar Hellal le 15 mars 1930, Mongi Kooli étudie au Collège Sadiki puis sort diplômé de la
+    faculté de droit de Paris, et il est élu en août 1959 secrétaire général de l'Union générale
+    des étudiants de Tunisie. Après les gouvernorats de Jendouba et de Bizerte, il est directeur de
+    la sûreté nationale, secrétaire d'État aux Affaires étrangères puis ministre de la Santé
+    publique du 31 mai 1976 au 26 décembre 1977, et il siège comme député de Monastir. Du 25 avril
+    1980 au 13 mars 1984, il est ministre délégué auprès du Premier ministre et directeur du Parti
+    socialiste destourien, puis représentant personnel du président jusqu'au 21 janvier 1986, et il
+    est ambassadeur en Espagne et en Tchécoslovaquie. Il meurt à Gammarth le 14 juin 2018.
+  summary_fr_by: machine
+  summary_ar: >-
+    وُلد منجي الكعلي في قصر هلال يوم 15 مارس 1930، ودرس بالمدرسة الصادقية ثم تخرّج من كلية الحقوق
+    بباريس، وانتُخب في أوت 1959 كاتبًا عامًا للاتحاد العام لطلبة تونس. بعد ولايتي جندوبة وبنزرت
+    أصبح مديرًا للأمن الوطني، ثم كاتب دولة للشؤون الخارجية، ثم وزيرًا للصحة العمومية من 31 ماي 1976
+    إلى 26 ديسمبر 1977، ونائبًا عن المنستير. من 25 أفريل 1980 إلى 13 مارس 1984 كان وزيرًا معتمدًا
+    لدى الوزير الأول ومديرًا للحزب الاشتراكي الدستوري، ثم ممثلًا شخصيًا للرئيس إلى 21 جانفي 1986،
+    وكان سفيرًا في إسبانيا وتشيكوسلوفاكيا. توفي في قمرت يوم 14 جوان 2018.
+  summary_ar_by: machine
+  confidence: B
   sources:
   - frwiki-gov-bizerte
   - frwiki-gov-jendouba
+  - frwiki-mongi-kooli
+  - jort-1970-016-kooli-surete-nationale
+  - jort-1976-045-kooli-ministere-sante
 - id: abdeljelil-mehiri
   name_en: Abdeljelil Mehiri
   layers:
@@ -18977,11 +19367,46 @@
   - Abdessalem Aloulou
 - id: abdelmalek-laarif
   name_en: Abdelmalek Laarif
+  name_fr: Abdelmalek Laârif
+  name_ar: عبد الملك العريف
+  birth: '1942-07-26'
   layers:
   - political
+  summary: >-
+    Born in Akouda on 26 July 1942, Abdelmalek Laârif was secretary general of the national bureau
+    of Destourian students in the 1970s and regional director of health at Kasserine. After
+    governing Jendouba and Bizerte he directed the Radiodiffusion-télévision tunisienne from 9
+    December 1986 to 31 December 1987. He was director of the Parti socialiste destourien from 29
+    September to 1 October 1987, minister delegate to the prime minister from 30 September 1987,
+    minister of cultural affairs from 12 April 1988 and minister of information from 27 July 1988
+    to 10 April 1989. He later headed the Société nationale immobilière and the Régie nationale des
+    tabacs et des allumettes, and was chief executive of Tunisair from 7 January 1999 to 2001.
+  summary_fr: >-
+    Né à Akouda le 26 juillet 1942, Abdelmalek Laârif est secrétaire général du bureau national des
+    étudiants destouriens dans les années 1970 et directeur régional de la santé à Kasserine. Après
+    les gouvernorats de Jendouba et de Bizerte, il dirige la Radiodiffusion-télévision tunisienne
+    du 9 décembre 1986 au 31 décembre 1987. Il est directeur du Parti socialiste destourien du 29
+    septembre au 1er octobre 1987, ministre délégué auprès du Premier ministre à partir du 30
+    septembre 1987, ministre des Affaires culturelles à partir du 12 avril 1988 et ministre de
+    l'Information du 27 juillet 1988 au 10 avril 1989. Il dirige ensuite la Société nationale
+    immobilière et la Régie nationale des tabacs et des allumettes, puis il est PDG de Tunisair du
+    7 janvier 1999 à 2001.
+  summary_fr_by: machine
+  summary_ar: >-
+    وُلد عبد الملك العريف بأكودة يوم 26 جويلية 1942، وكان في السبعينات أمينًا عامًا للمكتب الوطني
+    للطلبة الدستوريين، ومديرًا جهويًا للصحة بالقصرين. بعد ولايتي جندوبة وبنزرت أدار مؤسسة الإذاعة
+    والتلفزة التونسية من 9 ديسمبر 1986 إلى 31 ديسمبر 1987. كان مديرًا للحزب الاشتراكي الدستوري من
+    29 سبتمبر إلى 1 أكتوبر 1987، ووزيرًا معتمدًا لدى الوزير الأول منذ 30 سبتمبر 1987، ووزيرًا
+    للشؤون الثقافية منذ 12 أفريل 1988، ووزيرًا للإعلام من 27 جويلية 1988 إلى 10 أفريل 1989. ترأس
+    لاحقًا الشركة الوطنية العقارية ووكالة التبغ والوقيد، ثم كان رئيسًا مديرًا عامًا للخطوط التونسية
+    من 7 جانفي 1999 إلى 2001.
+  summary_ar_by: machine
+  confidence: B
   sources:
   - frwiki-gov-bizerte
   - frwiki-gov-jendouba
+  - frwiki-abdelmalek-laarif
+  - arwiki-abdelmalek-laarif
 - id: tahar-berrejeb
   name_en: Tahar Berrejeb
   layers:
@@ -19015,15 +19440,43 @@
   - frwiki-gov-bizerte
 - id: mohamed-ben-rejeb
   name_en: Mohamed Ben Rejeb
+  name_fr: Mohamed Ben Rejeb
+  name_ar: محمد بن رجب
+  birth: '1943-10-07'
   layers:
   - political
+  summary: >-
+    Born in Kélibia on 7 October 1943, Mohamed Ben Rejeb studied at the faculty of sciences of
+    Tunis and served in the national guard from 1965, where he became director of borders, director
+    of public security and, in 1979, inspector general of its services. French Wikipedia lists him
+    as governor of Sidi Bouzid from 1980 to 1986, Siliana from 1986 to 1988, Gafsa from 1988 to
+    1991 and Bizerte from 1991 to 1993. He was minister of agriculture from June 1993 and minister
+    of the interior from 22 January to 9 October 1997.
+  summary_fr: >-
+    Né à Kélibia le 7 octobre 1943, Mohamed Ben Rejeb étudie à la faculté des sciences de Tunis et
+    sert dans la garde nationale à partir de 1965, où il devient directeur des frontières,
+    directeur de la sécurité publique puis, en 1979, inspecteur général des services. Wikipédia en
+    français le donne gouverneur de Sidi Bouzid de 1980 à 1986, de Siliana de 1986 à 1988, de Gafsa
+    de 1988 à 1991 et de Bizerte de 1991 à 1993. Il est ministre de l'Agriculture à partir de juin
+    1993 et ministre de l'Intérieur du 22 janvier au 9 octobre 1997.
+  summary_fr_by: machine
+  summary_ar: >-
+    وُلد محمد بن رجب في قليبية يوم 7 أكتوبر 1943، ودرس بكلية العلوم بتونس، والتحق بالحرس الوطني منذ
+    1965 حيث أصبح مديرًا للحدود ثم مديرًا للأمن العمومي ثم، سنة 1979، متفقدًا عامًا لمصالحه. تذكره
+    ويكيبيديا الفرنسية واليًا على سيدي بوزيد من 1980 إلى 1986، وعلى سليانة من 1986 إلى 1988، وعلى
+    قفصة من 1988 إلى 1991، وعلى بنزرت من 1991 إلى 1993. تولّى وزارة الفلاحة منذ جوان 1993، ثم وزارة
+    الداخلية من 22 جانفي إلى 9 أكتوبر 1997.
+  summary_ar_by: machine
+  confidence: B
   sources:
   - frwiki-gov-bizerte
   - frwiki-gov-siliana
+  - frwiki-mohamed-ben-rejeb
+  - jort-1997-007-ben-rejeb-interieur
   notes:
-  - Possibly the same official as mohamed-ben-rejeb-sidi-bouzid (Sidi Bouzid 1980-1986); mohamed-ben-rejeb-gafsa
-    (Gafsa 1988-1991). The governor lists give the same name in a sequence that fits one career, but no
-    fetched source links the entries, so they are kept apart.
+  - French Wikipedia (frwiki-mohamed-ben-rejeb) gives one career covering Sidi Bouzid 1980-1986,
+    Siliana 1986-1988, Gafsa 1988-1991 and Bizerte 1991-1993, which ties this entry to
+    mohamed-ben-rejeb-sidi-bouzid and mohamed-ben-rejeb-gafsa. The entries are not merged yet.
 - id: mohamed-ridha-mokrani
   name_en: Mohamed Ridha Mokrani
   layers:
@@ -19068,8 +19521,45 @@
   - frwiki-gov-beja
 - id: chokri-belhassen
   name_en: Chokri Belhassen
+  name_fr: Chokri Belhassen
+  name_ar: شكري بن حسن
+  birth: '1972-12-08'
+  aliases:
+  - Choukri Ben Hassan
   layers:
   - political
+  summary: >-
+    Born in Sousse on 8 December 1972, Chokri Belhassen holds a law degree and is a principal
+    inspector of financial services; he was a delegate from 2006 to 2009 and from 16 June 2009
+    represented the Mahdia governorate on the council of the commissariat général au développement
+    régional. Named governor of Bizerte on 2 February 2011, he was prevented from taking up the
+    post, and he governed Kairouan from April 2015 to 16 September 2016; he was also regional
+    coordinator of Nidaa Tounes in Sousse. He was secretary of state for local affairs in charge of
+    the environment from 27 August 2016, minister to the head of government for the social and
+    solidarity economy from 5 November 2018 and minister of the environment from 19 February 2020,
+    also holding local affairs ad interim from 15 July 2020.
+  summary_fr: >-
+    Né à Sousse le 8 décembre 1972, Chokri Belhassen est titulaire d'une maîtrise en droit et
+    inspecteur principal des services financiers ; délégué de 2006 à 2009, il représente à partir
+    du 16 juin 2009 le gouvernorat de Mahdia au conseil d'entreprise du commissariat général au
+    développement régional. Nommé gouverneur de Bizerte le 2 février 2011, il est empêché
+    d'exercer, puis il gouverne Kairouan d'avril 2015 au 16 septembre 2016 ; il est aussi
+    coordinateur régional de Nidaa Tounes à Sousse. Il est secrétaire d'État aux Affaires locales
+    chargé de l'Environnement à partir du 27 août 2016, ministre auprès du chef du gouvernement
+    chargé de l'Économie sociale et solidaire à partir du 5 novembre 2018 et ministre de
+    l'Environnement à partir du 19 février 2020, avec les Affaires locales par intérim à partir du
+    15 juillet 2020.
+  summary_fr_by: machine
+  summary_ar: >-
+    وُلد شكري بن حسن في سوسة يوم 8 ديسمبر 1972، وهو حاصل على الأستاذية في الحقوق ومتفقد أول للمصالح
+    المالية؛ كان معتمدًا من 2006 إلى 2009، ومثّل منذ 16 جوان 2009 ولاية المهدية في مجلس المندوبية
+    العامة للتنمية الجهوية. عُيّن واليًا على بنزرت يوم 2 فيفري 2011 لكنه مُنع من مباشرة مهامه، ثم
+    تولّى ولاية القيروان من أفريل 2015 إلى 16 سبتمبر 2016، وكان أيضًا منسقًا جهويًا لنداء تونس
+    بسوسة. كان كاتب دولة للشؤون المحلية مكلفًا بالبيئة منذ 27 أوت 2016، ثم وزيرًا لدى رئيس الحكومة
+    مكلفًا بالاقتصاد الاجتماعي والتضامني منذ 5 نوفمبر 2018، ثم وزيرًا للبيئة منذ 19 فيفري 2020، مع
+    الشؤون المحلية بالنيابة منذ 15 جويلية 2020.
+  summary_ar_by: machine
+  confidence: B
   sources:
   - frwiki-gov-bizerte
   - frwiki-bio-belhassen
@@ -19153,11 +19643,41 @@
   - frwiki-gov-beja
 - id: abderrazak-kefi
   name_en: Abderrazak Kéfi
+  name_fr: Abderrazak Kéfi
+  name_ar: عبد الرزاق كافي
+  birth: '1938-04-22'
+  death: '2026-02-19'
   layers:
   - political
+  summary: >-
+    Born in Kairouan on 22 April 1938, Abderrazak Kéfi trained as a nuclear chemistry engineer, was
+    active in the UGET when young and served in ministerial cabinets. After governing Béja in 1969
+    and Jendouba from 1981 to 1982, he was director general of the Radiodiffusion-télévision
+    tunisienne from 1982, minister of information from 1983 to 1986 and minister of transport and
+    tourism from 1987 to 1988. He also presided over the Economic and Social Council, and he died
+    in Tunis on 19 February 2026.
+  summary_fr: >-
+    Né à Kairouan le 22 avril 1938, Abderrazak Kéfi est ingénieur en chimie nucléaire de formation,
+    milite jeune au sein de l'UGET et fait partie de cabinets ministériels. Après les gouvernorats
+    de Béja en 1969 et de Jendouba de 1981 à 1982, il est directeur général de la
+    Radiodiffusion-télévision tunisienne à partir de 1982, ministre de l'Information de 1983 à 1986
+    et ministre du Transport et du Tourisme de 1987 à 1988. Il préside aussi le Conseil économique
+    et social, et il meurt à Tunis le 19 février 2026.
+  summary_fr_by: machine
+  summary_ar: >-
+    وُلد عبد الرزاق كافي في القيروان يوم 22 أفريل 1938، وهو مهندس في الكيمياء النووية، ناضل شابًا
+    في الاتحاد العام لطلبة تونس وعمل في دواوين وزارية. بعد ولايتي باجة سنة 1969 وجندوبة من 1981 إلى
+    1982، كان مديرًا عامًا للإذاعة والتلفزة التونسية منذ 1982، ووزيرًا للإعلام من 1983 إلى 1986،
+    ووزيرًا للنقل والسياحة من 1987 إلى 1988. ترأس أيضًا المجلس الاقتصادي والاجتماعي، وتوفي في تونس
+    يوم 19 فيفري 2026.
+  summary_ar_by: machine
+  confidence: B
   sources:
   - frwiki-gov-beja
   - frwiki-gov-jendouba
+  - frwiki-abderrazak-kefi
+  - leaders-kefi-2026
+  - leconomiste-kefi-2026
 - id: romdhan-ben-mimoun
   name_en: Romdhan Ben Mimoun
   layers:
@@ -19357,15 +19877,44 @@
   - frwiki-gov-jendouba
 - id: mohamed-fadhel-khelil
   name_en: Mohamed Fadhel Khelil
+  name_fr: Mohamed Fadhel Khelil
+  name_ar: محمد الفاضل خليل
+  death: '2017-05-31'
   layers:
   - political
+  summary: >-
+    Born in Gafsa, Mohamed Fadhel Khelil was an engineer who worked in the cabinet of agriculture
+    minister Dhaoui Hannablia and headed the ministry's international cooperation. French Wikipedia
+    lists him as governor of the Kef from 1981 to 1982, Jendouba from 1987 to 1988 and Sfax from
+    1988 to 1990. He was chief executive of the Compagnie des phosphates de Gafsa, minister of
+    social affairs from August 1992, and ambassador to Syria, Austria and Algeria, the gazette
+    recording the Vienna posting in March 1995. He died on 31 May 2017.
+  summary_fr: >-
+    Né à Gafsa, Mohamed Fadhel Khelil est un ingénieur qui intègre le cabinet du ministre de
+    l'Agriculture Dhaoui Hannablia et dirige la coopération internationale du ministère. Wikipédia
+    en français le donne gouverneur du Kef de 1981 à 1982, de Jendouba de 1987 à 1988 et de Sfax de
+    1988 à 1990. Il est PDG de la Compagnie des phosphates de Gafsa, ministre des Affaires sociales
+    à partir d'août 1992 et ambassadeur en Syrie, en Autriche et en Algérie, le Journal officiel
+    enregistrant le poste de Vienne en mars 1995. Il meurt le 31 mai 2017.
+  summary_fr_by: machine
+  summary_ar: >-
+    وُلد محمد الفاضل خليل في قفصة، وهو مهندس عمل بديوان وزير الفلاحة الضاوي حنابلية وأدار التعاون
+    الدولي بالوزارة. تذكره ويكيبيديا الفرنسية واليًا على الكاف من 1981 إلى 1982، وعلى جندوبة من
+    1987 إلى 1988، وعلى صفاقس من 1988 إلى 1990. ترأس شركة فسفاط قفصة، وتولّى وزارة الشؤون
+    الاجتماعية منذ أوت 1992، وكان سفيرًا في سوريا والنمسا والجزائر، ويسجّل الرائد الرسمي تعيينه في
+    فيينا في مارس 1995. توفي يوم 31 ماي 2017.
+  summary_ar_by: machine
+  confidence: B
   sources:
   - frwiki-gov-jendouba
   - frwiki-gov-kef
+  - frwiki-mohamed-fadhel-khelil
+  - jort-1992-071-khelil-affaires-sociales
+  - jort-1995-029-khelil-ambassadeur
   notes:
-  - Possibly the same official as mohamed-fadhel-khelil-sfax (Sfax 1988-1990). The governor lists give
-    the same name in a sequence that fits one career, but no fetched source links the entries, so they
-    are kept apart.
+  - French Wikipedia (frwiki-mohamed-fadhel-khelil) gives one career covering the Kef 1981-1982,
+    Jendouba 1987-1988 and Sfax 1988-1990, which ties this entry to mohamed-fadhel-khelil-sfax. The
+    entries are not merged yet.
 - id: mohamed-belhaj
   name_en: Mohamed Belhaj
   layers:

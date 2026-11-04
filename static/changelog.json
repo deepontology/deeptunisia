@@ -1,20 +1,20 @@
 [
   {
-    "hash": "72d84a6c8",
-    "date": "2026-11-04T14:37:25+01:00",
-    "subject": "Data: draw who appointed and relieved each governor, from the gazette",
-    "kind": "expansion",
-    "added": 6770,
-    "removed": 0,
+    "hash": "a868e3110",
+    "date": "2026-11-04T17:44:50+01:00",
+    "subject": "Data: biographies for 19 governors who held more than one governorate",
+    "kind": "revision",
+    "added": 904,
+    "removed": 17,
     "files": [
       {
-        "file": "data/relationships.yaml",
-        "added": 6750,
-        "removed": 0
+        "file": "data/people.yaml",
+        "added": 566,
+        "removed": 17
       },
       {
         "file": "data/sources.yaml",
-        "added": 20,
+        "added": 338,
         "removed": 0
       }
     ]
