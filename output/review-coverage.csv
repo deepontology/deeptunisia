@@ -12,7 +12,7 @@ position,documented,1536,8,0,0,0,6,0
 position,reported,1510,19,0,0,0,11,0
 position,inferred,6,0,0,0,0,0,0
 position,unsubstantiated,3,2,0,0,0,2,0
-relationship,documented,220,0,0,0,0,0,0
+relationship,documented,650,0,0,0,0,0,0
 relationship,reported,1878,1,0,0,0,2,0
 relationship,inferred,16,1,0,0,0,0,0
 relationship,unsubstantiated,7,7,0,0,0,0,0
@@ -32,6 +32,7 @@ contract,inferred,1,0,0,0,0,0,0
 contract,unsubstantiated,2,0,0,0,0,0,0
 licence,documented,6,0,0,0,0,0,0
 licence,reported,5,0,0,0,0,0,0
+vacancy,reported,1,0,0,0,0,0,0
 declaration,documented,3,0,0,0,0,0,0
 declaration,reported,6,0,0,0,0,0,0
 education,reported,24,0,0,0,0,0,0

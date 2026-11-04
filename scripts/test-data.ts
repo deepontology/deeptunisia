@@ -434,6 +434,7 @@ const KIND_TO_DATASET: Record<string, string> = {
 	company: 'companies',
 	contract: 'contracts',
 	licence: 'licences',
+	vacancy: 'vacancies',
 	declaration: 'declarations',
 	education: 'education',
 	region: 'regions',
@@ -841,6 +842,7 @@ const KIND_TO_DATASET: Record<string, string> = {
 		['companies', ds.companies],
 		['contracts', ds.contracts],
 		['licences', ds.licences],
+		['vacancies', ds.vacancies],
 		['declarations', ds.declarations],
 		['education', ds.education],
 		['worldClaims', ds.worldClaims]
@@ -871,6 +873,7 @@ const KIND_TO_DATASET: Record<string, string> = {
 		['companies', ds.companies],
 		['contracts', ds.contracts],
 		['licences', ds.licences],
+		['vacancies', ds.vacancies],
 		['declarations', ds.declarations],
 		['education', ds.education],
 		['worldClaims', ds.worldClaims]
@@ -898,6 +901,7 @@ const KIND_TO_DATASET: Record<string, string> = {
 		['companies', ds.companies],
 		['contracts', ds.contracts],
 		['licences', ds.licences],
+		['vacancies', ds.vacancies],
 		['declarations', ds.declarations],
 		['education', ds.education],
 		['worldClaims', ds.worldClaims]
@@ -1352,6 +1356,7 @@ const KIND_TO_DATASET: Record<string, string> = {
 		['companies', 'company'],
 		['contracts', 'contract'],
 		['licences', 'licence'],
+		['vacancies', 'vacancy'],
 		['declarations', 'declaration'],
 		['education', 'education'],
 		['places', 'place']

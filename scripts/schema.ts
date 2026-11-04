@@ -36,6 +36,10 @@ import { DEFAULT_PARAMETERS, type Parameters } from './parameters';
  *          evidence lineage — unique origin publishers/hosts, never a URL
  *          count — and keeps the authored `independence` where no evidence
  *          exists.
+ * V32      documented vacancy (decision 0007): a vacancy names a known,
+ *          non-seated role and carries a source; it may not certainly overlap
+ *          a titular position in the same role, nor another vacancy of that
+ *          role. Acting positions may sit inside it.
  *
  * Numbering note: the pre-submission grant draft used "V25" for the grade-B
  * corroboration rule (confidence B needs two sources or `attributed_to`). That
@@ -313,6 +317,11 @@ export const TRANSLATABLE_FIELDS: Record<string, { name: string; kind: 'string' 
 	companies: [{ name: 'notes', kind: 'list' }],
 	contracts: [{ name: 'notes', kind: 'list' }],
 	licences: [{ name: 'notes', kind: 'list' }],
+	vacancies: [
+		{ name: 'reasoning', kind: 'string' },
+		{ name: 'falsifiable_by', kind: 'string' },
+		{ name: 'notes', kind: 'list' }
+	],
 	declarations: [{ name: 'summary', kind: 'string' }, { name: 'notes', kind: 'list' }],
 	education: [{ name: 'field', kind: 'string' }, { name: 'notes', kind: 'list' }],
 	// Sources stay out of the authored-prose counter on purpose. Source excerpts
@@ -1324,6 +1333,37 @@ export const LicenceSchema = withClaimEnvelope(
 );
 
 /**
+ * A documented vacancy: an interval in which an office had no titular holder
+ * (decision 0007). Without it the record shows a vacancy the same way it shows
+ * an unknown, as a missing row, and the reader cannot tell "nobody held the
+ * office, per this source" from "the record has no row".
+ *
+ * Vacant means no titular holder. An acting holder (a position with
+ * `acting: true`) may sit inside the interval, which is how an interim reads:
+ * the office is vacant and someone manages it. A titular position overlapping
+ * a vacancy in the same role is a contradiction, and V32 fails the build.
+ */
+export const VacancySchema = withClaimEnvelope(
+	'vacancy',
+	z.strictObject({
+		id: slug,
+		/** The office that stood empty. Must be a known, non-seated role (V32). */
+		role: slug,
+		/** When the last titular holder left. */
+		start: dateToken,
+		/** When the next titular holder took office; `ongoing` while still vacant. */
+		end: dateToken,
+		/** Free-text editorial context (who managed the office meanwhile, gazette checks). */
+		notes: z.array(z.string()).default([]),
+		...translatable('notes', 'list'),
+		...translatable('reasoning'),
+		...translatable('falsifiable_by'),
+		...claimFields,
+		evidence: z.array(EvidenceSchema).optional(),
+	})
+);
+
+/**
  * Declarations are records ABOUT documents, not about the world (spec §4.6):
  * the record captures that a document exists and what it says; it never asserts
  * the declared values are true.
@@ -1668,6 +1708,7 @@ export const REQUIRED_SOURCE_KINDS = new Set([
 	'company',
 	'contract',
 	'licence',
+	'vacancy',
 	'declaration',
 	'education',
 	'place'
@@ -1781,6 +1822,7 @@ export type WorldClaim = z.infer<typeof WorldClaimSchema>;
 export type Company = z.infer<typeof CompanySchema>;
 export type Contract = z.infer<typeof ContractSchema>;
 export type Licence = z.infer<typeof LicenceSchema>;
+export type Vacancy = z.infer<typeof VacancySchema>;
 export type Declaration = z.infer<typeof DeclarationSchema>;
 export type Education = z.infer<typeof EducationSchema>;
 export type Era = z.infer<typeof EraSchema>;

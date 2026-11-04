@@ -1,0 +1,97 @@
+# -----------------------------------------------------------------------------
+# VACANCIES — intervals in which an office had no titular holder (decision 0007)
+#
+# A vacancy is a fact the record knows: a source says nobody held the office.
+# A missing position row is a fact the record does not know. The two render
+# differently, and this file is what lets them.
+#
+# Vacant means no titular holder. An acting holder (a position with
+# `acting: true`) may sit inside the interval: the office is vacant and someone
+# manages it. A titular position overlapping a vacancy in the same role fails
+# the build (V32); that is a dispute to record, not a gap to merge.
+#
+# Do not create a vacancy from the absence of a row. The source has to say the
+# office was empty, or the interval has to be bounded by a departure and an
+# appointment that the sources tie to each other.
+# -----------------------------------------------------------------------------
+
+- id: vac-governor-tunis-2023
+  role: governor-tunis
+  start: "2023-03-17"
+  end: "2024-09-08"
+  confidence: B
+  reasoning: >-
+    Kamel Feki left the post on 17 March 2023, when he was named interior
+    minister (Anadolu, 18 March 2023). On 19 April 2023 the governorate's own
+    communiqué, reported by Webdo, charged the first delegate Fares Mejri with
+    managing its affairs provisionally, pending the president's appointment of
+    a new governor, so on that date the post had no titular holder. Decree
+    2024-472 of 8 September 2024 names Imed Boukhris governor of Tunis and
+    names no predecessor. The first gazette sweep of 2011-2026 found no Tunis appointment between those
+    dates.
+  reasoning_fr: >-
+    Kamel Feki a quitté le poste le 17 mars 2023, nommé ministre de
+    l'Intérieur (Anadolu, 18 mars 2023). Le 19 avril 2023, un communiqué du
+    gouvernorat, rapporté par Webdo, a chargé le premier délégué Fares Mejri de
+    gérer provisoirement ses affaires en attendant la nomination d'un nouveau
+    gouverneur par le président : à cette date, le poste n'avait pas de
+    titulaire. Le décret 2024-472 du 8 septembre 2024 nomme Imed Boukhris
+    gouverneur de Tunis sans nommer de prédécesseur. Le premier dépouillement du JORT
+    pour 2011-2026 n'a trouvé aucune nomination à Tunis entre ces dates.
+  reasoning_fr_by: machine
+  reasoning_ar: >-
+    غادر كمال الفقي المنصب يوم 17 مارس 2023 إثر تعيينه وزيرًا للداخلية
+    (الأناضول، 18 مارس 2023). ويوم 19 أفريل 2023 كلّف بلاغ صادر عن الولاية،
+    نقله موقع ويبدو، المعتمد الأول فارس المجري بتسيير شؤونها مؤقتًا في انتظار
+    تعيين رئيس الجمهورية واليًا جديدًا، فلم يكن للمنصب في ذلك التاريخ والٍ
+    أصيل. ويعيّن الأمر عدد 2024-472 المؤرخ في 8 سبتمبر 2024 عماد بوخريص واليًا
+    على تونس دون ذكر سلف له. ولم يعثر
+    المسح الأول للرائد الرسمي للفترة 2011-2026 على أي تعيين في تونس بين
+    التاريخين.
+  reasoning_ar_by: machine
+  falsifiable_by: >-
+    A decree in the official gazette, in the French or the Arabic edition,
+    appointing a titular governor of Tunis between 17 March 2023 and
+    8 September 2024. If one exists the vacancy is false and is deleted, not
+    narrowed.
+  falsifiable_by_fr: >-
+    Un décret au JORT, dans l'édition française ou arabe, nommant un gouverneur
+    titulaire de Tunis entre le 17 mars 2023 et le 8 septembre 2024. S'il en
+    existe un, la vacance est fausse et doit être supprimée, non raccourcie.
+  falsifiable_by_fr_by: machine
+  falsifiable_by_ar: >-
+    أمر في الرائد الرسمي، في النسخة الفرنسية أو العربية، يعيّن واليًا أصيلًا
+    على تونس بين 17 مارس 2023 و8 سبتمبر 2024. وإن وُجد فالشغور غير صحيح ويُحذف
+    ولا يُختصر.
+  falsifiable_by_ar_by: machine
+  notes:
+    - >-
+      Fares Mejri managed the governorate as acting governor from
+      19 April 2023 (p-gov-tunis-mejri-acting). No source names who managed it
+      between 17 March and 19 April 2023.
+    - >-
+      The gazette sweep read the French edition only. The Arabic issues for
+      the window have not been read.
+  notes_fr:
+    - >-
+      Fares Mejri a géré le gouvernorat comme gouverneur par intérim à partir
+      du 19 avril 2023 (p-gov-tunis-mejri-acting). Aucune source ne nomme qui
+      l'a géré entre le 17 mars et le 19 avril 2023.
+    - >-
+      Le dépouillement du JORT n'a lu que l'édition française. Les numéros
+      arabes de la période n'ont pas été lus.
+  notes_fr_by: machine
+  notes_ar:
+    - >-
+      تولّى فارس المجري تسيير الولاية بصفته واليًا بالنيابة بداية من 19 أفريل
+      2023 (p-gov-tunis-mejri-acting). ولا يذكر أي مصدر من تولّى تسييرها بين 17
+      مارس و19 أفريل 2023.
+    - >-
+      اقتصر مسح الرائد الرسمي على النسخة الفرنسية، ولم تُقرأ الأعداد العربية لهذه
+      الفترة.
+  notes_ar_by: machine
+  sources:
+    - aa-feki-2023-03-18
+    - webdo-tunis-interim-2023-04-19
+    - webdo-gouverneurs-2024
+    - jort-2024-472

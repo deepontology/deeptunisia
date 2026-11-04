@@ -216,12 +216,12 @@ institution,wifak-bank,1,1,0,0,0,0,1,1
 institution,world-bank,1,1,0,0,0,0,3,1
 institution,zitouna-bank,2,2,0,0,0,0,4,1
 institution,zitouna-tv,3,3,0,0,0,0,3,1
-era,ben-ali-consolidation,458,458,12,1,1,1,332,1
-era,bourguiba,968,968,20,1,1,1,481,1
-era,fragmentation,1753,1753,13,3,3,3,499,0
-era,pluralism,1254,1254,9,1,1,1,607,1
-era,police-state,1190,1190,14,2,2,2,547,1
-era,recentralisation,1616,1616,17,6,6,6,718,0
+era,ben-ali-consolidation,526,526,12,1,1,1,333,1
+era,bourguiba,1115,1115,20,1,1,1,483,1
+era,fragmentation,1783,1783,13,3,3,3,504,0
+era,pluralism,1341,1341,9,1,1,1,607,1
+era,police-state,1303,1303,14,2,2,2,548,1
+era,recentralisation,1661,1661,17,6,6,6,718,0
 era,transition,2384,2384,12,2,2,2,654,1
 source_family,africa business,3,2,0,0,0,2,3,1
 source_family,africa intelligence,2,2,0,0,0,2,2,1
@@ -412,7 +412,7 @@ source_family,jort via legislation securite tn,3,3,0,0,0,3,3,0
 source_family,journal officiel de la republique tunisienne,2,2,0,0,0,2,2,1
 source_family,journal officiel de la republique tunisienne archive jort,2,2,0,0,0,2,2,1
 source_family,journal officiel de la republique tunisienne archive officielle lake jort tn,12,8,0,0,0,8,12,0
-source_family,journal officiel de la republique tunisienne archive officielle ocr jort tn lake jort tn,28,28,0,0,0,28,28,0
+source_family,journal officiel de la republique tunisienne archive officielle ocr jort tn lake jort tn,30,30,0,0,0,30,30,0
 source_family,journal officiel de la republique tunisienne edition arabe officielle archive lake jort tn,1,1,0,0,0,1,1,1
 source_family,journal officiel de la republique tunisienne imprimerie officielle de la republique tunisienne,3,2,0,0,0,2,3,1
 source_family,journal officiel de la republique tunisienne jort,3,3,0,0,0,3,3,0
@@ -614,9 +614,9 @@ source_family,zawya,1,0,0,0,0,0,1,1
 source_family,zawya communique de presse,1,1,0,0,0,1,1,1
 source_family,zoom tunisia,1,1,0,0,0,1,1,1
 source_family,ويكيبيديا (العربية),11,10,0,0,0,10,11,0
-language,ar,109,68,0,0,0,68,109,0
+language,ar,110,69,0,0,0,69,110,0
 language,en,471,201,0,0,0,201,471,0
-language,fr,1915,1643,0,0,0,1643,1915,0
+language,fr,1916,1644,0,0,0,1644,1916,0
 language,it,4,1,0,0,0,1,4,1
 office,administrative-court-president,4,4,0,0,0,0,5,1
 office,administrative-reform-minister,4,4,0,0,0,0,4,1

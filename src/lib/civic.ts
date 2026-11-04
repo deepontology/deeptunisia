@@ -1,4 +1,5 @@
 import { ds, roleById, institutionById, relationshipsByEntity, activity, type Institution, type Position, type Role } from './model';
+import type { Vacancy } from '$data/index';
 
 /**
  * Who held public office over a piece of territory, at a date.
@@ -46,6 +47,37 @@ export function officesAt(region: string, t: number): Holding[] {
 	for (const p of officesOver(region)) {
 		const at = activity(p.interval, t);
 		if (at) out.push({ position: p, role: roleById.get(p.role)!, at });
+	}
+	return out;
+}
+
+/**
+ * A documented vacancy of one of the region's offices (decision 0007): the
+ * record knows nobody held the office titularly. It is a different fact from
+ * an interval with no position row, which is the record not knowing, and the
+ * card renders the two differently.
+ */
+export interface VacantSpell {
+	vacancy: Vacancy;
+	role: Role;
+	/** 2 = certainly vacant at the date, 1 = possibly (the dates are fuzzy). */
+	at: 1 | 2;
+}
+
+/** Every documented vacancy of the region's territorial offices, oldest first. */
+export function vacanciesOver(region: string): Vacancy[] {
+	const roles = new Set((territorial.get(region) ?? []).map((r) => r.id));
+	return ds.vacancies
+		.filter((v) => roles.has(v.role))
+		.sort((a, b) => a.interval.startEarliest - b.interval.startEarliest);
+}
+
+/** Documented vacancies of the region's offices at time `t`. */
+export function vacanciesAt(region: string, t: number): VacantSpell[] {
+	const out: VacantSpell[] = [];
+	for (const v of vacanciesOver(region)) {
+		const at = activity(v.interval, t);
+		if (at) out.push({ vacancy: v, role: roleById.get(v.role)!, at });
 	}
 	return out;
 }

@@ -1,6 +1,6 @@
 {
-  "generated": "2026-11-04T16:40:41.509Z",
-  "total": 5412,
+  "generated": "2026-11-04T17:17:02.379Z",
+  "total": 5843,
   "reviewed": 42,
   "queue": [
     {
@@ -21224,6 +21224,16 @@
       "title": "political-conflict: kais-saied → rached-ghannouchi"
     },
     {
+      "kind": "vacancy",
+      "id": "vac-governor-tunis-2023",
+      "confidence": "B",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 4,
+      "reviewed": false,
+      "title": "vacant — Governor of Tunis"
+    },
+    {
       "kind": "contract",
       "id": "ctr-tunisair-airbus-a320neo-2016",
       "confidence": "B",
@@ -42255,6 +42265,16 @@
     },
     {
       "kind": "relationship",
+      "id": "rel-bourguiba-hassib-ben-ammar-appointment-tunis-1965",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 3,
+      "reviewed": false,
+      "title": "appointment: bourguiba → hassib-ben-ammar"
+    },
+    {
+      "kind": "relationship",
       "id": "rel-judiciary-ghazi-chaouachi-prosecution",
       "confidence": "A",
       "basis": "documented",
@@ -51915,6 +51935,306 @@
     },
     {
       "kind": "relationship",
+      "id": "rel-ben-ali-abdallah-hadroug-appointment-jendouba-1995",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → abdallah-hadroug"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-abdallah-hadroug-dismissal-jendouba-1996",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → abdallah-hadroug"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-abdallah-kaabi-appointment-ariana-1988",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → abdallah-kaabi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-abdelaziz-bouallegue-appointment-kebili-1993",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → abdelaziz-bouallegue"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-abdelaziz-chaabane-appointment-monastir-1988",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → abdelaziz-chaabane"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-abdelaziz-chaabane-dismissal-monastir-1995",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → abdelaziz-chaabane"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-abdelbaki-bacha-appointment-sousse-1991",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → abdelbaki-bacha"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-abdeljelil-zaddem-appointment-kebili-1997",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → abdeljelil-zaddem"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-abdellatif-el-ghaoui-appointment-zaghouan-1994",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → abdellatif-el-ghaoui"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-abdellatif-el-ghaoui-dismissal-zaghouan-1996",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → abdellatif-el-ghaoui"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-abdelwaheb-jemal-appointment-nabeul-1992",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → abdelwaheb-jemal"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-abdelwaheb-jemal-dismissal-nabeul-1995",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → abdelwaheb-jemal"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-abdelwaheb-jemal-mahdia-dismissal-mahdia-1988",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → abdelwaheb-jemal-mahdia"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-abderrahman-bouhrizi-appointment-ariana-1990",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → abderrahman-bouhrizi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-abderrahman-bouhrizi-dismissal-ariana-1991",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → abderrahman-bouhrizi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-abderrahmane-limam-appointment-medenine-1993",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → abderrahmane-limam"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-ali-chaouch-appointment-medenine-1987",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → ali-chaouch"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-ali-ksiksi-tozeur-appointment-tozeur-1996",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → ali-ksiksi-tozeur"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-ali-trabelsi-appointment-siliana-1995",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → ali-trabelsi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-amor-n-sairi-appointment-sousse-1992",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → amor-n-sairi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-amor-n-sairi-dismissal-sousse-1996",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → amor-n-sairi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-barhoumi-laabidi-appointment-kebili-1990",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → barhoumi-laabidi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-bechir-ben-thabet-appointment-tataouine-1992",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → bechir-ben-thabet"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-bechir-ben-thabet-dismissal-tataouine-1993",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → bechir-ben-thabet"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-bechir-jamai-appointment-kasserine-1993",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → bechir-jamai"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-bechir-jamai-dismissal-kasserine-1994",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → bechir-jamai"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-bechir-mejdoub-appointment-kef-1992",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → bechir-mejdoub"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-bechir-mejdoub-dismissal-kef-1995",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → bechir-mejdoub"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-boubaker-ben-kraiem-dismissal-kef-1992",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → boubaker-ben-kraiem"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-boubaker-ben-kraiem-sidi-bouzid-appointment-sidi-bouzid-1990",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → boubaker-ben-kraiem-sidi-bouzid"
+    },
+    {
+      "kind": "relationship",
       "id": "rel-ben-ali-bourguiba-succession",
       "confidence": "A",
       "basis": "documented",
@@ -51925,6 +52245,956 @@
     },
     {
       "kind": "relationship",
+      "id": "rel-ben-ali-brahim-fridhi-appointment-tozeur-1993",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → brahim-fridhi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-brahim-fridhi-dismissal-tozeur-1995",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → brahim-fridhi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-chabib-daly-tozeur-appointment-tozeur-2000",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → chabib-daly-tozeur"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-chedly-karoui-appointment-siliana-1988",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → chedly-karoui"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-dhaou-maiz-appointment-zaghouan-1988",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → dhaou-maiz"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-dhaou-maiz-dismissal-zaghouan-1992",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → dhaou-maiz"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-faiez-ayed-appointment-zaghouan-1998",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → faiez-ayed"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-faouzi-el-aouem-appointment-tozeur-1988",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → faouzi-el-aouem"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-faouzi-el-aouem-dismissal-tozeur-1991",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → faouzi-el-aouem"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-frej-souissi-appointment-medenine-1998",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → frej-souissi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-frej-souissi-dismissal-medenine-2000",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → frej-souissi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-habib-aoual-appointment-kairouan-2001",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → habib-aoual"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-habib-ben-gamra-dismissal-kairouan-2001",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → habib-ben-gamra"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-habib-ben-gamra-sidi-bouzid-appointment-sidi-bouzid-1995",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → habib-ben-gamra-sidi-bouzid"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-habib-daldoul-dismissal-nabeul-1992",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → habib-daldoul"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-habib-daldoul-sousse-appointment-sousse-1988",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → habib-daldoul-sousse"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-habib-hadded-kasserine-appointment-kasserine-1998",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → habib-hadded-kasserine"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-habib-sayhi-dismissal-bizerte-1990",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → habib-sayhi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-hassen-alaya-dismissal-beja-1999",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → hassen-alaya"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-hassen-alaya-tataouine-appointment-tataouine-1993",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → hassen-alaya-tataouine"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-hassene-smaoui-dismissal-siliana-2000",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → hassene-smaoui"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-hassene-smaoui-gabes-appointment-gabes-1996",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → hassene-smaoui-gabes"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-hedi-ayeche-kasserine-appointment-kasserine-1988",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → hedi-ayeche-kasserine"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-hedi-ayeche-mahdia-dismissal-mahdia-1997",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → hedi-ayeche-mahdia"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-jamel-bouslimi-appointment-kairouan-1994",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → jamel-bouslimi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-kacem-salah-appointment-ben-arous-1992",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → kacem-salah"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-kamel-belkhodja-appointment-tunis-1988",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → kamel-belkhodja"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-kamel-ben-ali-mahdia-appointment-mahdia-2000",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → kamel-ben-ali-mahdia"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-kamel-cherigui-appointment-zaghouan-1992",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → kamel-cherigui"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-kamel-cherigui-dismissal-zaghouan-1994",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → kamel-cherigui"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-kamel-haj-sassi-dismissal-kairouan-1991",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → kamel-haj-sassi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-khelifa-jebeniani-appointment-siliana-2000",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → khelifa-jebeniani"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mahmoud-lajnef-appointment-gafsa-1994",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → mahmoud-lajnef"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mahmoud-lajnef-dismissal-gafsa-1994",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → mahmoud-lajnef"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mahmoud-mehiri-kasserine-appointment-kasserine-2001",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → mahmoud-mehiri-kasserine"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mohamed-akrimi-appointment-kebili-2001",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → mohamed-akrimi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mohamed-belghith-appointment-beja-1999",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → mohamed-belghith"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mohamed-ben-nasr-appointment-monastir-1995",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → mohamed-ben-nasr"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mohamed-ben-nasr-dismissal-monastir-1996",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → mohamed-ben-nasr"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mohamed-ben-nasr-mahdia-dismissal-mahdia-1990",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → mohamed-ben-nasr-mahdia"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mohamed-ben-saad-appointment-sfax-1990",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → mohamed-ben-saad"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mohamed-ben-saad-dismissal-sfax-1992",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → mohamed-ben-saad"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mohamed-ben-saad-kasserine-dismissal-kasserine-1988",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → mohamed-ben-saad-kasserine"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mohamed-ben-salem-tataouine-appointment-tataouine-1996",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → mohamed-ben-salem-tataouine"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mohamed-essid-tataouine-dismissal-tataouine-1990",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → mohamed-essid-tataouine"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mohamed-ghariani-appointment-sidi-bouzid-1996",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → mohamed-ghariani"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mohamed-hechmi-gouadria-appointment-mahdia-1997",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → mohamed-hechmi-gouadria"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mohamed-hechmi-gouadria-dismissal-mahdia-2000",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → mohamed-hechmi-gouadria"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mohamed-laabidi-kebili-dismissal-kebili-1993",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → mohamed-laabidi-kebili"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mohamed-lahbib-braham-appointment-ariana-1994",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → mohamed-lahbib-braham"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mohamed-laid-kidoussi-tataouine-appointment-tataouine-2000",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → mohamed-laid-kidoussi-tataouine"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mohamed-lajnef-dismissal-tataouine-1992",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → mohamed-lajnef"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mohamed-lamine-el-abed-kasserine-appointment-kasserine-1994",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → mohamed-lamine-el-abed-kasserine"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mohamed-louati-appointment-sidi-bouzid-1993",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → mohamed-louati"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mohamed-louati-dismissal-sidi-bouzid-1995",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → mohamed-louati"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mohamed-marzouki-dismissal-tataouine-1991",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → mohamed-marzouki"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mohamed-moncef-ayadi-appointment-medenine-1989",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → mohamed-moncef-ayadi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mohamed-moncef-ayadi-dismissal-medenine-1990",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → mohamed-moncef-ayadi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mohamed-nejib-drissi-dismissal-ariana-1994",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → mohamed-nejib-drissi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mohamed-rachdi-appointment-ben-arous-1988",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → mohamed-rachdi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mohamed-rachdi-sfax-dismissal-sfax-1995",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → mohamed-rachdi-sfax"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mohamed-rahmani-appointment-bizerte-1990",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → mohamed-rahmani"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mohamed-rahmani-dismissal-bizerte-1991",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → mohamed-rahmani"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mohamed-ridha-mokrani-gafsa-dismissal-gafsa-2001",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → mohamed-ridha-mokrani-gafsa"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mohamed-ridha-mokrani-mahdia-appointment-mahdia-1990",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → mohamed-ridha-mokrani-mahdia"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mohamed-sahbi-basly-appointment-sfax-1996",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → mohamed-sahbi-basly"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mohamed-sahbi-basly-dismissal-sfax-1998",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → mohamed-sahbi-basly"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mohamed-sahbi-basly-medenine-appointment-medenine-1992",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → mohamed-sahbi-basly-medenine"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mohamed-sahbi-basly-medenine-dismissal-medenine-1993",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → mohamed-sahbi-basly-medenine"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mohamed-soudani-sidi-bouzid-appointment-sidi-bouzid-1991",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → mohamed-soudani-sidi-bouzid"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mohamed-soudani-sousse-appointment-sousse-1997",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → mohamed-soudani-sousse"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mohamed-soudani-sousse-dismissal-sousse-1998",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → mohamed-soudani-sousse"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mohamed-tounsi-appointment-manouba-2000",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → mohamed-tounsi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mohsen-harbi-appointment-medenine-1990",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → mohsen-harbi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mohsen-harbi-dismissal-medenine-1991",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → mohsen-harbi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mohsen-senoussi-appointment-ben-arous-1997",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → mohsen-senoussi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mohsen-senoussi-dismissal-beja-2001",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → mohsen-senoussi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-moncef-balti-appointment-kef-1990",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → moncef-balti"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-moncef-balti-dismissal-kef-1991",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → moncef-balti"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-moncef-ben-jedidia-dismissal-beja-1990",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → moncef-ben-jedidia"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-moncef-ben-tmessek-appointment-kebili-1991",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → moncef-ben-tmessek"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-moncef-louati-appointment-gabes-1990",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → moncef-louati"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-moncef-louati-dismissal-gabes-1993",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → moncef-louati"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mondher-friji-appointment-ariana-1996",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → mondher-friji"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mostapha-boughazli-appointment-nabeul-1987",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → mostapha-boughazli"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mostapha-boughazli-dismissal-nabeul-1990",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → mostapha-boughazli"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-mustapha-karbia-gafsa-appointment-gafsa-1994",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → mustapha-karbia-gafsa"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-naceur-el-gharbi-appointment-gabes-1988",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → naceur-el-gharbi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-noureddine-hafsi-appointment-kairouan-1992",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → noureddine-hafsi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-noureddine-hafsi-dismissal-kairouan-1993",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → noureddine-hafsi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-noureddine-naija-appointment-medenine-1991",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → noureddine-naija"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-noureddine-naija-dismissal-medenine-1992",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → noureddine-naija"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-omar-ben-mahmoud-appointment-tunis-1999",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → omar-ben-mahmoud"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-rafaa-dekhil-appointment-sousse-1990",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → rafaa-dekhil"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-rafaa-dekhil-dismissal-sousse-1991",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → rafaa-dekhil"
+    },
+    {
+      "kind": "relationship",
       "id": "rel-ben-ali-rcd-party",
       "confidence": "A",
       "basis": "documented",
@@ -51932,6 +53202,1656 @@
       "sources": 2,
       "reviewed": false,
       "title": "party: ben-ali → rcd"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-saad-hajji-appointment-kef-1995",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → saad-hajji"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-saad-hajji-dismissal-kef-1996",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → saad-hajji"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-sadok-marzouk-appointment-siliana-1990",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → sadok-marzouk"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-salah-jouini-appointment-kairouan-1993",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → salah-jouini"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-salah-jouini-dismissal-kairouan-1994",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → salah-jouini"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-salah-kacem-dismissal-kasserine-1993",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → salah-kacem"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-salah-zoghlami-appointment-gafsa-1996",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → salah-zoghlami"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-salah-zoghlami-dismissal-gafsa-1998",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → salah-zoghlami"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-salem-jeribi-appointment-beja-2001",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → salem-jeribi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-salem-mekki-appointment-kairouan-1991",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → salem-mekki"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-salem-mekki-dismissal-kairouan-1992",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → salem-mekki"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-slaheddine-el-abed-appointment-jendouba-1990",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → slaheddine-el-abed"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-slaheddine-el-abed-kasserine-dismissal-kasserine-2001",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → slaheddine-el-abed-kasserine"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-tajeddine-bekri-appointment-sidi-bouzid-2001",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → tajeddine-bekri"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-youssef-ajlani-appointment-tozeur-1995",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → youssef-ajlani"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-youssef-ajlani-dismissal-tozeur-1996",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → youssef-ajlani"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-zoubeir-lasram-appointment-ben-arous-1996",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → zoubeir-lasram"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-zoubeir-lasram-dismissal-ben-arous-1997",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → zoubeir-lasram"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-zouheir-dhaouadi-appointment-nabeul-1995",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: ben-ali → zouheir-dhaouadi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-ben-ali-zouheir-dhaouadi-dismissal-nabeul-1996",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: ben-ali → zouheir-dhaouadi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-abbes-mohsen-appointment-nabeul-1976",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → abbes-mohsen"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-abbes-mohsen-appointment-tunis-1986",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → abbes-mohsen"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-abdelaziz-beltaief-medenine-appointment-medenine-1965",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → abdelaziz-beltaief-medenine"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-abdelhak-lassoued-appointment-zaghouan-1981",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → abdelhak-lassoued"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-abdelhak-lassoued-gabes-appointment-gabes-1984",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → abdelhak-lassoued-gabes"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-abdelhakim-tekaya-appointment-kef-1980",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → abdelhakim-tekaya"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-abdelhakim-tekaya-dismissal-kef-1981",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → abdelhakim-tekaya"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-abdelhamid-melki-gabes-appointment-gabes-1973",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → abdelhamid-melki-gabes"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-abdeljelil-mehiri-appointment-bizerte-1970",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → abdeljelil-mehiri"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-abdelkader-n-siri-appointment-sfax-1984",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → abdelkader-n-siri"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-abdelkader-n-siri-dismissal-sfax-1986",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → abdelkader-n-siri"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-abdelkader-zitouna-appointment-sfax-1982",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → abdelkader-zitouna"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-abdelkrim-azaiez-kasserine-appointment-kasserine-1986",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → abdelkrim-azaiez-kasserine"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-abdelmalek-laarif-appointment-jendouba-1973",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → abdelmalek-laarif"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-abdelmalek-laarif-dismissal-bizerte-1980",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → abdelmalek-laarif"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-abdelwaheb-jemal-mahdia-appointment-mahdia-1986",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → abdelwaheb-jemal-mahdia"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-abderahmen-mokrani-dismissal-kasserine-1981",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → abderahmen-mokrani"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-abderrahim-zouari-appointment-gabes-1974",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → abderrahim-zouari"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-abderrahim-zouari-dismissal-nabeul-1980",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → abderrahim-zouari"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-abderrazak-ayoub-appointment-jendouba-1981",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → abderrazak-ayoub"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-abderrazak-ayoub-tataouine-dismissal-tataouine-1985",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → abderrazak-ayoub-tataouine"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-abderrazak-kefi-appointment-beja-1969",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → abderrazak-kefi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-abderrazak-kefi-appointment-jendouba-1980",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → abderrazak-kefi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-abderrazak-kefi-dismissal-jendouba-1981",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → abderrazak-kefi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-abderrazak-yazid-appointment-gabes-1978",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → abderrazak-yazid"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-abdessalem-ben-ammar-dismissal-kairouan-1982",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → abdessalem-ben-ammar"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-abdessalem-ghedira-gafsa-appointment-gafsa-1962",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → abdessalem-ghedira-gafsa"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-abdessalem-kallel-kasserine-dismissal-kasserine-1970",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → abdessalem-kallel-kasserine"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-ahmed-bellalouna-gabes-dismissal-gabes-1967",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → ahmed-bellalouna-gabes"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-ahmed-ridha-ouaja-appointment-ben-arous-1986",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → ahmed-ridha-ouaja"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-ameur-ghedira-gabes-appointment-gabes-1973",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → ameur-ghedira-gabes"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-ameur-kriaa-appointment-ben-arous-1987",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → ameur-kriaa"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-ameur-kriaa-kebili-appointment-kebili-1984",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → ameur-kriaa-kebili"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-amor-chachia-appointment-sousse-1964",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → amor-chachia"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-amor-chachia-dismissal-kairouan-1964",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → amor-chachia"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-amor-latiri-appointment-sfax-1986",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → amor-latiri"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-amor-latiri-mahdia-appointment-mahdia-1982",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → amor-latiri-mahdia"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-amor-msadek-appointment-kairouan-1970",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → amor-msadek"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-bechir-lahmidi-appointment-kairouan-1979",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → bechir-lahmidi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-bechir-lahmidi-appointment-nabeul-1981",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → bechir-lahmidi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-brahim-jameleddine-appointment-sousse-1986",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → brahim-jameleddine"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-chedli-neffati-appointment-kairouan-1982",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → chedli-neffati"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-chedly-maamouri-dismissal-zaghouan-1980",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → chedly-maamouri"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-ezzedine-salaani-appointment-mahdia-1974",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → ezzedine-salaani"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-faycal-chahdoura-tataouine-appointment-tataouine-1981",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → faycal-chahdoura-tataouine"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-fouad-mebazaa-appointment-tunis-1969",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → fouad-mebazaa"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-habib-sayhi-appointment-bizerte-1987",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → habib-sayhi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-habib-tounsi-appointment-sfax-1978",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → habib-tounsi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-habib-tounsi-dismissal-sfax-1980",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → habib-tounsi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-hamadi-khouini-appointment-tunis-1983",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → hamadi-khouini"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-hamadi-khouini-sousse-appointment-sousse-1980",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → hamadi-khouini-sousse"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-hamed-khanfir-appointment-jendouba-1984",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → hamed-khanfir"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-hassen-louzir-appointment-jendouba-1971",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → hassen-louzir"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-hechmi-amri-appointment-sidi-bouzid-1977",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → hechmi-amri"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-hedi-alaya-appointment-kairouan-1978",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → hedi-alaya"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-hedi-baccouche-dismissal-gabes-1970",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → hedi-baccouche"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-hedi-jedidi-appointment-kasserine-1973",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → hedi-jedidi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-hedi-jedidi-dismissal-kasserine-1978",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → hedi-jedidi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-hedi-mabrouk-dismissal-kef-1961",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → hedi-mabrouk"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-kacem-bousnina-appointment-nabeul-1973",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → kacem-bousnina"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-kacem-bousnina-appointment-sfax-1971",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → kacem-bousnina"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-kacem-bousnina-dismissal-tunis-1978",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → kacem-bousnina"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-kantaoui-morjane-appointment-sousse-1983",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → kantaoui-morjane"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-kantaoui-morjane-kasserine-appointment-kasserine-1981",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → kantaoui-morjane-kasserine"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-khaled-guezmir-appointment-kairouan-1984",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → khaled-guezmir"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-khaled-guezmir-dismissal-kairouan-1987",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → khaled-guezmir"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-khelil-trad-appointment-jendouba-1978",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → khelil-trad"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-khelil-trad-dismissal-jendouba-1980",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → khelil-trad"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-lamine-el-kadri-appointment-beja-1980",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → lamine-el-kadri"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-mabrouk-bahri-kebili-appointment-kebili-1987",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → mabrouk-bahri-kebili"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-mahmoud-el-ghoul-medenine-appointment-medenine-1973",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → mahmoud-el-ghoul-medenine"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-mansour-skhiri-appointment-sousse-1974",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → mansour-skhiri"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-mehrez-bellamine-dismissal-sfax-1967",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → mehrez-bellamine"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-mezri-chekir-appointment-bizerte-1971",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → mezri-chekir"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-mezri-chekir-gafsa-dismissal-gafsa-1973",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → mezri-chekir-gafsa"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-mezri-stambouli-appointment-zaghouan-1980",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → mezri-stambouli"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-mezri-stambouli-dismissal-zaghouan-1981",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → mezri-stambouli"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-mimoun-chatti-appointment-medenine-1967",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → mimoun-chatti"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-mohamed-ben-nasr-appointment-monastir-1985",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → mohamed-ben-nasr"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-mohamed-ben-rejeb-appointment-siliana-1986",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → mohamed-ben-rejeb"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-mohamed-ben-saad-kasserine-appointment-kasserine-1987",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → mohamed-ben-saad-kasserine"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-mohamed-besbes-kasserine-dismissal-kasserine-1964",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → mohamed-besbes-kasserine"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-mohamed-boughzala-appointment-sfax-1980",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → mohamed-boughzala"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-mohamed-boughzala-dismissal-sfax-1980",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → mohamed-boughzala"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-mohamed-boulabiar-dismissal-nabeul-1981",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → mohamed-boulabiar"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-mohamed-ennaceur-appointment-sousse-1972",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → mohamed-ennaceur"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-mohamed-essid-appointment-gabes-1986",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → mohamed-essid"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-mohamed-fadhel-khelil-appointment-jendouba-1987",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → mohamed-fadhel-khelil"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-mohamed-fadhel-khelil-appointment-kef-1981",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → mohamed-fadhel-khelil"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-mohamed-fadhel-khelil-dismissal-kef-1982",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → mohamed-fadhel-khelil"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-mohamed-habib-gharbi-appointment-kef-1986",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → mohamed-habib-gharbi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-mohamed-habib-gharbi-dismissal-kef-1987",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → mohamed-habib-gharbi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-mohamed-habib-gharbi-gabes-appointment-gabes-1983",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → mohamed-habib-gharbi-gabes"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-mohamed-hafsa-appointment-kebili-1981",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → mohamed-hafsa"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-mohamed-hedi-bellakhoua-appointment-beja-1971",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → mohamed-hedi-bellakhoua"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-mohamed-hedi-bellakhoua-dismissal-beja-1973",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → mohamed-hedi-bellakhoua"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-mohamed-hedi-bellakhoua-medenine-appointment-medenine-1978",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → mohamed-hedi-bellakhoua-medenine"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-mohamed-hedi-bellakhoua-sidi-bouzid-dismissal-sidi-bouzid-1980",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → mohamed-hedi-bellakhoua-sidi-bouzid"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-mohamed-maalej-tozeur-appointment-tozeur-1986",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → mohamed-maalej-tozeur"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-mohamed-mekki-appointment-kasserine-1984",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → mohamed-mekki"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-mohamed-soudani-appointment-zaghouan-1986",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → mohamed-soudani"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-mohamed-triki-appointment-kef-1963",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → mohamed-triki"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-mohsen-bel-aljia-dismissal-kairouan-1966",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → mohsen-bel-aljia"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-mohsen-haddad-appointment-siliana-1974",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → mohsen-haddad"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-mohsen-nouira-appointment-beja-1961",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → mohsen-nouira"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-mohsen-nouira-dismissal-beja-1964",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → mohsen-nouira"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-mokhtar-zannad-appointment-jendouba-1970",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → mokhtar-zannad"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-moncef-belkhiria-appointment-kef-1974",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → moncef-belkhiria"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-moncef-ben-gharbia-appointment-kef-1987",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → moncef-ben-gharbia"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-moncef-ben-gharbia-mahdia-dismissal-mahdia-1982",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → moncef-ben-gharbia-mahdia"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-moncef-ben-jedidia-appointment-beja-1987",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → moncef-ben-jedidia"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-moncef-jehinaoui-appointment-zaghouan-1984",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → moncef-jehinaoui"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-mustapha-badreddine-appointment-kef-1984",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → mustapha-badreddine"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-naceur-ben-jaafar-dismissal-bizerte-1964",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → naceur-ben-jaafar"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-najih-drissi-appointment-sidi-bouzid-1986",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → najih-drissi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-nejib-drissi-dismissal-mahdia-1980",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → nejib-drissi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-nejib-drissi-kasserine-appointment-kasserine-1978",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → nejib-drissi-kasserine"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-noureddine-fenniche-appointment-beja-1973",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → noureddine-fenniche"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-noureddine-hached-appointment-mahdia-1976",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → noureddine-hached"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-noureddine-hached-dismissal-mahdia-1978",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → noureddine-hached"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-nouredine-fennich-dismissal-sousse-1980",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → nouredine-fennich"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-othman-naghmouchi-appointment-tataouine-1985",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → othman-naghmouchi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-rachid-badri-gabes-appointment-gabes-1970",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → rachid-badri-gabes"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-rafiq-belhaj-kacem-appointment-kairouan-1987",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → rafiq-belhaj-kacem"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-ridha-azzabi-appointment-nabeul-1969",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → ridha-azzabi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-ridha-azzabi-dismissal-nabeul-1971",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → ridha-azzabi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-romdhan-ben-mimoun-appointment-beja-1969",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → romdhan-ben-mimoun"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-romdhane-rahli-dismissal-kasserine-1980",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → romdhane-rahli"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-sadok-marzouk-kasserine-appointment-kasserine-1983",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → sadok-marzouk-kasserine"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-said-robbana-appointment-jendouba-1975",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → said-robbana"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-said-robbana-dismissal-jendouba-1978",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → said-robbana"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-salah-bhouri-appointment-sidi-bouzid-1978",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → salah-bhouri"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-salem-ben-h-jal-appointment-medenine-1971",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → salem-ben-h-jal"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-salem-boumiza-dismissal-medenine-1978",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → salem-boumiza"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-salem-mansouri-appointment-kef-1982",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → salem-mansouri"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-salem-mansouri-dismissal-bizerte-1987",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → salem-mansouri"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-slim-aloulou-appointment-kairouan-1970",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → slim-aloulou"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-tahar-berrejeb-appointment-bizerte-1980",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → tahar-berrejeb"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-tahar-kacem-appointment-beja-1966",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → tahar-kacem"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-tahar-sraieb-dismissal-siliana-1980",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → tahar-sraieb"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-tahar-sraieb-sfax-dismissal-sfax-1982",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → tahar-sraieb-sfax"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-taoufik-essid-appointment-kasserine-1970",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → taoufik-essid"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-taoufik-essid-dismissal-kasserine-1973",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "dismissal: bourguiba → taoufik-essid"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-youssef-saibi-appointment-siliana-1977",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → youssef-saibi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-bourguiba-zakaria-ben-mustapha-gabes-appointment-gabes-1967",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 2,
+      "reviewed": false,
+      "title": "appointment: bourguiba → zakaria-ben-mustapha-gabes"
     },
     {
       "kind": "relationship",
@@ -52515,6 +55435,16 @@
     },
     {
       "kind": "relationship",
+      "id": "rel-abdallah-kallel-slaheddine-el-abed-kasserine-appointment-kasserine-2000",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: abdallah-kallel → slaheddine-el-abed-kasserine"
+    },
+    {
+      "kind": "relationship",
       "id": "rel-abdelaziz-chaabani-arp23-voix-de-la-republique",
       "confidence": "A",
       "basis": "documented",
@@ -52925,6 +55855,56 @@
     },
     {
       "kind": "relationship",
+      "id": "rel-elyes-fakhfakh-adel-chlioui-dismissal-sousse-2020",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: elyes-fakhfakh → adel-chlioui"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-elyes-fakhfakh-mohamed-cheikh-rouhou-appointment-manouba-2020",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: elyes-fakhfakh → mohamed-cheikh-rouhou"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-elyes-fakhfakh-mohsen-moez-mili-appointment-beja-2020",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: elyes-fakhfakh → mohsen-moez-mili"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-elyes-fakhfakh-raja-trabelsi-sousse-appointment-sousse-2020",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: elyes-fakhfakh → raja-trabelsi-sousse"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-elyes-fakhfakh-sami-ghabi-appointment-gafsa-2020",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: elyes-fakhfakh → sami-ghabi"
+    },
+    {
+      "kind": "relationship",
       "id": "rel-ezzedine-taieb-arp23-voix-de-la-republique",
       "confidence": "A",
       "basis": "documented",
@@ -53025,6 +56005,436 @@
     },
     {
       "kind": "relationship",
+      "id": "rel-habib-essid-adel-khabthani-monastir-appointment-monastir-2015",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: habib-essid → adel-khabthani-monastir"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-habib-essid-ahmed-lamine-lansari-appointment-gabes-2015",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: habib-essid → ahmed-lamine-lansari"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-habib-essid-ahmed-smaoui-appointment-manouba-2015",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: habib-essid → ahmed-smaoui"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-habib-essid-amara-tlijani-kebili-dismissal-kebili-2015",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: habib-essid → amara-tlijani-kebili"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-habib-essid-ammar-khabbabi-dismissal-sidi-bouzid-2015",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: habib-essid → ammar-khabbabi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-habib-essid-anis-dhifallah-appointment-zaghouan-2016",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: habib-essid → anis-dhifallah"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-habib-essid-atef-boughattas-dismissal-beja-2015",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: habib-essid → atef-boughattas"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-habib-essid-baheddine-bakari-dismissal-ariana-2015",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: habib-essid → baheddine-bakari"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-habib-essid-chedly-bouallegue-kasserine-appointment-kasserine-2015",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: habib-essid → chedly-bouallegue-kasserine"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-habib-essid-chokri-belhassen-appointment-kairouan-2015",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: habib-essid → chokri-belhassen"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-habib-essid-fakher-gafsi-appointment-tunis-2015",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: habib-essid → fakher-gafsi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-habib-essid-faouzi-ghrab-appointment-mahdia-2015",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: habib-essid → faouzi-ghrab"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-habib-essid-fethi-bdira-appointment-sousse-2015",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: habib-essid → fethi-bdira"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-habib-essid-habib-skandrani-appointment-jendouba-2015",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: habib-essid → habib-skandrani"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-habib-essid-hachem-hmidi-appointment-kebili-2015",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: habib-essid → hachem-hmidi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-habib-essid-hamed-abid-dismissal-tunis-2015",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: habib-essid → hamed-abid"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-habib-essid-hichem-akrimi-dismissal-zaghouan-2015",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: habib-essid → hichem-akrimi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-habib-essid-houcine-hamdi-appointment-beja-2015",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: habib-essid → houcine-hamdi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-habib-essid-houcine-jrad-dismissal-gabes-2015",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: habib-essid → houcine-jrad"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-habib-essid-kamel-salmani-dismissal-beja-2015",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: habib-essid → kamel-salmani"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-habib-essid-lotfi-sassi-appointment-tozeur-2015",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: habib-essid → lotfi-sassi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-habib-essid-mehdi-chelbi-dismissal-sfax-2015",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: habib-essid → mehdi-chelbi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-habib-essid-mehdi-zaoui-appointment-zaghouan-2015",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: habib-essid → mehdi-zaoui"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-habib-essid-mnaouer-ouertani-appointment-bizerte-2015",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: habib-essid → mnaouer-ouertani"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-habib-essid-mohamed-akermi-hamdi-dismissal-nabeul-2015",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: habib-essid → mohamed-akermi-hamdi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-habib-essid-mohamed-mansouri-dismissal-tozeur-2015",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: habib-essid → mohamed-mansouri"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-habib-essid-mohamed-ridha-saadi-dismissal-manouba-2015",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: habib-essid → mohamed-ridha-saadi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-habib-essid-mohsen-ben-ali-appointment-tataouine-2015",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: habib-essid → mohsen-ben-ali"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-habib-essid-mohsen-mansouri-dismissal-kairouan-2015",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: habib-essid → mohsen-mansouri"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-habib-essid-mondher-aribi-appointment-gafsa-2016",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: habib-essid → mondher-aribi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-habib-essid-mourad-mahjoubi-appointment-sidi-bouzid-2015",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: habib-essid → mourad-mahjoubi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-habib-essid-mustapha-ben-moussa-dismissal-gafsa-2015",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: habib-essid → mustapha-ben-moussa"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-habib-essid-nabil-zarrouk-dismissal-gabes-2015",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: habib-essid → nabil-zarrouk"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-habib-essid-nejib-khabbouchi-dismissal-jendouba-2015",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: habib-essid → nejib-khabbouchi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-habib-essid-noureddine-ghannouchi-dismissal-siliana-2015",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: habib-essid → noureddine-ghannouchi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-habib-essid-omar-mansour-appointment-ariana-2015",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: habib-essid → omar-mansour"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-habib-essid-radhouane-ayara-appointment-kef-2015",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: habib-essid → radhouane-ayara"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-habib-essid-saber-mednini-dismissal-tataouine-2015",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: habib-essid → saber-mednini"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-habib-essid-samir-rouihem-appointment-nabeul-2015",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: habib-essid → samir-rouihem"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-habib-essid-slim-tissaoui-appointment-siliana-2015",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: habib-essid → slim-tissaoui"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-habib-essid-taieb-ezzaraii-appointment-gafsa-2015",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: habib-essid → taieb-ezzaraii"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-habib-essid-taieb-ezzaraii-dismissal-gafsa-2016",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: habib-essid → taieb-ezzaraii"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-habib-essid-taieb-nefzi-dismissal-monastir-2015",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: habib-essid → taieb-nefzi"
+    },
+    {
+      "kind": "relationship",
       "id": "rel-hafedh-caid-essebsi-beji-caid-essebsi-family",
       "confidence": "A",
       "basis": "documented",
@@ -53112,6 +56522,36 @@
       "sources": 1,
       "reviewed": false,
       "title": "party: hatem-labawi → arp23-voix-de-la-republique"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-hichem-mechichi-adel-mabrouk-appointment-kasserine-2020",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: hichem-mechichi → adel-mabrouk"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-hichem-mechichi-mohamed-samcha-dismissal-kasserine-2020",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: hichem-mechichi → mohamed-samcha"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-hichem-mechichi-moncef-chleghmia-appointment-kebili-2020",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: hichem-mechichi → moncef-chleghmia"
     },
     {
       "kind": "relationship",
@@ -53215,6 +56655,66 @@
     },
     {
       "kind": "relationship",
+      "id": "rel-kais-saied-abdelhalim-hamdi-appointment-sidi-bouzid-2022",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: kais-saied → abdelhalim-hamdi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-kais-saied-abderrazak-dekhil-dismissal-siliana-2022",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: kais-saied → abderrazak-dekhil"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-kais-saied-adel-mabrouk-dismissal-kasserine-2022",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: kais-saied → adel-mabrouk"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-kais-saied-adel-ouerghi-dismissal-tataouine-2022",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: kais-saied → adel-ouerghi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-kais-saied-ali-marmouri-dismissal-jendouba-2022",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: kais-saied → ali-marmouri"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-kais-saied-chedly-bouallegue-dismissal-tunis-2021",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: kais-saied → chedly-bouallegue"
+    },
+    {
+      "kind": "relationship",
       "id": "rel-kais-saied-chokri-riahi-appointment",
       "confidence": "A",
       "basis": "documented",
@@ -53222,6 +56722,56 @@
       "sources": 1,
       "reviewed": false,
       "title": "appointment: kais-saied → chokri-riahi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-kais-saied-ezzeddine-chelbi-appointment-ben-arous-2021",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: kais-saied → ezzeddine-chelbi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-kais-saied-fakher-fakhfakh-appointment-sfax-2022",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: kais-saied → fakher-fakhfakh"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-kais-saied-faouzi-mrad-appointment-sfax-2021",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: kais-saied → faouzi-mrad"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-kais-saied-faouzi-mrad-dismissal-sfax-2022",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: kais-saied → faouzi-mrad"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-kais-saied-hafedh-fitouri-appointment-tataouine-2022",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: kais-saied → hafedh-fitouri"
     },
     {
       "kind": "relationship",
@@ -53235,6 +56785,106 @@
     },
     {
       "kind": "relationship",
+      "id": "rel-kais-saied-kamel-feki-appointment-tunis-2021",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: kais-saied → kamel-feki"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-kais-saied-khaled-nouri-appointment-ariana-2022",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: kais-saied → khaled-nouri"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-kais-saied-mohamed-laach-appointment-zaghouan-2022",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: kais-saied → mohamed-laach"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-kais-saied-mohamed-ridha-mlika-dismissal-nabeul-2022",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: kais-saied → mohamed-ridha-mlika"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-kais-saied-mohamed-sedki-bououn-dismissal-sidi-bouzid-2021",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: kais-saied → mohamed-sedki-bououn"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-kais-saied-mohamed-taieb-khalifi-appointment-kebili-2022",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: kais-saied → mohamed-taieb-khalifi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-kais-saied-moncef-chleghmia-dismissal-kebili-2021",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: kais-saied → moncef-chleghmia"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-kais-saied-mondher-ben-sik-ali-appointment-monastir-2022",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: kais-saied → mondher-ben-sik-ali"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-kais-saied-mongi-thameur-dismissal-gabes-2021",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: kais-saied → mongi-thameur"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-kais-saied-mosbah-kardamin-appointment-gabes-2022",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: kais-saied → mosbah-kardamin"
+    },
+    {
+      "kind": "relationship",
       "id": "rel-kais-saied-mourad-saidane-appointment",
       "confidence": "A",
       "basis": "documented",
@@ -53245,6 +56895,66 @@
     },
     {
       "kind": "relationship",
+      "id": "rel-kais-saied-nabil-ferjani-appointment-sousse-2022",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: kais-saied → nabil-ferjani"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-kais-saied-nader-hamdouni-appointment-gafsa-2021",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: kais-saied → nader-hamdouni"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-kais-saied-raja-trabelsi-sousse-dismissal-sousse-2022",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: kais-saied → raja-trabelsi-sousse"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-kais-saied-ridha-rkebani-appointment-kasserine-2022",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: kais-saied → ridha-rkebani"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-kais-saied-said-ben-zayed-appointment-medenine-2021",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: kais-saied → said-ben-zayed"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-kais-saied-sami-ghabi-dismissal-gafsa-2021",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: kais-saied → sami-ghabi"
+    },
+    {
+      "kind": "relationship",
       "id": "rel-kais-saied-sami-hichri-appointment",
       "confidence": "A",
       "basis": "documented",
@@ -53252,6 +56962,26 @@
       "sources": 1,
       "reviewed": false,
       "title": "appointment: kais-saied → sami-hichri"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-kais-saied-samir-abdeljaoued-dismissal-ariana-2022",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: kais-saied → samir-abdeljaoued"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-kais-saied-walid-abbassi-appointment-siliana-2022",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: kais-saied → walid-abbassi"
     },
     {
       "kind": "relationship",
@@ -53542,6 +57272,26 @@
       "sources": 1,
       "reviewed": false,
       "title": "party: mohamed-majdi → arp23-pour-que-le-peuple-triomphe"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-mohamed-najem-gharsalli-habib-chaouat-appointment-sfax-2015",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: mohamed-najem-gharsalli → habib-chaouat"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-mohamed-najem-gharsalli-taher-matmati-appointment-medenine-2015",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: mohamed-najem-gharsalli → taher-matmati"
     },
     {
       "kind": "relationship",
@@ -53975,6 +57725,16 @@
     },
     {
       "kind": "relationship",
+      "id": "rel-tahar-belkhodja-kacem-bousnina-appointment-tunis-1976",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: tahar-belkhodja → kacem-bousnina"
+    },
+    {
+      "kind": "relationship",
       "id": "rel-tahar-ben-mansour-arp23-ligne-nationale-souveraine",
       "confidence": "A",
       "basis": "documented",
@@ -54085,6 +57845,506 @@
     },
     {
       "kind": "relationship",
+      "id": "rel-youssef-chahed-abdelfattah-chakchouk-appointment-mahdia-2019",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: youssef-chahed → abdelfattah-chakchouk"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-adel-chlioui-appointment-sousse-2017",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: youssef-chahed → adel-chlioui"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-adel-khabthani-dismissal-sfax-2019",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: youssef-chahed → adel-khabthani"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-adel-ouerghi-appointment-tataouine-2017",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: youssef-chahed → adel-ouerghi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-ahmed-lamine-lansari-dismissal-gabes-2016",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: youssef-chahed → ahmed-lamine-lansari"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-ahmed-smaoui-dismissal-manouba-2019",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: youssef-chahed → ahmed-smaoui"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-ali-marmouri-appointment-zaghouan-2018",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: youssef-chahed → ali-marmouri"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-ali-said-appointment-siliana-2017",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: youssef-chahed → ali-said"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-anis-dhifallah-sidi-bouzid-appointment-sidi-bouzid-2018",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: youssef-chahed → anis-dhifallah-sidi-bouzid"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-anis-dhifallah-sidi-bouzid-dismissal-sidi-bouzid-2019",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: youssef-chahed → anis-dhifallah-sidi-bouzid"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-anis-oueslati-appointment-sfax-2019",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: youssef-chahed → anis-oueslati"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-aymen-bejaoui-appointment-tozeur-2019",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: youssef-chahed → aymen-bejaoui"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-chedly-bouallegue-appointment-kef-2016",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: youssef-chahed → chedly-bouallegue"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-fakher-gafsi-dismissal-tunis-2016",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: youssef-chahed → fakher-gafsi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-faouzi-ghrab-dismissal-mahdia-2016",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: youssef-chahed → faouzi-ghrab"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-habib-chaouat-dismissal-sfax-2017",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: youssef-chahed → habib-chaouat"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-habib-chaouat-medenine-appointment-medenine-2018",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: youssef-chahed → habib-chaouat-medenine"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-habib-skandrani-dismissal-jendouba-2016",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: youssef-chahed → habib-skandrani"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-hassen-khedimi-appointment-kasserine-2016",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: youssef-chahed → hassen-khedimi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-hassen-khedimi-dismissal-kasserine-2017",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: youssef-chahed → hassen-khedimi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-houcine-hamdi-dismissal-beja-2018",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: youssef-chahed → houcine-hamdi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-lotfi-sassi-dismissal-tozeur-2016",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: youssef-chahed → lotfi-sassi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-mehdi-zaoui-dismissal-ariana-2016",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: youssef-chahed → mehdi-zaoui"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-mnaouer-ouertani-appointment-nabeul-2016",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: youssef-chahed → mnaouer-ouertani"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-mnaouer-ouertani-dismissal-kef-2019",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: youssef-chahed → mnaouer-ouertani"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-mohamed-ali-barhoumi-dismissal-tataouine-2017",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: youssef-chahed → mohamed-ali-barhoumi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-mohamed-bouden-appointment-mahdia-2016",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: youssef-chahed → mohamed-bouden"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-mohamed-bouden-dismissal-mahdia-2019",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: youssef-chahed → mohamed-bouden"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-mohamed-bourguiba-appointment-kairouan-2019",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: youssef-chahed → mohamed-bourguiba"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-mohamed-gouider-appointment-bizerte-2016",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: youssef-chahed → mohamed-gouider"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-mohamed-ridha-mlika-appointment-nabeul-2019",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: youssef-chahed → mohamed-ridha-mlika"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-mohamed-samcha-appointment-kasserine-2019",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: youssef-chahed → mohamed-samcha"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-mohamed-sedki-bouaoun-appointment-jendouba-2018",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: youssef-chahed → mohamed-sedki-bouaoun"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-mohsen-ben-ali-dismissal-tataouine-2017",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: youssef-chahed → mohsen-ben-ali"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-mokhtar-nefzi-appointment-ariana-2018",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: youssef-chahed → mokhtar-nefzi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-mongi-thameur-appointment-gabes-2016",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: youssef-chahed → mongi-thameur"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-mounir-hamdi-appointment-kairouan-2017",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: youssef-chahed → mounir-hamdi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-mounir-hamdi-dismissal-kairouan-2019",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: youssef-chahed → mounir-hamdi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-mounir-hamdi-tozeur-appointment-tozeur-2016",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: youssef-chahed → mounir-hamdi-tozeur"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-mourad-mahjoubi-dismissal-sidi-bouzid-2018",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: youssef-chahed → mourad-mahjoubi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-omar-mansour-appointment-tunis-2016",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: youssef-chahed → omar-mansour"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-omar-mansour-dismissal-tunis-2018",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: youssef-chahed → omar-mansour"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-raja-trabelsi-appointment-manouba-2019",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: youssef-chahed → raja-trabelsi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-salah-mtiraoui-tozeur-appointment-tozeur-2017",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: youssef-chahed → salah-mtiraoui-tozeur"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-saloua-khiari-appointment-ariana-2016",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: youssef-chahed → saloua-khiari"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-sami-ghabi-kebili-appointment-kebili-2017",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: youssef-chahed → sami-ghabi-kebili"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-samir-abdeljaoued-appointment-ariana-2019",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: youssef-chahed → samir-abdeljaoued"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-samir-boukadida-appointment-kasserine-2017",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: youssef-chahed → samir-boukadida"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-samir-boukadida-dismissal-kasserine-2019",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: youssef-chahed → samir-boukadida"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-samir-rouihem-dismissal-nabeul-2016",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: youssef-chahed → samir-rouihem"
+    },
+    {
+      "kind": "relationship",
       "id": "rel-youssef-chahed-selma-elloumi-appointment",
       "confidence": "A",
       "basis": "documented",
@@ -54092,6 +58352,56 @@
       "sources": 1,
       "reviewed": false,
       "title": "appointment: youssef-chahed → selma-elloumi"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-taher-matmati-dismissal-medenine-2018",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: youssef-chahed → taher-matmati"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-taoufik-ouertani-appointment-kairouan-2016",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: youssef-chahed → taoufik-ouertani"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-taoufik-ouertani-dismissal-kairouan-2017",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: youssef-chahed → taoufik-ouertani"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-walid-louguini-appointment-kebili-2016",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "appointment: youssef-chahed → walid-louguini"
+    },
+    {
+      "kind": "relationship",
+      "id": "rel-youssef-chahed-walid-louguini-dismissal-kebili-2017",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 1,
+      "reviewed": false,
+      "title": "dismissal: youssef-chahed → walid-louguini"
     },
     {
       "kind": "relationship",

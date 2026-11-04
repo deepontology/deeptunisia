@@ -352,6 +352,24 @@ try {
   name_en: Fixture Unsourced Person
   layers: [political]`);
 
+	// V32 documented vacancy: one vacancy claims the Tunis governorship was empty
+	// while a titular governor held it, and one names an office that does not
+	// exist. The real Tunis vacancy, which contains only an acting holder, is in
+	// the clean copy and must keep building.
+	appendBlock(TREE_BAD, 'vacancies.yaml', `
+- id: vac-fixture-overlaps-titular
+  role: governor-tunis
+  start: "2022-06-01"
+  end: "2022-12-01"
+  confidence: B
+  sources: [${s}]
+- id: vac-fixture-unknown-role
+  role: no-such-role
+  start: "2020-01-01"
+  end: "2020-06-01"
+  confidence: B
+  sources: [${s}]`);
+
 	const bad = build(TREE_BAD, OUT_BAD, STATIC_BAD);
 	ok('pipeline fixture: the injected tree fails the build', bad.code !== 0, `exit ${bad.code}`);
 
@@ -368,7 +386,9 @@ try {
 		['position p-fixture-grade-a-weak', 'a grade-A record without a tier-1/2 source fails and names the record (V25)'],
 		['positions.yaml [p-fixture-relation]', 'an incompatible source relation fails and names the record (V26)'],
 		['positions.yaml [p-fixture-evidence]', 'a year-only archive lookup fails and names the record (V29)'],
-		['event fixture-beyond-cutoff', 'an event dated past the research cutoff fails and names the record (V31)']
+		['event fixture-beyond-cutoff', 'an event dated past the research cutoff fails and names the record (V31)'],
+		['overlaps titular position p-gov-tunis-feki', 'a vacancy overlapping a titular holder fails and names the position (V32)'],
+		['unknown role "no-such-role" (V32)', 'a vacancy of an unknown office fails (V32)']
 	];
 	for (const [needle, label] of expectations) {
 		ok(`pipeline fixture: ${label}`, bad.output.includes(needle), `expected the build to say "${needle}"`);
@@ -407,6 +427,13 @@ try {
 		'pipeline fixture: the cutoff error is the V31 horizon message',
 		bad.output.includes('(V31)'),
 		'expected the V31 message in the build output'
+	);
+
+	ok(
+		'pipeline fixture: a vacancy holding only an acting governor builds clean (V32)',
+		Boolean(cleanGraph?.vacancies?.some((v: { id: string }) => v.id === 'vac-governor-tunis-2023')) &&
+			!clean.output.includes('(V32)'),
+		cleanGraph ? `${cleanGraph.vacancies?.length ?? 0} vacancies in the clean graph` : 'no clean graph'
 	);
 
 	// 3A: a failed build promotes nothing. The review caught editorial-queue.json
