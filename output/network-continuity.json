@@ -67,10 +67,10 @@
     "crossings": []
   },
   "edges": {
-    "total": 226,
+    "total": 493,
     "byKind": {
       "succession": 97,
-      "appointment": 25,
+      "appointment": 292,
       "patronage": 1,
       "co-membership": 103
     }
@@ -222,8 +222,8 @@
       "trials": 200,
       "min": 0,
       "median": 3,
-      "max": 19,
-      "atLeastReal": 83
+      "max": 17,
+      "atLeastReal": 95
     },
     "randomDates": {
       "trials": 200,

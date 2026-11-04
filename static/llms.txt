@@ -33,7 +33,7 @@ span as a date, or an unsubstantiated claim as a finding, misrepresents the sour
 
 ## Known limits, stated by the project
 
-- <!--stat:reviewed-->52<!--/stat--> of <!--stat:reviewable-->8306<!--/stat-->
+- <!--stat:reviewed-->52<!--/stat--> of <!--stat:reviewable-->8736<!--/stat-->
   records carry an editorial review note; independent human verification is
   <!--stat:independent-->0<!--/stat-->.
 - <!--stat:needsPrimarySource-->233<!--/stat--> records await a primary source.
