@@ -211,16 +211,15 @@ const CHECKS: Check[] = [
 			['.dock', 1],
 			['.track .playhead', 1],
 			['.era-band', 7],
-			// Lane headers and names are HTML over the canvas now, not SVG text — see
-			// src/lib/viz/labels.css. Asserting on .vlabel is what catches the label
-			// placement pass silently suppressing everything, which would leave a
-			// perfectly rendered graph with nothing named on it.
+			// Lane headers are pinned HTML over the canvas. People in post are seats
+			// inside their institution's box (src/lib/network/scene.ts), each a named
+			// button: asserting on .seat is what catches the map rendering boxes with
+			// nobody in them. 20 is far under the ~150 seated on the default date
+			// and still catches the view rendering nothing.
 			['.vlane', 4],
-			['.vlabel', 4],
-			// Only live nodes are drawn at the overview now — the four hundred dormant
-			// ones appear on zoom. 20 is well under the ~38 live at the default date and
-			// still catches the view rendering nothing.
+			['.seat', 20],
 			['.node', 20],
+			// Ties are lines; holding office is not, so this counts claims only.
 			['.edge', 10],
 			// Every reachable edge needs its fat invisible twin, or connections are
 			// untappable on a phone.
@@ -1838,13 +1837,14 @@ console.log('\n  ── connections ──');
 	});
 
 	/*
-	 * The `all` lens, not the default `influence` reading.
+	 * The `all` lens, not the default reading.
 	 *
-	 * Measurement edges (`flow-*`) and prosecution/family/business authored
-	 * edges are only drawn under `?mode=all` (NetworkView's mode filter), and
-	 * this section is about connections as records, so it asks for the lens
-	 * that holds every edge. That is also what makes the `.edge.measurement`
-	 * count below meaningful: under the default lens it is legitimately 0.
+	 * Measurement edges (`flow-*`) are drawn only when the trade and debt
+	 * family is on, and the older `?mode=all` link still turns every family on
+	 * (NetworkView reads it beside `?ties=`). This section is about connections
+	 * as records, so it asks for the lens that holds every edge. That is also
+	 * what makes the `.edge.measurement` count below meaningful: under the
+	 * default lens it is legitimately 0.
 	 */
 	await page.goto(BASE + '/network?mode=all', { waitUntil: 'networkidle' });
 	await settle(page);
@@ -1885,10 +1885,11 @@ console.log('\n  ── connections ──');
 	 * relationship id being added to the graph.
 	 */
 	/*
-	 * Measurement edges render in the All lens only; the influence lens filters
-	 * them out by design (a flow deep link switches the lens to All for exactly
-	 * that reason). The page above asked for All by URL; this counts the witness
-	 * there, then opens a clean page to prove the default lens withholds them.
+	 * Measurement edges render only with the trade and debt family on; the
+	 * default lens leaves them out by design (a flow deep link turns that family
+	 * on for exactly that reason). The page above asked for every family by URL;
+	 * this counts the witness there, then opens a clean page to prove the
+	 * default lens withholds them.
 	 */
 	const flowEndpoints = graphBackedFlowEndpoints(NETWORK_DEFAULT_YEAR);
 	const measurementEdges = await page.locator('.edge.measurement').count();
@@ -1905,7 +1906,7 @@ console.log('\n  ── connections ──');
 		await settle(plain);
 		const defaultLens = await plain.locator('.edge.measurement').count();
 		ok(
-			'the influence lens withholds measurement edges',
+			'the default lens withholds measurement edges',
 			flowEndpoints.length === 0 || defaultLens === 0,
 			`${defaultLens} measurement edges in the default lens`
 		);
@@ -2026,12 +2027,12 @@ console.log('\n  ── connections ──');
 	);
 
 	/*
-	 * The entity panel emits a plain `/network?rel=<id>`; carry the `all` lens
-	 * beside it, because the lens is what makes the relationship visible. The
-	 * first row is a family tie, which the default influence lens excludes, so
-	 * without the parameter the map would honour the id by opening nothing.
-	 * `?mode=` is part of the deep-link contract (NetworkView reads both on
-	 * arrival), which is exactly what this round trip exercises.
+	 * The entity panel emits a plain `/network?rel=<id>`; carry the older `all`
+	 * lens beside it. A bare `?rel=` would also land, because a deep link turns
+	 * on the family its tie belongs to, but `?mode=` is still part of the
+	 * deep-link contract (NetworkView reads it beside `?ties=`), and links
+	 * shared before the families existed carry it, so this round trip exercises
+	 * that older parameter.
 	 */
 	const relUrl = new URL(relLink!, BASE);
 	relUrl.searchParams.set('mode', 'all');
@@ -2998,10 +2999,11 @@ if (runSection('rtl')) for (const mode of MODES.filter((m) => m.id !== 'ltr')) {
 		ok(`${where} screen-space elements stay on screen`, escaped.length === 0, escaped.join(' | '));
 
 		if (path === '/network') {
-			// The label layer is the thing most likely to be thrown off by direction,
-			// so assert it is populated rather than merely not escaping.
-			const n = await page.locator('.vlabel').count();
-			ok(`${where} labels still render`, n >= 4, `${n} labels`);
+			// The seat layer is the thing most likely to be thrown off by direction
+			// (its coordinates are physical, the page is not), so assert it is
+			// populated rather than merely not escaping.
+			const n = await page.locator('.seat').count();
+			ok(`${where} seats still render`, n >= 20, `${n} seats`);
 		}
 
 		/*

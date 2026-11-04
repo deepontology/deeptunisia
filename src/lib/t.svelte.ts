@@ -218,7 +218,12 @@ export function entityName(id: string): string {
 }
 
 export function relLabel(type: string): string {
-	return translate(app.locale, `rel.${type}`) || REL_LABEL[type] || type;
+	// `translate` answers the key itself when no dictionary has it; a reader
+	// must never see "rel.board", so a missing key falls through to the model's
+	// English label and then to the type written as words.
+	const key = `rel.${type}`;
+	const v = translate(app.locale, key);
+	return (v && v !== key ? v : '') || REL_LABEL[type] || type.replace(/-/g, ' ');
 }
 
 export function confidenceLabel(c: Confidence): string {

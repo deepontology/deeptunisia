@@ -1,2003 +1,418 @@
 <script lang="ts">
-import AboutView from '$lib/shell/AboutView.svelte';
-import { untrack } from 'svelte';
-import { page } from '$app/state';
-import { goto } from '$app/navigation';
-import { app } from '$lib/state.svelte';
-import Tooltip from '$lib/ui/Tooltip.svelte';
-import { sheetDrag, type SheetDragParams } from '$lib/ui/sheet-drag';
-import { t, tf, formatDate, nameOf, layerLabel, basisLabel, relLabel } from '$lib/t.svelte';
-import { format } from '$lib/i18n';
-import Chip from '$lib/ui/Chip.svelte';
+	import AboutView from '$lib/shell/AboutView.svelte';
+	import { untrack } from 'svelte';
+	import { page } from '$app/state';
+	import { goto } from '$app/navigation';
+	import { app } from '$lib/state.svelte';
+	import { sheetDrag, type SheetDragParams } from '$lib/ui/sheet-drag';
+	import { t, tf, formatDate, layerLabel, basisLabel, relLabel, entityName, nameOf } from '$lib/t.svelte';
+	import { dirFor, format } from '$lib/i18n';
+	import Chip from '$lib/ui/Chip.svelte';
 	import Segmented from '$lib/ui/Segmented.svelte';
+	import Tooltip from '$lib/ui/Tooltip.svelte';
 	import ConnectionCard from './ConnectionCard.svelte';
+	import NetworkMatrix from './network/NetworkMatrix.svelte';
 	import { compact } from '$lib/design/media.svelte';
 	import { MediaQuery } from 'svelte/reactivity';
 	import { Camera } from '$lib/viz/camera.svelte';
 	import { navigable } from '$lib/viz/gestures';
-	import { placeLabels, type LabelDir } from '$lib/viz/place';
 	import NavControls from '$lib/viz/NavControls.svelte';
 	import {
 		BASIS_COLOR,
 		BASIS_OPACITY,
 		BASIS_ORDER,
-		CUTOFF,
 		DASH,
-		FLOOR,
 		LAYER_COLOR,
-		LAYERS,
 		ds,
 		institutionById,
 		meetsBasis,
 		personById,
-		positionsByHolder,
-		possiblyActive,
-		relKind,
-		resolveEntity,
 		type Basis,
 		type Layer,
 		type Position
 	} from '$lib/model';
-	import { GROUPS, REL_TYPE_COLOR, groupOf } from '$lib/viz/groups';
+	import { REL_TYPE_COLOR } from '$lib/viz/groups';
 	import { tradeIn, debtIn } from '$lib/world/countries';
 	import { moneyM } from '$lib/world/format';
+	import { sceneAt, GEO, type FlowTie, type Tie, type Unit } from '$lib/network/scene';
+	import { routeTies } from '$lib/network/route';
+	import {
+		DEFAULT_FAMILIES,
+		FAMILIES,
+		familiesFromMode,
+		familiesFromParam,
+		familiesParam,
+		familyOf,
+		type Family
+	} from '$lib/network/families';
 
 	/**
-	 * Layered network.
+	 * The Network: a seating chart of the state, with the ties between its seats.
 	 *
-	 * Deliberately NOT a force-directed layout. Free force layouts are pretty,
-	 * unreadable, and different on every page load — all three are disqualifying for
-	 * a research artifact. Instead each analytical layer gets a fixed lane, so the
-	 * cross-layer bridges the project is hunting become literally the edges that
-	 * cross lanes.
+	 * Each analytical layer keeps a lane, so a line that crosses lanes is still a
+	 * bridge between layers of power. Inside a lane, an institution is a box and a
+	 * person in post is a seat inside it. Holding office therefore costs no ink:
+	 * the lines left are claims (who appointed, owns, prosecutes or is related to
+	 * whom), drawn in the basis vocabulary every view shares. A chamber is one box
+	 * with its seats counted by group; only a member a drawn tie names gets a seat.
+	 * See src/lib/network/scene.ts for the rules and why they exist.
 	 *
-	 * Node positions are computed once over the whole dataset and never recomputed.
-	 * That means scrubbing the date fades nodes in and out of a stable map rather
-	 * than reshuffling it, so change is perceptible instead of disorienting.
+	 * PERFORMANCE
+	 *
+	 * Two things made the old map slow, and both are gone. It drew around 1,400
+	 * nodes and 2,800 paths, and it recomputed every label's screen position and
+	 * collision on every camera frame. Now the scene holds a few hundred seats,
+	 * and all text lives in one HTML layer that shares the camera's transform: a
+	 * pan or zoom writes one transform on three elements and nothing else. Text
+	 * is set in world units, so it can never outgrow its row; it is hidden by
+	 * zoom level (a class that changes only when a threshold is crossed) rather
+	 * than placed by a solver.
 	 */
 
-	/*
-	 * The world.
-	 *
-	 * Deliberately larger than any screen. Before the camera existed these numbers
-	 * had to be a compromise with the smallest viewport that would ever see them,
-	 * which is why nodes were drawn at three pixels with most labels suppressed —
-	 * the map was sized to be survivable at a glance rather than readable up close.
-	 * Now the reader moves over it, so it can be sized for reading.
-	 */
-	const W = 2600;
-	const H = 1700;
-	const PAD_TOP = 72;
-	const PAD_BOTTOM = 48;
-	const NODE_GAP = 42;
+	// --- Lenses: tie families, carried in the URL ------------------------------
 
-	/**
-	 * Gutter channel width, in world units.
-	 *
-	 * Cross-layer edges do not cross a lane boundary at an arbitrary point: they
-	 * leave their source lane, travel vertically in the channel between the two
-	 * lanes, and enter the target lane. The gutter is the finding made visible —
-	 * "which pairs of analytical layers actually exchange people and money" is a
-	 * question the layout answers structurally instead of by counting strokes.
-	 */
-	const GUTTER_W = 56;
+	let families = $state<Set<Family>>(new Set(DEFAULT_FAMILIES));
+	/** Set once a URL named the lens; a deep link then never overrides the reader's own choice. */
+	let familiesLinked = false;
 
-	/** Lane width with gutters absorbed: every lane shares the gutter cost equally. */
-	const FULL_LANE_W = (W - GUTTER_W * (LAYERS.length - 1)) / LAYERS.length;
-
-	let hoverEdge = $state<string | null>(null);
-
-	/** A lane narrower than this cannot carry its own name, so fitting never goes there. */
-	const MIN_LANE_PX = 132;
-
-	const cam = new Camera({
-		world: { w: W, h: H },
-		minScale: 0.12,
-		maxScale: 6,
-		padding: 20,
-		// Seven lanes across W minus six gutters: the scale at which one lane is
-		// still nameable. On a phone this is what stops "fit" from producing seven
-		// 55px columns that can only be read by zooming back in immediately.
-		fitFloor: MIN_LANE_PX / FULL_LANE_W
-	});
-
-	/**
-	 * Which labels are worth drawing right now.
-	 *
-	 * At the overview only the heaviest names fit without colliding; as the reader
-	 * moves in, the threshold drops and more of the map names itself. This is the
-	 * substitute for a collision solver, and it is a better one for a fixed layout:
-	 * the answer is stable and identical on every load.
-	 */
-	const labelFloor = $derived(Math.max(0, 60 - cam.zoomProgress * 60));
-
-	interface Node {
-		id: string;
-		kind: 'person' | 'institution';
-		name: string;
-		layer: Layer;
-		group: string;
-		weight: number;
-		/** Institution subtype (e.g. 'foreign-state', 'international-organisation'), people have none. */
-		type?: string;
-		x: number;
-		y: number;
-		r: number;
+	function writeUrl(mutate: (u: URL) => void) {
+		if (typeof history === 'undefined') return;
+		const u = new URL(page.url.href);
+		mutate(u);
+		history.replaceState(history.state, '', u);
 	}
 
-	interface GroupBand {
-		layer: Layer;
-		group: string;
-		/** Top of the reserved header strip. */
-		headerY: number;
-		/** Where nodes begin (below the header). */
-		contentTop: number;
-		contentBottom: number;
-		memberCount: number;
+	function syncFamiliesUrl() {
+		writeUrl((u) => {
+			u.searchParams.delete('mode');
+			const v = familiesParam(families);
+			if (v === null) u.searchParams.delete('ties');
+			else u.searchParams.set('ties', v);
+		});
 	}
 
-	// --- Stable global layout -------------------------------------------------
+	function toggleFamily(f: Family) {
+		const next = new Set(families);
+		if (next.has(f)) next.delete(f);
+		else next.add(f);
+		families = next;
+		syncFamiliesUrl();
+	}
+
+	/** Make sure a family is on, for a deep link that names a tie in it. */
+	function ensureFamily(f: Family) {
+		if (families.has(f) || familiesLinked) return;
+		families = new Set([...families, f]);
+	}
+
+	// --- View: the map, or the layer matrix --------------------------------------
 
 	/**
-	 * Height of the header strip at the top of each group band. Nodes never enter it.
-	 *
-	 * Deliberately generous. The header text is HTML at a fixed screen size (~17px
-	 * box, glyphs ~13px), while the strip is world units the camera scales. At the
-	 * fit floor (k≈0.355) the nearest node's top edge must stay below the glyphs even
-	 * at minimum radius (3.5px), so the band has to cover text + a node of slack:
-	 * (13 + 4 + 4)px ÷ 0.355 ≈ 59 world units. Smaller than that and the first row
-	 * of nodes collides with the very title meant to organise them; this is the
-	 * exact failure the redesign set out to fix.
+	 * A phone holds one lane of the map at a time, so it opens on the matrix,
+	 * which shows the whole picture at once; a wide screen opens on the map.
+	 * Either can be chosen, and the choice travels in the URL.
 	 */
-	const HEADER_H = 60;
-	const GROUP_GAP = 26;
-
+	let view = $state<'map' | 'matrix'>('map');
 	/**
-	 * Foreign register geometry.
-	 *
-	 * The foreign lane is not a cluster; it is a roster of counterparties. States
-	 * and international organisations do not exchange edges among themselves the
-	 * way a domestic network does, so the grid-with-floating-labels treatment that
-	 * suits the other six lanes produces ragged, detached names here. Instead the
-	 * lane is laid out as one register column: a fixed section header, then one row
-	 * per entity at a constant pitch, all entities sharing a single node spine. The
-	 * name, the load meter and the code become columns of a table, so every row
-	 * starts and ends on the same two vertical lines.
-	 *
-	 * The spine sits a fifth of the way into the lane, which leaves the name field
-	 * most of the lane width while keeping the squares clear of the incoming
-	 * cross-layer bridges that arrive from the left gutter.
+	 * The stage renders once the client has chosen the view. The page is
+	 * prerendered at desktop width, so choosing during render would hand a
+	 * phone a map it immediately throws away (or a hydration mismatch).
 	 */
-	const REG_SPINE_FRAC = 0.12;
-	/** A section header occupies this many row heights. */
-	const REG_HEADER_UNITS = 1.8;
-
-	const layout = $derived.by(() => {
-		const lanes = LAYERS.filter((l) => app.activeLayers.has(l));
-		// Each lane gives up half of each neighbouring gutter, so the world always
-		// sums to W: lanes + gutters tile it exactly.
-		const laneW = lanes.length > 1 ? (W - GUTTER_W * (lanes.length - 1)) / lanes.length : W;
-		const usableH = H - PAD_TOP - PAD_BOTTOM;
-		const nodes = new Map<string, Node>();
-		const groupBands: GroupBand[] = [];
-
-		for (const [li, layer] of lanes.entries()) {
-			const members: { id: string; kind: 'person' | 'institution'; name: string; group: string; weight: number; type?: string }[] = [];
-
-			for (const p of ds.people) {
-				if ((p.layers[0] as Layer) !== layer) continue;
-				members.push({ id: p.id, kind: 'person', name: nameOf(p), group: p.group, weight: p.peakAuthority });
-			}
-			for (const i of ds.institutions) {
-				if ((i.layer as Layer) !== layer) continue;
-				members.push({ id: i.id, kind: 'institution', name: nameOf(i), group: i.group, weight: 62, type: i.type });
-			}
-
-			// Group members by their group field
-			const groupMap = new Map<string, typeof members>();
-			for (const m of members) {
-				if (!groupMap.has(m.group)) groupMap.set(m.group, []);
-				groupMap.get(m.group)!.push(m);
-			}
-
-			// Determine group order: use defined order from GROUPS if available,
-			// then alphabetical, with "Other" always last.
-			const layerGroups = GROUPS.find((g) => g.layer === layer);
-			const groupOrder: string[] = [];
-			if (layerGroups) {
-				for (const sg of layerGroups.subsections) {
-					if (groupMap.has(sg.id)) groupOrder.push(sg.id);
-				}
-			}
-			// Add any groups not in the definition (shouldn't happen, but safety)
-			for (const g of groupMap.keys()) {
-				if (!groupOrder.includes(g)) groupOrder.push(g);
-			}
-			// Ensure "Other" is last
-			const otherIdx = groupOrder.indexOf('Other');
-			if (otherIdx >= 0) {
-				groupOrder.splice(otherIdx, 1);
-				groupOrder.push('Other');
-			}
-
-		// Present groups only (some defined groups may have zero members)
-		const present = groupOrder.filter((g) => (groupMap.get(g) ?? []).length > 0);
-		const totalCount = members.length;
-		if (totalCount === 0 || present.length === 0) continue;
-
-		/*
-		 * The foreign register.
-		 *
-		 * One column, sections stacked, constant pitch. Every row gets the same
-		 * vertical slot regardless of group, so the register reads as a table
-		 * rather than as two independently stretched grids. Header rows are
-		 * priced into the pitch so the sections do not push the roster off the
-		 * bottom of the world.
-		 */
-		if (layer === 'foreign') {
-			/*
-			 * Fill the lane from just under the pinned header to just above its
-			 * bottom edge. REG_TOP is the world height of the pinned lane header at
-			 * the fit floor, where it is largest relative to the map, so the first
-			 * section head can never sit under the title.
-			 *
-			 * Each section consumes REG_HEADER_UNITS row heights for its head plus
-			 * one per member, so those are the units the pitch divides. Pricing the
-			 * head at REG_HEADER_UNITS - 1 (as this once did) undercounts the total
-			 * height by a head per section, which is what pushed the last rows past
-			 * the bottom of the lane.
-			 */
-			const REG_TOP = 52;
-			const REG_BOTTOM = 16;
-			const registerH = H - REG_TOP - REG_BOTTOM;
-			const totalUnits = totalCount + present.length * REG_HEADER_UNITS;
-			const pitch = registerH / totalUnits;
-			const spineX = laneX(li, laneW) + laneW * REG_SPINE_FRAC;
-			let cursor = REG_TOP;
-
-			for (const groupName of present) {
-				const groupMembers = groupMap.get(groupName)!;
-				groupMembers.sort((a, b) => b.weight - a.weight || a.name.localeCompare(b.name));
-
-				const headerY = cursor;
-				const contentTop = cursor + pitch * REG_HEADER_UNITS;
-				const contentBottom = contentTop + groupMembers.length * pitch;
-
-				groupBands.push({
-					layer,
-					group: groupName,
-					headerY,
-					contentTop,
-					contentBottom,
-					memberCount: groupMembers.length
-				});
-
-				groupMembers.forEach((m, idx) => {
-					nodes.set(m.id, {
-						...m,
-						layer,
-						x: spineX,
-						y: contentTop + pitch * (idx + 0.5),
-						r: m.kind === 'institution' ? 8 : 5.2 + (m.weight / 100) * 8
-					});
-				});
-
-				cursor = contentBottom;
-			}
-			continue;
-		}
-
-		// Reserve one header strip per present group, plus inter-group gaps.
-		// The remainder is split between the groups proportionally to member count,
-		// so a four-person subsection does not stretch to the same height as a forty-person one.
-		const headerSpace = present.length * HEADER_H;
-		const gapSpace = (present.length - 1) * GROUP_GAP;
-		const contentH = usableH - headerSpace - gapSpace;
-
-		let cursor = PAD_TOP;
-
-		for (const groupName of present) {
-			const groupMembers = groupMap.get(groupName)!;
-			// Sort within group by weight descending
-			groupMembers.sort((a, b) => b.weight - a.weight || a.name.localeCompare(b.name));
-
-			// The group's own vertical slice, proportional to how many members it
-			// holds, so a four-person subsection does not stretch to the height of a
-			// forty-person one. (Foreign never reaches this path: it is a register,
-			// laid out above.)
-			const sliceH = (groupMembers.length / totalCount) * contentH;
-			const contentTop = cursor + HEADER_H;
-			const contentBottom = contentTop + sliceH;
-
-			groupBands.push({
-				layer,
-				group: groupName,
-				headerY: cursor,
-				contentTop,
-				contentBottom,
-				memberCount: groupMembers.length
-			});
-
-			// Arrange members in a grid inside the content zone only —
-			// the header strip stays empty so titles are never covered.
-			const perCol = Math.max(1, Math.floor(sliceH / NODE_GAP));
-			const cols = Math.max(1, Math.ceil(groupMembers.length / perCol));
-			const rows = Math.ceil(groupMembers.length / cols);
-			const colGap = laneW / (cols + 1);
-			const rowGap = sliceH / (rows + 1);
-
-			groupMembers.forEach((m, idx) => {
-				const col = idx % cols;
-				const row = Math.floor(idx / cols);
-				nodes.set(m.id, {
-					...m,
-					layer,
-					x: laneX(li, laneW) + colGap * (col + 1),
-					y: contentTop + rowGap * (row + 1),
-					r: m.kind === 'institution' ? 8 : 5.2 + (m.weight / 100) * 8
-				});
-			});
-
-			cursor = contentBottom + GROUP_GAP;
-		}
-		}
-
-		return { nodes, lanes, laneW, groupBands };
-	});
-
-	// --- Slice ----------------------------------------------------------------
-
-	const slice = $derived.by(() => {
-		const activePositions = ds.positions.filter(
-			(p) =>
-				possiblyActive(p.interval, app.t) &&
-				meetsBasis(p.basis as Basis, app.basisFloor) &&
-				app.activeLayers.has(p.layer as Layer)
-		);
-		const live = new Set<string>();
-		for (const p of activePositions) {
-			live.add(p.holder);
-			if (p.institution) live.add(p.institution);
-		}
-
-		const edges = [];
-		// relCandidates: authored relationships that would render in 'all' mode.
-		// relShown: what the current mode actually keeps. The difference is the
-		// honesty count the toolbar reports — hidden edges are named, not silent.
-		let relCandidates = 0;
-		let relShown = 0;
-		for (const rel of ds.relationships) {
-			if (!meetsBasis(rel.basis as Basis, app.basisFloor)) continue;
-			const a = layout.nodes.get(rel.from);
-			const b = layout.nodes.get(rel.to);
-			if (!a || !b) continue;
-			relCandidates++;
-			// Minimal influence map (spec §10/§13): filter the edges down to a layer
-			// of interest — influence-family + ownership + appointment, or the
-			// corporate ownership graph (ownership/board/shareholder/funding) — so
-			// the routes read alone instead of under the full graph.
-			if (mode === 'influence' && !INFLUENCE_TYPES.has(rel.type) && rel.type !== 'ownership' && rel.type !== 'appointment') continue;
-			if (mode === 'ownership' && !['ownership', 'board', 'shareholder', 'funding'].includes(rel.type)) continue;
-			relShown++;
-			// Undated structural ties (a family relationship, a business holding)
-			// persist; dated ties only appear inside their span.
-                // Undated structural ties (family, business, ownership) persist
-                // regardless of whether either endpoint holds an active position.
-                // Dated ties (appointments, prosecutions) only show when their
-                // interval overlaps app.t AND at least one endpoint is live.
-                const dated = rel.interval.raw.start !== null;
-                const timeOk = !dated || possiblyActive(rel.interval, app.t);
-                edges.push({
-                    id: rel.id,
-                    rel,
-                    a,
-                    b,
-                    active: timeOk && (!dated || live.has(rel.from) || live.has(rel.to)),
-				crossLayer: a.layer !== b.layer,
-				kind: relKind(rel.type)
-			});
-		}
-
-		/*
-		 * Derived measurements: the network finally shows that a flow is a
-		 * relationship without pretending it is an authored claim. Only pairs for
-		 * which the graph already has a node are eligible; an absent foreign-state
-		 * record remains a visible gap in the World ledger rather than becoming a
-		 * fabricated node here. The edge id is deliberately namespaced `flow-` and
-		 * never enters data/relationships.yaml.
-		 */
-		const tunisia = layout.nodes.get('etat-tunisien');
-		if (tunisia) {
-			const year = new Date(app.t).getUTCFullYear();
-			const byIso = new Map(
-				ds.institutions
-					.map((i) => [(i as unknown as { iso2?: string }).iso2, i] as const)
-					.filter(([iso]) => Boolean(iso))
-			);
-			for (const flow of tradeIn(year).slice(0, 20)) {
-				const target = byIso.get(flow.iso2);
-				const b = target ? layout.nodes.get(target.id) : undefined;
-				if (!b) continue;
-				const id = `flow-trade-${year}-${flow.iso2}`;
-				edges.push({
-					id,
-					rel: {
-						id,
-						from: 'etat-tunisien',
-						to: target!.id,
-						type: 'trade-flow',
-						subtype: String(year),
-						description: tf('network.flow.trade.description', {
-							year,
-							value: moneyM(flow.total, app.locale)
-						}),
-						sources: []
-					} as never,
-					a: tunisia,
-					b,
-					active: true,
-					crossLayer: tunisia.layer !== b.layer,
-					kind: 'documented' as const,
-					measurement: true,
-					flowValue: flow.total
-				});
-			}
-			for (const flow of debtIn(year).slice(0, 20)) {
-				const target = flow.institutionId
-					? ds.institutions.find((i) => i.id === flow.institutionId)
-					: byIso.get(flow.iso2);
-				const b = target ? layout.nodes.get(target.id) : undefined;
-				if (!b || flow.stock === null) continue;
-				const id = `flow-debt-${year}-${flow.institutionId ?? flow.iso2}`;
-				edges.push({
-					id,
-					rel: {
-						id,
-						from: 'etat-tunisien',
-						to: target!.id,
-						type: 'debt-flow',
-						subtype: String(year),
-						description: tf('network.flow.debt.description', {
-							year,
-							value: moneyM(flow.stock, app.locale)
-						}),
-						sources: []
-					} as never,
-					a: tunisia,
-					b,
-					active: true,
-					crossLayer: tunisia.layer !== b.layer,
-					kind: 'documented' as const,
-					measurement: true,
-					flowValue: flow.stock
-				});
-			}
-		}
-
-		// Parallel cross-layer edges between the same two endpoints share one
-		// gutter; spread them a few world units so a bundle reads as a bundle
-		// instead of one stroke. Deterministic: it depends only on the edge list.
-		const crossPairs = new Map<string, (typeof edges)[number][]>();
-		for (const e of edges) {
-			if (!e.crossLayer) continue;
-			const key = e.rel.from < e.rel.to ? e.rel.from + '|' + e.rel.to : e.rel.to + '|' + e.rel.from;
-			const list = crossPairs.get(key) ?? [];
-			list.push(e);
-			crossPairs.set(key, list);
-		}
-		for (const list of crossPairs.values()) {
-			const n = list.length;
-			list.forEach((e, i) => {
-				(e as { gxOff?: number }).gxOff = (i - (n - 1) / 2) * 5;
-			});
-		}
-
-		// Edge multiplicity: how many authored relationships share one directed
-		// pair (e.g. family + business + prosecution between the same two
-		// entities). A thick edge is a DENSE relationship, not a longer line —
-		// the width multiplies, capped so a triple tie does not shout.
-		const pairCount = new Map<string, number>();
-		for (const e of edges) {
-			const key = e.rel.from + '\u2192' + e.rel.to;
-			pairCount.set(key, (pairCount.get(key) ?? 0) + 1);
-		}
-		for (const e of edges) {
-			(e as { multi?: number }).multi = Math.min(3, pairCount.get(e.rel.from + '\u2192' + e.rel.to) ?? 1);
-		}
-
-		// Institutional membership edges: person -> institution while in post.
-		for (const p of activePositions) {
-			const a = layout.nodes.get(p.holder);
-			const b = layout.nodes.get(p.institution);
-			if (!a || !b) continue;
-			edges.push({
-				id: 'pos-' + p.id,
-				rel: {
-					id: 'pos-' + p.id,
-					from: p.holder,
-					to: p.institution,
-					type: 'institutional',
-					confidence: p.confidence,
-					description: p.roleTitle,
-					subtype: p.roleTitle,
-					attributed_to: undefined,
-					sources: p.sources
-				} as never,
-				a,
-				b,
-				active: true,
-				crossLayer: a.layer !== b.layer,
-				kind: 'documented' as const
-			});
-		}
-
-		return { live, edges, relCandidates, relShown };
-	});
-
-	/**
-	 * Fly to whatever got selected, including selections made in another view or from
-	 * the search palette. Travelling there is what tells the reader the map moved
-	 * rather than changed; a jump cut leaves them re-reading the lanes to work out
-	 * where they are.
-	 *
-	 * A selection made by CLICKING the map flies GENTLY: the reader is already
-	 * looking at that node, so the flight eases in and out to a slight zoom
-	 * (1.5× of fit, never zooming out), centred in the visible map area — the
-	 * canvas already excludes the docked inspector, so the centre is clear of the
-	 * card. The resize-pan is suppressed so the inspector docking does not lurch
-	 * the map a moment before the flight starts. Every other path (Chronicle,
-	 * search, deep links, connection-card endpoints) flies strong, because that
-	 * navigation must travel.
-	 *
-	 * `untrack` is not optional. `flyTo` reads cam.k, cam.fitScale and the viewport
-	 * size and writes cam.x/y/k — inside a tracked scope that is an effect writing
-	 * state it also reads, which self-triggers and makes Svelte abort the entire
-	 * effect tree. That failure renders the app blank with only a `get_first_child`
-	 * error to go on, and it has already cost this project a debugging session once.
-	 * See AGENTS.md.
-	 */
-	let selectFly: 'gentle' | 'strong' = 'strong';
+	let ready = $state(false);
+	let viewLinked = false;
 	$effect(() => {
-		const id = app.selected;
-		if (!id) return;
+		if (viewLinked) return;
+		const v = page.url.searchParams.get('view');
 		untrack(() => {
-			const mode = selectFly;
-			selectFly = 'strong';
-			const n = layout.nodes.get(id);
-			if (!n) return;
-			if (mode === 'gentle') {
-				// On a phone the inspector is a bottom sheet: centre above it so the
-				// node does not land underneath the card. Desktop cx/cy stay live
-				// (undefined) so a mid-flight resize moves the destination smoothly.
-				cam.flyTo(
-					n.x,
-					n.y,
-					Math.max(cam.k, cam.fitScale * 1.5),
-					640,
-					'inout',
-					undefined,
-					compact.current ? cam.vh * 0.35 : undefined
-				);
-			} else {
-				cam.flyTo(n.x, n.y, Math.max(cam.k, cam.fitScale * 2.2));
-			}
+			viewLinked = true;
+			view = v === 'matrix' || v === 'map' ? v : compact.current ? 'matrix' : 'map';
+			ready = true;
+		});
+	});
+	function setView(v: 'map' | 'matrix') {
+		view = v;
+		writeUrl((u) => {
+			const deflt = compact.current ? 'matrix' : 'map';
+			if (v === deflt) u.searchParams.delete('view');
+			else u.searchParams.set('view', v);
+		});
+	}
+
+	// --- The scene ----------------------------------------------------------------
+
+	const rtl = $derived(dirFor(app.locale) === 'rtl');
+
+	/**
+	 * Measured flows: Tunisia's top trade partners and creditors for the year
+	 * on the clock, as synthesised lines. Only partners with a record on the map
+	 * are eligible; an absent counterparty stays a gap in the World ledger rather
+	 * than becoming an invented box here. Ids are namespaced `flow-` and never
+	 * enter data/relationships.yaml.
+	 */
+	/** The year on the clock: flows are yearly, so they rebuild only when it changes. */
+	const year = $derived(new Date(app.t).getUTCFullYear());
+	const flows = $derived.by((): FlowTie[] => {
+		const byIso = new Map(
+			ds.institutions
+				.map((i) => [(i as unknown as { iso2?: string }).iso2, i] as const)
+				.filter(([iso]) => Boolean(iso))
+		);
+		const out: FlowTie[] = [];
+		for (const f of tradeIn(year).slice(0, 20)) {
+			const target = byIso.get(f.iso2);
+			if (!target) continue;
+			out.push({
+				id: `flow-trade-${year}-${f.iso2}`,
+				to: target.id,
+				type: 'trade-flow',
+				subtype: String(year),
+				description: tf('network.flow.trade.description', { year, value: moneyM(f.total, app.locale) }),
+				value: f.total
+			});
+		}
+		for (const f of debtIn(year).slice(0, 20)) {
+			const target = f.institutionId ? institutionById.get(f.institutionId) : byIso.get(f.iso2);
+			if (!target || f.stock === null) continue;
+			out.push({
+				id: `flow-debt-${year}-${f.institutionId ?? f.iso2}`,
+				to: target.id,
+				type: 'debt-flow',
+				subtype: String(year),
+				description: tf('network.flow.debt.description', { year, value: moneyM(f.stock, app.locale) }),
+				value: f.stock
+			});
+		}
+		return out;
+	});
+
+	/**
+	 * The scene, reused while the record is unchanged (see sceneAt): scrubbing
+	 * between two dates on which nobody took or left a post hands the view the
+	 * same object, so nothing downstream recomputes or re-renders.
+	 */
+	const scene = $derived(
+		sceneAt({ t: app.t, floor: app.basisFloor, layers: app.activeLayers, families, flows, rtl })
+	);
+	const routes = $derived(routeTies(scene));
+	const tieById = $derived(new Map(scene.ties.map((e) => [e.id, e])));
+
+	/** Ties per family: drawn when the family is on, held back when it is off. */
+	const familyCount = $derived.by(() => {
+		const shown = new Map<Family, number>();
+		for (const e of scene.ties) shown.set(e.family, (shown.get(e.family) ?? 0) + (e.bundle ?? 1));
+		const out = new Map<Family, number>();
+		for (const f of FAMILIES) out.set(f, families.has(f) ? (shown.get(f) ?? 0) : (scene.stats.notShown.get(f) ?? 0));
+		return out;
+	});
+	const notShownTotal = $derived([...scene.stats.notShown.values()].reduce((a, n) => a + n, 0));
+
+	// --- Camera -------------------------------------------------------------------
+
+	const PADDING = 16;
+	const cam = new Camera({ world: { w: 2000, h: 1600 }, minScale: 0.12, maxScale: 4, padding: PADDING });
+
+	/**
+	 * The world follows the scene, and "fit" means fit the width.
+	 *
+	 * The lanes are the structure, so the opening view shows all of them side by
+	 * side and the reader travels down. On a phone a lane is the unit: fitting
+	 * means one full lane across the screen, and the reader pans between lanes
+	 * (or uses the matrix, which shows every pair at once).
+	 */
+	$effect(() => {
+		const w = scene.width;
+		const h = scene.height;
+		const vw = cam.vw;
+		const phone = compact.current;
+		untrack(() => {
+			cam.world = { w, h };
+			cam.fitFloor = phone
+				? Math.min(1.2, Math.max(0.4, (vw - 24) / (GEO.LANE * 1.5 + GEO.GUT * 2)))
+				: Math.min(1.1, Math.max(0.2, (vw - PADDING * 2) / w));
 		});
 	});
 
 	/**
-	 * Opening framing.
-	 *
-	 * Whenever the world is wider than the window — always on a phone, because of
-	 * fitFloor — centring lands the reader on the boundary between two lanes with the
-	 * dense end off-screen. Security and political hold most of the record, so the
-	 * camera starts there and the reader pans right into the thinner layers.
-	 *
-	 * The same is true vertically. The fit floor can make the world taller than a
-	 * short laptop canvas, and centring then clips the top of every lane, where the
-	 * pinned headers and the first rows live. When that happens the opening view is
-	 * aligned to the top of the world instead, so the reader starts at the map's
-	 * beginning and pans down, rather than at an arbitrary middle band.
-	 *
-	 * `framed` is a plain `let`, not `$state`: an effect that wrote state it also read
-	 * would self-trigger. `cam.vw` is read tracked, which is what fires this once the
-	 * element has actually been measured; the writes go inside `untrack`.
+	 * Open on the top of the map once the canvas has been measured, then take
+	 * any flight that was asked for before there was a map to fly over (a deep
+	 * link, or "show on the map" from the matrix).
 	 */
 	let framed = false;
 	$effect(() => {
-		if (framed || cam.vw < 2) return;
-		framed = true;
+		if (cam.vw < 2 || view !== 'map') return;
 		untrack(() => {
-			const wider = W * cam.fitScale > cam.vw + 1;
-			const taller = H * cam.fitScale > cam.vh + 1;
-			if (wider || taller) {
-				cam.alignTo(0, taller ? 0 : H / 2, 0.03, taller ? 0 : 0.5);
+			if (!framed) {
+				framed = true;
+				cam.fit();
+				cam.alignTo(compact.current ? 0 : cam.world.w / 2, 0, compact.current ? 0 : 0.5, 0);
 			}
+			flushPendingFly();
 		});
 	});
+
+	/**
+	 * Levels of detail, by screen size of the text: below a threshold a kind of
+	 * text would draw too small to read, so it is hidden rather than left to
+	 * smear. A class on the canvas, so crossing a threshold restyles once and
+	 * panning restyles nothing.
+	 */
+	const lod = $derived(cam.k < 0.42 ? 0 : cam.k < 0.9 ? 1 : 2);
+
+	// --- Focus, compare -------------------------------------------------------------
 
 	const focus = $derived(app.selected ?? app.hovered);
 
-	// Attention rings replace the old binary neighbours set; see the `rings`
-	// derivation further down (it must sit after the slice, which builds it on).
-
-	/**
-	 * x position of the left edge of lane i, gutters between lanes.
-	 * The world is tiled lanes + gutters with no dead space: lane 0 spans
-	 * [0, laneW), gutter 0 spans [laneW, laneW + GUTTER_W), lane 1 follows.
-	 */
-	function laneX(i: number, laneW: number) {
-		return i * (laneW + GUTTER_W);
-	}
-
-	/** Centre of the gutter channel between lane k and lane k+1. */
-	function gutterCenter(k: number, laneW: number) {
-		return laneX(k + 1, laneW) - GUTTER_W / 2;
-	}
-
-	/**
-	 * The control point of an edge's curve.
-	 *
-	 * Factored out because two things need it and they must never disagree: the path
-	 * itself, and the point the connection card is anchored to. A card that opens
-	 * somewhere the line does not pass through reads as a bug in the data.
-	 */
-	function control(a: Node, b: Node) {
-		const mx = (a.x + b.x) / 2;
-		const my = (a.y + b.y) / 2;
-		// Bow perpendicular to the connection so parallel edges separate. The side
-		// is a strict function of vertical direction — downward edges bow one
-		// way, upward the other — which reads as a weak direction cue, but the
-		// real direction is the arrowhead on focus. (An axial "lean toward the
-		// target" was tried and withdrawn: the probe proved its side flipped
-		// within a direction class depending on edge length, which made the cue
-		// contradict itself.)
-		const dx = b.x - a.x;
-		const dy = b.y - a.y;
-		const len = Math.hypot(dx, dy) || 1;
-		const bow = Math.min(90, len * 0.14);
-		return { x: mx - (dy / len) * bow, y: my + (dx / len) * bow };
-	}
-
-	interface Route {
-		/** The visible path, trimmed to the nodes' edges so an arrowhead is not buried. */
-		d: string;
-		/** The untrimmed centre-to-centre path for the fat invisible hit twin. */
-		dh: string;
-		kind: 'same' | 'cross';
-		mid: { x: number; y: number };
-	}
-
-	/**
-	 * The path an edge actually draws.
-	 *
-	 * Same-layer edges keep the perpendicular bow that separates parallel curves.
-	 * Cross-layer edges travel in the gutter: they leave the source node toward the
-	 * channel between the two lanes, run vertically inside it, and enter the target
-	 * node — so the crossing happens in the channel, not at an arbitrary point of
-	 * the map. `gutterOff` spreads parallel edges between the same two endpoints so
-	 * a bundle reads as a bundle instead of one stroke.
-	 *
-	 * The cubic midpoint (t = 0.5) is where the connection card anchors; the card
-	 * and the line it describes can therefore never disagree.
-	 */
-	function routeEdge(a: Node, b: Node, laneW: number, gutterOff = 0): Route {
-		const ra = Math.max(a.r, 3);
-		const rb = Math.max(b.r, 3);
-		const ia = layout.lanes.indexOf(a.layer);
-		const ib = layout.lanes.indexOf(b.layer);
-		if (ia >= 0 && ib >= 0 && ia !== ib) {
-			// The gutter adjacent to the source lane in the direction of travel:
-			// right of the source lane when the target is to the right, left when
-			// the target is to the left.
-			const k = ib > ia ? ia : ia - 1;
-			const gx = gutterCenter(k, laneW) + gutterOff;
-			const c1 = { x: gx, y: a.y };
-			const c2 = { x: gx, y: b.y };
-			// The curve leaves the node horizontally and enters horizontally, so
-			// trimming is a straight nudge along the lane axis. The hit twin keeps
-			// the full span so a click near the node edge still catches the line.
-			const sx = Math.sign(gx - a.x) || 1;
-			const ex = Math.sign(b.x - gx) || 1;
-			const a2 = { x: a.x + sx * ra, y: a.y };
-			const b2 = { x: b.x - ex * rb, y: b.y };
-			return {
-				d: `M${a2.x},${a2.y} C${c1.x},${c1.y} ${c2.x},${c2.y} ${b2.x},${b2.y}`,
-				dh: `M${a.x},${a.y} C${c1.x},${c1.y} ${c2.x},${c2.y} ${b.x},${b.y}`,
-				kind: 'cross',
-				mid: {
-					x: (a.x + 3 * c1.x + 3 * c2.x + b.x) / 8,
-					y: (a.y + 3 * c1.y + 3 * c2.y + b.y) / 8
-				}
-			};
+	/** The focused entity and everything a drawn tie connects it to. */
+	const near = $derived.by(() => {
+		if (!focus || compare) return null;
+		const s = new Set<string>([focus]);
+		for (const e of scene.ties) {
+			if (e.rel.from === focus) s.add(e.rel.to);
+			else if (e.rel.to === focus) s.add(e.rel.from);
 		}
-		const c = control(a, b);
-		const start = trimAlong(a, c, ra);
-		const end = trimAlong(b, c, rb, true);
-		return {
-			d: `M${start.x},${start.y} Q${c.x},${c.y} ${end.x},${end.y}`,
-			dh: `M${a.x},${a.y} Q${c.x},${c.y} ${b.x},${b.y}`,
-			kind: 'same',
-			mid: {
-				x: 0.25 * a.x + 0.5 * c.x + 0.25 * b.x,
-				y: 0.25 * a.y + 0.5 * c.y + 0.25 * b.y
-			}
-		};
-	}
-
-	/** A point a few units along the line (node → control), or (control → node) when reversed. */
-	function trimAlong(
-		p: { x: number; y: number },
-		toward: { x: number; y: number },
-		dist: number,
-		reversed = false
-	) {
-		const dx = toward.x - p.x;
-		const dy = toward.y - p.y;
-		const len = Math.hypot(dx, dy) || 1;
-		const f = reversed ? dist : -dist;
-		return { x: p.x - (dx / len) * f, y: p.y - (dy / len) * f };
-	}
-
-	/** Every edge's path and card anchor, recomputed only when the layout or slice changes. */
-	const routes = $derived.by(() => {
-		const m = new Map<string, Route>();
-		for (const e of slice.edges) {
-			m.set(e.id, routeEdge(e.a, e.b, layout.laneW, (e as { gxOff?: number }).gxOff ?? 0));
-		}
-		return m;
+		return s;
 	});
-
-	const INFLUENCE_TYPES = new Set(['influence', 'reported-influence', 'advisory']);
-	let mode = $state<'all' | 'influence' | 'ownership'>('influence');
-
-	/** One-shot: `?mode=` on arrival selects a lens, exactly like `?id=`/`?rel=` select a subject. */
-	let modeLinked = false;
-	function syncModeUrl(m: typeof mode) {
-		if (typeof history === 'undefined') return;
-		const u = new URL(page.url.href);
-		if (m === 'influence') u.searchParams.delete('mode');
-		else u.searchParams.set('mode', m);
-		history.replaceState(null, '', u);
-	}
-
-	/**
-	 * Spec §10: influence-family edges render at width ∝ authored strength
-	 * (0.8–4), everything else at the default. The width is a claim about a
-	 * claim — strength is an editorial judgement stored on the edge.
-	 *
-	 * Multiplicity multiplies: N relationships between the same directed pair
-	 * render at ×(1 + 0.5(N−1)), capped at ×2. Density reads as thickness.
-	 */
-	function influenceWidth(rel: { type: string; influence?: { strength?: number } }, multi = 1): number {
-		const strength = INFLUENCE_TYPES.has(rel.type) ? rel.influence?.strength : undefined;
-		const base = strength ? 0.8 + strength * 3.2 : 1.4;
-		return base * (1 + 0.5 * Math.min(2, Math.max(1, multi) - 1));
-	}
-
-	/** Flow edges are measurements, not claims: no basis dash or opacity ramp. */
-	function isMeasurementEdge(e: { id: string }): boolean {
-		return e.id.startsWith('flow-');
-	}
-
-	function edgeDash(e: { id: string; rel: { basis?: Basis } }): string | undefined {
-		return isMeasurementEdge(e) ? undefined : DASH[e.rel.basis as Basis];
-	}
-
-	function edgeOpacity(e: { id: string; rel: { basis?: Basis } }, multiplier = 1): number {
-		return isMeasurementEdge(e) ? 0.56 * multiplier : BASIS_OPACITY[e.rel.basis as Basis] * multiplier;
-	}
-
-	function edgeWidth(e: { id: string; rel: { type: string; influence?: { strength?: number } }; flowValue?: number }, multi = 1): number {
-		if (!isMeasurementEdge(e)) return influenceWidth(e.rel, multi);
-		// Flow values are USD millions. Sqrt keeps a ten-billion stream from
-		// becoming ten times as thick as a one-billion stream, while still making
-		// magnitude visible in the network.
-		return 1.1 + Math.min(4.8, Math.sqrt(Math.max(0, e.flowValue ?? 0)) / 22);
-	}
-
-	/**
-	 * The staged edge colour language.
-	 *
-	 * At rest, an edge is coloured by its source layer (or `--bridge` when it
-	 * crosses layers) — the map reads by analytical layer. The moment a node is
-	 * focused, ONLY the edges touching it recolor to their relationship type; every
-	 * other edge stays in layer mode. One language, two scopes, and the map does
-	 * not change colour underneath the reader.
-	 */
-	function edgeColor(e: {
-		rel: { type: string; from: string; to: string };
-		a: Node;
-		b: Node;
-		crossLayer: boolean;
-	}): string {
-		if (focus && (e.rel.from === focus || e.rel.to === focus)) {
-			return REL_TYPE_COLOR[e.rel.type] ?? LAYER_COLOR[e.a.layer];
-		}
-		if (e.crossLayer) return 'var(--bridge)';
-		return LAYER_COLOR[e.a.layer];
-	}
-
-	/**
-	 * How strongly an edge is emphasised, as a multiplier on its basis opacity.
-	 *
-	 * Distance from the focus, not a binary on/off: incident edges read at full
-	 * strength, one-hop edges at half, two-hop at a third, everything else at a
-	 * trace. Without a focus, active edges are full and idle ones are context.
-	 */
-	function edgeEmphasis(e: { rel: { from: string; to: string }; active: boolean; a: Node; b: Node }): number {
-		if (!focus) return e.active ? 1 : 0.16;
-		const inc = e.rel.from === focus || e.rel.to === focus;
-		if (inc) return 1;
-		if (rings && rings.one.has(e.rel.from) && rings.one.has(e.rel.to)) return 0.55;
-		if (rings && rings.two.has(e.rel.from) && rings.two.has(e.rel.to)) return 0.3;
-		return 0.14;
-	}
-
-	/**
-	 * Attention rings — the graduated focus model.
-	 *
-	 * `one` is the ego plus its direct neighbours; `two` is the neighbours of
-	 * neighbours. Everything else is "rest". Distance is encoded by opacity and
-	 * label weight only, never by colour: colour is the reserved vocabulary of
-	 * layer, basis and relationship type. Rings compose with the existing semantic
-	 * zoom — two-hop emphasis only kicks in once the camera is close enough that
-	 * the roster itself is drawn.
-	 */
-	const rings = $derived.by(() => {
-		if (compare) return null; // compare mode owns the emphasis; rings stand down
-		if (!focus) return null;
-		const one = new Set<string>([focus]);
-		const two = new Set<string>();
-		for (const e of slice.edges) {
-			if (e.rel.from === focus) one.add(e.rel.to);
-			else if (e.rel.to === focus) one.add(e.rel.from);
-		}
-		// Structural relevance for the two-ring, not raw adjacency. A node earns
-		// a place if it CONVERGES with the ego-network (ties to >= 2 distinct
-		// one-ring members — it is a meeting point) or is itself notable (high
-		// peak authority, or any institution, which anchors a whole structure).
-		// A hub's sprawling fan — dozens of nodes whose only relevance is
-		// "connected to the hub" — stays out, so two-hop emphasis shows
-		// structure, not adjacency noise.
-		const oneCount = new Map<string, number>();
-		for (const e of slice.edges) {
-			const aIn = one.has(e.rel.from) && e.rel.from !== focus;
-			const bIn = one.has(e.rel.to) && e.rel.to !== focus;
-			if (aIn && e.rel.to !== focus) oneCount.set(e.rel.to, (oneCount.get(e.rel.to) ?? 0) + 1);
-			if (bIn && e.rel.from !== focus) oneCount.set(e.rel.from, (oneCount.get(e.rel.from) ?? 0) + 1);
-		}
-		for (const [id, count] of oneCount) {
-			const n = layout.nodes.get(id);
-			if (!n || one.has(id)) continue;
-			if (count >= 2 || n.kind === 'institution' || (n.weight ?? 0) >= 45) two.add(id);
-		}
-		return { one, two };
-	});
-
-	/**
-	 * Node emphasis as a class name: the ring a node sits in, or `dormant` when
-	 * nothing is focused and it is not live at the current instant.
-	 */
-	function nodeRingClass(n: { id: string }): string {
-		if (compare) return ''; // compare mode draws everything at full strength
-		if (!focus) return slice.live.has(n.id) ? '' : 'dormant';
-		if (rings!.one.has(n.id)) return 'r-one';
-		if (rings!.two.has(n.id)) return 'r-two';
-		return 'r-rest';
-	}
-
-	/** Smoothstep 0→1 across [lo, hi]: the crossfade helper for semantic zoom. */
-	function smoothStep(v: number, lo: number, hi: number): number {
-		const t = Math.min(1, Math.max(0, (v - lo) / (hi - lo)));
-		return t * t * (3 - 2 * t);
-	}
-
-	const stats = $derived.by(() => {
-		const visible = shownEdges.filter((e) => e.active);
-		// Dormant = nodes in their temporal interval but not holding a position at
-		// this instant.  Nodes outside their interval are not drawn and not counted:
-		// "in play" is the honest description of what the number represents.
-		const dormant = [...layout.nodes.values()].filter((n) => {
-			if (!hasAppeared(n.id)) return false;
-			return !slice.live.has(n.id);
-		}).length;
-		return {
-			nodes: slice.live.size,
-			dormant,
-			edges: visible.length,
-			bridges: visible.filter((e) => e.crossLayer).length,
-			reported: visible.filter((e) => e.kind !== 'documented').length,
-			withheld: Math.max(0, slice.relCandidates - slice.relShown)
-		};
-	});
-
-	/**
-	 * Which nodes are drawn.
-	 *
-	 * Every entity in the dataset used to be rendered at every instant — around 450
-	 * circles, of which some forty were live. The other four hundred were a dot matrix
-	 * behind the graph: most of the ink on screen, and none of the information, because
-	 * "this layer contains other people who held nothing in 1987" is a fact about the
-	 * dataset rather than about the moment being shown.
-	 *
-	 * So it is semantic zoom. At the overview, only what is live and what the reader has
-	 * focused; move in past the threshold and the full roster reappears in the same
-	 * fixed positions it always occupied. Nothing is hidden — the lane headers count the
-	 * live nodes, the toolbar counts the dormant ones, and the table lists everything.
-	 */
-	const showAll = $derived(cam.zoomProgress > 0.45);
-
-	/**
-	 * Roster crossfade. The full roster used to pop into the DOM at a zoom
-	 * threshold — half the map appearing in one frame reads as a jump, not a
-	 * zoom. Instead the roster enters the DOM once the fade starts and rides
-	 * `--rf` (0→1) over 32%–55% of the way in, so zooming eases it into view.
-	 * Below the window the roster is NOT in the DOM, so --rf must be 1 — the
-	 * live nodes render at full strength; only the entering roster fades.
-	 * The same factor multiplies the ring dims when focused.
-	 */
-	const rosterFade = $derived(
-		cam.zoomProgress <= 0.32 ? 1 : smoothStep(cam.zoomProgress, 0.32, 0.55)
-	);
-	/** Group headers fade in slightly earlier, over 10%–30%. */
-	const headerFade = $derived(smoothStep(cam.zoomProgress, 0.1, 0.3));
-
-	/**
-	 * Minimum node radius in world units so nodes are never invisible.
-	 * At the overview zoom (cam.k ~0.55), a person node (r=5.2) renders as ~2.9px
-	 * radius — too small next to 1.1px non-scaling-stroke edges. This floor ensures
-	 * every node is at least 3.5 screen-pixels radius regardless of zoom level.
-	 */
-	const minWorldR = $derived(3.5 / cam.k);
-
-	const visibleNodes = $derived.by(() => {
-		/**
-		 * A node is drawn once it has appeared; before its start date it does not
-		 * exist at all. The one-sided lifecycle: showing up is an event, going
-		 * quiet is a state — a retired figure stays hollow and clickable forever.
-		 * The 1-year buffer makes the appearance a fade rather than a cut.
-		 */
-		const all = [...layout.nodes.values()].filter((n) => hasAppeared(n.id));
-		/*
-		 * The foreign register is a complete roster, so its markers are never
-		 * culled by semantic zoom: a row without its square would be a name with
-		 * no anchor. They are unioned back in below rather than threaded through
-		 * every branch. Compare mode owns the whole canvas and the register stands
-		 * down, so it is excluded there.
-		 */
-		const retained = compare ? [] : [...layout.nodes.values()].filter(foreignExists);
-		const base = (() => {
-			// Compare mode: only the two anchors and their shared neighbours.
-			if (compare && compareSet) {
-				return all.filter((n) => compareSet.has(n.id));
-			}
-			// Quiet mode is the live graph only: no dormant scaffolding at all.
-			if (app.quiet && !showAll) {
-				const edgeNodes = new Set<string>();
-				for (const e of slice.edges.filter((e) => e.active)) {
-					edgeNodes.add(e.rel.from);
-					edgeNodes.add(e.rel.to);
-				}
-				return all.filter((n) => slice.live.has(n.id) || edgeNodes.has(n.id));
-			}
-			// The roster enters once its fade starts; --rf carries the opacity.
-			if (cam.zoomProgress > 0.32) return all;
-			// Include any node that has at least one edge in the current slice,
-			// so edges never terminate at an invisible point.
-			const edgeNodes = new Set<string>();
-			for (const e of slice.edges) {
-				edgeNodes.add(e.rel.from);
-				edgeNodes.add(e.rel.to);
-			}
-			if (rings) {
-				// Focus pulls its ego-network forward: the one-ring is always drawn,
-				// the two-ring only once the camera is in (it is part of the roster).
-				return all.filter(
-					(n) => rings.one.has(n.id) || (showAll && rings.two.has(n.id)) || slice.live.has(n.id) || edgeNodes.has(n.id)
-				);
-			}
-			return all.filter((n) => slice.live.has(n.id) || edgeNodes.has(n.id));
-		})();
-		if (!retained.length) return base;
-		const drawn = new Set(base.map((n) => n.id));
-		return [...base, ...retained.filter((n) => !drawn.has(n.id))];
-	});
-
-	const hovered = $derived(hoverEdge ? slice.edges.find((e) => e.id === hoverEdge) : null);
-
-	// --- The hover power-card ------------------------------------------------
-	//
-	// Hovering a node names it without committing to a selection: the reader gets
-	// the two-line "power card" — who, and what they hold at this instant — before
-	// deciding whether to click. The post line is the most authoritative ACTIVE
-	// post at the current time (same slice the map draws), so the card follows
-	// the clock exactly like the nodes do.
-
-	const hoveredNode = $derived(app.hovered ? (layout.nodes.get(app.hovered) ?? null) : null);
-
-	const hoverPost = $derived.by(() => {
-		if (!app.hovered) return null;
-		const list = positionsByHolder.get(app.hovered) ?? [];
-		const active = list
-			.filter((p) => possiblyActive(p.interval, app.t) && meetsBasis(p.basis as Basis, app.basisFloor))
-			.sort((a, b) => b.authority - a.authority);
-		if (!active.length) return null;
-		const best = active[0];
-		const inst = institutionById.get(best.institution);
-		return {
-			role: best.roleTitle,
-			inst: inst ? nameOf(inst) : best.institution
-		};
-	});
-
-	const hoverTipAt = $derived.by(() => {
-		if (!hoveredNode) return null;
-		const s = cam.worldToScreen(hoveredNode.x, hoveredNode.y);
-		// Under, not over: the tip must never cover the node it names.
-		// Flip above only when the node sits hard against the bottom edge.
-		const below = s.y + 18;
-		const above = s.y - 56;
-		const y = below + 60 > cam.vh - 8 ? above : below;
-		return {
-			x: Math.max(8, Math.min(s.x + 14, cam.vw - 220)),
-			y: Math.max(8, Math.min(y, cam.vh - 60))
-		};
-	});
-
-	const hoverName = $derived.by(() => {
-		if (!app.hovered) return '';
-		const p = personById.get(app.hovered);
-		if (p) return nameOf(p);
-		const i = institutionById.get(app.hovered);
-		if (i) return nameOf(i);
-		return app.hovered;
-	});
-
-	// --- The pinned connection ------------------------------------------------
-
-	let pinnedId = $state<string | null>(null);
-	const pinned = $derived(pinnedId ? slice.edges.find((e) => e.id === pinnedId) : null);
-
-	/**
-	 * The card outlives the pinned edge by one transition, the same way the
-	 * Inspector outlives its selection: `pinnedId` is what renders, `pinnedClosing`
-	 * drives the exit. Without it a dismissal unmounted the card on the frame it
-	 * landed and it snapped away instead of sliding under the dock.
-	 */
-	let pinnedClosing = $state(false);
-	let pinnedCloseTimer: ReturnType<typeof setTimeout> | undefined;
-
-	function closePinned() {
-		if (pinnedId === null) return;
-		clearTimeout(pinnedCloseTimer);
-		/*
-		 * The exit exists on phones, where the card is a sheet. A wide screen
-		 * uses the anchored card with no closing style, so waiting would leave a
-		 * dismissed card on the canvas for a quarter second with nothing to see.
-		 */
-		if (!compact.current) {
-			pinnedId = null;
-			pinnedClosing = false;
-			return;
-		}
-		pinnedClosing = true;
-		pinnedCloseTimer = setTimeout(() => {
-			pinnedId = null;
-			pinnedClosing = false;
-		}, 260);
-	}
-
-	/** A new pin supersedes a pending exit; the timer must not close what was just asked for. */
-	$effect(() => {
-		if (pinnedId !== null) {
-			clearTimeout(pinnedCloseTimer);
-			pinnedClosing = false;
-		}
-	});
-
-	/** Never let a pending close tick outlive the view. */
-	$effect(() => () => clearTimeout(pinnedCloseTimer));
-
-	/**
-	 * The edge card's gesture contract. It has one detent, so a downward pull
-	 * dismisses through the same `closePinned` the close button uses; `enabled`
-	 * gates the gesture to the phone layout, where the card is a sheet.
-	 */
-	const edgeDragParams: SheetDragParams = {
-		enabled: () => compact.current,
-		detent: () => 'full',
-		setDetent: () => {},
-		hasPeek: () => false,
-		handle: '.sheet-handle',
-		dismiss: () => closePinned()
-	};
-
-	/**
-	 * Where the card sits.
-	 *
-	 * Anchored to the midpoint of the curve it describes, clamped inside the canvas so
-	 * it never opens half off-screen. On a phone it ignores this and docks to the
-	 * bottom instead — a 320px card positioned near a tapped line on a 390px screen
-	 * covers the very thing the reader tapped to look at.
-	 */
-	const CARD_W = 320;
-	const CARD_H = 300;
-	const cardAt = $derived.by(() => {
-		if (!pinned) return null;
-		// The card anchors to the midpoint of the actual curve — same helper the
-		// path came from, so they can never disagree even inside the gutter.
-		const m = routes.get(pinned.id)?.mid ?? { x: pinned.a.x, y: pinned.a.y };
-		const s = cam.worldToScreen(m.x, m.y);
-		return {
-			x: Math.max(8, Math.min(s.x + 16, cam.vw - CARD_W - 8)),
-			y: Math.max(8, Math.min(s.y + 12, cam.vh - CARD_H - 8))
-		};
-	});
-
-	function pick(id: string) {
-		pinnedId = null;
-		/*
-		 * Assign, do not toggle.
-		 *
-		 * `app.select` is a toggle, which is right for clicking a node on the map —
-		 * clicking the selected one again clears it. It is wrong here: naming a person
-		 * in a connection card is a request to go to that person, and if they happened
-		 * to be selected already the toggle silently deselected them and closed the
-		 * inspector instead, leaving the reader on an empty map wondering what they hit.
-		 */
-		app.selected = id;
-	}
-
-	/**
-	 * A connection arriving by URL: /network?rel=<relationship id>.
-	 *
-	 * This is what makes an edge citable. Somebody disputing "his brother-in-law
-	 * controlled that bank" can link to the exact claim rather than describing where
-	 * on the graph to look for it, and the entity panel's relationship rows use the
-	 * same route.
-	 *
-	 * Runs once, guarded by a plain `let` — an effect writing state it also reads
-	 * self-triggers. `cam.vw` is read tracked so this waits until the element has been
-	 * measured; flying to a point before the viewport is known lands nowhere.
-	 */
-	let deepLinked = false;
-	$effect(() => {
-		/*
-		 * An agreement is not an edge, so nothing on this map can show it. Hand the
-		 * reader to the World ledger, which owns that record, once and with the URL
-		 * shape FlowCard shared. `deepLinked` guards the one redirect; the other
-		 * branches below never see a URL this branch consumed.
-		 */
-		const agreement = page.url.searchParams.get('agreement');
-		if (agreement && !deepLinked) {
-			deepLinked = true;
-			untrack(() => {
-				const u = new URL(page.url);
-				u.pathname = '/world';
-				u.search = new URLSearchParams({ agreement }).toString();
-				void goto(u, { replaceState: true });
-			});
-			return;
-		}
-
-		/*
-		 * Energy is the one measurement family this map does not synthesise edges
-		 * for, so a shared energy flow has nothing to pin here. The globe draws
-		 * those arcs and its card is the same FlowCard, so hand the reader there
-		 * with the URL shape the share already carries. Trade and debt stay: their
-		 * measurement edges exist and pin below.
-		 */
-		const flowParam = page.url.searchParams.get('flow');
-		if (flowParam?.startsWith('energy:') && !deepLinked) {
-			deepLinked = true;
-			untrack(() => {
-				const u = new URL(page.url);
-				u.pathname = '/world';
-				u.search = new URLSearchParams({ flow: flowParam }).toString();
-				void goto(u, { replaceState: true });
-			});
-			return;
-		}
-
-		/*
-		 * `?mode=` selects a lens on arrival. The mode is a reading of the map, not
-		 * a property of the reader, so it travels in the URL like the subject it
-		 * frames; `?id=`/`?rel=` name who, `?mode=` names how.
-		 */
-		const m = page.url.searchParams.get('mode');
-		if (!modeLinked && (m === 'influence' || m === 'ownership' || m === 'all')) {
-			modeLinked = true;
-			mode = m;
-		}
-
-		/*
-		 * `?id=` selects a person or institution, the way `?rel=` pins a connection.
-		 *
-		 * A node was the one addressable thing on this map with no address — which
-		 * only became a defect when Agora started rendering mentions, because every
-		 * `@Bourguiba` in a post pointed at `/network?id=bourguiba` and nothing read
-		 * it. The link resolved, the page loaded, and nothing happened: the worst
-		 * shape of broken, since it looks like the feature simply does not do much.
-		 */
-		const entity = page.url.searchParams.get('id');
-		if (entity && !deepLinked && (personById.has(entity) || institutionById.has(entity))) {
-			deepLinked = true;
-			untrack(() => {
-				app.selected = entity;
-				const n = layout.nodes.get(entity);
-				if (n && cam.vw >= 2) cam.flyTo(n.x, n.y);
-			});
-			return;
-		}
-
-		/*
-		 * `?flow=<kind>:<year>:<iso2>` is what a FlowCard shares. Measurement edges
-		 * are synthesised per year, so the link resolves only when the current slice
-		 * carries that year. Try the id the synthesiser would have built, then the
-		 * country the lender's record names (a debt id carries the institution id
-		 * when the counterparty is a body, not a state), then any edge that touches
-		 * the country. When nothing matches, the globe opens the card instead: a
-		 * shared measurement must not resolve to a blank page just because the map
-		 * is filtered. The reader's own filters are never changed.
-		 */
-		const flow = page.url.searchParams.get('flow');
-		if (flow && !deepLinked && cam.vw >= 2) {
-			deepLinked = true;
-			untrack(() => {
-				const parts = flow.split(':');
-				if (parts.length !== 3) return;
-				const [kind, yearStr, iso2] = parts;
-				if ((kind !== 'trade' && kind !== 'debt' && kind !== 'energy') || !iso2) return;
-				if (!/^\d{4}$/.test(yearStr)) return;
-				/*
-				 * Measurement edges only exist in the `all` lens. A shared flow that
-				 * opened the card over an influence map would name a line the reader
-				 * cannot see, so the lens follows the link. An explicit `?mode=` in the
-				 * URL still wins: that is the reader naming the view they want.
-				 */
-				if (!modeLinked) mode = 'all';
-				const prefix = `flow-${kind}-${yearStr}-`;
-				const ofKind = slice.edges.filter((x) => x.id.startsWith(prefix));
-				// A foreign state's record carries `iso2`; a lender body carries the
-				// country of its seat. Both are ways an edge "connects" the country.
-				const isoOf = (id: string) =>
-					(institutionById.get(id) as { iso2?: string } | undefined)?.iso2;
-				const seatOf = (id: string) =>
-					(institutionById.get(id) as { seat?: string } | undefined)?.seat;
-				const e =
-					ofKind.find((x) => x.id === `${prefix}${iso2}`) ??
-					(kind === 'debt'
-						? ofKind.find((x) => [x.a.id, x.b.id].some((id) => isoOf(id) === iso2))
-						: undefined) ??
-					ofKind.find(
-						(x) =>
-							[x.a.id, x.b.id, x.rel.from, x.rel.to].includes(iso2) ||
-							[x.a.id, x.b.id].some((id) => seatOf(id) === iso2)
-					);
-				if (!e) {
-					/*
-					 * No edge carries this measurement: outside the top 20, a year the
-					 * slice does not hold, or below the evidence floor. The card still
-					 * exists and the globe owns it, so the link is not a dead end. This
-					 * moves no threshold: the network stays as filtered as the reader
-					 * left it, and the record opens where it can be read.
-					 */
-					const u = new URL(page.url);
-					u.pathname = '/world';
-					u.search = new URLSearchParams({ flow }).toString();
-					void goto(u, { replaceState: true });
-					return;
-				}
-				pinnedId = e.id;
-				const m = routes.get(e.id)?.mid ?? { x: e.a.x, y: e.a.y };
-				cam.flyTo(m.x, m.y);
-			});
-			return;
-		}
-
-		const want = page.url.searchParams.get('rel');
-		if (!want || deepLinked || cam.vw < 2) return;
-		deepLinked = true;
-		untrack(() => {
-			let e = slice.edges.find((x) => x.rel.id === want || x.id === want);
-			if (!e) {
-				/*
-				 * A real, above-floor relationship can still be absent from the
-				 * slice because the current lens filters it out — a family tie is
-				 * not an influence route. A shared connection link that lands on
-				 * nothing looks like it worked, which is the worst shape of broken,
-				 * so the lens follows the link the same way a flow deep link
-				 * switches it: only when the relationship exists and passes the
-				 * evidence floor, and never over an explicit `?mode=` the reader
-				 * named themselves. A relationship below the floor still does
-				 * nothing: raising the threshold is the reader's decision.
-				 */
-				const authored = ds.relationships.find(
-					(r) => r.id === want && meetsBasis(r.basis as Basis, app.basisFloor)
-				);
-				if (authored && !modeLinked) {
-					mode = 'all';
-					e = slice.edges.find((x) => x.rel.id === want || x.id === want);
-				}
-			}
-			if (!e) return;
-			pinnedId = e.id;
-			const m = routes.get(e.id)?.mid ?? { x: e.a.x, y: e.a.y };
-			cam.flyTo(m.x, m.y);
-		});
-	});
-
-	/**
-	 * Escape closes the card before the shell gets a chance to clear the selection.
-	 *
-	 * Captured, because the layout's window handler also answers Escape by dropping
-	 * `app.selected`. Without stopping it there, one press would both close this card
-	 * and deselect the person the reader was reading — two undos from one key.
-	 */
-	function onKeyCapture(e: KeyboardEvent) {
-		if (e.key === 'Escape' && compareId) {
-			compareId = null;
-			e.stopPropagation();
-			return;
-		}
-		if (e.key === 'Escape' && pinnedId) {
-			closePinned();
-			e.stopPropagation();
-		}
-	}
-	// --- Labels ---------------------------------------------------------------
-	//
-	// Names are HTML over the canvas rather than SVG text, and which ones survive is
-	// decided by a deterministic priority pass. See src/lib/viz/labels.css and
-	// place.ts for why both of those are the way they are.
-
-	const labelCandidates = $derived.by(() => {
-		// Nodes that are endpoints of any edge (active or not) — these deserve
-		// labels even if they have no active position at the current time.
-		// This ensures foreign states, international orgs, and dormant entities
-		// that are connected to something visible still get named.
-		const edgeEndpointNodes = new Set<string>();
-		for (const e of slice.edges) {
-			edgeEndpointNodes.add(e.rel.from);
-			edgeEndpointNodes.add(e.rel.to);
-		}
-
-		/*
-		 * The persistent foreign anchors (states, international organisations)
-		 * are drawn by the register, never by this pass. Every label here
-		 * therefore belongs to the domestic graph and follows the clock: people
-		 * while they hold office, institutions while something connects them.
-		 */
-		const out = [];
-		for (const n of layout.nodes.values()) {
-			// The foreign lane is drawn by `registerRows` as a table, not by the
-			// floating-label pass. Its names are anchored to a spine and carry a
-			// meter and a code, so a second halo label for the same entity would
-			// be a duplicate, not a reinforcement.
-			if (n.layer === 'foreign') continue;
-			if (compare && compareSet && !compareSet.has(n.id)) continue;
-			// The focus PLATE belongs to the SELECTED node only. Hovering used to
-			// promote the hovered node to focus too, so it rendered the plate AND
-			// the hover power-card — two popups saying the same name. Hover gets
-			// the card; selection gets the plate.
-			const isFocus = app.selected === n.id;
-			if (!isFocus && app.hovered === n.id) continue;
-			// Hop distance from the focus, for the label modifier that marks who
-			// surrounds the reader's subject. 0 = not in any ring.
-			const hop = rings
-				? rings.one.has(n.id)
-					? 1
-					: rings.two.has(n.id)
-						? 2
-						: 0
-				: 0;
-			if (!isFocus) {
-				// Persons are labelled only while they hold a position at the current
-				// time — a name must follow the clock, never trail it. Institutions are
-				// the exception: they are anchors that name the whole contest whether or
-				// not anyone currently holds office in them, so an institution that is
-				// even connected to the slice still earns its title.
-				const inOffice = slice.live.has(n.id);
-				const anchored = n.kind === 'institution' && edgeEndpointNodes.has(n.id);
-				if (!inOffice && !anchored) continue;
-				// When something is focused, only its ego-network is labelled: the
-				// one-ring always, the two-ring once the roster itself is drawn.
-				if (rings && !rings.one.has(n.id) && !(showAll && rings.two.has(n.id))) continue;
-			}
-			out.push({
-				id: n.id,
-				x: n.x,
-				y: n.y,
-				text: n.name,
-				// Anchor preference (see place.ts): interior lanes read right-first,
-				// with vertical slots to break dense columns. The RIGHTMOST active
-				// lane anchors LEFT first, because a right-anchored name there falls
-				// off the world edge and the viewport check would suppress it even
-				// though the node is live. With foreign drawn as a register, this
-				// fallback only bites when foreign is hidden and civil inherits the
-				// right edge.
-				dirs: (layout.lanes.indexOf(n.layer) === layout.lanes.length - 1
-					? (['left', 'above', 'below', 'right'] as LabelDir[])
-					: (['right', 'above', 'below', 'left'] as LabelDir[])),
-				// Institutions sit a little below people of the same weight: when the two
-				// contest a slot, the person is the more informative name.
-				//
-				// A neighbour of the focused node is always worth a name: the whole
-				// point of focusing is to read who surrounds a person. Give it enough
-				// weight to beat the label collisions it would otherwise lose to.
-				priority: isFocus
-					? 10_000
-					: rings && rings.one.has(n.id)
-						? 5_000 + (n.weight - (n.kind === 'institution' ? 5 : 0))
-						: n.weight - (n.kind === 'institution' ? 5 : 0),
-				pinned: isFocus,
-				r: n.r,
-				data: { layer: n.layer, kind: n.kind, hop }
-			});
-		}
-		return out;
-	});
-
-	const labels = $derived(
-		placeLabels(labelCandidates, cam, { floor: labelFloor, majorAt: 66, limit: 100 })
-	);
-
-	/**
-	 * How busy each foreign counterparty is right now.
-	 *
-	 * The figure is the count of authored, active, non-measurement relationships
-	 * touching the entity at the current instant: "how many claims tie this
-	 * counterparty to the record right now", normalised against the busiest row.
-	 * Trade and debt flows are measurements, not authored claims, so they do not
-	 * count; conflating the two would let a single large trade line outrank a
-	 * dense web of documented appointments.
-	 *
-	 * The count is taken against the whole record, not only the nodes currently
-	 * drawn: soloing the lane removes every domestic endpoint from `layout`, and
-	 * a load that collapsed to zero the moment the reader isolated the lane would
-	 * be measuring the view rather than the counterparty.
-	 *
-	 * It is read twice. The register rows use it for the meter and the tooltip,
-	 * and the node markers themselves fill by it, which is what keeps the load
-	 * visible on a laptop-width lane where a meter column does not fit.
-	 */
-	const foreignLoad = $derived.by(() => {
-		const ids = new Set([...layout.nodes.values()].filter(foreignExists).map((n) => n.id));
-		const counts = new Map<string, number>();
-		for (const rel of ds.relationships) {
-			if (!meetsBasis(rel.basis as Basis, app.basisFloor)) continue;
-			if (mode === 'influence' && !INFLUENCE_TYPES.has(rel.type) && rel.type !== 'ownership' && rel.type !== 'appointment') continue;
-			if (mode === 'ownership' && !['ownership', 'board', 'shareholder', 'funding'].includes(rel.type)) continue;
-			const dated = rel.interval.raw.start !== null;
-			if (dated && !possiblyActive(rel.interval, app.t)) continue;
-			if (ids.has(rel.from)) counts.set(rel.from, (counts.get(rel.from) ?? 0) + 1);
-			if (ids.has(rel.to)) counts.set(rel.to, (counts.get(rel.to) ?? 0) + 1);
-		}
-		const max = Math.max(1, ...counts.values());
-		const out = new Map<string, { count: number; pct: number }>();
-		for (const id of ids) {
-			const c = counts.get(id) ?? 0;
-			out.set(id, { count: c, pct: c / max });
-		}
-		return out;
-	});
-
-	/**
-	 * The foreign register, in screen space.
-	 *
-	 * Emitted as a flat list of section heads and entity rows rather than through
-	 * the collision pass: a register is a structure, not a set of floating names,
-	 * so its rows are never suppressed and never re-anchored. Each row is a name
-	 * and nothing else, so the only geometry is the name's anchor, and there is
-	 * no column arithmetic left to get wrong. The load is carried by the node
-	 * marker and named in the row's tooltip.
-	 */
-	const registerRows = $derived.by(() => {
-		const foreign = [...layout.nodes.values()].filter(foreignExists);
-		if (!foreign.length) return [];
-		// Rows follow the register's vertical order, which is the authored section
-		// order and then alphabetical within each section.
-		foreign.sort((a, b) => a.y - b.y || a.name.localeCompare(b.name));
-		const bands = layout.groupBands.filter((b) => b.layer === 'foreign');
-		// The register column runs from the spine to the lane's right edge. The
-		// section heads use the same span, so a rule or a count can never stick out
-		// past the lane it belongs to.
-		const columnW = Math.min(380, layout.laneW * (1 - REG_SPINE_FRAC) * cam.k);
-		// A section head spans the whole lane, like a group head in any other
-		// lane, so a long name has room and the rule reads as the lane's divider.
-		const laneLeft = laneX(layout.lanes.indexOf('foreign'), layout.laneW);
-		const sectionW = (layout.laneW - 8) * cam.k;
-		const rows: {
-			key: string;
-			kind: 'section' | 'row';
-			name: string;
-			count: number;
-			x: number;
-			y: number;
-			pad: number;
-			width: number;
-			id?: string;
-		}[] = [];
-		for (const band of bands) {
-			const members = foreign.filter((n) => n.group === band.group);
-			if (!members.length) continue;
-			const head = cam.worldToScreen(laneLeft + 4, band.headerY);
-			rows.push({
-				key: 'sec:' + band.layer + ':' + band.group,
-				kind: 'section',
-				name: band.group,
-				count: band.memberCount,
-				x: head.x,
-				y: head.y,
-				pad: 0,
-				width: sectionW
-			});
-			for (const n of members) {
-				const s = cam.worldToScreen(n.x, n.y);
-				const rr = Math.max(n.r, minWorldR);
-				rows.push({
-					key: 'row:' + n.id,
-					kind: 'row',
-					id: n.id,
-					name: n.name,
-					count: foreignLoad.get(n.id)?.count ?? 0,
-					x: s.x,
-					y: s.y,
-					// Clear the node glyph at whatever the camera scale draws it,
-					// capped so a full-zoom square does not shove the name off-lane.
-					pad: Math.max(13, Math.min(30, rr * cam.k + 7)),
-					width: columnW
-				});
-			}
-		}
-		return rows;
-	});
-
-	/** The register's section names, which are data group ids rather than UI copy. */
-	function foreignGroupLabel(group: string): string {
-		if (group === 'States') return t('layer.foreign.section.states');
-		if (group === 'International Organisations') return t('layer.foreign.section.orgs');
-		return t('layer.foreign.section.other');
-	}
-
-	/**
-	 * Lane headers, pinned in screen space.
-	 *
-	 * Computed outside the camera transform so they stay at the top of the viewport
-	 * while the reader pans down a lane. Seven columns of near-identical shape are
-	 * genuinely hard to tell apart once the header has scrolled off the top, and the
-	 * lanes are the only structure in this view that never moves — so the label for
-	 * them should not move either.
-	 */
-	const laneHeaders = $derived.by(() => {
-		const live = new Map<Layer, number>();
-		for (const id of slice.live) {
-			const n = layout.nodes.get(id);
-			if (n) live.set(n.layer, (live.get(n.layer) ?? 0) + 1);
-		}
-
-		return layout.lanes
-			.map((layer, i) => {
-				const l = cam.worldToScreen(laneX(i, layout.laneW), 0).x;
-				const r = cam.worldToScreen(laneX(i + 1, layout.laneW), 0).x;
-				return { layer, l, r, count: live.get(layer) ?? 0 };
-			})
-			// A lane scrolled off the side gets no header; one only partly on screen
-			// keeps its header clamped to the edge it is still visible at.
-			.filter((h) => h.r > 44 && h.l < cam.vw - 8)
-			.map((h) => ({
-				layer: h.layer,
-				count: h.count,
-				left: Math.max(8, Math.min(h.l + 10, cam.vw - 120)),
-				maxWidth: Math.max(88, Math.min(h.r - h.l - 20, cam.vw - Math.max(8, h.l + 10) - 12))
-			}));
-	});
-
-	const soloed = $derived(app.activeLayers.size === 1);
-	const wide = $derived(!compact.current);
-	/*
-	 * Wide enough that the fitted map leaves the legend's 160px gutter clear of
-	 * the first lane. Below this the legend starts folded above the minimap, one
-	 * click away, instead of open over the Security lane's names.
-	 */
-	const roomy = new MediaQuery('(min-width: 1400px)', false);
-
-	/**
-	 * Group headers, positioned in world space but lifted into the overlay so they
-	 * always sit above nodes and edges. The SVG band behind them stays faint — the
-	 * text is the structure, and a header that a node can cover is not structure.
-	 *
-	 * Zoom-gated: a subsection title is meaningless while its nodes are still dots,
-	 * and at the overview the seven lanes' worth of them pile up (measured: 42
-	 * headers at the fit floor). They appear only once the camera is close enough
-	 * that the roster they organise is drawn.
-	 */
-	const showGroupHeaders = $derived(headerFade > 0);
-	const groupHeaders = $derived(
-		// The foreign lane's sections are drawn as part of the register, always
-		// visible rather than zoom-gated: a roster without its section heads is
-		// just a list of names, which is the failure being corrected.
-		layout.groupBands.filter((band) => band.layer !== 'foreign').map((band) => {
-			const laneIdx = layout.lanes.indexOf(band.layer);
-			const p = cam.worldToScreen(laneX(laneIdx, layout.laneW) + 10, band.headerY);
-			return {
-				key: band.layer + ':' + band.group,
-				layer: band.layer,
-				group: band.group,
-				memberCount: band.memberCount,
-				x: p.x,
-				y: p.y
-			};
-		})
-	);
-
-	/** The vertical gutter strips between lanes — where cross-layer traffic runs. */
-	const gutters = $derived(Array.from({ length: Math.max(0, layout.lanes.length - 1) }));
-
-	/** Cross-layer edge count per gutter, for the traffic labels. */
-	/**
-	 * Cross-layer edge counts per gutter, split by direction of travel.
-	 * `fwd` = edges running left → right, `rev` = right → left. The label shows
-	 * net flow, so a corridor reads as a narrative: who is reaching into whom.
-	 */
-	const gutterTraffic = $derived.by(() => {
-		const n = Math.max(0, layout.lanes.length - 1);
-		const counts = new Array(n).fill(0);
-		const fwd = new Array(n).fill(0);
-		const rev = new Array(n).fill(0);
-		for (const e of slice.edges) {
-			if (!e.crossLayer) continue;
-			const ia = layout.lanes.indexOf(e.a.layer);
-			const ib = layout.lanes.indexOf(e.b.layer);
-			if (ia < 0 || ib < 0 || ia === ib) continue;
-			const k = ib > ia ? ia : ia - 1;
-			if (k < 0 || k >= n) continue;
-			counts[k]++;
-			if (ib > ia) fwd[k]++;
-			else rev[k]++;
-		}
-		return { counts, fwd, rev };
-	});
-
-	/**
-	 * Gutter volume: how busy each channel is, normalized against the busiest.
-	 * The strip's fill intensity scales with it, so a corridor reads as a
-	 * thermometer — dense lane-pairs glow, quiet ones stay near the surface.
-	 */
-	const gutterVolume = $derived.by(() => {
-		const counts = gutterTraffic.counts;
-		const max = Math.max(1, ...counts);
-		return counts.map((c) => 0.06 + 0.3 * (c / max));
-	});
-
-	/**
-	 * Gutter traffic labels appear only once a gutter is wide enough on screen to
-	 * carry a vertical label — at the fit floor a 26px channel cannot.
-	 */
-	const showGutterLabels = $derived(cam.zoomProgress > 0.35);
-
-	// --- Tenure strips: sparklines and ghost arcs -----------------------------
-	//
-	// A node's time-in-office (sparkline) and its last-held institution (ghost
-	// arc) both derive from positions. Institutions are "active" whenever anyone
-	// holds a post in them, so their strip is the union of their holders' spans.
-
-	/** People: their own posts. Institutions: the posts held in them. */
-	const positionsByInstitution = (() => {
-		const map = new Map<string, Position[]>();
-		for (const p of ds.positions) {
-			if (!p.institution) continue;
-			const list = map.get(p.institution) ?? [];
-			list.push(p);
-			map.set(p.institution, list);
-		}
-		return map;
-	})();
-
-	/** Entity id → sparkline segments, on the 1956→2026 axis. Time-invariant. */
-	const SPARK_W = 26;
-
-	/**
-	 * Has an entity appeared by the current time? The lifecycle is ONE-SIDED:
-	 * before its earliest date a node does not exist at all (not even as a dot),
-	 * but once it has appeared it stays forever — hollow when inactive, never
-	 * unclickable. A retired minister or a dissolved company remains on the map
-	 * as structure; only the not-yet-born are absent.
-	 */
-	const hasAppeared = (id: string) => {
-		const t = appearDates.get(id);
-		if (t === undefined) return true; // no dated anchor → structural, always in play
-		return app.t >= t;
-	};
-
-	/**
-	 * Does this foreign register entry exist at the current instant?
-	 *
-	 * `appearDates` is built from records that INVOLVE an entity, not from the
-	 * entity's own active interval, so a state whose earliest recorded tie is
-	 * 2010 would "appear" then even though it has existed since independence, and
-	 * a counterparty with no early tie would leave a hole in the middle of the
-	 * register. Every foreign record carries an authored active interval, so that
-	 * interval is the existence rule here; only an entity with no start at all
-	 * falls back to the record-based rule.
-	 */
-	const foreignExists = (n: Node) => {
-		if (n.layer !== 'foreign') return false;
-		if (n.kind !== 'institution') return hasAppeared(n.id);
-		const inst = institutionById.get(n.id);
-		// Every foreign record carries an authored active interval, so its own
-		// start is the honest existence rule. Only an entity with no start at all
-		// falls back to the record-based rule.
-		if (inst && inst.interval.raw.start !== null) {
-			return app.t >= inst.interval.startEarliest;
-		}
-		return hasAppeared(n.id);
-	};
-
-	/**
-	 * When each entity came into play: the earliest DATED anchor across every
-	 * record kind that involves it — positions (holder and institution),
-	 * relationships (both endpoints), events (actors), company founding dates,
-	 * contracts, licences and declarations. Undated records are skipped: a
-	 * relationship with no date must not pull an entity back to 1956.
-	 * Entities with no dated anchor at all (structural institutions) are
-	 * absent from the map and default to always-visible.
-	 */
-	const appearDates = (() => {
-		const map = new Map<string, number>();
-		const note = (id: string | undefined, t: number) => {
-			if (!id) return;
-			const cur = map.get(id);
-			if (cur === undefined || t < cur) map.set(id, t);
-		};
-		// Positions: the post-holder and the institution appear when the post starts.
-		for (const p of ds.positions) {
-			if (p.interval.raw.start === null) continue;
-			note(p.holder, p.interval.startEarliest);
-			note(p.institution, p.interval.startEarliest);
-		}
-		// Relationships: both endpoints appear when the tie starts.
-		for (const r of ds.relationships) {
-			if (r.interval.raw.start === null) continue;
-			note(r.from, r.interval.startEarliest);
-			note(r.to, r.interval.startEarliest);
-		}
-		// Events: actors appear at the event date.
-		for (const ev of ds.events) {
-			const t = Date.parse(ev.date);
-			if (Number.isNaN(t)) continue;
-			for (const a of ev.actors) note(a, t);
-		}
-		// Companies: founded date.
-		for (const c of ds.companies) {
-			if (!c.founded) continue;
-			const t = Date.parse(c.founded);
-			if (Number.isNaN(t)) continue;
-			note(c.id, t);
-		}
-		// Contracts: the institution appears when the contract starts.
-		for (const c of ds.contracts) {
-			const t = c.interval?.startEarliest ?? (c.start ? Date.parse(c.start) : NaN);
-			if (t && !Number.isNaN(t)) note(c.institution, t);
-		}
-		// Licences: holder and issuer appear at grant.
-		for (const l of ds.licences) {
-			if (!l.grant) continue;
-			const t = Date.parse(l.grant);
-			if (Number.isNaN(t)) continue;
-			note(l.holder, t);
-			note(l.issuer, t);
-		}
-		// Declarations: the declarer appears at the declaration date.
-		for (const dec of ds.declarations) {
-			const t = Date.parse(dec.date);
-			if (Number.isNaN(t)) continue;
-			note(dec.declarer, t);
-		}
-		return map;
-	})();
-	const sparkSegments = (() => {
-		const map = new Map<string, { x: number; w: number }[]>();
-		const span = CUTOFF - FLOOR;
-		const segsFor = (list: Position[]) => {
-			const segs: { x: number; w: number }[] = [];
-			for (const p of list) {
-				const x0 = Math.max(0, ((p.interval.startEarliest - FLOOR) / span) * SPARK_W);
-				const x1 = Math.min(SPARK_W, (((p.interval.endLatest ?? CUTOFF) - FLOOR) / span) * SPARK_W);
-				if (x1 - x0 >= 0.4) segs.push({ x: x0, w: x1 - x0 });
-			}
-			return segs;
-		};
-		for (const p of ds.people) map.set(p.id, segsFor(positionsByHolder.get(p.id) ?? []));
-		for (const i of ds.institutions) map.set(i.id, segsFor(positionsByInstitution.get(i.id) ?? []));
-		return map;
-	})();
-
-	/** Sparklines render once the roster is in and there is room to read them. */
-	const showSparklines = $derived(cam.zoomProgress > 0.35);
-
-	/**
-	 * Ghost arcs: for each dormant person, a faint tie to the institution they
-	 * last held. The map must show not only who is out of office now, but where
-	 * they left the structure. An overview feature: suppressed while focused
-	 * (rings own the map), in quiet mode (which withholds the dormant
-	 * scaffolding by definition), and once the reader has zoomed in (the roster
-	 * is up; the scaffolding's job is done).
-	 */
-	const ghostArcs = $derived.by(() => {
-		const arcs: { a: Node; b: Node }[] = [];
-		if (focus || app.quiet || cam.zoomProgress > 0.3) return arcs;
-		for (const [id, list] of positionsByHolder) {
-			if (slice.live.has(id)) continue;
-			// Only show ghosts for people who have appeared — the ghost arc traces
-			// where they left the structure, and the not-yet-born have no
-			// structure to trace.
-			if (!hasAppeared(id)) continue;
-			const from = layout.nodes.get(id);
-			if (!from) continue;
-			let best: Position | null = null;
-			for (const p of list) {
-				if (!p.institution || !layout.nodes.has(p.institution)) continue;
-				if (!best || (p.interval.endLatest ?? CUTOFF) > (best.interval.endLatest ?? CUTOFF)) best = p;
-			}
-			if (best) arcs.push({ a: from, b: layout.nodes.get(best.institution)! });
-		}
-		return arcs;
-	});
-
-	// --- Compare mode: the intersection of two ego-networks -------------------
-	//
-	// Shift-click a second node to answer "what is common between X and Y?" —
-	// the shared neighbours render at full strength, everything else leaves the
-	// map. The layout never moves: the intersection is a filter over the fixed
-	// positions, not a new drawing of them.
 
 	let compareId = $state<string | null>(null);
-
 	const compare = $derived.by(() => {
 		if (!app.selected || !compareId || app.selected === compareId) return null;
-		const egoA = new Set<string>([app.selected]);
-		const egoB = new Set<string>([compareId]);
-		for (const e of slice.edges) {
+		const egoA = new Set<string>();
+		const egoB = new Set<string>();
+		for (const e of scene.ties) {
 			if (e.rel.from === app.selected) egoA.add(e.rel.to);
 			else if (e.rel.to === app.selected) egoA.add(e.rel.from);
 			if (e.rel.from === compareId) egoB.add(e.rel.to);
 			else if (e.rel.to === compareId) egoB.add(e.rel.from);
 		}
 		const common = new Set<string>();
-		for (const id of egoA) {
-			if (id !== app.selected && id !== compareId && egoB.has(id)) common.add(id);
-		}
-		return { a: app.selected, b: compareId, common };
+		for (const id of egoA) if (id !== app.selected && id !== compareId && egoB.has(id)) common.add(id);
+		return { a: app.selected, b: compareId, common, set: new Set([app.selected, compareId, ...common]) };
 	});
 
-	/** The full compare set: both anchors plus their shared neighbours. */
-	const compareSet = $derived(
-		compare ? new Set<string>([compare.a, compare.b, ...compare.common]) : null
+	/** Whether an entity is pushed back by the current focus or comparison. */
+	function dimmed(id: string | null): boolean {
+		if (!id) return !!(near || compare);
+		if (compare) return !compare.set.has(id);
+		if (near) return !near.has(id);
+		return false;
+	}
+
+	/** A box is lit when it, or anyone seated in it, is in the focused set. */
+	function unitDimmed(u: Unit): boolean {
+		if (!near && !compare) return false;
+		if (u.id && !dimmed(u.id)) return false;
+		return u.seats.every((s) => dimmed(s.person));
+	}
+
+	function incident(e: Tie): boolean {
+		if (compare) return compare.set.has(e.rel.from) && compare.set.has(e.rel.to);
+		return !!focus && (e.rel.from === focus || e.rel.to === focus);
+	}
+
+	// --- Edges ------------------------------------------------------------------------
+
+	let hoverEdge = $state<string | null>(null);
+	let pinnedId = $state<string | null>(null);
+	const pinned = $derived(pinnedId ? (tieById.get(pinnedId) ?? null) : null);
+
+	/** Ties drawn above the boxes: the focused ones, the hovered one and the pinned one. */
+	const topTies = $derived(
+		scene.ties.filter((e) => incident(e) || e.id === hoverEdge || e.id === pinnedId)
 	);
+	const topIds = $derived(new Set(topTies.map((e) => e.id)));
 
-	/** The edge subset the current mode actually draws. */
-	const shownEdges = $derived.by(() => {
-		/**
-		 * Edges to nodes that have not appeared yet are not drawn — the node does
-		 * not exist, so the connection cannot either. Once the node has appeared
-		 * its edges stay (each edge still obeys its own interval via `active`).
-		 */
-		const inTime = hasAppeared;
-		if (compare && compareSet) {
-			return slice.edges.filter(
-				(e) =>
-					(!('measurement' in e) || mode === 'all') &&
-					compareSet.has(e.rel.from) &&
-					compareSet.has(e.rel.to) &&
-					inTime(e.rel.from) &&
-					inTime(e.rel.to)
-			);
-		}
-		return slice.edges.filter(
-			(e) => (!('measurement' in e) || mode === 'all') && inTime(e.rel.from) && inTime(e.rel.to)
-		);
-	});
+	const INFLUENCE_TYPES = new Set(['influence', 'reported-influence', 'advisory']);
 
-	// --- The minimap ----------------------------------------------------------
-	//
-	// The world is 2600×1700 and the window shows a slice of it; the minimap is
-	// the "where am I" that panning alone cannot answer. A click or drag centres
-	// the map on the tapped point. The viewport rectangle is the live answer to
-	// "where am I", so it reads as a control and a readout at once.
-	const MINI_W = 100;
-	const MINI_H = (H / W) * MINI_W;
-	/*
-	 * The minimap's rendered height: a 132px box (3px padding, 1px border) whose
-	 * svg keeps the world's aspect. The legend stacks on top of it at the
-	 * bottom-left, so it has to know where the minimap ends.
+	/**
+	 * Stroke width. Authored influence strength widens an influence tie (a claim
+	 * about a claim, stored on the edge); several ties between one pair thicken
+	 * the line; a bundle of party ties and a measured flow scale with the square
+	 * root of what they carry, so a ten-billion flow is not ten times a billion.
 	 */
-	const MINI_BOX_H = Math.round(((132 - 8) * MINI_H) / MINI_W + 8);
+	function edgeWidth(e: Tie): number {
+		if (e.measurement) return 1 + Math.min(2.6, Math.sqrt(Math.max(0, e.flowValue ?? 0)) / 30);
+		if (e.bundle) return 1 + Math.min(5, Math.sqrt(e.bundle) * 0.55);
+		const strength = INFLUENCE_TYPES.has(e.rel.type)
+			? (e.rel as { influence?: { strength?: number } }).influence?.strength
+			: undefined;
+		const base = strength ? 0.8 + strength * 2.6 : 1.25;
+		return base * (1 + 0.5 * Math.min(2, Math.max(1, e.multi) - 1));
+	}
 
-	const miniView = $derived.by(() => {
-		const wx = -cam.x / cam.k;
-		const wy = -cam.y / cam.k;
-		const ww = cam.vw / cam.k;
-		const wh = cam.vh / cam.k;
-		const x0 = Math.max(0, wx);
-		const y0 = Math.max(0, wy);
-		/*
-		 * Clamp the viewport indicator to non-negative size. Mid-fly (and at the
-		 * first paint after a deep-linked flyTo, before the camera has settled)
-		 * the camera can legitimately sit past a world edge, which makes
-		 * (min(W, wx+ww) - x0) negative; SVG then throws "<rect> attribute
-		 * height: A negative value is not valid" — a console error on a real
-		 * user flow (cold /network?id=...). The rect should clamp, not throw.
-		 */
-		const w = Math.max(0, Math.min(W, wx + ww) - x0);
-		const h = Math.max(0, Math.min(H, wy + wh) - y0);
-		return {
-			x: (x0 / W) * MINI_W,
-			y: (y0 / H) * MINI_H,
-			w: (w / W) * MINI_W,
-			h: (h / H) * MINI_H
-		};
-	});
+	function edgeDash(e: Tie): string | undefined {
+		return e.measurement ? undefined : DASH[(e.rel.basis ?? 'documented') as Basis];
+	}
 
-	let miniDragging = false;
-	function miniJump(e: PointerEvent) {
-		const svg = e.currentTarget as SVGSVGElement;
-		const r = svg.getBoundingClientRect();
-		if (r.width < 2 || r.height < 2) return;
-		const fx = (e.clientX - r.left) / r.width;
-		const fy = (e.clientY - r.top) / r.height;
-		cam.alignTo(Math.min(W, Math.max(0, fx * W)), Math.min(H, Math.max(0, fy * H)), 0.5, 0.5);
-	}
-	function miniDown(e: PointerEvent) {
-		miniDragging = true;
-		miniJump(e);
-		(e.currentTarget as Element).setPointerCapture?.(e.pointerId);
-	}
-	function miniMove(e: PointerEvent) {
-		if (miniDragging) miniJump(e);
-	}
-	function miniUp() {
-		miniDragging = false;
+	function edgeOpacity(e: Tie): number {
+		return e.measurement ? 0.42 : BASIS_OPACITY[(e.rel.basis ?? 'documented') as Basis];
 	}
 
 	/**
-	 * The legend's relationship-type swatches: what a focused node's edges wear.
-	 * A curated subset of REL_TYPE_COLOR, so the legend stays compact — every
-	 * swatch is still rendered from the constant it describes.
+	 * At rest a line wears its source layer's colour, or the bridge colour when
+	 * it crosses layers. A focused tie recolours to its relationship type, so
+	 * "who he appointed" and "his family" read apart; nothing else changes
+	 * colour underneath the reader.
 	 */
-	const LEGEND_REL_TYPES = ['institutional', 'appointment', 'family', 'business', 'prosecution', 'reported-influence'];
+	function edgeColor(e: Tie, top: boolean): string {
+		if (top && incident(e)) return REL_TYPE_COLOR[e.rel.type] ?? (e.crossLayer ? 'var(--bridge)' : LAYER_COLOR[e.a.layer]);
+		if (e.measurement) return 'var(--text-muted)';
+		return e.crossLayer ? 'var(--bridge)' : LAYER_COLOR[e.a.layer];
+	}
 
-	// --- The dismissal machine ------------------------------------------------
-	//
-	// One interaction stack: hover (transient) < selected node (persistent,
-	// opens the Inspector) < pinned edge (persistent, opens the ConnectionCard).
-	// Clicking the canvas background pops the TOP of the stack — one level per
-	// click, the same two-step semantics Escape already has, now true for the
-	// pointer too. Nothing closes something below the top unless the gesture
-	// directly targets it.
-	function onCanvasBgClick(e: MouseEvent) {
-		const t = e.target as Element | null;
-		// A click that landed on something with its own behaviour is not a
-		// dismissal: nodes, edge hit-twins, lane header buttons, the card, the
-		// nav controls and the legend all swallow it. Without this guard the very
-		// node the reader just clicked would be deselected by the background.
-		if (t && t.closest('.node, .hit, .vlane, .edgecard, .viewnav, .legend')) return;
-		hoverEdge = null;
-		app.hovered = null;
-		if (pinnedId) pinnedId = null;
-		else if (app.selected) {
-			app.selected = null;
-			compareId = null;
+	// --- Hover tips (pointer-placed, never per frame) ------------------------------
+
+	let tipAt = $state<{ x: number; y: number } | null>(null);
+	let canvasEl = $state<HTMLDivElement | null>(null);
+
+	function pointerAt(e: PointerEvent | MouseEvent) {
+		const r = canvasEl?.getBoundingClientRect();
+		if (!r) return null;
+		return { x: e.clientX - r.left, y: e.clientY - r.top };
+	}
+
+	/** Hover is delegated: one listener for every seat, chip and box title. */
+	function onWorldOver(e: PointerEvent) {
+		if (e.pointerType === 'touch') return;
+		const el = (e.target as Element).closest?.('[data-id]') as HTMLElement | null;
+		const id = el?.dataset.id ?? null;
+		if (id !== app.hovered) app.hovered = id;
+		tipAt = id ? pointerAt(e) : null;
+	}
+	function onWorldOut(e: PointerEvent) {
+		const to = (e.relatedTarget as Element | null)?.closest?.('[data-id]');
+		if (!to) {
+			app.hovered = null;
+			tipAt = null;
 		}
 	}
 
-	// --- Long-press: the touch equivalent of hover ---------------------------
-	//
-	// Hover is a mouse-only tier; a phone has nothing between "nothing" and a
-	// full tap that commits. A 500ms press on a node focuses it transiently
-	// (hovered, not selected — no Inspector), and on an edge shows the edge tip.
-	// The click that follows the release is suppressed so a press never also
-	// selects.
+	function postTitle(p: Position): string {
+		const x = p as Position & { roleTitleFr?: string; roleTitleAr?: string };
+		if (app.locale === 'ar' && x.roleTitleAr) return x.roleTitleAr;
+		if (app.locale === 'fr' && x.roleTitleFr) return x.roleTitleFr;
+		return p.roleTitle;
+	}
+
+	/** What the hovered entity is doing on the map right now. */
+	const hoverInfo = $derived.by(() => {
+		const id = app.hovered;
+		if (!id) return null;
+		const unit = scene.unitOf.get(id);
+		const seat = unit?.seats.find((s) => s.person === id && s.primary);
+		let line = '';
+		if (seat?.position) line = `${postTitle(seat.position)} · ${entityName(seat.position.institution)}`;
+		else if (unit?.kind === 'chamber' && personById.has(id)) line = tf('network.tip.member', { chamber: entityName(unit.id!) });
+		else if (unit?.kind === 'actors') line = t('network.tip.outside');
+		else if (unit?.chamber) line = tf('network.chamber.named', { n: unit.chamber.named, seats: unit.chamber.seats });
+		else if (unit) line = layerLabel(unit.layer);
+		const ties = scene.ties.filter((e) => e.rel.from === id || e.rel.to === id).length;
+		return { name: entityName(id), line, ties };
+	});
+
+	const hoveredTie = $derived(hoverEdge && !pinned ? (tieById.get(hoverEdge) ?? null) : null);
+
+	// --- Long-press: the touch hover tier -----------------------------------------
+
 	let pressTimer: ReturnType<typeof setTimeout> | null = null;
 	let pressed = false;
 	function startPress(cb: () => void) {
@@ -2013,513 +428,815 @@ import Chip from '$lib/ui/Chip.svelte';
 			pressTimer = null;
 		}
 	}
+
+	// --- Selecting and flying -------------------------------------------------------
+
+	/**
+	 * A selection made on the map flies gently (the reader is already looking at
+	 * it); one made anywhere else (search, another view, a deep link, a card's
+	 * endpoint) flies decisively, because that navigation must travel.
+	 */
+	let selectFly: 'gentle' | 'strong' = 'strong';
+	function selectOnMap(id: string, e?: MouseEvent) {
+		if (pressed) return;
+		if (e?.shiftKey) {
+			compareId = compareId === id ? null : id;
+			return;
+		}
+		cam.skipResizePan = true;
+		selectFly = 'gentle';
+		app.select(id);
+	}
+
+	/** A flight requested before the map was measured (a deep link, the matrix's "show"). */
+	let pendingFly: { x: number; y: number } | null = null;
+	function flyToPoint(x: number, y: number, gentle = false) {
+		if (cam.vw < 2 || view !== 'map') {
+			pendingFly = { x, y };
+			return;
+		}
+		// On a phone the inspector is a bottom sheet: land in the upper third so
+		// the subject is not underneath the card it just opened.
+		const cy = compact.current ? cam.vh * 0.3 : undefined;
+		if (gentle) {
+			cam.flyTo(x, y, Math.max(cam.k, cam.fitScale * 1.4), 640, 'inout', undefined, cy);
+		} else {
+			cam.flyTo(x, y, Math.max(cam.k, Math.min(1.25, cam.fitScale * 2)), 560, 'out', undefined, cy);
+		}
+	}
+	function flushPendingFly() {
+		if (!pendingFly) return;
+		const p = pendingFly;
+		pendingFly = null;
+		cam.flyTo(p.x, p.y, Math.max(cam.k, Math.min(1.25, cam.fitScale * 2)), 0, 'out', undefined, compact.current ? cam.vh * 0.3 : undefined);
+	}
+
+	/**
+	 * Fly to whatever got selected. `untrack` is not optional: flyTo reads and
+	 * writes the camera, and an effect that writes what it reads self-triggers
+	 * and aborts the whole effect tree (see AGENTS.md history).
+	 */
+	$effect(() => {
+		const id = app.selected;
+		if (!id) return;
+		untrack(() => {
+			const mode = selectFly;
+			selectFly = 'strong';
+			const a = scene.anchors.get(id);
+			if (!a) return;
+			const unit = scene.unitOf.get(id);
+			const x = unit && unit.id === id ? unit.x + unit.w / 2 : (a.xl + a.xr) / 2;
+			flyToPoint(x, a.y, mode === 'gentle');
+		});
+	});
+
+	/** A selected entity the map cannot show at this date says so, rather than doing nothing. */
+	const offMap = $derived(
+		app.selected && !scene.anchors.has(app.selected) && (personById.has(app.selected) || institutionById.has(app.selected))
+			? app.selected
+			: null
+	);
+
+	// --- The pinned connection --------------------------------------------------------
+
+	let pinnedClosing = $state(false);
+	let pinnedCloseTimer: ReturnType<typeof setTimeout> | undefined;
+
+	function closePinned() {
+		if (pinnedId === null) return;
+		clearTimeout(pinnedCloseTimer);
+		if (!compact.current) {
+			pinnedId = null;
+			pinnedClosing = false;
+			return;
+		}
+		pinnedClosing = true;
+		pinnedCloseTimer = setTimeout(() => {
+			pinnedId = null;
+			pinnedClosing = false;
+		}, 260);
+	}
+	$effect(() => {
+		if (pinnedId !== null) {
+			clearTimeout(pinnedCloseTimer);
+			pinnedClosing = false;
+		}
+	});
+	$effect(() => () => clearTimeout(pinnedCloseTimer));
+
+	const edgeDragParams: SheetDragParams = {
+		enabled: () => compact.current,
+		detent: () => 'full',
+		setDetent: () => {},
+		hasPeek: () => false,
+		handle: '.sheet-handle',
+		dismiss: () => closePinned()
+	};
+
+	const CARD_W = 320;
+	const CARD_H = 300;
+	const cardAt = $derived.by(() => {
+		if (!pinned) return null;
+		if (view === 'matrix') return { x: Math.max(8, cam.vw - CARD_W - 16), y: 16 };
+		const m = routes.get(pinned.id)?.mid ?? { x: pinned.a.xr, y: pinned.a.y };
+		const s = cam.worldToScreen(m.x, m.y);
+		return {
+			x: Math.max(8, Math.min(s.x + 16, cam.vw - CARD_W - 8)),
+			y: Math.max(8, Math.min(s.y + 12, cam.vh - CARD_H - 8))
+		};
+	});
+
+	/** The card's edge, in the shape ConnectionCard reads. */
+	const cardEdge = $derived(pinned ? { ...pinned, active: true } : null);
+
+	/** A tie opened from anywhere: a bundle of party ties opens its party; everything else its card. */
+	function openTie(e: Tie, fly = false) {
+		if (e.bundle) {
+			app.selected = e.rel.to;
+			return;
+		}
+		pinnedId = e.id;
+		if (fly) {
+			const m = routes.get(e.id)?.mid;
+			if (m) flyToPoint(m.x, m.y);
+		}
+	}
+
+	function pick(id: string) {
+		pinnedId = null;
+		// Assign, never toggle: naming someone in a card is a request to go to them.
+		app.selected = id;
+	}
+
+	// --- Deep links ---------------------------------------------------------------------
+
+	/**
+	 * `?id=` selects, `?rel=` pins a connection, `?flow=` pins a measurement,
+	 * `?ties=` (or the older `?mode=`) names the lens, `?agreement=` and energy
+	 * flows hand the reader to the World ledger that owns those records. Runs
+	 * once; a link that names a tie in a family the lens has off turns that
+	 * family on, unless the link also named the lens.
+	 */
+	let deepLinked = false;
+	$effect(() => {
+		if (deepLinked) return;
+		const params = page.url.searchParams;
+		untrack(() => {
+			deepLinked = true;
+			const agreement = params.get('agreement');
+			if (agreement) {
+				const u = new URL(page.url);
+				u.pathname = '/world';
+				u.search = new URLSearchParams({ agreement }).toString();
+				void goto(u, { replaceState: true });
+				return;
+			}
+			const flow = params.get('flow');
+			if (flow?.startsWith('energy:')) {
+				const u = new URL(page.url);
+				u.pathname = '/world';
+				u.search = new URLSearchParams({ flow }).toString();
+				void goto(u, { replaceState: true });
+				return;
+			}
+
+			const named = familiesFromParam(params.get('ties')) ?? familiesFromMode(params.get('mode'));
+			if (named) {
+				families = named;
+				familiesLinked = true;
+			}
+
+			const entity = params.get('id');
+			if (entity && (personById.has(entity) || institutionById.has(entity))) {
+				app.selected = entity;
+				return;
+			}
+
+			if (flow) {
+				const parts = flow.split(':');
+				if (parts.length !== 3) return;
+				const [kind, yearStr, iso2] = parts;
+				if ((kind !== 'trade' && kind !== 'debt') || !iso2 || !/^\d{4}$/.test(yearStr)) return;
+				ensureFamily('flows');
+				const prefix = `flow-${kind}-${yearStr}-`;
+				const ofKind = scene.ties.filter((x) => x.id.startsWith(prefix));
+				const isoOf = (id: string) => (institutionById.get(id) as { iso2?: string } | undefined)?.iso2;
+				const seatOf = (id: string) => (institutionById.get(id) as { seat?: string } | undefined)?.seat;
+				const e =
+					ofKind.find((x) => x.id === `${prefix}${iso2}`) ??
+					(kind === 'debt' ? ofKind.find((x) => isoOf(x.rel.to) === iso2) : undefined) ??
+					ofKind.find((x) => x.rel.to === iso2 || seatOf(x.rel.to) === iso2);
+				if (!e) {
+					// Not on this map (outside the top 20, another year, a lane hidden):
+					// the globe owns the card, so the link is never a dead end.
+					const u = new URL(page.url);
+					u.pathname = '/world';
+					u.search = new URLSearchParams({ flow }).toString();
+					void goto(u, { replaceState: true });
+					return;
+				}
+				if (view !== 'map') view = 'map';
+				openTie(e, true);
+				return;
+			}
+
+			const want = params.get('rel');
+			if (!want) return;
+			const rel = ds.relationships.find((r) => r.id === want);
+			if (!rel || !meetsBasis(rel.basis as Basis, app.basisFloor)) return;
+			ensureFamily(familyOf(rel.type));
+			const e = scene.ties.find((x) => x.rel.id === want);
+			if (!e) return;
+			if (view !== 'map') view = 'map';
+			openTie(e, true);
+		});
+	});
+
+	/** Escape closes the card (or compare) before the shell gets to clear the selection. */
+	function onKeyCapture(e: KeyboardEvent) {
+		if (e.key === 'Escape' && compareId) {
+			compareId = null;
+			e.stopPropagation();
+			return;
+		}
+		if (e.key === 'Escape' && pinnedId) {
+			closePinned();
+			e.stopPropagation();
+		}
+	}
+
+	// --- Lane headers and the minimap (screen space) -----------------------------------
+
+	const laneHeaders = $derived.by(() =>
+		scene.lanes
+			.map((layer, i) => {
+				const l = cam.worldToScreen(scene.laneX[i], 0).x;
+				const r = cam.worldToScreen(scene.laneX[i] + scene.laneW[i], 0).x;
+				return { layer, l, r, count: scene.stats.perLane.get(layer) ?? 0 };
+			})
+			.filter((h) => h.r > 44 && h.l < cam.vw - 8)
+			.map((h) => ({
+				...h,
+				left: Math.max(8, Math.min(h.l + 6, cam.vw - 120)),
+				maxWidth: Math.max(88, Math.min(h.r - h.l - 12, cam.vw - Math.max(8, h.l + 6) - 12))
+			}))
+	);
+	const soloed = $derived(app.activeLayers.size === 1);
+
+	const MINI_W = 110;
+	const miniH = $derived(Math.min(150, (scene.height / scene.width) * MINI_W));
+	const miniView = $derived.by(() => {
+		const W = scene.width;
+		const H = scene.height;
+		const wx = -cam.x / cam.k;
+		const wy = -cam.y / cam.k;
+		const x0 = Math.max(0, wx);
+		const y0 = Math.max(0, wy);
+		const w = Math.max(0, Math.min(W, wx + cam.vw / cam.k) - x0);
+		const h = Math.max(0, Math.min(H, wy + cam.vh / cam.k) - y0);
+		return { x: (x0 / W) * MINI_W, y: (y0 / H) * miniH, w: (w / W) * MINI_W, h: (h / H) * miniH };
+	});
+	let miniDragging = false;
+	function miniJump(e: PointerEvent) {
+		const r = (e.currentTarget as SVGSVGElement).getBoundingClientRect();
+		if (r.width < 2 || r.height < 2) return;
+		const fx = (e.clientX - r.left) / r.width;
+		const fy = (e.clientY - r.top) / r.height;
+		cam.alignTo(Math.min(scene.width, Math.max(0, fx * scene.width)), Math.min(scene.height, Math.max(0, fy * scene.height)), 0.5, 0.5);
+	}
+
+	/*
+	 * Wide enough that the legend can sit open beside the first lane without
+	 * covering it. Below this it starts folded, one click away.
+	 */
+	const roomy = new MediaQuery('(min-width: 1800px)', false);
+	const LEGEND_REL_TYPES = ['appointment', 'family', 'business', 'prosecution', 'reported-influence', 'party'];
+
+	// --- Click-away: one level of the stack per click ------------------------------------
+
+	function onCanvasBgClick(e: MouseEvent) {
+		const t = e.target as Element | null;
+		if (t && t.closest('.node, .hit, .box, .vlane, .edgecard, .viewnav, .legend, .minimap, .offmap')) return;
+		hoverEdge = null;
+		app.hovered = null;
+		if (pinnedId) pinnedId = null;
+		else if (app.selected) {
+			app.selected = null;
+			compareId = null;
+		}
+	}
+
+	// --- Display helpers -------------------------------------------------------------------
+
+	function groupLabel(layer: Layer, group: string): string {
+		if (!group) return t('network.outside');
+		if (group === 'Other') return t('network.group.other');
+		const h = (ds.meta as { groupHeaders?: Record<string, Record<string, { fr: string | null; ar: string | null }>> }).groupHeaders?.[layer]?.[group];
+		if (app.locale === 'fr' && h?.fr) return h.fr;
+		if (app.locale === 'ar' && h?.ar) return h.ar;
+		return group;
+	}
+
+	/** Authored ties touching a foreign counterparty right now: the register row's load. */
+	const tiesOf = $derived.by(() => {
+		const m = new Map<string, number>();
+		for (const e of scene.ties) {
+			if (e.measurement) continue;
+			m.set(e.rel.from, (m.get(e.rel.from) ?? 0) + 1);
+			m.set(e.rel.to, (m.get(e.rel.to) ?? 0) + 1);
+		}
+		return m;
+	});
+
+	/** The chamber's three largest groups, named on the box; the rest are counted. */
+	function chamberCaption(u: Unit): { name: string; n: number; color: string }[] {
+		return (u.chamber?.groups ?? [])
+			.filter((g) => g.id)
+			.slice(0, 3)
+			.map((g) => ({ name: entityName(g.id), n: g.n, color: g.color }));
+	}
+
+	let tableOpen = $state(false);
+
+	const BASIS_RANK: Basis[] = ['documented', 'reported', 'inferred', 'unsubstantiated'];
+	const tableTies = $derived(
+		[...scene.ties].sort(
+			(a, b) =>
+				Number(b.crossLayer) - Number(a.crossLayer) ||
+				BASIS_RANK.indexOf((a.rel.basis ?? 'documented') as Basis) - BASIS_RANK.indexOf((b.rel.basis ?? 'documented') as Basis) ||
+				a.id.localeCompare(b.id)
+		)
+	);
 </script>
 
 <svelte:window onkeydowncapture={onKeyCapture} />
 
-<div class="network">
+<div class="network" class:phone={compact.current}>
 	<div class="toolbar">
-		<span class="eyebrow">{t('nav.network')}</span>
-		<AboutView hint={t('network.hint')} />
-		<div class="stats mono">
-			<span>{stats.nodes} {t('network.live')}</span>
-			<!--
-				The dormant count is the honest replacement for the dot matrix. Dropping
-				four hundred inactive nodes from the overview makes the map readable; not
-				saying they exist would make it a different map.
-			-->
-			{#if stats.dormant && cam.zoomProgress <= 0.32}
-				<Tooltip content={t('network.dormant.hint')}>
-					<span class="dormant">
-						{stats.dormant} {t('network.dormant')}
-					</span>
-				</Tooltip>
-			{/if}
-			<span>{stats.edges} {t('network.edges')}</span>
-			<span class="bridge">{stats.bridges} {t('network.cross')}</span>
-			{#if stats.reported}<span class="rep">{stats.reported} {t('network.reported')}</span>{/if}
-			{#if stats.withheld > 0}
-				<Tooltip content={t('network.withheld.hint')}>
-					<span class="withheld">
-						{stats.withheld} {t('network.withheld')}
-					</span>
-				</Tooltip>
-			{/if}
+		<div class="tb-row">
+			<span class="eyebrow">{t('nav.network')}</span>
+			<AboutView hint={t('network.hint')} />
 		</div>
-		<div class="modes">
-			<!--
-				Quiet is the intensity dial. The map defaults to showing everything it can,
-				which is honest and can be a lot; one toggle withholds the dormant
-				scaffolding so the live graph reads alone.
-			-->
-			<Tooltip content={t('network.quiet.hint')}>
-				<button
-					class="quiet"
-					class:on={app.quiet}
-					aria-pressed={app.quiet}
-					onclick={() => (app.quiet = !app.quiet)}
-				>
-					<span class="dot" aria-hidden="true"></span>
-					{t('network.quiet')}
-				</button>
-			</Tooltip>
-			<!--
-				Edge modes (spec §10/§13): all edges, the influence routes, or the
-				corporate ownership graph. Influence is the default lens: the full
-				graph (60 live + 296 dormant nodes, 157 edges) overwhelms on first
-				sight, while the influence routes are the finding the Network exists
-				to show. Quiet stays as a secondary dimmer, not a headline control.
-			-->
+		<div class="tb-row controls">
 			<Segmented
 				options={[
-					{ value: 'all', label: t('network.mode.all'), title: t('network.mode.all.hint') },
-					{ value: 'influence', label: t('network.mode.influence'), title: t('network.mode.influence.hint') },
-					{ value: 'ownership', label: t('network.mode.ownership'), title: t('network.mode.ownership.hint') }
+					{ value: 'map', label: t('network.view.map'), title: t('network.view.map.hint') },
+					{ value: 'matrix', label: t('network.view.matrix'), title: t('network.view.matrix.hint') }
 				]}
-				value={mode}
-				onchange={(v) => {
-					mode = v as typeof mode;
-					syncModeUrl(mode);
-				}}
+				value={view}
+				onchange={(v) => setView(v as 'map' | 'matrix')}
 				size="sm"
+				label={t('network.view')}
 			/>
+			<div class="stats mono" aria-live="polite">
+				<span>{tf('network.stat.office', { n: scene.stats.inOffice })}</span>
+				<span>{tf('network.stat.ties', { n: scene.stats.ties })}</span>
+				<span class="bridge">{tf('network.stat.cross', { n: scene.stats.crossLayer })}</span>
+				{#if notShownTotal}
+					<Tooltip content={t('network.notshown.hint')}>
+						<span class="withheld">{tf('network.stat.notshown', { n: notShownTotal })}</span>
+					</Tooltip>
+				{/if}
+			</div>
+		</div>
+		<div class="families" role="group" aria-label={t('network.families')}>
+			<span class="fam-label">{t('network.families')}</span>
+			{#each FAMILIES as f (f)}
+				<button
+					class="fam"
+					class:on={families.has(f)}
+					aria-pressed={families.has(f)}
+					title={t('network.family.' + f + '.hint')}
+					onclick={() => toggleFamily(f)}
+				>
+					<i class="fam-dot" aria-hidden="true"></i>
+					{t('network.family.' + f)}
+					<b class="mono">{familyCount.get(f) ?? 0}</b>
+				</button>
+			{/each}
 		</div>
 	</div>
 
-	<!--
-		The camera surface.
-
-		tabindex + role="application" because this is a navigable space, not a picture:
-		once focused it answers arrows, +/- and 0. The nodes inside keep their own focus
-		and labels, and the table below remains the complete non-visual equivalent —
-		none of that is replaced by making the canvas movable.
-
-		The lint rules below object to a focusable element with a non-interactive role
-		and to its click listener, and they are wrong here: "application" is the ARIA
-		role for a widget that handles its own keys, and it is useless without being
-		focusable. The click is the dismissal gesture; its keyboard equivalent is
-		Escape (handled in onKeyCapture and the shell), so nothing keyboard-only
-		loses. The alternative is to leave arrow-key panning and click-away to mouse
-		users only, which is a worse outcome than a suppressed warning.
-	-->
-	<!-- svelte-ignore a11y_no_noninteractive_tabindex, a11y_click_events_have_key_events, a11y_no_noninteractive_element_interactions -->
-	<div
-		class="canvas"
-		use:navigable={{ cam }}
-		tabindex="0"
-		role="application"
-		aria-label="{t('nav.network')} — {t('view.hint')}"
-		data-cursor="grab"
-		class:moving={cam.moving}
-		onclick={onCanvasBgClick}
-		oncontextmenu={(e) => e.preventDefault()}
-	>
-		<svg viewBox="0 0 {cam.vw} {cam.vh}" role="presentation">
-			<defs>
-				<!-- Direction arrowhead. Painted with context-stroke so it inherits
-				     whatever colour the edge carries; sized in strokeWidth units so it
-				     stays proportional to the hairline it rides on. -->
-				<marker
-					id="dt-arrow"
-					viewBox="0 0 8 8"
-					refX="7"
-					refY="4"
-					markerWidth="3.2"
-					markerHeight="3.2"
-					orient="auto-start-reverse"
-				>
-					<path d="M0,0 L8,4 L0,8 z" fill="context-stroke" />
-				</marker>
-			</defs>
-			<g transform={cam.transform}>
+	<div class="stage">
+		{#if !ready}
+			<!-- Prerendered and pre-hydration: the stage waits for the client to choose. -->
+		{:else if view === 'matrix'}
+			<NetworkMatrix
+				{scene}
+				onpick={(e) => openTie(e)}
+				onshow={(e) => {
+					setView('map');
+					openTie(e, true);
+				}}
+			/>
+		{:else}
 			<!--
-				The dismissal surface: a full-canvas transparent rect under everything.
-				Only a click that reaches it is a click-away. Nodes, hit twins and the
-				HTML overlays sit above it, so they keep their own behaviour; this rect
-				receives exactly the clicks that hit nothing.
+				The camera surface. role="application" because it answers its own keys
+				(arrows, +/-, 0) once focused; every entity on it is a real button, and
+				the table below is the complete text equivalent.
 			-->
-			<rect x="0" y="0" width={W} height={H} fill="transparent" class="bg" />
-
-			<!-- Gutter channels: the vertical strips where cross-layer traffic runs. -->
-			{#each gutters as _, gi (gi)}
-				<rect
-					x={laneX(gi + 1, layout.laneW) - GUTTER_W}
-					y="0"
-					width={GUTTER_W}
-					height={H}
-					class="gutter-strip"
-				/>
-				<!-- The volume thermometer: left half wears the left lane's hue,
-				     right half the right lane's, opacity scaled by traffic — the
-				     pair is identified by colour, the density by glow. -->
-				<rect
-					x={laneX(gi + 1, layout.laneW) - GUTTER_W}
-					y="0"
-					width={GUTTER_W / 2}
-					height={H}
-					fill={LAYER_COLOR[layout.lanes[gi]]}
-					opacity={gutterVolume[gi]}
-				/>
-				<rect
-					x={laneX(gi + 1, layout.laneW) - GUTTER_W / 2}
-					y="0"
-					width={GUTTER_W / 2}
-					height={H}
-					fill={LAYER_COLOR[layout.lanes[gi + 1]]}
-					opacity={gutterVolume[gi]}
-				/>
-				<line
-					x1={gutterCenter(gi, layout.laneW)}
-					x2={gutterCenter(gi, layout.laneW)}
-					y1="0"
-					y2={H}
-					class="gutter-line"
-				/>
-			{/each}
-
-			<!-- Lane backgrounds and headers -->
-			{#each layout.lanes as layer, i (layer)}
-				<g>
-					<rect
-						x={laneX(i, layout.laneW)}
-						y="0"
-						width={layout.laneW}
-						height={H}
-						fill={LAYER_COLOR[layer]}
-						opacity={layer === 'foreign' ? 0.048 : 0.028}
-					/>
-					<line
-						x1={laneX(i, layout.laneW)}
-						x2={laneX(i, layout.laneW)}
-						y1="0"
-						y2={H}
-						stroke="var(--border-subtle)"
-						stroke-width="1"
-					/>
-				</g>
-			{/each}
-
-			<!-- Group band backgrounds -->
-			{#each layout.groupBands as band (band.layer + band.group)}
-				{@const laneIdx = layout.lanes.indexOf(band.layer)}
-				{#if laneIdx >= 0}
-					<!-- Subtle band background spanning header + content -->
-					<rect
-						x={laneX(laneIdx, layout.laneW) + 4}
-						y={band.headerY - 6}
-						width={layout.laneW - 8}
-						height={band.contentBottom - band.headerY + 8}
-						fill={LAYER_COLOR[band.layer]}
-						opacity="0.035"
-						rx="5"
-					/>
-					<!-- The zone's top hairline: a band is a section of the lane,
-					     and sections have rules. The foreign register is exempt: its
-					     section head carries its own rule underneath, and stacking the
-					     band line above it drew a double stripe around every title. -->
-					{#if band.layer !== 'foreign'}
-						<line
-							x1={laneX(laneIdx, layout.laneW) + 4}
-							x2={laneX(laneIdx, layout.laneW) + layout.laneW - 4}
-							y1={band.headerY - 5}
-							y2={band.headerY - 5}
-							class="band-line"
-							style:--c={LAYER_COLOR[band.layer]}
-						/>
-					{/if}
-					<!-- The foreign register's spine: one rail the section's node
-					     squares sit on, so a row's marker is visually moored to the
-					     section rather than floating at the end of its name. -->
-					{#if band.layer === 'foreign'}
-						<line
-							x1={laneX(laneIdx, layout.laneW) + layout.laneW * REG_SPINE_FRAC}
-							x2={laneX(laneIdx, layout.laneW) + layout.laneW * REG_SPINE_FRAC}
-							y1={band.contentTop}
-							y2={band.contentBottom}
-							class="register-spine"
-							style:--c={LAYER_COLOR[band.layer]}
-						/>
-					{/if}
-				{/if}
-			{/each}
-
-			<!-- Edges: inactive first so active ones sit on top. A pinned edge is
-			     drawn with the active pass even when its own interval or endpoint
-			     liveness would keep it idle: the reader opened it by URL, and a
-			     card over a line the map does not mark is the failure the share
-			     link exists to prevent. -->
-			<g class="edges">
-				{#each shownEdges.filter((e) => !e.active && !app.quiet && e.id !== pinnedId) as e (e.id)}
-					{@const r = routes.get(e.id)}
-					{#if r}
-						{#if !focus}
-							<path d={r.d} class="edge idle" />
-						{:else if rings && rings.one.has(e.rel.from) && rings.one.has(e.rel.to)}
-							<path
-								d={r.d}
-								class="edge"
-								class:measurement={isMeasurementEdge(e)}
-								class:cross={e.crossLayer}
-								class:reported={e.kind === 'reported'}
-								class:alleged={e.kind === 'alleged'}
-								class:hot={hoverEdge === e.id}
-								class:pinned={pinnedId === e.id}
-								class:arrow={focus && cam.zoomProgress > 0.25}
-								stroke={edgeColor(e)}
-								stroke-dasharray={edgeDash(e)}
-								stroke-opacity={edgeOpacity(e, 0.5)}
-							/>
-						{/if}
-					{/if}
-				{/each}
-
-				{#each shownEdges.filter((e) => e.active || e.id === pinnedId) as e (e.id)}
-					{@const r = routes.get(e.id)}
-					{#if r}
-						<!-- The source-layer hairline: a bridge's identity tag. The
-						     bridge colour says "crosses layers"; the hairline says which
-						     pair. Only outside the focused scope — a focused edge already
-						     recolours to its relationship type. -->
-						{#if e.crossLayer && !isMeasurementEdge(e) && !(focus && (e.rel.from === focus || e.rel.to === focus))}
-							<path
-								d={r.d}
-								class="hairline"
-								stroke={LAYER_COLOR[e.a.layer]}
-								stroke-opacity={BASIS_OPACITY[e.rel.basis as Basis] * edgeEmphasis(e) * 0.5}
-							/>
-						{/if}
-						<path
-							d={r.d}
-							class="edge"
-							class:measurement={isMeasurementEdge(e)}
-							class:cross={e.crossLayer}
-							class:reported={e.kind === 'reported'}
-							class:alleged={e.kind === 'alleged'}
-							class:hot={hoverEdge === e.id}
-							class:pinned={pinnedId === e.id}
-							class:arrow={focus && (e.rel.from === focus || e.rel.to === focus) && cam.zoomProgress > 0.25}
-							stroke={edgeColor(e)}
-							stroke-dasharray={edgeDash(e)}
-							stroke-opacity={edgeOpacity(e, edgeEmphasis(e))}
-							stroke-width={edgeWidth(e, (e as { multi?: number }).multi)}
-						/>
-					{/if}
-				{/each}
-			</g>
-
-			<!--
-				Ghost arcs: dormant people tied faintly to their last-held
-				institution. "Who is out of office, and where they left the
-				structure" — the scaffolding the overview keeps honest.
-			-->
-			<g class="ghosts">
-				{#each ghostArcs as arc (arc.a.id)}
-					{@const r = routeEdge(arc.a, arc.b, layout.laneW)}
-					<path d={r.d} class="ghost" />
-				{/each}
-			</g>
-
-			<!--
-				Hit targets.
-
-				A 1.1px stroke is a pointer-precision target and effectively untouchable
-				with a finger, so every reachable edge gets an invisible fat twin. These sit
-				above the visible edges and below the nodes: a node under a line must still
-				win the tap, because the node is the more specific thing the reader aimed at.
-			-->
-			<g class="hits">
-				{#each shownEdges.filter((e) => e.active || (focus && (e.rel.from === focus || e.rel.to === focus))) as e (e.id)}
-					{@const r = routes.get(e.id)}
-					{#if r}
-						<path
-							d={r.dh}
-							class="hit"
-							onmouseenter={() => (hoverEdge = e.id)}
-							onmouseleave={() => (hoverEdge = null)}
-							onpointerdown={() => startPress(() => (hoverEdge = e.id))}
-							onpointerup={() => clearPress()}
-							onpointerleave={() => clearPress()}
-							onclick={() => {
-								if (pressed) return;
-								pinnedId = pinnedId === e.id ? null : e.id;
-							}}
-							role="presentation"
-						/>
-					{/if}
-				{/each}
-			</g>
-
-			<!-- Nodes -->
-			<g class="nodes">
-				{#each visibleNodes as n (n.id)}
-					{@const live = slice.live.has(n.id)}
-					{@const isFocus = focus === n.id}
-					{@const ringClass = nodeRingClass(n)}
-					{@const isAnchor = n.kind === 'institution' && (n.type === 'foreign-state' || n.type === 'international-organisation')}
-					{@const connected = focus ? (rings?.one.has(n.id) ?? false) : live}
-					{@const rr = Math.max(n.r, minWorldR)}
-					// A foreign register marker fills by how many authored ties it
-					// carries now, so the load is visible even where the meter column
-					// is dropped. The faintest fill still reads as a marker.
-					{@const fl = n.layer === 'foreign' ? foreignLoad.get(n.id) : undefined}
-				<g
-					class="node"
-					class:focus={isFocus}
-					class:r-one={ringClass === 'r-one'}
-					class:r-two={ringClass === 'r-two'}
-					class:r-rest={ringClass === 'r-rest'}
-					class:dormant={ringClass === 'dormant'}
-					class:anchor={isAnchor && !live}
-					transform="translate({n.x},{n.y})"
-						style:--enter-delay={n.y * 0.35 + 'ms'}
-						style:--rf={isFocus || ringClass === 'r-one' ? 1 : rosterFade}
-						role="button"
-						tabindex={live ? 0 : -1}
-						aria-label="{n.name} — {layerLabel(n.layer)}"
-						onpointerdown={() => startPress(() => (app.hovered = n.id))}
-						onpointerup={() => clearPress()}
-						onpointerleave={() => clearPress()}
-						onclick={(e) => {
-							if (pressed) {
-								e.preventDefault();
-								return;
-							}
-							// Shift-click sets the compare target — additive, never a
-							// replacement of the primary selection. Shift-clicking the
-							// same node again exits compare.
-							if (e.shiftKey) {
-								compareId = compareId === n.id ? null : n.id;
-								return;
-							}
-							// A map click is a selection the reader is already looking
-							// at: fly gently (see the fly effect), and let the flight
-							// own the resize instead of the keep-centre pan.
-							cam.skipResizePan = true;
-							selectFly = 'gentle';
-							app.select(n.id);
-						}}
-						onkeydown={(e) => {
-							if (e.key === 'Enter' || e.key === ' ') {
-								e.preventDefault();
-								app.select(n.id);
-							}
-						}}
-						onmouseenter={() => (app.hovered = n.id)}
-						onmouseleave={() => (app.hovered = null)}
-						oncontextmenu={(e) => e.preventDefault()}
-					>
-					{#if isFocus}
-						<!-- The focus halo: the one thing that may sit under the node
-						     itself, so the reader can find their subject in a sea of
-						     five hundred without it being covered by anything. -->
-						{#if n.kind === 'institution'}
+			<!-- svelte-ignore a11y_no_noninteractive_tabindex, a11y_click_events_have_key_events, a11y_no_noninteractive_element_interactions -->
+			<div
+				class="canvas lod-{lod}"
+				class:moving={cam.moving}
+				class:focusing={!!(near || compare)}
+				bind:this={canvasEl}
+				use:navigable={{ cam }}
+				tabindex="0"
+				role="application"
+				aria-label="{t('nav.network')} — {t('view.hint')}"
+				data-cursor="grab"
+				onclick={onCanvasBgClick}
+				oncontextmenu={(e) => e.preventDefault()}
+			>
+				<!-- Under the boxes: lanes, gutters, every tie at rest, and the hit twins. -->
+				<svg class="layer under" viewBox="0 0 {cam.vw} {cam.vh}" role="presentation">
+					<g transform={cam.transform}>
+						<rect x="0" y="0" width={scene.width} height={scene.height} fill="transparent" class="bg" />
+						{#each scene.lanes as layer, i (layer)}
 							<rect
-								x={-rr - 5}
-								y={-rr - 5}
-								width={(rr + 5) * 2}
-								height={(rr + 5) * 2}
-								rx="3"
-								class="halo"
-								vector-effect="non-scaling-stroke"
+								x={scene.laneX[i] - 6}
+								y="0"
+								width={scene.laneW[i] + 12}
+								height={scene.height}
+								rx="10"
+								class="lane-bg"
+								style:--c={LAYER_COLOR[layer]}
 							/>
-						{:else}
-							<circle r={rr + 5} class="halo" vector-effect="non-scaling-stroke" />
-						{/if}
-					{/if}
-					{#if n.kind === 'institution'}
-						<rect
-							x={-rr}
-							y={-rr}
-							width={rr * 2}
-							height={rr * 2}
-							rx="1.5"
-							fill={connected || fl ? LAYER_COLOR[n.layer] : 'var(--surface-panel)'}
-							fill-opacity={fl ? 0.14 + 0.72 * fl.pct : 1}
-							stroke={LAYER_COLOR[n.layer]}
-							stroke-width={isFocus ? 2 : 1.2}
-							vector-effect="non-scaling-stroke"
-						/>
-					{:else}
-						<circle
-							r={rr}
-							fill={connected ? LAYER_COLOR[n.layer] : 'var(--surface-panel)'}
-							stroke={LAYER_COLOR[n.layer]}
-							stroke-width={isFocus ? 2 : 1.2}
-							vector-effect="non-scaling-stroke"
-						/>
-						{/if}
-					{#if showSparklines && live}
-						<!-- The tenure strip: when this entity held office, on the
-						     1956→2026 axis. Time-invariant — it is the object's history,
-						     not its state at the playhead. -->
-						{@const segs = sparkSegments.get(n.id) ?? []}
-						{#if segs.length}
-							<g class="spark" transform="translate({-SPARK_W / 2},{rr + 4})">
-								<!-- Index key, not coordinates: two positions with the
-								     same clamped span would otherwise collide and
-								     Svelte's keyed-each duplicate check aborts the
-								     whole render pass. Segments are static per node. -->
-								{#each segs as seg, si (si)}
-									<rect
-										x={seg.x}
-										y="0"
-										width={seg.w}
-										height="3"
-										rx="1"
-										fill={LAYER_COLOR[n.layer]}
-										opacity="0.75"
+						{/each}
+						{#each scene.gutters as gx, gi (gi)}
+							<rect x={gx} y="0" width={GEO.GUT} height={scene.height} class="gutter-strip" />
+						{/each}
+						<g class="edges">
+							{#each scene.ties as e (e.id)}
+								{#if !topIds.has(e.id)}
+									{@const r = routes.get(e.id)}
+									{#if r}
+										<path
+											d={r.d}
+											class="edge"
+											class:measurement={e.measurement}
+											class:cross={e.crossLayer}
+											class:bundle={!!e.bundle}
+											class:dim={!!(near || compare)}
+											stroke={edgeColor(e, false)}
+											stroke-dasharray={edgeDash(e)}
+											stroke-opacity={edgeOpacity(e)}
+											stroke-width={edgeWidth(e)}
+										/>
+									{/if}
+								{/if}
+							{/each}
+						</g>
+						<!--
+							Hit targets: a hairline is untouchable with a finger, so every tie
+							gets a fat invisible twin. They sit under the boxes, so a tap on
+							a seat always wins over a line passing behind it.
+						-->
+						<g class="hits">
+							{#each scene.ties as e (e.id)}
+								{@const r = routes.get(e.id)}
+								{#if r}
+									<path
+										d={r.d}
+										class="hit"
+										role="presentation"
+										onmouseenter={(ev) => {
+											hoverEdge = e.id;
+											tipAt = pointerAt(ev);
+										}}
+										onmouseleave={() => (hoverEdge = null)}
+										onpointerdown={() => startPress(() => (hoverEdge = e.id))}
+										onpointerup={() => clearPress()}
+										onpointerleave={() => clearPress()}
+										onclick={() => {
+											if (pressed) return;
+											if (e.bundle) openTie(e);
+											else pinnedId = pinnedId === e.id ? null : e.id;
+										}}
 									/>
-								{/each}
-							</g>
-						{/if}
-					{/if}
+								{/if}
+							{/each}
+						</g>
 					</g>
-				{/each}
-			</g>
-			</g>
-		</svg>
+				</svg>
 
-		<!--
-			Hover names the connection; clicking opens the record.
+				<!--
+					The world: boxes, seats and chips, in one HTML layer that shares the
+					camera's transform. Pointer events pass through the layer itself and
+					land only on what it draws.
+				-->
+				<div
+					class="world"
+					class:rtl
+					style:transform="translate({cam.x}px, {cam.y}px) scale({cam.k})"
+					style:width="{scene.width}px"
+					style:height="{scene.height}px"
+					onpointerover={onWorldOver}
+					onpointerout={onWorldOut}
+					onpointerdown={(e) => {
+						const el = (e.target as Element).closest?.('[data-id]') as HTMLElement | null;
+						if (el?.dataset.id) startPress(() => (app.hovered = el.dataset.id!));
+					}}
+					onpointerup={clearPress}
+					onpointercancel={clearPress}
+					role="presentation"
+				>
+					{#each scene.heads as h (h.key)}
+						<div
+							class="ghead"
+							class:outside={!h.group}
+							style:transform="translate({h.x}px, {h.y}px)"
+							style:width="{scene.laneW[scene.lanes.indexOf(h.layer)]}px"
+							style:--c={LAYER_COLOR[h.layer]}
+						>
+							<span>{groupLabel(h.layer, h.group)}</span><i class="mono">{h.count}</i>
+						</div>
+					{/each}
 
-			Two levels rather than one, because hovering a line while tracing it should
-			not throw a 320px panel over the map. The tip is deliberately thin — who to
-			who, and on what basis — and suppressed once a card is open, where it would
-			just repeat it.
-		-->
-		{#if hoveredNode && hoverTipAt && !app.selected}
-			<!-- The hover power-card: who the pointer is over, and what they hold
-			     at this instant. Transient — reading it commits to nothing; the
-			     selection that opens the inspector is a click away. -->
-			<div class="node-tip" style:left="{hoverTipAt.x}px" style:top="{hoverTipAt.y}px" aria-hidden="true">
-				<strong>{hoverName}</strong>
-				{#if hoverPost}
-					<span class="tip-post">{hoverPost.role}<i> · </i>{hoverPost.inst}</span>
-				{:else}
-					<span class="tip-post muted">{t('network.notnow')}</span>
+					{#each scene.units as u (u.key)}
+						{#if u.kind === 'chip' || u.kind === 'register'}
+							<button
+								class="node chip k-{u.kind}"
+								class:dim={dimmed(u.id)}
+								class:focus={app.selected === u.id}
+								class:hot={app.hovered === u.id}
+								data-id={u.id}
+								style:transform="translate({u.x}px, {u.y}px)"
+								style:width="{u.w}px"
+								style:height="{u.h}px"
+								style:--c={LAYER_COLOR[u.layer]}
+								aria-label="{entityName(u.id!)} — {layerLabel(u.layer)}"
+								onclick={(e) => selectOnMap(u.id!, e)}
+							>
+								<i class="sq" class:tied={(tiesOf.get(u.id!) ?? 0) > 0}></i>
+								<span class="nm">{entityName(u.id!)}</span>
+								{#if u.kind === 'register' && tiesOf.get(u.id!)}<b class="mono">{tiesOf.get(u.id!)}</b>{/if}
+							</button>
+						{:else}
+							<div
+								class="box k-{u.kind}"
+								class:dim={unitDimmed(u)}
+								class:focus={!!u.id && app.selected === u.id}
+								class:list={u.cols === 1 && u.kind === 'office'}
+								style:transform="translate({u.x}px, {u.y}px)"
+								style:width="{u.w}px"
+								style:height="{u.h}px"
+								style:--c={LAYER_COLOR[u.layer]}
+							>
+								{#if u.id}
+									<button
+										class="node boxhead"
+										class:hot={app.hovered === u.id}
+										data-id={u.id}
+										aria-label="{entityName(u.id)} — {layerLabel(u.layer)}"
+										onclick={(e) => selectOnMap(u.id!, e)}
+									>
+										<span class="title">{entityName(u.id)}</span>
+										<span class="count mono">
+											{#if u.chamber}
+												{tf('network.chamber.short', { n: u.chamber.named, seats: u.chamber.seats })}
+											{:else if u.seats.length > 1}
+												{u.seats.length}
+											{/if}
+										</span>
+									</button>
+								{/if}
+								{#if u.chamber}
+									<!-- The seat bar: the chamber's composition by group, largest first,
+									     in the hemicycle's palette. Hollow where seats are not named. -->
+									<div class="seatbar" title={chamberCaption(u).map((g) => `${g.name} ${g.n}`).join(' · ')}>
+										<div class="bar">
+											{#each u.chamber.groups as g (g.id || 'none')}
+												<i style:flex-grow={g.n} style:background={g.color}></i>
+											{/each}
+											{#if u.chamber.seats > u.chamber.named && !u.chamber.split}
+												<i class="unnamed" style:flex-grow={u.chamber.seats - u.chamber.named}></i>
+											{/if}
+										</div>
+										<div class="bar-cap">
+											{#each chamberCaption(u) as g (g.name)}
+												<span><i style:background={g.color}></i>{g.name} <b class="mono">{g.n}</b></span>
+											{/each}
+										</div>
+									</div>
+								{/if}
+								{#each u.seats as s (s.key)}
+									{@const basis = (s.position?.basis ?? 'documented') as Basis}
+									<button
+										class="node seat b-{basis}"
+										class:secondary={!s.primary}
+										class:outside={!s.position && u.kind === 'actors'}
+										class:dim={dimmed(s.person)}
+										class:focus={app.selected === s.person}
+										class:hot={app.hovered === s.person}
+										data-id={s.person}
+										style:transform="translate({s.x - u.x}px, {s.y - u.y}px)"
+										style:width="{s.w}px"
+										aria-label="{entityName(s.person)}{s.position ? ' — ' + postTitle(s.position) : ''}"
+										onclick={(e) => selectOnMap(s.person, e)}
+									>
+										<i class="dot"></i>
+										<span class="nm">{entityName(s.person)}</span>
+										{#if s.position && u.cols === 1 && u.kind === 'office'}
+											<span class="role">{postTitle(s.position)}</span>
+										{/if}
+									</button>
+								{/each}
+							</div>
+						{/if}
+					{/each}
+				</div>
+
+				<!-- Over the boxes: the ties the reader is looking at, never hidden by a box. -->
+				<svg class="layer over" viewBox="0 0 {cam.vw} {cam.vh}" role="presentation" aria-hidden="true">
+					<defs>
+						<marker id="dt-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="3.4" markerHeight="3.4" orient="auto-start-reverse">
+							<path d="M0,0 L8,4 L0,8 z" fill="context-stroke" />
+						</marker>
+					</defs>
+					<g transform={cam.transform}>
+						{#each topTies as e (e.id)}
+							{@const r = routes.get(e.id)}
+							{#if r}
+								<path d={r.d} class="halo-line" stroke-width={edgeWidth(e) + 3} />
+								<path
+									d={r.d}
+									class="edge top"
+									class:measurement={e.measurement}
+									class:hot={hoverEdge === e.id}
+									class:pinned={pinnedId === e.id}
+									stroke={edgeColor(e, true)}
+									stroke-dasharray={edgeDash(e)}
+									stroke-opacity={Math.min(1, edgeOpacity(e) + 0.15)}
+									stroke-width={edgeWidth(e) + (pinnedId === e.id || hoverEdge === e.id ? 0.8 : 0.3)}
+									marker-end={lod > 0 && !e.measurement ? 'url(#dt-arrow)' : undefined}
+								/>
+							{/if}
+						{/each}
+					</g>
+				</svg>
+
+				<!-- Lane headers, pinned to the top of the canvas. -->
+				<div class="vlayer" data-no-pan>
+					{#each laneHeaders as h (h.layer)}
+						<button
+							class="vlane"
+							class:solo={soloed}
+							tabindex="-1"
+							style:left="{h.left}px"
+							style:max-width="{h.maxWidth}px"
+							style:--c={LAYER_COLOR[h.layer]}
+							title="{layerLabel(h.layer)} — {soloed ? t('network.lane.all') : t('network.lane.solo')}"
+							onclick={() => (soloed ? app.allLayers() : app.soloLayer(h.layer))}
+						>
+							{layerLabel(h.layer)}
+							{#if h.count}<b>{h.count}</b>{/if}
+						</button>
+					{/each}
+				</div>
+
+				{#if hoverInfo && tipAt && !app.selected}
+					<div class="node-tip" style:left="{Math.min(tipAt.x + 14, cam.vw - 240)}px" style:top="{Math.min(tipAt.y + 16, cam.vh - 70)}px" aria-hidden="true">
+						<strong>{hoverInfo.name}</strong>
+						{#if hoverInfo.line}<span class="tip-post">{hoverInfo.line}</span>{/if}
+						{#if hoverInfo.ties}<span class="tip-ties mono">{tf('network.tip.ties', { n: hoverInfo.ties })}</span>{/if}
+					</div>
+				{/if}
+
+				{#if hoveredTie && tipAt}
+					<div class="edge-tip" style:left="{Math.min(tipAt.x + 14, cam.vw - 300)}px" style:top="{Math.min(tipAt.y + 16, cam.vh - 90)}px" aria-hidden="true">
+						<span class="verb">{hoveredTie.bundle ? tf('network.bundle.label', { n: hoveredTie.bundle }) : relLabel(hoveredTie.rel.type)}</span>
+						<strong>{entityName(hoveredTie.rel.from)} → {entityName(hoveredTie.rel.to)}</strong>
+						<div class="tip-meta">
+							{#if !hoveredTie.measurement}
+								<Chip size="xs" dot tint="var(--basis-{hoveredTie.rel.basis ?? 'documented'})">
+									{basisLabel((hoveredTie.rel.basis ?? 'documented') as Basis)}
+								</Chip>
+							{/if}
+							{#if hoveredTie.crossLayer}
+								<Chip variant="outline" size="xs" tint="var(--bridge)">{t('network.legend.crosses')}</Chip>
+							{/if}
+							<span class="tip-cta">{hoveredTie.bundle ? t('network.bundle.open') : t('network.clickopen')}</span>
+						</div>
+					</div>
+				{/if}
+
+				{#if compare}
+					<div class="compare-banner" data-no-pan>
+						<span class="cmp-title">
+							{format(app.locale, 'network.compare.title', { a: entityName(compare.a), b: entityName(compare.b) })}
+						</span>
+						<span class="cmp-n">{format(app.locale, 'network.compare.common', { n: compare.common.size })}</span>
+						<button class="cmp-exit mono" onclick={() => (compareId = null)}>{t('network.compare.exit')}</button>
+					</div>
+				{/if}
+
+				{#if offMap}
+					<div class="offmap" data-no-pan role="status">
+						<span>{tf('network.offmap', { name: entityName(offMap), date: formatDate(app.t, 'day') })}</span>
+						<button class="mono" onclick={() => (app.selected = null)}>{t('network.clear')}</button>
+					</div>
+				{/if}
+
+				<div class="viewnav">
+					<NavControls {cam} label={t('nav.network')} />
+					{#if focus}
+						<button
+							class="clear-focus mono"
+							data-no-pan
+							onclick={() => {
+								pinnedId = null;
+								app.hovered = null;
+								app.selected = null;
+							}}
+						>
+							{t('network.clear')}
+						</button>
+					{/if}
+				</div>
+
+				<details class="legend" data-no-pan open={!compact.current && roomy.current}>
+					<summary aria-label={t('network.legend')}>
+						<svg viewBox="0 0 14 14" width="12" height="12" aria-hidden="true"
+							><path d="M2 4h10M2 7h10M2 10h6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" /></svg
+						>
+						<span>{t('network.legend')}</span>
+					</summary>
+
+					<div class="lsec">{t('network.legend.reading')}</div>
+					<div class="lgrid">
+						<span class="lrow"><i class="lg-box"></i>{t('network.legend.box')}</span>
+						<span class="lrow"><i class="lg-dot"></i>{t('network.legend.seat')}</span>
+						<span class="lrow"><i class="lg-dot hollow"></i>{t('network.legend.outside')}</span>
+						<span class="lrow"><i class="lg-bar"></i>{t('network.legend.chamber')}</span>
+						<span class="lrow"><i class="lg-chip"></i>{t('network.legend.chip')}</span>
+					</div>
+
+					<div class="lsec">{t('network.legend.basis')}</div>
+					<div class="lgrid">
+						{#each BASIS_ORDER as b (b)}
+							<span class="lrow">
+								<svg width="22" height="6" aria-hidden="true"
+									><line x1="0" y1="3" x2="22" y2="3" stroke={BASIS_COLOR[b]} stroke-opacity={BASIS_OPACITY[b]} stroke-width="1.4" stroke-dasharray={DASH[b]} /></svg
+								>
+								{t('basis.' + b)}
+							</span>
+						{/each}
+						<span class="lrow">
+							<svg width="22" height="6" aria-hidden="true"><line x1="0" y1="3" x2="22" y2="3" stroke="var(--bridge)" stroke-width="2" /></svg>
+							{t('network.legend.crosses')}
+						</span>
+					</div>
+
+					<div class="lsec">{t('network.legend.focused')}</div>
+					<span class="lrow">
+						<svg width="22" height="6" aria-hidden="true"
+							><line x1="1" y1="3" x2="21" y2="3" stroke="var(--text-secondary)" stroke-width="1.4" marker-end="url(#dt-arrow)" /></svg
+						>
+						{t('network.legend.direction')}
+					</span>
+					<div class="lgrid types">
+						{#each LEGEND_REL_TYPES as rt (rt)}
+							<span class="lrow"><i class="rdot" style:--c={REL_TYPE_COLOR[rt]}></i>{relLabel(rt)}</span>
+						{/each}
+					</div>
+				</details>
+
+				{#if !compact.current}
+					<div class="minimap" data-no-pan role="group" aria-label={t('network.minimap')}>
+						<svg
+							viewBox="0 0 {MINI_W} {miniH}"
+							width={MINI_W}
+							height={miniH}
+							onpointerdown={(e) => {
+								miniDragging = true;
+								miniJump(e);
+								(e.currentTarget as Element).setPointerCapture?.(e.pointerId);
+							}}
+							onpointermove={(e) => miniDragging && miniJump(e)}
+							onpointerup={() => (miniDragging = false)}
+							onpointercancel={() => (miniDragging = false)}
+							aria-hidden="true"
+						>
+							{#each scene.units as u (u.key)}
+								<rect
+									x={(u.x / scene.width) * MINI_W}
+									y={(u.y / scene.height) * miniH}
+									width={Math.max(0.6, (u.w / scene.width) * MINI_W)}
+									height={Math.max(0.6, (u.h / scene.height) * miniH)}
+									class="mm-unit"
+									style:--c={LAYER_COLOR[u.layer]}
+								/>
+							{/each}
+							<rect x={miniView.x} y={miniView.y} width={miniView.w} height={miniView.h} class="mm-view" />
+						</svg>
+					</div>
 				{/if}
 			</div>
 		{/if}
 
-		{#if hovered && !pinned}
-			<div class="edge-tip">
-				<span class="verb">{relLabel(hovered.rel.type)}</span>
-				<strong>{resolveEntity(hovered.rel.from)?.name} → {resolveEntity(hovered.rel.to)?.name}</strong>
-				<div class="tip-meta">
-					<Chip size="xs" dot tint="var(--basis-{hovered.rel.basis})">
-						{basisLabel(hovered.rel.basis as Basis)}
-					</Chip>
-					{#if hovered.crossLayer}
-						<Chip variant="outline" size="xs" tint="var(--bridge)">
-							{t('network.legend.crosses')}
-						</Chip>
-					{/if}
-					<span class="tip-cta">{t('network.clickopen')}</span>
-				</div>
-			</div>
-		{/if}
-
-		{#if pinned && cardAt}
+		{#if cardEdge && cardAt}
 			<div
 				class="edgecard"
 				class:sheet={compact.current}
@@ -2530,420 +1247,105 @@ import Chip from '$lib/ui/Chip.svelte';
 				data-no-pan
 			>
 				<span class="sheet-handle" aria-hidden="true"><i class="sheet-grip"></i></span>
-				<ConnectionCard edge={pinned} onclose={closePinned} onpick={pick} />
+				<ConnectionCard edge={cardEdge} onclose={closePinned} onpick={pick} />
 			</div>
 		{/if}
-
-		{#if compare}
-			<!-- Compare mode banner: the intersection query in plain words, with an
-			     explicit exit. The map underneath has already answered — the banner
-			     says what question was asked. -->
-			<div class="compare-banner" data-no-pan>
-				<span class="cmp-title">
-					{format(app.locale, 'network.compare.title', {
-						a: nameOf(personById.get(compare.a) ?? institutionById.get(compare.a) ?? {}),
-						b: nameOf(personById.get(compare.b) ?? institutionById.get(compare.b) ?? {})
-					})}
-				</span>
-				<span class="cmp-n">{format(app.locale, 'network.compare.common', { n: compare.common.size })}</span>
-				<button class="cmp-exit mono" onclick={() => (compareId = null)}>
-					{t('network.compare.exit')}
-				</button>
-			</div>
-		{/if}
-
-		<!--
-			Names and lane headers, in HTML over the canvas.
-
-			aria-hidden because the SVG nodes underneath already carry their own
-			accessible names and the table below is the complete equivalent. Announcing
-			these too would read every entity out twice.
-		-->
-		<div class="vlayer" data-no-pan aria-hidden="true">
-			{#each laneHeaders as h (h.layer)}
-				<!--
-					tabindex -1 because this whole layer is aria-hidden, and a focusable
-					control inside a hidden subtree is a trap: a keyboard user would land
-					on something a screen reader refuses to announce. Isolating a layer is
-					a pointer shortcut for what the dock's layer chips already do with a
-					proper label and keyboard access.
-				-->
-				<button
-					class="vlane"
-					class:solo={soloed}
-					tabindex="-1"
-					style:left="{h.left}px"
-					style:max-width="{h.maxWidth}px"
-					style:--c={LAYER_COLOR[h.layer]}
-					title="{layerLabel(h.layer)} — {soloed ? t('network.lane.all') : t('network.lane.solo')}"
-					onclick={() => (soloed ? app.allLayers() : app.soloLayer(h.layer))}
-				>
-					{h.layer === 'foreign' ? t('layer.foreign.short') : layerLabel(h.layer)}
-					{#if h.count}<b>{h.count}</b>{/if}
-				</button>
-			{/each}
-
-			{#if showGutterLabels}
-				<!-- Gutter traffic labels: how many cross-layer edges run in each
-				     channel, written vertically down the strip once it is wide
-				     enough to carry a label. The glyph shows net flow — ↓ is
-				     mostly left→right, ↑ mostly right→left, ↕ balanced. -->
-				{#each gutters as _, gi (gi)}
-					{@const gx = cam.worldToScreen(gutterCenter(gi, layout.laneW), 0).x}
-					{@const net = gutterTraffic.fwd[gi] > gutterTraffic.rev[gi] ? '↓' : gutterTraffic.rev[gi] > gutterTraffic.fwd[gi] ? '↑' : '↕'}
-					<span class="vgutter mono" style:left="{gx}px" style:--c="var(--bridge)">
-						{net} {gutterTraffic.counts[gi]} {t('network.gutter.short')}
-					</span>
-				{/each}
-			{/if}
-
-			{#if showGroupHeaders}
-				{#each groupHeaders as h (h.key)}
-					<span
-						class="vgroup"
-						style:transform="translate({h.x}px, {h.y}px)"
-						style:opacity={headerFade}
-						style:--c={LAYER_COLOR[h.layer]}
-					>
-						{h.group}
-						<i>{h.memberCount}</i>
-					</span>
-				{/each}
-			{/if}
-
-			{#if !compare}
-			{#each registerRows as r (r.key)}
-				{#if r.kind === 'section'}
-					<!-- A section head is a rule with a name: the register's structure,
-					     shown at every zoom because the roster is the lane's content. -->
-					<span
-						class="vreg-section"
-						style:left="{r.x}px"
-						style:top="{r.y}px"
-						style:width="{Math.max(60, r.width)}px"
-						style:--c={LAYER_COLOR.foreign}
-					>
-						<em>{foreignGroupLabel(r.name)}</em>
-						<i class="mono">{r.count}</i>
-					</span>
-				{:else}
-					<!--
-						One register row: the name, anchored to its node on the spine.
-						Nothing else lives in the row, so there are no columns to align
-						and no width to overflow. The node on the spine is the marker,
-						which is why the name carries no dot of its own; the load is on
-						the marker and named in the tooltip.
-					-->
-					<button
-						type="button"
-						tabindex="-1"
-						class="vrow"
-						class:hot={app.hovered === r.id}
-						class:focus={app.selected === r.id}
-						style:transform="translate({r.x}px, {r.y}px) translateY(-50%)"
-						style:padding-left="{r.pad}px"
-						style:max-width="{Math.max(80, r.width)}px"
-						style:--c={LAYER_COLOR.foreign}
-						title="{r.name} · {r.count} {t('network.register.ties')}"
-						onmouseenter={() => (app.hovered = r.id!)}
-						onmouseleave={() => (app.hovered = null)}
-						onclick={() => {
-							cam.skipResizePan = true;
-							selectFly = 'gentle';
-							app.select(r.id!);
-						}}
-					>
-						<span class="vrow-name">{r.name}</span>
-					</button>
-				{/if}
-			{/each}
-			{/if}
-
-			{#each labels as l (l.id)}
-				<span
-					class="vlabel t-{l.tier} l-{l.dir}"
-					class:is-institution={l.data?.kind === 'institution'}
-					class:hop-one={l.data?.hop === 1}
-					style:transform="translate({l.sx}px, {l.sy}px)"
-					style:--c={LAYER_COLOR[l.data!.layer]}
-					title={l.text}
-				>
-					{l.text}
-				</span>
-			{/each}
-		</div>
-
-		<div class="viewnav">
-			<NavControls {cam} label={t('nav.network')} />
-			{#if focus}
-				<button
-					class="clear-focus mono"
-					data-no-pan
-					onclick={() => {
-						pinnedId = null;
-						app.hovered = null;
-						app.selected = null;
-					}}
-				>
-					{t('network.clear')}
-				</button>
-			{/if}
-		</div>
-
-		<!--
-			The legend is a reference, not a control, so on a small screen it folds away
-			rather than covering a third of the map. Open by default where the left
-			gutter can hold it beside the first lane, so a reader meeting dashed lines
-			for the first time is told what they mean without hunting for a toggle.
-		-->
-		<details class="legend" data-no-pan open={wide && roomy.current} style:--mini-h="{MINI_BOX_H}px">
-			<summary aria-label={t('network.legend')}>
-				<svg viewBox="0 0 14 14" width="12" height="12" aria-hidden="true">
-					<path d="M2 4h10M2 7h10M2 10h6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" />
-				</svg>
-				<span>{t('network.legend')}</span>
-			</summary>
-
-			<div class="lsec">{t('network.legend.basis')}</div>
-			<!-- The four real bases, in order, with the dash that encodes each on the
-			     edges. Rendered from the model so the legend cannot drift from the
-			     strokes it explains (spec §14.1). -->
-			<div class="lgrid">
-				{#each BASIS_ORDER as b (b)}
-					<span class="lrow">
-						<svg width="22" height="6" aria-hidden="true"
-							><line
-								x1="0"
-								y1="3"
-								x2="22"
-								y2="3"
-								stroke={BASIS_COLOR[b]}
-								stroke-opacity={BASIS_OPACITY[b]}
-								stroke-width="1.4"
-								stroke-dasharray={DASH[b]}
-							/></svg
-						>
-						{t('basis.' + b)}
-					</span>
-				{/each}
-				<span class="lrow">
-					<svg width="22" height="6" aria-hidden="true"
-						><line x1="0" y1="3" x2="22" y2="3" stroke="var(--bridge)" stroke-width="2" /></svg
-					>
-					{t('network.legend.crosses')}
-				</span>
-			</div>
-
-			<div class="lsec">{t('network.legend.focused')}</div>
-			<span class="lrow">
-				<svg width="22" height="6" aria-hidden="true"
-					><line
-						x1="1"
-						y1="3"
-						x2="21"
-						y2="3"
-						stroke="var(--text-secondary)"
-						stroke-width="1.4"
-						marker-end="url(#dt-arrow)"
-					/></svg
-				>
-				{t('network.legend.direction')}
-			</span>
-			<div class="lgrid types">
-				{#each LEGEND_REL_TYPES as rt (rt)}
-					<span class="lrow"><i class="rdot" style:--c={REL_TYPE_COLOR[rt]}></i>{relLabel(rt)}</span>
-				{/each}
-			</div>
-
-			<div class="lsec">{t('network.legend.bridges')}</div>
-			<div class="lgrid">
-				<span class="lrow">
-					<svg width="22" height="8" aria-hidden="true"
-						><line x1="0" y1="6" x2="22" y2="6" stroke="var(--bridge)" stroke-width="2" /><line
-							x1="0"
-							y1="2"
-							x2="22"
-							y2="2"
-							stroke="var(--layer-political)"
-							stroke-width="0.7"
-							opacity="0.7"
-						/></svg
-					>
-					{t('network.legend.hairline')}
-				</span>
-				<span class="lrow">
-					<svg width="22" height="8" aria-hidden="true"
-						><rect
-							x="8.5"
-							y="0"
-							width="5"
-							height="8"
-							fill="var(--surface-sunken)"
-							stroke="var(--border-subtle)"
-						/><line x1="11" y1="0" x2="11" y2="8" stroke="var(--bridge)" stroke-width="1.4" /></svg
-					>
-					{t('network.legend.gutter')}
-				</span>
-			</div>
-
-			<div class="lsec">{t('network.legend.register')}</div>
-			<!-- The register's load is painted on the node, not in a column, so the
-			     key is two markers: a quiet square and a busy one. -->
-			<span class="lrow">
-				<svg width="22" height="10" aria-hidden="true"
-					><rect
-						x="1"
-						y="1"
-						width="8"
-						height="8"
-						rx="1"
-						fill="var(--layer-foreign)"
-						fill-opacity="0.14"
-						stroke="var(--layer-foreign)"
-					/><rect
-						x="13"
-						y="1"
-						width="8"
-						height="8"
-						rx="1"
-						fill="var(--layer-foreign)"
-						fill-opacity="0.86"
-						stroke="var(--layer-foreign)"
-					/></svg
-				>
-				{t('network.legend.register.load')}
-			</span>
-		</details>
-
-		<!--
-			The minimap: a miniature of the world — lanes, gutters, and the live
-			viewport rectangle. Clicking or dragging centres the map on the tapped
-			point; the rectangle is the honest answer to "where am I" on a world
-			larger than the window. Hidden on a phone, where the map IS the screen.
-		-->
-		<div class="minimap" data-no-pan role="group" aria-label={t('network.minimap')}>
-			<svg
-				viewBox="0 0 {MINI_W} {MINI_H}"
-				preserveAspectRatio="none"
-				onpointerdown={miniDown}
-				onpointermove={miniMove}
-				onpointerup={miniUp}
-				onpointercancel={miniUp}
-				aria-hidden="true"
-			>
-				{#each layout.lanes as layer, i (layer)}
-					<rect
-						x={(laneX(i, layout.laneW) / W) * MINI_W}
-						y="0"
-						width={(layout.laneW / W) * MINI_W}
-						height="100%"
-						class="mm-lane"
-						style:--c={LAYER_COLOR[layer]}
-					/>
-				{/each}
-				{#each gutters as _, gi (gi)}
-					<rect
-						x={((laneX(gi + 1, layout.laneW) - GUTTER_W) / W) * MINI_W}
-						y="0"
-						width={(GUTTER_W / W) * MINI_W}
-						height="100%"
-						class="mm-gutter"
-					/>
-				{/each}
-				<rect
-					x={miniView.x}
-					y={miniView.y}
-					width={miniView.w}
-					height={miniView.h}
-					class="mm-view"
-				/>
-			</svg>
-		</div>
-
 	</div>
 
 	<!--
-		Accessible equivalent of the graph. Every chart in this project owes one — a
-		network drawn in SVG is unreadable to a screen reader no matter how many
-		aria-labels the nodes carry, because the information IS the set of edges.
-		Cross-layer bridges are listed first, since those are the finding.
+		The text equivalent of the map. Every tie drawn above is a row, with the
+		same names, relationship and basis, and a button that pins it on the map.
+		Rendered only while open: it is the complete record of the view, and a
+		closed table has no reason to cost the page its rows.
 	-->
-	<details class="a11y">
+	<details class="a11y" bind:open={tableOpen}>
 		<summary>{t('network.table.summary')}</summary>
-		<!-- The focused ego-network, when there is one: the highlight state, as a
-		     table. The emphasis the map gives a focused node's connections is the
-		     most informative part of the view, so it cannot exist only for eyes. -->
-		{#if focus && rings}
-			<h4 class="a11y-sub">{format(app.locale, 'network.table.focus', { name: resolveEntity(focus)?.name ?? focus })}</h4>
+		{#if tableOpen}
+			{#if focus && near}
+				<h4 class="a11y-sub">{format(app.locale, 'network.table.focus', { name: entityName(focus) })}</h4>
+				<table>
+					<thead>
+						<tr>
+							<th>{t('network.table.other')}</th><th>{t('network.table.relationship')}</th><th>{t('network.table.basis')}</th><th>{t('network.table.crosses')}</th><th></th>
+						</tr>
+					</thead>
+					<tbody>
+						{#each scene.ties.filter((e) => e.rel.from === focus || e.rel.to === focus) as e (e.id)}
+							<tr>
+								<td>{entityName(e.rel.from === focus ? e.rel.to : e.rel.from)}</td>
+								<td>{e.bundle ? tf('network.bundle.label', { n: e.bundle }) : relLabel(e.rel.type)}</td>
+								<td>{e.measurement ? t('network.measurement') : basisLabel((e.rel.basis ?? 'documented') as Basis)}</td>
+								<td>{e.crossLayer ? t('network.table.yes') : t('network.table.no')}</td>
+								<td><button class="rowopen" onclick={() => openTie(e, true)}>{t('network.pick')}</button></td>
+							</tr>
+						{/each}
+					</tbody>
+				</table>
+			{/if}
 			<table>
+				<caption>
+					{format(app.locale, 'network.table.caption', {
+						date: formatDate(app.t, 'day'),
+						mode: FAMILIES.filter((f) => families.has(f)).map((f) => t('network.family.' + f)).join(', ')
+					})}
+				</caption>
 				<thead>
 					<tr>
-						<th>{t('network.table.other')}</th><th>{t('network.table.group')}</th><th>{t('network.table.relationship')}</th><th>{t('network.table.basis')}</th><th>{t('network.table.crosses')}</th><th></th>
+						<th>{t('network.table.from')}</th><th>{t('network.table.layer')}</th><th>{t('network.table.to')}</th><th>{t('network.table.layer')}</th><th>{t('network.table.relationship')}</th><th>{t('network.table.basis')}</th><th>{t('network.table.crosses')}</th><th></th>
 					</tr>
 				</thead>
 				<tbody>
-					{#each slice.edges.filter((e) => e.rel.from === focus || e.rel.to === focus) as e (e.id)}
-						{@const otherId = e.rel.from === focus ? e.rel.to : e.rel.from}
+					{#each tableTies as e (e.id)}
 						<tr>
-							<td>{resolveEntity(otherId)?.name ?? otherId}</td>
-							<td>{groupOf(otherId)}</td>
-							<td>{relLabel(e.rel.type)}</td>
-							<td>{basisLabel(e.rel.basis as Basis)}</td>
+							<td>{entityName(e.rel.from)}</td>
+							<td>{layerLabel(e.a.layer)}</td>
+							<td>{entityName(e.rel.to)}</td>
+							<td>{layerLabel(e.b.layer)}</td>
+							<td>{e.bundle ? tf('network.bundle.label', { n: e.bundle }) : relLabel(e.rel.type)}</td>
+							<td>{e.measurement ? t('network.measurement') : basisLabel((e.rel.basis ?? 'documented') as Basis)}</td>
 							<td>{e.crossLayer ? t('network.table.yes') : t('network.table.no')}</td>
 							<td>
 								<button
 									class="rowopen"
 									onclick={() => {
-										pinnedId = e.id;
-										const m = routes.get(e.id)?.mid ?? { x: e.a.x, y: e.a.y };
-										cam.flyTo(m.x, m.y);
-									}}
+										if (view !== 'map') setView('map');
+										openTie(e, true);
+									}}>{t('network.pick')}</button
 								>
-									{t('network.pick')}
-								</button>
 							</td>
 						</tr>
 					{/each}
 				</tbody>
 			</table>
+			<table>
+				<caption>{format(app.locale, 'network.table.seats', { date: formatDate(app.t, 'day') })}</caption>
+				<thead>
+					<tr><th>{t('network.table.layer')}</th><th>{t('network.table.institution')}</th><th>{t('network.table.person')}</th><th>{t('network.table.post')}</th></tr>
+				</thead>
+				<tbody>
+					{#each scene.units.filter((u) => u.seats.length || u.chamber) as u (u.key)}
+						{#if u.chamber}
+							<tr>
+								<td>{layerLabel(u.layer)}</td>
+								<td>{entityName(u.id!)}</td>
+								<td colspan="2">
+									{tf('network.chamber.named', { n: u.chamber.named, seats: u.chamber.seats })}:
+									{u.chamber.groups.map((g) => `${g.id ? entityName(g.id) : t('parl.unaffiliated')} ${g.n}`).join(', ')}
+								</td>
+							</tr>
+						{/if}
+						{#each u.seats as s (s.key)}
+							<tr>
+								<td>{layerLabel(u.layer)}</td>
+								<td>{u.id ? entityName(u.id) : t('network.outside')}</td>
+								<td>{entityName(s.person)}</td>
+								<td>{s.position ? postTitle(s.position) : u.kind === 'chamber' ? t('network.tip.membershort') : '—'}</td>
+							</tr>
+						{/each}
+					{/each}
+				</tbody>
+			</table>
 		{/if}
-		<table>
-			<caption>
-				{format(app.locale, 'network.table.caption', { date: formatDate(app.t, 'day'), mode: t('network.mode.' + mode) })}
-			</caption>
-			<thead>
-				<tr>
-					<th>{t('network.table.from')}</th><th>{t('network.table.group')}</th><th>{t('network.table.to')}</th><th>{t('network.table.group')}</th><th>{t('network.table.relationship')}</th><th>{t('network.table.basis')}</th><th>{t('network.table.crosses')}</th><th></th>
-				</tr>
-			</thead>
-			<tbody>
-				{#each slice.edges
-					.filter((e) => e.active)
-					.sort((a, b) => Number(b.crossLayer) - Number(a.crossLayer)) as e (e.id)}
-					<tr>
-						<td>{resolveEntity(e.rel.from)?.name}</td>
-						<td>{groupOf(e.rel.from)}</td>
-						<td>{resolveEntity(e.rel.to)?.name}</td>
-						<td>{groupOf(e.rel.to)}</td>
-						<td>{relLabel(e.rel.type)}</td>
-						<td>{basisLabel(e.rel.basis as Basis)}</td>
-						<td>{e.crossLayer ? t('network.table.yes') : t('network.table.no')}</td>
-						<td>
-							<button
-								class="rowopen"
-								onclick={() => {
-									pinnedId = e.id;
-									const m = routes.get(e.id)?.mid ?? { x: e.a.x, y: e.a.y };
-									cam.flyTo(m.x, m.y);
-								}}
-							>
-								{t('network.pick')}
-							</button>
-						</td>
-					</tr>
-				{/each}
-			</tbody>
-		</table>
 	</details>
 </div>
 
@@ -2954,825 +1356,970 @@ import Chip from '$lib/ui/Chip.svelte';
 		flex: 1;
 		min-height: 0;
 	}
+
+	/* --- Toolbar ------------------------------------------------------------ */
+
 	.toolbar {
+		display: grid;
+		grid-template-columns: auto minmax(0, 1fr);
+		grid-template-areas:
+			'about controls'
+			'fams fams';
+		align-items: center;
+		gap: var(--s-3) var(--s-6);
+		padding: var(--s-4) var(--s-6) var(--s-3);
+		border-bottom: var(--rule);
+	}
+	.tb-row {
 		display: flex;
 		align-items: center;
-		gap: var(--s-6);
-		padding: var(--s-4) var(--s-6);
-		border-bottom: 1px solid var(--border-subtle);
-		flex-wrap: wrap;
+		gap: var(--s-5);
+		min-width: 0;
+	}
+	.tb-row:first-child {
+		grid-area: about;
+	}
+	.controls {
+		grid-area: controls;
+		justify-content: flex-end;
 	}
 	.stats {
 		display: flex;
 		gap: var(--s-5);
-		margin-inline-start: auto;
-		font-family: var(--font-mono);
-		font-variant-numeric: tabular-nums;
 		font-size: var(--t-xs);
+		font-variant-numeric: tabular-nums;
 		color: var(--text-secondary);
 		white-space: nowrap;
+		overflow: hidden;
 	}
 	.stats .bridge {
 		color: var(--bridge);
 	}
-	.stats .rep {
-		color: var(--basis-inferred);
-	}
-	.stats .dormant {
+	.stats .withheld {
 		color: var(--text-faint);
 		cursor: help;
 		border-bottom: 1px dotted var(--border-strong);
 	}
-
-	.quiet {
-		display: inline-flex;
+	.families {
+		grid-area: fams;
+		display: flex;
 		align-items: center;
-		gap: var(--s-3);
-		padding: var(--s-2) var(--s-4) var(--s-2) var(--s-3);
+		gap: var(--s-2);
+		overflow-x: auto;
+		scrollbar-width: none;
+		min-width: 0;
+	}
+	.families::-webkit-scrollbar {
+		display: none;
+	}
+	.fam-label {
 		font-family: var(--font-mono);
-		font-variant-numeric: tabular-nums;
-		font-size: var(--t-xs);
+		font-size: var(--t-2xs);
 		letter-spacing: var(--track-caps);
 		text-transform: uppercase;
 		color: var(--text-faint);
-		background: transparent;
-		border: 1px solid var(--border-subtle);
-		border-radius: var(--r-full);
-		cursor: pointer;
-		opacity: 0.82;
-		transition:
-			color var(--dur-fast) var(--ease-out),
-			background var(--dur-fast) var(--ease-out),
-			border-color var(--dur-fast) var(--ease-out),
-			opacity var(--dur-fast) var(--ease-out);
+		margin-inline-end: var(--s-3);
+		white-space: nowrap;
 	}
-	.quiet .dot {
-		width: 6px;
-		height: 6px;
-		border-radius: 50%;
-		background: var(--text-faint);
-		opacity: 0.7;
-		transition: background var(--dur-fast) var(--ease-out), opacity var(--dur-fast) var(--ease-out);
-	}
-	.quiet:hover {
-		color: var(--text-secondary);
-		border-color: var(--border-default);
-		background: color-mix(in oklch, var(--surface-panel) 70%, transparent);
-		opacity: 1;
-	}
-	.quiet:hover .dot {
-		opacity: 1;
-	}
-	.quiet.on {
-		color: var(--text-primary);
-		border-color: color-mix(in oklch, var(--accent) 45%, transparent);
-		background: color-mix(in oklch, var(--accent) 10%, var(--surface-panel));
-		opacity: 1;
-	}
-	.quiet.on .dot {
-		background: var(--accent);
-		opacity: 1;
-		box-shadow: 0 0 0 3px color-mix(in oklch, var(--accent) 25%, transparent);
-	}
-
-	/* The lens switcher + quiet dimmer are a single control group. The graph
-	   defaults to Influence, which is sparser and the point of the view; the
-	   panel's surface + border makes the group readable as a control rather
-	   than as metadata that can be skipped, which it was when it sat as two
-	   naked pills at the far right of the bar. */
-	.modes {
+	.fam {
 		display: inline-flex;
 		align-items: center;
-		gap: var(--s-4);
-		padding: 4px;
-		background: var(--surface-raised);
-		border: 1px solid var(--border-default);
+		gap: var(--s-3);
+		height: 28px;
+		padding: 0 var(--s-4);
 		border-radius: var(--r-full);
-		box-shadow: var(--elev-1);
+		border: 1px solid var(--border-default);
+		background: transparent;
+		color: var(--text-muted);
+		font-size: var(--t-xs);
+		white-space: nowrap;
+		cursor: pointer;
+		transition:
+			background-color var(--dur-fast) var(--ease-out),
+			color var(--dur-fast) var(--ease-out),
+			border-color var(--dur-fast) var(--ease-out);
+	}
+	.fam b {
+		font-weight: 500;
+		font-size: var(--t-2xs);
+		color: var(--text-faint);
+		font-variant-numeric: tabular-nums;
+	}
+	.fam-dot {
+		width: 7px;
+		height: 7px;
+		border-radius: 50%;
+		border: 1.5px solid currentColor;
+	}
+	.fam:hover {
+		color: var(--text-primary);
+		border-color: var(--border-strong);
+	}
+	.fam.on {
+		background: var(--surface-active);
+		color: var(--text-primary);
+		border-color: var(--accent);
+	}
+	.fam.on .fam-dot {
+		background: var(--accent);
+		border-color: var(--accent);
+	}
+	.fam.on b {
+		color: var(--text-secondary);
+	}
+	.fam:focus-visible {
+		outline: none;
+		box-shadow: var(--ring);
 	}
 
 	@media (max-width: 900px) {
 		.toolbar {
-			gap: var(--s-2) var(--s-4);
-			padding: var(--s-2) var(--s-4);
+			grid-template-columns: minmax(0, 1fr);
+			grid-template-areas: 'about' 'controls' 'fams';
+			padding: var(--s-3) var(--s-5);
+			gap: var(--s-3);
 		}
-		/* The top bar already names the view. */
-		.toolbar > .eyebrow {
+		.eyebrow {
 			display: none;
 		}
-		/* One line that scrolls sideways, at a size a phone can read, rather than
-		   two wrapped lines of 9px figures above the map. */
-		.stats {
-			order: 3;
-			width: 100%;
-			margin-inline-start: 0;
-			gap: var(--s-4);
-			font-size: var(--t-2xs);
-			overflow-x: auto;
-			scrollbar-width: none;
-		}
-		.modes {
-			width: 100%;
+		.controls {
 			justify-content: space-between;
-			padding: 3px;
 		}
-		.quiet {
-			padding: var(--s-1) var(--s-3);
-			font-size: 9px;
+		.stats {
+			gap: var(--s-4);
+		}
+		/* The phone keeps the two counts that describe the lines; the office
+		   count and what is held back are on the family buttons and the table. */
+		.stats > :first-child,
+		.stats .withheld {
+			display: none;
+		}
+		.fam-label {
+			display: none;
+		}
+		.fam {
+			height: 32px;
 		}
 	}
 
-	.canvas {
+	/* --- Stage and canvas ----------------------------------------------------- */
+
+	.stage {
 		position: relative;
 		flex: 1;
 		min-height: 0;
 		display: flex;
-		/* The browser must not claim the gestures we handle: without this, a one-finger
-		   drag scrolls the page on touch and a pinch zooms the whole document. */
-		touch-action: none;
-		cursor: grab;
+	}
+	.canvas {
+		position: relative;
+		flex: 1;
+		min-height: 0;
 		overflow: hidden;
+		background: var(--surface-base);
+		touch-action: none;
+		outline: none;
+		cursor: grab;
 	}
 	.canvas.moving {
 		cursor: grabbing;
 	}
 	.canvas:focus-visible {
-		outline: 2px solid var(--accent);
-		outline-offset: -2px;
+		box-shadow: inset 0 0 0 2px var(--accent);
 	}
-	/* The graph canvas fills its surface. A DIRECT child selector, not `.canvas
-	   svg`: the legend and minimap live inside the canvas div too, and an
-	   unscoped `svg { width: 100% }` — or a scoped-but-ancestor one — stretched
-	   every one of them, turning the legend's 12×12 icons into full-width
-	   blocks and its swatch dashes into wall-to-wall lines. `> svg` hits only
-	   the graph itself. */
-	.canvas > svg {
+	.layer {
+		position: absolute;
+		inset: 0;
 		width: 100%;
 		height: 100%;
+		display: block;
 	}
-
+	.layer.over {
+		pointer-events: none;
+		z-index: 2;
+	}
+	.lane-bg {
+		fill: var(--c);
+		fill-opacity: 0.035;
+	}
+	.gutter-strip {
+		fill: var(--surface-sunken);
+		fill-opacity: 0.35;
+	}
 	.edge {
 		fill: none;
-		/* Stroke widths are screen pixels, not world units. A hairline that thickens
-		   as you zoom turns a dense graph into a solid mat exactly when the reader is
-		   trying to trace one line through it. */
 		vector-effect: non-scaling-stroke;
-		stroke-width: 1.1;
-		transition: stroke-opacity 0.18s;
-		/* Hit testing belongs to the fat invisible twins in .hits, so the visible line
-		   never competes with them for a pointer. */
-		pointer-events: none;
 		stroke-linecap: round;
+		stroke-linejoin: round;
+		transition: opacity var(--dur-fast) var(--ease-out);
 	}
-
+	.edge.dim {
+		opacity: 0.12;
+	}
+	.edge.top {
+		filter: none;
+	}
+	.halo-line {
+		fill: none;
+		stroke: var(--surface-base);
+		stroke-opacity: 0.85;
+		vector-effect: non-scaling-stroke;
+		stroke-linecap: round;
+		stroke-linejoin: round;
+	}
 	.hit {
 		fill: none;
 		stroke: transparent;
-		/* Screen pixels, so the target stays a comfortable ~11px wide band at every
-		   zoom level rather than shrinking to nothing as the reader pulls back. */
+		stroke-width: 12px;
 		vector-effect: non-scaling-stroke;
-		stroke-width: 11;
-		stroke-linecap: round;
 		pointer-events: stroke;
 		cursor: pointer;
 	}
-	.edge.idle {
-		stroke: var(--border-subtle);
-		/* Idle edges are context, not content: faint enough that the active graph
-		   reads first and the dormant spiderweb only registers as texture. The map
-		   is overwhelming exactly when every arc competes for the eye, and nothing
-		   competes harder than a stroke sitting at half-strength. */
-		stroke-opacity: 0.16;
-		stroke-width: 0.6;
-		pointer-events: none;
-	}
-	.edge.cross {
-		stroke-width: 1.7;
-	}
-	/* The basis is encoded by dash and opacity alone (see DASH/BASIS_OPACITY in
-	   model.ts). The old override forced reported AND allegation edges to one amber
-	   hue regardless of their actual basis, which made two distinct bases render
-	   identically — exactly what the legend must never claim. (spec §14.1) */
-	.edge.hot {
-		stroke-width: 2.6;
-		stroke-opacity: 1 !important;
-	}
-	/* The connection whose card is open. Thicker than hover and undashed-looking, so
-	   the reader can see which of forty crossing lines they are reading about. */
-	.edge.pinned {
-		stroke-width: 3.4;
-		stroke-opacity: 1 !important;
-		filter: drop-shadow(0 0 6px color-mix(in oklch, var(--accent) 55%, transparent));
-	}
 
-	.group-header {
+	/* --- The world layer (world units: 1px here is one unit) ------------------ */
+
+	.world {
+		position: absolute;
+		top: 0;
+		left: 0;
+		transform-origin: 0 0;
+		pointer-events: none;
+		direction: ltr;
+		z-index: 1;
 		font-family: var(--font-sans);
+		contain: layout style;
+	}
+	.canvas.moving .world {
+		will-change: transform;
+	}
+	/* The layer's coordinates are physical (the scene mirrors the lanes for a
+	   right-to-left reader); the text inside each box still reads in the
+	   page's direction. */
+	.world.rtl .box,
+	.world.rtl .chip,
+	.world.rtl .ghead {
+		direction: rtl;
+	}
+	.world.rtl .box {
+		box-shadow: inset -3px 0 0 var(--c);
+	}
+	.world > * {
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+	.ghead {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		height: 20px;
+		padding-inline: 2px;
+		font-size: 10.5px;
+		font-family: var(--font-mono);
+		letter-spacing: 0.08em;
 		text-transform: uppercase;
-		pointer-events: none;
+		color: var(--text-muted);
+		border-bottom: 1px solid var(--border-subtle);
+		transition: transform var(--dur-normal) var(--ease-out);
 	}
-
-	.node {
-		cursor: pointer;
-		/* --rf is the roster crossfade (0→1 over the semantic-zoom window); every
-		   emphasis state below multiplies it, so the roster fades in AND respects
-		   the ring it sits in. */
-		opacity: var(--rf, 1);
-		transition: opacity 0.18s;
-		animation: node-fade var(--dur-slow) var(--ease-out) both;
-		animation-delay: var(--enter-delay, 0ms);
+	.ghead span {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
-	@keyframes node-fade {
+	.ghead i {
+		font-style: normal;
+		color: var(--text-faint);
+		margin-inline-start: auto;
+	}
+	.ghead.outside {
+		border-bottom-style: dashed;
+	}
+	.box {
+		pointer-events: auto;
+		background: var(--surface-raised);
+		border: 1px solid var(--border-default);
+		border-radius: 7px;
+		box-shadow: inset 3px 0 0 var(--c);
+		/* Moves and fades only: transform and opacity stay on the compositor.
+		   A height transition would re-lay out the box every frame of playback.
+		   Containment keeps a change inside one box from re-laying out the map. */
+		contain: layout style;
+		transition:
+			transform var(--dur-normal) var(--ease-out),
+			opacity var(--dur-fast) var(--ease-out),
+			border-color var(--dur-fast) var(--ease-out);
+		animation: unit-in var(--dur-normal) var(--ease-out);
+	}
+	.box.k-actors {
+		background: transparent;
+		border-style: dashed;
+		box-shadow: none;
+	}
+	.box.k-chamber {
+		background: color-mix(in oklch, var(--surface-raised) 88%, var(--c));
+	}
+	.box.focus {
+		border-color: var(--accent);
+		box-shadow:
+			inset 3px 0 0 var(--c),
+			0 0 0 1px var(--accent);
+	}
+	.box.dim,
+	.chip.dim {
+		opacity: var(--dim);
+	}
+	@keyframes unit-in {
 		from {
 			opacity: 0;
 		}
 	}
-	@media (prefers-reduced-motion: reduce) {
-		.node {
-			animation: none;
-		}
-	}
-	.node.dormant {
-		opacity: calc(var(--rf, 1) * 0.52);
-	}
-	/* A persistent structural anchor (foreign state / intl org) that is dormant
-	   but labelled: brighter than generic dormant so it reads as "intentional
-	   structure", not "extra fake node." */
-	.node.anchor {
-		opacity: calc(var(--rf, 1) * 0.76);
-	}
-	.node.r-one {
-		opacity: calc(var(--rf, 1));
-	}
-	.node.r-two {
-		opacity: calc(var(--rf, 1) * 0.55);
-	}
-	.node.r-rest {
-		opacity: calc(var(--rf, 1) * 0.24);
-	}
-	.node.focus {
-		opacity: calc(var(--rf, 1));
-	}
-	/* The focus halo is a node of its own inside the group; the subject's own
-	   shape keeps the text-primary emphasis, and the halo must not inherit it. */
-	.node.focus circle:not(.halo),
-	.node.focus rect:not(.halo) {
-		stroke: var(--text-primary);
-		stroke-width: 2;
-	}
-	.node .halo {
-		fill: none;
-		stroke: color-mix(in oklch, var(--accent) 55%, transparent);
-		stroke-width: 2.5;
-	}
-	/* The cross-layer edge's identity tag: a thin second stroke in the source
-	   layer's hue, so a bridge says which pair of layers it joins without the
-	   bridge colour (pinned ochre) ever pretending to be a layer colour. */
-	.hairline {
-		fill: none;
-		stroke-width: 0.8;
-		vector-effect: non-scaling-stroke;
-		pointer-events: none;
-	}
-	/* A group band's top rule: the zone boundary, in the zone's own hue. */
-	.band-line {
-		stroke: var(--c);
-		stroke-width: 1;
-		opacity: 0.32;
-		pointer-events: none;
-	}
-	/* The foreign register's node rail. Non-scaling, because it is structure, not
-	   a measurement, and it must not swell with the camera the way the nodes do. */
-	.register-spine {
-		stroke: var(--c);
-		stroke-width: 1;
-		opacity: 0.3;
-		vector-effect: non-scaling-stroke;
-		pointer-events: none;
-	}
-	/* Ghost arcs: dormant people to their last-held institution. The faintest
-	   class of line on the map — scaffolding, named as such by being almost
-	   invisible until you look for it. */
-	.ghost {
-		fill: none;
-		stroke: var(--border-default);
-		stroke-width: 0.6;
-		stroke-dasharray: 1 4;
-		opacity: 0.5;
-		vector-effect: non-scaling-stroke;
-		pointer-events: none;
-	}
-	/* The tenure strip under a node: when it held office, on the 1956→2026 axis. */
-	.spark rect {
-		pointer-events: none;
-	}
-	/* Compare mode banner: the intersection query, stated in words. */
-	.compare-banner {
+	.box > * {
 		position: absolute;
-		top: 44px;
-		left: 50%;
-		transform: translateX(-50%);
-		z-index: 2;
+	}
+	.node {
+		font: inherit;
+		color: inherit;
+		background: none;
+		border: none;
+		padding: 0;
+		margin: 0;
+		cursor: pointer;
+		text-align: start;
+		pointer-events: auto;
+	}
+	.node:focus-visible {
+		outline: 2px solid var(--accent);
+		outline-offset: 1px;
+		border-radius: 3px;
+	}
+	.boxhead {
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 30px;
 		display: flex;
 		align-items: center;
-		gap: var(--s-4);
-		max-width: min(560px, calc(100vw - var(--s-8)));
-		padding: var(--s-3) var(--s-4);
-		background: color-mix(in oklch, var(--surface-overlay) 92%, transparent);
-		border: 1px solid var(--border-default);
-		border-radius: var(--r-full);
-		box-shadow: var(--elev-2);
-		backdrop-filter: blur(8px);
-		font-size: var(--t-xs);
+		gap: 6px;
+		padding: 0 8px 0 12px;
+		border-radius: 7px 7px 0 0;
 	}
-	.compare-banner .cmp-title {
+	.boxhead:hover,
+	.boxhead.hot {
+		background: var(--surface-hover);
+	}
+	.boxhead .title {
+		font-size: 13px;
+		font-weight: 600;
 		color: var(--text-primary);
+		overflow: hidden;
+		text-overflow: ellipsis;
 		white-space: nowrap;
+		min-width: 0;
+		flex: 1;
+	}
+	.boxhead .count {
+		font-size: 10.5px;
+		color: var(--text-muted);
+		white-space: nowrap;
+	}
+	.seat {
+		top: 0;
+		left: 0;
+		height: 22px;
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		padding: 0 4px;
+		border-radius: 4px;
+		transition:
+			transform var(--dur-normal) var(--ease-out),
+			opacity var(--dur-fast) var(--ease-out);
+		animation: unit-in var(--dur-normal) var(--ease-out);
+	}
+	.seat:hover,
+	.seat.hot {
+		background: var(--surface-hover);
+	}
+	.seat.focus {
+		background: var(--surface-active);
+		box-shadow: inset 0 0 0 1px var(--accent);
+	}
+	.seat.dim {
+		opacity: var(--dim);
+	}
+	.seat .dot {
+		flex: none;
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+		background: var(--c);
+		border: 1.5px solid var(--c);
+	}
+	/* What a post rests on: a documented post is a solid seat; a reported one a
+	   dashed ring at the reported weight; weaker bases dotted and fainter. */
+	.seat.b-reported .dot {
+		background: transparent;
+		border-style: dashed;
+		opacity: 0.82;
+	}
+	.seat.b-inferred .dot {
+		background: transparent;
+		border-style: dotted;
+		opacity: 0.6;
+	}
+	.seat.b-unsubstantiated .dot {
+		background: transparent;
+		border-style: dotted;
+		opacity: 0.45;
+	}
+	.seat.outside .dot {
+		background: transparent;
+		border-color: var(--text-muted);
+	}
+	.seat.secondary .dot {
+		background: transparent;
+	}
+	.seat.secondary .nm {
+		color: var(--text-muted);
+	}
+	.seat .nm {
+		font-size: 11.5px;
+		color: var(--text-primary);
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		min-width: 0;
+		flex: 1 1 auto;
+	}
+	.seat .role {
+		font-size: 10px;
+		color: var(--text-muted);
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		flex: 0 1 auto;
+		max-width: 52%;
+		text-align: end;
+	}
+	.seatbar {
+		top: 30px;
+		left: 12px;
+		right: 10px;
+		height: 32px;
+	}
+	.bar {
+		display: flex;
+		gap: 1.5px;
+		height: 10px;
+		border-radius: 3px;
+		overflow: hidden;
+	}
+	.bar i {
+		display: block;
+		min-width: 1px;
+	}
+	.bar i.unnamed {
+		background: transparent;
+		box-shadow: inset 0 0 0 1px var(--border-strong);
+	}
+	.bar-cap {
+		display: flex;
+		gap: 10px;
+		margin-top: 6px;
+		font-size: 10px;
+		color: var(--text-secondary);
+		white-space: nowrap;
+		overflow: hidden;
+	}
+	.bar-cap span {
+		display: inline-flex;
+		align-items: center;
+		gap: 4px;
+		min-width: 0;
 		overflow: hidden;
 		text-overflow: ellipsis;
 	}
-	.compare-banner .cmp-n {
-		color: var(--text-faint);
-		white-space: nowrap;
+	.bar-cap i {
+		width: 7px;
+		height: 7px;
+		border-radius: 2px;
+		flex: none;
 	}
-	.compare-banner .cmp-exit {
-		font-size: var(--t-2xs);
-		letter-spacing: var(--track-caps);
-		text-transform: uppercase;
-		color: var(--text-secondary);
-		padding: 2px 8px;
-		border: 1px solid var(--border-subtle);
-		border-radius: var(--r-full);
-		cursor: pointer;
-		transition:
-			color var(--dur-fast) var(--ease-out),
-			border-color var(--dur-fast) var(--ease-out);
+	.bar-cap b {
+		font-weight: 500;
+		color: var(--text-muted);
 	}
-	.compare-banner .cmp-exit:hover {
-		color: var(--text-primary);
-		border-color: var(--border-strong);
-	}
-	.edge.arrow {
-		marker-end: url(#dt-arrow);
-	}
-	/* The dismissal surface: transparent, painted, under everything. */
-	.bg {
-		pointer-events: all;
-	}
-	/* The gutter channel between lanes — where cross-layer traffic runs. */
-	.gutter-strip {
-		fill: var(--surface-sunken);
-	}
-	/* The centreline: the channel's spine, dotted so a reader can trace it
-	   without mistaking it for an edge. */
-	.gutter-line {
-		stroke: var(--border-subtle);
-		stroke-width: 1;
-		stroke-dasharray: 2 6;
-	}
-
-	/* The minimap: a miniature of the world with the live viewport rectangle.
-	   A reference and a control at once — click or drag to centre the map. */
-	.minimap {
-		position: absolute;
-		inset-inline-start: var(--s-6);
-		bottom: var(--s-6);
-		z-index: 2;
-		width: 132px;
-		padding: 3px;
-		background: color-mix(in oklch, var(--surface-panel) 88%, transparent);
-		border: 1px solid var(--border-default);
-		border-radius: var(--r-sm);
-		backdrop-filter: blur(8px);
-		box-shadow: var(--elev-2);
-		cursor: crosshair;
-	}
-	.minimap svg {
-		display: block;
-		width: 100%;
-		height: auto;
-		touch-action: none;
-	}
-	.mm-lane {
-		fill: var(--c);
-		opacity: 0.1;
-	}
-	.mm-gutter {
-		fill: var(--surface-sunken);
-	}
-	.mm-view {
-		fill: color-mix(in oklch, var(--accent) 14%, transparent);
-		stroke: var(--accent);
-		stroke-width: 1;
-	}
-
-	/* Clear focus: the explicit dismissal, for readers who do not know that
-	   click-away and Escape both pop the stack. */
-	.clear-focus {
-		padding: 4px 10px;
-		font-size: var(--t-2xs);
-		letter-spacing: var(--track-caps);
-		text-transform: uppercase;
-		color: var(--text-secondary);
-		background: color-mix(in oklch, var(--surface-panel) 88%, transparent);
-		border: 1px solid var(--border-default);
-		border-radius: var(--r-full);
-		backdrop-filter: blur(8px);
-		cursor: pointer;
-		transition:
-			color var(--dur-fast) var(--ease-out),
-			border-color var(--dur-fast) var(--ease-out),
-			background var(--dur-fast) var(--ease-out);
-	}
-	.clear-focus:hover {
-		color: var(--text-primary);
-		border-color: var(--border-strong);
-		background: color-mix(in oklch, var(--surface-overlay) 88%, transparent);
-	}
-
-	/* Gutter traffic labels, written vertically down each channel. */
-	.vgutter {
-		position: absolute;
-		top: 34px;
-		left: 0;
-		transform: translateX(-50%);
-		white-space: nowrap;
-		font-size: var(--t-2xs);
-		letter-spacing: var(--track-wide);
-		color: color-mix(in oklch, var(--bridge) 72%, var(--text-primary));
-		text-shadow:
-			0 0 3px var(--surface-base),
-			0 0 3px var(--surface-base),
-			1px 1px 0 var(--surface-base),
-			-1px -1px 0 var(--surface-base);
-		writing-mode: vertical-rl;
-		pointer-events: none;
-	}
-	.stats .withheld {
-		color: color-mix(in oklch, var(--text-faint) 85%, transparent);
-		cursor: help;
-		border-bottom: 1px dotted color-mix(in oklch, var(--border-strong) 70%, transparent);
-		opacity: 0.9;
-		font-size: calc(var(--t-xs) - 0.5px);
-	}
-	.a11y-sub {
-		margin: var(--s-5) 0 var(--s-3);
-		font-family: var(--font-mono);
-		font-size: var(--t-xs);
-		font-weight: 560;
-		letter-spacing: var(--track-caps);
-		text-transform: uppercase;
-		color: var(--text-secondary);
-	}
-	.a11y table + table {
-		margin-top: var(--s-6);
-	}
-	.viewnav {
+	.chip {
+		contain: layout style;
 		display: flex;
-		flex-direction: column;
-		align-items: flex-end;
-		gap: var(--s-3);
-		position: absolute;
-		inset-inline-end: var(--s-6);
-		top: var(--s-6);
-		/* Above the legend: the open legend is tall enough (its rows stretch
-		   because the component svg rule sizes every svg to its container) to
-		   reach up beside this cluster on a wide screen. Interactive chrome must
-		   stay reachable over a reference panel; still below the edgecard (4)
-		   and the Inspector sheet (45). */
-		z-index: 3;
+		align-items: center;
+		gap: 6px;
+		padding: 0 8px;
+		border-radius: 6px;
+		border: 1px solid var(--border-subtle);
+		background: color-mix(in oklch, var(--surface-base) 70%, var(--surface-raised));
+		transition:
+			transform var(--dur-normal) var(--ease-out),
+			opacity var(--dur-fast) var(--ease-out);
+		animation: unit-in var(--dur-normal) var(--ease-out);
+	}
+	.chip.k-register {
+		border-color: transparent;
+		background: transparent;
+	}
+	.chip:hover,
+	.chip.hot {
+		background: var(--surface-hover);
+		border-color: var(--border-default);
+	}
+	.chip.focus {
+		border-color: var(--accent);
+	}
+	.chip .sq {
+		flex: none;
+		width: 8px;
+		height: 8px;
+		border-radius: 2px;
+		border: 1.5px solid var(--c);
+	}
+	.chip .sq.tied {
+		background: var(--c);
+	}
+	.chip .nm {
+		font-size: 11.5px;
+		color: var(--text-secondary);
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		min-width: 0;
+		flex: 1;
+	}
+	.chip b {
+		font-size: 10px;
+		font-weight: 500;
+		color: var(--text-muted);
 	}
 
+	/* Levels of detail: text too small to read is hidden, never squeezed. */
+	.lod-0 .seat .nm,
+	.lod-0 .chip .nm,
+	.lod-0 .chip b,
+	.lod-0 .bar-cap,
+	.lod-0 .ghead {
+		visibility: hidden;
+	}
+	.lod-0 .seat,
+	.lod-1 .seat {
+		padding-inline: 2px;
+	}
+	.lod-0 .seat .role,
+	.lod-1 .seat .role {
+		display: none;
+	}
+
+	/* --- Screen-space chrome over the canvas ------------------------------------ */
+
+	.vlayer {
+		position: absolute;
+		inset: 0 0 auto 0;
+		height: 48px;
+		overflow: visible;
+		pointer-events: none;
+		z-index: 3;
+		direction: ltr;
+	}
+	.vlayer .vlane {
+		pointer-events: auto;
+	}
+	.vlane {
+		position: absolute;
+		top: var(--s-4);
+		display: inline-flex;
+		align-items: center;
+		gap: var(--s-3);
+		height: 24px;
+		padding: 0 var(--s-4);
+		border-radius: var(--r-full);
+		border: 1px solid color-mix(in oklch, var(--c) 45%, transparent);
+		background: color-mix(in oklch, var(--surface-base) 88%, var(--c));
+		color: var(--text-primary);
+		font-family: var(--font-mono);
+		font-size: var(--t-2xs);
+		letter-spacing: var(--track-caps);
+		text-transform: uppercase;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		cursor: pointer;
+		box-shadow: 0 1px 6px oklch(0% 0 0 / 0.25);
+	}
+	.vlane::before {
+		content: '';
+		width: 7px;
+		height: 7px;
+		border-radius: 2px;
+		background: var(--c);
+		flex: none;
+	}
+	.vlane b {
+		font-weight: 500;
+		color: var(--text-muted);
+	}
+	.node-tip,
 	.edge-tip {
 		position: absolute;
-		/* Centred so it never sits on the minimap (bottom-left) or the legend
-		   (bottom-right); centring is symmetric, so this is safe in RTL too. */
-		left: 50%;
-		transform: translateX(-50%);
-		bottom: var(--s-6);
-		z-index: 2;
-		max-width: 330px;
+		z-index: 6;
+		pointer-events: none;
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		max-width: 300px;
 		padding: var(--s-4) var(--s-5);
-		background: color-mix(in oklch, var(--surface-panel) 90%, transparent);
-		border: 1px solid var(--border-default);
 		border-radius: var(--r-md);
-		box-shadow: var(--elev-3);
-		backdrop-filter: blur(8px);
-		pointer-events: none;
-		animation: fade-in var(--dur-instant) var(--ease-out);
-	}
-
-	/* The hover power-card: names a node and its current post without committing.
-	   A smaller sibling of the edge-tip, anchored near the node it describes. */
-	.node-tip {
-		position: absolute;
-		z-index: 2;
-		max-width: 220px;
-		padding: var(--s-3) var(--s-4);
-		background: color-mix(in oklch, var(--surface-panel) 92%, transparent);
+		background: var(--surface-overlay);
 		border: 1px solid var(--border-default);
-		border-radius: var(--r-sm);
-		box-shadow: var(--elev-2);
-		backdrop-filter: blur(8px);
-		pointer-events: none;
-		animation: fade-in var(--dur-instant) var(--ease-out);
-	}
-	.node-tip strong {
-		display: block;
+		box-shadow: var(--shadow-md, 0 6px 20px oklch(0% 0 0 / 0.35));
 		font-size: var(--t-sm);
-		font-weight: 560;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
+		color: var(--text-primary);
 	}
-	.node-tip .tip-post {
-		display: block;
-		margin-top: 2px;
-		font-size: var(--t-2xs);
+	.tip-post {
 		color: var(--text-secondary);
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
+		font-size: var(--t-xs);
 	}
-	.node-tip .tip-post i {
-		font-style: normal;
-		color: var(--text-faint);
-	}
-	.node-tip .muted {
-		color: var(--text-faint);
+	.tip-ties {
+		color: var(--text-muted);
+		font-size: var(--t-2xs);
 	}
 	.edge-tip .verb {
-		display: block;
 		font-family: var(--font-mono);
 		font-size: var(--t-2xs);
 		text-transform: uppercase;
 		letter-spacing: var(--track-caps);
-		color: var(--text-faint);
-		margin-bottom: var(--s-1);
-	}
-	.edge-tip strong {
-		display: block;
-		font-weight: 520;
-		font-size: var(--t-base);
-		line-height: var(--lh-tight);
+		color: var(--text-muted);
 	}
 	.tip-meta {
 		display: flex;
 		align-items: center;
 		gap: var(--s-3);
+		margin-top: var(--s-2);
 		flex-wrap: wrap;
-		margin-top: var(--s-4);
 	}
 	.tip-cta {
 		font-size: var(--t-2xs);
 		color: var(--text-faint);
 	}
-
-	.edgecard {
+	.compare-banner,
+	.offmap {
 		position: absolute;
-		z-index: 4;
+		top: 44px;
+		left: 50%;
+		transform: translateX(-50%);
+		z-index: 5;
+		display: flex;
+		align-items: center;
+		gap: var(--s-5);
+		max-width: calc(100% - 32px);
+		padding: var(--s-3) var(--s-3) var(--s-3) var(--s-6);
+		border-radius: var(--r-full);
+		background: var(--surface-overlay);
+		border: 1px solid var(--border-default);
+		font-size: var(--t-sm);
+		color: var(--text-primary);
+		box-shadow: var(--shadow-md, 0 6px 20px oklch(0% 0 0 / 0.35));
 	}
-	/*
-	 * On a phone the card docks to the bottom instead of chasing the tapped line: a
-	 * 320px panel placed near a tap on a 390px screen covers what was tapped. It is
-	 * a real sheet now: the handle is the drag target, the wrapper is the surface
-	 * that slides away, and the ConnectionCard inside keeps its own scroll under a
-	 * cap measured against the canvas, never the viewport, so it can never paint
-	 * past the view it belongs to.
-	 */
-	.edgecard.sheet {
-		/* Flush to the canvas bottom, which is the dock top: the sheet reads as
-		   coming out from under the dock, and translateY(100%) hides it completely. */
-		inset: auto 0 0 0;
-		/* Landscape notch: full-bleed frame, inset content. */
-		padding-inline: var(--safe-l) var(--safe-r);
+	.cmp-n {
+		color: var(--text-muted);
+		font-size: var(--t-xs);
+	}
+	.cmp-exit,
+	.offmap button {
+		border: 1px solid var(--border-default);
+		background: none;
+		color: var(--text-secondary);
+		border-radius: var(--r-full);
+		padding: var(--s-2) var(--s-5);
+		font-size: var(--t-2xs);
+		cursor: pointer;
+		white-space: nowrap;
+	}
+	.cmp-exit:hover,
+	.offmap button:hover {
+		color: var(--text-primary);
+		border-color: var(--border-strong);
+	}
+	.viewnav {
+		position: absolute;
+		top: 44px;
+		inset-inline-end: var(--s-5);
+		z-index: 4;
 		display: flex;
 		flex-direction: column;
-		max-height: calc(100% - var(--s-8));
+		align-items: flex-end;
+		gap: var(--s-4);
+	}
+	.clear-focus {
+		border: 1px solid var(--border-default);
 		background: var(--surface-overlay);
-		border: 1px solid var(--border-strong);
-		border-bottom: none;
-		border-radius: var(--r-xl) var(--r-xl) 0 0;
-		box-shadow: var(--elev-4);
-		overflow: hidden;
-		transform: translateY(var(--sheet-y, 0px));
-		transition: transform var(--dur-normal) var(--ease-out);
-	}
-	/* The wrapper is the surface; the card inside is the scroll. Its own skin would
-	   double the border and corner, so only the layer hairline survives. */
-	.edgecard.sheet :global(.card) {
-		flex: 1;
-		min-height: 0;
-		width: 100%;
-		max-width: none;
-		max-height: none;
-		border: none;
-		border-inline-start: 2px solid var(--c);
-		border-radius: 0;
-		background: transparent;
-		box-shadow: none;
-		backdrop-filter: none;
-	}
-	/* Leaving: under the bottom edge, the same exit the other sheets use. */
-	.edgecard.sheet.closing {
-		transform: translateY(100%);
-		transition: transform var(--dur-normal) var(--ease-in-out);
-	}
-
-	.a11y {
-		border-top: 1px solid var(--border-subtle);
-		padding: var(--s-5) var(--s-6);
-		font-size: var(--t-base);
 		color: var(--text-secondary);
-		max-height: 40vh;
-		/* Both axes. The five-column table is wider than a phone, and this is the
-		   accessible equivalent of the whole graph — content that cannot be scrolled to
-		   is content the table does not actually provide. */
-		overflow: auto;
-		flex-shrink: 0;
-	}
-	.a11y summary {
-		cursor: pointer;
-		font-size: var(--t-sm);
-		color: var(--text-muted);
-	}
-	.a11y table {
-		width: 100%;
-		border-collapse: collapse;
-		margin-top: var(--s-5);
-		font-size: var(--t-sm);
-	}
-	.a11y caption {
-		text-align: start;
-		color: var(--text-faint);
-		font-size: var(--t-xs);
-		padding-bottom: var(--s-4);
-		max-width: 90ch;
-		line-height: var(--lh-snug);
-	}
-	.a11y th,
-	.a11y td {
-		text-align: start;
-		padding: var(--s-2) var(--s-6) var(--s-2) 0;
-		border-bottom: 1px solid var(--border-subtle);
-	}
-	.a11y th {
-		color: var(--text-faint);
-		font-weight: 400;
+		border-radius: var(--r-full);
+		padding: var(--s-3) var(--s-5);
 		font-size: var(--t-2xs);
+		letter-spacing: var(--track-caps);
 		text-transform: uppercase;
-		letter-spacing: var(--track-wide);
+		cursor: pointer;
 	}
-	.rowopen {
-		font-size: var(--t-xs);
-		color: var(--accent);
-		white-space: nowrap;
-		border-bottom: 1px solid var(--accent-border);
-	}
-	.rowopen:hover {
-		color: var(--accent-hover);
+	.clear-focus:hover {
+		color: var(--text-primary);
 	}
 
-	/*
-	   Bottom-left, stacked on the minimap. At the bottom-right it sat over the
-	   Foreign lane's list of states, the one part of the map that is text; the
-	   left edge holds the minimap and the start of the first lane instead. Its
-	   height is capped to the room above the minimap and it scrolls inside that.
-	*/
 	.legend {
 		position: absolute;
-		inset-inline-start: var(--s-6);
-		bottom: calc(var(--s-6) + var(--mini-h) + var(--s-3));
-		z-index: 2;
-		max-height: calc(100% - var(--mini-h) - var(--s-6) * 3);
-		overflow-y: auto;
-		/* Compact by design: a reference strip, not a panel. One column as wide as
-		   the minimap's gutter, so it stands beside the first lane rather than on
-		   it; labels wrap instead of truncating. */
-		width: 160px;
-		padding: var(--s-3) var(--s-4);
-		background: color-mix(in oklch, var(--surface-panel) 88%, transparent);
-		border: 1px solid var(--border-subtle);
-		border-radius: var(--r-sm);
-		backdrop-filter: blur(8px);
-		box-shadow: var(--elev-2);
+		inset-inline-start: var(--s-5);
+		bottom: var(--s-5);
+		z-index: 4;
+		max-width: 230px;
+		max-height: calc(100% - 140px);
+		overflow: auto;
+		padding: var(--s-3) var(--s-5);
+		border-radius: var(--r-md);
+		background: color-mix(in oklch, var(--surface-overlay) 94%, transparent);
+		border: 1px solid var(--border-default);
+		font-size: var(--t-xs);
+		color: var(--text-secondary);
+		backdrop-filter: blur(6px);
+	}
+	.phone .legend {
+		bottom: var(--s-5);
 	}
 	.legend summary {
 		display: flex;
 		align-items: center;
 		gap: var(--s-3);
+		cursor: pointer;
+		list-style: none;
 		font-family: var(--font-mono);
 		font-size: var(--t-2xs);
 		letter-spacing: var(--track-caps);
 		text-transform: uppercase;
-		color: var(--text-faint);
-		cursor: pointer;
-		list-style: none;
+		color: var(--text-muted);
+		min-height: 28px;
 	}
 	.legend summary::-webkit-details-marker {
 		display: none;
 	}
-	.legend summary:hover {
-		color: var(--text-primary);
-	}
-	/* Closed, the summary IS the control, so it needs no bottom margin. Open, it is a
-	   heading over the rows and does. */
-	.legend[open] summary {
-		margin-bottom: var(--s-3);
-		padding-bottom: var(--s-2);
-		border-bottom: 1px solid var(--border-subtle);
-	}
-	.legend .lsec {
-		margin: var(--s-3) 0 var(--s-1);
+	.lsec {
+		margin: var(--s-4) 0 var(--s-2);
 		font-family: var(--font-mono);
 		font-size: var(--t-2xs);
 		letter-spacing: var(--track-caps);
 		text-transform: uppercase;
 		color: var(--text-faint);
 	}
-	.legend .lsec:first-of-type {
-		margin-top: 0;
+	.lgrid {
+		display: grid;
+		gap: var(--s-2);
 	}
 	.lrow {
 		display: flex;
 		align-items: center;
-		gap: var(--s-2);
-		min-width: 0;
-		font-size: var(--t-2xs);
-		line-height: 1.9;
+		gap: var(--s-3);
+		line-height: 1.3;
+	}
+	.lrow svg {
+		flex: none;
+	}
+	.lg-box {
+		flex: none;
+		width: 18px;
+		height: 12px;
+		border-radius: 3px;
+		border: 1px solid var(--border-strong);
+		box-shadow: inset 2px 0 0 var(--layer-political);
+		background: var(--surface-raised);
+	}
+	.lg-dot {
+		flex: none;
+		width: 8px;
+		height: 8px;
+		margin-inline: 5px;
+		border-radius: 50%;
+		background: var(--layer-political);
+		border: 1.5px solid var(--layer-political);
+	}
+	.lg-dot.hollow {
+		background: transparent;
+		border-color: var(--text-muted);
+	}
+	.lg-bar {
+		flex: none;
+		width: 18px;
+		height: 6px;
+		border-radius: 2px;
+		background: linear-gradient(90deg, var(--seat-1) 0 55%, var(--seat-2) 55% 80%, var(--seat-3) 80%);
+	}
+	.lg-chip {
+		flex: none;
+		width: 8px;
+		height: 8px;
+		margin-inline: 5px;
+		border-radius: 2px;
+		border: 1.5px solid var(--layer-economic);
+	}
+	.rdot {
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+		background: var(--c);
+		flex: none;
+	}
+	.lgrid.types {
+		grid-template-columns: 1fr 1fr;
+		margin-top: var(--s-2);
+	}
+	.minimap {
+		position: absolute;
+		inset-inline-end: var(--s-5);
+		bottom: var(--s-5);
+		z-index: 4;
+		padding: 3px;
+		border-radius: var(--r-sm);
+		background: color-mix(in oklch, var(--surface-overlay) 92%, transparent);
+		border: 1px solid var(--border-default);
+		line-height: 0;
+		direction: ltr;
+	}
+	.minimap svg {
+		cursor: crosshair;
+		touch-action: none;
+	}
+	.mm-unit {
+		fill: var(--c);
+		fill-opacity: 0.45;
+	}
+	.mm-view {
+		fill: var(--accent);
+		fill-opacity: 0.08;
+		stroke: var(--accent);
+		stroke-width: 1;
+		vector-effect: non-scaling-stroke;
+	}
+
+	/* --- The connection card ----------------------------------------------------- */
+
+	.edgecard {
+		position: absolute;
+		z-index: 7;
+		width: 320px;
+		max-width: calc(100% - 16px);
+	}
+	.sheet-handle {
+		display: none;
+	}
+	.edgecard.sheet {
+		position: fixed;
+		left: 0;
+		right: 0;
+		bottom: calc(var(--dock-h, 44px) + var(--safe-bottom, 0px));
+		width: auto;
+		max-width: none;
+		max-height: 70vh;
+		overflow: auto;
+		border-radius: var(--r-xl) var(--r-xl) 0 0;
+		background: var(--surface-panel);
+		border-top: 1px solid var(--border-default);
+		box-shadow: 0 -10px 30px oklch(0% 0 0 / 0.35);
+		animation: sheet-in var(--dur-normal) var(--ease-out);
+	}
+	.edgecard.sheet.closing {
+		transform: translateY(100%);
+		transition: transform var(--dur-normal) var(--ease-in-out);
+	}
+	.edgecard.sheet .sheet-handle {
+		display: flex;
+		justify-content: center;
+		padding: var(--s-3) 0 0;
+	}
+	.sheet-grip {
+		width: 36px;
+		height: 4px;
+		border-radius: 2px;
+		background: var(--border-strong);
+	}
+	@keyframes sheet-in {
+		from {
+			transform: translateY(100%);
+		}
+	}
+
+	/* --- The table view ------------------------------------------------------------ */
+
+	.a11y {
+		border-top: var(--rule);
+		padding: var(--s-3) var(--s-6);
+		font-size: var(--t-sm);
 		color: var(--text-secondary);
+		max-height: 40vh;
+		overflow: auto;
+	}
+	.a11y summary {
+		cursor: pointer;
+		color: var(--text-muted);
+		font-size: var(--t-xs);
+		min-height: 28px;
+		display: flex;
+		align-items: center;
+	}
+	.a11y table {
+		width: 100%;
+		border-collapse: collapse;
+		margin: var(--s-4) 0;
+		font-size: var(--t-xs);
+	}
+	.a11y caption {
+		text-align: start;
+		color: var(--text-muted);
+		padding-bottom: var(--s-3);
+	}
+	.a11y th,
+	.a11y td {
+		text-align: start;
+		padding: var(--s-2) var(--s-4) var(--s-2) 0;
+		border-bottom: var(--rule);
+	}
+	.a11y th {
+		color: var(--text-muted);
+		font-weight: 500;
+	}
+	.a11y-sub {
+		margin: var(--s-5) 0 0;
+		font-size: var(--t-sm);
+		color: var(--text-primary);
+	}
+	.rowopen {
+		background: none;
+		border: 1px solid var(--border-default);
+		border-radius: var(--r-sm);
+		color: var(--text-secondary);
+		padding: var(--s-1) var(--s-4);
+		font-size: var(--t-2xs);
+		cursor: pointer;
 		white-space: nowrap;
 	}
-	.lsec + .lrow {
-		margin-top: var(--s-1);
+	.rowopen:hover {
+		color: var(--text-primary);
+		border-color: var(--border-strong);
 	}
-	/* The swatch lists: basis strokes, relationship types, bridges. One column,
-	   each label free to wrap under its swatch. */
-	.lgrid {
-		display: grid;
-		grid-template-columns: 1fr;
-		margin-top: var(--s-1);
-	}
-	.lgrid .lrow {
-		align-items: baseline;
-		white-space: normal;
-		line-height: var(--lh-snug);
-		padding-block: 2px;
-	}
-	.lgrid svg {
-		flex-shrink: 0;
-	}
-	/* A relationship-type swatch: a dot in the type colour, not a full-width
-	   line — the legend is a key, not a chart of its own. */
-	.rdot {
-		flex-shrink: 0;
-		width: 5px;
-		height: 5px;
-		border-radius: 50%;
-		background: var(--c, var(--text-muted));
+	.phone .stage {
+		min-height: 0;
 	}
 
-	/* --- compact ----------------------------------------------------------- */
-
-	@media (max-width: 900px) {
-		/*
-			The canvas is the view; on a phone everything else is overhead. The standing
-			explanation of what fixed lanes mean is the first thing to go — it is a
-			sentence you read once, and it is still in the aria-label and on the wide
-			layout.
-		*/
-		.toolbar {
-			gap: var(--s-5);
-			padding: var(--s-4) var(--s-5);
-		}
-		.stats {
-			font-size: var(--t-2xs);
-			gap: var(--s-4);
-		}
-		/*
-		 * Bottom-start on a phone: the zoom stack owns the bottom-end corner, and a
-		 * legend that shares it collides with the controls whenever the reference
-		 * opens. Opposite corners cannot intersect, whatever the legend's height.
-		 */
-		.legend {
-			inset-inline-start: var(--s-4);
-			inset-inline-end: auto;
-			bottom: var(--s-4);
-			/* No minimap on a phone, so nothing to stack on. */
-			max-height: calc(100% - var(--s-4) * 2);
-			padding: var(--s-3) var(--s-4);
-		}
-		/* On a phone the map IS the screen; a minimap over it is a second map. */
-		.minimap {
-			display: none;
-		}
-		.viewnav {
-			inset-inline-end: var(--s-4);
-			/* Clear of the pinned lane headers, which occupy the top strip. */
-			top: auto;
-			bottom: calc(var(--s-4) + 44px);
-		}
-		.a11y {
-			max-height: none;
+	@media (prefers-reduced-motion: reduce) {
+		.box,
+		.seat,
+		.chip,
+		.ghead {
+			transition: none;
+			animation: none;
 		}
 	}
 </style>

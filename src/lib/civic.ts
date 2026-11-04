@@ -1,4 +1,4 @@
-import { ds, roleById, institutionById, relationshipsByEntity, activity, type Institution, type Position, type Role } from './model';
+import { ds, roleById, institutionById, relationshipsByEntity, activity, meetsBasis, type Basis, type Institution, type Position, type Role } from './model';
 import type { Vacancy } from '$data/index';
 
 /**
@@ -202,6 +202,90 @@ export function affiliation(person: string, term: Term, t: number): { id: string
 		}
 	}
 	return null;
+}
+
+/**
+ * Who is seated on a chamber at `t`, after the evidence floor.
+ *
+ * A member whose seat rests on a claim below the floor is not seated: the
+ * chair stays hollow and the count says how many were withheld. A replacement
+ * known only to the year overlaps, on paper, with the member they replaced, so
+ * on some dates certain and possible members together outnumber the seats.
+ * Then only the certain ones are seated and the others are counted as
+ * uncertain rather than drawn in seats that do not exist.
+ */
+export function seatedAt(term: Term, t: number, floor: Basis): { members: Holding[]; withheld: number; uncertain: number } {
+	const everyone = membersAt(term, t);
+	const visible = everyone.filter((m) => meetsBasis(m.position.basis as Basis, floor));
+	const members = visible.length > term.seats ? visible.filter((m) => m.at === 2) : visible;
+	return { members, withheld: everyone.length - visible.length, uncertain: visible.length - members.length };
+}
+
+/** Groups past this rank share one colour and one legend entry. */
+export const SEAT_OTHERS = 7;
+
+/** One group or list on a chamber, with its seat count and palette slot. */
+export interface SeatGroup {
+	/** The group or party institution id; empty for members with no recorded affiliation. */
+	id: string;
+	n: number;
+	kind: 'group' | 'list' | null;
+	color: string;
+	/** True past the seventh group: it shares the eighth colour with every smaller one. */
+	other: boolean;
+}
+
+/**
+ * The groups present on a chamber, largest first.
+ *
+ * Where no member of a term is named but the source gives seats by party, the
+ * chamber is drawn from those counts (`split`). Otherwise each seated member
+ * is counted under their group or list (`affiliation`). Seven distinct colours
+ * go to the seven largest; every smaller group shares the eighth, so no small
+ * party wears a large one's colour. Members with no recorded affiliation come
+ * last, in the muted text colour, because "unaffiliated" is not a party.
+ */
+export function seatGroups(term: Term, members: Holding[], t: number): { groups: SeatGroup[]; split: boolean; byList: boolean } {
+	const sp = term.institution.seat_split;
+	if (sp?.length && !members.length) {
+		return {
+			split: true,
+			byList: true,
+			groups: [...sp]
+				.sort((a, b) => b.seats - a.seats)
+				.map((x, i) => ({
+					id: x.party,
+					n: x.seats,
+					kind: 'list' as const,
+					color: `var(--seat-${Math.min(i, SEAT_OTHERS) + 1})`,
+					other: i >= SEAT_OTHERS
+				}))
+		};
+	}
+	const count = new Map<string, number>();
+	const kind = new Map<string, 'group' | 'list'>();
+	for (const m of members) {
+		const a = affiliation(m.position.holder, term, t);
+		const key = a?.id ?? '';
+		count.set(key, (count.get(key) ?? 0) + 1);
+		if (a) kind.set(a.id, a.kind);
+	}
+	// A term coloured by party lists has no "no group" seats, only seats whose
+	// list was independent or is not in the record.
+	const byList = [...kind.values()].includes('list');
+	return {
+		split: false,
+		byList,
+		groups: [...count.entries()]
+			.sort((a, b) => (a[0] === '' ? 1 : b[0] === '' ? -1 : b[1] - a[1]))
+			.map(([id, n], i) => ({
+				id,
+				n,
+				kind: kind.get(id) ?? null,
+				color: id ? `var(--seat-${Math.min(i, SEAT_OTHERS) + 1})` : 'var(--text-muted)',
+				other: !!id && i >= SEAT_OTHERS
+			}))
+	};
 }
 
 /**

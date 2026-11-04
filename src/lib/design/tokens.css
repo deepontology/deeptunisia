@@ -426,6 +426,40 @@
 }
 
 /* ---------------------------------------------------------------------------
+   Sequential ramp: a magnitude, such as how many ties two layers exchange.
+   One hue (the bridge's, because the quantity measured is bridging) stepped
+   in lightness only, so more always reads as more and never as a different
+   category. Dark theme: more is brighter against the ink. Light theme: more
+   is darker against the paper. Each step names the ink its numbers wear.
+   --------------------------------------------------------------------------- */
+
+:root {
+	--seq-0: var(--surface-sunken);
+	--seq-1: oklch(29% 0.04 85);
+	--seq-2: oklch(38% 0.065 85);
+	--seq-3: oklch(49% 0.09 85);
+	--seq-4: oklch(63% 0.115 85);
+	--seq-5: oklch(78% 0.14 85);
+	--seq-ink-1: var(--text-primary);
+	--seq-ink-2: var(--text-primary);
+	--seq-ink-3: var(--text-primary);
+	--seq-ink-4: var(--text-inverted);
+	--seq-ink-5: var(--text-inverted);
+}
+[data-theme='light'] {
+	--seq-1: oklch(95% 0.025 85);
+	--seq-2: oklch(89% 0.055 85);
+	--seq-3: oklch(81% 0.085 82);
+	--seq-4: oklch(71% 0.11 78);
+	--seq-5: oklch(60% 0.125 72);
+	--seq-ink-1: var(--text-primary);
+	--seq-ink-2: var(--text-primary);
+	--seq-ink-3: var(--text-primary);
+	--seq-ink-4: var(--text-primary);
+	--seq-ink-5: var(--text-primary);
+}
+
+/* ---------------------------------------------------------------------------
    Relationship type palette — theme-independent
    Used when a node is selected: connecting edges recolour by type.
    Chosen so the palette is distinguishable and equally weighted.
