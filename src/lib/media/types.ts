@@ -140,7 +140,44 @@ export type StandardBlock =
 	| { t: 'ul' | 'ol'; items?: ContentInline[][] }
 	| { t: 'section'; id?: string | null; title?: string; section_type?: string };
 
-export type ContentBlock = StandardBlock | InterpBlock;
+/** A standalone "[[figure:id]]" marker: renders a record from figures.yaml. */
+export interface FigureBlock {
+	t: 'figure';
+	ref: string;
+}
+
+export type ContentBlock = StandardBlock | InterpBlock | FigureBlock;
+
+export interface TenureBar {
+	holder: string;
+	start: string;
+	/** null = still in post at the last check. */
+	end: string | null;
+	claims: string[];
+	/** Marks a holder known from a single report rather than a decree. */
+	weak?: boolean;
+}
+
+export interface TenureFigure {
+	id: string;
+	kind: 'tenure';
+	title: string;
+	caption: string;
+	domain: [string, string];
+	lanes: Array<{ label: string; bars: TenureBar[] }>;
+}
+
+export interface CompareFigure {
+	id: string;
+	kind: 'compare';
+	title: string;
+	caption: string;
+	columns: string[];
+	/** Cells are compiled to inline nodes by build-media.ts. */
+	rows: Array<{ label: string; cells: ContentInline[][] }>;
+}
+
+export type Figure = TenureFigure | CompareFigure;
 
 /**
  * One editor reading, from interpretations.yaml. Kept apart from graded
@@ -172,6 +209,7 @@ export interface InvestigationBundle {
 	entities: { entities: Entity[] };
 	exclusions: { exclusions: Exclusion[] };
 	interpretations: { interpretations: InterpretationRecord[] };
+	figures?: Figure[];
 	narrative: Record<string, { sections: ContentBlock[] }>;
 }
 
