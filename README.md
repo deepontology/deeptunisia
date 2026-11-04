@@ -45,9 +45,9 @@ halves of the dev loop as `beta` so the Agora tab is reachable during
 development; a reader on deeptunisia.org never touches it. The mode contract is
 `docs/agora-deployment.md`.
 
-The complete graph is <!--stat:graphKB-->13200<!--/stat--> KB as the internal
+The complete graph is <!--stat:graphKB-->13250<!--/stat--> KB as the internal
 bundle, and the public exports (dataset, CSVs, geographic layers, changelog)
-ship at <!--stat:shippedKB-->24050<!--/stat--> KB — both are computed by the
+ship at <!--stat:shippedKB-->24130<!--/stat--> KB — both are computed by the
 build, and `npm run test` fails if the README ever disagrees with them.
 
 ## Reproducibility
@@ -197,7 +197,7 @@ This is not neutrality for its own sake — it is the project's only real protec
 - **UI is translated for chrome only.** Arabic, French and English navigation, controls and labels, with RTL. Entity names are trilingual in the data and all three are searchable. Long-form analytical prose is deliberately *not* machine-translated — a machine-translated epistemology page would undermine the point.
 - **<!--stat:needsPrimarySource-->233<!--/stat--> records await a primary source.** Listed in full on `/evidence`.
 - **Human review is not merely thin, it is not independent.** Independent checks stand at <!--stat:independent-->0<!--/stat--> in every category, and the editorial notes that do exist are unevenly spread: <!--stat:reviewed-unsubstantiated-->18<!--/stat--> of <!--stat:reviewable-unsubstantiated-->22<!--/stat--> unsubstantiated claims, <!--stat:reviewed-attributed-->25<!--/stat--> of <!--stat:reviewable-attributed-->2833<!--/stat--> that name a source and <!--stat:reviewed-inferred-->2<!--/stat--> of <!--stat:reviewable-inferred-->67<!--/stat--> inferences carry one. The breakdown is on `/about`.
-- **<!--stat:sourcesUncited-->64<!--/stat--> of <!--stat:sources-->2465<!--/stat--> sources back no claim.** Staged reading, kept in the file but excluded from the published count of <!--stat:sourcesCited-->2401<!--/stat--> — a bibliography entry that holds nothing up is not evidence.
+- **<!--stat:sourcesUncited-->64<!--/stat--> of <!--stat:sources-->2499<!--/stat--> sources back no claim.** Staged reading, kept in the file but excluded from the published count of <!--stat:sourcesCited-->2435<!--/stat--> — a bibliography entry that holds nothing up is not evidence.
 
 ## Deliberately not built yet
 
