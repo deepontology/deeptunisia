@@ -274,6 +274,8 @@ const GRAPH_COLLECTIONS = [
 	'companies',
 	'contracts',
 	'licences',
+	// Documented vacancies (decision 0007): offices with no titular holder.
+	'vacancies',
 	'declarations',
 	'education',
 	// Independent verification (M2) — its own record type, its own denominator.

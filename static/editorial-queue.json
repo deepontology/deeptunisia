@@ -1,6 +1,6 @@
 {
-  "generated": "2026-11-03T19:03:04.493Z",
-  "total": 5412,
+  "generated": "2026-11-04T12:23:15.004Z",
+  "total": 5413,
   "reviewed": 42,
   "queue": [
     {
@@ -21222,6 +21222,16 @@
       "sources": 4,
       "reviewed": false,
       "title": "political-conflict: kais-saied → rached-ghannouchi"
+    },
+    {
+      "kind": "vacancy",
+      "id": "vac-governor-tunis-2023",
+      "confidence": "B",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 4,
+      "reviewed": false,
+      "title": "vacant — Governor of Tunis"
     },
     {
       "kind": "contract",

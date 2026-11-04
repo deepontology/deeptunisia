@@ -1,5 +1,25 @@
 [
   {
+    "hash": "dcb0fff77",
+    "date": "2026-11-03T20:03:51+01:00",
+    "subject": "Data: re-read the gazette issues behind 17 governor tenures",
+    "kind": "revision",
+    "added": 241,
+    "removed": 38,
+    "files": [
+      {
+        "file": "data/positions.yaml",
+        "added": 80,
+        "removed": 38
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 161,
+        "removed": 0
+      }
+    ]
+  },
+  {
     "hash": "34e775539",
     "date": "2026-11-03T19:50:19+01:00",
     "subject": "Data: merge two governors recorded twice",
