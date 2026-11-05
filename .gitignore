@@ -8,6 +8,8 @@ src/generated/
 .env.*
 !.env.example
 static/dataset.json
+static/prose-fr.json
+static/prose-ar.json
 static/positions.csv
 static/relationships.csv
 static/sources.csv
