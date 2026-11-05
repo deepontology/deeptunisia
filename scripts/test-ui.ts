@@ -18,7 +18,6 @@ import { studyShareMessage } from '../src/lib/share.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const NETWORK = readFileSync(join(HERE, '..', 'src', 'lib', 'components', 'NetworkView.svelte'), 'utf8');
-const LABELS_CSS = readFileSync(join(HERE, '..', 'src', 'lib', 'viz', 'labels.css'), 'utf8');
 
 let failures = 0;
 let checks = 0;
@@ -70,42 +69,52 @@ for (const loc of ['en', 'fr', 'ar'] as const) {
 	ok(`basis labels are distinct in ${loc}`, new Set(labels).size === 4, labels.join(' / '));
 }
 
-console.log('\n  ── §14.3: the rebuilt network view — gutter, rings, staged colour, dismissal ──\n');
+console.log('\n  ── §14.3: the network view — containment, tie families, the layer matrix ──\n');
 
-// The gutter channel: cross-layer edges travel in the strips between lanes.
-ok('the gutter channel exists as a layout constant', NETWORK.includes('const GUTTER_W ='));
-ok('the gutter strips are drawn between lanes', NETWORK.includes('gutter-strip'));
-ok('lanes absorb the gutter cost (world still sums to W)', NETWORK.includes('(W - GUTTER_W * (lanes.length - 1)) / lanes.length'));
-ok('cross-layer edges route through a gutter', NETWORK.includes('kind: \'cross\'') && NETWORK.includes('gutterCenter(k, laneW)'));
-ok('parallel cross-layer edges are spread deterministically', NETWORK.includes('gxOff'));
-ok('the card anchors to the routed midpoint, not a stale helper', NETWORK.includes('routes.get(pinned.id)?.mid'));
+const SCENE_TS = readFileSync(join(HERE, '..', 'src', 'lib', 'network', 'scene.ts'), 'utf8');
+const ROUTE_TS = readFileSync(join(HERE, '..', 'src', 'lib', 'network', 'route.ts'), 'utf8');
+const MATRIX = readFileSync(join(HERE, '..', 'src', 'lib', 'components', 'network', 'NetworkMatrix.svelte'), 'utf8');
 
-// Attention rings: graduated distance-from-focus, never a colour change.
-ok('the binary neighbours set is gone', !NETWORK.includes('const neighbours'));
-ok('attention rings compute 1-hop and 2-hop', NETWORK.includes('const rings = $derived.by') && NETWORK.includes('const two = new Set<string>()'));
-ok('node emphasis is a class ladder, not a colour', NETWORK.includes('nodeRingClass') && NETWORK.includes('r-two'));
-ok('distance is encoded by opacity only', NETWORK.includes('.node.r-rest {') && !NETWORK.includes('.node.r-rest { stroke'));
+// Holding office is containment: a seat inside its institution, never a line.
+ok('holding office is drawn as a seat, not synthesised as an edge', SCENE_TS.includes("kind: chamber ? 'chamber' : 'office'") && !NETWORK.includes("'pos-'"));
+ok('a chamber is one box counted by group, from the shared civic rule', SCENE_TS.includes('seatedAt(term, t, floor)') && SCENE_TS.includes('seatGroups(term'));
+ok('the hemicycle seats members by the same rule', readFileSync(join(HERE, '..', 'src', 'lib', 'components', 'ParliamentView.svelte'), 'utf8').includes('seatedAt(term, app.t, app.basisFloor)'));
+ok('ties route through gutters with interval-coloured tracks', ROUTE_TS.includes('Interval colouring per gutter') && ROUTE_TS.includes('scene.gutters[g]'));
+ok('the card anchors to the midpoint of the line on screen', NETWORK.includes('tiePaths.get(pinned.id)?.mid') && NETWORK.includes('dots ? dots.paths : routes'));
+// The dot view: the same scene as a node-link diagram, posts drawn as spokes.
+const DOTS_TS = readFileSync(join(HERE, '..', 'src', 'lib', 'network', 'dots.ts'), 'utf8');
+ok('the dot view is built from the scene, once per scene', DOTS_TS.includes('export function buildDots(scene: Scene') && DOTS_TS.includes('new WeakMap<Scene'));
+ok('the dot view is a third reading in the switch and the URL', NETWORK.includes("const VIEWS: View[] = ['map', 'dots', 'matrix']") && NETWORK.includes("t('network.view.dots')"));
+ok('the dot view draws posts as spokes and a chamber as a ring of seat colours', NETWORK.includes('dots.spokes') && NETWORK.includes('donutArcs('));
+ok('the legend is the reader\'s to open: no width-driven open attribute', NETWORK.includes('open={legendOpen} ontoggle={onLegendToggle}') && !NETWORK.includes('open={!compact.current'));
+ok('lanes stretch on a wide screen, in steps', NETWORK.includes('Math.floor(w * 8) / 8') && SCENE_TS.includes('export function laneWidth(layer: Layer, widen = 1)'));
 
-// The one-ring label modifier (place.ts untouched — a modifier, not a tier).
-ok('the one-ring label modifier exists in labels.css', LABELS_CSS.includes('.vlabel.hop-one'));
-ok('the neighbour modifier is additive, not a new tier', LABELS_CSS.includes('tier machine in place.ts stays untouched'));
+// The lens: tie families, honest about what they hold back.
+ok('tie families are URL-addressable and read the older ?mode= links', NETWORK.includes("params.get('ties')") && NETWORK.includes("familiesFromMode(params.get('mode'))") && NETWORK.includes('syncFamiliesUrl'));
+ok('a switched-off family is counted, never dropped silently', NETWORK.includes('scene.stats.notShown') && NETWORK.includes('network.stat.notshown') && NETWORK.includes('familyCount'));
 
-// Staged edge language: only focus-incident edges recolor to relationship type.
+// Focus: staged colour, distance by opacity, direction on the focused ties.
 ok('edge colour is staged by focus scope', NETWORK.includes('function edgeColor'));
-ok('the bridge keeps a source-layer hairline', NETWORK.includes('class="hairline"'));
-ok('direction arrows are gated on focus + zoom', NETWORK.includes('cam.zoomProgress > 0.25') && NETWORK.includes('marker-end'));
+ok('focus dims by opacity, never by recolouring the rest', NETWORK.includes('function dimmed') && NETWORK.includes('.seat.dim {') && NETWORK.includes('opacity: var(--dim)'));
+ok('focused ties are drawn over the boxes with direction', NETWORK.includes('class="layer over"') && NETWORK.includes('marker-end'));
 ok('the focused legend section is declared', NETWORK.includes('network.legend.focused'));
 ok('legend swatches render from the relationship constants', NETWORK.includes('LEGEND_REL_TYPES') && NETWORK.includes('REL_TYPE_COLOR[rt]'));
 ok(
 	'every legend swatch type is a real relationship kind',
-	(['institutional', 'appointment', 'family', 'business', 'prosecution', 'reported-influence'] as const).every((t) => t in REL_KIND)
+	(['appointment', 'family', 'business', 'prosecution', 'reported-influence', 'party'] as const).every((t) => t in REL_KIND)
 );
 
-// Group headers are zoom-gated and crossfade in (the measured overview pile-up:
-// 42 headers at the fit floor used to render; now they fade in over 10-30%).
-ok('group headers are zoom-gated', NETWORK.includes('showGroupHeaders') && NETWORK.includes('smoothStep(cam.zoomProgress, 0.1, 0.3)'));
-ok('the roster crossfades instead of popping at a threshold', NETWORK.includes('rosterFade') && NETWORK.includes('--rf'));
-ok('group bands carry a zone hairline', NETWORK.includes('band-line'));
+// Performance: one transform per frame, text hidden by level of detail.
+ok('all world text shares the camera transform in one layer', NETWORK.includes('class="world"') && NETWORK.includes('translate({cam.x}px, {cam.y}px) scale({cam.k})'));
+ok('text is hidden by level of detail, not placed per frame', NETWORK.includes('class="canvas lod-{lod}"') && !NETWORK.includes('placeLabels'));
+ok('hover is delegated: one listener for every seat', NETWORK.includes('onpointerover={onWorldOver}'));
+ok('the table renders only while open, and always in the prerendered page', NETWORK.includes('bind:open={tableOpen}') && NETWORK.includes('{#if tableOpen || !browser}'));
+ok('the off-map notice reads its sentence from the chamber rule', NETWORK.includes('chamberStanding(id, app.t, app.basisFloor)'));
+ok('a chamber known only by its party split counts its seats as held, and its box names what the count leaves out', NETWORK.includes('const held = c.split ?') && NETWORK.includes('chamberAria(u.id, u.layer, u.chamber)') && NETWORK.includes('chamberAria(c.id, c.layer, c.chamber)'));
+
+// The matrix is a real table and uses one sequential hue.
+ok('the layer matrix is an HTML table', MATRIX.includes('<table class="grid"') && MATRIX.includes('scope="row"') && MATRIX.includes('scope="col"'));
+ok('the matrix ramp is one hue, stepped in lightness', ['--seq-1', '--seq-5', '--seq-ink-5'].every((k) => readFileSync(join(HERE, '..', 'src', 'lib', 'design', 'tokens.css'), 'utf8').includes(k + ':')));
 
 // The dismissal machine: click-away pops exactly one level of the stack.
 ok('background click-away exists', NETWORK.includes('function onCanvasBgClick'));
@@ -113,18 +122,14 @@ ok(
 	'click-away pops one level: card first, then selection (and compare)',
 	NETWORK.includes('if (pinnedId) pinnedId = null;') && NETWORK.includes('else if (app.selected) {') && NETWORK.includes('compareId = null;')
 );
-ok('a click on a node/hit/card/lane is never a dismissal', NETWORK.includes("t.closest('.node, .hit, .vlane, .edgecard, .viewnav, .legend')"));
+ok('a click on a seat, box, line, card or lane is never a dismissal', NETWORK.includes("t.closest('.node, .hit, .box, .vlane, .edgecard, .viewnav, .legend, .minimap, .offmap, .dlabel, .spoke, .donut, .ghead')"));
 ok('long-press is the touch hover tier', NETWORK.includes('startPress') && NETWORK.includes('500'));
 ok('a long-press suppresses the click that follows it', NETWORK.includes('if (pressed)'));
 
-// ?mode= is addressable and written back into the URL.
-ok('the mode lens is URL-addressable', NETWORK.includes("searchParams.get('mode')"));
-ok('changing the mode rewrites the URL', NETWORK.includes('syncModeUrl'));
-ok('the mode hides nothing silently', NETWORK.includes('relCandidates') && NETWORK.includes('relShown') && NETWORK.includes('network.withheld'));
-
 // The accessible equivalent keeps pace: the focused ego-network is a table too.
 ok('the focus table exists (the highlight, for screen readers)', NETWORK.includes('network.table.focus'));
-ok('the table caption carries the mode', NETWORK.includes('network.table.caption'));
+ok('the table caption carries the families', NETWORK.includes('network.table.caption'));
+ok('who sits where is a table too', NETWORK.includes('network.table.seats'));
 
 // v0.0.2 records are first-class UI: a card, a route, and a search that opens it.
 const RECORD_PANEL = readFileSync(join(HERE, '..', 'src', 'lib', 'components', 'RecordPanel.svelte'), 'utf8');
@@ -216,8 +221,8 @@ ok(
 const WORLD = readFileSync(join(HERE, '..', 'src', 'lib', 'components', 'WorldView.svelte'), 'utf8');
 ok(
 	'the network hands energy flows and agreements to the world ledger',
-	NETWORK.includes("flowParam?.startsWith('energy:')") &&
-		NETWORK.includes("searchParams.get('agreement')") &&
+	NETWORK.includes("flow?.startsWith('energy:')") &&
+		NETWORK.includes("params.get('agreement')") &&
 		WORLD.includes("searchParams.get('flow')") &&
 		WORLD.includes("searchParams.get('agreement')"),
 	'NetworkView redirects, WorldView opens the card'
@@ -233,11 +238,14 @@ const GROUPS_TS = readFileSync(join(HERE, '..', 'src', 'lib', 'viz', 'groups.ts'
 ok('lane subsections are ordered by the authored groupOrder, never alphabetical', GROUPS_TS.includes('ds.meta.groupOrder') && !GROUPS_TS.includes('localeCompare'));
 ok('the minimap exists with a live viewport rect', NETWORK.includes('miniView') && NETWORK.includes('class="minimap"'));
 ok('clear-focus is an explicit dismissal', NETWORK.includes('clear-focus') && NETWORK.includes("t('network.clear')"));
-ok('gutter traffic labels carry counts', NETWORK.includes('gutterTraffic') && NETWORK.includes('network.gutter.short'));
 ok('wheel zoom is smoothed, with direct fallback', (() => {
 	const G = readFileSync(join(HERE, '..', 'src', 'lib', 'viz', 'gestures.ts'), 'utf8');
 	const C = readFileSync(join(HERE, '..', 'src', 'lib', 'viz', 'camera.svelte.ts'), 'utf8');
 	return G.includes('zoomSmoothTo') && G.includes('else cam.zoomAt') && C.includes('zoomSmoothTo(');
+})());
+ok('one wheel notch zooms by a step, not an e-fold', (() => {
+	const G = readFileSync(join(HERE, '..', 'src', 'lib', 'viz', 'gestures.ts'), 'utf8');
+	return G.includes('Math.max(-0.2, Math.min(0.2, -px * 0.01))') && G.includes('e.deltaMode === 1');
 })());
 
 console.log('\n  ── §14.4: the chronicle events timeline ──\n');

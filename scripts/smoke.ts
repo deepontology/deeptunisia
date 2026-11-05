@@ -211,16 +211,15 @@ const CHECKS: Check[] = [
 			['.dock', 1],
 			['.track .playhead', 1],
 			['.era-band', 7],
-			// Lane headers and names are HTML over the canvas now, not SVG text — see
-			// src/lib/viz/labels.css. Asserting on .vlabel is what catches the label
-			// placement pass silently suppressing everything, which would leave a
-			// perfectly rendered graph with nothing named on it.
+			// Lane headers are pinned HTML over the canvas. People in post are seats
+			// inside their institution's box (src/lib/network/scene.ts), each a named
+			// button: asserting on .seat is what catches the map rendering boxes with
+			// nobody in them. 20 is far under the ~150 seated on the default date
+			// and still catches the view rendering nothing.
 			['.vlane', 4],
-			['.vlabel', 4],
-			// Only live nodes are drawn at the overview now — the four hundred dormant
-			// ones appear on zoom. 20 is well under the ~38 live at the default date and
-			// still catches the view rendering nothing.
+			['.seat', 20],
 			['.node', 20],
+			// Ties are lines; holding office is not, so this counts claims only.
 			['.edge', 10],
 			// Every reachable edge needs its fat invisible twin, or connections are
 			// untappable on a phone.
@@ -1826,7 +1825,7 @@ console.log('\n  ── connections ──');
 	page.on('pageerror', (e) => problems.push(`[pageerror] ${e.message}`));
 	page.on('console', (m: ConsoleMessage) => {
 		/*
-		 * The W2 write hook calls raw history.replaceState, so SvelteKit's
+		 * Older builds wrote the lens through raw history.replaceState, so SvelteKit's
 		 * dev-mode advisory fires on the lens writes this section performs. It
 		 * is dev-only noise, pinned by the deep-link section's own assertions,
 		 * not an error in the flows under test.
@@ -1838,13 +1837,14 @@ console.log('\n  ── connections ──');
 	});
 
 	/*
-	 * The `all` lens, not the default `influence` reading.
+	 * The `all` lens, not the default reading.
 	 *
-	 * Measurement edges (`flow-*`) and prosecution/family/business authored
-	 * edges are only drawn under `?mode=all` (NetworkView's mode filter), and
-	 * this section is about connections as records, so it asks for the lens
-	 * that holds every edge. That is also what makes the `.edge.measurement`
-	 * count below meaningful: under the default lens it is legitimately 0.
+	 * Measurement edges (`flow-*`) are drawn only when the trade and debt
+	 * family is on, and the older `?mode=all` link still turns every family on
+	 * (NetworkView reads it beside `?ties=`). This section is about connections
+	 * as records, so it asks for the lens that holds every edge. That is also
+	 * what makes the `.edge.measurement` count below meaningful: under the
+	 * default lens it is legitimately 0.
 	 */
 	await page.goto(BASE + '/network?mode=all', { waitUntil: 'networkidle' });
 	await settle(page);
@@ -1885,10 +1885,11 @@ console.log('\n  ── connections ──');
 	 * relationship id being added to the graph.
 	 */
 	/*
-	 * Measurement edges render in the All lens only; the influence lens filters
-	 * them out by design (a flow deep link switches the lens to All for exactly
-	 * that reason). The page above asked for All by URL; this counts the witness
-	 * there, then opens a clean page to prove the default lens withholds them.
+	 * Measurement edges render only with the trade and debt family on; the
+	 * default lens leaves them out by design (a flow deep link turns that family
+	 * on for exactly that reason). The page above asked for every family by URL;
+	 * this counts the witness there, then opens a clean page to prove the
+	 * default lens withholds them.
 	 */
 	const flowEndpoints = graphBackedFlowEndpoints(NETWORK_DEFAULT_YEAR);
 	const measurementEdges = await page.locator('.edge.measurement').count();
@@ -1905,7 +1906,7 @@ console.log('\n  ── connections ──');
 		await settle(plain);
 		const defaultLens = await plain.locator('.edge.measurement').count();
 		ok(
-			'the influence lens withholds measurement edges',
+			'the default lens withholds measurement edges',
 			flowEndpoints.length === 0 || defaultLens === 0,
 			`${defaultLens} measurement edges in the default lens`
 		);
@@ -2026,12 +2027,12 @@ console.log('\n  ── connections ──');
 	);
 
 	/*
-	 * The entity panel emits a plain `/network?rel=<id>`; carry the `all` lens
-	 * beside it, because the lens is what makes the relationship visible. The
-	 * first row is a family tie, which the default influence lens excludes, so
-	 * without the parameter the map would honour the id by opening nothing.
-	 * `?mode=` is part of the deep-link contract (NetworkView reads both on
-	 * arrival), which is exactly what this round trip exercises.
+	 * The entity panel emits a plain `/network?rel=<id>`; carry the older `all`
+	 * lens beside it. A bare `?rel=` would also land, because a deep link turns
+	 * on the family its tie belongs to, but `?mode=` is still part of the
+	 * deep-link contract (NetworkView reads it beside `?ties=`), and links
+	 * shared before the families existed carry it, so this round trip exercises
+	 * that older parameter.
 	 */
 	const relUrl = new URL(relLink!, BASE);
 	relUrl.searchParams.set('mode', 'all');
@@ -2065,6 +2066,122 @@ console.log('\n  ── connections ──');
 
 	ok('connection console clean', problems.length === 0, problems.slice(0, 3).join(' | '));
 	await page.screenshot({ path: join(OUT, 'connection.png') });
+	await context.close();
+}
+
+// --- The network's readings and its legend -----------------------------------
+/*
+ * The view and the lens live in the URL, and a selection must not drop them.
+ * SvelteKit's replaceState is shallow routing and leaves page.url at the last
+ * navigation, so NetworkView and the layout's ?id= write both build on
+ * location.href. The legend's open state is the reader's: a pan does not undo
+ * it, and a reload remembers it.
+ */
+if (runSection('network readings')) {
+	console.log('\n  ── network readings ──');
+	const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+	const page = await context.newPage();
+	const problems: string[] = [];
+	page.on('pageerror', (e) => problems.push(`[pageerror] ${e.message}`));
+	await page.goto(BASE + '/network', { waitUntil: 'networkidle' });
+	await settle(page);
+
+	await page.getByRole('radio', { name: 'Dots' }).click();
+	await page.waitForTimeout(300);
+	ok('choosing Dots puts it in the URL', new URL(page.url()).searchParams.get('view') === 'dots', page.url());
+
+	await page.locator('button.fam').last().click();
+	await page.waitForTimeout(200);
+	const afterLens = new URL(page.url()).searchParams;
+	ok('a lens change keeps the view', afterLens.get('view') === 'dots' && afterLens.has('ties'), page.url());
+
+	const picked = (await page.evaluate(`(() => {
+		const b = document.querySelector('.dp');
+		if (!b) return null;
+		b.click();
+		return b.getAttribute('data-id');
+	})()`)) as string | null;
+	await page.waitForTimeout(400);
+	const afterPick = new URL(page.url()).searchParams;
+	ok(
+		'a selection keeps the view and the lens',
+		!!picked && afterPick.get('id') === picked && afterPick.get('view') === 'dots' && afterPick.has('ties'),
+		page.url()
+	);
+
+	await page.reload({ waitUntil: 'networkidle' });
+	await settle(page);
+	ok('a reload opens the same reading', (await page.getByRole('radio', { name: 'Dots' }).getAttribute('aria-checked')) === 'true');
+
+	await page.locator('.legend > summary').click();
+	await page.waitForTimeout(150);
+	const box = await page.locator('.canvas').boundingBox();
+	if (box) {
+		await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+		await page.mouse.down();
+		await page.mouse.move(box.x + box.width / 2 - 160, box.y + box.height / 2 - 60, { steps: 6 });
+		await page.mouse.up();
+		await page.mouse.wheel(0, -300);
+		await page.waitForTimeout(300);
+	}
+	const legendOpen = () => page.evaluate(`document.querySelector('.legend')?.open === true`) as Promise<boolean>;
+	ok('the legend stays open through a pan and a zoom', await legendOpen());
+	await page.reload({ waitUntil: 'networkidle' });
+	await settle(page);
+	ok('the legend remembers the reader', await legendOpen());
+
+	/*
+	 * A link to a chamber member's party tie, with no lens named: it turns the
+	 * party family on and opens the chamber's bundle, whose party it selects.
+	 * The selection is written during the page's first effects, before the
+	 * router is ready, which used to throw and leave ?id= unwritten.
+	 */
+	await page.goto(BASE + '/network?rel=rel-kamel-chergui-rcd-cdd-xii-member', { waitUntil: 'networkidle' });
+	await settle(page);
+	await page.waitForTimeout(400);
+	const bundled = new URL(page.url()).searchParams;
+	ok(
+		'a bundled party-tie link turns the family on and selects the party',
+		(bundled.get('ties') ?? '').includes('party') && bundled.get('id') === 'rcd',
+		page.url()
+	);
+
+	/*
+	 * A drag that starts on a name pans; it never selects text. And moving from
+	 * seat to seat keeps the map dimmed across the gaps between them, rather
+	 * than lighting everything and dimming it again on each gap.
+	 */
+	await page.goto(BASE + '/network', { waitUntil: 'networkidle' });
+	await settle(page);
+	const nm = await page.locator('.seat .nm').nth(3).boundingBox();
+	if (nm) {
+		await page.mouse.move(nm.x + 4, nm.y + 4);
+		await page.mouse.down();
+		await page.mouse.move(nm.x + 300, nm.y + 160, { steps: 10 });
+		await page.mouse.up();
+	}
+	ok('a drag across names selects no text', (await page.evaluate('String(getSelection())')) === '');
+	// A fresh page: the drag above leaves the map gliding under a still pointer.
+	await page.reload({ waitUntil: 'networkidle' });
+	await settle(page);
+	const seatsAt = (await page.evaluate(`(() => Array.from(document.querySelectorAll('.seat')).map((el) => [el, el.getBoundingClientRect()]).filter(([el, r]) => r.width > 20 && r.top > 120 && r.bottom < innerHeight - 40 && r.left > 0 && r.right < innerWidth && document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2)?.closest('.seat') === el).slice(0, 12).map(([, r]) => [r.left + r.width / 2, r.top + r.height / 2]))()`)) as [number, number][];
+	if (seatsAt.length) await page.mouse.move(seatsAt[0][0], seatsAt[0][1]);
+	await page.waitForTimeout(60);
+	// Every frame of the sweep: a frame with nothing dimmed is the flicker.
+	await page.evaluate(`(() => { window.__lit = 0; window.__watch = true; const f = () => { if (!document.querySelector('.seat.dim')) window.__lit++; if (window.__watch) requestAnimationFrame(f); }; requestAnimationFrame(f); })()`);
+	for (const [x, y] of seatsAt.slice(1)) await page.mouse.move(x, y, { steps: 6 });
+	const lit = (await page.evaluate('(() => { window.__watch = false; return window.__lit; })()')) as number;
+	ok('moving between seats keeps the map dimmed', seatsAt.length > 4 && lit === 0, `${lit} frames lit the whole map across ${Math.max(0, seatsAt.length - 1)} moves`);
+	await page.mouse.move(2, 2);
+
+	// A chamber's rank and file hold a seat but are counted on its bar: the
+	// notice says so instead of "no post held".
+	await page.goto(BASE + '/network?id=kamel-chergui', { waitUntil: 'networkidle' });
+	await settle(page);
+	const memberNote = (await page.locator('.offmap').innerText().catch(() => '')).trim();
+	ok('a chamber member off the map is said to be counted in its seats', /sits in/.test(memberNote) && !/no post held/.test(memberNote), memberNote.slice(0, 90));
+
+	ok('network readings console clean', problems.length === 0, problems.slice(0, 3).join(' | '));
 	await context.close();
 }
 
@@ -2998,10 +3115,11 @@ if (runSection('rtl')) for (const mode of MODES.filter((m) => m.id !== 'ltr')) {
 		ok(`${where} screen-space elements stay on screen`, escaped.length === 0, escaped.join(' | '));
 
 		if (path === '/network') {
-			// The label layer is the thing most likely to be thrown off by direction,
-			// so assert it is populated rather than merely not escaping.
-			const n = await page.locator('.vlabel').count();
-			ok(`${where} labels still render`, n >= 4, `${n} labels`);
+			// The seat layer is the thing most likely to be thrown off by direction
+			// (its coordinates are physical, the page is not), so assert it is
+			// populated rather than merely not escaping.
+			const n = await page.locator('.seat').count();
+			ok(`${where} seats still render`, n >= 20, `${n} seats`);
 		}
 
 		/*

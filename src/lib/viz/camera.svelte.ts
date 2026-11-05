@@ -89,6 +89,8 @@ export interface CameraOptions {
 	 * With a floor, fitting means "as far out as is still worth looking at" and the
 	 * map is allowed to be bigger than the window — which is the point of having a
 	 * camera at all.
+	 *
+	 * The camera holds it as state, so a view may move it after construction.
 	 */
 	fitFloor?: number;
 	/**
@@ -154,12 +156,18 @@ export class Camera implements Navigable {
 	vw = $state(1);
 	vh = $state(1);
 
-	readonly world: { w: number; h: number };
+	/**
+	 * The world's size. Reactive, because a view whose content changes with
+	 * the date (the Network's boxes grow and shrink as offices fill) resizes its
+	 * world without rebuilding the camera.
+	 */
+	world = $state<{ w: number; h: number }>({ w: 1, h: 1 });
 	readonly minScale: number;
 	readonly maxScale: number;
 	readonly padding: number;
 	readonly overscroll: number;
-	readonly fitFloor: number;
+	/** The smallest scale "fit" may choose. Settable, so a view can fit to width rather than to the whole world. */
+	fitFloor = $state(0);
 
 	/** True while a pointer drag or momentum glide is in flight. */
 	moving = $state(false);

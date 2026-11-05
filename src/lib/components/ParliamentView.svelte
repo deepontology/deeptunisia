@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { t, tf, nameOf, formatDate } from '$lib/t.svelte';
 	import { app } from '$lib/state.svelte';
-	import { personById, institutionById, ds, meetsBasis, BASIS_ORDER, type Basis } from '$lib/model';
-	import { terms, termAt, membersAt, affiliation, type Term, type Holding } from '$lib/civic';
+	import { personById, institutionById, ds, BASIS_ORDER, type Basis } from '$lib/model';
+	import { terms, termAt, affiliation, seatedAt, seatGroups, type Term, type Holding } from '$lib/civic';
 	import { world } from '$lib/world/store.svelte';
 	import { compact } from '$lib/design/media.svelte';
 	import Chamber3D, { type ChamberSeat } from './Chamber3D.svelte';
@@ -46,28 +46,18 @@
 	const upperNow = $derived(!!termAt(app.t, 'upper'));
 	const chamberTerms = $derived(terms.filter((x) => x.chamber === chamber));
 	const term = $derived(termAt(app.t, chamber));
-	/** Groups past this rank share one colour and one legend entry. */
-	const OTHERS = 7;
 	const index = $derived(term ? chamberTerms.indexOf(term) : -1);
 	/**
-	 * Who sits. A replacement known only to the year overlaps, on paper, with the
-	 * member they replaced, so on some dates certain and possible members together
-	 * outnumber the seats. Then only the certain ones are seated, and the others
-	 * are counted in words rather than drawn in seats that do not exist.
-	 */
-	const everyone = $derived(term ? membersAt(term, app.t) : []);
-	/**
-	 * The evidence floor is the same control every other view honours. A member
+	 * Who sits. The evidence floor is the same control every other view honours. A member
 	 * whose seat rests on a claim below the floor is not seated: the chair stays
 	 * hollow, which is the same language the view already uses for a seat the
-	 * record does not fill, and the count says how many were withheld.
+	 * record does not fill, and the count says how many were withheld. The rule
+	 * lives in civic.ts so the Network's chamber box seats exactly the same people.
 	 */
-	const visible = $derived(everyone.filter((m) => meetsBasis(m.position.basis, app.basisFloor)));
-	const withheld = $derived(everyone.length - visible.length);
-	const members = $derived(
-		term && visible.length > term.seats ? visible.filter((m) => m.at === 2) : visible
-	);
-	const uncertain = $derived(visible.length - members.length);
+	const seated = $derived(term ? seatedAt(term, app.t, app.basisFloor) : null);
+	const withheld = $derived(seated?.withheld ?? 0);
+	const members = $derived(seated?.members ?? []);
+	const uncertain = $derived(seated?.uncertain ?? 0);
 
 	/**
 	 * Where no member of a term is named but the source gives seats by party,
@@ -94,41 +84,11 @@
 	/** Groups present on the date, largest first, with their palette slot. */
 	const groups = $derived.by(() => {
 		if (!term) return [];
-		if (split) {
-			return [...split]
-				.sort((a, b) => b.seats - a.seats)
-				.map((x, i) => ({
-					id: x.party,
-					n: x.seats,
-					kind: 'list' as 'group' | 'list' | null,
-					name: nameOf(institutionById.get(x.party)) || x.party,
-					color: `var(--seat-${Math.min(i, OTHERS) + 1})`,
-					other: i >= OTHERS
-				}));
-		}
-		const count = new Map<string, number>();
-		const kind = new Map<string, 'group' | 'list'>();
-		for (const m of members) {
-			const a = affiliation(m.position.holder, term, app.t);
-			const key = a?.id ?? '';
-			count.set(key, (count.get(key) ?? 0) + 1);
-			if (a) kind.set(a.id, a.kind);
-		}
-		// A term coloured by party lists has no "no group" seats, only seats whose
-		// list was independent or is not in the record.
-		const byList = [...kind.values()].includes('list');
-		return [...count.entries()]
-			.sort((a, b) => (a[0] === '' ? 1 : b[0] === '' ? -1 : b[1] - a[1]))
-			.map(([id, n], i) => ({
-				id,
-				n,
-				kind: kind.get(id) ?? null,
-				name: id ? nameOf(institutionById.get(id)) || id : t(byList ? 'parl.nolist' : 'parl.unaffiliated'),
-				// Seven distinct colours for the seven largest; every smaller group or
-				// list shares the eighth, so no small party wears a large one's colour.
-				color: id ? `var(--seat-${Math.min(i, OTHERS) + 1})` : 'var(--text-muted)',
-				other: !!id && i >= OTHERS
-			}));
+		const g = seatGroups(term, members, app.t);
+		return g.groups.map((x) => ({
+			...x,
+			name: x.id ? nameOf(institutionById.get(x.id)) || x.id : t(g.byList ? 'parl.nolist' : 'parl.unaffiliated')
+		}));
 	});
 
 	/**

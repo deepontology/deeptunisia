@@ -2466,6 +2466,18 @@ const dataset = {
 		// as meta because it is dataset structure, not a collection of records.
 		groupOrder: Object.fromEntries(
 			groupLayers.map((l) => [l.layer, [...l.subsections.map((s) => s.header_en), 'Other']])
+		),
+		// The translated headers groups.yaml already authors, keyed by the English
+		// header the records carry as their group id. A view names a group in the
+		// reader's language from here; a header with no translation falls back to
+		// the English one at the call site, never to a code.
+		groupHeaders: Object.fromEntries(
+			groupLayers.map((l) => [
+				l.layer,
+				Object.fromEntries(
+					l.subsections.map((s) => [s.header_en, { fr: s.header_fr ?? null, ar: s.header_ar ?? null }])
+				)
+			])
 		)
 	},
 	sources,
@@ -3282,6 +3294,8 @@ export interface DatasetMeta {
 	 * at the bottom of the political lane.
 	 */
 	groupOrder: Record<string, string[]>;
+	/** Translated group headers per layer, keyed by the English header (the group id). */
+	groupHeaders: Record<string, Record<string, { fr: string | null; ar: string | null }>>;
 	successionGaps: { role: string; after: string; before: string; gapYears: number }[];
 	successionOverlaps: { role: string; a: string; b: string; overlapYears: number }[];
 	contradictions: Contradiction[];

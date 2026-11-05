@@ -198,7 +198,13 @@ export function navigable(node: HTMLElement | SVGElement, params: { cam: Navigab
 		if (e.ctrlKey || e.metaKey) {
 			const r = node.getBoundingClientRect();
 			// deltaY is in the same direction as a pinch-close, hence the negation.
-			const factor = Math.exp(-e.deltaY * 0.01);
+			// A trackpad pinch arrives as many small deltas and maps 1:1. A mouse
+			// wheel notch arrives as one large delta (around 100 pixels, or 3 lines
+			// in Firefox), which mapped the same way is a 2.7x jump per notch, so
+			// one event is capped at a fifth of an e-fold: about 1.22x a notch,
+			// and a fast spin still accumulates.
+			const px = e.deltaMode === 1 ? e.deltaY * 33 : e.deltaMode === 2 ? e.deltaY * 400 : e.deltaY;
+			const factor = Math.exp(Math.max(-0.2, Math.min(0.2, -px * 0.01)));
 			const sx = e.clientX - r.left;
 			const sy = e.clientY - r.top;
 			// Impulse input is smoothed so a wheel does not step the map in bursts;
