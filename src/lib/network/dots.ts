@@ -20,7 +20,7 @@
 
 import type { Basis, Layer } from '$lib/model';
 import { personById } from '$lib/model';
-import { GEO, type ChamberInfo, type Scene, type Tie, type Unit } from './scene';
+import { GEO, type ChamberInfo, type Scene, type Unit } from './scene';
 
 export const DOT = {
 	/** Ring radii: the first ring around a square, and the step between rings. */
@@ -403,9 +403,11 @@ export function buildDots(scene: Scene, rtl = false): DotScene {
 	// Ties: the same set the map draws, between dots.
 	const paths: DotScene['paths'] = new Map();
 	for (const e of scene.ties) {
-		const a = pos.get(e.a.id) ?? anchorPoint(e.a);
-		const b = pos.get(e.b.id) ?? anchorPoint(e.b);
-		paths.set(e.id, curve(a, b, e.a.lane === e.b.lane, rtl));
+		// Every endpoint the map anchors has a dot (the tests pin it). A miss
+		// draws nothing rather than mixing in the map's coordinates.
+		const a = pos.get(e.a.id);
+		const b = pos.get(e.b.id);
+		if (a && b) paths.set(e.id, curve(a, b, e.a.lane === e.b.lane, rtl));
 	}
 
 	return {
@@ -424,10 +426,6 @@ export function buildDots(scene: Scene, rtl = false): DotScene {
 /** Where a list row's square sits: at its reading start. */
 function rtlRowX(r: DotRow, rtl: boolean): number {
 	return rtl ? r.x + r.w - 8 : r.x + 8;
-}
-
-function anchorPoint(a: Tie['a']): { x: number; y: number } {
-	return { x: (a.xl + a.xr) / 2, y: a.y };
 }
 
 const memo = new WeakMap<Scene, Map<string, DotScene>>();

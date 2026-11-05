@@ -21,12 +21,14 @@
  *    trap). Every param this module emits is read by the view it names; the
  *    write hook only runs on routes that consume `?id=`.
  *
- * TRAP (caught by smoke, W2): the raw `history.replaceState` does NOT update
- * SvelteKit's internal `page.url` — no popstate fires — so a guard comparing
- * the built URL against `page.url.href` no-ops against a stale base and the
- * write is dropped (or a stale param survives). The correct API is
- * SvelteKit's `replaceState` from `$app/navigation`, which keeps its URL
- * state in sync. It also silences the dev-mode advisory about the raw API.
+ * TRAP (caught by smoke, W2): `page.url` is where the last navigation put
+ * it. Neither the raw `history.replaceState` nor SvelteKit's `replaceState`
+ * (shallow routing) moves it, so a write built on `page.url.href`, or a guard
+ * comparing against it, works from a stale base: the write is dropped, or a
+ * param another view wrote since is lost. Read the current URL from
+ * `location.href`, and write through SvelteKit's `replaceState` from
+ * `$app/navigation`, which keeps the router's history entry intact and
+ * silences the dev-mode advisory about the raw API.
  */
 
 import { page } from '$app/state';
@@ -118,5 +120,5 @@ export function syncSelectionUrl() {
 	const u = new URL(location.href);
 	if (sel && validEntity(sel)) u.searchParams.set('id', sel);
 	else u.searchParams.delete('id');
-	if (u.href !== location.href) replaceState(u, '');
+	if (u.href !== location.href) replaceState(u, page.state);
 }

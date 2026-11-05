@@ -109,6 +109,7 @@ ok('all world text shares the camera transform in one layer', NETWORK.includes('
 ok('text is hidden by level of detail, not placed per frame', NETWORK.includes('class="canvas lod-{lod}"') && !NETWORK.includes('placeLabels'));
 ok('hover is delegated: one listener for every seat', NETWORK.includes('onpointerover={onWorldOver}'));
 ok('the table renders only while open, and always in the prerendered page', NETWORK.includes('bind:open={tableOpen}') && NETWORK.includes('{#if tableOpen || !browser}'));
+ok('a chamber known only by its party split counts its seats as held, and its box names what the count leaves out', NETWORK.includes('const held = c.split ?') && NETWORK.includes('chamberAria(u.id, u.layer, u.chamber)') && NETWORK.includes('chamberAria(c.id, c.layer, c.chamber)'));
 
 // The matrix is a real table and uses one sequential hue.
 ok('the layer matrix is an HTML table', MATRIX.includes('<table class="grid"') && MATRIX.includes('scope="row"') && MATRIX.includes('scope="col"'));

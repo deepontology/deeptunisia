@@ -706,7 +706,7 @@
 					void goto(u, { replaceState: true });
 					return;
 				}
-				if (view === 'matrix') view = 'map';
+				if (view === 'matrix') setView('map');
 				openTie(e, true);
 				return;
 			}
@@ -714,17 +714,19 @@
 			const want = params.get('rel');
 			if (!want) return;
 			const rel = ds.relationships.find((r) => r.id === want);
-			if (!rel || !meetsBasis(rel.basis as Basis, app.basisFloor)) return;
-			ensureFamily(familyOf(rel.type));
-			const e = scene.ties.find((x) => x.rel.id === want) ?? bundleOf(rel);
+			if (!rel) return;
+			const shown = meetsBasis(rel.basis as Basis, app.basisFloor);
+			if (shown) ensureFamily(familyOf(rel.type));
+			const e = shown ? (scene.ties.find((x) => x.rel.id === want) ?? bundleOf(rel)) : undefined;
 			if (!e) {
-				// Not drawn on this map (a hidden layer, another date): select its
-				// person, so the link lands on their card or the off-map notice.
+				// Not drawn on this map (below the floor, a hidden layer, another
+				// date): select its person, so the link lands on their card or the
+				// off-map notice.
 				const end = personById.has(rel.from) ? rel.from : personById.has(rel.to) ? rel.to : rel.from;
 				if (personById.has(end) || institutionById.has(end)) app.selected = end;
 				return;
 			}
-			if (view === 'matrix') view = 'map';
+			if (view === 'matrix') setView('map');
 			openTie(e, true);
 		});
 	});
@@ -902,6 +904,22 @@
 
 	let tableOpen = $state(false);
 
+	type ChamberCount = NonNullable<Unit['chamber']>;
+	/**
+	 * A chamber's "held/seats" caption. A chamber known only by its party split
+	 * names nobody, but its seats are held: the split is the count. A star
+	 * marks a count that leaves members out; the note says which.
+	 */
+	function chamberShort(c: ChamberCount): string {
+		const held = c.split ? c.groups.reduce((a, g) => a + g.n, 0) : c.named;
+		return tf('network.chamber.short', { n: held, seats: c.seats }) + (c.withheld || c.uncertain ? '*' : '');
+	}
+	/** The accessible name of a chamber's box: name, lane, count and what the count leaves out. */
+	function chamberAria(id: string, layer: Layer, c: ChamberCount): string {
+		const note = chamberNote(c);
+		return `${entityName(id)} — ${layerLabel(layer)} — ${chamberShort(c).replace(/\*$/, '')}${note ? ', ' + note : ''}`;
+	}
+
 	/** Seats the count leaves out, in the hemicycle's words: below the floor, or dated only to the year. */
 	function chamberNote(c: { withheld: number; uncertain: number }): string | undefined {
 		const parts = [];
@@ -941,7 +959,7 @@
 				size="sm"
 				label={t('network.view')}
 			/>
-			<div class="stats mono" aria-live="polite">
+			<div class="stats mono">
 				<span>{tf('network.stat.office', { n: scene.stats.inOffice })}</span>
 				<span>{tf('network.stat.ties', { n: scene.stats.ties })}</span>
 				<span class="bridge">{tf('network.stat.cross', { n: scene.stats.crossLayer })}</span>
@@ -1157,7 +1175,7 @@
 							data-id={c.id}
 							style:transform="translate({c.cx}px, {c.cy}px)"
 							style:--c={LAYER_COLOR[c.layer]}
-							aria-label="{entityName(c.id)} — {layerLabel(c.layer)}"
+							aria-label={c.chamber ? chamberAria(c.id, c.layer, c.chamber) : `${entityName(c.id)} — ${layerLabel(c.layer)}`}
 							onclick={(e) => selectOnMap(c.id, e)}
 						></button>
 						<button
@@ -1171,9 +1189,9 @@
 							onclick={(e) => selectOnMap(c.id, e)}
 						>
 							<span class="title">{entityName(c.id)}</span>
-							<span class="count mono">
+							<span class="count mono" title={c.chamber ? chamberNote(c.chamber) : undefined}>
 								{#if c.chamber}
-									{tf('network.chamber.short', { n: c.chamber.named, seats: c.chamber.seats })}
+									{chamberShort(c.chamber)}
 								{:else if c.posts > 1}
 									{c.posts}
 								{/if}
@@ -1283,13 +1301,13 @@
 										class="node boxhead"
 										class:hot={app.hovered === u.id}
 										data-id={u.id}
-										aria-label="{entityName(u.id)} — {layerLabel(u.layer)}"
+										aria-label={u.chamber ? chamberAria(u.id, u.layer, u.chamber) : `${entityName(u.id)} — ${layerLabel(u.layer)}`}
 										onclick={(e) => selectOnMap(u.id!, e)}
 									>
 										<span class="title">{entityName(u.id)}</span>
 										<span class="count mono" title={u.chamber ? chamberNote(u.chamber) : undefined}>
 											{#if u.chamber}
-												{tf('network.chamber.short', { n: u.chamber.named, seats: u.chamber.seats })}{#if u.chamber.withheld || u.chamber.uncertain}*{/if}
+												{chamberShort(u.chamber)}
 											{:else if u.seats.length > 1}
 												{u.seats.length}
 											{/if}

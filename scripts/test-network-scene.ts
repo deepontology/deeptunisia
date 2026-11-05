@@ -234,9 +234,11 @@ console.log('\n  ── the dot view ──\n');
 	for (const t of dates) {
 		for (const families of [DEFAULT_FAMILIES, EVERY]) {
 			const rtl = families === EVERY && new Date(t).getUTCFullYear() % 2 === 1;
-			const scene = buildScene({ t, floor: 'reported', layers: ALL, families, rtl });
+			// Stretched lanes keep every dot invariant too: a third of the default-lens years run wide.
+			const widen = families === DEFAULT_FAMILIES && new Date(t).getUTCFullYear() % 3 === 0 ? 1.5 : 1;
+			const scene = buildScene({ t, floor: 'reported', layers: ALL, families, rtl, widen });
 			const dots = buildDots(scene, rtl);
-			const day = new Date(t).toISOString().slice(0, 10) + (families === EVERY ? ' all' : '') + (rtl ? ' rtl' : '');
+			const day = new Date(t).toISOString().slice(0, 10) + (families === EVERY ? ' all' : '') + (rtl ? ' rtl' : '') + (widen > 1 ? ' wide' : '');
 
 			// Cells and rows stay in their lane and never share space.
 			const boxes = [

@@ -2071,10 +2071,11 @@ console.log('\n  ── connections ──');
 
 // --- The network's readings and its legend -----------------------------------
 /*
- * The view and the lens live in the URL, and a selection must not drop them:
- * NetworkView writes them through SvelteKit's replaceState, so page.url (from
- * which the layout rebuilds ?id=) follows. The legend's open state is the
- * reader's: a pan does not undo it, and a reload remembers it.
+ * The view and the lens live in the URL, and a selection must not drop them.
+ * SvelteKit's replaceState is shallow routing and leaves page.url at the last
+ * navigation, so NetworkView and the layout's ?id= write both build on
+ * location.href. The legend's open state is the reader's: a pan does not undo
+ * it, and a reload remembers it.
  */
 if (runSection('network readings')) {
 	console.log('\n  ── network readings ──');
