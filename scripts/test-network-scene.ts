@@ -22,11 +22,11 @@
  *
  *   npx tsx scripts/test-network-scene.ts
  */
-import { buildScene, sceneAt, layerMatrix, laneFrames, GEO, WIDEN_MAX, type Scene } from '../src/lib/network/scene.ts';
+import { buildScene, sceneAt, layerMatrix, laneFrames, GEO, WIDEN_MAX, ELSEWHERE, type Scene } from '../src/lib/network/scene.ts';
 import { buildDots, dotsAt } from '../src/lib/network/dots.ts';
 import { routeTies } from '../src/lib/network/route.ts';
 import { DEFAULT_FAMILIES, FAMILIES, familyOf, familiesFromMode, familiesParam, familiesFromParam } from '../src/lib/network/families.ts';
-import { ds, institutionById, activity, meetsBasis, LAYERS, CUTOFF, FLOOR, type Layer } from '../src/lib/model.ts';
+import { ds, institutionById, activity, meetsBasis, possiblyActive, LAYERS, CUTOFF, FLOOR, type Layer } from '../src/lib/model.ts';
 import { terms, termAt, seatedAt, membersAt, chamberStanding } from '../src/lib/civic.ts';
 
 let failures = 0;
@@ -292,6 +292,21 @@ console.log('\n  ── the date readers land on: 14 January 2011 ──\n');
 		lines.push(`${floor}: ${tally.counted} counted, ${tally.uncertain} possibly sitting, ${tally.withheld} withheld`);
 	}
 	ok("each member's standing adds up to the chamber's own counts", agree, lines.join('; '));
+}
+
+{
+	// A post in a hidden lane is still a post: soloing a lane never files a
+	// sitting office-holder under "outside office".
+	const t = at(2011, 0, 14);
+	const holds = (id: string) => ds.positions.some((p) => p.holder === id && possiblyActive(p.interval, t) && meetsBasis(p.basis as never, 'reported'));
+	const wrong: string[] = [];
+	for (const layer of LAYERS) {
+		const solo = buildScene({ t, floor: 'reported', layers: new Set([layer]), families: DEFAULT_FAMILIES });
+		for (const u of solo.units) if (u.kind === 'actors' && u.group === '') for (const s of u.seats) if (holds(s.person)) wrong.push(`${layer}: ${s.person}`);
+	}
+	const sec = buildScene({ t, floor: 'reported', layers: new Set(['security' as Layer]), families: DEFAULT_FAMILIES });
+	const benAli = sec.units.find((u) => u.seats.some((s) => s.person === 'ben-ali'));
+	ok('a lane solo never calls an office-holder outside office', wrong.length === 0 && (!benAli || benAli.group === ELSEWHERE), wrong.slice(0, 3).join(' | ') || `ben-ali in the security solo: ${benAli ? benAli.group : 'not drawn'}`);
 }
 
 console.log('\n  ── the dot view ──\n');

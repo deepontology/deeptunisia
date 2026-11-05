@@ -326,6 +326,8 @@ export interface Scene {
 // --- Static indexes (built once) ---------------------------------------------
 
 /** Legislative terms, whose members are counted on a chamber box rather than seated one by one. */
+/** The group of the section for people whose post is in a hidden lane. */
+export const ELSEWHERE = '@elsewhere';
 const termInstitutions = new Set(terms.map((x) => x.institution.id));
 const rosterRoles = new Set(ds.roles.filter((r) => r.seats).map((r) => r.id));
 const isParliamentaryGroup = (id: string) => institutionById.get(id)?.type === 'parliamentary-group';
@@ -512,6 +514,8 @@ export function buildScene(input: SceneInput): Scene {
 	// presidents) hold posts like any office; its members are the roster.
 	const posts = new Map<string, Position[]>();
 	const holders = new Set<string>();
+	/** People whose only posts sit in lanes the reader has hidden. */
+	const hiddenPost = new Set<string>();
 	for (const p of ds.positions) {
 		if (!possiblyActive(p.interval, t)) continue;
 		if (!meetsBasis(p.basis as Basis, floor)) continue;
@@ -519,7 +523,11 @@ export function buildScene(input: SceneInput): Scene {
 		if (rosterRoles.has(p.role)) continue;
 		if (termInstitutions.has(p.institution) && !sittingTerm.has(p.institution)) continue;
 		const inst = institutionById.get(p.institution);
-		if (!inst || !laneOf.has(inst.layer as Layer)) continue;
+		if (!inst) continue;
+		if (!laneOf.has(inst.layer as Layer)) {
+			hiddenPost.add(p.holder);
+			continue;
+		}
 		(posts.get(p.holder) ?? posts.set(p.holder, []).get(p.holder)!).push(p);
 	}
 	// The most senior post is where a person's lines attach.
@@ -829,32 +837,37 @@ export function buildScene(input: SceneInput): Scene {
 			y += GEO.GROUP_GAP - GEO.BOX_GAP;
 		}
 
-		// Outside office: people a drawn tie names who hold no post and sit in no chamber.
-		const outside = [...endpoints]
+		// People a drawn tie names who have no post on this map. Those who hold
+		// none sit "outside office"; those whose post is in a hidden lane get a
+		// section of their own, so a solo never calls a sitting president
+		// outside office.
+		const unposted = [...endpoints]
 			.filter((id) => personById.has(id) && !primaryOf.has(id) && !chamberOfMember.has(id) && personLane(id) === layer)
 			.sort((a, b) => (personById.get(b)!.peakAuthority ?? 0) - (personById.get(a)!.peakAuthority ?? 0) || a.localeCompare(b));
-		if (outside.length) {
-			heads.push({ key: layer + ':outside', layer, group: '', x: x0, y, count: outside.length });
+		const sections: [group: string, head: string, list: string[]][] = [
+			['', 'outside', unposted.filter((id) => !hiddenPost.has(id))],
+			[ELSEWHERE, 'elsewhere', unposted.filter((id) => hiddenPost.has(id))]
+		];
+		for (const [group, head, list] of sections) {
+			if (!list.length) continue;
+			heads.push({ key: layer + ':' + head, layer, group, x: x0, y, count: list.length });
 			y += GEO.GROUP;
-			const cols = seatCols(
-				outside.map(nameFor),
-				LW
-			);
-			const rows = Math.ceil(outside.length / cols);
+			const cols = seatCols(list.map(nameFor), LW);
+			const rows = Math.ceil(list.length / cols);
 			const colW = (LW - GEO.PAD * 2) / cols;
 			const h = rows * GEO.ROW + GEO.PAD * 2;
 			const unit: Unit = {
-				key: 'actors:' + layer,
+				key: 'actors:' + layer + ':' + head,
 				kind: 'actors',
 				id: null,
 				layer,
-				group: '',
+				group,
 				x: x0,
 				y,
 				w: LW,
 				h,
 				cols,
-				seats: outside.map((person, i) => ({
+				seats: list.map((person, i) => ({
 					key: 'out:' + person,
 					person,
 					position: null,

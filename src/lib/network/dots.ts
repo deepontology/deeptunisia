@@ -332,8 +332,8 @@ export function buildDots(scene: Scene, rtl = false): DotScene {
 				flush();
 				if (group !== null) y += GEO.GROUP_GAP - DOT.CELL_GAP;
 				group = u.group;
-				const hk = u.kind === 'actors' ? layer + ':outside' : layer + ':' + u.group;
-				heads.push({ key: 'dh:' + hk, layer, group: u.kind === 'actors' ? '' : u.group, x: x0, y, w: LW, count: headCount.get(hk) ?? 0 });
+				const hk = u.kind === 'actors' ? layer + (u.group ? ':elsewhere' : ':outside') : layer + ':' + u.group;
+				heads.push({ key: 'dh:' + hk, layer, group: u.group, x: x0, y, w: LW, count: headCount.get(hk) ?? 0 });
 				y += GEO.GROUP;
 			}
 			run.push(u);

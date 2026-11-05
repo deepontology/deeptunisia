@@ -455,7 +455,7 @@ export const REL_KIND: Record<string, 'documented' | 'reported' | 'alleged'> = {
 };
 
 export const REL_LABEL: Record<string, string> = {
-	institutional: 'held office in',
+	institutional: 'institutional tie',
 	appointment: 'appointed',
 	succession: 'succeeded',
 	family: 'family tie',

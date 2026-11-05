@@ -29,6 +29,7 @@
 		ds,
 		institutionById,
 		meetsBasis,
+		possiblyActive,
 		personById,
 		type Basis,
 		type Layer,
@@ -37,7 +38,7 @@
 	import { REL_TYPE_COLOR } from '$lib/viz/groups';
 	import { tradeIn, debtIn } from '$lib/world/countries';
 	import { moneyM } from '$lib/world/format';
-	import { sceneAt, laneFrames, nameWidth, GEO, WIDEN_MAX, type FlowTie, type Tie, type Unit } from '$lib/network/scene';
+	import { sceneAt, laneFrames, nameWidth, GEO, WIDEN_MAX, ELSEWHERE, type FlowTie, type Tie, type Unit } from '$lib/network/scene';
 	import { routeTies } from '$lib/network/route';
 	import { dotsAt, DOT } from '$lib/network/dots';
 	import {
@@ -504,7 +505,7 @@
 		let line = '';
 		if (seat?.position) line = `${postTitle(seat.position)} · ${entityName(seat.position.institution)}`;
 		else if (unit?.kind === 'chamber' && personById.has(id)) line = tf('network.tip.member', { chamber: entityName(unit.id!) });
-		else if (unit?.kind === 'actors') line = t('network.tip.outside');
+		else if (unit?.kind === 'actors') line = t(unit.group === ELSEWHERE ? 'network.tip.elsewhere' : 'network.tip.outside');
 		else if (unit?.chamber) line = chamberShort(unit.chamber);
 		else if (unit) line = layerLabel(unit.layer);
 		const ties = scene.ties.filter((e) => e.rel.from === id || e.rel.to === id).length;
@@ -621,7 +622,9 @@
 		// sitting, or on a claim below the floor.
 		const seat = chamberStanding(id, app.t, app.basisFloor);
 		if (seat) return tf(`network.offmap.${seat.standing === 'counted' ? 'member' : seat.standing}`, { name, chamber: entityName(seat.term.institution.id), date });
-		return tf('network.offmap', { name, date });
+		// A post in a hidden lane is still a post.
+		const posted = ds.positions.some((p) => p.holder === id && possiblyActive(p.interval, app.t) && meetsBasis(p.basis as Basis, app.basisFloor));
+		return tf(posted ? 'network.offmap.hidden' : 'network.offmap', { name, date });
 	}
 
 	/** A selected entity the map cannot show at this date says so, rather than doing nothing. */
@@ -933,6 +936,7 @@
 
 	function groupLabel(layer: Layer, group: string): string {
 		if (!group) return t('network.outside');
+		if (group === ELSEWHERE) return t('network.outside.elsewhere');
 		if (group === 'Other') return t('network.group.other');
 		const h = (ds.meta as { groupHeaders?: Record<string, Record<string, { fr: string | null; ar: string | null }>> }).groupHeaders?.[layer]?.[group];
 		if (app.locale === 'fr' && h?.fr) return h.fr;
@@ -1766,7 +1770,7 @@
 						{#each u.seats as s (s.key)}
 							<tr>
 								<td>{layerLabel(u.layer)}</td>
-								<td>{u.id ? entityName(u.id) : t('network.outside')}</td>
+								<td>{u.id ? entityName(u.id) : groupLabel(u.layer, u.group)}</td>
 								<td>{entityName(s.person)}</td>
 								<td>{s.position ? postTitle(s.position) : u.kind === 'chamber' ? t('network.tip.membershort') : '—'}</td>
 							</tr>

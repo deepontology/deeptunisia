@@ -153,7 +153,7 @@
 										class:diag={ri === ci}
 										class:on={current === c}
 										disabled={c.count === 0}
-										aria-pressed={current === c}
+										aria-pressed={picked === row + '|' + col && current === c}
 										aria-label={cellLabel(c)}
 										title={cellLabel(c)}
 										onclick={() => pickCell(row + '|' + col)}
