@@ -123,8 +123,10 @@ try {
 	const clean = build(TREE, OUT, STATIC);
 	ok('pipeline fixture: the clean copy builds', clean.code === 0, clean.output.split('\n').slice(-3).join(' '));
 
-	const cleanGraph = clean.code === 0 && existsSync(join(OUT, 'dataset.json'))
-		? JSON.parse(readFileSync(join(OUT, 'dataset.json'), 'utf8'))
+	// The published graph of the build (static/dataset.json): the record the
+	// hash describes. The bundled out/dataset.json is trimmed for the browser.
+	const cleanGraph = clean.code === 0 && existsSync(join(STATIC, 'dataset.json'))
+		? JSON.parse(readFileSync(join(STATIC, 'dataset.json'), 'utf8'))
 		: null;
 
 	if (cleanGraph && existsSync(REAL_DATASET)) {
@@ -157,11 +159,11 @@ try {
 		const CAN2 = join(WORK, 'canonical-2');
 		const c1 = build(TREE, join(CAN1, 'out'), join(CAN1, 'static'), { DT_CANONICAL: '1' });
 		const c2 = build(TREE, join(CAN2, 'out'), join(CAN2, 'static'), { DT_CANONICAL: '1' });
-		const b1 = existsSync(join(CAN1, 'out', 'dataset.json'))
-			? readFileSync(join(CAN1, 'out', 'dataset.json'), 'utf8')
+		const b1 = existsSync(join(CAN1, 'static', 'dataset.json'))
+			? readFileSync(join(CAN1, 'static', 'dataset.json'), 'utf8')
 			: '';
-		const b2 = existsSync(join(CAN2, 'out', 'dataset.json'))
-			? readFileSync(join(CAN2, 'out', 'dataset.json'), 'utf8')
+		const b2 = existsSync(join(CAN2, 'static', 'dataset.json'))
+			? readFileSync(join(CAN2, 'static', 'dataset.json'), 'utf8')
 			: '';
 		ok(
 			'pipeline fixture: two canonical builds are byte-identical',

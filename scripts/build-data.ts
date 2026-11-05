@@ -3877,6 +3877,50 @@ let datasetHashValue = '';
 	}
 }
 
+// The client's copy of the graph. Everything above (the published
+// static/dataset.json and meta.datasetHash) is the full record; what the
+// bundle carries is trimmed to what a reader's browser shows, because the
+// bundle is parsed on every page load and most readers are on phones.
+//  - French and Arabic prose (summaries, notes, reasoning, descriptions) is a
+//    third of the graph and only one language is ever on screen, so each
+//    language's prose goes to static/prose-<lang>.json and is fetched for the
+//    reader's language (src/lib/locale-prose.svelte.ts). Until it arrives,
+//    prose falls back to English exactly as an untranslated record does.
+//  - Translations the site never shows (source excerpts and title glosses,
+//    career trajectories: displayed in the original only) and build-only
+//    derived counts are left out of the bundle. The published file keeps them.
+{
+	const SPLIT_PROSE = new Set(['summary', 'notes', 'reasoning', 'falsifiable_by', 'tagline', 'description']);
+	const UNSHOWN_TRANSLATION = new Set(['excerpt', 'title_gloss', 'trajectory']);
+	const BUILD_ONLY = new Set(['erasSpanned', 'seniorYears', 'layerCount', 'basis_derived', 'source_relation', 'tier_note']);
+	const COLLECTIONS = ['people', 'institutions', 'positions', 'relationships', 'events', 'sources'] as const;
+	const client = JSON.parse(readFileSync(join(STAGE_OUT, 'dataset.json'), 'utf8'));
+	const overlay: Record<'fr' | 'ar', Record<string, Record<string, Record<string, unknown>>>> = { fr: {}, ar: {} };
+	for (const c of COLLECTIONS) {
+		for (const rec of client[c] as Record<string, unknown>[]) {
+			for (const key of Object.keys(rec)) {
+				if (BUILD_ONLY.has(key)) {
+					delete rec[key];
+					continue;
+				}
+				const m = /^(.+)_(fr|ar)(_by)?$/.exec(key);
+				if (!m) continue;
+				if (UNSHOWN_TRANSLATION.has(m[1])) delete rec[key];
+				else if (SPLIT_PROSE.has(m[1])) {
+					const lang = m[2] as 'fr' | 'ar';
+					((overlay[lang][c] ??= {})[rec.id as string] ??= {})[key] = rec[key];
+					delete rec[key];
+				}
+			}
+		}
+	}
+	writeFileSync(join(STAGE_OUT, 'dataset.json'), CANONICAL ? canonicalBytes(client) : JSON.stringify(client), 'utf8');
+	// Built in record order, so the bytes are already reproducible.
+	for (const lang of ['fr', 'ar'] as const) {
+		writeFileSync(join(STAGE_STATIC, `prose-${lang}.json`), JSON.stringify({ datasetHash: datasetHashValue, ...overlay[lang] }), 'utf8');
+	}
+}
+
 // The audits the product publishes: family edges (the coverage audit's kin walk
 // and the paper's §8.2 both cite this), the research queue, and the risk-bucketed
 // review counts. Computed once, emitted to stats.json, and tagged into the paper

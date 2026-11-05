@@ -5,6 +5,7 @@
 	import { page } from '$app/state';
 	import { app, startPlayback } from '$lib/state.svelte';
 	import { syncSelectionUrl, validEntity, validRelationship } from '$lib/deeplink.svelte';
+	import { ensureLocaleProse } from '$lib/locale-prose.svelte';
 	import { initTheme, theme } from '$lib/design/theme.svelte';
 	import { dirFor } from '$lib/i18n';
 	import { personById, institutionById, relationshipById, eventById, resolveEntity } from '$lib/model';
@@ -200,6 +201,12 @@ import { tour, tourSeen } from '$lib/shell/tour.svelte';
 	// consume it. replaceState, never pushState — selections are not history.
 	$effect(() => {
 		syncSelectionUrl();
+	});
+
+	// French and Arabic prose ships beside the graph, not in it: fetch the
+	// reader's language (locale-prose.svelte.ts). English needs nothing.
+	$effect(() => {
+		void ensureLocaleProse(app.locale);
 	});
 
 	$effect(() => {

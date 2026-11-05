@@ -17,7 +17,9 @@ import { buildCoverage, coverageCsv } from './coverage.ts';
 import { verifyDebtProvenance, DEBT_MANIFEST_ID, type DebtManifestEntry } from './debt-provenance.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-const ds = JSON.parse(readFileSync(join(HERE, '..', 'src', 'generated', 'dataset.json'), 'utf8'));
+// The published graph (static/dataset.json): the record the hash and every audit
+// describe. The bundled src/generated copy is trimmed for the browser.
+const ds = JSON.parse(readFileSync(join(HERE, '..', 'static', 'dataset.json'), 'utf8'));
 const world = JSON.parse(readFileSync(join(HERE, '..', 'src', 'generated', 'world.json'), 'utf8'));
 
 let failures = 0;
@@ -1546,7 +1548,7 @@ console.log('\n  ── three review populations, never summed ──\n');
 	ok('a verification naming no record is reported, not silently dropped', orphan.independentlyChecked === 0 && orphan.unmatchedVerifications.length === 1, orphan.unmatchedVerifications.join(','));
 
 	// The shipped graph.
-	const ds = JSON.parse(readFileSync(join(HERE, '..', 'src', 'generated', 'dataset.json'), 'utf8')) as Record<string, any>;
+	const ds = JSON.parse(readFileSync(join(HERE, '..', 'static', 'dataset.json'), 'utf8')) as Record<string, any>;
 	const queuePath = join(HERE, '..', 'static', 'editorial-queue.json');
 	const queue = existsSync(queuePath) ? JSON.parse(readFileSync(queuePath, 'utf8')) as { total: number } : { total: 0 };
 	const verifications = Array.isArray(ds.verifications) ? ds.verifications : [];
@@ -1602,6 +1604,40 @@ console.log('\n  ── three review populations, never summed ──\n');
 		missingCapture.length === 0,
 		missingCapture.slice(0, 5).join(', ')
 	);
+}
+
+// The browser's copy: French and Arabic prose ships beside the graph, per
+// language, and the bundle plus the reader's file is the published prose.
+{
+	const bundle = JSON.parse(readFileSync(join(HERE, '..', 'src', 'generated', 'dataset.json'), 'utf8'));
+	const overlay = { fr: JSON.parse(readFileSync(join(HERE, '..', 'static', 'prose-fr.json'), 'utf8')), ar: JSON.parse(readFileSync(join(HERE, '..', 'static', 'prose-ar.json'), 'utf8')) };
+	const SPLIT = /^(summary|notes|reasoning|falsifiable_by|tagline|description)_(fr|ar)(_by)?$/;
+	const COLLECTIONS = ['people', 'institutions', 'positions', 'relationships', 'events', 'sources'];
+	let left = 0;
+	let missing = 0;
+	let moved = 0;
+	for (const c of COLLECTIONS) {
+		const byId = new Map((bundle[c] as { id: string }[]).map((r) => [r.id, r as Record<string, unknown>]));
+		for (const rec of ds[c] as Record<string, unknown>[]) {
+			const mine = byId.get(rec.id as string);
+			if (!mine) {
+				missing++;
+				continue;
+			}
+			for (const [k, v] of Object.entries(rec)) {
+				const m = SPLIT.exec(k);
+				if (!m) continue;
+				if (k in mine) left++;
+				const got = overlay[m[2] as 'fr' | 'ar'][c]?.[rec.id as string]?.[k];
+				if (JSON.stringify(got) !== JSON.stringify(v)) missing++;
+				else moved++;
+			}
+		}
+	}
+	ok('the bundle carries no French or Arabic prose', left === 0, `${left} fields left in the bundle`);
+	ok('the bundle and the language files give back every published translation', missing === 0 && moved > 0, `${moved} fields moved, ${missing} missing`);
+	ok('each language file names the graph it belongs to', overlay.fr.datasetHash === ds.meta.datasetHash && overlay.ar.datasetHash === ds.meta.datasetHash);
+	ok('every name stays in the bundle in all three languages', (bundle.people as Record<string, unknown>[]).every((p) => 'name_en' in p) && (bundle.people as Record<string, unknown>[]).filter((p) => p.name_ar).length === (ds.people as Record<string, unknown>[]).filter((p) => p.name_ar).length);
 }
 
 console.log(

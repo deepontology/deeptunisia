@@ -1,4 +1,5 @@
 import { app } from './state.svelte';
+import { localeProse } from './locale-prose.svelte';
 import { translate, format as formatIn, type Locale } from './i18n';
 import {
 	BASIS_LABEL,
@@ -128,6 +129,8 @@ export function prose(record: object, field: string): ProseValue {
 	const rec = record as Record<string, unknown>;
 	const original = String(rec[field] ?? '');
 	if (app.locale === 'en') return { text: original, translated: true };
+	// Re-read when the reader's language prose arrives (locale-prose.svelte.ts).
+	void localeProse.version;
 	const value = rec[`${field}_${app.locale}`];
 	if (typeof value === 'string' && value.trim()) {
 		return { text: value, translated: true, by: rec[`${field}_${app.locale}_by`] as string };
@@ -140,6 +143,7 @@ export function proseList(record: object, field: string): ProseValue & { items: 
 	const rec = record as Record<string, unknown>;
 	const original = (rec[field] as string[] | undefined) ?? [];
 	if (app.locale === 'en') return { items: original, text: '', translated: true };
+	void localeProse.version;
 	const value = rec[`${field}_${app.locale}`];
 	if (Array.isArray(value) && value.length) {
 		return {
