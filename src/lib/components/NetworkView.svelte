@@ -376,6 +376,11 @@
 	let hoverEdge = $state<string | null>(null);
 	let pinnedId = $state<string | null>(null);
 	const pinned = $derived(pinnedId ? (tieById.get(pinnedId) ?? null) : null);
+	// A pinned tie that leaves the scene (a scrub, a family switched off) is
+	// unpinned, so it neither returns unasked nor swallows the next click.
+	$effect(() => {
+		if (pinnedId && !pinned) pinnedId = null;
+	});
 
 	/** Ties drawn above the boxes: the focused ones, the hovered one and the pinned one. */
 	const topTies = $derived(
@@ -465,7 +470,7 @@
 		if (seat?.position) line = `${postTitle(seat.position)} · ${entityName(seat.position.institution)}`;
 		else if (unit?.kind === 'chamber' && personById.has(id)) line = tf('network.tip.member', { chamber: entityName(unit.id!) });
 		else if (unit?.kind === 'actors') line = t('network.tip.outside');
-		else if (unit?.chamber) line = tf('network.chamber.named', { n: unit.chamber.named, seats: unit.chamber.seats });
+		else if (unit?.chamber) line = chamberShort(unit.chamber);
 		else if (unit) line = layerLabel(unit.layer);
 		const ties = scene.ties.filter((e) => e.rel.from === id || e.rel.to === id).length;
 		return { name: entityName(id), line, ties };
@@ -549,6 +554,20 @@
 			flyToPoint(p.x, p.y, mode === 'gentle');
 		});
 	});
+
+	/**
+	 * Why the map does not draw it. A chamber's rank and file hold a seat but
+	 * are counted on its bar rather than drawn, and an institution holds no
+	 * post, so each gets its own sentence.
+	 */
+	function offMapText(id: string): string {
+		const date = formatDate(app.t, 'day');
+		const name = entityName(id);
+		if (!personById.has(id)) return tf('network.offmap.inst', { name, date });
+		const chamber = scene.units.find((u) => u.chamber && seatedAt(u.chamber.term, app.t, app.basisFloor).members.some((m) => m.position.holder === id));
+		if (chamber) return tf('network.offmap.member', { name, chamber: entityName(chamber.id!), date });
+		return tf('network.offmap', { name, date });
+	}
 
 	/** A selected entity the map cannot show at this date says so, rather than doing nothing. */
 	const offMap = $derived(
@@ -1106,7 +1125,13 @@
 											tipAt = pointerAt(ev);
 										}}
 										onmouseleave={() => (hoverEdge = null)}
-										onpointerdown={() => startPress(() => (hoverEdge = e.id))}
+										onpointerdown={(ev) => {
+											const at = pointerAt(ev);
+											startPress(() => {
+												hoverEdge = e.id;
+												tipAt = at;
+											});
+										}}
 										onpointerup={() => clearPress()}
 										onpointerleave={() => clearPress()}
 										onclick={() => {
@@ -1136,7 +1161,13 @@
 					onpointerout={onWorldOut}
 					onpointerdown={(e) => {
 						const el = (e.target as Element).closest?.('[data-id]') as HTMLElement | null;
-						if (el?.dataset.id) startPress(() => (app.hovered = el.dataset.id!));
+						if (!el?.dataset.id) return;
+						// A long press is the touch hover: the same highlight and tip.
+						const at = pointerAt(e);
+						startPress(() => {
+							app.hovered = el.dataset.id!;
+							tipAt = at;
+						});
 					}}
 					onpointerup={clearPress}
 					onpointercancel={clearPress}
@@ -1225,7 +1256,7 @@
 					{#each dots.people as p (p.id)}
 						{#if !p.outside}
 							<button
-								class="node dp b-{p.basis} side-{p.side}"
+								class="node dp b-{p.basis ?? 'documented'} side-{p.side}"
 								class:named={tiesOf.has(p.id)}
 								class:dim={dimmed(p.id)}
 								class:lit={!!near?.has(p.id)}
@@ -1235,7 +1266,7 @@
 								style:transform="translate({p.x}px, {p.y}px)"
 								style:--r="{p.r}px"
 								style:--c={LAYER_COLOR[p.layer]}
-								aria-label="{entityName(p.id)}, {basisLabel(p.basis)}"
+								aria-label="{entityName(p.id)}{p.basis ? ', ' + basisLabel(p.basis) : ''}"
 								onclick={(e) => selectOnMap(p.id, e)}
 							>
 								<span class="nm">{entityName(p.id)}</span>
@@ -1436,7 +1467,7 @@
 
 				{#if offMap}
 					<div class="offmap" data-no-pan role="status">
-						<span>{tf('network.offmap', { name: entityName(offMap), date: formatDate(app.t, 'day') })}</span>
+						<span>{offMapText(offMap)}</span>
 						<button class="mono" onclick={() => (app.selected = null)}>{t('network.clear')}</button>
 					</div>
 				{/if}

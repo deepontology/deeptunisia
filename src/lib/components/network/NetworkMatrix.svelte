@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { tick } from 'svelte';
 	import { app } from '$lib/state.svelte';
 	import { t, tf, layerLabel, relLabel, basisLabel, entityName, formatDate } from '$lib/t.svelte';
 	import { LAYER_COLOR, BASIS_COLOR, BASIS_OPACITY, DASH, BASIS_ORDER, type Basis, type Layer } from '$lib/model';
@@ -51,7 +52,11 @@
 	function pickCell(key: string) {
 		picked = key;
 		const c = cellOf.get(key);
-		if (c) announce = `${pairLabel(c)}: ${tf('network.matrix.count', { n: c.count })}`;
+		if (!c) return;
+		// Cleared first, so picking the same pair again is announced again.
+		announce = '';
+		const text = `${pairLabel(c)}: ${tf('network.matrix.count', { n: c.count })}`;
+		void tick().then(() => (announce = text));
 	}
 	/** A picked pair the lens has since emptied gives way to the busiest one. */
 	const current = $derived.by<MatrixCell | null>(() => {

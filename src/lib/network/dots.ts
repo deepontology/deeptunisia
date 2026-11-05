@@ -46,7 +46,8 @@ export interface DotPerson {
 	x: number;
 	y: number;
 	r: number;
-	basis: Basis;
+	/** The basis of the post that seats them; absent for someone without one. */
+	basis?: Basis;
 	/** Which side of the dot its name goes on. */
 	side: 'l' | 'r';
 	/** No post: drawn because a tie names them. */
@@ -260,7 +261,7 @@ export function buildDots(scene: Scene, rtl = false): DotScene {
 								x: px,
 								y: cell.cy + Math.sin(ang) * rg.r,
 								r: dotR(s.person),
-								basis: ((s.position?.basis ?? 'documented') as Basis) || 'documented',
+								basis: (s.position?.basis as Basis | undefined) || undefined,
 								side: Math.cos(ang) < -0.2 ? 'l' : 'r',
 								outside: false
 							});
@@ -292,7 +293,6 @@ export function buildDots(scene: Scene, rtl = false): DotScene {
 							x: rx + 8,
 							y: ry + DOT.ROW / 2,
 							r: dotR(s.person),
-							basis: 'documented',
 							side: 'r',
 							outside: true
 						});
@@ -379,7 +379,7 @@ export function buildDots(scene: Scene, rtl = false): DotScene {
 			inst: c.id,
 			person: p.id,
 			layer: p.layer,
-			basis: p.basis,
+			basis: p.basis ?? 'documented',
 			secondary: false,
 			d: `M${f1(c.cx)},${f1(c.cy)} L${f1(p.x)},${f1(p.y)}`
 		});

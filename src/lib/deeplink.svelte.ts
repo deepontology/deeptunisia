@@ -94,22 +94,41 @@ export function applyEntityLink(): boolean {
  * new URL are both read from the address bar.
  */
 /**
- * Rewrite the address bar from its current value. A write in the first
- * effects of a page load can come before the SvelteKit router is ready, and
- * `replaceState` throws then; the write waits for the router (a few tasks at
- * most) and is rebuilt from the address bar when it runs, so a write made in
- * between is never undone.
+ * Rewrite the address bar from its current value.
+ *
+ * A write in the first effects of a page load can come before the SvelteKit
+ * router is ready, and `replaceState` throws then. Writes therefore go through
+ * one queue, applied in the order they were made, each rebuilt from the
+ * address bar when it runs: a later write can never be undone by an earlier
+ * one that had to wait. A queued write for a page the reader has since left
+ * is dropped, and so is the queue if the router never comes up (a few
+ * seconds), rather than throwing from a timer.
  */
-export function rewriteUrl(mutate: (u: URL) => void, tries = 20) {
+const pending: { mutate: (u: URL) => void; path: string }[] = [];
+let retry: ReturnType<typeof setTimeout> | undefined;
+export function rewriteUrl(mutate: (u: URL) => void) {
 	if (!browser) return;
-	const u = new URL(location.href);
-	mutate(u);
-	if (u.href === location.href) return;
-	try {
-		replaceState(u, page.state);
-	} catch (err) {
-		if (tries <= 0) throw err;
-		setTimeout(() => rewriteUrl(mutate, tries - 1), 50);
+	pending.push({ mutate, path: location.pathname });
+	if (retry === undefined) flushUrl(60);
+}
+function flushUrl(tries: number) {
+	retry = undefined;
+	while (pending.length) {
+		const { mutate, path } = pending[0];
+		if (path === location.pathname) {
+			const u = new URL(location.href);
+			mutate(u);
+			if (u.href !== location.href) {
+				try {
+					replaceState(u, page.state);
+				} catch {
+					if (tries > 0) retry = setTimeout(() => flushUrl(tries - 1), 50);
+					else pending.length = 0;
+					return;
+				}
+			}
+		}
+		pending.shift();
 	}
 }
 

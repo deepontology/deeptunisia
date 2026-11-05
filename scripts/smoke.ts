@@ -2146,6 +2146,13 @@ if (runSection('network readings')) {
 		page.url()
 	);
 
+	// A chamber's rank and file hold a seat but are counted on its bar: the
+	// notice says so instead of "no post held".
+	await page.goto(BASE + '/network?id=kamel-chergui', { waitUntil: 'networkidle' });
+	await settle(page);
+	const memberNote = (await page.locator('.offmap').innerText().catch(() => '')).trim();
+	ok('a chamber member off the map is said to be counted in its seats', /sits in/.test(memberNote) && !/no post held/.test(memberNote), memberNote.slice(0, 90));
+
 	ok('network readings console clean', problems.length === 0, problems.slice(0, 3).join(' | '));
 	await context.close();
 }

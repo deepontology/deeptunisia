@@ -599,6 +599,11 @@ export function buildScene(input: SceneInput): Scene {
 	for (const rel of partyRels) {
 		const person = personById.has(rel.from) ? rel.from : personById.has(rel.to) ? rel.to : null;
 		const party = person === rel.from ? rel.to : rel.from;
+		// A party tie between two people (a patronage claim) is never a roster:
+		// it is drawn only when both are already on the map.
+		if (person !== null && personById.has(party)) {
+			if (!onMap(person) || !onMap(party)) continue;
+		}
 		const direct = person === null || onMap(person);
 		const term = person ? chamberOfMember.get(person) : undefined;
 		if (!direct && !term) continue; // a past member: not in play
