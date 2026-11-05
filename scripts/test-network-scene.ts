@@ -242,6 +242,22 @@ console.log('\n  ── the date readers land on: 14 January 2011 ──\n');
 	);
 }
 
+{
+	// The memo never serves a stale picture: scrubbing day by day through the
+	// memo gives what a fresh build gives, across the fuzzy-date boundaries
+	// where a chamber's possible members become certain.
+	const stale: string[] = [];
+	const look = (s: Scene) => JSON.stringify([s.units.map((u) => [u.key, u.seats.length, u.chamber?.named, u.chamber?.uncertain, u.chamber?.withheld]), s.ties.map((e) => e.id)]);
+	for (const y of [2011, 2013, 2015, 2017, 2020, 2024]) {
+		for (let d = 0; d < 60; d += 3) {
+			const t = Date.UTC(y, 0, 1 + d);
+			const input = { t, floor: 'reported' as const, layers: ALL, families: DEFAULT_FAMILIES };
+			if (look(sceneAt(input)) !== look(buildScene(input))) stale.push(new Date(t).toISOString().slice(0, 10));
+		}
+	}
+	ok('scrubbing through the memo matches a fresh build on every day', stale.length === 0, stale.slice(0, 4).join(', ') || '120 days');
+}
+
 console.log('\n  ── the dot view ──\n');
 {
 	const dOutside: string[] = [];

@@ -5,7 +5,7 @@
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
 	import { rewriteUrl } from '$lib/deeplink.svelte';
-	import { seatedAt } from '$lib/civic';
+	import { seatedAt, termAt } from '$lib/civic';
 	import { app } from '$lib/state.svelte';
 	import { sheetDrag, type SheetDragParams } from '$lib/ui/sheet-drag';
 	import { t, tf, formatDate, layerLabel, basisLabel, relLabel, entityName, nameOf } from '$lib/t.svelte';
@@ -429,6 +429,8 @@
 	// --- Hover tips (pointer-placed, never per frame) ------------------------------
 
 	let tipAt = $state<{ x: number; y: number } | null>(null);
+	/** The seat under the pointer, when it is one: a second post reports its own title. */
+	let hoverSeat = $state<string | null>(null);
 	let canvasEl = $state<HTMLDivElement | null>(null);
 
 	function pointerAt(e: PointerEvent | MouseEvent) {
@@ -443,12 +445,19 @@
 		const el = (e.target as Element).closest?.('[data-id]') as HTMLElement | null;
 		const id = el?.dataset.id ?? null;
 		if (id !== app.hovered) app.hovered = id;
+		hoverSeat = el?.dataset.seat ?? null;
 		tipAt = id ? pointerAt(e) : null;
+	}
+	/** The tip follows the pointer across a wide seat or box. */
+	function onWorldMove(e: PointerEvent) {
+		if (e.pointerType === 'touch' || !app.hovered) return;
+		tipAt = pointerAt(e);
 	}
 	function onWorldOut(e: PointerEvent) {
 		const to = (e.relatedTarget as Element | null)?.closest?.('[data-id]');
 		if (!to) {
 			app.hovered = null;
+			hoverSeat = null;
 			tipAt = null;
 		}
 	}
@@ -464,8 +473,9 @@
 	const hoverInfo = $derived.by(() => {
 		const id = app.hovered;
 		if (!id) return null;
-		const unit = scene.unitOf.get(id);
-		const seat = unit?.seats.find((s) => s.person === id && s.primary);
+		const held = hoverSeat ? scene.units.find((u) => u.seats.some((s) => s.key === hoverSeat)) : undefined;
+		const unit = held ?? scene.unitOf.get(id);
+		const seat = unit?.seats.find((s) => (hoverSeat ? s.key === hoverSeat : s.person === id && s.primary));
 		let line = '';
 		if (seat?.position) line = `${postTitle(seat.position)} · ${entityName(seat.position.institution)}`;
 		else if (unit?.kind === 'chamber' && personById.has(id)) line = tf('network.tip.member', { chamber: entityName(unit.id!) });
@@ -505,7 +515,11 @@
 	 */
 	let selectFly: 'gentle' | 'strong' = 'strong';
 	function selectOnMap(id: string, e?: MouseEvent) {
-		if (pressed) return;
+		// The click that ends a long press is the press's own: swallow it once.
+		if (pressed) {
+			pressed = false;
+			return;
+		}
 		if (e?.shiftKey) {
 			compareId = compareId === id ? null : id;
 			return;
@@ -564,8 +578,9 @@
 		const date = formatDate(app.t, 'day');
 		const name = entityName(id);
 		if (!personById.has(id)) return tf('network.offmap.inst', { name, date });
-		const chamber = scene.units.find((u) => u.chamber && seatedAt(u.chamber.term, app.t, app.basisFloor).members.some((m) => m.position.holder === id));
-		if (chamber) return tf('network.offmap.member', { name, chamber: entityName(chamber.id!), date });
+		// From the record, not the drawn units: a solo on another lane hides the box, not the seat.
+		const term = [termAt(app.t, 'lower'), termAt(app.t, 'upper')].find((x) => x && seatedAt(x, app.t, app.basisFloor).members.some((m) => m.position.holder === id));
+		if (term) return tf('network.offmap.member', { name, chamber: entityName(term.institution.id), date });
 		return tf('network.offmap', { name, date });
 	}
 
@@ -1135,7 +1150,10 @@
 										onpointerup={() => clearPress()}
 										onpointerleave={() => clearPress()}
 										onclick={() => {
-											if (pressed) return;
+											if (pressed) {
+												pressed = false;
+												return;
+											}
 											if (e.bundle) openTie(e);
 											else pinnedId = pinnedId === e.id ? null : e.id;
 										}}
@@ -1158,14 +1176,17 @@
 					style:width="{scene.width}px"
 					style:height="{worldH()}px"
 					onpointerover={onWorldOver}
+					onpointermove={onWorldMove}
 					onpointerout={onWorldOut}
 					onpointerdown={(e) => {
 						const el = (e.target as Element).closest?.('[data-id]') as HTMLElement | null;
 						if (!el?.dataset.id) return;
 						// A long press is the touch hover: the same highlight and tip.
 						const at = pointerAt(e);
+						const seatKey = el.dataset.seat ?? null;
 						startPress(() => {
 							app.hovered = el.dataset.id!;
+							hoverSeat = seatKey;
 							tipAt = at;
 						});
 					}}
@@ -1363,6 +1384,7 @@
 										class:focus={app.selected === s.person}
 										class:hot={app.hovered === s.person}
 										data-id={s.person}
+										data-seat={s.key}
 										style:transform="translate({s.x - u.x}px, {s.y - u.y}px)"
 										style:width="{s.w}px"
 										aria-label="{entityName(s.person)}{s.position ? ' — ' + postTitle(s.position) + ', ' + basisLabel(basis) : ''}"

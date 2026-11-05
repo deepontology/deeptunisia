@@ -47,6 +47,7 @@ import {
 	institutionById,
 	personById,
 	possiblyActive,
+	activity,
 	meetsBasis,
 	LAYERS,
 	type Basis,
@@ -429,7 +430,11 @@ function signature(input: SceneInput): number {
 	mix(input.rtl ? 'rtl' : 'ltr');
 	mix(String(input.widen ?? 1));
 	for (const f of input.flows ?? []) mix(f.id + f.description);
-	for (const p of ds.positions) if (possiblyActive(p.interval, t) && meetsBasis(p.basis as Basis, floor)) mix(p.id);
+	// Every post in play, with whether it is certain or only possible: a
+	// chamber seats only its certain members once the possible ones overflow
+	// it, and counts those below the floor as withheld, so both change the box
+	// without a post entering or leaving.
+	for (const p of ds.positions) if (possiblyActive(p.interval, t)) mix(p.id + ':' + activity(p.interval, t));
 	for (const r of ds.relationships) {
 		if (r.interval.raw.start !== null && !possiblyActive(r.interval, t)) continue;
 		if (!meetsBasis(r.basis as Basis, floor)) continue;
@@ -594,6 +599,10 @@ export function buildScene(input: SceneInput): Scene {
 
 	// A person is on the map if they hold a (non-chamber) post or a drawn tie names them.
 	const onMap = (id: string) => primaryOf.has(id) || endpoints.has(id) || !personById.has(id);
+	// Who the claims put there, before any party tie: a tie between two people
+	// asks of this, so the answer does not depend on the order of the record.
+	const claimed = new Set(endpoints);
+	const placed = (id: string) => primaryOf.has(id) || claimed.has(id);
 	const bundles = new Map<string, { term: Term; party: string; n: number; basis: Basis }>();
 	const BASIS_RANK: Basis[] = ['documented', 'reported', 'inferred', 'unsubstantiated'];
 	for (const rel of partyRels) {
@@ -602,7 +611,7 @@ export function buildScene(input: SceneInput): Scene {
 		// A party tie between two people (a patronage claim) is never a roster:
 		// it is drawn only when both are already on the map.
 		if (person !== null && personById.has(party)) {
-			if (!onMap(person) || !onMap(party)) continue;
+			if (!placed(person) || !placed(party)) continue;
 		}
 		const direct = person === null || onMap(person);
 		const term = person ? chamberOfMember.get(person) : undefined;
