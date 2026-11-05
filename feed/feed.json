@@ -3,6 +3,66 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:7ff4e1584d5cc725",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Saisie de cannabis et de psychotropes à Sousse | Trois dealers arrêtés",
+      "link": "https://kapitalis.com/tunisie/2026/11/05/saisie-de-cannabis-et-de-psychotropes-a-sousse-trois-dealers-arretes/",
+      "published": "2026-11-04T23:06:06Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:3fd1a2a500337e16",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "« L’intellectuel et l’IA : Une liaison dangereuse » | Décryptage avec le Pr Abdelaziz Kacem",
+      "link": "https://kapitalis.com/tunisie/2026/11/04/lintellectuel-et-lia-une-liaison-dangereuse-decryptage-avec-le-pr-abdelaziz-kacem/",
+      "published": "2026-11-04T22:42:48Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:e000ac4929c78bc3",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "ExpoProtection 2026 | Des entreprises tunisiennes exposent leur savoir-faire à Paris",
+      "link": "https://kapitalis.com/tunisie/2026/11/04/expoprotection-2026-des-entreprises-tunisiennes-exposent-leur-savoir-faire-a-paris/",
+      "published": "2026-11-04T21:42:47Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:ef7c38640b44d772",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Incendie criminel au lycée Tahar Haddad à Regueb | Appel à l’ouverture d’une enquête urgente",
+      "link": "https://kapitalis.com/tunisie/2026/11/04/incendie-criminel-au-lycee-tahar-haddad-a-regueb-appel-a-louverture-dune-enquete-urgente/",
+      "published": "2026-11-04T21:08:27Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:african-manager:7a8d63594594053e",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Banques résidentes : Hausse du PNB global à 8,4 milliards DT",
+      "link": "https://africanmanager.com/banques-residentes-hausse-du-pnb-global-a-84-milliards-dt/",
+      "published": "2026-11-04T20:21:35Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:kapitalis:39d5e27d4e842ca4",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Participation de la FTAV au World travel market à Londres",
+      "link": "https://kapitalis.com/tunisie/2026/11/04/participation-de-la-ftav-au-world-travel-market-a-londres/",
+      "published": "2026-11-04T20:11:04Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
       "id": "feed:african-manager:b1b9c9a40f5afa81",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -11936,66 +11996,6 @@
       "title": "Coopération audiovisuelle sino-arabe : Pékin veut approfondir les échanges",
       "link": "https://africanmanager.com/cooperation-audiovisuelle-sino-arabe-pekin-veut-approfondir-les-echanges/",
       "published": "2026-09-25T08:46:47Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:e81d9a0f2c594b5c",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Mseddi propose une loi portant sur la qualité du travail politique",
-      "link": "https://africanmanager.com/mseddi-propose-une-loi-portant-sur-la-qualite-du-travail-politique/",
-      "published": "2026-09-25T08:45:06Z",
-      "lang": "fr",
-      "author": "Africanmanager"
-    },
-    {
-      "id": "feed:kapitalis:ba5c0b4ae130d1c0",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Les urgences environnementales en Méditerranée en débat à Bizerte",
-      "link": "https://kapitalis.com/tunisie/2026/09/25/les-urgences-environnementales-en-mediterranee-en-debat-a-bizerte/",
-      "published": "2026-09-25T08:39:48Z",
-      "lang": "fr",
-      "author": "webmaster kapitalis"
-    },
-    {
-      "id": "feed:african-manager:8647f8ac06051e65",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Produits de la pêche : Un excédent de 92,6 MDT",
-      "link": "https://africanmanager.com/produits-de-la-peche-la-balance-commerciale-enregistre-un-excedent-de-926-mdt/",
-      "published": "2026-09-25T08:35:59Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:8b48128df4690ffb",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Tunisie–CEDEAO : coopération en perspectives",
-      "link": "https://africanmanager.com/tunisie-cedeao-vers-de-nouvelles-perspectives-de-cooperation/",
-      "published": "2026-09-25T08:34:42Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:039d040997c87c5d",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Abandon scolaire: 100.000 élèves quittent chaque année l’école",
-      "link": "https://africanmanager.com/abandon-scolaire-100-000-eleves-quittent-chaque-annee-lecole/",
-      "published": "2026-09-25T07:55:59Z",
-      "lang": "fr",
-      "author": "Africanmanager"
-    },
-    {
-      "id": "feed:african-manager:1be4819f84056921",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "La BM réaffirme son soutien à la Tunisie pour l’avenir",
-      "link": "https://africanmanager.com/la-banque-mondiale-reaffirme-son-soutien-a-la-tunisie-au-cours-de-la-prochaine-periode/",
-      "published": "2026-09-25T07:51:45Z",
       "lang": "fr",
       "author": "African Manager"
     }
