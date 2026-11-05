@@ -454,7 +454,7 @@
 		hoverClear = setTimeout(() => {
 			app.hovered = null;
 			hoverSeat = null;
-			tipAt = null;
+			if (!hoverEdge) tipAt = null;
 		}, HOVER_GRACE);
 	}
 	function onWorldOver(e: PointerEvent) {
@@ -529,6 +529,9 @@
 			clearTimeout(pressTimer);
 			pressTimer = null;
 		}
+		// A long press is over once released: its click comes at once or never,
+		// so the guard lapses shortly after, wherever the finger lifted.
+		if (pressed) setTimeout(() => (pressed = false), 350);
 	}
 
 	// --- Selecting and flying -------------------------------------------------------
@@ -606,7 +609,11 @@
 		// From the record, not the drawn units, and at any basis: a lane solo or
 		// the evidence floor hides the seat from the map, not from the chamber.
 		const term = [termAt(app.t, 'lower'), termAt(app.t, 'upper')].find((x) => x && membersAt(x, app.t).some((m) => m.position.holder === id));
-		if (term) return tf('network.offmap.member', { name, chamber: entityName(term.institution.id), date });
+		if (term) {
+			// Counted on the bar, or withheld by the floor: the sentence says which.
+			const counted = seatedAt(term, app.t, app.basisFloor).members.some((m) => m.position.holder === id);
+			return tf(counted ? 'network.offmap.member' : 'network.offmap.withheld', { name, chamber: entityName(term.institution.id), date });
+		}
 		return tf('network.offmap', { name, date });
 	}
 
@@ -645,6 +652,7 @@
 	$effect(() => () => {
 		clearTimeout(pinnedCloseTimer);
 		clearTimeout(hoverClear);
+		if (tipFrame) cancelAnimationFrame(tipFrame);
 	});
 
 	const edgeDragParams: SheetDragParams = {
@@ -1165,6 +1173,7 @@
 										class="hit"
 										role="presentation"
 										onmouseenter={(ev) => {
+											// The seat just left still clears its hover, but not this tie's tip.
 											hoverEdge = e.id;
 											tipAt = pointerAt(ev);
 										}}
@@ -1178,6 +1187,7 @@
 										}}
 										onpointerup={() => clearPress()}
 										onpointerleave={() => clearPress()}
+										onpointercancel={() => clearPress()}
 										onclick={() => {
 											if (pressed) {
 												pressed = false;

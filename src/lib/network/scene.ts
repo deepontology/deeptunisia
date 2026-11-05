@@ -429,7 +429,7 @@ function signature(input: SceneInput): number {
 	mix([...families].sort().join(','));
 	mix(input.rtl ? 'rtl' : 'ltr');
 	mix(String(input.widen ?? 1));
-	for (const f of input.flows ?? []) mix(f.id + f.description);
+	for (const f of input.flows ?? []) mix(f.id + ':' + f.value + ':' + f.description);
 	// Every post in play, with whether it is certain or only possible: a
 	// chamber seats only its certain members once the possible ones overflow
 	// it, and counts those below the floor as withheld, so both change the box

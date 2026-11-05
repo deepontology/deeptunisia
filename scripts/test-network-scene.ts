@@ -168,7 +168,7 @@ ok('no two boxes in a lane overlap, at any year', overlaps.length === 0, overlap
 ok('every box sits in its lane and every seat in its box', outside.length === 0, outside.slice(0, 3).join(' | '));
 ok('holding office is never drawn as a line', memberships.length === 0, memberships.slice(0, 3).join(' | '));
 ok('every line ends at something drawn', loose.length === 0, loose.slice(0, 3).join(' | '));
-ok('lines run vertically only inside gutters, so they never cross a box', offGutter.length === 0, offGutter.slice(0, 3).join(' | '));
+ok('lines run vertically only inside gutters; a bridge between distant lanes crosses behind their boxes', offGutter.length === 0, offGutter.slice(0, 3).join(' | '));
 ok('a connection card anchors in a gutter, never over a box', cardOffGutter.length === 0, cardOffGutter.slice(0, 3).join(' | '));
 ok('a person has one seat their lines attach to', doubleSeat.length === 0, doubleSeat.slice(0, 3).join(' | '));
 ok("a chamber's rank and file are counted, not seated", rankAndFile.length === 0, rankAndFile.slice(0, 3).join(' | '));
@@ -249,7 +249,7 @@ console.log('\n  ── the date readers land on: 14 January 2011 ──\n');
 	const stale: string[] = [];
 	const look = (s: Scene) =>
 		JSON.stringify([
-			s.units.map((u) => [u.key, u.seats.length, u.chamber?.named, u.chamber?.uncertain, u.chamber?.withheld, u.chamber?.groups.map((g) => g.id + ':' + g.n)]),
+			s.units.map((u) => [u.key, u.x, u.y, u.h, u.seats.map((x) => x.key), u.chamber?.named, u.chamber?.uncertain, u.chamber?.withheld, u.chamber?.groups.map((g) => g.id + ':' + g.n)]),
 			s.ties.map((e) => e.id)
 		]);
 	// Both floors: the seat bar's group colours are not filtered by the floor.
