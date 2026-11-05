@@ -435,10 +435,11 @@ function signature(input: SceneInput): number {
 	// it, and counts those below the floor as withheld, so both change the box
 	// without a post entering or leaving.
 	for (const p of ds.positions) if (possiblyActive(p.interval, t)) mix(p.id + ':' + activity(p.interval, t));
+	// Every relationship in play, at any basis and with its certainty: the
+	// seat bar colours members by group memberships the floor does not filter.
 	for (const r of ds.relationships) {
 		if (r.interval.raw.start !== null && !possiblyActive(r.interval, t)) continue;
-		if (!meetsBasis(r.basis as Basis, floor)) continue;
-		if (hasAppeared(r.from, t) && hasAppeared(r.to, t)) mix(r.id);
+		if (hasAppeared(r.from, t) && hasAppeared(r.to, t)) mix(r.id + ':' + activity(r.interval, t));
 	}
 	for (const which of ['lower', 'upper'] as const) mix(termAt(t, which)?.role.id ?? '-');
 	for (const inst of ds.institutions) if (inst.layer === 'foreign' && foreignExists(inst, t)) mix(inst.id);

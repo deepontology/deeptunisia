@@ -121,7 +121,7 @@ ok(
 	'click-away pops one level: card first, then selection (and compare)',
 	NETWORK.includes('if (pinnedId) pinnedId = null;') && NETWORK.includes('else if (app.selected) {') && NETWORK.includes('compareId = null;')
 );
-ok('a click on a seat, box, line, card or lane is never a dismissal', NETWORK.includes("t.closest('.node, .hit, .box, .vlane, .edgecard, .viewnav, .legend, .minimap, .offmap, .dlabel')"));
+ok('a click on a seat, box, line, card or lane is never a dismissal', NETWORK.includes("t.closest('.node, .hit, .box, .vlane, .edgecard, .viewnav, .legend, .minimap, .offmap, .dlabel, .spoke, .donut, .ghead')"));
 ok('long-press is the touch hover tier', NETWORK.includes('startPress') && NETWORK.includes('500'));
 ok('a long-press suppresses the click that follows it', NETWORK.includes('if (pressed)'));
 

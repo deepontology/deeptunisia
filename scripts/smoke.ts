@@ -2146,6 +2146,34 @@ if (runSection('network readings')) {
 		page.url()
 	);
 
+	/*
+	 * A drag that starts on a name pans; it never selects text. And moving from
+	 * seat to seat keeps the map dimmed across the gaps between them, rather
+	 * than lighting everything and dimming it again on each gap.
+	 */
+	await page.goto(BASE + '/network', { waitUntil: 'networkidle' });
+	await settle(page);
+	const nm = await page.locator('.seat .nm').nth(3).boundingBox();
+	if (nm) {
+		await page.mouse.move(nm.x + 4, nm.y + 4);
+		await page.mouse.down();
+		await page.mouse.move(nm.x + 300, nm.y + 160, { steps: 10 });
+		await page.mouse.up();
+	}
+	ok('a drag across names selects no text', (await page.evaluate('String(getSelection())')) === '');
+	// A fresh page: the drag above leaves the map gliding under a still pointer.
+	await page.reload({ waitUntil: 'networkidle' });
+	await settle(page);
+	const seatsAt = (await page.evaluate(`(() => Array.from(document.querySelectorAll('.seat')).map((el) => [el, el.getBoundingClientRect()]).filter(([el, r]) => r.width > 20 && r.top > 120 && r.bottom < innerHeight - 40 && r.left > 0 && r.right < innerWidth && document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2)?.closest('.seat') === el).slice(0, 12).map(([, r]) => [r.left + r.width / 2, r.top + r.height / 2]))()`)) as [number, number][];
+	if (seatsAt.length) await page.mouse.move(seatsAt[0][0], seatsAt[0][1]);
+	await page.waitForTimeout(60);
+	// Every frame of the sweep: a frame with nothing dimmed is the flicker.
+	await page.evaluate(`(() => { window.__lit = 0; window.__watch = true; const f = () => { if (!document.querySelector('.seat.dim')) window.__lit++; if (window.__watch) requestAnimationFrame(f); }; requestAnimationFrame(f); })()`);
+	for (const [x, y] of seatsAt.slice(1)) await page.mouse.move(x, y, { steps: 6 });
+	const lit = (await page.evaluate('(() => { window.__watch = false; return window.__lit; })()')) as number;
+	ok('moving between seats keeps the map dimmed', seatsAt.length > 4 && lit === 0, `${lit} frames lit the whole map across ${Math.max(0, seatsAt.length - 1)} moves`);
+	await page.mouse.move(2, 2);
+
 	// A chamber's rank and file hold a seat but are counted on its bar: the
 	// notice says so instead of "no post held".
 	await page.goto(BASE + '/network?id=kamel-chergui', { waitUntil: 'networkidle' });

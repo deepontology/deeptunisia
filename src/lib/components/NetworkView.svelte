@@ -5,7 +5,7 @@
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
 	import { rewriteUrl } from '$lib/deeplink.svelte';
-	import { seatedAt, termAt } from '$lib/civic';
+	import { seatedAt, membersAt, termAt } from '$lib/civic';
 	import { app } from '$lib/state.svelte';
 	import { sheetDrag, type SheetDragParams } from '$lib/ui/sheet-drag';
 	import { t, tf, formatDate, layerLabel, basisLabel, relLabel, entityName, nameOf } from '$lib/t.svelte';
@@ -439,27 +439,52 @@
 		return { x: e.clientX - r.left, y: e.clientY - r.top };
 	}
 
-	/** Hover is delegated: one listener for every seat, chip and box title. */
+	/**
+	 * Hover is delegated: one listener for every seat, chip and box title.
+	 *
+	 * Leaving a target clears the hover only after a short wait. The pointer
+	 * crosses the gaps between seats on its way from one to the next, and
+	 * clearing at once lit the whole map and dimmed it again on every gap: a
+	 * flicker, and a restyle of every element on the map, twice per seat.
+	 */
+	const HOVER_GRACE = 140;
+	let hoverClear: ReturnType<typeof setTimeout> | undefined;
+	function clearHoverSoon() {
+		clearTimeout(hoverClear);
+		hoverClear = setTimeout(() => {
+			app.hovered = null;
+			hoverSeat = null;
+			tipAt = null;
+		}, HOVER_GRACE);
+	}
 	function onWorldOver(e: PointerEvent) {
 		if (e.pointerType === 'touch') return;
 		const el = (e.target as Element).closest?.('[data-id]') as HTMLElement | null;
 		const id = el?.dataset.id ?? null;
+		if (!id) {
+			if (app.hovered) clearHoverSoon();
+			return;
+		}
+		clearTimeout(hoverClear);
 		if (id !== app.hovered) app.hovered = id;
 		hoverSeat = el?.dataset.seat ?? null;
-		tipAt = id ? pointerAt(e) : null;
+		tipAt = pointerAt(e);
 	}
-	/** The tip follows the pointer across a wide seat or box. */
+	/** The tip follows the pointer across a wide seat or box, once per frame at most. */
+	let tipFrame = 0;
+	let tipNext: { x: number; y: number } | null = null;
 	function onWorldMove(e: PointerEvent) {
 		if (e.pointerType === 'touch' || !app.hovered) return;
-		tipAt = pointerAt(e);
+		tipNext = pointerAt(e);
+		if (tipFrame) return;
+		tipFrame = requestAnimationFrame(() => {
+			tipFrame = 0;
+			if (app.hovered && tipNext) tipAt = tipNext;
+		});
 	}
 	function onWorldOut(e: PointerEvent) {
 		const to = (e.relatedTarget as Element | null)?.closest?.('[data-id]');
-		if (!to) {
-			app.hovered = null;
-			hoverSeat = null;
-			tipAt = null;
-		}
+		if (!to) clearHoverSoon();
 	}
 
 	function postTitle(p: Position): string {
@@ -578,8 +603,9 @@
 		const date = formatDate(app.t, 'day');
 		const name = entityName(id);
 		if (!personById.has(id)) return tf('network.offmap.inst', { name, date });
-		// From the record, not the drawn units: a solo on another lane hides the box, not the seat.
-		const term = [termAt(app.t, 'lower'), termAt(app.t, 'upper')].find((x) => x && seatedAt(x, app.t, app.basisFloor).members.some((m) => m.position.holder === id));
+		// From the record, not the drawn units, and at any basis: a lane solo or
+		// the evidence floor hides the seat from the map, not from the chamber.
+		const term = [termAt(app.t, 'lower'), termAt(app.t, 'upper')].find((x) => x && membersAt(x, app.t).some((m) => m.position.holder === id));
 		if (term) return tf('network.offmap.member', { name, chamber: entityName(term.institution.id), date });
 		return tf('network.offmap', { name, date });
 	}
@@ -616,7 +642,10 @@
 			pinnedClosing = false;
 		}
 	});
-	$effect(() => () => clearTimeout(pinnedCloseTimer));
+	$effect(() => () => {
+		clearTimeout(pinnedCloseTimer);
+		clearTimeout(hoverClear);
+	});
 
 	const edgeDragParams: SheetDragParams = {
 		enabled: () => compact.current,
@@ -873,7 +902,7 @@
 
 	function onCanvasBgClick(e: MouseEvent) {
 		const t = e.target as Element | null;
-		if (t && t.closest('.node, .hit, .box, .vlane, .edgecard, .viewnav, .legend, .minimap, .offmap, .dlabel')) return;
+		if (t && t.closest('.node, .hit, .box, .vlane, .edgecard, .viewnav, .legend, .minimap, .offmap, .dlabel, .spoke, .donut, .ghead')) return;
 		hoverEdge = null;
 		app.hovered = null;
 		if (pinnedId) pinnedId = null;
@@ -1191,7 +1220,11 @@
 						});
 					}}
 					onpointerup={clearPress}
-					onpointercancel={clearPress}
+					onpointercancel={() => {
+						// A cancelled press is followed by no click, so nothing would consume the guard.
+						clearPress();
+						pressed = false;
+					}}
 					role="presentation"
 				>
 					{#if dots}
@@ -1892,6 +1925,9 @@
 		touch-action: none;
 		outline: none;
 		cursor: grab;
+		/* A drag pans the map; it must never start a text selection. */
+		-webkit-user-select: none;
+		user-select: none;
 	}
 	.canvas.moving {
 		cursor: grabbing;
@@ -1923,7 +1959,6 @@
 		vector-effect: non-scaling-stroke;
 		stroke-linecap: round;
 		stroke-linejoin: round;
-		transition: opacity var(--dur-fast) var(--ease-out);
 	}
 	.edge.dim {
 		opacity: 0.12;
@@ -2019,7 +2054,6 @@
 		contain: layout style;
 		transition:
 			transform var(--dur-normal) var(--ease-out),
-			opacity var(--dur-fast) var(--ease-out),
 			border-color var(--dur-fast) var(--ease-out);
 		animation: unit-in var(--dur-normal) var(--ease-out);
 	}
@@ -2104,9 +2138,7 @@
 		gap: 6px;
 		padding: 0 4px;
 		border-radius: 4px;
-		transition:
-			transform var(--dur-normal) var(--ease-out),
-			opacity var(--dur-fast) var(--ease-out);
+		transition: transform var(--dur-normal) var(--ease-out);
 		animation: unit-in var(--dur-normal) var(--ease-out);
 	}
 	.seat:hover,
@@ -2233,9 +2265,7 @@
 		border-radius: 6px;
 		border: 1px solid var(--border-subtle);
 		background: color-mix(in oklch, var(--surface-base) 70%, var(--surface-raised));
-		transition:
-			transform var(--dur-normal) var(--ease-out),
-			opacity var(--dur-fast) var(--ease-out);
+		transition: transform var(--dur-normal) var(--ease-out);
 		animation: unit-in var(--dur-normal) var(--ease-out);
 	}
 	.chip.k-register {
@@ -2282,7 +2312,6 @@
 		stroke-width: 0.9px;
 		stroke-opacity: 0.4;
 		vector-effect: non-scaling-stroke;
-		transition: stroke-opacity var(--dur-fast) var(--ease-out);
 	}
 	.spoke.secondary {
 		stroke-opacity: 0.32;
@@ -2308,7 +2337,6 @@
 		border-radius: 3px;
 		background: var(--c);
 		box-shadow: 0 0 0 2px var(--surface-base);
-		transition: opacity var(--dur-fast) var(--ease-out);
 	}
 	.dsq.chamber {
 		width: 13px;
@@ -2369,7 +2397,6 @@
 		background: var(--c);
 		border: 1.5px solid var(--c);
 		box-shadow: 0 0 0 1.5px var(--surface-base);
-		transition: opacity var(--dur-fast) var(--ease-out);
 	}
 	.dp.b-reported {
 		background: var(--surface-base);
