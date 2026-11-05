@@ -2130,6 +2130,22 @@ if (runSection('network readings')) {
 	await settle(page);
 	ok('the legend remembers the reader', await legendOpen());
 
+	/*
+	 * A link to a chamber member's party tie, with no lens named: it turns the
+	 * party family on and opens the chamber's bundle, whose party it selects.
+	 * The selection is written during the page's first effects, before the
+	 * router is ready, which used to throw and leave ?id= unwritten.
+	 */
+	await page.goto(BASE + '/network?rel=rel-kamel-chergui-rcd-cdd-xii-member', { waitUntil: 'networkidle' });
+	await settle(page);
+	await page.waitForTimeout(400);
+	const bundled = new URL(page.url()).searchParams;
+	ok(
+		'a bundled party-tie link turns the family on and selects the party',
+		(bundled.get('ties') ?? '').includes('party') && bundled.get('id') === 'rcd',
+		page.url()
+	);
+
 	ok('network readings console clean', problems.length === 0, problems.slice(0, 3).join(' | '));
 	await context.close();
 }

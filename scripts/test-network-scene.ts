@@ -26,7 +26,7 @@ import { buildScene, sceneAt, layerMatrix, laneFrames, GEO, WIDEN_MAX, type Scen
 import { buildDots, dotsAt } from '../src/lib/network/dots.ts';
 import { routeTies } from '../src/lib/network/route.ts';
 import { DEFAULT_FAMILIES, FAMILIES, familyOf, familiesFromMode, familiesParam, familiesFromParam } from '../src/lib/network/families.ts';
-import { ds, LAYERS, CUTOFF, FLOOR, type Layer } from '../src/lib/model.ts';
+import { ds, institutionById, LAYERS, CUTOFF, FLOOR, type Layer } from '../src/lib/model.ts';
 import { terms, termAt } from '../src/lib/civic.ts';
 
 let failures = 0;
@@ -221,6 +221,21 @@ console.log('\n  ── the date readers land on: 14 January 2011 ──\n');
 
 	const rtl = buildScene({ t, floor: 'reported', layers: ALL, families: DEFAULT_FAMILIES, rtl: true });
 	ok('right-to-left reading mirrors the lane order', rtl.lanes[0] === scene.lanes[scene.lanes.length - 1]);
+}
+
+{
+	// A group's chair is a claim: drawn, bundled or counted, never silently dropped.
+	const t = at(2024, 0, 1);
+	const isGroup = (id: string) => institutionById.get(id)?.type === 'parliamentary-group';
+	const chairs = ds.relationships.filter((r) => /parliamentary group (vice-)?chair/.test(r.subtype ?? '') && (isGroup(r.from) || isGroup(r.to)));
+	const on = buildScene({ t, floor: 'reported', layers: ALL, families: EVERY });
+	const off = buildScene({ t, floor: 'reported', layers: ALL, families: DEFAULT_FAMILIES });
+	const toGroups = on.ties.filter((e) => isGroup(e.rel.from) || isGroup(e.rel.to)).reduce((a, e) => a + (e.bundle ?? 1), 0);
+	ok(
+		"a parliamentary group's chairs are drawn or counted, not dropped",
+		chairs.length === 0 || (toGroups > 0 && (off.stats.notShown.get('party') ?? 0) >= toGroups),
+		`${chairs.length} chair ties in the record, ${toGroups} drawn to groups in 2024`
+	);
 }
 
 console.log('\n  ── the dot view ──\n');

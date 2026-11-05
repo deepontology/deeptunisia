@@ -93,6 +93,26 @@ export function applyEntityLink(): boolean {
  * `page.url` where the last navigation put it, so the current value and the
  * new URL are both read from the address bar.
  */
+/**
+ * Rewrite the address bar from its current value. A write in the first
+ * effects of a page load can come before the SvelteKit router is ready, and
+ * `replaceState` throws then; the write waits for the router (a few tasks at
+ * most) and is rebuilt from the address bar when it runs, so a write made in
+ * between is never undone.
+ */
+export function rewriteUrl(mutate: (u: URL) => void, tries = 20) {
+	if (!browser) return;
+	const u = new URL(location.href);
+	mutate(u);
+	if (u.href === location.href) return;
+	try {
+		replaceState(u, page.state);
+	} catch (err) {
+		if (tries <= 0) throw err;
+		setTimeout(() => rewriteUrl(mutate, tries - 1), 50);
+	}
+}
+
 export function syncSelectionUrl() {
 	if (!browser) return;
 	if (!consumesEntityLink(page.url.pathname)) return;
@@ -117,8 +137,8 @@ export function syncSelectionUrl() {
 	// routing and leaves page.url at the last navigation, so building on it
 	// dropped whatever a view had written since (the network's ?view= and
 	// ?ties=).
-	const u = new URL(location.href);
-	if (sel && validEntity(sel)) u.searchParams.set('id', sel);
-	else u.searchParams.delete('id');
-	if (u.href !== location.href) replaceState(u, page.state);
+	rewriteUrl((u) => {
+		if (sel && validEntity(sel)) u.searchParams.set('id', sel);
+		else u.searchParams.delete('id');
+	});
 }

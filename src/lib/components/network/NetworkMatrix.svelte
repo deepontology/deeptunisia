@@ -42,6 +42,17 @@
 	});
 
 	let picked = $state<string | null>(null);
+	/**
+	 * What a screen reader hears, set only when the reader picks a cell. The
+	 * pair panel itself is not a live region: it follows the scene, and a date
+	 * scrub would announce it on every frame.
+	 */
+	let announce = $state('');
+	function pickCell(key: string) {
+		picked = key;
+		const c = cellOf.get(key);
+		if (c) announce = `${pairLabel(c)}: ${tf('network.matrix.count', { n: c.count })}`;
+	}
 	/** A picked pair the lens has since emptied gives way to the busiest one. */
 	const current = $derived.by<MatrixCell | null>(() => {
 		const c = picked ? cellOf.get(picked) : undefined;
@@ -140,7 +151,7 @@
 										aria-pressed={current === c}
 										aria-label={cellLabel(c)}
 										title={cellLabel(c)}
-										onclick={() => (picked = row + '|' + col)}
+										onclick={() => pickCell(row + '|' + col)}
 									>
 										{#if c.count}<span class="n mono">{c.count}</span>{/if}
 									</button>
@@ -163,7 +174,8 @@
 		</div>
 	</section>
 
-	<section class="pair" aria-live="polite">
+	<p class="sr-only" role="status">{announce}</p>
+	<section class="pair">
 		{#if current}
 			<header class="pair-head">
 				<span class="pair-sw" aria-hidden="true">

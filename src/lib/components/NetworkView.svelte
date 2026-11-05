@@ -3,7 +3,8 @@
 	import { untrack } from 'svelte';
 	import { page } from '$app/state';
 	import { browser } from '$app/environment';
-	import { goto, replaceState } from '$app/navigation';
+	import { goto } from '$app/navigation';
+	import { rewriteUrl } from '$lib/deeplink.svelte';
 	import { seatedAt } from '$lib/civic';
 	import { app } from '$lib/state.svelte';
 	import { sheetDrag, type SheetDragParams } from '$lib/ui/sheet-drag';
@@ -79,25 +80,13 @@
 	let familiesLinked = false;
 
 	/**
-	 * Write the reader's lens or view into the address bar, through SvelteKit's
-	 * `replaceState` (see the trap in deeplink.svelte.ts). That is shallow
-	 * routing: `page.url` stays at the last navigation, so every write builds on
-	 * the address bar itself, and the layout's `?id=` write does the same.
-	 * A write from the first deep-link pass can come before the router is
-	 * ready; it waits a task.
+	 * Write the reader's lens or view into the address bar. `rewriteUrl` builds
+	 * on the address bar itself (SvelteKit's `replaceState` is shallow routing
+	 * and leaves `page.url` at the last navigation) and waits for the router
+	 * when a deep link writes during the page's first effects.
 	 */
 	function writeUrl(mutate: (u: URL) => void) {
-		if (typeof history === 'undefined') return;
-		const write = () => {
-			const u = new URL(location.href);
-			mutate(u);
-			if (u.href !== location.href) replaceState(u, page.state);
-		};
-		try {
-			write();
-		} catch {
-			setTimeout(write, 0);
-		}
+		rewriteUrl(mutate);
 	}
 
 	function syncFamiliesUrl() {
@@ -1246,7 +1235,7 @@
 								style:transform="translate({p.x}px, {p.y}px)"
 								style:--r="{p.r}px"
 								style:--c={LAYER_COLOR[p.layer]}
-								aria-label={entityName(p.id)}
+								aria-label="{entityName(p.id)}, {basisLabel(p.basis)}"
 								onclick={(e) => selectOnMap(p.id, e)}
 							>
 								<span class="nm">{entityName(p.id)}</span>
@@ -1345,7 +1334,7 @@
 										data-id={s.person}
 										style:transform="translate({s.x - u.x}px, {s.y - u.y}px)"
 										style:width="{s.w}px"
-										aria-label="{entityName(s.person)}{s.position ? ' — ' + postTitle(s.position) : ''}"
+										aria-label="{entityName(s.person)}{s.position ? ' — ' + postTitle(s.position) + ', ' + basisLabel(basis) : ''}"
 										onclick={(e) => selectOnMap(s.person, e)}
 									>
 										<i class="dot"></i>

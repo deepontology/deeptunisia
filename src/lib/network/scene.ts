@@ -555,7 +555,9 @@ export function buildScene(input: SceneInput): Scene {
 	for (const rel of ds.relationships) {
 		if (!meetsBasis(rel.basis as Basis, floor)) continue;
 		if (rel.interval.raw.start !== null && !possiblyActive(rel.interval, t)) continue;
-		if (isParliamentaryGroup(rel.from) || isParliamentaryGroup(rel.to)) continue; // drawn by the seat bar
+		// Membership of a parliamentary group is the seat bar's colour. Who
+		// chairs a group is a claim, and goes through the party rule below.
+		if ((isParliamentaryGroup(rel.from) || isParliamentaryGroup(rel.to)) && rel.subtype === 'parliamentary group member') continue;
 		if (!hasAppeared(rel.from, t) || !hasAppeared(rel.to, t)) continue;
 		if (!entityLane(rel.from) || !entityLane(rel.to)) continue;
 		const family = familyOf(rel.type);
