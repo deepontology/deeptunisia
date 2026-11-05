@@ -28,7 +28,7 @@ import { GEO, type Scene, type Tie } from './scene';
 export interface Route {
 	/** The visible path. */
 	d: string;
-	/** Where the connection card anchors: the middle of the line's longest run. */
+	/** Where the connection card anchors: the middle of a run inside a gutter. */
 	mid: { x: number; y: number };
 }
 
@@ -192,7 +192,10 @@ export function routeTies(scene: Scene): Map<string, Route> {
 			{ x: x1, y: b.y },
 			{ x: bx, y: b.y }
 		];
-		out.set(tie.id, { d: orth(pts), mid: { x: (x0 + x1) / 2, y: plan.ym } });
+		// The card anchors on the longer gutter run, not on the crossing, which
+		// passes behind other lanes' boxes.
+		const mid = Math.abs(plan.ym - a.y) >= Math.abs(b.y - plan.ym) ? { x: x0, y: (a.y + plan.ym) / 2 } : { x: x1, y: (plan.ym + b.y) / 2 };
+		out.set(tie.id, { d: orth(pts), mid });
 	}
 	return out;
 }

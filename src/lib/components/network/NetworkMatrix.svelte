@@ -42,7 +42,11 @@
 	});
 
 	let picked = $state<string | null>(null);
-	const current = $derived<MatrixCell | null>((picked && cellOf.get(picked)) || busiest);
+	/** A picked pair the lens has since emptied gives way to the busiest one. */
+	const current = $derived.by<MatrixCell | null>(() => {
+		const c = picked ? cellOf.get(picked) : undefined;
+		return c && c.count > 0 ? c : busiest;
+	});
 
 	/**
 	 * Five steps on a square-root scale, set by the busiest pair ACROSS layers.

@@ -86,15 +86,16 @@ export function applyEntityLink(): boolean {
  *
  * Reads `app.selected` so it re-runs on every selection change, and
  * `page.url.pathname` so it does nothing on routes that do not consume
- * `?id=`. SvelteKit's `replaceState` (not the raw history API — see the trap
- * above) updates its internal URL, so the next run compares against the
- * value this one wrote.
+ * `?id=`. It writes through SvelteKit's `replaceState` (not the raw history
+ * API — see the trap above). That call is shallow routing and leaves
+ * `page.url` where the last navigation put it, so the current value and the
+ * new URL are both read from the address bar.
  */
 export function syncSelectionUrl() {
 	if (!browser) return;
 	if (!consumesEntityLink(page.url.pathname)) return;
 	const sel = app.selected;
-	const current = page.url.searchParams.get('id');
+	const current = new URL(location.href).searchParams.get('id');
 	/*
 	 * Compare the PARAM, not the whole href.
 	 *
@@ -110,8 +111,12 @@ export function syncSelectionUrl() {
 	} else if (current === null) {
 		return;
 	}
-	const u = new URL(page.url.href);
+	// From the address bar, not page.url: SvelteKit's replaceState is shallow
+	// routing and leaves page.url at the last navigation, so building on it
+	// dropped whatever a view had written since (the network's ?view= and
+	// ?ties=).
+	const u = new URL(location.href);
 	if (sel && validEntity(sel)) u.searchParams.set('id', sel);
 	else u.searchParams.delete('id');
-	if (u.href !== page.url.href) replaceState(u, '');
+	if (u.href !== location.href) replaceState(u, '');
 }

@@ -2,7 +2,9 @@
 	import AboutView from '$lib/shell/AboutView.svelte';
 	import { untrack } from 'svelte';
 	import { page } from '$app/state';
-	import { goto } from '$app/navigation';
+	import { browser } from '$app/environment';
+	import { goto, replaceState } from '$app/navigation';
+	import { seatedAt } from '$lib/civic';
 	import { app } from '$lib/state.svelte';
 	import { sheetDrag, type SheetDragParams } from '$lib/ui/sheet-drag';
 	import { t, tf, formatDate, layerLabel, basisLabel, relLabel, entityName, nameOf } from '$lib/t.svelte';
@@ -76,11 +78,26 @@
 	/** Set once a URL named the lens; a deep link then never overrides the reader's own choice. */
 	let familiesLinked = false;
 
+	/**
+	 * Write the reader's lens or view into the address bar, through SvelteKit's
+	 * `replaceState` (see the trap in deeplink.svelte.ts). That is shallow
+	 * routing: `page.url` stays at the last navigation, so every write builds on
+	 * the address bar itself, and the layout's `?id=` write does the same.
+	 * A write from the first deep-link pass can come before the router is
+	 * ready; it waits a task.
+	 */
 	function writeUrl(mutate: (u: URL) => void) {
 		if (typeof history === 'undefined') return;
-		const u = new URL(page.url.href);
-		mutate(u);
-		history.replaceState(history.state, '', u);
+		const write = () => {
+			const u = new URL(location.href);
+			mutate(u);
+			if (u.href !== location.href) replaceState(u, page.state);
+		};
+		try {
+			write();
+		} catch {
+			setTimeout(write, 0);
+		}
 	}
 
 	function syncFamiliesUrl() {
@@ -104,6 +121,7 @@
 	function ensureFamily(f: Family) {
 		if (families.has(f) || familiesLinked) return;
 		families = new Set([...families, f]);
+		syncFamiliesUrl();
 	}
 
 	// --- View: the map, the dots, or the layer matrix ------------------------------
@@ -698,12 +716,33 @@
 			const rel = ds.relationships.find((r) => r.id === want);
 			if (!rel || !meetsBasis(rel.basis as Basis, app.basisFloor)) return;
 			ensureFamily(familyOf(rel.type));
-			const e = scene.ties.find((x) => x.rel.id === want);
-			if (!e) return;
+			const e = scene.ties.find((x) => x.rel.id === want) ?? bundleOf(rel);
+			if (!e) {
+				// Not drawn on this map (a hidden layer, another date): select its
+				// person, so the link lands on their card or the off-map notice.
+				const end = personById.has(rel.from) ? rel.from : personById.has(rel.to) ? rel.to : rel.from;
+				if (personById.has(end) || institutionById.has(end)) app.selected = end;
+				return;
+			}
 			if (view === 'matrix') view = 'map';
 			openTie(e, true);
 		});
 	});
+
+	/**
+	 * A chamber member's party tie is drawn inside its chamber's bundle, so a
+	 * link to that tie opens the bundle that carries it.
+	 */
+	function bundleOf(rel: { type: string; from: string; to: string }): Tie | undefined {
+		if (rel.type !== 'party') return undefined;
+		const person = personById.has(rel.from) ? rel.from : rel.to;
+		const party = person === rel.from ? rel.to : rel.from;
+		return scene.ties.find((x) => {
+			if (!x.bundle || x.rel.to !== party) return false;
+			const term = scene.units.find((u) => u.id === x.rel.from)?.chamber?.term;
+			return !!term && seatedAt(term, app.t, app.basisFloor).members.some((m) => m.position.holder === person);
+		});
+	}
 
 	/** Escape closes the card (or compare) before the shell gets to clear the selection. */
 	function onKeyCapture(e: KeyboardEvent) {
@@ -788,7 +827,7 @@
 			try {
 				saved = localStorage.getItem(LEGEND_KEY);
 			} catch {
-				/* storage blocked: fall back to the width */
+				/* storage blocked: the legend starts folded */
 			}
 			legendOpen = saved === '1';
 		});
@@ -862,6 +901,14 @@
 	}
 
 	let tableOpen = $state(false);
+
+	/** Seats the count leaves out, in the hemicycle's words: below the floor, or dated only to the year. */
+	function chamberNote(c: { withheld: number; uncertain: number }): string | undefined {
+		const parts = [];
+		if (c.uncertain) parts.push(tf('parl.uncertainShort', { n: c.uncertain }));
+		if (c.withheld) parts.push(tf('parl.withheldShort', { n: c.withheld }));
+		return parts.length ? parts.join(' · ') : undefined;
+	}
 
 	const BASIS_RANK: Basis[] = ['documented', 'reported', 'inferred', 'unsubstantiated'];
 	const tableTies = $derived(
@@ -1240,9 +1287,9 @@
 										onclick={(e) => selectOnMap(u.id!, e)}
 									>
 										<span class="title">{entityName(u.id)}</span>
-										<span class="count mono">
+										<span class="count mono" title={u.chamber ? chamberNote(u.chamber) : undefined}>
 											{#if u.chamber}
-												{tf('network.chamber.short', { n: u.chamber.named, seats: u.chamber.seats })}
+												{tf('network.chamber.short', { n: u.chamber.named, seats: u.chamber.seats })}{#if u.chamber.withheld || u.chamber.uncertain}*{/if}
 											{:else if u.seats.length > 1}
 												{u.seats.length}
 											{/if}
@@ -1520,12 +1567,13 @@
 	<!--
 		The text equivalent of the map. Every tie drawn above is a row, with the
 		same names, relationship and basis, and a button that pins it on the map.
-		Rendered only while open: it is the complete record of the view, and a
-		closed table has no reason to cost the page its rows.
+		Rendered only while open in the browser: it is the complete record of
+		the view, and a closed table has no reason to cost the page its rows.
+		The prerendered page always carries them, for readers without scripts.
 	-->
 	<details class="a11y" bind:open={tableOpen}>
 		<summary>{t('network.table.summary')}</summary>
-		{#if tableOpen}
+		{#if tableOpen || !browser}
 			{#if focus && near}
 				<h4 class="a11y-sub">{format(app.locale, 'network.table.focus', { name: entityName(focus) })}</h4>
 				<table>
@@ -1595,7 +1643,7 @@
 								<td>{entityName(u.id!)}</td>
 								<td colspan="2">
 									{tf('network.chamber.named', { n: u.chamber.named, seats: u.chamber.seats })}:
-									{u.chamber.groups.map((g) => `${g.id ? entityName(g.id) : t('parl.unaffiliated')} ${g.n}`).join(', ')}
+									{u.chamber.groups.map((g) => `${g.id ? entityName(g.id) : t('parl.unaffiliated')} ${g.n}`).join(', ')}{#if chamberNote(u.chamber)}{'. '}{chamberNote(u.chamber)}{/if}
 								</td>
 							</tr>
 						{/if}

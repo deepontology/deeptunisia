@@ -82,9 +82,14 @@ export function familiesFromMode(mode: string | null): Set<Family> | null {
 	return null;
 }
 
-/** `?ties=power,money` → the set it names; null when the parameter is absent or names nothing. */
+/**
+ * `?ties=power,money` → the set it names. An empty `?ties=` is the reader
+ * switching every family off; null when the parameter is absent or names
+ * only unknown families.
+ */
 export function familiesFromParam(param: string | null): Set<Family> | null {
 	if (param === null) return null;
+	if (param.trim() === '') return new Set();
 	const out = new Set<Family>();
 	for (const part of param.split(',')) {
 		const f = part.trim() as Family;

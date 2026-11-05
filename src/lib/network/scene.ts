@@ -17,9 +17,10 @@
  * Three further rules keep the map honest at any size:
  *
  * - A chamber is one box. Its members are counted by group on a seat bar (the
- *   same composition the World view's hemicycle draws, from civic.ts). Only a
- *   member who is party to a drawn tie gets a seat of their own, because only
- *   then does the map need somewhere to attach the line.
+ *   same composition the World view's hemicycle draws, from civic.ts). Its
+ *   officers sit in it like any office. Otherwise only a member who is party
+ *   to a drawn tie gets a seat of their own, because only then does the map
+ *   need somewhere to attach the line.
  * - A person outside office who is party to a drawn tie sits in their lane's
  *   "outside office" section. Nobody else outside office is drawn: they are in
  *   the table and the search, and a map of absences is not a map.
@@ -29,8 +30,9 @@
  *
  * DETERMINISM
  *
- * Everything below is a pure function of (date, evidence floor, layers, tie
- * families, direction). There is no force simulation and no randomness, so a
+ * Everything below is a pure function of its input: the date, the evidence
+ * floor, the layers, the tie families, the flows, the reading direction and
+ * the lane stretch. There is no force simulation and no randomness, so a
  * link always opens on the same picture and scrubbing the date changes only
  * what changed in the record. Institutions keep their authored order inside
  * their group, so a box that appears or leaves moves its neighbours, never
@@ -459,32 +461,21 @@ export function buildScene(input: SceneInput): Scene {
 	if (input.rtl) lanes.reverse();
 	const laneOf = new Map(lanes.map((l, i) => [l, i]));
 	const frames = laneFrames(lanes, Math.min(WIDEN_MAX, Math.max(1, input.widen ?? 1)));
-	/** A person's name as the reader will see it, for sizing seat columns. */
+	/**
+	 * A person's name as the reader will see it, for sizing seat columns. Left
+	 * to right it is the longer of the English and French names, so one layout
+	 * serves both languages.
+	 */
 	const nameFor = (id: string): string => {
-		const p = personById.get(id) as unknown as { name_en?: string; name_ar?: string } | undefined;
-		return (input.rtl ? p?.name_ar : undefined) || p?.name_en || id;
+		const p = personById.get(id) as unknown as { name_en?: string; name_fr?: string; name_ar?: string } | undefined;
+		if (input.rtl && p?.name_ar) return p.name_ar;
+		const en = p?.name_en || id;
+		const fr = p?.name_fr || '';
+		return fr.length > en.length ? fr : en;
 	};
 
-	// 1. Who is in post. Chamber membership is read through civic.ts so the
-	//    chamber box seats exactly who the hemicycle seats.
-	const posts = new Map<string, Position[]>();
-	const holders = new Set<string>();
-	for (const p of ds.positions) {
-		if (!possiblyActive(p.interval, t)) continue;
-		if (!meetsBasis(p.basis as Basis, floor)) continue;
-		holders.add(p.holder);
-		if (rosterRoles.has(p.role) || termInstitutions.has(p.institution)) continue;
-		const inst = institutionById.get(p.institution);
-		if (!inst || !laneOf.has(inst.layer as Layer)) continue;
-		(posts.get(p.holder) ?? posts.set(p.holder, []).get(p.holder)!).push(p);
-	}
-	// The most senior post is where a person's lines attach.
-	const primaryOf = new Map<string, Position>();
-	for (const [person, list] of posts) {
-		list.sort((a, b) => b.authority - a.authority || a.interval.startEarliest - b.interval.startEarliest || a.id.localeCompare(b.id));
-		primaryOf.set(person, list[0]);
-	}
-
+	// 1. Who sits in each chamber, read through civic.ts so the chamber box
+	//    seats exactly who the hemicycle seats.
 	const chambers: { term: Term; info: ChamberInfo; members: Set<string> }[] = [];
 	const chamberOfMember = new Map<string, Term>();
 	for (const which of ['lower', 'upper'] as const) {
@@ -510,6 +501,28 @@ export function buildScene(input: SceneInput): Scene {
 		});
 	}
 	const sittingTerm = new Map(chambers.map((c) => [c.term.institution.id, c]));
+
+	// Who is in post. A chamber's officers (its president, its vice
+	// presidents) hold posts like any office; its members are the roster.
+	const posts = new Map<string, Position[]>();
+	const holders = new Set<string>();
+	for (const p of ds.positions) {
+		if (!possiblyActive(p.interval, t)) continue;
+		if (!meetsBasis(p.basis as Basis, floor)) continue;
+		holders.add(p.holder);
+		if (rosterRoles.has(p.role)) continue;
+		if (termInstitutions.has(p.institution) && !sittingTerm.has(p.institution)) continue;
+		const inst = institutionById.get(p.institution);
+		if (!inst || !laneOf.has(inst.layer as Layer)) continue;
+		(posts.get(p.holder) ?? posts.set(p.holder, []).get(p.holder)!).push(p);
+	}
+	// The most senior post is where a person's lines attach.
+	const primaryOf = new Map<string, Position>();
+	for (const [person, list] of posts) {
+		list.sort((a, b) => b.authority - a.authority || a.interval.startEarliest - b.interval.startEarliest || a.id.localeCompare(b.id));
+		primaryOf.set(person, list[0]);
+	}
+
 
 	// 2. Where an entity would be drawn, if a tie needs it. A person in post sits
 	//    in their primary post's lane; anyone else in their home lane.
@@ -679,17 +692,18 @@ export function buildScene(input: SceneInput): Scene {
 			const filled = boxes.map((inst) => {
 				const chamber = sittingTerm.get(inst.id);
 				let seated: { person: string; position: Position | null }[];
+				const posted = (office.get(inst.id) ?? [])
+					.sort((a, b) => b.authority - a.authority || a.roleTitle.localeCompare(b.roleTitle) || a.interval.startEarliest - b.interval.startEarliest || a.id.localeCompare(b.id))
+					.map((p) => ({ person: p.holder, position: p as Position | null }));
 				if (chamber) {
-					// Only members a drawn tie names get a seat of their own.
-					seated = [...chamber.members]
+					// Its officers first, then only the members a drawn tie names.
+					const members = [...chamber.members]
 						.filter((m) => endpoints.has(m) && !primaryOf.has(m))
 						.sort((a, b) => (personById.get(b)?.peakAuthority ?? 0) - (personById.get(a)?.peakAuthority ?? 0) || a.localeCompare(b))
 						.map((person) => ({ person, position: null }));
+					seated = [...posted, ...members];
 				} else {
-					seated = office
-						.get(inst.id)!
-						.sort((a, b) => b.authority - a.authority || a.roleTitle.localeCompare(b.roleTitle) || a.interval.startEarliest - b.interval.startEarliest || a.id.localeCompare(b.id))
-						.map((p) => ({ person: p.holder, position: p }));
+					seated = posted;
 				}
 				return { inst, chamber, seated };
 			});

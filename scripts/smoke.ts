@@ -1825,7 +1825,7 @@ console.log('\n  ── connections ──');
 	page.on('pageerror', (e) => problems.push(`[pageerror] ${e.message}`));
 	page.on('console', (m: ConsoleMessage) => {
 		/*
-		 * The W2 write hook calls raw history.replaceState, so SvelteKit's
+		 * Older builds wrote the lens through raw history.replaceState, so SvelteKit's
 		 * dev-mode advisory fires on the lens writes this section performs. It
 		 * is dev-only noise, pinned by the deep-link section's own assertions,
 		 * not an error in the flows under test.
@@ -2066,6 +2066,70 @@ console.log('\n  ── connections ──');
 
 	ok('connection console clean', problems.length === 0, problems.slice(0, 3).join(' | '));
 	await page.screenshot({ path: join(OUT, 'connection.png') });
+	await context.close();
+}
+
+// --- The network's readings and its legend -----------------------------------
+/*
+ * The view and the lens live in the URL, and a selection must not drop them:
+ * NetworkView writes them through SvelteKit's replaceState, so page.url (from
+ * which the layout rebuilds ?id=) follows. The legend's open state is the
+ * reader's: a pan does not undo it, and a reload remembers it.
+ */
+if (runSection('network readings')) {
+	console.log('\n  ── network readings ──');
+	const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+	const page = await context.newPage();
+	const problems: string[] = [];
+	page.on('pageerror', (e) => problems.push(`[pageerror] ${e.message}`));
+	await page.goto(BASE + '/network', { waitUntil: 'networkidle' });
+	await settle(page);
+
+	await page.getByRole('radio', { name: 'Dots' }).click();
+	await page.waitForTimeout(300);
+	ok('choosing Dots puts it in the URL', new URL(page.url()).searchParams.get('view') === 'dots', page.url());
+
+	await page.locator('button.fam').last().click();
+	await page.waitForTimeout(200);
+	const afterLens = new URL(page.url()).searchParams;
+	ok('a lens change keeps the view', afterLens.get('view') === 'dots' && afterLens.has('ties'), page.url());
+
+	const picked = (await page.evaluate(`(() => {
+		const b = document.querySelector('.dp');
+		if (!b) return null;
+		b.click();
+		return b.getAttribute('data-id');
+	})()`)) as string | null;
+	await page.waitForTimeout(400);
+	const afterPick = new URL(page.url()).searchParams;
+	ok(
+		'a selection keeps the view and the lens',
+		!!picked && afterPick.get('id') === picked && afterPick.get('view') === 'dots' && afterPick.has('ties'),
+		page.url()
+	);
+
+	await page.reload({ waitUntil: 'networkidle' });
+	await settle(page);
+	ok('a reload opens the same reading', (await page.getByRole('radio', { name: 'Dots' }).getAttribute('aria-checked')) === 'true');
+
+	await page.locator('.legend > summary').click();
+	await page.waitForTimeout(150);
+	const box = await page.locator('.canvas').boundingBox();
+	if (box) {
+		await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+		await page.mouse.down();
+		await page.mouse.move(box.x + box.width / 2 - 160, box.y + box.height / 2 - 60, { steps: 6 });
+		await page.mouse.up();
+		await page.mouse.wheel(0, -300);
+		await page.waitForTimeout(300);
+	}
+	const legendOpen = () => page.evaluate(`document.querySelector('.legend')?.open === true`) as Promise<boolean>;
+	ok('the legend stays open through a pan and a zoom', await legendOpen());
+	await page.reload({ waitUntil: 'networkidle' });
+	await settle(page);
+	ok('the legend remembers the reader', await legendOpen());
+
+	ok('network readings console clean', problems.length === 0, problems.slice(0, 3).join(' | '));
 	await context.close();
 }
 

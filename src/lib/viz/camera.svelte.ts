@@ -89,6 +89,8 @@ export interface CameraOptions {
 	 * With a floor, fitting means "as far out as is still worth looking at" and the
 	 * map is allowed to be bigger than the window — which is the point of having a
 	 * camera at all.
+	 *
+	 * The camera holds it as state, so a view may move it after construction.
 	 */
 	fitFloor?: number;
 	/**

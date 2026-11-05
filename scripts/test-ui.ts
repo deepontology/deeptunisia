@@ -108,7 +108,7 @@ ok(
 ok('all world text shares the camera transform in one layer', NETWORK.includes('class="world"') && NETWORK.includes('translate({cam.x}px, {cam.y}px) scale({cam.k})'));
 ok('text is hidden by level of detail, not placed per frame', NETWORK.includes('class="canvas lod-{lod}"') && !NETWORK.includes('placeLabels'));
 ok('hover is delegated: one listener for every seat', NETWORK.includes('onpointerover={onWorldOver}'));
-ok('the table renders only while open', NETWORK.includes('bind:open={tableOpen}') && NETWORK.includes('{#if tableOpen}'));
+ok('the table renders only while open, and always in the prerendered page', NETWORK.includes('bind:open={tableOpen}') && NETWORK.includes('{#if tableOpen || !browser}'));
 
 // The matrix is a real table and uses one sequential hue.
 ok('the layer matrix is an HTML table', MATRIX.includes('<table class="grid"') && MATRIX.includes('scope="row"') && MATRIX.includes('scope="col"'));

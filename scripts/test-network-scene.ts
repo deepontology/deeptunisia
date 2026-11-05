@@ -56,6 +56,7 @@ ok('the older ?mode=all link names every family', familiesFromMode('all')?.size 
 ok('the older ?mode=influence link is the default lens', familiesParam(familiesFromMode('influence')!) === null);
 ok('a family set survives the URL round trip', familiesParam(familiesFromParam('money,courts')!) === 'money,courts');
 ok('an unknown family in the URL is ignored, not invented', familiesFromParam('money,bogus')?.size === 1 && familiesFromParam('bogus') === null);
+ok('switching every family off survives the URL round trip', familiesParam(new Set()) === '' && familiesFromParam(familiesParam(new Set())!)?.size === 0);
 
 console.log('\n  ── geometry, at every year of the record ──\n');
 
@@ -68,6 +69,7 @@ const overlaps: string[] = [];
 const outside: string[] = [];
 const loose: string[] = [];
 const offGutter: string[] = [];
+const cardOffGutter: string[] = [];
 const memberships: string[] = [];
 const doubleSeat: string[] = [];
 const rankAndFile: string[] = [];
@@ -126,11 +128,11 @@ for (const t of dates) {
 		for (const u of scene.units) for (const s of u.seats) if (s.primary) primaries.set(s.person, (primaries.get(s.person) ?? 0) + 1);
 		for (const [p, n] of primaries) if (n > 1) doubleSeat.push(`${day} ${p}×${n}`);
 
-		// A chamber seats only members a drawn tie names.
+		// A chamber seats its officers, and otherwise only members a drawn tie names.
 		const endpoints = new Set(scene.ties.flatMap((e) => [e.rel.from, e.rel.to]));
 		for (const u of scene.units) {
 			if (u.kind !== 'chamber') continue;
-			for (const s of u.seats) if (!endpoints.has(s.person)) rankAndFile.push(`${day} ${u.id} ${s.person}`);
+			for (const s of u.seats) if (!s.position && !endpoints.has(s.person)) rankAndFile.push(`${day} ${u.id} ${s.person}`);
 		}
 
 		// Ties: never a membership, always anchored, vertical only in gutters.
@@ -152,6 +154,7 @@ for (const t of dates) {
 					break;
 				}
 			}
+			if (!inGutter(scene, r.mid.x)) cardOffGutter.push(`${day} ${e.id} x=${r.mid.x}`);
 		}
 
 		// The matrix counts exactly the authored ties the map draws.
@@ -166,6 +169,7 @@ ok('every box sits in its lane and every seat in its box', outside.length === 0,
 ok('holding office is never drawn as a line', memberships.length === 0, memberships.slice(0, 3).join(' | '));
 ok('every line ends at something drawn', loose.length === 0, loose.slice(0, 3).join(' | '));
 ok('lines run vertically only inside gutters, so they never cross a box', offGutter.length === 0, offGutter.slice(0, 3).join(' | '));
+ok('a connection card anchors in a gutter, never over a box', cardOffGutter.length === 0, cardOffGutter.slice(0, 3).join(' | '));
 ok('a person has one seat their lines attach to', doubleSeat.length === 0, doubleSeat.slice(0, 3).join(' | '));
 ok("a chamber's rank and file are counted, not seated", rankAndFile.length === 0, rankAndFile.slice(0, 3).join(' | '));
 ok('the layer matrix adds up to the ties on the map', matrixDrift.length === 0, matrixDrift.slice(0, 3).join(' | '));
@@ -177,6 +181,9 @@ console.log('\n  ── the date readers land on: 14 January 2011 ──\n');
 	const term = termAt(t, 'lower');
 	const chamber = term ? scene.units.find((u) => u.id === term.institution.id) : undefined;
 	ok('the sitting chamber is one box with its seat bar', !!chamber && chamber.kind === 'chamber' && !!chamber.chamber && chamber.chamber.named > 100, chamber ? `${chamber.id}: ${chamber.chamber?.named} of ${chamber.chamber?.seats}` : 'missing');
+	const upper = termAt(t, 'upper');
+	const speaker = upper ? scene.units.find((u) => u.id === upper.institution.id)?.seats.find((x) => x.person === 'abdallah-kallel') : undefined;
+	ok("a chamber's officers sit in it like any office", !!speaker && !!speaker.position && speaker.primary, speaker ? `${speaker.person} as ${speaker.position?.roleTitle}` : 'the upper chamber president is missing');
 	ok('no past chamber is drawn', scene.units.every((u) => !u.id || !terms.some((x) => x.institution.id === u.id) || u.kind === 'chamber'));
 	ok('the default map draws a readable number of lines', scene.ties.length < 250, `${scene.ties.length} ties (the old map drew 349 lines here)`);
 	ok('party ties are counted, not drawn, under the default lens', (scene.stats.notShown.get('party') ?? 0) > 0 && scene.ties.every((e) => e.family !== 'party'));
