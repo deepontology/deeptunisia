@@ -5,7 +5,7 @@
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
 	import { rewriteUrl } from '$lib/deeplink.svelte';
-	import { seatedAt, membersAt, termAt } from '$lib/civic';
+	import { seatedAt, chamberStanding } from '$lib/civic';
 	import { app } from '$lib/state.svelte';
 	import { sheetDrag, type SheetDragParams } from '$lib/ui/sheet-drag';
 	import { t, tf, formatDate, layerLabel, basisLabel, relLabel, entityName, nameOf } from '$lib/t.svelte';
@@ -454,7 +454,7 @@
 		hoverClear = setTimeout(() => {
 			app.hovered = null;
 			hoverSeat = null;
-			if (!hoverEdge) tipAt = null;
+			if (!hoveredTie) tipAt = null;
 		}, HOVER_GRACE);
 	}
 	function onWorldOver(e: PointerEvent) {
@@ -512,6 +512,11 @@
 	});
 
 	const hoveredTie = $derived(hoverEdge && !pinned ? (tieById.get(hoverEdge) ?? null) : null);
+	// A hovered tie that leaves the scene (playback, a family switched off)
+	// fires no mouseleave, so it is let go here.
+	$effect(() => {
+		if (hoverEdge && !tieById.has(hoverEdge)) hoverEdge = null;
+	});
 
 	// --- Long-press: the touch hover tier -----------------------------------------
 
@@ -520,6 +525,7 @@
 	let pressLapse: ReturnType<typeof setTimeout> | undefined;
 	function startPress(cb: () => void) {
 		clearTimeout(pressLapse);
+		if (pressTimer) clearTimeout(pressTimer);
 		pressed = false;
 		pressTimer = setTimeout(() => {
 			pressed = true;
@@ -611,15 +617,10 @@
 		if (!personById.has(id)) return tf('network.offmap.inst', { name, date });
 		// From the record, not the drawn units, and at any basis: a lane solo or
 		// the evidence floor hides the seat from the map, not from the chamber.
-		for (const term of [termAt(app.t, 'lower'), termAt(app.t, 'upper')]) {
-			const held = term && membersAt(term, app.t).find((m) => m.position.holder === id);
-			if (!term || !held) continue;
-			// Below the floor is a fact about the claim. A member left out only
-			// because their dates are uncertain is still a member: the box counts
-			// them as possibly sitting.
-			const below = !meetsBasis(held.position.basis as Basis, app.basisFloor);
-			return tf(below ? 'network.offmap.withheld' : 'network.offmap.member', { name, chamber: entityName(term.institution.id), date });
-		}
+		// One rule with the chamber's own counts (civic.ts): counted, possibly
+		// sitting, or on a claim below the floor.
+		const seat = chamberStanding(id, app.t, app.basisFloor);
+		if (seat) return tf(`network.offmap.${seat.standing === 'counted' ? 'member' : seat.standing}`, { name, chamber: entityName(seat.term.institution.id), date });
 		return tf('network.offmap', { name, date });
 	}
 
@@ -1506,7 +1507,7 @@
 					{/each}
 				</div>
 
-				{#if hoverInfo && tipAt && !app.selected && !hoverEdge}
+				{#if hoverInfo && tipAt && !app.selected && !hoveredTie}
 					<div class="node-tip" style:left="{Math.min(tipAt.x + 14, cam.vw - 240)}px" style:top="{Math.min(tipAt.y + 16, cam.vh - 70)}px" aria-hidden="true">
 						<strong>{hoverInfo.name}</strong>
 						{#if hoverInfo.line}<span class="tip-post">{hoverInfo.line}</span>{/if}

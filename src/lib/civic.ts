@@ -221,6 +221,26 @@ export function seatedAt(term: Term, t: number, floor: Basis): { members: Holdin
 	return { members, withheld: everyone.length - visible.length, uncertain: visible.length - members.length };
 }
 
+/**
+ * Where a person stands in a sitting chamber at `t`: counted in its seats,
+ * possibly sitting (their dates are known only to the year and the chamber
+ * overflows), on a claim below the floor, or not a member. The same rule as
+ * `seatedAt`, read for one person, so a sentence about them can never
+ * disagree with the chamber's own counts.
+ */
+export function chamberStanding(id: string, t: number, floor: Basis): { term: Term; standing: 'counted' | 'uncertain' | 'withheld' } | null {
+	for (const which of ['lower', 'upper'] as const) {
+		const term = termAt(t, which);
+		if (!term) continue;
+		const held = membersAt(term, t).find((m) => m.position.holder === id);
+		if (!held) continue;
+		if (!meetsBasis(held.position.basis as Basis, floor)) return { term, standing: 'withheld' };
+		const counted = seatedAt(term, t, floor).members.some((m) => m.position.holder === id);
+		return { term, standing: counted ? 'counted' : 'uncertain' };
+	}
+	return null;
+}
+
 /** Groups past this rank share one colour and one legend entry. */
 export const SEAT_OTHERS = 7;
 

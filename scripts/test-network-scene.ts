@@ -27,7 +27,7 @@ import { buildDots, dotsAt } from '../src/lib/network/dots.ts';
 import { routeTies } from '../src/lib/network/route.ts';
 import { DEFAULT_FAMILIES, FAMILIES, familyOf, familiesFromMode, familiesParam, familiesFromParam } from '../src/lib/network/families.ts';
 import { ds, institutionById, activity, meetsBasis, LAYERS, CUTOFF, FLOOR, type Layer } from '../src/lib/model.ts';
-import { terms, termAt } from '../src/lib/civic.ts';
+import { terms, termAt, seatedAt, membersAt, chamberStanding } from '../src/lib/civic.ts';
 
 let failures = 0;
 let checks = 0;
@@ -273,6 +273,25 @@ console.log('\n  ── the date readers land on: 14 January 2011 ──\n');
 	const a = sceneAt({ t, floor: 'reported', layers: ALL, families: EVERY, flows: flow(100) as never });
 	const b = sceneAt({ t, floor: 'reported', layers: ALL, families: EVERY, flows: flow(200) as never });
 	ok('the memo rebuilds when only a flow value changes', a !== b);
+}
+
+{
+	// One person's standing in a chamber agrees with the chamber's counts.
+	const t = Date.UTC(2011, 11, 1);
+	const bribech = chamberStanding('habib-bribech', t, 'reported');
+	ok('a year-only member of an overflowing chamber is possibly sitting, not below the floor', bribech?.standing === 'uncertain', `habib-bribech on 2011-12-01: ${bribech?.standing ?? 'not a member'}`);
+	const term = termAt(t, 'lower')!;
+	const everyone = membersAt(term, t);
+	const lines: string[] = [];
+	let agree = true;
+	for (const floor of ['reported', 'documented'] as const) {
+		const s = seatedAt(term, t, floor);
+		const tally = { counted: 0, uncertain: 0, withheld: 0 };
+		for (const m of everyone) tally[chamberStanding(m.position.holder, t, floor)!.standing]++;
+		agree &&= tally.counted === s.members.length && tally.uncertain === s.uncertain && tally.withheld === s.withheld;
+		lines.push(`${floor}: ${tally.counted} counted, ${tally.uncertain} possibly sitting, ${tally.withheld} withheld`);
+	}
+	ok("each member's standing adds up to the chamber's own counts", agree, lines.join('; '));
 }
 
 console.log('\n  ── the dot view ──\n');
