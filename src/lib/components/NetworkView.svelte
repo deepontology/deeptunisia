@@ -517,7 +517,9 @@
 
 	let pressTimer: ReturnType<typeof setTimeout> | null = null;
 	let pressed = false;
+	let pressLapse: ReturnType<typeof setTimeout> | undefined;
 	function startPress(cb: () => void) {
+		clearTimeout(pressLapse);
 		pressed = false;
 		pressTimer = setTimeout(() => {
 			pressed = true;
@@ -531,7 +533,8 @@
 		}
 		// A long press is over once released: its click comes at once or never,
 		// so the guard lapses shortly after, wherever the finger lifted.
-		if (pressed) setTimeout(() => (pressed = false), 350);
+		clearTimeout(pressLapse);
+		if (pressed) pressLapse = setTimeout(() => (pressed = false), 350);
 	}
 
 	// --- Selecting and flying -------------------------------------------------------
@@ -608,11 +611,14 @@
 		if (!personById.has(id)) return tf('network.offmap.inst', { name, date });
 		// From the record, not the drawn units, and at any basis: a lane solo or
 		// the evidence floor hides the seat from the map, not from the chamber.
-		const term = [termAt(app.t, 'lower'), termAt(app.t, 'upper')].find((x) => x && membersAt(x, app.t).some((m) => m.position.holder === id));
-		if (term) {
-			// Counted on the bar, or withheld by the floor: the sentence says which.
-			const counted = seatedAt(term, app.t, app.basisFloor).members.some((m) => m.position.holder === id);
-			return tf(counted ? 'network.offmap.member' : 'network.offmap.withheld', { name, chamber: entityName(term.institution.id), date });
+		for (const term of [termAt(app.t, 'lower'), termAt(app.t, 'upper')]) {
+			const held = term && membersAt(term, app.t).find((m) => m.position.holder === id);
+			if (!term || !held) continue;
+			// Below the floor is a fact about the claim. A member left out only
+			// because their dates are uncertain is still a member: the box counts
+			// them as possibly sitting.
+			const below = !meetsBasis(held.position.basis as Basis, app.basisFloor);
+			return tf(below ? 'network.offmap.withheld' : 'network.offmap.member', { name, chamber: entityName(term.institution.id), date });
 		}
 		return tf('network.offmap', { name, date });
 	}
@@ -652,6 +658,8 @@
 	$effect(() => () => {
 		clearTimeout(pinnedCloseTimer);
 		clearTimeout(hoverClear);
+		clearTimeout(pressLapse);
+		if (pressTimer) clearTimeout(pressTimer);
 		if (tipFrame) cancelAnimationFrame(tipFrame);
 	});
 
@@ -1187,7 +1195,11 @@
 										}}
 										onpointerup={() => clearPress()}
 										onpointerleave={() => clearPress()}
-										onpointercancel={() => clearPress()}
+										onpointercancel={() => {
+											// A cancelled press is followed by no click, so nothing would consume the guard.
+											clearPress();
+											pressed = false;
+										}}
 										onclick={() => {
 											if (pressed) {
 												pressed = false;
@@ -1494,7 +1506,7 @@
 					{/each}
 				</div>
 
-				{#if hoverInfo && tipAt && !app.selected}
+				{#if hoverInfo && tipAt && !app.selected && !hoverEdge}
 					<div class="node-tip" style:left="{Math.min(tipAt.x + 14, cam.vw - 240)}px" style:top="{Math.min(tipAt.y + 16, cam.vh - 70)}px" aria-hidden="true">
 						<strong>{hoverInfo.name}</strong>
 						{#if hoverInfo.line}<span class="tip-post">{hoverInfo.line}</span>{/if}

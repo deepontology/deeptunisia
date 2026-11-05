@@ -109,6 +109,7 @@ ok('all world text shares the camera transform in one layer', NETWORK.includes('
 ok('text is hidden by level of detail, not placed per frame', NETWORK.includes('class="canvas lod-{lod}"') && !NETWORK.includes('placeLabels'));
 ok('hover is delegated: one listener for every seat', NETWORK.includes('onpointerover={onWorldOver}'));
 ok('the table renders only while open, and always in the prerendered page', NETWORK.includes('bind:open={tableOpen}') && NETWORK.includes('{#if tableOpen || !browser}'));
+ok('an off-map member is called withheld only when their claim is below the floor, not when their dates are uncertain', NETWORK.includes("const below = !meetsBasis(held.position.basis as Basis, app.basisFloor);") && NETWORK.includes("below ? 'network.offmap.withheld' : 'network.offmap.member'"));
 ok('a chamber known only by its party split counts its seats as held, and its box names what the count leaves out', NETWORK.includes('const held = c.split ?') && NETWORK.includes('chamberAria(u.id, u.layer, u.chamber)') && NETWORK.includes('chamberAria(c.id, c.layer, c.chamber)'));
 
 // The matrix is a real table and uses one sequential hue.

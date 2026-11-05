@@ -266,6 +266,15 @@ console.log('\n  ── the date readers land on: 14 January 2011 ──\n');
 	ok('scrubbing through the memo matches a fresh build on every day', stale.length === 0, stale.slice(0, 4).join(', ') || `${days.length * 2} days`);
 }
 
+{
+	// A flow whose value changes is a different picture, even with the same id.
+	const t = at(2011, 0, 14);
+	const flow = (value: number) => [{ id: 'flow-trade-2011-FR', to: 'etat-tunisien', type: 'trade', subtype: 'exports', description: 'test', value }];
+	const a = sceneAt({ t, floor: 'reported', layers: ALL, families: EVERY, flows: flow(100) as never });
+	const b = sceneAt({ t, floor: 'reported', layers: ALL, families: EVERY, flows: flow(200) as never });
+	ok('the memo rebuilds when only a flow value changes', a !== b);
+}
+
 console.log('\n  ── the dot view ──\n');
 {
 	const dOutside: string[] = [];
