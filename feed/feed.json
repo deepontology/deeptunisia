@@ -3,6 +3,66 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:cf4371e43322df57",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Journées Cinématographiques de Carthage | Hommage à un cinéma d’Afrique de l’Est résistant et engagé",
+      "link": "https://kapitalis.com/tunisie/2026/11/06/journees-cinematographiques-de-carthage-hommage-a-un-cinema-dafrique-de-lest-resistant-et-engage/",
+      "published": "2026-11-06T19:32:49Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:african-manager:ba90fcece9b0f74b",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "La chercheuse tunisienne à l’IPT, Dr Emna Harigua, reçoit le Pasteur Network Talent Award 2026",
+      "link": "https://africanmanager.com/la-chercheuse-tunisienne-a-lipt-dr-emna-harigua-recoit-le-pasteur-network-talent-award-2026/",
+      "published": "2026-11-06T19:02:25Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:ce60d36469565e20",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "La Tunisie mise sur l’éolien pour atteindre 35 % d’électricité renouvelable en 2030",
+      "link": "https://africanmanager.com/la-tunisie-mise-sur-leolien-pour-atteindre-35-delectricite-renouvelable-en-2030/",
+      "published": "2026-11-06T18:59:42Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:kapitalis:c5395c70c919b29c",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Vol dans un lycée à Tunis | Le suspect principal arrêté",
+      "link": "https://kapitalis.com/tunisie/2026/11/06/vol-dans-un-lycee-a-tunis-le-suspect-principal-arrete/",
+      "published": "2026-11-06T18:52:25Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:5602f59629274865",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "​Tunisie | Bulletin météo pour cette nuit",
+      "link": "https://kapitalis.com/tunisie/2026/11/06/tunisie-bulletin-meteo-pour-cette-nuit-6/",
+      "published": "2026-11-06T18:26:34Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:african-manager:cb7bdcc8b0e15995",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Tunisair envisage un emprunt obligataire de près de 7 M€",
+      "link": "https://africanmanager.com/tunisair-envisage-un-emprunt-obligataire-de-pres-de-7-me/",
+      "published": "2026-11-06T17:02:22Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
       "id": "feed:african-manager:7dbbd7d5452b3481",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -11937,66 +11997,6 @@
       "title": "Les touristes français constituent la première nationalité européenne en Tunisie",
       "link": "https://africanmanager.com/les-touristes-francais-constituent-la-premiere-nationalite-europeenne-en-tunisie/",
       "published": "2026-09-28T07:48:38Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:70a9675999b6f74b",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Figeac Aero inaugure un nouveau centre d’excellence aéronautique en Tunisie",
-      "link": "https://africanmanager.com/figeac-aero-inaugure-un-nouveau-centre-dexcellence-aeronautique-en-tunisie/",
-      "published": "2026-09-28T07:47:00Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:4552fce026925f69",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Israël révoque le statut de diplomates néerlandais en raison des sanctions imposées aux colonies",
-      "link": "https://africanmanager.com/israel-revoque-le-statut-de-diplomates-neerlandais-en-raison-des-sanctions-imposees-aux-colonies/",
-      "published": "2026-09-28T07:38:49Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:5803c8b70cc416e1",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "L’ONU ajoute 61 entreprises à sa liste noire pour opérations dans les colonies de Cisjordanie",
-      "link": "https://africanmanager.com/lonu-ajoute-61-entreprises-a-sa-liste-noire-pour-operations-dans-les-colonies-de-cisjordanie/",
-      "published": "2026-09-28T07:38:28Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:58e84703f0a6c8a8",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Hamas : La feuille de route pour Gaza inclut la création d’un État palestinien",
-      "link": "https://africanmanager.com/hamas-la-feuille-de-route-pour-gaza-inclut-la-creation-dun-etat-palestinien/",
-      "published": "2026-09-28T07:35:12Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:eec822ed0070171e",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Netanyahu en visite secrète à Abou Dhabi pour rencontrer Mohammed ben Zayed",
-      "link": "https://africanmanager.com/netanyahu-en-visite-secrete-a-abou-dhabi-pour-rencontrer-mohammed-ben-zayed/",
-      "published": "2026-09-28T07:33:53Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:2b67e77d13fbd893",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Trump dit s’attendre à une reprise dans la semaine des négociations avec l’Iran",
-      "link": "https://africanmanager.com/trump-dit-sattendre-a-une-reprise-dans-la-semaine-des-negociations-avec-liran/",
-      "published": "2026-09-28T07:33:39Z",
       "lang": "fr",
       "author": "African Manager"
     }
