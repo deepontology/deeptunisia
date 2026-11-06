@@ -4927,6 +4927,7 @@
 
 - id: ev-chebbi-hunger-strike-2026-10-01
   date: "2026-10-01"
+  date_end: "2026-10-07"
   title_en: "Ahmed Néjib Chebbi begins a hunger strike in Mornaguia prison"
   title_fr: "Ahmed Néjib Chebbi entame une grève de la faim à la prison de Mornaguia"
   category: legal
@@ -4944,10 +4945,19 @@
     conditions meant to isolate opponents from the outside world. He is held
     at Mornaguia prison, where he has been since his arrest on 4 December
     2025 (see nejib-chebbi-arrested-2025); a Kapitalis column of 5 October
-    2026 still describes him on hunger strike there. The strike rests on a
-    statement by the prisoner himself. No prison administration, medical or
-    defence-committee account was found, and no outlet other than Kapitalis
-    was located: the websearch provider was unavailable on 2026-10-05.
+    2026 still describes him on hunger strike there, and Business News reported the
+    start the same day, citing his family. On the evening of Wednesday 7 October
+    2026 his family announced on Facebook that he had suspended the strike after a
+    week, following commitments by prison administration representatives to
+    guarantee detainees access to a reliable source of information; the same post
+    says he lost significant weight, was taken to hospital on the Friday and the
+    Tuesday, and refused a third hospitalisation advised on 7 October so that he
+    could receive visits (Kapitalis, 7 October). Kapitalis of 10 October still
+    describes the strike as led by Chebbi and Abdelhamid Jelassi when it reports
+    Zied El Heni's symbolic participation; no source says Chebbi resumed, so that
+    phrasing is kept as an open question rather than a claim. Every account relays
+    his own communiqué or his family; no prison administration or medical
+    statement was found.
   confidence: C
   basis: inferred
   verification: needs-primary-source
@@ -4957,7 +4967,7 @@
     person concerned, so the claim is his own and uncorroborated. Grade C
     with attribution rather than B, because no second independent account
     was obtained and the search provider was down on the day of the sweep.
-    The 5 October column is the same outlet and does not raise the grade.
+    The 5 October column is the same outlet, and the Business News article of 1 October relays the same family statement, so neither raises the grade.
     Basis stays `inferred`: one relay of one origin is not a multi-outlet
     report, and grade C with `needs-primary-source` derives `inferred`, so
     `reported` here would be an override (V27). Falsified the same way as
@@ -4967,7 +4977,19 @@
     follow-up from his defence committee or family, or a second outlet
     reporting the strike would confirm or refute the date and the stated
     grounds; a communiqué withdrawing it would refute the record outright.
-  sources: [kapitalis-chebbi-greve-faim-2026-10-01, kapitalis-chebbi-experience-carcerale-2026-10-05]
+  disputes:
+    - claim: >-
+        Whether Ahmed Néjib Chebbi was still on hunger strike after 7 October.
+      held_by: >-
+        Kapitalis, 7 October 2026, reports his family saying he suspended the
+        strike that evening; Kapitalis, 10 October 2026, describes the strike as
+        led by Chebbi and Abdelhamid Jelassi.
+      source: kapitalis-chebbi-suspension-2026-10-07
+      assessment: >-
+        The 10 October phrasing may be loose or may refer to the strike as a
+        movement; no source says Chebbi resumed. Recorded open.
+      status: open
+  sources: [kapitalis-chebbi-greve-faim-2026-10-01, kapitalis-chebbi-experience-carcerale-2026-10-05, bn-chebbi-greve-faim-2026-10-01, kapitalis-chebbi-suspension-2026-10-07, kapitalis-elheni-greve-faim-2026-10-10]
 
 - id: ev-march-of-dignity-2026-10-05
   date: "2026-09-27"
@@ -7040,3 +7062,253 @@
     terms would correct the record.
   sources:
   - kapitalis-pompeo-zenith-2026-10-29
+- id: ev-romdhani-death-2026-10-15
+  date: '2026-10-15'
+  title_en: Content creator Yosri Romdhani dies after transfer from prison to hospital
+  title_fr: Le créateur de contenu Yosri Romdhani meurt après son transfert de prison à l’hôpital
+  category: legal
+  subcategory: detention-death
+  actors: []
+  institutions:
+  - judiciary
+  causes: []
+  consequences: []
+  summary: Business News reported on 15 October 2026 that the Tunisian content creator Yosri Romdhani
+    died on Thursday 15 October 2026 after being transferred from prison to the Charles-Nicolle hospital
+    in Tunis, according to information relayed on social media. The outlet says he had been detained after
+    publishing a video criticising the authorities, and that late-September and early-October reports
+    described his arrest in a judicial inquiry into remarks made during a TikTok live. Relatives say he
+    was deprived of the medication he needed in detention; the outlet says this is not officially confirmed
+    and that nothing available establishes a link between his health, his detention conditions and his
+    death. No official statement, cause of death or forensic finding was retrieved, and the article gives
+    no court, charge or prison. The claim about medication stays attributed to relatives.
+  confidence: C
+  verification: needs-primary-source
+  attributed_to: Business News (15 October 2026), relaying social-media posts and statements attributed
+    to relatives
+  reasoning: 'One outlet, relaying social-media posts: the death and the transfer from prison to hospital
+    are reported as information relayed, not confirmed by an official statement. Grade C with attribution.
+    The record asserts neither a cause of death nor responsibility: the relatives'' allegation about medication
+    is kept as an attributed claim, and the outlet itself says it is unconfirmed.'
+  falsifiable_by: A prison administration, ministry or hospital statement, a forensic report, a family
+    or defence statement, or a second outlet would confirm or correct the date, the custody status and
+    the cause; a judicial source saying he was released before his death would refute the custody framing.
+  contested:
+  - framing: His death is linked to deprivation of medication in detention
+    held_by: Relatives, as relayed by Business News; not officially confirmed
+  sources:
+  - bn-romdhani-death-2026-10-15
+- id: ev-sumud-march-aftermath-2026-10-06
+  date: '2026-10-06'
+  date_end: '2026-10-20'
+  title_en: Releases and suspended sentences follow the arrests after the 19 September march
+  title_fr: Libérations et peines avec sursis après les arrestations de la marche du 19 septembre
+  category: legal
+  subcategory: detention-release
+  actors: []
+  institutions:
+  - judiciary
+  causes:
+  - ev-sumud-march-arrests-2026-09-19
+  consequences: []
+  summary: Kapitalis, relaying the Al-Soumoud flotilla committee in Tunisia, reports four steps in the
+    case of those arrested after the 19 September 2026 march. On 6 October the pupil Adem Mbarek was released.
+    On 12 October three activists received suspended sentences (see ev-sumud-activists-verdict-2026-10-12).
+    On the evening of 13 October the activists Adel Ben Ghazi and Moudhaffar Omar were released. On 20
+    October Rachid Othmani and Souheil Chebbi, also arrested after the march, were sentenced to six months
+    in prison each, suspended, and so freed that day. The figure of fourteen people in pre-trial detention
+    in ev-sumud-march-arrests-2026-09-19 is a 27 September figure; no source gives a consolidated count
+    after 20 October. No court, charge or judgment text is given for any of the four steps, and the committee
+    asks for the remaining detainees to be freed, which implies some were still held.
+  confidence: C
+  verification: needs-primary-source
+  attributed_to: Al-Soumoud flotilla committee in Tunisia, as relayed by Kapitalis (6, 13 and 20 October
+    2026)
+  reasoning: 'One outlet in three articles, each relaying the same committee: one origin. Grade C with
+    attribution. The record does not compute a current number of detainees from these steps, because the
+    earlier figure is a different date and the sources give no consolidated count.'
+  falsifiable_by: A court communiqué, a defence-committee list, or a second outlet would confirm the dates,
+    the names and the terms; a consolidated count of those still held would replace the open question
+    on the remaining detainees.
+  sources:
+  - kapitalis-mbarek-libere-2026-10-06
+  - kapitalis-sumud-liberations-2026-10-13
+  - kapitalis-sumud-sursis-2026-10-20
+- id: ev-henchiri-ends-hunger-strike-2026-10-01
+  date: '2026-10-01'
+  title_en: Ghassen Henchiri ends his hunger strike after 22 days
+  title_fr: Ghassen Henchiri met fin à sa grève de la faim après 22 jours
+  category: legal
+  subcategory: detention-protest
+  actors:
+  - ghassan-henchiri
+  institutions: []
+  causes:
+  - ev-sumud-four-detention-2026-02
+  consequences: []
+  summary: Ghassen Henchiri, a member of the Tunisian coordination of the Sumud flotilla held at Mornaguia
+    prison since March 2026, announced on Thursday 1 October 2026 the end of the hunger strike he began
+    22 days earlier, in a communiqué sent from prison. He gives the exhaustion of this form of protest
+    and the deterioration of his physical condition as the reasons, and says it does not end his commitment.
+    Business News adds that he and Ghassen Boughdiri began on 10 September according to a coordination
+    body; the existing record of the four organisers has the group joining on 9 September, and the one-day
+    difference is not reconciled. The article says nothing on Nabil Channoufi or Ghassen Boughdiri ending
+    theirs.
+  confidence: C
+  verification: needs-primary-source
+  attributed_to: Ghassen Henchiri’s own communiqué, as relayed by Business News (1 October 2026)
+  reasoning: One outlet relaying the prisoner’s own communiqué. Grade C with attribution; no prison administration,
+    medical or defence-committee statement was found. The 22 days and the start date are the communiqué’s
+    and the coordination body’s figures, and the record does not recompute them.
+  falsifiable_by: A defence-committee statement, a prison statement or a second outlet would confirm the
+    end date and the length; a report that he resumed would extend the record.
+  disputes:
+  - claim: Start date of the Sumud hunger strikes of Henchiri and Boughdiri.
+    held_by: Business News (1 October 2026) says 10 September per the coordination; ev-sumud-four-detention-2026-02
+      has 9 September.
+    source: bn-henchiri-fin-greve-2026-10-01
+    assessment: A one-day difference between sources; neither is a primary record. Recorded open.
+    status: open
+  sources:
+  - bn-henchiri-fin-greve-2026-10-01
+- id: ev-jelassi-hunger-strike-2026-10-06
+  date: '2026-10-06'
+  title_en: Abdelhamid Jelassi announces an open hunger strike; Zied El Heni joins symbolically
+  title_fr: Abdelhamid Jelassi annonce une grève de la faim ouverte; Zied El Heni s’y associe symboliquement
+  category: legal
+  subcategory: detention-protest
+  actors:
+  - abdelhamid-jelassi
+  - zied-el-heni
+  institutions: []
+  causes: []
+  consequences: []
+  summary: 'Kapitalis reported on 5 October 2026 that the former Ennahdha leader Abdelhamid Jelassi would
+    begin a hunger strike on Tuesday 6 October 2026 to denounce his detention conditions, on his wife
+    Monia Ibrahim’s account: an open strike, during which he would also refuse his medication and any
+    medical follow-up in prison. On 10 October the journalist Zied El Heni announced his symbolic participation
+    in the hunger strike, which Kapitalis describes as led by Ahmed Néjib Chebbi and Abdelhamid Jelassi,
+    three days after Kapitalis reported that Chebbi had suspended his (see ev-chebbi-hunger-strike-2026-10-01).
+    No source reports Jelassi’s strike ending, and none confirms its start beyond the announced intention.'
+  confidence: C
+  verification: needs-primary-source
+  attributed_to: Monia Ibrahim, Abdelhamid Jelassi’s wife, as relayed by Kapitalis (5 October 2026); Zied
+    El Heni’s announcement as relayed by Kapitalis (10 October 2026)
+  reasoning: 'One outlet in two articles, each relaying an announcement: the wife’s account of the prisoner’s
+    intention, and the journalist’s own announcement. Grade C with attribution. The record states an announced
+    intention and an announced symbolic participation, not a confirmed duration or end.'
+  falsifiable_by: A defence-committee, family or prison statement, or a second outlet, would confirm the
+    start, the duration or the end; a report that the strike never began or ended earlier would correct
+    the record.
+  sources:
+  - kapitalis-jelassi-greve-faim-2026-10-05
+  - kapitalis-elheni-greve-faim-2026-10-10
+- id: ev-hammami-rally-2026-11-03
+  date: '2026-11-03'
+  title_en: Rally outside Monastir prison for Ayachi Hammami, who fasts on the first Tuesday of each month
+  title_fr: Rassemblement devant la prison de Monastir pour Ayachi Hammami, qui jeûne chaque premier mardi
+    du mois
+  category: protest
+  subcategory: detention-protest
+  actors:
+  - ayachi-hammami
+  institutions:
+  - ltdh
+  causes: []
+  consequences: []
+  summary: Kapitalis reported that a solidarity rally was held on Tuesday 3 November 2026 outside the
+    Monastir civil prison in support of the lawyer and human-rights activist Ayachi Hammami, at the call
+    of the LTDH sections of Monastir, Sousse, Mahdia and Kairouan, to denounce political arrests and pressure
+    on detainees and their families. The article says the rally took place alongside a periodic hunger
+    strike that Hammami observes on the first Tuesday of each month, which he has done since his transfer,
+    "more than a month" earlier, from Mornaguia to Monastir (his defence announced the transfer on 24
+    September 2026). The first-Tuesday formula is Kapitalis’s own wording and no second outlet, LTDH communiqué
+    or defence statement was found. The article carries a 3 November date without a time.
+  confidence: C
+  verification: needs-primary-source
+  attributed_to: Kapitalis (3 November 2026)
+  reasoning: One outlet for both the rally and the monthly fast; the fast is described in the outlet’s
+    own words and attributed to it. Grade C. The transfer date comes from the existing record of Hammami’s
+    September strike and transfer.
+  falsifiable_by: An LTDH communiqué on the rally, a defence-committee statement on the fast, or a second
+    outlet would confirm both; a statement that the fast is not periodic would correct the second.
+  sources:
+  - kapitalis-hammami-rassemblement-2026-11-03
+- id: ev-bensedrine-krichi-adjournment-2026-11-05
+  date: '2026-11-05'
+  title_en: Trial of Sihem Ben Sedrine and Khaled Krichi adjourned to 19 November
+  title_fr: Procès de Sihem Ben Sedrine et Khaled Krichi reporté au 19 novembre
+  category: legal
+  subcategory: trial-adjournment
+  actors:
+  - sihem-bensedrine
+  - khaled-krichi
+  - lazhar-sta
+  institutions:
+  - judiciary
+  causes: []
+  consequences: []
+  summary: The criminal chamber specialised in financial-corruption cases at the Tunis Court of First
+    Instance decided on Thursday 5 November 2026 to adjourn to 19 November the case of the former Truth
+    and Dignity Commission (IVD) president Sihem Ben Sedrine and the former chair of its arbitration and
+    reconciliation committee, the lawyer Khaled Krichi, per Business News on 6 November. The case concerns
+    the arbitration and reconciliation decision the IVD made for the businessman Lazhar Sta, who died
+    on 8 September 2026 in detention. Ben Sedrine appears free; Krichi remains in detention. Earlier hearings
+    were 21 September, then 1 October, then 22 October; no reason is given for this adjournment. The outlet
+    says that in June 2026 Ben Sedrine received a first-instance total of 25 years and Krichi ten, under
+    appeal, and that the association Intersection called for Krichi’s release after more than four months
+    of detention. No court communiqué was retrieved.
+  confidence: C
+  verification: needs-primary-source
+  attributed_to: Business News (6 November 2026)
+  reasoning: 'One outlet, no court communiqué: the adjournment date and the earlier hearing dates are
+    as it states them. Grade C. The June 2026 totals and the Intersection position are its account and
+    are attributed; the record does not add them to any sentence figure elsewhere.'
+  falsifiable_by: A court communiqué, a defence statement or a second outlet would confirm the date and
+    the reasons; a different next hearing date would correct the record.
+  sources:
+  - bn-bensedrine-krichi-report-2026-11-06
+- id: ev-rnta-former-pdg-sentence-2026-11-05
+  date: ~2026-11-05
+  title_en: Former head of the national tobacco régie sentenced in absentia to 18 years
+  title_fr: L’ancien PDG de la Régie nationale du tabac condamné par contumace à 18 ans de prison
+  category: legal
+  subcategory: corruption-verdict
+  actors: []
+  institutions:
+  - judiciary
+  causes: []
+  consequences: []
+  summary: The criminal chamber of the Tunis Court of First Instance sentenced in absentia the former
+    chairman and chief executive of the Régie nationale du tabac et des allumettes (RNTA) to 18 years
+    in prison and ordered him to repay the public body more than 90,000 dinars, in a case of diverting
+    large quantities of cigarettes later resold outside official distribution channels, with losses stated
+    as above 170,000 dinars. Four former RNTA employees received prison terms of two, three and eight
+    years, are jointly liable for about 81,000 dinars and are barred from public office; five other defendants
+    were discharged. Webdo reported it on the evening of 5 November 2026; African Manager (citing Mosaïque
+    FM) and La Presse on 6 November. No outlet names the former chief executive or gives the hearing date,
+    so the ruling is dated no later than 5 November. The record creates no person entry. Webdo says he
+    was dismissed from RNTA in 2023 by a gazette decision; La Presse says the 2023 dismissal was from
+    the Régie nationale de l’alcool. No judgment text was retrieved.
+  confidence: B
+  verification: needs-primary-source
+  attributed_to: Webdo (5 November 2026), African Manager citing Mosaïque FM (6 November 2026), La Presse
+    de Tunisie (6 November 2026)
+  reasoning: Three outlets agree on the 18-year in-absentia sentence, the repayment, the four employees’
+    terms, the discharge of five and the subject of the case, which supports B on the verdict. The outlets
+    do not name the defendant or the hearing date, and neither carries a court document. They disagree
+    on which body he was dismissed from in 2023; both versions are carried.
+  falsifiable_by: The judgment, a court communiqué or the Mosaïque FM report would confirm the terms,
+    the date and the defendant’s name; the gazette decision of 2023 would settle the dismissal question.
+  disputes:
+  - claim: Which public body the former chief executive was dismissed from in 2023.
+    held_by: Webdo (5 November 2026) says RNTA, by a gazette decision; La Presse de Tunisie (6 November
+      2026) says the Régie nationale de l’alcool.
+    source: lapresse-rnta-verdict-2026-11-06
+    assessment: Both are reported; neither names the gazette issue and no gazette text was retrieved.
+      Recorded open.
+    status: open
+  sources:
+  - webdo-rnta-verdict-2026-11-05
+  - am-rnta-verdict-2026-11-06
+  - lapresse-rnta-verdict-2026-11-06
