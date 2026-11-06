@@ -85,6 +85,8 @@ inventory:
     note: Route metadata and application shell text.
     exclude:
       - '\b(?:18|19|20)\d{2}\b'
+      # The PSI cell floor quoted on /introduction: a fixed suppression rule from a hashed instrument, not a current-state count.
+      - '\bfewer than 20 people\b'
   - path: output/deeptunisia-release-paper-v0.1.2.md
     rule: release-paper
     note: Active release paper. Only its `<!--stat:-->` spans and its current-state summary are governed; the methodology history is historical prose.

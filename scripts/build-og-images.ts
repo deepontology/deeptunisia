@@ -1,5 +1,6 @@
 /**
- * Build OG images: the default card, a study card, and the wordmark assets.
+ * Build OG images: the default card, a study card, the introduction's card,
+ * and the wordmark assets.
  *
  * The provided wordmark SVG (dark theme: accent #ddb049, text #f0eeec) is the
  * source. We wrap it in a 1200×630 canvas (Twitter large card) with a dark
@@ -96,6 +97,52 @@ async function renderStudyCard(outPath: string) {
 	console.log(`  og  ${outPath.replace(ROOT + '/', '')}  ${Math.round(png.length / 1024)}KB`);
 }
 
+/**
+ * The introduction's card: Eclipse black, the title in all three languages,
+ * and a field of squares in the cover's manner. The squares are decoration
+ * here and carry no count: the page prints the live figure, and a number in
+ * an image outlives the record it describes.
+ */
+function buildIntroSvg(): string {
+	const cols = 22;
+	const rows = 26;
+	const cell = 19;
+	const sq = 12;
+	const x0 = 760;
+	const y0 = 64;
+	let squares = '';
+	for (let r = 0; r < rows; r++) {
+		// A full field with a part-filled last row, as on the page's cover.
+		for (let c = 0; c < (r === rows - 1 ? 9 : cols); c++) {
+			squares += `<rect x="${x0 + c * cell}" y="${y0 + r * cell}" width="${sq}" height="${sq}"/>`;
+		}
+	}
+	return `<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="DeepTunisia, an introduction: power, on the record.">
+  <rect width="1200" height="630" fill="#000"/>
+  <g fill="#f4f4f6" fill-opacity="0.42">${squares}</g>
+  <rect x="0" y="0" width="1200" height="3" fill="#ddb049" opacity="0.6"/>
+  <g transform="translate(72,72)">
+    <circle cx="14" cy="14" r="12.5" fill="none" stroke="#ddb049" stroke-width="2"/>
+    <circle cx="14" cy="14" r="4.5" fill="#ddb049"/>
+    <text x="40" y="20" font-family="'JetBrains Mono', 'JetBrainsMono NF', 'Liberation Mono', monospace" font-size="15" letter-spacing="2.4" fill="#b8b8bc">DEEPTUNISIA · AN INTRODUCTION</text>
+  </g>
+  <text font-family="'Liberation Serif', 'Noto Serif', serif" font-weight="700" font-size="82" fill="#f4f4f6" letter-spacing="1">
+    <tspan x="68" y="250">POWER,</tspan>
+    <tspan x="68" y="336">ON THE</tspan>
+    <tspan x="68" y="422">RECORD.</tspan>
+  </text>
+  <text x="72" y="482" font-family="'Liberation Serif', 'Noto Serif', serif" font-size="25" fill="#a9a9ae">Le pouvoir, consigné.</text>
+  <text x="690" y="482" text-anchor="end" font-family="'Noto Sans Arabic', sans-serif" font-size="26" fill="#a9a9ae">السلطة، في السجل</text>
+  <rect x="72" y="520" width="56" height="2" fill="#ddb049"/>
+  <text x="72" y="566" font-family="'JetBrains Mono', 'JetBrainsMono NF', 'Liberation Mono', monospace" font-size="17" fill="#ddb049">deeptunisia.org/introduction</text>
+</svg>`;
+}
+
+async function renderIntroCard(outPath: string) {
+	await render(buildIntroSvg(), outPath);
+}
+
 async function render(svg: string, outPath: string) {
 	const png = await sharp(Buffer.from(svg)).png({ compressionLevel: 9 }).toBuffer();
 	mkdirSync(dirname(outPath), { recursive: true });
@@ -125,6 +172,9 @@ async function main() {
 	// A scoring study's preview card. One per study that ships one; the page
 	// falls back to the default for any study without artwork.
 	await renderStudyCard(join(OUT_DIR, 'police.png'));
+
+	// The introduction, sent as a link more than it is browsed to.
+	await renderIntroCard(join(OUT_DIR, 'introduction.png'));
 }
 
 main().catch((e) => {

@@ -88,7 +88,7 @@ import { tour, tourSeen } from '$lib/shell/tour.svelte';
 	}
 
 	/** Reference pages are documents: no time controls, and they scroll normally. */
-	const DOC_PAGES = ['/evidence', '/methodology', '/corrections', '/about', '/data', '/guide', '/colophon', '/research'];
+	const DOC_PAGES = ['/evidence', '/methodology', '/corrections', '/about', '/data', '/guide', '/colophon', '/introduction', '/research'];
 	/** Prefixes whose child routes are documents too: media articles, research studies. */
 	const DOC_PREFIXES = ['/media', '/research'];
 	const isDoc = $derived(
@@ -114,8 +114,8 @@ import { tour, tourSeen } from '$lib/shell/tour.svelte';
 	const hasDock = $derived(!isDoc && !TIMELESS.includes(page.url.pathname));
 	const dir = $derived(dirFor(app.locale));
 
-	/** Pages that write their own preview tags: the police study page (IndexStudy) and the share shells. Other study pages and the participate and withdraw pages take the default. */
-	const ownsPreview = $derived(/^\/(share\/|research\/police\/?$)/.test(page.url.pathname));
+	/** Pages that write their own preview tags: the police study page (IndexStudy), the introduction and the share shells. Other study pages and the participate and withdraw pages take the default. */
+	const ownsPreview = $derived(/^\/(share\/|research\/police\/?$|introduction\/?$)/.test(page.url.pathname));
 
 	// OG preview — dynamic per selection/rel/flow, client-enhanced (crawlers use prerendered /share shells).
 	// Prerender cannot access searchParams (SvelteKit forbids it); guard with browser so build succeeds.
