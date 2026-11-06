@@ -3,6 +3,36 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:060f1271cee16a4a",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Trouver.tn met en relation particuliers et professionnels",
+      "link": "https://kapitalis.com/tunisie/2026/11/06/trouver-tn-met-en-relation-particuliers-et-professionnels/",
+      "published": "2026-11-06T06:40:16Z",
+      "lang": "fr",
+      "author": "webmaster kapitalis"
+    },
+    {
+      "id": "feed:kapitalis:93d26bab630e94eb",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "JCC 2026 | Appel à candidatures pour le recrutement des bénévoles",
+      "link": "https://kapitalis.com/tunisie/2026/11/05/jcc-2026-appel-a-candidatures-pour-le-recrutement-des-benevoles/",
+      "published": "2026-11-05T22:38:53Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:bff1d80ca77fa4bc",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Marseille | La Tunisie participe au Forum méditerranéen de l’intelligence artificielle",
+      "link": "https://kapitalis.com/tunisie/2026/11/05/marseille-la-tunisie-participe-au-forum-mediterraneen-de-lintelligence-artificielle/",
+      "published": "2026-11-05T22:12:53Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
       "id": "feed:kapitalis:8a3104bcb2c46759",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -11968,36 +11998,6 @@
       "published": "2026-09-26T11:22:10Z",
       "lang": "fr",
       "author": "webmaster kapitalis"
-    },
-    {
-      "id": "feed:kapitalis:78b124b660f49b75",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "La production de la grenade tunisienne en hausse de 8%",
-      "link": "https://kapitalis.com/tunisie/2026/09/26/la-production-de-la-grenade-tunisienne-en-hausse-de-8/",
-      "published": "2026-09-26T11:01:39Z",
-      "lang": "fr",
-      "author": "webmaster kapitalis"
-    },
-    {
-      "id": "feed:kapitalis:c9403ee0e9613318",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Les trois raisons de la baisse des ressources halieutiques tunisiennes",
-      "link": "https://kapitalis.com/tunisie/2026/09/26/les-trois-raisons-de-la-baisse-des-ressources-halieutiques-tunisiennes/",
-      "published": "2026-09-26T10:35:10Z",
-      "lang": "fr",
-      "author": "webmaster kapitalis"
-    },
-    {
-      "id": "feed:african-manager:7e398f7a980a61ee",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Sidi Bouzid : Le projet de station d’épuration à Regueb à l’arrêt en raison d’un problème foncier",
-      "link": "https://africanmanager.com/sidi-bouzid-le-projet-de-station-depuration-a-regueb-a-larret-en-raison-dun-probleme-foncier/",
-      "published": "2026-09-26T09:36:03Z",
-      "lang": "fr",
-      "author": "African Manager"
     }
   ]
 }
