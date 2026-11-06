@@ -5381,9 +5381,9 @@
 
 - id: ev-turki-appeal-convictions-2026-10-17
   date: "2026-10-17"
-  title_en: "Appeal court confirms a four-year sentence on Khayam Turki, alongside a separate 14-year corruption verdict"
-  title_fr: "La cour d'appel confirme quatre ans de prison contre Khayam Turki, aux côtés d'une condamnation distincte à 14 ans pour corruption"
-  title_ar: "محكمة الاستئناف تؤكد الحكم بأربع سنوات سجنا ضد خيام التركي إلى جانب حكم آخر بـ14 سنة"
+  title_en: "Appeal court confirms a four-year sentence on Khayam Turki in fiscal cases"
+  title_fr: "La cour d'appel confirme quatre ans de prison contre Khayam Turki dans des affaires fiscales"
+  title_ar: "محكمة الاستئناف تؤكد الحكم بأربع سنوات سجنا ضد خيام التركي في قضايا جبائية"
   category: legal
   subcategory: sentencing
   location: [gov-tunis]
@@ -5393,31 +5393,55 @@
     The Tunis Court of Appeal confirmed on Saturday 17 October 2026 a sentence of
     four years' firm imprisonment and a 200,000-dinar fine against the political
     activist and businessman Khayam Turki, in fraud and tax cases, per a source
-    cited by Mosaïque FM as relayed by Kapitalis. In parallel, the criminal
-    chamber specialised in financial-corruption cases near the Tunis Court of
-    First Instance sentenced him to 14 years' firm imprisonment and a fine for
-    money laundering, fraud and illegal exploitation of his professional and
-    social activities, with five years' administrative surveillance after the
-    sentence and confiscation of all his assets held at Tunisian financial
-    institutions. Turki is the Ettakatol leader and Front de Salut national
-    coordinator detained in the February 2023 arrests. Neither the appeal ruling
-    nor the criminal-chamber judgment was retrieved; both rest on the relayed
-    Mosaïque FM attribution.
+    cited by Mosaïque FM as relayed by Kapitalis. Webdo adds that the
+    financial-corruption chamber near the Court of Appeal upheld the first-instance
+    judgment in four fiscal files. Both outlets also mention a 14-year sentence
+    for money laundering and fraud, with five years' administrative surveillance
+    and confiscation of his assets held at Tunisian financial institutions, which
+    Kapitalis places "in parallel" with the appeal ruling. Webdo's report of
+    21 April 2026 dates that sentence to the criminal chamber of the Tunis Court
+    of First Instance on 21 April 2026 (Tunisie Numérique says Monday), and
+    Webdo's report of 18 October says the appeal ruling "follows" it. This record
+    therefore dates only the four-year confirmation to 17 October; the 14-year
+    sentence is context from April 2026, not an event of 17 October. Turki is the
+    Ettakatol leader and Front de Salut national coordinator detained in the
+    February 2023 arrests. The appeal ruling was not retrieved and rests on the
+    relayed Mosaïque FM attribution.
   confidence: C
   verification: needs-primary-source
-  attributed_to: "Kapitalis, citing Mosaïque FM (17 October 2026)"
+  attributed_to: "Kapitalis, citing Mosaïque FM (17 October 2026); Webdo (18 October 2026)"
   reasoning: >-
-    One outlet quoting a second outlet; the two sentences, their terms and the
-    confiscation are as relayed. The graph holds no earlier record of these
-    convictions, so this is a new legal event referencing the existing person
-    rather than a correction.
+    Two outlets report the four-year confirmation, both relaying Mosaïque FM or
+    unnamed media, so the origin count stays one and the grade stays C. The
+    earlier text of this record dated a 14-year sentence to 17 October on the
+    strength of Kapitalis's "parallèlement"; Webdo's contemporaneous report of
+    21 April 2026 and Webdo's own 18 October wording place it in April, so the
+    record is narrowed to the four-year confirmation and the disagreement is
+    recorded below.
   falsifiable_by: >-
-    The appeal ruling and the criminal-chamber judgment, or a second outlet's
-    independent account, would confirm the four-year and 14-year terms, the fine,
-    the surveillance and the asset confiscation.
+    The appeal ruling, a court communiqué, or a second independent account would
+    confirm the four-year term, the fine and the four fiscal files. The
+    first-instance judgment or a dated court communiqué would settle the date of
+    the 14-year sentence.
+  disputes:
+    - claim: >-
+        The date of the 14-year money-laundering and fraud sentence on Khayam Turki.
+      held_by: >-
+        Kapitalis, 17 October 2026, writes that the criminal chamber sentenced him
+        "parallèlement" to the appeal ruling; Webdo, 21 April 2026, dates it to
+        Tuesday 21 April 2026, and Webdo, 18 October 2026, says the appeal ruling
+        follows it.
+      source: webdo-turki-14-ans-2026-04-21
+      assessment: >-
+        The April report is contemporaneous and Webdo's October piece agrees with
+        it; Kapitalis's phrasing reads as a recap. The record carries the sentence
+        as April 2026 context, outside the 17 October event. Recorded open because
+        no court document was retrieved.
+      status: open
   sources:
     - kapitalis-turki-appel-2026-10-17
-
+    - webdo-turki-appel-2026-10-18
+    - webdo-turki-14-ans-2026-04-21
 - id: ev-saied-bizerte-evacuation-naval-2026-10-15
   date: "2026-10-15"
   title_en: "Saïed marks Evacuation Day in Bizerte and inaugurates a Tunisian-built naval patrol boat"
