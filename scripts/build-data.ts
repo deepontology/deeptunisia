@@ -4069,6 +4069,7 @@ if (!FIXTURE_MODE) {
 		'/about',
 		'/guide',
 		'/colophon',
+		'/introduction',
 		'/media',
 		'/media/bot-farm',
 		'/media/chemical-century',
