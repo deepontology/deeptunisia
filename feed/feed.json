@@ -3,6 +3,56 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:5e701082edd7654c",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Sidi Bouzid | Enquête sanitaire suite à l’intoxication de 22 élèves du lycée pilote",
+      "link": "https://kapitalis.com/tunisie/2026/11/07/sidi-bouzid-enquete-sanitaire-suite-a-lintoxication-de-22-eleves-du-lycee-pilote/",
+      "published": "2026-11-07T19:29:56Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:91ae9f6bb0242357",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Un partenariat tuniso-suisse pour des secours plus rapides et mieux préparés",
+      "link": "https://kapitalis.com/tunisie/2026/11/07/un-partenariat-tuniso-suisse-pour-des-secours-plus-rapides-et-mieux-prepares/",
+      "published": "2026-11-07T18:46:55Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:african-manager:16fd00f8b33806c9",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "L’Espérance consolide sa place de dauphin, le clasico accouche d’un nul",
+      "link": "https://africanmanager.com/lesperance-consolide-sa-place-de-dauphin-le-clasico-accouche-dun-nul/",
+      "published": "2026-11-07T17:52:06Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:kapitalis:f4b5c105e6c4b1bf",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Tunisie | Quel temps pour cette nuit ?",
+      "link": "https://kapitalis.com/tunisie/2026/11/07/tunisie-quel-temps-pour-cette-nuit/",
+      "published": "2026-11-07T17:47:47Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:african-manager:0733c07f290ae72e",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Réseau international de trafic de cocaïne démantelé",
+      "link": "https://africanmanager.com/demantelement-dun-reseau-international-de-trafic-de-cocaine-2/",
+      "published": "2026-11-07T15:43:41Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
       "id": "feed:kapitalis:e4e0fe3bd385478c",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -11949,56 +11999,6 @@
       "published": "2026-09-28T16:18:16Z",
       "lang": "fr",
       "author": "Africanmanager"
-    },
-    {
-      "id": "feed:african-manager:66d3f6adb3bafd04",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Tunisie-USA: La coopération juridique et judiciaire à l’examen",
-      "link": "https://africanmanager.com/tunisie-usa-la-cooperation-juridique-et-judiciaire-a-lexamen/",
-      "published": "2026-09-28T14:07:15Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:9263e95dd795cc75",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Le déficit commercial devrait repartir à la hausse en 2026, selon un économiste !",
-      "link": "https://africanmanager.com/le-deficit-commercial-devrait-repartir-a-la-hausse-en-2026-selon-un-economiste/",
-      "published": "2026-09-28T14:06:00Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:b86729b935129eac",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Les transferts de la diaspora, une planche de salut au pied levé !",
-      "link": "https://africanmanager.com/les-transferts-de-la-diaspora-une-planche-de-salut-au-pied-leve/",
-      "published": "2026-09-28T14:03:00Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:13dcb24099f2db17",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Les échanges commerciaux tuniso-saoudiens pèsent 1,1 milliard de dinars",
-      "link": "https://africanmanager.com/les-echanges-commerciaux-tuniso-saoudiens-pesent-11-milliard-de-dinars/",
-      "published": "2026-09-28T14:00:00Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:22f3745744bd948e",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "ANME: Ouverture des candidatures pour bénéficier d’une subvention destinée à l’acquisition de taxis individuels électriques",
-      "link": "https://africanmanager.com/anme-ouverture-des-candidatures-pour-beneficier-dune-subvention-destinee-a-lacquisition-de-taxis-individuels-electriques/",
-      "published": "2026-09-28T13:52:36Z",
-      "lang": "fr",
-      "author": "African Manager"
     }
   ]
 }
