@@ -3,6 +3,36 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:19999aea84f1bd1c",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Un chaton asphyxié à Sidi Bouzid | Plainte déposée",
+      "link": "https://kapitalis.com/tunisie/2026/11/07/un-chaton-asphyxie-a-sidi-bouzid-plainte-deposee/",
+      "published": "2026-11-06T23:12:31Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:87b699b3cf747f0b",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Prix « Recherche forum MED’IA : innovation économique » | Pr. Farah Jemili de l’Université de Sousse à l’honneur",
+      "link": "https://kapitalis.com/tunisie/2026/11/06/prix-recherche-forum-media-innovation-economique-pr-farah-jemili-de-luniversite-de-sousse-a-lhonneur/",
+      "published": "2026-11-06T22:47:39Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:06592825ad4d09ec",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Vers un renforcement des échanges entre l’Université de la Manouba et la Russie",
+      "link": "https://kapitalis.com/tunisie/2026/11/06/vers-un-renforcement-des-echanges-entre-luniversite-de-la-manouba-et-la-russie/",
+      "published": "2026-11-06T22:17:43Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
       "id": "feed:kapitalis:cf4371e43322df57",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -11969,36 +11999,6 @@
       "published": "2026-09-28T08:15:10Z",
       "lang": "fr",
       "author": "Africanmanager"
-    },
-    {
-      "id": "feed:african-manager:f403a8fcad59c20b",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Le ministère de la Santé dévoile le programme de la conférence internationale « Telehealth Connect 2026 »",
-      "link": "https://africanmanager.com/le-ministere-de-la-sante-devoile-le-programme-de-la-conference-internationale-telehealth-connect-2026/",
-      "published": "2026-09-28T07:53:01Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:3f48985460a68f54",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Enseignement supérieur : Un concours national lancé pour le recrutement de 90 technologues",
-      "link": "https://africanmanager.com/enseignement-superieur-un-concours-national-lance-pour-le-recrutement-de-90-technologues/",
-      "published": "2026-09-28T07:49:45Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:2f45635ca87f882d",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Les touristes français constituent la première nationalité européenne en Tunisie",
-      "link": "https://africanmanager.com/les-touristes-francais-constituent-la-premiere-nationalite-europeenne-en-tunisie/",
-      "published": "2026-09-28T07:48:38Z",
-      "lang": "fr",
-      "author": "African Manager"
     }
   ]
 }
