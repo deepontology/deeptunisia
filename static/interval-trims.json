@@ -5083,13 +5083,13 @@
     "end": "2026",
     "interval": {
       "startEarliest": 1767225600000,
-      "startLatest": 1793664000000,
-      "endEarliest": 1793664000000,
-      "endLatest": 1793664000000,
+      "startLatest": 1794096000000,
+      "endEarliest": 1794096000000,
+      "endLatest": 1794096000000,
       "startPrecision": "year",
       "endPrecision": "year",
       "status": "ended",
-      "lastObserved": 1793664000000,
+      "lastObserved": 1794096000000,
       "trimmed": true,
       "raw": {
         "start": "2026",
@@ -5147,9 +5147,9 @@
     "end": "~2026-08-20",
     "interval": {
       "startEarliest": 1779235200000,
-      "startLatest": 1793664000000,
+      "startLatest": 1794096000000,
       "endEarliest": 1779235200000,
-      "endLatest": 1793664000000,
+      "endLatest": 1794096000000,
       "startPrecision": "approx",
       "endPrecision": "approx",
       "status": "ended",
@@ -5169,13 +5169,13 @@
     "end": "~2026-08-25",
     "interval": {
       "startEarliest": 1779408000000,
-      "startLatest": 1793664000000,
-      "endEarliest": 1793664000000,
-      "endLatest": 1793664000000,
+      "startLatest": 1794096000000,
+      "endEarliest": 1794096000000,
+      "endLatest": 1794096000000,
       "startPrecision": "approx",
       "endPrecision": "approx",
       "status": "ended",
-      "lastObserved": 1793664000000,
+      "lastObserved": 1794096000000,
       "trimmed": true,
       "raw": {
         "start": "~2026-08-22",
@@ -5191,13 +5191,13 @@
     "end": "~2026-08-18",
     "interval": {
       "startEarliest": 1779062400000,
-      "startLatest": 1793664000000,
-      "endEarliest": 1793664000000,
-      "endLatest": 1793664000000,
+      "startLatest": 1794096000000,
+      "endEarliest": 1794096000000,
+      "endLatest": 1794096000000,
       "startPrecision": "approx",
       "endPrecision": "approx",
       "status": "ended",
-      "lastObserved": 1793664000000,
+      "lastObserved": 1794096000000,
       "trimmed": true,
       "raw": {
         "start": "~2026-08-18",
@@ -5213,13 +5213,13 @@
     "end": "~2026-09-08",
     "interval": {
       "startEarliest": 1780876800000,
-      "startLatest": 1793664000000,
-      "endEarliest": 1793664000000,
-      "endLatest": 1793664000000,
+      "startLatest": 1794096000000,
+      "endEarliest": 1794096000000,
+      "endLatest": 1794096000000,
       "startPrecision": "approx",
       "endPrecision": "approx",
       "status": "ended",
-      "lastObserved": 1793664000000,
+      "lastObserved": 1794096000000,
       "trimmed": true,
       "raw": {
         "start": "~2026-09-08",
@@ -5256,13 +5256,13 @@
     "end": "~2026-09-07",
     "interval": {
       "startEarliest": 1780790400000,
-      "startLatest": 1793664000000,
-      "endEarliest": 1793664000000,
-      "endLatest": 1793664000000,
+      "startLatest": 1794096000000,
+      "endEarliest": 1794096000000,
+      "endLatest": 1794096000000,
       "startPrecision": "approx",
       "endPrecision": "approx",
       "status": "ended",
-      "lastObserved": 1793664000000,
+      "lastObserved": 1794096000000,
       "trimmed": true,
       "raw": {
         "start": "~2026-09-07",
@@ -5278,13 +5278,13 @@
     "end": "~2026-09-10",
     "interval": {
       "startEarliest": 1781049600000,
-      "startLatest": 1793664000000,
-      "endEarliest": 1793664000000,
-      "endLatest": 1793664000000,
+      "startLatest": 1794096000000,
+      "endEarliest": 1794096000000,
+      "endLatest": 1794096000000,
       "startPrecision": "approx",
       "endPrecision": "approx",
       "status": "ended",
-      "lastObserved": 1793664000000,
+      "lastObserved": 1794096000000,
       "trimmed": true,
       "raw": {
         "start": "~2026-09-10",
@@ -5321,13 +5321,13 @@
     "end": "~2026-10-23",
     "interval": {
       "startEarliest": 1784764800000,
-      "startLatest": 1793664000000,
-      "endEarliest": 1793664000000,
-      "endLatest": 1793664000000,
+      "startLatest": 1794096000000,
+      "endEarliest": 1794096000000,
+      "endLatest": 1794096000000,
       "startPrecision": "approx",
       "endPrecision": "approx",
       "status": "ended",
-      "lastObserved": 1793664000000,
+      "lastObserved": 1794096000000,
       "trimmed": true,
       "raw": {
         "start": "~2026-10-23",
@@ -5355,6 +5355,28 @@
         "start": "~2025-12",
         "end": "~2025-12"
       }
+    }
+  },
+  {
+    "kind": "event",
+    "id": "ev-rnta-former-pdg-sentence-2026-11-05",
+    "start": "~2026-11-05",
+    "end": "~2026-11-05",
+    "interval": {
+      "startEarliest": 1785888000000,
+      "startLatest": 1794096000000,
+      "endEarliest": 1785888000000,
+      "endLatest": 1794096000000,
+      "startPrecision": "approx",
+      "endPrecision": "approx",
+      "status": "ended",
+      "lastObserved": 1785888000000,
+      "raw": {
+        "start": "~2026-11-05",
+        "end": "~2026-11-05"
+      },
+      "startClamped": true,
+      "trimmed": true
     }
   }
 ]

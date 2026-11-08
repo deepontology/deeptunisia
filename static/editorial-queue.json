@@ -1,6 +1,6 @@
 {
-  "generated": "2026-11-04T17:45:46.758Z",
-  "total": 5854,
+  "generated": "2026-11-08T03:49:39.805Z",
+  "total": 5868,
   "reviewed": 42,
   "queue": [
     {
@@ -12,6 +12,16 @@
       "sources": 5,
       "reviewed": true,
       "title": "reported-influence: atika-chebil → chebil-family-business"
+    },
+    {
+      "kind": "event",
+      "id": "ev-penrec-settlement-claim-2026-11-04",
+      "confidence": "D",
+      "basis": "unsubstantiated",
+      "risk": 0,
+      "sources": 3,
+      "reviewed": false,
+      "title": "Tunisie Telegraph reports final penal-reconciliation agreements with detained businessmen and an imminent official list"
     },
     {
       "kind": "relationship",
@@ -132,6 +142,26 @@
       "sources": 1,
       "reviewed": true,
       "title": "reported-influence: naoufel-saied → abou-khater-project"
+    },
+    {
+      "kind": "event",
+      "id": "ev-penrec-commission-denial-2026-11-05",
+      "confidence": "C",
+      "basis": "inferred",
+      "risk": 1,
+      "sources": 6,
+      "reviewed": false,
+      "title": "Penal-reconciliation commission denies concluding any settlement agreement with businessmen"
+    },
+    {
+      "kind": "event",
+      "id": "ev-chebbi-hunger-strike-2026-10-01",
+      "confidence": "C",
+      "basis": "inferred",
+      "risk": 1,
+      "sources": 5,
+      "reviewed": false,
+      "title": "Ahmed Néjib Chebbi begins a hunger strike in Mornaguia prison"
     },
     {
       "kind": "relationship",
@@ -262,6 +292,26 @@
       "sources": 3,
       "reviewed": false,
       "title": "Mastère en économie industrielle — Finance internationale — fethi-zouhair-nouri"
+    },
+    {
+      "kind": "event",
+      "id": "ev-sumud-march-aftermath-2026-10-06",
+      "confidence": "C",
+      "basis": "inferred",
+      "risk": 1,
+      "sources": 3,
+      "reviewed": false,
+      "title": "Releases and suspended sentences follow the arrests after the 19 September march"
+    },
+    {
+      "kind": "event",
+      "id": "ev-turki-appeal-convictions-2026-10-17",
+      "confidence": "C",
+      "basis": "inferred",
+      "risk": 1,
+      "sources": 3,
+      "reviewed": false,
+      "title": "Appeal court confirms a four-year sentence on Khayam Turki in fiscal cases"
     },
     {
       "kind": "event",
@@ -465,16 +515,6 @@
     },
     {
       "kind": "event",
-      "id": "ev-chebbi-hunger-strike-2026-10-01",
-      "confidence": "C",
-      "basis": "inferred",
-      "risk": 1,
-      "sources": 2,
-      "reviewed": false,
-      "title": "Ahmed Néjib Chebbi begins a hunger strike in Mornaguia prison"
-    },
-    {
-      "kind": "event",
       "id": "ev-fitch-affirms-b-minus-2026-09",
       "confidence": "C",
       "basis": "reported",
@@ -495,6 +535,16 @@
     },
     {
       "kind": "event",
+      "id": "ev-jelassi-hunger-strike-2026-10-06",
+      "confidence": "C",
+      "basis": "inferred",
+      "risk": 1,
+      "sources": 2,
+      "reviewed": false,
+      "title": "Abdelhamid Jelassi announces an open hunger strike; Zied El Heni joins symbolically"
+    },
+    {
+      "kind": "event",
       "id": "ev-moussi-cassation-rejet-2026-09-29",
       "confidence": "C",
       "basis": "inferred",
@@ -502,6 +552,16 @@
       "sources": 2,
       "reviewed": false,
       "title": "Court of Cassation rejects Abir Moussi's appeals in three cases"
+    },
+    {
+      "kind": "event",
+      "id": "ev-saied-abbes-penrec-audience-2026-11-02",
+      "confidence": "C",
+      "basis": "inferred",
+      "risk": 1,
+      "sources": 2,
+      "reviewed": false,
+      "title": "Saïed receives Ali Abbès and says penal-reconciliation flexibility means no concession on the people's rights"
     },
     {
       "kind": "event",
@@ -1055,6 +1115,16 @@
     },
     {
       "kind": "event",
+      "id": "ev-bensedrine-krichi-adjournment-2026-11-05",
+      "confidence": "C",
+      "basis": "inferred",
+      "risk": 1,
+      "sources": 1,
+      "reviewed": false,
+      "title": "Trial of Sihem Ben Sedrine and Khaled Krichi adjourned to 19 November"
+    },
+    {
+      "kind": "event",
       "id": "ev-bizerte-maritime-excellence-centre-2026",
       "confidence": "C",
       "basis": "inferred",
@@ -1082,6 +1152,26 @@
       "sources": 1,
       "reviewed": false,
       "title": "Tunisia signs two FADES loan agreements worth 432 million dinars for infrastructure"
+    },
+    {
+      "kind": "event",
+      "id": "ev-hammami-rally-2026-11-03",
+      "confidence": "C",
+      "basis": "inferred",
+      "risk": 1,
+      "sources": 1,
+      "reviewed": false,
+      "title": "Rally outside Monastir prison for Ayachi Hammami, who fasts on the first Tuesday of each month"
+    },
+    {
+      "kind": "event",
+      "id": "ev-henchiri-ends-hunger-strike-2026-10-01",
+      "confidence": "C",
+      "basis": "inferred",
+      "risk": 1,
+      "sources": 1,
+      "reviewed": false,
+      "title": "Ghassen Henchiri ends his hunger strike after 22 days"
     },
     {
       "kind": "event",
@@ -1162,6 +1252,16 @@
       "sources": 1,
       "reviewed": false,
       "title": "Restricted ministerial council adopts an olive-oil support package, 150 MDT for the Office national de l'huile"
+    },
+    {
+      "kind": "event",
+      "id": "ev-romdhani-death-2026-10-15",
+      "confidence": "C",
+      "basis": "inferred",
+      "risk": 1,
+      "sources": 1,
+      "reviewed": false,
+      "title": "Content creator Yosri Romdhani dies after transfer from prison to hospital"
     },
     {
       "kind": "event",
@@ -1292,16 +1392,6 @@
       "sources": 1,
       "reviewed": false,
       "title": "World Bank's new Tunisia director meets the economy minister"
-    },
-    {
-      "kind": "event",
-      "id": "ev-turki-appeal-convictions-2026-10-17",
-      "confidence": "C",
-      "basis": "inferred",
-      "risk": 1,
-      "sources": 1,
-      "reviewed": false,
-      "title": "Appeal court confirms a four-year sentence on Khayam Turki, alongside a separate 14-year corruption verdict"
     },
     {
       "kind": "event",
@@ -20155,6 +20245,16 @@
     },
     {
       "kind": "position",
+      "id": "p-arp23-riad-jaidane",
+      "confidence": "B",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 6,
+      "reviewed": false,
+      "title": "Member of the Assembly of the Representatives of the People (2023 term) — Riad Jaïdane"
+    },
+    {
+      "kind": "position",
       "id": "p-dgsn-seddik",
       "confidence": "B",
       "basis": "reported",
@@ -20305,6 +20405,16 @@
     },
     {
       "kind": "event",
+      "id": "ev-saied-carthage-prices-waste-2026-11-06",
+      "confidence": "B",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 4,
+      "reviewed": false,
+      "title": "Saïed receives the head of government and two ministers on prices, monopoly and waste"
+    },
+    {
+      "kind": "event",
       "id": "regime-beylical-provisional-powers-1955-1957",
       "confidence": "B",
       "basis": "reported",
@@ -20322,16 +20432,6 @@
       "sources": 4,
       "reviewed": false,
       "title": "Member of the Assembly of the Representatives of the People (2023 term) — Amor Barhoumi"
-    },
-    {
-      "kind": "position",
-      "id": "p-arp23-riad-jaidane",
-      "confidence": "B",
-      "basis": "reported",
-      "risk": 3,
-      "sources": 4,
-      "reviewed": false,
-      "title": "Member of the Assembly of the Representatives of the People (2023 term) — Riad Jaïdane"
     },
     {
       "kind": "position",
@@ -21412,6 +21512,16 @@
       "sources": 3,
       "reviewed": false,
       "title": "Terrorism court sentences Ounissi to nine years and El Heni to four in the audio-recordings case"
+    },
+    {
+      "kind": "event",
+      "id": "ev-rnta-former-pdg-sentence-2026-11-05",
+      "confidence": "B",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 3,
+      "reviewed": false,
+      "title": "Former head of the national tobacco régie sentenced in absentia to 18 years"
     },
     {
       "kind": "event",
@@ -22585,6 +22695,16 @@
     },
     {
       "kind": "event",
+      "id": "ev-dbeibah-nafti-tripoli-2026-11-07",
+      "confidence": "B",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 2,
+      "reviewed": false,
+      "title": "Libya's Dbeibah receives Nafti in Tripoli during the CEN-SAD Executive Council session"
+    },
+    {
+      "kind": "event",
       "id": "ev-elmed-steering-committee-2026-09-22",
       "confidence": "B",
       "basis": "reported",
@@ -22642,6 +22762,16 @@
       "sources": 2,
       "reviewed": false,
       "title": "Nafas march in Tunis against President Saied"
+    },
+    {
+      "kind": "event",
+      "id": "ev-nafti-baour-tripoli-2026-11-06",
+      "confidence": "B",
+      "basis": "reported",
+      "risk": 3,
+      "sources": 2,
+      "reviewed": false,
+      "title": "Nafti and Libya's acting foreign minister Baour review bilateral relations in Tripoli"
     },
     {
       "kind": "event",
@@ -36112,6 +36242,16 @@
       "sources": 11,
       "reviewed": false,
       "title": "Governor of the Central Bank — Fethi Zouhair Nouri"
+    },
+    {
+      "kind": "event",
+      "id": "ev-eu-tunisia-cpm-fourth-session-2026-11-05",
+      "confidence": "A",
+      "basis": "documented",
+      "risk": 4,
+      "sources": 8,
+      "reviewed": false,
+      "title": "Fourth session of the EU-Tunisia Joint Parliamentary Committee meets in Brussels after eight years"
     },
     {
       "kind": "event",

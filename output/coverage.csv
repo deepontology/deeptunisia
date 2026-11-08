@@ -18,7 +18,7 @@ institution,aridha-chaabia,26,26,0,0,0,0,2,1
 institution,armed-forces,11,11,1,0,0,0,20,1
 institution,arp-2014,241,241,0,0,0,0,2,1
 institution,arp-2019,224,224,0,0,0,0,2,1
-institution,arp-2023,156,156,0,0,0,0,9,1
+institution,arp-2023,156,156,0,0,0,0,11,1
 institution,arp23-al-ahrar,23,23,0,0,0,0,1,1
 institution,arp23-amana-wa-amal,27,27,0,0,0,0,1,1
 institution,arp23-bloc-national-independant,18,18,0,0,0,0,1,1
@@ -221,14 +221,14 @@ era,bourguiba,1116,1116,20,1,1,1,484,1
 era,fragmentation,1784,1784,13,3,3,3,505,0
 era,pluralism,1342,1342,9,1,1,1,608,1
 era,police-state,1304,1304,14,2,2,2,549,1
-era,recentralisation,1662,1662,17,6,6,6,719,0
+era,recentralisation,1662,1662,17,6,6,6,721,0
 era,transition,2385,2385,12,2,2,2,655,1
 source_family,africa business,3,2,0,0,0,2,3,1
 source_family,africa intelligence,2,2,0,0,0,2,2,1
 source_family,africa intelligence accessed via blackfacts aggregator original is paywalled,1,0,0,0,0,0,1,1
 source_family,africa intelligence maghreb confidential,1,1,0,0,0,1,1,1
 source_family,african development bank,4,1,0,0,0,1,4,1
-source_family,african manager,95,74,0,0,0,74,95,0
+source_family,african manager,99,78,0,0,0,78,99,0
 source_family,african manager en,1,0,0,0,0,0,1,1
 source_family,african union,1,0,0,0,0,0,1,1
 source_family,africanews,2,2,0,0,0,2,2,1
@@ -289,7 +289,7 @@ source_family,bloomberg,1,1,0,0,0,1,1,1
 source_family,bofip impots boi annx 000306,1,0,0,0,0,0,1,1
 source_family,bofip impots direction generale des finances publiques france,1,0,0,0,0,0,1,1
 source_family,bukhatir group official site,1,1,0,0,0,1,1,1
-source_family,business news,31,26,0,0,0,26,31,0
+source_family,business news,36,31,0,0,0,31,36,0
 source_family,business news via web archive org capture 14 07 2018,1,1,0,0,0,1,1,1
 source_family,businessnews com tn,2,2,0,0,0,2,2,1
 source_family,businessnews tunisie,2,2,0,0,0,2,2,1
@@ -341,6 +341,7 @@ source_family,direction generale des finances publiques france,1,0,0,0,0,0,1,1
 source_family,editions l harmattan,1,1,0,0,0,1,1,1
 source_family,el watan algerie,1,1,0,0,0,1,1,1
 source_family,elmedniniya,1,1,0,0,0,1,1,1
+source_family,elyssa tv,1,1,0,0,0,1,1,1
 source_family,embassy of belgium in tunis official facebook page,1,0,0,0,0,0,1,1
 source_family,embassy of india tunis,1,0,0,0,0,0,1,1
 source_family,encyclopedia com international directory of company histories,1,1,0,0,0,1,1,1
@@ -356,6 +357,10 @@ source_family,european bank for reconstruction and development ebrd,1,0,0,0,0,0,
 source_family,european commission directorate general for trade,1,0,0,0,0,0,1,1
 source_family,european free trade association,2,0,0,0,0,0,2,1
 source_family,european investment bank,2,0,0,0,0,0,2,1
+source_family,european parliament and assemblee des representants du peuple,1,1,0,0,0,1,1,1
+source_family,european parliament dmag 8th parliamentary term archive,1,1,0,0,0,1,1,1
+source_family,european parliament dmag 9th parliamentary term archive,1,1,0,0,0,1,1,1
+source_family,european parliament dmag delegation page,1,1,0,0,0,1,1,1
 source_family,european union official website,1,0,0,0,0,0,1,1
 source_family,eusee hivos,1,1,0,0,0,1,1,1
 source_family,fondation pour la maitrise des enjeux strategiques fmes,1,1,0,0,0,1,1,1
@@ -430,14 +435,14 @@ source_family,journal officiel de la republique tunisienne via legislation secur
 source_family,jurisite tunisie,3,2,0,0,0,2,3,1
 source_family,jurisitetunisie base de textes legaux tunisiens,1,0,0,0,0,0,1,1
 source_family,jurist,1,1,0,0,0,1,1,1
-source_family,kapitalis,99,80,0,0,0,80,99,0
+source_family,kapitalis,106,87,0,0,0,87,106,0
 source_family,kapitalis avec tap,1,0,0,0,0,0,1,1
 source_family,kuna,1,0,0,0,0,0,1,1
 source_family,l economiste maghrebin,20,8,0,0,0,8,20,0
 source_family,l economiste maghrebin tap,1,0,0,0,0,0,1,1
 source_family,l orient le jour afp,1,0,0,0,0,0,1,1
 source_family,la depeche du midi afp,1,1,0,0,0,1,1,1
-source_family,la presse de tunisie,24,21,0,0,0,21,24,0
+source_family,la presse de tunisie,28,25,0,0,0,25,28,0
 source_family,la presse de tunisie page facebook officielle,1,0,0,0,0,0,1,1
 source_family,le matin maghreb arabe presse,1,1,0,0,0,1,1,1
 source_family,le monde,12,11,0,0,0,11,12,0
@@ -461,6 +466,7 @@ source_family,legislation securite tn jort,1,1,0,0,0,1,1,1
 source_family,legislation securite tn legal database,1,1,0,0,0,1,1,1
 source_family,lepoint tn,1,0,0,0,0,0,1,1
 source_family,letunizien com,1,1,0,0,0,1,1,1
+source_family,libyan news agency lana,1,1,0,0,0,1,1,1
 source_family,los angeles times,1,1,0,0,0,1,1,1
 source_family,maghreb intelligence,1,1,0,0,0,1,1,1
 source_family,managers,1,1,0,0,0,1,1,1
@@ -483,14 +489,15 @@ source_family,ministerio de asuntos exteriores union europea y cooperacion spain
 source_family,ministero degli affari esteri e della cooperazione internazionale italia,1,0,0,0,0,0,1,1
 source_family,ministero delle imprese e del made in italy italia,1,0,0,0,0,0,1,1
 source_family,ministry of defence egypt,1,1,0,0,0,1,1,1
+source_family,ministry of foreign affairs and international cooperation libya,1,1,0,0,0,1,1,1
 source_family,ministry of foreign affairs of japan,2,0,0,0,0,0,2,1
 source_family,ministry of national defence algeria,1,1,0,0,0,1,1,1
 source_family,mondafrique,7,4,0,0,0,4,7,0
-source_family,mosaique fm,22,21,0,0,0,21,22,0
+source_family,mosaique fm,23,22,0,0,0,22,23,0
 source_family,mosaique fm tunisie,1,1,0,0,0,1,1,1
 source_family,natural resource governance institute,1,1,0,0,0,1,1,1
 source_family,nawaat,23,17,0,0,0,17,23,0
-source_family,nessma tv,1,1,0,0,0,1,1,1
+source_family,nessma tv,2,2,0,0,0,2,2,1
 source_family,news tunisia tunisie numerique,1,1,0,0,0,1,1,1
 source_family,nobel prize committee,1,1,0,0,0,1,1,1
 source_family,noonpost,2,1,0,0,0,1,2,1
@@ -508,6 +515,7 @@ source_family,presidence du gouvernement tunisien,1,1,0,0,0,1,1,1
 source_family,primature pm gov tn,1,1,0,0,0,1,1,1
 source_family,princeton university press,1,1,0,0,0,1,1,1
 source_family,publisud,1,1,0,0,0,1,1,1
+source_family,radio nationale radionationale tn,1,1,0,0,0,1,1,1
 source_family,realites,4,3,0,0,0,3,4,0
 source_family,realites magazine,2,0,0,0,0,0,2,1
 source_family,regulation afrique blogspot com relayant business news,1,0,0,0,0,0,1,1
@@ -546,9 +554,11 @@ source_family,tunisie actualite source tunivisions,1,1,0,0,0,1,1,1
 source_family,tunisie direct,1,0,0,0,0,0,1,1
 source_family,tunisie haut debit,1,1,0,0,0,1,1,1
 source_family,tunisie haut debit thd,1,1,0,0,0,1,1,1
-source_family,tunisie numerique,15,11,0,0,0,11,15,0
+source_family,tunisie numerique,17,13,0,0,0,13,17,0
 source_family,tunisie radio com annuaire des radios tunisiennes,1,1,0,0,0,1,1,1
+source_family,tunisie telegraph,2,2,0,0,0,2,2,1
 source_family,tunisie tribune,1,1,0,0,0,1,1,1
+source_family,tunisie tv tunisiatv tn,1,1,0,0,0,1,1,1
 source_family,tunisie valeurs,1,1,0,0,0,1,1,1
 source_family,tunisie14,2,2,0,0,0,2,2,1
 source_family,tunivisions,1,1,0,0,0,1,1,1
@@ -570,13 +580,14 @@ source_family,united nations,1,0,0,0,0,0,1,1
 source_family,united nations treaty series,1,0,0,0,0,0,1,1
 source_family,united nations via belgium news syndication,1,0,0,0,0,0,1,1
 source_family,united states africa command,1,1,0,0,0,1,1,1
-source_family,univers news,2,2,0,0,0,2,2,1
+source_family,univers news,3,3,0,0,0,3,3,0
+source_family,univers news arabic,1,1,0,0,0,1,1,1
 source_family,university of texas press,1,0,0,0,0,0,1,1
 source_family,upr official site,1,1,0,0,0,1,1,1
 source_family,us embassy tunis wikileaks cable 09tunis171,1,1,0,0,0,1,1,1
 source_family,variety,1,1,0,0,0,1,1,1
 source_family,web manager center wmc avec tap,1,1,0,0,0,1,1,1
-source_family,webdo,18,18,0,0,0,18,18,0
+source_family,webdo,23,23,0,0,0,23,23,0
 source_family,webdo tap,1,1,0,0,0,1,1,1
 source_family,webdo tn,1,1,0,0,0,1,1,1
 source_family,webmanagercenter,26,15,0,0,0,15,26,0
@@ -614,9 +625,9 @@ source_family,zawya,1,0,0,0,0,0,1,1
 source_family,zawya communique de presse,1,1,0,0,0,1,1,1
 source_family,zoom tunisia,1,1,0,0,0,1,1,1
 source_family,ويكيبيديا (العربية),11,10,0,0,0,10,11,0
-language,ar,110,69,0,0,0,69,110,0
-language,en,471,201,0,0,0,201,471,0
-language,fr,1937,1657,0,0,0,1657,1937,0
+language,ar,116,75,0,0,0,75,116,0
+language,en,475,205,0,0,0,205,475,0
+language,fr,1969,1689,0,0,0,1689,1969,0
 language,it,4,1,0,0,0,1,4,1
 office,administrative-court-president,4,4,0,0,0,0,5,1
 office,administrative-reform-minister,4,4,0,0,0,0,4,1
@@ -626,7 +637,7 @@ office,anc-1956-member,107,107,0,0,0,0,1,1
 office,anti-corruption-head,1,1,0,0,0,0,3,1
 office,arp-2014-member,241,241,0,0,0,0,2,1
 office,arp-2019-member,224,224,0,0,0,0,2,1
-office,arp-2023-member,156,156,0,0,0,0,9,1
+office,arp-2023-member,156,156,0,0,0,0,11,1
 office,attessia-tv-owner,2,2,0,0,0,0,5,1
 office,audit-court-president,4,4,0,0,0,0,6,1
 office,bank-director-general,3,3,0,0,0,0,1,1
