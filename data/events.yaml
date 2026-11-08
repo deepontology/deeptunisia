@@ -7336,3 +7336,389 @@
   - webdo-rnta-verdict-2026-11-05
   - am-rnta-verdict-2026-11-06
   - lapresse-rnta-verdict-2026-11-06
+- id: ev-saied-abbes-penrec-audience-2026-11-02
+  date: 2026-11-02
+  title_en: Saïed receives Ali Abbès and says penal-reconciliation flexibility means no concession on
+    the people's rights
+  title_fr: Saïed reçoit Ali Abbès et affirme que la souplesse de la réconciliation pénale ne signifie
+    aucune concession sur les droits du peuple
+  category: political
+  subcategory: presidential-audience
+  location:
+  - gov-tunis
+  actors:
+  - kais-saied
+  institutions:
+  - presidency
+  causes: []
+  consequences: []
+  summary: On Monday 2 November 2026 at Carthage Palace President Kaïs Saïed received Ali Abbès, president
+    of the National Commission for Penal Reconciliation, to review the commission's work since the publication
+    of Decree 2026-2 of 30 September 2026, per a presidency communiqué relayed by Tunisie Numérique, Webdo
+    and Réalités. Saïed said the flexibility introduced in the commission's procedure for concluding reconciliation
+    agreements, before files go to the National Security Council, did not mean abandoning fundamental
+    principles or conceding any of the Tunisian people's rights, and repeated that not "a single millime"
+    would be given up. He called on the persons concerned to reconsider their position and engage in the
+    legal framework, renouncing pressure, manipulation and delaying manoeuvres, and warned that prescription
+    or time would not extinguish the people's rights. The communiqué mentions no agreement, no beneficiary
+    and no list. Ali Abbès is named in this summary because the graph has no person record for him; the
+    commission has no institution record either.
+  confidence: C
+  verification: needs-primary-source
+  attributed_to: The presidency communiqué of 2 November 2026, as relayed by Tunisie Numérique (3 November
+    2026) and Webdo (3 November 2026); the communiqué itself was not retrieved
+  reasoning: Two outlets reproduce the same communiqué with consistent wording, but they share one origin
+    and the text was not obtained from presidence.tn. The audience and its content are recorded as the
+    communiqué states them; the record does not infer any decision about individual files from the meeting.
+    It is kept because it is the only official statement in the window on the reconciliation procedure,
+    and because the claim and the denial both refer to it.
+  falsifiable_by: The presidency communiqué, a video or transcript of the audience, or a commission account
+    would confirm the date and the statements; a different date or wording would correct the record.
+  sources:
+  - tunisienumerique-saied-penrec-2026-11-03
+  - webdo-saied-penrec-2026-11-03
+- id: ev-penrec-settlement-claim-2026-11-04
+  date: 2026-11-04
+  title_en: Tunisie Telegraph reports final penal-reconciliation agreements with detained businessmen
+    and an imminent official list
+  title_fr: Tunisie Telegraph annonce des accords définitifs de réconciliation pénale avec des hommes
+    d’affaires détenus et une liste officielle imminente
+  category: legal
+  subcategory: penal-reconciliation
+  location: []
+  actors: []
+  institutions: []
+  causes: []
+  consequences: []
+  summary: On 4 November 2026 Tunisie Telegraph reported, citing unnamed "informed and cross-checked sources",
+    that the penal-reconciliation file was moving toward a decisive closure of one of its largest cases
+    and that a formal and final announcement accepting the settlement requests of several major beneficiaries
+    on the first list was expected "within hours or the next few days". The article named the first list
+    as the businessmen Marouane Mabrouk, Habib Haouas, Ridha Charfeddine and Mohamed Frikha, said, in
+    the passage on Mr Mabrouk's case, that preliminary agreements ("preliminary letters") concluded earlier
+    had been referred to the Supreme National Security Council to check the figures and the settlements,
+    and expected the announcement by the end of that week. The claim follows an earlier Tunisie Telegraph
+    piece of 26 October 2026 which said an official list of businessmen "who reached final agreements
+    with the National Commission for Penal Reconciliation" would be announced shortly and named two of
+    them only by initials. No agreement text, official list, release order, commission communiqué or National
+    Security Council decision was retrieved. The commission denied the claim the next day (see ev-penrec-commission-denial-2026-11-05);
+    the disagreement is recorded open below. The names are recorded as published, not as a finding that
+    any agreement exists.
+  confidence: D
+  verification: needs-primary-source
+  attributed_to: Tunisie Telegraph (26 October and 4 November 2026), citing unnamed 'informed' sources;
+    no named official, no document
+  reasoning: A single outlet publishing under anonymous sourcing, with no agreement text, list, release
+    order or institutional record, and contradicted the following day by an official of the institution
+    concerned. The claim is carried because the map must show what was published and denied, not because
+    it is established. Confidence D reflects circulating material without documentary support.
+  falsifiable_by: An official list, an agreement or settlement text, a release order, a National Security
+    Council decision or a commission announcement would confirm part or all of the claim; the commission's
+    denial being confirmed in writing, or the continued detention of the named men without any settlement,
+    would show the claim false.
+  disputes:
+  - claim: That the National Commission for Penal Reconciliation had concluded final settlement agreements
+      with detained businessmen and that an official list of beneficiaries would be announced within days.
+    held_by: Tunisie Telegraph (26 October and 4 November 2026), citing unnamed informed sources.
+    source: mosaiquefm-penrec-denial-2026-11-05
+    assessment: 'An unnamed official of the commission, speaking to Mosaïque FM on 5 November 2026, denied
+      that any settlement agreement had been concluded, said the commission is not empowered to conclude
+      one, and said no final agreement can precede full restitution. No document supports the claim. Recorded
+      open and unresolved: the denial is itself an unnamed source, so neither account is a primary record.'
+    status: open
+  sources:
+  - tunisie-telegraph-penrec-list-2026-11-04
+  - tunisie-telegraph-penrec-list-2026-10-26
+  - universnews-ar-penrec-denial-2026-11-06
+- id: ev-eu-tunisia-cpm-fourth-session-2026-11-05
+  date: 2026-11-05
+  title_en: Fourth session of the EU-Tunisia Joint Parliamentary Committee meets in Brussels after eight
+    years
+  title_fr: Quatrième session de la Commission parlementaire mixte UE-Tunisie à Bruxelles, après huit
+    ans d'interruption
+  category: political
+  subcategory: interparliamentary-session
+  location: []
+  actors:
+  - riad-jaidane
+  institutions:
+  - legislature
+  - european-union
+  causes: []
+  consequences: []
+  summary: 'The fourth session of the EU-Tunisia Joint Parliamentary Committee (Commission parlementaire
+    mixte) took place at the European Parliament in Brussels on Thursday 5 November 2026, 09.00 to 12.00,
+    under the co-presidency of Riadh Jaidane for the Assembly of the Representatives of the People and
+    Ruggero Razza for the European Parliament, per the European Parliament''s own inter-parliamentary
+    meetings page. The page''s draft agenda lists opening remarks by both co-chairs, an IN CAMERA heading
+    above four topics (regional and international developments; bilateral relations and political dialogue;
+    migration, security and regional developments; economic and financial cooperation), a joint statement
+    and a closing session, and links a joint declaration in French. The previous session, the third, was
+    held in Tunis on 18 September 2018; the Tunisian outlets describe the 2026 meeting as resuming after
+    an interruption of eight years. The Tunisian account, carried by African Manager, La Presse and Nessma
+    from a single ARP communique, says the commission adopted a joint declaration calling for a strategic
+    partnership based on reciprocity and mutual interests, a sustainable development process and a new
+    balanced approach to migration, the energy transition and the digital transformation, and for continued
+    efforts to recover misappropriated funds. It adds the opening speeches: Razza on Tunisia as the EU''s
+    first partner and on cooperation, mutual respect and shared responsibility; Jaidane on the resumption
+    of the committee''s work, on updating the 1995 Association Agreement, on a Tunisian-European strategy
+    for training, research, skills exchange and talent mobility, on cooperation in artificial intelligence,
+    and on the restitution of misappropriated funds as a right of the Tunisian people. The declaration''s
+    PDF returned HTTP 403 when fetched on 2026-11-08, so its point-by-point content is not carried here.
+    No attendance list, minutes or verbatim record was retrieved.'
+  confidence: A
+  verification: verified
+  attributed_to: European Parliament inter-parliamentary meetings page and the joint declaration of 5
+    November 2026 (institutional records); the ARP communiqué as relayed by African Manager (6 November
+    2026), La Presse de Tunisie (5 November 2026) and Nessma TV (5 November 2026)
+  reasoning: 'The meeting, its date, its co-chairs and its agenda are stated by the European Parliament''s
+    own page, which also links the joint declaration, an institutional record; that is why the event is
+    graded A rather than on press alone. The substance of the declaration is carried only as African Manager,
+    La Presse and Nessma report it from one ARP communique. Those three are not independent of one another,
+    and two of them are word for word identical. The declaration''s PDF could not be fetched on 2026-11-08
+    (HTTP 403), so no point-by-point content is asserted. The record does not infer any binding outcome
+    from a parliamentary declaration, and it leaves out member counts and anything said in camera. The
+    "eight years" framing is carried as the outlets'' description, anchored to the dated third session
+    of 18 September 2018 instead of a computed interval. Spelling: African Manager and La Presse print
+    "Ruggiero Razza", the European Parliament page and Nessma print "Ruggero Razza"; these are one person
+    and the European Parliament''s own spelling is carried. It is a spelling variant, not a disagreement
+    about the facts.'
+  falsifiable_by: The minutes, attendance list or verbatim record of the session, or the European Parliament's
+    meeting documents for 5 November 2026, would confirm the agenda as held, the delegations' composition
+    and the in camera items; a corrigendum to the joint declaration, an EP or ARP statement that the session
+    did not take place as described, or evidence of a CPM meeting between 2019 and 2024 would correct
+    the record and the "after eight years" description.
+  sources:
+  - ep-dmag-ipm-tunisia-2026-11-05
+  - ep-arp-cpm-joint-declaration-2026-11-05
+  - ep-dmag-ipm-tunisia-2018-09-18
+  - ep-dmag-ipm-9th-term-tunisia-absent
+  - lapresse-cpm-2026-11-05
+  - nessma-cpm-2026-11-05
+  - am-cpm-bruxelles-2026-11-06
+  - businessnews-arp-commissions-2026-01-26
+- id: ev-penrec-commission-denial-2026-11-05
+  date: 2026-11-05
+  title_en: Penal-reconciliation commission denies concluding any settlement agreement with businessmen
+  title_fr: La commission de réconciliation pénale dément avoir conclu un accord de règlement avec des
+    hommes d’affaires
+  category: legal
+  subcategory: penal-reconciliation
+  location: []
+  actors: []
+  institutions: []
+  causes: []
+  consequences: []
+  summary: On 5 November 2026 an unnamed official source told Mosaïque FM that the National Commission
+    for Penal Reconciliation had concluded no settlement agreement, "contrairement aux informations relayées
+    récemment", and categorically denied reports that reconciliation agreements had been concluded. The
+    same source said the commission is not empowered to conclude such agreements, and that no negotiation
+    or definitive conciliation can take place before the integral restitution of the funds diverted from
+    the Tunisian people, without exception or reduction of the amounts concerned. Mosaïque FM published
+    the denial that evening; Webdo, Univers News, Elyssa TV and African Manager relayed it on 5, 6 and
+    7 November 2026. Elyssa TV dates the denial to 5 November 2026 and states its object as settlement
+    agreements with businessmen detained "during the recent period"; Univers News says the claim had circulated
+    about settlements with businessmen prosecuted or detained. The denial came one day after the Tunisie
+    Telegraph article naming four prospective beneficiaries. No named spokesperson, written commission
+    statement or presidency denial was retrieved, and the relays share Mosaïque FM's single origin. The
+    disagreement with the claim is recorded open below.
+  confidence: C
+  verification: needs-primary-source
+  attributed_to: An unnamed official source of the National Commission for Penal Reconciliation, cited
+    by Mosaïque FM on 5 November 2026 and relayed by Webdo, Univers News, Elyssa TV and African Manager
+  reasoning: One origin, an unnamed official, republished by several outlets that quote each other rather
+    than adding independent reporting. The wording of the denial is consistent across the relays and the
+    Elyssa TV Arabic text matches it, which supports that the denial was made as reported; it does not
+    make the denial a primary record, and it does not establish what actually happened inside the commission.
+    Confidence C, not B, because the outlets are not independent corroboration.
+  falsifiable_by: A signed commission statement, a named spokesperson, the presidency's communiqué, or
+    a published list or agreement would confirm or correct the denial. Evidence that a settlement was
+    in fact concluded (an agreement text, a release order, a payment) would show the denial wrong or incomplete.
+  disputes:
+  - claim: Whether the commission has concluded settlement agreements with detained businessmen, and whether
+      an official list of beneficiaries exists or is imminent.
+    held_by: Tunisie Telegraph (26 October and 4 November 2026) reported final agreements and an imminent
+      official list; an unnamed commission official cited by Mosaïque FM (5 November 2026) denied it.
+    source: tunisie-telegraph-penrec-list-2026-11-04
+    assessment: 'Both accounts rest on unnamed sources. The denial is the institution''s own voice but
+      unattributed to a person and unrecorded in writing; the claim is a single outlet''s anonymous reporting.
+      Neither a list nor an agreement text was retrieved. Recorded open: the two candidates must be read
+      together and neither is adopted as the fact.'
+    status: open
+  sources:
+  - mosaiquefm-penrec-denial-2026-11-05
+  - africanmanager-penrec-denial-2026-11-07
+  - webdo-penrec-denial-2026-11-06
+  - elyssatv-penrec-denial-2026-11-06
+  - universnews-penrec-denial-2026-11-06
+  - universnews-ar-penrec-denial-2026-11-06
+- id: ev-nafti-baour-tripoli-2026-11-06
+  date: 2026-11-06
+  title_en: Nafti and Libya's acting foreign minister Baour review bilateral relations in Tripoli
+  title_fr: Nafti et le ministre libyen par intérim des Affaires étrangères Baour passent en revue les
+    relations bilatérales à Tripoli
+  category: political
+  subcategory: diplomacy
+  location: []
+  actors:
+  - mohamed-ali-nafti
+  institutions:
+  - libya
+  summary: Foreign minister Mohamed Ali Nafti met Libya's acting foreign minister and chargé de la gestion
+    du ministère des Affaires étrangères et de la Coopération internationale, Tahar Salem Baour, in Tripoli
+    on Friday 6 November 2026, on the margins of the 22nd ordinary session of the CEN-SAD Executive Council.
+    The Libyan foreign ministry says Baour received Nafti at Mitiga International Airport on his arrival;
+    the Tunisian ministry communiqué relayed by La Presse describes an entretien without a venue, so the
+    sources are not reconciled on whether this was one encounter or two. Per the Tunisian readout, they
+    reviewed fraternal relations and affirmed the common will to raise them further; Nafti restated Tunisia's
+    support for an inter-Libyan political solution under UN auspices preserving Libya's unity and its
+    sovereignty over its resources. They discussed the preparatory meeting of the Tunisian-Libyan High
+    Joint Commission due in Tunis on 10-11 November 2026, and water and energy security, trade, border-zone
+    development and health cooperation. They also discussed revitalising CEN-SAD and its institutions
+    and strengthening consultation on regional security and stability. Baour has no graph record and is
+    named only. This is a new meeting, not the 8 October 2026 Nouri-Trabelsi interior ministers' meeting
+    already recorded at ev-tunisia-libya-security-2026-10-08.
+  confidence: B
+  basis: reported
+  verification: needs-primary-source
+  attributed_to: Tunisian foreign ministry communiqué via La Presse de Tunisie; Libyan foreign ministry
+    statement
+  reasoning: 'The Tunisian foreign ministry readout relayed by La Presse and the Libyan foreign ministry''s
+    own statement agree on the date, the two principals and Tripoli, and each government is a party to
+    the meeting. That gives two institutional accounts rather than one outlet''s assessment, hence B.
+    The venue differs between the accounts (airport reception versus an entretien), which is recorded
+    rather than smoothed. No Tunisian foreign ministry page was fetched directly, so verification remains
+    open. Caveat: the Libyan ministry statement''s body could not be fetched on 2026-11-08 (only its title
+    loads), so the second institutional account is carried as transcribed in the source row; La Presse''s
+    relay of the Tunisian communique was re-read and matches.'
+  falsifiable_by: The Tunisian foreign ministry's original communiqué or Facebook post; the Libyan foreign
+    ministry's Arabic statement; the CEN-SAD session record; any of these with a venue and agenda would
+    confirm or correct the account.
+  sources:
+  - lapresse-tunisie-libye-cen-sad-2026-11-07
+  - libya-mfa-nafti-arrival-2026-11-06
+- id: ev-saied-carthage-prices-waste-2026-11-06
+  date: 2026-11-06
+  title_en: Saïed receives the head of government and two ministers on prices, monopoly and waste
+  title_fr: Saïed reçoit la cheffe du gouvernement et deux ministres sur les prix, le monopole et les
+    déchets
+  category: political
+  subcategory: presidential-declaration
+  location:
+  - gov-tunis
+  actors:
+  - kais-saied
+  - sara-zaafarani
+  - khaled-nouri
+  - samir-abid
+  institutions:
+  - presidency
+  - cabinet-zenzri
+  - ministry-interior
+  causes: []
+  consequences: []
+  summary: 'On Friday 6 November 2026 President Kaïs Saïed received at the Carthage palace the head of
+    government Sarra Zaafrani Zenzri, the interior minister Khaled Nouri and the commerce and export-development
+    minister Samir Abid, per the presidency communiqué reproduced by Radio Nationale and Tunisie TV in
+    Arabic and by African Manager and Tunisie Numerique in French. According to the communiqué, the meeting
+    dealt mainly with the need to stop what it calls the "crazy" rise in prices and to counter the "disguised
+    monopoly" affecting several agricultural products. Dates are the example: the communiqué says the
+    kilogram is not paid to the farmer at more than one dinar, despite the harvesters'' labour and the
+    risks taken by workers suspended by ropes at the top of the palms. The president said some parties
+    deliberately obstruct the distribution of fertiliser and seeds, worsening farmers'' difficulties and
+    threatening production, and that these parties and those behind them must be held to account. He denounced
+    sudden and manufactured price changes in which products appear on the market and then disappear without
+    justification, aiming at artificial scarcity and price control, citing spiny lobster, poultry and
+    bottled water as examples. He said real freedom requires transparency, justice and fairness and has
+    nothing to do with monopoly, speculation and the "starvation of citizens", that these practices must
+    end as soon as possible, and that the lack of state financial resources cannot serve as an excuse
+    while the state spends large sums importing luxury goods. On waste collection he ordered the operations
+    to be intensified and carried out regularly, continuously and without interruption, with no accumulation
+    over weeks or months, and said some parties deliberately exploit such situations to inflame social
+    tensions. He added that anyone behind or planning these practices must face accountability, that the
+    law applies to all without exception and that no one, whatever their rank or position, has an immunity
+    preventing accountability. The communiqué closes with a passage saying that those the people rejected,
+    after seeking to divide the state, undermine social unity and "assassinate free thought", have "no
+    place in the future of Tunisia". The text names no person, firm, figure, investigation or legal instrument;
+    the price, monopoly, obstruction and waste accusations are the president''s statements, not established
+    facts. The ministry of commerce and export development has no institution record and is named here,
+    not coded.'
+  confidence: B
+  basis: reported
+  verification: needs-primary-source
+  attributed_to: Presidency of the Republic, communiqué of 6 November 2026, as reproduced by African Manager
+    (7 November 2026, French), Radio Nationale (7 November 2026, Arabic), Tunisie TV (7 November 2026,
+    Arabic) and Tunisie Numerique (7 November 2026, French)
+  contested:
+  - framing: Price rises in several agricultural products are driven by a disguised monopoly, by deliberate
+      obstruction of fertiliser and seed distribution and by manufactured scarcity, and unnamed parties
+      do this to inflame social tensions.
+    held_by: Presidency of the Republic (President Kaïs Saïed), communiqué of 6 November 2026
+    source: african-manager-saied-prices-2026-11-07
+  reasoning: 'Four relays carry the same communiqué text, two of them state broadcasters (Radio Nationale,
+    Tunisie TV) and one an established business news site (African Manager), which supports B for the
+    meeting''s occurrence, its date of 6 November 2026, the four participants and the content of the communiqué.
+    They are not independent of one another: all four reproduce the presidency''s own text, so B grades
+    agreement on what the communiqué says, not independent verification of its allegations. The record
+    is kept at basis "reported" because the price rises, the disguised monopoly, the obstruction of fertiliser
+    and seed distribution and the exploitation of waste accumulation are the president''s claims; no market
+    data, ministry report, competition-authority file, investigation or court record was retrieved. The
+    grade is one step above the graph''s existing presidential-declaration records (ev-sabotage-declaration-2026-08-26
+    and ev-saied-carthage-audiences-2026-10-08, both C on a single relay) because more than one relay
+    was retrieved this time, not because the underlying allegations are corroborated.'
+  falsifiable_by: The presidency's own communiqué page (carthage.tn or the Presidency Facebook page) of
+    6 November 2026, or the TAP dispatch of 7 November 2026, would confirm the wording and the attendee
+    list. A relay showing a different date, a different attendee list or different directives would correct
+    the record. Evidence of an investigation, a court file or a ministry measure following the meeting
+    would show implementation, which this record does not assert.
+  disputes:
+  - claim: Which products the communiqué cites as examples of sudden, manufactured price changes.
+    held_by: Radio Nationale and Tunisie TV (Arabic) cite جراد البحر (spiny lobster), poultry and bottled
+      water; African Manager gives no product examples; Tunisie Numerique renders the first term as crevettes
+      (prawns).
+    source: radionationale-saied-prices-2026-11-07
+    assessment: The Arabic relays agree with each other; the French relays diverge, and "crevettes" is
+      not a rendering of جراد البحر. The summary carries the Arabic wording. Recorded open pending the
+      presidency's own text.
+    status: open
+  sources:
+  - african-manager-saied-prices-2026-11-07
+  - radionationale-saied-prices-2026-11-07
+  - tunisiatv-saied-prices-2026-11-07
+  - tunisienumerique-saied-prices-2026-11-07
+- id: ev-dbeibah-nafti-tripoli-2026-11-07
+  date: 2026-11-07
+  title_en: Libya's Dbeibah receives Nafti in Tripoli during the CEN-SAD Executive Council session
+  title_fr: Le Libyen Dbeibah reçoit Nafti à Tripoli en marge du Conseil exécutif de la CEN-SAD
+  category: political
+  subcategory: diplomacy
+  location: []
+  actors:
+  - mohamed-ali-nafti
+  institutions:
+  - libya
+  summary: Abdelhamid Dbeibah, head of Libya's Government of National Unity, received foreign minister
+    Mohamed Ali Nafti in Tripoli on Saturday 7 November 2026, on the margins of the 22nd ministerial meeting
+    of the CEN-SAD Executive Council, per the Tunisian foreign ministry communiqué relayed by La Presse
+    and the Libyan prime minister's media office relayed by LANA. Dbeibah expressed respect for Tunisia
+    and the wish to develop cooperation and partnership between the two countries, and confidence in upcoming
+    bilateral deadlines. Nafti recalled the president's position on a Libyan-Libyan solution under UN
+    support preserving Libya's unity, security and resources, and said Tunisia wanted to raise bilateral
+    cooperation to cover energy, communication technologies, water resources and the security of the shared
+    border. Dbeibah has no person record and is named only. This is distinct from the Nafti-Baour meeting
+    of 6 November and from the 8 October 2026 Nouri-Trabelsi interior ministers' meeting already in the
+    graph.
+  confidence: B
+  basis: reported
+  verification: needs-primary-source
+  attributed_to: Tunisian foreign ministry communiqué via La Presse de Tunisie; Libyan prime minister's
+    media office via LANA
+  reasoning: Two official readouts, one Tunisian and one Libyan, agree on the date, participants and city.
+    Neither was fetched from the issuing ministry's own page, and the Libyan account lists Nafti among
+    several ministers received separately rather than giving a dedicated readout of this conversation.
+    Grade B reflects two institutional relays, not an independently witnessed encounter.
+  falsifiable_by: The Tunisian foreign ministry's original communiqué; the Libyan prime minister's media
+    office statement; a photograph or agenda placing the reception on 7 November would confirm it.
+  sources:
+  - lapresse-dbeibeh-nafti-2026-11-07
+  - lana-dbeibah-cen-sad-2026-11-07

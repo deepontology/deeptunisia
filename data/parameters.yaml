@@ -93,9 +93,14 @@ time:
   #   sentence of the former RNTA chief executive (reported 5 November). The sweep
   #   read the feed through 2026-11-06, so the cutoff takes the coverage date
   #   rather than the latest record date.
+  # Advanced again 2026-11-08 when the Nov-06 to Nov-08 sweep merged seven events and one
+  # verified end date, one of them dated past the previous horizon: the Libyan prime
+  # minister receiving the foreign minister in Tripoli (7 November). The sweep read the
+  # feed through 2026-11-08, so the cutoff takes the coverage date rather than the latest
+  # record date.
   # V31 now fails the build on any record interval dated past the cutoff.
   floor: "1956-03-20"
-  cutoff: "2026-11-06"
+  cutoff: "2026-11-08"
   # How far back an open-ended "in post by X" bound may reach. A plausible
   # ceiling for a senior command tenure; the longest documented run in the
   # dataset is about seven and a half years.

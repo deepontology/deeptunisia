@@ -13890,7 +13890,7 @@
   role: arp-2023-member
   holder: riad-jaidane
   start: '2023-03-13'
-  end: verified:2026-10
+  end: verified:2026-11
   constituency:
     id: arp23-france-3
     name_en: France 3
@@ -13904,11 +13904,14 @@
   - Abroad seat; one of the three foreign constituencies in which an election was held (the other seven
     were vacant). Ranked among the 23 first-round winners ISIE reports, so the round is inferred from
     that count.
+  - Co-chaired the EU-Tunisia joint parliamentary committee for the ARP in Brussels on 5 November 2026 (European Parliament meeting page and joint declaration), which places him in the Assembly that month. An inference from the role, not a direct membership statement.
   sources:
   - arp-deputy-details
   - arp-deputies-list
   - isie-2022-legislative
   - universnews-arp-composition-2023-02-26
+  - ep-dmag-ipm-tunisia-2026-11-05
+  - ep-arp-cpm-joint-declaration-2026-11-05
 - id: p-arp23-fatma-al-mseddi
   role: arp-2023-member
   holder: fatma-al-mseddi

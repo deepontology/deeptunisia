@@ -25626,3 +25626,390 @@
   note: Published Sunday 18 October 2026 at 07:34. Says the 14-year sentence preceded the appeal ruling
     ("intervient après"), where Kapitalis says "parallèlement". Cites "plusieurs médias tunisiens" without
     naming them.
+- id: ep-dmag-ipm-tunisia-2026-11-05
+  title: 'Inter-parliamentary meetings: 4th EU-Tunisia Joint Parliamentary Committee, 5 November 2026,
+    Brussels'
+  publisher: European Parliament (DMAG delegation page)
+  date: 2026-11-05
+  url: https://www.europarl.europa.eu/delegations/en/dmag/activities/inter-parliamentary?tabCode=tunisia
+  tier: 2
+  lang: en
+  excerpt: 'The 4th EU-Tunisia Joint Parliamentary Committee took place in Brussels on 5 November 2026,
+    from 09.00 to 12.00. The draft agenda was the following: Opening Session / Adoption of the agenda
+    / Opening remarks by Mr. Ruggero Razza, Co-Chair of the Joint Parliamentary Committee for the European
+    Parliament / Opening remarks by Mr. Riadh Jaidane, Co-Chair of the Joint Parliamentary Committee for
+    the Assembly of the Representatives of the People of the Republic of Tunisia / IN CAMERA / Regional
+    and International Developments / Bilateral Relations and Political Dialogue / Migration, Security,
+    and Regional Developments / Economic and Financial Cooperation / Joint Statement / Closing Session'
+  note: 'Institutional record of the meeting. The page also links the draft agenda (meeting document 1353466FR),
+    the joint declaration PDF and a photoset of the session. Fetched 2026-11-08. The word "draft" is the
+    page''s own: the agenda as published is a draft agenda, and the record does not treat its item order
+    as minutes.'
+- id: ep-arp-cpm-joint-declaration-2026-11-05
+  title: Déclaration conjointe, quatrième réunion de la Commission parlementaire mixte UE-Tunisie
+  publisher: European Parliament and Assemblée des représentants du peuple
+  date: 2026-11-05
+  url: https://www.europarl.europa.eu/telastatic/cmsdata/312746/D%C3%A9claration_conjointe_CPM_UE_Tunisie_VERSION_FINALE.pdf
+  tier: 2
+  lang: fr
+  excerpt: Quatrième réunion de la Commission parlementaire mixte UE-Tunisie (CPM), Bruxelles, le 5 novembre
+    2026. Les délégations parlementaires européenne et tunisienne, co-présidées par Monsieur Ruggero Razza,
+    pour le Parlement européen, et par Monsieur Riadh Jaidane, pour l'Assemblée des Représentants du Peuple
+    de la République tunisienne, à l'issue de la quatrième réunion de la Commission parlementaire mixte
+    qui s'est tenue aujourd'hui à Bruxelles, au siège du Parlement européen, ont convenu ce qui suit.
+  note: 'The points below were transcribed from the PDF text; a later fetch on 2026-11-08 returned HTTP
+    403, so they were not re-checked. Fourteen numbered points, adopted jointly. Headed by both institutions''
+    logos and signed by the two co-chairs. Text extracted from the PDF with pdftotext on 2026-11-08; the
+    signature block is partly garbled by the extraction. Final point: the two delegations agree to hold
+    the next CPM meeting in Tunis "à une date à fixer d''un commun accord en 2027".'
+- id: ep-dmag-ipm-tunisia-2018-09-18
+  title: 'Inter-parliamentary meetings: Troisième réunion de la CPM UE-Tunisie, Tunis, 18 septembre 2018'
+  publisher: European Parliament (DMAG, 8th parliamentary term archive)
+  date: 2018-09-18
+  url: https://www.europarl.europa.eu/delegations/en/archives/8/dmag/activities/inter-parliamentary?tabCode=tunisia
+  tier: 2
+  lang: fr
+  excerpt: Troisième réunion de la Commission parlementaire mixte UE - Tunisie (CPM), Tunis, le 18 septembre
+    2018. Les délégations parlementaires tunisienne et européenne co-présidées par Madame Inés Ayala Sender,
+    pour le Parlement européen, et par Monsieur Mohamed Fadhel Ben Omrane, pour l'Assemblée des Représentants
+    du Peuple de la République Tunisienne, à l'issue de la troisième réunion ordinaire qui s'est tenue
+    aujourd'hui, à Tunis au siège de l'Assemblée des Représentants du Peuple, ont convenu ce qui suit.
+  note: The same page lists the constitutive meeting of 18 February 2016 (Brussels, co-chairs Pier Antonio
+    Panzeri and Mohamed Fadhel Ben Omrane) and the meeting of 13 December 2017 (Strasbourg). The declaration's
+    own text calls the 2018 session the "troisième réunion ordinaire", so an earlier ordinary meeting
+    is implied; a 20 September 2016 date was not confirmed on the page and is not carried. This is the
+    dated basis for the "eight years" claim; the record carries the date, not the interval.
+- id: ep-dmag-ipm-9th-term-tunisia-absent
+  title: 'Inter-parliamentary meetings, DMAG, 9th parliamentary term (2019-2024): no Tunisia tab'
+  publisher: European Parliament (DMAG, 9th parliamentary term archive)
+  date: '?'
+  url: https://www.europarl.europa.eu/delegations/en/archives/9/dmag/activities/inter-parliamentary?tabCode=tunisia
+  tier: 2
+  lang: en
+  excerpt: Inter-parliamentary meetings / Algeria / Mauritania / Morocco
+  note: The 9th-term page offers tabs for three partner parliaments only; no Tunisia tab exists, and no
+    EU-Tunisia CPM meeting is listed for 2019-2024. Negative evidence, used only to corroborate the outlets'
+    "eight years" framing, never as a certificate that no meeting was held.
+- id: lapresse-cpm-2026-11-05
+  title: 'Tunisie-UE : reprise du dialogue parlementaire après huit ans d''interruption'
+  publisher: La Presse de Tunisie
+  date: 2026-11-05
+  url: https://www.lapresse.tn/2026/11/05/tunisie-ue-reprise-du-dialogue-parlementaire-apres-huit-ans-dinterruption
+  tier: 3
+  lang: fr
+  excerpt: Après huit ans d'absence, la quatrième session de la Commission parlementaire mixte Tunisie-Union
+    européenne s'est ouverte jeudi au siège du Parlement européen à Bruxelles. La réunion est coprésidée
+    par Riadh Jaïdane du côté tunisien et de Ruggiero Razza du côté européen. selon un communiqué publié
+    par l'Assemblée des représentants du peuple (ARP).
+  note: Full text fetched 2026-11-08. Reproduces the ARP communiqué; identical in wording to African Manager's
+    piece. Reports the agenda (bilateral relations, migration and security, economic and financial cooperation,
+    regional and international developments) and a joint declaration at the close. Prints "Ruggiero Razza".
+- id: nessma-cpm-2026-11-05
+  title: 'Bruxelles : tenue de la 4e session de la commission parlementaire mixte Tunisie-UE'
+  publisher: Nessma TV
+  date: 2026-11-05
+  url: https://www.nessma.tv/fr/nationale/actu/bruxelles-tenue-de-la-4e-session-de-la-commission-parlementaire-mixte-tunisie-ue/597698
+  tier: 3
+  lang: fr
+  excerpt: La quatrième session de la commission parlementaire mixte Tunisie-Union européenne s'est tenue
+    jeudi au siège du Parlement européen à Bruxelles, sous la coprésidence de Riadh Jaidane pour la partie
+    tunisienne et de "Ruggero Razza" pour la partie européenne, après une interruption de huit ans, dans
+    une démarche qui "reflète la volonté commune de reprendre le dialogue parlementaire et de renforcer
+    la coopération entre les deux parties", selon un communiqué publié par l'Assemblée des représentants
+    du peuple (ARP).
+  note: Timestamped "Jeudi 5 Novembre 2026 - 17:24". Direct fetch blocked by a Cloudflare challenge; the
+    text is the search-index render of the same article. Independently worded from La Presse's version
+    but draws on the same ARP communiqué.
+- id: am-cpm-bruxelles-2026-11-06
+  title: La CPM Tunisie-UE à Bruxelles après 8 ans d'absence
+  publisher: African Manager
+  date: 2026-11-06
+  url: https://africanmanager.com/la-commission-parlementaire-mixtetunisie-union-europeenne-se-reunit-a-bruxelles-apres-huit-ans-dabsence/
+  tier: 3
+  lang: fr
+  excerpt: Après huit ans d'absence, la quatrième session de la Commission parlementaire mixte (CPM) Tunisie-Union
+    européenne s'est ouverte jeudi au siège du Parlement européen à Bruxelles. La réunion est coprésidée
+    par Riadh Jaïdane du côté tunisien et de Ruggiero Razza du côté européen. selon un communiqué publié
+    par l'Assemblée des représentants du peuple (ARP).
+  note: Full text fetched 2026-11-08. The item that first reported the session; its text is identical
+    to La Presse's, both reproducing the ARP communiqué. Gives the leadership of the ARP delegation (Jaidane
+    on the Association Agreement, migration, restitution of misappropriated funds) and of the EP side
+    (Razza on Tunisia as the EU's first partner).
+- id: businessnews-arp-commissions-2026-01-26
+  title: 'ARP : qui préside les treize commissions parlementaires ?'
+  publisher: Business News
+  date: 2026-01-26
+  url: https://businessnews.com.tn/2026/01/26/composition-des-bureaux-des-commissions-parlementaires/1385183
+  tier: 3
+  lang: fr
+  excerpt: 'La commission des Relations Extérieures, de la Coopération internationale, des Affaires des
+    Tunisiens à l''Etranger et l''Emigration / Président : Riadh Jaidane, n''appartenant à aucun groupe
+    parlementaire / Vice-président : Kamel Keraani, Les Libres / Rapporteur : Taieb Talbi, Pour que le
+    peuple triomphe.'
+  note: 'Context only: it places Jaidane at the head of the ARP committee whose remit covers the CPM,
+    which explains why he leads the Tunisian delegation. Dated 26 January 2026, so it does not attest
+    anything about 5 November 2026 and is not used for the flag below.'
+- id: african-manager-saied-prices-2026-11-07
+  title: 'Saïed ordonne : Pas d’immunité aux « barons » de la spéculation'
+  publisher: African Manager
+  date: 2026-11-07
+  url: https://africanmanager.com/le-president-saied-pas-dimmunite-pour-les-barons-de-la-speculation-et-du-monopole/
+  tier: 3
+  lang: fr
+  excerpt: Le président de la République, Kais Saïed, a appelé, vendredi, à mettre fin à la flambée des
+    prix et au monopole déguisé. C’était en recevant, au palais de Carthage, la cheffe du gouvernement,
+    Sarra Zaâfrani Zenzri, le ministre de l’Intérieur, Khaled Nouri, et le ministre du Commerce et du
+    Développement des exportations, Samir Abid, cite un communiqué de la présidence de la République.
+  note: Relays the presidency communiqué. Dates the meeting "vendredi" (Friday 6 November 2026). Quotes
+    the dates example at one dinar per kilogram paid to the farmer, the fertiliser and seed obstruction,
+    the "barons" of corruption, monopoly and speculation, the artificial scarcity, the waste collection
+    order and the no-immunity passage. Gives no product examples for the price swings and no time of day.
+- id: radionationale-saied-prices-2026-11-07
+  title: 'رئيس الدولة: لابد من وضع حدّ للارتفاع الجنوني للأسعار والتصدّي لمظاهر الاحتكار المقنّع لعدد
+    من المواد الفلاحية'
+  publisher: Radio Nationale (Radionationale.tn)
+  date: 2026-11-07
+  url: https://www.radionationale.tn/article/6aeed26a24f658fa4679925d/%D8%B1%D8%A6%D9%8A%D8%B3-%D8%A7%D9%84%D8%AF%D9%88%D9%84%D8%A9-%D9%84%D8%A7%D8%A8%D8%AF-%D9%85%D9%86-%D9%88%D8%B6%D8%B9-%D8%AD%D8%AF-%D9%84%D9%84%D8%A7%D8%B1%D8%AA%D9%81%D8%A7%D8%B9-%D8%A7%D9%84%D8%AC%D9%86%D9%88%D9%86%D9%8A-%D9%84%D9%84%D8%A3%D8%B3%D8%B9%D8%A7%D8%B1-%D9%88%D8%A7%D9%84%D8%AA%D8%B5%D8%AF%D9%8A-%D9%84%D9%85%D8%B8%D8%A7%D9%87%D8%B1-%D8%A7%D9%84%D8%A7%D8%AD%D8%AA%D9%83%D8%A7%D8%B1-%D8%A7%D9%84%D9%85%D9%82%D9%86%D8%B9-%D9%84%D8%B9%D8%AF%D8%AF-%D9%85%D9%86-%D8%A7%D9%84%D9%85%D9%88%D8%A7%D8%AF-%D8%A7%D9%84%D9%81%D9%84%D8%A7%D8%AD%D9%8A%D8%A9
+  tier: 3
+  lang: ar
+  excerpt: استقبل رئيس الجمهوريّة قيس سعيّد عصر يوم أمس، السادس من شهر نوفمبر الجاري بقصر قرطاج كلاً من،
+    رئيسة الحكومة سارة الزعفراني الزنزري، ووزير الداخلية خالد النوري، ووزير التجارة وتنمية الصادرات سمير
+    عبيد. وتناول اللقاء، بالخصوص، ضرورة وضع حدّ للارتفاع الجنوني للأسعار، والتصدّي لمظاهر الاحتكار المقنّع
+    التي تطال عدداً من المواد الفلاحية، على غرار التمور، التي لا يتجاوز سعر بيع الكيلوغرام الواحد منها
+    من الفلاح ديناراً واحداً.
+  note: State radio, publishes the full communiqué text. Names the day and time ("عصر يوم أمس، السادس
+    من شهر نوفمبر", afternoon of yesterday, 6 November). Gives "جراد البحر والدواجن والمياه المعلبة" (spiny
+    lobster, poultry, bottled water) as the products with manufactured price swings, and the waste-collection
+    order.
+- id: tunisiatv-saied-prices-2026-11-07
+  title: قيس سعيد يدعو إلى ضرورة وضع حد للارتفاع الجنوني للأسعار والتصدي لمظاهر الاحتكار المقنّع
+  publisher: Tunisie TV (Tunisiatv.tn)
+  date: 2026-11-07
+  url: https://www.tunisiatv.tn/ar/article/6aeed0aebac8b3ab23202b41/%D9%82%D9%8A%D8%B3-%D8%B3%D8%B9%D9%8A%D8%AF-%D9%8A%D8%AF%D8%B9%D9%88-%D8%A7%D9%84%D9%89-%D8%B6%D8%B1%D9%88%D8%B1%D8%A9-%D9%88%D8%B6%D8%B9-%D8%AD%D8%AF-%D9%84%D9%84%D8%A7%D8%B1%D8%AA%D9%81%D8%A7%D8%B9-%D8%A7%D9%84%D8%AC%D9%86%D9%88%D9%86%D9%8A-%D9%84%D9%84%D8%A7%D8%B3%D8%B9%D8%A7%D8%B1-%D9%88%D8%A7%D9%84%D8%AA%D8%B5%D8%AF%D9%8A-%D9%84%D9%85%D8%B8%D8%A7%D9%87%D8%B1-%D8%A7%D9%84%D8%A7%D8%AD%D8%AA%D9%83%D8%A7%D8%B1-%D8%A7%D9%84%D9%85%D9%82%D9%86%D8%B9
+  tier: 3
+  lang: ar
+  excerpt: كما شدّد رئيس الجمهوريّة على ضرورة تكثيف عمليات رفع الفضلات والقيام بها بصفة دورية ومنتظمة
+    ودون انقطاع، وعدم تركها متراكمة لأسابيع أو أشهر. وأشار إلى وجود أطراف تتعمّد توظيف مثل هذه الأوضاع
+    لتأجيج الأوضاع الاجتماعية.
+  note: State television, reproduces the same communiqué text as Radio Nationale, including the attendee
+    list, the dates example, the fertiliser and seed obstruction, the lobster, poultry and bottled-water
+    examples, the waste order and the no-immunity passage.
+- id: tunisienumerique-saied-prices-2026-11-07
+  title: 'Prix, agriculture, déchets : les priorités fixées par Kaïs Saïed au gouvernement'
+  publisher: Tunisie Numerique
+  date: 2026-11-07
+  url: https://www.tunisienumerique.com/kais-saied-prix-agriculture-dechets-priorites-gouvernement-6-novembre-2026/
+  tier: 4
+  lang: fr
+  excerpt: Le président de la République, Kaïs Saïed, a reçu le 6 novembre au palais de Carthage la cheffe
+    du gouvernement, Sarra Zaafrani Zenzri, le ministre de l’Intérieur, Khaled Nouri, et le ministre du
+    Commerce et du Développement des exportations, Samir Abid. Selon le communiqué de la Présidence, la
+    réunion a porté principalement sur la hausse des prix, les circuits de distribution, les difficultés
+    touchant certains produits agricoles, la collecte des déchets et l’application de la loi.
+  note: Gives the date explicitly as 6 November and attributes the account to the presidency communiqué.
+    Renders "جراد البحر" as "crevettes". Adds INS October inflation figures and a 7-8 November commerce-ministry
+    discount operation, both outside the communiqué as the other relays carry it.
+- id: lapresse-tunisie-libye-cen-sad-2026-11-07
+  title: 'Tunisie-Libye : eau, énergie, commerce et santé au cœur des priorités bilatérales'
+  publisher: La Presse de Tunisie
+  date: 2026-11-07
+  url: https://www.lapresse.tn/2026/11/07/tunisie-libye-eau-energie-commerce-et-sante-au-coeur-des-priorites-bilaterales
+  tier: 3
+  lang: fr
+  excerpt: Le ministre des Affaires étrangères, de la Migration et des Tunisiens à l’étranger, Mohamed
+    Ali Nafti, et le chargé de la gestion du ministère des Affaires étrangères et de la Coopération internationale
+    en Libye, Tahar Salem Baour, ont passé en revue, vendredi, les relations de fraternité qui unissent
+    les deux pays et peuples frères, réaffirmant la volonté commune de les hisser davantage, lit-on dans
+    un communiqué publié par le ministère des Affaires étrangères.
+  note: Relays the Tunisian foreign ministry communiqué. Places the meeting on the margins of the 22nd
+    CEN-SAD Executive Council session without naming a venue; "vendredi" from a 7 November publication
+    is 6 November 2026.
+- id: libya-mfa-nafti-arrival-2026-11-06
+  title: Minister Taher El-Baour receives Minister Mohamed Ali Nafti at Mitiga International Airport
+  publisher: Ministry of Foreign Affairs and International Cooperation, Libya
+  date: 2026-11-06
+  url: https://www.facebook.com/MinistryofForeignAffairs.Libya/posts/1478008814420774/
+  tier: 2
+  lang: en
+  excerpt: H.E. Mr. Taher El-Baour, Acting Minister of Foreign Affairs and International Cooperation,
+    received today, Friday, 6 November 2026, at Mitiga International Airport, H.E. Mr. Mohamed Ali Nafti,
+    Minister of Foreign Affairs, Migration and Tunisians Abroad of the Republic of Tunisia, upon his arrival
+    in the capital, Tripoli, to participate in the 22nd Ordinary Session of the Executive Council of the
+    Community of Sahel-Saharan States (CEN-SAD).
+  note: 'Official ministry statement published on Facebook; treated as an institutional statement (tier
+    2) with the platform caveat. Confirms date, place and both titles. It describes a reception on arrival,
+    which the Tunisian readout calls an entretien; the two accounts are not reconciled here. Not fetchable
+    on 2026-11-08: the Facebook page returns only the post title. The excerpt is as transcribed from the
+    post; the meeting on 6 November is also carried by La Presse''s relay of the Tunisian ministry communique.'
+- id: lapresse-dbeibeh-nafti-2026-11-07
+  title: 'Tunisie-Libye : Entretien entre Dbeibeh et Nafti en marge de la réunion du conseil de la Communauté
+    des États Sahélo-Sahariens'
+  publisher: La Presse de Tunisie
+  date: 2026-11-07
+  url: https://www.lapresse.tn/2026/11/07/tunisie-libye-abdelhamid-dbeibeh-recoit-mohamed-ali-nafti-a-tripoli
+  tier: 3
+  lang: fr
+  excerpt: Le Chef du Gouvernement d’Unité Nationale de l’État de Libye, Abdelhamid Dbeibeh, a reçu, samedi,
+    le ministre des Affaires étrangères, de la Migration et des Tunisiens à l’Étranger, Mohamed Ali Nafti,
+    en marge de sa participation à Tripoli aux travaux de la 22ème réunion ministérielle du Conseil Exécutif
+    de la Communauté des États Sahélo-Sahariens.
+  note: Relays a communiqué of the Tunisian foreign ministry. The reception is Saturday 7 November 2026,
+    the day of the CEN-SAD Executive Council session, and is distinct from the 6 November Nafti-Baour
+    meeting.
+- id: lana-dbeibah-cen-sad-2026-11-07
+  title: Dbeibah meets with Foreign Ministers and Officials of Sahel-Saharan States
+  publisher: Libyan News Agency (LANA)
+  date: 2026-11-07
+  url: https://lana.gov.ly/post.php?id=369493&lang=en
+  tier: 3
+  lang: en
+  excerpt: This came during his meetings on Saturday with a number of foreign ministers and officials
+    participating in the 22nd session of the CEN-SAD Executive Council, held in Tripoli. [...] the meetings
+    included Minister of Foreign Affairs, Migration, and Tunisians Abroad Mohamed Nafti.
+  note: Libyan state news agency, citing the prime minister's media office. Confirms the Saturday 7 November
+    reception in Tripoli and Nafti's participation, but does not name Dbeibah's individual interlocutors'
+    topics beyond the general bilateral agenda.
+- id: mosaiquefm-penrec-denial-2026-11-05
+  title: 'Réconciliation pénale : Aucun accord conclu...'
+  publisher: Mosaïque FM
+  date: 2026-11-05
+  url: https://www.mosaiquefm.net/fr/national-tunisie/1535881/conciliation-penale-un-responsable-dement-la-conclusion-d-accord
+  tier: 3
+  lang: fr
+  excerpt: La Commission nationale de réconciliation pénale n’a conclu aucun accord de règlement, contrairement
+    aux informations relayées récemment. C’est ce qu’a affirmé une source officielle à Mosaïque FM,démentant
+    catégoriquement les informations faisant état de la conclusion d’accords de réconciliation.
+  note: 'The original denial. The page carries the timestamp 2026-11-05 21:40 Africa/Tunis. It continues:
+    the same source recalled that the commission is not empowered to conclude such agreements, and that
+    no negotiation or final conciliation can take place before the full restitution of the misappropriated
+    funds, without exception or reduction. The source is not named and speaks in the singular. Not fetchable
+    on 2026-11-08: the page text is script-rendered and only the headline loads. The excerpt and timestamp
+    above are as transcribed from the page; the denial is also carried by the African Manager relay, which
+    names Mosaique FM as the origin, and by Webdo and Univers News.'
+- id: africanmanager-penrec-denial-2026-11-07
+  title: 'Réconciliation pénale : Aucun accord n’a été conclu'
+  publisher: African Manager
+  date: 2026-11-07
+  url: https://africanmanager.com/reconciliation-penale-aucun-accord-na-ete-conclu/
+  tier: 3
+  lang: fr
+  excerpt: La Commission nationale de réconciliation pénale n’a conclu aucun accord de règlement, contrairement
+    aux informations relayées récemment. C’est ce qu’a affirmé une source officielle à Mosaïque FM, démentant
+    catégoriquement les informations faisant état de la conclusion d’accords de réconciliation.
+  note: 'The item that triggered this research. It reproduces the Mosaïque text and adds the same source''s
+    points: the commission is not empowered to conclude such agreements, and no negotiation or definitive
+    agreement before the full restitution of diverted funds, without exception or reduction of the amounts.
+    No independent reporting.'
+- id: webdo-penrec-denial-2026-11-06
+  title: 'Réconciliation pénale : La commission dément avoir conclu des accords'
+  publisher: Webdo
+  date: 2026-11-06
+  url: https://www.webdo.tn/fr/actualite/national/reconciliation-penale-la-commission-dement-avoir-conclu-des-accords/406700/
+  tier: 3
+  lang: fr
+  excerpt: La Commission nationale de réconciliation pénale n’a conclu aucun accord de conciliation, contrairement
+    aux informations relayées récemment. Un responsable de la commission, cité par Mosaïque FM, a démenti
+    ces informations, précisant que l’instance n’est pas habilitée à conclure elle-même des accords.
+  note: 'Adds procedural context: the 2022 decree-law procedure, the dissolution of the previous commission
+    on 15 September 2024, Ali Abbès''s appointment on 8 June 2026, the members'' swearing-in on 26 June,
+    and the 30 September 2026 amendment. It calls the source "un responsable de la commission", still
+    unnamed.'
+- id: elyssatv-penrec-denial-2026-11-06
+  title: لجنة الصلح الجزائي تنفي إبرام اتفاقيات تسوية مالية
+  publisher: Elyssa TV
+  date: 2026-11-06
+  url: https://elyssatv.com/news/8114984863-%D9%84%D8%AC%D9%86%D8%A9-%D8%A7%D9%84%D8%B5%D9%84%D8%AD-%D8%A7%D9%84%D8%AC%D8%B2%D8%A7%D8%A6%D9%8A-%D8%AA%D9%86%D9%81%D9%8A-%D8%A5%D8%A8%D8%B1%D8%A7%D9%85-%D8%A3%D9%8A-%D8%A7%D8%AA%D9%81%D8%A7%D9%82%D9%8A%D8%A7%D8%AA-%D8%AA%D8%B3%D9%88%D9%8A%D8%A9
+  tier: 4
+  lang: ar
+  excerpt: نفت اللجنة الوطنية للصلح الجزائي، في 5 نوفمبر 2026 في تونس، إبرام أي اتفاقيات تسوية مالية مع
+    رجال أعمال معتقلين خلال الفترة الأخيرة.
+  note: 'Arabic relay that dates the denial to 5 November 2026 and states the object of the denied claim:
+    settlement agreements with businessmen who had been detained "during the recent period". It repeats
+    that the commission is not legally empowered to conclude agreements on its own and that no negotiation
+    is under way.'
+- id: universnews-penrec-denial-2026-11-06
+  title: 'Réconciliation pénale : aucun accord n’a été conclu…..!!??'
+  publisher: Univers News
+  date: 2026-11-06
+  url: https://universnews.tn/reconciliation-penale-aucun-accord-na-ete-conclu
+  tier: 4
+  lang: fr
+  excerpt: Une source informée a confirmé à Mosaïque FM le contenu du statut publié par Riadh Jrad au
+    sujet de la réconciliation pénale. Les informations sur des accords qu’aurait conclus la Commission
+    nationale de réconciliation pénale avec des hommes d’affaires sont donc sans fondement.
+  note: 'Says the claim had circulated "ces derniers jours" about settlements with businessmen prosecuted
+    or detained, without naming the outlets. It reproduces the Riadh Jrad Facebook status and cites him
+    as the author of the mise au point. It adds that no consolidated official balance has been published
+    since 2022: neither the number of files processed nor the amounts recovered.'
+- id: universnews-ar-penrec-denial-2026-11-06
+  title: 'الصلح الجزائي: نفي رسمي لابرام الاتفاقيات'
+  publisher: Univers News (Arabic)
+  date: 2026-11-06
+  url: https://universnews.tn/ar/%D8%A7%D9%84%D8%B5%D9%84%D8%AD-%D8%A7%D9%84%D8%AC%D8%B2%D8%A7%D8%A6%D9%8A-%D9%86%D9%81%D9%8A-%D8%B1%D8%B3%D9%85%D9%8A-%D9%84%D9%84%D8%A3%D8%AE%D8%A8%D8%A7%D8%B1-%D8%A7%D9%84%D9%85%D8%AA%D8%AF%D8%A7-2
+  tier: 4
+  lang: ar
+  excerpt: يذكر وانه تم تداول معطيات بشان الاعلان عن القائمة الاولى للمنتفعين بالصلح الجزائي تضم أربعة
+    أسماء وهم مروان المبروك و الحبيب حواص ورضا شرف الدين ومحمد الفريخة، على أن تتوالى الاسماء بتقدم دراسة
+    الملفات.
+  note: 'The only retrieved text that states, in its own words, what had circulated: a first list of beneficiaries
+    with four names. It also cites Riadh Jrad''s post as the origin of the denial and repeats that the
+    commission is not empowered to conclude agreements.'
+- id: tunisie-telegraph-penrec-list-2026-10-26
+  title: قريبا الإعلان عن قائمة رسمية تضم عدداً من رجال الأعمال الذين توصلوا إلى إتفاقات نهائية مع اللجنة
+    الوطنية للصلح الجزائي
+  publisher: Tunisie Telegraph
+  date: 2026-10-26
+  url: https://tunisie-telegraph.com/a-la-une-%D8%A2%D8%AE%D8%B1-%D8%A7%D9%84%D8%A3%D8%AE%D8%A8%D8%A7%D8%B1/%D9%82%D8%B1%D9%8A%D8%A8%D8%A7-%D8%A7%D9%84%D8%A5%D8%B9%D9%84%D8%A7%D9%86-%D8%B9%D9%86-%D9%82%D8%A7%D8%A6%D9%85%D8%A9-%D8%B1%D8%B3%D9%85%D9%8A%D8%A9-%D8%AA%D8%B6%D9%85-%D8%B9%D8%AF%D8%AF%D8%A7%D9%8B
+  tier: 4
+  lang: ar
+  excerpt: علم موقع « تونيزي تيليغراف » من مصادر مطلعة وعادة، أنه من المنتظر أن يتم في القريب العاجل الإعلان
+    عن قائمة رسمية تضم عدداً من رجال الأعمال الذين توصلوا إلى اتفاقات نهائية مع اللجنة الوطنية للصلح الجزائي.
+  note: 'The earliest instance found of the claim. The same paragraph says the legal and administrative
+    steps are proceeding at the required speed to secure the release of detained businessmen "who responded
+    to the settlement conditions", and gives two names only as initials: « م.ف » and « ر.ش ».'
+- id: tunisie-telegraph-penrec-list-2026-11-04
+  title: انفراجة مرتقبة وحاسمة في ملف الصلح الجزائي.. اتفاقات تشمل ...
+  publisher: Tunisie Telegraph
+  date: 2026-11-04
+  url: https://tunisie-telegraph.com/a-la-une-%D8%A2%D8%AE%D8%B1-%D8%A7%D9%84%D8%A3%D8%AE%D8%A8%D8%A7%D8%B1/%D8%A7%D9%86%D9%81%D8%B1%D8%A7%D8%AC%D8%A9-%D9%85%D8%B1%D8%AA%D9%82%D8%A8%D8%A9-%D9%88%D8%AD%D8%A7%D8%B3%D9%85%D8%A9-%D9%81%D9%8A-%D9%85%D9%84%D9%81-%D8%A7%D9%84%D8%B5%D9%84%D8%AD-%D8%A7%D9%84%D8%AC
+  tier: 4
+  lang: ar
+  excerpt: أفادت مصادر مطلعة ومتقاطعة بأن ملف الصلح الجزائي في تونس يتجه نحو إغلاق حاسم لواحدة من أكبر
+    قضاياه، حيث يُنتظر الإعلان الرسمي والنهائي عن قبول مطالب التسوية والصلح لعدد من كبار المنتفعين المدرجين
+    بالقائمة الأولى، وذلك خلال الساعات أو الايام القليلة القادمة.
+  note: 'The specific claim the denial answers, published the day before the denial and referring to the
+    audience of 2 November. It names the first list as Marouane Mabrouk, Habib Haouas, Ridha Charfeddine
+    and Mohamed Frikha, says preliminary letters went to the Supreme National Security Council, and expects
+    a formal announcement "by the end of this week". Anonymous sourcing only; no document. Fetched on
+    2026-11-08: the Arabic text names the four businessmen and contains "بعد إبرام مكاتيب مبدئية أحيلت
+    في وقت سابق إلى المجلس الأعلى للأمن القومي لتدقيق الأرقام والتسويات المبرمة", in the paragraph on
+    Marouane Mabrouk''s case.'
+- id: tunisienumerique-saied-penrec-2026-11-03
+  title: '"Aucun millime ne sera abandonné" : Kaïs Saïed réaffirme sa position sur la réconciliation pénale'
+  publisher: Tunisie Numérique
+  date: 2026-11-03
+  url: https://www.tunisienumerique.com/aucun-millime-ne-sera-abandonne-kais-saied-reaffirme-sa-position-sur-la-reconciliation-penale
+  tier: 3
+  lang: fr
+  excerpt: Selon un communiqué de la présidence de la République, Kaïs Saïed a précisé que l’introduction
+    d’une certaine souplesse dans les procédures de conclusion des accords de réconciliation au niveau
+    de la Commission, avant la transmission des dossiers au Conseil de sécurité nationale, ne signifiait
+    en aucun cas un abandon des principes fondamentaux ni une quelconque concession sur les droits du
+    peuple tunisien.
+  note: The closest official statement found. It reports the audience of Monday 2 November 2026 with Ali
+    Abbès and reproduces the presidency communiqué's wording. It mentions no agreement and no list, and
+    is not a denial of the Tunisie Telegraph claim.
+- id: webdo-saied-penrec-2026-11-03
+  title: 'Réconciliation pénale : Kaïs Saïed exclut toute concession sur les fonds dus aux Tunisiens'
+  publisher: Webdo
+  date: 2026-11-03
+  url: https://www.webdo.tn/fr/actualite/national/reconciliation-penale-kais-saied-exclut-toute-concession-sur-les-fonds-dus-aux-tunisiens/406495/
+  tier: 3
+  lang: fr
+  excerpt: Le chef de l’État a surtout tenu à clarifier la portée de la souplesse désormais accordée à
+    la commission dans l’examen des dossiers, avant leur soumission au Conseil de sécurité nationale.
+    Selon lui, cette flexibilité doit permettre d’accélérer les procédures et non d’ouvrir la voie au
+    laxisme ou au contournement des objectifs de la réconciliation pénale.
+  note: 'Second relay of the same presidency communiqué, with the fuller account: accelerate the files
+    without renouncing the people''s rights, warning against reliance on prescription, and the phrase
+    "Les portes restent ouvertes à ceux qui sont revenus à la raison". Same single origin as Tunisie Numérique.'

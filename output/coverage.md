@@ -22,8 +22,8 @@ not a partition.
 
 - `institution`: 217 slice(s), 217 sparse
 - `era`: 7 slice(s), 5 sparse
-- `source_family`: 391 slice(s), 327 sparse
+- `source_family`: 402 slice(s), 337 sparse
 - `language`: 4 slice(s), 1 sparse
 - `office`: 169 slice(s), 169 sparse
 
-719 sparse slice(s) of 788.
+729 sparse slice(s) of 799.

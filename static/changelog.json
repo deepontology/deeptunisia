@@ -1,5 +1,110 @@
 [
   {
+    "hash": "532a61aa7",
+    "date": "2026-11-06T18:13:22+01:00",
+    "subject": "Data: date Khayam Turki's 14-year sentence to April 2026",
+    "kind": "revision",
+    "added": 80,
+    "removed": 22,
+    "files": [
+      {
+        "file": "data/events.yaml",
+        "added": 46,
+        "removed": 22
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 34,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "e2b9985c3",
+    "date": "2026-11-06T17:15:39+01:00",
+    "subject": "Data: merge the 2026-11-03 to 2026-11-06 sweep",
+    "kind": "revision",
+    "added": 484,
+    "removed": 7,
+    "files": [
+      {
+        "file": "data/events.yaml",
+        "added": 278,
+        "removed": 6
+      },
+      {
+        "file": "data/parameters.yaml",
+        "added": 7,
+        "removed": 1
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 199,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "dcd128494",
+    "date": "2026-11-06T15:48:46+01:00",
+    "subject": "Site: add /introduction, a trilingual guide to the project with live figures",
+    "kind": "expansion",
+    "added": 2,
+    "removed": 0,
+    "files": [
+      {
+        "file": "data/public-claims.yaml",
+        "added": 2,
+        "removed": 0
+      }
+    ]
+  },
+  {
+    "hash": "146fb6026",
+    "date": "2026-11-04T18:49:59+01:00",
+    "subject": "Data: merge the 2026-10-25 to 2026-11-03 sweep",
+    "kind": "revision",
+    "added": 1974,
+    "removed": 13,
+    "files": [
+      {
+        "file": "data/contracts.yaml",
+        "added": 42,
+        "removed": 0
+      },
+      {
+        "file": "data/contrib/daily-2026-11-03.yaml",
+        "added": 1174,
+        "removed": 0
+      },
+      {
+        "file": "data/events.yaml",
+        "added": 365,
+        "removed": 0
+      },
+      {
+        "file": "data/parameters.yaml",
+        "added": 8,
+        "removed": 1
+      },
+      {
+        "file": "data/people.yaml",
+        "added": 82,
+        "removed": 10
+      },
+      {
+        "file": "data/positions.yaml",
+        "added": 30,
+        "removed": 2
+      },
+      {
+        "file": "data/sources.yaml",
+        "added": 273,
+        "removed": 0
+      }
+    ]
+  },
+  {
     "hash": "a868e3110",
     "date": "2026-11-04T17:44:50+01:00",
     "subject": "Data: biographies for 19 governors who held more than one governorate",
