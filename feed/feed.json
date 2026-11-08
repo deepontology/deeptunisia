@@ -3,6 +3,16 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:african-manager:b16f68fbc5b9293d",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Saïed fête la journée de l’arbre et en plante à Siliana",
+      "link": "https://africanmanager.com/le-president-de-la-republique-prend-part-a-une-operation-de-plantation-darbres-a-siliana/",
+      "published": "2026-11-08T16:42:23Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
       "id": "feed:african-manager:63ef4a41c0889060",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -11990,16 +12000,6 @@
       "published": "2026-09-29T12:45:27Z",
       "lang": "fr",
       "author": "African Manager"
-    },
-    {
-      "id": "feed:kapitalis:d19c2356b28d5f18",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Drame de viol à Tunis | Il faut savoir raison garder",
-      "link": "https://kapitalis.com/tunisie/2026/09/29/drame-de-viol-a-tunis-il-faut-savoir-raison-garder/",
-      "published": "2026-09-29T12:19:17Z",
-      "lang": "fr",
-      "author": "webmaster kapitalis"
     }
   ]
 }
