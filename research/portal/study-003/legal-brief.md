@@ -23,7 +23,7 @@ Key differences from the Study 001 brief:
 
 - Open online self-administration, adults 18+, Arabic, French, and English.
 - Server-side bot mitigation (Turnstile), rotating salted hash for rate limiting (no IP address stored).
-- Stored fields per response: instrument id, version, hash; locale; channel; consent version; timestamps and completion time; order arm; answers (allocations as integer basis points per category, two short items, optional governorate); revision flag; random receipt.
+- Stored fields per response: instrument id, version, hash; locale; channel; consent version; timestamps and completion time; answers (allocations as integer basis points per category, two short items, optional governorate); revision flag; random receipt.
 - Explicitly not stored: name, email, IP address, user agent, fingerprint, location beyond optional governorate, user account.
 - Stored in Cloudflare D1. Raw rows are never published. Public output is coarsened, suppressed microdata (CC BY 4.0) and aggregate statistics.
 - Withdrawal: a random receipt code allows response deletion while the study window remains open; after dataset freeze, deletion is impossible.

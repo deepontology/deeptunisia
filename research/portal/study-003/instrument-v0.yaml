@@ -9,10 +9,10 @@
 # prototype (src/lib/budget-game/copy.ts) and is marked unreviewed there; it is
 # not the instrument text.
 #
-# Every figure in the allocation block is a PLACEHOLDER stub (invented round
-# numbers, MD). The frozen instrument takes figures only from
-# data/studies/dt-research-003/figures-2027.yaml rows with status adopted-lf,
-# each with a page reference. Nothing in this file is verified.
+# Every figure in the allocation block is a DRAFT figure from
+# data/studies/dt-research-003/figures-2027.yaml, labelled draft, not verified.
+# The frozen instrument takes figures only from rows with status adopted-lf,
+# each with a page reference.
 # -----------------------------------------------------------------------------
 
 instrument:
@@ -24,7 +24,7 @@ instrument:
   content_hash: null
   source_locale: en
   locales: [en, fr, ar]
-  estimated_minutes: 7
+  estimated_minutes: 6
   completion_target_minutes_max: 10
   pretest_required: true
   response_scale_note: >-
@@ -117,37 +117,36 @@ items:
     tier: core
     construct: budget allocation
     provenance: project (SPEC section 2, the game screen)
-    text_en: "Move money between the lines of the 2027 state budget, as a citizen. Each line starts at its draft amount. The movable lines must balance before you go on. Keeping the draft is a valid answer."
+    text_en: "Use the Treasury board: move money between the lines of the 2027 state budget, as a citizen. Start from the draft or from an empty purse. Place every shilling before you go on. Keeping the draft is a valid answer."
     text_fr: null
     text_ar: null
     response: allocation
     required: true
-    notes: "Placeholder amounts. Replace from figures-2027.yaml (adopted-lf rows only) before freezing."
+    notes: "Amounts are the draft figures from figures-2027.yaml, labelled draft, not verified. Freeze only on adopted-law rows with page references."
     allocation:
-      envelope_md: 29500
+      envelope_md: 59932.381
       tolerance: 0.005
       step_bp: 500
       max_bp: 20000
       categories:
-      - { id: schools, draft_md: 4000, locked: false }
-      - { id: universities, draft_md: 2000, locked: false }
-      - { id: health, draft_md: 3000, locked: false }
-      - { id: social, draft_md: 3500, locked: false }
-      - { id: fuel, draft_md: 2500, locked: false }
-      - { id: food, draft_md: 1500, locked: false }
-      - { id: energy, draft_md: 1200, locked: false }
-      - { id: police, draft_md: 2400, locked: false }
-      - { id: army, draft_md: 2200, locked: false }
-      - { id: justice, draft_md: 800, locked: false }
-      - { id: farming, draft_md: 1300, locked: false }
-      - { id: roads, draft_md: 2000, locked: false }
-      - { id: youth, draft_md: 600, locked: false }
-      - { id: culture, draft_md: 400, locked: false }
-      - { id: presidency, draft_md: 200, locked: false }
-      - { id: government, draft_md: 900, locked: false }
-      - { id: other, draft_md: 1000, locked: false }
-      - { id: debt, draft_md: 3000, locked: true }
-      - { id: reserve, draft_md: 500, locked: true }
+      - { id: education, draft_md: 9184.5, locked: false }
+      - { id: higher_education, draft_md: 2484, locked: false }
+      - { id: health, draft_md: 4741.2, locked: false }
+      - { id: social, draft_md: 4547.49, locked: false }
+      - { id: subsidies, draft_md: 11846, locked: false }
+      - { id: energy_trade, draft_md: 272.8, locked: false }
+      - { id: police, draft_md: 6560, locked: false }
+      - { id: army, draft_md: 5628.2, locked: false }
+      - { id: justice, draft_md: 1112, locked: false }
+      - { id: farming, draft_md: 2530, locked: false }
+      - { id: roads_housing, draft_md: 2249, locked: false }
+      - { id: youth_sports, draft_md: 1065, locked: false }
+      - { id: culture, draft_md: 500, locked: false }
+      - { id: presidency, draft_md: 248.576, locked: false }
+      - { id: government, draft_md: 878.475, locked: false }
+      - { id: other, draft_md: 6085.14, locked: false }
+      - { id: debt, draft_md: 7968, locked: true }
+      - { id: reserve, draft_md: 995, locked: true }
 
   - id: q_spending
     module: questions

@@ -34,11 +34,11 @@ This document is the pre-registration plan for DT Research 003. It defines the r
 
 The study does not claim to measure what the wider population prefers, what the budget should be, or whether any spending line is wasteful.
 
-## 3. Design and randomization
+## 3. Design
 
-Respondents adjust allocations across movable spending lines using sliders spanning 0% to 200% of the draft baseline in 5% increments. Locked lines (debt interest, reserve) remain fixed. To submit, the movable allocation must balance within plus or minus 0.5% of the movable envelope. Respondents may also explicitly choose to keep the draft baseline unchanged.
+Respondents move money between movable spending systems on a board, one step at a time, where a step is 5% of a system's draft. Each respondent starts from the draft or from an empty purse, according to the study version. Locked lines (debt interest, reserve) are fixed. To finish, the purse must be placed to within 0.5% of the movable envelope. Respondents may also keep the draft explicitly.
 
-**Order arm:** category presentation order on the game screen is randomised per respondent (Order Arm A versus Order Arm B), assigned and cryptographically signed server-side when the instrument is retrieved. This allows measurement of presentation order effects.
+**Presentation order:** systems are shown in official budget order for every respondent in this version. A randomised presentation order (an order arm) is not part of version 1 and is not estimated. A later version that adds it must amend this preregistration first.
 
 ## 4. Data collection and protections
 
@@ -75,8 +75,7 @@ All estimands are pre-specified:
 **Sensitivity checks:** published alongside primary results:
 - Excluding responses from the largest recruitment link channel.
 - 5% trimmed mean allocations across categories.
-- Comparison of category means across order arms (Order Arm A versus Order Arm B).
-- Primary estimands evaluated with and without respondents who chose to keep the draft unchanged.
+- Primary estimands evaluated with and without respondents who kept the draft unchanged.
 
 **Reporting floors and presentation rules:**
 - No statistics published until at least 100 valid responses are reached.

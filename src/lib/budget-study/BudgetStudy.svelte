@@ -33,6 +33,7 @@
 	const rows = $derived(FIGURES.rows.filter((r) => !r.memo));
 	const memo = $derived(FIGURES.rows.filter((r) => r.memo));
 	const rowSum = $derived(rows.reduce((s, r) => s + r.amount_md, 0));
+	const movableSum = $derived(rows.filter((r) => !['financing_costs_locked', 'unforeseen_locked'].includes(r.id)).reduce((s, r) => s + r.amount_md, 0));
 </script>
 
 <svelte:head>
@@ -75,22 +76,23 @@
 				<h2>How would you move money, as a citizen?</h2>
 				<p>
 					The study asks how you would move money between the lines of the 2027 state budget, and how far that
-					changes what the state gives up elsewhere. About five minutes. Five rounds, each with a pressure on the
-					budget and three responses. Each response names what it pays for and who pays.
+					changes what the state gives up elsewhere. About five to seven minutes, on a board: move money between the
+					lines of the budget until every dinar is placed.
 				</p>
 			</section>
 
 			<section id="sec-game" class="sec">
 				<p class="kicker mono">02 / The game</p>
-				<h2>Five rounds, one budget, no score</h2>
+				<h2>One budget, one board, no score</h2>
 				<p>
-					The total never changes. A fuel subsidy, a hospital wave, a good harvest, a regional road bill, a court
-					order: each one is paid for by cutting something else. The rounds record what you chose. They do not
-					score it, rank you, or say which choice was right.
+					The purse starts empty or full, according to the version you are shown. Every system is drawn to the same
+					scale in dinars, so the largest line is long and the smallest is a sliver. Taking money from a system
+					moves it to the purse. Giving from the purse moves it into a system. You cannot give what you do not hold.
+					Finish when every dinar is placed.
 				</p>
 				<p>
-					Each consequence line is illustrative and is not a forecast. It is written to make the trade visible, and
-					it is reviewed before fielding.
+					Debt interest and the unforeseen reserve are shown first, as already spent. Nothing here is scored or ranked.
+					The board uses the same draft figures as the table below.
 				</p>
 			</section>
 
@@ -104,7 +106,7 @@
 					reference in the adopted law.
 				</p>
 				<p class="note">
-					Total spending excluding debt principal, draft: {fmt(FIGURES.total_md)} MD. Rows sum to {fmt(Math.round(rowSum * 10) / 10)} MD.
+					Total spending excluding debt principal, draft: {fmt(FIGURES.total_md)} MD. Rows sum to {fmt(Math.round(rowSum * 10) / 10)} MD. The board places the movable part of these figures, {fmt(Math.round(movableSum * 10) / 10)} MD, and the locked part is shown as already spent.
 					Subsidies are a memo inside the Industry and Trade lines, so they are not added.
 				</p>
 				<div class="table-scroll">

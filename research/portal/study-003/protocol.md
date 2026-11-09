@@ -24,10 +24,10 @@ The experience uses interactive controls, a live balance meter, and a comparativ
 
 The participant experience follows seven sequential steps:
 
-1. **Step 1: Study page** (`/research/citizen-budget`, static): introduces the task, estimates completion time (5 to 7 minutes), outlines data privacy safeguards, identifies the research team, and notes the official source and date of baseline figures.
+1. **Step 1: Study page** (`/research/citizen-budget`, static): introduces the task, estimates completion time (about five to seven minutes), outlines data privacy safeguards, identifies the research team, and notes the official source and date of baseline figures.
 2. **Step 2: Consent module:** presents informed consent items (`consent_read`, `consent_withdrawal`, `consent_age`). If a respondent indicates they are under 18, the session terminates immediately and no data is stored.
 3. **Step 3: Framing screen:** neutral orientation instructing participants: "Answer as yourself, a citizen. Not as a minister, an economist or a party member. There is no right answer and no score." Displays three verified context facts: total 2027 expenditure, revenue sources (tax, non-tax, borrowing), and the fact that public salaries constitute the bulk of departmental spending. Persuasive or editorial advocacy frames are strictly prohibited inside the instrument.
-4. **Step 4: The game screen:** displays one slider per budget category. Sliders start at 100% of the baseline and move between 0% and 200% in 5% steps. Each row details the category title, draft baseline allocation, participant allocation, and the change in dinars per citizen per year. A live meter tracks remaining imbalance. Locked rows (debt interest, reserve) are displayed greyed out with concise explanations. Category sequence is randomised per participant (order arm assigned and signed server-side). Mobile-friendly, keyboard-accessible, with RTL support for Arabic and a tabular alternative for the meter.
+4. **Step 4: The Treasury board:** the participant moves money between systems, one step at a time. A step is 5% of a system's draft. Taking from a system moves money to a purse; giving from the purse moves it into a system. The participant starts from the draft (every system at its draft, the purse empty) or from an empty purse, according to the study version. The purse must be placed to finish, within 0.5% of the movable envelope. Systems are shown in official budget order, the same for every participant in this version. Locked rows (debt interest, reserve) are shown with the amount spent before the start and cannot be moved. The board has a table view of every line. Mobile-friendly, keyboard-accessible, with RTL support for Arabic.
 5. **Step 5: Two short items and optional region:**
    - Total spending direction item: lower, the same, or higher.
    - Citizen say rating: 0 (none) to 10 (a lot).
@@ -37,10 +37,10 @@ The participant experience follows seven sequential steps:
 
 ## 3. Game rules and constraints
 
-- **Allocation range:** sliders move from 0% to 200% of draft baseline in 5% increments (stored as integer basis points, where 10000 represents the draft baseline).
+- **Allocation range:** each system moves from 0% to 200% of its draft baseline in 5% steps (stored as integer basis points, where 10000 represents the draft baseline and steps are 500).
 - **Balance constraint:** movable expenditure must balance to the movable envelope within plus or minus 0.5% (50 basis points) before submission is enabled. No automated balancing tool is provided, avoiding proportional scaling bias toward the baseline.
 - **Locked rows:** debt interest (sovereign legal obligation) and the contingency reserve fund remain locked at baseline amounts.
-- **Keep-draft choice:** retaining the draft baseline is a valid response, enabled through an explicit "I would keep the draft as it is" submission option.
+- **Keep-draft choice:** keeping the draft baseline is a valid response, enabled through an explicit "I would keep the draft" control. It sets every system to the draft and is recorded as kept_draft.
 
 ## 4. Figures and the placeholder-figure rule
 
@@ -56,7 +56,6 @@ All figures in current draft documents and prototype interfaces are placeholders
 - channel
 - consent version
 - timestamps and completion time
-- the order arm
 - answers (the allocation as integer basis points per category, the two items, optional governorate)
 - revision flag
 - random receipt

@@ -1,34 +1,16 @@
 /**
- * Copy for the citizen budget game prototype.
+ * Copy for the citizen budget board (prototype).
  *
- * Every figure the screens show comes from lines.ts and is a placeholder. The
- * copy never names a press figure, a total or a ministry amount.
+ * Every amount on screen is a draft figure from data/studies/dt-research-003/
+ * figures-2027.yaml and is labelled "draft, not verified". The copy never
+ * names a total or a ministry amount itself.
  *
- * Arabic and French are drafts. They are marked on screen as unreviewed until a
- * native reviewer has read them.
+ * French and Arabic are interim drafts, marked unreviewed on screen.
  */
 import type { Locale } from '$lib/i18n';
+import type { LineId } from './lines';
 
-export type LineId =
-	| 'schools'
-	| 'universities'
-	| 'health'
-	| 'social'
-	| 'fuel'
-	| 'food'
-	| 'energy'
-	| 'police'
-	| 'army'
-	| 'justice'
-	| 'farming'
-	| 'roads'
-	| 'youth'
-	| 'culture'
-	| 'presidency'
-	| 'government'
-	| 'other'
-	| 'debt'
-	| 'reserve';
+export type { LineId } from './lines';
 
 export interface LineCopy {
 	name: string;
@@ -40,7 +22,7 @@ export interface Copy {
 	unreviewed: string | null;
 	title: string;
 	status: string;
-	stepLabels: { intro: string; frame: string; game: string; items: string; card: string };
+	stepLabels: { intro: string; frame: string; board: string; items: string; card: string };
 	intro: {
 		whatWeAsk: string;
 		whatWeAskBody: string;
@@ -68,25 +50,38 @@ export interface Copy {
 		next: string;
 		back: string;
 	};
-	game: {
+	board: {
 		title: string;
 		hint: string;
+		purse: string;
+		purseHint: string;
+		systems: string;
+		locked: string;
+		lockedText: (amount: string) => string;
+		draftMark: string;
 		draft: string;
 		yours: string;
 		change: string;
-		keepDraft: string;
-		reset: string;
-		envelope: string;
-		spent: string;
-		borrow: (amount: string) => string;
+		take: (amount: string) => string;
+		give: (amount: string) => string;
+		atZero: string;
+		atMax: string;
+		notEnough: (purse: string, step: string) => string;
 		leftover: (amount: string) => string;
 		balanced: string;
-		lockedWhy: string;
-		sliderLabel: (line: string) => string;
-		next: string;
-		back: string;
-		meterLabel: string;
-		rowsLabel: string;
+		ledger: string;
+		tookFrom: (amount: string, line: string) => string;
+		gaveTo: (amount: string, line: string) => string;
+		kept: string;
+		keep: string;
+		undo: string;
+		reset: string;
+		startDraft: string;
+		startEmpty: string;
+		startNote: string;
+		tableView: string;
+		finish: string;
+		meter: string;
 	};
 	items: {
 		title: string;
@@ -114,11 +109,11 @@ export interface Copy {
 }
 
 const en: Copy = {
-	prototype: 'Prototype · placeholder figures',
+	prototype: 'Prototype · draft figures, not verified',
 	unreviewed: null,
-	title: 'Citizen budget game',
+	title: 'Citizen budget board',
 	status: 'Design prototype. Not fielded. Not collecting.',
-	stepLabels: { intro: 'About', frame: 'Frame', game: 'Budget', items: 'Questions', card: 'Result' },
+	stepLabels: { intro: 'About', frame: 'Frame', board: 'Board', items: 'Questions', card: 'Result' },
 	intro: {
 		whatWeAsk: 'What we ask',
 		whatWeAskBody:
@@ -130,7 +125,7 @@ const en: Copy = {
 		whoBody: 'DeepTunisia. This is a design prototype. The study has not been approved and has not opened.',
 		figures: 'Where the figures come from',
 		figuresBody:
-			'Every figure on these screens is a placeholder. None is checked against the official budget document. The real study will give the source and page for each line before it opens.',
+			'Every figure on these screens is a draft figure reported by the press from the 2027 draft budget. None is checked against the official document. The real study will give the source and page for each line before it opens.',
 		sample: 'What the answers can and cannot say',
 		sampleBody:
 			'They describe the people who take part in an open, self-selected online survey of adults. They do not describe Tunisians as a whole.',
@@ -142,33 +137,46 @@ const en: Copy = {
 	frame: {
 		title: 'Answer as yourself, as a citizen',
 		body: 'Not as a minister, an economist or a party member. There is no right answer and no score.',
-		factsHeading: 'Three facts, all placeholders',
-		fact1: (total) => `The 2027 spending total is about ${total} MD (placeholder).`,
-		fact2: 'Where the money comes from: tax, other income and borrowing (placeholder split).',
-		fact3: 'Most of every line is salaries (placeholder share).',
-		placeholder: 'Placeholder, not verified',
-		next: 'Open the budget',
+		factsHeading: 'Three facts, all draft figures',
+		fact1: (total) => `The draft plans to spend about ${total} MD in 2027, excluding debt principal (not verified).`,
+		fact2: 'Tax is most of what the state raises itself. The rest of spending is covered by other income and borrowing.',
+		fact3: 'A large part of the budget is salaries. The split by line is not yet verified.',
+		placeholder: 'Draft figures, reported by the press, not verified',
+		next: 'Open the board',
 		back: 'Back'
 	},
-	game: {
-		title: 'Move the money',
-		hint: 'Each line starts at the draft amount. Move any line from 0% to 200% of it. The meter must balance before you can go on.',
+	board: {
+		title: 'The Treasury board',
+		hint: 'Take money out of a system and it goes to the purse. Give from the purse to a system. Place every dinar before you finish. You cannot give what you do not hold.',
+		purse: 'Purse',
+		purseHint: 'Money you hold. Place it all to finish.',
+		systems: 'Systems',
+		locked: 'Already spent before you start',
+		lockedText: (amount) => `${amount} MD. Debt interest and the unforeseen reserve are owed. They cannot be moved.`,
+		draftMark: 'Draft',
 		draft: 'Draft',
 		yours: 'Yours',
 		change: 'Change',
-		keepDraft: 'I would keep the draft as it is',
-		reset: 'Reset to draft',
-		envelope: 'Money for these lines',
-		spent: 'You spend',
-		borrow: (amount) => `You would borrow ${amount} MD to pay for this.`,
-		leftover: (amount) => `${amount} MD is left unspent. Move it to a line.`,
-		balanced: 'Balanced. You can go on.',
-		lockedWhy: 'Locked, not up for change in this game.',
-		sliderLabel: (line) => `Share of the draft for ${line}`,
-		next: 'Go on',
-		back: 'Back',
-		meterLabel: 'Balance meter',
-		rowsLabel: 'Lines and amounts'
+		take: (amount) => `Take ${amount} MD`,
+		give: (amount) => `Give ${amount} MD`,
+		atZero: 'This system is at zero. Nothing left to take.',
+		atMax: 'This system is at 200% of its draft. Give elsewhere first.',
+		notEnough: (purse, step) => `Your purse holds ${purse} MD. One step here costs ${step} MD. Take from another system first.`,
+		leftover: (amount) => `${amount} MD left unplaced. You can finish, or place it.`,
+		balanced: 'Every dinar is placed. You can finish.',
+		ledger: 'Last moves',
+		tookFrom: (amount, line) => `Took ${amount} MD from ${line}.`,
+		gaveTo: (amount, line) => `Gave ${amount} MD to ${line}.`,
+		kept: 'Kept the draft.',
+		keep: 'I would keep the draft',
+		undo: 'Undo',
+		reset: 'Reset',
+		startDraft: 'Start from the draft',
+		startEmpty: 'Start from an empty purse',
+		startNote: 'The draft start has every system at its draft and an empty purse.',
+		tableView: 'Show as a table',
+		finish: 'Finish',
+		meter: 'Purse'
 	},
 	items: {
 		title: 'Two short questions',
@@ -184,7 +192,7 @@ const en: Copy = {
 	},
 	card: {
 		title: 'Your budget beside the draft',
-		note: 'Placeholder figures, not verified. This prototype stops here: nothing is sent or stored.',
+		note: 'Draft figures, not verified. This prototype stops here: nothing is sent or stored.',
 		total: 'Total',
 		keptDraft: 'You kept the draft as it is.',
 		restart: 'Start again',
@@ -193,228 +201,168 @@ const en: Copy = {
 	},
 	unit: 'MD',
 	lines: {
-		schools: { name: 'Schools', note: 'Teachers, buildings and school meals.' },
-		universities: { name: 'Universities and research', note: 'Universities, labs and research grants.' },
+		education: { name: 'Education', note: 'Schools and the teachers who staff them.' },
+		higher_education: { name: 'Higher education and research', note: 'Universities, laboratories and research.' },
 		health: { name: 'Health', note: 'Hospitals, clinics and medicines.' },
-		social: { name: 'Social protection', note: 'Pensions, cash support and family help.' },
-		fuel: { name: 'Fuel and electricity subsidies', note: 'Lower prices for fuel and power bills.' },
-		food: { name: 'Basic food subsidies', note: 'Lower prices for bread, flour, oil and sugar.' },
-		energy: { name: 'Energy and industry, without subsidies', note: 'Public firms and industry support, not price subsidies.' },
+		social: { name: 'Social protection and family', note: 'Pensions, cash support and family help.' },
+		subsidies: { name: 'Subsidies: fuel, electricity and food', note: 'Lower prices for fuel, power and basic food. The split by type is not yet verified.' },
+		energy_trade: { name: 'Energy, industry and trade, without subsidies', note: 'Public firms and industry and trade support, after subsidies are taken out.' },
 		police: { name: 'Police and internal security', note: 'Police, gendarmerie and internal security forces.' },
-		army: { name: 'Army', note: 'Armed forces pay, equipment and training.' },
-		justice: { name: 'Justice and prisons', note: 'Courts and prisons.' },
-		farming: { name: 'Farming and water', note: 'Farmers, irrigation and water supply.' },
-		roads: { name: 'Roads, housing and transport', note: 'Roads, public housing and transport.' },
-		youth: { name: 'Youth and sports', note: 'Youth centres and sports.' },
+		army: { name: 'Defence', note: 'Armed forces pay, equipment and training.' },
+		justice: { name: 'Justice', note: 'Courts and prisons.' },
+		farming: { name: 'Farming, water and fisheries', note: 'Farmers, irrigation and water supply.' },
+		roads_housing: { name: 'Roads, housing and equipment', note: 'Roads, public housing and public buildings.' },
+		youth_sports: { name: 'Youth and sports', note: 'Youth centres and sports.' },
 		culture: { name: 'Culture and arts', note: 'Heritage, theatre, cinema and museums.' },
 		presidency: { name: 'Presidency', note: 'The office of the President of the Republic.' },
-		government: { name: 'Government, parliament and diplomacy', note: 'Government offices, parliament, elections and embassies.' },
-		other: { name: 'Everything else', note: 'Every other ministry and body.' },
-		debt: { name: 'Debt interest', note: 'Interest owed on existing debt. A cut would mean default.' },
+		government: { name: 'Government, parliament, elections and diplomacy', note: 'Government offices, parliament, elections and embassies.' },
+		other: { name: 'Everything else', note: 'Every other ministry and body, including tourism.' },
+		debt: { name: 'Debt interest', note: 'Interest owed on existing debt.' },
 		reserve: { name: 'Unforeseen reserve', note: 'Kept for costs nobody planned for.' }
 	}
 };
 
 const fr: Copy = {
-	prototype: 'Prototype · chiffres provisoires',
-	unreviewed: 'Traduction française provisoire, pas encore relue par un locuteur natif.',
-	title: 'Jeu du budget citoyen',
+	...en,
+	prototype: 'Prototype · chiffres du projet, non vérifiés',
+	unreviewed: 'Traduction française provisoire, pas encore relue. Certains textes restent en anglais.',
+	title: 'Plateau budgétaire du citoyen',
 	status: 'Prototype de conception. Non lancé. Aucune collecte.',
-	stepLabels: { intro: 'Présentation', frame: 'Cadre', game: 'Budget', items: 'Questions', card: 'Résultat' },
-	intro: {
-		whatWeAsk: 'Ce que nous demandons',
-		whatWeAskBody:
-			"Comment vous répartiriez l’argent entre les lignes du budget de l’État 2027, en tant que citoyen. Environ cinq minutes. Il n’y a pas de bonne réponse et pas de score.",
-		stored: 'Ce qui est conservé',
-		storedBody:
-			"Dans ce prototype, rien. Dans l’étude réelle : votre budget sous forme de parts de chaque ligne, deux courtes réponses, la version de l’étude et la durée. Ni nom, ni courriel, ni adresse IP, ni données d’appareil.",
-		who: 'Qui la mène',
-		whoBody: "DeepTunisia. Ceci est un prototype de conception. L’étude n’a pas été approuvée et n’est pas ouverte.",
-		figures: "D’où viennent les chiffres",
-		figuresBody:
-			"Chaque chiffre affiché est provisoire. Aucun n’est vérifié contre le document budgétaire officiel. L’étude réelle indiquera la source et la page de chaque ligne avant son ouverture.",
-		sample: 'Ce que les réponses peuvent et ne peuvent pas dire',
-		sampleBody:
-			"Elles décrivent les personnes qui participent à une enquête en ligne ouverte et sans tirage au sort, auprès d’adultes. Elles ne décrivent pas les Tunisiens dans leur ensemble.",
-		consentAge: "J’ai 18 ans ou plus.",
-		consentPrototype: 'Je comprends que ce prototype ne conserve rien de ce que je saisis.',
-		start: 'Commencer',
-		under18: "Cette étude est réservée aux adultes. Rien de ce que vous avez saisi n’est conservé. Vous pouvez fermer cette page."
-	},
+	stepLabels: { intro: 'Présentation', frame: 'Cadre', board: 'Plateau', items: 'Questions', card: 'Résultat' },
 	frame: {
+		...en.frame,
 		title: 'Répondez en tant que citoyen',
-		body: "Pas en tant que ministre, économiste ou membre d’un parti. Il n’y a pas de bonne réponse et pas de score.",
-		factsHeading: 'Trois faits, tous provisoires',
-		fact1: (total) => `Le total des dépenses de l’État pour 2027 est d’environ ${total} MD (provisoire).`,
-		fact2: "D’où vient l’argent : impôts, autres recettes et emprunts (répartition provisoire).",
-		fact3: 'La plus grande part de chaque ligne sert à payer des salaires (chiffre provisoire).',
-		placeholder: 'Provisoire, non vérifié',
-		next: 'Ouvrir le budget',
+		body: "Pas en tant que ministre, économiste ou membre d'un parti. Il n'y a pas de bonne réponse et pas de score.",
+		next: 'Ouvrir le plateau',
 		back: 'Retour'
 	},
-	game: {
-		title: "Déplacez l’argent",
-		hint: "Chaque ligne part du montant du projet. Réglez chaque ligne de 0 % à 200 % de ce montant. La jauge doit être équilibrée pour continuer.",
+	board: {
+		...en.board,
+		title: 'Le plateau du Trésor',
+		hint: "Retirez de l'argent d'un poste et il va à la bourse. Versez de la bourse à un poste. Placez chaque dinar avant de terminer.",
+		purse: 'Bourse',
+		purseHint: 'Argent que vous détenez. Placez tout pour terminer.',
+		systems: 'Postes',
+		locked: 'Déjà dépensé avant le début',
+		lockedText: (amount) => `${amount} MD. Les intérêts de la dette et la réserve sont dus. Ils ne peuvent pas être déplacés.`,
 		draft: 'Projet',
 		yours: 'Vous',
 		change: 'Écart',
-		keepDraft: 'Je garderais le projet tel quel',
-		reset: 'Revenir au projet',
-		envelope: 'Argent pour ces lignes',
-		spent: 'Vous dépensez',
-		borrow: (amount) => `Vous emprunteriez ${amount} MD pour payer cela.`,
-		leftover: (amount) => `${amount} MD ne sont pas dépensés. Affectez-les à une ligne.`,
-		balanced: 'Équilibrée. Vous pouvez continuer.',
-		lockedWhy: 'Bloqué, non modifiable dans ce jeu.',
-		sliderLabel: (line) => `Part du projet pour ${line}`,
-		next: 'Continuer',
-		back: 'Retour',
-		meterLabel: "Jauge d’équilibre",
-		rowsLabel: 'Lignes et montants'
+		take: (amount) => `Retirer ${amount} MD`,
+		give: (amount) => `Verser ${amount} MD`,
+		atZero: 'Ce poste est à zéro. Rien à retirer.',
+		atMax: 'Ce poste est à 200 % de son projet. Retirez ailleurs d’abord.',
+		notEnough: (purse, step) => `Votre bourse contient ${purse} MD. Un pas ici coûte ${step} MD. Retirez d'abord d'un autre poste.`,
+		leftover: (amount) => `${amount} MD non placés. Vous pouvez terminer ou les placer.`,
+		balanced: 'Chaque dinar est placé. Vous pouvez terminer.',
+		ledger: 'Derniers mouvements',
+		tookFrom: (amount, line) => `Retiré ${amount} MD de ${line}.`,
+		gaveTo: (amount, line) => `Versé ${amount} MD à ${line}.`,
+		kept: 'Projet conservé.',
+		keep: 'Je garderais le projet',
+		undo: 'Annuler',
+		reset: 'Réinitialiser',
+		startDraft: 'Partir du projet',
+		startEmpty: 'Partir d’une bourse vide',
+		startNote: 'Le départ au projet place chaque poste à son projet et la bourse à zéro.',
+		tableView: 'Afficher en tableau',
+		finish: 'Terminer',
+		meter: 'Bourse'
 	},
-	items: {
-		title: 'Deux courtes questions',
-		q1: "Sachant que l’écart est financé par l’emprunt, les dépenses totales devraient-elles être plus basses, les mêmes, ou plus élevées ?",
-		q1Lower: 'Plus basses',
-		q1Same: 'Les mêmes',
-		q1Higher: 'Plus élevées',
-		q2: "Quel pouvoir les citoyens ont-ils aujourd’hui sur la façon dont le budget est dépensé ? 0 signifie aucun, 10 signifie beaucoup.",
-		q2Low: 'Aucun',
-		q2High: 'Beaucoup',
-		submit: 'Soumettre mon budget',
-		back: 'Retour'
-	},
-	card: {
-		title: 'Votre budget à côté du projet',
-		note: "Chiffres provisoires, non vérifiés. Ce prototype s’arrête ici : rien n’est envoyé ni conservé.",
-		total: 'Total',
-		keptDraft: 'Vous avez gardé le projet tel quel.',
-		restart: 'Recommencer',
-		back: 'Modifier mon budget',
-		stop: 'Dans le prototype, le bouton de soumission s’arrête à cette fiche.'
-	},
+	items: { ...en.items, title: 'Deux courtes questions', submit: 'Soumettre mon budget', back: 'Retour' },
+	card: { ...en.card, title: 'Votre budget à côté du projet', restart: 'Recommencer', back: 'Modifier mon budget' },
 	unit: 'MD',
 	lines: {
-		schools: { name: 'Écoles', note: 'Enseignants, bâtiments et cantines.' },
-		universities: { name: 'Universités et recherche', note: 'Universités, laboratoires et bourses de recherche.' },
+		education: { name: 'Éducation', note: 'Écoles et enseignants.' },
+		higher_education: { name: 'Enseignement supérieur et recherche', note: 'Universités, laboratoires et recherche.' },
 		health: { name: 'Santé', note: 'Hôpitaux, dispensaires et médicaments.' },
-		social: { name: 'Protection sociale', note: 'Retraites, aides en espèces et aide aux familles.' },
-		fuel: { name: 'Subventions au carburant et à l’électricité', note: 'Prix plus bas pour le carburant et les factures d’électricité.' },
-		food: { name: 'Subventions aux produits de base', note: 'Prix plus bas pour le pain, la farine, l’huile et le sucre.' },
-		energy: { name: 'Énergie et industrie, hors subventions', note: "Entreprises publiques et soutien à l’industrie, sans subventions sur les prix." },
+		social: { name: 'Protection sociale et famille', note: 'Retraites, aides en espèces et aide aux familles.' },
+		subsidies: { name: 'Subventions : carburant, électricité et alimentation', note: 'Prix plus bas pour le carburant, l’électricité et les produits de base. La répartition n’est pas encore vérifiée.' },
+		energy_trade: { name: 'Énergie, industrie et commerce, hors subventions', note: 'Entreprises publiques et soutien à l’industrie et au commerce, hors subventions.' },
 		police: { name: 'Police et sécurité intérieure', note: 'Police, gendarmerie et forces de sécurité intérieure.' },
-		army: { name: 'Armée', note: 'Solde, équipements et formation des forces armées.' },
-		justice: { name: 'Justice et prisons', note: 'Tribunaux et prisons.' },
-		farming: { name: 'Agriculture et eau', note: 'Agriculteurs, irrigation et approvisionnement en eau.' },
-		roads: { name: 'Routes, logement et transport', note: 'Routes, logement public et transports.' },
-		youth: { name: 'Jeunesse et sport', note: 'Maisons de jeunes et sport.' },
+		army: { name: 'Défense', note: 'Solde, équipements et formation des forces armées.' },
+		justice: { name: 'Justice', note: 'Tribunaux et prisons.' },
+		farming: { name: 'Agriculture, eau et pêche', note: 'Agriculteurs, irrigation et approvisionnement en eau.' },
+		roads_housing: { name: 'Routes, logement et équipements', note: 'Routes, logement public et bâtiments publics.' },
+		youth_sports: { name: 'Jeunesse et sport', note: 'Maisons de jeunes et sport.' },
 		culture: { name: 'Culture et arts', note: 'Patrimoine, théâtre, cinéma et musées.' },
 		presidency: { name: 'Présidence', note: 'La présidence de la République.' },
-		government: { name: 'Gouvernement, parlement et diplomatie', note: 'Services du gouvernement, parlement, élections et ambassades.' },
-		other: { name: 'Tout le reste', note: 'Tous les autres ministères et organismes.' },
-		debt: { name: 'Intérêts de la dette', note: 'Intérêts dus sur la dette existante. Une baisse signifierait un défaut.' },
+		government: { name: 'Gouvernement, parlement, élections et diplomatie', note: 'Services du gouvernement, parlement, élections et ambassades.' },
+		other: { name: 'Tout le reste', note: 'Tous les autres ministères et organismes, dont le tourisme.' },
+		debt: { name: 'Intérêts de la dette', note: 'Intérêts dus sur la dette existante.' },
 		reserve: { name: 'Réserve pour imprévus', note: 'Réservée aux dépenses que personne n’avait prévues.' }
 	}
 };
 
 const ar: Copy = {
-	prototype: 'نموذج أولي · أرقام مؤقتة',
-	unreviewed: 'ترجمة عربية مبدئية، لم يراجعها بعد متحدث أصلي.',
-	title: 'لعبة الميزانية للمواطن',
+	...en,
+	prototype: 'نموذج أولي · أرقام المشروع، لم يُتحقق منها',
+	unreviewed: 'ترجمة عربية مبدئية، لم يراجعها بعد متحدث أصلي. بعض النصوص ما زالت بالإنجليزية.',
+	title: 'لوحة الخزينة للمواطن',
 	status: 'نموذج تصميمي. لم يُطلق. لا يجمع أي بيانات.',
-	stepLabels: { intro: 'تعريف', frame: 'الإطار', game: 'الميزانية', items: 'أسئلة', card: 'النتيجة' },
-	intro: {
-		whatWeAsk: 'ما الذي نسأل عنه',
-		whatWeAskBody:
-			'كيف تنقل الأموال بين بنود ميزانية الدولة لسنة 2027، بصفتك مواطنًا. نحو خمس دقائق. لا توجد إجابة صحيحة ولا نقاط.',
-		stored: 'ما الذي يُحفظ',
-		storedBody:
-			'في هذا النموذج، لا شيء. في الدراسة الفعلية: ميزانيتك كنسب من كل بند، وإجابتان قصيرتان، ونسخة الدراسة، والمدة التي استغرقتها. لا اسم ولا بريد إلكتروني ولا عنوان IP ولا بيانات الجهاز.',
-		who: 'من يديرها',
-		whoBody: 'DeepTunisia. هذا نموذج تصميمي. لم تُعتمد الدراسة بعد ولم تُفتح.',
-		figures: 'من أين جاءت الأرقام',
-		figuresBody:
-			'كل رقم على هذه الشاشات مؤقت. لم يُقارن أي منها بوثيقة الميزانية الرسمية. ستذكر الدراسة الفعلية المصدر والصفحة لكل بند قبل فتحها.',
-		sample: 'ما الذي تستطيع الإجابات قوله وما الذي لا تستطيعه',
-		sampleBody: 'تصف الإجابات الأشخاص الذين شاركوا في استطلاع إلكتروني مفتوح ذاتي الاختيار للبالغين. لا تصف التونسيين كافة.',
-		consentAge: 'عمري 18 سنة أو أكثر.',
-		consentPrototype: 'أفهم أن هذا النموذج لا يحفظ أي شيء أدخله.',
-		start: 'ابدأ',
-		under18: 'هذه الدراسة للبالغين فقط. لم يُحفظ أي شيء أدخلته. يمكنك إغلاق الصفحة.'
-	},
+	stepLabels: { intro: 'تعريف', frame: 'الإطار', board: 'اللوحة', items: 'أسئلة', card: 'النتيجة' },
 	frame: {
+		...en.frame,
 		title: 'أجب بصفتك مواطنًا',
 		body: 'لا بصفتك وزيرًا أو خبيرًا اقتصاديًا أو عضوًا في حزب. لا توجد إجابة صحيحة ولا نقاط.',
-		factsHeading: 'ثلاث حقائق، كلها مؤقتة',
-		fact1: (total) => `إجمالي إنفاق الدولة لسنة 2027 نحو ${total} مليون دينار (مؤقت).`,
-		fact2: 'من أين يأتي المال: الضرائب والإيرادات الأخرى والاقتراض (التقسيم مؤقت).',
-		fact3: 'أغلب كل بند رواتب (رقم مؤقت).',
-		placeholder: 'مؤقت، لم يُتحقق منه',
-		next: 'افتح الميزانية',
+		next: 'افتح اللوحة',
 		back: 'رجوع'
 	},
-	game: {
-		title: 'حرّك المال',
-		hint: 'يبدأ كل بند من مبلغ المشروع. حرّك أي بند من 0% إلى 200% منه. يجب أن يتوازن المؤشر قبل المتابعة.',
+	board: {
+		...en.board,
+		title: 'لوحة الخزينة',
+		hint: 'أخرج المال من بند فيذهب إلى الخزانة. ومن الخزانة ادفع إلى بند. ضع كل دينار قبل أن تنهي.',
+		purse: 'الخزانة',
+		purseHint: 'المال الذي بيدك. ضعه كله لتنهي.',
+		systems: 'البنود',
+		locked: 'مُنفق بالفعل قبل البداية',
+		lockedText: (amount) => `${amount} م.د. فوائد الدين والاحتياطي مستحقة. لا يمكن تحريكها.`,
 		draft: 'المشروع',
 		yours: 'أنت',
 		change: 'التغيير',
-		keepDraft: 'سأبقي المشروع كما هو',
-		reset: 'العودة إلى المشروع',
-		envelope: 'المال المخصص لهذه البنود',
-		spent: 'تنفق',
-		borrow: (amount) => `ستقترض ${amount} مليون دينار لتغطية هذا.`,
-		leftover: (amount) => `${amount} مليون دينار لم يُنفق. ضع المبلغ في بند.`,
-		balanced: 'متوازن. يمكنك المتابعة.',
-		lockedWhy: 'مقفل، لا يمكن تغييره في هذه اللعبة.',
-		sliderLabel: (line) => `نسبة ${line} من المشروع`,
-		next: 'تابع',
-		back: 'رجوع',
-		meterLabel: 'مؤشر التوازن',
-		rowsLabel: 'البنود والمبالغ'
+		take: (amount) => `اسحب ${amount} م.د`,
+		give: (amount) => `ادفع ${amount} م.د`,
+		atZero: 'هذا البند صفر. لا شيء لسحبه.',
+		atMax: 'هذا البند عند 200% من مشروعه. ادفع من بند آخر أولًا.',
+		notEnough: (purse, step) => `تحتوي الخزانة على ${purse} م.د. خطوة هنا تكلف ${step} م.د. اسحب من بند آخر أولًا.`,
+		leftover: (amount) => `${amount} م.د لم توضع بعد. يمكنك الإنهاء أو وضعها.`,
+		balanced: 'وُضع كل دينار. يمكنك الإنهاء.',
+		ledger: 'آخر الحركات',
+		tookFrom: (amount, line) => `سُحب ${amount} م.د من ${line}.`,
+		gaveTo: (amount, line) => `دُفع ${amount} م.د إلى ${line}.`,
+		kept: 'أُبقي على المشروع.',
+		keep: 'أبقي على المشروع',
+		undo: 'تراجع',
+		reset: 'إعادة ضبط',
+		startDraft: 'ابدأ من المشروع',
+		startEmpty: 'ابدأ بخزانة فارغة',
+		startNote: 'البداية من المشروع: كل بند على مشروعه والخزانة صفر.',
+		tableView: 'اعرض كجدول',
+		finish: 'أنهِ',
+		meter: 'الخزانة'
 	},
-	items: {
-		title: 'سؤالان قصيران',
-		q1: 'مع العلم أن الفارق مُمول بالاقتراض، هل يجب أن يكون إجمالي الإنفاق أقل أم مساويًا أم أعلى؟',
-		q1Lower: 'أقل',
-		q1Same: 'مساويًا',
-		q1Higher: 'أعلى',
-		q2: 'ما مدى تأثير المواطنين اليوم على طريقة صرف الميزانية؟ 0 يعني لا تأثير، و10 يعني تأثيرًا كبيرًا.',
-		q2Low: 'لا تأثير',
-		q2High: 'تأثير كبير',
-		submit: 'أرسل ميزانيتي',
-		back: 'رجوع'
-	},
-	card: {
-		title: 'ميزانيتك بجانب المشروع',
-		note: 'أرقام مؤقتة لم يُتحقق منها. يتوقف هذا النموذج هنا: لا يُرسل شيء ولا يُحفظ.',
-		total: 'المجموع',
-		keptDraft: 'أبقيت المشروع كما هو.',
-		restart: 'ابدأ من جديد',
-		back: 'تعديل ميزانيتي',
-		stop: 'في النموذج، يتوقف زر الإرسال عند هذه البطاقة.'
-	},
+	items: { ...en.items, title: 'سؤالان قصيران', submit: 'أرسل ميزانيتي', back: 'رجوع' },
+	card: { ...en.card, title: 'ميزانيتك بجانب المشروع', restart: 'ابدأ من جديد', back: 'تعديل ميزانيتي' },
 	unit: 'م.د',
 	lines: {
-		schools: { name: 'المدارس', note: 'المعلمون والمباني والمطاعم المدرسية.' },
-		universities: { name: 'الجامعات والبحث العلمي', note: 'الجامعات والمخابر والمنح البحثية.' },
+		education: { name: 'التعليم', note: 'المدارس والمعلمون.' },
+		higher_education: { name: 'التعليم العالي والبحث', note: 'الجامعات والمخابر والبحث.' },
 		health: { name: 'الصحة', note: 'المستشفيات والمراكز الصحية والأدوية.' },
-		social: { name: 'الحماية الاجتماعية', note: 'المعاشات والمساعدات النقدية ودعم الأسر.' },
-		fuel: { name: 'دعم المحروقات والكهرباء', note: 'أسعار أقل للوقود وفواتير الكهرباء.' },
-		food: { name: 'دعم المواد الغذائية الأساسية', note: 'أسعار أقل للخبز والدقيق والزيت والسكر.' },
-		energy: { name: 'الطاقة والصناعة دون الدعم', note: 'المؤسسات العمومية ودعم الصناعة، دون دعم الأسعار.' },
+		social: { name: 'الحماية الاجتماعية والأسرة', note: 'المعاشات والمساعدات النقدية ودعم الأسر.' },
+		subsidies: { name: 'الدعم: المحروقات والكهرباء والغذاء', note: 'أسعار أقل للوقود والكهرباء والمواد الأساسية. التوزيع حسب النوع لم يُتحقق منه بعد.' },
+		energy_trade: { name: 'الطاقة والصناعة والتجارة دون الدعم', note: 'المؤسسات العمومية ودعم الصناعة والتجارة بعد إخراج الدعم.' },
 		police: { name: 'الأمن الداخلي والشرطة', note: 'الشرطة والحرس الوطني وقوات الأمن الداخلي.' },
-		army: { name: 'الجيش', note: 'رواتب القوات المسلحة وتجهيزها وتدريبها.' },
-		justice: { name: 'العدل والسجون', note: 'المحاكم والسجون.' },
-		farming: { name: 'الفلاحة والمياه', note: 'الفلاحون والري وتزويد المياه.' },
-		roads: { name: 'الطرقات والسكن والنقل', note: 'الطرقات والسكن العمومي والنقل.' },
-		youth: { name: 'الشباب والرياضة', note: 'دور الشباب والرياضة.' },
+		army: { name: 'الدفاع', note: 'رواتب القوات المسلحة وتجهيزها وتدريبها.' },
+		justice: { name: 'العدالة', note: 'المحاكم والسجون.' },
+		farming: { name: 'الفلاحة والمياه والصيد', note: 'الفلاحون والري وتزويد المياه.' },
+		roads_housing: { name: 'الطرقات والسكن والتجهيزات', note: 'الطرقات والسكن العمومي والمباني العمومية.' },
+		youth_sports: { name: 'الشباب والرياضة', note: 'دور الشباب والرياضة.' },
 		culture: { name: 'الثقافة والفنون', note: 'التراث والمسرح والسينما والمتاحف.' },
 		presidency: { name: 'رئاسة الجمهورية', note: 'مؤسسة رئيس الجمهورية.' },
-		government: { name: 'الحكومة والبرلمان والدبلوماسية', note: 'مصالح الحكومة والبرلمان والانتخابات والسفارات.' },
-		other: { name: 'كل ما عدا ذلك', note: 'كل الوزارات والهيئات الأخرى.' },
-		debt: { name: 'فوائد الدين', note: 'فوائد الدين القائم. خفضها يعني التخلف عن السداد.' },
-		reserve: { name: 'احتياطي النفقات غير المتوقعة', note: 'يُحتفظ به لتكاليف لم يخطط لها أحد.' }
+		government: { name: 'الحكومة والبرلمان والانتخابات والدبلوماسية', note: 'مصالح الحكومة والبرلمان والانتخابات والسفارات.' },
+		other: { name: 'كل ما عدا ذلك', note: 'كل الوزارات والهيئات الأخرى، بما فيها السياحة.' },
+		debt: { name: 'فوائد الدين', note: 'فوائد الدين القائم.' },
+		reserve: { name: 'احتياطي الطوارئ', note: 'يُحتفظ به لتكاليف لم يخطط لها أحد.' }
 	}
 };
 

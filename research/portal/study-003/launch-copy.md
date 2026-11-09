@@ -2,7 +2,7 @@
 
 ## 1. Study Page Text
 
-This study invites citizens to balance Tunisia's 2027 state budget. In about five minutes, you adjust spending across major public sectors to reflect your priorities, working within a realistic balanced total. 91 dinars in every 100 the state raises itself come from tax. Understanding how public funds are gathered and allocated helps ground our collective conversations about public services, subsidies, and national investments.
+This study invites citizens to balance Tunisia's 2027 state budget. In about five to seven minutes, you move money between the lines of the budget on a board, and place every dinar. 91 dinars in every 100 the state raises itself come from tax. Understanding how public funds are gathered and allocated helps ground our collective conversations about public services, subsidies, and national investments.
 
 All figures presented in this draft instrument are currently being checked against official finance ministry documents and parliamentary mission tables. The study will not open until every category total is verified against the final adopted law. Once the final budget law is adopted by parliament, the interactive tool will be made available. Comparing different allocations helps clarify the trade-offs involved in public finance.
 

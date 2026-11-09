@@ -1,71 +1,47 @@
-# Citizen Budget 2027: game design (prototype v2)
+# Citizen Budget 2027: game design (board, version 1)
 
-Status: design for review. Placeholder amounts. Nothing is collected.
+Status: design for review. Draft figures, not verified. Nothing is collected.
+This file replaces the five-round design. The rounds are parked in parked/.
 
 ## Premise
-One budget year, five rounds. Each round a pressure hits the state's budget. The respondent pays for it by cutting other lines by the same amount. The total never changes. The question is what gets given up.
+The 2027 draft budget is a set of systems and a total. The respondent moves money between the systems on a board, to rebuild the budget as a citizen. The purse holds money not yet placed. The board finishes when every dinar is placed.
 
-## Why this is a game and still a study
-- The game's output is the allocation item the study records: one share per line in basis points (10000 is the draft). Every round moves money in exact 5% steps of each line's draft, so the final budget is a valid allocation under the same rules as the submit path.
-- Stakes are consequences, not points. Each response names who pays and what happens to them, in plain words, labelled "illustrative, not a forecast". There is no score and no winner, as SPEC section 1 requires.
+## What is on screen
+- The purse: money not yet placed, in dinars and as a row of coin marks.
+- The systems: one bar per movable line, on one scale in dinars, so the largest line is long and the smallest is a sliver. A tick marks the draft. Each bar shows what the line holds now and how far from the draft it is.
+- Each system has two buttons: take one step (5% of its draft) to the purse, and give one step from the purse. Each button shows its own price in dinars.
+- A refused move stays visible and says why, in words: at zero, at 200% of draft, or the purse does not hold one step.
+- The locked block: debt interest and the unforeseen reserve, shown as already spent before the start.
+- Two stacked bars: the draft and yours, by share of the envelope.
+- The last five moves, in words.
+- Undo, reset to the start, keep the draft, and a table view of every line.
 
-## Gauges (all on screen, all in words too)
-- **Still to find:** the amount this round's pressure asks for. Goes to zero when a response is chosen.
-- **Cut so far:** total MD taken from lines below the draft, and the number of lines.
-- **Added so far:** total MD added to lines above the draft.
-- **Scars:** a line cut in two rounds shows a scar card at the end of the second cut.
+## Start states (decision D2)
+- Draft start (default): every system at its draft, the purse empty.
+- Empty start: every system at zero, the purse holds the whole envelope.
+- One flag chooses between them. The prototype reads `?start=empty`.
 
-## Round flow
-1. Pressure card arrives (headline, two sentences, the amount). Motion: the card slides in once; reduced motion shows it at once.
-2. Three responses. Each shows: what it pays for, which lines it cuts (with MD), and the consequence line.
-3. Choosing a response: the ledger ticks each line up or down (animated count, 400 ms), the gauges move, a stamp reads FUNDED.
-4. A short result line: what you chose, in words. No praise, no blame.
-5. After round 5: the final card (section 6).
+## Rules (enforced by src/lib/budget-game/board.ts)
+1. The envelope is the sum of the movable drafts. One step for a line is 5% of its draft. A level runs from 0 to 40 steps (0% to 200%); the draft is 20.
+2. Take: a level falls by one and the purse rises by one step. Refused at zero.
+3. Give: a level rises by one and the purse falls by one step. Refused at 200% and when the purse does not hold one step.
+4. Finish when the purse is within 0.5% of the envelope.
+5. Keep the draft sets every level to the draft and is recorded.
+6. No borrowing lever in version 1 (decision D4).
+7. No score, no rank, no winner, no praise, no timer, no auto-balance.
 
-Invalid choices are not shown as errors: a response that would take a line past 0% or 200% of its draft is shown greyed with the reason in words.
+## Answer
+The board serialises to the allocation item: basis points per line (10000 is the draft), locked lines at 10000, and `kept_draft`, true exactly when every line is at the draft. The contract validates it.
 
-## Rounds (exact MD; each response's pays equal its cuts)
-Steps are 5% of the line's draft. Lines and drafts are placeholders from lines.ts.
+## Not in version 1
+- The salary band per line. The official salary split by mission is not in hand, so the board does not show it. It must not be invented.
+- A borrowing lever (D4).
+- A randomised presentation order (see the preregistration).
+- Round-based events and consequence narratives (the rounds are parked).
 
-R1, fuel prices jump in spring. Pays 250 MD of subsidy.
-- A. Fund the fuel subsidy in full: fuel +2 steps (+250). Cuts: roads −1 (−100), universities −1 (−100), other −1 (−50). Consequence: fewer road and housing projects this year; pump prices hold.
-- B. Fund half and add food support: fuel +1 (+125), food +1 (+75), other +1 (+50). Cuts: army −1 (−110), police −1 (−120), culture −1 (−20). Consequence: pump prices rise for most; basic food stays cheaper.
-- C. Let prices move: no change to the budget. Consequence: household fuel costs rise this year; the budget stays as drafted.
+## Figures
+Every line is a sum of rows from data/studies/dt-research-003/figures-2027.yaml. The subsidies line is the memo row. The energy and trade line is what remains of the Industry and Trade rows after the subsidies are taken out, on the stated assumption that all subsidies sit inside those two rows. Every figure is labelled draft, not verified.
 
-R2, a hospital wave. The health line asks for 300 MD of staffing.
-- A. Staff the hospitals: health +2 (+300). Cuts: schools −1 (−200), roads −1 (−100). Consequence: fewer teachers added in the next intake.
-- B. Staff with fewer cuts to schools: health +2 (+300). Cuts: universities −1 (−100), farming −1 (−65), government −3 (−135). Consequence: government offices run with fewer staff; farm support slows.
-- C. Defer to next year: no change. Consequence: a waiting list in the hospitals.
-
-R3, a good harvest brings food and fuel prices down. The state can save 250 MD in subsidies.
-- A. Save on fuel and move the saving to farming and roads: fuel −2 (−250). Pays: farming +2 (+130), roads +1 (+100), culture +1 (+20). Consequence: cheaper fuel is no longer subsidised; farm water and roads get the money.
-- B. Save on food and move it to health: food −2 (−150). Pays: health +1 (+150). Consequence: basic food prices rise; hospitals get the money.
-- C. Keep the subsidies: no change. Consequence: the saving is not made.
-
-R4, the regions ask for 200 MD for local roads.
-- A. Pay from government and culture: roads +2 (+200). Cuts: government −4 (−180), culture −1 (−20). Consequence: central offices shrink; local roads are repaired.
-- B. Pay from schools: roads +2 (+200). Cuts: schools −1 (−200). Consequence: school repairs and classes are delayed.
-- C. Pay from security and small lines: roads +2 (+200). Cuts: police −1 (−120), other −1 (−50), youth −1 (−30). Consequence: fewer police stations refurbished; youth centres wait.
-
-R5, a court orders 160 MD of compensation to former workers. This is the last decision.
-- A. Pay from universities and energy: justice +4 (+160). Cuts: universities −1 (−100), energy −1 (−60). Consequence: research grants slow; energy firms get less state support.
-- B. Pay from farming and youth: justice +4 (+160). Cuts: farming −2 (−130), youth −1 (−30). Consequence: farm support is cut for a season; youth programmes shrink.
-- C. Pay from government, other and culture: justice +4 (+160). Cuts: government −2 (−90), other −1 (−50), culture −1 (−20). Consequence: central administration is thinner; smaller programmes wait.
-
-## Final card (end of round 5)
-- Budget versus draft: the same table as the card in the prototype, with placeholder amounts.
-- Your five decisions in order, each with its consequence line.
-- The lines cut and protected, in words (for example: "You cut schools twice").
-- Two short questions (SPEC section 2 step 5), then submit. Submit shows this card and stops.
-
-## Rules the code must hold
-- Every response's pays equal its cuts exactly (MD). A test checks all fifteen responses.
-- Every response is a multiple of 5% of each line's draft.
-- The allocation is balanced at the end: the movable lines sum to the envelope within 0.5%.
-- Locked lines (debt interest, reserve) never move.
-- Keep-draft is a valid choice in every round (response C in R1, R2, R3, R4 or R5 may be chosen as "no change"); the final draft choice is also offered on the first screen.
-
-## Open for review
-- Whether "stakes" as consequence lines is within SPEC section 1 ("no score, no winner, no right answer"). It is, on this reading. Owner to confirm.
-- Consequence wording needs review by a person who knows the sectors. Placeholder until then.
-- The five pressures are invented. They are not drawn from the 2027 draft and must not be presented as its content.
+## Open
+- Owner plays both start modes (plan step 12).
+- The plate image (decision D5) is a placeholder until the owner supplies or approves one.
