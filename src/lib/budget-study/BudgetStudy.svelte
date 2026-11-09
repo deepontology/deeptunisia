@@ -262,15 +262,15 @@
 									{#each rows as r (r.id)}
 										<tr>
 											<th scope="row">{r.label_en}</th>
-											<td class="num">{fmt(r.amount_md)}</td>
-											<td>{STATUS_WORDS[r.status]}</td>
+											<td class="num" data-label={copy.graphicLabels.draft}>{fmt(r.amount_md)}</td>
+											<td data-label={sec.record.label}>{STATUS_WORDS[r.status]}</td>
 										</tr>
 									{/each}
 									{#each memo as r (r.id)}
 										<tr class="memo">
 											<th scope="row">{r.label_en}</th>
-											<td class="num">{fmt(r.amount_md)}</td>
-											<td>{STATUS_WORDS[r.status]}</td>
+											<td class="num" data-label={copy.graphicLabels.draft}>{fmt(r.amount_md)}</td>
+											<td data-label={sec.record.label}>{STATUS_WORDS[r.status]}</td>
 										</tr>
 									{/each}
 								</tbody>
@@ -351,7 +351,9 @@
 			</div>
 		</article>
 	</div>
-	<Ruler scroller={scrollEl} {sections} label={copy.title} />
+	<div class="rail-slot">
+		<Ruler scroller={scrollEl} {sections} label={copy.title} />
+	</div>
 </div>
 
 <style>
@@ -773,5 +775,85 @@
 		overflow: hidden;
 		clip-path: inset(50%);
 		white-space: nowrap;
+	}
+
+	/* Phones: the rule goes away and the page reads edge to edge. The frame
+	   carries the one gutter, so every section below is the full content width
+	   and no wrapper can narrow it. The safe-area padding keeps the text clear
+	   of a notch when the page is opened from a home screen. */
+	@media (max-width: 599px) {
+		.frame {
+			grid-template-columns: minmax(0, 1fr);
+			padding-inline-start: max(16px, env(safe-area-inset-left, 0px));
+			padding-inline-end: max(16px, env(safe-area-inset-right, 0px));
+		}
+		.rail-slot {
+			display: none;
+		}
+		/* The gutter now lives on the frame, so the inner blocks give theirs up
+		   instead of stacking two of them. */
+		.secbar,
+		.body,
+		.first,
+		.cover {
+			padding-inline: 0;
+		}
+		.body,
+		.first,
+		.cover {
+			max-inline-size: none;
+		}
+		/* The figures table becomes one stacked row per line: the label, then
+		   the draft and its status, each with its own small heading. A real
+		   table stays at desktop. */
+		.figures,
+		.figures tbody,
+		.figures tr,
+		.figures th,
+		.figures td {
+			display: block;
+		}
+		.figures thead {
+			display: none;
+		}
+		.figures tr {
+			padding-block: var(--s-3);
+			border-block-end: var(--rule);
+		}
+		.figures th,
+		.figures td {
+			padding: 0;
+			border: 0;
+		}
+		.figures th[scope='row'] {
+			font-family: var(--font-read);
+			font-size: var(--step-0);
+			line-height: 1.4;
+			color: var(--text-primary);
+		}
+		.figures .memo th[scope='row'] {
+			color: var(--text-muted);
+		}
+		.figures td {
+			display: grid;
+			grid-template-columns: 6.5em minmax(0, 1fr);
+			gap: var(--s-3);
+			padding-block-start: var(--s-2);
+			font-size: var(--t-sm);
+			color: var(--text-secondary);
+		}
+		.figures td::before {
+			content: attr(data-label);
+			font-family: var(--font-mono);
+			font-size: var(--t-xs);
+			line-height: 1.4;
+			letter-spacing: 0.06em;
+			text-transform: uppercase;
+			color: var(--text-muted);
+		}
+		.figures .num {
+			text-align: start;
+			white-space: normal;
+		}
 	}
 </style>

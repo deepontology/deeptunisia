@@ -25,6 +25,7 @@ import {
 	type Board,
 	type BoardState
 } from '../src/lib/budget-game/board.ts';
+import { transferState, isRefused, undoTransfer } from '../src/lib/budget-game/dragdrop.ts';
 import { compileInstrument, validateSubmission, type InstrumentDocument } from '../community/research-contract.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -363,6 +364,115 @@ ok(
 	'an empty finished board answers not-kept-draft and passes the allocation validator',
 	answer.kept_draft === false && v.ok,
 	v.ok ? '' : v.error
+);
+
+// Transfers: one atomic step from one system to another (the drag and drop path).
+{
+	const before = startBoard(board, 'draft');
+	const moved = transferState(board, before, 'education', 'health');
+	ok('a transfer from one system to another is accepted', !isRefused(moved));
+	if (!isRefused(moved)) {
+		ok(
+			'a transfer moves one step between systems and leaves the total steps unchanged',
+			Object.values(moved.levels).reduce((s, n) => s + n, 0) ===
+				Object.values(before.levels).reduce((s, n) => s + n, 0)
+		);
+		ok(
+			'the purse moves by exactly the price gap between the two steps',
+			Math.abs(
+				purse(board, moved) -
+					purse(board, before) -
+					(stepMd(lines.movable.find((l) => l.id === 'education')!) -
+						stepMd(lines.movable.find((l) => l.id === 'health')!))
+			) < 1e-6
+		);
+		ok(
+			'a transfer takes one step out of the first system',
+			moved.levels.education === before.levels.education - 1
+		);
+		ok(
+			'a transfer gives one step to the second system',
+			moved.levels.health === before.levels.health + 1
+		);
+		ok(
+			'a transfer writes two log entries, a take then a give',
+			moved.log.length === before.log.length + 2 &&
+				moved.log.at(-2)?.kind === 'take' &&
+				moved.log.at(-1)?.kind === 'give'
+		);
+		ok(
+			'the two halves name the two systems',
+			moved.log.at(-2)?.line === 'education' && moved.log.at(-1)?.line === 'health'
+		);
+		const back = undoTransfer(moved);
+		ok(
+			'one undo steps back over both entries of a transfer',
+			JSON.stringify(back.levels) === JSON.stringify(before.levels) &&
+				back.log.length === before.log.length &&
+				back.snapshots.length === before.snapshots.length
+		);
+	}
+
+	// A transfer into a system already at its 200% cap is refused.
+	const capped = { ...before, levels: { ...before.levels, health: MAX_LEVEL } };
+	const intoCap = transferState(board, capped, 'education', 'health');
+	ok('a transfer into a system at 200% is refused', isRefused(intoCap));
+	ok(
+		'the refused transfer into the cap gives its reason in words',
+		isRefused(intoCap) && /200%/.test(intoCap.refused)
+	);
+
+	// A transfer the purse after the take cannot pay is refused and changes nothing.
+	const frozen = JSON.stringify(draftState);
+	const shortPurse = transferState(board, draftState, 'culture', 'subsidies');
+	ok('a transfer the purse cannot pay is refused', isRefused(shortPurse));
+	ok(
+		'the refused short-purse transfer says the purse is short',
+		isRefused(shortPurse) && /purse/i.test(shortPurse.refused)
+	);
+	ok('a refused transfer leaves the state unchanged', JSON.stringify(draftState) === frozen);
+
+	const self = transferState(board, draftState, 'education', 'education');
+	ok('a transfer of a system into itself is refused', isRefused(self));
+}
+
+// Transfers hold the envelope over a random walk, and refusals never write.
+let transferBroke = 0;
+let transferAccepted = 0;
+let transferRefused = 0;
+let transferWalk: BoardState = startBoard(board, 'draft');
+for (let i = 0; i < 500; i++) {
+	const from = lines.movable[Math.floor(rand() * lines.movable.length)];
+	const to = lines.movable[Math.floor(rand() * lines.movable.length)];
+	if (from.id === to.id) continue;
+	const source = transferWalk;
+	const result = transferState(board, source, from.id, to.id);
+	if (isRefused(result)) {
+		transferRefused++;
+		if (JSON.stringify(transferWalk) !== JSON.stringify(source)) transferBroke++;
+		if (result.refused.length === 0) transferBroke++;
+		continue;
+	}
+	transferAccepted++;
+	const stepGap =
+		stepMd(lines.movable.find((l) => l.id === from.id)!) -
+		stepMd(lines.movable.find((l) => l.id === to.id)!);
+	if (Math.abs(purse(board, result) - purse(board, source) - stepGap) > 1e-6) transferBroke++;
+	if (
+		Object.values(result.levels).reduce((s, n) => s + n, 0) !==
+		Object.values(source.levels).reduce((s, n) => s + n, 0)
+	)
+		transferBroke++;
+	if (result.log.length !== source.log.length + 2) transferBroke++;
+	if (result.levels[from.id] !== source.levels[from.id] - 1) transferBroke++;
+	if (result.levels[to.id] !== source.levels[to.id] + 1) transferBroke++;
+	transferWalk = result;
+}
+ok('transfers hold one step in and one step out over a random walk', transferBroke === 0, `${transferBroke} broke`);
+ok(
+	'the random walk exercised both accepted and refused transfers',
+	transferAccepted > 0 && transferRefused > 0,
+	`${transferAccepted} accepted, ${transferRefused} refused`
 );
 
 console.log(`\n  ${checks - failures}/${checks} checks passed${failures ? `, ${failures} FAILED` : ''}\n`);

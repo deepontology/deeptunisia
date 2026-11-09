@@ -5,6 +5,8 @@
 	import { linesFrom, MAX_LEVEL, type LineId } from './lines';
 	import * as B from './board';
 	import type { Board, BoardState, LogEntry } from './board';
+	import { lineDifference, type Difference } from './diff';
+	import { isRefused, transferState } from './dragdrop';
 	import { untrack } from 'svelte';
 
 	/**
@@ -46,12 +48,13 @@
 	const rows = $derived(
 		lines.movable.map((l) => {
 			const level = game.levels[l.id];
+			const amount = B.amountOf(l, level);
 			return {
 				line: l,
 				level,
-				amount: B.amountOf(l, level),
+				amount,
 				step: B.stepMd(l),
-				delta: B.amountOf(l, level) - l.draft,
+				diff: lineDifference(l.draft, amount),
 				takeOk: B.takeProblem(game, l.id) === null,
 				giveOk: B.giveProblem(board, game, l.id) === null
 			};
@@ -76,6 +79,8 @@
 			rows: g.ids.map((id) => rows.find((r) => r.line.id === id)!).filter(Boolean)
 		}))
 	);
+	/** Every system in the order the board shows them: the order the arrow keys walk. */
+	const order = $derived(groups.flatMap((g) => g.rows.map((r) => r.line.id)));
 
 	/** The last five moves, newest first, for the desk ledger strip. */
 	const ledger = $derived(game.log.slice(-5).reverse());
@@ -92,8 +97,14 @@
 	 * went. +1 is a take (into the purse), -1 is a give (out of it).
 	 */
 	let coinDir = $state<0 | 1 | -1>(0);
-	let moveDirs = $state<number[]>([]);
+	/** One entry per undoable move: the direction for the animation and how many log entries it wrote. */
+	let moveLog = $state<{ dir: 0 | 1 | -1; steps: number }[]>([]);
 	let moveSeq = $state(0);
+
+	/** Pointer drag: what is being dragged and which target it is over. */
+	type DragFrom = { kind: 'system'; id: LineId } | { kind: 'purse' };
+	let drag = $state<DragFrom | null>(null);
+	let dropAt = $state<LineId | 'purse' | null>(null);
 
 	/** The coin that crosses the board on a take or a give, in transform only. */
 	let boardEl = $state<HTMLElement>();
@@ -107,12 +118,21 @@
 	let noteLine = $state<LineId | null>(null);
 	let noteTrigger: HTMLElement | null = null;
 
-	function fmtDelta(n: number): string {
-		const sign = n > 0.5 ? '+' : n < -0.5 ? '−' : '';
-		return `${sign}${fmt(Math.abs(n))}\u00a0${unit}`;
+	/** Signed MD for the difference. The sign is the first direction signal; the words repeat it. */
+	function diffMd(d: Difference): string {
+		if (d.direction === 'same') return `0\u00a0${unit}`;
+		return `${d.deltaMd > 0 ? '+' : '−'}${fmt(Math.abs(d.deltaMd))}\u00a0${unit}`;
 	}
-	function pctLabel(level: number): string {
-		return `${level * 5}%`;
+	function pctText(d: Difference): string {
+		if (d.direction === 'same') return '0.0%';
+		return `${d.deltaPct > 0 ? '+' : '−'}${Math.abs(d.deltaPct).toFixed(1)}%`;
+	}
+	function diffWords(d: Difference): string {
+		return d.direction === 'more'
+			? c.board.moreThanPlan
+			: d.direction === 'less'
+				? c.board.lessThanPlan
+				: c.board.sameAsPlan;
 	}
 	function ledgerText(entry: LogEntry): string {
 		if (entry.kind === 'keep') return c.board.kept;
@@ -128,6 +148,155 @@
 	}
 	function takeReason(r: (typeof rows)[number]): string {
 		return r.takeOk ? '' : c.board.reasonAtZero;
+	}
+
+	const drop = $derived(planDrop(drag, dropAt));
+
+	/**
+	 * What a drop between these two ends would do, or null when there is no
+	 * target or the target is the system the drag came from. The text is the cue
+	 * shown while dragging: what the drop does, or the words of the refusal.
+	 */
+	function planDrop(
+		active: DragFrom | null,
+		target: LineId | 'purse' | null
+	): { target: 'purse' | LineId; ok: boolean; text: string } | null {
+		if (!active || target === null) return null;
+		if (active.kind === 'purse') {
+			if (target === 'purse') return null;
+			const row = rows.find((r) => r.line.id === target);
+			if (!row) return null;
+			if (row.giveOk) return { target, ok: true, text: c.board.give(fmt(row.step)) };
+			return {
+				target,
+				ok: false,
+				text:
+					row.level >= MAX_LEVEL
+						? c.board.reasonAtMax
+						: c.board.notEnough(fmt(P), fmt(row.step))
+			};
+		}
+		if (target === 'purse') {
+			const row = rows.find((r) => r.line.id === active.id);
+			if (!row) return null;
+			return row.takeOk
+				? { target, ok: true, text: c.board.take(fmt(row.step)) }
+				: { target, ok: false, text: c.board.reasonAtZero };
+		}
+		if (target === active.id) return null;
+		const from = rows.find((r) => r.line.id === active.id);
+		const to = rows.find((r) => r.line.id === target);
+		if (!from || !to) return null;
+		if (!from.takeOk) return { target, ok: false, text: c.board.reasonAtZero };
+		if (to.level >= MAX_LEVEL) return { target, ok: false, text: c.board.reasonAtMax };
+		const afterTake = P + from.step;
+		if (afterTake + 1e-6 < to.step)
+			return { target, ok: false, text: c.board.notEnough(fmt(afterTake), fmt(to.step)) };
+		return { target, ok: true, text: c.board.give(fmt(to.step)) };
+	}
+	function isTarget(id: LineId | 'purse', ok: boolean): boolean {
+		const d = drop;
+		return !!d && d.target === id && d.ok === ok;
+	}
+	function systemEl(id: LineId): HTMLElement | null {
+		return document.getElementById(`sys-${id}`);
+	}
+	function focusSystem(id: LineId) {
+		systemEl(id)?.focus();
+	}
+	/** The refusal in words for a transfer, from the same rules the cue uses. */
+	function transfer(fromId: LineId, toId: LineId) {
+		const result = transferState(board, game, fromId, toId);
+		if (isRefused(result)) {
+			const plan = planDrop({ kind: 'system', id: fromId }, toId);
+			refusal = plan && !plan.ok ? plan.text : c.board.reasonAtZero;
+			return;
+		}
+		game = result;
+		refusal = '';
+		afterMove(0, null, 2);
+	}
+	function beginDrag(e: PointerEvent, from: DragFrom) {
+		if (e.pointerType === 'mouse' && e.button !== 0) return;
+		drag = from;
+		dropAt = null;
+		refusal = '';
+		try {
+			(e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+		} catch {
+			// The pointer was already released; the drag ends on the next move.
+		}
+		e.preventDefault();
+	}
+	function beginPurseDrag(e: PointerEvent) {
+		// On touch, only the coin stack is a handle, so the rest of the purse still scrolls.
+		if (e.pointerType !== 'mouse' && !(e.target as HTMLElement).closest('.stack')) return;
+		beginDrag(e, { kind: 'purse' });
+	}
+	function dropTargetAt(e: PointerEvent): LineId | 'purse' | null {
+		const under = document.elementFromPoint(e.clientX, e.clientY) as HTMLElement | null;
+		const holder = under?.closest<HTMLElement>('[data-drop]');
+		const value = holder?.dataset.drop ?? '';
+		if (value === 'purse') return 'purse';
+		return rows.some((r) => r.line.id === value) ? (value as LineId) : null;
+	}
+	function moveDrag(e: PointerEvent) {
+		if (!drag) return;
+		dropAt = dropTargetAt(e);
+	}
+	function cancelDrag() {
+		drag = null;
+		dropAt = null;
+	}
+	function endDrag(e: PointerEvent) {
+		const active = drag;
+		if (!active) return;
+		// Trust the release point over the last move, so a fast drag still lands.
+		const released = dropTargetAt(e);
+		const plan = planDrop(active, released);
+		try {
+			(e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
+		} catch {
+			// Nothing captured, nothing to release.
+		}
+		drag = null;
+		dropAt = null;
+		if (plan && !plan.ok) {
+			// Keep the reason on screen after the pointer is gone.
+			refusal = plan.text;
+			return;
+		}
+		if (!plan) return;
+		const target = plan.target;
+		if (active.kind === 'purse') {
+			if (target !== 'purse') give(target, systemEl(target));
+			return;
+		}
+		if (target === 'purse') take(active.id, systemEl(active.id));
+		else transfer(active.id, target);
+	}
+	function rowKey(e: KeyboardEvent, id: LineId) {
+		// Only the row itself: arrow keys inside its buttons keep their own meaning.
+		if (e.target !== e.currentTarget) return;
+		const i = order.indexOf(id);
+		if (i < 0) return;
+		if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+			const next = order[e.key === 'ArrowUp' ? i - 1 : i + 1];
+			if (!next) return;
+			e.preventDefault();
+			focusSystem(next);
+			return;
+		}
+		if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+		e.preventDefault();
+		const step = e.key === 'ArrowLeft' ? -1 : 1;
+		if (e.shiftKey) {
+			const to = order[i + step];
+			if (to) transfer(id, to);
+			return;
+		}
+		if (step === -1) take(id, systemEl(id));
+		else give(id, systemEl(id));
 	}
 
 	/** Computes the flight in board-relative pixels so the overlay needs no physical insets. */
@@ -150,9 +319,9 @@
 		if (flightTimer) clearTimeout(flightTimer);
 		flightTimer = setTimeout(() => (flight = null), 240);
 	}
-	function afterMove(dir: number, from: HTMLElement | null) {
+	function afterMove(dir: number, from: HTMLElement | null, steps = 1) {
 		coinDir = dir === 0 ? 0 : dir > 0 ? 1 : -1;
-		moveDirs = [...moveDirs, coinDir];
+		moveLog = [...moveLog, { dir: coinDir, steps }];
 		moveSeq += 1;
 		if (coinDir !== 0) fly(from, coinDir);
 	}
@@ -182,19 +351,24 @@
 		refusal = '';
 	}
 	function undo() {
-		const last = moveDirs[moveDirs.length - 1] ?? 0;
-		moveDirs = moveDirs.slice(0, -1);
-		coinDir = last === 0 ? 0 : last === 1 ? -1 : 1;
+		const last = moveLog[moveLog.length - 1] ?? { dir: 0, steps: 1 };
+		moveLog = moveLog.slice(0, -1);
+		coinDir = last.dir === 0 ? 0 : last.dir === 1 ? -1 : 1;
 		moveSeq += 1;
 		refusal = '';
-		game = B.undo(game);
+		// A transfer wrote two entries, so one undo steps back over both.
+		let next = game;
+		for (let i = 0; i < last.steps; i++) next = B.undo(next);
+		game = next;
 	}
 	function reset() {
 		game = B.startBoard(board, mode);
-		moveDirs = [];
+		moveLog = [];
 		coinDir = 0;
 		flight = null;
 		refusal = '';
+		drag = null;
+		dropAt = null;
 	}
 	function finish() {
 		if (done) onfinish?.(game, board);
@@ -218,9 +392,23 @@
 </script>
 
 <section class="board" bind:this={boardEl} aria-labelledby="h-board" lang={app.locale}>
-	<div class="purse">
+	<div
+		class="purse"
+		class:drop-ok={isTarget('purse', true)}
+		class:drop-no={isTarget('purse', false)}
+		data-drop="purse"
+	>
 		<p class="purse-label">{c.board.purse}</p>
-		<div class="purse-main" role="status" aria-live="polite">
+		<div
+			class="purse-main"
+			role="status"
+			aria-live="polite"
+			onpointerdown={beginPurseDrag}
+			onpointermove={moveDrag}
+			onpointerup={endDrag}
+			onpointercancel={cancelDrag}
+			onlostpointercapture={cancelDrag}
+		>
 			<div class="stack" bind:this={purseEl} aria-hidden="true">
 				{#key held}
 					<span class="slots" class:drop={coinDir > 0} class:lift={coinDir < 0}>
@@ -241,6 +429,9 @@
 		</button>
 		{#if refusal}
 			<p class="refusal" aria-live="polite">{refusal}</p>
+		{/if}
+		{#if drag && drop}
+			<p class="drag-cue" aria-hidden="true">{drop.text}</p>
 		{/if}
 	</div>
 
@@ -279,24 +470,63 @@
 		{#if mode === 'draft'}<p class="note">{c.board.startNote}</p>{/if}
 
 		{#if view === 'bars'}
+			<p class="legend">
+				<span class="legend-item">
+					<span class="swatch plan" aria-hidden="true"></span>{c.board.planLabel}
+				</span>
+				<span class="legend-item">
+					<span class="swatch yours" aria-hidden="true"></span>{c.board.yoursLabel}
+				</span>
+			</p>
 			<div class="systems">
 				{#each groups as g (g.key)}
 					<section class="group {g.key}" style:--rows={g.rows.length}>
 						<h3 class="group-title">{c.board.groups[g.key]}</h3>
 						<ul class="group-list">
 							{#each g.rows as r (r.line.id)}
-								<li class="system" class:wide={r.line.id === 'education' || r.line.id === 'subsidies'}>
+								<!-- The row itself takes focus and the arrow keys, as the board's keyboard rules require; ARIA has no focusable list row. -->
+								<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
+								<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+								<li
+									class="system"
+									class:wide={r.line.id === 'education' || r.line.id === 'subsidies'}
+									class:drop-ok={isTarget(r.line.id, true)}
+									class:drop-no={isTarget(r.line.id, false)}
+									id="sys-{r.line.id}"
+									data-drop={r.line.id}
+									tabindex="0"
+									onkeydown={(e) => rowKey(e, r.line.id)}
+								>
+									<span
+										class="grip"
+										aria-hidden="true"
+										onpointerdown={(e) => beginDrag(e, { kind: 'system', id: r.line.id })}
+										onpointermove={moveDrag}
+										onpointerup={endDrag}
+										onpointercancel={cancelDrag}
+										onlostpointercapture={cancelDrag}
+									></span>
 									<div class="system-head">
 										<button
 											type="button"
 											class="name"
 											onclick={(e) => openNote(r.line.id, e.currentTarget)}
 										>{c.lines[r.line.id].name}</button>
-										<span class="delta">{fmtDelta(r.delta)} · {pctLabel(r.level)}</span>
+										<span class="delta">
+											<span class="delta-fig">{diffMd(r.diff)} · {pctText(r.diff)}</span>
+											<span class="delta-words">{diffWords(r.diff)}</span>
+										</span>
 									</div>
-									<div class="tank" aria-hidden="true">
-										<span class="fill" class:up={r.level > 20} class:down={r.level < 20} style:inline-size="{(r.amount / scaleMax) * 100}%"></span>
-										<span class="tick" style:inset-inline-start="{(r.line.draft / scaleMax) * 100}%"></span>
+									<div class="bars" aria-hidden="true">
+										<span class="track plan">
+											<span class="bar plan" data-series="plan" style:inline-size="{(r.line.draft / scaleMax) * 100}%"></span>
+										</span>
+										<span class="track yours">
+											<span class="bar yours" data-series="yours" style:inline-size="{(r.amount / scaleMax) * 100}%"></span>
+										</span>
+										<span class="tick" style:margin-inline-start="calc({(r.line.draft / scaleMax) * 100}% - var(--s-1))"></span>
+										<span class="bar-val plan-val">{fmt(r.line.draft)}</span>
+										<span class="bar-val yours-val">{fmt(r.amount)}</span>
 									</div>
 									<div class="actions">
 										<button
@@ -332,6 +562,7 @@
 							<th scope="col" class="num">{c.board.draft} ({unit})</th>
 							<th scope="col" class="num">{c.board.yours} ({unit})</th>
 							<th scope="col" class="num">{c.board.change} ({unit})</th>
+							<th scope="col" class="num">{c.board.change} (%)</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -342,7 +573,8 @@
 								</th>
 								<td class="num">{fmt(r.line.draft)}</td>
 								<td class="num">{fmt(r.amount)}</td>
-								<td class="num">{fmtDelta(r.delta)}</td>
+								<td class="num">{diffMd(r.diff)}</td>
+								<td class="num">{pctText(r.diff)}</td>
 							</tr>
 						{/each}
 					</tbody>
@@ -410,6 +642,7 @@
 	}
 	.purse {
 		grid-area: purse;
+		position: relative;
 		display: flex;
 		flex-direction: column;
 		gap: var(--s-2);
@@ -439,6 +672,7 @@
 		background: var(--surface-sunken);
 		border: var(--rule);
 		border-radius: var(--r-sm);
+		touch-action: none;
 	}
 	.slots {
 		display: flex;
@@ -499,6 +733,23 @@
 		margin: 0;
 		font-size: var(--t-sm);
 		color: var(--rupture);
+	}
+	.drag-cue {
+		position: absolute;
+		inset-block-start: 100%;
+		inset-inline: 0;
+		z-index: 5;
+		margin: 0;
+		padding: var(--s-1) var(--s-3);
+		background: var(--surface-overlay);
+		border-block-end: var(--rule);
+		font-family: var(--font-mono);
+		font-size: var(--t-2xs);
+		font-variant-numeric: tabular-nums;
+		color: var(--text-primary);
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
 	.side {
 		grid-area: side;
@@ -574,6 +825,32 @@
 		color: var(--text-muted);
 		margin: 0;
 	}
+	.legend {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--s-1) var(--s-5);
+		margin: 0 0 var(--s-2);
+		font-family: var(--font-mono);
+		font-size: var(--t-2xs);
+		color: var(--text-muted);
+	}
+	.legend-item {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--s-2);
+	}
+	.swatch {
+		inline-size: var(--s-3);
+		block-size: var(--s-3);
+		border-radius: var(--r-xs);
+	}
+	.swatch.plan {
+		background: var(--text-muted);
+	}
+	.swatch.yours {
+		background: var(--accent);
+	}
 	.systems {
 		flex: 1;
 		min-block-size: 0;
@@ -623,13 +900,51 @@
 		gap: var(--s-2);
 		min-block-size: 0;
 		overflow: hidden;
-		padding: var(--s-2) var(--s-3);
+		padding-block: var(--s-1);
+		padding-inline: var(--s-6) var(--s-3);
 		background: var(--surface-raised);
 		border: var(--rule);
 		border-radius: var(--r-md);
 	}
 	.system.wide {
 		grid-column: span 2;
+	}
+	.grip {
+		position: absolute;
+		inset-block-start: 0;
+		inset-inline-start: 0;
+		display: grid;
+		place-items: center;
+		inline-size: var(--s-6);
+		block-size: var(--s-6);
+		color: var(--text-muted);
+		cursor: grab;
+		touch-action: none;
+	}
+	.grip::before {
+		content: '';
+		inline-size: var(--s-1);
+		block-size: var(--s-4);
+		border-radius: var(--r-full);
+		background: currentColor;
+		opacity: 0.45;
+	}
+	.system:active .grip {
+		cursor: grabbing;
+	}
+	.system.drop-ok,
+	.purse.drop-ok {
+		outline: 2px solid var(--accent);
+		outline-offset: 2px;
+	}
+	.system.drop-no,
+	.purse.drop-no {
+		outline: 2px dashed var(--rupture);
+		outline-offset: 2px;
+	}
+	.system:focus-visible {
+		outline: 2px solid var(--accent);
+		outline-offset: 2px;
 	}
 	.system-head {
 		display: flex;
@@ -663,37 +978,80 @@
 		text-decoration: underline;
 	}
 	.delta {
+		display: flex;
+		flex-wrap: wrap;
+		column-gap: var(--s-2);
 		font-family: var(--font-mono);
 		font-size: var(--t-2xs);
 		font-variant-numeric: tabular-nums;
 		white-space: nowrap;
+	}
+	.delta-fig {
 		color: var(--text-muted);
 	}
-	.tank {
-		position: relative;
-		block-size: var(--s-4);
-		background: var(--surface-sunken);
-		border-radius: var(--r-full);
-		overflow: hidden;
+	.delta-words {
+		color: var(--text-secondary);
 	}
-	.fill {
+	.bars {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto;
+		grid-template-rows: var(--s-4) var(--s-4);
+		column-gap: var(--s-2);
+		row-gap: var(--s-1);
+	}
+	.track {
+		display: block;
+		position: relative;
+		grid-column: 1;
+		block-size: var(--s-4);
+		overflow: hidden;
+		border-radius: var(--r-xs);
+		background: var(--surface-sunken);
+	}
+	.track.plan {
+		grid-row: 1;
+	}
+	.track.yours {
+		grid-row: 2;
+	}
+	.bar {
 		position: absolute;
 		inset-block: 0;
 		inset-inline-start: 0;
-		background: var(--text-faint);
-		transition: inline-size var(--dur-fast) var(--ease-out);
+		border-start-end-radius: var(--r-sm);
+		border-end-end-radius: var(--r-sm);
+		transition: inline-size var(--dur-normal) var(--ease-out);
 	}
-	.fill.up {
-		background: var(--accent);
-	}
-	.fill.down {
+	.bar.plan {
 		background: var(--text-muted);
 	}
+	.bar.yours {
+		background: var(--accent);
+	}
 	.tick {
-		position: absolute;
-		inset-block: 0;
+		grid-column: 1;
+		grid-row: 1 / 3;
+		justify-self: start;
 		inline-size: var(--s-1);
 		background: var(--text-primary);
+		opacity: 0.55;
+	}
+	.bar-val {
+		grid-column: 2;
+		align-self: center;
+		min-inline-size: 5ch;
+		font-family: var(--font-mono);
+		font-size: var(--t-2xs);
+		font-variant-numeric: tabular-nums;
+		line-height: 1;
+		color: var(--text-muted);
+		text-align: end;
+	}
+	.plan-val {
+		grid-row: 1;
+	}
+	.yours-val {
+		grid-row: 2;
 	}
 	.actions {
 		display: flex;
@@ -705,7 +1063,7 @@
 	}
 	.actions button {
 		flex: 1;
-		min-block-size: var(--s-10);
+		min-block-size: var(--s-9);
 		padding-inline: var(--s-2);
 		font-size: var(--t-2xs);
 		line-height: var(--lh-tight);
@@ -1076,11 +1434,17 @@
 			grid-template-columns: minmax(0, 1fr) auto auto;
 			align-items: center;
 			gap: var(--s-2);
-			padding: 0 var(--s-3);
+			padding-block: 0;
+			padding-inline: var(--s-11) var(--s-3);
 			background: transparent;
 			border: 0;
 			border-block-end: var(--rule);
 			border-radius: 0;
+		}
+		.grip {
+			inline-size: var(--touch);
+			block-size: 100%;
+			min-block-size: var(--touch);
 		}
 		.system-head {
 			display: contents;
@@ -1097,14 +1461,44 @@
 			text-overflow: ellipsis;
 		}
 		.delta {
-			display: none;
+			position: absolute;
+			inline-size: 1px;
+			block-size: 1px;
+			overflow: hidden;
+			clip-path: inset(50%);
+			white-space: nowrap;
 		}
-		.tank {
+		.legend {
+			gap: var(--s-1) var(--s-4);
+			margin: 0;
+			padding: var(--s-1) var(--s-3);
+		}
+		.bars {
 			position: absolute;
 			inset: 0;
+			grid-template-columns: minmax(0, 1fr);
+			grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+			column-gap: 0;
+			row-gap: var(--s-1);
+		}
+		.track {
 			block-size: auto;
 			border-radius: 0;
-			opacity: 0.3;
+			background: transparent;
+		}
+		.bar {
+			border-radius: 0;
+		}
+		.bar.plan {
+			background: var(--text-muted);
+			opacity: 0.16;
+		}
+		.bar.yours {
+			background: var(--accent);
+			opacity: 0.32;
+		}
+		.bar-val {
+			display: none;
 		}
 		.actions {
 			display: contents;
@@ -1136,7 +1530,7 @@
 		}
 	}
 	@media (prefers-reduced-motion: reduce) {
-		.fill {
+		.bar {
 			transition: none;
 		}
 		.slots.drop .coin.on,

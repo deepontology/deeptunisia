@@ -62,6 +62,11 @@ export interface Copy {
 		draft: string;
 		yours: string;
 		change: string;
+		planLabel: string;
+		yoursLabel: string;
+		moreThanPlan: string;
+		lessThanPlan: string;
+		sameAsPlan: string;
 		take: (amount: string) => string;
 		give: (amount: string) => string;
 		atZero: string;
@@ -167,6 +172,11 @@ const en: Copy = {
 		draft: 'Draft',
 		yours: 'Yours',
 		change: 'Change',
+		planLabel: 'State plan 2027 (draft, not verified)',
+		yoursLabel: 'Your allocation',
+		moreThanPlan: 'more than plan',
+		lessThanPlan: 'less than plan',
+		sameAsPlan: 'same as plan',
 		take: (amount) => `Take ${amount} MD`,
 		give: (amount) => `Give ${amount} MD`,
 		atZero: 'This system is at zero. Nothing left to take.',
@@ -302,6 +312,11 @@ const fr: Copy = {
 		draft: 'Projet',
 		yours: 'Vous',
 		change: 'Écart',
+		planLabel: "Projet de l'État 2027 (provisoire, non vérifié)",
+		yoursLabel: 'Votre répartition',
+		moreThanPlan: 'plus que le projet',
+		lessThanPlan: 'moins que le projet',
+		sameAsPlan: 'comme le projet',
 		take: (amount) => `Retirer ${amount} MD`,
 		give: (amount) => `Verser ${amount} MD`,
 		atZero: 'Ce poste est à zéro. Rien à retirer.',
@@ -438,6 +453,11 @@ const ar: Copy = {
 		draft: 'المشروع',
 		yours: 'أنت',
 		change: 'التغيير',
+		planLabel: 'مشروع الدولة 2027 (مؤقّت، غير متحقّق منه)',
+		yoursLabel: 'توزيعك',
+		moreThanPlan: 'أكثر من المشروع',
+		lessThanPlan: 'أقل من المشروع',
+		sameAsPlan: 'مثل المشروع',
 		take: (amount) => `اسحب ${amount} م.د`,
 		give: (amount) => `ادفع ${amount} م.د`,
 		atZero: 'هذا البند صفر. لا شيء لسحبه.',
