@@ -35956,3 +35956,485 @@
     correct the record.
   sources:
   - am-etap-marzouki-2026-10-25
+- id: yathreb-machiri
+  name_en: "Yathreb Machiri"
+  name_fr: "Yathreb Machiri"
+  name_ar: "يثرب مشيري"
+  layers: [media]
+  tagline: "Journalist, as described by SNJT"
+  summary: "Named in press and SNJT reports as arrested, summoned, charged, tried or sentenced, 2020-02-13 to 2020-02-27."
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "SNJT"
+  reasoning: "One outlet names the person in this role."
+  falsifiable_by: "A second outlet or a press-card record."
+  sources:
+    - snjt-2020-03-12-21e43
+- id: montassar-sassi
+  name_en: "Montassar Sassi"
+  name_fr: "Montassar Sassi"
+  name_ar: "منتصر ساسي"
+  layers: [media]
+  tagline: "Journalist, as described by SNJT"
+  summary: "Named in press and SNJT reports as arrested, summoned, charged, tried or sentenced, 2020-04 to 2025-11-06."
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "SNJT"
+  reasoning: "One outlet names the person in this role."
+  falsifiable_by: "A second outlet or a press-card record."
+  sources:
+    - snjt-2020-05-15-2a6e4
+    - snjt-2020-07-03-27017
+    - snjt-2020-12-08-2a94d
+    - snjt-2021-03-13-0dacb
+- id: ghassen-ben-khelifa
+  name_en: "Ghassen Ben Khelifa"
+  name_fr: "Ghassen Ben Khelifa"
+  name_ar: "غسان بن خليفة"
+  layers: [media]
+  tagline: "Journalist, as described by SNJT"
+  summary: "Named in press and SNJT reports as arrested, summoned, charged, tried or sentenced, 2020-09 to 2026-03-30."
+  confidence: B
+  basis: reported
+  sources:
+    - snjt-2020-10-08-22435
+    - cpj-2022-09-07-136de
+    - nawaat-2024-05-29-07d21
+    - snjt-2025-05-03-c71fc
+- id: amer-ayad
+  name_en: "Amer Ayad"
+  name_fr: "Amer Ayad"
+  layers: [media]
+  tagline: "talk show host for privately owned channel Zaytouna TV"
+  summary: "Named in press and SNJT reports as arrested, summoned, charged, tried or sentenced, 2021 to 2021-11-25."
+  confidence: B
+  basis: reported
+  sources:
+    - nawaat-2024-05-29-07d21
+    - committee-to-protect-2021-10-07-eba5f
+    - human-rights-watch-2021-12-23-fc497
+- id: islem-hkiri
+  name_en: "Islem Hkiri"
+  name_fr: "Islem Hkiri"
+  name_ar: "اسلام الحكيري"
+  layers: [media]
+  tagline: "freelance photographer"
+  summary: "Named in press and SNJT reports as arrested, summoned, charged, tried or sentenced, 2021-01-23 to 2021-01-27."
+  confidence: B
+  basis: reported
+  sources:
+    - idn-indepthnews-2021-02-01-1d531
+    - snjt-2021-02-11-ab1ac
+- id: chadha-hadj-mbarek
+  name_en: "Chadha Hadj Mbarek"
+  name_fr: "Chadha Hadj Mbarek"
+  name_ar: "شذى الحاج مبارك"
+  layers: [media]
+  tagline: "journalist and social media content editor at Instalingo"
+  summary: "Named in press and SNJT reports as arrested, summoned, charged, tried or sentenced, 2021-09 to 2026-01-14."
+  confidence: B
+  basis: reported
+  sources:
+    - committee-to-protect-2025-03-03-bfd50
+    - snjt-2021-10-19-711b3
+    - al-jazeera-arabic-2021-10-06-45be9
+    - snjt-2025-05-03-c71fc
+- id: faiza-al-arfaoui
+  name_en: "Faiza Al Arfaoui"
+  name_fr: "Faiza Al Arfaoui"
+  name_ar: "فائزة العرفاوي"
+  layers: [media]
+  tagline: "Journalist, as described by SNJT"
+  summary: "Named in press and SNJT reports as arrested, summoned, charged, tried or sentenced, 2021-09-29 to 2021-09-29."
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "SNJT"
+  reasoning: "One outlet names the person in this role."
+  falsifiable_by: "A second outlet or a press-card record."
+  sources:
+    - snjt-2021-10-19-711b3
+- id: makram-meftahi
+  name_en: "Makram Meftahi"
+  name_fr: "Makram Meftahi"
+  name_ar: "مكرم مفتاحي"
+  layers: [media]
+  tagline: "Journalist, as described by SNJT"
+  summary: "Named in press and SNJT reports as arrested, summoned, charged, tried or sentenced, 2021-09-29 to 2021-09-29."
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "SNJT"
+  reasoning: "One outlet names the person in this role."
+  falsifiable_by: "A second outlet or a press-card record."
+  sources:
+    - snjt-2021-10-19-711b3
+- id: oussama-chaouali
+  name_en: "Oussama Chaouali"
+  name_fr: "Oussama Chaouali"
+  name_ar: "أسامة الشوالي"
+  layers: [media]
+  tagline: "Journalist, as described by SNJT"
+  summary: "Named in press and SNJT reports as arrested, summoned, charged, tried or sentenced, 2020-02 to 2021-09-30."
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "SNJT"
+  reasoning: "One outlet names the person in this role."
+  falsifiable_by: "A second outlet or a press-card record."
+  sources:
+    - snjt-2020-03-12-21e43
+    - snjt-2021-10-19-711b3
+- id: khalifa-guesmi
+  name_en: "Khalifa Guesmi"
+  name_fr: "Khalifa Guesmi"
+  name_ar: "خليفة القاسمي"
+  layers: [media]
+  tagline: "correspondent for Mosaique FM"
+  summary: "Named in press and SNJT reports as arrested, summoned, charged, tried or sentenced, 2022 to 2025-06-09."
+  confidence: B
+  basis: reported
+  sources:
+    - snjt-2025-05-03-c71fc
+    - cpj-2023-05-18-c774f
+    - snjt-2022-04-13-64b88
+    - snjt-2023-06-15-62738
+- id: marouen-sehili
+  name_en: "Marouen Sehili"
+  name_fr: "Marouen Sehili"
+  name_ar: "مروان السهيلي"
+  layers: [media]
+  tagline: "Journalist, as described by SNJT"
+  summary: "Named in press and SNJT reports as arrested, summoned, charged, tried or sentenced, 2022-01-14 to 2022-01-14."
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "SNJT"
+  reasoning: "One outlet names the person in this role."
+  falsifiable_by: "A second outlet or a press-card record."
+  sources:
+    - snjt-2022-02-11-41539
+- id: mathieu-galtier
+  name_en: "Mathieu Galtier"
+  name_fr: "Mathieu Galtier"
+  name_ar: "ماثيو غالتيه"
+  layers: [media]
+  tagline: "Journalist, as described by SNJT"
+  summary: "Named in press and SNJT reports as arrested, summoned, charged, tried or sentenced, 2022-01-14 to 2022-01-14."
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "SNJT"
+  reasoning: "One outlet names the person in this role."
+  falsifiable_by: "A second outlet or a press-card record."
+  sources:
+    - snjt-2022-02-11-41539
+- id: matteo-garavoglia
+  name_en: "Matteo Garavoglia"
+  name_fr: "Matteo Garavoglia"
+  name_ar: "ماثيو غارافوليا"
+  layers: [media]
+  tagline: "Journalist, as described by SNJT"
+  summary: "Named in press and SNJT reports as arrested, summoned, charged, tried or sentenced, 2022-01-14 to 2022-01-14."
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "SNJT"
+  reasoning: "One outlet names the person in this role."
+  falsifiable_by: "A second outlet or a press-card record."
+  sources:
+    - snjt-2022-02-11-41539
+- id: mehdi-ach
+  name_en: "Mehdi Ach"
+  name_fr: "Mehdi Ach"
+  name_ar: "مهدي العش"
+  layers: [media]
+  tagline: "Journalist, as described by SNJT"
+  summary: "Named in press and SNJT reports as arrested, summoned, charged, tried or sentenced, 2022-01-14 to 2022-01-14."
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "SNJT"
+  reasoning: "One outlet names the person in this role."
+  falsifiable_by: "A second outlet or a press-card record."
+  sources:
+    - snjt-2022-02-11-41539
+- id: zeina-majri
+  name_en: "Zeina Majri"
+  name_fr: "Zeina Majri"
+  name_ar: "زينة الماجري"
+  layers: [media]
+  tagline: "Journalist, as described by SNJT"
+  summary: "Named in press and SNJT reports as arrested, summoned, charged, tried or sentenced, 2022-01-14 to 2022-01-14."
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "SNJT"
+  reasoning: "One outlet names the person in this role."
+  falsifiable_by: "A second outlet or a press-card record."
+  sources:
+    - snjt-2022-02-11-41539
+- id: nizar-ben-hassene
+  name_en: "Nizar Ben Hassene"
+  name_fr: "Nizar Ben Hassene"
+  name_ar: "نزار بن حسن"
+  layers: [media]
+  tagline: "Journalist, as described by SNJT"
+  summary: "Named in press and SNJT reports as arrested, summoned, charged, tried or sentenced, 2022-03 to 2022-11."
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "SNJT"
+  reasoning: "One outlet names the person in this role."
+  falsifiable_by: "A second outlet or a press-card record."
+  sources:
+    - snjt-2022-12-07-0367a
+- id: salah-attia
+  name_en: "Salah Attia"
+  name_fr: "Salah Attia"
+  name_ar: "صلاح عطية"
+  layers: [media]
+  tagline: "founder and editor-in-chief of news website Al-Ray al-Jadid"
+  summary: "Named in press and SNJT reports as arrested, summoned, charged, tried or sentenced, 2021-02 to 2023-02-20."
+  confidence: B
+  basis: reported
+  sources:
+    - snjt-2021-03-13-0dacb
+    - cpj-2022-08-17-3bee6
+    - snjt-2023-03-09-e9033
+- id: ezzedine-moslem
+  name_en: "Ezzedine Moslem"
+  name_fr: "Ezzedine Moslem"
+  name_ar: "عز الدين مسلم"
+  layers: [media]
+  tagline: "Journalist, as described by SNJT"
+  summary: "Named in press and SNJT reports as arrested, summoned, charged, tried or sentenced, 2022-11 to 2022-11."
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "SNJT"
+  reasoning: "One outlet names the person in this role."
+  falsifiable_by: "A second outlet or a press-card record."
+  sources:
+    - snjt-2022-12-07-0367a
+- id: alaa-chebbi
+  name_en: "Alaa Chebbi"
+  name_fr: "Alaa Chebbi"
+  name_ar: "علاء الشابي"
+  layers: [media]
+  tagline: "Journalist, as described by SNJT"
+  summary: "Named in press and SNJT reports as arrested, summoned, charged, tried or sentenced, 2023-09-22 to 2023-09-22."
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "SNJT"
+  reasoning: "One outlet names the person in this role."
+  falsifiable_by: "A second outlet or a press-card record."
+  sources:
+    - snjt-2023-10-05-4aa6f
+    - snjt-2024-05-03-b0df2
+- id: yassine-ramdhani
+  name_en: "Yassine Ramdhani"
+  name_fr: "Yassine Ramdhani"
+  name_ar: "ياسين الرمضاني"
+  layers: [media]
+  tagline: "Journalist, as described by SNJT"
+  summary: "Named in press and SNJT reports as arrested, summoned, charged, tried or sentenced, 2023-10 to 2023-12-01."
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "SNJT"
+  reasoning: "One outlet names the person in this role."
+  falsifiable_by: "A second outlet or a press-card record."
+  sources:
+    - snjt-2024-05-03-b0df2
+- id: borhen-bsaies
+  name_en: "Borhen Bsaies"
+  name_fr: "Borhen Bsaies"
+  name_ar: "برهان بسيس"
+  layers: [media]
+  tagline: "radio journalist"
+  summary: "Named in press and SNJT reports as arrested, summoned, charged, tried or sentenced, 2023-12-05 to 2026-01-22."
+  confidence: B
+  basis: reported
+  sources:
+    - snjt-2024-01-15-293ab
+    - committee-to-protect-2024-05-23-2805b
+    - snjt-2025-05-03-c71fc
+    - reporters-without-bo-2026-05-11-40d1a
+- id: mohamed-boughalleb
+  name_en: "Mohamed Boughalleb"
+  name_fr: "Mohamed Boughalleb"
+  name_ar: "محمد بوغلاب"
+  layers: [media]
+  tagline: "journalist"
+  summary: "Named in press and SNJT reports as arrested, summoned, charged, tried or sentenced, 2023-04-07 to 2026-01-02."
+  confidence: B
+  basis: reported
+  sources:
+    - nawaat-2024-05-29-07d21
+    - snjt-2023-10-05-4aa6f
+    - snjt-2025-05-03-c71fc
+    - committee-to-protect-2024-04-03-a00cc
+- id: samir-sassi
+  name_en: "Samir Sassi"
+  name_fr: "Samir Sassi"
+  name_ar: "سمير ساسي"
+  layers: [media]
+  tagline: "Journalist, as described by SNJT"
+  summary: "Named in press and SNJT reports as arrested, summoned, charged, tried or sentenced, 2024-01-03 to 2024-04-14."
+  confidence: B
+  basis: reported
+  sources:
+    - nawaat-2024-05-29-07d21
+    - snjt-2024-02-12-d6557
+    - snjt-2024-05-03-b0df2
+- id: haythem-el-mekki
+  name_en: "Haythem El Mekki"
+  name_fr: "Haythem El Mekki"
+  name_ar: "هيثم المكي"
+  layers: [media]
+  tagline: "journalist"
+  summary: "Named in press and SNJT reports as arrested, summoned, charged, tried or sentenced, 2023-05-19 to 2026-07-08."
+  confidence: B
+  basis: reported
+  sources:
+    - nawaat-2024-05-29-07d21
+    - snjt-2024-05-03-b0df2
+    - snjt-2025-05-03-c71fc
+    - committee-to-protect-2026-09-03-fcdc2
+- id: shaimaa-hammami
+  name_en: "Shaimaa Hammami"
+  name_fr: "Shaimaa Hammami"
+  name_ar: "شيماء همامي"
+  layers: [media]
+  tagline: "Journalist, as described by SNJT"
+  summary: "Named in press and SNJT reports as arrested, summoned, charged, tried or sentenced, 2024-04-23 to 2024-04-23."
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "SNJT"
+  reasoning: "One outlet names the person in this role."
+  falsifiable_by: "A second outlet or a press-card record."
+  sources:
+    - snjt-2024-05-17-a52bf
+- id: mourad-zeghidi
+  name_en: "Mourad Zeghidi"
+  name_fr: "Mourad Zeghidi"
+  name_ar: "مراد الزغيدي"
+  layers: [media]
+  tagline: "radio journalist"
+  summary: "Named in press and SNJT reports as arrested, summoned, charged, tried or sentenced, 2024-05-11 to 2026-01-22."
+  confidence: B
+  basis: reported
+  sources:
+    - committee-to-protect-2024-05-23-2805b
+    - snjt-2025-05-03-c71fc
+    - reporters-without-bo-2026-05-11-40d1a
+- id: yassin-mahjoub
+  name_en: "Yassin Mahjoub"
+  name_fr: "Yassin Mahjoub"
+  layers: [media]
+  tagline: "freelance photojournalist"
+  summary: "Named in press and SNJT reports as arrested, summoned, charged, tried or sentenced, 2024-05-13 to 2024-05-13."
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "Committee to Protect Journalists"
+  reasoning: "One outlet names the person in this role."
+  falsifiable_by: "A second outlet or a press-card record."
+  sources:
+    - committee-to-protect-2024-05-15-871e7
+- id: nizar-bahloul
+  name_en: "Nizar Bahloul"
+  name_fr: "Nizar Bahloul"
+  name_ar: "نزار بهلول"
+  layers: [media]
+  tagline: "editor of the Tunisian online news outlet Business News"
+  summary: "Named in press and SNJT reports as arrested, summoned, charged, tried or sentenced, 2022-11-14 to 2025-07-04."
+  confidence: B
+  basis: reported
+  sources:
+    - snjt-2026-05-03-84b03
+- id: khaoula-boukrim
+  name_en: "Khaoula Boukrim"
+  name_fr: "Khaoula Boukrim"
+  name_ar: "خولة بوكريم"
+  layers: [media]
+  tagline: "Journalist, as described by SNJT"
+  summary: "Named in press and SNJT reports as arrested, summoned, charged, tried or sentenced, 2024-11 to 2026-02-26."
+  confidence: B
+  basis: reported
+  sources:
+    - snjt-2025-05-03-c71fc
+    - committee-to-protect-2026-06-11-e3c2e
+- id: hamza-belloumi
+  name_en: "Hamza Belloumi"
+  name_fr: "Hamza Belloumi"
+  name_ar: "حمزة البلومي"
+  layers: [media]
+  tagline: "Journalist, as described by SNJT"
+  summary: "Named in press and SNJT reports as arrested, summoned, charged, tried or sentenced, 2020-01-27 to 2026-07-01."
+  confidence: B
+  basis: reported
+  sources:
+    - committee-to-protect-2026-09-03-fcdc2
+- id: insaf-boughdiri
+  name_en: "Insaf Boughdiri"
+  name_fr: "Insaf Boughdiri"
+  layers: [media]
+  tagline: "broadcast journalist and blogger"
+  summary: "Named in press and SNJT reports as arrested, summoned, charged, tried or sentenced, 2026-07-01 to 2026-07-01."
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "Committee to Protect Journalists"
+  reasoning: "One outlet names the person in this role."
+  falsifiable_by: "A second outlet or a press-card record."
+  sources:
+    - committee-to-protect-2026-09-03-fcdc2
+- id: ahmed-ayari
+  name_en: "Ahmed Ayari"
+  name_fr: "Ahmed Ayari"
+  layers: [media]
+  tagline: "journalist with Al Jazeera Tunis bureau"
+  summary: "Named in press and SNJT reports as arrested, summoned, charged, tried or sentenced, 2026-08-26 to 2026-08-26."
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "Reporters Without Borders"
+  reasoning: "One outlet names the person in this role."
+  falsifiable_by: "A second outlet or a press-card record."
+  sources:
+    - reporters-without-bo-2026-08-28-c16e7
+- id: mahmoud-el-majdoub
+  name_en: "Mahmoud El Majdoub"
+  name_fr: "Mahmoud El Majdoub"
+  layers: [media]
+  tagline: "journalist with Al Jazeera Tunis bureau"
+  summary: "Named in press and SNJT reports as arrested, summoned, charged, tried or sentenced, 2026-08-26 to 2026-08-26."
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "Reporters Without Borders"
+  reasoning: "One outlet names the person in this role."
+  falsifiable_by: "A second outlet or a press-card record."
+  sources:
+    - reporters-without-bo-2026-08-28-c16e7
+- id: hamdi-suwaisi
+  name_en: "Hamdi Suwaisi"
+  name_fr: "Hamdi Suwaisi"
+  name_ar: "حمدي السويسي"
+  layers: [media]
+  tagline: "Journalist, as described by SNJT"
+  summary: "Named in press and SNJT reports as arrested, summoned, charged, tried or sentenced, 2026-09-01 to 2026-09-01."
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "SNJT"
+  reasoning: "One outlet names the person in this role."
+  falsifiable_by: "A second outlet or a press-card record."
+  sources:
+    - snjt-2026-10-26-2357a
