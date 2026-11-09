@@ -26013,6 +26013,50 @@
   note: 'Second relay of the same presidency communiqué, with the fuller account: accelerate the files
     without renouncing the people''s rights, warning against reliance on prescription, and the phrase
     "Les portes restent ouvertes à ceux qui sont revenus à la raison". Same single origin as Tunisie Numérique.'
+- id: snjt-2020-03-12-21e43
+  title: "SNJT (protection.snjt.org) report, 2020-03-12"
+  publisher: "SNJT"
+  date: 2020-03-12
+  url: https://protection.snjt.org/wp-content/uploads/2020/03/تقرير-فيفري-.doc
+  tier: 2
+  lang: ar
+  excerpt: "مثلت الصحفية يثرب مشيري امام الدائرة الجناحية الابتدائية بتطاوين بتهمة الاساءة الى الغير عبر شبكة الاتصالات العمومية موضوع الفصل 86 من مجلة الاتصالات اثر شكاية تقدم بها مسؤول رياضي جهوي"
+  note: "Page title not retrieved (the site refused automated access); the quote was checked on the page by hand or from an archive copy."
+- id: snjt-2020-05-15-2a6e4
+  title: "SNJT (protection.snjt.org) report, 2020-05-15"
+  publisher: "SNJT"
+  date: 2020-05-15
+  url: https://protection.snjt.org/wp-content/uploads/2020/05/تقرير-شهر-أفريل-2020.doc
+  tier: 2
+  lang: ar
+  excerpt: "تم إيقاف الصحفي بـ \"إذاعة شمس أف أم\" منتصر ساسي في الطريق السريعة"
+  note: "Page title not retrieved (the site refused automated access); the quote was checked on the page by hand or from an archive copy."
+- id: snjt-2020-07-03-27017
+  title: "SNJT (protection.snjt.org) report, 2020-07-03"
+  publisher: "SNJT"
+  date: 2020-07-03
+  url: https://protection.snjt.org/wp-content/uploads/2020/07/تقرير-شهر-جوان-1.doc
+  tier: 2
+  lang: ar
+  excerpt: "تم الاستماع لمراسل إذاعة \"شمس أف أم\" منتصر ساسي بإقليم الحرس الوطني بنابل على خلفية شكاية تقدم بها صاحب محطة استشفائية ببيت الجديدي"
+  note: "Page title not retrieved (the site refused automated access); the quote was checked on the page by hand or from an archive copy."
+- id: snjt-2020-12-08-2a94d
+  title: "SNJT تقرير شهر نوفمبر 2020"
+  publisher: "SNJT"
+  date: 2020-12-08
+  url: https://protection.snjt.org/wp-content/uploads/2020/12/تقرير-نوفمبر-2020-1.pdf
+  tier: 2
+  lang: ar
+  excerpt: "قام أعوان أمن بنابل باحتجاز منتصر ساسي الصحفي ومراسل إذاعة \"شمس أف أم\""
+- id: snjt-2021-03-13-0dacb
+  title: "SNJT (protection.snjt.org) report, 2021-03-13"
+  publisher: "SNJT"
+  date: 2021-03-13
+  url: https://protection.snjt.org/wp-content/uploads/2021/03/تقرير-شهر-فيفري2021-.doc
+  tier: 2
+  lang: ar
+  excerpt: "تم الاستماع لمراسل إذاعة \"شمس أف أم\" منتصر ساسي من قبل الشرطة العدلية بنابل على خلفية تقدمت بها في حقه النائبة إيمان بالطيب"
+  note: "Page title not retrieved (the site refused automated access); the quote was checked on the page by hand or from an archive copy."
 - id: international-federa-2020-07-29-607fc
   title: "Tunisie : la condamnation d’un journaliste à une peine de prison ferme est une grave atteinte à la liberté d’expression / IFJ"
   publisher: "International Federation of Journalists"
@@ -26029,14 +26073,23 @@
   tier: 4
   lang: fr
   excerpt: "La peine de prison contre le journaliste et écrivain, Taoufik Ben Brik a été revue à la baisse, ce mardi 4 août 2020"
-- id: snjt-2020-12-08-2a94d
-  title: "SNJT تقرير شهر نوفمبر 2020"
+- id: snjt-2020-10-08-22435
+  title: "SNJT (protection.snjt.org) report, 2020-10-08"
   publisher: "SNJT"
-  date: 2020-12-08
-  url: https://protection.snjt.org/wp-content/uploads/2020/12/تقرير-نوفمبر-2020-1.pdf
+  date: 2020-10-08
+  url: https://protection.snjt.org/wp-content/uploads/2020/10/تقرير-شهر-سبتمبر-2020.docx
   tier: 2
   lang: ar
-  excerpt: "قام أعوان أمن بنابل باحتجاز منتصر ساسي الصحفي ومراسل إذاعة \"شمس أف أم\""
+  excerpt: "مثل الصحفي بموقع \"انحياز\" الالكتروني غسان بن خليفة أمام المحكمة الابتدائية بجندوبة على خلفية شكاية تقدم بها صاحب مقطع حجارة"
+  note: "Page title not retrieved (the site refused automated access); the quote was checked on the page by hand or from an archive copy."
+- id: cpj-2022-09-07-136de
+  title: "Tunisian authorities arrest journalist Ghassen Ben Khelifa for alleged terrorism - Committee to Protect Journalists"
+  publisher: "CPJ"
+  date: 2022-09-07
+  url: https://cpj.org/2022/09/tunisian-authorities-arrest-journalist-ghassen-ben-khelifa-for-alleged-terrorism/
+  tier: 2
+  lang: en
+  excerpt: "On Tuesday, September 6, state security officers arrested Ben Khelifa, editor-in-chief of the local independent newspaper Inhiyez,"
 - id: nawaat-2024-05-29-07d21
   title: "Timeline: Journalists under fire of Saied regime"
   publisher: "Nawaat"
@@ -26044,7 +26097,7 @@
   url: https://nawaat.org/2024/05/29/timeline-journalists-under-fire-of-saied-regime/
   tier: 4
   lang: en
-  excerpt: "The Military Court sentences Ayad to four months in prison for “insulting” the head of state."
+  excerpt: "Journalist Ghassen Ben Khelifa is interrogated for terrorist conspiracy, in a case dating back to 2022."
 - id: committee-to-protect-2021-10-07-eba5f
   title: "Tunisian authorities arrest Zaytouna TV host Amer Ayad, confiscate channel’s equipment - Committee to Protect Journalists"
   publisher: "Committee to Protect Journalists"
@@ -26069,22 +26122,15 @@
   tier: 4
   lang: en
   excerpt: "Islem Hkiri, a freelance photographer, was arrested on January 23 and charged with breaking the curfew and assaulting a public servant."
-- id: snjt-2021-06-09-cca70
-  title: "SNJT تقرير شهر ماي 2021"
+- id: snjt-2021-02-11-ab1ac
+  title: "SNJT (protection.snjt.org) report, 2021-02-11"
   publisher: "SNJT"
-  date: 2021-06-09
-  url: https://protection.snjt.org/wp-content/uploads/2021/06/تقرير-شهر-ماي-2021-1.pdf
+  date: 2021-02-11
+  url: https://protection.snjt.org/wp-content/uploads/2021/04/تقرير-جانفي-2021.doc
   tier: 2
   lang: ar
-  excerpt: "تصويرها. ورغم تأكيد الص حفية انها لم تعمل على تصوير أعوان األمن اال انه تم احتجازها ونقلها الي مركز األمن بنهج"
-- id: euro-med-human-right-2022-05-17-cb9d0
-  title: "'Reporting Under the Weight of Fear': Restrictions on the media in Tunisia under the president's exceptional measures (25 July 2021 – 15 April 2022)"
-  publisher: "Euro-Med Human Rights Monitor"
-  date: 2022-05-17
-  url: https://www.euromedmonitor.org/en/article/5121/%27Reporting-Under-the-Weight-of-Fear%27:-Restrictions-on-the-media-in-Tunisia-under-the-president%27s-exceptional-measures-%2825-July-2021-%E2%80%93-15-April-2022%29
-  tier: 2
-  lang: en
-  excerpt: "detained New York Times' special envoy Vivian Yee for two hours, as she covered events"
+  excerpt: "في 26 جانفي 2021، وقضت المحكمة بإدانته بتهمة \"الاعتداء بالقول على موظف عمومي خلال تأديته لعمله\" وقضت ضده بخطية مالية بـ 200 دينار"
+  note: "Page title not retrieved (the site refused automated access); the quote was checked on the page by hand or from an archive copy."
 - id: committee-to-protect-2025-03-03-bfd50
   title: "Chadha Hadj Mbarek - Committee to Protect Journalists"
   publisher: "Committee to Protect Journalists"
@@ -26109,14 +26155,6 @@
   tier: 3
   lang: ar
   excerpt: "أصدرت يوم أمس دائرة الاتهام بمحكمة سوسة في الساحل التونسي، بطاقة إيداع بالسجن في حق الصحفية شذى الحاج مبارك"
-- id: kapitalis-2021-09-30-7df32
-  title: "Tunisie : Plusieurs abus policiers contre des journalistes pendant l'exercice de leurs fonctions - Kapitalis"
-  publisher: "Kapitalis"
-  date: 2021-09-30
-  url: https://kapitalis.com/tunisie/2021/09/30/tunisie-plusieurs-abus-policiers-contre-des-journalistes-pendant-lexercice-de-leurs-fonctions/
-  tier: 2
-  lang: fr
-  excerpt: "Le policier a tenté de s’emparer de son équipement, l’a agressée et l’a emmenée au poste de police du Bardo"
 - id: snjt-2025-05-03-c71fc
   title: "SNJT report, 2025-05-03"
   publisher: "SNJT"
@@ -26151,6 +26189,15 @@
   tier: 2
   lang: en
   excerpt: "Guesmi was first arrested over his reporting on March 18, 2022,"
+- id: snjt-2022-04-13-64b88
+  title: "SNJT (protection.snjt.org) report, 2022-04-13"
+  publisher: "SNJT"
+  date: 2022-04-13
+  url: https://protection.snjt.org/wp-content/uploads/2022/04/%D8%AA%D9%82%D8%B1%D9%8A%D8%B1-%D9%85%D8%A7%D8%B1%D8%B3-2022.doc
+  tier: 2
+  lang: ar
+  excerpt: "قرر وكيل بالجمهورية بالقطب القضائي لمكافحة الإرهاب تجديد الاحتفاظ بخليفة القاسمي على ذمة التحقيق في"
+  note: "Page title not retrieved (the site refused automated access); the quote was checked on the page by hand or from an archive copy."
 - id: snjt-2023-06-15-62738
   title: "SNJT تقرير شهر ماي 2023"
   publisher: "SNJT"
@@ -26175,6 +26222,24 @@
   tier: 2
   lang: en
   excerpt: "He was released on March 6, 2024, and acquitted on all charges on June 9, 2025."
+- id: snjt-2022-02-11-41539
+  title: "SNJT (protection.snjt.org) report, 2022-02-11"
+  publisher: "SNJT"
+  date: 2022-02-11
+  url: https://protection.snjt.org/wp-content/uploads/2022/02/تقرير-جانفي-2022.doc
+  tier: 2
+  lang: ar
+  excerpt: "قام عون أمن بالزي الرسمي بنقل المصور الصحفي بموقع بيزنس نيوز مروان السهيلي إلى مركز الأمن"
+  note: "Page title not retrieved (the site refused automated access); the quote was checked on the page by hand or from an archive copy."
+- id: snjt-2022-12-07-0367a
+  title: "SNJT (protection.snjt.org) report, 2022-12-07"
+  publisher: "SNJT"
+  date: 2022-12-07
+  url: https://protection.snjt.org/wp-content/uploads/2022/12/%D8%AA%D9%82%D8%B1%D9%8A%D8%B1-%D8%B4%D9%87%D8%B1-%D9%86%D9%88%D9%81%D9%85%D8%A8%D8%B1-2022.doc
+  tier: 2
+  lang: ar
+  excerpt: "إثر اعتراضه على صدور حكم غيابي صادر في شهر مارس 2022 يقضي بسجنة سنة بسبب خبر"
+  note: "Page title not retrieved (the site refused automated access); the quote was checked on the page by hand or from an archive copy."
 - id: cpj-2022-08-17-3bee6
   title: "Tunisian journalist Salah Attia sentenced to 3 months in prison - Committee to Protect Journalists"
   publisher: "CPJ"
@@ -26191,14 +26256,6 @@
   tier: 2
   lang: ar
   excerpt: "االختبــارات التقنيــة عليهــم. تتبع الصحفيين ابتسام شويخة وصالح عطية قضائيا الوقــــــــــــــــــــائع اس ـتمعت فرق ـة األبح ـاث والتفتي ـش ل ـكل م ـن الصحفـي والمحل"
-- id: cpj-2022-09-07-136de
-  title: "Tunisian authorities arrest journalist Ghassen Ben Khelifa for alleged terrorism - Committee to Protect Journalists"
-  publisher: "CPJ"
-  date: 2022-09-07
-  url: https://cpj.org/2022/09/tunisian-authorities-arrest-journalist-ghassen-ben-khelifa-for-alleged-terrorism/
-  tier: 2
-  lang: en
-  excerpt: "On Tuesday, September 6, state security officers arrested Ben Khelifa, editor-in-chief of the local independent newspaper Inhiyez,"
 - id: cpj-2023-02-14-e1e79
   title: "Tunisian authorities arrest Mosaique FM director Noureddine Boutar - Committee to Protect Journalists"
   publisher: "CPJ"
@@ -26231,14 +26288,6 @@
   tier: 2
   lang: en
   excerpt: "El-Heni was released on June 22 and that trial is ongoing,"
-- id: snjt-2023-08-15-8a797
-  title: "SNJT تقرير شهر جويلية 2023"
-  publisher: "SNJT"
-  date: 2023-08-15
-  url: https://protection.snjt.org/wp-content/uploads/2023/08/%D8%AC%D9%88%D9%8A%D9%84%D9%8A%D8%A9.pdf
-  tier: 2
-  lang: ar
-  excerpt: "السـبت 21جويلبـة 2023بالسـجن المدنـي بالمس ـعدين. ترحيل اسالم الحكيري من ليبيا الوقــــــــــــــــــــائع تـم فـي الليلـة الفاصلـة بيـن 11و 12جويليـة ،2023احتجـاز المصـور الصحفـي إسـام الحكي ـري"
 - id: snjt-2023-10-05-4aa6f
   title: "SNJT تقرير شهر سبتمبر 2023"
   publisher: "SNJT"
@@ -26246,7 +26295,7 @@
   url: https://protection.snjt.org/wp-content/uploads/2023/11/septembre-2023.pdf
   tier: 2
   lang: ar
-  excerpt: "وتعريــض أطفــال للخطــر» بســبب التقريــر الــذي نشــره. تتبع عالء الشابي قضائيا: الوقــــــــــــــــــــائع مثـل الصحفـي ومقـدم برنامـج «عنـدي مـا نقلـك» بقنـاة «الحـوار التونسـي» سـابقا عـاء الشـابي"
+  excerpt: "وتعريــض أطفــال للخطــر» بســبب التقريــر الــذي نشــره. تتبع عالء الشابي قضائيا: الوقــــــــــــــــــــائع مثـل الصحفـي ومقـدم برنامـج «عنـدي مـا نقلـك» بقنـاة «الحـوار التونسـي» سـابقا عـاء ..."
 - id: snjt-2024-01-15-293ab
   title: "SNJT تقرير شهر ديسمبر 2023"
   publisher: "SNJT"

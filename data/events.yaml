@@ -7722,6 +7722,45 @@
   sources:
   - lapresse-dbeibeh-nafti-2026-11-07
   - lana-dbeibah-cen-sad-2026-11-07
+- id: ev-press-snjt-2020-02-yathreb-machiri-summons
+  date: "2020-02-13"
+  date_end: "2020-02-27"
+  title_en: "Journalist Yathreb Machiri: summons, questioning or charge, sentence"
+  title_fr: "Journaliste Yathreb Machiri : convocation, audition ou poursuite, condamnation"
+  category: legal
+  subcategory: press-detention
+  actors: [yathreb-machiri]
+  institutions: [snjt]
+  summary: "2020-02-13: Journalist appeared before the Tataouine first-instance criminal chamber charged with insulting others via public telecom networks (art. 86 ... 2020-02-27: Court convicted journalist Yathreb Machiri (fine) on 27 February 2020 of insulting others via public telecom networks (art. 86, Telecommunications ... Outcome and later rulings, as far as the sources say: not stated. Judgment text not retrieved."
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "SNJT"
+  reasoning: "One outlet or report relays the steps; no court record or second source retrieved."
+  falsifiable_by: "The court registry or a second independent report."
+  sources:
+    - snjt-2020-03-12-21e43
+- id: ev-press-snjt-2020-04-montassar-sassi-arrest
+  date: "2020-04"
+  date_end: "2021-02"
+  title_en: "Journalist Montassar Sassi: arrest or detention, summons, questioning or charge"
+  title_fr: "Journaliste Montassar Sassi : arrestation ou garde à vue, convocation, audition ou poursuite"
+  category: legal
+  subcategory: press-detention
+  actors: [montassar-sassi]
+  institutions: [snjt]
+  summary: "2020-04: Journalist at 'Shems FM' stopped on the Nabeul-Sousse motorway while following a car carrying a businessman to compulsory quarantine; taken to ... 2020-06-25: Shems FM reporter questioned by Nabeul regional national guard following a complaint by the owner of a medical station in Hammamet over an article ... 2020-11-02: Detained by Nabeul police, taken to the station, and a minutes report drawn up against ... Outcome and later rulings, as far as the sources say: questioned; source confidentiality asserted. Judgment text not retrieved."
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "SNJT"
+  reasoning: "One outlet or report relays the steps; no court record or second source retrieved."
+  falsifiable_by: "The court registry or a second independent report."
+  sources:
+    - snjt-2020-05-15-2a6e4
+    - snjt-2020-07-03-27017
+    - snjt-2020-12-08-2a94d
+    - snjt-2021-03-13-0dacb
 - id: ev-press-taoufik-ben-brik-2020
   date: "2020-07-23"
   date_end: "2020-08-04"
@@ -7737,23 +7776,22 @@
   sources:
     - international-federa-2020-07-29-607fc
     - business-news-2020-08-04-d4d37
-- id: ev-press-sassi-montassar
-  date: "2020-11-02"
-  title_en: "Journalist Montassar Sassi: arrest or detention, summons, questioning or charge"
-  title_fr: "Journaliste Montassar Sassi : arrestation ou garde à vue, convocation, audition ou poursuite"
+- id: ev-press-benkhelifa-2022
+  date: "2020-09"
+  date_end: "2023-11-15"
+  title_en: "Journalist Ghassen Ben Khelifa: arrest or detention, summons, questioning or charge, trial hearing"
+  title_fr: "Journaliste Ghassen Ben Khelifa : arrestation ou garde à vue, convocation, audition ou poursuite, audience"
   category: legal
   subcategory: press-detention
-  actors: [montassar-sassi]
+  actors: [ghassen-ben-khelifa]
   institutions: [snjt]
-  summary: "2020-11-02: Detained by Nabeul police, taken to the station, and a minutes report drawn up against him; presented to the prosecutor in a state of presentation. 2020-11-02: Referred to the Nabeul prosecutor in a state of presentation on a charge of carrying out journalism subject to licence. Outcome and later rulings, as far as the sources say: released. Judgment text not retrieved."
-  confidence: C
-  basis: inferred
-  verification: needs-primary-source
-  attributed_to: "SNJT"
-  reasoning: "One outlet or report relays the steps; no court record or second source retrieved."
-  falsifiable_by: "The court registry or a second independent report."
+  summary: "2020-09: Journalist at 'Inhiyaz' electronic appeared before the Jendouba first-instance court following a complaint by a landowner over coverage of protests ... 2022-09-06: State security officers arrested Ben Khelifa at his home in Tunis after raiding it and confiscating laptops and electronic devices; counterterrorism ... 2023-11-15: Interrogated for terrorist conspiracy in a case dating back to 2022. Outcome and later rulings, as far as the sources say: not stated. Judgment text not retrieved."
+  confidence: B
+  basis: reported
   sources:
-    - snjt-2020-12-08-2a94d
+    - snjt-2020-10-08-22435
+    - cpj-2022-09-07-136de
+    - nawaat-2024-05-29-07d21
 - id: ev-press-amer-ayad-2021
   date: "2021"
   date_end: "2021-11-25"
@@ -7773,55 +7811,18 @@
 - id: ev-press-islem-hkiri-2021
   date: "2021-01-23"
   date_end: "2021-01-27"
-  title_en: "Journalist Islem Hkiri: arrest or detention"
-  title_fr: "Journaliste Islem Hkiri : arrestation ou garde à vue"
+  title_en: "Journalist Islem Hkiri: arrest or detention, sentence"
+  title_fr: "Journaliste Islem Hkiri : arrestation ou garde à vue, condamnation"
   category: legal
   subcategory: press-detention
   actors: [islem-hkiri]
-  institutions: []
-  summary: "2021-01-23: He was arrested at night while covering protests despite holding a curfew authorisation, and charged with breaking the curfew and assaulting a public ... Outcome and later rulings, as far as the sources say: Released on bail.. Judgment text not retrieved."
-  confidence: C
-  basis: inferred
-  verification: needs-primary-source
-  attributed_to: "IDN-InDepthNews"
-  reasoning: "One outlet or report relays the steps; no court record or second source retrieved."
-  falsifiable_by: "The court registry or a second independent report."
+  institutions: [snjt]
+  summary: "2021-01-23: He was arrested at night while covering protests despite holding a curfew authorisation, and charged with breaking the curfew and assaulting a public ... 2021-01-26: Court convicted photographer Islam Hakiri of insulting a public official by word during performance of duties and fined him 200 dinars (26 January ... Outcome and later rulings, as far as the sources say: Released on bail.. Judgment text not retrieved."
+  confidence: B
+  basis: reported
   sources:
     - idn-indepthnews-2021-02-01-1d531
-- id: ev-press-al-marnaqi-amna
-  date: "2021-05-11"
-  title_en: "Journalist Amna Al Marnaqi: arrest or detention"
-  title_fr: "Journaliste Amna Al Marnaqi : arrestation ou garde à vue"
-  category: legal
-  subcategory: press-detention
-  actors: [amna-al-marnaqi]
-  institutions: [snjt]
-  summary: "2021-05-11: Detained by uniformed police while filming a report at Sidi Bahri market in Tunis over health-protocol compliance; taken to the Nahj Colonia police ... Outcome and later rulings, as far as the sources say: released. Judgment text not retrieved."
-  confidence: C
-  basis: inferred
-  verification: needs-primary-source
-  attributed_to: "SNJT"
-  reasoning: "One outlet or report relays the steps; no court record or second source retrieved."
-  falsifiable_by: "The court registry or a second independent report."
-  sources:
-    - snjt-2021-06-09-cca70
-- id: ev-press-vivian-yee-2021
-  date: "2021-07"
-  title_en: "Journalist Vivian Yee: arrest or detention"
-  title_fr: "Journaliste Vivian Yee : arrestation ou garde à vue"
-  category: legal
-  subcategory: press-detention
-  actors: [vivian-yee]
-  institutions: []
-  summary: "2021-07: Security forces detained her for two hours while she was covering events in a Tunis neighbourhood after the 25 July measures. Outcome and later rulings, as far as the sources say: Released after two hours.. Judgment text not retrieved."
-  confidence: C
-  basis: inferred
-  verification: needs-primary-source
-  attributed_to: "Euro-Med Human Rights Monitor"
-  reasoning: "One outlet or report relays the steps; no court record or second source retrieved."
-  falsifiable_by: "The court registry or a second independent report."
-  sources:
-    - euro-med-human-right-2022-05-17-cb9d0
+    - snjt-2021-02-11-ab1ac
 - id: ev-press-hadjmbarek-2021
   date: "2021-09"
   date_end: "2021-10-05"
@@ -7831,30 +7832,13 @@
   subcategory: press-detention
   actors: [chadha-hadj-mbarek]
   institutions: [snjt]
-  summary: "2021-09: She was arrested at home in Sousse over the Instalingo case and held for five days on anti-state charges. 2021-09: Travel ban imposed on the defendants by the prosecutor during the investigation (date within September 2021 not stated; first mentioned in the ... 2021-09-13: Prosecutor at Sousse 2 opened an investigation against her and 9 InstaLingo production-company staff on state-security charges; investigating judge ... 2021-09-17: Questioned by the Sousse investigating judge seized of the file. ... Outcome and later rulings, as far as the sources say: deposit warrant ordered. Judgment text not retrieved."
+  summary: "2021-09: She was arrested at home in Sousse over the Instalingo case and held for five days on anti-state charges. 2021-09: Travel ban imposed on the defendants by the prosecutor during the investigation (date within September 2021 not stated; first mentioned in the ... 2021-09-13: Prosecutor at Sousse 2 opened an investigation against her and 9 InstaLingo production-company staff on state-security charges; ... Outcome and later rulings, as far as the sources say: deposit warrant ordered. Judgment text not retrieved."
   confidence: B
   basis: reported
   sources:
     - committee-to-protect-2025-03-03-bfd50
     - snjt-2021-10-19-711b3
     - al-jazeera-arabic-2021-10-06-45be9
-- id: ev-press-lilia-housseini-2021
-  date: "2021-09"
-  title_en: "Journalist Lilia Housseini: arrest or detention"
-  title_fr: "Journaliste Lilia Housseini : arrestation ou garde à vue"
-  category: legal
-  subcategory: press-detention
-  actors: [lilia-housseini]
-  institutions: []
-  summary: "2021-09: A security officer at Bardo assaulted her, tried to seize her equipment and took her to the Bardo police station while she was checking a report on ... Outcome and later rulings, as far as the sources say: Taken to the police station; released.. Judgment text not retrieved."
-  confidence: C
-  basis: inferred
-  verification: needs-primary-source
-  attributed_to: "Kapitalis"
-  reasoning: "One outlet or report relays the steps; no court record or second source retrieved."
-  falsifiable_by: "The court registry or a second independent report."
-  sources:
-    - kapitalis-2021-09-30-7df32
 - id: ev-press-al-arfaoui-faiza
   date: "2021-09-29"
   title_en: "Journalist Faiza Al Arfaoui: arrest or detention, summons, questioning or charge"
@@ -7916,7 +7900,7 @@
   subcategory: press-detention
   actors: [chadha-hadj-mbarek]
   institutions: [snjt]
-  summary: "2022: SNJT inventory lists a judicial prosecution of the journalist: complainant Public Prosecution; reason: Journalistic work; status: Imprisonment ... 2023-07-20: Security forces detained Hadj Mbarek for her work for digital content production company Instalingo; rights groups reported detention in connection ... 2023-07-20: Appeal chamber in Sousse reversed the investigating judge's dismissal and ordered continuation of prosecution and detention in the Anastalingo case. 2024-10: Judge transferred Hadj Mbarek ... Outcome and later rulings, as far as the sources say: released. Judgment text not retrieved."
+  summary: "2022: SNJT inventory lists a judicial prosecution of the journalist: complainant Public Prosecution; reason: Journalistic work; status: Imprisonment ... 2023-07-20: Security forces detained Hadj Mbarek for her work for digital content production company Instalingo; rights groups reported detention in connection ... 2023-07-20: Appeal chamber in Sousse reversed the investigating judge's dismissal and ordered ... Outcome and later rulings, as far as the sources say: released. Judgment text not retrieved."
   confidence: B
   basis: reported
   sources:
@@ -7933,15 +7917,119 @@
   subcategory: press-detention
   actors: [khalifa-guesmi]
   institutions: [snjt]
-  summary: "2022: SNJT inventory lists a judicial prosecution of the journalist: complainant Public Prosecution; reason: Newspaper article; status: Release after ... 2022-03-18: Authorities arrested Guesmi and held him for one week after alleging his reporting on the dismantling of a terrorist cell illegally disclosed ... 2022-11-29: A court of first instance sentenced Guesmi to one year in prison on charges of disclosing national security information related to reporting on a ... 2023-05-15: Sentence recorded in the source; ... Outcome and later rulings, as far as the sources say: acquitted. Judgment text not retrieved."
+  summary: "2022: SNJT inventory lists a judicial prosecution of the journalist: complainant Public Prosecution; reason: Newspaper article; status: Release after ... 2022-03-18: Authorities arrested Guesmi and held him for one week after alleging his reporting on the dismantling of a terrorist cell illegally disclosed ... 2022-03-25: Custody renewed for a second five-day period and presented in custody on 2022-03-25 for ... Outcome and later rulings, as far as the sources say: acquitted. Judgment text not retrieved."
   confidence: B
   basis: reported
   sources:
     - snjt-2025-05-03-c71fc
     - cpj-2023-05-18-c774f
+    - snjt-2022-04-13-64b88
     - snjt-2023-06-15-62738
     - rsf-2024-03-07-b0122
     - committee-to-protect-2024-03-07-4bdbd
+- id: ev-press-marouen-sehili-detention-2022-01-14-snjtf
+  date: "2022-01-14"
+  title_en: "Journalist Marouen Sehili: arrest or detention"
+  title_fr: "Journaliste Marouen Sehili : arrestation ou garde à vue"
+  category: legal
+  subcategory: press-detention
+  actors: [marouen-sehili]
+  institutions: [snjt]
+  summary: "2022-01-14: Taken to Ibn Khaldoun police station for photographing on Avenue Habib Bourguiba during 14 January protests and held over an hour without stated ... Outcome and later rulings, as far as the sources say: released. Judgment text not retrieved."
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "SNJT"
+  reasoning: "One outlet or report relays the steps; no court record or second source retrieved."
+  falsifiable_by: "The court registry or a second independent report."
+  sources:
+    - snjt-2022-02-11-41539
+- id: ev-press-mathieu-galtier-detention-2022-01-14-snjtf
+  date: "2022-01-14"
+  title_en: "Journalist Mathieu Galtier: arrest or detention"
+  title_fr: "Journaliste Mathieu Galtier : arrestation ou garde à vue"
+  category: legal
+  subcategory: press-detention
+  actors: [mathieu-galtier]
+  institutions: [snjt]
+  summary: "2022-01-14: Assaulted, had phone and notebook seized, and arrested/taken to Ibn Khaldoun police station while covering dispersal of protests; released after ... Outcome and later rulings, as far as the sources say: released. Judgment text not retrieved."
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "SNJT"
+  reasoning: "One outlet or report relays the steps; no court record or second source retrieved."
+  falsifiable_by: "The court registry or a second independent report."
+  sources:
+    - snjt-2022-02-11-41539
+- id: ev-press-matteo-garavoglia-detention-2022-01-14-snjtf
+  date: "2022-01-14"
+  title_en: "Journalist Matteo Garavoglia: arrest or detention"
+  title_fr: "Journaliste Matteo Garavoglia : arrestation ou garde à vue"
+  category: legal
+  subcategory: press-detention
+  actors: [matteo-garavoglia]
+  institutions: [snjt]
+  summary: "2022-01-14: Detained by security forces on Avenue Habib Bourguiba during 14 January protests coverage due to lack of 2022 accreditation card; released after ... Outcome and later rulings, as far as the sources say: released. Judgment text not retrieved."
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "SNJT"
+  reasoning: "One outlet or report relays the steps; no court record or second source retrieved."
+  falsifiable_by: "The court registry or a second independent report."
+  sources:
+    - snjt-2022-02-11-41539
+- id: ev-press-mehdi-ach-detention-2022-01-14-snjtf
+  date: "2022-01-14"
+  title_en: "Journalist Mehdi Ach: arrest or detention"
+  title_fr: "Journaliste Mehdi Ach : arrestation ou garde à vue"
+  category: legal
+  subcategory: press-detention
+  actors: [mehdi-ach]
+  institutions: [snjt]
+  summary: "2022-01-14: Arrested by security forces near Rue Jean Jaurès during 14 January protests coverage and taken to Ibn Khaldoun police station; released after ... Outcome and later rulings, as far as the sources say: released. Judgment text not retrieved."
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "SNJT"
+  reasoning: "One outlet or report relays the steps; no court record or second source retrieved."
+  falsifiable_by: "The court registry or a second independent report."
+  sources:
+    - snjt-2022-02-11-41539
+- id: ev-press-zeina-majri-detention-2022-01-14-snjtf
+  date: "2022-01-14"
+  title_en: "Journalist Zeina Majri: arrest or detention"
+  title_fr: "Journaliste Zeina Majri : arrestation ou garde à vue"
+  category: legal
+  subcategory: press-detention
+  actors: [zeina-majri]
+  institutions: [snjt]
+  summary: "2022-01-14: Arrested while filming the detention of a 15-year-old during protests on Avenue Mohamed V, taken to Ibn Khaldoun police station and held over an hour. Outcome and later rulings, as far as the sources say: released. Judgment text not retrieved."
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "SNJT"
+  reasoning: "One outlet or report relays the steps; no court record or second source retrieved."
+  falsifiable_by: "The court registry or a second independent report."
+  sources:
+    - snjt-2022-02-11-41539
+- id: ev-press-nizar-ben-hassene-conviction-2022-03-snjtf
+  date: "2022-03"
+  date_end: "2022-11"
+  title_en: "Journalist Nizar Ben Hassene: trial hearing, sentence"
+  title_fr: "Journaliste Nizar Ben Hassene : audience, condamnation"
+  category: legal
+  subcategory: press-detention
+  actors: [nizar-ben-hassene]
+  institutions: [snjt]
+  summary: "2022-03: Sentenced in absentia to one year in prison in March 2022 over a news item about a citizen's protest in front of Mahdia governorate, on charges ... 2022-11: Appeared before the Mahdia first instance court after objecting to the in absentia one-year prison sentence issued in March 2022. Outcome and later rulings, as far as the sources say: objection hearing held (as stated). Judgment text not retrieved."
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "SNJT"
+  reasoning: "One outlet or report relays the steps; no court record or second source retrieved."
+  falsifiable_by: "The court registry or a second independent report."
+  sources:
+    - snjt-2022-12-07-0367a
 - id: ev-press-salah-attia-2022
   date: "2022-06-11"
   date_end: "2023-02-20"
@@ -7951,27 +8039,29 @@
   subcategory: press-detention
   actors: [salah-attia]
   institutions: [snjt]
-  summary: "2022-06-11: Plainclothes security officers arrested Attia in a coffee shop in Tunis in connection with his June 10 Al-Jazeera interview claiming President Saied ... 2022-08-16: Tunis military court sentenced Attia to three months in prison on charges including accusing public officials of illegal actions and harming the ... 2023-02-20: Summons, questioning or charge recorded in the source; legal basis as stated: not stated. Outcome and later rulings, as far as the sources say: not stated. Judgment text not retrieved."
+  summary: "2022-06-11: Plainclothes security officers arrested Attia in a coffee shop in Tunis in connection with his June 10 Al-Jazeera interview claiming President Saied ... 2022-08-16: Tunis military court sentenced Attia to three months in prison on charges including accusing public officials of illegal actions and harming the ... 2023-02-20: Summons, questioning or charge recorded in the source; legal basis as stated: not ... Outcome and later rulings, as far as the sources say: not stated. Judgment text not retrieved."
   confidence: B
   basis: reported
   sources:
     - cpj-2022-08-17-3bee6
     - snjt-2023-03-09-e9033
-- id: ev-press-benkhelifa-2022
-  date: "2022-09-06"
-  date_end: "2023-11-15"
-  title_en: "Journalist Ghassen Ben Khelifa: arrest or detention, summons, questioning or charge"
-  title_fr: "Journaliste Ghassen Ben Khelifa : arrestation ou garde à vue, convocation, audition ou poursuite"
+- id: ev-press-ezzedine-moslem-detention-2022-11-snjtf
+  date: "2022-11"
+  title_en: "Journalist Ezzedine Moslem: arrest or detention"
+  title_fr: "Journaliste Ezzedine Moslem : arrestation ou garde à vue"
   category: legal
   subcategory: press-detention
-  actors: [ghassen-ben-khelifa]
-  institutions: []
-  summary: "2022-09-06: State security officers arrested Ben Khelifa at his home in Tunis after raiding it and confiscating laptops and electronic devices; counterterrorism ... 2023-11-15: Interrogated for terrorist conspiracy in a case dating back to 2022. Outcome and later rulings, as far as the sources say: not stated. Judgment text not retrieved."
-  confidence: B
-  basis: reported
+  actors: [ezzedine-moslem]
+  institutions: [snjt]
+  summary: "2022-11: Detained by Zarzis National Guard units while covering Jerjis protests, had camera seized, taken to the National Guard center and questioned ... Outcome and later rulings, as far as the sources say: released. Judgment text not retrieved."
+  confidence: C
+  basis: inferred
+  verification: needs-primary-source
+  attributed_to: "SNJT"
+  reasoning: "One outlet or report relays the steps; no court record or second source retrieved."
+  falsifiable_by: "The court registry or a second independent report."
   sources:
-    - cpj-2022-09-07-136de
-    - nawaat-2024-05-29-07d21
+    - snjt-2022-12-07-0367a
 - id: ev-press-noureddine-boutar-2023
   date: "2023-02-13"
   date_end: "2023-05-24"
@@ -8007,23 +8097,6 @@
   sources:
     - cpj-2023-06-21-0c3a4
     - cpj-2024-01-02-cf60e
-- id: ev-press-hakiri-detention-libya-2023-07-11
-  date: "2023-07-11"
-  title_en: "Journalist Islem Hkiri: arrest or detention"
-  title_fr: "Journaliste Islem Hkiri : arrestation ou garde à vue"
-  category: legal
-  subcategory: press-detention
-  actors: [islem-hkiri]
-  institutions: [snjt]
-  summary: "2023-07-11: Arrest or detention recorded in the source; legal basis as stated: not stated. Outcome and later rulings, as far as the sources say: not stated. Judgment text not retrieved."
-  confidence: C
-  basis: inferred
-  verification: needs-primary-source
-  attributed_to: "SNJT"
-  reasoning: "One outlet or report relays the steps; no court record or second source retrieved."
-  falsifiable_by: "The court registry or a second independent report."
-  sources:
-    - snjt-2023-08-15-8a797
 - id: ev-press-chebbi-hearing-2023-09-22
   date: "2023-09-22"
   title_en: "Journalist Alaa Chebbi: summons, questioning or charge, sentence"
@@ -8051,7 +8124,7 @@
   subcategory: press-detention
   actors: [yassine-ramdhani]
   institutions: [snjt]
-  summary: "2023-10: Charged under Decree-Law 54 art. 24 for publishing a video about Ibn Jazzar hospital; investigation opened following a complaint in October 2023. 2023-10-03: Detained for 24 hours after being heard over a complaint by former Interior Minister Taoufik Charfeddine; charged under Decree-Law 54 art. 24. 2023-11-22: Investigating judge charged him with insulting others via social networks under Decree-Law 54 art. 24 over a complaint by the former Interior ... Outcome and later rulings, as far as the sources say: released pending trial. Judgment text not retrieved."
+  summary: "2023-10: Charged under Decree-Law 54 art. 24 for publishing a video about Ibn Jazzar hospital; investigation opened following a complaint in October 2023. 2023-10-03: Detained for 24 hours after being heard over a complaint by former Interior Minister Taoufik Charfeddine; charged under Decree-Law 54 art. 24. 2023-11-22: Investigating judge charged him with insulting others via social networks under Decree-Law 54 ... Outcome and later rulings, as far as the sources say: released; charged. Judgment text not retrieved."
   confidence: C
   basis: inferred
   verification: needs-primary-source
@@ -8069,7 +8142,7 @@
   subcategory: press-detention
   actors: [borhen-bsaies]
   institutions: [snjt]
-  summary: "2023-12-05: Investigating judge questioned Bsaies over a program on the conspiracy case; charges of spreading false news under Decree 54 art 24, exceeding ... 2024-05-11: Police arrested Bsaies in Tunis with Zeghidi in connection with television and radio commentary critical of President Saied. 2024-05-22: Tunis court convicted Bsaies of defamation and spreading false news and sentenced him to one year in prison. 2024-07: SNJT inventory lists a judicial prosecution of the journalist: complainant Public ... Outcome and later rulings, as far as the sources say: Final prison sentence. Judgment text not retrieved."
+  summary: "2023-12-05: Investigating judge questioned Bsaies over a program on the conspiracy case; charges of spreading false news under Decree 54 art 24, exceeding ... 2024-05-11: Police arrested Bsaies in Tunis with Zeghidi in connection with television and radio commentary critical of President Saied. 2024-05-22: Tunis court convicted Bsaies of defamation and spreading false news and sentenced him to one year in prison. ... Outcome and later rulings, as far as the sources say: Final prison sentence. Judgment text not retrieved."
   confidence: B
   basis: reported
   sources:
@@ -8085,7 +8158,7 @@
   subcategory: press-detention
   actors: [zied-el-heni]
   institutions: [snjt]
-  summary: "2023-12-28: Police arrested El Heni after he responded to a summons for questioning over his Dec 28 radio comments criticizing Commerce Minister Kalthoum Ben ... 2024-01-01: General Prosecutor charged El-Heni under Telecommunications Code article 86 for using telecommunications network to insult others; pre-trial ... 2024-01-10: Tunis Court of First Instance convicted El-Heni and imposed six-month suspended prison sentence for insulting the trade minister. 2024-01-30: Appeared before the anti-terror investigating ... Outcome and later rulings, as far as the sources say: charged; kept at liberty. Judgment text not retrieved."
+  summary: "2023-12-28: Police arrested El Heni after he responded to a summons for questioning over his Dec 28 radio comments criticizing Commerce Minister Kalthoum Ben ... 2024-01-01: General Prosecutor charged El-Heni under Telecommunications Code article 86 for using telecommunications network to insult others; pre-trial ... 2024-01-10: Tunis Court of First Instance convicted El-Heni and imposed six-month suspended prison ... Outcome and later rulings, as far as the sources say: charged; kept at liberty. Judgment text not retrieved."
   confidence: B
   basis: reported
   sources:
@@ -8101,7 +8174,7 @@
   subcategory: press-detention
   actors: [mohamed-boughalleb]
   institutions: [snjt]
-  summary: "2024-01: SNJT inventory lists a judicial prosecution of the journalist: complainant Employee; reason: Audiovisual content critical of a government official ... 2024-03-22: Tunisian police arrested Boughalleb in Tunis after complaint by Ministry of Religious Affairs official over social media posts and statements on ... 2024-03-25: Summoned to be heard by the central cybercrime brigade; refused without his defence team present. 2024-04-02: Summoned before the investigating judge in the complaint by lawyer Awicha ... Outcome and later rulings, as far as the sources say: travel-banned. Judgment text not retrieved."
+  summary: "2024-01: SNJT inventory lists a judicial prosecution of the journalist: complainant Employee; reason: Audiovisual content critical of a government official ... 2024-03-22: Tunisian police arrested Boughalleb in Tunis after complaint by Ministry of Religious Affairs official over social media posts and statements on ... 2024-03-25: Summoned to be heard by the central cybercrime brigade; refused without his defence ... Outcome and later rulings, as far as the sources say: travel-banned. Judgment text not retrieved."
   confidence: B
   basis: reported
   sources:
@@ -8136,7 +8209,7 @@
   subcategory: press-detention
   actors: [haythem-el-mekki]
   institutions: [snjt]
-  summary: "2024-01-15: Appeared before the judicial investigations unit of the National Guard in Sfax after a complaint by the Habib Bourguiba University Hospital. 2024-05-16: Appeared before the Sfax court of first instance under Decree-Law 54 following the hospital complaint. 2025-03: SNJT inventory lists a judicial prosecution of the journalist: complainant Public Prosecutor's Office; reason: Publishing content on social media ... 2026-07-08: Sfax Court of Appeal sentenced El Mekki to one year in prison over a social ... Outcome and later rulings, as far as the sources say: convicted; fled Tunisia. Judgment text not retrieved."
+  summary: "2024-01-15: Appeared before the judicial investigations unit of the National Guard in Sfax after a complaint by the Habib Bourguiba University Hospital. 2024-05-16: Appeared before the Sfax court of first instance under Decree-Law 54 following the hospital complaint. 2025-03: SNJT inventory lists a judicial prosecution of the journalist: complainant Public Prosecutor's Office; reason: Publishing content on social ... Outcome and later rulings, as far as the sources say: convicted; fled Tunisia. Judgment text not retrieved."
   confidence: B
   basis: reported
   sources:
@@ -8185,7 +8258,7 @@
   subcategory: press-detention
   actors: [mourad-zeghidi]
   institutions: [snjt]
-  summary: "2024-05-11: Police arrested Zeghidi in Tunis with Bsaies over social media posts in solidarity with imprisoned journalist Mohamed Boughaleb and radio commentary. 2024-05-22: Tunis court convicted Zeghidi of defamation and spreading false news and sentenced him to one year in prison. 2024-07: SNJT inventory lists a judicial prosecution of the journalist: complainant Public Prosecutor's Office; reason: Radio comment; status: Served ... Outcome and later rulings, as far as the sources say: Final prison sentence. Judgment text not retrieved."
+  summary: "2024-05-11: Police arrested Zeghidi in Tunis with Bsaies over social media posts in solidarity with imprisoned journalist Mohamed Boughaleb and radio commentary. 2024-05-22: Tunis court convicted Zeghidi of defamation and spreading false news and sentenced him to one year in prison. 2024-07: SNJT inventory lists a judicial prosecution of the journalist: complainant Public Prosecutor's Office; reason: Radio comment; ... Outcome and later rulings, as far as the sources say: Final prison sentence. Judgment text not retrieved."
   confidence: B
   basis: reported
   sources:
@@ -8217,7 +8290,7 @@
   subcategory: press-detention
   actors: [borhen-bsaies]
   institutions: [snjt]
-  summary: "2024-12: SNJT inventory lists a judicial prosecution of the journalist: complainant Public Prosecutor's Office; reason: Financial matter at a media outlet ... 2025-01-07: Investigating judge issued new detention warrants for Bsaies as part of money-laundering investigation instead of releasing him after eight-month ... 2026-01-22: Tunis court sentenced Bsaies to three years for money laundering and six months for tax offences. Outcome and later rulings, as far as the sources say: convicted; imprisoned. Judgment text not retrieved."
+  summary: "2024-12: SNJT inventory lists a judicial prosecution of the journalist: complainant Public Prosecutor's Office; reason: Financial matter at a media outlet ... 2025-01-07: Investigating judge issued new detention warrants for Bsaies as part of money-laundering investigation instead of releasing him after eight-month ... 2026-01-22: Tunis court sentenced Bsaies to three years for money laundering and six months for ... Outcome and later rulings, as far as the sources say: convicted; imprisoned. Judgment text not retrieved."
   confidence: B
   basis: reported
   sources:
@@ -8232,7 +8305,7 @@
   subcategory: press-detention
   actors: [mourad-zeghidi]
   institutions: [snjt]
-  summary: "2024-12: SNJT inventory lists a judicial prosecution of the journalist: complainant Public Prosecutor's Office; reason: Financial matter at a media outlet ... 2025-01-07: Investigating judge issued new detention warrants for Zeghidi as part of money-laundering investigation instead of releasing him after eight-month ... 2026-01-22: Tunis court sentenced Zeghidi to three years for money laundering and six months for tax offences. Outcome and later rulings, as far as the sources say: convicted; imprisoned. Judgment text not retrieved."
+  summary: "2024-12: SNJT inventory lists a judicial prosecution of the journalist: complainant Public Prosecutor's Office; reason: Financial matter at a media outlet ... 2025-01-07: Investigating judge issued new detention warrants for Zeghidi as part of money-laundering investigation instead of releasing him after eight-month ... 2026-01-22: Tunis court sentenced Zeghidi to three years for money laundering and six months for ... Outcome and later rulings, as far as the sources say: convicted; imprisoned. Judgment text not retrieved."
   confidence: B
   basis: reported
   sources:
