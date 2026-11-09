@@ -4,12 +4,15 @@
 	import type { StartMode } from '$lib/budget-game/board';
 
 	/**
-	 * Decision D2: the default start is the draft; ?start=empty opens the empty purse.
-	 * The query is read in the browser only, because the page is prerendered.
+	 * The default start is the empty purse: every system at zero and the whole
+	 * envelope in the purse. ?start=draft is the hidden testing flag for the
+	 * draft start. The query is read in the browser only, because the page is
+	 * prerendered.
 	 */
-	let start = $state<StartMode>('draft');
+	let start = $state<StartMode>('empty');
+	let playing = $state(false);
 	$effect(() => {
-		if (browser) start = new URLSearchParams(window.location.search).get('start') === 'empty' ? 'empty' : 'draft';
+		if (browser) start = new URLSearchParams(window.location.search).get('start') === 'draft' ? 'draft' : 'empty';
 	});
 	/**
 	 * Citizen budget game, study prototype. Placeholder figures only; nothing is
@@ -23,13 +26,14 @@
 	<meta name="robots" content="noindex" />
 </svelte:head>
 
-<div class="scroll">
+<div class="scroll" class:playing>
 	<p class="back"><a href="/research/citizen-budget">Back to the study page</a></p>
-	<BudgetGame {start} />
+	<BudgetGame {start} onstep={(s) => (playing = s === 'board')} />
 </div>
 
 <style>
 	.back {
+		flex: none;
 		max-inline-size: 46rem;
 		margin: var(--s-6) auto 0;
 		padding-inline: var(--s-6);
@@ -38,5 +42,16 @@
 		flex: 1;
 		min-height: 0;
 		overflow-y: auto;
+		display: flex;
+		flex-direction: column;
+	}
+	/* The board is one screen. The intro, questions and result screens scroll. */
+	.scroll.playing {
+		overflow: hidden;
+	}
+	@media (max-width: 900px) {
+		.scroll.playing .back {
+			display: none;
+		}
 	}
 </style>

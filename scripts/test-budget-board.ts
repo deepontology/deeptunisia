@@ -21,6 +21,7 @@ import {
 	toAllocation,
 	giveProblem,
 	atDraft,
+	stepMd,
 	type Board,
 	type BoardState
 } from '../src/lib/budget-game/board.ts';
@@ -206,6 +207,163 @@ if (alloc) {
 }
 ok('draft level is twenty steps and the maximum is forty', DRAFT_LEVEL === 20 && MAX_LEVEL === 40);
 ok('the order lists match the line model', MOVABLE_ORDER.length === 16 && LOCKED_ORDER.length === 2);
+
+// The owner's rules after the board rewrite.
+
+// Every step is 5% of its line's draft.
+ok(
+	'every movable line steps by 5% of its draft',
+	lines.movable.every((l) => Math.abs(stepMd(l) - l.draft * 0.05) <= 0.001),
+	lines.movable.map((l) => `${l.id} ${stepMd(l).toFixed(3)}`).join(', ')
+);
+
+// The route default is the empty start; draft is only a hidden test flag.
+const prototype = readFileSync(join(ROOT, 'src/routes/research/citizen-budget/prototype/+page.svelte'), 'utf8');
+const initialStart = prototype.match(/let\s+start\s*=\s*\$state<StartMode>\('([a-z]+)'\)/)?.[1];
+ok('the prototype route defaults to the empty start', initialStart === 'empty', `the route starts at "${initialStart}"`);
+const queryStart = prototype.match(/get\('start'\)\s*===\s*'([a-z]+)'\s*\?\s*'([a-z]+)'\s*:\s*'([a-z]+)'/);
+ok(
+	'the prototype route reads draft only as the hidden ?start=draft flag',
+	queryStart !== null && queryStart[2] === 'draft' && queryStart[3] === 'empty',
+	queryStart ? `the route reads "${queryStart[1]}" and falls back to "${queryStart[3]}"` : 'no start query handling found'
+);
+
+// Take then give of the same line returns to the same levels and purse.
+{
+	const before = startBoard(board, 'draft');
+	const out = give(board, give(board, take(board, take(board, before, 'education'), 'education'), 'education'), 'education');
+	ok(
+		'take then give of the same line returns to the same levels and purse',
+		JSON.stringify(out.levels) === JSON.stringify(before.levels) && Math.abs(purse(board, out) - purse(board, before)) < 1e-6
+	);
+}
+let takeGiveBroke = 0;
+let takeGiveTried = 0;
+let takeGiveState: BoardState = startBoard(board, 'draft');
+for (let i = 0; i < 500; i++) {
+	const l = lines.movable[Math.floor(rand() * lines.movable.length)];
+	const taken = take(board, takeGiveState, l.id);
+	if (taken === takeGiveState) continue;
+	const returned = give(board, taken, l.id);
+	if (returned === taken) continue;
+	takeGiveTried++;
+	if (JSON.stringify(returned.levels) !== JSON.stringify(takeGiveState.levels)) takeGiveBroke++;
+	if (Math.abs(purse(board, returned) - purse(board, takeGiveState)) > 1e-6) takeGiveBroke++;
+	takeGiveState = returned;
+}
+ok('take then give holds over a random walk', takeGiveTried > 0 && takeGiveBroke === 0, `${takeGiveTried} tried, ${takeGiveBroke} broke`);
+
+// Undo is exact for every move kind, over 2,000 random sequences.
+const undoKinds = new Map<string, number>();
+let undoChecked = 0;
+let undoBroke = 0;
+let undoState: BoardState = startBoard(board, 'draft');
+for (let i = 0; i < 2_000; i++) {
+	const l = lines.movable[Math.floor(rand() * lines.movable.length)];
+	const before = undoState;
+	const r = rand();
+	let next: BoardState;
+	let kind: 'take' | 'give' | 'keep' | 'undo';
+	if (r < 0.4) {
+		next = take(board, undoState, l.id);
+		kind = 'take';
+	} else if (r < 0.8) {
+		next = give(board, undoState, l.id);
+		kind = 'give';
+	} else if (r < 0.92) {
+		next = keepDraft(board, undoState);
+		kind = 'keep';
+	} else {
+		next = undo(undoState);
+		kind = 'undo';
+	}
+	undoState = next;
+	if (kind === 'undo' || next === before) continue;
+	undoKinds.set(kind, (undoKinds.get(kind) ?? 0) + 1);
+	undoChecked++;
+	const back = undo(next);
+	if (JSON.stringify(back.levels) !== JSON.stringify(before.levels)) undoBroke++;
+	if (JSON.stringify(back.log) !== JSON.stringify(before.log)) undoBroke++;
+	if (rand() < 0.5) undoState = back;
+}
+ok(
+	'undo restores the levels and the log exactly over 2,000 random sequences',
+	undoChecked >= 1_000 && undoBroke === 0,
+	`${undoChecked} checked, ${undoBroke} broke`
+);
+ok(
+	'the random sequences exercise take, give and keep before undo',
+	(undoKinds.get('take') ?? 0) > 0 && (undoKinds.get('give') ?? 0) > 0 && (undoKinds.get('keep') ?? 0) > 0,
+	JSON.stringify([...undoKinds])
+);
+
+// Keep draft from any state lands at the draft and undoes back to the previous levels.
+let keepBroke = 0;
+let keepUndoBroke = 0;
+let keepFrom: BoardState = startBoard(board, 'empty');
+for (let i = 0; i < 200; i++) {
+	const l = lines.movable[Math.floor(rand() * lines.movable.length)];
+	keepFrom = rand() < 0.6 ? give(board, keepFrom, l.id) : take(board, keepFrom, l.id);
+	if (rand() < 0.2) keepFrom = undo(keepFrom);
+	const beforeKeep = keepFrom;
+	const keptAny = keepDraft(board, keepFrom);
+	if (!atDraft(keptAny)) keepBroke++;
+	if (Math.abs(purse(board, keptAny)) > 1e-6) keepBroke++;
+	const restored = undo(keptAny);
+	if (JSON.stringify(restored.levels) !== JSON.stringify(beforeKeep.levels)) keepUndoBroke++;
+	if (restored.log.length !== beforeKeep.log.length) keepUndoBroke++;
+	keepFrom = keptAny;
+}
+ok('keep draft from any state sets every line to the draft and empties the purse', keepBroke === 0, `${keepBroke} broke`);
+ok('undo after keep draft restores the previous levels', keepUndoBroke === 0, `${keepUndoBroke} broke`);
+
+// Finishing from empty requires placing the purse. A greedy fill marks the last
+// state that still holds money and the state after the last placement.
+let lastUnplaced: BoardState = startBoard(board, 'empty');
+let filling = lastUnplaced;
+let fillTurn = 0;
+while (purse(board, filling) > lines.envelope * 0.005 && fillTurn <= lines.movable.length * 100) {
+	const l = lines.movable[fillTurn % lines.movable.length];
+	fillTurn++;
+	if (purse(board, filling) + 1e-6 < stepMd(l)) continue;
+	lastUnplaced = filling;
+	filling = give(board, filling, l.id);
+}
+ok(
+	'a purse above the tolerance is not finished',
+	!finished(board, lastUnplaced) && purse(board, lastUnplaced) > lines.envelope * 0.005,
+	`purse ${purse(board, lastUnplaced).toFixed(2)}`
+);
+ok('the same board after placing the last step is finished', finished(board, filling), `purse ${purse(board, filling).toFixed(2)}`);
+
+// The log grows by exactly one per successful move and never for a refused move.
+let logGrew = 0;
+let logRefused = 0;
+let logBroke = 0;
+let logState: BoardState = startBoard(board, 'empty');
+for (let i = 0; i < 5_000; i++) {
+	const l = lines.movable[Math.floor(rand() * lines.movable.length)];
+	const before = logState;
+	const r = rand();
+	logState = r < 0.4 ? take(board, logState, l.id) : r < 0.85 ? give(board, logState, l.id) : keepDraft(board, logState);
+	if (logState === before) {
+		logRefused++;
+		if (logState.log.length !== before.log.length) logBroke++;
+	} else if (logState.log.length === before.log.length + 1) {
+		logGrew++;
+	} else {
+		logBroke++;
+	}
+}
+ok('each successful move adds exactly one log entry', logGrew > 0 && logBroke === 0, `${logGrew} grew, ${logBroke} wrong`);
+ok('a refused move leaves the log untouched', logRefused > 0, `${logRefused} refused`);
+
+// An empty finished board is accepted, and answers not-kept-draft.
+ok(
+	'an empty finished board answers not-kept-draft and passes the allocation validator',
+	answer.kept_draft === false && v.ok,
+	v.ok ? '' : v.error
+);
 
 console.log(`\n  ${checks - failures}/${checks} checks passed${failures ? `, ${failures} FAILED` : ''}\n`);
 process.exit(failures ? 1 : 0);

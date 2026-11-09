@@ -12,7 +12,13 @@
 	 * questions, and a result card. Nothing is sent or stored. The submit step
 	 * shows the result and stops.
 	 */
-	let { start = 'draft' }: { start?: StartMode } = $props();
+	let {
+		start = 'empty',
+		onstep
+	}: {
+		start?: StartMode;
+		onstep?: (step: string) => void;
+	} = $props();
 
 	type Step = 'intro' | 'frame' | 'board' | 'items' | 'card' | 'out';
 	const STEPS: Exclude<Step, 'out'>[] = ['intro', 'frame', 'board', 'items', 'card'];
@@ -36,6 +42,7 @@
 
 	function go(next: Step) {
 		step = next;
+		onstep?.(next);
 		void tick().then(() => headingEl?.focus());
 	}
 
@@ -66,22 +73,24 @@
 	}
 </script>
 
-<div class="game research-type" {dir} lang={app.locale}>
-	<header class="hero">
-		<p class="chip">{c.prototype}</p>
-		<h1>{c.title}</h1>
-		<p class="status">{c.status}</p>
-		{#if c.unreviewed}
-			<p class="unreviewed">{c.unreviewed}</p>
-		{/if}
-	</header>
+<div class="game research-type" class:playing={step === 'board'} {dir} lang={app.locale}>
+	{#if step !== 'board'}
+		<header class="hero">
+			<p class="chip">{c.prototype}</p>
+			<h1>{c.title}</h1>
+			<p class="status">{c.status}</p>
+			{#if c.unreviewed}
+				<p class="unreviewed">{c.unreviewed}</p>
+			{/if}
+		</header>
 
-	{#if step !== 'out'}
-		<ol class="steps" aria-label={c.title}>
-			{#each STEPS as s, i (s)}
-				<li class:done={i < stepIndex} aria-current={i === stepIndex ? 'step' : undefined}>{c.stepLabels[s]}</li>
-			{/each}
-		</ol>
+		{#if step !== 'out'}
+			<ol class="steps" aria-label={c.title}>
+				{#each STEPS as s, i (s)}
+					<li class:done={i < stepIndex} aria-current={i === stepIndex ? 'step' : undefined}>{c.stepLabels[s]}</li>
+				{/each}
+			</ol>
+		{/if}
 	{/if}
 
 	{#if step === 'intro'}
@@ -223,6 +232,17 @@
 		margin-inline: auto;
 		padding: var(--s-9) var(--s-6) var(--s-11);
 		color: var(--text-primary);
+	}
+	/* The board owns the whole viewport: no hero, no step strip, no page scroll. */
+	.game.playing {
+		max-width: none;
+		margin-inline: 0;
+		inline-size: 100%;
+		flex: 1 1 auto;
+		min-block-size: 0;
+		display: flex;
+		flex-direction: column;
+		padding: 0;
 	}
 	.hero {
 		margin-block-end: var(--s-8);

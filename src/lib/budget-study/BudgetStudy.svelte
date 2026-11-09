@@ -3,213 +3,235 @@
 	import Plate from '$lib/index-study/Plate.svelte';
 	import Ruler from '$lib/index-study/Ruler.svelte';
 	import { FIGURES, STATUS_WORDS } from './figures';
+	import { linesFrom } from '$lib/budget-game/lines';
+	import StudyGraphic from './StudyGraphic.svelte';
+	import { landingCopy, type LandingSection } from './landing-copy';
 
 	/**
 	 * The landing page of the citizen budget study. It follows the structure of
 	 * the police index landing (plate, cover, numbered sections, scroll ruler,
 	 * honest states) and carries its own artwork and its own nouns.
 	 *
-	 * The study is in design: nothing is collected. Every figure is a draft
-	 * figure with its status beside it. The page is in English until the
-	 * translations are reviewed, and says so.
+	 * Every visible string is read from landingCopy for the reader's locale; a
+	 * locale outside en, fr and ar falls back to English. The study is in
+	 * design: nothing is collected, and every figure is a draft with its status
+	 * beside it.
 	 */
 	let { study, instrument }: { study: { slug: string; title_en: string; population_statement: string | null; status: string }; instrument: { id: string; version: string } | null } = $props();
 
 	const locale = $derived(app.locale);
+	const lang = $derived<'en' | 'fr' | 'ar'>(locale === 'fr' || locale === 'ar' ? locale : 'en');
+	const copy = $derived(landingCopy[lang]);
+
+	const sec = $derived(
+		Object.fromEntries(copy.sections.map((s) => [s.id, s])) as Record<LandingSection['id'], LandingSection>
+	);
+	const sections = $derived(copy.sections.map((s) => ({ id: `sec-${s.id}`, num: s.num, label: s.label })));
+
 	let scrollEl = $state<HTMLElement | null>(null);
 
-	const sections = [
-		{ id: 'sec-question', num: '01', label: 'The question' },
-		{ id: 'sec-game', num: '02', label: 'The game' },
-		{ id: 'sec-figures', num: '03', label: 'The figures' },
-		{ id: 'sec-method', num: '04', label: 'Method' },
-		{ id: 'sec-stored', num: '05', label: 'What is stored' },
-		{ id: 'sec-limits', num: '06', label: 'What it cannot say' },
-		{ id: 'sec-record', num: '07', label: 'Record' },
-		{ id: 'sec-take', num: '08', label: 'Take part' }
-	];
+	const fmt = (n: number) =>
+		n.toLocaleString(lang === 'ar' ? 'ar-TN' : lang === 'fr' ? 'fr' : 'en-US', {
+			maximumFractionDigits: 3
+		});
 
-	const fmt = (n: number) => n.toLocaleString('en-US', { maximumFractionDigits: 3 });
 	const rows = $derived(FIGURES.rows.filter((r) => !r.memo));
 	const memo = $derived(FIGURES.rows.filter((r) => r.memo));
-	const rowSum = $derived(rows.reduce((s, r) => s + r.amount_md, 0));
-	const movableSum = $derived(rows.filter((r) => !['financing_costs_locked', 'unforeseen_locked'].includes(r.id)).reduce((s, r) => s + r.amount_md, 0));
+
+	/** The board's own lines, the same ones the game places. */
+	const lines = $derived(linesFrom(FIGURES.rows));
+	const systemName = (id: string) => id.replace(/_/g, ' ').replace(/^./, (c) => c.toUpperCase());
+	const graphicSystems = $derived(lines.movable.map((l) => ({ name: systemName(l.id), draft: l.draft })));
+	const graphicLocked = $derived(lines.locked.map((l) => ({ name: systemName(l.id), draft: l.draft })));
 </script>
 
 <svelte:head>
 	<title>{study.title_en} · DeepTunisia</title>
-	<meta name="description" content="A citizen budget study for 2027. In design: not collecting responses. Figures are drafts, not verified." />
+	<meta name="description" content={copy.cover} />
 </svelte:head>
 
 <div class="frame research-type" class:rtl={locale === 'ar'}>
-<div class="scroll" bind:this={scrollEl}>
-	<div class="secbar mono">
-		<span class="secbar-end">CBG · 2027 · IN DESIGN</span>
-	</div>
-
-	<article class="pti">
-		<!-- Plate: our own 1-bit artwork, not the police study's. -->
-		<Plate name="cb-1" width={1600} height={900} eager focus="50% 40%" class="plate-hero">
-			<div class="cover">
-				<p class="cover-kicker mono">Deeptunisia research · 003 · one-off budget study</p>
-				<h1 class="cover-title">Citizen budget 2027</h1>
-				<p class="cover-line">
-					Rebuild the 2027 state budget as a citizen. See what each choice gives up. Nothing you do is scored.
-				</p>
-				<p class="cover-meta mono">
-					<span class="cover-tag">In design · not collecting</span>
-				</p>
-			</div>
-		</Plate>
-
-		<div class="body">
-			<p class="honest">
-				Not collecting responses yet. The question, the figures and the rules are published below.
-			</p>
-			<p class="cta-row">
-				<a class="cta" href="/research/citizen-budget/prototype">Open the prototype</a>
-				<span class="note">Placeholder figures. Nothing is sent or stored.</span>
-			</p>
-
-			<section id="sec-question" class="sec">
-				<p class="kicker mono">01 / The question</p>
-				<h2>How would you move money, as a citizen?</h2>
-				<p>
-					The study asks how you would move money between the lines of the 2027 state budget, and how far that
-					changes what the state gives up elsewhere. About five to seven minutes, on a board: move money between the
-					lines of the budget until every dinar is placed.
-				</p>
-			</section>
-
-			<section id="sec-game" class="sec">
-				<p class="kicker mono">02 / The game</p>
-				<h2>One budget, one board, no score</h2>
-				<p>
-					The purse starts empty or full, according to the version you are shown. Every system is drawn to the same
-					scale in dinars, so the largest line is long and the smallest is a sliver. Taking money from a system
-					moves it to the purse. Giving from the purse moves it into a system. You cannot give what you do not hold.
-					Finish when every dinar is placed.
-				</p>
-				<p>
-					Debt interest and the unforeseen reserve are shown first, as already spent. Nothing here is scored or ranked.
-					The board uses the same draft figures as the table below.
-				</p>
-			</section>
-
-			<section id="sec-figures" class="sec">
-				<p class="kicker mono">03 / The figures</p>
-				<h2>Draft figures, with their status</h2>
-				<p>
-					Every figure below is a draft, taken from press reports of the 2027 draft budget between 21 October and 9
-					November 2026. None has been checked against the official document: the finance ministry site held
-					2024 to 2026 files only on the check date. The study will not freeze on a figure until it has a page
-					reference in the adopted law.
-				</p>
-				<p class="note">
-					Total spending excluding debt principal, draft: {fmt(FIGURES.total_md)} MD. Rows sum to {fmt(Math.round(rowSum * 10) / 10)} MD. The board places the movable part of these figures, {fmt(Math.round(movableSum * 10) / 10)} MD, and the locked part is shown as already spent.
-					Subsidies are a memo inside the Industry and Trade lines, so they are not added.
-				</p>
-				<div class="table-scroll">
-					<table class="figures">
-						<caption class="sr-only">Draft 2027 figures by line, with status</caption>
-						<thead>
-							<tr>
-								<th scope="col">Line</th>
-								<th scope="col" class="num">MD (draft)</th>
-								<th scope="col">Status</th>
-							</tr>
-						</thead>
-						<tbody>
-							{#each rows as r (r.id)}
-								<tr>
-									<th scope="row">{r.label_en}</th>
-									<td class="num">{fmt(r.amount_md)}</td>
-									<td>{STATUS_WORDS[r.status]}</td>
-								</tr>
-							{/each}
-							{#each memo as r (r.id)}
-								<tr class="memo">
-									<th scope="row">{r.label_en}</th>
-									<td class="num">{fmt(r.amount_md)}</td>
-									<td>{STATUS_WORDS[r.status]} Memo, not added.</td>
-								</tr>
-							{/each}
-						</tbody>
-					</table>
-				</div>
-				<p class="note">Source for each row: the press reports named in the study file. Checked {FIGURES.checked}.</p>
-			</section>
-
-			<section id="sec-method" class="sec">
-				<p class="kicker mono">04 / Method</p>
-				<h2>How the answers will be read</h2>
-				<p>
-					For each line: the share of respondents who would give it more, the same, or less than its draft, and the
-					median change with its interquartile range. The average budget submitted, with a bootstrap interval. A
-					consensus measure. A result without the largest link channel. Results are shown only above 100 valid
-					answers, and no cell under 20 is shown.
-				</p>
-				<p>
-					Population: {study.population_statement ?? 'Among respondents to an open, self-selected online survey of adults. Results describe the people who took part, not Tunisians as a whole.'}
-				</p>
-				{#if instrument}
-					<p class="note mono">Instrument {instrument.id} · {instrument.version} · not frozen</p>
-				{/if}
-			</section>
-
-			<section id="sec-stored" class="sec">
-				<p class="kicker mono">05 / What is stored</p>
-				<h2>Only what the answers need</h2>
-				<p>
-					Stored per response: your budget as a share of each line, two short answers, optional region, the study
-					version and locale, the channel that brought you, timings, and a random receipt code.
-				</p>
-				<p>
-					Never stored: your name, email, IP address, device details, location beyond the optional region, or free
-					text. The prototype stores nothing.
-				</p>
-			</section>
-
-			<section id="sec-limits" class="sec">
-				<p class="kicker mono">06 / What it cannot say</p>
-				<h2>What these answers are not</h2>
-				<ul>
-					<li>Not what Tunisians as a whole want.</li>
-					<li>Not what the budget should be, or whether any line is wasteful.</li>
-					<li>Not a ranking of respondents, or of their choices.</li>
-					<li>
-						Open, self-selected, online. Organised groups can take part and can inflate their own line. That is
-						real opinion, and it will be read as organised opinion.
-					</li>
-				</ul>
-			</section>
-
-			<section id="sec-record" class="sec">
-				<p class="kicker mono">07 / Record</p>
-				<h2>The status, stated plainly</h2>
-				<dl class="facts">
-					<dt>Stage</dt><dd>Design. The study is not open.</dd>
-					<dt>Ethics review</dt><dd>None has taken place.</dd>
-					<dt>Data-protection review</dt><dd>None has taken place. The legal brief is a draft that asks counsel questions. It is not an opinion.</dd>
-					<dt>Preregistration</dt><dd>Drafted, not registered.</dd>
-					<dt>Principal investigator</dt><dd>Not named.</dd>
-					<dt>Figures</dt><dd>Draft, press-reported, not verified.</dd>
-					<dt>Translation</dt><dd>English only for now. French and Arabic are drafts pending review.</dd>
-				</dl>
-			</section>
-
-			<section id="sec-take" class="sec">
-				<p class="kicker mono">08 / Take part</p>
-				<h2>Not open yet</h2>
-				<p>
-					There is nothing to submit. You can try the prototype, which stores nothing and uses placeholder figures.
-				</p>
-				<p><a class="cta" href="/research/citizen-budget/prototype">Open the prototype</a></p>
-			</section>
+	<div class="scroll" bind:this={scrollEl}>
+		<div class="secbar mono">
+			<span class="secbar-end">{copy.status}</span>
 		</div>
-	</article>
-</div>
-<Ruler scroller={scrollEl} {sections} label="Sections of the citizen budget study" />
+
+		<article class="pti">
+			<!-- Plate: our own 1-bit artwork, not the police study's. -->
+			<Plate name="cb-1" width={1600} height={900} eager focus="50% 40%" class="plate-hero">
+				<div class="cover">
+					<p class="cover-kicker mono">{copy.kicker}</p>
+					<h1 class="cover-title">{copy.title}</h1>
+					<p class="cover-line">{copy.cover}</p>
+					<p class="cover-meta mono">
+						<span class="cover-tag">{copy.status}</span>
+					</p>
+				</div>
+			</Plate>
+
+			<div class="body">
+				<p class="hook">{copy.hook}</p>
+				<p class="honest">{copy.notCollecting}</p>
+				<p class="cta-row">
+					<a class="cta" href="/research/citizen-budget/prototype">{copy.ctaPrototype}</a>
+					<span class="note">{copy.ctaNote}</span>
+				</p>
+				{#if copy.interimNotice}
+					<p class="note interim">{copy.interimNotice}</p>
+				{/if}
+
+				<!-- 01: the study in seconds. -->
+				<section id="sec-question" class="sec">
+					<p class="kicker mono">{sec.question.num} / {sec.question.label}</p>
+					<h2>{sec.question.heading}</h2>
+					{#each sec.question.body as para, i (i)}
+						<p>{para}</p>
+					{/each}
+					<p class="note">{copy.whyItMatters}</p>
+					<div class="figure-block">
+						<StudyGraphic
+							labels={copy.graphicLabels}
+							systems={graphicSystems}
+							locked={graphicLocked}
+							envelopeLabel={sec.board.label}
+							playable={false}
+						/>
+						<p class="note">{copy.draftNotice}</p>
+					</div>
+				</section>
+
+				<!-- 02: the board, live and touchable, on the real draft lines. -->
+				<section id="sec-board" class="sec">
+					<p class="kicker mono">{sec.board.num} / {sec.board.label}</p>
+					<h2>{sec.board.heading}</h2>
+					{#each sec.board.body as para, i (i)}
+						<p>{para}</p>
+					{/each}
+					<div class="figure-block">
+						<StudyGraphic
+							labels={copy.graphicLabels}
+							systems={graphicSystems}
+							locked={graphicLocked}
+							envelopeLabel={sec.board.label}
+							playable={true}
+						/>
+						<p class="note">{copy.draftNotice}</p>
+						<p class="note">{copy.intricacy}</p>
+					</div>
+				</section>
+
+				<!-- 03: the figures, each with its status, and who is being asked. -->
+				<section id="sec-figures" class="sec">
+					<p class="kicker mono">{sec.figures.num} / {sec.figures.label}</p>
+					<h2>{sec.figures.heading}</h2>
+					{#each sec.figures.body as para, i (i)}
+						<p>{para}</p>
+					{/each}
+					<div class="figures-wrap">
+						<div class="table-scroll">
+							<table class="figures">
+								<caption class="sr-only">{sec.figures.label}</caption>
+								<thead>
+									<tr>
+										<th scope="col">{copy.graphicLabels.systems}</th>
+										<th scope="col" class="num">{copy.graphicLabels.draft}</th>
+										<th scope="col">{sec.record.label}</th>
+									</tr>
+								</thead>
+								<tbody>
+									{#each rows as r (r.id)}
+										<tr>
+											<th scope="row">{r.label_en}</th>
+											<td class="num">{fmt(r.amount_md)}</td>
+											<td>{STATUS_WORDS[r.status]}</td>
+										</tr>
+									{/each}
+									{#each memo as r (r.id)}
+										<tr class="memo">
+											<th scope="row">{r.label_en}</th>
+											<td class="num">{fmt(r.amount_md)}</td>
+											<td>{STATUS_WORDS[r.status]}</td>
+										</tr>
+									{/each}
+								</tbody>
+							</table>
+							<p class="note">{copy.figuresNote}</p>
+						</div>
+						<aside class="population">
+							<p class="note">{copy.draftNotice}</p>
+							{#if study.population_statement}
+								<p>{study.population_statement}</p>
+							{/if}
+						</aside>
+					</div>
+				</section>
+
+				<!-- 04: how the answers will be read. -->
+				<section id="sec-method" class="sec">
+					<p class="kicker mono">{sec.method.num} / {sec.method.label}</p>
+					<h2>{sec.method.heading}</h2>
+					{#each sec.method.body as para, i (i)}
+						<p>{para}</p>
+					{/each}
+					{#if instrument}
+						<p class="note mono">{instrument.id} · {instrument.version}</p>
+					{/if}
+				</section>
+
+				<!-- 05: what is stored. -->
+				<section id="sec-stored" class="sec">
+					<p class="kicker mono">{sec.stored.num} / {sec.stored.label}</p>
+					<h2>{sec.stored.heading}</h2>
+					{#each sec.stored.body as para, i (i)}
+						<p>{para}</p>
+					{/each}
+				</section>
+
+				<!-- 06: what the answers cannot say. -->
+				<section id="sec-cannot" class="sec">
+					<p class="kicker mono">{sec.cannot.num} / {sec.cannot.label}</p>
+					<h2>{sec.cannot.heading}</h2>
+					{#each sec.cannot.body as para, i (i)}
+						<p>{para}</p>
+					{/each}
+					<ul>
+						{#each copy.cannotSay as item, i (i)}
+							<li>{item}</li>
+						{/each}
+					</ul>
+				</section>
+
+				<!-- 07: the honest record. -->
+				<section id="sec-record" class="sec">
+					<p class="kicker mono">{sec.record.num} / {sec.record.label}</p>
+					<h2>{sec.record.heading}</h2>
+					{#each sec.record.body as para, i (i)}
+						<p>{para}</p>
+					{/each}
+					<dl class="facts">
+						{#each copy.recordFacts as fact (fact.label)}
+							<dt>{fact.label}</dt>
+							<dd>{fact.value}</dd>
+						{/each}
+					</dl>
+				</section>
+
+				<!-- 08: take part. -->
+				<section id="sec-take" class="sec">
+					<p class="kicker mono">{sec.take.num} / {sec.take.label}</p>
+					<h2>{sec.take.heading}</h2>
+					{#each sec.take.body as para, i (i)}
+						<p>{para}</p>
+					{/each}
+					<p>
+						<a class="cta" href="/research/citizen-budget/prototype">{copy.ctaPrototype}</a>
+					</p>
+					<p class="note">{copy.ctaNote}</p>
+				</section>
+			</div>
+		</article>
+	</div>
+	<Ruler scroller={scrollEl} {sections} label={copy.title} />
 </div>
 
 <style>
@@ -281,12 +303,21 @@
 		margin-inline: auto;
 		padding: var(--s-9) var(--s-6) var(--s-11);
 	}
+	.hook {
+		font-family: var(--font-read);
+		font-size: var(--step-1);
+		line-height: 1.45;
+		margin-block: var(--s-6) var(--s-5);
+	}
 	.honest {
 		font-family: var(--font-mono);
 		font-size: var(--t-sm);
 		color: var(--text-secondary);
 		border-inline-start: 3px solid var(--accent);
 		padding-inline-start: var(--s-4);
+	}
+	.interim {
+		margin-block-start: var(--s-4);
 	}
 	.cta-row {
 		display: flex;
@@ -338,9 +369,31 @@
 		font-size: var(--t-sm);
 		color: var(--text-muted);
 	}
+	.figure-block {
+		margin-block: var(--s-6);
+	}
+	.figures-wrap {
+		display: grid;
+		grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+		gap: var(--s-6);
+		align-items: start;
+		margin-block: var(--s-5);
+	}
+	@container (max-width: 44rem) {
+		.figures-wrap {
+			grid-template-columns: minmax(0, 1fr);
+		}
+	}
+	.population {
+		border-inline-start: 3px solid var(--accent);
+		padding-inline-start: var(--s-4);
+	}
+	.population p {
+		font-size: var(--t-sm);
+		color: var(--text-secondary);
+	}
 	.table-scroll {
 		overflow-x: auto;
-		margin-block: var(--s-5);
 	}
 	.figures {
 		inline-size: 100%;
