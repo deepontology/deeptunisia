@@ -213,24 +213,24 @@ async function checkLanding(
 	const { context, page, errors } = await openPage(browser, size, locale);
 	try {
 		await page.goto(`${BASE}/research/citizen-budget`, { waitUntil: 'load' });
-		await page.locator('svg .purse-amount:visible').first().waitFor({ state: 'visible' });
+		await page.locator('figure.graphic .purse-value:visible').first().waitFor({ state: 'visible' });
 		await settle(page);
 		await page.screenshot({ path: join(OUT, `landing-${size.label}-${locale}.png`) });
 
 		await assertNoHorizontalScroll(page, name);
 
-		const live = page.locator('svg:has(.purse-amount) g[role="button"], svg:has(.purse-amount) [tabindex="0"]');
+		const live = page.locator('figure.graphic [role="button"][tabindex="0"]');
 		const candidates = await live.count();
 		if (candidates === 0) {
 			fail(`${name} touchable example`, 'no role="button" group or focusable element inside the graphic that shows the purse');
 		}
 		const first = live.first();
-		const before = (await first.evaluate((el) => el.closest('svg')?.querySelector('.purse-amount')?.textContent ?? '')).trim();
+		const before = (await first.evaluate((el) => el.closest('figure.graphic')?.querySelector('.purse-value')?.textContent ?? '')).trim();
 		await first.click();
 		try {
 			await page.waitForFunction(
 				(previous) =>
-					Array.from(document.querySelectorAll('svg .purse-amount')).some(
+					Array.from(document.querySelectorAll('figure.graphic .purse-value')).some(
 						(el) => (el.textContent ?? '').trim() !== previous
 					),
 				before,
@@ -239,7 +239,7 @@ async function checkLanding(
 		} catch {
 			fail(`${name} touchable example`, `purse text stayed "${before}" after clicking the live example`);
 		}
-		const after = (await first.evaluate((el) => el.closest('svg')?.querySelector('.purse-amount')?.textContent ?? '')).trim();
+		const after = (await first.evaluate((el) => el.closest('figure.graphic')?.querySelector('.purse-value')?.textContent ?? '')).trim();
 		if (after === before) {
 			fail(`${name} touchable example`, `purse text stayed "${before}" after clicking the live example`);
 		}
