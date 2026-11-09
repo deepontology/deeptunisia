@@ -63,6 +63,20 @@
 	const spentTotal = $derived(rows.reduce((s, r) => s + r.amount, 0) + lines.locked.reduce((s, l) => s + l.draft, 0));
 	const draftTotal = $derived(lines.total);
 
+	/** The line that moved furthest from its draft, named in one sentence above the table. */
+	const largest = $derived.by(() => {
+		if (!answer) return null;
+		let best = rows[0];
+		for (const r of rows) if (Math.abs(r.delta) > Math.abs(best.delta)) best = r;
+		if (!best || Math.abs(best.delta) < 0.5) return null;
+		const pct = Math.round((best.delta / best.line.draft) * 100);
+		return {
+			name: c.lines[best.line.id].name,
+			amount: fmt(Math.abs(best.delta)),
+			pct: `${pct > 0 ? '+' : pct < 0 ? '−' : ''}${Math.abs(pct)}`
+		};
+	});
+
 	function restart() {
 		result = null;
 		q1 = null;
@@ -179,6 +193,9 @@
 			<h2 bind:this={headingEl} tabindex="-1">{c.card.title}</h2>
 			<p class="note">{c.card.note}</p>
 			{#if kept}<p>{c.card.keptDraft}</p>{/if}
+			{#if largest}
+				<p class="largest">{c.board.largestChange(largest.name, largest.amount, largest.pct)}</p>
+			{/if}
 			<div class="table-scroll">
 				<table class="card-table">
 					<thead>
@@ -289,6 +306,10 @@
 	.unreviewed {
 		color: var(--rupture);
 		font-size: var(--t-md);
+	}
+	.largest {
+		font-weight: 600;
+		margin-block: var(--s-4) 0;
 	}
 	.steps {
 		display: flex;

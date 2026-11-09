@@ -45,6 +45,18 @@ export interface LandingCopy {
 		step: string;
 	};
 	interimNotice: string | null;
+	hookTagline: [string, string];
+	tally: { draftTotal: string; locked: string; movable: string };
+	example: {
+		title: string;
+		formula: string;
+		intro: string;
+		step: (name: string, draft: string, stepMd: string) => string;
+		invented: string;
+		result: string;
+	};
+	share: { button: string; heading: string; text: string };
+	sectionReadout: string;
 }
 
 export const landingCopy: Record<Locale, LandingCopy> = {
@@ -173,7 +185,27 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 			systems: 'Systems',
 			step: 'One step'
 		},
-		interimNotice: null
+		interimNotice: null,
+		hookTagline: ['The total does not move.', 'Only where it goes does.'],
+		tally: {
+			draftTotal: 'Draft total',
+			locked: 'Locked before the start',
+			movable: 'Movable'
+		},
+		example: {
+			title: 'A worked example',
+			formula: 'purse = envelope − placed',
+			intro: 'In this example the envelope is 100 MD and the starting draft is 40 MD. The numbers are invented.',
+			step: (name, draft, stepMd) => `${name} is at ${draft} MD, and one step is ${stepMd} MD.`,
+			invented: 'Invented for illustration. Not a figure from the budget.',
+			result: 'After one step the purse holds the step, and the line sits that much below its draft.'
+		},
+		share: {
+			button: 'Copy link',
+			heading: 'Share this page',
+			text: 'In design, not collecting. The link opens the published landing page.'
+		},
+		sectionReadout: 'You are in'
 	},
 
 	fr: {
@@ -303,7 +335,27 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 			systems: 'Systèmes',
 			step: 'Un pas'
 		},
-		interimNotice: 'Traduction provisoire, non relue par une personne de langue maternelle.'
+		interimNotice: 'Traduction provisoire, non relue par une personne de langue maternelle. Les nouveaux textes sont des brouillons intermédiaires.',
+		hookTagline: ['Le total ne bouge pas.', 'Seulement l’endroit où il va.'],
+		tally: {
+			draftTotal: 'Total du projet',
+			locked: 'Verrouillé avant le début',
+			movable: 'Mobile'
+		},
+		example: {
+			title: 'Un exemple chiffré',
+			formula: 'cagnotte = enveloppe − placé',
+			intro: 'Dans cet exemple, l’enveloppe est de 100 MD et le projet de départ de 40 MD. Les chiffres sont inventés.',
+			step: (name, draft, stepMd) => `${name} est à ${draft} MD, et un pas vaut ${stepMd} MD.`,
+			invented: 'Inventé pour l’illustration. Ce n’est pas un chiffre du budget.',
+			result: 'Après un pas, la cagnotte détient le pas, et la ligne descend d’autant sous son projet.'
+		},
+		share: {
+			button: 'Copier le lien',
+			heading: 'Partager cette page',
+			text: 'En conception, pas de collecte. Le lien ouvre la page publique publiée.'
+		},
+		sectionReadout: 'Vous êtes dans'
 	},
 
 	ar: {
@@ -432,6 +484,26 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 			systems: 'الأنظمة',
 			step: 'خطوة واحدة'
 		},
-		interimNotice: 'ترجمة مؤقّتة، لم يراجعها متحدّث بالعربية كلغة أم.'
+		interimNotice: 'ترجمة مؤقّتة، لم يراجعها متحدّث بالعربية كلغة أم. والنصوص الجديدة مسودّات مبدئية.',
+		hookTagline: ['المجموع لا يتحرّك.', 'بل يتحرّك مكان إنفاقه فقط.'],
+		tally: {
+			draftTotal: 'إجمالي المشروع',
+			locked: 'مقفل قبل البداية',
+			movable: 'قابل للتحريك'
+		},
+		example: {
+			title: 'مثال محسوب',
+			formula: 'المحفظة = المظروف − الموضوع',
+			intro: 'في هذا المثال المظروف 100 م.د والمشروع الأولي 40 م.د. الأرقام مخترعة.',
+			step: (name, draft, stepMd) => `${name} عند ${draft} م.د، والخطوة ${stepMd} م.د.`,
+			invented: 'مخترع للتوضيح. ليس رقمًا من الميزانية.',
+			result: 'بعد خطوة، تحتفظ المحفظة بالخطوة، وينزل البند بهذا القدر تحت مشروعه.'
+		},
+		share: {
+			button: 'انسخ الرابط',
+			heading: 'شارك هذه الصفحة',
+			text: 'قيد التصميم، لا جمع للردود. الرابط يفتح صفحة الهبوط المنشورة.'
+		},
+		sectionReadout: 'أنت في'
 	}
 };

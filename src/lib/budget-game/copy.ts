@@ -82,6 +82,16 @@ export interface Copy {
 		tableView: string;
 		finish: string;
 		meter: string;
+		groups: { people: string; state: string; economy: string };
+		purseProgress: (placed: string, total: string) => string;
+		reasonAtZero: string;
+		reasonAtMax: string;
+		reasonNoPurse: (purse: string) => string;
+		hintToggle: string;
+		hintClose: string;
+		noteTitle: string;
+		largestChange: (name: string, amount: string, pct: string) => string;
+		coinLabel: string;
 	};
 	items: {
 		title: string;
@@ -176,7 +186,21 @@ const en: Copy = {
 		startNote: 'The draft start has every system at its draft and an empty purse.',
 		tableView: 'Show as a table',
 		finish: 'Finish',
-		meter: 'Purse'
+		meter: 'Purse',
+		groups: {
+			people: 'People and services',
+			state: 'State and security',
+			economy: 'Economy and territory'
+		},
+		purseProgress: (placed, total) => `Placed ${placed} of ${total} MD`,
+		reasonAtZero: 'This system is at zero.',
+		reasonAtMax: 'This system is at its 200% cap.',
+		reasonNoPurse: (purse) => `Your purse holds ${purse} MD.`,
+		hintToggle: 'Rules',
+		hintClose: 'Close',
+		noteTitle: 'Note on this system',
+		largestChange: (name, amount, pct) => `Largest change: ${name}, ${amount} MD, ${pct}%.`,
+		coinLabel: 'Coins: one coin is about 1,000 MD of the envelope'
 	},
 	items: {
 		title: 'Two short questions',
@@ -225,14 +249,44 @@ const en: Copy = {
 const fr: Copy = {
 	...en,
 	prototype: 'Prototype · chiffres du projet, non vérifiés',
-	unreviewed: 'Traduction française provisoire, pas encore relue. Certains textes restent en anglais.',
+	unreviewed: 'Traduction française provisoire, pas encore relue. Les nouveaux textes (groupes, aide, note de poste, plus grand écart) sont des brouillons intermédiaires.',
 	title: 'Plateau budgétaire du citoyen',
 	status: 'Prototype de conception. Non lancé. Aucune collecte.',
 	stepLabels: { intro: 'Présentation', frame: 'Cadre', board: 'Plateau', items: 'Questions', card: 'Résultat' },
+	intro: {
+		whatWeAsk: 'Ce que nous demandons',
+		whatWeAskBody:
+			"Comment vous déplaceriez l'argent entre les lignes du budget de l'État 2027, en tant que citoyen. Environ cinq minutes. Il n'y a pas de bonne réponse et pas de score.",
+		stored: 'Ce qui est conservé',
+		storedBody:
+			"Dans ce prototype, rien. Dans l'étude réelle : votre budget en parts de chaque ligne, deux courtes réponses, la version de l'étude et sa durée. Ni nom, ni e-mail, ni adresse IP, ni détails de l'appareil.",
+		who: 'Qui la mène',
+		whoBody:
+			"DeepTunisia. Il s'agit d'un prototype de conception. L'étude n'a pas été approuvée et n'est pas ouverte.",
+		figures: "D'où viennent les chiffres",
+		figuresBody:
+			"Chaque chiffre de ces écrans est un chiffre du projet rapporté par la presse pour le budget 2027. Aucun n'est vérifié sur le document officiel. L'étude réelle donnera la source et la page de chaque ligne avant son ouverture.",
+		sample: 'Ce que les réponses peuvent dire et ne peuvent pas dire',
+		sampleBody:
+			"Elles décrivent les personnes qui participent à une enquête en ligne ouverte et auto-sélectionnée auprès d'adultes. Elles ne décrivent pas les Tunisiens dans leur ensemble.",
+		consentAge: "J'ai 18 ans ou plus.",
+		consentPrototype: 'Je comprends que ce prototype ne conserve rien de ce que je saisis.',
+		start: 'Commencer',
+		under18:
+			"Cette étude est réservée aux adultes. Rien de ce que vous avez saisi n'est conservé. Vous pouvez fermer cette page."
+	},
 	frame: {
 		...en.frame,
 		title: 'Répondez en tant que citoyen',
 		body: "Pas en tant que ministre, économiste ou membre d'un parti. Il n'y a pas de bonne réponse et pas de score.",
+		factsHeading: 'Trois faits, tous des chiffres provisoires',
+		fact1: (total) =>
+			`Le projet prévoit de dépenser environ ${total} MD en 2027, hors principal de la dette (non vérifié).`,
+		fact2:
+			"L'impôt constitue l'essentiel de ce que l'État prélève lui-même. Le reste des dépenses est couvert par d'autres recettes et par l'emprunt.",
+		fact3:
+			"Une grande partie du budget est constituée de salaires. La répartition par ligne n'est pas encore vérifiée.",
+		placeholder: 'Chiffres provisoires rapportés par la presse, non vérifiés',
 		next: 'Ouvrir le plateau',
 		back: 'Retour'
 	},
@@ -267,10 +321,46 @@ const fr: Copy = {
 		startNote: 'Le départ au projet place chaque poste à son projet et la bourse à zéro.',
 		tableView: 'Afficher en tableau',
 		finish: 'Terminer',
-		meter: 'Bourse'
+		meter: 'Bourse',
+		draftMark: 'Projet',
+		groups: {
+			people: 'Personnes et services',
+			state: 'État et sécurité',
+			economy: 'Économie et territoire'
+		},
+		purseProgress: (placed, total) => `Placé : ${placed} MD sur ${total} MD`,
+		reasonAtZero: 'Ce poste est à zéro.',
+		reasonAtMax: 'Ce poste atteint son maximum.',
+		reasonNoPurse: (purse) => `Votre bourse contient ${purse} MD.`,
+		hintToggle: 'Règles',
+		hintClose: 'Fermer',
+		noteTitle: 'Note sur ce poste',
+		largestChange: (name, amount, pct) => `Plus grand écart : ${name}, ${amount} MD, ${pct} %.`,
+		coinLabel: 'Pièces : une pièce vaut environ 1 000 MD de l’enveloppe'
 	},
-	items: { ...en.items, title: 'Deux courtes questions', submit: 'Soumettre mon budget', back: 'Retour' },
-	card: { ...en.card, title: 'Votre budget à côté du projet', restart: 'Recommencer', back: 'Modifier mon budget' },
+	items: {
+		...en.items,
+		title: 'Deux courtes questions',
+		q1: 'Sachant que le déficit est emprunté, la dépense totale devrait-elle être plus basse, identique ou plus haute ?',
+		q1Lower: 'Plus basse',
+		q1Same: 'Identique',
+		q1Higher: 'Plus haute',
+		q2: "Quelle influence les citoyens ont-ils aujourd'hui sur la façon dont le budget est dépensé ? 0 signifie aucune, 10 signifie beaucoup.",
+		q2Low: 'Aucune',
+		q2High: 'Beaucoup',
+		submit: 'Soumettre mon budget',
+		back: 'Retour'
+	},
+	card: {
+		...en.card,
+		title: 'Votre budget à côté du projet',
+		note: "Chiffres provisoires, non vérifiés. Ce prototype s'arrête ici : rien n'est envoyé ni conservé.",
+		total: 'Total',
+		keptDraft: 'Vous avez gardé le projet tel quel.',
+		restart: 'Recommencer',
+		back: 'Modifier mon budget',
+		stop: "Dans le prototype, le bouton d'envoi s'arrête à cette carte."
+	},
 	unit: 'MD',
 	lines: {
 		education: { name: 'Éducation', note: 'Écoles et enseignants.' },
@@ -297,14 +387,42 @@ const fr: Copy = {
 const ar: Copy = {
 	...en,
 	prototype: 'نموذج أولي · أرقام المشروع، لم يُتحقق منها',
-	unreviewed: 'ترجمة عربية مبدئية، لم يراجعها بعد متحدث أصلي. بعض النصوص ما زالت بالإنجليزية.',
+	unreviewed: 'ترجمة عربية مبدئية، لم يراجعها بعد متحدث أصلي. والنصوص الجديدة (المجموعات، والمساعدة، وملاحظة البند، وأكبر تغيير) مسودّات مبدئية.',
 	title: 'لوحة الخزينة للمواطن',
 	status: 'نموذج تصميمي. لم يُطلق. لا يجمع أي بيانات.',
 	stepLabels: { intro: 'تعريف', frame: 'الإطار', board: 'اللوحة', items: 'أسئلة', card: 'النتيجة' },
+	intro: {
+		whatWeAsk: 'ما نطلبه',
+		whatWeAskBody:
+			'كيف ستنقل المال بين بنود ميزانية الدولة لسنة 2027، كمواطن. نحو خمس دقائق. لا توجد إجابة صحيحة ولا نقاط.',
+		stored: 'ما يُحفظ',
+		storedBody:
+			'في هذا النموذج الأوّلي، لا شيء. في الدراسة الحقيقية: ميزانيتك كنسب من كل بند، وإجابتان قصيرتان، ونسخة الدراسة ومدّتها. لا اسم، ولا بريد إلكتروني، ولا عنوان IP، ولا تفاصيل الجهاز.',
+		who: 'من يشرف عليها',
+		whoBody: 'DeepTunisia. هذا نموذج تصميمي. لم تُعتمد الدراسة ولم تُفتح.',
+		figures: 'من أين تأتي الأرقام',
+		figuresBody:
+			'كل رقم في هذه الشاشات رقم مؤقّت نقله الصحافة عن مشروع ميزانية 2027. ولم يُتحقّق من أي منها في الوثيقة الرسمية. وستعطي الدراسة الحقيقية المصدر والصفحة لكل بند قبل فتحها.',
+		sample: 'ما يمكن أن تقوله الإجابات وما لا يمكنها قوله',
+		sampleBody:
+			'تصف الأشخاص الذين يشاركون في استبيان إلكتروني مفتوح وقائم على الانتقاء الذاتي للبالغين. ولا تصف التونسيين في مجموعهم.',
+		consentAge: 'عمري 18 سنة أو أكثر.',
+		consentPrototype: 'أفهم أن هذا النموذج الأوّلي لا يحفظ شيئًا مما أدخله.',
+		start: 'ابدأ',
+		under18:
+			'هذه الدراسة للبالغين فقط. لا يُحفظ شيء مما أدخلته. يمكنك إغلاق هذه الصفحة.'
+	},
 	frame: {
 		...en.frame,
 		title: 'أجب بصفتك مواطنًا',
 		body: 'لا بصفتك وزيرًا أو خبيرًا اقتصاديًا أو عضوًا في حزب. لا توجد إجابة صحيحة ولا نقاط.',
+		factsHeading: 'ثلاثة حقائق، كلها أرقام مؤقّتة',
+		fact1: (total) =>
+			`يخطط المشروع لإنفاق نحو ${total} م.د في 2027، دون أصل الدين (غير متحقّق منه).`,
+		fact2:
+			'الضريبة هي معظم ما تجمعه الدولة بنفسها. والباقي من النفقات تغطّيه إيرادات أخرى والاقتراض.',
+		fact3: 'جزء كبير من الميزانية رواتب. والتوزيع حسب البند لم يُتحقق منه بعد.',
+		placeholder: 'أرقام مؤقّتة نقلتها الصحافة، غير متحقّق منها',
 		next: 'افتح اللوحة',
 		back: 'رجوع'
 	},
@@ -339,10 +457,46 @@ const ar: Copy = {
 		startNote: 'البداية من المشروع: كل بند على مشروعه والخزانة صفر.',
 		tableView: 'اعرض كجدول',
 		finish: 'أنهِ',
-		meter: 'الخزانة'
+		meter: 'الخزانة',
+		draftMark: 'المشروع',
+		groups: {
+			people: 'الأشخاص والخدمات',
+			state: 'الدولة والأمن',
+			economy: 'الاقتصاد والتراب'
+		},
+		purseProgress: (placed, total) => `وُضع ${placed} من ${total} م.د`,
+		reasonAtZero: 'هذا البند صفر.',
+		reasonAtMax: 'هذا البند عند سقف 200%.',
+		reasonNoPurse: (purse) => `تحتوي خزانتك على ${purse} م.د.`,
+		hintToggle: 'القواعد',
+		hintClose: 'إغلاق',
+		noteTitle: 'ملاحظة عن هذا البند',
+		largestChange: (name, amount, pct) => `أكبر تغيير: ${name}، ${amount} م.د، ${pct}%.`,
+		coinLabel: 'العملات: العملة الواحدة نحو 1,000 م.د من المظروف'
 	},
-	items: { ...en.items, title: 'سؤالان قصيران', submit: 'أرسل ميزانيتي', back: 'رجوع' },
-	card: { ...en.card, title: 'ميزانيتك بجانب المشروع', restart: 'ابدأ من جديد', back: 'تعديل ميزانيتي' },
+	items: {
+		...en.items,
+		title: 'سؤالان قصيران',
+		q1: 'مع العلم أن الفجوة تُقترض، هل ينبغي أن تكون النفقات الإجمالية أقل أم نفسها أم أعلى؟',
+		q1Lower: 'أقل',
+		q1Same: 'نفسها',
+		q1Higher: 'أعلى',
+		q2: 'ما مدى تأثير المواطنين اليوم في طريقة إنفاق الميزانية؟ 0 يعني لا تأثير، و10 يعني تأثيرًا كبيرًا.',
+		q2Low: 'لا تأثير',
+		q2High: 'تأثير كبير',
+		submit: 'أرسل ميزانيتي',
+		back: 'رجوع'
+	},
+	card: {
+		...en.card,
+		title: 'ميزانيتك بجانب المشروع',
+		note: 'أرقام مؤقّتة، غير متحقّق منها. يتوقف هذا النموذج الأوّلي هنا: لا يُرسَل شيء ولا يُحفظ.',
+		total: 'المجموع',
+		keptDraft: 'أبقيت على المشروع كما هو.',
+		restart: 'ابدأ من جديد',
+		back: 'تعديل ميزانيتي',
+		stop: 'في النموذج الأوّلي، يتوقف زر الإرسال عند هذه البطاقة.'
+	},
 	unit: 'م.د',
 	lines: {
 		education: { name: 'التعليم', note: 'المدارس والمعلمون.' },

@@ -2,7 +2,7 @@
 	import { app } from '$lib/state.svelte';
 	import { FIGURES } from '$lib/budget-study/figures';
 	import { copyFor } from './copy';
-	import { linesFrom, type LineId } from './lines';
+	import { linesFrom, MAX_LEVEL, type LineId } from './lines';
 	import * as B from './board';
 	import type { Board, BoardState, LogEntry } from './board';
 	import { untrack } from 'svelte';
@@ -14,9 +14,9 @@
 	 * purse is within tolerance. Every figure is a draft figure from the figures
 	 * file.
 	 *
-	 * One screen, two shapes: on a desk the purse and totals sit in a left
-	 * column and the systems fill a dense grid on the right; on a phone the
-	 * purse is a sticky bar and the systems are a list of rows with 44px
+	 * One screen, two shapes: on a desk the purse and controls sit in a left
+	 * column and the systems fill a grouped grid on the right; on a phone the
+	 * purse is a sticky bar and the systems are a grouped list of rows with 44px
 	 * controls. The board itself never scrolls; only the intro, questions and
 	 * result screens do.
 	 */
@@ -32,7 +32,7 @@
 	const board: Board = { lines };
 	let game: BoardState = $state(B.startBoard(board, untrack(() => mode)));
 	let view = $state<'bars' | 'table'>('bars');
-	let notice = $state('');
+	let refusal = $state('');
 
 	const c = $derived(copyFor(app.locale));
 	const unit = $derived(c.unit);
@@ -58,25 +58,54 @@
 		})
 	);
 
+	/** The three groups, in the order the brief fixes them. Education and subsidies are the largest and span two tracks. */
+	const GROUPS = [
+		{ key: 'people', ids: ['education', 'higher_education', 'health', 'social'] },
+		{ key: 'state', ids: ['subsidies', 'police', 'army', 'justice', 'presidency', 'government'] },
+		{
+			key: 'economy',
+			ids: ['energy_trade', 'farming', 'roads_housing', 'youth_sports', 'culture', 'other']
+		}
+	] as const satisfies ReadonlyArray<{
+		key: 'people' | 'state' | 'economy';
+		ids: readonly LineId[];
+	}>;
+	const groups = $derived(
+		GROUPS.map((g) => ({
+			key: g.key,
+			rows: g.ids.map((id) => rows.find((r) => r.line.id === id)!).filter(Boolean)
+		}))
+	);
+
 	/** The last five moves, newest first, for the desk ledger strip. */
 	const ledger = $derived(game.log.slice(-5).reverse());
 	const lockedTotal = lines.locked.reduce((s, l) => s + l.draft, 0);
 
-	/** Coin marks: one per 1/18 of the envelope still held in the purse. */
-	const COIN_SLOTS = Array.from({ length: 18 }, (_, i) => i);
-	const coins = $derived(
+	/** Coin marks: one per eighth of the envelope still held in the purse. */
+	const COIN_SLOTS = Array.from({ length: 8 }, (_, i) => i);
+	const held = $derived(
 		Math.round(Math.max(0, Math.min(1, P / lines.envelope)) * COIN_SLOTS.length)
 	);
-	/** Take drops a coin from a system into the purse; give lifts one out. */
-	const coinDir = $derived(
-		game.log.length === 0
-			? 0
-			: game.log[game.log.length - 1].kind === 'take'
-				? 1
-				: game.log[game.log.length - 1].kind === 'give'
-					? -1
-					: 0
-	);
+	/**
+	 * The direction of the last move lives in state, not in the log: undo and a
+	 * step too small to change the coin count still animate the way the money
+	 * went. +1 is a take (into the purse), -1 is a give (out of it).
+	 */
+	let coinDir = $state<0 | 1 | -1>(0);
+	let moveDirs = $state<number[]>([]);
+	let moveSeq = $state(0);
+
+	/** The coin that crosses the board on a take or a give, in transform only. */
+	let boardEl = $state<HTMLElement>();
+	let purseEl = $state<HTMLElement>();
+	let flight = $state<{ fx: number; fy: number; tx: number; ty: number; seq: number } | null>(null);
+	let flightTimer: ReturnType<typeof setTimeout> | undefined;
+
+	/** The note dialog and the rules dialog (the full hint on phone). */
+	let noteDialog = $state<HTMLDialogElement>();
+	let hintDialog = $state<HTMLDialogElement>();
+	let noteLine = $state<LineId | null>(null);
+	let noteTrigger: HTMLElement | null = null;
 
 	function fmtDelta(n: number): string {
 		const sign = n > 0.5 ? '+' : n < -0.5 ? '−' : '';
@@ -92,39 +121,95 @@
 			? c.board.tookFrom(`${fmt(entry.md)}`, name)
 			: c.board.gaveTo(`${fmt(entry.md)}`, name);
 	}
-	function take(id: LineId) {
+	/** The short refusal for a give: the cap first, then the purse. */
+	function giveReason(r: (typeof rows)[number]): string {
+		if (r.giveOk) return '';
+		return r.level >= MAX_LEVEL ? c.board.reasonAtMax : c.board.reasonNoPurse(fmt(P));
+	}
+	function takeReason(r: (typeof rows)[number]): string {
+		return r.takeOk ? '' : c.board.reasonAtZero;
+	}
+
+	/** Computes the flight in board-relative pixels so the overlay needs no physical insets. */
+	function fly(from: HTMLElement | null, dir: 1 | -1) {
+		if (!from || !purseEl || !boardEl) return;
+		const a = from.getBoundingClientRect();
+		const p = purseEl.getBoundingClientRect();
+		const b = boardEl.getBoundingClientRect();
+		const cx = b.left + b.width / 2;
+		const cy = b.top + b.height / 2;
+		const sx = a.left + a.width / 2 - cx;
+		const sy = a.top + a.height / 2 - cy;
+		const px = p.left + p.width / 2 - cx;
+		const py = p.top + p.height / 2 - cy;
+		const fx = dir === 1 ? sx : px;
+		const fy = dir === 1 ? sy : py;
+		const tx = dir === 1 ? px : sx;
+		const ty = dir === 1 ? py : sy;
+		flight = { fx, fy, tx, ty, seq: moveSeq };
+		if (flightTimer) clearTimeout(flightTimer);
+		flightTimer = setTimeout(() => (flight = null), 240);
+	}
+	function afterMove(dir: number, from: HTMLElement | null) {
+		coinDir = dir === 0 ? 0 : dir > 0 ? 1 : -1;
+		moveDirs = [...moveDirs, coinDir];
+		moveSeq += 1;
+		if (coinDir !== 0) fly(from, coinDir);
+	}
+	function take(id: LineId, from: HTMLElement | null) {
 		if (!B.takeProblem(game, id)) {
 			game = B.take(board, game, id);
-			notice = '';
+			afterMove(1, from);
+			refusal = '';
 			return;
 		}
-		notice = c.board.atZero;
+		refusal = c.board.reasonAtZero;
 	}
-	function give(id: LineId) {
+	function give(id: LineId, from: HTMLElement | null) {
 		if (!B.giveProblem(board, game, id)) {
 			game = B.give(board, game, id);
-			notice = '';
+			afterMove(-1, from);
+			refusal = '';
 			return;
 		}
-		notice =
-			game.levels[id] >= 40
-				? c.board.atMax
-				: c.board.notEnough(fmt(P), fmt(B.stepMd(B.findLine(board, id))));
+		refusal =
+			game.levels[id] >= MAX_LEVEL ? c.board.reasonAtMax : c.board.reasonNoPurse(fmt(P));
 	}
 	function keep() {
+		const dir = P > 0.5 ? -1 : P < -0.5 ? 1 : 0;
 		game = B.keepDraft(board, game);
-		notice = '';
+		afterMove(dir, null);
+		refusal = '';
 	}
 	function undo() {
+		const last = moveDirs[moveDirs.length - 1] ?? 0;
+		moveDirs = moveDirs.slice(0, -1);
+		coinDir = last === 0 ? 0 : last === 1 ? -1 : 1;
+		moveSeq += 1;
+		refusal = '';
 		game = B.undo(game);
-		notice = '';
 	}
 	function reset() {
 		game = B.startBoard(board, mode);
-		notice = '';
+		moveDirs = [];
+		coinDir = 0;
+		flight = null;
+		refusal = '';
 	}
 	function finish() {
 		if (done) onfinish?.(game, board);
+	}
+	function openNote(id: LineId, trigger: HTMLElement | null) {
+		noteTrigger = trigger;
+		noteLine = id;
+		noteDialog?.showModal();
+	}
+	function closeNote() {
+		noteDialog?.close();
+	}
+	function onNoteClose() {
+		noteLine = null;
+		noteTrigger?.focus();
 	}
 	const startLabel = $derived(mode === 'draft' ? c.board.startDraft : c.board.startEmpty);
 	const balanceText = $derived(
@@ -132,30 +217,34 @@
 	);
 </script>
 
-<section class="board" aria-labelledby="h-board" lang={app.locale}>
-	<div class="purse" role="status" aria-live="polite">
+<section class="board" bind:this={boardEl} aria-labelledby="h-board" lang={app.locale}>
+	<div class="purse">
 		<p class="purse-label">{c.board.purse}</p>
-		<p class="purse-value">
-			{#key coins}
-				<span class="coins" class:drop={coinDir > 0} class:lift={coinDir < 0} aria-hidden="true">
-					{#each COIN_SLOTS as i (i)}
-						<span class="coin" class:on={i < coins} style:--i={i}></span>
-					{/each}
-				</span>
-			{/key}
-			<span class="amount">{fmt(P)} <span class="unit">{unit}</span></span>
-		</p>
+		<div class="purse-main" role="status" aria-live="polite">
+			<div class="stack" bind:this={purseEl} aria-hidden="true">
+				{#key held}
+					<span class="slots" class:drop={coinDir > 0} class:lift={coinDir < 0}>
+						{#each COIN_SLOTS as i (i)}
+							<span class="coin" class:on={i < held}></span>
+						{/each}
+					</span>
+				{/key}
+			</div>
+			<div class="purse-figures">
+				<span class="amount purse-value">{fmt(P)} <span class="unit">{unit}</span></span>
+				<p class="progress">{c.board.purseProgress(fmt(placedMd), fmt(lines.envelope))}</p>
+			</div>
+		</div>
+		<p class="purse-rule">{c.board.purseHint}</p>
+		<button type="button" class="quiet hint-toggle" onclick={() => hintDialog?.showModal()}>
+			{c.board.hintToggle}
+		</button>
+		{#if refusal}
+			<p class="refusal" aria-live="polite">{refusal}</p>
+		{/if}
 	</div>
 
 	<div class="side">
-		<div class="totals">
-			<div><span>{c.board.yours}</span><strong>{fmt(placedMd)} {unit}</strong></div>
-			<div><span>{c.board.draft}</span><strong>{fmt(lines.envelope)} {unit}</strong></div>
-			<div><span>{c.board.change}</span><strong>{fmtDelta(placedMd - lines.envelope)}</strong></div>
-		</div>
-
-		<p class="notice" class:is-refusal={notice !== ''} role="status" aria-live="polite">{notice || c.board.purseHint}</p>
-
 		<div class="toolbar">
 			<button type="button" class="quiet" onclick={() => (view = view === 'bars' ? 'table' : 'bars')} aria-pressed={view === 'table'}>{c.board.tableView}</button>
 			<button type="button" class="quiet" onclick={undo} disabled={game.snapshots.length === 0}>{c.board.undo}</button>
@@ -190,25 +279,49 @@
 		{#if mode === 'draft'}<p class="note">{c.board.startNote}</p>{/if}
 
 		{#if view === 'bars'}
-			<ul class="systems">
-				{#each rows as r (r.line.id)}
-					<li class="system">
-						<div class="system-head">
-							<h4 title={c.lines[r.line.id].name}>{c.lines[r.line.id].name}</h4>
-							<span class="delta">{fmtDelta(r.delta)} · {pctLabel(r.level)}</span>
-						</div>
-						<div class="tank" aria-hidden="true">
-							<span class="fill" class:up={r.level > 20} class:down={r.level < 20} style:inline-size="{(r.amount / scaleMax) * 100}%"></span>
-							<span class="tick" style:inset-inline-start="{(r.line.draft / scaleMax) * 100}%"></span>
-						</div>
-						<div class="actions">
-							<button type="button" class="take" class:refused={!r.takeOk} onclick={() => take(r.line.id)}>{c.board.take(fmt(r.step))}</button>
-							<button type="button" class="give" class:refused={!r.giveOk} onclick={() => give(r.line.id)}>{c.board.give(fmt(r.step))}</button>
-						</div>
-						<span class="sr-only">{c.lines[r.line.id].name}: {fmt(r.amount)} {unit}, {pctLabel(r.level)}. {r.takeOk ? '' : c.board.atZero}</span>
-					</li>
+			<div class="systems">
+				{#each groups as g (g.key)}
+					<section class="group {g.key}" style:--rows={g.rows.length}>
+						<h3 class="group-title">{c.board.groups[g.key]}</h3>
+						<ul class="group-list">
+							{#each g.rows as r (r.line.id)}
+								<li class="system" class:wide={r.line.id === 'education' || r.line.id === 'subsidies'}>
+									<div class="system-head">
+										<button
+											type="button"
+											class="name"
+											onclick={(e) => openNote(r.line.id, e.currentTarget)}
+										>{c.lines[r.line.id].name}</button>
+										<span class="delta">{fmtDelta(r.delta)} · {pctLabel(r.level)}</span>
+									</div>
+									<div class="tank" aria-hidden="true">
+										<span class="fill" class:up={r.level > 20} class:down={r.level < 20} style:inline-size="{(r.amount / scaleMax) * 100}%"></span>
+										<span class="tick" style:inset-inline-start="{(r.line.draft / scaleMax) * 100}%"></span>
+									</div>
+									<div class="actions">
+										<button
+											type="button"
+											class="take"
+											class:refused={!r.takeOk}
+											aria-disabled={!r.takeOk}
+											aria-label={r.takeOk ? c.board.take(fmt(r.step)) : `${c.board.take(fmt(r.step))}. ${takeReason(r)}`}
+											onclick={(e) => take(r.line.id, e.currentTarget)}
+										>{c.board.take(fmt(r.step))}</button>
+										<button
+											type="button"
+											class="give"
+											class:refused={!r.giveOk}
+											aria-disabled={!r.giveOk}
+											aria-label={r.giveOk ? c.board.give(fmt(r.step)) : `${c.board.give(fmt(r.step))}. ${giveReason(r)}`}
+											onclick={(e) => give(r.line.id, e.currentTarget)}
+										>{c.board.give(fmt(r.step))}</button>
+									</div>
+								</li>
+							{/each}
+						</ul>
+					</section>
 				{/each}
-			</ul>
+			</div>
 		{:else}
 			<div class="table-wrap">
 				<table class="figures">
@@ -224,7 +337,9 @@
 					<tbody>
 						{#each rows as r (r.line.id)}
 							<tr>
-								<th scope="row">{c.lines[r.line.id].name}</th>
+								<th scope="row">
+									<button type="button" class="name" onclick={(e) => openNote(r.line.id, e.currentTarget)}>{c.lines[r.line.id].name}</button>
+								</th>
 								<td class="num">{fmt(r.line.draft)}</td>
 								<td class="num">{fmt(r.amount)}</td>
 								<td class="num">{fmtDelta(r.delta)}</td>
@@ -239,7 +354,46 @@
 			<span class="stamp" aria-hidden="true">{balanceText}</span>
 		{/if}
 	</div>
+
+	{#if flight}
+		{#key flight.seq}
+			<span
+				class="fly"
+				aria-hidden="true"
+				style="--fx: {flight.fx}px; --fy: {flight.fy}px; --tx: {flight.tx}px; --ty: {flight.ty}px"
+			></span>
+		{/key}
+	{/if}
 </section>
+
+<dialog
+	class="sheet"
+	bind:this={noteDialog}
+	onclose={onNoteClose}
+	onclick={(e) => {
+		if (e.target === noteDialog) closeNote();
+	}}
+	aria-labelledby="note-title"
+>
+	{#if noteLine}
+		<h3 id="note-title">{c.board.noteTitle}</h3>
+		<p class="note-name">{c.lines[noteLine].name}</p>
+		<p>{c.lines[noteLine].note}</p>
+	{/if}
+	<button type="button" class="quiet close" onclick={closeNote}>{c.board.hintClose}</button>
+</dialog>
+
+<dialog
+	class="sheet"
+	bind:this={hintDialog}
+	onclick={(e) => {
+		if (e.target === hintDialog) hintDialog?.close();
+	}}
+	aria-label={c.board.hintToggle}
+>
+	<p>{c.board.hint}</p>
+	<button type="button" class="quiet close" onclick={() => hintDialog?.close()}>{c.board.hintClose}</button>
+</dialog>
 
 <style>
 	.board {
@@ -258,7 +412,7 @@
 		grid-area: purse;
 		display: flex;
 		flex-direction: column;
-		gap: var(--s-1);
+		gap: var(--s-2);
 		padding: var(--s-3) var(--s-4);
 		background: var(--surface-raised);
 		border: var(--rule);
@@ -272,17 +426,52 @@
 		letter-spacing: var(--track-wide);
 		color: var(--text-muted);
 	}
-	.purse-value {
-		margin: 0;
+	.purse-main {
 		display: flex;
-		align-items: center;
+		align-items: stretch;
 		gap: var(--s-3);
+	}
+	.stack {
+		flex: none;
+		inline-size: var(--s-6);
+		block-size: var(--s-11);
+		padding: var(--s-1);
+		background: var(--surface-sunken);
+		border: var(--rule);
+		border-radius: var(--r-sm);
+	}
+	.slots {
+		display: flex;
+		flex-direction: column-reverse;
+		gap: var(--s-1);
+		block-size: 100%;
+		inline-size: 100%;
+	}
+	.coin {
+		flex: 1 1 0;
+		min-block-size: 0;
+		border-radius: var(--r-full);
+		background: var(--surface-base);
+	}
+	.coin.on {
+		background: var(--accent);
+	}
+	.slots.drop .coin.on,
+	.slots.lift .coin.on {
+		animation: coin-pop var(--dur-fast) var(--ease-out) both;
+	}
+	.purse-figures {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		gap: var(--s-1);
+		min-inline-size: 0;
+	}
+	.amount {
 		font-size: var(--step-1);
 		font-weight: 700;
 		font-variant-numeric: tabular-nums;
 		line-height: var(--lh-tight);
-	}
-	.amount {
 		white-space: nowrap;
 	}
 	.unit {
@@ -290,31 +479,26 @@
 		font-weight: 500;
 		color: var(--text-muted);
 	}
-	.coins {
-		display: flex;
-		flex-wrap: wrap;
-		gap: var(--s-1);
-		flex: 1;
-		max-inline-size: 9rem;
+	.progress {
+		margin: 0;
+		font-family: var(--font-mono);
+		font-size: var(--t-2xs);
+		font-variant-numeric: tabular-nums;
+		color: var(--text-muted);
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
 	}
-	.coin {
-		inline-size: var(--s-3);
-		block-size: var(--s-3);
-		border: var(--rule);
-		border-radius: var(--r-full);
-		background: var(--surface-sunken);
+	.purse-rule {
+		display: none;
 	}
-	.coin.on {
-		background: var(--accent);
-		border-color: var(--accent);
+	.hint-toggle {
+		display: none;
 	}
-	.coins.drop .coin.on {
-		animation: coin-drop var(--dur-fast) var(--ease-out) both;
-		animation-delay: calc(var(--dur-instant) * var(--i) / 12);
-	}
-	.coins.lift .coin.on {
-		animation: coin-lift var(--dur-fast) var(--ease-out) both;
-		animation-delay: calc(var(--dur-instant) * var(--i) / 12);
+	.refusal {
+		margin: 0;
+		font-size: var(--t-sm);
+		color: var(--rupture);
 	}
 	.side {
 		grid-area: side;
@@ -323,37 +507,6 @@
 		gap: var(--s-3);
 		min-block-size: 0;
 		overflow: hidden;
-	}
-	.totals {
-		display: grid;
-		gap: var(--s-1);
-		padding: var(--s-3) var(--s-4);
-		background: var(--surface-sunken);
-		border: var(--rule);
-		border-radius: var(--r-md);
-		font-variant-numeric: tabular-nums;
-	}
-	.totals div {
-		display: flex;
-		justify-content: space-between;
-		gap: var(--s-3);
-	}
-	.totals span {
-		font-family: var(--font-mono);
-		font-size: var(--t-xs);
-		text-transform: uppercase;
-		letter-spacing: var(--track-wide);
-		color: var(--text-muted);
-	}
-	.totals strong {
-		font-size: var(--t-sm);
-		font-weight: 600;
-	}
-	.notice {
-		margin: 0;
-		min-block-size: var(--s-8);
-		font-size: var(--t-sm);
-		color: var(--text-muted);
 	}
 	.toolbar {
 		display: grid;
@@ -422,15 +575,45 @@
 		margin: 0;
 	}
 	.systems {
-		list-style: none;
-		padding: 0;
-		margin: 0;
 		flex: 1;
 		min-block-size: 0;
 		display: grid;
-		grid-template-columns: repeat(4, minmax(0, 1fr));
-		grid-template-rows: repeat(4, minmax(0, 1fr));
+		grid-auto-rows: minmax(0, 1fr);
 		gap: var(--s-3);
+	}
+	.group {
+		display: flex;
+		flex-direction: column;
+		gap: var(--s-2);
+		min-block-size: 0;
+	}
+	.group-title {
+		margin: 0;
+		font-family: var(--font-mono);
+		font-size: var(--t-2xs);
+		line-height: 1;
+		text-transform: uppercase;
+		letter-spacing: var(--track-wide);
+		color: var(--text-muted);
+	}
+	.group-list {
+		flex: 1;
+		min-block-size: 0;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		grid-auto-rows: minmax(0, 1fr);
+		gap: var(--s-3);
+	}
+	.group.people .group-list {
+		grid-template-columns: repeat(5, minmax(0, 1fr));
+	}
+	.group.state .group-list {
+		grid-template-columns: repeat(7, minmax(0, 1fr));
+	}
+	.group.economy .group-list {
+		grid-template-columns: repeat(6, minmax(0, 1fr));
 	}
 	.system {
 		position: relative;
@@ -440,26 +623,44 @@
 		gap: var(--s-2);
 		min-block-size: 0;
 		overflow: hidden;
-		padding: var(--s-3);
+		padding: var(--s-2) var(--s-3);
 		background: var(--surface-raised);
 		border: var(--rule);
 		border-radius: var(--r-md);
 	}
+	.system.wide {
+		grid-column: span 2;
+	}
 	.system-head {
 		display: flex;
-		justify-content: space-between;
-		align-items: baseline;
-		gap: var(--s-2);
+		flex-direction: column;
+		align-items: flex-start;
+		gap: var(--s-1);
+		min-inline-size: 0;
 	}
-	h4 {
+	.name {
 		margin: 0;
+		padding: 0;
+		border: 0;
+		background: none;
+		color: inherit;
+		font: inherit;
 		font-size: var(--t-sm);
+		font-weight: 600;
 		line-height: var(--lh-tight);
+		text-align: start;
+		min-block-size: 0;
+		min-inline-size: 0;
+		cursor: pointer;
 		display: -webkit-box;
 		line-clamp: 2;
 		-webkit-line-clamp: 2;
 		-webkit-box-orient: vertical;
 		overflow: hidden;
+	}
+	.name:hover {
+		color: var(--accent);
+		text-decoration: underline;
 	}
 	.delta {
 		font-family: var(--font-mono);
@@ -496,13 +697,18 @@
 	}
 	.actions {
 		display: flex;
-		gap: var(--s-2);
+		flex-direction: column;
+		gap: var(--s-1);
+	}
+	.system.wide .actions {
+		flex-direction: row;
 	}
 	.actions button {
 		flex: 1;
-		min-block-size: var(--tap);
+		min-block-size: var(--s-10);
 		padding-inline: var(--s-2);
-		font-size: var(--t-xs);
+		font-size: var(--t-2xs);
+		line-height: var(--lh-tight);
 	}
 	button {
 		font: inherit;
@@ -555,6 +761,10 @@
 		border-block-end: var(--rule);
 		text-align: start;
 	}
+	.figures .name {
+		display: inline;
+		overflow: visible;
+	}
 	.figures .num {
 		text-align: end;
 	}
@@ -579,6 +789,51 @@
 		transform: rotate(-6deg);
 		animation: stamp-in var(--dur-slow) var(--ease-spring) both;
 	}
+	.fly {
+		position: absolute;
+		inset-block-start: 50%;
+		inset-inline-start: 50%;
+		inline-size: var(--s-4);
+		block-size: var(--s-4);
+		margin-block-start: calc(var(--s-4) / -2);
+		margin-inline-start: calc(var(--s-4) / -2);
+		border-radius: var(--r-full);
+		background: var(--accent);
+		pointer-events: none;
+		z-index: 6;
+		animation: coin-fly var(--dur-fast) var(--ease-out) both;
+	}
+	.sheet {
+		margin: auto;
+		max-inline-size: min(26rem, calc(100vw - var(--s-8)));
+		padding: var(--s-5);
+		background: var(--surface-overlay);
+		color: var(--text-primary);
+		border: var(--rule);
+		border-radius: var(--r-lg);
+		box-shadow: var(--elev-3);
+	}
+	.sheet::backdrop {
+		background: var(--n-1000);
+		opacity: 0.45;
+	}
+	.sheet h3 {
+		margin: 0 0 var(--s-2);
+		font-size: var(--step-0);
+	}
+	.sheet p {
+		margin: 0 0 var(--s-3);
+		font-size: var(--t-sm);
+		line-height: var(--lh-snug);
+	}
+	.sheet .note-name {
+		color: var(--text-muted);
+		font-family: var(--font-mono);
+		font-size: var(--t-xs);
+	}
+	.sheet .close {
+		margin-block-start: var(--s-2);
+	}
 	.sr-only {
 		position: absolute;
 		inline-size: 1px;
@@ -587,25 +842,27 @@
 		clip-path: inset(50%);
 		white-space: nowrap;
 	}
-	@keyframes coin-drop {
+	@keyframes coin-pop {
 		from {
-			opacity: 0;
-			transform: translateY(calc(var(--s-3) * -1));
+			opacity: 0.2;
+			transform: scaleY(0.4);
 		}
 		to {
 			opacity: 1;
-			transform: translateY(0);
+			transform: scaleY(1);
 		}
 	}
-	@keyframes coin-lift {
+	@keyframes coin-fly {
 		0% {
-			transform: translateY(0);
+			opacity: 0;
+			transform: translate(var(--fx), var(--fy)) scale(0.7);
 		}
-		40% {
-			transform: translateY(calc(var(--s-2) * -1));
+		20% {
+			opacity: 1;
 		}
 		100% {
-			transform: translateY(0);
+			opacity: 0;
+			transform: translate(var(--tx), var(--ty)) scale(1);
 		}
 	}
 	@keyframes stamp-in {
@@ -650,48 +907,74 @@
 			position: sticky;
 			top: 0;
 			z-index: 4;
-			flex-direction: row;
-			align-items: center;
-			gap: var(--s-3);
-			block-size: var(--s-9);
+			flex-direction: column;
+			align-items: stretch;
+			gap: 0;
+			block-size: var(--s-11);
 			padding: var(--s-1) var(--s-3);
 			background: var(--surface-base);
 			border: 0;
 			border-block-end: var(--rule);
 			border-radius: 0;
 		}
-		.purse-value {
+		.purse-label {
+			display: none;
+		}
+		.purse-main {
+			flex: 1;
+			min-block-size: 0;
+			gap: var(--s-2);
+		}
+		.stack {
+			inline-size: var(--s-4);
+			block-size: 100%;
+			padding: 0;
+			border-radius: var(--r-xs);
+		}
+		.amount {
 			font-size: var(--t-lg);
 		}
-		.coins {
-			flex: 0 1 auto;
-			flex-wrap: nowrap;
-			max-inline-size: none;
-			overflow: hidden;
+		.progress {
+			margin-inline-start: auto;
+			align-self: center;
 		}
-		.unit {
+		.purse-rule {
+			display: block;
+			margin: 0;
 			font-size: var(--t-2xs);
+			line-height: var(--s-5);
+			color: var(--text-muted);
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			padding-inline-end: var(--s-10);
+		}
+		.hint-toggle {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			position: absolute;
+			inset-block-start: 50%;
+			inset-inline-end: var(--s-3);
+			transform: translateY(-50%);
+			min-block-size: var(--touch);
+			min-inline-size: var(--touch);
+			padding: 0 var(--s-2);
+			font-size: var(--t-2xs);
+		}
+		.refusal {
+			position: absolute;
+			inset-block-start: 100%;
+			inset-inline: 0;
+			z-index: 5;
+			padding: var(--s-1) var(--s-3);
+			background: var(--surface-overlay);
+			border-block-end: var(--rule);
 		}
 		.side {
 			display: contents;
 		}
-		.totals,
 		.ledger {
-			display: none;
-		}
-		.notice {
-			position: absolute;
-			inset-block-end: var(--s-6);
-			inset-inline: var(--s-4);
-			z-index: 5;
-			min-block-size: 0;
-			padding: var(--s-2) var(--s-3);
-			background: var(--surface-overlay);
-			border: var(--rule);
-			border-radius: var(--r-md);
-			pointer-events: none;
-		}
-		.notice:not(.is-refusal) {
 			display: none;
 		}
 		.toolbar {
@@ -753,10 +1036,40 @@
 			margin: 0;
 		}
 		.systems {
-			grid-template-columns: minmax(0, 1fr);
-			grid-template-rows: repeat(16, minmax(0, 1fr));
+			display: flex;
+			flex-direction: column;
 			gap: 0;
+			flex: 1;
+			min-block-size: 0;
+			overflow: hidden;
 			border-block-start: var(--rule);
+		}
+		.group {
+			flex: var(--rows) 1 0;
+			gap: 0;
+			min-block-size: 0;
+		}
+		.group-title {
+			block-size: var(--s-5);
+			line-height: var(--s-5);
+			padding-inline: var(--s-3);
+			background: var(--surface-sunken);
+			border-block-end: var(--rule);
+		}
+		.group.people .group-list,
+		.group.state .group-list,
+		.group.economy .group-list {
+			grid-template-columns: minmax(0, 1fr);
+		}
+		.group-list {
+			display: grid;
+			grid-auto-rows: minmax(0, 1fr);
+			gap: 0;
+			flex: 1;
+			min-block-size: 0;
+		}
+		.system.wide {
+			grid-column: auto;
 		}
 		.system {
 			display: grid;
@@ -772,10 +1085,12 @@
 		.system-head {
 			display: contents;
 		}
-		h4 {
+		.name {
 			position: relative;
 			z-index: 1;
 			display: block;
+			min-block-size: var(--touch);
+			align-self: stretch;
 			font-size: var(--t-sm);
 			white-space: nowrap;
 			overflow: hidden;
@@ -799,6 +1114,7 @@
 			z-index: 1;
 			flex: none;
 			min-block-size: var(--touch);
+			min-inline-size: var(--touch);
 			padding: 0 var(--s-2);
 			font-size: var(--t-2xs);
 		}
@@ -823,10 +1139,14 @@
 		.fill {
 			transition: none;
 		}
-		.coins.drop .coin.on,
-		.coins.lift .coin.on,
+		.slots.drop .coin.on,
+		.slots.lift .coin.on,
+		.fly,
 		.stamp {
 			animation: none;
+		}
+		.fly {
+			display: none;
 		}
 	}
 </style>

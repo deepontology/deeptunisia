@@ -17,13 +17,15 @@
 		systems,
 		locked,
 		envelopeLabel,
-		playable = false
+		playable = false,
+		compact = false
 	}: {
 		labels: { draft: string; yours: string; locked: string; purse: string; systems: string; step: string };
 		systems: { name: string; draft: number }[];
 		locked: { name: string; draft: number }[];
 		envelopeLabel: string;
 		playable?: boolean;
+		compact?: boolean;
 	} = $props();
 
 	const titleId = `study-graphic-title-${++seq}`;
@@ -31,20 +33,27 @@
 	/* One step is a twentieth of a system's draft, as in the board. */
 	const STEP_SHARE = 0.05;
 
-	/* Layout in viewBox units. Geometry only; no data lives here. */
-	const W = 540;
-	const ENV_X = 20;
-	const ENV_Y = 64;
-	const ENV_W = 320;
-	const BAR_X = 148;
-	const BAR_MAX = 172;
-	const NAME_X = BAR_X - 12;
-	const BAR_H = 18;
-	const BAR_GAP = 12;
-	const BARS_TOP = ENV_Y + 52;
-	const PURSE_X = 372;
-	const PURSE_W = 132;
-	const PURSE_H = 100;
+	/* Layout in viewBox units. Geometry only; no data lives here. Compact mode
+	   tightens the rows so the board fits a first screen without shrinking the
+	   labels below legibility. Each name sits above its bar and wraps at word
+	   boundaries, so the longest name is never cut by the viewBox edge. */
+	const W = 560;
+	const ENV_X = 12;
+	const ENV_Y = 56;
+	const ENV_W = 348;
+	const INNER_X = ENV_X + 14;
+	const BAR_X = INNER_X;
+	const BAR_MAX = 320;
+	const BAR_H = $derived(compact ? 12 : 15);
+	const ROW_GAP = $derived(compact ? 7 : 10);
+	const BARS_TOP = ENV_Y + 46;
+	const LABEL_LINE_H = 17;
+	/* Characters per wrapped line. The mono face is about 0.6em wide, so 29
+	   characters stay inside the bar column even at the small-screen size. */
+	const LABEL_CHARS = 29;
+	const PURSE_X = 390;
+	const PURSE_W = 146;
+	const PURSE_H = 104;
 
 	let moved = $state<Record<number, boolean>>({});
 
@@ -73,24 +82,52 @@
 		}
 	}
 
-	const rows = $derived(
-		systems.map((s, i) => ({
-			name: s.name,
-			draft: s.draft,
-			current: currentOf(i),
-			pressed: moved[i] === true,
-			y: BARS_TOP + i * (BAR_H + BAR_GAP),
-			draftW: barWidth(s.draft),
-			curW: barWidth(currentOf(i))
-		}))
-	);
+	const rows = $derived.by(() => {
+		let y = BARS_TOP;
+		return systems.map((s, i) => {
+			const lines = wrapLabel(s.name, LABEL_CHARS);
+			const barY = y + lines.length * LABEL_LINE_H + 2;
+			const row = {
+				name: s.name,
+				draft: s.draft,
+				current: currentOf(i),
+				pressed: moved[i] === true,
+				lines,
+				y,
+				barY,
+				rowH: lines.length * LABEL_LINE_H + 2 + BAR_H,
+				draftW: barWidth(s.draft),
+				curW: barWidth(currentOf(i))
+			};
+			y = barY + BAR_H + ROW_GAP;
+			return row;
+		});
+	});
 
-	const barsH = $derived(Math.max(systems.length, 1) * (BAR_H + BAR_GAP));
-	const lockedY = $derived(BARS_TOP + barsH + 20);
-	const envH = $derived(52 + barsH + 60);
-	const viewH = $derived(ENV_Y + envH + 36);
+	const barsH = $derived(rows.length ? rows[rows.length - 1].barY + BAR_H - BARS_TOP : 0);
+	const lockedLabelY = $derived(BARS_TOP + barsH + 26);
+	const lockedBarY = $derived(lockedLabelY + 6);
+	const envH = $derived(lockedBarY + BAR_H + 16 - ENV_Y);
+	const viewH = $derived(ENV_Y + envH + 24);
 	const purseY = $derived(ENV_Y + envH / 2 - PURSE_H / 2);
 	const lockW = $derived(Math.min(BAR_MAX, barWidth(totalLocked)));
+
+	/** Greedy word wrap so a long system name never leaves the label column. */
+	function wrapLabel(text: string, maxChars: number): string[] {
+		const lines: string[] = [];
+		let line = '';
+		for (const word of text.split(/\s+/)) {
+			const next = line ? `${line} ${word}` : word;
+			if (next.length > maxChars && line) {
+				lines.push(line);
+				line = word;
+			} else {
+				line = next;
+			}
+		}
+		if (line) lines.push(line);
+		return lines;
+	}
 
 	const heroIndex = $derived(
 		systems.length === 0 ? -1 : systems.reduce((best, s, i, all) => (s.draft > all[best].draft ? i : best), 0)
@@ -156,10 +193,10 @@
 		<text class="envelope-label" x={ENV_X + 16} y={ENV_Y + 26}>{envelopeLabel}</text>
 
 		<!-- Legend: filled is yours, outlined is the draft. -->
-		<rect x={ENV_X + 176} y={ENV_Y + 17} width="10" height="10" rx="2" fill="var(--accent)" />
-		<text class="legend" x={ENV_X + 192} y={ENV_Y + 26}>{labels.yours}</text>
+		<rect x={ENV_X + 210} y={ENV_Y + 17} width="10" height="10" rx="2" fill="var(--accent)" />
+		<text class="legend" x={ENV_X + 226} y={ENV_Y + 26}>{labels.yours}</text>
 		<rect
-			x={ENV_X + 246}
+			x={ENV_X + 280}
 			y={ENV_Y + 17}
 			width="10"
 			height="10"
@@ -167,7 +204,7 @@
 			fill="none"
 			stroke="var(--border-subtle)"
 		/>
-		<text class="legend" x={ENV_X + 262} y={ENV_Y + 26}>{labels.draft}</text>
+		<text class="legend" x={ENV_X + 296} y={ENV_Y + 26}>{labels.draft}</text>
 
 		{#each rows as row, i (i)}
 			{#if playable}
@@ -180,20 +217,22 @@
 					onclick={() => toggle(i)}
 					onkeydown={(event) => onKey(event, i)}
 				>
-					<rect class="hit-area" x={ENV_X + 8} y={row.y - 4} width={BAR_X + BAR_MAX - ENV_X - 4} height={BAR_H + 8} />
+					<rect class="hit-area" x={ENV_X + 6} y={row.y - 2} width={ENV_W - 12} height={row.rowH + 4} />
 					<rect
 						class="focus-ring"
 						x={BAR_X - 4}
-						y={row.y - 4}
+						y={row.barY - 4}
 						width={BAR_MAX + 8}
 						height={BAR_H + 8}
 						rx="5"
 					/>
-					<text class="system-name" x={NAME_X} y={row.y + BAR_H - 4}>{row.name}</text>
+					{#each row.lines as line, li (li)}
+						<text class="system-name" x={INNER_X} y={row.y + (li + 1) * LABEL_LINE_H - 5}>{line}</text>
+					{/each}
 					<rect
 						class="bar-track"
 						x={BAR_X}
-						y={row.y}
+						y={row.barY}
 						width={row.draftW}
 						height={BAR_H}
 						rx="3"
@@ -203,7 +242,7 @@
 					<rect
 						class="bar-fill"
 						x={BAR_X}
-						y={row.y}
+						y={row.barY}
 						width={row.curW}
 						height={BAR_H}
 						rx="3"
@@ -213,28 +252,30 @@
 				</g>
 			{:else}
 				<g class="bar-row static">
-					<text class="system-name" x={NAME_X} y={row.y + BAR_H - 4}>{row.name}</text>
+					{#each row.lines as line, li (li)}
+						<text class="system-name" x={INNER_X} y={row.y + (li + 1) * LABEL_LINE_H - 5}>{line}</text>
+					{/each}
 					<rect
 						class="bar-track"
 						x={BAR_X}
-						y={row.y}
+						y={row.barY}
 						width={row.draftW}
 						height={BAR_H}
 						rx="3"
 						fill="none"
 						stroke="var(--border-subtle)"
 					/>
-					<rect class="bar-fill" x={BAR_X} y={row.y} width={row.curW} height={BAR_H} rx="3" fill="var(--accent)" />
+					<rect class="bar-fill" x={BAR_X} y={row.barY} width={row.curW} height={BAR_H} rx="3" fill="var(--accent)" />
 				</g>
 			{/if}
 		{/each}
 
 		<!-- Already spent, hatched in the warning colour. -->
-		<text class="locked-label" x={BAR_X} y={lockedY - 8}>{`${labels.locked} ${fmt(totalLocked)}`}</text>
+		<text class="locked-label" x={BAR_X} y={lockedLabelY}>{`${labels.locked} ${fmt(totalLocked)}`}</text>
 		<rect
 			class="locked-block"
 			x={BAR_X}
-			y={lockedY}
+			y={lockedBarY}
 			width={lockW}
 			height={BAR_H}
 			rx="3"
@@ -246,7 +287,7 @@
 		{#if systems.length > 0}
 			<path
 				class="flow receive"
-				d={`M ${BAR_X + rows[heroIndex].draftW + 6} ${rows[heroIndex].y + BAR_H / 2} C ${BAR_X + rows[heroIndex].draftW + 34} ${rows[heroIndex].y + BAR_H / 2} ${PURSE_X - 34} ${purseY + 24} ${PURSE_X - 2} ${purseY + 30}`}
+				d={`M ${BAR_X + rows[heroIndex].draftW + 6} ${rows[heroIndex].barY + BAR_H / 2} C ${BAR_X + rows[heroIndex].draftW + 30} ${rows[heroIndex].barY + BAR_H / 2} ${PURSE_X - 30} ${purseY + 24} ${PURSE_X - 2} ${purseY + 30}`}
 				fill="none"
 				stroke="var(--accent)"
 				stroke-width="2"
@@ -254,7 +295,7 @@
 			/>
 			<path
 				class="flow give"
-				d={`M ${PURSE_X - 2} ${purseY + PURSE_H - 26} C ${PURSE_X - 26} ${purseY + PURSE_H - 12} ${ENV_X + ENV_W + 30} ${purseY + PURSE_H - 26} ${ENV_X + ENV_W + 2} ${purseY + PURSE_H - 26}`}
+				d={`M ${PURSE_X - 2} ${purseY + PURSE_H - 26} C ${PURSE_X - 24} ${purseY + PURSE_H - 12} ${ENV_X + ENV_W + 26} ${purseY + PURSE_H - 26} ${ENV_X + ENV_W + 2} ${purseY + PURSE_H - 26}`}
 				fill="none"
 				stroke="var(--text-muted)"
 				stroke-width="2"
@@ -351,8 +392,7 @@
 
 	.system-name {
 		fill: var(--text-muted);
-		font-size: 13px;
-		text-anchor: end;
+		font-size: 15px;
 	}
 
 	.bar-fill {
@@ -440,11 +480,11 @@
 		}
 
 		.legend {
-			font-size: 12.5px;
+			font-size: 12px;
 		}
 
 		.system-name {
-			font-size: 15px;
+			font-size: 18px;
 		}
 
 		.locked-label {

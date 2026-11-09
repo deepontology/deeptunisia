@@ -213,7 +213,7 @@ async function checkLanding(
 	const { context, page, errors } = await openPage(browser, size, locale);
 	try {
 		await page.goto(`${BASE}/research/citizen-budget`, { waitUntil: 'load' });
-		await page.locator('svg .purse-amount').first().waitFor({ state: 'visible' });
+		await page.locator('svg .purse-amount:visible').first().waitFor({ state: 'visible' });
 		await settle(page);
 		await page.screenshot({ path: join(OUT, `landing-${size.label}-${locale}.png`) });
 
