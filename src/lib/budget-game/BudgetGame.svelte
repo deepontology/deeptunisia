@@ -3,6 +3,7 @@
 	import { app } from '$lib/state.svelte';
 	import { copyFor } from './copy';
 	import { MOVABLE, LOCKED, DRAFT_ENVELOPE, MIN_PCT, MAX_PCT, STEP_PCT, BALANCE_TOLERANCE } from './lines';
+	import { ROUNDS, stepMd, addedMd, cutMd, type Response } from './rounds';
 
 	/**
 	 * The citizen budget game, as a prototype.
@@ -89,13 +90,63 @@
 		for (const l of MOVABLE) pct[l.id] = 100;
 	}
 
-	function keepDraft() {
+	/** The round state. `round` is the index of the round on screen; 5 means the year is done. */
+	let round = $state(0);
+	let choices = $state<(string | null)[]>([null, null, null, null, null]);
+	const roundDone = $derived(round < ROUNDS.length && choices[round] !== null);
+	const current = $derived(ROUNDS[Math.min(round, ROUNDS.length - 1)]);
+	const yearDone = $derived(round >= ROUNDS.length);
+
+	/** Each response is a set of whole 5% steps; a step moves the line by 5 points of its draft. */
+	function choose(resp: Response) {
+		if (roundDone) return;
+		for (const m of resp.moves) pct[m.line] = pct[m.line] + m.steps * 5;
+		choices[round] = resp.id;
+	}
+
+	function nextRound() {
+		round += 1;
+	}
+
+	function startYear() {
 		resetDraft();
-		go('items');
+		round = 0;
+		choices = [null, null, null, null, null];
+	}
+
+	/** Dinars still asked for by the round on screen; zero once answered. */
+	const stillToFind = $derived(!yearDone && !roundDone && current.amountMd > 0 ? current.amountMd : 0);
+	const cutSoFar = $derived(MOVABLE.reduce((sum, l) => sum + (pct[l.id] < 100 ? (l.draft * (100 - pct[l.id])) / 100 : 0), 0));
+	const addedSoFar = $derived(MOVABLE.reduce((sum, l) => sum + (pct[l.id] > 100 ? (l.draft * (pct[l.id] - 100)) / 100 : 0), 0));
+	const linesCut = $derived(MOVABLE.filter((l) => pct[l.id] < 100).length);
+	const linesAdded = $derived(MOVABLE.filter((l) => pct[l.id] > 100).length);
+	/** Lines cut in two or more rounds: a scar, shown in words. */
+	const scars = $derived(
+		MOVABLE.map((l) => ({
+			id: l.id,
+			times: ROUNDS.filter((r, i) => {
+				const chosen = r.responses.find((x) => x.id === choices[i]);
+				return chosen?.moves.some((m) => m.line === l.id && m.steps < 0);
+			}).length
+		})).filter((x) => x.times >= 2)
+	);
+	function movesText(resp: Response): string {
+		return resp.moves
+			.map((m) => {
+				const md = Math.abs(m.steps) * stepMd(m.line);
+				return `${c.lines[m.line].name} ${m.steps > 0 ? '+' : '\u2212'}${fmt(md)} ${unit}`;
+			})
+			.join(' · ');
+	}
+	function outcome(resp: Response): string {
+		if (resp.moves.length === 0) return resp.consequence;
+		const added = addedMd(resp);
+		const cut = cutMd(resp);
+		return `${fmt(added)} ${unit} moved from ${fmt(cut)} ${unit} of cuts. ${resp.consequence}`;
 	}
 
 	function restart() {
-		resetDraft();
+		startYear();
 		q1 = null;
 		q2 = null;
 		adult = false;
@@ -190,84 +241,106 @@
 					aria-label={c.game.meterLabel}
 					aria-valuemin="0"
 					aria-valuemax={Math.round(meterMax)}
-					aria-valuenow={Math.min(Math.round(spent), Math.round(meterMax))}
+					aria-valuenow={Math.round(spent)}
 					aria-valuetext={balanceText}
 				>
 					<span class="meter-fill" class:over={overBy > 0} class:under={underBy > 0} class:ok={balanced} style:inline-size="{fillPct}%"></span>
 					<span class="meter-target" style:inset-inline-start="{targetPct}%"></span>
 				</div>
 				<p class="balance" class:ok={balanced} class:over={overBy > 0} role="status" aria-live="polite">{balanceText}</p>
-				<p class="sum">
-					{c.game.spent} <strong>{fmt(spent)} {unit}</strong>
-					<span class="sep" aria-hidden="true">/</span>
-					{c.game.envelope} <strong>{fmt(DRAFT_ENVELOPE)} {unit}</strong>
-				</p>
+				<dl class="gauges">
+					<div>
+						<dt>Still to find</dt>
+						<dd>{fmt(stillToFind)} {unit}</dd>
+					</div>
+					<div>
+						<dt>Cut so far</dt>
+						<dd>{fmt(cutSoFar)} {unit} from {linesCut} {linesCut === 1 ? 'line' : 'lines'}</dd>
+					</div>
+					<div>
+						<dt>Added so far</dt>
+						<dd>{fmt(addedSoFar)} {unit} to {linesAdded} {linesAdded === 1 ? 'line' : 'lines'}</dd>
+					</div>
+				</dl>
 			</div>
 
 			<h2 id="h-game" bind:this={headingEl} tabindex="-1">{c.game.title}</h2>
-			<p class="hint">{c.game.hint}</p>
-
-			<ul class="tiles" aria-label={c.game.rowsLabel}>
-				{#each rows as r (r.line.id)}
-					{@const copy = c.lines[r.line.id]}
-					<li class="tile" class:up={r.p > 100} class:down={r.p < 100}>
-						<div class="tile-head">
-							<h3>{copy.name}</h3>
-							<span class="delta">{pctSigned(r.p)}</span>
-						</div>
-						<p class="note">{copy.note}</p>
-						<div class="bar" aria-hidden="true">
-							<span class="bar-fill" style:inline-size="{(r.p / MAX_PCT) * 100}%"></span>
-							<span class="bar-tick"></span>
-						</div>
-						<input
-							class="range"
-							type="range"
-							min={MIN_PCT}
-							max={MAX_PCT}
-							step={STEP_PCT}
-							value={r.p}
-							aria-label={c.game.sliderLabel(copy.name)}
-							aria-valuetext={`${r.p}% · ${fmt(r.amount)} ${unit}`}
-							oninput={(e) => setPct(r.line.id, e.currentTarget.valueAsNumber)}
-						/>
-						<dl class="nums">
-							<div>
-								<dt>{c.game.draft}</dt>
-								<dd>{fmt(r.line.draft)} {unit}</dd>
-							</div>
-							<div>
-								<dt>{c.game.yours}</dt>
-								<dd>{fmt(r.amount)} {unit}</dd>
-							</div>
-							<div>
-								<dt>{c.game.change}</dt>
-								<dd>{signed(r.delta)} {unit}</dd>
-							</div>
-						</dl>
+			<ol class="rounds" aria-label="Rounds">
+				{#each ROUNDS as r, i (r.id)}
+					<li class:done={choices[i] !== null} class:current={i === round && !yearDone}>
+						<span class="sr-only">Round {r.id}</span>{r.id}
 					</li>
 				{/each}
-			</ul>
+			</ol>
 
-			<ul class="tiles locked" aria-label={c.game.rowsLabel}>
-				{#each LOCKED as l (l.id)}
-					{@const copy = c.lines[l.id]}
-					<li class="tile locked-tile">
-						<div class="tile-head">
-							<h3>{copy.name}</h3>
-							<span class="delta">{fmt(l.draft)} {unit}</span>
+			{#if !yearDone}
+				<article class="pressure" aria-labelledby="h-pressure">
+					<p class="round-no">Round {current.id} of {ROUNDS.length}</p>
+					<h3 id="h-pressure">{current.headline}</h3>
+					<p>{current.body}</p>
+					{#if app.locale !== 'en'}
+						<p class="note">This round text is in English for now. Translation is pending review.</p>
+					{/if}
+				</article>
+
+				<fieldset class="responses" disabled={roundDone}>
+					<legend>Choose one response</legend>
+					{#each current.responses as resp (resp.id)}
+						<button
+							class="response"
+							class:chosen={choices[round] === resp.id}
+							type="button"
+							onclick={() => choose(resp)}
+						>
+							<span class="resp-label">{resp.label}</span>
+							<span class="resp-pays">{resp.pays}</span>
+							{#if resp.moves.length > 0}
+								<span class="resp-moves">{movesText(resp)}</span>
+							{/if}
+							<span class="resp-cons">{resp.consequence} <em>Illustrative, not a forecast.</em></span>
+						</button>
+					{/each}
+				</fieldset>
+
+				{#if roundDone}
+					{@const chosen = current.responses.find((x) => x.id === choices[round])}
+					<div class="result" role="status" aria-live="polite">
+						<span class="stamp">{chosen && chosen.moves.length > 0 ? 'Funded' : 'Not funded'}</span>
+						{#if chosen}<p>{outcome(chosen)}</p>{/if}
+						<button class="cta" type="button" onclick={nextRound}>
+							{round + 1 < ROUNDS.length ? 'Next round' : 'Close the year'}
+						</button>
+					</div>
+				{/if}
+			{:else}
+				<section class="year-end" aria-labelledby="h-year">
+					<h3 id="h-year">The year is closed</h3>
+					<ol class="decisions">
+						{#each ROUNDS as r, i (r.id)}
+							{@const chosen = r.responses.find((x) => x.id === choices[i])}
+							<li>
+								<strong>Round {r.id}: {r.headline}.</strong>
+								{chosen ? chosen.label : 'No response'}. {chosen ? chosen.consequence : ''}
+							</li>
+						{/each}
+					</ol>
+					{#if scars.length > 0}
+						<div class="scars" role="note">
+							<p>Cut in more than one round:</p>
+							<ul>
+								{#each scars as sc (sc.id)}
+									<li>{c.lines[sc.id].name}: cut in {sc.times} rounds.</li>
+								{/each}
+							</ul>
 						</div>
-						<p class="note">{copy.note}</p>
-						<p class="note">{c.game.lockedWhy}</p>
-					</li>
-				{/each}
-			</ul>
+					{/if}
+				</section>
+			{/if}
 
 			<div class="actions">
 				<button class="quiet" type="button" onclick={() => go('frame')}>{c.game.back}</button>
-				<button class="quiet" type="button" onclick={resetDraft} disabled={kept}>{c.game.reset}</button>
-				<button class="quiet" type="button" onclick={keepDraft}>{c.game.keepDraft}</button>
-				<button class="cta" type="button" disabled={!balanced} onclick={() => go('items')}>{c.game.next}</button>
+				<button class="quiet" type="button" onclick={startYear}>Start the year again</button>
+				<button class="cta" type="button" disabled={!yearDone || !balanced} onclick={() => go('items')}>{c.game.next}</button>
 			</div>
 		</section>
 	{/if}
@@ -412,8 +485,7 @@
 		max-inline-size: var(--measure);
 	}
 	.status,
-	.note,
-	.sep {
+	.note {
 		color: var(--text-muted);
 		font-size: var(--t-md);
 	}
@@ -557,124 +629,6 @@
 	.balance.over {
 		color: var(--rupture);
 	}
-	.sum {
-		margin: 0;
-		font-size: var(--t-sm);
-		color: var(--text-muted);
-		font-variant-numeric: tabular-nums;
-	}
-	.sum strong {
-		color: var(--text-primary);
-		font-weight: 600;
-	}
-
-	.hint {
-		color: var(--text-secondary);
-	}
-	.tiles {
-		list-style: none;
-		padding: 0;
-		margin: var(--s-6) 0;
-		display: grid;
-		gap: var(--s-4);
-	}
-	@media (min-width: 40rem) {
-		.tiles:not(.locked) {
-			grid-template-columns: 1fr 1fr;
-		}
-	}
-	.tile {
-		background: var(--surface-raised);
-		border: var(--rule);
-		border-inline-start: var(--s-1) solid var(--border-strong);
-		border-radius: var(--r-lg);
-		padding: var(--s-5);
-		transition:
-			border-color var(--dur-normal) var(--ease-out),
-			background-color var(--dur-normal) var(--ease-out);
-	}
-	.tile.up {
-		border-inline-start-color: var(--accent);
-	}
-	.tile.down {
-		border-inline-start-style: dashed;
-		border-inline-start-color: var(--text-secondary);
-	}
-	.tile.locked-tile {
-		opacity: 0.6;
-	}
-	.tile-head {
-		display: flex;
-		justify-content: space-between;
-		align-items: baseline;
-		gap: var(--s-4);
-	}
-	.tile-head h3 {
-		margin: 0;
-	}
-	.delta {
-		font-family: var(--font-mono);
-		font-size: var(--t-sm);
-		font-variant-numeric: tabular-nums;
-		white-space: nowrap;
-		color: var(--text-secondary);
-	}
-	.tile.up .delta {
-		color: var(--accent);
-	}
-	.tile.down .delta {
-		color: var(--text-secondary);
-	}
-	.tile .note {
-		margin: var(--s-1) 0 var(--s-4);
-	}
-	.bar {
-		position: relative;
-		block-size: var(--s-3);
-		background: var(--surface-sunken);
-		border-radius: var(--r-full);
-		overflow: hidden;
-	}
-	.bar-fill {
-		position: absolute;
-		inset-block: 0;
-		inset-inline-start: 0;
-		background: var(--text-faint);
-		transition: inline-size var(--dur-fast) var(--ease-out);
-	}
-	.tile.up .bar-fill {
-		background: var(--accent);
-	}
-	.bar-tick {
-		position: absolute;
-		inset-block: 0;
-		inset-inline-start: 50%;
-		inline-size: var(--s-1);
-		background: var(--text-primary);
-	}
-	.range {
-		inline-size: 100%;
-		min-block-size: var(--touch);
-		min-inline-size: var(--touch);
-		margin-block: var(--s-3);
-		accent-color: var(--accent);
-	}
-	.nums {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: var(--s-3);
-		margin: 0;
-		font-variant-numeric: tabular-nums;
-	}
-	.nums dt {
-		font-size: var(--t-xs);
-		color: var(--text-muted);
-	}
-	.nums dd {
-		margin: 0;
-		font-size: var(--t-sm);
-		color: var(--text-primary);
-	}
 
 	.q {
 		border: 0;
@@ -757,9 +711,155 @@
 
 	@media (prefers-reduced-motion: reduce) {
 		.meter-fill,
-		.bar-fill,
-		.tile {
+		.stamp {
 			transition: none;
+			animation: none;
 		}
+	}
+
+	/* Rounds: gauges, pressure card, responses, result and the year's end. */
+	.gauges {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: var(--s-3);
+		margin: var(--s-3) 0 0;
+		font-variant-numeric: tabular-nums;
+	}
+	.gauges dt {
+		font-size: var(--t-xs);
+		color: var(--text-muted);
+	}
+	.gauges dd {
+		margin: 0;
+		font-size: var(--t-sm);
+		color: var(--text-primary);
+	}
+	.rounds {
+		display: flex;
+		gap: var(--s-3);
+		list-style: none;
+		padding: 0;
+		margin: var(--s-5) 0 var(--s-4);
+		font-family: var(--font-mono);
+		font-size: var(--t-xs);
+	}
+	.rounds li {
+		min-inline-size: var(--touch);
+		text-align: center;
+		padding: var(--s-2) 0;
+		border: var(--rule);
+		border-radius: var(--r-full);
+		color: var(--text-faint);
+	}
+	.rounds li.current {
+		color: var(--accent);
+		border-color: var(--accent);
+	}
+	.rounds li.done {
+		color: var(--text-primary);
+		background: var(--surface-raised);
+	}
+	.pressure {
+		border-inline-start: 3px solid var(--accent);
+		padding-inline-start: var(--s-5);
+		margin-block: var(--s-4) var(--s-6);
+	}
+	.pressure h3 {
+		font-size: var(--step-2);
+		margin: var(--s-1) 0 var(--s-3);
+	}
+	.round-no {
+		font-family: var(--font-mono);
+		font-size: var(--t-xs);
+		color: var(--text-muted);
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		margin: 0;
+	}
+	.responses {
+		border: 0;
+		padding: 0;
+		margin: 0;
+		min-inline-size: 0;
+		display: grid;
+		gap: var(--s-4);
+	}
+	.responses legend {
+		font-weight: 600;
+		margin-block-end: var(--s-3);
+	}
+	.response {
+		display: grid;
+		gap: var(--s-2);
+		text-align: start;
+		inline-size: 100%;
+		padding: var(--s-5);
+		background: var(--surface-raised);
+		border: var(--rule);
+		border-radius: var(--r-lg);
+	}
+	.response:disabled {
+		opacity: 0.55;
+	}
+	.response.chosen {
+		border-color: var(--accent);
+		opacity: 1;
+	}
+	.resp-label {
+		font-weight: 600;
+		font-size: var(--step-0);
+	}
+	.resp-pays,
+	.resp-moves {
+		font-family: var(--font-mono);
+		font-size: var(--t-xs);
+		color: var(--text-secondary);
+		font-variant-numeric: tabular-nums;
+	}
+	.resp-cons {
+		color: var(--text-secondary);
+		font-size: var(--t-sm);
+	}
+	.resp-cons em {
+		color: var(--text-faint);
+	}
+	.result {
+		margin-block: var(--s-6);
+		padding: var(--s-5);
+		border-block-start: var(--rule);
+	}
+	.stamp {
+		display: inline-block;
+		font-family: var(--font-mono);
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--accent);
+		border: 2px solid var(--accent);
+		padding: var(--s-1) var(--s-3);
+		border-radius: var(--r-sm);
+	}
+	.year-end {
+		margin-block: var(--s-6);
+	}
+	.decisions {
+		padding-inline-start: var(--s-6);
+		max-inline-size: var(--measure);
+	}
+	.decisions li {
+		margin-block-end: var(--s-3);
+	}
+	.scars {
+		padding: var(--s-4);
+		border: var(--rule);
+		border-radius: var(--r-md);
+	}
+	.sr-only {
+		position: absolute;
+		inline-size: 1px;
+		block-size: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
 	}
 </style>
