@@ -1,0 +1,186 @@
+# -----------------------------------------------------------------------------
+# DT Research 003: citizen budget instrument v0.1.0-draft
+#
+# "Citizen Budget 2027" (slug citizen-budget). Spec: specs/budget-game/SPEC.md.
+#
+# Status: draft. Not frozen. Not fielded. The English column is the source.
+# French and Arabic are null on purpose: the project rule is human translation
+# with reconciliation and back-translation. The interim UI copy lives in the
+# prototype (src/lib/budget-game/copy.ts) and is marked unreviewed there; it is
+# not the instrument text.
+#
+# Every figure in the allocation block is a PLACEHOLDER stub (invented round
+# numbers, MD). The frozen instrument takes figures only from
+# data/studies/dt-research-003/figures-2027.yaml rows with status adopted-lf,
+# each with a page reference. Nothing in this file is verified.
+# -----------------------------------------------------------------------------
+
+instrument:
+  id: dt003-citizen-budget
+  study: dt-research-003
+  version: 0.1.0-draft
+  status: draft
+  frozen: false
+  content_hash: null
+  source_locale: en
+  locales: [en, fr, ar]
+  estimated_minutes: 7
+  completion_target_minutes_max: 10
+  pretest_required: true
+  response_scale_note: >-
+    The allocation item gives each line a share of its draft from 0% to 200% in
+    steps of 5%, stored as integer basis points (10000 is the draft). The movable
+    lines must balance to the envelope within 0.5%. Locked lines stay at the
+    draft. The two short questions use a 0 to 10 scale for citizens' say and a
+    three-option choice for total spending.
+
+translation:
+  policy: >-
+    Human translation only, with two independent translators per locale,
+    reconciliation, back-translation and cognitive interviews, before freeze.
+    No machine text in this file.
+  report: null
+  locales:
+    en:
+      status: source
+    fr:
+      status: pending-human-translation
+      translator_a: null
+      translator_b: null
+      back_translator: null
+      cognitive_interviews: 0
+    ar:
+      status: pending-human-translation
+      translator_a: null
+      translator_b: null
+      back_translator: null
+      cognitive_interviews: 0
+
+response_types:
+  consent: boolean required, recorded with consent version
+  single_choice: one option plus prefer-not-to-say where stated
+  scale_0_10: integer 0-10 plus skip
+  allocation: object of integer basis points per declared line, plus kept_draft (boolean); validated by community/research-contract.ts
+  auto: recorded by the platform, not shown
+
+modules:
+  - id: consent
+    label: Consent and age
+    items: [consent_read, consent_withdrawal, consent_age]
+  - id: budget
+    label: The budget
+    items: [alloc_budget]
+  - id: questions
+    label: Two short questions
+    items: [q_spending, q_say]
+  - id: about
+    label: About you (optional)
+    items: [demo_governorate]
+
+items:
+  - id: consent_read
+    module: consent
+    tier: core
+    construct: consent
+    provenance: project
+    text_en: "I have read the study information and what happens to my answers."
+    text_fr: null
+    text_ar: null
+    response: consent
+    required: true
+
+  - id: consent_withdrawal
+    module: consent
+    tier: core
+    construct: consent
+    provenance: project
+    text_en: "I understand that I will receive a receipt code, and that I can withdraw my answers with it until the study window closes."
+    text_fr: null
+    text_ar: null
+    response: consent
+    required: true
+
+  - id: consent_age
+    module: consent
+    tier: core
+    construct: consent
+    provenance: project
+    text_en: "I confirm that I am 18 years old or older."
+    text_fr: null
+    text_ar: null
+    response: consent
+    required: true
+    routing: if false, end the session and store nothing
+
+  - id: alloc_budget
+    module: budget
+    tier: core
+    construct: budget allocation
+    provenance: project (SPEC section 2, the game screen)
+    text_en: "Move money between the lines of the 2027 state budget, as a citizen. Each line starts at its draft amount. The movable lines must balance before you go on. Keeping the draft is a valid answer."
+    text_fr: null
+    text_ar: null
+    response: allocation
+    required: true
+    notes: "Placeholder amounts. Replace from figures-2027.yaml (adopted-lf rows only) before freezing."
+    allocation:
+      envelope_md: 29500
+      tolerance: 0.005
+      step_bp: 500
+      max_bp: 20000
+      categories:
+      - { id: schools, draft_md: 4000, locked: false }
+      - { id: universities, draft_md: 2000, locked: false }
+      - { id: health, draft_md: 3000, locked: false }
+      - { id: social, draft_md: 3500, locked: false }
+      - { id: fuel, draft_md: 2500, locked: false }
+      - { id: food, draft_md: 1500, locked: false }
+      - { id: energy, draft_md: 1200, locked: false }
+      - { id: police, draft_md: 2400, locked: false }
+      - { id: army, draft_md: 2200, locked: false }
+      - { id: justice, draft_md: 800, locked: false }
+      - { id: farming, draft_md: 1300, locked: false }
+      - { id: roads, draft_md: 2000, locked: false }
+      - { id: youth, draft_md: 600, locked: false }
+      - { id: culture, draft_md: 400, locked: false }
+      - { id: presidency, draft_md: 200, locked: false }
+      - { id: government, draft_md: 900, locked: false }
+      - { id: other, draft_md: 1000, locked: false }
+      - { id: debt, draft_md: 3000, locked: true }
+      - { id: reserve, draft_md: 500, locked: true }
+
+  - id: q_spending
+    module: questions
+    tier: core
+    construct: total spending direction
+    provenance: project (SPEC section 1, secondary question 1)
+    text_en: "Knowing that the gap is borrowed, should total spending be lower, the same, or higher?"
+    text_fr: null
+    text_ar: null
+    response: single_choice
+    required: false
+    options: [lower, same, higher]
+
+  - id: q_say
+    module: questions
+    tier: core
+    construct: citizen say over the budget
+    provenance: project (SPEC section 1, secondary question 2)
+    text_en: "How much say do citizens have today over how the budget is spent? 0 means none, 10 means a lot."
+    text_fr: null
+    text_ar: null
+    response: scale_0_10
+    required: false
+
+  - id: demo_governorate
+    module: about
+    tier: optional
+    construct: demographics
+    provenance: reused from study 001 (demo_governorate)
+    text_en: "Which governorate do you live in?"
+    text_fr: null
+    text_ar: null
+    response: single_choice
+    required: false
+    notes: "Published only as the seven INS regions, under the cell floor of 20 (SPEC section 5). Options below are the study 001 list, to be re-cut before fielding."
+    options: [ariana, beja, ben_arous, bizerte, gabes, gafsa, jendouba, kairouan, kasserine, kebili, kef, mahdia, manouba, medenine, monastir, nabeul, sfax, sidi_bouzid, siliana, sousse, tataouine, tozeur, tunis, zaghouan, prefer_not_to_say]

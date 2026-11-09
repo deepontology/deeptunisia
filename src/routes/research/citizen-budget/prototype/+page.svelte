@@ -2,8 +2,8 @@
 	import BudgetGame from '$lib/budget-game/BudgetGame.svelte';
 	/**
 	 * Citizen budget game, study prototype. Placeholder figures only; nothing is
-	 * sent, stored or scored. The page is static and sits outside the research
-	 * registry on purpose, so it is not listed as a study.
+	 * sent, stored or scored. The page is static, is served at /research/citizen-budget/prototype while the
+	 * study entry is in design, and is not linked from the study page.
 	 */
 </script>
 

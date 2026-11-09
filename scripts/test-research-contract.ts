@@ -677,6 +677,92 @@ console.log('\n  ── the MaxDiff design gate ──\n');
 	);
 }
 
+// ---------------------------------------------------------------------------
+// Allocation item — the budget game (response `allocation`)
+// ---------------------------------------------------------------------------
+
+console.log('\n  ── allocation item ──\n');
+
+const allocationDoc = (): InstrumentDocument => ({
+	instrument: {
+		id: 'it-allocation',
+		study: 'dt-fixture',
+		version: '1.0.0',
+		source_locale: 'en',
+		locales: ['en', 'fr', 'ar'],
+		estimated_minutes: 5,
+		completion_target_minutes_max: 15
+	},
+	modules: [{ id: 'mod-1', label: 'Fixture module', items: ['consent_fix', 'alloc_fix'] }],
+	items: [
+		{
+			id: 'consent_fix',
+			module: 'mod-1',
+			tier: 'core',
+			response: 'consent',
+			required: true,
+			text_en: 'I consent.',
+			text_fr: null,
+			text_ar: null
+		},
+		{
+			id: 'alloc_fix',
+			module: 'mod-1',
+			tier: 'core',
+			response: 'allocation',
+			required: true,
+			text_en: 'Move money between lines.',
+			text_fr: null,
+			text_ar: null,
+			allocation: {
+				envelope_md: 2000,
+				tolerance: 0.005,
+				step_bp: 500,
+				max_bp: 20000,
+				categories: [
+					{ id: 'alpha', draft_md: 1000, locked: false },
+					{ id: 'beta', draft_md: 1000, locked: false },
+					{ id: 'debt', draft_md: 500, locked: true }
+				]
+			}
+		}
+	]
+});
+
+const allocationInstrument: RuntimeInstrument = compileInstrument(allocationDoc());
+const allocPayload = (alloc: Record<string, unknown>) => ({
+	instrumentHash: allocationInstrument.hash,
+	locale: 'en',
+	channel: 'test',
+	consentVersion: 'consent-v1',
+	startedAt: 1_000,
+	completionMs: 60_000,
+	answers: { consent_fix: true, alloc_fix: alloc }
+});
+const DRAFT_SHARES = { alpha: 10000, beta: 10000, debt: 10000, kept_draft: true };
+
+{
+	ok('an allocation hash differs from the same instrument without the block', allocationInstrument.hash !== compileInstrument({ ...allocationDoc(), items: allocationDoc().items.map((i) => ({ ...i, allocation: undefined })) }).hash);
+	const kept = validateSubmission(allocationInstrument, allocPayload(DRAFT_SHARES));
+	ok('keeping the draft is accepted', kept.ok);
+	const moved = validateSubmission(allocationInstrument, allocPayload({ alpha: 10500, beta: 9500, debt: 10000, kept_draft: false }));
+	ok('a balanced move is accepted', moved.ok, moved.ok ? '' : moved.error);
+
+	const refuse = (name: string, alloc: Record<string, unknown>, text: string) => {
+		const result = validateSubmission(allocationInstrument, allocPayload(alloc));
+		ok(name, !result.ok && result.code === 'invalid-answer' && result.error.includes(text), result.ok ? 'accepted: expected refusal' : result.error);
+	};
+	refuse('unbalanced is refused', { alpha: 12000, beta: 10000, debt: 10000, kept_draft: false }, 'do not balance');
+	refuse('a locked line moved is refused', { alpha: 10000, beta: 10000, debt: 10500, kept_draft: false }, 'must stay at the draft');
+	refuse('an unknown category is refused', { alpha: 10000, beta: 10000, debt: 10000, gamma: 10000, kept_draft: false }, 'unknown category "gamma"');
+	refuse('an extra key is refused', { alpha: 10000, beta: 10000, debt: 10000, note: 'x', kept_draft: false }, 'unknown category "note"');
+	refuse('an out-of-range share is refused', { alpha: 21000, beta: 9000, debt: 10000, kept_draft: false }, 'multiple of 500');
+	refuse('a share off the 5% step is refused', { alpha: 10250, beta: 9750, debt: 10000, kept_draft: false }, 'multiple of 500');
+	refuse('kept_draft with a moved line is refused', { alpha: 10500, beta: 9500, debt: 10000, kept_draft: true }, 'kept_draft is true');
+	refuse('a missing line is refused', { alpha: 10000, debt: 10000, kept_draft: false }, 'needs an integer');
+	refuse('kept_draft must be a boolean', { alpha: 10000, beta: 10000, debt: 10000, kept_draft: 'yes' }, 'true or false');
+}
+
 console.log(
 	`\n  ${checks - failures}/${checks} checks passed${failures ? `, ${failures} FAILED` : ''}\n`
 );
