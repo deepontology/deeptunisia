@@ -35,7 +35,7 @@ let failures = 0;
 function ok(name: string, cond: boolean, detail = '') {
 	checks++;
 	if (!cond) failures++;
-	console.log(`  ${cond ? 'ok  ' : 'FAIL'}  ${name}${detail && !cond ? ` — ${detail}` : ''}`);
+	console.log(`  ${cond ? 'ok  ' : 'FAIL'}  ${name}${detail && !cond ? ` : ${detail}` : ''}`);
 }
 
 // Figures file: the same numbers the landing reads.
