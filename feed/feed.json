@@ -3,6 +3,76 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:african-manager:3fcd7b08e68a318e",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Thabti: les plateformes numériques en Tunisie nécessitent une mutualisation",
+      "link": "https://africanmanager.com/thabti-les-plateformes-numeriques-en-tunisie-necessitent-une-mutualisation/",
+      "published": "2026-11-09T06:41:36Z",
+      "lang": "fr",
+      "author": "Africanmanager"
+    },
+    {
+      "id": "feed:african-manager:f083b7c5adbbe246",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Hausse de 9,1% du budget des Affaires étrangères en 2027",
+      "link": "https://africanmanager.com/hausse-de-91-du-budget-des-affaires-etrangeres-en-2027/",
+      "published": "2026-11-09T06:37:35Z",
+      "lang": "fr",
+      "author": "Africanmanager"
+    },
+    {
+      "id": "feed:african-manager:210b1ffb8733737c",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Abid: Les stocks de sucre couvrent 5 mois de consommation",
+      "link": "https://africanmanager.com/abid-les-stocks-de-sucre-couvrent-5-mois-de-consommation/",
+      "published": "2026-11-09T06:33:06Z",
+      "lang": "fr",
+      "author": "Africanmanager"
+    },
+    {
+      "id": "feed:african-manager:070fa1524356d0ad",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "La Banque d’Algérie fixe les règles régissant les opérations sur or sur le marché local",
+      "link": "https://africanmanager.com/la-banque-dalgerie-fixe-les-regles-regissant-les-operations-sur-or-sur-le-marche-local/",
+      "published": "2026-11-09T06:30:32Z",
+      "lang": "fr",
+      "author": "Africanmanager"
+    },
+    {
+      "id": "feed:kapitalis:24e99466b7a96d92",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Chott El-Djerid | Un tourisme de découverte et d’aventure",
+      "link": "https://kapitalis.com/tunisie/2026/11/09/chott-el-djerid-un-tourisme-de-decouverte-et-daventure/",
+      "published": "2026-11-09T06:30:00Z",
+      "lang": "fr",
+      "author": "webmaster kapitalis"
+    },
+    {
+      "id": "feed:african-manager:c2dac7d91a4556e6",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Maroc : Le Conseil de gouvernement valide plusieurs nominations à de hauts postes",
+      "link": "https://africanmanager.com/maroc-le-conseil-de-gouvernement-valide-plusieurs-nominations-a-de-hauts-postes/",
+      "published": "2026-11-09T06:26:54Z",
+      "lang": "fr",
+      "author": "Africanmanager"
+    },
+    {
+      "id": "feed:african-manager:154dc00b03d16522",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Selmi: 2027 pourrait être plus difficile pour l’emploi et les dossiers sociaux !",
+      "link": "https://africanmanager.com/selmi-2027-pourrait-etre-plus-difficile-pour-lemploi-et-les-dossiers-sociaux/",
+      "published": "2026-11-09T06:19:39Z",
+      "lang": "fr",
+      "author": "Africanmanager"
+    },
+    {
       "id": "feed:african-manager:b16f68fbc5b9293d",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -11928,76 +11998,6 @@
       "title": "La Tunisie en tête en Afrique en termes de recettes d’exportation de dattes",
       "link": "https://africanmanager.com/la-tunisie-en-tete-en-afrique-en-termes-de-recettes-dexportation-de-dattes/",
       "published": "2026-09-29T15:05:05Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:b24fc642aedbaa89",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Lancement des rencontres régionales de sensibilisation sur le programme national « Easy Export »",
-      "link": "https://africanmanager.com/lancement-des-rencontres-regionales-de-sensibilisation-sur-le-programme-national-easy-export/",
-      "published": "2026-09-29T13:33:14Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:26038adf29078dcb",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Participation de la Tunisie à la première édition du Forum de Fezzan, en Libye",
-      "link": "https://africanmanager.com/participation-de-la-tunisie-a-la-premiere-edition-du-forum-de-fezzan-en-libye/",
-      "published": "2026-09-29T12:52:33Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:kapitalis:9df39a1231f94e66",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "«Primitive Robot» | Concert de Marcondiro à Tunis",
-      "link": "https://kapitalis.com/tunisie/2026/09/29/primitive-robot-concert-de-marcondiro-a-tunis/",
-      "published": "2026-09-29T12:52:11Z",
-      "lang": "fr",
-      "author": "webmaster kapitalis"
-    },
-    {
-      "id": "feed:african-manager:995df0171518e0c9",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Kasserine-BTS : 320 mille DT pour financer des microprojets réalisés par des personnes en situation de handicap",
-      "link": "https://africanmanager.com/kasserine-bts-320-mille-dinars-pour-financer-des-microprojets-realises-par-des-personnes-en-situation-de-handicap/",
-      "published": "2026-09-29T12:51:08Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:0d40420adff95e31",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "L’or recule dans un contexte de hausse des prix du pétrole et de renforcement du dollar US",
-      "link": "https://africanmanager.com/lor-recule-dans-un-contexte-de-hausse-des-prix-du-petrole-et-de-renforcement-du-dollar-us/",
-      "published": "2026-09-29T12:49:00Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:6108eae7b31dbe06",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Des hordes de colons israéliens attaquent le village de Jalud en Cisjordanie occupée",
-      "link": "https://africanmanager.com/des-hordes-de-colons-israeliens-attaquent-le-village-de-jalud-en-cisjordanie-occupee/",
-      "published": "2026-09-29T12:46:52Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:e2691cfb12841b09",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Trump nie avoir proposé un allègement des sanctions contre l’Iran",
-      "link": "https://africanmanager.com/trump-nie-avoir-propose-un-allegement-des-sanctions-contre-liran/",
-      "published": "2026-09-29T12:45:27Z",
       "lang": "fr",
       "author": "African Manager"
     }
