@@ -8,16 +8,22 @@ import { DEFAULT_PARAMETERS, type Parameters } from './parameters';
  * project rests entirely on every claim being traceable, so "a fact with no source"
  * or "an edge pointing at nobody" must be a build error, not a runtime surprise.
  *
- * VALIDATOR REGISTER (canonical numbering; mirrored in the sprint spec table)
+ * VALIDATOR REGISTER
  * ---------------------------------------------------------------------------
- * V1–V24   shipped before the review-hardening pass: ownership sums, company
- *          registration, contract/event/influence invariants, geographic
- *          hierarchy, duplicate edges, and the H1–H7 hardening contract. The
- *          full table is the sprint specification's validation section.
+ * The canonical list of validator ids, their status and the code that enforces
+ * each one is `scripts/validator-register.ts`. This comment does not restate
+ * that list: a range written here drifts as soon as a rule changes status. The
+ * register marks V1, V2, V3, V6, V7 and V11 as specified only and V30 as
+ * reserved; every other id is enforced in this tree. `scripts/test-paper.ts`
+ * fails if this header claims a shipped range that includes a specified id.
+ *
  * V25      grade-A primary source (Phase 1D): every `confidence: A` claim record
  *          cites at least one tier-1 or tier-2 source, or carries an explicit,
  *          unexpired entry in `data/source-exceptions.yaml`.
- * V26      kind versus strength cross-field compatibility (reserved; Phase 6).
+ * V26      kind versus strength cross-field compatibility (Phase 6): a source
+ *          relation and an independence count that cannot both be true with the
+ *          record's basis fail the build, and an excepted grade-A record whose
+ *          derived kind is `reported` warns.
  * V27      basis-override provenance (Phase 1B): an authored basis stronger than
  *          the grade-implied basis requires a review object, non-blank reasoning,
  *          a falsifier for inferred targets, at least one source, and a
@@ -33,8 +39,8 @@ import { DEFAULT_PARAMETERS, type Parameters } from './parameters';
  *          Source records get the same treatment: a fetchable http(s) URL, and
  *          a web.archive.org snapshot URL that carries its full capture
  *          timestamp. The build derives each claim's `origins` count from
- *          evidence lineage — unique origin publishers/hosts, never a URL
- *          count — and keeps the authored `independence` where no evidence
+ *          evidence lineage - unique origin publishers/hosts, never a URL
+ *          count - and keeps the authored `independence` where no evidence
  *          exists.
  * V32      documented vacancy (decision 0007): a vacancy names a known,
  *          non-seated role and carries a source; it may not certainly overlap
