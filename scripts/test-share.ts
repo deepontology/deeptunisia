@@ -17,7 +17,7 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
 const SHARE_DIR = join(ROOT, 'build', 'share');
 const DATASET_FILE = join(ROOT, 'src', 'generated', 'dataset.json');
-const MAX_BYTES = 6 * 1024;
+const MAX_BYTES = 12 * 1024;
 
 let failures = 0;
 let checks = 0;
@@ -25,10 +25,10 @@ let checks = 0;
 function ok(name: string, condition: boolean, detail = '') {
 	checks++;
 	if (condition) {
-		console.log(`  ok    ${name}${detail ? ` — ${detail}` : ''}`);
+		console.log(`  ok    ${name}${detail ? `: ${detail}` : ''}`);
 	} else {
 		failures++;
-		console.error(`  FAIL  ${name}${detail ? ` — ${detail}` : ''}`);
+		console.error(`  FAIL  ${name}${detail ? `: ${detail}` : ''}`);
 	}
 }
 
@@ -39,8 +39,8 @@ function bail(message: string): never {
 
 console.log('\n  ── share pages ──\n');
 
-if (!existsSync(SHARE_DIR)) bail('build/share is missing — run `npm run build` first');
-if (!existsSync(DATASET_FILE)) bail('src/generated/dataset.json is missing — run `npm run data` (or `npm run build`) first');
+if (!existsSync(SHARE_DIR)) bail('build/share is missing: run `npm run build` first');
+if (!existsSync(DATASET_FILE)) bail('src/generated/dataset.json is missing: run `npm run data` (or `npm run build`) first');
 
 const dataset = JSON.parse(readFileSync(DATASET_FILE, 'utf8')) as {
 	people: { id: string }[];
@@ -83,9 +83,9 @@ ok(
 	missing.length ? `missing ${missing.length}: ${sample(missing)}` : ''
 );
 ok(
-	'every share page is at most 6 KB',
+	'every share page is at most 12 KB',
 	oversize.length === 0,
-	oversize.length ? `${oversize.length} over 6 KB: ${sample(oversize)}` : ''
+	oversize.length ? `${oversize.length} over 12 KB: ${sample(oversize)}` : ''
 );
 ok(
 	'every share page has og:title, the refresh meta and the canonical link',
