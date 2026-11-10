@@ -279,7 +279,10 @@ function message(error: unknown): string {
 function gitState(): GitState {
 	const branch = spawnSync('git', ['rev-parse', '--abbrev-ref', 'HEAD'], { cwd: ROOT, encoding: 'utf8' });
 	if (branch.status !== 0) throw new Error('this is not a git checkout, or git is not on PATH');
-	const status = spawnSync('git', ['status', '--porcelain'], { cwd: ROOT, encoding: 'utf8' });
+	// A stale origin/main would make an out-of-date checkout look current.
+	const fetched = spawnSync('git', ['fetch', '--quiet', 'origin', 'main'], { cwd: ROOT, encoding: 'utf8' });
+	if (fetched.status !== 0) throw new Error(`git fetch origin main failed: ${fetched.stderr.trim()}`);
+	const status =spawnSync('git', ['status', '--porcelain'], { cwd: ROOT, encoding: 'utf8' });
 	if (status.status !== 0) throw new Error(`git status failed: ${status.stderr.trim()}`);
 	const count = spawnSync('git', ['rev-list', '--left-right', '--count', 'origin/main...HEAD'], {
 		cwd: ROOT,
