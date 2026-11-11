@@ -342,10 +342,16 @@ function positionRow(p: Rec, kind: RecordKind, world: World, idx: SourceIndex): 
 	const title = String(p.roleTitle ?? p.role ?? '');
 	const inst = world.institutions.get(String(p.institution));
 	const who = kind === 'institution' ? world.people.get(String(p.holder)) : undefined;
+	/* When the office is the institution by another name, printing both reads as a
+	   stutter: "National Constituent Assembly, National Constituent Assembly". The
+	   link stays, the repeated title goes. */
+	const sameName = !!inst && title.trim().toLowerCase() === String(inst.name_en ?? '').trim().toLowerCase();
 	const lead = who
 		? `<a class=who href="${esc(href(String(who.id)))}">${esc(who.name_en)}</a> <span class=role>${esc(title)}</span>`
-		: `<span class=role>${esc(title)}</span>`;
-	const instLink = inst ? `, <a class=inst href="${esc(href(String(inst.id)))}">${esc(inst.name_en)}</a>` : '';
+		: sameName
+			? ''
+			: `<span class=role>${esc(title)}</span>`;
+	const instLink = inst ? `${lead ? ', ' : ''}<a class=inst href="${esc(href(String(inst.id)))}">${esc(inst.name_en)}</a>` : '';
 	const dates = datePhrase(p.interval as Interval | undefined);
 	return `<li class=claim data-basis="${esc(p.basis)}"><p class=line>${lead}${instLink}${dates ? `, ${dates}` : ''}</p>${metaLine(p.basis, p.confidence, p.sources as string[] | undefined, idx)}</li>`;
 }
