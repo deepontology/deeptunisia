@@ -53,15 +53,32 @@ rather than by a code edit.
 
 ## Deployment steps
 
-### 1. Build the static atlas
+### 1. Deploy and verify
 
 ```bash
-npm run build
+npm run deploy:dry   # rehearse: checks, builds, dry-runs, then stops
+npm run deploy       # the same, then deploys and verifies
 ```
 
-Produces `build/` with the prerendered routes. Give the build
-`VITE_COMMUNITY_MODE` only if the deployment is not running `off`; an unset
-value renders the closed state.
+`npm run deploy:dry` is the build plus the rehearsal, and it uploads nothing. It
+refuses to go on when the tree has uncommitted changes, when HEAD is not `main`
+equal to `origin/main` (overridable only with `--allow-branch`), or when it
+cannot read the live study state (overridable only with `--research-open=1` or
+`--research-open=0`).
+
+Every wrangler call the script makes carries `--keep-vars`, and it passes
+`--var RESEARCH_OPEN:1` when a study is accepting answers. A plain
+`wrangler deploy` resets the Worker's variables to `wrangler.toml` and closes a
+fielding survey without changing a line of code; this is what prevents that.
+`--research-open=0` is the deliberate close, and the plan says so in a warning.
+
+After a deploy the script reads the site again: every study that was accepting
+before must still be accepting (unless `--research-open=0`), and
+`/changelog.json` must carry the newest entry the build produced. It exits
+non-zero with the reason when either check fails.
+
+Give the build `VITE_COMMUNITY_MODE` only if the deployment is not running
+`off`; an unset value renders the closed state.
 
 ### 2. Set secrets (one-time)
 
@@ -97,12 +114,15 @@ binding pointed at the production database, so a staging deploy would have
 written production data under a name that said otherwise. It returns when a
 distinct database exists.
 
-### 5. Deploy and verify
+### 5. The public gate
 
 ```bash
-wrangler deploy
 node scripts/verify-deploy.cjs https://deeptunisia.org off
 ```
+
+`npm run deploy` checks that the deploy did not close a study and that the
+changelog is this build. This script checks the part a deployer cannot see from
+the inside: real DNS, TLS, headers, the Agora mode and the browser.
 
 The second argument is the mode being claimed. Verification never proceeds
 against the mode someone hoped for: if the deployment runs `off` and the command
@@ -133,10 +153,8 @@ asks for `beta`, the checks fail.
 To close the Agora:
 
 ```bash
-# wrangler.toml
-[vars]
-COMMUNITY_MODE = "off"
-wrangler deploy
+# set COMMUNITY_MODE = "off" under [vars] in wrangler.toml, then:
+npm run deploy
 ```
 
 No rebuild is required to close: the mode is runtime configuration. Existing
