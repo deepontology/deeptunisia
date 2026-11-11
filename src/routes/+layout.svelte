@@ -117,6 +117,9 @@ import { tour, tourSeen } from '$lib/shell/tour.svelte';
 	/** Pages that write their own preview tags: the police study page (IndexStudy), the introduction and the share shells. Other study pages and the participate and withdraw pages take the default. */
 	const ownsPreview = $derived(/^\/(share\/|research\/police\/?$|introduction\/?$)/.test(page.url.pathname));
 
+	/** Share pages are redirect stubs: they render no shell and load no app JavaScript (csr = false). */
+	const isShare = $derived(page.url.pathname.startsWith('/share/'));
+
 	// OG preview — dynamic per selection/rel/flow, client-enhanced (crawlers use prerendered /share shells).
 	// Prerender cannot access searchParams (SvelteKit forbids it); guard with browser so build succeeds.
 	const og = $derived.by(() => {
@@ -280,6 +283,9 @@ import { tour, tourSeen } from '$lib/shell/tour.svelte';
 
 <svelte:window onkeydown={onKey} />
 
+{#if isShare}
+	{@render children()}
+{:else}
 <div class="os" class:inspecting={Boolean(app.selected)}>
 	<!--
 		Skip links. Not boilerplate: the instrument views put hundreds of focusable
@@ -320,6 +326,7 @@ import { tour, tourSeen } from '$lib/shell/tour.svelte';
 <Cursor />
 <TourOverlay />
 <TourInvite />
+{/if}
 
 <style>
 	/* The application window. Fixed height, no page scroll — panes scroll
