@@ -886,6 +886,10 @@ rejectsWith(ReviewSchema, review({ by: 'Jane Doe' }), 'V23: a personal name is r
 rejectsWith(ReviewSchema, review({ by: 'maintainer ' }), 'V23: a padded role label is rejected', 'role label');
 accepts(ReviewSchema, review({ by: 'Research pass 2026-10-09' }), 'V23: a dated research pass is a valid reviewer label');
 accepts(ReviewSchema, review({ by: 'JORT verification pass' }), 'V23: a named verification pass is a valid reviewer label');
+accepts(ReviewSchema, review({ by: 'reviewer-1' }), 'V23: a numbered reviewer label is a valid reviewer label');
+accepts(ReviewSchema, review({ by: 'reviewer-12' }), 'V23: a two-digit numbered reviewer label is a valid reviewer label');
+rejectsWith(ReviewSchema, review({ by: 'reviewer-' }), 'V23: a numbered reviewer label needs a number', 'role label');
+rejectsWith(ReviewSchema, review({ by: 'reviewer-one' }), 'V23: a numbered reviewer label takes digits only', 'role label');
 rejectsWith(
 	DisputeSchema,
 	{ claim: ' ', held_by: 'somebody' },
@@ -951,6 +955,19 @@ accepts(ReviewSchema, review({ date: '2020-02-29' }), 'V23: 2020-02-29 parses â€
 rejects(ReviewSchema, review({ method: 'guessed-it' }), 'V23: a free-text method is rejected (m8)');
 rejects(ReviewSchema, review({ date: '26/07/2026' }), 'V23: a non-ISO date is rejected (m9)');
 rejects(PositionSchema, pos({ review: review({ date: '2026-02-31' }) }), 'V23: a position carrying an impossible review date is rejected');
+
+// ---------------------------------------------------------------------------
+// D2: a review says who did it. `actor` is optional: every review written
+// before the field existed must stay valid, and a value outside the two kinds
+// of reviewer must not slip through as free text.
+// ---------------------------------------------------------------------------
+
+accepts(ReviewSchema, review({ actor: 'human' }), 'D2: a review made by a person parses');
+accepts(ReviewSchema, review({ actor: 'agent' }), 'D2: a review made by an agent parses');
+accepts(ReviewSchema, review(), 'D2: a review without an actor still parses');
+rejectsWith(ReviewSchema, review({ actor: 'robot' }), 'D2: an unknown actor is rejected', 'expected one of');
+rejectsWith(ReviewSchema, review({ actor: 'Human' }), 'D2: an actor value is case-sensitive', 'expected one of');
+accepts(PositionSchema, pos({ review: review({ actor: 'human' }) }), 'D2: a position carrying an actor-bearing review parses');
 
 // ---------------------------------------------------------------------------
 // V23 gate â€” the review guard on gazette claims (reviewOverclaims).

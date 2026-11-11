@@ -371,15 +371,19 @@ export const ReviewMethod = z.enum(['source-check', 'dedup', 'attribute', 'accep
 /**
  * A reviewer is recorded as a role or a named pass, never as a person: the record
  * says what kind of check was made and when, which is what a reader can audit.
+ * A reviewer outside the maintainer group signs as `reviewer-<n>`, which carries no name.
  */
-export const REVIEWER_LABEL = /^(maintainer|Initial compilation|JORT verification pass|Research pass \d{4}-\d{2}-\d{2})$/;
+export const REVIEWER_LABEL = /^(maintainer|Initial compilation|JORT verification pass|Research pass \d{4}-\d{2}-\d{2}|reviewer-\d+)$/;
+
+/** Who performed the review: a person at the source, or a pass run by an agent. */
+export const ReviewActor = z.enum(['human', 'agent']);
 
 export const ReviewSchema = z.strictObject({
 	by: z
 		.string()
 		.regex(
 			REVIEWER_LABEL,
-			'reviewer must be a role label: maintainer, Initial compilation, JORT verification pass, or Research pass YYYY-MM-DD (V23)'
+			'reviewer must be a role label: maintainer, Initial compilation, JORT verification pass, Research pass YYYY-MM-DD, or reviewer-N (V23)'
 		),
 	/** Calendar-valid ISO date. (V23) */
 	date: z
@@ -410,7 +414,13 @@ export const ReviewSchema = z.strictObject({
 	 * free-text claims such as "checked directly against the JORT decree text"
 	 * live here so reviewOverclaims() can still read them.
 	 */
-	note: z.string().optional()
+	note: z.string().optional(),
+	/**
+	 * Whether the check was made by a person or by an agent. Optional so that every
+	 * review written before the field existed stays valid; the release branch makes
+	 * it required.
+	 */
+	actor: ReviewActor.optional()
 });
 
 /**
