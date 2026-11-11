@@ -702,6 +702,27 @@ const KIND_TO_DATASET: Record<string, string> = {
 	);
 }
 
+{
+	const table = parseCsv(readFileSync(join(HERE, '..', 'static', 'relationships.csv'), 'utf8'));
+	const at = new Map(table[0].map((name, index) => [name, index]));
+	const body = table.slice(1).filter((cells) => cells.some((cell) => cell !== ''));
+	const col = at.get('verification');
+	const csvPending = col === undefined ? -1 : body.filter((cells) => cells[col] !== 'verified').length;
+	const graphPending = ds.relationships.filter(
+		(r: { verification?: string }) => r.verification !== 'verified'
+	).length;
+	ok(
+		'relationships.csv carries a verification column',
+		col !== undefined && body.length === ds.relationships.length,
+		`${col === undefined ? 'header missing' : 'header present'}, ${body.length} rows`
+	);
+	ok(
+		'relationships.csv verification matches the graph',
+		csvPending === graphPending,
+		`${csvPending} not verified in the export, ${graphPending} in the graph`
+	);
+}
+
 // R13 — world measurements keep their boundary and columnar shape. The snapshots
 // are optional: a fresh clone is allowed to emit null and the interface must then
 // show agreements plus explicit empty/sum-of-parts states. When a snapshot exists,
