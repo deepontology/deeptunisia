@@ -75,7 +75,7 @@ import {
 	type ResolvedInterval
 } from './dates.ts';
 import { loadParameters, type Parameters } from './parameters.ts';
-import { countOrigins, type EvidenceLike } from './origins.ts';
+import { countOrigins, restsOn, type EvidenceLike } from './origins.ts';
 import { VERIFIED_EXCEPTIONS } from './verified-exceptions.ts';
 import { buildCoverage, coverageCsv, coverageMarkdown } from './coverage.ts';
 import { checkNarrative, type NarrativeClaim } from './consistency.ts';
@@ -2448,6 +2448,26 @@ function withOrigins<T extends { evidence?: readonly EvidenceLike[] }>(rows: T[]
 	});
 }
 
+/**
+ * What a record rests on (D3): the number of distinct origins among the
+ * publishers it cites, and whether every cited source is an encyclopedia.
+ *
+ * Distinct from `origins` above, which counts evidence lineage (V29). This is
+ * about the bibliography, so it is emitted under its own name: the two numbers
+ * answer different questions and one must never overwrite the other.
+ */
+function withRestsOn<T extends { sources?: readonly string[] }>(
+	rows: T[]
+): (T & { restsOnOrigins?: number; encyclopediaOnly?: boolean })[] {
+	return rows.map((row) => {
+		const publishers = (row.sources ?? [])
+			.map((id) => sourceById.get(id)?.publisher)
+			.filter((p): p is string => typeof p === 'string');
+		const rest = restsOn(publishers);
+		return rest ? { ...row, ...rest } : row;
+	});
+}
+
 const dataset = {
 	meta: {
 		generated: new Date().toISOString(),
@@ -2538,29 +2558,60 @@ const dataset = {
 		)
 	},
 	sources,
-	eras: resolvedEras,
-	institutions: withOrigins(resolvedInstitutions),
-	roles,
-	people: withOrigins(resolvedPeople),
-	positions: withOrigins(resolvedPositions),
-	relationships: withOrigins(resolvedRelationships),
-	events: withOrigins(resolvedEvents),
-	questions,
-	hypotheses,
-	agreements: withOrigins(resolvedAgreements),
-	worldClaims: withOrigins(resolvedWorldClaims),
-	companies: withOrigins(resolvedCompanies),
-	contracts: withOrigins(resolvedContracts),
-	licences: withOrigins(resolvedLicences),
-	vacancies: withOrigins(resolvedVacancies),
-	declarations: withOrigins(resolvedDeclarations),
-	education: withOrigins(resolvedEducation),
-	regions: resolvedRegions,
-	places: withOrigins(places),
+	eras: withRestsOn(resolvedEras),
+	institutions: withRestsOn(withOrigins(resolvedInstitutions)),
+	roles: withRestsOn(roles),
+	people: withRestsOn(withOrigins(resolvedPeople)),
+	positions: withRestsOn(withOrigins(resolvedPositions)),
+	relationships: withRestsOn(withOrigins(resolvedRelationships)),
+	events: withRestsOn(withOrigins(resolvedEvents)),
+	questions: withRestsOn(questions),
+	hypotheses: withRestsOn(hypotheses),
+	agreements: withRestsOn(withOrigins(resolvedAgreements)),
+	worldClaims: withRestsOn(withOrigins(resolvedWorldClaims)),
+	companies: withRestsOn(withOrigins(resolvedCompanies)),
+	contracts: withRestsOn(withOrigins(resolvedContracts)),
+	licences: withRestsOn(withOrigins(resolvedLicences)),
+	vacancies: withRestsOn(withOrigins(resolvedVacancies)),
+	declarations: withRestsOn(withOrigins(resolvedDeclarations)),
+	education: withRestsOn(withOrigins(resolvedEducation)),
+	regions: withRestsOn(resolvedRegions),
+	places: withRestsOn(withOrigins(places)),
 	// Independent verification records. A distinct collection with its own
 	// schema, so the three review populations can never be summed (M2).
 	verifications
 };
+
+/**
+ * Records whose every cited source is an encyclopedia (D3). Counted once over
+ * the assembled graph so the published number is the one a reader can recompute
+ * from dataset.json, and computed before stats so no view can disagree with it.
+ */
+const encyclopediaOnlyTotal = [
+	dataset.eras,
+	dataset.institutions,
+	dataset.roles,
+	dataset.people,
+	dataset.positions,
+	dataset.relationships,
+	dataset.events,
+	dataset.questions,
+	dataset.hypotheses,
+	dataset.agreements,
+	dataset.worldClaims,
+	dataset.companies,
+	dataset.contracts,
+	dataset.licences,
+	dataset.vacancies,
+	dataset.declarations,
+	dataset.education,
+	dataset.regions,
+	dataset.places
+].reduce(
+	(total, rows) =>
+		total + rows.filter((r) => (r as { encyclopediaOnly?: boolean }).encyclopediaOnly === true).length,
+	0
+);
 
 /**
  * Coverage by slice (Phase 10A): institution, era, source family, language and
@@ -3012,10 +3063,22 @@ export interface Dispute {
  * The claim axes every claim-bearing record shares (V26/V29). \`independence\` is
  * the authored origin count and stays the fallback; \`origins\` is derived by the
  * build from evidence lineage and is the stronger statement where it exists.
+ * \`restsOnOrigins\` is a different count, derived from the publishers of the
+ * record's citations (D3); \`encyclopediaOnly\` says whether every citation is an
+ * encyclopedia. Neither overwrites the other.
  */
-export interface ClaimAxes {
+export interface ClaimAxes extends RestsOn {
 	independence?: number;
 	origins?: number;
+}
+
+/**
+ * What a record rests on (D3), derived from the publishers of the sources it
+ * cites. Present on every record that cites at least one source.
+ */
+export interface RestsOn {
+	restsOnOrigins?: number;
+	encyclopediaOnly?: boolean;
 }
 
 export interface Interval {
@@ -3043,7 +3106,7 @@ export interface Source {
 	excerpt?: string;
 }
 
-export interface Era {
+export interface Era extends RestsOn {
 	id: string;
 	label_en: string;
 	label_fr?: string;
@@ -3063,7 +3126,7 @@ export interface Era {
 	interval: Interval;
 }
 
-export interface Institution {
+export interface Institution extends RestsOn {
 	id: string;
 	name_en: string;
 	name_fr?: string;
@@ -3087,7 +3150,7 @@ export interface Institution {
 	timeline: TimelineItem[];
 }
 
-export interface Role {
+export interface Role extends RestsOn {
 	id: string;
 	title_en: string;
 	title_fr?: string;
@@ -3248,7 +3311,7 @@ export interface EventRec extends ClaimAxes {
 	interval: Interval;
 }
 
-export interface Question {
+export interface Question extends RestsOn {
 	id: string;
 	question: string;
 	kind: 'verification' | 'analytical';
@@ -3283,7 +3346,7 @@ export interface HypothesisEvidence {
 	sources: string[];
 }
 
-export interface Hypothesis {
+export interface Hypothesis extends RestsOn {
 	id: string;
 	label: string;
 	statement: string;
@@ -3640,7 +3703,7 @@ export interface Dataset {
 	places: PlaceRec[];
 }
 
-export interface RegionRec {
+export interface RegionRec extends RestsOn {
 	id: string;
 	kind: 'region' | 'governorate' | 'delegation' | 'municipality';
 	name_en: string;
@@ -4039,6 +4102,9 @@ const stats: Record<string, string> = {
 	floor: parameters.time.floor,
 	cutoff: parameters.time.cutoff,
 	needsPrimarySource: String(needsPrimary.length),
+	// D3: records citing at least one source whose every source is an
+	// encyclopedia. The total is a different statement from a basis count.
+	encyclopediaOnly: String(encyclopediaOnlyTotal),
 	successionGaps: String(successionGaps.length),
 	successionOverlaps: String(successionOverlaps.length),
 	contradictions: String(contradictions.length),

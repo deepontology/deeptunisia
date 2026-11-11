@@ -62,7 +62,7 @@ import {
 } from './dates.ts';
 import { configureTime } from './dates.ts';
 import { loadParameters } from './parameters.ts';
-import { countOrigins } from './origins.ts';
+import { countOrigins, originOf, restsOn } from './origins.ts';
 import {
 	reviewFlagsOf,
 	reviewRiskOf,
@@ -520,6 +520,25 @@ ok(
 	'V29 origins: no evidence leaves the authored independence alone',
 	countOrigins([]) === undefined && countOrigins(undefined) === undefined
 );
+
+// ---------------------------------------------------------------------------
+// D3 — what a record rests on. `restsOnOrigins` counts distinct origins among
+// the publishers a record cites; `encyclopediaOnly` is true only when it cites
+// something and every citation is an encyclopedia. Both are separate from the
+// V29 lineage count above.
+// ---------------------------------------------------------------------------
+
+ok('D3: Wikipedia resolves to the wikipedia origin', originOf('Wikipedia (FR)').origin === 'wikipedia');
+ok('D3: a French spelling resolves to the same origin', originOf('Wikipédia (français)').origin === 'wikipedia');
+ok('D3: an Arabic spelling resolves to the same origin', originOf('ويكيبيديا (العربية)').origin === 'wikipedia');
+ok('D3: Wikidata is its own origin', originOf('Wikidata').origin === 'wikidata');
+ok('D3: both encyclopedia origins are class encyclopedia', originOf('Wikidata').class === 'encyclopedia' && originOf('Wikipedia').class === 'encyclopedia');
+ok('D3: an unmapped publisher is its own origin, class other', originOf('Le Monde').origin === 'Le Monde' && originOf('Le Monde').class === 'other');
+ok('D3: two Wikipedia spellings are one origin', restsOn(['Wikipedia', 'Wikipédia (fr)'])?.restsOnOrigins === 1);
+ok('D3: Wikipedia and Wikidata are two origins', restsOn(['Wikipedia', 'Wikidata'])?.restsOnOrigins === 2);
+ok('D3: encyclopedia only when every citation is one', restsOn(['Wikipedia', 'Wikidata'])?.encyclopediaOnly === true);
+ok('D3: one other publisher breaks encyclopediaOnly', restsOn(['Wikipedia', 'Le Monde'])?.encyclopediaOnly === false);
+ok('D3: citing nothing derives nothing', restsOn([]) === undefined);
 rejectsWith(
 	PositionSchema,
 	pos({ evidence: [evidence({ passage_type: 'summary' })] }),
