@@ -12,7 +12,7 @@ import { parse as parseYaml } from 'yaml';
 import { RelationshipType, EDGE_DIRECTION, REQUIRED_SOURCE_KINDS } from '../scripts/schema.ts';
 import { computeDatasetHash } from './canonical.ts';
 import { countOrigins } from './origins.ts';
-import { reviewCoverageCsv, summariseReview, type ReviewInput, type ReviewKind } from './review-coverage.ts';
+import { reviewCoverageCsv, summariseReview, REVIEW_KINDS, type ReviewInput, type ReviewKind } from './review-coverage.ts';
 import { parseCsv } from './studies-aggregate.ts';
 import { buildCoverage, coverageCsv } from './coverage.ts';
 import { verifyDebtProvenance, DEBT_MANIFEST_ID, type DebtManifestEntry } from './debt-provenance.ts';
@@ -397,7 +397,12 @@ const MIN_DOCUMENTED_SHARE = 0.185; // of all based claims
 
 {
 	const denom = ds.meta.counts.positions + ds.meta.counts.people;
-	const share = ds.meta.needsPrimarySourceCount / denom;
+	// The published count covers every claim-bearing kind, so this share is
+	// recomputed over the two kinds it was written for.
+	const awaiting = [...ds.positions, ...ds.people].filter(
+		(r: { verification?: string }) => r.verification === 'needs-primary-source'
+	).length;
+	const share = awaiting / denom;
 	ok(
 		'share awaiting a primary source has not regressed',
 		share <= MAX_AWAITING_PRIMARY_SOURCE,
@@ -720,6 +725,27 @@ const KIND_TO_DATASET: Record<string, string> = {
 		'relationships.csv verification matches the graph',
 		csvPending === graphPending,
 		`${csvPending} not verified in the export, ${graphPending} in the graph`
+	);
+}
+
+{
+	const stats: Record<string, string> = JSON.parse(
+		readFileSync(join(HERE, '..', 'src', 'generated', 'stats.json'), 'utf8')
+	);
+	const fresh = REVIEW_KINDS.flatMap((kind) =>
+		((ds[KIND_TO_DATASET[kind]] ?? []) as { id: string; verification?: string }[]).filter(
+			(r) => r.verification === 'needs-primary-source'
+		)
+	);
+	ok(
+		'the published needsPrimarySource count covers every claim kind',
+		ds.meta.needsPrimarySourceCount === fresh.length,
+		`published ${ds.meta.needsPrimarySourceCount}, graph holds ${fresh.length}`
+	);
+	ok(
+		'the needsPrimarySource stat tag equals the same count',
+		stats.needsPrimarySource === String(fresh.length),
+		`tag ${stats.needsPrimarySource}, graph holds ${fresh.length}`
 	);
 }
 
