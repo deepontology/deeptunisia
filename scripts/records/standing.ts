@@ -30,6 +30,8 @@ export interface StandingRecord {
 export interface Omitted {
 	inferred: number;
 	unsubstantiated: number;
+	/** Strong claims the page does not print because the record has too many. */
+	beyondLength?: number;
 }
 
 export function isShown(basis: string | undefined): boolean {
@@ -74,9 +76,15 @@ export function standingLines(record: StandingRecord, omitted: Omitted = { infer
 	if (record.verification === 'needs-primary-source') lines.push({ key: 'rec.standing.needsPrimary' });
 	if (record.verification === 'disputed') lines.push({ key: 'rec.standing.disputed' });
 
+	/* Two different reasons for a claim not being here, stated separately and
+	   followed by one sentence saying where the rest are. */
+	const notices: Line[] = [];
 	const weak = (omitted.inferred || 0) + (omitted.unsubstantiated || 0);
-	if (weak > 0) {
-		lines.push({ key: 'rec.standing.omitted', params: { n: weak } });
+	if (weak > 0) notices.push({ key: 'rec.standing.omitted', params: { n: weak } });
+	const beyond = omitted.beyondLength || 0;
+	if (beyond > 0) notices.push({ key: 'rec.standing.unshown', params: { n: beyond } });
+	if (notices.length) {
+		lines.push(...notices);
 		lines.push({ key: 'rec.standing.omittedWhere' });
 	}
 

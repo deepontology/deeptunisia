@@ -14,9 +14,10 @@
  *   - the JSON-LD carries identity and nothing else
  */
 import { INDEXING, SITE_URL, PAGES_DIR, type RecordKind } from './config.ts';
-import { esc, tri, triRaw, one } from './labels.ts';
+import { esc, tri, triRaw, triEach, one, loc } from './labels.ts';
 import { standingLines, isShown, restsOnEncyclopediaOnly, type Omitted } from './standing.ts';
 import { describeInterval } from '../../src/lib/model.ts';
+import { deriveBasis } from '../schema.ts';
 
 /* The dataset is a plain graph; these are the parts this file reads. */
 export interface Interval {
@@ -125,7 +126,7 @@ function datePhrase(interval: Interval | undefined): string {
 		fr: describeInterval(interval as never, 'fr'),
 		ar: describeInterval(interval as never, 'ar')
 	});
-	return text ? `<span class=dates>${text}</span>` : '';
+	return text ? `<span class=d>${text}</span>` : '';
 }
 
 /** The date of one event, as written, with its precision where it is coarse. */
@@ -201,6 +202,43 @@ interface Claims {
 	omitted: Omitted;
 }
 
+/*
+ * An institution can hold more offices than a document can print: the interior
+ * ministry has 726, across 27 offices. The page keeps every office visible by
+ * taking its most recent holders first, in turn, until the budget is spent, so
+ * no office disappears from its own record; the rest are counted in the standing
+ * block with where to find them. The budget is what keeps the heaviest page
+ * inside the weight ceiling.
+ */
+const HOLDER_BUDGET = 120;
+
+function capHolders(positions: Rec[]): { rows: Rec[]; dropped: number } {
+	if (positions.length <= HOLDER_BUDGET) return { rows: positions, dropped: 0 };
+	const roles = new Map<string, Rec[]>();
+	for (const p of positions) {
+		const key = String(p.roleTitle ?? p.role ?? '');
+		const list = roles.get(key);
+		if (list) list.push(p);
+		else roles.set(key, [p]);
+	}
+	for (const list of roles.values()) list.sort((a, b) => byStart(b, a));
+	const order = [...roles.values()].sort((a, b) => byStart(b[0], a[0]));
+	const rows: Rec[] = [];
+	for (let depth = 0; rows.length < HOLDER_BUDGET; depth++) {
+		let added = 0;
+		for (const list of order) {
+			if (rows.length >= HOLDER_BUDGET) break;
+			const row = list[depth];
+			if (row) {
+				rows.push(row);
+				added++;
+			}
+		}
+		if (!added) break;
+	}
+	return { rows, dropped: positions.length - rows.length };
+}
+
 function namesPerson(world: World, r: Rec): boolean {
 	return world.people.has(String(r.from)) || world.people.has(String(r.to));
 }
@@ -222,15 +260,24 @@ function claimsFor(kind: RecordKind, rec: Rec, world: World): Claims {
 	const relationships = kind === 'event' ? [] : world.relByEndpoint.get(rec.id) ?? [];
 
 	const showsRelationship = (r: Rec) => (kind === 'institution' ? isShown(r.basis as string) || !namesPerson(world, r) : isShown(r.basis as string));
-	const shownPositions = positions.filter((p) => isShown(p.basis as string)).sort(byStart);
-	const shownRelationships = relationships.filter(showsRelationship).sort(byOtherParty(world, rec.id));
+	const eligiblePositions = positions.filter((p) => isShown(p.basis as string));
+	const capped = kind === 'institution' ? capHolders(eligiblePositions) : { rows: eligiblePositions, dropped: 0 };
+	const shownPositions = capped.rows.sort(byStart);
+	/* Ties print in basis groups, so the twin keeps that order too: a data twin
+	   that reordered the claims would not be the page it sits beside. */
+	const eligibleRelationships = relationships.filter(showsRelationship).sort(byOtherParty(world, rec.id));
+	const groupedRelationships = GROUP_ORDER.flatMap((basis) => eligibleRelationships.filter((r) => r.basis === basis));
+	const shownRelationships = [
+		...groupedRelationships,
+		...eligibleRelationships.filter((r) => !GROUP_ORDER.includes(String(r.basis)))
+	];
 
-	const omitted: Omitted = { inferred: 0, unsubstantiated: 0 };
+	const omitted: Omitted = { inferred: 0, unsubstantiated: 0, beyondLength: capped.dropped };
 	const count = (basis: unknown) => {
 		if (basis === 'inferred') omitted.inferred++;
 		else if (basis === 'unsubstantiated') omitted.unsubstantiated++;
 	};
-	positions.filter((p) => !shownPositions.includes(p)).forEach((p) => count(p.basis));
+	positions.filter((p) => !shownPositions.includes(p) && !capped.rows.includes(p)).forEach((p) => count(p.basis));
 	relationships.filter((r) => !shownRelationships.includes(r)).forEach((r) => count(r.basis));
 
 	return { positions: shownPositions, relationships: shownRelationships, omitted };
@@ -268,8 +315,25 @@ function grouped(list: Rec[]): [string, Rec[]][] {
    not repeat it. An office row has no such heading and carries the basis itself. */
 function metaLine(basis: unknown, confidence: unknown, sources: string[] | undefined, idx: SourceIndex, withBasis = true): string {
 	const bits: string[] = [];
-	if (withBasis) bits.push(tri(`basis.${String(basis)}`));
-	if (confidence) bits.push(tri('rec.grade', { grade: String(confidence) }));
+	if (withBasis) {
+		const label = `basis.${String(basis)}`;
+		bits.push(
+			confidence
+				? triEach('rec.meta.line', {
+						en: { basis: loc('en', label), grade: String(confidence) },
+						fr: { basis: loc('fr', label), grade: String(confidence) },
+						ar: { basis: loc('ar', label), grade: String(confidence) }
+					})
+				: tri(label)
+		);
+	} else if (confidence) {
+		/* The group heading states the basis, so the row gives only the grade. */
+		bits.push(triEach('rec.meta.grade', {
+			en: { grade: String(confidence) },
+			fr: { grade: String(confidence) },
+			ar: { grade: String(confidence) }
+		}));
+	}
 	if (restsOnEncyclopediaOnly(sources)) bits.push(tri('rec.standing.wikipediaOnly'));
 	return `<p class=meta>${bits.join(' · ')}${idx.marks(sources)}</p>`;
 }
@@ -283,7 +347,7 @@ function positionRow(p: Rec, kind: RecordKind, world: World, idx: SourceIndex): 
 		: `<span class=role>${esc(title)}</span>`;
 	const instLink = inst ? `, <a class=inst href="${esc(href(String(inst.id)))}">${esc(inst.name_en)}</a>` : '';
 	const dates = datePhrase(p.interval as Interval | undefined);
-	return `<li class="claim row" data-claim="position" data-basis="${esc(p.basis)}"><p class=line>${lead}${instLink}${dates ? `, ${dates}` : ''}</p>${metaLine(p.basis, p.confidence, p.sources as string[] | undefined, idx)}</li>`;
+	return `<li class=claim data-basis="${esc(p.basis)}"><p class=line>${lead}${instLink}${dates ? `, ${dates}` : ''}</p>${metaLine(p.basis, p.confidence, p.sources as string[] | undefined, idx)}</li>`;
 }
 
 function relationshipRow(r: Rec, recId: string, world: World, idx: SourceIndex): string {
@@ -291,7 +355,7 @@ function relationshipRow(r: Rec, recId: string, world: World, idx: SourceIndex):
 	const type = r.type ? tri(`rel.${String(r.type)}`) : '';
 	const dates = datePhrase(r.interval as Interval | undefined);
 	const description = r.description ? `<p class=desc>${esc(r.description)}</p>` : '';
-	return `<li class="claim row" data-claim="relationship" data-basis="${esc(r.basis)}"><p class=line>${entityLink(world, otherId)} ${type}${dates ? `, ${dates}` : ''}</p>${metaLine(r.basis, r.confidence, r.sources as string[] | undefined, idx, false)}${description}</li>`;
+	return `<li class=claim data-basis="${esc(r.basis)}"><p class=line>${entityLink(world, otherId)} ${type}${dates ? `, ${dates}` : ''}</p>${metaLine(r.basis, r.confidence, r.sources as string[] | undefined, idx, false)}${description}</li>`;
 }
 
 function eventRow(rec: Rec): string {
@@ -527,17 +591,28 @@ function lifeLine(rec: Rec): string {
    Entry point
    --------------------------------------------------------------------------- */
 
+/*
+ * An institution rarely carries an explicit basis: the dataset builder derives
+ * one from confidence and the primary-source flag. The page derives it the same
+ * way, so it cannot say "reported" where the builder says "documented".
+ */
+function withDerivedBasis(rec: Rec): Rec {
+	if (rec.basis || !rec.confidence) return rec;
+	return { ...rec, basis: deriveBasis(rec.confidence as never, rec.verification as never) };
+}
+
 export function renderRecord(kind: RecordKind, rec: Rec, world: World): Rendered {
 	const name = recordName(kind, rec);
 	const idx = new SourceIndex(world);
-	const claims = claimsFor(kind, rec, world);
+	const record = withDerivedBasis(rec);
+	const claims = claimsFor(kind, record, world);
 
 	/* The record's own sources take the first numbers: the standing block opens
 	   the page and rests on them. */
-	const standing = standingBlock(rec, claims, idx);
-	const body = kind === 'person' ? personBody(rec, world, idx, claims)
-		: kind === 'institution' ? institutionBody(rec, world, idx, claims)
-			: eventBody(rec, world, idx);
+	const standing = standingBlock(record, claims, idx);
+	const body = kind === 'person' ? personBody(record, world, idx, claims)
+		: kind === 'institution' ? institutionBody(record, world, idx, claims)
+			: eventBody(record, world, idx);
 
 	/* Disputes on anything printed above, plus the record's own disagreements. */
 	const disputes: Rec[] = [

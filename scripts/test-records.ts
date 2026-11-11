@@ -115,7 +115,7 @@ const refLeaks: string[] = [];
 
 for (const [id, html] of pages) {
 	const standing = html.indexOf('id=standing');
-	const firstClaim = html.indexOf('class="claim row"');
+	const firstClaim = html.indexOf('class=claim');
 	if (standing === -1) noStanding.push(id);
 	else if (firstClaim !== -1 && firstClaim < standing) standingAfterClaim.push(id);
 	if (/<script[^>]*type=["']?module/.test(html)) moduleScripts.push(id);
@@ -211,19 +211,41 @@ ok(
 	`${recValues.length} rec.* values`
 );
 
-/* Rule 2: a claim about a person is printed only when documented or reported. */
-const weakClaims: string[] = [];
+/* Rule 2: a claim about a person is printed only when documented or reported.
+   An institution page may keep a weak claim that names no person, so each weak
+   row is looked up in the twin, which holds the claims in the order they print. */
+const people = new Set(data.people.map((p) => p.id));
+const weakNamingPerson: string[] = [];
 const omittedWithoutCount: string[] = [];
 for (const [id, html] of pages) {
-	for (const row of html.matchAll(/class="claim row" data-claim="[a-z]+" data-basis="([a-z-]+)"/g)) {
-		if (row[1] !== 'documented' && row[1] !== 'reported') weakClaims.push(`${id}: ${row[1]}`);
+	const split = html.indexOf('<section id=ties');
+	const offices = split === -1 ? html : html.slice(0, split);
+	const ties = split === -1 ? '' : html.slice(split);
+	const weakRows = (part: string) => [...part.matchAll(/class=claim data-basis="(inferred|unsubstantiated)"/g)].length;
+	if (weakRows(offices)) weakNamingPerson.push(`${id}: ${weakRows(offices)} in offices`);
+	let twin: { relationships?: { from?: string; to?: string; basis?: string }[] } = {};
+	try {
+		twin = JSON.parse(readFileSync(join(E, `${id}.json`), 'utf8'));
+	} catch {
+		/* the twin checks report this on their own */
 	}
-	const omitted = /(\d+) further claims of weaker standing are not shown here/.exec(html);
-	if (html.includes('further claims of weaker standing')) {
-		if (!omitted) omittedWithoutCount.push(id);
+	const relationships = twin.relationships ?? [];
+	let row = 0;
+	for (const match of ties.matchAll(/class=claim data-basis="([a-z-]+)"/g)) {
+		const relationship = relationships[row++];
+		if (match[1] === 'documented' || match[1] === 'reported') continue;
+		if (!relationship || people.has(String(relationship.from)) || people.has(String(relationship.to))) {
+			weakNamingPerson.push(`${id}: ${String(relationship?.id)}`);
+		}
 	}
+	const omitted = /weaker standing[^<]*?(\d+)/i.exec(html);
+	if (html.includes('further claims of weaker standing') && !omitted) omittedWithoutCount.push(id);
 }
-ok('no page prints a claim of weaker standing on a page about a person', weakClaims.length === 0, weakClaims.length ? sample(weakClaims) : '');
+ok(
+	'no page prints a claim of weaker standing that names a person',
+	weakNamingPerson.length === 0,
+	weakNamingPerson.length ? sample(weakNamingPerson) : ''
+);
 ok('the omitted-claims sentence always carries its number', omittedWithoutCount.length === 0, omittedWithoutCount.length ? sample(omittedWithoutCount) : '');
 
 /* ---------------------------------------------------------------------------
@@ -283,7 +305,7 @@ for (const [id, html] of pages) {
 	if (twin.record?.id !== id) twinProblems.push(`${id}: wrong record`);
 	if (twin.meta?.datasetHash !== data.meta.datasetHash) twinProblems.push(`${id}: hash`);
 	if (!Array.isArray(twin.positions) || !Array.isArray(twin.relationships)) twinProblems.push(`${id}: no claim arrays`);
-	const pageRows = (html.match(/class="claim row"/g) ?? []).length;
+	const pageRows = (html.match(/class=claim/g) ?? []).length;
 	const twinRows = (twin.positions?.length ?? 0) + (twin.relationships?.length ?? 0);
 	if (pageRows !== twinRows) countProblems.push(`${id}: ${pageRows} rows, ${twinRows} in the twin`);
 }

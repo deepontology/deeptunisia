@@ -215,18 +215,18 @@ h3.grp {
 	list-style: none;
 }
 
-.row {
+.claim {
 	padding: var(--s-4) 0;
 	border-bottom: var(--rule);
 }
 
-.row .line,
-.row .meta,
-.row .desc {
+.claim .line,
+.claim .meta,
+.claim .desc {
 	margin: 0;
 }
 
-.row .line {
+.claim .line {
 	font-size: var(--step-1);
 	line-height: var(--lh-snug);
 }
@@ -261,7 +261,7 @@ sup.marks a:hover {
 	text-decoration: underline;
 }
 
-.dates,
+.d,
 .date {
 	color: var(--text-secondary);
 }

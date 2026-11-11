@@ -62,6 +62,15 @@ export function triRaw(values: Record<string, string>): string {
 		.join('');
 }
 
+/** A phrase whose parameters are themselves translated, one set per language. */
+export function triEach(key: string, params: Record<string, Params>): string {
+	return LANGS.map((locale) => {
+		const text = esc(fill(translate(locale, key), params[locale]));
+		const extra = locale === 'ar' ? ' lang=ar dir=rtl' : '';
+		return `<b data-l=${locale}${extra}>${text}</b>`;
+	}).join('');
+}
+
 /** The same phrase in one language, for a place that cannot hold three (a meta tag). */
 export function one(locale: Locale, key: string, params?: Params): string {
 	return fill(translate(locale, key), params);
