@@ -1,0 +1,469 @@
+/* ===========================================================================
+   Record pages: /e/<id>
+   ===========================================================================
+
+   One reading column, phone first. The register is the reading one (one serif
+   column, as on /about), not the instrument panel's.
+
+   Built from the design tokens and nothing else. Every colour comes from a
+   semantic token and every size from the type scale, so the page follows the
+   reader's theme, palette and density the way the app does. tokens.css is
+   copied beside this file by scripts/build-records.ts and linked just before it.
+
+   DARK AND LIGHT WITHOUT SCRIPT: the script sets data-theme and data-palette
+   before paint, which is exactly what the app does. Without script no attribute
+   exists, the tokens default to the dark theme, and the media query below maps
+   the same semantic tokens to their light values, using only the ramp primitives.
+   =========================================================================== */
+
+@media (prefers-color-scheme: light) {
+	html:not([data-theme]) {
+		--n-hue: 80;
+		--n-chroma: 1.5;
+		--layer-l: 52%;
+		--layer-c: 0.135;
+		--basis-l: 52%;
+		--basis-c: 0.14;
+		--surface-sunken: var(--n-50);
+		--surface-base: var(--n-0);
+		--surface-raised: var(--n-25);
+		--surface-panel: var(--n-0);
+		--text-primary: var(--n-900);
+		--text-secondary: var(--n-600);
+		--text-muted: var(--n-500);
+		--text-faint: var(--n-400);
+		--border-subtle: var(--n-200);
+		--border-default: var(--n-300);
+		--border-strong: var(--n-400);
+		color-scheme: light;
+	}
+}
+
+html {
+	background: var(--surface-base);
+	-webkit-text-size-adjust: 100%;
+}
+
+body {
+	margin: 0;
+	background: var(--surface-base);
+	color: var(--text-primary);
+	font-family: var(--font-read);
+	font-size: var(--step-0);
+	line-height: var(--lh-normal);
+	text-rendering: optimizeLegibility;
+}
+
+html[lang='ar'] body {
+	line-height: var(--lh-relaxed);
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+.sheet {
+	max-width: var(--measure);
+	margin-inline: auto;
+	padding: var(--s-6) var(--s-5) var(--s-11);
+}
+
+/* ---------------------------------------------------------------------------
+   Language. Every label is printed in three languages; the page's lang picks one.
+   Without script the page is English, which is what the lang attribute says.
+   --------------------------------------------------------------------------- */
+
+b[data-l] {
+	display: none;
+	font-weight: inherit;
+}
+
+html[lang='en'] b[data-l='en'],
+html[lang='fr'] b[data-l='fr'],
+html[lang='ar'] b[data-l='ar'] {
+	display: inline;
+}
+
+/* Prose keeps the record's own language. A translation, when one exists, takes
+   over for its language; otherwise the English block stays and says so. */
+.prose {
+	display: block;
+}
+
+.prose[data-lang='fr'],
+.prose[data-lang='ar'] {
+	display: none;
+}
+
+html[lang='fr'] .prose[data-lang='fr'],
+html[lang='ar'] .prose[data-lang='ar'] {
+	display: block;
+}
+
+html[lang='fr'] .prose[data-lang='en'][data-fallback~='fr'],
+html[lang='ar'] .prose[data-lang='en'][data-fallback~='ar'] {
+	display: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Head
+   --------------------------------------------------------------------------- */
+
+.kind {
+	margin: 0 0 var(--s-3);
+	font-family: var(--font-sans);
+	font-size: var(--step--1);
+	letter-spacing: var(--track-caps);
+	text-transform: uppercase;
+	color: var(--text-muted);
+}
+
+h1 {
+	margin: 0 0 var(--s-3);
+	font-size: var(--step-3);
+	line-height: var(--lh-tight);
+	letter-spacing: var(--track-tight);
+	font-weight: 600;
+}
+
+.alt {
+	margin: 0;
+	font-size: var(--step-0);
+	color: var(--text-secondary);
+}
+
+.alt.ar {
+	font-size: var(--step-1);
+	line-height: var(--lh-snug);
+}
+
+.life,
+.tag {
+	margin: var(--s-4) 0 0;
+	color: var(--text-secondary);
+}
+
+.tag {
+	font-size: var(--step-1);
+	line-height: var(--lh-snug);
+}
+
+/* ---------------------------------------------------------------------------
+   Standing. Above the fold on a phone, in sentences, before the first claim.
+   --------------------------------------------------------------------------- */
+
+.standing {
+	margin: var(--s-8) 0 var(--s-9);
+	padding: var(--s-5);
+	border: var(--rule);
+	border-inline-start: var(--s-2) solid var(--text-primary);
+	border-radius: var(--r-sm);
+	background: color-mix(in oklab, var(--text-primary) 4%, transparent);
+}
+
+.standing .sl {
+	margin: 0 0 var(--s-2);
+	font-size: var(--step--1);
+	line-height: var(--lh-snug);
+}
+
+.standing .sl:last-child {
+	margin-bottom: 0;
+}
+
+.standing .meta {
+	margin: var(--s-3) 0 0;
+}
+
+.where {
+	text-decoration-color: var(--text-muted);
+}
+
+/* ---------------------------------------------------------------------------
+   Sections and claim rows
+   --------------------------------------------------------------------------- */
+
+h2 {
+	margin: var(--s-10) 0 var(--s-4);
+	padding-top: var(--s-5);
+	border-top: var(--rule);
+	font-family: var(--font-sans);
+	font-size: var(--step-0);
+	letter-spacing: var(--track-wide);
+	text-transform: uppercase;
+	color: var(--text-secondary);
+}
+
+h3.grp {
+	margin: var(--s-6) 0 var(--s-2);
+	font-family: var(--font-sans);
+	font-size: var(--step--1);
+	letter-spacing: var(--track-caps);
+	text-transform: uppercase;
+	color: var(--text-muted);
+}
+
+.rows,
+.events,
+.involved,
+.places,
+.disputes {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.row {
+	padding: var(--s-4) 0;
+	border-bottom: var(--rule);
+}
+
+.row .line,
+.row .meta,
+.row .desc {
+	margin: 0;
+}
+
+.row .line {
+	font-size: var(--step-1);
+	line-height: var(--lh-snug);
+}
+
+.role {
+	font-weight: 600;
+}
+
+.meta {
+	margin-top: var(--s-2);
+	font-family: var(--font-sans);
+	font-size: var(--step--1);
+	line-height: var(--lh-snug);
+	color: var(--text-muted);
+}
+
+sup.marks {
+	margin-inline-start: var(--s-2);
+	font-family: var(--font-mono);
+	font-size: var(--step--1);
+	line-height: 0;
+}
+
+sup.marks a {
+	margin-inline-end: var(--s-1);
+	color: var(--text-muted);
+	text-decoration: none;
+}
+
+sup.marks a:hover {
+	color: var(--text-primary);
+	text-decoration: underline;
+}
+
+.dates,
+.date {
+	color: var(--text-secondary);
+}
+
+.desc {
+	margin-top: var(--s-2);
+	font-size: var(--step--1);
+	line-height: var(--lh-snug);
+	color: var(--text-secondary);
+}
+
+.evrow,
+.involved li,
+.places li {
+	padding: var(--s-2) 0;
+	border-bottom: var(--rule);
+}
+
+.prec,
+.flinks,
+.note {
+	font-family: var(--font-sans);
+	font-size: var(--step--1);
+	color: var(--text-muted);
+}
+
+.note {
+	margin: var(--s-2) 0 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Facts (institution and event)
+   --------------------------------------------------------------------------- */
+
+.facts {
+	display: grid;
+	gap: var(--s-4);
+	margin: var(--s-6) 0 0;
+}
+
+.facts dt {
+	font-family: var(--font-sans);
+	font-size: var(--step--1);
+	letter-spacing: var(--track-caps);
+	text-transform: uppercase;
+	color: var(--text-muted);
+}
+
+.facts dd {
+	margin: var(--s-1) 0 0;
+}
+
+.places {
+	margin-top: var(--s-1);
+}
+
+/* ---------------------------------------------------------------------------
+   Contested framings, side by side once there is room
+   --------------------------------------------------------------------------- */
+
+.framings {
+	display: grid;
+	gap: var(--s-5);
+}
+
+.framing {
+	margin: 0;
+	padding: var(--s-4) var(--s-5);
+	border: var(--rule);
+	border-radius: var(--r-sm);
+}
+
+.framing blockquote {
+	margin: 0;
+	font-size: var(--step-1);
+	line-height: var(--lh-snug);
+}
+
+.framing figcaption {
+	margin-top: var(--s-3);
+	font-family: var(--font-sans);
+	font-size: var(--step--1);
+	color: var(--text-secondary);
+}
+
+@media (min-width: 60rem) {
+	.framings {
+		grid-template-columns: 1fr 1fr;
+	}
+}
+
+/* ---------------------------------------------------------------------------
+   Disputes
+   --------------------------------------------------------------------------- */
+
+.disputes li {
+	padding: var(--s-4) 0;
+	border-bottom: var(--rule);
+}
+
+.dclaim {
+	margin: 0;
+	font-size: var(--step-0);
+	line-height: var(--lh-snug);
+}
+
+.dheld {
+	margin: var(--s-2) 0 0;
+	font-size: var(--step--1);
+	line-height: var(--lh-snug);
+	color: var(--text-secondary);
+}
+
+.dlabel {
+	font-family: var(--font-sans);
+	letter-spacing: var(--track-caps);
+	text-transform: uppercase;
+	color: var(--text-muted);
+}
+
+.dmeta {
+	margin: var(--s-2) 0 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Sources, citation, footer
+   --------------------------------------------------------------------------- */
+
+.sources {
+	margin: 0;
+	padding-inline-start: var(--s-6);
+}
+
+.sources li {
+	margin: var(--s-3) 0;
+	font-size: var(--step--1);
+	line-height: var(--lh-snug);
+	color: var(--text-secondary);
+}
+
+.sources li::marker {
+	font-family: var(--font-mono);
+	color: var(--text-muted);
+}
+
+.stitle {
+	color: var(--text-primary);
+}
+
+.stamp {
+	font-family: var(--font-mono);
+	font-size: var(--step--1);
+	color: var(--text-muted);
+}
+
+.cite {
+	margin: 0 0 var(--s-3);
+	padding: var(--s-4);
+	border-radius: var(--r-sm);
+	background: var(--surface-sunken);
+	font-family: var(--font-mono);
+	font-size: var(--step--1);
+	line-height: var(--lh-snug);
+	overflow-wrap: anywhere;
+}
+
+footer {
+	margin-top: var(--s-11);
+	padding-top: var(--s-5);
+	border-top: var(--rule);
+	font-family: var(--font-sans);
+	font-size: var(--step--1);
+	line-height: var(--lh-snug);
+	color: var(--text-muted);
+}
+
+.flinks a {
+	margin-inline-end: var(--s-4);
+}
+
+/* ---------------------------------------------------------------------------
+   Links and focus
+   --------------------------------------------------------------------------- */
+
+a {
+	color: inherit;
+	text-decoration-color: var(--text-muted);
+	text-underline-offset: 0.18em;
+}
+
+a:hover {
+	text-decoration-color: var(--text-primary);
+}
+
+a:focus-visible {
+	outline: var(--s-1) solid var(--text-primary);
+	outline-offset: var(--s-1);
+	border-radius: var(--r-xs);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	a {
+		transition: text-decoration-color var(--dur-fast) var(--ease-out);
+	}
+}

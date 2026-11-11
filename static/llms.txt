@@ -72,6 +72,10 @@ span as a date, or an unsubstantiated claim as a finding, misrepresents the sour
 
 ## Pages
 
+- /e/<record id>   one document per person, institution and event: the record's
+                  claims, what each rests on, its sources and a citation block.
+                  No JavaScript needed. The same record as data sits beside it at
+                  /e/<record id>.json.
 - /              the landing page; the atlas entry point
 - /chronicle     officeholding across time, drawn to scale
 - /now           who holds which office today, against each office's median tenure
