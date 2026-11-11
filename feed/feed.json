@@ -3,6 +3,106 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:35bb1d0391b5b21f",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "L’Insat félicite Dorsaf Sebai pour sa distinction aux Springer nature Awards 2026",
+      "link": "https://kapitalis.com/tunisie/2026/11/11/linsat-felicite-dorsaf-sebai-pour-sa-distinction-aux-springer-nature-awards-2026/",
+      "published": "2026-11-11T22:44:02Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:c838e495ca92fabc",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "La justice a rendu son verdict dans l’affaire Al-Karama Holding",
+      "link": "https://kapitalis.com/tunisie/2026/11/11/la-justice-a-rendu-son-verdict-dans-laffaire-al-karama-holding/",
+      "published": "2026-11-11T22:17:16Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:african-manager:71868e80a7e1a4b6",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Baisse des prix des viandes de volaille à la fin de semaine",
+      "link": "https://africanmanager.com/ariana-une-baisse-des-prix-des-viandes-de-volaille-annoncee-pour-la-fin-de-semaine/",
+      "published": "2026-11-11T20:56:25Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:kapitalis:196a898209d6de61",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Arrestation du principal auteur d’une violente agression avec viol et séquestration",
+      "link": "https://kapitalis.com/tunisie/2026/11/11/arrestation-du-principal-auteur-dune-violente-agression-avec-viol-et-sequestration/",
+      "published": "2026-11-11T20:40:28Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:7966f0b5c5be01da",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "JCC 2026 | Les films tunisiens retenus en compétition officielle dévoilés",
+      "link": "https://kapitalis.com/tunisie/2026/11/11/jcc-2026-les-films-tunisiens-retenus-en-competition-officielle-devoiles/",
+      "published": "2026-11-11T20:01:38Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:f24e0b823477974d",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "CTN | Changement d’horaire pour la traversée Tunis-Gênes du 12 novembre",
+      "link": "https://kapitalis.com/tunisie/2026/11/11/ctn-changement-dhoraire-pour-la-traversee-tunis-genes-du-12-novembre/",
+      "published": "2026-11-11T18:37:09Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:e358940cdd04535a",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Bulletin météo pour cette nuit en Tunisie",
+      "link": "https://kapitalis.com/tunisie/2026/11/11/bulletin-meteo-pour-cette-nuit-en-tunisie-2/",
+      "published": "2026-11-11T18:21:36Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:inkyfada:070b1064283e0043",
+      "outlet": "Inkyfada",
+      "outletId": "inkyfada",
+      "title": "« On n’encourt pas les mêmes risques que tout le monde » : ces résidents étrangers en France qui se mobilisent malgré la peur",
+      "link": "https://inkyfada.com/fr/2026/11/11/on-nencourt-pas-les-memes-risques-que-tout-le-monde-ces-residents-etrangers-en-france-qui-se-mobilisent-malgre-la-peur/",
+      "published": "2026-11-11T17:14:04Z",
+      "lang": "fr",
+      "author": "Sisbane Selma"
+    },
+    {
+      "id": "feed:african-manager:27cae7d97024344d",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "2 accords de financement pour la centrale PV de Béni Mhira",
+      "link": "https://africanmanager.com/signature-de-deux-accords-de-garantie-et-de-financement-pour-la-construction-de-la-centrale-pv-de-beni-mhira-a-tataouine/",
+      "published": "2026-11-11T16:51:01Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:0020ce13753a698a",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Le marché boursier clôture la séance de mercredi, sur une note légèrement baissière",
+      "link": "https://africanmanager.com/le-marche-boursier-cloture-la-seance-de-mercredi-sur-une-note-legerement-baissiere/",
+      "published": "2026-11-11T16:39:50Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
       "id": "feed:african-manager:f9f46f0038ef31ba",
       "outlet": "African Manager",
       "outletId": "african-manager",
@@ -29,6 +129,16 @@
       "title": "Hydrogène vert : L’endroit et le revers de la médaille !",
       "link": "https://africanmanager.com/hydrogene-vert-lendroit-et-le-revers-de-la-medaille/",
       "published": "2026-11-11T15:10:00Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:56115cc13ea44546",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "La neutralité carbone à l’horizon 2050 : La trajectoire est tracée",
+      "link": "https://africanmanager.com/la-neutralite-carbone-a-lhorizon-2050-la-trajectoire-est-tracee/",
+      "published": "2026-11-11T15:00:00Z",
       "lang": "fr",
       "author": "African Manager"
     },
@@ -11888,116 +11998,6 @@
       "title": "Les États-Unis sanctionnent la Cour pénale internationale elle-même",
       "link": "https://africanmanager.com/les-etats-unis-sanctionnent-la-cour-penale-internationale-elle-meme/",
       "published": "2026-10-10T06:53:32Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:0db232c64f6ccb8b",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Le cessez-le-feu à Gaza « n’est qu’une façade », affirment plus de 100 ONG",
-      "link": "https://africanmanager.com/le-cessez-le-feu-a-gaza-nest-quune-facade-affirment-plus-de-100-ong/",
-      "published": "2026-10-10T06:53:12Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:kapitalis:966c216ab62ff106",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Conakry | Création d’un Conseil d’affaires tuniso-guinéen",
-      "link": "https://kapitalis.com/tunisie/2026/10/10/conakry-creation-dun-conseil-daffaires-tuniso-guineen/",
-      "published": "2026-10-10T06:50:35Z",
-      "lang": "fr",
-      "author": "webmaster kapitalis"
-    },
-    {
-      "id": "feed:african-manager:fb87811fa4911b60",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Un sénateur américain qualifie la guerre contre l’Iran d’« humiliation nationale » et de « débâcle »",
-      "link": "https://africanmanager.com/un-senateur-americain-qualifie-la-guerre-contre-liran-d-humiliation-nationale-et-de-debacle/",
-      "published": "2026-10-10T06:38:16Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:kapitalis:46a256679aac67fa",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "R. Stahl ouvre un bureau à Tunis",
-      "link": "https://kapitalis.com/tunisie/2026/10/10/r-stahl-ouvre-un-bureau-a-tunis/",
-      "published": "2026-10-10T06:24:11Z",
-      "lang": "fr",
-      "author": "webmaster kapitalis"
-    },
-    {
-      "id": "feed:kapitalis:8eca4ba43e6a401f",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Météo | Un samedi pluvieux en perspective",
-      "link": "https://kapitalis.com/tunisie/2026/10/10/meteo-un-samedi-pluvieux-en-perspective/",
-      "published": "2026-10-09T23:04:03Z",
-      "lang": "fr",
-      "author": "Yusra NY"
-    },
-    {
-      "id": "feed:kapitalis:f7f6d1ef24164a5c",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Drogue à l’Ariana | Un réseau démantelé et un dealer arrêté près d’un lycée",
-      "link": "https://kapitalis.com/tunisie/2026/10/09/drogue-a-lariana-un-reseau-demantele-et-un-dealer-arrete-pres-dun-lycee/",
-      "published": "2026-10-09T22:52:42Z",
-      "lang": "fr",
-      "author": "Yusra NY"
-    },
-    {
-      "id": "feed:kapitalis:c4d4d12511af3d06",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Meurtre à Nabeul | L’ami de la victime interpellé à la Cité Ettahrir",
-      "link": "https://kapitalis.com/tunisie/2026/10/09/meurtre-a-nabeul-lami-de-la-victime-interpelle-a-la-cite-ettahrir/",
-      "published": "2026-10-09T20:47:07Z",
-      "lang": "fr",
-      "author": "Yusra NY"
-    },
-    {
-      "id": "feed:african-manager:be8f679a6564279c",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Abdelmalek Ghannem prix d’honneur d’ONU-Habitat pour ses solutions de construction durables",
-      "link": "https://africanmanager.com/un-entrepreneur-tunisien-distingue-par-le-prix-dhonneur-donu-habitat-pour-ses-solutions-de-construction-durables/",
-      "published": "2026-10-09T20:03:06Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:kapitalis:e587dfc935936f6c",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Les foulées vertes | Courir tous ensemble pour le don d’organes",
-      "link": "https://kapitalis.com/tunisie/2026/10/09/les-foulees-vertes-courir-tous-ensemble-pour-le-don-dorganes/",
-      "published": "2026-10-09T19:42:19Z",
-      "lang": "fr",
-      "author": "Yusra NY"
-    },
-    {
-      "id": "feed:african-manager:16c955372c091f45",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Rémunération des dirigeants des sociétés cotées : Le bénéfice ne fait pas la paie",
-      "link": "https://africanmanager.com/remuneration-des-dirigeants-des-societes-cotees-le-benefice-ne-fait-pas-la-paie/",
-      "published": "2026-10-09T16:00:00Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:11ab7d80fe9966eb",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Tunisie-Chine : Le partenaire stratégique deviendrait-il un partenaire difficile ?",
-      "link": "https://africanmanager.com/tunisie-chine-le-partenaire-strategique-deviendrait-il-un-partenaire-difficile/",
-      "published": "2026-10-09T15:59:29Z",
       "lang": "fr",
       "author": "African Manager"
     }
