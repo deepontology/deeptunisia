@@ -169,12 +169,17 @@ ok('a finished empty-start board is accepted by the allocation validator', v.ok,
 
 let accepted = 0;
 let tried = 0;
+let overPlaced = 0;
+const placedTotals: number[] = [];
 let walk: BoardState = startBoard(board, 'draft');
 for (let i = 0; i < 2_000; i++) {
 	const l = lines.movable[Math.floor(rand() * lines.movable.length)];
 	walk = rand() < 0.5 ? give(board, walk, l.id) : take(board, walk, l.id);
 	if (finished(board, walk)) {
 		tried++;
+		const placedNow = placed(board, walk);
+		if (placedNow > lines.envelope + 1e-6) overPlaced++;
+		placedTotals.push(placedNow);
 		const r = validateSubmission(compiled, {
 			instrumentHash: compiled.hash,
 			locale: 'en',
@@ -188,6 +193,20 @@ for (let i = 0; i < 2_000; i++) {
 	}
 }
 ok('every finished draft-start state along a random walk is accepted', tried > 0 && accepted === tried, `${accepted}/${tried}`);
+ok('a finished board never places more than the envelope', overPlaced === 0, `${overPlaced} over-placed`);
+
+// The finish band is 0.5% of the envelope. A finished board can leave that much
+// unspent, and the purse cannot be over-placed, so the mean placed total sits at
+// most on the envelope and never more than one band below it. The average is
+// reported with that shortfall, not as an exactly balanced budget.
+const toleranceMd = lines.envelope * 0.005;
+const meanPlaced = placedTotals.reduce((s, n) => s + n, 0) / placedTotals.length;
+const meanGap = lines.envelope - meanPlaced;
+ok(
+	'the mean of finished boards is on or below the envelope and inside the finish band',
+	meanGap >= -1e-6 && meanGap <= toleranceMd + 1e-6,
+	`mean placed ${meanPlaced.toFixed(3)} MD, gap ${meanGap.toFixed(3)} MD, band ${toleranceMd.toFixed(3)} MD`
+);
 
 // The draft start, kept, is the draft and is accepted as kept_draft.
 const keptAnswer = toAllocation(board, kept);
@@ -209,6 +228,19 @@ if (alloc) {
 ok('draft level is twenty steps and the maximum is forty', DRAFT_LEVEL === 20 && MAX_LEVEL === 40);
 ok('the order lists match the line model', MOVABLE_ORDER.length === 16 && LOCKED_ORDER.length === 2);
 
+// The copy and the drafts say the finish band, not "every dinar", and the
+// derived energy and trade line says so where a respondent reads it.
+const boardCopy = readFileSync(join(ROOT, 'src/lib/budget-game/copy.ts'), 'utf8');
+const prereg = readFileSync(join(ROOT, 'research/portal/study-003/preregistration.md'), 'utf8');
+const instrumentText = readFileSync(join(ROOT, 'research/portal/study-003/instrument-v0.yaml'), 'utf8');
+ok('the board copy no longer promises every dinar is placed', !/every dinar is placed/i.test(boardCopy));
+ok(
+	'the derived energy and trade line says so in its copy',
+	/energy_trade:[^\n]*\(derived\)/.test(boardCopy) && /energy_trade:[^\n]*not a ministry budget/.test(boardCopy)
+);
+ok('the preregistration no longer claims the mean sums exactly', !/sums exactly/i.test(prereg));
+ok('the instrument no longer says shilling', !/shilling/i.test(instrumentText));
+
 // The owner's rules after the board rewrite.
 
 // Every step is 5% of its line's draft.
@@ -218,15 +250,15 @@ ok(
 	lines.movable.map((l) => `${l.id} ${stepMd(l).toFixed(3)}`).join(', ')
 );
 
-// The route default is the empty start; draft is only a hidden test flag.
+// The route default is the draft start, the version 1 arm; empty is the prototype view.
 const prototype = readFileSync(join(ROOT, 'src/routes/research/citizen-budget/prototype/+page.svelte'), 'utf8');
 const initialStart = prototype.match(/let\s+start\s*=\s*\$state<StartMode>\('([a-z]+)'\)/)?.[1];
-ok('the prototype route defaults to the empty start', initialStart === 'empty', `the route starts at "${initialStart}"`);
-const queryStart = prototype.match(/get\('start'\)\s*===\s*'([a-z]+)'\s*\?\s*'([a-z]+)'\s*:\s*'([a-z]+)'/);
+ok('the prototype route defaults to the draft start', initialStart === 'draft', `the route starts at "${initialStart}"`);
+const queryStart = prototype.match(/get\('([a-z]+)'\)\s*===\s*'([a-z]+)'\s*\?\s*'([a-z]+)'\s*:\s*'([a-z]+)'/);
 ok(
-	'the prototype route reads draft only as the hidden ?start=draft flag',
-	queryStart !== null && queryStart[2] === 'draft' && queryStart[3] === 'empty',
-	queryStart ? `the route reads "${queryStart[1]}" and falls back to "${queryStart[3]}"` : 'no start query handling found'
+	'the prototype route reads empty only as the ?start=empty view',
+	queryStart !== null && queryStart[1] === 'start' && queryStart[2] === 'empty' && queryStart[3] === 'empty' && queryStart[4] === 'draft',
+	queryStart ? `the route reads "${queryStart[2]}" and falls back to "${queryStart[4]}"` : 'no start query handling found'
 );
 
 // Take then give of the same line returns to the same levels and purse.

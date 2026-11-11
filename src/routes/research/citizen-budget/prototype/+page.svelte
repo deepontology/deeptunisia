@@ -4,15 +4,15 @@
 	import type { StartMode } from '$lib/budget-game/board';
 
 	/**
-	 * The default start is the empty purse: every system at zero and the whole
-	 * envelope in the purse. ?start=draft is the hidden testing flag for the
-	 * draft start. The query is read in the browser only, because the page is
-	 * prerendered.
+	 * The default start is the draft: every system at its draft and an empty
+	 * purse. That is the version 1 study arm. ?start=empty is the prototype view
+	 * with every system at zero and the whole envelope in the purse. The query is
+	 * read in the browser only, because the page is prerendered.
 	 */
-	let start = $state<StartMode>('empty');
+	let start = $state<StartMode>('draft');
 	let playing = $state(false);
 	$effect(() => {
-		if (browser) start = new URLSearchParams(window.location.search).get('start') === 'draft' ? 'draft' : 'empty';
+		if (browser) start = new URLSearchParams(window.location.search).get('start') === 'empty' ? 'empty' : 'draft';
 	});
 	/**
 	 * Citizen budget game, study prototype. Placeholder figures only; nothing is

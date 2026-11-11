@@ -78,7 +78,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 				label: 'The question',
 				heading: 'How would you move money, as a citizen?',
 				body: [
-					'The study asks how you would move money between the lines of the 2027 state budget, and how far that changes what the state gives up elsewhere. You do it on a board, in a few minutes, until every dinar is placed.',
+					'The study asks how you would move money between the lines of the 2027 state budget, and how far that changes what the state gives up elsewhere. You do it on a board, in a few minutes, until the purse is inside the finish band.',
 					'A budget is not a list of separate wishes. Every dinar in one line is a dinar not in another. The study makes that constraint visible.'
 				]
 			},
@@ -88,7 +88,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 				label: 'The board',
 				heading: 'One budget, one board, no score',
 				body: [
-					'The purse starts empty or full, according to the version you are shown. Every system is drawn to the same scale in dinars, so the largest line is long and the smallest is a sliver. Taking money from a system moves it to the purse. Giving from the purse moves it into a system. You cannot give what you do not hold. Finish when every dinar is placed.',
+					'The purse starts empty and every system starts at its draft. Every system is drawn to the same scale in dinars, so the largest line is long and the smallest is a sliver. Taking money from a system moves it to the purse. Giving from the purse moves it into a system. You cannot give what you do not hold. Finish when the purse is within 0.5% of the envelope. The purse is never over-placed, so up to 0.5% may stay unspent, and the report shows that shortfall.',
 					'Debt interest and the unforeseen reserve, 8,963 MD, are shown first, as already spent. The movable part, 59,932 MD, is spread across sixteen systems. Nothing here is scored or ranked.'
 				]
 			},
@@ -98,8 +98,8 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 				label: 'The figures',
 				heading: 'Draft figures, with their status',
 				body: [
-					'Every amount below is a draft, taken from press reports. None has been checked against the official document. The study will not freeze on a figure until it has a page reference in the adopted law.',
-					'The draft 2027 spending total is 68,895 MD, excluding debt principal. Debt interest and the unforeseen reserve, 8,963 MD, are spent before the start. The movable part is 59,932 MD across sixteen systems. A subsidies row of 11,846 MD sits inside the Industry and Trade lines, so it is not added again.'
+					'Every amount below is a draft. Most are press-reported; two are derived from the total and are labelled so. None has been checked against the official document. The study will not freeze on a figure until it has a page reference in the adopted law.',
+					'The draft 2027 spending total is 68,895 MD, excluding debt principal. Debt interest and the unforeseen reserve, 8,963 MD, are spent before the start. The movable part is 59,932 MD across sixteen systems. A subsidies row of 11,846 MD sits inside the Industry and Trade lines, so it is not added again. What remains of those two lines after the subsidies, 272.8 MD, is a derived line, not a ministry budget.'
 				]
 			},
 			{
@@ -154,7 +154,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 		whyItMatters:
 			'The budget decides what the state can do. Reading it as a set of choices, with a fixed total, shows what each choice gives up.',
 		intricacy:
-			'Sixteen systems share one fixed envelope. A step is a fixed share of a system\u2019s draft, takes and gives move money one way, and the purse must be empty before the board is complete.',
+			'Sixteen systems share one fixed envelope. A step is a fixed share of a system\u2019s draft, takes and gives move money one way, and the board is complete when the purse is within 0.5% of that envelope.',
 		cannotSay: [
 			'Not a picture of national preference, and not a national result. Taking part is open and self-selected.',
 			'Not what the budget should be.',
@@ -226,7 +226,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 				label: 'La question',
 				heading: 'Comment déplaceriez-vous l\u2019argent, en tant que citoyen\u00A0?',
 				body: [
-					'L\u2019étude demande comment vous déplaceriez l\u2019argent entre les lignes du budget de l\u2019État 2027, et dans quelle mesure cela change ce que l\u2019État abandonne ailleurs. Vous le faites sur un plateau, en quelques minutes, jusqu\u2019à ce que chaque dinar soit placé.',
+					'L\u2019étude demande comment vous déplaceriez l\u2019argent entre les lignes du budget de l\u2019État 2027, et dans quelle mesure cela change ce que l\u2019État abandonne ailleurs. Vous le faites sur un plateau, en quelques minutes, jusqu\u2019à ce que la cagnotte entre dans la marge de fin.',
 					'Un budget n\u2019est pas une liste de souhaits séparés. Chaque dinar mis dans une ligne est un dinar qui n\u2019est pas dans une autre. L\u2019étude rend cette contrainte visible.'
 				]
 			},
@@ -236,7 +236,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 				label: 'Le plateau',
 				heading: 'Un budget, un plateau, aucun score',
 				body: [
-					'La cagnotte part vide ou pleine, selon la version qui vous est montrée. Chaque système est dessiné à la même échelle en dinars\u00A0: la ligne la plus grande est longue, la plus petite n\u2019est qu\u2019un trait. Prendre de l\u2019argent à un système le déplace vers la cagnotte. Donner depuis la cagnotte le place dans un système. Vous ne pouvez pas donner ce que vous ne détenez pas. Terminez quand chaque dinar est placé.',
+					'La cagnotte part vide et chaque système part à son projet. Chaque système est dessiné à la même échelle en dinars\u00A0: la ligne la plus grande est longue, la plus petite n\u2019est qu\u2019un trait. Prendre de l\u2019argent à un système le déplace vers la cagnotte. Donner depuis la cagnotte le place dans un système. Vous ne pouvez pas donner ce que vous ne détenez pas. Terminez quand la cagnotte est à moins de 0,5 % de l\u2019enveloppe. La cagnotte ne peut pas être dépassée\u00A0: jusqu\u2019à 0,5 % peut rester non placé, et le rapport indique ce reliquat.',
 					'Les intérêts de la dette et la réserve pour imprévus, 8\u202F963 MD, sont montrés d\u2019abord, comme déjà dépensés. La part mobile, 59\u202F932 MD, se répartit sur seize systèmes. Rien ici n\u2019est noté ni classé.'
 				]
 			},
@@ -246,8 +246,8 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 				label: 'Les chiffres',
 				heading: 'Des chiffres provisoires, avec leur statut',
 				body: [
-					'Chaque montant ci-dessous est provisoire, tiré de la presse. Aucun n\u2019a été vérifié sur le document officiel. L\u2019étude ne figera un chiffre qu\u2019une fois qu\u2019il aura une référence de page dans la loi adoptée.',
-					'Le total provisoire des dépenses 2027 est de 68\u202F895 MD, hors principal de la dette. Les intérêts de la dette et la réserve pour imprévus, 8\u202F963 MD, sont dépensés avant le début. La part mobile est de 59\u202F932 MD sur seize systèmes. Une ligne de subventions de 11\u202F846 MD se trouve dans les lignes de l\u2019Industrie et du Commerce\u00A0; elle n\u2019est donc pas ajoutée.'
+					'Chaque montant ci-dessous est provisoire. La plupart sont tirés de la presse\u00A0; deux sont dérivés du total et signalés comme tels. Aucun n\u2019a été vérifié sur le document officiel. L\u2019étude ne figera un chiffre qu\u2019une fois qu\u2019il aura une référence de page dans la loi adoptée.',
+					'Le total provisoire des dépenses 2027 est de 68\u202F895 MD, hors principal de la dette. Les intérêts de la dette et la réserve pour imprévus, 8\u202F963 MD, sont dépensés avant le début. La part mobile est de 59\u202F932 MD sur seize systèmes. Une ligne de subventions de 11\u202F846 MD se trouve dans les lignes de l\u2019Industrie et du Commerce\u00A0; elle n\u2019est donc pas ajoutée. Ce qui reste de ces deux lignes après les subventions, 272,8 MD, est une ligne dérivée, non un budget ministériel.'
 				]
 			},
 			{
@@ -302,7 +302,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 		whyItMatters:
 			'Le budget décide de ce que l\u2019État peut faire. Le lire comme un ensemble de choix, à total fixe, montre ce que chaque choix coûte.',
 		intricacy:
-			'Seize systèmes partagent une seule enveloppe fixe. Un pas est une part fixe du projet d\u2019un système, les prises et les dons déplacent l\u2019argent dans un sens, et la cagnotte doit être vide avant la fin du plateau.',
+			'Seize systèmes partagent une seule enveloppe fixe. Un pas est une part fixe du projet d\u2019un système, les prises et les dons déplacent l\u2019argent dans un sens, et le plateau est terminé quand la cagnotte est à moins de 0,5 % de cette enveloppe.',
 		cannotSay: [
 			'Pas une image de la préférence nationale, et pas un résultat national. La participation est ouverte et auto-sélectionnée.',
 			'Pas ce que le budget devrait être.',
@@ -375,7 +375,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 				label: 'السؤال',
 				heading: 'كيف ستنقل المال، كمواطن؟',
 				body: [
-					'تسأل الدراسة كيف ستنقل المال بين بنود ميزانية الدولة لسنة 2027، وإلى أي حدّ يغيّر ذلك ما تتخلّى عنه الدولة في مكان آخر. تفعل ذلك على لوحة، في بضع دقائق، حتى يُوضع كلّ دينار.',
+					'تسأل الدراسة كيف ستنقل المال بين بنود ميزانية الدولة لسنة 2027، وإلى أي حدّ يغيّر ذلك ما تتخلّى عنه الدولة في مكان آخر. تفعل ذلك على لوحة، في بضع دقائق، حتى تدخل المحفظة هامش الإنهاء.',
 					'الميزانية ليست قائمة رغبات منفصلة. كلّ دينار في بند هو دينار ليس في بند آخر. تُظهر الدراسة هذا القيد.'
 				]
 			},
@@ -385,7 +385,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 				label: 'اللوحة',
 				heading: 'ميزانية واحدة، لوحة واحدة، بلا تنقيط',
 				body: [
-					'تبدأ المحفظة فارغة أو ممتلئة، حسب النسخة التي تُعرض عليك. يُرسم كلّ نظام بالمقياس نفسه بالدينار، فيكون أكبر بند طويلًا وأصغرها خيطًا رفيعًا. الأخذ من نظام ينقل المال إلى المحفظة. والعطاء من المحفظة يضعه في نظام. لا يمكنك أن تعطي ما لا تملك. تنتهي عندما يُوضع كلّ دينار.',
+					'تبدأ المحفظة فارغة ويبدأ كلّ نظام عند مشروعه. يُرسم كلّ نظام بالمقياس نفسه بالدينار، فيكون أكبر بند طويلًا وأصغرها خيطًا رفيعًا. الأخذ من نظام ينقل المال إلى المحفظة. والعطاء من المحفظة يضعه في نظام. لا يمكنك أن تعطي ما لا تملك. تنتهي عندما تكون المحفظة داخل 0.5% من الغلاف. لا يمكن تجاوز الغلاف، وقد يبقى حتى 0.5% غير موضوع، ويُظهر التقرير هذا الفارق.',
 					'تُعرض فوائد الدين واحتياطي الطوارئ، 8,963 م.د، أولًا، بوصفها أُنفقت قبل البداية. أمّا الجزء القابل للتحريك، 59,932 م.د، فيتوزّع على ستة عشر نظامًا. لا شيء هنا يُقيَّم أو يُرتَّب.'
 				]
 			},
@@ -395,8 +395,8 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 				label: 'الأرقام',
 				heading: 'أرقام مؤقّتة، مع وضعها',
 				body: [
-					'كلّ مبلغ أدناه مؤقّت، مأخوذ من تقارير الصحافة. ولم يُتحقّق منه في الوثيقة الرسمية. لن تُثبّت الدراسة أيّ رقم قبل أن يكون له مرجع صفحة في القانون المعتمد.',
-					'إجمالي نفقات 2027 المؤقّت هو 68,895 م.د، دون أصل الدين. تُنفق فوائد الدين واحتياطي الطوارئ، 8,963 م.د، قبل البداية. والجزء القابل للتحريك 59,932 م.د على ستة عشر نظامًا. ويقع بند دعم بـ 11,846 م.د داخل بنود الصناعة والتجارة، لذلك لا يُضاف مرّة أخرى.'
+					'كلّ مبلغ أدناه مؤقّت. معظمه مأخوذ من تقارير الصحافة، واثنان مشتقّان من الإجمالي ومُعلَّمان بذلك. ولم يُتحقّق من أيّ منه في الوثيقة الرسمية. لن تُثبّت الدراسة أيّ رقم قبل أن يكون له مرجع صفحة في القانون المعتمد.',
+					'إجمالي نفقات 2027 المؤقّت هو 68,895 م.د، دون أصل الدين. تُنفق فوائد الدين واحتياطي الطوارئ، 8,963 م.د، قبل البداية. والجزء القابل للتحريك 59,932 م.د على ستة عشر نظامًا. ويقع بند دعم بـ 11,846 م.د داخل بنود الصناعة والتجارة، لذلك لا يُضاف مرّة أخرى. وما يبقى من هذين البندين بعد الدعم، 272.8 م.د، بند مشتقّ وليس ميزانية وزارة.'
 				]
 			},
 			{
@@ -451,7 +451,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 		whyItMatters:
 			'الميزانية تحدّد ما تستطيع الدولة فعله. وقراءتها كمجموعة اختيارات ضمن مجموع ثابت تُظهر ما يكلّفه كلّ اختيار.',
 		intricacy:
-			'ستة عشر نظامًا تتقاسم مظروفًا واحدًا ثابتًا. الخطوة حصّة ثابتة من مشروع النظام، والأخذ والعطاء ينقلان المال في اتجاه واحد، ويجب أن تفرغ المحفظة قبل إتمام اللوحة.',
+			'ستة عشر نظامًا تتقاسم مظروفًا واحدًا ثابتًا. الخطوة حصّة ثابتة من مشروع النظام، والأخذ والعطاء ينقلان المال في اتجاه واحد، وتكتمل اللوحة عندما تكون المحفظة داخل 0.5% من ذلك المظروف.',
 		cannotSay: [
 			'ليست صورة للتفضيل الوطني، وليست نتيجة وطنية. المشاركة مفتوحة وقائمة على الانتقاء الذاتي.',
 			'ليست ما ينبغي أن تكون عليه الميزانية.',

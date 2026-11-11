@@ -13,7 +13,7 @@
 	 * shows the result and stops.
 	 */
 	let {
-		start = 'empty',
+		start = 'draft',
 		onstep
 	}: {
 		start?: StartMode;

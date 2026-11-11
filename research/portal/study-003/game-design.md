@@ -4,7 +4,7 @@ Status: design for review. Draft figures, not verified. Nothing is collected.
 This file replaces the five-round design. The rounds are parked in parked/.
 
 ## Premise
-The 2027 draft budget is a set of systems and a total. The respondent moves money between the systems on a board, to rebuild the budget as a citizen. The purse holds money not yet placed. The board finishes when every dinar is placed.
+The 2027 draft budget is a set of systems and a total. The respondent moves money between the systems on a board, to rebuild the budget as a citizen. The purse holds money not yet placed. The board finishes when the purse is within 0.5% of the envelope.
 
 ## What is on screen
 - The purse: money not yet placed, in dinars and as a row of coin marks.
@@ -17,9 +17,9 @@ The 2027 draft budget is a set of systems and a total. The respondent moves mone
 - Undo, reset to the start, keep the draft, and a table view of every line.
 
 ## Start states (decision D2)
-- Draft start (default): every system at its draft, the purse empty.
-- Empty start: every system at zero, the purse holds the whole envelope.
-- One flag chooses between them. The prototype reads `?start=empty`.
+- Draft start (default): every system at its draft, the purse empty. This is the version 1 study arm.
+- Empty start: every system at zero, the purse holds the whole envelope. This is a prototype view only and is not a study arm.
+- One flag chooses between them in the prototype. The prototype reads `?start=empty`.
 
 ## Rules (enforced by src/lib/budget-game/board.ts)
 1. The envelope is the sum of the movable drafts. One step for a line is 5% of its draft. A level runs from 0 to 40 steps (0% to 200%); the draft is 20.
@@ -40,7 +40,7 @@ The board serialises to the allocation item: basis points per line (10000 is the
 - Round-based events and consequence narratives (the rounds are parked).
 
 ## Figures
-Every line is a sum of rows from data/studies/dt-research-003/figures-2027.yaml. The subsidies line is the memo row. The energy and trade line is what remains of the Industry and Trade rows after the subsidies are taken out, on the stated assumption that all subsidies sit inside those two rows. Every figure is labelled draft, not verified.
+Every line is a sum of rows from data/studies/dt-research-003/figures-2027.yaml. The subsidies line is the memo row. The energy and trade line is what remains of the Industry and Trade rows after the subsidies are taken out, on the stated assumption that all subsidies sit inside those two rows. It is a derived line, not a ministry budget, and its label and note say so on the board. Every figure is labelled draft, not verified.
 
 ## Open
 - Owner plays both start modes (plan step 12).

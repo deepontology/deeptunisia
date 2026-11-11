@@ -117,12 +117,12 @@ items:
     tier: core
     construct: budget allocation
     provenance: project (SPEC section 2, the game screen)
-    text_en: "Use the Treasury board: move money between the lines of the 2027 state budget, as a citizen. Start from the draft or from an empty purse. Place every shilling before you go on. Keeping the draft is a valid answer."
+    text_en: "Use the Treasury board: move money between the lines of the 2027 state budget, as a citizen. Start from the draft. Finish when the purse is within 0.5% of the envelope; the purse cannot be over-placed. Keeping the draft is a valid answer."
     text_fr: null
     text_ar: null
     response: allocation
     required: true
-    notes: "Amounts are the draft figures from figures-2027.yaml, labelled draft, not verified. Freeze only on adopted-law rows with page references."
+    notes: "Amounts are the draft figures from figures-2027.yaml, labelled draft, not verified. The empty-purse start is a prototype view, not a version 1 arm. Freeze only on adopted-law rows with page references."
     allocation:
       envelope_md: 59932.381
       tolerance: 0.005
