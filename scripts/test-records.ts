@@ -267,12 +267,15 @@ ok('every page carries noindex exactly when its kind is out of the index', disag
 
 if (existsSync(SITEMAP)) {
 	const sitemap = readFileSync(SITEMAP, 'utf8');
-	const listed = new Set([...sitemap.matchAll(/<loc>[^<]*\/e\/([^<]+)<\/loc>/g)].map((m) => m[1]));
+	const recordUrls = [...sitemap.matchAll(/<loc>[^<]*\/e\/([^<]+)<\/loc>/g)].map((m) => m[1]);
+	const listed = new Set(recordUrls);
+	ok('the sitemap lists each record page once', recordUrls.length === listed.size, `${recordUrls.length} entries, ${listed.size} distinct`);
 	const shouldList = KINDS.filter((k) => INDEXING[k]).flatMap((k) => rows[k].map((r) => r.id));
 	const missingFromSitemap = shouldList.filter((id) => !listed.has(id));
 	const shouldNotList = KINDS.filter((k) => !INDEXING[k]).flatMap((k) => rows[k].map((r) => r.id));
 	const listedWrongly = shouldNotList.filter((id) => listed.has(id));
 	ok('the sitemap lists every page its kind allows', missingFromSitemap.length === 0, missingFromSitemap.length ? sample(missingFromSitemap) : `${listed.size} record addresses`);
+	ok('the sitemap count equals the number of indexable pages', listed.size === shouldList.length, `${listed.size} of ${shouldList.length}`);
 	ok('the sitemap lists no page its kind keeps out', listedWrongly.length === 0, listedWrongly.length ? sample(listedWrongly) : '');
 } else {
 	ok('build/sitemap.xml exists so the indexing switch can be checked', false, 'missing');
@@ -315,6 +318,36 @@ for (const [id, html] of pages) {
 }
 ok('every page has a data twin that parses and names the same record', twinProblems.length === 0, twinProblems.length ? sample(twinProblems) : '');
 ok('each twin holds exactly the claims the page shows', countProblems.length === 0, countProblems.length ? sample(countProblems) : '');
+
+/* The twin is not an approximation of the page: the counts it states, the
+   sources it lists and the events it names are the ones printed beside it. */
+const twinDrift: string[] = [];
+for (const [id, html] of pages) {
+	let twin: {
+		events?: { id?: string }[];
+		sources?: unknown[];
+		omitted?: { inferred?: number; unsubstantiated?: number; beyondLength?: number };
+		meta?: { page?: string };
+	};
+	try {
+		twin = JSON.parse(readFileSync(join(E, `${id}.json`), 'utf8'));
+	} catch {
+		continue;
+	}
+	const notices = [...html.matchAll(/(?:weaker standing not shown here|weaker standing|more claims than this page can carry, so)[^<]*?(\d+)/gi)].map((m) => Number(m[1]));
+	const weak = (twin.omitted?.inferred ?? 0) + (twin.omitted?.unsubstantiated ?? 0);
+	const beyond = twin.omitted?.beyondLength ?? 0;
+	if (weak > 0 && !notices.includes(weak)) twinDrift.push(`${id}: weak ${weak}`);
+	if (beyond > 0 && !notices.includes(beyond)) twinDrift.push(`${id}: beyond ${beyond}`);
+	const marks = new Set([...html.matchAll(/id="src-(\d+)"/g)].map((m) => m[1]));
+	if (marks.size !== (twin.sources?.length ?? 0)) twinDrift.push(`${id}: ${marks.size} sources printed, ${twin.sources?.length} in the twin`);
+	const eventSection = /<section id=events[\s\S]*?<\/section>/.exec(html)?.[0] ?? '';
+	const printedEvents = [...eventSection.matchAll(/href="\/e\/([^"?#]+)"/g)].map((m) => m[1]);
+	const twinEvents = (twin.events ?? []).map((e) => String(e.id));
+	if (printedEvents.length && printedEvents.join(',') !== twinEvents.join(',')) twinDrift.push(`${id}: events`);
+	if (twin.meta?.page !== `https://deeptunisia.org/e/${id}`) twinDrift.push(`${id}: page address`);
+}
+ok('each twin states the same counts, sources and events as its page', twinDrift.length === 0, twinDrift.length ? sample(twinDrift) : '');
 
 /* The JSON-LD block is identity only. */
 const ALLOWED_LD = new Set(['@context', '@type', 'name', 'alternateName', 'url', 'identifier']);

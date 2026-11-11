@@ -149,7 +149,7 @@ function writeSitemap() {
 		return rows.map((r) => `  <url><loc>${SITE_URL}/${PAGES_DIR}/${r.id}</loc><lastmod>${today}</lastmod></url>`);
 	});
 	const original = readFileSync(SITEMAP, 'utf8');
-	const withoutRecords = original.replace(/\n?\s*<url><loc>[^<]*\/e\/[^<]*<\/loc>[^<]*<\/url>/g, '');
+	const withoutRecords = original.replace(/\n?\s*<url><loc>[^<]*\/e\/[^<]*<\/loc>.*?<\/url>/g, '');
 	if (!withoutRecords.includes('</urlset>')) fail('build/sitemap.xml has no closing </urlset>');
 	writeFileSync(SITEMAP, withoutRecords.replace('</urlset>', `${entries.join('\n')}\n</urlset>`), 'utf8');
 	return entries.length;
