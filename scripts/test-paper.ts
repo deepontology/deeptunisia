@@ -33,6 +33,7 @@ import { createHash } from 'node:crypto';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { certainlyActive, DASH, BASIS_OPACITY, BASIS_ORDER } from '../src/lib/model.ts';
+import { VALIDATOR_REGISTER } from './validator-register.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 
@@ -241,6 +242,126 @@ const papers = new Map<string, string>();
 // 4. Build-owned non-paper documents are gated by test-data's
 // "published statistics match the graph" assertion, which covers README,
 // AGENTS, DESIGN and static/llms.txt. This suite owns the papers.
+
+// 5. Validator register: the appendix table, the enforcing code and the schema
+// header must agree.
+//
+// The same rule used to be described in three places with three different
+// claims: a schema header said a range shipped, the appendix listed rules as if
+// each ran, and six of them had no enforcing code. The register is now the one
+// source for status, and this block fails when any surface drifts from it.
+{
+	const newestName = PAPER_NAMES[PAPER_NAMES.length - 1];
+	const newestText = papers.get(newestName);
+	const expectedIds = Array.from({ length: 32 }, (_, i) => `V${i + 1}`);
+	const registerIds = VALIDATOR_REGISTER.map((v) => v.id);
+	const duplicateIds = registerIds.filter((id, i) => registerIds.indexOf(id) !== i);
+	ok(
+		'the validator register covers V1 to V32 exactly once',
+		JSON.stringify(registerIds) === JSON.stringify(expectedIds) && duplicateIds.length === 0,
+		`${registerIds.length} entries` +
+			(duplicateIds.length ? `, duplicate ${[...new Set(duplicateIds)].join(', ')}` : '') +
+			(JSON.stringify(registerIds) === JSON.stringify(expectedIds) ? '' : ', ids are not the sequence V1 to V32')
+	);
+
+	if (newestText !== undefined) {
+		const appendixStart = newestText.indexOf('## Appendix A');
+		const appendix = appendixStart === -1 ? '' : newestText.slice(appendixStart);
+		const nextHeading = appendix.indexOf('\n## ', 4);
+		const appendixBlock = nextHeading === -1 ? appendix : appendix.slice(0, nextHeading);
+		const heading = appendixBlock.match(/^## Appendix A[^\n]*/m)?.[0] ?? '';
+		const statedRange = heading.match(/V(\d+)\s*[–-]\s*V(\d+)/);
+		const statedMax = statedRange ? Number(statedRange[2]) : null;
+
+		const paperRows = new Map<string, string>();
+		for (const line of appendixBlock.split('\n')) {
+			const m = line.match(/^\|\s*(V\d+)\s*\|([^|]*)\|([^|]*)\|([^|]*)\|\s*$/);
+			if (m) paperRows.set(m[1], m[4].trim());
+		}
+
+		const missingFromRegister = [...paperRows.keys()].filter((id) => !registerIds.includes(id));
+		ok(
+			'every Appendix A row has a validator register entry',
+			missingFromRegister.length === 0,
+			missingFromRegister.length ? `not registered: ${missingFromRegister.join(', ')}` : `${paperRows.size} rows`
+		);
+
+		const missingFromPaper =
+			statedMax === null
+				? []
+				: registerIds.filter((id) => Number(id.slice(1)) <= statedMax && !paperRows.has(id));
+		ok(
+			'every registered id up to the appendix stated range is tabulated',
+			missingFromPaper.length === 0,
+			statedMax === null
+				? 'no V1 to Vn range in the Appendix A heading'
+				: missingFromPaper.length
+					? `missing rows: ${missingFromPaper.join(', ')}`
+					: `stated range ends at V${statedMax}`
+		);
+
+		const SPECIFIED_TEXT = 'specified, not enforced';
+		const statusDrift: string[] = [];
+		for (const [id, behaviour] of paperRows) {
+			const entry = VALIDATOR_REGISTER.find((v) => v.id === id);
+			if (!entry) continue;
+			if (entry.status === 'specified' && !behaviour.includes(SPECIFIED_TEXT)) {
+				statusDrift.push(`${id} is specified but its row does not say "${SPECIFIED_TEXT}"`);
+			}
+			if (entry.status === 'enforced' && behaviour.includes(SPECIFIED_TEXT)) {
+				statusDrift.push(`${id} is enforced but its row says "${SPECIFIED_TEXT}"`);
+			}
+		}
+		ok(
+			'the Appendix A Behaviour column matches each rule status',
+			statusDrift.length === 0,
+			statusDrift.length ? statusDrift.slice(0, 4).join('; ') : `${paperRows.size} row(s) checked`
+		);
+	}
+
+	const brokenSites: string[] = [];
+	for (const entry of VALIDATOR_REGISTER) {
+		if (entry.status !== 'enforced') continue;
+		if (!entry.site) {
+			brokenSites.push(`${entry.id} has no site`);
+			continue;
+		}
+		const file = join(HERE, '..', entry.site.file);
+		if (!existsSync(file)) {
+			brokenSites.push(`${entry.id} names missing file ${entry.site.file}`);
+			continue;
+		}
+		if (!readFileSync(file, 'utf8').includes(entry.site.anchor)) {
+			brokenSites.push(`${entry.id} anchor not found in ${entry.site.file}`);
+		}
+	}
+	ok(
+		'every enforced validator names code that exists',
+		brokenSites.length === 0,
+		brokenSites.length ? brokenSites.slice(0, 4).join('; ') : `${VALIDATOR_REGISTER.filter((v) => v.status === 'enforced').length} enforced entries`
+	);
+
+	const schemaHeader = readFileSync(join(HERE, 'schema.ts'), 'utf8').split('*/')[0];
+	const shippedRange = schemaHeader.match(/V(\d+)\s*[–-]\s*V(\d+)[^\n]*\bshipped\b/i);
+	const offending = shippedRange
+		? VALIDATOR_REGISTER.filter(
+				(v) =>
+					v.status === 'specified' &&
+					Number(v.id.slice(1)) >= Number(shippedRange[1]) &&
+					Number(v.id.slice(1)) <= Number(shippedRange[2])
+			)
+		: [];
+	ok(
+		'the schema header makes no shipped-range claim over a specified rule',
+		offending.length === 0,
+		offending.length
+			? `header range covers ${offending.map((v) => v.id).join(', ')}, which are specified only`
+			: shippedRange
+				? `range ${shippedRange[0]} contains no specified rule`
+				: 'no shipped-range claim in the header'
+	);
+}
+
 
 // 3. Landing drift guard — DENSITY/NODES/EDGES tied to dataset.json hash.
 //
