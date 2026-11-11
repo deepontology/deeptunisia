@@ -46,7 +46,9 @@ import {
 	configureSchemaExceptions,
 	isBasisUpgrade,
 	nonBlank,
-	reviewOverclaims
+	reviewOverclaims,
+	verifiedGrounded,
+	deriveBasis
 } from './schema.ts';
 import {
 	parseDateEdge,
@@ -953,6 +955,53 @@ ok(
 	reviewOverclaims('reviewed the press coverage of the handover', ['tier3-article']) === false
 );
 ok('V23-guard: an undefined method is never a claim', reviewOverclaims(undefined, []) === false);
+
+// ---------------------------------------------------------------------------
+// V33 — verified means a person opened the source and confirmed it. The
+// pipeline fixture that fails a whole build lives in test-pipeline.ts; these
+// pin the predicate the build calls and the default that replaced `verified`.
+// ---------------------------------------------------------------------------
+
+ok('V33: unflagged needs no review', verifiedGrounded({ verification: 'unflagged' }));
+ok('V33: no verification value needs no review', verifiedGrounded({}));
+ok(
+	'V33: verified with a human source-check passes',
+	verifiedGrounded({ verification: 'verified', review: { actor: 'human', method: 'source-check' } })
+);
+ok('V33: verified with no review fails', !verifiedGrounded({ verification: 'verified' }));
+ok(
+	'V33: verified with an agent review fails',
+	!verifiedGrounded({ verification: 'verified', review: { actor: 'agent', method: 'source-check' } })
+);
+ok(
+	'V33: verified with a human review of another method fails',
+	!verifiedGrounded({ verification: 'verified', review: { actor: 'human', method: 'judge' } })
+);
+ok(
+	'V33: verified with a review that names no actor fails',
+	!verifiedGrounded({ verification: 'verified', review: { method: 'source-check' } })
+);
+accepts(ReviewSchema, review({ actor: 'human' }), 'V33: a review names a human actor');
+accepts(ReviewSchema, review({ actor: 'agent' }), 'V33: a review names an agent actor');
+rejects(ReviewSchema, review({ actor: 'model' }), 'V33: an actor outside human/agent is rejected');
+
+{
+	const withoutVerification: Record<string, unknown> = { ...pos() };
+	delete withoutVerification.verification;
+	ok(
+		'V33: a claim-bearing record defaults to unflagged, not verified',
+		PositionSchema.parse(withoutVerification).verification === 'unflagged'
+	);
+}
+
+// `unflagged` is the absence of a check, so it derives exactly as `verified`
+// did: changing the word may not move any basis (the canonical diff pins this).
+for (const confidence of ['A', 'B', 'C', 'D'] as const) {
+	ok(
+		`V33: basis for ${confidence} is the same under unflagged and verified`,
+		deriveBasis(confidence, 'unflagged') === deriveBasis(confidence, 'verified')
+	);
+}
 
 // ---------------------------------------------------------------------------
 // R11 — dispute status is a closed enum. Kills m12.

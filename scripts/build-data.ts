@@ -54,6 +54,7 @@ import {
 	REQUIRED_SOURCE_KINDS,
 	SourceExceptionSchema,
 	reviewOverclaims,
+	verifiedGrounded,
 	configureSchema,
 	TRANSLATABLE_FIELDS,
 	TRANSLATED_LOCALES,
@@ -75,6 +76,7 @@ import {
 } from './dates.ts';
 import { loadParameters, type Parameters } from './parameters.ts';
 import { countOrigins, type EvidenceLike } from './origins.ts';
+import { VERIFIED_EXCEPTIONS } from './verified-exceptions.ts';
 import { buildCoverage, coverageCsv, coverageMarkdown } from './coverage.ts';
 import { checkNarrative, type NarrativeClaim } from './consistency.ts';
 import {
@@ -984,7 +986,7 @@ function settledInterval(
  */
 function basisFields(record: {
 	confidence: 'A' | 'B' | 'C' | 'D';
-	verification: 'verified' | 'needs-primary-source' | 'disputed';
+	verification: 'unflagged' | 'verified' | 'needs-primary-source' | 'disputed';
 	basis?: 'documented' | 'reported' | 'inferred' | 'unsubstantiated';
 }): { basis: 'documented' | 'reported' | 'inferred' | 'unsubstantiated'; basis_derived?: string } {
 	const basis = deriveBasis(record.confidence, record.verification, record.basis);
@@ -999,7 +1001,7 @@ function basisFields(record: {
  */
 function derivedBasisField(record: {
 	confidence: 'A' | 'B' | 'C' | 'D';
-	verification: 'verified' | 'needs-primary-source' | 'disputed';
+	verification: 'unflagged' | 'verified' | 'needs-primary-source' | 'disputed';
 	basis?: 'documented' | 'reported' | 'inferred' | 'unsubstantiated';
 }): Record<string, string> {
 	if (!record.basis) return {};
@@ -1980,6 +1982,60 @@ for (const issue of narrative.errors) fail(issue.where, issue.message);
 for (const issue of narrative.warnings) warn(issue.where, issue.message);
 
 // ---------------------------------------------------------------------------
+// V33 — `verified` is a person's check.
+//
+// Every kind that can carry a review is checked here, so no record can reach
+// the graph wearing the word without one. Eras, questions and regions carry the
+// field but no review field: for them `verified` is unimplementable until a
+// review field exists, which is the honest consequence of the rule. The check
+// sits before the error report so a V33 failure is reported in the same pass as
+// every other validation error.
+//
+// The 82 values written before the rule are the only exception, listed with an
+// expiry in scripts/verified-exceptions.ts. The build fails when the date
+// passes, because a dated exception is a research task, not a permission.
+// ---------------------------------------------------------------------------
+{
+	const today = new Date().toISOString().slice(0, 10);
+	if (VERIFIED_EXCEPTIONS.expires < today) {
+		fail(
+			'verified-exceptions.ts',
+			`the "${VERIFIED_EXCEPTIONS.reason}" exception expired on ${VERIFIED_EXCEPTIONS.expires} (V33) — the list must be empty before release`
+		);
+	}
+	const excepted = new Set<string>(VERIFIED_EXCEPTIONS.ids);
+	const sections: [string, { id?: string; verification?: string; review?: { actor?: string; method?: string } }[]][] = [
+		['institution', resolvedInstitutions],
+		['person', resolvedPeople],
+		['position', resolvedPositions],
+		['relationship', resolvedRelationships],
+		['event', resolvedEvents],
+		['agreement', resolvedAgreements],
+		['world-claim', resolvedWorldClaims],
+		['company', resolvedCompanies],
+		['contract', resolvedContracts],
+		['licence', resolvedLicences],
+		['vacancy', resolvedVacancies],
+		['declaration', resolvedDeclarations],
+		['education', resolvedEducation],
+		['place', places],
+		['era', eras],
+		['question', questions],
+		['region', regions]
+	];
+	for (const [kind, records] of sections) {
+		records.forEach((record, i) => {
+			if (record.id && excepted.has(record.id)) return;
+			if (verifiedGrounded(record)) return;
+			fail(
+				`${kind} ${record.id ?? `at index ${i}`}`,
+				'verification "verified" needs a review with actor human and method source-check (V33); an agent pass or an unrecorded check cannot make a record verified'
+			);
+		});
+	}
+}
+
+// ---------------------------------------------------------------------------
 // Report
 // ---------------------------------------------------------------------------
 
@@ -2090,6 +2146,7 @@ const reviewSections: [
 	['education', resolvedEducation],
 	['place', places]
 ];
+
 const reviewSummary = summariseReview(
 	reviewSections.flatMap(([kind, rows]) => rows.map((r) => ({ ...r, kind }))),
 	verifications
@@ -2924,7 +2981,7 @@ export const changelog = changelogRaw as ChangeEntry[];
 
 export type Confidence = 'A' | 'B' | 'C' | 'D';
 export type Basis = 'documented' | 'reported' | 'inferred' | 'unsubstantiated';
-export type Verification = 'verified' | 'needs-primary-source' | 'disputed';
+export type Verification = 'unflagged' | 'verified' | 'needs-primary-source' | 'disputed';
 export type Layer =
 	| 'security'
 	| 'political'
@@ -2940,6 +2997,8 @@ export interface Review {
 	by: string;
 	date: string;
 	method?: string;
+	/** Who performed the check. Only a human source-check makes a record verified (V33). */
+	actor?: 'human' | 'agent';
 }
 
 export interface Dispute {

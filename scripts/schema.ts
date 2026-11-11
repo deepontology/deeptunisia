@@ -40,6 +40,12 @@ import { DEFAULT_PARAMETERS, type Parameters } from './parameters';
  *          non-seated role and carries a source; it may not certainly overlap
  *          a titular position in the same role, nor another vacancy of that
  *          role. Acting positions may sit inside it.
+ * V33      verified means a person checked it (release 1.0): a record whose
+ *          `verification` is `verified` carries a review whose `actor` is
+ *          `human` and whose `method` is `source-check`. The 82 `verified`
+ *          values written before the rule are listed with an expiry in
+ *          `scripts/verified-exceptions.ts`; the list must be empty before
+ *          release.
  *
  * Numbering note: the pre-submission grant draft used "V25" for the grade-B
  * corroboration rule (confidence B needs two sources or `attributed_to`). That
@@ -202,8 +208,14 @@ export const Confidence = z.enum(['A', 'B', 'C', 'D']);
  */
 export const Basis = z.enum(['documented', 'reported', 'inferred', 'unsubstantiated']);
 
-/** Where a claim sits in the research pipeline. Drives the open-questions page. */
-export const Verification = z.enum(['verified', 'needs-primary-source', 'disputed']);
+/**
+ * Where a claim sits in the research pipeline. Drives the open-questions page.
+ *
+ * `unflagged` is the default: nobody has checked the record and nothing has been
+ * flagged on it. `verified` is a claim only a person can make, by opening the
+ * source and confirming it says what the record says, and V33 enforces that.
+ */
+export const Verification = z.enum(['unflagged', 'verified', 'needs-primary-source', 'disputed']);
 
 /**
  * WHO PRODUCED A TRANSLATION — the basis field, applied to language.
@@ -388,6 +400,12 @@ export const ReviewSchema = z.strictObject({
 	/** What kind of human check this was. (V23 — was free text, which the gazette guard read) */
 	method: ReviewMethod,
 	/**
+	 * Who performed the check. A person and an agent both write a review; only a
+	 * person's check can make a record `verified` (V33). Optional here because
+	 * reviews written before the field existed carry no actor.
+	 */
+	actor: z.enum(['human', 'agent']).optional(),
+	/**
 	 * Free text describing what was actually checked. The method is now an enum;
 	 * free-text claims such as "checked directly against the JORT decree text"
 	 * live here so reviewOverclaims() can still read them.
@@ -426,6 +444,21 @@ export function reviewOverclaims(method: string | undefined, sources: string[]):
 	// "NOT verified against a JORT decree" is an honest disclaimer, not a claim.
 	if (/\bnot\b[^.]{0,40}\b(verified|checked)\b/i.test(method)) return false;
 	return !sources.some((s) => gazetteSource.test(s));
+}
+
+/**
+ * V33 — a record may say `verified` only when a person opened its source and
+ * confirmed it. The review that carries the check must name a human actor and
+ * the `source-check` method; an agent pass, a review of another method, or no
+ * review at all cannot make a record verified. The rule is true of the word
+ * everywhere, so it lives here where the editorial tool can read it too.
+ */
+export function verifiedGrounded(record: {
+	verification?: string;
+	review?: { actor?: string; method?: string };
+}): boolean {
+	if (record.verification !== 'verified') return true;
+	return record.review?.actor === 'human' && record.review?.method === 'source-check';
 }
 
 /**
@@ -710,7 +743,7 @@ export const InstitutionSchema = withClaimEnvelope(
 	summary: z.string().optional(),
 	confidence: Confidence.default('A'),
 	basis: Basis.optional(),
-	verification: Verification.default('verified'),
+	verification: Verification.default('unflagged'),
 	/** Whose claim this is, mandatory below grade B. (V20) */
 	attributed_to: z.string().optional(),
 	/** Required for inferred claims. (V18) */
@@ -797,7 +830,7 @@ export const PersonSchema = withClaimEnvelope(
 	trajectory: z.array(z.string()).default([]),
 	confidence: Confidence.default('B'),
 	basis: Basis.optional(),
-	verification: Verification.default('verified'),
+	verification: Verification.default('unflagged'),
 	/** Whose claim this is, mandatory below grade B. (V20) */
 	attributed_to: z.string().optional(),
 	/** Required for inferred claims. (V18) */
@@ -856,7 +889,7 @@ export const PositionSchema = withClaimEnvelope(
 	confidence: Confidence.default('B'),
 	/** Overrides the basis derived from `confidence`. */
 	basis: Basis.optional(),
-	verification: Verification.default('verified'),
+	verification: Verification.default('unflagged'),
 	/** Whose claim this is, mandatory below grade B. (V20) */
 	attributed_to: z.string().optional(),
 	/** Required for inferred claims: why this is reasoned, and what would refute it. */
@@ -912,7 +945,7 @@ export const RelationshipSchema = withClaimEnvelope(
 		confidence: Confidence,
 		/** Overrides the basis derived from `confidence`. */
 		basis: Basis.optional(),
-		verification: Verification.default('verified'),
+		verification: Verification.default('unflagged'),
 		/** Whose claim this is, mandatory for anything below grade B. */
 		attributed_to: z.string().optional(),
 		/** Required for inferred claims. */
@@ -1048,7 +1081,7 @@ export const EventSchema = withClaimEnvelope(
 	institutions: z.array(slug).default([]),
 	confidence: Confidence.default('A'),
 	basis: Basis.optional(),
-	verification: Verification.default('verified'),
+	verification: Verification.default('unflagged'),
 	/** Whose claim this is, mandatory below grade B. (V20) */
 	attributed_to: z.string().optional(),
 	/** Required for inferred claims. (V18) */
@@ -1122,7 +1155,7 @@ export const AgreementSchema = withClaimEnvelope(
 		confidence: Confidence,
 		/** Overrides the basis derived from `confidence`. */
 		basis: Basis.optional(),
-		verification: Verification.default('verified'),
+		verification: Verification.default('unflagged'),
 		/** Whose claim this is, mandatory for anything below grade B. */
 		attributed_to: z.string().optional(),
 		reasoning: z.string().optional(),
@@ -1164,7 +1197,7 @@ export const WorldClaimSchema = withClaimEnvelope(
 		confidence: Confidence.default('C'),
 		/** Overrides the basis derived from `confidence`. */
 		basis: Basis.optional(),
-		verification: Verification.default('verified'),
+		verification: Verification.default('unflagged'),
 		/** Whose claim this is, mandatory for anything below grade B. */
 		attributed_to: z.string().optional(),
 		reasoning: z.string().optional(),
@@ -1198,7 +1231,7 @@ const claimFields = {
 	confidence: Confidence.default('B'),
 	/** Overrides the basis derived from `confidence`. */
 	basis: Basis.optional(),
-	verification: Verification.default('verified'),
+	verification: Verification.default('unflagged'),
 	/** Whose claim this is, mandatory for anything below grade B (V20). */
 	attributed_to: z.string().optional(),
 	/** Required for inferred claims (V18). */
@@ -1634,13 +1667,16 @@ export const HypothesisSchema = z.strictObject({
  */
 export function deriveBasis(
 	confidence: 'A' | 'B' | 'C' | 'D',
-	verification: 'verified' | 'needs-primary-source' | 'disputed',
+	verification: 'unflagged' | 'verified' | 'needs-primary-source' | 'disputed',
 	explicit?: 'documented' | 'reported' | 'inferred' | 'unsubstantiated'
 ): 'documented' | 'reported' | 'inferred' | 'unsubstantiated' {
 	if (explicit) return explicit;
 	if (confidence === 'A') return 'documented';
 	if (confidence === 'D') return 'unsubstantiated';
 	// Grade C with no primary source is a reasoned estimate rather than a report.
+	// `unflagged` is the absence of a check, not a weaker kind of claim: like
+	// `verified` it leaves the basis to the grade. No basis may move when a
+	// record changes between the two.
 	if (confidence === 'C' && verification === 'needs-primary-source') return 'inferred';
 	return 'reported';
 }
@@ -1854,7 +1890,7 @@ export const RegionSchema = z.strictObject({
 	 */
 	created: dateToken.optional(),
 	confidence: Confidence.default('A'),
-	verification: Verification.default('verified'),
+	verification: Verification.default('unflagged'),
 	sources: z.array(slug).min(1, 'every region needs at least one source'),
 	/**
 	 * Source-backed notes (English base; `_fr`/`_ar` siblings via the

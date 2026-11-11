@@ -29,7 +29,7 @@ export const CONFIDENCE = ['A', 'B', 'C', 'D'];
 
 export const BASIS = ['documented', 'reported', 'inferred', 'unsubstantiated'];
 
-export const VERIFICATION = ['verified', 'needs-primary-source', 'disputed'];
+export const VERIFICATION = ['unflagged', 'verified', 'needs-primary-source', 'disputed'];
 
 export const RELATIONSHIP_TYPES = [
 	'institutional',
