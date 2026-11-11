@@ -2786,7 +2786,9 @@ writeFileSync(
 			date: s.date ?? '',
 			lang: s.lang,
 			url: s.url,
-			archive: s.archive_url ?? `https://web.archive.org/web/2026/${s.url}`,
+			// Empty when no archive was recorded. A synthesised Wayback address would
+			// claim an archived copy this project does not hold.
+			archive: s.archive_url ?? '',
 			excerpt: s.excerpt ?? ''
 		})),
 		['id', 'tier', 'title', 'publisher', 'date', 'lang', 'url', 'archive', 'excerpt']

@@ -13,6 +13,7 @@ import { RelationshipType, EDGE_DIRECTION, REQUIRED_SOURCE_KINDS } from '../scri
 import { computeDatasetHash } from './canonical.ts';
 import { countOrigins } from './origins.ts';
 import { reviewCoverageCsv, summariseReview, type ReviewInput, type ReviewKind } from './review-coverage.ts';
+import { parseCsv } from './studies-aggregate.ts';
 import { buildCoverage, coverageCsv } from './coverage.ts';
 import { verifyDebtProvenance, DEBT_MANIFEST_ID, type DebtManifestEntry } from './debt-provenance.ts';
 
@@ -668,6 +669,36 @@ const KIND_TO_DATASET: Record<string, string> = {
 		'published statistics match the graph',
 		drift.length === 0,
 		drift.length ? drift.join('; ') : `${tagged} tagged figures in sync`
+	);
+}
+
+// --- Exports say what is true ---------------------------------------------
+//
+// A downloadable column is a claim about the graph, and a file nobody can
+// misread is worth more than a file with a fuller header. These pin the three
+// exports that overstated what the project holds.
+
+{
+	const table = parseCsv(readFileSync(join(HERE, '..', 'static', 'sources.csv'), 'utf8'));
+	const at = new Map(table[0].map((name, index) => [name, index]));
+	const body = table.slice(1).filter((cells) => cells.some((cell) => cell !== ''));
+	const archiveById = new Map(
+		ds.sources.map((s: { id: string; archive_url?: string }) => [s.id, s.archive_url ?? ''])
+	);
+	const wrong = body.filter(
+		(cells) => cells[at.get('archive')!] !== (archiveById.get(cells[at.get('id')!]) ?? '')
+	);
+	const nonEmpty = body.filter((cells) => cells[at.get('archive')!] !== '').length;
+	const withArchive = [...archiveById.values()].filter(Boolean).length;
+	ok(
+		'every archive value in sources.csv is that source archive_url',
+		wrong.length === 0,
+		wrong.length ? `${wrong.length} rows differ` : `${withArchive} of ${body.length} rows carry an archive`
+	);
+	ok(
+		'sources.csv invents no archive a source does not have',
+		nonEmpty === withArchive,
+		`${nonEmpty} non-empty values, ${withArchive} sources with archive_url`
 	);
 }
 
