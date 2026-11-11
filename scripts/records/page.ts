@@ -472,7 +472,7 @@ function head(kind: RecordKind, rec: Rec, name: Name, title: string): string {
 <link rel=stylesheet href=/e/tokens.css>
 <link rel=stylesheet href=/e/record.css>
 <script type=application/ld+json>${JSON.stringify(ld)}</script>
-<script src=/e/record.js defer></script>
+<script src=/e/record.js></script>
 </head>`;
 }
 
