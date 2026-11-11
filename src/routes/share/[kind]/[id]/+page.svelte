@@ -70,9 +70,6 @@
 	<h1>{title}</h1>
 	<p class="desc">{desc}</p>
 	<p class="goto">Redirecting to <a href={canonical}>{canonical}</a>…</p>
-	<script>
-		location.replace(canonical);
-	</script>
 </main>
 
 <style>
