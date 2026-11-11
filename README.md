@@ -47,7 +47,7 @@ development; a reader on deeptunisia.org never touches it. The mode contract is
 
 The complete graph is <!--stat:graphKB-->14350<!--/stat--> KB as the internal
 bundle, and the public exports (dataset, CSVs, geographic layers, changelog)
-ship at <!--stat:shippedKB-->26100<!--/stat--> KB — both are computed by the
+ship at <!--stat:shippedKB-->20700<!--/stat--> KB — both are computed by the
 build, and `npm run test` fails if the README ever disagrees with them.
 
 ## Reproducibility
