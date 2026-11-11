@@ -15,7 +15,7 @@
 export type RecordKind = 'person' | 'institution' | 'event';
 
 /** The kinds the generator writes, in the order the build reports them. */
-export const KINDS: RecordKind[] = ['person', 'institution'];
+export const KINDS: RecordKind[] = ['person', 'institution', 'event'];
 
 /** One entry per kind. The only switch for robots meta and sitemap. */
 export const INDEXING: Record<RecordKind, boolean> = {

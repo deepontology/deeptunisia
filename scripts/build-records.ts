@@ -51,6 +51,7 @@ interface Dataset {
 	relationships: Rec[];
 	sources: Rec[];
 	places: Rec[];
+	regions: Rec[];
 }
 
 const data = JSON.parse(readFileSync(DATA, 'utf8')) as Dataset;
@@ -82,7 +83,8 @@ const world: World = {
 	people: new Map(data.people.map((r) => [r.id, r])),
 	institutions: new Map(data.institutions.map((r) => [r.id, r])),
 	events: new Map(data.events.map((r) => [r.id, r])),
-	places: new Map(data.places.map((r) => [r.id, r])),
+	/* An event's location is a place or a governorate; both are named in the same map. */
+	places: new Map([...data.places, ...(data.regions ?? [])].map((r) => [r.id, r])),
 	sources: new Map(data.sources.map((r) => [r.id, r])),
 	positionsByHolder: new Map(),
 	positionsByInstitution: new Map(),

@@ -51,6 +51,10 @@ function ok(name: string, condition: boolean, detail = '') {
 	}
 }
 
+/* Values are escaped into the page, so a fixture is searched for in that form. */
+const escaped = (text: string) => text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+const shows = (html: string, text: string) => html.includes(text) || html.includes(escaped(text));
+
 const sample = (list: string[]) => list.slice(0, 3).join(', ') + (list.length > 3 ? ` and ${list.length - 3} more` : '');
 
 console.log('\n  -- record pages --\n');
@@ -353,8 +357,8 @@ if (KINDS.includes('event')) {
 	ok('build/e/coup-1987.html exists', !!coup);
 	if (coup) {
 		const contested = data.events.find((e) => e.id === 'coup-1987')?.contested ?? [];
-		const missingFramings = contested.filter((c) => !c.framing || !coup.includes(c.framing));
-		const missingHolders = contested.filter((c) => !c.held_by || !coup.includes(c.held_by));
+		const missingFramings = contested.filter((c) => !c.framing || !shows(coup, c.framing));
+		const missingHolders = contested.filter((c) => !c.held_by || !shows(coup, c.held_by));
 		ok(`the fixture shows both framings (${contested.length})`, contested.length > 1 && missingFramings.length === 0, sample(missingFramings.map((c) => String(c.framing))));
 		ok('each framing names who holds it', missingHolders.length === 0, sample(missingHolders.map((c) => String(c.held_by))));
 	}

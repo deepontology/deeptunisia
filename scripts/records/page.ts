@@ -560,7 +560,14 @@ function eventBody(rec: Rec, world: World, idx: SourceIndex): string {
 	const places = ((rec.location as string[] | undefined) ?? [])
 		.map((id) => world.places.get(id))
 		.filter((p): p is Rec => !!p)
-		.map((p) => `<li>${esc(p.name_en ?? p.id)}</li>`)
+		.map((p) =>
+			triRaw({
+				en: String(p.name_en ?? p.id),
+				fr: String(p.name_fr ?? p.name_en ?? p.id),
+				ar: String(p.name_ar ?? p.name_en ?? p.id)
+			})
+		)
+		.map((name) => `<li>${name}</li>`)
 		.join('');
 	const causes = ((rec.causes as string[] | undefined) ?? []).filter((id) => world.events.has(id));
 	const consequences = ((rec.consequences as string[] | undefined) ?? []).filter((id) => world.events.has(id));
