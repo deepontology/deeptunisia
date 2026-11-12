@@ -137,7 +137,7 @@ function computeVisuals() {
 	const years: number[] = [];
 	for (let y = 1956; y <= 2026; y++) years.push(y);
 	const DENSITY = years.map((y) =>
-		(d.positions || []).filter((p) => p.interval && certainlyActive(p.interval, new Date(y, 6, 1).getTime())).length
+		(d.positions || []).filter((p) => p.interval && certainlyActive(p.interval, Date.UTC(y, 6, 1))).length
 	);
 
 	/* The 46 most-connected people by global relationship degree, with their
