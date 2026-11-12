@@ -1,0 +1,23 @@
+components:
+  - type: article
+    required: true
+
+  - type: evidence-ledger
+    required: false
+    config:
+      show_orphaned: true
+
+  - type: timeline
+    required: true
+    config:
+      range: [1986, 2026]
+      style: sidebar
+      events_source: timeline.yaml
+
+  - type: source-registry
+    required: true
+
+  - type: exclusions
+    required: false
+    description:
+      en: "Statements in the film that this article leaves out, with reasons"

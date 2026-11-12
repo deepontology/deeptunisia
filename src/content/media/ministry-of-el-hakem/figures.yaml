@@ -1,0 +1,138 @@
+# Figures placed in the narrative with [[figure:id]].
+
+figures:
+- id: tenures
+  kind: tenure
+  title: Who held the posts, July 2021 to October 2026
+  caption: 'Interior ministers change; the two commanders and the head of presidential security do not,
+    once settled. Each bar runs between documented dates. A faded right edge means still in post at the
+    last check. The hatched bar is a holder known from one press report, not a decree. The first three
+    bars of the minister lane are too narrow to label: Mechichi (acting), Yahyaoui, then Gharsallaoui.
+    The table below the chart has every date.'
+  domain:
+  - '2021-07-01'
+  - '2026-11-01'
+  lanes:
+  - label: Interior minister
+    bars:
+    - holder: Mechichi, acting
+      start: '2021-07-01'
+      end: '2021-07-26'
+      claims:
+      - C064
+    - holder: Yahyaoui
+      start: '2021-07-26'
+      end: '2021-07-29'
+      claims:
+      - C065
+      weak: true
+    - holder: Gharsallaoui
+      start: '2021-07-29'
+      end: '2021-10-11'
+      claims:
+      - C067
+      - C074
+    - holder: Charfeddine
+      start: '2021-10-11'
+      end: '2023-03-17'
+      claims:
+      - C074
+      - C130
+    - holder: Feki
+      start: '2023-03-17'
+      end: '2024-05-25'
+      claims:
+      - C074
+      - C130
+    - holder: Nouri
+      start: '2024-05-25'
+      end: null
+      claims:
+      - C074
+      - C130
+  - label: Director general of the national police
+    bars:
+    - holder: Seddik
+      start: '2021-07-01'
+      end: '2021-08-18'
+      claims:
+      - C130
+    - holder: Hichri
+      start: '2021-08-18'
+      end: '2022-05-31'
+      claims:
+      - C068
+    - holder: Saidane
+      start: '2022-05-31'
+      end: null
+      claims:
+      - C070
+  - label: Commander of the National Guard
+    bars:
+    - holder: Ben Khaled
+      start: '2021-07-01'
+      end: '2021-08-18'
+      claims:
+      - C130
+    - holder: Riahi
+      start: '2021-08-18'
+      end: '2022-07-28'
+      claims:
+      - C068
+    - holder: Guezguez
+      start: '2022-07-28'
+      end: '2023-05-24'
+      claims:
+      - C130
+    - holder: Gharbi
+      start: '2023-05-24'
+      end: null
+      claims:
+      - C071
+  - label: Head of presidential security
+    bars:
+    - holder: Khaled Yahyaoui
+      start: '2021-07-01'
+      end: null
+      claims:
+      - C072
+      - C127
+- id: compare
+  kind: compare
+  title: Ben Ali's system set beside today's
+  caption: The film's own comparison, in one table. Each cell carries its evidence. That the two columns
+    resemble each other is a reading, set out in the panel above; the cells are what the sources say.
+  columns:
+  - Ben Ali, 1987 to 2010
+  - Today, 2021 to 2026
+  rows:
+  - label: Ruling party
+    cells:
+    - The RCD claimed more than two million members [C019] until a court dissolved it in March 2011 [C034].
+    - None. Candidates ran as individuals in December 2022 [C078], with a first-round turnout of 8.8 percent,
+      later given as 11.22 percent [C079].
+  - label: Presidential security
+    cells:
+    - Attached to the presidency by Decree 88-250 [C016]. Seriati led it from 2001 to 2011 [C015].
+    - Khaled Yahyaoui has directed it since 2019 [C072], and by one report took command of the ministry
+      on 25 July 2021 [C065].
+  - label: Secretary of state for security
+    cells:
+    - Mohamed Ali Ganzoui, 1995 to 2002 [C018].
+    - Post restored in May 2024 for Sofiane Bessadok [C075].
+  - label: Head of the national police
+    cells:
+    - Seriati from 1991 [C014]; Bennour in 2005 and again in 2011 [C044].
+    - Saidane since 2022 [C070].
+  - label: Military justice
+    cells:
+    - 279 tried and 265 convicted in 1992 [C022].
+    - At least ten civilians before military courts in the three months after 25 July 2021 [C098].
+  - label: The false-news charge
+    cells:
+    - Used against Zouhair Yahyaoui in 2002 [C008].
+    - Article 24 of Decree-Law 54 from September 2022 [C080], amended on 30 September 2026 [C118].
+  - label: Presidential immunity
+    cells:
+    - Article 41, added by the 2002 referendum [C023].
+    - Article 110 of the 2022 constitution [C123].

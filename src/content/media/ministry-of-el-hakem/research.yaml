@@ -1,0 +1,15 @@
+researcher: "DeepTunisia research team"
+research_period: "2026-10-11 to 2026-10-20"
+datasets_consulted:
+  - data/people.yaml
+  - data/positions.yaml
+  - data/institutions.yaml
+records_created: []
+sources_consulted_count: 122
+primary_sources_count: 40
+entities_identified: 24
+claims_extracted: 182
+disputed_claims: 0
+unresolved_claims: 3
+documented_negatives: 3
+notes: "Claims come from the 182 on-screen evidence chips of the film. Reading chips became editor interpretations or were left out, so the shipped ledger is smaller than the extraction count."
