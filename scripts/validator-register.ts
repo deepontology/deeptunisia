@@ -127,7 +127,7 @@ export const VALIDATOR_REGISTER: ValidatorEntry[] = [
 		rule: 'an interval may not end before it begins',
 		status: 'enforced',
 		gate: 'fail',
-		site: { file: 'node_modules/deepepisteme/src/time.ts', anchor: 'Interval ends before it begins' }
+		site: { file: 'node_modules/deepepisteme/src/kernel/time.ts', anchor: 'Interval ends before it begins' }
 	},
 	{
 		id: 'V16',
