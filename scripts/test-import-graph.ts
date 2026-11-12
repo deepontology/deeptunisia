@@ -25,7 +25,11 @@ const ENTRIES = [
 	'src/lib/vocab.ts',
 	'src/lib/t.svelte.ts',
 	'src/lib/design/theme.svelte.ts',
-	'src/lib/state.svelte.ts'
+	'src/lib/state.svelte.ts',
+	// Reading pages that must not pull the graph through their own imports.
+	'src/routes/corrections/+page.svelte',
+	'src/routes/guide/+page.svelte',
+	'src/routes/colophon/+page.svelte'
 ];
 
 const FORBIDDEN = ['src/generated/dataset.json', 'src/generated/index.ts'];
