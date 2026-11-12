@@ -26,6 +26,10 @@ const ENTRIES = [
 	'src/lib/t.svelte.ts',
 	'src/lib/design/theme.svelte.ts',
 	'src/lib/state.svelte.ts',
+	// Search and its palette are fetched on demand and read a small file, never
+	// the graph, so a keystroke cannot pull 10 MB into a reading page.
+	'src/lib/search.svelte.ts',
+	'src/lib/components/SearchPalette.svelte',
 	// Reading pages that must not pull the graph through their own imports.
 	'src/routes/corrections/+page.svelte',
 	'src/routes/guide/+page.svelte',

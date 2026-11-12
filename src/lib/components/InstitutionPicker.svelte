@@ -25,7 +25,7 @@
 	import { format } from '$lib/i18n';
 	import { app } from '$lib/state.svelte';
 	import Input from '$lib/ui/Input.svelte';
-	import { search } from '$lib/search';
+	import { search } from '$lib/search.svelte';
 	import {
 		LAYER_COLOR,
 		ds,

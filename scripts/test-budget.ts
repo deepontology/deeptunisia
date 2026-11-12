@@ -27,13 +27,15 @@ const CAPS = {
 	'dataset (published)': 20,
 	'timelines (published)': 3.5,
 	'dataset (generated)': 12,
-	'static tree': 36
+	'search index': 1,
+	'static tree': 37
 };
 
 const PATHS = {
 	'dataset (published)': 'static/dataset.json',
 	'timelines (published)': 'static/timelines.json',
 	'dataset (generated)': 'src/generated/dataset.json',
+	'search index': 'static/search-index.json',
 	'static tree': 'static'
 };
 
@@ -73,6 +75,18 @@ for (const [name, cap] of Object.entries(CAPS)) {
 		`${name} is under ${cap} MB`,
 		mb <= cap,
 		`${mb.toFixed(1)} MB of ${cap} MB — raise the cap deliberately if this growth is intended`
+	);
+}
+
+// The search file is the one payload a reader pays for by asking for search,
+// not by opening a page. Printed exactly, because its size is the whole point
+// of the split: the cap above says when it has grown into a problem.
+if (existsSync(join(ROOT, 'static/search-index.json'))) {
+	const index = JSON.parse(readFileSync(join(ROOT, 'static/search-index.json'), 'utf8')) as {
+		records?: unknown[];
+	};
+	console.log(
+		`\n  search index: ${statSync(join(ROOT, 'static/search-index.json')).size.toLocaleString('en-US')} bytes, ${(index.records ?? []).length} rows, fetched on first search\n`
 	);
 }
 

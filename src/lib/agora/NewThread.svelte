@@ -22,7 +22,7 @@
 	import EntityMenu from './EntityMenu.svelte';
 	import PrivacyNotice from './PrivacyNotice.svelte';
 	import PostingAs from './PostingAs.svelte';
-	import { search, type Hit, type HitKind } from '$lib/search';
+	import { search, type Hit, type HitKind } from '$lib/search.svelte';
 	import { THREAD_KINDS } from '$lib/agora.svelte';
 	import { t } from '$lib/t.svelte';
 	import { LAYER_COLOR } from '$lib/model';

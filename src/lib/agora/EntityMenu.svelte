@@ -4,7 +4,7 @@
 	 *
 	 * One component behind two affordances: the `@` menu inside the composer, and
 	 * the "attach this thread to a record" picker. Both search the same index as
-	 * ⌘K — see `$lib/search` for why that had to be extracted — so a name ranks
+	 * ⌘K — see `$lib/search.svelte` for why that had to be extracted — so a name ranks
 	 * identically wherever you type it.
 	 *
 	 * ANCHORED TO THE FIELD, NOT TO THE CARET
@@ -18,7 +18,7 @@
 	 */
 	import { LAYER_COLOR } from '$lib/model';
 	import { t, formatDate } from '$lib/t.svelte';
-	import type { Hit } from '$lib/search';
+	import type { Hit } from '$lib/search.svelte';
 
 	interface Props {
 		hits: Hit[];

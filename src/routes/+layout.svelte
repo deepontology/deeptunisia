@@ -1,6 +1,6 @@
 <script lang="ts">
 	import '../app.css';
-	import { onMount } from 'svelte';
+	import { onMount, type Component } from 'svelte';
 	import { browser } from '$app/environment';
 	import { page } from '$app/state';
 	import { app, startPlayback } from '$lib/state.svelte';
@@ -19,10 +19,10 @@ import { tour, tourSeen } from '$lib/shell/tour.svelte';
 	import Inspector from '$lib/shell/Inspector.svelte';
 	import BootScreen from '$lib/shell/BootScreen.svelte';
 	import Cursor from '$lib/shell/Cursor.svelte';
-	import SearchPalette from '$lib/components/SearchPalette.svelte';
 	import TourOverlay from '$lib/shell/TourOverlay.svelte';
 	import TourInvite from '$lib/shell/TourInvite.svelte';
 	import { startTour } from '$lib/shell/tour.svelte';
+	import { isReadingPath } from '$lib/shell/reading';
 
 	let { children } = $props();
 
@@ -88,13 +88,18 @@ import { tour, tourSeen } from '$lib/shell/tour.svelte';
 	}
 
 	/** Reference pages are documents: no time controls, and they scroll normally. */
-	const DOC_PAGES = ['/evidence', '/methodology', '/corrections', '/about', '/data', '/guide', '/colophon', '/introduction', '/research'];
-	/** Prefixes whose child routes are documents too: media articles, research studies. */
-	const DOC_PREFIXES = ['/media', '/research'];
-	const isDoc = $derived(
-		DOC_PAGES.includes(page.url.pathname) ||
-			DOC_PREFIXES.some((prefix) => page.url.pathname.startsWith(prefix))
-	);
+	const isDoc = $derived(isReadingPath(page.url.pathname));
+
+	/**
+	 * The palette is fetched the first time a reader opens it. A static import
+	 * would put its chunk, and everything the palette used to pull in with it,
+	 * on every page before anyone asked to search.
+	 */
+	let Palette = $state<Component | null>(null);
+	$effect(() => {
+		if (!app.searchOpen || Palette) return;
+		void import('$lib/components/SearchPalette.svelte').then((m) => (Palette = m.default));
+	});
 
 	/**
 	 * Views for which the scrubbed instant is not a dimension of the data.
@@ -315,8 +320,8 @@ import { tour, tourSeen } from '$lib/shell/tour.svelte';
 	{/if}
 </div>
 
-{#if app.searchOpen}
-	<SearchPalette />
+{#if app.searchOpen && Palette}
+	<Palette />
 {/if}
 
 {#if !booted && !isDoc}
