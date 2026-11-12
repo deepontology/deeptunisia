@@ -76,6 +76,7 @@ import {
 } from './dates.ts';
 import { loadParameters, type Parameters } from './parameters.ts';
 import { countOrigins, restsOn, type EvidenceLike } from './origins.ts';
+import { deskStatsText } from './desk.ts';
 import { VERIFIED_EXCEPTIONS } from './verified-exceptions.ts';
 import { buildCoverage, coverageCsv, coverageMarkdown } from './coverage.ts';
 import { checkNarrative, type NarrativeClaim } from './consistency.ts';
@@ -4061,6 +4062,21 @@ const lockHashValue = (() => {
 	}
 })();
 
+// D5: the verification desk's measured figure. `research/desk/sessions.tsv` is
+// data; no file or no session line means the page says "not measured yet". The
+// keys exist either way so the page reads one shape. The file follows the data
+// folder, so a run over a copied dataset reads that copy's sessions and not the
+// working tree's.
+const deskStats = deskStatsText(
+	(() => {
+		try {
+			return readFileSync(join(dirname(DATA_DIR), 'research', 'desk', 'sessions.tsv'), 'utf8');
+		} catch {
+			return '';
+		}
+	})()
+);
+
 const stats: Record<string, string> = {
 	sources: String(sources.length),
 	sourcesCited: String(sources.length - uncitedSources.length),
@@ -4161,7 +4177,12 @@ const stats: Record<string, string> = {
 	// time; together they identify a build without trusting the wall clock.
 	datasetHash: datasetHashValue,
 	lockHash: lockHashValue,
-	node: process.version
+	node: process.version,
+	// The desk: sessions recorded, verified claims behind the figure, and the
+	// median minutes per verified claim (empty until there is a session).
+	deskSessions: deskStats.deskSessions,
+	deskClaims: deskStats.deskClaims,
+	deskMinutes: deskStats.deskMinutes
 };
 
 writeFileSync(join(STAGE_OUT, 'stats.json'), JSON.stringify(stats, null, 2), 'utf8');

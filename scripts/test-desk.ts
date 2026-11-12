@@ -416,14 +416,18 @@ console.log('\n  ── the copy still holds a valid dataset ──\n');
 console.log('\n  ── one remote session produces one line ──\n');
 
 {
+	// Three sessions whose medians are skewed: 60, 120 and 600 seconds. The median
+	// is 120 (2 minutes); the mean would be 260 (4.3 minutes), so this fixture can
+	// tell the two apart.
 	const fixtureText = 'date\trecords_seen\tverified\tpartly\tnot_said\tunreadable\tcontested\tskipped\tmedian_seconds\tsigned_by\n'
-		+ '2026-11-01\t10\t4\t1\t2\t1\t1\t1\t150\tmaintainer\n'
-		+ '2026-11-02\t6\t2\t0\t0\t0\t0\t0\t90\tmaintainer\n';
+		+ '2026-11-01\t10\t4\t1\t2\t1\t1\t1\t60\tmaintainer\n'
+		+ '2026-11-02\t6\t2\t0\t0\t0\t0\t0\t120\tmaintainer\n'
+		+ '2026-11-03\t5\t3\t0\t0\t0\t0\t0\t600\tmaintainer\n';
 	const lines = parseSessions(fixtureText);
-	ok('the session file parses its lines and skips the header', lines.length === 2 && lines[0].verified === 4);
+	ok('the session file parses its lines and skips the header', lines.length === 3 && lines[0].verified === 4);
 	const figure = deskFigure(lines);
-	ok('the figure is the median of the session medians', figure.minutes === 2, JSON.stringify(figure));
-	ok('the figure carries the number of verified claims behind it', figure.claims === 6 && figure.sessions === 2);
+	ok('the figure is the median of the session medians, not their mean', figure.minutes === 2, JSON.stringify(figure));
+	ok('the figure carries the number of verified claims behind it', figure.claims === 9 && figure.sessions === 3);
 	ok('a file with no session lines reports no figure', deskFigure(parseSessions('date\trecords_seen\tverified\tpartly\tnot_said\tunreadable\tcontested\tskipped\tmedian_seconds\tsigned_by\n')).minutes === null);
 }
 

@@ -5,9 +5,22 @@
 	import { t } from '$lib/t.svelte';
 	import Stat from '$lib/ui/Stat.svelte';
 	import Content from '$lib/ui/Content.svelte';
+	import rawStats from '$data/stats.json';
 
 	/** Translation coverage, per locale and per provenance tier. Never summed. */
 	const tr = ds.meta.translation;
+
+	/**
+	 * The verification desk's measured figure. It lives in stats.json rather than
+	 * the graph bundle: it is read from research/desk/sessions.tsv, which the
+	 * dataset hash does not cover, and a figure that moved the hash would turn every
+	 * recorded session into a dataset change. No session line, no number.
+	 */
+	const built = rawStats as Record<string, string>;
+	const deskClaims = Number(built.deskClaims ?? 0);
+	const deskMinutesText = (built.deskMinutes ?? '').trim();
+	const deskMinutes = Number(deskMinutesText);
+	const deskMeasured = deskMinutesText !== '' && Number.isFinite(deskMinutes) && deskClaims > 0;
 
 	const reviewPct = $derived(
 		Math.round((ds.meta.review.reviewed / Math.max(1, ds.meta.review.reviewable)) * 100)
@@ -128,6 +141,26 @@
 					tint="var(--basis-inferred)"
 				/>
 			</div>
+			<div class="cell">
+				{#if deskMeasured}
+					<Stat
+						value={deskMinutes}
+						decimals={1}
+						suffix=" min"
+						label={format(app.locale, 'about.desk.perClaim', { claims: deskClaims })}
+						tint="var(--basis-inferred)"
+					/>
+				{:else}
+					<div class="unmeasured">
+						<span class="v">—</span>
+						<span class="k">{t('about.desk.notMeasured')}</span>
+					</div>
+				{/if}
+			</div>
+		</div>
+
+		<div class="doc">
+			<p>{t('about.desk.note')}</p>
 		</div>
 
 		<div class="prose">
@@ -534,5 +567,25 @@
 	.cell {
 		background: var(--surface-raised);
 		padding: var(--s-5) var(--s-5);
+	}
+	/* The desk's cell before its first session: a dash and the words, never a zero
+	   that could be read as a measured figure. */
+	.unmeasured {
+		display: inline-flex;
+		flex-direction: column;
+		gap: 1px;
+		min-width: 0;
+	}
+	.unmeasured .v {
+		font-family: var(--font-mono);
+		font-size: var(--t-xl);
+		font-weight: 520;
+		letter-spacing: var(--track-tight);
+		color: var(--text-faint);
+	}
+	.unmeasured .k {
+		font-size: var(--t-2xs);
+		color: var(--text-faint);
+		line-height: var(--lh-tight);
 	}
 </style>
