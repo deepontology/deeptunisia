@@ -4000,6 +4000,70 @@ let datasetHashValue = '';
 	}
 }
 
+// ---------------------------------------------------------------------------
+// The search file.
+//
+// The palette used to build its index from the whole graph when its module
+// loaded, which put the 10 MB graph behind a keystroke. It now fetches this
+// file, written here from the same records, so search costs one small request
+// and no graph. Only the kinds a reading page can open are indexed: people,
+// institutions and events. A row carries the three name scripts, the aliases,
+// the one-line detail and the words the old index folded into its haystack, so
+// a spelling in any script still finds the record.
+// ---------------------------------------------------------------------------
+{
+	const rows = [
+		...dataset.people.map((p) => ({
+			id: p.id,
+			kind: 'person',
+			name: p.name_en,
+			name_fr: p.name_fr,
+			name_ar: p.name_ar,
+			aliases: p.aliases,
+			detail: p.tagline ?? '',
+			layer: p.layers[0],
+			hay: p.trajectory.join(' ')
+		})),
+		...dataset.institutions.map((i) => ({
+			id: i.id,
+			kind: 'institution',
+			name: i.name_en,
+			name_fr: i.name_fr,
+			name_ar: i.name_ar,
+			detail: i.abbr ?? i.type.replace('-', ' '),
+			layer: i.layer,
+			hay: i.type
+		})),
+		...dataset.events.map((e) => ({
+			id: e.id,
+			kind: 'event',
+			name: e.title_en,
+			name_fr: e.title_fr,
+			name_ar: e.title_ar,
+			detail: '',
+			layer: 'political',
+			date: e.interval.startEarliest,
+			hay: [e.summary, e.category].filter(Boolean).join(' ')
+		}))
+	];
+	// Empty keys are dropped: the file is fetched, and most rows have no
+	// translation in one or two scripts.
+	const records = rows.map((row) => {
+		const out: Record<string, unknown> = {};
+		for (const [key, value] of Object.entries(row)) {
+			if (value === undefined || value === null || value === '') continue;
+			if (Array.isArray(value) && value.length === 0) continue;
+			out[key] = value;
+		}
+		return out;
+	});
+	writeFileSync(
+		join(STAGE_STATIC, 'search-index.json'),
+		JSON.stringify({ datasetHash: datasetHashValue, records }),
+		'utf8'
+	);
+}
+
 // The client's copy of the graph. Everything above (the published
 // static/dataset.json and meta.datasetHash) is the full record; what the
 // bundle carries is trimmed to what a reader's browser shows, because the
@@ -4141,6 +4205,10 @@ const stats: Record<string, string> = {
 	// edit, and a README that churns by one kilobyte per commit buries the changes
 	// that matter in noise. The prose keeps a "~" in front of it.
 	graphKB: String(Math.round(Number(size) / 10) * 10),
+	// What /data labels the flagship export with. Kept apart from graphKB (the
+	// bundled graph) and shippedKB (every export together): the card prints the
+	// size of the file it downloads, and no other number means that.
+	datasetKB: String(datasetKB),
 	// What the public exports weigh — see the shippedKB note above. The README says
 	// both numbers so the internal bundle and the shipped payload cannot be
 	// mistaken for each other.
@@ -4186,6 +4254,115 @@ const stats: Record<string, string> = {
 };
 
 writeFileSync(join(STAGE_OUT, 'stats.json'), JSON.stringify(stats, null, 2), 'utf8');
+
+// The research window as its own few bytes. The shell and prose pages need
+// these two numbers; without this file they would import the dataset to read them.
+writeFileSync(
+	join(STAGE_OUT, 'window.json'),
+	JSON.stringify({ cutoff: dataset.meta.cutoff, floor: dataset.meta.floor }),
+	'utf8'
+);
+
+// The structured figures a reading page prints. The flat counts are already in
+// stats.json; these are the tables and tiers that live in meta, cut here so the
+// page reads numbers instead of records. One file per page, holding exactly the
+// values that page shows.
+writeFileSync(
+	join(STAGE_OUT, 'about-figures.json'),
+	JSON.stringify(
+		{
+			coverage: dataset.meta.coverage.principals.map((p) => ({
+				id: p.id,
+				name: p.name,
+				total: p.total,
+				kin: p.kin,
+				missing: p.missing
+			})),
+			reviewFlags: dataset.meta.review.flags,
+			translation: dataset.meta.translation,
+			// The verification desk's measured figure. Empty until a session
+			// line exists, so the page says "not measured yet" rather than zero.
+			desk: {
+				sessions: Number(deskStats.deskSessions) || 0,
+				claims: Number(deskStats.deskClaims) || 0,
+				minutes: deskStats.deskMinutes === '' ? null : Number(deskStats.deskMinutes)
+			}
+		},
+		null,
+		2
+	),
+	'utf8'
+);
+
+// The method page's figures: the four basis counts, the two succession audits,
+// the review denominators and the published weight table. Every role carries the
+// three scripts of its own title and its institution's name, cut here so the
+// table is text and never a record lookup.
+writeFileSync(
+	join(STAGE_OUT, 'methodology-figures.json'),
+	JSON.stringify(
+		{
+			basis: basisCounts,
+			successionGaps: successionGaps.length,
+			successionOverlaps: successionOverlaps.length,
+			contradictions: contradictions.length,
+			review: { reviewed, reviewable },
+			roles: [...roles]
+				.sort((a, b) => b.authority - a.authority)
+				.map((role) => ({
+					id: role.id,
+					authority: role.authority,
+					title: { en: role.title_en, fr: role.title_fr ?? '', ar: role.title_ar ?? '' },
+					institution: {
+						en: institutionById.get(role.institution)?.name_en ?? '',
+						fr: institutionById.get(role.institution)?.name_fr ?? '',
+						ar: institutionById.get(role.institution)?.name_ar ?? ''
+					}
+				}))
+		},
+		null,
+		2
+	),
+	'utf8'
+);
+
+// The open-data page's figures: the two coverage tables, the card histogram and
+// worklist, and the review denominators by kind and by flag. Names carry all
+// three scripts so the tables localise without a record lookup.
+function sliceNames(id: string, fallback: string) {
+	const person = personById.get(id);
+	return person
+		? { en: person.name_en, fr: person.name_fr ?? '', ar: person.name_ar ?? '' }
+		: { en: fallback, fr: '', ar: '' };
+}
+
+writeFileSync(
+	join(STAGE_OUT, 'data-figures.json'),
+	JSON.stringify(
+		{
+			coverage: dataset.meta.coverage.principals.map((p) => ({
+				id: p.id,
+				name: sliceNames(p.id, p.name),
+				total: p.total,
+				kin: p.kin,
+				missing: p.missing
+			})),
+			cards: {
+				sections: dataset.meta.cards.sections,
+				histogram: dataset.meta.cards.histogram,
+				worklist: dataset.meta.cards.worklist.map((w) => ({
+					id: w.id,
+					name: sliceNames(w.id, w.name),
+					filled: w.filled
+				}))
+			},
+			review: { byKind: dataset.meta.review.byKind, flags: dataset.meta.review.flags }
+		},
+		null,
+		2
+	),
+	'utf8'
+);
 
 // Sitemap for the static site. Generated, never hand-maintained: every route
 // in this list is a real prerendered page (adapter-static, strict mode fails

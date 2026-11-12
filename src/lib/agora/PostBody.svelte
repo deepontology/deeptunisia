@@ -17,7 +17,7 @@
 	 * The hover card is allowed to look like the graph, because it is the graph.
 	 */
 	import { parse, type Block, type Inline, type MentionSpan } from './markdown';
-	import { hitById } from '$lib/search';
+	import { hitById } from '$lib/search.svelte';
 	import { LAYER_COLOR } from '$lib/model';
 	import Tooltip from '$lib/ui/Tooltip.svelte';
 
