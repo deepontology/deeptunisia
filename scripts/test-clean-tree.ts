@@ -7,8 +7,10 @@
  *
  * This runs last in `npm run test`, after the build and the other suites, and
  * reads `git status --porcelain`. Every listed path must be on the allowlist
- * below. The allowlist is the set of mixed files the team still has to make
- * read-only for the build; it shrinks to nothing and is not meant to grow.
+ * below, and the allowlist is empty: after a build, a test run or a check, the
+ * tree is clean or the gate names the file that broke the rule. Adding an entry
+ * to it is a step backwards, so it should only ever happen to record a known
+ * fault that is being fixed.
  *
  * Outside a git checkout (an exported tarball) there is nothing to compare and
  * the gate says so instead of passing silently.
@@ -21,20 +23,10 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
 
 /**
- * Tracked files the build still rewrites in place, with the job that removes
- * each from the rewrite path. Empty is the goal.
+ * Tracked files the build still rewrites in place. Empty is the goal: a file is
+ * written by a person or by the build, never by both.
  */
-const ALLOWED = new Set<string>([
-	// Documents a person wrote that the build edits in place. The build stops
-	// rewriting them; until then they stay here.
-	'landing/index.html',
-	'static/llms.txt',
-	'README.md',
-	'AGENTS.md',
-	'DESIGN.md',
-	'output/deeptunisia-release-paper-v0.1.1.md',
-	'output/deeptunisia-release-paper-v0.1.2.md'
-]);
+const ALLOWED = new Set<string>([]);
 
 let checks = 0;
 let failures = 0;
