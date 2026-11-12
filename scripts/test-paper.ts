@@ -20,11 +20,15 @@
  * gated paper must carry the full set, and the appendix must list it, so the
  * successor source is pinned rather than inherited.
  *
- * The gate covers every build-owned document, not only the papers: README,
- * AGENTS, DESIGN and llms.txt carry the same tags, so the §8.2 promise that a
- * hand-edited published number fails the suite is true for the whole set.
+ * The gate covers every document that carries the tags, not only the papers:
+ * README, AGENTS, DESIGN and the served llms.txt carry the same tags, so the
+ * §8.2 promise that a hand-edited published number fails the suite is true for
+ * the whole set. README, AGENTS and DESIGN are refreshed by `npm run stats:write`;
+ * the served llms.txt is generated from content/llms.template.txt at build time.
  * Any paper-shaped file in output/ that carries stat tags must be listed in
- * PAPER_NAMES, which is how a successor release is forced through this gate.
+ * PAPER_NAMES, which is how a successor release is forced through this gate. A
+ * paper the registry marks `historical-prose` is history and is not compared
+ * with today's graph.
  *
  * The V0.1 file stays untagged and frozen, deliberately outside this gate.
  */
@@ -33,15 +37,17 @@ import { createHash } from 'node:crypto';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { certainlyActive, DASH, BASIS_OPACITY, BASIS_ORDER } from '../src/lib/model.ts';
+import { VALIDATOR_REGISTER } from './validator-register.ts';
+import { loadPublicClaims } from './public-claims.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 
 /**
  * The gated paper sources, oldest first. The successor source is pinned here
  * deliberately: a new release paper must be added to this list in the same
- * change that adds it to STAT_DOCS, and the discovery check below fails on a
- * tagged paper that is not listed, so the gate cannot silently keep checking
- * the previous file.
+ * change that publishes it, and the discovery check below fails on a tagged
+ * paper that is not listed, so the gate cannot silently keep checking the
+ * previous file.
  */
 const PAPER_NAMES = [
 	'output/deeptunisia-release-paper-v0.1.1.md',
@@ -49,9 +55,9 @@ const PAPER_NAMES = [
 ];
 
 /**
- * Non-paper documents the build rewrites through the same stat-tag mechanism
- * are checked by `scripts/test-data.ts` ("published statistics match the
- * graph"), which covers README, AGENTS, DESIGN and static/llms.txt.
+ * Non-paper documents that carry the same stat tags are checked by
+ * `scripts/test-data.ts` ("published statistics match the graph"), which covers
+ * README, AGENTS, DESIGN and static/llms.txt.
  */
 
 const stats: Record<string, string> = JSON.parse(
@@ -175,11 +181,24 @@ const papers = new Map<string, string>();
 		if (existsSync(path)) papers.set(name, readFileSync(path, 'utf8'));
 	}
 
+	/* The registry decides which papers are history. A `historical-prose` entry is
+	   a paper as it was published: its figures were true then and are not updated
+	   now, so its spans are not compared with today's graph. */
+	const historicalPapers = new Set(
+		loadPublicClaims(join(HERE, '..', 'data', 'public-claims.yaml'))
+			.inventory.filter((e) => e.rule === 'historical-prose')
+			.map((e) => e.path)
+	);
+
 	// 1. Every tag in every gated paper must name an emitted key and show the
-	// emitted value.
+	// emitted value, except in a paper the registry marks historical-prose: that
+	// one was published once and is not updated afterwards.
 	const drift: string[] = [];
 	let paperTags = 0;
+	let checkedPapers = 0;
 	for (const [name, text] of papers) {
+		if (historicalPapers.has(name)) continue;
+		checkedPapers++;
 		for (const m of text.matchAll(STAT_TAG)) {
 			const [, key, shown] = m;
 			paperTags++;
@@ -188,15 +207,15 @@ const papers = new Map<string, string>();
 		}
 	}
 	ok(
-		'every stat tag in every gated paper matches the emitted stats.json',
+		'every stat tag in every current gated paper matches the emitted stats.json',
 		drift.length === 0,
-		drift.length ? drift.slice(0, 5).join('; ') : `${paperTags} tagged figures in sync across ${papers.size} paper(s)`
+		drift.length ? drift.slice(0, 5).join('; ') : `${paperTags} tagged figures in sync across ${checkedPapers} paper(s)`
 	);
 
 	// 2. The live claims rest on these keys. They must all be tagged in the
-	// newest gated paper; the earlier paper is historical and is only checked
-	// for drift, so the required set can grow with the successor without
-	// rewriting the previous release.
+	// newest gated paper; the earlier papers are historical and are not checked,
+	// so the required set can grow with the successor without rewriting a
+	// published release.
 	const newestName = PAPER_NAMES[PAPER_NAMES.length - 1];
 	const newestText = papers.get(newestName);
 	if (newestText !== undefined) {
@@ -244,6 +263,126 @@ const papers = new Map<string, string>();
 // "published statistics match the graph" assertion, which covers README,
 // AGENTS, DESIGN and static/llms.txt. This suite owns the papers.
 
+// 5. Validator register: the appendix table, the enforcing code and the schema
+// header must agree.
+//
+// The same rule used to be described in three places with three different
+// claims: a schema header said a range shipped, the appendix listed rules as if
+// each ran, and six of them had no enforcing code. The register is now the one
+// source for status, and this block fails when any surface drifts from it.
+{
+	const newestName = PAPER_NAMES[PAPER_NAMES.length - 1];
+	const newestText = papers.get(newestName);
+	const expectedIds = Array.from({ length: 32 }, (_, i) => `V${i + 1}`);
+	const registerIds = VALIDATOR_REGISTER.map((v) => v.id);
+	const duplicateIds = registerIds.filter((id, i) => registerIds.indexOf(id) !== i);
+	ok(
+		'the validator register covers V1 to V32 exactly once',
+		JSON.stringify(registerIds) === JSON.stringify(expectedIds) && duplicateIds.length === 0,
+		`${registerIds.length} entries` +
+			(duplicateIds.length ? `, duplicate ${[...new Set(duplicateIds)].join(', ')}` : '') +
+			(JSON.stringify(registerIds) === JSON.stringify(expectedIds) ? '' : ', ids are not the sequence V1 to V32')
+	);
+
+	if (newestText !== undefined) {
+		const appendixStart = newestText.indexOf('## Appendix A');
+		const appendix = appendixStart === -1 ? '' : newestText.slice(appendixStart);
+		const nextHeading = appendix.indexOf('\n## ', 4);
+		const appendixBlock = nextHeading === -1 ? appendix : appendix.slice(0, nextHeading);
+		const heading = appendixBlock.match(/^## Appendix A[^\n]*/m)?.[0] ?? '';
+		const statedRange = heading.match(/V(\d+)\s*[–-]\s*V(\d+)/);
+		const statedMax = statedRange ? Number(statedRange[2]) : null;
+
+		const paperRows = new Map<string, string>();
+		for (const line of appendixBlock.split('\n')) {
+			const m = line.match(/^\|\s*(V\d+)\s*\|([^|]*)\|([^|]*)\|([^|]*)\|\s*$/);
+			if (m) paperRows.set(m[1], m[4].trim());
+		}
+
+		const missingFromRegister = [...paperRows.keys()].filter((id) => !registerIds.includes(id));
+		ok(
+			'every Appendix A row has a validator register entry',
+			missingFromRegister.length === 0,
+			missingFromRegister.length ? `not registered: ${missingFromRegister.join(', ')}` : `${paperRows.size} rows`
+		);
+
+		const missingFromPaper =
+			statedMax === null
+				? []
+				: registerIds.filter((id) => Number(id.slice(1)) <= statedMax && !paperRows.has(id));
+		ok(
+			'every registered id up to the appendix stated range is tabulated',
+			missingFromPaper.length === 0,
+			statedMax === null
+				? 'no V1 to Vn range in the Appendix A heading'
+				: missingFromPaper.length
+					? `missing rows: ${missingFromPaper.join(', ')}`
+					: `stated range ends at V${statedMax}`
+		);
+
+		const SPECIFIED_TEXT = 'specified, not enforced';
+		const statusDrift: string[] = [];
+		for (const [id, behaviour] of paperRows) {
+			const entry = VALIDATOR_REGISTER.find((v) => v.id === id);
+			if (!entry) continue;
+			if (entry.status === 'specified' && !behaviour.includes(SPECIFIED_TEXT)) {
+				statusDrift.push(`${id} is specified but its row does not say "${SPECIFIED_TEXT}"`);
+			}
+			if (entry.status === 'enforced' && behaviour.includes(SPECIFIED_TEXT)) {
+				statusDrift.push(`${id} is enforced but its row says "${SPECIFIED_TEXT}"`);
+			}
+		}
+		ok(
+			'the Appendix A Behaviour column matches each rule status',
+			statusDrift.length === 0,
+			statusDrift.length ? statusDrift.slice(0, 4).join('; ') : `${paperRows.size} row(s) checked`
+		);
+	}
+
+	const brokenSites: string[] = [];
+	for (const entry of VALIDATOR_REGISTER) {
+		if (entry.status !== 'enforced') continue;
+		if (!entry.site) {
+			brokenSites.push(`${entry.id} has no site`);
+			continue;
+		}
+		const file = join(HERE, '..', entry.site.file);
+		if (!existsSync(file)) {
+			brokenSites.push(`${entry.id} names missing file ${entry.site.file}`);
+			continue;
+		}
+		if (!readFileSync(file, 'utf8').includes(entry.site.anchor)) {
+			brokenSites.push(`${entry.id} anchor not found in ${entry.site.file}`);
+		}
+	}
+	ok(
+		'every enforced validator names code that exists',
+		brokenSites.length === 0,
+		brokenSites.length ? brokenSites.slice(0, 4).join('; ') : `${VALIDATOR_REGISTER.filter((v) => v.status === 'enforced').length} enforced entries`
+	);
+
+	const schemaHeader = readFileSync(join(HERE, 'schema.ts'), 'utf8').split('*/')[0];
+	const shippedRange = schemaHeader.match(/V(\d+)\s*[–-]\s*V(\d+)[^\n]*\bshipped\b/i);
+	const offending = shippedRange
+		? VALIDATOR_REGISTER.filter(
+				(v) =>
+					v.status === 'specified' &&
+					Number(v.id.slice(1)) >= Number(shippedRange[1]) &&
+					Number(v.id.slice(1)) <= Number(shippedRange[2])
+			)
+		: [];
+	ok(
+		'the schema header makes no shipped-range claim over a specified rule',
+		offending.length === 0,
+		offending.length
+			? `header range covers ${offending.map((v) => v.id).join(', ')}, which are specified only`
+			: shippedRange
+				? `range ${shippedRange[0]} contains no specified rule`
+				: 'no shipped-range claim in the header'
+	);
+}
+
+
 // 3. Landing drift guard — DENSITY/NODES/EDGES tied to dataset.json hash.
 //
 // The landing page claims "Nothing is illustrative" and its DENSITY/NODES/EDGES
@@ -276,7 +415,7 @@ const papers = new Map<string, string>();
 		const years: number[] = [];
 		for (let y = 1956; y <= 2026; y++) years.push(y);
 		const expectedDENSITY = years.map(
-			(y) => (d.positions || []).filter((p) => p.interval && certainlyActive(p.interval as never, new Date(y, 6, 1).getTime())).length
+			(y) => (d.positions || []).filter((p) => p.interval && certainlyActive(p.interval as never, Date.UTC(y, 6, 1))).length
 		);
 
 		const deg = new Map<string, number>();

@@ -82,6 +82,12 @@ jobs:
       - name: Assert the feed is separate from the graph
         run: npx --no-install tsx scripts/test-feed.ts
 
+      # The documents that carry a published figure are no longer rewritten by a
+      # build, so a job that has just rebuilt the graph refreshes them on
+      # request. Nothing is committed until this has run.
+      - name: Refresh the published statistics
+        run: npm run stats:write
+
       - name: Commit the archive if it changed
         run: |
           set -euo pipefail

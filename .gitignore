@@ -11,6 +11,17 @@ static/dataset.json
 static/prose-fr.json
 static/prose-ar.json
 static/search-index.json
+static/llms.txt
+# Written by the build only; a fresh clone gets them from `npm run build`.
+static/editorial-queue.json
+static/geo.json
+static/tn/regions.geojson
+static/sitemap.xml
+static/timelines.json
+static/interval-trims.json
+static/changelog.json
+static/public-claims.json
+static/build-manifest.json
 static/positions.csv
 static/relationships.csv
 static/sources.csv
@@ -57,3 +68,11 @@ internal
 # Disclosures — staged locally; review before commit (and rename /GENAI.md → path once public)
 /GENAI.md
 /CONTRIBUTING.md
+# The share images are drawn by the build (scripts/build-og-images.ts) and come out
+# different on another machine, so they are build output like the files above.
+static/og/default-dark.png
+static/og/default-light.png
+static/og/default.png
+static/og/default.svg
+static/og/introduction.png
+static/og/police.png

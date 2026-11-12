@@ -8,6 +8,7 @@
         "data": "tsx scripts/build-data.ts && tsx scripts/build-region.ts && tsx scripts/network-continuity.ts && tsx scripts/build-media.ts && tsx scripts/build-og-images.ts && tsx scripts/build-public-claims.ts && tsx scripts/build-studies.ts",
         "data:watch": "tsx watch scripts/build-data.ts",
         "studies:build": "tsx scripts/build-studies.ts",
+        "stats:write": "tsx scripts/write-stats.ts",
         "studies:export": "tsx scripts/studies-export.ts",
         "studies:aggregate": "tsx scripts/studies-aggregate.ts",
         "studies:freeze": "tsx scripts/studies-freeze.ts",
@@ -16,10 +17,11 @@
         "build": "npm run data && vite build && tsx scripts/build-landing.ts && tsx scripts/build-records.ts",
         "preview": "vite preview",
         "check": "npm run data && svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-        "test": "tsx scripts/test-data.ts && tsx scripts/test-validators.ts && tsx scripts/test-engine-conformance.ts && tsx scripts/test-pipeline.ts && tsx scripts/test-network-continuity.ts && tsx scripts/test-network-scene.ts && tsx scripts/test-prefixtree.ts && tsx scripts/test-media.ts && tsx scripts/test-ui.ts && tsx scripts/test-i18n.ts && tsx scripts/test-match.ts && tsx scripts/test-markup.ts && tsx scripts/test-feed.ts && tsx scripts/test-emit.ts && tsx scripts/test-proposals.ts && tsx scripts/test-encoding.ts && tsx scripts/test-parameters.ts && tsx scripts/test-paper.ts && tsx scripts/test-claim-matrix.ts && tsx scripts/test-consistency.ts && tsx scripts/test-public-claims.ts && tsx scripts/test-modes.ts && tsx scripts/test-community.ts && tsx scripts/test-api.ts && tsx scripts/test-landing-indexes.ts && tsx scripts/test-chronicle-rows.ts && tsx scripts/test-chronicle-links.ts && tsx scripts/test-headers.ts && tsx scripts/test-recovery.ts && tsx scripts/test-studies.ts && tsx scripts/test-research-contract.ts && tsx scripts/test-research-api.ts && tsx scripts/test-maxdiff.ts && tsx scripts/test-studies-export.ts && tsx scripts/test-research-scoring.ts && tsx scripts/test-ledger.ts && tsx scripts/test-tree-hygiene.ts && tsx scripts/test-budget.ts && tsx scripts/test-share.ts && tsx scripts/test-hash-ledger.ts && tsx scripts/test-desk.ts && tsx scripts/test-desk-session.ts && tsx scripts/test-precheck.ts && tsx scripts/test-import-graph.ts && tsx scripts/test-search-index.ts && tsx scripts/test-search-kinds.ts && tsx scripts/test-deploy-preview.ts && tsx scripts/test-records.ts",
+        "test": "tsx scripts/test-data.ts && tsx scripts/test-validators.ts && tsx scripts/test-engine-conformance.ts && tsx scripts/test-pipeline.ts && tsx scripts/test-network-continuity.ts && tsx scripts/test-network-scene.ts && tsx scripts/test-prefixtree.ts && tsx scripts/test-media.ts && tsx scripts/test-ui.ts && tsx scripts/test-i18n.ts && tsx scripts/test-match.ts && tsx scripts/test-markup.ts && tsx scripts/test-feed.ts && tsx scripts/test-emit.ts && tsx scripts/test-proposals.ts && tsx scripts/test-encoding.ts && tsx scripts/test-parameters.ts && tsx scripts/test-paper.ts && tsx scripts/test-claim-matrix.ts && tsx scripts/test-consistency.ts && tsx scripts/test-public-claims.ts && tsx scripts/test-modes.ts && tsx scripts/test-community.ts && tsx scripts/test-api.ts && tsx scripts/test-landing-indexes.ts && tsx scripts/test-chronicle-rows.ts && tsx scripts/test-chronicle-links.ts && tsx scripts/test-headers.ts && tsx scripts/test-recovery.ts && tsx scripts/test-studies.ts && tsx scripts/test-research-contract.ts && tsx scripts/test-research-api.ts && tsx scripts/test-maxdiff.ts && tsx scripts/test-studies-export.ts && tsx scripts/test-research-scoring.ts && tsx scripts/test-ledger.ts && tsx scripts/test-tree-hygiene.ts && tsx scripts/test-published-layout.ts && tsx scripts/test-budget.ts && tsx scripts/test-share.ts && tsx scripts/test-hash-ledger.ts && tsx scripts/test-desk.ts && tsx scripts/test-desk-session.ts && tsx scripts/test-precheck.ts && tsx scripts/test-import-graph.ts && tsx scripts/test-search-index.ts && tsx scripts/test-search-kinds.ts && tsx scripts/test-deploy-preview.ts && tsx scripts/test-records.ts && tsx scripts/test-deploy.ts && tsx scripts/test-clean-tree.ts",
         "test:markup": "tsx scripts/test-markup.ts",
         "test:i18n": "tsx scripts/test-i18n.ts",
         "test:data": "tsx scripts/test-data.ts",
+        "test:layout": "tsx scripts/test-published-layout.ts",
         "test:validators": "tsx scripts/test-validators.ts",
         "test:pipeline": "tsx scripts/test-pipeline.ts",
         "test:media": "tsx scripts/test-media.ts",
@@ -48,7 +50,7 @@
         "proposals": "tsx scripts/apply-proposals.ts",
         "smoke": "tsx scripts/smoke.ts",
         "sources:precheck": "tsx scripts/precheck-sources.ts",
-        "deploy": "npm run build && wrangler deploy",
+        "deploy": "tsx scripts/deploy.ts --go",
         "deploy:preview": "tsx scripts/deploy-preview.ts --go",
         "deploy:preview:dry": "tsx scripts/deploy-preview.ts",
         "agents:discover": "tsx scripts/agents.ts",
@@ -59,7 +61,7 @@
         "study:kappa": "tsx scripts/study-kappa.ts",
         "study:model": "tsx scripts/study-model-arm.ts",
         "study:dry-run": "npm run data && tsx scripts/study-sampler.ts --n 10 --out research/study/dry-run --seed 20260902 && tsx scripts/study-blinding.ts --verify --sample research/study/dry-run/sample-10-blinded.json --key research/study/dry-run/sample-10-key.json && tsx scripts/study-blinding.ts --build --sample research/study/dry-run/sample-10-blinded.json --key research/study/dry-run/sample-10-key.json --out research/study/dry-run/raters",
-        "deploy:dry": "npm run build && wrangler deploy --dry-run"
+        "deploy:dry": "tsx scripts/deploy.ts"
     },
     "devDependencies": {
         "@sveltejs/adapter-static": "3.0.10",

@@ -47,7 +47,7 @@ development; a reader on deeptunisia.org never touches it. The mode contract is
 
 The complete graph is <!--stat:graphKB-->14750<!--/stat--> KB as the internal
 bundle, and the public exports (dataset, CSVs, geographic layers, changelog)
-ship at <!--stat:shippedKB-->26640<!--/stat--> KB — both are computed by the
+ship at <!--stat:shippedKB-->20840<!--/stat--> KB — both are computed by the
 build, and `npm run test` fails if the README ever disagrees with them.
 
 ## Reproducibility
@@ -195,8 +195,8 @@ This is not neutrality for its own sake — it is the project's only real protec
 - **The 2014–2019 police succession does not fit its endpoints.** Three reported tenures cannot fit between two firmly dated ones; recorded as an unresolved contradiction rather than smoothed over.
 - **`<=` bounds use an 8-year window.** Stated modelling assumption, not a fact.
 - **UI is translated for chrome only.** Arabic, French and English navigation, controls and labels, with RTL. Entity names are trilingual in the data and all three are searchable. Long-form analytical prose is deliberately *not* machine-translated — a machine-translated epistemology page would undermine the point.
-- **<!--stat:needsPrimarySource-->256<!--/stat--> records await a primary source.** Listed in full on `/evidence`.
-- **Review is not merely thin, it is not independent.** Independent checks stand at <!--stat:independent-->0<!--/stat--> in every category, and the editorial notes that do exist are unevenly spread: <!--stat:reviewNotes-unsubstantiated-->18<!--/stat--> of <!--stat:reviewable-unsubstantiated-->23<!--/stat--> unsubstantiated claims, <!--stat:reviewNotes-attributed-->25<!--/stat--> of <!--stat:reviewable-attributed-->2904<!--/stat--> that name a source and <!--stat:reviewNotes-inferred-->2<!--/stat--> of <!--stat:reviewable-inferred-->129<!--/stat--> inferences carry one. The breakdown is on `/about`.
+- **<!--stat:needsPrimarySource-->432<!--/stat--> records await a primary source.** Listed in full on `/evidence`.
+- **Human review is not merely thin, it is not independent.** Independent checks stand at <!--stat:independent-->0<!--/stat--> in every category, and the editorial notes that do exist are unevenly spread: <!--stat:reviewNotes-unsubstantiated-->18<!--/stat--> of <!--stat:reviewable-unsubstantiated-->23<!--/stat--> unsubstantiated claims, <!--stat:reviewNotes-attributed-->25<!--/stat--> of <!--stat:reviewable-attributed-->2904<!--/stat--> that name a source and <!--stat:reviewNotes-inferred-->2<!--/stat--> of <!--stat:reviewable-inferred-->129<!--/stat--> inferences carry one. The breakdown is on `/about`.
 - **<!--stat:sourcesUncited-->71<!--/stat--> of <!--stat:sources-->2615<!--/stat--> sources back no claim.** Staged reading, kept in the file but excluded from the published count of <!--stat:sourcesCited-->2544<!--/stat--> — a bibliography entry that holds nothing up is not evidence.
 
 ## Deliberately not built yet
