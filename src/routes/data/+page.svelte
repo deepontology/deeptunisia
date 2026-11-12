@@ -36,7 +36,9 @@
 	const caveatParams = {
 		needsPrimary: ds.meta.needsPrimarySourceCount,
 		contradictions: ds.meta.contradictions.length,
-		reviewed: ds.meta.review.reviewed,
+		checkedByPerson: ds.meta.review.reviewedHuman,
+		passedByAgent: ds.meta.review.reviewedAgent,
+		unstated: ds.meta.review.reviewedUnstated,
 		reviewable: ds.meta.review.reviewable
 	};
 
@@ -285,16 +287,21 @@
 			<thead>
 				<tr>
 					<th>{t('about.review.claimtype')}</th>
-					<th>{t('coverage.reviewed.reviewed')}</th>
+					<th>{t('about.review.person')}</th>
+					<th>{t('about.review.agent')}</th>
+					<th>{t('about.review.unstated')}</th>
 					<th>{t('coverage.reviewed.histogram')}</th>
 				</tr>
 			</thead>
 			<tbody>
 				{#each Object.entries(ds.meta.review.byKind) as [kind, counts] (kind)}
-					{@const pct = counts.total ? Math.round((counts.reviewed / counts.total) * 100) : 0}
+					{@const pct = counts.total ? Math.round(((counts.reviewedHuman + counts.reviewedAgent + counts.reviewedUnstated) / counts.total) * 100) : 0}
+					{@const notes = counts.reviewedHuman + counts.reviewedAgent + counts.reviewedUnstated}
 					<tr>
-						<td>{t(`coverage.kind.${kind}`)}</td>
-						<td>{counts.reviewed} / {counts.total}</td>
+						<td>{t(`coverage.kind.${kind}`)} <span class="mono">({notes}/{counts.total})</span></td>
+						<td class="mono">{counts.reviewedHuman}</td>
+						<td class="mono">{counts.reviewedAgent}</td>
+						<td class="mono">{counts.reviewedUnstated}</td>
 						<td>
 							<span class="hist-track"><span class="hist-fill" style="width: {pct}%"></span></span>
 							<span class="mono hist-pct">{pct}%</span>
@@ -310,17 +317,22 @@
 			<thead>
 				<tr>
 					<th>{t('coverage.reviewed.bucket')}</th>
-					<th>{t('coverage.reviewed.reviewed')}</th>
+					<th>{t('about.review.person')}</th>
+					<th>{t('about.review.agent')}</th>
+					<th>{t('about.review.unstated')}</th>
 					<th>{t('coverage.reviewed.histogram')}</th>
 				</tr>
 			</thead>
 			<tbody>
 				{#each RISK_ORDER as flag (flag)}
 					{@const counts = ds.meta.review.flags[flag]}
-					{@const pct = counts.total ? Math.round((counts.reviewed / counts.total) * 100) : 0}
+					{@const pct = counts.total ? Math.round(((counts.reviewedHuman + counts.reviewedAgent + counts.reviewedUnstated) / counts.total) * 100) : 0}
+					{@const notes = counts.reviewedHuman + counts.reviewedAgent + counts.reviewedUnstated}
 					<tr>
-						<td>{t(RISK_KEY[flag])}</td>
-						<td>{counts.reviewed} / {counts.total}</td>
+						<td>{t(RISK_KEY[flag])} <span class="mono">({notes}/{counts.total})</span></td>
+						<td class="mono">{counts.reviewedHuman}</td>
+						<td class="mono">{counts.reviewedAgent}</td>
+						<td class="mono">{counts.reviewedUnstated}</td>
 						<td>
 							<span class="hist-track"><span class="hist-fill" style="width: {pct}%"></span></span>
 							<span class="mono hist-pct">{pct}%</span>

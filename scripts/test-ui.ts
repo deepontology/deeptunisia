@@ -568,7 +568,8 @@ for (const loc of ['en', 'fr', 'ar'] as const) {
 		`the review coverage note resolves in ${loc}`,
 		translate(loc, 'coverage.flagsNote') !== 'coverage.flagsNote' &&
 			translate(loc, 'coverage.kind.relationship') !== 'coverage.kind.relationship' &&
-			translate(loc, 'about.stat.reviewed').includes('{reviewed}'),
+			translate(loc, 'about.stat.checkedByPerson').includes('{human}') &&
+				translate(loc, 'about.stat.checkedByAgent').includes('{agent}'),
 		translate(loc, 'coverage.byKind')
 	);
 }

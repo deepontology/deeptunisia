@@ -28,7 +28,7 @@ The `status: "last-verified"` shown above is a different field. It says when the
 - **{contradictions} contradictions are unresolved.** Where sources disagree, the dataset records the disagreement instead of choosing. Check the `disputes` array before using a figure.
 - **The pre-2011 police chronology is the weakest area.** The sequence of national police chiefs under Ben Ali rests largely on secondary sources.
 - **The authority weights are editorial.** They are a judgement about formal authority, published on the [method page](/methodology) so you can substitute your own.
-- **Only {reviewed} of {reviewable} records carry an editorial review note; independent checks stand at zero.** Treat the rest as compiled but unaudited.
+- **{checkedByPerson} records have been checked by a person, {passedByAgent} by an agent, and {unstated} carry a review note that does not say who read it, of {reviewable} reviewable; independent checks stand at zero.** Treat the rest as compiled but unaudited.
 
 ## Rebuilding it yourself {#rebuild}
 

@@ -54,9 +54,6 @@
 	const inferred = $derived(ds.positions.filter((p) => p.basis === 'inferred'));
 	const unsubstantiated = $derived(ds.relationships.filter((r) => r.basis === 'unsubstantiated'));
 	const openQuestions = $derived(ds.questions.filter((q) => q.status !== 'answered'));
-	const reviewPct = $derived(
-		Math.round((ds.meta.review.reviewed / Math.max(1, ds.meta.review.reviewable)) * 100)
-	);
 </script>
 
 <svelte:head>
@@ -95,10 +92,10 @@
 			<span class="flag">{ds.meta.needsPrimarySourceCount} {t('ev.counts.needsPrimary')}</span>
 			<span class="flag">{ds.meta.contradictions.length} {t('ev.counts.contradictions')}</span>
 			<span
-				>{format(app.locale, 'ev.counts.humanReviewed', {
-					reviewed: ds.meta.review.reviewed,
-					reviewable: ds.meta.review.reviewable,
-					pct: reviewPct
+				>{format(app.locale, 'ev.counts.checked', {
+					human: ds.meta.review.reviewedHuman,
+					agent: ds.meta.review.reviewedAgent,
+					reviewable: ds.meta.review.reviewable
 				})}</span
 			>
 		</div>

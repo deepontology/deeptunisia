@@ -80,7 +80,12 @@ export interface VerificationInput {
 }
 
 export interface ReviewCount {
-	reviewed: number;
+	/** Reviews that name a person as the actor. */
+	reviewedHuman: number;
+	/** Reviews that name an agent as the actor. */
+	reviewedAgent: number;
+	/** Reviews written before the actor field existed, so who read the claim is not recorded. */
+	reviewedUnstated: number;
 	total: number;
 }
 
@@ -97,10 +102,15 @@ export interface CoverageRow {
 }
 
 export interface ReviewSummary {
-	reviewed: number;
+	/** Of the reviewable records, those with a review naming a person. */
+	reviewedHuman: number;
+	/** Of the reviewable records, those with a review naming an agent. */
+	reviewedAgent: number;
+	/** Of the reviewable records, those with a review that does not say who read it. */
+	reviewedUnstated: number;
 	reviewable: number;
 	/** Independent verifications that resolved to a graph claim. Separate population. */
-	independentlyChecked: number;
+	independent: number;
 	/** Every independent verification record, resolved or not. Its own denominator. */
 	verifications: number;
 	/** `kind:id` values pointing at no record — reported, never dropped silently. */
@@ -109,6 +119,12 @@ export interface ReviewSummary {
 	byKind: Record<ReviewKind, ReviewCount>;
 	byBasis: Record<string, ReviewCount>;
 	coverage: CoverageRow[];
+}
+
+/** Which kind of actor a review names, or that it does not say. */
+export function reviewActorOf(review: unknown): 'human' | 'agent' | 'unstated' {
+	const actor = (review as { actor?: string } | null | undefined)?.actor;
+	return actor === 'human' || actor === 'agent' ? actor : 'unstated';
 }
 
 /**
@@ -137,7 +153,16 @@ export function reviewRiskOf(r: { basis?: string; attributed_to?: string }): Rev
 }
 
 function emptyCounts<K extends string>(keys: readonly K[]): Record<K, ReviewCount> {
-	return Object.fromEntries(keys.map((k) => [k, { reviewed: 0, total: 0 }])) as Record<K, ReviewCount>;
+	return Object.fromEntries(
+		keys.map((k) => [k, { reviewedHuman: 0, reviewedAgent: 0, reviewedUnstated: 0, total: 0 }])
+	) as Record<K, ReviewCount>;
+}
+
+function addReview(count: ReviewCount, review: unknown): void {
+	const actor = reviewActorOf(review);
+	if (actor === 'human') count.reviewedHuman++;
+	else if (actor === 'agent') count.reviewedAgent++;
+	else count.reviewedUnstated++;
 }
 
 export function summariseReview(rows: ReviewInput[], verifications: VerificationInput[] = []): ReviewSummary {
@@ -148,22 +173,29 @@ export function summariseReview(rows: ReviewInput[], verifications: Verification
 	// `kind:id` → the coverage cell the record sits in, so an independent
 	// verification increments a count instead of being a flag someone can set.
 	const cellByClaim = new Map<string, CoverageRow>();
-	let reviewed = 0;
+	let reviewedHuman = 0;
+	let reviewedAgent = 0;
+	let reviewedUnstated = 0;
 
 	for (const row of rows) {
 		const isReviewed = row.review !== undefined && row.review !== null;
-		if (isReviewed) reviewed++;
+		const actor = reviewActorOf(row.review);
+		if (isReviewed) {
+			if (actor === 'human') reviewedHuman++;
+			else if (actor === 'agent') reviewedAgent++;
+			else reviewedUnstated++;
+		}
 		const basis = row.basis ?? 'unknown';
 
 		byKind[row.kind].total++;
-		if (isReviewed) byKind[row.kind].reviewed++;
-		byBasis[basis] ??= { reviewed: 0, total: 0 };
+		if (isReviewed) addReview(byKind[row.kind], row.review);
+		byBasis[basis] ??= { reviewedHuman: 0, reviewedAgent: 0, reviewedUnstated: 0, total: 0 };
 		byBasis[basis].total++;
-		if (isReviewed) byBasis[basis].reviewed++;
+		if (isReviewed) addReview(byBasis[basis], row.review);
 
 		for (const flag of reviewFlagsOf(row)) {
 			flags[flag].total++;
-			if (isReviewed) flags[flag].reviewed++;
+			if (isReviewed) addReview(flags[flag], row.review);
 		}
 
 		const key = `${row.kind}|${basis}`;
@@ -195,7 +227,7 @@ export function summariseReview(rows: ReviewInput[], verifications: Verification
 	 * discarded — a count that quietly skips unresolvable rows would flatter
 	 * itself.
 	 */
-	let independentlyChecked = 0;
+	let independent = 0;
 	const unmatchedVerifications: string[] = [];
 	for (const v of verifications) {
 		const cell = cellByClaim.get(v.claim);
@@ -204,7 +236,7 @@ export function summariseReview(rows: ReviewInput[], verifications: Verification
 			continue;
 		}
 		cell.independentlyChecked++;
-		independentlyChecked++;
+		independent++;
 	}
 
 	const basisRank = new Map<string, number>(REVIEW_BASIS.map((b, i) => [b, i]));
@@ -218,9 +250,11 @@ export function summariseReview(rows: ReviewInput[], verifications: Verification
 		);
 
 	return {
-		reviewed,
+		reviewedHuman,
+		reviewedAgent,
+		reviewedUnstated,
 		reviewable: rows.length,
-		independentlyChecked,
+		independent,
 		verifications: verifications.length,
 		unmatchedVerifications,
 		flags,
@@ -264,7 +298,8 @@ export function reviewCoverageCsv(summary: ReviewSummary): string {
 
 export function reviewCoverageMarkdown(summary: ReviewSummary): string {
 	const flagLines = REVIEW_FLAGS.map(
-		(f) => `- \`${f}\`: ${summary.flags[f].reviewed} of ${summary.flags[f].total} carry a review note`
+		(f) =>
+			`- \`${f}\`: ${summary.flags[f].reviewedHuman} by a person, ${summary.flags[f].reviewedAgent} by an agent, ${summary.flags[f].reviewedUnstated} not stated, of ${summary.flags[f].total}`
 	);
 	return `# Review coverage
 
@@ -273,7 +308,8 @@ Generated by \`scripts/build-data.ts\` from \`data/*.yaml\`. Do not edit by hand
 ## What the columns mean
 
 - \`total\`: records of this kind and basis in the graph. The denominator.
-- \`examined\`: records carrying a \`review\` object — someone looked at them.
+- \`examined\`: records carrying a \`review\` object. Who read the record is counted
+  separately, by the \`actor\` on that review.
 - \`independently_checked\`: records with an **independent verification record**
   of their own — \`data/verifications.yaml\`, a second human blinded to the
   project's grade, applying the study rubric. **Zero everywhere today**: that
@@ -290,19 +326,22 @@ Generated by \`scripts/build-data.ts\` from \`data/*.yaml\`. Do not edit by hand
 
 | Population | Where it lives | Denominator |
 |---|---|---|
-| editorial review notes | a \`review\` object on a record | ${summary.reviewed} of ${summary.reviewable} |
+| editorial review notes | a \`review\` object on a record | ${summary.reviewedHuman} by a person, ${summary.reviewedAgent} by an agent, ${summary.reviewedUnstated} not stated, of ${summary.reviewable} |
 | the editorial queue | \`static/editorial-queue.json\` | its own count, never derived from the two above |
-| independent verifications | \`data/verifications.yaml\` | ${summary.independentlyChecked} of ${summary.verifications} |
+| independent verifications | \`data/verifications.yaml\` | ${summary.independent} of ${summary.verifications} |
 
 They answer different questions and are never added together, multiplied or
-substituted for one another.
+substituted for one another. A review that does not name its actor is counted as
+not stated; it is never folded into the person count or the agent count.
 
 ## Flags overlap
 
 The risk flags are not a partition: a record carries every flag true of it, so
 the flag totals sum to more than the record count. An inferred claim that names
-its source is both \`inferred\` and \`attributed\`. Headline: ${summary.reviewed} of
-${summary.reviewable} records carry a review note.
+its source is both \`inferred\` and \`attributed\`. Headline: ${summary.reviewedHuman}
+review(s) name a person, ${summary.reviewedAgent} name an agent, and
+${summary.reviewedUnstated} do not say who read the record, out of ${summary.reviewable}
+reviewable records.
 
 ${flagLines.join('\n')}
 `;

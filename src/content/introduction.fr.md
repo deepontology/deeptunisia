@@ -60,10 +60,10 @@ Nous testons {hypotheses} hypothèses en public. À ce jour, les preuves ne sout
 Nous testons {hypotheses} hypothèses en public. Les résultats, bons ou mauvais, sont sur la [page des preuves](/evidence).
 
 {#review-none}
-Sur {reviewable} enregistrements pouvant être relus, {reviewed} portent une note de relecture éditoriale, et aucun n’a encore été vérifié de façon indépendante. Ce chiffre figure sur notre [page À propos](/about), parce que c’est la seule façon pour que cet engagement ait un sens.
+Sur {reviewable} enregistrements pouvant être relus, {checkedByPerson} ont été contrôlés par une personne, {passedByAgent} par un agent, et {unstated} portent une note de relecture qui ne dit pas qui l’a lue. Aucun n’a encore été vérifié de façon indépendante. Ce chiffre figure sur notre [page À propos](/about), parce que c’est la seule façon pour que cet engagement ait un sens.
 
 {#review-some}
-Sur {reviewable} enregistrements pouvant être relus, {reviewed} portent une note de relecture éditoriale, et {independent} ont été vérifiés de façon indépendante. Ce chiffre figure sur notre [page À propos](/about), parce que c’est la seule façon pour que cet engagement ait un sens.
+Sur {reviewable} enregistrements pouvant être relus, {checkedByPerson} ont été contrôlés par une personne, {passedByAgent} par un agent, {unstated} portent une note de relecture qui ne dit pas qui l’a lue, et {independent} ont été vérifiés de façon indépendante. Ce chiffre figure sur notre [page À propos](/about), parce que c’est la seule façon pour que cet engagement ait un sens.
 
 ## Une organisation, un moteur, un pays, *quatre portes.* {#struct-title}
 
@@ -300,7 +300,7 @@ Les projets d’intérêt public meurent en général quand l’argent, l’atte
 4. **Grandir ne demande pas de nouveau logiciel.** Un nouvel indice est une configuration de la plateforme de recherche. Un nouveau pays est une copie du moteur avec un seul fichier de réglages modifié.
 5. **Petite équipe, grand levier.** DeepTunisia a été construit par une seule personne travaillant avec de nombreux modèles d’IA, et nous le disons ouvertement dans le [colophon](/colophon). La règle ne change jamais : les modèles proposent, les humains décident, et le moteur vérifie tout ce que les uns et les autres écrivent.
 6. **Indépendant par principe.** Chaque financeur est publié avec le montant, la période et l’objet. Aucun financeur ne peut influencer les conclusions, les sujets de recherche ou la classification d’une affirmation. La liste actuelle est sur la [page À propos](/about).
-7. **Il se tient à jour tout seul.** Un fil d’actualité se rafraîchit toutes les quatre heures. Les titulaires de fonctions sans source récente sont automatiquement marqués « dernière vérification » au lieu de « en poste », pour que le registre ne puisse pas vieillir en silence. Les chiffres de cette page sont comptés de la même façon, par la construction qui l’a publiée.
+7. **Il se tient à jour tout seul.** Un fil d’actualité se rafraîchit toutes les quatre heures. Les titulaires de fonctions sans source récente sont automatiquement marqués « dernière confirmation » au lieu de « en poste », pour que le registre ne puisse pas vieillir en silence. Les chiffres de cette page sont comptés de la même façon, par la construction qui l’a publiée.
 
 ## Chacun peut modifier le registre. *Personne ne peut le faire en silence.* {#contrib-title}
 

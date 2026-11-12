@@ -549,7 +549,11 @@
 								<p class="reviewed">
 									{t('panel.review')}: {pos.review.by}, {pos.review.date}{pos.review.method
 										? ` — ${pos.review.method}`
-										: ''}
+										: ''} ({pos.review.actor === 'human'
+										? t('panel.review.actor.human')
+										: pos.review.actor === 'agent'
+											? t('panel.review.actor.agent')
+											: t('panel.review.actor.unstated')})
 								</p>
 							{/if}
 							<SourceList ids={pos.sources} compact />

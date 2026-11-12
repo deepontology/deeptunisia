@@ -28,7 +28,7 @@ Le `status: "last-verified"` montré ci-dessus est un autre champ. Il dit quand 
 - **{contradictions} contradictions restent non résolues.** Là où les sources divergent, le jeu de données consigne le désaccord au lieu de choisir. Vérifiez le tableau `disputes` avant d'utiliser un chiffre.
 - **La chronologie de la police antérieure à 2011 est le point le plus faible.** La succession des chefs de la police nationale sous Ben Ali repose en grande partie sur des sources secondaires.
 - **Les pondérations d'autorité sont éditoriales.** Elles relèvent d'un jugement sur l'autorité formelle, publié sur la [page Méthode](/methodology) pour que vous puissiez y substituer les vôtres.
-- **Seuls {reviewed} des {reviewable} enregistrements ont fait l'objet d'une relecture humaine indépendante.** Traitez le reste comme compilé mais non audité.
+- **{checkedByPerson} enregistrements ont été contrôlés par une personne, {passedByAgent} par un agent, et {unstated} portent une note de relecture qui ne dit pas qui l'a lue, sur {reviewable} ; les vérifications indépendantes restent à zéro.** Traitez le reste comme compilé mais non audité.
 
 ## Le reconstruire vous-même {#rebuild}
 

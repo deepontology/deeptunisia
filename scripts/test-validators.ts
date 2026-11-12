@@ -1367,8 +1367,21 @@ ok(
 	);
 	ok(
 		'Phase 8: examined never implies independently checked',
-		summary.coverage.every((c) => c.independentlyChecked === 0) && summary.reviewed === 1,
-		`examined ${summary.reviewed}, independent 0`
+		summary.coverage.every((c) => c.independentlyChecked === 0) && summary.reviewedUnstated === 1,
+		`unstated ${summary.reviewedUnstated}, independent 0`
+	);
+	const split = summariseReview([
+		{ kind: 'person', review: { by: 'maintainer', actor: 'human' } },
+		{ kind: 'person', review: { by: 'Research pass 2026-08-04', actor: 'agent' } },
+		{ kind: 'person', review: { by: 'maintainer' } }
+	] as ReviewInput[]);
+	ok(
+		'D2: a review is counted by the actor it names, and an unnamed actor is not folded into either',
+		split.reviewedHuman === 1 &&
+			split.reviewedAgent === 1 &&
+			split.reviewedUnstated === 1 &&
+			split.reviewable === 3,
+		`${split.reviewedHuman} person, ${split.reviewedAgent} agent, ${split.reviewedUnstated} unstated`
 	);
 	const csv = reviewCoverageCsv(summary);
 	const header = csv.split('\n')[0];

@@ -8,6 +8,8 @@
 	 */
 	import { BASIS_COLOR, BASIS_ORDER, DASH, ds, type Basis } from '$lib/model';
 	import { nameOf, t, basisLabel, basisDesc, indexMeta } from '$lib/t.svelte';
+	import { format } from '$lib/i18n';
+	import { app } from '$lib/state.svelte';
 	import { INDEX_KEYS } from '$lib/indices';
 	import SectionHeader from '$lib/ui/SectionHeader.svelte';
 
@@ -185,7 +187,13 @@
 			<p>
 				{t('m.pipeline1')}
 				<a href="/about">{t('m.link.about')}</a> {t('m.pipeline2')}
-				<strong>{ds.meta.review.reviewed} of {ds.meta.review.reviewable}</strong>{t('m.pipeline3')}
+				<strong
+					>{format(app.locale, 'm.review.split', {
+						human: ds.meta.review.reviewedHuman,
+						agent: ds.meta.review.reviewedAgent,
+						reviewable: ds.meta.review.reviewable
+					})}</strong
+				>{t('m.pipeline3')}
 			</p>
 			<p>
 				{t('m.noai1')} <a href="/investigate">investigate</a> {t('m.noai2')}

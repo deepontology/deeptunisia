@@ -60,10 +60,10 @@ We test {hypotheses} hypotheses in public. At the moment the evidence fails to s
 We test {hypotheses} hypotheses in public. The results, good or bad, are on the [evidence page](/evidence).
 
 {#review-none}
-Of {reviewable} records that can be reviewed, {reviewed} carry an editorial review note, and none has yet been independently verified. That number is on our [About page](/about) because it is the only way the promise means anything.
+Of {reviewable} records that can be reviewed, {checkedByPerson} have been checked by a person, {passedByAgent} by an agent, and {unstated} carry a review note that does not say who read it. None has yet been independently verified. That number is on our [About page](/about) because it is the only way the promise means anything.
 
 {#review-some}
-Of {reviewable} records that can be reviewed, {reviewed} carry an editorial review note, and {independent} have been independently verified. That number is on our [About page](/about) because it is the only way the promise means anything.
+Of {reviewable} records that can be reviewed, {checkedByPerson} have been checked by a person, {passedByAgent} by an agent, {unstated} carry a review note that does not say who read it, and {independent} have been independently verified. That number is on our [About page](/about) because it is the only way the promise means anything.
 
 ## One organisation, one engine, one country, *four doors.* {#struct-title}
 
@@ -300,7 +300,7 @@ Public-interest projects usually die when money, attention or a key person runs 
 4. **Growth does not mean new software.** A new index is a configuration of the research platform. A new country is a fork of the engine with one settings file changed.
 5. **Small team, large leverage.** DeepTunisia was built by one person working with many AI models, and we disclose this openly on the [colophon](/colophon). The rule never changes: models propose, people decide, and the engine checks everything either of them writes.
 6. **Independent by rule.** Every funder is published with amount, period and purpose. No funder may influence conclusions, research targets or how a claim is classified. The current list is on the [About page](/about).
-7. **It keeps itself current.** A news feed refreshes every four hours. Office holders without a recent source are automatically marked “last verified” instead of “current”, so the record cannot silently go stale. The figures on this page are counted the same way, by the build that published it.
+7. **It keeps itself current.** A news feed refreshes every four hours. Office holders without a recent source are automatically marked “last confirmed” instead of “current”, so the record cannot silently go stale. The figures on this page are counted the same way, by the build that published it.
 
 ## Anyone can change the record. *Nobody can change it quietly.* {#contrib-title}
 
