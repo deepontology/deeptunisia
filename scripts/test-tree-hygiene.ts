@@ -1,8 +1,8 @@
 /**
- * Tree hygiene — what may never be committed or shipped.
+ * Tree hygiene — what may never be committed, shipped or imported.
  *
  * Three rules, checked against every tracked file and, when it exists, every file
- * in build/ (what the site actually serves):
+ * in build/ (what the site actually serves), and a fourth over the source tree:
  *
  *   1. No symbolic links are tracked. A worktree that represents node_modules,
  *      .claude or .opencode as a symlink to the main checkout makes `git add -A`
@@ -15,6 +15,10 @@
  *      them. The list itself is never tracked and never printed: a hit is
  *      reported by file, line and list position only. Without the file (CI, a
  *      fork, a fresh clone) this rule is skipped and the run says so.
+ *   4. Nothing under scripts/ or src/ imports the retired v0.1 engine paths
+ *      `deepepisteme/time` or `deepepisteme/claim`. Those modules configure one
+ *      time model and one claim envelope in module state, so two callers cannot
+ *      disagree on purpose. The engine is used through an instance instead.
  *
  * The pattern file is the first of: $DT_IDENTITY_PATTERNS, or
  * internal/identity-patterns.txt in the main checkout (found through the git
@@ -162,6 +166,26 @@ if (existsSync(BUILD)) {
 } else {
 	console.log('  build/ absent; built-site scan skipped (run after `npm run build` to include it)');
 }
+
+// 4. Retired engine module paths
+const RETIRED_ENGINE = /['"]deepepisteme\/(?:time|claim)['"]/;
+const retired: string[] = [];
+for (const dir of ['scripts', 'src']) {
+	for (const abs of walk(join(ROOT, dir))) {
+		const rel = abs.slice(ROOT.length + 1);
+		if (!/\.(?:[cm]?[jt]sx?|svelte)$/.test(rel)) continue;
+		readFileSync(abs, 'utf8')
+			.split(/\r?\n/)
+			.forEach((line, i) => {
+				if (RETIRED_ENGINE.test(line)) retired.push(`${rel}:${i + 1}`);
+			});
+	}
+}
+ok(
+	'nothing imports the retired engine module paths',
+	retired.length === 0,
+	retired.length ? retired.slice(0, 10).join(', ') : 'scripts/ and src/ clean'
+);
 
 if (pdfSkipped.length) {
 	console.log(`  note: pdftotext/pdfinfo not installed; ${pdfSkipped.length} PDF(s) scanned as raw bytes only`);

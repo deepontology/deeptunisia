@@ -1,0 +1,122 @@
+[
+	{
+		"file": "src/lib/components/EntityPanel.svelte",
+		"text": "UNS",
+		"reason": "Basis short code (unsubstantiated), not prose"
+	},
+	{
+		"file": "src/routes/(instrument)/evidence/+page.svelte",
+		"text": "UNS",
+		"reason": "Basis short code (unsubstantiated), not prose"
+	},
+	{
+		"file": "src/lib/components/EntityPanel.svelte",
+		"text": "M TND",
+		"reason": "Currency unit: millions of Tunisian dinars"
+	},
+	{
+		"file": "src/lib/components/RecordPanel.svelte",
+		"text": "M TND",
+		"reason": "Currency unit: millions of Tunisian dinars"
+	},
+	{
+		"file": "src/lib/components/Rankings.svelte",
+		"text": "sensitivity.json",
+		"reason": "Download file name, must stay byte-identical"
+	},
+	{
+		"file": "src/lib/components/SearchPalette.svelte",
+		"text": "enter",
+		"reason": "Keyboard key label"
+	},
+	{
+		"file": "src/lib/components/SearchPalette.svelte",
+		"text": "esc",
+		"reason": "Keyboard key label"
+	},
+	{
+		"file": "src/lib/index-study/Barcode.svelte",
+		"text": "sha256",
+		"reason": "Hash algorithm name"
+	},
+	{
+		"file": "src/lib/index-study/IndexStudy.svelte",
+		"text": "PSI ·",
+		"reason": "Index code and separator, not prose"
+	},
+	{
+		"file": "src/lib/shell/BootScreen.svelte",
+		"text": "Deep",
+		"reason": "Brand wordmark, split across two elements"
+	},
+	{
+		"file": "src/lib/shell/BootScreen.svelte",
+		"text": "Tunisia",
+		"reason": "Brand wordmark, split across two elements"
+	},
+	{
+		"file": "src/lib/shell/MenuBar.svelte",
+		"text": "Deep",
+		"reason": "Brand wordmark, split across two elements"
+	},
+	{
+		"file": "src/lib/shell/MenuBar.svelte",
+		"text": "Tunisia",
+		"reason": "Brand wordmark, split across two elements"
+	},
+	{
+		"file": "src/routes/(read)/data/+page.svelte",
+		"text": "dataset.json",
+		"reason": "Download file name"
+	},
+	{
+		"file": "src/routes/(read)/data/+page.svelte",
+		"text": "positions.csv",
+		"reason": "Download file name"
+	},
+	{
+		"file": "src/routes/(read)/data/+page.svelte",
+		"text": "relationships.csv",
+		"reason": "Download file name"
+	},
+	{
+		"file": "src/routes/(read)/data/+page.svelte",
+		"text": "sources.csv",
+		"reason": "Download file name"
+	},
+	{
+		"file": "src/routes/(read)/data/+page.svelte",
+		"text": "JSON ·",
+		"reason": "File format name and separator"
+	},
+	{
+		"file": "src/routes/(read)/data/+page.svelte",
+		"text": "CSV ·",
+		"reason": "File format name and separator"
+	},
+	{
+		"file": "src/routes/(read)/data/+page.svelte",
+		"text": "KB",
+		"reason": "Unit: kilobytes"
+	},
+	{
+		"file": "src/routes/(read)/introduction/+page.svelte",
+		"text": "deeptunisia.org",
+		"reason": "Domain name"
+	},
+	{
+		"file": "src/routes/(read)/introduction/+page.svelte",
+		"text": "github.com/deepontology/deeptunisia",
+		"reason": "Repository URL"
+	},
+	{
+		"file": "src/routes/(read)/introduction/+page.svelte",
+		"text": "contact@deeptunisia.org",
+		"reason": "Email address"
+	},
+	{
+		"file": "src/routes/(read)/research/+page.svelte",
+		"text": "DT Research",
+		"reason": "Programme name, a proper noun"
+	}
+]

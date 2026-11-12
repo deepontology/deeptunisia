@@ -372,6 +372,17 @@ try {
   confidence: B
   sources: [${s}]`);
 
+	// V33 verified needs a person: a record says verified with no review at all,
+	// which is what every defaulted record said before 1.0.
+	appendBlock(TREE_BAD, 'positions.yaml', `
+- id: p-fixture-verified-noreview
+  role: president
+  holder: bourguiba
+  start: "2020-01-01"
+  confidence: A
+  verification: verified
+  sources: [${s}]`);
+
 	const bad = build(TREE_BAD, OUT_BAD, STATIC_BAD);
 	ok('pipeline fixture: the injected tree fails the build', bad.code !== 0, `exit ${bad.code}`);
 
@@ -390,7 +401,8 @@ try {
 		['positions.yaml [p-fixture-evidence]', 'a year-only archive lookup fails and names the record (V29)'],
 		['event fixture-beyond-cutoff', 'an event dated past the research cutoff fails and names the record (V31)'],
 		['overlaps titular position p-gov-tunis-feki', 'a vacancy overlapping a titular holder fails and names the position (V32)'],
-		['unknown role "no-such-role" (V32)', 'a vacancy of an unknown office fails (V32)']
+		['unknown role "no-such-role" (V32)', 'a vacancy of an unknown office fails (V32)'],
+		['position p-fixture-verified-noreview', 'a verified record with no review fails and names the record (V33)']
 	];
 	for (const [needle, label] of expectations) {
 		ok(`pipeline fixture: ${label}`, bad.output.includes(needle), `expected the build to say "${needle}"`);
@@ -429,6 +441,11 @@ try {
 		'pipeline fixture: the cutoff error is the V31 horizon message',
 		bad.output.includes('(V31)'),
 		'expected the V31 message in the build output'
+	);
+	ok(
+		'pipeline fixture: the verified error is the V33 human-review message',
+		bad.output.includes('(V33)') && bad.output.includes('actor human and method source-check'),
+		'expected the V33 message in the build output'
 	);
 
 	ok(

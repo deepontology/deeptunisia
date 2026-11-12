@@ -85,3 +85,15 @@
 /sources.csv
   Cache-Control: public, max-age=3600
   Access-Control-Allow-Origin: *
+
+# ---------------------------------------------------------------------------
+# NO workers.dev ADDRESS IS FOR SEARCH ENGINES
+# ---------------------------------------------------------------------------
+#
+# The site is deeptunisia.org. Any workers.dev address that serves these files
+# (the preview of a release branch, or the production Worker's own platform
+# address) is a second copy, and a second copy in a search index would compete
+# with the real page and outlive the branch it showed. The selector names the
+# host, so no response on deeptunisia.org carries this header.
+https://:worker.:account.workers.dev/*
+  X-Robots-Tag: noindex, nofollow

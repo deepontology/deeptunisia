@@ -308,7 +308,7 @@
 		class="inspector d-{detent}"
 		class:closing
 		class:tucked
-		aria-label="Entity inspector"
+		aria-label={t('panel.entityInspector')}
 		bind:this={asideEl}
 		onclickcapture={untuck}
 		use:sheetDrag={dragParams}

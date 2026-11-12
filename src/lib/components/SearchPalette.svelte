@@ -4,7 +4,7 @@
 	import { page } from '$app/state';
 	import { onMount } from 'svelte';
 	import { LAYER_COLOR } from '$lib/vocab';
-	import { formatDate } from '$lib/t.svelte';
+	import { formatDate, t, tf } from '$lib/t.svelte';
 	import { loadSearch, search, searchError, searchStatus, type Hit } from '$lib/search.svelte';
 	import { isReadingPath } from '$lib/shell/reading';
 
@@ -115,13 +115,13 @@
 	role="presentation"
 ></div>
 
-<div class="palette" role="dialog" aria-modal="true" aria-label="Search">
+<div class="palette" role="dialog" aria-modal="true" aria-label={t('ctl.search')}>
 	<input
 		bind:this={inputEl}
 		bind:value={query}
 		onkeydown={onKey}
-		placeholder="Search people, institutions, events — Arabic, French or English"
-		aria-label="Search query"
+		placeholder={t('search.placeholder')}
+		aria-label={t('search.query')}
 		autocomplete="off"
 		spellcheck="false"
 	/>
@@ -145,19 +145,19 @@
 		{#if results.length === 0}
 			<li class="empty">
 				{#if status === 'error'}
-					Search is unavailable: {reading ? searchError() : richError}
+					{tf('search.unavailable', { error: (reading ? searchError() : richError) ?? '' })}
 				{:else if status !== 'ready'}
-					Loading the index…
+					{t('search.loading')}
 				{:else}
-					No match. Try a surname, an institution, or a year.
+					{t('search.empty')}
 				{/if}
 			</li>
 		{/if}
 	</ul>
 	<footer>
-		<span><kbd>↑</kbd><kbd>↓</kbd> navigate</span>
-		<span><kbd>enter</kbd> open</span>
-		<span><kbd>esc</kbd> dismiss</span>
+		<span><kbd>↑</kbd><kbd>↓</kbd> {t('search.navigate')}</span>
+		<span><kbd>enter</kbd> {t('search.open')}</span>
+		<span><kbd>esc</kbd> {t('search.dismiss')}</span>
 	</footer>
 </div>
 
