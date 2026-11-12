@@ -10,9 +10,13 @@
  *
  *   tsx scripts/test-hash-ledger.ts
  *     The ledger itself: header, six fields per line, hash formats, the chain
- *     (each line's hash_before is the previous line's hash_after), dates valid
- *     and not decreasing, a real reason on every line after the baseline.
- *     Runs the comparison unit tests too.
+ *     (see below), dates valid and not decreasing, a real reason on every line
+ *     after the baseline. Runs the unit tests of both rules too.
+ *
+ * The chain: a line's hash_before must equal the hash_after of the line above
+ * only when both were built on the same data_commit. A daily sync from main
+ * brings new data and moves the hash with no line, so two lines built on
+ * different data cannot be asked to join up.
  *
  *   tsx scripts/test-hash-ledger.ts --base <hash> --head <hash>
  *     The rule: equal hashes pass. Different hashes pass only when the last
@@ -98,8 +102,8 @@ export function parseLedger(text: string): { lines: LedgerLine[]; errors: string
 		}
 		if (baseline && reason.trim() === '') errors.push(`line ${row}: reason is empty`);
 		const previous = lines[lines.length - 1];
-		if (previous && hashBefore !== previous.hashAfter) {
-			errors.push(`line ${row}: hash_before does not equal line ${row - 1}'s hash_after`);
+		if (previous && previous.dataCommit === dataCommit && hashBefore !== previous.hashAfter) {
+			errors.push(`line ${row}: hash_before does not equal line ${row - 1}'s hash_after, and both lines name the same data_commit`);
 		}
 		if (previous && isDate(date) && isDate(previous.date) && date < previous.date) {
 			errors.push(`line ${row}: date ${date} is earlier than the line above (${previous.date})`);
@@ -170,6 +174,24 @@ export function runComparisonCases(): { name: string; passed: boolean; detail: s
 	});
 }
 
+/** The chain rule, on ledgers written here so the cases do not depend on the real file. */
+export function runChainCases(): { name: string; passed: boolean; detail: string }[] {
+	const DATA_1 = '1'.repeat(40);
+	const DATA_2 = '2'.repeat(40);
+	const text = (rows: string[][]) => [LEDGER_COLUMNS.join('\t'), ...rows.map((r) => r.join('\t'))].join('\n') + '\n';
+	const baseline = ['2026-11-11', DATA_1, '', HASH_A, '', 'baseline'];
+	const reason = 'a reason long enough to pass the check';
+	const cases: { name: string; rows: string[][]; ok: boolean }[] = [
+		{ name: 'same data, hashes join up', rows: [baseline, ['2026-11-12', DATA_1, HASH_A, HASH_B, '#41', reason]], ok: true },
+		{ name: 'same data, hashes do not join up', rows: [baseline, ['2026-11-12', DATA_1, HASH_C, HASH_B, '#41', reason]], ok: false },
+		{ name: 'new data arrived between two lines, so they need not join up', rows: [baseline, ['2026-11-12', DATA_2, HASH_C, HASH_B, '#41', reason]], ok: true }
+	];
+	return cases.map((c) => {
+		const { errors } = parseLedger(text(c.rows));
+		return { name: c.name, passed: (errors.length === 0) === c.ok, detail: errors.join('; ') };
+	});
+}
+
 function readLedger(): { lines: LedgerLine[]; errors: string[] } {
 	if (!existsSync(LEDGER)) return { lines: [], errors: ['docs/hash-ledger.tsv is missing'] };
 	return parseLedger(readFileSync(LEDGER, 'utf8'));
@@ -210,7 +232,12 @@ function main(argv: string[]): number {
 	let passed = 0;
 	console.log('\n  ── hash ledger ──\n');
 	checks++;
-	passed += report('the ledger parses, every line has six fields, the hashes chain, the dates hold, every line has a reason', errors.length === 0, errors.join('; '));
+	passed += report('the ledger parses, every line has six fields, lines on the same data join up, the dates hold, every line has a reason', errors.length === 0, errors.join('; '));
+
+	for (const c of runChainCases()) {
+		checks++;
+		passed += report(`chain: ${c.name}`, c.passed, c.passed ? '' : c.detail);
+	}
 
 	const cases = runComparisonCases();
 	for (const c of cases) {
