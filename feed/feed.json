@@ -3,6 +3,36 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:14dc0a6aa992e4df",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Journées de l’Entreprise à Sousse | La gouvernance face à l’exigence de résultats",
+      "link": "https://kapitalis.com/tunisie/2026/11/12/journees-de-lentreprise-a-sousse-la-gouvernance-face-a-lexigence-de-resultats/",
+      "published": "2026-11-12T07:20:00Z",
+      "lang": "fr",
+      "author": "webmaster kapitalis"
+    },
+    {
+      "id": "feed:kapitalis:01e4a0771c8e0dc3",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Les potins du cardiologue | Pourquoi je voterais pour le Pr Afef Ben Halima",
+      "link": "https://kapitalis.com/tunisie/2026/11/12/les-potins-du-cardiologue-pourquoi-je-voterais-pour-le-pr-afef-ben-halima/",
+      "published": "2026-11-12T07:02:31Z",
+      "lang": "fr",
+      "author": "webmaster kapitalis"
+    },
+    {
+      "id": "feed:kapitalis:92458c11390c3e5f",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Impacts de la débâcle de Trump sur la politique étrangère américaine",
+      "link": "https://kapitalis.com/tunisie/2026/11/12/impacts-de-la-debacle-de-trump-sur-la-politique-etrangere-americaine/",
+      "published": "2026-11-12T06:30:00Z",
+      "lang": "fr",
+      "author": "webmaster kapitalis"
+    },
+    {
       "id": "feed:kapitalis:35bb1d0391b5b21f",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -11968,36 +11998,6 @@
       "title": "Les Émirats affirment que le copilote de flydubai a planifié un attentat-suicide sur un vol à destination de Tel Aviv",
       "link": "https://africanmanager.com/les-emirats-affirment-que-le-copilote-de-flydubai-a-planifie-un-attentat-suicide-sur-un-vol-a-destination-de-tel-aviv/",
       "published": "2026-10-10T06:59:01Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:b6aba84ba1383823",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "La Tunisie tient son rang en autosuffisance avicole",
-      "link": "https://africanmanager.com/la-tunisie-tient-son-rang-en-autosuffisance-avicole/",
-      "published": "2026-10-10T06:58:43Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:3cc0aabffff6d508",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Les cours du pétrole reculent après les déclarations de Trump sur une attaque contre l’Iran",
-      "link": "https://africanmanager.com/les-cours-du-petrole-reculent-apres-les-declarations-de-trump-sur-une-attaque-contre-liran/",
-      "published": "2026-10-10T06:55:03Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:bcd30cb7a4c594a8",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Les États-Unis sanctionnent la Cour pénale internationale elle-même",
-      "link": "https://africanmanager.com/les-etats-unis-sanctionnent-la-cour-penale-internationale-elle-meme/",
-      "published": "2026-10-10T06:53:32Z",
       "lang": "fr",
       "author": "African Manager"
     }
