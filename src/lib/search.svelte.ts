@@ -138,13 +138,15 @@ export interface SearchOptions {
  * mention menu open with something to arrow through. A menu that appears empty
  * reads as broken, and the reader has no way to tell it apart from one that is.
  *
- * Before the file arrives it returns an empty list and starts the load; callers
- * that render in an effect re-run when it lands, because the status is read here.
+ * Before the file arrives it returns an empty list and starts the load on the
+ * next microtask; callers that render in an effect re-run when it lands, because
+ * the status is read here. The load is not started in place: `search` is called
+ * from `$derived`, and writing state while a derived is evaluated aborts Svelte.
  */
 export function search(query: string, options: SearchOptions = {}): Hit[] {
 	void status;
 	if (!mini) {
-		if (status === 'idle') void loadSearch();
+		if (status === 'idle') queueMicrotask(() => void loadSearch());
 		return [];
 	}
 	const { limit = 24, kinds } = options;
@@ -169,6 +171,6 @@ function strip(d: Doc | Hit): Hit {
 /** Resolve an id to its display form. Used when rendering a stored mention. */
 export function hitById(id: string): Hit | null {
 	void status;
-	if (!mini && status === 'idle') void loadSearch();
+	if (!mini && status === 'idle') queueMicrotask(() => void loadSearch());
 	return byId.get(id) ?? null;
 }
