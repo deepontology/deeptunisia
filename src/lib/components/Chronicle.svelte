@@ -1829,9 +1829,9 @@
 	<details class="a11y">
 		<summary>{t('chronicle.table')}</summary>
 		<table>
-			<caption>Officeholders by post, with the span each source actually supports.</caption>
+			<caption>{t('chronicle.table.caption')}</caption>
 			<thead>
-				<tr><th>Post</th><th>Holder</th><th>Span</th><th>Duration</th><th>Evidence</th><th>Origins</th></tr>
+				<tr><th>{t('tbl.post')}</th><th>{t('tbl.holder')}</th><th>{t('tbl.span')}</th><th>{t('tbl.duration')}</th><th>{t('tbl.evidence')}</th><th>{t('tbl.origins')}</th></tr>
 			</thead>
 			<tbody>
 				{#each layout.items.filter((i) => i.kind === 'row') as row (row.roleId)}
@@ -1851,7 +1851,7 @@
 		<table>
 			<caption>{t('timeline.lane.event')}</caption>
 			<thead>
-				<tr><th>Date</th><th>Event</th><th>Category</th><th>Rupture</th><th>Evidence</th><th>Origins</th></tr>
+				<tr><th>{t('tbl.date')}</th><th>{t('tbl.event')}</th><th>{t('tbl.category')}</th><th>{t('tbl.rupture')}</th><th>{t('tbl.evidence')}</th><th>{t('tbl.origins')}</th></tr>
 			</thead>
 			<tbody>
 				{#each eventsSorted.filter(eventPasses) as e (e.id)}
@@ -1859,7 +1859,7 @@
 						<td>{formatDate(e.interval.startEarliest, 'day')}</td>
 						<td>{eventTitle(e)}</td>
 						<td>{e.category}</td>
-						<td>{e.rupture ? 'yes' : 'no'}</td>
+						<td>{e.rupture ? t('record.yes') : t('record.no')}</td>
 						<td>{e.confidence}</td>
 						<td>{e.origins ?? e.independence ?? '?'}</td>
 					</tr>

@@ -531,7 +531,7 @@ ok(
 );
 ok(
 	'both chronicle table alternatives gained an origins column',
-	(CHRONICLE.match(/<th>Origins<\/th>/g) ?? []).length === 2 &&
+	(CHRONICLE.match(/<th>\{t\('tbl\.origins'\)\}<\/th>/g) ?? []).length === 2 &&
 		CHRONICLE.includes('pos.origins ?? pos.independence') &&
 		CHRONICLE.includes('e.origins ?? e.independence')
 );
