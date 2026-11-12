@@ -3,7 +3,8 @@
 	import { app } from '$lib/state.svelte';
 	import { compact } from '$lib/design/media.svelte';
 	import { ds, institutionById, personById, relationshipById } from '$lib/model';
-	import { basisLabel, entityName, relLabel, t, tf } from '$lib/t.svelte';
+	import { entityName, relLabel, t, tf } from '$lib/t.svelte';
+	import { basisLineText } from '$lib/ui/BasisLine.svelte';
 	import { format } from '$lib/i18n';
 	import { INFLUENCE_CARRYING_TYPES, intervalsOverlap } from '$lib/interpretation';
 	import Disclosure from '$lib/ui/Disclosure.svelte';
@@ -169,7 +170,7 @@
 				out.push({
 					kind: 'confidence',
 					title: t('inspector.confidence.title'),
-					body: tf('inspector.confidence.named', { link: link(weak.id), basis: basisLabel(weak.basis) })
+					body: tf('inspector.confidence.named', { link: link(weak.id), basis: basisLineText(weak) })
 				});
 			}
 		}

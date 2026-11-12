@@ -32,12 +32,13 @@
 </script>
 
 <script lang="ts">
-	import { t, tf, nameOf, basisLabel, formatDate } from '$lib/t.svelte';
+	import { t, tf, nameOf, formatDate } from '$lib/t.svelte';
 	import { app } from '$lib/state.svelte';
-	import { ds, type Basis } from '$lib/model';
+	import { ds } from '$lib/model';
 	import { compact } from '$lib/design/media.svelte';
 	import { AGORA_OPEN } from '$lib/agora-gate';
 	import Chip from '$lib/ui/Chip.svelte';
+	import BasisLine from '$lib/ui/BasisLine.svelte';
 	import Tooltip from '$lib/ui/Tooltip.svelte';
 	import OriginsChip from '$lib/ui/OriginsChip.svelte';
 	import CommunityActions from '$lib/ui/CommunityActions.svelte';
@@ -264,11 +265,7 @@
 			<h3 class="title" dir="auto">{nameOf(agreement)}</h3>
 			<p class="desc" dir="auto"><Prose record={agreement} field="summary" block /></p>
 			<div class="meta">
-				{#if agreement.basis}
-					<Chip size="xs" dot tint="var(--basis-{agreement.basis})">
-						{agreement.confidence ? `${agreement.confidence} — ` : ''}{basisLabel(agreement.basis as Basis)}
-					</Chip>
-				{/if}
+				<BasisLine record={agreement} />
 				<OriginsChip origins={agreement.origins} independence={agreement.independence} />
 				{#if agreement.in_force}
 					<Chip variant="outline" size="xs">{tf('world.inforce.date', { date: localDate(agreement.in_force) })}</Chip>

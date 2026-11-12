@@ -22,7 +22,8 @@
 		type YearDebt
 	} from '$lib/world/countries';
 	import { moneyM } from '$lib/world/format';
-import { t, tf, nameOf, basisLabel, relLabel, describeInterval, confidenceLabel, entityName, formatDate, proseList } from '$lib/t.svelte';
+import { t, tf, nameOf, relLabel, describeInterval, confidenceLabel, entityName, formatDate, proseList } from '$lib/t.svelte';
+import BasisLine from '$lib/ui/BasisLine.svelte';
 	import Panel from '$lib/ui/Panel.svelte';
 	import Chip from '$lib/ui/Chip.svelte';
 	import Content from '$lib/ui/Content.svelte';
@@ -279,7 +280,7 @@ import { t, tf, nameOf, basisLabel, relLabel, describeInterval, confidenceLabel,
 			<div class="chips">
 				<Chip variant="outline">{t(`inst.${record.type}`) || record.type}</Chip>
 				{#if recordBasis}
-					<Chip dot tint={`var(--basis-${recordBasis})`}>{record.confidence} — {basisLabel(recordBasis)}</Chip>
+					<BasisLine record={record} />
 				{:else}
 					<Chip variant="outline">{record.confidence}</Chip>
 				{/if}
@@ -406,7 +407,7 @@ import { t, tf, nameOf, basisLabel, relLabel, describeInterval, confidenceLabel,
 			<div class="claim-list">
 				{#each agreements as ag (ag.id)}
 					<Panel padded elevation={1}>
-						<div class="claim-top"><h3 dir="auto">{nameOf(ag)}</h3><Chip dot tint={`var(--basis-${ag.basis})`}>{ag.confidence} — {basisLabel(ag.basis)}</Chip></div>
+						<div class="claim-top"><h3 dir="auto">{nameOf(ag)}</h3><BasisLine record={ag} /></div>
 						<p dir="auto"><Prose record={ag} field="summary" block /></p>
 						<div class="meta"><span>{t(`world.kind.${ag.kind}`)}</span>{#if ag.in_force}<span class="mono">{tf('world.inforce.date', { date: localDate(ag.in_force) })}</span>{/if}</div>
 						{#if ag.attributed_to}<p class="attributed">{tf('world.dossier.attributed', { label: t('basis.attributed'), who: ag.attributed_to })}</p>{/if}
@@ -426,7 +427,7 @@ import { t, tf, nameOf, basisLabel, relLabel, describeInterval, confidenceLabel,
 			<div class="relation-list">
 				{#each graphRelations as rel (rel.id)}
 					<Panel padded elevation={1}>
-						<div class="claim-top"><h3>{tf('world.dossier.relationship.title', { relation: relLabel(rel.type), counterparty: counterpart(rel) })}</h3><Chip dot tint={`var(--basis-${rel.basis})`}>{rel.confidence} — {basisLabel(rel.basis)}</Chip></div>
+						<div class="claim-top"><h3>{tf('world.dossier.relationship.title', { relation: relLabel(rel.type), counterparty: counterpart(rel) })}</h3><BasisLine record={rel} /></div>
 						{#if rel.description}<p dir="auto"><Prose record={rel} field="description" block /></p>{/if}
 						<div class="meta">{#if relationInterval(rel)}<span class="mono">{relationInterval(rel)}</span>{/if}<span>{confidenceLabel(rel.confidence)}</span></div>
 						{#if rel.attributed_to}<p class="attributed">{tf('world.dossier.attributed', { label: t('basis.attributed'), who: rel.attributed_to })}</p>{/if}
@@ -444,7 +445,7 @@ import { t, tf, nameOf, basisLabel, relLabel, describeInterval, confidenceLabel,
 				{#each contracts as contract (contract.id)}
 					{@const notes = notesValue(contract)}
 					<Panel padded elevation={1}>
-						<div class="claim-top"><h3 dir="auto">{nameOf(contract)}</h3><Chip dot tint={`var(--basis-${contract.basis})`}>{contract.confidence} — {basisLabel(contract.basis)}</Chip></div>
+						<div class="claim-top"><h3 dir="auto">{nameOf(contract)}</h3><BasisLine record={contract} /></div>
 						<div class="meta"><span>{t(`world.contract.status.${contract.status}`)}</span>{#if contract.award}<span class="mono">{contract.award.value} {contract.award.currency}</span>{/if}</div>
 						{#if notes.items.length}<p dir="auto">{notes.items[0]}{#if !notes.translated}<span class="untranslated-note">{t('prose.untranslated')}</span>{/if}</p>{/if}
 						{#if contract.sources?.length}<SourceList ids={contract.sources} compact />{/if}
@@ -473,7 +474,7 @@ import { t, tf, nameOf, basisLabel, relLabel, describeInterval, confidenceLabel,
 			<div class="claim-list">
 				{#each claims as claim (claim.id)}
 					<Panel padded elevation={1} tint={`var(--basis-${claim.basis})`}>
-						<div class="claim-top"><h3 dir="auto"><Prose record={claim} field="claim" /></h3><Chip dot tint={`var(--basis-${claim.basis})`}>{claim.confidence} — {basisLabel(claim.basis)}</Chip></div>
+						<div class="claim-top"><h3 dir="auto"><Prose record={claim} field="claim" /></h3><BasisLine record={claim} /></div>
 						<p class="assessment" dir="auto"><strong>{t('world.dossier.assessment')}:</strong> <Prose record={claim} field="assessment" /></p>
 						{#if claim.attributed_to}<p class="attributed">{tf('world.dossier.attributed', { label: t('basis.attributed'), who: claim.attributed_to })}</p>{/if}
 						{#if claim.sources?.length}<SourceList ids={claim.sources} compact />{/if}

@@ -1,14 +1,13 @@
 <script lang="ts">
 	import { app } from '$lib/state.svelte';
-	import { t, basisLabel, confidenceLabel, describeInterval, formatDate, nameOf } from '$lib/t.svelte';
+	import { t, describeInterval, formatDate, nameOf } from '$lib/t.svelte';
 	import SourceList from './SourceList.svelte';
-	import Chip from '$lib/ui/Chip.svelte';
 	import OriginsChip from '$lib/ui/OriginsChip.svelte';
+	import BasisLine from '$lib/ui/BasisLine.svelte';
 	import CommunityActions from '$lib/ui/CommunityActions.svelte';
 	import ShareMenu from '$lib/ui/ShareMenu.svelte';
 	import { canonicalShareUrl } from '$lib/share';
 	import {
-		BASIS_COLOR,
 		companyById,
 		contractById,
 		declarationById,
@@ -19,7 +18,6 @@
 		licenceById,
 		personById,
 		entityName,
-		type Basis,
 		type Contract,
 		type Declaration,
 		type Education,
@@ -84,8 +82,7 @@
 		return id;
 	});
 
-	const basis = $derived((contract ?? declaration ?? event ?? education)?.basis as Basis | undefined);
-	const confidence = $derived((contract ?? declaration ?? event ?? education)?.confidence as string | undefined);
+	const record = $derived(contract ?? declaration ?? event ?? education);
 	const origins = $derived((contract ?? declaration ?? event ?? education)?.origins);
 	const independence = $derived((contract ?? declaration ?? event ?? education)?.independence);
 	const attributedTo = $derived((contract ?? declaration ?? event ?? education)?.attributed_to);
@@ -203,11 +200,7 @@
 	<h2>{title}</h2>
 
 	<div class="meta">
-		{#if basis}
-			<Chip size="xs" dot tint="var(--basis-{basis})">
-				{confidence ? `${confidence} — ` : ''}{basisLabel(basis)}
-			</Chip>
-		{/if}
+		<BasisLine {record} />
 		<OriginsChip origins={origins} independence={independence} />
 		{#if dated}
 			<span class="span mono">{describeInterval(dated)}</span>

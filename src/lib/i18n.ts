@@ -452,6 +452,10 @@ const en: Dict = {
 	'verification.needsPrimarySource': 'Awaiting a primary source: someone noted that the official document behind it has not been found.',
 	'verification.disputed': 'Disputed: someone contests it, and the dispute is written on the record.',
 
+	'restsOn.encyclopediaOnly': 'encyclopedia only',
+	'restsOn.one': 'rests on one origin',
+	'restsOn.many': 'rests on {n} origins',
+
 	'origins.count': 'Independent origins: {n}',
 	'origins.note':
 		'Origins count independent evidence groups, not links; outlets republishing one wire are one origin.',
@@ -2446,6 +2450,10 @@ const fr: Dict = {
 	'verification.needsPrimarySource': 'En attente d’une source primaire : quelqu’un a noté que le document officiel derrière l’affirmation n’a pas été trouvé.',
 	'verification.disputed': 'Contesté : quelqu’un conteste la fiche, et le désaccord est écrit sur la fiche.',
 
+	'restsOn.encyclopediaOnly': 'encyclopédie uniquement',
+	'restsOn.one': 'repose sur une seule origine',
+	'restsOn.many': 'repose sur {n} origines',
+
 	'origins.count': 'Origines indépendantes : {n}',
 	'origins.note':
 		'Les origines comptent des groupes de preuves indépendants, et non des liens ; des médias qui republient une même dépêche ne comptent que pour une seule origine.',
@@ -4412,6 +4420,10 @@ const ar: Dict = {
 	'verification.verified': 'مُتحقَّق منه: فتح شخص المصدر وأكّد أنه يقول ما يقوله السجل.',
 	'verification.needsPrimarySource': 'في انتظار مصدر أولي: لاحظ أحد أن الوثيقة الرسمية وراءه لم يُعثر عليها.',
 	'verification.disputed': 'متنازع عليه: أحد يعترض عليه، والاعتراض مكتوب على السجل.',
+
+	'restsOn.encyclopediaOnly': 'موسوعة فقط',
+	'restsOn.one': 'يستند إلى أصل واحد',
+	'restsOn.many': 'يستند إلى {n} من الأصول',
 
 	'origins.count': 'أصول مستقلة: {n}',
 	'origins.note':

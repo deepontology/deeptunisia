@@ -5,10 +5,11 @@
 	import { relationshipsByEntity } from '$lib/model';
 	import { app } from '$lib/state.svelte';
 	import { applyEntityLink } from '$lib/deeplink.svelte';
-	import { t, tf, basisLabel, describeInterval, durationLabel, eventTitle, formatDate, nameOf} from '$lib/t.svelte';
+	import { t, tf, describeInterval, durationLabel, eventTitle, formatDate, nameOf} from '$lib/t.svelte';
 	import { dateFormatter } from '$lib/i18n';
 	import Button from '$lib/ui/Button.svelte';
 	import Chip from '$lib/ui/Chip.svelte';
+	import BasisLine from '$lib/ui/BasisLine.svelte';
 	import Segmented from '$lib/ui/Segmented.svelte';
 	import Tooltip from '$lib/ui/Tooltip.svelte';
 	import { BASIS_COLOR } from '$lib/model';
@@ -1764,9 +1765,7 @@
 					<span class="t-meta">
 						<!-- Basis, not the raw confidence letter. What kind of claim this is
 						     matters more to a reader than an internal grading code. -->
-						<Chip tint={BASIS_COLOR[tip.pos.basis as Basis]} dot>
-							{basisLabel(tip.pos.basis as Basis)}
-						</Chip>
+						<BasisLine record={tip.pos} />
 						<span class="mono">{durationLabel(tip.pos.years)}</span>
 						{#if tip.pos.datesInferred}
 							<span class="warn-flag">dates estimated</span>

@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { t, describeInterval, confidenceLabel, basisLabel } from '$lib/t.svelte';
+	import { t, describeInterval, confidenceLabel } from '$lib/t.svelte';
 	import { BASIS_COLOR, BASIS_OPACITY, FLOOR, CUTOFF, type Person } from '$lib/model';
 	import Chip from '$lib/ui/Chip.svelte';
+	import BasisLine from '$lib/ui/BasisLine.svelte';
 	import Tooltip from '$lib/ui/Tooltip.svelte';
 
 	/**
@@ -222,7 +223,7 @@
 		<div class="detail">
 			<strong dir="auto">{current.title}</strong>
 			<Chip variant="outline">{confidenceLabel(current.confidence)}</Chip>
-			<Chip tint={BASIS_COLOR[current.basis] as string} dot>{basisLabel(current.basis)}</Chip>
+			<BasisLine record={current} grade={false} />
 			{#if current.disputed}
 				<span class="contested">{t('timeline.contested')}</span>
 			{/if}

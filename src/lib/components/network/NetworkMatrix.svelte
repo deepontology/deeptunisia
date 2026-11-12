@@ -2,6 +2,7 @@
 	import { tick } from 'svelte';
 	import { app } from '$lib/state.svelte';
 	import { t, tf, layerLabel, relLabel, basisLabel, entityName, formatDate } from '$lib/t.svelte';
+	import { basisLineText } from '$lib/ui/BasisLine.svelte';
 	import { LAYER_COLOR, BASIS_COLOR, BASIS_OPACITY, DASH, BASIS_ORDER, type Basis, type Layer } from '$lib/model';
 	import { layerMatrix, type MatrixCell, type Scene, type Tie } from '$lib/network/scene';
 
@@ -222,7 +223,7 @@
 										stroke-dasharray={DASH[(e.rel.basis ?? 'documented') as Basis]}
 									/></svg
 								>
-								<span class="basis">{basisLabel((e.rel.basis ?? 'documented') as Basis)}</span>
+								<span class="basis">{basisLineText(e.rel.basis ? e.rel : { basis: 'documented' })}</span>
 							</span>
 						</button>
 						<button class="show mono" onclick={() => onshow(e)} aria-label={t('network.matrix.show')} title={t('network.matrix.show')}>
