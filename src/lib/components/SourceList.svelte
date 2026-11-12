@@ -23,7 +23,7 @@
 					<span dir="auto">{s.publisher}</span>
 					{#if s.date}<span class="mono">{s.date}</span>{/if}
 					<a class="archive" href={archiveLookup(s)} target="_blank" rel="noopener noreferrer"
-						>archive</a
+						>{t('sources.archive')}</a
 					>
 				</div>
 				{#if s.excerpt}

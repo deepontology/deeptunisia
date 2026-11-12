@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { changelog, type ChangeEntry } from '$data/index';
+	import changelogRaw from '$data/changelog.json';
+	import type { ChangeEntry } from '$data/index';
 	import Chip from '$lib/ui/Chip.svelte';
 	import Content from '$lib/ui/Content.svelte';
 	import { t, formatDate } from '$lib/t.svelte';
@@ -16,6 +17,9 @@
 	 */
 
 	type Kind = ChangeEntry['kind'];
+
+	// The JSON import carries no types of its own; the index declares the shape.
+	const changelog = changelogRaw as ChangeEntry[];
 
 	const KIND_META: Record<Kind, { label: string; tint: string; blurb: string }> = {
 		revision: {

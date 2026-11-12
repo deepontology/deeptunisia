@@ -11,7 +11,7 @@ import { fileURLToPath } from 'node:url';
 import { parse as parseYaml } from 'yaml';
 import { RelationshipType, EDGE_DIRECTION, REQUIRED_SOURCE_KINDS } from '../scripts/schema.ts';
 import { computeDatasetHash } from './canonical.ts';
-import { countOrigins } from './origins.ts';
+import { countOrigins, originOf } from './origins.ts';
 import { reviewCoverageCsv, summariseReview, type ReviewInput, type ReviewKind } from './review-coverage.ts';
 import { buildCoverage, coverageCsv } from './coverage.ts';
 import { verifyDebtProvenance, DEBT_MANIFEST_ID, type DebtManifestEntry } from './debt-provenance.ts';
@@ -1639,6 +1639,65 @@ console.log('\n  ── three review populations, never summed ──\n');
 	ok('each language file names the graph it belongs to', overlay.fr.datasetHash === ds.meta.datasetHash && overlay.ar.datasetHash === ds.meta.datasetHash);
 	ok('every name stays in the bundle in all three languages', (bundle.people as Record<string, unknown>[]).every((p) => 'name_en' in p) && (bundle.people as Record<string, unknown>[]).filter((p) => p.name_ar).length === (ds.people as Record<string, unknown>[]).filter((p) => p.name_ar).length);
 }
+
+// --- D3: what a record rests on -------------------------------------------
+// The table in scripts/origins.ts must cover every encyclopedia spelling in
+// the registry. A publisher that names Wikipedia or Wikidata in Latin or
+// Arabic script and has no row would be counted as its own origin, which would
+// make an encyclopedia-only record look corroborated.
+//
+// The pattern names the encyclopedias, not the bare substring "wiki": three
+// publishers contain it without being one (a WikiLeaks cable, and two JORT
+// sources fetched through an Arabic Wikipedia footnote). They stay their own
+// origins, class other, which is what they are.
+
+const ENCYCLOPEDIA_NAME = /wikip[eé]dia|wikidata|ويكيبيد/i;
+const encyclopediaSpellings = [...new Set(
+	(ds.sources as { publisher: string }[])
+		.map((s) => s.publisher)
+		.filter((p) => ENCYCLOPEDIA_NAME.test(p))
+)];
+const uncovered = encyclopediaSpellings.filter((p) => {
+	const found = originOf(p);
+	return found.class !== 'encyclopedia' || !/^(wikipedia|wikidata)$/.test(found.origin);
+});
+ok(
+	'every encyclopedia publisher spelling has an origin row (D3)',
+	uncovered.length === 0,
+	`${encyclopediaSpellings.length} spellings, ${uncovered.length} uncovered${uncovered.length ? `: ${uncovered.join(', ')}` : ''}`
+);
+ok(
+	'the 27 encyclopedia spellings collapse to two origins (D3)',
+	encyclopediaSpellings.length === 27 &&
+		new Set(encyclopediaSpellings.map((p) => originOf(p).origin)).size === 2,
+	`${encyclopediaSpellings.length} spellings, ${new Set(encyclopediaSpellings.map((p) => originOf(p).origin)).size} origins`
+);
+ok(
+	'a wiki lookalike is class other, not an encyclopedia (D3)',
+	originOf('US Embassy Tunis (Wikileaks cable 09TUNIS171)').class === 'other' &&
+		originOf('Journal Officiel de la République Tunisienne (via ar.wiki footnote)').class === 'other'
+);
+
+const restKinds = [
+	'eras', 'institutions', 'roles', 'people', 'positions', 'relationships', 'events',
+	'questions', 'hypotheses', 'agreements', 'worldClaims', 'companies', 'contracts',
+	'licences', 'vacancies', 'declarations', 'education', 'regions', 'places'
+];
+const restRecords = restKinds.flatMap((k) => (ds[k] as { sources?: string[]; restsOnOrigins?: number; encyclopediaOnly?: boolean }[]) ?? []);
+ok(
+	'every record that cites a source carries restsOnOrigins and encyclopediaOnly (D3)',
+	restRecords.every((r) => !r.sources?.length || (typeof r.restsOnOrigins === 'number' && typeof r.encyclopediaOnly === 'boolean'))
+);
+ok(
+	'no record that cites nothing carries the fields (D3)',
+	restRecords.every((r) => r.sources?.length ? true : r.restsOnOrigins === undefined && r.encyclopediaOnly === undefined)
+);
+ok(
+	'the published encyclopediaOnly total is the count in the graph (D3)',
+	Number(JSON.parse(readFileSync(join(HERE, '..', 'src', 'generated', 'stats.json'), 'utf8')).encyclopediaOnly) ===
+		restRecords.filter((r) => r.encyclopediaOnly === true).length,
+	`${restRecords.filter((r) => r.encyclopediaOnly === true).length} records`
+);
 
 console.log(
 	`\n  ${checks - failures}/${checks} checks passed${failures ? `, ${failures} FAILED` : ''}\n`

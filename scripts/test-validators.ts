@@ -46,7 +46,9 @@ import {
 	configureSchemaExceptions,
 	isBasisUpgrade,
 	nonBlank,
-	reviewOverclaims
+	reviewOverclaims,
+	verifiedGrounded,
+	deriveBasis
 } from './schema.ts';
 import {
 	parseDateEdge,
@@ -60,7 +62,7 @@ import {
 } from './dates.ts';
 import { configureTime } from './dates.ts';
 import { loadParameters } from './parameters.ts';
-import { countOrigins } from './origins.ts';
+import { countOrigins, originOf, restsOn } from './origins.ts';
 import {
 	reviewFlagsOf,
 	reviewRiskOf,
@@ -518,6 +520,25 @@ ok(
 	'V29 origins: no evidence leaves the authored independence alone',
 	countOrigins([]) === undefined && countOrigins(undefined) === undefined
 );
+
+// ---------------------------------------------------------------------------
+// D3: what a record rests on. `restsOnOrigins` counts distinct origins among
+// the publishers a record cites; `encyclopediaOnly` is true only when it cites
+// something and every citation is an encyclopedia. Both are separate from the
+// V29 lineage count above.
+// ---------------------------------------------------------------------------
+
+ok('D3: Wikipedia resolves to the wikipedia origin', originOf('Wikipedia (FR)').origin === 'wikipedia');
+ok('D3: a French spelling resolves to the same origin', originOf('Wikipédia (français)').origin === 'wikipedia');
+ok('D3: an Arabic spelling resolves to the same origin', originOf('ويكيبيديا (العربية)').origin === 'wikipedia');
+ok('D3: Wikidata is its own origin', originOf('Wikidata').origin === 'wikidata');
+ok('D3: both encyclopedia origins are class encyclopedia', originOf('Wikidata').class === 'encyclopedia' && originOf('Wikipedia').class === 'encyclopedia');
+ok('D3: an unmapped publisher is its own origin, class other', originOf('Le Monde').origin === 'Le Monde' && originOf('Le Monde').class === 'other');
+ok('D3: two Wikipedia spellings are one origin', restsOn(['Wikipedia', 'Wikipédia (fr)'])?.restsOnOrigins === 1);
+ok('D3: Wikipedia and Wikidata are two origins', restsOn(['Wikipedia', 'Wikidata'])?.restsOnOrigins === 2);
+ok('D3: encyclopedia only when every citation is one', restsOn(['Wikipedia', 'Wikidata'])?.encyclopediaOnly === true);
+ok('D3: one other publisher breaks encyclopediaOnly', restsOn(['Wikipedia', 'Le Monde'])?.encyclopediaOnly === false);
+ok('D3: citing nothing derives nothing', restsOn([]) === undefined);
 rejectsWith(
 	PositionSchema,
 	pos({ evidence: [evidence({ passage_type: 'summary' })] }),
@@ -865,6 +886,10 @@ rejectsWith(ReviewSchema, review({ by: 'Jane Doe' }), 'V23: a personal name is r
 rejectsWith(ReviewSchema, review({ by: 'maintainer ' }), 'V23: a padded role label is rejected', 'role label');
 accepts(ReviewSchema, review({ by: 'Research pass 2026-10-09' }), 'V23: a dated research pass is a valid reviewer label');
 accepts(ReviewSchema, review({ by: 'JORT verification pass' }), 'V23: a named verification pass is a valid reviewer label');
+accepts(ReviewSchema, review({ by: 'reviewer-1' }), 'V23: a numbered reviewer label is a valid reviewer label');
+accepts(ReviewSchema, review({ by: 'reviewer-12' }), 'V23: a two-digit numbered reviewer label is a valid reviewer label');
+rejectsWith(ReviewSchema, review({ by: 'reviewer-' }), 'V23: a numbered reviewer label needs a number', 'role label');
+rejectsWith(ReviewSchema, review({ by: 'reviewer-one' }), 'V23: a numbered reviewer label takes digits only', 'role label');
 rejectsWith(
 	DisputeSchema,
 	{ claim: ' ', held_by: 'somebody' },
@@ -932,6 +957,19 @@ rejects(ReviewSchema, review({ date: '26/07/2026' }), 'V23: a non-ISO date is re
 rejects(PositionSchema, pos({ review: review({ date: '2026-02-31' }) }), 'V23: a position carrying an impossible review date is rejected');
 
 // ---------------------------------------------------------------------------
+// D2: a review says who did it. `actor` is optional: every review written
+// before the field existed must stay valid, and a value outside the two kinds
+// of reviewer must not slip through as free text.
+// ---------------------------------------------------------------------------
+
+accepts(ReviewSchema, review({ actor: 'human' }), 'D2: a review made by a person parses');
+accepts(ReviewSchema, review({ actor: 'agent' }), 'D2: a review made by an agent parses');
+accepts(ReviewSchema, review(), 'D2: a review without an actor still parses');
+rejectsWith(ReviewSchema, review({ actor: 'robot' }), 'D2: an unknown actor is rejected', 'expected one of');
+rejectsWith(ReviewSchema, review({ actor: 'Human' }), 'D2: an actor value is case-sensitive', 'expected one of');
+accepts(PositionSchema, pos({ review: review({ actor: 'human' }) }), 'D2: a position carrying an actor-bearing review parses');
+
+// ---------------------------------------------------------------------------
 // V23 gate — the review guard on gazette claims (reviewOverclaims).
 // Kills m11.
 // ---------------------------------------------------------------------------
@@ -953,6 +991,53 @@ ok(
 	reviewOverclaims('reviewed the press coverage of the handover', ['tier3-article']) === false
 );
 ok('V23-guard: an undefined method is never a claim', reviewOverclaims(undefined, []) === false);
+
+// ---------------------------------------------------------------------------
+// V33: verified means a person opened the source and confirmed it. The
+// pipeline fixture that fails a whole build lives in test-pipeline.ts; these
+// pin the predicate the build calls and the default that replaced `verified`.
+// ---------------------------------------------------------------------------
+
+ok('V33: unflagged needs no review', verifiedGrounded({ verification: 'unflagged' }));
+ok('V33: no verification value needs no review', verifiedGrounded({}));
+ok(
+	'V33: verified with a human source-check passes',
+	verifiedGrounded({ verification: 'verified', review: { actor: 'human', method: 'source-check' } })
+);
+ok('V33: verified with no review fails', !verifiedGrounded({ verification: 'verified' }));
+ok(
+	'V33: verified with an agent review fails',
+	!verifiedGrounded({ verification: 'verified', review: { actor: 'agent', method: 'source-check' } })
+);
+ok(
+	'V33: verified with a human review of another method fails',
+	!verifiedGrounded({ verification: 'verified', review: { actor: 'human', method: 'judge' } })
+);
+ok(
+	'V33: verified with a review that names no actor fails',
+	!verifiedGrounded({ verification: 'verified', review: { method: 'source-check' } })
+);
+accepts(ReviewSchema, review({ actor: 'human' }), 'V33: a review names a human actor');
+accepts(ReviewSchema, review({ actor: 'agent' }), 'V33: a review names an agent actor');
+rejects(ReviewSchema, review({ actor: 'model' }), 'V33: an actor outside human/agent is rejected');
+
+{
+	const withoutVerification: Record<string, unknown> = { ...pos() };
+	delete withoutVerification.verification;
+	ok(
+		'V33: a claim-bearing record defaults to unflagged, not verified',
+		PositionSchema.parse(withoutVerification).verification === 'unflagged'
+	);
+}
+
+// `unflagged` is the absence of a check, so it derives exactly as `verified`
+// did: changing the word may not move any basis (the canonical diff pins this).
+for (const confidence of ['A', 'B', 'C', 'D'] as const) {
+	ok(
+		`V33: basis for ${confidence} is the same under unflagged and verified`,
+		deriveBasis(confidence, 'unflagged') === deriveBasis(confidence, 'verified')
+	);
+}
 
 // ---------------------------------------------------------------------------
 // R11 — dispute status is a closed enum. Kills m12.
