@@ -1,5 +1,5 @@
 import { prefersReducedMotion } from 'svelte/motion';
-import { BASIS_ORDER, LAYERS, type Basis, type Layer } from '$lib/model';
+import { BASIS_ORDER, LAYERS, type Basis, type Layer } from '$lib/vocab';
 import { type Locale } from '$lib/i18n';
 
 /**

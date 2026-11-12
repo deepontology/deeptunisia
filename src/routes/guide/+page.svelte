@@ -2,7 +2,7 @@
 	import { t } from '$lib/t.svelte';
 	import Content from '$lib/ui/Content.svelte';
 	import { VIEWS } from '$lib/views';
-	import { BASIS_ORDER } from '$lib/model';
+	import { BASIS_ORDER } from '$lib/vocab';
 
 	/**
 	 * The guide — the in-product orientation page (W1).

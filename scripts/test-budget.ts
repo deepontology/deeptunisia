@@ -14,7 +14,7 @@
  *
  * Usage: `npx tsx scripts/test-budget.ts`
  */
-import { readdirSync, statSync } from 'node:fs';
+import { closeSync, existsSync, openSync, readdirSync, readFileSync, readSync, statSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -74,6 +74,106 @@ for (const [name, cap] of Object.entries(CAPS)) {
 		mb <= cap,
 		`${mb.toFixed(1)} MB of ${cap} MB — raise the cap deliberately if this growth is intended`
 	);
+}
+
+// --- What a page preloads, read from the build -----------------------------
+//
+// Report mode. The table records today's weight per page and never fails on a
+// row; the ceilings land in a later change. The one failure is a build whose
+// graph chunk cannot be located, because a missing row would read as a pass.
+
+const BUILD = join(ROOT, 'build');
+const CLIENT_MANIFEST = join(ROOT, '.svelte-kit/output/client/.vite/manifest.json');
+const DATASET = join(ROOT, 'src/generated/dataset.json');
+
+function head(path: string, length: number): string {
+	const fd = openSync(path, 'r');
+	try {
+		const buf = Buffer.alloc(length);
+		const read = readSync(fd, buf, 0, length, 0);
+		return buf.subarray(0, read).toString('utf8');
+	} finally {
+		closeSync(fd);
+	}
+}
+
+function findGraphChunk(): { path: string; via: string } | null {
+	// The manifest names chunk files, and for entry modules the source. Use it
+	// only when it actually names the dataset; a chunk name is not a module.
+	if (existsSync(CLIENT_MANIFEST)) {
+		const manifest = JSON.parse(readFileSync(CLIENT_MANIFEST, 'utf8')) as Record<
+			string,
+			{ file: string; name?: string; src?: string }
+		>;
+		for (const [key, entry] of Object.entries(manifest)) {
+			const label = `${key} ${entry.name ?? ''} ${entry.src ?? ''}`;
+			if (!label.includes('generated/dataset.json')) continue;
+			const path = join(BUILD, entry.file);
+			if (existsSync(path)) return { path, via: 'manifest' };
+		}
+	}
+	// No manifest lists the modules inside a shared chunk, so fall back to the
+	// text: the graph chunk is the one that begins with the dataset itself.
+	// The chunk inlines `meta` directly, so the probe starts inside that object.
+	if (!existsSync(DATASET)) return null;
+	const dataset = JSON.parse(readFileSync(DATASET, 'utf8')) as { meta?: unknown };
+	const prefix = JSON.stringify(dataset.meta ?? {}).slice(0, 64);
+	const dir = join(BUILD, '_app/immutable/chunks');
+	if (!existsSync(dir)) return null;
+	for (const name of readdirSync(dir)) {
+		if (!name.endsWith('.js')) continue;
+		const path = join(dir, name);
+		if (head(path, 4096).includes(prefix)) return { path, via: 'text' };
+	}
+	return null;
+}
+
+/** Every script the page asks for before hydration: modulepreload links and inline imports. */
+function preloads(html: string): string[] {
+	const files = new Set<string>();
+	for (const tag of html.match(/<link[^>]*>/g) ?? []) {
+		if (!/rel="modulepreload"/.test(tag)) continue;
+		const href = /href="([^"]+)"/.exec(tag)?.[1];
+		if (href?.endsWith('.js')) files.add(href);
+	}
+	for (const match of html.matchAll(/import\("([^"]+\.js)"\)/g)) files.add(match[1]);
+	return [...files];
+}
+
+function builtPath(href: string): string {
+	return join(BUILD, href.replace(/^\.?\//, ''));
+}
+
+if (!existsSync(BUILD)) {
+	console.log('\n  build/ not present, page preload table skipped\n');
+} else {
+	const chunk = findGraphChunk();
+	ok(
+		'graph chunk located in the build',
+		chunk !== null,
+		chunk
+			? chunk.via === 'manifest'
+				? 'named by the build manifest'
+				: 'by its text, because no manifest names it'
+			: 'no chunk under build/_app contains the dataset'
+	);
+	if (chunk) {
+		console.log('\n  script preloads per page (report only, uncompressed)\n');
+		console.log('  page                        files        bytes   graph');
+		const pages = readdirSync(BUILD)
+			.filter((name) => name.endsWith('.html'))
+			.sort();
+		for (const page of pages) {
+			const files = preloads(readFileSync(join(BUILD, page), 'utf8'));
+			const paths = files.map(builtPath);
+			const size = paths.reduce((sum, path) => sum + (existsSync(path) ? statSync(path).size : 0), 0);
+			const graph = paths.includes(chunk.path) ? 'yes' : 'no';
+			console.log(
+				`  ${page.padEnd(26)} ${String(files.length).padStart(5)} ${size.toLocaleString('en-US').padStart(12)}   ${graph}`
+			);
+		}
+		console.log('');
+	}
 }
 
 console.log(`\n   ${checks - failures.length}/${checks} budget checks passed${failures.length ? `, ${failures.length} FAILED` : ''}\n`);

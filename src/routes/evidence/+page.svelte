@@ -1,10 +1,11 @@
 <script lang="ts">
 	import { app } from '$lib/state.svelte';
 	import SourceList from '$lib/components/SourceList.svelte';
-	import { entityName, t, nameOf, basisDesc } from '$lib/t.svelte';
+	import { t, basisDesc, basisLabel } from '$lib/t.svelte';
+	import { entityName, nameOf } from '$lib/names.svelte';
 	import { format } from '$lib/i18n';
 	import Prose from '$lib/ui/Prose.svelte';
-	import { BASIS_COLOR, BASIS_LABEL, BASIS_ORDER, ds, type Basis } from '$lib/model';
+	import { BASIS_COLOR, BASIS_ORDER, ds, type Basis } from '$lib/model';
 	import continuity from '$data/network-continuity.json';
 
 	/**
@@ -72,7 +73,7 @@
 		<span class="eyebrow">{t('ev.eyebrow')}</span>
 		<h1>{t('ev.title')}</h1>
 		<p class="lede">
-			{t('ev.lede1')} <em>not</em> {t('ev.lede2')}
+			{t('ev.lede1')} <em>{t('ev.lede.em')}</em> {t('ev.lede2')}
 		</p>
 
 		<div class="basis-bar">
@@ -80,12 +81,12 @@
 				{@const n = ds.meta.basisCounts[b]}
 				<div class="bb" style:--c={BASIS_COLOR[b]} style:flex={Math.max(1, n)} style:min-width={n < 25 ? '54px' : '0'}>
 					<span class="bb-n mono">{n}</span>
-					<span class="bb-l">{BASIS_LABEL[b]}</span>
+					<span class="bb-l">{basisLabel(b)}</span>
 				</div>
 			{/each}
 		</div>
 		<p class="basis-note">
-			{t('ev.shape1')} <em>fails</em> {t('ev.shape2')}
+			{t('ev.shape1')} <em>{t('ev.shape.em')}</em> {t('ev.shape2')}
 		</p>
 
 		<div class="counts mono">
@@ -105,7 +106,7 @@
 	</header>
 
 	<nav class="tabs" aria-label={t('ev.tabAria')}>
-		<button class:on={tab === 'hypotheses'} onclick={() => (tab = 'hypotheses')}>Hypotheses</button>
+		<button class:on={tab === 'hypotheses'} onclick={() => (tab = 'hypotheses')}>{t('ev.tab.hyp')}</button>
 		<button class:on={tab === 'questions'} onclick={() => (tab = 'questions')}
 			>{t('ev.tab.openq')} <span class="n">{openQuestions.length}</span></button
 		>
@@ -117,7 +118,7 @@
 			></button
 		>
 		<button class:on={tab === 'sources'} onclick={() => (tab = 'sources')}
-			>Sources <span class="n">{ds.meta.counts.sources}</span></button
+			>{t('ev.tab.sources')} <span class="n">{ds.meta.counts.sources}</span></button
 		>
 	</nav>
 
@@ -281,7 +282,7 @@
 			</p>
 			<table>
 				<thead>
-					<tr><th>Post</th><th>After</th><th>Before</th><th class="num">Gap</th></tr>
+					<tr><th>{t('tbl.post')}</th><th>{t('ev.gap.after')}</th><th>{t('ev.gap.before')}</th><th class="num">{t('ev.gap.gap')}</th></tr>
 				</thead>
 				<tbody>
 					{#each ds.meta.successionGaps as g (g.role + g.after + g.before)}
@@ -302,7 +303,7 @@
 				</p>
 				<table>
 					<thead>
-						<tr><th>Post</th><th>{t('tbl.holder')}</th><th>Holder</th><th class="num">Overlap</th></tr>
+						<tr><th>{t('tbl.post')}</th><th>{t('tbl.holder')}</th><th>{t('tbl.holder')}</th><th class="num">{t('tbl.overlap')}</th></tr>
 					</thead>
 					<tbody>
 						{#each ds.meta.successionOverlaps as o (o.role + o.a + o.b)}
@@ -361,7 +362,7 @@
 				{#each BASIS_ORDER as b (b)}
 					<div class="grade" style:--c={BASIS_COLOR[b]}>
 						<span class="gdot"></span>
-						<strong>{BASIS_LABEL[b]}</strong>
+						<strong>{basisLabel(b)}</strong>
 						<p>{basisDesc(b)}</p>
 					</div>
 				{/each}
