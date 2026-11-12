@@ -28,7 +28,7 @@
 	import EntityMenu from './EntityMenu.svelte';
 	import PostBody from './PostBody.svelte';
 	import PostingAs from './PostingAs.svelte';
-	import { search, type Hit } from '$lib/search';
+	import { search, type Hit } from '$lib/search.svelte';
 	import { countLinks, type MentionSpan } from './markdown';
 	import { t } from '$lib/t.svelte';
 	import { format } from '$lib/i18n';

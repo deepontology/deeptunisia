@@ -3999,6 +3999,70 @@ let datasetHashValue = '';
 	}
 }
 
+// ---------------------------------------------------------------------------
+// The search file.
+//
+// The palette used to build its index from the whole graph when its module
+// loaded, which put the 10 MB graph behind a keystroke. It now fetches this
+// file, written here from the same records, so search costs one small request
+// and no graph. Only the kinds a reading page can open are indexed: people,
+// institutions and events. A row carries the three name scripts, the aliases,
+// the one-line detail and the words the old index folded into its haystack, so
+// a spelling in any script still finds the record.
+// ---------------------------------------------------------------------------
+{
+	const rows = [
+		...dataset.people.map((p) => ({
+			id: p.id,
+			kind: 'person',
+			name: p.name_en,
+			name_fr: p.name_fr,
+			name_ar: p.name_ar,
+			aliases: p.aliases,
+			detail: p.tagline ?? '',
+			layer: p.layers[0],
+			hay: p.trajectory.join(' ')
+		})),
+		...dataset.institutions.map((i) => ({
+			id: i.id,
+			kind: 'institution',
+			name: i.name_en,
+			name_fr: i.name_fr,
+			name_ar: i.name_ar,
+			detail: i.abbr ?? i.type.replace('-', ' '),
+			layer: i.layer,
+			hay: i.type
+		})),
+		...dataset.events.map((e) => ({
+			id: e.id,
+			kind: 'event',
+			name: e.title_en,
+			name_fr: e.title_fr,
+			name_ar: e.title_ar,
+			detail: '',
+			layer: 'political',
+			date: e.interval.startEarliest,
+			hay: [e.summary, e.category].filter(Boolean).join(' ')
+		}))
+	];
+	// Empty keys are dropped: the file is fetched, and most rows have no
+	// translation in one or two scripts.
+	const records = rows.map((row) => {
+		const out: Record<string, unknown> = {};
+		for (const [key, value] of Object.entries(row)) {
+			if (value === undefined || value === null || value === '') continue;
+			if (Array.isArray(value) && value.length === 0) continue;
+			out[key] = value;
+		}
+		return out;
+	});
+	writeFileSync(
+		join(STAGE_STATIC, 'search-index.json'),
+		JSON.stringify({ datasetHash: datasetHashValue, records }),
+		'utf8'
+	);
+}
+
 // The client's copy of the graph. Everything above (the published
 // static/dataset.json and meta.datasetHash) is the full record; what the
 // bundle carries is trimmed to what a reader's browser shows, because the
