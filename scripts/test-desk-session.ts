@@ -35,10 +35,10 @@ let checks = 0;
 
 function ok(name: string, condition: boolean, detail = '') {
 	checks++;
-	if (condition) console.log(`  ok    ${name}${detail ? ` — ${detail}` : ''}`);
+	if (condition) console.log(`  ok    ${name}${detail ? ` - ${detail}` : ''}`);
 	else {
 		failures++;
-		console.error(`  FAIL  ${name}${detail ? ` — ${detail}` : ''}`);
+		console.error(`  FAIL  ${name}${detail ? ` - ${detail}` : ''}`);
 	}
 }
 

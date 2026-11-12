@@ -152,7 +152,7 @@
 					/>
 				{:else}
 					<div class="unmeasured">
-						<span class="v">—</span>
+						<span class="v">–</span>
 						<span class="k">{t('about.desk.notMeasured')}</span>
 					</div>
 				{/if}
