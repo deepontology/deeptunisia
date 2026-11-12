@@ -1,9 +1,10 @@
 <script lang="ts">
-	import { ds, personById } from '$lib/model';
+	import stats from '$data/stats.json';
+	import figures from '$data/data-figures.json';
 	import { t, tf } from '$lib/t.svelte';
-	import { personName } from '$lib/names.svelte';
 	import { format } from '$lib/i18n';
 	import { app } from '$lib/state.svelte';
+	import { localName } from '$lib/local-name';
 	import Content from '$lib/ui/Content.svelte';
 	import Button from '$lib/ui/Button.svelte';
 
@@ -29,16 +30,16 @@
 		documented: 'basis.documented'
 	};
 
-	const histogramRows = Object.entries(ds.meta.cards.histogram).sort(
+	const histogramRows = Object.entries(figures.cards.histogram).sort(
 		(a, b) => Number(a[0]) - Number(b[0])
 	);
 
 	// The live numbers the caveats prose interpolates ({param} in content files).
 	const caveatParams = {
-		needsPrimary: ds.meta.needsPrimarySourceCount,
-		contradictions: ds.meta.contradictions.length,
-		reviewed: ds.meta.review.reviewed,
-		reviewable: ds.meta.review.reviewable
+		needsPrimary: Number(stats.needsPrimarySource),
+		contradictions: Number(stats.contradictions),
+		reviewed: Number(stats.reviewed),
+		reviewable: Number(stats.reviewable)
 	};
 
 	const SCHEMA = [
@@ -138,7 +139,7 @@
 			<a class="dl primary" href="/dataset.json" download>
 				<span class="dl-name">dataset.json</span>
 				<span class="dl-desc">{t('data.dl.dataset')}</span>
-				<span class="dl-meta mono">JSON · {t('data.meta.intervals')} · ~{Math.round(ds.meta.datasetKB)} KB</span>
+				<span class="dl-meta mono">JSON · {t('data.meta.intervals')} · ~{Math.round(Number(stats.datasetKB))} KB</span>
 			</a>
 			<Button variant="ghost" size="xs" onclick={() => copyUrl('/dataset.json')} aria-label={tf('data.copyAria', { url: 'https://deeptunisia.org/dataset.json' })}>
 				{copied === '/dataset.json' ? t('agora.copied') : t('agora.copylink')}
@@ -148,7 +149,7 @@
 			<a class="dl" href="/positions.csv" download>
 				<span class="dl-name">positions.csv</span>
 				<span class="dl-desc">{t('data.dl.positions')}</span>
-				<span class="dl-meta mono">CSV · {ds.meta.counts.positions} {t('data.meta.rows')}</span>
+				<span class="dl-meta mono">CSV · {stats.positions} {t('data.meta.rows')}</span>
 			</a>
 			<Button variant="ghost" size="xs" onclick={() => copyUrl('/positions.csv')} aria-label={tf('data.copyAria', { url: 'https://deeptunisia.org/positions.csv' })}>
 				{copied === '/positions.csv' ? t('agora.copied') : t('agora.copylink')}
@@ -158,7 +159,7 @@
 			<a class="dl" href="/relationships.csv" download>
 				<span class="dl-name">relationships.csv</span>
 				<span class="dl-desc">{t('data.dl.relationships')}</span>
-				<span class="dl-meta mono">CSV · {ds.meta.counts.relationships} {t('data.meta.rows')}</span>
+				<span class="dl-meta mono">CSV · {stats.relationships} {t('data.meta.rows')}</span>
 			</a>
 			<Button variant="ghost" size="xs" onclick={() => copyUrl('/relationships.csv')} aria-label={tf('data.copyAria', { url: 'https://deeptunisia.org/relationships.csv' })}>
 				{copied === '/relationships.csv' ? t('agora.copied') : t('agora.copylink')}
@@ -168,7 +169,7 @@
 			<a class="dl" href="/sources.csv" download>
 				<span class="dl-name">sources.csv</span>
 				<span class="dl-desc">{t('data.dl.sources')}</span>
-				<span class="dl-meta mono">CSV · {ds.meta.counts.sources} {t('data.meta.rows')}</span>
+				<span class="dl-meta mono">CSV · {stats.sources} {t('data.meta.rows')}</span>
 			</a>
 			<Button variant="ghost" size="xs" onclick={() => copyUrl('/sources.csv')} aria-label={tf('data.copyAria', { url: 'https://deeptunisia.org/sources.csv' })}>
 				{copied === '/sources.csv' ? t('agora.copied') : t('agora.copylink')}
@@ -217,10 +218,10 @@
 				</tr>
 			</thead>
 			<tbody>
-				{#each ds.meta.coverage.principals as p (p.id)}
+				{#each figures.coverage as p (p.id)}
 					<tr>
 						<td class="sname">
-							{personById.has(p.id) ? personName(personById.get(p.id)!) : p.name}
+							{localName(p.name, app.locale)}
 						</td>
 						<td>{p.total}</td>
 						<td>{p.kin}</td>
@@ -241,7 +242,7 @@
 			<tbody>
 				{#each histogramRows as [k, count] (k)}
 					<tr>
-						<td>{k} / {ds.meta.cards.sections.length}</td>
+						<td>{k} / {figures.cards.sections.length}</td>
 						<td>{count}</td>
 					</tr>
 				{/each}
@@ -250,19 +251,19 @@
 
 		<h2>{t('coverage.queue')}</h2>
 		<p>{t('coverage.queueNote')}</p>
-		{#if ds.meta.cards.worklist.length === 0}
+		{#if figures.cards.worklist.length === 0}
 			<p>{t('coverage.queueEmpty')}</p>
 		{:else}
 			<ul class="queue">
-				{#each ds.meta.cards.worklist as w (w.id)}
+				{#each figures.cards.worklist as w (w.id)}
 					<li>
 						<a href={`/network?id=${encodeURIComponent(w.id)}`}>
-							{personById.has(w.id) ? personName(personById.get(w.id)!) : w.name}
+							{localName(w.name, app.locale)}
 						</a>
 						<span class="mono">
 							{format(app.locale, 'coverage.cardsOf', {
 								count: w.filled,
-								total: ds.meta.cards.sections.length
+								total: figures.cards.sections.length
 							})}
 						</span>
 					</li>
@@ -281,7 +282,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				{#each Object.entries(ds.meta.review.byKind) as [kind, counts] (kind)}
+				{#each Object.entries(figures.review.byKind) as [kind, counts] (kind)}
 					{@const pct = counts.total ? Math.round((counts.reviewed / counts.total) * 100) : 0}
 					<tr>
 						<td>{t(`coverage.kind.${kind}`)}</td>
@@ -307,7 +308,7 @@
 			</thead>
 			<tbody>
 				{#each RISK_ORDER as flag (flag)}
-					{@const counts = ds.meta.review.flags[flag]}
+					{@const counts = figures.review.flags[flag]}
 					{@const pct = counts.total ? Math.round((counts.reviewed / counts.total) * 100) : 0}
 					<tr>
 						<td>{t(RISK_KEY[flag])}</td>

@@ -6,16 +6,15 @@
 	 * one carries its own number on SectionHeader — the one section-heading style
 	 * the archive uses everywhere.
 	 */
-	import { BASIS_COLOR, BASIS_ORDER, DASH, ds, type Basis } from '$lib/model';
+	import { BASIS_COLOR, BASIS_ORDER, DASH, INDEX_KEYS, type Basis } from '$lib/vocab';
 	import { t, tf, basisLabel, basisDesc, indexMeta } from '$lib/t.svelte';
-	import { nameOf } from '$lib/names.svelte';
-	import { INDEX_KEYS } from '$lib/indices';
+	import figures from '$data/methodology-figures.json';
+	import { localName } from '$lib/local-name';
+	import { app } from '$lib/state.svelte';
 	import SectionHeader from '$lib/ui/SectionHeader.svelte';
 
 	/** Derived, not read once: the eyebrow is a string and the locale can change. */
 	const EYEBROW = $derived(t('nav.method'));
-
-	const roleWeights = $derived([...ds.roles].sort((a, b) => b.authority - a.authority));
 </script>
 
 <svelte:head>
@@ -62,7 +61,7 @@
 								/>
 							</svg>
 							<strong>{basisLabel(b)}</strong>
-							<span class="b-count mono">{tf('m.claimcount', { n: ds.meta.basisCounts[b as Basis] })}</span>
+							<span class="b-count mono">{tf('m.claimcount', { n: figures.basis[b as Basis] })}</span>
 						</div>
 						<p>{basisDesc(b)}</p>
 					</li>
@@ -95,15 +94,15 @@
 			<SectionHeader n={3} eyebrow={EYEBROW} title={t('m.succ')} />
 			<p>
 				{t('m.succ1')}
-				<strong>{tf('m.gapcount', { n: ds.meta.successionGaps.length })}</strong> {t('m.and')}
-				<strong>{tf('m.overlapcount', { n: ds.meta.successionOverlaps.length })}</strong>{t('m.succ2')}
+				<strong>{tf('m.gapcount', { n: figures.successionGaps })}</strong> {t('m.and')}
+				<strong>{tf('m.overlapcount', { n: figures.successionOverlaps })}</strong>{t('m.succ2')}
 				<a href="/evidence">{t('m.link.evidence')}</a>{t('m.succ3')}
 			</p>
 
 			<SectionHeader n={4} eyebrow={EYEBROW} title={t('m.dis')} />
 			<p>
 				{t('m.dis1')}
-				<strong>{tf('m.contracount', { n: ds.meta.contradictions.length })}</strong>{t('m.dis2')}
+				<strong>{tf('m.contracount', { n: figures.contradictions })}</strong>{t('m.dis2')}
 			</p>
 
 			<SectionHeader n={5} eyebrow={EYEBROW} title={t('m.noscore')} />
@@ -153,11 +152,11 @@
 					<tr><th class="num">{t('tbl.weight')}</th><th>{t('tbl.office')}</th><th>{t('tbl.institution')}</th></tr>
 				</thead>
 				<tbody>
-					{#each roleWeights as role (role.id)}
+					{#each figures.roles as role (role.id)}
 						<tr>
 							<td class="num mono">{role.authority}</td>
-							<td>{nameOf(role)}</td>
-							<td class="inst">{nameOf(ds.institutions.find((i) => i.id === role.institution))}</td>
+							<td>{localName(role.title, app.locale)}</td>
+							<td class="inst">{localName(role.institution, app.locale)}</td>
 						</tr>
 					{/each}
 				</tbody>
@@ -184,7 +183,7 @@
 			<p>
 				{t('m.pipeline1')}
 				<a href="/about">{t('m.link.about')}</a> {t('m.pipeline2')}
-				<strong>{tf('m.reviewedOf', { rev: ds.meta.review.reviewed, tot: ds.meta.review.reviewable })}</strong>{t('m.pipeline3')}
+				<strong>{tf('m.reviewedOf', { rev: figures.review.reviewed, tot: figures.review.reviewable })}</strong>{t('m.pipeline3')}
 			</p>
 			<p>
 				{t('m.noai1')} <a href="/investigate">{t('m.investigate.link')}</a> {t('m.noai2')}
