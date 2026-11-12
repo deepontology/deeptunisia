@@ -21,7 +21,6 @@
 		sourcesCited: n(stats.sourcesCited),
 		needsPrimarySource: n(stats.needsPrimarySource),
 		contradictions: n(stats.contradictions),
-		reviewed: n(stats.reviewed),
 		reviewable: n(stats.reviewable)
 	};
 

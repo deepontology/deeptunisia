@@ -25,7 +25,6 @@
 	import { t, tf, basisLabel, relLabel, confidenceLabel, describeInterval, formatDate } from '$lib/t.svelte';
 	import { nameOf, entityName, proseList } from '$lib/names.svelte';
 import BasisLine from '$lib/ui/BasisLine.svelte';
-	import BasisLine from '$lib/ui/BasisLine.svelte';
 	import Panel from '$lib/ui/Panel.svelte';
 	import Chip from '$lib/ui/Chip.svelte';
 	import Content from '$lib/ui/Content.svelte';

@@ -851,7 +851,7 @@ const BARE_BASIS_ALLOWED = new Set([
 	join(SRC, 'lib', 't.svelte.ts'),
 	join(SRC, 'lib', 'ui', 'BasisLine.svelte'),
 	join(SRC, 'lib', 'components', 'network', 'NetworkMatrix.svelte'),
-	join(SRC, 'routes', 'methodology', '+page.svelte')
+	join(SRC, 'routes', '(read)', 'methodology', '+page.svelte')
 ]);
 const ALL_SOURCES = sourceFiles(SRC);
 const BARE_BASIS = ALL_SOURCES.filter(
