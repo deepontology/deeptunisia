@@ -7,7 +7,7 @@
 	 * the archive uses everywhere.
 	 */
 	import { BASIS_COLOR, BASIS_ORDER, DASH, ds, type Basis } from '$lib/model';
-	import { t, basisLabel, basisDesc, indexMeta } from '$lib/t.svelte';
+	import { t, tf, basisLabel, basisDesc, indexMeta } from '$lib/t.svelte';
 	import { nameOf } from '$lib/names.svelte';
 	import { INDEX_KEYS } from '$lib/indices';
 	import SectionHeader from '$lib/ui/SectionHeader.svelte';
@@ -62,7 +62,7 @@
 								/>
 							</svg>
 							<strong>{basisLabel(b)}</strong>
-							<span class="b-count mono">{ds.meta.basisCounts[b as Basis]} claims</span>
+							<span class="b-count mono">{tf('m.claimcount', { n: ds.meta.basisCounts[b as Basis] })}</span>
 						</div>
 						<p>{basisDesc(b)}</p>
 					</li>
@@ -73,9 +73,7 @@
 				{t('m.floor')}
 			</p>
 			<p>
-				{t('m.oblig1')} <strong
-					>inferred</strong
-				> {t('m.oblig2')}
+				{t('m.oblig1')} <strong>{t('basis.inferred')}</strong> {t('m.oblig2')}
 			</p>
 
 			<h3>{t('m.unskept')}</h3>
@@ -97,15 +95,15 @@
 			<SectionHeader n={3} eyebrow={EYEBROW} title={t('m.succ')} />
 			<p>
 				{t('m.succ1')}
-				<strong>{ds.meta.successionGaps.length} gaps</strong> and
-				<strong>{ds.meta.successionOverlaps.length} overlapping tenures</strong>{t('m.succ2')}
+				<strong>{tf('m.gapcount', { n: ds.meta.successionGaps.length })}</strong> {t('m.and')}
+				<strong>{tf('m.overlapcount', { n: ds.meta.successionOverlaps.length })}</strong>{t('m.succ2')}
 				<a href="/evidence">{t('m.link.evidence')}</a>{t('m.succ3')}
 			</p>
 
 			<SectionHeader n={4} eyebrow={EYEBROW} title={t('m.dis')} />
 			<p>
 				{t('m.dis1')}
-				<strong>{ds.meta.contradictions.length} recorded contradictions</strong>{t('m.dis2')}
+				<strong>{tf('m.contracount', { n: ds.meta.contradictions.length })}</strong>{t('m.dis2')}
 			</p>
 
 			<SectionHeader n={5} eyebrow={EYEBROW} title={t('m.noscore')} />
@@ -139,10 +137,10 @@
 
 			<SectionHeader n={7} eyebrow={EYEBROW} title={t('m.struct')} />
 			<p>
-				{t('m.ng1')} <strong>not</strong> {t('m.ng2')}
+				{t('m.ng1')} <strong>{t('m.ng.not')}</strong> {t('m.ng2')}
 			</p>
 			<p>
-				{t('m.cos1')} <strong>not</strong> {t('m.cos2')}
+				{t('m.cos1')} <strong>{t('m.cos.not')}</strong> {t('m.cos2')}
 			</p>
 
 			<SectionHeader n={8} eyebrow={EYEBROW} title={t('m.weights')} />
@@ -152,7 +150,7 @@
 
 			<table class="weights">
 				<thead>
-					<tr><th class="num">Weight</th><th>{t('tbl.office')}</th><th>{t('tbl.institution')}</th></tr>
+					<tr><th class="num">{t('tbl.weight')}</th><th>{t('tbl.office')}</th><th>{t('tbl.institution')}</th></tr>
 				</thead>
 				<tbody>
 					{#each roleWeights as role (role.id)}
@@ -169,13 +167,13 @@
 			<p>{t('m.tiers')}</p>
 			<ul>
 				<li>
-					<strong>Tier 1.</strong> {t('m.t1')}
+					<strong>{tf('m.tier', { n: 1 })}</strong> {t('m.t1')}
 				</li>
-				<li><strong>Tier 2.</strong> {t('m.t2')}</li>
-				<li><strong>Tier 3.</strong> {t('m.t3')}</li>
-				<li><strong>Tier 4.</strong> {t('m.t4')}</li>
+				<li><strong>{tf('m.tier', { n: 2 })}</strong> {t('m.t2')}</li>
+				<li><strong>{tf('m.tier', { n: 3 })}</strong> {t('m.t3')}</li>
+				<li><strong>{tf('m.tier', { n: 4 })}</strong> {t('m.t4')}</li>
 				<li>
-					<strong>Tier 5.</strong> {t('m.t5')}
+					<strong>{tf('m.tier', { n: 5 })}</strong> {t('m.t5')}
 				</li>
 			</ul>
 			<p>
@@ -186,10 +184,10 @@
 			<p>
 				{t('m.pipeline1')}
 				<a href="/about">{t('m.link.about')}</a> {t('m.pipeline2')}
-				<strong>{ds.meta.review.reviewed} of {ds.meta.review.reviewable}</strong>{t('m.pipeline3')}
+				<strong>{tf('m.reviewedOf', { rev: ds.meta.review.reviewed, tot: ds.meta.review.reviewable })}</strong>{t('m.pipeline3')}
 			</p>
 			<p>
-				{t('m.noai1')} <a href="/investigate">investigate</a> {t('m.noai2')}
+				{t('m.noai1')} <a href="/investigate">{t('m.investigate.link')}</a> {t('m.noai2')}
 			</p>
 
 			<SectionHeader n={11} eyebrow={EYEBROW} title={t('nav.corrections')} />

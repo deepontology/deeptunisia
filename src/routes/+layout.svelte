@@ -9,6 +9,7 @@
 	import { initTheme, theme } from '$lib/design/theme.svelte';
 	import { dirFor } from '$lib/i18n';
 	import { personById, institutionById, relationshipById, eventById, resolveEntity } from '$lib/model';
+	import { t } from '$lib/t.svelte';
 	import { eventTitle, nameOf } from '$lib/names.svelte';
 	import MenuBar from '$lib/shell/MenuBar.svelte';
 	import SubNav from '$lib/shell/SubNav.svelte';
@@ -293,10 +294,10 @@ import { tour, tourSeen } from '$lib/shell/tour.svelte';
 		renders last, so without these a keyboard user has to traverse 70+ chart bars
 		before reaching the timeline controls that drive the whole app.
 	-->
-	<nav class="skip" aria-label="Skip links">
-		<a href="#view">Skip to view</a>
+	<nav class="skip" aria-label={t('skip.links')}>
+		<a href="#view">{t('skip.view')}</a>
 		{#if hasDock}
-			<a href="#timeline">Skip to timeline controls</a>
+			<a href="#timeline">{t('skip.dock')}</a>
 		{/if}
 	</nav>
 
