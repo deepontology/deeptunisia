@@ -12,6 +12,9 @@ import {
 	type Basis,
 	type Layer
 } from './model';
+import { DEFAULT_WEIGHTS, INDEX_KEYS, type IndexKey } from './vocab';
+
+export { DEFAULT_WEIGHTS, INDEX_KEYS, type IndexKey };
 
 /**
  * Structural power indices.
@@ -308,9 +311,6 @@ export function basisDiscount(b: Basis): number {
 	return discount ? discount[b] : INFLUENCE_BASIS_WEIGHT[b];
 }
 
-export const INDEX_KEYS = ['authority', 'proximity', 'survival', 'brokerage', 'reach', 'influence'] as const;
-export type IndexKey = (typeof INDEX_KEYS)[number];
-
 export const INDEX_META: Record<IndexKey, { label: string; short: string; blurb: string; derived: string }> = {
 	authority: {
 		label: 'Formal authority',
@@ -350,15 +350,6 @@ export const INDEX_META: Record<IndexKey, { label: string; short: string; blurb:
 		derived:
 			'Computed from documented influence edges in the graph. Reads: how many evidenced routes. Not a judgement of who truly runs the country.'
 	}
-};
-
-export const DEFAULT_WEIGHTS: Record<IndexKey, number> = {
-	authority: 1,
-	proximity: 1,
-	survival: 1,
-	brokerage: 1,
-	reach: 1,
-	influence: 1
 };
 
 export function composite(score: IndexScores, weights: Record<IndexKey, number>): number {

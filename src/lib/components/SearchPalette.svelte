@@ -2,7 +2,7 @@
 	import { app } from '$lib/state.svelte';
 	import { goto } from '$app/navigation';
 	import { LAYER_COLOR, ds } from '$lib/model';
-	import { formatDate } from '$lib/t.svelte';
+	import { formatDate, t } from '$lib/t.svelte';
 	import { search, type Hit } from '$lib/search';
 
 	let query = $state('');
@@ -68,13 +68,13 @@ function onKey(e: KeyboardEvent) {
 	role="presentation"
 ></div>
 
-<div class="palette" role="dialog" aria-modal="true" aria-label="Search">
+<div class="palette" role="dialog" aria-modal="true" aria-label={t('ctl.search')}>
 	<input
 		bind:this={inputEl}
 		bind:value={query}
 		onkeydown={onKey}
-		placeholder="Search people, institutions, events — Arabic, French or English"
-		aria-label="Search query"
+		placeholder={t('search.placeholder')}
+		aria-label={t('search.query')}
 		autocomplete="off"
 		spellcheck="false"
 	/>
@@ -96,13 +96,13 @@ function onKey(e: KeyboardEvent) {
 			</li>
 		{/each}
 		{#if results.length === 0}
-			<li class="empty">No match. Try a surname, an institution, or a year.</li>
+			<li class="empty">{t('search.empty')}</li>
 		{/if}
 	</ul>
 	<footer>
-		<span><kbd>↑</kbd><kbd>↓</kbd> navigate</span>
-		<span><kbd>enter</kbd> open</span>
-		<span><kbd>esc</kbd> dismiss</span>
+		<span><kbd>↑</kbd><kbd>↓</kbd> {t('search.navigate')}</span>
+		<span><kbd>enter</kbd> {t('search.open')}</span>
+		<span><kbd>esc</kbd> {t('search.dismiss')}</span>
 	</footer>
 </div>
 

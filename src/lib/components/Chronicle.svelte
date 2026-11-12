@@ -5,7 +5,8 @@
 	import { relationshipsByEntity } from '$lib/model';
 	import { app } from '$lib/state.svelte';
 	import { applyEntityLink } from '$lib/deeplink.svelte';
-	import { t, tf, basisLabel, describeInterval, durationLabel, eventTitle, formatDate, nameOf} from '$lib/t.svelte';
+	import { t, tf, basisLabel, describeInterval, durationLabel, formatDate } from '$lib/t.svelte';
+	import { eventTitle, nameOf } from '$lib/names.svelte';
 	import { dateFormatter } from '$lib/i18n';
 	import Button from '$lib/ui/Button.svelte';
 	import Chip from '$lib/ui/Chip.svelte';
@@ -786,7 +787,7 @@
 		if (!clusterPop) return;
 		const away = (e: PointerEvent) => {
 			const el = e.target as Element | null;
-			if (el?.closest?.('.ev-pop') || el?.closest?.('[aria-label*=" events, "]')) return;
+			if (el?.closest?.('.ev-pop') || el?.closest?.('[data-cluster]')) return;
 			clusterPop = null;
 		};
 		const esc = (e: KeyboardEvent) => {
@@ -1287,10 +1288,11 @@
 						{@const w = Math.max(18, Math.min(36, 14 + String(it.members.length).length * 7))}
 						<g
 							class="ev-mark"
+							data-cluster
 							class:dim={eventSelected !== null ? !membersSel : personEvents !== null && !it.members.some((m) => personEvents.has(m.id))}
 							role="button"
 							tabindex="0"
-							aria-label="{it.members.length} events, {clusterRange(it.members)}"
+							aria-label={tf('chronicle.vertical.spine.cluster', { n: it.members.length, range: clusterRange(it.members) })}
 							onkeydown={(ke) => {
 								if (ke.key === 'Enter' || ke.key === ' ') {
 									ke.preventDefault();
@@ -1298,7 +1300,7 @@
 								}
 							}}
 						>
-							<title>{it.members.length} events, {clusterRange(it.members)}</title>
+							<title>{tf('chronicle.vertical.spine.cluster', { n: it.members.length, range: clusterRange(it.members) })}</title>
 							<rect
 								x={it.x - w / 2}
 								y={POINT_MID - 8}
@@ -1460,10 +1462,11 @@
 						{@const membersSel = c.members.some((m) => m.id === eventSelected?.id)}
 						<g
 							class="ev-mark clickable"
+							data-cluster
 							class:dim={eventSelected !== null ? !membersSel : personEvents !== null && !c.members.some((m) => personEvents.has(m.id))}
 							role="button"
 							tabindex="0"
-							aria-label="{c.members.length} events, {clusterRange(c.members)}"
+							aria-label={tf('chronicle.vertical.spine.cluster', { n: c.members.length, range: clusterRange(c.members) })}
 							onclick={(me) => openCluster(c.members, me.clientX, me.clientY)}
 							onmouseenter={(me) => {
 								const r = plotEl?.getBoundingClientRect();
@@ -1483,7 +1486,7 @@
 								}
 							}}
 						>
-							<title>{c.members.length} events, {clusterRange(c.members)}</title>
+							<title>{tf('chronicle.vertical.spine.cluster', { n: c.members.length, range: clusterRange(c.members) })}</title>
 							<rect
 								x={c.x0}
 								y={c.y - 8}
@@ -1769,7 +1772,7 @@
 						</Chip>
 						<span class="mono">{durationLabel(tip.pos.years)}</span>
 						{#if tip.pos.datesInferred}
-							<span class="warn-flag">dates estimated</span>
+							<span class="warn-flag">{t('chronicle.datesEstimated')}</span>
 						{/if}
 					</span>
 					{#if tip.pos.notes.length}
@@ -1797,12 +1800,12 @@
 					style:left="{clusterPop.x}px"
 					style:top="{clusterPop.y}px"
 					role="dialog"
-					aria-label="Events in this group"
+					aria-label={t('chronicle.cluster.group')}
 				>
 					<div class="ev-pop-head">
-						<span class="mono">{clusterPop.members.length} events</span>
-						<button onclick={() => zoomToCluster(clusterPop?.members ?? [])}>Zoom in</button>
-						<button class="ev-pop-x" onclick={() => (clusterPop = null)} aria-label="Close">×</button>
+						<span class="mono">{tf('chronicle.cluster.count', { n: clusterPop.members.length })}</span>
+						<button onclick={() => zoomToCluster(clusterPop?.members ?? [])}>{t('view.zoomin')}</button>
+						<button class="ev-pop-x" onclick={() => (clusterPop = null)} aria-label={t('ctl.close')}>×</button>
 					</div>
 					<ul>
 						{#each clusterPop.members as m (m.id)}
@@ -1829,9 +1832,9 @@
 	<details class="a11y">
 		<summary>{t('chronicle.table')}</summary>
 		<table>
-			<caption>Officeholders by post, with the span each source actually supports.</caption>
+			<caption>{t('chronicle.table.caption')}</caption>
 			<thead>
-				<tr><th>Post</th><th>Holder</th><th>Span</th><th>Duration</th><th>Evidence</th><th>Origins</th></tr>
+				<tr><th>{t('tbl.post')}</th><th>{t('tbl.holder')}</th><th>{t('tbl.span')}</th><th>{t('tbl.duration')}</th><th>{t('tbl.evidence')}</th><th>{t('tbl.origins')}</th></tr>
 			</thead>
 			<tbody>
 				{#each layout.items.filter((i) => i.kind === 'row') as row (row.roleId)}
@@ -1851,7 +1854,7 @@
 		<table>
 			<caption>{t('timeline.lane.event')}</caption>
 			<thead>
-				<tr><th>Date</th><th>Event</th><th>Category</th><th>Rupture</th><th>Evidence</th><th>Origins</th></tr>
+				<tr><th>{t('tbl.date')}</th><th>{t('tbl.event')}</th><th>{t('tbl.category')}</th><th>{t('tbl.rupture')}</th><th>{t('tbl.evidence')}</th><th>{t('tbl.origins')}</th></tr>
 			</thead>
 			<tbody>
 				{#each eventsSorted.filter(eventPasses) as e (e.id)}
@@ -1859,7 +1862,7 @@
 						<td>{formatDate(e.interval.startEarliest, 'day')}</td>
 						<td>{eventTitle(e)}</td>
 						<td>{e.category}</td>
-						<td>{e.rupture ? 'yes' : 'no'}</td>
+						<td>{e.rupture ? t('record.yes') : t('record.no')}</td>
 						<td>{e.confidence}</td>
 						<td>{e.origins ?? e.independence ?? '?'}</td>
 					</tr>

@@ -49,7 +49,7 @@
 	<div class="column">
 		<header class="page-head">
 			<span class="eyebrow">{t('about.eyebrow')}</span>
-			<h1>DeepTunisia</h1>
+			<h1>{t('brand.name')}</h1>
 			<div class="lede"><Content view="about" section="intro" /></div>
 		</header>
 

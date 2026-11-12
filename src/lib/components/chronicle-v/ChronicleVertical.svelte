@@ -70,7 +70,8 @@
 	import { applyEntityLink } from '$lib/deeplink.svelte';
 	import AboutView from '$lib/shell/AboutView.svelte';
 	import Popover from '$lib/ui/Popover.svelte';
-	import { layerLabel, nameOf, t, tf } from '$lib/t.svelte';
+	import { layerLabel, t, tf } from '$lib/t.svelte';
+	import { nameOf } from '$lib/names.svelte';
 	import {
 		CUTOFF,
 		LAYERS,
