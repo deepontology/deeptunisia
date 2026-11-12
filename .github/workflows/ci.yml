@@ -36,6 +36,53 @@ jobs:
       - run: npm run test
       - run: npm run check
 
+  hash-ledger:
+    name: hash ledger
+    # Release code must not move the dataset hash by accident. This job builds
+    # the data at both ends of a pull request into release/1.0 and compares the
+    # two hashes; a difference is allowed only when the last line of
+    # docs/hash-ledger.tsv records exactly that move.
+    if: github.event_name == 'pull_request' && github.event.pull_request.base.ref == 'release/1.0'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+          path: head
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          fetch-depth: 0
+          path: base
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "22"
+      - name: data at the base commit
+        working-directory: base
+        run: |
+          npm ci --ignore-scripts
+          npm run data
+      - name: data at the head commit
+        working-directory: head
+        run: |
+          npm ci --ignore-scripts
+          npm run data
+      - name: compare the two hashes
+        working-directory: head
+        env:
+          HEAD_BRANCH: ${{ github.event.pull_request.head.ref }}
+        run: |
+          # A sync brings new data from main on purpose; only code is ledgered.
+          if [[ "$HEAD_BRANCH" == sync/* ]]; then
+            echo "::notice::head branch $HEAD_BRANCH is a sync: the hash comparison is skipped because it carries new data"
+            exit 0
+          fi
+          base=$(node -p "require('../base/src/generated/dataset.json').meta.datasetHash")
+          head=$(node -p "require('./src/generated/dataset.json').meta.datasetHash")
+          echo "base $base"
+          echo "head $head"
+          npx tsx scripts/test-hash-ledger.ts --base "$base" --head "$head"
+
   audit-baseline:
     name: review probe baseline
     runs-on: ubuntu-latest
