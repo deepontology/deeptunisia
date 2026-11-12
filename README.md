@@ -45,9 +45,9 @@ halves of the dev loop as `beta` so the Agora tab is reachable during
 development; a reader on deeptunisia.org never touches it. The mode contract is
 `docs/agora-deployment.md`.
 
-The complete graph is <!--stat:graphKB-->14350<!--/stat--> KB as the internal
+The complete graph is <!--stat:graphKB-->14530<!--/stat--> KB as the internal
 bundle, and the public exports (dataset, CSVs, geographic layers, changelog)
-ship at <!--stat:shippedKB-->20450<!--/stat--> KB — both are computed by the
+ship at <!--stat:shippedKB-->20780<!--/stat--> KB — both are computed by the
 build, and `npm run test` fails if the README ever disagrees with them.
 
 ## Reproducibility
