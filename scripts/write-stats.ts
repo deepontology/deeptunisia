@@ -1,5 +1,5 @@
 /**
- * npm run stats:write — refresh the generated values inside documents a person wrote.
+ * npm run stats:write: refresh the generated values inside documents a person wrote.
  *
  * The build never writes these files. Each carries a block that has to agree with
  * the graph:
@@ -22,7 +22,7 @@ const ROOT = join(HERE, '..');
 
 const statsPath = join(ROOT, 'src', 'generated', 'stats.json');
 if (!existsSync(statsPath)) {
-	console.error('\n  stats:write — src/generated/stats.json is missing; run `npm run data` first\n');
+	console.error('\n  stats:write: src/generated/stats.json is missing; run `npm run data` first\n');
 	process.exit(1);
 }
 const stats = JSON.parse(readFileSync(statsPath, 'utf8')) as Record<string, string>;
@@ -30,7 +30,7 @@ const stats = JSON.parse(readFileSync(statsPath, 'utf8')) as Record<string, stri
 const DOCS = ['README.md', 'AGENTS.md', 'DESIGN.md', 'output/deeptunisia-release-paper-v0.1.2.md'];
 const STAT_TAG = /<!--stat:([A-Za-z][A-Za-z0-9-]*)-->([\s\S]*?)<!--\/stat-->/g;
 
-console.log('\n  stats:write — the documents the build no longer edits\n');
+console.log('\n  stats:write: the documents the build no longer edits\n');
 
 let changed = 0;
 for (const file of DOCS) {
@@ -66,8 +66,8 @@ const landing = spawnSync('npx', ['--no-install', 'tsx', 'scripts/build-landing.
 	stdio: 'inherit'
 });
 if (landing.status !== 0) {
-	console.error('\n  stats:write — the landing page could not be refreshed\n');
+	console.error('\n  stats:write: the landing page could not be refreshed\n');
 	process.exit(landing.status ?? 1);
 }
 
-console.log(`\n  stats:write — ${changed} document(s) changed\n`);
+console.log(`\n  stats:write: ${changed} document(s) changed\n`);

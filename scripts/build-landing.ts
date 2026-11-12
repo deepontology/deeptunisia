@@ -287,7 +287,7 @@ let fresh = withFreshVisuals(html, visuals);
 fresh = withFreshHash(fresh, datasetHash);
 /* The index card's plate is gated on the file being there. static/ is the
    source of every served asset, so the answer is the same before and after a
-   build — the source and the built page cannot disagree. */
+   build: the source and the built page cannot disagree. */
 fresh = withRegion(fresh, 'indexes', renderIndexes(loadStudies(), 'en', (p) => existsSync(join(ROOT, 'static', p))));
 
 if (WRITE_SOURCE) {

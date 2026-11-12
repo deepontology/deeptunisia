@@ -1,5 +1,5 @@
 /**
- * Clean tree gate — the build and the tests must leave tracked files alone.
+ * Clean tree gate: the build and the tests must leave tracked files alone.
  *
  * The rule: a file is written by a person or by the build, never by both. A
  * file the build writes is not tracked; a file in git is not touched by
