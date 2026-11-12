@@ -67,13 +67,13 @@ export const CLAIM_MATRIX: MatrixRow[] = [
 	{
 		paper_ref: '§1, §8.2, Appendix (stat tags)',
 		claim_text:
-			'Every dataset number in the paper is a stat tag rewritten by the build at every `npm run data`; a hand-edit fails the suite.',
+			'Every dataset number in the paper is a stat tag that `npm run stats:write` refreshes; a hand-edited number fails the suite.',
 		status: 'shipped+tested',
-		code_pointer: 'scripts/build-data.ts :: const STAT_DOCS; scripts/build-data.ts :: const stats',
+		code_pointer: 'scripts/write-stats.ts :: const DOCS; scripts/build-data.ts :: const stats',
 		test_pointer:
-			'scripts/test-paper.ts :: every stat tag in every gated paper matches the emitted stats.json; scripts/test-paper.ts :: every required stat key is tagged in',
+			'scripts/test-paper.ts :: every stat tag in every current gated paper matches the emitted stats.json; scripts/test-paper.ts :: every required stat key is tagged in',
 		notes:
-			'The v0.1.2 source carries 48 unique keys against a 46-key required list (commitSha and roles tag separately). `npm run data` rewrites the tag and `npm run test` fails on drift in any gated paper.'
+			'The v0.1.2 source carries 48 unique keys against a 46-key required list (commitSha and roles tag separately). `npm run stats:write` refreshes the tags and `npm run test` fails on drift in any current gated paper; a paper the registry marks historical-prose is not compared.'
 	},
 	{
 		paper_ref: '§3, Table 2 (kind counts)',
@@ -99,13 +99,13 @@ export const CLAIM_MATRIX: MatrixRow[] = [
 	{
 		paper_ref: '§8.2, Appendix (stat tags)',
 		claim_text:
-			'A hand-edit of a published stat fails the test suite, not only for the paper but for every document the build rewrites.',
+			'A hand-edit of a published stat fails the test suite, not only for the paper but for every document that carries one.',
 		status: 'shipped+tested',
-		code_pointer: 'scripts/build-data.ts :: const STAT_DOCS',
+		code_pointer: 'scripts/write-stats.ts :: const DOCS',
 		test_pointer:
 			'scripts/test-data.ts :: published statistics match the graph; scripts/test-data.ts :: static/llms.txt',
 		notes:
-			'The v0.1.1 gate covered only the paper, while STAT_DOCS also rewrites README, AGENTS, DESIGN and static/llms.txt. The successor release extended the existing test-data assertion to llms.txt and added the paper sources to test-paper, so the §8.2 promise holds for the whole set.'
+			'The v0.1.1 gate covered only the paper. The successor release extended the existing test-data assertion to README, AGENTS, DESIGN and the served llms.txt, and added the paper sources to test-paper, so the §8.2 promise holds for the whole set. `npm run stats:write` writes the tags; nothing writes them implicitly.'
 	},
 	{
 		paper_ref: 'Appendix (gate-required stat tags)',
