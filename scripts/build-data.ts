@@ -1982,7 +1982,7 @@ for (const issue of narrative.errors) fail(issue.where, issue.message);
 for (const issue of narrative.warnings) warn(issue.where, issue.message);
 
 // ---------------------------------------------------------------------------
-// V33 — `verified` is a person's check.
+// V33: `verified` is a person's check.
 //
 // Every kind that can carry a review is checked here, so no record can reach
 // the graph wearing the word without one. Eras, questions and regions carry the
@@ -2000,7 +2000,7 @@ for (const issue of narrative.warnings) warn(issue.where, issue.message);
 	if (VERIFIED_EXCEPTIONS.expires < today) {
 		fail(
 			'verified-exceptions.ts',
-			`the "${VERIFIED_EXCEPTIONS.reason}" exception expired on ${VERIFIED_EXCEPTIONS.expires} (V33) — the list must be empty before release`
+			`the "${VERIFIED_EXCEPTIONS.reason}" exception expired on ${VERIFIED_EXCEPTIONS.expires} (V33): the list must be empty before release`
 		);
 	}
 	const excepted = new Set<string>(VERIFIED_EXCEPTIONS.ids);

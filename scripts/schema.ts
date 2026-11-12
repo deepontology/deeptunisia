@@ -404,12 +404,6 @@ export const ReviewSchema = z.strictObject({
 	/** What kind of human check this was. (V23 — was free text, which the gazette guard read) */
 	method: ReviewMethod,
 	/**
-	 * Who performed the check. A person and an agent both write a review; only a
-	 * person's check can make a record `verified` (V33). Optional here because
-	 * reviews written before the field existed carry no actor.
-	 */
-	actor: z.enum(['human', 'agent']).optional(),
-	/**
 	 * Free text describing what was actually checked. The method is now an enum;
 	 * free-text claims such as "checked directly against the JORT decree text"
 	 * live here so reviewOverclaims() can still read them.
@@ -457,7 +451,7 @@ export function reviewOverclaims(method: string | undefined, sources: string[]):
 }
 
 /**
- * V33 — a record may say `verified` only when a person opened its source and
+ * V33: a record may say `verified` only when a person opened its source and
  * confirmed it. The review that carries the check must name a human actor and
  * the `source-check` method; an agent pass, a review of another method, or no
  * review at all cannot make a record verified. The rule is true of the word

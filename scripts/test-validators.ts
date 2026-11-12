@@ -522,7 +522,7 @@ ok(
 );
 
 // ---------------------------------------------------------------------------
-// D3 — what a record rests on. `restsOnOrigins` counts distinct origins among
+// D3: what a record rests on. `restsOnOrigins` counts distinct origins among
 // the publishers a record cites; `encyclopediaOnly` is true only when it cites
 // something and every citation is an encyclopedia. Both are separate from the
 // V29 lineage count above.
@@ -993,7 +993,7 @@ ok(
 ok('V23-guard: an undefined method is never a claim', reviewOverclaims(undefined, []) === false);
 
 // ---------------------------------------------------------------------------
-// V33 — verified means a person opened the source and confirmed it. The
+// V33: verified means a person opened the source and confirmed it. The
 // pipeline fixture that fails a whole build lives in test-pipeline.ts; these
 // pin the predicate the build calls and the default that replaced `verified`.
 // ---------------------------------------------------------------------------
