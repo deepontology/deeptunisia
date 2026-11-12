@@ -57,9 +57,23 @@ const ctx = loadClaimContext(ROOT);
 const issues: ClaimIssue[] = [];
 const { issues: claimIssues, resolved } = validateClaims(file, ROOT, ctx);
 issues.push(...claimIssues);
-issues.push(...checkStatSpans(file, ROOT, ctx));
+/*
+ * The `<!--stat:key-->` spans are enforced by `npm run test` (test-data.ts and
+ * test-paper.ts), not here. They are reported here so a data run still names a
+ * stale figure, but they do not abort it: the repair is `npm run stats:write`,
+ * which needs this run to finish, and a build that refuses to start cannot be
+ * the thing that tells you how to fix it.
+ */
+const spanIssues = checkStatSpans(file, ROOT, ctx);
+const staleSpans = spanIssues.filter((i) => i.code === 'STALE_STAT');
+issues.push(...spanIssues.filter((i) => i.code !== 'STALE_STAT'));
 issues.push(...scanUnregistered(file, ROOT));
 if (issues.length) fail(issues);
+if (staleSpans.length) {
+	console.warn(`\n  ${staleSpans.length} published figure(s) are stale; npm run test fails on them. Run npm run stats:write.\n`);
+	for (const i of staleSpans.slice(0, 10)) console.warn(`   !  [${i.code}] ${i.claimId ? i.claimId + ': ' : ''}${i.detail}`);
+	if (staleSpans.length > 10) console.warn(`   !  ... ${staleSpans.length - 10} more\n`);
+}
 
 const registry = buildResolvedRegistry(file, ctx);
 const manifest = buildManifest(ctx, registry);
