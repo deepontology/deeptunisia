@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { app } from '$lib/state.svelte';
 	import SourceList from '$lib/components/SourceList.svelte';
-	import { entityName, t, nameOf, basisDesc } from '$lib/t.svelte';
+	import { t, basisDesc } from '$lib/t.svelte';
+	import { entityName, nameOf } from '$lib/names.svelte';
 	import { format } from '$lib/i18n';
 	import Prose from '$lib/ui/Prose.svelte';
 	import { BASIS_COLOR, BASIS_LABEL, BASIS_ORDER, ds, type Basis } from '$lib/model';

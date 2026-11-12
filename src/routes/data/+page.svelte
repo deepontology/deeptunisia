@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { ds, personById } from '$lib/model';
-	import { personName, t } from '$lib/t.svelte';
+	import { t } from '$lib/t.svelte';
+	import { personName } from '$lib/names.svelte';
 	import { format } from '$lib/i18n';
 	import { app } from '$lib/state.svelte';
 	import Content from '$lib/ui/Content.svelte';

@@ -9,7 +9,7 @@
 	import { initTheme, theme } from '$lib/design/theme.svelte';
 	import { dirFor } from '$lib/i18n';
 	import { personById, institutionById, relationshipById, eventById, resolveEntity } from '$lib/model';
-	import { eventTitle, nameOf } from '$lib/t.svelte';
+	import { eventTitle, nameOf } from '$lib/names.svelte';
 	import MenuBar from '$lib/shell/MenuBar.svelte';
 	import SubNav from '$lib/shell/SubNav.svelte';
 	import { rememberPath } from '$lib/shell/nav.svelte';

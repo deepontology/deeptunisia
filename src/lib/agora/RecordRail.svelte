@@ -15,7 +15,8 @@
 	import ConnectionCard from '$lib/components/ConnectionCard.svelte';
 	import Chip from '$lib/ui/Chip.svelte';
 	import SourceList from '$lib/components/SourceList.svelte';
-	import { t, basisLabel, confidenceLabel, describeInterval, nameOf } from '$lib/t.svelte';
+	import { t, basisLabel, confidenceLabel, describeInterval } from '$lib/t.svelte';
+	import { nameOf } from '$lib/names.svelte';
 	import {
 		communityTypeOf,
 		institutionById,

@@ -35,7 +35,8 @@
 		type Institution,
 		type Layer
 	} from '$lib/model';
-	import { nameOf, t, tf } from '$lib/t.svelte';
+	import { t, tf } from '$lib/t.svelte';
+	import { nameOf } from '$lib/names.svelte';
 
 	interface Props {
 		/** Names the fieldset and the listbox. A word, never a code. */
