@@ -1,4 +1,6 @@
 import data from '$data/index';
+import { createTime } from 'deepepisteme/kernel/time';
+import { dateFormatter, format, translate, type Locale } from './i18n';
 import {
 	CUTOFF,
 	BASIS_ORDER,
@@ -11,11 +13,6 @@ import {
 	type Basis
 } from './vocab';
 import { describeInterval, durationLabel, formatDate } from './dates';
-import {
-	certainlyActive as engineCertainlyActive,
-	possiblyActive as enginePossiblyActive,
-	configureTime as configureEngineTime
-} from 'deepepisteme/time';
 import type {
 	Company,
 	Confidence,
@@ -203,16 +200,17 @@ export function targetName(type: string, id: string): string {
 // the build algebra and the interface answer with one implementation. The
 // jurisdiction's parameters are installed at module load: without that, the
 // engine's cutoff clamp would use its shipped defaults instead of the
-// dataset's cutoff, and nothing could be certain at the horizon.
+// dataset's cutoff, and nothing could be certain at the horizon. The values
+// themselves come from `ds.meta`, exactly as before.
 
-configureEngineTime(ds.meta.parameters.time);
+const time = createTime(ds.meta.parameters.time);
 
 export function certainlyActive(iv: Interval, t: number): boolean {
-	return engineCertainlyActive(iv, t);
+	return time.certainlyActive(iv, t);
 }
 
 export function possiblyActive(iv: Interval, t: number): boolean {
-	return enginePossiblyActive(iv, t);
+	return time.possiblyActive(iv, t);
 }
 
 /** 0 = not active, 1 = possibly active, 2 = certainly active. */
