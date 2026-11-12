@@ -2618,8 +2618,40 @@ if (errors.length) {
 // as downloadable data alongside the site.
 // ---------------------------------------------------------------------------
 
+/**
+ * The published dataset layout: one record per line, no padding.
+ *
+ * `meta` keeps the two-space indentation so the build facts at the top stay
+ * readable. Every other key is written on one line, except a top-level array,
+ * whose elements each get a line of their own, so one changed record is one
+ * changed line in git. The result parses to exactly the value
+ * `JSON.stringify(dataset)` carries; only the layout differs.
+ */
+function publishedDatasetJSON(dataset: Record<string, unknown>): string {
+	const keys = Object.keys(dataset);
+	const lines: string[] = ['{'];
+	keys.forEach((key, index) => {
+		const value = dataset[key];
+		const comma = index === keys.length - 1 ? '' : ',';
+		const label = `${JSON.stringify(key)}: `;
+		if (key === 'meta') {
+			lines.push(`  ${label}${JSON.stringify(value, null, 2).replace(/\n/g, '\n  ')}${comma}`);
+		} else if (Array.isArray(value) && value.length) {
+			lines.push(`  ${label}[`);
+			value.forEach((element, i) => {
+				lines.push(`    ${JSON.stringify(element)}${i === value.length - 1 ? '' : ','}`);
+			});
+			lines.push(`  ]${comma}`);
+		} else {
+			lines.push(`  ${label}${JSON.stringify(value)}${comma}`);
+		}
+	});
+	lines.push('}');
+	return `${lines.join('\n')}\n`;
+}
+
 mkdirSync(STAGE_STATIC, { recursive: true });
-writeFileSync(join(STAGE_STATIC, 'dataset.json'), JSON.stringify(dataset, null, 2), 'utf8');
+writeFileSync(join(STAGE_STATIC, 'dataset.json'), publishedDatasetJSON(dataset), 'utf8');
 
 // GIS exports (spec §8.3): the gazetteer as GeoJSON for the map view and for
 // external tooling. Places carry Point geometry from their coordinates; regions
@@ -3890,7 +3922,7 @@ let datasetHashValue = '';
 		writeFileSync(join(STAGE_STATIC, 'dataset.json'), canonicalBytes(withTimelines(bundled, true)), 'utf8');
 	} else {
 		writeFileSync(join(STAGE_OUT, 'dataset.json'), JSON.stringify(bundled), 'utf8');
-		writeFileSync(join(STAGE_STATIC, 'dataset.json'), JSON.stringify(withTimelines(bundled, true), null, 2), 'utf8');
+		writeFileSync(join(STAGE_STATIC, 'dataset.json'), publishedDatasetJSON(withTimelines(bundled, true)), 'utf8');
 	}
 }
 
