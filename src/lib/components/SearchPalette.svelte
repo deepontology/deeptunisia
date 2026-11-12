@@ -1,17 +1,51 @@
 <script lang="ts">
 	import { app } from '$lib/state.svelte';
 	import { goto } from '$app/navigation';
-	import { LAYER_COLOR, ds } from '$lib/model';
-	import { formatDate } from '$lib/t.svelte';
-	import { search, type Hit } from '$lib/search';
+	import { page } from '$app/state';
+	import { onMount } from 'svelte';
+	import { LAYER_COLOR } from '$lib/vocab';
+	import { formatDate, t, tf } from '$lib/t.svelte';
+	import { loadSearch, search, searchError, searchStatus, type Hit } from '$lib/search.svelte';
+	import { isReadingPath } from '$lib/shell/reading';
 
 	let query = $state('');
 	let cursor = $state(0);
 	let inputEl = $state<HTMLInputElement | null>(null);
 
-	/* The index itself lives in $lib/search, shared with Agora's mention menu, so
-	   typing a name here and typing it in a post rank identically. */
-	const results = $derived(search(query, { limit: query.trim() ? 24 : 9 }));
+	/*
+	 * Two modes, one verdict per page.
+	 *
+	 * A reading page fetches the small index file: it holds the three kinds that
+	 * page can open and costs no graph. An instrument page already holds the graph,
+	 * so there the full index is loaded on demand and can also find connections,
+	 * contracts, licences, declarations, education records, places and regions. The
+	 * import is dynamic so a page of prose never follows this edge.
+	 */
+	const reading = isReadingPath(page.url.pathname);
+	type RichSearch = typeof import('$lib/search-graph');
+	let rich = $state<RichSearch | null>(null);
+	let richError = $state('');
+
+	const status = $derived(
+		reading ? searchStatus() : rich ? 'ready' : richError ? 'error' : 'loading'
+	);
+	const results = $derived(
+		reading
+			? search(query, { limit: query.trim() ? 24 : 9 })
+			: rich
+				? rich.searchGraph(query, { limit: query.trim() ? 24 : 9 })
+				: []
+	);
+
+	onMount(() => {
+		if (reading) {
+			void loadSearch();
+			return;
+		}
+		void import('$lib/search-graph')
+			.then((m) => (rich = m))
+			.catch((err) => (richError = err instanceof Error ? err.message : String(err)));
+	});
 
 	$effect(() => {
 		inputEl?.focus();
@@ -22,13 +56,26 @@
 		cursor = 0;
 	});
 
-		function choose(r: Hit) {
+	function choose(r: Hit) {
+		/* A reading page has no Inspector, so a hit opens the record's own page
+		   there. An instrument page keeps the panel and the timeline. */
+		if (isReadingPath(page.url.pathname)) {
+			if (r.kind === 'relationship') {
+				void goto(`/network?rel=${encodeURIComponent(r.id)}`);
+			} else if (r.kind === 'place' || r.kind === 'region') {
+				void goto(r.id.startsWith('gov-') ? `/world?region=${encodeURIComponent(r.id)}` : '/world?at=tunisia');
+			} else {
+				void goto(`/e/${encodeURIComponent(r.id)}`);
+			}
+			app.searchOpen = false;
+			return;
+		}
 		if (r.kind === 'event') {
-			// Jump the timeline to the event AND open its card.
-			const ev = ds.events.find((e) => e.id === r.id);
-			if (ev) {
+			// Jump the timeline to the event AND open its card. The date travels
+			// with the hit, so this needs no graph lookup.
+			if (r.date !== undefined) {
 				app.playing = false;
-				app.setDate(ev.interval.startEarliest);
+				app.setDate(r.date);
 			}
 			app.selected = r.id;
 		} else if (r.kind === 'relationship') {
@@ -47,7 +94,7 @@
 		app.searchOpen = false;
 	}
 
-function onKey(e: KeyboardEvent) {
+	function onKey(e: KeyboardEvent) {
 		if (e.key === 'ArrowDown') {
 			e.preventDefault();
 			cursor = Math.min(results.length - 1, cursor + 1);
@@ -68,13 +115,13 @@ function onKey(e: KeyboardEvent) {
 	role="presentation"
 ></div>
 
-<div class="palette" role="dialog" aria-modal="true" aria-label="Search">
+<div class="palette" role="dialog" aria-modal="true" aria-label={t('ctl.search')}>
 	<input
 		bind:this={inputEl}
 		bind:value={query}
 		onkeydown={onKey}
-		placeholder="Search people, institutions, events — Arabic, French or English"
-		aria-label="Search query"
+		placeholder={t('search.placeholder')}
+		aria-label={t('search.query')}
 		autocomplete="off"
 		spellcheck="false"
 	/>
@@ -88,21 +135,29 @@ function onKey(e: KeyboardEvent) {
 				>
 					<i class="dot" style:background={LAYER_COLOR[r.layer]}></i>
 					<span class="name">{r.name}</span>
-					<!-- An event's date is re-formatted in the reader's language; the index
-					     was built once, before a locale existed. See $lib/search. -->
+					<!-- An event's date is re-formatted in the reader's language. The
+					     file carries a timestamp, not a rendered date. -->
 					<span class="detail">{r.date ? formatDate(r.date, 'month') : r.detail}</span>
 					<span class="kind">{r.kind}</span>
 				</button>
 			</li>
 		{/each}
 		{#if results.length === 0}
-			<li class="empty">No match. Try a surname, an institution, or a year.</li>
+			<li class="empty">
+				{#if status === 'error'}
+					{tf('search.unavailable', { error: (reading ? searchError() : richError) ?? '' })}
+				{:else if status !== 'ready'}
+					{t('search.loading')}
+				{:else}
+					{t('search.empty')}
+				{/if}
+			</li>
 		{/if}
 	</ul>
 	<footer>
-		<span><kbd>↑</kbd><kbd>↓</kbd> navigate</span>
-		<span><kbd>enter</kbd> open</span>
-		<span><kbd>esc</kbd> dismiss</span>
+		<span><kbd>↑</kbd><kbd>↓</kbd> {t('search.navigate')}</span>
+		<span><kbd>enter</kbd> {t('search.open')}</span>
+		<span><kbd>esc</kbd> {t('search.dismiss')}</span>
 	</footer>
 </div>
 

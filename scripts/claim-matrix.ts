@@ -535,7 +535,7 @@ export const CLAIM_MATRIX: MatrixRow[] = [
 		claim_text:
 			'The dashboard H1 card shows both readings: the personnel snapshot test and the network path test, with denominators and thresholds.',
 		status: 'shipped+tested',
-		code_pointer: 'src/routes/evidence/+page.svelte :: nullControls.shuffledCohorts',
+		code_pointer: 'src/routes/(instrument)/evidence/+page.svelte :: nullControls.shuffledCohorts',
 		test_pointer:
 			'scripts/test-ui.ts :: the null-control comparison travels with the counts; scripts/test-ui.ts :: the continuity card resolves in',
 		notes: 'Every chart keeps a table alternative per DESIGN.'

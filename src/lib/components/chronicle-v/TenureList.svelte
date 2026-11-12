@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { app } from '$lib/state.svelte';
 	import { BASIS_COLOR, BASIS_OPACITY, CUTOFF, DASH, personById, type Basis, type EventRec, type Position } from '$lib/model';
-	import { describeInterval, durationLabel, eventTitle, nameOf, t } from '$lib/t.svelte';
+	import { t, basisLabel, describeInterval, durationLabel } from '$lib/t.svelte';
+	import { eventTitle, nameOf } from '$lib/names.svelte';
 import { basisLineText } from '$lib/ui/BasisLine.svelte';
 	import { visiblePositions, type ChronGroup } from '$lib/chronicle/rows';
 

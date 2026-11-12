@@ -3,7 +3,8 @@
 	import type { Snippet } from 'svelte';
 	import { app } from '$lib/state.svelte';
 	import { format } from '$lib/i18n';
-	import { t, tf, describeInterval, durationLabel, formatDate, layerLabel, relLabel, confidenceLabel, nameOf, entityName} from '$lib/t.svelte';
+	import { t, tf, describeInterval, durationLabel, formatDate, layerLabel, relLabel, confidenceLabel, basisLabel } from '$lib/t.svelte';
+	import { nameOf, entityName } from '$lib/names.svelte';
 	import Chip from '$lib/ui/Chip.svelte';
 	import BasisLine from '$lib/ui/BasisLine.svelte';
 	import OriginsChip from '$lib/ui/OriginsChip.svelte';
@@ -211,14 +212,11 @@
 
 			{#if tone === 'reported'}
 				<p class="caveat">
-					Claims below come from credible reporting but are not established by any public
-					document. Each names who is making the claim.
+					{t('panel.reported.caveat')}
 				</p>
 			{:else if tone === 'circulating'}
 				<p class="caveat hard">
-					These claims circulate without reliable evidence. They are recorded, not endorsed —
-					deleting them would leave no way to show why the popular account is wrong. Several
-					are contradicted by this project's own data.
+					{t('panel.circulating.caveat')}
 				</p>
 			{/if}
 
@@ -290,7 +288,7 @@
 	</div>
 {/snippet}
 
-<aside class="panel" aria-label="Entity detail">
+<aside class="panel" aria-label={t('panel.entityDetail')}>
 	<header>
 		<div class="titles">
 			<span class="eyebrow">
@@ -503,7 +501,7 @@
 							</div>
 							<div class="o-meta mono">
 								{describeInterval(pos.interval)} · {durationLabel(pos.years)}
-								{#if pos.acting}· acting{/if}
+								{#if pos.acting}· {t('now.acting')}{/if}
 							</div>
 							{#if pos.predecessorDerived || pos.successorDerived}
 								<div class="chain">

@@ -8,7 +8,8 @@
 	import { seatedAt, chamberStanding } from '$lib/civic';
 	import { app } from '$lib/state.svelte';
 	import { sheetDrag, type SheetDragParams } from '$lib/ui/sheet-drag';
-	import { t, tf, formatDate, layerLabel, relLabel, entityName, nameOf } from '$lib/t.svelte';
+	import { t, tf, layerLabel, basisLabel, relLabel, formatDate } from '$lib/t.svelte';
+	import { entityName, nameOf } from '$lib/names.svelte';
 	import { dirFor, format } from '$lib/i18n';
 	import Chip from '$lib/ui/Chip.svelte';
 	import BasisLine, { basisLineText } from '$lib/ui/BasisLine.svelte';

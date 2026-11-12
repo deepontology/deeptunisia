@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { BASIS_OPACITY, CUTOFF, DASH, LAYER_COLOR, personById, type Basis, type Layer, type Position } from '$lib/model';
-	import { describeInterval, formatDate, nameOf } from '$lib/t.svelte';
+	import { nameOf } from '$lib/names.svelte';
+	import { describeInterval, formatDate } from '$lib/t.svelte';
 	import type { VScale } from '$lib/chronicle/vscale';
 
 	/**
