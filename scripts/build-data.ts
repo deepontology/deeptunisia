@@ -4133,38 +4133,44 @@ if (!FIXTURE_MODE) {
 
 if (!FIXTURE_MODE) {
 	const STAT_TAG = /<!--stat:([A-Za-z][A-Za-z0-9-]*)-->([\s\S]*?)<!--\/stat-->/g;
-	const STAT_DOCS = [
-		'README.md',
-		'AGENTS.md',
-		'DESIGN.md',
-		'static/llms.txt',
-		'output/deeptunisia-release-paper-v0.1.1.md',
-		'output/deeptunisia-release-paper-v0.1.2.md'
+	/*
+	 * Where each document reads its text from and where the filled copy goes.
+	 * Same path in, same path out means a document a person edits in place:
+	 * `npm run stats:write` refreshes those, never `npm run data`. A different
+	 * out path means the served file is a build product and the authored text
+	 * lives in the template.
+	 */
+	const STAT_DOCS: { from: string; to: string }[] = [
+		{ from: 'README.md', to: 'README.md' },
+		{ from: 'AGENTS.md', to: 'AGENTS.md' },
+		{ from: 'DESIGN.md', to: 'DESIGN.md' },
+		{ from: 'output/deeptunisia-release-paper-v0.1.2.md', to: 'output/deeptunisia-release-paper-v0.1.2.md' },
+		{ from: 'content/llms.template.txt', to: 'static/llms.txt' }
 	];
+	/* README, AGENTS and DESIGN are refreshed by `npm run stats:write`, not here;
+	   recounting them on every data run is what made a data commit dirty a tree
+	   it had not been asked to change. Only the build product is written here. */
 
 	const statUpdates: string[] = [];
-	for (const file of STAT_DOCS) {
-		const path = join(ROOT, file);
-		if (!existsSync(path)) continue;
-		const before = readFileSync(path, 'utf8');
+	for (const doc of STAT_DOCS) {
+		// A document a person edits is refreshed by `npm run stats:write`, never
+		// by a data run. Only the template-to-product pair is written here.
+		if (doc.to === doc.from) continue;
+		const before = readFileSync(join(ROOT, doc.from), 'utf8');
 		let replaced = 0;
-		let unknown: string[] = [];
 		const after = before.replace(STAT_TAG, (whole, key: string, current: string) => {
 			const value = stats[key];
 			if (value === undefined) {
-				unknown.push(key);
+				console.log(`   !  ${doc.from}: unknown stat key "${key}"`);
 				return whole;
 			}
 			if (current !== value) replaced++;
 			return `<!--stat:${key}-->${value}<!--/stat-->`;
 		});
-		for (const key of unknown) console.log(`   !  ${file}: unknown stat key "${key}"`);
-		if (after !== before) {
-			writeFileSync(path, after, 'utf8');
-			statUpdates.push(`${file} (${replaced})`);
-		}
+		writeFileSync(join(ROOT, doc.to), after, 'utf8');
+		if (after !== before) statUpdates.push(`${doc.to} (${replaced})`);
 	}
-	if (statUpdates.length) console.log(`   ↻  published stats refreshed: ${statUpdates.join(', ')}`);
+	if (statUpdates.length) console.log(`   ↻  build products written: ${statUpdates.join(', ')}`);
 }
 
 console.log(`
