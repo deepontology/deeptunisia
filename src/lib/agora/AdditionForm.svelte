@@ -36,7 +36,8 @@
 	import Segmented from '$lib/ui/Segmented.svelte';
 	import Textarea from '$lib/ui/Textarea.svelte';
 	import RecordPicker, { type PickerOption } from './RecordPicker.svelte';
-	import { t, layerLabel, nameOf } from '$lib/t.svelte';
+	import { t, layerLabel } from '$lib/t.svelte';
+	import { nameOf } from '$lib/names.svelte';
 	import { agora } from '$lib/agora.svelte';
 	import { LAYER_COLOR, communityTypeOf, ds, institutionById, type Layer } from '$lib/model';
 	import {
