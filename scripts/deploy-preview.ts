@@ -17,9 +17,9 @@
  *
  * The response header that keeps the address out of search results is not in
  * this config: Workers Assets takes custom headers only from a `_headers` file
- * in the assets directory, and `build/_headers` is copied from `static/_headers`,
- * which production reads too. See the preview job's result note before running
- * this command for real.
+ * in the assets directory. It is the last block of `static/_headers`, scoped to
+ * workers.dev hosts, and the test beside this script fails if it is missing.
+ * After the first real deploy, check the header on the printed address.
  */
 import { spawnSync } from 'node:child_process';
 import { existsSync, readFileSync, realpathSync } from 'node:fs';

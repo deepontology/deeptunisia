@@ -314,6 +314,39 @@ directory = "build"
 	ok('no preview script calls wrangler directly', !/wrangler/.test(String(scripts['deploy:preview'])) && !/wrangler/.test(String(scripts['deploy:preview:dry'])));
 }
 
+// The preview is only safe to deploy while the shared headers file keeps every
+// workers.dev address out of search results, and only those addresses.
+{
+	const lines = readFileSync(join(ROOT, 'static', '_headers'), 'utf8').split(/\r?\n/);
+	const blocks: { selector: string; headers: string[] }[] = [];
+	for (const line of lines) {
+		if (!line.trim() || line.trimStart().startsWith('#')) continue;
+		if (/^\s/.test(line)) blocks[blocks.length - 1]?.headers.push(line.trim().toLowerCase());
+		else blocks.push({ selector: line.trim(), headers: [] });
+	}
+	const robots = blocks.filter((b) => b.headers.some((h) => h.startsWith('x-robots-tag:')));
+	ok(
+		'exactly one block of static/_headers sets X-Robots-Tag',
+		robots.length === 1,
+		robots.map((b) => b.selector).join(', ') || '(none)'
+	);
+	const block = robots[0];
+	ok(
+		'that block is scoped to workers.dev hosts and to nothing else',
+		!!block && /^https:\/\/(:[a-z]+\.)+workers\.dev\/\*$/.test(block.selector),
+		block?.selector ?? '(none)'
+	);
+	ok(
+		'it says noindex and nofollow',
+		!!block && block.headers.some((h) => /^x-robots-tag:\s*noindex,\s*nofollow$/.test(h)),
+		block?.headers.join(' | ') ?? '(none)'
+	);
+	ok(
+		'no block that reaches deeptunisia.org sets X-Robots-Tag',
+		!blocks.some((b) => !b.selector.startsWith('https://') && b.headers.some((h) => h.startsWith('x-robots-tag:')))
+	);
+}
+
 rmSync(DIR, { recursive: true, force: true });
 
 console.log(`\n  ${checks - failures}/${checks} preview deploy checks passed\n`);

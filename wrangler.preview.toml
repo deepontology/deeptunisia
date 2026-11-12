@@ -5,11 +5,12 @@
 # workers.dev address, and the deploy command passes --name as well as this file
 # so a change to this file cannot make it write the production Worker.
 #
-# The header that keeps that address out of search results is NOT declared here.
-# Workers Assets takes custom headers only from a `_headers` file in the assets
-# directory, and build/_headers is copied from static/_headers, which production
-# reads too. Until that is decided, a deploy of this config serves the built
-# robots.txt, which says "Allow: /". See the preview job's result note.
+# The header that keeps that address out of search results is not declared here,
+# because Workers Assets takes custom headers only from the `_headers` file in
+# the assets directory. It is the last block of static/_headers, scoped to
+# workers.dev hosts. After the first deploy, check it before sharing the address:
+#   curl -sI https://<the printed workers.dev address>/ | grep -i x-robots-tag
+# If that prints nothing, delete the preview Worker; do not leave it up.
 
 name = "deeptunisia-preview"
 compatibility_date = "2026-07-29"
