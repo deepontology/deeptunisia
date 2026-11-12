@@ -2073,7 +2073,14 @@ const contradictions = [
  */
 const reviewSections: [
 	ReviewInput['kind'],
-	{ basis?: string; attributed_to?: string; review?: unknown; disputes?: unknown[] }[]
+	{
+		id?: string;
+		basis?: string;
+		attributed_to?: string;
+		verification?: string;
+		review?: unknown;
+		disputes?: unknown[];
+	}[]
 ][] = [
 	['institution', resolvedInstitutions],
 	['person', resolvedPeople],
@@ -2211,10 +2218,17 @@ if (translationProblems.length) {
 	abortBuild();
 }
 
-const needsPrimary = [
-	...resolvedPositions.filter((p) => p.verification === 'needs-primary-source').map((p) => p.id),
-	...resolvedPeople.filter((p) => p.verification === 'needs-primary-source').map((p) => p.id)
-];
+/**
+ * Every claim-bearing record flagged needs-primary-source, across every kind
+ * whose schema carries the flag. The published count is this list's length, so
+ * a surface that says "records" counts all of them, not positions and people
+ * alone.
+ */
+const needsPrimary = reviewSections.flatMap(([kind, rows]) =>
+	rows
+		.filter((r) => r.verification === 'needs-primary-source')
+		.map((r) => `${kind}:${r.id ?? ''}`)
+);
 
 /**
  * Coverage audit: what the map does not contain.
@@ -2743,6 +2757,7 @@ writeFileSync(
 			direction: r.direction,
 			basis: r.basis,
 			confidence: r.confidence,
+			verification: r.verification,
 			attributed_to: r.attributed_to ?? '',
 			start_raw: r.interval.raw.start,
 			end_raw: r.interval.raw.end,
@@ -2762,6 +2777,7 @@ writeFileSync(
 			'direction',
 			'basis',
 			'confidence',
+			'verification',
 			'attributed_to',
 			'start_raw',
 			'end_raw',
@@ -2785,7 +2801,9 @@ writeFileSync(
 			date: s.date ?? '',
 			lang: s.lang,
 			url: s.url,
-			archive: s.archive_url ?? `https://web.archive.org/web/2026/${s.url}`,
+			// Empty when no archive was recorded. A synthesised Wayback address would
+			// claim an archived copy this project does not hold.
+			archive: s.archive_url ?? '',
 			excerpt: s.excerpt ?? ''
 		})),
 		['id', 'tier', 'title', 'publisher', 'date', 'lang', 'url', 'archive', 'excerpt']
