@@ -28,6 +28,17 @@
 	/** Translation coverage, per locale and per provenance tier. Never summed. */
 	const tr = figures.translation;
 
+	/**
+	 * The verification desk's measured figure. It is cut into about-figures.json
+	 * from research/desk/sessions.tsv, which the dataset hash does not cover, and a
+	 * figure that moved the hash would turn every recorded session into a dataset
+	 * change. No session line, no number.
+	 */
+	const deskClaims = figures.desk.claims;
+	const deskMinutes = figures.desk.minutes;
+	const deskMeasured =
+		deskMinutes !== null && Number.isFinite(deskMinutes) && deskClaims > 0;
+
 	const reviewPct = $derived(
 		Math.round((counts.reviewed / Math.max(1, counts.reviewable)) * 100)
 	);
@@ -147,6 +158,26 @@
 					tint="var(--basis-inferred)"
 				/>
 			</div>
+			<div class="cell">
+				{#if deskMeasured}
+					<Stat
+						value={deskMinutes}
+						decimals={1}
+						suffix=" min"
+						label={format(app.locale, 'about.desk.perClaim', { claims: deskClaims })}
+						tint="var(--basis-inferred)"
+					/>
+				{:else}
+					<div class="unmeasured">
+						<span class="v">–</span>
+						<span class="k">{t('about.desk.notMeasured')}</span>
+					</div>
+				{/if}
+			</div>
+		</div>
+
+		<div class="doc">
+			<p>{t('about.desk.note')}</p>
 		</div>
 
 		<div class="prose">
@@ -553,5 +584,25 @@
 	.cell {
 		background: var(--surface-raised);
 		padding: var(--s-5) var(--s-5);
+	}
+	/* The desk's cell before its first session: a dash and the words, never a zero
+	   that could be read as a measured figure. */
+	.unmeasured {
+		display: inline-flex;
+		flex-direction: column;
+		gap: 1px;
+		min-width: 0;
+	}
+	.unmeasured .v {
+		font-family: var(--font-mono);
+		font-size: var(--t-xl);
+		font-weight: 520;
+		letter-spacing: var(--track-tight);
+		color: var(--text-faint);
+	}
+	.unmeasured .k {
+		font-size: var(--t-2xs);
+		color: var(--text-faint);
+		line-height: var(--lh-tight);
 	}
 </style>

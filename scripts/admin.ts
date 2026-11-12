@@ -46,25 +46,19 @@ import {
 	reviewRiskOf as riskOf,
 	type ReviewFlag as Risk
 } from './review-coverage.ts';
+import { PositionSchema, SourceSchema, reviewOverclaims } from './schema.ts';
 import {
-	PositionSchema,
-	RelationshipSchema,
-	EventSchema,
-	SourceSchema,
-	reviewOverclaims
-} from './schema.ts';
+	REVIEWABLE,
+	DeskSession,
+	configureDeskSchema,
+	editField,
+	type Kind,
+	type VerdictKey
+} from './desk.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
-const ROOT = join(HERE, '..');
+const REPO_ROOT = join(HERE, '..');
 const PORT = 5199;
-
-/** Only these three carry `review:` in the schema. They also carry `sources:`. */
-const REVIEWABLE = {
-	positions: { file: 'positions.yaml', schema: PositionSchema },
-	relationships: { file: 'relationships.yaml', schema: RelationshipSchema },
-	events: { file: 'events.yaml', schema: EventSchema }
-} as const;
-type Kind = keyof typeof REVIEWABLE;
 
 const SOURCES_FILE = 'sources.yaml';
 
@@ -88,8 +82,8 @@ const PRIMARY_TIERS = [1, 2];
  * (they overlap); this key is only what orders the queue, most-damaging first.
  */
 
-const dataPath = (file: string) => join(ROOT, 'data', file);
-const readData = (file: string) => readFileSync(dataPath(file), 'utf8');
+const dataPath = (root: string, file: string) => join(root, 'data', file);
+const readData = (root: string, file: string) => readFileSync(dataPath(root, file), 'utf8');
 
 interface QueueItem {
 	kind: Kind;
@@ -111,8 +105,11 @@ interface QueueItem {
 	target: Target;
 }
 
-function loadQueue(): { items: QueueItem[]; coverage: Record<Risk, { reviewed: number; total: number }> } {
-	const ds = JSON.parse(readFileSync(join(ROOT, 'src', 'generated', 'dataset.json'), 'utf8'));
+function loadQueue(root: string): {
+	items: QueueItem[];
+	coverage: Record<Risk, { reviewed: number; total: number }>;
+} {
+	const ds = JSON.parse(readFileSync(join(root, 'src', 'generated', 'dataset.json'), 'utf8'));
 
 	const label = (kind: Kind, r: any): string => {
 		if (kind === 'positions') return `${r.roleTitle ?? r.role} — ${r.holder}`;
@@ -165,9 +162,15 @@ function loadQueue(): { items: QueueItem[]; coverage: Record<Risk, { reviewed: n
  * does not replace `npm run data`, which additionally resolves dates and checks
  * cross-file references — the caller is told to run it.
  */
-function recordReview(kind: Kind, target: Target, review: { by: string; date: string; method?: string }) {
+function recordReview(
+	root: string,
+	kind: Kind,
+	target: Target,
+	review: { by: string; date: string; method?: string }
+) {
+	configureDeskSchema(root);
 	const { file, schema } = REVIEWABLE[kind];
-	const source = readData(file);
+	const source = readData(root, file);
 
 	const entries: Record<string, string> = { by: review.by, date: review.date };
 	if (review.method?.trim()) entries.method = review.method.trim();
@@ -179,7 +182,7 @@ function recordReview(kind: Kind, target: Target, review: { by: string; date: st
 		throw new EmitError(`edit fails the schema: ${parsed.error.issues[0]?.message ?? 'unknown'}`);
 	}
 
-	writeFileSync(dataPath(file), text, 'utf8');
+	writeFileSync(dataPath(root, file), text, 'utf8');
 	return { file, added: splice.text.trim() };
 }
 
@@ -198,69 +201,14 @@ function gazetteWarning(method: string, sources: string[]): string | null {
 // Editing an existing record
 // ---------------------------------------------------------------------------
 
-/**
- * Fields this tool will change on an existing record, and nothing else.
- *
- * Deliberately short. Dates are the timeline's backbone and the thing most often
- * wrong; grade and verification are what the sourcing work moves. Prose, ids and
- * cross-references are absent — changing an id silently breaks every reference to
- * the record, and there is no reason to make that a two-click action.
- */
-const EDITABLE: Record<Kind, string[]> = {
-	positions: ['start', 'end', 'confidence', 'verification', 'acting'],
-	relationships: ['start', 'end', 'confidence', 'verification'],
-	events: ['date', 'confidence', 'verification']
-};
-
-function editField(kind: Kind, id: string, field: string, raw: string) {
-	if (!EDITABLE[kind].includes(field)) {
-		throw new EmitError(`"${field}" is not editable here — allowed: ${EDITABLE[kind].join(', ')}`);
-	}
-
-	const { file, schema } = REVIEWABLE[kind];
-	const before = readData(file);
-	const target = { id };
-
-	const existing = (parseYaml(before) as any[]).find((r) => r.id === id);
-	if (!existing) throw new EmitError(`no ${kind} with id "${id}"`);
-
-	const value: unknown = field === 'acting' ? raw === 'true' : raw;
-
-	// Dates go through the same grammar the build uses. A token it cannot read
-	// resolves to an `unknown` interval, which drops the record off the timeline
-	// without failing anything — the worst kind of error this dataset can have.
-	if (['start', 'end', 'date'].includes(field) && raw) {
-		try {
-			const spec = field === 'end' ? { start: existing.start, end: raw } : { start: raw, end: existing.end };
-			const interval = resolveInterval(spec);
-			if (interval.status === 'unknown' && raw !== '?') {
-				throw new Error(`"${raw}" is not a date this grammar understands`);
-			}
-		} catch (e) {
-			throw new EmitError(`dates: ${(e as Error).message}`);
-		}
-	}
-
-	const op = field in existing ? 'set' : 'add-field';
-	const { text, splice } = applyEdit(before, { op, target, field, value } as any);
-
-	const parsed = z.array(schema).safeParse(parseYaml(text));
-	if (!parsed.success) {
-		const issue = parsed.error.issues[0];
-		throw new EmitError(`edit fails the schema: ${issue.path.join('.')} ${issue.message}`);
-	}
-
-	writeFileSync(dataPath(file), text, 'utf8');
-	return { file, was: splice.replaced, now: splice.text };
-}
-
 // ---------------------------------------------------------------------------
 // Committing
 // ---------------------------------------------------------------------------
 
-const git = (args: string[]) => execFileSync('git', args, { cwd: ROOT, encoding: 'utf8' });
+const git = (root: string, args: string[]) =>
+	execFileSync('git', args, { cwd: root, encoding: 'utf8' });
 
-function pendingChanges() {
+function pendingChanges(root: string) {
 	/*
 	 * Do NOT trim the porcelain output as a whole.
 	 *
@@ -270,13 +218,13 @@ function pendingChanges() {
 	 * so slice(3) then ate a character and reported "ata/positions.yaml" — a bug
 	 * visible on exactly one line of any listing, which is how it survives a glance.
 	 */
-	const lines = git(['status', '--porcelain', '--', 'data/'])
+	const lines = git(root, ['status', '--porcelain', '--', 'data/'])
 		.split('\n')
 		.filter((l) => l.trim().length > 0);
 	if (!lines.length) return { files: [], diffstat: '' };
 	return {
 		files: lines.map((l) => l.slice(3)),
-		diffstat: git(['diff', '--stat', '--', 'data/']).trim()
+		diffstat: git(root, ['diff', '--stat', '--', 'data/']).trim()
 	};
 }
 
@@ -289,8 +237,8 @@ function pendingChanges() {
  * a commit that cannot pass it should not exist. Catching it here matters because
  * otherwise the failure is discovered by whoever pulls next.
  */
-function commitChanges(message: string) {
-	const pending = pendingChanges();
+function commitChanges(root: string, message: string) {
+	const pending = pendingChanges(root);
 	if (!pending.files.length) throw new EmitError('nothing to commit in data/');
 	if (message.trim().length < 12) throw new EmitError('write a real commit message — what changed, and why');
 
@@ -306,7 +254,7 @@ function commitChanges(message: string) {
 	 */
 	try {
 		execFileSync(process.execPath, ['--import', 'tsx', 'scripts/build-data.ts'], {
-			cwd: ROOT,
+			cwd: root,
 			encoding: 'utf8',
 			stdio: 'pipe'
 		});
@@ -323,9 +271,9 @@ function commitChanges(message: string) {
 		throw new EmitError(`the build rejects this, nothing committed:\n${lines.join('\n')}`);
 	}
 
-	git(['add', '--', 'data/']);
-	git(['commit', '-m', message.trim(), '-m', 'Recorded through the local editorial tool.']);
-	return { sha: git(['rev-parse', '--short', 'HEAD']).trim(), files: pending.files };
+	git(root, ['add', '--', 'data/']);
+	git(root, ['commit', '-m', message.trim(), '-m', 'Recorded through the local editorial tool.']);
+	return { sha: git(root, ['rev-parse', '--short', 'HEAD']).trim(), files: pending.files };
 }
 
 // ---------------------------------------------------------------------------
@@ -341,8 +289,8 @@ function commitChanges(message: string) {
  * intervals. HANDOFF.md lists filling these as the work after review, naming the
  * Bourguiba-era foreign ministers specifically.
  */
-function loadPositionGap() {
-	const ds = JSON.parse(readFileSync(join(ROOT, 'src', 'generated', 'dataset.json'), 'utf8'));
+function loadPositionGap(root: string) {
+	const ds = JSON.parse(readFileSync(join(root, 'src', 'generated', 'dataset.json'), 'utf8'));
 	const held = new Set(ds.positions.map((p: any) => p.holder));
 
 	const orphans = ds.people
@@ -370,7 +318,8 @@ function loadPositionGap() {
  * rejects the whole dataset — a bad position written from this tool would leave
  * `npm run data` failing for every other piece of work until someone found it.
  */
-function createPosition(input: Record<string, any>) {
+function createPosition(root: string, input: Record<string, any>) {
+	configureDeskSchema(root);
 	const parsed = PositionSchema.safeParse(input);
 	if (!parsed.success) {
 		const issue = parsed.error.issues[0];
@@ -397,7 +346,7 @@ function createPosition(input: Record<string, any>) {
 
 	// Referential integrity. build-data.ts fails on a dangling reference, so a
 	// mistyped holder here would break the build rather than this request.
-	const ds = JSON.parse(readFileSync(join(ROOT, 'src', 'generated', 'dataset.json'), 'utf8'));
+	const ds = JSON.parse(readFileSync(join(root, 'src', 'generated', 'dataset.json'), 'utf8'));
 	const has = (list: any[], id: string) => list.some((x: any) => x.id === id);
 
 	if (!has(ds.roles, position.role)) throw new EmitError(`no role "${position.role}"`);
@@ -433,8 +382,8 @@ function createPosition(input: Record<string, any>) {
 	if (position.falsifiable_by) record.falsifiable_by = position.falsifiable_by;
 	record.sources = position.sources;
 
-	const { text } = applyEdit(readData('positions.yaml'), { op: 'append-record', record });
-	writeFileSync(dataPath('positions.yaml'), text, 'utf8');
+	const { text } = applyEdit(readData(root, 'positions.yaml'), { op: 'append-record', record });
+	writeFileSync(dataPath(root, 'positions.yaml'), text, 'utf8');
 	return position;
 }
 
@@ -459,8 +408,8 @@ interface SourcingItem {
  * whose appointment decrees exist in the gazette and would fix both the grade and
  * the dates. Ordered worst-sourced first, so effort lands where the gap is widest.
  */
-function loadSourcing(): { items: SourcingItem[]; sources: any[] } {
-	const ds = JSON.parse(readFileSync(join(ROOT, 'src', 'generated', 'dataset.json'), 'utf8'));
+function loadSourcing(root: string): { items: SourcingItem[]; sources: any[] } {
+	const ds = JSON.parse(readFileSync(join(root, 'src', 'generated', 'dataset.json'), 'utf8'));
 	const byId = new Map<string, any>(ds.sources.map((s: any) => [s.id, s]));
 
 	const label = (kind: Kind, r: any): string => {
@@ -504,7 +453,8 @@ function loadSourcing(): { items: SourcingItem[]; sources: any[] } {
 }
 
 /** Create a source record. Validated, then appended to sources.yaml. */
-function createSource(input: Record<string, unknown>) {
+function createSource(root: string, input: Record<string, unknown>) {
+	configureDeskSchema(root);
 	const parsed = SourceSchema.safeParse(input);
 	if (!parsed.success) {
 		const issue = parsed.error.issues[0];
@@ -512,7 +462,7 @@ function createSource(input: Record<string, unknown>) {
 	}
 	const source = parsed.data;
 
-	const before = readData(SOURCES_FILE);
+	const before = readData(root, SOURCES_FILE);
 	// Field order matters only for readability, but a source that reads like the
 	// ones around it is a source someone will actually check.
 	const record: Record<string, unknown> = {
@@ -528,7 +478,7 @@ function createSource(input: Record<string, unknown>) {
 	if (source.excerpt) record.excerpt = source.excerpt;
 
 	const { text } = applyEdit(before, { op: 'append-record', record });
-	writeFileSync(dataPath(SOURCES_FILE), text, 'utf8');
+	writeFileSync(dataPath(root, SOURCES_FILE), text, 'utf8');
 	return source;
 }
 
@@ -540,17 +490,19 @@ function createSource(input: Record<string, unknown>) {
  * attached in the same action.
  */
 function attachSource(
+	root: string,
 	kind: Kind,
 	id: string,
 	sourceId: string,
 	upgrade?: { confidence?: string; verification?: string }
 ) {
+	configureDeskSchema(root);
 	const { file, schema } = REVIEWABLE[kind];
-	const sources = parseYaml(readData(SOURCES_FILE)) as any[];
+	const sources = parseYaml(readData(root, SOURCES_FILE)) as any[];
 	const source = sources.find((s) => s.id === sourceId);
 	if (!source) throw new EmitError(`no source with id "${sourceId}"`);
 
-	let text = readData(file);
+	let text = readData(root, file);
 	const target = { id };
 
 	text = applyEdit(text, { op: 'append-to-list', target, field: 'sources', item: sourceId }).text;
@@ -580,7 +532,7 @@ function attachSource(
 		throw new EmitError(`edit fails the schema: ${issue.path.join('.')} ${issue.message}`);
 	}
 
-	writeFileSync(dataPath(file), text, 'utf8');
+	writeFileSync(dataPath(root, file), text, 'utf8');
 	return { file };
 }
 
@@ -609,8 +561,18 @@ table.cov td:first-child { color:var(--dim) }
 .tag.inferred { color:#7aa2f7; border-color:#7aa2f766 }
 form { margin-top:10px; display:none; gap:8px; flex-wrap:wrap; align-items:flex-start }
 form.open { display:flex }
-input, button { font:inherit; padding:6px 10px; border-radius:6px; border:1px solid var(--line); background:var(--bg); color:var(--fg) }
+input, button, textarea { font:inherit; padding:6px 10px; border-radius:6px; border:1px solid var(--line); background:var(--bg); color:var(--fg) }
 input.method { flex:1; min-width:260px }
+textarea { width:100%; resize:vertical }
+.claim { font-size:16px; line-height:1.45; margin:6px 0 8px }
+.src { border:1px solid var(--line); border-radius:6px; padding:8px 10px; margin:8px 0 }
+.src a { color:var(--accent) }
+.excerpt { font-size:13px; color:var(--fg); border-left:2px solid var(--line); padding-left:8px; margin:6px 0 }
+.keys { display:flex; gap:6px; flex-wrap:wrap; margin:10px 0 }
+.keys button { border-color:var(--accent) }
+.rule pre { white-space:pre-wrap; font-size:12px; color:var(--dim); border-top:1px solid var(--line); padding-top:8px }
+.session { margin-top:18px; border-top:1px solid var(--line); padding-top:12px }
+.session pre { white-space:pre-wrap; font-size:12px; background:var(--card); border:1px solid var(--line); border-radius:6px; padding:8px }
 button { cursor:pointer; border-color:var(--accent); color:var(--accent) }
 button.plain { border-color:var(--line); color:var(--dim) }
 .warn { color:#e0af68; font-size:12px; width:100% }
@@ -630,7 +592,7 @@ label { display:block; font-size:11px; color:var(--dim); margin-bottom:3px }
 </style></head><body>
 <header><h1>Deep Tunisia — editorial</h1>
 <div class="sub">Local tool. Writes data/*.yaml directly; commit with git as usual. Run <code>npm run data &amp;&amp; npm run test</code> after editing.</div>
-<nav><button data-tab="review" class="on">Review queue</button><button data-tab="sourcing">Sourcing</button><button data-tab="positions">Position gaps</button></nav></header>
+<nav><button data-tab="review" class="on">Review queue</button><button data-tab="sourcing">Sourcing</button><button data-tab="positions">Position gaps</button><button data-tab="verify">Verify</button></nav></header>
 <main><div id="pending"></div><div id="app">Loading…</div></main>
 <script type="module">
 const app = document.getElementById('app');
@@ -683,6 +645,7 @@ async function refreshPending() {
 let state = null;
 let sourcing = null;
 let tab = 'review';
+let reviewer = localStorage.getItem('desk-reviewer') || 'maintainer';
 
 for (const b of document.querySelectorAll('nav button')) {
   b.onclick = () => {
@@ -703,9 +666,11 @@ async function load() {
   } else if (tab === 'sourcing') {
     sourcing = await (await fetch('/api/sourcing')).json();
     renderSourcing();
-  } else {
+  } else if (tab === 'positions') {
     gaps = await (await fetch('/api/positions')).json();
     renderGaps();
+  } else {
+    await loadVerify();
   }
 }
 
@@ -1004,6 +969,254 @@ async function submit(e) {
   refreshPending();
 }
 
+// --- verify mode ------------------------------------------------------------
+
+let packet = null;
+let verdictState = null;
+
+async function loadVerify() {
+  const out = await (await fetch('/api/packet')).json();
+  packet = out.packet;
+  verdictState = out.state;
+  if (packet) renderPacket(); else renderSession();
+}
+
+async function postVerdict(body) {
+  const res = await fetch('/api/verdict', {
+    method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(body)
+  });
+  const out = await res.json();
+  if (!res.ok) { flash(out.error); return false; }
+  await loadVerify();
+  return true;
+}
+
+function flash(message) {
+  const el = document.getElementById('flash');
+  if (!el) return;
+  el.hidden = false;
+  el.textContent = message;
+}
+
+function standing(p) {
+  const s = p.standing;
+  const bits = [];
+  if (s.basis) bits.push('basis ' + s.basis);
+  if (s.grade) bits.push('grade ' + s.grade);
+  if (s.origins !== null) bits.push('rests on ' + s.origins + (s.origins === 1 ? ' origin' : ' origins'));
+  if (s.encyclopediaOnly) bits.push('encyclopedia only');
+  if (s.verification) bits.push('verification ' + s.verification);
+  return bits.join(' · ');
+}
+
+function precheckText(s) {
+  if (!s.precheck) return 'not pre-checked';
+  const p = s.precheck;
+  const code = p.http ? ' (HTTP ' + p.http + ')' : '';
+  const excerpt = p.excerpt ? ', excerpt ' + p.excerpt : '';
+  return 'pre-check: ' + p.status + code + excerpt;
+}
+
+function renderPacket() {
+  const p = packet;
+  const srcs = p.sources.map((s) => {
+    const link = s.url ? '<a href="' + esc(s.url) + '" target="_blank" rel="noreferrer">link</a>' : 'no link';
+    const snap = s.archive_url
+      ? ' · <a href="' + esc(s.archive_url) + '" target="_blank" rel="noreferrer">snapshot</a>'
+      : ' · no snapshot';
+    const excerpt = s.excerpt
+      ? '<div class="excerpt">' + esc(s.excerpt) + '</div><div class="meta">excerpt: ' + esc(s.excerptLabel) + '</div>'
+      : '<div class="meta">no excerpt on the source</div>';
+    return '<div class="src">'
+      + '<div><strong>' + esc(s.title || s.id) + '</strong> '
+      + '<span class="tag">tier ' + (s.tier === null ? '?' : s.tier) + '</span> '
+      + '<span class="tag">' + esc(s.lang || 'lang ?') + '</span></div>'
+      + '<div class="meta"><span>' + esc(s.publisher || 'publisher not recorded') + '</span></div>'
+      + '<div class="meta">' + link + snap + '</div>'
+      + '<div class="meta">' + esc(precheckText(s)) + '</div>'
+      + excerpt
+      + '</div>';
+  }).join('');
+
+  const disputes = p.standing.disputes.length
+    ? '<div class="warn">' + p.standing.disputes.map(esc).join(' ') + '</div>'
+    : '';
+  const replace = p.standing.hasReview
+    ? '<div class="meta">This record already carries a review. A new verdict replaces it.</div>'
+    : '';
+
+  app.innerHTML = '<div class="item">'
+    + '<div class="meta"><span>' + esc(p.kind) + ' · ' + esc(p.id) + '</span><span>' + esc(p.label) + '</span></div>'
+    + '<div class="claim">' + esc(p.claim) + '</div>'
+    + '<div class="meta"><span>' + esc(standing(p)) + '</span></div>'
+    + disputes + replace
+    + '<div class="meta" style="margin-top:10px">' + esc(sessionLine()) + '</div>'
+    + srcs
+    + '<div class="rule"><details><summary>How to grade this record</summary><pre>'
+    + esc(p.rule || 'the rubric file is not present') + '</pre></details></div>'
+    + '<div class="keys">'
+    + '<button type="button" data-key="1">1 the source says it</button>'
+    + '<button type="button" data-key="2">2 says part of it</button>'
+    + '<button type="button" data-key="3">3 does not say it</button>'
+    + '<button type="button" data-key="4">4 cannot be read</button>'
+    + '<button type="button" data-key="5">5 contested</button>'
+    + '<button type="button" class="plain" data-key="s">s skip</button>'
+    + '<button type="button" class="plain" data-key="u">u undo</button>'
+    + '</div>'
+    + '<div id="vform"></div>'
+    + '<div class="err" id="flash" hidden></div>'
+    + reviewerField()
+    + '</div>';
+
+  for (const b of app.querySelectorAll('[data-key]')) b.onclick = () => judge(b.dataset.key);
+  wireReviewer();
+}
+
+function reviewerField() {
+  return '<div class="meta" style="margin-top:8px"><label style="display:inline">signed by '
+    + '<input name="reviewer" value="' + esc(reviewer) + '" size="12"></label>'
+    + '<span>maintainer, or reviewer-1 for anyone else</span></div>';
+}
+
+function wireReviewer() {
+  const input = app.querySelector('input[name=reviewer]');
+  if (!input) return;
+  input.oninput = () => {
+    reviewer = input.value.trim();
+    localStorage.setItem('desk-reviewer', reviewer);
+  };
+}
+
+function sessionLine() {
+  if (!verdictState) return '';
+  const v = verdictState.verdicts;
+  const median = verdictState.medianSeconds === null ? 'no timed claim' : verdictState.medianSeconds + ' s median';
+  return verdictState.seen + ' seen · ' + v['1'] + ' verified · ' + v['2'] + ' partial · '
+    + v['3'] + ' not said · ' + v['4'] + ' unreadable · ' + v['5'] + ' contested · ' + median;
+}
+
+async function judge(key) {
+  if (!packet) return;
+  const base = { kind: packet.kind, id: packet.id, by: reviewer };
+  if (key === 'u') {
+    const out = await (await fetch('/api/undo', { method: 'POST' })).json();
+    if (out.undone) await loadVerify(); else flash('nothing to undo in this session');
+    return;
+  }
+  if (key === 's') {
+    await fetch('/api/skip', {
+      method: 'POST', headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ kind: packet.kind, id: packet.id })
+    });
+    await loadVerify();
+    return;
+  }
+  if (key === '2') return openForm('2');
+  if (key === '3') return openForm('3');
+  if (key === '5') return openForm('5');
+  await postVerdict(Object.assign({ key: key }, base));
+}
+
+function openForm(key) {
+  const area = document.getElementById('vform');
+  let html = '<form>';
+  if (key === '2' || key === '3') {
+    html += '<label>note (required)</label><textarea name="note" rows="2" placeholder="'
+      + (key === '2' ? 'which part the source supports' : 'what the source does say, or does not') + '"></textarea>';
+  }
+  if (key === '2') {
+    html += '<div class="grid">'
+      + '<div><label>start (blank keeps it)</label><input name="start" placeholder="1990 or 1990-05"></div>'
+      + '<div><label>end</label><input name="end"></div>'
+      + '<div><label>grade</label><select name="confidence">'
+      + '<option value="">keep</option><option>A</option><option>B</option><option>C</option><option>D</option>'
+      + '</select></div></div>';
+  }
+  if (key === '5') {
+    html += '<div class="grid">'
+      + '<div class="wide"><label>the contested claim</label><input name="claim" required></div>'
+      + '<div class="wide"><label>who holds it</label><input name="held_by" required></div>'
+      + '<div><label>source id (optional)</label><input name="source"></div>'
+      + '<div class="wide"><label>why this project does or does not adopt it (optional)</label><input name="assessment"></div>'
+      + '</div>';
+  }
+  html += '<button type="submit">Save this verdict</button> '
+    + '<button type="button" class="plain" data-cancel>Cancel</button></form>';
+  area.innerHTML = html;
+  const form = area.querySelector('form');
+  area.querySelector('[data-cancel]').onclick = () => { area.innerHTML = ''; };
+  form.onsubmit = async (e) => {
+    e.preventDefault();
+    const body = { kind: packet.kind, id: packet.id, key: key, by: reviewer };
+    if (key === '2' || key === '3') {
+      body.note = form.note.value.trim();
+      if (!body.note) return flash('this verdict needs a note');
+    }
+    if (key === '2') {
+      body.fields = {};
+      for (const field of ['start', 'end', 'confidence']) {
+        if (form[field].value.trim()) body.fields[field] = form[field].value.trim();
+      }
+    }
+    if (key === '5') {
+      const claim = form.claim.value.trim();
+      const held = form.held_by.value.trim();
+      if (!claim || !held) return flash('a dispute needs the claim and who holds it');
+      body.dispute = { claim: claim, held_by: held };
+      if (form.source.value.trim()) body.dispute.source = form.source.value.trim();
+      if (form.assessment.value.trim()) body.dispute.assessment = form.assessment.value.trim();
+    }
+    await postVerdict(body);
+  };
+}
+
+function renderSession() {
+  app.innerHTML = '<div class="item">'
+    + '<h3>Session finished: every record in the queue has been seen</h3>'
+    + '<div class="meta">' + esc(sessionLine()) + '</div>'
+    + '<div class="session"><label>signed by</label>'
+    + '<input name="finisher" value="' + esc(reviewer) + '" size="12"> '
+    + '<button type="button" id="finish">Finish session</button>'
+    + '<div class="err" id="flash" hidden></div>'
+    + '<div id="finish-out"></div></div>'
+    + '</div>';
+  document.getElementById('finish').onclick = finishSession;
+}
+
+async function finishSession() {
+  const by = document.querySelector('input[name=finisher]').value.trim();
+  const res = await fetch('/api/session/finish', {
+    method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ by: by })
+  });
+  const out = await res.json();
+  if (!res.ok) { flash(out.error); return; }
+  const box = document.getElementById('finish-out');
+  box.innerHTML = '<div class="meta">Committed ' + esc(out.sha) + ' on ' + esc(out.branch) + '</div>'
+    + '<div class="meta">Not pushed. These two commands would publish it:</div>'
+    + '<pre>' + esc(out.commands.push) + '\\n' + esc(out.commands.pr) + '</pre>'
+    + '<button type="button" id="run">Run these two commands</button> '
+    + '<span class="meta">the desk runs them only when you press this</span>';
+  document.getElementById('run').onclick = async () => {
+    if (!confirm('Push the branch and open the pull request now?')) return;
+    const run = await fetch('/api/session/publish', {
+      method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ confirm: true })
+    });
+    const result = await run.json();
+    if (run.ok) box.insertAdjacentHTML('beforeend', '<div class="done">published</div>');
+    else flash(result.error);
+  };
+}
+
+document.addEventListener('keydown', (e) => {
+  if (tab !== 'verify' || !packet) return;
+  const tag = (document.activeElement && document.activeElement.tagName) || '';
+  if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+  const key = e.key.toLowerCase();
+  if (!['1', '2', '3', '4', '5', 's', 'u'].includes(key)) return;
+  e.preventDefault();
+  judge(key);
+});
+
 load();
 </script></body></html>`;
 
@@ -1036,100 +1249,188 @@ async function readBody(req: any): Promise<any> {
 	return JSON.parse(text);
 }
 
-const server = createServer(async (req, res) => {
-	try {
-		if (req.method === 'GET' && req.url === '/') {
-			res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' });
-			return res.end(PAGE);
-		}
+export interface AdminOptions {
+	/** The repository the tool reads and writes. Tests point it at a copy. */
+	root?: string;
+	/** The clock, so a test can time a session without waiting. */
+	now?: () => number;
+}
 
-		if (req.method === 'GET' && req.url === '/api/queue') {
-			return json(res, 200, loadQueue());
-		}
+/**
+ * The local HTTP tool, as a server object.
+ *
+ * The root is a parameter because the tests start this on a copy of `data/`: a
+ * verdict test that wrote into the real dataset would be the damage it exists to
+ * prevent. Importing the module still starts nothing.
+ */
+export function createAdminServer(options: AdminOptions = {}) {
+	const root = options.root ?? REPO_ROOT;
+	const session = new DeskSession({
+		root,
+		now: options.now,
+		queue: () => loadQueue(root).items.map(({ kind, id, label }) => ({ kind, id, label }))
+	});
 
-		if (req.method === 'GET' && req.url === '/api/changes') {
-			return json(res, 200, pendingChanges());
-		}
+	return createServer(async (req, res) => {
+		try {
+			const url = new URL(req.url ?? '/', 'http://127.0.0.1');
 
-		if (req.method === 'POST' && req.url === '/api/commit') {
-			const body = await readBody(req);
-			const out = commitChanges(String(body.message ?? ''));
-			console.log(`  commit  ${out.sha}  ${out.files.join(', ')}`);
-			return json(res, 200, out);
-		}
-
-		if (req.method === 'POST' && req.url === '/api/edit') {
-			const body = await readBody(req);
-			const out = editField(body.kind, body.id, body.field, String(body.value ?? ''));
-			console.log(`  edit    ${body.kind}/${body.id} ${body.field}: ${out.was} -> ${out.now}`);
-			return json(res, 200, out);
-		}
-
-		if (req.method === 'GET' && req.url === '/api/positions') {
-			return json(res, 200, loadPositionGap());
-		}
-
-		if (req.method === 'POST' && req.url === '/api/position') {
-			const body = await readBody(req);
-			const position = createPosition(body.position);
-			console.log(`  position ${position.id} (${position.role} / ${position.holder})`);
-			return json(res, 200, { id: position.id });
-		}
-
-		if (req.method === 'GET' && req.url === '/api/sourcing') {
-			return json(res, 200, loadSourcing());
-		}
-
-		if (req.method === 'POST' && req.url === '/api/source') {
-			const body = await readBody(req);
-			const source = createSource(body.source);
-			let attached: string | null = null;
-
-			// Creating a source and attaching it are one action for the user, and two
-			// writes to two files. The source goes first: if the attach then fails, the
-			// result is an uncited source, which the project already tolerates and
-			// excludes from its published count. The reverse order would leave a record
-			// citing a source that does not exist, which fails the build.
-			if (body.attachTo) {
-				attachSource(body.attachTo.kind, body.attachTo.id, source.id, body.upgrade);
-				attached = body.attachTo.id;
+			if (req.method === 'GET' && url.pathname === '/') {
+				res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' });
+				return res.end(PAGE);
 			}
 
-			console.log(`  source  ${source.id} (tier ${source.tier})${attached ? ` → ${attached}` : ''}`);
-			return json(res, 200, { id: source.id, attached });
+			if (req.method === 'GET' && url.pathname === '/api/queue') {
+				return json(res, 200, loadQueue(root));
+			}
+
+			if (req.method === 'GET' && url.pathname === '/api/changes') {
+				return json(res, 200, pendingChanges(root));
+			}
+
+			if (req.method === 'POST' && url.pathname === '/api/commit') {
+				const body = await readBody(req);
+				const out = commitChanges(root, String(body.message ?? ''));
+				console.log(`  commit  ${out.sha}  ${out.files.join(', ')}`);
+				return json(res, 200, out);
+			}
+
+			if (req.method === 'POST' && url.pathname === '/api/edit') {
+				const body = await readBody(req);
+				const out = editField(root, body.kind, body.id, body.field, String(body.value ?? ''));
+				console.log(`  edit    ${body.kind}/${body.id} ${body.field}: ${out.was} -> ${out.now}`);
+				return json(res, 200, out);
+			}
+
+			if (req.method === 'GET' && url.pathname === '/api/positions') {
+				return json(res, 200, loadPositionGap(root));
+			}
+
+			if (req.method === 'POST' && url.pathname === '/api/position') {
+				const body = await readBody(req);
+				const position = createPosition(root, body.position);
+				console.log(`  position ${position.id} (${position.role} / ${position.holder})`);
+				return json(res, 200, { id: position.id });
+			}
+
+			if (req.method === 'GET' && url.pathname === '/api/sourcing') {
+				return json(res, 200, loadSourcing(root));
+			}
+
+			if (req.method === 'POST' && url.pathname === '/api/source') {
+				const body = await readBody(req);
+				const source = createSource(root, body.source);
+				let attached: string | null = null;
+
+				// Creating a source and attaching it are one action for the user, and two
+				// writes to two files. The source goes first: if the attach then fails, the
+				// result is an uncited source, which the project already tolerates and
+				// excludes from its published count. The reverse order would leave a record
+				// citing a source that does not exist, which fails the build.
+				if (body.attachTo) {
+					attachSource(root, body.attachTo.kind, body.attachTo.id, source.id, body.upgrade);
+					attached = body.attachTo.id;
+				}
+
+				console.log(`  source  ${source.id} (tier ${source.tier})${attached ? ` → ${attached}` : ''}`);
+				return json(res, 200, { id: source.id, attached });
+			}
+
+			if (req.method === 'POST' && url.pathname === '/api/attach') {
+				const body = await readBody(req);
+				attachSource(root, body.kind, body.id, body.sourceId, body.upgrade);
+				console.log(`  attach  ${body.sourceId} → ${body.kind}/${body.id}`);
+				return json(res, 200, { ok: true });
+			}
+
+			if (req.method === 'POST' && url.pathname === '/api/review') {
+				const body = await readBody(req);
+
+				if (!REVIEWABLE[body.kind as Kind]) return json(res, 400, { error: `unknown kind "${body.kind}"` });
+				if (!body.by || body.by.length < 2) return json(res, 400, { error: 'a review needs a name' });
+				if (!/^\d{4}-\d{2}-\d{2}$/.test(body.date ?? '')) return json(res, 400, { error: 'date must be YYYY-MM-DD' });
+
+				const item = loadQueue(root).items.find((i) => i.kind === body.kind && i.id === body.id);
+				if (!item) return json(res, 404, { error: `no ${body.kind} with id "${body.id}"` });
+
+				const { file, added } = recordReview(root, body.kind, item.target, body);
+				const warning = body.method ? gazetteWarning(body.method, item.sources) : null;
+
+				console.log(`  review  ${body.kind}/${body.id} by ${body.by}${warning ? '  ⚠ ' + warning : ''}`);
+				return json(res, 200, { file, added, warning });
+			}
+
+			// --- verify mode -----------------------------------------------------
+
+			if (req.method === 'GET' && url.pathname === '/api/packet') {
+				const kind = url.searchParams.get('kind') as Kind | null;
+				const id = url.searchParams.get('id');
+				if (kind && id) {
+					const packet = session.packet(kind, id);
+					if (!packet) return json(res, 404, { error: `no ${kind} with id "${id}"` });
+					return json(res, 200, { packet, state: session.state() });
+				}
+				return json(res, 200, { packet: session.next(), state: session.state() });
+			}
+
+			if (req.method === 'POST' && url.pathname === '/api/verdict') {
+				const body = await readBody(req);
+				if (!REVIEWABLE[body.kind as Kind]) return json(res, 400, { error: `unknown kind "${body.kind}"` });
+				const out = session.judge({
+					kind: body.kind,
+					id: body.id,
+					key: String(body.key) as VerdictKey,
+					by: body.by,
+					note: body.note,
+					fields: body.fields,
+					dispute: body.dispute
+				});
+				console.log(
+					`  verdict ${body.key}  ${body.kind}/${body.id}${out.wrote.length ? `  (${out.wrote.join(', ')})` : ''}`
+				);
+				return json(res, 200, out);
+			}
+
+			if (req.method === 'POST' && url.pathname === '/api/skip') {
+				const body = await readBody(req);
+				if (!REVIEWABLE[body.kind as Kind]) return json(res, 400, { error: `unknown kind "${body.kind}"` });
+				console.log(`  skip    ${body.kind}/${body.id}`);
+				return json(res, 200, { state: session.skip(body.kind, body.id) });
+			}
+
+			if (req.method === 'POST' && url.pathname === '/api/undo') {
+				const out = session.undo();
+				console.log(`  undo    ${out.undone ? `${out.undone.kind}/${out.undone.id}` : 'nothing to undo'}`);
+				return json(res, 200, out);
+			}
+
+			if (req.method === 'GET' && url.pathname === '/api/session') {
+				return json(res, 200, session.state());
+			}
+
+			if (req.method === 'POST' && url.pathname === '/api/session/finish') {
+				const body = await readBody(req);
+				const out = session.finish(String(body.by ?? 'maintainer'));
+				console.log(`  finish  ${out.branch}  ${out.sha}`);
+				return json(res, 200, out);
+			}
+
+			if (req.method === 'POST' && url.pathname === '/api/session/publish') {
+				const body = await readBody(req);
+				if (body.confirm !== true) {
+					return json(res, 400, { error: 'the two commands run only when the reviewer presses the button' });
+				}
+				return json(res, 200, { commands: session.publish() });
+			}
+
+			res.writeHead(404).end('not found');
+		} catch (e) {
+			const message = (e as Error).message;
+			console.error(`  error   ${message}`);
+			json(res, e instanceof EmitError ? 400 : 500, { error: message });
 		}
-
-		if (req.method === 'POST' && req.url === '/api/attach') {
-			const body = await readBody(req);
-			attachSource(body.kind, body.id, body.sourceId, body.upgrade);
-			console.log(`  attach  ${body.sourceId} → ${body.kind}/${body.id}`);
-			return json(res, 200, { ok: true });
-		}
-
-		if (req.method === 'POST' && req.url === '/api/review') {
-			const body = await readBody(req);
-
-			if (!REVIEWABLE[body.kind as Kind]) return json(res, 400, { error: `unknown kind "${body.kind}"` });
-			if (!body.by || body.by.length < 2) return json(res, 400, { error: 'a review needs a name' });
-			if (!/^\d{4}-\d{2}-\d{2}$/.test(body.date ?? '')) return json(res, 400, { error: 'date must be YYYY-MM-DD' });
-
-			const item = loadQueue().items.find((i) => i.kind === body.kind && i.id === body.id);
-			if (!item) return json(res, 404, { error: `no ${body.kind} with id "${body.id}"` });
-
-			const { file, added } = recordReview(body.kind, item.target, body);
-			const warning = body.method ? gazetteWarning(body.method, item.sources) : null;
-
-			console.log(`  review  ${body.kind}/${body.id} by ${body.by}${warning ? '  ⚠ ' + warning : ''}`);
-			return json(res, 200, { file, added, warning });
-		}
-
-		res.writeHead(404).end('not found');
-	} catch (e) {
-		const message = (e as Error).message;
-		console.error(`  error   ${message}`);
-		json(res, e instanceof EmitError ? 400 : 500, { error: message });
-	}
-});
+	});
+}
 
 /**
  * Only listen when run directly.
@@ -1139,15 +1440,17 @@ const server = createServer(async (req, res) => {
  */
 const runDirectly = process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href;
 
-// 127.0.0.1, never 0.0.0.0. This binding is the access control — see the header.
-if (runDirectly) server.listen(PORT, '127.0.0.1', () => {
-	const { items, coverage } = loadQueue();
-	const pending = items.filter((i) => !i.reviewed).length;
-	console.log(`\n  Deep Tunisia editorial tool — http://127.0.0.1:${PORT}`);
-	console.log(`  ${pending} unreviewed of ${items.length}`);
-	for (const risk of RISK) {
-		const c = coverage[risk];
-		if (c.total) console.log(`    ${risk.padEnd(16)} ${String(c.reviewed).padStart(4)} / ${c.total}`);
-	}
-	console.log('\n  Writes data/*.yaml. Run `npm run data && npm run test` before committing.\n');
-});
+// 127.0.0.1, never 0.0.0.0. This binding is the access control, see the header.
+if (runDirectly) {
+	createAdminServer().listen(PORT, '127.0.0.1', () => {
+		const { items, coverage } = loadQueue(REPO_ROOT);
+		const pending = items.filter((i) => !i.reviewed).length;
+		console.log(`\n  Deep Tunisia editorial tool, http://127.0.0.1:${PORT}`);
+		console.log(`  ${pending} unreviewed of ${items.length}`);
+		for (const risk of RISK) {
+			const c = coverage[risk];
+			if (c.total) console.log(`    ${risk.padEnd(16)} ${String(c.reviewed).padStart(4)} / ${c.total}`);
+		}
+		console.log('\n  Writes data/*.yaml. Run `npm run data && npm run test` before committing.\n');
+	});
+}

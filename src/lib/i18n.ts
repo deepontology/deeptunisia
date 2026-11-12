@@ -1522,6 +1522,10 @@ const en: Dict = {
 	'about.stat.needsPrimary': 'awaiting a primary source',
 	'about.stat.contradictions': 'unresolved contradictions',
 	'about.stat.reviewed': 'human-reviewed ({reviewed}/{reviewable})',
+	'about.desk.perClaim': 'per verified claim, {claims} timed',
+	'about.desk.notMeasured': 'not measured yet',
+	'about.desk.note':
+		'Minutes per verified claim come from the verification desk: the median of each session median, with idle time over five minutes on one record counted as five. The figure appears after the first recorded session.',
 	'about.funders.donor': 'Donor',
 	'about.funders.amount': 'Amount',
 	'about.funders.period': 'Period',
@@ -3608,6 +3612,10 @@ const fr: Dict = {
 	'about.stat.needsPrimary': 'en attente d\'une source primaire',
 	'about.stat.contradictions': 'contradictions non résolues',
 	'about.stat.reviewed': 'relecture humaine ({reviewed}/{reviewable})',
+	'about.desk.perClaim': 'par affirmation vérifiée, {claims} minutées',
+	'about.desk.notMeasured': 'pas encore mesuré',
+	'about.desk.note':
+		'Les minutes par affirmation vérifiée viennent du bureau de vérification : la médiane des médianes de chaque session, le temps d\'inactivité de plus de cinq minutes sur une fiche comptant pour cinq. Le chiffre apparaît après la première session enregistrée.',
 	'about.funders.donor': 'Donateur',
 	'about.funders.amount': 'Montant',
 	'about.funders.period': 'Période',
@@ -5681,6 +5689,10 @@ const ar: Dict = {
 	'about.stat.needsPrimary': 'بانتظار مصدر أولي',
 	'about.stat.contradictions': 'تناقضات غير محسومة',
 	'about.stat.reviewed': 'مراجعة بشرية ({reviewed}/{reviewable})',
+	'about.desk.perClaim': 'لكل ادعاء تم التحقق منه، {claims} موقوتة',
+	'about.desk.notMeasured': 'لم يُقس بعد',
+	'about.desk.note':
+		'تُقاس الدقائق لكل ادعاء تم التحقق منه في مكتب التحقق: وسيط وسائط الجلسات، ويُحسب وقت الخمول الذي يزيد على خمس دقائق في سجل واحد خمس دقائق. يظهر الرقم بعد أول جلسة مسجلة.',
 	'about.funders.donor': 'الجهة المانحة',
 	'about.funders.amount': 'المبلغ',
 	'about.funders.period': 'الفترة',

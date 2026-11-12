@@ -44,7 +44,9 @@ moderator-pub.pem
 output/
 docs/
 design-plans/
-/research/
+/research/*
+# The verification desk's records are data and go with the dataset.
+!/research/desk/
 data/contrib/
 tmp
 uncited.txt
