@@ -2,7 +2,7 @@
  * Engine-conformance gate.
  *
  * DeepTunisia consumes the DeepEpisteme engine module by module, pinned by tag
- * in package.json. The pinned engine is the source of truth for the time
+ * or by commit in package.json. The pinned engine is the source of truth for the time
  * predicates and the claim envelope, so DeepTunisia CI must fail when a bump
  * changes the contract it depends on. This suite runs the installed engine
  * through that contract:
@@ -55,8 +55,8 @@ const installed = JSON.parse(
 );
 const spec: string = pkg.dependencies?.deepepisteme ?? '';
 ok(
-	'the engine dependency is pinned to an exact tag',
-	/#v\d+\.\d+\.\d+$/.test(spec),
+	'the engine dependency is pinned to an exact tag or commit',
+	/#v\d+\.\d+\.\d+$/.test(spec) || /#[0-9a-f]{40}$/.test(spec),
 	`${spec} installed ${installed.version}`
 );
 
