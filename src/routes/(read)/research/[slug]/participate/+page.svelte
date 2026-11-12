@@ -13,8 +13,8 @@
 	import type { LiveResults } from '$lib/index-study/live';
 	import type { RuntimeInstrument, RuntimeItem, StudyRecord } from '$lib/research';
 	import { startProofOfWork, type BotCheck } from '$lib/pow';
-	import { channelCode, evaluateCondition, periodOf, scoreResponse } from '../../../../../community/research-scoring.ts';
-	import { gapAnswerKey, GAP_ANSWER_PREFIX } from '../../../../../community/research-contract.ts';
+	import { channelCode, evaluateCondition, periodOf, scoreResponse } from '../../../../../../community/research-scoring.ts';
+	import { gapAnswerKey, GAP_ANSWER_PREFIX } from '../../../../../../community/research-contract.ts';
 
 	/**
 	 * The survey runner: one question per screen.

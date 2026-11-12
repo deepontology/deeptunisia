@@ -31,9 +31,10 @@ const ENTRIES = [
 	'src/lib/search.svelte.ts',
 	'src/lib/components/SearchPalette.svelte',
 	// Reading pages that must not pull the graph through their own imports.
-	'src/routes/corrections/+page.svelte',
-	'src/routes/guide/+page.svelte',
-	'src/routes/colophon/+page.svelte'
+	'src/routes/(read)/+layout.svelte',
+	'src/routes/(read)/corrections/+page.svelte',
+	'src/routes/(read)/guide/+page.svelte',
+	'src/routes/(read)/colophon/+page.svelte'
 ];
 
 const FORBIDDEN = ['src/generated/dataset.json', 'src/generated/index.ts'];

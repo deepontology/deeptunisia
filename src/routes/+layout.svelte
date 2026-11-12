@@ -1,99 +1,27 @@
 <script lang="ts">
 	import '../app.css';
 	import { onMount, type Component } from 'svelte';
-	import { browser } from '$app/environment';
 	import { page } from '$app/state';
-	import { app, startPlayback } from '$lib/state.svelte';
-	import { syncSelectionUrl, validEntity, validRelationship } from '$lib/deeplink.svelte';
-	import { ensureLocaleProse } from '$lib/locale-prose.svelte';
+	import { app } from '$lib/state.svelte';
 	import { initTheme, theme } from '$lib/design/theme.svelte';
 	import { dirFor } from '$lib/i18n';
-	import { personById, institutionById, relationshipById, eventById, resolveEntity } from '$lib/model';
-	import { eventTitle, nameOf } from '$lib/names.svelte';
+	import { rememberPath } from '$lib/shell/nav.svelte';
+	import { tour } from '$lib/shell/tour.svelte';
+	import { ownsPreviewTags } from '$lib/shell/preview';
 	import MenuBar from '$lib/shell/MenuBar.svelte';
 	import SubNav from '$lib/shell/SubNav.svelte';
-	import { rememberPath } from '$lib/shell/nav.svelte';
-import { tour, tourSeen } from '$lib/shell/tour.svelte';
-	import TimeDock from '$lib/shell/TimeDock.svelte';
-	import Viewport from '$lib/shell/Viewport.svelte';
-	import Inspector from '$lib/shell/Inspector.svelte';
-	import BootScreen from '$lib/shell/BootScreen.svelte';
 	import Cursor from '$lib/shell/Cursor.svelte';
-	import TourOverlay from '$lib/shell/TourOverlay.svelte';
-	import TourInvite from '$lib/shell/TourInvite.svelte';
-	import { startTour } from '$lib/shell/tour.svelte';
-	import { isReadingPath } from '$lib/shell/reading';
 
 	let { children } = $props();
 
-	/**
-	 * Boot runs once per session, not once per navigation. A loading screen that
-	 * reappears when you click a tab stops being an entrance and becomes an
-	 * obstruction.
-	 *
-	 * And only for a reader arriving at the Chronicle itself. Someone following a
-	 * deep link (?id=) came for one record, and someone landing on any other view
-	 * came for that view; both open directly, and the session counts as booted.
-	 * The inline script in app.html applies the same rule before first paint.
-	 */
-	let booted = $state(browser ? document.documentElement.dataset.boot === 'ready' : true);
-	onMount(() => {
-		// The inline script in app.html already set data-boot before first paint;
-		// keep .os hidden until we decide, then mirror the decision in Svelte
-		// so the CSS gate and the component stay in sync.
-		const skip = page.url.pathname !== '/chronicle' || page.url.searchParams.has('id');
-		const already =
-			skip ||
-			(() => {
-				try {
-					return sessionStorage.getItem('deeptunisia:booted') === '1';
-				} catch {
-					return false;
-				}
-			})();
-		booted = already;
-		try {
-			document.documentElement.dataset.boot = already ? 'ready' : 'pending';
-		} catch {}
-		if (isDoc || skip) finishBoot();
-		// Start the guided tour on first visit, or if ?tour=1 is present.
-		// Defer until the boot animation has finished, otherwise the tour
-		// modal appears on top of the counting boot — the exact overlap
-		// testers reported (tour before loading ends).
-		const force = page.url.searchParams.get('tour') === '1';
-		if (!isDoc) {
-			if (booted) {
-				startTour(force);
-			} else {
-				const iv = setInterval(() => {
-					try {
-						if (document.documentElement.dataset.boot === 'ready') {
-							startTour(force);
-							if (tour.open || tour.invite || tourSeen()) clearInterval(iv);
-						}
-					} catch {}
-				}, 120);
-				setTimeout(() => clearInterval(iv), 6000);
-			}
-		}
-	});
-	function finishBoot() {
-		booted = true;
-		try {
-			// The first-paint placeholder, when the boot never ran to remove it.
-			document.getElementById('static-boot')?.remove();
-			sessionStorage.setItem('deeptunisia:booted', '1');
-			document.documentElement.dataset.boot = 'ready';
-		} catch {}
-	}
-
-	/** Reference pages are documents: no time controls, and they scroll normally. */
-	const isDoc = $derived(isReadingPath(page.url.pathname));
+	/** Share pages are redirect stubs: they render no shell and load no app JavaScript (csr = false). */
+	const isShare = $derived(page.url.pathname.startsWith('/share/'));
+	const dir = $derived(dirFor(app.locale));
+	const ownsPreview = $derived(ownsPreviewTags(page.url.pathname));
 
 	/**
 	 * The palette is fetched the first time a reader opens it. A static import
-	 * would put its chunk, and everything the palette used to pull in with it,
-	 * on every page before anyone asked to search.
+	 * would put its chunk on every page before anyone asked to search.
 	 */
 	let Palette = $state<Component | null>(null);
 	$effect(() => {
@@ -101,100 +29,12 @@ import { tour, tourSeen } from '$lib/shell/tour.svelte';
 		void import('$lib/components/SearchPalette.svelte').then((m) => (Palette = m.default));
 	});
 
-	/**
-	 * Views for which the scrubbed instant is not a dimension of the data.
-	 *
-	 * The feed is a list of what other people published in the last few days; there
-	 * is no sense in which it can be projected onto 1987. Leaving the dock visible
-	 * there would put a playhead reading "14 Jan 2011" under today's headlines — an
-	 * affordance that appears to drive the page and does not. Docs already lose the
-	 * dock via isDoc; this is the same judgement for a page that is a view in every
-	 * other respect.
-	 *
-	 * /now deliberately does NOT belong here: it pins the playhead to the cutoff on
-	 * arrival, so the dock keeps agreeing with the page and stays a live control for
-	 * the evidence dial and layer filters, which that view does respond to.
-	 */
-	const TIMELESS = ['/feed'];
-	const hasDock = $derived(!isDoc && !TIMELESS.includes(page.url.pathname));
-	const dir = $derived(dirFor(app.locale));
-
-	/** Pages that write their own preview tags: the police study page (IndexStudy), the introduction and the share shells. Other study pages and the participate and withdraw pages take the default. */
-	const ownsPreview = $derived(/^\/(share\/|research\/police\/?$|introduction\/?$)/.test(page.url.pathname));
-
-	/** Share pages are redirect stubs: they render no shell and load no app JavaScript (csr = false). */
-	const isShare = $derived(page.url.pathname.startsWith('/share/'));
-
-	// OG preview — dynamic per selection/rel/flow, client-enhanced (crawlers use prerendered /share shells).
-	// Prerender cannot access searchParams (SvelteKit forbids it); guard with browser so build succeeds.
-	const og = $derived.by(() => {
-		if (!browser) return null;
-		const rel = page.url.searchParams.get('rel');
-		if (rel && validRelationship(rel)) {
-			const r = relationshipById.get(rel);
-			const from = r ? (personById.get(r.from)?.name_en ?? institutionById.get(r.from)?.name_en ?? r.from) : rel;
-			const to = r ? (personById.get(r.to)?.name_en ?? institutionById.get(r.to)?.name_en ?? r.to) : '';
-			const label = to ? `${from} → ${to}` : from;
-			const desc = r?.description ? r.description.slice(0, 160) : 'A documented relationship in the DeepTunisia graph.';
-			return { title: `${label} · DeepTunisia`, desc, image: 'https://deeptunisia.org/og/default.png', url: page.url.href };
-		}
-		const flow = page.url.searchParams.get('flow');
-		if (flow) {
-			const [kind, year, iso] = flow.split(':');
-			const label = kind && year && iso ? `${kind} ${iso} · ${year}` : flow;
-			return { title: `${label} · DeepTunisia`, desc: 'A measured flow between Tunisia and a counterparty.', image: 'https://deeptunisia.org/og/default.png', url: page.url.href };
-		}
-		const agreement = page.url.searchParams.get('agreement');
-		if (agreement) {
-			return { title: `${agreement} · DeepTunisia`, desc: 'An agreement in the DeepTunisia world dataset.', image: 'https://deeptunisia.org/og/default.png', url: page.url.href };
-		}
-		const sel = page.url.searchParams.get('id') ?? app.selected;
-		if (sel && validEntity(sel)) {
-			const person = personById.get(sel);
-			const inst = institutionById.get(sel);
-			if (person || inst) {
-				const ref = resolveEntity(sel);
-				const raw = ref ? nameOf({ name_en: ref.name, name_fr: (ref as unknown as { name_fr?: string })?.name_fr, name_ar: (ref as unknown as { name_ar?: string })?.name_ar } as unknown as { name_en: string }) : sel;
-				// nameOf already picks locale; fallback to ref.name
-				const titleName = (() => {
-					if (person) return nameOf(person);
-					if (inst) return nameOf(inst);
-					return ref?.name ?? sel;
-				})();
-				const descRaw = (person?.summary ?? inst?.summary ?? person?.tagline ?? '') as string;
-				const desc = descRaw ? descRaw.slice(0, 160) : `An entity in the DeepTunisia graph — ${ref?.kind ?? 'record'}.`;
-				return { title: `${titleName} · DeepTunisia`, desc, image: 'https://deeptunisia.org/og/default.png', url: page.url.href };
-			}
-			// Events (and only events, among records) are URL-addressable: lane
-			// clicks sync ?id=, so shared event links deserve a real title, not
-			// the id. resolveEntity covers persons and institutions only.
-			const ev = eventById.get(sel);
-			if (ev) {
-				const descRaw = ev.summary ?? '';
-				return {
-					title: `${eventTitle(ev)} · DeepTunisia`,
-					desc: descRaw ? descRaw.slice(0, 160) : 'An event in the DeepTunisia graph.',
-					image: 'https://deeptunisia.org/og/default.png',
-					url: page.url.href
-				};
-			}
-		}
-		return null;
-	});
+	onMount(() => initTheme());
 
 	// Remember where each section was left, so crossing between Graph and Agora and
 	// back returns the reader to the view they were reading. See nav.svelte.ts.
 	$effect(() => {
 		rememberPath(page.url);
-	});
-
-	onMount(() => {
-		const stopTheme = initTheme();
-		const stopPlay = startPlayback();
-		return () => {
-			stopTheme();
-			stopPlay();
-		};
 	});
 
 	// Charts follow the theme through CSS variables, so nothing else needs to be
@@ -204,30 +44,17 @@ import { tour, tourSeen } from '$lib/shell/tour.svelte';
 		document.documentElement.dataset.theme = theme.resolved;
 	});
 
-	// W2: every selection is a URL. Reads app.selected, so this re-runs on every
-	// selection change anywhere, and keeps ?id= in step on the entity views that
-	// consume it. replaceState, never pushState — selections are not history.
-	$effect(() => {
-		syncSelectionUrl();
-	});
-
-	// French and Arabic prose ships beside the graph, not in it: fetch the
-	// reader's language (locale-prose.svelte.ts). English needs nothing.
-	$effect(() => {
-		void ensureLocaleProse(app.locale);
-	});
-
 	$effect(() => {
 		document.documentElement.setAttribute('dir', dir);
 		document.documentElement.setAttribute('lang', app.locale);
 	});
 
+	/*
+	 * The keys every page uses: search, the theme, and Escape. The instruments add
+	 * their transport keys on top (their own layout).
+	 */
 	function onKey(e: KeyboardEvent) {
-		/* The tour is modal. Its overlay and the shell both listen on window,
-		   and stopPropagation cannot order two listeners on one node - so
-		   while the tour is open this handler stands down entirely. Without
-		   this, Escape dismissed the tour AND cleared a deep-linked selection:
-		   the card a reader had followed a link to vanished under their keys. */
+		/* The tour is modal: while it is open, the shell stands down. */
 		if (tour.open) return;
 		const tag = (e.target as HTMLElement)?.tagName;
 		if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
@@ -240,17 +67,6 @@ import { tour, tourSeen } from '$lib/shell/tour.svelte';
 			else app.selected = null;
 		} else if (e.key.toLowerCase() === 'd' && !e.metaKey && !e.ctrlKey) {
 			theme.cycle();
-		} else if (hasDock) {
-			if (e.key === ' ') {
-				e.preventDefault();
-				app.playing = !app.playing;
-			} else if (e.key === 'ArrowLeft' && !e.defaultPrevented) {
-				// The date slider handles its own arrows and prevents the default;
-				// without this check a focused slider stepped the date twice.
-				app.nudge(e.shiftKey ? -5 : -1);
-			} else if (e.key === 'ArrowRight' && !e.defaultPrevented) {
-				app.nudge(e.shiftKey ? 5 : 1);
-			}
 		}
 	}
 </script>
@@ -259,31 +75,6 @@ import { tour, tourSeen } from '$lib/shell/tour.svelte';
 	{#if !ownsPreview}
 		<link rel="canonical" href={`https://deeptunisia.org${page.url.pathname.replace(/\/$/, '')}`} />
 	{/if}
-	{#if og}
-		<title>{og.title}</title>
-		<meta property="og:title" content={og.title} />
-		<meta property="og:description" content={og.desc} />
-		<meta property="og:url" content={og.url} />
-		<meta property="og:image" content={og.image} />
-		<meta property="og:type" content="article" />
-		<meta name="twitter:card" content="summary_large_image" />
-		<meta name="twitter:title" content={og.title} />
-		<meta name="twitter:description" content={og.desc} />
-		<meta name="twitter:image" content={og.image} />
-	{:else if !ownsPreview}
-		<!-- Prerendered default, so a link to any page that sets no card of its own still
-		     previews with the mark. Study and share pages set their own. -->
-		<meta property="og:site_name" content="DeepTunisia" />
-		<meta property="og:title" content="DeepTunisia: a public record of power" />
-		<meta property="og:description" content="An open, source-backed public record of the people, institutions and networks that shape Tunisia, 1956 to 2026." />
-		<meta property="og:type" content="website" />
-		<meta property="og:image" content="https://deeptunisia.org/og/default.png" />
-		<meta property="og:image:alt" content="DeepTunisia: the circle and dot mark beside the name and the line Power, institutions and evidence, 1956 to 2026." />
-		<meta property="og:image:width" content="1200" />
-		<meta property="og:image:height" content="630" />
-		<meta name="twitter:card" content="summary_large_image" />
-		<meta name="twitter:image" content="https://deeptunisia.org/og/default.png" />
-	{/if}
 </svelte:head>
 
 <svelte:window onkeydown={onKey} />
@@ -291,46 +82,28 @@ import { tour, tourSeen } from '$lib/shell/tour.svelte';
 {#if isShare}
 	{@render children()}
 {:else}
-<div class="os" class:inspecting={Boolean(app.selected)}>
-	<!--
-		Skip links. Not boilerplate: the instrument views put hundreds of focusable
-		nodes in the tab order — the Chronicle alone has one per tenure — and the dock
-		renders last, so without these a keyboard user has to traverse 70+ chart bars
-		before reaching the timeline controls that drive the whole app.
-	-->
-	<nav class="skip" aria-label="Skip links">
-		<a href="#view">Skip to view</a>
-		{#if hasDock}
-			<a href="#timeline">Skip to timeline controls</a>
-		{/if}
-	</nav>
+	<div class="os" class:inspecting={Boolean(app.selected)}>
+		<!--
+			Skip link. Not boilerplate: the instrument views put hundreds of focusable
+			nodes in the tab order (the Chronicle alone has one per tenure), so without
+			this a keyboard user has to traverse 70+ chart bars before reaching the
+			view. The instruments add a second link to their transport controls.
+		-->
+		<nav class="skip" aria-label="Skip links">
+			<a href="#view">Skip to view</a>
+		</nav>
 
-	<MenuBar />
-	<SubNav />
+		<MenuBar />
+		<SubNav />
 
-	<div class="body">
-		<Viewport>
-			{@render children()}
-		</Viewport>
-		<Inspector />
+		{@render children()}
 	</div>
 
-	{#if hasDock}
-		<TimeDock />
+	{#if app.searchOpen && Palette}
+		<Palette />
 	{/if}
-</div>
 
-{#if app.searchOpen && Palette}
-	<Palette />
-{/if}
-
-{#if !booted && !isDoc}
-	<BootScreen onDone={finishBoot} />
-{/if}
-
-<Cursor />
-<TourOverlay />
-<TourInvite />
+	<Cursor />
 {/if}
 
 <style>
@@ -343,13 +116,6 @@ import { tour, tourSeen } from '$lib/shell/tour.svelte';
 		display: flex;
 		flex-direction: column;
 		overflow: hidden;
-	}
-
-	.body {
-		flex: 1;
-		min-height: 0;
-		display: flex;
-		align-items: stretch;
 	}
 
 	/* Off-screen until focused, then a real, visible target. */
@@ -375,8 +141,5 @@ import { tour, tourSeen } from '$lib/shell/tour.svelte';
 	.skip a:focus-visible {
 		inset-inline-start: 0;
 		outline-offset: -3px;
-	}
-	.skip a:nth-child(2):focus-visible {
-		inset-inline-start: 150px;
 	}
 </style>
