@@ -1,5 +1,4 @@
-import { CUTOFF, FLOOR, LAYERS, type Basis, type Layer } from './model';
-import { DEFAULT_WEIGHTS, type IndexKey } from './indices';
+import { CUTOFF, DEFAULT_WEIGHTS, FLOOR, LAYERS, type Basis, type IndexKey, type Layer } from './vocab';
 import { type Locale } from './i18n';
 
 /**

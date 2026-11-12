@@ -3,7 +3,8 @@
 	import { app } from '$lib/state.svelte';
 	import { compact } from '$lib/design/media.svelte';
 	import { ds, institutionById, personById, relationshipById } from '$lib/model';
-	import { basisLabel, entityName, relLabel, t, tf } from '$lib/t.svelte';
+	import { basisLabel, relLabel, t, tf } from '$lib/t.svelte';
+	import { entityName } from '$lib/names.svelte';
 	import { format } from '$lib/i18n';
 	import { INFLUENCE_CARRYING_TYPES, intervalsOverlap } from '$lib/interpretation';
 	import Disclosure from '$lib/ui/Disclosure.svelte';

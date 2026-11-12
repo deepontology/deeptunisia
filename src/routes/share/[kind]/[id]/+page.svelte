@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { personById, institutionById, relationshipById, resolveEntity } from '$lib/model';
-	import { nameOf, t } from '$lib/t.svelte';
+	import { t } from '$lib/t.svelte';
+	import { nameOf } from '$lib/names.svelte';
 
 	let { data } = $props<{ data: { kind: string; id: string } }>();
 

@@ -7,7 +7,8 @@
 	 * the archive uses everywhere.
 	 */
 	import { BASIS_COLOR, BASIS_ORDER, DASH, ds, type Basis } from '$lib/model';
-	import { nameOf, t, tf, basisLabel, basisDesc, indexMeta } from '$lib/t.svelte';
+	import { t, tf, basisLabel, basisDesc, indexMeta } from '$lib/t.svelte';
+	import { nameOf } from '$lib/names.svelte';
 	import { INDEX_KEYS } from '$lib/indices';
 	import SectionHeader from '$lib/ui/SectionHeader.svelte';
 

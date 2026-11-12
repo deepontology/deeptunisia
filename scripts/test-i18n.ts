@@ -241,7 +241,11 @@ const IDENTICAL_IS_FINE = new Set([
 	'map.basemap',
 	// Only placeholders: the words arrive through {month} and {value}.
 	'index.series.pointAria',
-	'research.hub.latest'
+	'research.hub.latest',
+	// A citation format and a lifespan: punctuation and parameters only, and a
+	// citation that changed shape by interface language would not be citable.
+	'rec.cite.line',
+	'rec.life.both'
 ]);
 
 for (const l of locales.filter((x) => x !== 'en')) {

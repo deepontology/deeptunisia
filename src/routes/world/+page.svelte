@@ -26,7 +26,8 @@
 	import AboutView from '$lib/shell/AboutView.svelte';
 	import { world, type WorldFamily, type WorldViewMode } from '$lib/world/store.svelte';
 	import Segmented from '$lib/ui/Segmented.svelte';
-	import { t, tf, nameOf } from '$lib/t.svelte';
+	import { t, tf } from '$lib/t.svelte';
+	import { nameOf } from '$lib/names.svelte';
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import { app } from '$lib/state.svelte';
