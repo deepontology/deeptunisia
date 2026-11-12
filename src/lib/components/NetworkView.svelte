@@ -12,6 +12,7 @@
 	import { entityName, nameOf } from '$lib/names.svelte';
 	import { dirFor, format } from '$lib/i18n';
 	import Chip from '$lib/ui/Chip.svelte';
+	import BasisLine, { basisLineText } from '$lib/ui/BasisLine.svelte';
 	import Segmented from '$lib/ui/Segmented.svelte';
 	import Tooltip from '$lib/ui/Tooltip.svelte';
 	import ConnectionCard from './ConnectionCard.svelte';
@@ -1348,7 +1349,7 @@
 								style:transform="translate({p.x}px, {p.y}px)"
 								style:--r="{p.r}px"
 								style:--c={LAYER_COLOR[p.layer]}
-								aria-label="{entityName(p.id)}{p.basis ? ', ' + basisLabel(p.basis) : ''}"
+								aria-label="{entityName(p.id)}{p.basis ? ', ' + basisLineText(p) : ''}"
 								onclick={(e) => selectOnMap(p.id, e)}
 							>
 								<span class="nm">{entityName(p.id)}</span>
@@ -1448,7 +1449,7 @@
 										data-seat={s.key}
 										style:transform="translate({s.x - u.x}px, {s.y - u.y}px)"
 										style:width="{s.w}px"
-										aria-label="{entityName(s.person)}{s.position ? ' — ' + postTitle(s.position) + ', ' + basisLabel(basis) : ''}"
+										aria-label="{entityName(s.person)}{s.position ? ' — ' + postTitle(s.position) + ', ' + basisLineText(s.position) : ''}"
 										onclick={(e) => selectOnMap(s.person, e)}
 									>
 										<i class="dot"></i>
@@ -1526,9 +1527,7 @@
 						<strong>{entityName(hoveredTie.rel.from)} → {entityName(hoveredTie.rel.to)}</strong>
 						<div class="tip-meta">
 							{#if !hoveredTie.measurement}
-								<Chip size="xs" dot tint="var(--basis-{hoveredTie.rel.basis ?? 'documented'})">
-									{basisLabel((hoveredTie.rel.basis ?? 'documented') as Basis)}
-								</Chip>
+								<BasisLine record={hoveredTie.rel.basis ? hoveredTie.rel : { basis: 'documented' }} />
 							{/if}
 							{#if hoveredTie.crossLayer}
 								<Chip variant="outline" size="xs" tint="var(--bridge)">{t('network.legend.crosses')}</Chip>
@@ -1708,7 +1707,7 @@
 							<tr>
 								<td>{entityName(e.rel.from === focus ? e.rel.to : e.rel.from)}</td>
 								<td>{e.bundle ? tf('network.bundle.label', { n: e.bundle }) : relLabel(e.rel.type)}</td>
-								<td>{e.measurement ? t('network.measurement') : basisLabel((e.rel.basis ?? 'documented') as Basis)}</td>
+								<td>{e.measurement ? t('network.measurement') : basisLineText(e.rel.basis ? e.rel : { basis: 'documented' })}</td>
 								<td>{e.crossLayer ? t('network.table.yes') : t('network.table.no')}</td>
 								<td><button class="rowopen" onclick={() => openTie(e, true)}>{t('network.pick')}</button></td>
 							</tr>
@@ -1736,7 +1735,7 @@
 							<td>{entityName(e.rel.to)}</td>
 							<td>{layerLabel(e.b.layer)}</td>
 							<td>{e.bundle ? tf('network.bundle.label', { n: e.bundle }) : relLabel(e.rel.type)}</td>
-							<td>{e.measurement ? t('network.measurement') : basisLabel((e.rel.basis ?? 'documented') as Basis)}</td>
+							<td>{e.measurement ? t('network.measurement') : basisLineText(e.rel.basis ? e.rel : { basis: 'documented' })}</td>
 							<td>{e.crossLayer ? t('network.table.yes') : t('network.table.no')}</td>
 							<td>
 								<button

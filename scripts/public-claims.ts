@@ -470,10 +470,19 @@ const RESOLVERS: Record<ResolverSource, Resolver> = {
 
 	review(key, ctx) {
 		const meta = dotted(ctx.dataset, 'meta.review') as Json;
+		// The number of records carrying a note is stated as a total here, on
+		// purpose: the claim is about notes, not about who read them. The old
+		// single `reviewed` key no longer exists, so this sum cannot be reached
+		// by a page that meant "checks by a person".
+		const notes =
+			num(meta?.reviewedHuman, 'review.reviewedHuman') +
+			num(meta?.reviewedAgent, 'review.reviewedAgent') +
+			num(meta?.reviewedUnstated, 'review.reviewedUnstated');
 		const keys: Record<string, Resolved> = {
 			'editorial-notes': {
-				value: num(meta?.reviewed, 'review.reviewed'),
-				basis: 'src/generated/dataset.json#meta.review.reviewed'
+				value: notes,
+				basis:
+					'src/generated/dataset.json#meta.review.reviewedHuman + reviewedAgent + reviewedUnstated'
 			},
 			'editorial-notes-denominator': {
 				value: num(meta?.reviewable, 'review.reviewable'),
@@ -1165,7 +1174,9 @@ export function buildManifest(ctx: ClaimContext, registry: ResolvedRegistry) {
 		},
 		populations: {
 			review: {
-				editorialNotes: Number(review.reviewed ?? 0),
+				checkedByPerson: Number(review.reviewedHuman ?? 0),
+				passedByAgent: Number(review.reviewedAgent ?? 0),
+				unstated: Number(review.reviewedUnstated ?? 0),
 				reviewable: Number(review.reviewable ?? 0),
 				independentChecks: ctx.verifications.length,
 				editorialQueue: Number(ctx.editorialQueue.total ?? 0),

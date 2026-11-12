@@ -2153,7 +2153,9 @@ const reviewSummary = summariseReview(
 	verifications
 );
 const {
-	reviewed,
+	reviewedHuman,
+	reviewedAgent,
+	reviewedUnstated,
 	reviewable,
 	flags: reviewFlags,
 	byKind: reviewByKind,
@@ -2524,7 +2526,16 @@ const dataset = {
 			exemption: SUCCESSION_EXEMPTION
 		},
 		contradictions,
-		review: { reviewed, reviewable, flags: reviewFlags, byKind: reviewByKind, byBasis: reviewByBasis },
+		review: {
+			reviewedHuman,
+			reviewedAgent,
+			reviewedUnstated,
+			reviewable,
+			independent: reviewSummary.independent,
+			flags: reviewFlags,
+			byKind: reviewByKind,
+			byBasis: reviewByBasis
+		},
 		translation,
 		coverage: { expectedCategories, principals: principalCoverage },
 		// W4: chains of all-weak influence edges (inferred/unsubstantiated),
@@ -3428,8 +3439,15 @@ export interface DatasetMeta {
 		{ total: number; done: number; tiers: Record<'machine' | 'model-reviewed' | 'machine-reviewed' | 'human', number> }
 	>;
 	review: {
-		reviewed: number;
+		/** Reviewable records whose review names a person. */
+		reviewedHuman: number;
+		/** Reviewable records whose review names an agent. */
+		reviewedAgent: number;
+		/** Reviewable records whose review does not say who read them. */
+		reviewedUnstated: number;
 		reviewable: number;
+		/** Independent verifications that resolved to a claim (data/verifications.yaml). */
+		independent: number;
 		/**
 		 * Coverage per overlapping risk flag, most-damaging first. A record
 		 * carries every flag true of it, so these totals exceed \`reviewable\`.
@@ -3437,12 +3455,18 @@ export interface DatasetMeta {
 		 */
 		flags: Record<
 			'unsubstantiated' | 'attributed' | 'inferred' | 'reported' | 'documented',
-			{ reviewed: number; total: number }
+			{ reviewedHuman: number; reviewedAgent: number; reviewedUnstated: number; total: number }
 		>;
 		/** Denominator per claim kind, including people, institutions and the newer kinds. */
-		byKind: Record<string, { reviewed: number; total: number }>;
+		byKind: Record<
+			string,
+			{ reviewedHuman: number; reviewedAgent: number; reviewedUnstated: number; total: number }
+		>;
 		/** Denominator per derived basis. */
-		byBasis: Record<string, { reviewed: number; total: number }>;
+		byBasis: Record<
+			string,
+			{ reviewedHuman: number; reviewedAgent: number; reviewedUnstated: number; total: number }
+		>;
 	};
 	/** Card completeness: how much each record actually carries. A worklist. */
 	cards: {
@@ -4188,12 +4212,14 @@ const stats: Record<string, string> = {
 	successionGaps: String(successionGaps.length),
 	successionOverlaps: String(successionOverlaps.length),
 	contradictions: String(contradictions.length),
-	reviewed: String(reviewed),
+	reviewedHuman: String(reviewedHuman),
+	reviewedAgent: String(reviewedAgent),
+	reviewedUnstated: String(reviewedUnstated),
 	reviewable: String(reviewable),
 	// Independent verification is the study population (data/verifications.yaml),
 	// never the editorial pass. Emitted so README and llms.txt can say zero with a
 	// tag, and so no summary can rename an editorial note as an independent check.
-	independent: String(reviewSummary.independentlyChecked),
+	independent: String(reviewSummary.independent),
 	// Translation coverage, published for the same reason the review numbers are: a
 	// commitment nobody can see the shortfall in does not mean anything. `human` is
 	// the only tier that means a person who reads the language has looked at it.
@@ -4228,7 +4254,10 @@ const stats: Record<string, string> = {
 	),
 	...Object.fromEntries(
 		REVIEW_FLAGS.flatMap((k) => [
-			[`reviewed-${k}`, String(reviewFlags[k].reviewed)],
+			[`reviewNotes-${k}`, String(reviewFlags[k].reviewedHuman + reviewFlags[k].reviewedAgent + reviewFlags[k].reviewedUnstated)],
+			[`reviewedHuman-${k}`, String(reviewFlags[k].reviewedHuman)],
+			[`reviewedAgent-${k}`, String(reviewFlags[k].reviewedAgent)],
+			[`reviewedUnstated-${k}`, String(reviewFlags[k].reviewedUnstated)],
 			[`reviewable-${k}`, String(reviewFlags[k].total)]
 		])
 	),
@@ -4279,6 +4308,15 @@ writeFileSync(
 				missing: p.missing
 			})),
 			reviewFlags: dataset.meta.review.flags,
+			// The split every page prints: a review by a person, a pass by an
+			// agent, and a review note that does not say who read it.
+			review: {
+				reviewedHuman,
+				reviewedAgent,
+				reviewedUnstated,
+				reviewable,
+				independent: reviewSummary.independent
+			},
 			translation: dataset.meta.translation,
 			// The verification desk's measured figure. Empty until a session
 			// line exists, so the page says "not measured yet" rather than zero.
@@ -4306,7 +4344,13 @@ writeFileSync(
 			successionGaps: successionGaps.length,
 			successionOverlaps: successionOverlaps.length,
 			contradictions: contradictions.length,
-			review: { reviewed, reviewable },
+			review: {
+				reviewedHuman,
+				reviewedAgent,
+				reviewedUnstated,
+				reviewable,
+				independent: reviewSummary.independent
+			},
 			roles: [...roles]
 				.sort((a, b) => b.authority - a.authority)
 				.map((role) => ({
@@ -4356,7 +4400,15 @@ writeFileSync(
 					filled: w.filled
 				}))
 			},
-			review: { byKind: dataset.meta.review.byKind, flags: dataset.meta.review.flags }
+			review: {
+				reviewedHuman,
+				reviewedAgent,
+				reviewedUnstated,
+				reviewable,
+				independent: reviewSummary.independent,
+				byKind: dataset.meta.review.byKind,
+				flags: dataset.meta.review.flags
+			}
 		},
 		null,
 		2
@@ -4503,9 +4555,9 @@ console.log(`
     basis   documented ${basisCounts.documented}   reported ${basisCounts.reported}   inferred ${basisCounts.inferred}   unsubstantiated ${basisCounts.unsubstantiated}
     flagged for primary-source verification: ${needsPrimary.length}
     succession gaps: ${successionGaps.length}   overlaps: ${successionOverlaps.length}   recorded contradictions: ${contradictions.length}
-    human-reviewed: ${reviewed}/${reviewable}  (flags overlap)
+    checked by a person: ${reviewedHuman}/${reviewable}   passed by an agent: ${reviewedAgent}/${reviewable}   not stated: ${reviewedUnstated}
 ${REVIEW_FLAGS.map(
-	(k) => `      ${k.padEnd(16)} ${String(reviewFlags[k].reviewed).padStart(4)}/${String(reviewFlags[k].total).padEnd(4)}`
+	(k) => `      ${k.padEnd(16)} ${String(reviewFlags[k].reviewedHuman).padStart(4)} person ${String(reviewFlags[k].reviewedAgent).padStart(4)} agent ${String(reviewFlags[k].reviewedUnstated).padStart(4)} unstated / ${String(reviewFlags[k].total).padEnd(4)}`
 ).join('\n')}
 
     translation coverage        fr        ar

@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { app } from '$lib/state.svelte';
 	import { BASIS_COLOR, BASIS_OPACITY, CUTOFF, DASH, personById, type Basis, type EventRec, type Position } from '$lib/model';
-	import { basisLabel, t, describeInterval, durationLabel } from '$lib/t.svelte';
+	import { t, basisLabel, describeInterval, durationLabel } from '$lib/t.svelte';
 	import { eventTitle, nameOf } from '$lib/names.svelte';
+import { basisLineText } from '$lib/ui/BasisLine.svelte';
 	import { visiblePositions, type ChronGroup } from '$lib/chronicle/rows';
 
 	/**
@@ -93,7 +94,7 @@
 								stroke-dasharray={DASH[b]}
 							/>
 						</svg>
-						<span class="tl-basis-word">{basisLabel(b)}</span>
+						<span class="tl-basis-word">{basisLineText(e.pos)}</span>
 					</span>
 				</button>
 			</li>
@@ -118,7 +119,7 @@
 						<svg width="22" height="6" viewBox="0 0 22 6" aria-hidden="true">
 							<line x1="1" y1="3" x2="21" y2="3" stroke="currentColor" stroke-width="2" stroke-opacity={BASIS_OPACITY[b]} stroke-dasharray={DASH[b]} />
 						</svg>
-						<span class="tl-basis-word">{basisLabel(b)}</span>
+						<span class="tl-basis-word">{basisLineText(ev)}</span>
 					</span>
 				</button>
 			</li>

@@ -32,7 +32,7 @@ Every claim in the dataset carries its evidence with it — source, provenance, 
 
 That is not a guideline. The build fails. A candidate that lacks these is rejected at the gate and never merges. The paper calls this property *"the dataset cannot be quietly wrong"* — not that it cannot be factually wrong, but that it cannot silently violate its own declared contract.
 
-The paper is the frozen, citable form. The live form is the graph itself and the pages that describe it — [/methodology](/methodology) for how a claim is filed, [/about](/about) for how much has actually been verified.
+The paper is the frozen, citable form. The live form is the graph itself and the pages that describe it — [/methodology](/methodology) for how a claim is filed, [/about](/about) for how much a person has actually opened against a source.
 
 ## What the swarm did not do {#not}
 
@@ -56,10 +56,10 @@ The assistance does not change the rule: the human remains responsible for the j
 
 Two numbers explain the restraint:
 
-- Only a small fraction of records carry an editorial review note, and independent checks stand at zero. The exact figure is on [/about](/about); it is deliberately unflattering, and broken out by risk — `unsubstantiated` and `inferred` claims sit near zero.
+- Only a small fraction of records carry an editorial review note; a note says someone read the claim, not that a person opened its source. Independent checks stand at zero. The exact figures are on [/about](/about); they are deliberately unflattering, and broken out by risk — `unsubstantiated` and `inferred` claims sit near zero.
 - Most dataset prose is not yet human-translated. Long-form analytical text is deliberately not machine-translated, because fluency must never read as verification.
 
-The project's stated architecture is *machines propose, humans verify*. The second half is the load-bearing one. Almost nothing has been through a second pair of eyes yet, and publishing that number is the only way the first half means anything.
+The project's stated architecture is *machines propose, humans verify*. The second half is the load-bearing one. Almost nothing has been through a second pair of eyes yet: the default state is `unflagged`, and a record is `verified` only when a person has opened its source under the method `source-check`. Publishing the count of each is the only way the first half means anything.
 
 ## How to tell {#how}
 

@@ -18,7 +18,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseDocument } from 'yaml';
 import { applyEdit, assertOnlyTargetChanged, EmitError, type Edit } from './emit.ts';
-import { reviewFlagsOf } from './review-coverage.ts';
+import { reviewActorOf, reviewFlagsOf } from './review-coverage.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const read = (f: string) => readFileSync(join(HERE, '..', 'data', f), 'utf8');
@@ -684,7 +684,10 @@ console.log('\n  ── the editorial tool agrees with the build ──\n');
 	const ds = JSON.parse(
 		readFileSync(join(HERE, '..', 'src', 'generated', 'dataset.json'), 'utf8')
 	);
-	const published = ds.meta.review.flags as Record<string, { reviewed: number; total: number }>;
+	const published = ds.meta.review.flags as Record<
+		string,
+		{ reviewedHuman: number; reviewedAgent: number; reviewedUnstated: number; total: number }
+	>;
 	const KINDS = [
 		'institutions',
 		'people',
@@ -702,18 +705,33 @@ console.log('\n  ── the editorial tool agrees with the build ──\n');
 		'places'
 	] as const;
 
-	const mine: Record<string, { reviewed: number; total: number }> = {};
-	for (const key of Object.keys(published)) mine[key] = { reviewed: 0, total: 0 };
+	const mine: Record<
+		string,
+		{ reviewedHuman: number; reviewedAgent: number; reviewedUnstated: number; total: number }
+	> = {};
+	for (const key of Object.keys(published))
+		mine[key] = { reviewedHuman: 0, reviewedAgent: 0, reviewedUnstated: 0, total: 0 };
 	let records = 0;
-	let reviewed = 0;
+	let reviewedHuman = 0;
+	let reviewedAgent = 0;
+	let reviewedUnstated = 0;
 	for (const kind of KINDS) {
 		for (const record of ds[kind] ?? []) {
 			records++;
-			const isReviewed = Boolean(record.review);
-			if (isReviewed) reviewed++;
+			if (record.review) {
+				const actor = reviewActorOf(record.review);
+				if (actor === 'human') reviewedHuman++;
+				else if (actor === 'agent') reviewedAgent++;
+				else reviewedUnstated++;
+			}
 			for (const flag of reviewFlagsOf(record)) {
 				mine[flag].total++;
-				if (isReviewed) mine[flag].reviewed++;
+				if (record.review) {
+					const actor = reviewActorOf(record.review);
+					if (actor === 'human') mine[flag].reviewedHuman++;
+					else if (actor === 'agent') mine[flag].reviewedAgent++;
+					else mine[flag].reviewedUnstated++;
+				}
 			}
 		}
 	}
@@ -721,8 +739,11 @@ console.log('\n  ── the editorial tool agrees with the build ──\n');
 	for (const [flag, expected] of Object.entries(published)) {
 		ok(
 			`risk flag "${flag}" matches the published table`,
-			mine[flag].total === expected.total && mine[flag].reviewed === expected.reviewed,
-			`published ${expected.reviewed}/${expected.total}, recomputed ${mine[flag].reviewed}/${mine[flag].total}`
+			mine[flag].total === expected.total &&
+				mine[flag].reviewedHuman === expected.reviewedHuman &&
+				mine[flag].reviewedAgent === expected.reviewedAgent &&
+				mine[flag].reviewedUnstated === expected.reviewedUnstated,
+			`published ${expected.reviewedHuman}/${expected.reviewedAgent}/${expected.reviewedUnstated} of ${expected.total}, recomputed ${mine[flag].reviewedHuman}/${mine[flag].reviewedAgent}/${mine[flag].reviewedUnstated} of ${mine[flag].total}`
 		);
 	}
 	ok(
@@ -731,9 +752,12 @@ console.log('\n  ── the editorial tool agrees with the build ──\n');
 		`${Object.values(published).reduce((s, f) => s + f.total, 0)} flag hits over ${records} records`
 	);
 	ok(
-		'the headline reviewed/reviewable recomputes from every claim kind',
-		ds.meta.review.reviewed === reviewed && ds.meta.review.reviewable === records,
-		`${ds.meta.review.reviewed}/${ds.meta.review.reviewable}`
+		'the actor split recomputes from every claim kind',
+		ds.meta.review.reviewedHuman === reviewedHuman &&
+			ds.meta.review.reviewedAgent === reviewedAgent &&
+			ds.meta.review.reviewedUnstated === reviewedUnstated &&
+			ds.meta.review.reviewable === records,
+		`${ds.meta.review.reviewedHuman}/${ds.meta.review.reviewedAgent}/${ds.meta.review.reviewedUnstated} of ${ds.meta.review.reviewable}`
 	);
 }
 

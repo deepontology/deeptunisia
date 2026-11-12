@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { app } from '$lib/state.svelte';
 	import SourceList from '$lib/components/SourceList.svelte';
-	import { t, basisDesc, basisLabel } from '$lib/t.svelte';
+	import { t, basisDesc } from '$lib/t.svelte';
 	import { entityName, nameOf } from '$lib/names.svelte';
 	import { format } from '$lib/i18n';
 	import Prose from '$lib/ui/Prose.svelte';
-	import { BASIS_COLOR, BASIS_ORDER, ds, type Basis } from '$lib/model';
+	import { BASIS_COLOR, BASIS_LABEL, BASIS_ORDER, ds, type Basis } from '$lib/model';
 	import continuity from '$data/network-continuity.json';
 
 	/**
@@ -55,9 +55,6 @@
 	const inferred = $derived(ds.positions.filter((p) => p.basis === 'inferred'));
 	const unsubstantiated = $derived(ds.relationships.filter((r) => r.basis === 'unsubstantiated'));
 	const openQuestions = $derived(ds.questions.filter((q) => q.status !== 'answered'));
-	const reviewPct = $derived(
-		Math.round((ds.meta.review.reviewed / Math.max(1, ds.meta.review.reviewable)) * 100)
-	);
 </script>
 
 <svelte:head>
@@ -81,7 +78,7 @@
 				{@const n = ds.meta.basisCounts[b]}
 				<div class="bb" style:--c={BASIS_COLOR[b]} style:flex={Math.max(1, n)} style:min-width={n < 25 ? '54px' : '0'}>
 					<span class="bb-n mono">{n}</span>
-					<span class="bb-l">{basisLabel(b)}</span>
+					<span class="bb-l">{BASIS_LABEL[b]}</span>
 				</div>
 			{/each}
 		</div>
@@ -96,10 +93,10 @@
 			<span class="flag">{ds.meta.needsPrimarySourceCount} {t('ev.counts.needsPrimary')}</span>
 			<span class="flag">{ds.meta.contradictions.length} {t('ev.counts.contradictions')}</span>
 			<span
-				>{format(app.locale, 'ev.counts.humanReviewed', {
-					reviewed: ds.meta.review.reviewed,
-					reviewable: ds.meta.review.reviewable,
-					pct: reviewPct
+				>{format(app.locale, 'ev.counts.checked', {
+					human: ds.meta.review.reviewedHuman,
+					agent: ds.meta.review.reviewedAgent,
+					reviewable: ds.meta.review.reviewable
 				})}</span
 			>
 		</div>
@@ -362,7 +359,7 @@
 				{#each BASIS_ORDER as b (b)}
 					<div class="grade" style:--c={BASIS_COLOR[b]}>
 						<span class="gdot"></span>
-						<strong>{basisLabel(b)}</strong>
+						<strong>{BASIS_LABEL[b]}</strong>
 						<p>{basisDesc(b)}</p>
 					</div>
 				{/each}

@@ -33,9 +33,10 @@ span as a date, or an unsubstantiated claim as a finding, misrepresents the sour
 
 ## Known limits, stated by the project
 
-- <!--stat:reviewed-->52<!--/stat--> of <!--stat:reviewable-->8842<!--/stat-->
-  records carry an editorial review note; independent human verification is
-  <!--stat:independent-->0<!--/stat-->.
+- <!--stat:reviewedHuman-->0<!--/stat--> of <!--stat:reviewable-->8842<!--/stat-->
+  records have been checked by a person and <!--stat:reviewedAgent-->0<!--/stat--> by an agent;
+  <!--stat:reviewedUnstated-->52<!--/stat--> carry a review note that does not say who read
+  it, and independent human verification is <!--stat:independent-->0<!--/stat-->.
 - <!--stat:needsPrimarySource-->256<!--/stat--> records await a primary source.
 - Defence intelligence (ANRSD) has no primary sourcing at all: statute, appointment
   date and current status are unestablished.

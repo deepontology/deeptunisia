@@ -137,12 +137,11 @@ const ENTITY_PANEL = readFileSync(join(HERE, '..', 'src', 'lib', 'components', '
 const INSPECTOR = readFileSync(join(HERE, '..', 'src', 'lib', 'shell', 'Inspector.svelte'), 'utf8');
 const SEARCH = readFileSync(join(HERE, '..', 'src', 'lib', 'components', 'SearchPalette.svelte'), 'utf8');
 const MODEL = readFileSync(join(HERE, '..', 'src', 'lib', 'model.ts'), 'utf8');
-ok('the record card exists and carries basis chips', RECORD_PANEL.includes('basisLabel') && RECORD_PANEL.includes('CommunityActions'));
+ok('the record card exists and carries its basis line', RECORD_PANEL.includes('BasisLine') && RECORD_PANEL.includes('CommunityActions'));
 ok(
 	'the entity panel shows kind and strength as separate chips',
-	ENTITY_PANEL.includes('basisLabel(') &&
-		ENTITY_PANEL.includes('confidenceLabel(') &&
-		ENTITY_PANEL.includes('tint="var(--basis-')
+	ENTITY_PANEL.includes('<BasisLine') &&
+		ENTITY_PANEL.includes('confidenceLabel(')
 );
 ok('every record kind has a lookup map', ['companyById', 'contractById', 'licenceById', 'declarationById', 'educationById', 'eventById'].every((m) => MODEL.includes(m)));
 ok('the Inspector routes records away from the entity panel', INSPECTOR.includes('RecordPanel') && INSPECTOR.includes('personById.has(panelSel)'));
@@ -568,7 +567,8 @@ for (const loc of ['en', 'fr', 'ar'] as const) {
 		`the review coverage note resolves in ${loc}`,
 		translate(loc, 'coverage.flagsNote') !== 'coverage.flagsNote' &&
 			translate(loc, 'coverage.kind.relationship') !== 'coverage.kind.relationship' &&
-			translate(loc, 'about.stat.reviewed').includes('{reviewed}'),
+			translate(loc, 'about.stat.checkedByPerson').includes('{human}') &&
+				translate(loc, 'about.stat.checkedByAgent').includes('{agent}'),
 		translate(loc, 'coverage.byKind')
 	);
 }
@@ -830,6 +830,53 @@ for (const loc of ['en', 'fr', 'ar'] as const) {
 	);
 }
 
+
+console.log('\n  ── D3: one component prints what a record rests on ──\n');
+
+import { readdirSync } from 'node:fs';
+
+const SRC = join(HERE, '..', 'src');
+function sourceFiles(dir: string): string[] {
+	return readdirSync(dir, { withFileTypes: true }).flatMap((e) => {
+		const full = join(dir, e.name);
+		if (e.isDirectory()) return e.name === 'generated' ? [] : sourceFiles(full);
+		return e.name.endsWith('.svelte') || e.name.endsWith('.ts') ? [full] : [];
+	});
+}
+
+/* The only places a bare basis word may come from the dictionary: the one
+   component, the dictionary itself, and two legends or totals that print a
+   distribution rather than one record. */
+const BARE_BASIS_ALLOWED = new Set([
+	join(SRC, 'lib', 't.svelte.ts'),
+	join(SRC, 'lib', 'ui', 'BasisLine.svelte'),
+	join(SRC, 'lib', 'components', 'network', 'NetworkMatrix.svelte'),
+	join(SRC, 'routes', '(read)', 'methodology', '+page.svelte')
+]);
+const ALL_SOURCES = sourceFiles(SRC);
+const BARE_BASIS = ALL_SOURCES.filter(
+	(f) => readFileSync(f, 'utf8').includes('basisLabel(') && !BARE_BASIS_ALLOWED.has(f)
+);
+const RECORD_BASIS = ALL_SOURCES.filter((f) => /<BasisLine\b|basisLineText\(/.test(readFileSync(f, 'utf8')));
+const BASIS_LINE = readFileSync(join(SRC, 'lib', 'ui', 'BasisLine.svelte'), 'utf8');
+
+ok(
+	'basisLabel is called only inside the one component and in legends or totals',
+	BARE_BASIS.length === 0,
+	BARE_BASIS.map((f) => f.slice(SRC.length + 1)).join(', ') || `${ALL_SOURCES.length} source files`
+);
+ok(
+	'every surface that prints one record uses BasisLine or its text helper',
+	RECORD_BASIS.length >= 14,
+	`${RECORD_BASIS.length} files`
+);
+ok(
+	'the one component carries basis, grade and the origins note',
+	BASIS_LINE.includes('record.confidence') &&
+		BASIS_LINE.includes('restsOnNote') &&
+		BASIS_LINE.includes('encyclopediaOnly') &&
+		BASIS_LINE.includes('restsOnOrigins')
+);
 console.log(`
    ${checks - failures}/${checks} checks passed${failures ? `, ${failures} FAILED` : ''}
 `);

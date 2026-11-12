@@ -47,7 +47,7 @@ development; a reader on deeptunisia.org never touches it. The mode contract is
 
 The complete graph is <!--stat:graphKB-->14750<!--/stat--> KB as the internal
 bundle, and the public exports (dataset, CSVs, geographic layers, changelog)
-ship at <!--stat:shippedKB-->26630<!--/stat--> KB — both are computed by the
+ship at <!--stat:shippedKB-->26640<!--/stat--> KB — both are computed by the
 build, and `npm run test` fails if the README ever disagrees with them.
 
 ## Reproducibility
@@ -84,7 +84,7 @@ this table mirrors it and must be kept in step.
 | View | What it answers |
 | --- | --- |
 | **Chronicle** | Who held which post, when, drawn to scale. Bar length is tenure, so continuity is visible without reading. |
-| **Now** | Who holds which office today — split by how recently each was verified, and measured against that office's historical median tenure. |
+| **Now** | Who holds which office today — split by how recently each was confirmed in post, and measured against that office's historical median tenure. |
 | **Network** | Who connects to whom. Fixed lane per layer, so cross-layer bridges are literally the edges that cross lanes. |
 | **Atlas** | Everything at once: structure per era as small multiples, a survival matrix of people against eras, an institution-crossing matrix, and median tenure per office. |
 | **Rankings** | Six separate structural indices with reader-adjustable weights. Deliberately no single power score. |
@@ -137,7 +137,7 @@ Six decisions carry most of the weight:
 
 **Positions are the join table.** A `Position` is `(role, holder, start, end)`. You cannot ask "who held power in 1994" from a list of people, only from a set of intervals.
 
-**Dates are ranges, not points.** Four fields — earliest/latest start, earliest/latest end — plus a status (`ended`, `ongoing`, `last-verified`, `unknown`). The Chronicle draws the documented core solid and the uncertain envelope hatched. Grammar: `2018-06-01`, `2018-06`, `2018`, `~2017`, `<=2018-06`, `ongoing`, `verified:2025-12`, `?`.
+**Dates are ranges, not points.** Four fields — earliest/latest start, earliest/latest end — plus a status (`ended`, `ongoing`, `last-verified`, `unknown`). The Chronicle draws the documented core solid and the uncertain envelope hatched. Grammar: `2018-06-01`, `2018-06`, `2018`, `~2017`, `<=2018-06`, `ongoing`, `verified:2025-12`, `?`. The `verified:` token is an interval status and says when the post was last confirmed; it is not the record's `verification` field, which is `unflagged` unless a person opened the source.
 
 **Basis describes the claim, not its dates.** A position bundles two separable claims — "X held this post" and "between these dates" — which routinely have different standing. A security chief whose office is well reported but whose start date nobody published is a *reported* officeholding with an *inferred* span. `datesInferred` is a separate flag so imprecise dating never looks like speculation.
 
@@ -189,14 +189,14 @@ This is not neutrality for its own sake — it is the project's only real protec
 
 ## Known limits
 
-- **<!--stat:reviewed-->52<!--/stat--> of <!--stat:reviewable-->8842<!--/stat--> records carry an editorial review note, and independent human verification is <!--stat:independent-->0<!--/stat-->.** The stated architecture is that machines propose and humans verify; almost nothing has been through a second pair of eyes. The real numbers are published on `/about` because that is the only way the commitment means anything.
+- **<!--stat:reviewedHuman-->0<!--/stat--> of <!--stat:reviewable-->8842<!--/stat--> records have been checked by a person and <!--stat:reviewedAgent-->0<!--/stat--> by an agent; <!--stat:reviewedUnstated-->52<!--/stat--> carry a review note that does not say who read it, and independent human verification is <!--stat:independent-->0<!--/stat-->.** The stated architecture is that machines propose and humans verify; almost nothing has been through a second pair of eyes. The real numbers are published on `/about` because that is the only way the commitment means anything.
 - **Defence intelligence (ANRSD) has no primary sourcing at all** — statute, appointment date, current status all unestablished. Largest hole in the security map.
 - **Pre-2011 police chronology is the weakest area**, resting largely on secondary sources.
 - **The 2014–2019 police succession does not fit its endpoints.** Three reported tenures cannot fit between two firmly dated ones; recorded as an unresolved contradiction rather than smoothed over.
 - **`<=` bounds use an 8-year window.** Stated modelling assumption, not a fact.
 - **UI is translated for chrome only.** Arabic, French and English navigation, controls and labels, with RTL. Entity names are trilingual in the data and all three are searchable. Long-form analytical prose is deliberately *not* machine-translated — a machine-translated epistemology page would undermine the point.
 - **<!--stat:needsPrimarySource-->256<!--/stat--> records await a primary source.** Listed in full on `/evidence`.
-- **Human review is not merely thin, it is not independent.** Independent checks stand at <!--stat:independent-->0<!--/stat--> in every category, and the editorial notes that do exist are unevenly spread: <!--stat:reviewed-unsubstantiated-->18<!--/stat--> of <!--stat:reviewable-unsubstantiated-->23<!--/stat--> unsubstantiated claims, <!--stat:reviewed-attributed-->25<!--/stat--> of <!--stat:reviewable-attributed-->2904<!--/stat--> that name a source and <!--stat:reviewed-inferred-->2<!--/stat--> of <!--stat:reviewable-inferred-->129<!--/stat--> inferences carry one. The breakdown is on `/about`.
+- **Review is not merely thin, it is not independent.** Independent checks stand at <!--stat:independent-->0<!--/stat--> in every category, and the editorial notes that do exist are unevenly spread: <!--stat:reviewNotes-unsubstantiated-->18<!--/stat--> of <!--stat:reviewable-unsubstantiated-->23<!--/stat--> unsubstantiated claims, <!--stat:reviewNotes-attributed-->25<!--/stat--> of <!--stat:reviewable-attributed-->2904<!--/stat--> that name a source and <!--stat:reviewNotes-inferred-->2<!--/stat--> of <!--stat:reviewable-inferred-->129<!--/stat--> inferences carry one. The breakdown is on `/about`.
 - **<!--stat:sourcesUncited-->71<!--/stat--> of <!--stat:sources-->2615<!--/stat--> sources back no claim.** Staged reading, kept in the file but excluded from the published count of <!--stat:sourcesCited-->2544<!--/stat--> — a bibliography entry that holds nothing up is not evidence.
 
 ## Deliberately not built yet

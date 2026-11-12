@@ -32,7 +32,7 @@ Chaque affirmation dans le jeu de données porte sa preuve avec elle — source,
 
 Ce n'est pas une recommandation. La compilation échoue. Un candidat qui manque à ces exigences est rejeté à l'entrée et ne fusionne jamais. Le papier appelle cette propriété *« le jeu de données ne peut pas être silencieusement faux »* — non pas qu'il ne puisse pas être factuellement faux, mais qu'il ne peut pas violer silencieusement son propre contrat déclaré.
 
-Le papier est la forme figée et citable. La forme vivante est le graphe lui-même et les pages qui le décrivent — [/methodology](/methodology) pour comment une affirmation est déposée, [/about](/about) pour combien a réellement été vérifié.
+Le papier est la forme figée et citable. La forme vivante est le graphe lui-même et les pages qui le décrivent — [/methodology](/methodology) pour comment une affirmation est déposée, [/about](/about) pour combien une personne en a réellement ouvert la source.
 
 ## Ce que l'essaim n'a pas fait {#not}
 
@@ -56,10 +56,10 @@ L'assistance ne change pas la règle : l'humain reste responsable du jugement. L
 
 Deux chiffres expliquent la retenue :
 
-- Seule une petite fraction des enregistrements a eu une revue humaine indépendante. Le chiffre exact est sur [/about](/about) ; il est délibérément peu flatteur, et ventilé par risque — les affirmations `unsubstantiated` et `inferred` restent proches de zéro.
+- Seule une petite fraction des enregistrements porte une note de relecture éditoriale ; une note dit que quelqu'un a lu l'affirmation, pas qu'une personne a ouvert sa source. Les vérifications indépendantes sont à zéro. Les chiffres exacts sont sur [/about](/about) ; ils sont délibérément peu flatteurs, et ventilés par risque — les affirmations `unsubstantiated` et `inferred` restent proches de zéro.
 - La plupart de la prose du jeu de données n'est pas encore traduite par un humain. Le texte analytique long n'est délibérément pas traduit à la machine, parce que la fluidité ne doit jamais se lire comme une vérification.
 
-L'architecture affichée du projet est *les machines proposent, les humains vérifient*. La seconde moitié est celle qui porte. Presque rien n'est encore passé par une seconde paire d'yeux, et publier ce nombre est la seule façon pour que la première moitié veuille dire quelque chose.
+L'architecture affichée du projet est *les machines proposent, les humains vérifient*. La seconde moitié est celle qui porte. Presque rien n'est encore passé par une seconde paire d'yeux : l'état par défaut est `unflagged`, et une fiche n'est `verified` que lorsqu'une personne a ouvert sa source selon la méthode `source-check`. Publier le décompte de chacun est la seule façon pour que la première moitié veuille dire quelque chose.
 
 ## Comment le dire {#how}
 

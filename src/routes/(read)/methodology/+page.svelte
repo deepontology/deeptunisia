@@ -8,6 +8,7 @@
 	 */
 	import { BASIS_COLOR, BASIS_ORDER, DASH, INDEX_KEYS, type Basis } from '$lib/vocab';
 	import { t, tf, basisLabel, basisDesc, indexMeta } from '$lib/t.svelte';
+	import { format } from '$lib/i18n';
 	import figures from '$data/methodology-figures.json';
 	import { localName } from '$lib/local-name';
 	import { app } from '$lib/state.svelte';
@@ -183,7 +184,13 @@
 			<p>
 				{t('m.pipeline1')}
 				<a href="/about">{t('m.link.about')}</a> {t('m.pipeline2')}
-				<strong>{tf('m.reviewedOf', { rev: figures.review.reviewed, tot: figures.review.reviewable })}</strong>{t('m.pipeline3')}
+				<strong
+					>{format(app.locale, 'm.review.split', {
+						human: figures.review.reviewedHuman,
+						agent: figures.review.reviewedAgent,
+						reviewable: figures.review.reviewable
+					})}</strong
+				>{t('m.pipeline3')}
 			</p>
 			<p>
 				{t('m.noai1')} <a href="/investigate">{t('m.investigate.link')}</a> {t('m.noai2')}

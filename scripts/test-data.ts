@@ -12,7 +12,7 @@ import { parse as parseYaml } from 'yaml';
 import { RelationshipType, EDGE_DIRECTION, REQUIRED_SOURCE_KINDS } from '../scripts/schema.ts';
 import { computeDatasetHash } from './canonical.ts';
 import { countOrigins, originOf } from './origins.ts';
-import { reviewCoverageCsv, summariseReview, type ReviewInput, type ReviewKind } from './review-coverage.ts';
+import { reviewCoverageCsv, reviewActorOf, summariseReview, type ReviewInput, type ReviewKind } from './review-coverage.ts';
 import { buildCoverage, coverageCsv } from './coverage.ts';
 import { verifyDebtProvenance, DEBT_MANIFEST_ID, type DebtManifestEntry } from './debt-provenance.ts';
 
@@ -1369,9 +1369,54 @@ const KIND_TO_DATASET: Record<string, string> = {
 	const summary = summariseReview(rows);
 
 	ok(
-		'the headline reviewed/reviewable recomputes from every claim kind',
-		ds.meta.review.reviewed === summary.reviewed && ds.meta.review.reviewable === summary.reviewable,
-		`${ds.meta.review.reviewed}/${ds.meta.review.reviewable}`
+		'the published review counts recompute from every claim kind',
+		ds.meta.review.reviewedHuman === summary.reviewedHuman &&
+			ds.meta.review.reviewedAgent === summary.reviewedAgent &&
+			ds.meta.review.reviewedUnstated === summary.reviewedUnstated &&
+			ds.meta.review.reviewable === summary.reviewable &&
+			ds.meta.review.independent === summary.independent,
+		`${ds.meta.review.reviewedHuman} person, ${ds.meta.review.reviewedAgent} agent, ${ds.meta.review.reviewedUnstated} unstated of ${ds.meta.review.reviewable}`
+	);
+	const reviewedRecords = rows.filter((r) => r.review !== undefined && r.review !== null).length;
+	ok(
+		'every review falls in exactly one actor bucket',
+		ds.meta.review.reviewedHuman + ds.meta.review.reviewedAgent + ds.meta.review.reviewedUnstated ===
+			reviewedRecords,
+		`${ds.meta.review.reviewedHuman} + ${ds.meta.review.reviewedAgent} + ${ds.meta.review.reviewedUnstated} = ${reviewedRecords} reviews`
+	);
+
+	/*
+	 * D2: the published channel that pages and documents read. The old single
+	 * `reviewed` key must be gone, not kept as a sum, so a page cannot print the
+	 * editorial figure and call it human work by accident.
+	 */
+	const stats = JSON.parse(readFileSync(join(HERE, '..', 'src', 'generated', 'stats.json'), 'utf8')) as Record<
+		string,
+		string
+	>;
+	const freshHuman = rows.filter(
+		(r) => r.review !== undefined && r.review !== null && reviewActorOf(r.review) === 'human'
+	).length;
+	const freshAgent = rows.filter(
+		(r) => r.review !== undefined && r.review !== null && reviewActorOf(r.review) === 'agent'
+	).length;
+	const freshUnstated = rows.filter(
+		(r) => r.review !== undefined && r.review !== null && reviewActorOf(r.review) === 'unstated'
+	).length;
+	ok(
+		'stats.json carries the three actor keys and no old reviewed key',
+		stats.reviewedHuman !== undefined &&
+			stats.reviewedAgent !== undefined &&
+			stats.independent !== undefined &&
+			stats.reviewed === undefined,
+		`reviewedHuman=${stats.reviewedHuman} reviewedAgent=${stats.reviewedAgent} independent=${stats.independent} reviewed=${String(stats.reviewed)}`
+	);
+	ok(
+		'each actor key equals a fresh count over the dataset',
+		Number(stats.reviewedHuman) === freshHuman &&
+			Number(stats.reviewedAgent) === freshAgent &&
+			Number(stats.reviewedUnstated) === freshUnstated,
+		`${freshHuman}/${freshAgent}/${freshUnstated}`
 	);
 	const flagHits = Object.values(summary.flags).reduce((s, f) => s + f.total, 0);
 	ok(
@@ -1536,16 +1581,16 @@ console.log('\n  ── three review populations, never summed ──\n');
 {
 	const synthetic: ReviewInput[] = [{ id: 'p-x', kind: 'position' as ReviewKind, basis: 'reported' }];
 	const editorial = summariseReview([{ id: 'p-x', kind: 'position' as ReviewKind, basis: 'reported', review: { by: 'editor' } } as ReviewInput]);
-	ok('an editorial review note raises the examined count', editorial.reviewed === 1);
-	ok('but never raises the independent count', editorial.independentlyChecked === 0, `${editorial.independentlyChecked}`);
+	ok('an editorial review note raises the examined count', editorial.reviewedUnstated === 1);
+	ok('but never raises the independent count', editorial.independent === 0, `${editorial.independent}`);
 
 	const verified = summariseReview(synthetic, [{ claim: 'position:p-x' }]);
-	ok('an independent verification record raises the independent count', verified.independentlyChecked === 1, `${verified.independentlyChecked}`);
+	ok('an independent verification record raises the independent count', verified.independent === 1, `${verified.independent}`);
 	ok('and is counted in its own denominator', verified.verifications === 1, `${verified.verifications}`);
-	ok('the two counts stay separate numbers', verified.reviewed === 0 && verified.independentlyChecked === 1);
+	ok('the two counts stay separate numbers', verified.reviewedUnstated === 0 && verified.independent === 1);
 
 	const orphan = summariseReview(synthetic, [{ claim: 'position:no-such-record' }]);
-	ok('a verification naming no record is reported, not silently dropped', orphan.independentlyChecked === 0 && orphan.unmatchedVerifications.length === 1, orphan.unmatchedVerifications.join(','));
+	ok('a verification naming no record is reported, not silently dropped', orphan.independent === 0 && orphan.unmatchedVerifications.length === 1, orphan.unmatchedVerifications.join(','));
 
 	// The shipped graph.
 	const ds = JSON.parse(readFileSync(join(HERE, '..', 'static', 'dataset.json'), 'utf8')) as Record<string, any>;
@@ -1556,12 +1601,14 @@ console.log('\n  ── three review populations, never summed ──\n');
 	ok('independent verification is a collection of its own in the graph', Array.isArray(ds.verifications));
 	ok('with its own count beside the others', typeof ds.meta.counts.verifications === 'number', `counts.verifications=${ds.meta.counts.verifications}`);
 	ok('the collection carries the same count as its meta', ds.meta.counts.verifications === verifications.length);
-	ok('it is empty today, so the published independent count is zero', verifications.length === 0 && ds.meta.review.reviewed === 52, `verifications=${verifications.length} reviewed=${ds.meta.review.reviewed}`);
-	ok('the editorial queue keeps its own denominator', queue.total > ds.meta.review.reviewed, `${queue.total} queued vs ${ds.meta.review.reviewed} reviewed`);
+	const notesTotal =
+		ds.meta.review.reviewedHuman + ds.meta.review.reviewedAgent + ds.meta.review.reviewedUnstated;
+	ok('it is empty today, so the published independent count is zero', verifications.length === 0 && notesTotal === 52, `verifications=${verifications.length} notes=${notesTotal}`);
+	ok('the editorial queue keeps its own denominator', queue.total > notesTotal, `${queue.total} queued vs ${notesTotal} notes`);
 	ok(
 		'the three populations are three distinct numbers',
-		new Set([ds.meta.review.reviewed, queue.total, verifications.length]).size === 3,
-		`${ds.meta.review.reviewed} / ${queue.total} / ${verifications.length}`
+		new Set([notesTotal, queue.total, verifications.length]).size === 3,
+		`${notesTotal} / ${queue.total} / ${verifications.length}`
 	);
 
 	// The published artifact must say the same thing as the graph.

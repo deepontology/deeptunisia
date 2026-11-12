@@ -38,8 +38,10 @@
 	const caveatParams = {
 		needsPrimary: Number(stats.needsPrimarySource),
 		contradictions: Number(stats.contradictions),
-		reviewed: Number(stats.reviewed),
-		reviewable: Number(stats.reviewable)
+		checkedByPerson: figures.review.reviewedHuman,
+		passedByAgent: figures.review.reviewedAgent,
+		unstated: figures.review.reviewedUnstated,
+		reviewable: figures.review.reviewable
 	};
 
 	const SCHEMA = [
@@ -91,6 +93,7 @@
   "role": "dg-national-security",
   "holder": "mourad-saidane",
   "basis": "documented",
+  "verification": "unflagged",
   "datesInferred": false,
   "interval": {
     "startEarliest": 1653955200000,
@@ -182,6 +185,15 @@
 	</div>
 
 	<pre class="example"><code>{EXAMPLE}</code></pre>
+
+	<div class="prose">
+		<Content view="data" section="verification" />
+		<ul class="verification-states">
+			{#each ['unflagged', 'verified', 'needsPrimarySource', 'disputed'] as v (v)}
+				<li>{t(`verification.${v}`)}</li>
+			{/each}
+		</ul>
+	</div>
 
 	<div class="prose">
 		<h2>{t('data.schema.entityModel')}</h2>
@@ -277,16 +289,21 @@
 			<thead>
 				<tr>
 					<th>{t('about.review.claimtype')}</th>
-					<th>{t('coverage.reviewed.reviewed')}</th>
+					<th>{t('about.review.person')}</th>
+					<th>{t('about.review.agent')}</th>
+					<th>{t('about.review.unstated')}</th>
 					<th>{t('coverage.reviewed.histogram')}</th>
 				</tr>
 			</thead>
 			<tbody>
 				{#each Object.entries(figures.review.byKind) as [kind, counts] (kind)}
-					{@const pct = counts.total ? Math.round((counts.reviewed / counts.total) * 100) : 0}
+					{@const pct = counts.total ? Math.round(((counts.reviewedHuman + counts.reviewedAgent + counts.reviewedUnstated) / counts.total) * 100) : 0}
+					{@const notes = counts.reviewedHuman + counts.reviewedAgent + counts.reviewedUnstated}
 					<tr>
-						<td>{t(`coverage.kind.${kind}`)}</td>
-						<td>{counts.reviewed} / {counts.total}</td>
+						<td>{t(`coverage.kind.${kind}`)} <span class="mono">({notes}/{counts.total})</span></td>
+						<td class="mono">{counts.reviewedHuman}</td>
+						<td class="mono">{counts.reviewedAgent}</td>
+						<td class="mono">{counts.reviewedUnstated}</td>
 						<td>
 							<span class="hist-track"><span class="hist-fill" style="width: {pct}%"></span></span>
 							<span class="mono hist-pct">{pct}%</span>
@@ -302,17 +319,22 @@
 			<thead>
 				<tr>
 					<th>{t('coverage.reviewed.bucket')}</th>
-					<th>{t('coverage.reviewed.reviewed')}</th>
+					<th>{t('about.review.person')}</th>
+					<th>{t('about.review.agent')}</th>
+					<th>{t('about.review.unstated')}</th>
 					<th>{t('coverage.reviewed.histogram')}</th>
 				</tr>
 			</thead>
 			<tbody>
 				{#each RISK_ORDER as flag (flag)}
 					{@const counts = figures.review.flags[flag]}
-					{@const pct = counts.total ? Math.round((counts.reviewed / counts.total) * 100) : 0}
+					{@const pct = counts.total ? Math.round(((counts.reviewedHuman + counts.reviewedAgent + counts.reviewedUnstated) / counts.total) * 100) : 0}
+					{@const notes = counts.reviewedHuman + counts.reviewedAgent + counts.reviewedUnstated}
 					<tr>
-						<td>{t(RISK_KEY[flag])}</td>
-						<td>{counts.reviewed} / {counts.total}</td>
+						<td>{t(RISK_KEY[flag])} <span class="mono">({notes}/{counts.total})</span></td>
+						<td class="mono">{counts.reviewedHuman}</td>
+						<td class="mono">{counts.reviewedAgent}</td>
+						<td class="mono">{counts.reviewedUnstated}</td>
 						<td>
 							<span class="hist-track"><span class="hist-fill" style="width: {pct}%"></span></span>
 							<span class="mono hist-pct">{pct}%</span>
@@ -352,6 +374,14 @@
 	}
 	.prose :global(h2) {
 		font-family: var(--font-serif);
+	}
+	.verification-states {
+		margin: 0 0 14px;
+		padding-inline-start: 22px;
+		font-size: var(--t-sm);
+	}
+	.verification-states li {
+		margin-bottom: 6px;
 	}
 
 	.downloads {

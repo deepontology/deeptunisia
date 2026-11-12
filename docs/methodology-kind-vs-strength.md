@@ -69,7 +69,7 @@ record uses them.
 |---|---|---|
 | Source relationship | `source_relation` | `direct-record`, `direct-report`, `corroborated-report`, `single-report`, `inference-from-records`, `circulating-claim` |
 | Independence | `independence` | Count of independent origin groups, never URLs. Two outlets republishing one wire are one origin. |
-| Verification state | `verification` | `verified`, `needs-primary-source`, `disputed` |
+| Verification state | `verification` | `unflagged` (the default: nobody has checked it), `verified` (a person opened the source), `needs-primary-source`, `disputed` |
 | Date uncertainty | interval fields | Four fuzzy bounds plus a status; see the time module. |
 | Review outcome | `review` | Who checked, when, how. An outcome enum is reserved until governance defines one; unknown fields fail rather than being stripped. |
 

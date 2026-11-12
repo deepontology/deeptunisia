@@ -5,8 +5,8 @@
 	import SourceList from '$lib/components/SourceList.svelte';
 	import Button from '$lib/ui/Button.svelte';
 	import Chip from '$lib/ui/Chip.svelte';
+	import BasisLine from '$lib/ui/BasisLine.svelte';
 	import {
-		BASIS_COLOR,
 		ds,
 		institutionById,
 		meetsBasis,
@@ -273,7 +273,7 @@
 								<td class="span mono">{describeInterval(p.interval)}</td>
 								<td class="num mono">{durationLabel(p.years)}</td>
 								<td class="basis">
-									<Chip size="xs" tint={BASIS_COLOR[p.basis as Basis]}>{basisLabel(p.basis as Basis)}</Chip>
+									<BasisLine record={p} />
 								</td>
 							</tr>
 						{/each}
@@ -332,7 +332,7 @@
 						<li>
 							<strong>{nameOf(roleById.get(p.role)) || p.roleTitle}</strong>
 							<span class="mono">{describeInterval(p.interval)}</span>
-							<Chip size="xs" tint={BASIS_COLOR[p.basis as Basis]}>{basisLabel(p.basis as Basis)}</Chip>
+							<BasisLine record={p} />
 						</li>
 					{/each}
 				</ul>
@@ -345,7 +345,7 @@
 						<li>
 							<button onclick={() => app.select(other)}>{entityName(other)}</button>
 							<span class="rtype">{relLabel(r.type)}</span>
-							<Chip size="xs" tint={BASIS_COLOR[r.basis as Basis]}>{basisLabel(r.basis as Basis)}</Chip>
+							<BasisLine record={r} />
 							{#if relKind(r.type) !== 'documented' && r.attributed_to}
 								<span class="attrib">{format(app.locale, 'investigate.claimedBy', { who: r.attributed_to })}</span>
 							{/if}

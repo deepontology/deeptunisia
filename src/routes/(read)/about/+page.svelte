@@ -21,7 +21,6 @@
 		sourcesCited: n(stats.sourcesCited),
 		needsPrimarySource: n(stats.needsPrimarySource),
 		contradictions: n(stats.contradictions),
-		reviewed: n(stats.reviewed),
 		reviewable: n(stats.reviewable)
 	};
 
@@ -39,9 +38,7 @@
 	const deskMeasured =
 		deskMinutes !== null && Number.isFinite(deskMinutes) && deskClaims > 0;
 
-	const reviewPct = $derived(
-		Math.round((counts.reviewed / Math.max(1, counts.reviewable)) * 100)
-	);
+	const review = figures.review;
 
 	/**
 	 * Funding transparency table. Empty by design at this stage, and published empty
@@ -61,9 +58,14 @@
 
 	const reviewRows = Object.entries(figures.reviewFlags).map(([key, v]) => ({
 		key,
-		reviewed: v.reviewed,
+		human: v.reviewedHuman,
+		agent: v.reviewedAgent,
+		unstated: v.reviewedUnstated,
 		total: v.total,
-		pct: v.total === 0 ? 0 : Math.round((v.reviewed / v.total) * 100)
+		pct:
+			v.total === 0
+				? 0
+				: Math.round(((v.reviewedHuman + v.reviewedAgent + v.reviewedUnstated) / v.total) * 100)
 	}));
 </script>
 
@@ -149,14 +151,26 @@
 			</div>
 			<div class="cell">
 				<Stat
-					value={reviewPct}
-					suffix="%"
-					label={format(app.locale, 'about.stat.reviewed', {
-						reviewed: counts.reviewed,
-						reviewable: counts.reviewable
+					value={review.reviewedHuman}
+					label={format(app.locale, 'about.stat.checkedByPerson', {
+						human: review.reviewedHuman,
+						reviewable: review.reviewable
 					})}
 					tint="var(--basis-inferred)"
 				/>
+			</div>
+			<div class="cell">
+				<Stat
+					value={review.reviewedAgent}
+					label={format(app.locale, 'about.stat.checkedByAgent', {
+						agent: review.reviewedAgent,
+						reviewable: review.reviewable
+					})}
+					tint="var(--basis-inferred)"
+				/>
+			</div>
+			<div class="cell">
+				<Stat value={review.independent} label={t('about.stat.independent')} tint="var(--basis-inferred)" />
 			</div>
 			<div class="cell">
 				{#if deskMeasured}
@@ -189,22 +203,26 @@
 			<thead>
 				<tr>
 					<th>{t('about.review.flag')}</th>
-					<th>{t('about.review.reviewed')}</th>
+					<th>{t('about.review.person')}</th>
+					<th>{t('about.review.agent')}</th>
+					<th>{t('about.review.unstated')}</th>
 					<th>{t('about.review.coverage')}</th>
 				</tr>
 			</thead>
 			<tbody>
 				{#each reviewRows as r (r.key)}
-					<tr class:zero={r.reviewed === 0}>
-						<td>{t(`about.risk.${r.key}`)}</td>
-						<td class="num">{r.reviewed}/{r.total}</td>
+					<tr class:zero={r.human + r.agent + r.unstated === 0}>
+						<td>{t(`about.risk.${r.key}`)} <span class="num">({r.total})</span></td>
+						<td class="num">{r.human}</td>
+						<td class="num">{r.agent}</td>
+						<td class="num">{r.unstated}</td>
 						<td>
 							<div
 								class="track"
 								role="img"
 								aria-label={format(app.locale, 'about.review.aria', {
 									pct: r.pct,
-									reviewed: r.reviewed,
+									notes: r.human + r.agent + r.unstated,
 									total: r.total
 								})}
 							>
