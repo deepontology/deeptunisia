@@ -8,6 +8,7 @@
         "data": "tsx scripts/build-data.ts && tsx scripts/build-region.ts && tsx scripts/network-continuity.ts && tsx scripts/build-media.ts && tsx scripts/build-og-images.ts && tsx scripts/build-public-claims.ts && tsx scripts/build-studies.ts",
         "data:watch": "tsx watch scripts/build-data.ts",
         "studies:build": "tsx scripts/build-studies.ts",
+        "stats:write": "tsx scripts/write-stats.ts",
         "studies:export": "tsx scripts/studies-export.ts",
         "studies:aggregate": "tsx scripts/studies-aggregate.ts",
         "studies:freeze": "tsx scripts/studies-freeze.ts",

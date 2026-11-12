@@ -10,6 +10,7 @@ src/generated/
 static/dataset.json
 static/prose-fr.json
 static/prose-ar.json
+static/llms.txt
 # Written by the build only; a fresh clone gets them from `npm run build`.
 static/editorial-queue.json
 static/geo.json

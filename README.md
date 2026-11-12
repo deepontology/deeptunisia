@@ -24,6 +24,7 @@ npm run test          # all suites
 npm run check         # svelte-check — must be 0 errors, 0 warnings
 
 # Day to day:
+npm run stats:write   # refresh the published figures a build no longer rewrites
 npm run dev           # builds the graph, then starts the dev server on :5173
 npm start             # atlas on :5173 AND the Agora API on :5200, one command
 npm run build         # validates, exports, and produces a static site in build/
@@ -32,7 +33,7 @@ npm run feed          # fetch news headlines into feed/ (also runs every 4h in C
 npm run audit:probes  # reproduce the external code review's compiler probes
 ```
 
-`npx svelte-kit sync` is required before `npm run test` on a fresh clone: the suites import the `$data` alias, which SvelteKit generates. `npm run build` is required too, because `landing/index.html` is hash-tied to the generated dataset and the drift gate fails otherwise. The `ci` workflow runs the same sequence on a clean runner.
+`npx svelte-kit sync` is required before `npm run test` on a fresh clone: the suites import the `$data` alias, which SvelteKit generates. `npm run build` is required too, because the suites read the built graph and `landing/index.html` is hash-tied to it. A build never rewrites that page; when a data change moves a figure it prints, `npm run stats:write` refreshes it and the drift gate fails until it has. The `ci` workflow runs the same sequence on a clean runner.
 
 The atlas itself needs no server, no database, no API and no accounts — the
 static site ships as files. The discussion layer (Agora) is separate: a
