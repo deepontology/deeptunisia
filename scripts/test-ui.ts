@@ -553,11 +553,11 @@ ok(
 );
 ok(
 	'the data page shows a denominator for every claim kind',
-	DATA_PAGE.includes('ds.meta.review.byKind') && DATA_PAGE.includes('coverage.kind.')
+	DATA_PAGE.includes('figures.review.byKind') && DATA_PAGE.includes('coverage.kind.')
 );
 ok(
 	'the data page shows the overlapping risk flags with their denominators',
-	DATA_PAGE.includes('ds.meta.review.flags') && DATA_PAGE.includes("coverage.flagsNote") && !DATA_PAGE.includes('byRisk')
+	DATA_PAGE.includes('figures.review.flags') && DATA_PAGE.includes("coverage.flagsNote") && !DATA_PAGE.includes('byRisk')
 );
 ok(
 	'the independence limit is stated where the numbers are read',

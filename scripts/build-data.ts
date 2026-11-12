@@ -4064,6 +4064,10 @@ const stats: Record<string, string> = {
 	// edit, and a README that churns by one kilobyte per commit buries the changes
 	// that matter in noise. The prose keeps a "~" in front of it.
 	graphKB: String(Math.round(Number(size) / 10) * 10),
+	// What /data labels the flagship export with. Kept apart from graphKB (the
+	// bundled graph) and shippedKB (every export together): the card prints the
+	// size of the file it downloads, and no other number means that.
+	datasetKB: String(datasetKB),
 	// What the public exports weigh — see the shippedKB note above. The README says
 	// both numbers so the internal bundle and the shipped payload cannot be
 	// mistaken for each other.
@@ -4162,6 +4166,44 @@ writeFileSync(
 						ar: institutionById.get(role.institution)?.name_ar ?? ''
 					}
 				}))
+		},
+		null,
+		2
+	),
+	'utf8'
+);
+
+// The open-data page's figures: the two coverage tables, the card histogram and
+// worklist, and the review denominators by kind and by flag. Names carry all
+// three scripts so the tables localise without a record lookup.
+function sliceNames(id: string, fallback: string) {
+	const person = personById.get(id);
+	return person
+		? { en: person.name_en, fr: person.name_fr ?? '', ar: person.name_ar ?? '' }
+		: { en: fallback, fr: '', ar: '' };
+}
+
+writeFileSync(
+	join(STAGE_OUT, 'data-figures.json'),
+	JSON.stringify(
+		{
+			coverage: dataset.meta.coverage.principals.map((p) => ({
+				id: p.id,
+				name: sliceNames(p.id, p.name),
+				total: p.total,
+				kin: p.kin,
+				missing: p.missing
+			})),
+			cards: {
+				sections: dataset.meta.cards.sections,
+				histogram: dataset.meta.cards.histogram,
+				worklist: dataset.meta.cards.worklist.map((w) => ({
+					id: w.id,
+					name: sliceNames(w.id, w.name),
+					filled: w.filled
+				}))
+			},
+			review: { byKind: dataset.meta.review.byKind, flags: dataset.meta.review.flags }
 		},
 		null,
 		2
