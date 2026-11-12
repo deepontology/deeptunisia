@@ -89,8 +89,10 @@ const en: Dict = {
 
 	'ev.title': 'What this dataset can and cannot show',
 	'ev.lede1': 'The value of a power map is entirely in its receipts. This page holds the analytical claims with honest verdicts and explicit falsifiers, the questions still open, the places where sources disagree and the disagreement has',
+	'ev.lede.em': 'not',
 	'ev.lede2': 'been resolved, and every source cited anywhere on the site.',
 	'ev.shape1': 'Every claim in the dataset sits in one of these four categories. Note the shape: documented and reported claims outnumber inferences by roughly eight to one, and the unsubstantiated tier exists to hold claims the evidence',
+	'ev.shape.em': 'fails',
 	'ev.eyebrow': 'Evidence',
 	'ev.support.strong': 'Well supported',
 	'ev.support.moderate': 'Partly supported',
@@ -216,6 +218,7 @@ const en: Dict = {
 	'tbl.adopted': 'Adopted',
 	'tbl.holder': 'Holder',
 	'tbl.overlap': 'Overlap',
+	'tbl.post': 'Post',
 
 	'ev.gap.after': 'After',
 	'ev.gap.before': 'Before',
@@ -2073,9 +2076,11 @@ const fr: Dict = {
 	'inst.ngo': 'ONG',
 
 	'ev.title': 'Ce que ce jeu de données peut et ne peut pas montrer',
-	'ev.lede1': 'La valeur d\'une carte du pouvoir tient entièrement à ses justificatifs. Cette page rassemble les affirmations analytiques avec leurs verdicts honnêtes et leurs réfutateurs explicites, les questions encore ouvertes, les endroits où les sources divergent sans que le désaccord ait',
+	'ev.lede1': 'La valeur d\'une carte du pouvoir tient entièrement à ses justificatifs. Cette page rassemble les affirmations analytiques avec leurs verdicts honnêtes et leurs réfutateurs explicites, les questions encore ouvertes, les endroits où les sources divergent et où le désaccord',
+	'ev.lede.em': 'n\'a pas',
 	'ev.lede2': 'été tranché, et chaque source citée où que ce soit sur le site.',
-	'ev.shape1': 'Chaque affirmation du jeu de données relève de l\'une de ces quatre catégories. Notez la forme : les affirmations documentées et rapportées dépassent les inférences d\'environ huit contre une, et le palier « non étayé » existe pour recueillir les affirmations que les preuves',
+	'ev.shape1': 'Chaque affirmation du jeu de données relève de l\'une de ces quatre catégories. Notez la forme : les affirmations documentées et rapportées dépassent les inférences d\'environ huit contre une, et le palier « non étayé » existe pour recueillir les affirmations',
+	'ev.shape.em': 'que les preuves échouent',
 	'ev.eyebrow': 'Preuves',
 	'ev.support.strong': 'Bien étayé',
 	'ev.support.moderate': 'Partiellement étayé',
@@ -2201,6 +2206,7 @@ const fr: Dict = {
 	'tbl.adopted': 'Retenu',
 	'tbl.holder': 'Titulaire',
 	'tbl.overlap': 'Chevauchement',
+	'tbl.post': 'Poste',
 
 	'ev.gap.after': 'Après',
 	'ev.gap.before': 'Avant',
@@ -4028,9 +4034,11 @@ const ar: Dict = {
 	'inst.ngo': 'منظمة غير حكومية',
 
 	'ev.title': 'ما تستطيع هذه البيانات إظهاره وما لا تستطيع',
-	'ev.lede1': 'قيمة أي خريطة للسلطة تكمن كلّها في مستنداتها. تجمع هذه الصفحة الادعاءات التحليلية بأحكامها الصريحة وبما يمكن أن يدحضها، والأسئلة التي ما زالت مفتوحة، والمواضع التي تختلف فيها المصادر ولم يُحسم فيها الخلاف',
+	'ev.lede1': 'قيمة أي خريطة للسلطة تكمن كلّها في مستنداتها. تجمع هذه الصفحة الادعاءات التحليلية بأحكامها الصريحة وبما يمكن أن يدحضها، والأسئلة التي ما زالت مفتوحة، والمواضع التي تختلف فيها المصادر ولم',
+	'ev.lede.em': 'يُحسم فيها الخلاف',
 	'ev.lede2': 'بعد، وكل مصدر ورد في أي مكان من الموقع.',
-	'ev.shape1': 'كل ادعاء في هذه البيانات يقع في واحدة من هذه الفئات الأربع. لاحظ الشكل: تفوق الادعاءات الموثّقة والمنقولة عدد الاستنتاجات بنحو ثمانية إلى واحد، وتوجد الفئة غير المُثبتة لتضم ادعاءات تعجز الأدلة',
+	'ev.shape1': 'كل ادعاء في هذه البيانات يقع في واحدة من هذه الفئات الأربع. لاحظ الشكل: تفوق الادعاءات الموثّقة والمنقولة عدد الاستنتاجات بنحو ثمانية إلى واحد، وتوجد الفئة غير المُثبتة لتضم ادعاءات',
+	'ev.shape.em': 'تعجز الأدلة',
 	'ev.eyebrow': 'الأدلة',
 	'ev.support.strong': 'مدعوم جيدًا',
 	'ev.support.moderate': 'مدعوم جزئيًا',
@@ -4156,6 +4164,7 @@ const ar: Dict = {
 	'tbl.adopted': 'المعتمَد',
 	'tbl.holder': 'شاغل المنصب',
 	'tbl.overlap': 'التداخل',
+	'tbl.post': 'المنصب',
 
 	'ev.gap.after': 'بعد',
 	'ev.gap.before': 'قبل',
