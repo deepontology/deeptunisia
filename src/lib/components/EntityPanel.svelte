@@ -210,14 +210,11 @@
 
 			{#if tone === 'reported'}
 				<p class="caveat">
-					Claims below come from credible reporting but are not established by any public
-					document. Each names who is making the claim.
+					{t('panel.reported.caveat')}
 				</p>
 			{:else if tone === 'circulating'}
 				<p class="caveat hard">
-					These claims circulate without reliable evidence. They are recorded, not endorsed —
-					deleting them would leave no way to show why the popular account is wrong. Several
-					are contradicted by this project's own data.
+					{t('panel.circulating.caveat')}
 				</p>
 			{/if}
 
@@ -289,7 +286,7 @@
 	</div>
 {/snippet}
 
-<aside class="panel" aria-label="Entity detail">
+<aside class="panel" aria-label={t('panel.entityDetail')}>
 	<header>
 		<div class="titles">
 			<span class="eyebrow">
@@ -502,7 +499,7 @@
 							</div>
 							<div class="o-meta mono">
 								{describeInterval(pos.interval)} · {durationLabel(pos.years)}
-								{#if pos.acting}· acting{/if}
+								{#if pos.acting}· {t('now.acting')}{/if}
 							</div>
 							{#if pos.predecessorDerived || pos.successorDerived}
 								<div class="chain">

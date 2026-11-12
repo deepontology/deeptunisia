@@ -278,7 +278,7 @@
 														weight: row.authority
 													})}
 												{:else}
-													{t('rankings.detail.nopost')} · weight {row.authority}
+													{t('rankings.detail.nopost')} {format(app.locale, 'rankings.weight', { w: row.authority })}
 												{/if}
 											</p>
 										</div>

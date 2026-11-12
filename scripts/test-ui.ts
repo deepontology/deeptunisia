@@ -316,7 +316,7 @@ ok(
 	CHRONICLE.includes('function openCluster') &&
 		CHRONICLE.includes('function zoomToCluster') &&
 		CHRONICLE.includes('ev-pop') &&
-		CHRONICLE.includes('Zoom in')
+		CHRONICLE.includes("t('view.zoomin')")
 );
 ok('the lane respects the evidence dial via the shared predicate', CHRONICLE.includes('meetsBasis(e.basis') && CHRONICLE.includes('eventPasses('));
 ok(

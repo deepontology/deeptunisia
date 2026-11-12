@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { personById, institutionById, relationshipById, resolveEntity } from '$lib/model';
-	import { nameOf } from '$lib/t.svelte';
+	import { nameOf, t } from '$lib/t.svelte';
 
 	let { data } = $props<{ data: { kind: string; id: string } }>();
 
@@ -66,10 +66,10 @@
 </svelte:head>
 
 <main class="sheet">
-	<p class="eyebrow">DeepTunisia — share</p>
+	<p class="eyebrow">{t('share.eyebrow')}</p>
 	<h1>{title}</h1>
 	<p class="desc">{desc}</p>
-	<p class="goto">Redirecting to <a href={canonical}>{canonical}</a>…</p>
+	<p class="goto">{t('share.redirecting')} <a href={canonical}>{canonical}</a>…</p>
 </main>
 
 <style>

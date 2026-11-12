@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { ds, personById } from '$lib/model';
-	import { personName, t } from '$lib/t.svelte';
+	import { personName, t, tf } from '$lib/t.svelte';
 	import { format } from '$lib/i18n';
 	import { app } from '$lib/state.svelte';
 	import Content from '$lib/ui/Content.svelte';
@@ -139,7 +139,7 @@
 				<span class="dl-desc">{t('data.dl.dataset')}</span>
 				<span class="dl-meta mono">JSON · {t('data.meta.intervals')} · ~{Math.round(ds.meta.datasetKB)} KB</span>
 			</a>
-			<Button variant="ghost" size="xs" onclick={() => copyUrl('/dataset.json')} aria-label="Copy https://deeptunisia.org/dataset.json">
+			<Button variant="ghost" size="xs" onclick={() => copyUrl('/dataset.json')} aria-label={tf('data.copyAria', { url: 'https://deeptunisia.org/dataset.json' })}>
 				{copied === '/dataset.json' ? t('agora.copied') : t('agora.copylink')}
 			</Button>
 		</div>
@@ -149,7 +149,7 @@
 				<span class="dl-desc">{t('data.dl.positions')}</span>
 				<span class="dl-meta mono">CSV · {ds.meta.counts.positions} {t('data.meta.rows')}</span>
 			</a>
-			<Button variant="ghost" size="xs" onclick={() => copyUrl('/positions.csv')} aria-label="Copy https://deeptunisia.org/positions.csv">
+			<Button variant="ghost" size="xs" onclick={() => copyUrl('/positions.csv')} aria-label={tf('data.copyAria', { url: 'https://deeptunisia.org/positions.csv' })}>
 				{copied === '/positions.csv' ? t('agora.copied') : t('agora.copylink')}
 			</Button>
 		</div>
@@ -159,7 +159,7 @@
 				<span class="dl-desc">{t('data.dl.relationships')}</span>
 				<span class="dl-meta mono">CSV · {ds.meta.counts.relationships} {t('data.meta.rows')}</span>
 			</a>
-			<Button variant="ghost" size="xs" onclick={() => copyUrl('/relationships.csv')} aria-label="Copy https://deeptunisia.org/relationships.csv">
+			<Button variant="ghost" size="xs" onclick={() => copyUrl('/relationships.csv')} aria-label={tf('data.copyAria', { url: 'https://deeptunisia.org/relationships.csv' })}>
 				{copied === '/relationships.csv' ? t('agora.copied') : t('agora.copylink')}
 			</Button>
 		</div>
@@ -169,7 +169,7 @@
 				<span class="dl-desc">{t('data.dl.sources')}</span>
 				<span class="dl-meta mono">CSV · {ds.meta.counts.sources} {t('data.meta.rows')}</span>
 			</a>
-			<Button variant="ghost" size="xs" onclick={() => copyUrl('/sources.csv')} aria-label="Copy https://deeptunisia.org/sources.csv">
+			<Button variant="ghost" size="xs" onclick={() => copyUrl('/sources.csv')} aria-label={tf('data.copyAria', { url: 'https://deeptunisia.org/sources.csv' })}>
 				{copied === '/sources.csv' ? t('agora.copied') : t('agora.copylink')}
 			</Button>
 		</div>
