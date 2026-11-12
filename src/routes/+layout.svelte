@@ -8,6 +8,7 @@
 	import { rememberPath } from '$lib/shell/nav.svelte';
 	import { tour } from '$lib/shell/tour.svelte';
 	import { ownsPreviewTags } from '$lib/shell/preview';
+	import { t } from '$lib/t.svelte';
 	import MenuBar from '$lib/shell/MenuBar.svelte';
 	import SubNav from '$lib/shell/SubNav.svelte';
 	import Cursor from '$lib/shell/Cursor.svelte';
@@ -89,8 +90,8 @@
 			this a keyboard user has to traverse 70+ chart bars before reaching the
 			view. The instruments add a second link to their transport controls.
 		-->
-		<nav class="skip" aria-label="Skip links">
-			<a href="#view">Skip to view</a>
+		<nav class="skip" aria-label={t('skip.links')}>
+			<a href="#view">{t('skip.view')}</a>
 		</nav>
 
 		<MenuBar />

@@ -1,0 +1,3 @@
+date	data_commit	hash_before	hash_after	pull_request	reason
+2026-11-11	c1062ead44fcb1c131ae4807ec16bd2d4cd52a0e		24bc8547ce53ee8c9e11a301be3b64ad7c014f9db10106127cb4e00724560743		baseline at the creation of the release branch
+2026-11-12	c1062ead44fcb1c131ae4807ec16bd2d4cd52a0e	24bc8547ce53ee8c9e11a301be3b64ad7c014f9db10106127cb4e00724560743	25338a4c99fc38b39f772425cb87187e7178f213ffb80f587423c534ad716649	#46	8,411 records nobody checked say unflagged instead of verified, and every record that cites a source gains restsOnOrigins and encyclopediaOnly

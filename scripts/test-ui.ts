@@ -316,7 +316,7 @@ ok(
 	CHRONICLE.includes('function openCluster') &&
 		CHRONICLE.includes('function zoomToCluster') &&
 		CHRONICLE.includes('ev-pop') &&
-		CHRONICLE.includes('Zoom in')
+		CHRONICLE.includes("t('view.zoomin')")
 );
 ok('the lane respects the evidence dial via the shared predicate', CHRONICLE.includes('meetsBasis(e.basis') && CHRONICLE.includes('eventPasses('));
 ok(
@@ -531,7 +531,7 @@ ok(
 );
 ok(
 	'both chronicle table alternatives gained an origins column',
-	(CHRONICLE.match(/<th>Origins<\/th>/g) ?? []).length === 2 &&
+	(CHRONICLE.match(/<th>\{t\('tbl\.origins'\)\}<\/th>/g) ?? []).length === 2 &&
 		CHRONICLE.includes('pos.origins ?? pos.independence') &&
 		CHRONICLE.includes('e.origins ?? e.independence')
 );

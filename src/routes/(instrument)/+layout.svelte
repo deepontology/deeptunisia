@@ -7,6 +7,7 @@
 	import { ensureLocaleProse } from '$lib/locale-prose.svelte';
 	import { personById, institutionById, relationshipById, eventById, resolveEntity } from '$lib/model';
 	import { eventTitle, nameOf } from '$lib/names.svelte';
+	import { t } from '$lib/t.svelte';
 	import Viewport from '$lib/shell/Viewport.svelte';
 	import TimeDock from '$lib/shell/TimeDock.svelte';
 	import Inspector from '$lib/shell/Inspector.svelte';
@@ -222,9 +223,9 @@
 
 <svelte:window onkeydown={onKey} />
 
-<nav class="skip" aria-label="Skip to timeline controls">
+<nav class="skip" aria-label={t('skip.dock')}>
 	{#if hasDock}
-		<a href="#timeline">Skip to timeline controls</a>
+		<a href="#timeline">{t('skip.dock')}</a>
 	{/if}
 </nav>
 
