@@ -19,7 +19,8 @@
 		type Basis,
 		type Layer
 	} from '$lib/model';
-	import { t, basisLabel, durationLabel, formatDate, nameOf } from '$lib/t.svelte';
+	import { t, basisLabel } from '$lib/t.svelte';
+	import { durationLabel, formatDate, nameOf } from '$lib/names.svelte';
 	import { format } from '$lib/i18n';
 	import { currencyOf, elapsedYears, monthsSince, tenureByRole, type Currency } from '$lib/tenure';
 

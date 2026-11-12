@@ -36,7 +36,8 @@
 	 * The Discuss door is discuss-only: a UN Comtrade figure is not this
 	 * project's to edit.
 	 */
-	import { t, tf, nameOf, formatDate } from '$lib/t.svelte';
+	import { t, tf } from '$lib/t.svelte';
+	import { nameOf, formatDate } from '$lib/names.svelte';
 	import { app } from '$lib/state.svelte';
 	import { ds, relationshipsByEntity } from '$lib/model';
 	import {

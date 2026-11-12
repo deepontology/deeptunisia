@@ -2,7 +2,8 @@
 	import { changelog, type ChangeEntry } from '$data/index';
 	import Chip from '$lib/ui/Chip.svelte';
 	import Content from '$lib/ui/Content.svelte';
-	import { t, formatDate } from '$lib/t.svelte';
+	import { t } from '$lib/t.svelte';
+	import { formatDate } from '$lib/names.svelte';
 
 	/**
 	 * The dataset's change history.

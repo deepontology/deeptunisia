@@ -3,7 +3,8 @@
 	import type { Snippet } from 'svelte';
 	import { app } from '$lib/state.svelte';
 	import { format } from '$lib/i18n';
-	import { t, tf, describeInterval, durationLabel, formatDate, layerLabel, relLabel, confidenceLabel, basisLabel, nameOf, entityName} from '$lib/t.svelte';
+	import { t, tf, layerLabel, relLabel, confidenceLabel, basisLabel } from '$lib/t.svelte';
+	import { describeInterval, durationLabel, formatDate, nameOf, entityName } from '$lib/names.svelte';
 	import Chip from '$lib/ui/Chip.svelte';
 	import OriginsChip from '$lib/ui/OriginsChip.svelte';
 	import Prose from '$lib/ui/Prose.svelte';

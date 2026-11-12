@@ -32,7 +32,8 @@
 </script>
 
 <script lang="ts">
-	import { t, tf, nameOf, basisLabel, formatDate } from '$lib/t.svelte';
+	import { t, tf, basisLabel } from '$lib/t.svelte';
+	import { nameOf, formatDate } from '$lib/names.svelte';
 	import { app } from '$lib/state.svelte';
 	import { ds, type Basis } from '$lib/model';
 	import { compact } from '$lib/design/media.svelte';

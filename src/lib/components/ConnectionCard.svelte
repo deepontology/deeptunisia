@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { app } from '$lib/state.svelte';
-	import { t, describeInterval, basisLabel, relLabel } from '$lib/t.svelte';
+	import { t, basisLabel, relLabel } from '$lib/t.svelte';
+	import { describeInterval } from '$lib/names.svelte';
 	import SourceList from './SourceList.svelte';
 	import Chip from '$lib/ui/Chip.svelte';
 	import OriginsChip from '$lib/ui/OriginsChip.svelte';

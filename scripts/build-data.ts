@@ -4041,6 +4041,14 @@ const stats: Record<string, string> = {
 
 writeFileSync(join(STAGE_OUT, 'stats.json'), JSON.stringify(stats, null, 2), 'utf8');
 
+// The research window as its own few bytes. The shell and prose pages need
+// these two numbers; without this file they would import the dataset to read them.
+writeFileSync(
+	join(STAGE_OUT, 'window.json'),
+	JSON.stringify({ cutoff: dataset.meta.cutoff, floor: dataset.meta.floor }),
+	'utf8'
+);
+
 // Sitemap for the static site. Generated, never hand-maintained: every route
 // in this list is a real prerendered page (adapter-static, strict mode fails
 // on a route that does not exist). The domain is the deployed apex; a fork

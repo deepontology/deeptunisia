@@ -2,7 +2,7 @@
 	import { app } from '$lib/state.svelte';
 	import { goto } from '$app/navigation';
 	import { LAYER_COLOR, ds } from '$lib/model';
-	import { formatDate } from '$lib/t.svelte';
+	import { formatDate } from '$lib/names.svelte';
 	import { search, type Hit } from '$lib/search';
 
 	let query = $state('');

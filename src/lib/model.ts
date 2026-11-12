@@ -1,5 +1,16 @@
 import data from '$data/index';
 import {
+	CUTOFF,
+	BASIS_ORDER,
+	CONFIDENCE_LABEL,
+	FLOOR,
+	LAYERS,
+	LAYER_COLOR,
+	LAYER_LABEL,
+	REL_LABEL,
+	type Basis
+} from './vocab';
+import {
 	certainlyActive as engineCertainlyActive,
 	possiblyActive as enginePossiblyActive,
 	configureTime as configureEngineTime
@@ -28,6 +39,7 @@ import type {
 } from '$data/index';
 
 export type {
+	Basis,
 	Confidence,
 	Era,
 	EventRec,
@@ -49,8 +61,9 @@ export type {
 };
 
 export const ds: Dataset = data;
-export const CUTOFF = ds.meta.cutoff;
-export const FLOOR = ds.meta.floor;
+
+/** The window dates and pure vocabulary live in `vocab.ts`; re-exported here. */
+export { BASIS_ORDER, CONFIDENCE_LABEL, CUTOFF, FLOOR, LAYERS, LAYER_COLOR, LAYER_LABEL, REL_LABEL };
 
 // --- Lookups ---------------------------------------------------------------
 
@@ -319,10 +332,6 @@ export function durationLabel(years: number, locale: Locale = 'en'): string {
 // The primary axis of the whole site. Not "how sure are we" but "what kind of
 // claim is this", which is the more useful question and the harder one to fake.
 
-export type Basis = 'documented' | 'reported' | 'inferred' | 'unsubstantiated';
-
-export const BASIS_ORDER: Basis[] = ['documented', 'reported', 'inferred', 'unsubstantiated'];
-
 export const BASIS_LABEL: Record<Basis, string> = {
 	documented: 'Documented',
 	reported: 'Reported',
@@ -383,52 +392,7 @@ export const BASIS_OPACITY: Record<Basis, number> = {
 
 export const CONFIDENCE_ORDER: Confidence[] = ['A', 'B', 'C', 'D'];
 
-export const CONFIDENCE_LABEL: Record<Confidence, string> = {
-	A: 'Primary record',
-	B: 'Multiple credible sources',
-	C: 'Single source or estimate',
-	D: 'No reliable evidence located'
-};
-
 // --- Layers ----------------------------------------------------------------
-
-export const LAYERS: Layer[] = [
-	'security',
-	'political',
-	'economic',
-	'media',
-	'judicial',
-	'civil',
-	'foreign'
-];
-
-export const LAYER_LABEL: Record<Layer, string> = {
-	security: 'Security',
-	political: 'Political',
-	economic: 'Economic',
-	media: 'Media',
-	judicial: 'Judicial',
-	civil: 'Civil society',
-	foreign: 'Foreign & international'
-};
-
-/**
- * Layer colours resolve to design tokens, never literal hex.
- *
- * The tokens are defined in OKLCH with identical lightness and chroma so the seven
- * layers carry equal visual weight — no layer looks more important because its hue
- * happens to be brighter — and they re-resolve automatically when the theme flips.
- * See src/lib/design/tokens.css.
- */
-export const LAYER_COLOR: Record<Layer, string> = {
-	security: 'var(--layer-security)',
-	political: 'var(--layer-political)',
-	economic: 'var(--layer-economic)',
-	media: 'var(--layer-media)',
-	judicial: 'var(--layer-judicial)',
-	civil: 'var(--layer-civil)',
-	foreign: 'var(--layer-foreign)'
-};
 
 // --- Relationship types ----------------------------------------------------
 
@@ -454,22 +418,6 @@ export const REL_KIND: Record<string, 'documented' | 'reported' | 'alleged'> = {
 	allegation: 'alleged'
 };
 
-export const REL_LABEL: Record<string, string> = {
-	institutional: 'institutional tie',
-	appointment: 'appointed',
-	succession: 'succeeded',
-	family: 'family tie',
-	business: 'business tie',
-	party: 'party tie',
-	security: 'security link',
-	funding: 'funded',
-	diplomatic: 'diplomatic relationship with',
-	'political-alliance': 'allied with',
-	'political-conflict': 'in conflict with',
-	prosecution: 'prosecuted',
-	'reported-influence': 'reported influence over',
-	allegation: 'claim circulates about'
-};
 
 export function relKind(type: string) {
 	return REL_KIND[type] ?? 'reported';
