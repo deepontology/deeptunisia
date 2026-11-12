@@ -1655,7 +1655,7 @@ const resolvedEducation = education.map((e) => ({
 	push('declaration', resolvedDeclarations.map((d) => ({ ...d, title: `${d.kind} — ${d.declarer ?? 'regime'}` })));
 	push('education', resolvedEducation.map((e) => ({ ...e, title: `${e.degree_en} — ${e.person}` })));
 	queue.sort((a, b) => a.risk - b.risk || b.sources - a.sources || a.kind.localeCompare(b.kind) || a.id.localeCompare(b.id));
-	writeFileSync(join(STAGE_STATIC, 'editorial-queue.json'), JSON.stringify({ generated: new Date().toISOString(), total: queue.length, reviewed: queue.filter((q) => q.reviewed).length, queue }, null, 2), 'utf8');
+	writeFileSync(join(STAGE_STATIC, 'editorial-queue.json'), JSON.stringify({ total: queue.length, reviewed: queue.filter((q) => q.reviewed).length, queue }, null, 2), 'utf8');
 }
 
 // V4/V5: a contract value is attributed — there is no "value filled from memory".
@@ -2073,7 +2073,14 @@ const contradictions = [
  */
 const reviewSections: [
 	ReviewInput['kind'],
-	{ basis?: string; attributed_to?: string; review?: unknown; disputes?: unknown[] }[]
+	{
+		id?: string;
+		basis?: string;
+		attributed_to?: string;
+		verification?: string;
+		review?: unknown;
+		disputes?: unknown[];
+	}[]
 ][] = [
 	['institution', resolvedInstitutions],
 	['person', resolvedPeople],
@@ -2211,10 +2218,17 @@ if (translationProblems.length) {
 	abortBuild();
 }
 
-const needsPrimary = [
-	...resolvedPositions.filter((p) => p.verification === 'needs-primary-source').map((p) => p.id),
-	...resolvedPeople.filter((p) => p.verification === 'needs-primary-source').map((p) => p.id)
-];
+/**
+ * Every claim-bearing record flagged needs-primary-source, across every kind
+ * whose schema carries the flag. The published count is this list's length, so
+ * a surface that says "records" counts all of them, not positions and people
+ * alone.
+ */
+const needsPrimary = reviewSections.flatMap(([kind, rows]) =>
+	rows
+		.filter((r) => r.verification === 'needs-primary-source')
+		.map((r) => `${kind}:${r.id ?? ''}`)
+);
 
 /**
  * Coverage audit: what the map does not contain.
@@ -2672,7 +2686,6 @@ writeFileSync(join(STAGE_STATIC, 'dataset.json'), publishedDatasetJSON(dataset),
 	}));
 	const geo = {
 		type: 'FeatureCollection',
-		generated: new Date().toISOString(),
 		features: [...regionFeatures, ...placeFeatures]
 	};
 	writeFileSync(join(STAGE_STATIC, 'geo.json'), JSON.stringify(geo), 'utf8');
@@ -2776,6 +2789,7 @@ writeFileSync(
 			direction: r.direction,
 			basis: r.basis,
 			confidence: r.confidence,
+			verification: r.verification,
 			attributed_to: r.attributed_to ?? '',
 			start_raw: r.interval.raw.start,
 			end_raw: r.interval.raw.end,
@@ -2795,6 +2809,7 @@ writeFileSync(
 			'direction',
 			'basis',
 			'confidence',
+			'verification',
 			'attributed_to',
 			'start_raw',
 			'end_raw',
@@ -2818,7 +2833,9 @@ writeFileSync(
 			date: s.date ?? '',
 			lang: s.lang,
 			url: s.url,
-			archive: s.archive_url ?? `https://web.archive.org/web/2026/${s.url}`,
+			// Empty when no archive was recorded. A synthesised Wayback address would
+			// claim an archived copy this project does not hold.
+			archive: s.archive_url ?? '',
 			excerpt: s.excerpt ?? ''
 		})),
 		['id', 'tier', 'title', 'publisher', 'date', 'lang', 'url', 'archive', 'excerpt']
@@ -4109,7 +4126,9 @@ if (!FIXTURE_MODE) {
 		'/research/police/participate',
 		'/research/democracy'
 	];
-	const lastmod = new Date().toISOString().slice(0, 10);
+	// The day the data last changed, not the day the build ran: the sitemap then
+	// moves only when the dataset does, so a rebuild cannot dirty it.
+	const lastmod = isoDay(DATASET_CUTOFF);
 	const sitemap =
 		'<?xml version="1.0" encoding="UTF-8"?>\n' +
 		'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
@@ -4164,38 +4183,44 @@ if (!FIXTURE_MODE) {
 
 if (!FIXTURE_MODE) {
 	const STAT_TAG = /<!--stat:([A-Za-z][A-Za-z0-9-]*)-->([\s\S]*?)<!--\/stat-->/g;
-	const STAT_DOCS = [
-		'README.md',
-		'AGENTS.md',
-		'DESIGN.md',
-		'static/llms.txt',
-		'output/deeptunisia-release-paper-v0.1.1.md',
-		'output/deeptunisia-release-paper-v0.1.2.md'
+	/*
+	 * Where each document reads its text from and where the filled copy goes.
+	 * Same path in, same path out means a document a person edits in place:
+	 * `npm run stats:write` refreshes those, never `npm run data`. A different
+	 * out path means the served file is a build product and the authored text
+	 * lives in the template.
+	 */
+	const STAT_DOCS: { from: string; to: string }[] = [
+		{ from: 'README.md', to: 'README.md' },
+		{ from: 'AGENTS.md', to: 'AGENTS.md' },
+		{ from: 'DESIGN.md', to: 'DESIGN.md' },
+		{ from: 'output/deeptunisia-release-paper-v0.1.2.md', to: 'output/deeptunisia-release-paper-v0.1.2.md' },
+		{ from: 'content/llms.template.txt', to: 'static/llms.txt' }
 	];
+	/* README, AGENTS and DESIGN are refreshed by `npm run stats:write`, not here;
+	   recounting them on every data run is what made a data commit dirty a tree
+	   it had not been asked to change. Only the build product is written here. */
 
 	const statUpdates: string[] = [];
-	for (const file of STAT_DOCS) {
-		const path = join(ROOT, file);
-		if (!existsSync(path)) continue;
-		const before = readFileSync(path, 'utf8');
+	for (const doc of STAT_DOCS) {
+		// A document a person edits is refreshed by `npm run stats:write`, never
+		// by a data run. Only the template-to-product pair is written here.
+		if (doc.to === doc.from) continue;
+		const before = readFileSync(join(ROOT, doc.from), 'utf8');
 		let replaced = 0;
-		let unknown: string[] = [];
 		const after = before.replace(STAT_TAG, (whole, key: string, current: string) => {
 			const value = stats[key];
 			if (value === undefined) {
-				unknown.push(key);
+				console.log(`   !  ${doc.from}: unknown stat key "${key}"`);
 				return whole;
 			}
 			if (current !== value) replaced++;
 			return `<!--stat:${key}-->${value}<!--/stat-->`;
 		});
-		for (const key of unknown) console.log(`   !  ${file}: unknown stat key "${key}"`);
-		if (after !== before) {
-			writeFileSync(path, after, 'utf8');
-			statUpdates.push(`${file} (${replaced})`);
-		}
+		writeFileSync(join(ROOT, doc.to), after, 'utf8');
+		if (after !== before) statUpdates.push(`${doc.to} (${replaced})`);
 	}
-	if (statUpdates.length) console.log(`   ↻  published stats refreshed: ${statUpdates.join(', ')}`);
+	if (statUpdates.length) console.log(`   ↻  build products written: ${statUpdates.join(', ')}`);
 }
 
 console.log(`

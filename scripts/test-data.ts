@@ -12,7 +12,8 @@ import { parse as parseYaml } from 'yaml';
 import { RelationshipType, EDGE_DIRECTION, REQUIRED_SOURCE_KINDS } from '../scripts/schema.ts';
 import { computeDatasetHash } from './canonical.ts';
 import { countOrigins } from './origins.ts';
-import { reviewCoverageCsv, summariseReview, type ReviewInput, type ReviewKind } from './review-coverage.ts';
+import { reviewCoverageCsv, summariseReview, REVIEW_KINDS, type ReviewInput, type ReviewKind } from './review-coverage.ts';
+import { parseCsv } from './studies-aggregate.ts';
 import { buildCoverage, coverageCsv } from './coverage.ts';
 import { verifyDebtProvenance, DEBT_MANIFEST_ID, type DebtManifestEntry } from './debt-provenance.ts';
 
@@ -396,7 +397,12 @@ const MIN_DOCUMENTED_SHARE = 0.185; // of all based claims
 
 {
 	const denom = ds.meta.counts.positions + ds.meta.counts.people;
-	const share = ds.meta.needsPrimarySourceCount / denom;
+	// The published count covers every claim-bearing kind, so this share is
+	// recomputed over the two kinds it was written for.
+	const awaiting = [...ds.positions, ...ds.people].filter(
+		(r: { verification?: string }) => r.verification === 'needs-primary-source'
+	).length;
+	const share = awaiting / denom;
 	ok(
 		'share awaiting a primary source has not regressed',
 		share <= MAX_AWAITING_PRIMARY_SOURCE,
@@ -668,6 +674,78 @@ const KIND_TO_DATASET: Record<string, string> = {
 		'published statistics match the graph',
 		drift.length === 0,
 		drift.length ? drift.join('; ') : `${tagged} tagged figures in sync`
+	);
+}
+
+// --- Exports say what is true ---------------------------------------------
+//
+// A downloadable column is a claim about the graph, and a file nobody can
+// misread is worth more than a file with a fuller header. These pin the three
+// exports that overstated what the project holds.
+
+{
+	const table = parseCsv(readFileSync(join(HERE, '..', 'static', 'sources.csv'), 'utf8'));
+	const at = new Map(table[0].map((name, index) => [name, index]));
+	const body = table.slice(1).filter((cells) => cells.some((cell) => cell !== ''));
+	const archiveById = new Map(
+		ds.sources.map((s: { id: string; archive_url?: string }) => [s.id, s.archive_url ?? ''])
+	);
+	const wrong = body.filter(
+		(cells) => cells[at.get('archive')!] !== (archiveById.get(cells[at.get('id')!]) ?? '')
+	);
+	const nonEmpty = body.filter((cells) => cells[at.get('archive')!] !== '').length;
+	const withArchive = [...archiveById.values()].filter(Boolean).length;
+	ok(
+		'every archive value in sources.csv is that source archive_url',
+		wrong.length === 0,
+		wrong.length ? `${wrong.length} rows differ` : `${withArchive} of ${body.length} rows carry an archive`
+	);
+	ok(
+		'sources.csv invents no archive a source does not have',
+		nonEmpty === withArchive,
+		`${nonEmpty} non-empty values, ${withArchive} sources with archive_url`
+	);
+}
+
+{
+	const table = parseCsv(readFileSync(join(HERE, '..', 'static', 'relationships.csv'), 'utf8'));
+	const at = new Map(table[0].map((name, index) => [name, index]));
+	const body = table.slice(1).filter((cells) => cells.some((cell) => cell !== ''));
+	const col = at.get('verification');
+	const csvPending = col === undefined ? -1 : body.filter((cells) => cells[col] !== 'verified').length;
+	const graphPending = ds.relationships.filter(
+		(r: { verification?: string }) => r.verification !== 'verified'
+	).length;
+	ok(
+		'relationships.csv carries a verification column',
+		col !== undefined && body.length === ds.relationships.length,
+		`${col === undefined ? 'header missing' : 'header present'}, ${body.length} rows`
+	);
+	ok(
+		'relationships.csv verification matches the graph',
+		csvPending === graphPending,
+		`${csvPending} not verified in the export, ${graphPending} in the graph`
+	);
+}
+
+{
+	const stats: Record<string, string> = JSON.parse(
+		readFileSync(join(HERE, '..', 'src', 'generated', 'stats.json'), 'utf8')
+	);
+	const fresh = REVIEW_KINDS.flatMap((kind) =>
+		((ds[KIND_TO_DATASET[kind]] ?? []) as { id: string; verification?: string }[]).filter(
+			(r) => r.verification === 'needs-primary-source'
+		)
+	);
+	ok(
+		'the published needsPrimarySource count covers every claim kind',
+		ds.meta.needsPrimarySourceCount === fresh.length,
+		`published ${ds.meta.needsPrimarySourceCount}, graph holds ${fresh.length}`
+	);
+	ok(
+		'the needsPrimarySource stat tag equals the same count',
+		stats.needsPrimarySource === String(fresh.length),
+		`tag ${stats.needsPrimarySource}, graph holds ${fresh.length}`
 	);
 }
 
