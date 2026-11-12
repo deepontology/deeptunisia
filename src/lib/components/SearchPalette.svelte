@@ -4,7 +4,7 @@
 	import { page } from '$app/state';
 	import { onMount } from 'svelte';
 	import { LAYER_COLOR } from '$lib/vocab';
-	import { formatDate, t } from '$lib/t.svelte';
+	import { formatDate, t, tf } from '$lib/t.svelte';
 	import { loadSearch, search, searchError, searchStatus, type Hit } from '$lib/search.svelte';
 	import { isReadingPath } from '$lib/shell/reading';
 
@@ -121,9 +121,9 @@
 		{#if results.length === 0}
 			<li class="empty">
 				{#if status === 'error'}
-					Search is unavailable: {searchError()}
+					{tf('search.unavailable', { error: searchError() ?? '' })}
 				{:else if status !== 'ready'}
-					Loading the index…
+					{t('search.loading')}
 				{:else}
 					{t('search.empty')}
 				{/if}
