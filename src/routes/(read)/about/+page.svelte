@@ -1,16 +1,35 @@
 <script lang="ts">
 	import { app } from '$lib/state.svelte';
-	import { ds } from '$lib/model';
+	import stats from '$data/stats.json';
+	import figures from '$data/about-figures.json';
 	import { LOCALES, localeCoverage, format } from '$lib/i18n';
 	import { t } from '$lib/t.svelte';
 	import Stat from '$lib/ui/Stat.svelte';
 	import Content from '$lib/ui/Content.svelte';
 
+	/**
+	 * Every figure on this page is cut at build time: the counts from stats.json,
+	 * the coverage table, the review flags and the translation tiers from the
+	 * page's own file. The page reads no records, so it loads no graph.
+	 */
+	const n = (v: string) => Number.parseInt(v, 10) || 0;
+
+	const counts = {
+		people: n(stats.people),
+		positions: n(stats.positions),
+		relationships: n(stats.relationships),
+		sourcesCited: n(stats.sourcesCited),
+		needsPrimarySource: n(stats.needsPrimarySource),
+		contradictions: n(stats.contradictions),
+		reviewed: n(stats.reviewed),
+		reviewable: n(stats.reviewable)
+	};
+
 	/** Translation coverage, per locale and per provenance tier. Never summed. */
-	const tr = ds.meta.translation;
+	const tr = figures.translation;
 
 	const reviewPct = $derived(
-		Math.round((ds.meta.review.reviewed / Math.max(1, ds.meta.review.reviewable)) * 100)
+		Math.round((counts.reviewed / Math.max(1, counts.reviewable)) * 100)
 	);
 
 	/**
@@ -26,10 +45,10 @@
 	 * everybody can, and because this particular gap runs in a direction that would
 	 * otherwise read as a political claim the project never meant to make.
 	 */
-	const coverage = ds.meta.coverage.principals;
+	const coverage = figures.coverage;
 	const maxKin = Math.max(1, ...coverage.map((p) => p.kin));
 
-	const reviewRows = Object.entries(ds.meta.review.flags).map(([key, v]) => ({
+	const reviewRows = Object.entries(figures.reviewFlags).map(([key, v]) => ({
 		key,
 		reviewed: v.reviewed,
 		total: v.total,
@@ -94,10 +113,10 @@
 
 		<div class="status">
 			{#each [
-				{ v: ds.meta.counts.people, k: 'about.stat.people' },
-				{ v: ds.meta.counts.positions, k: 'about.stat.positions' },
-				{ v: ds.meta.counts.relationships, k: 'about.stat.relationships' },
-				{ v: ds.meta.counts.sourcesCited, k: 'about.stat.sourcesCited' }
+				{ v: counts.people, k: 'about.stat.people' },
+				{ v: counts.positions, k: 'about.stat.positions' },
+				{ v: counts.relationships, k: 'about.stat.relationships' },
+				{ v: counts.sourcesCited, k: 'about.stat.sourcesCited' }
 			] as s (s.k)}
 				<div class="cell"><Stat value={s.v} label={t(s.k)} /></div>
 			{/each}
@@ -105,14 +124,14 @@
 			     shortcomings are colour-coded the same way a weak claim would be. -->
 			<div class="cell">
 				<Stat
-					value={ds.meta.needsPrimarySourceCount}
+					value={counts.needsPrimarySource}
 					label={t('about.stat.needsPrimary')}
 					tint="var(--basis-inferred)"
 				/>
 			</div>
 			<div class="cell">
 				<Stat
-					value={ds.meta.contradictions.length}
+					value={counts.contradictions}
 					label={t('about.stat.contradictions')}
 					tint="var(--basis-inferred)"
 				/>
@@ -122,8 +141,8 @@
 					value={reviewPct}
 					suffix="%"
 					label={format(app.locale, 'about.stat.reviewed', {
-						reviewed: ds.meta.review.reviewed,
-						reviewable: ds.meta.review.reviewable
+						reviewed: counts.reviewed,
+						reviewable: counts.reviewable
 					})}
 					tint="var(--basis-inferred)"
 				/>

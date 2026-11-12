@@ -34,7 +34,8 @@ const ENTRIES = [
 	'src/routes/(read)/+layout.svelte',
 	'src/routes/(read)/corrections/+page.svelte',
 	'src/routes/(read)/guide/+page.svelte',
-	'src/routes/(read)/colophon/+page.svelte'
+	'src/routes/(read)/colophon/+page.svelte',
+	'src/routes/(read)/about/+page.svelte'
 ];
 
 const FORBIDDEN = ['src/generated/dataset.json', 'src/generated/index.ts'];

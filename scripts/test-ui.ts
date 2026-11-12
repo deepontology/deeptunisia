@@ -549,7 +549,7 @@ const ABOUT_PAGE = readFileSync(join(HERE, '..', 'src', 'routes', '(read)', 'abo
 const DATA_PAGE = readFileSync(join(HERE, '..', 'src', 'routes', '(read)', 'data', '+page.svelte'), 'utf8');
 ok(
 	'the about page reads overlapping flags, not the retired partition',
-	ABOUT_PAGE.includes('ds.meta.review.flags') && !ABOUT_PAGE.includes('meta.review.byRisk')
+	ABOUT_PAGE.includes('figures.reviewFlags') && !ABOUT_PAGE.includes('meta.review.byRisk')
 );
 ok(
 	'the data page shows a denominator for every claim kind',

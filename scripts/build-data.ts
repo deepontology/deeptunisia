@@ -4113,6 +4113,30 @@ writeFileSync(
 	'utf8'
 );
 
+// The structured figures a reading page prints. The flat counts are already in
+// stats.json; these are the tables and tiers that live in meta, cut here so the
+// page reads numbers instead of records. One file per page, holding exactly the
+// values that page shows.
+writeFileSync(
+	join(STAGE_OUT, 'about-figures.json'),
+	JSON.stringify(
+		{
+			coverage: dataset.meta.coverage.principals.map((p) => ({
+				id: p.id,
+				name: p.name,
+				total: p.total,
+				kin: p.kin,
+				missing: p.missing
+			})),
+			reviewFlags: dataset.meta.review.flags,
+			translation: dataset.meta.translation
+		},
+		null,
+		2
+	),
+	'utf8'
+);
+
 // Sitemap for the static site. Generated, never hand-maintained: every route
 // in this list is a real prerendered page (adapter-static, strict mode fails
 // on a route that does not exist). The domain is the deployed apex; a fork
