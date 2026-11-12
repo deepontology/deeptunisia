@@ -12,15 +12,39 @@
 	let cursor = $state(0);
 	let inputEl = $state<HTMLInputElement | null>(null);
 
-	/* The index itself lives in $lib/search.svelte, shared with Agora's mention
-	   menu, so typing a name here and typing it in a post rank identically. It
-	   arrives as a small file, not as the graph: this palette is what a reading
-	   page gets when a reader asks for search, and the graph is not part of it. */
-	const status = $derived(searchStatus());
-	const results = $derived(search(query, { limit: query.trim() ? 24 : 9 }));
+	/*
+	 * Two modes, one verdict per page.
+	 *
+	 * A reading page fetches the small index file: it holds the three kinds that
+	 * page can open and costs no graph. An instrument page already holds the graph,
+	 * so there the full index is loaded on demand and can also find connections,
+	 * contracts, licences, declarations, education records, places and regions. The
+	 * import is dynamic so a page of prose never follows this edge.
+	 */
+	const reading = isReadingPath(page.url.pathname);
+	type RichSearch = typeof import('$lib/search-graph');
+	let rich = $state<RichSearch | null>(null);
+	let richError = $state('');
+
+	const status = $derived(
+		reading ? searchStatus() : rich ? 'ready' : richError ? 'error' : 'loading'
+	);
+	const results = $derived(
+		reading
+			? search(query, { limit: query.trim() ? 24 : 9 })
+			: rich
+				? rich.searchGraph(query, { limit: query.trim() ? 24 : 9 })
+				: []
+	);
 
 	onMount(() => {
-		void loadSearch();
+		if (reading) {
+			void loadSearch();
+			return;
+		}
+		void import('$lib/search-graph')
+			.then((m) => (rich = m))
+			.catch((err) => (richError = err instanceof Error ? err.message : String(err)));
 	});
 
 	$effect(() => {
@@ -121,7 +145,7 @@
 		{#if results.length === 0}
 			<li class="empty">
 				{#if status === 'error'}
-					Search is unavailable: {searchError()}
+					Search is unavailable: {reading ? searchError() : richError}
 				{:else if status !== 'ready'}
 					Loading the index…
 				{:else}
