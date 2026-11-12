@@ -1,8 +1,11 @@
 import data from '$data/index';
 import {
 	CUTOFF,
+	BASIS_COLOR,
+	BASIS_OPACITY,
 	BASIS_ORDER,
 	CONFIDENCE_LABEL,
+	DASH,
 	FLOOR,
 	LAYERS,
 	LAYER_COLOR,
@@ -63,7 +66,19 @@ export type {
 export const ds: Dataset = data;
 
 /** The window dates and pure vocabulary live in `vocab.ts`; re-exported here. */
-export { BASIS_ORDER, CONFIDENCE_LABEL, CUTOFF, FLOOR, LAYERS, LAYER_COLOR, LAYER_LABEL, REL_LABEL };
+export {
+	BASIS_COLOR,
+	BASIS_OPACITY,
+	BASIS_ORDER,
+	CONFIDENCE_LABEL,
+	CUTOFF,
+	DASH,
+	FLOOR,
+	LAYERS,
+	LAYER_COLOR,
+	LAYER_LABEL,
+	REL_LABEL
+};
 
 /** Date rendering is pure; re-exported so existing importers keep one path. */
 export { describeInterval, durationLabel, formatDate };
@@ -265,36 +280,10 @@ export const BASIS_DESC: Record<Basis, string> = {
 		'A claim that circulates without reliable evidence. Recorded so it can be examined, never presented as evidence.'
 };
 
-/**
- * Basis colours. Unlike the layer hues these ARE a ranked ramp — green through
- * amber to red — because documented and unsubstantiated is a real ordering and the
- * colour should say so.
- */
-export const BASIS_COLOR: Record<Basis, string> = {
-	documented: 'var(--basis-documented)',
-	reported: 'var(--basis-reported)',
-	inferred: 'var(--basis-inferred)',
-	unsubstantiated: 'var(--basis-unsubstantiated)'
-};
-
 export function meetsBasis(b: Basis, floor: Basis): boolean {
 	return BASIS_ORDER.indexOf(b) <= BASIS_ORDER.indexOf(floor);
 }
 
-/** SVG stroke-dasharray by basis, so the kind of claim is visible at a glance. */
-export const DASH: Record<Basis, string> = {
-	documented: '',
-	reported: '5 3',
-	inferred: '2 3',
-	unsubstantiated: '1 3 6 3'
-};
-
-export const BASIS_OPACITY: Record<Basis, number> = {
-	documented: 1,
-	reported: 0.82,
-	inferred: 0.6,
-	unsubstantiated: 0.45
-};
 
 // --- Confidence (authoring shorthand, kept visible for auditability) --------
 

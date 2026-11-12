@@ -4137,6 +4137,38 @@ writeFileSync(
 	'utf8'
 );
 
+// The method page's figures: the four basis counts, the two succession audits,
+// the review denominators and the published weight table. Every role carries the
+// three scripts of its own title and its institution's name, cut here so the
+// table is text and never a record lookup.
+writeFileSync(
+	join(STAGE_OUT, 'methodology-figures.json'),
+	JSON.stringify(
+		{
+			basis: basisCounts,
+			successionGaps: successionGaps.length,
+			successionOverlaps: successionOverlaps.length,
+			contradictions: contradictions.length,
+			review: { reviewed, reviewable },
+			roles: [...roles]
+				.sort((a, b) => b.authority - a.authority)
+				.map((role) => ({
+					id: role.id,
+					authority: role.authority,
+					title: { en: role.title_en, fr: role.title_fr ?? '', ar: role.title_ar ?? '' },
+					institution: {
+						en: institutionById.get(role.institution)?.name_en ?? '',
+						fr: institutionById.get(role.institution)?.name_fr ?? '',
+						ar: institutionById.get(role.institution)?.name_ar ?? ''
+					}
+				}))
+		},
+		null,
+		2
+	),
+	'utf8'
+);
+
 // Sitemap for the static site. Generated, never hand-maintained: every route
 // in this list is a real prerendered page (adapter-static, strict mode fails
 // on a route that does not exist). The domain is the deployed apex; a fork
