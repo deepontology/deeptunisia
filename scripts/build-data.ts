@@ -1655,7 +1655,7 @@ const resolvedEducation = education.map((e) => ({
 	push('declaration', resolvedDeclarations.map((d) => ({ ...d, title: `${d.kind} — ${d.declarer ?? 'regime'}` })));
 	push('education', resolvedEducation.map((e) => ({ ...e, title: `${e.degree_en} — ${e.person}` })));
 	queue.sort((a, b) => a.risk - b.risk || b.sources - a.sources || a.kind.localeCompare(b.kind) || a.id.localeCompare(b.id));
-	writeFileSync(join(STAGE_STATIC, 'editorial-queue.json'), JSON.stringify({ generated: new Date().toISOString(), total: queue.length, reviewed: queue.filter((q) => q.reviewed).length, queue }, null, 2), 'utf8');
+	writeFileSync(join(STAGE_STATIC, 'editorial-queue.json'), JSON.stringify({ total: queue.length, reviewed: queue.filter((q) => q.reviewed).length, queue }, null, 2), 'utf8');
 }
 
 // V4/V5: a contract value is attributed — there is no "value filled from memory".
@@ -2640,7 +2640,6 @@ writeFileSync(join(STAGE_STATIC, 'dataset.json'), JSON.stringify(dataset, null, 
 	}));
 	const geo = {
 		type: 'FeatureCollection',
-		generated: new Date().toISOString(),
 		features: [...regionFeatures, ...placeFeatures]
 	};
 	writeFileSync(join(STAGE_STATIC, 'geo.json'), JSON.stringify(geo), 'utf8');
@@ -4077,7 +4076,9 @@ if (!FIXTURE_MODE) {
 		'/research/police/participate',
 		'/research/democracy'
 	];
-	const lastmod = new Date().toISOString().slice(0, 10);
+	// The day the data last changed, not the day the build ran: the sitemap then
+	// moves only when the dataset does, so a rebuild cannot dirty it.
+	const lastmod = isoDay(DATASET_CUTOFF);
 	const sitemap =
 		'<?xml version="1.0" encoding="UTF-8"?>\n' +
 		'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +

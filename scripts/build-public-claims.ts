@@ -106,7 +106,7 @@ function reviewMarkdown(reg: ResolvedRegistry): string {
 	const lines: string[] = [];
 	lines.push('# Public-claim registry — maintainer review table');
 	lines.push('');
-	lines.push(`Generated ${reg.generatedAt}; graph cutoff ${reg.cutoff}.`);
+	lines.push(`Graph cutoff ${reg.cutoff}. Schema version ${reg.schemaVersion}.`);
 	lines.push('');
 	lines.push(`**${reg.counts.claims} claims**: ${reg.counts.current} current, ${reg.counts.historical} historical, ${reg.counts.planning} planning, ${reg.counts.superseded} superseded.`);
 	lines.push('');
