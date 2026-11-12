@@ -152,7 +152,7 @@ const mini = new MiniSearch<Doc>({
 });
 mini.addAll(docs);
 
-/** Drop the haystack — callers render the display fields, and it is large. */
+/** Drop the haystack: callers render the display fields, and it is large. */
 function strip(d: Doc | Hit): Hit {
 	const { id, kind, name, detail, layer, date } = d as Doc;
 	return { id, kind, name, detail, layer, date };
