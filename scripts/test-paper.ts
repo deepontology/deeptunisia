@@ -413,7 +413,7 @@ const papers = new Map<string, string>();
 		const years: number[] = [];
 		for (let y = 1956; y <= 2026; y++) years.push(y);
 		const expectedDENSITY = years.map(
-			(y) => (d.positions || []).filter((p) => p.interval && certainlyActive(p.interval as never, new Date(y, 6, 1).getTime())).length
+			(y) => (d.positions || []).filter((p) => p.interval && certainlyActive(p.interval as never, Date.UTC(y, 6, 1))).length
 		);
 
 		const deg = new Map<string, number>();
