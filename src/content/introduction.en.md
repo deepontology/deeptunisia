@@ -119,7 +119,7 @@ Each claim in the record, whether it is a person holding an office, a family tie
 - **Sources** where it comes from, ranked from tier 1, an official gazette, to tier 5, a lead
 - **Kind** documented, reported, inferred or unsubstantiated
 - **Strength** how solid the evidence is, graded A to D
-- **Verification** how it was checked
+- **Verification** whether a person has opened the source; unflagged means nobody has
 - **Said by** who makes the claim, if it is weak
 - **Reasoning** why we infer it, if we do
 - **Falsifier** what would prove it wrong

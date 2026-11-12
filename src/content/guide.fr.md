@@ -29,9 +29,11 @@ Le dock en bas est la frise chronologique. Faites-la défiler et chaque vue se p
 - La **courbe de densité** derrière la piste montre l'épaisseur du registre à chaque date. Elle s'amincit avant 1987 non parce qu'il s'est passé moins de choses, mais parce que l'archive est plus mince. C'est le signal d'honnêteté du projet : la carte montre le registre, pas le passé.
 - Un poste est un **intervalle**, pas une ligne de tableau. « X a occupé le poste Y » et « entre ces dates » sont des affirmations séparées au statut séparé — l'une peut être documentée tandis que l'autre est déduite.
 
-## Ce que « vérifié » veut dire {#verified}
+## Ce que veulent dire « non signalé » et « vérifié » {#verified}
 
-L'architecture du projet est : les machines proposent, les humains vérifient. À ce stade, la plupart des fiches ne sont pas passées par une seconde paire d'yeux — le chiffre réel est publié sur la [page À propos](/about) plutôt que caché. Une fiche marquée « en attente d'une source primaire » n'est pas une accusation ; c'est une liste de tâches que le projet vous montre.
+Chaque fiche porte un seul état de vérification, et cet état dit qui, s'il y a quelqu'un, l'a confrontée à sa source. **Non signalé** est l'état par défaut : personne n'a contrôlé la fiche et rien n'y a été signalé. Ce n'est pas une affirmation qu'elle est fausse, et ce n'est pas une affirmation qu'elle est juste. **Vérifié** signifie qu'une personne a ouvert la source et confirmé qu'elle dit ce que la fiche dit ; seule une fiche dont la relecture nomme cette personne et la méthode `source-check` peut le porter. Deux états écrits à la main l'accompagnent : **en attente d'une source primaire**, quand quelqu'un a noté que le document officiel derrière l'affirmation n'a pas été trouvé, et **contesté**, quand quelqu'un conteste l'affirmation et que le désaccord est écrit sur la fiche.
+
+L'architecture du projet est : les machines proposent, les humains vérifient. À ce stade, la plupart des fiches sont non signalées, et la répartition entre contrôles faits par une personne et passes faits par un agent est publiée sur la [page À propos](/about) plutôt que cachée. Une fiche marquée « en attente d'une source primaire » n'est pas une accusation ; c'est une liste de tâches que le projet vous montre.
 
 ## Quelle vue répond à votre question {#views}
 

@@ -84,7 +84,7 @@ this table mirrors it and must be kept in step.
 | View | What it answers |
 | --- | --- |
 | **Chronicle** | Who held which post, when, drawn to scale. Bar length is tenure, so continuity is visible without reading. |
-| **Now** | Who holds which office today — split by how recently each was verified, and measured against that office's historical median tenure. |
+| **Now** | Who holds which office today — split by how recently each was confirmed in post, and measured against that office's historical median tenure. |
 | **Network** | Who connects to whom. Fixed lane per layer, so cross-layer bridges are literally the edges that cross lanes. |
 | **Atlas** | Everything at once: structure per era as small multiples, a survival matrix of people against eras, an institution-crossing matrix, and median tenure per office. |
 | **Rankings** | Six separate structural indices with reader-adjustable weights. Deliberately no single power score. |
@@ -137,7 +137,7 @@ Six decisions carry most of the weight:
 
 **Positions are the join table.** A `Position` is `(role, holder, start, end)`. You cannot ask "who held power in 1994" from a list of people, only from a set of intervals.
 
-**Dates are ranges, not points.** Four fields — earliest/latest start, earliest/latest end — plus a status (`ended`, `ongoing`, `last-verified`, `unknown`). The Chronicle draws the documented core solid and the uncertain envelope hatched. Grammar: `2018-06-01`, `2018-06`, `2018`, `~2017`, `<=2018-06`, `ongoing`, `verified:2025-12`, `?`.
+**Dates are ranges, not points.** Four fields — earliest/latest start, earliest/latest end — plus a status (`ended`, `ongoing`, `last-verified`, `unknown`). The Chronicle draws the documented core solid and the uncertain envelope hatched. Grammar: `2018-06-01`, `2018-06`, `2018`, `~2017`, `<=2018-06`, `ongoing`, `verified:2025-12`, `?`. The `verified:` token is an interval status and says when the post was last confirmed; it is not the record's `verification` field, which is `unflagged` unless a person opened the source.
 
 **Basis describes the claim, not its dates.** A position bundles two separable claims — "X held this post" and "between these dates" — which routinely have different standing. A security chief whose office is well reported but whose start date nobody published is a *reported* officeholding with an *inferred* span. `datesInferred` is a separate flag so imprecise dating never looks like speculation.
 

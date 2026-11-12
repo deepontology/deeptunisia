@@ -14,6 +14,14 @@ Two fields carry most of the epistemic weight. `basis` says what kind of claim t
 
 Here `status: "last-verified"` means the officeholder was confirmed in post on 1 October 2025 and may well have continued. It does not mean they left. That distinction is the difference between a dataset and a guess, and it is why the Chronicle draws that bar with a soft right edge.
 
+## What the verification field says {#verification}
+
+`verification` answers one question: has a person opened the source and confirmed that it says what the record says? The four values mean exactly this, everywhere in the schema, the exports and these pages:
+
+Before 1.0, the build wrote `verified` on every record that said nothing, so the old files marked thousands of records verified that no person had opened. That is why the default is now `unflagged`; in a file written before 1.0, `verified` means only that the file was silent.
+
+The `status: "last-verified"` shown above is a different field. It says when the officeholder was last confirmed in post, not that a person checked the record against a source.
+
 ## Caveats you should carry with the data {#caveats}
 
 - **{needsPrimary} records await a primary source.** They are marked. Do not cite an inferred span as a date.

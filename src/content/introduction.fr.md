@@ -119,7 +119,7 @@ Chaque affirmation du registre, qu’il s’agisse d’une personne occupant une
 - **Sources** d’où elle vient, classée du niveau 1, un journal officiel, au niveau 5, une piste
 - **Type** documentée, rapportée, inférée ou non étayée
 - **Solidité** la force de la preuve, notée de A à D
-- **Vérification** comment elle a été vérifiée
+- **Vérification** si une personne a ouvert la source ; non signalé signifie que personne ne l'a fait
 - **Portée par** qui porte l’affirmation, si elle est fragile
 - **Raisonnement** pourquoi nous l’inférons, le cas échéant
 - **Réfutation** ce qui la réfuterait

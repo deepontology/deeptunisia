@@ -89,6 +89,7 @@
   "role": "dg-national-security",
   "holder": "mourad-saidane",
   "basis": "documented",
+  "verification": "unflagged",
   "datesInferred": false,
   "interval": {
     "startEarliest": 1653955200000,
@@ -180,6 +181,15 @@
 	</div>
 
 	<pre class="example"><code>{EXAMPLE}</code></pre>
+
+	<div class="prose">
+		<Content view="data" section="verification" />
+		<ul class="verification-states">
+			{#each ['unflagged', 'verified', 'needsPrimarySource', 'disputed'] as v (v)}
+				<li>{t(`verification.${v}`)}</li>
+			{/each}
+		</ul>
+	</div>
 
 	<div class="prose">
 		<h2>{t('data.schema.entityModel')}</h2>
@@ -350,6 +360,14 @@
 	}
 	.prose :global(h2) {
 		font-family: var(--font-serif);
+	}
+	.verification-states {
+		margin: 0 0 14px;
+		padding-inline-start: 22px;
+		font-size: var(--t-sm);
+	}
+	.verification-states li {
+		margin-bottom: 6px;
 	}
 
 	.downloads {
