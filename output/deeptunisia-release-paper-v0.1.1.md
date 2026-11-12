@@ -574,7 +574,7 @@ This appendix exists to make the `test-paper.ts` gate's requirement visible: eve
 - reported: <!--stat:reported-->3513<!--/stat-->
 - inferred: <!--stat:inferred-->94<!--/stat-->
 - unsubstantiated: <!--stat:unsubstantiated-->15<!--/stat-->
-- needsPrimarySource: <!--stat:needsPrimarySource-->256<!--/stat-->
+- needsPrimarySource: <!--stat:needsPrimarySource-->432<!--/stat-->
 - successionGaps: <!--stat:successionGaps-->126<!--/stat-->
 - successionOverlaps: <!--stat:successionOverlaps-->49<!--/stat-->
 - contradictions: <!--stat:contradictions-->78<!--/stat-->
