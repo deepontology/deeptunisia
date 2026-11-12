@@ -32,8 +32,9 @@ import {
 	getCutoff,
 	getFloor
 } from 'deepepisteme/time';
+import { createTime } from 'deepepisteme/kernel/time';
 import * as localDates from './dates.ts';
-import { loadParameters } from './parameters.ts';
+import { DEFAULT_PARAMETERS, loadParameters } from './parameters.ts';
 
 let failures = 0;
 let checks = 0;
@@ -61,16 +62,65 @@ ok(
 );
 
 // --- one implementation -----------------------------------------------------
+//
+// The local binding is not allowed to compute dates itself. It holds one Time
+// object built from the shipped parameters, so a Time built here from the same
+// values must answer every question identically. A second copy in dates.ts
+// drifts on the first token either side handles differently.
 
-ok(
-	'DeepTunisia re-exports the engine resolver, not a second copy',
-	localDates.resolveInterval === engineResolveInterval
-);
-ok(
-	'DeepTunisia re-exports the engine predicates, not a second copy',
-	localDates.certainlyActive === engineCertainlyActive &&
-		localDates.possiblyActive === enginePossiblyActive
-);
+{
+	const reference = createTime(DEFAULT_PARAMETERS.time);
+	const starts = ['2018-06-01', '2018-06', '2018', '~2017', '<=2018-06', '>=1984', '?', 'ongoing', 'verified:2025-12', '2030-01-01'];
+	const ends = ['2021-06-01', '2021-06', '2021', '~2021', 'ongoing', 'verified:2021-06', '?', '<=2021'];
+	const run = (fn: () => unknown) => {
+		try {
+			return JSON.stringify(fn());
+		} catch {
+			return 'threw';
+		}
+	};
+
+	const intervalDrift: string[] = [];
+	const intervals = [];
+	for (const start of starts) {
+		for (const end of ends) {
+			const local = run(() => localDates.resolveInterval({ start, end }));
+			const engine = run(() => reference.resolveInterval(start, end));
+			if (local !== engine) intervalDrift.push(`${start}/${end}`);
+			else if (local !== 'threw') {
+				intervals.push(reference.resolveInterval(start, end));
+			}
+		}
+	}
+	ok(
+		'DeepTunisia resolves intervals through the engine, not a second copy',
+		intervalDrift.length === 0,
+		intervalDrift[0] ?? `${starts.length * ends.length} token pairs`
+	);
+
+	const probes = [Date.UTC(2019, 5, 1), Date.UTC(2021, 6, 1), Date.UTC(2026, 10, 8), Date.UTC(2027, 0, 1)];
+	const predicateDrift: string[] = [];
+	for (const iv of intervals) {
+		for (const t of probes) {
+			const local = run(() => [
+				localDates.certainlyActive(iv, t),
+				localDates.possiblyActive(iv, t),
+				localDates.durationYears(iv)
+			]);
+			const engine = run(() => [
+				reference.certainlyActive(iv, t),
+				reference.possiblyActive(iv, t),
+				reference.durationYears(iv)
+			]);
+			if (local !== engine) predicateDrift.push(`${iv.raw.start}/${iv.raw.end}@${t}`);
+		}
+	}
+	ok(
+		'DeepTunisia predicates are the engine predicates, not a second copy',
+		predicateDrift.length === 0,
+		predicateDrift[0] ?? `${intervals.length * probes.length} probes`
+	);
+}
 
 // --- claim envelope ---------------------------------------------------------
 
