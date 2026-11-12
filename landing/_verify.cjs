@@ -2,10 +2,14 @@
    landing/_verify.cjs - browser checks for the landing page
    ============================================================================
 
-   Run it against any static server rooted at the repo:
+   Run it against a static server rooted at build/, the folder the site serves:
 
-       py -3 -m http.server 4810
+       npm run build
+       npx vite preview --port 4810        (or: cd build && python3 -m http.server 4810)
        node landing/_verify.cjs
+
+   It reads the built page, not landing/index.html: the source no longer carries
+   the filled dictionary, arrays or hash, and it is not what a reader gets.
 
    It asserts the things that would fail silently: that the stratum is drawn
    from the real DENSITY array, that the evidence dial actually removes edges
@@ -22,7 +26,7 @@ const path = require('path');
 const os = require('os');
 const OUT = (process.env.SHOT_DIR || path.join(os.tmpdir(), 'dt-landing-shots')) + path.sep;
 require('fs').mkdirSync(OUT, { recursive: true });
-const URL = process.env.LANDING_URL || 'http://localhost:4810/landing/index.html';
+const URL = process.env.LANDING_URL || 'http://localhost:4810/';
 
 (async () => {
   const pre = [];

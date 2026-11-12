@@ -47,8 +47,17 @@ function fail(message: string): never {
 	process.exit(1);
 }
 
-if (!existsSync(BUILD)) fail('build/ does not exist — run `vite build` first');
+/*
+ * Two modes. `npm run build` fills the page and writes build/index.html only:
+ * the tracked source is a person's file and the build never writes it.
+ * `--write-source` (run by `npm run stats:write`) refreshes the tracked source
+ * itself: the generated dictionary block, the DENSITY/NODES/EDGES arrays, the
+ * dataset-hash marker and the index cards.
+ */
+const WRITE_SOURCE = process.argv.includes('--write-source');
+
 if (!existsSync(SRC)) fail('landing/index.html is missing');
+if (!WRITE_SOURCE && !existsSync(BUILD)) fail('build/ does not exist — run `vite build` first');
 
 /*
  * adapter-static prerenders the dev-fallback root route (src/routes/+page.svelte,
@@ -61,7 +70,7 @@ if (!existsSync(SRC)) fail('landing/index.html is missing');
  * atlas and landing on the wrong thing.
  */
 const ROOT_TITLE = '<title>DeepTunisia</title>';
-if (existsSync(OUT)) {
+if (!WRITE_SOURCE && existsSync(OUT)) {
 	const existing = readFileSync(OUT, 'utf8');
 	if (!existing.includes(ROOT_TITLE)) {
 		fail(
@@ -108,10 +117,9 @@ html = withFreshDictionaries(html);
    THE VISUALS ARE THE GRAPH. The DENSITY ribbon and the evidence-dial demo are
    baked snapshots, and the page claims "Nothing is illustrative" — so the three
    arrays are recomputed here from the built graph with the site's own interval
-   predicate (certainlyActive, imported from src/lib/model.ts), and the page is
-   rewritten in both the build copy and the source, so the committed file stays
-   the true snapshot. If the arrays in landing/index.html ever look hand-edited,
-   they were: run `npm run build`, which overwrites them.
+   predicate (certainlyActive, imported from src/lib/model.ts). A build fills the
+   arrays in memory only; `npm run stats:write` writes them back to the source,
+   and `scripts/test-paper.ts` fails when the source has gone stale.
    --------------------------------------------------------------------------- */
 const GRAPH = join(ROOT, 'src', 'generated', 'dataset.json');
 
@@ -277,13 +285,25 @@ const visuals = computeVisuals();
 const datasetHash = createHash('sha256').update(JSON.stringify(visuals)).digest('hex').slice(0, 16);
 let fresh = withFreshVisuals(html, visuals);
 fresh = withFreshHash(fresh, datasetHash);
-fresh = withRegion(fresh, 'indexes', renderIndexes(loadStudies(), 'en', (p) => existsSync(join(BUILD, p))));
-if (fresh !== original) {
-	/* the source stays the true snapshot — the same rule as the build's own
-	   published statistics, which rewrite the docs that carry them */
+/* The index card's plate is gated on the file being there. static/ is the
+   source of every served asset, so the answer is the same before and after a
+   build — the source and the built page cannot disagree. */
+fresh = withRegion(fresh, 'indexes', renderIndexes(loadStudies(), 'en', (p) => existsSync(join(ROOT, 'static', p))));
+
+if (WRITE_SOURCE) {
 	writeFileSync(SRC, fresh, 'utf8');
-	html = fresh;
+	// Check what was just written, not what was there before: the point of this
+	// mode is to make a stale page current, so a stale page must not block it.
+	checkFloorNote(fresh, visuals);
+	checkDatasetHash(fresh, datasetHash);
+	checkClaims();
+	console.log(`\n  landing source  ${fresh === original ? 'already current' : 'refreshed'} → landing/index.html\n`);
+	process.exit(0);
 }
+
+/* The build fills the page in memory and writes build/index.html only. The
+   tracked source is refreshed by `npm run stats:write`, never by a build. */
+html = fresh;
 checkFloorNote(html, visuals);
 checkDatasetHash(html, datasetHash);
 checkClaims();
