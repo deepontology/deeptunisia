@@ -169,9 +169,6 @@ if (existsSync(BUILD)) {
 
 // 4. Retired engine module paths
 const RETIRED_ENGINE = /['"]deepepisteme\/(?:time|claim)['"]/;
-// Until the conformance suite moves to the instance interface it reads those
-// modules on purpose, to prove the local binding agrees with them.
-const RETIRED_ALLOWED = new Set(['scripts/test-engine-conformance.ts']);
 const retired: string[] = [];
 for (const dir of ['scripts', 'src']) {
 	for (const abs of walk(join(ROOT, dir))) {
@@ -180,7 +177,7 @@ for (const dir of ['scripts', 'src']) {
 		readFileSync(abs, 'utf8')
 			.split(/\r?\n/)
 			.forEach((line, i) => {
-				if (RETIRED_ENGINE.test(line) && !RETIRED_ALLOWED.has(rel)) retired.push(`${rel}:${i + 1}`);
+				if (RETIRED_ENGINE.test(line)) retired.push(`${rel}:${i + 1}`);
 			});
 	}
 }
