@@ -1,8 +1,8 @@
 <script lang="ts">
 	import AboutView from '$lib/shell/AboutView.svelte';
 	import { app } from '$lib/state.svelte';
-	import { t } from '$lib/t.svelte';
-	import { nameOf, formatDate } from '$lib/names.svelte';
+	import { t, formatDate } from '$lib/t.svelte';
+	import { nameOf } from '$lib/names.svelte';
 	import { format } from '$lib/i18n';
 	import Chip from '$lib/ui/Chip.svelte';
 	import Button from '$lib/ui/Button.svelte';

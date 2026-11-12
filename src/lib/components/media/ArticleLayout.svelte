@@ -18,8 +18,7 @@
 
 	import { onMount } from 'svelte';
 	import { app } from '$lib/state.svelte';
-	import { t } from '$lib/t.svelte';
-	import { formatDate } from '$lib/names.svelte';
+	import { t, formatDate } from '$lib/t.svelte';
 	import { format } from '$lib/i18n';
 	import { localized } from '$lib/media/meta';
 	import { resolveEntity } from '$lib/model';

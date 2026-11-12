@@ -22,8 +22,8 @@
 		type YearDebt
 	} from '$lib/world/countries';
 	import { moneyM } from '$lib/world/format';
-import { t, tf, basisLabel, relLabel, confidenceLabel } from '$lib/t.svelte';
-import { nameOf, describeInterval, entityName, formatDate, proseList } from '$lib/names.svelte';
+import { t, tf, basisLabel, relLabel, confidenceLabel, describeInterval, formatDate } from '$lib/t.svelte';
+import { nameOf, entityName, proseList } from '$lib/names.svelte';
 	import Panel from '$lib/ui/Panel.svelte';
 	import Chip from '$lib/ui/Chip.svelte';
 	import Content from '$lib/ui/Content.svelte';

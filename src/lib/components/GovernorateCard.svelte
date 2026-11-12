@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { t, tf } from '$lib/t.svelte';
-	import { nameOf, formatDate, describeInterval, proseList } from '$lib/names.svelte';
+	import { t, tf, formatDate, describeInterval } from '$lib/t.svelte';
+	import { nameOf, proseList } from '$lib/names.svelte';
 	import { app } from '$lib/state.svelte';
 	import { ds, personById, institutionById, meetsBasis, type Basis, type Position } from '$lib/model';
 	import type { Vacancy } from '$data/index';

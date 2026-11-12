@@ -18,8 +18,8 @@
 		type Basis,
 		type Layer
 	} from '$lib/model';
-	import { basisLabel, relLabel, t } from '$lib/t.svelte';
-	import { describeInterval, durationLabel, nameOf, entityName } from '$lib/names.svelte';
+	import { basisLabel, relLabel, t, describeInterval, durationLabel } from '$lib/t.svelte';
+	import { nameOf, entityName } from '$lib/names.svelte';
 	import { format } from '$lib/i18n';
 
 	/**

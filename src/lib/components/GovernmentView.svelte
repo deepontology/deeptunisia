@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition';
 	import { prefersReducedMotion } from 'svelte/motion';
-	import { t, tf } from '$lib/t.svelte';
-	import { nameOf, formatDate } from '$lib/names.svelte';
+	import { t, tf, formatDate } from '$lib/t.svelte';
+	import { nameOf } from '$lib/names.svelte';
 	import { app } from '$lib/state.svelte';
 	import { ds, personById, institutionById, activity, meetsBasis, type Institution, type Position, type Role } from '$lib/model';
 	import { termAt, membersAt, tenureTag } from '$lib/civic';

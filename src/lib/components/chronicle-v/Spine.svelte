@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { format } from '$lib/i18n';
 	import { app } from '$lib/state.svelte';
-	import { tf } from '$lib/t.svelte';
-	import { eventTitle, formatDate } from '$lib/names.svelte';
+	import { tf, formatDate } from '$lib/t.svelte';
+	import { eventTitle } from '$lib/names.svelte';
 	import { BASIS_COLOR, BASIS_OPACITY, DASH, meetsBasis, type EventRec } from '$lib/model';
 	import type { VScale } from '$lib/chronicle/vscale';
 	import EventListSheet from './EventListSheet.svelte';

@@ -5,8 +5,8 @@
 	import { relationshipsByEntity } from '$lib/model';
 	import { app } from '$lib/state.svelte';
 	import { applyEntityLink } from '$lib/deeplink.svelte';
-	import { t, tf, basisLabel } from '$lib/t.svelte';
-	import { describeInterval, durationLabel, eventTitle, formatDate, nameOf } from '$lib/names.svelte';
+	import { t, tf, basisLabel, describeInterval, durationLabel, formatDate } from '$lib/t.svelte';
+	import { eventTitle, nameOf } from '$lib/names.svelte';
 	import { dateFormatter } from '$lib/i18n';
 	import Button from '$lib/ui/Button.svelte';
 	import Chip from '$lib/ui/Chip.svelte';

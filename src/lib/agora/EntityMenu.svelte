@@ -17,8 +17,7 @@
 	 * in RTL, and on a phone it sits above the keyboard instead of under it.
 	 */
 	import { LAYER_COLOR } from '$lib/model';
-	import { t } from '$lib/t.svelte';
-	import { formatDate } from '$lib/names.svelte';
+	import { t, formatDate } from '$lib/t.svelte';
 	import type { Hit } from '$lib/search';
 
 	interface Props {

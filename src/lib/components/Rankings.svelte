@@ -2,7 +2,7 @@
 	import AboutView from '$lib/shell/AboutView.svelte';
 	import { app } from '$lib/state.svelte';
 	import { applyEntityLink } from '$lib/deeplink.svelte';
-	import { t, layerLabel } from '$lib/t.svelte';
+	import { t, layerLabel, durationLabel, formatDate } from '$lib/t.svelte';
 	import { nameOf } from '$lib/names.svelte';
 	import { format } from '$lib/i18n';
 	import Tooltip from '$lib/ui/Tooltip.svelte';
@@ -10,7 +10,6 @@
 	import { INDEX_KEYS, composite, computeIndices, type IndexKey } from '$lib/indices';
 	import { LAYER_COLOR, personById, roleById, type Layer } from '$lib/model';
 	import { indexMeta } from '$lib/t.svelte';
-	import { durationLabel, formatDate } from '$lib/names.svelte';
 	import Button from '$lib/ui/Button.svelte';
 	import Chip from '$lib/ui/Chip.svelte';
 

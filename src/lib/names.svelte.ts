@@ -8,15 +8,11 @@
 import { app } from './state.svelte';
 import { localeProse } from './locale-prose.svelte';
 import {
-	describeInterval as describeIntervalIn,
-	durationLabel as durationLabelIn,
 	entityName as entityNameIn,
-	formatDate as fmtDate,
 	institutionById,
 	personById,
 	type EventRec,
 	type Institution,
-	type Interval,
 	type Person,
 	type Role
 } from './model';
@@ -49,29 +45,6 @@ export function eventTitle(e: EventRec): string {
 	if (app.locale === 'ar' && e.title_ar) return e.title_ar;
 	if (app.locale === 'fr' && e.title_fr) return e.title_fr;
 	return e.title_en;
-}
-
-/* --- Generated strings, in the reader's language ---------------------------
- *
- * Same split as `translate` / `t`: the pure function in `model.ts` takes an
- * explicit locale, and these wrappers supply it from app state so a component
- * re-renders when the language changes. Call these from components; call the
- * `model.ts` versions where there is no reactive context.
- *
- * These deliberately keep the names of the pure functions they wrap, so a
- * component gets the reactive one and its call sites do not change.
- */
-export function formatDate(t: number, precision: 'day' | 'month' | 'year' = 'day'): string {
-	return fmtDate(t, precision, app.locale);
-}
-
-/** "1957 to present", "by June 2018 at the latest", "confirmed through Dec 2025". */
-export function describeInterval(iv: Interval): string {
-	return describeIntervalIn(iv, app.locale);
-}
-
-export function durationLabel(years: number): string {
-	return durationLabelIn(years, app.locale);
 }
 
 /* --- Authored prose, in the reader's language ------------------------------

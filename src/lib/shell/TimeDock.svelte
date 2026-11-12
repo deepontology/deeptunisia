@@ -4,7 +4,7 @@
 	import { page } from '$app/state';
 	import { app } from '$lib/state.svelte';
 	import { theme } from '$lib/design/theme.svelte';
-	import { t, tf } from '$lib/t.svelte';
+	import { t, tf, formatDate } from '$lib/t.svelte';
 	import { nameOf } from '$lib/names.svelte';
 	import {
 		CUTOFF,
@@ -20,7 +20,6 @@
 		type Layer
 	} from '$lib/model';
 	import { layerLabel } from '$lib/t.svelte';
-	import { formatDate } from '$lib/names.svelte';
 	import { compact } from '$lib/design/media.svelte';
 	import { fits } from '$lib/viz/measure';
 	import Segmented from '$lib/ui/Segmented.svelte';

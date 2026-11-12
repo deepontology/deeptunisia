@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { t, confidenceLabel, basisLabel } from '$lib/t.svelte';
-	import { describeInterval } from '$lib/names.svelte';
+	import { t, confidenceLabel, basisLabel, describeInterval } from '$lib/t.svelte';
 	import { BASIS_COLOR, BASIS_OPACITY, FLOOR, CUTOFF, type Person } from '$lib/model';
 	import Chip from '$lib/ui/Chip.svelte';
 	import Tooltip from '$lib/ui/Tooltip.svelte';
