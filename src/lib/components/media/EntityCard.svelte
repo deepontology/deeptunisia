@@ -6,6 +6,7 @@
 	 */
 
 	import type { Claim, Entity } from '$lib/media/types';
+	import { t, tf } from '$lib/t.svelte';
 
 	interface Props {
 		entity: Entity;
@@ -20,16 +21,16 @@
 	const roleLabel = $derived(role.replace(/_/g, ' '));
 </script>
 
-<div class="entity-card" role="complementary" aria-label="Entity: {displayName}">
+<div class="entity-card" role="complementary" aria-label={tf('media.card.entity', { name: displayName })}>
 	<header class="card-head">
 		<h3>{displayName}</h3>
-		<button class="close" onclick={onclose} aria-label="Close">✕</button>
+		<button class="close" onclick={onclose} aria-label={t('ctl.close')}>✕</button>
 	</header>
 	<span class="role">{roleLabel}</span>
 
 	{#if claims.length > 0}
 		<div class="claims">
-			<div class="label">In this investigation</div>
+			<div class="label">{t('media.card.inInvestigation')}</div>
 			{#each claims.slice(0, 8) as claim (claim.id)}
 				<div class="claim">
 					<span class="claim-id">{claim.id}</span>
@@ -40,13 +41,13 @@
 				</div>
 			{/each}
 			{#if claims.length > 8}
-				<div class="more">+{claims.length - 8} more in the ledger</div>
+				<div class="more">+{claims.length - 8} {t('media.card.moreInLedger')}</div>
 			{/if}
 		</div>
 	{/if}
 
 	<a class="graph-link" href="/network?entity={entity.id}">
-		<span>View full record in graph</span>
+		<span>{t('media.card.viewRecord')}</span>
 		<span class="arrow" aria-hidden="true">→</span>
 	</a>
 </div>

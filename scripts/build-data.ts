@@ -54,6 +54,7 @@ import {
 	REQUIRED_SOURCE_KINDS,
 	SourceExceptionSchema,
 	reviewOverclaims,
+	verifiedGrounded,
 	configureSchema,
 	TRANSLATABLE_FIELDS,
 	TRANSLATED_LOCALES,
@@ -74,7 +75,8 @@ import {
 	type ResolvedInterval
 } from './dates.ts';
 import { loadParameters, type Parameters } from './parameters.ts';
-import { countOrigins, type EvidenceLike } from './origins.ts';
+import { countOrigins, restsOn, type EvidenceLike } from './origins.ts';
+import { VERIFIED_EXCEPTIONS } from './verified-exceptions.ts';
 import { buildCoverage, coverageCsv, coverageMarkdown } from './coverage.ts';
 import { checkNarrative, type NarrativeClaim } from './consistency.ts';
 import {
@@ -984,7 +986,7 @@ function settledInterval(
  */
 function basisFields(record: {
 	confidence: 'A' | 'B' | 'C' | 'D';
-	verification: 'verified' | 'needs-primary-source' | 'disputed';
+	verification: 'unflagged' | 'verified' | 'needs-primary-source' | 'disputed';
 	basis?: 'documented' | 'reported' | 'inferred' | 'unsubstantiated';
 }): { basis: 'documented' | 'reported' | 'inferred' | 'unsubstantiated'; basis_derived?: string } {
 	const basis = deriveBasis(record.confidence, record.verification, record.basis);
@@ -999,7 +1001,7 @@ function basisFields(record: {
  */
 function derivedBasisField(record: {
 	confidence: 'A' | 'B' | 'C' | 'D';
-	verification: 'verified' | 'needs-primary-source' | 'disputed';
+	verification: 'unflagged' | 'verified' | 'needs-primary-source' | 'disputed';
 	basis?: 'documented' | 'reported' | 'inferred' | 'unsubstantiated';
 }): Record<string, string> {
 	if (!record.basis) return {};
@@ -1980,6 +1982,60 @@ for (const issue of narrative.errors) fail(issue.where, issue.message);
 for (const issue of narrative.warnings) warn(issue.where, issue.message);
 
 // ---------------------------------------------------------------------------
+// V33: `verified` is a person's check.
+//
+// Every kind that can carry a review is checked here, so no record can reach
+// the graph wearing the word without one. Eras, questions and regions carry the
+// field but no review field: for them `verified` is unimplementable until a
+// review field exists, which is the honest consequence of the rule. The check
+// sits before the error report so a V33 failure is reported in the same pass as
+// every other validation error.
+//
+// The 82 values written before the rule are the only exception, listed with an
+// expiry in scripts/verified-exceptions.ts. The build fails when the date
+// passes, because a dated exception is a research task, not a permission.
+// ---------------------------------------------------------------------------
+{
+	const today = new Date().toISOString().slice(0, 10);
+	if (VERIFIED_EXCEPTIONS.expires < today) {
+		fail(
+			'verified-exceptions.ts',
+			`the "${VERIFIED_EXCEPTIONS.reason}" exception expired on ${VERIFIED_EXCEPTIONS.expires} (V33): the list must be empty before release`
+		);
+	}
+	const excepted = new Set<string>(VERIFIED_EXCEPTIONS.ids);
+	const sections: [string, { id?: string; verification?: string; review?: { actor?: string; method?: string } }[]][] = [
+		['institution', resolvedInstitutions],
+		['person', resolvedPeople],
+		['position', resolvedPositions],
+		['relationship', resolvedRelationships],
+		['event', resolvedEvents],
+		['agreement', resolvedAgreements],
+		['world-claim', resolvedWorldClaims],
+		['company', resolvedCompanies],
+		['contract', resolvedContracts],
+		['licence', resolvedLicences],
+		['vacancy', resolvedVacancies],
+		['declaration', resolvedDeclarations],
+		['education', resolvedEducation],
+		['place', places],
+		['era', eras],
+		['question', questions],
+		['region', regions]
+	];
+	for (const [kind, records] of sections) {
+		records.forEach((record, i) => {
+			if (record.id && excepted.has(record.id)) return;
+			if (verifiedGrounded(record)) return;
+			fail(
+				`${kind} ${record.id ?? `at index ${i}`}`,
+				'verification "verified" needs a review with actor human and method source-check (V33); an agent pass or an unrecorded check cannot make a record verified'
+			);
+		});
+	}
+}
+
+// ---------------------------------------------------------------------------
 // Report
 // ---------------------------------------------------------------------------
 
@@ -2090,6 +2146,7 @@ const reviewSections: [
 	['education', resolvedEducation],
 	['place', places]
 ];
+
 const reviewSummary = summariseReview(
 	reviewSections.flatMap(([kind, rows]) => rows.map((r) => ({ ...r, kind }))),
 	verifications
@@ -2391,6 +2448,26 @@ function withOrigins<T extends { evidence?: readonly EvidenceLike[] }>(rows: T[]
 	});
 }
 
+/**
+ * What a record rests on (D3): the number of distinct origins among the
+ * publishers it cites, and whether every cited source is an encyclopedia.
+ *
+ * Distinct from `origins` above, which counts evidence lineage (V29). This is
+ * about the bibliography, so it is emitted under its own name: the two numbers
+ * answer different questions and one must never overwrite the other.
+ */
+function withRestsOn<T extends { sources?: readonly string[] }>(
+	rows: T[]
+): (T & { restsOnOrigins?: number; encyclopediaOnly?: boolean })[] {
+	return rows.map((row) => {
+		const publishers = (row.sources ?? [])
+			.map((id) => sourceById.get(id)?.publisher)
+			.filter((p): p is string => typeof p === 'string');
+		const rest = restsOn(publishers);
+		return rest ? { ...row, ...rest } : row;
+	});
+}
+
 const dataset = {
 	meta: {
 		generated: new Date().toISOString(),
@@ -2481,29 +2558,60 @@ const dataset = {
 		)
 	},
 	sources,
-	eras: resolvedEras,
-	institutions: withOrigins(resolvedInstitutions),
-	roles,
-	people: withOrigins(resolvedPeople),
-	positions: withOrigins(resolvedPositions),
-	relationships: withOrigins(resolvedRelationships),
-	events: withOrigins(resolvedEvents),
-	questions,
-	hypotheses,
-	agreements: withOrigins(resolvedAgreements),
-	worldClaims: withOrigins(resolvedWorldClaims),
-	companies: withOrigins(resolvedCompanies),
-	contracts: withOrigins(resolvedContracts),
-	licences: withOrigins(resolvedLicences),
-	vacancies: withOrigins(resolvedVacancies),
-	declarations: withOrigins(resolvedDeclarations),
-	education: withOrigins(resolvedEducation),
-	regions: resolvedRegions,
-	places: withOrigins(places),
+	eras: withRestsOn(resolvedEras),
+	institutions: withRestsOn(withOrigins(resolvedInstitutions)),
+	roles: withRestsOn(roles),
+	people: withRestsOn(withOrigins(resolvedPeople)),
+	positions: withRestsOn(withOrigins(resolvedPositions)),
+	relationships: withRestsOn(withOrigins(resolvedRelationships)),
+	events: withRestsOn(withOrigins(resolvedEvents)),
+	questions: withRestsOn(questions),
+	hypotheses: withRestsOn(hypotheses),
+	agreements: withRestsOn(withOrigins(resolvedAgreements)),
+	worldClaims: withRestsOn(withOrigins(resolvedWorldClaims)),
+	companies: withRestsOn(withOrigins(resolvedCompanies)),
+	contracts: withRestsOn(withOrigins(resolvedContracts)),
+	licences: withRestsOn(withOrigins(resolvedLicences)),
+	vacancies: withRestsOn(withOrigins(resolvedVacancies)),
+	declarations: withRestsOn(withOrigins(resolvedDeclarations)),
+	education: withRestsOn(withOrigins(resolvedEducation)),
+	regions: withRestsOn(resolvedRegions),
+	places: withRestsOn(withOrigins(places)),
 	// Independent verification records. A distinct collection with its own
 	// schema, so the three review populations can never be summed (M2).
 	verifications
 };
+
+/**
+ * Records whose every cited source is an encyclopedia (D3). Counted once over
+ * the assembled graph so the published number is the one a reader can recompute
+ * from dataset.json, and computed before stats so no view can disagree with it.
+ */
+const encyclopediaOnlyTotal = [
+	dataset.eras,
+	dataset.institutions,
+	dataset.roles,
+	dataset.people,
+	dataset.positions,
+	dataset.relationships,
+	dataset.events,
+	dataset.questions,
+	dataset.hypotheses,
+	dataset.agreements,
+	dataset.worldClaims,
+	dataset.companies,
+	dataset.contracts,
+	dataset.licences,
+	dataset.vacancies,
+	dataset.declarations,
+	dataset.education,
+	dataset.regions,
+	dataset.places
+].reduce(
+	(total, rows) =>
+		total + rows.filter((r) => (r as { encyclopediaOnly?: boolean }).encyclopediaOnly === true).length,
+	0
+);
 
 /**
  * Coverage by slice (Phase 10A): institution, era, source family, language and
@@ -2924,7 +3032,7 @@ export const changelog = changelogRaw as ChangeEntry[];
 
 export type Confidence = 'A' | 'B' | 'C' | 'D';
 export type Basis = 'documented' | 'reported' | 'inferred' | 'unsubstantiated';
-export type Verification = 'verified' | 'needs-primary-source' | 'disputed';
+export type Verification = 'unflagged' | 'verified' | 'needs-primary-source' | 'disputed';
 export type Layer =
 	| 'security'
 	| 'political'
@@ -2940,6 +3048,8 @@ export interface Review {
 	by: string;
 	date: string;
 	method?: string;
+	/** Who performed the check. Only a human source-check makes a record verified (V33). */
+	actor?: 'human' | 'agent';
 }
 
 export interface Dispute {
@@ -2953,10 +3063,22 @@ export interface Dispute {
  * The claim axes every claim-bearing record shares (V26/V29). \`independence\` is
  * the authored origin count and stays the fallback; \`origins\` is derived by the
  * build from evidence lineage and is the stronger statement where it exists.
+ * \`restsOnOrigins\` is a different count, derived from the publishers of the
+ * record's citations (D3); \`encyclopediaOnly\` says whether every citation is an
+ * encyclopedia. Neither overwrites the other.
  */
-export interface ClaimAxes {
+export interface ClaimAxes extends RestsOn {
 	independence?: number;
 	origins?: number;
+}
+
+/**
+ * What a record rests on (D3), derived from the publishers of the sources it
+ * cites. Present on every record that cites at least one source.
+ */
+export interface RestsOn {
+	restsOnOrigins?: number;
+	encyclopediaOnly?: boolean;
 }
 
 export interface Interval {
@@ -2984,7 +3106,7 @@ export interface Source {
 	excerpt?: string;
 }
 
-export interface Era {
+export interface Era extends RestsOn {
 	id: string;
 	label_en: string;
 	label_fr?: string;
@@ -3004,7 +3126,7 @@ export interface Era {
 	interval: Interval;
 }
 
-export interface Institution {
+export interface Institution extends RestsOn {
 	id: string;
 	name_en: string;
 	name_fr?: string;
@@ -3028,7 +3150,7 @@ export interface Institution {
 	timeline: TimelineItem[];
 }
 
-export interface Role {
+export interface Role extends RestsOn {
 	id: string;
 	title_en: string;
 	title_fr?: string;
@@ -3189,7 +3311,7 @@ export interface EventRec extends ClaimAxes {
 	interval: Interval;
 }
 
-export interface Question {
+export interface Question extends RestsOn {
 	id: string;
 	question: string;
 	kind: 'verification' | 'analytical';
@@ -3224,7 +3346,7 @@ export interface HypothesisEvidence {
 	sources: string[];
 }
 
-export interface Hypothesis {
+export interface Hypothesis extends RestsOn {
 	id: string;
 	label: string;
 	statement: string;
@@ -3581,7 +3703,7 @@ export interface Dataset {
 	places: PlaceRec[];
 }
 
-export interface RegionRec {
+export interface RegionRec extends RestsOn {
 	id: string;
 	kind: 'region' | 'governorate' | 'delegation' | 'municipality';
 	name_en: string;
@@ -3877,6 +3999,70 @@ let datasetHashValue = '';
 	}
 }
 
+// ---------------------------------------------------------------------------
+// The search file.
+//
+// The palette used to build its index from the whole graph when its module
+// loaded, which put the 10 MB graph behind a keystroke. It now fetches this
+// file, written here from the same records, so search costs one small request
+// and no graph. Only the kinds a reading page can open are indexed: people,
+// institutions and events. A row carries the three name scripts, the aliases,
+// the one-line detail and the words the old index folded into its haystack, so
+// a spelling in any script still finds the record.
+// ---------------------------------------------------------------------------
+{
+	const rows = [
+		...dataset.people.map((p) => ({
+			id: p.id,
+			kind: 'person',
+			name: p.name_en,
+			name_fr: p.name_fr,
+			name_ar: p.name_ar,
+			aliases: p.aliases,
+			detail: p.tagline ?? '',
+			layer: p.layers[0],
+			hay: p.trajectory.join(' ')
+		})),
+		...dataset.institutions.map((i) => ({
+			id: i.id,
+			kind: 'institution',
+			name: i.name_en,
+			name_fr: i.name_fr,
+			name_ar: i.name_ar,
+			detail: i.abbr ?? i.type.replace('-', ' '),
+			layer: i.layer,
+			hay: i.type
+		})),
+		...dataset.events.map((e) => ({
+			id: e.id,
+			kind: 'event',
+			name: e.title_en,
+			name_fr: e.title_fr,
+			name_ar: e.title_ar,
+			detail: '',
+			layer: 'political',
+			date: e.interval.startEarliest,
+			hay: [e.summary, e.category].filter(Boolean).join(' ')
+		}))
+	];
+	// Empty keys are dropped: the file is fetched, and most rows have no
+	// translation in one or two scripts.
+	const records = rows.map((row) => {
+		const out: Record<string, unknown> = {};
+		for (const [key, value] of Object.entries(row)) {
+			if (value === undefined || value === null || value === '') continue;
+			if (Array.isArray(value) && value.length === 0) continue;
+			out[key] = value;
+		}
+		return out;
+	});
+	writeFileSync(
+		join(STAGE_STATIC, 'search-index.json'),
+		JSON.stringify({ datasetHash: datasetHashValue, records }),
+		'utf8'
+	);
+}
+
 // The client's copy of the graph. Everything above (the published
 // static/dataset.json and meta.datasetHash) is the full record; what the
 // bundle carries is trimmed to what a reader's browser shows, because the
@@ -3980,6 +4166,9 @@ const stats: Record<string, string> = {
 	floor: parameters.time.floor,
 	cutoff: parameters.time.cutoff,
 	needsPrimarySource: String(needsPrimary.length),
+	// D3: records citing at least one source whose every source is an
+	// encyclopedia. The total is a different statement from a basis count.
+	encyclopediaOnly: String(encyclopediaOnlyTotal),
 	successionGaps: String(successionGaps.length),
 	successionOverlaps: String(successionOverlaps.length),
 	contradictions: String(contradictions.length),
@@ -4040,6 +4229,14 @@ const stats: Record<string, string> = {
 };
 
 writeFileSync(join(STAGE_OUT, 'stats.json'), JSON.stringify(stats, null, 2), 'utf8');
+
+// The research window as its own few bytes. The shell and prose pages need
+// these two numbers; without this file they would import the dataset to read them.
+writeFileSync(
+	join(STAGE_OUT, 'window.json'),
+	JSON.stringify({ cutoff: dataset.meta.cutoff, floor: dataset.meta.floor }),
+	'utf8'
+);
 
 // Sitemap for the static site. Generated, never hand-maintained: every route
 // in this list is a real prerendered page (adapter-static, strict mode fails

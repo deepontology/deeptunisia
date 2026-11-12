@@ -1,10 +1,18 @@
 import data from '$data/index';
-import {
-	certainlyActive as engineCertainlyActive,
-	possiblyActive as enginePossiblyActive,
-	configureTime as configureEngineTime
-} from 'deepepisteme/time';
+import { createTime } from 'deepepisteme/kernel/time';
 import { dateFormatter, format, translate, type Locale } from './i18n';
+import {
+	CUTOFF,
+	BASIS_ORDER,
+	CONFIDENCE_LABEL,
+	FLOOR,
+	LAYERS,
+	LAYER_COLOR,
+	LAYER_LABEL,
+	REL_LABEL,
+	type Basis
+} from './vocab';
+import { describeInterval, durationLabel, formatDate } from './dates';
 import type {
 	Company,
 	Confidence,
@@ -28,6 +36,7 @@ import type {
 } from '$data/index';
 
 export type {
+	Basis,
 	Confidence,
 	Era,
 	EventRec,
@@ -49,8 +58,12 @@ export type {
 };
 
 export const ds: Dataset = data;
-export const CUTOFF = ds.meta.cutoff;
-export const FLOOR = ds.meta.floor;
+
+/** The window dates and pure vocabulary live in `vocab.ts`; re-exported here. */
+export { BASIS_ORDER, CONFIDENCE_LABEL, CUTOFF, FLOOR, LAYERS, LAYER_COLOR, LAYER_LABEL, REL_LABEL };
+
+/** Date rendering is pure; re-exported so existing importers keep one path. */
+export { describeInterval, durationLabel, formatDate };
 
 // --- Lookups ---------------------------------------------------------------
 
@@ -187,16 +200,17 @@ export function targetName(type: string, id: string): string {
 // the build algebra and the interface answer with one implementation. The
 // jurisdiction's parameters are installed at module load: without that, the
 // engine's cutoff clamp would use its shipped defaults instead of the
-// dataset's cutoff, and nothing could be certain at the horizon.
+// dataset's cutoff, and nothing could be certain at the horizon. The values
+// themselves come from `ds.meta`, exactly as before.
 
-configureEngineTime(ds.meta.parameters.time);
+const time = createTime(ds.meta.parameters.time);
 
 export function certainlyActive(iv: Interval, t: number): boolean {
-	return engineCertainlyActive(iv, t);
+	return time.certainlyActive(iv, t);
 }
 
 export function possiblyActive(iv: Interval, t: number): boolean {
-	return enginePossiblyActive(iv, t);
+	return time.possiblyActive(iv, t);
 }
 
 /** 0 = not active, 1 = possibly active, 2 = certainly active. */
@@ -219,109 +233,10 @@ export function eraAt(t: number): Era | null {
 	return ds.eras.find((e) => t >= e.interval.startEarliest && t <= (e.interval.endLatest ?? CUTOFF)) ?? null;
 }
 
-/**
- * Dates, in the reader's language.
- *
- * `locale` is an explicit parameter rather than something read from app state, because
- * this module is pure and several callers are not components — `search.ts` builds its
- * index once at module load, where there is no reactive context to read. The reactive
- * wrappers live in `t.svelte.ts`, which is the same split `translate`/`t` already uses.
- *
- * Years render bare in every locale: a year is a number, and wrapping it in locale
- * chrome would make the Chronicle's axis labels different widths per language.
- */
-export function formatDate(
-	t: number,
-	precision: 'day' | 'month' | 'year' = 'day',
-	locale: Locale = 'en'
-): string {
-	const d = new Date(t);
-	if (precision === 'year') return String(d.getUTCFullYear());
-	if (precision === 'month') return dateFormatter(locale, { month: 'short', year: 'numeric' }).format(d);
-	return dateFormatter(locale, { day: 'numeric', month: 'short', year: 'numeric' }).format(d);
-}
-
-/**
- * Renders an interval the way the sources actually support it, rather than
- * inventing precision. "in post by June 2018", "around 2017", "documented
- * through Dec 2025 and possibly later" are all different statements and the
- * reader should be able to tell them apart at a glance.
- */
-export function describeInterval(iv: Interval, locale: Locale = 'en'): string {
-	const start = describeEdge(iv.startEarliest, iv.startLatest, iv.startPrecision, iv.raw.start, locale);
-	if (iv.status === 'ongoing') return format(locale, 'interval.ongoing', { start });
-	if (iv.status === 'unknown') return format(locale, 'interval.unknown', { start });
-	/*
-	 * The one that matters most, and the easiest to lose in translation: it says the
-	 * officeholding was CONFIRMED to a date, not that it ended there. `/now` splits its
-	 * entire display on that distinction, so it is a whole sentence in the dictionary
-	 * rather than a phrase assembled from parts.
-	 */
-	if (iv.status === 'last-verified') {
-		return format(locale, 'interval.lastVerified', {
-			start,
-			date: formatDate(iv.endEarliest ?? CUTOFF, 'month', locale)
-		});
-	}
-	const end = describeEdge(iv.endEarliest ?? CUTOFF, iv.endLatest ?? CUTOFF, iv.endPrecision, iv.raw.end, locale);
-	return format(locale, 'interval.range', { start, end });
-}
-
-function describeEdge(
-	earliest: number,
-	latest: number,
-	precision: string,
-	raw: string | null,
-	locale: Locale
-): string {
-	switch (precision) {
-		case 'day':
-			return formatDate(earliest, 'day', locale);
-		case 'month':
-			return formatDate(earliest, 'month', locale);
-		case 'year':
-			return formatDate(earliest, 'year', locale);
-		// The three below are epistemic statements, not date formats. Each says something
-		// different about what the sources support, and each is its own sentence.
-		case 'approx':
-			return format(locale, 'edge.approx', { year: formatDate((earliest + latest) / 2, 'year', locale) });
-		case 'before':
-			return format(locale, 'edge.before', { date: formatDate(latest, 'month', locale) });
-		case 'after':
-			return format(locale, 'edge.after', { year: formatDate(earliest, 'year', locale) });
-		default:
-			return raw ?? translate(locale, 'edge.unknown');
-	}
-}
-
-export function durationLabel(years: number, locale: Locale = 'en'): string {
-	if (years < 1) {
-		// Rounds up to a whole year just below the boundary — 0.97y is 12 months, and
-		// "12 mo" is not a duration anyone writes.
-		const months = Math.max(1, Math.round(years * 12));
-		return months >= 12
-			? format(locale, 'duration.y', { y: 1 })
-			: format(locale, 'duration.m', { m: months });
-	}
-	let y = Math.floor(years);
-	let m = Math.round((years - y) * 12);
-	// Same boundary one level up: 2.99y rounded the remainder to 12 and printed
-	// "2y 12m". Carry it instead.
-	if (m >= 12) {
-		y += 1;
-		m = 0;
-	}
-	return m > 0 ? format(locale, 'duration.ym', { y, m }) : format(locale, 'duration.y', { y });
-}
-
 // --- Epistemic basis -------------------------------------------------------
 //
 // The primary axis of the whole site. Not "how sure are we" but "what kind of
 // claim is this", which is the more useful question and the harder one to fake.
-
-export type Basis = 'documented' | 'reported' | 'inferred' | 'unsubstantiated';
-
-export const BASIS_ORDER: Basis[] = ['documented', 'reported', 'inferred', 'unsubstantiated'];
 
 export const BASIS_LABEL: Record<Basis, string> = {
 	documented: 'Documented',
@@ -383,52 +298,7 @@ export const BASIS_OPACITY: Record<Basis, number> = {
 
 export const CONFIDENCE_ORDER: Confidence[] = ['A', 'B', 'C', 'D'];
 
-export const CONFIDENCE_LABEL: Record<Confidence, string> = {
-	A: 'Primary record',
-	B: 'Multiple credible sources',
-	C: 'Single source or estimate',
-	D: 'No reliable evidence located'
-};
-
 // --- Layers ----------------------------------------------------------------
-
-export const LAYERS: Layer[] = [
-	'security',
-	'political',
-	'economic',
-	'media',
-	'judicial',
-	'civil',
-	'foreign'
-];
-
-export const LAYER_LABEL: Record<Layer, string> = {
-	security: 'Security',
-	political: 'Political',
-	economic: 'Economic',
-	media: 'Media',
-	judicial: 'Judicial',
-	civil: 'Civil society',
-	foreign: 'Foreign & international'
-};
-
-/**
- * Layer colours resolve to design tokens, never literal hex.
- *
- * The tokens are defined in OKLCH with identical lightness and chroma so the seven
- * layers carry equal visual weight — no layer looks more important because its hue
- * happens to be brighter — and they re-resolve automatically when the theme flips.
- * See src/lib/design/tokens.css.
- */
-export const LAYER_COLOR: Record<Layer, string> = {
-	security: 'var(--layer-security)',
-	political: 'var(--layer-political)',
-	economic: 'var(--layer-economic)',
-	media: 'var(--layer-media)',
-	judicial: 'var(--layer-judicial)',
-	civil: 'var(--layer-civil)',
-	foreign: 'var(--layer-foreign)'
-};
 
 // --- Relationship types ----------------------------------------------------
 
@@ -454,22 +324,6 @@ export const REL_KIND: Record<string, 'documented' | 'reported' | 'alleged'> = {
 	allegation: 'alleged'
 };
 
-export const REL_LABEL: Record<string, string> = {
-	institutional: 'institutional tie',
-	appointment: 'appointed',
-	succession: 'succeeded',
-	family: 'family tie',
-	business: 'business tie',
-	party: 'party tie',
-	security: 'security link',
-	funding: 'funded',
-	diplomatic: 'diplomatic relationship with',
-	'political-alliance': 'allied with',
-	'political-conflict': 'in conflict with',
-	prosecution: 'prosecuted',
-	'reported-influence': 'reported influence over',
-	allegation: 'claim circulates about'
-};
 
 export function relKind(type: string) {
 	return REL_KIND[type] ?? 'reported';

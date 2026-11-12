@@ -25,7 +25,7 @@
 	import { format } from '$lib/i18n';
 	import { app } from '$lib/state.svelte';
 	import Input from '$lib/ui/Input.svelte';
-	import { search } from '$lib/search';
+	import { search } from '$lib/search.svelte';
 	import {
 		LAYER_COLOR,
 		ds,
@@ -35,7 +35,8 @@
 		type Institution,
 		type Layer
 	} from '$lib/model';
-	import { nameOf, t, tf } from '$lib/t.svelte';
+	import { t, tf } from '$lib/t.svelte';
+	import { nameOf } from '$lib/names.svelte';
 
 	interface Props {
 		/** Names the fieldset and the listbox. A word, never a code. */

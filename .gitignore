@@ -10,6 +10,7 @@ src/generated/
 static/dataset.json
 static/prose-fr.json
 static/prose-ar.json
+static/search-index.json
 static/positions.csv
 static/relationships.csv
 static/sources.csv

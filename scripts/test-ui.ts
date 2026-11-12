@@ -316,7 +316,7 @@ ok(
 	CHRONICLE.includes('function openCluster') &&
 		CHRONICLE.includes('function zoomToCluster') &&
 		CHRONICLE.includes('ev-pop') &&
-		CHRONICLE.includes('Zoom in')
+		CHRONICLE.includes("t('view.zoomin')")
 );
 ok('the lane respects the evidence dial via the shared predicate', CHRONICLE.includes('meetsBasis(e.basis') && CHRONICLE.includes('eventPasses('));
 ok(
@@ -531,7 +531,7 @@ ok(
 );
 ok(
 	'both chronicle table alternatives gained an origins column',
-	(CHRONICLE.match(/<th>Origins<\/th>/g) ?? []).length === 2 &&
+	(CHRONICLE.match(/<th>\{t\('tbl\.origins'\)\}<\/th>/g) ?? []).length === 2 &&
 		CHRONICLE.includes('pos.origins ?? pos.independence') &&
 		CHRONICLE.includes('e.origins ?? e.independence')
 );
@@ -545,8 +545,8 @@ for (const loc of ['en', 'fr', 'ar'] as const) {
 
 console.log('\n  ── Phase 8: review coverage is flags and denominators, not one bucket ──\n');
 
-const ABOUT_PAGE = readFileSync(join(HERE, '..', 'src', 'routes', 'about', '+page.svelte'), 'utf8');
-const DATA_PAGE = readFileSync(join(HERE, '..', 'src', 'routes', 'data', '+page.svelte'), 'utf8');
+const ABOUT_PAGE = readFileSync(join(HERE, '..', 'src', 'routes', '(read)', 'about', '+page.svelte'), 'utf8');
+const DATA_PAGE = readFileSync(join(HERE, '..', 'src', 'routes', '(read)', 'data', '+page.svelte'), 'utf8');
 ok(
 	'the about page reads overlapping flags, not the retired partition',
 	ABOUT_PAGE.includes('ds.meta.review.flags') && !ABOUT_PAGE.includes('meta.review.byRisk')
@@ -574,7 +574,7 @@ for (const loc of ['en', 'fr', 'ar'] as const) {
 }
 console.log('\n  ── Phase 10D: the H1 card carries both continuity tests ──\n');
 
-const EVIDENCE_PAGE = readFileSync(join(HERE, '..', 'src', 'routes', 'evidence', '+page.svelte'), 'utf8');
+const EVIDENCE_PAGE = readFileSync(join(HERE, '..', 'src', 'routes', '(instrument)', 'evidence', '+page.svelte'), 'utf8');
 ok(
 	'the H1 card renders the continuity table from the probe output',
 	EVIDENCE_PAGE.includes('network-continuity.json') && EVIDENCE_PAGE.includes("ev.continuity.title")
@@ -636,7 +636,7 @@ console.log('\n  ── the survey runner: resume, re-entry, shared links, prese
  * the essentiality ratings they were asked beside.
  */
 const PARTICIPATE = readFileSync(
-	join(HERE, '..', 'src', 'routes', 'research', '[slug]', 'participate', '+page.svelte'),
+	join(HERE, '..', 'src', 'routes', '(read)', 'research', '[slug]', 'participate', '+page.svelte'),
 	'utf8'
 );
 const INDEX_STUDY = readFileSync(join(HERE, '..', 'src', 'lib', 'index-study', 'IndexStudy.svelte'), 'utf8');
@@ -659,7 +659,7 @@ ok(
 const INSTRUMENT_002 = readFileSync(join(HERE, '..', 'research', 'portal', 'study-002', 'instrument-v0.yaml'), 'utf8');
 const WRANGLER = readFileSync(join(HERE, '..', 'wrangler.toml'), 'utf8');
 const PAGE_EN = readFileSync(join(HERE, '..', 'src', 'content', 'police-index.en.md'), 'utf8');
-const HUB = readFileSync(join(HERE, '..', 'src', 'routes', 'research', '+page.svelte'), 'utf8');
+const HUB = readFileSync(join(HERE, '..', 'src', 'routes', '(read)', 'research', '+page.svelte'), 'utf8');
 ok(
 	'the consent box names the one-word repeat mark and claims no absence of device information',
 	INSTRUMENT_002.includes('No name, email, IP address or device identifier is kept with them. If this browser has already answered this month, one word saying so is kept') &&
