@@ -514,7 +514,9 @@ const RESOLVERS: Record<ResolverSource, Resolver> = {
 	},
 
 	'editorial-queue': (key, ctx) => {
-		const map: Record<string, string> = { total: 'total', reviewed: 'reviewed', generated: 'generated' };
+		// No `generated` key: the queue carries no run time, and a claim that asked
+		// for one should fail closed rather than publish "undefined".
+		const map: Record<string, string> = { total: 'total', reviewed: 'reviewed' };
 		if (!(key in map)) throw new ClaimError('UNRESOLVED', `editorial-queue resolver has no key "${key}"`);
 		const v = ctx.editorialQueue[map[key]];
 		if (typeof v === 'number') return { value: v, basis: `static/editorial-queue.json#${map[key]}` };
@@ -1117,7 +1119,6 @@ export function buildResolvedRegistry(file: PublicClaimsFile, ctx: ClaimContext)
 	}
 	return {
 		schemaVersion: 1 as const,
-		generatedAt: new Date().toISOString(),
 		cutoff: String((dotted(ctx.dataset, 'meta.parameters.time.cutoff') as string | undefined) ?? ctx.stats.cutoff ?? ''),
 		counts: {
 			claims: claims.length,
@@ -1135,7 +1136,9 @@ export type ResolvedRegistry = ReturnType<typeof buildResolvedRegistry>;
 /**
  * The public, non-secret build manifest. Deployment and freshness resolvers read
  * it; it is written to `static/build-manifest.json` and is deliberately not part
- * of the canonical Tunisia evidence graph.
+ * of the canonical Tunisia evidence graph. It carries no run time and no runtime
+ * version: both change on every build and would make the file impossible to
+ * keep in a tree that a rebuild leaves clean.
  */
 export function buildManifest(ctx: ClaimContext, registry: ResolvedRegistry) {
 	const review = (dotted(ctx.dataset, 'meta.review') as Json) ?? {};
@@ -1147,15 +1150,13 @@ export function buildManifest(ctx: ClaimContext, registry: ResolvedRegistry) {
 		project: 'deeptunisia',
 		origin: 'https://deeptunisia.org',
 		license: 'CC-BY-4.0',
-		generatedAt: registry.generatedAt,
 		release: {
 			packageVersion: String((ctx.releaseBaseline.release as Json)?.packageVersion ?? ''),
 			currentTag: String((ctx.releaseBaseline.release as Json)?.currentTag ?? ''),
 			targetVersion: String((ctx.releaseBaseline.release as Json)?.targetVersion ?? '')
 		},
 		build: {
-			commit: process.env.DT_RELEASE_SHA ?? '',
-			node: process.version
+			commit: process.env.DT_RELEASE_SHA ?? ''
 		},
 		graph: {
 			datasetHash: String((dotted(ctx.dataset, 'meta.datasetHash') as string | undefined) ?? ''),
