@@ -55,6 +55,7 @@ import {
 	type Kind,
 	type VerdictKey
 } from './desk.ts';
+import { PILOT_FILE, pilotQueue, recordLabel } from './desk-pilot-sample.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = join(HERE, '..');
@@ -111,11 +112,7 @@ function loadQueue(root: string): {
 } {
 	const ds = JSON.parse(readFileSync(join(root, 'src', 'generated', 'dataset.json'), 'utf8'));
 
-	const label = (kind: Kind, r: any): string => {
-		if (kind === 'positions') return `${r.roleTitle ?? r.role} — ${r.holder}`;
-		if (kind === 'relationships') return `${r.from} → ${r.to} (${r.type})`;
-		return r.title ?? r.id;
-	};
+	const label = recordLabel;
 
 	const items: QueueItem[] = [];
 	const coverage = Object.fromEntries(RISK.map((k) => [k, { reviewed: 0, total: 0 }])) as Record<
@@ -973,11 +970,13 @@ async function submit(e) {
 
 let packet = null;
 let verdictState = null;
+let pilotInfo = null;
 
 async function loadVerify() {
   const out = await (await fetch('/api/packet')).json();
   packet = out.packet;
   verdictState = out.state;
+  pilotInfo = out.pilot || null;
   if (packet) renderPacket(); else renderSession();
 }
 
@@ -1091,7 +1090,8 @@ function sessionLine() {
   if (!verdictState) return '';
   const v = verdictState.verdicts;
   const median = verdictState.medianSeconds === null ? 'no timed claim' : verdictState.medianSeconds + ' s median';
-  return verdictState.seen + ' seen · ' + v['1'] + ' verified · ' + v['2'] + ' partial · '
+  const pilot = pilotInfo ? 'pilot: ' + pilotInfo.seen + ' of ' + pilotInfo.total + ' · ' : '';
+  return pilot + verdictState.seen + ' seen · ' + v['1'] + ' verified · ' + v['2'] + ' partial · '
     + v['3'] + ' not said · ' + v['4'] + ' unreadable · ' + v['5'] + ' contested · ' + median;
 }
 
@@ -1171,8 +1171,13 @@ function openForm(key) {
 }
 
 function renderSession() {
+  const heading = pilotInfo
+    ? 'Pilot sample complete: every record in the sample has been seen'
+    : 'Session finished: every record in the queue has been seen';
+  const next = pilotInfo ? '<div class="meta">The sample is exhausted. Use Finish session to record it.</div>' : '';
   app.innerHTML = '<div class="item">'
-    + '<h3>Session finished: every record in the queue has been seen</h3>'
+    + '<h3>' + heading + '</h3>'
+    + next
     + '<div class="meta">' + esc(sessionLine()) + '</div>'
     + '<div class="session"><label>signed by</label>'
     + '<input name="finisher" value="' + esc(reviewer) + '" size="12"> '
@@ -1192,6 +1197,7 @@ async function finishSession() {
   if (!res.ok) { flash(out.error); return; }
   const box = document.getElementById('finish-out');
   box.innerHTML = '<div class="meta">Committed ' + esc(out.sha) + ' on ' + esc(out.branch) + '</div>'
+    + '<div class="meta">Files in the commit: ' + esc((out.files || []).join(', ')) + '</div>'
     + '<div class="meta">Not pushed. These two commands would publish it:</div>'
     + '<pre>' + esc(out.commands.push) + '\\n' + esc(out.commands.pr) + '</pre>'
     + '<button type="button" id="run">Run these two commands</button> '
@@ -1254,6 +1260,12 @@ export interface AdminOptions {
 	root?: string;
 	/** The clock, so a test can time a session without waiting. */
 	now?: () => number;
+	/**
+	 * Show the fixed pilot sample in the verify tab instead of the risk queue.
+	 * The sample file is committed; a missing one is an error, not a reason to
+	 * draw a different sample.
+	 */
+	pilot?: boolean;
 }
 
 /**
@@ -1265,11 +1277,18 @@ export interface AdminOptions {
  */
 export function createAdminServer(options: AdminOptions = {}) {
 	const root = options.root ?? REPO_ROOT;
+	const pilot = options.pilot ? pilotQueue(root) : null;
 	const session = new DeskSession({
 		root,
 		now: options.now,
-		queue: () => loadQueue(root).items.map(({ kind, id, label }) => ({ kind, id, label }))
+		queue: () =>
+			pilot
+				? pilot.items
+				: loadQueue(root).items.map(({ kind, id, label }) => ({ kind, id, label }))
 	});
+	/** What the verify tab prints as its pilot line, or null outside pilot mode. */
+	const pilotState = () =>
+		pilot ? { total: pilot.items.length, seen: session.state().seen } : null;
 
 	return createServer(async (req, res) => {
 		try {
@@ -1368,9 +1387,9 @@ export function createAdminServer(options: AdminOptions = {}) {
 				if (kind && id) {
 					const packet = session.packet(kind, id);
 					if (!packet) return json(res, 404, { error: `no ${kind} with id "${id}"` });
-					return json(res, 200, { packet, state: session.state() });
+					return json(res, 200, { packet, state: session.state(), pilot: pilotState() });
 				}
-				return json(res, 200, { packet: session.next(), state: session.state() });
+				return json(res, 200, { packet: session.next(), state: session.state(), pilot: pilotState() });
 			}
 
 			if (req.method === 'POST' && url.pathname === '/api/verdict') {
@@ -1405,7 +1424,7 @@ export function createAdminServer(options: AdminOptions = {}) {
 			}
 
 			if (req.method === 'GET' && url.pathname === '/api/session') {
-				return json(res, 200, session.state());
+				return json(res, 200, { ...session.state(), pilot: pilotState() });
 			}
 
 			if (req.method === 'POST' && url.pathname === '/api/session/finish') {
@@ -1442,10 +1461,20 @@ const runDirectly = process.argv[1] && import.meta.url === pathToFileURL(process
 
 // 127.0.0.1, never 0.0.0.0. This binding is the access control, see the header.
 if (runDirectly) {
-	createAdminServer().listen(PORT, '127.0.0.1', () => {
+	const pilot = process.argv.includes('--pilot');
+	createAdminServer({ pilot }).listen(PORT, '127.0.0.1', () => {
+		console.log(`\n  Deep Tunisia editorial tool, http://127.0.0.1:${PORT}`);
+		if (pilot) {
+			const sample = pilotQueue(REPO_ROOT);
+			console.log(`  pilot sample: ${PILOT_FILE}, ${sample.items.length} records in file order`);
+			if (sample.missing.length) {
+				console.log(`  named by the sample but no longer in the dataset, skipped: ${sample.missing.join(', ')}`);
+			}
+			console.log('  the verify tab shows exactly this sample; every other tab is unchanged\n');
+			return;
+		}
 		const { items, coverage } = loadQueue(REPO_ROOT);
 		const pending = items.filter((i) => !i.reviewed).length;
-		console.log(`\n  Deep Tunisia editorial tool, http://127.0.0.1:${PORT}`);
 		console.log(`  ${pending} unreviewed of ${items.length}`);
 		for (const risk of RISK) {
 			const c = coverage[risk];
