@@ -658,7 +658,10 @@ export function commitSession(
 	git(['checkout', '-b', branch]);
 
 	const files = [...new Set([...touched, sessionsFile, ...refreshed])].sort();
-	git(['add', '--', ...files]);
+	// -f because a tracked file can sit under an ignored directory: output/ is
+	// ignored so the build's other products stay out of git, and the release
+	// paper inside it is still tracked and still refreshed by stats:write.
+	git(['add', '-f', '--', ...files]);
 	git([
 		'-c',
 		'user.name=DeepOntology Collective',
