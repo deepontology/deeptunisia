@@ -348,7 +348,7 @@ console.log('\n  ── the /about figure equals a fresh median ──\n');
 			emitted.deskMinutes === expected.deskMinutes,
 		JSON.stringify({ emitted: [emitted.deskSessions, emitted.deskClaims, emitted.deskMinutes], expected })
 	);
-	ok('with no session line the figure is empty, not zero', expected.deskMinutes === '' && expected.deskClaims === '0', JSON.stringify(expected));
+	ok('with no session line the figure is empty, not zero', deskStatsText(SESSIONS_HEADER + '\n').deskMinutes === '' && deskStatsText(SESSIONS_HEADER + '\n').deskClaims === '0', JSON.stringify(deskStatsText(SESSIONS_HEADER + '\n')));
 	ok('and the page has words for that in three languages', (['en', 'fr', 'ar'] as Locale[]).every((l) => translate(l, 'about.desk.notMeasured').length > 0));
 }
 
