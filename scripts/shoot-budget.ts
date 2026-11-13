@@ -3,8 +3,8 @@
  *
  * Drives a real browser at desktop and phone size, in English and Arabic:
  * the prototype board must fit one screen with no page scroll, no horizontal
- * scroll, 44px buttons on a phone, and the empty start must hold the whole
- * envelope in the purse (?start=draft must hold zero). The study page must not
+ * scroll, 44px buttons on a phone, and the default draft start must hold zero
+ * in the purse (?start=empty must hold the whole envelope). The study page must not
  * scroll sideways and its live example must actually move the purse.
  *
  * Fails on any page error or console error, screenshots each state to
@@ -150,9 +150,9 @@ async function checkBoard(
 		await assertNoHorizontalScroll(page, name);
 
 		const purse = digits(await purseText(page));
-		if (purse === ``) fail(`${name} empty start purse`, `no number in the purse value`);
-		if (Math.abs(Number(purse) - ENVELOPE) > 1) {
-			fail(`${name} empty start purse`, `purse ${purse} MD, expected ${ENVELOPE} MD within 1 MD`);
+		if (purse === ``) fail(`${name} draft start purse`, `no number in the purse value`);
+		if (Number(purse) !== 0) {
+			fail(`${name} draft start purse`, `purse ${purse} MD, expected 0 MD`);
 		}
 
 		let touch = '';
@@ -182,22 +182,22 @@ async function checkBoard(
 	}
 }
 
-/** The hidden testing flag must start with every system at the draft: nothing in the purse. */
-async function checkDraftStart(
+/** The prototype view must start with every system at zero and the whole envelope in the purse. */
+async function checkEmptyStart(
 	browser: Awaited<ReturnType<typeof chromium.launch>>,
 	size: Size,
 	locale: Locale
 ): Promise<void> {
-	const name = `board ${size.label} ${locale} ?start=draft`;
+	const name = `board ${size.label} ${locale} ?start=empty`;
 	const { context, page, errors } = await openPage(browser, size, locale);
 	try {
-		await openBoard(page, '?start=draft');
+		await openBoard(page, '?start=empty');
 		const purse = digits(await purseText(page));
-		if (purse === '' || Number(purse) !== 0) {
-			fail(`${name} purse`, `purse ${purse === '' ? '(none)' : `${purse} MD`}, expected 0 MD`);
+		if (purse === '' || Math.abs(Number(purse) - ENVELOPE) > 1) {
+			fail(`${name} purse`, `purse ${purse === '' ? '(none)' : `${purse} MD`}, expected ${ENVELOPE} MD within 1 MD`);
 		}
 		assertNoPageErrors(errors, name);
-		ok(`${name}: purse 0 MD`);
+		ok(`${name}: purse ${ENVELOPE} MD`);
 	} finally {
 		await context.close();
 	}
@@ -258,7 +258,7 @@ async function main(): Promise<void> {
 		for (const locale of LOCALES) {
 			for (const size of SIZES) {
 				await checkBoard(browser, size, locale);
-				await checkDraftStart(browser, size, locale);
+				await checkEmptyStart(browser, size, locale);
 				await checkLanding(browser, size, locale);
 			}
 		}

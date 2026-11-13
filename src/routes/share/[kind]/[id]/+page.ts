@@ -2,18 +2,18 @@ import { personById, institutionById, relationshipById } from '$lib/model';
 import { error } from '@sveltejs/kit';
 
 export const prerender = true;
+export const csr = false;
 
 const VALID_KINDS = new Set(['entity', 'relationship', 'flow', 'agreement']);
 
 export async function entries() {
-	// Build-time: enumerate all addressable ids so adapter-static can prerender OG shells.
-	// Flow ids are synthetic (no dataset enumeration) — leave those for client.
+	// Build-time: every person, institution and relationship gets a prerendered share page.
+	// Flow and agreement ids are not enumerated; they are not dataset records.
 	const out: { kind: string; id: string }[] = [];
 	for (const p of personById.values()) out.push({ kind: 'entity', id: p.id });
 	for (const i of institutionById.values()) out.push({ kind: 'entity', id: i.id });
 	for (const r of relationshipById.values()) out.push({ kind: 'relationship', id: r.id });
-	// cap to avoid explosion — full enumeration is fine (~800), but guard.
-	return out.slice(0, 2000);
+	return out;
 }
 
 export function load({ params }: { params: { kind: string; id: string } }) {

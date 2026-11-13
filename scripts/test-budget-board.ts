@@ -231,5 +231,18 @@ ok('the prototype route defaults to the draft start', /let\s+start\s*=\s*\$state
 ok('the prototype route reads ?start=empty', /get\('start'\)\s*===\s*'empty'/.test(route));
 ok('the prototype route reads ?rule=step', /get\('rule'\)\s*===\s*'step'/.test(route));
 
+// The drafts and the copy agree with the default rule, and derived lines say so in every locale.
+const boardCopyText = readFileSync(join(ROOT, 'src/lib/budget-game/copy.ts'), 'utf8');
+const preregText = readFileSync(join(ROOT, 'research/portal/study-003/preregistration.md'), 'utf8');
+const protocolText = readFileSync(join(ROOT, 'research/portal/study-003/protocol.md'), 'utf8');
+const designText = readFileSync(join(ROOT, 'research/portal/study-003/game-design.md'), 'utf8');
+const instrumentText = readFileSync(join(ROOT, 'research/portal/study-003/instrument-v0.yaml'), 'utf8');
+ok('the instrument no longer says shilling', !/shilling/i.test(instrumentText));
+ok('the derived lines are labelled in en, fr and ar', (boardCopyText.match(/energy_trade: \{ name: '[^']*\((derived|dérivée|مشتقّ)\)'/g) ?? []).length === 3 && (boardCopyText.match(/other: \{ name: '[^']*\((derived|dérivée|مشتقّ)\)'/g) ?? []).length === 3);
+for (const [name, text] of [['preregistration', preregText], ['protocol', protocolText], ['game design', designText], ['instrument', instrumentText]] as const) {
+	ok(`the ${name} describes the 100 MD coin`, /100 MD/.test(text));
+	ok(`the ${name} does not describe 5% steps as the study rule`, !/one step at a time|in 5% steps|A step is 5%/i.test(text));
+}
+
 console.log(`\n  ${checks - failures}/${checks} checks passed${failures ? `, ${failures} FAILED` : ''}\n`);
 process.exit(failures ? 1 : 0);

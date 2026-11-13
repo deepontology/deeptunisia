@@ -54,6 +54,8 @@ export interface BoardCopy {
 	finish: string;
 	finishNeeds: (amount: string) => string;
 	ready: string;
+	/** Rule B: finished inside the 0.5% band with money still in the purse. */
+	readyBand: string;
 	moves: string;
 	noMoves: string;
 	th: { system: string; plan: string; yours: string; md: string; pct: string };
@@ -120,6 +122,7 @@ const en: BoardCopy = {
 	finish: 'Finish',
 	finishNeeds: (a) => `Place ${a} MD to finish`,
 	ready: 'Every dinar is placed. You can finish.',
+	readyBand: 'The purse is inside the 0.5% band. You can finish; what is left stays unplaced.',
 	moves: 'Moves',
 	noMoves: 'No moves yet.',
 	th: { system: 'System', plan: 'Plan, MD', yours: 'Yours, MD', md: 'Change, MD', pct: 'Change, %' },
@@ -186,6 +189,7 @@ const fr: BoardCopy = {
 	finish: 'Terminer',
 	finishNeeds: (a) => `Placez ${a} MD pour terminer`,
 	ready: 'Chaque dinar est placé. Vous pouvez terminer.',
+	readyBand: 'La bourse est dans la marge de 0,5 %. Vous pouvez terminer ; le reste n’est pas placé.',
 	moves: 'Mouvements',
 	noMoves: 'Aucun mouvement.',
 	th: { system: 'Poste', plan: 'Projet, MD', yours: 'Le vôtre, MD', md: 'Écart, MD', pct: 'Écart, %' },
@@ -252,6 +256,7 @@ const ar: BoardCopy = {
 	finish: 'إنهاء',
 	finishNeeds: (a) => `وزّع ${a} م.د لتنهي`,
 	ready: 'كل دينار في مكانه. يمكنك الإنهاء.',
+	readyBand: 'المحفظة داخل هامش 0.5%. يمكنك الإنهاء، وما تبقّى يبقى غير موضوع.',
 	moves: 'الحركات',
 	noMoves: 'لا حركة بعد.',
 	th: { system: 'القطاع', plan: 'المشروع، م.د', yours: 'توزيعك، م.د', md: 'الفرق، م.د', pct: 'الفرق، %' },

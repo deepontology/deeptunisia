@@ -36,7 +36,9 @@ The study does not claim to measure what the wider population prefers, what the 
 
 ## 3. Design
 
-Respondents move money between movable spending systems on a board, one step at a time, where a step is 5% of a system's draft. Each respondent starts from the draft or from an empty purse, according to the study version. Locked lines (debt interest, reserve) are fixed. To finish, the purse must be placed to within 0.5% of the movable envelope. Respondents may also keep the draft explicitly.
+Respondents move money between movable spending systems on a board, one coin of 100 MD at a time. A coin moves from one system to another, or between a system and the purse. The last coin out of a system, or into a system at 200% of its draft, is short, so a system can reach exactly 0% or 200%. Each respondent starts from the draft. Locked lines (debt interest, reserve) are fixed. To finish, the purse must be empty, so every finished board places the whole movable envelope to the dinar. Respondents may also keep the draft explicitly.
+
+The subsidies line is a memo row of 11,846 MD inside the Industry and Trade lines. What remains of those two lines after the memo, 272.8 MD, is shown as a derived line: it is not a ministry budget, and results for it are read with that in mind.
 
 **Presentation order:** systems are shown in official budget order for every respondent in this version. A randomised presentation order (an order arm) is not part of version 1 and is not estimated. A later version that adds it must amend this preregistration first.
 
@@ -66,7 +68,7 @@ Exclusions are applied mechanically. Every exclusion is logged and reported by r
 All estimands are pre-specified:
 
 1. **Headline per category:** the share of respondents who give each category more, the same, or less than the draft baseline, alongside the median change in percent with its interquartile range (IQR).
-2. **The average citizen budget:** the mean allocation per category. Because the mean of balanced budgets sums exactly to the envelope, this produces a mathematically valid budget. Reported with a bootstrap 95% interval, labelled "average of the budgets submitted". Medians do not sum to the envelope and are never displayed as a combined budget.
+2. **The average citizen budget:** the mean allocation per category. Every finished board places the whole envelope, and shares are stored as whole basis points, so each submitted budget equals the envelope within that rounding (a few MD at most). The mean of submitted budgets is therefore itself a budget that fits the envelope within the same rounding. The report shows the mean placed total against the envelope. It is labelled "average of the budgets submitted". Reported with a bootstrap 95% interval. Medians do not sum to the envelope and are never displayed as a combined budget.
 3. **Spread and consensus:** individual change distributions displayed via strip or box plots per category; consensus measured as the share of respondents allocating within plus or minus 10% of the category median.
 4. **Secondary estimands:** percentage distribution on overall spending direction (lower, same, higher) and mean and median ratings of perceived citizen say (0 to 10 scale).
 

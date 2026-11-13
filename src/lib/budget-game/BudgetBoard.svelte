@@ -395,7 +395,7 @@
 			{/if}
 		</div>
 
-		<p class="message" class:ready={!message && done} role="status" aria-live="polite">{message || (done ? t.ready : '')}</p>
+		<p class="message" class:ready={!message && done} role="status" aria-live="polite">{message || (done ? (purseState === 'leftover' ? t.readyBand : t.ready) : '')}</p>
 
 		<div class="ledger">
 			<p class="ledger-title">{t.moves}</p>

@@ -32,8 +32,8 @@ instrument:
     stored as integer basis points (10000 is the draft). Money moves in coins of
     100 MD (rule A, the default; the last coin out of or into a line may be
     short so a line can reach exactly 0% or 200%). The movable lines must
-    balance to the envelope within 0.5%; under rule A the board asks for every
-    dinar to be placed. Locked lines stay at the
+    balance to the envelope within 0.5% at the server; the board itself only
+    finishes when the purse is empty, so every dinar is placed. Locked lines stay at the
     draft. The two short questions use a 0 to 10 scale for citizens' say and a
     three-option choice for total spending.
 
@@ -120,7 +120,7 @@ items:
     tier: core
     construct: budget allocation
     provenance: project (SPEC section 2, the game screen)
-    text_en: "Use the Treasury board: move money between the lines of the 2027 state budget, as a citizen. Every move carries one coin of 100 MD. Place every dinar in the purse before you go on. Keeping the draft is a valid answer."
+    text_en: "Use the Treasury board: move money between the lines of the 2027 state budget, as a citizen. Start from the draft. Every move carries one coin of 100 MD. Finish when the purse is empty. Keeping the draft is a valid answer."
     text_fr: null
     text_ar: null
     response: allocation
