@@ -10,7 +10,8 @@
 	import EnvelopeField from './EnvelopeField.svelte';
 	import TryBoard from './TryBoard.svelte';
 	import { landingCopy, type FactKey, type LandingSection } from './landing-copy';
-	import { shareOrCopy } from '$lib/share';
+	import ShareMenu from '$lib/ui/ShareMenu.svelte';
+	import type { RuntimeInstrument } from '$lib/research';
 
 	/**
 	 * The landing page of the citizen budget study, built to the police index
@@ -21,7 +22,19 @@
 	 *
 	 * Every amount is computed from the figures file; the copy carries words only.
 	 */
-	let { study, instrument }: { study: { slug: string; title_en: string; population_statement: string | null; status: string }; instrument: { id: string; version: string } | null } = $props();
+	let { study, instrument }: { study: { slug: string; title_en: string; population_statement: string | null; status: string }; instrument: Pick<RuntimeInstrument, 'id' | 'version' | 'items'> | null } = $props();
+
+	/** Every displayed question, in instrument order, in the reader's language (English when a translation is still pending). */
+	const questions = $derived(
+		(instrument?.items ?? [])
+			.filter((i) => i.displayed)
+			.map((i) => {
+				const own = i.text[lang] ?? null;
+				const labels = i.optionLabels?.[lang] ?? i.optionLabels?.en;
+				const options = i.response === 'single_choice' && i.options && i.options.length <= 5 ? i.options.map((o) => labels?.[o] ?? o) : [];
+				return { id: i.id, text: own ?? i.text.en ?? i.id, pending: own === null, kind: copy.answerKinds[i.response] ?? i.response, required: i.required, options };
+			})
+	);
 
 	const lang = $derived<'en' | 'fr' | 'ar'>(app.locale === 'fr' || app.locale === 'ar' ? app.locale : 'en');
 	const copy = $derived(landingCopy[lang]);
@@ -121,26 +134,41 @@
 		})
 	);
 
-	async function onShare() {
-		await shareOrCopy({ url: LANDING_URL, title: copy.title, text: copy.share.text });
-	}
+	/** The preview card built by scripts/build-og-images.ts, like the police index's. */
+	const OG_IMAGE = 'https://deeptunisia.org/og/citizen-budget.png';
 </script>
 
 <svelte:head>
+	<!-- The same preview tags as the police index, so a shared link arrives as a card. -->
 	<title>{copy.title} · DeepTunisia</title>
 	<meta name="description" content={copy.cover} />
+	<link rel="canonical" href={LANDING_URL} />
+	<meta property="og:type" content="article" />
+	<meta property="og:site_name" content="DeepTunisia" />
+	<meta property="og:title" content={`${copy.title} · DeepTunisia`} />
+	<meta property="og:description" content={copy.cover} />
+	<meta property="og:url" content={LANDING_URL} />
+	<meta property="og:image" content={OG_IMAGE} />
+	<meta property="og:image:alt" content="Citizen Budget 2027, a DeepTunisia research study." />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="630" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content={`${copy.title} · DeepTunisia`} />
+	<meta name="twitter:description" content={copy.cover} />
+	<meta name="twitter:image" content={OG_IMAGE} />
+	<meta name="twitter:image:alt" content="Citizen Budget 2027, a DeepTunisia research study." />
 </svelte:head>
 
 <div class="frame research-type" dir={lang === 'ar' ? 'rtl' : 'ltr'} lang={lang}>
 	<div class="scroll" bind:this={scrollEl}>
 		<div class="secbar mono">
 			<span class="secbar-now" aria-live="polite">
-				<span class="secbar-lead">{copy.sectionReadout}</span>
 				<span class="sec-num">{current?.num}</span><span class="sec-slash">/</span>{current?.label}
 			</span>
 			<span class="secbar-end">
-				<span class="secbar-status">{copy.status}</span>
-				<button class="share-btn" type="button" onclick={onShare} title={copy.share.heading}>{copy.share.button}</button>
+				<span class="secbar-status">CB · {copy.status}</span>
+				<!-- Share the page, never the current location, as on the police index. -->
+				<ShareMenu url={LANDING_URL} title={copy.title} text={copy.share.text} heading={copy.share.heading} label={copy.share.heading} />
 			</span>
 		</div>
 
@@ -305,14 +333,30 @@
 					{#if instrument}<p class="note mono">{instrument.id} · {instrument.version}</p>{/if}
 				</section>
 
-				<!-- 05 -->
+				<!-- 05: every question, as the police index publishes its own -->
+				<section id="sec-questions" class="sec">
+					<p class="sec-kicker mono">{sec.questions.num} / {sec.questions.label}</p>
+					<h2>{sec.questions.heading}</h2>
+					{#each sec.questions.body as p, i (i)}<p>{p}</p>{/each}
+					<ol class="q-list">
+						{#each questions as q (q.id)}
+							<li>
+								<p class="q-text" lang={q.pending ? 'en' : undefined} dir={q.pending ? 'ltr' : undefined}>{q.text}</p>
+								{#if q.options.length}<p class="q-options">{q.options.join(' · ')}</p>{/if}
+								<p class="q-kind mono">{q.kind}{#if !q.required} · {copy.optional}{/if}</p>
+							</li>
+						{/each}
+					</ol>
+				</section>
+
+				<!-- 06 -->
 				<section id="sec-stored" class="sec">
 					<p class="sec-kicker mono">{sec.stored.num} / {sec.stored.label}</p>
 					<h2>{sec.stored.heading}</h2>
 					{#each sec.stored.body as p, i (i)}<p>{p}</p>{/each}
 				</section>
 
-				<!-- 06 -->
+				<!-- 07 -->
 				<section id="sec-cannot" class="sec">
 					<p class="sec-kicker mono">{sec.cannot.num} / {sec.cannot.label}</p>
 					<h2>{sec.cannot.heading}</h2>
@@ -322,7 +366,7 @@
 					</ul>
 				</section>
 
-				<!-- 07 -->
+				<!-- 08 -->
 				<section id="sec-record" class="sec">
 					<p class="sec-kicker mono">{sec.record.num} / {sec.record.label}</p>
 					<h2>{sec.record.heading}</h2>
@@ -382,6 +426,47 @@
 		font-variant-numeric: tabular-nums;
 	}
 
+	/* Questions: the instrument as it will be asked */
+	.q-list {
+		margin: var(--s-6) 0 0;
+		padding: 0;
+		list-style: none;
+		counter-reset: q;
+		border-block-start: var(--rule);
+	}
+	.q-list li {
+		counter-increment: q;
+		display: grid;
+		grid-template-columns: 3ch minmax(0, 1fr);
+		column-gap: var(--s-4);
+		padding-block: var(--s-4);
+		border-block-end: var(--rule);
+	}
+	.q-list li::before {
+		content: counter(q, decimal-leading-zero);
+		grid-row: span 3;
+		font-family: var(--font-mono);
+		font-size: var(--t-xs);
+		color: var(--text-muted);
+		padding-block-start: 0.3em;
+	}
+	.q-list p {
+		grid-column: 2;
+		margin: 0;
+	}
+	.q-options {
+		margin-block-start: var(--s-1) !important;
+		color: var(--text-secondary);
+		font-size: var(--t-sm);
+	}
+	.q-kind {
+		margin-block-start: var(--s-2) !important;
+		font-size: var(--t-xs);
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: var(--text-muted);
+	}
+
 	/* Section bar */
 	.secbar {
 		position: sticky;
@@ -417,18 +502,6 @@
 		text-transform: uppercase;
 		letter-spacing: 0.08em;
 	}
-	.share-btn {
-		min-block-size: var(--touch);
-		padding: var(--s-2) var(--s-5);
-		border: 1px solid var(--border-default);
-		border-radius: var(--r-md);
-		background: var(--surface-raised);
-		color: var(--text-secondary);
-		font-family: var(--font-mono);
-		font-size: var(--t-xs);
-		cursor: pointer;
-	}
-	.share-btn:focus-visible,
 	.cta:focus-visible {
 		outline: 2px solid var(--accent);
 		outline-offset: 2px;

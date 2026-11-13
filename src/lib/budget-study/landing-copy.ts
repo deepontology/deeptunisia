@@ -13,7 +13,7 @@
 export type Locale = 'en' | 'fr' | 'ar';
 
 export interface LandingSection {
-	id: 'question' | 'board' | 'figures' | 'method' | 'stored' | 'cannot' | 'record' | 'take';
+	id: 'question' | 'board' | 'figures' | 'method' | 'questions' | 'stored' | 'cannot' | 'record' | 'take';
 	num: string;
 	label: string;
 	heading: string;
@@ -76,7 +76,9 @@ export interface LandingCopy {
 	interimNotice: string | null;
 	closing: [string, string];
 	share: { button: string; heading: string; text: string };
-	sectionReadout: string;
+	/** How each kind of answer is given, for the questions section. */
+	answerKinds: Record<string, string>;
+	optional: string;
 }
 
 export const landingCopy: Record<Locale, LandingCopy> = {
@@ -183,8 +185,15 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 				]
 			},
 			{
-				id: 'stored',
+				id: 'questions',
 				num: '05',
+				label: 'Questions',
+				heading: 'Every question, as it will be asked',
+				body: ['The whole instrument, in order. Nothing else is asked. The words are a draft until the study is frozen.']
+			},
+			{
+				id: 'stored',
+				num: '06',
 				label: 'What is stored',
 				heading: 'Only what the answers need',
 				body: [
@@ -194,21 +203,21 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 			},
 			{
 				id: 'cannot',
-				num: '06',
+				num: '07',
 				label: 'What it cannot say',
 				heading: 'What these answers are not',
 				body: ['The answers are a record of choices by the people who made them. They cannot stand in for a country.']
 			},
 			{
 				id: 'record',
-				num: '07',
+				num: '08',
 				label: 'Record',
 				heading: 'The status, stated plainly',
 				body: ['The study is in design. Nothing is collected, and no review has cleared it.']
 			},
 			{
 				id: 'take',
-				num: '08',
+				num: '09',
 				label: 'Take part',
 				heading: 'Not open yet',
 				body: [
@@ -235,12 +244,13 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 		draftNotice: 'Every figure on this page is a press-reported draft, not a verified official figure.',
 		interimNotice: null,
 		closing: ['The total does not move.', 'Only where it goes does.'],
+		answerKinds: { consent: 'Required tick', allocation: 'On the board', single_choice: 'One choice', scale_0_10: 'From 0 to 10' },
+		optional: 'optional',
 		share: {
 			button: 'Copy link',
 			heading: 'Share this page',
 			text: 'In design, not collecting. The link opens the published landing page.'
-		},
-		sectionReadout: 'You are in'
+		}
 	},
 
 	fr: {
@@ -346,8 +356,15 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 				]
 			},
 			{
-				id: 'stored',
+				id: 'questions',
 				num: '05',
+				label: 'Questions',
+				heading: 'Chaque question, telle qu’elle sera posée',
+				body: ['Tout le questionnaire, dans l’ordre. Rien d’autre n’est demandé. Les mots restent un projet jusqu’au gel de l’étude.']
+			},
+			{
+				id: 'stored',
+				num: '06',
 				label: 'Ce qui est conservé',
 				heading: 'Seulement ce que les réponses exigent',
 				body: [
@@ -357,21 +374,21 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 			},
 			{
 				id: 'cannot',
-				num: '06',
+				num: '07',
 				label: 'Ce qu’elle ne peut pas dire',
 				heading: 'Ce que ces réponses ne sont pas',
 				body: ['Les réponses sont la trace des choix des personnes qui les ont faits. Elles ne peuvent pas tenir lieu de pays.']
 			},
 			{
 				id: 'record',
-				num: '07',
+				num: '08',
 				label: 'Registre',
 				heading: 'Le statut, dit simplement',
 				body: ['L’étude est en conception. Rien n’est collecté, et aucune instance n’a validé le dispositif.']
 			},
 			{
 				id: 'take',
-				num: '08',
+				num: '09',
 				label: 'Participer',
 				heading: 'Pas encore ouvert',
 				body: [
@@ -398,12 +415,13 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 		draftNotice: 'Chaque chiffre de cette page est un projet rapporté par la presse, non un chiffre officiel vérifié.',
 		interimNotice: 'Traduction provisoire, non relue par une personne de langue maternelle.',
 		closing: ['Le total ne bouge pas.', 'Seule sa répartition change.'],
+		answerKinds: { consent: 'Case obligatoire', allocation: 'Sur le plateau', single_choice: 'Un seul choix', scale_0_10: 'De 0 à 10' },
+		optional: 'facultatif',
 		share: {
 			button: 'Copier le lien',
 			heading: 'Partager cette page',
 			text: 'En conception, pas de collecte. Le lien ouvre la page publique publiée.'
-		},
-		sectionReadout: 'Vous êtes dans'
+		}
 	},
 
 	ar: {
@@ -509,8 +527,15 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 				]
 			},
 			{
-				id: 'stored',
+				id: 'questions',
 				num: '05',
+				label: 'الأسئلة',
+				heading: 'كلّ سؤال، كما سيُطرح',
+				body: ['الاستبيان كاملًا، بالترتيب. لا يُسأل شيء غير ذلك. تبقى الصياغة مسودّة إلى أن تُثبَّت الدراسة.']
+			},
+			{
+				id: 'stored',
+				num: '06',
 				label: 'ما يُحفظ',
 				heading: 'فقط ما تحتاجه الإجابات',
 				body: [
@@ -520,21 +545,21 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 			},
 			{
 				id: 'cannot',
-				num: '06',
+				num: '07',
 				label: 'ما لا تستطيع قوله',
 				heading: 'ما ليست هذه الإجابات',
 				body: ['الإجابات سجلّ لاختيارات من قاموا بها. ولا يمكنها أن تنوب عن بلد.']
 			},
 			{
 				id: 'record',
-				num: '07',
+				num: '08',
 				label: 'السجل',
 				heading: 'الوضع، مقولًا ببساطة',
 				body: ['الدراسة قيد التصميم. لا يُجمع شيء، ولم تُقرّها أيّ مراجعة.']
 			},
 			{
 				id: 'take',
-				num: '08',
+				num: '09',
 				label: 'المشاركة',
 				heading: 'ليست مفتوحة بعد',
 				body: [
@@ -561,11 +586,12 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 		draftNotice: 'كلّ رقم في هذه الصفحة مشروع نقلته الصحافة، وليس رقمًا رسميًّا متحقّقًا منه.',
 		interimNotice: 'ترجمة مؤقّتة، لم يراجعها متحدّث بالعربية كلغة أم.',
 		closing: ['المجموع لا يتغيّر.', 'وحده توزيعه يتغيّر.'],
+		answerKinds: { consent: 'خانة إلزامية', allocation: 'على اللوحة', single_choice: 'اختيار واحد', scale_0_10: 'من 0 إلى 10' },
+		optional: 'اختياري',
 		share: {
 			button: 'انسخ الرابط',
 			heading: 'شارك هذه الصفحة',
 			text: 'قيد التصميم، لا جمع للردود. الرابط يفتح صفحة الهبوط المنشورة.'
-		},
-		sectionReadout: 'أنت في'
+		}
 	}
 };

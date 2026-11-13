@@ -47,6 +47,11 @@ function ok(line: string): void {
 	console.log(`ok ${line}`);
 }
 
+/** A decimal amount: "59,932.4 MD" reads as 59932.4; separators and bidi marks drop out. */
+function amount(text: string | null | undefined): string {
+	return (text ?? '').replace(/[٫]/g, '.').replace(/[^0-9.]/g, '').replace(/\.$/, '');
+}
+
 /** Digits only: "59,932 MD" reads as 59932, and any bidi marks drop out. */
 function digits(text: string | null | undefined): string {
 	return (text ?? '').replace(/[^0-9]/g, '');
@@ -110,7 +115,7 @@ async function assertNoPageScroll(page: Page, name: string) {
 
 /** Consent, submit, and the frame step, which is where the board starts. */
 async function openBoard(page: Page, query = ''): Promise<void> {
-	await page.goto(`${BASE}/research/citizen-budget/prototype${query}`, { waitUntil: 'load' });
+	await page.goto(`${BASE}/research/citizen-budget/prototype${query}`, { waitUntil: 'networkidle' });
 	const boxes = page.locator('.consent input[type="checkbox"]');
 	await boxes.first().waitFor({ state: 'visible' });
 	const count = await boxes.count();
@@ -125,7 +130,7 @@ async function openBoard(page: Page, query = ''): Promise<void> {
 }
 
 async function purseText(page: Page): Promise<string> {
-	return (await page.locator('.board .purse-value').first().innerText()).trim();
+	return (await page.locator('.board .purse-amount').first().innerText()).trim();
 }
 
 async function checkBoard(
@@ -192,7 +197,7 @@ async function checkEmptyStart(
 	const { context, page, errors } = await openPage(browser, size, locale);
 	try {
 		await openBoard(page, '?start=empty');
-		const purse = digits(await purseText(page));
+		const purse = amount(await purseText(page));
 		if (purse === '' || Math.abs(Number(purse) - ENVELOPE) > 1) {
 			fail(`${name} purse`, `purse ${purse === '' ? '(none)' : `${purse} MD`}, expected ${ENVELOPE} MD within 1 MD`);
 		}
@@ -213,24 +218,24 @@ async function checkLanding(
 	const { context, page, errors } = await openPage(browser, size, locale);
 	try {
 		await page.goto(`${BASE}/research/citizen-budget`, { waitUntil: 'load' });
-		await page.locator('figure.graphic .purse-value:visible').first().waitFor({ state: 'visible' });
+		await page.locator('[data-testid="try-board"] .purse-value:visible').first().waitFor({ state: 'visible' });
 		await settle(page);
 		await page.screenshot({ path: join(OUT, `landing-${size.label}-${locale}.png`) });
 
 		await assertNoHorizontalScroll(page, name);
 
-		const live = page.locator('figure.graphic [role="button"][tabindex="0"]');
+		const live = page.locator('[data-testid="try-board"] .rows button:not([disabled])');
 		const candidates = await live.count();
 		if (candidates === 0) {
-			fail(`${name} touchable example`, 'no role="button" group or focusable element inside the graphic that shows the purse');
+			fail(`${name} touchable example`, 'no enabled take or give button on the try board');
 		}
 		const first = live.first();
-		const before = (await first.evaluate((el) => el.closest('figure.graphic')?.querySelector('.purse-value')?.textContent ?? '')).trim();
+		const before = (await first.evaluate((el) => el.closest('[data-testid="try-board"]')?.querySelector('.purse-value')?.textContent ?? '')).trim();
 		await first.click();
 		try {
 			await page.waitForFunction(
 				(previous) =>
-					Array.from(document.querySelectorAll('figure.graphic .purse-value')).some(
+					Array.from(document.querySelectorAll('[data-testid="try-board"] .purse-value')).some(
 						(el) => (el.textContent ?? '').trim() !== previous
 					),
 				before,
@@ -239,7 +244,7 @@ async function checkLanding(
 		} catch {
 			fail(`${name} touchable example`, `purse text stayed "${before}" after clicking the live example`);
 		}
-		const after = (await first.evaluate((el) => el.closest('figure.graphic')?.querySelector('.purse-value')?.textContent ?? '')).trim();
+		const after = (await first.evaluate((el) => el.closest('[data-testid="try-board"]')?.querySelector('.purse-value')?.textContent ?? '')).trim();
 		if (after === before) {
 			fail(`${name} touchable example`, `purse text stayed "${before}" after clicking the live example`);
 		}

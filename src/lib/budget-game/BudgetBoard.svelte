@@ -582,7 +582,8 @@
 		display: none;
 	}
 	.move .unit {
-		margin-inline-start: 0.3em;
+		/* The flex gap already separates the amount from its unit. */
+		margin-inline-start: calc(-1 * var(--s-1));
 	}
 	.move {
 		white-space: nowrap;
@@ -766,16 +767,17 @@
 	}
 	.moves-buttons {
 		display: grid;
-		grid-template-columns: 1fr 1fr;
-		gap: var(--s-4);
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: var(--s-3);
 	}
 	.move {
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		gap: var(--s-3);
+		gap: var(--s-2);
+		min-inline-size: 0;
 		min-block-size: var(--touch);
-		padding-inline: var(--s-4);
+		padding-inline: var(--s-2);
 		border-radius: var(--r-md);
 		font: 600 var(--t-md) var(--font-sans);
 		cursor: pointer;

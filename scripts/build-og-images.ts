@@ -12,10 +12,12 @@
  * so the image stays cacheable and theme-stable.
  */
 
-import { writeFileSync, mkdirSync, existsSync } from 'node:fs';
+import { writeFileSync, mkdirSync, existsSync, readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
+import { parse } from 'yaml';
+import { linesFrom } from '../src/lib/budget-game/lines.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
@@ -139,6 +141,55 @@ function buildIntroSvg(): string {
 </svg>`;
 }
 
+/**
+ * The citizen budget's card, in the manner of its landing cover: the draft
+ * budget as a field of squares, one band per board line, sized by its share.
+ * The squares follow the draft figures file, so the card never shows a
+ * proportion the page does not; no amount is printed in the image.
+ */
+function buildBudgetSvg(): string {
+	const figures = parse(readFileSync(join(ROOT, 'data/studies/dt-research-003/figures-2027.yaml'), 'utf8')) as {
+		rows: { id: string; amount_md: number; memo?: boolean }[];
+	};
+	const lines = linesFrom(figures.rows);
+	const all = [...lines.locked, ...lines.movable];
+	const total = all.reduce((t, l) => t + l.draft, 0);
+	const cols = 22;
+	const rows = 26;
+	const cell = 19;
+	const sq = 12;
+	const x0 = 760;
+	const y0 = 64;
+	const cells = cols * rows;
+	let squares = '';
+	let k = 0;
+	all.forEach((l, i) => {
+		const n = Math.round((l.draft / total) * cells);
+		const op = l.locked ? 0.18 : i % 2 === 0 ? 0.78 : 0.46;
+		let band = '';
+		for (let j = 0; j < n && k < cells; j++, k++) {
+			const r = Math.floor(k / cols);
+			const c = k % cols;
+			band += `<rect x="${x0 + c * cell}" y="${y0 + r * cell}" width="${sq}" height="${sq}"/>`;
+		}
+		squares += `<g fill="#f4f4f6" fill-opacity="${op}">${band}</g>`;
+	});
+	return `<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Citizen Budget 2027, a research study by DeepTunisia">
+  <rect width="1200" height="630" fill="#0d0b09"/>
+  ${squares}
+  <rect x="0" y="0" width="1200" height="3" fill="#ddb049" opacity="0.6"/>
+  <text x="72" y="104" font-family="'JetBrains Mono', 'JetBrainsMono NF', 'Liberation Mono', monospace" font-size="15" letter-spacing="2.4" fill="#ddb049">DEEPTUNISIA RESEARCH · 003 · BUDGET STUDY</text>
+  <text font-family="'Liberation Serif', 'Noto Serif', serif" font-weight="700" font-size="82" fill="#f4f4f6" letter-spacing="1">
+    <tspan x="68" y="232">CITIZEN</tspan>
+    <tspan x="68" y="318">BUDGET</tspan>
+    <tspan x="68" y="404">2027</tspan>
+  </text>
+  <text x="72" y="466" font-family="'Liberation Serif', 'Noto Serif', serif" font-size="25" fill="#a9a9ae">Divide the state budget yourself, on one board.</text>
+  <rect x="72" y="520" width="56" height="2" fill="#ddb049"/>
+  <text x="72" y="566" font-family="'JetBrains Mono', 'JetBrainsMono NF', 'Liberation Mono', monospace" font-size="17" fill="#ddb049">deeptunisia.org/research/citizen-budget</text>
+</svg>`;
+}
 async function renderIntroCard(outPath: string) {
 	await render(buildIntroSvg(), outPath);
 }
@@ -175,6 +226,8 @@ async function main() {
 
 	// The introduction, sent as a link more than it is browsed to.
 	await renderIntroCard(join(OUT_DIR, 'introduction.png'));
+	// The citizen budget, a design-stage study with its own card.
+	await render(buildBudgetSvg(), join(OUT_DIR, 'citizen-budget.png'));
 }
 
 main().catch((e) => {

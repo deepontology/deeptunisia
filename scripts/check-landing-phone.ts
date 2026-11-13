@@ -24,6 +24,7 @@ const SECTIONS = [
 	'sec-board',
 	'sec-figures',
 	'sec-method',
+	'sec-questions',
 	'sec-stored',
 	'sec-cannot',
 	'sec-record',

@@ -249,7 +249,7 @@
 	}
 	.list button {
 		display: grid;
-		grid-template-columns: 1fr auto 4.5ch;
+		grid-template-columns: minmax(0, 1fr) auto 6ch;
 		gap: var(--s-4);
 		inline-size: 100%;
 		padding: var(--s-3) 0;
