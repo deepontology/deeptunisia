@@ -338,12 +338,13 @@
 					<p class="sec-kicker mono">{sec.questions.num} / {sec.questions.label}</p>
 					<h2>{sec.questions.heading}</h2>
 					{#each sec.questions.body as p, i (i)}<p>{p}</p>{/each}
+					{#if questions.some((q) => q.pending)}<p class="note">{copy.questionsPending}</p>{/if}
 					<ol class="q-list">
 						{#each questions as q (q.id)}
 							<li>
 								<p class="q-text" lang={q.pending ? 'en' : undefined} dir={q.pending ? 'ltr' : undefined}>{q.text}</p>
 								{#if q.options.length}<p class="q-options">{q.options.join(' · ')}</p>{/if}
-								<p class="q-kind mono">{q.kind}{#if !q.required} · {copy.optional}{/if}</p>
+								<p class="q-kind mono">{q.kind}{#if !q.required}{` · ${copy.optional}`}{/if}</p>
 							</li>
 						{/each}
 					</ol>

@@ -79,6 +79,8 @@ export interface LandingCopy {
 	/** How each kind of answer is given, for the questions section. */
 	answerKinds: Record<string, string>;
 	optional: string;
+	/** Shown when the instrument has no reviewed translation for this language yet. */
+	questionsPending: string;
 }
 
 export const landingCopy: Record<Locale, LandingCopy> = {
@@ -246,6 +248,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 		closing: ['The total does not move.', 'Only where it goes does.'],
 		answerKinds: { consent: 'Required tick', allocation: 'On the board', single_choice: 'One choice', scale_0_10: 'From 0 to 10' },
 		optional: 'optional',
+		questionsPending: 'Shown in English until the translation is reviewed.',
 		share: {
 			button: 'Copy link',
 			heading: 'Share this page',
@@ -417,6 +420,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 		closing: ['Le total ne bouge pas.', 'Seule sa répartition change.'],
 		answerKinds: { consent: 'Case obligatoire', allocation: 'Sur le plateau', single_choice: 'Un seul choix', scale_0_10: 'De 0 à 10' },
 		optional: 'facultatif',
+		questionsPending: 'Affichées en anglais jusqu’à la relecture de la traduction.',
 		share: {
 			button: 'Copier le lien',
 			heading: 'Partager cette page',
@@ -588,6 +592,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 		closing: ['المجموع لا يتغيّر.', 'وحده توزيعه يتغيّر.'],
 		answerKinds: { consent: 'خانة إلزامية', allocation: 'على اللوحة', single_choice: 'اختيار واحد', scale_0_10: 'من 0 إلى 10' },
 		optional: 'اختياري',
+		questionsPending: 'تُعرض بالإنجليزية إلى أن تُراجَع الترجمة.',
 		share: {
 			button: 'انسخ الرابط',
 			heading: 'شارك هذه الصفحة',
