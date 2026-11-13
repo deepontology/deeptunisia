@@ -1,18 +1,27 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import BudgetGame from '$lib/budget-game/BudgetGame.svelte';
-	import type { StartMode } from '$lib/budget-game/board';
+	import { app } from '$lib/state.svelte';
+	import { boardCopyFor } from '$lib/budget-game/board-copy';
+	import { DEFAULT_RULE, type MoveRule, type StartMode } from '$lib/budget-game/board';
 
 	/**
-	 * The default start is the empty purse: every system at zero and the whole
-	 * envelope in the purse. ?start=draft is the hidden testing flag for the
-	 * draft start. The query is read in the browser only, because the page is
-	 * prerendered.
+	 * The default start is the draft (owner decision D2): every system at its
+	 * plan and the purse empty. ?start=empty is the flag for the empty start.
+	 *
+	 * The default move rule is the 100 MD coin (option A). ?rule=step switches
+	 * to 5% steps (option B) so the owner can play both.
+	 *
+	 * Queries are read in the browser only, because the page is prerendered.
 	 */
-	let start = $state<StartMode>('empty');
+	let start = $state<StartMode>('draft');
+	let rule = $state<MoveRule>(DEFAULT_RULE);
 	let playing = $state(false);
 	$effect(() => {
-		if (browser) start = new URLSearchParams(window.location.search).get('start') === 'draft' ? 'draft' : 'empty';
+		if (!browser) return;
+		const q = new URLSearchParams(window.location.search);
+		start = q.get('start') === 'empty' ? 'empty' : 'draft';
+		rule = q.get('rule') === 'step' ? 'step' : q.get('rule') === 'coin' ? 'coin' : DEFAULT_RULE;
 	});
 	/**
 	 * Citizen budget game, study prototype. Placeholder figures only; nothing is
@@ -27,8 +36,10 @@
 </svelte:head>
 
 <div class="scroll" class:playing>
-	<p class="back"><a href="/research/citizen-budget">Back to the study page</a></p>
-	<BudgetGame {start} onstep={(s) => (playing = s === 'board')} />
+	<p class="back"><a href="/research/citizen-budget">{boardCopyFor(app.locale).back}</a></p>
+	{#key `${start}-${rule}`}
+		<BudgetGame {start} {rule} onstep={(s) => (playing = s === 'board')} />
+	{/key}
 </div>
 
 <style>

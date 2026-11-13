@@ -1,1550 +1,1077 @@
 <script lang="ts">
+	import { onMount, tick, untrack } from 'svelte';
 	import { app } from '$lib/state.svelte';
 	import { FIGURES } from '$lib/budget-study/figures';
 	import { copyFor } from './copy';
-	import { linesFrom, MAX_LEVEL, type LineId } from './lines';
+	import { boardCopyFor } from './board-copy';
+	import { linesFrom, type LineId } from './lines';
 	import * as B from './board';
-	import type { Board, BoardState, LogEntry } from './board';
-	import { lineDifference, type Difference } from './diff';
-	import { isRefused, transferState } from './dragdrop';
-	import { untrack } from 'svelte';
+	import { lineDifference } from './diff';
+	import { dragMoney, flyCoin } from './drag';
+	import SystemRow, { fmtMd, signed } from './SystemRow.svelte';
 
 	/**
-	 * The Treasury board. Systems are tanks on one scale in dinars. The purse
-	 * holds what is not yet placed. Take moves money from a system to the purse;
-	 * give moves money from the purse into a system. The board finishes when the
-	 * purse is within tolerance. Every figure is a draft figure from the figures
-	 * file.
+	 * The Treasury board, one screen on a desk and on a phone.
 	 *
-	 * One screen, two shapes: on a desk the purse and controls sit in a left
-	 * column and the systems fill a grouped grid on the right; on a phone the
-	 * purse is a sticky bar and the systems are a grouped list of rows with 44px
-	 * controls. The board itself never scrolls; only the intro, questions and
-	 * result screens do.
+	 * Desk: the purse, the spent-before-you-start block, the chosen system with
+	 * Take and Give, the last moves and the actions sit in a column; the sixteen
+	 * systems fill two columns of rows on one scale in dinars. Phone: the purse
+	 * is a bar at the top, the systems are rows, and the chosen system's Take
+	 * and Give sit in a dock at the bottom, under the thumb.
+	 *
+	 * Money moves by dragging one system onto another (or onto the purse, or
+	 * from the purse onto a system), by Take and Give, or by keys. The engine
+	 * (board.ts) decides what one move carries: a 100 MD coin by default.
 	 */
 	let {
-		mode = 'empty',
+		mode = 'draft',
+		rule = B.DEFAULT_RULE,
 		onfinish
 	}: {
 		mode?: B.StartMode;
+		rule?: B.MoveRule;
 		onfinish?: (game: B.BoardState, board: B.Board) => void;
 	} = $props();
 
 	const lines = linesFrom(FIGURES.rows);
-	const board: Board = { lines };
-	let game: BoardState = $state(B.startBoard(board, untrack(() => mode)));
-	let view = $state<'bars' | 'table'>('bars');
-	let refusal = $state('');
+	const board: B.Board = { lines };
+	const start = () => B.startBoard(board, untrack(() => mode), untrack(() => rule));
+	let game: B.BoardState = $state(start());
 
+	const t = $derived(boardCopyFor(app.locale));
 	const c = $derived(copyFor(app.locale));
-	const unit = $derived(c.unit);
-	const fmt = (n: number) => Math.round(n).toLocaleString('en-US');
-	const scaleMax = Math.max(...lines.movable.map((l) => l.draft));
-	const placedMd = $derived(B.placed(board, game));
+	const nameOf = (id: string) => (id === 'purse' ? t.purse : c.lines[id as LineId].name);
+
+	/** One scale for every system: half again the largest plan, rounded up to 2,000 MD. */
+	const SCALE = Math.ceil((Math.max(...lines.movable.map((l) => l.draft)) * 1.5) / 2000) * 2000;
+	const TICKS = [0, 5000, 10000].filter((v) => v < SCALE);
+
 	const P = $derived(B.purse(board, game));
 	const done = $derived(B.finished(board, game));
-	const kept = $derived(B.atDraft(game));
-
 	const rows = $derived(
 		lines.movable.map((l) => {
-			const level = game.levels[l.id];
-			const amount = B.amountOf(l, level);
-			return {
-				line: l,
-				level,
-				amount,
-				step: B.stepMd(l),
-				diff: lineDifference(l.draft, amount),
-				takeOk: B.takeProblem(game, l.id) === null,
-				giveOk: B.giveProblem(board, game, l.id) === null
-			};
+			const yours = B.heldMd(board, game, l.id);
+			return { id: l.id, plan: l.draft, yours, diff: lineDifference(l.draft, yours) };
 		})
 	);
-
-	/** The three groups, in the order the brief fixes them. Education and subsidies are the largest and span two tracks. */
-	const GROUPS = [
-		{ key: 'people', ids: ['education', 'higher_education', 'health', 'social'] },
-		{ key: 'state', ids: ['subsidies', 'police', 'army', 'justice', 'presidency', 'government'] },
-		{
-			key: 'economy',
-			ids: ['energy_trade', 'farming', 'roads_housing', 'youth_sports', 'culture', 'other']
-		}
-	] as const satisfies ReadonlyArray<{
-		key: 'people' | 'state' | 'economy';
-		ids: readonly LineId[];
-	}>;
-	const groups = $derived(
-		GROUPS.map((g) => ({
-			key: g.key,
-			rows: g.ids.map((id) => rows.find((r) => r.line.id === id)!).filter(Boolean)
-		}))
-	);
-	/** Every system in the order the board shows them: the order the arrow keys walk. */
-	const order = $derived(groups.flatMap((g) => g.rows.map((r) => r.line.id)));
-
-	/** The last five moves, newest first, for the desk ledger strip. */
-	const ledger = $derived(game.log.slice(-5).reverse());
+	const half = Math.ceil(lines.movable.length / 2);
+	const columns = $derived([rows.slice(0, half), rows.slice(half)]);
+	const debt = lines.locked.find((l) => l.id === 'debt')!;
+	const reserve = lines.locked.find((l) => l.id === 'reserve')!;
 	const lockedTotal = lines.locked.reduce((s, l) => s + l.draft, 0);
 
-	/** Coin marks: one per eighth of the envelope still held in the purse. */
-	const COIN_SLOTS = Array.from({ length: 8 }, (_, i) => i);
-	const held = $derived(
-		Math.round(Math.max(0, Math.min(1, P / lines.envelope)) * COIN_SLOTS.length)
-	);
-	/**
-	 * The direction of the last move lives in state, not in the log: undo and a
-	 * step too small to change the coin count still animate the way the money
-	 * went. +1 is a take (into the purse), -1 is a give (out of it).
-	 */
-	let coinDir = $state<0 | 1 | -1>(0);
-	/** One entry per undoable move: the direction for the animation and how many log entries it wrote. */
-	let moveLog = $state<{ dir: 0 | 1 | -1; steps: number }[]>([]);
-	let moveSeq = $state(0);
+	let active = $state<LineId | null>(null);
+	let carrying = $state<string | null>(null);
+	let over = $state<string | null>(null);
+	let refusedId = $state<string | null>(null);
+	let message = $state('');
+	let view = $state<'bars' | 'table'>('bars');
+	let listEl = $state<HTMLElement | undefined>(undefined);
+	let rootEl = $state<HTMLElement | undefined>(undefined);
 
-	/** Pointer drag: what is being dragged and which target it is over. */
-	type DragFrom = { kind: 'system'; id: LineId } | { kind: 'purse' };
-	let drag = $state<DragFrom | null>(null);
-	let dropAt = $state<LineId | 'purse' | null>(null);
+	const activeRow = $derived(active ? rows.find((r) => r.id === active)! : null);
+	const takeMd = $derived(active ? B.takeAmount(board, game, active) : 0);
+	const giveMd = $derived(active ? B.giveAmount(board, game, active) : 0);
+	const stepOf = (id: LineId) => (rule === 'step' ? fmtMd(B.stepMd(B.findLine(board, id))) : '');
+	const unitLabel = (id: string) => {
+		if (id === 'purse') return `${fmtMd(rule === 'coin' ? Math.min(B.COIN_MD, Math.max(P, 0)) : P)} MD`;
+		const amount = B.takeAmount(board, game, id as LineId);
+		return `${fmtMd(amount || (rule === 'coin' ? B.COIN_MD : B.stepMd(B.findLine(board, id as LineId))))} MD`;
+	};
 
-	/** The coin that crosses the board on a take or a give, in transform only. */
-	let boardEl = $state<HTMLElement>();
-	let purseEl = $state<HTMLElement>();
-	let flight = $state<{ fx: number; fy: number; tx: number; ty: number; seq: number } | null>(null);
-	let flightTimer: ReturnType<typeof setTimeout> | undefined;
+	function describe(entry: B.LogEntry): string {
+		const n = (id: LineId | null) => (id ? c.lines[id].name : '');
+		if (entry.kind === 'take') return t.took(fmtMd(entry.md), n(entry.from));
+		if (entry.kind === 'give') return t.gave(fmtMd(entry.md), n(entry.to));
+		if (entry.kind === 'move')
+			return Math.abs(entry.md - entry.mdIn) < 1e-9
+				? t.moved(fmtMd(entry.md), n(entry.from), n(entry.to))
+				: t.movedStep(fmtMd(entry.md), fmtMd(entry.mdIn), n(entry.from), n(entry.to));
+		return t.kept;
+	}
+	const recent = $derived(game.log.slice(-4).reverse().map(describe));
 
-	/** The note dialog and the rules dialog (the full hint on phone). */
-	let noteDialog = $state<HTMLDialogElement>();
-	let hintDialog = $state<HTMLDialogElement>();
-	let noteLine = $state<LineId | null>(null);
-	let noteTrigger: HTMLElement | null = null;
-
-	/** Signed MD for the difference. The sign is the first direction signal; the words repeat it. */
-	function diffMd(d: Difference): string {
-		if (d.direction === 'same') return `0\u00a0${unit}`;
-		return `${d.deltaMd > 0 ? '+' : '−'}${fmt(Math.abs(d.deltaMd))}\u00a0${unit}`;
-	}
-	function pctText(d: Difference): string {
-		if (d.direction === 'same') return '0.0%';
-		return `${d.deltaPct > 0 ? '+' : '−'}${Math.abs(d.deltaPct).toFixed(1)}%`;
-	}
-	function diffWords(d: Difference): string {
-		return d.direction === 'more'
-			? c.board.moreThanPlan
-			: d.direction === 'less'
-				? c.board.lessThanPlan
-				: c.board.sameAsPlan;
-	}
-	function ledgerText(entry: LogEntry): string {
-		if (entry.kind === 'keep') return c.board.kept;
-		const name = entry.line ? c.lines[entry.line].name : '';
-		return entry.kind === 'take'
-			? c.board.tookFrom(`${fmt(entry.md)}`, name)
-			: c.board.gaveTo(`${fmt(entry.md)}`, name);
-	}
-	/** The short refusal for a give: the cap first, then the purse. */
-	function giveReason(r: (typeof rows)[number]): string {
-		if (r.giveOk) return '';
-		return r.level >= MAX_LEVEL ? c.board.reasonAtMax : c.board.reasonNoPurse(fmt(P));
-	}
-	function takeReason(r: (typeof rows)[number]): string {
-		return r.takeOk ? '' : c.board.reasonAtZero;
+	function el(id: string): Element | null {
+		return rootEl?.querySelector(`[data-drop="${id}"]`) ?? null;
 	}
 
-	const drop = $derived(planDrop(drag, dropAt));
-
-	/**
-	 * What a drop between these two ends would do, or null when there is no
-	 * target or the target is the system the drag came from. The text is the cue
-	 * shown while dragging: what the drop does, or the words of the refusal.
-	 */
-	function planDrop(
-		active: DragFrom | null,
-		target: LineId | 'purse' | null
-	): { target: 'purse' | LineId; ok: boolean; text: string } | null {
-		if (!active || target === null) return null;
-		if (active.kind === 'purse') {
-			if (target === 'purse') return null;
-			const row = rows.find((r) => r.line.id === target);
-			if (!row) return null;
-			if (row.giveOk) return { target, ok: true, text: c.board.give(fmt(row.step)) };
-			return {
-				target,
-				ok: false,
-				text:
-					row.level >= MAX_LEVEL
-						? c.board.reasonAtMax
-						: c.board.notEnough(fmt(P), fmt(row.step))
-			};
-		}
-		if (target === 'purse') {
-			const row = rows.find((r) => r.line.id === active.id);
-			if (!row) return null;
-			return row.takeOk
-				? { target, ok: true, text: c.board.take(fmt(row.step)) }
-				: { target, ok: false, text: c.board.reasonAtZero };
-		}
-		if (target === active.id) return null;
-		const from = rows.find((r) => r.line.id === active.id);
-		const to = rows.find((r) => r.line.id === target);
-		if (!from || !to) return null;
-		if (!from.takeOk) return { target, ok: false, text: c.board.reasonAtZero };
-		if (to.level >= MAX_LEVEL) return { target, ok: false, text: c.board.reasonAtMax };
-		const afterTake = P + from.step;
-		if (afterTake + 1e-6 < to.step)
-			return { target, ok: false, text: c.board.notEnough(fmt(afterTake), fmt(to.step)) };
-		return { target, ok: true, text: c.board.give(fmt(to.step)) };
-	}
-	function isTarget(id: LineId | 'purse', ok: boolean): boolean {
-		const d = drop;
-		return !!d && d.target === id && d.ok === ok;
-	}
-	function systemEl(id: LineId): HTMLElement | null {
-		return document.getElementById(`sys-${id}`);
-	}
-	function focusSystem(id: LineId) {
-		systemEl(id)?.focus();
-	}
-	/** The refusal in words for a transfer, from the same rules the cue uses. */
-	function transfer(fromId: LineId, toId: LineId) {
-		const result = transferState(board, game, fromId, toId);
-		if (isRefused(result)) {
-			const plan = planDrop({ kind: 'system', id: fromId }, toId);
-			refusal = plan && !plan.ok ? plan.text : c.board.reasonAtZero;
-			return;
-		}
-		game = result;
-		refusal = '';
-		afterMove(0, null, 2);
-	}
-	function beginDrag(e: PointerEvent, from: DragFrom) {
-		if (e.pointerType === 'mouse' && e.button !== 0) return;
-		drag = from;
-		dropAt = null;
-		refusal = '';
-		try {
-			(e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
-		} catch {
-			// The pointer was already released; the drag ends on the next move.
-		}
-		e.preventDefault();
-	}
-	function beginPurseDrag(e: PointerEvent) {
-		// On touch, only the coin stack is a handle, so the rest of the purse still scrolls.
-		if (e.pointerType !== 'mouse' && !(e.target as HTMLElement).closest('.stack')) return;
-		beginDrag(e, { kind: 'purse' });
-	}
-	function dropTargetAt(e: PointerEvent): LineId | 'purse' | null {
-		const under = document.elementFromPoint(e.clientX, e.clientY) as HTMLElement | null;
-		const holder = under?.closest<HTMLElement>('[data-drop]');
-		const value = holder?.dataset.drop ?? '';
-		if (value === 'purse') return 'purse';
-		return rows.some((r) => r.line.id === value) ? (value as LineId) : null;
-	}
-	function moveDrag(e: PointerEvent) {
-		if (!drag) return;
-		dropAt = dropTargetAt(e);
-	}
-	function cancelDrag() {
-		drag = null;
-		dropAt = null;
-	}
-	function endDrag(e: PointerEvent) {
-		const active = drag;
-		if (!active) return;
-		// Trust the release point over the last move, so a fast drag still lands.
-		const released = dropTargetAt(e);
-		const plan = planDrop(active, released);
-		try {
-			(e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
-		} catch {
-			// Nothing captured, nothing to release.
-		}
-		drag = null;
-		dropAt = null;
-		if (plan && !plan.ok) {
-			// Keep the reason on screen after the pointer is gone.
-			refusal = plan.text;
-			return;
-		}
-		if (!plan) return;
-		const target = plan.target;
-		if (active.kind === 'purse') {
-			if (target !== 'purse') give(target, systemEl(target));
-			return;
-		}
-		if (target === 'purse') take(active.id, systemEl(active.id));
-		else transfer(active.id, target);
-	}
-	function rowKey(e: KeyboardEvent, id: LineId) {
-		// Only the row itself: arrow keys inside its buttons keep their own meaning.
-		if (e.target !== e.currentTarget) return;
-		const i = order.indexOf(id);
-		if (i < 0) return;
-		if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
-			const next = order[e.key === 'ArrowUp' ? i - 1 : i + 1];
-			if (!next) return;
-			e.preventDefault();
-			focusSystem(next);
-			return;
-		}
-		if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
-		e.preventDefault();
-		const step = e.key === 'ArrowLeft' ? -1 : 1;
-		if (e.shiftKey) {
-			const to = order[i + step];
-			if (to) transfer(id, to);
-			return;
-		}
-		if (step === -1) take(id, systemEl(id));
-		else give(id, systemEl(id));
+	function refuse(why: B.Refusal, id: string) {
+		const name = nameOf(id);
+		message = t.refusal(why, name, fmtMd(P), id !== 'purse' && rule === 'step' && why === 'purse' ? stepOf(id as LineId) : '');
+		refusedId = id;
+		setTimeout(() => {
+			if (refusedId === id) refusedId = null;
+		}, 400);
 	}
 
-	/** Computes the flight in board-relative pixels so the overlay needs no physical insets. */
-	function fly(from: HTMLElement | null, dir: 1 | -1) {
-		if (!from || !purseEl || !boardEl) return;
-		const a = from.getBoundingClientRect();
-		const p = purseEl.getBoundingClientRect();
-		const b = boardEl.getBoundingClientRect();
-		const cx = b.left + b.width / 2;
-		const cy = b.top + b.height / 2;
-		const sx = a.left + a.width / 2 - cx;
-		const sy = a.top + a.height / 2 - cy;
-		const px = p.left + p.width / 2 - cx;
-		const py = p.top + p.height / 2 - cy;
-		const fx = dir === 1 ? sx : px;
-		const fy = dir === 1 ? sy : py;
-		const tx = dir === 1 ? px : sx;
-		const ty = dir === 1 ? py : sy;
-		flight = { fx, fy, tx, ty, seq: moveSeq };
-		if (flightTimer) clearTimeout(flightTimer);
-		flightTimer = setTimeout(() => (flight = null), 240);
-	}
-	function afterMove(dir: number, from: HTMLElement | null, steps = 1) {
-		coinDir = dir === 0 ? 0 : dir > 0 ? 1 : -1;
-		moveLog = [...moveLog, { dir: coinDir, steps }];
-		moveSeq += 1;
-		if (coinDir !== 0) fly(from, coinDir);
-	}
-	function take(id: LineId, from: HTMLElement | null) {
-		if (!B.takeProblem(game, id)) {
-			game = B.take(board, game, id);
-			afterMove(1, from);
-			refusal = '';
-			return;
+	/** One move from `from` to `to`; either may be the purse. Returns false when refused. */
+	function moveMoney(from: string, to: string): boolean {
+		let next: B.BoardState;
+		if (from === 'purse' && to === 'purse') return false;
+		if (from === 'purse') {
+			const why = B.giveProblem(board, game, to as LineId);
+			if (why) return (refuse(why, to), false);
+			next = B.give(board, game, to as LineId);
+		} else if (to === 'purse') {
+			const why = B.takeProblem(board, game, from as LineId);
+			if (why) return (refuse(why, from), false);
+			next = B.take(board, game, from as LineId);
+		} else {
+			const why = B.transferProblem(board, game, from as LineId, to as LineId);
+			if (why) return (refuse(why, why === 'zero' ? from : to), false);
+			next = B.transfer(board, game, from as LineId, to as LineId);
 		}
-		refusal = c.board.reasonAtZero;
-	}
-	function give(id: LineId, from: HTMLElement | null) {
-		if (!B.giveProblem(board, game, id)) {
-			game = B.give(board, game, id);
-			afterMove(-1, from);
-			refusal = '';
-			return;
-		}
-		refusal =
-			game.levels[id] >= MAX_LEVEL ? c.board.reasonAtMax : c.board.reasonNoPurse(fmt(P));
-	}
-	function keep() {
-		const dir = P > 0.5 ? -1 : P < -0.5 ? 1 : 0;
-		game = B.keepDraft(board, game);
-		afterMove(dir, null);
-		refusal = '';
-	}
-	function undo() {
-		const last = moveLog[moveLog.length - 1] ?? { dir: 0, steps: 1 };
-		moveLog = moveLog.slice(0, -1);
-		coinDir = last.dir === 0 ? 0 : last.dir === 1 ? -1 : 1;
-		moveSeq += 1;
-		refusal = '';
-		// A transfer wrote two entries, so one undo steps back over both.
-		let next = game;
-		for (let i = 0; i < last.steps; i++) next = B.undo(next);
+		const entry = next.log[next.log.length - 1];
+		flyCoin(el(from), el(to), `${fmtMd(entry.md)}`);
 		game = next;
+		message = describe(entry);
+		return true;
+	}
+
+	function select(id: string) {
+		if (id === 'purse') return;
+		active = id as LineId;
+		message = '';
+	}
+
+	// Take and Give buttons: one move per press, and holding keeps money flowing.
+	let holdDelay: ReturnType<typeof setTimeout> | null = null;
+	let holdTick: ReturnType<typeof setInterval> | null = null;
+	function stopHold() {
+		if (holdDelay) clearTimeout(holdDelay);
+		if (holdTick) clearInterval(holdTick);
+		holdDelay = holdTick = null;
+	}
+	function hold(e: PointerEvent, from: string, to: string) {
+		if (e.button !== 0) return;
+		e.preventDefault();
+		stopHold();
+		if (!moveMoney(from, to)) return;
+		holdDelay = setTimeout(() => {
+			holdTick = setInterval(() => {
+				if (!moveMoney(from, to)) stopHold();
+			}, 110);
+		}, 450);
+	}
+	function press(e: MouseEvent, from: string, to: string) {
+		// Pointer presses are handled by hold(); this is the keyboard path (detail 0).
+		if (e.detail === 0) moveMoney(from, to);
+	}
+
+	// Keys on the list of systems.
+	function onkey(e: KeyboardEvent) {
+		const ids = rows.map((r) => r.id);
+		const i = active ? ids.indexOf(active) : -1;
+		const go = (j: number) => {
+			active = ids[(j + ids.length) % ids.length];
+			void tick().then(() => el(active!)?.scrollIntoView({ block: 'nearest' }));
+		};
+		if (e.key === 'ArrowDown') go(i + 1);
+		else if (e.key === 'ArrowUp') go(i - 1);
+		else if (e.key === 'Home') go(0);
+		else if (e.key === 'End') go(ids.length - 1);
+		else if ((e.key === '-' || e.key === '_') && active) moveMoney(active, 'purse');
+		else if ((e.key === '+' || e.key === '=') && active) moveMoney('purse', active);
+		else if ((e.key === 'Enter' || e.key === ' ') && active) {
+			if (!carrying) {
+				carrying = active;
+				message = t.carrying(unitLabel(active).replace(' MD', ''), nameOf(active));
+			} else if (carrying !== active) moveMoney(carrying, active);
+		} else if (e.key === 'Escape' && carrying) {
+			carrying = null;
+			message = '';
+		} else return;
+		e.preventDefault();
+	}
+
+	function undo() {
+		game = B.undo(game);
+		message = '';
 	}
 	function reset() {
-		game = B.startBoard(board, mode);
-		moveLog = [];
-		coinDir = 0;
-		flight = null;
-		refusal = '';
-		drag = null;
-		dropAt = null;
+		game = start();
+		active = null;
+		message = '';
 	}
-	function finish() {
-		if (done) onfinish?.(game, board);
+	function keep() {
+		game = B.keepDraft(board, game);
+		message = t.kept;
 	}
-	function openNote(id: LineId, trigger: HTMLElement | null) {
-		noteTrigger = trigger;
-		noteLine = id;
-		noteDialog?.showModal();
-	}
-	function closeNote() {
-		noteDialog?.close();
-	}
-	function onNoteClose() {
-		noteLine = null;
-		noteTrigger?.focus();
-	}
-	const startLabel = $derived(mode === 'draft' ? c.board.startDraft : c.board.startEmpty);
-	const balanceText = $derived(
-		done && Math.abs(P) < 0.5 ? c.board.balanced : done ? c.board.leftover(fmt(P)) : ''
-	);
+
+	onMount(() => {
+		if (!listEl) return;
+		const parent = listEl.closest('.board') as HTMLElement;
+		const stop = dragMoney(parent, {
+			canStart: (id) => (id === 'purse' ? P > 0 : true),
+			onStart: (id) => {
+				carrying = id;
+				if (id !== 'purse') active = id as LineId;
+			},
+			onOver: (id) => (over = id),
+			onDrop: (from, to) => moveMoney(from, to),
+			onTap: (id) => select(id),
+			onEnd: () => {
+				carrying = null;
+				over = null;
+			},
+			label: (id) => unitLabel(id)
+		});
+		return () => {
+			stop();
+			stopHold();
+		};
+	});
+
+	// A message fades after a few seconds; the ledger keeps the record.
+	$effect(() => {
+		if (!message) return;
+		const shown = message;
+		const timer = setTimeout(() => {
+			if (message === shown) message = '';
+		}, 3200);
+		return () => clearTimeout(timer);
+	});
+
+	const purseState = $derived(Math.abs(P) < 1e-9 ? 'empty' : done ? 'leftover' : 'hold');
 </script>
 
-<section class="board" bind:this={boardEl} aria-labelledby="h-board" lang={app.locale}>
-	<div
-		class="purse"
-		class:drop-ok={isTarget('purse', true)}
-		class:drop-no={isTarget('purse', false)}
-		data-drop="purse"
-	>
-		<p class="purse-label">{c.board.purse}</p>
-		<div
-			class="purse-main"
-			role="status"
-			aria-live="polite"
-			onpointerdown={beginPurseDrag}
-			onpointermove={moveDrag}
-			onpointerup={endDrag}
-			onpointercancel={cancelDrag}
-			onlostpointercapture={cancelDrag}
-		>
-			<div class="stack" bind:this={purseEl} aria-hidden="true">
-				{#key held}
-					<span class="slots" class:drop={coinDir > 0} class:lift={coinDir < 0}>
-						{#each COIN_SLOTS as i (i)}
-							<span class="coin" class:on={i < held}></span>
-						{/each}
-					</span>
-				{/key}
-			</div>
-			<div class="purse-figures">
-				<span class="amount purse-value">{fmt(P)} <span class="unit">{unit}</span></span>
-				<p class="progress">{c.board.purseProgress(fmt(placedMd), fmt(lines.envelope))}</p>
-			</div>
-		</div>
-		<p class="purse-rule">{c.board.purseHint}</p>
-		<button type="button" class="quiet hint-toggle" onclick={() => hintDialog?.showModal()}>
-			{c.board.hintToggle}
-		</button>
-		{#if refusal}
-			<p class="refusal" aria-live="polite">{refusal}</p>
-		{/if}
-		{#if drag && drop}
-			<p class="drag-cue" aria-hidden="true">{drop.text}</p>
-		{/if}
-	</div>
+<svelte:window onpointerup={stopHold} onblur={stopHold} />
 
-	<div class="side">
-		<div class="toolbar">
-			<button type="button" class="quiet" onclick={() => (view = view === 'bars' ? 'table' : 'bars')} aria-pressed={view === 'table'}>{c.board.tableView}</button>
-			<button type="button" class="quiet" onclick={undo} disabled={game.snapshots.length === 0}>{c.board.undo}</button>
-			<button type="button" class="quiet reset" onclick={reset}>{startLabel}</button>
-			<button type="button" class="quiet" onclick={keep} disabled={kept}>{c.board.keep}</button>
-			<button type="button" class="cta" onclick={finish} disabled={!done}>{c.board.finish}</button>
+<div class="board" class:carrying={!!carrying} data-rule={rule} bind:this={rootEl}>
+	<!-- The purse, with what is spent before you start. -->
+	<section class="purse-zone" aria-label={t.purse}>
+		<p class="badge">{t.badge}<span class="rule">{t.rule[rule]}</span></p>
+		<h1 class="title">{t.title}</h1>
+
+		<div class="purse" class:target={over === 'purse'} class:refused={refusedId === 'purse'} data-drop="purse" data-state={purseState}>
+			<span class="purse-label">{t.purse}</span>
+			<span class="purse-amount num">{fmtMd(Math.max(P, 0))}<small>{t.unit}</small></span>
+			<span class="purse-note">
+				{purseState === 'empty' ? t.purseEmpty : purseState === 'leftover' ? t.purseLeftover : t.purseToPlace}
+			</span>
+			<span class="meter" aria-hidden="true"><span style:inline-size="{Math.min(100, (Math.max(P, 0) / lines.envelope) * 100)}%"></span></span>
+		</div>
+		<div class="tools">
+			<button type="button" class="tool" onclick={undo} disabled={game.snapshots.length === 0} aria-label={t.undo} title={t.undo}><span aria-hidden="true">↶</span></button>
+			<button type="button" class="tool" onclick={() => (view = view === 'bars' ? 'table' : 'bars')} aria-pressed={view === 'table'} aria-label={t.table} title={t.table}><span aria-hidden="true">{view === 'bars' ? '☰' : '▥'}</span></button>
 		</div>
 
 		<div class="locked">
-			<h3 class="sub">{c.board.locked}</h3>
-			<p class="locked-line">{c.board.lockedText(fmt(lockedTotal))}</p>
-			<ul>
-				{#each lines.locked as l (l.id)}
-					<li>{c.lines[l.id].name}: {fmt(l.draft)} {unit}</li>
-				{/each}
-			</ul>
+			<span class="locked-swatch" aria-hidden="true"></span>
+			<p><strong>{t.lockedTitle}: <span class="num">{fmtMd(lockedTotal)} MD</span></strong> {t.lockedBody(fmtMd(debt.draft), fmtMd(reserve.draft))}</p>
+		</div>
+	</section>
+
+	<!-- The systems. -->
+	<section class="systems" aria-label={c.board.systems}>
+		<div class="legend">
+			<span class="key"><span class="sw plan" aria-hidden="true"></span>{t.legendPlan}</span>
+			<span class="key"><span class="sw mine" aria-hidden="true"></span>{t.legendYours}</span>
+			<span class="scale">{t.scale(fmtMd(SCALE))}</span>
+			<button type="button" class="link" onclick={() => (view = view === 'bars' ? 'table' : 'bars')} aria-pressed={view === 'table'}>
+				{view === 'bars' ? t.table : t.bars}
+			</button>
 		</div>
 
-		<section class="ledger" aria-labelledby="h-ledger">
-			<h3 id="h-ledger" class="sub">{c.board.ledger}</h3>
-			<ol>
-				{#each ledger as entry, i (i + '-' + game.log.length)}
-					<li>{ledgerText(entry)}</li>
-				{/each}
-			</ol>
-		</section>
-	</div>
-
-	<div class="field">
-		<h2 id="h-board" class="title">{c.board.title}</h2>
-		<p class="hint">{c.board.hint}</p>
-		{#if mode === 'draft'}<p class="note">{c.board.startNote}</p>{/if}
-
 		{#if view === 'bars'}
-			<p class="legend">
-				<span class="legend-item">
-					<span class="swatch plan" aria-hidden="true"></span>{c.board.planLabel}
-				</span>
-				<span class="legend-item">
-					<span class="swatch yours" aria-hidden="true"></span>{c.board.yoursLabel}
-				</span>
-			</p>
-			<div class="systems">
-				{#each groups as g (g.key)}
-					<section class="group {g.key}" style:--rows={g.rows.length}>
-						<h3 class="group-title">{c.board.groups[g.key]}</h3>
-						<ul class="group-list">
-							{#each g.rows as r (r.line.id)}
-								<!-- The row itself takes focus and the arrow keys, as the board's keyboard rules require; ARIA has no focusable list row. -->
-								<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
-								<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
-								<li
-									class="system"
-									class:wide={r.line.id === 'education' || r.line.id === 'subsidies'}
-									class:drop-ok={isTarget(r.line.id, true)}
-									class:drop-no={isTarget(r.line.id, false)}
-									id="sys-{r.line.id}"
-									data-drop={r.line.id}
-									tabindex="0"
-									onkeydown={(e) => rowKey(e, r.line.id)}
-								>
-									<span
-										class="grip"
-										aria-hidden="true"
-										onpointerdown={(e) => beginDrag(e, { kind: 'system', id: r.line.id })}
-										onpointermove={moveDrag}
-										onpointerup={endDrag}
-										onpointercancel={cancelDrag}
-										onlostpointercapture={cancelDrag}
-									></span>
-									<div class="system-head">
-										<button
-											type="button"
-											class="name"
-											onclick={(e) => openNote(r.line.id, e.currentTarget)}
-										>{c.lines[r.line.id].name}</button>
-										<span class="delta">
-											<span class="delta-fig">{diffMd(r.diff)} · {pctText(r.diff)}</span>
-											<span class="delta-words">{diffWords(r.diff)}</span>
-										</span>
-									</div>
-									<div class="bars" aria-hidden="true">
-										<span class="track plan">
-											<span class="bar plan" data-series="plan" style:inline-size="{(r.line.draft / scaleMax) * 100}%"></span>
-										</span>
-										<span class="track yours">
-											<span class="bar yours" data-series="yours" style:inline-size="{(r.amount / scaleMax) * 100}%"></span>
-										</span>
-										<span class="tick" style:margin-inline-start="calc({(r.line.draft / scaleMax) * 100}% - var(--s-1))"></span>
-										<span class="bar-val plan-val">{fmt(r.line.draft)}</span>
-										<span class="bar-val yours-val">{fmt(r.amount)}</span>
-									</div>
-									<div class="actions">
-										<button
-											type="button"
-											class="take"
-											class:refused={!r.takeOk}
-											aria-disabled={!r.takeOk}
-											aria-label={r.takeOk ? c.board.take(fmt(r.step)) : `${c.board.take(fmt(r.step))}. ${takeReason(r)}`}
-											onclick={(e) => take(r.line.id, e.currentTarget)}
-										>{c.board.take(fmt(r.step))}</button>
-										<button
-											type="button"
-											class="give"
-											class:refused={!r.giveOk}
-											aria-disabled={!r.giveOk}
-											aria-label={r.giveOk ? c.board.give(fmt(r.step)) : `${c.board.give(fmt(r.step))}. ${giveReason(r)}`}
-											onclick={(e) => give(r.line.id, e.currentTarget)}
-										>{c.board.give(fmt(r.step))}</button>
-									</div>
-								</li>
+			<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
+			<div
+				class="list"
+				role="listbox"
+				tabindex="0"
+				aria-label={`${c.board.systems}. ${t.keys}`}
+				aria-activedescendant={active ? `sys-${active}` : undefined}
+				onkeydown={onkey}
+				bind:this={listEl}
+			>
+				{#each columns as col, k (k)}
+					<div class="col">
+						<div class="axis" aria-hidden="true">
+							{#each TICKS as v (v)}
+								<span style:inset-inline-start="{(v / SCALE) * 100}%">{v === 0 ? '0' : `${v / 1000}k`}</span>
 							{/each}
-						</ul>
-					</section>
+						</div>
+						{#each col as r (r.id)}
+							<div
+								class="slot"
+								id="sys-{r.id}"
+								role="option"
+								aria-selected={active === r.id}
+								aria-label={t.rowAria(
+									c.lines[r.id].name,
+									fmtMd(r.plan),
+									fmtMd(r.yours),
+									r.diff.direction === 'same' ? t.same : `${signed(r.diff.deltaMd)} MD, ${signed(r.diff.deltaPct, 1)}%, ${r.diff.direction === 'more' ? t.more : t.less}`
+								)}
+							>
+								<SystemRow
+									id={r.id}
+									name={c.lines[r.id].name}
+									plan={r.plan}
+									yours={r.yours}
+									scale={SCALE}
+									deltaMd={r.diff.deltaMd}
+									deltaPct={r.diff.deltaPct}
+									direction={r.diff.direction}
+									words={{ plan: t.plan, yours: t.yours, more: t.more, less: t.less, same: t.same }}
+									active={active === r.id}
+									target={over === r.id}
+									source={carrying === r.id}
+									refused={refusedId === r.id}
+								/>
+							</div>
+						{/each}
+					</div>
 				{/each}
 			</div>
 		{:else}
 			<div class="table-wrap">
-				<table class="figures">
-					<caption class="sr-only">{c.board.systems}</caption>
+				<table>
 					<thead>
-						<tr>
-							<th scope="col">{c.board.systems}</th>
-							<th scope="col" class="num">{c.board.draft} ({unit})</th>
-							<th scope="col" class="num">{c.board.yours} ({unit})</th>
-							<th scope="col" class="num">{c.board.change} ({unit})</th>
-							<th scope="col" class="num">{c.board.change} (%)</th>
-						</tr>
+						<tr><th scope="col">{t.th.system}</th><th scope="col">{t.th.plan}</th><th scope="col">{t.th.yours}</th><th scope="col">{t.th.md}</th><th scope="col">{t.th.pct}</th></tr>
 					</thead>
 					<tbody>
-						{#each rows as r (r.line.id)}
+						{#each rows as r (r.id)}
 							<tr>
-								<th scope="row">
-									<button type="button" class="name" onclick={(e) => openNote(r.line.id, e.currentTarget)}>{c.lines[r.line.id].name}</button>
-								</th>
-								<td class="num">{fmt(r.line.draft)}</td>
-								<td class="num">{fmt(r.amount)}</td>
-								<td class="num">{diffMd(r.diff)}</td>
-								<td class="num">{pctText(r.diff)}</td>
+								<th scope="row">{c.lines[r.id].name}</th>
+								<td>{fmtMd(r.plan)}</td>
+								<td>{fmtMd(r.yours)}</td>
+								<td>{signed(r.diff.deltaMd)}</td>
+								<td>{signed(r.diff.deltaPct, 1)}</td>
 							</tr>
 						{/each}
+						{#each lines.locked as l (l.id)}
+							<tr class="lockrow"><th scope="row">{c.lines[l.id].name}</th><td>{fmtMd(l.draft)}</td><td>{fmtMd(l.draft)}</td><td>0</td><td>0.0</td></tr>
+						{/each}
 					</tbody>
+					<tfoot>
+						<tr><th scope="row">{t.total}</th><td>{fmtMd(lines.total)}</td><td>{fmtMd(lines.total - P)}</td><td>{signed(-P)}</td><td></td></tr>
+					</tfoot>
 				</table>
 			</div>
 		{/if}
+	</section>
 
-		{#if balanceText}
-			<span class="stamp" aria-hidden="true">{balanceText}</span>
-		{/if}
-	</div>
+	<!-- The chosen system, the last moves and the actions. -->
+	<section class="dock" aria-label={t.change}>
+		<div class="chosen">
+			{#if activeRow}
+				<p class="chosen-name">{c.lines[activeRow.id].name}</p>
+				<p class="chosen-figs num">
+					<span>{t.plan} {fmtMd(activeRow.plan)}</span>
+					<span>{t.yours} {fmtMd(activeRow.yours)}</span>
+					<span data-dir={activeRow.diff.direction}>{t.change} <bdi dir="ltr">{signed(activeRow.diff.deltaMd)} · {signed(activeRow.diff.deltaPct, 1)}%</bdi></span>
+				</p>
+				<p class="chosen-note">{c.lines[activeRow.id].note}</p>
+				<div class="moves-buttons">
+					<button
+						type="button"
+						class="move take"
+						disabled={takeMd === 0}
+						aria-label={t.takeAria(fmtMd(takeMd || B.COIN_MD), c.lines[activeRow.id].name)}
+						onpointerdown={(e) => hold(e, activeRow.id, 'purse')}
+						onclick={(e) => press(e, activeRow.id, 'purse')}
+					>
+						<span class="glyph" aria-hidden="true">−</span>{t.take(fmtMd(takeMd || (rule === 'coin' ? B.COIN_MD : B.stepMd(B.findLine(board, activeRow.id)))))}<span class="unit">{t.unit}</span>
+					</button>
+					<button
+						type="button"
+						class="move give"
+						aria-disabled={giveMd === 0}
+						aria-label={t.giveAria(fmtMd(giveMd || B.COIN_MD), c.lines[activeRow.id].name)}
+						onpointerdown={(e) => (giveMd === 0 ? refuse(B.giveProblem(board, game, activeRow.id) ?? 'purse', activeRow.id) : hold(e, 'purse', activeRow.id))}
+						onclick={(e) => (giveMd === 0 ? e.detail === 0 && refuse(B.giveProblem(board, game, activeRow.id) ?? 'purse', activeRow.id) : press(e, 'purse', activeRow.id))}
+					>
+						{t.give(fmtMd(giveMd || (rule === 'coin' ? B.COIN_MD : B.stepMd(B.findLine(board, activeRow.id)))))}<span class="unit">{t.unit}</span><span class="glyph" aria-hidden="true">+</span>
+					</button>
+				</div>
+			{:else}
+				<p class="chosen-name muted">{t.pick}</p>
+				<p class="howto">{t.howTo[rule]}</p>
+				<div class="moves-buttons idle">
+					<button type="button" class="move take" onclick={keep}>{t.keep}</button>
+					<button type="button" class="move take" onclick={reset}>{t.reset}</button>
+				</div>
+			{/if}
+		</div>
 
-	{#if flight}
-		{#key flight.seq}
-			<span
-				class="fly"
-				aria-hidden="true"
-				style="--fx: {flight.fx}px; --fy: {flight.fy}px; --tx: {flight.tx}px; --ty: {flight.ty}px"
-			></span>
-		{/key}
-	{/if}
-</section>
+		<p class="message" class:ready={!message && done} role="status" aria-live="polite">{message || (done ? t.ready : '')}</p>
 
-<dialog
-	class="sheet"
-	bind:this={noteDialog}
-	onclose={onNoteClose}
-	onclick={(e) => {
-		if (e.target === noteDialog) closeNote();
-	}}
-	aria-labelledby="note-title"
->
-	{#if noteLine}
-		<h3 id="note-title">{c.board.noteTitle}</h3>
-		<p class="note-name">{c.lines[noteLine].name}</p>
-		<p>{c.lines[noteLine].note}</p>
-	{/if}
-	<button type="button" class="quiet close" onclick={closeNote}>{c.board.hintClose}</button>
-</dialog>
+		<div class="ledger">
+			<p class="ledger-title">{t.moves}</p>
+			{#if recent.length}
+				<ol>
+					{#each recent as line, i (i + line)}<li>{line}</li>{/each}
+				</ol>
+			{:else}
+				<p class="muted">{t.noMoves}</p>
+			{/if}
+		</div>
 
-<dialog
-	class="sheet"
-	bind:this={hintDialog}
-	onclick={(e) => {
-		if (e.target === hintDialog) hintDialog?.close();
-	}}
-	aria-label={c.board.hintToggle}
->
-	<p>{c.board.hint}</p>
-	<button type="button" class="quiet close" onclick={() => hintDialog?.close()}>{c.board.hintClose}</button>
-</dialog>
+		<div class="actions">
+			<button type="button" class="ghost" onclick={undo} disabled={game.snapshots.length === 0}>{t.undo}</button>
+			<button type="button" class="ghost" onclick={keep}>{t.keep}</button>
+			<button type="button" class="ghost" onclick={reset}>{t.reset}</button>
+			<button type="button" class="finish" disabled={!done} onclick={() => onfinish?.(game, board)}>
+				{#if done}{t.finish}{:else}<span class="long">{t.finishNeeds(fmtMd(Math.abs(P)))}</span><span class="short">{t.finish}</span>{/if}
+			</button>
+		</div>
+		{#if t.interim}<p class="interim">{t.interim}</p>{/if}
+	</section>
+</div>
 
 <style>
+	/*
+	 * Layout: an instrument, dense and ruled like a ledger. Desk: a 20rem
+	 * column (purse, chosen system, actions) beside the sixteen systems in two
+	 * columns. Phone: purse bar, systems, dock, top to bottom, one screen.
+	 */
 	.board {
-		position: relative;
+		--panel-w: 20rem;
+		flex: 1;
+		min-block-size: 0;
+		block-size: 100%;
 		display: grid;
-		grid-template-columns: minmax(200px, 288px) minmax(0, 1fr);
+		grid-template-columns: var(--panel-w) minmax(0, 1fr);
 		grid-template-rows: auto minmax(0, 1fr);
 		grid-template-areas:
-			'purse field'
-			'side field';
-		gap: var(--s-4);
-		block-size: 100%;
-		padding: var(--s-4) var(--s-6);
-	}
-	.purse {
-		grid-area: purse;
-		position: relative;
-		display: flex;
-		flex-direction: column;
-		gap: var(--s-2);
-		padding: var(--s-3) var(--s-4);
-		background: var(--surface-raised);
-		border: var(--rule);
-		border-radius: var(--r-md);
-	}
-	.purse-label {
-		margin: 0;
-		font-family: var(--font-mono);
-		font-size: var(--t-xs);
-		text-transform: uppercase;
-		letter-spacing: var(--track-wide);
-		color: var(--text-muted);
-	}
-	.purse-main {
-		display: flex;
-		align-items: stretch;
-		gap: var(--s-3);
-	}
-	.stack {
-		flex: none;
-		inline-size: var(--s-6);
-		block-size: var(--s-11);
-		padding: var(--s-1);
-		background: var(--surface-base);
-		border: var(--rule);
-		border-radius: var(--r-sm);
-		touch-action: none;
-	}
-	.slots {
-		display: flex;
-		flex-direction: column-reverse;
-		gap: var(--s-1);
-		block-size: 100%;
-		inline-size: 100%;
-	}
-	.coin {
-		flex: 1 1 0;
-		min-block-size: 0;
-		border-radius: var(--r-full);
-		background: var(--surface-base);
-	}
-	.coin.on {
-		background: var(--accent);
-	}
-	.slots.drop .coin.on,
-	.slots.lift .coin.on {
-		animation: coin-pop var(--dur-fast) var(--ease-out) both;
-	}
-	.purse-figures {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		gap: var(--s-1);
-		min-inline-size: 0;
-	}
-	.amount {
-		font-variant-numeric: tabular-nums;
-		line-height: var(--lh-tight);
-		white-space: nowrap;
-	}
-	.purse-value {
-		font-family: var(--font-mono);
-		font-size: var(--step-3);
-		font-weight: 500;
-		letter-spacing: var(--track-tight);
-	}
-	.unit {
-		font-size: var(--t-sm);
-		font-weight: 500;
-		color: var(--text-muted);
-	}
-	.progress {
-		margin: 0;
-		font-family: var(--font-mono);
-		font-size: var(--t-2xs);
-		font-variant-numeric: tabular-nums;
-		color: var(--text-muted);
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-	}
-	.purse-rule {
-		display: none;
-	}
-	.hint-toggle {
-		display: none;
-	}
-	.refusal {
-		margin: 0;
-		font-size: var(--t-sm);
-		color: var(--rupture);
-	}
-	.drag-cue {
-		position: absolute;
-		inset-block-start: 100%;
-		inset-inline: 0;
-		z-index: 5;
-		margin: 0;
-		padding: var(--s-1) var(--s-3);
-		background: var(--surface-overlay);
-		border-block-end: var(--rule);
-		font-family: var(--font-mono);
-		font-size: var(--t-2xs);
-		font-variant-numeric: tabular-nums;
+			'purse systems'
+			'dock systems';
+		column-gap: var(--s-8);
+		padding: var(--s-6) var(--s-8);
+		font-family: var(--font-sans);
 		color: var(--text-primary);
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
+		background: var(--surface-base);
 	}
-	.side {
-		grid-area: side;
-		display: flex;
-		flex-direction: column;
-		gap: var(--s-3);
-		min-block-size: 0;
-		overflow: hidden;
+	.num {
+		font-family: var(--font-mono);
+		font-variant-numeric: tabular-nums;
 	}
-	.toolbar {
-		display: grid;
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-		gap: var(--s-2);
-	}
-	.toolbar .cta {
-		grid-column: 1 / -1;
-	}
-	.locked {
-		padding-block: var(--s-3);
-		padding-inline: 0;
-		border: 0;
-		border-block-start: var(--rule);
-		border-radius: 0;
-		background: transparent;
+	.muted {
 		color: var(--text-muted);
 	}
-	.locked .sub {
-		margin-block: 0 var(--s-1);
+
+	/* Purse zone */
+	.purse-zone {
+		grid-area: purse;
+		display: grid;
+		gap: var(--s-5);
+		align-content: start;
 	}
-	.locked-line {
-		margin: 0;
-		font-size: var(--t-sm);
-	}
-	.locked ul {
-		margin: var(--s-1) 0 0;
-		padding-inline-start: var(--s-5);
-		font-size: var(--t-sm);
-	}
-	.ledger {
-		min-block-size: 0;
-		overflow: hidden;
-	}
-	.ledger .sub {
-		margin-block: 0 var(--s-1);
-	}
-	.ledger ol {
-		margin: 0;
-		padding-inline-start: var(--s-5);
-		font-size: var(--t-sm);
-		color: var(--text-secondary);
-	}
-	.field {
-		grid-area: field;
-		position: relative;
+	.badge {
 		display: flex;
-		flex-direction: column;
-		min-block-size: 0;
+		flex-wrap: wrap;
+		gap: var(--s-2) var(--s-4);
+		margin: 0;
+		font-family: var(--font-mono);
+		font-size: var(--t-2xs);
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--text-muted);
+	}
+	.rule {
+		color: var(--accent);
 	}
 	.title {
+		margin: 0;
 		font-family: var(--font-read);
-		font-size: var(--step-4);
-		font-weight: 400;
-		line-height: var(--lh-tight);
-		letter-spacing: var(--track-tight);
-		margin: 0 0 var(--s-2);
+		font-size: var(--step-1);
+		font-weight: 700;
+		line-height: 1.1;
+		letter-spacing: -0.01em;
+		text-wrap: balance;
 	}
-	.hint,
-	.note {
-		margin: 0 0 var(--s-3);
-		color: var(--text-muted);
-		font-size: var(--t-sm);
-		max-inline-size: var(--measure);
-	}
-	.sub {
-		font-size: var(--t-xs);
-		font-family: var(--font-mono);
-		text-transform: uppercase;
-		letter-spacing: var(--track-wide);
-		color: var(--text-muted);
-		margin: 0;
-	}
-	.legend {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		gap: var(--s-1) var(--s-5);
-		margin: 0 0 var(--s-2);
-		font-family: var(--font-mono);
-		font-size: var(--t-2xs);
-		text-transform: uppercase;
-		letter-spacing: var(--track-wide);
-		line-height: 1;
-		color: var(--text-muted);
-		white-space: nowrap;
-	}
-	.legend-item {
-		display: inline-flex;
-		align-items: center;
-		gap: var(--s-2);
-	}
-	.swatch {
-		flex: none;
-		inline-size: var(--s-5);
-		block-size: var(--s-1);
-		border-radius: 0;
-	}
-	.swatch.plan {
-		background: var(--text-muted);
-	}
-	.swatch.yours {
-		background: var(--accent);
-	}
-	.systems {
-		flex: 1;
-		min-block-size: 0;
-		display: grid;
-		grid-auto-rows: minmax(0, 1fr);
-		gap: var(--s-3);
-	}
-	.group {
-		display: flex;
-		flex-direction: column;
-		gap: var(--s-2);
-		min-block-size: 0;
-	}
-	.group-title {
-		display: flex;
-		align-items: baseline;
-		gap: var(--s-2);
-		margin: 0;
-		padding-block-end: var(--s-1);
-		border-block-end: var(--rule);
-		font-family: var(--font-mono);
-		font-size: var(--t-2xs);
-		line-height: 1;
-		text-transform: uppercase;
-		letter-spacing: var(--track-caps);
-		color: var(--text-muted);
-	}
-	.group-list {
-		flex: 1;
-		min-block-size: 0;
-		list-style: none;
-		margin: 0;
-		padding: 0;
-		display: grid;
-		grid-auto-rows: minmax(0, 1fr);
-		gap: 0;
-	}
-	.group.people .group-list {
-		grid-template-columns: repeat(5, minmax(0, 1fr));
-	}
-	.group.state .group-list {
-		grid-template-columns: repeat(7, minmax(0, 1fr));
-	}
-	.group.economy .group-list {
-		grid-template-columns: repeat(6, minmax(0, 1fr));
-	}
-	.system {
+	.purse {
 		position: relative;
 		display: grid;
-		grid-template-rows: auto minmax(0, 1fr) auto;
-		align-content: stretch;
-		gap: var(--s-2);
-		min-block-size: 0;
-		overflow: hidden;
-		padding-block: var(--s-2);
-		padding-inline: var(--s-6) var(--s-3);
-		background: transparent;
-		border: 0;
-		border-block-end: var(--rule);
-		border-radius: 0;
-	}
-	.system.wide {
-		grid-column: span 2;
-	}
-	.grip {
-		position: absolute;
-		inset-block-start: 0;
-		inset-inline-start: 0;
-		display: grid;
-		place-items: center;
-		inline-size: var(--s-6);
-		block-size: var(--s-6);
-		color: var(--text-muted);
+		grid-template-columns: 1fr auto;
+		align-items: baseline;
+		gap: var(--s-2) var(--s-4);
+		padding: var(--s-5) var(--s-6) var(--s-6);
+		border-radius: var(--r-lg);
+		background: var(--plate-bg);
+		color: var(--plate-ink);
 		cursor: grab;
 		touch-action: none;
+		user-select: none;
+		transition: box-shadow var(--dur-fast) var(--ease-out);
 	}
-	.grip::before {
-		content: '';
-		inline-size: var(--s-1);
-		block-size: var(--s-4);
+	.purse.target {
+		box-shadow: 0 0 0 3px var(--accent);
+	}
+	.purse.refused {
+		animation: nudge var(--dur-slow) var(--ease-out);
+	}
+	@keyframes nudge {
+		30% {
+			transform: translateX(var(--s-2));
+		}
+		60% {
+			transform: translateX(calc(-1 * var(--s-2)));
+		}
+	}
+	.purse-label {
+		font-family: var(--font-mono);
+		font-size: var(--t-xs);
+		letter-spacing: 0.14em;
+		text-transform: uppercase;
+		opacity: 0.7;
+	}
+	.purse-amount {
+		grid-column: 1 / -1;
+		font-size: var(--t-4xl);
+		font-weight: 600;
+		line-height: 1;
+		letter-spacing: -0.02em;
+	}
+	.purse-amount small {
+		margin-inline-start: var(--s-3);
+		font-size: var(--t-md);
+		font-weight: 500;
+		opacity: 0.7;
+	}
+	.purse[data-state='hold'] .purse-amount {
+		color: var(--accent);
+	}
+	.purse-note {
+		grid-column: 1 / -1;
+		font-size: var(--t-sm);
+		opacity: 0.8;
+	}
+	.meter {
+		grid-column: 1 / -1;
+		display: block;
+		block-size: var(--s-2);
 		border-radius: var(--r-full);
-		background: currentColor;
-		opacity: 0.45;
+		background: oklch(100% 0 0 / 0.12);
+		overflow: hidden;
 	}
-	.system:active .grip {
-		cursor: grabbing;
+	.meter span {
+		display: block;
+		block-size: 100%;
+		background: var(--accent);
+		transition: inline-size var(--dur-normal) var(--ease-out);
 	}
-	.system.drop-ok,
-	.purse.drop-ok {
-		outline: 2px solid var(--accent);
-		outline-offset: 2px;
+	.locked {
+		display: flex;
+		gap: var(--s-4);
+		align-items: flex-start;
 	}
-	.system.drop-no,
-	.purse.drop-no {
-		outline: 2px dashed var(--rupture);
-		outline-offset: 2px;
+	.locked p {
+		margin: 0;
+		font-size: var(--t-sm);
+		line-height: 1.45;
+		color: var(--text-secondary);
 	}
-	.system:focus-visible {
-		outline: 2px solid var(--accent);
-		outline-offset: 2px;
+	.locked strong {
+		color: var(--text-primary);
+		font-weight: 600;
 	}
-	.system-head {
+	.locked-swatch {
+		flex: none;
+		inline-size: var(--s-6);
+		block-size: var(--s-6);
+		margin-block-start: var(--s-1);
+		border-radius: var(--r-xs);
+		background: repeating-linear-gradient(135deg, var(--text-faint) 0 2px, transparent 2px 5px);
+		box-shadow: inset 0 0 0 1px var(--border-default);
+	}
+
+	.tools,
+	.moves-buttons.idle {
+		display: none;
+	}
+	.move .unit {
+		margin-inline-start: 0.3em;
+	}
+	.move {
+		white-space: nowrap;
+	}
+	.move .glyph {
+		font-family: var(--font-mono);
+		font-size: var(--t-lg);
+	}
+
+	/* Systems */
+	.systems {
+		grid-area: systems;
 		display: flex;
 		flex-direction: column;
-		align-items: flex-start;
-		gap: var(--s-1);
+		min-block-size: 0;
 		min-inline-size: 0;
 	}
-	.name {
-		margin: 0;
-		padding: 0;
-		border: 0;
-		background: none;
+	.legend {
+		flex: none;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: var(--s-2) var(--s-6);
+		padding-block-end: var(--s-4);
+		border-block-end: var(--rule);
+		font-size: var(--t-sm);
+		color: var(--text-secondary);
+	}
+	.key {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--s-3);
+	}
+	.sw {
+		inline-size: var(--s-6);
+		block-size: var(--s-3);
+		border-radius: var(--r-xs);
+	}
+	.sw.plan {
+		background: var(--text-faint);
+		opacity: 0.55;
+	}
+	.sw.mine {
+		background: var(--accent);
+	}
+	.scale {
+		font-family: var(--font-mono);
+		font-size: var(--t-xs);
+		color: var(--text-muted);
+	}
+	.link {
+		margin-inline-start: auto;
+		min-block-size: var(--s-9);
+		padding-inline: var(--s-5);
+		border: 1px solid var(--border-default);
+		border-radius: var(--r-full);
+		background: transparent;
 		color: var(--text-primary);
 		font: inherit;
 		font-size: var(--t-sm);
-		font-weight: 600;
-		line-height: var(--lh-tight);
-		text-align: start;
-		min-block-size: 0;
-		min-inline-size: 0;
-		max-inline-size: 100%;
 		cursor: pointer;
-		display: block;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
 	}
-	.name:hover {
-		color: var(--accent);
-		text-decoration: underline;
-	}
-	.delta {
-		display: flex;
-		flex-wrap: wrap;
-		column-gap: var(--s-2);
-		font-family: var(--font-mono);
-		font-size: var(--t-2xs);
-		font-variant-numeric: tabular-nums;
-		line-height: var(--lh-tight);
-		white-space: nowrap;
-	}
-	.delta-fig {
-		color: var(--text-secondary);
-	}
-	.delta-words {
-		color: var(--text-muted);
-	}
-	.bars {
-		display: grid;
-		grid-template-columns: minmax(0, 1fr) auto;
-		grid-template-rows: var(--s-4) var(--s-4);
-		column-gap: var(--s-2);
-		row-gap: var(--s-1);
-		align-self: end;
-	}
-	.track {
-		display: block;
-		position: relative;
-		grid-column: 1;
-		block-size: var(--s-4);
-		overflow: hidden;
-		background: var(--border-subtle);
-	}
-	.track.plan {
-		grid-row: 1;
-	}
-	.track.yours {
-		grid-row: 2;
-	}
-	.bar {
-		position: absolute;
-		inset-block: 0;
-		inset-inline-start: 0;
-		border-start-end-radius: var(--r-sm);
-		border-end-end-radius: var(--r-sm);
-		transition: inline-size var(--dur-normal) var(--ease-out);
-	}
-	.bar.plan {
-		background: var(--text-muted);
-	}
-	.bar.yours {
-		background: var(--accent);
-	}
-	.tick {
-		grid-column: 1;
-		grid-row: 1;
-		justify-self: start;
-		align-self: stretch;
-		inline-size: var(--s-1);
-		background: var(--text-primary);
-		z-index: 1;
-	}
-	.bar-val {
-		grid-column: 2;
-		align-self: center;
-		min-inline-size: 6ch;
-		font-family: var(--font-mono);
-		font-size: var(--t-2xs);
-		font-variant-numeric: tabular-nums;
-		line-height: 1;
-		color: var(--text-secondary);
-		text-align: end;
-		white-space: nowrap;
-	}
-	.plan-val {
-		grid-row: 1;
-	}
-	.yours-val {
-		grid-row: 2;
-	}
-	.actions {
-		display: flex;
-		flex-direction: column;
-		gap: var(--s-1);
-	}
-	.system.wide .actions {
-		flex-direction: row;
-	}
-	.actions button {
+	.list {
 		flex: 1;
-		min-block-size: var(--s-8);
-		padding-block: var(--s-1);
-		padding-inline: var(--s-2);
+		min-block-size: 0;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		column-gap: var(--s-8);
+		padding-block-start: var(--s-2);
+		outline: none;
+	}
+	.list:focus-visible {
+		box-shadow: var(--ring);
+		border-radius: var(--r-md);
+	}
+	.col {
+		position: relative;
+		display: grid;
+		grid-template-rows: var(--s-7) repeat(8, minmax(0, 1fr));
+		min-block-size: 0;
+	}
+	.axis {
+		position: relative;
+		margin-inline: var(--s-5) var(--s-4);
 		font-family: var(--font-mono);
 		font-size: var(--t-2xs);
-		font-variant-numeric: tabular-nums;
-		line-height: var(--lh-tight);
-		border-radius: var(--r-sm);
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
+		color: var(--text-faint);
 	}
-	button {
-		font: inherit;
-		min-block-size: var(--touch);
-		padding: var(--s-2) var(--s-3);
-		border: var(--rule);
-		border-radius: var(--r-md);
-		background: var(--surface-raised);
-		color: var(--text-primary);
-		cursor: pointer;
+	.axis span {
+		position: absolute;
+		inset-block-end: var(--s-1);
+		transform: translateX(-50%);
 	}
-	.take {
-		background: transparent;
-		border: var(--rule);
-		border-color: var(--border-strong);
-		color: var(--text-secondary);
+	:global([dir='rtl']) .axis span {
+		transform: translateX(50%);
 	}
-	.take:hover {
-		border-color: var(--border-strong);
-		color: var(--text-primary);
+	.axis span:first-child {
+		transform: none;
 	}
-	.give {
-		background: var(--accent);
-		border-color: var(--accent);
-		color: var(--accent-text);
-		font-weight: 600;
+	.slot {
+		min-block-size: 0;
+		border-block-end: var(--rule);
 	}
-	.give:hover {
-		background: var(--accent-hover);
-		border-color: var(--accent-hover);
-	}
-	button:disabled {
-		opacity: 0.45;
-		cursor: not-allowed;
-	}
-	button.refused {
-		opacity: 0.55;
-	}
-	button:focus-visible {
-		outline: 2px solid var(--accent);
-		outline-offset: 2px;
-	}
-	.quiet {
-		background: transparent;
-	}
-	.cta {
-		background: var(--accent);
-		border-color: var(--accent);
-		color: var(--accent-text);
-		font-weight: 600;
+	.board.carrying .slot {
+		cursor: grabbing;
 	}
 	.table-wrap {
 		flex: 1;
 		min-block-size: 0;
 		overflow: auto;
 	}
-	.figures {
+	table {
 		inline-size: 100%;
 		border-collapse: collapse;
-		font-size: var(--t-sm);
+		font-size: var(--t-base);
+	}
+	th,
+	td {
+		padding: var(--s-3) var(--s-4);
+		border-block-end: var(--rule);
+		text-align: end;
+		font-family: var(--font-mono);
 		font-variant-numeric: tabular-nums;
 	}
-	.figures th,
-	.figures td {
-		padding: var(--s-2) var(--s-3);
-		border-block-end: var(--rule);
+	th[scope='row'],
+	thead th:first-child {
 		text-align: start;
+		font-family: var(--font-sans);
+		font-weight: 500;
 	}
-	.figures .name {
-		display: inline;
-		overflow: visible;
+	thead th {
+		font-size: var(--t-xs);
+		color: var(--text-muted);
+		font-weight: 500;
 	}
-	.figures .num {
-		text-align: end;
+	.lockrow {
+		color: var(--text-muted);
 	}
-	.figures td.num {
-		white-space: nowrap;
+	tfoot th,
+	tfoot td {
+		font-weight: 600;
+		border-block-end: none;
 	}
-	.figures thead th {
+
+	/* Dock */
+	.dock {
+		grid-area: dock;
+		display: flex;
+		flex-direction: column;
+		gap: var(--s-4);
+		min-block-size: 0;
+		padding-block-start: var(--s-5);
+	}
+	.chosen {
+		display: grid;
+		gap: var(--s-3);
+		padding: var(--s-5);
+		border: 1px solid var(--border-default);
+		border-radius: var(--r-lg);
+		background: var(--surface-raised);
+	}
+	.chosen p {
+		margin: 0;
+	}
+	.chosen-name {
+		font-weight: 600;
+		font-size: var(--t-lg);
+	}
+	.chosen-figs {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--s-1) var(--s-5);
+		font-size: var(--t-sm);
+		color: var(--text-secondary);
+	}
+	.chosen-note,
+	.howto {
+		font-size: var(--t-sm);
+		line-height: 1.45;
+		color: var(--text-muted);
+	}
+	.moves-buttons {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: var(--s-4);
+	}
+	.move {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: var(--s-3);
+		min-block-size: var(--touch);
+		padding-inline: var(--s-4);
+		border-radius: var(--r-md);
+		font: 600 var(--t-md) var(--font-sans);
+		cursor: pointer;
+		touch-action: none;
+		user-select: none;
+	}
+	.take {
+		border: 1px solid var(--border-strong);
+		background: var(--surface-base);
+		color: var(--text-primary);
+	}
+	.give {
+		border: 1px solid var(--accent);
+		background: var(--accent);
+		color: var(--accent-text);
+	}
+	.give[aria-disabled='true'] {
+		background: transparent;
+		color: var(--text-muted);
+		border-color: var(--border-default);
+	}
+	.move:disabled {
+		opacity: 0.45;
+		cursor: not-allowed;
+	}
+	.message {
+		min-block-size: 2.6em;
+		margin: 0;
+		font-size: var(--t-sm);
+		line-height: 1.35;
+		color: var(--text-secondary);
+	}
+	.ledger {
+		min-block-size: 0;
+		overflow: hidden;
+	}
+	.ledger-title {
+		margin: 0 0 var(--s-2);
 		font-family: var(--font-mono);
 		font-size: var(--t-2xs);
-		font-weight: 500;
+		letter-spacing: 0.12em;
 		text-transform: uppercase;
-		letter-spacing: var(--track-wide);
 		color: var(--text-muted);
-		vertical-align: bottom;
 	}
-	.stamp {
-		position: absolute;
-		inset-block-end: var(--s-6);
-		inset-inline-end: var(--s-6);
-		max-inline-size: 12rem;
-		padding: var(--s-4);
-		border: 2px double var(--accent);
-		border-radius: 0;
-		background: var(--surface-base);
-		color: var(--accent);
-		font-family: var(--font-mono);
-		font-size: var(--t-xs);
-		line-height: var(--lh-snug);
-		text-align: center;
-		pointer-events: none;
-		transform: rotate(-6deg);
-	}
-	.sheet {
-		margin: auto;
-		max-inline-size: min(26rem, calc(100vw - var(--s-8)));
-		padding: var(--s-5);
-		background: var(--surface-overlay);
-		color: var(--text-primary);
-		border: var(--rule);
-		border-radius: 0;
-		box-shadow: var(--elev-3);
-	}
-	.sheet::backdrop {
-		background: var(--n-1000);
-		opacity: 0.45;
-	}
-	.sheet h3 {
-		margin: 0 0 var(--s-2);
-		font-size: var(--step-0);
-	}
-	.sheet p {
-		margin: 0 0 var(--s-3);
+	.ledger ol {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		display: grid;
+		gap: var(--s-1);
 		font-size: var(--t-sm);
-		line-height: var(--lh-snug);
+		color: var(--text-secondary);
 	}
-	.sheet .note-name {
-		color: var(--text-muted);
-		font-family: var(--font-mono);
-		font-size: var(--t-xs);
+	.ledger li:first-child {
+		color: var(--text-primary);
 	}
-	.sheet .close {
-		margin-block-start: var(--s-2);
+	.ledger p {
+		margin: 0;
+		font-size: var(--t-sm);
 	}
-	.sr-only {
-		position: absolute;
-		inline-size: 1px;
-		block-size: 1px;
-		overflow: hidden;
-		clip-path: inset(50%);
+	.actions {
+		margin-block-start: auto;
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--s-3);
+	}
+	.ghost {
+		flex: 1 1 0;
 		white-space: nowrap;
 	}
-	@keyframes coin-pop {
-		from {
-			opacity: 0.2;
-			transform: scaleY(0.4);
-		}
-		to {
-			opacity: 1;
-			transform: scaleY(1);
-		}
+	.ghost,
+	.finish {
+		min-block-size: var(--s-10);
+		padding-inline: var(--s-3);
+		border-radius: var(--r-md);
+		font: 500 var(--t-base) var(--font-sans);
+		cursor: pointer;
 	}
-	@media (min-width: 901px) and (max-width: 1150px) {
-		.actions button {
-			font-size: var(--t-2xs);
-			padding-inline: var(--s-1);
-		}
+	.ghost {
+		border: 1px solid var(--border-default);
+		background: transparent;
+		color: var(--text-primary);
 	}
-	@media (max-width: 900px) {
-		.board {
-			grid-template-columns: minmax(0, 1fr);
-			grid-template-rows: auto auto minmax(0, 1fr) auto;
-			grid-template-areas:
-				'purse'
-				'toolbar'
-				'field'
-				'locked';
-			gap: 0;
-			padding: 0;
-		}
-		.purse {
-			position: sticky;
-			top: 0;
-			z-index: 4;
-			flex-direction: column;
-			align-items: stretch;
-			gap: 0;
-			block-size: var(--s-11);
-			padding: var(--s-1) var(--s-3);
-			background: var(--surface-base);
-			border: 0;
-			border-block-end: var(--rule);
-			border-radius: 0;
-		}
-		.purse-label {
-			display: none;
-		}
-		.purse-main {
-			flex: 1;
-			min-block-size: 0;
-			gap: var(--s-2);
-		}
-		.stack {
-			inline-size: var(--s-4);
-			block-size: 100%;
-			padding: 0;
-			border-radius: var(--r-xs);
-		}
-		.purse-value {
-			font-size: var(--t-xl);
-		}
-		.progress {
-			margin-inline-start: auto;
-			align-self: center;
-		}
-		.purse-rule {
-			display: block;
-			margin: 0;
-			font-size: var(--t-2xs);
-			line-height: var(--s-5);
-			color: var(--text-muted);
-			white-space: nowrap;
-			overflow: hidden;
-			text-overflow: ellipsis;
-			padding-inline-end: var(--s-10);
-		}
-		.hint-toggle {
-			display: inline-flex;
-			align-items: center;
-			justify-content: center;
-			position: absolute;
-			inset-block-start: 50%;
-			inset-inline-end: var(--s-3);
-			transform: translateY(-50%);
-			min-block-size: var(--touch);
-			min-inline-size: var(--touch);
-			padding: 0 var(--s-2);
-			font-size: var(--t-2xs);
-		}
-		.refusal {
-			position: absolute;
-			inset-block-start: 100%;
-			inset-inline: 0;
-			z-index: 5;
-			padding: var(--s-1) var(--s-3);
-			background: var(--surface-overlay);
-			border-block-end: var(--rule);
-		}
-		.side {
-			display: contents;
-		}
+	.ghost:disabled {
+		opacity: 0.45;
+		cursor: not-allowed;
+	}
+	.finish {
+		flex-basis: 100%;
+		min-block-size: var(--touch);
+		border: 1px solid var(--text-primary);
+		background: var(--text-primary);
+		color: var(--text-inverted);
+		font-weight: 600;
+	}
+	.finish:disabled {
+		background: transparent;
+		color: var(--text-muted);
+		border-color: var(--border-default);
+		cursor: not-allowed;
+	}
+	.short {
+		display: none;
+	}
+	.interim {
+		margin: 0;
+		font-size: var(--t-xs);
+		color: var(--text-muted);
+	}
+	button:focus-visible {
+		outline: none;
+		box-shadow: var(--ring);
+	}
+	[data-dir='more'] {
+		color: var(--text-primary);
+	}
+
+	/* A low desk window: the chosen system's note and the ledger give way first. */
+	@media (min-width: 721px) and (max-height: 760px) {
+		.chosen-note,
 		.ledger {
 			display: none;
 		}
-		.toolbar {
-			grid-area: toolbar;
-			display: flex;
-			flex-wrap: nowrap;
-			gap: var(--s-2);
-			block-size: var(--s-10);
-			padding: 0 var(--s-3);
-			align-items: center;
-			background: var(--surface-base);
-			border-block-end: var(--rule);
+		.board {
+			padding-block: var(--s-4);
 		}
-		.toolbar .cta {
-			flex: 1;
-		}
-		.toolbar button {
-			min-block-size: var(--touch);
-			padding: 0 var(--s-2);
-			font-size: var(--t-2xs);
-			white-space: nowrap;
-		}
-		.reset {
-			display: none;
-		}
-		.locked {
-			grid-area: locked;
-			block-size: var(--s-6);
-			padding: 0 var(--s-3);
-			overflow: hidden;
-			background: var(--surface-base);
-			border: 0;
-			border-block-start: var(--rule);
-			border-radius: 0;
-		}
-		.locked .sub,
-		.locked ul {
-			display: none;
-		}
-		.locked-line {
-			font-size: var(--t-2xs);
-			line-height: var(--s-6);
-			white-space: nowrap;
-			overflow: hidden;
-			text-overflow: ellipsis;
-		}
-		.field {
-			min-block-size: 0;
-		}
-		.title,
-		.hint,
-		.note {
-			position: absolute;
-			inline-size: 1px;
-			block-size: 1px;
-			overflow: hidden;
-			clip-path: inset(50%);
-			white-space: nowrap;
-			margin: 0;
-		}
-		.systems {
-			display: flex;
-			flex-direction: column;
-			gap: 0;
-			flex: 1;
-			min-block-size: 0;
-			overflow: hidden;
-			border-block-start: var(--rule);
-		}
-		.group {
-			flex: var(--rows) 1 0;
-			gap: 0;
-			min-block-size: 0;
-		}
-		.group-title {
-			block-size: var(--s-5);
-			line-height: var(--s-5);
-			padding-block-end: 0;
-			padding-inline: var(--s-3);
-			background: var(--surface-base);
-			border-block-end: var(--rule);
-		}
-		.group.people .group-list,
-		.group.state .group-list,
-		.group.economy .group-list {
+	}
+
+	/* Phone: purse bar, systems, dock. */
+	@media (max-width: 720px) {
+		.board {
 			grid-template-columns: minmax(0, 1fr);
+			grid-template-rows: auto minmax(0, 1fr) auto;
+			grid-template-areas: 'purse' 'systems' 'dock';
+			padding: 0;
+			column-gap: 0;
 		}
-		.group-list {
-			display: grid;
-			grid-auto-rows: minmax(0, 1fr);
-			gap: 0;
+		.purse-zone {
+			display: flex;
+			align-items: center;
+			gap: var(--s-3);
+			padding: var(--s-3) var(--s-6);
+			border-block-end: var(--rule);
+		}
+		.badge,
+		.title,
+		.locked,
+		.meter,
+		.legend .link,
+		.scale,
+		.axis {
+			display: none;
+		}
+		.purse {
 			flex: 1;
-			min-block-size: 0;
+			grid-template-columns: auto auto 1fr;
+			align-items: center;
+			gap: 0 var(--s-4);
+			padding: var(--s-2) var(--s-5);
+			min-block-size: var(--touch);
+			border-radius: var(--r-md);
 		}
-		.system.wide {
+		.purse-label,
+		.purse-amount,
+		.purse-note {
+			grid-row: 1;
 			grid-column: auto;
 		}
-		.system {
-			display: grid;
-			grid-template-columns: minmax(0, 1fr) auto auto;
-			grid-template-rows: minmax(0, 1fr);
-			align-items: center;
+		.purse-amount {
+			font-size: var(--t-2xl);
+		}
+		.purse-note {
+			font-size: var(--t-xs);
+			line-height: 1.2;
+		}
+		.tools {
+			display: flex;
 			gap: var(--s-2);
-			padding-block: 0;
-			padding-inline: var(--s-11) var(--s-3);
-			background: transparent;
-			border: 0;
-			border-block-end: var(--rule);
-			border-radius: 0;
 		}
-		.grip {
+		.tool {
 			inline-size: var(--touch);
-			block-size: 100%;
-			min-block-size: var(--touch);
+			block-size: var(--touch);
+			border: 1px solid var(--border-default);
+			border-radius: var(--r-md);
+			background: transparent;
+			color: var(--text-primary);
+			font: 500 var(--t-xl) var(--font-mono);
+			cursor: pointer;
 		}
-		.system-head {
-			display: contents;
+		.tool:disabled {
+			opacity: 0.4;
 		}
-		.name {
+		.systems {
+			padding-inline: var(--s-4);
+		}
+		.legend {
+			gap: var(--s-1) var(--s-5);
+			padding-block: var(--s-2);
+			font-size: var(--t-xs);
+		}
+		.list {
+			display: flex;
+			flex-direction: column;
+			padding-block-start: 0;
+		}
+		.col {
+			display: flex;
+			flex-direction: column;
+			flex: 8 1 0;
+		}
+		.slot {
+			flex: 1 1 0;
+			min-block-size: 0;
+		}
+		.dock {
 			position: relative;
-			z-index: 1;
-			display: block;
-			min-block-size: var(--touch);
-			align-self: stretch;
-			font-size: var(--t-sm);
+			display: grid;
+			grid-template-columns: minmax(0, 1fr) auto;
+			grid-template-areas: 'chosen finish';
+			align-items: end;
+			gap: var(--s-4);
+			padding: var(--s-3) var(--s-6) calc(var(--s-3) + env(safe-area-inset-bottom, 0px));
+			border-block-start: var(--rule);
+			background: var(--surface-raised);
+		}
+		.chosen {
+			grid-area: chosen;
+			padding: 0;
+			border: none;
+			background: none;
+			gap: var(--s-2);
+		}
+		.chosen-name {
+			font-size: var(--t-base);
 			white-space: nowrap;
 			overflow: hidden;
 			text-overflow: ellipsis;
 		}
-		.delta {
-			position: absolute;
-			inline-size: 1px;
-			block-size: 1px;
-			overflow: hidden;
-			clip-path: inset(50%);
+		.chosen-figs {
+			display: none;
+		}
+		.chosen-note,
+		.ledger,
+		.howto {
+			display: none;
+		}
+		.moves-buttons.idle {
+			display: grid;
+		}
+		.moves-buttons {
+			gap: var(--s-3);
+		}
+		.move {
+			padding-inline: var(--s-2);
+			font-size: var(--t-base);
 			white-space: nowrap;
 		}
-		.legend {
-			gap: var(--s-1) var(--s-4);
-			margin: 0;
-			padding: var(--s-1) var(--s-3);
+		.move .unit {
+			display: none;
 		}
-		.bars {
+		/* A refusal or the last move shows above the dock for a moment, without moving the rows. */
+		.message {
 			position: absolute;
-			inset: 0;
-			grid-template-columns: minmax(0, 1fr);
-			grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
-			column-gap: 0;
-			row-gap: var(--s-1);
+			inset-block-end: calc(100% + var(--s-2));
+			inset-inline: var(--s-6);
+			min-block-size: 0;
+			padding: var(--s-3) var(--s-4);
+			border-radius: var(--r-md);
+			background: var(--plate-bg);
+			color: var(--plate-ink);
+			font-size: var(--t-sm);
+			box-shadow: var(--elev-2);
+			pointer-events: none;
 		}
-		.track {
-			block-size: auto;
-			border-radius: 0;
-			background: transparent;
-		}
-		.bar {
-			border-radius: 0;
-		}
-		.bar.plan {
-			background: var(--text-muted);
-			opacity: 0.16;
-		}
-		.bar.yours {
-			background: var(--accent);
-			opacity: 0.32;
-		}
-		.bar-val {
+		.message:empty,
+		.message.ready {
 			display: none;
 		}
 		.actions {
-			display: contents;
+			grid-area: finish;
+			margin: 0;
 		}
-		.actions button {
-			position: relative;
-			z-index: 1;
-			flex: none;
-			min-block-size: var(--touch);
-			min-inline-size: var(--touch);
-			padding: 0 var(--s-2);
-			font-size: var(--t-2xs);
-		}
-		.stamp {
-			inset-block-start: auto;
-			inset-block-end: var(--s-6);
-			inset-inline: var(--s-3);
-			max-inline-size: none;
-			padding: var(--s-1) var(--s-2);
-			font-size: var(--t-2xs);
-			transform: rotate(-1deg);
-		}
-	}
-	@media (max-height: 760px) and (min-width: 901px) {
-		.hint,
-		.note {
+		.ghost,
+		.interim {
 			display: none;
 		}
-	}
-	@media (prefers-reduced-motion: reduce) {
-		.bar {
-			transition: none;
+		.finish {
+			flex: none;
+			min-inline-size: 5.5rem;
+			font-size: var(--t-base);
 		}
-		.slots.drop .coin.on,
-		.slots.lift .coin.on {
-			animation: none;
+		.long {
+			display: none;
+		}
+		.short {
+			display: inline;
 		}
 	}
 </style>

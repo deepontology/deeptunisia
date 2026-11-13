@@ -87,39 +87,45 @@ export interface Lines {
 	total: number;
 }
 
-export function linesFrom(rows: FigureRowLike[]): Lines {
-	const subsidies = amountOf(rows, 'subsidies_total_memo');
-	const energyTrade = amountOf(rows, 'industry_mines_energy') + amountOf(rows, 'trade_export') - subsidies;
-	if (energyTrade < 0) throw new Error('subsidies exceed the Industry and Trade rows');
+/**
+ * What each board line is made of: rows of the figures file added together,
+ * minus rows taken out. The subsidies memo row sits inside the Industry and
+ * Trade rows, so the energy and trade line is those two rows less subsidies.
+ * The landing page prints this mapping next to the figures.
+ */
+export const LINE_ROWS: Record<LineId, { plus: string[]; minus?: string[] }> = {
+	education: { plus: ['education'] },
+	higher_education: { plus: ['higher_education_research'] },
+	health: { plus: ['health'] },
+	social: { plus: ['social_affairs', 'family_women_children_seniors'] },
+	subsidies: { plus: ['subsidies_total_memo'] },
+	energy_trade: { plus: ['industry_mines_energy', 'trade_export'], minus: ['subsidies_total_memo'] },
+	police: { plus: ['interior'] },
+	army: { plus: ['national_defence'] },
+	justice: { plus: ['justice'] },
+	farming: { plus: ['agriculture_water_fisheries'] },
+	roads_housing: { plus: ['equipment_housing'] },
+	youth_sports: { plus: ['youth_sports'] },
+	culture: { plus: ['culture_arts'] },
+	presidency: { plus: ['presidency'] },
+	government: { plus: ['foreign_affairs', 'head_of_government', 'isie_elections', 'assembly_of_representatives'] },
+	other: { plus: ['all_other_missions', 'tourism'] },
+	debt: { plus: ['financing_costs_locked'] },
+	reserve: { plus: ['unforeseen_locked'] }
+};
 
-	const drafts: Record<LineId, number> = {
-		education: amountOf(rows, 'education'),
-		higher_education: amountOf(rows, 'higher_education_research'),
-		health: amountOf(rows, 'health'),
-		social: amountOf(rows, 'social_affairs') + amountOf(rows, 'family_women_children_seniors'),
-		subsidies,
-		energy_trade: energyTrade,
-		police: amountOf(rows, 'interior'),
-		army: amountOf(rows, 'national_defence'),
-		justice: amountOf(rows, 'justice'),
-		farming: amountOf(rows, 'agriculture_water_fisheries'),
-		roads_housing: amountOf(rows, 'equipment_housing'),
-		youth_sports: amountOf(rows, 'youth_sports'),
-		culture: amountOf(rows, 'culture_arts'),
-		presidency: amountOf(rows, 'presidency'),
-		government:
-			amountOf(rows, 'foreign_affairs') +
-			amountOf(rows, 'head_of_government') +
-			amountOf(rows, 'isie_elections') +
-			amountOf(rows, 'assembly_of_representatives'),
-		other: amountOf(rows, 'all_other_missions') + amountOf(rows, 'tourism'),
-		debt: amountOf(rows, 'financing_costs_locked'),
-		reserve: amountOf(rows, 'unforeseen_locked')
-	};
+export function linesFrom(rows: FigureRowLike[]): Lines {
+	const drafts = {} as Record<LineId, number>;
+	for (const [id, made] of Object.entries(LINE_ROWS) as [LineId, (typeof LINE_ROWS)[LineId]][]) {
+		const sum = made.plus.reduce((s, r) => s + amountOf(rows, r), 0) - (made.minus ?? []).reduce((s, r) => s + amountOf(rows, r), 0);
+		if (sum < 0) throw new Error(`line "${id}" comes out negative`);
+		// Rounded to the thousand dinars the figures file is written in, so sums carry no float dust.
+		drafts[id] = Math.round(sum * 1000) / 1000;
+	}
 
 	const movable = MOVABLE_ORDER.map((id) => ({ id, draft: drafts[id], locked: false }));
 	const locked = LOCKED_ORDER.map((id) => ({ id, draft: drafts[id], locked: true }));
-	const envelope = movable.reduce((s, l) => s + l.draft, 0);
-	const total = envelope + locked.reduce((s, l) => s + l.draft, 0);
+	const envelope = Math.round(movable.reduce((s, l) => s + l.draft, 0) * 1000) / 1000;
+	const total = Math.round((envelope + locked.reduce((s, l) => s + l.draft, 0)) * 1000) / 1000;
 	return { movable, locked, envelope, total };
 }

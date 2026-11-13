@@ -4,7 +4,7 @@
 	import { FIGURES } from '$lib/budget-study/figures';
 	import { copyFor } from './copy';
 	import { linesFrom } from './lines';
-	import { toAllocation, type Board, type BoardState, type StartMode } from './board';
+	import { DEFAULT_RULE, toAllocation, type Board, type BoardState, type MoveRule, type StartMode } from './board';
 	import BudgetBoard from './BudgetBoard.svelte';
 
 	/**
@@ -13,10 +13,12 @@
 	 * shows the result and stops.
 	 */
 	let {
-		start = 'empty',
+		start = 'draft',
+		rule = DEFAULT_RULE,
 		onstep
 	}: {
 		start?: StartMode;
+		rule?: MoveRule;
 		onstep?: (step: string) => void;
 	} = $props();
 
@@ -158,7 +160,7 @@
 	{/if}
 
 	{#if step === 'board'}
-		<BudgetBoard mode={start} {onfinish} />
+		<BudgetBoard mode={start} {rule} {onfinish} />
 	{/if}
 
 	{#if step === 'items'}

@@ -28,9 +28,12 @@ instrument:
   completion_target_minutes_max: 10
   pretest_required: true
   response_scale_note: >-
-    The allocation item gives each line a share of its draft from 0% to 200% in
-    steps of 5%, stored as integer basis points (10000 is the draft). The movable
-    lines must balance to the envelope within 0.5%. Locked lines stay at the
+    The allocation item gives each line a share of its draft from 0% to 200%,
+    stored as integer basis points (10000 is the draft). Money moves in coins of
+    100 MD (rule A, the default; the last coin out of or into a line may be
+    short so a line can reach exactly 0% or 200%). The movable lines must
+    balance to the envelope within 0.5%; under rule A the board asks for every
+    dinar to be placed. Locked lines stay at the
     draft. The two short questions use a 0 to 10 scale for citizens' say and a
     three-option choice for total spending.
 
@@ -117,7 +120,7 @@ items:
     tier: core
     construct: budget allocation
     provenance: project (SPEC section 2, the game screen)
-    text_en: "Use the Treasury board: move money between the lines of the 2027 state budget, as a citizen. Start from the draft or from an empty purse. Place every shilling before you go on. Keeping the draft is a valid answer."
+    text_en: "Use the Treasury board: move money between the lines of the 2027 state budget, as a citizen. Every move carries one coin of 100 MD. Place every dinar in the purse before you go on. Keeping the draft is a valid answer."
     text_fr: null
     text_ar: null
     response: allocation
@@ -126,7 +129,10 @@ items:
     allocation:
       envelope_md: 59932.381
       tolerance: 0.005
-      step_bp: 500
+      # Any whole basis point: the default move rule (A) moves 100 MD coins, so a
+      # share is the amount over the draft, rounded to the basis point. Rule B
+      # (5% steps) gives multiples of 500, which this also accepts.
+      step_bp: 1
       max_bp: 20000
       categories:
       - { id: education, draft_md: 9184.5, locked: false }
