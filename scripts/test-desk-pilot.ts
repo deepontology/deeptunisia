@@ -2,13 +2,16 @@
  * The pilot sample: sixty fixed records, and the desk's queue in the file's order.
  *
  * The sample is committed, so this test's first job is to prove the committed
- * file is what the sampler produces today: the same seed, the same dataset, the
- * same bytes. A sample that silently redraws itself between runs is not a
- * sample, it is a queue with a story.
+ * file is what the sampler produces today. It can only prove that while the
+ * dataset is the one the sample was drawn from: a session records reviews and a
+ * sync brings new records, and the sample is fixed on purpose, so the sidecar
+ * `pilot-sample.json` names the dataset hash it belongs to. On that dataset the
+ * draw is reproduced byte for byte; on any later one the file is checked as what
+ * it is, a fixed sample whose records must still exist.
  *
- * It then checks the file describes real records, that every non-empty stratum
- * is represented, and that a desk session started in pilot mode serves the
- * records in exactly the file's order.
+ * The rest holds on every tree: sixty lines, real records, no duplicate, the
+ * digest order, and a desk session started in pilot mode serving the records in
+ * exactly the file's order.
  */
 import { readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
@@ -18,6 +21,7 @@ import { DeskSession, REVIEWABLE, type Kind } from './desk.ts';
 import {
 	PILOT_FILE,
 	PILOT_HEADER,
+	PILOT_META_FILE,
 	PILOT_SEED,
 	PILOT_SIZE,
 	pilotDigest,
@@ -44,19 +48,60 @@ function ok(name: string, condition: boolean, detail = '') {
 
 const dataset = JSON.parse(readFileSync(join(ROOT, 'src', 'generated', 'dataset.json'), 'utf8'));
 const committedText = readFileSync(join(ROOT, PILOT_FILE), 'utf8');
+const meta = JSON.parse(readFileSync(join(ROOT, PILOT_META_FILE), 'utf8'));
 const entries = readPilotSample(ROOT);
-const sample = pilotSample(dataset, PILOT_SEED, PILOT_SIZE);
+const datasetHash = dataset?.meta?.datasetHash ?? '';
+const drawnFromThisTree = meta.datasetHash === datasetHash;
 
-console.log('\n  ── the sample is fixed and regenerable ──\n');
+console.log('\n  ── the sample is fixed and carries the dataset it was drawn from ──\n');
 
 {
-	const regenerated = renderPilotSample(dataset, PILOT_SEED, PILOT_SIZE);
-	ok('rerunning the sampler gives the committed file byte for byte', regenerated === committedText, `${regenerated.length} vs ${committedText.length} bytes`);
-	ok('the file uses LF line endings', !committedText.includes('\r'), committedText.includes('\r') ? 'CR found' : 'LF only');
+	ok('the sidecar names the seed, the size and a dataset hash', meta.seed === PILOT_SEED && meta.size === PILOT_SIZE && /^[0-9a-f]{64}$/.test(meta.datasetHash), JSON.stringify(meta));
+	ok('the sidecar carries exactly those three fields', Object.keys(meta).sort().join(',') === 'datasetHash,seed,size', Object.keys(meta).join(','));
 	ok('the file has the header and 60 records', committedText.split('\n')[0] === PILOT_HEADER && entries.length === PILOT_SIZE, `${entries.length} records`);
+	ok('the file uses LF line endings', !committedText.includes('\r'), committedText.includes('\r') ? 'CR found' : 'LF only');
 	ok('the sample size is 60 and the seed is fixed', PILOT_SIZE === 60 && PILOT_SEED === 'pilot-2026-11');
-	ok('a different seed draws a different sample', renderPilotSample(dataset, 'pilot-2026-12', PILOT_SIZE) !== committedText);
-	ok('the sampler is deterministic across two calls', JSON.stringify(pilotSample(dataset, PILOT_SEED, PILOT_SIZE)) === JSON.stringify(sample));
+	ok(
+		'the order is the digest order, so it is stable',
+		entries.every((e, i) => i === 0 || pilotDigest(PILOT_SEED, entries[i - 1].kind, entries[i - 1].id) <= pilotDigest(PILOT_SEED, e.kind, e.id))
+	);
+	ok('a different seed draws a different sample', renderPilotSample(dataset, 'pilot-2026-12', PILOT_SIZE) !== renderPilotSample(dataset, PILOT_SEED, PILOT_SIZE));
+	ok('the sampler is deterministic across two calls', JSON.stringify(pilotSample(dataset, PILOT_SEED, PILOT_SIZE)) === JSON.stringify(pilotSample(dataset, PILOT_SEED, PILOT_SIZE)));
+}
+
+console.log('\n  ── the draw belongs to its dataset ──\n');
+
+{
+	if (drawnFromThisTree) {
+		const regenerated = renderPilotSample(dataset, PILOT_SEED, PILOT_SIZE);
+		ok('rerunning the sampler gives the committed file byte for byte', regenerated === committedText, `${regenerated.length} vs ${committedText.length} bytes`);
+		const strata = new Map<string, number>();
+		for (const kind of Object.keys(REVIEWABLE) as Kind[]) {
+			for (const record of (dataset[kind] ?? []) as any[]) {
+				if (!Array.isArray(record.sources) || !record.sources.length || record.review) continue;
+				strata.set(`${kind}/${record.basis ?? ''}`, (strata.get(`${kind}/${record.basis ?? ''}`) ?? 0) + 1);
+			}
+		}
+		const drawn = new Map<string, number>();
+		for (const e of entries) drawn.set(`${e.kind}/${e.basis}`, (drawn.get(`${e.kind}/${e.basis}`) ?? 0) + 1);
+		const empty = [...strata.keys()].filter((k) => !drawn.get(k));
+		ok('every stratum with eligible records is represented', empty.length === 0, empty.join(', '));
+		const sample = pilotSample(dataset, PILOT_SEED, PILOT_SIZE);
+		ok('every stratum gets its floor: 2, or 1 when only one record exists', sample.allocation.every((a) => a.allocated >= a.minimum), sample.allocation.filter((a) => a.allocated < a.minimum).map((a) => `${a.kind}/${a.basis}`).join(', '));
+		ok('the allocation is exactly 60 seats', sample.allocation.reduce((n, a) => n + a.allocated, 0) === 60);
+		ok('no drawn record is given more seats than it holds', sample.allocation.every((a) => a.allocated <= a.eligible));
+		ok('no drawn record already carries a review', entries.every((e) => !(dataset[e.kind] ?? []).find((r: any) => r.id === e.id)?.review));
+	} else {
+		// The dataset moved after the draw, by design: a session records reviews and
+		// a sync brings new records. The file stays fixed, so the draw cannot be
+		// reproduced from this tree; the fixed sample is still checked below for
+		// every property that does not depend on the dataset it came from.
+		ok('the dataset moved since the draw, so the fixed sample is checked, not redrawn', /^[0-9a-f]{64}$/.test(datasetHash), `${meta.datasetHash.slice(0, 8)} -> ${datasetHash.slice(0, 8)}`);
+		const strata = new Map<string, number>();
+		for (const e of entries) strata.set(`${e.kind}/${e.basis}`, (strata.get(`${e.kind}/${e.basis}`) ?? 0) + 1);
+		ok('the fixed sample still spreads across its strata', strata.size >= Object.keys(REVIEWABLE).length, `${strata.size} strata`);
+		ok('the fixed sample is still 60 seats', [...strata.values()].reduce((n, c) => n + c, 0) === 60);
+	}
 }
 
 console.log('\n  ── every line describes a record the desk can verify ──\n');
@@ -72,39 +117,11 @@ console.log('\n  ── every line describes a record the desk can verify ──
 	const wrongBasis = entries.filter((e) => index.get(`${e.kind}/${e.id}`)?.basis !== e.basis);
 	ok('every line carries the record basis', wrongBasis.length === 0, wrongBasis.slice(0, 3).map((e) => e.id).join(', '));
 
-	const reviewed = entries.filter((e) => index.get(`${e.kind}/${e.id}`)?.review);
-	ok('no drawn record already carries a review', reviewed.length === 0, reviewed.slice(0, 3).map((e) => e.id).join(', '));
-
 	const uncited = entries.filter((e) => ((index.get(`${e.kind}/${e.id}`)?.sources ?? []) as unknown[]).length === 0);
 	ok('every drawn record cites at least one source', uncited.length === 0, uncited.slice(0, 3).map((e) => e.id).join(', '));
 
 	const keys = entries.map((e) => `${e.kind}/${e.id}`);
 	ok('no record is drawn twice', new Set(keys).size === keys.length, `${keys.length} entries, ${new Set(keys).size} unique`);
-}
-
-console.log('\n  ── every non-empty stratum is represented ──\n');
-
-{
-	const strata = new Map<string, number>();
-	for (const kind of Object.keys(REVIEWABLE) as Kind[]) {
-		for (const record of (dataset[kind] ?? []) as any[]) {
-			if (!Array.isArray(record.sources) || !record.sources.length || record.review) continue;
-			const key = `${kind}/${record.basis ?? ''}`;
-			strata.set(key, (strata.get(key) ?? 0) + 1);
-		}
-	}
-	const drawn = new Map<string, number>();
-	for (const e of entries) drawn.set(`${e.kind}/${e.basis}`, (drawn.get(`${e.kind}/${e.basis}`) ?? 0) + 1);
-
-	const empty = [...strata.keys()].filter((k) => !drawn.get(k));
-	ok('every stratum with eligible records is represented', empty.length === 0, empty.join(', '));
-
-	const short = sample.allocation.filter((a) => a.allocated < a.minimum);
-	ok('every stratum gets its floor: 2, or 1 when only one record exists', short.length === 0, short.map((a) => `${a.kind}/${a.basis} ${a.allocated} < ${a.minimum}`).join(', '));
-
-	const total = sample.allocation.reduce((n, a) => n + a.allocated, 0);
-	ok('the allocation is exactly 60 seats', total === 60, String(total));
-	ok('no stratum is given more records than it holds', sample.allocation.every((a) => a.allocated <= a.eligible));
 }
 
 console.log('\n  ── the pilot queue is the file, in order ──\n');
@@ -131,7 +148,6 @@ console.log('\n  ── the pilot queue is the file, in order ──\n');
 	}
 	ok('a pilot session serves the file records in exactly the file order', served.join('\n') === entries.map((e) => `${e.kind}/${e.id}`).join('\n'), `${served.length} served`);
 	ok('the sample is exhausted after 60 packets', session.next() === null && session.state().seen === served.length);
-	ok('the order is the digest order, so it is stable', entries.every((e, i) => i === 0 || pilotDigest(PILOT_SEED, entries[i - 1].kind, entries[i - 1].id) <= pilotDigest(PILOT_SEED, e.kind, e.id)));
 }
 
 console.log('\n  ── the tool in pilot mode serves that queue ──\n');
@@ -154,7 +170,7 @@ console.log('\n  ── the tool in pilot mode serves that queue ──\n');
 	ok('the second packet is the second line of the file', second.packet.kind === entries[1].kind && second.packet.id === entries[1].id);
 	ok('the pilot line counts the skipped record', second.pilot.seen === 1 && second.pilot.total === 60, JSON.stringify(second.pilot));
 	const page = await (await fetch(base + '/')).text();
-	ok('the page prints the pilot line', page.includes("pilot: ") && page.includes('pilotInfo.total'));
+	ok('the page prints the pilot line', page.includes('pilot: ') && page.includes('pilotInfo.total'));
 	ok('the page says the sample is exhausted and points at Finish session', page.includes('Pilot sample complete') && page.includes('Use Finish session'));
 	server.close();
 }

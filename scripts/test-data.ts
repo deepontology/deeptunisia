@@ -1681,7 +1681,18 @@ console.log('\n  ── three review populations, never summed ──\n');
 	ok('the collection carries the same count as its meta', ds.meta.counts.verifications === verifications.length);
 	const notesTotal =
 		ds.meta.review.reviewedHuman + ds.meta.review.reviewedAgent + ds.meta.review.reviewedUnstated;
-	ok('it is empty today, so the published independent count is zero', verifications.length === 0 && notesTotal === 52, `verifications=${verifications.length} notes=${notesTotal}`);
+	// The total moves every time a review is recorded, so the check is the
+	// relation, not a snapshot: the published count is the number of records
+	// that carry a review block, across every collection that has them.
+	const notesInRecords = Object.values(ds).reduce(
+		(n: number, value) =>
+			Array.isArray(value)
+				? n + value.filter((record: any) => record && typeof record === 'object' && record.review).length
+				: n,
+		0
+	);
+	ok('it is empty today, so the published independent count is zero', verifications.length === 0, `verifications=${verifications.length}`);
+	ok('the editorial note total is the number of records carrying a review', notesTotal === notesInRecords, `${notesTotal} published, ${notesInRecords} in the graph`);
 	ok('the editorial queue keeps its own denominator', queue.total > notesTotal, `${queue.total} queued vs ${notesTotal} notes`);
 	ok(
 		'the three populations are three distinct numbers',

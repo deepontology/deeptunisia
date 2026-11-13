@@ -26,6 +26,14 @@ export const PILOT_SEED = 'pilot-2026-11';
 export const PILOT_SIZE = 60;
 export const PILOT_FILE = 'research/desk/pilot-sample.tsv';
 export const PILOT_HEADER = 'kind\tid\tbasis';
+/**
+ * The dataset the committed sample was drawn from. The sample is fixed on
+ * purpose, so once the data moves (a session records reviews, a sync brings new
+ * records) the draw cannot be reproduced from the tree alone. This sidecar says
+ * which dataset it belongs to, so the test can tell "the sample was drawn from
+ * this tree" from "the sample is a fixed record of an earlier draw".
+ */
+export const PILOT_META_FILE = 'research/desk/pilot-sample.json';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
@@ -166,6 +174,11 @@ export function renderPilotSample(dataset: any, seed: string = PILOT_SEED, size:
 	return [PILOT_HEADER, ...entries.map((e) => `${e.kind}\t${e.id}\t${e.basis}`)].join('\n') + '\n';
 }
 
+/** The sidecar: the seed, the size and the dataset hash the draw was made on. */
+export function renderPilotMeta(dataset: any, seed: string = PILOT_SEED, size: number = PILOT_SIZE): string {
+	return JSON.stringify({ seed, size, datasetHash: dataset?.meta?.datasetHash ?? '' }, null, 2) + '\n';
+}
+
 /** Read the committed sample. The header must be the one this module writes. */
 export function parsePilotSample(text: string): PilotEntry[] {
 	const lines = text.replace(/\r\n/g, '\n').split('\n').filter((line) => line.length > 0);
@@ -227,8 +240,10 @@ function main(): number {
 	const dataset = JSON.parse(readFileSync(datasetPath, 'utf8'));
 	const text = renderPilotSample(dataset);
 	writeFileSync(join(ROOT, PILOT_FILE), text, 'utf8');
+	writeFileSync(join(ROOT, PILOT_META_FILE), renderPilotMeta(dataset), 'utf8');
 	const entries = parsePilotSample(text);
-	console.log(`\n  pilot sample  ${PILOT_FILE}: ${entries.length} records, seed ${PILOT_SEED}\n`);
+	console.log(`\n  pilot sample  ${PILOT_FILE}: ${entries.length} records, seed ${PILOT_SEED}`);
+	console.log(`  drawn from    ${dataset?.meta?.datasetHash ?? '(no hash)'}  (${PILOT_META_FILE})\n`);
 	return 0;
 }
 
