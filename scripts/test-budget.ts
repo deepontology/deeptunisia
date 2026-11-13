@@ -24,7 +24,7 @@ const MB = 1024 * 1024;
 
 /** Caps in megabytes. Deliberately close to today's weight. */
 const CAPS = {
-	'dataset (published)': 20,
+	'dataset (published)': 17,
 	'timelines (published)': 3.5,
 	'dataset (generated)': 12,
 	'static tree': 36

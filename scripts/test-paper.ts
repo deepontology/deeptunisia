@@ -20,11 +20,15 @@
  * gated paper must carry the full set, and the appendix must list it, so the
  * successor source is pinned rather than inherited.
  *
- * The gate covers every build-owned document, not only the papers: README,
- * AGENTS, DESIGN and llms.txt carry the same tags, so the §8.2 promise that a
- * hand-edited published number fails the suite is true for the whole set.
+ * The gate covers every document that carries the tags, not only the papers:
+ * README, AGENTS, DESIGN and the served llms.txt carry the same tags, so the
+ * §8.2 promise that a hand-edited published number fails the suite is true for
+ * the whole set. README, AGENTS and DESIGN are refreshed by `npm run stats:write`;
+ * the served llms.txt is generated from content/llms.template.txt at build time.
  * Any paper-shaped file in output/ that carries stat tags must be listed in
- * PAPER_NAMES, which is how a successor release is forced through this gate.
+ * PAPER_NAMES, which is how a successor release is forced through this gate. A
+ * paper the registry marks `historical-prose` is history and is not compared
+ * with today's graph.
  *
  * The V0.1 file stays untagged and frozen, deliberately outside this gate.
  */
@@ -34,15 +38,16 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { certainlyActive, DASH, BASIS_OPACITY, BASIS_ORDER } from '../src/lib/model.ts';
 import { VALIDATOR_REGISTER } from './validator-register.ts';
+import { loadPublicClaims } from './public-claims.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 
 /**
  * The gated paper sources, oldest first. The successor source is pinned here
  * deliberately: a new release paper must be added to this list in the same
- * change that adds it to STAT_DOCS, and the discovery check below fails on a
- * tagged paper that is not listed, so the gate cannot silently keep checking
- * the previous file.
+ * change that publishes it, and the discovery check below fails on a tagged
+ * paper that is not listed, so the gate cannot silently keep checking the
+ * previous file.
  */
 const PAPER_NAMES = [
 	'output/deeptunisia-release-paper-v0.1.1.md',
@@ -50,9 +55,9 @@ const PAPER_NAMES = [
 ];
 
 /**
- * Non-paper documents the build rewrites through the same stat-tag mechanism
- * are checked by `scripts/test-data.ts` ("published statistics match the
- * graph"), which covers README, AGENTS, DESIGN and static/llms.txt.
+ * Non-paper documents that carry the same stat tags are checked by
+ * `scripts/test-data.ts` ("published statistics match the graph"), which covers
+ * README, AGENTS, DESIGN and static/llms.txt.
  */
 
 const stats: Record<string, string> = JSON.parse(
@@ -174,11 +179,24 @@ const papers = new Map<string, string>();
 		if (existsSync(path)) papers.set(name, readFileSync(path, 'utf8'));
 	}
 
+	/* The registry decides which papers are history. A `historical-prose` entry is
+	   a paper as it was published: its figures were true then and are not updated
+	   now, so its spans are not compared with today's graph. */
+	const historicalPapers = new Set(
+		loadPublicClaims(join(HERE, '..', 'data', 'public-claims.yaml'))
+			.inventory.filter((e) => e.rule === 'historical-prose')
+			.map((e) => e.path)
+	);
+
 	// 1. Every tag in every gated paper must name an emitted key and show the
-	// emitted value.
+	// emitted value, except in a paper the registry marks historical-prose: that
+	// one was published once and is not updated afterwards.
 	const drift: string[] = [];
 	let paperTags = 0;
+	let checkedPapers = 0;
 	for (const [name, text] of papers) {
+		if (historicalPapers.has(name)) continue;
+		checkedPapers++;
 		for (const m of text.matchAll(STAT_TAG)) {
 			const [, key, shown] = m;
 			paperTags++;
@@ -187,15 +205,15 @@ const papers = new Map<string, string>();
 		}
 	}
 	ok(
-		'every stat tag in every gated paper matches the emitted stats.json',
+		'every stat tag in every current gated paper matches the emitted stats.json',
 		drift.length === 0,
-		drift.length ? drift.slice(0, 5).join('; ') : `${paperTags} tagged figures in sync across ${papers.size} paper(s)`
+		drift.length ? drift.slice(0, 5).join('; ') : `${paperTags} tagged figures in sync across ${checkedPapers} paper(s)`
 	);
 
 	// 2. The live claims rest on these keys. They must all be tagged in the
-	// newest gated paper; the earlier paper is historical and is only checked
-	// for drift, so the required set can grow with the successor without
-	// rewriting the previous release.
+	// newest gated paper; the earlier papers are historical and are not checked,
+	// so the required set can grow with the successor without rewriting a
+	// published release.
 	const newestName = PAPER_NAMES[PAPER_NAMES.length - 1];
 	const newestText = papers.get(newestName);
 	if (newestText !== undefined) {
@@ -395,7 +413,7 @@ const papers = new Map<string, string>();
 		const years: number[] = [];
 		for (let y = 1956; y <= 2026; y++) years.push(y);
 		const expectedDENSITY = years.map(
-			(y) => (d.positions || []).filter((p) => p.interval && certainlyActive(p.interval as never, new Date(y, 6, 1).getTime())).length
+			(y) => (d.positions || []).filter((p) => p.interval && certainlyActive(p.interval as never, Date.UTC(y, 6, 1))).length
 		);
 
 		const deg = new Map<string, number>();
