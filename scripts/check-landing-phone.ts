@@ -9,7 +9,7 @@
  * Run against a built preview server: npx tsx scripts/check-landing-phone.ts
  * Exits 1 on the first failing group, after printing every check.
  */
-import { chromium } from '/home/adala/justice/worktrees/budget-study/node_modules/playwright/index.mjs';
+import { chromium } from 'playwright';
 
 /** The built preview by default; LANDING_URL lets a dev server be checked too. */
 const BASE = process.env.LANDING_URL ?? 'http://localhost:4173/research/citizen-budget';
