@@ -100,7 +100,39 @@ const lines: Line[] = name
 
 // --- The published figures, recounted here ----------------------------------
 
-// Filled in by the build side of this change.
+{
+	const count = (test: (line: Line) => boolean) => lines.filter(test).length;
+	// Written out again rather than shared with the build: two independent
+	// derivations from one file are what makes an agreement mean something.
+	const expected: Record<string, string> = {
+		precheckDate: name.replace(/\.jsonl$/, ''),
+		precheckSources: String(lines.length),
+		precheckAlive: String(
+			lines.filter((line) => line.status === 'alive' || line.status === 'redirected').length
+		),
+		precheckDead: String(count((line) => line.status === 'dead')),
+		precheckUncheckable: String(
+			lines.filter((line) => line.status === 'blocked' || line.status === 'timeout').length
+		),
+		precheckSnapshot: String(count((line) => line.snapshot_url !== null && line.snapshot_url !== '')),
+		precheckWithExcerpt: String(count((line) => line.excerpt !== 'no-excerpt')),
+		precheckExcerptFound: String(
+			lines.filter((line) => line.excerpt === 'found-live' || line.excerpt === 'found-snapshot').length
+		)
+	};
+
+	const statsPath = join(ROOT, 'src', 'generated', 'stats.json');
+	const published = existsSync(statsPath)
+		? (JSON.parse(readFileSync(statsPath, 'utf8')) as Record<string, string>)
+		: {};
+	for (const [key, value] of Object.entries(expected)) {
+		ok(
+			`the published ${key} is the file's own count`,
+			published[key] === value,
+			`published ${JSON.stringify(published[key])}, file ${JSON.stringify(value)}`
+		);
+	}
+}
 
 console.log(`\n  ${checks - failures}/${checks} checks passed${failures ? `, ${failures} FAILED` : ''}\n`);
 if (failures) process.exit(1);

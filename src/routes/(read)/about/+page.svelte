@@ -41,6 +41,24 @@
 	const review = figures.review;
 
 	/**
+	 * The source pre-check of the latest run. The counts come from stats.json,
+	 * which the build fills from the newest dated file under
+	 * research/desk/precheck. Empty strings mean no run has been recorded, so the
+	 * page says that instead of printing zeroes as a result.
+	 */
+	const precheckRan = stats.precheckDate !== '';
+	const precheckParams = {
+		date: stats.precheckDate,
+		sources: stats.precheckSources,
+		alive: stats.precheckAlive,
+		dead: stats.precheckDead,
+		uncheckable: stats.precheckUncheckable,
+		snapshot: stats.precheckSnapshot,
+		withExcerpt: stats.precheckWithExcerpt,
+		found: stats.precheckExcerptFound
+	};
+
+	/**
 	 * Funding transparency table. Empty by design at this stage, and published empty
 	 * rather than omitted: the commitment has to exist before there is money, or it is
 	 * not a commitment.
@@ -192,6 +210,12 @@
 
 		<div class="doc">
 			<p>{t('about.desk.note')}</p>
+			{#if precheckRan}
+				<p>{format(app.locale, 'about.precheck.block', precheckParams)}</p>
+				<p>{t('about.precheck.caveat')}</p>
+			{:else}
+				<p>{t('about.precheck.notRun')}</p>
+			{/if}
 		</div>
 
 		<div class="prose">
