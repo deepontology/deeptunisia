@@ -487,6 +487,9 @@ const en: Dict = {
 	'chronicle.fullrange': 'full range',
 	'chronicle.table': 'Table view of every tenure shown above',
 	'chronicle.table.caption': 'Officeholders by post, with the span each source actually supports.',
+	'chronicle.table.files': 'The same records are published as files, so they can be read without scripts:',
+	'chronicle.table.positions': 'positions.csv, every post and tenure',
+	'chronicle.table.dataset': 'dataset.json, the archive including every event',
 	'chronicle.events.expand': 'Open the full events timeline',
 	'chronicle.events.collapse': 'Back to the timeline',
 
@@ -2620,6 +2623,9 @@ const fr: Dict = {
 	'chronicle.fullrange': 'période complète',
 	'chronicle.table': 'Vue tableau de tous les mandats ci-dessus',
 	'chronicle.table.caption': 'Titulaires par poste, avec la période que chaque source étaye réellement.',
+	'chronicle.table.files': 'Ces mêmes données sont publiées en fichiers, lisibles sans scripts :',
+	'chronicle.table.positions': 'positions.csv, chaque poste et chaque mandat',
+	'chronicle.table.dataset': 'dataset.json, l’archive avec chaque événement',
 	'chronicle.events.expand': 'Ouvrir la chronologie complète des événements',
 	'chronicle.events.collapse': 'Retour à la chronologie',
 
@@ -4720,6 +4726,9 @@ const ar: Dict = {
 	'chronicle.fullrange': 'المدى الكامل',
 	'chronicle.table': 'عرض جدولي لكل المناصب أعلاه',
 	'chronicle.table.caption': 'شاغلو المناصب حسب المنصب، مع الفترة التي يدعمها كل مصدر فعليًا.',
+	'chronicle.table.files': 'هذه السجلات نفسها منشورة في ملفات، تُقرأ دون سكربتات:',
+	'chronicle.table.positions': 'positions.csv، كل منصب وكل فترة شغل',
+	'chronicle.table.dataset': 'dataset.json، الأرشيف بما فيه كل حدث',
 	'chronicle.events.expand': 'فتح الجدول الزمني الكامل للأحداث',
 	'chronicle.events.collapse': 'العودة إلى الجدول الزمني',
 

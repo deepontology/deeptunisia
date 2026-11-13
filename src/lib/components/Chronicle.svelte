@@ -1119,6 +1119,19 @@
 	}
 
 	const zoomed = $derived(domain[0] > FLOOR + 1 || domain[1] < CUTOFF - 1);
+
+	/**
+	 * The two tables below the chart are its text alternative. They are drawn
+	 * only while the reader has the section open, so a closed section costs
+	 * nothing to load and nothing to keep. The same records are published as
+	 * files for a reader with no scripts.
+	 */
+	let a11yOpen = $state(false);
+
+	function onA11yToggle(e: Event) {
+		const open = (e.currentTarget as HTMLDetailsElement).open;
+		if (open !== a11yOpen) a11yOpen = open;
+	}
 </script>
 
 <div class="chronicle">
@@ -1940,8 +1953,15 @@
 		</div>
 	</div>
 
-	<details class="a11y">
+	<details class="a11y" ontoggle={onA11yToggle}>
 		<summary>{t('chronicle.table')}</summary>
+		<p class="a11y-note">{t('chronicle.table.files')}</p>
+		<p class="a11y-files">
+			<a href="/positions.csv" download>{t('chronicle.table.positions')}</a>
+			<span aria-hidden="true"> · </span>
+			<a href="/dataset.json" download>{t('chronicle.table.dataset')}</a>
+		</p>
+		{#if a11yOpen}
 		<table>
 			<caption>{t('chronicle.table.caption')}</caption>
 			<thead>
@@ -1980,6 +2000,7 @@
 				{/each}
 			</tbody>
 		</table>
+		{/if}
 	</details>
 </div>
 
@@ -2641,6 +2662,22 @@
 	.a11y summary {
 		cursor: pointer;
 		font-size: var(--t-sm);
+	}
+	.a11y-note {
+		margin: var(--s-2) 0 0;
+		color: var(--text-faint);
+		font-size: var(--t-xs);
+	}
+	.a11y-files {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--s-1);
+		margin: var(--s-1) 0 0;
+		font-family: var(--font-mono);
+		font-size: var(--t-2xs);
+	}
+	.a11y-files a {
+		color: var(--accent);
 	}
 	.a11y table {
 		width: 100%;
