@@ -74,10 +74,24 @@ jobs:
         working-directory: head
         env:
           HEAD_BRANCH: ${{ github.event.pull_request.head.ref }}
+          BASE_REF: ${{ github.event.pull_request.base.ref }}
         run: |
           # A sync brings new data from main on purpose; only code is ledgered.
-          if [[ "$HEAD_BRANCH" == sync/* ]]; then
-            echo "::notice::head branch $HEAD_BRANCH is a sync: the hash comparison is skipped because it carries new data"
+          # A desk session moves the hash on purpose too, but only when it changes
+          # nothing beyond data/, its own line in research/desk/sessions.tsv, and
+          # the documents `npm run stats:write` rewrites because their counts
+          # moved with it. scripts/ledger-exempt.ts decides both cases, and a
+          # branch it does not exempt falls through to the hash comparison below.
+          #
+          # The two checkouts are separate clones, so the head clone has no local
+          # origin/release/1.0 to compare with. Fetch the base branch from the
+          # base checkout: it is the branch as it is now, not base.sha, for the
+          # reason written on the checkout above.
+          git remote add base-checkout "$GITHUB_WORKSPACE/base" 2>/dev/null \
+            || git remote set-url base-checkout "$GITHUB_WORKSPACE/base"
+          git fetch -q base-checkout "refs/heads/$BASE_REF:refs/remotes/base-checkout/$BASE_REF"
+          git diff --name-only "base-checkout/$BASE_REF...HEAD" > "$RUNNER_TEMP/changed-files.txt"
+          if npx tsx scripts/ledger-exempt.ts --branch "$HEAD_BRANCH" --files-from "$RUNNER_TEMP/changed-files.txt"; then
             exit 0
           fi
           base=$(node -p "require('../base/src/generated/dataset.json').meta.datasetHash")
