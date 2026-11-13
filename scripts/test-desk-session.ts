@@ -8,7 +8,7 @@
  * against the schemas, and checks the figure the build publishes equals a median
  * computed here from the seconds the reviewer actually spent.
  */
-import { cpSync, existsSync, mkdtempSync, mkdirSync, readFileSync, rmSync } from 'node:fs';
+import { cpSync, existsSync, mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { tmpdir } from 'node:os';
@@ -18,11 +18,13 @@ import { z } from 'zod';
 import { createAdminServer } from './admin.ts';
 import {
 	SESSIONS_HEADER,
+	changedFiles,
 	configureDeskSchema,
 	deskFigure,
 	deskStatsText,
 	parseSessions
 } from './desk.ts';
+import { rewriteClaimSurface } from './write-claims.ts';
 import { PositionSchema, RelationshipSchema, EventSchema, verifiedGrounded } from './schema.ts';
 import { VERIFIED_EXCEPTIONS } from './verified-exceptions.ts';
 import { translate, type Locale } from '../src/lib/i18n.ts';
@@ -55,9 +57,56 @@ git(['add', '-A']);
 git(['-c', 'user.name=Fixture', '-c', 'user.email=fixture@example.org', 'commit', '-m', 'fixture data']);
 
 let clock = Date.UTC(2026, 10, 12, 9, 0, 0);
-const server = createAdminServer({ root, now: () => clock });
+
+/**
+ * The refresh finish runs before it commits. The real one rebuilds the dataset,
+ * rewrites the declared claim surfaces and the stat-tagged documents; here it
+ * writes one tracked file, which is enough to prove the commit carries what the
+ * refresh rewrote and that the answer lists it.
+ */
+const REFRESHED = 'src/generated/published-counts.json';
+let refreshCalls = 0;
+const refresh = (at: string) => {
+	refreshCalls++;
+	writeFileSync(join(at, REFRESHED), JSON.stringify({ reviewed: 6 }, null, 2) + '\n', 'utf8');
+	return changedFiles(at);
+};
+
+const server = createAdminServer({ root, now: () => clock, refresh });
 await new Promise<void>((resolve) => server.listen(0, '127.0.0.1', resolve));
 const base = `http://127.0.0.1:${(server.address() as any).port}`;
+
+console.log('\n  ── the claim surfaces refresh only their figure ──\n');
+
+{
+	const en = 'The worse number is the one that matters. <strong>All 52 review notes predate the actor field.</strong>';
+	const out = rewriteClaimSurface(en, { id: 'review-editorial-notes', display: '58' }, '[Aa]ll (\\d+) review notes');
+	ok('a stale figure is replaced', out.text.includes('All 58 review notes') && !out.text.includes('All 52'));
+	ok('the sentence around it is untouched', out.text.replace('58', '52') === en);
+	ok('the change records the figure before and after', out.changes[0]?.before === '52' && out.changes[0]?.after === '58');
+
+	const fr = 'Les 52 notes de relecture sont antérieures au champ acteur.';
+	const frOut = rewriteClaimSurface(fr, { id: 'review-editorial-notes', display: '58' }, 'Les (\\d+) notes de relecture');
+	ok('a translated sentence keeps its translation', frOut.text === 'Les 58 notes de relecture sont antérieures au champ acteur.');
+
+	const ar = 'ملاحظات المراجعة الـ52 تسبق حقل الفاعل.';
+	const arOut = rewriteClaimSurface(ar, { id: 'review-editorial-notes', display: '58' }, 'ملاحظات المراجعة الـ(\\d+)');
+	ok('an Arabic sentence keeps its text', arOut.text === 'ملاحظات المراجعة الـ58 تسبق حقل الفاعل.');
+
+	const current = rewriteClaimSurface('All 58 review notes', { id: 'x', display: '58' }, '[Aa]ll (\\d+) review notes');
+	ok('a surface that already agrees changes nothing', current.changes.length === 0 && current.text === 'All 58 review notes');
+
+	const throws = (text: string, locator: string) => {
+		try {
+			rewriteClaimSurface(text, { id: 'x', display: '1' }, locator);
+			return '';
+		} catch (e) {
+			return (e as Error).message;
+		}
+	};
+	ok('a locator that no longer matches throws', /matches 0 times/.test(throws('nothing here', '[Aa]ll (\\d+) review notes')));
+	ok('a locator that matches twice throws', /matches 2 times/.test(throws('All 1 review notes, all 2 review notes', '[Aa]ll (\\d+) review notes')));
+}
 
 console.log('\n  ── a ten-record session ──\n');
 
@@ -121,6 +170,23 @@ for (const step of PLAN) {
 ok('every verdict in the plan is accepted', refused.length === 0, refused.join(' | '));
 ok('the session saw ten records', seen.length === 10 && seen.every((s) => s !== ''), seen.join(', '));
 
+console.log('\n  ── finish refuses a tree the session did not make ──\n');
+
+{
+	const rubric = join(root, 'research', 'study', 'rubric-v2.md');
+	writeFileSync(rubric, 'a local edit that is not part of the session\n', 'utf8');
+	const out = await fetch(base + '/api/session/finish', {
+		method: 'POST',
+		headers: { 'content-type': 'application/json' },
+		body: JSON.stringify({ by: 'maintainer' })
+	});
+	const body = await out.json();
+	ok('a change the session did not make stops finish', out.status === 400 && /did not make/.test(body.error ?? ''), JSON.stringify(body));
+	ok('the refusal names the file', /research\/study\/rubric-v2\.md/.test(body.error ?? ''), body.error);
+	ok('the refusal creates no branch', !git(['branch', '--list']).includes('data/desk-2026-11-12'));
+	git(['checkout', '--', 'research/study/rubric-v2.md']);
+}
+
 const finished = await (await fetch(base + '/api/session/finish', {
 	method: 'POST',
 	headers: { 'content-type': 'application/json' },
@@ -129,6 +195,15 @@ const finished = await (await fetch(base + '/api/session/finish', {
 
 ok('finish reports the branch it committed on', finished.branch === 'data/desk-2026-11-12', JSON.stringify(finished.branch));
 ok('finish reports a commit', /^[0-9a-f]{7,}$/.test(finished.sha ?? ''), JSON.stringify(finished.sha));
+ok('finish ran the refresh before committing', refreshCalls === 1, String(refreshCalls));
+ok(
+	'finish lists every file it committed, including what the refresh rewrote',
+	Array.isArray(finished.files) &&
+		finished.files.includes('research/desk/sessions.tsv') &&
+		finished.files.includes(REFRESHED) &&
+		finished.files.some((f: string) => f.startsWith('data/')),
+	JSON.stringify(finished.files)
+);
 ok(
 	'finish shows the two publish commands and does not run them',
 	typeof finished.commands?.push === 'string' &&
@@ -150,7 +225,12 @@ console.log('\n  ── the branch ──\n');
 		.split('\n')
 		.map((l) => l.trim())
 		.filter(Boolean);
-	ok('the commit touches data files and the session file only', files.every((f) => f.startsWith('data/') || f === 'research/desk/sessions.tsv'), files.join(', '));
+	ok(
+		'the commit touches data files, the session file and what the refresh rewrote',
+		files.every((f) => f.startsWith('data/') || f === 'research/desk/sessions.tsv' || f === REFRESHED),
+		files.join(', ')
+	);
+	ok('the commit carries what the refresh rewrote', files.includes(REFRESHED));
 	ok('the commit carries the session file', files.includes('research/desk/sessions.tsv'));
 	ok('the working tree is clean after the commit', git(['status', '--porcelain']).trim() === '');
 	ok('the commit subject names the desk', /^Desk: record a verification session/.test(git(['log', '-1', '--pretty=%s']).trim()));
@@ -281,6 +361,59 @@ console.log('\n  ── the page says it in three languages ──\n');
 	ok('the unmeasured label differs by language', fr !== en && ar !== en && ar !== fr, `${en} | ${fr} | ${ar}`);
 	const labels = (['en', 'fr', 'ar'] as Locale[]).map((l) => translate(l, 'about.desk.perClaim'));
 	ok('the per-claim label keeps its count in every language', labels.every((l) => l.includes('{claims}')), labels.join(' | '));
+}
+
+console.log('\n  ── a failed refresh leaves no branch and no second line ──\n');
+
+{
+	// A tree of its own: the successful session above has committed and its
+	// branch exists, so a second finish here would be refused for the wrong
+	// reason.
+	const failRoot = mkdtempSync(join(tmpdir(), 'dt-desk-session-fail-'));
+	cpSync(join(ROOT, 'data'), join(failRoot, 'data'), { recursive: true });
+	mkdirSync(join(failRoot, 'src', 'generated'), { recursive: true });
+	cpSync(join(ROOT, 'src', 'generated', 'dataset.json'), join(failRoot, 'src', 'generated', 'dataset.json'));
+	mkdirSync(join(failRoot, 'research', 'study'), { recursive: true });
+	cpSync(join(ROOT, 'research', 'study', 'rubric-v2.md'), join(failRoot, 'research', 'study', 'rubric-v2.md'));
+
+	const g = (args: string[]) => execFileSync('git', args, { cwd: failRoot, encoding: 'utf8' });
+	g(['init']);
+	g(['add', '-A']);
+	g(['-c', 'user.name=Fixture', '-c', 'user.email=fixture@example.org', 'commit', '-m', 'fixture data']);
+
+	const failing = createAdminServer({
+		root: failRoot,
+		now: () => Date.UTC(2026, 10, 12, 9, 0, 0),
+		refresh: () => {
+			throw new Error('the build failed on purpose');
+		}
+	});
+	await new Promise<void>((resolve) => failing.listen(0, '127.0.0.1', resolve));
+	const failBase = `http://127.0.0.1:${(failing.address() as any).port}`;
+
+	const packet = (await (await fetch(failBase + '/api/packet')).json()).packet;
+	await fetch(failBase + '/api/verdict', {
+		method: 'POST',
+		headers: { 'content-type': 'application/json' },
+		body: JSON.stringify({ kind: packet.kind, id: packet.id, key: '1', by: 'maintainer' })
+	});
+	const out = await fetch(failBase + '/api/session/finish', {
+		method: 'POST',
+		headers: { 'content-type': 'application/json' },
+		body: JSON.stringify({ by: 'maintainer' })
+	});
+	const body = await out.json();
+	ok('a failed refresh fails the finish', out.status === 500 && /failed on purpose/.test(body.error ?? ''), JSON.stringify(body));
+	ok('no branch was created', !g(['branch', '--list']).includes('data/desk-2026-11-12'), g(['branch', '--list']).trim());
+	ok(
+		'the session file was not left with a line',
+		!existsSync(join(failRoot, 'research', 'desk', 'sessions.tsv')) ||
+			readFileSync(join(failRoot, 'research', 'desk', 'sessions.tsv'), 'utf8').trim() === SESSIONS_HEADER
+	);
+	ok('the reviewer write is still in the tree', g(['diff', '--name-only', 'HEAD']).includes('data/positions.yaml'));
+
+	failing.close();
+	rmSync(failRoot, { recursive: true, force: true });
 }
 
 server.close();

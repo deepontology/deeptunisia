@@ -9,6 +9,7 @@
         "data:watch": "tsx watch scripts/build-data.ts",
         "studies:build": "tsx scripts/build-studies.ts",
         "stats:write": "tsx scripts/write-stats.ts",
+        "claims:write": "tsx scripts/write-claims.ts",
         "studies:export": "tsx scripts/studies-export.ts",
         "studies:aggregate": "tsx scripts/studies-aggregate.ts",
         "studies:freeze": "tsx scripts/studies-freeze.ts",

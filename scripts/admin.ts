@@ -1266,6 +1266,8 @@ export interface AdminOptions {
 	 * draw a different sample.
 	 */
 	pilot?: boolean;
+	/** What finish runs before committing. Tests pass their own. */
+	refresh?: (root: string) => string[];
 }
 
 /**
@@ -1281,6 +1283,7 @@ export function createAdminServer(options: AdminOptions = {}) {
 	const session = new DeskSession({
 		root,
 		now: options.now,
+		refresh: options.refresh,
 		queue: () =>
 			pilot
 				? pilot.items
