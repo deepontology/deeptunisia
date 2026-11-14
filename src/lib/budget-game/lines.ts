@@ -32,7 +32,13 @@ export type LineId =
 	| 'culture'
 	| 'presidency'
 	| 'government'
-	| 'other'
+	| 'employment'
+	| 'finance'
+	| 'transport'
+	| 'environment'
+	| 'economy'
+	| 'tourism'
+	| 'rest'
 	| 'debt'
 	| 'reserve';
 
@@ -57,18 +63,24 @@ export const MOVABLE_ORDER: LineId[] = [
 	'higher_education',
 	'health',
 	'social',
+	'employment',
 	'subsidies',
 	'energy_trade',
 	'police',
 	'army',
 	'justice',
+	'finance',
 	'farming',
 	'roads_housing',
+	'transport',
+	'environment',
+	'economy',
 	'youth_sports',
 	'culture',
+	'tourism',
 	'presidency',
 	'government',
-	'other'
+	'rest'
 ];
 export const LOCKED_ORDER: LineId[] = ['debt', 'reserve'];
 
@@ -109,7 +121,14 @@ export const LINE_ROWS: Record<LineId, { plus: string[]; minus?: string[] }> = {
 	culture: { plus: ['culture_arts'] },
 	presidency: { plus: ['presidency'] },
 	government: { plus: ['foreign_affairs', 'head_of_government', 'isie_elections', 'assembly_of_representatives'] },
-	other: { plus: ['all_other_missions', 'tourism'] },
+	employment: { plus: ['employment_training'] },
+	finance: { plus: ['finance'] },
+	transport: { plus: ['transport'] },
+	environment: { plus: ['environment'] },
+	economy: { plus: ['economy_planning'] },
+	tourism: { plus: ['tourism'] },
+	// The only remainder, and a small one: named missions whose 2027 drafts are not yet reported.
+	rest: { plus: ['all_other_missions'] },
 	debt: { plus: ['financing_costs_locked'] },
 	reserve: { plus: ['unforeseen_locked'] }
 };
@@ -128,4 +147,77 @@ export function linesFrom(rows: FigureRowLike[]): Lines {
 	const envelope = Math.round(movable.reduce((s, l) => s + l.draft, 0) * 1000) / 1000;
 	const total = Math.round((envelope + locked.reduce((s, l) => s + l.draft, 0)) * 1000) / 1000;
 	return { movable, locked, envelope, total };
+}
+
+/**
+ * The same board lines in the adopted laws of past years (tableau C, by mission).
+ * Every mission of the law lands in exactly one line, so a year's lines add up to
+ * the law's total. Subsidies are not a mission there: the board reads them as the
+ * energy programme of Industry, Mines and Energy plus the domestic trade programme
+ * of Commerce, and the energy and trade line is those two missions less the two
+ * programmes. That is close to, not the same as, the 2027 subsidies memo row.
+ */
+export const HISTORY_ROWS: Record<LineId, { missions?: string[]; programmes?: string[]; minusProgrammes?: string[] }> = {
+	education: { missions: ['education'] },
+	higher_education: { missions: ['higher_education_research'] },
+	health: { missions: ['health'] },
+	social: { missions: ['social_affairs', 'family_women_children_seniors'] },
+	subsidies: { programmes: ['energy', 'domestic_trade'] },
+	energy_trade: { missions: ['industry_mines_energy', 'trade_export'], minusProgrammes: ['energy', 'domestic_trade'] },
+	police: { missions: ['interior'] },
+	army: { missions: ['national_defence'] },
+	justice: { missions: ['justice'] },
+	farming: { missions: ['agriculture_water_fisheries'] },
+	roads_housing: { missions: ['equipment_housing'] },
+	youth_sports: { missions: ['youth_sports'] },
+	culture: { missions: ['culture_arts'] },
+	presidency: { missions: ['presidency'] },
+	government: { missions: ['head_of_government', 'foreign_affairs', 'isie_elections', 'arp'] },
+	employment: { missions: ['employment_training'] },
+	finance: { missions: ['finance'] },
+	transport: { missions: ['transport'] },
+	environment: { missions: ['environment'] },
+	economy: { missions: ['economy_planning'] },
+	tourism: { missions: ['tourism'] },
+	rest: {
+		missions: [
+			'religious_affairs',
+			'communication_technologies',
+			'state_domains',
+			'court_of_accounts',
+			'anrd',
+			'higher_council_education',
+			'judicial_council',
+			'constitutional_court'
+		]
+	},
+	debt: { missions: ['financing_costs'] },
+	reserve: { missions: ['unforeseen'] }
+};
+
+export interface HistoryYearLike {
+	missions: Record<string, { amount_md: number }>;
+	programmes: Record<string, { amount_md: number }>;
+}
+
+/** One past year's law, read onto the board's lines (MD). Missions a year lacks count as zero. */
+export function historyLines(year: HistoryYearLike): Record<LineId, number> {
+	const mission = (id: string) => year.missions[id]?.amount_md ?? 0;
+	const programme = (id: string) => {
+		const p = year.programmes[id];
+		if (!p) throw new Error(`history year has no programme "${id}"`);
+		return p.amount_md;
+	};
+	const out = {} as Record<LineId, number>;
+	for (const [id, made] of Object.entries(HISTORY_ROWS) as [LineId, (typeof HISTORY_ROWS)[LineId]][]) {
+		const sum =
+			(made.missions ?? []).reduce((s, m) => s + mission(m), 0) +
+			(made.programmes ?? []).reduce((s, m) => s + programme(m), 0) -
+			(made.minusProgrammes ?? []).reduce((s, m) => s + programme(m), 0);
+		out[id] = Math.round(sum * 1000) / 1000;
+	}
+	// Every mission must land somewhere, or the lines would not add up to the law.
+	const used = new Set(Object.values(HISTORY_ROWS).flatMap((m) => m.missions ?? []));
+	for (const id of Object.keys(year.missions)) if (!used.has(id)) throw new Error(`history mission "${id}" is on no line`);
+	return out;
 }

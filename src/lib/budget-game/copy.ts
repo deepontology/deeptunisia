@@ -150,7 +150,7 @@ const en: Copy = {
 		whoBody: 'DeepTunisia. This is a design prototype. The study has not been approved and has not opened.',
 		figures: 'Where the figures come from',
 		figuresBody:
-			'Every figure on these screens is a draft figure reported by the press from the 2027 draft budget. None is checked against the official document. The real study will give the source and page for each line before it opens.',
+			'Every 2027 figure on these screens is a draft figure reported by the press from the 2027 draft budget. None is checked against the official document. The real study will give the source and page for each line before it opens. The past years (2024 to 2026) are the budgets as voted, read from the finance laws in the Journal Officiel.',
 		sample: 'What the answers can and cannot say',
 		sampleBody:
 			'They describe the people who take part in an open, self-selected online survey of adults. They do not describe Tunisians as a whole.',
@@ -268,7 +268,13 @@ const en: Copy = {
 		culture: { name: 'Culture and arts', note: 'Heritage, theatre, cinema and museums.' },
 		presidency: { name: 'Presidency', note: 'The office of the President of the Republic.' },
 		government: { name: 'Government, parliament, elections and diplomacy', note: 'Government offices, parliament, elections and embassies.' },
-		other: { name: 'Everything else (derived)', note: 'Every other ministry and body, including tourism. Mostly the residual of the total after the named lines, so treat it as a derived line, not a reported one.' },
+		employment: { name: 'Jobs and vocational training', note: 'Training centres, job programmes and help to start a business.' },
+		finance: { name: 'Finance: tax, customs, treasury', note: 'Customs, tax offices and public accounting. Debt interest is not here: it is spent before you start.' },
+		transport: { name: 'Transport', note: 'Mostly land transport: buses, metro and trains. Also ports and civil aviation.' },
+		environment: { name: 'Environment', note: 'Waste, pollution and sanitation, and sustainable development.' },
+		economy: { name: 'Economy and regional development', note: 'Mostly regional development programmes. Also statistics, international cooperation and investment support.' },
+		tourism: { name: 'Tourism and crafts', note: 'Tourism promotion and handicrafts.' },
+		rest: { name: 'Religion, digital, state lands, courts (derived)', note: 'Religious Affairs, Communication Technologies, State Domains, the Court of Accounts, the National Council of Regions and Districts and two councils. Their 2027 drafts are not yet reported one by one, so this line is the total less every other line. In 2026 they came to 565 MD.' },
 		debt: { name: 'Debt interest', note: 'Interest owed on existing debt.' },
 		reserve: { name: 'Unforeseen reserve', note: 'Kept for costs nobody planned for.' }
 	}
@@ -293,7 +299,7 @@ const fr: Copy = {
 			"DeepTunisia. Il s'agit d'un prototype de conception. L'étude n'a pas été approuvée et n'est pas ouverte.",
 		figures: "D'où viennent les chiffres",
 		figuresBody:
-			"Chaque chiffre de ces écrans est un chiffre du projet rapporté par la presse pour le budget 2027. Aucun n'est vérifié sur le document officiel. L'étude réelle donnera la source et la page de chaque ligne avant son ouverture.",
+			"Chaque chiffre 2027 de ces écrans est un chiffre du projet rapporté par la presse pour le budget 2027. Aucun n'est vérifié sur le document officiel. L'étude réelle donnera la source et la page de chaque ligne avant son ouverture. Les années passées (2024 à 2026) sont les budgets votés, lus dans les lois de finances au Journal officiel.",
 		sample: 'Ce que les réponses peuvent dire et ne peuvent pas dire',
 		sampleBody:
 			"Elles décrivent les personnes qui participent à une enquête en ligne ouverte et auto-sélectionnée auprès d'adultes. Elles ne décrivent pas les Tunisiens dans leur ensemble.",
@@ -419,7 +425,13 @@ const fr: Copy = {
 		culture: { name: 'Culture et arts', note: 'Patrimoine, théâtre, cinéma et musées.' },
 		presidency: { name: 'Présidence', note: 'La présidence de la République.' },
 		government: { name: 'Gouvernement, parlement, élections et diplomatie', note: 'Services du gouvernement, parlement, élections et ambassades.' },
-		other: { name: 'Tout le reste (dérivée)', note: 'Tous les autres ministères et organismes, dont le tourisme. Surtout le reste du total après les lignes nommées : une ligne dérivée, pas un chiffre rapporté.' },
+		employment: { name: 'Emploi et formation professionnelle', note: "Centres de formation, programmes d'emploi et aide à la création d'entreprise." },
+		finance: { name: 'Finances : impôts, douane, trésor', note: "Douane, services fiscaux et comptabilité publique. Les intérêts de la dette n'y sont pas : ils sont dépensés avant de commencer." },
+		transport: { name: 'Transport', note: "Surtout le transport terrestre : bus, métro et trains. Aussi les ports et l'aviation civile." },
+		environment: { name: 'Environnement', note: 'Déchets, dépollution et assainissement, et développement durable.' },
+		economy: { name: 'Économie et développement régional', note: "Surtout les programmes de développement régional. Aussi la statistique, la coopération internationale et l'appui à l'investissement." },
+		tourism: { name: 'Tourisme et artisanat', note: 'Promotion du tourisme et artisanat.' },
+		rest: { name: 'Culte, numérique, domaines, contrôle (dérivée)', note: "Affaires religieuses, Technologies de la communication, Domaines de l'État, Cour des comptes, Conseil national des régions et des districts et deux conseils. Leurs montants 2027 ne sont pas encore publiés un par un : cette ligne est le total moins toutes les autres. En 2026, ils faisaient 565 MD." },
 		debt: { name: 'Intérêts de la dette', note: 'Intérêts dus sur la dette existante.' },
 		reserve: { name: 'Réserve pour imprévus', note: 'Réservée aux dépenses que personne n’avait prévues.' }
 	}
@@ -443,7 +455,7 @@ const ar: Copy = {
 		whoBody: 'DeepTunisia. هذا نموذج تصميمي. لم تُعتمد الدراسة ولم تُفتح.',
 		figures: 'من أين تأتي الأرقام',
 		figuresBody:
-			'كل رقم في هذه الشاشات رقم مؤقّت نقله الصحافة عن مشروع ميزانية 2027. ولم يُتحقّق من أي منها في الوثيقة الرسمية. وستعطي الدراسة الحقيقية المصدر والصفحة لكل بند قبل فتحها.',
+			'كل رقم لسنة 2027 في هذه الشاشات رقم مؤقّت نقلته الصحافة عن مشروع ميزانية 2027. ولم يُتحقّق من أي منها في الوثيقة الرسمية. وستعطي الدراسة الحقيقية المصدر والصفحة لكل بند قبل فتحها. أمّا السنوات الماضية (2024 إلى 2026) فهي الميزانيات كما صودق عليها، مأخوذة من قوانين المالية في الرائد الرسمي.',
 		sample: 'ما يمكن أن تقوله الإجابات وما لا يمكنها قوله',
 		sampleBody:
 			'تصف الأشخاص الذين يشاركون في استبيان إلكتروني مفتوح وقائم على الانتقاء الذاتي للبالغين. ولا تصف التونسيين في مجموعهم.',
@@ -568,7 +580,13 @@ const ar: Copy = {
 		culture: { name: 'الثقافة والفنون', note: 'التراث والمسرح والسينما والمتاحف.' },
 		presidency: { name: 'رئاسة الجمهورية', note: 'مؤسسة رئيس الجمهورية.' },
 		government: { name: 'الحكومة والبرلمان والانتخابات والدبلوماسية', note: 'مصالح الحكومة والبرلمان والانتخابات والسفارات.' },
-		other: { name: 'كل ما عدا ذلك (مشتقّ)', note: 'كل الوزارات والهيئات الأخرى، بما فيها السياحة. في معظمه باقي الإجمالي بعد البنود المسمّاة: بند مشتقّ وليس رقمًا منقولًا.' },
+		employment: { name: 'التشغيل والتكوين المهني', note: 'مراكز التكوين وبرامج التشغيل والمساعدة على بعث المؤسسات.' },
+		finance: { name: 'المالية: الجباية والديوانة والخزينة', note: 'الديوانة والمصالح الجبائية والمحاسبة العمومية. فوائد الدين ليست هنا: تُصرف قبل أن تبدأ.' },
+		transport: { name: 'النقل', note: 'أساسًا النقل البرّي: الحافلات والمترو والقطارات. وكذلك الموانئ والطيران المدني.' },
+		environment: { name: 'البيئة', note: 'النفايات ومكافحة التلوّث والتطهير، والتنمية المستدامة.' },
+		economy: { name: 'الاقتصاد والتنمية الجهوية', note: 'أساسًا برامج التنمية الجهوية. وكذلك الإحصاء والتعاون الدولي ودعم الاستثمار.' },
+		tourism: { name: 'السياحة والصناعات التقليدية', note: 'الترويج السياحي والصناعات التقليدية.' },
+		rest: { name: 'الشؤون الدينية، الرقمنة، أملاك الدولة، الرقابة (مشتقّ)', note: 'الشؤون الدينية، وتكنولوجيات الاتصال، وأملاك الدولة، ومحكمة المحاسبات، والمجلس الوطني للجهات والأقاليم، ومجلسان آخران. أرقامها لسنة 2027 لم تُنشر بعدُ واحدًا واحدًا، فهذا البند هو المجموع ناقص كل البنود الأخرى. في 2026 بلغت 565 م.د.' },
 		debt: { name: 'فوائد الدين', note: 'فوائد الدين القائم.' },
 		reserve: { name: 'احتياطي الطوارئ', note: 'يُحتفظ به لتكاليف لم يخطط لها أحد.' }
 	}

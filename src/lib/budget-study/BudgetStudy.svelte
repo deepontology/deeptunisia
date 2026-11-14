@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { app } from '$lib/state.svelte';
 	import Ruler from '$lib/index-study/Ruler.svelte';
-	import { FIGURES, type FigureRow } from './figures';
+	import { FIGURES, HISTORY, type FigureRow } from './figures';
 	import { linesFrom, LINE_ROWS, type LineId } from '$lib/budget-game/lines';
 	import { copyFor } from '$lib/budget-game/copy';
 	import { boardCopyFor } from '$lib/budget-game/board-copy';
@@ -287,6 +287,7 @@
 							<thead>
 								<tr>
 									<th scope="col">{copy.figures.system}</th>
+									{#each HISTORY as h (h.year)}<th scope="col" class="past">{copy.figures.adopted(String(h.year))}</th>{/each}
 									<th scope="col">{copy.figures.draft}</th>
 									<th scope="col">{copy.figures.status}</th>
 								</tr>
@@ -299,17 +300,19 @@
 											{#if f.madeOf}<span class="made" lang="en" dir="ltr">{copy.figures.madeOf}: {f.madeOf}</span>{/if}
 											{#if f.locked}<span class="made">{copy.figures.locked}</span>{/if}
 										</th>
+										{#each HISTORY as h (h.year)}<td class="past">{fmtMd(h.lines[f.id])}</td>{/each}
 										<td>{fmtMd(f.md)}</td>
 										<td><span class="chip" data-status={f.status}>{copy.figures.chip[f.status]}</span></td>
 									</tr>
 								{/each}
 							</tbody>
 							<tfoot>
-								<tr><th scope="row">{copy.figures.total}</th><td>{fmtMd(lines.total)}</td><td></td></tr>
+								<tr><th scope="row">{copy.figures.total}</th>{#each HISTORY as h (h.year)}<td class="past">{fmtMd(h.total_md)}</td>{/each}<td>{fmtMd(lines.total)}</td><td></td></tr>
 							</tfoot>
 						</table>
 					</div>
 					<p class="note">{copy.draftNotice}</p>
+					<p class="note">{copy.figures.historyNote}</p>
 					<details class="sources">
 						<summary>{copy.figures.sources}</summary>
 						<ul>
@@ -318,6 +321,18 @@
 									<span class="src-name">{r.label_en}</span>
 									<span class="mono">{fmtMd(r.amount_md)} MD</span>
 									<span class="src">{#if r.url}<a href={r.url} rel="noopener noreferrer">{r.source}</a>{:else}{r.source}{/if}</span>
+								</li>
+							{/each}
+						</ul>
+					</details>
+					<details class="sources">
+						<summary>{copy.figures.historySources}</summary>
+						<ul>
+							{#each HISTORY as h (h.year)}
+								<li lang="fr" dir="ltr">
+									<span class="src-name">{h.year}</span>
+									<span class="mono">{fmtMd(h.total_md)} MD</span>
+									<span class="src"><a href={h.url} rel="noopener noreferrer">{h.document}</a>. {h.source}, pages {Math.min(...Object.values(h.missions).map((m) => m.page))} to {Math.max(...Object.values(h.missions).map((m) => m.page))}.</span>
 								</li>
 							{/each}
 						</ul>
@@ -765,6 +780,18 @@
 		color: var(--text-muted);
 	}
 	tr.locked th,
+	/* Past years read as context: lighter than the 2027 draft the board starts from. */
+	td.past,
+	th.past {
+		color: var(--text-muted);
+		white-space: nowrap;
+	}
+	@media (max-width: 640px) {
+		td.past,
+		th.past {
+			display: none;
+		}
+	}
 	tr.locked td {
 		color: var(--text-muted);
 	}

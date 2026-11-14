@@ -68,6 +68,10 @@ export interface LandingCopy {
 		sources: string;
 		locked: string;
 		total: string;
+		/** Past years: the adopted laws, column header and sources. */
+		adopted: (year: string) => string;
+		historySources: string;
+		historyNote: string;
 	};
 	sections: LandingSection[];
 	cannotSay: string[];
@@ -120,7 +124,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 		},
 		demo: {
 			title: 'Try it with three systems',
-			body: 'Drag one system onto another, or use the buttons. These are the draft figures for three of the sixteen systems.',
+			body: 'Drag one system onto another, or use the buttons. These are the draft figures for three of the twenty-two systems.',
 			purse: 'Purse',
 			reset: 'Put it back',
 			take: (name) => `Take 100 MD from ${name}`,
@@ -143,7 +147,10 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 			chip: { 'draft-press': 'Press, not verified', 'draft-derived': 'Derived, not verified', 'draft-plf': 'Draft law', 'adopted-lf': 'Adopted law' },
 			sources: 'Every row of the figures file, with its source',
 			locked: 'Owed, does not move',
-			total: 'Total'
+			total: 'Total',
+			adopted: (y) => `${y}, adopted`,
+			historySources: 'The adopted laws of 2024, 2025 and 2026, with their Journal Officiel pages',
+			historyNote: 'The 2024 to 2026 columns are the budgets as voted in each finance law (tableau C of the Journal Officiel), in dinars of each year. Subsidies and the energy and trade line are read from programme lines in those years, so they sit close to, not exactly on, the 2027 definition.'
 		},
 		sections: [
 			{
@@ -243,7 +250,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 			{ label: 'Figures', value: 'Draft, press-reported, not verified.' },
 			{ label: 'Translation', value: 'English only for now. French and Arabic are drafts pending review.' }
 		],
-		draftNotice: 'Every figure on this page is a press-reported draft, not a verified official figure.',
+		draftNotice: 'Every 2027 figure on this page is a press-reported draft, not a verified official figure. The 2024 to 2026 figures come from the adopted laws.',
 		interimNotice: null,
 		closing: ['The total does not move.', 'Only where it goes does.'],
 		answerKinds: { consent: 'Required tick', allocation: 'On the board', single_choice: 'One choice', scale_0_10: 'From 0 to 10' },
@@ -292,7 +299,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 		},
 		demo: {
 			title: 'Essayez avec trois postes',
-			body: 'Glissez un poste sur un autre, ou utilisez les boutons. Ce sont les chiffres du projet pour trois des seize postes.',
+			body: 'Glissez un poste sur un autre, ou utilisez les boutons. Ce sont les chiffres du projet pour trois des vingt-deux postes.',
 			purse: 'Bourse',
 			reset: 'Remettre',
 			take: (name) => `Retirer 100 MD de ${name}`,
@@ -315,7 +322,10 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 			chip: { 'draft-press': 'Presse, non vérifié', 'draft-derived': 'Calculé, non vérifié', 'draft-plf': 'Projet de loi', 'adopted-lf': 'Loi adoptée' },
 			sources: 'Chaque ligne du fichier des chiffres, avec sa source',
 			locked: 'Dû, ne bouge pas',
-			total: 'Total'
+			total: 'Total',
+			adopted: (y) => `${y}, adoptée`,
+			historySources: 'Les lois adoptées de 2024, 2025 et 2026, avec leurs pages au Journal officiel',
+			historyNote: "Les colonnes 2024 à 2026 sont les budgets votés dans chaque loi de finances (tableau C du Journal officiel), en dinars de chaque année. Pour ces années, les subventions et la ligne énergie et commerce sont lues sur des programmes : elles sont proches de la définition 2027, pas identiques."
 		},
 		sections: [
 			{
@@ -415,7 +425,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 			{ label: 'Chiffres', value: 'Provisoires, rapportés par la presse, non vérifiés.' },
 			{ label: 'Traduction', value: 'Anglais seulement pour l’instant. Le français et l’arabe sont des brouillons en attente de relecture.' }
 		],
-		draftNotice: 'Chaque chiffre de cette page est un projet rapporté par la presse, non un chiffre officiel vérifié.',
+		draftNotice: 'Chaque chiffre 2027 de cette page est un projet rapporté par la presse, non un chiffre officiel vérifié. Les chiffres 2024 à 2026 viennent des lois adoptées.',
 		interimNotice: 'Traduction provisoire, non relue par une personne de langue maternelle.',
 		closing: ['Le total ne bouge pas.', 'Seule sa répartition change.'],
 		answerKinds: { consent: 'Case obligatoire', allocation: 'Sur le plateau', single_choice: 'Un seul choix', scale_0_10: 'De 0 à 10' },
@@ -464,7 +474,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 		},
 		demo: {
 			title: 'جرّب بثلاثة قطاعات',
-			body: 'اسحب قطاعًا على آخر، أو استعمل الأزرار. هذه أرقام المشروع لثلاثة من القطاعات الستّة عشر.',
+			body: 'اسحب قطاعًا على آخر، أو استعمل الأزرار. هذه أرقام المشروع لثلاثة من القطاعات الاثنين والعشرين.',
 			purse: 'المحفظة',
 			reset: 'أعدها كما كانت',
 			take: (name) => `خذ 100 م.د من ${name}`,
@@ -487,7 +497,10 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 			chip: { 'draft-press': 'الصحافة، غير متحقّق', 'draft-derived': 'محسوب، غير متحقّق', 'draft-plf': 'مشروع القانون', 'adopted-lf': 'القانون المصادق عليه' },
 			sources: 'كلّ صفّ في ملفّ الأرقام، مع مصدره',
 			locked: 'واجب، لا يتحرّك',
-			total: 'المجموع'
+			total: 'المجموع',
+			adopted: (y) => `${y}، مصادق عليه`,
+			historySources: 'قوانين المالية المصادق عليها لسنوات 2024 و2025 و2026، مع صفحاتها في الرائد الرسمي',
+			historyNote: 'أعمدة 2024 إلى 2026 هي الميزانيات كما صودق عليها في كل قانون مالية (جدول نفقات ميزانية الدولة في الرائد الرسمي)، بدنانير كل سنة. في تلك السنوات يُقرأ الدعم وبند الطاقة والتجارة من البرامج، فهما قريبان من تعريف 2027 وليسا مطابقين له.'
 		},
 		sections: [
 			{
@@ -587,7 +600,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 			{ label: 'الأرقام', value: 'مؤقّتة، نقلتها الصحافة، غير متحقّق منها.' },
 			{ label: 'الترجمة', value: 'الإنجليزية فقط في الوقت الحالي. الفرنسية والعربية مسودّتان في انتظار المراجعة.' }
 		],
-		draftNotice: 'كلّ رقم في هذه الصفحة مشروع نقلته الصحافة، وليس رقمًا رسميًّا متحقّقًا منه.',
+		draftNotice: 'كلّ رقم لسنة 2027 في هذه الصفحة مشروع نقلته الصحافة، وليس رقمًا رسميًّا متحقّقًا منه. أرقام 2024 إلى 2026 مأخوذة من القوانين المصادق عليها.',
 		interimNotice: 'ترجمة مؤقّتة، لم يراجعها متحدّث بالعربية كلغة أم.',
 		closing: ['المجموع لا يتغيّر.', 'وحده توزيعه يتغيّر.'],
 		answerKinds: { consent: 'خانة إلزامية', allocation: 'على اللوحة', single_choice: 'اختيار واحد', scale_0_10: 'من 0 إلى 10' },

@@ -1,20 +1,20 @@
 <script lang="ts">
 	import { onMount, tick, untrack } from 'svelte';
 	import { app } from '$lib/state.svelte';
-	import { FIGURES } from '$lib/budget-study/figures';
+	import { FIGURES, HISTORY } from '$lib/budget-study/figures';
 	import { copyFor } from './copy';
 	import { boardCopyFor } from './board-copy';
 	import { linesFrom, type LineId } from './lines';
 	import * as B from './board';
 	import { lineDifference } from './diff';
 	import { clearCoins, dragMoney, flyCoin } from './drag';
-	import SystemRow, { fmtMd, signed } from './SystemRow.svelte';
+	import SystemRow, { fmtMd, signed, type TrendPoint } from './SystemRow.svelte';
 
 	/**
 	 * The Treasury board, one screen on a desk and on a phone.
 	 *
 	 * Desk: the purse, the spent-before-you-start block, the chosen system with
-	 * Take and Give, the last moves and the actions sit in a column; the sixteen
+	 * Take and Give, the last moves and the actions sit in a column; the twenty-two
 	 * systems fill two columns of rows on one scale in dinars. Phone: the purse
 	 * is a bar at the top, the systems are rows, and the chosen system's Take
 	 * and Give sit in a dock at the bottom, under the thumb.
@@ -58,6 +58,29 @@
 		})
 	);
 	const half = Math.ceil(lines.movable.length / 2);
+
+	/*
+	 * Past years: the adopted laws of 2024 to 2026, shown by default beside the
+	 * 2027 draft, each year switchable. A phone has one switch for all of them.
+	 */
+	const DRAFT_YEAR = 2027;
+	let shown = $state<number[]>(HISTORY.map((h) => h.year));
+	const pastShown = $derived(HISTORY.filter((h) => shown.includes(h.year)));
+	function toggleYear(year: number) {
+		shown = shown.includes(year) ? shown.filter((y) => y !== year) : [...shown, year].sort();
+	}
+	function toggleAllYears() {
+		shown = shown.length ? [] : HISTORY.map((h) => h.year);
+	}
+	function trendOf(id: LineId, plan: number): TrendPoint[] {
+		if (!pastShown.length) return [];
+		return [...pastShown.map((h) => ({ year: h.year, md: h.lines[id], draft: false })), { year: DRAFT_YEAR, md: plan, draft: true }];
+	}
+	function historyText(id: LineId): string {
+		return pastShown.map((h) => `${h.year} ${fmtMd(h.lines[id])} MD`).join(', ');
+	}
+	/** A phone shows the rows as a list that scrolls, so a touch pans it; Take and Give move the money. */
+	let narrow = $state(false);
 	const columns = $derived([rows.slice(0, half), rows.slice(half)]);
 	const debt = lines.locked.find((l) => l.id === 'debt')!;
 	const reserve = lines.locked.find((l) => l.id === 'reserve')!;
@@ -204,7 +227,11 @@
 	}
 
 	onMount(() => {
-		if (!listEl) return;
+		const mq = window.matchMedia('(max-width: 720px)');
+		narrow = mq.matches;
+		const onmq = () => (narrow = mq.matches);
+		mq.addEventListener('change', onmq);
+		if (!listEl) return () => mq.removeEventListener('change', onmq);
 		const parent = listEl.closest('.board') as HTMLElement;
 		const stop = dragMoney(parent, {
 			canStart: (id) => (id === 'purse' ? P > 0 : true),
@@ -225,6 +252,7 @@
 			stop();
 			stopHold();
 			clearCoins();
+			mq.removeEventListener('change', onmq);
 		};
 	});
 
@@ -261,6 +289,9 @@
 		<div class="tools">
 			<button type="button" class="tool" onclick={undo} disabled={game.snapshots.length === 0} aria-label={t.undo} title={t.undo}><span aria-hidden="true">↶</span></button>
 			<button type="button" class="tool" onclick={() => (view = view === 'bars' ? 'table' : 'bars')} aria-pressed={view === 'table'} aria-label={t.table} title={t.table}><span aria-hidden="true">{view === 'bars' ? '☰' : '▥'}</span></button>
+			<button type="button" class="tool years-tool" onclick={toggleAllYears} aria-pressed={shown.length > 0} aria-label={t.pastYearsToggle} title={t.pastYearsToggle}>
+				<svg viewBox="0 0 20 14" width="20" height="14" aria-hidden="true"><path d="M2 11 L7 8 L12 9 L18 3" /><circle cx="18" cy="3" r="2" /></svg>
+			</button>
 		</div>
 
 		<div class="locked">
@@ -274,6 +305,12 @@
 		<div class="legend">
 			<span class="key"><span class="sw plan" aria-hidden="true"></span>{t.legendPlan}</span>
 			<span class="key"><span class="sw mine" aria-hidden="true"></span>{t.legendYours}</span>
+			<span class="years" role="group" aria-label={t.pastYears} title={t.historyNote}>
+				<span class="years-label"><svg viewBox="0 0 20 14" width="18" height="12" aria-hidden="true"><path d="M2 11 L7 8 L12 9 L18 3" /><circle cx="18" cy="3" r="2" /></svg>{t.pastYears}</span>
+				{#each HISTORY as h (h.year)}
+					<button type="button" class="year" aria-pressed={shown.includes(h.year)} onclick={() => toggleYear(h.year)}>{h.year}</button>
+				{/each}
+			</span>
 			<span class="scale">{t.scale(fmtMd(SCALE))}</span>
 			<button type="button" class="link" onclick={() => (view = view === 'bars' ? 'table' : 'bars')} aria-pressed={view === 'table'}>
 				{view === 'bars' ? t.table : t.bars}
@@ -292,7 +329,7 @@
 				bind:this={listEl}
 			>
 				{#each columns as col, k (k)}
-					<div class="col">
+					<div class="col" style:--rows={half}>
 						<div class="axis" aria-hidden="true">
 							{#each TICKS as v (v)}
 								<span style:inset-inline-start="{(v / SCALE) * 100}%">{v === 0 ? '0' : `${v / 1000}k`}</span>
@@ -309,7 +346,7 @@
 									fmtMd(r.plan),
 									fmtMd(r.yours),
 									r.diff.direction === 'same' ? t.same : `${signed(r.diff.deltaMd)} MD, ${signed(r.diff.deltaPct, 1)}%, ${r.diff.direction === 'more' ? t.more : t.less}`
-								)}
+								) + (pastShown.length ? ` ${t.historyAria(historyText(r.id))}` : '')}
 							>
 								<SystemRow
 									id={r.id}
@@ -325,6 +362,10 @@
 									target={over === r.id}
 									source={carrying === r.id}
 									refused={refusedId === r.id}
+									pan={narrow}
+									trend={trendOf(r.id, r.plan)}
+									firstYear={HISTORY[0]?.year ?? DRAFT_YEAR}
+									lastYear={DRAFT_YEAR}
 								/>
 							</div>
 						{/each}
@@ -335,12 +376,13 @@
 			<div class="table-wrap">
 				<table>
 					<thead>
-						<tr><th scope="col">{t.th.system}</th><th scope="col">{t.th.plan}</th><th scope="col">{t.th.yours}</th><th scope="col">{t.th.md}</th><th scope="col">{t.th.pct}</th></tr>
+						<tr><th scope="col">{t.th.system}</th>{#each pastShown as h (h.year)}<th scope="col" class="past">{h.year}</th>{/each}<th scope="col">{t.th.plan}</th><th scope="col">{t.th.yours}</th><th scope="col">{t.th.md}</th><th scope="col">{t.th.pct}</th></tr>
 					</thead>
 					<tbody>
 						{#each rows as r (r.id)}
 							<tr>
 								<th scope="row">{c.lines[r.id].name}</th>
+								{#each pastShown as h (h.year)}<td class="past">{fmtMd(h.lines[r.id])}</td>{/each}
 								<td>{fmtMd(r.plan)}</td>
 								<td>{fmtMd(r.yours)}</td>
 								<td>{signed(r.diff.deltaMd)}</td>
@@ -348,11 +390,11 @@
 							</tr>
 						{/each}
 						{#each lines.locked as l (l.id)}
-							<tr class="lockrow"><th scope="row">{c.lines[l.id].name}</th><td>{fmtMd(l.draft)}</td><td>{fmtMd(l.draft)}</td><td>0</td><td>0.0</td></tr>
+							<tr class="lockrow"><th scope="row">{c.lines[l.id].name}</th>{#each pastShown as h (h.year)}<td class="past">{fmtMd(h.lines[l.id])}</td>{/each}<td>{fmtMd(l.draft)}</td><td>{fmtMd(l.draft)}</td><td>0</td><td>0.0</td></tr>
 						{/each}
 					</tbody>
 					<tfoot>
-						<tr><th scope="row">{t.total}</th><td>{fmtMd(lines.total)}</td><td>{fmtMd(lines.total - P)}</td><td>{signed(-P)}</td><td></td></tr>
+						<tr><th scope="row">{t.total}</th>{#each pastShown as h (h.year)}<td class="past">{fmtMd(h.total_md)}</td>{/each}<td>{fmtMd(lines.total)}</td><td>{fmtMd(lines.total - P)}</td><td>{signed(-P)}</td><td></td></tr>
 					</tfoot>
 				</table>
 			</div>
@@ -364,12 +406,11 @@
 		<div class="chosen">
 			{#if activeRow}
 				<p class="chosen-name">{c.lines[activeRow.id].name}</p>
-				<p class="chosen-figs num">
+				<p class="chosen-figs num" class:has-history={pastShown.length > 0}>
 					<span>{t.plan} {fmtMd(activeRow.plan)}</span>
 					<span>{t.yours} {fmtMd(activeRow.yours)}</span>
 					<span data-dir={activeRow.diff.direction}>{t.change} <bdi dir="ltr">{signed(activeRow.diff.deltaMd)} · {signed(activeRow.diff.deltaPct, 1)}%</bdi></span>
 				</p>
-				<p class="chosen-note">{c.lines[activeRow.id].note}</p>
 				<div class="moves-buttons">
 					<button
 						type="button"
@@ -392,6 +433,38 @@
 						{t.give(fmtMd(giveMd || (rule === 'coin' ? B.COIN_MD : B.stepMd(B.findLine(board, activeRow.id)))))}<span class="unit">{t.unit}</span><span class="glyph" aria-hidden="true">+</span>
 					</button>
 				</div>
+				{#if pastShown.length}
+					{@const id = activeRow.id}
+					{@const series = [
+						...pastShown.map((h) => ({ label: String(h.year), md: h.lines[id], kind: 'past' })),
+						{ label: t.draftYear, md: activeRow.plan, kind: 'draft' },
+						{ label: t.yours, md: activeRow.yours, kind: 'mine' }
+					]}
+					{@const top = Math.max(...series.map((p) => p.md), 1e-9)}
+					{@const first = pastShown[0]}
+					<div class="history" title={t.historyNote}>
+						<p class="history-title">
+							<span>{t.yearByYear}</span>
+							{#if first.lines[id] > 0}<span class="num">{t.since(String(first.year))} <bdi dir="ltr">{signed(((activeRow.plan - first.lines[id]) / first.lines[id]) * 100, 1)}%</bdi></span>{/if}
+						</p>
+						<ul>
+							{#each series as p (p.label)}
+								<li class={p.kind} data-dir={p.kind === 'mine' ? activeRow.diff.direction : undefined}>
+									<span class="h-label">{p.label}</span>
+									<span class="h-track" aria-hidden="true"><span style:inline-size="{(p.md / top) * 100}%"></span></span>
+									<span class="h-val num">{fmtMd(p.md)}</span>
+								</li>
+							{/each}
+						</ul>
+						{#if activeRow.diff.direction !== 'same'}
+							<p class="history-change num" data-dir={activeRow.diff.direction}>{t.change} <bdi dir="ltr">{signed(activeRow.diff.deltaMd)} · {signed(activeRow.diff.deltaPct, 1)}%</bdi></p>
+						{/if}
+					</div>
+				{/if}
+				<p class="chosen-note">{c.lines[activeRow.id].note}</p>
+				{#if pastShown.length && (activeRow.id === 'subsidies' || activeRow.id === 'energy_trade' || activeRow.id === 'rest')}
+					<p class="chosen-note history-caveat">{t.historyCaveat[activeRow.id]}</p>
+				{/if}
 			{:else}
 				<p class="chosen-name muted">{t.pick}</p>
 				<p class="howto">{t.howTo[rule]}</p>
@@ -430,7 +503,7 @@
 <style>
 	/*
 	 * Layout: an instrument, dense and ruled like a ledger. Desk: a 20rem
-	 * column (purse, chosen system, actions) beside the sixteen systems in two
+	 * column (purse, chosen system, actions) beside the twenty-two systems in two
 	 * columns. Phone: purse bar, systems, dock, top to bottom, one screen.
 	 */
 	.board {
@@ -653,6 +726,138 @@
 		font-size: var(--t-sm);
 		cursor: pointer;
 	}
+	.years {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--s-2);
+	}
+	.years-label {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--s-2);
+		margin-inline-end: var(--s-1);
+	}
+	.years svg path,
+	.years-tool svg path {
+		fill: none;
+		stroke: currentColor;
+		stroke-width: 1.6;
+		stroke-linejoin: round;
+	}
+	.years svg circle,
+	.years-tool svg circle {
+		fill: var(--accent);
+	}
+	.year {
+		min-block-size: var(--s-8);
+		padding-inline: var(--s-3);
+		border: 1px solid var(--border-default);
+		border-radius: var(--r-full);
+		background: transparent;
+		color: var(--text-muted);
+		font: 500 var(--t-xs) var(--font-mono);
+		cursor: pointer;
+	}
+	.year[aria-pressed='true'] {
+		background: var(--surface-raised);
+		border-color: var(--text-muted);
+		color: var(--text-primary);
+	}
+	.year[aria-pressed='false'] {
+		text-decoration: line-through;
+	}
+	.year:focus-visible,
+	.tool:focus-visible {
+		outline: 2px solid var(--accent);
+		outline-offset: 2px;
+	}
+	.years-tool {
+		display: none;
+	}
+	.history {
+		display: grid;
+		gap: var(--s-2);
+		padding-block-start: var(--s-3);
+		border-block-start: var(--rule);
+	}
+	.history-title {
+		margin: 0;
+		font-family: var(--font-mono);
+		font-size: var(--t-2xs);
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: var(--text-muted);
+	}
+	.history ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		display: grid;
+		gap: 3px;
+	}
+	.history li {
+		display: grid;
+		grid-template-columns: 6rem minmax(0, 1fr) 7ch;
+		align-items: center;
+		gap: var(--s-3);
+		font-size: var(--t-xs);
+		color: var(--text-secondary);
+	}
+	.h-track {
+		block-size: 6px;
+	}
+	.h-track span {
+		display: block;
+		block-size: 100%;
+		border-start-end-radius: 3px;
+		border-end-end-radius: 3px;
+		background: var(--text-faint);
+		opacity: 0.55;
+	}
+	.history li.draft .h-track span {
+		background: var(--text-secondary);
+		opacity: 0.8;
+	}
+	.history li.mine .h-track span {
+		background: var(--accent);
+		opacity: 1;
+	}
+	.history li.mine {
+		color: var(--text-primary);
+		font-weight: 600;
+	}
+	.h-val {
+		text-align: end;
+		font-family: var(--font-mono);
+		font-variant-numeric: tabular-nums;
+	}
+	.history-title {
+		display: flex;
+		justify-content: space-between;
+		gap: var(--s-3);
+	}
+	.history-title .num {
+		letter-spacing: 0;
+		text-transform: none;
+	}
+	.history-change {
+		margin: 0;
+		font-family: var(--font-mono);
+		font-size: var(--t-xs);
+		color: var(--text-secondary);
+	}
+	.history-caveat {
+		font-size: var(--t-xs);
+		color: var(--text-muted);
+	}
+	/* With the years shown, the year list carries the plan and yours; the one-line figures step aside. */
+	.chosen-figs.has-history {
+		display: none;
+	}
+	td.past,
+	th.past {
+		color: var(--text-muted);
+	}
 	.list {
 		flex: 1;
 		min-block-size: 0;
@@ -669,7 +874,7 @@
 	.col {
 		position: relative;
 		display: grid;
-		grid-template-rows: var(--s-7) repeat(8, minmax(0, 1fr));
+		grid-template-rows: var(--s-7) repeat(var(--rows, 8), minmax(0, 1fr));
 		min-block-size: 0;
 	}
 	.axis {
@@ -744,7 +949,11 @@
 		min-block-size: 0;
 		padding-block-start: var(--s-5);
 	}
+	/* The chosen card gives way before the actions: the moves log shrinks first, then the card scrolls. */
 	.chosen {
+		flex: 0 1 auto;
+		min-block-size: 0;
+		overflow-y: auto;
 		display: grid;
 		gap: var(--s-3);
 		padding: var(--s-5);
@@ -818,8 +1027,14 @@
 		color: var(--text-secondary);
 	}
 	.ledger {
+		flex: 1 1 0;
 		min-block-size: 0;
 		overflow: hidden;
+	}
+	.dock > .message,
+	.dock > .actions,
+	.dock > .interim {
+		flex: none;
 	}
 	.ledger-title {
 		margin: 0 0 var(--s-2);
@@ -923,8 +1138,12 @@
 	/* A low desk window: the chosen system's note and the ledger give way first. */
 	@media (min-width: 721px) and (max-height: 760px) {
 		.chosen-note,
-		.ledger {
+		.ledger,
+		.history {
 			display: none;
+		}
+		.chosen-figs.has-history {
+			display: flex;
 		}
 		.board {
 			padding-block: var(--s-4);
@@ -953,8 +1172,17 @@
 		.meter,
 		.legend .link,
 		.scale,
-		.axis {
+		.axis,
+		.years,
+		.history {
 			display: none;
+		}
+		.years-tool {
+			display: inline-grid;
+			place-items: center;
+		}
+		.years-tool[aria-pressed='false'] svg {
+			opacity: 0.4;
 		}
 		.purse {
 			flex: 1;
@@ -1003,19 +1231,22 @@
 			padding-block: var(--s-2);
 			font-size: var(--t-xs);
 		}
+		/* Twenty-two systems do not fit a phone screen: the list scrolls inside the board, the purse and dock stay put. */
 		.list {
 			display: flex;
 			flex-direction: column;
 			padding-block-start: 0;
+			overflow-y: auto;
+			overscroll-behavior: contain;
 		}
 		.col {
 			display: flex;
 			flex-direction: column;
-			flex: 8 1 0;
+			flex: none;
 		}
 		.slot {
-			flex: 1 1 0;
-			min-block-size: 0;
+			flex: none;
+			min-block-size: 3rem;
 		}
 		.dock {
 			position: relative;

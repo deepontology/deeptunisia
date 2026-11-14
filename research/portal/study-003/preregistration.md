@@ -40,6 +40,8 @@ Respondents move money between movable spending systems on a board, one coin of 
 
 The subsidies line is a memo row of 11,846 MD inside the Industry and Trade lines. What remains of those two lines after the memo, 272.8 MD, is shown as a derived line: it is not a ministry budget, and results for it are read with that in mind.
 
+The board shows 22 movable lines; no catch-all line hides a large share of the budget. It also shows the adopted budgets of 2024, 2025 and 2026 for every line, on by default, each year switchable by the respondent (see game-design.md, "Past years"). This is part of the stimulus and is the same for every respondent at the start. Open before fielding: whether past years stay on by default, and recording which years were shown at submission.
+
 **Presentation order:** systems are shown in official budget order for every respondent in this version. A randomised presentation order (an order arm) is not part of version 1 and is not estimated. A later version that adds it must amend this preregistration first.
 
 ## 4. Data collection and protections

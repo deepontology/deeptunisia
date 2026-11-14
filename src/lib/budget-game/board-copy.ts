@@ -62,6 +62,16 @@ export interface BoardCopy {
 	total: string;
 	unit: string;
 	back: string;
+	/** Past years: the adopted laws of 2024 to 2026, shown beside the 2027 draft. */
+	pastYears: string;
+	pastYearsToggle: string;
+	yearByYear: string;
+	draftYear: string;
+	since: (year: string) => string;
+	historyNote: string;
+	historyAria: (list: string) => string;
+	/** Lines whose past years are built differently from 2027, and why. */
+	historyCaveat: Partial<Record<'subsidies' | 'energy_trade' | 'rest', string>>;
 }
 
 const en: BoardCopy = {
@@ -128,7 +138,19 @@ const en: BoardCopy = {
 	th: { system: 'System', plan: 'Plan, MD', yours: 'Yours, MD', md: 'Change, MD', pct: 'Change, %' },
 	total: 'Total',
 	unit: 'MD',
-	back: 'Back to the study page'
+	back: 'Back to the study page',
+	pastYears: 'Past years',
+	pastYearsToggle: 'Show past years',
+	yearByYear: 'Year by year',
+	draftYear: '2027 draft',
+	since: (y) => `Since ${y}:`,
+	historyNote: 'Past years are the budgets as voted in each finance law (Journal Officiel, tableau C). Dinars of each year, not adjusted for inflation.',
+	historyAria: (l) => `Past years: ${l}.`,
+	historyCaveat: {
+		subsidies: 'Past years count the energy and domestic trade programmes of the law, which hold most subsidies. Close to, not the same as, the 2027 figure.',
+		energy_trade: 'Past years: the Industry and Commerce missions less their energy and domestic trade programmes.',
+		rest: 'Past years add up the same missions from each law.'
+	}
 };
 
 const fr: BoardCopy = {
@@ -195,7 +217,19 @@ const fr: BoardCopy = {
 	th: { system: 'Poste', plan: 'Projet, MD', yours: 'Le vôtre, MD', md: 'Écart, MD', pct: 'Écart, %' },
 	total: 'Total',
 	unit: 'MD',
-	back: 'Retour à la page de l’étude'
+	back: 'Retour à la page de l’étude',
+	pastYears: 'Années passées',
+	pastYearsToggle: 'Afficher les années passées',
+	yearByYear: 'Année par année',
+	draftYear: 'Projet 2027',
+	since: (y) => `Depuis ${y} :`,
+	historyNote: "Les années passées sont les budgets votés dans chaque loi de finances (Journal officiel, tableau C). Dinars de chaque année, sans correction de l'inflation.",
+	historyAria: (l) => `Années passées : ${l}.`,
+	historyCaveat: {
+		subsidies: "Pour les années passées : les programmes énergie et commerce intérieur de la loi, qui portent l'essentiel des subventions. Proche du chiffre 2027, pas identique.",
+		energy_trade: 'Pour les années passées : les missions Industrie et Commerce moins leurs programmes énergie et commerce intérieur.',
+		rest: 'Pour les années passées : la somme des mêmes missions dans chaque loi.'
+	}
 };
 
 const ar: BoardCopy = {
@@ -262,7 +296,19 @@ const ar: BoardCopy = {
 	th: { system: 'القطاع', plan: 'المشروع، م.د', yours: 'توزيعك، م.د', md: 'الفرق، م.د', pct: 'الفرق، %' },
 	total: 'المجموع',
 	unit: 'م.د',
-	back: 'العودة إلى صفحة الدراسة'
+	back: 'العودة إلى صفحة الدراسة',
+	pastYears: 'السنوات الماضية',
+	pastYearsToggle: 'إظهار السنوات الماضية',
+	yearByYear: 'سنة بسنة',
+	draftYear: 'مشروع 2027',
+	since: (y) => `منذ ${y}:`,
+	historyNote: 'السنوات الماضية هي الميزانيات كما صودق عليها في كل قانون مالية (الرائد الرسمي، جدول نفقات ميزانية الدولة). بدنانير كل سنة، دون احتساب التضخّم.',
+	historyAria: (l) => `السنوات الماضية: ${l}.`,
+	historyCaveat: {
+		subsidies: 'للسنوات الماضية: برنامجا الطاقة والتجارة الداخلية في القانون، وفيهما معظم الدعم. قريب من رقم 2027 وليس مطابقًا له.',
+		energy_trade: 'للسنوات الماضية: مهمّتا الصناعة والتجارة ناقص برنامجي الطاقة والتجارة الداخلية.',
+		rest: 'للسنوات الماضية: مجموع المهام نفسها في كل قانون.'
+	}
 };
 
 const COPY: Record<Locale, BoardCopy> = { en, fr, ar };

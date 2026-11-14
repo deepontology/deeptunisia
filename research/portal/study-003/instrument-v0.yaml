@@ -139,18 +139,24 @@ items:
       - { id: higher_education, draft_md: 2484, locked: false }
       - { id: health, draft_md: 4741.2, locked: false }
       - { id: social, draft_md: 4547.49, locked: false }
+      - { id: employment, draft_md: 1104, locked: false }
       - { id: subsidies, draft_md: 11846, locked: false }
       - { id: energy_trade, draft_md: 272.8, locked: false }
       - { id: police, draft_md: 6560, locked: false }
       - { id: army, draft_md: 5628.2, locked: false }
       - { id: justice, draft_md: 1112, locked: false }
+      - { id: finance, draft_md: 1626.6, locked: false }
       - { id: farming, draft_md: 2530, locked: false }
       - { id: roads_housing, draft_md: 2249, locked: false }
+      - { id: transport, draft_md: 1321, locked: false }
+      - { id: environment, draft_md: 524, locked: false }
+      - { id: economy, draft_md: 794.1, locked: false }
       - { id: youth_sports, draft_md: 1065, locked: false }
       - { id: culture, draft_md: 500, locked: false }
+      - { id: tourism, draft_md: 182.14, locked: false }
       - { id: presidency, draft_md: 248.576, locked: false }
       - { id: government, draft_md: 878.475, locked: false }
-      - { id: other, draft_md: 6085.14, locked: false }
+      - { id: rest, draft_md: 533.3, locked: false }
       - { id: debt, draft_md: 7968, locked: true }
       - { id: reserve, draft_md: 995, locked: true }
 

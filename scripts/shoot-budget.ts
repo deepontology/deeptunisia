@@ -180,8 +180,20 @@ async function checkBoard(
 			touch = ', all board buttons >= 44px';
 		}
 
+		// Past years: a trend on every system, on by default, and the switches change it.
+		const rowsShown = await page.locator('.board [data-drop]:not([data-drop="purse"])').count();
+		const sparks = await page.locator('.board svg.spark').count();
+		if (rowsShown !== 22 || sparks !== 22) fail(`${name} past years`, `${rowsShown} systems, ${sparks} trend lines, expected 22 of each`);
+		const dots = async () => page.locator('.board [data-drop="education"] svg.spark circle').count();
+		const before = await dots();
+		const yearSwitch = size.width <= 720 ? page.locator('.board .years-tool') : page.locator('.board .year').first();
+		await yearSwitch.click();
+		const after = await dots();
+		if (!(after < before)) fail(`${name} past years`, `switching a year off left ${after} of ${before} points`);
+		await yearSwitch.click();
+
 		assertNoPageErrors(errors, name);
-		ok(`${name}: board visible, no page scroll (${m.scrollHeight}/${m.innerHeight}), no h-scroll, purse ${purse} MD${touch}`);
+		ok(`${name}: board visible, no page scroll (${m.scrollHeight}/${m.innerHeight}), no h-scroll, purse ${purse} MD${touch}, 22 systems with past years`);
 	} finally {
 		await context.close();
 	}

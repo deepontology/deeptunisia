@@ -17,7 +17,7 @@ import { readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parse } from 'yaml';
-import { linesFrom, MOVABLE_ORDER, LOCKED_ORDER, type LineId } from '../src/lib/budget-game/lines.ts';
+import { linesFrom, historyLines, MOVABLE_ORDER, LOCKED_ORDER, type LineId } from '../src/lib/budget-game/lines.ts';
 import {
 	COIN_MD,
 	DEFAULT_RULE,
@@ -69,6 +69,24 @@ const rand = () => {
 const pick = (): LineId => ids[Math.floor(rand() * ids.length)];
 const sameHeld = (a: BoardState, b: BoardState) => JSON.stringify(a.held) === JSON.stringify(b.held);
 
+// No catch-all line: the only remainder is small and named, under 1% of the envelope.
+ok('there is no catch-all "other" line', !(ids as string[]).includes('other'));
+const rest = lines.movable.find((l) => l.id === 'rest');
+ok('the named remainder is under 1% of the envelope', !!rest && rest.draft / lines.envelope < 0.01, rest ? `${rest.draft} MD` : 'no rest line');
+
+// Past years: every adopted law lands on the board's lines and adds up to its total.
+const history = parse(readFileSync(join(ROOT, 'data/studies/dt-research-003/history-lf-2024-2026.yaml'), 'utf8')) as {
+	years: Record<string, { total_md: number; missions: Record<string, { amount_md: number }>; programmes: Record<string, { amount_md: number }> }>;
+};
+const years = Object.entries(history.years);
+ok('the history file holds 2024, 2025 and 2026', years.map(([y]) => y).join(',') === '2024,2025,2026');
+for (const [year, y] of years) {
+	const byLine = historyLines(y);
+	const sum = Object.values(byLine).reduce((a, b) => a + b, 0);
+	ok(`${year}: the board lines add up to the law's total`, Math.abs(sum - y.total_md) < 0.001, `${sum} vs ${y.total_md}`);
+	ok(`${year}: every board line has a value, none negative`, [...MOVABLE_ORDER, ...LOCKED_ORDER].every((id) => typeof byLine[id] === 'number' && byLine[id] >= 0));
+}
+
 // The instrument, as committed, is the validator every finished board must pass.
 const inst = parse(readFileSync(join(ROOT, 'research/portal/study-003/instrument-v0.yaml'), 'utf8')) as InstrumentDocument;
 const allocItem = inst.items.find((i) => i.id === 'alloc_budget');
@@ -82,7 +100,7 @@ const alloc = allocItem!.allocation!;
 	ok('the instrument locks exactly the two locked lines', alloc.categories.filter((c) => c.locked).length === 2);
 	ok('the instrument accepts any whole basis point, so both rules validate', alloc.step_bp === 1 && alloc.max_bp === 20000);
 }
-ok('the order lists match the line model', MOVABLE_ORDER.length === 16 && LOCKED_ORDER.length === 2);
+ok('the order lists match the line model', MOVABLE_ORDER.length === 22 && LOCKED_ORDER.length === 2);
 ok('the default rule is the coin (option A)', DEFAULT_RULE === 'coin' && COIN_MD === 100);
 ok('every draft splits into 20 whole-dinar steps, so rule B lands on the draft', lines.movable.every((l) => Math.round(l.draft * 1e6) % 20 === 0));
 
@@ -238,7 +256,7 @@ const protocolText = readFileSync(join(ROOT, 'research/portal/study-003/protocol
 const designText = readFileSync(join(ROOT, 'research/portal/study-003/game-design.md'), 'utf8');
 const instrumentText = readFileSync(join(ROOT, 'research/portal/study-003/instrument-v0.yaml'), 'utf8');
 ok('the instrument no longer says shilling', !/shilling/i.test(instrumentText));
-ok('the derived lines are labelled in en, fr and ar', (boardCopyText.match(/energy_trade: \{ name: '[^']*\((derived|dérivée|مشتقّ)\)'/g) ?? []).length === 3 && (boardCopyText.match(/other: \{ name: '[^']*\((derived|dérivée|مشتقّ)\)'/g) ?? []).length === 3);
+ok('the derived lines are labelled in en, fr and ar', (boardCopyText.match(/energy_trade: \{ name: '[^']*\((derived|dérivée|مشتقّ)\)'/g) ?? []).length === 3 && (boardCopyText.match(/rest: \{ name: '[^']*\((derived|dérivée|مشتقّ)\)'/g) ?? []).length === 3);
 for (const [name, text] of [['preregistration', preregText], ['protocol', protocolText], ['game design', designText], ['instrument', instrumentText]] as const) {
 	ok(`the ${name} describes the 100 MD coin`, /100 MD/.test(text));
 	ok(`the ${name} does not describe 5% steps as the study rule`, !/one step at a time|in 5% steps|A step is 5%/i.test(text));

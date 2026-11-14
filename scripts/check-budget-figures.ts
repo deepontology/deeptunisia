@@ -65,6 +65,34 @@ if (typeof doc.total_md === 'number') {
 	else console.log(`  ok    rows sum to ${sum.toFixed(3)} MD, total ${doc.total_md} MD (gap ${gap.toFixed(3)})`);
 }
 
+/*
+ * The adopted 2024 to 2026 budgets (history file): every year's missions must add up
+ * to the law's stated total to the thousand dinars, every mission and programme needs a
+ * printed JORT page, and each year needs its source and url. Skipped when a path is given.
+ */
+if (!process.argv[2]) {
+	const historyPath = join(HERE, '..', 'data', 'studies', 'dt-research-003', 'history-lf-2024-2026.yaml');
+	interface Entry { amount_md?: unknown; page?: unknown; label?: unknown }
+	interface Year { total_md?: unknown; source?: unknown; url?: unknown; missions?: Record<string, Entry>; programmes?: Record<string, Entry> }
+	const history = parse(readFileSync(historyPath, 'utf8')) as { years?: Record<string, Year> };
+	const years = Object.entries(history.years ?? {});
+	if (years.length === 0) failures.push('history: no years');
+	for (const [year, y] of years) {
+		if (typeof y.source !== 'string' || typeof y.url !== 'string') failures.push(`history ${year}: source and url are required`);
+		let total = 0;
+		for (const [kind, entries] of [['mission', y.missions ?? {}], ['programme', y.programmes ?? {}]] as const) {
+			for (const [id, e] of Object.entries(entries)) {
+				if (typeof e.amount_md !== 'number' || e.amount_md < 0) failures.push(`history ${year} ${kind} ${id}: amount_md must be a non-negative number`);
+				if (typeof e.page !== 'number') failures.push(`history ${year} ${kind} ${id}: page is required`);
+				if (kind === 'mission' && typeof e.amount_md === 'number') total += e.amount_md;
+			}
+		}
+		const gap = total - Number(y.total_md);
+		if (Math.abs(gap) > 0.0005) failures.push(`history ${year}: missions sum to ${total.toFixed(3)}, law total ${y.total_md}`);
+		else console.log(`  ok    ${year}: ${Object.keys(y.missions ?? {}).length} missions sum to the law total, ${y.total_md} MD`);
+	}
+}
+
 for (const w of warnings) console.log(`  warn  ${w}`);
 for (const f of failures) console.error(`  FAIL  ${f}`);
 console.log(`\n  ${(doc.rows ?? []).length} rows, ${failures.length} failure(s), ${warnings.length} warning(s)\n`);

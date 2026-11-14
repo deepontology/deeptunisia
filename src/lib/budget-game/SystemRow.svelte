@@ -18,6 +18,13 @@
 <script lang="ts">
 	import type { Direction } from './diff';
 
+	/** One point of a line's history: a past year's law, or the 2027 draft. */
+	export interface TrendPoint {
+		year: number;
+		md: number;
+		draft: boolean;
+	}
+
 	/**
 	 * One system on the board: its name, two bars on the board's common scale
 	 * (the state's 2027 plan as a filled reference, the citizen's allocation in
@@ -39,7 +46,10 @@
 		target = false,
 		source = false,
 		refused = false,
-		pan = false
+		pan = false,
+		trend = [],
+		firstYear = 2024,
+		lastYear = 2027
 	}: {
 		id: string;
 		name: string;
@@ -56,7 +66,33 @@
 		refused?: boolean;
 		/** On a page that scrolls, let a touch pan the page; buttons move the money there. */
 		pan?: boolean;
+		/** Past years shown and the 2027 draft, oldest first. Empty hides the trend line. */
+		trend?: TrendPoint[];
+		firstYear?: number;
+		lastYear?: number;
 	} = $props();
+
+	/*
+	 * The trend line: its own scale per system, so a small system's movement shows,
+	 * but never stretched past what the money did: the window is at least 15% of the
+	 * largest value, so a 1% change stays a gentle slope.
+	 */
+	const SW = 52;
+	const SH = 18;
+	const PAD = 3;
+	const spark = $derived.by(() => {
+		if (trend.length < 2) return null;
+		const values = [...trend.map((p) => p.md), yours];
+		const hi = Math.max(...values);
+		const lo = Math.min(...values);
+		const span = Math.max(hi - lo, hi * 0.15, 1e-9);
+		const mid = (hi + lo) / 2;
+		const x = (year: number) => PAD + ((year - firstYear) / Math.max(1, lastYear - firstYear)) * (SW - 2 * PAD);
+		const y = (md: number) => SH / 2 - ((md - mid) / span) * (SH - 2 * PAD);
+		const pts = trend.map((p) => ({ x: x(p.year), y: y(p.md), draft: p.draft }));
+		return { pts, path: pts.map((p, i) => `${i ? 'L' : 'M'}${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' '), mine: { x: x(lastYear), y: y(yours) } };
+	});
+	const sparkTitle = $derived(trend.map((p) => `${p.year}${p.draft ? '*' : ''}: ${fmtMd(p.md)}`).join(' · '));
 
 	const pct = (n: number) => `${Math.min(100, (Math.max(0, n) / scale) * 100)}%`;
 	const over = $derived(yours > scale);
@@ -72,10 +108,22 @@
 			<span class="arrow" aria-hidden="true">{direction === 'more' ? '▲' : direction === 'less' ? '▼' : '='}</span>{#if direction !== 'same'}<bdi dir="ltr">{`${signed(deltaMd)} · ${signed(deltaPct, 1)}%`}</bdi>{/if}<span class="sr">{word}</span>
 		</span>
 	</div>
-	<div class="bars" aria-hidden="true">
-		<span class="bar plan" style:inline-size={pct(plan)}></span>
-		<span class="bar mine" class:over style:inline-size={pct(yours)}></span>
-		<span class="mark" style:inset-inline-start={pct(plan)}></span>
+	<div class="bars-line">
+		<div class="bars" aria-hidden="true">
+			<span class="bar plan" style:inline-size={pct(plan)}></span>
+			<span class="bar mine" class:over style:inline-size={pct(yours)}></span>
+			<span class="mark" style:inset-inline-start={pct(plan)}></span>
+		</div>
+		{#if spark}
+			<svg class="spark" viewBox="0 0 {SW} {SH}" width={SW} height={SH} aria-hidden="true">
+				<title>{sparkTitle}</title>
+				<path d={spark.path} />
+				{#each spark.pts as p, i (i)}
+					<circle class:draft={p.draft} cx={p.x} cy={p.y} r={p.draft ? 2.2 : 1.6} />
+				{/each}
+				<circle class="mine-dot" cx={spark.mine.x} cy={spark.mine.y} r="2.6" />
+			</svg>
+		{/if}
 	</div>
 	<div class="foot num" aria-hidden="true">
 		<span>{words.plan} {fmtMd(plan)}</span>
@@ -242,8 +290,38 @@
 	}
 
 	.foot {
+		display: none;
 		font-size: var(--t-xs);
 		color: var(--text-muted);
+	}
+	.bars-line {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto;
+		align-items: center;
+		gap: var(--s-4);
+	}
+	/* The trend reads left to right in every language, like the years on a calendar. */
+	.spark {
+		direction: ltr;
+		overflow: visible;
+	}
+	.spark path {
+		fill: none;
+		stroke: var(--text-muted);
+		stroke-width: 1.5;
+		stroke-linejoin: round;
+		stroke-linecap: round;
+	}
+	.spark circle {
+		fill: var(--text-muted);
+	}
+	.spark circle.draft {
+		fill: var(--text-primary);
+	}
+	.spark .mine-dot {
+		fill: var(--accent);
+		stroke: var(--surface-base, var(--bg));
+		stroke-width: 1;
 	}
 
 	/* Short rows, on a phone or a low window: one line of text, thinner bars, no foot. */

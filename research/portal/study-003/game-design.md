@@ -43,6 +43,15 @@ The board serialises to the allocation item: basis points per line (10000 is the
 ## Figures
 Every line is a sum of rows from data/studies/dt-research-003/figures-2027.yaml. The subsidies line is the memo row. The energy and trade line is what remains of the Industry and Trade rows after the subsidies are taken out, on the stated assumption that all subsidies sit inside those two rows. It is a derived line, not a ministry budget, and its label and note say so on the board. Every figure is labelled draft, not verified.
 
+The board has 22 movable lines. There is no catch-all "everything else" line: Finance, Transport, Jobs and vocational training, Economy and regional development, Environment and Tourism each have their own line, from press-reported 2027 drafts. The only remainder is small and named: Religious Affairs, Communication Technologies, State Domains, the Court of Accounts, the National Council of Regions and Districts and two councils, 533.3 MD, derived as the total less every other line because their 2027 drafts are not yet reported one by one. In the 2026 law the same missions came to 565.1 MD.
+
+## Past years
+The board shows the adopted budgets of 2024, 2025 and 2026 beside the 2027 draft, on by default (owner decision, 14 November 2026). Each row has a small trend line from 2024 to the 2027 draft, with the respondent's own amount as a dot. Each year can be switched off in the legend (one switch for all years on a phone). The chosen system shows the amounts year by year and the change since the first year shown. The table view adds a column per year.
+
+The past years come from data/studies/dt-research-003/history-lf-2024-2026.yaml: tableau C of each finance law in the Journal Officiel (French translation), every mission with its printed page, every year adding up to the law's total to the dinar. They are the budgets as voted, not as spent, in dinars of each year (not adjusted for inflation). Every mission lands on exactly one board line. Subsidies are not a mission in those laws, so the board reads them as the energy programme of Industry, Mines and Energy plus the domestic trade programme of Commerce; this is close to, not the same as, the 2027 subsidies memo, and the board says so on that line.
+
+Showing past years is part of the stimulus. Before fielding, the preregistration must fix whether they are on by default for every respondent, and the instrument should record which years were shown at submission.
+
 ## Open
 - Owner plays both start modes and both move rules, and confirms rule A.
 - The plate image (decision D5) is a placeholder until the owner supplies or approves one.
