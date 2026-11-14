@@ -208,6 +208,59 @@ async function checkEmptyStart(
 	}
 }
 
+/**
+ * Play, finish, go back from the questions, and finish again: the board must
+ * keep every move, and the result must show exactly the systems that changed.
+ * Keys drive it so the check reads the same in every language.
+ */
+async function checkRoundTrip(
+	browser: Awaited<ReturnType<typeof chromium.launch>>,
+	size: Size,
+	locale: Locale
+): Promise<void> {
+	const name = `round trip ${size.label} ${locale}`;
+	const { context, page, errors } = await openPage(browser, size, locale);
+	try {
+		await openBoard(page);
+		const list = page.locator('.board .list');
+		await list.focus();
+		await page.keyboard.press('ArrowDown'); // Education
+		for (let i = 0; i < 3; i++) await page.keyboard.press('-');
+		await page.keyboard.press('ArrowDown');
+		await page.keyboard.press('ArrowDown'); // Health
+		for (let i = 0; i < 3; i++) await page.keyboard.press('+');
+		const healthBefore = amount(await page.locator('.board [data-drop="health"] .yours').first().innerText());
+		if (Number(digits(await purseText(page))) !== 0) fail(`${name} play`, 'purse not empty after 3 takes and 3 gives');
+
+		await page.locator('.board .finish').click();
+		await page.locator('.game .q').first().waitFor({ state: 'visible' });
+		await page.locator('.game .actions button.quiet').click();
+		await page.locator('.board').waitFor({ state: 'visible' });
+		const healthAfter = amount(await page.locator('.board [data-drop="health"] .yours').first().innerText());
+		if (healthAfter !== healthBefore) {
+			fail(`${name} back keeps the board`, `Health was ${healthBefore} MD, after Back it is ${healthAfter} MD`);
+		}
+
+		await page.locator('.board .finish').click();
+		await page.locator('.game .q').first().waitFor({ state: 'visible' });
+		await page.locator('.game .actions button.cta').click();
+		await page.locator('.game .diverge').waitFor({ state: 'visible' });
+		const bars = await page.locator('.game .diverge li').count();
+		if (bars !== 2) fail(`${name} result`, `expected 2 changed systems on the result, found ${bars}`);
+		const summary = await page.locator('.game .summary').innerText();
+		if (!/(^|[^0-9])300([^0-9]|$)/.test(summary.replace(/[^0-9 .]/g, ' '))) {
+			fail(`${name} result`, `summary "${summary}" does not say 300 MD moved`);
+		}
+		await page.screenshot({ path: join(OUT, `result-${size.label}-${locale}.png`), fullPage: true });
+		await assertNoHorizontalScroll(page, name);
+
+		assertNoPageErrors(errors, name);
+		ok(`${name}: Back kept Health at ${healthAfter} MD, result shows 2 changed systems and 300 MD moved`);
+	} finally {
+		await context.close();
+	}
+}
+
 /** The landing page: no sideways scroll, and its live example moves the purse. */
 async function checkLanding(
 	browser: Awaited<ReturnType<typeof chromium.launch>>,
@@ -264,6 +317,7 @@ async function main(): Promise<void> {
 			for (const size of SIZES) {
 				await checkBoard(browser, size, locale);
 				await checkEmptyStart(browser, size, locale);
+				await checkRoundTrip(browser, size, locale);
 				await checkLanding(browser, size, locale);
 			}
 		}

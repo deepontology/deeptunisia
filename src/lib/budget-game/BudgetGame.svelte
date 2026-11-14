@@ -4,8 +4,10 @@
 	import { FIGURES } from '$lib/budget-study/figures';
 	import { copyFor } from './copy';
 	import { linesFrom } from './lines';
-	import { DEFAULT_RULE, toAllocation, type Board, type BoardState, type MoveRule, type StartMode } from './board';
+	import { DEFAULT_RULE, heldMd, toAllocation, type Board, type BoardState, type MoveRule, type StartMode } from './board';
 	import BudgetBoard from './BudgetBoard.svelte';
+	import { fmtMd, signed } from './SystemRow.svelte';
+	import { boardCopyFor } from './board-copy';
 
 	/**
 	 * The citizen budget prototype: consent, framing, the Treasury board, two
@@ -26,6 +28,7 @@
 	const STEPS: Exclude<Step, 'out'>[] = ['intro', 'frame', 'board', 'items', 'card'];
 
 	const c = $derived(copyFor(app.locale));
+	const t = $derived(boardCopyFor(app.locale));
 	const dir = $derived(app.locale === 'ar' ? 'rtl' : 'ltr');
 	const lines = linesFrom(FIGURES.rows);
 	const board: Board = { lines };
@@ -57,27 +60,30 @@
 	const kept = $derived(answer ? answer.kept_draft === true : false);
 	const rows = $derived(
 		lines.movable.map((l) => {
-			const bp = answer ? (answer[l.id] as number) : 10000;
-			const amount = (l.draft * bp) / 10000;
+			// The exact amount on the board, so the result reads the same figures the citizen saw.
+			const amount = result ? heldMd(board, result, l.id) : l.draft;
 			return { line: l, amount, delta: amount - l.draft };
 		})
 	);
 	const spentTotal = $derived(rows.reduce((s, r) => s + r.amount, 0) + lines.locked.reduce((s, l) => s + l.draft, 0));
 	const draftTotal = $derived(lines.total);
 
-	/** The line that moved furthest from its draft, named in one sentence above the table. */
-	const largest = $derived.by(() => {
-		if (!answer) return null;
-		let best = rows[0];
-		for (const r of rows) if (Math.abs(r.delta) > Math.abs(best.delta)) best = r;
-		if (!best || Math.abs(best.delta) < 0.5) return null;
-		const pct = Math.round((best.delta / best.line.draft) * 100);
-		return {
-			name: c.lines[best.line.id].name,
-			amount: fmt(Math.abs(best.delta)),
-			pct: `${pct > 0 ? '+' : pct < 0 ? '−' : ''}${Math.abs(pct)}`
-		};
-	});
+	/** Every system the citizen changed, most money gained first and most lost last. */
+	const changed = $derived(
+		rows
+			.filter((r) => Math.abs(r.delta) >= 0.5)
+			.map((r) => ({ ...r, pct: (r.delta / r.line.draft) * 100 }))
+			.sort((a, b) => b.delta - a.delta)
+	);
+	const unchangedNames = $derived(
+		rows.filter((r) => Math.abs(r.delta) < 0.5).map((r) => c.lines[r.line.id].name).join(app.locale === 'ar' ? '، ' : ', ')
+	);
+	/** Money moved: what the gaining systems received, which is what the others gave up. */
+	const moved = $derived(rows.reduce((s, r) => s + Math.max(0, r.delta), 0));
+	const maxChange = $derived(Math.max(1, ...changed.map((r) => Math.abs(r.delta))));
+	const rise = $derived(changed.length && changed[0].delta > 0 ? changed[0] : null);
+	const cut = $derived(changed.length && changed[changed.length - 1].delta < 0 ? changed[changed.length - 1] : null);
+	const totalSame = $derived(Math.abs(spentTotal - draftTotal) < 0.5);
 
 	function restart() {
 		result = null;
@@ -160,7 +166,7 @@
 	{/if}
 
 	{#if step === 'board'}
-		<BudgetBoard mode={start} {rule} {onfinish} />
+		<BudgetBoard mode={start} {rule} resume={result} {onfinish} />
 	{/if}
 
 	{#if step === 'items'}
@@ -194,48 +200,83 @@
 		<section class="block">
 			<h2 bind:this={headingEl} tabindex="-1">{c.card.title}</h2>
 			<p class="note">{c.card.note}</p>
-			{#if kept}<p>{c.card.keptDraft}</p>{/if}
-			{#if largest}
-				<p class="largest">{c.board.largestChange(largest.name, largest.amount, largest.pct)}</p>
+			{#if kept || changed.length === 0}
+				<p>{c.card.keptDraft}</p>
+			{:else}
+				<p class="summary">{c.card.summary(fmtMd(moved), changed.length)}{#if totalSame}{' '}{c.card.totalSame}{/if}</p>
+				<dl class="stats">
+					{#each [[c.card.rise, rise], [c.card.cut, cut]] as const as [label, r] (label)}
+						{#if r}
+							<div class="stat" data-dir={r.delta > 0 ? 'more' : 'less'}>
+								<dt>{label}</dt>
+								<dd>
+									<span class="stat-name">{c.lines[r.line.id].name}</span>
+									<span class="stat-fig num"><bdi dir="ltr">{signed(r.delta)}</bdi> {c.unit} · <bdi dir="ltr">{signed(r.pct, 1)}%</bdi></span>
+								</dd>
+							</div>
+						{/if}
+					{/each}
+				</dl>
+
+				<h3>{c.card.chartTitle}</h3>
+				<p class="note">{c.card.chartNote}</p>
+				<ul class="diverge">
+					{#each changed as r (r.line.id)}
+						{@const dirn = r.delta > 0 ? 'more' : 'less'}
+						<li data-dir={dirn} title={`${c.lines[r.line.id].name}: ${signed(r.delta)} ${c.unit}, ${dirn === 'more' ? t.more : t.less}`}>
+							<span class="d-name">{c.lines[r.line.id].name}</span>
+							<span class="d-track" aria-hidden="true"><span class="d-bar" style:inline-size="{(Math.abs(r.delta) / maxChange) * 50}%"></span></span>
+							<span class="d-val num">
+								<span class="arrow" aria-hidden="true">{dirn === 'more' ? '▲' : '▼'}</span><bdi dir="ltr">{signed(r.delta)} · {signed(r.pct, 1)}%</bdi>
+								<span class="sr">{dirn === 'more' ? t.more : t.less}</span>
+							</span>
+						</li>
+					{/each}
+				</ul>
+				{#if unchangedNames}<p class="note unchanged">{c.card.unchanged(unchangedNames)}</p>{/if}
 			{/if}
-			<div class="table-scroll">
-				<table class="card-table">
-					<thead>
-						<tr>
-							<th scope="col">{c.board.systems}</th>
-							<th scope="col" class="num">{c.board.draft}</th>
-							<th scope="col" class="num">{c.board.yours}</th>
-							<th scope="col" class="num">{c.board.change}</th>
-						</tr>
-					</thead>
-					<tbody>
-						{#each rows as r (r.line.id)}
+
+			<details class="as-table">
+				<summary>{c.card.tableToggle}</summary>
+				<div class="table-scroll">
+					<table class="card-table">
+						<thead>
 							<tr>
-								<th scope="row">{c.lines[r.line.id].name}</th>
-								<td class="num">{fmt(r.line.draft)}</td>
-								<td class="num">{fmt(r.amount)}</td>
-								<td class="num">{r.delta >= 0 ? '+' : '−'}{fmt(Math.abs(r.delta))}</td>
+								<th scope="col">{c.board.systems}</th>
+								<th scope="col" class="num">{c.board.draft}</th>
+								<th scope="col" class="num">{c.board.yours}</th>
+								<th scope="col" class="num">{c.board.change}</th>
 							</tr>
-						{/each}
-						{#each lines.locked as l (l.id)}
-							<tr class="locked-row">
-								<th scope="row">{c.lines[l.id].name}</th>
-								<td class="num">{fmt(l.draft)}</td>
-								<td class="num">{fmt(l.draft)}</td>
-								<td class="num">0</td>
+						</thead>
+						<tbody>
+							{#each rows as r (r.line.id)}
+								<tr>
+									<th scope="row">{c.lines[r.line.id].name}</th>
+									<td class="num">{fmtMd(r.line.draft)}</td>
+									<td class="num">{fmtMd(r.amount)}</td>
+									<td class="num"><bdi dir="ltr">{signed(r.delta)}</bdi></td>
+								</tr>
+							{/each}
+							{#each lines.locked as l (l.id)}
+								<tr class="locked-row">
+									<th scope="row">{c.lines[l.id].name}</th>
+									<td class="num">{fmtMd(l.draft)}</td>
+									<td class="num">{fmtMd(l.draft)}</td>
+									<td class="num">0</td>
+								</tr>
+							{/each}
+						</tbody>
+						<tfoot>
+							<tr>
+								<th scope="row">{c.card.total} ({unit})</th>
+								<td class="num">{fmtMd(draftTotal)}</td>
+								<td class="num">{fmtMd(spentTotal)}</td>
+								<td class="num"><bdi dir="ltr">{signed(spentTotal - draftTotal)}</bdi></td>
 							</tr>
-						{/each}
-					</tbody>
-					<tfoot>
-						<tr>
-							<th scope="row">{c.card.total} ({unit})</th>
-							<td class="num">{fmt(draftTotal)}</td>
-							<td class="num">{fmt(spentTotal)}</td>
-							<td class="num">{fmt(spentTotal - draftTotal)}</td>
-						</tr>
-					</tfoot>
-				</table>
-			</div>
+						</tfoot>
+					</table>
+				</div>
+			</details>
 			<p class="note">{c.card.stop}</p>
 			<div class="actions">
 				<button class="quiet" type="button" onclick={() => go('board')}>{c.card.back}</button>
@@ -309,9 +350,151 @@
 		color: var(--rupture);
 		font-size: var(--t-md);
 	}
-	.largest {
+	/* Result: a one-line summary, the biggest rise and cut, then every change as a bar from a centre line. */
+	.summary {
+		font-size: var(--t-lg);
+		line-height: 1.4;
+	}
+	.stats {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+		gap: var(--s-4);
+		margin: var(--s-6) 0;
+	}
+	.stat {
+		padding: var(--s-4) var(--s-5);
+		border: var(--rule);
+		border-inline-start: 4px solid var(--stat-c);
+		border-radius: var(--r-md);
+		background: var(--surface-raised);
+	}
+	.stat[data-dir='more'],
+	.diverge li[data-dir='more'] {
+		--stat-c: var(--index-band-5);
+	}
+	.stat[data-dir='less'],
+	.diverge li[data-dir='less'] {
+		--stat-c: var(--index-band-1);
+	}
+	.stat dt {
+		font-family: var(--font-mono);
+		font-size: var(--t-xs);
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: var(--text-muted);
+	}
+	.stat dd {
+		margin: var(--s-2) 0 0;
+		display: grid;
+		gap: var(--s-1);
+	}
+	.stat-name {
 		font-weight: 600;
-		margin-block: var(--s-4) 0;
+	}
+	.stat-fig {
+		font-family: var(--font-mono);
+		font-size: var(--t-sm);
+		color: var(--text-secondary);
+	}
+	.diverge {
+		list-style: none;
+		margin: var(--s-4) 0;
+		padding: 0;
+		display: grid;
+		gap: var(--s-2);
+	}
+	.diverge li {
+		display: grid;
+		grid-template-columns: minmax(0, 13rem) minmax(0, 1fr) 9.5rem;
+		align-items: center;
+		gap: var(--s-4);
+		min-block-size: var(--s-8);
+	}
+	.d-name {
+		font-size: var(--t-sm);
+		line-height: 1.25;
+	}
+	.d-track {
+		position: relative;
+		block-size: var(--s-4);
+	}
+	/* The centre line is the draft: no change. */
+	.d-track::before {
+		content: '';
+		position: absolute;
+		inset-block: calc(-1 * var(--s-2));
+		inset-inline-start: 50%;
+		inline-size: 1px;
+		background: var(--border-default);
+	}
+	.d-bar {
+		position: absolute;
+		inset-block: 0;
+		min-inline-size: 2px;
+		background: var(--stat-c);
+	}
+	li[data-dir='more'] .d-bar {
+		inset-inline-start: calc(50% + 1px);
+		border-start-end-radius: 4px;
+		border-end-end-radius: 4px;
+	}
+	li[data-dir='less'] .d-bar {
+		inset-inline-end: calc(50% + 1px);
+		border-start-start-radius: 4px;
+		border-end-start-radius: 4px;
+	}
+	.d-val {
+		font-family: var(--font-mono);
+		font-size: var(--t-xs);
+		color: var(--text-secondary);
+		text-align: end;
+		white-space: nowrap;
+	}
+	.d-val .arrow {
+		color: var(--stat-c);
+		margin-inline-end: var(--s-1);
+	}
+	.sr {
+		position: absolute;
+		inline-size: 1px;
+		block-size: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
+	}
+	.unchanged {
+		font-size: var(--t-sm);
+	}
+	.as-table {
+		margin-block: var(--s-6);
+	}
+	.as-table summary {
+		cursor: pointer;
+		min-block-size: var(--touch);
+		display: flex;
+		align-items: center;
+		color: var(--text-secondary);
+		text-decoration: underline;
+		text-underline-offset: 3px;
+	}
+	@media (max-width: 560px) {
+		.diverge {
+			gap: var(--s-4);
+		}
+		.diverge li {
+			grid-template-columns: minmax(0, 1fr) auto;
+			grid-template-areas: 'name val' 'track track';
+			gap: var(--s-1) var(--s-3);
+		}
+		.d-name {
+			grid-area: name;
+		}
+		.d-val {
+			grid-area: val;
+		}
+		.d-track {
+			grid-area: track;
+		}
 	}
 	.steps {
 		display: flex;

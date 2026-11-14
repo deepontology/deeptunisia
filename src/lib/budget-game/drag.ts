@@ -189,4 +189,12 @@ export function flyCoin(from: Element | null, to: Element | null, label: string)
 	);
 	anim.onfinish = () => coin.remove();
 	anim.oncancel = () => coin.remove();
+	// If the animation never reports back (a paused timeline, a page that moved on), the coin still goes.
+	setTimeout(() => coin.remove(), 1000);
+}
+
+/** Removes any coin still in flight, so none is left over the next screen. */
+export function clearCoins(): void {
+	if (typeof document === 'undefined') return;
+	for (const coin of document.querySelectorAll('.money-coin')) coin.remove();
 }

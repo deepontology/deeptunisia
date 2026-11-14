@@ -118,6 +118,16 @@ export interface Copy {
 		restart: string;
 		back: string;
 		stop: string;
+		/** One sentence: how much money moved, between how many systems. */
+		summary: (moved: string, systems: number) => string;
+		/** Shown only when the citizen's total equals the draft's. */
+		totalSame: string;
+		rise: string;
+		cut: string;
+		chartTitle: string;
+		chartNote: string;
+		unchanged: (names: string) => string;
+		tableToggle: string;
 	};
 	unit: string;
 	lines: Record<LineId, LineCopy>;
@@ -231,7 +241,15 @@ const en: Copy = {
 		keptDraft: 'You kept the draft as it is.',
 		restart: 'Start again',
 		back: 'Change my budget',
-		stop: 'In the prototype, the submit button stops at this card.'
+		stop: 'In the prototype, the submit button stops at this card.',
+		summary: (moved, systems) => `You moved ${moved} MD between ${systems} systems.`,
+		totalSame: 'The total is the same as the draft: what one system gains, another gives.',
+		rise: 'Biggest rise',
+		cut: 'Biggest cut',
+		chartTitle: 'What you changed',
+		chartNote: 'Each bar is your change from the draft, in MD. Bars to the right are more money, bars to the left are less.',
+		unchanged: (names) => `Not changed: ${names}.`,
+		tableToggle: 'Every system, as a table'
 	},
 	unit: 'MD',
 	lines: {
@@ -374,7 +392,15 @@ const fr: Copy = {
 		keptDraft: 'Vous avez gardé le projet tel quel.',
 		restart: 'Recommencer',
 		back: 'Modifier mon budget',
-		stop: "Dans le prototype, le bouton d'envoi s'arrête à cette carte."
+		stop: "Dans le prototype, le bouton d'envoi s'arrête à cette carte.",
+		summary: (moved, systems) => `Vous avez déplacé ${moved} MD entre ${systems} postes.`,
+		totalSame: "Le total est celui du projet : ce qu'un poste gagne, un autre le cède.",
+		rise: 'Plus forte hausse',
+		cut: 'Plus forte baisse',
+		chartTitle: 'Ce que vous avez changé',
+		chartNote: "Chaque barre est votre écart avec le projet, en MD. Vers la droite, plus d'argent ; vers la gauche, moins.",
+		unchanged: (names) => `Inchangés : ${names}.`,
+		tableToggle: 'Tous les postes, en tableau'
 	},
 	unit: 'MD',
 	lines: {
@@ -515,7 +541,15 @@ const ar: Copy = {
 		keptDraft: 'أبقيت على المشروع كما هو.',
 		restart: 'ابدأ من جديد',
 		back: 'تعديل ميزانيتي',
-		stop: 'في النموذج الأوّلي، يتوقف زر الإرسال عند هذه البطاقة.'
+		stop: 'في النموذج الأوّلي، يتوقف زر الإرسال عند هذه البطاقة.',
+		summary: (moved, systems) => `نقلت ${moved} م.د. عدد البنود التي غيّرتها: ${systems}.`,
+		totalSame: 'المجموع هو مجموع المشروع نفسه: ما يكسبه بند يتنازل عنه بند آخر.',
+		rise: 'أكبر زيادة',
+		cut: 'أكبر تخفيض',
+		chartTitle: 'ما غيّرته',
+		chartNote: 'كل شريط هو الفرق بين ميزانيتك والمشروع، بالمليون دينار. نحو اليسار مال أكثر، ونحو اليمين مال أقل.',
+		unchanged: (names) => `لم تتغيّر: ${names}.`,
+		tableToggle: 'كل البنود في جدول'
 	},
 	unit: 'م.د',
 	lines: {

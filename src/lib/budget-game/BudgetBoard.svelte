@@ -7,7 +7,7 @@
 	import { linesFrom, type LineId } from './lines';
 	import * as B from './board';
 	import { lineDifference } from './diff';
-	import { dragMoney, flyCoin } from './drag';
+	import { clearCoins, dragMoney, flyCoin } from './drag';
 	import SystemRow, { fmtMd, signed } from './SystemRow.svelte';
 
 	/**
@@ -26,17 +26,20 @@
 	let {
 		mode = 'draft',
 		rule = B.DEFAULT_RULE,
+		resume = null,
 		onfinish
 	}: {
 		mode?: B.StartMode;
 		rule?: B.MoveRule;
+		/** A board the citizen already played: coming back from the questions keeps every move. */
+		resume?: B.BoardState | null;
 		onfinish?: (game: B.BoardState, board: B.Board) => void;
 	} = $props();
 
 	const lines = linesFrom(FIGURES.rows);
 	const board: B.Board = { lines };
 	const start = () => B.startBoard(board, untrack(() => mode), untrack(() => rule));
-	let game: B.BoardState = $state(start());
+	let game: B.BoardState = $state(untrack(() => resume) ?? start());
 
 	const t = $derived(boardCopyFor(app.locale));
 	const c = $derived(copyFor(app.locale));
@@ -90,6 +93,8 @@
 		return t.kept;
 	}
 	const recent = $derived(game.log.slice(-4).reverse().map(describe));
+	/** The status line repeats the newest ledger line; where the ledger shows, sighted readers see it once. */
+	const echo = $derived(message !== '' && message === recent[0]);
 
 	function el(id: string): Element | null {
 		return rootEl?.querySelector(`[data-drop="${id}"]`) ?? null;
@@ -219,6 +224,7 @@
 		return () => {
 			stop();
 			stopHold();
+			clearCoins();
 		};
 	});
 
@@ -233,6 +239,7 @@
 	});
 
 	const purseState = $derived(Math.abs(P) < 1e-9 ? 'empty' : done ? 'leftover' : 'hold');
+	const readyText = $derived(done ? (purseState === 'leftover' ? t.readyBand : t.ready) : '');
 </script>
 
 <svelte:window onpointerup={stopHold} onblur={stopHold} />
@@ -395,7 +402,7 @@
 			{/if}
 		</div>
 
-		<p class="message" class:ready={!message && done} role="status" aria-live="polite">{message || (done ? (purseState === 'leftover' ? t.readyBand : t.ready) : '')}</p>
+		<p class="message" class:ready={!message && done} class:echo role="status" aria-live="polite"><span class="main">{message || readyText}</span>{#if echo}<span class="alt" aria-hidden="true">{readyText}</span>{/if}</p>
 
 		<div class="ledger">
 			<p class="ledger-title">{t.moves}</p>
@@ -893,6 +900,24 @@
 	}
 	[data-dir='more'] {
 		color: var(--text-primary);
+	}
+
+	.message .alt {
+		display: none;
+	}
+	/* A desk tall enough for the ledger: the newest move shows there, not twice. */
+	@media (min-width: 721px) and (min-height: 761px) {
+		.message.echo .main {
+			position: absolute;
+			inline-size: 1px;
+			block-size: 1px;
+			overflow: hidden;
+			clip-path: inset(50%);
+			white-space: nowrap;
+		}
+		.message.echo .alt {
+			display: inline;
+		}
 	}
 
 	/* A low desk window: the chosen system's note and the ledger give way first. */
