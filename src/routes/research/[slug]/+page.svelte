@@ -4,6 +4,7 @@
 	import { titleOf } from '$lib/research';
 	import Content from '$lib/ui/Content.svelte';
 	import IndexStudy from '$lib/index-study/IndexStudy.svelte';
+	import BudgetStudy from '$lib/budget-study/BudgetStudy.svelte';
 
 	/**
 	 * A study page.
@@ -24,6 +25,10 @@
 	/** Design-stage statuses share one honest line: published as drafts, under review. */
 	const inDesign = $derived(['proposed', 'design', 'ethics-review', 'frozen'].includes(study.status));
 	const number = $derived(study.id.split('-').pop() ?? '');
+	/** A study whose instrument asks for a budget allocation has its own landing; chosen by the item type, never the slug. */
+	const allocationStudy = $derived(
+		!!instrument?.items?.some((item: { response: string }) => item.response === 'allocation')
+	);
 </script>
 
 <svelte:head>
@@ -34,6 +39,8 @@
      page is the instrument and its readouts rather than the study case. -->
 {#if instrument?.scoring}
 	<IndexStudy {study} {instrument} />
+{:else if allocationStudy}
+	<BudgetStudy {study} {instrument} />
 {:else}
 <!-- The shell is a fixed window; a document page owns its own scroll. -->
 <div class="scroll research-type">

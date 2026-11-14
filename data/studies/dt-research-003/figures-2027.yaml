@@ -1,0 +1,188 @@
+# Draft 2027 state budget figures for the citizen budget study (dt-research-003).
+#
+# STATUS: draft-press. Every amount here is press-reported from ministers'
+# hearings and budget coverage between 21 October and 9 November 2026. None has
+# been read from the official document: the finance ministry site (checked
+# 9 November 2026) holds 2024 to 2026 files only. Nothing here may be frozen
+# into an instrument. The study freezes only on rows whose status is
+# adopted-lf, with a page reference to the Journal Officiel text.
+#
+# Units: millions of dinars (MD), payment credits.
+# Rows marked memo: true are inside another row and are NOT added to the total.
+# Checked by: npx tsx scripts/check-budget-figures.ts
+
+study: dt-research-003
+document: "Projet de loi de finances 2027 (draft, before parliament)"
+total_label: "Spending excluding debt principal, draft"
+total_md: 68895
+checked: 2026-11-09
+rows:
+  - id: education
+    label_en: Education
+    amount_md: 9184.5
+    status: draft-press
+    source: "Tunisie Numérique 21 Oct 2026; Radio Nationale 23 Oct 2026; Tuniscope 23 Oct 2026"
+    url: "https://www.tuniscope.com/article/443072/business/economie/loi-de-finance-233312"
+    page: null
+  - id: industry_mines_energy
+    label_en: "Industry, Mines and Energy (includes fuel and electricity subsidies)"
+    amount_md: 7890.2
+    status: draft-press
+    source: "Radio Nationale 23 Oct 2026; Tunisie Numérique 21 Oct 2026 (another report: 7,899.2)"
+    url: null
+    page: null
+  - id: interior
+    label_en: Interior
+    amount_md: 6560
+    status: draft-press
+    source: "Webdo; La Presse 4 Nov 2026 (minister's hearing)"
+    url: null
+    page: null
+  - id: national_defence
+    label_en: National Defence
+    amount_md: 5628.2
+    status: draft-press
+    source: "Tunisie Numérique 21 Oct 2026; Italpress (minister's hearing)"
+    url: null
+    page: null
+  - id: health
+    label_en: Health
+    amount_md: 4741.2
+    status: draft-press
+    source: "Tunisie Numérique 21 Oct 2026"
+    url: null
+    page: null
+  - id: trade_export
+    label_en: "Trade and Export Development (includes basic food subsidies)"
+    amount_md: 4228.6
+    status: draft-press
+    source: "Tunisie Numérique; Radio Nationale (another report: 4,223)"
+    url: null
+    page: null
+  - id: social_affairs
+    label_en: Social Affairs
+    amount_md: 4215.8
+    status: draft-press
+    source: "Tunisie Numérique 21 Oct 2026"
+    url: null
+    page: null
+  - id: agriculture_water_fisheries
+    label_en: "Agriculture, Water and Fisheries"
+    amount_md: 2530
+    status: draft-press
+    source: "Tunisie Numérique 21 Oct 2026"
+    url: null
+    page: null
+  - id: higher_education_research
+    label_en: Higher Education and Research
+    amount_md: 2484
+    status: draft-press
+    source: "Tunisie Numérique 21 Oct 2026"
+    url: null
+    page: null
+  - id: equipment_housing
+    label_en: Equipment and Housing
+    amount_md: 2249
+    status: draft-press
+    source: "Tunisie Numérique 21 Oct 2026"
+    url: null
+    page: null
+  - id: justice
+    label_en: Justice
+    amount_md: 1112
+    status: draft-press
+    source: "Business News 3 Nov 2026; La Presse 3 Nov 2026"
+    url: null
+    page: null
+  - id: youth_sports
+    label_en: Youth and Sports
+    amount_md: 1065
+    status: draft-press
+    source: "Press report of a 2 Nov 2026 committee session (outlet not pinned)"
+    url: null
+    page: null
+  - id: culture_arts
+    label_en: Cultural Affairs (about; five programmes sum to 500.0)
+    amount_md: 500
+    status: draft-press
+    source: "Babnet; Radio Culturelle; Le Quotidien, Nov 2026"
+    url: null
+    page: null
+  - id: foreign_affairs
+    label_en: Foreign Affairs
+    amount_md: 404
+    status: draft-press
+    source: "Radio Nationale 23 Oct 2026"
+    url: null
+    page: null
+  - id: head_of_government
+    label_en: Head of Government
+    amount_md: 368
+    status: draft-press
+    source: "Hakaek Online"
+    url: null
+    page: null
+  - id: family_women_children_seniors
+    label_en: Family, Women, Children and Seniors
+    amount_md: 331.69
+    status: draft-press
+    source: "Le Temps 4 Nov 2026"
+    url: null
+    page: null
+  - id: presidency
+    label_en: Presidency of the Republic
+    amount_md: 248.576
+    status: draft-press
+    source: "Mosaïque FM; Jawhara FM; Radio Nationale"
+    url: null
+    page: null
+  - id: tourism
+    label_en: Tourism
+    amount_md: 182.14
+    status: draft-press
+    source: "Business News 23 Oct 2026"
+    url: null
+    page: null
+  - id: isie_elections
+    label_en: Election authority (ISIE)
+    amount_md: 57.724
+    status: draft-press
+    source: "Radio Nationale 23 Oct 2026"
+    url: null
+    page: null
+  - id: assembly_of_representatives
+    label_en: Assembly of the People's Representatives
+    amount_md: 48.751
+    status: draft-press
+    source: "Radio Nationale 23 Oct 2026"
+    url: null
+    page: null
+  - id: all_other_missions
+    label_en: "All other missions (derived as the total minus the rows above; not verified)"
+    amount_md: 5903
+    status: draft-derived
+    source: "Derived in this file, not reported"
+    url: null
+    page: null
+  - id: financing_costs_locked
+    label_en: Debt interest (financing costs, locked in the game)
+    amount_md: 7968
+    status: draft-press
+    source: "Espace Manager 9 Nov 2026; Tunisie Numérique"
+    url: null
+    page: null
+  - id: unforeseen_locked
+    label_en: Unforeseen and unallocated (locked in the game)
+    amount_md: 995
+    status: draft-press
+    source: "Espace Manager 9 Nov 2026"
+    url: null
+    page: null
+  - id: subsidies_total_memo
+    label_en: "Subsidies, all types (memo: sits inside the Industry and Trade lines; split by type not found)"
+    amount_md: 11846
+    status: draft-press
+    memo: true
+    source: "Espace Manager 9 Nov 2026"
+    url: null
+    page: null
