@@ -62,7 +62,7 @@ function shift(rule: MoveRule, from: LineId, to: LineId, amountMd: number): { mo
 
 const tasks: { name: string; from: LineId; to: LineId; amountMd: number }[] = [
 	{ name: '10% of Education into Health', from: 'education', to: 'health', amountMd: 918.45 },
-	{ name: '10% of the subsidy line into Social protection', from: 'subsidies', to: 'social', amountMd: 1184.6 }
+	{ name: '10% of the fuel and electricity subsidy line into Social affairs', from: 'subsidies_energy', to: 'social_affairs', amountMd: 771.2588 }
 ];
 
 let failures = 0;

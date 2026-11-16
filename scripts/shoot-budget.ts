@@ -32,6 +32,7 @@ interface Size {
 
 const SIZES: Size[] = [
 	{ label: '1280x800', width: 1280, height: 800, dpr: 1 },
+	{ label: '820x1180', width: 820, height: 1180, dpr: 1 },
 	{ label: '390x844', width: 390, height: 844, dpr: 2 }
 ];
 const LOCALES = ['en', 'ar'] as const;
@@ -119,9 +120,10 @@ async function openBoard(page: Page, query = ''): Promise<void> {
 	const boxes = page.locator('.consent input[type="checkbox"]');
 	await boxes.first().waitFor({ state: 'visible' });
 	const count = await boxes.count();
-	if (count !== 2) fail('board consent', `expected 2 consent boxes, found ${count}`);
+	if (count !== 3) fail('board consent', `expected 3 consent boxes, found ${count}`);
 	await boxes.nth(0).check();
 	await boxes.nth(1).check();
+	await boxes.nth(2).check();
 	await page.locator('.consent button[type="submit"]').click();
 	await page.locator('#h-frame').waitFor({ state: 'visible' });
 	await page.locator('.game .actions button.cta').click();
@@ -160,6 +162,26 @@ async function checkBoard(
 			fail(`${name} draft start purse`, `purse ${purse} MD, expected 0 MD`);
 		}
 
+		// The explicit keep-draft control: Finish is disabled until a move or the tick.
+		const finish = page.locator('.board .finish');
+		if (!(await finish.isDisabled())) fail(`${name} keep gate`, 'Finish is enabled at the draft without a move or a tick');
+		const keep = page.locator('.board .keep-choice input');
+		await keep.check();
+		if (await finish.isDisabled()) fail(`${name} keep gate`, 'Finish is still disabled after the keep-draft tick');
+		await keep.uncheck();
+		if (!(await finish.isDisabled())) fail(`${name} keep gate`, 'Finish is enabled after the keep-draft tick is cleared');
+
+		// The detail panel: a subsidy line opens its 2026 programmes and can be set to 2024.
+		await page.locator('.board [data-drop="subsidies_energy"]').click();
+		const beforeSet = amount(await page.locator('.board [data-drop="subsidies_energy"] .yours').innerText());
+		await page.locator('.board .details-toggle').click();
+		await page.locator('.board .detail').waitFor({ state: 'visible' });
+		const programmeRows = await page.locator('.board .detail-mission').count();
+		if (programmeRows < 1) fail(`${name} detail`, 'the subsidy detail panel has no 2026 programme rows');
+		await page.locator('.board .detail-action').first().click();
+		const afterSet = amount(await page.locator('.board [data-drop="subsidies_energy"] .yours').innerText());
+		if (afterSet === beforeSet) fail(`${name} detail`, `set to 2024 left the line at ${beforeSet} MD`);
+
 		let touch = '';
 		if (size.width <= 480) {
 			/* Hidden buttons (the reset control is display:none on a phone) are not
@@ -180,20 +202,27 @@ async function checkBoard(
 			touch = ', all board buttons >= 44px';
 		}
 
-		// Past years: a trend on every system, on by default, and the switches change it.
+		// Past years: thin bars on every system, on by default, and the switches change them.
 		const rowsShown = await page.locator('.board [data-drop]:not([data-drop="purse"])').count();
-		const sparks = await page.locator('.board svg.spark').count();
-		if (rowsShown !== 22 || sparks !== 22) fail(`${name} past years`, `${rowsShown} systems, ${sparks} trend lines, expected 22 of each`);
-		const dots = async () => page.locator('.board [data-drop="education"] svg.spark circle').count();
-		const before = await dots();
+		const pastBars = await page.locator('.board .slot .past-dot').count();
+		if (rowsShown !== 27 || pastBars !== 27 * 6) fail(`${name} past years`, `${rowsShown} systems, ${pastBars} past dots, expected 27 systems and 162 dots`);
+		const before = pastBars;
 		const yearSwitch = size.width <= 720 ? page.locator('.board .years-tool') : page.locator('.board .year').first();
 		await yearSwitch.click();
-		const after = await dots();
-		if (!(after < before)) fail(`${name} past years`, `switching a year off left ${after} of ${before} points`);
+		const after = await page.locator('.board .slot .past-dot').count();
+		if (!(after < before)) fail(`${name} past years`, `switching a year off left ${after} of ${before} bars`);
 		await yearSwitch.click();
+		if (size.label === '820x1180') {
+			const clipped = await page.evaluate(() =>
+				Array.from(document.querySelectorAll('.board .slot .name'))
+					.filter((el) => el.scrollWidth > el.clientWidth + 1)
+					.map((el) => (el.textContent ?? '').trim())
+			);
+			if (clipped.length > 0) fail(`${name} names`, `clipped names: ${clipped.join(' | ')}`);
+		}
 
 		assertNoPageErrors(errors, name);
-		ok(`${name}: board visible, no page scroll (${m.scrollHeight}/${m.innerHeight}), no h-scroll, purse ${purse} MD${touch}, 22 systems with past years`);
+		ok(`${name}: board visible, no page scroll (${m.scrollHeight}/${m.innerHeight}), no h-scroll, purse ${purse} MD${touch}, 27 systems with past years`);
 	} finally {
 		await context.close();
 	}
@@ -234,13 +263,10 @@ async function checkRoundTrip(
 	const { context, page, errors } = await openPage(browser, size, locale);
 	try {
 		await openBoard(page);
-		const list = page.locator('.board .list');
-		await list.focus();
-		await page.keyboard.press('ArrowDown'); // Education
-		for (let i = 0; i < 3; i++) await page.keyboard.press('-');
-		await page.keyboard.press('ArrowDown');
-		await page.keyboard.press('ArrowDown'); // Health
-		for (let i = 0; i < 3; i++) await page.keyboard.press('+');
+		await page.locator('.board [data-drop="education"]').click();
+		for (let i = 0; i < 3; i++) await page.locator('.board .moves-buttons .take').click();
+		await page.locator('.board [data-drop="health"]').click();
+		for (let i = 0; i < 3; i++) await page.locator('.board .moves-buttons .give').click();
 		const healthBefore = amount(await page.locator('.board [data-drop="health"] .yours').first().innerText());
 		if (Number(digits(await purseText(page))) !== 0) fail(`${name} play`, 'purse not empty after 3 takes and 3 gives');
 

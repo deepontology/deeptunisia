@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount, tick, untrack } from 'svelte';
 	import { app } from '$lib/state.svelte';
-	import { FIGURES, HISTORY } from '$lib/budget-study/figures';
+	import { FIGURES, HISTORY, programmesForLine } from '$lib/budget-study/figures';
 	import { copyFor } from './copy';
 	import { boardCopyFor } from './board-copy';
 	import { linesFrom, type LineId } from './lines';
@@ -74,10 +74,13 @@
 	}
 	function trendOf(id: LineId, plan: number): TrendPoint[] {
 		if (!pastShown.length) return [];
-		return [...pastShown.map((h) => ({ year: h.year, md: h.lines[id], draft: false })), { year: DRAFT_YEAR, md: plan, draft: true }];
+		return [
+			...pastShown.map((h) => ({ year: h.year, md: h.lines[id], draft: false })),
+			{ year: DRAFT_YEAR, md: plan, draft: true, derived: id === 'subsidies_energy' || id === 'subsidies_food' }
+		];
 	}
 	function historyText(id: LineId): string {
-		return pastShown.map((h) => `${h.year} ${fmtMd(h.lines[id])} MD`).join(', ');
+		return pastShown.map((h) => `${h.year} ${fmtMd(h.lines[id])} ${t.unit}`).join(', ');
 	}
 	/** A phone shows the rows as a list that scrolls, so a touch pans it; Take and Give move the money. */
 	let narrow = $state(false);
@@ -92,23 +95,40 @@
 	let refusedId = $state<string | null>(null);
 	let message = $state('');
 	let view = $state<'bars' | 'table'>('bars');
+	let keepChoice = $state(false);
+	let detailOpen = $state(false);
 	let listEl = $state<HTMLElement | undefined>(undefined);
 	let rootEl = $state<HTMLElement | undefined>(undefined);
 
 	const activeRow = $derived(active ? rows.find((r) => r.id === active)! : null);
 	const takeMd = $derived(active ? B.takeAmount(board, game, active) : 0);
 	const giveMd = $derived(active ? B.giveAmount(board, game, active) : 0);
+	const atDraftNow = $derived(B.atDraft(board, game));
+	const hasChange = $derived(!atDraftNow);
+	/** Finish needs either a real change or the explicit keep-draft tick. */
+	const canFinish = $derived(done && (hasChange || keepChoice));
+	const programmes = $derived(activeRow ? programmesForLine(activeRow.id) : []);
+	const lineCaveat = $derived.by(() => {
+		if (!activeRow) return null;
+		const id = activeRow.id;
+		if ((id === 'police' || id === 'environment') && shown.includes(2020)) return t.historyCaveat[id] ?? null;
+		if (id === 'subsidies_energy' || id === 'subsidies_food' || id === 'energy_trade' || id === 'rest') return t.historyCaveat[id] ?? null;
+		return null;
+	});
+	const firstPast = $derived(pastShown[0] ?? null);
+	const year2024 = $derived(HISTORY.find((h) => h.year === 2024) ?? null);
 	const stepOf = (id: LineId) => (rule === 'step' ? fmtMd(B.stepMd(B.findLine(board, id))) : '');
 	const unitLabel = (id: string) => {
-		if (id === 'purse') return `${fmtMd(rule === 'coin' ? Math.min(B.COIN_MD, Math.max(P, 0)) : P)} MD`;
+		if (id === 'purse') return `${fmtMd(rule === 'coin' ? Math.min(B.COIN_MD, Math.max(P, 0)) : P)} ${t.unit}`;
 		const amount = B.takeAmount(board, game, id as LineId);
-		return `${fmtMd(amount || (rule === 'coin' ? B.COIN_MD : B.stepMd(B.findLine(board, id as LineId))))} MD`;
+		return `${fmtMd(amount || (rule === 'coin' ? B.COIN_MD : B.stepMd(B.findLine(board, id as LineId))))} ${t.unit}`;
 	};
 
 	function describe(entry: B.LogEntry): string {
 		const n = (id: LineId | null) => (id ? c.lines[id].name : '');
 		if (entry.kind === 'take') return t.took(fmtMd(entry.md), n(entry.from));
 		if (entry.kind === 'give') return t.gave(fmtMd(entry.md), n(entry.to));
+		if (entry.kind === 'set') return t.setTo(fmtMd(entry.md), n(entry.to));
 		if (entry.kind === 'move')
 			return Math.abs(entry.md - entry.mdIn) < 1e-9
 				? t.moved(fmtMd(entry.md), n(entry.from), n(entry.to))
@@ -152,6 +172,7 @@
 		const entry = next.log[next.log.length - 1];
 		flyCoin(el(from), el(to), `${fmtMd(entry.md)}`);
 		game = next;
+		keepChoice = false;
 		message = describe(entry);
 		return true;
 	}
@@ -159,7 +180,38 @@
 	function select(id: string) {
 		if (id === 'purse') return;
 		active = id as LineId;
+		detailOpen = false;
 		message = '';
+	}
+
+	/** The explicit keep-draft control. Ticking it puts the whole board back on the draft. */
+	function toggleKeep(next: boolean) {
+		keepChoice = next;
+		if (next) {
+			game = B.keepDraft(board, game);
+			active = null;
+			detailOpen = false;
+			message = t.kept;
+		}
+	}
+
+	/** Set one line to an exact amount (2024 level, draft or zero). One undo. */
+	function applySet(targetMd: number) {
+		if (!active) return;
+		const why = B.setProblem(board, game, active, targetMd);
+		if (why) {
+			message = t.setRefused(fmtMd(P));
+			refusedId = active;
+			setTimeout(() => {
+				if (refusedId === active) refusedId = null;
+			}, 400);
+			return;
+		}
+		const next = B.setLine(board, game, active, targetMd);
+		if (next === game) return;
+		game = next;
+		keepChoice = false;
+		message = describe(next.log[next.log.length - 1]);
 	}
 
 	// Take and Give buttons: one move per press, and holding keeps money flowing.
@@ -203,7 +255,7 @@
 		else if ((e.key === 'Enter' || e.key === ' ') && active) {
 			if (!carrying) {
 				carrying = active;
-				message = t.carrying(unitLabel(active).replace(' MD', ''), nameOf(active));
+				message = t.carrying(unitLabel(active).replace(` ${t.unit}`, ''), nameOf(active));
 			} else if (carrying !== active) moveMoney(carrying, active);
 		} else if (e.key === 'Escape' && carrying) {
 			carrying = null;
@@ -220,12 +272,9 @@
 		game = start();
 		active = null;
 		message = '';
+		keepChoice = false;
+		detailOpen = false;
 	}
-	function keep() {
-		game = B.keepDraft(board, game);
-		message = t.kept;
-	}
-
 	onMount(() => {
 		const mq = window.matchMedia('(max-width: 720px)');
 		narrow = mq.matches;
@@ -267,7 +316,9 @@
 	});
 
 	const purseState = $derived(Math.abs(P) < 1e-9 ? 'empty' : done ? 'leftover' : 'hold');
-	const readyText = $derived(done ? (purseState === 'leftover' ? t.readyBand : t.ready) : '');
+	const readyText = $derived(
+		done ? (atDraftNow && !keepChoice ? t.readyChoice : purseState === 'leftover' ? t.readyBand : t.ready) : ''
+	);
 </script>
 
 <svelte:window onpointerup={stopHold} onblur={stopHold} />
@@ -277,6 +328,7 @@
 	<section class="purse-zone" aria-label={t.purse}>
 		<p class="badge">{t.badge}<span class="rule">{t.rule[rule]}</span></p>
 		<h1 class="title">{t.title}</h1>
+		<a class="study-link" href="/research/citizen-budget">{t.studyPage}</a>
 
 		<div class="purse" class:target={over === 'purse'} class:refused={refusedId === 'purse'} data-drop="purse" data-state={purseState}>
 			<span class="purse-label">{t.purse}</span>
@@ -296,7 +348,7 @@
 
 		<div class="locked">
 			<span class="locked-swatch" aria-hidden="true"></span>
-			<p><strong>{t.lockedTitle}: <span class="num">{fmtMd(lockedTotal)} MD</span></strong> {t.lockedBody(fmtMd(debt.draft), fmtMd(reserve.draft))}</p>
+			<p><strong>{t.lockedTitle}: <span class="num">{fmtMd(lockedTotal)} {t.unit}</span></strong> {t.lockedBody(fmtMd(debt.draft), fmtMd(reserve.draft))}</p>
 		</div>
 	</section>
 
@@ -316,6 +368,9 @@
 				{view === 'bars' ? t.table : t.bars}
 			</button>
 		</div>
+		{#if pastShown.length}
+			<p class="legend-notes"><span>{t.yearLegend}</span> <span>{t.nominalNote}</span> <span>{t.derivedShort}</span> <span class="legend-definitions">{t.historyDefinitions}</span></p>
+		{/if}
 
 		{#if view === 'bars'}
 			<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
@@ -345,7 +400,7 @@
 									c.lines[r.id].name,
 									fmtMd(r.plan),
 									fmtMd(r.yours),
-									r.diff.direction === 'same' ? t.same : `${signed(r.diff.deltaMd)} MD, ${signed(r.diff.deltaPct, 1)}%, ${r.diff.direction === 'more' ? t.more : t.less}`
+									r.diff.direction === 'same' ? t.same : `${signed(r.diff.deltaMd)} ${t.unit}, ${signed(r.diff.deltaPct, 1)}%, ${r.diff.direction === 'more' ? t.more : t.less}`
 								) + (pastShown.length ? ` ${t.historyAria(historyText(r.id))}` : '')}
 							>
 								<SystemRow
@@ -364,8 +419,7 @@
 									refused={refusedId === r.id}
 									pan={narrow}
 									trend={trendOf(r.id, r.plan)}
-									firstYear={HISTORY[0]?.year ?? DRAFT_YEAR}
-									lastYear={DRAFT_YEAR}
+									planDerived={r.id === 'subsidies_energy' || r.id === 'subsidies_food'}
 								/>
 							</div>
 						{/each}
@@ -425,14 +479,50 @@
 					<button
 						type="button"
 						class="move give"
+						disabled={giveMd === 0}
 						aria-disabled={giveMd === 0}
 						aria-label={t.giveAria(fmtMd(giveMd || B.COIN_MD), c.lines[activeRow.id].name)}
-						onpointerdown={(e) => (giveMd === 0 ? refuse(B.giveProblem(board, game, activeRow.id) ?? 'purse', activeRow.id) : hold(e, 'purse', activeRow.id))}
-						onclick={(e) => (giveMd === 0 ? e.detail === 0 && refuse(B.giveProblem(board, game, activeRow.id) ?? 'purse', activeRow.id) : press(e, 'purse', activeRow.id))}
+						onpointerdown={(e) => hold(e, 'purse', activeRow.id)}
+						onclick={(e) => press(e, 'purse', activeRow.id)}
 					>
 						{t.give(fmtMd(giveMd || (rule === 'coin' ? B.COIN_MD : B.stepMd(B.findLine(board, activeRow.id)))))}<span class="unit">{t.unit}</span><span class="glyph" aria-hidden="true">+</span>
 					</button>
 				</div>
+				<button type="button" class="details-toggle" aria-expanded={detailOpen} onclick={() => (detailOpen = !detailOpen)}>
+					{detailOpen ? t.detailsClose : t.details}
+				</button>
+				{#if detailOpen}
+					<div class="detail">
+						{#if programmes.length}
+							<p class="detail-title">{t.programmes2026}</p>
+							<p class="detail-source">{t.programmesNote}</p>
+							{#each programmes as m (m.key)}
+								<div class="detail-mission">
+									<p class="detail-mission-label">
+										<span lang="fr" dir="ltr">{m.mission.label}</span> <span class="num">{fmtMd(m.mission.total_md)} {t.unit}</span>
+										<span class="detail-page">p. {m.mission.page}</span>
+									</p>
+									<ul>
+										{#each m.mission.programmes as p (p.label)}
+											<li><span lang="fr" dir="ltr">{p.label}</span><span class="num">{fmtMd(p.amount_md)}</span></li>
+										{/each}
+									</ul>
+								</div>
+							{/each}
+						{:else}
+							<p class="detail-note">{t.noProgrammes}</p>
+						{/if}
+						<div class="detail-actions">
+							{#if year2024}
+								<button type="button" class="detail-action" onclick={() => applySet(year2024.lines[activeRow.id])}>
+									{t.setTo2024}
+								</button>
+							{/if}
+							<button type="button" class="detail-action" onclick={() => applySet(activeRow.plan)}>{t.setToDraft}</button>
+							<button type="button" class="detail-action" onclick={() => applySet(0)}>{t.zeroLine}</button>
+						</div>
+					</div>
+				{/if}
 				{#if pastShown.length}
 					{@const id = activeRow.id}
 					{@const series = [
@@ -442,10 +532,10 @@
 					]}
 					{@const top = Math.max(...series.map((p) => p.md), 1e-9)}
 					{@const first = pastShown[0]}
-					<div class="history" title={t.historyNote}>
+					<div class="history">
 						<p class="history-title">
 							<span>{t.yearByYear}</span>
-							{#if first.lines[id] > 0}<span class="num">{t.since(String(first.year))} <bdi dir="ltr">{signed(((activeRow.plan - first.lines[id]) / first.lines[id]) * 100, 1)}%</bdi></span>{/if}
+							{#if first.lines[id] > 0}<span class="num">{t.since(String(first.year))} <bdi dir="ltr">{signed(((activeRow.plan - first.lines[id]) / first.lines[id]) * 100, 1)}%</bdi> {t.nominalShort}</span>{/if}
 						</p>
 						<ul>
 							{#each series as p (p.label)}
@@ -459,17 +549,18 @@
 						{#if activeRow.diff.direction !== 'same'}
 							<p class="history-change num" data-dir={activeRow.diff.direction}>{t.change} <bdi dir="ltr">{signed(activeRow.diff.deltaMd)} · {signed(activeRow.diff.deltaPct, 1)}%</bdi></p>
 						{/if}
+						<p class="history-note">{t.nominalNote}</p>
 					</div>
 				{/if}
 				<p class="chosen-note">{c.lines[activeRow.id].note}</p>
-				{#if pastShown.length && (activeRow.id === 'subsidies' || activeRow.id === 'energy_trade' || activeRow.id === 'rest')}
-					<p class="chosen-note history-caveat">{t.historyCaveat[activeRow.id]}</p>
+				{#if lineCaveat}
+					<p class="chosen-note history-caveat">{lineCaveat}</p>
 				{/if}
 			{:else}
 				<p class="chosen-name muted">{t.pick}</p>
 				<p class="howto">{t.howTo[rule]}</p>
+				<p class="howto phone-howto">{t.howToPhone}</p>
 				<div class="moves-buttons idle">
-					<button type="button" class="move take" onclick={keep}>{t.keep}</button>
 					<button type="button" class="move take" onclick={reset}>{t.reset}</button>
 				</div>
 			{/if}
@@ -489,11 +580,15 @@
 		</div>
 
 		<div class="actions">
+			<label class="keep-choice">
+				<input type="checkbox" checked={keepChoice} onchange={(e) => toggleKeep(e.currentTarget.checked)} />
+				<span class="keep-tick">{t.keepTick}</span>
+				<span class="keep-note">{t.keepTickNote}</span>
+			</label>
 			<button type="button" class="ghost" onclick={undo} disabled={game.snapshots.length === 0}>{t.undo}</button>
-			<button type="button" class="ghost" onclick={keep}>{t.keep}</button>
 			<button type="button" class="ghost" onclick={reset}>{t.reset}</button>
-			<button type="button" class="finish" disabled={!done} onclick={() => onfinish?.(game, board)}>
-				{#if done}{t.finish}{:else}<span class="long">{t.finishNeeds(fmtMd(Math.abs(P)))}</span><span class="short">{t.finish}</span>{/if}
+			<button type="button" class="finish" disabled={!canFinish} onclick={() => onfinish?.(game, board)}>
+				{#if canFinish}{t.finish}{:else}<span class="long">{atDraftNow ? t.finishNeedsChoice : t.finishNeeds(fmtMd(Math.abs(P)))}</span><span class="short">{t.finish}</span>{/if}
 			</button>
 		</div>
 		{#if t.interim}<p class="interim">{t.interim}</p>{/if}
@@ -560,6 +655,13 @@
 		line-height: 1.1;
 		letter-spacing: -0.01em;
 		text-wrap: balance;
+	}
+	.study-link {
+		align-self: start;
+		font-size: var(--t-sm);
+		color: var(--text-muted);
+		text-decoration: underline;
+		text-underline-offset: 3px;
 	}
 	.purse {
 		position: relative;
@@ -691,6 +793,17 @@
 		border-block-end: var(--rule);
 		font-size: var(--t-sm);
 		color: var(--text-secondary);
+	}
+	.legend-notes {
+		flex: none;
+		margin: 0;
+		padding-block: var(--s-2);
+		font-size: var(--t-xs);
+		line-height: 1.4;
+		color: var(--text-muted);
+	}
+	.legend-notes span + span::before {
+		content: ' ';
 	}
 	.key {
 		display: inline-flex;
@@ -866,6 +979,8 @@
 		column-gap: var(--s-8);
 		padding-block-start: var(--s-2);
 		outline: none;
+		overflow-y: auto;
+		overscroll-behavior: contain;
 	}
 	.list:focus-visible {
 		box-shadow: var(--ring);
@@ -951,7 +1066,7 @@
 	}
 	/* The chosen card gives way before the actions: the moves log shrinks first, then the card scrolls. */
 	.chosen {
-		flex: 0 1 auto;
+		flex: 0 0 auto;
 		min-block-size: 0;
 		overflow-y: auto;
 		display: grid;
@@ -985,6 +1100,84 @@
 		display: grid;
 		grid-template-columns: repeat(2, minmax(0, 1fr));
 		gap: var(--s-3);
+	}
+	.details-toggle {
+		justify-self: start;
+		min-block-size: var(--s-8);
+		padding: 0;
+		border: 0;
+		background: transparent;
+		color: var(--text-secondary);
+		font: 500 var(--t-xs) var(--font-sans);
+		text-decoration: underline;
+		text-underline-offset: 3px;
+		cursor: pointer;
+	}
+	.detail {
+		display: grid;
+		gap: var(--s-3);
+		padding-block-start: var(--s-3);
+		border-block-start: var(--rule);
+		font-size: var(--t-xs);
+		color: var(--text-secondary);
+	}
+	.detail-title {
+		margin: 0;
+		font-family: var(--font-mono);
+		font-size: var(--t-2xs);
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: var(--text-muted);
+	}
+	.detail-source {
+		margin: 0;
+		font-size: var(--t-2xs);
+		color: var(--text-muted);
+	}
+	.detail-mission {
+		display: grid;
+		gap: var(--s-1);
+	}
+	.detail-mission-label {
+		margin: 0;
+		font-weight: 600;
+		color: var(--text-primary);
+	}
+	.detail-page {
+		font-family: var(--font-mono);
+		font-weight: 400;
+		color: var(--text-muted);
+	}
+	.detail ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		display: grid;
+		gap: 2px;
+	}
+	.detail li {
+		display: flex;
+		justify-content: space-between;
+		gap: var(--s-3);
+	}
+	.detail-note {
+		margin: 0;
+		color: var(--text-muted);
+	}
+	.detail-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--s-2);
+	}
+	.detail-action {
+		min-block-size: var(--s-8);
+		padding-inline: var(--s-3);
+		border: 1px solid var(--border-default);
+		border-radius: var(--r-full);
+		background: transparent;
+		color: var(--text-primary);
+		font: 500 var(--t-xs) var(--font-sans);
+		cursor: pointer;
 	}
 	.move {
 		display: inline-flex;
@@ -1066,6 +1259,34 @@
 		flex-wrap: wrap;
 		gap: var(--s-3);
 	}
+	.keep-choice {
+		flex: 1 1 100%;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: flex-start;
+		gap: var(--s-2) var(--s-3);
+		font-size: var(--t-sm);
+		color: var(--text-secondary);
+		cursor: pointer;
+	}
+	.keep-choice input {
+		flex: none;
+		inline-size: 1.1rem;
+		block-size: 1.1rem;
+		margin-block-start: 0.15em;
+		accent-color: var(--accent);
+	}
+	.keep-tick {
+		font-weight: 600;
+		color: var(--text-primary);
+	}
+	.keep-note {
+		flex-basis: 100%;
+		padding-inline-start: calc(1.1rem + var(--s-3));
+		font-size: var(--t-xs);
+		line-height: 1.35;
+		color: var(--text-muted);
+	}
 	.ghost {
 		flex: 1 1 0;
 		white-space: nowrap;
@@ -1136,11 +1357,16 @@
 	}
 
 	/* A low desk window: the chosen system's note and the ledger give way first. */
-	@media (min-width: 721px) and (max-height: 760px) {
+	@media (min-width: 721px) and (max-height: 860px) {
 		.chosen-note,
 		.ledger,
-		.history {
+		.history,
+		.howto,
+		.keep-note {
 			display: none;
+		}
+		.chosen {
+			flex: 0 1 auto;
 		}
 		.chosen-figs.has-history {
 			display: flex;
@@ -1160,11 +1386,25 @@
 			column-gap: 0;
 		}
 		.purse-zone {
-			display: flex;
+			display: grid;
+			grid-template-columns: minmax(0, 1fr) auto;
+			grid-template-areas:
+				'study study'
+				'purse tools';
 			align-items: center;
-			gap: var(--s-3);
-			padding: var(--s-3) var(--s-6);
+			gap: var(--s-2) var(--s-3);
+			padding: var(--s-2) var(--s-6) var(--s-3);
 			border-block-end: var(--rule);
+		}
+		.study-link {
+			grid-area: study;
+			font-size: var(--t-xs);
+		}
+		.purse {
+			grid-area: purse;
+		}
+		.tools {
+			grid-area: tools;
 		}
 		.badge,
 		.title,
@@ -1252,9 +1492,11 @@
 			position: relative;
 			display: grid;
 			grid-template-columns: minmax(0, 1fr) auto;
-			grid-template-areas: 'chosen finish';
+			grid-template-areas:
+				'chosen finish'
+				'keep keep';
 			align-items: end;
-			gap: var(--s-4);
+			gap: var(--s-2) var(--s-4);
 			padding: var(--s-3) var(--s-6) calc(var(--s-3) + env(safe-area-inset-bottom, 0px));
 			border-block-start: var(--rule);
 			background: var(--surface-raised);
@@ -1268,9 +1510,12 @@
 		}
 		.chosen-name {
 			font-size: var(--t-base);
-			white-space: nowrap;
+			line-height: 1.2;
+			display: -webkit-box;
+			-webkit-line-clamp: 2;
+			line-clamp: 2;
+			-webkit-box-orient: vertical;
 			overflow: hidden;
-			text-overflow: ellipsis;
 		}
 		.chosen-figs {
 			display: none;
@@ -1279,6 +1524,32 @@
 		.ledger,
 		.howto {
 			display: none;
+		}
+		.phone-howto {
+			display: block;
+			font-size: var(--t-xs);
+			color: var(--text-muted);
+		}
+		.legend-definitions {
+			display: none;
+		}
+		.purse[data-state='empty'] .purse-note {
+			display: none;
+		}
+		.keep-choice {
+			padding-block-end: var(--s-2);
+		}
+		.legend-notes {
+			font-size: var(--t-2xs);
+			padding-block: var(--s-1);
+		}
+		.detail {
+			max-block-size: 38vh;
+			overflow-y: auto;
+		}
+		.details-toggle,
+		.detail-action {
+			min-block-size: var(--touch);
 		}
 		.moves-buttons.idle {
 			display: grid;
@@ -1313,14 +1584,21 @@
 			display: none;
 		}
 		.actions {
-			grid-area: finish;
-			margin: 0;
+			display: contents;
 		}
 		.ghost,
 		.interim {
 			display: none;
 		}
+		.keep-choice {
+			grid-area: keep;
+			font-size: var(--t-xs);
+		}
+		.keep-note {
+			display: none;
+		}
 		.finish {
+			grid-area: finish;
 			flex: none;
 			min-inline-size: 5.5rem;
 			font-size: var(--t-base);

@@ -42,10 +42,10 @@ const COIN = COIN_MD * DINARS;
 export type Refusal = 'zero' | 'cap' | 'purse' | 'self';
 
 export interface LogEntry {
-	kind: 'take' | 'give' | 'move' | 'keep';
+	kind: 'take' | 'give' | 'move' | 'keep' | 'set';
 	/** The system money left (take, move). */
 	from: LineId | null;
-	/** The system money went to (give, move). */
+	/** The system money went to (give, move, set). */
 	to: LineId | null;
 	/** What left the source, in MD. */
 	md: number;
@@ -241,6 +241,30 @@ export function transfer(board: Board, state: BoardState, from: LineId, to: Line
 	const outD = state.rule === 'coin' ? into : out;
 	const held = { ...state.held, [from]: state.held[from] - outD, [to]: state.held[to] + into };
 	return push(state, held, { kind: 'move', from, to, md: md(outD), mdIn: md(into) });
+}
+
+/** Why setting a line to an exact amount is refused, or null. */
+export function setProblem(board: Board, state: BoardState, id: LineId, targetMd: number): Refusal | null {
+	const line = findLine(board, id);
+	const target = Math.round(Math.max(0, Math.min(targetMd, md(capD(line)))) * DINARS);
+	const diff = target - state.held[id];
+	if (diff > 0 && diff > purseD(board, state)) return 'purse';
+	return null;
+}
+
+/**
+ * Sets one line to an exact amount in MD, clamped to 0 and the 200% cap. The
+ * difference comes from (or goes to) the purse. One snapshot, one log entry, so
+ * undo takes it back in one step. Used by the detail panel's "set to the 2024
+ * level", "set back to the draft" and "set to zero" actions.
+ */
+export function setLine(board: Board, state: BoardState, id: LineId, targetMd: number): BoardState {
+	if (setProblem(board, state, id, targetMd)) return state;
+	const line = findLine(board, id);
+	const target = Math.round(Math.max(0, Math.min(targetMd, md(capD(line)))) * DINARS);
+	const diff = target - state.held[id];
+	if (diff === 0) return state;
+	return push(state, { ...state.held, [id]: target }, { kind: 'set', from: null, to: id, md: md(Math.abs(diff)), mdIn: md(Math.abs(diff)) });
 }
 
 /** Sets every movable line to its draft. The log records it as a keep. */

@@ -98,7 +98,10 @@
 	const top4Share = (top4.reduce((s, l) => s + l.draft, 0) / lines.envelope) * 100;
 	const FACT_VALUE: Record<FactKey, { value: string; unit: string }> = {
 		locked: { value: fmt(lockedTotal), unit: 'MD' },
-		subsidies: { value: fmt(lineOf('subsidies').draft), unit: 'MD' },
+		subsidies: {
+			value: fmt(lines.movable.filter((l) => l.id === 'subsidies_energy' || l.id === 'subsidies_food').reduce((s, l) => s + l.draft, 0)),
+			unit: 'MD'
+		},
 		largest: { value: top4Share.toFixed(0), unit: '%' },
 		zero: { value: '+100 −100', unit: '' }
 	};
@@ -284,6 +287,13 @@
 					{#each sec.figures.body as p, i (i)}<p>{p}</p>{/each}
 					<div class="table-scroll wide">
 						<table class="figures">
+							<caption>{copy.figures.pastHeading}</caption>
+							<colgroup>
+								<col class="c-name" />
+								{#each HISTORY as h (h.year)}<col class="c-year" />{/each}
+								<col class="c-draft" />
+								<col class="c-status" />
+							</colgroup>
 							<thead>
 								<tr>
 									<th scope="col">{copy.figures.system}</th>
@@ -297,7 +307,7 @@
 									<tr class:locked={f.locked}>
 										<th scope="row">
 											{f.name}
-											{#if f.madeOf}<span class="made" lang="en" dir="ltr">{copy.figures.madeOf}: {f.madeOf}</span>{/if}
+											{#if f.madeOf && lang === 'en'}<span class="made" lang="en" dir="ltr">{copy.figures.madeOf}: {f.madeOf}</span>{/if}
 											{#if f.locked}<span class="made">{copy.figures.locked}</span>{/if}
 										</th>
 										{#each HISTORY as h (h.year)}<td class="past">{fmtMd(h.lines[f.id])}</td>{/each}
@@ -311,6 +321,7 @@
 							</tfoot>
 						</table>
 					</div>
+					{#if lang !== 'en'}<p class="note">{copy.figures.madeOfNote}</p>{/if}
 					<p class="note">{copy.draftNotice}</p>
 					<p class="note">{copy.figures.historyNote}</p>
 					<details class="sources">
@@ -319,7 +330,7 @@
 							{#each FIGURES.rows as r (r.id)}
 								<li lang="en" dir="ltr">
 									<span class="src-name">{r.label_en}</span>
-									<span class="mono">{fmtMd(r.amount_md)} MD</span>
+									<span class="mono">{fmtMd(r.amount_md)} {copy.unit}</span>
 									<span class="src">{#if r.url}<a href={r.url} rel="noopener noreferrer">{r.source}</a>{:else}{r.source}{/if}</span>
 								</li>
 							{/each}
@@ -331,7 +342,7 @@
 							{#each HISTORY as h (h.year)}
 								<li lang="fr" dir="ltr">
 									<span class="src-name">{h.year}</span>
-									<span class="mono">{fmtMd(h.total_md)} MD</span>
+									<span class="mono">{fmtMd(h.total_md)} {copy.unit}</span>
 									<span class="src"><a href={h.url} rel="noopener noreferrer">{h.document}</a>. {h.source}, pages {Math.min(...Object.values(h.missions).map((m) => m.page))} to {Math.max(...Object.values(h.missions).map((m) => m.page))}.</span>
 								</li>
 							{/each}
@@ -785,6 +796,44 @@
 	th.past {
 		color: var(--text-muted);
 		white-space: nowrap;
+	}
+	.figures {
+		table-layout: fixed;
+		inline-size: 100%;
+		font-size: var(--t-sm);
+	}
+	.figures caption {
+		caption-side: top;
+		padding-block-end: var(--s-2);
+		text-align: start;
+		font-family: var(--font-mono);
+		font-size: var(--t-2xs);
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--text-muted);
+	}
+	.figures th,
+	.figures td {
+		padding: var(--s-2);
+	}
+	.figures .c-name {
+		inline-size: 28%;
+	}
+	.figures .c-year {
+		inline-size: 8%;
+	}
+	.figures .c-draft {
+		inline-size: 10%;
+	}
+	.figures .c-status {
+		inline-size: 14%;
+	}
+	.figures td.past,
+	.figures th.past {
+		font-size: var(--t-xs);
+	}
+	.figures th[scope='row'] {
+		overflow-wrap: anywhere;
 	}
 	@media (max-width: 640px) {
 		td.past,

@@ -23,14 +23,16 @@
 		year: number;
 		md: number;
 		draft: boolean;
+		derived?: boolean;
 	}
 
 	/**
 	 * One system on the board: its name, two bars on the board's common scale
 	 * (the state's 2027 plan as a filled reference, the citizen's allocation in
-	 * the accent), a mark at the plan across both, and the difference in MD
-	 * and per cent. Direction is carried by the sign and the word, never by
-	 * colour alone.
+	 * the accent), a mark at the plan, and the difference in MD and per cent.
+	 * Past years are thin bars on the same track, oldest first, so the history
+	 * and the 2027 draft can be read together at a glance. Direction is carried
+	 * by the sign and the word, never by colour alone.
 	 */
 	let {
 		id,
@@ -48,8 +50,7 @@
 		refused = false,
 		pan = false,
 		trend = [],
-		firstYear = 2024,
-		lastYear = 2027
+		planDerived = false
 	}: {
 		id: string;
 		name: string;
@@ -66,32 +67,13 @@
 		refused?: boolean;
 		/** On a page that scrolls, let a touch pan the page; buttons move the money there. */
 		pan?: boolean;
-		/** Past years shown and the 2027 draft, oldest first. Empty hides the trend line. */
+		/** Past years shown and the 2027 draft, oldest first. Empty hides the history bars. */
 		trend?: TrendPoint[];
-		firstYear?: number;
-		lastYear?: number;
+		/** The 2027 plan is a derived split, not a reported figure. */
+		planDerived?: boolean;
 	} = $props();
 
-	/*
-	 * The trend line: its own scale per system, so a small system's movement shows,
-	 * but never stretched past what the money did: the window is at least 15% of the
-	 * largest value, so a 1% change stays a gentle slope.
-	 */
-	const SW = 52;
-	const SH = 18;
-	const PAD = 3;
-	const spark = $derived.by(() => {
-		if (trend.length < 2) return null;
-		const values = [...trend.map((p) => p.md), yours];
-		const hi = Math.max(...values);
-		const lo = Math.min(...values);
-		const span = Math.max(hi - lo, hi * 0.15, 1e-9);
-		const mid = (hi + lo) / 2;
-		const x = (year: number) => PAD + ((year - firstYear) / Math.max(1, lastYear - firstYear)) * (SW - 2 * PAD);
-		const y = (md: number) => SH / 2 - ((md - mid) / span) * (SH - 2 * PAD);
-		const pts = trend.map((p) => ({ x: x(p.year), y: y(p.md), draft: p.draft }));
-		return { pts, path: pts.map((p, i) => `${i ? 'L' : 'M'}${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' '), mine: { x: x(lastYear), y: y(yours) } };
-	});
+	const past = $derived(trend.filter((p) => !p.draft));
 	const sparkTitle = $derived(trend.map((p) => `${p.year}${p.draft ? '*' : ''}: ${fmtMd(p.md)}`).join(' · '));
 
 	const pct = (n: number) => `${Math.min(100, (Math.max(0, n) / scale) * 100)}%`;
@@ -109,21 +91,25 @@
 		</span>
 	</div>
 	<div class="bars-line">
-		<div class="bars" aria-hidden="true">
-			<span class="bar plan" style:inline-size={pct(plan)}></span>
+		<div class="bars" aria-hidden="true" title={sparkTitle}>
+			{#if past.length}
+				<div class="past" data-count={past.length}>
+					{#each past as p, i (p.year)}
+						<span
+							class="past-dot"
+							class:oldest={i === 0}
+							class:newest={i === past.length - 1}
+							style:inset-inline-start={pct(p.md)}
+							data-year={p.year}
+							title={`${p.year}: ${fmtMd(p.md)}`}
+						></span>
+					{/each}
+				</div>
+			{/if}
+			<span class="bar plan" class:derived={planDerived} style:inline-size={pct(plan)}></span>
 			<span class="bar mine" class:over style:inline-size={pct(yours)}></span>
 			<span class="mark" style:inset-inline-start={pct(plan)}></span>
 		</div>
-		{#if spark}
-			<svg class="spark" viewBox="0 0 {SW} {SH}" width={SW} height={SH} aria-hidden="true">
-				<title>{sparkTitle}</title>
-				<path d={spark.path} />
-				{#each spark.pts as p, i (i)}
-					<circle class:draft={p.draft} cx={p.x} cy={p.y} r={p.draft ? 2.2 : 1.6} />
-				{/each}
-				<circle class="mine-dot" cx={spark.mine.x} cy={spark.mine.y} r="2.6" />
-			</svg>
-		{/if}
 	</div>
 	<div class="foot num" aria-hidden="true">
 		<span>{words.plan} {fmtMd(plan)}</span>
@@ -208,9 +194,8 @@
 		font-size: var(--t-md);
 		font-weight: 550;
 		color: var(--text-primary);
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
+		line-height: 1.15;
+		overflow-wrap: anywhere;
 	}
 	.num {
 		font-family: var(--font-mono);
@@ -281,7 +266,8 @@
 	}
 	.mark {
 		position: absolute;
-		inset-block: calc(-1 * var(--s-1));
+		inset-block-start: calc(var(--s-2) * 2);
+		inset-block-end: 0;
 		inline-size: 2px;
 		margin-inline-start: -1px;
 		background: var(--text-primary);
@@ -295,41 +281,54 @@
 		color: var(--text-muted);
 	}
 	.bars-line {
-		display: grid;
-		grid-template-columns: minmax(0, 1fr) auto;
-		align-items: center;
-		gap: var(--s-4);
+		display: block;
 	}
-	/* The trend reads left to right in every language, like the years on a calendar. */
-	.spark {
-		direction: ltr;
-		overflow: visible;
+	/* Past years: dots on the same common scale, oldest first. One rail, not one bar per year. */
+	.past {
+		position: relative;
+		block-size: 6px;
+		margin-block-end: 2px;
 	}
-	.spark path {
-		fill: none;
-		stroke: var(--text-muted);
-		stroke-width: 1.5;
-		stroke-linejoin: round;
-		stroke-linecap: round;
+	.past::before {
+		content: '';
+		position: absolute;
+		inset-block: 50%;
+		inset-inline: 0;
+		block-size: 1px;
+		background: var(--text-faint);
+		opacity: 0.45;
 	}
-	.spark circle {
-		fill: var(--text-muted);
+	.past-dot {
+		position: absolute;
+		inset-block: 50%;
+		inline-size: 4px;
+		block-size: 4px;
+		margin-block-start: -2px;
+		margin-inline-start: -2px;
+		border-radius: var(--r-full);
+		background: var(--text-faint);
+		opacity: 0.8;
 	}
-	.spark circle.draft {
-		fill: var(--text-primary);
+	.past-dot.oldest {
+		background: transparent;
+		box-shadow: inset 0 0 0 1px var(--text-muted);
+		opacity: 1;
 	}
-	.spark .mine-dot {
-		fill: var(--accent);
-		stroke: var(--surface-base, var(--bg));
-		stroke-width: 1;
+	.past-dot.newest {
+		background: var(--text-secondary);
+		opacity: 1;
+	}
+	.plan.derived {
+		background: repeating-linear-gradient(135deg, var(--text-faint) 0 2px, transparent 2px 5px);
+		opacity: 0.8;
 	}
 
 	/* Short rows, on a phone or a low window: one line of text, thinner bars, no foot. */
-	@media (max-width: 720px), (max-height: 760px) {
+	@media (max-width: 720px), (max-height: 860px) {
 		.row {
-			--bar-h: var(--s-3);
+			--bar-h: var(--s-2);
 			gap: var(--s-1);
-			padding-block: var(--s-2);
+			padding-block: var(--s-1);
 		}
 		.foot {
 			display: none;

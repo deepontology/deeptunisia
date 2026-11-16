@@ -36,6 +36,9 @@ export interface Copy {
 		sampleBody: string;
 		consentAge: string;
 		consentPrototype: string;
+		consentRead: string;
+		consentWithdrawal: string;
+		consentNote: string;
 		start: string;
 		under18: string;
 	};
@@ -107,6 +110,8 @@ export interface Copy {
 		q2: string;
 		q2Low: string;
 		q2High: string;
+		optional: string;
+		skip: string;
 		submit: string;
 		back: string;
 	};
@@ -119,7 +124,7 @@ export interface Copy {
 		back: string;
 		stop: string;
 		/** One sentence: how much money moved, between how many systems. */
-		summary: (moved: string, systems: number) => string;
+		summary: (moved: string, moves: number, systems: number) => string;
 		/** Shown only when the citizen's total equals the draft's. */
 		totalSame: string;
 		rise: string;
@@ -127,7 +132,11 @@ export interface Copy {
 		chartTitle: string;
 		chartNote: string;
 		unchanged: (names: string) => string;
+		unchangedCount: (n: number) => string;
 		tableToggle: string;
+		receiptTitle: string;
+		receiptNote: string;
+		receiptLink: string;
 	};
 	unit: string;
 	lines: Record<LineId, LineCopy>;
@@ -150,12 +159,16 @@ const en: Copy = {
 		whoBody: 'DeepTunisia. This is a design prototype. The study has not been approved and has not opened.',
 		figures: 'Where the figures come from',
 		figuresBody:
-			'Every 2027 figure on these screens is a draft figure reported by the press from the 2027 draft budget. None is checked against the official document. The real study will give the source and page for each line before it opens. The past years (2024 to 2026) are the budgets as voted, read from the finance laws in the Journal Officiel.',
+			'Every 2027 figure on these screens is a draft figure reported by the press from the 2027 draft budget. None is checked against the official document. The real study will give the source and page for each line before it opens. The past years are the budgets as voted, read from the finance laws in the Journal Officiel.',
 		sample: 'What the answers can and cannot say',
 		sampleBody:
 			'They describe the people who take part in an open, self-selected online survey of adults. They do not describe Tunisians as a whole.',
-		consentAge: 'I am 18 or older.',
+		consentAge: 'I confirm that I am 18 years old or older.',
 		consentPrototype: 'I understand this prototype stores nothing I enter.',
+		consentRead: 'I have read the study information and what happens to my answers.',
+		consentWithdrawal:
+			'I understand that I will receive a receipt code, and that I can withdraw my answers with it until the study window closes. In this prototype nothing is stored and no code is issued.',
+		consentNote: 'These are the real consent items. The receipt and withdrawal step is rehearsed at the end.',
 		start: 'Start',
 		under18: 'This study is for adults only. Nothing you entered is stored. You can close this page.'
 	},
@@ -220,7 +233,7 @@ const en: Copy = {
 		hintClose: 'Close',
 		noteTitle: 'Note on this system',
 		largestChange: (name, amount, pct) => `Largest change: ${name}, ${amount} MD, ${pct}%.`,
-		coinLabel: 'Coins: one coin is about 1,000 MD of the envelope'
+		coinLabel: 'Coins: one coin is 100 MD'
 	},
 	items: {
 		title: 'Two short questions',
@@ -231,7 +244,9 @@ const en: Copy = {
 		q2: 'How much say do citizens have today over how the budget is spent? 0 means none, 10 means a lot.',
 		q2Low: 'None',
 		q2High: 'A lot',
-		submit: 'Submit my budget',
+		optional: 'Optional. You can skip either question.',
+		skip: 'Prefer not to say',
+		submit: 'See my result',
 		back: 'Back'
 	},
 	card: {
@@ -241,40 +256,50 @@ const en: Copy = {
 		keptDraft: 'You kept the draft as it is.',
 		restart: 'Start again',
 		back: 'Change my budget',
-		stop: 'In the prototype, the submit button stops at this card.',
-		summary: (moved, systems) => `You moved ${moved} MD between ${systems} systems.`,
+		stop: 'In the prototype, this is where the real study would submit. Nothing is sent or stored.',
+		summary: (moved, moves, systems) => `You moved ${moved} MD into ${systems} systems, in ${moves} moves.`,
 		totalSame: 'The total is the same as the draft: what one system gains, another gives.',
 		rise: 'Biggest rise',
 		cut: 'Biggest cut',
 		chartTitle: 'What you changed',
 		chartNote: 'Each bar is your change from the draft, in MD. Bars to the right are more money, bars to the left are less.',
 		unchanged: (names) => `Not changed: ${names}.`,
-		tableToggle: 'Every system, as a table'
+		unchangedCount: (n) => `${n} systems not changed`,
+		tableToggle: 'Every system, as a table',
+		receiptTitle: 'Prototype receipt',
+		receiptNote:
+			'In the real study this code would be your receipt and the only way to withdraw. Nothing was sent, so this code does nothing.',
+		receiptLink: 'What withdrawal would look like'
 	},
 	unit: 'MD',
 	lines: {
-		education: { name: 'Education', note: 'Schools and the teachers who staff them.' },
-		higher_education: { name: 'Higher education and research', note: 'Universities, laboratories and research.' },
-		health: { name: 'Health', note: 'Hospitals, clinics and medicines.' },
-		social: { name: 'Social protection and family', note: 'Pensions, cash support and family help.' },
-		subsidies: { name: 'Subsidies: fuel, electricity and food', note: 'Lower prices for fuel, power and basic food. The split by type is not yet verified.' },
-		energy_trade: { name: 'Energy and trade, net (derived)', note: 'Public firms and industry and trade support, after subsidies are taken out. This is a derived line: the two ministry lines minus the 11,846 MD subsidy memo. It is not a ministry budget.' },
-		police: { name: 'Police and internal security', note: 'Police, gendarmerie and internal security forces.' },
-		army: { name: 'Defence', note: 'Armed forces pay, equipment and training.' },
-		justice: { name: 'Justice', note: 'Courts and prisons.' },
-		farming: { name: 'Farming, water and fisheries', note: 'Farmers, irrigation and water supply.' },
-		roads_housing: { name: 'Roads, housing and equipment', note: 'Roads, public housing and public buildings.' },
-		youth_sports: { name: 'Youth and sports', note: 'Youth centres and sports.' },
-		culture: { name: 'Culture and arts', note: 'Heritage, theatre, cinema and museums.' },
-		presidency: { name: 'Presidency', note: 'The office of the President of the Republic.' },
-		government: { name: 'Government, parliament, elections and diplomacy', note: 'Government offices, parliament, elections and embassies.' },
-		employment: { name: 'Jobs and vocational training', note: 'Training centres, job programmes and help to start a business.' },
-		finance: { name: 'Finance: tax, customs, treasury', note: 'Customs, tax offices and public accounting. Debt interest is not here: it is spent before you start.' },
-		transport: { name: 'Transport', note: 'Mostly land transport: buses, metro and trains. Also ports and civil aviation.' },
-		environment: { name: 'Environment', note: 'Waste, pollution and sanitation, and sustainable development.' },
+		parliament: { name: 'Parliament', note: 'The Assembly of the People’s Representatives: members, staff and the institution.' },
+		presidency: { name: 'Presidency', note: 'The office of the President of the Republic: national security and foreign relations, presidential security, and support.' },
+		government_offices: { name: 'Government offices', note: 'The Presidency of the Government: supervision, control, information and support services.' },
+		police: { name: 'Police and internal security', note: 'National security, the National Guard, civil protection and local affairs.' },
+		justice: { name: 'Justice', note: 'Courts, prisons and rehabilitation.' },
+		foreign_affairs: { name: 'Foreign affairs', note: 'Embassies, consulates and diplomacy.' },
+		army: { name: 'Defence', note: 'Intervention forces, logistics, support for service members and military administration.' },
+		finance: { name: 'Finance: tax, customs, treasury', note: 'Customs, tax offices, public accounting and budget services. Debt interest is not here: it is spent before you start.' },
 		economy: { name: 'Economy and regional development', note: 'Mostly regional development programmes. Also statistics, international cooperation and investment support.' },
+		farming: { name: 'Farming, water and fisheries', note: 'Farmers, irrigation and water supply.' },
+		subsidies_energy: { name: 'Subsidies: fuel and electricity', note: 'Lower prices for fuel and electricity. The 2027 split of the 11,846 MD subsidy memo between fuel and food is derived from the two ministry lines that contain it; the split by type is not reported.' },
+		subsidies_food: { name: 'Subsidies: basic food', note: 'Lower prices for basic food. The 2027 split of the 11,846 MD subsidy memo between fuel and food is derived from the two ministry lines that contain it; the split by type is not reported.' },
+		energy_trade: { name: 'Industry and trade, net (derived)', note: 'Public firms and industry and trade support, after both subsidy lines are taken out. This is a derived line: the two ministry lines minus the 11,846 MD subsidy memo. It is not a ministry budget.' },
 		tourism: { name: 'Tourism and crafts', note: 'Tourism promotion and handicrafts.' },
+		roads_housing: { name: 'Roads, housing and equipment', note: 'Roads, public housing and public buildings.' },
+		environment: { name: 'Environment', note: 'Waste, pollution and sanitation, and sustainable development.' },
+		transport: { name: 'Transport', note: 'Mostly land transport: buses, metro and trains. Also ports and civil aviation.' },
+		culture: { name: 'Culture and arts', note: 'Heritage, theatre, cinema and museums.' },
+		youth_sports: { name: 'Youth and sports', note: 'Youth centres and sports.' },
+		family: { name: 'Family, women, children and seniors', note: 'Family and equality programmes, childhood, and older people.' },
+		health: { name: 'Health', note: 'Basic care, hospitals, university hospital research and support.' },
+		social_affairs: { name: 'Social affairs', note: 'Social security, social promotion and employment relations.' },
+		education: { name: 'Education', note: 'Primary, preparatory and secondary schools and support.' },
+		higher_education: { name: 'Higher education and research', note: 'Universities, laboratories and research.' },
+		employment: { name: 'Jobs and vocational training', note: 'Training centres, job programmes and help to start a business.' },
 		rest: { name: 'Religion, digital, state lands, courts (derived)', note: 'Religious Affairs, Communication Technologies, State Domains, the Court of Accounts, the National Council of Regions and Districts and two councils. Their 2027 drafts are not yet reported one by one, so this line is the total less every other line. In 2026 they came to 565 MD.' },
+		elections: { name: 'Elections (ISIE)', note: 'The Independent High Authority for Elections.' },
 		debt: { name: 'Debt interest', note: 'Interest owed on existing debt.' },
 		reserve: { name: 'Unforeseen reserve', note: 'Kept for costs nobody planned for.' }
 	}
@@ -299,12 +324,17 @@ const fr: Copy = {
 			"DeepTunisia. Il s'agit d'un prototype de conception. L'étude n'a pas été approuvée et n'est pas ouverte.",
 		figures: "D'où viennent les chiffres",
 		figuresBody:
-			"Chaque chiffre 2027 de ces écrans est un chiffre du projet rapporté par la presse pour le budget 2027. Aucun n'est vérifié sur le document officiel. L'étude réelle donnera la source et la page de chaque ligne avant son ouverture. Les années passées (2024 à 2026) sont les budgets votés, lus dans les lois de finances au Journal officiel.",
+			"Chaque chiffre 2027 de ces écrans est un chiffre du projet rapporté par la presse pour le budget 2027. Aucun n'est vérifié sur le document officiel. L'étude réelle donnera la source et la page de chaque ligne avant son ouverture. Les années passées sont les budgets votés, lus dans les lois de finances au Journal officiel.",
 		sample: 'Ce que les réponses peuvent dire et ne peuvent pas dire',
 		sampleBody:
 			"Elles décrivent les personnes qui participent à une enquête en ligne ouverte et auto-sélectionnée auprès d'adultes. Elles ne décrivent pas les Tunisiens dans leur ensemble.",
-		consentAge: "J'ai 18 ans ou plus.",
+		consentAge: "Je confirme avoir 18 ans ou plus.",
 		consentPrototype: 'Je comprends que ce prototype ne conserve rien de ce que je saisis.',
+		consentRead:
+			"J'ai lu les informations de l'étude et ce qu'il advient de mes réponses.",
+		consentWithdrawal:
+			"Je comprends que je recevrai un code de reçu et que je pourrai retirer mes réponses avec ce code jusqu'à la fermeture de l'étude. Dans ce prototype, rien n'est conservé et aucun code n'est délivré.",
+		consentNote: 'Ce sont les vrais items de consentement. L’étape du reçu et du retrait est répétée à la fin.',
 		start: 'Commencer',
 		under18:
 			"Cette étude est réservée aux adultes. Rien de ce que vous avez saisi n'est conservé. Vous pouvez fermer cette page."
@@ -375,7 +405,7 @@ const fr: Copy = {
 		hintClose: 'Fermer',
 		noteTitle: 'Note sur ce poste',
 		largestChange: (name, amount, pct) => `Plus grand écart : ${name}, ${amount} MD, ${pct} %.`,
-		coinLabel: 'Pièces : une pièce vaut environ 1 000 MD de l’enveloppe'
+		coinLabel: 'Pièces : une pièce vaut 100 MD'
 	},
 	items: {
 		...en.items,
@@ -387,7 +417,9 @@ const fr: Copy = {
 		q2: "Quelle influence les citoyens ont-ils aujourd'hui sur la façon dont le budget est dépensé ? 0 signifie aucune, 10 signifie beaucoup.",
 		q2Low: 'Aucune',
 		q2High: 'Beaucoup',
-		submit: 'Soumettre mon budget',
+		optional: 'Facultatif. Vous pouvez sauter l’une ou l’autre question.',
+		skip: 'Préfère ne pas répondre',
+		submit: 'Voir mon résultat',
 		back: 'Retour'
 	},
 	card: {
@@ -398,40 +430,50 @@ const fr: Copy = {
 		keptDraft: 'Vous avez gardé le projet tel quel.',
 		restart: 'Recommencer',
 		back: 'Modifier mon budget',
-		stop: "Dans le prototype, le bouton d'envoi s'arrête à cette carte.",
-		summary: (moved, systems) => `Vous avez déplacé ${moved} MD entre ${systems} postes.`,
+		stop: "Dans le prototype, c'est ici que la vraie étude enverrait. Rien n'est envoyé ni conservé.",
+		summary: (moved, moves, systems) => `Vous avez déplacé ${moved} MD vers ${systems} postes, en ${moves} mouvements.`,
 		totalSame: "Le total est celui du projet : ce qu'un poste gagne, un autre le cède.",
 		rise: 'Plus forte hausse',
 		cut: 'Plus forte baisse',
 		chartTitle: 'Ce que vous avez changé',
 		chartNote: "Chaque barre est votre écart avec le projet, en MD. Vers la droite, plus d'argent ; vers la gauche, moins.",
 		unchanged: (names) => `Inchangés : ${names}.`,
-		tableToggle: 'Tous les postes, en tableau'
+		unchangedCount: (n) => `${n} postes inchangés`,
+		tableToggle: 'Tous les postes, en tableau',
+		receiptTitle: 'Reçu du prototype',
+		receiptNote:
+			"Dans l'étude réelle, ce code serait votre reçu et le seul moyen de retirer vos réponses. Rien n'a été envoyé, donc ce code ne fait rien.",
+		receiptLink: 'À quoi ressemblerait le retrait'
 	},
 	unit: 'MD',
 	lines: {
-		education: { name: 'Éducation', note: 'Écoles et enseignants.' },
-		higher_education: { name: 'Enseignement supérieur et recherche', note: 'Universités, laboratoires et recherche.' },
-		health: { name: 'Santé', note: 'Hôpitaux, dispensaires et médicaments.' },
-		social: { name: 'Protection sociale et famille', note: 'Retraites, aides en espèces et aide aux familles.' },
-		subsidies: { name: 'Subventions : carburant, électricité et alimentation', note: 'Prix plus bas pour le carburant, l’électricité et les produits de base. La répartition n’est pas encore vérifiée.' },
-		energy_trade: { name: 'Énergie et commerce, net (dérivée)', note: 'Entreprises publiques et soutien à l’industrie et au commerce, hors subventions. Ligne dérivée : les deux lignes ministérielles moins les 11 846 MD de subventions, pas un budget ministériel.' },
-		police: { name: 'Police et sécurité intérieure', note: 'Police, gendarmerie et forces de sécurité intérieure.' },
-		army: { name: 'Défense', note: 'Solde, équipements et formation des forces armées.' },
-		justice: { name: 'Justice', note: 'Tribunaux et prisons.' },
-		farming: { name: 'Agriculture, eau et pêche', note: 'Agriculteurs, irrigation et approvisionnement en eau.' },
-		roads_housing: { name: 'Routes, logement et équipements', note: 'Routes, logement public et bâtiments publics.' },
-		youth_sports: { name: 'Jeunesse et sport', note: 'Maisons de jeunes et sport.' },
-		culture: { name: 'Culture et arts', note: 'Patrimoine, théâtre, cinéma et musées.' },
-		presidency: { name: 'Présidence', note: 'La présidence de la République.' },
-		government: { name: 'Gouvernement, parlement, élections et diplomatie', note: 'Services du gouvernement, parlement, élections et ambassades.' },
-		employment: { name: 'Emploi et formation professionnelle', note: "Centres de formation, programmes d'emploi et aide à la création d'entreprise." },
-		finance: { name: 'Finances : impôts, douane, trésor', note: "Douane, services fiscaux et comptabilité publique. Les intérêts de la dette n'y sont pas : ils sont dépensés avant de commencer." },
-		transport: { name: 'Transport', note: "Surtout le transport terrestre : bus, métro et trains. Aussi les ports et l'aviation civile." },
-		environment: { name: 'Environnement', note: 'Déchets, dépollution et assainissement, et développement durable.' },
+		parliament: { name: 'Parlement', note: "L'Assemblée des représentants du peuple : membres, personnel et institution." },
+		presidency: { name: 'Présidence', note: 'La présidence de la République : sécurité nationale et relations extérieures, sécurité présidentielle et appui.' },
+		government_offices: { name: 'Services du gouvernement', note: 'La présidence du Gouvernement : tutelle, contrôle, information et appui.' },
+		police: { name: 'Police et sécurité intérieure', note: 'Sécurité nationale, Garde nationale, protection civile et affaires locales.' },
+		justice: { name: 'Justice', note: 'Tribunaux, prisons et rééducation.' },
+		foreign_affairs: { name: 'Affaires étrangères', note: 'Ambassades, consulats et diplomatie.' },
+		army: { name: 'Défense', note: 'Forces d’intervention, logistique, assistance aux militaires et administration.' },
+		finance: { name: 'Finances : impôts, douane, trésor', note: "Douane, services fiscaux, comptabilité publique et services budgétaires. Les intérêts de la dette n'y sont pas : ils sont dépensés avant de commencer." },
 		economy: { name: 'Économie et développement régional', note: "Surtout les programmes de développement régional. Aussi la statistique, la coopération internationale et l'appui à l'investissement." },
+		farming: { name: 'Agriculture, eau et pêche', note: 'Agriculteurs, irrigation et approvisionnement en eau.' },
+		subsidies_energy: { name: 'Subventions : carburant et électricité', note: 'Prix plus bas pour le carburant et l’électricité. La répartition 2027 des 11 846 MD de subventions entre carburant et alimentation est dérivée des deux lignes ministérielles qui la contiennent ; la répartition par type n’est pas publiée.' },
+		subsidies_food: { name: 'Subventions : alimentation de base', note: 'Prix plus bas pour les produits de base. La répartition 2027 des 11 846 MD de subventions entre carburant et alimentation est dérivée des deux lignes ministérielles qui la contiennent ; la répartition par type n’est pas publiée.' },
+		energy_trade: { name: 'Industrie et commerce, net (dérivée)', note: 'Entreprises publiques et soutien à l’industrie et au commerce, après déduction des deux lignes de subventions. Ligne dérivée : les deux lignes ministérielles moins les 11 846 MD de subventions, pas un budget ministériel.' },
 		tourism: { name: 'Tourisme et artisanat', note: 'Promotion du tourisme et artisanat.' },
+		roads_housing: { name: 'Routes, logement et équipements', note: 'Routes, logement public et bâtiments publics.' },
+		environment: { name: 'Environnement', note: 'Déchets, dépollution et assainissement, et développement durable.' },
+		transport: { name: 'Transport', note: "Surtout le transport terrestre : bus, métro et trains. Aussi les ports et l'aviation civile." },
+		culture: { name: 'Culture et arts', note: 'Patrimoine, théâtre, cinéma et musées.' },
+		youth_sports: { name: 'Jeunesse et sport', note: 'Maisons de jeunes et sport.' },
+		family: { name: 'Famille, femmes, enfance et personnes âgées', note: 'Programmes famille et égalité, enfance et personnes âgées.' },
+		health: { name: 'Santé', note: 'Soins de base, hôpitaux, recherche hospitalo-universitaire et appui.' },
+		social_affairs: { name: 'Affaires sociales', note: 'Sécurité sociale, promotion sociale et relations du travail.' },
+		education: { name: 'Éducation', note: 'Écoles primaires, préparatoires et secondaires, et appui.' },
+		higher_education: { name: 'Enseignement supérieur et recherche', note: 'Universités, laboratoires et recherche.' },
+		employment: { name: 'Emploi et formation professionnelle', note: "Centres de formation, programmes d'emploi et aide à la création d'entreprise." },
 		rest: { name: 'Culte, numérique, domaines, contrôle (dérivée)', note: "Affaires religieuses, Technologies de la communication, Domaines de l'État, Cour des comptes, Conseil national des régions et des districts et deux conseils. Leurs montants 2027 ne sont pas encore publiés un par un : cette ligne est le total moins toutes les autres. En 2026, ils faisaient 565 MD." },
+		elections: { name: 'Élections (ISIE)', note: "L'Instance supérieure indépendante pour les élections." },
 		debt: { name: 'Intérêts de la dette', note: 'Intérêts dus sur la dette existante.' },
 		reserve: { name: 'Réserve pour imprévus', note: 'Réservée aux dépenses que personne n’avait prévues.' }
 	}
@@ -455,12 +497,16 @@ const ar: Copy = {
 		whoBody: 'DeepTunisia. هذا نموذج تصميمي. لم تُعتمد الدراسة ولم تُفتح.',
 		figures: 'من أين تأتي الأرقام',
 		figuresBody:
-			'كل رقم لسنة 2027 في هذه الشاشات رقم مؤقّت نقلته الصحافة عن مشروع ميزانية 2027. ولم يُتحقّق من أي منها في الوثيقة الرسمية. وستعطي الدراسة الحقيقية المصدر والصفحة لكل بند قبل فتحها. أمّا السنوات الماضية (2024 إلى 2026) فهي الميزانيات كما صودق عليها، مأخوذة من قوانين المالية في الرائد الرسمي.',
+			'كل رقم لسنة 2027 في هذه الشاشات رقم مؤقّت نقلته الصحافة عن مشروع ميزانية 2027. ولم يُتحقّق من أي منها في الوثيقة الرسمية. وستعطي الدراسة الحقيقية المصدر والصفحة لكل بند قبل فتحها. أمّا السنوات الماضية فهي الميزانيات كما صودق عليها، مأخوذة من قوانين المالية في الرائد الرسمي.',
 		sample: 'ما يمكن أن تقوله الإجابات وما لا يمكنها قوله',
 		sampleBody:
 			'تصف الأشخاص الذين يشاركون في استبيان إلكتروني مفتوح وقائم على الانتقاء الذاتي للبالغين. ولا تصف التونسيين في مجموعهم.',
-		consentAge: 'عمري 18 سنة أو أكثر.',
+		consentAge: 'أؤكّد أن عمري 18 سنة أو أكثر.',
 		consentPrototype: 'أفهم أن هذا النموذج الأوّلي لا يحفظ شيئًا مما أدخله.',
+		consentRead: 'قرأت معلومات الدراسة وما يحدث بإجاباتي.',
+		consentWithdrawal:
+			'أفهم أنني سأحصل على رمز إيصال، وأنه يمكنني سحب إجاباتي به حتى إغلاق الدراسة. في هذا النموذج الأوّلي لا يُحفظ شيء ولا يُسلَّم أي رمز.',
+		consentNote: 'هذه هي بنود الموافقة الحقيقية. وتُعاد خطوة الإيصال والسحب في النهاية.',
 		start: 'ابدأ',
 		under18:
 			'هذه الدراسة للبالغين فقط. لا يُحفظ شيء مما أدخلته. يمكنك إغلاق هذه الصفحة.'
@@ -530,7 +576,7 @@ const ar: Copy = {
 		hintClose: 'إغلاق',
 		noteTitle: 'ملاحظة عن هذا البند',
 		largestChange: (name, amount, pct) => `أكبر تغيير: ${name}، ${amount} م.د، ${pct}%.`,
-		coinLabel: 'العملات: العملة الواحدة نحو 1,000 م.د من المظروف'
+		coinLabel: 'العملات: العملة الواحدة 100 م.د'
 	},
 	items: {
 		...en.items,
@@ -542,7 +588,9 @@ const ar: Copy = {
 		q2: 'ما مدى تأثير المواطنين اليوم في طريقة إنفاق الميزانية؟ 0 يعني لا تأثير، و10 يعني تأثيرًا كبيرًا.',
 		q2Low: 'لا تأثير',
 		q2High: 'تأثير كبير',
-		submit: 'أرسل ميزانيتي',
+		optional: 'اختياري. يمكنك تخطّي أي من السؤالين.',
+		skip: 'أفضّل عدم الإجابة',
+		submit: 'اعرض نتيجتي',
 		back: 'رجوع'
 	},
 	card: {
@@ -553,40 +601,49 @@ const ar: Copy = {
 		keptDraft: 'أبقيت على المشروع كما هو.',
 		restart: 'ابدأ من جديد',
 		back: 'تعديل ميزانيتي',
-		stop: 'في النموذج الأوّلي، يتوقف زر الإرسال عند هذه البطاقة.',
-		summary: (moved, systems) => `نقلت ${moved} م.د. عدد البنود التي غيّرتها: ${systems}.`,
+		stop: 'في النموذج الأوّلي، هنا تُرسل الدراسة الحقيقية. لا يُرسَل شيء ولا يُحفظ.',
+		summary: (moved, moves, systems) => `نقلت ${moved} م.د إلى ${systems} بنود، في ${moves} حركات.`,
 		totalSame: 'المجموع هو مجموع المشروع نفسه: ما يكسبه بند يتنازل عنه بند آخر.',
 		rise: 'أكبر زيادة',
 		cut: 'أكبر تخفيض',
 		chartTitle: 'ما غيّرته',
 		chartNote: 'كل شريط هو الفرق بين ميزانيتك والمشروع، بالمليون دينار. نحو اليسار مال أكثر، ونحو اليمين مال أقل.',
 		unchanged: (names) => `لم تتغيّر: ${names}.`,
-		tableToggle: 'كل البنود في جدول'
+		unchangedCount: (n) => `${n} بنود لم تتغيّر`,
+		tableToggle: 'كل البنود في جدول',
+		receiptTitle: 'إيصال النموذج الأوّلي',
+		receiptNote: 'في الدراسة الحقيقية سيكون هذا الرمز إيصالك والطريق الوحيد لسحب إجاباتك. لم يُرسل شيء، فهذا الرمز لا يفعل شيئًا.',
+		receiptLink: 'كيف سيكون السحب'
 	},
 	unit: 'م.د',
 	lines: {
-		education: { name: 'التعليم', note: 'المدارس والمعلمون.' },
-		higher_education: { name: 'التعليم العالي والبحث', note: 'الجامعات والمخابر والبحث.' },
-		health: { name: 'الصحة', note: 'المستشفيات والمراكز الصحية والأدوية.' },
-		social: { name: 'الحماية الاجتماعية والأسرة', note: 'المعاشات والمساعدات النقدية ودعم الأسر.' },
-		subsidies: { name: 'الدعم: المحروقات والكهرباء والغذاء', note: 'أسعار أقل للوقود والكهرباء والمواد الأساسية. التوزيع حسب النوع لم يُتحقق منه بعد.' },
-		energy_trade: { name: 'الطاقة والتجارة، صافٍ (مشتقّ)', note: 'المؤسسات العمومية ودعم الصناعة والتجارة بعد إخراج الدعم. بند مشتقّ: بندا الوزارتين ناقص 11,846 م.د من الدعم، وليس ميزانية وزارة.' },
-		police: { name: 'الأمن الداخلي والشرطة', note: 'الشرطة والحرس الوطني وقوات الأمن الداخلي.' },
-		army: { name: 'الدفاع', note: 'رواتب القوات المسلحة وتجهيزها وتدريبها.' },
-		justice: { name: 'العدالة', note: 'المحاكم والسجون.' },
-		farming: { name: 'الفلاحة والمياه والصيد', note: 'الفلاحون والري وتزويد المياه.' },
-		roads_housing: { name: 'الطرقات والسكن والتجهيزات', note: 'الطرقات والسكن العمومي والمباني العمومية.' },
-		youth_sports: { name: 'الشباب والرياضة', note: 'دور الشباب والرياضة.' },
-		culture: { name: 'الثقافة والفنون', note: 'التراث والمسرح والسينما والمتاحف.' },
-		presidency: { name: 'رئاسة الجمهورية', note: 'مؤسسة رئيس الجمهورية.' },
-		government: { name: 'الحكومة والبرلمان والانتخابات والدبلوماسية', note: 'مصالح الحكومة والبرلمان والانتخابات والسفارات.' },
-		employment: { name: 'التشغيل والتكوين المهني', note: 'مراكز التكوين وبرامج التشغيل والمساعدة على بعث المؤسسات.' },
-		finance: { name: 'المالية: الجباية والديوانة والخزينة', note: 'الديوانة والمصالح الجبائية والمحاسبة العمومية. فوائد الدين ليست هنا: تُصرف قبل أن تبدأ.' },
-		transport: { name: 'النقل', note: 'أساسًا النقل البرّي: الحافلات والمترو والقطارات. وكذلك الموانئ والطيران المدني.' },
-		environment: { name: 'البيئة', note: 'النفايات ومكافحة التلوّث والتطهير، والتنمية المستدامة.' },
+		parliament: { name: 'البرلمان', note: 'مجلس نوّاب الشعب: الأعضاء والموظفون والمؤسسة.' },
+		presidency: { name: 'رئاسة الجمهورية', note: 'مؤسسة رئيس الجمهورية: الأمن الوطني والعلاقات الخارجية، والأمن الرئاسي، والدعم.' },
+		government_offices: { name: 'مصالح الحكومة', note: 'رئاسة الحكومة: الإشراف والرقابة والإعلام والدعم.' },
+		police: { name: 'الأمن الداخلي والشرطة', note: 'الأمن الوطني والحرس الوطني والحماية المدنية والشؤون المحلية.' },
+		justice: { name: 'العدالة', note: 'المحاكم والسجون وإعادة التأهيل.' },
+		foreign_affairs: { name: 'الشؤون الخارجية', note: 'السفارات والقنصليات والدبلوماسية.' },
+		army: { name: 'الدفاع', note: 'قوات التدخل واللوجستيك ومساعدة العسكريين والإدارة العسكرية.' },
+		finance: { name: 'المالية: الجباية والديوانة والخزينة', note: 'الديوانة والمصالح الجبائية والمحاسبة العمومية والمصالح الميزانياتية. فوائد الدين ليست هنا: تُصرف قبل أن تبدأ.' },
 		economy: { name: 'الاقتصاد والتنمية الجهوية', note: 'أساسًا برامج التنمية الجهوية. وكذلك الإحصاء والتعاون الدولي ودعم الاستثمار.' },
+		farming: { name: 'الفلاحة والمياه والصيد', note: 'الفلاحون والري وتزويد المياه.' },
+		subsidies_energy: { name: 'الدعم: المحروقات والكهرباء', note: 'أسعار أقل للمحروقات والكهرباء. تقسيم 2027 لدعم 11,846 م.د بين المحروقات والغذاء مشتقّ من بندي الوزارتين اللذين يحتويانه، والتقسيم حسب النوع غير منشور.' },
+		subsidies_food: { name: 'الدعم: المواد الغذائية الأساسية', note: 'أسعار أقل للمواد الغذائية الأساسية. تقسيم 2027 لدعم 11,846 م.د بين المحروقات والغذاء مشتقّ من بندي الوزارتين اللذين يحتويانه، والتقسيم حسب النوع غير منشور.' },
+		energy_trade: { name: 'الصناعة والتجارة، صافٍ (مشتقّ)', note: 'المؤسسات العمومية ودعم الصناعة والتجارة بعد إخراج بندي الدعم. بند مشتقّ: بندا الوزارتين ناقص 11,846 م.د من الدعم، وليس ميزانية وزارة.' },
 		tourism: { name: 'السياحة والصناعات التقليدية', note: 'الترويج السياحي والصناعات التقليدية.' },
+		roads_housing: { name: 'الطرقات والسكن والتجهيزات', note: 'الطرقات والسكن العمومي والمباني العمومية.' },
+		environment: { name: 'البيئة', note: 'النفايات ومكافحة التلوّث والتطهير، والتنمية المستدامة.' },
+		transport: { name: 'النقل', note: 'أساسًا النقل البرّي: الحافلات والمترو والقطارات. وكذلك الموانئ والطيران المدني.' },
+		culture: { name: 'الثقافة والفنون', note: 'التراث والمسرح والسينما والمتاحف.' },
+		youth_sports: { name: 'الشباب والرياضة', note: 'دور الشباب والرياضة.' },
+		family: { name: 'الأسرة والمرأة والطفولة وكبار السن', note: 'برامج الأسرة والمساواة والطفولة وكبار السن.' },
+		health: { name: 'الصحة', note: 'العلاج الأساسي والمستشفيات والبحث الاستشفائي الجامعي والدعم.' },
+		social_affairs: { name: 'الشؤون الاجتماعية', note: 'الضمان الاجتماعي والنهوض الاجتماعي وعلاقات العمل.' },
+		education: { name: 'التعليم', note: 'المدارس الابتدائية والإعدادية والثانوية والدعم.' },
+		higher_education: { name: 'التعليم العالي والبحث', note: 'الجامعات والمخابر والبحث.' },
+		employment: { name: 'التشغيل والتكوين المهني', note: 'مراكز التكوين وبرامج التشغيل والمساعدة على بعث المؤسسات.' },
 		rest: { name: 'الشؤون الدينية، الرقمنة، أملاك الدولة، الرقابة (مشتقّ)', note: 'الشؤون الدينية، وتكنولوجيات الاتصال، وأملاك الدولة، ومحكمة المحاسبات، والمجلس الوطني للجهات والأقاليم، ومجلسان آخران. أرقامها لسنة 2027 لم تُنشر بعدُ واحدًا واحدًا، فهذا البند هو المجموع ناقص كل البنود الأخرى. في 2026 بلغت 565 م.د.' },
+		elections: { name: 'الانتخابات (الهيئة)', note: 'الهيئة العليا المستقلة للانتخابات.' },
 		debt: { name: 'فوائد الدين', note: 'فوائد الدين القائم.' },
 		reserve: { name: 'احتياطي الطوارئ', note: 'يُحتفظ به لتكاليف لم يخطط لها أحد.' }
 	}

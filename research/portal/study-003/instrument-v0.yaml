@@ -120,12 +120,12 @@ items:
     tier: core
     construct: budget allocation
     provenance: project (SPEC section 2, the game screen)
-    text_en: "Use the Treasury board: move money between the lines of the 2027 state budget, as a citizen. Start from the draft. Every move carries one coin of 100 MD. Finish when the purse is empty. Keeping the draft is a valid answer."
+    text_en: "Use the Treasury board: move money between the lines of the 2027 state budget, as a citizen. Start from the draft. Every move carries one coin of 100 MD. Finish when the purse is empty, or tick that you would keep the draft exactly as it is. Keeping the draft is a valid answer, not a skip."
     text_fr: null
     text_ar: null
     response: allocation
     required: true
-    notes: "Amounts are the draft figures from figures-2027.yaml, labelled draft, not verified. Freeze only on adopted-law rows with page references."
+    notes: "Amounts are the draft figures from figures-2027.yaml, labelled draft, not verified. Freeze only on adopted-law rows with page references. The subsidy memo is split into fuel and electricity versus basic food; the 2027 split by type is derived from the two containing lines and is labelled as such on screen."
     allocation:
       envelope_md: 59932.381
       tolerance: 0.005
@@ -135,28 +135,33 @@ items:
       step_bp: 1
       max_bp: 20000
       categories:
+      - { id: parliament, draft_md: 48.751, locked: false }
+      - { id: presidency, draft_md: 248.576, locked: false }
+      - { id: government_offices, draft_md: 368, locked: false }
+      - { id: police, draft_md: 6560, locked: false }
+      - { id: justice, draft_md: 1112, locked: false }
+      - { id: foreign_affairs, draft_md: 404, locked: false }
+      - { id: army, draft_md: 5628.2, locked: false }
+      - { id: finance, draft_md: 1626.6, locked: false }
+      - { id: economy, draft_md: 794.1, locked: false }
+      - { id: farming, draft_md: 2530, locked: false }
+      - { id: subsidies_energy, draft_md: 7712.588, locked: false }
+      - { id: subsidies_food, draft_md: 4133.412, locked: false }
+      - { id: energy_trade, draft_md: 272.8, locked: false }
+      - { id: tourism, draft_md: 182.14, locked: false }
+      - { id: roads_housing, draft_md: 2249, locked: false }
+      - { id: environment, draft_md: 524, locked: false }
+      - { id: transport, draft_md: 1321, locked: false }
+      - { id: culture, draft_md: 500, locked: false }
+      - { id: youth_sports, draft_md: 1065, locked: false }
+      - { id: family, draft_md: 331.69, locked: false }
+      - { id: health, draft_md: 4741.2, locked: false }
+      - { id: social_affairs, draft_md: 4215.8, locked: false }
       - { id: education, draft_md: 9184.5, locked: false }
       - { id: higher_education, draft_md: 2484, locked: false }
-      - { id: health, draft_md: 4741.2, locked: false }
-      - { id: social, draft_md: 4547.49, locked: false }
       - { id: employment, draft_md: 1104, locked: false }
-      - { id: subsidies, draft_md: 11846, locked: false }
-      - { id: energy_trade, draft_md: 272.8, locked: false }
-      - { id: police, draft_md: 6560, locked: false }
-      - { id: army, draft_md: 5628.2, locked: false }
-      - { id: justice, draft_md: 1112, locked: false }
-      - { id: finance, draft_md: 1626.6, locked: false }
-      - { id: farming, draft_md: 2530, locked: false }
-      - { id: roads_housing, draft_md: 2249, locked: false }
-      - { id: transport, draft_md: 1321, locked: false }
-      - { id: environment, draft_md: 524, locked: false }
-      - { id: economy, draft_md: 794.1, locked: false }
-      - { id: youth_sports, draft_md: 1065, locked: false }
-      - { id: culture, draft_md: 500, locked: false }
-      - { id: tourism, draft_md: 182.14, locked: false }
-      - { id: presidency, draft_md: 248.576, locked: false }
-      - { id: government, draft_md: 878.475, locked: false }
       - { id: rest, draft_md: 533.3, locked: false }
+      - { id: elections, draft_md: 57.724, locked: false }
       - { id: debt, draft_md: 7968, locked: true }
       - { id: reserve, draft_md: 995, locked: true }
 
