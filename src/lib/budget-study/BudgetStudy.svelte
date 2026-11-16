@@ -299,7 +299,7 @@
 									<th scope="col">{copy.figures.system}</th>
 									{#each HISTORY as h (h.year)}<th scope="col" class="past">{copy.figures.adopted(String(h.year))}</th>{/each}
 									<th scope="col">{copy.figures.draft}</th>
-									<th scope="col">{copy.figures.status}</th>
+									<th scope="col" class="status-col">{copy.figures.status}</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -309,10 +309,11 @@
 											{f.name}
 											{#if f.madeOf && lang === 'en'}<span class="made" lang="en" dir="ltr">{copy.figures.madeOf}: {f.madeOf}</span>{/if}
 											{#if f.locked}<span class="made">{copy.figures.locked}</span>{/if}
+											<span class="chip status-mobile" data-status={f.status}>{copy.figures.chip[f.status]}</span>
 										</th>
 										{#each HISTORY as h (h.year)}<td class="past">{fmtMd(h.lines[f.id])}</td>{/each}
 										<td>{fmtMd(f.md)}</td>
-										<td><span class="chip" data-status={f.status}>{copy.figures.chip[f.status]}</span></td>
+										<td class="status-col"><span class="chip" data-status={f.status}>{copy.figures.chip[f.status]}</span></td>
 									</tr>
 								{/each}
 							</tbody>
@@ -835,10 +836,32 @@
 	.figures th[scope='row'] {
 		overflow-wrap: anywhere;
 	}
+	.status-mobile {
+		display: none;
+	}
 	@media (max-width: 640px) {
 		td.past,
-		th.past {
+		th.past,
+		.status-col {
 			display: none;
+		}
+		.status-mobile {
+			display: inline-block;
+			margin-block-start: var(--s-1);
+		}
+		.figures {
+			table-layout: auto;
+			inline-size: 100%;
+		}
+		.figures colgroup {
+			display: none;
+		}
+		.figures .c-name {
+			inline-size: auto;
+		}
+		.figures th,
+		.figures td {
+			padding: var(--s-2);
 		}
 	}
 	tr.locked td {
