@@ -84,7 +84,9 @@
 	}
 	/** A phone shows the rows as a list that scrolls, so a touch pans it; Take and Give move the money. */
 	let narrow = $state(false);
-	const columns = $derived([rows.slice(0, half), rows.slice(half)]);
+	/** Below 1,100 pixels the systems are one column; above, two. */
+	let wide = $state(true);
+	const columns = $derived(wide ? [rows.slice(0, half), rows.slice(half)] : [rows]);
 	const debt = lines.locked.find((l) => l.id === 'debt')!;
 	const reserve = lines.locked.find((l) => l.id === 'reserve')!;
 	const lockedTotal = lines.locked.reduce((s, l) => s + l.draft, 0);
@@ -280,7 +282,15 @@
 		narrow = mq.matches;
 		const onmq = () => (narrow = mq.matches);
 		mq.addEventListener('change', onmq);
-		if (!listEl) return () => mq.removeEventListener('change', onmq);
+		const mqw = window.matchMedia('(min-width: 1100px)');
+		wide = mqw.matches;
+		const onmqw = () => (wide = mqw.matches);
+		mqw.addEventListener('change', onmqw);
+		if (!listEl)
+			return () => {
+				mq.removeEventListener('change', onmq);
+				mqw.removeEventListener('change', onmqw);
+			};
 		const parent = listEl.closest('.board') as HTMLElement;
 		const stop = dragMoney(parent, {
 			canStart: (id) => (id === 'purse' ? P > 0 : true),
@@ -302,6 +312,7 @@
 			stopHold();
 			clearCoins();
 			mq.removeEventListener('change', onmq);
+			mqw.removeEventListener('change', onmqw);
 		};
 	});
 
@@ -384,7 +395,7 @@
 				bind:this={listEl}
 			>
 				{#each columns as col, k (k)}
-					<div class="col" style:--rows={half}>
+					<div class="col" style:--rows={wide ? half : rows.length}>
 						<div class="axis" aria-hidden="true">
 							{#each TICKS as v (v)}
 								<span style:inset-inline-start="{(v / SCALE) * 100}%">{v === 0 ? '0' : `${v / 1000}k`}</span>
@@ -493,6 +504,7 @@
 				</button>
 				{#if detailOpen}
 					<div class="detail">
+						<p class="detail-name">{c.lines[activeRow.id].name}</p>
 						{#if programmes.length}
 							<p class="detail-title">{t.programmes2026}</p>
 							<p class="detail-source">{t.programmesNote}</p>
@@ -982,6 +994,26 @@
 		overflow-y: auto;
 		overscroll-behavior: contain;
 	}
+	/* Below 1,100 pixels the names need the full width: one scrolling column. */
+	@media (max-width: 1099px) {
+		.list {
+			display: flex;
+			flex-direction: column;
+			overflow-y: auto;
+		}
+		.col {
+			display: flex;
+			flex-direction: column;
+			flex: none;
+		}
+		.axis {
+			block-size: var(--s-7);
+		}
+		.slot {
+			flex: none;
+			min-block-size: 3rem;
+		}
+	}
 	.list:focus-visible {
 		box-shadow: var(--ring);
 		border-radius: var(--r-md);
@@ -1120,6 +1152,12 @@
 		border-block-start: var(--rule);
 		font-size: var(--t-xs);
 		color: var(--text-secondary);
+	}
+	.detail-name {
+		margin: 0;
+		font-weight: 600;
+		font-size: var(--t-sm);
+		color: var(--text-primary);
 	}
 	.detail-title {
 		margin: 0;

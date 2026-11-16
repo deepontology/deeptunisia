@@ -84,7 +84,7 @@
 <div class="row" class:active class:target class:source class:refused class:pan data-drop={id} data-dir={direction}>
 	<div class="head">
 		<span class="grip" aria-hidden="true"></span>
-		<span class="name">{name}</span>
+		<span class="name" title={name}>{name}</span>
 		<span class="yours num" dir="ltr">{fmtMd(yours)}</span>
 		<span class="delta num" title={word}>
 			<span class="arrow" aria-hidden="true">{direction === 'more' ? '▲' : direction === 'less' ? '▼' : '='}</span>{#if direction !== 'same'}<bdi dir="ltr">{`${signed(deltaMd)} · ${signed(deltaPct, 1)}%`}</bdi>{/if}<span class="sr">{word}</span>
@@ -195,7 +195,15 @@
 		font-weight: 550;
 		color: var(--text-primary);
 		line-height: 1.15;
-		overflow-wrap: anywhere;
+		/* Break at spaces, never inside a word. The box is clamped to two lines;
+		   the full name is in the row's aria label and the detail panel. */
+		overflow-wrap: break-word;
+		hyphens: none;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
 	}
 	.num {
 		font-family: var(--font-mono);

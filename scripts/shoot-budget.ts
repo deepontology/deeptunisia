@@ -32,6 +32,7 @@ interface Size {
 
 const SIZES: Size[] = [
 	{ label: '1280x800', width: 1280, height: 800, dpr: 1 },
+	{ label: '1024x768', width: 1024, height: 768, dpr: 1 },
 	{ label: '820x1180', width: 820, height: 1180, dpr: 1 },
 	{ label: '390x844', width: 390, height: 844, dpr: 2 }
 ];
@@ -212,17 +213,32 @@ async function checkBoard(
 		const after = await page.locator('.board .slot .past-dot').count();
 		if (!(after < before)) fail(`${name} past years`, `switching a year off left ${after} of ${before} bars`);
 		await yearSwitch.click();
-		if (size.label === '820x1180') {
-			const clipped = await page.evaluate(() =>
-				Array.from(document.querySelectorAll('.board .slot .name'))
-					.filter((el) => el.scrollWidth > el.clientWidth + 1)
-					.map((el) => (el.textContent ?? '').trim())
-			);
-			if (clipped.length > 0) fail(`${name} names`, `clipped names: ${clipped.join(' | ')}`);
-		}
+		// Names: no mid-word break and no more than two lines at any tested width.
+		const nameIssues = await page.evaluate(() => {
+			const out: string[] = [];
+			for (const el of Array.from(document.querySelectorAll<HTMLElement>('.board .slot .name'))) {
+				const cs = getComputedStyle(el);
+				const lineHeight = parseFloat(cs.lineHeight) || parseFloat(cs.fontSize) * 1.15;
+				const lines = el.clientHeight / lineHeight;
+				const label = (el.textContent ?? '').trim();
+				if (lines > 2.1) out.push(`${label}: ${lines.toFixed(1)} lines`);
+				const meas = document.createElement('span');
+				meas.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;font:inherit;';
+				el.appendChild(meas);
+				let widest = 0;
+				for (const word of label.split(/\s+/)) {
+					meas.textContent = word;
+					widest = Math.max(widest, meas.getBoundingClientRect().width);
+				}
+				meas.remove();
+				if (widest > el.clientWidth + 1) out.push(`${label}: word ${widest.toFixed(1)}px > box ${el.clientWidth}px`);
+			}
+			return out;
+		});
+		if (nameIssues.length > 0) fail(`${name} names`, nameIssues.join(' | '));
 
 		assertNoPageErrors(errors, name);
-		ok(`${name}: board visible, no page scroll (${m.scrollHeight}/${m.innerHeight}), no h-scroll, purse ${purse} MD${touch}, 27 systems with past years`);
+		ok(`${name}: board visible, no page scroll (${m.scrollHeight}/${m.innerHeight}), no h-scroll, purse ${purse} MD${touch}, 27 systems with past years, names at most 2 lines and no mid-word breaks`);
 	} finally {
 		await context.close();
 	}
