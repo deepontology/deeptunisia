@@ -51,6 +51,8 @@ export interface LogEntry {
 	md: number;
 	/** What reached the target, in MD. Equal to md except a step-rule move. */
 	mdIn: number;
+	/** For a set action: the level the line was set to, after the 200% cap. */
+	targetMd?: number;
 }
 
 export interface BoardState {
@@ -264,7 +266,7 @@ export function setLine(board: Board, state: BoardState, id: LineId, targetMd: n
 	const target = Math.round(Math.max(0, Math.min(targetMd, md(capD(line)))) * DINARS);
 	const diff = target - state.held[id];
 	if (diff === 0) return state;
-	return push(state, { ...state.held, [id]: target }, { kind: 'set', from: null, to: id, md: md(Math.abs(diff)), mdIn: md(Math.abs(diff)) });
+	return push(state, { ...state.held, [id]: target }, { kind: 'set', from: null, to: id, md: md(Math.abs(diff)), mdIn: md(Math.abs(diff)), targetMd: md(target) });
 }
 
 /** Sets every movable line to its draft. The log records it as a keep. */

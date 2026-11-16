@@ -27,8 +27,8 @@ const path = process.argv[2] && !process.argv[2].startsWith('--') ? process.argv
 const strict = process.argv.includes('--strict');
 
 const STATUSES = new Set(['draft-press', 'draft-derived', 'draft-plf', 'adopted-lf']);
-/** The file's own gap is 0.381 MD; half a million dinars is the most we allow. */
-const TOLERANCE_MD = 0.5;
+/** The rows now close the total by construction; allow only float dust. */
+const TOLERANCE_MD = 0.001;
 /** Programme lines are printed to the thousand dinars; 50,000 dinars covers the rounding. */
 const PROGRAMME_TOLERANCE_MD = 0.05;
 

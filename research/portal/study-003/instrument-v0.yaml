@@ -127,7 +127,7 @@ items:
     required: true
     notes: "Amounts are the draft figures from figures-2027.yaml, labelled draft, not verified. Freeze only on adopted-law rows with page references. The subsidy memo is split into fuel and electricity versus basic food; the 2027 split by type is derived from the two containing lines and is labelled as such on screen."
     allocation:
-      envelope_md: 59932.381
+      envelope_md: 59932.000
       tolerance: 0.005
       # Any whole basis point: the default move rule (A) moves 100 MD coins, so a
       # share is the amount over the draft, rounded to the basis point. Rule B
@@ -160,7 +160,7 @@ items:
       - { id: education, draft_md: 9184.5, locked: false }
       - { id: higher_education, draft_md: 2484, locked: false }
       - { id: employment, draft_md: 1104, locked: false }
-      - { id: rest, draft_md: 533.3, locked: false }
+      - { id: rest, draft_md: 532.919, locked: false }
       - { id: elections, draft_md: 57.724, locked: false }
       - { id: debt, draft_md: 7968, locked: true }
       - { id: reserve, draft_md: 995, locked: true }

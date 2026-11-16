@@ -103,6 +103,7 @@ for (const l of lines.movable) ok(`line ${l.id} is not negative`, l.draft >= 0, 
 	const target = 5000;
 	const s1 = setLine(board, s0, 'education', target);
 	ok('setLine sets the line and frees money to the purse', Math.abs(heldMd(board, s1, 'education') - target) < 1e-6 && purse(board, s1) > 0);
+	ok('setLine logs the target level, not only the difference', s1.log.at(-1)?.kind === 'set' && Math.abs((s1.log.at(-1)?.targetMd ?? -1) - target) < 1e-6);
 	ok('setLine is one undo', sameHeld(undo(s1), s0) && undo(s1).log.length === 0);
 	const tiny = startBoard(board, 'draft', 'coin');
 	ok('setLine above the purse is refused', setLine(board, tiny, 'education', 10000) === tiny && setProblem(board, tiny, 'education', 10000) === 'purse');

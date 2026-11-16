@@ -83,6 +83,7 @@
 	const unchangedNames = $derived(unchanged.join(app.locale === 'ar' ? '، ' : ', '));
 	/** Money moved: what the gaining systems received, which is what the others gave up. */
 	const moved = $derived(rows.reduce((s, r) => s + Math.max(0, r.delta), 0));
+	const gaining = $derived(changed.filter((r) => r.delta > 0).length);
 	const movesCount = $derived(result ? result.log.filter((e) => e.kind !== 'keep').length : 0);
 	const maxChange = $derived(Math.max(1, ...changed.map((r) => Math.abs(r.delta))));
 	const rise = $derived(changed.length && changed[0].delta > 0 ? changed[0] : null);
@@ -220,7 +221,7 @@
 			{#if kept || changed.length === 0}
 				<p>{c.card.keptDraft}</p>
 			{:else}
-				<p class="summary">{c.card.summary(fmtMd(moved), movesCount, changed.length)}{#if totalSame}{' '}{c.card.totalSame}{/if}</p>
+				<p class="summary">{c.card.summary(fmtMd(moved), movesCount, gaining)}{#if totalSame}{' '}{c.card.totalSame}{/if}</p>
 				<dl class="stats">
 					{#each [[c.card.rise, rise], [c.card.cut, cut]] as const as [label, r] (label)}
 						{#if r}
@@ -303,7 +304,7 @@
 				<p class="receipt-title">{c.card.receiptTitle}</p>
 				<p class="receipt-code num">{receipt ?? 'CB-PROTO-········'}</p>
 				<p class="receipt-note">{c.card.receiptNote}</p>
-				<a class="receipt-link" href="/research/citizen-budget/withdraw">{c.card.receiptLink}</a>
+				<a class="receipt-link" href="/research/citizen-budget#withdrawal">{c.card.receiptLink}</a>
 			</div>
 			<p class="note">{c.card.stop}</p>
 			<div class="actions">

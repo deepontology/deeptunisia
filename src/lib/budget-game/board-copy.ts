@@ -76,10 +76,12 @@ export interface BoardCopy {
 	/** Visible text under the legend: past years are nominal dinars and the 2027 subsidy split is derived. */
 	nominalNote: string;
 	derivedShort: string;
+	basketShort: string;
 	historyDefinitions: string;
 	/** The explicit keep-draft control. */
 	keepTick: string;
 	keepTickNote: string;
+	keepTickHint: string;
 	finishNeedsChoice: string;
 	readyChoice: string;
 	nominalShort: string;
@@ -94,6 +96,7 @@ export interface BoardCopy {
 	setToDraft: string;
 	zeroLine: string;
 	setTo: (amount: string, name: string) => string;
+	setCapped: (wanted: string, cap: string) => string;
 	setRefused: (amount: string) => string;
 	historyNominal: (pct: string) => string;
 	/** Phone-first instruction. */
@@ -184,9 +187,11 @@ const en: BoardCopy = {
 	},
 	nominalNote: 'Dinars of each year, not adjusted for inflation.',
 	derivedShort: '2027 subsidy split is derived.',
+	basketShort: 'The 2027 memo is all subsidy types; past years are the two programmes that hold most of them.',
 	historyDefinitions: 'Past years are the adopted laws. The 2027 memo covers all subsidy types; the past years count the two programmes that hold most of them, so the 2026 to 2027 step is a change of basket, not only a policy change. The 2027 split between fuel and food is derived from the two ministry lines that contain the memo; the split by type has not been reported.',
 	keepTick: 'I would keep the draft exactly as it is',
-	keepTickNote: 'This is a real answer, not a skip. Finish stays disabled until you move money or tick this.',
+	keepTickNote: 'This is a real answer, not a skip. Ticking it puts every line back on the draft; Finish then opens.',
+	keepTickHint: 'Puts every line back.',
 	finishNeedsChoice: 'Move money, or tick that you would keep the draft',
 	readyChoice: 'The draft is fully placed. Move money, or tick that you would keep it.',
 	nominalShort: '(nominal)',
@@ -200,6 +205,7 @@ const en: BoardCopy = {
 	setToDraft: 'Set back to the draft',
 	zeroLine: 'Set this line to zero',
 	setTo: (amount, name) => `Set ${name} to ${amount} MD.`,
+	setCapped: (wanted, cap) => `That level is ${wanted} MD; the 200% cap is ${cap} MD. Set to ${cap}.`,
 	setRefused: (amount) => `The purse holds ${amount} MD. That change needs more.`,
 	historyNominal: (pct) => `Since 2024: ${pct}% (nominal)`,
 	howToPhone: 'Tap a system, then hold Take. Or drag one system onto another on a desk.',
@@ -289,9 +295,11 @@ const fr: BoardCopy = {
 	},
 	nominalNote: 'Dinars de chaque année, sans correction de l’inflation.',
 	derivedShort: 'La répartition 2027 des subventions est dérivée.',
+	basketShort: "La note 2027 couvre tous les types de subventions ; les années passées sont les deux programmes qui en portent l'essentiel.",
 	historyDefinitions: "Les années passées sont les lois adoptées. La note 2027 couvre tous les types de subventions ; les années passées comptent les deux programmes qui en portent l'essentiel, donc le saut de 2026 à 2027 est un changement de panier, pas seulement de politique. La répartition 2027 entre carburant et alimentation est dérivée des deux lignes ministérielles qui contiennent la note ; la répartition par type n'est pas publiée.",
 	keepTick: 'Je garderais le projet exactement tel quel',
-	keepTickNote: "C'est une vraie réponse, pas un saut. Terminer reste bloqué jusqu'à un mouvement ou cette case cochée.",
+	keepTickNote: "C'est une vraie réponse, pas un saut. La cocher remet chaque poste au projet ; Terminer s'ouvre alors.",
+	keepTickHint: 'Remet chaque poste au projet.',
 	finishNeedsChoice: 'Déplacez de l’argent, ou cochez que vous garderiez le projet',
 	readyChoice: 'Le projet est entièrement placé. Déplacez de l’argent, ou cochez que vous le garderiez.',
 	nominalShort: '(nominal)',
@@ -305,6 +313,7 @@ const fr: BoardCopy = {
 	setToDraft: 'Revenir au projet',
 	zeroLine: 'Mettre ce poste à zéro',
 	setTo: (amount, name) => `Mettre ${name} à ${amount} MD.`,
+	setCapped: (wanted, cap) => `Ce niveau est ${wanted} MD ; le plafond de 200 % est ${cap} MD. Mis à ${cap}.`,
 	setRefused: (amount) => `La bourse contient ${amount} MD. Ce changement en demande plus.`,
 	historyNominal: (pct) => `Depuis 2024 : ${pct} % (nominal)`,
 	howToPhone: 'Touchez un poste, puis maintenez Retirer. Ou glissez un poste sur un autre sur un ordinateur.',
@@ -394,9 +403,11 @@ const ar: BoardCopy = {
 	},
 	nominalNote: 'بدنانير كل سنة، دون احتساب التضخّم.',
 	derivedShort: 'تقسيم 2027 للدعم مشتقّ.',
+	basketShort: 'مذكرة 2027 تشمل كل أنواع الدعم؛ والسنوات الماضية هي البرنامجان اللذان يحملان معظمه.',
 	historyDefinitions: 'السنوات الماضية هي القوانين المصادق عليها. مذكرة 2027 تشمل كل أنواع الدعم؛ والسنوات الماضية تحسب البرنامجين اللذين يحملان معظمه، فقفزة 2026 إلى 2027 تغيّر السلة وليست تغيّر سياسة فقط. تقسيم 2027 بين المحروقات والغذاء مشتقّ من بندي الوزارتين اللذين يحتويان المذكرة؛ والتقسيم حسب النوع لم يُنشر.',
 	keepTick: 'أبقي على المشروع كما هو تمامًا',
-	keepTickNote: 'هذه إجابة حقيقية، ليست تخطّيًا. يبقى الإنهاء معطّلًا حتى تحرّك المال أو تؤشّر هذا.',
+	keepTickNote: 'هذه إجابة حقيقية، ليست تخطّيًا. تأشيرها يعيد كل بند إلى المشروع، ثم يُتاح الإنهاء.',
+	keepTickHint: 'يعيد كل بند إلى المشروع.',
 	finishNeedsChoice: 'حرّك المال، أو أشّر أنك ستبقي المشروع',
 	readyChoice: 'المشروع موضوع بالكامل. حرّك المال، أو أشّر أنك ستبقيه.',
 	nominalShort: '(اسمي)',
@@ -410,6 +421,7 @@ const ar: BoardCopy = {
 	setToDraft: 'أعد إلى المشروع',
 	zeroLine: 'اجعل هذا البند صفرًا',
 	setTo: (amount, name) => `اضبط ${name} على ${amount} م.د.`,
+	setCapped: (wanted, cap) => `هذا المستوى ${wanted} م.د؛ وسقف 200% هو ${cap} م.د. ضُبط على ${cap}.`,
 	setRefused: (amount) => `في المحفظة ${amount} م.د. هذا التغيير يحتاج أكثر.`,
 	historyNominal: (pct) => `منذ 2024: ${pct}% (اسمي)`,
 	howToPhone: 'اختر بندًا، ثم اضغط مطوّلًا على «خذ». أو اسحب بندًا على آخر على الحاسوب.',

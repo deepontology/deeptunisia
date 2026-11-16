@@ -80,6 +80,7 @@ export interface LandingCopy {
 	recordFacts: { label: string; value: string }[];
 	draftNotice: string;
 	interimNotice: string | null;
+	withdrawal: { heading: string; body: string };
 	closing: [string, string];
 	share: { button: string; heading: string; text: string };
 	/** How each kind of answer is given, for the questions section. */
@@ -256,6 +257,10 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 		],
 		draftNotice: 'Every 2027 figure on this page is a press-reported draft, not a verified official figure. The past-year figures come from the adopted laws, with their Journal Officiel pages.',
 		interimNotice: null,
+		withdrawal: {
+			heading: 'Withdrawal and the receipt',
+			body: 'In the real study, submitting a budget would produce a random receipt code. That code is the only handle on your answers: you could enter it on the withdrawal page to delete your response while the study window is open. Once the window closes and the data are frozen, deletion is no longer possible. In this prototype nothing is submitted, no receipt is issued, and there is nothing to withdraw.'
+		},
 		closing: ['The total does not move.', 'Only where it goes does.'],
 		answerKinds: { consent: 'Required tick', allocation: 'On the board', single_choice: 'One choice', scale_0_10: 'From 0 to 10' },
 		optional: 'optional',
@@ -433,6 +438,10 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 		],
 		draftNotice: 'Chaque chiffre 2027 de cette page est un projet rapporté par la presse, non un chiffre officiel vérifié. Les chiffres des années passées viennent des lois adoptées, avec leurs pages au Journal officiel.',
 		interimNotice: 'Traduction provisoire, non relue par une personne de langue maternelle.',
+		withdrawal: {
+			heading: 'Retrait et reçu',
+			body: "Dans l'étude réelle, l'envoi d'un budget produirait un code de reçu aléatoire. Ce code est le seul lien avec vos réponses : vous pourriez le saisir sur la page de retrait pour supprimer votre réponse tant que la période de l'étude est ouverte. Une fois la période close et les données figées, la suppression n'est plus possible. Dans ce prototype, rien n'est envoyé, aucun reçu n'est délivré et il n'y a rien à retirer."
+		},
 		closing: ['Le total ne bouge pas.', 'Seule sa répartition change.'],
 		answerKinds: { consent: 'Case obligatoire', allocation: 'Sur le plateau', single_choice: 'Un seul choix', scale_0_10: 'De 0 à 10' },
 		optional: 'facultatif',
@@ -610,6 +619,10 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 		],
 		draftNotice: 'كلّ رقم لسنة 2027 في هذه الصفحة مشروع نقلته الصحافة، وليس رقمًا رسميًّا متحقّقًا منه. أرقام السنوات الماضية مأخوذة من القوانين المصادق عليها، مع صفحاتها في الرائد الرسمي.',
 		interimNotice: 'ترجمة مؤقّتة، لم يراجعها متحدّث بالعربية كلغة أم.',
+		withdrawal: {
+			heading: 'السحب والإيصال',
+			body: 'في الدراسة الحقيقية، سيؤدي إرسال الميزانية إلى رمز إيصال عشوائي. هذا الرمز هو الرابط الوحيد بإجاباتك: يمكنك إدخاله في صفحة السحب لحذف إجابتك ما دامت فترة الدراسة مفتوحة. وبعد إغلاق الفترة وتثبيت البيانات، لا يعود الحذف ممكنًا. في هذا النموذج الأوّلي لا يُرسَل شيء، ولا يُسلَّم إيصال، ولا يوجد ما يُسحب.'
+		},
 		closing: ['المجموع لا يتغيّر.', 'وحده توزيعه يتغيّر.'],
 		answerKinds: { consent: 'خانة إلزامية', allocation: 'على اللوحة', single_choice: 'اختيار واحد', scale_0_10: 'من 0 إلى 10' },
 		optional: 'اختياري',

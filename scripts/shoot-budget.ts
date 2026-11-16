@@ -163,6 +163,13 @@ async function checkBoard(
 			fail(`${name} draft start purse`, `purse ${purse} MD, expected 0 MD`);
 		}
 
+		if (size.width === 390) {
+			const basket = page.locator('.board .basket-short');
+			if (!(await basket.isVisible())) fail(`${name} basket caveat`, 'the basket sentence is not visible at 390');
+			const hint = page.locator('.board .keep-hint');
+			if (!(await hint.isVisible())) fail(`${name} keep hint`, 'the phone does not say what the tick does');
+		}
+
 		// The explicit keep-draft control: Finish is disabled until a move or the tick.
 		const finish = page.locator('.board .finish');
 		if (!(await finish.isDisabled())) fail(`${name} keep gate`, 'Finish is enabled at the draft without a move or a tick');
@@ -172,6 +179,14 @@ async function checkBoard(
 		await keep.uncheck();
 		if (!(await finish.isDisabled())) fail(`${name} keep gate`, 'Finish is enabled after the keep-draft tick is cleared');
 
+		if (size.width > 720) {
+			await page.locator('.board [data-drop="education"]').click();
+			await page.locator('.board .moves-buttons .take').click();
+			await keep.check();
+			await page.locator('.board .ghost').first().click();
+			if (await keep.isChecked()) fail(`${name} undo keep`, 'the keep tick survives Undo after moves return');
+		}
+
 		// The detail panel: a subsidy line opens its 2026 programmes and can be set to 2024.
 		await page.locator('.board [data-drop="subsidies_energy"]').click();
 		const beforeSet = amount(await page.locator('.board [data-drop="subsidies_energy"] .yours').innerText());
@@ -179,9 +194,26 @@ async function checkBoard(
 		await page.locator('.board .detail').waitFor({ state: 'visible' });
 		const programmeRows = await page.locator('.board .detail-mission').count();
 		if (programmeRows < 1) fail(`${name} detail`, 'the subsidy detail panel has no 2026 programme rows');
+		if (size.label === '1280x800' || size.label === '1024x768') {
+			const heading = page.locator('.board .detail-title:visible').first();
+			const action = page.locator('.board .detail-action:visible').first();
+			await heading.waitFor({ state: 'visible' });
+			await action.waitFor({ state: 'visible' });
+			const vp = page.viewportSize()!;
+			const hb = await heading.boundingBox();
+			const ab = await action.boundingBox();
+			const inside = (b: { x: number; y: number; width: number; height: number } | null) =>
+				!!b && b.x >= -1 && b.y >= -1 && b.x + b.width <= vp.width + 1 && b.y + b.height <= vp.height + 1;
+			if (!inside(hb) || !inside(ab)) {
+				fail(`${name} detail in view`, `heading ${JSON.stringify(hb)} action ${JSON.stringify(ab)} viewport ${vp.width}x${vp.height}`);
+			}
+		}
 		await page.locator('.board .detail-action').first().click();
 		const afterSet = amount(await page.locator('.board [data-drop="subsidies_energy"] .yours').innerText());
 		if (afterSet === beforeSet) fail(`${name} detail`, `set to 2024 left the line at ${beforeSet} MD`);
+		const setMessage = (await page.locator('.board .message').innerText()).trim();
+		if (!setMessage.includes('7,209.3')) fail(`${name} set message`, `the status says "${setMessage}", not the target level`);
+		await page.locator('.board .details-toggle').click();
 
 		let touch = '';
 		if (size.width <= 480) {
@@ -304,6 +336,10 @@ async function checkRoundTrip(
 		const summary = await page.locator('.game .summary').innerText();
 		if (!/(^|[^0-9])300([^0-9]|$)/.test(summary.replace(/[^0-9 .]/g, ' '))) {
 			fail(`${name} result`, `summary "${summary}" does not say 300 MD moved`);
+		}
+		const receiptHref = await page.locator('.game .receipt-link').getAttribute('href');
+		if (!receiptHref?.startsWith('/research/citizen-budget#')) {
+			fail(`${name} receipt link`, `the prototype receipt links to ${receiptHref}, not a static study-page section`);
 		}
 		await page.screenshot({ path: join(OUT, `result-${size.label}-${locale}.png`), fullPage: true });
 		await assertNoHorizontalScroll(page, name);

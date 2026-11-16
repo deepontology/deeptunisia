@@ -202,9 +202,9 @@ rows:
     page: null
   - id: all_other_missions
     label_en: "Religious affairs, digital, state lands, and courts and councils (derived as the total minus every row above; not verified)"
-    amount_md: 533.3
+    amount_md: 532.919
     status: draft-derived
-    source: "Derived in this file. In the 2026 law the same missions came to 565.1 MD: Religious Affairs 202.4, Communication Technologies 197.3, State Domains 94.2, Court of Accounts 35.6, National Council of Regions and Districts 24.1, higher education council 10, judicial council 1.5."
+    source: "Derived in this file as 68,895 less every other non-memo row: 532.919. In the 2026 law the same missions came to 565.1 MD: Religious Affairs 202.4, Communication Technologies 197.3, State Domains 94.2, Court of Accounts 35.6, National Council of Regions and Districts 24.1, higher education council 10, judicial council 1.5."
     url: null
     page: null
   - id: financing_costs_locked

@@ -130,7 +130,7 @@
 		const n = (id: LineId | null) => (id ? c.lines[id].name : '');
 		if (entry.kind === 'take') return t.took(fmtMd(entry.md), n(entry.from));
 		if (entry.kind === 'give') return t.gave(fmtMd(entry.md), n(entry.to));
-		if (entry.kind === 'set') return t.setTo(fmtMd(entry.md), n(entry.to));
+		if (entry.kind === 'set') return t.setTo(fmtMd(entry.targetMd ?? entry.md), n(entry.to));
 		if (entry.kind === 'move')
 			return Math.abs(entry.md - entry.mdIn) < 1e-9
 				? t.moved(fmtMd(entry.md), n(entry.from), n(entry.to))
@@ -209,11 +209,14 @@
 			}, 400);
 			return;
 		}
+		const line = B.findLine(board, active);
+		const cap = Math.round(line.draft * 2 * 1000) / 1000;
+		const capped = targetMd > cap + 0.0005;
 		const next = B.setLine(board, game, active, targetMd);
 		if (next === game) return;
 		game = next;
 		keepChoice = false;
-		message = describe(next.log[next.log.length - 1]);
+		message = capped ? t.setCapped(fmtMd(targetMd), fmtMd(cap)) : describe(next.log[next.log.length - 1]);
 	}
 
 	// Take and Give buttons: one move per press, and holding keeps money flowing.
@@ -268,6 +271,8 @@
 
 	function undo() {
 		game = B.undo(game);
+		// The tick says the board is the draft. If Undo brings moves back, it is not.
+		if (!B.atDraft(board, game)) keepChoice = false;
 		message = '';
 	}
 	function reset() {
@@ -334,6 +339,42 @@
 
 <svelte:window onpointerup={stopHold} onblur={stopHold} />
 
+{#snippet detailPanel()}
+	{#if activeRow}
+		<div class="detail">
+			<p class="detail-name">{c.lines[activeRow.id].name}</p>
+			{#if programmes.length}
+				<p class="detail-title">{t.programmes2026}</p>
+				<p class="detail-source">{t.programmesNote}</p>
+				{#each programmes as m (m.key)}
+					<div class="detail-mission">
+						<p class="detail-mission-label">
+							<span lang="fr" dir="ltr">{m.mission.label}</span> <span class="num">{fmtMd(m.mission.total_md)} {t.unit}</span>
+							<span class="detail-page">p. {m.mission.page}</span>
+						</p>
+						<ul>
+							{#each m.mission.programmes as p (p.label)}
+								<li><span lang="fr" dir="ltr">{p.label}</span><span class="num">{fmtMd(p.amount_md)}</span></li>
+							{/each}
+						</ul>
+					</div>
+				{/each}
+			{:else}
+				<p class="detail-note">{t.noProgrammes}</p>
+			{/if}
+			<div class="detail-actions">
+				{#if year2024}
+					<button type="button" class="detail-action" onclick={() => applySet(year2024.lines[activeRow.id])}>
+						{t.setTo2024}
+					</button>
+				{/if}
+				<button type="button" class="detail-action" onclick={() => applySet(activeRow.plan)}>{t.setToDraft}</button>
+				<button type="button" class="detail-action" onclick={() => applySet(0)}>{t.zeroLine}</button>
+			</div>
+		</div>
+	{/if}
+{/snippet}
+
 <div class="board" class:carrying={!!carrying} data-rule={rule} bind:this={rootEl}>
 	<!-- The purse, with what is spent before you start. -->
 	<section class="purse-zone" aria-label={t.purse}>
@@ -380,7 +421,7 @@
 			</button>
 		</div>
 		{#if pastShown.length}
-			<p class="legend-notes"><span>{t.yearLegend}</span> <span>{t.nominalNote}</span> <span>{t.derivedShort}</span> <span class="legend-definitions">{t.historyDefinitions}</span></p>
+			<p class="legend-notes"><span>{t.yearLegend}</span> <span>{t.nominalNote}</span> <span>{t.derivedShort}</span> <span class="basket-short">{t.basketShort}</span> <span class="legend-definitions">{t.historyDefinitions}</span></p>
 		{/if}
 
 		{#if view === 'bars'}
@@ -502,38 +543,8 @@
 				<button type="button" class="details-toggle" aria-expanded={detailOpen} onclick={() => (detailOpen = !detailOpen)}>
 					{detailOpen ? t.detailsClose : t.details}
 				</button>
-				{#if detailOpen}
-					<div class="detail">
-						<p class="detail-name">{c.lines[activeRow.id].name}</p>
-						{#if programmes.length}
-							<p class="detail-title">{t.programmes2026}</p>
-							<p class="detail-source">{t.programmesNote}</p>
-							{#each programmes as m (m.key)}
-								<div class="detail-mission">
-									<p class="detail-mission-label">
-										<span lang="fr" dir="ltr">{m.mission.label}</span> <span class="num">{fmtMd(m.mission.total_md)} {t.unit}</span>
-										<span class="detail-page">p. {m.mission.page}</span>
-									</p>
-									<ul>
-										{#each m.mission.programmes as p (p.label)}
-											<li><span lang="fr" dir="ltr">{p.label}</span><span class="num">{fmtMd(p.amount_md)}</span></li>
-										{/each}
-									</ul>
-								</div>
-							{/each}
-						{:else}
-							<p class="detail-note">{t.noProgrammes}</p>
-						{/if}
-						<div class="detail-actions">
-							{#if year2024}
-								<button type="button" class="detail-action" onclick={() => applySet(year2024.lines[activeRow.id])}>
-									{t.setTo2024}
-								</button>
-							{/if}
-							<button type="button" class="detail-action" onclick={() => applySet(activeRow.plan)}>{t.setToDraft}</button>
-							<button type="button" class="detail-action" onclick={() => applySet(0)}>{t.zeroLine}</button>
-						</div>
-					</div>
+				{#if detailOpen && narrow}
+					{@render detailPanel()}
 				{/if}
 				{#if pastShown.length}
 					{@const id = activeRow.id}
@@ -595,6 +606,7 @@
 			<label class="keep-choice">
 				<input type="checkbox" checked={keepChoice} onchange={(e) => toggleKeep(e.currentTarget.checked)} />
 				<span class="keep-tick">{t.keepTick}</span>
+				<span class="keep-hint">{t.keepTickHint}</span>
 				<span class="keep-note">{t.keepTickNote}</span>
 			</label>
 			<button type="button" class="ghost" onclick={undo} disabled={game.snapshots.length === 0}>{t.undo}</button>
@@ -605,6 +617,15 @@
 		</div>
 		{#if t.interim}<p class="interim">{t.interim}</p>{/if}
 	</section>
+
+	{#if detailOpen && !narrow && activeRow}
+		<div class="detail-overlay" role="dialog" aria-modal="true" aria-label={c.lines[activeRow.id].name}>
+			<div class="detail-sheet">
+				<button type="button" class="detail-close" onclick={() => (detailOpen = false)}>{t.detailsClose}</button>
+				{@render detailPanel()}
+			</div>
+		</div>
+	{/if}
 </div>
 
 <style>
@@ -615,6 +636,7 @@
 	 */
 	.board {
 		--panel-w: 20rem;
+		position: relative;
 		flex: 1;
 		min-block-size: 0;
 		block-size: 100%;
@@ -816,6 +838,9 @@
 	}
 	.legend-notes span + span::before {
 		content: ' ';
+	}
+	.basket-short {
+		display: none;
 	}
 	.key {
 		display: inline-flex;
@@ -1202,6 +1227,41 @@
 		margin: 0;
 		color: var(--text-muted);
 	}
+	.detail-overlay {
+		position: absolute;
+		inset-block: var(--s-6);
+		inset-inline-start: calc(var(--panel-w) + var(--s-8) * 2);
+		inset-inline-end: var(--s-8);
+		z-index: var(--z-sheet);
+		display: flex;
+		padding: var(--s-3);
+		background: var(--surface-base);
+		border: var(--rule);
+		border-radius: var(--r-lg);
+		box-shadow: var(--elev-2);
+	}
+	.detail-sheet {
+		display: flex;
+		flex-direction: column;
+		gap: var(--s-2);
+		inline-size: 100%;
+		max-inline-size: 42rem;
+		margin-inline: auto;
+		min-block-size: 0;
+		overflow-y: auto;
+		padding: var(--s-4) var(--s-5) var(--s-5);
+	}
+	.detail-close {
+		align-self: flex-end;
+		min-block-size: var(--s-8);
+		padding-inline: var(--s-4);
+		border: 1px solid var(--border-default);
+		border-radius: var(--r-full);
+		background: transparent;
+		color: var(--text-primary);
+		font: 500 var(--t-xs) var(--font-sans);
+		cursor: pointer;
+	}
 	.detail-actions {
 		display: flex;
 		flex-wrap: wrap;
@@ -1325,6 +1385,9 @@
 		line-height: 1.35;
 		color: var(--text-muted);
 	}
+	.keep-hint {
+		display: none;
+	}
 	.ghost {
 		flex: 1 1 0;
 		white-space: nowrap;
@@ -1402,6 +1465,9 @@
 		.howto,
 		.keep-note {
 			display: none;
+		}
+		.keep-hint {
+			display: inline;
 		}
 		.chosen {
 			flex: 0 1 auto;
@@ -1570,6 +1636,12 @@
 		}
 		.legend-definitions {
 			display: none;
+		}
+		.basket-short {
+			display: inline;
+		}
+		.keep-hint {
+			display: inline;
 		}
 		.purse[data-state='empty'] .purse-note {
 			display: none;

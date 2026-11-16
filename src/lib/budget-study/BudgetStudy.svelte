@@ -382,6 +382,8 @@
 					<p class="sec-kicker mono">{sec.stored.num} / {sec.stored.label}</p>
 					<h2>{sec.stored.heading}</h2>
 					{#each sec.stored.body as p, i (i)}<p>{p}</p>{/each}
+					<h3 id="withdrawal">{copy.withdrawal.heading}</h3>
+					<p>{copy.withdrawal.body}</p>
 				</section>
 
 				<!-- 07 -->
