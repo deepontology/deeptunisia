@@ -2,6 +2,7 @@
 	import { app } from '$lib/state.svelte';
 	import Ruler from '$lib/index-study/Ruler.svelte';
 	import { FIGURES, HISTORY, type FigureRow } from './figures';
+	import { REVENUE } from './revenue';
 	import { linesFrom, LINE_ROWS, type LineId } from '$lib/budget-game/lines';
 	import { copyFor } from '$lib/budget-game/copy';
 	import { boardCopyFor } from '$lib/budget-game/board-copy';
@@ -350,6 +351,62 @@
 						</ul>
 					</details>
 					{#if study.population_statement}<p class="note">{study.population_statement}</p>{/if}
+
+					<div class="revenue">
+						<h3>{copy.revenue.heading}</h3>
+						<p>{copy.revenue.intro}</p>
+						<dl class="ratios">
+							<div>
+								<dt>{copy.revenue.per100.label}</dt>
+								<dd>{copy.revenue.per100.text}</dd>
+							</div>
+							<div>
+								<dt>{copy.revenue.covered.label}</dt>
+								<dd>{copy.revenue.covered.text}</dd>
+							</div>
+						</dl>
+						<div class="table-scroll wide">
+							<table class="revenue-table">
+								<caption>{copy.revenue.caption}</caption>
+								<thead>
+									<tr>
+										<th scope="col">{copy.revenue.th.year}</th>
+										<th scope="col">{copy.revenue.th.per100}</th>
+										<th scope="col">{copy.revenue.th.covered}</th>
+										<th scope="col">{copy.revenue.th.spending}</th>
+										<th scope="col">{copy.revenue.th.tax}</th>
+										<th scope="col">{copy.revenue.th.own}</th>
+									</tr>
+								</thead>
+								<tbody>
+									{#each REVENUE as r (r.year)}
+										<tr>
+											<th scope="row">{r.year}<span class="rev-page">{copy.revenue.th.page} {r.page}</span></th>
+											<td>{r.tax_per_100.toFixed(1)}</td>
+											<td>{r.covered_pct.toFixed(1)}</td>
+											<td>{fmtMd(r.spending_md)}</td>
+											<td>{fmtMd(r.tax_md)}</td>
+											<td>{fmtMd(r.own_md)}</td>
+										</tr>
+									{/each}
+								</tbody>
+							</table>
+						</div>
+						<p class="note">{copy.revenue.note}</p>
+						<p class="note">{copy.revenue.leftOut}</p>
+						<details class="sources">
+							<summary>{copy.revenue.sources}</summary>
+							<ul>
+								{#each REVENUE as r (r.year)}
+									<li lang="fr" dir="ltr">
+										<span class="src-name">{r.year}</span>
+										<span class="mono">{fmtMd(r.tax_md)} / {fmtMd(r.own_md)} {copy.unit}</span>
+										<span class="src"><a href={r.url} rel="noopener noreferrer">{r.document}</a>. {r.source}. Tableau A, page {r.tableau_a_page}. Crop: {r.crop}; tableau A crop: {r.tableau_a_crop}.</span>
+									</li>
+								{/each}
+							</ul>
+						</details>
+					</div>
 				</section>
 
 				<!-- 04 -->
@@ -708,6 +765,69 @@
 	}
 	.note {
 		font-size: var(--t-base);
+		color: var(--text-muted);
+	}
+	/* The revenue block sits inside the figures section: same subject, second table. */
+	.revenue {
+		display: grid;
+		gap: var(--s-4);
+		margin-block-start: var(--s-10);
+		padding-block-start: var(--s-6);
+		border-block-start: var(--rule);
+	}
+	.revenue h3 {
+		margin: 0;
+		font-size: var(--step-1);
+		line-height: 1.2;
+	}
+	.revenue p {
+		margin: 0;
+	}
+	.ratios {
+		display: grid;
+		gap: var(--s-4);
+		margin: 0;
+	}
+	.ratios > div {
+		display: grid;
+		gap: var(--s-1);
+		padding-inline-start: var(--s-4);
+		border-inline-start: 2px solid var(--accent-muted);
+	}
+	.ratios dt {
+		font-weight: 600;
+		color: var(--text-primary);
+	}
+	.ratios dd {
+		margin: 0;
+		font-size: var(--t-md);
+		line-height: 1.45;
+		color: var(--text-secondary);
+	}
+	.revenue-table {
+		min-inline-size: 30rem;
+		font-size: var(--t-sm);
+	}
+	.revenue-table th,
+	.revenue-table td {
+		padding-inline: var(--s-2);
+	}
+	.rev-page {
+		display: block;
+		white-space: nowrap;
+		font-family: var(--font-mono);
+		font-size: var(--t-2xs);
+		font-weight: 400;
+		color: var(--text-muted);
+	}
+	.revenue-table caption {
+		caption-side: top;
+		padding-block-end: var(--s-2);
+		text-align: start;
+		font-family: var(--font-mono);
+		font-size: var(--t-2xs);
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
 		color: var(--text-muted);
 	}
 	.wide {

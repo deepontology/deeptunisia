@@ -171,6 +171,79 @@ if (!process.argv[2] || process.argv[2].startsWith('--')) {
 		if (typeof m.page !== 'number' || !programmes.pages?.[String(m.page)]) failures.push(`programmes 2026 ${id}: page ${m.page} has no kept page image`);
 	}
 	console.log(`  ok    programmes 2026: ${Object.keys(programmes.missions ?? {}).length} missions checked against the history table`);
+
+	/*
+	 * Revenue: Article premier and Article 2 of each law. The two identities must hold
+	 * to the thousand dinars, the spending total must be the same law's total the board
+	 * already uses, and every figure must have its printed page and its kept crop.
+	 */
+	const revenuePath = join(STUDY, 'revenue-lf-2020-2026.yaml');
+	interface RevYear {
+		spending_md?: unknown;
+		revenue_md?: unknown;
+		tax_md?: unknown;
+		non_tax_md?: unknown;
+		grants_md?: unknown;
+		deficit_md?: unknown;
+		page?: unknown;
+		crop?: unknown;
+		tableau_a_page?: unknown;
+		tableau_a_crop?: unknown;
+		pdf_sha256?: unknown;
+	}
+	const revenue = parse(readFileSync(revenuePath, 'utf8')) as { years?: Record<string, RevYear> };
+	const revYears = Object.entries(revenue.years ?? {});
+	if (revYears.length === 0) failures.push('revenue: no years');
+	for (const [year, r] of revYears) {
+		const n = (v: unknown) => (typeof v === 'number' && Number.isFinite(v) ? v : NaN);
+		const spending = n(r.spending_md);
+		const total = n(r.revenue_md);
+		const tax = n(r.tax_md);
+		const nonTax = n(r.non_tax_md);
+		const grants = n(r.grants_md);
+		const deficit = n(r.deficit_md);
+		if ([spending, total, tax, nonTax, grants, deficit].some((v) => Number.isNaN(v))) {
+			failures.push(`revenue ${year}: spending, revenue, tax, non-tax, grants and deficit must all be numbers`);
+			continue;
+		}
+		if (typeof r.pdf_sha256 !== 'string' || !/^[a-f0-9]{64}$/.test(r.pdf_sha256)) failures.push(`revenue ${year}: pdf_sha256 must be a lowercase SHA-256`);
+		const lineSum = Math.round((tax + nonTax + grants) * 1000) / 1000;
+		if (Math.abs(lineSum - total) > 0.0005) failures.push(`revenue ${year}: tax ${tax} + non-tax ${nonTax} + grants ${grants} = ${lineSum}, article 2 total ${total}`);
+		if (Math.abs(spending - total - deficit) > 0.0005) failures.push(`revenue ${year}: spending ${spending} - revenue ${total} = ${Math.round((spending - total) * 1000) / 1000}, deficit ${deficit}`);
+		const histTotal = history.years?.[year]?.total_md;
+		if (typeof histTotal !== 'number') failures.push(`revenue ${year}: no spending side in the history file`);
+		else if (Math.abs(spending - histTotal) > 0.0005) failures.push(`revenue ${year}: spending ${spending} differs from the history total ${histTotal}`);
+		if (typeof r.page !== 'number') failures.push(`revenue ${year}: printed page is required`);
+		for (const [what, file] of [
+			['article page', r.crop],
+			['tableau A page', r.tableau_a_crop]
+		] as const) {
+			if (typeof file !== 'string' || file.length === 0) {
+				failures.push(`revenue ${year}: ${what} crop is required`);
+				continue;
+			}
+			const full = join(STUDY, file);
+			if (!existsSync(full) || statSync(full).size < 1000) {
+				failures.push(`revenue ${year}: ${what} crop is missing or empty (${file})`);
+				continue;
+			}
+			const size = pngSize(full);
+			if (!size) failures.push(`revenue ${year}: ${what} crop is not a PNG (${file})`);
+			else if (size.w < 700 || size.h < 1000) failures.push(`revenue ${year}: ${what} crop is not a full page (${size.w}x${size.h}); the footer with the issue, date and page number must be visible`);
+		}
+		const per100 = (tax / (tax + nonTax)) * 100;
+		const covered = (tax / spending) * 100;
+		if (!(per100 > 0 && per100 <= 100)) failures.push(`revenue ${year}: tax per 100 raised is ${per100.toFixed(1)}, outside 0 to 100`);
+		if (!(covered > 0 && covered <= 100)) failures.push(`revenue ${year}: tax share of spending is ${covered.toFixed(1)}, outside 0 to 100`);
+		console.log(`  ok    revenue ${year}: ${tax} tax + ${nonTax} non-tax + ${grants} grants = ${total} MD; tax ${per100.toFixed(1)} per 100 raised, ${covered.toFixed(1)}% of spending; page ${r.page}`);
+	}
+	for (const year of Object.keys(history.years ?? {})) {
+		if (!revenue.years?.[year]) failures.push(`revenue: the history year ${year} has no revenue row`);
+	}
+	for (const year of Object.keys(revenue.years ?? {})) {
+		if (!history.years?.[year]) failures.push(`revenue: ${year} is not a history year`);
+	}
+	console.log(`  ok    revenue: ${revYears.length} adopted laws, each with its page and its kept crop`);
 }
 
 if (warnings.length > 0) {

@@ -75,6 +75,18 @@ export interface LandingCopy {
 		historySources: string;
 		historyNote: string;
 	};
+	/** The revenue side: the two ratios in words, and the year table that carries them. */
+	revenue: {
+		heading: string;
+		intro: string;
+		per100: { label: string; text: string };
+		covered: { label: string; text: string };
+		caption: string;
+		th: { year: string; spending: string; tax: string; own: string; per100: string; covered: string; page: string };
+		note: string;
+		leftOut: string;
+		sources: string;
+	};
 	sections: LandingSection[];
 	cannotSay: string[];
 	recordFacts: { label: string; value: string }[];
@@ -156,6 +168,23 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 			pastHeading: 'Past years, adopted',
 			historySources: 'The adopted laws, with their Journal Officiel pages and kept page images',
 			historyNote: 'The past-year columns are the budgets as voted in each finance law (tableau C of the Journal Officiel), in dinars of each year, not adjusted for inflation. The two subsidy lines are read from the energy and domestic trade programmes in those years. The 2027 split between fuel and food is derived from the two ministry lines that contain the memo, because the 2027 split by type has not been reported.'
+		},
+		revenue: {
+			heading: 'Where the money came from',
+			intro: 'Two ratios, read from each law, answer two different questions. One says how much of what the state raises itself is tax. The other says how much of its spending that tax pays for.',
+			per100: {
+				label: 'Tax in every 100 dinars the state raises itself',
+				text: 'Tax receipts divided by tax plus non-tax receipts. Grants and borrowing are not money the state raises itself, so they sit outside this denominator. This is the denominator of the 91 in the opening line.'
+			},
+			covered: {
+				label: 'Spending covered by tax',
+				text: 'Tax receipts divided by the payment credits of the same law. The rest is covered by non-tax receipts, grants and borrowing.'
+			},
+			caption: 'The adopted laws, revenue side',
+			th: { year: 'Law', spending: 'Spending, MD', tax: 'Tax, MD', own: 'Raised itself, MD', per100: 'Tax per 100 raised', covered: 'Spending covered, %', page: 'p.' },
+			note: 'Tax, non-tax receipts and grants are read from Article premier and Article 2 of each finance law, printed in the Journal Officiel. The spending column is tableau C of the same law, the total the spending side of this study already uses. Each figure has a printed page and a kept full-page crop in the study files.',
+			leftOut: 'No adopted year between 2020 and 2026 is missing. 2021 is not in the study: its spending table was not sourced, so it has no revenue row either. 2018 and 2019 are left out on purpose: those laws print one revenue total split into Titre I, Titre II and the special treasury funds, with loans inside Titre II and no tax or non-tax split, so they cannot sit on these two ratios without inventing a mapping.',
+			sources: 'Sources, revenue side, with pages and kept crops'
 		},
 		sections: [
 			{
@@ -338,6 +367,23 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 			historySources: 'Les lois adoptées, avec leurs pages au Journal officiel et les images de page conservées',
 			historyNote: "Les colonnes des années passées sont les budgets votés dans chaque loi de finances (tableau C du Journal officiel), en dinars de chaque année, sans correction de l'inflation. Les deux lignes de subventions sont lues sur les programmes énergie et commerce intérieur. La répartition 2027 entre carburant et alimentation est dérivée des deux lignes ministérielles qui contiennent la note, car la répartition par type n'est pas publiée."
 		},
+		revenue: {
+			heading: "D'où venait l'argent",
+			intro: "Deux ratios, lus dans chaque loi, répondent à deux questions différentes. L'un dit quelle part de ce que l'État prélève lui-même est de l'impôt. L'autre dit quelle part de ses dépenses cet impôt paie.",
+			per100: {
+				label: "L'impôt dans chaque tranche de 100 dinars que l'État prélève lui-même",
+				text: "L'impôt divisé par l'impôt plus les recettes non fiscales. Les dons et l'emprunt ne sont pas de l'argent que l'État prélève lui-même : ils sont hors de ce dénominateur. C'est le dénominateur du 91 de la phrase d'ouverture."
+			},
+			covered: {
+				label: "Dépenses couvertes par l'impôt",
+				text: "L'impôt divisé par les crédits de paiement de la même loi. Le reste est couvert par les recettes non fiscales, les dons et l'emprunt."
+			},
+			caption: "Les lois adoptées, côté recettes",
+			th: { year: 'Loi', spending: 'Dépenses, MD', tax: 'Impôt, MD', own: 'Prélevé lui-même, MD', per100: 'Impôt pour 100 prélevés', covered: 'Dépenses couvertes, %', page: 'p.' },
+			note: "L'impôt, les recettes non fiscales et les dons sont lus dans l'article premier et l'article 2 de chaque loi de finances, publiés au Journal officiel. La colonne des dépenses est le tableau C de la même loi, le total que le volet dépenses de cette étude utilise déjà. Chaque chiffre a sa page imprimée et une image de page conservée dans les fichiers de l'étude.",
+			leftOut: "Aucune année adoptée entre 2020 et 2026 ne manque. 2021 n'est pas dans l'étude : son tableau de dépenses n'a pas été sourcé, donc elle n'a pas non plus de ligne de recettes. 2018 et 2019 sont écartées volontairement : ces lois impriment un seul total de recettes réparti en Titre I, Titre II et fonds spéciaux du Trésor, avec les emprunts dans le Titre II et sans ventilation impôt / non-impôt ; elles ne peuvent pas figurer sur ces deux ratios sans inventer une correspondance.",
+			sources: 'Sources, côté recettes, avec pages et images conservées'
+		},
 		sections: [
 			{
 				id: 'question',
@@ -518,6 +564,23 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 			pastHeading: 'السنوات الماضية، مصادق عليها',
 			historySources: 'قوانين المالية المصادق عليها، مع صفحاتها في الرائد الرسمي وصور الصفحات المحفوظة',
 			historyNote: 'أعمدة السنوات الماضية هي الميزانيات كما صودق عليها في كل قانون مالية (جدول نفقات ميزانية الدولة في الرائد الرسمي)، بدنانير كل سنة، دون احتساب التضخّم. ويُقرأ بندا الدعم من برنامجي الطاقة والتجارة الداخلية. أمّا تقسيم 2027 بين المحروقات والغذاء فمشتقّ من بندي الوزارتين اللذين يحتويان المذكرة، لأن التقسيم حسب النوع لم يُنشر.'
+		},
+		revenue: {
+			heading: 'من أين جاء المال',
+			intro: 'نسبتان، تُقرآن من كل قانون، تجيبان عن سؤالين مختلفين. الأولى تقول كم من أموال تجمعها الدولة بنفسها هي ضريبة. والثانية تقول كم من نفقاتها تغطيه هذه الضريبة.',
+			per100: {
+				label: 'الضريبة في كل 100 دينار تجمعها الدولة بنفسها',
+				text: 'الضريبة مقسومة على الضريبة زائد الإيرادات غير الجبائية. الهبات والاقتراض ليست أموالًا تجمعها الدولة بنفسها، فهي خارج هذا المقام. وهذا هو مقام الرقم 91 في الجملة الافتتاحية.'
+			},
+			covered: {
+				label: 'النفقات التي تغطيها الضريبة',
+				text: 'الضريبة مقسومة على اعتمادات الدفع في القانون نفسه. ويُغطّى الباقي بالإيرادات غير الجبائية والهبات والاقتراض.'
+			},
+			caption: 'القوانين المصادق عليها، من جهة الإيرادات',
+			th: { year: 'القانون', spending: 'النفقات، م.د', tax: 'الضريبة، م.د', own: 'ما تجمعه بنفسها، م.د', per100: 'الضريبة من كل 100', covered: 'النفقات المغطاة، %', page: 'ص.' },
+			note: 'تُقرأ الضريبة والإيرادات غير الجبائية والهبات من الفصل الأول والفصل 2 من كل قانون مالية، كما نُشرت في الرائد الرسمي. وعمود النفقات هو الجدول «ج» من القانون نفسه، وهو المجموع الذي يستعمله جانب النفقات في هذه الدراسة. ولكل رقم صفحته المطبوعة وصورة الصفحة المحفوظة في ملفات الدراسة.',
+			leftOut: 'لا تنقص أي سنة مصادق عليها بين 2020 و2026. وسنة 2021 ليست في الدراسة: لم يُوثَّق جدول نفقاتها، فلا سطر إيرادات لها أيضًا. أمّا 2018 و2019 فمستبعدتان بقرار: تلك القوانين تطبع مجموع إيرادات واحدًا موزعًا على العنوان الأول والعنوان الثاني وصناديق الخزينة الخاصة، والاقتراض داخل العنوان الثاني، ودون تفصيل بين ضريبة وغير ضريبة، فلا يمكن إدراجهما في هاتين النسبتين دون اختراع مطابقة.',
+			sources: 'المصادر، من جهة الإيرادات، مع الصفحات والصور المحفوظة'
 		},
 		sections: [
 			{
