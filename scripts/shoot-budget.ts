@@ -181,6 +181,9 @@ async function checkBoard(
 			const deskLegend = (await page.locator('.board .legend-notes').innerText()).replace(/\s+/g, ' ');
 			if (/change of basket|changement de panier|تغيّر السلة/i.test(deskLegend)) fail(`${name} basket claim`, 'the legend still claims a change of basket');
 			if (!/7,617\.4/.test(deskLegend)) fail(`${name} containment`, 'the desk legend does not state the containment bound');
+			if (!/177\.6/.test(deskLegend)) fail(`${name} containment`, 'the desk legend does not state the 177.6 MD worst case');
+			const conditional = locale === 'ar' ? /إذا كانت مذكرة/.test(deskLegend) : /if the 2027 memo sits/i.test(deskLegend);
+			if (!conditional) fail(`${name} containment`, 'the desk legend states containment as a fact, not an assumption');
 		}
 
 		const legendText = (await page.locator('.board .legend-notes').innerText()).replace(/\s+/g, ' ');
@@ -397,7 +400,7 @@ async function checkLanding(
 		const method = (await page.locator('#sec-method').innerText()).replace(/\s+/g, ' ');
 		const floorPending =
 			locale === 'ar'
-				? /تعديل مقترح/.test(method) && /بانتظار تأكيد/.test(method)
+				? /تعديل مقترح/.test(method) && /بانتظار تأكيد/.test(method) && /الحدّ الأدنى/.test(method) && !/سقف 300/.test(method)
 				: /proposed amendment/i.test(method) && /pending the owner/i.test(method);
 		if (!floorPending) fail(`${name} floor status`, 'the method does not mark the 300 floor as a proposed amendment pending the owner');
 

@@ -114,9 +114,9 @@ as spent, in dinars of each year (not adjusted for inflation). Every mission lan
 one board line. Subsidies are not a mission in those laws, so the board reads them as the energy
 programme of Industry, Mines and Energy plus the domestic trade programme of Commerce. The 2027
 memo covers all subsidy types; the past years count the two programmes that hold most of them.
-The memo sits inside the Industry and Trade lines, so energy can only fall between 7,617.4 and
-7,890.2 MD, and the apportionment is within about 140 MD of any split that keeps both lines
-non-negative. The 2027 memo is a press total; past years are two programme lines. The board says
+If the memo sits wholly inside the Industry and Trade lines, as assumed here, energy can only
+fall between 7,617.4 and 7,890.2 MD, and the apportionment is within 177.6 MD of any split that
+keeps both lines non-negative. The 2027 memo is a press total; past years are two programme lines. The board says
 so in visible text under the legend, not in a tooltip alone. 2018 is not shown: its tableau C is
 organised by ministry chapter, it includes debt principal, and it has no programme split, so it
 cannot sit on the same bars honestly. 2015 was not sourced.
