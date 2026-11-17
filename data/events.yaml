@@ -7073,7 +7073,11 @@
     and the amount is not an adjudicated debt. The piece says the cumulative claims across the group's
     disputes are about USD 639.7 million and that a separate arbitration awarded Zenith about USD 9.7
     million including interest. The article also involves ETAP in the wider dispute. Zenith, CNQ, ICSID
-    and Pompeo have no graph records.
+    and Pompeo have no graph records. On 9 November 2026 Zenith said Tunisia had again failed to pay
+    its share of the arbitration costs and that ICSID had asked for payment of the unpaid costs, calling
+    Tunisia's conduct deliberate obstruction and an abuse of process; African Manager relayed the
+    company's statement, no ICSID order and no Tunisian response were retrieved, and the amount remains
+    a claim, not an agreed debt.
   confidence: C
   verification: needs-primary-source
   attributed_to: Kapitalis (29 October 2026), citing Agenzia Nova; the claim amount and procedural calendar
@@ -7086,6 +7090,7 @@
     terms would correct the record.
   sources:
   - kapitalis-pompeo-zenith-2026-10-29
+  - am-zenith-arbitration-costs-2026-11-09
 - id: ev-romdhani-death-2026-10-15
   date: '2026-10-15'
   title_en: Content creator Yosri Romdhani dies after transfer from prison to hospital
@@ -8460,3 +8465,123 @@
   falsifiable_by: "The court registry or a second independent report."
   sources:
     - snjt-2026-10-26-2357a
+
+# ---------------------------------------------------------------------------
+# Daily sweep 2026-11-03 to 2026-11-16 (data/contrib/daily-2026-11-16.yaml)
+# ---------------------------------------------------------------------------
+- id: ev-nafti-barrot-association-agreement-2026-11-04
+  date: "2026-11-04"
+  title_en: "France backs Tunisia's request to revise the EU association agreement"
+  title_fr: "La France soutient la demande tunisienne de révision de l'accord d'association avec l'UE"
+  category: political
+  subcategory: diplomacy
+  location: []
+  actors: [mohamed-ali-nafti]
+  institutions: [france, european-union]
+  causes: []
+  consequences: []
+  summary: >-
+    On Wednesday 4 November 2026 French foreign minister Jean-Noël Barrot
+    told his Tunisian counterpart Mohamed Ali Nafti by telephone that France
+    supported Tunisia's approach to revising the 1995 EU association
+    agreement in favour of a more balanced partnership adapted to new
+    economic realities, according to a Tunisian foreign ministry communiqué
+    relayed by African Manager on 5 November. The ministers also discussed
+    bilateral cooperation and upcoming bilateral and multilateral deadlines.
+    Barrot has no person record and is named only. The item restates earlier
+    Tunisian demands (the Saied-Macron call of 20 March 2026, Nafti's
+    September 2026 meeting with commissioner Dubravka Suica) but records the
+    French position for the first time in this sweep. It is a diplomatic
+    position, not a decision or a signed revision.
+  confidence: C
+  verification: needs-primary-source
+  attributed_to: "Tunisian Ministry of Foreign Affairs communiqué, relayed by African Manager (5 November 2026)"
+  reasoning: >-
+    One outlet relaying the ministry's own readout; the French side's account
+    was not retrieved. The date is the article's "mercredi", i.e. Wednesday
+    4 November 2026. The support is a stated position, not a negotiated
+    revision.
+  falsifiable_by: >-
+    The French foreign ministry's readout or a joint statement would confirm
+    the call and the position; a French denial or a different formulation
+    would correct the record.
+  sources:
+    - am-nafti-barrot-2026-11-05
+- id: ev-al-karama-holding-verdict-2026-11-10
+  date: "2026-11-10"
+  title_en: "Tunis criminal chamber sentences Al Karama Holding's former chief executive and a former judicial official to eight years"
+  title_fr: "La chambre criminelle de Tunis condamne l'ancien PDG d'Al Karama Holding et un ancien cadre judiciaire à huit ans"
+  category: legal
+  subcategory: corruption-verdict
+  location: [gov-tunis]
+  actors: []
+  institutions: [al-karama-holding, judiciary]
+  causes: []
+  consequences: []
+  summary: >-
+    On Tuesday 10 November 2026 the criminal chamber of the Tunis Court of
+    First Instance sentenced the former president-director general of Al
+    Karama Holding and a former judicial official to eight years in prison in
+    a case concerning financial and administrative irregularities in the
+    management of the state holding, according to TAP as relayed by African
+    Manager and Kapitalis on 11 November. A former magistrate and two other
+    defendants were sentenced to three years, and several other defendants,
+    all former Al Karama Holding employees, were acquitted. The defendants
+    were prosecuted under article 96 of the penal code for abuse of office.
+    Neither outlet publishes the former chief executive's name, and no
+    judgment text, court communiqué or case file was retrieved. The record is
+    the verdict, not a finding on an individual: the person is named only by
+    office.
+  confidence: B
+  basis: reported
+  verification: needs-primary-source
+  attributed_to: "TAP, relayed by African Manager and Kapitalis on 11 November 2026"
+  reasoning: >-
+    Two national outlets published the same day and agree on the court, the
+    date, the eight- and three-year terms, the acquittals and the article 96
+    charge, but both attribute the account to TAP and neither names the
+    convicted former chief executive. Grade B reflects two relays of one
+    agency report, not two independent accounts.
+  falsifiable_by: >-
+    The judgment of the criminal chamber, the court communiqué or the case
+    file would confirm the terms, the acquittals and the identity of the
+    former chief executive; a judgment with different terms or a different
+    court would correct the record.
+  sources:
+    - am-al-karama-verdict-2026-11-11
+    - kapitalis-al-karama-verdict-2026-11-11
+- id: ev-zenith-robbana-production-resume-2026-11-16
+  date: "2026-11-16"
+  title_en: "Zenith subsidiary resumes oil production at Robbana after repairing vandalised equipment"
+  title_fr: "La filiale de Zenith reprend la production pétrolière à Robbana après la réparation des équipements endommagés"
+  category: economic
+  subcategory: oil-and-gas
+  location: []
+  actors: []
+  institutions: [etap]
+  causes: []
+  consequences: []
+  summary: >-
+    Zenith Energy said its wholly owned subsidiary Ecumed Petroleum Tunisia
+    resumed oil production on the onshore Robbana concession at about 35
+    barrels per day after repairing equipment it says was damaged by
+    vandalism, and that Tunisian authorities had indicated production and sale
+    of oil could resume without hindrance, per African Manager on 16 November
+    relaying TipRanks. Zenith said it had spent about USD 2.7 million on
+    salaries, environmental compliance and maintenance during the
+    interruption at Robbana and El Bibane, without prejudice to its claims in
+    the arbitration against Tunisia, which remains pending. The restart date
+    is not given; 16 November is the report date.
+  confidence: C
+  verification: needs-primary-source
+  attributed_to: "Zenith Energy statement relayed by TipRanks and African Manager (16 November 2026)"
+  reasoning: >-
+    One outlet relaying a company announcement. The restart, the rate and the
+    spending are the company's account; the Tunisian authorities' position is
+    reported through the company, not from a Tunisian source.
+  falsifiable_by: >-
+    A Tunisian energy ministry or ETAP statement, or Zenith's own regulatory
+    announcement, would confirm the restart and the rate; a denial or a
+    different rate would correct the record.
+  sources:
+    - am-zenith-robbana-resume-2026-11-16
