@@ -538,7 +538,7 @@
 			{:else if phase === 'too-fast'}
 				<p class="note" role="status">{c.study.tooFast}</p>
 				<div class="actions">
-					<button class="cta" type="button" onclick={() => void send()} disabled={sending}>{c.study.sendAgain}</button>
+					<button class="cta" type="button" data-send-again onclick={() => void send()} disabled={sending}>{c.study.sendAgain}</button>
 				</div>
 			{:else}
 				<p class="note" role="status">{c.study.failed}</p>

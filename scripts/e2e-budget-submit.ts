@@ -43,7 +43,7 @@
 import { chromium } from 'playwright';
 
 const BASE = (process.env.BUDGET_E2E_BASE ?? 'http://127.0.0.1:5320').replace(/\/$/, '');
-const EXPECT = (process.env.BUDGET_E2E_EXPECT ?? 'accepting') as 'accepting' | 'paused' | 'design';
+const EXPECT = (process.env.BUDGET_E2E_EXPECT ?? 'accepting') as 'accepting' | 'paused' | 'design' | 'too-fast';
 
 let checks = 0;
 let failures = 0;
@@ -105,12 +105,19 @@ try {
 	const before = await count(context.request);
 	console.log(`\n  state ${EXPECT}, stored answers before: ${before}\n`);
 
-	await landing(EXPECT === 'accepting' ? /In the field · collecting/i : EXPECT === 'paused' ? /In the field · not collecting right now/i : /In design · not collecting/i, before);
+	await landing(
+		EXPECT === 'paused'
+			? /In the field · not collecting right now/i
+			: EXPECT === 'design'
+				? /In design · not collecting/i
+				: /In the field · collecting/i,
+		before
+	);
 
 	await page.goto(`${BASE}/research/citizen-budget/prototype?src=direct`, { waitUntil: 'networkidle' });
 
 	const status = await page.locator('.game .status').innerText();
-	if (EXPECT === 'accepting') ok('the page shows the accepting state', /collecting answers/i.test(status), status);
+	if (EXPECT === 'accepting' || EXPECT === 'too-fast') ok('the page shows the accepting state', /collecting answers/i.test(status), status);
 	else ok(`the page shows the ${EXPECT} state`, CLOSED[EXPECT].header.test(status), status);
 
 	// Consent: the three real instrument items, then the frame.
@@ -130,7 +137,7 @@ try {
 	// at 6 minutes). A dev-override run skips it; a real-path run sets the pause so
 	// the same answer clears it.
 	const pause = Number(process.env.BUDGET_E2E_PAUSE_MS ?? '0');
-	if (pause > 0) {
+	if (pause > 0 && EXPECT === 'accepting') {
 		console.log(`  waiting ${pause} ms before submit for the completion floor`);
 		await page.waitForTimeout(pause);
 	}
@@ -162,6 +169,36 @@ try {
 		ok('the row is gone', afterWithdraw === before, `${afterSubmit} then ${afterWithdraw}`);
 
 		await landing(/In the field · collecting/i, afterWithdraw);
+	} else if (EXPECT === 'too-fast') {
+		// The real Worker refuses a keep-draft answer finished under the floor.
+		// The card must say what happened, keep the result and offer the send
+		// again; the retry after the pause must clear the floor.
+		await page.locator('.game .block p[role="status"]').last().waitFor({ state: 'visible', timeout: 30_000 });
+		const fastOutcome = await page.locator('.game .block p[role="status"]').last().innerText();
+		ok('the fast answer gets the floor caption', /minimum time|wait a moment/i.test(fastOutcome), fastOutcome);
+		ok('no receipt is shown for the fast answer', (await page.locator('.game .receipt-code').count()) === 0);
+		const afterFast = await count(context.request);
+		ok('the fast answer stored nothing', afterFast === before, `${before} then ${afterFast}`);
+		ok('the send-again control is on the card', await page.locator('[data-send-again]').isVisible());
+
+		const wait = pause > 0 ? pause : 150_000;
+		console.log(`  waiting ${wait} ms before sending again`);
+		await page.waitForTimeout(wait);
+		await page.locator('[data-send-again]').click();
+		await page.locator('.game .receipt-code').waitFor({ state: 'visible', timeout: 30_000 });
+		const receipt = (await page.locator('.game .receipt-code').innerText()).trim();
+		ok('the retry shows a real receipt', /^[\da-f]{8}-[\da-f]{4}-[\da-f]{4}-[\da-f]{4}-[\da-f]{12}$/.test(receipt), receipt);
+		const afterRetry = await count(context.request);
+		ok('the retry stored one answer', afterRetry === before + 1, `${before} then ${afterRetry}`);
+
+		await page.goto(`${BASE}/research/citizen-budget/withdraw`, { waitUntil: 'networkidle' });
+		await page.locator('.wrap input').fill(receipt);
+		await page.locator('.wrap button[type="submit"]').click();
+		await page.locator('.done').waitFor({ state: 'visible', timeout: 30_000 });
+		const done = await page.locator('.done').innerText();
+		ok('the withdrawal page deletes the retry', /deleted|supprim|حذف/i.test(done), done);
+		const afterWithdraw = await count(context.request);
+		ok('the retry row is gone', afterWithdraw === before, `${afterRetry} then ${afterWithdraw}`);
 	} else {
 		await page.locator('.game .block p[role="status"]').last().waitFor({ state: 'visible', timeout: 30_000 });
 		const outcome = await page.locator('.game .block p[role="status"]').last().innerText();
