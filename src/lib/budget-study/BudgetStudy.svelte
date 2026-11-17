@@ -341,6 +341,7 @@
 					<p class="sec-kicker mono">{sec.figures.num} / {sec.figures.label}</p>
 					<h2>{sec.figures.heading}</h2>
 					{#each sec.figures.body as p, i (i)}<p>{p}</p>{/each}
+					<p class="note figures-legend">{copy.figures.auditLegend}</p>
 					<div class="table-scroll wide">
 						<table class="figures">
 							<caption>{copy.figures.pastHeading}</caption>
@@ -355,7 +356,7 @@
 									<th scope="col">{copy.figures.system}</th>
 									{#each HISTORY as h (h.year)}<th scope="col" class="past">{copy.figures.adopted(String(h.year))}</th>{/each}
 									<th scope="col">{copy.figures.draft}</th>
-									<th scope="col" class="status-col">{copy.figures.status}</th>
+									<th scope="col" class="status-col past">{copy.figures.status}</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -828,6 +829,11 @@
 		font-size: var(--t-base);
 		color: var(--text-muted);
 	}
+	.figures-legend {
+		margin-block: var(--s-4) var(--s-2);
+		font-size: var(--t-sm);
+		line-height: 1.5;
+	}
 	/* The revenue block sits inside the figures section: same subject, second table. */
 	.revenue {
 		display: grid;
@@ -1069,6 +1075,13 @@
 		font-size: var(--t-xs);
 		white-space: nowrap;
 		color: var(--text-secondary);
+	}
+	/* The draft status is a sentence now, not a two-word tag: let it wrap in the
+	   narrow status column and in the phone row header instead of overflowing. */
+	.status-col .chip,
+	.chip.status-mobile {
+		white-space: normal;
+		line-height: 1.25;
 	}
 	.example {
 		margin-block-start: var(--s-9);

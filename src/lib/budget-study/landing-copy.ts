@@ -68,6 +68,7 @@ export interface LandingCopy {
 		system: string;
 		draft: string;
 		status: string;
+		auditLegend: string;
 		madeOf: string;
 		madeOfNote: string;
 		less: string;
@@ -171,11 +172,12 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 		figures: {
 			system: 'Board line',
 			draft: 'Draft, MD',
-			status: 'Status',
+			status: '2027 draft',
 			madeOf: 'Made of',
 			madeOfNote: 'The composition notes are in English until the translation pass.',
 			less: 'less',
-			chip: { 'draft-press': 'Press, not verified', 'draft-derived': 'Derived, not verified', 'draft-plf': 'Draft law', 'adopted-lf': 'Adopted law' },
+			chip: { 'draft-press': '2027 draft: press, not verified', 'draft-derived': '2027 draft: derived, not verified', 'draft-plf': '2027 draft: draft law, not verified', 'adopted-lf': 'Adopted: verified' },
+			auditLegend: 'Adopted years are verified against the Journal Officiel; hover a figure for its page. d = derived from verified rows; 1 = read once, not counted as verified.',
 			sources: 'Every row of the figures file, with its source',
 			locked: 'Owed, does not move',
 			total: 'Total',
@@ -379,11 +381,12 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 		figures: {
 			system: 'Ligne du plateau',
 			draft: 'Projet, MD',
-			status: 'Statut',
+			status: 'Projet 2027',
 			madeOf: 'Composée de',
 			madeOfNote: "Les notes de composition sont en anglais jusqu'à la passe de traduction.",
 			less: 'moins',
-			chip: { 'draft-press': 'Presse, non vérifié', 'draft-derived': 'Calculé, non vérifié', 'draft-plf': 'Projet de loi', 'adopted-lf': 'Loi adoptée' },
+			chip: { 'draft-press': 'Projet 2027 : presse, non vérifié', 'draft-derived': 'Projet 2027 : calculé, non vérifié', 'draft-plf': 'Projet 2027 : projet de loi, non vérifié', 'adopted-lf': 'Loi adoptée : vérifiée' },
+			auditLegend: 'Les années adoptées sont vérifiées au Journal officiel ; survolez un chiffre pour voir sa page. d = calculé à partir de lignes vérifiées ; 1 = lu une seule fois, non compté comme vérifié.',
 			sources: 'Chaque ligne du fichier des chiffres, avec sa source',
 			locked: 'Dû, ne bouge pas',
 			total: 'Total',
@@ -587,11 +590,12 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 		figures: {
 			system: 'بند اللوحة',
 			draft: 'المشروع، م.د',
-			status: 'الوضع',
+			status: 'مشروع 2027',
 			madeOf: 'يتكوّن من',
 			madeOfNote: 'ملاحظات التكوين بالإنجليزية إلى حين مراجعة الترجمة.',
 			less: 'ناقص',
-			chip: { 'draft-press': 'الصحافة، غير متحقّق', 'draft-derived': 'محسوب، غير متحقّق', 'draft-plf': 'مشروع القانون', 'adopted-lf': 'القانون المصادق عليه' },
+			chip: { 'draft-press': 'مشروع 2027: الصحافة، غير متحقّق', 'draft-derived': 'مشروع 2027: محسوب، غير متحقّق', 'draft-plf': 'مشروع 2027: مشروع القانون، غير متحقّق', 'adopted-lf': 'القانون المصادق عليه: متحقّق منه' },
+			auditLegend: 'السنوات المعتمدة متحقَّق منها في الرائد الرسمي؛ مرّر المؤشر على رقم لترى صفحته. d = محسوب من بنود متحقَّق منها؛ 1 = قُرئ مرة واحدة ولا يُحتسب متحقَّقًا منه.',
 			sources: 'كلّ صفّ في ملفّ الأرقام، مع مصدره',
 			locked: 'واجب، لا يتحرّك',
 			total: 'المجموع',

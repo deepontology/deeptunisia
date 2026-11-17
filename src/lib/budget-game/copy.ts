@@ -170,7 +170,7 @@ export interface Copy {
 }
 
 const en: Copy = {
-	prototype: 'Prototype · draft figures, not verified',
+	prototype: 'Prototype · 2027 draft figures, not verified',
 	unreviewed: null,
 	title: 'Citizen budget board',
 	status: 'Design prototype. Not fielded. Not collecting.',
@@ -359,7 +359,7 @@ const en: Copy = {
 
 const fr: Copy = {
 	...en,
-	prototype: 'Prototype · chiffres du projet, non vérifiés',
+	prototype: 'Prototype · chiffres du projet 2027, non vérifiés',
 	unreviewed: 'Traduction française provisoire, pas encore relue. Les nouveaux textes (groupes, aide, note de poste, plus grand écart) sont des brouillons intermédiaires.',
 	title: 'Plateau budgétaire du citoyen',
 	status: 'Prototype de conception. Non lancé. Aucune collecte.',
@@ -559,7 +559,7 @@ const fr: Copy = {
 
 const ar: Copy = {
 	...en,
-	prototype: 'نموذج أولي · أرقام المشروع، لم يُتحقق منها',
+	prototype: 'نموذج أولي · أرقام مشروع 2027، لم يُتحقق منها',
 	unreviewed: 'ترجمة عربية مبدئية، لم يراجعها بعد متحدث أصلي. والنصوص الجديدة (المجموعات، والمساعدة، وملاحظة البند، وأكبر تغيير) مسودّات مبدئية.',
 	title: 'لوحة الخزينة للمواطن',
 	status: 'نموذج تصميمي. لم يُطلق. لا يجمع أي بيانات.',

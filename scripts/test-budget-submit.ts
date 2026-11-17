@@ -216,6 +216,9 @@ console.log('\n  ── the page uses the states and the police path is untouche
 			(field) => typeof (one as unknown as Record<string, unknown>)[field] !== 'string'
 		);
 		ok(`the ${locale} landing states are complete`, missing.length === 0 && one.countNote(1).length > 0 && one.countNote(2).length > 0, missing.join(', '));
+		ok(`the ${locale} draft chip names the 2027 draft`, /2027/.test(one.figures.chip['draft-press']) && /2027/.test(one.figures.status), `${one.figures.chip['draft-press']} / ${one.figures.status}`);
+		ok(`the ${locale} audit legend is present`, one.figures.auditLegend.length > 40, one.figures.auditLegend);
+		ok(`the ${locale} board chip names the 2027 draft`, /2027/.test(copyFor(locale).prototype), copyFor(locale).prototype);
 	}
 
 	const studyPage = readFileSync(join(ROOT, 'src/lib/budget-study/BudgetStudy.svelte'), 'utf8');
