@@ -23,8 +23,8 @@ they would keep the draft.
   money flowing. Drag a system onto the purse to take, or the purse onto a system to give. The
   selected system has Take and Give in the dock, and the arrow keys do the same on a focused row.
 - The dock's detail panel, opened with Details, shows the line's 2026 programme rows with their
-  printed page, and three actions: set the line to its 2024 level, set it back to the draft, or
-  set it to zero. Each action is one undo.
+  printed page, and three actions: set it back to the draft, set it to zero, or, as a prototype
+  aid outside the study task, set it to its 2024 level. Each action is one undo.
 - A refused move says why, in words: at zero, at 200% of draft, the purse is empty, or a move
   into itself.
 - The locked block: debt interest and the unforeseen reserve, shown as already spent before the
@@ -62,7 +62,7 @@ control the protocol promised; a finish at zero without a move or a tick is no l
    system. Transfer moves one coin from one system to another, and one undo takes it back.
 3. Finish when the purse is empty (rule A) or within 0.5% of the envelope (rule B), and either a
    move has been made or the keep-draft tick is set.
-4. The detail panel's set actions (2024 level, draft, zero) are exact amounts: the difference
+4. The detail panel's set actions (draft, zero, and the prototype 2024 aid) are exact amounts: the difference
    comes from or goes to the purse, and one undo takes the whole action back. A set above the
    purse is refused; a set above 200% is clamped.
 5. Keep the draft sets every system to the draft and is recorded.
@@ -113,9 +113,11 @@ page, every year adding up to the law's total to the dinar. They are the budgets
 as spent, in dinars of each year (not adjusted for inflation). Every mission lands on exactly
 one board line. Subsidies are not a mission in those laws, so the board reads them as the energy
 programme of Industry, Mines and Energy plus the domestic trade programme of Commerce. The 2027
-memo covers all subsidy types; the past years count the two programmes that hold most of them,
-so the 2026 to 2027 step is a change of basket as well as a policy change. The board says so in
-visible text under the legend, not in a tooltip alone. 2018 is not shown: its tableau C is
+memo covers all subsidy types; the past years count the two programmes that hold most of them.
+The memo sits inside the Industry and Trade lines, so energy can only fall between 7,617.4 and
+7,890.2 MD, and the apportionment is within about 140 MD of any split that keeps both lines
+non-negative. The 2027 memo is a press total; past years are two programme lines. The board says
+so in visible text under the legend, not in a tooltip alone. 2018 is not shown: its tableau C is
 organised by ministry chapter, it includes debt principal, and it has no programme split, so it
 cannot sit on the same bars honestly. 2015 was not sourced.
 

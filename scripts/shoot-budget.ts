@@ -178,6 +178,9 @@ async function checkBoard(
 			for (const a of spans) for (const b of spans) {
 				if (a !== b && b.includes(a)) fail(`${name} legend repeat`, `"${a}" is printed inside another visible note`);
 			}
+			const deskLegend = (await page.locator('.board .legend-notes').innerText()).replace(/\s+/g, ' ');
+			if (/change of basket|changement de panier|تغيّر السلة/i.test(deskLegend)) fail(`${name} basket claim`, 'the legend still claims a change of basket');
+			if (!/7,617\.4/.test(deskLegend)) fail(`${name} containment`, 'the desk legend does not state the containment bound');
 		}
 
 		const legendText = (await page.locator('.board .legend-notes').innerText()).replace(/\s+/g, ' ');
@@ -209,6 +212,10 @@ async function checkBoard(
 		await page.locator('.board .detail').waitFor({ state: 'visible' });
 		const programmeRows = await page.locator('.board .detail-mission').count();
 		if (programmeRows < 1) fail(`${name} detail`, 'the subsidy detail panel has no 2026 programme rows');
+		const firstAction = (await page.locator('.board .detail-action:visible').first().innerText()).trim();
+		if (!(locale === 'ar' ? /أداة نموذج أولي/ : /prototype aid/i).test(firstAction)) {
+			fail(`${name} 2024 aid`, `the 2024 action reads "${firstAction}", not a prototype aid`);
+		}
 		if (locale === 'ar') {
 			const pageRef = page.locator('.board .detail-page:visible').first();
 			const pageText = (await pageRef.innerText()).trim();
@@ -386,6 +393,13 @@ async function checkLanding(
 		await page.screenshot({ path: join(OUT, `landing-${size.label}-${locale}.png`) });
 
 		await assertNoHorizontalScroll(page, name);
+
+		const method = (await page.locator('#sec-method').innerText()).replace(/\s+/g, ' ');
+		const floorPending =
+			locale === 'ar'
+				? /تعديل مقترح/.test(method) && /بانتظار تأكيد/.test(method)
+				: /proposed amendment/i.test(method) && /pending the owner/i.test(method);
+		if (!floorPending) fail(`${name} floor status`, 'the method does not mark the 300 floor as a proposed amendment pending the owner');
 
 		const live = page.locator('[data-testid="try-board"] .rows button:not([disabled])');
 		const candidates = await live.count();

@@ -234,7 +234,7 @@ rows:
     amount_md: 7712.588
     status: draft-derived
     memo: true
-    source: "Derived in this file. 11,846 MD memo (Espace Manager 9 Nov 2026) apportioned between the two lines that contain it, Industry 7,890.2 and Trade 4,228.6 (both press, 21 Oct 2026), in proportion to those totals: 11,846 x 7,890.2 / 12,118.8 = 7,712.588. The 2027 split by type has not been reported. The 2024 and 2025 laws split 66.5% energy and 65.3% energy, close to this 65.1%."
+    source: "Derived in this file. 11,846 MD memo (Espace Manager 9 Nov 2026) apportioned between the two lines that contain it, Industry 7,890.2 and Trade 4,228.6 (both press, 21 Oct 2026), in proportion to those totals: 11,846 x 7,890.2 / 12,118.8 = 7,712.588. The 2027 split by type has not been reported. The memo sits inside Industry and Trade, so energy can only fall between 7,617.4 and 7,890.2 MD; the apportionment is within about 140 MD of any split that keeps both lines non-negative. The 2027 memo is a press total; past years are two programme lines."
     url: null
     page: null
   - id: subsidies_food_2027

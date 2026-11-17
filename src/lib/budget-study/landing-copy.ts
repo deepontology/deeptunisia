@@ -175,7 +175,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 				heading: 'One board, one coin, no score',
 				body: [
 					'Each system shows two bars on one scale: the state’s 2027 plan, and yours. Thin bars above them show the adopted budgets of past years, oldest first. Drag one system onto another and a coin of 100 MD moves between them. Money you take and have not placed waits in the purse, and you finish when the purse is empty.',
-					'Nothing is scored or ranked. A line can be opened for its 2026 programmes, and set to its 2024 level, to zero, or back to the draft. Keeping the plan as it is counts as an answer: tick that you would keep it, and Finish opens.'
+					'Nothing is scored or ranked. A line can be opened for its 2026 programmes, and set to zero or back to the draft; a prototype aid also sets it to its 2024 level, outside the study task. Keeping the plan as it is counts as an answer: tick that you would keep it, and Finish opens.'
 				]
 			},
 			{
@@ -195,7 +195,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 				heading: 'How the answers will be read',
 				body: [
 					'For each line: the share of respondents who would give it more, the same, or less than its plan, and the median change with its interquartile range. The average budget submitted, with a bootstrap interval. A consensus measure. A result without the largest link channel.',
-					'Results are shown only above 300 valid answers, and no cell under 20 is shown. The number of valid answers and the fielding dates lead the results page, not a footnote. Population: among respondents to an open, self-selected online survey of adults. Results describe the people who took part, not the country as a whole.'
+					'Results are shown only above 300 valid answers, and no cell under 20 is shown. The 300 floor is a proposed amendment, dated 16 November 2026, pending the owner\'s confirmation; it was raised from 100 before any data exist. The number of valid answers and the fielding dates lead the results page, not a footnote. Population: among respondents to an open, self-selected online survey of adults. Results describe the people who took part, not the country as a whole.'
 				]
 			},
 			{
@@ -376,7 +376,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 				heading: 'Comment les réponses seront lues',
 				body: [
 					'Pour chaque ligne : la part des répondants qui lui donneraient plus, autant ou moins que son projet, et l’écart médian avec son intervalle interquartile. Le budget moyen soumis, avec un intervalle bootstrap. Une mesure de consensus. Un résultat sans le plus grand canal de lien.',
-					'Les résultats ne sont affichés qu’au-dessus de 300 réponses valides, et aucune cellule de moins de 20 n’est montrée. Le nombre de réponses valides et les dates de terrain ouvrent la page de résultats, pas une note de bas de page. Population : parmi les répondants à une enquête en ligne ouverte et auto-sélectionnée auprès d’adultes. Les résultats décrivent les personnes qui ont participé, pas le pays dans son ensemble.'
+					'Les résultats ne sont affichés qu’au-dessus de 300 réponses valides, et aucune cellule de moins de 20 n’est montrée. Le seuil de 300 est un amendement proposé, daté du 16 novembre 2026, en attente de la confirmation du commanditaire ; il a été relevé de 100 avant que des données existent. Le nombre de réponses valides et les dates de terrain ouvrent la page de résultats, pas une note de bas de page. Population : parmi les répondants à une enquête en ligne ouverte et auto-sélectionnée auprès d’adultes. Les résultats décrivent les personnes qui ont participé, pas le pays dans son ensemble.'
 				]
 			},
 			{
@@ -557,7 +557,7 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 				heading: 'كيف ستُقرأ الإجابات',
 				body: [
 					'لكلّ بند: نسبة المستجيبين الذين سيعطونه أكثر أو مثله أو أقلّ من مشروعه، والتغيّر الوسيط مع مداه الربيعي. والميزانية المتوسّطة المقدَّمة، مع مجال ثقة بطريقة bootstrap. ومقياس توافق. ونتيجة دون أكبر قناة ربط.',
-					'لا تُعرض النتائج إلّا فوق 300 إجابة صالحة، ولا تُعرض أيّ خليّة أقلّ من 20. وعدد الإجابات الصالحة وتواريخ العمل الميداني تتصدّر صفحة النتائج، لا هامشها. المجتمع: بين المستجيبين لاستبيان إلكتروني مفتوح وقائم على الانتقاء الذاتي للبالغين. تصف النتائج الأشخاص الذين شاركوا، لا البلد في مجموعه.'
+					'لا تُعرض النتائج إلّا فوق 300 إجابة صالحة، ولا تُعرض أيّ خليّة أقلّ من 20. وسقف 300 تعديل مقترح، بتاريخ 16 نوفمبر 2026، بانتظار تأكيد صاحب الدراسة؛ وقد رُفع من 100 قبل وجود أي بيانات. وعدد الإجابات الصالحة وتواريخ العمل الميداني تتصدّر صفحة النتائج، لا هامشها. المجتمع: بين المستجيبين لاستبيان إلكتروني مفتوح وقائم على الانتقاء الذاتي للبالغين. تصف النتائج الأشخاص الذين شاركوا، لا البلد في مجموعه.'
 				]
 			},
 			{
