@@ -440,7 +440,13 @@ async function checkRoundTrip(
 		await page.screenshot({ path: join(OUT, `result-${size.label}-${locale}.png`), fullPage: true });
 		await assertNoHorizontalScroll(page, name);
 
-		assertNoPageErrors(errors, name);
+		// The design study answers the submit with 409. The card says "not open"
+		// and stores nothing, but the browser still logs the refused resource.
+		// That one line is the refusal this run tests, not a page failure.
+		assertNoPageErrors(
+			errors.filter((e) => !/status of 409 \(Conflict\)/.test(e)),
+			name
+		);
 		ok(`${name}: Back kept Health at ${healthAfter} MD, result shows 2 changed systems and 300 MD moved`);
 	} finally {
 		await context.close();
