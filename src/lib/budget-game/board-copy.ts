@@ -22,6 +22,21 @@ export interface BoardCopy {
 	lockedBody: (debt: string, reserve: string) => string;
 	legendPlan: string;
 	legendYours: string;
+	/** The compared past year, named on the legend and in the row's aria label. */
+	legendPast: (year: string) => string;
+	legendPastNone: string;
+	/** The trend chart sheet. */
+	chartOpen: string;
+	chartHeading: string;
+	/** The label of the citizen's point on the chart: short enough for one column. */
+	chartYou: string;
+	chartHint: string;
+	chartChange: (from: string, pct: string) => string;
+	chartAria: (list: string) => string;
+	/** The budget-wide tax dependence of the compared year, on the board and in the chart. */
+	taxLine: (year: string, per100: string, covered: string) => string;
+	taxDefinition: string;
+	taxPage: (page: string) => string;
 	scale: (max: string) => string;
 	howTo: Record<MoveRule, string>;
 	keys: string;
@@ -70,7 +85,7 @@ export interface BoardCopy {
 	draftYear: string;
 	since: (year: string) => string;
 	historyNote: string;
-	historyAria: (list: string) => string;
+	historyAria: (year: string, amount: string, unit: string) => string;
 	/** Lines whose past years are built differently from 2027, and why. */
 	historyCaveat: Partial<Record<'subsidies_energy' | 'subsidies_food' | 'energy_trade' | 'rest' | 'police' | 'environment', string>>;
 	/** Visible text under the legend: past years are nominal dinars and the 2027 subsidy split is derived. */
@@ -117,9 +132,20 @@ const en: BoardCopy = {
 	coinNote: { coin: 'One coin is 100 MD.', step: 'One step is 5% of a system’s plan.' },
 	lockedTitle: 'Spent before you start',
 	lockedBody: (debt, reserve) => `Debt interest ${debt} MD and the unforeseen reserve ${reserve} MD are owed. They cannot be moved.`,
-	legendPlan: 'State plan 2027 (draft)',
+	legendPlan: '2027 draft',
 	legendYours: 'Yours',
-	scale: (max) => `One scale for every system, 0 to ${max} MD`,
+	legendPast: (year) => `${year} law`,
+	legendPastNone: 'No past year',
+	chartOpen: 'Year by year chart',
+	chartHeading: 'Year by year',
+	chartYou: 'You',
+	chartHint: 'Choose a year to compare it in the rows.',
+	chartChange: (from, pct) => `From ${from} to the 2027 draft: ${pct} (nominal)`,
+	chartAria: (list) => `Year by year: ${list}.`,
+	taxLine: (year, per100, covered) => `${year}: tax was ${per100} dinars of every 100 the state raised itself, and covered ${covered}% of spending.`,
+	taxDefinition: 'Tax per 100 raised is tax receipts divided by tax plus non-tax receipts; grants and borrowing are not money the state raises itself. Spending covered by tax is tax receipts divided by the credits of the same law.',
+	taxPage: (page) => `Article premier and Article 2, p. ${page}.`,
+	scale: (max) => `One scale, 0 to ${max} MD`,
 	howTo: {
 		coin: 'Drag one system onto another to move 100 MD. Keep holding to keep money flowing. Or choose a system and use Take and Give.',
 		step: 'Drag one system onto another to move one step. The difference between the two steps stays in the purse.'
@@ -177,7 +203,7 @@ const en: BoardCopy = {
 	draftYear: '2027 draft',
 	since: (y) => `Since ${y}:`,
 	historyNote: 'Past years are the budgets as voted in each finance law (Journal Officiel, tableau C). Dinars of each year, not adjusted for inflation.',
-	historyAria: (l) => `Past years: ${l}.`,
+	historyAria: (year, amount, unit) => `${year} adopted law: ${amount} ${unit}.`,
 	historyCaveat: {
 		subsidies_energy: 'Past years count the energy programme of Industry, Mines and Energy, which holds most fuel and electricity subsidies. The 2027 split between fuel and food is derived, not reported.',
 		subsidies_food: 'Past years count the domestic trade programme of Commerce, which holds most basic food subsidies. The 2027 split between fuel and food is derived, not reported.',
@@ -211,7 +237,7 @@ const en: BoardCopy = {
 	setRefused: (amount) => `The purse holds ${amount} MD. That change needs more.`,
 	historyNominal: (pct) => `Since 2024: ${pct}% (nominal)`,
 	howToPhone: 'Tap a system, then hold Take. Or drag one system onto another on a desk.',
-	yearLegend: 'Dots: past years, oldest first. The mark is the 2027 draft.'
+	yearLegend: 'The vertical mark is the 2027 draft level.'
 };
 
 const fr: BoardCopy = {
@@ -226,9 +252,20 @@ const fr: BoardCopy = {
 	coinNote: { coin: 'Une pièce vaut 100 MD.', step: 'Un pas vaut 5 % du projet du poste.' },
 	lockedTitle: 'Dépensé avant de commencer',
 	lockedBody: (d, r) => `Les intérêts de la dette (${d} MD) et la réserve pour imprévus (${r} MD) sont dus. Ils ne bougent pas.`,
-	legendPlan: 'Projet de l’État 2027',
+	legendPlan: 'Projet 2027',
 	legendYours: 'Le vôtre',
-	scale: (m) => `Une seule échelle pour tous les postes, de 0 à ${m} MD`,
+	legendPast: (year) => `Loi ${year}`,
+	legendPastNone: 'Aucune année passée',
+	chartOpen: 'Courbe année par année',
+	chartHeading: 'Année par année',
+	chartYou: 'Vous',
+	chartHint: 'Choisissez une année pour la comparer dans les lignes.',
+	chartChange: (from, pct) => `De ${from} au projet 2027 : ${pct} (nominal)`,
+	chartAria: (list) => `Année par année : ${list}.`,
+	taxLine: (year, per100, covered) => `${year} : l'impôt représentait ${per100} dinars sur 100 que l'État prélève lui-même, et couvrait ${covered} % des dépenses.`,
+	taxDefinition: "L'impôt pour 100 prélevés est l'impôt divisé par l'impôt plus les recettes non fiscales ; les dons et l'emprunt ne sont pas de l'argent que l'État prélève lui-même. La part des dépenses couverte par l'impôt est l'impôt divisé par les crédits de la même loi.",
+	taxPage: (page) => `Article premier et article 2, p. ${page}.`,
+	scale: (m) => `Une échelle, de 0 à ${m} MD`,
 	howTo: {
 		coin: 'Glissez un poste sur un autre pour déplacer 100 MD. Maintenez pour continuer. Ou choisissez un poste et utilisez Retirer et Verser.',
 		step: 'Glissez un poste sur un autre pour déplacer un pas. L’écart entre les deux pas reste dans la bourse.'
@@ -286,7 +323,7 @@ const fr: BoardCopy = {
 	draftYear: 'Projet 2027',
 	since: (y) => `Depuis ${y} :`,
 	historyNote: "Les années passées sont les budgets votés dans chaque loi de finances (Journal officiel, tableau C). Dinars de chaque année, sans correction de l'inflation.",
-	historyAria: (l) => `Années passées : ${l}.`,
+	historyAria: (year, amount, unit) => `Loi adoptée de ${year} : ${amount} ${unit}.`,
 	historyCaveat: {
 		subsidies_energy: "Pour les années passées : le programme énergie de l'Industrie, des Mines et de l'Énergie, qui porte l'essentiel du soutien au carburant et à l'électricité. La répartition 2027 entre carburant et alimentation est dérivée, non publiée.",
 		subsidies_food: "Pour les années passées : le programme commerce intérieur du Commerce, qui porte l'essentiel du soutien alimentaire. La répartition 2027 entre carburant et alimentation est dérivée, non publiée.",
@@ -320,7 +357,7 @@ const fr: BoardCopy = {
 	setRefused: (amount) => `La bourse contient ${amount} MD. Ce changement en demande plus.`,
 	historyNominal: (pct) => `Depuis 2024 : ${pct} % (nominal)`,
 	howToPhone: 'Touchez un poste, puis maintenez Retirer. Ou glissez un poste sur un autre sur un ordinateur.',
-	yearLegend: 'Points : années passées, de la plus ancienne à la plus récente. Le repère est le projet 2027.'
+	yearLegend: 'Le repère vertical est le niveau du projet 2027.'
 };
 
 const ar: BoardCopy = {
@@ -335,9 +372,20 @@ const ar: BoardCopy = {
 	coinNote: { coin: 'القطعة الواحدة تساوي 100 مليون دينار.', step: 'الخطوة تساوي 5% من مخصص القطاع في المشروع.' },
 	lockedTitle: 'مصروف قبل أن تبدأ',
 	lockedBody: (d, r) => `فوائد الدين (${d} م.د) والاحتياطي للنفقات الطارئة (${r} م.د) واجبة الدفع. لا يمكن تحريكها.`,
-	legendPlan: 'مشروع الدولة 2027',
+	legendPlan: 'مشروع 2027',
 	legendYours: 'توزيعك',
-	scale: (m) => `سلّم واحد لكل القطاعات، من 0 إلى ${m} م.د`,
+	legendPast: (year) => `قانون ${year}`,
+	legendPastNone: 'لا سنة ماضية',
+	chartOpen: 'منحنى سنة بسنة',
+	chartHeading: 'سنة بسنة',
+	chartYou: 'أنت',
+	chartHint: 'اختر سنة لمقارنتها في الأسطر.',
+	chartChange: (from, pct) => `من ${from} إلى مشروع 2027: ${pct} (اسمي)`,
+	chartAria: (list) => `سنة بسنة: ${list}.`,
+	taxLine: (year, per100, covered) => `${year}: كانت الضريبة ${per100} دينارًا من كل 100 دينار تجمعها الدولة بنفسها، وغطّت ${covered}% من النفقات.`,
+	taxDefinition: 'الضريبة من كل 100 دينار مجمّعة هي الضريبة مقسومة على الضريبة زائد الإيرادات غير الجبائية؛ والهبات والاقتراض ليست أموالًا تجمعها الدولة بنفسها. وحصة النفقات التي تغطيها الضريبة هي الضريبة مقسومة على اعتمادات القانون نفسه.',
+	taxPage: (page) => `الفصل الأول والفصل 2، ص. ${page}.`,
+	scale: (m) => `سلّم واحد، من 0 إلى ${m} م.د`,
 	howTo: {
 		coin: 'اسحب قطاعًا وأفلته على قطاع آخر لنقل 100 م.د. واصل الضغط ليستمر النقل. أو اختر قطاعًا واستعمل «خذ» و«أعطِ».',
 		step: 'اسحب قطاعًا وأفلته على قطاع آخر لنقل خطوة واحدة. يبقى الفرق بين الخطوتين في المحفظة.'
@@ -395,7 +443,7 @@ const ar: BoardCopy = {
 	draftYear: 'مشروع 2027',
 	since: (y) => `منذ ${y}:`,
 	historyNote: 'السنوات الماضية هي الميزانيات كما صودق عليها في كل قانون مالية (الرائد الرسمي، جدول نفقات ميزانية الدولة). بدنانير كل سنة، دون احتساب التضخّم.',
-	historyAria: (l) => `السنوات الماضية: ${l}.`,
+	historyAria: (year, amount, unit) => `قانون ${year} المصادق عليه: ${amount} ${unit}.`,
 	historyCaveat: {
 		subsidies_energy: 'للسنوات الماضية: برنامج الطاقة في وزارة الصناعة والمناجم والطاقة، وفيه معظم دعم المحروقات والكهرباء. تقسيم 2027 بين المحروقات والغذاء مشتقّ وغير منشور.',
 		subsidies_food: 'للسنوات الماضية: برنامج التجارة الداخلية في وزارة التجارة، وفيه معظم الدعم الغذائي. تقسيم 2027 بين المحروقات والغذاء مشتقّ وغير منشور.',
@@ -429,7 +477,7 @@ const ar: BoardCopy = {
 	setRefused: (amount) => `في المحفظة ${amount} م.د. هذا التغيير يحتاج أكثر.`,
 	historyNominal: (pct) => `منذ 2024: ${pct}% (اسمي)`,
 	howToPhone: 'اختر بندًا، ثم اضغط مطوّلًا على «خذ». أو اسحب بندًا على آخر على الحاسوب.',
-	yearLegend: 'نقاط: السنوات الماضية، من الأقدم إلى الأحدث. العلامة هي مشروع 2027.'
+	yearLegend: 'العلامة العمودية هي مستوى مشروع 2027.'
 };
 
 const COPY: Record<Locale, BoardCopy> = { en, fr, ar };

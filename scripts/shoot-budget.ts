@@ -1,7 +1,7 @@
 /**
  * Mobile and one-screen check for the citizen budget study and prototype.
  *
- * Drives a real browser at desktop and phone size, in English and Arabic:
+ * Drives a real browser at desktop and phone size, in English, French and Arabic:
  * the prototype board must fit one screen with no page scroll, no horizontal
  * scroll, 44px buttons on a phone, and the default draft start must hold zero
  * in the purse (?start=empty must hold the whole envelope). The study page must not
@@ -36,7 +36,7 @@ const SIZES: Size[] = [
 	{ label: '820x1180', width: 820, height: 1180, dpr: 1 },
 	{ label: '390x844', width: 390, height: 844, dpr: 2 }
 ];
-const LOCALES = ['en', 'ar'] as const;
+const LOCALES = ['en', 'fr', 'ar'] as const;
 type Locale = (typeof LOCALES)[number];
 
 class Failure extends Error {}
@@ -180,9 +180,13 @@ async function checkBoard(
 			}
 			const deskLegend = (await page.locator('.board .legend-notes').innerText()).replace(/\s+/g, ' ');
 			if (/change of basket|changement de panier|تغيّر السلة/i.test(deskLegend)) fail(`${name} basket claim`, 'the legend still claims a change of basket');
-			if (!/7,617\.4/.test(deskLegend)) fail(`${name} containment`, 'the desk legend does not state the containment bound');
-			if (!/177\.6/.test(deskLegend)) fail(`${name} containment`, 'the desk legend does not state the 177.6 MD worst case');
-			const conditional = locale === 'ar' ? /إذا كانت مذكرة/.test(deskLegend) : /if the 2027 memo sits/i.test(deskLegend);
+			/* French copy writes its own decimal comma and thin space grouping. */
+			const bound = locale === 'fr' ? /7\s?617,4/ : /7,617\.4/;
+			const worst = locale === 'fr' ? /177,6/ : /177\.6/;
+			if (!bound.test(deskLegend)) fail(`${name} containment`, 'the desk legend does not state the containment bound');
+			if (!worst.test(deskLegend)) fail(`${name} containment`, 'the desk legend does not state the 177.6 MD worst case');
+			const conditional =
+				locale === 'ar' ? /إذا كانت مذكرة/.test(deskLegend) : locale === 'fr' ? /si la note 2027 se situe/i.test(deskLegend) : /if the 2027 memo sits/i.test(deskLegend);
 			if (!conditional) fail(`${name} containment`, 'the desk legend states containment as a fact, not an assumption');
 		}
 
@@ -216,7 +220,8 @@ async function checkBoard(
 		const programmeRows = await page.locator('.board .detail-mission').count();
 		if (programmeRows < 1) fail(`${name} detail`, 'the subsidy detail panel has no 2026 programme rows');
 		const firstAction = (await page.locator('.board .detail-action:visible').first().innerText()).trim();
-		if (!(locale === 'ar' ? /أداة نموذج أولي/ : /prototype aid/i).test(firstAction)) {
+		const aidWord = locale === 'ar' ? /أداة نموذج أولي/ : locale === 'fr' ? /aide au prototype/i : /prototype aid/i;
+		if (!aidWord.test(firstAction)) {
 			fail(`${name} 2024 aid`, `the 2024 action reads "${firstAction}", not a prototype aid`);
 		}
 		if (locale === 'ar') {
@@ -265,16 +270,47 @@ async function checkBoard(
 			touch = ', all board buttons >= 44px';
 		}
 
-		// Past years: thin bars on every system, on by default, and the switches change them.
+		// Past years: one compared year as a real bar in every row, three bars per
+		// row, and the chart icon opens the trajectory. The dots are gone.
 		const rowsShown = await page.locator('.board [data-drop]:not([data-drop="purse"])').count();
-		const pastBars = await page.locator('.board .slot .past-dot').count();
-		if (rowsShown !== 27 || pastBars !== 27 * 6) fail(`${name} past years`, `${rowsShown} systems, ${pastBars} past dots, expected 27 systems and 162 dots`);
-		const before = pastBars;
-		const yearSwitch = size.width <= 720 ? page.locator('.board .years-tool') : page.locator('.board .year').first();
-		await yearSwitch.click();
-		const after = await page.locator('.board .slot .past-dot').count();
-		if (!(after < before)) fail(`${name} past years`, `switching a year off left ${after} of ${before} bars`);
-		await yearSwitch.click();
+		const pastBars = await page.locator('.board .slot .bar.year').count();
+		if (rowsShown !== 27 || pastBars !== 27) fail(`${name} past years`, `${rowsShown} systems, ${pastBars} past bars, expected 27 systems and one compared bar each`);
+		if ((await page.locator('.board .slot .past-dot').count()) !== 0) fail(`${name} past years`, 'the old dots are still drawn');
+		const legendKeys = (await page.locator('.board .legend .key').allInnerTexts()).map((s) => s.trim());
+		if (legendKeys.length !== 3) fail(`${name} legend`, `${legendKeys.length} legend keys, expected three: the past year, the 2027 draft, yours`);
+		if (!legendKeys.some((k) => /20\d\d/.test(k))) fail(`${name} legend`, `no legend key names the compared year: ${legendKeys.join(' | ')}`);
+		// The chart: the chosen line across every adopted year and the draft, plus yours.
+		const chartButton = size.width <= 720 ? page.locator('.board .years-tool') : page.locator('.board .chart-btn');
+		await chartButton.click();
+		const sheet = page.locator('.board .chart-overlay');
+		await sheet.waitFor({ state: 'visible' });
+		const points = await sheet.locator('.plot .dot').count();
+		const chips = await sheet.locator('.chips .chip').count();
+		if (points !== 8 || chips !== 6) fail(`${name} chart`, `${points} points and ${chips} year chips, expected 8 points (six laws, the draft, yours) and 6 chips`);
+		const figure = (await sheet.locator('.figure').innerText()).replace(/\s+/g, ' ');
+		if ((await sheet.locator('.plot .val.mine').count()) !== 1) fail(`${name} chart`, 'the citizen point has no value label');
+		const mineLabel = ((await sheet.locator('.plot .val.mine').textContent()) ?? '').trim();
+		if (!/\d/.test(mineLabel)) fail(`${name} chart`, 'the citizen point label carries no number');
+		if (!figure.includes(mineLabel)) fail(`${name} chart`, `the summary "${figure}" does not carry the citizen's amount ${mineLabel}`);
+		// A phone picks the compared year inside the chart; a desk switches it on the chip row.
+		const pick = size.width <= 720 ? sheet.locator('.chips .chip').nth(0) : page.locator('.board .legend .year').nth(0);
+		const beforePick = await page.locator('.board .slot .bar.year').count();
+		if (size.width <= 720) {
+			await pick.click();
+			await sheet.locator('.detail-close').click();
+			await sheet.waitFor({ state: 'hidden' });
+			if ((await page.locator('.board .slot .bar.year').count()) !== beforePick) fail(`${name} past years`, 'picking a year in the chart dropped the row bars');
+		} else {
+			await page.locator('.board .chart-overlay .detail-close').click();
+			await sheet.waitFor({ state: 'hidden' });
+			const firstYear = page.locator('.board .legend .year').nth(0);
+			if ((await firstYear.getAttribute('aria-pressed')) === 'true') {
+				await firstYear.click();
+				if ((await page.locator('.board .slot .bar.year').count()) !== 0) fail(`${name} past years`, 'clearing the compared year left bars behind');
+				await firstYear.click();
+			}
+			if ((await page.locator('.board .slot .bar.year').count()) !== beforePick) fail(`${name} past years`, 'switching the year dropped the row bars');
+		}
 		// Names: no mid-word break and no more than two lines at any tested width.
 		const nameIssues = await page.evaluate(() => {
 			const out: string[] = [];
@@ -300,7 +336,7 @@ async function checkBoard(
 		if (nameIssues.length > 0) fail(`${name} names`, nameIssues.join(' | '));
 
 		assertNoPageErrors(errors, name);
-		ok(`${name}: board visible, no page scroll (${m.scrollHeight}/${m.innerHeight}), no h-scroll, purse ${purse} MD${touch}, 27 systems with past years, names at most 2 lines and no mid-word breaks`);
+		ok(`${name}: board visible, no page scroll (${m.scrollHeight}/${m.innerHeight}), no h-scroll, purse ${purse} MD${touch}, 27 systems with a compared year bar, a chart of 8 points, names at most 2 lines and no mid-word breaks`);
 	} finally {
 		await context.close();
 	}
@@ -401,7 +437,9 @@ async function checkLanding(
 		const floorPending =
 			locale === 'ar'
 				? /تعديل مقترح/.test(method) && /بانتظار تأكيد/.test(method) && /الحدّ الأدنى/.test(method) && !/سقف 300/.test(method)
-				: /proposed amendment/i.test(method) && /pending the owner/i.test(method);
+				: locale === 'fr'
+					? /amendement proposé/i.test(method) && /attente de la confirmation/i.test(method)
+					: /proposed amendment/i.test(method) && /pending the owner/i.test(method);
 		if (!floorPending) fail(`${name} floor status`, 'the method does not mark the 300 floor as a proposed amendment pending the owner');
 
 		const live = page.locator('[data-testid="try-board"] .rows button:not([disabled])');

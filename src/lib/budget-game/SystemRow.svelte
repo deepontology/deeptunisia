@@ -18,21 +18,13 @@
 <script lang="ts">
 	import type { Direction } from './diff';
 
-	/** One point of a line's history: a past year's law, or the 2027 draft. */
-	export interface TrendPoint {
-		year: number;
-		md: number;
-		draft: boolean;
-		derived?: boolean;
-	}
-
 	/**
-	 * One system on the board: its name, two bars on the board's common scale
-	 * (the state's 2027 plan as a filled reference, the citizen's allocation in
+	 * One system on the board: its name, three bars on the board's common scale
+	 * (the compared past year, the state's 2027 plan, the citizen's allocation in
 	 * the accent), a mark at the plan, and the difference in MD and per cent.
-	 * Past years are thin bars on the same track, oldest first, so the history
-	 * and the 2027 draft can be read together at a glance. Direction is carried
-	 * by the sign and the word, never by colour alone.
+	 * The past year is the one the year chips compare, not a series: the series
+	 * lives in the trend chart. Direction is carried by the sign and the word,
+	 * never by colour alone.
 	 */
 	let {
 		id,
@@ -49,7 +41,8 @@
 		source = false,
 		refused = false,
 		pan = false,
-		trend = [],
+		past = null,
+		unit = '',
 		planDerived = false
 	}: {
 		id: string;
@@ -67,14 +60,15 @@
 		refused?: boolean;
 		/** On a page that scrolls, let a touch pan the page; buttons move the money there. */
 		pan?: boolean;
-		/** Past years shown and the 2027 draft, oldest first. Empty hides the history bars. */
-		trend?: TrendPoint[];
+		/** The compared past year, drawn above the plan. Null draws no third bar. */
+		past?: { year: number; md: number } | null;
+		/** MD, م.د and so on, for the past bar's title. */
+		unit?: string;
 		/** The 2027 plan is a derived split, not a reported figure. */
 		planDerived?: boolean;
 	} = $props();
 
-	const past = $derived(trend.filter((p) => !p.draft));
-	const sparkTitle = $derived(trend.map((p) => `${p.year}${p.draft ? '*' : ''}: ${fmtMd(p.md)}`).join(' · '));
+	const pastTitle = $derived(past ? `${past.year}: ${fmtMd(past.md)} ${unit}` : '');
 
 	const pct = (n: number) => `${Math.min(100, (Math.max(0, n) / scale) * 100)}%`;
 	const over = $derived(yours > scale);
@@ -91,20 +85,9 @@
 		</span>
 	</div>
 	<div class="bars-line">
-		<div class="bars" aria-hidden="true" title={sparkTitle}>
-			{#if past.length}
-				<div class="past" data-count={past.length}>
-					{#each past as p, i (p.year)}
-						<span
-							class="past-dot"
-							class:oldest={i === 0}
-							class:newest={i === past.length - 1}
-							style:inset-inline-start={pct(p.md)}
-							data-year={p.year}
-							title={`${p.year}: ${fmtMd(p.md)}`}
-						></span>
-					{/each}
-				</div>
+		<div class="bars" aria-hidden="true" title={pastTitle}>
+			{#if past}
+				<span class="bar year" style:inline-size={pct(past.md)} data-year={past.year}></span>
 			{/if}
 			<span class="bar plan" class:derived={planDerived} style:inline-size={pct(plan)}></span>
 			<span class="bar mine" class:over style:inline-size={pct(yours)}></span>
@@ -112,13 +95,14 @@
 		</div>
 	</div>
 	<div class="foot num" aria-hidden="true">
+		{#if past}<span>{past.year} {fmtMd(past.md)}</span>{/if}
 		<span>{words.plan} {fmtMd(plan)}</span>
 	</div>
 </div>
 
 <style>
 	.row {
-		--bar-h: var(--s-4);
+		--bar-h: var(--s-3);
 		position: relative;
 		display: grid;
 		grid-template-rows: auto auto auto;
@@ -262,6 +246,12 @@
 		background: var(--text-faint);
 		opacity: 0.55;
 	}
+	/* The compared past year: a solid mid grey, so the pale draft and the accent
+	   stay the two things that matter, and the past reads as the law as voted. */
+	.year {
+		background: var(--text-muted);
+		opacity: 0.7;
+	}
 	.mine {
 		background: var(--accent);
 	}
@@ -274,8 +264,7 @@
 	}
 	.mark {
 		position: absolute;
-		inset-block-start: calc(var(--s-2) * 2);
-		inset-block-end: 0;
+		inset-block: 0;
 		inline-size: 2px;
 		margin-inline-start: -1px;
 		background: var(--text-primary);
@@ -285,46 +274,13 @@
 
 	.foot {
 		display: none;
+		gap: var(--s-4);
+		justify-content: flex-end;
 		font-size: var(--t-xs);
 		color: var(--text-muted);
 	}
 	.bars-line {
 		display: block;
-	}
-	/* Past years: dots on the same common scale, oldest first. One rail, not one bar per year. */
-	.past {
-		position: relative;
-		block-size: 6px;
-		margin-block-end: 2px;
-	}
-	.past::before {
-		content: '';
-		position: absolute;
-		inset-block: 50%;
-		inset-inline: 0;
-		block-size: 1px;
-		background: var(--text-faint);
-		opacity: 0.45;
-	}
-	.past-dot {
-		position: absolute;
-		inset-block: 50%;
-		inline-size: 4px;
-		block-size: 4px;
-		margin-block-start: -2px;
-		margin-inline-start: -2px;
-		border-radius: var(--r-full);
-		background: var(--text-faint);
-		opacity: 0.8;
-	}
-	.past-dot.oldest {
-		background: transparent;
-		box-shadow: inset 0 0 0 1px var(--text-muted);
-		opacity: 1;
-	}
-	.past-dot.newest {
-		background: var(--text-secondary);
-		opacity: 1;
 	}
 	.plan.derived {
 		background: repeating-linear-gradient(135deg, var(--text-faint) 0 2px, transparent 2px 5px);
