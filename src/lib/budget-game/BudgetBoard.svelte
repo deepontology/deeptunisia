@@ -350,7 +350,7 @@
 					<div class="detail-mission">
 						<p class="detail-mission-label">
 							<span lang="fr" dir="ltr">{m.mission.label}</span> <span class="num">{fmtMd(m.mission.total_md)} {t.unit}</span>
-							<span class="detail-page">p. {m.mission.page}</span>
+							<span class="detail-page">{t.pageLabel} {m.mission.page}</span>
 						</p>
 						<ul>
 							{#each m.mission.programmes as p (p.label)}
@@ -421,7 +421,7 @@
 			</button>
 		</div>
 		{#if pastShown.length}
-			<p class="legend-notes"><span>{t.yearLegend}</span> <span>{t.nominalNote}</span> <span>{t.derivedShort}</span> <span class="basket-short">{t.basketShort}</span> <span class="legend-definitions">{t.historyDefinitions}</span></p>
+			<p class="legend-notes"><span>{t.yearLegend}</span> <span>{t.nominalNote}</span> <span class="derived-short">{t.derivedShort}</span> <span class="basket-short">{t.basketShort}</span> <span class="legend-definitions">{t.historyDefinitions}</span></p>
 		{/if}
 
 		{#if view === 'bars'}
@@ -840,6 +840,9 @@
 		content: ' ';
 	}
 	.basket-short {
+		display: none;
+	}
+	.derived-short {
 		display: none;
 	}
 	.key {
@@ -1638,6 +1641,9 @@
 			display: none;
 		}
 		.basket-short {
+			display: inline;
+		}
+		.derived-short {
 			display: inline;
 		}
 		.keep-hint {

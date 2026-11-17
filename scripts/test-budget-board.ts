@@ -286,6 +286,7 @@ for (const [name, text] of [['preregistration', preregText], ['protocol', protoc
 	ok(`the ${name} describes the 100 MD coin`, /100 MD/.test(text));
 	ok(`the ${name} does not describe 5% steps as the study rule`, !/one step at a time|in 5% steps|A step is 5%/i.test(text));
 }
+ok('the instrument names the move-or-tick rule', /you have made a move or you tick/i.test(instrumentText));
 
 console.log(`\n  ${checks - failures}/${checks} checks passed${failures ? `, ${failures} FAILED` : ''}\n`);
 process.exit(failures ? 1 : 0);

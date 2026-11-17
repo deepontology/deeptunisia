@@ -45,6 +45,13 @@ interface Row {
 
 const failures: string[] = [];
 const warnings: string[] = [];
+
+/** PNG width and height, or null when the file is not a PNG. */
+function pngSize(file: string): { w: number; h: number } | null {
+	const b = readFileSync(file);
+	if (b.length < 24 || b[0] !== 0x89 || b.toString('ascii', 1, 4) !== 'PNG') return null;
+	return { w: b.readUInt32BE(16), h: b.readUInt32BE(20) };
+}
 const doc = parse(readFileSync(path, 'utf8')) as { total_md?: unknown; rows?: Row[] };
 
 if (typeof doc.total_md !== 'number') failures.push('total_md must be a number');
@@ -112,13 +119,21 @@ if (!process.argv[2] || process.argv[2].startsWith('--')) {
 	const history = parse(readFileSync(historyPath, 'utf8')) as { years?: Record<string, Year> };
 	const years = Object.entries(history.years ?? {});
 	if (years.length === 0) failures.push('history: no years');
+	let cropPages = 0;
 	for (const [year, y] of years) {
 		if (typeof y.source !== 'string' || typeof y.url !== 'string') failures.push(`history ${year}: source and url are required`);
 		if (typeof y.pdf_sha256 !== 'string' || !/^[a-f0-9]{64}$/.test(y.pdf_sha256)) failures.push(`history ${year}: pdf_sha256 must be a lowercase SHA-256`);
 		if (!y.crops || Object.keys(y.crops).length === 0) failures.push(`history ${year}: at least one kept page crop is required`);
 		for (const [page, file] of Object.entries(y.crops ?? {})) {
 			const full = join(STUDY, file);
-			if (!existsSync(full) || statSync(full).size < 1000) failures.push(`history ${year}: crop for page ${page} is missing or empty (${file})`);
+			if (!existsSync(full) || statSync(full).size < 1000) {
+				failures.push(`history ${year}: crop for page ${page} is missing or empty (${file})`);
+				continue;
+			}
+			const size = pngSize(full);
+			if (!size) failures.push(`history ${year}: crop for page ${page} is not a PNG (${file})`);
+			else if (size.w < 700 || size.h < 1000) failures.push(`history ${year}: crop for page ${page} is not a full page (${size.w}x${size.h}); the footer with the JORT issue, date and page number must be visible`);
+			else cropPages++;
 		}
 		let total = 0;
 		for (const [kind, entries] of [['mission', y.missions ?? {}], ['programme', y.programmes ?? {}]] as const) {
@@ -132,6 +147,7 @@ if (!process.argv[2] || process.argv[2].startsWith('--')) {
 		if (Math.abs(gap) > 0.0005) failures.push(`history ${year}: missions sum to ${total.toFixed(3)}, law total ${y.total_md}`);
 		else console.log(`  ok    ${year}: ${Object.keys(y.missions ?? {}).length} missions sum to the law total, ${y.total_md} MD`);
 	}
+	console.log(`  ok    ${cropPages} page crops are full pages; the JORT issue, date and page number are in frame`);
 
 	/* The 2026 programme detail: every mission's programmes add up to the mission total. */
 	const programmesPath = join(STUDY, 'programmes-2026.yaml');

@@ -168,7 +168,22 @@ async function checkBoard(
 			if (!(await basket.isVisible())) fail(`${name} basket caveat`, 'the basket sentence is not visible at 390');
 			const hint = page.locator('.board .keep-hint');
 			if (!(await hint.isVisible())) fail(`${name} keep hint`, 'the phone does not say what the tick does');
+			if (!(await page.locator('.board .derived-short').isVisible())) fail(`${name} derived note`, 'the short derived note is not visible on a phone');
+		} else {
+			if (await page.locator('.board .derived-short').isVisible()) fail(`${name} derived note`, 'the short derived note duplicates the full definitions on desk');
+			if (!(await page.locator('.board .legend-definitions').isVisible())) fail(`${name} derived note`, 'the full definitions are not visible on desk');
+			const spans = (await page.locator('.board .legend-notes > span:visible').allInnerTexts())
+				.map((s) => s.trim())
+				.filter(Boolean);
+			for (const a of spans) for (const b of spans) {
+				if (a !== b && b.includes(a)) fail(`${name} legend repeat`, `"${a}" is printed inside another visible note`);
+			}
 		}
+
+		const legendText = (await page.locator('.board .legend-notes').innerText()).replace(/\s+/g, ' ');
+		const derivedWord = locale === 'ar' ? /مشتق/g : locale === 'fr' ? /dériv/gi : /derived/gi;
+		const derivedCount = (legendText.match(derivedWord) ?? []).length;
+		if (derivedCount !== 1) fail(`${name} derived note`, `the legend states the derived split ${derivedCount} times, not once`);
 
 		// The explicit keep-draft control: Finish is disabled until a move or the tick.
 		const finish = page.locator('.board .finish');
@@ -194,6 +209,11 @@ async function checkBoard(
 		await page.locator('.board .detail').waitFor({ state: 'visible' });
 		const programmeRows = await page.locator('.board .detail-mission').count();
 		if (programmeRows < 1) fail(`${name} detail`, 'the subsidy detail panel has no 2026 programme rows');
+		if (locale === 'ar') {
+			const pageRef = page.locator('.board .detail-page:visible').first();
+			const pageText = (await pageRef.innerText()).trim();
+			if (!pageText.startsWith('ص.')) fail(`${name} page label`, `the Arabic page reference is "${pageText}", not "ص."`);
+		}
 		if (size.label === '1280x800' || size.label === '1024x768') {
 			const heading = page.locator('.board .detail-title:visible').first();
 			const action = page.locator('.board .detail-action:visible').first();

@@ -91,6 +91,7 @@ export interface BoardCopy {
 	madeOf: string;
 	programmes2026: string;
 	programmesNote: string;
+	pageLabel: string;
 	noProgrammes: string;
 	setTo2024: string;
 	setToDraft: string;
@@ -200,6 +201,7 @@ const en: BoardCopy = {
 	madeOf: 'Made of',
 	programmes2026: 'In the 2026 adopted law',
 	programmesNote: 'Printed programme labels from the French translation.',
+	pageLabel: 'p.',
 	noProgrammes: 'The 2026 programme detail for this line has not been read yet.',
 	setTo2024: 'Set to the 2024 level',
 	setToDraft: 'Set back to the draft',
@@ -308,6 +310,7 @@ const fr: BoardCopy = {
 	madeOf: 'Composé de',
 	programmes2026: 'Dans la loi adoptée de 2026',
 	programmesNote: 'Libellés imprimés de la traduction française.',
+	pageLabel: 'p.',
 	noProgrammes: "Le détail des programmes 2026 de ce poste n'a pas encore été lu.",
 	setTo2024: 'Mettre au niveau de 2024',
 	setToDraft: 'Revenir au projet',
@@ -416,6 +419,7 @@ const ar: BoardCopy = {
 	madeOf: 'يتكوّن من',
 	programmes2026: 'في قانون 2026 المصادق عليه',
 	programmesNote: 'عناوين البرامج كما وردت في الترجمة الفرنسية.',
+	pageLabel: 'ص.',
 	noProgrammes: 'تفاصيل برامج 2026 لهذا البند لم تُقرأ بعد.',
 	setTo2024: 'اضبط على مستوى 2024',
 	setToDraft: 'أعد إلى المشروع',

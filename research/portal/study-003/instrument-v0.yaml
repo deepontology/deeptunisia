@@ -120,7 +120,7 @@ items:
     tier: core
     construct: budget allocation
     provenance: project (SPEC section 2, the game screen)
-    text_en: "Use the Treasury board: move money between the lines of the 2027 state budget, as a citizen. Start from the draft. Every move carries one coin of 100 MD. Finish when the purse is empty, or tick that you would keep the draft exactly as it is. Keeping the draft is a valid answer, not a skip."
+    text_en: "Use the Treasury board: move money between the lines of the 2027 state budget, as a citizen. Start from the draft. Every move carries one coin of 100 MD. Finish when the purse is empty and either you have made a move or you tick that you would keep the draft exactly as it is. Keeping the draft is a valid answer, not a skip."
     text_fr: null
     text_ar: null
     response: allocation
