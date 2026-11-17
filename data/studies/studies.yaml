@@ -89,7 +89,7 @@
   design_type: cross-sectional-online-allocation
   population: open-online-18-plus
   population_statement: "Among respondents to an open, self-selected online survey of adults. Results describe the people who took part, not Tunisians as a whole."
-  locales: [en]
+  locales: [en, fr, ar]
   ethics_review: null
   data_protection_review: null
   preregistration: null
@@ -108,4 +108,4 @@
   pi: null
   outputs: []
   created: 2026-11-09
-  updated: 2026-11-09
+  updated: 2026-11-16

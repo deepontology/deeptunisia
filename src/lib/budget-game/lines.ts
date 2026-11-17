@@ -4,9 +4,12 @@
  * Nothing here is typed in by hand: each line is a sum of rows from
  * data/studies/dt-research-003/figures-2027.yaml, so the landing page and the
  * game read the same numbers (decision D3: draft figures, labelled "draft, not
- * verified"). The subsidies line is the memo row. The energy and trade line is
- * what is left of the Industry and Trade rows once the subsidies are taken out,
- * on the stated assumption that all subsidies sit inside those two rows.
+ * verified"). The subsidies memo is split into two derived rows, fuel and
+ * electricity versus basic food, so the largest line on the board can be cut in
+ * the way people argue about it. The two rows sum to the memo. The energy and
+ * trade line is what is left of the Industry and Trade rows once the two
+ * subsidy rows are taken out, on the stated assumption that the memo sits
+ * inside those two rows.
  *
  * Debt interest and the unforeseen reserve are locked: spent before the start.
  */
@@ -17,28 +20,33 @@ export interface FigureRowLike {
 }
 
 export type LineId =
+	| 'parliament'
+	| 'presidency'
+	| 'government_offices'
+	| 'police'
+	| 'justice'
+	| 'foreign_affairs'
+	| 'army'
+	| 'finance'
+	| 'economy'
+	| 'farming'
+	| 'subsidies_energy'
+	| 'subsidies_food'
+	| 'energy_trade'
+	| 'tourism'
+	| 'roads_housing'
+	| 'environment'
+	| 'transport'
+	| 'culture'
+	| 'youth_sports'
+	| 'family'
+	| 'health'
+	| 'social_affairs'
 	| 'education'
 	| 'higher_education'
-	| 'health'
-	| 'social'
-	| 'subsidies'
-	| 'energy_trade'
-	| 'police'
-	| 'army'
-	| 'justice'
-	| 'farming'
-	| 'roads_housing'
-	| 'youth_sports'
-	| 'culture'
-	| 'presidency'
-	| 'government'
 	| 'employment'
-	| 'finance'
-	| 'transport'
-	| 'environment'
-	| 'economy'
-	| 'tourism'
 	| 'rest'
+	| 'elections'
 	| 'debt'
 	| 'reserve';
 
@@ -57,30 +65,40 @@ export const MAX_LEVEL = 40;
 /** Finished when the purse is within this share of the envelope. */
 export const BALANCE_TOLERANCE = 0.005;
 
-/** Movable lines in official budget order (the order the board shows them). */
+/**
+ * Movable lines in the order of the finance law's tableau C (mission 1 first),
+ * so the board never ranks the lines by what the designer thinks matters. The
+ * split subsidy rows sit where their containing missions sit; the one derived
+ * remainder and the election authority close the list.
+ */
 export const MOVABLE_ORDER: LineId[] = [
+	'parliament',
+	'presidency',
+	'government_offices',
+	'police',
+	'justice',
+	'foreign_affairs',
+	'army',
+	'finance',
+	'economy',
+	'farming',
+	'subsidies_energy',
+	'subsidies_food',
+	'energy_trade',
+	'tourism',
+	'roads_housing',
+	'environment',
+	'transport',
+	'culture',
+	'youth_sports',
+	'family',
+	'health',
+	'social_affairs',
 	'education',
 	'higher_education',
-	'health',
-	'social',
 	'employment',
-	'subsidies',
-	'energy_trade',
-	'police',
-	'army',
-	'justice',
-	'finance',
-	'farming',
-	'roads_housing',
-	'transport',
-	'environment',
-	'economy',
-	'youth_sports',
-	'culture',
-	'tourism',
-	'presidency',
-	'government',
-	'rest'
+	'rest',
+	'elections'
 ];
 export const LOCKED_ORDER: LineId[] = ['debt', 'reserve'];
 
@@ -101,34 +119,39 @@ export interface Lines {
 
 /**
  * What each board line is made of: rows of the figures file added together,
- * minus rows taken out. The subsidies memo row sits inside the Industry and
- * Trade rows, so the energy and trade line is those two rows less subsidies.
- * The landing page prints this mapping next to the figures.
+ * minus rows taken out. The two subsidy rows are derived from the memo and sum
+ * to it; the energy and trade line is the two containing ministry rows less
+ * both subsidy rows, so it is a remainder, not a ministry budget.
  */
 export const LINE_ROWS: Record<LineId, { plus: string[]; minus?: string[] }> = {
+	parliament: { plus: ['assembly_of_representatives'] },
+	presidency: { plus: ['presidency'] },
+	government_offices: { plus: ['head_of_government'] },
+	police: { plus: ['interior'] },
+	justice: { plus: ['justice'] },
+	foreign_affairs: { plus: ['foreign_affairs'] },
+	army: { plus: ['national_defence'] },
+	finance: { plus: ['finance'] },
+	economy: { plus: ['economy_planning'] },
+	farming: { plus: ['agriculture_water_fisheries'] },
+	subsidies_energy: { plus: ['subsidies_energy_2027'] },
+	subsidies_food: { plus: ['subsidies_food_2027'] },
+	energy_trade: { plus: ['industry_mines_energy', 'trade_export'], minus: ['subsidies_energy_2027', 'subsidies_food_2027'] },
+	tourism: { plus: ['tourism'] },
+	roads_housing: { plus: ['equipment_housing'] },
+	environment: { plus: ['environment'] },
+	transport: { plus: ['transport'] },
+	culture: { plus: ['culture_arts'] },
+	youth_sports: { plus: ['youth_sports'] },
+	family: { plus: ['family_women_children_seniors'] },
+	health: { plus: ['health'] },
+	social_affairs: { plus: ['social_affairs'] },
 	education: { plus: ['education'] },
 	higher_education: { plus: ['higher_education_research'] },
-	health: { plus: ['health'] },
-	social: { plus: ['social_affairs', 'family_women_children_seniors'] },
-	subsidies: { plus: ['subsidies_total_memo'] },
-	energy_trade: { plus: ['industry_mines_energy', 'trade_export'], minus: ['subsidies_total_memo'] },
-	police: { plus: ['interior'] },
-	army: { plus: ['national_defence'] },
-	justice: { plus: ['justice'] },
-	farming: { plus: ['agriculture_water_fisheries'] },
-	roads_housing: { plus: ['equipment_housing'] },
-	youth_sports: { plus: ['youth_sports'] },
-	culture: { plus: ['culture_arts'] },
-	presidency: { plus: ['presidency'] },
-	government: { plus: ['foreign_affairs', 'head_of_government', 'isie_elections', 'assembly_of_representatives'] },
 	employment: { plus: ['employment_training'] },
-	finance: { plus: ['finance'] },
-	transport: { plus: ['transport'] },
-	environment: { plus: ['environment'] },
-	economy: { plus: ['economy_planning'] },
-	tourism: { plus: ['tourism'] },
-	// The only remainder, and a small one: named missions whose 2027 drafts are not yet reported.
+	// The only remainder, and a small one: named missions whose 2027 drafts are not reported one by one.
 	rest: { plus: ['all_other_missions'] },
+	elections: { plus: ['isie_elections'] },
 	debt: { plus: ['financing_costs_locked'] },
 	reserve: { plus: ['unforeseen_locked'] }
 };
@@ -153,32 +176,36 @@ export function linesFrom(rows: FigureRowLike[]): Lines {
  * The same board lines in the adopted laws of past years (tableau C, by mission).
  * Every mission of the law lands in exactly one line, so a year's lines add up to
  * the law's total. Subsidies are not a mission there: the board reads them as the
- * energy programme of Industry, Mines and Energy plus the domestic trade programme
- * of Commerce, and the energy and trade line is those two missions less the two
- * programmes. That is close to, not the same as, the 2027 subsidies memo row.
+ * energy programme of Industry, Mines and Energy and the domestic trade programme
+ * of Commerce. The energy and trade line is those two missions less the two
+ * programmes. That is close to, not the same as, the 2027 memo and its derived split.
  */
 export const HISTORY_ROWS: Record<LineId, { missions?: string[]; programmes?: string[]; minusProgrammes?: string[] }> = {
+	parliament: { missions: ['arp'] },
+	presidency: { missions: ['presidency'] },
+	government_offices: { missions: ['head_of_government'] },
+	police: { missions: ['interior'] },
+	justice: { missions: ['justice'] },
+	foreign_affairs: { missions: ['foreign_affairs'] },
+	army: { missions: ['national_defence'] },
+	finance: { missions: ['finance'] },
+	economy: { missions: ['economy_planning'] },
+	farming: { missions: ['agriculture_water_fisheries'] },
+	subsidies_energy: { programmes: ['energy'] },
+	subsidies_food: { programmes: ['domestic_trade'] },
+	energy_trade: { missions: ['industry_mines_energy', 'trade_export'], minusProgrammes: ['energy', 'domestic_trade'] },
+	tourism: { missions: ['tourism'] },
+	roads_housing: { missions: ['equipment_housing'] },
+	environment: { missions: ['environment'] },
+	transport: { missions: ['transport'] },
+	culture: { missions: ['culture_arts'] },
+	youth_sports: { missions: ['youth_sports'] },
+	family: { missions: ['family_women_children_seniors'] },
+	health: { missions: ['health'] },
+	social_affairs: { missions: ['social_affairs'] },
 	education: { missions: ['education'] },
 	higher_education: { missions: ['higher_education_research'] },
-	health: { missions: ['health'] },
-	social: { missions: ['social_affairs', 'family_women_children_seniors'] },
-	subsidies: { programmes: ['energy', 'domestic_trade'] },
-	energy_trade: { missions: ['industry_mines_energy', 'trade_export'], minusProgrammes: ['energy', 'domestic_trade'] },
-	police: { missions: ['interior'] },
-	army: { missions: ['national_defence'] },
-	justice: { missions: ['justice'] },
-	farming: { missions: ['agriculture_water_fisheries'] },
-	roads_housing: { missions: ['equipment_housing'] },
-	youth_sports: { missions: ['youth_sports'] },
-	culture: { missions: ['culture_arts'] },
-	presidency: { missions: ['presidency'] },
-	government: { missions: ['head_of_government', 'foreign_affairs', 'isie_elections', 'arp'] },
 	employment: { missions: ['employment_training'] },
-	finance: { missions: ['finance'] },
-	transport: { missions: ['transport'] },
-	environment: { missions: ['environment'] },
-	economy: { missions: ['economy_planning'] },
-	tourism: { missions: ['tourism'] },
 	rest: {
 		missions: [
 			'religious_affairs',
@@ -188,9 +215,12 @@ export const HISTORY_ROWS: Record<LineId, { missions?: string[]; programmes?: st
 			'anrd',
 			'higher_council_education',
 			'judicial_council',
-			'constitutional_court'
+			'constitutional_court',
+			// 2020 only: the public service and administration modernisation mission.
+			'other_fonction_publique'
 		]
 	},
+	elections: { missions: ['isie_elections'] },
 	debt: { missions: ['financing_costs'] },
 	reserve: { missions: ['unforeseen'] }
 };

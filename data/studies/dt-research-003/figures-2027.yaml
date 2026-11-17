@@ -9,6 +9,14 @@
 #
 # Units: millions of dinars (MD), payment credits.
 # Rows marked memo: true are inside another row and are NOT added to the total.
+#
+# The subsidy memo row (11,846 MD) is split into two derived rows so the board
+# can ask about fuel and electricity separately from basic food. The 2027 split
+# by type has not been reported. It is apportioned between the two lines that
+# contain the memo (Industry, Mines and Energy; Trade and Export Development),
+# in proportion to their 2027 draft totals. The two derived rows sum to the memo
+# to the dinar. This is an inference, not a reported 2027 figure: the rows carry
+# status draft-derived and the board says so on screen.
 # Checked by: npx tsx scripts/check-budget-figures.ts
 
 study: dt-research-003
@@ -194,9 +202,9 @@ rows:
     page: null
   - id: all_other_missions
     label_en: "Religious affairs, digital, state lands, and courts and councils (derived as the total minus every row above; not verified)"
-    amount_md: 533.3
+    amount_md: 532.919
     status: draft-derived
-    source: "Derived in this file. In the 2026 law the same missions came to 565.1 MD: Religious Affairs 202.4, Communication Technologies 197.3, State Domains 94.2, Court of Accounts 35.6, National Council of Regions and Districts 24.1, higher education council 10, judicial council 1.5."
+    source: "Derived in this file as 68,895 less every other non-memo row: 532.919. In the 2026 law the same missions came to 565.1 MD: Religious Affairs 202.4, Communication Technologies 197.3, State Domains 94.2, Court of Accounts 35.6, National Council of Regions and Districts 24.1, higher education council 10, judicial council 1.5."
     url: null
     page: null
   - id: financing_costs_locked
@@ -214,10 +222,26 @@ rows:
     url: null
     page: null
   - id: subsidies_total_memo
-    label_en: "Subsidies, all types (memo: sits inside the Industry and Trade lines; split by type not found)"
+    label_en: "Subsidies, all types (memo: sits inside the Industry and Trade lines; the derived split is in the two rows below)"
     amount_md: 11846
     status: draft-press
     memo: true
     source: "Espace Manager 9 Nov 2026"
+    url: null
+    page: null
+  - id: subsidies_energy_2027
+    label_en: "Subsidies: fuel and electricity (derived 2027 split, not reported)"
+    amount_md: 7712.588
+    status: draft-derived
+    memo: true
+    source: "Derived in this file. 11,846 MD memo (Espace Manager 9 Nov 2026) apportioned between the two lines that contain it, Industry 7,890.2 and Trade 4,228.6 (both press, 21 Oct 2026), in proportion to those totals: 11,846 x 7,890.2 / 12,118.8 = 7,712.588. The 2027 split by type has not been reported. If the memo sits wholly inside Industry and Trade, as assumed here, energy can only fall between 7,617.4 and 7,890.2 MD; the apportionment is within 177.6 MD of any split that keeps both lines non-negative. The 2027 memo is a press total; past years are two programme lines."
+    url: null
+    page: null
+  - id: subsidies_food_2027
+    label_en: "Subsidies: basic food (derived 2027 split, not reported)"
+    amount_md: 4133.412
+    status: draft-derived
+    memo: true
+    source: "Derived in this file as the 11,846 MD memo less the fuel and electricity row. 11,846 x 4,228.6 / 12,118.8 = 4,133.412. The 2027 split by type has not been reported."
     url: null
     page: null

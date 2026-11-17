@@ -1,7 +1,7 @@
 /**
  * Mobile and one-screen check for the citizen budget study and prototype.
  *
- * Drives a real browser at desktop and phone size, in English and Arabic:
+ * Drives a real browser at desktop and phone size, in English, French and Arabic:
  * the prototype board must fit one screen with no page scroll, no horizontal
  * scroll, 44px buttons on a phone, and the default draft start must hold zero
  * in the purse (?start=empty must hold the whole envelope). The study page must not
@@ -32,9 +32,11 @@ interface Size {
 
 const SIZES: Size[] = [
 	{ label: '1280x800', width: 1280, height: 800, dpr: 1 },
+	{ label: '1024x768', width: 1024, height: 768, dpr: 1 },
+	{ label: '820x1180', width: 820, height: 1180, dpr: 1 },
 	{ label: '390x844', width: 390, height: 844, dpr: 2 }
 ];
-const LOCALES = ['en', 'ar'] as const;
+const LOCALES = ['en', 'fr', 'ar'] as const;
 type Locale = (typeof LOCALES)[number];
 
 class Failure extends Error {}
@@ -119,9 +121,10 @@ async function openBoard(page: Page, query = ''): Promise<void> {
 	const boxes = page.locator('.consent input[type="checkbox"]');
 	await boxes.first().waitFor({ state: 'visible' });
 	const count = await boxes.count();
-	if (count !== 2) fail('board consent', `expected 2 consent boxes, found ${count}`);
+	if (count !== 3) fail('board consent', `expected 3 consent boxes, found ${count}`);
 	await boxes.nth(0).check();
 	await boxes.nth(1).check();
+	await boxes.nth(2).check();
 	await page.locator('.consent button[type="submit"]').click();
 	await page.locator('#h-frame').waitFor({ state: 'visible' });
 	await page.locator('.game .actions button.cta').click();
@@ -160,6 +163,93 @@ async function checkBoard(
 			fail(`${name} draft start purse`, `purse ${purse} MD, expected 0 MD`);
 		}
 
+		if (size.width === 390) {
+			const basket = page.locator('.board .basket-short');
+			if (!(await basket.isVisible())) fail(`${name} basket caveat`, 'the basket sentence is not visible at 390');
+			const hint = page.locator('.board .keep-hint');
+			if (!(await hint.isVisible())) fail(`${name} keep hint`, 'the phone does not say what the tick does');
+			if (!(await page.locator('.board .derived-short').isVisible())) fail(`${name} derived note`, 'the short derived note is not visible on a phone');
+		} else {
+			if (await page.locator('.board .derived-short').isVisible()) fail(`${name} derived note`, 'the short derived note duplicates the full definitions on desk');
+			if (!(await page.locator('.board .legend-definitions').isVisible())) fail(`${name} derived note`, 'the full definitions are not visible on desk');
+			const spans = (await page.locator('.board .legend-notes > span:visible').allInnerTexts())
+				.map((s) => s.trim())
+				.filter(Boolean);
+			for (const a of spans) for (const b of spans) {
+				if (a !== b && b.includes(a)) fail(`${name} legend repeat`, `"${a}" is printed inside another visible note`);
+			}
+			const deskLegend = (await page.locator('.board .legend-notes').innerText()).replace(/\s+/g, ' ');
+			if (/change of basket|changement de panier|تغيّر السلة/i.test(deskLegend)) fail(`${name} basket claim`, 'the legend still claims a change of basket');
+			/* French copy writes its own decimal comma and thin space grouping. */
+			const bound = locale === 'fr' ? /7\s?617,4/ : /7,617\.4/;
+			const worst = locale === 'fr' ? /177,6/ : /177\.6/;
+			if (!bound.test(deskLegend)) fail(`${name} containment`, 'the desk legend does not state the containment bound');
+			if (!worst.test(deskLegend)) fail(`${name} containment`, 'the desk legend does not state the 177.6 MD worst case');
+			const conditional =
+				locale === 'ar' ? /إذا كانت مذكرة/.test(deskLegend) : locale === 'fr' ? /si la note 2027 se situe/i.test(deskLegend) : /if the 2027 memo sits/i.test(deskLegend);
+			if (!conditional) fail(`${name} containment`, 'the desk legend states containment as a fact, not an assumption');
+		}
+
+		const legendText = (await page.locator('.board .legend-notes').innerText()).replace(/\s+/g, ' ');
+		const derivedWord = locale === 'ar' ? /مشتق/g : locale === 'fr' ? /dériv/gi : /derived/gi;
+		const derivedCount = (legendText.match(derivedWord) ?? []).length;
+		if (derivedCount !== 1) fail(`${name} derived note`, `the legend states the derived split ${derivedCount} times, not once`);
+
+		// The explicit keep-draft control: Finish is disabled until a move or the tick.
+		const finish = page.locator('.board .finish');
+		if (!(await finish.isDisabled())) fail(`${name} keep gate`, 'Finish is enabled at the draft without a move or a tick');
+		const keep = page.locator('.board .keep-choice input');
+		await keep.check();
+		if (await finish.isDisabled()) fail(`${name} keep gate`, 'Finish is still disabled after the keep-draft tick');
+		await keep.uncheck();
+		if (!(await finish.isDisabled())) fail(`${name} keep gate`, 'Finish is enabled after the keep-draft tick is cleared');
+
+		if (size.width > 720) {
+			await page.locator('.board [data-drop="education"]').click();
+			await page.locator('.board .moves-buttons .take').click();
+			await keep.check();
+			await page.locator('.board .ghost').first().click();
+			if (await keep.isChecked()) fail(`${name} undo keep`, 'the keep tick survives Undo after moves return');
+		}
+
+		// The detail panel: a subsidy line opens its 2026 programmes and can be set to 2024.
+		await page.locator('.board [data-drop="subsidies_energy"]').click();
+		const beforeSet = amount(await page.locator('.board [data-drop="subsidies_energy"] .yours').innerText());
+		await page.locator('.board .details-toggle').click();
+		await page.locator('.board .detail').waitFor({ state: 'visible' });
+		const programmeRows = await page.locator('.board .detail-mission').count();
+		if (programmeRows < 1) fail(`${name} detail`, 'the subsidy detail panel has no 2026 programme rows');
+		const firstAction = (await page.locator('.board .detail-action:visible').first().innerText()).trim();
+		const aidWord = locale === 'ar' ? /أداة نموذج أولي/ : locale === 'fr' ? /aide au prototype/i : /prototype aid/i;
+		if (!aidWord.test(firstAction)) {
+			fail(`${name} 2024 aid`, `the 2024 action reads "${firstAction}", not a prototype aid`);
+		}
+		if (locale === 'ar') {
+			const pageRef = page.locator('.board .detail-page:visible').first();
+			const pageText = (await pageRef.innerText()).trim();
+			if (!pageText.startsWith('ص.')) fail(`${name} page label`, `the Arabic page reference is "${pageText}", not "ص."`);
+		}
+		if (size.label === '1280x800' || size.label === '1024x768') {
+			const heading = page.locator('.board .detail-title:visible').first();
+			const action = page.locator('.board .detail-action:visible').first();
+			await heading.waitFor({ state: 'visible' });
+			await action.waitFor({ state: 'visible' });
+			const vp = page.viewportSize()!;
+			const hb = await heading.boundingBox();
+			const ab = await action.boundingBox();
+			const inside = (b: { x: number; y: number; width: number; height: number } | null) =>
+				!!b && b.x >= -1 && b.y >= -1 && b.x + b.width <= vp.width + 1 && b.y + b.height <= vp.height + 1;
+			if (!inside(hb) || !inside(ab)) {
+				fail(`${name} detail in view`, `heading ${JSON.stringify(hb)} action ${JSON.stringify(ab)} viewport ${vp.width}x${vp.height}`);
+			}
+		}
+		await page.locator('.board .detail-action').first().click();
+		const afterSet = amount(await page.locator('.board [data-drop="subsidies_energy"] .yours').innerText());
+		if (afterSet === beforeSet) fail(`${name} detail`, `set to 2024 left the line at ${beforeSet} MD`);
+		const setMessage = (await page.locator('.board .message').innerText()).trim();
+		if (!setMessage.includes('7,209.3')) fail(`${name} set message`, `the status says "${setMessage}", not the target level`);
+		await page.locator('.board .details-toggle').click();
+
 		let touch = '';
 		if (size.width <= 480) {
 			/* Hidden buttons (the reset control is display:none on a phone) are not
@@ -180,20 +270,101 @@ async function checkBoard(
 			touch = ', all board buttons >= 44px';
 		}
 
-		// Past years: a trend on every system, on by default, and the switches change it.
+		// Past years: one compared year as a real bar in every row, three bars per
+		// row, and the chart icon opens the trajectory. The dots are gone.
 		const rowsShown = await page.locator('.board [data-drop]:not([data-drop="purse"])').count();
-		const sparks = await page.locator('.board svg.spark').count();
-		if (rowsShown !== 22 || sparks !== 22) fail(`${name} past years`, `${rowsShown} systems, ${sparks} trend lines, expected 22 of each`);
-		const dots = async () => page.locator('.board [data-drop="education"] svg.spark circle').count();
-		const before = await dots();
-		const yearSwitch = size.width <= 720 ? page.locator('.board .years-tool') : page.locator('.board .year').first();
-		await yearSwitch.click();
-		const after = await dots();
-		if (!(after < before)) fail(`${name} past years`, `switching a year off left ${after} of ${before} points`);
-		await yearSwitch.click();
+		const pastBars = await page.locator('.board .slot .bar.year').count();
+		if (rowsShown !== 27 || pastBars !== 27) fail(`${name} past years`, `${rowsShown} systems, ${pastBars} past bars, expected 27 systems and one compared bar each`);
+		if ((await page.locator('.board .slot .past-dot').count()) !== 0) fail(`${name} past years`, 'the old dots are still drawn');
+		const legendKeys = (await page.locator('.board .legend .key').allInnerTexts()).map((s) => s.trim());
+		if (legendKeys.length !== 3) fail(`${name} legend`, `${legendKeys.length} legend keys, expected three: the past year, the 2027 draft, yours`);
+		if (!legendKeys.some((k) => /20\d\d/.test(k))) fail(`${name} legend`, `no legend key names the compared year: ${legendKeys.join(' | ')}`);
+		// The chart: the chosen line across every adopted year and the draft, plus yours.
+		const chartButton = size.width <= 720 ? page.locator('.board .years-tool') : page.locator('.board .chart-btn');
+		await chartButton.click();
+		const sheet = page.locator('.board .chart-overlay');
+		await sheet.waitFor({ state: 'visible' });
+		const points = await sheet.locator('.plot .dot').count();
+		const chips = await sheet.locator('.chips .chip').count();
+		if (points !== 8 || chips !== 6) fail(`${name} chart`, `${points} points and ${chips} year chips, expected 8 points (six laws, the draft, yours) and 6 chips`);
+		const figure = (await sheet.locator('.figure').innerText()).replace(/\s+/g, ' ');
+		const chartAudit = (await sheet.locator('.verify').innerText()).replace(/\s+/g, ' ');
+		if (!/JORT|الرائد/.test(chartAudit)) fail(`${name} chart`, `the chart carries no JORT page: "${chartAudit}"`);
+		if ((await sheet.locator('.plot .val.mine').count()) !== 1) fail(`${name} chart`, 'the citizen point has no value label');
+		const mineLabel = ((await sheet.locator('.plot .val.mine').textContent()) ?? '').trim();
+		if (!/\d/.test(mineLabel)) fail(`${name} chart`, 'the citizen point label carries no number');
+		if (!figure.includes(mineLabel)) fail(`${name} chart`, `the summary "${figure}" does not carry the citizen's amount ${mineLabel}`);
+		// A phone picks the compared year inside the chart; a desk switches it on the chip row.
+		const pick = size.width <= 720 ? sheet.locator('.chips .chip').nth(0) : page.locator('.board .legend .year').nth(0);
+		const beforePick = await page.locator('.board .slot .bar.year').count();
+		if (size.width <= 720) {
+			await pick.click();
+			await sheet.locator('.detail-close').click();
+			await sheet.waitFor({ state: 'hidden' });
+			if ((await page.locator('.board .slot .bar.year').count()) !== beforePick) fail(`${name} past years`, 'picking a year in the chart dropped the row bars');
+		} else {
+			await page.locator('.board .chart-overlay .detail-close').click();
+			await sheet.waitFor({ state: 'hidden' });
+			const firstYear = page.locator('.board .legend .year').nth(0);
+			if ((await firstYear.getAttribute('aria-pressed')) === 'true') {
+				await firstYear.click();
+				if ((await page.locator('.board .slot .bar.year').count()) !== 0) fail(`${name} past years`, 'clearing the compared year left bars behind');
+				await firstYear.click();
+			}
+			if ((await page.locator('.board .slot .bar.year').count()) !== beforePick) fail(`${name} past years`, 'switching the year dropped the row bars');
+		}
+		// The JORT audit: every compared cell names its page, and a derived cell says it is derived.
+		const jortWord = locale === 'ar' ? 'الرائد' : 'JORT';
+		const derivedWording = locale === 'ar' ? 'مشتقّ' : locale === 'fr' ? 'Dérivé' : 'Derived';
+		const educationAria = (await page.locator('#sys-education').getAttribute('aria-label')) ?? '';
+		if (!educationAria.includes(jortWord)) fail(`${name} audit`, `the row aria carries no JORT page: "${educationAria}"`);
+		const pageMark = locale === 'ar' ? 'ص.' : 'p.';
+		if (!educationAria.includes(pageMark)) fail(`${name} audit`, `the row aria carries no page number: "${educationAria}"`);
+		const restAria = (await page.locator('#sys-rest').getAttribute('aria-label')) ?? '';
+		if (!restAria.includes(derivedWording)) fail(`${name} audit`, `the derived line does not say it is derived: "${restAria}"`);
+		if (!restAria.includes(jortWord)) fail(`${name} audit`, `the derived line carries no JORT page: "${restAria}"`);
+		const barTitle = (await page.locator('#sys-education .bars').getAttribute('title')) ?? '';
+		if (!barTitle.includes(jortWord)) fail(`${name} audit`, `the compared bar's hover label carries no JORT page: "${barTitle}"`);
+		// The one single read, named in the detail panel, at desk width where the chips are reachable.
+		if (size.width > 720) {
+			await page.locator('.board .legend .year', { hasText: '2024' }).click();
+			await page.locator('.board [data-drop="rest"]').click();
+			await page.locator('.board .details-toggle').click();
+			await page.locator('.board .detail-verify').waitFor({ state: 'visible' });
+			const verify = (await page.locator('.board .detail-verify').innerText()).replace(/\s+/g, ' ');
+			const singleWord = locale === 'ar' ? 'مرة واحدة' : locale === 'fr' ? 'une seule fois' : 'read once';
+			if (!verify.includes(singleWord)) fail(`${name} audit`, `the 2024 remainder does not say one read once: "${verify.slice(0, 160)}"`);
+			if (!/Constitution|الدستورية/.test(verify)) fail(`${name} audit`, `the single read is not named: "${verify.slice(0, 160)}"`);
+			await page.locator('.board .detail-close').click();
+			await page.locator('.board .legend .year', { hasText: '2026' }).click();
+		}
+
+		// Names: no mid-word break and no more than two lines at any tested width.
+		const nameIssues = await page.evaluate(() => {
+			const out: string[] = [];
+			for (const el of Array.from(document.querySelectorAll<HTMLElement>('.board .slot .name'))) {
+				const cs = getComputedStyle(el);
+				const lineHeight = parseFloat(cs.lineHeight) || parseFloat(cs.fontSize) * 1.15;
+				const lines = el.clientHeight / lineHeight;
+				const label = (el.textContent ?? '').trim();
+				if (lines > 2.1) out.push(`${label}: ${lines.toFixed(1)} lines`);
+				const meas = document.createElement('span');
+				meas.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;font:inherit;';
+				el.appendChild(meas);
+				let widest = 0;
+				for (const word of label.split(/\s+/)) {
+					meas.textContent = word;
+					widest = Math.max(widest, meas.getBoundingClientRect().width);
+				}
+				meas.remove();
+				if (widest > el.clientWidth + 1) out.push(`${label}: word ${widest.toFixed(1)}px > box ${el.clientWidth}px`);
+			}
+			return out;
+		});
+		if (nameIssues.length > 0) fail(`${name} names`, nameIssues.join(' | '));
 
 		assertNoPageErrors(errors, name);
-		ok(`${name}: board visible, no page scroll (${m.scrollHeight}/${m.innerHeight}), no h-scroll, purse ${purse} MD${touch}, 22 systems with past years`);
+		ok(`${name}: board visible, no page scroll (${m.scrollHeight}/${m.innerHeight}), no h-scroll, purse ${purse} MD${touch}, 27 systems with a compared year bar, a chart of 8 points, names at most 2 lines and no mid-word breaks`);
 	} finally {
 		await context.close();
 	}
@@ -234,13 +405,10 @@ async function checkRoundTrip(
 	const { context, page, errors } = await openPage(browser, size, locale);
 	try {
 		await openBoard(page);
-		const list = page.locator('.board .list');
-		await list.focus();
-		await page.keyboard.press('ArrowDown'); // Education
-		for (let i = 0; i < 3; i++) await page.keyboard.press('-');
-		await page.keyboard.press('ArrowDown');
-		await page.keyboard.press('ArrowDown'); // Health
-		for (let i = 0; i < 3; i++) await page.keyboard.press('+');
+		await page.locator('.board [data-drop="education"]').click();
+		for (let i = 0; i < 3; i++) await page.locator('.board .moves-buttons .take').click();
+		await page.locator('.board [data-drop="health"]').click();
+		for (let i = 0; i < 3; i++) await page.locator('.board .moves-buttons .give').click();
 		const healthBefore = amount(await page.locator('.board [data-drop="health"] .yours').first().innerText());
 		if (Number(digits(await purseText(page))) !== 0) fail(`${name} play`, 'purse not empty after 3 takes and 3 gives');
 
@@ -262,6 +430,10 @@ async function checkRoundTrip(
 		const summary = await page.locator('.game .summary').innerText();
 		if (!/(^|[^0-9])300([^0-9]|$)/.test(summary.replace(/[^0-9 .]/g, ' '))) {
 			fail(`${name} result`, `summary "${summary}" does not say 300 MD moved`);
+		}
+		const receiptHref = await page.locator('.game .receipt-link').getAttribute('href');
+		if (!receiptHref?.startsWith('/research/citizen-budget#')) {
+			fail(`${name} receipt link`, `the prototype receipt links to ${receiptHref}, not a static study-page section`);
 		}
 		await page.screenshot({ path: join(OUT, `result-${size.label}-${locale}.png`), fullPage: true });
 		await assertNoHorizontalScroll(page, name);
@@ -289,6 +461,15 @@ async function checkLanding(
 
 		await assertNoHorizontalScroll(page, name);
 
+		const method = (await page.locator('#sec-method').innerText()).replace(/\s+/g, ' ');
+		const floorPending =
+			locale === 'ar'
+				? /تعديل مقترح/.test(method) && /بانتظار تأكيد/.test(method) && /الحدّ الأدنى/.test(method) && !/سقف 300/.test(method)
+				: locale === 'fr'
+					? /amendement proposé/i.test(method) && /attente de la confirmation/i.test(method)
+					: /proposed amendment/i.test(method) && /pending the owner/i.test(method);
+		if (!floorPending) fail(`${name} floor status`, 'the method does not mark the 300 floor as a proposed amendment pending the owner');
+
 		const live = page.locator('[data-testid="try-board"] .rows button:not([disabled])');
 		const candidates = await live.count();
 		if (candidates === 0) {
@@ -314,8 +495,21 @@ async function checkLanding(
 			fail(`${name} touchable example`, `purse text stayed "${before}" after clicking the live example`);
 		}
 
+		// The figures table: adopted cells carry their page, and the 2024 remainder is marked 1.
+		await page.locator('#sec-figures table.figures').scrollIntoViewIfNeeded();
+		const cellTitle = (await page.locator('#sec-figures table.figures tbody tr td.past').first().getAttribute('title')) ?? '';
+		if (!/JORT|الرائد/.test(cellTitle)) fail(`${name} figures audit`, `an adopted cell carries no JORT page: "${cellTitle}"`);
+		if (size.width > 640) {
+			const marked = await page.locator('#sec-figures table.figures td.past .ck-single').count();
+			if (marked !== 1) fail(`${name} figures audit`, `${marked} cells carry the single-read mark, expected one`);
+			const derivedCells = await page.locator('#sec-figures table.figures td.past[data-check="derived"]').count();
+			if (derivedCells !== 13) fail(`${name} figures audit`, `${derivedCells} derived cells, expected 13`);
+		}
+		const auditNote = (await page.locator('#sec-figures p.note').allInnerTexts()).join(' ');
+		if (!/215/.test(auditNote) || !/214/.test(auditNote)) fail(`${name} figures audit`, 'the figures table does not state the audit counts');
+
 		assertNoPageErrors(errors, name);
-		ok(`${name}: no h-scroll, live example moved the purse ${before} -> ${after}`);
+		ok(`${name}: no h-scroll, live example moved the purse ${before} -> ${after}, figures table carries the audit`);
 	} finally {
 		await context.close();
 	}

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { tick } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	import { app } from '$lib/state.svelte';
 	import { FIGURES } from '$lib/budget-study/figures';
 	import { copyFor } from './copy';
@@ -37,10 +37,14 @@
 
 	let step = $state<Step>('intro');
 	let adult = $state(false);
-	let understood = $state(false);
+	let readInfo = $state(false);
+	let withdrawal = $state(false);
 	let result = $state<BoardState | null>(null);
-	let q1 = $state<'lower' | 'same' | 'higher' | null>(null);
+	let q1 = $state<'lower' | 'same' | 'higher' | 'skip' | null>(null);
 	let q2 = $state<number | null>(null);
+	let q2Skipped = $state(false);
+	let showUnchanged = $state(false);
+	let receipt = $state<string | null>(null);
 	let headingEl = $state<HTMLElement | undefined>(undefined);
 
 	const stepIndex = $derived(step === 'out' ? -1 : STEPS.indexOf(step));
@@ -75,11 +79,12 @@
 			.map((r) => ({ ...r, pct: (r.delta / r.line.draft) * 100 }))
 			.sort((a, b) => b.delta - a.delta)
 	);
-	const unchangedNames = $derived(
-		rows.filter((r) => Math.abs(r.delta) < 0.5).map((r) => c.lines[r.line.id].name).join(app.locale === 'ar' ? '، ' : ', ')
-	);
+	const unchanged = $derived(rows.filter((r) => Math.abs(r.delta) < 0.5).map((r) => c.lines[r.line.id].name));
+	const unchangedNames = $derived(unchanged.join(app.locale === 'ar' ? '، ' : ', '));
 	/** Money moved: what the gaining systems received, which is what the others gave up. */
 	const moved = $derived(rows.reduce((s, r) => s + Math.max(0, r.delta), 0));
+	const gaining = $derived(changed.filter((r) => r.delta > 0).length);
+	const movesCount = $derived(result ? result.log.filter((e) => e.kind !== 'keep').length : 0);
 	const maxChange = $derived(Math.max(1, ...changed.map((r) => Math.abs(r.delta))));
 	const rise = $derived(changed.length && changed[0].delta > 0 ? changed[0] : null);
 	const cut = $derived(changed.length && changed[changed.length - 1].delta < 0 ? changed[changed.length - 1] : null);
@@ -89,10 +94,19 @@
 		result = null;
 		q1 = null;
 		q2 = null;
+		q2Skipped = false;
 		adult = false;
-		understood = false;
+		readInfo = false;
+		withdrawal = false;
 		go('intro');
 	}
+
+	onMount(() => {
+		const bytes = new Uint8Array(4);
+		if (globalThis.crypto?.getRandomValues) globalThis.crypto.getRandomValues(bytes);
+		else for (let i = 0; i < bytes.length; i++) bytes[i] = Math.floor(Math.random() * 256);
+		receipt = 'CB-PROTO-' + Array.from(bytes, (b) => b.toString(16).padStart(2, '0')).join('').toUpperCase().slice(0, 6);
+	});
 </script>
 
 <div class="game research-type" class:playing={step === 'board'} {dir} lang={app.locale}>
@@ -135,10 +149,12 @@
 				go(adult ? 'frame' : 'out');
 			}}
 		>
+			<label class="check"><input type="checkbox" bind:checked={readInfo} /><span>{c.intro.consentRead}</span></label>
+			<label class="check"><input type="checkbox" bind:checked={withdrawal} /><span>{c.intro.consentWithdrawal}</span></label>
 			<label class="check"><input type="checkbox" bind:checked={adult} /><span>{c.intro.consentAge}</span></label>
-			<label class="check"><input type="checkbox" bind:checked={understood} /><span>{c.intro.consentPrototype}</span></label>
+			<p class="consent-note">{c.intro.consentNote}</p>
 			<div class="actions">
-				<button class="cta" type="submit" disabled={!understood}>{c.intro.start}</button>
+				<button class="cta" type="submit" disabled={!readInfo || !withdrawal}>{c.intro.start}</button>
 			</div>
 		</form>
 	{/if}
@@ -172,10 +188,11 @@
 	{#if step === 'items'}
 		<section class="block">
 			<h2 bind:this={headingEl} tabindex="-1">{c.items.title}</h2>
+			<p class="note">{c.items.optional}</p>
 			<fieldset class="q">
 				<legend>{c.items.q1}</legend>
 				<div class="options">
-					{#each [['lower', c.items.q1Lower], ['same', c.items.q1Same], ['higher', c.items.q1Higher]] as [value, label] (value)}
+					{#each [['lower', c.items.q1Lower], ['same', c.items.q1Same], ['higher', c.items.q1Higher], ['skip', c.items.skip]] as [value, label] (value)}
 						<label class="opt"><input type="radio" name="q1" {value} checked={q1 === value} onchange={() => (q1 = value as typeof q1)} /><span>{label}</span></label>
 					{/each}
 				</div>
@@ -184,8 +201,9 @@
 				<legend>{c.items.q2}</legend>
 				<div class="scale">
 					{#each Array.from({ length: 11 }, (_, n) => n) as n (n)}
-						<button class="pill" type="button" aria-pressed={q2 === n} onclick={() => (q2 = n)}>{n}</button>
+						<button class="pill" type="button" aria-pressed={q2 === n} onclick={() => { q2 = n; q2Skipped = false; }}>{n}</button>
 					{/each}
+					<button class="pill skip" type="button" aria-pressed={q2Skipped} onclick={() => { q2 = null; q2Skipped = true; }}>{c.items.skip}</button>
 				</div>
 				<p class="note scale-ends"><span>{c.items.q2Low}</span><span>{c.items.q2High}</span></p>
 			</fieldset>
@@ -203,7 +221,7 @@
 			{#if kept || changed.length === 0}
 				<p>{c.card.keptDraft}</p>
 			{:else}
-				<p class="summary">{c.card.summary(fmtMd(moved), changed.length)}{#if totalSame}{' '}{c.card.totalSame}{/if}</p>
+				<p class="summary">{c.card.summary(fmtMd(moved), movesCount, gaining)}{#if totalSame}{' '}{c.card.totalSame}{/if}</p>
 				<dl class="stats">
 					{#each [[c.card.rise, rise], [c.card.cut, cut]] as const as [label, r] (label)}
 						{#if r}
@@ -233,7 +251,12 @@
 						</li>
 					{/each}
 				</ul>
-				{#if unchangedNames}<p class="note unchanged">{c.card.unchanged(unchangedNames)}</p>{/if}
+				{#if unchanged.length}
+					<button type="button" class="unchanged-toggle" aria-expanded={showUnchanged} onclick={() => (showUnchanged = !showUnchanged)}>
+						{c.card.unchangedCount(unchanged.length)}
+					</button>
+					{#if showUnchanged}<p class="unchanged">{c.card.unchanged(unchangedNames)}</p>{/if}
+				{/if}
 			{/if}
 
 			<details class="as-table">
@@ -277,6 +300,12 @@
 					</table>
 				</div>
 			</details>
+			<div class="receipt">
+				<p class="receipt-title">{c.card.receiptTitle}</p>
+				<p class="receipt-code num">{receipt ?? 'CB-PROTO-········'}</p>
+				<p class="receipt-note">{c.card.receiptNote}</p>
+				<a class="receipt-link" href="/research/citizen-budget#withdrawal">{c.card.receiptLink}</a>
+			</div>
 			<p class="note">{c.card.stop}</p>
 			<div class="actions">
 				<button class="quiet" type="button" onclick={() => go('board')}>{c.card.back}</button>
@@ -463,6 +492,68 @@
 		white-space: nowrap;
 	}
 	.unchanged {
+		margin: var(--s-2) 0 var(--s-4);
+		font-size: var(--t-sm);
+		color: var(--text-muted);
+	}
+	.unchanged-toggle {
+		display: flex;
+		align-items: center;
+		gap: var(--s-2);
+		min-block-size: var(--touch);
+		padding: 0;
+		border: 0;
+		background: transparent;
+		color: var(--text-secondary);
+		font: 500 var(--t-sm) var(--font-sans);
+		text-decoration: underline;
+		text-underline-offset: 3px;
+		cursor: pointer;
+	}
+	.unchanged-toggle::before {
+		content: '▸';
+		font-size: var(--t-xs);
+		color: var(--text-muted);
+	}
+	.unchanged-toggle[aria-expanded='true']::before {
+		content: '▾';
+	}
+	.receipt {
+		margin-block: var(--s-6);
+		padding: var(--s-5);
+		border: var(--rule);
+		border-radius: var(--r-md);
+		background: var(--surface-raised);
+	}
+	.receipt-title {
+		margin: 0 0 var(--s-2);
+		font-family: var(--font-mono);
+		font-size: var(--t-xs);
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--text-muted);
+	}
+	.receipt-code {
+		margin: 0 0 var(--s-3);
+		font-size: var(--t-xl);
+		font-weight: 600;
+		letter-spacing: 0.08em;
+	}
+	.receipt-note {
+		margin: 0 0 var(--s-3);
+		font-size: var(--t-sm);
+		color: var(--text-muted);
+	}
+	.receipt-link {
+		font-size: var(--t-sm);
+		color: var(--text-secondary);
+		text-underline-offset: 3px;
+	}
+	.consent-note {
+		font-size: var(--t-sm);
+		color: var(--text-muted);
+	}
+	.pill.skip {
 		font-size: var(--t-sm);
 	}
 	.as-table {

@@ -20,6 +20,8 @@ import { parse } from 'yaml';
 import { linesFrom, historyLines, MOVABLE_ORDER, LOCKED_ORDER, type LineId } from '../src/lib/budget-game/lines.ts';
 import {
 	COIN_MD,
+	setLine,
+	setProblem,
 	DEFAULT_RULE,
 	atDraft,
 	finished,
@@ -75,16 +77,39 @@ const rest = lines.movable.find((l) => l.id === 'rest');
 ok('the named remainder is under 1% of the envelope', !!rest && rest.draft / lines.envelope < 0.01, rest ? `${rest.draft} MD` : 'no rest line');
 
 // Past years: every adopted law lands on the board's lines and adds up to its total.
-const history = parse(readFileSync(join(ROOT, 'data/studies/dt-research-003/history-lf-2024-2026.yaml'), 'utf8')) as {
+const history = parse(readFileSync(join(ROOT, 'data/studies/dt-research-003/history-lf-2020-2026.yaml'), 'utf8')) as {
 	years: Record<string, { total_md: number; missions: Record<string, { amount_md: number }>; programmes: Record<string, { amount_md: number }> }>;
 };
 const years = Object.entries(history.years);
-ok('the history file holds 2024, 2025 and 2026', years.map(([y]) => y).join(',') === '2024,2025,2026');
+ok('the history file holds 2024, 2025 and 2026', years.map(([y]) => y).includes('2024') && years.map(([y]) => y).includes('2025') && years.map(([y]) => y).includes('2026'));
 for (const [year, y] of years) {
 	const byLine = historyLines(y);
 	const sum = Object.values(byLine).reduce((a, b) => a + b, 0);
 	ok(`${year}: the board lines add up to the law's total`, Math.abs(sum - y.total_md) < 0.001, `${sum} vs ${y.total_md}`);
 	ok(`${year}: every board line has a value, none negative`, [...MOVABLE_ORDER, ...LOCKED_ORDER].every((id) => typeof byLine[id] === 'number' && byLine[id] >= 0));
+}
+
+// The subsidy split is derived, sums to the memo, and the containing lines stay positive.
+const subsidyEnergy = lines.movable.find((l) => l.id === 'subsidies_energy')!;
+const subsidyFood = lines.movable.find((l) => l.id === 'subsidies_food')!;
+const memo = figures.rows.find((r) => r.id === 'subsidies_total_memo')!;
+ok('the two subsidy lines sum to the memo', Math.abs(subsidyEnergy.draft + subsidyFood.draft - memo.amount_md) < 1e-6, `${subsidyEnergy.draft} + ${subsidyFood.draft} vs ${memo.amount_md}`);
+ok('the energy and trade remainder is the two missions less the memo', Math.abs(lines.movable.find((l) => l.id === 'energy_trade')!.draft - 272.8) < 1e-6);
+for (const l of lines.movable) ok(`line ${l.id} is not negative`, l.draft >= 0, `${l.draft}`);
+
+// Set a line to an exact amount: one undo, the difference goes to the purse, the cap and purse refuse.
+{
+	const s0 = startBoard(board, 'draft', 'coin');
+	const target = 5000;
+	const s1 = setLine(board, s0, 'education', target);
+	ok('setLine sets the line and frees money to the purse', Math.abs(heldMd(board, s1, 'education') - target) < 1e-6 && purse(board, s1) > 0);
+	ok('setLine logs the target level, not only the difference', s1.log.at(-1)?.kind === 'set' && Math.abs((s1.log.at(-1)?.targetMd ?? -1) - target) < 1e-6);
+	ok('setLine is one undo', sameHeld(undo(s1), s0) && undo(s1).log.length === 0);
+	const tiny = startBoard(board, 'draft', 'coin');
+	ok('setLine above the purse is refused', setLine(board, tiny, 'education', 10000) === tiny && setProblem(board, tiny, 'education', 10000) === 'purse');
+	const big = startBoard(board, 'empty', 'coin');
+	const eduCap = lines.movable.find((l) => l.id === 'education')!.draft * 2;
+	ok('setLine clamps above the 200% cap', Math.abs(heldMd(board, setLine(board, big, 'education', 999999), 'education') - eduCap) < 1e-6);
 }
 
 // The instrument, as committed, is the validator every finished board must pass.
@@ -100,7 +125,7 @@ const alloc = allocItem!.allocation!;
 	ok('the instrument locks exactly the two locked lines', alloc.categories.filter((c) => c.locked).length === 2);
 	ok('the instrument accepts any whole basis point, so both rules validate', alloc.step_bp === 1 && alloc.max_bp === 20000);
 }
-ok('the order lists match the line model', MOVABLE_ORDER.length === 22 && LOCKED_ORDER.length === 2);
+ok('the order lists match the line model', MOVABLE_ORDER.length === 27 && LOCKED_ORDER.length === 2);
 ok('the default rule is the coin (option A)', DEFAULT_RULE === 'coin' && COIN_MD === 100);
 ok('every draft splits into 20 whole-dinar steps, so rule B lands on the draft', lines.movable.every((l) => Math.round(l.draft * 1e6) % 20 === 0));
 
@@ -173,7 +198,7 @@ function suite(rule: MoveRule) {
 		ok('coin: the purse can always be placed to the dinar', purse(board, s) === 0 && finished(board, s));
 		ok('coin: that board passes the allocation validator', validate(s).ok, (() => { const r = validate(s); return r.ok ? '' : r.error; })());
 	} else {
-		const small = transferProblem(board, draft, 'culture', 'subsidies');
+		const small = transferProblem(board, draft, 'culture', 'subsidies_energy');
 		ok('step: a transfer the purse cannot pay is refused as purse', small === 'purse');
 	}
 
@@ -261,6 +286,22 @@ for (const [name, text] of [['preregistration', preregText], ['protocol', protoc
 	ok(`the ${name} describes the 100 MD coin`, /100 MD/.test(text));
 	ok(`the ${name} does not describe 5% steps as the study rule`, !/one step at a time|in 5% steps|A step is 5%/i.test(text));
 }
+ok('the instrument names the move-or-tick rule', /you have made a move or you tick/i.test(instrumentText));
+
+// F7, F8 and F11: the conservative readings the owner can flip. These assertions
+// fail if the copy drifts back to a decided floor, a change-of-basket claim, or a
+// 2024 set presented as part of the study task.
+const boardCopySource = readFileSync(join(ROOT, 'src/lib/budget-game/board-copy.ts'), 'utf8');
+ok('the floor is a proposed amendment pending the owner', /proposed amendment/.test(preregText) && /pending the owner's confirmation/.test(preregText) && /proposed amendment/.test(protocolText) && /pending the owner's confirmation/.test(protocolText));
+const landingSource = readFileSync(join(ROOT, 'src/lib/budget-study/landing-copy.ts'), 'utf8');
+ok('the landing says the floor is pending, not decided', /proposed amendment/.test(landingSource));
+ok('the Arabic floor is a minimum, not a ceiling', /الحدّ الأدنى/.test(landingSource) && !/سقف 300/.test(landingSource));
+ok('the board no longer claims a change of basket', !/change of basket|changement de panier|تغيّر السلة/i.test(boardCopySource));
+ok('the board states the containment bound', /7,617\.4/.test(boardCopySource) && /7,890\.2/.test(boardCopySource) && /177\.6 MD|177,6 MD|177\.6 م\.د/.test(boardCopySource));
+ok('the containment is worded as an assumption', /as assumed here/.test(boardCopySource) && /comme on le suppose ici/.test(boardCopySource) && /كما يُفترض هنا/.test(boardCopySource));
+ok('the 2024 set is labelled a prototype aid', /Prototype aid/.test(boardCopySource) && /Aide au prototype/.test(boardCopySource) && /أداة نموذج أولي/.test(boardCopySource));
+ok('the protocol does not promise the 2024 set as a study action', !/set to its 2024 level/.test(protocolText));
+ok('the game design calls the 2024 set a prototype aid', /prototype\s+aid outside the study task/.test(designText));
 
 console.log(`\n  ${checks - failures}/${checks} checks passed${failures ? `, ${failures} FAILED` : ''}\n`);
 process.exit(failures ? 1 : 0);

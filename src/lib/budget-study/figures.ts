@@ -34,7 +34,7 @@ export const STATUS_WORDS: Record<FigureRow['status'], string> = {
 	'adopted-lf': 'In the adopted law, with page reference.'
 };
 
-import historyRaw from '../../../data/studies/dt-research-003/history-lf-2024-2026.yaml?raw';
+import historyRaw from '../../../data/studies/dt-research-003/history-lf-2020-2026.yaml?raw';
 import { historyLines, type LineId } from '../budget-game/lines';
 
 interface HistoryEntry {
@@ -62,3 +62,67 @@ const historyDoc = parse(historyRaw) as { years: Record<string, Omit<HistoryYear
 export const HISTORY: HistoryYear[] = Object.entries(historyDoc.years)
 	.map(([year, y]) => ({ ...y, year: Number(year), lines: historyLines(y) }))
 	.sort((a, b) => a.year - b.year);
+
+/* The 2026 law's programme lines, for the board's detail panel. Not used to split 2027. */
+import programmesRaw from '../../../data/studies/dt-research-003/programmes-2026.yaml?raw';
+
+export interface ProgrammeEntry {
+	label: string;
+	amount_md: number;
+}
+
+export interface MissionProgrammes {
+	label: string;
+	total_md: number;
+	page: number;
+	programmes: ProgrammeEntry[];
+}
+
+interface ProgrammesDoc {
+	document: string;
+	source: string;
+	url: string;
+	year: number;
+	pages: Record<string, string>;
+	missions: Record<string, MissionProgrammes>;
+}
+
+export const PROGRAMMES_2026: ProgrammesDoc = parse(programmesRaw) as ProgrammesDoc;
+
+/** Which 2026 missions sit inside each board line, for the detail panel. */
+export const LINE_MISSIONS: Partial<Record<LineId, string[]>> = {
+	education: ['education'],
+	higher_education: ['higher_education_research'],
+	health: ['health'],
+	social_affairs: ['social_affairs'],
+	family: ['family_women_children_seniors'],
+	employment: ['employment_training'],
+	subsidies_energy: ['industry_mines_energy'],
+	subsidies_food: ['trade_export'],
+	energy_trade: ['industry_mines_energy', 'trade_export'],
+	police: ['interior'],
+	army: ['national_defence'],
+	justice: ['justice'],
+	finance: ['finance'],
+	farming: ['agriculture_water_fisheries'],
+	roads_housing: ['equipment_housing'],
+	transport: ['transport'],
+	environment: ['environment'],
+	economy: ['economy_planning'],
+	youth_sports: ['youth_sports'],
+	culture: ['culture_arts'],
+	tourism: ['tourism'],
+	presidency: ['presidency'],
+	government_offices: ['head_of_government'],
+	foreign_affairs: ['foreign_affairs'],
+	parliament: ['arp'],
+	elections: ['isie_elections'],
+	rest: ['religious_affairs', 'communication_technologies', 'state_domains', 'court_of_accounts', 'anrd', 'higher_council_education']
+};
+
+/** The 2026 programme rows for a board line; empty when the law's detail was not read. */
+export function programmesForLine(id: LineId): { mission: MissionProgrammes; key: string }[] {
+	return (LINE_MISSIONS[id] ?? [])
+		.map((key) => ({ key, mission: PROGRAMMES_2026.missions[key] }))
+		.filter((m): m is { key: string; mission: MissionProgrammes } => Boolean(m.mission));
+}
