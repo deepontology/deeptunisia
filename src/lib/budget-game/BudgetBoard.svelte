@@ -653,7 +653,8 @@
 					words={t}
 					unit={t.unit}
 					caveat={lineCaveat}
-					taxNote={comparedRevenue ? `${t.taxLine(String(comparedRevenue.year), comparedRevenue.tax_per_100.toFixed(1), comparedRevenue.covered_pct.toFixed(1))} ${t.taxDefinition} ${t.taxPage(String(comparedRevenue.page))}` : null}
+					taxNote={comparedRevenue ? `${t.taxLine(String(comparedRevenue.year), comparedRevenue.tax_per_100.toFixed(1), comparedRevenue.covered_pct.toFixed(1))} ${t.taxPage(String(comparedRevenue.page))}` : null}
+					taxDetail={comparedRevenue ? t.taxDefinition : null}
 					onpick={(year) => (compared = compared === year ? null : year)}
 				/>
 			</div>

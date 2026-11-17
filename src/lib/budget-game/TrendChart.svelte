@@ -24,6 +24,7 @@
 		unit,
 		caveat = null,
 		taxNote = null,
+		taxDetail = null,
 		onpick
 	}: {
 		name: string;
@@ -38,8 +39,10 @@
 		unit: string;
 		/** What is different about this line's past years, if anything. */
 		caveat?: string | null;
-		/** The budget-wide tax share for the compared year, if it is known. */
+		/** The budget-wide tax share for the compared year, with its page. */
 		taxNote?: string | null;
+		/** The two ratios in words. */
+		taxDetail?: string | null;
 		onpick: (year: number) => void;
 	} = $props();
 
@@ -121,11 +124,13 @@
 	{#if taxNote}
 		<p class="tax">{taxNote}</p>
 	{/if}
+	{#if taxDetail}
+		<p class="note">{taxDetail}</p>
+	{/if}
 	{#if caveat}
 		<p class="note">{caveat}</p>
 	{/if}
 	<p class="note">{words.historyNote}</p>
-	<p class="note">{words.nominalNote}</p>
 </div>
 
 <style>
