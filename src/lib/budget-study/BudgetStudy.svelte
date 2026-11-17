@@ -4,6 +4,7 @@
 	import Ruler from '$lib/index-study/Ruler.svelte';
 	import { FIGURES, HISTORY, type FigureRow } from './figures';
 	import { REVENUE } from './revenue';
+	import { cellCheck, checkPhrase } from './verification';
 	import { linesFrom, LINE_ROWS, type LineId } from '$lib/budget-game/lines';
 	import { copyFor } from '$lib/budget-game/copy';
 	import { boardCopyFor } from '$lib/budget-game/board-copy';
@@ -138,6 +139,13 @@
 			return { id: l.id, name: names.lines[l.id].name, md: l.draft, locked: l.locked, status, madeOf };
 		})
 	);
+
+	/** The hover text of one adopted cell: its amount, then its page and audit status. */
+	function cellTitle(year: number, id: LineId, amount: number): string {
+		const check = cellCheck(year, id);
+		if (!check) return `${fmtMd(amount)} ${copy.unit}`;
+		return `${fmtMd(amount)} ${copy.unit} · ${checkPhrase(check, bc)}`;
+	}
 
 	/** The preview card built by scripts/build-og-images.ts, like the police index's. */
 	const OG_IMAGE = 'https://deeptunisia.org/og/citizen-budget.png';
@@ -359,7 +367,12 @@
 											{#if f.locked}<span class="made">{copy.figures.locked}</span>{/if}
 											<span class="chip status-mobile" data-status={f.status}>{copy.figures.chip[f.status]}</span>
 										</th>
-										{#each HISTORY as h (h.year)}<td class="past">{fmtMd(h.lines[f.id])}</td>{/each}
+										{#each HISTORY as h (h.year)}
+											{@const check = cellCheck(h.year, f.id)}
+											<td class="past" data-check={check?.status ?? 'none'} title={cellTitle(h.year, f.id, h.lines[f.id])}>
+												{fmtMd(h.lines[f.id])}{#if check?.status === 'derived'}<sup class="ck" aria-hidden="true">d</sup>{:else if check?.status === 'single'}<sup class="ck ck-single" aria-hidden="true">1</sup>{/if}
+											</td>
+										{/each}
 										<td>{fmtMd(f.md)}</td>
 										<td class="status-col"><span class="chip" data-status={f.status}>{copy.figures.chip[f.status]}</span></td>
 									</tr>
@@ -373,6 +386,7 @@
 					{#if lang !== 'en'}<p class="note">{copy.figures.madeOfNote}</p>{/if}
 					<p class="note">{copy.draftNotice}</p>
 					<p class="note">{copy.figures.historyNote}</p>
+					<p class="note">{copy.verification.note}</p>
 					<details class="sources">
 						<summary>{copy.figures.sources}</summary>
 						<ul>
@@ -866,6 +880,17 @@
 		font-size: var(--t-2xs);
 		font-weight: 400;
 		color: var(--text-muted);
+	}
+	.ck {
+		margin-inline-start: 1px;
+		font-family: var(--font-mono);
+		font-size: var(--t-2xs);
+		color: var(--text-muted);
+		text-decoration: none;
+	}
+	.ck-single {
+		color: var(--text-secondary);
+		font-weight: 600;
 	}
 	.revenue-table caption {
 		caption-side: top;

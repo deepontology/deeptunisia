@@ -3,6 +3,7 @@
 	import { app } from '$lib/state.svelte';
 	import { FIGURES, HISTORY, programmesForLine } from '$lib/budget-study/figures';
 	import { revenueFor } from '$lib/budget-study/revenue';
+	import { cellCheck, checkPhrase, jortLabel, singleParts } from '$lib/budget-study/verification';
 	import { copyFor } from './copy';
 	import { boardCopyFor } from './board-copy';
 	import { linesFrom, type LineId } from './lines';
@@ -79,7 +80,9 @@
 		return pastYears.map((h) => `${h.year} ${fmtMd(h.lines[id])} ${t.unit}`).join(', ');
 	}
 	function comparedAria(id: LineId): string {
-		return comparedYear ? ` ${t.historyAria(String(comparedYear.year), fmtMd(comparedYear.lines[id]), t.unit)}` : '';
+		if (!comparedYear) return '';
+		const check = cellCheck(comparedYear.year, id);
+		return ` ${t.historyAria(String(comparedYear.year), fmtMd(comparedYear.lines[id]), t.unit)}${check ? ` ${checkPhrase(check, t)}` : ''}`;
 	}
 	/** A phone shows the rows as a list that scrolls, so a touch pans it; Take and Give move the money. */
 	let narrow = $state(false);
@@ -98,6 +101,29 @@
 	let view = $state<'bars' | 'table'>('bars');
 	let keepChoice = $state(false);
 	let detailOpen = $state(false);
+	/** Every adopted year's audit for the chosen line, for the detail panel. */
+	const activeChecks = $derived(
+		active && pastYears.length
+			? pastYears.flatMap((h) => {
+					const check = cellCheck(h.year, active as LineId);
+					return check ? [{ year: h.year, check }] : [];
+				})
+			: []
+	);
+	/** Every single-read component behind the chosen line, named with its year and page. */
+	const singleCells = $derived.by(() => {
+		if (!active) return [];
+		return activeChecks.flatMap(({ year, check }) => {
+			const h = HISTORY.find((x) => x.year === year);
+			return singleParts(check).map((part) => ({
+				id: `${year}-${part.id}`,
+				year,
+				label: h?.missions[part.id]?.label ?? part.id,
+				amount: h?.missions[part.id]?.amount_md ?? 0,
+				page: part.page
+			}));
+		});
+	});
 	/** The trend chart: the chosen line across every adopted year and the 2027 draft. */
 	let chartOpen = $state(false);
 	let listEl = $state<HTMLElement | undefined>(undefined);
@@ -351,6 +377,26 @@
 	{#if activeRow}
 		<div class="detail">
 			<p class="detail-name">{c.lines[activeRow.id].name}</p>
+			{#if activeChecks.length}
+				<div class="detail-verify">
+					<p class="detail-title">{t.verifiedTitle}</p>
+					<ul>
+						{#each activeChecks as row (row.year)}
+							<li>
+								<span class="num dv-year">{row.year}</span>
+								<span class="dv-page">{jortLabel(row.check, t)}</span>
+								<span class="dv-word" data-status={row.check.status}>{t.verifiedWords[row.check.status]}</span>
+								{#if row.year === compared}
+									<span class="dv-where" aria-hidden="true">•</span>
+								{/if}
+							</li>
+						{/each}
+					</ul>
+					{#each singleCells as s (s.id)}
+						<p class="detail-note">{t.singleNote(String(s.year), s.label, fmtMd(s.amount), String(s.page))}</p>
+					{/each}
+				</div>
+			{/if}
 			{#if programmes.length}
 				<p class="detail-title">{t.programmes2026}</p>
 				<p class="detail-source">{t.programmesNote}</p>
@@ -486,6 +532,12 @@
 									refused={refusedId === r.id}
 									pan={narrow}
 									past={comparedYear ? { year: comparedYear.year, md: comparedYear.lines[r.id] } : null}
+									pastTitle={comparedYear
+										? `${comparedYear.year}: ${fmtMd(comparedYear.lines[r.id])} ${t.unit}${(() => {
+												const check = cellCheck(comparedYear.year, r.id);
+												return check ? ` · ${checkPhrase(check, t)}` : '';
+											})()}`
+										: ''}
 									planDerived={r.id === 'subsidies_energy' || r.id === 'subsidies_food'}
 								/>
 							</div>
@@ -655,6 +707,10 @@
 					caveat={lineCaveat}
 					taxNote={comparedRevenue ? `${t.taxLine(String(comparedRevenue.year), comparedRevenue.tax_per_100.toFixed(1), comparedRevenue.covered_pct.toFixed(1))} ${t.taxPage(String(comparedRevenue.page))}` : null}
 					taxDetail={comparedRevenue ? t.taxDefinition : null}
+					verifyNote={compared && activeRow ? (() => {
+						const check = cellCheck(compared, activeRow.id);
+						return check ? `${jortLabel(check, t)} · ${t.verifiedWords[check.status]}` : null;
+					})() : null}
 					onpick={(year) => (compared = compared === year ? null : year)}
 				/>
 			</div>
@@ -1268,6 +1324,36 @@
 		font-weight: 600;
 		font-size: var(--t-sm);
 		color: var(--text-primary);
+	}
+	.detail-verify {
+		display: grid;
+		gap: var(--s-1);
+		padding-block-start: var(--s-3);
+		border-block-start: var(--rule);
+	}
+	.detail-verify ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		display: grid;
+		gap: 2px;
+	}
+	.detail-verify li {
+		display: grid;
+		grid-template-columns: 4ch minmax(0, auto) 1fr auto;
+		gap: var(--s-3);
+		align-items: baseline;
+	}
+	.dv-year {
+		font-weight: 600;
+		color: var(--text-primary);
+	}
+	.dv-page {
+		font-family: var(--font-mono);
+	}
+	.dv-word[data-status='derived'],
+	.dv-word[data-status='single'] {
+		color: var(--text-muted);
 	}
 	.detail-title {
 		margin: 0;

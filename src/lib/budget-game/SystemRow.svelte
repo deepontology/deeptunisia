@@ -42,6 +42,7 @@
 		refused = false,
 		pan = false,
 		past = null,
+		pastTitle = '',
 		unit = '',
 		planDerived = false
 	}: {
@@ -62,13 +63,15 @@
 		pan?: boolean;
 		/** The compared past year, drawn above the plan. Null draws no third bar. */
 		past?: { year: number; md: number } | null;
+		/** The past bar's hover label: its amount and the JORT audit of that cell. */
+		pastTitle?: string;
 		/** MD, م.د and so on, for the past bar's title. */
 		unit?: string;
 		/** The 2027 plan is a derived split, not a reported figure. */
 		planDerived?: boolean;
 	} = $props();
 
-	const pastTitle = $derived(past ? `${past.year}: ${fmtMd(past.md)} ${unit}` : '');
+	const pastWord = $derived(past ? pastTitle || `${past.year}: ${fmtMd(past.md)} ${unit}` : '');
 
 	const pct = (n: number) => `${Math.min(100, (Math.max(0, n) / scale) * 100)}%`;
 	const over = $derived(yours > scale);
@@ -85,7 +88,7 @@
 		</span>
 	</div>
 	<div class="bars-line">
-		<div class="bars" aria-hidden="true" title={pastTitle}>
+		<div class="bars" aria-hidden="true" title={pastWord}>
 			{#if past}
 				<span class="bar year" style:inline-size={pct(past.md)} data-year={past.year}></span>
 			{/if}

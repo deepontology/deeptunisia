@@ -288,6 +288,8 @@ async function checkBoard(
 		const chips = await sheet.locator('.chips .chip').count();
 		if (points !== 8 || chips !== 6) fail(`${name} chart`, `${points} points and ${chips} year chips, expected 8 points (six laws, the draft, yours) and 6 chips`);
 		const figure = (await sheet.locator('.figure').innerText()).replace(/\s+/g, ' ');
+		const chartAudit = (await sheet.locator('.verify').innerText()).replace(/\s+/g, ' ');
+		if (!/JORT|الرائد/.test(chartAudit)) fail(`${name} chart`, `the chart carries no JORT page: "${chartAudit}"`);
 		if ((await sheet.locator('.plot .val.mine').count()) !== 1) fail(`${name} chart`, 'the citizen point has no value label');
 		const mineLabel = ((await sheet.locator('.plot .val.mine').textContent()) ?? '').trim();
 		if (!/\d/.test(mineLabel)) fail(`${name} chart`, 'the citizen point label carries no number');
@@ -311,6 +313,32 @@ async function checkBoard(
 			}
 			if ((await page.locator('.board .slot .bar.year').count()) !== beforePick) fail(`${name} past years`, 'switching the year dropped the row bars');
 		}
+		// The JORT audit: every compared cell names its page, and a derived cell says it is derived.
+		const jortWord = locale === 'ar' ? 'الرائد' : 'JORT';
+		const derivedWording = locale === 'ar' ? 'مشتقّ' : locale === 'fr' ? 'Dérivé' : 'Derived';
+		const educationAria = (await page.locator('#sys-education').getAttribute('aria-label')) ?? '';
+		if (!educationAria.includes(jortWord)) fail(`${name} audit`, `the row aria carries no JORT page: "${educationAria}"`);
+		const pageMark = locale === 'ar' ? 'ص.' : 'p.';
+		if (!educationAria.includes(pageMark)) fail(`${name} audit`, `the row aria carries no page number: "${educationAria}"`);
+		const restAria = (await page.locator('#sys-rest').getAttribute('aria-label')) ?? '';
+		if (!restAria.includes(derivedWording)) fail(`${name} audit`, `the derived line does not say it is derived: "${restAria}"`);
+		if (!restAria.includes(jortWord)) fail(`${name} audit`, `the derived line carries no JORT page: "${restAria}"`);
+		const barTitle = (await page.locator('#sys-education .bars').getAttribute('title')) ?? '';
+		if (!barTitle.includes(jortWord)) fail(`${name} audit`, `the compared bar's hover label carries no JORT page: "${barTitle}"`);
+		// The one single read, named in the detail panel, at desk width where the chips are reachable.
+		if (size.width > 720) {
+			await page.locator('.board .legend .year', { hasText: '2024' }).click();
+			await page.locator('.board [data-drop="rest"]').click();
+			await page.locator('.board .details-toggle').click();
+			await page.locator('.board .detail-verify').waitFor({ state: 'visible' });
+			const verify = (await page.locator('.board .detail-verify').innerText()).replace(/\s+/g, ' ');
+			const singleWord = locale === 'ar' ? 'مرة واحدة' : locale === 'fr' ? 'une seule fois' : 'read once';
+			if (!verify.includes(singleWord)) fail(`${name} audit`, `the 2024 remainder does not say one read once: "${verify.slice(0, 160)}"`);
+			if (!/Constitution|الدستورية/.test(verify)) fail(`${name} audit`, `the single read is not named: "${verify.slice(0, 160)}"`);
+			await page.locator('.board .detail-close').click();
+			await page.locator('.board .legend .year', { hasText: '2026' }).click();
+		}
+
 		// Names: no mid-word break and no more than two lines at any tested width.
 		const nameIssues = await page.evaluate(() => {
 			const out: string[] = [];
@@ -469,8 +497,21 @@ async function checkLanding(
 			fail(`${name} touchable example`, `purse text stayed "${before}" after clicking the live example`);
 		}
 
+		// The figures table: adopted cells carry their page, and the 2024 remainder is marked 1.
+		await page.locator('#sec-figures table.figures').scrollIntoViewIfNeeded();
+		const cellTitle = (await page.locator('#sec-figures table.figures tbody tr td.past').first().getAttribute('title')) ?? '';
+		if (!/JORT|الرائد/.test(cellTitle)) fail(`${name} figures audit`, `an adopted cell carries no JORT page: "${cellTitle}"`);
+		if (size.width > 640) {
+			const marked = await page.locator('#sec-figures table.figures td.past .ck-single').count();
+			if (marked !== 1) fail(`${name} figures audit`, `${marked} cells carry the single-read mark, expected one`);
+			const derivedCells = await page.locator('#sec-figures table.figures td.past[data-check="derived"]').count();
+			if (derivedCells !== 13) fail(`${name} figures audit`, `${derivedCells} derived cells, expected 13`);
+		}
+		const auditNote = (await page.locator('#sec-figures p.note').allInnerTexts()).join(' ');
+		if (!/215/.test(auditNote) || !/214/.test(auditNote)) fail(`${name} figures audit`, 'the figures table does not state the audit counts');
+
 		assertNoPageErrors(errors, name);
-		ok(`${name}: no h-scroll, live example moved the purse ${before} -> ${after}`);
+		ok(`${name}: no h-scroll, live example moved the purse ${before} -> ${after}, figures table carries the audit`);
 	} finally {
 		await context.close();
 	}
