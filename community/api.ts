@@ -77,6 +77,14 @@ export interface Env {
 	/** '1' accepts research submissions. Absent or any other value → 403. */
 	RESEARCH_OPEN?: string;
 	/**
+	 * The per-study allowlist for research submissions, comma-separated slugs or
+	 * registry ids. Set as a Worker secret so it can change without a rebuild.
+	 * Absent or blank: RESEARCH_OPEN alone decides, which is the behaviour every
+	 * deploy before this one had. Set: only the named studies accept. It never
+	 * opens or closes a study it does not name.
+	 */
+	RESEARCH_ACCEPT?: string;
+	/**
 	 * Secret for signing arm assignments (contract §10). Falls back to
 	 * RATE_PEPPER when unset; both are stable secrets on either side.
 	 */
@@ -437,11 +445,12 @@ export async function handle(request: Request, env: Env): Promise<Response> {
 	try {
 		// ---- research: its own refusal ladder (contract §4). Research is a
 		// separate product with its own fail-closed gate: a study must be fielding
-		// and RESEARCH_OPEN must be '1' before any write is accepted. The community
-		// mode governs Agora and does not close research, so this branch runs ahead
-		// of the mode gate. It never touches Agora tables; the DB binding is used
-		// only for the salted rate-limit buckets. Instrument reads stay
-		// unauthenticated and unlimited; the address only derives a bucket.
+		// and the submission gate open (RESEARCH_OPEN, and RESEARCH_ACCEPT when it
+		// is set) before any write is accepted. The community mode governs Agora
+		// and does not close research, so this branch runs ahead of the mode gate.
+		// It never touches Agora tables; the DB binding is used only for the salted
+		// rate-limit buckets. Instrument reads stay unauthenticated and unlimited;
+		// the address only derives a bucket.
 		if (path === '/api/studies' || path.startsWith('/api/studies/')) {
 			return await handleResearch(request, env, {
 				clientAddress: clientAddress(request),

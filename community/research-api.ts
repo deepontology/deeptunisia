@@ -9,11 +9,12 @@
  * sensitive thing they will hand this site.
  *
  * Submissions follow the refusal ladder in contract §4, in order: parse (capped)
- * → study exists → study fielding → RESEARCH_OPEN → storage → honeypot → bot
+ * → study exists → study fielding → submission gate → storage → honeypot → bot
  * challenge → rate limit → assignment → completion floor → validateSubmission →
  * receipt → insert. Each refusal is the honest one for its cause; the order
  * matters because a caller acts differently on "not open yet" than on "you
- * answered wrong".
+ * answered wrong". The gate is the master RESEARCH_OPEN and, when it is set,
+ * the per-study allowlist RESEARCH_ACCEPT (see gateOpenFor).
  *
  * LOCAL DEVELOPMENT ONLY. RESEARCH_DEV_STUDY (read in community/server.ts) names
  * one study by slug or id: the API treats it as fielding and accepts its
@@ -489,6 +490,43 @@ function effectiveStatus(env: Env, study: StudySummary): string {
 }
 
 /**
+ * The studies named by RESEARCH_ACCEPT, or null when the variable is unset.
+ *
+ * A set means submissions are open only for the studies it names, by slug or
+ * by registry id. Unset, blank or absent keeps the behaviour every earlier
+ * deploy had: with RESEARCH_OPEN=1, every fielding study accepts. That default
+ * is deliberate. Deploying this code must not close the police study, and the
+ * new variable is what turns one study on without touching another. A name
+ * that matches no study simply admits nothing, which is the safe direction.
+ */
+function acceptedStudies(env: Env): Set<string> | null {
+	const raw = env.RESEARCH_ACCEPT;
+	if (typeof raw !== 'string') return null;
+	const names = raw
+		.split(',')
+		.map((name) => name.trim())
+		.filter((name) => name.length > 0);
+	return names.length > 0 ? new Set(names) : null;
+}
+
+/**
+ * Is the submission gate open for this study?
+ *
+ * RESEARCH_OPEN is the master switch: anything but '1' closes every study,
+ * which is the emergency stop the deploy script already understands. Inside
+ * that, RESEARCH_ACCEPT, when set, is the per-study allowlist: a fielding study
+ * not named there does not accept, and naming one study never opens or closes
+ * another. When it is unset the master alone decides, exactly as before, so a
+ * deploy that does not set the new variable changes no study's answer.
+ */
+function gateOpenFor(env: Env, study: StudySummary): boolean {
+	if (env.RESEARCH_OPEN !== '1') return false;
+	const accepted = acceptedStudies(env);
+	if (accepted === null) return true;
+	return accepted.has(study.slug) || accepted.has(study.id);
+}
+
+/**
  * Is this study taking responses right now?
  *
  * The status a page shows and the gate a respondent meets are different facts:
@@ -499,7 +537,7 @@ function effectiveStatus(env: Env, study: StudySummary): string {
  * participation links decide on instead, and it names no reason to anyone.
  */
 function acceptingResponses(env: Env, study: StudySummary): boolean {
-	return effectiveStatus(env, study) === 'fielding' && env.RESEARCH_OPEN === '1' && env.RESEARCH_DB !== undefined;
+	return effectiveStatus(env, study) === 'fielding' && gateOpenFor(env, study) && env.RESEARCH_DB !== undefined;
 }
 
 /** Parse and cap the body once, for every route that takes one (contract §4). */
@@ -972,8 +1010,11 @@ export async function handleResearch(
 			if (effectiveStatus(env, study) !== 'fielding') {
 				throw new ResearchError('this study is not accepting responses', 409);
 			}
-			// 4. the gate is open; anything but '1' is closed.
-			if (env.RESEARCH_OPEN !== '1') {
+			// 4. the submission gate is open for this study: the master switch,
+			//    and the per-study allowlist when one is set. A study the allowlist
+			//    does not name refuses here, and the message does not say which of
+			//    the two closed it.
+			if (!gateOpenFor(env, study)) {
 				throw new ResearchError('submissions are closed', 403);
 			}
 			// 5. somewhere to put the response.
