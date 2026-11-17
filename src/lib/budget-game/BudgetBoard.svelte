@@ -180,6 +180,13 @@
 		return true;
 	}
 
+	/** The chart needs a line: with none chosen, it takes the first row so the click is never dead. */
+	function openChart() {
+		if (!active) active = rows[0]?.id ?? null;
+		detailOpen = false;
+		chartOpen = true;
+	}
+
 	function select(id: string) {
 		if (id === 'purse') return;
 		active = id as LineId;
@@ -338,7 +345,7 @@
 	);
 </script>
 
-<svelte:window onpointerup={stopHold} onblur={stopHold} />
+<svelte:window onpointerup={stopHold} onblur={stopHold} onkeydown={(e) => e.key === 'Escape' && (chartOpen = false)} />
 
 {#snippet detailPanel()}
 	{#if activeRow}
@@ -394,7 +401,7 @@
 		<div class="tools">
 			<button type="button" class="tool" onclick={undo} disabled={game.snapshots.length === 0} aria-label={t.undo} title={t.undo}><span aria-hidden="true">↶</span></button>
 			<button type="button" class="tool" onclick={() => (view = view === 'bars' ? 'table' : 'bars')} aria-pressed={view === 'table'} aria-label={t.table} title={t.table}><span aria-hidden="true">{view === 'bars' ? '☰' : '▥'}</span></button>
-			<button type="button" class="tool years-tool" onclick={() => (chartOpen = true)} aria-label={t.chartOpen} title={t.chartOpen} aria-haspopup="dialog">
+			<button type="button" class="tool years-tool" onclick={openChart} aria-label={t.chartOpen} title={t.chartOpen} aria-haspopup="dialog">
 				<svg viewBox="0 0 20 14" width="20" height="14" aria-hidden="true"><path d="M2 11 L7 8 L12 9 L18 3" /><circle cx="18" cy="3" r="2" /></svg>
 			</button>
 		</div>
@@ -412,7 +419,7 @@
 			<span class="key"><span class="sw plan" aria-hidden="true"></span>{t.legendPlan}</span>
 			<span class="key"><span class="sw mine" aria-hidden="true"></span>{t.legendYours}</span>
 			<span class="years" role="group" aria-label={t.pastYears} title={t.historyNote}>
-				<button type="button" class="chart-btn" onclick={() => (chartOpen = true)} aria-label={t.chartOpen} title={t.chartOpen} aria-haspopup="dialog">
+				<button type="button" class="chart-btn" onclick={openChart} aria-label={t.chartOpen} title={t.chartOpen} aria-haspopup="dialog">
 					<svg viewBox="0 0 20 14" width="18" height="12" aria-hidden="true"><path d="M2 11 L7 8 L12 9 L18 3" /><circle cx="18" cy="3" r="2" /></svg>
 				</button>
 				{#each pastYears as h (h.year)}
@@ -552,7 +559,7 @@
 					<button type="button" class="details-toggle" aria-expanded={detailOpen} onclick={() => (detailOpen = !detailOpen)}>
 						{detailOpen ? t.detailsClose : t.details}
 					</button>
-					<button type="button" class="chart-link" aria-haspopup="dialog" onclick={() => (chartOpen = true)}>
+					<button type="button" class="chart-link" aria-haspopup="dialog" onclick={openChart}>
 						{t.chartHeading}
 					</button>
 				</div>
