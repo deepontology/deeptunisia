@@ -14,6 +14,7 @@
 	 *
 	 * Queries are read in the browser only, because the page is prerendered.
 	 */
+	let { data } = $props();
 	let start = $state<StartMode>('draft');
 	let rule = $state<MoveRule>(DEFAULT_RULE);
 	let playing = $state(false);
@@ -23,11 +24,6 @@
 		start = q.get('start') === 'empty' ? 'empty' : 'draft';
 		rule = q.get('rule') === 'step' ? 'step' : q.get('rule') === 'coin' ? 'coin' : DEFAULT_RULE;
 	});
-	/**
-	 * Citizen budget game, study prototype. Placeholder figures only; nothing is
-	 * sent, stored or scored. The page is static, is served at /research/citizen-budget/prototype while the
-	 * study entry is in design, and the study page links to it.
-	 */
 </script>
 
 <svelte:head>
@@ -38,7 +34,7 @@
 <div class="scroll" class:playing>
 	<p class="back"><a href="/research/citizen-budget">{boardCopyFor(app.locale).back}</a></p>
 	{#key `${start}-${rule}`}
-		<BudgetGame {start} {rule} onstep={(s) => (playing = s === 'board')} />
+		<BudgetGame {start} {rule} study={data.study} instrument={data.instrument} onstep={(s) => (playing = s === 'board')} />
 	{/key}
 </div>
 

@@ -29,10 +29,16 @@ export interface LandingCopy {
 	cover: string;
 	status: string;
 	notCollecting: string;
+	statusLive: string;
+	statusPaused: string;
+	countNote: (n: number) => string;
+	countUnknown: string;
+	pausedNote: string;
+	ctaNoteLive: string;
 	ctaBoard: string;
 	ctaNote: string;
 	unit: string;
-	tally: { total: string; locked: string; movable: string; systems: string; answers: string };
+	tally: { total: string; locked: string; movable: string; systems: string; answers: string; answer: string };
 	field: {
 		caption: (perDot: string) => string;
 		idle: string;
@@ -110,6 +116,12 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 		cover: 'Divide the 2027 state budget yourself, on one board, with the draft figures. Every dinar you give one system, you take from another.',
 		status: 'In design · not collecting',
 		notCollecting: 'Not collecting answers yet. The question, the figures and the rules are published here first, so they can be checked before anyone answers.',
+		statusLive: 'In the field · collecting',
+		statusPaused: 'In the field · not collecting right now',
+		countNote: (n) => `${n} ${n === 1 ? 'answer' : 'answers'} stored so far.`,
+		countUnknown: 'The count could not be read.',
+		pausedNote: 'The study is in the field but is not collecting answers right now. Nothing is stored.',
+		ctaNoteLive: 'About five minutes. Draft figures are labelled. A receipt is shown at the end.',
 		ctaBoard: 'Try the board',
 		ctaNote: 'Prototype. Draft figures. Nothing is sent or stored.',
 		unit: 'MD',
@@ -118,7 +130,8 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 			locked: 'Owed before any choice',
 			movable: 'Yours to divide',
 			systems: 'systems on the board',
-			answers: 'answers collected'
+			answers: 'answers collected',
+			answer: 'answer collected'
 		},
 		field: {
 			caption: (perDot) => `The 2027 draft, one dot for every ${perDot} MD. Touch a block to read it.`,
@@ -308,6 +321,12 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 		cover: 'Répartissez vous-même le budget de l’État 2027, sur un seul plateau, avec les chiffres du projet. Chaque dinar donné à un poste est pris à un autre.',
 		status: 'En conception · pas de collecte',
 		notCollecting: 'Aucune réponse n’est collectée. La question, les chiffres et les règles sont publiés ici d’abord, pour être vérifiés avant que quiconque réponde.',
+		statusLive: 'Sur le terrain · collecte en cours',
+		statusPaused: 'Sur le terrain · pas de collecte pour le moment',
+		countNote: (n) => `${n} ${n === 1 ? 'réponse enregistrée' : 'réponses enregistrées'} à ce jour.`,
+		countUnknown: 'Le décompte n’a pas pu être lu.',
+		pausedNote: 'L’étude est sur le terrain mais ne collecte pas de réponses pour le moment. Rien n’est conservé.',
+		ctaNoteLive: 'Environ cinq minutes. Les chiffres du projet sont étiquetés. Un reçu s’affiche à la fin.',
 		ctaBoard: 'Essayer le plateau',
 		ctaNote: 'Prototype. Chiffres du projet. Rien n’est envoyé ni conservé.',
 		unit: 'MD',
@@ -316,7 +335,8 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 			locked: 'Dû avant tout choix',
 			movable: 'À vous de répartir',
 			systems: 'postes sur le plateau',
-			answers: 'réponses collectées'
+			answers: 'réponses collectées',
+			answer: 'réponse collectée'
 		},
 		field: {
 			caption: (perDot) => `Le projet 2027, un point pour ${perDot} MD. Touchez un bloc pour le lire.`,
@@ -506,6 +526,12 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 		cover: 'وزّع بنفسك ميزانية الدولة لسنة 2027، على لوحة واحدة، بأرقام المشروع. كلّ دينار تعطيه لقطاع تأخذه من قطاع آخر.',
 		status: 'قيد التصميم · لا جمع للردود',
 		notCollecting: 'لا تُجمع أيّ إجابة بعد. نُشرت السؤال والأرقام والقواعد هنا أوّلًا، ليمكن التحقّق منها قبل أن يجيب أحد.',
+		statusLive: 'قيد الميدان · جمع الإجابات',
+		statusPaused: 'قيد الميدان · لا جمع للردود الآن',
+		countNote: (n) => `${n} ${n === 1 ? 'إجابة مخزّنة' : 'إجابات مخزّنة'} حتى الآن.`,
+		countUnknown: 'تعذّرت قراءة العدد.',
+		pausedNote: 'الدراسة قيد الميدان لكنها لا تجمع إجابات الآن. لا يُخزَّن شيء.',
+		ctaNoteLive: 'نحو خمس دقائق. أرقام المشروع موسومة. يظهر إيصال في النهاية.',
 		ctaBoard: 'جرّب اللوحة',
 		ctaNote: 'نموذج أوّلي. أرقام المشروع. لا يُرسل شيء ولا يُحفظ.',
 		unit: 'م.د',
@@ -514,7 +540,8 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 			locked: 'واجب الدفع قبل أيّ اختيار',
 			movable: 'لك أن توزّعه',
 			systems: 'قطاعًا على اللوحة',
-			answers: 'إجابة مجمّعة'
+			answers: 'إجابة مجمّعة',
+			answer: 'إجابة مجمّعة'
 		},
 		field: {
 			caption: (perDot) => `مشروع 2027، نقطة لكلّ ${perDot} م.د. المس كتلة لتقرأها.`,

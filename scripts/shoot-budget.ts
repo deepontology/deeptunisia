@@ -403,10 +403,12 @@ async function checkRoundTrip(
 		if (!/(^|[^0-9])300([^0-9]|$)/.test(summary.replace(/[^0-9 .]/g, ' '))) {
 			fail(`${name} result`, `summary "${summary}" does not say 300 MD moved`);
 		}
-		const receiptHref = await page.locator('.game .receipt-link').getAttribute('href');
-		if (!receiptHref?.startsWith('/research/citizen-budget#')) {
-			fail(`${name} receipt link`, `the prototype receipt links to ${receiptHref}, not a static study-page section`);
+		const receiptCode = page.locator('.game .receipt-code');
+		if ((await receiptCode.count()) > 0) {
+			fail(`${name} receipt`, 'a design study shows a receipt code, but nothing can be stored');
 		}
+		const outcome = await page.locator('.game .block p[role="status"]').last().innerText();
+		if (!outcome.trim()) fail(`${name} outcome`, 'the result does not say what the server did with the answer');
 		await page.screenshot({ path: join(OUT, `result-${size.label}-${locale}.png`), fullPage: true });
 		await assertNoHorizontalScroll(page, name);
 

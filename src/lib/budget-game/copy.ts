@@ -138,6 +138,31 @@ export interface Copy {
 		receiptNote: string;
 		receiptLink: string;
 	};
+	/**
+	 * The live state of the study and the submission it can take. The design
+	 * strings above stay the prototype's; these are used once the registry says
+	 * the study is fielding, and the page says which of the two it is.
+	 */
+	study: {
+		chip: string;
+		statusPaused: string;
+		statusAccepting: string;
+		storedBody: string;
+		whoBody: string;
+		consentWithdrawal: string;
+		consentNote: string;
+		submit: string;
+		sending: string;
+		sent: string;
+		refused: string;
+		notOpen: string;
+		failed: string;
+		prototypeView: string;
+		cardNote: string;
+		receiptTitle: string;
+		receiptNote: string;
+		receiptLink: string;
+	};
 	unit: string;
 	lines: Record<LineId, LineCopy>;
 }
@@ -270,6 +295,29 @@ const en: Copy = {
 		receiptNote:
 			'In the real study this code would be your receipt and the only way to withdraw. Nothing was sent, so this code does nothing.',
 		receiptLink: 'What withdrawal would look like'
+	},
+	study: {
+		chip: 'Study · fielding',
+		statusPaused: 'The study is fielding, but it is not collecting answers right now.',
+		statusAccepting: 'The study is fielding and collecting answers.',
+		storedBody:
+			'Your budget as shares of each line, two short answers, the version of the study and how long it took. No name, email, IP address or device details.',
+		whoBody:
+			'DeepTunisia. The study is fielding. The answers describe the people who take part in an open, self-selected online survey of adults.',
+		consentWithdrawal:
+			'I understand that I will receive a receipt code, and that I can withdraw my answers with it until the study window closes.',
+		consentNote: 'A receipt is shown at the end. Keep it: it is the only way to withdraw your answer while the study is open.',
+		submit: 'Send my answer',
+		sending: 'Sending your answer.',
+		sent: 'Your answer was stored.',
+		refused: 'The study is not collecting answers right now. Nothing was sent.',
+		notOpen: 'This study is not open for answers yet. Nothing was sent.',
+		failed: 'The answer could not be sent. Nothing was stored.',
+		prototypeView: 'This empty-start view is a prototype. The study starts from the draft. Nothing was sent.',
+		cardNote: 'Draft figures, not verified.',
+		receiptTitle: 'Your receipt',
+		receiptNote: 'Keep this code. It is the only way to withdraw your answer while the study is open.',
+		receiptLink: 'Withdraw this answer'
 	},
 	unit: 'MD',
 	lines: {
@@ -445,6 +493,30 @@ const fr: Copy = {
 			"Dans l'étude réelle, ce code serait votre reçu et le seul moyen de retirer vos réponses. Rien n'a été envoyé, donc ce code ne fait rien.",
 		receiptLink: 'À quoi ressemblerait le retrait'
 	},
+	study: {
+		chip: 'Étude · en cours',
+		statusPaused: "L'étude est en cours, mais elle ne collecte pas de réponses pour le moment.",
+		statusAccepting: "L'étude est en cours et collecte des réponses.",
+		storedBody:
+			'Votre budget en parts de chaque ligne, deux réponses courtes, la version de l’étude et sa durée. Aucun nom, courriel, adresse IP ni détail d’appareil.',
+		whoBody:
+			'DeepTunisia. L’étude est en cours. Les réponses décrivent les personnes qui participent à une enquête en ligne ouverte et auto-sélectionnée auprès d’adultes.',
+		consentWithdrawal:
+			'Je comprends que je recevrai un code de reçu et que je pourrai retirer mes réponses avec ce code jusqu’à la clôture de l’étude.',
+		consentNote:
+			'Un reçu s’affiche à la fin. Conservez-le : c’est le seul moyen de retirer votre réponse pendant que l’étude est ouverte.',
+		submit: 'Envoyer ma réponse',
+		sending: 'Envoi de votre réponse.',
+		sent: 'Votre réponse a été enregistrée.',
+		refused: "L'étude ne collecte pas de réponses pour le moment. Rien n'a été envoyé.",
+		notOpen: "Cette étude n'est pas encore ouverte aux réponses. Rien n'a été envoyé.",
+		failed: "La réponse n'a pas pu être envoyée. Rien n'a été enregistré.",
+		prototypeView: "Cette vue avec une bourse vide est un prototype. L'étude part du projet. Rien n'a été envoyé.",
+		cardNote: 'Chiffres du projet, non vérifiés.',
+		receiptTitle: 'Votre reçu',
+		receiptNote: 'Conservez ce code. C’est le seul moyen de retirer votre réponse pendant que l’étude est ouverte.',
+		receiptLink: 'Retirer cette réponse'
+	},
 	unit: 'MD',
 	lines: {
 		parliament: { name: 'Parlement', note: "L'Assemblée des représentants du peuple : membres, personnel et institution." },
@@ -614,6 +686,28 @@ const ar: Copy = {
 		receiptTitle: 'إيصال النموذج الأوّلي',
 		receiptNote: 'في الدراسة الحقيقية سيكون هذا الرمز إيصالك والطريق الوحيد لسحب إجاباتك. لم يُرسل شيء، فهذا الرمز لا يفعل شيئًا.',
 		receiptLink: 'كيف سيكون السحب'
+	},
+	study: {
+		chip: 'دراسة · قيد الميدان',
+		statusPaused: 'الدراسة قيد الميدان، لكنها لا تجمع إجابات الآن.',
+		statusAccepting: 'الدراسة قيد الميدان وتجمع الإجابات.',
+		storedBody:
+			'ميزانيتك كنسب من كل بند، وإجابتان قصيرتان، ونسخة الدراسة ومدتها. لا اسم ولا بريد إلكتروني ولا عنوان IP ولا تفاصيل جهاز.',
+		whoBody:
+			'DeepTunisia. الدراسة قيد الميدان. تصف الإجابات الأشخاص الذين شاركوا في استبيان مفتوح عبر الإنترنت يختار المشاركون أنفسهم، بين بالغين.',
+		consentWithdrawal: 'أفهم أنني سأحصل على رمز إيصال، وأنه يمكنني سحب إجاباتي به حتى إغلاق نافذة الدراسة.',
+		consentNote: 'يظهر الإيصال في النهاية. احتفظ به: إنه الطريقة الوحيدة لسحب إجابتك أثناء بقاء الدراسة مفتوحة.',
+		submit: 'أرسل إجابتي',
+		sending: 'جارٍ إرسال إجابتك.',
+		sent: 'تم تخزين إجابتك.',
+		refused: 'الدراسة لا تجمع إجابات الآن. لم يُرسل شيء.',
+		notOpen: 'هذه الدراسة ليست مفتوحة للإجابات بعد. لم يُرسل شيء.',
+		failed: 'تعذّر إرسال الإجابة. لم يُخزَّن شيء.',
+		prototypeView: 'هذا العرض ببداية فارغة نموذج أوّلي. تبدأ الدراسة من المشروع. لم يُرسل شيء.',
+		cardNote: 'أرقام المشروع، لم يُتحقق منها.',
+		receiptTitle: 'إيصالك',
+		receiptNote: 'احتفظ بهذا الرمز. إنه الطريقة الوحيدة لسحب إجابتك أثناء بقاء الدراسة مفتوحة.',
+		receiptLink: 'اسحب هذه الإجابة'
 	},
 	unit: 'م.د',
 	lines: {
