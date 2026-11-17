@@ -157,6 +157,8 @@ export interface Copy {
 		refused: string;
 		notOpen: string;
 		failed: string;
+		tooFast: string;
+		sendAgain: string;
 		prototypeView: string;
 		cardNote: string;
 		receiptTitle: string;
@@ -313,6 +315,8 @@ const en: Copy = {
 		refused: 'The study is not collecting answers right now. Nothing was sent.',
 		notOpen: 'This study is not open for answers yet. Nothing was sent.',
 		failed: 'The answer could not be sent. Nothing was stored.',
+		tooFast: "You finished faster than the study's minimum time. Nothing was stored. Wait a moment and send again.",
+		sendAgain: 'Send again',
 		prototypeView: 'This empty-start view is a prototype. The study starts from the draft. Nothing was sent.',
 		cardNote: 'Draft figures, not verified.',
 		receiptTitle: 'Your receipt',
@@ -511,6 +515,8 @@ const fr: Copy = {
 		refused: "L'étude ne collecte pas de réponses pour le moment. Rien n'a été envoyé.",
 		notOpen: "Cette étude n'est pas encore ouverte aux réponses. Rien n'a été envoyé.",
 		failed: "La réponse n'a pas pu être envoyée. Rien n'a été enregistré.",
+		tooFast: "Vous avez terminé plus vite que le temps minimum de l'étude. Rien n'a été conservé. Attendez un instant et renvoyez.",
+		sendAgain: 'Renvoyer',
 		prototypeView: "Cette vue avec une bourse vide est un prototype. L'étude part du projet. Rien n'a été envoyé.",
 		cardNote: 'Chiffres du projet, non vérifiés.',
 		receiptTitle: 'Votre reçu',
@@ -703,6 +709,8 @@ const ar: Copy = {
 		refused: 'الدراسة لا تجمع إجابات الآن. لم يُرسل شيء.',
 		notOpen: 'هذه الدراسة ليست مفتوحة للإجابات بعد. لم يُرسل شيء.',
 		failed: 'تعذّر إرسال الإجابة. لم يُخزَّن شيء.',
+		tooFast: 'أنهيت أسرع من الحدّ الأدنى لوقت الدراسة. لم يُخزَّن شيء. انتظر قليلًا ثم أرسل مرة أخرى.',
+		sendAgain: 'أرسل مرة أخرى',
 		prototypeView: 'هذا العرض ببداية فارغة نموذج أوّلي. تبدأ الدراسة من المشروع. لم يُرسل شيء.',
 		cardNote: 'أرقام المشروع، لم يُتحقق منها.',
 		receiptTitle: 'إيصالك',

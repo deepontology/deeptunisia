@@ -164,6 +164,18 @@ console.log('\n  ── the page uses the states and the police path is untouche
 	ok('the stored state links to the real withdrawal page', game.includes('href="/research/citizen-budget/withdraw"'));
 	ok('the closed states have their own captions', game.includes('c.study.refused') && game.includes('c.study.notOpen') && game.includes('c.study.failed'));
 	ok('the empty-start view is labelled a prototype', game.includes('c.study.prototypeView'));
+	const sendHead = game.slice(game.indexOf('async function send()'), game.indexOf('const allocation = result'));
+	ok(
+		'the design state returns before the network call and says not open',
+		/if \(design\)/.test(sendHead) && /phase = 'not-open'/.test(sendHead)
+	);
+	ok(
+		'the completion floor has its own caption and a send-again control',
+		game.includes("'the completion time is below the study minimum'") &&
+			game.includes("phase = 'too-fast'") &&
+			game.includes('c.study.tooFast') &&
+			game.includes('c.study.sendAgain'),
+	);
 
 	const copy = readFileSync(join(ROOT, 'src/lib/budget-game/copy.ts'), 'utf8');
 	ok('the copy keeps the state captions in one place', copy.includes('statusPaused') && copy.includes('statusAccepting'));
@@ -183,6 +195,8 @@ console.log('\n  ── the page uses the states and the police path is untouche
 			'refused',
 			'notOpen',
 			'failed',
+			'tooFast',
+			'sendAgain',
 			'prototypeView',
 			'cardNote',
 			'receiptTitle',

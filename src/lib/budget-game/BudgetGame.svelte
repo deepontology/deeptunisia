@@ -46,7 +46,7 @@
 	} = $props();
 
 	type Step = 'intro' | 'frame' | 'board' | 'items' | 'card' | 'out';
-	type Phase = 'idle' | 'sending' | 'sent' | 'refused' | 'not-open' | 'failed';
+	type Phase = 'idle' | 'sending' | 'sent' | 'refused' | 'not-open' | 'too-fast' | 'failed';
 	const STEPS: Exclude<Step, 'out'>[] = ['intro', 'frame', 'board', 'items', 'card'];
 
 	const c = $derived(copyFor(app.locale));
@@ -183,6 +183,18 @@
 			go('card');
 			return;
 		}
+		// A design study stores nothing, and the consent text a design reader sees
+		// says so. Sending the answers anyway would make that text false and would
+		// open a race with the freeze deploy: a page loaded in design could store
+		// under design consent if the switch came up before the button. So a
+		// design state never reaches the network, and the card says the honest
+		// thing. The empty-purse view above is the same rule for the other
+		// prototype view.
+		if (design) {
+			phase = 'not-open';
+			go('card');
+			return;
+		}
 		const allocation = result ? toAllocation(board, result) : null;
 		const current = currentInstrument;
 		if (!allocation || !current) {
@@ -218,6 +230,11 @@
 				receipt = res.receipt;
 				phase = 'sent';
 				markAnswered();
+			} else if (res.status === 400 && res.error === 'the completion time is below the study minimum') {
+				// The floor is a data-quality rule, not a network failure. Keep the
+				// answer on screen, say what happened, and leave the send button so a
+				// reader who waited the floor out can send the same answer again.
+				phase = 'too-fast';
 			} else if (res.status === 403 && res.error === 'submissions are closed') {
 				phase = 'refused';
 			} else if (res.status === 409) {
@@ -502,6 +519,10 @@
 			</details>
 			{#if start === 'empty'}
 				<p class="note" role="status">{c.study.prototypeView}</p>
+			{:else if design}
+				<p class="note" role="status">{c.study.notOpen}</p>
+			{:else if phase === 'sending'}
+				<p class="note" role="status">{c.study.sending}</p>
 			{:else if phase === 'sent' && receipt}
 				<p class="note" role="status">{c.study.sent}</p>
 				<div class="receipt">
@@ -514,6 +535,11 @@
 				<p class="note" role="status">{c.study.refused}</p>
 			{:else if phase === 'not-open'}
 				<p class="note" role="status">{c.study.notOpen}</p>
+			{:else if phase === 'too-fast'}
+				<p class="note" role="status">{c.study.tooFast}</p>
+				<div class="actions">
+					<button class="cta" type="button" onclick={() => void send()} disabled={sending}>{c.study.sendAgain}</button>
+				</div>
 			{:else}
 				<p class="note" role="status">{c.study.failed}</p>
 			{/if}

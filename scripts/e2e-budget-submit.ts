@@ -25,6 +25,18 @@
  * Pass BUDGET_E2E_EXPECT to match:
  *   BUDGET_E2E_EXPECT=paused npx tsx scripts/e2e-budget-submit.ts
  *
+ * The dev override skips the proof of work and the completion floor, and makes
+ * the assignment optional. The real-path run uses a temporary fielding registry
+ * (src/generated/studies.json, gitignored), no RESEARCH_DEV_STUDY, and a pause:
+ *
+ *   BUDGET_E2E_BASE=http://127.0.0.1:8787 BUDGET_E2E_PAUSE_MS=150000 \
+ *     npx tsx scripts/e2e-budget-submit.ts
+ *
+ * Run it against `wrangler dev --local` (the real Worker and local D1) with the
+ * budget study fielding and RESEARCH_ACCEPT naming both studies. The page solves
+ * the proof of work and sends the signed assignment; the pause clears the 144 s
+ * floor. Restore the design registry with `npm run data` afterwards.
+ *
  * BASE can point at another pair:
  *   BUDGET_E2E_BASE=http://127.0.0.1:5320 npx tsx scripts/e2e-budget-submit.ts
  */
@@ -113,6 +125,15 @@ try {
 	await page.locator('.board .keep-choice input').check();
 	await page.locator('.board .finish').click();
 	await page.locator('.game .q').first().waitFor({ state: 'visible' });
+
+	// The real Worker applies the completion floor (40% of estimated_minutes, 144 s
+	// at 6 minutes). A dev-override run skips it; a real-path run sets the pause so
+	// the same answer clears it.
+	const pause = Number(process.env.BUDGET_E2E_PAUSE_MS ?? '0');
+	if (pause > 0) {
+		console.log(`  waiting ${pause} ms before submit for the completion floor`);
+		await page.waitForTimeout(pause);
+	}
 
 	// The result card is the submission step.
 	await page.locator('.game .actions button.cta').click();
