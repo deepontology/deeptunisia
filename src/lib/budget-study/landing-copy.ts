@@ -87,6 +87,8 @@ export interface LandingCopy {
 		leftOut: string;
 		sources: string;
 	};
+	/** The JORT audit note under the figures table. */
+	verification: { note: string };
 	sections: LandingSection[];
 	cannotSay: string[];
 	recordFacts: { label: string; value: string }[];
@@ -185,6 +187,9 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 			note: 'Tax, non-tax receipts and grants are read from Article premier and Article 2 of each finance law, printed in the Journal Officiel. The spending column is tableau C of the same law, the total the spending side of this study already uses. Each figure has a printed page and a kept full-page crop in the study files.',
 			leftOut: 'No adopted year between 2020 and 2026 is missing. 2021 is not in the study: its spending table was not sourced, so it has no revenue row either. 2018 and 2019 are left out on purpose: those laws print one revenue total split into Titre I, Titre II and the special treasury funds, with loans inside Titre II and no tax or non-tax split, so they cannot sit on these two ratios without inventing a mapping.',
 			sources: 'Sources, revenue side, with pages and kept crops'
+		},
+		verification: {
+			note: 'Adopted years: 215 figures, every one read from its law and audited twice. 214 are verified: 188 by two readers agreeing, 26 settled by a third reader or by the programme arithmetic. One is read once, the 2024 Constitutional Court at 0 MD, page 3502, marked 1. A d marks a figure computed from verified printed lines, so it is never presented as a printed cell. Each cell carries its Journal Officiel page.',
 		},
 		sections: [
 			{
@@ -384,6 +389,9 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 			leftOut: "Aucune année adoptée entre 2020 et 2026 ne manque. 2021 n'est pas dans l'étude : son tableau de dépenses n'a pas été sourcé, donc elle n'a pas non plus de ligne de recettes. 2018 et 2019 sont écartées volontairement : ces lois impriment un seul total de recettes réparti en Titre I, Titre II et fonds spéciaux du Trésor, avec les emprunts dans le Titre II et sans ventilation impôt / non-impôt ; elles ne peuvent pas figurer sur ces deux ratios sans inventer une correspondance.",
 			sources: 'Sources, côté recettes, avec pages et images conservées'
 		},
+		verification: {
+			note: "Années adoptées : 215 chiffres, tous lus dans leur loi et audités deux fois. 214 sont vérifiés : 188 par deux lecteurs d'accord, 26 tranchés par un troisième lecteur ou par l'arithmétique des programmes. Un est lu une seule fois, la Cour constitutionnelle 2024 à 0 MD, page 3502, marqué 1. Un d marque un chiffre calculé à partir de lignes imprimées vérifiées, jamais présenté comme une cellule imprimée. Chaque cellule porte sa page au Journal officiel.",
+		},
 		sections: [
 			{
 				id: 'question',
@@ -581,6 +589,9 @@ export const landingCopy: Record<Locale, LandingCopy> = {
 			note: 'تُقرأ الضريبة والإيرادات غير الجبائية والهبات من الفصل الأول والفصل 2 من كل قانون مالية، كما نُشرت في الرائد الرسمي. وعمود النفقات هو الجدول «ج» من القانون نفسه، وهو المجموع الذي يستعمله جانب النفقات في هذه الدراسة. ولكل رقم صفحته المطبوعة وصورة الصفحة المحفوظة في ملفات الدراسة.',
 			leftOut: 'لا تنقص أي سنة مصادق عليها بين 2020 و2026. وسنة 2021 ليست في الدراسة: لم يُوثَّق جدول نفقاتها، فلا سطر إيرادات لها أيضًا. أمّا 2018 و2019 فمستبعدتان بقرار: تلك القوانين تطبع مجموع إيرادات واحدًا موزعًا على العنوان الأول والعنوان الثاني وصناديق الخزينة الخاصة، والاقتراض داخل العنوان الثاني، ودون تفصيل بين ضريبة وغير ضريبة، فلا يمكن إدراجهما في هاتين النسبتين دون اختراع مطابقة.',
 			sources: 'المصادر، من جهة الإيرادات، مع الصفحات والصور المحفوظة'
+		},
+		verification: {
+			note: 'السنوات المصادق عليها: 215 رقمًا، كلّها مقروءة من قانونها ومُدقَّقة مرتين. 214 مُتحقَّق منها: 188 بتوافق قارئين، و26 حُسمت بقارئ ثالث أو بحساب البرامج. ورقم واحد قُرئ مرة واحدة، المحكمة الدستورية 2024 عند 0 م.د، صفحة 3502، معلَّم بـ 1. والحرف d يعلّم رقمًا محسوبًا من بنود مطبوعة مُتحقَّق منها، فلا يُقدَّم بندًا مطبوعًا. ولكل خلية صفحتها في الرائد الرسمي.',
 		},
 		sections: [
 			{

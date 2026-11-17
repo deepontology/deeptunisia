@@ -37,6 +37,14 @@ export interface BoardCopy {
 	taxLine: (year: string, per100: string, covered: string) => string;
 	taxDefinition: string;
 	taxPage: (page: string) => string;
+	/** The JORT audit of the compared cell: page citation and status, in words. */
+	jort: (year: string, from: string, to: string | null) => string;
+	verifiedCell: (label: string) => string;
+	derivedCell: (label: string) => string;
+	singleCell: (label: string) => string;
+	verifiedTitle: string;
+	verifiedWords: Record<'verified' | 'derived' | 'single', string>;
+	singleNote: (year: string, name: string, amount: string, page: string) => string;
 	scale: (max: string) => string;
 	howTo: Record<MoveRule, string>;
 	keys: string;
@@ -145,6 +153,13 @@ const en: BoardCopy = {
 	taxLine: (year, per100, covered) => `${year}: tax was ${per100} dinars of every 100 the state raised itself, and covered ${covered}% of spending.`,
 	taxDefinition: 'Tax per 100 raised is tax receipts divided by tax plus non-tax receipts; grants and borrowing are not money the state raises itself. Spending covered by tax is tax receipts divided by the credits of the same law.',
 	taxPage: (page) => `Article premier and Article 2, p. ${page}.`,
+	jort: (year, from, to) => (to ? `JORT ${year}, pp. ${from} to ${to}` : `JORT ${year}, p. ${from}`),
+	verifiedCell: (label) => `Verified against the law, ${label}.`,
+	derivedCell: (label) => `Derived from verified figures, ${label}.`,
+	singleCell: (label) => `Derived, one component read once, ${label}.`,
+	verifiedTitle: 'Checked against the law',
+	verifiedWords: { verified: 'verified', derived: 'derived from verified figures', single: 'one component read once' },
+	singleNote: (year, name, amount, page) => `${year} · ${name}: ${amount} MD, p. ${page}, read once.`,
 	scale: (max) => `One scale, 0 to ${max} MD`,
 	howTo: {
 		coin: 'Drag one system onto another to move 100 MD. Keep holding to keep money flowing. Or choose a system and use Take and Give.',
@@ -237,7 +252,7 @@ const en: BoardCopy = {
 	setRefused: (amount) => `The purse holds ${amount} MD. That change needs more.`,
 	historyNominal: (pct) => `Since 2024: ${pct}% (nominal)`,
 	howToPhone: 'Tap a system, then hold Take. Or drag one system onto another on a desk.',
-	yearLegend: 'The vertical mark is the 2027 draft level.'
+	yearLegend: 'The vertical mark is the 2027 draft level. Every past year is checked against its law.'
 };
 
 const fr: BoardCopy = {
@@ -265,6 +280,13 @@ const fr: BoardCopy = {
 	taxLine: (year, per100, covered) => `${year} : l'impôt représentait ${per100} dinars sur 100 que l'État prélève lui-même, et couvrait ${covered} % des dépenses.`,
 	taxDefinition: "L'impôt pour 100 prélevés est l'impôt divisé par l'impôt plus les recettes non fiscales ; les dons et l'emprunt ne sont pas de l'argent que l'État prélève lui-même. La part des dépenses couverte par l'impôt est l'impôt divisé par les crédits de la même loi.",
 	taxPage: (page) => `Article premier et article 2, p. ${page}.`,
+	jort: (year, from, to) => (to ? `JORT ${year}, p. ${from} à ${to}` : `JORT ${year}, p. ${from}`),
+	verifiedCell: (label) => `Vérifié sur la loi, ${label}.`,
+	derivedCell: (label) => `Dérivé de chiffres vérifiés, ${label}.`,
+	singleCell: (label) => `Dérivé, un élément lu une seule fois, ${label}.`,
+	verifiedTitle: 'Vérifié sur la loi',
+	verifiedWords: { verified: 'vérifié', derived: 'dérivé de chiffres vérifiés', single: 'un élément lu une seule fois' },
+	singleNote: (year, name, amount, page) => `${year} · ${name} : ${amount} MD, p. ${page}, lu une seule fois.`,
 	scale: (m) => `Une échelle, de 0 à ${m} MD`,
 	howTo: {
 		coin: 'Glissez un poste sur un autre pour déplacer 100 MD. Maintenez pour continuer. Ou choisissez un poste et utilisez Retirer et Verser.',
@@ -357,7 +379,7 @@ const fr: BoardCopy = {
 	setRefused: (amount) => `La bourse contient ${amount} MD. Ce changement en demande plus.`,
 	historyNominal: (pct) => `Depuis 2024 : ${pct} % (nominal)`,
 	howToPhone: 'Touchez un poste, puis maintenez Retirer. Ou glissez un poste sur un autre sur un ordinateur.',
-	yearLegend: 'Le repère vertical est le niveau du projet 2027.'
+	yearLegend: 'Le repère vertical est le niveau du projet 2027. Chaque année passée est vérifiée sur sa loi.'
 };
 
 const ar: BoardCopy = {
@@ -385,6 +407,13 @@ const ar: BoardCopy = {
 	taxLine: (year, per100, covered) => `${year}: كانت الضريبة ${per100} دينارًا من كل 100 دينار تجمعها الدولة بنفسها، وغطّت ${covered}% من النفقات.`,
 	taxDefinition: 'الضريبة من كل 100 دينار مجمّعة هي الضريبة مقسومة على الضريبة زائد الإيرادات غير الجبائية؛ والهبات والاقتراض ليست أموالًا تجمعها الدولة بنفسها. وحصة النفقات التي تغطيها الضريبة هي الضريبة مقسومة على اعتمادات القانون نفسه.',
 	taxPage: (page) => `الفصل الأول والفصل 2، ص. ${page}.`,
+	jort: (year, from, to) => (to ? `الرائد ${year}، ص. ${from} إلى ${to}` : `الرائد ${year}، ص. ${from}`),
+	verifiedCell: (label) => `مُتحقَّق منه على القانون، ${label}.`,
+	derivedCell: (label) => `مشتقّ من أرقام مُتحقَّق منها، ${label}.`,
+	singleCell: (label) => `مشتقّ، عنصر واحد قُرئ مرة واحدة، ${label}.`,
+	verifiedTitle: 'مُتحقَّق منه على القانون',
+	verifiedWords: { verified: 'مُتحقَّق منه', derived: 'مشتقّ من أرقام مُتحقَّق منها', single: 'عنصر واحد قُرئ مرة واحدة' },
+	singleNote: (year, name, amount, page) => `${year} · ${name}: ${amount} م.د، ص. ${page}، قُرئ مرة واحدة.`,
 	scale: (m) => `سلّم واحد، من 0 إلى ${m} م.د`,
 	howTo: {
 		coin: 'اسحب قطاعًا وأفلته على قطاع آخر لنقل 100 م.د. واصل الضغط ليستمر النقل. أو اختر قطاعًا واستعمل «خذ» و«أعطِ».',
@@ -477,7 +506,7 @@ const ar: BoardCopy = {
 	setRefused: (amount) => `في المحفظة ${amount} م.د. هذا التغيير يحتاج أكثر.`,
 	historyNominal: (pct) => `منذ 2024: ${pct}% (اسمي)`,
 	howToPhone: 'اختر بندًا، ثم اضغط مطوّلًا على «خذ». أو اسحب بندًا على آخر على الحاسوب.',
-	yearLegend: 'العلامة العمودية هي مستوى مشروع 2027.'
+	yearLegend: 'العلامة العمودية هي مستوى مشروع 2027. وكل سنة ماضية مُتحقَّق منها على قانونها.'
 };
 
 const COPY: Record<Locale, BoardCopy> = { en, fr, ar };

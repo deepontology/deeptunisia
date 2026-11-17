@@ -15,10 +15,12 @@
  *
  * Usage: npx tsx scripts/check-budget-figures.ts [path] [--strict]
  */
+import { createHash } from 'node:crypto';
 import { existsSync, readFileSync, statSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parse } from 'yaml';
+import { HISTORY_ROWS, LOCKED_ORDER, MOVABLE_ORDER, type LineId } from '../src/lib/budget-game/lines.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
@@ -244,6 +246,81 @@ if (!process.argv[2] || process.argv[2].startsWith('--')) {
 		if (!history.years?.[year]) failures.push(`revenue: ${year} is not a history year`);
 	}
 	console.log(`  ok    revenue: ${revYears.length} adopted laws, each with its page and its kept crop`);
+
+	/*
+	 * The JORT audit (ticket 0027): one record per printed row, with its page and its
+	 * status. The stored amounts are pinned by a hash, so a figure cannot change
+	 * without a new audit, and every board line must resolve to a record for every
+	 * year: no cell may claim a verification the ledger does not carry.
+	 */
+	type RowStatus = 'verified' | 'derived' | 'single';
+	interface AuditRow {
+		page?: unknown;
+		status?: unknown;
+		basis?: unknown;
+		note?: unknown;
+	}
+	interface AuditYear {
+		pages?: unknown;
+		values_sha256?: unknown;
+		rows?: Record<string, AuditRow>;
+	}
+	const auditPath = join(STUDY, 'verification-lf-2020-2026.yaml');
+	const audit = parse(readFileSync(auditPath, 'utf8')) as {
+		summary?: { audited?: number; verified?: number; two_readers_agree?: number; resolved?: number; single_read?: number };
+		years?: Record<string, AuditYear>;
+	};
+	const auditYears = Object.entries(audit.years ?? {});
+	if (auditYears.length === 0) failures.push('audit: no years');
+	let auditedRows = 0;
+	let derivedRows = 0;
+	let singleRows = 0;
+	for (const [year, a] of auditYears) {
+		const h = history.years?.[year];
+		if (!h) {
+			failures.push(`audit ${year}: not a history year`);
+			continue;
+		}
+		const pages = Array.isArray(a.pages) ? (a.pages as unknown[]) : [];
+		if (pages.length === 0) failures.push(`audit ${year}: pages must be a non-empty list`);
+		const stored = new Set(Object.keys({ ...(h.missions ?? {}), ...(h.programmes ?? {}) }));
+		const audited = new Set(Object.keys(a.rows ?? {}));
+		for (const id of stored) if (!audited.has(id)) failures.push(`audit ${year}: the stored row "${id}" has no audit record`);
+		for (const id of audited) if (!stored.has(id)) failures.push(`audit ${year}: the audit row "${id}" is not in the history file`);
+		/* The hash covers the stored amounts the audit cleared, so a later edit breaks it. */
+		const pairs: string[] = [];
+		for (const [kind, entries] of [['missions', h.missions ?? {}], ['programmes', h.programmes ?? {}]] as const) {
+			for (const [id, e] of Object.entries(entries)) pairs.push(`${id}\t${Number(e.amount_md).toFixed(6)}`);
+		}
+		const digest = createHash('sha256').update(pairs.sort().join('\n')).digest('hex');
+		if (a.values_sha256 !== digest) failures.push(`audit ${year}: the stored amounts changed since the audit (hash ${String(a.values_sha256).slice(0, 8)} != ${digest.slice(0, 8)})`);
+		for (const [id, r] of Object.entries(a.rows ?? {})) {
+			auditedRows++;
+			if (r.status !== 'verified' && r.status !== 'derived' && r.status !== 'single') failures.push(`audit ${year} ${id}: status must be verified, derived or single`);
+			if (r.status === 'derived') derivedRows++;
+			if (r.status === 'single') singleRows++;
+			if (typeof r.page !== 'number' || !pages.includes(r.page)) failures.push(`audit ${year} ${id}: page ${String(r.page)} is not one of the year's audited pages`);
+			if (typeof r.basis !== 'string' || r.basis.length === 0) failures.push(`audit ${year} ${id}: basis is required`);
+			if (r.status === 'derived' && (typeof r.note !== 'string' || r.note.length === 0)) failures.push(`audit ${year} ${id}: a derived row must say what it is made of`);
+		}
+		/* Every board line, for every adopted year, must resolve. */
+		for (const line of [...MOVABLE_ORDER, ...LOCKED_ORDER] as LineId[]) {
+			const made = HISTORY_ROWS[line];
+			const parts = [...(made.missions ?? []), ...(made.programmes ?? []), ...(made.minusProgrammes ?? [])];
+			if (parts.length === 0) failures.push(`audit ${year} ${line}: the board line has no printed rows`);
+			/* A mission a year's law does not print counts as zero on the line; only a row the
+			   year does carry can sit unverified. */
+			for (const id of parts) if (stored.has(id) && !a.rows?.[id]) failures.push(`audit ${year} ${line}: the board line needs the row "${id}", which the audit does not carry`);
+		}
+	}
+	const summary = audit.summary ?? {};
+	const verifiedRows = auditedRows - singleRows;
+	if (summary.audited !== auditedRows) failures.push(`audit: summary says ${String(summary.audited)} audited, the file holds ${auditedRows}`);
+	if (summary.verified !== verifiedRows) failures.push(`audit: summary says ${String(summary.verified)} verified, the file holds ${verifiedRows} (single read excluded)`);
+	if (summary.single_read !== singleRows) failures.push(`audit: summary says ${String(summary.single_read)} single read, the file holds ${singleRows}`);
+	if ((summary.two_readers_agree ?? 0) + (summary.resolved ?? 0) !== verifiedRows) failures.push('audit: the two-reader and resolved counts do not add up to the verified rows');
+	if (singleRows !== 1) failures.push(`audit: ${singleRows} single-read rows, the page says one`);
+	console.log(`  ok    audit: ${auditedRows} rows, ${verifiedRows} verified (${summary.two_readers_agree} by two readers, ${summary.resolved} resolved), ${derivedRows} derived, ${singleRows} single read; every board line resolves`);
 }
 
 if (warnings.length > 0) {

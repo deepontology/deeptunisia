@@ -25,6 +25,7 @@
 		caveat = null,
 		taxNote = null,
 		taxDetail = null,
+		verifyNote = null,
 		onpick
 	}: {
 		name: string;
@@ -43,6 +44,8 @@
 		taxNote?: string | null;
 		/** The two ratios in words. */
 		taxDetail?: string | null;
+		/** The JORT audit of the compared cell. */
+		verifyNote?: string | null;
 		onpick: (year: number) => void;
 	} = $props();
 
@@ -120,6 +123,9 @@
 	</p>
 	{#if change !== null && first}
 		<p class="change num">{words.chartChange(String(first.year), `${signed(change, 1)}%`)}</p>
+	{/if}
+	{#if verifyNote}
+		<p class="verify">{verifyNote}</p>
 	{/if}
 	{#if taxNote}
 		<p class="tax">{taxNote}</p>
@@ -265,7 +271,8 @@
 	.figure [data-dir='more'] {
 		color: var(--text-primary);
 	}
-	.tax {
+	.tax,
+	.verify {
 		color: var(--text-secondary);
 	}
 	@media (max-width: 720px) {
