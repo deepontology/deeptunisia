@@ -94,7 +94,7 @@ interface ContentInline {
 }
 
 interface ContentBlock {
-	t: 'h1' | 'h2' | 'h3' | 'p' | 'section' | 'interp';
+	t: 'h1' | 'h2' | 'h3' | 'p' | 'section' | 'interp' | 'figure';
 	id?: string;
 	title?: string;
 	section_type?: string;
@@ -156,6 +156,15 @@ function parseNarrative(
 	while (i < lines.length) {
 		const line = lines[i];
 		const trimmed = line.trim();
+
+		// Figure marker: a line that is only [[figure:id]]. The figure itself lives in
+		// figures.yaml; the narrative only says where it sits.
+		const fig = trimmed.match(/^\[\[figure:([a-z0-9-]+)\]\]$/);
+		if (fig) {
+			blocks.push({ t: 'figure', ref: fig[1] });
+			i++;
+			continue;
+		}
 
 		// Interpretation reference block: a paragraph whose lines ALL begin with
 		// "> ". These are markers like "> [I3]" pointing into interpretations.yaml,
@@ -325,6 +334,9 @@ interface ValidationIssue {
 		| 'missing_interpretation'
 		| 'orphaned_interpretation'
 		| 'interp_section_unknown'
+		| 'missing_figure'
+		| 'orphaned_figure'
+		| 'figure_claim_unknown'
 		| 'absolutes_without_claim';
 	detail: string;
 }
@@ -469,6 +481,41 @@ function validate(
 	return issues;
 }
 
+/**
+ * Figures: every [[figure:id]] marker must resolve to a record in figures.yaml,
+ * every record must be placed somewhere, and every claim a figure cites
+ * (cell text [C###], bar `claims`) must exist in the ledger. A figure is
+ * evidence presented as a picture, so it is held to the same referential
+ * rule as the prose around it.
+ */
+function validateFigures(
+	slug: string,
+	narrativeEn: string,
+	figures: Array<Record<string, unknown>>,
+	claims: Array<{ id: string }>
+): ValidationIssue[] {
+	const issues: ValidationIssue[] = [];
+	const claimIds = new Set(claims.map((c) => c.id));
+	const ids = new Set(figures.map((f) => String(f.id ?? '')));
+	const placed = new Set<string>();
+	for (const m of narrativeEn.matchAll(/\[\[figure:([a-z0-9-]+)\]\]/g)) {
+		placed.add(m[1]);
+		if (!ids.has(m[1])) issues.push({ slug, type: 'missing_figure', detail: `Narrative places [[figure:${m[1]}]] but figures.yaml has no such figure` });
+	}
+	for (const f of figures) {
+		const id = String(f.id ?? '');
+		if (!placed.has(id)) issues.push({ slug, type: 'orphaned_figure', detail: `Figure ${id} exists in figures.yaml but no [[figure:${id}]] marker appears in the narrative` });
+		const cited = new Set<string>();
+		for (const m of JSON.stringify(f).matchAll(/\[([A-Z]\d+)\]/g)) cited.add(m[1]);
+		for (const lane of (f.lanes as Array<{ bars?: Array<{ claims?: string[] }> }>) ?? [])
+			for (const bar of lane.bars ?? []) for (const c of bar.claims ?? []) cited.add(c);
+		for (const c of cited) {
+			if (!claimIds.has(c)) issues.push({ slug, type: 'figure_claim_unknown', detail: `Figure ${id} cites ${c} but no such claim in evidence.yaml` });
+		}
+	}
+	return issues;
+}
+
 // ── Main ────────────────────────────────────────────────────────────────────
 
 /**
@@ -608,6 +655,8 @@ function buildInvestigation(
 	}
 	const entities = loadOptionalYaml(join(dir, 'entities.yaml'), { entities: [] });
 	const exclusions = loadOptionalYaml(join(dir, 'exclusions.yaml'), { exclusions: [] });
+	// Figures placed in the narrative with [[figure:id]]. Absent file is normal.
+	const figuresFile = loadOptionalYaml<{ figures: Array<Record<string, unknown>> }>(join(dir, 'figures.yaml'), { figures: [] });
 	// The interpretive layer. Absent file is normal — an investigation with no
 	// editor readings simply carries an empty list, not a failure.
 	const interpretations = loadOptionalYaml<{ interpretations: Array<Record<string, unknown>> }>(
@@ -674,7 +723,7 @@ function buildInvestigation(
 					entities.entities ?? [],
 					interpretations.interpretations
 				);
-				for (const issue of issues) {
+				for (const issue of [...issues, ...validateFigures(slug, md, figuresFile.figures ?? [], evidence.claims)]) {
 					reportProblem(issue.detail);
 				}
 			}
@@ -703,6 +752,17 @@ function buildInvestigation(
 		no_reviewer_by: editorialState.reviewer.none_by ?? null
 	};
 
+	// Compare-figure cells carry [C###] markers; compile them to the same inline
+	// nodes the prose uses so the page renders chips, not raw brackets.
+	const figures = (figuresFile.figures ?? []).map((f) => {
+		if (f.kind !== 'compare') return f;
+		const rows = ((f.rows as Array<{ label: string; cells: string[] }>) ?? []).map((r) => ({
+			label: r.label,
+			cells: r.cells.map((c) => parseInline(c))
+		}));
+		return { ...f, rows };
+	});
+
 	// Build the bundle
 	const bundle: Record<string, unknown> = {
 		slug,
@@ -719,6 +779,7 @@ function buildInvestigation(
 		entities,
 		exclusions,
 		interpretations,
+		figures,
 		narrative
 	};
 

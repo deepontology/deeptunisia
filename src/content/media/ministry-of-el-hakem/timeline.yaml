@@ -1,0 +1,344 @@
+# Timeline
+events:
+- id: T001
+  date: '1986-04-28'
+  end_date: null
+  description:
+    en: Ben Ali becomes interior minister
+  source: s011
+  entity: null
+  type: event
+  section: S03
+- id: T002
+  date: '1987-11-07'
+  end_date: null
+  description:
+    en: Ben Ali takes the presidency
+  source: s012
+  entity: null
+  type: event
+  section: S02
+- id: T003
+  date: '1988-02-26'
+  end_date: null
+  description:
+    en: Decree 88-250 attaches presidential security to the presidency
+  source: s015
+  entity: null
+  type: event
+  section: S00
+- id: T004
+  date: '1991'
+  end_date: null
+  description:
+    en: 'Barraket Essahel arrests: 244 military men'
+  source: s022
+  entity: null
+  type: event
+  section: S03
+- id: T005
+  date: '1992'
+  end_date: null
+  description:
+    en: 'Military trials: 279 tried, 265 convicted'
+  source: s023
+  entity: null
+  type: event
+  section: S03
+- id: T006
+  date: '2001-07-06'
+  end_date: null
+  description:
+    en: Judge Mokhtar Yahyaoui writes his open letter to President Ben Ali
+  source: s004
+  entity: null
+  type: event
+  section: S01
+- id: T007
+  date: '2001-07-14'
+  end_date: null
+  description:
+    en: Yahyaoui suspended
+  source: s006
+  entity: null
+  type: event
+  section: S00
+- id: T008
+  date: '2001-12-29'
+  end_date: null
+  description:
+    en: Disciplinary council removes Yahyaoui from the bench
+  source: s006
+  entity: null
+  type: event
+  section: S00
+- id: T009
+  date: '2002-06-04'
+  end_date: null
+  description:
+    en: Zouhair Yahyaoui arrested in a Ben Arous internet café
+  source: s008
+  entity: null
+  type: event
+  section: S01
+- id: T010
+  date: '2003-12-10'
+  end_date: null
+  description:
+    en: Law 2003-75 on terrorism
+  source: s025
+  entity: null
+  type: event
+  section: S03
+- id: T011
+  date: 2005-03
+  end_date: null
+  description:
+    en: Zouhair Yahyaoui dies, aged 37
+  source: s009
+  entity: null
+  type: event
+  section: S01
+- id: T012
+  date: '2011-01-14'
+  end_date: null
+  description:
+    en: Protest in front of the ministry; Ben Ali leaves; Seriati arrested
+  source: s027
+  entity: null
+  type: event
+  section: S04
+- id: T013
+  date: '2011-03-07'
+  end_date: null
+  description:
+    en: Ministry spokesman announces the political police dissolved
+  source: s033
+  entity: null
+  type: event
+  section: S04
+- id: T014
+  date: '2011-03-09'
+  end_date: null
+  description:
+    en: Tunis court dissolves the RCD
+  source: s032
+  entity: null
+  type: event
+  section: S02
+- id: T015
+  date: 2012-07
+  end_date: null
+  description:
+    en: Seriati sentenced to twenty years
+  source: s029
+  entity: null
+  type: event
+  section: S04
+- id: T016
+  date: '2014-05-17'
+  end_date: null
+  description:
+    en: Seriati released
+  source: s030
+  entity: null
+  type: event
+  section: S04
+- id: T017
+  date: 2015-03
+  end_date: null
+  description:
+    en: Post of director general of the national police abolished
+  source: s043
+  entity: null
+  type: event
+  section: S05
+- id: T018
+  date: 2015-12
+  end_date: null
+  description:
+    en: Post restored; Belhaj Ali named
+  source: s016
+  entity: null
+  type: event
+  section: S03
+- id: T019
+  date: '2018-02-26'
+  end_date: null
+  description:
+    en: Police gather outside the Ben Arous court
+  source: s048
+  entity: null
+  type: event
+  section: S05
+- id: T020
+  date: '2021-01-05'
+  end_date: null
+  description:
+    en: Mechichi dismisses interior minister Charfeddine
+  source: s052
+  entity: null
+  type: event
+  section: S05
+- id: T021
+  date: '2021-04-18'
+  end_date: null
+  description:
+    en: 'Saied: the president commands the civilian armed forces'
+  source: s054
+  entity: null
+  type: event
+  section: S02
+- id: T022
+  date: '2021-07-25'
+  end_date: null
+  description:
+    en: Article 80 invoked; parliament frozen
+  source: s055
+  entity: null
+  type: event
+  section: S02
+- id: T023
+  date: '2021-07-26'
+  end_date: null
+  description:
+    en: Plainclothes police close Al Jazeera's Tunis office
+  source: s059
+  entity: null
+  type: event
+  section: S06
+- id: T024
+  date: '2021-07-29'
+  end_date: null
+  description:
+    en: Gharsallaoui put in charge of the ministry
+  source: s061
+  entity: null
+  type: event
+  section: S06
+- id: T025
+  date: '2021-08-18'
+  end_date: null
+  description:
+    en: Presidency replaces the national police and National Guard commanders
+  source: s062
+  entity: null
+  type: event
+  section: S02
+- id: T026
+  date: '2021-09-22'
+  end_date: null
+  description:
+    en: 'Decree 2021-117: decree-laws cannot be challenged for annulment'
+  source: s063
+  entity: null
+  type: event
+  section: S02
+- id: T027
+  date: '2022-02-12'
+  end_date: null
+  description:
+    en: Supreme Judicial Council dissolved
+  source: s079
+  entity: null
+  type: event
+  section: S08
+- id: T028
+  date: '2022-06-01'
+  end_date: null
+  description:
+    en: 57 judges and prosecutors dismissed
+  source: s080
+  entity: null
+  type: event
+  section: S08
+- id: T029
+  date: '2022-09-16'
+  end_date: null
+  description:
+    en: Decree-Law 54 published
+  source: s075
+  entity: null
+  type: event
+  section: S01
+- id: T030
+  date: '2022-09-20'
+  end_date: null
+  description:
+    en: Immunity of Anas Hamadi lifted
+  source: s076
+  entity: null
+  type: event
+  section: S08
+- id: T031
+  date: '2022-09-23'
+  end_date: null
+  description:
+    en: Sfax military court issues warrants against eight union leaders
+  source: s077
+  entity: null
+  type: event
+  section: S08
+- id: T032
+  date: '2023-03-16'
+  end_date: null
+  description:
+    en: Code of conduct for the internal security forces
+  source: s086
+  entity: null
+  type: event
+  section: S08
+- id: T033
+  date: '2024-05-11'
+  end_date: null
+  description:
+    en: Sonia Dahmani arrested at the Maison de l'Avocat
+  source: s088
+  entity: null
+  type: event
+  section: S08
+- id: T034
+  date: '2024-05-25'
+  end_date: null
+  description:
+    en: Secretary of state post restored; Bessadok named
+  source: s070
+  entity: null
+  type: event
+  section: S07
+- id: T035
+  date: '2025-10-07'
+  end_date: null
+  description:
+    en: Saber Ben Chouchane pardoned
+  source: s100
+  entity: null
+  type: event
+  section: S01
+- id: T036
+  date: '2026-09-04'
+  end_date: null
+  description:
+    en: Mohamed Yousfi arrested
+  source: s108
+  entity: null
+  type: event
+  section: S09
+- id: T037
+  date: '2026-09-30'
+  end_date: null
+  description:
+    en: Article 24 of Decree-Law 54 amended; electoral commission decree
+  source: s112
+  entity: null
+  type: event
+  section: S09
+- id: T038
+  date: '2026-10-08'
+  end_date: null
+  description:
+    en: Presidency communiqué on accountability
+  source: s118
+  entity: null
+  type: event
+  section: S09
