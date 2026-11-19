@@ -8,7 +8,8 @@
  * config file, so a rule that stops working fails the test chain rather than a
  * deploy. Nothing in this file touches the network or runs wrangler.
  */
-import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
+import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { basename, dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -20,6 +21,14 @@ import {
 	readConfig,
 	type PreviewPlan
 } from './deploy-preview.ts';
+import {
+	STAMP_FILE,
+	gitFacts,
+	parseStamp,
+	renderStamp,
+	stampRefusals,
+	type BuildStamp
+} from './build-stamp.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
@@ -58,8 +67,21 @@ function withLine(extra: string): string {
 	return `${VALID}\n${extra}\n`;
 }
 
-function refusalsOf(text: string, file = PREVIEW_CONFIG, buildExists = true): PreviewPlan {
-	return planPreview({ configFile: file, configText: text, buildExists });
+const HEAD = 'a'.repeat(40);
+const OTHER = 'b'.repeat(40);
+
+/** A stamp for the commit checked out now, from a clean tree. */
+const GOOD_STAMP: BuildStamp = { commit: HEAD, clean: true };
+
+function refusalsOf(
+	text: string,
+	file = PREVIEW_CONFIG,
+	buildExists = true,
+	stamp: BuildStamp | null = GOOD_STAMP,
+	head = HEAD,
+	treeClean = true
+): PreviewPlan {
+	return planPreview({ configFile: file, configText: text, buildExists, stamp, head, treeClean });
 }
 
 /** True when exactly one refusal was produced and it names this thing. */
@@ -194,6 +216,89 @@ for (const testCase of CASES) {
 }
 
 // ---------------------------------------------------------------------------
+// The build must be the commit being deployed
+// ---------------------------------------------------------------------------
+
+{
+	const good = refusalsOf(VALID);
+	ok('a build stamped with HEAD from a clean tree passes', good.ok, good.refusals.join('; '));
+
+	const stale = refusalsOf(VALID, PREVIEW_CONFIG, true, { commit: OTHER, clean: true });
+	ok('a build made from another commit is refused', !stale.ok);
+	ok('the refusal names both commits', onlyRefusal(stale, `${OTHER.slice(0, 7)} but HEAD is ${HEAD.slice(0, 7)}`), stale.refusals.join('; '));
+	ok('the refusal says to build again', stale.refusals[0]?.includes('npm run build') === true);
+	ok('a stale build gives no command to run', stale.command.length === 0 || !stale.ok);
+
+	const unstamped = refusalsOf(VALID, PREVIEW_CONFIG, true, null);
+	ok('a build with no stamp is refused', onlyRefusal(unstamped, 'no build stamp'), unstamped.refusals.join('; '));
+
+	const dirtyBuild = refusalsOf(VALID, PREVIEW_CONFIG, true, { commit: HEAD, clean: false });
+	ok('a build made from a dirty tree is refused', onlyRefusal(dirtyBuild, 'uncommitted changes'), dirtyBuild.refusals.join('; '));
+
+	const dirtyNow = refusalsOf(VALID, PREVIEW_CONFIG, true, GOOD_STAMP, HEAD, false);
+	ok('a dirty tree now is refused even with a good stamp', onlyRefusal(dirtyNow, 'the working tree has uncommitted changes'), dirtyNow.refusals.join('; '));
+
+	const both = refusalsOf(VALID, PREVIEW_CONFIG, true, { commit: OTHER, clean: false }, HEAD, false);
+	ok('every stamp reason is reported, not only the first', both.refusals.length === 3, both.refusals.join('; '));
+
+	// The stamp does not replace the other guards: the production config with a
+	// perfect stamp is still refused, and a missing build is one refusal, not two.
+	const production = refusalsOf(readFileSync(join(ROOT, 'wrangler.toml'), 'utf8'), 'wrangler.toml');
+	ok('a good stamp does not rescue the production config', !production.ok && production.refusals.some((r) => r.includes('deeptunisia-preview')));
+	const missing = refusalsOf(VALID, PREVIEW_CONFIG, false, null);
+	ok('a missing build/ is one refusal, not a missing stamp as well', onlyRefusal(missing, 'build/ is missing'), missing.refusals.join('; '));
+
+	// The stamp file's text.
+	ok('a stamp round-trips through its file text', JSON.stringify(parseStamp(renderStamp(GOOD_STAMP))) === JSON.stringify(GOOD_STAMP));
+	ok('no text is no stamp', parseStamp(null) === null);
+	ok('text that is not JSON is no stamp', parseStamp('not json') === null);
+	ok('a stamp with a short commit is no stamp', parseStamp('{"commit":"abc1234","clean":true}') === null);
+	ok('a stamp with no clean flag is no stamp', parseStamp(`{"commit":"${HEAD}"}`) === null);
+	ok('a stamp whose flag is a string is no stamp', parseStamp(`{"commit":"${HEAD}","clean":"yes"}`) === null);
+	ok('stampRefusals agrees with the plan', stampRefusals(GOOD_STAMP, HEAD, true).length === 0 && stampRefusals(null, HEAD, true).length === 1);
+}
+
+// The same check on a real repository: a build stamped at one commit stops
+// passing the moment HEAD moves, and a tracked edit makes the tree dirty.
+{
+	const repo = mkdtempSync(join(DIR, 'repo-'));
+	const run = (...args: string[]) => {
+		const result = spawnSync('git', args, { cwd: repo, encoding: 'utf8' });
+		return result.status === 0 ? result.stdout.trim() : null;
+	};
+	const configured =
+		run('init', '-q') !== null &&
+		run('config', 'user.email', 'test@example.org') !== null &&
+		run('config', 'user.name', 'Test') !== null &&
+		run('config', 'commit.gpgsign', 'false') !== null;
+	ok('a scratch repository can be made', configured);
+	if (configured) {
+		writeFileSync(join(repo, 'file.txt'), 'one\n');
+		run('add', 'file.txt');
+		run('commit', '-q', '-m', 'first');
+		const first = gitFacts(repo);
+		ok('a clean repository reports its HEAD and a clean tree', !!first && /^[0-9a-f]{40}$/.test(first.head) && first.clean);
+		const stamp: BuildStamp = { commit: first!.head, clean: first!.clean };
+		ok('the stamp passes at the commit it was made at', stampRefusals(stamp, first!.head, first!.clean).length === 0);
+
+		writeFileSync(join(repo, 'file.txt'), 'two\n');
+		const edited = gitFacts(repo);
+		ok('a tracked edit makes the tree dirty', !!edited && !edited.clean);
+		ok('the same stamp is refused over a dirty tree', stampRefusals(stamp, edited!.head, edited!.clean).length === 1);
+
+		run('commit', '-q', '-am', 'second');
+		const second = gitFacts(repo);
+		ok('a new commit moves HEAD', !!second && second.head !== first!.head && second.clean);
+		const refused = stampRefusals(stamp, second!.head, second!.clean);
+		ok('the old stamp is refused at the new commit', refused.length === 1 && refused[0].includes(first!.head.slice(0, 7)), refused.join('; '));
+
+		writeFileSync(join(repo, 'untracked.txt'), 'x');
+		ok('an untracked file does not make the tree dirty (build outputs are ignored files)', gitFacts(repo)!.clean);
+	}
+	ok('outside a git checkout there are no facts', gitFacts(DIR) === null);
+}
+
+// ---------------------------------------------------------------------------
 // The configs that exist
 // ---------------------------------------------------------------------------
 
@@ -311,6 +416,12 @@ directory = "build"
 	ok('deploy:preview:dry runs the checked script without --go', scripts['deploy:preview:dry'] === 'tsx scripts/deploy-preview.ts', String(scripts['deploy:preview:dry']));
 	ok('the dry command comes before the real one in name and in risk', !String(scripts['deploy:preview:dry']).includes('--go'));
 	ok('the test chain runs this file', typeof scripts.test === 'string' && scripts.test.includes('tsx scripts/test-deploy-preview.ts'));
+	const build = String(scripts.build);
+	ok('the build clears the stamp before it starts', build.startsWith('tsx scripts/build-stamp.ts --clear && '), build);
+	ok('the build writes the stamp last, after every output exists', build.endsWith(' && tsx scripts/build-stamp.ts'), build);
+	ok('the stamp is the last step and appears once as a write', build.split('tsx scripts/build-stamp.ts').length === 3, build);
+	ok('the stamp file is ignored by git', readFileSync(join(ROOT, '.gitignore'), 'utf8').split(/\r?\n/).includes(STAMP_FILE));
+	ok('the stamp is not inside build/, so it is never uploaded', !STAMP_FILE.includes('/') && !existsSync(join(ROOT, 'build', STAMP_FILE)));
 	ok('no preview script calls wrangler directly', !/wrangler/.test(String(scripts['deploy:preview'])) && !/wrangler/.test(String(scripts['deploy:preview:dry'])));
 }
 

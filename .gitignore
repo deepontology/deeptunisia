@@ -1,5 +1,6 @@
 node_modules
 build/
+.build-stamp.json
 .svelte-kit/
 src/generated/
 .DS_Store

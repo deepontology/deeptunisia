@@ -15,6 +15,11 @@
  * `--name` names the preview, so even a config edited between the check and the
  * upload cannot write the production Worker.
  *
+ * A deploy ships `build/` and nothing else, so the plan also refuses a build
+ * that was not made from the commit checked out now (scripts/build-stamp.ts).
+ * Without that, a build left over from another branch is uploaded as if it were
+ * this one.
+ *
  * The response header that keeps the address out of search results is not in
  * this config: Workers Assets takes custom headers only from a `_headers` file
  * in the assets directory. It is the last block of `static/_headers`, scoped to
@@ -25,6 +30,7 @@ import { spawnSync } from 'node:child_process';
 import { existsSync, readFileSync, realpathSync } from 'node:fs';
 import { basename, dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { gitFacts, parseStamp, readStampFile, stampRefusals, type BuildStamp } from './build-stamp.ts';
 
 /** The only config a preview deploy may pass. */
 export const PREVIEW_CONFIG = 'wrangler.preview.toml';
@@ -57,6 +63,12 @@ export type PreviewInput = {
 	configFile: string;
 	configText: string;
 	buildExists: boolean;
+	/** The stamp `npm run build` left, or null when there is none. */
+	stamp: BuildStamp | null;
+	/** The commit checked out now. */
+	head: string;
+	/** True when no tracked file differs from `head`. */
+	treeClean: boolean;
 };
 
 type ConfigFacts = {
@@ -234,6 +246,10 @@ export function planPreview(input: PreviewInput): PreviewPlan {
 	const refusals = checkPreviewConfig(input.configFile, input.configText);
 	if (!input.buildExists) {
 		note(refusals, 'build/ is missing; run npm run build first, then deploy the preview');
+	} else {
+		// A build that exists is still the wrong site when it came from another
+		// commit: the preview then shows a branch nobody asked to look at.
+		for (const refusal of stampRefusals(input.stamp, input.head, input.treeClean)) note(refusals, refusal);
 	}
 	return {
 		ok: refusals.length === 0,
@@ -291,10 +307,21 @@ function main(argv: string[]): number {
 	}
 
 	const buildExists = existsSync(join(ROOT, 'build'));
-	const plan = planPreview({ configFile: basename(CONFIG_PATH), configText, buildExists });
+	const facts = gitFacts(ROOT);
+	const stamp = parseStamp(readStampFile(ROOT));
+	const plan = planPreview({
+		configFile: basename(CONFIG_PATH),
+		configText,
+		buildExists,
+		stamp,
+		// Outside a git checkout nothing proves the build, so the plan refuses.
+		head: facts?.head ?? 'unknown',
+		treeClean: facts?.clean ?? false
+	});
 
 	say(`\n  config ${PREVIEW_CONFIG}`);
 	say(`    assets: ${buildExists ? 'build/ exists' : 'build/ is missing'}`);
+	say(`    build:  ${stamp ? `made from ${stamp.commit.slice(0, 7)}` : 'no build stamp'}, HEAD ${facts ? facts.head.slice(0, 7) : 'unknown'}`);
 	say(`    name:   ${readConfig(configText).name ?? 'none'}`);
 
 	say('\n  plan');
