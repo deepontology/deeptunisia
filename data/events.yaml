@@ -4811,7 +4811,6 @@
   summary: "On Tuesday 29 September 2026 President Kaïs Saïed chaired a Council of Ministers at Carthage Palace; the presidency communiqué, published on Wednesday 30 September and relayed by Business News, Le Temps News and other outlets, states that it examined four draft decrees: one amending Decree-Law 54/2022 on offences related to information and communication systems; one amending Decree-Law 13/2022 on penal reconciliation and the allocation of its revenues; one amending certain provisions of organic law 2012-23 on the Independent High Authority for Elections (ISIE); and one concerning municipal councils. The meeting also covered questions of public-service operation. The communiqué did not state the content of the changes; all four texts were published the following day in JORT n° 96 (see the four linked events). The presidency communiqué is a single origin; the outlets relaying it are not independent corroboration."
   confidence: B
   basis: reported
-  verification: verified
   sources: [businessnews-conseil-ministres-2026-09-30, letemps-conseil-ministres-2026-09-30, africanmanager-decret54-revision-2026-09-30]
   attributed_to: "Présidence de la République communiqué, relayed by Business News, Le Temps News and African Manager"
 
@@ -4829,7 +4828,6 @@
   summary: "JORT n° 96 of 30 September 2026 (p. 2056) published Decree No. 1 of 2026, dated 30 September 2026, which repeals and replaces article 24 of Decree-Law 54/2022 of 13 September 2022 on combating offences related to information and communication systems; it does not repeal the article, it rewrites it, and the rest of Decree-Law 54 is untouched. The new article 24 punishes with a fine of 10,000 to 20,000 dinars — no custodial sentence for the base offence — anyone who deliberately uses information and communication networks or systems to produce, promote, publish, send or prepare false news, data or rumours, fabricated or forged documents, or material falsely attributed to others, where the purpose is to harm others' rights or public security or national defence, or to spread terror among the population; the same fine applies to deliberate publication of false personal data or untrue attributions intended to defame or harm, incite an attack on a person, or incite hatred. On recidivism the penalty is six months' imprisonment and a 50,000-dinar fine; the penalties double where the targeted person is a public official or equivalent; article 53 of the Penal Code does not apply to these offences in cases of recidivism. The decree followed the Council of Ministers of 29 September 2026 and bypasses Parliament, where MP Mohamed Ali's February 2024 initiative to delete article 24 had remained blocked in committee; the SNJT, RSF and other organisations had demanded repeal of article 24, not its conversion to a fine. Press readings describe the headline change as the abolition of the prison sentence (Mosaïque FM); the gazette text keeps imprisonment on recidivism."
   confidence: A
   basis: documented
-  verification: verified
   falsifiable_by: The gazette text itself is the record; a misreading would be shown by a human re-read of JORT n° 96 p. 2056 (the two-column extraction is artefacted).
   sources: [jort-2026-096, tunisienumerique-decret54-article24-2026-09-30, mosaiquefm-decret54-amendement-2026-09-30, businessnews-decret54-mohamed-ali-2026-09-24, africanmanager-decret54-revision-2026-09-30]
 
@@ -4847,7 +4845,6 @@
   summary: "JORT n° 96 of 30 September 2026 (p. 2056) published Decree No. 2 of 2026, dated 30 September 2026, amending Decree-Law 13/2022 of 20 March 2022 on penal reconciliation and the allocation of its revenues. The repeals and replacements: article 25's second paragraph now allows a provisional settlement project providing for payment of at least 50% of the sums due, with a commitment to pay the remainder within a period proposed by the commission that must not exceed two years, based on solid and serious evidence provided by the applicant; a new final paragraph of article 25 lets the commission propose a lower rate where it deems that justified from the file; article 30's third paragraph now allocates penal-reconciliation revenues to financing the projects mentioned in its first paragraph, in accordance with the decisions of the National Security Council; the last paragraph of article 30 is repealed. African Manager described the same instrument as concerning prison regulations (\"règlements pénitentiaires\"), while the gazette title, Business News, Mosaïque FM and Le Temps News identify it as penal reconciliation; the discrepancy is recorded as a rejected dispute below."
   confidence: A
   basis: documented
-  verification: verified
   disputes: [{claim: The instrument amended by the second draft decree is the prison-regulations decree (décret-loi 2022-13), held_by: African Manager, source: africanmanager-decret54-revision-2026-09-30, assessment: 'The gazette title ("الصلح الجزائي وتوظيف عائداته وإتمامه") and three other outlets identify décret-loi 2022-13 as the penal-reconciliation text; the primary source settles it against the African Manager wording, which is not adopted.', status: rejected}]
   sources: [jort-2026-096, mosaiquefm-reconciliation-penale-2026-09-30, businessnews-conseil-ministres-2026-09-30, africanmanager-decret54-revision-2026-09-30]
 
@@ -4865,7 +4862,6 @@
   summary: "JORT n° 96 of 30 September 2026 (p. 2057) published Decree No. 3 of 2026, dated 30 September 2026, amending organic law 2012-23 on the Independent High Authority for Elections. It repeals articles 5, 6 and 9 and replaces them: the ISIE council is composed of nine independent, neutral members chosen as follows — three with at least ten years' experience in election administration chosen by the President; a judicial judge with at least ten years' seniority from three proposed by the Conseil supérieur de la magistrature; an administrative judge proposed by the administrative judiciary council; a financial judge proposed by the financial judiciary council; an engineer specialised in information systems and security from three proposed by the National Information Centre; a statistics engineer from three proposed by the National Institute of Statistics; and a retired diplomat from three proposed by the Ministry of Foreign Affairs. Members are appointed by decree, public-sector members keep their original ranks, and the President appoints the ISIE president from among the members. Each member serves a non-renewable six-year term, with one third of the council renewed every two years; a lottery fixes the first renewals at the end of the second and fourth years, the president not being drawn in the first two rounds; the ISIE president informs the President three months before a term ends. Members appointed under Decree-Law 2022-22 continue until the new council takes office. The article 3 substitutions also drop references to \"the head of government\" and replace \"five members\" with \"seven members\", \"by presidential decree\" with \"by decree\", \"accountant\" with \"specialist in accounting or financial audit\", and the Audit Court references."
   confidence: A
   basis: documented
-  verification: verified
   sources: [jort-2026-096, businessnews-conseil-ministres-2026-09-30]
 
 - id: ev-decret-2026-4-municipal-councils-2026-09-30
@@ -4882,7 +4878,6 @@
   summary: "JORT n° 96 of 30 September 2026 (p. 2058) published Decree No. 4 of 2026, dated 30 September 2026, on municipal councils: a comprehensive text running to p. 2074 (the next sommaire item begins at p. 2075). The pages read so far cover general provisions (the municipal council as a local collectivity with legal personality and administrative and financial autonomy, mandated to deliver citizen services and guarantee residents' participation), the merger of two or more municipal areas by decree with transfer of rights and obligations and an Interior Ministry inventory of the merged councils' assets, state support for municipal financial balance and staffing, council tasks (local regulations, budget, planning schemes, environmental and social programmes, cooperation, naming of public spaces), civil-status functions of the mayor and assistants, and standing committees. Full-text analysis of the whole text (roughly seventeen gazette pages) is owed before any detailed record; this candidate records the act and its scope only."
   confidence: A
   basis: documented
-  verification: verified
   falsifiable_by: A full reading of p. 2058-2074 would correct or extend the scope summary; the candidate deliberately states only what was read.
   sources: [jort-2026-096]
 
@@ -5832,7 +5827,6 @@
     publication.
   confidence: A
   basis: documented
-  verification: verified
   reasoning: >-
     The instrument is read from the gazette itself, on the page the sommaire
     assigns it, and the candidate transcribes what the arrêté says. The reading
@@ -5879,7 +5873,6 @@
     from, so the record does not assert who signed them.
   confidence: A
   basis: documented
-  verification: verified
   reasoning: >-
     The seven instruments, their numbers, their date, the employer and the grades
     of the seven staff are read directly from the gazette page. Nothing further
@@ -7472,7 +7465,6 @@
     PDF returned HTTP 403 when fetched on 2026-11-08, so its point-by-point content is not carried here.
     No attendance list, minutes or verbatim record was retrieved.'
   confidence: A
-  verification: verified
   attributed_to: European Parliament inter-parliamentary meetings page and the joint declaration of 5
     November 2026 (institutional records); the ARP communiqué as relayed by African Manager (6 November
     2026), La Presse de Tunisie (5 November 2026) and Nessma TV (5 November 2026)
@@ -8660,7 +8652,6 @@
     citing an unrecovered Tunisie Valeurs sector study of 23 October 2026 for the
     liquidity and credit context.
   confidence: A
-  verification: verified
   attributed_to: "Circular and press release: Banque centrale de Tunisie. Derived 2.2 bn TND and the sector figures: African Manager (19 November 2026), citing a Tunisie Valeurs study of 23 October 2026."
   reasoning: >-
     The circular and the annex it replaces were both retrieved from the BCT and
