@@ -106,9 +106,18 @@ time:
   #   enterprise restructuring statement, both resting on named companies with no
   #   records. The sweep read the feed through 2026-11-16, so the cutoff takes the
   #   coverage date rather than the latest record date.
+  # Advanced again 2026-11-19 when the Nov-16 to Nov-19 sweep merged three events,
+  #   two agreements and one correction flag. Four of the new records are dated past
+  #   the previous horizon: the ARP finance committee's approval of seven water-financing
+  #   bills (17 November), the Japan supplementary loan for the Sfax desalination plant
+  #   and the German grant for Chotrana 1 (both 18 November), and the Tunisair
+  #   convocation (19 November). The BCT reserve-requirement circular is dated on the
+  #   instrument (9 October) and was already inside the horizon. The sweep read the feed
+  #   through 2026-11-19, so the cutoff takes the coverage date rather than the latest
+  #   record date.
   # V31 now fails the build on any record interval dated past the cutoff.
   floor: "1956-03-20"
-  cutoff: "2026-11-16"
+  cutoff: "2026-11-19"
   # How far back an open-ended "in post by X" bound may reach. A plausible
   # ceiling for a senior command tenure; the longest documented run in the
   # dataset is about seven and a half years.

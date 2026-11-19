@@ -955,3 +955,103 @@
   verification: needs-primary-source
   falsifiable_by: JICA Tunisia project page or the signed procès-verbal; a JORT notice if one exists
   sources: [african-manager-sonede-jica-sfax-2026-09-11, entreprises-magazine-sonede-jica-2026-09-10]
+
+# ---------------------------------------------------------------------------
+# Daily sweep 2026-11-16 to 2026-11-19 (data/contrib/daily-2026-11-19.yaml)
+# ---------------------------------------------------------------------------
+
+- id: agr-tunisia-japan-sfax-desalination-loan-2-2026
+  title_en: "Tunisia-Japan exchange of notes and JICA loan agreement for phase II of the Sfax seawater desalination plant (2026)"
+  title_fr: "Echange de notes Tunisie-Japon et accord de pret de la JICA pour la deuxieme phase de la station de dessalement de Sfax (2026)"
+  kind: other
+  parties: [jica]
+  signed: "2026-11-18"
+  summary: >-
+    Signed in Tunis on 18 November 2026: an exchange of notes between the
+    Tunisian and Japanese governments, and a yen loan agreement (L/A) between
+    the Republic of Tunisia and JICA, for phase II of the Sfax sea water
+    desalination plant construction project (スファックス海水淡水化施設建設事業
+    （第二期）, Sfax Sea Water Desalination Plant Construction Project (II)).
+    Loan ceiling 9,559 million yen (95億5,900万円), which the Tunisian press
+    converts to 175.86 million dinars at a rate African Manager derives as about
+    18.4 dinars per 1,000 yen. Terms per JICA: interest 2.50% on the main works
+    and 0.65% on consulting services; repayment over 30 years including a
+    10-year grace period; general untied procurement; executing agency SONEDE
+    (水資源開発公社); scheduled completion February 2029. Scope: construction of
+    the desalination plant, transmission mains, reservoirs, pumping stations and
+    the power connection line, plus consulting services for construction
+    supervision. JICA puts the population served at about 900,000; the Tunisian
+    press puts plant capacity at 100,000 m3/day extensible to 250,000 and the
+    population at about one million, figures this record does not assert. This
+    is a separate instrument from the phase I loan of 36,676 million yen signed
+    in July 2017 (ctr-sonede-sfax-dessalement-2022), which carries its own 25-year
+    maturity and 1.7% rate; phase II is additional to it, and combined JICA
+    lending on the station is 46,235 million yen. It is also distinct from the
+    August 2026 SONEDE-JICA technical cooperation record of discussions
+    (agr-sonede-jica-sfax-2060-2026). No JORT approval law and no signed
+    instrument were retrieved.
+  confidence: A
+  basis: documented
+  verification: verified
+  falsifiable_by: >-
+    A JORT law approving the exchange of notes, the signed notes or L/A, or
+    JICA's ODA project page for phase II would confirm the ceiling, rate,
+    maturity and procurement terms; a different ceiling or different terms
+    would correct the record. A JICA phase II capacity figure would settle the
+    disagreement with the Tunisian press.
+  sources:
+    - jica-tunisia-sfax-loan-phase2-2026-11-19
+    - mofa-tunisia-sfax-notes-2026-11-18
+    - tap-japon-tunisie-sfax-pret-2026-11-18
+    - lapresse-sfax-japon-pret-2026-11-18
+    - am-japon-sfax-pret-2026-11-18
+
+- id: agr-tunisia-germany-onas-choutrana-grant-2026-11-18
+  title_en: "Germany–Tunisia grant agreement for the rehabilitation and energy-efficiency upgrade of the Chotrana 1 wastewater treatment plant (2026)"
+  title_fr: "Accord de don Tunisie–Allemagne pour la réhabilitation et l'efficacité énergétique de la station d'épuration Chotrana 1 (2026)"
+  kind: other
+  parties: [DE]
+  signed: "2026-11-18"
+  summary: >-
+    A German grant of EUR 20 million for the rehabilitation and energy-efficiency upgrade of the Chotrana
+    1 (Choutrana I) wastewater treatment plant in the northern suburbs of Tunis, the largest treatment
+    plant in the country and the centre of the Grand Tunis sanitation system. The grant contract was
+    signed on the evening of Wednesday 18 November 2026 at the foreign ministry in Tunis, on the margin of
+    the 2026 Tunisian-German intergovernmental negotiations on development cooperation. Per the KfW
+    release relayed by Plumes Economiques the signatories were the foreign ministry, ONAS and KfW acting
+    for the federal ministry for economic cooperation and development (BMZ), within the "Programme
+    d'Efficience Energétique du Pôle environnemental Choutrana"; AFD and AECID co-finance under the JEFIC
+    framework, with a significant Tunisian contribution. No individual signatory is named by any source.
+    African Manager and La Presse, in one shared text, put the total project cost at 355 million dinars
+    and the population served at about one million inhabitants of Greater Tunis, and attribute the works
+    description to an ONAS social-media post; the Spanish Council of Ministers decision of 28 July 2026 on
+    the same project gives EUR 118 million total cost and 900,000 people directly served in the capital,
+    with KfW leading the financing and a EUR 25 million AECID loan to ONAS under Tunisian sovereign
+    guarantee. 355 MDT against EUR 118m is consistent at roughly 3.0 dinars to the euro, a conversion
+    derived here at no cited rate. The graph has no Chotrana record; ONAS and Germany do, KfW and BMZ do not.
+  confidence: B
+  verification: needs-primary-source
+  attributed_to: "African Manager and La Presse de Tunisie (19 November 2026, one shared text) for the amount, the date, the 355 MDT total and the beneficiary count; Plumes Economiques (19 November 2026) relaying the KfW/BMZ release for the signing institutions and the programme; La Moncloa and Europa Press (28 July 2026) for the EUR 118m total, the JEFIC co-financing and the Spanish share."
+  reasoning: >-
+    Two independent texts report the EUR 20 million grant signed on 18 November 2026 at the foreign
+    ministry: a Tunisian news write-up built on an ONAS social-media post, and what reads as the KfW
+    release. They agree on the amount, the instrument, the date, the venue and the plant, so the core claim
+    is B and not C. Neither is a primary document — no KfW, BMZ, foreign ministry or ONAS page carrying the
+    release was retrieved, and the ONAS site's own news list stops at 16 November — so the grant itself
+    stays needs-primary-source. The 355 MDT cost, the one-million figure and the works list sit in one text
+    only and are carried with attribution rather than as established fact; the EUR 118m total corroborates
+    the order of magnitude of the project, not that figure. ONAS is the implementing agency and a Tunisian
+    body, so it is not in parties and Tunisia is never listed; KfW and BMZ have no institution id, so
+    Germany stands as the party and the agency chain is described in the summary. No signatory and no
+    exchange rate is invented.
+  falsifiable_by: >-
+    The signed grant contract, a KfW or BMZ press release, the foreign ministry communiqué or a JORT notice
+    would confirm or correct the amount, the date, the signatories and the split; a different total project
+    cost, or an AFD/AECID structure other than JEFIC, would correct the financing sentences; evidence that
+    the plant serves materially fewer or more than a million people would correct the beneficiary sentence.
+  sources:
+    - am-chotrana-don-allemand-2026-11-19
+    - lapresse-chotrana-don-allemand-2026-11-19
+    - plumes-kfw-choutrana-don-2026-11-19
+    - moncloa-consejo-ministros-choutrana-2026-07-28
+    - europapress-choutrana-25m-2026-07-28
