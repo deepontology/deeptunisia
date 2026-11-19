@@ -1,0 +1,110 @@
+# daily-2026-11-19: daily dataset sweep (quick mode), consolidated outbox
+#
+# Window swept: 2026-11-16 to 2026-11-19. The inherited state file said
+#   lastRun 2026-11-03 and its lastSeen list is from that date; it is stale and
+#   was not used. "New" here means published after 2026-11-16T00:00:00Z in
+#   feed/feed.json as committed on main at 372cc3a (refreshed 2026-11-19
+#   18:34Z, 1200 headlines, 116 items in the window). npm run feed was not run
+#   again (quick mode).
+#   Outlets in the window: African Manager 100, Kapitalis 10, Nawaat 5,
+#   BBC News 1. Languages: fr 112, ar 3, en 1. Newest item 2026-11-19T18:24:02Z.
+# Sources read at source this run (webfetch): African Manager (Tunisair AGM,
+#   Chotrana grant, BTE management, BCT reserves, Ennasr case, Japan loan,
+#   ARP water bills, Nafti voluntary returns, Ramzi Louati at the ILO, Sfax
+#   airport drill), Nawaat (Manouba demonstration). Research on the BCT
+#   circular, the Japan loan, the German grant and the water bills was fanned
+#   out to four research threads; their confirmations are folded in below and
+#   their separate files are listed in the report.
+# Failure vocabulary (must not be collapsed):
+#   - The Tunisair convocation is an Amen Invest analysis relayed by African
+#     Manager. The convocation notice and the 2024 accounts were not retrieved;
+#     the 15 December 2026 meeting is a future date carried in the summary, and
+#     the record is dated to the announcement, not to the meeting.
+#   - The BCT reserve-requirement change rests on the circular number and dates
+#     as African Manager states them. The circular text is the primary target;
+#     grade follows what the research thread retrieved.
+#   - The Japan loan and the German grant are government-to-government
+#     instruments reported by the outlets; signed texts and JORT ratification
+#     were not in hand unless the research thread says otherwise.
+#   - The Nafti figure is the minister's answer in a joint plenary, reported by
+#     one outlet; it is not an IOM-published statistic and excludes individual
+#     returns handled by the Interior Ministry, as he said.
+# Cutoff: these candidates include records dated through 2026-11-19, past the
+#   current time.cutoff (2026-11-16). The merge must advance the cutoff to
+#   2026-11-19 and move the pinned defaults in scripts/parameters.ts and
+#   scripts/test-parameters.ts in the same edit, or V31 fails the build.
+# CANDIDATES ARE PROPOSALS, NOT GRAPH DATA.
+# DISPOSITION 2026-11-19 (maintainer merge): six candidates merged, eight notes kept.
+#   Merged into canonical data: ev-bct-reserve-requirement-tripled-2026-10-09,
+#   ev-arp-water-financing-bills-committee-2026-11-17 and
+#   ev-tunisair-agm-egm-convocation-2026-11-19 into data/events.yaml;
+#   agr-tunisia-japan-sfax-desalination-loan-2-2026 and
+#   agr-tunisia-germany-onas-choutrana-grant-2026-11-18 into data/agreements.yaml.
+#   The correction on ev-nafti-iom-voluntary-returns-2026-09-22 was applied as one
+#   attributed sentence in that event's summary, and its source added to the record.
+#   All 22 source entries of the merged records went to data/sources.yaml. The Germany
+#   agreement also cites the La Presse text its attribution names. The research
+#   cutoff moved to 2026-11-19 (data/parameters.yaml and the pinned defaults).
+#   Kept here, not merged: the eight notes (BTE management change, Manouba
+#   demonstration, CNRPS deficit, Ennasr case, and the no-change groupings). They
+#   are research backlog, not records: a named party is missing, the item rests on
+#   one outlet, or no dated instrument exists. None carries a source entry.
+#   The research files data/contrib/research-0040-*.yaml stay beside this file.
+#
+notes:
+  - >-
+    Note, not a record: BTE management change (18 November 2026). African
+    Manager, citing L'Economiste Maghrebin and confirming independently, reports
+    that Feriel Chabrak was removed as director-general of the Banque de Tunisie
+    et des Emirats and that senior executive Taoufik Khemissi is interim. No
+    official communiqué had confirmed it, and the reasons did not leak. The bank
+    and both people have no graph records. NEEDS RESEARCH: the bank and the two
+    people before a position record; the departure is unconfirmed officially.
+  - >-
+    Note, not a record: Manouba demonstration (18 November 2026). Nawaat
+    published a video report on a demonstration in Manouba governorate,
+    described as the first of its kind there, organised by a coordinating
+    framework of civil forces against the authority's policies and framing a
+    national mobilisation for 17 December 2026; slogans demanded freedoms,
+    employment, fair trial and an end to the police state, and the report says
+    other governorates will join. One outlet, a collective with no graph record,
+    and no second account retrieved. NEEDS RESEARCH: a second source and the
+    organising body's identity before an event.
+  - >-
+    Note, not a record: CNRPS deficit (18 November 2026). African Manager reports
+    the pension fund losing 220 million dinars a month. The CNRPS has no
+    institution record and the piece is a financial analysis without a fund
+    statement. NEEDS RESEARCH only if the social-insurance institutions enter the
+    graph.
+  - >-
+    Note, not a record: Ennasr kindergarten case (18 November 2026). A judicial
+    source told TAP that one suspect, the kindergarten's photographer, is in
+    custody and that no final judgment has been given; the regional delegate for
+    women's and family affairs said the closure remains in force. The case has
+    no named defendant and no graph entity. Kept as a note; no record until a
+    named party or a court decision exists.
+  - >-
+    No change: Ramzi Louati, charge d'affaires at Tunisia's permanent mission in
+    Geneva, spoke at the ILO Governing Body on social justice (18 November
+    2026). A diplomatic statement with no graph entity and no decision.
+  - >-
+    No change: Hemissi on La Poste (19 November), Mourali's sport reform plan
+    (19 November), Chaoued on human resources (18 November), the 40 e-Consulat
+    representations (18 November), the two automotive and electronics cities
+    (19 November), the Tunisia-Navarre automotive agreement (19 November), the
+    76 MDT telecom white-zone programme (19 November) and the Sfax-Thyna airport
+    emergency drill (18 November). Statements, programmes or exercises without a
+    dated decision or a graph entity to anchor.
+  - >-
+    No change: market and corporate reporting on banks and listed companies
+    (STB dividend, bank tax, BTE results, wallets, cheques, SAH/SFBT, Unimed,
+    Amen Bank, Biat), olive-oil exports, the Spanish textile investor, the
+    60 M€ green investment, the 7 hydraulic bills' underlying loan amounts as
+    market data, and the sports items. These are measurements or results about
+    entities outside the graph's current company coverage, or duplicated by the
+    water-bills event.
+  - >-
+    No change: all world items in the window (Gaza, the ICJ Myanmar ruling,
+    Trump-Xi-Putin, Saudi-Yemen, Hormuz insurance, US domestic politics, the
+    Knesset vote, Australia's sanctions, Morocco and Algeria items, Le
+    Figaro-OpenAI, France 24's anniversary). Outside the Tunisia graph.

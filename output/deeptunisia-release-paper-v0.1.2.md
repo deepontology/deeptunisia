@@ -31,7 +31,7 @@ The review treated the paper the way the paper treats the data: every checkable 
 - **C13 — Table 2's kind counts were hand-typed and had drifted.** Agreements read 7 against the emitted 23, companies 8 against 25, places 12 against 44, education 21 against 25, and the others by smaller margins; only the seven original scale rows carried tags. All ten kind counts are now emitted stats and tagged, so the table cannot drift again. Three stale spots in this release were found by the claim matrix rather than by the tag gate, and that is the matrix doing its job: the gate can only check the tags that exist.
 - **C14: Appendix A presented six validator rules as enforced, and the V5 row contradicted the code.** V1, V2, V3, V6, V7 and V11 have no enforcing code in this tree; their rows now read `specified, not enforced`, and V5 reads `fail`, matching the contract-award check. `scripts/validator-register.ts` is the register, and `scripts/test-paper.ts` fails if the table, the register or the header in `scripts/schema.ts` claim a rule runs when it does not.
 
-**Reproducibility block.** Built from commit <!--stat:commitSha--><!--/stat--> — <!--stat:sources-->2615<!--/stat--> sources (<!--stat:sourcesCited-->2544<!--/stat--> cited), <!--stat:people-->2510<!--/stat--> people, <!--stat:positions-->3056<!--/stat--> positions, <!--stat:relationships-->2551<!--/stat--> relationships, <!--stat:events-->242<!--/stat--> events. Every dataset figure in this file is a stat tag rewritten by the build; `scripts/test-paper.ts` fails the suite on drift; the frozen artifact is the PDF exported at release.
+**Reproducibility block.** Built from commit <!--stat:commitSha--><!--/stat--> — <!--stat:sources-->2643<!--/stat--> sources (<!--stat:sourcesCited-->2572<!--/stat--> cited), <!--stat:people-->2510<!--/stat--> people, <!--stat:positions-->3056<!--/stat--> positions, <!--stat:relationships-->2551<!--/stat--> relationships, <!--stat:events-->248<!--/stat--> events. Every dataset figure in this file is a stat tag rewritten by the build; `scripts/test-paper.ts` fails the suite on drift; the frozen artifact is the PDF exported at release.
 
 **Keywords:** knowledge graphs · evidence grading · provenance · build-time validation · epistemic basis · fuzzy temporal intervals · computational social science · verifiability
 
@@ -70,7 +70,7 @@ The paper's contributions are four, and each is stated at the level of what the 
 3. **Honest self-measurement as a design property** (§8): published statistics that the build itself rewrites from the graph, risk-bucketed review coverage, per-tier translation coverage, and coverage audits that surface what the map does *not* contain — so the project's prose cannot drift from its data, and its shortfalls are published rather than hidden.
 4. **A portable epistemic infrastructure, not a Tunisia database** (§5.9, §9): the enforcement layer is jurisdiction-agnostic — a new deployment (DeepMorocco, DeepCalifornia, DeepLagos) forks the repository, replaces the canonical dataset and jurisdiction-specific ontology, and retains the evidence envelope, validators, build gate, audit machinery and community layer, independently operated and independently responsible for its evidentiary judgments. The design is portable; the demonstration is planned rather than performed, and the paper says so (§9, §10.2 item 6). The Agora completes the loop: the graph creates the discussion, the discussion proposes changes, and only the compiler changes the graph — with discussion anchored to records, identity designed so a server compromise impersonates nobody, votes that rank but never grade, and petitions whose honesty rules are fixed before the feature exists. The loop is the architecture: the compiler admits, the community warrants, and only recompilation changes the record.
 
-The system is source-available and runnable (`npm run data && npm run test`), and the full dataset ships as downloadable JSON and CSV beside the site. Licensing status is stated precisely in the availability section — this paper deliberately does not use the term "open source" until a license is in force, because a paper whose thesis is that an unenforced claim must not pass as an enforced one should not make an unenforced licensing claim itself. At the time of writing, the graph holds <!--stat:sources-->2615<!--/stat--> sources, <!--stat:institutions-->312<!--/stat--> institutions, <!--stat:roles-->198<!--/stat--> roles, <!--stat:people-->2510<!--/stat--> people, <!--stat:positions-->3056<!--/stat--> positions, <!--stat:relationships-->2551<!--/stat--> relationships and <!--stat:events-->242<!--/stat--> events, plus first records in the corporate and documentary layers [4].
+The system is source-available and runnable (`npm run data && npm run test`), and the full dataset ships as downloadable JSON and CSV beside the site. Licensing status is stated precisely in the availability section — this paper deliberately does not use the term "open source" until a license is in force, because a paper whose thesis is that an unenforced claim must not pass as an enforced one should not make an unenforced licensing claim itself. At the time of writing, the graph holds <!--stat:sources-->2643<!--/stat--> sources, <!--stat:institutions-->312<!--/stat--> institutions, <!--stat:roles-->198<!--/stat--> roles, <!--stat:people-->2510<!--/stat--> people, <!--stat:positions-->3056<!--/stat--> positions, <!--stat:relationships-->2551<!--/stat--> relationships and <!--stat:events-->248<!--/stat--> events, plus first records in the corporate and documentary layers [4].
 
 ## 2. Background and requirements
 
@@ -110,19 +110,19 @@ The ontology grows additively: new record kinds compose the same claim envelope 
 
 | Record kind | Count | Claim-bearing | Notes |
 |---|---|---|---|
-| sources | <!--stat:sources-->2615<!--/stat--> (<!--stat:sourcesCited-->2544<!--/stat--> cited) | — | tier 1–5, archive URLs |
+| sources | <!--stat:sources-->2643<!--/stat--> (<!--stat:sourcesCited-->2572<!--/stat--> cited) | — | tier 1–5, archive URLs |
 | institutions | <!--stat:institutions-->312<!--/stat--> | yes | incl. corporate-like |
 | roles | <!--stat:roles-->198<!--/stat--> | — | canonical offices with authority weights |
 | people | <!--stat:people-->2510<!--/stat--> | yes | trilingual, aliases |
 | positions | <!--stat:positions-->3056<!--/stat--> | yes | the time-join |
 | relationships | <!--stat:relationships-->2551<!--/stat--> | yes | ~30 types, directed |
-| events | <!--stat:events-->242<!--/stat--> | yes | causal edges, rupture flag |
-| agreements | <!--stat:agreements-->27<!--/stat--> | yes | treaties/accessions |
+| events | <!--stat:events-->248<!--/stat--> | yes | causal edges, rupture flag |
+| agreements | <!--stat:agreements-->29<!--/stat--> | yes | treaties/accessions |
 | questions / hypotheses | <!--stat:questions-->26<!--/stat--> / <!--stat:hypotheses-->6<!--/stat--> | — | the open research agenda |
 | companies / contracts / licences / declarations / education | <!--stat:companies-->27<!--/stat--> / <!--stat:contracts-->17<!--/stat--> / <!--stat:licences-->11<!--/stat--> / <!--stat:declarations-->9<!--/stat--> / <!--stat:education-->25<!--/stat--> | yes | v0.0.2 kinds, first records |
 | regions / places | <!--stat:regions-->84<!--/stat--> / <!--stat:places-->44<!--/stat--> | yes | 1 country + 6 regions + 24 governorates + 53 delegations; point-place gazetteer |
 
-**Table 2 — dataset scale. Counts are live stat tags; the historical data cutoff is <!--stat:cutoff-->2026-11-08<!--/stat--> (distinct from any build date by design: the build can run on any date without moving the research cutoff).**
+**Table 2 — dataset scale. Counts are live stat tags; the historical data cutoff is <!--stat:cutoff-->2026-11-19<!--/stat--> (distinct from any build date by design: the build can run on any date without moving the research cutoff).**
 
 *Counts are live stat tags rewritten by the build; the canonical specification [4] describes the ontology, not the current counts.*
 
@@ -262,7 +262,7 @@ ResolvedInterval = {
 | `ongoing` | positively confirmed at the cutoff | open end |
 | `?` | unknown | full floor-to-cutoff envelope, status `unknown` |
 
-**Table 5 — the date grammar. Two modelling assumptions are explicit and published as data, not hidden in code: the 8-year backwards window for `<=` tokens, and the dataset floor (<!--stat:floor-->1956-03-20<!--/stat-->, Tunisian independence) and cutoff (<!--stat:cutoff-->2026-11-08<!--/stat-->).**
+**Table 5 — the date grammar. Two modelling assumptions are explicit and published as data, not hidden in code: the 8-year backwards window for `<=` tokens, and the dataset floor (<!--stat:floor-->1956-03-20<!--/stat-->, Tunisian independence) and cutoff (<!--stat:cutoff-->2026-11-19<!--/stat-->).**
 
 **The query semantics are specified, not left to the reader's guess.** A four-field interval is a representation; what a *query* does with it is a separate decision, and the paper states it because "who held power in 1994" has a precise answer only if the inclusion rule is published. Two predicates define it, and they are the same two the implementation exposes:
 
@@ -586,7 +586,7 @@ The roadmap [16] is explicit about what comes next, and this section adds the it
 
 ## 11. Conclusion
 
-DeepTunisia is an attempt to make a specific promise machine-checkable: that a dataset about contested political history cannot be quietly wrong. The mechanism is simple in outline — evidence policy compiled as build-time invariants, uncertain time represented rather than resolved, influence anchored or rejected, the system's own shortfalls published by the same build that publishes the data — and the evidence that the promise is kept is the audit of §7: seven real bypasses, found by testing the enforcement, closed with validators and regression tests that fail on the pre-fix dataset. The design's limits are stated as loudly as its claims: the gate makes status structural and non-upgradable; it does not authenticate documents, and it does not decide whether an epistemic judgment is right — only whether the record honours the judgment it declares (Axiom A1). The architecture's answer to everything the gate cannot do is not a bigger gate; it is the division of labour of §9 — the compiler enforces the epistemic constitution, the community exercises epistemic judgment, git records the audit trail, and every correction re-enters the compiler. Within those limits, the architecture demonstrates that the epistemic discipline the semantic web imagined as a trust layer [1,18], medicine formalised as an evidence ladder [9,10], and Wikipedia maintains as a policy [24] can be *compiled* — and that when it is, a dataset of <!--stat:claimRecords-->5859<!--/stat--> claim-bearing records — more than a thousand separable claims, since each record carries at least one and a position carries two (the officeholding and its span, §5.2) — about living people and operating institutions can honestly offer itself for adversarial inspection by humans and machines alike. And because the enforcement layer is jurisdiction-agnostic (§9), the compiler is the contribution — but only half of it. The other half is the loop that completes the compiler: human epistemic judgment becomes an executable contract, machine enforcement publishes it, and public scrutiny, challenge and recompilation close the circle. Tunisia is where the standard was first compiled and first subjected to that loop — not the only place it can run.
+DeepTunisia is an attempt to make a specific promise machine-checkable: that a dataset about contested political history cannot be quietly wrong. The mechanism is simple in outline — evidence policy compiled as build-time invariants, uncertain time represented rather than resolved, influence anchored or rejected, the system's own shortfalls published by the same build that publishes the data — and the evidence that the promise is kept is the audit of §7: seven real bypasses, found by testing the enforcement, closed with validators and regression tests that fail on the pre-fix dataset. The design's limits are stated as loudly as its claims: the gate makes status structural and non-upgradable; it does not authenticate documents, and it does not decide whether an epistemic judgment is right — only whether the record honours the judgment it declares (Axiom A1). The architecture's answer to everything the gate cannot do is not a bigger gate; it is the division of labour of §9 — the compiler enforces the epistemic constitution, the community exercises epistemic judgment, git records the audit trail, and every correction re-enters the compiler. Within those limits, the architecture demonstrates that the epistemic discipline the semantic web imagined as a trust layer [1,18], medicine formalised as an evidence ladder [9,10], and Wikipedia maintains as a policy [24] can be *compiled* — and that when it is, a dataset of <!--stat:claimRecords-->5865<!--/stat--> claim-bearing records — more than a thousand separable claims, since each record carries at least one and a position carries two (the officeholding and its span, §5.2) — about living people and operating institutions can honestly offer itself for adversarial inspection by humans and machines alike. And because the enforcement layer is jurisdiction-agnostic (§9), the compiler is the contribution — but only half of it. The other half is the loop that completes the compiler: human epistemic judgment becomes an executable contract, machine enforcement publishes it, and public scrutiny, challenge and recompilation close the circle. Tunisia is where the standard was first compiled and first subjected to that loop — not the only place it can run.
 
 ## Data and code availability
 
@@ -605,13 +605,13 @@ DeepTunisia is an attempt to make a specific promise machine-checkable: that a d
 
 This appendix exists to make the `test-paper.ts` gate's requirement visible: every dataset number the corrections release rests on is tagged and build-rewritten. Values are the live graph at build time.
 
-- sources: <!--stat:sources-->2615<!--/stat-->
-- sourcesCited: <!--stat:sourcesCited-->2544<!--/stat-->
+- sources: <!--stat:sources-->2643<!--/stat-->
+- sourcesCited: <!--stat:sourcesCited-->2572<!--/stat-->
 - people: <!--stat:people-->2510<!--/stat-->
 - positions: <!--stat:positions-->3056<!--/stat-->
 - relationships: <!--stat:relationships-->2551<!--/stat-->
-- events: <!--stat:events-->242<!--/stat-->
-- agreements: <!--stat:agreements-->27<!--/stat-->
+- events: <!--stat:events-->248<!--/stat-->
+- agreements: <!--stat:agreements-->29<!--/stat-->
 - questions: <!--stat:questions-->26<!--/stat-->
 - hypotheses: <!--stat:hypotheses-->6<!--/stat-->
 - companies: <!--stat:companies-->27<!--/stat-->
@@ -622,14 +622,14 @@ This appendix exists to make the `test-paper.ts` gate's requirement visible: eve
 - regions: <!--stat:regions-->84<!--/stat-->
 - places: <!--stat:places-->44<!--/stat-->
 - floor: <!--stat:floor-->1956-03-20<!--/stat-->
-- cutoff: <!--stat:cutoff-->2026-11-08<!--/stat-->
+- cutoff: <!--stat:cutoff-->2026-11-19<!--/stat-->
 - institutions: <!--stat:institutions-->312<!--/stat-->
-- documented: <!--stat:documented-->2237<!--/stat-->
-- reported: <!--stat:reported-->3513<!--/stat-->
-- inferred: <!--stat:inferred-->94<!--/stat-->
+- documented: <!--stat:documented-->2238<!--/stat-->
+- reported: <!--stat:reported-->3515<!--/stat-->
+- inferred: <!--stat:inferred-->97<!--/stat-->
 - unsubstantiated: <!--stat:unsubstantiated-->15<!--/stat-->
-- claimRecords: <!--stat:claimRecords-->5859<!--/stat-->
-- needsPrimarySource: <!--stat:needsPrimarySource-->432<!--/stat-->
+- claimRecords: <!--stat:claimRecords-->5865<!--/stat-->
+- needsPrimarySource: <!--stat:needsPrimarySource-->438<!--/stat-->
 - successionGaps: <!--stat:successionGaps-->126<!--/stat-->
 - successionOverlaps: <!--stat:successionOverlaps-->49<!--/stat-->
 - intervalTrims: <!--stat:intervalTrims-->259<!--/stat-->
