@@ -3,6 +3,66 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:0f12787c7652ecd6",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Varsovie | La FI2T au salon ITTF Warsaw 2026",
+      "link": "https://kapitalis.com/tunisie/2026/11/19/varsovie-la-fi2t-au-salon-ittf-warsaw-2026/",
+      "published": "2026-11-19T22:03:37Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:a0adc00bcef1852f",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Plusieurs victimes dans un accident à Enfidha",
+      "link": "https://kapitalis.com/tunisie/2026/11/19/plusieurs-victimes-dans-un-accident-a-enfidha/",
+      "published": "2026-11-19T20:49:33Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:66bea32b74b126b6",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Chaima Issa en grève de la faim | ASF réclame sa libération immédiate",
+      "link": "https://kapitalis.com/tunisie/2026/11/19/chaima-issa-en-greve-de-la-faim-asf-reclame-sa-liberation-immediate/",
+      "published": "2026-11-19T19:35:40Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:african-manager:5f9a0d4fb05aa7eb",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Bourse : Le marché clôture la séance de jeudi dans le rouge",
+      "link": "https://africanmanager.com/bourse-le-marche-cloture-la-seance-de-jeudi-dans-le-rouge-5/",
+      "published": "2026-11-19T18:57:09Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:ce8e4591149033e4",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Eau de Djerba & réseau électrique, 75 millions d’euros de Berlin",
+      "link": "https://africanmanager.com/eau-de-djerba-reseau-electrique-75-millions-deuros-de-berlin/",
+      "published": "2026-11-19T18:53:37Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:kapitalis:797510ff092d2ec9",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "JCC 2026 | Les films en compétition dans «Nouvelles Visions»",
+      "link": "https://kapitalis.com/tunisie/2026/11/19/jcc-2026-les-films-en-competition-dans-nouvelles-visions/",
+      "published": "2026-11-19T18:36:49Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
       "id": "feed:kapitalis:7abd0f9a3576f762",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -11937,66 +11997,6 @@
       "title": "Bilel Sahnoun membre du CA de l’AFCM jusqu’à 2028",
       "link": "https://africanmanager.com/la-bourse-de-tunis-reelue-membre-du-conseil-dadministration-de-lafcm-pour-la-periode-2026-2028/",
       "published": "2026-10-22T14:51:55Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:e18a52005aca378c",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "En Tunisie, l’indépendance énergétique se dégrade toujours !",
-      "link": "https://africanmanager.com/tunisie-le-taux-dindependance-energetique-continue-de-se-degrader/",
-      "published": "2026-10-22T14:39:05Z",
-      "lang": "fr",
-      "author": "Africanmanager"
-    },
-    {
-      "id": "feed:african-manager:f034efad4f6bdfc1",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Tunisie: une augmentation de la production d’électricité de 10 %",
-      "link": "https://africanmanager.com/tunisie-une-augmentation-de-la-production-delectricite-de-10/",
-      "published": "2026-10-22T14:31:54Z",
-      "lang": "fr",
-      "author": "Africanmanager"
-    },
-    {
-      "id": "feed:african-manager:1709cee7ca8ab1db",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Ben Rejab : Rompre la dépendance en énergie",
-      "link": "https://africanmanager.com/ben-rajab-la-tunisie-est-appelee-a-rompre-sa-dependance-et-a-diversifier-ses-sources-dapprovisionnement-en-energie/",
-      "published": "2026-10-22T14:22:44Z",
-      "lang": "fr",
-      "author": "Africanmanager"
-    },
-    {
-      "id": "feed:african-manager:ae8379c88b203041",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Le Fisc traque le commerce en ligne, avec le livreur qui devient « l’indic »",
-      "link": "https://africanmanager.com/le-fisc-traque-le-commerce-en-ligne-avec-le-livreur-qui-devient-lindic/",
-      "published": "2026-10-22T13:36:00Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:5d6c3b27a492f370",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Textile : Convention de partenariat du projet NASIJ",
-      "link": "https://africanmanager.com/textile-formation-signature-de-la-convention-de-partenariat-du-projet-nasij/",
-      "published": "2026-10-22T13:20:31Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:c2a63be730afd18d",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Le prix Sakharov décerné à la CPI, sous le coup de sanctions américaines",
-      "link": "https://africanmanager.com/le-prix-sakharov-decerne-a-la-cpi-sous-le-coup-de-sanctions-americaines/",
-      "published": "2026-10-22T13:17:15Z",
       "lang": "fr",
       "author": "African Manager"
     }
