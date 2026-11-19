@@ -1,5 +1,45 @@
 import { z } from 'zod';
 import { DEFAULT_PARAMETERS, type Parameters } from './parameters';
+import {
+	Basis,
+	Confidence,
+	DisputeSchema,
+	ReviewMethod,
+	TRANSLATION_TIERS,
+	TranslatedBy,
+	Verification as VerificationStatus,
+	deriveBasis,
+	isBasisUpgrade,
+	nonBlank,
+	slug
+} from 'deepepisteme/kernel';
+
+/**
+ * KERNEL-OWNED SYMBOLS, RE-EXPORTED
+ * ---------------------------------------------------------------------------
+ * The grade ladder (Confidence, Basis, Verification), the translation ladder
+ * (TranslatedBy, TRANSLATION_TIERS), the review method enum (ReviewMethod),
+ * the dispute shape (DisputeSchema), the id and prose guards (slug,
+ * nonBlank) and the basis derivation (deriveBasis, isBasisUpgrade) are
+ * defined once by the engine kernel and imported above, so this schema and
+ * the engine cannot drift apart on them.
+ * They are re-exported under the names this module has always used, so no
+ * importer changes. The `Verification` name stays overloaded exactly as
+ * before: the value is the pipeline-status enum, the type (below, at
+ * VerificationSchema) is the independent-verification record.
+ */
+export {
+	Basis,
+	Confidence,
+	DisputeSchema,
+	ReviewMethod,
+	TRANSLATION_TIERS,
+	TranslatedBy,
+	VerificationStatus as Verification,
+	deriveBasis,
+	isBasisUpgrade,
+	nonBlank
+};
 
 /**
  * Validation schema for the DeepTunisia knowledge graph.
@@ -59,22 +99,6 @@ import { DEFAULT_PARAMETERS, type Parameters } from './parameters';
  * V25 for the grade-A primary-source rule, per the review-hardening spec. One
  * number names one rule.
  */
-
-const slug = z.string().regex(/^[a-z0-9][a-z0-9-]*$/, 'ids must be lowercase kebab-case');
-
-/**
- * A mandatory text field is satisfied only by a string with real content.
- *
- * `z.string().min(1)` accepts a single space, and `min(10)` accepts ten spaces.
- * The independent review replaced a position's reasoning, falsifier and
- * attribution with whitespace and the build accepted the record. A required
- * field that whitespace satisfies is not required. `nonBlank` trims before it
- * measures, and callers pass the field's existing minimum when there is one.
- * (V18/V20/V23)
- */
-export function nonBlank(v: unknown, min = 1): boolean {
-	return typeof v === 'string' && v.trim().length >= min;
-}
 
 /**
  * KIND VERSUS STRENGTH — the second and third axes of a claim (V26).
@@ -180,82 +204,11 @@ const claimAxes = {
 	independence: z.number().int().min(1).optional()
 };
 
-/**
- * Confidence grading, retained as authoring shorthand.
- *   A  primary/official record
- *   B  several credible secondary sources agree
- *   C  single credible source, or a reasoned estimate
- *   D  circulating claim with no reliable evidence located
- */
-export const Confidence = z.enum(['A', 'B', 'C', 'D']);
-
-/**
- * EPISTEMIC BASIS — the user-facing axis, and the most important field in the
- * whole schema.
- *
- * Confidence answers "how strong is this?". Basis answers the more useful
- * question: "what KIND of claim is this?". A reasoned inference and a thinly
- * sourced report are both weak, but they are weak in completely different ways,
- * and collapsing them is how a research project quietly becomes a rumour mill.
- *
- *   documented       An official record, decree, gazette entry or primary document
- *                    states this.
- *   reported         One or more credible publications report it. Attributed, not
- *                    independently verified against a primary record.
- *   inferred         Nobody states this directly. It is reasoned from documented
- *                    structure, and must carry both the reasoning and what would
- *                    falsify it.
- *   unsubstantiated  A claim that circulates without reliable evidence. Recorded
- *                    rather than deleted, because pretending widely-believed claims
- *                    do not exist is its own distortion — but never rendered as
- *                    though it were evidence.
- *
- * Derived from `confidence` at build time unless stated explicitly.
- */
-export const Basis = z.enum(['documented', 'reported', 'inferred', 'unsubstantiated']);
-
-/**
- * Where a claim sits in the research pipeline. Drives the open-questions page.
- *
- * `unflagged` is the default: nobody has checked the record and nothing has been
- * flagged on it. `verified` is a claim only a person can make, by opening the
- * source and confirming it says what the record says, and V33 enforces that.
- */
-export const Verification = z.enum(['unflagged', 'verified', 'needs-primary-source', 'disputed']);
-
-/**
- * WHO PRODUCED A TRANSLATION — the basis field, applied to language.
- *
- * A translation is a claim about what the original says, so it carries its standing
- * the same way every other claim here does. The four values are ordered, and each
- * says exactly what happened and no more:
- *
- *   machine           a model produced it in one pass; nothing checked it
- *   model-reviewed    a model produced it, and a separate model pass checked it
- *                     against the source. NO HUMAN HAS READ IT.
- *   machine-reviewed  a model produced it, and a human who reads both languages
- *                     approved it
- *   human             a person wrote it in that language
- *
- * `model-reviewed` exists because the alternative was worse. The agent doing this
- * work reviews its own output, which is a real and useful step — but filing that as
- * `machine-reviewed` would assert a human check that never happened, across tens of
- * thousands of words, in a project whose entire architecture is that an unverified
- * claim never wears the clothes of a verified one. A model checking a model is
- * simply not the same act, so it gets its own name and its own tier.
- *
- * Coverage is reported per tier and never summed into one percentage — see
- * `docs/i18n-spec.md` §4.4. A single "translated" number would let unreviewed text
- * read as finished work, which is the overstatement the human-review statistic
- * already exists to prevent.
- */
-export const TranslatedBy = z.enum(['machine', 'model-reviewed', 'machine-reviewed', 'human']);
-export type TranslatedByValue = z.infer<typeof TranslatedBy>;
-
-export const TRANSLATION_TIERS = ['machine', 'model-reviewed', 'machine-reviewed', 'human'] as const;
-
 /** The locales a prose field may carry beyond the English original. */
 export const TRANSLATED_LOCALES = ['fr', 'ar'] as const;
+
+/** The provenance value a `_by` sibling carries (kernel: TranslatedBy). */
+export type TranslatedByValue = z.infer<typeof TranslatedBy>;
 
 /**
  * The `_fr` / `_ar` / `_by` siblings for one prose field.
@@ -368,13 +321,6 @@ export const TRANSLATABLE_FIELDS: Record<string, { name: string; kind: 'string' 
 export const NO_RAW_MACHINE = new Set(['hypotheses', 'eras']);
 
 /**
- * Provenance of the human check. The eventual ingestion pipeline proposes; a human
- * verifies. Recording who and when is what keeps that promise auditable instead of
- * rhetorical.
- */
-export const ReviewMethod = z.enum(['source-check', 'dedup', 'attribute', 'accept-reject', 'judge']);
-
-/**
  * A reviewer is recorded as a role or a named pass, never as a person: the record
  * says what kind of check was made and when, which is what a reader can audit.
  * A reviewer outside the maintainer group signs as `reviewer-<n>`, which carries no name.
@@ -470,31 +416,6 @@ export function verifiedGrounded(record: {
 	if (record.verification !== 'verified') return true;
 	return record.review?.actor === 'human' && record.review?.method === 'source-check';
 }
-
-/**
- * A competing claim about the same fact. When two sources disagree on a date, the
- * dataset records the disagreement rather than silently picking a winner.
- */
-export const DisputeSchema = z.strictObject({
-	claim: z
-		.string()
-		.refine((v) => nonBlank(v, 3), 'a dispute claim must be at least 3 non-blank characters'),
-	held_by: z
-		.string()
-		.refine((v) => nonBlank(v, 2), 'a dispute holder must be at least 2 non-blank characters'),
-	source: slug.optional(),
-	/** Why this dataset does or does not adopt this version. */
-	assessment: z.string().optional(),
-	/**
-	 * Resolution state (spec §13.4): open (disagreement recorded, no decision),
-	 * adopted (the dataset took one side and says so), rejected (the other
-	 * version won). A dispute without a status is open by default.
-	 */
-	status: z.enum(['open', 'adopted', 'rejected']).optional(),
-	/** Who resolved it, when, with what reasoning — the audit trail. */
-	resolved_by: z.string().optional(),
-	resolved_at: z.string().optional()
-});
 
 /**
  * Analytical layers. A person or institution can belong to several; those that
@@ -753,7 +674,7 @@ export const InstitutionSchema = withClaimEnvelope(
 	summary: z.string().optional(),
 	confidence: Confidence.default('A'),
 	basis: Basis.optional(),
-	verification: Verification.default('unflagged'),
+	verification: VerificationStatus.default('unflagged'),
 	/** Whose claim this is, mandatory below grade B. (V20) */
 	attributed_to: z.string().optional(),
 	/** Required for inferred claims. (V18) */
@@ -840,7 +761,7 @@ export const PersonSchema = withClaimEnvelope(
 	trajectory: z.array(z.string()).default([]),
 	confidence: Confidence.default('B'),
 	basis: Basis.optional(),
-	verification: Verification.default('unflagged'),
+	verification: VerificationStatus.default('unflagged'),
 	/** Whose claim this is, mandatory below grade B. (V20) */
 	attributed_to: z.string().optional(),
 	/** Required for inferred claims. (V18) */
@@ -899,7 +820,7 @@ export const PositionSchema = withClaimEnvelope(
 	confidence: Confidence.default('B'),
 	/** Overrides the basis derived from `confidence`. */
 	basis: Basis.optional(),
-	verification: Verification.default('unflagged'),
+	verification: VerificationStatus.default('unflagged'),
 	/** Whose claim this is, mandatory below grade B. (V20) */
 	attributed_to: z.string().optional(),
 	/** Required for inferred claims: why this is reasoned, and what would refute it. */
@@ -955,7 +876,7 @@ export const RelationshipSchema = withClaimEnvelope(
 		confidence: Confidence,
 		/** Overrides the basis derived from `confidence`. */
 		basis: Basis.optional(),
-		verification: Verification.default('unflagged'),
+		verification: VerificationStatus.default('unflagged'),
 		/** Whose claim this is, mandatory for anything below grade B. */
 		attributed_to: z.string().optional(),
 		/** Required for inferred claims. */
@@ -1091,7 +1012,7 @@ export const EventSchema = withClaimEnvelope(
 	institutions: z.array(slug).default([]),
 	confidence: Confidence.default('A'),
 	basis: Basis.optional(),
-	verification: Verification.default('unflagged'),
+	verification: VerificationStatus.default('unflagged'),
 	/** Whose claim this is, mandatory below grade B. (V20) */
 	attributed_to: z.string().optional(),
 	/** Required for inferred claims. (V18) */
@@ -1165,7 +1086,7 @@ export const AgreementSchema = withClaimEnvelope(
 		confidence: Confidence,
 		/** Overrides the basis derived from `confidence`. */
 		basis: Basis.optional(),
-		verification: Verification.default('unflagged'),
+		verification: VerificationStatus.default('unflagged'),
 		/** Whose claim this is, mandatory for anything below grade B. */
 		attributed_to: z.string().optional(),
 		reasoning: z.string().optional(),
@@ -1207,7 +1128,7 @@ export const WorldClaimSchema = withClaimEnvelope(
 		confidence: Confidence.default('C'),
 		/** Overrides the basis derived from `confidence`. */
 		basis: Basis.optional(),
-		verification: Verification.default('unflagged'),
+		verification: VerificationStatus.default('unflagged'),
 		/** Whose claim this is, mandatory for anything below grade B. */
 		attributed_to: z.string().optional(),
 		reasoning: z.string().optional(),
@@ -1241,7 +1162,7 @@ const claimFields = {
 	confidence: Confidence.default('B'),
 	/** Overrides the basis derived from `confidence`. */
 	basis: Basis.optional(),
-	verification: Verification.default('unflagged'),
+	verification: VerificationStatus.default('unflagged'),
 	/** Whose claim this is, mandatory for anything below grade B (V20). */
 	attributed_to: z.string().optional(),
 	/** Required for inferred claims (V18). */
@@ -1477,7 +1398,7 @@ export const EraSchema = z.strictObject({
 	// grades them like any claim: confidence, whose synthesis it is, the reasoning
 	// that supports the thesis, and what would falsify it.
 	confidence: Confidence.optional(),
-	verification: Verification.optional(),
+	verification: VerificationStatus.optional(),
 	attributed_to: z.string().optional(),
 	reasoning: z.string().optional(),
 	falsifiable_by: z.string().optional(),
@@ -1588,7 +1509,7 @@ export const QuestionSchema = z.strictObject({
 	answer: z.string().optional(),
 	basis: Basis.optional(),
 	confidence: Confidence.optional(),
-	verification: Verification.optional(),
+	verification: VerificationStatus.optional(),
 	attributed_to: z.string().optional(),
 	reasoning: z.string().optional(),
 	falsifiable_by: z.string().optional(),
@@ -1663,60 +1584,6 @@ export const HypothesisSchema = z.strictObject({
 });
 
 /**
- * Derives epistemic basis from the authoring shorthand.
- *
- * Note carefully what basis describes: THE CLAIM ITSELF, not its dates. A position
- * record actually bundles two separable claims — "this person held this post" and
- * "between these two dates" — and they routinely have different standing. A
- * presidential security chief whose office is well reported but whose start date
- * nobody has published is a *reported* officeholding with an *inferred* span.
- *
- * So basis covers the officeholding, and the span carries its own uncertainty
- * through the four-field fuzzy interval plus the `datesInferred` flag. Merging the
- * two would make every imprecisely-dated fact look like speculation.
- */
-export function deriveBasis(
-	confidence: 'A' | 'B' | 'C' | 'D',
-	verification: 'unflagged' | 'verified' | 'needs-primary-source' | 'disputed',
-	explicit?: 'documented' | 'reported' | 'inferred' | 'unsubstantiated'
-): 'documented' | 'reported' | 'inferred' | 'unsubstantiated' {
-	if (explicit) return explicit;
-	if (confidence === 'A') return 'documented';
-	if (confidence === 'D') return 'unsubstantiated';
-	// Grade C with no primary source is a reasoned estimate rather than a report.
-	// `unflagged` is the absence of a check, not a weaker kind of claim: like
-	// `verified` it leaves the basis to the grade. No basis may move when a
-	// record changes between the two.
-	if (confidence === 'C' && verification === 'needs-primary-source') return 'inferred';
-	return 'reported';
-}
-
-/**
- * V18/V20/V27: the shared claim-envelope refines, applied to every claim-bearing
- * record kind so no future kind can forget them. The inferred/unsubstantiated
- * checks run on the DERIVED basis (deriveBasis) rather than the authored one, so
- * an explicit `basis` may override the derivation but a derived `inferred` with
- * no reasoning or falsifier fails exactly like an authored one.
- *
- * Mandatory prose is checked with `nonBlank`, not truthiness: a string of spaces
- * is a missing field, and the review that found the bypass is the regression
- * fixture.
- *
- * A basis stronger than the grade implies is an override (V27). It requires a
- * review object, reasoning, a falsifier when an inference is involved, at least
- * one source and `basis_override_reason`. Overrides that pre-date the rule are
- * enumerated in `data/source-exceptions.yaml` with an owner and a deadline; they
- * are exempt from the requirement, never from visibility: the build still emits
- * `basis_derived` beside the authored `basis`.
- */
-const BASIS_STRENGTH: Record<z.infer<typeof Basis>, number> = {
-	unsubstantiated: 0,
-	inferred: 1,
-	reported: 2,
-	documented: 3
-};
-
-/**
  * V26 — which source relationships can honestly carry which kinds of claim.
  * `documented` means the record itself is held, so a report-relation
  * contradicts it; `inferred` means nobody states it; a circulating claim is
@@ -1728,14 +1595,6 @@ const RELATION_ALLOWED: Record<z.infer<typeof Basis>, SourceRelationValue[]> = {
 	inferred: ['inference-from-records'],
 	unsubstantiated: ['circulating-claim']
 };
-
-/** True when `authored` claims more epistemic standing than `derived`. */
-export function isBasisUpgrade(
-	authored: z.infer<typeof Basis>,
-	derived: z.infer<typeof Basis>
-): boolean {
-	return BASIS_STRENGTH[authored] > BASIS_STRENGTH[derived];
-}
 
 /**
  * Record kinds whose claim records must cite at least one source (rule 2).
@@ -1775,6 +1634,24 @@ function overrideKey(kind: string, r: any): string {
 	return `${kind}:${r.id}:${derived}>${r.basis}`;
 }
 
+/**
+ * V18/V20/V27: the shared claim-envelope refines, applied to every claim-bearing
+ * record kind so no future kind can forget them. The inferred/unsubstantiated
+ * checks run on the DERIVED basis (deriveBasis) rather than the authored one, so
+ * an explicit `basis` may override the derivation but a derived `inferred` with
+ * no reasoning or falsifier fails exactly like an authored one.
+ *
+ * Mandatory prose is checked with `nonBlank`, not truthiness: a string of spaces
+ * is a missing field, and the review that found the bypass is the regression
+ * fixture.
+ *
+ * A basis stronger than the grade implies is an override (V27). It requires a
+ * review object, reasoning, a falsifier when an inference is involved, at least
+ * one source and `basis_override_reason`. Overrides that pre-date the rule are
+ * enumerated in `data/source-exceptions.yaml` with an owner and a deadline; they
+ * are exempt from the requirement, never from visibility: the build still emits
+ * `basis_derived` beside the authored `basis`.
+ */
 function withClaimEnvelope<S extends z.ZodObject<z.ZodRawShape>>(kind: string, schema: S) {
 	return schema
 		.refine((r: any) => !((r.confidence === 'C' || r.confidence === 'D') && !nonBlank(r.attributed_to)), {
@@ -1900,7 +1777,7 @@ export const RegionSchema = z.strictObject({
 	 */
 	created: dateToken.optional(),
 	confidence: Confidence.default('A'),
-	verification: Verification.default('unflagged'),
+	verification: VerificationStatus.default('unflagged'),
 	sources: z.array(slug).min(1, 'every region needs at least one source'),
 	/**
 	 * Source-backed notes (English base; `_fr`/`_ar` siblings via the

@@ -10,10 +10,12 @@
  * survived and why.
  *
  * Targets are the files DeepTunisia owns (scripts/schema.ts,
- * scripts/build-data.ts) and the pinned engine where the time predicates and
- * the canonical projection live (node_modules/deepepisteme/src). Mutating the
- * engine copy is deliberate: it simulates a bad engine bump, which is the
- * failure mode the pinned dependency and the conformance suite exist to catch.
+ * scripts/build-data.ts) and the pinned engine where the time predicates, the
+ * canonical projection and the schema's own kernel symbols (the grade ladder,
+ * deriveBasis, the dispute shape, the prose guards) live
+ * (node_modules/deepepisteme/src). Mutating the engine copy is deliberate: it
+ * simulates a bad engine bump, which is the failure mode the pinned
+ * dependency and the conformance suite exist to catch.
  *
  * CLASSIFICATION
  * --------------
@@ -53,6 +55,9 @@ const DATASET = join(ROOT, 'src', 'generated', 'dataset.json');
 const S = (f: string) => join(HERE, f);
 const ENGINE_TIME = '../node_modules/deepepisteme/src/kernel/time.ts';
 const ENGINE_CANONICAL = '../node_modules/deepepisteme/src/kernel/canonical.ts';
+const ENGINE_BASIS = '../node_modules/deepepisteme/src/kernel/basis.ts';
+const ENGINE_REVIEW = '../node_modules/deepepisteme/src/kernel/review.ts';
+const ENGINE_ENVELOPE = '../node_modules/deepepisteme/src/kernel/envelope.ts';
 
 const hash = (p: string) => {
 	if (!existsSync(p)) return 'missing';
@@ -85,21 +90,21 @@ interface Mutation {
 }
 
 const MUTATIONS: Mutation[] = [
-	// --- schema.ts: deriveBasis -------------------------------------------------
+	// --- engine kernel/basis.ts: deriveBasis (schema move, engine target) --------
 	{
-		id: 'm01', file: 'schema.ts', expect: 'test-data deriveBasis truth table (rows 14-15)',
+		id: 'm01', file: ENGINE_BASIS, expect: 'test-data deriveBasis truth table (rows 14-15)',
 		label: 'deriveBasis ignores the explicit override',
 		from: 'if (explicit) return explicit;',
 		to: "if (explicit) return 'reported';"
 	},
 	{
-		id: 'm02', file: 'schema.ts', expect: 'test-data deriveBasis truth table (row C/nps)',
+		id: 'm02', file: ENGINE_BASIS, expect: 'test-data deriveBasis truth table (row C/nps)',
 		label: 'C + needs-primary-source no longer derives inferred',
 		from: "if (confidence === 'C' && verification === 'needs-primary-source') return 'inferred';",
 		to: "if (false && confidence === 'C' && verification === 'needs-primary-source') return 'inferred';"
 	},
 	{
-		id: 'm03', file: 'schema.ts', expect: 'test-data deriveBasis truth table (D rows)',
+		id: 'm03', file: ENGINE_BASIS, expect: 'test-data deriveBasis truth table (D rows)',
 		label: 'grade D no longer derives unsubstantiated',
 		from: "if (confidence === 'D') return 'unsubstantiated';",
 		to: "if (false && confidence === 'D') return 'unsubstantiated';"
@@ -156,19 +161,19 @@ const MUTATIONS: Mutation[] = [
 		from: 'if (/\\bnot\\b[^.]{0,40}\\b(verified|checked)\\b/i.test(method)) return false;',
 		to: ''
 	},
-	// --- schema.ts: dispute status (R11) -----------------------------------------
+	// --- engine kernel/review.ts: dispute status (R11, schema move) --------------
 	{
-		id: 'm12', file: 'schema.ts', expect: 'test-validators R11 (dispute status enum)',
+		id: 'm12', file: ENGINE_REVIEW, expect: 'test-validators R11 (dispute status enum)',
 		label: 'dispute status becomes free text',
 		from: "status: z.enum(['open', 'adopted', 'rejected']).optional(),",
 		to: 'status: z.string().optional(),'
 	},
-	// --- schema.ts: non-blank mandatory text and override provenance --------------
+	// --- engine kernel/envelope.ts and schema.ts: non-blank text and override provenance --
 	{
-		id: 'm27', file: 'schema.ts', expect: 'test-validators whitespace fixtures (V18/V20)',
+		id: 'm27', file: ENGINE_ENVELOPE, expect: 'test-validators whitespace fixtures (V18/V20)',
 		label: 'nonBlank stops trimming, so a space passes for prose',
-		from: "\treturn typeof v === 'string' && v.trim().length >= min;",
-		to: "\treturn typeof v === 'string' && v.length > 0;"
+		from: '  return typeof v === \'string\' && v.trim().length >= min;',
+		to: '  return typeof v === \'string\' && v.length > 0;'
 	},
 	{
 		id: 'm28', file: 'schema.ts', expect: 'test-validators V23 (whitespace reviewer name)',
@@ -449,6 +454,9 @@ const SUITES_FOR: Record<string, string[]> = {
 	'schema.ts': ['test-data.ts', 'test-validators.ts'],
 	'build-data.ts': ['test-data.ts', 'test-validators.ts', 'test-pipeline.ts'],
 	[ENGINE_CANONICAL]: ['test-data.ts', 'test-pipeline.ts'],
+	[ENGINE_BASIS]: ['test-data.ts', 'test-validators.ts'],
+	[ENGINE_REVIEW]: ['test-data.ts', 'test-validators.ts'],
+	[ENGINE_ENVELOPE]: ['test-data.ts', 'test-validators.ts'],
 	'origins.ts': ['test-validators.ts'],
 	'review-coverage.ts': ['test-data.ts', 'test-validators.ts', 'test-emit.ts'],
 	'network-continuity.ts': ['test-network-continuity.ts'],
