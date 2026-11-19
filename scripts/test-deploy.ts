@@ -263,18 +263,69 @@ ok(
 // checkDryRun
 // ---------------------------------------------------------------------------
 
+/** The line wrangler 4.125 prints for a --var value it masks in the dry run. */
+const MASKED_LINE = 'env.RESEARCH_OPEN ("(hidden)")                 Environment Variable';
+
 {
 	const plan = planDeploy({ git: CLEAN_MAIN, live: ACCEPTING });
-	ok('the dry-run check passes when the output names RESEARCH_OPEN:1', checkDryRun('vars: RESEARCH_OPEN:1', plan).length === 0);
-	const reasons = checkDryRun('Uploaded deeptunisia (2.1 sec)', plan);
-	ok('the dry-run check rejects output that does not mention RESEARCH_OPEN', reasons.length === 1 && reasons[0].includes('RESEARCH_OPEN'), reasons.join('; '));
+	const visible = checkDryRun('vars: RESEARCH_OPEN:1', plan);
+	ok(
+		'the dry-run check passes when the output names RESEARCH_OPEN:1',
+		visible.refusals.length === 0 && visible.warnings.length === 0,
+		[...visible.refusals, ...visible.warnings].join('; ')
+	);
+
+	const absent = checkDryRun('Uploaded deeptunisia (2.1 sec)', plan);
+	ok(
+		'absent: the dry-run check refuses output that does not mention RESEARCH_OPEN',
+		absent.refusals.length === 1 && absent.refusals[0].includes('does not mention RESEARCH_OPEN'),
+		absent.refusals.join('; ')
+	);
+
 	const wrong = checkDryRun('vars: RESEARCH_OPEN:0', plan);
-	ok('the dry-run check rejects a different research value', wrong.length === 1, wrong.join('; '));
+	ok(
+		'wrong value: the dry-run check refuses a visibly different research value',
+		wrong.refusals.length === 1 && wrong.refusals[0].includes('a different value would be deployed'),
+		wrong.refusals.join('; ')
+	);
+
+	const masked = checkDryRun(`Your Worker has access to the following bindings:\n${MASKED_LINE}\n`, plan);
+	ok('masked: a masked RESEARCH_OPEN with RESEARCH_OPEN:1 in the plan is not a refusal', masked.refusals.length === 0, masked.refusals.join('; '));
+	ok(
+		'masked: the dry-run check warns that the value cannot be read and names verifyAfter as the guard',
+		masked.warnings.length === 1 && masked.warnings[0].includes('(hidden)') && masked.warnings[0].includes('verifyAfter'),
+		masked.warnings.join('; ')
+	);
+
+	const maskedAndWrong = checkDryRun(`${MASKED_LINE}\nvars: RESEARCH_OPEN:0`, plan);
+	ok('a masked line does not hide a visibly wrong value elsewhere in the output', maskedAndWrong.refusals.length === 1, maskedAndWrong.refusals.join('; '));
+	const rightAndWrong = checkDryRun('vars: RESEARCH_OPEN:1\nvars: RESEARCH_OPEN:0', plan);
+	ok('a visible right value does not hide a visibly wrong one', rightAndWrong.refusals.length === 1, rightAndWrong.refusals.join('; '));
+	const wrongNextToHidden = checkDryRun('vars: RESEARCH_OPEN:0 (hidden)', plan);
+	ok('a visible wrong value on a line that also says (hidden) is refused', wrongNextToHidden.refusals.length === 1, wrongNextToHidden.refusals.join('; '));
+	const prefix = checkDryRun('vars: RESEARCH_OPEN:10', plan);
+	ok('RESEARCH_OPEN:10 is not read as RESEARCH_OPEN:1', prefix.refusals.length === 1, prefix.refusals.join('; '));
+	const bindingWrong = checkDryRun('env.RESEARCH_OPEN ("0")                 Environment Variable', plan);
+	ok('an unmasked binding row with a different value is refused', bindingWrong.refusals.length === 1, bindingWrong.refusals.join('; '));
+	const bindingRight = checkDryRun('env.RESEARCH_OPEN ("1")                 Environment Variable', plan);
+	ok('an unmasked binding row with the planned value passes', bindingRight.refusals.length === 0 && bindingRight.warnings.length === 0);
+	const noValue = checkDryRun('RESEARCH_OPEN is set', plan);
+	ok('a mention with no value is refused', noValue.refusals.length === 1, noValue.refusals.join('; '));
 }
 
 {
 	const plan = planDeploy({ git: CLEAN_MAIN, live: CLOSED });
-	ok('a closed study does not require RESEARCH_OPEN in the dry-run output', checkDryRun('nothing interesting', plan).length === 0);
+	ok('the closed-study plan passes no --var', plan.researchVar === null);
+	const quiet = checkDryRun('nothing interesting', plan);
+	ok('a closed study does not require RESEARCH_OPEN in the dry-run output', quiet.refusals.length === 0 && quiet.warnings.length === 0);
+
+	const masked = checkDryRun(MASKED_LINE, plan);
+	ok(
+		'masked with a null plan: a masked RESEARCH_OPEN is refused when the plan passes no --var',
+		masked.refusals.length === 1 && masked.refusals[0].includes('plan passes no --var'),
+		masked.refusals.join('; ')
+	);
+	ok('masked with a null plan: no warning stands in for the refusal', masked.warnings.length === 0);
 }
 
 // ---------------------------------------------------------------------------

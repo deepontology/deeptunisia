@@ -156,21 +156,79 @@ export function planDeploy(input: PlanInput): Plan {
 	};
 }
 
+/** The variable the plan passes with --var, and the name it is printed under. */
+const RESEARCH_NAME = 'RESEARCH_OPEN';
+
+/**
+ * Wrangler 4.125 masks a --var value in the dry-run binding listing instead of
+ * printing it, as `env.RESEARCH_OPEN ("(hidden)")`. The value is then not
+ * readable from the dry run at all.
+ */
+const MASKED_VALUE = '(hidden)';
+
+export type DryRunCheck = {
+	/** The dry run contradicts the plan; nothing may be uploaded. */
+	refusals: string[];
+	/** The dry run cannot be read far enough to confirm the plan. */
+	warnings: string[];
+};
+
+/**
+ * Every value one line of dry-run output shows for RESEARCH_OPEN, in either
+ * form wrangler uses: `RESEARCH_OPEN:1` or the binding row `env.RESEARCH_OPEN ("1")`.
+ * A masked binding row yields MASKED_VALUE.
+ */
+function researchValues(line: string): string[] {
+	const values: string[] = [];
+	for (const m of line.matchAll(/RESEARCH_OPEN:([^\s"'),;]*)/g)) values.push(m[1]);
+	for (const m of line.matchAll(/RESEARCH_OPEN\s*\("([^"]*)"\)/g)) values.push(m[1]);
+	return values;
+}
+
 /**
  * The dry-run output lists the vars the deploy would set. If the plan passes
  * RESEARCH_OPEN and the output does not name it, wrangler did not accept the
  * flag and the real run would close the study.
+ *
+ * Presence is still required, and any value visible in the output has to be
+ * the value the plan passes. A value wrangler masks is neither right nor
+ * wrong: the output is honest but unreadable, so the check warns and the
+ * post-deploy verifyAfter becomes the guard. A masked mention proves nothing
+ * when the plan passes no --var at all, so that case still refuses.
  */
-export function checkDryRun(output: string, plan: Plan): string[] {
-	const reasons: string[] = [];
-	if (plan.researchVar) {
-		if (!output.includes('RESEARCH_OPEN')) {
-			reasons.push(`the dry-run output does not mention RESEARCH_OPEN; ${plan.researchVar} would not reach the Worker`);
-		} else if (!output.includes(plan.researchVar)) {
-			reasons.push(`the dry-run output does not carry ${plan.researchVar}; a different value would be deployed`);
+export function checkDryRun(output: string, plan: Plan): DryRunCheck {
+	const refusals: string[] = [];
+	const warnings: string[] = [];
+	const mentions = output.split(/\r?\n/).filter((line) => line.includes(RESEARCH_NAME));
+	const values = mentions.flatMap(researchValues);
+	const masked = values.includes(MASKED_VALUE);
+	const visible = values.filter((value) => value !== MASKED_VALUE);
+
+	const expected = plan.researchVar;
+	if (!expected) {
+		if (masked) {
+			refusals.push(
+				`the dry-run output masks ${RESEARCH_NAME} as ${MASKED_VALUE} but the plan passes no --var ${RESEARCH_NAME}; there is no value in the plan to check the masked output against`
+			);
 		}
+		return { refusals, warnings };
 	}
-	return reasons;
+
+	const expectedValue = expected.slice(RESEARCH_NAME.length + 1);
+	if (mentions.length === 0) {
+		refusals.push(`the dry-run output does not mention ${RESEARCH_NAME}; ${expected} would not reach the Worker`);
+	} else if (visible.some((value) => value !== expectedValue)) {
+		refusals.push(`the dry-run output does not carry ${expected}; a different value would be deployed`);
+	} else if (visible.length > 0) {
+		// Every visible value is the planned one.
+	} else if (masked) {
+		warnings.push(
+			`the dry-run output masks the value of ${RESEARCH_NAME} as ${MASKED_VALUE}, so ${expected} cannot be read from the dry run; the post-deploy verifyAfter is the guard that catches a study which closed`
+		);
+	} else {
+		refusals.push(`the dry-run output mentions ${RESEARCH_NAME} but shows no value for it; ${expected} cannot be confirmed`);
+	}
+	return { refusals, warnings };
 }
 
 export type LocalBuild = {
@@ -450,9 +508,10 @@ async function main(argv: string[]): Promise<number> {
 		console.error(`\n  the dry run failed; nothing was uploaded\n`);
 		return 1;
 	}
-	const dryReasons = checkDryRun(dry.output, plan);
-	if (dryReasons.length > 0) {
-		for (const reason of dryReasons) console.error(`  STOP  ${reason}`);
+	const dryCheck = checkDryRun(dry.output, plan);
+	for (const warning of dryCheck.warnings) say(`  WARN  ${warning}`);
+	if (dryCheck.refusals.length > 0) {
+		for (const reason of dryCheck.refusals) console.error(`  STOP  ${reason}`);
 		console.error('\n  the dry run did not show what the plan expects; nothing was uploaded\n');
 		return 1;
 	}
