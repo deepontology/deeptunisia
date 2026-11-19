@@ -55,7 +55,8 @@
 		uncheckable: stats.precheckUncheckable,
 		snapshot: stats.precheckSnapshot,
 		withExcerpt: stats.precheckWithExcerpt,
-		found: stats.precheckExcerptFound
+		found: stats.precheckExcerptFound,
+		newer: stats.precheckNewer
 	};
 
 	/**
@@ -213,6 +214,9 @@
 			{#if precheckRan}
 				<p>{format(app.locale, 'about.precheck.block', precheckParams)}</p>
 				<p>{t('about.precheck.caveat')}</p>
+				{#if Number(stats.precheckNewer) > 0}
+					<p>{format(app.locale, 'about.precheck.newer', precheckParams)}</p>
+				{/if}
 			{:else}
 				<p>{t('about.precheck.notRun')}</p>
 			{/if}

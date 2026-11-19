@@ -4220,7 +4220,7 @@ const deskStats = deskStatsText(
 // run, which is a different statement from "nothing answered".
 const precheck = (() => {
 	const newest = newestPrecheck(dirname(DATA_DIR));
-	return newest ? precheckStats(newest.name, newest.text) : EMPTY_PRECHECK_STATS;
+	return newest ? precheckStats(newest.name, newest.text, sources.map((s) => s.id)) : EMPTY_PRECHECK_STATS;
 })();
 
 const stats: Record<string, string> = {
@@ -4348,7 +4348,8 @@ const stats: Record<string, string> = {
 	precheckUncheckable: precheck.uncheckable,
 	precheckSnapshot: precheck.snapshot,
 	precheckWithExcerpt: precheck.withExcerpt,
-	precheckExcerptFound: precheck.excerptFound
+	precheckExcerptFound: precheck.excerptFound,
+	precheckNewer: precheck.newer
 };
 
 writeFileSync(join(STAGE_OUT, 'stats.json'), JSON.stringify(stats, null, 2), 'utf8');

@@ -1550,6 +1550,7 @@ const en: Dict = {
 	'about.precheck.caveat':
 		'Not found is a flag for a person, not a verdict: many stored excerpts are summaries or translations.',
 	'about.precheck.notRun': 'The source pre-check has not been run yet.',
+	'about.precheck.newer': 'Sources added since that run and not yet checked: {newer}.',
 	'about.funders.donor': 'Donor',
 	'about.funders.amount': 'Amount',
 	'about.funders.period': 'Period',
@@ -3666,6 +3667,7 @@ const fr: Dict = {
 	'about.precheck.caveat':
 		'Un extrait non retrouvé est un signalement pour une personne, pas un verdict : beaucoup d\'extraits stockés sont des résumés ou des traductions.',
 	'about.precheck.notRun': 'Le pré-contrôle des sources n\'a pas encore été lancé.',
+	'about.precheck.newer': 'Sources ajoutées depuis ce passage et pas encore contrôlées : {newer}.',
 	'about.funders.donor': 'Donateur',
 	'about.funders.amount': 'Montant',
 	'about.funders.period': 'Période',
@@ -5769,6 +5771,7 @@ const ar: Dict = {
 	'about.precheck.caveat':
 		'عدم العثور على المقتطف إشارة لشخص، لا حكم: كثير من المقتطفات المخزنة ملخصات أو ترجمات.',
 	'about.precheck.notRun': 'لم يُشغَّل الفحص المسبق للمصادر بعد.',
+	'about.precheck.newer': 'المصادر المضافة بعد ذلك التشغيل ولم تُفحص بعد: {newer}.',
 	'about.funders.donor': 'الجهة المانحة',
 	'about.funders.amount': 'المبلغ',
 	'about.funders.period': 'الفترة',

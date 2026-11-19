@@ -231,6 +231,8 @@ export interface PrecheckStats {
 	snapshot: string;
 	withExcerpt: string;
 	excerptFound: string;
+	/** Sources in the data that the run's file does not name: added after the run. */
+	newer: string;
 }
 
 export const EMPTY_PRECHECK_STATS: PrecheckStats = {
@@ -241,7 +243,8 @@ export const EMPTY_PRECHECK_STATS: PrecheckStats = {
 	uncheckable: '',
 	snapshot: '',
 	withExcerpt: '',
-	excerptFound: ''
+	excerptFound: '',
+	newer: ''
 };
 
 /**
@@ -250,12 +253,13 @@ export const EMPTY_PRECHECK_STATS: PrecheckStats = {
  * timeout, which is not a death; `withExcerpt` is every line that says the
  * source stores an excerpt, whatever the check found.
  */
-export function precheckStats(name: string, text: string): PrecheckStats {
+export function precheckStats(name: string, text: string, sourceIds?: readonly string[]): PrecheckStats {
 	const rows = text
 		.split('\n')
 		.filter((line) => line.trim())
 		.map((line) => JSON.parse(line) as PrecheckLine);
 	const count = (test: (row: PrecheckLine) => boolean) => rows.filter(test).length;
+	const named = new Set(rows.map((r) => r.id));
 	return {
 		date: name.replace(/\.jsonl$/, ''),
 		sources: String(rows.length),
@@ -264,7 +268,8 @@ export function precheckStats(name: string, text: string): PrecheckStats {
 		uncheckable: String(count((r) => r.status === 'blocked' || r.status === 'timeout')),
 		snapshot: String(count((r) => Boolean(r.snapshot_url))),
 		withExcerpt: String(count((r) => r.excerpt !== 'no-excerpt')),
-		excerptFound: String(count((r) => r.excerpt === 'found-live' || r.excerpt === 'found-snapshot'))
+		excerptFound: String(count((r) => r.excerpt === 'found-live' || r.excerpt === 'found-snapshot')),
+		newer: sourceIds ? String(sourceIds.filter((id) => !named.has(id)).length) : ''
 	};
 }
 
