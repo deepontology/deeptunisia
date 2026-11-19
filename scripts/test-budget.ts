@@ -196,11 +196,12 @@ const INSTRUMENT_GROWTH = 1.05;
 /**
  * The HTML a page ships, for the pages whose markup is large enough to matter.
  * The Chronicle draws a bar for every tenure; its prerendered page weighed
- * 2.76 MB before it was windowed to the first screen of rows. Each ceiling is
- * the weight the page had when it was set, plus 5%.
+ * 2.76 MB before it was windowed to the first screen of rows, and 466,396
+ * bytes after. Each ceiling is the weight the page had when it was set, plus
+ * 5%, so drawing every row into the page again fails here.
  */
 const HTML_CEILING: Record<string, number> = {
-	chronicle: 2_900_000
+	chronicle: 490_000
 };
 
 /** Record pages are documents: no script is preloaded, and what is, stays under this. */
