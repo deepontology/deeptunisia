@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
+	import { untrack } from 'svelte';
 	import AboutView from '$lib/shell/AboutView.svelte';
 	import { AxisCamera, navigableAxis } from '$lib/viz/axis.svelte';
 	import { fits, textWidth } from '$lib/viz/measure';
@@ -107,7 +109,26 @@
 		family: 'JetBrains Mono, monospace'
 	};
 
-	let tip = $state<{ x: number; y: number; pos: Position } | null>(null);
+	/**
+	 * The tenure tooltip. Its content is reactive only in *what* is hovered;
+	 * its position is written straight to the element, so following the pointer
+	 * never re-renders a template the whole chart depends on.
+	 */
+	let tipPos = $state<Position | null>(null);
+	let tipEl = $state<HTMLElement | null>(null);
+	let tipXY = { x: 0, y: 0 };
+	let tipFrame = 0;
+
+	function placeTip() {
+		tipFrame = 0;
+		if (!tipEl) return;
+		tipEl.style.left = `${Math.min(tipXY.x + 14, width - 300)}px`;
+		tipEl.style.top = `${tipXY.y + 16}px`;
+	}
+
+	$effect(() => {
+		if (tipPos && tipEl) placeTip();
+	});
 
 	/** Hover preview for the events lane, positioned in plot coordinates. */
 	let evTip = $state<{ x: number; y: number; title: string; sub: string } | null>(null);
@@ -238,6 +259,82 @@
 			y += 6;
 		}
 		return { items, height: y + PAD_B };
+	});
+
+	// --- The drawn window -----------------------------------------------------
+	//
+	// Only rows inside the scroll container's visible band (plus a margin) are
+	// in the document. The SVG keeps its full height, so every `y` and the
+	// scrollbar stay exactly as they were. A row outside the band is still
+	// addressable by its `y`: nothing may compute a target from an element that
+	// may not be drawn.
+
+	const WINDOW_MARGIN = 800;
+	/** What the prerender draws: the first screen of rows, before any scroll. */
+	const PRERENDER_PX = 1400;
+
+	let scrollEl = $state<HTMLDivElement | null>(null);
+	let win = $state({ top: 0, bottom: PRERENDER_PX });
+
+	const rowsInView = $derived(
+		layout.items.filter((it) => it.y + GROUP_H >= win.top && it.y <= win.bottom)
+	);
+
+	/** Rows enter with a stagger on arrival; a row drawn by a scroll does not. */
+	let enterDone = $state(false);
+
+	$effect(() => {
+		if (!browser) return;
+		const id = setTimeout(() => (enterDone = true), 1200);
+		return () => clearTimeout(id);
+	});
+
+	/** The band around a y that must be drawn so a focused row can be reached. */
+	function ensureDrawn(y: number) {
+		if (!Number.isFinite(y)) return;
+		const edge = 160;
+		if (y >= win.top + edge && y <= win.bottom - edge) return;
+		win = {
+			top: Math.max(0, Math.min(win.top, y - WINDOW_MARGIN)),
+			bottom: Math.max(win.bottom, y + WINDOW_MARGIN)
+		};
+	}
+
+	/**
+	 * Tab reaches the last drawn bar and must not strand the reader there: when
+	 * focus arrives near the edge of the drawn band, draw the next band before
+	 * the following Tab. Focus itself scrolls the container, which re-measures.
+	 */
+	function onPlotFocusIn(e: FocusEvent) {
+		const host = (e.target as Element | null)?.closest?.('[data-y]') as HTMLElement | null;
+		if (!host) return;
+		ensureDrawn(Number(host.dataset.y));
+	}
+
+	$effect(() => {
+		const el = scrollEl;
+		if (!browser || !el) return;
+		let queued = false;
+		const measure = () => {
+			queued = false;
+			const top = Math.max(0, el.scrollTop - WINDOW_MARGIN);
+			const bottom = el.scrollTop + el.clientHeight + WINDOW_MARGIN;
+			const prev = untrack(() => win);
+			if (top !== prev.top || bottom !== prev.bottom) win = { top, bottom };
+		};
+		const onScroll = () => {
+			if (queued) return;
+			queued = true;
+			requestAnimationFrame(measure);
+		};
+		measure();
+		el.addEventListener('scroll', onScroll, { passive: true });
+		const ro = new ResizeObserver(onScroll);
+		ro.observe(el);
+		return () => {
+			el.removeEventListener('scroll', onScroll);
+			ro.disconnect();
+		};
 	});
 
 	const ruptures = ds.events.filter((e) => e.rupture);
@@ -483,6 +580,17 @@
 			...expandedLayout.clusters.map((c) => Math.round(c.y))
 		])
 	]);
+
+	// The expanded lane is one row per event, so it grows with the data: it is
+	// drawn by the same window as the tenure rows.
+	const expItemsInView = $derived(
+		expandedLayout.items.filter((it) => it.y >= win.top && it.y <= win.bottom)
+	);
+	const expClustersInView = $derived(
+		expandedLayout.clusters.filter((c) => c.y >= win.top && c.y <= win.bottom)
+	);
+	const expGutterInView = $derived(expGutter.filter((g) => g.y >= win.top && g.y <= win.bottom));
+	const laneYsInView = $derived(laneYs.filter((y) => y >= win.top && y <= win.bottom));
 
 	/** The band height: slim overview normally, the row stack when expanded. */
 	const laneH = $derived(expanded ? expandedLayout.height : LANE_H);
@@ -1005,10 +1113,25 @@
 	function showTip(e: MouseEvent, pos: Position) {
 		const rect = plotEl?.getBoundingClientRect();
 		if (!rect) return;
-		tip = { x: e.clientX - rect.left, y: e.clientY - rect.top, pos };
+		tipXY = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+		if (tipPos !== pos) tipPos = pos;
+		if (!tipFrame) tipFrame = requestAnimationFrame(placeTip);
 	}
 
 	const zoomed = $derived(domain[0] > FLOOR + 1 || domain[1] < CUTOFF - 1);
+
+	/**
+	 * The two tables below the chart are its text alternative. They are drawn
+	 * only while the reader has the section open, so a closed section costs
+	 * nothing to load and nothing to keep. The same records are published as
+	 * files for a reader with no scripts.
+	 */
+	let a11yOpen = $state(false);
+
+	function onA11yToggle(e: Event) {
+		const open = (e.currentTarget as HTMLDetailsElement).open;
+		if (open !== a11yOpen) a11yOpen = open;
+	}
 </script>
 
 <div class="chronicle">
@@ -1076,7 +1199,7 @@
 		</div>
 	{/if}
 
-	<div class="plot-scroll">
+	<div class="plot-scroll" bind:this={scrollEl} onfocusin={onPlotFocusIn}>
 		<!--
 			The gesture surface. Offset by the gutter so a pinch or a wheel-zoom anchors
 			on the date actually under the pointer rather than on one shifted left by the
@@ -1088,6 +1211,7 @@
 			bind:clientWidth={width}
 			use:navigableAxis={{ axis, width: () => plotW, offset: () => GUTTER }}
 			class:moving={axis.moving}
+			class:focusing={anyFocus && focusRoles === null}
 		>
 			<svg {width} height={layout.height} role="presentation">
 				<defs>
@@ -1360,7 +1484,7 @@
 						role="presentation"
 						onclick={() => (app.selected = null)}
 					/>
-					{#each laneYs as ly (ly)}
+					{#each laneYsInView as ly (ly)}
 						<line x1="0" x2={plotW} y1={ly - EXP_ROW_H / 2} y2={ly - EXP_ROW_H / 2} class="ev-row-line" />
 					{/each}
 					{#if eventSelected}
@@ -1386,13 +1510,14 @@
 							{/each}
 						{/if}
 					{/if}
-					{#each expandedLayout.items as it (it.event.id)}
+					{#each expItemsInView as it (it.event.id)}
 						{@const e = it.event}
 						{@const cy = it.y}
 						{@const isSel = eventSelected?.id === e.id}
 						{@const w = Math.max(0, it.x1 - it.x0)}
 						<g
 							class="ev-mark clickable"
+							data-y={it.y}
 							class:dim={eventDim(e)}
 							role="button"
 							tabindex="0"
@@ -1458,11 +1583,12 @@
 							{/if}
 						</g>
 					{/each}
-					{#each expandedLayout.clusters as c (c.members[0].id)}
+					{#each expClustersInView as c (c.members[0].id)}
 						{@const cx = (c.x0 + c.x1) / 2}
 						{@const membersSel = c.members.some((m) => m.id === eventSelected?.id)}
 						<g
 							class="ev-mark clickable"
+							data-y={c.y}
 							data-cluster
 							class:dim={eventSelected !== null ? !membersSel : personEvents !== null && !c.members.some((m) => personEvents.has(m.id))}
 							role="button"
@@ -1503,8 +1629,9 @@
 				</g>
 			{/if}
 
-			<!-- Rows -->
-				{#each layout.items as item (item.kind === 'group' ? 'g-' + item.id : 'r-' + item.roleId)}
+			<!-- Rows. Only the drawn window is in the document; every row's y comes
+			     from the layout, never from its element. -->
+				{#each rowsInView as item (item.kind === 'group' ? 'g-' + item.id : 'r-' + item.roleId)}
 					{#if item.kind === 'group'}
 						<g transform="translate(0,{item.y})">
 							<rect x="0" y="0" width={width} height={GROUP_H} class="group-bg" />
@@ -1517,7 +1644,9 @@
 						     with group headers, and y is what the eye actually tracks. -->
 						<g
 							transform="translate(0,{item.y})"
+							data-y={item.y}
 							class="row"
+							class:enter={!enterDone}
 							class:row-focus={focusedRow}
 							class:row-tied={tiedRow}
 							style:--enter-delay="{Math.min(420, item.y * 0.45)}ms"
@@ -1532,10 +1661,8 @@
 										{@const focus = isFocused(pos)}
 										{@const tied = !focus && isConnected(pos)}
 										{@const evdim = focusRoles !== null && !focusRoles.has(item.roleId)}
-										{@const dim = focusRoles === null && anyFocus && !focus && !tied}
 										<g
 											class="bar"
-											class:dim
 											class:evdim
 											class:focus
 											class:tied
@@ -1553,13 +1680,13 @@
 												}
 											}}
 											onmouseenter={(e) => {
-												app.hovered = pos.holder;
+												if (app.hovered !== pos.holder) app.hovered = pos.holder;
 												showTip(e, pos);
 											}}
 											onmousemove={(e) => showTip(e, pos)}
 											onmouseleave={() => {
-												app.hovered = null;
-												tip = null;
+												if (app.hovered === pos.holder) app.hovered = null;
+												tipPos = null;
 											}}
 										>
 											<!--
@@ -1682,10 +1809,11 @@
 					</g>
 				</g>
 				{#if expanded}
-					{#each expGutter as gl (gl.key)}
+					{#each expGutterInView as gl (gl.key)}
 						{@const sel = gl.event !== null && eventSelected?.id === gl.event.id}
 						<g
 							class="exp-gl"
+							data-y={gl.y}
 							class:sel
 							class:rupture={gl.event?.rupture ?? false}
 							class:dim={gl.event ? eventDim(gl.event) : false}
@@ -1712,7 +1840,7 @@
 						</g>
 					{/each}
 				{/if}
-				{#each layout.items as item (item.kind === 'group' ? 'lg-' + item.id : 'lr-' + item.roleId)}
+				{#each rowsInView as item (item.kind === 'group' ? 'lg-' + item.id : 'lr-' + item.roleId)}
 						{#if item.kind === 'group'}
 							<g transform="translate(0,{item.y})">
 								<rect x="0" y="0" width="3" height={GROUP_H} fill={LAYER_COLOR[item.layer]} opacity="0.8" />
@@ -1731,6 +1859,7 @@
 								x="24"
 								y={item.y + ROW_H / 2 + 4}
 								class="row-label"
+								class:enter={!enterDone}
 								class:row-label-focus={focusedRow}
 								class:row-label-tied={tiedRow}
 								style:--enter-delay="{Math.min(420, item.y * 0.45)}ms"
@@ -1754,28 +1883,24 @@
 
 			</svg>
 
-			{#if tip}
-				{@const person = personById.get(tip.pos.holder)}
-				{@const role = roleById.get(tip.pos.role)}
-				<div
-					class="tooltip"
-					style:left="{Math.min(tip.x + 14, width - 300)}px"
-					style:top="{tip.y + 16}px"
-				>
+			{#if tipPos}
+				{@const person = personById.get(tipPos.holder)}
+				{@const role = roleById.get(tipPos.role)}
+				<div class="tooltip" bind:this={tipEl}>
 					<strong>{nameOf(person)}</strong>
 					<span class="t-role">{nameOf(role)}</span>
-					<span class="t-span mono">{describeInterval(tip.pos.interval)}</span>
+					<span class="t-span mono">{describeInterval(tipPos.interval)}</span>
 					<span class="t-meta">
 						<!-- Basis, not the raw confidence letter. What kind of claim this is
 						     matters more to a reader than an internal grading code. -->
-						<BasisLine record={tip.pos} />
-						<span class="mono">{durationLabel(tip.pos.years)}</span>
-						{#if tip.pos.datesInferred}
+						<BasisLine record={tipPos} />
+						<span class="mono">{durationLabel(tipPos.years)}</span>
+						{#if tipPos.datesInferred}
 							<span class="warn-flag">{t('chronicle.datesEstimated')}</span>
 						{/if}
 					</span>
-					{#if tip.pos.notes.length}
-						<span class="t-note">{tip.pos.notes[0]}</span>
+					{#if tipPos.notes.length}
+						<span class="t-note">{tipPos.notes[0]}</span>
 					{/if}
 				</div>
 			{/if}
@@ -1828,8 +1953,15 @@
 		</div>
 	</div>
 
-	<details class="a11y">
+	<details class="a11y" ontoggle={onA11yToggle}>
 		<summary>{t('chronicle.table')}</summary>
+		<p class="a11y-note">{t('chronicle.table.files')}</p>
+		<p class="a11y-files">
+			<a href="/positions.csv" download>{t('chronicle.table.positions')}</a>
+			<span aria-hidden="true"> · </span>
+			<a href="/dataset.json" download>{t('chronicle.table.dataset')}</a>
+		</p>
+		{#if a11yOpen}
 		<table>
 			<caption>{t('chronicle.table.caption')}</caption>
 			<thead>
@@ -1868,6 +2000,7 @@
 				{/each}
 			</tbody>
 		</table>
+		{/if}
 	</details>
 </div>
 
@@ -2035,6 +2168,10 @@
 	.row-label {
 		font-size: 11px;
 		fill: var(--text-secondary);
+	}
+	/* Only the rows drawn on arrival assemble in sequence. A row that a scroll
+	   brings into the window is already where it belongs. */
+	.row-label.enter {
 		animation: row-enter var(--dur-slow) var(--ease-out) both;
 		animation-delay: var(--enter-delay, 0ms);
 	}
@@ -2390,7 +2527,7 @@
 	/* Rows fade up in sequence on mount. The view is keyed on the route, so this
 	   plays once on arrival and never re-runs while filtering — a chart that
 	   re-animates every time you move a control is unusable. */
-	.row {
+	.row.enter {
 		animation: row-enter var(--dur-slow) var(--ease-out) both;
 		animation-delay: var(--enter-delay, 0ms);
 	}
@@ -2403,8 +2540,8 @@
 		}
 	}
 	@media (prefers-reduced-motion: reduce) {
-		.row,
-		.row-label {
+		.row.enter,
+		.row-label.enter {
 			animation: none;
 		}
 	}
@@ -2413,7 +2550,13 @@
 		cursor: pointer;
 		transition: opacity var(--dur-fast) var(--ease-out);
 	}
-	.bar.dim {
+	/*
+	   One class on the plot root says something is focused; this rule dims the
+	   rest. Only the focused and tied bars carry a class of their own, so a
+	   hover changes one attribute on the root plus a handful on the few bars
+	   that changed state, never a class on every bar in the chart.
+	*/
+	.focusing .bar:not(.focus):not(.tied) {
 		opacity: 0.24;
 	}
 	/* Under an event focus: rows the event does not involve step back. */
@@ -2454,7 +2597,7 @@
 		font-weight: 500;
 		pointer-events: none;
 	}
-	.bar.dim .bar-label {
+	.focusing .bar:not(.focus):not(.tied) .bar-label {
 		fill: var(--text-primary);
 	}
 
@@ -2519,6 +2662,22 @@
 	.a11y summary {
 		cursor: pointer;
 		font-size: var(--t-sm);
+	}
+	.a11y-note {
+		margin: var(--s-2) 0 0;
+		color: var(--text-faint);
+		font-size: var(--t-xs);
+	}
+	.a11y-files {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--s-1);
+		margin: var(--s-1) 0 0;
+		font-family: var(--font-mono);
+		font-size: var(--t-2xs);
+	}
+	.a11y-files a {
+		color: var(--accent);
 	}
 	.a11y table {
 		width: 100%;
