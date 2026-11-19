@@ -193,6 +193,16 @@ const INSTRUMENT_BASELINE: Record<string, number> = {
 };
 const INSTRUMENT_GROWTH = 1.05;
 
+/**
+ * The HTML a page ships, for the pages whose markup is large enough to matter.
+ * The Chronicle draws a bar for every tenure; its prerendered page weighed
+ * 2.76 MB before it was windowed to the first screen of rows. Each ceiling is
+ * the weight the page had when it was set, plus 5%.
+ */
+const HTML_CEILING: Record<string, number> = {
+	chronicle: 2_900_000
+};
+
 /** Record pages are documents: no script is preloaded, and what is, stays under this. */
 const RECORD_SCRIPT_CEILING = 1024;
 
@@ -264,6 +274,12 @@ if (!existsSync(BUILD)) {
 			);
 		}
 		console.log('');
+
+		for (const [name, ceiling] of Object.entries(HTML_CEILING)) {
+			const file = join(BUILD, `${name}.html`);
+			const size = existsSync(file) ? statSync(file).size : -1;
+			ok(`/${name} ships at most ${ceiling.toLocaleString('en-US')} bytes of HTML`, size >= 0 && size <= ceiling, size < 0 ? 'page is missing' : `${size.toLocaleString('en-US')} bytes`);
+		}
 
 		ok('every reading route has a built page', reading.every((name) => pages.includes(`${name}.html`)), reading.filter((name) => !pages.includes(`${name}.html`)).join(', '));
 		ok('every instrument route has a built page', instruments.every((name) => pages.includes(`${name}.html`)), instruments.filter((name) => !pages.includes(`${name}.html`)).join(', '));
