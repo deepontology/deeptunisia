@@ -10,8 +10,8 @@
  * survived and why.
  *
  * Targets are the files DeepTunisia owns (scripts/schema.ts,
- * scripts/build-data.ts, scripts/canonical.ts) and the pinned engine the time
- * predicates live in (node_modules/deepepisteme/src/time.ts). Mutating the
+ * scripts/build-data.ts) and the pinned engine where the time predicates and
+ * the canonical projection live (node_modules/deepepisteme/src). Mutating the
  * engine copy is deliberate: it simulates a bad engine bump, which is the
  * failure mode the pinned dependency and the conformance suite exist to catch.
  *
@@ -51,7 +51,8 @@ const ROOT = join(HERE, '..');
 const TSR = join(ROOT, 'node_modules', 'tsx', 'dist', 'cli.mjs');
 const DATASET = join(ROOT, 'src', 'generated', 'dataset.json');
 const S = (f: string) => join(HERE, f);
-const ENGINE_TIME = '../node_modules/deepepisteme/src/time.ts';
+const ENGINE_TIME = '../node_modules/deepepisteme/src/kernel/time.ts';
+const ENGINE_CANONICAL = '../node_modules/deepepisteme/src/kernel/canonical.ts';
 
 const hash = (p: string) => {
 	if (!existsSync(p)) return 'missing';
@@ -319,20 +320,20 @@ const MUTATIONS: Mutation[] = [
 	{
 		id: 'm20', file: ENGINE_TIME, expect: 'test-validators (open-ended duration, engine target)',
 		label: 'open-ended durations measured from the epoch instead of the cutoff',
-		from: '? DATASET_CUTOFF\n      : (iv.endEarliest + iv.endLatest) / 2;',
-		to: '? 0\n      : (iv.endEarliest + iv.endLatest) / 2;'
+		from: '        ? DATASET_CUTOFF\n        : (iv.endEarliest + iv.endLatest) / 2;',
+		to: '        ? 0\n        : (iv.endEarliest + iv.endLatest) / 2;'
 	},
 	{
 		id: 'm33', file: ENGINE_TIME, expect: 'test-validators (no assertion past cutoff, engine target)',
 		label: 'certainlyActive loses its cutoff clamp',
-		from: 'if (t > DATASET_CUTOFF) return false;\n  if (t < iv.startLatest) return false;',
-		to: 'if (t < iv.startLatest) return false;'
+		from: '    if (t > DATASET_CUTOFF) return false;\n    if (t < iv.startLatest) return false;',
+		to: '    if (t < iv.startLatest) return false;'
 	},
 	{
 		id: 'm34', file: ENGINE_TIME, expect: 'test-validators (no assertion past cutoff, engine target)',
 		label: 'possiblyActive loses its cutoff clamp',
-		from: 'if (t > DATASET_CUTOFF) return false;\n  if (t < iv.startEarliest) return false;',
-		to: 'if (t < iv.startEarliest) return false;'
+		from: '    if (t > DATASET_CUTOFF) return false;\n    if (t < iv.startEarliest) return false;',
+		to: '    if (t < iv.startEarliest) return false;'
 	},
 	{
 		id: 'm35', file: ENGINE_TIME, expect: 'test-validators (unknown-end certainty horizon, engine target)',
@@ -349,8 +350,8 @@ const MUTATIONS: Mutation[] = [
 	{
 		id: 'm37', file: ENGINE_TIME, expect: 'test-validators (ongoing confirmation window, engine target)',
 		label: 'ongoing is always treated as recently confirmed',
-		from: 'lastObservation !== null &&\n    lastObservation >= cutoff - ONGOING_CONFIRMATION_DAYS * 86_400_000;',
-		to: 'true;'
+		from: '      lastObservation !== null &&\n      lastObservation >= cutoff - ONGOING_CONFIRMATION_DAYS * MS_PER_DAY;',
+		to: '      true;'
 	},
 	{
 		id: 'm38', file: ENGINE_TIME, expect: 'test-validators (unknown-end observation, engine target)',
@@ -377,11 +378,11 @@ const MUTATIONS: Mutation[] = [
 		from: 'const origin = entry.lineage?.[0];',
 		to: 'const origin = entry.lineage?.[entry.lineage.length - 1];'
 	},
-	// --- canonical.ts: byte reproducibility --------------------------------------
+	// --- engine kernel/canonical.ts: byte reproducibility ------------------------
 	{
-		id: 'm39', file: 'canonical.ts', expect: 'test-pipeline (canonical byte equality)',
+		id: 'm39', file: ENGINE_CANONICAL, expect: 'test-pipeline (canonical byte equality, engine target)',
 		label: 'canonical bytes keep the wall-clock generated timestamp',
-		from: '\tcopy.meta.generated = CANONICAL_GENERATED;\n',
+		from: '    (meta as Record<string, unknown>).generated = CANONICAL_GENERATED;\n',
 		to: ''
 	},
 	// --- review-coverage.ts: overlapping flags and honest columns (Phase 8) ------
@@ -447,7 +448,7 @@ const MUTATIONS: Mutation[] = [
 const SUITES_FOR: Record<string, string[]> = {
 	'schema.ts': ['test-data.ts', 'test-validators.ts'],
 	'build-data.ts': ['test-data.ts', 'test-validators.ts', 'test-pipeline.ts'],
-	'canonical.ts': ['test-data.ts', 'test-pipeline.ts'],
+	[ENGINE_CANONICAL]: ['test-data.ts', 'test-pipeline.ts'],
 	'origins.ts': ['test-validators.ts'],
 	'review-coverage.ts': ['test-data.ts', 'test-validators.ts', 'test-emit.ts'],
 	'network-continuity.ts': ['test-network-continuity.ts'],

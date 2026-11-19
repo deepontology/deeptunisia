@@ -19,23 +19,11 @@
  * from node_modules; a failed install fails here first.
  */
 import { readFileSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
 import { z } from 'zod';
-import { createEngine, type Deployment } from 'deepepisteme';
 import { nonBlank } from 'deepepisteme/kernel';
 import * as localDates from './dates.ts';
-import { loadParameters } from './parameters.ts';
-import {
-	AgreementKind,
-	EDGE_DIRECTION,
-	INFLUENCE_CHANNELS,
-	InstitutionType,
-	Layer,
-	PlaceKind,
-	RegionKind,
-	RelationshipType,
-	ReviewSchema as DeeptunisiaReviewSchema
-} from './schema.ts';
+import { engine, parameters } from './engine.ts';
+import { ReviewSchema as DeeptunisiaReviewSchema } from './schema.ts';
 
 let failures = 0;
 let checks = 0;
@@ -64,41 +52,13 @@ ok(
 
 // --- the deployment and the engine ------------------------------------------
 
-const parameters = loadParameters(
-	fileURLToPath(new URL('../data/parameters.yaml', import.meta.url))
-);
-
 /**
- * Tunisia as a deployment. The engine holds no configuration of its own, so
- * every value below comes from data/parameters.yaml or from a vocabulary that
- * scripts/schema.ts already declares.
+ * The engine under test is the one instance this repository builds
+ * (scripts/engine.ts), configured from data/parameters.yaml and the
+ * vocabularies scripts/schema.ts declares. The canonical hash and the splicer
+ * are reached through the same instance, so this gate covers the engine the
+ * build and the editorial tool actually use, not a second one built here.
  */
-const tunisia: Deployment = {
-	name: parameters.jurisdiction.name,
-	time: parameters.time,
-	translatedLocales: ['fr', 'ar'],
-	sourceLanguages: ['ar', 'fr', 'en'],
-	gazette: parameters.jurisdiction.gazette,
-	registry: parameters.jurisdiction.registry,
-	bbox: parameters.jurisdiction.bbox,
-	/** The strict form of these labels is REVIEWER_LABEL in scripts/schema.ts. */
-	reviewerLabels: ['maintainer', 'Initial compilation', 'JORT verification pass'],
-	index: parameters.index,
-	vocabulary: {
-		layers: [...Layer.options],
-		institutionTypes: [...InstitutionType.options],
-		relationshipTypes: [...RelationshipType.options],
-		edgeDirection: EDGE_DIRECTION,
-		influenceChannels: [...INFLUENCE_CHANNELS],
-		agreementKinds: [...AgreementKind.options],
-		placeKinds: [...PlaceKind.options],
-		regionKinds: [...RegionKind.options]
-	},
-	/** The matcher's word lists move with the matcher (slice 5). */
-	matcher: { particles: [], functionWords: [], splittablePrefixes: [] }
-};
-
-const engine = createEngine(tunisia);
 
 /** Point the local binding at the same parameters the build uses. */
 localDates.configureTime(parameters.time);
