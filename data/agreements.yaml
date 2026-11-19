@@ -939,7 +939,6 @@
   summary: "Two state-guarantee agreements were signed in Tunis on 22 September 2026 between the Republic of Tunisia and the African Development Bank, covering two loans: EUR 111.5 million to SONEDE for the Greater Tunis Drinking Water Network Technical and Energy Performance Improvement Project (PAP-GT), and USD 110 million to GCT for the Environmental Upgrading and Rehabilitation Support Project (PAER-GCT) — about USD 240 million combined, per the AfDB. Signed by Economy and Planning Minister Samir Abdelhafidh and AfDB Deputy Director-General for North Africa Malinne Blomberg; SONEDE CEO Abdelhamid Mnaja and GCT CEO Omar Bouzouada signed the loan documents. The press relays conversions of roughly 377 MDT and 321 MDT respectively (African Manager). Recorded here as one candidate row covering two same-day instruments; a human may split it if the canonical convention is one record per instrument."
   confidence: A
   basis: documented
-  verification: verified
   falsifiable_by: The signed agreements or the AfDB board approval documents; any JORT ratification text
   sources: [afdb-tunisia-guarantees-240m-2026-09-24, african-manager-bad-garanties-2026-09-22]
 
@@ -992,7 +991,6 @@
     instrument were retrieved.
   confidence: A
   basis: documented
-  verification: verified
   falsifiable_by: >-
     A JORT law approving the exchange of notes, the signed notes or L/A, or
     JICA's ODA project page for phase II would confirm the ceiling, rate,
