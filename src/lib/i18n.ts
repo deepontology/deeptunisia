@@ -1545,6 +1545,12 @@ const en: Dict = {
 	'about.desk.notMeasured': 'not measured yet',
 	'about.desk.note':
 		'Minutes per verified claim come from the verification desk: the median of each session median, with idle time over five minutes on one record counted as five. The figure appears after the first recorded session.',
+	'about.precheck.block':
+		'On {date} a script opened every one of the {sources} sources once: {alive} answered, {dead} were dead, and {uncheckable} refused a machine or timed out. {snapshot} have a saved copy on the Internet Archive. Of the {withExcerpt} sources that store an excerpt, the text was found on the page for {found}.',
+	'about.precheck.caveat':
+		'Not found is a flag for a person, not a verdict: many stored excerpts are summaries or translations.',
+	'about.precheck.notRun': 'The source pre-check has not been run yet.',
+	'about.precheck.newer': 'Sources added since that run and not yet checked: {newer}.',
 	'about.funders.donor': 'Donor',
 	'about.funders.amount': 'Amount',
 	'about.funders.period': 'Period',
@@ -3656,6 +3662,12 @@ const fr: Dict = {
 	'about.desk.notMeasured': 'pas encore mesuré',
 	'about.desk.note':
 		'Les minutes par affirmation vérifiée viennent du bureau de vérification : la médiane des médianes de chaque session, le temps d\'inactivité de plus de cinq minutes sur une fiche comptant pour cinq. Le chiffre apparaît après la première session enregistrée.',
+	'about.precheck.block':
+		'Le {date}, un script a ouvert une fois chacune des {sources} sources : {alive} ont répondu, {dead} étaient mortes, et {uncheckable} ont refusé une machine ou expiré. {snapshot} disposent d\'une copie enregistrée sur l\'Internet Archive. Sur les {withExcerpt} sources qui stockent un extrait, le texte a été retrouvé sur la page pour {found}.',
+	'about.precheck.caveat':
+		'Un extrait non retrouvé est un signalement pour une personne, pas un verdict : beaucoup d\'extraits stockés sont des résumés ou des traductions.',
+	'about.precheck.notRun': 'Le pré-contrôle des sources n\'a pas encore été lancé.',
+	'about.precheck.newer': 'Sources ajoutées depuis ce passage et pas encore contrôlées : {newer}.',
 	'about.funders.donor': 'Donateur',
 	'about.funders.amount': 'Montant',
 	'about.funders.period': 'Période',
@@ -5754,6 +5766,12 @@ const ar: Dict = {
 	'about.desk.notMeasured': 'لم يُقس بعد',
 	'about.desk.note':
 		'تُقاس الدقائق لكل ادعاء تم التحقق منه في مكتب التحقق: وسيط وسائط الجلسات، ويُحسب وقت الخمول الذي يزيد على خمس دقائق في سجل واحد خمس دقائق. يظهر الرقم بعد أول جلسة مسجلة.',
+	'about.precheck.block':
+		'في {date} فتح برنامج كل المصادر الـ{sources} مرة واحدة: استجاب {alive}، وكان {dead} ميتًا، ورفض {uncheckable} فحص الآلة أو انتهت مهلته. لدى {snapshot} نسخة محفوظة في أرشيف الإنترنت. ومن بين {withExcerpt} مصدرًا يخزّن مقتطفًا، وُجد النص في الصفحة لدى {found}.',
+	'about.precheck.caveat':
+		'عدم العثور على المقتطف إشارة لشخص، لا حكم: كثير من المقتطفات المخزنة ملخصات أو ترجمات.',
+	'about.precheck.notRun': 'لم يُشغَّل الفحص المسبق للمصادر بعد.',
+	'about.precheck.newer': 'المصادر المضافة بعد ذلك التشغيل ولم تُفحص بعد: {newer}.',
 	'about.funders.donor': 'الجهة المانحة',
 	'about.funders.amount': 'المبلغ',
 	'about.funders.period': 'الفترة',

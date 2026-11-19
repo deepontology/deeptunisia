@@ -24,7 +24,9 @@ import {
 	deskFigure,
 	excerptLabel,
 	median,
+	newestPrecheck,
 	parseSessions,
+	readPrecheck,
 	verdictSeconds
 } from './desk.ts';
 import { PositionSchema, verifiedGrounded } from './schema.ts';
@@ -181,6 +183,47 @@ console.log('\n  ── the packet is one screen ──\n');
 	ok('a source without an excerpt has no excerpt label', excerptLabel(null, null) === null);
 	ok('the folded rubric travels with the packet', packet.rule === '## 6. Decision tree');
 	ok('a record with no sources has an empty source list', buildPacket('positions', { id: 'x', holder: 'h', role: 'r', sources: [], interval: { raw: {} } }, 'x', context).sources.length === 0);
+}
+
+console.log('\n  ── the newest dated pre-check file is the one read ──\n');
+
+{
+	// A real run file and an older one that calls the same source dead. The
+	// newest name must win, and a packet must carry that line rather than say the
+	// source was never checked.
+	const dir = join(root, 'research', 'desk', 'precheck');
+	mkdirSync(dir, { recursive: true });
+	const realText = readFileSync(join(ROOT, 'research', 'desk', 'precheck', '2026-11-12.jsonl'), 'utf8');
+	writeFileSync(join(dir, '2026-11-12.jsonl'), realText);
+	const rows = realText
+		.split('\n')
+		.filter(Boolean)
+		.map((line) => JSON.parse(line) as any);
+	const checked = rows.find((r) => r.status === 'alive' && r.excerpt === 'found-live');
+	writeFileSync(
+		join(dir, '2020-01-01.jsonl'),
+		JSON.stringify({ ...checked, status: 'dead', http: 404, excerpt: 'no-excerpt' }) + '\n'
+	);
+
+	ok('the newest file by name is the one read, not the oldest', newestPrecheck(root)?.name === '2026-11-12.jsonl', newestPrecheck(root)?.name);
+	const map = readPrecheck(root);
+	ok('the result comes from the newest file', map.get(checked.id)?.status === 'alive', map.get(checked.id)?.status);
+
+	const packet = buildPacket(
+		'positions',
+		{ id: 'fixture-precheck', holder: 'holder-id', role: 'role-id', sources: [checked.id], interval: { raw: {} } },
+		'fixture',
+		{
+			sources: new Map<string, any>([
+				[checked.id, { id: checked.id, title: 'Checked', publisher: 'JORT', tier: 1, lang: 'fr', url: checked.url, excerpt: 'the line' }]
+			]),
+			names: (id: string) => id,
+			precheck: map,
+			rule: null
+		}
+	);
+	ok('a source in the file shows its pre-check result, not not pre-checked', packet.sources[0].precheck?.status === 'alive' && packet.sources[0].precheck?.id === checked.id, JSON.stringify(packet.sources[0].precheck?.status));
+	ok('the packet labels the excerpt a quote because the file found it', packet.sources[0].excerptLabel === 'quote found on the page', packet.sources[0].excerptLabel ?? '');
 }
 
 console.log('\n  ── timing ──\n');

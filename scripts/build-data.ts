@@ -76,7 +76,7 @@ import {
 } from './dates.ts';
 import { loadParameters, type Parameters } from './parameters.ts';
 import { countOrigins, restsOn, type EvidenceLike } from './origins.ts';
-import { deskStatsText } from './desk.ts';
+import { deskStatsText, newestPrecheck, precheckStats, EMPTY_PRECHECK_STATS } from './desk.ts';
 import { VERIFIED_EXCEPTIONS } from './verified-exceptions.ts';
 import { buildCoverage, coverageCsv, coverageMarkdown } from './coverage.ts';
 import { checkNarrative, type NarrativeClaim } from './consistency.ts';
@@ -4214,6 +4214,15 @@ const deskStats = deskStatsText(
 	})()
 );
 
+// D4: the latest source pre-check. Like the sessions file it is data beside the
+// data folder, so a run over a copied dataset reads that copy's check. No file
+// means every key is empty, not zero: the page can then say the check has not
+// run, which is a different statement from "nothing answered".
+const precheck = (() => {
+	const newest = newestPrecheck(dirname(DATA_DIR));
+	return newest ? precheckStats(newest.name, newest.text, sources.map((s) => s.id)) : EMPTY_PRECHECK_STATS;
+})();
+
 const stats: Record<string, string> = {
 	sources: String(sources.length),
 	sourcesCited: String(sources.length - uncitedSources.length),
@@ -4328,7 +4337,19 @@ const stats: Record<string, string> = {
 	// median minutes per verified claim (empty until there is a session).
 	deskSessions: deskStats.deskSessions,
 	deskClaims: deskStats.deskClaims,
-	deskMinutes: deskStats.deskMinutes
+	deskMinutes: deskStats.deskMinutes,
+	// D4: the source pre-check of the latest run, in the same flat string form.
+	// `alive` counts a redirect, `uncheckable` a refusal or a timeout, and
+	// `withExcerpt` every source that stores an excerpt at all.
+	precheckDate: precheck.date,
+	precheckSources: precheck.sources,
+	precheckAlive: precheck.alive,
+	precheckDead: precheck.dead,
+	precheckUncheckable: precheck.uncheckable,
+	precheckSnapshot: precheck.snapshot,
+	precheckWithExcerpt: precheck.withExcerpt,
+	precheckExcerptFound: precheck.excerptFound,
+	precheckNewer: precheck.newer
 };
 
 writeFileSync(join(STAGE_OUT, 'stats.json'), JSON.stringify(stats, null, 2), 'utf8');

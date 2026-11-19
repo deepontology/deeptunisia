@@ -185,19 +185,27 @@ export function nameIndex(dataset: any): (id: string) => string {
 	return (id: string) => map.get(id) ?? id;
 }
 
+/** A dated pre-check file: its name (`YYYY-MM-DD.jsonl`) and its bytes. */
+export function newestPrecheck(root: string): { name: string; text: string } | null {
+	const dir = join(root, 'research', 'desk', 'precheck');
+	if (!existsSync(dir)) return null;
+	const files = readdirSync(dir)
+		.filter((f) => /^\d{4}-\d{2}-\d{2}\.jsonl$/.test(f))
+		.sort();
+	if (!files.length) return null;
+	const name = files[files.length - 1];
+	return { name, text: readFileSync(join(dir, name), 'utf8') };
+}
+
 /**
  * The latest pre-check file under research/desk/precheck, by filename. One dated
  * file per run; the newest one is the current statement about a source.
  */
 export function readPrecheck(root: string): Map<string, PrecheckLine> {
-	const dir = join(root, 'research', 'desk', 'precheck');
 	const out = new Map<string, PrecheckLine>();
-	if (!existsSync(dir)) return out;
-	const files = readdirSync(dir)
-		.filter((f) => f.endsWith('.jsonl'))
-		.sort();
-	if (!files.length) return out;
-	for (const line of readFileSync(join(dir, files[files.length - 1]), 'utf8').split('\n')) {
+	const newest = newestPrecheck(root);
+	if (!newest) return out;
+	for (const line of newest.text.split('\n')) {
 		if (!line.trim()) continue;
 		try {
 			const row = JSON.parse(line) as PrecheckLine;
@@ -208,6 +216,63 @@ export function readPrecheck(root: string): Map<string, PrecheckLine> {
 	}
 	return out;
 }
+
+/**
+ * The figures /about prints from the latest pre-check. Every key is a string,
+ * like the rest of stats.json. A missing file yields empty strings rather than
+ * zeroes: "no run yet" and "a run where nothing answered" are different claims.
+ */
+export interface PrecheckStats {
+	date: string;
+	sources: string;
+	alive: string;
+	dead: string;
+	uncheckable: string;
+	snapshot: string;
+	withExcerpt: string;
+	excerptFound: string;
+	/** Sources in the data that the run's file does not name: added after the run. */
+	newer: string;
+}
+
+export const EMPTY_PRECHECK_STATS: PrecheckStats = {
+	date: '',
+	sources: '',
+	alive: '',
+	dead: '',
+	uncheckable: '',
+	snapshot: '',
+	withExcerpt: '',
+	excerptFound: '',
+	newer: ''
+};
+
+/**
+ * Counts the published figures straight off one dated file. `alive` includes a
+ * redirect because the address answered; `uncheckable` is a refusal or a
+ * timeout, which is not a death; `withExcerpt` is every line that says the
+ * source stores an excerpt, whatever the check found.
+ */
+export function precheckStats(name: string, text: string, sourceIds?: readonly string[]): PrecheckStats {
+	const rows = text
+		.split('\n')
+		.filter((line) => line.trim())
+		.map((line) => JSON.parse(line) as PrecheckLine);
+	const count = (test: (row: PrecheckLine) => boolean) => rows.filter(test).length;
+	const named = new Set(rows.map((r) => r.id));
+	return {
+		date: name.replace(/\.jsonl$/, ''),
+		sources: String(rows.length),
+		alive: String(count((r) => r.status === 'alive' || r.status === 'redirected')),
+		dead: String(count((r) => r.status === 'dead')),
+		uncheckable: String(count((r) => r.status === 'blocked' || r.status === 'timeout')),
+		snapshot: String(count((r) => Boolean(r.snapshot_url))),
+		withExcerpt: String(count((r) => r.excerpt !== 'no-excerpt')),
+		excerptFound: String(count((r) => r.excerpt === 'found-live' || r.excerpt === 'found-snapshot')),
+		newer: sourceIds ? String(sourceIds.filter((id) => !named.has(id)).length) : ''
+	};
+}
+
 
 /** The decision tree, section 6 of the rubric, folded to one block for the packet. */
 export function rubricTree(root: string): string | null {
