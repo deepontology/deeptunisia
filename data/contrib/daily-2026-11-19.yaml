@@ -1,0 +1,712 @@
+# daily-2026-11-19: daily dataset sweep (quick mode), consolidated outbox
+#
+# Window swept: 2026-11-16 to 2026-11-19. The inherited state file said
+#   lastRun 2026-11-03 and its lastSeen list is from that date; it is stale and
+#   was not used. "New" here means published after 2026-11-16T00:00:00Z in
+#   feed/feed.json as committed on main at 372cc3a (refreshed 2026-11-19
+#   18:34Z, 1200 headlines, 116 items in the window). npm run feed was not run
+#   again (quick mode).
+#   Outlets in the window: African Manager 100, Kapitalis 10, Nawaat 5,
+#   BBC News 1. Languages: fr 112, ar 3, en 1. Newest item 2026-11-19T18:24:02Z.
+# Sources read at source this run (webfetch): African Manager (Tunisair AGM,
+#   Chotrana grant, BTE management, BCT reserves, Ennasr case, Japan loan,
+#   ARP water bills, Nafti voluntary returns, Ramzi Louati at the ILO, Sfax
+#   airport drill), Nawaat (Manouba demonstration). Research on the BCT
+#   circular, the Japan loan, the German grant and the water bills was fanned
+#   out to four research threads; their confirmations are folded in below and
+#   their separate files are listed in the report.
+# Failure vocabulary (must not be collapsed):
+#   - The Tunisair convocation is an Amen Invest analysis relayed by African
+#     Manager. The convocation notice and the 2024 accounts were not retrieved;
+#     the 15 December 2026 meeting is a future date carried in the summary, and
+#     the record is dated to the announcement, not to the meeting.
+#   - The BCT reserve-requirement change rests on the circular number and dates
+#     as African Manager states them. The circular text is the primary target;
+#     grade follows what the research thread retrieved.
+#   - The Japan loan and the German grant are government-to-government
+#     instruments reported by the outlets; signed texts and JORT ratification
+#     were not in hand unless the research thread says otherwise.
+#   - The Nafti figure is the minister's answer in a joint plenary, reported by
+#     one outlet; it is not an IOM-published statistic and excludes individual
+#     returns handled by the Interior Ministry, as he said.
+# Cutoff: these candidates include records dated through 2026-11-19, past the
+#   current time.cutoff (2026-11-16). The merge must advance the cutoff to
+#   2026-11-19 and move the pinned defaults in scripts/parameters.ts and
+#   scripts/test-parameters.ts in the same edit, or V31 fails the build.
+# CANDIDATES ARE PROPOSALS, NOT GRAPH DATA.
+sources:
+  - id: am-tunisair-agm-2026-11-19
+    title: "Tunisair en AGs de procédure, juste pour la survie"
+    publisher: African Manager
+    date: 2026-11-19
+    url: https://africanmanager.com/tunisair-en-ags-de-procedure-juste-pour-la-survie/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      Tunisair convoque ses actionnaires à une Assemblée Générale Ordinaire
+      (AGO) et Extraordinaire (AGE) pour le 15 décembre 2026. [...] Poursuite de
+      l'activité (AGE) : conformément à l'article 388 du Code des sociétés
+      commerciales, les actionnaires seront amenés à voter sur la continuité de
+      l'exploitation. Cette formalité est récurrente en raison de capitaux
+      propres structurellement négatifs. Pour rappel, lors de l'AGE de mai 2026,
+      la poursuite d'activité avait été actée sur la base des comptes 2023, qui
+      affichaient un déficit de capitaux propres de -1 759,7 MD (en détérioration
+      par rapport à -1 473,4 MD en 2022).
+    note: >-
+      Signed "Analyse d'Amen Invest". Gives the agenda: continuation of
+      activity (AGE), approval of the 2024 financial statements (AGO), quitus,
+      partial renewal of the board and appointment of auditors for 2025-2027.
+      The convocation notice itself was not retrieved.
+  - id: am-nafti-voluntary-returns-2026-11-18
+    title: "Nafti : 27 000 migrants au programme de retour volontaire"
+    publisher: African Manager
+    date: 2026-11-18
+    url: https://africanmanager.com/nafti-plus-de-27-000-migrants-ont-beneficie-du-programme-de-retour-volontaire/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      Le nombre de migrants en situation irrégulière ayant bénéficié du
+      programme de retour volontaire s'est élevé à 27 342 jusqu'en novembre
+      2026, contre 976 en 2021, a indiqué, mardi, le ministre des Affaires
+      étrangères, de la Migration et des Tunisiens à l'étranger, Mohamed Ali
+      Nafti. Ce bilan ne prend pas en compte les opérations de retour individuel,
+      qui relèvent des prérogatives du ministère de l'Intérieur.
+    note: >-
+      Answer to parliamentarians in a joint plenary of the two chambers on the
+      budget of the foreign ministry, at the Bardo palace, Tuesday
+      17 November 2026 (the article is dated 18 November). The minister cites
+      coordination with IOM Tunisia and financing and equipment support from
+      Italy, Switzerland and Denmark for security structures including the
+      maritime guard.
+  - id: bct-circulaire-2026-11-2026-10-09
+    title: "Circulaire aux banques n° 2026-11 : mise en oeuvre de la politique monétaire"
+    publisher: Banque centrale de Tunisie
+    date: 2026-10-09
+    url: https://www.bct.gov.tn/bct/siteprod/documents/Cir_2026_11_fr.pdf
+    tier: 1
+    lang: fr
+    excerpt: "Vu la délibération du Conseil d'Administration de la Banque Centrale de Tunisie en date du 7 octobre 2026 [...] L'annexe II.3 de la circulaire n° 2017-02 du 10 mars 2017 susvisée est abrogée et remplacée par l'annexe à la présente circulaire. La présente circulaire entre en vigueur à compter du 1er novembre 2026. Le Gouverneur, Fethi Zouhaier NOURI."
+    note: "Signed PDF, Tunis, 9 October 2026, read in full. New annexe II.3: 3% on P02010000 comptes à vue and P02990000 autres sommes dues à la clientèle; 0% on special and other savings accounts, time deposits, bons de caisse and certificates of deposit; a shortfall is penalised at the lending-facility rate plus 2.5 points; the reserve is averaged over the month after the declaration, so the first reserve at the new rate is constituted in December 2026."
+  - id: bct-circulaire-2017-02-2017-03-10
+    title: "Circulaire aux banques n° 2017-02, annexe II.3, modèle de déclaration de la réserve obligatoire"
+    publisher: Banque centrale de Tunisie
+    date: 2017-03-10
+    url: https://www.bct.gov.tn/bct/siteprod/documents/Cir_2017_02_fr.pdf
+    tier: 1
+    lang: fr
+    excerpt: "P02010000 Comptes à vue 1% [...] P02990000 Autres sommes dues à la clientèle 1% [...] P02021000 Comptes spéciaux d'épargne 0% [...] P02030000 Comptes à terme, bons de caisse et autres produits financiers 0%."
+    note: "The replaced annex. This is what makes 1% to 3% a primary-text claim rather than an outlet's comparison: same two headings, same grid, 1% in 2017 against 3% in 2026."
+  - id: bct-conseil-administration-2026-10-07
+    title: "Communiqué de presse du Conseil d'Administration de la BCT réuni le 7 octobre 2026"
+    publisher: Banque centrale de Tunisie
+    date: 2026-10-07
+    url: https://www.bct.gov.tn/bct/siteprod/actualites.jsp?id=1285
+    tier: 2
+    lang: fr
+    excerpt: "Le Conseil d'Administration [...] a décidé, lors de sa réunion du 7 octobre 2026, de maintenir le taux directeur [...] inchangé à 7,00%. Les risques entourant la trajectoire future de l'inflation demeurent orientés à la hausse."
+    note: "Institutional press release, not a gazette text. Supplies the context African Manager repeats: inflation 5.6% in September 2026 after 5.4% in August, fresh food 13.0%, growth 2.3% in Q2 2026, net foreign assets 23.7 bn TND or 92 days of imports at 6 October 2026."
+  - id: am-reserves-obligatoires-triplees-2026-11-19
+    title: "Les réserves obligatoires triplées, depuis le 1er novembre 26"
+    publisher: African Manager
+    date: 2026-11-19
+    url: https://africanmanager.com/les-reserves-obligatoires-triplees-de-1-a-3-depuis-le-1er-novembre-2026/
+    tier: 3
+    lang: fr
+    excerpt: "Sa circulaire n° 2026-11 du 9 octobre 2026 triple le coefficient des réserves obligatoires, qui passe de 1 % à 3 % à partir du 1er novembre 2026. L'étude sectorielle de Tunisie Valeurs, publiée le 23 octobre 2026, en mesure le contexte. [...] Le 7 octobre, son conseil d'administration avait maintenu le taux directeur à 7 %."
+    note: "The item under test; its spine checks out against the two circulars and the press release. Its own arithmetic: ~2.2 bn TND immobilised from 110.7 bn TND of listed banks' deposits. From the unrecovered study: liquidity ratio 252.8% end-2025, loans to deposits 92.1%, refinancing 14 bn TND in 2024 and 11.1 bn in H1 2026, listed-bank credit growth 1.5% in 2025 and 0.4% in H1 2026, 1.2% forecast for the year."
+  - id: wmc-tap-bct-reserves-obligatoires-2026-10-17
+    title: "Tunisie : la BCT durcit les réserves obligatoires pour freiner l'inflation"
+    publisher: Webmanagercenter avec TAP
+    date: 2026-10-17
+    url: https://www.webmanagercenter.com/2026/10/17/574897/tunisie-la-bct-durcit-les-reserves-obligatoires-pour-freiner-linflation
+    tier: 3
+    lang: fr
+    excerpt: "Le 9 octobre 2026, la BCT a publié une circulaire (n° 2026-11), portant modification du taux des réserves obligatoires applicable aux banques (comptes à vue et autres sommes dues à la clientèle) de 1% à 3%, mesure qui entrera en vigueur à partir du 1er novembre 2026."
+    note: "TAP copy, attributed on the page, independent of African Manager. Carries analyst Bassem Ennaifer's reading: 30 million dinars blocked per billion of demand deposits instead of 10; cash in circulation near 29.3 bn TND at 14 October 2026. His figures, not the circular's."
+  - id: jica-tunisia-sfax-loan-phase2-2026-11-19
+    title: "チュニジア向け円借款貸付契約の調印：海水淡水化施設建設により同国第2の都市を擁する大都市圏における水不足解消に貢献"
+    publisher: JICA (Japan International Cooperation Agency)
+    date: "2026-11-19"
+    url: https://www.jica.go.jp/information/press/2026/20261119_12.html
+    tier: 2
+    lang: en
+    excerpt: >-
+      国際協力機構（JICA）は、11月18日、チュニジア共和国の首都チュニス市にて、
+      同国政府との間で、「スファックス海水淡水化施設建設事業（第二期）」を対象として、
+      円借款貸付契約（Loan Agreement: L/A）に調印しました。[...] 借款金額（上限）
+      95億5,900万円 [...] 金利 本体：2.50％　コンサルティング・サービス0.65％ [...]
+      償還期間 30年（うち据置10年） [...] 調達条件 一般アンタイド [...] 実施機関
+      水資源開発公社 [...] 事業の完成予定時期：2029年2月
+    note: >-
+      The lender's own release for its own instrument, so the strongest retrieved
+      source. Signed by economy and planning minister Samir Abdelhafidh and JICA
+      Middle East and Europe department director-general Kotaro Tanaka. Gives
+      every term the Tunisian communique omits: ceiling 9,559 million yen,
+      2.50% on the main works and 0.65% on consulting services, 30 years with a
+      10-year grace period, general untied procurement, completion February 2029.
+      Says about 900,000 residents benefit. Does not restate plant capacity. Language note: the page is published in Japanese; the source registry lang enum allows ar/fr/en/it/de only, so it is recorded as en pending a schema value.
+  - id: mofa-tunisia-sfax-notes-2026-11-18
+    title: "チュニジアに対する円借款に関する書簡の署名・交換（スファックス海水淡水化施設建設計画（第二期））"
+    publisher: Ministry of Foreign Affairs of Japan
+    date: "2026-11-18"
+    url: https://www.mofa.go.jp/mofaj/press/release/index.html
+    tier: 2
+    lang: en
+    excerpt: >-
+      円借款で支える（有償資金協力「スファックス海水淡水化施設建設計画（第二期）」に
+      関するチュニジア共和国に対する円借款に関する書簡の署名・交換）— 令和8年11月18日
+    note: >-
+      Establishes the instrument as an exchange of notes (書簡の交換, sign and
+      exchange), not a single "loan agreement", and dates it 18 November 2026.
+      Read from the ministry's press-release index; the release page itself
+      returned 403 from this machine, so the note text and signatories are not
+      retrieved. Tier 2 on the strength of the ministry entry, not of the body. Language note: the page is published in Japanese; the source registry lang enum allows ar/fr/en/it/de only, so it is recorded as en pending a schema value.
+  - id: tap-japon-tunisie-sfax-pret-2026-11-18
+    title: "Japon-Tunisie : Signature d'un accord de prêt relatif à un financement complémentaire pour le projet de la station de dessalement d'eau de Sfax"
+    publisher: TAP (Tunis Afrique Presse)
+    date: "2026-11-18"
+    url: https://www.tap.info.tn/fr/Portail-Economie/20817610-japon-tunisie
+    tier: 3
+    lang: fr
+    excerpt: >-
+      (TAP)- Un accord de prêt a été signé, mercredi, à Tunis, relatif à un
+      financement complémentaire d'un montant de 9,559 milliards de yens [...]
+    note: >-
+      The agency's own wire. Body not retrieved: tap.info.tn returned a transport
+      error from this machine. Headline, date (18/11/2026) and the opening line
+      were read from the TAP index, and the agency's English post gives
+      "¥9.559bn (TND 175.86M)". The Tunisian-press figures below rest on this wire.
+  - id: lapresse-sfax-japon-pret-2026-11-18
+    title: "Station de dessalement de Sfax : le Japon accorde un pret complementaire de 175,86 millions de dinars a la Tunisie"
+    publisher: La Presse de Tunisie (via allAfrica)
+    date: "2026-11-18"
+    url: https://fr.allafrica.com/stories/202611190387.html
+    tier: 3
+    lang: fr
+    excerpt: >-
+      La Tunisie et le Japon ont signé, le 18 novembre 2026, un accord de prêt
+      complémentaire de 9,559 milliards de yens, soit 175,86 millions de dinars,
+      destiné à financer l'achèvement de la station de dessalement de l'eau de mer
+      de Sfax. [...] D'une capacité initiale de 100 000 mètres cubes par jour,
+      extensible à 250 000 mètres cubes, elle doit couvrir les besoins d'environ
+      un million d'habitants.
+    note: >-
+      Independent of African Manager and read in full. Carries the same TAP
+      figures, and adds the second same-day document: a JICA-SONEDE procès-verbal
+      on a plan to improve the efficiency of Sfax drinking-water distribution
+      networks. Gives the capacity and population figures at 250,000 m3/day and
+      one million, which disagree with both JICA and the canonical phase I record.
+  - id: am-japon-sfax-pret-2026-11-18
+    title: "Encore un credit, cette fois Japonais"
+    publisher: African Manager
+    date: "2026-11-18"
+    url: https://africanmanager.com/encore-un-credit-cette-fois-japonais/
+    tier: 4
+    lang: fr
+    excerpt: >-
+      La Tunisie a signé, le 18 novembre 2026, un accord de prêt complémentaire
+      avec le Japon. Il porte sur 9,559 milliards de yens, soit l'équivalent de
+      175,86 MDT (millions de dinars tunisiens) [...] Le communiqué ne précise ni
+      le taux d'intérêt, ni la durée de remboursement, ni le délai de grâce.
+    note: >-
+      The article the mission started from, read in full. Its own headline figure
+      holds. Its three stated gaps are each closed by the JICA release above; its
+      "the communiqué gives no initial loan amount" is closed by the canonical
+      phase I record (36.676 billion yen). It describes the ceremony as chaired by
+      four people; JICA and the Japanese embassy relay give two signing pairs, not
+      four chairs.
+  - id: arp-finance-committee-calendar-2026-11-17
+    title: "روزنامة لجنة المالية والميزانية — جلسة الثلاثاء 17 نوفمبر 2026"
+    publisher: Assembly of the Representatives of the People
+    date: 2026-11-16
+    url: https://www.arp.tn/commission/fixe/calendar/20
+    tier: 2
+    lang: ar
+    excerpt: >-
+      تستمع لجنة المالية والميزانية يوم الثلاثاء 17 نوفمبر 2026 على الساعة 9.30
+      بالقاعة عدد 2 إلى ممثلين عن وزارة الاقتصاد والتخطيط ووزارة الفلاحة والموارد
+      المائية والصيد البحري حول سبعة مشاريع قوانين تتعلق باتفاقيات قروض وضمان
+      لتمويل مشاريع تحسين شبكة الماء الصالح للشرب وتدعيم المنشآت المائية وتعزيز
+      وتأمين التزويد بالماء الصالح للشراب
+    note: >-
+      The committee's own agenda page. Read 19 November 2026 via a search index and
+      a direct fetch of the commissions section. Confirms the committee, the date,
+      the hour and the count of seven; announces a hearing, not an approval.
+  - id: am-arp-water-bills-2026-11-19
+    title: "Approbation en commission de 7 projets hydriques"
+    publisher: African Manager
+    date: 2026-11-19
+    url: https://africanmanager.com/approbation-en-commission-de-sept-projets-de-loi-lies-a-la-securite-hydrique/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      La commission des finances et du budget de l'Assemblée des représentants du
+      peuple a approuvé, hier mardi, sept projets de loi relatifs au financement de
+      projets stratégiques visant à renforcer la sécurité hydrique et à développer
+      le système d'approvisionnement en eau potable. [...] Ces projets ont été
+      adoptés, selon un communiqué publié ce mercredi soir par le Parlement, à
+      l'issue d'une audition de représentants des ministères de l'Économie et de la
+      Planification, de l'Agriculture, des Ressources hydrauliques et de la Pêche,
+      et des Finances, ainsi que du Président-directeur général de la Société
+      nationale d'exploitation et de distribution des eaux (SONEDE).
+    note: >-
+      Read in full at source. The seven items appear as a bare list, quoted from the
+      communiqué, each with its signature date; no amount, tenor or bill number.
+  - id: lapresse-arp-water-bills-2026-11-19
+    title: "Sécurité hydrique en Tunisie : sept projets de loi approuvés pour renforcer l'approvisionnement en eau potable"
+    publisher: La Presse de Tunisie
+    date: 2026-11-19
+    url: https://www.lapresse.tn/2026/11/19/securite-hydrique-en-tunisie-sept-projets-de-loi-approuves-pour-renforcer-lapprovisionnement-en-eau-potable
+    tier: 3
+    lang: fr
+    excerpt: >-
+      La commission des finances et du budget de l'Assemblée des représentants du
+      peuple (ARP) a approuvé, mardi 17 novembre 2026, sept projets de loi relatifs
+      au financement de projets stratégiques visant à renforcer la sécurité
+      hydrique [...] Selon un communiqué publié mercredi soir par le Parlement,
+      cette approbation intervient à l'issue d'une séance d'audition des
+      représentants des ministères de l'Économie et de la Planification, de
+      l'Agriculture, des Ressources hydrauliques et de la Pêche, et des Finances,
+      ainsi que du PDG de la Société nationale d'exploitation et de distribution des
+      eaux (SONEDE).
+    note: >-
+      The only source read that states the date instead of a weekday. Its list of
+      the seven is truncated on the page ("..." after the fifth item); the two
+      missing entries are the IsDB and AfDB instruments, which African Manager has.
+  - id: managers-arp-water-bills-2026-11-19
+    title: "Eau potable : sept textes de financement avancent au Parlement, le Code des eaux en réforme"
+    publisher: Managers
+    date: 2026-11-19
+    url: https://managers.tn/2026/11/19/eau-potable-sept-textes-de-financement-avancent-au-parlement-le-code-des-eaux-en-reforme/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      Réunie le 17 novembre 2026, la commission parlementaire a approuvé sept
+      textes relatifs à des prêts, des garanties et des financements complémentaires
+      concernant notamment la Société nationale d'exploitation et de distribution
+      des eaux (Sonede). [...] Le texte n° 64/2026 concerne une garantie liée à un
+      financement de la BAD [...] Le texte n° 65/2026 porte sur un financement
+      complémentaire de la BID pour les barrages de Saïda et de Kalaâ Kebira [...]
+      L'approbation en commission constitue toutefois une étape du processus
+      parlementaire.
+    note: >-
+      Relays Tunisie Numérique. Its breakdown (one AfDB, one IsDB, two Bejaoua and
+      treated-water, three Greater Tunis) matches the seven. Explicit that committee
+      approval is one stage, which is why the record claims no adoption in plenary.
+  - id: espacemanager-arp-bureau-nine-bills-2026-11-02
+    title: "Bureau ARP : neuf projets de loi renvoyés à la Commission des finances et du budget"
+    publisher: Espacemanager
+    date: 2026-11-02
+    url: https://espacemanager.com/bureau-arp-neuf-projets-de-loi-renvoyes-a-la-commission-des-finances-et-du-budget
+    tier: 3
+    lang: fr
+    excerpt: >-
+      Projet de loi n° 64/2026 : approbation de l'accord de garantie conclu le 22
+      septembre 2026 entre la Tunisie et la Banque africaine de développement (BAD)
+      [...] n° 65/2026 : approbation de la convention de vente à terme conclue le 10
+      mai 2026 entre la Tunisie et la Banque islamique de développement [...] n°
+      67/2026 : approbation de l'accord de garantie à première demande conclu le 28
+      avril 2025 entre la Tunisie et la Banque européenne d'investissement (BEI) [...]
+      Le bureau a décidé de préparer un rapport commun sur les projets de loi n° 64,
+      69, 70 et 71 de 2026, ainsi qu'un autre rapport commun sur les projets n° 67 et
+      68 de 2026.
+    note: >-
+      Transcription of the ARP bureau minutes of Monday 2 November 2026, which also
+      lists n° 66/2026 (EBRD guarantee, STEG Grombalia-Kandar line) and n° 74/2026
+      (Maghreb bank, STEG gas). Nine laws referred; the water package is seven.
+      This is the cleanest published derivation of which bill number is which
+      instrument: 64 AfDB, 65 IsDB, 67 EIB Bejaoua, 68 AFD treated water, 69 EIB
+      Greater Tunis, 70 AFD loan, 71 AFD guarantee.
+  - id: am-chotrana-don-allemand-2026-11-19
+    title: "20 M€ allemands pour réhabiliter la station Chotrana 1"
+    publisher: African Manager
+    date: 2026-11-19
+    url: https://africanmanager.com/un-don-allemand-de-20-millions-deuros-pour-rehabiliter-la-station-chotrana-1/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      La Tunisie bénéficiera d'un don allemand de 20 millions d'euros destiné à financer la réhabilitation
+      et l'amélioration de l'efficacité énergétique de la station d'épuration « Chotrana 1 » [...] L'accord
+      de financement a été signé le 18 novembre 2026 au siège du ministère des Affaires étrangères, de la
+      Migration et des Tunisiens à l'étranger. D'un coût global de 355 millions de dinars [...] la plus
+      grande station d'assainissement du pays [...] environ un million d'habitants du Grand Tunis.
+    note: "Full text read. Names no signatory and no German institution; says don allemand and négociations intergouvernementales tuniso-allemandes sur la coopération au développement. Attributes the works description on the page to une publication de l'Office national de l'Assainissement (ONAS) sur ses réseaux sociaux. No KfW, BMZ, AFD or AECID mention."
+  - id: lapresse-chotrana-don-allemand-2026-11-19
+    title: "Un don allemand de 20 millions d'euros pour réhabiliter la station Chotrana 1"
+    publisher: La Presse de Tunisie
+    date: 2026-11-19
+    url: https://lapresse.tn/2026/11/19/un-don-allemand-de-20-millions-deuros-pour-rehabiliter-la-station-chotrana-1
+    tier: 3
+    lang: fr
+    excerpt: >-
+      L'accord de financement a été signé le 18 novembre 2026 au siège du ministère des Affaires étrangères
+      [...] D'un coût global de 355 millions de dinars [...] environ un million d'habitants du Grand Tunis.
+    note: "Identical to the African Manager text sentence for sentence. Counted as the same report, not as corroboration; kept as evidence that the copy ran through a second masthead."
+  - id: plumes-kfw-choutrana-don-2026-11-19
+    title: "20 millions d'euros de don au soutien de la rénovation de la principale station d'épuration du Grand Tunis"
+    publisher: Plumes Economiques
+    date: 2026-11-19
+    url: https://plumeseconomiques.com/fr/news/20-millions-deuros-de-don-au-soutien-de-la-renovation-de-la-principale-station-depuration-du-grand-tunis/
+    tier: 3
+    lang: fr
+    excerpt: >-
+      En marge des négociations intergouvernementales tuniso-allemandes 2026, un contrat de don de 20
+      millions d'euros a été signé ce soir le mercredi 18 novembre au Ministère des Affaires Etrangères
+      [...] entre le ministère des Affaires Étrangères, l'Office National de l'Assainissement (ONAS) et la
+      Banque Allemande de Développement (KfW), agissant pour le compte du Ministère Fédéral allemand de la
+      Coopération Economique et du Développement (BMZ) [...] dans le cadre du « Programme d'Efficience
+      Energétique du Pôle environnemental Choutrana ».
+    note: "Read as the KfW/BMZ release, relayed. Supplies what AM lacks: the three signing institutions, the programme name, and co-financing by AFD and AECID under the JEFIC framework avec une contribution significative de la partie tunisienne. No dinar total, no beneficiary count, no individual signatory. Ends with KfW MENA boilerplate."
+  - id: moncloa-consejo-ministros-choutrana-2026-07-28
+    title: "Referencia del Consejo de Ministros: crédito a la Oficina Nacional de Saneamiento de Túnez para el Proyecto de rehabilitación de la EDAR Choutrana I"
+    publisher: La Moncloa (Gobierno de España)
+    date: 2026-07-28
+    url: https://www.lamoncloa.gob.es/consejodeministros/referencias/paginas/2026/20260728-referencia-rueda-de-prensa-ministros.aspx
+    tier: 2
+    lang: en
+    excerpt: >-
+      ACUERDO por el que se autoriza la concesión de un crédito a la Oficina Nacional de Saneamiento de
+      Túnez, con cargo al Fondo Español de Desarrollo Sostenible, por un importe máximo de 25.000.000 de
+      euros con garantía soberana de la República de Túnez, para la financiación del Proyecto de
+      rehabilitación de la estación de depuración de aguas residuales Choutrana I.
+    note: "A government decision, not a signed loan. Establishes independently of the Tunisian outlets that a Choutrana I rehabilitation project was already being co-financed, and that ONAS is the borrower. Language note: the page is published in Spanish; the source registry lang enum allows ar/fr/en/it/de only, so it is recorded as en pending a schema value."
+  - id: europapress-choutrana-25m-2026-07-28
+    title: "El Gobierno aprueba un crédito de 25 millones para rehabilitar la mayor estación para depurar aguas residuales de Túnez"
+    publisher: Europa Press
+    date: 2026-07-28
+    url: https://www.europapress.es/nacional/noticia-gobierno-aprueba-credito-25-millones-rehabilitar-mayor-estacion-depurar-aguas-residuales-tunez-20260728222452.html
+    tier: 3
+    lang: en
+    excerpt: >-
+      El coste total asciende a 118 millones de euros de los que, como máximo, el 21% (25 millones) serán
+      aportados por la Agencia Española de Cooperación Internacional para el Desarrollo (AECID) mediante un
+      crédito FEDES [...] bajo el Acuerdo Marco de Cofinanciación del Joint European Financiers For
+      International Cooperation (JEFIC) junto al Kreditanstalt für Wiederaufbau [...] que lidera la
+      operación, y la Agence Française de Développement (AFD).
+    note: "Agency copy on the same decision, with the plan the reference omits: EUR 118m total cost, KfW leading, AFD alongside, 900,000 people directly served in the capital and indirectly all Grand Tunis (~3 million), la mayor estación del país; loan at 2.5%, 17 years, 7 of grace, guarantee contract to be signed with the economy and planning ministry. Language note: the page is published in Spanish; the source registry lang enum allows ar/fr/en/it/de only, so it is recorded as en pending a schema value."
+events:
+  - id: ev-tunisair-agm-egm-convocation-2026-11-19
+    date: "2026-11-19"
+    title_en: "Tunisair convokes its shareholders to ordinary and extraordinary meetings for 15 December 2026"
+    title_fr: "Tunisair convoque ses actionnaires en assemblée générale ordinaire et extraordinaire pour le 15 décembre 2026"
+    category: economic
+    location: [gov-tunis]
+    actors: []
+    institutions: [tunisair]
+    causes: []
+    consequences: []
+    summary: >-
+      Tunisair convoked its shareholders to an ordinary general meeting and an
+      extraordinary general meeting for 15 December 2026, per an Amen Invest
+      analysis relayed by African Manager on 19 November 2026. The extraordinary
+      meeting is to vote on continuation of activity under article 388 of the
+      commercial companies code, a recurring formality because the carrier's
+      equity is structurally negative; the analysis recalls that the May 2026
+      extraordinary meeting approved continuation on the 2023 accounts, which
+      showed an equity deficit of 1,759.7 million dinars, against 1,473.4
+      million dinars in 2022. The ordinary meeting is to approve the 2024
+      financial statements and to decide the quitus, a partial renewal of the
+      board and the appointment of auditors for 2025-2027. The convocation
+      notice, the 2024 accounts and the May 2026 resolution were not retrieved;
+      the meeting date is future and is carried in this summary, not as the
+      record date.
+    confidence: C
+    verification: needs-primary-source
+    attributed_to: "Amen Invest analysis relayed by African Manager (19 November 2026)"
+    reasoning: >-
+      One outlet relaying a broker's analysis of a convocation. The agenda, the
+      article 388 procedure and the equity figures are as that relay states
+      them; no convocation notice, board minutes or financial statements were
+      retrieved. The record is dated to the announcement, not to the December
+      meeting.
+    falsifiable_by: >-
+      The convocation notice published by Tunisair (BVMT or company site), the
+      2024 financial statements and the May 2026 extraordinary-meeting minutes
+      would confirm the agenda and the equity figures; a different date, agenda
+      or figures would correct the record.
+    sources:
+      - am-tunisair-agm-2026-11-19
+  - id: ev-bct-reserve-requirement-tripled-2026-10-09
+    date: "2026-10-09"
+    title_en: "Central Bank triples the reserve-requirement rate on demand deposits from 1% to 3%"
+    title_fr: "La Banque centrale triple le taux des réserves obligatoires sur les comptes à vue, de 1 % à 3 %"
+    category: economic
+    subcategory: monetary-policy
+    location: []
+    actors: [fethi-zouhair-nouri]
+    institutions: [bct]
+    causes: []
+    consequences: []
+    summary: >-
+      The Central Bank of Tunisia issued circular to banks no. 2026-11 on 9 October
+      2026, replacing annexe II.3 of the 2017-02 circular of 10 March 2017 and
+      setting the reserve-requirement rate at 3% on demand accounts (P02010000) and
+      other sums due to customers (P02990000), against 1% in the replaced grid, with
+      special and other savings accounts, time deposits, bons de caisse and
+      certificates of deposit unchanged at 0%. It enters into force on 1 November
+      2026 and recites the board deliberation of 7 October 2026; the reserve is
+      averaged over the month after the declaration, so the first reserve at the new
+      rate is constituted in December 2026. The board held the policy rate at 7.00%
+      at that meeting, saying inflation risks remained tilted upward, with inflation
+      at 5.6% in September 2026. African Manager reported the measure on 19 November
+      2026, deriving about 2.2 bn TND immobilised from 110.7 bn TND of listed banks'
+      deposits at end-June 2026 against a regulatory base it concedes may differ, and
+      citing an unrecovered Tunisie Valeurs sector study of 23 October 2026 for the
+      liquidity and credit context.
+    confidence: A
+    verification: verified
+    attributed_to: "Circular and press release: Banque centrale de Tunisie. Derived 2.2 bn TND and the sector figures: African Manager (19 November 2026), citing a Tunisie Valeurs study of 23 October 2026."
+    reasoning: >-
+      The circular and the annex it replaces were both retrieved from the BCT and
+      read, so the number, date, headings, the 1% to 3% change and the 1 November
+      2026 entry into force are the instrument's own words. The 7% decision is the
+      board's press release. Dated on the circular rather than on the effective date
+      because the instrument is the event; the effective date and the December
+      constitution are stated in the summary. Only the quantities are second hand,
+      and they are marked derived and attributed.
+    falsifiable_by: >-
+      A JORT printing showing another rate or entry into force, an amending or
+      repealing circular before 1 November 2026, or BCT statistics showing a reserve
+      base different from African Manager's derivation would correct the record; a
+      7 October board decision at another rate would correct the policy-rate
+      sentence.
+    sources:
+      - bct-circulaire-2026-11-2026-10-09
+      - bct-circulaire-2017-02-2017-03-10
+      - bct-conseil-administration-2026-10-07
+      - am-reserves-obligatoires-triplees-2026-11-19
+      - wmc-tap-bct-reserves-obligatoires-2026-10-17
+  - id: ev-arp-water-financing-bills-committee-2026-11-17
+    date: "2026-11-17"
+    title_en: "ARP finance and budget committee approves seven bills on water-sector loan and guarantee agreements"
+    title_fr: "La commission des finances et du budget de l'ARP approuve sept projets de loi sur des accords de prêt et de garantie dans le secteur de l'eau"
+    category: political
+    subcategory: legislation
+    location: [gov-tunis]
+    actors: []
+    institutions: [arp-2023, sonede]
+    causes: []
+    consequences: []
+    summary: >-
+      The finance and budget committee of the Assembly of the Representatives of the
+      People approved on Tuesday 17 November 2026, at the end of a hearing of
+      representatives of the economy and planning, agriculture/water resources/
+      fisheries and finance ministries and of the SONEDE chief executive, seven
+      draft laws approving water-sector loan, guarantee and supplementary-financing
+      agreements concluded between the Republic of Tunisia and international lenders
+      for the benefit of SONEDE, per a Parliament communiqué of Wednesday evening 18
+      November as relayed by African Manager, La Presse de Tunisie and Managers on
+      19 November. The seven, as African Manager quotes the communiqué: an EIB
+      first-demand guarantee of 28 April 2025 on a supplementary loan for the
+      Bejaoua water treatment plant and its connection to SONEDE's networks; an AFD
+      first-demand guarantee of 19 February 2026 on a supplementary loan for the
+      treated-water transport works; an EIB supplementary financing contract of 28
+      April 2025 for the Greater Tunis drinking-water supply security programme; an
+      AFD loan agreement of 12 September 2025 for the same programme; an AFD
+      first-demand guarantee of 19 February 2026 for the same programme; an IsDB
+      murabaha (forward-sale) agreement of 10 May 2026 for additional financing of
+      the Saida and Kalaat El Kebir dams and their associated water-transfer works;
+      and an AfDB guarantee agreement of 22 September 2026 for the Greater Tunis
+      drinking-water network technical and energy performance project. Per the ARP
+      bureau minutes of 2 November 2026 the seven carry bill numbers 64, 65 and 67
+      to 71 of 2026; a ninth law referred the same day, n° 66, is an EBRD guarantee
+      for a STEG Grombalia-Kandar line and is not among the seven. Committee approval
+      is one stage: no plenary vote, promulgated law or JORT act was found for any of
+      the seven, and none of the sources read states an amount, tenor or dinar value.
+    confidence: B
+    verification: needs-primary-source
+    attributed_to: "A Parliament communiqué of Wednesday 18 November 2026, as relayed by African Manager, La Presse de Tunisie and Managers on 19 November 2026; the committee's agenda for 17 November 2026 on arp.tn"
+    reasoning: >-
+      Two institutional facts carry this record and one does not. The ARP's own
+      committee calendar fixes the committee, the date, the hour and the count of
+      seven bills on exactly this subject, so the sitting is tier-2 documented. The
+      vote, the attendance list and the seven instruments come from a communiqué
+      that was not retrieved, relayed near-verbatim by three outlets on the same day
+      — enough for B (several credible outlets), not for A, which needs the
+      communiqué itself. The bill-number mapping is the ARP bureau minutes of 2
+      November as transcribed by Espacemanager; the underlying PDF is a scan whose
+      Arabic was read only through a search index's OCR. The event is graded on the
+      approval, not on the financing: each of the seven agreements is older (April
+      2025 to September 2026) and none was verified here. No figure is carried
+      because no source states one.
+    falsifiable_by: >-
+      The Parliament communiqué of 18 November 2026, the committee's minutes or
+      report for the 17 November sitting, the plenary record, or a JORT law
+      ratifying any of the seven would confirm or correct the date, the count and the
+      list; a different bill number for any instrument, or a sitting held on
+      Wednesday 18 November instead of Tuesday 17, would correct the record.
+    sources:
+      - arp-finance-committee-calendar-2026-11-17
+      - am-arp-water-bills-2026-11-19
+      - lapresse-arp-water-bills-2026-11-19
+      - managers-arp-water-bills-2026-11-19
+      - espacemanager-arp-bureau-nine-bills-2026-11-02
+agreements:
+  - id: agr-tunisia-japan-sfax-desalination-loan-2-2026
+    title_en: "Tunisia-Japan exchange of notes and JICA loan agreement for phase II of the Sfax seawater desalination plant (2026)"
+    title_fr: "Echange de notes Tunisie-Japon et accord de pret de la JICA pour la deuxieme phase de la station de dessalement de Sfax (2026)"
+    kind: other
+    parties: [jica]
+    signed: "2026-11-18"
+    summary: >-
+      Signed in Tunis on 18 November 2026: an exchange of notes between the
+      Tunisian and Japanese governments, and a yen loan agreement (L/A) between
+      the Republic of Tunisia and JICA, for phase II of the Sfax sea water
+      desalination plant construction project (スファックス海水淡水化施設建設事業
+      （第二期）, Sfax Sea Water Desalination Plant Construction Project (II)).
+      Loan ceiling 9,559 million yen (95億5,900万円), which the Tunisian press
+      converts to 175.86 million dinars at a rate African Manager derives as about
+      18.4 dinars per 1,000 yen. Terms per JICA: interest 2.50% on the main works
+      and 0.65% on consulting services; repayment over 30 years including a
+      10-year grace period; general untied procurement; executing agency SONEDE
+      (水資源開発公社); scheduled completion February 2029. Scope: construction of
+      the desalination plant, transmission mains, reservoirs, pumping stations and
+      the power connection line, plus consulting services for construction
+      supervision. JICA puts the population served at about 900,000; the Tunisian
+      press puts plant capacity at 100,000 m3/day extensible to 250,000 and the
+      population at about one million, figures this record does not assert. This
+      is a separate instrument from the phase I loan of 36,676 million yen signed
+      in July 2017 (ctr-sonede-sfax-dessalement-2022), which carries its own 25-year
+      maturity and 1.7% rate; phase II is additional to it, and combined JICA
+      lending on the station is 46,235 million yen. It is also distinct from the
+      August 2026 SONEDE-JICA technical cooperation record of discussions
+      (agr-sonede-jica-sfax-2060-2026). No JORT approval law and no signed
+      instrument were retrieved.
+    confidence: A
+    basis: documented
+    verification: verified
+    falsifiable_by: >-
+      A JORT law approving the exchange of notes, the signed notes or L/A, or
+      JICA's ODA project page for phase II would confirm the ceiling, rate,
+      maturity and procurement terms; a different ceiling or different terms
+      would correct the record. A JICA phase II capacity figure would settle the
+      disagreement with the Tunisian press.
+    sources:
+      - jica-tunisia-sfax-loan-phase2-2026-11-19
+      - mofa-tunisia-sfax-notes-2026-11-18
+      - tap-japon-tunisie-sfax-pret-2026-11-18
+      - lapresse-sfax-japon-pret-2026-11-18
+      - am-japon-sfax-pret-2026-11-18
+  - id: agr-tunisia-germany-onas-choutrana-grant-2026-11-18
+    title_en: "Germany–Tunisia grant agreement for the rehabilitation and energy-efficiency upgrade of the Chotrana 1 wastewater treatment plant (2026)"
+    title_fr: "Accord de don Tunisie–Allemagne pour la réhabilitation et l'efficacité énergétique de la station d'épuration Chotrana 1 (2026)"
+    kind: other
+    parties: [DE]
+    signed: "2026-11-18"
+    summary: >-
+      A German grant of EUR 20 million for the rehabilitation and energy-efficiency upgrade of the Chotrana
+      1 (Choutrana I) wastewater treatment plant in the northern suburbs of Tunis, the largest treatment
+      plant in the country and the centre of the Grand Tunis sanitation system. The grant contract was
+      signed on the evening of Wednesday 18 November 2026 at the foreign ministry in Tunis, on the margin of
+      the 2026 Tunisian-German intergovernmental negotiations on development cooperation. Per the KfW
+      release relayed by Plumes Economiques the signatories were the foreign ministry, ONAS and KfW acting
+      for the federal ministry for economic cooperation and development (BMZ), within the "Programme
+      d'Efficience Energétique du Pôle environnemental Choutrana"; AFD and AECID co-finance under the JEFIC
+      framework, with a significant Tunisian contribution. No individual signatory is named by any source.
+      African Manager and La Presse, in one shared text, put the total project cost at 355 million dinars
+      and the population served at about one million inhabitants of Greater Tunis, and attribute the works
+      description to an ONAS social-media post; the Spanish Council of Ministers decision of 28 July 2026 on
+      the same project gives EUR 118 million total cost and 900,000 people directly served in the capital,
+      with KfW leading the financing and a EUR 25 million AECID loan to ONAS under Tunisian sovereign
+      guarantee. 355 MDT against EUR 118m is consistent at roughly 3.0 dinars to the euro, a conversion
+      derived here at no cited rate. The graph has no Chotrana record; ONAS and Germany do, KfW and BMZ do not.
+    confidence: B
+    verification: needs-primary-source
+    attributed_to: "African Manager and La Presse de Tunisie (19 November 2026, one shared text) for the amount, the date, the 355 MDT total and the beneficiary count; Plumes Economiques (19 November 2026) relaying the KfW/BMZ release for the signing institutions and the programme; La Moncloa and Europa Press (28 July 2026) for the EUR 118m total, the JEFIC co-financing and the Spanish share."
+    reasoning: >-
+      Two independent texts report the EUR 20 million grant signed on 18 November 2026 at the foreign
+      ministry: a Tunisian news write-up built on an ONAS social-media post, and what reads as the KfW
+      release. They agree on the amount, the instrument, the date, the venue and the plant, so the core claim
+      is B and not C. Neither is a primary document — no KfW, BMZ, foreign ministry or ONAS page carrying the
+      release was retrieved, and the ONAS site's own news list stops at 16 November — so the grant itself
+      stays needs-primary-source. The 355 MDT cost, the one-million figure and the works list sit in one text
+      only and are carried with attribution rather than as established fact; the EUR 118m total corroborates
+      the order of magnitude of the project, not that figure. ONAS is the implementing agency and a Tunisian
+      body, so it is not in parties and Tunisia is never listed; KfW and BMZ have no institution id, so
+      Germany stands as the party and the agency chain is described in the summary. No signatory and no
+      exchange rate is invented.
+    falsifiable_by: >-
+      The signed grant contract, a KfW or BMZ press release, the foreign ministry communiqué or a JORT notice
+      would confirm or correct the amount, the date, the signatories and the split; a different total project
+      cost, or an AFD/AECID structure other than JEFIC, would correct the financing sentences; evidence that
+      the plant serves materially fewer or more than a million people would correct the beneficiary sentence.
+    sources:
+      - am-chotrana-don-allemand-2026-11-19
+      - plumes-kfw-choutrana-don-2026-11-19
+      - moncloa-consejo-ministros-choutrana-2026-07-28
+      - europapress-choutrana-25m-2026-07-28
+flags:
+  - kind: flag
+    id: ev-nafti-iom-voluntary-returns-2026-09-22
+    note: >-
+      UPDATE, correction proposed. The event records 5,077 voluntary returns
+      since 1 January 2026 and 25,351 since the mechanism's establishment, as
+      the foreign ministry put them on 22 September 2026. On Tuesday
+      17 November 2026, in a joint plenary on his ministry's budget,
+      foreign minister Mohamed Ali Nafti put the cumulative figure at 27,342
+      "jusqu'en novembre 2026", against 976 in 2021, and said the tally excludes
+      individual returns handled by the Interior Ministry (African Manager,
+      18 November 2026). Proposed addition to the event summary: "On
+      17 November 2026 Nafti put the cumulative total at 27,342, a figure he
+      said excludes individual returns handled by the Interior Ministry." The
+      new figure is the minister's, relayed by one outlet, like the September
+      one; the record's sources remain valid and the new item should be added.
+    sources:
+      - am-nafti-voluntary-returns-2026-11-18
+notes:
+  - >-
+    Note, not a record: BTE management change (18 November 2026). African
+    Manager, citing L'Economiste Maghrebin and confirming independently, reports
+    that Feriel Chabrak was removed as director-general of the Banque de Tunisie
+    et des Emirats and that senior executive Taoufik Khemissi is interim. No
+    official communiqué had confirmed it, and the reasons did not leak. The bank
+    and both people have no graph records. NEEDS RESEARCH: the bank and the two
+    people before a position record; the departure is unconfirmed officially.
+  - >-
+    Note, not a record: Manouba demonstration (18 November 2026). Nawaat
+    published a video report on a demonstration in Manouba governorate,
+    described as the first of its kind there, organised by a coordinating
+    framework of civil forces against the authority's policies and framing a
+    national mobilisation for 17 December 2026; slogans demanded freedoms,
+    employment, fair trial and an end to the police state, and the report says
+    other governorates will join. One outlet, a collective with no graph record,
+    and no second account retrieved. NEEDS RESEARCH: a second source and the
+    organising body's identity before an event.
+  - >-
+    Note, not a record: CNRPS deficit (18 November 2026). African Manager reports
+    the pension fund losing 220 million dinars a month. The CNRPS has no
+    institution record and the piece is a financial analysis without a fund
+    statement. NEEDS RESEARCH only if the social-insurance institutions enter the
+    graph.
+  - >-
+    Note, not a record: Ennasr kindergarten case (18 November 2026). A judicial
+    source told TAP that one suspect, the kindergarten's photographer, is in
+    custody and that no final judgment has been given; the regional delegate for
+    women's and family affairs said the closure remains in force. The case has
+    no named defendant and no graph entity. Kept as a note; no record until a
+    named party or a court decision exists.
+  - >-
+    No change: Ramzi Louati, charge d'affaires at Tunisia's permanent mission in
+    Geneva, spoke at the ILO Governing Body on social justice (18 November
+    2026). A diplomatic statement with no graph entity and no decision.
+  - >-
+    No change: Hemissi on La Poste (19 November), Mourali's sport reform plan
+    (19 November), Chaoued on human resources (18 November), the 40 e-Consulat
+    representations (18 November), the two automotive and electronics cities
+    (19 November), the Tunisia-Navarre automotive agreement (19 November), the
+    76 MDT telecom white-zone programme (19 November) and the Sfax-Thyna airport
+    emergency drill (18 November). Statements, programmes or exercises without a
+    dated decision or a graph entity to anchor.
+  - >-
+    No change: market and corporate reporting on banks and listed companies
+    (STB dividend, bank tax, BTE results, wallets, cheques, SAH/SFBT, Unimed,
+    Amen Bank, Biat), olive-oil exports, the Spanish textile investor, the
+    60 M€ green investment, the 7 hydraulic bills' underlying loan amounts as
+    market data, and the sports items. These are measurements or results about
+    entities outside the graph's current company coverage, or duplicated by the
+    water-bills event.
+  - >-
+    No change: all world items in the window (Gaza, the ICJ Myanmar ruling,
+    Trump-Xi-Putin, Saudi-Yemen, Hormuz insurance, US domestic politics, the
+    Knesset vote, Australia's sanctions, Morocco and Algeria items, Le
+    Figaro-OpenAI, France 24's anniversary). Outside the Tunisia graph.
