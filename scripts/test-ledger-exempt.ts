@@ -117,6 +117,27 @@ console.log('\n  ── the branch and the changed files decide ──\n');
 			files: ['data/positions.yaml', 'datafile.txt'],
 			exempt: false,
 			name: 'a path that only looks like data/ is not under data/'
+		},
+		{
+			branch: 'data/desk-2026-11-14',
+			files: ['data/positions.yaml', 'data/parameters.yaml'],
+			exempt: false,
+			name: 'a desk branch that changes the parameters is not exempt, they set the time window',
+			names: 'data/parameters.yaml'
+		},
+		{
+			branch: 'data/desk-2026-11-14',
+			files: ['data/positions.yaml', 'data/source-exceptions.yaml'],
+			exempt: false,
+			name: 'a desk branch that changes the exception register is not exempt',
+			names: 'data/source-exceptions.yaml'
+		},
+		{
+			branch: 'data/desk-2026-11-14',
+			files: ['data/positions.yaml', 'data/people.yaml'],
+			exempt: false,
+			name: 'a desk branch that changes a kind the desk cannot verify is not exempt',
+			names: 'data/people.yaml'
 		}
 	];
 

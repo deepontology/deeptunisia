@@ -17,6 +17,7 @@
  */
 import { existsSync, readFileSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
+import { REVIEWABLE } from './desk.ts';
 
 /**
  * The documents `npm run stats:write` rewrites, and nothing else. The four
@@ -44,9 +45,20 @@ export interface Exemption {
 	reason: string;
 }
 
-/** Under `data/`, exactly the session file, or a document stats:write rewrites. */
+/**
+ * The data files a desk session writes: the kinds the desk can verify, taken
+ * from the desk itself so this list cannot drift from it. Every other file
+ * under `data/` can move the hash without a review behind it (the parameters
+ * set the time window, the exception register excuses a rule), so a branch that
+ * touches one is compared like any other.
+ */
+export const DESK_DATA_FILES: readonly string[] = Object.values(REVIEWABLE).map(
+	(kind) => `data/${kind.file}`
+);
+
+/** A file a desk session may change: a reviewable data file, its own line in the session file, or a document stats:write rewrites. */
 export function deskSessionFile(file: string): boolean {
-	if (file.startsWith('data/') && file.length > 'data/'.length) return true;
+	if (DESK_DATA_FILES.includes(file)) return true;
 	if (file === 'research/desk/sessions.tsv') return true;
 	return (STATS_WRITE_FILES as readonly string[]).includes(file);
 }
