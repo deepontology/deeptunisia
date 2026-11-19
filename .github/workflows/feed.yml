@@ -68,6 +68,14 @@ jobs:
 
       - run: npm ci
 
+      # The $data and $lib aliases are declared in svelte.config.js and reach
+      # plain tsx only through the tsconfig SvelteKit generates. `npm run build`
+      # produces it as a side effect of `vite build` in ci.yml; this job never
+      # runs vite, so it asks for the file directly. Without it the stat writer
+      # dies on "Cannot find package '$data'" imported from src/lib/model.ts.
+      - name: Generate the SvelteKit tsconfig (for the $data alias)
+        run: npx --no-install svelte-kit sync
+
       # scripts/test-feed.ts checks feed ids against real entity ids, so it needs
       # the built graph. This step writes only to src/generated/ and static/,
       # both of which are gitignored and neither of which is staged below.

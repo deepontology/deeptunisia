@@ -3543,7 +3543,6 @@
   summary_ar_by: model-reviewed
   confidence: C
   basis: reported
-  verification: verified
   attributed_to: Leaders / Asian Voice (embassy CV lineage)
   reasoning: >-
     No JORT or civil record for birth was located. Birth 7 September 1965 appears in a single embassy-CV lineage (Asian Voice 2015 reproduces the London embassy CV, reused by fr.wikipedia/Wikidata/Tunisie Numérique), while UN credentials renders as 09/07/1965 (DD/MM ambiguity). Career postings are reported by Leaders (Belgium/Luxembourg/EU, Oslo chargé d'affaires, London 2013) and the Brussels posting is independently documented by JORT 2020-128; the other postings remain single-source.
@@ -3618,7 +3617,6 @@
   summary_ar_by: model-reviewed
   confidence: C
   basis: reported
-  verification: verified
   attributed_to: Mosaïque FM / RFI(AFP)
   reasoning: >-
     Prior career (Secretary of State Sep 2020–30 Jul 2021 dismissal; DG governance Oct 2023; postings Greece, Spain, South Korea/Seoul) is reported by a single national outlet (Mosaïque FM) and one AFP wire (RFI), no JORT decree or MAE bio located for those postings. Single-outlet assessment → C + attributed_to per V20.
@@ -4288,7 +4286,6 @@
   confidence: C
   basis: reported
   attributed_to: "Leaders (15 Feb 2024 Who's Who 35647 and biography 35646) — birth 'Né le 7 nov 1955 à Tunis' and 'Nationalité Tunisienne' per structured fiche; BCT CV PDF (bct-cv-nouri-fr) linked from BCT board page but not human-verified inline, so C until verified"
-  verification: verified
   reasoning: >-
     Biographical detail from Leaders 35646/35647 (tier 4) corroborated by Le
     Quotidien 2024-02-15; institutional BCT board page (tier1 bct-gov-conseil-2024)
@@ -6273,7 +6270,6 @@
     2020 في حكومة إلياس الفخفاخ. أُقيل بعد خمسة أشهر؛ والحدّان موثّقان بأمرين.
   summary_ar_by: model-reviewed
   confidence: B
-  verification: verified
   sources: [legislation-securite-2020-19, jort-2020-455, leaders-erray-2020, tunisienumerique-erray-2020]
 
 - id: salma-ennaifer
@@ -6316,7 +6312,6 @@
     امرأة تترأس الدبلوماسية التونسية، بالنيابة. المدة موثّقة بأمر.
   summary_ar_by: model-reviewed
   confidence: B
-  verification: verified
   sources: [legislation-securite-2020-19, jort-2020-455, leaders-ennaifer-2020, wmc-ennaifer-2020]
 
 - id: mohamed-snoussi
@@ -8705,7 +8700,6 @@
   trajectory_ar: [قناة الزيتونة]
   trajectory_ar_by: model-reviewed
   confidence: B
-  verification: verified
   notes:
     - >-
       Co-founded Zitouna TV with Sami Essid in 2012; stepped down and sold his
@@ -11704,7 +11698,6 @@
   summary_ar_by: model-reviewed
   confidence: B
   basis: reported
-  verification: verified
   notes:
     - >-
       Nothing beyond encyclopaedic and press summaries was located for this
