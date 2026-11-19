@@ -24,7 +24,15 @@
  * tabs use. A packet is one record: a review replaces the record's existing review
  * because the schema allows one, and that is stated in the packet.
  */
-import { existsSync, mkdirSync, readFileSync, readdirSync, appendFileSync, writeFileSync } from 'node:fs';
+import {
+	existsSync,
+	mkdirSync,
+	readFileSync,
+	readdirSync,
+	appendFileSync,
+	writeFileSync,
+	rmSync
+} from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { join } from 'node:path';
 import { parse as parseYaml } from 'yaml';
@@ -599,10 +607,65 @@ export function deskStatsText(text: string): { deskSessions: string; deskClaims:
 	};
 }
 
+/**
+ * What "Finish session" runs before it commits: the build steps that make the
+ * moved counts agree everywhere they are published, returning the files they
+ * rewrote. A test passes its own so the temp repository needs no toolchain.
+ */
+export type DeskRefresh = (root: string) => string[];
+
+/** Paths git reports as changed from HEAD: tracked edits plus untracked, ignored files excluded. */
+export function changedFiles(root: string): string[] {
+	const git = (args: string[]) => execFileSync('git', args, { cwd: root, encoding: 'utf8' });
+	const tracked = git(['diff', '--name-only', 'HEAD']).split('\n');
+	const untracked = git(['ls-files', '--others', '--exclude-standard']).split('\n');
+	return [...new Set([...tracked, ...untracked].map((f) => f.trim()).filter(Boolean))].sort();
+}
+
+function runStep(root: string, cmd: string, args: string[]): void {
+	try {
+		execFileSync(cmd, args, { cwd: root, stdio: ['ignore', 'pipe', 'pipe'], maxBuffer: 32 * 1024 * 1024 });
+	} catch (e: any) {
+		const tail = `${e.stdout ?? ''}${e.stderr ?? ''}`
+			.toString()
+			.trim()
+			.split('\n')
+			.filter(Boolean)
+			.slice(-8)
+			.join('\n');
+		throw new EmitError(`a session step failed: ${cmd} ${args.join(' ')}\n${tail}`);
+	}
+}
+
+/**
+ * The real refresh.
+ *
+ * A verdict writes review blocks and verification values, so three kinds of
+ * published figure move with it: the resolved public claims (landing page
+ * numbers, including the translated strings), the documents `stats:write` owns,
+ * and the generated dataset itself. Each has one writer, and they have to run in
+ * this order because each reads what the one before it produced:
+ *
+ *   build-data.ts    the dataset and stats the resolvers read
+ *   write-claims.ts  the declared claim surfaces that publish those numbers
+ *   npm run data     the rest of the data build, now that the claims agree
+ *   svelte-kit sync  the generated tsconfig that tsx needs for build-landing's alias
+ *   stats:write      the stat tags and the landing's generated regions
+ */
+export function refreshGeneratedFiles(root: string): string[] {
+	runStep(root, 'npx', ['--no-install', 'tsx', 'scripts/build-data.ts']);
+	runStep(root, 'npx', ['--no-install', 'tsx', 'scripts/write-claims.ts']);
+	runStep(root, 'npm', ['run', 'data']);
+	runStep(root, 'npx', ['--no-install', 'svelte-kit', 'sync']);
+	runStep(root, 'npm', ['run', 'stats:write']);
+	return changedFiles(root);
+}
+
 export function commitSession(
 	root: string,
 	line: SessionLine,
-	touched: readonly string[]
+	touched: readonly string[],
+	refresh: DeskRefresh = refreshGeneratedFiles
 ): { branch: string; sha: string; previous: string; files: string[] } {
 	const git = (args: string[]) => execFileSync('git', args, { cwd: root, encoding: 'utf8' });
 	let previous = '';
@@ -621,15 +684,49 @@ export function commitSession(
 		// not found: the normal case
 	}
 
+	const sessionsPath = join(root, SESSIONS_FILE);
+	const sessionsFile = SESSIONS_FILE.replace(/\\/g, '/');
+	const before = changedFiles(root);
+	const previousText = existsSync(sessionsPath) ? readFileSync(sessionsPath, 'utf8') : '';
+	const lineText = formatSessionLine(line);
+	// A failed refresh leaves the session line in the tree so a retry can reuse
+	// it. Appending it twice would make one session look like two.
+	const appended = previousText.split('\n').filter(Boolean).at(-1) !== lineText;
+	if (appended) {
+		mkdirSync(join(root, SESSIONS_DIR), { recursive: true });
+		if (!existsSync(sessionsPath)) appendFileSync(sessionsPath, SESSIONS_HEADER + '\n', 'utf8');
+		appendFileSync(sessionsPath, lineText + '\n', 'utf8');
+	}
+
+	let refreshed: string[];
+	try {
+		refreshed = refresh(root);
+	} catch (e) {
+		// The refresh only writes files the build owns. Put them back, and take
+		// the session line out, so the reviewer can fix what stopped it and press
+		// Finish again without a second line or a tree full of half-built files.
+		if (appended) {
+			if (previousText) writeFileSync(sessionsPath, previousText, 'utf8');
+			else rmSync(sessionsPath, { force: true });
+		}
+		for (const file of changedFiles(root)) {
+			if (before.includes(file)) continue;
+			try {
+				git(['checkout', '--', file]);
+			} catch {
+				rmSync(join(root, file), { force: true });
+			}
+		}
+		throw e;
+	}
+
 	git(['checkout', '-b', branch]);
 
-	const sessionsPath = join(root, SESSIONS_FILE);
-	mkdirSync(join(root, SESSIONS_DIR), { recursive: true });
-	if (!existsSync(sessionsPath)) appendFileSync(sessionsPath, SESSIONS_HEADER + '\n', 'utf8');
-	appendFileSync(sessionsPath, formatSessionLine(line) + '\n', 'utf8');
-
-	const files = [...new Set([...touched, SESSIONS_FILE.replace(/\\/g, '/')])];
-	git(['add', '--', ...files]);
+	const files = [...new Set([...touched, sessionsFile, ...refreshed])].sort();
+	// -f because a tracked file can sit under an ignored directory: output/ is
+	// ignored so the build's other products stay out of git, and the release
+	// paper inside it is still tracked and still refreshed by stats:write.
+	git(['add', '-f', '--', ...files]);
 	git([
 		'-c',
 		'user.name=DeepOntology Collective',
@@ -661,6 +758,8 @@ export interface DeskOptions {
 	now?: () => number;
 	/** The review queue, in the order the tool already shows it. */
 	queue: () => DeskQueueItem[];
+	/** What finish runs before committing. Defaults to the real build steps. */
+	refresh?: DeskRefresh;
 }
 
 export interface VerdictInput {
@@ -697,6 +796,7 @@ export class DeskSession {
 	readonly root: string;
 	private now: () => number;
 	private queue: () => DeskQueueItem[];
+	private refresh: DeskRefresh;
 	private dataset: any;
 	private sources: Map<string, any>;
 	private names: (id: string) => string;
@@ -713,6 +813,7 @@ export class DeskSession {
 		this.root = options.root;
 		this.now = options.now ?? Date.now;
 		this.queue = options.queue;
+		this.refresh = options.refresh ?? refreshGeneratedFiles;
 		this.dataset = JSON.parse(readFileSync(join(this.root, 'src', 'generated', 'dataset.json'), 'utf8'));
 		this.sources = new Map((this.dataset.sources ?? []).map((s: any) => [s.id, s]));
 		this.names = nameIndex(this.dataset);
@@ -933,6 +1034,20 @@ export class DeskSession {
 		if (this.finished) throw new EmitError(`this session was already committed on ${this.finished.branch}`);
 		if (!this.judged.length && !this.skipped.size) throw new EmitError('nothing has been seen in this session yet');
 
+		// Finish commits everything the build wrote, so the tree must start with
+		// only this session's writes in it. Anything else is the reviewer's work
+		// and would be swept into a session commit under a subject that does not
+		// describe it.
+		const sessionsFile = SESSIONS_FILE.replace(/\\/g, '/');
+		const foreign = changedFiles(this.root).filter((f) => !(f.startsWith('data/') || f === sessionsFile));
+		if (foreign.length) {
+			const named = foreign.slice(0, 5).join(', ');
+			const rest = foreign.length > 5 ? ` and ${foreign.length - 5} more` : '';
+			throw new EmitError(
+				`the working tree has changes this session did not make: ${named}${rest}. Commit or stash them, then finish.`
+			);
+		}
+
 		const state = this.state();
 		const line: SessionLine = {
 			date: this.date(),
@@ -946,7 +1061,7 @@ export class DeskSession {
 			medianSeconds: state.medianSeconds === null ? null : Math.round(state.medianSeconds),
 			by
 		};
-		const committed = commitSession(this.root, line, [...this.touched]);
+		const committed = commitSession(this.root, line, [...this.touched], this.refresh);
 		const commands = this.commands(committed.branch, committed.previous, line);
 		this.finished = { ...committed, line };
 		return { ...committed, line, commands };
