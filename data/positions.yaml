@@ -1461,7 +1461,6 @@
   start: "2005-11-29"
   end: "2006-06-05"
   confidence: A
-  verification: verified
   notes:
     - >-
       Start corrected 2026-08-08 from "2005-11-21" (Jeune Afrique) to the decree
@@ -4243,7 +4242,6 @@
   start: "1970-06-12"
   end: "1971-09-04"
   confidence: B
-  verification: verified
   notes: ["Dismissed by presidential decree after opposing arbitrary appointments."]
   notes_fr:
     - >-
@@ -4634,7 +4632,6 @@
   start: "2015-02-06"
   end: "2016-01-12"
   confidence: A
-  verification: verified
   notes:
     - >-
       Served under PM Habib Essid until removed in the reshuffle of 6 January
@@ -4728,7 +4725,6 @@
   start: "1991-02-20"
   end: "1991-10-10"
   confidence: B
-  verification: verified
   notes: ["Brief tenure of less than a year, after the foreign portfolio."]
   notes_fr:
     - >-
@@ -4845,7 +4841,6 @@
   start: "2014-01-29"
   end: "2015-02-06"
   confidence: A
-  verification: verified
   notes:
     - >-
       Defence minister in the Jomaa government, succeeding Rachid Sabbagh and
@@ -5143,7 +5138,6 @@
   start: "1988-07-27"
   end: "1990-03-03"
   confidence: A
-  verification: verified
   notes:
     - >-
       Start corrected 2026-08-08 from "1988-11-07" to the decree date: décret
@@ -5662,7 +5656,6 @@
   start: "2013-03-15"
   end: "2014-01-29"
   confidence: A
-  verification: verified
   notes:
     - >-
       Start corrected 2026-08-08 from "2013-03-13" (swearing-in) to the decree
@@ -5749,7 +5742,6 @@
   end: "2024-08-25"
   confidence: A
   basis: documented
-  verification: verified
   notes:
     - >-
       Start documented by décret n°2023-112 du 7 Feb 2023 (Visa in JORT 2023-045 tier-1 arrêté); oath ceremony same day at Carthage. End documented by décret n°2024-465 du 25 Aug 2024 (JORT N°104, 26 Aug 2024) which names the successor.
@@ -5792,7 +5784,6 @@
   end: ongoing
   confidence: A
   basis: documented
-  verification: verified
   notes:
     - >-
       Start documented by décret n°2024-465 du 25 Aug 2024, Art.1 (JORT N°104 26 Aug 2024); cross-checked at pm.gov.tn composition Depuis 25.08.2024 (both pm-gov-membres and pm-gov-composition). AFP via RFI contemporaneous reporting kept as reported corroboration only.
@@ -5828,7 +5819,6 @@
   start: "1961-01-30"
   end: "1969-09-08"
   confidence: B
-  verification: verified
   notes: ["Held Planning, Finance, Economy, Agriculture and Education concurrently."]
   notes_fr:
     - >-
@@ -5865,7 +5855,6 @@
   start: "1969-09-08"
   end: "1971-10-29"
   confidence: B
-  verification: verified
   reasoning: >-
     French Wikipedia's dated finance list records Rassaa 8 September 1969 to
     29 October 1971, succeeding Ahmed Ben Salah and preceding Mohamed Fitouri.
@@ -5893,7 +5882,6 @@
   start: "1956-04-15"
   end: "1958-09-30"
   confidence: B
-  verification: verified
   notes: ["First finance minister of independent Tunisia; previously the post was held under the protectorate. Left for the BCT governorship."]
   notes_fr:
     - >-
@@ -5938,7 +5926,6 @@
   start: "1980-04-25"
   end: "1983-06-18"
   confidence: B
-  verification: verified
   notes: ["Served as Planning & Finance Minister under Mzali."]
   notes_fr:
     - >-
@@ -5975,7 +5962,6 @@
   start: "1983-06-18"
   end: "1986-04-28"
   confidence: B
-  verification: verified
   notes: ["Finance Minister during the 1984 bread riots period."]
   notes_fr:
     - >-
@@ -6043,7 +6029,6 @@
   start: "1969-09-06"
   end: "1970-06-12"
   confidence: B
-  verification: verified
   reasoning: >-
     French Wikipedia's dated justice list records Snoussi 6 September 1969 to
     12 June 1970, succeeding Mongi Slim and preceding Habib Bourguiba Jr.
@@ -6072,7 +6057,6 @@
   start: "1956-04-15"
   end: "1958-12-30"
   confidence: B
-  verification: verified
   reasoning: >-
     French Wikipedia's dated justice list records Mestiri as the first justice
     minister of independent Tunisia, 15 April 1956 to 30 December 1958, under
@@ -6106,7 +6090,6 @@
   start: "1971-10-29"
   end: "1973-06-05"
   confidence: B
-  verification: verified
   reasoning: >-
     French Wikipedia's dated justice list records Bellalouna 29 October 1971 to
     5 June 1973, succeeding Mohamed Fitouri and preceding Slaheddine Baly.
@@ -6134,7 +6117,6 @@
   start: "1984-10-29"
   end: "1986-02-12"
   confidence: B
-  verification: verified
   reasoning: >-
     French Wikipedia's dated justice list records Ridha Ben Ali 29 October 1984
     to 12 February 1986, succeeding Mohamed Chaker and preceding Mohamed Salah
@@ -6165,7 +6147,6 @@
   start: "1986-02-12"
   end: "1988-04-12"
   confidence: B
-  verification: verified
   notes: ["Retained briefly by Ben Ali after the 1987 coup."]
   notes_fr:
     - >-
@@ -6204,7 +6185,6 @@
   start: "1988-07-27"
   end: "1989-09-27"
   confidence: B
-  verification: verified
   notes: ["Later prime minister."]
   notes_fr:
     - >-
@@ -6443,7 +6423,6 @@
   start: "1992-06-09"
   end: "1997-01-22"
   confidence: B
-  verification: verified
   reasoning: >-
     French Wikipedia's dated justice list records Chaabane 9 June 1992 to
     22 January 1997, preceding Abdallah Kallel.
@@ -6472,7 +6451,6 @@
   start: "1999-11-17"
   end: "2010-01-15"
   confidence: B
-  verification: verified
   reasoning: >-
     French Wikipedia's dated justice list records Tekkari 17 November 1999 to
     15 January 2010, in the Ghannouchi I government, succeeding Abdallah Kallel.
@@ -6504,7 +6482,6 @@
   start: "2010-01-15"
   end: "2011-01-17"
   confidence: B
-  verification: verified
   reasoning: >-
     French Wikipedia's dated justice list records Bououni 15 January 2010 to
     17 January 2011, spanning the fall of Ben Ali's regime.
@@ -6533,7 +6510,6 @@
   start: "2011-01-17"
   end: "2011-12-24"
   confidence: A
-  verification: verified
   reasoning: >-
     French Wikipedia's dated justice list records Karoui Chebbi 17 January to
     24 December 2011, through the Ghannouchi II and Caïd Essebsi governments,
@@ -6566,7 +6542,6 @@
   start: "2011-12-24"
   end: "2013-03-13"
   confidence: A
-  verification: verified
   notes: ["Ennahda-affiliated justice minister in the Troika government."]
   notes_fr:
     - >-
@@ -6607,7 +6582,6 @@
   start: "2013-03-13"
   end: "2014-01-29"
   confidence: A
-  verification: verified
   reasoning: >-
     French Wikipedia's dated justice list records Ben Ammou 13 March 2013 to
     29 January 2014, in the Ali Laarayedh government.
@@ -6636,7 +6610,6 @@
   start: "2014-01-29"
   end: "2015-02-06"
   confidence: A
-  verification: verified
   reasoning: >-
     French Wikipedia's dated justice list records Ben Salah 29 January 2014 to
     6 February 2015, in the Mehdi Jomaa government.
@@ -6665,7 +6638,6 @@
   start: "2015-02-06"
   end: "2015-10-20"
   confidence: A
-  verification: verified
   reasoning: >-
     French Wikipedia's dated justice list records Ben Aissa 6 February to
     20 October 2015 in the Essid government, resigning amid the terrorist
@@ -6697,7 +6669,6 @@
   start: "2016-01-12"
   end: "2016-08-27"
   confidence: A
-  verification: verified
   notes: ["Appointed by decree 2016-1 of 12 January 2016 in the Essid government; left in the 27 August 2016 Chahed reshuffle."]
   notes_fr:
     - >-
@@ -6742,7 +6713,6 @@
   start: "2016-08-27"
   end: "2018-11-14"
   confidence: A
-  verification: verified
   notes:
     - >-
       Held the portfolio through the Chahed government while also taking
@@ -6791,7 +6761,6 @@
   start: "2018-11-14"
   end: "2020-02-27"
   confidence: A
-  verification: verified
   reasoning: >-
     French Wikipedia's dated justice list and his biography agree on
     14 November 2018 to 27 February 2020.
@@ -6821,7 +6790,6 @@
   start: "2020-02-27"
   end: "2020-09-02"
   confidence: A
-  verification: verified
   notes: ["First woman to hold the portfolio; sister of Ghazi Jeribi, her predecessor but one."]
   notes_fr:
     - >-
@@ -6859,7 +6827,6 @@
   start: "2020-09-02"
   end: "2021-02-15"
   confidence: A
-  verification: verified
   reasoning: >-
     French Wikipedia's dated justice list and his biography agree on
     2 September 2020 to 15 February 2021 in the Mechichi government.
@@ -6887,7 +6854,6 @@
   start: "2021-02-15"
   end: "2021-07-26"
   confidence: B
-  verification: verified
   acting: true
   notes:
     - >-
@@ -6931,7 +6897,6 @@
   start: "2021-10-11"
   end: ongoing
   confidence: A
-  verification: verified
   notes:
     - >-
       First woman to hold the justice portfolio. Appointed by presidential
@@ -6996,7 +6961,6 @@
   start: "2020-08"
   end: "2021-02-15"
   confidence: A
-  verification: verified
   notes:
     - "Appointed in the Mechichi reshuffle of August 2020; dismissed on 15 February 2021."
     - 'Primary document jort-2020-84-b is dated 2020-09-02; the start date is kept from the earlier record pending review.'
@@ -7392,7 +7356,6 @@
   start: "2015-02-06"
   end: "2016-08-27"
   confidence: A
-  verification: verified
   notes:
     - Announcement 02 Feb 2015 (TAP/BusinessNews) vs decree 06 Feb 2015 (JORT n° 12 du 10 Feb 2015, pp. 468-469) is not a dispute on the legal act — ARP confidence 05 Feb, decree 06 Feb, JORT 10 Feb; candidates cite decree date 06 Feb 2015 (jort-2015-35-chaker).
     - End bracketed by decree 2016-107 du 27 Aug 2016 naming Lamia Boujnah Zribi as Finance Minister (publication JORT n° 71 du 30 Aug 2016 lags 3 days — not a substantive disagreement).
@@ -7596,7 +7559,6 @@
   start: "2009-06-10"
   end: "2010-12-29"
   confidence: B
-  verification: verified
   notes: ["Commerce and Handicrafts minister in the Ghannouchi I government; left in the 29 December 2010 reshuffle."]
   notes_fr:
     - >-
@@ -7681,7 +7643,6 @@
   start: "2025-02-05"
   end: ongoing
   confidence: A
-  verification: verified
   reasoning: "Ministry of Finance institutional page (tier 1) dates the appointment 'mercredi 5 février 2025' — replaces month-precision ~2025-02. Reuters contemporaneous relay of the presidency communiqué corroborates the same day (Wednesday). Prior finance minister Sihem Boughdiri's removal is stated in the same pages."
   reasoning_fr: "La page institutionnelle du ministère des Finances date la nomination au 'mercredi 5 février 2025' — remplace la précision mensuelle ~2025-02. Le relais contemporain Reuters du communiqué de la présidence corrobore le même jour."
   reasoning_fr_by: human
@@ -7719,7 +7680,6 @@
   start: "1970-11-10"
   end: "1972-02-18"
   confidence: B
-  verification: verified
   sources: [leaders-bct-governors, frwiki-bct]
 
 - id: p-bct-ghenima
@@ -7728,7 +7688,6 @@
   start: "1972-03-04"
   end: "1980-05-07"
   confidence: B
-  verification: verified
   sources: [leaders-bct-governors, frwiki-bct]
 
 - id: p-bct-mathari
@@ -7737,7 +7696,6 @@
   start: "1980-05-08"
   end: "1980-07-11"
   confidence: B
-  verification: verified
   notes: ["Shortest BCT tenure — two months; left over differences with the government."]
   notes_fr:
     - >-
@@ -7776,7 +7734,6 @@
   start: "1980-07-12"
   end: "1986-03-14"
   confidence: B
-  verification: verified
   sources: [leaders-bct-governors, frwiki-bct]
 
 - id: p-bct-skhiri
@@ -7785,7 +7742,6 @@
   start: "1986-03-15"
   end: "1987-10-26"
   confidence: B
-  verification: verified
   sources: [leaders-bct-governors, frwiki-bct]
 
 - id: p-bct-khelil
@@ -7794,7 +7750,6 @@
   start: "1987-10-27"
   end: "1990-03-02"
   confidence: B
-  verification: verified
   sources: [leaders-bct-governors, frwiki-bct]
 
 - id: p-bct-baji-hamda
@@ -7803,7 +7758,6 @@
   start: "1990-03-03"
   end: "2001-01-22"
   confidence: B
-  verification: verified
   notes: ["Eleven-year tenure, the longest of any governor."]
   notes_fr:
     - >-
@@ -7842,7 +7796,6 @@
   start: "2001-01-23"
   end: "2004-01-13"
   confidence: B
-  verification: verified
   reasoning: >-
     Leaders' 13-governors list and French Wikipedia both record 23 January 2001
     to 13 January 2004.
@@ -7871,7 +7824,6 @@
   start: "2004-01-14"
   end: "2011-01-16"
   confidence: B
-  verification: verified
   notes: ["Left office with the fall of the regime in January 2011."]
   notes_fr:
     - >-
@@ -7912,7 +7864,6 @@
   start: "2011-01-17"
   end: "2012-06-27"
   confidence: B
-  verification: verified
   reasoning: >-
     Leaders' 13-governors list and French Wikipedia both record 17 January 2011
     to 27 June 2012. The earlier record had placed him ~2000-2004, which is
@@ -7943,7 +7894,6 @@
   start: "2012-07-23"
   end: "2018-02-14"
   confidence: B
-  verification: verified
   reasoning: >-
     Leaders' 13-governors list and French Wikipedia both record 23 July 2012 to
     14 February 2018.
@@ -7971,7 +7921,6 @@
   start: "2018-02-16"
   end: "2024-02-15"
   confidence: B
-  verification: verified
   reasoning: >-
     Leaders' 13-governors list and French Wikipedia both record 16 February 2018
     to 15 February 2024, when Saïed replaced him with Fethi Zouhair Nouri.
@@ -8002,7 +7951,6 @@
   confidence: A
   source_relation: direct-record
   independence: 2
-  verification: verified
   notes:
     - >-
       Start corrected 2026-08-28 from 2024-02-15 to 2024-02-16 per JORT tier-1:
@@ -8639,7 +8587,6 @@
   start: "2021-07-28"
   end: ongoing
   confidence: A
-  verification: verified
   reasoning: >-
     Wikipedia records Awatef Dali as interim PDG of ETT since July 2021.
   reasoning_fr: >-
@@ -10409,7 +10356,6 @@
   start: "2022-01-07"
   end: ongoing
   confidence: A
-  verification: verified
   reasoning: >-
     Wikipedia records Taoufik Boufaied as PDG since January 10, 2022.
   reasoning_fr: >-
@@ -10436,7 +10382,6 @@
   start: "2020-11-02"
   end: "2021-10-08"
   confidence: A
-  verification: verified
   reasoning: >-
     Wikipedia records Belgacem Tayaa as PDG from October 2020, dismissed October 2021.
   reasoning_fr: >-
@@ -10492,7 +10437,6 @@
   start: "2024-12-11"
   end: "2026-04-27"
   confidence: A
-  verification: verified
   reasoning: >-
     Wikipedia records Marouen Ben Slimene as PDG since December 2024.
   reasoning_fr: >-
@@ -11004,7 +10948,6 @@
   confidence: B
   source_relation: inference-from-records
   independence: 2
-  verification: verified
   reasoning: "End corrected from ongoing. Décret n° 2026-30 du 2 mars 2026 (JORT n° 2026-025, fetched on 9anoun 2026-10-01) names Samira Guiza first president of the Administrative Tribunal; the decree does not mention Grissiaa, so the end is bounded by the successor's appointment (house convention, cf. p-soe-sonede-ahmed-soula) rather than documented by a cessation act, hence B/inferred. La Presse (3 Mar 2026) adds the reason: he « succède à Abdessalem Mehdi Ghrissia, admis à la retraite après avoir atteint l'âge légal », installed the day after the decree. Leaders (6 Apr 2026) independently dates his tenure « 2016 à mars 2026 ». Confidence drops A → B for the same reason the end is inferred: no decree naming his release was located; a cessation decree would restore A."
   reasoning_fr: >-
     L'article sur le Tribunal administratif de Wikipédia consigne Abdessalem Mehdi Grissiaa
@@ -11063,7 +11006,6 @@
   confidence: A
   source_relation: direct-record
   independence: 2
-  verification: verified
   reasoning: >-
     Wikipedia Cour des comptes article records Abdelkader Zgolli as president
     from 6 August 2011 to 17 March 2014.
@@ -11548,7 +11490,6 @@
   start: "1964"
   end: "1981"
   confidence: B
-  verification: verified
   reasoning: >-
     French Wikipedia's biography and the presidents list both record his tenure
     as 1964-1981 (17 years), succeeding Jallouli Farès and preceding Mahmoud
@@ -11673,7 +11614,6 @@
   end: "2011-03-23"
   acting: true
   confidence: B
-  verification: verified
   reasoning: >-
     First vice-president who took over when Mebazaa was elevated to the interim
     presidency on 15 January 2011; he presided the chamber's first post-
@@ -12726,7 +12666,6 @@
   start: "2016-01-12"
   end: "2022-10-25"
   confidence: B
-  verification: verified
   notes: ["Second tenure, ending in death; a first tenure ran 2008-11-01 to 2013-07-06 (predecessor of Hamda Saïed, who held the post between the two tenures)."]
   notes_fr:
     - >-
@@ -13046,7 +12985,6 @@
   end: "2026-09-10"
   confidence: A
   basis: documented
-  verification: verified
   sources: [jort-2026-091, jort-2026-091-ar]
   notes: ["New position and new role/institution (Office national de la propriété foncière is not in the graph). Décret n° 2026-221 du 10 septembre 2026 (JORT n° 91 du 11 septembre 2026, p. 1854) ends his functions as « Président-directeur général de l'Office national de la propriété foncière »; the same day's décret n° 2026-220 ends the separate function of « conservateur de la propriété foncière ». Only the end is documented; the appointment (start) was not located, so a second position row for the conservateur office is kept in this note rather than claimed. The Arabic edition confirms the operative verb (يعفى, relieved)."]
 
@@ -13057,7 +12995,6 @@
   end: ongoing
   confidence: A
   basis: documented
-  verification: verified
   sources: [jort-2026-043]
   notes: ["Décret n° 2026-61 du 27 avril 2026 (JORT n° 43 du 28 avril 2026) : « Monsieur Yassine Faria est nommé Président-directeur général de l'Office national des postes. » Same-day décret n° 2026-62 ends Ben Slimene's functions. New person row for yassine-faria is needed; his Arabic spelling was not fetched, so none is proposed here."]
 
@@ -13068,7 +13005,6 @@
   end: ongoing
   confidence: A
   basis: documented
-  verification: verified
   sources: [jort-2024-150]
   notes: ["Décret n° 2024-636 du 11 décembre 2024 (JORT n° 150 du 13 décembre 2024) : « Monsieur Abdelhamid Mnaja, ingénieur général, est chargé des fonctions de président directeur général de la société nationale d'exploitation et de distribution des eaux. » New person row for abdelhamid-mnaja is needed. Cross-check: the 2026-09-25 economy outbox flags this same replacement from press/SONEDE-board sources; this row supplies the gazette date."]
 
@@ -13091,7 +13027,6 @@
   end: ongoing
   confidence: A
   basis: documented
-  verification: verified
   notes: ["New position: successor of p-admin-abdessalem-mehdi-grissiaa, named by décret n° 2026-30 du 2 mars 2026 (JORT n° 2026-025, fetched 2026-10-01 on the 9anoun mirror), installed 3 March 2026 (La Presse). In her new quality she is first vice-president of the provisional CSM and president of the provisional council of the administrative order (Leaders, 6 Apr 2026).", "WINDOW HONESTY: no source dated ≥ 2026-07-02 naming Guiza in office was found in this pass, so `end: ongoing` will emit as `last-verified` (newest source 2026-04-06) — correct, not a defect. The natural in-window candidate is a JORT arrêté signed by her as first president in the July-September 2026 issues (Grissiaa's March 2025 arrêté in JORT n° 38/2025 was the model); no such issue was read here. The La Presse report of 30 Sep 2026 on JORT n° 96's administrative magistracy decrees (fetched) does NOT name her and was therefore not used."]
   sources: [jort-2026-025-guiza, lapresse-guiza-installation-2026-03-03, leaders-guiza-who-who-2026-04-06]
 
