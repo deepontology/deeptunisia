@@ -26,7 +26,8 @@ import {
 	PlaceKind,
 	REVIEWER_LABELS,
 	RegionKind,
-	RelationshipType
+	RelationshipType,
+	SOURCE_LANGUAGES
 } from './vocabulary.ts';
 
 /** Tunisia's parameters, loaded once per process from data/parameters.yaml. */
@@ -44,7 +45,7 @@ export const deployment: Deployment = {
 	time: parameters.time,
 	translatedLocales: ['fr', 'ar'],
 	/** The languages scripts/schema.ts accepts for a source; the engine's source kind validates against this list. */
-	sourceLanguages: ['ar', 'fr', 'en', 'it', 'de'],
+	sourceLanguages: [...SOURCE_LANGUAGES],
 	gazette: parameters.jurisdiction.gazette,
 	registry: parameters.jurisdiction.registry,
 	bbox: parameters.jurisdiction.bbox,
