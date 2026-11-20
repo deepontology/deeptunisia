@@ -1074,57 +1074,6 @@ const SUCCESSION_GAP_YEARS = 1;
 const SUCCESSION_OVERLAP_YEARS = 1;
 const SUCCESSION_EXEMPTION = 'unknown-end and open-ended intervals are excluded from overlap detection';
 
-// Seated roles (legislative terms) have no succession chain. Members sit
-// together rather than replace one another, and from 2011 to 2019 a constituency
-// elected several members from party lists, so even a per-constituency chain
-// would read concurrent colleagues as overlapping holders. A replacement from
-// the list is recorded as its own position with its own dates.
-const byRole = new Map<string, typeof resolvedPositions>();
-for (const pos of resolvedPositions) {
-	if (roleById.get(pos.role)?.seats !== undefined) continue;
-	const list = byRole.get(pos.role) ?? [];
-	list.push(pos);
-	byRole.set(pos.role, list);
-}
-
-const successionGaps: { role: string; after: string; before: string; gapYears: number }[] = [];
-const successionOverlaps: { role: string; a: string; b: string; overlapYears: number }[] = [];
-
-for (const list of byRole.values()) {
-	list.sort((a, b) => a.interval.startLatest - b.interval.startLatest);
-	for (let i = 0; i < list.length; i++) {
-		const cur = list[i];
-		const prev = list[i - 1];
-		const next = list[i + 1];
-		if (prev && !cur.predecessor) cur.predecessorDerived = prev.holder;
-		if (cur.predecessor) cur.predecessorDerived = cur.predecessor;
-		if (next) cur.successorDerived = next.holder;
-
-		if (prev) {
-			const prevEnd = prev.interval.endEarliest ?? DATASET_CUTOFF;
-			const gap = (cur.interval.startEarliest - prevEnd) / (365.2425 * 86_400_000);
-			if (gap > SUCCESSION_GAP_YEARS) {
-				successionGaps.push({
-					role: cur.role,
-					after: prev.holder,
-					before: cur.holder,
-					gapYears: Math.round(gap * 10) / 10
-				});
-			}
-			const prevLatestEnd = prev.interval.endLatest ?? DATASET_CUTOFF;
-			const overlap = (prevLatestEnd - cur.interval.startLatest) / (365.2425 * 86_400_000);
-			if (overlap > SUCCESSION_OVERLAP_YEARS && prev.interval.status === 'ended' && cur.interval.status !== 'unknown') {
-				successionOverlaps.push({
-					role: cur.role,
-					a: prev.holder,
-					b: cur.holder,
-					overlapYears: Math.round(overlap * 10) / 10
-				});
-			}
-		}
-	}
-}
-
 const resolvedRelationships = relationships.map((rel) => {
 	const basis = deriveBasis(rel.confidence, rel.verification, rel.basis);
 	const derivedBasis = deriveBasis(rel.confidence, rel.verification, undefined);
@@ -1488,6 +1437,22 @@ const engineResolved = engine.resolve({
 		if (f.severity === 'error') fail(f.record ? `${f.record.kind} ${f.record.id}` : f.rule, f.message);
 		else warn(f.record ? `${f.record.kind} ${f.record.id}` : f.rule, f.message);
 	}
+}
+
+// The derivation is the engine's (`engine.successions`): the thresholds above
+// are this dataset's published numbers, and seated roles (legislative terms)
+// have no chain, since members sit together rather than replace one another.
+const succession = engine.successions(engineResolved, {
+	gapYears: SUCCESSION_GAP_YEARS,
+	overlapYears: SUCCESSION_OVERLAP_YEARS
+});
+const successionGaps = succession.gaps;
+const successionOverlaps = succession.overlaps;
+for (const pos of resolvedPositions) {
+	const neighbours = succession.neighbours.get(pos.id);
+	if (!neighbours) continue;
+	pos.predecessorDerived = neighbours.predecessor;
+	pos.successorDerived = neighbours.successor;
 }
 
 // V10 — the geographic hierarchy (spec §8). A place's `parent` chain must

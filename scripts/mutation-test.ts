@@ -67,6 +67,7 @@ const ENGINE_EVENT_ORPHAN = '../node_modules/deepepisteme/src/atlas/rules/event-
 const ENGINE_HORIZON = '../node_modules/deepepisteme/src/atlas/rules/horizon.ts';
 const ENGINE_VACANCY_OVERLAP = '../node_modules/deepepisteme/src/atlas/rules/vacancy-overlap.ts';
 const ENGINE_INTERVAL_TRIMS = '../node_modules/deepepisteme/src/atlas/rules/interval-trims.ts';
+const ENGINE_SUCCESSION = '../node_modules/deepepisteme/src/atlas/succession.ts';
 const ENGINE_UNMOORED_INFLUENCE = '../node_modules/deepepisteme/src/atlas/rules/unmoored-influence.ts';
 const ENGINE_EVENT_CAUSAL = '../node_modules/deepepisteme/src/atlas/rules/event-causal.ts';
 const ENGINE_EVENT_RUPTURE = '../node_modules/deepepisteme/src/atlas/rules/event-rupture.ts';
@@ -353,6 +354,18 @@ const MUTATIONS: Mutation[] = [
 		to: 'continue;'
 	},
 	{
+		id: 'm70', file: ENGINE_SUCCESSION, expect: 'test-data (published overlaps no longer match the pairwise comparison)',
+		label: 'an overlap counts a previous holder who is not ended (V24)',
+		from: "if (overlap > thresholds.overlapYears && prev.interval.status === 'ended' && cur.interval.status !== 'unknown') {",
+		to: "if (overlap > thresholds.overlapYears && cur.interval.status !== 'unknown') {"
+	},
+	{
+		id: 'm71', file: ENGINE_SUCCESSION, expect: 'test-data (published gaps no longer match the recomputed chain gaps)',
+		label: 'a handover is a gap only past twice the published threshold (V24)',
+		from: 'if (gap > thresholds.gapYears) {',
+		to: 'if (gap > thresholds.gapYears * 2) {'
+	},
+	{
 		id: 'm31', file: 'build-data.ts', expect: 'the build gate (grade-A primary rule)',
 		label: 'grade-A records no longer checked for a tier-1/2 source',
 		from: '\t\tif (tiers.some((t) => t <= 2)) continue;',
@@ -553,6 +566,7 @@ const SUITES_FOR: Record<string, string[]> = {
 	[ENGINE_VACANCY_OVERLAP]: ['test-data.ts', 'test-pipeline.ts'],
 	[ENGINE_INTERVAL_TRIMS]: ['test-data.ts', 'test-pipeline.ts'],
 	[ENGINE_UNMOORED_INFLUENCE]: ['test-data.ts', 'test-pipeline.ts'],
+	[ENGINE_SUCCESSION]: ['test-data.ts'],
 	[ENGINE_EVENT_RUPTURE]: ['test-data.ts', 'test-pipeline.ts'],
 	[ENGINE_RELATIONSHIP_DUPLICATES]: ['test-data.ts', 'test-pipeline.ts'],
 	'origins.ts': ['test-validators.ts'],
