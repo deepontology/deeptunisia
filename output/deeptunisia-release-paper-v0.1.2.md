@@ -723,17 +723,17 @@ This appendix exists to make the `test-paper.ts` gate's requirement visible: eve
 
 | ID | Validator | Scope | Behaviour |
 |---|---|---|---|
-| V1 | ownership percentage sum ≤ 100 | all `ownership` edges, per company, per `direct` group, per interval window (sweep-line) | specified, not enforced |
+| V1 | ownership percentage sum ≤ 100 | direct `ownership` and `shareholder` edges carrying `equity.pct`, per owned entity, at every instant at which they are certainly live; look-through (`direct: false`), merged and superseded edges are left out; strict at the interval boundary, so an edge that ends on the day another begins is a handover, not an overlap | **fail** on a sum above 100 |
 | V2 | capital/registration date consistency | company `founded` vs `institution.active`, `capital.date` | specified, not enforced |
-| V3 | CIN/registration validity | `registration.number` | specified, not enforced |
+| V3 | CIN/registration validity | `registration.registry` and `registration.number` | **fail** on a registry the jurisdiction does not list, a blank number, or a number carried by two companies in one registry |
 | V4 | contract award → winner | contracts with award status | **fail** no winner; **warn** announced-but-not-awarded |
 | V5 | contract award value attribution | contracts with an `award` value | **fail** award value with no attribution or a tier-1/2 source |
 | V6 | duplicate company detection | name normalisation (Arabic/French/English), Levenshtein + token similarity | specified, not enforced |
-| V7 | board overlap / conflict of interest | person in two overlapping `board` edges | specified, not enforced |
+| V7 | board overlap / conflict of interest | a person in two `board` edges into different entities that are certainly live together | **warn** |
 | V8 | event ordering + causal cycles | `causes`→`consequences` intervals; Tarjan SCC | **fail** on ordering violation; **fail** on cycle |
 | V9 | unmoored influence | influence-family edges with no documented adjacency | **fail** influence/advisory; **warn** reported-influence |
 | V10 | geographic hierarchy | places parent chain, coordinates, bounding box | **fail** no parent/coords for point classes; **warn** otherwise |
-| V11 | orphaned events | events with no participants/orgs/documents | specified, not enforced |
+| V11 | orphaned events | events with no actors, institutions, documents or recorded disputes | **warn** |
 | V12 | missing citations | every claim-envelope kind; the legacy kinds that predate the envelope are pinned by the exception register (§8.1) | **fail** |
 | V13 | equity validity | `equity.pct ∈ [0,100]`, `beneficial` → attributed | **fail** invalid; **warn** untattributed beneficial |
 | V14 | directionality | directed edge semantics, endpoint kinds | **fail** reversed/incorrect endpoint |

@@ -1,10 +1,10 @@
 {
-  "generated": "2026-11-20T06:33:40.288Z",
-  "commit": "a23b55b",
+  "generated": "2026-11-20T07:39:03.710Z",
+  "commit": "8d5a1b3",
   "withValidators": true,
   "summary": {
-    "counted": 62,
-    "killed": 60,
+    "counted": 66,
+    "killed": 64,
     "latent": 2,
     "knownLatent": 2,
     "drift": 0,
@@ -310,6 +310,42 @@
       "expect": "test-pipeline (injected floating rupture)"
     },
     {
+      "id": "m63",
+      "label": "direct stakes summing past 100 percent are no longer found (V1)",
+      "file": "../node_modules/deepepisteme/src/atlas/rules/ownership-sum.ts",
+      "verdict": "killed",
+      "by": "test-pipeline",
+      "outputChanged": false,
+      "expect": "test-pipeline (injected stakes over 100 percent)"
+    },
+    {
+      "id": "m64",
+      "label": "a registration number carried by two companies is no longer found (V3)",
+      "file": "../node_modules/deepepisteme/src/atlas/rules/company-registration.ts",
+      "verdict": "killed",
+      "by": "test-pipeline",
+      "outputChanged": false,
+      "expect": "test-pipeline (injected repeated registration number)"
+    },
+    {
+      "id": "m65",
+      "label": "one person on two boards over the same years is no longer flagged (V7)",
+      "file": "../node_modules/deepepisteme/src/atlas/rules/board-overlap.ts",
+      "verdict": "killed",
+      "by": "test-pipeline",
+      "outputChanged": false,
+      "expect": "test-pipeline (injected two overlapping board seats)"
+    },
+    {
+      "id": "m66",
+      "label": "an event linked to nothing is no longer flagged (V11)",
+      "file": "../node_modules/deepepisteme/src/atlas/rules/event-orphan.ts",
+      "verdict": "killed",
+      "by": "test-pipeline",
+      "outputChanged": false,
+      "expect": "test-pipeline (injected orphan event)"
+    },
+    {
       "id": "m31",
       "label": "grade-A records no longer checked for a tier-1/2 source",
       "file": "build-data.ts",
@@ -440,8 +476,8 @@
       "label": "ongoing is always treated as recently confirmed",
       "file": "../node_modules/deepepisteme/src/kernel/time.ts",
       "verdict": "killed",
-      "by": "test-validators",
-      "outputChanged": true,
+      "by": "build gate",
+      "outputChanged": false,
       "expect": "test-validators (ongoing confirmation window, engine target)"
     },
     {

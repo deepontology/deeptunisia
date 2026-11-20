@@ -1580,9 +1580,10 @@ const resolvedEducation = education.map((e) => ({
 		institution: institutions,
 		role: roles,
 		relationship: relationships,
-		event: events
+		event: events,
+		company: companies
 	});
-	for (const f of engine.validate(resolved, { only: ['V4', 'V10', 'V16', 'V17', 'V8'] })) {
+	for (const f of engine.validate(resolved, { only: ['V4', 'V10', 'V16', 'V17', 'V8', 'V3', 'V11', 'V1', 'V7'] })) {
 		if (f.severity === 'error') fail(f.record ? `${f.record.kind} ${f.record.id}` : f.rule, f.message);
 		else warn(f.record ? `${f.record.kind} ${f.record.id}` : f.rule, f.message);
 	}
