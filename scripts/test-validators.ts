@@ -938,6 +938,41 @@ accepts(
 	'V13: finance metadata on a funding edge parses'
 );
 
+// V13's second half: an equity share is a percentage. The bound was declared in
+// the schema and asserted nowhere, so a mutation widening it survived.
+rejectsWith(
+	RelationshipSchema,
+	rel({ type: 'ownership', equity: { pct: 100.5, direct: true, beneficial: false } }),
+	'V13: an equity share above 100 is rejected',
+	'<=100'
+);
+rejectsWith(
+	RelationshipSchema,
+	rel({ type: 'ownership', equity: { pct: -1, direct: true, beneficial: false } }),
+	'V13: a negative equity share is rejected',
+	'>=0'
+);
+accepts(
+	RelationshipSchema,
+	rel({ type: 'ownership', equity: { pct: 100, direct: true, beneficial: false } }),
+	'V13: an equity share of exactly 100 parses'
+);
+accepts(
+	RelationshipSchema,
+	rel({ type: 'ownership', equity: { pct: 0, direct: true, beneficial: false } }),
+	'V13: an equity share of exactly 0 parses'
+);
+
+// V10's coordinate half: a point outside the jurisdiction box is refused by the
+// schema itself, so the fixture build and a hand edit fail the same way.
+rejectsWith(
+	PlaceSchema,
+	placeRec({ parent: 'gov-fixture', coordinates: [100, 10] }),
+	'V10: coordinates outside the jurisdiction box are rejected',
+	'coordinates must fall inside'
+);
+accepts(PlaceSchema, placeRec({ parent: 'gov-fixture', coordinates: [10.29, 36.8] }), 'V10: coordinates inside the box parse');
+
 // ---------------------------------------------------------------------------
 // V23 — every review carries a calendar-valid ISO date and an enum method.
 // Kills m8, m9, m10. Note the shape: the review DATE is not a dateToken; it is
@@ -1121,6 +1156,17 @@ throws(
 	'V22: an interval that ends before it begins is rejected (m16)',
 	'start 2020-01-01 / end 2018-01-01'
 );
+// V15 is the same rule under its own number: the register names the engine's
+// interval check as the site, and this is the assertion that carries the label.
+throws(
+	() => resolveInterval({ start: '2020-01-01', end: '2018-01-01' }),
+	'V15: an interval may not end before it begins',
+	'start 2020-01-01 / end 2018-01-01'
+);
+// V19 is the strict-schema rule; its cases live under V28 above because the two
+// ids were merged in the register. These two carry the V19 label directly.
+rejectsWith(PersonSchema, personRec({ not_a_declared_field: 1 }), 'V19: an undeclared key on a person fails', 'Unrecognized key');
+rejectsWith(PositionSchema, pos({ not_a_declared_field: 1 }), 'V19: an undeclared key on a position fails', 'Unrecognized key');
 
 ok(
 	'V22: an over-wide fuzzy start is clamped down to the known end and flagged (m17)',

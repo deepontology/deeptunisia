@@ -383,6 +383,94 @@ try {
   verification: verified
   sources: [${s}]`);
 
+	// V4/V5 award values: a contract figure with neither an attribution nor a
+	// tier-1/2 source floats free. The control carries an attribution on the same
+	// weak source and must not be named in any error.
+	appendBlock(TREE_BAD, 'contracts.yaml', `
+- id: ctr-fixture-award-floating
+  title_en: "Fixture contract with a floating award value"
+  institution: tunisair
+  kind: procurement
+  procurement: { mechanism: negotiated-direct, advertised: "~2016" }
+  award: { value: "1000000", currency: TND, year: 2016 }
+  status: signed
+  start: "2016-09"
+  confidence: B
+  basis: reported
+  sources: [${sourceIdWithTier(3)}]
+- id: ctr-fixture-award-attributed
+  title_en: "Fixture contract with an attributed award value"
+  institution: tunisair
+  kind: procurement
+  procurement: { mechanism: negotiated-direct, advertised: "~2016" }
+  award: { value: "1000000", currency: TND, year: 2016 }
+  status: signed
+  start: "2016-09"
+  confidence: B
+  basis: reported
+  attributed_to: "Fixture reporter quoted in the cited article"
+  sources: [${sourceIdWithTier(3)}]`);
+
+	// V10 geography: a point place with no parent region, a place whose
+	// coordinates fall outside the jurisdiction box, and one with no coordinates.
+	appendBlock(TREE_BAD, 'places.yaml', `
+- kind: port
+  id: place-fixture-parentless
+  name_en: "Fixture parentless port"
+  coordinates: [10.287201, 36.805401]
+  confidence: A
+  basis: documented
+  sources: [${s}]
+- kind: port
+  id: place-fixture-offshore
+  name_en: "Fixture port far outside the box"
+  parent: gov-ben-arous
+  coordinates: [100.0, 10.0]
+  confidence: A
+  basis: documented
+  sources: [${s}]
+- kind: port
+  id: place-fixture-no-coordinates
+  name_en: "Fixture port without coordinates"
+  parent: gov-ben-arous
+  confidence: A
+  basis: documented
+  sources: [${s}]`);
+
+	// V14 direction: a prosecution drawn from a person to an institution is the
+	// reversed claim.
+	appendBlock(TREE_BAD, 'relationships.yaml', `
+- id: rel-fixture-reversed-prosecution
+  from: bourguiba
+  to: presidency
+  type: prosecution
+  description: "Synthetic prosecution drawn the wrong way round, injected by the pipeline fixture runner."
+  confidence: A
+  sources: [${s}]`);
+
+	// V16 duplicates: the same family edge as a real record, with an overlapping
+	// interval and no merged_into.
+	appendBlock(TREE_BAD, 'relationships.yaml', `
+- id: rel-fixture-duplicate
+  from: leila-trabelsi
+  to: ben-ali
+  type: family
+  subtype: spouse
+  start: "1992"
+  description: "Synthetic duplicate of an existing edge, injected by the pipeline fixture runner."
+  confidence: A
+  sources: [${s}]`);
+
+	// V17 rupture: flagged, not failed. A rupture event linked to nothing.
+	appendBlock(TREE_BAD, 'events.yaml', `
+- id: fixture-floating-rupture
+  date: "2012-01-01"
+  title_en: "Fixture floating rupture"
+  category: political
+  rupture: true
+  summary: "Synthetic rupture event linked to nothing, injected by the pipeline fixture runner to prove the V17 flag fires."
+  sources: [${s}]`);
+
 	const bad = build(TREE_BAD, OUT_BAD, STATIC_BAD);
 	ok('pipeline fixture: the injected tree fails the build', bad.code !== 0, `exit ${bad.code}`);
 
@@ -395,14 +483,21 @@ try {
 		['positions.yaml [p-fixture-whitespace]', 'the whitespace probe fails and names the record (1A)'],
 		['positions.yaml [p-fixture-override]', 'the override probe fails and names the record (1B)'],
 		['positions.yaml [p-fixture-review-outcome]', 'the nested-outcome probe fails and names the record (1C)'],
-		['people.yaml [fixture-unsourced-person]', 'the no-source probe fails and names the record (1D)'],
+		['people.yaml [fixture-unsourced-person]', 'the no-source probe fails and names the record (1D, V12)'],
 		['position p-fixture-grade-a-weak', 'a grade-A record without a tier-1/2 source fails and names the record (V25)'],
 		['positions.yaml [p-fixture-relation]', 'an incompatible source relation fails and names the record (V26)'],
 		['positions.yaml [p-fixture-evidence]', 'a year-only archive lookup fails and names the record (V29)'],
 		['event fixture-beyond-cutoff', 'an event dated past the research cutoff fails and names the record (V31)'],
 		['overlaps titular position p-gov-tunis-feki', 'a vacancy overlapping a titular holder fails and names the position (V32)'],
 		['unknown role "no-such-role" (V32)', 'a vacancy of an unknown office fails (V32)'],
-		['position p-fixture-verified-noreview', 'a verified record with no review fails and names the record (V33)']
+		['position p-fixture-verified-noreview', 'a verified record with no review fails and names the record (V33)'],
+		['contract ctr-fixture-award-floating', 'an award value with no attribution and no primary source fails and names the contract (V4/V5)'],
+		['place place-fixture-parentless: every place needs a parent region/governorate (V10)', 'a point place with no parent region fails (V10)'],
+		['place-fixture-offshore', 'a place outside the jurisdiction box fails (V10)'],
+		['relationship rel-fixture-reversed-prosecution: prosecution is directed: "from" must be an institution', 'a reversed prosecution edge fails and names the relationship (V14)'],
+		['duplicate of rel-fixture-duplicate', 'a duplicate relationship with an overlapping interval fails (V16)'],
+		['event fixture-floating-rupture: rupture event is not linked into the causal graph (V17)', 'a floating rupture event is flagged (V17)'],
+		['place place-fixture-no-coordinates: no coordinates', 'a place with no coordinates is flagged (V10)']
 	];
 	for (const [needle, label] of expectations) {
 		ok(`pipeline fixture: ${label}`, bad.output.includes(needle), `expected the build to say "${needle}"`);
