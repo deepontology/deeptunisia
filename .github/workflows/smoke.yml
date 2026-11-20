@@ -2,7 +2,8 @@ name: Smoke
 
 # The browser suite, as a job of its own. `npm run smoke` drives a real
 # Chromium over the atlas and the Agora in both themes, on a desktop and a phone
-# viewport (about 1,270 checks, about 15 minutes), so it is not part of
+# viewport (about 1,270 checks; about 15 minutes on a desktop, about 35 on a
+# runner), so it is not part of
 # `npm test` and the fresh-clone job in ci.yml does not wait for it. A gate that
 # only runs when someone remembers to run it had already gone red without
 # anyone noticing, so it runs here on every pull request into release/1.0 and
@@ -28,7 +29,8 @@ jobs:
     # Not ubuntu-latest: it is Ubuntu 26.04 now, which the pinned Playwright
     # (1.56) cannot install a browser on. Move this with the Playwright pin.
     runs-on: ubuntu-24.04
-    timeout-minutes: 40
+    # A run takes about 35 minutes here; the limit leaves room for a busy runner.
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
