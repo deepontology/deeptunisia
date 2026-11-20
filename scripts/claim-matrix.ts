@@ -300,7 +300,8 @@ export const CLAIM_MATRIX: MatrixRow[] = [
 		claim_text:
 			'A high-risk claim links to an exact passage and a locator, plus either a real timestamped capture or a dated retry promise; a generated archive lookup is not a capture.',
 		status: 'shipped+tested',
-		code_pointer: 'scripts/schema.ts :: EvidenceSchema; scripts/schema.ts :: isArchiveSnapshot',
+		code_pointer:
+			'node_modules/deepepisteme/src/kernel/evidence.ts :: capture_url must be an actual snapshot; node_modules/deepepisteme/src/kernel/kinds.ts :: isArchiveSnapshot',
 		test_pointer:
 			'scripts/test-validators.ts :: V29: a position with a captured passage parses; scripts/test-validators.ts :: V29: evidence without a capture or a retry date is rejected',
 		notes:

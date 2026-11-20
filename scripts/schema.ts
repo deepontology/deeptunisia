@@ -19,13 +19,27 @@ import {
 	reviewerLabelPattern,
 	slug,
 	withClaimEnvelope as engineClaimEnvelope,
+	EvidenceSchema,
 	NarrativeReferenceSchema,
+	isArchiveSnapshot,
+	type ExceptionRegister,
 	type HypothesisRecord,
 	type QuestionRecord,
 	type SourceRelationValue,
 	type SourceRecord,
 	type VerificationRecord
 } from 'deepepisteme/kernel';
+import type {
+	contractSchema,
+	declarationSchema,
+	educationSchema,
+	eraSchema,
+	licenceSchema,
+	positionSchema,
+	roleSchema,
+	vacancySchema,
+	worldClaimSchema
+} from 'deepepisteme/atlas';
 import { engine } from './engine.ts';
 import {
 	AgreementKind,
@@ -49,6 +63,21 @@ import {
 function kernelSchema<Out>(kind: string): z.ZodType<Out> {
 	return engine.schemaOf(kind) as unknown as z.ZodType<Out>;
 }
+
+/** The record a kind factory builds a schema for. */
+type AtlasRecord<F extends (...args: never[]) => z.ZodType> = z.infer<ReturnType<F>>;
+
+/**
+ * The schema the engine parses an atlas kind with, closed over the exception
+ * sets the build configures (`configureSchema`). The sets are read at every
+ * parse, so a schema built here at load time answers with the sets as they
+ * stand when a record is parsed. Entries carry no deadline in this module: the
+ * build checks the dated register itself, so every configured entry counts.
+ */
+function atlasSchema<Out>(kind: string): z.ZodType<Out> {
+	return engine.schemaOf(kind, configuredRegister) as unknown as z.ZodType<Out>;
+}
+
 
 /** The vocabularies, re-exported under the names this module has always used. */
 export {
@@ -174,19 +203,7 @@ export type { SourceRelationValue };
  *   circulating-claim      the claim circulates without reliable evidence
  */
 
-/**
- * Is this archive URL a snapshot, or a lookup that resolves to one later?
- *
- * Only web.archive.org URLs are checked, because that is where the review found
- * generated links. `/web/2026/` and `/web/20230605/` are lookups: the Wayback
- * Machine resolves them to whichever capture is nearest, which is not evidence
- * that the page was ever read. A real capture carries the full 14-digit
- * timestamp, optionally with the replay modifier suffix (`if_`, `id_`). (V29)
- */
-export function isArchiveSnapshot(url: string): boolean {
-	if (!/^https?:\/\/(www\.)?web\.archive\.org\//i.test(url)) return true;
-	return /^https?:\/\/(www\.)?web\.archive\.org\/web\/\d{14}(?:[a-z_]+)?\//i.test(url);
-}
+export { isArchiveSnapshot };
 
 /**
  * CLAIM-LEVEL EVIDENCE (V29) — the passage, not the bibliography.
@@ -197,47 +214,7 @@ export function isArchiveSnapshot(url: string): boolean {
  * promise to make one. `lineage` names the originating report and each
  * republishing step, so two outlets sharing one wire count as one origin.
  */
-export const EvidenceSchema = z
-	.strictObject({
-		passage_type: z.enum(['quote', 'paraphrase']),
-		/** Verbatim for `quote`; a close reading, marked as such, for `paraphrase`. */
-		passage: z
-			.string()
-			.refine((v) => nonBlank(v, 10), 'a passage must be at least 10 non-blank characters'),
-		/** Page, article section or timestamp: where in the source the passage sits. */
-		locator: z
-			.string()
-			.refine((v) => nonBlank(v, 2), 'evidence needs a locator (page, section or timestamp)'),
-		retrieved_at: z
-			.string()
-			.regex(/^\d{4}-\d{2}-\d{2}$/, 'retrieved_at must be an ISO date (YYYY-MM-DD)'),
-		/** A real snapshot, never a generated archive lookup. */
-		capture_url: z
-			.string()
-			.url()
-			.refine(
-				isArchiveSnapshot,
-				'capture_url must be an actual snapshot (timestamped), not a year-only or date-only archive lookup (V29)'
-			)
-			.optional(),
-		/** When no capture exists yet, the date a retry is owed. */
-		capture_missing: z
-			.string()
-			.regex(/^\d{4}-\d{2}-\d{2}$/, 'capture_missing must be an ISO retry date (YYYY-MM-DD)')
-			.optional(),
-		/** Originating report plus each republishing step, in order. */
-		lineage: z
-			.array(z.strictObject({ publisher: z.string().min(2), url: z.string().url().optional() }))
-			.default([])
-	})
-	.superRefine((e, ctx) => {
-		if (!e.capture_url && !e.capture_missing) {
-			ctx.addIssue({
-				code: 'custom',
-				message: 'evidence needs a capture_url, or capture_missing with the retry date (V29)'
-			});
-		}
-	});
+export { EvidenceSchema };
 
 const claimAxes = {
 	/** How the cited sources relate to the claim itself (V26). */
@@ -513,37 +490,7 @@ export const InstitutionSchema = withClaimEnvelope(
 // Role  (a canonical office, held over time by different people)
 // ---------------------------------------------------------------------------
 
-export const RoleSchema = z.strictObject({
-	id: slug,
-	title_en: z.string().min(2),
-	title_fr: z.string().optional(),
-	title_ar: z.string().optional(),
-	institution: slug,
-	/**
-	 * Formal authority weight, 0-100. This is an explicit editorial judgement, not a
-	 * computed value, and it is published in the methodology page so readers can
-	 * disagree with it. It exists so "formal authority" can be ranked without
-	 * pretending the ranking is objective.
-	 */
-	authority: z.number().min(0).max(100),
-	/**
-	 * The region or governorate the office covers, for territorial offices such
-	 * as a governor. One role per governorate keeps successions derivable per
-	 * territory with no extra machinery. Must resolve in regions.yaml.
-	 */
-	region: slug.optional(),
-	/**
-	 * Concurrent seats in a collegial body (a legislative term). Holders of a
-	 * seated role do not succeed one another, so no succession chain is derived
-	 * for it: 161 members sitting at once is not 160 overlaps.
-	 */
-	seats: z.number().int().min(2).optional(),
-	/** Chronicle row grouping; defaults to the institution. */
-	row: slug.optional(),
-	summary: z.string().optional(),
-	sources: z.array(slug).default([]),
-	...translatable('summary')
-});
+export const RoleSchema = atlasSchema<Role>('role');
 
 // ---------------------------------------------------------------------------
 // Person
@@ -603,60 +550,7 @@ export const PersonSchema = withClaimEnvelope(
 // Position  (the join between a person, a role and a span of time)
 // ---------------------------------------------------------------------------
 
-export const PositionSchema = withClaimEnvelope(
-	'position',
-	z.strictObject({
-	id: slug,
-	role: slug,
-	holder: slug,
-	start: dateToken.optional(),
-	end: dateToken.optional(),
-	/** Interim/acting appointment, rendered differently on the Chronicle. */
-	acting: z.boolean().default(false),
-	/**
-	 * The seat this position fills, for a role with `seats`. `id` names the
-	 * constituency within the term; `region` places it on the map. An abroad
-	 * constituency carries no region.
-	 */
-	constituency: z
-		.strictObject({
-			id: slug,
-			name_en: z.string().min(2),
-			name_fr: z.string().optional(),
-			name_ar: z.string().optional(),
-			region: slug.optional(),
-			abroad: z.boolean().default(false)
-		})
-		.optional(),
-	/** Explicit predecessor override. Otherwise derived from the role's sequence. */
-	predecessor: slug.nullable().optional(),
-	/** This position supersedes another record of the same kind (spec §13.4). */
-	supersedes: slug.optional(),
-	confidence: Confidence.default('B'),
-	/** Overrides the basis derived from `confidence`. */
-	basis: Basis.optional(),
-	verification: VerificationStatus.default('unflagged'),
-	/** Whose claim this is, mandatory below grade B. (V20) */
-	attributed_to: z.string().optional(),
-	/** Required for inferred claims: why this is reasoned, and what would refute it. */
-	reasoning: z.string().optional(),
-	falsifiable_by: z.string().optional(),
-	/** V27 — why the authored `basis` overrides the grade-implied basis. */
-	basis_override_reason: z.string().optional(),
-	...claimAxes,
-	evidence: z.array(EvidenceSchema).optional(),
-	/** Competing versions of the same span, recorded rather than silently resolved. */
-	disputes: z.array(DisputeSchema).default([]),
-	/** This record was merged into another (V16 escape, spec §13.3). */
-	merged_into: slug.optional(),
-	review: ReviewSchema.optional(),
-	notes: z.array(z.string()).default([]),
-	sources: z.array(slug).min(1, 'every position needs at least one source'),
-	...translatable('reasoning'),
-	...translatable('falsifiable_by'),
-	...translatable('notes', 'list')
-	})
-);
+export const PositionSchema = atlasSchema<Position>('position');
 
 // ---------------------------------------------------------------------------
 // Relationship
@@ -921,36 +815,7 @@ export const AgreementSchema = withClaimEnvelope(
 // claim is about Tunisia itself. A claim is NEVER a measurement: it carries
 // the full envelope and must carry at least one source.
 // ---------------------------------------------------------------------------
-export const WorldClaimSchema = withClaimEnvelope(
-	'world-claim',
-	z.strictObject({
-		id: slug,
-		/** Graph institution id, or null when the claim is about Tunisia itself. */
-		entity: slug.nullable().default(null),
-		claim: z.string().min(10),
-		/** What the evidence shows — the counter or the boundary, stated. */
-		assessment: z.string().min(10),
-		confidence: Confidence.default('C'),
-		/** Overrides the basis derived from `confidence`. */
-		basis: Basis.optional(),
-		verification: VerificationStatus.default('unflagged'),
-		/** Whose claim this is, mandatory for anything below grade B. */
-		attributed_to: z.string().optional(),
-		reasoning: z.string().optional(),
-		falsifiable_by: z.string().optional(),
-		/** V27 — why the authored `basis` overrides the grade-implied basis. */
-		basis_override_reason: z.string().optional(),
-		...claimAxes,
-		evidence: z.array(EvidenceSchema).optional(),
-		disputes: z.array(DisputeSchema).default([]),
-		review: ReviewSchema.optional(),
-		notes: z.array(z.string()).default([]),
-		sources: z.array(slug).min(1, 'every world claim needs at least one source'),
-		...translatable('claim'),
-		...translatable('assessment'),
-		...translatable('notes', 'list')
-	})
-);
+export const WorldClaimSchema = atlasSchema<WorldClaim>('world-claim');
 
 // ---------------------------------------------------------------------------
 // v0.0.2 record kinds (spec §4): company, contract, licence, declaration,
@@ -1032,74 +897,10 @@ export const CompanySchema = withClaimEnvelope(
 );
 
 /** Procurement / PPP / concession records (spec §4.4). */
-export const ContractSchema = withClaimEnvelope(
-	'contract',
-	z.strictObject({
-		id: slug,
-		title_en: z.string().min(2),
-		title_fr: z.string().optional(),
-		title_ar: z.string().optional(),
-		/** The buying institution in the graph. */
-		institution: slug,
-		kind: z.enum(['procurement', 'ppp', 'concession', 'privatisation', 'service', 'construction']),
-		procurement: z
-			.strictObject({ mechanism: z.string().min(1), advertised: dateToken })
-			.optional(),
-		/**
-		 * Attributed value — a fuzzy token like "~400000000". There is no "value
-		 * filled from memory"; a contract with an `award` must either name who
-		 * reports the figure or draw on a primary source (V4/V5).
-		 */
-		award: z
-			.strictObject({
-				value: z.string().min(1),
-				currency: z.string().regex(/^[A-Z]{3}$/, 'ISO 4217 code'),
-				year: z.number().int().min(1956).max(2030)
-			})
-			.optional(),
-		winner: slug.optional(),
-		losers: z.array(slug).default([]),
-		financing: z.strictObject({ type: z.string().min(1), lender: slug.nullable() }).optional(),
-		status: z.enum(['advertised', 'awarded', 'signed', 'annulled', 'finished', 'cancelled', 'sued', 'unknown']),
-		start: dateToken.optional(),
-		end: dateToken.optional(),
-		location: z.array(slug).default([]),
-		/** Free-text editorial context (announced-vs-awarded notes, negative findings). */
-		notes: z.array(z.string()).default([]),
-		...translatable('notes', 'list'),
-		...claimFields,
-		evidence: z.array(EvidenceSchema).optional(),
-	})
-);
+export const ContractSchema = atlasSchema<Contract>('contract');
 
 /** Time-bound rights between an operating company and a state body (spec A4.5). */
-export const LicenceSchema = withClaimEnvelope(
-	'licence',
-	z.strictObject({
-		id: slug,
-		holder: slug,
-		issuer: slug,
-		kind: z.enum(['spectrum', 'banking', 'mineral', 'media', 'import-export']),
-		grant: dateToken,
-		term: z.strictObject({ years: z.number().int().positive() }).optional(),
-		scope: z
-			.strictObject({ frequency: z.string().optional(), region: z.string().min(1) })
-			.optional(),
-		fees: z
-			.strictObject({
-				amount: z.number().nonnegative(),
-				currency: z.string().regex(/^[A-Z]{3}$/, 'ISO 4217 code'),
-				year: z.number().int().min(1956).max(2030)
-			})
-			.optional(),
-		status: z.enum(['active', 'expired', 'suspended', 'revoked']).default('active'),
-		/** Free-text editorial context (decree references, licence chains). */
-		notes: z.array(z.string()).default([]),
-		...translatable('notes', 'list'),
-		...claimFields,
-		evidence: z.array(EvidenceSchema).optional(),
-	})
-);
+export const LicenceSchema = atlasSchema<Licence>('licence');
 
 /**
  * A documented vacancy: an interval in which an office had no titular holder
@@ -1112,105 +913,23 @@ export const LicenceSchema = withClaimEnvelope(
  * the office is vacant and someone manages it. A titular position overlapping
  * a vacancy in the same role is a contradiction, and V32 fails the build.
  */
-export const VacancySchema = withClaimEnvelope(
-	'vacancy',
-	z.strictObject({
-		id: slug,
-		/** The office that stood empty. Must be a known, non-seated role (V32). */
-		role: slug,
-		/** When the last titular holder left. */
-		start: dateToken,
-		/** When the next titular holder took office; `ongoing` while still vacant. */
-		end: dateToken,
-		/** Free-text editorial context (who managed the office meanwhile, gazette checks). */
-		notes: z.array(z.string()).default([]),
-		...translatable('notes', 'list'),
-		...translatable('reasoning'),
-		...translatable('falsifiable_by'),
-		...claimFields,
-		evidence: z.array(EvidenceSchema).optional(),
-	})
-);
+export const VacancySchema = atlasSchema<Vacancy>('vacancy');
 
 /**
  * Declarations are records ABOUT documents, not about the world (spec §4.6):
  * the record captures that a document exists and what it says; it never asserts
  * the declared values are true.
  */
-export const DeclarationSchema = withClaimEnvelope(
-	'declaration',
-	z.strictObject({
-		id: slug,
-		/** Person id; null for regime/class records (a legal regime, a class of declarants). */
-		declarer: slug.nullable(),
-		date: dateToken,
-		kind: z.enum(['asset-declaration', 'income', 'member-of-something', 'dgi-file']),
-		jurisdiction: slug,
-		/** Institution holding the document, when it is a graph entity. */
-		body: slug.nullable(),
-		summary: z.string().min(1),
-		...translatable('summary'),
-		status: z.enum(['available', 'referred', 'sealed', 'destroyed']).default('available'),
-		/** Free-text editorial context (filing history, verification status). */
-		notes: z.array(z.string()).default([]),
-		...translatable('notes', 'list'),
-		...claimFields,
-		evidence: z.array(EvidenceSchema).optional(),
-	})
-);
+export const DeclarationSchema = atlasSchema<Declaration>('declaration');
 
 /** Education records let multiple timelines overlap (spec §4.7). */
-export const EducationSchema = withClaimEnvelope(
-	'education',
-	z.strictObject({
-		id: slug,
-		person: slug,
-		/** Graph institution when extant; null when the school has no record. */
-		institution: slug.nullable(),
-		degree_en: z.string().min(1),
-		degree_fr: z.string().optional(),
-		degree_ar: z.string().optional(),
-		field: z.string().optional(),
-		...translatable('field'),
-		kind: z.enum(['phd', 'masters', 'licence', 'baccalaureate', 'certificate', 'other']),
-		start: dateToken.optional(),
-		end: dateToken.optional(),
-		notes: z.array(z.string()).default([]),
-		...translatable('notes', 'list'),
-		...claimFields,
-		evidence: z.array(EvidenceSchema).optional(),
-	})
-);
+export const EducationSchema = atlasSchema<Education>('education');
 
 // ---------------------------------------------------------------------------
 // Era
 // ---------------------------------------------------------------------------
 
-export const EraSchema = z.strictObject({
-	id: slug,
-	label_en: z.string().min(2),
-	label_fr: z.string().optional(),
-	label_ar: z.string().optional(),
-	start: dateToken,
-	end: dateToken,
-	/** The analytical claim about how power was distributed in this era. */
-	thesis: z.string().min(10),
-	/** Compact power-distribution formula, e.g. "Presidency + Interior > Military". */
-	formula: z.string().optional(),
-	accent: z.string().regex(/^#[0-9a-f]{6}$/i),
-	sources: z.array(slug).default([]),
-	// P2 #17 — eras are analytical theses; the source-attachment pass (2026-08-13)
-	// grades them like any claim: confidence, whose synthesis it is, the reasoning
-	// that supports the thesis, and what would falsify it.
-	confidence: Confidence.optional(),
-	verification: VerificationStatus.optional(),
-	attributed_to: z.string().optional(),
-	reasoning: z.string().optional(),
-	falsifiable_by: z.string().optional(),
-	...translatable('thesis'),
-	...translatable('reasoning'),
-	...translatable('falsifiable_by')
-});
+export const EraSchema = atlasSchema<Era>('era');
 
 // ---------------------------------------------------------------------------
 // Open research question
@@ -1252,6 +971,24 @@ export interface SchemaExceptions {
 
 let schemaExceptions: SchemaExceptions = {};
 
+let registerFor: { source: SchemaExceptions; register: ExceptionRegister } | undefined;
+
+/** The configured exception sets, as the register the engine's schemas read. */
+function configuredRegister(): ExceptionRegister {
+	if (registerFor?.source === schemaExceptions) return registerFor.register;
+	const sourceExceptions = new Map<string, { rule: 'no-source'; expires: string; reason: string }>();
+	for (const key of schemaExceptions.emptySources ?? []) {
+		sourceExceptions.set(key, { rule: 'no-source', expires: '9999-12-31', reason: 'configured by the build' });
+	}
+	const basisOverrides = new Map<string, { reason: string; source: string }>();
+	for (const key of schemaExceptions.basisOverrides ?? []) {
+		basisOverrides.set(key, { reason: 'configured by the build', source: 'data/source-exceptions.yaml' });
+	}
+	const register: ExceptionRegister = { sourceExceptions, basisOverrides };
+	registerFor = { source: schemaExceptions, register };
+	return register;
+}
+
 /**
  * V18/V20/V27: the shared claim-envelope refines, applied to every claim-bearing
  * record kind so no future kind can forget them. The inferred/unsubstantiated
@@ -1282,20 +1019,20 @@ function withClaimEnvelope<S extends z.ZodObject<z.ZodRawShape>>(kind: string, s
 
 export type Source = Omit<SourceRecord, 'lang'> & { lang: SourceLanguage };
 export type Institution = z.infer<typeof InstitutionSchema>;
-export type Role = z.infer<typeof RoleSchema>;
+export type Role = AtlasRecord<typeof roleSchema>;
 export type Person = z.infer<typeof PersonSchema>;
-export type Position = z.infer<typeof PositionSchema>;
+export type Position = AtlasRecord<typeof positionSchema>;
 export type Relationship = z.infer<typeof RelationshipSchema>;
 export type EventRec = z.infer<typeof EventSchema>;
 export type Agreement = z.infer<typeof AgreementSchema>;
-export type WorldClaim = z.infer<typeof WorldClaimSchema>;
+export type WorldClaim = AtlasRecord<typeof worldClaimSchema>;
 export type Company = z.infer<typeof CompanySchema>;
-export type Contract = z.infer<typeof ContractSchema>;
-export type Licence = z.infer<typeof LicenceSchema>;
-export type Vacancy = z.infer<typeof VacancySchema>;
-export type Declaration = z.infer<typeof DeclarationSchema>;
-export type Education = z.infer<typeof EducationSchema>;
-export type Era = z.infer<typeof EraSchema>;
+export type Contract = AtlasRecord<typeof contractSchema>;
+export type Licence = AtlasRecord<typeof licenceSchema>;
+export type Vacancy = AtlasRecord<typeof vacancySchema>;
+export type Declaration = AtlasRecord<typeof declarationSchema>;
+export type Education = AtlasRecord<typeof educationSchema>;
+export type Era = AtlasRecord<typeof eraSchema>;
 export type Question = QuestionRecord;
 export type Hypothesis = HypothesisRecord;
 export type Dispute = z.infer<typeof DisputeSchema>;

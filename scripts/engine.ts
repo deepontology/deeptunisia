@@ -46,6 +46,8 @@ export const deployment: Deployment = {
 	translatedLocales: ['fr', 'ar'],
 	/** The languages scripts/schema.ts accepts for a source; the engine's source kind validates against this list. */
 	sourceLanguages: [...SOURCE_LANGUAGES],
+	/** The two texts the claim envelope's messages carry: the register's file and the basis-override rule id. */
+	envelopeTexts: { exceptionFile: 'data/source-exceptions.yaml', basisOverrideRule: 'V27' },
 	gazette: parameters.jurisdiction.gazette,
 	registry: parameters.jurisdiction.registry,
 	bbox: parameters.jurisdiction.bbox,
