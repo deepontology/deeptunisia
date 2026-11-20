@@ -178,5 +178,8 @@ export const PlaceKind = z.enum([
 ]);
 
 /** The languages a source may be written in. The engine's source kind validates against this list. */
+/** The locales a prose field may carry beyond the English original. */
+export const TRANSLATED_LOCALES = ['fr', 'ar'] as const;
+
 export const SOURCE_LANGUAGES = ['ar', 'fr', 'en', 'it', 'de'] as const;
 export type SourceLanguage = (typeof SOURCE_LANGUAGES)[number];

@@ -14,8 +14,9 @@
  * rejects, a narrowed vocabulary stops matching "JORT", and the date
  * resolver's window/slack arithmetic tracks the configured values.
  *
- * The suite mutates module-level state (schema.ts's jurisdiction params and
- * dates.ts's exported lets). Every block that reconfigures restores the
+ * The suite mutates module-level state (dates.ts's exported lets); the place box
+ * and the gazette vocabulary are the deployment's, so those blocks build a
+ * second engine instead. Every block that reconfigures restores the
  * shipped defaults, and a final block asserts the restoration itself — a test
  * that leaks its fixture state would poison every assertion after it.
  */
@@ -26,7 +27,7 @@ import { isDeepStrictEqual } from 'node:util';
 import { DEFAULT_PARAMETERS, loadParameters, type Parameters } from './parameters.ts';
 import { createEngine } from 'deepepisteme';
 import { deployment, engine } from './engine.ts';
-import { configureSchema, PlaceSchema, reviewOverclaims } from './schema.ts';
+import { PlaceSchema, reviewOverclaims } from './schema.ts';
 import {
 	configureTime,
 	parseDateEdge,
@@ -169,8 +170,8 @@ function coordMessage(schema: { safeParse(v: unknown): { success: boolean; error
 }
 
 // ---------------------------------------------------------------------------
-// 4. The gazette-overclaim guard reads the parameter vocabulary and source
-//    prefixes. Restore afterwards.
+// 4. The gazette-overclaim guard reads the deployment's vocabulary and source
+//    prefixes.
 // ---------------------------------------------------------------------------
 {
 	ok(
@@ -182,22 +183,20 @@ function coordMessage(schema: { safeParse(v: unknown): { success: boolean; error
 		reviewOverclaims('checked directly against the JORT decree text', ['jort-2020-123']) === false
 	);
 
-	configureSchema({
-		...DEFAULT_PARAMETERS,
-		jurisdiction: {
-			...DEFAULT_PARAMETERS.jurisdiction,
-			gazette: { ...DEFAULT_PARAMETERS.jurisdiction.gazette, vocabulary: ['bulletin'] }
-		}
+	// The vocabulary is the deployment's: a second engine whose deployment names
+	// another gazette word reads it, and the build engine is not touched.
+	const bulletin = createEngine({
+		...deployment,
+		gazette: { ...deployment.gazette, vocabulary: ['bulletin'] }
 	});
 	ok(
-		'guard: vocabulary comes from parameters — "JORT" no longer claims a gazette',
-		reviewOverclaims('checked directly against the JORT decree text', ['tier3-article']) === false
+		'guard: vocabulary comes from the deployment — "JORT" no longer claims a gazette',
+		bulletin.envelope.reviewOverclaims('checked directly against the JORT decree text', ['tier3-article']) === false
 	);
 	ok(
 		'guard: the configured vocabulary now matches "bulletin"',
-		reviewOverclaims('checked against the bulletin', ['tier3-article']) === true
+		bulletin.envelope.reviewOverclaims('checked against the bulletin', ['tier3-article']) === true
 	);
-	configureSchema(DEFAULT_PARAMETERS);
 }
 
 // ---------------------------------------------------------------------------
