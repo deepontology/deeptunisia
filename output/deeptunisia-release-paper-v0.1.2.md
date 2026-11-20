@@ -723,7 +723,7 @@ This appendix exists to make the `test-paper.ts` gate's requirement visible: eve
 
 | ID | Validator | Scope | Behaviour |
 |---|---|---|---|
-| V1 | ownership percentage sum ≤ 100 | direct `ownership` and `shareholder` edges carrying `equity.pct`, per owned entity, at every instant at which they are certainly live; look-through (`direct: false`), merged and superseded edges are left out | **fail** on a sum above 100 |
+| V1 | ownership percentage sum ≤ 100 | direct `ownership` and `shareholder` edges carrying `equity.pct`, per owned entity, at every instant at which they are certainly live; look-through (`direct: false`), merged and superseded edges are left out; strict at the interval boundary, so an edge that ends on the day another begins is a handover, not an overlap | **fail** on a sum above 100 |
 | V2 | capital/registration date consistency | company `founded` vs `institution.active`, `capital.date` | specified, not enforced |
 | V3 | CIN/registration validity | `registration.registry` and `registration.number` | **fail** on a registry the jurisdiction does not list, a blank number, or a number carried by two companies in one registry |
 | V4 | contract award → winner | contracts with award status | **fail** no winner; **warn** announced-but-not-awarded |
