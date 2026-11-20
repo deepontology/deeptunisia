@@ -58,6 +58,7 @@ const ENGINE_CANONICAL = '../node_modules/deepepisteme/src/kernel/canonical.ts';
 const ENGINE_BASIS = '../node_modules/deepepisteme/src/kernel/basis.ts';
 const ENGINE_REVIEW = '../node_modules/deepepisteme/src/kernel/review.ts';
 const ENGINE_ENVELOPE = '../node_modules/deepepisteme/src/kernel/envelope.ts';
+const ENGINE_CONTRACT_AWARD = '../node_modules/deepepisteme/src/atlas/rules/contract-award.ts';
 
 const hash = (p: string) => {
 	if (!existsSync(p)) return 'missing';
@@ -268,10 +269,10 @@ const MUTATIONS: Mutation[] = [
 		to: 'if (false && !entityIds.has(rel.from)) fail(`relationship ${label}`, `unknown "from" entity "${rel.from}"`);'
 	},
 	{
-		id: 'm58', file: 'build-data.ts', expect: 'test-pipeline (injected floating award value)',
+		id: 'm58', file: ENGINE_CONTRACT_AWARD, expect: 'test-pipeline (injected floating award value)',
 		label: 'award values stop needing an attribution or a primary source (V4/V5)',
-		from: 'if (!primary && !c.attributed_to) {',
-		to: 'if (false && !primary && !c.attributed_to) {'
+		from: 'if (primary || attributed) continue;',
+		to: 'if (true) continue;'
 	},
 	{
 		id: 'm59', file: 'build-data.ts', expect: 'test-pipeline (injected parentless place)',

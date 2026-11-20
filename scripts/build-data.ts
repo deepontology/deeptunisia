@@ -75,6 +75,7 @@ import {
 	type ResolvedInterval
 } from './dates.ts';
 import { loadParameters, type Parameters } from './parameters.ts';
+import { engine } from './engine.ts';
 import { countOrigins, restsOn, type EvidenceLike } from './origins.ts';
 import { deskStatsText, newestPrecheck, precheckStats, EMPTY_PRECHECK_STATS } from './desk.ts';
 import { VERIFIED_EXCEPTIONS } from './verified-exceptions.ts';
@@ -1661,19 +1662,17 @@ const resolvedEducation = education.map((e) => ({
 	writeFileSync(join(STAGE_STATIC, 'editorial-queue.json'), JSON.stringify({ total: queue.length, reviewed: queue.filter((q) => q.reviewed).length, queue }, null, 2), 'utf8');
 }
 
-// V4/V5: a contract value is attributed — there is no "value filled from memory".
-// A contract carrying `award` must either name who reports the figure or draw on
-// a primary source (tier 1/2). The check runs on the derived claim like every
-// other epistemic rule, so a C-grade figure with attribution but no primary
-// source passes only while its attribution is present.
-for (const c of resolvedContracts) {
-	if (!c.award) continue;
-	const primary = c.sources.some((s) => (sourceById.get(s)?.tier ?? 9) <= 2);
-	if (!primary && !c.attributed_to) {
-		fail(
-			`contract ${c.id}`,
-			'award.value must be attributed or backed by a primary source (tier ≤ 2) — numbers never float free (V4/V5)'
-		);
+// Rules that live in the engine run here by id. The records are the ones this
+// build loaded; each finding goes through fail() with its record as the place,
+// so the error text names the record the way the in-file checks do.
+//   V4/V5: a contract value is attributed — there is no "value filled from
+//   memory". A contract carrying `award` names who reports the figure or draws
+//   on a primary source (tier 1/2).
+{
+	const resolved = engine.resolve({ source: sources, contract: contracts });
+	for (const f of engine.validate(resolved, { only: ['V4'] })) {
+		if (f.severity === 'error') fail(f.record ? `${f.record.kind} ${f.record.id}` : f.rule, f.message);
+		else warn(f.record ? `${f.record.kind} ${f.record.id}` : f.rule, f.message);
 	}
 }
 
