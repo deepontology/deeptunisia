@@ -1,10 +1,10 @@
 {
-  "generated": "2026-11-20T07:39:03.710Z",
-  "commit": "8d5a1b3",
+  "generated": "2026-11-20T08:55:55.841Z",
+  "commit": "8607f9e",
   "withValidators": true,
   "summary": {
-    "counted": 66,
-    "killed": 64,
+    "counted": 68,
+    "killed": 66,
     "latent": 2,
     "knownLatent": 2,
     "drift": 0,
@@ -344,6 +344,24 @@
       "by": "test-pipeline",
       "outputChanged": false,
       "expect": "test-pipeline (injected orphan event)"
+    },
+    {
+      "id": "m67",
+      "label": "a record that begins past the research cutoff is no longer flagged (V31)",
+      "file": "../node_modules/deepepisteme/src/atlas/rules/horizon.ts",
+      "verdict": "killed",
+      "by": "test-pipeline",
+      "outputChanged": false,
+      "expect": "test-pipeline (injected event dated past the cutoff)"
+    },
+    {
+      "id": "m68",
+      "label": "a vacancy over a titular holder of the same office is no longer flagged (V32)",
+      "file": "../node_modules/deepepisteme/src/atlas/rules/vacancy-overlap.ts",
+      "verdict": "killed",
+      "by": "test-pipeline",
+      "outputChanged": false,
+      "expect": "test-pipeline (injected vacancy over a titular holder)"
     },
     {
       "id": "m31",

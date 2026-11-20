@@ -345,9 +345,9 @@ export const CLAIM_MATRIX: MatrixRow[] = [
 	{
 		paper_ref: 'successor Appendix A (V31)',
 		claim_text:
-			'No record interval may begin or end past the research cutoff: a record dated beyond time.cutoff fails the build, so a cutoff advance and the batch that needs it are one edit.',
+			'No record interval may begin past the research cutoff: a record that begins beyond time.cutoff fails the build, so a cutoff advance and the batch that needs it are one edit. An authored end past the cutoff is not checked: the resolver pulls it back to the cutoff and publishes the clamp as trimmed.',
 		status: 'shipped+tested',
-		code_pointer: 'scripts/build-data.ts :: past the research cutoff',
+		code_pointer: 'node_modules/deepepisteme/src/atlas/rules/horizon.ts :: past the research cutoff',
 		test_pointer:
 			'scripts/test-pipeline.ts :: an event dated past the research cutoff fails and names the record (V31); scripts/test-pipeline.ts :: the cutoff error is the V31 horizon message',
 		notes:

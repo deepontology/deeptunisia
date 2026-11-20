@@ -242,10 +242,10 @@ export const VALIDATOR_REGISTER: ValidatorEntry[] = [
 	},
 	{
 		id: 'V31',
-		rule: 'no record interval begins or ends past the research cutoff',
+		rule: 'no record interval begins past the research cutoff',
 		status: 'enforced',
 		gate: 'fail',
-		site: { file: 'scripts/build-data.ts', anchor: 'past the research cutoff' }
+		site: { file: 'node_modules/deepepisteme/src/atlas/rules/horizon.ts', anchor: 'past the research cutoff' }
 	},
 	{
 		id: 'V32',
@@ -253,7 +253,7 @@ export const VALIDATOR_REGISTER: ValidatorEntry[] = [
 		status: 'enforced',
 		gate: 'fail',
 		site: {
-			file: 'scripts/build-data.ts',
+			file: 'node_modules/deepepisteme/src/atlas/rules/vacancy-overlap.ts',
 			anchor: 'is a seated term, which has no single holder to be vacant'
 		}
 	},

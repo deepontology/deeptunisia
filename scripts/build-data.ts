@@ -1358,41 +1358,9 @@ const resolvedEvents = events.map((ev) => ({
 	)
 }));
 
-// ---------------------------------------------------------------------------
-// V31 — research-cutoff horizon. What leaked: two sweeps merged 22 of the 135
-// events dated past an un-advanced `time.cutoff`, and every time-based view
-// clips records past `meta.cutoff`, so those events rendered nowhere while all
-// gates stayed green — nothing in this file compared a record's resolved
-// interval to the cutoff. Events were the leak because they carry authored
-// dates; positions and relationships clamp by construction, and the sweep
-// checked both kinds anyway. Scope is record intervals only: a verification or
-// a dispute dated after the cutoff is a fact about the review, not about the
-// world, and stays legal. Equality passes, so an event dated on the cutoff day
-// is a valid record rather than a future one.
-// ---------------------------------------------------------------------------
-{
-	const isoDay = (t: number) => new Date(t).toISOString().slice(0, 10);
-	const cutoffDay = isoDay(DATASET_CUTOFF);
-	const insideHorizon = (kind: string, id: string, interval: ResolvedInterval): void => {
-		if (interval.startEarliest > DATASET_CUTOFF) {
-			fail(
-				`${kind} ${id}`,
-				`interval begins ${isoDay(interval.startEarliest)}, past the research cutoff ${cutoffDay} (V31)`
-			);
-		}
-		// `?? 0`: an open-ended (`ongoing`) interval has no end bound and is
-		// settled at the cutoff by construction, so it is inside by definition.
-		if ((interval.endLatest ?? 0) > DATASET_CUTOFF) {
-			fail(
-				`${kind} ${id}`,
-				`interval ends ${isoDay(interval.endLatest!)}, past the research cutoff ${cutoffDay} (V31)`
-			);
-		}
-	};
-	for (const p of resolvedPositions) insideHorizon('position', p.id, p.interval);
-	for (const r of resolvedRelationships) insideHorizon('relationship', r.id, r.interval);
-	for (const e of resolvedEvents) insideHorizon('event', e.id, e.interval);
-}
+// V31 — research-cutoff horizon — runs from the engine rule below. A start past
+// `time.cutoff` is the leak it catches; an authored end past the cutoff is
+// pulled back by the resolver above (`trimmed`), so there is no end check.
 
 // V16 — duplicate relationships (spec §12) runs from the engine rule below,
 // together with the `merged_into` ref check. The `supersedes` refs on
@@ -1470,38 +1438,10 @@ const resolvedVacancies = vacancies.map((v) => ({
 	interval: settledInterval(`vacancy ${v.id}`, v, { start: v.start, end: v.end })
 }));
 
-// V32 — a documented vacancy (decision 0007). It names a known office that has a
-// succession (a seated legislative role has members, not holders), and it may
-// not certainly overlap a titular holder of that office, or another vacancy of
-// it: either would be two records saying opposite things about the same days,
-// which is a dispute to record, not a gap to merge. "Certainly" is the strict
-// reading: the latest start of each falls before the earliest end of the other,
-// so a shared handover day or fuzzy year edges do not count as a contradiction.
-// An acting holder may sit inside the interval; that is what an interim is.
-{
-	const certainlyOverlap = (a: ResolvedInterval, b: ResolvedInterval) =>
-		a.startLatest < (b.endEarliest ?? DATASET_CUTOFF) && b.startLatest < (a.endEarliest ?? DATASET_CUTOFF);
-	for (const v of resolvedVacancies) {
-		const where = `vacancy ${v.id}`;
-		checkSources(where, v.sources);
-		const role = roleById.get(v.role);
-		if (!role) {
-			fail(where, `unknown role "${v.role}" (V32)`);
-			continue;
-		}
-		if (role.seats !== undefined) fail(where, `role "${v.role}" is a seated term, which has no single holder to be vacant (V32)`);
-		for (const p of resolvedPositions) {
-			if (p.role !== v.role || p.acting) continue;
-			if (certainlyOverlap(v.interval, p.interval)) {
-				fail(where, `overlaps titular position ${p.id}: the office cannot be both vacant and held (V32)`);
-			}
-		}
-		for (const w of resolvedVacancies) {
-			if (w.id <= v.id || w.role !== v.role) continue;
-			if (certainlyOverlap(v.interval, w.interval)) fail(where, `overlaps vacancy ${w.id} of the same role (V32)`);
-		}
-	}
-}
+// V32 — a documented vacancy (decision 0007) — runs from the engine rule below:
+// a known, non-seated office, no certain overlap with a titular holder or with
+// another vacancy of it. The source check stays here.
+for (const v of resolvedVacancies) checkSources(`vacancy ${v.id}`, v.sources);
 const resolvedDeclarations = declarations.map((d) => ({
 	...d,
 	...basisFields(d)
@@ -1581,9 +1521,11 @@ const resolvedEducation = education.map((e) => ({
 		role: roles,
 		relationship: relationships,
 		event: events,
-		company: companies
+		company: companies,
+		position: positions,
+		vacancy: vacancies
 	});
-	for (const f of engine.validate(resolved, { only: ['V4', 'V10', 'V16', 'V17', 'V8', 'V3', 'V11', 'V1', 'V7'] })) {
+	for (const f of engine.validate(resolved, { only: ['V4', 'V10', 'V16', 'V17', 'V8', 'V3', 'V11', 'V1', 'V7', 'V31', 'V32'] })) {
 		if (f.severity === 'error') fail(f.record ? `${f.record.kind} ${f.record.id}` : f.rule, f.message);
 		else warn(f.record ? `${f.record.kind} ${f.record.id}` : f.rule, f.message);
 	}

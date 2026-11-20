@@ -64,6 +64,8 @@ const ENGINE_OWNERSHIP_SUM = '../node_modules/deepepisteme/src/atlas/rules/owner
 const ENGINE_BOARD_OVERLAP = '../node_modules/deepepisteme/src/atlas/rules/board-overlap.ts';
 const ENGINE_COMPANY_REGISTRATION = '../node_modules/deepepisteme/src/atlas/rules/company-registration.ts';
 const ENGINE_EVENT_ORPHAN = '../node_modules/deepepisteme/src/atlas/rules/event-orphan.ts';
+const ENGINE_HORIZON = '../node_modules/deepepisteme/src/atlas/rules/horizon.ts';
+const ENGINE_VACANCY_OVERLAP = '../node_modules/deepepisteme/src/atlas/rules/vacancy-overlap.ts';
 const ENGINE_EVENT_CAUSAL = '../node_modules/deepepisteme/src/atlas/rules/event-causal.ts';
 const ENGINE_EVENT_RUPTURE = '../node_modules/deepepisteme/src/atlas/rules/event-rupture.ts';
 const ENGINE_RELATIONSHIP_DUPLICATES = '../node_modules/deepepisteme/src/atlas/rules/relationship-duplicates.ts';
@@ -331,6 +333,18 @@ const MUTATIONS: Mutation[] = [
 		to: 'if (true) continue;'
 	},
 	{
+		id: 'm67', file: ENGINE_HORIZON, expect: 'test-pipeline (injected event dated past the cutoff)',
+		label: 'a record that begins past the research cutoff is no longer flagged (V31)',
+		from: 'if (interval.startEarliest > cutoff) {',
+		to: 'if (false) {'
+	},
+	{
+		id: 'm68', file: ENGINE_VACANCY_OVERLAP, expect: 'test-pipeline (injected vacancy over a titular holder)',
+		label: 'a vacancy over a titular holder of the same office is no longer flagged (V32)',
+		from: 'if (held && certainlyOverlap(own, held)) {',
+		to: 'if (false) {'
+	},
+	{
 		id: 'm31', file: 'build-data.ts', expect: 'the build gate (grade-A primary rule)',
 		label: 'grade-A records no longer checked for a tier-1/2 source',
 		from: '\t\tif (tiers.some((t) => t <= 2)) continue;',
@@ -527,6 +541,8 @@ const SUITES_FOR: Record<string, string[]> = {
 	[ENGINE_BOARD_OVERLAP]: ['test-data.ts', 'test-pipeline.ts'],
 	[ENGINE_COMPANY_REGISTRATION]: ['test-data.ts', 'test-pipeline.ts'],
 	[ENGINE_EVENT_ORPHAN]: ['test-data.ts', 'test-pipeline.ts'],
+	[ENGINE_HORIZON]: ['test-data.ts', 'test-pipeline.ts'],
+	[ENGINE_VACANCY_OVERLAP]: ['test-data.ts', 'test-pipeline.ts'],
 	[ENGINE_EVENT_RUPTURE]: ['test-data.ts', 'test-pipeline.ts'],
 	[ENGINE_RELATIONSHIP_DUPLICATES]: ['test-data.ts', 'test-pipeline.ts'],
 	'origins.ts': ['test-validators.ts'],
