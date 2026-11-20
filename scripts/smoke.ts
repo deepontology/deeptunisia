@@ -455,6 +455,15 @@ function isIgnorable(text: string) {
 	) {
 		return true;
 	}
+	/*
+	 * Two lines that only the dev server writes. Record pages (/e/<id>) are written
+	 * into build/ after the build, so the dev server has no such route and says so
+	 * when a reading page forwards a link to one; and it warns that its next
+	 * hot-reload will reload the page. A built site has neither.
+	 */
+	if (text.includes('Not found: /e/') || text.includes('The next HMR update will cause the page to reload')) {
+		return true;
+	}
 	return text.includes('favicon') || text.includes('Download the React DevTools');
 }
 
@@ -1135,6 +1144,7 @@ console.log('\n  ── timeline ──');
 if (runSection('chronicle navigation')) {
 console.log('\n  ── chronicle navigation ──');
 	const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+	await context.addInitScript(TOUR_SEEN_INIT);
 	const page = await context.newPage();
 	await page.goto(BASE + '/chronicle', { waitUntil: 'networkidle' });
 	await settle(page);
@@ -1149,7 +1159,10 @@ console.log('\n  ── chronicle navigation ──');
 	 * measures the clamp, not the gesture.
 	 */
 	await page.mouse.move(box.x + box.width / 2, y);
+	// A plain vertical wheel scrolls the page; ctrl (or cmd) with the wheel zooms the chart.
+	await page.keyboard.down('Control');
 	await page.mouse.wheel(0, -600);
+	await page.keyboard.up('Control');
 	await page.waitForTimeout(500);
 	const zoomed = await page.getByRole('button', { name: /full range|toute la période|المدى/i }).count();
 	ok('wheel-zoom narrows the window', zoomed >= 1);
@@ -1202,10 +1215,12 @@ console.log('\n  ── chronicle navigation ──');
 	// The axis is a scrub surface, and its ticks adapt to the zoom.
 	const plotBox = (await page.locator('.plot').boundingBox())!;
 	await page.mouse.move(plotBox.x + plotBox.width * 0.5, plotBox.y + 200);
+	await page.keyboard.down('Control');
 	for (let i = 0; i < 10; i++) {
 		await page.mouse.wheel(0, -600);
 		await page.waitForTimeout(100);
 	}
+	await page.keyboard.up('Control');
 	const tickLabels = await page.locator('.plot .tick-label').allTextContents();
 	ok(
 		'axis ticks adapt to months when zoomed in',
@@ -1242,6 +1257,7 @@ console.log('\n  ── chronicle navigation ──');
 if (runSection('chronicle events lane')) {
 console.log('\n  ── chronicle events lane ──');
 	const context = await browser.newContext({ viewport: { width: 1600, height: 1000 } });
+	await context.addInitScript(TOUR_SEEN_INIT);
 	const page = await context.newPage();
 	const problems: string[] = [];
 	page.on('pageerror', (e) => problems.push(`[pageerror] ${e.message}`));
@@ -1260,9 +1276,15 @@ console.log('\n  ── chronicle events lane ──');
 	// equal the table's row count.
 	const marks = await page.locator('.ev-mark').count();
 	ok('events lane renders marks', marks > 0, `${marks} marks`);
+	// The tables are the chart's text alternative and are drawn only while the section is open.
+	await page.locator('.a11y summary').click();
+	await page.waitForSelector('.a11y table');
 	const tables = await page.locator('.a11y table').count();
 	ok('events table present beside the tenures table', tables >= 2, `${tables} tables`);
 	const evRows = await page.locator('.a11y table').nth(1).locator('tbody tr').count();
+	// Close it again: an open section sits over the chart and takes the clicks aimed at it.
+	await page.locator('.a11y summary').click();
+	await page.waitForSelector('.a11y table', { state: 'detached' });
 	const recon = (await page.evaluate(`(() => {
 		const marks = Array.from(document.querySelectorAll('.chronicle .ev-mark'));
 		const clusters = marks.filter((m) => m.querySelector('.ev-cluster'));
@@ -1494,6 +1516,7 @@ console.log('\n  ── chronicle events lane ──');
 if (runSection('chronicle events expanded')) {
 	console.log('\n  ── chronicle events expanded ──');
 	const context = await browser.newContext({ viewport: { width: 1600, height: 1000 } });
+	await context.addInitScript(TOUR_SEEN_INIT);
 	const page = await context.newPage();
 	const problems: string[] = [];
 	page.on('pageerror', (e) => problems.push(`[pageerror] ${e.message}`));
@@ -1537,7 +1560,15 @@ if (runSection('chronicle events expanded')) {
 	// Row labels live in the gutter and must never sit on top of a mark.
 	const overlaps = await page.evaluate(`(() => {
 		const labels = Array.from(document.querySelectorAll('.exp-gl text')).map((l) => l.getBoundingClientRect());
-		const marks = Array.from(document.querySelectorAll('.ev-mark.clickable .ev-dot, .ev-mark.clickable .ev-pill, .ev-mark.clickable .ev-diamond, .ev-mark.clickable .ev-spanbar')).map((el) => el.getBoundingClientRect());
+		// A span that began before the window is clipped at the gutter's edge, but its box is not:
+		// only the part right of the gutter is on screen, so that is the part that can overlap.
+		const clip = document.querySelector('#plot-clip rect');
+		const plotLeft = document.querySelector('.plot').getBoundingClientRect().left;
+		const visibleFrom = plotLeft + (clip ? Number(clip.getAttribute('x')) : 0);
+		const marks = Array.from(document.querySelectorAll('.ev-mark.clickable .ev-dot, .ev-mark.clickable .ev-pill, .ev-mark.clickable .ev-diamond, .ev-mark.clickable .ev-spanbar')).map((el) => {
+			const r = el.getBoundingClientRect();
+			return { left: Math.max(r.left, visibleFrom), right: r.right, top: r.top, bottom: r.bottom };
+		});
 		const hit = (a, b) => !(a.right <= b.left || a.left >= b.right || a.bottom <= b.top || a.top >= b.bottom);
 		let n = 0;
 		for (const l of labels) if (marks.some((m) => hit(l, m))) n++;
@@ -1546,7 +1577,18 @@ if (runSection('chronicle events expanded')) {
 	ok('no gutter label overlaps a mark', overlaps === 0, `${overlaps} overlaps`);
 
 	// Clicking a mark opens the record.
-	await page.locator('.ev-mark.clickable').first().click();
+	// A mark whose span began before the window is centred under the gutter; click one that is on screen.
+	const onScreen = (await page.evaluate(`(() => {
+		const clip = document.querySelector('#plot-clip rect');
+		const from = document.querySelector('.plot').getBoundingClientRect().left + (clip ? Number(clip.getAttribute('x')) : 0);
+		for (const el of document.querySelectorAll('.ev-mark.clickable .ev-dot, .ev-mark.clickable .ev-pill, .ev-mark.clickable .ev-diamond')) {
+			const r = el.getBoundingClientRect();
+			const x = r.left + r.width / 2, y = r.top + r.height / 2;
+			if (x > from + 10 && x < window.innerWidth - 10 && y > 0 && y < window.innerHeight) return { x, y };
+		}
+		return null;
+	})()`)) as { x: number; y: number } | null;
+	if (onScreen) await page.mouse.click(onScreen.x, onScreen.y);
 	await page.waitForTimeout(600);
 	ok('clicking an expanded mark opens the inspector', (await page.locator('.inspector').count()) === 1);
 	await page.keyboard.press('Escape');
@@ -2773,6 +2815,7 @@ console.log('\n  ── deep-link round trips ──');
 	 */
 	{
 		const page = await context.newPage();
+		const seen = problems.length;
 		await page.goto(BASE + '/data?id=bourguiba', { waitUntil: 'networkidle', timeout: 30_000 });
 		await settle(page);
 		await page.waitForTimeout(1000);
@@ -2780,11 +2823,18 @@ console.log('\n  ── deep-link round trips ──');
 			'deep-link /data?id=bourguiba does not open the inspector',
 			(await page.locator('.inspector').count()) === 0
 		);
+		// /data is a reading page with no panel to open a record in, so a link that names one
+		// goes to the record's own page, replacing the entry rather than adding one.
 		ok(
-			'deep-link /data?id=bourguiba leaves the URL untouched',
-			page.url().includes('id=bourguiba') && !page.url().includes('region='),
+			'deep-link /data?id=bourguiba goes to the record page',
+			new URL(page.url()).pathname === '/e/bourguiba' && !page.url().includes('region='),
 			page.url().replace(BASE, '')
 		);
+		// The dev server has no /e/ route, so the forwarded request is a 404 it reports as a
+		// resource error; that one line is the dev server's, not the page's.
+		for (let i = problems.length - 1; i >= seen; i--) {
+			if (problems[i].includes('status of 404')) problems.splice(i, 1);
+		}
 		await page.close();
 	}
 
@@ -2946,7 +2996,8 @@ if (runSection('captions')) {
 console.log('\n  ── captions ──');
 	const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
 	await context.addInitScript(TOUR_SEEN_INIT);
-	for (const path of ['/rankings', '/map']) {
+	// /map forwards to /world, and the world view has its About while it shows the globe.
+	for (const path of ['/rankings', '/world']) {
 		const page = await context.newPage();
 		await page.goto(BASE + path, { waitUntil: 'networkidle', timeout: 30_000 });
 		await settle(page);
@@ -3352,7 +3403,10 @@ if (runSection('every language')) for (const locale of ['ar', 'fr'] as const) {
 			// (atlas), git commit subjects (corrections), hypothesis prose from
 			// records lacking fr/ar (evidence). Ceilings fall as DATA translation
 			// lands; the UI-chrome part of each landing is done.
-			'/methodology': 37,
+			// 2026-11-20: 37 -> 70. Measured 66. 75 of the 198 roles have no `title_ar`
+			// yet and the page lists roles, so the Arabic page shows their English
+			// titles. Data translation, not UI: the ceiling falls as the titles land.
+			'/methodology': 70,
 			'/map': 5,
 			'/network': 5,
 			// The guide is translated prose (guide.*.md + guide.* keys, same
