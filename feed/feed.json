@@ -3,6 +3,96 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:277abf9af619cc1a",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Une nouvelle extrême droite pro-israélienne s’installe en Amérique Latine",
+      "link": "https://kapitalis.com/tunisie/2026/11/20/une-nouvelle-extreme-droite-pro-israelienne-sinstalle-en-amerique-latine/",
+      "published": "2026-11-20T07:30:00Z",
+      "lang": "fr",
+      "author": "webmaster kapitalis"
+    },
+    {
+      "id": "feed:kapitalis:e1af9e15d11e89b4",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Imen Ben Rejeb raconte la mémoire des Siciliens de Tunisie",
+      "link": "https://kapitalis.com/tunisie/2026/11/20/imen-ben-rejeb-raconte-la-memoire-des-siciliens-de-tunisie/",
+      "published": "2026-11-20T07:28:08Z",
+      "lang": "fr",
+      "author": "webmaster kapitalis"
+    },
+    {
+      "id": "feed:african-manager:bfbd67b259c285df",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Zouari annonce 316 MDT pour l’entretien des routes et pistes",
+      "link": "https://africanmanager.com/zouari-annonce-316-mdt-pour-lentretien-des-routes-et-pistes/",
+      "published": "2026-11-20T07:13:13Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:1e68f10fff6dac95",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Location-vente : le ministère prévoit 1000 logements de plus en 2027",
+      "link": "https://africanmanager.com/location-vente-le-ministere-prevoit-1000-logements-de-plus-en-2027/",
+      "published": "2026-11-20T07:12:06Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:0a23293d838fa29e",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Urbanisme : 78 plans validés en 2026, 73 autres à l’étude en 2027",
+      "link": "https://africanmanager.com/urbanisme-78-plans-valides-en-2026-73-autres-a-letude-en-2027/",
+      "published": "2026-11-20T07:10:39Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:kapitalis:7d65989d1547cc57",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Un élu critique d’Israël pourrait devenir le chef de la majorité démocrate au Sénat",
+      "link": "https://kapitalis.com/tunisie/2026/11/20/un-elu-critique-disrael-pourrait-devenir-le-chef-de-la-majorite-democrate-au-senat/",
+      "published": "2026-11-20T07:00:00Z",
+      "lang": "fr",
+      "author": "webmaster kapitalis"
+    },
+    {
+      "id": "feed:kapitalis:62be30ba441c7f14",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Fawzia Zouari : «Je suis une femme, arabe, tunisienne, musulmane et laïque»",
+      "link": "https://kapitalis.com/tunisie/2026/11/20/fawzia-zouari-je-suis-une-femme-arabe-tunisienne-musulmane-et-laique/",
+      "published": "2026-11-20T06:30:00Z",
+      "lang": "fr",
+      "author": "webmaster kapitalis"
+    },
+    {
+      "id": "feed:nawaat:de7aada775078b5e",
+      "outlet": "Nawaat",
+      "outletId": "nawaat",
+      "title": "محاكمة سيف الدين العرفاوي سياسية وليست جزائية، حوار مع ربيع قاسم",
+      "link": "https://nawaat.org/2026/11/20/%d9%85%d8%ad%d8%a7%d9%83%d9%85%d8%a9-%d8%b3%d9%8a%d9%81-%d8%a7%d9%84%d8%af%d9%8a%d9%86-%d8%a7%d9%84%d8%b9%d8%b1%d9%81%d8%a7%d9%88%d9%8a-%d8%b3%d9%8a%d8%a7%d8%b3%d9%8a%d8%a9-%d9%88%d9%84%d9%8a%d8%b3/",
+      "published": "2026-11-19T23:14:37Z",
+      "lang": "ar",
+      "author": "Mahdi Jlassi"
+    },
+    {
+      "id": "feed:kapitalis:4c53f0a7e66cc2ce",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "La Cour d’appel de Tunis rend son verdict dans l’affaire Lourimi & Gharbi",
+      "link": "https://kapitalis.com/tunisie/2026/11/20/la-cour-dappel-de-tunis-rend-son-verdict-dans-laffaire-lourimi-gharbi/",
+      "published": "2026-11-19T23:09:12Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
       "id": "feed:kapitalis:0f12787c7652ecd6",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -11909,96 +11999,6 @@
       "published": "2026-10-22T22:17:09Z",
       "lang": "fr",
       "author": "Yusra NY"
-    },
-    {
-      "id": "feed:kapitalis:5c6ad2d564545dde",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Ariana | Arrestation d’un voleur ciblant les usagers des distributeurs bancaires",
-      "link": "https://kapitalis.com/tunisie/2026/10/22/ariana-arrestation-dun-voleur-ciblant-les-usagers-des-distributeurs-bancaires/",
-      "published": "2026-10-22T21:24:52Z",
-      "lang": "fr",
-      "author": "Yusra NY"
-    },
-    {
-      "id": "feed:kapitalis:b3376f4e2edeac3b",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Exposition | L’Argentine et la Tunisie fêtent 65 ans d’amitié en images",
-      "link": "https://kapitalis.com/tunisie/2026/10/22/exposition-largentine-et-la-tunisie-fetent-65-ans-damitie-en-images/",
-      "published": "2026-10-22T21:01:34Z",
-      "lang": "fr",
-      "author": "Yusra NY"
-    },
-    {
-      "id": "feed:kapitalis:ea76155c109f6517",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Drame au foyer universitaire de Sidi Mansour | Grève générale à l’appel de l’Uget",
-      "link": "https://kapitalis.com/tunisie/2026/10/22/drame-au-foyer-universitaire-de-sidi-mansour-greve-generale-a-lappel-de-luget/",
-      "published": "2026-10-22T18:35:54Z",
-      "lang": "fr",
-      "author": "Yusra NY"
-    },
-    {
-      "id": "feed:kapitalis:7d631ccb8e9f2d8e",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "​Météo-Tunisie | Les pévisions pour cette nuit",
-      "link": "https://kapitalis.com/tunisie/2026/10/22/meteo-tunisie-les-pevisions-pour-cette-nuit/",
-      "published": "2026-10-22T17:40:55Z",
-      "lang": "fr",
-      "author": "Yusra NY"
-    },
-    {
-      "id": "feed:nawaat:2f745c1b90d8d6c1",
-      "outlet": "Nawaat",
-      "outletId": "nawaat",
-      "title": "« Les héritiers du silence » : l’histoire oubliée de l’esclavage en Tunisie",
-      "link": "https://nawaat.org/2026/10/22/les-heritiers-du-silence-lhistoire-oubliee-de-lesclavage-en-tunisie/",
-      "published": "2026-10-22T17:27:07Z",
-      "lang": "fr",
-      "author": "Rihab Boukhayatia"
-    },
-    {
-      "id": "feed:african-manager:fe206933942ba274",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "ARP-CNDR : Abdelhafidh audtionné sur le projet du BE 27",
-      "link": "https://africanmanager.com/arp-cndr-audition-mercredi-du-ministre-de-leconomie-sur-le-projet-de-budget-economique-2027/",
-      "published": "2026-10-22T16:03:48Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:d253725f9fe06dbe",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Gaz de schiste: Un expert appelle à la prudence !",
-      "link": "https://africanmanager.com/gaz-de-schiste-un-expert-appelle-a-la-prudence-contre-des-risques-environnementaux/",
-      "published": "2026-10-22T15:34:46Z",
-      "lang": "fr",
-      "author": "Africanmanager"
-    },
-    {
-      "id": "feed:nawaat:8ba7e4c9558db5c0",
-      "outlet": "Nawaat",
-      "outletId": "nawaat",
-      "title": "محاكمة محمد اليوسفي محاكمة للصحافة الحرة، حوار مع هالة بن سالم",
-      "link": "https://nawaat.org/2026/10/22/%d9%85%d8%ad%d8%a7%d9%83%d9%85%d8%a9-%d9%85%d8%ad%d9%85%d8%af-%d8%a7%d9%84%d9%8a%d9%88%d8%b3%d9%81%d9%8a-%d9%85%d8%ad%d8%a7%d9%83%d9%85%d8%a9-%d9%84%d9%84%d8%b5%d8%ad%d8%a7%d9%81%d8%a9-%d8%a7%d9%84/",
-      "published": "2026-10-22T15:16:06Z",
-      "lang": "ar",
-      "author": "Mahdi Jlassi"
-    },
-    {
-      "id": "feed:african-manager:bedbda8ed0b92472",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Bilel Sahnoun membre du CA de l’AFCM jusqu’à 2028",
-      "link": "https://africanmanager.com/la-bourse-de-tunis-reelue-membre-du-conseil-dadministration-de-lafcm-pour-la-periode-2026-2028/",
-      "published": "2026-10-22T14:51:55Z",
-      "lang": "fr",
-      "author": "African Manager"
     }
   ]
 }
