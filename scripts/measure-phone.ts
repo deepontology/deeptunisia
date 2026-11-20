@@ -36,12 +36,20 @@
  * --cpu-profile prints where the page spent its main-thread time before the tap
  * gate passed, by function, for the first profile run.
  *
+ * Every row says how loaded the machine was while it ran: the 1-minute load average
+ * (at the start of the row and at its end), the share of the processors that were busy
+ * during it, and `LOADED` when the load average was over a quarter of the processors.
+ * The processor throttle is relative to the machine's own speed, so a figure taken on a
+ * busy machine is pessimistic and says so in its own row. `--enforce` does not give a
+ * verdict on a loaded machine: it exits 3, "not taken on a quiet machine".
+ *
  * This is a measurement, not a test: it needs a build and a browser, and it
  * asserts nothing unless `--enforce` is given, which fails when the 4G median of a
  * gate is over its line (`LINES`). It is not part of `npm test`.
  */
 import { chromium, type CDPSession, type Page } from 'playwright';
 import http from 'node:http';
+import os from 'node:os';
 import zlib from 'node:zlib';
 import { existsSync, readFileSync, statSync } from 'node:fs';
 import { dirname, extname, join } from 'node:path';
@@ -139,6 +147,21 @@ interface Run {
 }
 
 const BUDGET_MS = 120_000;
+
+/** Load above this share of the processors is not a quiet machine. */
+const QUIET_LOAD_PER_CPU = 0.25;
+
+function cpuTimes(): { idle: number; total: number } {
+	let idle = 0;
+	let total = 0;
+	for (const c of os.cpus()) {
+		idle += c.times.idle;
+		total += c.times.user + c.times.nice + c.times.sys + c.times.idle + c.times.irq;
+	}
+	return { idle, total };
+}
+const load1 = () => os.loadavg()[0];
+const isLoaded = (l: number) => l > os.cpus().length * QUIET_LOAD_PER_CPU;
 
 /**
  * The lines, in milliseconds, on the 4G profile with the processor four times slower.
@@ -288,11 +311,15 @@ console.log('  primary gate: tap (the first tenure opens its record); text: that
 console.log('  profile          gate     first paint   usable     wire before usable   line');
 let profiled = false;
 let overLine = false;
+let everLoaded = false;
+console.log(`  machine: ${os.cpus().length} processors, 1-minute load average ${load1().toFixed(1)} at the start (quiet is under ${(os.cpus().length * QUIET_LOAD_PER_CPU).toFixed(0)})\n`);
 for (const profile of PROFILES) {
 	if (only && profile.name !== only) continue;
 	if (remote && profile.local) continue;
 	for (const gate of ['tap', 'text', 'palette'] as Gate[]) {
 		const results: Run[] = [];
+		const loadBefore = load1();
+		const cpuBefore = cpuTimes();
 		for (let i = 0; i < runs; i++) {
 			const withProfile = cpuProfile && !profiled && gate === 'tap' && i === 0;
 			results.push(await runOnce(browser, base, route, profile, gate, withProfile));
@@ -302,16 +329,28 @@ for (const profile of PROFILES) {
 		const paint = median(results.map((r) => r.firstPaint));
 		const wire = median(results.map((r) => r.wireKB));
 		const sec = (ms: number | null) => (ms === null ? 'never' : `${(ms / 1000).toFixed(1)} s`);
+		const cpuAfter = cpuTimes();
+		const busy = Math.round((1 - (cpuAfter.idle - cpuBefore.idle) / (cpuAfter.total - cpuBefore.total)) * 100);
+		const loadAfter = load1();
+		const loaded = isLoaded(loadBefore) || isLoaded(loadAfter);
+		if (loaded) everLoaded = true;
 		const line = LINES[profile.name]?.[gate];
 		const over = line !== undefined && (usable === null || usable > line);
 		if (over) overLine = true;
 		console.log(
 			`  ${profile.name.padEnd(16)} ${gate.padEnd(8)} ${sec(paint).padEnd(13)} ${sec(usable).padEnd(10)} ${wire?.toLocaleString('en-US')} KB` +
-				(line === undefined ? '' : `   line ${sec(line)}${over ? '  OVER' : ''}`)
+				(line === undefined ? '' : `   line ${sec(line)}${over ? '  OVER' : ''}`) +
+				`   load ${loadBefore.toFixed(1)}→${loadAfter.toFixed(1)}, ${busy}% busy${loaded ? '  LOADED' : ''}`
 		);
 	}
 }
 console.log('');
 await browser.close();
 local?.close();
-if (overLine && process.argv.includes('--enforce')) process.exit(1);
+if (process.argv.includes('--enforce')) {
+	if (everLoaded) {
+		console.log('  --enforce: the machine was loaded during this run, so it gives no verdict. Run it again when it is quiet.\n');
+		process.exit(3);
+	}
+	if (overLine) process.exit(1);
+}
