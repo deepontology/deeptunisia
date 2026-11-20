@@ -1329,17 +1329,24 @@ const KIND_TO_DATASET: Record<string, string> = {
 	{
 		const trimsPath = join(HERE, '..', 'static', 'interval-trims.json');
 		const published = existsSync(trimsPath) ? JSON.parse(readFileSync(trimsPath, 'utf8')) : [];
-		const clamped = [
-			...ds.positions
-				.filter((p: Pos) => p.interval.trimmed || p.interval.startClamped)
-				.map((p: Pos) => ({ kind: 'position', id: p.id })),
-			...(ds.relationships as { id?: string; interval: { trimmed?: boolean; startClamped?: boolean } }[])
-				.filter((r) => r.interval.trimmed || r.interval.startClamped)
-				.map((r) => ({ kind: 'relationship', id: r.id })),
-			...(ds.events as { id?: string; interval: { trimmed?: boolean; startClamped?: boolean } }[])
-				.filter((e) => e.interval.trimmed || e.interval.startClamped)
-				.map((e) => ({ kind: 'event', id: e.id }))
+		// Every collection of the graph that carries an interval, read from the
+		// graph itself and not from the build's own list: "every clamp is
+		// published" is the claim, so a kind the report forgot shows up here.
+		const WITH_INTERVALS: [string, string][] = [
+			['eras', 'era'],
+			['institutions', 'institution'],
+			['positions', 'position'],
+			['relationships', 'relationship'],
+			['events', 'event'],
+			['contracts', 'contract'],
+			['vacancies', 'vacancy'],
+			['education', 'education']
 		];
+		const clamped = WITH_INTERVALS.flatMap(([collection, kind]) =>
+			((ds as Record<string, unknown>)[collection] as { id?: string; interval?: { trimmed?: boolean; startClamped?: boolean } }[])
+				.filter((r) => r.interval?.trimmed || r.interval?.startClamped)
+				.map((r) => ({ kind, id: r.id }))
+		);
 		const missing = clamped.filter(
 			(c) => !published.some((p: { kind: string; id: string }) => p.kind === c.kind && p.id === c.id)
 		);
@@ -1347,6 +1354,11 @@ const KIND_TO_DATASET: Record<string, string> = {
 			'V22: every clamped interval of the current graph appears in the published trims report',
 			missing.length === 0,
 			missing.length ? `not published: ${missing.slice(0, 5).map((m) => `${m.kind}:${m.id}`).join('; ')}` : `${published.length} trims published, ${clamped.length} clamped in graph`
+		);
+		ok(
+			'V22: the trims report lists exactly the clamped intervals of the graph, no more and no fewer',
+			published.length === clamped.length,
+			`${published.length} published, ${clamped.length} clamped in the graph`
 		);
 	}
 	ok('V22: p-foreign-drif carries a corrected span or a recorded dispute', (() => {
