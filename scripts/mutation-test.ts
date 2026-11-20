@@ -60,6 +60,9 @@ const ENGINE_REVIEW = '../node_modules/deepepisteme/src/kernel/review.ts';
 const ENGINE_ENVELOPE = '../node_modules/deepepisteme/src/kernel/envelope.ts';
 const ENGINE_PLACE_GEOGRAPHY = '../node_modules/deepepisteme/src/atlas/rules/place-geography.ts';
 const ENGINE_CONTRACT_AWARD = '../node_modules/deepepisteme/src/atlas/rules/contract-award.ts';
+const ENGINE_EVENT_CAUSAL = '../node_modules/deepepisteme/src/atlas/rules/event-causal.ts';
+const ENGINE_EVENT_RUPTURE = '../node_modules/deepepisteme/src/atlas/rules/event-rupture.ts';
+const ENGINE_RELATIONSHIP_DUPLICATES = '../node_modules/deepepisteme/src/atlas/rules/relationship-duplicates.ts';
 
 const hash = (p: string) => {
 	if (!existsSync(p)) return 'missing';
@@ -240,7 +243,7 @@ const MUTATIONS: Mutation[] = [
 		to: ''
 	},
 	{
-		id: 'm22', file: 'build-data.ts', expect: 'test-pipeline (injected causal cycle)',
+		id: 'm22', file: ENGINE_EVENT_CAUSAL, expect: 'test-pipeline (injected causal cycle)',
 		label: 'causal-cycle detection disabled (V8/Tarjan)',
 		from: 'if (low.get(v) === index.get(v)) {',
 		to: 'if (false && low.get(v) === index.get(v)) {'
@@ -252,10 +255,10 @@ const MUTATIONS: Mutation[] = [
 		to: 'if (false && !sourceById.has(id)) fail(where, `unknown source "${id}"`);'
 	},
 	{
-		id: 'm24', file: 'build-data.ts', expect: 'test-pipeline (injected cause-after-consequence)',
+		id: 'm24', file: ENGINE_EVENT_CAUSAL, expect: 'test-pipeline (injected cause-after-consequence)',
 		label: 'cause-after-consequence ordering disabled (V8 temporal)',
-		from: 'if (cause && cause.interval.startEarliest > ends) {',
-		to: 'if (false && cause && cause.interval.startEarliest > ends) {'
+		from: 'if (causeInterval.startEarliest > ends) {',
+		to: 'if (false && causeInterval.startEarliest > ends) {'
 	},
 	{
 		id: 'm25', file: 'build-data.ts', expect: 'test-pipeline (injected unmoored influence edge)',
@@ -288,16 +291,16 @@ const MUTATIONS: Mutation[] = [
 		to: "if (false && rule.from === 'institution' && fromPerson) {"
 	},
 	{
-		id: 'm61', file: 'build-data.ts', expect: 'test-pipeline (injected duplicate relationship)',
+		id: 'm61', file: ENGINE_RELATIONSHIP_DUPLICATES, expect: 'test-pipeline (injected duplicate relationship)',
 		label: 'overlapping duplicate relationships are no longer found (V16)',
-		from: 'const overlap = a.interval.startEarliest <= bEnd && b.interval.startEarliest <= aEnd;',
+		from: 'const overlap = aInterval.startEarliest <= bEnd && bInterval.startEarliest <= aEnd;',
 		to: 'const overlap = false;'
 	},
 	{
-		id: 'm62', file: 'build-data.ts', expect: 'test-pipeline (injected floating rupture)',
+		id: 'm62', file: ENGINE_EVENT_RUPTURE, expect: 'test-pipeline (injected floating rupture)',
 		label: 'a rupture event linked to nothing is no longer flagged (V17)',
-		from: 'if (ev.rupture && ev.causes.length === 0 && ev.consequences.length === 0) {',
-		to: 'if (false && ev.rupture && ev.causes.length === 0 && ev.consequences.length === 0) {'
+		from: 'if (causes !== 0 || consequences !== 0) continue;',
+		to: 'if (true) continue;'
 	},
 	{
 		id: 'm31', file: 'build-data.ts', expect: 'the build gate (grade-A primary rule)',
@@ -491,6 +494,9 @@ const SUITES_FOR: Record<string, string[]> = {
 	[ENGINE_ENVELOPE]: ['test-data.ts', 'test-validators.ts'],
 	[ENGINE_CONTRACT_AWARD]: ['test-data.ts', 'test-pipeline.ts'],
 	[ENGINE_PLACE_GEOGRAPHY]: ['test-data.ts', 'test-pipeline.ts'],
+	[ENGINE_EVENT_CAUSAL]: ['test-data.ts', 'test-pipeline.ts'],
+	[ENGINE_EVENT_RUPTURE]: ['test-data.ts', 'test-pipeline.ts'],
+	[ENGINE_RELATIONSHIP_DUPLICATES]: ['test-data.ts', 'test-pipeline.ts'],
 	'origins.ts': ['test-validators.ts'],
 	'review-coverage.ts': ['test-data.ts', 'test-validators.ts', 'test-emit.ts'],
 	'network-continuity.ts': ['test-network-continuity.ts'],

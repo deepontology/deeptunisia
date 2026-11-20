@@ -1394,17 +1394,13 @@ const resolvedEvents = events.map((ev) => ({
 	for (const e of resolvedEvents) insideHorizon('event', e.id, e.interval);
 }
 
-// V16 — duplicate relationships (spec §12): the same (from,to,type,subtype) with
-// overlapping intervals is a duplicate and fails, unless one of the two records
-// carries `merged_into` naming the survivor (spec §13.3 — the merge escape).
-// `merged_into` and `supersedes` refs must also resolve.
+// V16 — duplicate relationships (spec §12) runs from the engine rule below,
+// together with the `merged_into` ref check. The `supersedes` refs on
+// relationships and positions are checked here.
 {
 	const relById = new Map(resolvedRelationships.map((r) => [r.id, r]));
 	const posById = new Map(resolvedPositions.map((p) => [p.id, p]));
 	for (const r of resolvedRelationships) {
-		if (r.merged_into && !relById.has(r.merged_into)) {
-			fail(`relationship ${r.id}`, `merged_into names unknown relationship "${r.merged_into}" (V16)`);
-		}
 		if (r.supersedes && !relById.has(r.supersedes)) {
 			fail(`relationship ${r.id}`, `supersedes names unknown relationship "${r.supersedes}"`);
 		}
@@ -1414,39 +1410,12 @@ const resolvedEvents = events.map((ev) => ({
 			fail(`position ${p.id}`, `supersedes names unknown position "${p.supersedes}"`);
 		}
 	}
-	const groups = new Map<string, typeof resolvedRelationships>();
-	for (const r of resolvedRelationships) {
-		const key = `${r.from}|${r.to}|${r.type}|${r.subtype ?? ''}`;
-		groups.set(key, [...(groups.get(key) ?? []), r]);
-	}
-	for (const [key, group] of groups) {
-		if (group.length < 2) continue;
-		for (let i = 0; i < group.length; i++) {
-			for (let j = i + 1; j < group.length; j++) {
-				const a = group[i];
-				const b = group[j];
-				if (a.merged_into === b.id || b.merged_into === a.id) continue;
-				const aEnd = a.interval.endLatest ?? DATASET_CUTOFF;
-				const bEnd = b.interval.endLatest ?? DATASET_CUTOFF;
-				const overlap = a.interval.startEarliest <= bEnd && b.interval.startEarliest <= aEnd;
-				if (overlap) {
-					fail(
-						`relationship ${a.id}`,
-						`duplicate of ${b.id} (${key}) with an overlapping interval — merge one into the other (merged_into) or record the conflict (V16)`
-					);
-				}
-			}
-		}
-	}
 }
 
 // Editorial queue (spec §13.1): every unreviewed claim record across ALL kinds,
-// V8/V17 — the event causal graph (spec §6).
-//
-// `causes` and `consequences` are event-to-event edges. A cause must precede its
-// consequence (V8, hard), a causal cycle is impossible in reality and fails
-// (V8/Tarjan), and a rupture event that floats — linked to nothing — is a gap
-// the reviewer should see (V17, warn).
+// V8/V17 — the event causal graph (spec §6) runs from the engine rules below:
+// a cause cannot begin after its consequence ends, a causal cycle fails, and a
+// rupture linked to nothing is flagged. The ref checks stay here.
 
 // resolved-events index for the causal graph (the raw-file index at line 177 is
 // for the pre-resolution ref-checks).
@@ -1462,72 +1431,6 @@ for (const ev of resolvedEvents) {
 		if (d.source && !sourceById.has(d.source)) {
 			fail(`event ${ev.id}`, `dispute cites unknown source "${d.source}"`);
 		}
-	}
-}
-
-// V8 — temporal ordering: the cause cannot begin after the consequence is over.
-for (const ev of resolvedEvents) {
-	for (const causeId of ev.causes) {
-		const cause = causalEventById.get(causeId);
-		const consequence = ev;
-		const ends = consequence.interval.endLatest ?? DATASET_CUTOFF;
-		if (cause && cause.interval.startEarliest > ends) {
-			if ((consequence.disputes?.length ?? 0) === 0) {
-				fail(
-					`event ${ev.id}`,
-					`cause "${causeId}" (${cause.date}) begins after its consequence ends — reorder or record a dispute (V8)`
-				);
-			}
-		}
-	}
-}
-
-// V8 — a causal cycle is impossible: Tarjan's SCC over the cause edges.
-{
-	const adj = new Map<string, string[]>();
-	for (const ev of resolvedEvents) adj.set(ev.id, [...ev.causes]);
-	const index = new Map<string, number>();
-	const low = new Map<string, number>();
-	const onStack = new Set<string>();
-	const stack: string[] = [];
-	let counter = 0;
-	const cycles: string[][] = [];
-	const strong = (v: string) => {
-		index.set(v, counter);
-		low.set(v, counter);
-		counter++;
-		stack.push(v);
-		onStack.add(v);
-		for (const w of adj.get(v) ?? []) {
-			if (!causalEventById.has(w)) continue; // unknown ids already failed above
-			if (!index.has(w)) {
-				strong(w);
-				low.set(v, Math.min(low.get(v)!, low.get(w)!));
-			} else if (onStack.has(w)) {
-				low.set(v, Math.min(low.get(v)!, index.get(w)!));
-			}
-		}
-		if (low.get(v) === index.get(v)) {
-			const scc: string[] = [];
-			let w: string;
-			do {
-				w = stack.pop()!;
-				onStack.delete(w);
-				scc.push(w);
-			} while (w !== v);
-			if (scc.length > 1) cycles.push(scc);
-		}
-	};
-	for (const ev of resolvedEvents) if (!index.has(ev.id)) strong(ev.id);
-	for (const cycle of cycles) {
-		fail('event-causal-graph', `causal cycle: ${cycle.join(' → ')} (V8)`);
-	}
-}
-
-// V17 — a rupture that links to nothing is a flagged gap, not a failure.
-for (const ev of resolvedEvents) {
-	if (ev.rupture && ev.causes.length === 0 && ev.consequences.length === 0) {
-		warn(`event ${ev.id}`, `rupture event is not linked into the causal graph (V17)`);
 	}
 }
 
@@ -1669,8 +1572,17 @@ const resolvedEducation = education.map((e) => ({
 //   memory". A contract carrying `award` names who reports the figure or draws
 //   on a primary source (tier 1/2).
 {
-	const resolved = engine.resolve({ source: sources, contract: contracts, place: places, person: people, institution: institutions, role: roles });
-	for (const f of engine.validate(resolved, { only: ['V4', 'V10'] })) {
+	const resolved = engine.resolve({
+		source: sources,
+		contract: contracts,
+		place: places,
+		person: people,
+		institution: institutions,
+		role: roles,
+		relationship: relationships,
+		event: events
+	});
+	for (const f of engine.validate(resolved, { only: ['V4', 'V10', 'V16', 'V17', 'V8'] })) {
 		if (f.severity === 'error') fail(f.record ? `${f.record.kind} ${f.record.id}` : f.rule, f.message);
 		else warn(f.record ? `${f.record.kind} ${f.record.id}` : f.rule, f.message);
 	}
