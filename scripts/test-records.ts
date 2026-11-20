@@ -133,6 +133,25 @@ for (const [id, html] of pages) {
 	}
 }
 
+/* A record link pasted into a chat app must preview as well as the share shell it
+   replaces: a large image card, and an icon the browser and the home screen find. */
+const headGaps: string[] = [];
+for (const [id, html] of pages) {
+	const need = [
+		/<meta property=og:image content="https:\/\/deeptunisia\.org\/og\/default\.png">/,
+		/<meta name=twitter:card content=summary_large_image>/,
+		/<meta name=twitter:image content="https:\/\/deeptunisia\.org\/og\/default\.png">/,
+		/<link rel=icon href=\/favicon\.svg /,
+		/<link rel=icon href=\/favicon\.ico /,
+		/<link rel=apple-touch-icon href=\/apple-touch-icon\.png>/
+	];
+	if (need.some((re) => !re.test(html))) headGaps.push(id);
+}
+ok('every page head carries the share image, the large card and the icons', headGaps.length === 0, headGaps.length ? sample(headGaps) : '');
+const headFiles = ['og/default.png', 'favicon.svg', 'favicon.ico', 'icon-192.png', 'apple-touch-icon.png'];
+const headMissing = headFiles.filter((f) => !existsSync(join(ROOT, 'static', f)));
+ok('every file the page head names exists in static/', headMissing.length === 0, headMissing.join(', '));
+
 ok('every page has a standing block', noStanding.length === 0, noStanding.length ? sample(noStanding) : '');
 ok(
 	'the standing block comes before the first claim row',
