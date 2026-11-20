@@ -55,6 +55,7 @@ const DATASET = join(ROOT, 'src', 'generated', 'dataset.json');
 const S = (f: string) => join(HERE, f);
 const ENGINE_TIME = '../node_modules/deepepisteme/src/kernel/time.ts';
 const ENGINE_CANONICAL = '../node_modules/deepepisteme/src/kernel/canonical.ts';
+const ENGINE_EVIDENCE = '../node_modules/deepepisteme/src/kernel/evidence.ts';
 const ENGINE_KERNEL_KINDS = '../node_modules/deepepisteme/src/kernel/kinds.ts';
 const ENGINE_BASIS = '../node_modules/deepepisteme/src/kernel/basis.ts';
 const ENGINE_REVIEW = '../node_modules/deepepisteme/src/kernel/review.ts';
@@ -220,21 +221,15 @@ const MUTATIONS: Mutation[] = [
 		from: 'if (r.independence === undefined) {',
 		to: 'if (false && r.independence === undefined) {'
 	},
-	// --- schema.ts: claim evidence and archive snapshots (V29) -------------------
+	// --- claim evidence and archive snapshots (V29): the engine's kernel ---------
 	{
-		id: 'm42', file: 'schema.ts', expect: 'test-validators V29 (year-only/date-only lookup fixtures)',
-		label: 'archive lookup format check disabled (a lookup passes as a snapshot)',
-		from: 'return /^https?:\\/\\/(www\\.)?web\\.archive\\.org\\/web\\/\\d{14}(?:[a-z_]+)?\\//i.test(url);',
-		to: 'return true;'
-	},
-	{
-		id: 'm43', file: 'schema.ts', expect: 'test-validators V29 (capture or retry required)',
+		id: 'm43', file: ENGINE_EVIDENCE, expect: 'test-validators V29 (capture or retry required)',
 		label: 'evidence no longer needs a capture or a dated retry',
 		from: 'if (!e.capture_url && !e.capture_missing) {',
 		to: 'if (false && !e.capture_url && !e.capture_missing) {'
 	},
 	{
-		id: 'm44', file: 'schema.ts', expect: 'test-validators V29 (locator required)',
+		id: 'm44', file: ENGINE_EVIDENCE, expect: 'test-validators V29 (locator required)',
 		label: 'the evidence locator minimum is weakened to allow whitespace',
 		from: ".refine((v) => nonBlank(v, 2), 'evidence needs a locator (page, section or timestamp)'),",
 		to: ".refine((v) => nonBlank(v, 0), 'evidence needs a locator (page, section or timestamp)'),"
@@ -247,7 +242,7 @@ const MUTATIONS: Mutation[] = [
 	},
 	{
 		id: 'm72', file: ENGINE_KERNEL_KINDS, expect: 'test-validators V29 source (year-only/date-only lookup fixtures)',
-		label: 'a source archive lookup passes as a snapshot (V29)',
+		label: 'an archive lookup passes as a snapshot, for a source or for evidence (V29)',
 		from: 'return /^https?:\\/\\/(www\\.)?web\\.archive\\.org\\/web\\/\\d{14}(?:[a-z_]+)?\\//i.test(url);',
 		to: 'return true;'
 	},
@@ -575,6 +570,7 @@ const SUITES_FOR: Record<string, string[]> = {
 	[ENGINE_UNMOORED_INFLUENCE]: ['test-data.ts', 'test-pipeline.ts'],
 	[ENGINE_SUCCESSION]: ['test-data.ts'],
 	[ENGINE_KERNEL_KINDS]: ['test-validators.ts', 'test-data.ts'],
+	[ENGINE_EVIDENCE]: ['test-validators.ts', 'test-data.ts'],
 	[ENGINE_EVENT_RUPTURE]: ['test-data.ts', 'test-pipeline.ts'],
 	[ENGINE_RELATIONSHIP_DUPLICATES]: ['test-data.ts', 'test-pipeline.ts'],
 	'origins.ts': ['test-validators.ts'],

@@ -232,7 +232,7 @@ export const VALIDATOR_REGISTER: ValidatorEntry[] = [
 		rule: 'evidence needs a passage, locator, retrieval date and a real capture or a dated retry',
 		status: 'enforced',
 		gate: 'fail',
-		site: { file: 'scripts/schema.ts', anchor: 'capture_url must be an actual snapshot' }
+		site: { file: 'node_modules/deepepisteme/src/kernel/evidence.ts', anchor: 'capture_url must be an actual snapshot' }
 	},
 	{
 		id: 'V30',

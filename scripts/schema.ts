@@ -19,7 +19,9 @@ import {
 	reviewerLabelPattern,
 	slug,
 	withClaimEnvelope as engineClaimEnvelope,
+	EvidenceSchema,
 	NarrativeReferenceSchema,
+	isArchiveSnapshot,
 	type ExceptionRegister,
 	type HypothesisRecord,
 	type QuestionRecord,
@@ -201,19 +203,7 @@ export type { SourceRelationValue };
  *   circulating-claim      the claim circulates without reliable evidence
  */
 
-/**
- * Is this archive URL a snapshot, or a lookup that resolves to one later?
- *
- * Only web.archive.org URLs are checked, because that is where the review found
- * generated links. `/web/2026/` and `/web/20230605/` are lookups: the Wayback
- * Machine resolves them to whichever capture is nearest, which is not evidence
- * that the page was ever read. A real capture carries the full 14-digit
- * timestamp, optionally with the replay modifier suffix (`if_`, `id_`). (V29)
- */
-export function isArchiveSnapshot(url: string): boolean {
-	if (!/^https?:\/\/(www\.)?web\.archive\.org\//i.test(url)) return true;
-	return /^https?:\/\/(www\.)?web\.archive\.org\/web\/\d{14}(?:[a-z_]+)?\//i.test(url);
-}
+export { isArchiveSnapshot };
 
 /**
  * CLAIM-LEVEL EVIDENCE (V29) — the passage, not the bibliography.
@@ -224,47 +214,7 @@ export function isArchiveSnapshot(url: string): boolean {
  * promise to make one. `lineage` names the originating report and each
  * republishing step, so two outlets sharing one wire count as one origin.
  */
-export const EvidenceSchema = z
-	.strictObject({
-		passage_type: z.enum(['quote', 'paraphrase']),
-		/** Verbatim for `quote`; a close reading, marked as such, for `paraphrase`. */
-		passage: z
-			.string()
-			.refine((v) => nonBlank(v, 10), 'a passage must be at least 10 non-blank characters'),
-		/** Page, article section or timestamp: where in the source the passage sits. */
-		locator: z
-			.string()
-			.refine((v) => nonBlank(v, 2), 'evidence needs a locator (page, section or timestamp)'),
-		retrieved_at: z
-			.string()
-			.regex(/^\d{4}-\d{2}-\d{2}$/, 'retrieved_at must be an ISO date (YYYY-MM-DD)'),
-		/** A real snapshot, never a generated archive lookup. */
-		capture_url: z
-			.string()
-			.url()
-			.refine(
-				isArchiveSnapshot,
-				'capture_url must be an actual snapshot (timestamped), not a year-only or date-only archive lookup (V29)'
-			)
-			.optional(),
-		/** When no capture exists yet, the date a retry is owed. */
-		capture_missing: z
-			.string()
-			.regex(/^\d{4}-\d{2}-\d{2}$/, 'capture_missing must be an ISO retry date (YYYY-MM-DD)')
-			.optional(),
-		/** Originating report plus each republishing step, in order. */
-		lineage: z
-			.array(z.strictObject({ publisher: z.string().min(2), url: z.string().url().optional() }))
-			.default([])
-	})
-	.superRefine((e, ctx) => {
-		if (!e.capture_url && !e.capture_missing) {
-			ctx.addIssue({
-				code: 'custom',
-				message: 'evidence needs a capture_url, or capture_missing with the retry date (V29)'
-			});
-		}
-	});
+export { EvidenceSchema };
 
 const claimAxes = {
 	/** How the cited sources relate to the claim itself (V26). */
