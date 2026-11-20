@@ -19,8 +19,14 @@ import {
 	reviewerLabelPattern,
 	slug,
 	withClaimEnvelope as engineClaimEnvelope,
-	type SourceRelationValue
+	NarrativeReferenceSchema,
+	type HypothesisRecord,
+	type QuestionRecord,
+	type SourceRelationValue,
+	type SourceRecord,
+	type VerificationRecord
 } from 'deepepisteme/kernel';
+import { engine } from './engine.ts';
 import {
 	AgreementKind,
 	type DirectionKind,
@@ -31,8 +37,18 @@ import {
 	PlaceKind,
 	REVIEWER_LABELS,
 	RegionKind,
-	RelationshipType
+	RelationshipType,
+	type SourceLanguage
 } from './vocabulary.ts';
+
+/**
+ * The schema the engine parses a kind with, typed as the record this module
+ * declares for it. Kinds whose record type the engine does not carry statically
+ * are narrowed here, on the deployment side.
+ */
+function kernelSchema<Out>(kind: string): z.ZodType<Out> {
+	return engine.schemaOf(kind) as unknown as z.ZodType<Out>;
+}
 
 /** The vocabularies, re-exported under the names this module has always used. */
 export {
@@ -423,68 +439,11 @@ const intervalSpec = z.strictObject({
 // Source
 // ---------------------------------------------------------------------------
 
-export const SourceSchema = z.strictObject({
-	id: slug,
-	/**
-	 * Optional record-type marker. A minority of source records carry
-	 * `kind: source` as a first key; before V28 the schema stripped it silently.
-	 */
-	kind: z.literal('source').optional(),
-	title: z.string().min(3),
-	publisher: z.string().min(2),
-	/** Publication date, ISO. Optional only for undated primary records. */
-	date: z.string().optional(),
-	/** The page a reader can fetch. A source URL is a web link, not any URI. */
-	url: z
-		.string()
-		.url()
-		.refine((v) => /^https?:\/\//i.test(v), 'a source URL must be http(s) (V29)'),
-	/**
-	 * Snapshot URL. Tunisian media and gazette links rot fast, so a source-backed
-	 * site whose sources 404 in two years is worthless. A registered snapshot must
-	 * be a real timestamped capture, not a generated archive lookup. (V29)
-	 */
-	archive_url: z
-		.string()
-		.url()
-		.refine(
-			isArchiveSnapshot,
-			'a web.archive.org archive_url must be an actual snapshot (timestamped), not a year-only or date-only archive lookup (V29)'
-		)
-		.optional(),
-	/**
-	 * 1 official/primary (gazette, decrees, government portals)
-	 * 2 institutional or peer-reviewed research
-	 * 3 established international journalism
-	 * 4 reputable regional media
-	 * 5 lead requiring corroboration; never sufficient on its own
-	 */
-	tier: z.union([z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)]),
-	lang: z.enum(['ar', 'fr', 'en', 'it', 'de']).default('en'),
-	/** Short quotation supporting the claims that cite this source. */
-	excerpt: z.string().optional(),
-	/**
-	 * Editorial notes about the source itself (an HTTP block, a dead link, a
-	 * tier judgement). Before V28 these were silently stripped; making strict
-	 * parsing real surfaced 24 records that carried them.
-	 */
-	note: z.string().optional(),
-	notes: z.array(z.string()).optional(),
-	/** Why the tier is what it is (V28 audit find). */
-	tier_note: z.string().optional(),
-
-	// The original `excerpt` stays primary (quoted material). `excerpt_fr`/`excerpt_ar`
-	// are AI-produced reading aids carried at the `machine` tier — the admission that
-	// a model produced them and nothing checked them (i18n-spec §2.2 amendment). They
-	// render subordinate, never in place of the original quote.
-	...translatable('excerpt'),
-
-	// docs/i18n-spec.md §2.1: a source title is part of the citation and always
-	// displays in its original language. `title_gloss_fr`/`title_gloss_ar` are a
-	// reading aid that renders BESIDE the original — never in place of it, never in
-	// a citation string, never in the CSV export's title column.
-	...translatable('title_gloss')
-});
+/**
+ * A citation record. The engine owns the kind: this is the schema its `parse`
+ * reads sources with, narrowed to the languages this deployment declares.
+ */
+export const SourceSchema = kernelSchema<Source>('source');
 
 // ---------------------------------------------------------------------------
 // Institution
@@ -1258,176 +1217,30 @@ export const EraSchema = z.strictObject({
 // ---------------------------------------------------------------------------
 
 /**
- * A typed narrative reference (v0.1.3 M2) — the machine-checkable half of a
- * sentence that names a person in a post on a date.
- *
- * Hypotheses, evidence findings and questions are free prose. This is how one
- * asserts a fact from that prose WITHOUT parsing it: the author states the fact
- * explicitly, and `scripts/consistency.ts` compares it against the canonical
- * positions and their intervals. A reference that contradicts a record fails
- * the build; a claim that declares none gets a named review warning.
- *
- * `on` is an exact date on purpose. A range cannot be contradicted cleanly —
- * "between 2011 and 2018" would overlap the canonical record under any reading.
+ * A typed narrative reference (v0.1.3 M2): the machine-checkable half of a
+ * sentence that names a person in a post on a date. The engine owns the schema;
+ * `scripts/consistency.ts` compares each reference against the canonical
+ * positions and their intervals.
  */
-export const NarrativeReferenceSchema = z.strictObject({
-	/** Canonical person id, as `people.yaml` uses it. */
-	person: slug,
-	/** Canonical role id, as `positions.yaml` uses it. */
-	role: slug.optional(),
-	/** Canonical institution id, when the narrative names the body, not the post. */
-	institution: slug.optional(),
-	/** The instant the narrative asserts they held it. */
-	on: z
-		.string()
-		.regex(/^\d{4}-\d{2}-\d{2}$/, 'a typed reference needs an exact date (YYYY-MM-DD), not a range or a ?'),
-	/** Why this reference is here, when it is not obvious from the claim. */
-	note: z.string().max(400).optional()
-});
-
+export { NarrativeReferenceSchema };
 export type NarrativeReference = z.infer<typeof NarrativeReferenceSchema>;
 
 /**
- * Independent verification (v0.1.3 plan, milestone M2).
- *
- * Deliberately its own record type, not a flag on the editorial `review`
- * object. The three populations must stay separate forever, because the
- * project's credibility rests on never adding them together:
- *
- *   editorial review     a maintainer or agent looked at a record — 46 of them
- *   editorial queue      the records still waiting for a look — 956 of them
- *   independent          a second human, blinded to the project's own grade,
- *   verification         assessed the same record under the study rubric
- *
- * Only the third may raise the independent count, and today it raises nothing:
- * no record of this kind exists, which is why every published figure says zero.
- * A verification record is the evidence that the study happened; the absence of
- * the records is what makes "zero independently checked" true rather than a
- * claim. The outcome taxonomy is the five-valued one the protocol defines, not
- * the editorial `review.outcome` that governance has not opened yet.
+ * Independent verification (v0.1.3 plan, milestone M2): a second human, blinded
+ * to the project's own grade, assessed the same record under the study rubric.
+ * Deliberately its own record type, not a flag on the editorial `review`, so the
+ * populations are never added together. The engine owns the schema.
  */
-export const VerificationSchema = z.strictObject({
-	id: slug,
-	/** The record checked, as `kind:id` — e.g. `position:p-dgsn-bennour-2`. */
-	claim: z.string().min(3),
-	/** The claim kind, so coverage can be reported per kind. */
-	kind: slug,
-	/** The claim's basis, so coverage can be reported per basis. */
-	basis: z.enum(['documented', 'reported', 'inferred', 'unsubstantiated']),
-	/** When the check happened. */
-	date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'a verification needs a YYYY-MM-DD date'),
-	/** Who checked it: a second human who did not compile the record. */
-	by: z.string().min(2),
-	/** The instrument applied, from the frozen study protocol. */
-	method: z.string().min(2),
-	/** Whether the rater was shown the project's own grade. Blinding is the point. */
-	blinded: z.boolean().default(true),
-	/** What the rater concluded. A reviewed claim may legitimately be refuted. */
-	outcome: z.enum(['supported', 'refuted', 'disputed', 'unresolved', 'insufficient_evidence']),
-	/** The evidence the rater read. */
-	sources: z.array(slug).default([]),
-	note: z.string().max(2000).optional()
-});
+export const VerificationSchema = kernelSchema<Verification>('verification');
+export type Verification = VerificationRecord;
 
-export type Verification = z.infer<typeof VerificationSchema>;
-
-export const QuestionSchema = z.strictObject({
-	id: slug,
-	question: z.string().min(10),
-	kind: z.enum(['verification', 'analytical']),
-	status: z.enum(['open', 'partial', 'answered']).default('open'),
-	/** Entities this question bears on, so the UI can surface it in context. */
-	relates_to: z.array(slug).default([]),
-	/**
-	 * Typed assertions this question makes about the canonical record (M2).
-	 * Empty is legal — but an empty list is reported as a review warning, so an
-	 * unchecked claim is never mistaken for a checked one.
-	 */
-	references: z.array(NarrativeReferenceSchema).default([]),
-	notes: z.string().optional(),
-	/**
-	 * P2 #18 — a sourced answer. An answer is a claim like any other: it carries
-	 * its own basis/confidence/verification/attribution/reasoning/falsifier and
-	 * at least one source, and renders with that standing, never as a fact.
-	 * Questions themselves stay deliberately unsourced scaffolding (test-data
-	 * excludes them from the zero-source ratchet); only the answer is a claim.
-	 */
-	answer: z.string().optional(),
-	basis: Basis.optional(),
-	confidence: Confidence.optional(),
-	verification: VerificationStatus.optional(),
-	attributed_to: z.string().optional(),
-	reasoning: z.string().optional(),
-	falsifiable_by: z.string().optional(),
-	sources: z.array(slug).default([]),
-	...translatable('question'),
-	...translatable('notes'),
-	...translatable('answer')
-});
+export const QuestionSchema = kernelSchema<Question>('question');
 
 // ---------------------------------------------------------------------------
 // Hypothesis
 // ---------------------------------------------------------------------------
 
-/**
- * One evidence finding tested against a hypothesis's falsifier clause (P2 #19).
- * A finding is itself a claim: it states which falsifier part was tested, the
- * direction of the result, the evidence prose (translated), the claim fields,
- * and the falsifier progress the finding makes. The generic TRANSLATABLE_FIELDS
- * loop cannot see nested prose, so test-data.ts enforces its `evidence_*`
- * provenance directly, the same way test-i18n treats sources.excerpt.
- */
-const HypothesisEvidenceSchema = withClaimEnvelope(
-	'hypothesis-evidence',
-	z.strictObject({
-		/** Which clause of the hypothesis's `falsifiable_by` this finding tests. */
-		falsifier_part: z.string().optional(),
-		/** Direction of the finding: does the evidence support or refute the falsifier clause? */
-		finding: z.enum(['supports', 'contradicts', 'neutral']),
-		evidence: z.string().min(10),
-		...translatable('evidence'),
-		falsifier_progress: z.string().optional(),
-		...translatable('falsifier_progress'),
-		note: z.string().optional(),
-		...translatable('note'),
-		/** Typed assertions this finding makes about the canonical record (M2). */
-		references: z.array(NarrativeReferenceSchema).default([]),
-		...claimFields
-	})
-);
-
-export const HypothesisSchema = z.strictObject({
-	id: slug,
-	label: z.string().min(3),
-	statement: z.string().min(10),
-	/** How well the current dataset supports it. */
-	support: z.enum(['strong', 'moderate', 'insufficient', 'contradicted']),
-	reasoning: z.string().min(10),
-	/**
-	 * What evidence would overturn the verdict above. Mandatory. A claim that cannot be
-	 * falsified is not a hypothesis, it is a belief, and this project has no business
-	 * publishing beliefs as findings.
-	 *
-	 * Note the field is anchored to `support`, not to `statement`. Where the verdict is
-	 * `strong` the two coincide. Where it is `insufficient` or `contradicted` they do
-	 * not, and the honest commitment is to name what would move the project to the
-	 * opposite finding — otherwise a negative verdict is unfalsifiable, which is the
-	 * exact failure this field exists to prevent.
-	 *
-	 * Must be specific to its own hypothesis. `test-data.ts` rejects duplicates: a
-	 * falsifier shared between two hypotheses is a falsifier for neither.
-	 */
-	falsifiable_by: z.string().min(10),
-	sources: z.array(slug).default([]),
-	/** Typed assertions this hypothesis makes about the canonical record (M2). */
-	references: z.array(NarrativeReferenceSchema).default([]),
-	/** Evidence findings tested against the falsifier clauses (P2 #19). */
-	evidence: z.array(HypothesisEvidenceSchema).default([]),
-	...translatable('label'),
-	...translatable('statement'),
-	...translatable('reasoning'),
-	...translatable('falsifiable_by')
-});
+export const HypothesisSchema = kernelSchema<Hypothesis>('hypothesis');
 
 /** Exceptions the build configures into the schema before parsing any record. */
 export interface SchemaExceptions {
@@ -1467,7 +1280,7 @@ function withClaimEnvelope<S extends z.ZodObject<z.ZodRawShape>>(kind: string, s
 	});
 }
 
-export type Source = z.infer<typeof SourceSchema>;
+export type Source = Omit<SourceRecord, 'lang'> & { lang: SourceLanguage };
 export type Institution = z.infer<typeof InstitutionSchema>;
 export type Role = z.infer<typeof RoleSchema>;
 export type Person = z.infer<typeof PersonSchema>;
@@ -1483,8 +1296,8 @@ export type Vacancy = z.infer<typeof VacancySchema>;
 export type Declaration = z.infer<typeof DeclarationSchema>;
 export type Education = z.infer<typeof EducationSchema>;
 export type Era = z.infer<typeof EraSchema>;
-export type Question = z.infer<typeof QuestionSchema>;
-export type Hypothesis = z.infer<typeof HypothesisSchema>;
+export type Question = QuestionRecord;
+export type Hypothesis = HypothesisRecord;
 export type Dispute = z.infer<typeof DisputeSchema>;
 export type Review = z.infer<typeof ReviewSchema>;
 

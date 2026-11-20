@@ -176,3 +176,7 @@ export const PlaceKind = z.enum([
 	'town',
 	'quarter'
 ]);
+
+/** The languages a source may be written in. The engine's source kind validates against this list. */
+export const SOURCE_LANGUAGES = ['ar', 'fr', 'en', 'it', 'de'] as const;
+export type SourceLanguage = (typeof SOURCE_LANGUAGES)[number];
