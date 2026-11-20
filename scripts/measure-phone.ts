@@ -18,13 +18,17 @@
  * so the throttle applies to a local server too; a profile named "loopback"
  * has no network throttle and measures CPU alone.
  *
- * Two gates, each measured on its own page load and never averaged together:
+ * Three gates, each measured on its own page load and never averaged together:
  *
  *   tap      PRIMARY. The first time a tap on the first Chronicle tenure opens its
  *            record (the URL gains `?id=`). This is what a reader does on that page.
- *   palette  SECONDARY. The first time pressing "/" opens the search palette.
- *            Opening it asks for the full search index, so this gate includes the
- *            cost of building that index.
+ *   text     The first time that record's text is on screen: its tagline or summary,
+ *            which is a file of its own (`prose-en.json`) and not part of the page's
+ *            graph. A tap that opens a record with no words in it is not a reader's
+ *            answer, so this gate is read beside the tap gate, never instead of it.
+ *   palette  SECONDARY. The first time pressing "/" opens the search palette with
+ *            results in it. The index is built from the record text, so this gate
+ *            includes the cost of fetching that text and building the index.
  *
  * The plan's 5-second line is judged against the tap gate. Bytes are what the
  * browser received over the wire (encoded) before the gate passed.
@@ -35,7 +39,7 @@
  * This is a measurement, not a test: it needs a build and a browser, and it
  * makes no assertion. It is not part of `npm test`.
  */
-import { chromium, type CDPSession } from 'playwright';
+import { chromium, type CDPSession, type Page } from 'playwright';
 import http from 'node:http';
 import zlib from 'node:zlib';
 import { existsSync, readFileSync, statSync } from 'node:fs';
@@ -124,7 +128,7 @@ function serveBuild(): Promise<{ base: string; close: () => void }> {
 	});
 }
 
-type Gate = 'tap' | 'palette';
+type Gate = 'tap' | 'text' | 'palette';
 
 interface Run {
 	gate: Gate;
@@ -134,6 +138,17 @@ interface Run {
 }
 
 const BUDGET_MS = 120_000;
+
+/** True once the open record shows words: a tagline or a summary with text in it. */
+async function recordText(page: Page): Promise<boolean> {
+	return page
+		.evaluate(() =>
+			Array.from(document.querySelectorAll('.tagline, .summary')).some(
+				(e) => ((e as HTMLElement).innerText ?? '').trim().length > 20
+			)
+		)
+		.catch(() => false);
+}
 
 async function runOnce(
 	browser: Awaited<ReturnType<typeof chromium.launch>>,
@@ -184,7 +199,7 @@ async function runOnce(
 	let usable: number | null = null;
 	let wireAtGate = 0;
 	while (Date.now() - start < BUDGET_MS) {
-		if (gate === 'tap') {
+		if (gate === 'tap' || gate === 'text') {
 			// A tap before hydration does nothing, so the first one that opens a record is the
 			// answer. The tap is the page's own click on the first tenure, dispatched in the page:
 			// a driver-side tap re-checks every one of the page's buttons for actionability on
@@ -193,13 +208,17 @@ async function runOnce(
 				.evaluate(() => (document.querySelector('.tb') as HTMLElement | null)?.click())
 				.catch(() => {});
 			if (/[?&]id=/.test(page.url())) {
-				usable = Date.now() - start;
-				wireAtGate = wire;
-				break;
+				const words = gate === 'tap' ? true : await recordText(page);
+				if (words) {
+					usable = Date.now() - start;
+					wireAtGate = wire;
+					break;
+				}
 			}
 		} else {
-			await page.keyboard.press('/').catch(() => {});
-			if ((await page.locator('.palette').count().catch(() => 0)) > 0) {
+			// Once the palette is open a further "/" would be typed into its query.
+			if ((await page.locator('.palette').count().catch(() => 0)) === 0) await page.keyboard.press('/').catch(() => {});
+			if ((await page.locator('.palette li button').count().catch(() => 0)) > 0) {
 				usable = Date.now() - start;
 				wireAtGate = wire;
 				break;
@@ -253,13 +272,13 @@ const browser = await chromium.launch({
 });
 
 console.log(`\n  ${route} on ${remote ?? 'the local build'} — 390x844 mobile, cache off, median of ${runs}`);
-console.log('  primary gate: tap (the first tenure opens its record); secondary: palette (search opens)\n');
+console.log('  primary gate: tap (the first tenure opens its record); text: that record shows its words; secondary: palette (search opens with results)\n');
 console.log('  profile          gate     first paint   usable     wire before usable');
 let profiled = false;
 for (const profile of PROFILES) {
 	if (only && profile.name !== only) continue;
 	if (remote && profile.local) continue;
-	for (const gate of ['tap', 'palette'] as Gate[]) {
+	for (const gate of ['tap', 'text', 'palette'] as Gate[]) {
 		const results: Run[] = [];
 		for (let i = 0; i < runs; i++) {
 			const withProfile = cpuProfile && !profiled && gate === 'tap' && i === 0;

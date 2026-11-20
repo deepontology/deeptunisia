@@ -19,7 +19,7 @@
 		type Layer
 	} from '$lib/model';
 	import { basisLabel, relLabel, t, describeInterval, durationLabel } from '$lib/t.svelte';
-	import { nameOf, entityName } from '$lib/names.svelte';
+	import { english, nameOf, entityName } from '$lib/names.svelte';
 	import { format } from '$lib/i18n';
 
 	/**
@@ -349,7 +349,7 @@
 							{#if relKind(r.type) !== 'documented' && r.attributed_to}
 								<span class="attrib">{format(app.locale, 'investigate.claimedBy', { who: r.attributed_to })}</span>
 							{/if}
-							<p class="rdesc">{r.description}</p>
+							<p class="rdesc">{english(r, 'description')}</p>
 							<SourceList ids={r.sources} compact />
 						</li>
 					{/each}

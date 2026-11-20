@@ -11,6 +11,7 @@ src/generated/
 static/dataset.json
 static/prose-fr.json
 static/prose-ar.json
+static/prose-en.json
 static/sources-prose.json
 static/search-index.json
 static/llms.txt

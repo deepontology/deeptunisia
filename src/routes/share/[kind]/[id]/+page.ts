@@ -16,7 +16,7 @@ export async function entries() {
 	return out;
 }
 
-export function load({ params }: { params: { kind: string; id: string } }) {
+export function load({ params, data }: { params: { kind: string; id: string }; data: { text: string } }) {
 	if (!VALID_KINDS.has(params.kind)) throw error(404, 'Unknown share kind');
 	// Relationship validation; entity handled via resolve; flows pass through.
 	if (params.kind === 'entity' && !personById.has(params.id) && !institutionById.has(params.id)) {
@@ -27,5 +27,5 @@ export function load({ params }: { params: { kind: string; id: string } }) {
 	if (params.kind === 'relationship' && !relationshipById.has(params.id) && !params.id.startsWith('flow-')) {
 		throw error(404, 'Unknown relationship');
 	}
-	return { kind: params.kind, id: params.id };
+	return { kind: params.kind, id: params.id, text: data.text };
 }

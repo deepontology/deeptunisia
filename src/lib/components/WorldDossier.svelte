@@ -23,7 +23,7 @@
 	} from '$lib/world/countries';
 	import { moneyM } from '$lib/world/format';
 	import { t, tf, basisLabel, relLabel, confidenceLabel, describeInterval, formatDate } from '$lib/t.svelte';
-	import { nameOf, entityName, proseList } from '$lib/names.svelte';
+	import { english, nameOf, entityName, proseList } from '$lib/names.svelte';
 import BasisLine from '$lib/ui/BasisLine.svelte';
 	import Panel from '$lib/ui/Panel.svelte';
 	import Chip from '$lib/ui/Chip.svelte';
@@ -286,7 +286,7 @@ import BasisLine from '$lib/ui/BasisLine.svelte';
 					<Chip variant="outline">{record.confidence}</Chip>
 				{/if}
 			</div>
-			{#if record.summary}<p class="summary" dir="auto"><Prose record={record} field="summary" block /></p>{/if}
+			{#if english(record, 'summary')}<p class="summary" dir="auto"><Prose record={record} field="summary" block /></p>{/if}
 			{#if record.sources?.length}<SourceList ids={record.sources} compact />{/if}
 		{:else if !isTunisia}
 			<p class="missing">{t('world.dossier.norecord')}</p>
@@ -429,7 +429,7 @@ import BasisLine from '$lib/ui/BasisLine.svelte';
 				{#each graphRelations as rel (rel.id)}
 					<Panel padded elevation={1}>
 						<div class="claim-top"><h3>{tf('world.dossier.relationship.title', { relation: relLabel(rel.type), counterparty: counterpart(rel) })}</h3><BasisLine record={rel} /></div>
-						{#if rel.description}<p dir="auto"><Prose record={rel} field="description" block /></p>{/if}
+						{#if english(rel, 'description')}<p dir="auto"><Prose record={rel} field="description" block /></p>{/if}
 						<div class="meta">{#if relationInterval(rel)}<span class="mono">{relationInterval(rel)}</span>{/if}<span>{confidenceLabel(rel.confidence)}</span></div>
 						{#if rel.attributed_to}<p class="attributed">{tf('world.dossier.attributed', { label: t('basis.attributed'), who: rel.attributed_to })}</p>{/if}
 						{#if rel.sources?.length}<SourceList ids={rel.sources} compact />{/if}

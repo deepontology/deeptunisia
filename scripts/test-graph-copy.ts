@@ -3,7 +3,7 @@
  *
  * `static/dataset.json` is the graph: its canonical hash is `meta.datasetHash`.
  * The browser does not load it. It loads `src/generated/graph.json`, which trims
- * some fields, and fetches the rest from `static/prose-<lang>.json`,
+ * some fields, and fetches the rest from `static/prose-<lang>.json` (English included),
  * `static/timelines.json` and `static/sources-prose.json` when a panel needs them. Both halves of that are
  * declared in `scripts/client-copy.ts`. This test puts the pieces back together
  * and compares every record with the published one, so a field that falls out of
@@ -22,6 +22,7 @@ import {
 	BUILD_ONLY,
 	CLIENT_COLLECTIONS,
 	COPY_ADDED,
+	ENGLISH_PROSE_COLLECTIONS,
 	FETCHED_FIELDS,
 	SPLIT_PROSE,
 	UNREAD_IN_BROWSER,
@@ -48,6 +49,7 @@ function ok(name: string, pass: boolean, detail = '') {
 const PATHS = {
 	full: 'static/dataset.json',
 	graph: 'src/generated/graph.json',
+	en: 'static/prose-en.json',
 	fr: 'static/prose-fr.json',
 	ar: 'static/prose-ar.json',
 	fetched: 'static/sources-prose.json',
@@ -63,7 +65,7 @@ const read = <T>(rel: string) => JSON.parse(readFileSync(join(ROOT, rel), 'utf8'
 
 const full = read<Dataset>(PATHS.full);
 const graph = read<Dataset>(PATHS.graph);
-const overlays = { fr: read<Overlay>(PATHS.fr), ar: read<Overlay>(PATHS.ar) };
+const overlays = { en: read<Overlay>(PATHS.en), fr: read<Overlay>(PATHS.fr), ar: read<Overlay>(PATHS.ar) };
 const fetched = read<Overlay>(PATHS.fetched);
 const timelines = read<Record<string, unknown[]>>(PATHS.timelines);
 
@@ -76,7 +78,7 @@ ok(
 
 // 2. Every file that goes with the copy names the same build.
 ok('the copy carries the published hash', graph.meta.datasetHash === full.meta.datasetHash);
-for (const [name, file] of Object.entries({ 'prose-fr': overlays.fr, 'prose-ar': overlays.ar, 'sources-prose': fetched })) {
+for (const [name, file] of Object.entries({ 'prose-en': overlays.en, 'prose-fr': overlays.fr, 'prose-ar': overlays.ar, 'sources-prose': fetched })) {
 	ok(`${name}.json carries the published hash`, file.datasetHash === full.meta.datasetHash);
 }
 
@@ -101,6 +103,7 @@ function stable(v: unknown): string {
 }
 
 const clientCollections = new Set<string>(CLIENT_COLLECTIONS);
+const englishCollections = new Set<string>(ENGLISH_PROSE_COLLECTIONS);
 
 // 4. Collections the copy does not touch are the published collections.
 for (const key of Object.keys(full)) {
@@ -135,6 +138,18 @@ for (const c of CLIENT_COLLECTIONS) {
 
 		const got: Record<string, unknown> = { ...copy[i] };
 		for (const k of added) delete got[k];
+		// The English prose: the fields the copy left out, under their own names.
+		const english = overlays.en[c]?.[copy[i].id];
+		if (english) {
+			for (const [k, v] of Object.entries(english)) {
+				if (!englishCollections.has(c) || !SPLIT_PROSE.has(k) || k in got) {
+					mismatched++;
+					first ||= `${c}/${copy[i].id}: English prose field ${k} is not a declared split`;
+				}
+				got[k] = v;
+				overlaid++;
+			}
+		}
 		for (const lang of ['fr', 'ar'] as const) {
 			const fields = overlays[lang][c]?.[copy[i].id];
 			if (!fields) continue;
@@ -190,8 +205,38 @@ for (const c of CLIENT_COLLECTIONS) {
 	);
 }
 
+// 5b. The long English text is out of the browser's graph for the declared collections,
+// stays in it for the others, and nothing the file carries is missing from the record
+// it came from: every split field a published record has is in the file under its id,
+// empty ones included, so a panel can tell "no text" from "not loaded yet".
+for (const c of CLIENT_COLLECTIONS) {
+	const published = full[c] as Rec[];
+	const copy = graph[c] as Rec[];
+	const split = englishCollections.has(c);
+	const unreadHere = (UNREAD_IN_BROWSER as Record<string, readonly string[]>)[c] ?? [];
+	let leaked = 0;
+	let missing = 0;
+	let wrongly = 0;
+	for (let i = 0; i < published.length; i++) {
+		for (const k of SPLIT_PROSE) {
+			if (!(k in published[i])) continue;
+			if (split) {
+				if (k in copy[i]) leaked++;
+				if (!(k in (overlays.en[c]?.[copy[i].id] ?? {}))) missing++;
+			} else if (!unreadHere.includes(k) && !(k in copy[i])) wrongly++;
+		}
+	}
+	ok(
+		split
+			? `${c}: no English prose field stays in the graph, and each is in prose-en.json`
+			: `${c}: keeps its English prose in the graph`,
+		leaked === 0 && missing === 0 && wrongly === 0 && (split || !overlays.en[c]),
+		leaked || missing || wrongly ? `${leaked} left in the graph, ${missing} missing from prose-en.json, ${wrongly} dropped` : ''
+	);
+}
+
 // 6. Nothing is in a side file that has no record to land on.
-for (const [name, file] of Object.entries({ fr: overlays.fr, ar: overlays.ar, fetched })) {
+for (const [name, file] of Object.entries({ en: overlays.en, fr: overlays.fr, ar: overlays.ar, fetched })) {
 	let orphans = 0;
 	for (const [c, records] of Object.entries(file)) {
 		if (c === 'datasetHash') continue;

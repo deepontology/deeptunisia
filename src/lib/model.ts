@@ -23,18 +23,18 @@ import type {
 	Declaration,
 	Education,
 	Era,
-	EventRec,
+	Graph,
+	GraphEvent as EventRec,
+	GraphInstitution as Institution,
+	GraphPerson as Person,
+	GraphPosition as Position,
+	GraphRelationship as Relationship,
 	Hypothesis,
-	Institution,
 	Interval,
 	Layer,
 	Licence,
-	Person,
-	Position,
 	Question,
-	Relationship,
 	Role,
-	Graph,
 	SourceCite as Source
 } from '$data/index';
 
@@ -60,7 +60,13 @@ export type {
 	Education
 };
 
-/** The graph the browser loads. A source in it is its citation; its excerpt is in `source-prose.svelte.ts`. */
+/**
+ * The graph the browser loads. A source in it is its citation (its excerpt is in
+ * `source-prose.svelte.ts`), and a person, institution, position, relationship or event
+ * has no long English text: read that through `prose()`, which waits for `prose-en.json`.
+ * The record types exported here are those slimmer types, so a direct read of a moved
+ * field does not compile.
+ */
 export const ds: Graph = data;
 
 /** The window dates and pure vocabulary live in `vocab.ts`; re-exported here. */

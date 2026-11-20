@@ -2,7 +2,7 @@
 	import { app } from '$lib/state.svelte';
 	import SourceList from '$lib/components/SourceList.svelte';
 	import { t, basisDesc } from '$lib/t.svelte';
-	import { entityName, nameOf } from '$lib/names.svelte';
+	import { english, entityName, nameOf } from '$lib/names.svelte';
 	import { format } from '$lib/i18n';
 	import Prose from '$lib/ui/Prose.svelte';
 	import { BASIS_COLOR, BASIS_LABEL, BASIS_ORDER, ds, type Basis } from '$lib/model';
@@ -327,8 +327,8 @@
 							<span class="f-role">{p.roleTitle}</span>
 							<span class="mono f-raw">{p.interval.raw.start ?? '?'} → {p.interval.raw.end ?? '?'}</span>
 						</div>
-						{#if p.reasoning}<p class="inf-why">{p.reasoning}</p>{/if}
-						{#if p.falsifiable_by}
+						{#if english(p, 'reasoning')}<p class="inf-why">{english(p, 'reasoning')}</p>{/if}
+						{#if english(p, 'falsifiable_by')}
 							<p class="inf-fals"><span class="eyebrow">{t('panel.falsifier')}</span> <Prose record={p} field="falsifiable_by" /></p>
 						{/if}
 					</li>
@@ -347,7 +347,7 @@
 							<strong>{entityName(r.from)} → {entityName(r.to)}</strong>
 						</div>
 						<p class="uns-attrib">{r.attributed_to}</p>
-						<p class="uns-desc">{r.description}</p>
+						<p class="uns-desc">{english(r, 'description')}</p>
 						<SourceList ids={r.sources} compact />
 					</li>
 				{/each}

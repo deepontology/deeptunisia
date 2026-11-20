@@ -13,8 +13,20 @@
 /** Collections whose records the copy trims. */
 export const CLIENT_COLLECTIONS = ['people', 'institutions', 'positions', 'relationships', 'events', 'sources'] as const;
 
-/** Prose fields whose French and Arabic forms ship in `static/prose-<lang>.json`. */
+/**
+ * Prose fields whose French and Arabic forms ship in `static/prose-<lang>.json`, and
+ * whose English forms ship in `static/prose-en.json` for the collections below.
+ */
 export const SPLIT_PROSE = new Set(['summary', 'notes', 'reasoning', 'falsifiable_by', 'tagline', 'description']);
+
+/**
+ * Collections whose long English text (`SPLIT_PROSE`) leaves the browser's graph and ships
+ * in `static/prose-en.json`, fetched the first time a panel shows a record
+ * (`src/lib/locale-prose.svelte.ts`). The names, dates, intervals, ids, sources and
+ * links stay in the graph, so a record is identified, drawn and cited without it.
+ * Every field is still in the published dataset.
+ */
+export const ENGLISH_PROSE_COLLECTIONS = ['people', 'institutions', 'positions', 'relationships', 'events'] as const;
 
 /** Translations the site never shows: source excerpts and title glosses, career trajectories. Left out of the copy. */
 export const UNSHOWN_TRANSLATION = new Set(['excerpt', 'title_gloss', 'trajectory']);

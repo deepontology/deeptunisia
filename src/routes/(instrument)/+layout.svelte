@@ -4,9 +4,9 @@
 	import { page } from '$app/state';
 	import { app, startPlayback } from '$lib/state.svelte';
 	import { syncSelectionUrl, validEntity, validRelationship } from '$lib/deeplink.svelte';
-	import { ensureLocaleProse } from '$lib/locale-prose.svelte';
+	import { ensureEnglishProse, ensureLocaleProse } from '$lib/locale-prose.svelte';
 	import { personById, institutionById, relationshipById, eventById, resolveEntity } from '$lib/model';
-	import { eventTitle, nameOf } from '$lib/names.svelte';
+	import { english, eventTitle, nameOf } from '$lib/names.svelte';
 	import { t } from '$lib/t.svelte';
 	import Viewport from '$lib/shell/Viewport.svelte';
 	import TimeDock from '$lib/shell/TimeDock.svelte';
@@ -108,7 +108,7 @@
 			const from = r ? (personById.get(r.from)?.name_en ?? institutionById.get(r.from)?.name_en ?? r.from) : rel;
 			const to = r ? (personById.get(r.to)?.name_en ?? institutionById.get(r.to)?.name_en ?? r.to) : '';
 			const label = to ? `${from} → ${to}` : from;
-			const desc = r?.description ? r.description.slice(0, 160) : 'A documented relationship in the DeepTunisia graph.';
+			const desc = english(r, 'description') ? english(r, 'description').slice(0, 160) : 'A documented relationship in the DeepTunisia graph.';
 			return { title: `${label} · DeepTunisia`, desc, image: 'https://deeptunisia.org/og/default.png', url: page.url.href };
 		}
 		const flow = page.url.searchParams.get('flow');
@@ -134,7 +134,7 @@
 					if (inst) return nameOf(inst);
 					return ref?.name ?? sel;
 				})();
-				const descRaw = (person?.summary ?? inst?.summary ?? person?.tagline ?? '') as string;
+				const descRaw = english(person, 'summary') || english(inst, 'summary') || english(person, 'tagline');
 				const desc = descRaw ? descRaw.slice(0, 160) : `An entity in the DeepTunisia graph — ${ref?.kind ?? 'record'}.`;
 				return { title: `${titleName} · DeepTunisia`, desc, image: 'https://deeptunisia.org/og/default.png', url: page.url.href };
 			}
@@ -143,7 +143,7 @@
 			// the id. resolveEntity covers persons and institutions only.
 			const ev = eventById.get(sel);
 			if (ev) {
-				const descRaw = ev.summary ?? '';
+				const descRaw = english(ev, 'summary');
 				return {
 					title: `${eventTitle(ev)} · DeepTunisia`,
 					desc: descRaw ? descRaw.slice(0, 160) : 'An event in the DeepTunisia graph.',
@@ -157,7 +157,20 @@
 
 	onMount(() => {
 		const stopPlay = startPlayback();
-		return () => stopPlay();
+		/*
+		 * The long English text of a record is a file of its own, wanted the first time a
+		 * panel opens a record. Asking for it when the browser is idle, after the page has
+		 * loaded and been drawn, means a reader's first tap on a record finds it already
+		 * here on most connections, and costs the load nothing: it is not requested
+		 * before the page is interactive.
+		 */
+		const idle = (window as unknown as { requestIdleCallback?: (f: () => void, o?: { timeout: number }) => number })
+			.requestIdleCallback;
+		const timer = idle ? idle(() => void ensureEnglishProse(), { timeout: 4000 }) : window.setTimeout(() => void ensureEnglishProse(), 2000);
+		return () => {
+			stopPlay();
+			if (!idle) window.clearTimeout(timer);
+		};
 	});
 
 	// W2: every selection is a URL. Reads app.selected, so this re-runs on every

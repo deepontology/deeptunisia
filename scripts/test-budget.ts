@@ -27,6 +27,7 @@ const CAPS = {
 	'dataset (published)': 17,
 	'timelines (published)': 3.5,
 	'source excerpts (fetched)': 0.6,
+	'record text (fetched)': 2,
 	'dataset (generated)': 12,
 	'search index': 1,
 	'static tree': 36
@@ -36,6 +37,7 @@ const PATHS = {
 	'dataset (published)': 'static/dataset.json',
 	'timelines (published)': 'static/timelines.json',
 	'source excerpts (fetched)': 'static/sources-prose.json',
+	'record text (fetched)': 'static/prose-en.json',
 	'dataset (generated)': 'src/generated/dataset.json',
 	'search index': 'static/search-index.json',
 	'static tree': 'static'
@@ -181,20 +183,22 @@ const READING_CEILING = 960_000;
  * the ceilings were turned on, plus 5%, and the baseline is lowered when the weight
  * goes down so the gain cannot be spent again. Bytes preloaded, uncompressed.
  * Lowered by about 525,000 bytes each when the sources' excerpts, notes and
- * flags left the bundled graph (`static/sources-prose.json`, fetched on demand).
+ * flags left the bundled graph (`static/sources-prose.json`, fetched on demand), and by
+ * about 1,480,000 more when the long English text of people, institutions, positions,
+ * connections and events left it (`static/prose-en.json`, fetched on demand).
  */
 const INSTRUMENT_BASELINE: Record<string, number> = {
-	agora: 10_878_754,
-	atlas: 10_998_266,
-	chronicle: 10_796_816,
-	evidence: 10_745_158,
-	feed: 11_424_173,
-	investigate: 10_761_057,
-	map: 10_724_746,
-	network: 10_818_963,
-	now: 10_992_499,
-	rankings: 10_824_327,
-	world: 11_151_830
+	agora: 9_394_076,
+	atlas: 9_513_484,
+	chronicle: 9_312_075,
+	evidence: 9_260_454,
+	feed: 9_939_391,
+	investigate: 9_276_296,
+	map: 9_239_964,
+	network: 9_334_250,
+	now: 9_507_717,
+	rankings: 9_339_545,
+	world: 9_667_057
 };
 const INSTRUMENT_GROWTH = 1.05;
 
