@@ -15,6 +15,7 @@
  */
 import { fileURLToPath } from 'node:url';
 import { createEngine, type Deployment, type Engine } from 'deepepisteme';
+import { MATCHER_WORDS } from '../src/lib/match-words.ts';
 import { loadParameters } from './parameters.ts';
 import {
 	AgreementKind,
@@ -59,8 +60,8 @@ export const deployment: Deployment = {
 		placeKinds: [...PlaceKind.options],
 		regionKinds: [...RegionKind.options]
 	},
-	/** The matcher's word lists move with the matcher (slice 5). */
-	matcher: { particles: [], functionWords: [], splittablePrefixes: [] }
+	/** The same word lists the browser matcher in src/lib/match.ts is built from. */
+	matcher: MATCHER_WORDS
 };
 
 /** The one engine. Nothing else in this tree may call createEngine. */
