@@ -87,7 +87,7 @@ export const VALIDATOR_REGISTER: ValidatorEntry[] = [
 		rule: 'a place parent chain terminates at a region and point places carry coordinates',
 		status: 'enforced',
 		gate: 'fail-or-warn',
-		site: { file: 'scripts/build-data.ts', anchor: 'every place needs a parent region/governorate' }
+		site: { file: 'node_modules/deepepisteme/src/atlas/rules/place-geography.ts', anchor: 'every place needs a parent region/governorate' }
 	},
 	{
 		id: 'V11',
