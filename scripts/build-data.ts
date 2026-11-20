@@ -79,6 +79,7 @@ import { engine } from './engine.ts';
 import { countOrigins, restsOn, type EvidenceLike } from './origins.ts';
 import { deskStatsText, newestPrecheck, precheckStats, EMPTY_PRECHECK_STATS } from './desk.ts';
 import { VERIFIED_EXCEPTIONS } from './verified-exceptions.ts';
+import { ARABIC_TITLE_EXCEPTION } from './prose-exceptions.ts';
 import { buildCoverage, coverageCsv, coverageMarkdown } from './coverage.ts';
 import { checkNarrative, type NarrativeClaim } from './consistency.ts';
 import {
@@ -1774,6 +1775,24 @@ for (const issue of narrative.warnings) warn(issue.where, issue.message);
 		);
 	}
 	const excepted = new Set<string>(VERIFIED_EXCEPTIONS.ids);
+	// Arabic role titles: a dated exception to the Arabic prose ceiling on /methodology
+	// (scripts/prose-exceptions.ts). The count is the work; the date is the deadline.
+	{
+		const missing = roles.filter((r) => !r.title_ar).length;
+		const declared = ARABIC_TITLE_EXCEPTION.rolesWithoutTitleAr;
+		if (roles.length !== ARABIC_TITLE_EXCEPTION.rolesTotal || missing !== declared) {
+			fail(
+				'prose-exceptions.ts',
+				`${missing} of ${roles.length} roles have no title_ar, and the Arabic title exception states ${declared} of ${ARABIC_TITLE_EXCEPTION.rolesTotal}: change the numbers in scripts/prose-exceptions.ts in the change that moves them, and lower the Arabic ceiling it states when titles land`
+			);
+		}
+		if (missing > 0 && ARABIC_TITLE_EXCEPTION.expires < today) {
+			fail(
+				'prose-exceptions.ts',
+				`the "${ARABIC_TITLE_EXCEPTION.reason}" exception expired on ${ARABIC_TITLE_EXCEPTION.expires} with ${missing} of ${roles.length} roles still without title_ar: add the titles to data/roles.yaml`
+			);
+		}
+	}
 	const sections: [string, { id?: string; verification?: string; review?: { actor?: string; method?: string } }[]][] = [
 		['institution', resolvedInstitutions],
 		['person', resolvedPeople],
