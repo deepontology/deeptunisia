@@ -273,15 +273,15 @@ const papers = new Map<string, string>();
 {
 	const newestName = PAPER_NAMES[PAPER_NAMES.length - 1];
 	const newestText = papers.get(newestName);
-	const expectedIds = Array.from({ length: 32 }, (_, i) => `V${i + 1}`);
+	const expectedIds = Array.from({ length: 33 }, (_, i) => `V${i + 1}`);
 	const registerIds = VALIDATOR_REGISTER.map((v) => v.id);
 	const duplicateIds = registerIds.filter((id, i) => registerIds.indexOf(id) !== i);
 	ok(
-		'the validator register covers V1 to V32 exactly once',
+		'the validator register covers V1 to V33 exactly once',
 		JSON.stringify(registerIds) === JSON.stringify(expectedIds) && duplicateIds.length === 0,
 		`${registerIds.length} entries` +
 			(duplicateIds.length ? `, duplicate ${[...new Set(duplicateIds)].join(', ')}` : '') +
-			(JSON.stringify(registerIds) === JSON.stringify(expectedIds) ? '' : ', ids are not the sequence V1 to V32')
+			(JSON.stringify(registerIds) === JSON.stringify(expectedIds) ? '' : ', ids are not the sequence V1 to V33')
 	);
 
 	if (newestText !== undefined) {

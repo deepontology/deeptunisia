@@ -252,6 +252,16 @@ export const VALIDATOR_REGISTER: ValidatorEntry[] = [
 			file: 'scripts/build-data.ts',
 			anchor: 'is a seated term, which has no single holder to be vacant'
 		}
+	},
+	{
+		id: 'V33',
+		rule: 'a record marked verified carries a review made by a human as a source check',
+		status: 'enforced',
+		gate: 'fail',
+		site: {
+			file: 'scripts/build-data.ts',
+			anchor: 'actor human and method source-check'
+		}
 	}
 ];
 

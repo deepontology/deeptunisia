@@ -268,6 +268,36 @@ const MUTATIONS: Mutation[] = [
 		to: 'if (false && !entityIds.has(rel.from)) fail(`relationship ${label}`, `unknown "from" entity "${rel.from}"`);'
 	},
 	{
+		id: 'm58', file: 'build-data.ts', expect: 'test-pipeline (injected floating award value)',
+		label: 'award values stop needing an attribution or a primary source (V4/V5)',
+		from: 'if (!primary && !c.attributed_to) {',
+		to: 'if (false && !primary && !c.attributed_to) {'
+	},
+	{
+		id: 'm59', file: 'build-data.ts', expect: 'test-pipeline (injected parentless place)',
+		label: 'a point place no longer needs a parent region (V10)',
+		from: "if (p.kind !== 'quarter' && p.kind !== 'town') {",
+		to: "if (false && p.kind !== 'quarter' && p.kind !== 'town') {"
+	},
+	{
+		id: 'm60', file: 'build-data.ts', expect: 'test-pipeline (injected reversed prosecution)',
+		label: 'a directed edge may run from a person where an institution is required (V14)',
+		from: "if (rule.from === 'institution' && fromPerson) {",
+		to: "if (false && rule.from === 'institution' && fromPerson) {"
+	},
+	{
+		id: 'm61', file: 'build-data.ts', expect: 'test-pipeline (injected duplicate relationship)',
+		label: 'overlapping duplicate relationships are no longer found (V16)',
+		from: 'const overlap = a.interval.startEarliest <= bEnd && b.interval.startEarliest <= aEnd;',
+		to: 'const overlap = false;'
+	},
+	{
+		id: 'm62', file: 'build-data.ts', expect: 'test-pipeline (injected floating rupture)',
+		label: 'a rupture event linked to nothing is no longer flagged (V17)',
+		from: 'if (ev.rupture && ev.causes.length === 0 && ev.consequences.length === 0) {',
+		to: 'if (false && ev.rupture && ev.causes.length === 0 && ev.consequences.length === 0) {'
+	},
+	{
 		id: 'm31', file: 'build-data.ts', expect: 'the build gate (grade-A primary rule)',
 		label: 'grade-A records no longer checked for a tier-1/2 source',
 		from: '\t\tif (tiers.some((t) => t <= 2)) continue;',
