@@ -83,7 +83,7 @@ export const VALIDATOR_REGISTER: ValidatorEntry[] = [
 		rule: 'an influence-family edge needs a position or a documented edge on one endpoint',
 		status: 'enforced',
 		gate: 'fail-or-warn',
-		site: { file: 'scripts/build-data.ts', anchor: 'is unmoored' }
+		site: { file: 'node_modules/deepepisteme/src/atlas/rules/unmoored-influence.ts', anchor: 'is unmoored' }
 	},
 	{
 		id: 'V10',

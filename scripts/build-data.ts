@@ -1147,51 +1147,6 @@ const resolvedRelationships = relationships.map((rel) => {
 	};
 });
 
-// V9 — unmoored influence (spec §10.3). An influence-family edge must be
-// attached to something: at least one endpoint must hold a position or carry a
-// documented edge of a formal kind (appointment, ownership, board, prosecution,
-// …). An influence edge between two nodes that nothing else connects is a bare
-// assertion — "X influences Y" with no evidenced route — and fails.
-{
-	const INFLUENCE_TYPES = new Set(['influence', 'reported-influence', 'advisory']);
-	const positionsByEntity = new Map<string, number>();
-	for (const p of resolvedPositions) {
-		// "Holds a position" includes institutions that employ one: a party with
-		// a leader recorded, a TV station with a director — that record is the
-		// evidenced route the influence edge must not float without.
-		positionsByEntity.set(p.holder, (positionsByEntity.get(p.holder) ?? 0) + 1);
-		positionsByEntity.set(p.institution, (positionsByEntity.get(p.institution) ?? 0) + 1);
-	}
-
-	const documentedNeighbours = new Map<string, Set<string>>();
-	for (const r of resolvedRelationships) {
-		if (INFLUENCE_TYPES.has(r.type)) continue;
-		if (r.basis !== 'documented') continue;
-		documentedNeighbours.set(r.from, new Set([...(documentedNeighbours.get(r.from) ?? []), r.to]));
-		documentedNeighbours.set(r.to, new Set([...(documentedNeighbours.get(r.to) ?? []), r.from]));
-	}
-
-	for (const r of resolvedRelationships) {
-		if (!INFLUENCE_TYPES.has(r.type)) continue;
-		const attached =
-			(positionsByEntity.get(r.from) ?? 0) > 0 ||
-			(positionsByEntity.get(r.to) ?? 0) > 0 ||
-			(documentedNeighbours.get(r.from)?.size ?? 0) > 0 ||
-			(documentedNeighbours.get(r.to)?.size ?? 0) > 0;
-		if (!attached) {
-			// A documented- or advisory-influence edge must be attached — it asserts
-			// standing, so it fails. A reported-influence edge asserts only that
-			// sources report the chain; it is kept and flagged (rule 6 — the popular
-			// account is exactly what the map must show, anchored or not). Documented
-			// deviation from the V9 row: fail for influence/advisory, warn for
-			// reported-influence.
-			const message = `${r.type} edge ${r.from} → ${r.to} is unmoored — neither endpoint has a position or a documented edge (V9)`;
-			if (r.type === 'reported-influence') warn(`relationship ${r.id}`, message);
-			else fail(`relationship ${r.id}`, message);
-		}
-	}
-}
-
 // ---------------------------------------------------------------------------
 // pathAudit (UI pass W4; the paper's §10.2 item 5, first slice) — warn-only.
 //
@@ -1529,7 +1484,7 @@ const engineResolved = engine.resolve({
 });
 {
 	// V22 is not run here: its findings are the clamp report, published below.
-	for (const f of engine.validate(engineResolved, { only: ['V4', 'V10', 'V16', 'V17', 'V8', 'V3', 'V11', 'V1', 'V7', 'V31', 'V32'] })) {
+	for (const f of engine.validate(engineResolved, { only: ['V4', 'V10', 'V16', 'V17', 'V8', 'V3', 'V11', 'V1', 'V7', 'V31', 'V32', 'V9'] })) {
 		if (f.severity === 'error') fail(f.record ? `${f.record.kind} ${f.record.id}` : f.rule, f.message);
 		else warn(f.record ? `${f.record.kind} ${f.record.id}` : f.rule, f.message);
 	}

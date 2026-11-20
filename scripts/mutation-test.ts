@@ -67,6 +67,7 @@ const ENGINE_EVENT_ORPHAN = '../node_modules/deepepisteme/src/atlas/rules/event-
 const ENGINE_HORIZON = '../node_modules/deepepisteme/src/atlas/rules/horizon.ts';
 const ENGINE_VACANCY_OVERLAP = '../node_modules/deepepisteme/src/atlas/rules/vacancy-overlap.ts';
 const ENGINE_INTERVAL_TRIMS = '../node_modules/deepepisteme/src/atlas/rules/interval-trims.ts';
+const ENGINE_UNMOORED_INFLUENCE = '../node_modules/deepepisteme/src/atlas/rules/unmoored-influence.ts';
 const ENGINE_EVENT_CAUSAL = '../node_modules/deepepisteme/src/atlas/rules/event-causal.ts';
 const ENGINE_EVENT_RUPTURE = '../node_modules/deepepisteme/src/atlas/rules/event-rupture.ts';
 const ENGINE_RELATIONSHIP_DUPLICATES = '../node_modules/deepepisteme/src/atlas/rules/relationship-duplicates.ts';
@@ -268,10 +269,10 @@ const MUTATIONS: Mutation[] = [
 		to: 'if (false && causeInterval.startEarliest > ends) {'
 	},
 	{
-		id: 'm25', file: 'build-data.ts', expect: 'test-pipeline (injected unmoored influence edge)',
+		id: 'm25', file: ENGINE_UNMOORED_INFLUENCE, expect: 'test-pipeline (injected unmoored influence edge)',
 		label: 'unmoored-influence rejection disabled (V9 anchoring)',
-		from: 'if (!attached) {',
-		to: 'if (false && !attached) {'
+		from: 'if (holds.has(from) || holds.has(to) || documented.has(from) || documented.has(to)) continue;',
+		to: 'continue;'
 	},
 	{
 		id: 'm26', file: 'build-data.ts', expect: 'test-pipeline (injected ghost edge endpoint)',
@@ -551,6 +552,7 @@ const SUITES_FOR: Record<string, string[]> = {
 	[ENGINE_HORIZON]: ['test-data.ts', 'test-pipeline.ts'],
 	[ENGINE_VACANCY_OVERLAP]: ['test-data.ts', 'test-pipeline.ts'],
 	[ENGINE_INTERVAL_TRIMS]: ['test-data.ts', 'test-pipeline.ts'],
+	[ENGINE_UNMOORED_INFLUENCE]: ['test-data.ts', 'test-pipeline.ts'],
 	[ENGINE_EVENT_RUPTURE]: ['test-data.ts', 'test-pipeline.ts'],
 	[ENGINE_RELATIONSHIP_DUPLICATES]: ['test-data.ts', 'test-pipeline.ts'],
 	'origins.ts': ['test-validators.ts'],
