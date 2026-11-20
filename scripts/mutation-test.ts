@@ -66,6 +66,7 @@ const ENGINE_COMPANY_REGISTRATION = '../node_modules/deepepisteme/src/atlas/rule
 const ENGINE_EVENT_ORPHAN = '../node_modules/deepepisteme/src/atlas/rules/event-orphan.ts';
 const ENGINE_HORIZON = '../node_modules/deepepisteme/src/atlas/rules/horizon.ts';
 const ENGINE_VACANCY_OVERLAP = '../node_modules/deepepisteme/src/atlas/rules/vacancy-overlap.ts';
+const ENGINE_INTERVAL_TRIMS = '../node_modules/deepepisteme/src/atlas/rules/interval-trims.ts';
 const ENGINE_EVENT_CAUSAL = '../node_modules/deepepisteme/src/atlas/rules/event-causal.ts';
 const ENGINE_EVENT_RUPTURE = '../node_modules/deepepisteme/src/atlas/rules/event-rupture.ts';
 const ENGINE_RELATIONSHIP_DUPLICATES = '../node_modules/deepepisteme/src/atlas/rules/relationship-duplicates.ts';
@@ -345,6 +346,12 @@ const MUTATIONS: Mutation[] = [
 		to: 'if (false) {'
 	},
 	{
+		id: 'm69', file: ENGINE_INTERVAL_TRIMS, expect: 'test-data (clamped intervals missing from the published report)',
+		label: 'a clamped interval is no longer reported, so the trims file stops listing it (V22)',
+		from: 'if (!interval.trimmed && !interval.startClamped) continue;',
+		to: 'continue;'
+	},
+	{
 		id: 'm31', file: 'build-data.ts', expect: 'the build gate (grade-A primary rule)',
 		label: 'grade-A records no longer checked for a tier-1/2 source',
 		from: '\t\tif (tiers.some((t) => t <= 2)) continue;',
@@ -543,6 +550,7 @@ const SUITES_FOR: Record<string, string[]> = {
 	[ENGINE_EVENT_ORPHAN]: ['test-data.ts', 'test-pipeline.ts'],
 	[ENGINE_HORIZON]: ['test-data.ts', 'test-pipeline.ts'],
 	[ENGINE_VACANCY_OVERLAP]: ['test-data.ts', 'test-pipeline.ts'],
+	[ENGINE_INTERVAL_TRIMS]: ['test-data.ts', 'test-pipeline.ts'],
 	[ENGINE_EVENT_RUPTURE]: ['test-data.ts', 'test-pipeline.ts'],
 	[ENGINE_RELATIONSHIP_DUPLICATES]: ['test-data.ts', 'test-pipeline.ts'],
 	'origins.ts': ['test-validators.ts'],

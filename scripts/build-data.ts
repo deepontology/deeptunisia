@@ -1511,21 +1511,25 @@ const resolvedEducation = education.map((e) => ({
 //   V4/V5: a contract value is attributed — there is no "value filled from
 //   memory". A contract carrying `award` names who reports the figure or draws
 //   on a primary source (tier 1/2).
+const engineResolved = engine.resolve({
+	source: sources,
+	contract: contracts,
+	place: places,
+	person: people,
+	institution: institutions,
+	role: roles,
+	relationship: relationships,
+	event: events,
+	company: companies,
+	position: positions,
+	vacancy: vacancies,
+	era: eras,
+	education,
+	licence: licences
+});
 {
-	const resolved = engine.resolve({
-		source: sources,
-		contract: contracts,
-		place: places,
-		person: people,
-		institution: institutions,
-		role: roles,
-		relationship: relationships,
-		event: events,
-		company: companies,
-		position: positions,
-		vacancy: vacancies
-	});
-	for (const f of engine.validate(resolved, { only: ['V4', 'V10', 'V16', 'V17', 'V8', 'V3', 'V11', 'V1', 'V7', 'V31', 'V32'] })) {
+	// V22 is not run here: its findings are the clamp report, published below.
+	for (const f of engine.validate(engineResolved, { only: ['V4', 'V10', 'V16', 'V17', 'V8', 'V3', 'V11', 'V1', 'V7', 'V31', 'V32'] })) {
 		if (f.severity === 'error') fail(f.record ? `${f.record.kind} ${f.record.id}` : f.rule, f.message);
 		else warn(f.record ? `${f.record.kind} ${f.record.id}` : f.rule, f.message);
 	}
@@ -2502,18 +2506,19 @@ const coverageRows = buildCoverage({
 
 // V22: trims are never silent. Every envelope clamp is published with the record,
 // its original span and its resolved interval, so a reader can see what the model
-// decided and an editor can fix the span instead of the report growing.
-const intervalTrims = [
-	...resolvedPositions
-		.filter((p) => p.interval.trimmed || p.interval.startClamped)
-		.map((p) => ({ kind: 'position', id: p.id, start: p.start, end: p.end, interval: p.interval })),
-	...resolvedRelationships
-		.filter((r) => r.interval.trimmed || r.interval.startClamped)
-		.map((r) => ({ kind: 'relationship', id: r.id, start: r.start, end: r.end, interval: r.interval })),
-	...resolvedEvents
-		.filter((e) => e.interval.trimmed || e.interval.startClamped)
-		.map((e) => ({ kind: 'event', id: e.id, start: e.date, end: e.date_end ?? e.date, interval: e.interval }))
-];
+// decided and an editor can fix the span instead of the report growing. The
+// engine rule names every clamped interval of every kind the resolver settles;
+// the report is those findings, with the span the record was authored with.
+const intervalTrims = engine.validate(engineResolved, { only: ['V22'] }).map((f) => {
+	const kind = f.record!.kind;
+	const id = f.record!.id;
+	const record = (engineResolved.records[kind] ?? []).find((r) => r.id === id) as
+		| { start?: string; end?: string; date?: string; date_end?: string }
+		| undefined;
+	// An event is dated, not spanned: its span is its date and its end date.
+	const span = kind === 'event' ? { start: record?.date, end: record?.date_end ?? record?.date } : { start: record?.start, end: record?.end };
+	return { kind, id, ...span, interval: engineResolved.intervals.get(`${kind}:${id}`) };
+});
 writeFileSync(join(STAGE_STATIC, 'interval-trims.json'), JSON.stringify(intervalTrims, null, 2), 'utf8');
 if (intervalTrims.length) {
 	warn('interval-trims', `${intervalTrims.length} interval(s) envelope-clamped (V22) — see static/interval-trims.json`);
