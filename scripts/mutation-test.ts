@@ -58,6 +58,7 @@ const ENGINE_CANONICAL = '../node_modules/deepepisteme/src/kernel/canonical.ts';
 const ENGINE_BASIS = '../node_modules/deepepisteme/src/kernel/basis.ts';
 const ENGINE_REVIEW = '../node_modules/deepepisteme/src/kernel/review.ts';
 const ENGINE_ENVELOPE = '../node_modules/deepepisteme/src/kernel/envelope.ts';
+const ENGINE_PLACE_GEOGRAPHY = '../node_modules/deepepisteme/src/atlas/rules/place-geography.ts';
 const ENGINE_CONTRACT_AWARD = '../node_modules/deepepisteme/src/atlas/rules/contract-award.ts';
 
 const hash = (p: string) => {
@@ -275,10 +276,10 @@ const MUTATIONS: Mutation[] = [
 		to: 'if (true) continue;'
 	},
 	{
-		id: 'm59', file: 'build-data.ts', expect: 'test-pipeline (injected parentless place)',
+		id: 'm59', file: ENGINE_PLACE_GEOGRAPHY, expect: 'test-pipeline (injected parentless place)',
 		label: 'a point place no longer needs a parent region (V10)',
-		from: "if (p.kind !== 'quarter' && p.kind !== 'town') {",
-		to: "if (false && p.kind !== 'quarter' && p.kind !== 'town') {"
+		from: "if (typeof place.kind !== 'string' || !PARENTLESS_KINDS.has(place.kind)) {",
+		to: "if (false) {"
 	},
 	{
 		id: 'm60', file: 'build-data.ts', expect: 'test-pipeline (injected reversed prosecution)',
@@ -489,6 +490,7 @@ const SUITES_FOR: Record<string, string[]> = {
 	[ENGINE_REVIEW]: ['test-data.ts', 'test-validators.ts'],
 	[ENGINE_ENVELOPE]: ['test-data.ts', 'test-validators.ts'],
 	[ENGINE_CONTRACT_AWARD]: ['test-data.ts', 'test-pipeline.ts'],
+	[ENGINE_PLACE_GEOGRAPHY]: ['test-data.ts', 'test-pipeline.ts'],
 	'origins.ts': ['test-validators.ts'],
 	'review-coverage.ts': ['test-data.ts', 'test-validators.ts', 'test-emit.ts'],
 	'network-continuity.ts': ['test-network-continuity.ts'],

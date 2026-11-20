@@ -1669,8 +1669,8 @@ const resolvedEducation = education.map((e) => ({
 //   memory". A contract carrying `award` names who reports the figure or draws
 //   on a primary source (tier 1/2).
 {
-	const resolved = engine.resolve({ source: sources, contract: contracts });
-	for (const f of engine.validate(resolved, { only: ['V4'] })) {
+	const resolved = engine.resolve({ source: sources, contract: contracts, place: places, person: people, institution: institutions, role: roles });
+	for (const f of engine.validate(resolved, { only: ['V4', 'V10'] })) {
 		if (f.severity === 'error') fail(f.record ? `${f.record.kind} ${f.record.id}` : f.rule, f.message);
 		else warn(f.record ? `${f.record.kind} ${f.record.id}` : f.rule, f.message);
 	}
@@ -1679,23 +1679,13 @@ const resolvedEducation = education.map((e) => ({
 // V10 — the geographic hierarchy (spec §8). A place's `parent` chain must
 // terminate at a region; point-class places must carry coordinates inside
 // Tunisia's bounding box; coordinates and owner refs must resolve.
+// The half that needs this deployment's regions stays here: the parent must
+// name a region. The rest of V10 (a parent at all, a real owner, coordinates)
+// runs from the engine rule below.
 const regionById = new Map(regions.map((r) => [r.id, r]));
 for (const p of places) {
-	if (!p.parent) {
-		if (p.kind !== 'quarter' && p.kind !== 'town') {
-			fail(`place ${p.id}`, 'every place needs a parent region/governorate (V10)');
-		}
-		continue;
-	}
-	if (!regionById.has(p.parent)) {
+	if (p.parent && !regionById.has(p.parent)) {
 		fail(`place ${p.id}`, `unknown parent region "${p.parent}" (V10)`);
-		continue;
-	}
-	if (p.owner && !entityIds.has(p.owner)) {
-		fail(`place ${p.id}`, `unknown owner "${p.owner}" (must be a graph entity)`);
-	}
-	if (!p.coordinates) {
-		warn(`place ${p.id}`, 'no coordinates — the map cannot place it (V10)');
 	}
 }
 // The hierarchy must be acyclic and rooted: walk every chain to its top.
