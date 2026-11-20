@@ -1,0 +1,77 @@
+# Opens or refreshes the branch that carries main into release/1.0.
+#
+# Data lands on main and code lands on release/1.0, so release falls behind every
+# time main moves, and a sync was a manual merge. This job does that merge each
+# night on `sync/nightly` and opens a pull request for it. It never pushes to
+# main or release/1.0, and it never overwrites commits already on the sync
+# branch: scripts/sync-branch.ts merges main in rather than resetting, and
+# replaces the branch only after it has been merged into release/1.0.
+#
+# Scheduled workflows run from the default branch, so this file has to exist on
+# main as well as on release/1.0. The checkout below takes release/1.0 either
+# way, because the script and its test live there.
+#
+# Checkout uses FEED_PAT, as the feed job does: a push made with GITHUB_TOKEN
+# raises no workflow events, so the pull request's checks would never start.
+#
+# A conflict fails this run and pushes nothing. A merge that is clean but leaves
+# a typed figure stale fails the branch's own checks instead, which is the gate
+# doing its job.
+
+name: Sync main into release
+
+on:
+  schedule:
+    - cron: '40 2 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: sync-main-into-release
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: release/1.0
+          token: ${{ secrets.FEED_PAT }}
+          fetch-depth: 0
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - run: npm ci --ignore-scripts
+
+      - name: Open or refresh the sync branch
+        id: sync
+        run: npx --no-install tsx scripts/sync-branch.ts
+
+      - name: Make sure a pull request is open for it
+        if: steps.sync.outputs.action != 'none'
+        env:
+          GH_TOKEN: ${{ secrets.FEED_PAT }}
+          BRANCH: ${{ steps.sync.outputs.branch }}
+          BEHIND: ${{ steps.sync.outputs.behind }}
+          MAIN_SHA: ${{ steps.sync.outputs.main_sha }}
+        run: |
+          set -euo pipefail
+          open=$(gh pr list --head "$BRANCH" --base release/1.0 --state open --json number --jq 'length')
+          if [ "$open" != "0" ]; then
+            echo "a pull request for $BRANCH is already open"
+            exit 0
+          fi
+          body=$(printf '%s\n' \
+            "Merges main (${MAIN_SHA:0:7}) into release/1.0. Release was ${BEHIND} commit(s) behind." \
+            "" \
+            "Merge with a merge commit. The checks on this branch are the gate: build, tests and check. The hash ledger is skipped for sync branches because they carry new data, so compare meta.datasetHash with main's data before merging. If a typed figure in the landing strings is stale, correct it to the value the claims gate prints, then run npm run stats:write.")
+          gh pr create --base release/1.0 --head "$BRANCH" \
+            --title "Sync main into release/1.0 (${MAIN_SHA:0:7})" --body "$body"
