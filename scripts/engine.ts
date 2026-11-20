@@ -23,6 +23,7 @@ import {
 	InstitutionType,
 	Layer,
 	PlaceKind,
+	REVIEWER_LABELS,
 	RegionKind,
 	RelationshipType
 } from './schema.ts';
@@ -45,8 +46,8 @@ export const deployment: Deployment = {
 	gazette: parameters.jurisdiction.gazette,
 	registry: parameters.jurisdiction.registry,
 	bbox: parameters.jurisdiction.bbox,
-	/** The strict form of these labels is REVIEWER_LABEL in scripts/schema.ts. */
-	reviewerLabels: ['maintainer', 'Initial compilation', 'JORT verification pass'],
+	/** The same labels scripts/schema.ts builds REVIEWER_LABEL from. */
+	reviewerLabels: [...REVIEWER_LABELS],
 	index: parameters.index,
 	vocabulary: {
 		layers: [...Layer.options],

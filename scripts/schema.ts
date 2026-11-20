@@ -4,14 +4,22 @@ import {
 	Basis,
 	Confidence,
 	DisputeSchema,
+	RELATION_ALLOWED,
+	REQUIRED_SOURCE_KINDS,
+	ReviewActor,
 	ReviewMethod,
+	SourceRelation,
 	TRANSLATION_TIERS,
 	TranslatedBy,
 	Verification as VerificationStatus,
+	createReviewSchema,
 	deriveBasis,
 	isBasisUpgrade,
 	nonBlank,
-	slug
+	reviewerLabelPattern,
+	slug,
+	withClaimEnvelope as engineClaimEnvelope,
+	type SourceRelationValue
 } from 'deepepisteme/kernel';
 
 /**
@@ -32,7 +40,10 @@ export {
 	Basis,
 	Confidence,
 	DisputeSchema,
+	REQUIRED_SOURCE_KINDS,
+	ReviewActor,
 	ReviewMethod,
+	SourceRelation,
 	TRANSLATION_TIERS,
 	TranslatedBy,
 	VerificationStatus as Verification,
@@ -40,6 +51,7 @@ export {
 	isBasisUpgrade,
 	nonBlank
 };
+export type { SourceRelationValue };
 
 /**
  * Validation schema for the DeepTunisia knowledge graph.
@@ -119,15 +131,6 @@ export {
  *   inference-from-records nobody states it; it is reasoned from records
  *   circulating-claim      the claim circulates without reliable evidence
  */
-export const SourceRelation = z.enum([
-	'direct-record',
-	'direct-report',
-	'corroborated-report',
-	'single-report',
-	'inference-from-records',
-	'circulating-claim'
-]);
-export type SourceRelationValue = z.infer<typeof SourceRelation>;
 
 /**
  * Is this archive URL a snapshot, or a lookup that resolves to one later?
@@ -325,49 +328,16 @@ export const NO_RAW_MACHINE = new Set(['hypotheses', 'eras']);
  * says what kind of check was made and when, which is what a reader can audit.
  * A reviewer outside the maintainer group signs as `reviewer-<n>`, which carries no name.
  */
-export const REVIEWER_LABEL = /^(maintainer|Initial compilation|JORT verification pass|Research pass \d{4}-\d{2}-\d{2}|reviewer-\d+)$/;
+export const REVIEWER_LABELS = ['Initial compilation', 'JORT verification pass', 'Research pass YYYY-MM-DD'] as const;
+export const REVIEWER_LABEL = reviewerLabelPattern(REVIEWER_LABELS);
 
-/** Who performed the review: a person at the source, or a pass run by an agent. */
-export const ReviewActor = z.enum(['human', 'agent']);
-
-export const ReviewSchema = z.strictObject({
-	by: z
-		.string()
-		.regex(
-			REVIEWER_LABEL,
-			'reviewer must be a role label: maintainer, Initial compilation, JORT verification pass, Research pass YYYY-MM-DD, or reviewer-N (V23)'
-		),
-	/** Calendar-valid ISO date. (V23) */
-	date: z
-		.string()
-		.regex(/^\d{4}-\d{2}-\d{2}$/, 'review date must be an ISO date (YYYY-MM-DD)')
-		.refine(
-			(d) => {
-				// The regex is format-only: "2026-02-31" matches it and Date.UTC silently
-				// rolls the impossible day over to 2026-03-03. The same round-trip the date
-				// parser applies to interval tokens (V21) is applied here, or the strongest
-				// human-check label on the site would accept dates that do not exist.
-				const [y, mo, da] = d.split('-').map(Number);
-				const t = new Date(Date.UTC(y, mo - 1, da));
-				return t.getUTCFullYear() === y && t.getUTCMonth() === mo - 1 && t.getUTCDate() === da;
-			},
-			'review date must be a calendar-valid date (V23)'
-		),
-	/** What kind of human check this was. (V23 — was free text, which the gazette guard read) */
-	method: ReviewMethod,
-	/**
-	 * Free text describing what was actually checked. The method is now an enum;
-	 * free-text claims such as "checked directly against the JORT decree text"
-	 * live here so reviewOverclaims() can still read them.
-	 */
-	note: z.string().optional(),
-	/**
-	 * Whether the check was made by a person or by an agent. Optional so that every
-	 * review written before the field existed stays valid; the release branch makes
-	 * it required.
-	 */
-	actor: ReviewActor.optional()
-});
+/**
+ * The strict review object is built by the engine from the labels above, so the
+ * engine and this tree sign reviews with the same pattern and the same messages.
+ * `actor` is optional so every review written before the field existed stays
+ * valid; a `verified` record must name a human actor (V33).
+ */
+export const ReviewSchema = createReviewSchema(REVIEWER_LABELS);
 
 /**
  * A review note may not claim a verification the record cannot support.
@@ -1583,42 +1553,6 @@ export const HypothesisSchema = z.strictObject({
 	...translatable('falsifiable_by')
 });
 
-/**
- * V26 — which source relationships can honestly carry which kinds of claim.
- * `documented` means the record itself is held, so a report-relation
- * contradicts it; `inferred` means nobody states it; a circulating claim is
- * the whole of `unsubstantiated`.
- */
-const RELATION_ALLOWED: Record<z.infer<typeof Basis>, SourceRelationValue[]> = {
-	documented: ['direct-record'],
-	reported: ['direct-report', 'corroborated-report', 'single-report'],
-	inferred: ['inference-from-records'],
-	unsubstantiated: ['circulating-claim']
-};
-
-/**
- * Record kinds whose claim records must cite at least one source (rule 2).
- * Roles, questions, regions, eras, institutions and the administrative
- * scaffolding are deliberately absent: their standing is carried by the records
- * inside them, not by a citation of their own.
- */
-export const REQUIRED_SOURCE_KINDS = new Set([
-	'institution',
-	'person',
-	'position',
-	'relationship',
-	'event',
-	'agreement',
-	'world-claim',
-	'company',
-	'contract',
-	'licence',
-	'vacancy',
-	'declaration',
-	'education',
-	'place'
-]);
-
 /** Exceptions the build configures into the schema before parsing any record. */
 export interface SchemaExceptions {
 	/** `${kind}:${id}` whose empty `sources` list is an explicit, unexpired escape. */
@@ -1628,11 +1562,6 @@ export interface SchemaExceptions {
 }
 
 let schemaExceptions: SchemaExceptions = {};
-
-function overrideKey(kind: string, r: any): string {
-	const derived = deriveBasis(r.confidence, r.verification, undefined);
-	return `${kind}:${r.id}:${derived}>${r.basis}`;
-}
 
 /**
  * V18/V20/V27: the shared claim-envelope refines, applied to every claim-bearing
@@ -1653,84 +1582,13 @@ function overrideKey(kind: string, r: any): string {
  * `basis_derived` beside the authored `basis`.
  */
 function withClaimEnvelope<S extends z.ZodObject<z.ZodRawShape>>(kind: string, schema: S) {
-	return schema
-		.refine((r: any) => !((r.confidence === 'C' || r.confidence === 'D') && !nonBlank(r.attributed_to)), {
-			message: 'grade C/D claims must name who is making the claim (attributed_to, non-blank)'
-		})
-		.refine(
-			(r: any) => {
-				const derived = deriveBasis(r.confidence, r.verification, r.basis);
-				return !(derived === 'inferred' && (!nonBlank(r.reasoning) || !nonBlank(r.falsifiable_by)));
-			},
-			{ message: 'an inferred claim must state its reasoning and what would falsify it (non-blank)' }
-		)
-		.refine(
-			(r: any) =>
-				!(deriveBasis(r.confidence, r.verification, r.basis) === 'unsubstantiated' &&
-					!nonBlank(r.attributed_to)),
-			{ message: 'an unsubstantiated claim must name where the claim circulates (non-blank)' }
-		)
-		.refine(
-			(r: any) => {
-				if (!REQUIRED_SOURCE_KINDS.has(kind)) return true;
-				if ((r.sources?.length ?? 0) > 0) return true;
-				return schemaExceptions.emptySources?.has(`${kind}:${r.id}`) ?? false;
-			},
-			{
-				message:
-					'rule 2: every claim record must cite at least one source, or be listed in data/source-exceptions.yaml with an owner and a deadline'
-			}
-		)
-		.superRefine((r: any, ctx) => {
-			if (!r.basis) return;
-			const derived = deriveBasis(r.confidence, r.verification, undefined);
-			if (!isBasisUpgrade(r.basis, derived)) return;
-			if (schemaExceptions.basisOverrides?.has(overrideKey(kind, r))) return;
-			const pair = `authored basis "${r.basis}" over grade-implied "${derived}"`;
-			const issue = (missing: string) =>
-				ctx.addIssue({ code: 'custom', message: `${pair} (V27): ${missing}`, path: ['basis'] });
-			if (!r.review) issue('a basis override requires a review object with a date and method');
-			if (!nonBlank(r.reasoning)) issue('a basis override requires non-blank reasoning');
-			if ((r.basis === 'inferred' || derived === 'inferred') && !nonBlank(r.falsifiable_by)) {
-				issue('a basis override on an inference requires a non-blank falsifiable_by');
-			}
-			if ((r.sources?.length ?? 0) < 1) issue('a basis override requires at least one source');
-			if (!nonBlank(r.basis_override_reason, 10)) {
-				issue(
-					'a basis override requires basis_override_reason of at least 10 non-blank characters, or a live entry in data/source-exceptions.yaml'
-				);
-			}
-		})
-		.superRefine((r: any, ctx) => {
-			// V26 — kind versus strength. The source relationship is a separate
-			// axis from the authored kind; a combination that cannot both be true
-			// fails, and the two fields stand or fall together.
-			const basis = deriveBasis(r.confidence, r.verification, r.basis);
-			if (r.source_relation) {
-				const allowed = RELATION_ALLOWED[basis] ?? [];
-				if (!allowed.includes(r.source_relation)) {
-					ctx.addIssue({
-						code: 'custom',
-						message: `source_relation "${r.source_relation}" is incompatible with basis "${basis}" (V26)`,
-						path: ['source_relation']
-					});
-				}
-				if (r.independence === undefined) {
-					ctx.addIssue({
-						code: 'custom',
-						message: 'source_relation requires independence: how many independent origins carry this claim? (V26)',
-						path: ['independence']
-					});
-				}
-			}
-			if (r.independence !== undefined && Array.isArray(r.sources) && r.independence > r.sources.length) {
-				ctx.addIssue({
-					code: 'custom',
-					message: `independence ${r.independence} exceeds the ${r.sources.length} cited source(s) (V26)`,
-					path: ['independence']
-				});
-			}
-		});
+	// The refines live in the engine kernel. The exception sets arrive through a
+	// getter, so configureSchema() can replace them between parses, and the two
+	// texts below keep every message this tree has always published.
+	return engineClaimEnvelope(kind, schema, () => schemaExceptions, {
+		exceptionFile: 'data/source-exceptions.yaml',
+		basisOverrideRule: 'V27'
+	});
 }
 
 export type Source = z.infer<typeof SourceSchema>;

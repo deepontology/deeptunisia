@@ -111,22 +111,22 @@ const MUTATIONS: Mutation[] = [
 	},
 	// --- schema.ts: the claim envelope (V18/V20, now nonBlank) -------------------
 	{
-		id: 'm04', file: 'schema.ts', expect: 'test-validators V20 (C/D attribution)',
+		id: 'm04', file: ENGINE_ENVELOPE, expect: 'test-validators V20 (C/D attribution)',
 		label: 'envelope stops requiring attributed_to on C/D',
 		from: "(r: any) => !((r.confidence === 'C' || r.confidence === 'D') && !nonBlank(r.attributed_to))",
 		to: '(r: any) => true'
 	},
 	{
-		id: 'm05', file: 'schema.ts', expect: 'test-validators V18 (inferred completeness)',
+		id: 'm05', file: ENGINE_ENVELOPE, expect: 'test-validators V18 (inferred completeness)',
 		label: 'envelope stops requiring reasoning/falsifier on inferred',
-		from: "\t\t\t(r: any) => {\n\t\t\t\tconst derived = deriveBasis(r.confidence, r.verification, r.basis);\n\t\t\t\treturn !(derived === 'inferred' && (!nonBlank(r.reasoning) || !nonBlank(r.falsifiable_by)));\n\t\t\t}",
-		to: '(r: any) => true'
+		from: "return !(derived === 'inferred' && (!nonBlank(r.reasoning) || !nonBlank(r.falsifiable_by)));",
+		to: 'return true;'
 	},
 	{
-		id: 'm06', file: 'schema.ts', expect: 'test-validators V18 (explicit unsubstantiated)',
+		id: 'm06', file: ENGINE_ENVELOPE, expect: 'test-validators V18 (explicit unsubstantiated)',
 		label: 'envelope stops requiring attribution on unsubstantiated',
-		from: "(r: any) =>\n\t\t\t\t!(deriveBasis(r.confidence, r.verification, r.basis) === 'unsubstantiated' &&\n\t\t\t\t\t!nonBlank(r.attributed_to)),",
-		to: '(r: any) => true,'
+		from: "deriveBasis(r.confidence, r.verification, r.basis) === 'unsubstantiated' &&",
+		to: 'false &&'
 	},
 	{
 		id: 'm07', file: 'schema.ts', expect: 'latent — redundant with the envelope, documented below',
@@ -137,23 +137,23 @@ const MUTATIONS: Mutation[] = [
 	},
 	// --- schema.ts: review guard (V23) ------------------------------------------
 	{
-		id: 'm08', file: 'schema.ts', expect: 'test-validators V23 (method enum)',
+		id: 'm08', file: ENGINE_REVIEW, expect: 'test-validators V23 (method enum)',
 		label: 'review method becomes free text',
 		from: 'method: ReviewMethod,',
 		to: 'method: z.string(),'
 	},
 	{
-		id: 'm09', file: 'schema.ts', expect: 'latent — by design, documented below',
+		id: 'm09', file: ENGINE_REVIEW, expect: 'latent — by design, documented below',
 		label: 'review date loses its ISO format check',
-		from: "\t\t.regex(/^\\d{4}-\\d{2}-\\d{2}$/, 'review date must be an ISO date (YYYY-MM-DD)')",
-		to: '',
+		from: '.refine((v) => /^\\d{4}-\\d{2}-\\d{2}$/.test(v), {',
+		to: '.refine((v) => true, {',
 		known: 'by design: the V23 calendar round-trip (m10) already rejects any non-calendar date — "26/07/2026" splits to a single NaN segment, "2026-31-07" rolls over and fails the round-trip — so the format regex is redundant defense-in-depth that only improves the error message.'
 	},
 	{
-		id: 'm10', file: 'schema.ts', expect: 'test-validators V23 (calendar round-trip)',
+		id: 'm10', file: ENGINE_REVIEW, expect: 'test-validators V23 (calendar round-trip)',
 		label: 'review date loses its calendar round-trip (2026-02-31 accepted)',
-		from: "return t.getUTCFullYear() === y && t.getUTCMonth() === mo - 1 && t.getUTCDate() === da;\n\t\t\t},\n\t\t\t'review date must be a calendar-valid date (V23)'",
-		to: "return true;\n\t\t\t},\n\t\t\t'review date must be a calendar-valid date (V23)'"
+		from: 'return t.getUTCFullYear() === y && t.getUTCMonth() === mo - 1 && t.getUTCDate() === da;',
+		to: 'return true;'
 	},
 	{
 		id: 'm11', file: 'schema.ts', expect: 'test-validators V23-guard (disclaimer clause)',
@@ -176,31 +176,31 @@ const MUTATIONS: Mutation[] = [
 		to: '  return typeof v === \'string\' && v.length > 0;'
 	},
 	{
-		id: 'm28', file: 'schema.ts', expect: 'test-validators V23 (whitespace reviewer name)',
-		label: 'reviewer names stop being trimmed before the minimum',
-		from: "\tby: z.string().refine((v) => nonBlank(v, 2), 'reviewer name must be at least 2 non-blank characters (V23)'),",
-		to: '\tby: z.string().min(2),'
+		id: 'm28', file: ENGINE_REVIEW, expect: 'test-validators V23 (reviewer must be a role label)',
+		label: 'a reviewer may sign with any name, not a role label',
+		from: 'by: z.string().refine((v) => labels.test(v), {',
+		to: 'by: z.string().refine((v) => nonBlank(v, 2), {'
 	},
 	{
-		id: 'm29', file: 'schema.ts', expect: 'the build gate (legacy override register)',
+		id: 'm29', file: ENGINE_ENVELOPE, expect: 'the build gate (legacy override register)',
 		label: 'legacy basis-override exception register stops being consulted',
-		from: '\t\t\tif (schemaExceptions.basisOverrides?.has(overrideKey(kind, r))) return;',
-		to: '\t\t\tif (false) return;'
+		from: 'if (live(exceptions).basisOverrides?.has(`${kind}:${r.id}:${derived}>${r.basis}`)) return;',
+		to: 'if (false) return;'
 	},
 	{
-		id: 'm30', file: 'schema.ts', expect: 'test-validators V27 (override review requirement)',
+		id: 'm30', file: ENGINE_ENVELOPE, expect: 'test-validators V27 (override review requirement)',
 		label: 'override review requirement stops issuing',
-		from: "\t\t\tif (!r.review) issue('a basis override requires a review object with a date and method');",
-		to: "\t\t\tif (false) issue('a basis override requires a review object with a date and method');"
+		from: "if (!record.review) gaps.push('a basis override requires a review object with a date and method');",
+		to: "if (false) gaps.push('a basis override requires a review object with a date and method');"
 	},
 	{
-		id: 'm40', file: 'schema.ts', expect: 'test-validators V26 (incompatible relation)',
+		id: 'm40', file: ENGINE_ENVELOPE, expect: 'test-validators V26 (incompatible relation)',
 		label: 'source relations stop being checked against the authored kind',
 		from: 'if (!allowed.includes(r.source_relation)) {',
 		to: 'if (false && !allowed.includes(r.source_relation)) {'
 	},
 	{
-		id: 'm41', file: 'schema.ts', expect: 'test-validators V26 (relation needs independence)',
+		id: 'm41', file: ENGINE_ENVELOPE, expect: 'test-validators V26 (relation needs independence)',
 		label: 'a source relation no longer requires an origin count',
 		from: 'if (r.independence === undefined) {',
 		to: 'if (false && r.independence === undefined) {'

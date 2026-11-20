@@ -216,15 +216,28 @@ const positionSchema = engine.envelope.withClaimEnvelope('position', claimFixtur
 		engine.envelope.isBasisUpgrade('documented', 'reported') &&
 			!engine.envelope.isBasisUpgrade('reported', 'documented')
 	);
-	// Deeptunisia keeps a stricter review schema than the engine ships: the
-	// signer must be a role label, not any name. This documents the difference
-	// so a later slice cannot quietly take the weaker one.
-	const signed = { by: 'Example reviewer', date: '2026-09-09', method: 'source-check' };
+	// The review schema is built by the engine from this deployment's labels, so
+	// the engine and this tree take and refuse the same signers, dates and keys.
+	const signers = [
+		'Example reviewer',
+		'maintainer',
+		'Initial compilation',
+		'JORT verification pass',
+		'Research pass 2026-09-09',
+		'Research pass 2026-02-31x',
+		'reviewer-7',
+		'reviewer-'
+	];
+	const reviewBase = { date: '2026-09-09', method: 'source-check' };
+	const sameVerdict = signers.every(
+		(by) => engine.envelope.ReviewSchema.safeParse({ ...reviewBase, by }).success === DeeptunisiaReviewSchema.safeParse({ ...reviewBase, by }).success
+	);
+	ok('review: the engine and this tree take and refuse the same signers', sameVerdict);
 	ok(
-		'review runs the stricter schema here: the engine accepts any signer, this one does not',
-		engine.envelope.ReviewSchema.safeParse(signed).success &&
-			!DeeptunisiaReviewSchema.safeParse(signed).success &&
-			DeeptunisiaReviewSchema.safeParse({ ...signed, by: 'JORT verification pass' }).success
+		'review: a signer that is a name is refused, a role label is accepted',
+		!engine.envelope.ReviewSchema.safeParse({ ...reviewBase, by: 'Example reviewer' }).success &&
+			engine.envelope.ReviewSchema.safeParse({ ...reviewBase, by: 'JORT verification pass' }).success &&
+			engine.envelope.ReviewSchema.safeParse({ ...reviewBase, by: 'Research pass 2026-09-09' }).success
 	);
 }
 
