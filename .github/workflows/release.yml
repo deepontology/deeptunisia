@@ -213,6 +213,8 @@ jobs:
 
       - name: Assets a release would carry (dry run)
         if: github.event_name == 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
           ASSETS=()
@@ -231,6 +233,13 @@ jobs:
           if ! ls output/deeptunisia-release-paper-*.pdf >/dev/null 2>&1; then
             echo "::error::no release paper PDF was produced."
             exit 1
+          fi
+          echo "ref: ${GITHUB_REF_NAME} (${GITHUB_REF_TYPE})"
+          if [ "${GITHUB_REF_TYPE}" = "tag" ]; then
+            echo "release notes the tag would carry (auto-generated from commits since the previous tag):"
+            gh api "repos/${GITHUB_REPOSITORY}/releases/generate-notes" -f tag_name="${GITHUB_REF_NAME}" --jq '.body' || echo "_No auto-notes available._"
+          else
+            echo "release notes: not previewed, the ref is a branch (a tag ref previews them)."
           fi
           echo "dataset hash: $(node -e "console.log(JSON.parse(require('fs').readFileSync('static/dataset.json','utf8')).meta.datasetHash)")"
 
