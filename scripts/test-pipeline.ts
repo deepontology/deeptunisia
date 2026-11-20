@@ -482,7 +482,7 @@ try {
   equity: { pct: 90, direct: true }
   description: "Synthetic stake injected by the pipeline fixture runner."
   confidence: B
-  sources: [\${s}]
+  sources: [${s}]
 - id: own-fixture-over-b
   from: aziz-miled
   to: biat
@@ -492,7 +492,7 @@ try {
   equity: { pct: 90, direct: true }
   description: "Synthetic stake injected by the pipeline fixture runner."
   confidence: B
-  sources: [\${s}]`);
+  sources: [${s}]`);
 
 	// V7: one person on two boards over the same years (a warning).
 	appendBlock(TREE_BAD, 'relationships.yaml', `
@@ -504,7 +504,7 @@ try {
   end: "2005"
   description: "Synthetic board seat injected by the pipeline fixture runner."
   confidence: B
-  sources: [\${s}]
+  sources: [${s}]
 - id: board-fixture-seat-b
   from: bourguiba
   to: poulina
@@ -513,18 +513,18 @@ try {
   end: "2006"
   description: "Synthetic board seat injected by the pipeline fixture runner."
   confidence: B
-  sources: [\${s}]`);
+  sources: [${s}]`);
 
 	// V3: two companies carrying one registration number in one registry.
 	appendBlock(TREE_BAD, 'companies.yaml', `
 - id: sonede
   registration: { registry: registre-de-commerce, number: "B-FIXTURE-1", date: "2020" }
   confidence: B
-  sources: [\${s}]
+  sources: [${s}]
 - id: sncft
   registration: { registry: registre-de-commerce, number: "B-FIXTURE-1", date: "2020" }
   confidence: B
-  sources: [\${s}]`);
+  sources: [${s}]`);
 
 	// V11: an event with no actor, institution, document or recorded dispute (a warning).
 	appendBlock(TREE_BAD, 'events.yaml', `
@@ -533,7 +533,7 @@ try {
   title_en: "Fixture orphan event"
   category: political
   summary: "Synthetic event linked to nothing, injected by the pipeline fixture runner to prove the V11 flag fires."
-  sources: [\${s}]`);
+  sources: [${s}]`);
 
 	const bad = build(TREE_BAD, OUT_BAD, STATIC_BAD);
 	ok('pipeline fixture: the injected tree fails the build', bad.code !== 0, `exit ${bad.code}`);

@@ -60,6 +60,10 @@ const ENGINE_REVIEW = '../node_modules/deepepisteme/src/kernel/review.ts';
 const ENGINE_ENVELOPE = '../node_modules/deepepisteme/src/kernel/envelope.ts';
 const ENGINE_PLACE_GEOGRAPHY = '../node_modules/deepepisteme/src/atlas/rules/place-geography.ts';
 const ENGINE_CONTRACT_AWARD = '../node_modules/deepepisteme/src/atlas/rules/contract-award.ts';
+const ENGINE_OWNERSHIP_SUM = '../node_modules/deepepisteme/src/atlas/rules/ownership-sum.ts';
+const ENGINE_BOARD_OVERLAP = '../node_modules/deepepisteme/src/atlas/rules/board-overlap.ts';
+const ENGINE_COMPANY_REGISTRATION = '../node_modules/deepepisteme/src/atlas/rules/company-registration.ts';
+const ENGINE_EVENT_ORPHAN = '../node_modules/deepepisteme/src/atlas/rules/event-orphan.ts';
 const ENGINE_EVENT_CAUSAL = '../node_modules/deepepisteme/src/atlas/rules/event-causal.ts';
 const ENGINE_EVENT_RUPTURE = '../node_modules/deepepisteme/src/atlas/rules/event-rupture.ts';
 const ENGINE_RELATIONSHIP_DUPLICATES = '../node_modules/deepepisteme/src/atlas/rules/relationship-duplicates.ts';
@@ -303,6 +307,30 @@ const MUTATIONS: Mutation[] = [
 		to: 'if (true) continue;'
 	},
 	{
+		id: 'm63', file: ENGINE_OWNERSHIP_SUM, expect: 'test-pipeline (injected stakes over 100 percent)',
+		label: 'direct stakes summing past 100 percent are no longer found (V1)',
+		from: 'if (sum <= 100 + TOLERANCE || flagged.has(probe.id)) continue;',
+		to: 'if (true) continue;'
+	},
+	{
+		id: 'm64', file: ENGINE_COMPANY_REGISTRATION, expect: 'test-pipeline (injected repeated registration number)',
+		label: 'a registration number carried by two companies is no longer found (V3)',
+		from: 'if (first !== undefined) {',
+		to: 'if (false) {'
+	},
+	{
+		id: 'm65', file: ENGINE_BOARD_OVERLAP, expect: 'test-pipeline (injected two overlapping board seats)',
+		label: 'one person on two boards over the same years is no longer flagged (V7)',
+		from: 'if (a.from < b.until && b.from < a.until) {',
+		to: 'if (false) {'
+	},
+	{
+		id: 'm66', file: ENGINE_EVENT_ORPHAN, expect: 'test-pipeline (injected orphan event)',
+		label: 'an event linked to nothing is no longer flagged (V11)',
+		from: 'if (carries(event.actors) || carries(event.institutions) || carries(event.documents) || carries(event.disputes)) continue;',
+		to: 'if (true) continue;'
+	},
+	{
 		id: 'm31', file: 'build-data.ts', expect: 'the build gate (grade-A primary rule)',
 		label: 'grade-A records no longer checked for a tier-1/2 source',
 		from: '\t\tif (tiers.some((t) => t <= 2)) continue;',
@@ -495,6 +523,10 @@ const SUITES_FOR: Record<string, string[]> = {
 	[ENGINE_CONTRACT_AWARD]: ['test-data.ts', 'test-pipeline.ts'],
 	[ENGINE_PLACE_GEOGRAPHY]: ['test-data.ts', 'test-pipeline.ts'],
 	[ENGINE_EVENT_CAUSAL]: ['test-data.ts', 'test-pipeline.ts'],
+	[ENGINE_OWNERSHIP_SUM]: ['test-data.ts', 'test-pipeline.ts'],
+	[ENGINE_BOARD_OVERLAP]: ['test-data.ts', 'test-pipeline.ts'],
+	[ENGINE_COMPANY_REGISTRATION]: ['test-data.ts', 'test-pipeline.ts'],
+	[ENGINE_EVENT_ORPHAN]: ['test-data.ts', 'test-pipeline.ts'],
 	[ENGINE_EVENT_RUPTURE]: ['test-data.ts', 'test-pipeline.ts'],
 	[ENGINE_RELATIONSHIP_DUPLICATES]: ['test-data.ts', 'test-pipeline.ts'],
 	'origins.ts': ['test-validators.ts'],
