@@ -1,10 +1,10 @@
 {
-  "generated": "2026-11-20T10:38:07.248Z",
-  "commit": "88f598d",
+  "generated": "2026-11-20T11:24:05.144Z",
+  "commit": "991c470",
   "withValidators": true,
   "summary": {
-    "counted": 69,
-    "killed": 67,
+    "counted": 71,
+    "killed": 69,
     "latent": 2,
     "knownLatent": 2,
     "drift": 0,
@@ -371,6 +371,24 @@
       "by": "test-data",
       "outputChanged": true,
       "expect": "test-data (clamped intervals missing from the published report)"
+    },
+    {
+      "id": "m70",
+      "label": "an overlap counts a previous holder who is not ended (V24)",
+      "file": "../node_modules/deepepisteme/src/atlas/succession.ts",
+      "verdict": "killed",
+      "by": "test-data",
+      "outputChanged": true,
+      "expect": "test-data (published overlaps no longer match the pairwise comparison)"
+    },
+    {
+      "id": "m71",
+      "label": "a handover is a gap only past twice the published threshold (V24)",
+      "file": "../node_modules/deepepisteme/src/atlas/succession.ts",
+      "verdict": "killed",
+      "by": "test-data",
+      "outputChanged": true,
+      "expect": "test-data (published gaps no longer match the recomputed chain gaps)"
     },
     {
       "id": "m31",
