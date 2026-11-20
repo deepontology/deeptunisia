@@ -73,7 +73,7 @@ export const VALIDATOR_REGISTER: ValidatorEntry[] = [
 		rule: 'a cause cannot begin after its consequence, and a causal cycle fails',
 		status: 'enforced',
 		gate: 'fail',
-		site: { file: 'scripts/build-data.ts', anchor: 'causal cycle:' }
+		site: { file: 'node_modules/deepepisteme/src/atlas/rules/event-causal.ts', anchor: 'causal cycle:' }
 	},
 	{
 		id: 'V9',
@@ -134,14 +134,14 @@ export const VALIDATOR_REGISTER: ValidatorEntry[] = [
 		rule: 'duplicate relationships on the same key with overlapping intervals fail',
 		status: 'enforced',
 		gate: 'fail',
-		site: { file: 'scripts/build-data.ts', anchor: 'with an overlapping interval' }
+		site: { file: 'node_modules/deepepisteme/src/atlas/rules/relationship-duplicates.ts', anchor: 'with an overlapping interval' }
 	},
 	{
 		id: 'V17',
 		rule: 'a rupture event not linked into the causal graph is flagged',
 		status: 'enforced',
 		gate: 'warn',
-		site: { file: 'scripts/build-data.ts', anchor: 'not linked into the causal graph (V17)' }
+		site: { file: 'node_modules/deepepisteme/src/atlas/rules/event-rupture.ts', anchor: 'not linked into the causal graph (V17)' }
 	},
 	{
 		id: 'V18',
