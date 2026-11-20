@@ -239,6 +239,42 @@ const ScaleAnchorsSchema = z.strictObject({
 
 const optionLabelMap = z.record(z.string(), z.string().min(1));
 
+/** Reserved answer key on an allocation item: true when the respondent kept the draft. */
+export const ALLOCATION_KEPT_KEY = 'kept_draft';
+
+/**
+ * One line of a budget allocation. `draft_md` is the draft amount in millions
+ * of dinars (a placeholder until the instrument freezes on the adopted law).
+ * A locked line is shown but never moved.
+ */
+export const AllocationCategorySchema = z.strictObject({
+	id: z.string().min(1).refine((id) => id !== ALLOCATION_KEPT_KEY, `"${ALLOCATION_KEPT_KEY}" is a reserved key`),
+	draft_md: z.number().nonnegative(),
+	locked: z.boolean()
+});
+
+/**
+ * An allocation item (response `allocation`): the respondent gives each line a
+ * share of its draft in basis points (10000 is the draft), in steps of
+ * `step_bp` up to `max_bp`. The movable lines must balance to `envelope_md`
+ * within `tolerance`, and locked lines stay at the draft.
+ */
+export const AllocationBlockSchema = z
+	.strictObject({
+		envelope_md: z.number().positive(),
+		tolerance: z.number().positive().max(0.05),
+		step_bp: z.number().int().positive(),
+		max_bp: z.number().int().positive(),
+		categories: z.array(AllocationCategorySchema).min(2)
+	})
+	.refine((b) => new Set(b.categories.map((c) => c.id)).size === b.categories.length, 'allocation category ids must be unique')
+	.refine(
+		(b) =>
+			Math.abs(b.categories.filter((c) => !c.locked).reduce((sum, c) => sum + c.draft_md, 0) - b.envelope_md) <= 1,
+		'envelope_md must equal the movable draft total within 1'
+	);
+export type AllocationBlock = z.infer<typeof AllocationBlockSchema>;
+
 export const ItemSchema = z.strictObject({
 	id: z.string().min(1),
 	module: z.string().min(1),
@@ -270,7 +306,9 @@ export const ItemSchema = z.strictObject({
 	/** A short explanation shown under the question, per locale. */
 	help_en: z.string().min(1).optional(),
 	help_fr: z.string().min(1).optional(),
-	help_ar: z.string().min(1).optional()
+	help_ar: z.string().min(1).optional(),
+	/** Only on an `allocation` item: the lines the respondent may move. */
+	allocation: AllocationBlockSchema.optional()
 });
 export type Item = z.infer<typeof ItemSchema>;
 

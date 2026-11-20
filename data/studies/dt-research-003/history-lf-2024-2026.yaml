@@ -1,0 +1,149 @@
+# Adopted state budgets 2024 to 2026, by mission, for the citizen budget study (dt-research-003).
+#
+# STATUS: adopted-lf. Every amount is read from tableau C ("Dépenses du budget de l'État,
+# crédits de paiement") annexed to each year's finance law, as published in the Journal
+# Officiel de la République Tunisienne (French translation). Each mission carries the
+# printed JORT page. The tables are scanned images; each figure was read from the page
+# image and every year's missions add up to the law's stated total to the dinar
+# (checked by scripts/check-budget-figures.ts).
+#
+# These are the budgets as voted in December of the year before. They are not what was
+# finally spent, and they do not include later supplementary finance laws.
+#
+# Units: millions of dinars (MD), payment credits, nominal (not adjusted for inflation).
+# programmes: the two programme lines the board uses to estimate subsidies (the energy
+# programme of Industry, Mines and Energy and the domestic trade programme of Commerce),
+# read from the same tables.
+
+study: dt-research-003
+checked: 2026-11-14
+years:
+  2024:
+    document: "Loi n° 2023-13 du 11 décembre 2023, portant loi de finances pour l'année 2024"
+    source: "JORT n° 144, 12 décembre 2023 (French translation), tableau C"
+    url: "https://lake.jort.tn/journal-officiel/fr/2023/144.pdf"
+    total_md: 59805
+    programmes:
+      energy: { amount_md: 7209.344, page: 3500, label: "Industrie, Mines et Énergie, programme 1: Énergie" }
+      domestic_trade: { amount_md: 3633.825, page: 3500, label: "Commerce, programme 1: Commerce intérieur" }
+    missions:
+      arp: { amount_md: 38.553, page: 3499, label: "Assemblée des Représentants du Peuple" }
+      anrd: { amount_md: 0, page: 3499, label: "Conseil (Assemblée) National des Régions et des Districts" }
+      presidency: { amount_md: 200.4, page: 3499, label: "Présidence de la République" }
+      head_of_government: { amount_md: 272.302, page: 3499, label: "Présidence du Gouvernement" }
+      interior: { amount_md: 5822, page: 3499, label: "Mission de l'Intérieur" }
+      justice: { amount_md: 946.594, page: 3499, label: "Mission de la Justice" }
+      foreign_affairs: { amount_md: 344, page: 3499, label: "Affaires Étrangères, Migration et Tunisiens à l'Étranger" }
+      national_defence: { amount_md: 4086.848, page: 3500, label: "Défense Nationale" }
+      religious_affairs: { amount_md: 187, page: 3500, label: "Affaires Religieuses" }
+      finance: { amount_md: 1358, page: 3500, label: "Finances" }
+      economy_planning: { amount_md: 950.15, page: 3500, label: "Économie et Planification" }
+      state_domains: { amount_md: 88.618, page: 3500, label: "Domaines de l'État et Affaires Foncières" }
+      agriculture_water_fisheries: { amount_md: 2202.075, page: 3500, label: "Agriculture, Ressources Hydrauliques et Pêche" }
+      industry_mines_energy: { amount_md: 7406, page: 3500, label: "Industrie, Mines et Énergie" }
+      trade_export: { amount_md: 3759.3, page: 3500, label: "Commerce et Développement des Exportations" }
+      communication_technologies: { amount_md: 175.15, page: 3501, label: "Technologies de la Communication" }
+      tourism: { amount_md: 180, page: 3501, label: "Tourisme" }
+      equipment_housing: { amount_md: 1970, page: 3501, label: "Équipement et Habitat" }
+      environment: { amount_md: 459.4, page: 3501, label: "Environnement" }
+      transport: { amount_md: 1051.031, page: 3501, label: "Transports" }
+      culture_arts: { amount_md: 414.3, page: 3501, label: "Affaires Culturelles" }
+      youth_sports: { amount_md: 922.164, page: 3501, label: "Jeunesse et Sports" }
+      family_women_children_seniors: { amount_md: 248.9, page: 3501, label: "Famille, Femme, Enfance et Personnes Âgées" }
+      health: { amount_md: 3930, page: 3501, label: "Santé" }
+      social_affairs: { amount_md: 2852, page: 3502, label: "Affaires Sociales" }
+      education: { amount_md: 7917.5, page: 3502, label: "Éducation" }
+      higher_education_research: { amount_md: 2277.238, page: 3502, label: "Enseignement Supérieur et Recherche Scientifique" }
+      employment_training: { amount_md: 999.589, page: 3502, label: "Emploi et Formation Professionnelle" }
+      judicial_council: { amount_md: 2.207, page: 3502, label: "Conseil Supérieur provisoire de la Magistrature" }
+      constitutional_court: { amount_md: 0, page: 3502, label: "Cour Constitutionnelle (no credits)" }
+      court_of_accounts: { amount_md: 32.986, page: 3502, label: "Cour des Comptes" }
+      isie_elections: { amount_md: 192.469, page: 3502, label: "Instance Supérieure Indépendante pour les Élections" }
+      financing_costs: { amount_md: 6838, page: 3502, label: "Charges de Financement (debt interest)" }
+      unforeseen: { amount_md: 1680.226, page: 3502, label: "Dépenses Imprévues et non Réparties" }
+  2025:
+    document: "Loi n° 2024-48 du 9 décembre 2024, portant loi de finances pour l'année 2025"
+    source: "JORT n° 149, 10 décembre 2024 (French translation), tableau C"
+    url: "https://lake.jort.tn/journal-officiel/fr/2024/149.pdf"
+    total_md: 59828
+    programmes:
+      energy: { amount_md: 7231.557, page: 3463, label: "Industrie, Mines et Énergie, programme 1: Énergie" }
+      domestic_trade: { amount_md: 3849.379, page: 3463, label: "Commerce, programme 1: Commerce intérieur" }
+    missions:
+      arp: { amount_md: 43.193, page: 3462, label: "Assemblée des Représentants du Peuple" }
+      anrd: { amount_md: 15.61, page: 3462, label: "Conseil (Assemblée) National des Régions et des Districts" }
+      presidency: { amount_md: 214.259, page: 3462, label: "Présidence de la République" }
+      head_of_government: { amount_md: 271, page: 3462, label: "Présidence du Gouvernement" }
+      interior: { amount_md: 5931, page: 3462, label: "Mission de l'Intérieur" }
+      justice: { amount_md: 984, page: 3462, label: "Mission de la Justice" }
+      foreign_affairs: { amount_md: 366.607, page: 3462, label: "Affaires Étrangères, Migration et Tunisiens à l'Étranger" }
+      national_defence: { amount_md: 4445, page: 3462, label: "Défense Nationale" }
+      religious_affairs: { amount_md: 195.58, page: 3462, label: "Affaires Religieuses" }
+      finance: { amount_md: 1390, page: 3462, label: "Finances" }
+      economy_planning: { amount_md: 958, page: 3462, label: "Économie et Planification" }
+      state_domains: { amount_md: 90, page: 3463, label: "Domaines de l'État et Affaires Foncières" }
+      agriculture_water_fisheries: { amount_md: 2279.05, page: 3463, label: "Agriculture, Ressources Hydrauliques et Pêche" }
+      industry_mines_energy: { amount_md: 7435.818, page: 3463, label: "Industrie, Mines et Énergie" }
+      trade_export: { amount_md: 3971.21, page: 3463, label: "Commerce et Développement des Exportations" }
+      communication_technologies: { amount_md: 184, page: 3463, label: "Technologies de la Communication" }
+      tourism: { amount_md: 174.156, page: 3463, label: "Tourisme" }
+      equipment_housing: { amount_md: 2022, page: 3463, label: "Équipement et Habitat" }
+      environment: { amount_md: 465.97, page: 3463, label: "Environnement" }
+      transport: { amount_md: 1076.47, page: 3463, label: "Transports" }
+      culture_arts: { amount_md: 425.49, page: 3463, label: "Affaires Culturelles" }
+      youth_sports: { amount_md: 936.276, page: 3463, label: "Jeunesse et Sports" }
+      family_women_children_seniors: { amount_md: 262.457, page: 3464, label: "Famille, Femme, Enfance et Personnes Âgées" }
+      health: { amount_md: 4000, page: 3464, label: "Santé" }
+      social_affairs: { amount_md: 3468, page: 3464, label: "Affaires Sociales" }
+      education: { amount_md: 8044, page: 3464, label: "Éducation" }
+      higher_education_research: { amount_md: 2293.393, page: 3464, label: "Enseignement Supérieur et Recherche Scientifique" }
+      employment_training: { amount_md: 1015.35, page: 3464, label: "Emploi et Formation Professionnelle" }
+      judicial_council: { amount_md: 1.576, page: 3464, label: "Conseil Supérieur provisoire de la Magistrature" }
+      constitutional_court: { amount_md: 0, page: 3464, label: "Cour Constitutionnelle (no credits)" }
+      court_of_accounts: { amount_md: 34, page: 3464, label: "Cour des Comptes" }
+      isie_elections: { amount_md: 23, page: 3464, label: "Instance Supérieure Indépendante pour les Élections" }
+      financing_costs: { amount_md: 6487, page: 3464, label: "Charges de Financement (debt interest)" }
+      unforeseen: { amount_md: 324.535, page: 3464, label: "Dépenses Imprévues et non Réparties" }
+  2026:
+    document: "Loi n° 2025-17 du 12 décembre 2025, portant loi de finances pour l'année 2026"
+    source: "JORT n° 148, 12 décembre 2025 (French translation), tableau C"
+    url: "https://lake.jort.tn/journal-officiel/fr/2025/148.pdf"
+    total_md: 63575
+    programmes:
+      energy: { amount_md: 5115.351, page: 3375, label: "Industrie, Mines et Énergie, programme 1: Énergie" }
+      domestic_trade: { amount_md: 4134.719, page: 3375, label: "Commerce, programme 1: Commerce intérieur" }
+    missions:
+      arp: { amount_md: 48.876, page: 3374, label: "Assemblée des Représentants du Peuple" }
+      anrd: { amount_md: 24.088, page: 3374, label: "Conseil (Assemblée) National des Régions et des Districts" }
+      presidency: { amount_md: 229.705, page: 3374, label: "Présidence de la République" }
+      head_of_government: { amount_md: 284.5, page: 3374, label: "Présidence du Gouvernement" }
+      interior: { amount_md: 6239.8, page: 3374, label: "Mission de l'Intérieur" }
+      justice: { amount_md: 1025.5, page: 3374, label: "Mission de la Justice" }
+      foreign_affairs: { amount_md: 370.137, page: 3374, label: "Affaires Étrangères, Migration et Tunisiens à l'Étranger" }
+      national_defence: { amount_md: 5014.008, page: 3374, label: "Défense Nationale" }
+      religious_affairs: { amount_md: 202.4, page: 3374, label: "Affaires Religieuses" }
+      finance: { amount_md: 1477, page: 3374, label: "Finances" }
+      economy_planning: { amount_md: 895.331, page: 3374, label: "Économie et Planification" }
+      state_domains: { amount_md: 94.165, page: 3375, label: "Domaines de l'État et Affaires Foncières" }
+      agriculture_water_fisheries: { amount_md: 2400, page: 3375, label: "Agriculture, Ressources Hydrauliques et Pêche" }
+      industry_mines_energy: { amount_md: 5325.619, page: 3375, label: "Industrie, Mines et Énergie" }
+      trade_export: { amount_md: 4260, page: 3375, label: "Commerce et Développement des Exportations" }
+      communication_technologies: { amount_md: 197.335, page: 3375, label: "Technologies de la Communication" }
+      tourism: { amount_md: 166.578, page: 3375, label: "Tourisme" }
+      equipment_housing: { amount_md: 2150.34, page: 3375, label: "Équipement et Habitat" }
+      environment: { amount_md: 500, page: 3375, label: "Environnement" }
+      transport: { amount_md: 1267.3, page: 3375, label: "Transports" }
+      culture_arts: { amount_md: 460.969, page: 3375, label: "Affaires Culturelles" }
+      youth_sports: { amount_md: 1005, page: 3375, label: "Jeunesse et Sports" }
+      family_women_children_seniors: { amount_md: 287, page: 3376, label: "Famille, Femme, Enfance et Personnes Âgées" }
+      health: { amount_md: 4350, page: 3376, label: "Santé" }
+      social_affairs: { amount_md: 4080.5, page: 3376, label: "Affaires Sociales" }
+      education: { amount_md: 8700, page: 3376, label: "Éducation" }
+      higher_education_research: { amount_md: 2379.18, page: 3376, label: "Enseignement Supérieur et Recherche Scientifique" }
+      employment_training: { amount_md: 1063.9, page: 3376, label: "Emploi et Formation Professionnelle" }
+      higher_council_education: { amount_md: 10, page: 3376, label: "Conseil Supérieur de l'Éducation et de l'Enseignement" }
+      judicial_council: { amount_md: 1.525, page: 3376, label: "Conseil Supérieur provisoire de la Magistrature" }
+      court_of_accounts: { amount_md: 35.563, page: 3376, label: "Cour des Comptes" }
+      isie_elections: { amount_md: 27.703, page: 3376, label: "Instance Supérieure Indépendante pour les Élections" }
+      financing_costs: { amount_md: 7208, page: 3376, label: "Charges de Financement (debt interest)" }
+      unforeseen: { amount_md: 1792.978, page: 3376, label: "Dépenses Imprévues et non Réparties" }

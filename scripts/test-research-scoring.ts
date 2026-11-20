@@ -19,12 +19,19 @@ import {
 	aggregateSeries,
 	applyExclusions,
 	applyPublicationFloor,
+	bootstrapInterval,
 	channelCode,
 	CHANNELS,
+	consensus,
+	iqrChange,
 	linkCheck,
 	localLevelFilter,
+	meanBudget,
+	medianChange,
 	periodOf,
 	periodsBetween,
+	shareMoreSameLess,
+	withoutLargestChannel,
 	evaluateCondition,
 	scoreResponse,
 	validateScoringSpec,
@@ -1123,6 +1130,127 @@ console.log('\n  ── the link check ──\n');
 	const noSeries = structuredClone(spec);
 	delete noSeries.series;
 	ok('a spec without a series block returns none', aggregateSeries(noSeries, seriesRows, { seed: 1, resamples: 10, now }) === null);
+}
+
+// ---------------------------------------------------------------------------
+// The budget allocation: headline, spread, average budget and the floors
+// ---------------------------------------------------------------------------
+
+console.log('\n  ── budget allocation ──\n');
+
+{
+	const categories = [
+		{ id: 'schools', draft_md: 4000, locked: false },
+		{ id: 'roads', draft_md: 2000, locked: false },
+		{ id: 'debt', draft_md: 4000, locked: true }
+	];
+	// The movable lines, schools and roads, are the envelope the answers balance to.
+	const envelope = 6000;
+	const balanced = { schools: 7500, roads: 15000, debt: 10000, kept_draft: false };
+	// schools at 3000 MD and roads at 3000 MD: a different budget of the same size.
+	const shifted = { schools: 5000, roads: 20000, debt: 10000, kept_draft: false };
+
+	// A 20% brigade: eighty honest answers at +20% and twenty answers at zero.
+	const brigaded = [
+		...Array.from({ length: 80 }, () => ({ ...balanced, schools: 12000 })),
+		...Array.from({ length: 20 }, () => ({ ...balanced, schools: 0 }))
+	];
+	const shares = shareMoreSameLess(brigaded, 'schools');
+	ok(
+		'the headline counts more, same and less',
+		shares.n === 100 && shares.more.n === 80 && shares.less.n === 20 && shares.same.suppressed,
+		JSON.stringify(shares)
+	);
+	const headline = medianChange(brigaded, 'schools');
+	const mean = meanBudget(brigaded, categories);
+	const meanChange = (mean.md?.schools as number) / 4000 - 1;
+	ok('the median headline stays at the honest +20%', headline.median === 0.2, String(headline.median));
+	ok(
+		'a 20% brigade moves the median headline by less than the mean',
+		Math.abs((headline.median as number) - 0.2) < Math.abs(meanChange - 0.2) && meanChange < 0,
+		`median ${headline.median}, mean ${meanChange.toFixed(4)}`
+	);
+	const spread = iqrChange(brigaded, 'schools');
+	ok(
+		'the interquartile range brackets the median',
+		!spread.suppressed && (spread.q1 as number) <= (headline.median as number) && (headline.median as number) <= (spread.q3 as number),
+		`${spread.q1}..${spread.q3}`
+	);
+	const agreed = consensus(brigaded, 'schools');
+	ok('consensus is the share within ten points of the median', agreed.share === 0.8, String(agreed.share));
+	const interval = bootstrapInterval(brigaded, categories, 'schools', 500, 7);
+	const intervalAgain = bootstrapInterval(brigaded, categories, 'schools', 500, 7);
+	ok(
+		'the bootstrap interval is seeded and brackets the mean',
+		JSON.stringify(interval) === JSON.stringify(intervalAgain) &&
+			(interval.low_md as number) <= (mean.md?.schools as number) &&
+			(mean.md?.schools as number) <= (interval.high_md as number),
+		`${interval.low_md}..${interval.high_md}`
+	);
+
+	// The mean of balanced budgets is still balanced: every answer spends the
+	// envelope, so the line means add up to it.
+	const average = meanBudget(
+		[
+			...Array.from({ length: 50 }, () => ({ ...balanced })),
+			...Array.from({ length: 50 }, () => ({ ...shifted }))
+		],
+		categories
+	);
+	const movable = (average.md?.schools as number) + (average.md?.roads as number);
+	ok(
+		'the mean budget sums to the movable envelope within 1 MD',
+		!average.suppressed && Math.abs(movable - envelope) < 1,
+		`${movable} vs ${envelope}`
+	);
+	ok(
+		'the mean is taken line by line',
+		Math.abs((average.md?.schools as number) - 2500) < 1e-9 && Math.abs((average.md?.roads as number) - 3500) < 1e-9,
+		JSON.stringify(average.md)
+	);
+
+	// A channel of 130 answers at zero holds the full median down; removing it
+	// leaves 100 honest answers and the honest median.
+	const honest = { ...balanced, schools: 12000 };
+	const contested = [
+		...Array.from({ length: 130 }, () => ({ ...balanced, schools: 0 })),
+		...Array.from({ length: 100 }, () => ({ ...honest }))
+	];
+	const fullMedian = medianChange(contested, 'schools');
+	const without = withoutLargestChannel(
+		contested,
+		(answer) => (answer.schools === 0 ? 'brigade' : 'direct'),
+		'schools'
+	);
+	ok('the brigade holds the full median at the draft-relative -100%', fullMedian.median === -1, String(fullMedian.median));
+	ok(
+		'withoutLargestChannel recovers the honest median within 2 percentage points',
+		!without.suppressed && Math.abs((without.median as number) - 0.2) <= 0.02,
+		`${without.median} over ${without.n} answers, ${without.removed_n} removed`
+	);
+
+	// The floors: under 100 valid answers nothing computed leaves, and a branch
+	// under 20 hides with its complement.
+	const ninetyNine = Array.from({ length: 99 }, () => ({ ...honest }));
+	const shortSplit = shareMoreSameLess(ninetyNine, 'schools');
+	const shortMedian = medianChange(ninetyNine, 'schools');
+	ok(
+		'fewer than 100 valid answers is suppressed',
+		shortSplit.n === null && shortSplit.more.suppressed && shortMedian.suppressed && shortMedian.median === null
+	);
+	const cellSplit = shareMoreSameLess(
+		[
+			...Array.from({ length: 60 }, () => ({ ...balanced, schools: 12000 })),
+			...Array.from({ length: 25 }, () => ({ ...balanced, schools: 10000 })),
+			...Array.from({ length: 15 }, () => ({ ...balanced, schools: 0 }))
+		],
+		'schools'
+	);
+	ok(
+		'a cell under 20 is suppressed, and the complement rule hides its neighbour',
+		cellSplit.more.n === 60 && cellSplit.same.suppressed && cellSplit.less.suppressed,
+		JSON.stringify(cellSplit)
+	);
 }
 
 console.log(
