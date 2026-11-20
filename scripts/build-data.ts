@@ -91,7 +91,7 @@ import {
 } from './review-coverage.ts';
 import { auditInterpretationPaths } from '../src/lib/interpretation.ts';
 import { canonicalBytes, computeDatasetHash, CANONICAL_GENERATED } from './canonical.ts';
-import { BUILD_ONLY, CLIENT_COLLECTIONS, FETCHED_FIELDS, SPLIT_PROSE, UNSHOWN_TRANSLATION } from './client-copy.ts';
+import { BUILD_ONLY, CLIENT_COLLECTIONS, FETCHED_FIELDS, SPLIT_PROSE, UNREAD_IN_BROWSER, UNSHOWN_TRANSLATION } from './client-copy.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
@@ -3975,10 +3975,14 @@ let datasetHashValue = '';
 	const graph: Record<string, unknown> = { ...client };
 	const fetched: Record<string, Record<string, Record<string, unknown>>> = {};
 	for (const [c, fields] of Object.entries(FETCHED_FIELDS)) {
+		const unread: readonly string[] = (UNREAD_IN_BROWSER as Record<string, readonly string[]>)[c] ?? [];
 		graph[c] = (client[c] as Record<string, unknown>[]).map((rec) => {
 			const kept: Record<string, unknown> = {};
 			const moved: Record<string, unknown> = {};
-			for (const [k, v] of Object.entries(rec)) (fields.includes(k as never) ? moved : kept)[k] = v;
+			for (const [k, v] of Object.entries(rec)) {
+				if (unread.includes(k)) continue;
+				(fields.includes(k as never) ? moved : kept)[k] = v;
+			}
 			if (Object.keys(moved).length) {
 				(fetched[c] ??= {})[rec.id as string] = moved;
 				if (moved.excerpt !== undefined) kept.hasExcerpt = true;

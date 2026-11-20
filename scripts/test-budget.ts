@@ -26,7 +26,7 @@ const MB = 1024 * 1024;
 const CAPS = {
 	'dataset (published)': 17,
 	'timelines (published)': 3.5,
-	'source excerpts (fetched)': 1,
+	'source excerpts (fetched)': 0.6,
 	'dataset (generated)': 12,
 	'search index': 1,
 	'static tree': 36

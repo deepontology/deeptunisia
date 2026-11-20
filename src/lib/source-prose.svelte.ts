@@ -6,7 +6,7 @@ import { ds } from './model';
  *
  * The bundled graph keeps every source's citation (id, title, publisher, date,
  * url, archive_url, tier, lang), so a claim's sources are checkable on the first
- * screen and with no connection. The excerpts are about 160 KB compressed and none
+ * screen and with no connection. The excerpts are about 145 KB compressed and none
  * of the first screen, so `scripts/build-data.ts` writes them to
  * `static/sources-prose.json` and this module fetches that file once.
  *
@@ -17,7 +17,7 @@ import { ds } from './model';
  * source with no excerpt (`hasExcerpt` unset) never shows either state.
  */
 
-export type SourceProse = { excerpt?: string; note?: string; notes?: string };
+export type SourceProse = { excerpt?: string };
 
 export const sourceProseState = $state<{ status: 'idle' | 'loading' | 'ready' | 'error' }>({ status: 'idle' });
 
