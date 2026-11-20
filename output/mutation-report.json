@@ -1,6 +1,6 @@
 {
-  "generated": "2026-11-20T02:52:06.848Z",
-  "commit": "40959f3",
+  "generated": "2026-11-20T06:33:40.288Z",
+  "commit": "a23b55b",
   "withValidators": true,
   "summary": {
     "counted": 62,
@@ -222,7 +222,7 @@
     {
       "id": "m22",
       "label": "causal-cycle detection disabled (V8/Tarjan)",
-      "file": "build-data.ts",
+      "file": "../node_modules/deepepisteme/src/atlas/rules/event-causal.ts",
       "verdict": "killed",
       "by": "test-pipeline",
       "outputChanged": false,
@@ -240,7 +240,7 @@
     {
       "id": "m24",
       "label": "cause-after-consequence ordering disabled (V8 temporal)",
-      "file": "build-data.ts",
+      "file": "../node_modules/deepepisteme/src/atlas/rules/event-causal.ts",
       "verdict": "killed",
       "by": "test-pipeline",
       "outputChanged": false,
@@ -267,7 +267,7 @@
     {
       "id": "m58",
       "label": "award values stop needing an attribution or a primary source (V4/V5)",
-      "file": "build-data.ts",
+      "file": "../node_modules/deepepisteme/src/atlas/rules/contract-award.ts",
       "verdict": "killed",
       "by": "test-pipeline",
       "outputChanged": false,
@@ -276,7 +276,7 @@
     {
       "id": "m59",
       "label": "a point place no longer needs a parent region (V10)",
-      "file": "build-data.ts",
+      "file": "../node_modules/deepepisteme/src/atlas/rules/place-geography.ts",
       "verdict": "killed",
       "by": "test-pipeline",
       "outputChanged": false,
@@ -294,7 +294,7 @@
     {
       "id": "m61",
       "label": "overlapping duplicate relationships are no longer found (V16)",
-      "file": "build-data.ts",
+      "file": "../node_modules/deepepisteme/src/atlas/rules/relationship-duplicates.ts",
       "verdict": "killed",
       "by": "test-pipeline",
       "outputChanged": false,
@@ -303,7 +303,7 @@
     {
       "id": "m62",
       "label": "a rupture event linked to nothing is no longer flagged (V17)",
-      "file": "build-data.ts",
+      "file": "../node_modules/deepepisteme/src/atlas/rules/event-rupture.ts",
       "verdict": "killed",
       "by": "test-pipeline",
       "outputChanged": false,
