@@ -52,6 +52,7 @@
         "community": "tsx community/server.ts",
         "proposals": "tsx scripts/apply-proposals.ts",
         "smoke": "tsx scripts/smoke.ts",
+        "measure:phone": "tsx scripts/measure-phone.ts",
         "sources:precheck": "tsx scripts/precheck-sources.ts",
         "deploy": "tsx scripts/deploy.ts --go",
         "deploy:preview": "tsx scripts/deploy-preview.ts --go",

@@ -26,10 +26,12 @@
 		layer: Layer;
 		/** Pixels from this block's top to the next block's top in the column. */
 		room: number;
+		/** The id of the column's hatch pattern, which the column draws once for all its blocks. */
+		hatchId: string;
 		onselect(holder: string): void;
 	}
 
-	let { pos, scale, layer, room, onselect }: Props = $props();
+	let { pos, scale, layer, room, hatchId, onselect }: Props = $props();
 
 	const basis = $derived(pos.basis as Basis);
 	/* Layer colour, like the horizontal bars; the basis is carried by the dash and
@@ -79,13 +81,6 @@
 		const b = formatDate(iv.endLatest ?? CUTOFF, 'year');
 		return a === b ? a : `${a}\u2013${b}`;
 	});
-
-	/*
-	 * A hatch pattern per block. Finite, per-position ids so each block tints its
-	 * own fuzzy edges with its own basis colour through the `--basis-*` token the
-	 * surrounding SVG inherits.
-	 */
-	const patternId = $derived(`cv-fuzz-${pos.id}`);
 </script>
 
 <button
@@ -97,11 +92,6 @@
 	onclick={() => onselect(pos.holder)}
 >
 	<svg class="tb-svg" style:height="{height}px" aria-hidden="true">
-		<defs>
-			<pattern id={patternId} width="5" height="5" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
-				<line x1="0" y1="0" x2="0" y2="5" style:stroke={color} stroke-width="1.6" opacity="0.55" />
-			</pattern>
-		</defs>
 		<!-- Whole envelope: basis fill and the basis dash border, one pixel per -->
 		<!-- user unit so the pattern matches the horizontal Chronicle exactly. -->
 		<rect
@@ -119,10 +109,10 @@
 		/>
 		<!-- Uncertain edges, hatched over the fill. -->
 		{#if showLead}
-			<rect x="0" y="0" width="100%" height={leadH} rx="2" fill="url(#{patternId})" />
+			<rect x="0" y="0" width="100%" height={leadH} rx="2" fill="url(#{hatchId})" />
 		{/if}
 		{#if showTail}
-			<rect x="0" y={tailTop} width="100%" height={tailH} rx="2" fill="url(#{patternId})" />
+			<rect x="0" y={tailTop} width="100%" height={tailH} rx="2" fill="url(#{hatchId})" />
 		{/if}
 	</svg>
 	{#if showLabel}
