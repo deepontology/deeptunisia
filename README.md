@@ -27,7 +27,7 @@ npm run check         # svelte-check — must be 0 errors, 0 warnings
 npm run dev           # builds the graph, then starts the dev server on :5173
 npm start             # atlas on :5173 AND the Agora API on :5200, one command
 npm run build         # validates, exports, and produces a static site in build/
-npm run smoke         # real browser, both themes, desktop AND phone — run it against `npm start`, not `npm run dev` (the Agora checks need the API; mode defaults to beta, override with VITE_COMMUNITY_MODE). SMOKE_CHROMIUM=/path/to/chromium names the browser. It is not part of `npm test` or CI; a full run is 1,273 checks and takes about 15 minutes, and it is expected to finish with none failing
+npm run smoke         # real browser, both themes, desktop AND phone — run it against `npm start`, not `npm run dev` (the Agora checks need the API; mode defaults to beta, override with VITE_COMMUNITY_MODE). SMOKE_CHROMIUM=/path/to/chromium names the browser. It is not part of `npm test`: CI runs it as its own job (`.github/workflows/smoke.yml`) on every pull request into `release/1.0` and nightly. A full run is 1,273 checks and takes about 15 minutes, and it is expected to finish with none failing
 npm run measure:phone # load time of a route on a 390 wide throttled phone profile, against build/ or --url; reports a tap gate and a search gate apart, asserts nothing
 npm run feed          # fetch news headlines into feed/ (also runs every 4h in CI)
 npm run audit:probes  # reproduce the external code review's compiler probes
