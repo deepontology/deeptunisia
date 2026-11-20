@@ -116,6 +116,10 @@ jobs:
         run: npx svelte-kit sync
 
       - name: Run full test gate
+        env:
+          # The clean-tree gate allows the paper's commitSha tag to differ in a
+          # release run, and only that.
+          DT_RELEASE_SHA: ${{ github.sha }}
         run: npm run test
 
       - name: svelte-check (0 errors, 0 warnings)

@@ -88,6 +88,9 @@ export function releaseGuardProblems(text: string): string[] {
 		problems.push('the stats:write step does not carry DT_RELEASE_SHA');
 	}
 
+	const gate = steps.find((s) => /npm run test/.test(s.run ?? ''));
+	if (gate && !gate.env?.DT_RELEASE_SHA) problems.push('the test gate step does not carry DT_RELEASE_SHA, so the clean-tree gate would reject the written paper');
+
 	const verify = steps.find((s) => /git tag -v/.test(s.run ?? '') && /Verify tag/i.test(label(s)));
 	if (!verify) problems.push('the tag signature step is missing');
 	else if (verify.if?.trim() !== "github.ref_type == 'tag'") {
