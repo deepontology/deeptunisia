@@ -1,6 +1,6 @@
 {
-  "generated": "2026-11-20T14:01:49.878Z",
-  "commit": "e2dc264",
+  "generated": "2026-11-20T15:00:10.209Z",
+  "commit": "aaee2af",
   "withValidators": true,
   "summary": {
     "counted": 71,
@@ -69,7 +69,7 @@
     {
       "id": "m07",
       "label": "claim envelope drops the sources minimum",
-      "file": "schema.ts",
+      "file": "../node_modules/deepepisteme/src/kernel/kinds.ts",
       "verdict": "survived-latent",
       "by": "known limitation (documented)",
       "outputChanged": false,

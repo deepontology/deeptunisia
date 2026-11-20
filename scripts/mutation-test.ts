@@ -125,7 +125,7 @@ const MUTATIONS: Mutation[] = [
 		from: "if (confidence === 'D') return 'unsubstantiated';",
 		to: "if (false && confidence === 'D') return 'unsubstantiated';"
 	},
-	// --- schema.ts: the claim envelope (V18/V20, now nonBlank) -------------------
+	// --- engine kernel: the claim envelope (V18/V20, now nonBlank) --------------
 	{
 		id: 'm04', file: ENGINE_ENVELOPE, expect: 'test-validators V20 (C/D attribution)',
 		label: 'envelope stops requiring attributed_to on C/D',
@@ -145,7 +145,7 @@ const MUTATIONS: Mutation[] = [
 		to: 'false &&'
 	},
 	{
-		id: 'm07', file: 'schema.ts', expect: 'latent — redundant with the envelope, documented below',
+		id: 'm07', file: ENGINE_KERNEL_KINDS, expect: 'latent — redundant with the envelope, documented below',
 		label: 'claim envelope drops the sources minimum',
 		from: "sources: z.array(slug).min(1, 'every claim record needs at least one source')",
 		to: 'sources: z.array(slug),',

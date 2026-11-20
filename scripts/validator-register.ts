@@ -115,7 +115,7 @@ export const VALIDATOR_REGISTER: ValidatorEntry[] = [
 		status: 'enforced',
 		gate: 'fail',
 		site: {
-			file: 'scripts/schema.ts',
+			file: 'node_modules/deepepisteme/src/atlas/kinds/relationship.ts',
 			anchor: 'finance metadata is allowed only on funding, sponsorship and ownership edges (V13)'
 		}
 	},
@@ -173,7 +173,7 @@ export const VALIDATOR_REGISTER: ValidatorEntry[] = [
 		rule: 'date tokens follow the grammar and are calendar-valid',
 		status: 'enforced',
 		gate: 'fail',
-		site: { file: 'scripts/schema.ts', anchor: 'date token must be YYYY, YYYY-MM, YYYY-MM-DD' }
+		site: { file: 'node_modules/deepepisteme/src/kernel/kinds.ts', anchor: 'date token must be YYYY, YYYY-MM, YYYY-MM-DD' }
 	},
 	{
 		id: 'V22',
@@ -225,7 +225,7 @@ export const VALIDATOR_REGISTER: ValidatorEntry[] = [
 		rule: 'undeclared keys in a claim record and its nested objects fail',
 		status: 'enforced',
 		gate: 'fail',
-		site: { file: 'scripts/schema.ts', anchor: 'const intervalSpec = z.strictObject({' }
+		site: { file: 'node_modules/deepepisteme/src/kernel/kinds.ts', anchor: 'export const intervalSpec = z.strictObject({' }
 	},
 	{
 		id: 'V29',
