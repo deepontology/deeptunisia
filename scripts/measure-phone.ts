@@ -37,7 +37,8 @@
  * gate passed, by function, for the first profile run.
  *
  * This is a measurement, not a test: it needs a build and a browser, and it
- * makes no assertion. It is not part of `npm test`.
+ * asserts nothing unless `--enforce` is given, which fails when the 4G median of a
+ * gate is over its line (`LINES`). It is not part of `npm test`.
  */
 import { chromium, type CDPSession, type Page } from 'playwright';
 import http from 'node:http';
@@ -138,6 +139,17 @@ interface Run {
 }
 
 const BUDGET_MS = 120_000;
+
+/**
+ * The lines, in milliseconds, on the 4G profile with the processor four times slower.
+ * `tap` is the plan's 5-second line and is defined by the tap gate. `text` is the line for
+ * "a record you can read": the open record's words on screen. They are separate promises
+ * with separate numbers; neither stands in for the other. `--enforce` exits non-zero
+ * when a median on that profile is over its line.
+ */
+const LINES: Record<string, Partial<Record<Gate, number>>> = {
+	'4g-cpu4': { tap: 5_000, text: 7_000 }
+};
 
 /** True once the open record shows words: a tagline or a summary with text in it. */
 async function recordText(page: Page): Promise<boolean> {
@@ -273,8 +285,9 @@ const browser = await chromium.launch({
 
 console.log(`\n  ${route} on ${remote ?? 'the local build'} — 390x844 mobile, cache off, median of ${runs}`);
 console.log('  primary gate: tap (the first tenure opens its record); text: that record shows its words; secondary: palette (search opens with results)\n');
-console.log('  profile          gate     first paint   usable     wire before usable');
+console.log('  profile          gate     first paint   usable     wire before usable   line');
 let profiled = false;
+let overLine = false;
 for (const profile of PROFILES) {
 	if (only && profile.name !== only) continue;
 	if (remote && profile.local) continue;
@@ -289,11 +302,16 @@ for (const profile of PROFILES) {
 		const paint = median(results.map((r) => r.firstPaint));
 		const wire = median(results.map((r) => r.wireKB));
 		const sec = (ms: number | null) => (ms === null ? 'never' : `${(ms / 1000).toFixed(1)} s`);
+		const line = LINES[profile.name]?.[gate];
+		const over = line !== undefined && (usable === null || usable > line);
+		if (over) overLine = true;
 		console.log(
-			`  ${profile.name.padEnd(16)} ${gate.padEnd(8)} ${sec(paint).padEnd(13)} ${sec(usable).padEnd(10)} ${wire?.toLocaleString('en-US')} KB`
+			`  ${profile.name.padEnd(16)} ${gate.padEnd(8)} ${sec(paint).padEnd(13)} ${sec(usable).padEnd(10)} ${wire?.toLocaleString('en-US')} KB` +
+				(line === undefined ? '' : `   line ${sec(line)}${over ? '  OVER' : ''}`)
 		);
 	}
 }
 console.log('');
 await browser.close();
 local?.close();
+if (overLine && process.argv.includes('--enforce')) process.exit(1);
