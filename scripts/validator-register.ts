@@ -148,21 +148,21 @@ export const VALIDATOR_REGISTER: ValidatorEntry[] = [
 		rule: 'an inferred claim states its reasoning and a falsifier',
 		status: 'enforced',
 		gate: 'fail',
-		site: { file: 'scripts/schema.ts', anchor: 'an inferred claim must state its reasoning and what would falsify it' }
+		site: { file: 'node_modules/deepepisteme/src/kernel/envelope.ts', anchor: 'an inferred claim must state its reasoning and what would falsify it' }
 	},
 	{
 		id: 'V19',
 		rule: 'strict schemas reject an undeclared key',
 		status: 'enforced',
 		gate: 'fail',
-		site: { file: 'scripts/schema.ts', anchor: 'export const ReviewSchema = z.strictObject({' }
+		site: { file: 'node_modules/deepepisteme/src/kernel/review.ts', anchor: 'return z.strictObject({' }
 	},
 	{
 		id: 'V20',
 		rule: 'grade C and D claims name who makes the claim',
 		status: 'enforced',
 		gate: 'fail',
-		site: { file: 'scripts/schema.ts', anchor: 'grade C/D claims must name who is making the claim' }
+		site: { file: 'node_modules/deepepisteme/src/kernel/envelope.ts', anchor: 'grade C/D claims must name who is making the claim' }
 	},
 	{
 		id: 'V21',
@@ -183,7 +183,7 @@ export const VALIDATOR_REGISTER: ValidatorEntry[] = [
 		rule: 'review dates are calendar-valid, methods are an enum, and a gazette claim must be supported',
 		status: 'enforced',
 		gate: 'fail',
-		site: { file: 'scripts/schema.ts', anchor: 'review date must be a calendar-valid date' }
+		site: { file: 'node_modules/deepepisteme/src/kernel/review.ts', anchor: 'review date must be a calendar-valid date' }
 	},
 	{
 		id: 'V24',
@@ -205,7 +205,7 @@ export const VALIDATOR_REGISTER: ValidatorEntry[] = [
 		status: 'enforced',
 		gate: 'fail-or-warn',
 		site: {
-			file: 'scripts/schema.ts',
+			file: 'node_modules/deepepisteme/src/kernel/envelope.ts',
 			anchor: 'source_relation requires independence: how many independent origins carry this claim? (V26)'
 		}
 	},
@@ -214,7 +214,7 @@ export const VALIDATOR_REGISTER: ValidatorEntry[] = [
 		rule: 'an authored basis stronger than the grade needs review, reasoning, falsifier, source and reason',
 		status: 'enforced',
 		gate: 'fail',
-		site: { file: 'scripts/schema.ts', anchor: 'a basis override requires basis_override_reason' }
+		site: { file: 'node_modules/deepepisteme/src/kernel/envelope.ts', anchor: 'a basis override requires basis_override_reason' }
 	},
 	{
 		id: 'V28',

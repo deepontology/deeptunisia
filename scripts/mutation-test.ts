@@ -111,22 +111,22 @@ const MUTATIONS: Mutation[] = [
 	},
 	// --- schema.ts: the claim envelope (V18/V20, now nonBlank) -------------------
 	{
-		id: 'm04', file: 'schema.ts', expect: 'test-validators V20 (C/D attribution)',
+		id: 'm04', file: ENGINE_ENVELOPE, expect: 'test-validators V20 (C/D attribution)',
 		label: 'envelope stops requiring attributed_to on C/D',
 		from: "(r: any) => !((r.confidence === 'C' || r.confidence === 'D') && !nonBlank(r.attributed_to))",
 		to: '(r: any) => true'
 	},
 	{
-		id: 'm05', file: 'schema.ts', expect: 'test-validators V18 (inferred completeness)',
+		id: 'm05', file: ENGINE_ENVELOPE, expect: 'test-validators V18 (inferred completeness)',
 		label: 'envelope stops requiring reasoning/falsifier on inferred',
-		from: "\t\t\t(r: any) => {\n\t\t\t\tconst derived = deriveBasis(r.confidence, r.verification, r.basis);\n\t\t\t\treturn !(derived === 'inferred' && (!nonBlank(r.reasoning) || !nonBlank(r.falsifiable_by)));\n\t\t\t}",
-		to: '(r: any) => true'
+		from: "return !(derived === 'inferred' && (!nonBlank(r.reasoning) || !nonBlank(r.falsifiable_by)));",
+		to: 'return true;'
 	},
 	{
-		id: 'm06', file: 'schema.ts', expect: 'test-validators V18 (explicit unsubstantiated)',
+		id: 'm06', file: ENGINE_ENVELOPE, expect: 'test-validators V18 (explicit unsubstantiated)',
 		label: 'envelope stops requiring attribution on unsubstantiated',
-		from: "(r: any) =>\n\t\t\t\t!(deriveBasis(r.confidence, r.verification, r.basis) === 'unsubstantiated' &&\n\t\t\t\t\t!nonBlank(r.attributed_to)),",
-		to: '(r: any) => true,'
+		from: "deriveBasis(r.confidence, r.verification, r.basis) === 'unsubstantiated' &&",
+		to: 'false &&'
 	},
 	{
 		id: 'm07', file: 'schema.ts', expect: 'latent — redundant with the envelope, documented below',
@@ -137,16 +137,16 @@ const MUTATIONS: Mutation[] = [
 	},
 	// --- schema.ts: review guard (V23) ------------------------------------------
 	{
-		id: 'm08', file: 'schema.ts', expect: 'test-validators V23 (method enum)',
+		id: 'm08', file: ENGINE_REVIEW, expect: 'test-validators V23 (method enum)',
 		label: 'review method becomes free text',
 		from: 'method: ReviewMethod,',
 		to: 'method: z.string(),'
 	},
 	{
-		id: 'm09', file: 'schema.ts', expect: 'latent — by design, documented below',
+		id: 'm09', file: ENGINE_REVIEW, expect: 'latent — by design, documented below',
 		label: 'review date loses its ISO format check',
-		from: "\t\t.regex(/^\\d{4}-\\d{2}-\\d{2}$/, 'review date must be an ISO date (YYYY-MM-DD)')",
-		to: '',
+		from: '.refine((v) => /^\\d{4}-\\d{2}-\\d{2}$/.test(v), {',
+		to: '.refine((v) => true, {',
 		known: 'by design: the V23 calendar round-trip (m10) already rejects any non-calendar date — "26/07/2026" splits to a single NaN segment, "2026-31-07" rolls over and fails the round-trip — so the format regex is redundant defense-in-depth that only improves the error message.'
 	},
 	{
