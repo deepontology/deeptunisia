@@ -18,6 +18,7 @@ import { resolveClientMode } from '../src/lib/agora-gate.ts';
 import { TOUR_KEY, TOUR_VERSION } from '../src/lib/shell/tour-version.ts';
 import { translate } from '../src/lib/i18n.ts';
 import { hasDoubleEncoding } from './encoding-guard.ts';
+import { ARABIC_TITLE_EXCEPTION, arabicTitleExceptionActive } from './prose-exceptions.ts';
 
 /**
  * A returning reader has already seen the current tour. Seeding the seen-flag
@@ -3403,10 +3404,11 @@ if (runSection('every language')) for (const locale of ['ar', 'fr'] as const) {
 			// (atlas), git commit subjects (corrections), hypothesis prose from
 			// records lacking fr/ar (evidence). Ceilings fall as DATA translation
 			// lands; the UI-chrome part of each landing is done.
-			// 2026-11-20: 37 -> 70. Measured 66. 75 of the 198 roles have no `title_ar`
-			// yet and the page lists roles, so the Arabic page shows their English
-			// titles. Data translation, not UI: the ceiling falls as the titles land.
-			'/methodology': 70,
+			// The ceiling stays 37. The Arabic page stands above it only under the
+			// dated exception in scripts/prose-exceptions.ts (75 of 198 roles without
+			// `title_ar`), applied below until its date, and the build fails when the
+			// date passes with titles still missing.
+			'/methodology': 37,
 			'/map': 5,
 			'/network': 5,
 			// The guide is translated prose (guide.*.md + guide.* keys, same
@@ -3439,7 +3441,14 @@ if (runSection('every language')) for (const locale of ['ar', 'fr'] as const) {
 			'/agora': 20
 		};
 		const PROSE_BACKSTOP = 200;
-		const proseCeiling = PROSE_CEILINGS[path] ?? PROSE_BACKSTOP;
+		let proseCeiling = PROSE_CEILINGS[path] ?? PROSE_BACKSTOP;
+		if (
+			locale === ARABIC_TITLE_EXCEPTION.locale &&
+			path === ARABIC_TITLE_EXCEPTION.route &&
+			arabicTitleExceptionActive()
+		) {
+			proseCeiling = ARABIC_TITLE_EXCEPTION.ceiling;
+		}
 		ok(
 			`${where} English prose within ceiling`,
 			englishProse <= proseCeiling,
