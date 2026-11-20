@@ -127,7 +127,7 @@ export const CLAIM_MATRIX: MatrixRow[] = [
 		claim_text:
 			'Every claim-bearing kind composes the same nine-field envelope through one schema function; no kind can carry less metadata.',
 		status: 'shipped+tested',
-		code_pointer: 'scripts/schema.ts :: withClaimEnvelope; scripts/build-data.ts :: claimKindRegistry',
+		code_pointer: 'node_modules/deepepisteme/src/kernel/envelope.ts :: withClaimEnvelope; scripts/build-data.ts :: claimKindRegistry',
 		test_pointer:
 			'scripts/test-validators.ts :: V18/20: a clean position parses; scripts/test-validators.ts :: whitespace attributed_to',
 		notes:
@@ -138,7 +138,7 @@ export const CLAIM_MATRIX: MatrixRow[] = [
 		claim_text:
 			'`basis` is derived from confidence and verification by a published, deterministic mapping; an author cannot upgrade a claim by omitting a field.',
 		status: 'shipped+tested',
-		code_pointer: 'scripts/schema.ts :: deriveBasis',
+		code_pointer: 'node_modules/deepepisteme/src/kernel/basis.ts :: deriveBasis',
 		test_pointer:
 			'scripts/test-data.ts :: the deriveBasis truth table is pinned — every input combination',
 		notes:
@@ -149,7 +149,7 @@ export const CLAIM_MATRIX: MatrixRow[] = [
 		claim_text:
 			'A stronger authored basis is an override and requires review, reasoning, a falsifier for inferred targets, at least one source, and a stated reason; both the authored and derived basis are emitted.',
 		status: 'shipped+tested',
-		code_pointer: 'scripts/schema.ts :: withClaimEnvelope; scripts/build-data.ts :: basisFields',
+		code_pointer: 'node_modules/deepepisteme/src/kernel/envelope.ts :: withClaimEnvelope; scripts/build-data.ts :: basisFields',
 		test_pointer:
 			'scripts/test-validators.ts :: V27: a reported-over-inferred override without review is rejected; scripts/test-pipeline.ts :: the override probe fails and names the record (1B)',
 		notes:
@@ -160,7 +160,7 @@ export const CLAIM_MATRIX: MatrixRow[] = [
 		claim_text:
 			'An undocumented key anywhere in a claim-bearing record, including nested review, dispute and interval objects, fails the build instead of being silently stripped.',
 		status: 'shipped+tested',
-		code_pointer: 'scripts/schema.ts :: ReviewSchema; scripts/schema.ts :: strictObject',
+		code_pointer: 'node_modules/deepepisteme/src/kernel/review.ts :: createReviewSchema; node_modules/deepepisteme/src/kernel/review.ts :: strictObject',
 		test_pointer:
 			'scripts/test-validators.ts :: V28: an unknown review key (outcome) fails instead of being stripped; scripts/test-pipeline.ts :: the nested-outcome probe fails and names the record (1C)',
 		notes:
@@ -175,7 +175,7 @@ export const CLAIM_MATRIX: MatrixRow[] = [
 		claim_text:
 			'An inference never ships without reasoning and a falsifier, checked on the derived basis for every claim kind.',
 		status: 'shipped+tested',
-		code_pointer: 'scripts/schema.ts :: withClaimEnvelope; scripts/schema.ts :: nonBlank',
+		code_pointer: 'node_modules/deepepisteme/src/kernel/envelope.ts :: withClaimEnvelope; node_modules/deepepisteme/src/kernel/envelope.ts :: nonBlank',
 		test_pointer:
 			'scripts/test-validators.ts :: whitespace reasoning; scripts/test-data.ts :: every inferred claim states a falsifier',
 		notes:
@@ -186,7 +186,7 @@ export const CLAIM_MATRIX: MatrixRow[] = [
 		claim_text:
 			'A field written in the source file reaches the reader; silent stripping is impossible.',
 		status: 'shipped+tested',
-		code_pointer: 'scripts/schema.ts :: strictObject',
+		code_pointer: 'node_modules/deepepisteme/src/kernel/kinds.ts :: strictObject',
 		test_pointer:
 			'scripts/test-validators.ts :: V28: an unknown person key fails; scripts/test-validators.ts :: V28: an unknown nested dispute key fails',
 		notes:
@@ -196,7 +196,7 @@ export const CLAIM_MATRIX: MatrixRow[] = [
 		paper_ref: 'Table 7 (H3), §6 (V20)',
 		claim_text: 'Grade C/D claims name who is making them, on every claim kind.',
 		status: 'shipped+tested',
-		code_pointer: 'scripts/schema.ts :: withClaimEnvelope',
+		code_pointer: 'node_modules/deepepisteme/src/kernel/envelope.ts :: withClaimEnvelope',
 		test_pointer:
 			'scripts/test-validators.ts :: V20: grade C without attributed_to is rejected; scripts/test-data.ts :: every C/D evidence finding names who makes the claim (V20)',
 		notes: 'The envelope refine is shared by all claim kinds; the graph sweep covers hypotheses and relations.'
@@ -206,7 +206,7 @@ export const CLAIM_MATRIX: MatrixRow[] = [
 		claim_text:
 			'A date that cannot exist fails the build; `2018-02-31` is rejected, not rolled over to a different day.',
 		status: 'shipped+tested',
-		code_pointer: 'scripts/schema.ts :: date token must be; scripts/dates.ts :: parseDateEdge',
+		code_pointer: 'node_modules/deepepisteme/src/kernel/kinds.ts :: date token must be; scripts/dates.ts :: parseDateEdge',
 		test_pointer:
 			'scripts/test-validators.ts :: V21: 2018-02-31 is rejected by the date parser (m15); scripts/test-data.ts :: V21: no calendar-rollover date in the dataset',
 		notes: 'Regex grammar at the schema boundary plus a calendar round-trip in the parser.'
@@ -227,7 +227,7 @@ export const CLAIM_MATRIX: MatrixRow[] = [
 		claim_text:
 			'Human review is real: a review date must be a calendar-valid day and a method must be an enum value, and the published statistic cannot count a substance-free review object.',
 		status: 'shipped+tested',
-		code_pointer: 'scripts/schema.ts :: ReviewSchema; scripts/review-coverage.ts :: summariseReview',
+		code_pointer: 'node_modules/deepepisteme/src/kernel/review.ts :: createReviewSchema; scripts/review-coverage.ts :: summariseReview',
 		test_pointer:
 			'scripts/test-validators.ts :: V23: 2026-02-31 is rejected — not a real day (m10); scripts/test-data.ts :: V23: every review has a calendar-valid date and an enum method',
 		notes:
@@ -285,7 +285,7 @@ export const CLAIM_MATRIX: MatrixRow[] = [
 		claim_text:
 			'Explicit `source_relation` and `independence` cannot contradict each other or the basis: a single-report documented claim fails, and an origin count above the cited sources fails.',
 		status: 'shipped+tested',
-		code_pointer: 'scripts/schema.ts :: SourceRelation; scripts/schema.ts :: claimAxes',
+		code_pointer: 'node_modules/deepepisteme/src/kernel/envelope.ts :: SourceRelation; node_modules/deepepisteme/src/kernel/kinds.ts :: claimAxes',
 		test_pointer:
 			'scripts/test-validators.ts :: V26: more independent origins than cited sources is rejected; scripts/test-pipeline.ts :: an incompatible source relation fails and names the record (V26)',
 		notes:
@@ -410,7 +410,7 @@ export const CLAIM_MATRIX: MatrixRow[] = [
 		claim_text:
 			'Axiom A1: the compiler verifies that a record conforms to its declared contract; it does not determine whether the underlying judgment is correct.',
 		status: 'shipped+tested',
-		code_pointer: 'scripts/schema.ts :: deriveBasis; scripts/schema.ts :: withClaimEnvelope',
+		code_pointer: 'node_modules/deepepisteme/src/kernel/basis.ts :: deriveBasis; node_modules/deepepisteme/src/kernel/envelope.ts :: withClaimEnvelope',
 		test_pointer:
 			'scripts/test-data.ts :: the deriveBasis truth table is pinned — every input combination',
 		notes:
@@ -480,7 +480,7 @@ export const CLAIM_MATRIX: MatrixRow[] = [
 		claim_text:
 			'Translation coverage is per-tier and never summed: `human` is the only tier that means a person read the language.',
 		status: 'shipped+tested',
-		code_pointer: 'scripts/schema.ts :: TRANSLATION_TIERS',
+		code_pointer: 'node_modules/deepepisteme/src/kernel/translation.ts :: TRANSLATION_TIERS',
 		test_pointer:
 			'scripts/test-i18n.ts :: model-reviewed sits below the human-checked tiers',
 		notes: 'The `translatedHuman` stat tag is separately gated by test-paper.'

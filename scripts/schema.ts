@@ -4,7 +4,6 @@ import {
 	Basis,
 	Confidence,
 	DisputeSchema,
-	RELATION_ALLOWED,
 	REQUIRED_SOURCE_KINDS,
 	ReviewActor,
 	ReviewMethod,
@@ -13,12 +12,12 @@ import {
 	TranslatedBy,
 	Verification as VerificationStatus,
 	createReviewSchema,
+	dateToken,
 	deriveBasis,
 	isBasisUpgrade,
 	nonBlank,
 	reviewerLabelPattern,
 	slug,
-	withClaimEnvelope as engineClaimEnvelope,
 	EvidenceSchema,
 	NarrativeReferenceSchema,
 	isArchiveSnapshot,
@@ -30,12 +29,20 @@ import {
 	type VerificationRecord
 } from 'deepepisteme/kernel';
 import type {
+	agreementSchema,
+	companySchema,
 	contractSchema,
 	declarationSchema,
 	educationSchema,
 	eraSchema,
+	eventSchema,
+	groupLayerSchema,
+	institutionSchema,
 	licenceSchema,
+	personSchema,
+	placeSchema,
 	positionSchema,
+	relationshipSchema,
 	roleSchema,
 	vacancySchema,
 	worldClaimSchema
@@ -63,6 +70,9 @@ import {
 function kernelSchema<Out>(kind: string): z.ZodType<Out> {
 	return engine.schemaOf(kind) as unknown as z.ZodType<Out>;
 }
+
+/** A record type with the named fields narrowed to the deployment's vocabularies. */
+type Narrow<T, N> = Omit<T, keyof N> & N;
 
 /** The record a kind factory builds a schema for. */
 type AtlasRecord<F extends (...args: never[]) => z.ZodType> = z.infer<ReturnType<F>>;
@@ -215,16 +225,6 @@ export { isArchiveSnapshot };
  * republishing step, so two outlets sharing one wire count as one origin.
  */
 export { EvidenceSchema };
-
-const claimAxes = {
-	/** How the cited sources relate to the claim itself (V26). */
-	source_relation: SourceRelation.optional(),
-	/**
-	 * Count of independent origin groups behind the claim, never a count of
-	 * URLs. Two outlets republishing one wire are one origin.
-	 */
-	independence: z.number().int().min(1).optional()
-};
 
 /** The locales a prose field may carry beyond the English original. */
 export const TRANSLATED_LOCALES = ['fr', 'ar'] as const;
@@ -400,18 +400,6 @@ export function verifiedGrounded(record: {
 	return record.review?.actor === 'human' && record.review?.method === 'source-check';
 }
 
-const dateToken = z
-	.string()
-	.regex(
-		/^(?:~|<=|>=)?\d{4}(?:-\d{2}(?:-\d{2})?)?$|^(?:\?|ongoing|verified:\d{4}(?:-\d{2}(?:-\d{2})?)?)$/,
-		'date token must be YYYY, YYYY-MM, YYYY-MM-DD, ~YYYY[-MM], <=YYYY[-MM], >=YYYY[-MM], ?, ongoing, or verified:YYYY-MM[-DD] (V21)'
-	);
-
-const intervalSpec = z.strictObject({
-	start: dateToken.optional(),
-	end: dateToken.optional()
-});
-
 // ---------------------------------------------------------------------------
 // Source
 // ---------------------------------------------------------------------------
@@ -426,65 +414,7 @@ export const SourceSchema = kernelSchema<Source>('source');
 // Institution
 // ---------------------------------------------------------------------------
 
-export const InstitutionSchema = withClaimEnvelope(
-	'institution',
-	z.strictObject({
-	id: slug,
-	name_en: z.string().min(2),
-	name_fr: z.string().optional(),
-	name_ar: z.string().optional(),
-	abbr: z.string().optional(),
-	/**
-	 * How the seats of a legislative term divide between parties where the
-	 * members are not named: the party's institution id and its seat count.
-	 * The members' own records replace it wherever they exist.
-	 */
-	seat_split: z.array(z.strictObject({ party: slug, seats: z.number().int().positive() })).optional(),
-	aliases: z.array(z.string()).default([]),
-	notes: z.array(z.string()).default([]),
-	...translatable('notes', 'list'),
-	type: InstitutionType,
-	layer: Layer,
-	/** Parent institution id, for the command-chain tree. */
-	parent: slug.nullable().default(null),
-	/**
-	 * ISO 3166-1 alpha-2 for a foreign-state institution, so the world view can
-	 * place its record on the globe and link trade/debt flows to the graph entity.
-	 */
-	iso2: z
-		.string()
-		.regex(/^[A-Z]{2}$/, 'must be an ISO 3166-1 alpha-2 code')
-		.optional(),
-	/** ISO 3166-1 alpha-2 host country for an international organisation's seat. */
-	seat: z
-		.string()
-		.regex(/^[A-Z]{2}$/, 'seat must be an ISO 3166-1 alpha-2 host country code')
-		.optional(),
-	active: intervalSpec.default({}),
-	/** Display order within its layer on the Chronicle rows. */
-	order: z.number().int().default(100),
-	summary: z.string().optional(),
-	confidence: Confidence.default('A'),
-	basis: Basis.optional(),
-	verification: VerificationStatus.default('unflagged'),
-	/** Whose claim this is, mandatory below grade B. (V20) */
-	attributed_to: z.string().optional(),
-	/** Required for inferred claims. (V18) */
-	reasoning: z.string().optional(),
-	falsifiable_by: z.string().optional(),
-	/**
-	 * V27 — why the authored `basis` overrides the basis the grade implies. Min
-	 * 10 non-blank characters when present; required for every new override.
-	 */
-	basis_override_reason: z.string().optional(),
-	...claimAxes,
-	evidence: z.array(EvidenceSchema).optional(),
-	disputes: z.array(DisputeSchema).default([]),
-	review: ReviewSchema.optional(),
-	sources: z.array(slug).default([]),
-	...translatable('summary')
-	})
-);
+export const InstitutionSchema = atlasSchema<Institution>('institution');
 
 // ---------------------------------------------------------------------------
 // Role  (a canonical office, held over time by different people)
@@ -496,55 +426,7 @@ export const RoleSchema = atlasSchema<Role>('role');
 // Person
 // ---------------------------------------------------------------------------
 
-export const PersonSchema = withClaimEnvelope(
-	'person',
-	z.strictObject({
-	id: slug,
-	name_en: z.string().min(2),
-	name_fr: z.string().optional(),
-	name_ar: z.string().optional(),
-	/**
-	 * Alternative transliterations. Essential here: the same officer appears as
-	 * "Hajem" and "El Hajjam" across sources, and near-identical names belong to
-	 * genuinely different people (Chokri Rahali versus Chokri Riahi).
-	 */
-	aliases: z.array(z.string()).default([]),
-	birth: dateToken.optional(),
-	death: dateToken.optional(),
-	/** Place of birth — a places.yaml id once the gazetteer ships (R8). */
-	birthplace: slug.optional(),
-	/** ISO alpha-2 citizenships; feeds the flow layer. */
-	nationality: z.array(z.string().regex(/^[A-Z]{2}$/)).default([]),
-	layers: z.array(Layer).min(1),
-	/** One-line identification shown in tooltips. */
-	tagline: z.string().optional(),
-	summary: z.string().optional(),
-	/** Career arc in short hops, e.g. ["Military", "Intelligence", "Presidency"]. */
-	trajectory: z.array(z.string()).default([]),
-	confidence: Confidence.default('B'),
-	basis: Basis.optional(),
-	verification: VerificationStatus.default('unflagged'),
-	/** Whose claim this is, mandatory below grade B. (V20) */
-	attributed_to: z.string().optional(),
-	/** Required for inferred claims. (V18) */
-	reasoning: z.string().optional(),
-	falsifiable_by: z.string().optional(),
-	/** V27 — why the authored `basis` overrides the grade-implied basis. */
-	basis_override_reason: z.string().optional(),
-	...claimAxes,
-	evidence: z.array(EvidenceSchema).optional(),
-	disputes: z.array(DisputeSchema).default([]),
-	review: ReviewSchema.optional(),
-	notes: z.array(z.string()).default([]),
-	sources: z.array(slug).default([]),
-	...translatable('tagline'),
-	...translatable('summary'),
-	...translatable('trajectory', 'list'),
-	...translatable('notes', 'list'),
-	...translatable('reasoning'),
-	...translatable('falsifiable_by')
-	})
-);
+export const PersonSchema = atlasSchema<Person>('person');
 
 // ---------------------------------------------------------------------------
 // Position  (the join between a person, a role and a span of time)
@@ -556,191 +438,20 @@ export const PositionSchema = atlasSchema<Position>('position');
 // Relationship
 // ---------------------------------------------------------------------------
 
-export const RelationshipSchema = withClaimEnvelope(
-	'relationship',
-	z.strictObject({
-		/**
-		 * Required, since July 2026.
-		 *
-		 * Relationships had no id for most of this project's life, and build-data.ts
-		 * synthesised `rel-<index>-<from>-<to>` from the record's array position — so
-		 * inserting one relationship renumbered every relationship after it. That was
-		 * tolerable while the graph was only read, and became untenable the moment
-		 * anything could reference a relationship: a discussion thread or a proposed
-		 * change pinned to an id would silently re-point at a different pair of named
-		 * people after the next insertion, with both records perfectly valid.
-		 *
-		 * Optional would leave the door open to a new relationship inheriting a
-		 * positional id and reintroducing the whole problem for one record.
-		 */
-		id: slug,
-		from: slug,
-		to: slug,
-		type: RelationshipType,
-		/** Free-text qualifier, e.g. "son-in-law", "51% shareholder". */
-		subtype: z.string().optional(),
-		start: dateToken.optional(),
-		end: dateToken.optional(),
-		description: z.string().min(4),
-		confidence: Confidence,
-		/** Overrides the basis derived from `confidence`. */
-		basis: Basis.optional(),
-		verification: VerificationStatus.default('unflagged'),
-		/** Whose claim this is, mandatory for anything below grade B. */
-		attributed_to: z.string().optional(),
-		/** Required for inferred claims. */
-		reasoning: z.string().optional(),
-		falsifiable_by: z.string().optional(),
-		/** V27 — why the authored `basis` overrides the grade-implied basis. */
-		basis_override_reason: z.string().optional(),
-		...claimAxes,
-		evidence: z.array(EvidenceSchema).optional(),
-		disputes: z.array(DisputeSchema).default([]),
-		/** This record was merged into another (V16 escape, spec §13.3). */
-		merged_into: slug.optional(),
-		/** This relationship supersedes another record of the same kind (§13.4). */
-		supersedes: slug.optional(),
-		review: ReviewSchema.optional(),
-		sources: z.array(slug).default([]),
-		...translatable('description'),
-		...translatable('reasoning'),
-		...translatable('falsifiable_by'),
-		notes: z.array(z.string()).default([]),
-		...translatable('notes', 'list'),
-		// v0.0.2 rich edge surface (spec §5.3)
-		equity: z
-			.strictObject({
-				pct: z.number().min(0).max(100),
-				direct: z.boolean().default(true),
-				beneficial: z.boolean().default(false),
-				class: z.string().optional()
-			})
-			.optional(),
-		finance: z
-			.strictObject({
-				amount: z.number().nonnegative(),
-				currency: z.string().regex(/^[A-Z]{3}$/, 'ISO 4217 code'),
-				year: z.number().int().min(1956).max(2030)
-			})
-			.optional(),
-		/**
-		 * Influence metadata: allowed only on the influence families, and `strength`
-		 * is an editorial judgment that must state its reasoning (V9) — the same
-		 * contract as the `authority` weight on roles.
-		 */
-		influence: z
-			.strictObject({
-				channel: z.enum(INFLUENCE_CHANNELS),
-				strength: z.number().min(0.3).max(1)
-			})
-			.optional()
-	})
-).refine((r) => !(r.type === 'allegation' && r.sources.length === 0), {
-		message: 'an allegation must carry a source showing the claim circulates'
-	})
-	.refine((r) => !r.influence || ['influence', 'reported-influence', 'advisory'].includes(r.type), {
-		message: 'influence metadata is allowed only on influence-family edges (influence, reported-influence, advisory) — V9'
-	})
-	.refine((r) => !(r.influence && !r.reasoning), {
-		message: 'an influence strength is an editorial judgment and must state its reasoning (V9)'
-	})
-	.refine((r) => !(r.finance && !['funding', 'sponsorship', 'ownership'].includes(r.type)), {
-		message: 'finance metadata is allowed only on funding, sponsorship and ownership edges (V13)'
-	});
+export const RelationshipSchema = atlasSchema<Relationship>('relationship');
 
 // ---------------------------------------------------------------------------
 // Groups  (subsection definitions for the network view)
 // ---------------------------------------------------------------------------
 
-/** A single membership rule — an entity matches if ANY rule in the list matches. */
-const MembershipRule = z.strictObject({
-	role: z.union([z.string(), z.array(z.string()).min(1)]).optional(),
-	role_prefix: z.union([z.string(), z.array(z.string()).min(1)]).optional(),
-	type: z.union([z.string(), z.array(z.string()).min(1)]).optional(),
-	members: z.array(z.string()).min(1).optional()
-}).refine((r) => r.role || r.role_prefix || r.type || r.members, {
-	message: 'membership rule must have at least one of: role, role_prefix, type, members'
-});
-
-const GroupDefSchema = z.strictObject({
-	header_en: z.string().min(1),
-	header_fr: z.string().optional(),
-	header_ar: z.string().optional(),
-	membership: MembershipRule
-});
-
-export const GroupLayerSchema = z.strictObject({
-	layer: Layer,
-	subsections: z.array(GroupDefSchema).min(1)
-});
+export type GroupLayer = Narrow<AtlasRecord<typeof groupLayerSchema>, { layer: z.infer<typeof Layer> }>;
+export const GroupLayerSchema = atlasSchema<GroupLayer>('group-layer');
 
 // ---------------------------------------------------------------------------
 // Event
 // ---------------------------------------------------------------------------
 
-export const EventSchema = withClaimEnvelope(
-	'event',
-	z.strictObject({
-	id: slug,
-	date: dateToken,
-	/** Optional end for events that span time (a trial, an uprising). */
-	date_end: dateToken.optional(),
-	title_en: z.string().min(3),
-	title_fr: z.string().optional(),
-	title_ar: z.string().optional(),
-	category: z.enum([
-		'political',
-		'military',
-		'security',
-		'economic',
-		'constitutional',
-		'election',
-		'protest',
-		'legal',
-		// v0.0.2 (spec §6): award, investigation, media (major interviews / publications)
-		'award',
-		'investigation',
-		'media'
-	]),
-	/** Finer cut than category, for the timeline lanes (spec §6). */
-	subcategory: z.string().optional(),
-	/** Place ids — validated once the places gazetteer ships (R8). */
-	location: z.array(slug).default([]),
-	/** Which layers the event moved, when the record can say so. */
-	impact: z.strictObject({ layer: z.array(Layer).default([]) }).optional(),
-	/** External references the event rests on (JORT decree ids, URLs). */
-	documents: z.array(z.string()).default([]),
-	materials: z.array(z.string()).default([]),
-	/** Event-to-event edges (spec §6): a cause precedes its consequence (V8). */
-	causes: z.array(slug).default([]),
-	consequences: z.array(slug).default([]),
-	/** Ruptures draw a labelled vertical line across every Chronicle row. */
-	rupture: z.boolean().default(false),
-	summary: z.string().min(10),
-	actors: z.array(slug).default([]),
-	institutions: z.array(slug).default([]),
-	confidence: Confidence.default('A'),
-	basis: Basis.optional(),
-	verification: VerificationStatus.default('unflagged'),
-	/** Whose claim this is, mandatory below grade B. (V20) */
-	attributed_to: z.string().optional(),
-	/** Required for inferred claims. (V18) */
-	reasoning: z.string().optional(),
-	falsifiable_by: z.string().optional(),
-	/** V27 — why the authored `basis` overrides the grade-implied basis. */
-	basis_override_reason: z.string().optional(),
-	...claimAxes,
-	evidence: z.array(EvidenceSchema).optional(),
-	/** Competing characterisations, shown side by side rather than adjudicated. */
-	contested: z
-		.array(z.strictObject({ framing: z.string(), held_by: z.string(), source: slug.optional() }))
-		.default([]),
-	disputes: z.array(DisputeSchema).default([]),
-	review: ReviewSchema.optional(),
-	sources: z.array(slug).min(1, 'every event needs at least one source'),
-	...translatable('summary')
-	})
-);
+export const EventSchema = atlasSchema<EventRec>('event');
 
 // ---------------------------------------------------------------------------
 // Agreement  (a treaty or accession binding Tunisia to other states or bodies)
@@ -760,46 +471,7 @@ export const EventSchema = withClaimEnvelope(
  * latter against the graph and build-world.ts checks the former against the
  * globe's gazetteer.
  */
-export const AgreementSchema = withClaimEnvelope(
-	'agreement',
-	z.strictObject({
-		id: slug,
-		title_en: z.string().min(3),
-		title_fr: z.string().optional(),
-		title_ar: z.string().optional(),
-		kind: AgreementKind,
-		parties: z
-			.array(
-				z
-					.string()
-					.regex(
-						/^(?:[A-Z]{2}|[a-z0-9][a-z0-9-]*)$/,
-						'a party is an ISO alpha-2 state code or an institution id'
-					)
-			)
-			.min(1, 'an agreement needs at least one party'),
-		signed: dateToken.optional(),
-		in_force: dateToken.optional(),
-		text_url: z.string().url().optional(),
-		summary: z.string().min(10),
-		confidence: Confidence,
-		/** Overrides the basis derived from `confidence`. */
-		basis: Basis.optional(),
-		verification: VerificationStatus.default('unflagged'),
-		/** Whose claim this is, mandatory for anything below grade B. */
-		attributed_to: z.string().optional(),
-		reasoning: z.string().optional(),
-		falsifiable_by: z.string().optional(),
-		/** V27 — why the authored `basis` overrides the grade-implied basis. */
-		basis_override_reason: z.string().optional(),
-		...claimAxes,
-		evidence: z.array(EvidenceSchema).optional(),
-		disputes: z.array(DisputeSchema).default([]),
-		review: ReviewSchema.optional(),
-		sources: z.array(slug).min(1, 'every agreement needs at least one source'),
-		...translatable('summary')
-	})
-);
+export const AgreementSchema = atlasSchema<Agreement>('agreement');
 
 // ---------------------------------------------------------------------------
 // World claims — the dossier's shelf (docs/plans/world-rebuild-v2.md §2.7/§4.4)
@@ -827,74 +499,11 @@ export const WorldClaimSchema = atlasSchema<WorldClaim>('world-claim');
 // is the feature gate and no invented data enters the graph (rule 8).
 // ---------------------------------------------------------------------------
 
-/** The nine-field claim envelope, shared by every new kind. `sources` ≥ 1. */
-const claimFields = {
-	confidence: Confidence.default('B'),
-	/** Overrides the basis derived from `confidence`. */
-	basis: Basis.optional(),
-	verification: VerificationStatus.default('unflagged'),
-	/** Whose claim this is, mandatory for anything below grade B (V20). */
-	attributed_to: z.string().optional(),
-	/** Required for inferred claims (V18). */
-	reasoning: z.string().optional(),
-	falsifiable_by: z.string().optional(),
-	/** V27 — why the authored `basis` overrides the grade-implied basis. */
-	basis_override_reason: z.string().optional(),
-	...claimAxes,
-	disputes: z.array(DisputeSchema).default([]),
-	review: ReviewSchema.optional(),
-	sources: z.array(slug).min(1, 'every claim record needs at least one source')
-};
-
 /**
  * Company records — a corporate identity keyed by an institution id, so the graph
  * node and the corporate record can never desync (spec §4.2).
  */
-export const CompanySchema = withClaimEnvelope(
-	'company',
-	z.strictObject({
-		id: slug, // MUST be the id of an institution of a company-like type (checked in build-data)
-		legal_name_en: z.string().optional(),
-		legal_name_fr: z.string().optional(),
-		legal_name_ar: z.string().optional(),
-		legal_form: z.string().optional(),
-		registration: z
-			.strictObject({
-				/** The registry this number belongs to — one of the jurisdiction's listed registries. */
-				registry: slug.refine(
-					(r) => jurisdictionParams.jurisdiction.registry.registries.includes(r),
-					{
-						message: () =>
-							`registry must be one of the jurisdiction's registries: ${jurisdictionParams.jurisdiction.registry.registries.join(', ')} (parameters.jurisdiction.registry.registries)`
-					}
-				),
-				number: z.string().min(1),
-				date: dateToken
-			})
-			.optional(),
-		/** Tunisian "registre de commerce" CIN — exact identifier. */
-		cin: z.string().optional(),
-		status: z
-			.enum(['active', 'dissolved', 'liquidated', 'dormant', 'confiscated', 'delisted'])
-			.default('active'),
-		founded: dateToken.optional(),
-		/** Capital is a claim about a balance-sheet date (P7): numbers never float free. */
-		capital: z.strictObject({ tnd: z.number().positive(), date: dateToken }).optional(),
-		state_owned: z.boolean().default(false),
-		activities: z.array(z.string()).default([]),
-		/** Place id — validated once the places gazetteer ships (R8). */
-		headquarters: slug.optional(),
-		/** Free-text editorial context (registry gaps, flag resolution, capital mechanics). */
-		notes: z.array(z.string()).default([]),
-		/** Machine-reviewed translations of the notes (provenance carried by the _by field). */
-		notes_fr: z.array(z.string()).optional(),
-		notes_ar: z.array(z.string()).optional(),
-		notes_fr_by: z.string().optional(),
-		notes_ar_by: z.string().optional(),
-		...claimFields,
-		evidence: z.array(EvidenceSchema).optional(),
-	})
-);
+export const CompanySchema = atlasSchema<Company>('company');
 
 /** Procurement / PPP / concession records (spec §4.4). */
 export const ContractSchema = atlasSchema<Contract>('contract');
@@ -989,44 +598,30 @@ function configuredRegister(): ExceptionRegister {
 	return register;
 }
 
-/**
- * V18/V20/V27: the shared claim-envelope refines, applied to every claim-bearing
- * record kind so no future kind can forget them. The inferred/unsubstantiated
- * checks run on the DERIVED basis (deriveBasis) rather than the authored one, so
- * an explicit `basis` may override the derivation but a derived `inferred` with
- * no reasoning or falsifier fails exactly like an authored one.
- *
- * Mandatory prose is checked with `nonBlank`, not truthiness: a string of spaces
- * is a missing field, and the review that found the bypass is the regression
- * fixture.
- *
- * A basis stronger than the grade implies is an override (V27). It requires a
- * review object, reasoning, a falsifier when an inference is involved, at least
- * one source and `basis_override_reason`. Overrides that pre-date the rule are
- * enumerated in `data/source-exceptions.yaml` with an owner and a deadline; they
- * are exempt from the requirement, never from visibility: the build still emits
- * `basis_derived` beside the authored `basis`.
- */
-function withClaimEnvelope<S extends z.ZodObject<z.ZodRawShape>>(kind: string, schema: S) {
-	// The refines live in the engine kernel. The exception sets arrive through a
-	// getter, so configureSchema() can replace them between parses, and the two
-	// texts below keep every message this tree has always published.
-	return engineClaimEnvelope(kind, schema, () => schemaExceptions, {
-		exceptionFile: 'data/source-exceptions.yaml',
-		basisOverrideRule: 'V27'
-	});
-}
-
 export type Source = Omit<SourceRecord, 'lang'> & { lang: SourceLanguage };
-export type Institution = z.infer<typeof InstitutionSchema>;
+export type Institution = Narrow<
+	AtlasRecord<typeof institutionSchema>,
+	{ type: z.infer<typeof InstitutionType>; layer: z.infer<typeof Layer> }
+>;
 export type Role = AtlasRecord<typeof roleSchema>;
-export type Person = z.infer<typeof PersonSchema>;
+export type Person = Narrow<AtlasRecord<typeof personSchema>, { layers: z.infer<typeof Layer>[] }>;
 export type Position = AtlasRecord<typeof positionSchema>;
-export type Relationship = z.infer<typeof RelationshipSchema>;
-export type EventRec = z.infer<typeof EventSchema>;
-export type Agreement = z.infer<typeof AgreementSchema>;
+type RelationshipRecord = AtlasRecord<typeof relationshipSchema>;
+export type Relationship = Narrow<
+	RelationshipRecord,
+	{
+		type: z.infer<typeof RelationshipType>;
+		influence?: Narrow<NonNullable<RelationshipRecord['influence']>, { channel: (typeof INFLUENCE_CHANNELS)[number] }>;
+	}
+>;
+type EventRecord = AtlasRecord<typeof eventSchema>;
+export type EventRec = Narrow<
+	EventRecord,
+	{ impact?: { layer: z.infer<typeof Layer>[] } }
+>;
+export type Agreement = Narrow<AtlasRecord<typeof agreementSchema>, { kind: z.infer<typeof AgreementKind> }>;
 export type WorldClaim = AtlasRecord<typeof worldClaimSchema>;
-export type Company = z.infer<typeof CompanySchema>;
+export type Company = AtlasRecord<typeof companySchema>;
 export type Contract = AtlasRecord<typeof contractSchema>;
 export type Licence = AtlasRecord<typeof licenceSchema>;
 export type Vacancy = AtlasRecord<typeof vacancySchema>;
@@ -1074,12 +669,9 @@ export const RegionSchema = z.strictObject({
 // Places  — point features with coordinates (spec §8.2)
 // ---------------------------------------------------------------------------
 
-/** WGS84 longitude/latitude, within the jurisdiction's bounding box (V10).
- *
- * The box comes from data/parameters.yaml via configureSchema() — the build
- * calls it before any record is parsed. A fork retargeting the framework edits
- * the parameter file, not this validator. The default is the shipped Tunisia
- * box, byte-identical to the literal it replaced.
+/**
+ * The jurisdiction parameters the gazette-overclaim guard reads. The place box
+ * and name are the deployment's (scripts/engine.ts), built from the same file.
  */
 let jurisdictionParams = DEFAULT_PARAMETERS;
 
@@ -1162,52 +754,8 @@ export const SourceExceptionSchema = z
 
 export type SourceException = z.infer<typeof SourceExceptionSchema>;
 
-export const Coordinates = z
-	.array(z.number())
-	.length(2)
-	.refine(
-		([lon, lat]) => {
-			const b = jurisdictionParams.jurisdiction.bbox;
-			return lon >= b.lonMin && lon <= b.lonMax && lat >= b.latMin && lat <= b.latMax;
-		},
-		{
-			message: () => {
-				const b = jurisdictionParams.jurisdiction.bbox;
-				return `coordinates must fall inside ${jurisdictionParams.jurisdiction.name} (lon ${b.lonMin}..${b.lonMax}, lat ${b.latMin}..${b.latMax})`;
-			}
-		}
-	);
-
-export const PlaceSchema = withClaimEnvelope(
-	'place',
-	z.strictObject({
-		id: slug,
-		kind: PlaceKind,
-		name_en: z.string().min(2),
-		name_fr: z.string().optional(),
-		name_ar: z.string().optional(),
-		/** Region/governorate this place belongs to (V10: chain must terminate). */
-		parent: slug.optional(),
-		/** [lon, lat] WGS84 — mandatory for point classes (V10). */
-		coordinates: Coordinates.optional(),
-		/** Strategic asset flag: feeds the economic layer (spec §7.1). */
-		asset: z.boolean().default(false),
-		/** Graph entity (institution/person) that owns or operates it, when known. */
-		owner: slug.optional(),
-		...claimFields,
-		evidence: z.array(EvidenceSchema).optional(),
-		/**
-		 * Source-backed notes (English base; `_fr`/`_ar` siblings via the
-		 * translatable spread below). The base key was omitted when the schema
-		 * shipped empty; every other claim-bearing kind carries it, and the
-		 * first place records (2026-08-08 merge) carry registry cross-checks
-		 * and selection flags that must not be dropped (strict mode otherwise
-		 * rejects plain `notes`).
-		 */
-		notes: z.array(z.string()).default([]),
-		...translatable('notes', 'list')
-	})
-);
+export type Place = Narrow<AtlasRecord<typeof placeSchema>, { kind: z.infer<typeof PlaceKind> }>;
+export const PlaceSchema = atlasSchema<Place>('place');
 
 /**
  * data/countries.yaml — the world gazetteer crosswalk.

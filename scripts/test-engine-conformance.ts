@@ -18,14 +18,20 @@
  * deployment value that only works elsewhere fails here. It reads the engine
  * from node_modules; a failed install fails here first.
  */
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { parse as parseYaml } from 'yaml';
 import { z } from 'zod';
 import { nonBlank } from 'deepepisteme/kernel';
 import * as localDates from './dates.ts';
-import { engine, parameters } from './engine.ts';
+import { deployment, engine, parameters } from './engine.ts';
+import * as vocabulary from './vocabulary.ts';
+import * as schemaModule from './schema.ts';
 import { ReviewSchema as DeeptunisiaReviewSchema } from './schema.ts';
+
+function isEqualList(a: string[], b: string[]): boolean {
+	return a.length === b.length && a.every((v, i) => v === b[i]);
+}
 
 let failures = 0;
 let checks = 0;
@@ -339,6 +345,172 @@ ok('engine: the floor follows the configured parameters', engine.time.floor === 
 		'engine: the deployment parses every record in data/ without a finding',
 		findings.length === 0 && total > 0,
 		findings.length ? `${findings.length} findings; ${sample.join(' | ')}` : `${total} records, 0 findings`
+	);
+
+	// --- the schemas this repository exports are the schemas parse uses -------
+	//
+	// A schema kept in scripts/ after its kind moved to the engine still passes
+	// every test that imports it, while parse no longer uses it: green tests,
+	// zero coverage. So every engine kind must have exactly one export in
+	// scripts/schema.ts, built through engine.schemaOf and nothing else, the
+	// only other schemas in the file are the ones that name no engine kind, and
+	// each export answers like the schema parse resolves for its kind.
+	const source = readFileSync(join(import.meta.dirname, 'schema.ts'), 'utf8');
+	const exportsByKind = new Map<string, string[]>();
+	for (const m of source.matchAll(/^export const (\w+) = (?:kernelSchema|atlasSchema)<\w+>\('([a-z-]+)'\);$/gm)) {
+		exportsByKind.set(m[2], [...(exportsByKind.get(m[2]) ?? []), m[1]]);
+	}
+	const kinds = [...engine.kinds.keys()].sort();
+	ok(
+		'every engine kind has exactly one consumer schema, built through engine.schemaOf',
+		kinds.every((k) => exportsByKind.get(k)?.length === 1) &&
+			[...exportsByKind.keys()].every((k) => engine.kinds.has(k)),
+		`${kinds.length} kinds, ${exportsByKind.size} exports`
+	);
+	const constructed = [...source.matchAll(/^export const (\w+) = (?!kernelSchema|atlasSchema)(?:z\s*\.|create\w+\()/gm)]
+		.map((m) => m[1])
+		.sort();
+	ok(
+		'no consumer schema is constructed for an engine kind',
+		isEqualList(constructed, ['CountriesFileSchema', 'RegionSchema', 'ReviewSchema', 'SourceExceptionRule', 'SourceExceptionSchema']),
+		constructed.join(', ')
+	);
+	const mod = schemaModule as Record<string, z.ZodType>;
+	const wrong: string[] = [];
+	for (const kind of kinds) {
+		const exported = mod[exportsByKind.get(kind)?.[0] ?? ''];
+		const direct = engine.schemaOf(kind);
+		const candidates = (raw[kind] ?? []).slice(0, 25);
+		const accepted = candidates.find((r) => direct.safeParse(r).success);
+		const probes: unknown[] = [{}, ...(accepted ? [accepted, { ...(accepted as object), stranger_key: 1 }] : [])];
+		for (const probe of probes) {
+			const a = exported?.safeParse(probe);
+			const b = direct.safeParse(probe);
+			const same =
+				!!a &&
+				a.success === b.success &&
+				(a.success || JSON.stringify(a.error.issues.map((i) => i.message)) === JSON.stringify((b as { error: z.ZodError }).error.issues.map((i) => i.message)));
+			if (!same) wrong.push(`${kind} ${JSON.stringify(probe).slice(0, 40)}`);
+		}
+		if (accepted && exported?.safeParse({ ...(accepted as object), stranger_key: 1 }).success) wrong.push(`${kind} accepts an unknown key`);
+	}
+	ok(
+		'each consumer schema answers like the schema parse resolves for its kind',
+		wrong.length === 0,
+		wrong.length ? wrong.join('; ') : `${kinds.length} kinds, accepted record, stranger key and empty record each agree`
+	);
+
+	// --- scripts/vocabulary.ts is the one place a vocabulary list lives -------
+	//
+	// The deployment reads the lists, the consumer narrows its types from them,
+	// and the engine's kinds validate against them. A list copied elsewhere is
+	// how a vocabulary ends up accepted in one place and refused in another.
+	const lists: Record<string, readonly string[]> = {
+		layers: vocabulary.Layer.options,
+		institutionTypes: vocabulary.InstitutionType.options,
+		relationshipTypes: vocabulary.RelationshipType.options,
+		influenceChannels: vocabulary.INFLUENCE_CHANNELS,
+		agreementKinds: vocabulary.AgreementKind.options,
+		placeKinds: vocabulary.PlaceKind.options,
+		regionKinds: vocabulary.RegionKind.options,
+		reviewerLabels: vocabulary.REVIEWER_LABELS,
+		sourceLanguages: vocabulary.SOURCE_LANGUAGES
+	};
+	const dv = deployment as unknown as Record<string, unknown>;
+	const dvVocabulary = dv.vocabulary as Record<string, unknown>;
+	const declared: Record<string, unknown> = { ...dvVocabulary, reviewerLabels: dv.reviewerLabels, sourceLanguages: dv.sourceLanguages };
+	ok(
+		'the deployment carries exactly the lists scripts/vocabulary.ts declares',
+		Object.entries(lists).every(([name, list]) => isEqualList([...(declared[name] as string[])], [...list])) &&
+			isEqualList(Object.keys(dvVocabulary as object).sort(), [...Object.keys(lists).filter((n) => n !== 'reviewerLabels' && n !== 'sourceLanguages'), 'edgeDirection'].sort()) &&
+			isEqualList(
+				Object.keys(dvVocabulary.edgeDirection as object).sort(),
+				[...vocabulary.RelationshipType.options].sort()
+			),
+		Object.keys(lists).join(', ')
+	);
+
+	/** A record of the kind the engine accepts, so a probe differs from it in one field only. */
+	const base = (kind: string, where?: (r: Record<string, unknown>) => boolean): Record<string, unknown> | undefined =>
+		(raw[kind] as Record<string, unknown>[] | undefined)?.find((r) => engine.schemaOf(kind).safeParse(r).success && (where?.(r) ?? true));
+	/** Whether the schema refuses a value at the given field, whatever else it says about the record. */
+	const refusesAt = (kind: string, record: Record<string, unknown>, path: string[]): boolean => {
+		const r = mod[exportsByKind.get(kind)![0]].safeParse(record);
+		return !r.success && r.error.issues.some((i) => path.every((p, n) => i.path[n] === p));
+	};
+	const cases: { kind: string; field: string; path: string[]; list: readonly string[]; make: (r: Record<string, unknown>, v: string) => Record<string, unknown>; need?: (r: Record<string, unknown>) => boolean }[] = [
+		{ kind: 'institution', field: 'institution.type', path: ['type'], list: lists.institutionTypes, make: (r, v) => ({ ...r, type: v }) },
+		{ kind: 'institution', field: 'institution.layer', path: ['layer'], list: lists.layers, make: (r, v) => ({ ...r, layer: v }) },
+		{ kind: 'person', field: 'person.layers', path: ['layers'], list: lists.layers, make: (r, v) => ({ ...r, layers: [v] }) },
+		{ kind: 'relationship', field: 'relationship.type', path: ['type'], list: lists.relationshipTypes, make: (r, v) => ({ ...r, type: v }) },
+		{
+			kind: 'relationship',
+			field: 'relationship.influence.channel',
+			path: ['influence', 'channel'],
+			list: lists.influenceChannels,
+			make: (r, v) => ({ ...r, influence: { ...(r.influence as object), channel: v } }),
+			need: (r) => !!r.influence
+		},
+		{ kind: 'group-layer', field: 'group-layer.layer', path: ['layer'], list: lists.layers, make: (r, v) => ({ ...r, layer: v }) },
+		{ kind: 'event', field: 'event.impact.layer', path: ['impact', 'layer'], list: lists.layers, make: (r, v) => ({ ...r, impact: { layer: [v] } }) },
+		{ kind: 'agreement', field: 'agreement.kind', path: ['kind'], list: lists.agreementKinds, make: (r, v) => ({ ...r, kind: v }) },
+		{ kind: 'place', field: 'place.kind', path: ['kind'], list: lists.placeKinds, make: (r, v) => ({ ...r, kind: v }) },
+		{ kind: 'source', field: 'source.lang', path: ['lang'], list: lists.sourceLanguages, make: (r, v) => ({ ...r, lang: v }) }
+	];
+	const vocabularyFaults: string[] = [];
+	for (const c of cases) {
+		const record = base(c.kind, c.need);
+		if (!record) {
+			vocabularyFaults.push(`${c.field}: no shipped record to probe with`);
+			continue;
+		}
+		for (const v of c.list) if (refusesAt(c.kind, c.make(record, v), c.path)) vocabularyFaults.push(`${c.field} refuses its own entry "${v}"`);
+		if (!refusesAt(c.kind, c.make(record, 'not-in-the-vocabulary'), c.path)) vocabularyFaults.push(`${c.field} accepts a stranger`);
+	}
+	ok(
+		'every vocabulary entry parses where it is used, and a stranger does not',
+		vocabularyFaults.length === 0,
+		vocabularyFaults.length ? vocabularyFaults.join('; ') : `${cases.length} fields, ${cases.reduce((n, c) => n + c.list.length, 0)} entries`
+	);
+
+	// A complete copy of a list anywhere else in the tree is a second place for
+	// it to change. The browser's copies cannot import this module, so each is
+	// named here and compared to it; any other complete copy fails.
+	const root = join(import.meta.dirname, '..');
+	const sourceFiles = (dir: string): string[] =>
+		readdirSync(join(root, dir), { withFileTypes: true }).flatMap((e) =>
+			e.isDirectory() ? sourceFiles(join(dir, e.name)) : /\.(ts|svelte)$/.test(e.name) && !/^(test-|mutation-)/.test(e.name) ? [join(dir, e.name)] : []
+		);
+	const copies: string[] = [];
+	for (const file of [...sourceFiles('scripts'), ...sourceFiles('src'), ...sourceFiles('community')]) {
+		if (file === join('scripts', 'vocabulary.ts')) continue;
+		const text = readFileSync(join(root, file), 'utf8');
+		for (const m of text.matchAll(/(?:'[^'\n]*'|"[^"\n]*")(?:\s*,\s*(?:\/\/[^\n]*\n\s*)?(?:'[^'\n]*'|"[^"\n]*")){2,}/g)) {
+			const entries = [...m[0].matchAll(/'([^'\n]*)'|"([^"\n]*)"/g)].map((x) => x[1] ?? x[2]);
+			for (const [name, list] of Object.entries(lists)) {
+				if (list.length >= 3 && entries.length === list.length && list.every((e) => entries.includes(e))) copies.push(`${file} (${name})`);
+			}
+		}
+	}
+	const mirrored = ['src/lib/taxonomy.ts (layers)', 'src/lib/taxonomy.ts (institutionTypes)', 'src/lib/taxonomy.ts (relationshipTypes)', 'src/lib/viz/groups.ts (layers)', 'src/lib/vocab.ts (layers)'];
+	ok(
+		'no complete copy of a vocabulary list lives outside scripts/vocabulary.ts, apart from the browser mirrors named here',
+		isEqualList([...new Set(copies)].sort(), mirrored.sort()),
+		[...new Set(copies)].sort().join(', ')
+	);
+	/** The strings of the first list literal after a marker in a browser source file. */
+	const listAfter = (file: string, marker: string): string[] => {
+		const text = readFileSync(join(root, file), 'utf8');
+		const at = text.indexOf(marker);
+		const open = at < 0 ? -1 : text.indexOf('= [', at);
+		const body = open < 0 ? '' : text.slice(open, text.indexOf(']', open));
+		return [...body.matchAll(/'([^']*)'/g)].map((m) => m[1]);
+	};
+	ok(
+		'the browser layer lists are the vocabulary, in its order',
+		isEqualList(listAfter('src/lib/vocab.ts', 'export const LAYERS'), [...lists.layers]) &&
+			isEqualList(listAfter('src/lib/viz/groups.ts', 'const layerOrder'), [...lists.layers]),
+		'src/lib/vocab.ts, src/lib/viz/groups.ts'
 	);
 }
 
