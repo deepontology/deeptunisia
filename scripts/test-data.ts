@@ -1381,12 +1381,36 @@ const KIND_TO_DATASET: Record<string, string> = {
 	ok('V23: every review has a calendar-valid date and an enum method', bad.length === 0, bad.length ? bad.slice(0, 5).join('; ') : `${reviews.length} reviews valid`);
 }
 
-// V24 — succession stats are reproducible from the emitted constants.
+// V24 — succession counts are recomputed by a second method that shares no
+// code with the chain walk that publishes them: every pair of positions in a
+// role for overlaps, and the days a role's earlier holders still cover for
+// gaps. Neither count has one definition, so each is reported under its own
+// name and none is called "the" count here.
+//
+//   Overlaps, three readings of one fact:
+//     chain overlaps     — consecutive holders that certainly sat together
+//                          (what the dataset publishes today);
+//     overlapping pairs  — any two holders of a post that certainly sat together;
+//     overlap incidents  — connected groups of those pairs: one per moment a
+//                          post had more than one holder.
+//   Gaps, two readings:
+//     chain gaps         — the handover from the previous holder in start order
+//                          is longer than the threshold (published today);
+//     coverage holes     — the same, against whoever of all earlier holders
+//                          reached furthest: a gap nobody covers.
+//
+// Which of these is the headline is the owner's decision, not this test's. It
+// holds the readings apart and checks how they relate; the literal values are
+// pinned only at the audited dataset hash, so a changed dataset does not fail
+// on a number nobody chose.
 {
 	const meta = ds.meta as {
+		datasetHash: string;
 		successionGaps: { role: string; after: string; before: string; gapYears: number }[];
+		successionOverlaps: { role: string; a: string; b: string; overlapYears: number }[];
 		successionMeta: { gapYears: number; overlapYears: number; exemption: string };
 	};
+	const YEAR = 365.2425 * 86_400_000;
 	// Seated roles (legislative terms) have no succession chain: the same rule as the build.
 	const seated = new Set(ds.roles.filter((r: { seats?: number }) => r.seats !== undefined).map((r: { id: string }) => r.id));
 	const byRole = new Map<string, Pos[]>();
@@ -1396,22 +1420,100 @@ const KIND_TO_DATASET: Record<string, string> = {
 		list.push(p);
 		byRole.set(p.role, list);
 	}
-	const gaps: { role: string; after: string; before: string }[] = [];
+
+	// Overlaps: every pair, earlier start first, and a union of the pairs for incidents.
+	const pairKeys = new Set<string>();
+	const consecutiveKeys = new Set<string>();
+	const parent = new Map<string, string>();
+	const find = (x: string): string => {
+		let r = x;
+		while (parent.get(r) !== r) r = parent.get(r)!;
+		return r;
+	};
 	for (const [role, list] of byRole) {
 		const sorted = [...list].sort((a, b) => a.interval.startLatest - b.interval.startLatest);
-		for (let i = 1; i < sorted.length; i++) {
-			const prevEnd = sorted[i - 1].interval.endEarliest ?? CUTOFF;
-			const gapYears = (sorted[i].interval.startEarliest - prevEnd) / (365.2425 * 86_400_000);
-			if (gapYears > meta.successionMeta.gapYears) {
-				gaps.push({ role, after: sorted[i - 1].holder, before: sorted[i].holder });
+		for (let i = 0; i < sorted.length; i++) {
+			for (let j = i + 1; j < sorted.length; j++) {
+				const a = sorted[i];
+				const b = sorted[j];
+				const years = ((a.interval.endLatest ?? CUTOFF) - b.interval.startLatest) / YEAR;
+				if (!(years > meta.successionMeta.overlapYears && a.interval.status === 'ended' && b.interval.status !== 'unknown')) continue;
+				const key = `${role}|${a.holder}|${b.holder}|${Math.round(years * 10) / 10}`;
+				pairKeys.add(key);
+				if (j === i + 1) consecutiveKeys.add(key);
+				for (const id of [a.id, b.id]) if (!parent.has(id)) parent.set(id, id);
+				parent.set(find(a.id), find(b.id));
 			}
 		}
 	}
+	const incidents = new Set([...parent.keys()].map(find)).size;
+	const publishedOverlaps = meta.successionOverlaps.map((o) => `${o.role}|${o.a}|${o.b}|${o.overlapYears}`);
+	const published = new Set(publishedOverlaps);
+	const strayOverlaps = publishedOverlaps.filter((k) => !pairKeys.has(k));
+	const missedOverlaps = [...consecutiveKeys].filter((k) => !published.has(k));
+	ok(
+		'V24: chain overlaps are the consecutive overlapping pairs of an independent pairwise comparison',
+		strayOverlaps.length === 0 && missedOverlaps.length === 0,
+		`chain overlaps ${publishedOverlaps.length}, overlapping pairs ${pairKeys.size}, overlap incidents ${incidents}; ` +
+			`published but not a pair ${strayOverlaps.length}, consecutive pair not published ${missedOverlaps.length}`
+	);
+	ok(
+		'V24: every reading of the overlaps is bounded by the pairs (incidents <= overlapping pairs, chain overlaps <= overlapping pairs)',
+		incidents <= pairKeys.size && publishedOverlaps.length <= pairKeys.size,
+		`overlap incidents ${incidents}, chain overlaps ${publishedOverlaps.length}, overlapping pairs ${pairKeys.size}`
+	);
+
+	// Gaps: the chain reading and the coverage reading, position by position.
+	const chainGapIds = new Set<string>();
+	const holeIds = new Set<string>();
+	for (const list of byRole.values()) {
+		const sorted = [...list].sort((a, b) => a.interval.startLatest - b.interval.startLatest);
+		let reach = -Infinity;
+		for (let i = 1; i < sorted.length; i++) {
+			reach = Math.max(reach, sorted[i - 1].interval.endEarliest ?? CUTOFF);
+			const start = sorted[i].interval.startEarliest;
+			if ((start - (sorted[i - 1].interval.endEarliest ?? CUTOFF)) / YEAR > meta.successionMeta.gapYears) chainGapIds.add(sorted[i].id);
+			if ((start - reach) / YEAR > meta.successionMeta.gapYears) holeIds.add(sorted[i].id);
+		}
+	}
+	const chainOnly = [...chainGapIds].filter((id) => !holeIds.has(id));
+	const missedHoles = [...holeIds].filter((id) => !chainGapIds.has(id));
 	ok(
 		'V24: succession gaps reproducible from the emitted constants',
-		gaps.length === meta.successionGaps.length,
-		`emitted ${meta.successionGaps.length}, recomputed ${gaps.length} (threshold ${meta.successionMeta.gapYears}y, ${meta.successionMeta.exemption})`
+		chainGapIds.size === meta.successionGaps.length && missedHoles.length === 0,
+		`chain gaps ${meta.successionGaps.length} (recomputed ${chainGapIds.size}), coverage holes ${holeIds.size}, ` +
+			`chain gaps another holder still covers ${chainOnly.length}, holes the chain misses ${missedHoles.length} ` +
+			`(threshold ${meta.successionMeta.gapYears}y, ${meta.successionMeta.exemption})`
 	);
+	if (chainOnly.length > 0) console.log(`      chain gaps that a coverage reading drops: ${chainOnly.join(', ')}`);
+
+	// The audited dataset: the readings at the hash the owner is deciding on.
+	// Pending the owner's choice of headline; moving any of these is a ledgered
+	// change to the published counts and the hash, never a quiet edit here.
+	const AUDITED_HASH = 'f57388b09f949a6c6e9b57afa117cb0f1323a9b90e4b3257dc9c9dfb30b83400';
+	if (meta.datasetHash === AUDITED_HASH) {
+		const audited = {
+			chainOverlaps: 49,
+			overlappingPairs: 67,
+			overlapIncidents: 43,
+			chainGaps: 126,
+			coverageHoles: 121,
+			chainGapsAnotherHolderCovers: 5
+		};
+		const got = {
+			chainOverlaps: publishedOverlaps.length,
+			overlappingPairs: pairKeys.size,
+			overlapIncidents: incidents,
+			chainGaps: chainGapIds.size,
+			coverageHoles: holeIds.size,
+			chainGapsAnotherHolderCovers: chainOnly.length
+		};
+		ok(
+			'V24: the audited readings hold at the audited dataset (owner has not chosen a headline)',
+			JSON.stringify(got) === JSON.stringify(audited),
+			JSON.stringify(got)
+		);
+	}
 }
 
 // The published terms and payload. A dataset that invites reuse must say under
