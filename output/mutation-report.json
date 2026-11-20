@@ -1,10 +1,10 @@
 {
-  "generated": "2026-11-20T11:24:05.144Z",
-  "commit": "991c470",
+  "generated": "2026-11-20T12:35:45.072Z",
+  "commit": "9b6ff92",
   "withValidators": true,
   "summary": {
-    "counted": 71,
-    "killed": 69,
+    "counted": 72,
+    "killed": 70,
     "latent": 2,
     "knownLatent": 2,
     "drift": 0,
@@ -204,11 +204,20 @@
     {
       "id": "m45",
       "label": "source URLs stop being restricted to http(s)",
-      "file": "schema.ts",
+      "file": "../node_modules/deepepisteme/src/kernel/kinds.ts",
       "verdict": "killed",
       "by": "test-validators",
       "outputChanged": false,
       "expect": "test-validators V29 source (http(s) url required)"
+    },
+    {
+      "id": "m72",
+      "label": "a source archive lookup passes as a snapshot (V29)",
+      "file": "../node_modules/deepepisteme/src/kernel/kinds.ts",
+      "verdict": "killed",
+      "by": "test-validators",
+      "outputChanged": false,
+      "expect": "test-validators V29 source (year-only/date-only lookup fixtures)"
     },
     {
       "id": "m21",
