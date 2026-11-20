@@ -47,14 +47,14 @@ export const VALIDATOR_REGISTER: ValidatorEntry[] = [
 		rule: 'a contract award value is attributed or backed by a tier-1 or tier-2 source',
 		status: 'enforced',
 		gate: 'fail',
-		site: { file: 'scripts/build-data.ts', anchor: 'award.value must be attributed or backed by a primary source' }
+		site: { file: 'node_modules/deepepisteme/src/atlas/rules/contract-award.ts', anchor: 'award.value must be attributed or backed by a primary source' }
 	},
 	{
 		id: 'V5',
 		rule: 'a contract award value with neither attribution nor a tier-1 or tier-2 source fails the build',
 		status: 'enforced',
 		gate: 'fail',
-		site: { file: 'scripts/build-data.ts', anchor: 'award.value must be attributed or backed by a primary source' }
+		site: { file: 'node_modules/deepepisteme/src/atlas/rules/contract-award.ts', anchor: 'award.value must be attributed or backed by a primary source' }
 	},
 	{
 		id: 'V6',
