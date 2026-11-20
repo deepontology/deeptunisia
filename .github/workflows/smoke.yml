@@ -25,7 +25,9 @@ concurrency:
 jobs:
   smoke:
     name: browser smoke (atlas and Agora)
-    runs-on: ubuntu-latest
+    # Not ubuntu-latest: it is Ubuntu 26.04 now, which the pinned Playwright
+    # (1.56) cannot install a browser on. Move this with the Playwright pin.
+    runs-on: ubuntu-24.04
     timeout-minutes: 40
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
