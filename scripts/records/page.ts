@@ -474,6 +474,17 @@ function head(kind: RecordKind, rec: Rec, name: Name, title: string): string {
 <meta property=og:description content="${esc(description)}">
 <meta property=og:url content="${esc(url)}">
 <meta property=og:site_name content="DeepTunisia">
+<meta property=og:image content="${SITE_URL}/og/default.png">
+<meta property=og:image:width content=1200>
+<meta property=og:image:height content=630>
+<meta name=twitter:card content=summary_large_image>
+<meta name=twitter:title content="${esc(title)}">
+<meta name=twitter:description content="${esc(description)}">
+<meta name=twitter:image content="${SITE_URL}/og/default.png">
+<link rel=icon href=/favicon.svg type=image/svg+xml>
+<link rel=icon href=/favicon.ico sizes=48x48>
+<link rel=icon href=/icon-192.png sizes=192x192 type=image/png>
+<link rel=apple-touch-icon href=/apple-touch-icon.png>
 <link rel=stylesheet href=/fonts/fonts.css>
 <link rel=stylesheet href=/e/tokens.css>
 <link rel=stylesheet href=/e/record.css>
