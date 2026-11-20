@@ -6,7 +6,7 @@
  * imports these names; a page that only prints translation keys does not.
  */
 import { app } from './state.svelte';
-import { localeProse } from './locale-prose.svelte';
+import { localeProse, wantEnglishProse } from './locale-prose.svelte';
 import {
 	entityName as entityNameIn,
 	institutionById,
@@ -68,10 +68,12 @@ export function prose(record: object, field: string): ProseValue {
 	// which do not carry one, and widening each of them to accept arbitrary keys
 	// would cost more type safety than this reads back.
 	const rec = record as Record<string, unknown>;
+	// Re-read when the prose arrives (locale-prose.svelte.ts). The English original of a
+	// person, institution, position, relationship or event is in that file too.
+	void localeProse.version;
+	wantEnglishProse();
 	const original = String(rec[field] ?? '');
 	if (app.locale === 'en') return { text: original, translated: true };
-	// Re-read when the reader's language prose arrives (locale-prose.svelte.ts).
-	void localeProse.version;
 	const value = rec[`${field}_${app.locale}`];
 	if (typeof value === 'string' && value.trim()) {
 		return { text: value, translated: true, by: rec[`${field}_${app.locale}_by`] as string };
@@ -79,12 +81,31 @@ export function prose(record: object, field: string): ProseValue {
 	return { text: original, translated: false };
 }
 
+/**
+ * The English original of a prose field, for a place that shows it whatever the
+ * reader's language. Redraws when the prose file arrives; empty until then.
+ */
+export function english(record: object | null | undefined, field: string): string {
+	void localeProse.version;
+	wantEnglishProse();
+	return String((record as Record<string, unknown> | null | undefined)?.[field] ?? '');
+}
+
+/** The English list form (a record's notes), in the same sense as `english()`. */
+export function englishList(record: object | null | undefined, field: string): string[] {
+	void localeProse.version;
+	wantEnglishProse();
+	const value = (record as Record<string, unknown> | null | undefined)?.[field];
+	return Array.isArray(value) ? (value as string[]) : [];
+}
+
 /** The list form, trajectory and notes. Falls back element-wise, never partially. */
 export function proseList(record: object, field: string): ProseValue & { items: string[] } {
 	const rec = record as Record<string, unknown>;
+	void localeProse.version;
+	wantEnglishProse();
 	const original = (rec[field] as string[] | undefined) ?? [];
 	if (app.locale === 'en') return { items: original, text: '', translated: true };
-	void localeProse.version;
 	const value = rec[`${field}_${app.locale}`];
 	if (Array.isArray(value) && value.length) {
 		return {

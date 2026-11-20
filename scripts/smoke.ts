@@ -1057,6 +1057,111 @@ console.log('\n  ── interaction ──');
 	await context.close();
 }
 
+// --- Record text -------------------------------------------------------------
+/*
+ * The long English text of a record (a person's tagline and summary, a connection's
+ * description) is not in the graph the page loads: it is `/prose-en.json`, fetched
+ * once. These runs hold the two places a reader meets that: a record's panel, and
+ * the palette, whose index is built from that text and so is not ready until it has
+ * arrived. Expected strings are read from the generated dataset, not typed here.
+ */
+if (runSection('record text')) {
+console.log('\n  ── record text ──');
+	const datasetText = readFileSync(join(HERE, '..', 'src', 'generated', 'dataset.json'), 'utf8');
+	const people = (
+		JSON.parse(datasetText) as {
+			people: { id: string; name_en: string; tagline?: string; summary?: string }[];
+		}
+	).people;
+	/*
+	 * A word that is in few records' text anywhere in the dataset, taken from one person's
+	 * tagline, so that a search for it must find that person through the fetched prose and
+	 * through nothing else.
+	 */
+	const occurrences = (w: string) => datasetText.toLowerCase().split(w.toLowerCase()).length - 1;
+	let subject = people[0];
+	let word = '';
+	for (const p of people) {
+		if (!p.tagline || !p.summary) continue;
+		const w = p.tagline.split(/[^A-Za-z]+/).find((x) => x.length >= 8 && occurrences(x) <= 3 && !p.name_en.includes(x));
+		if (w) {
+			subject = p;
+			word = w;
+			break;
+		}
+	}
+	ok('the record text test has a subject and a distinctive word', !!word, `${subject.id}, "${word}" in ${word ? occurrences(word) : 0} places`);
+
+	const context = await browser.newContext({ viewport: { width: 1600, height: 1000 } });
+	await context.addInitScript(TOUR_SEEN_INIT);
+	const problems: string[] = [];
+
+	// 1. A record's panel shows its tagline and summary from the fetched file.
+	{
+		const page = await context.newPage();
+		page.on('pageerror', (e) => problems.push(e.message));
+		const fetchedProse: string[] = [];
+		page.on('response', (r) => {
+			if (r.url().includes('/prose-en.json')) fetchedProse.push(`${r.status()} ${r.url().split('/').pop()}`);
+		});
+		await page.goto(BASE + '/chronicle?id=' + encodeURIComponent(subject.id), { waitUntil: 'networkidle', timeout: 30_000 });
+		await settle(page);
+		const want = subject.tagline!.slice(0, 40);
+		await page.waitForFunction(
+			(w) => Array.from(document.querySelectorAll('.tagline')).some((e) => (e.textContent ?? '').includes(w)),
+			want,
+			{ timeout: 10_000 }
+		).catch(() => {});
+		const tagline = await page.locator('.tagline').first().innerText().catch(() => '');
+		ok("a record's panel shows its tagline", tagline.includes(want), tagline.slice(0, 60));
+		const summaryText = await page.locator('.summary').first().innerText().catch(() => '');
+		ok("a record's panel shows its summary", summaryText.includes(subject.summary!.slice(0, 40)), summaryText.slice(0, 60));
+		ok('the prose file is requested once with the build hash', fetchedProse.length === 1 && /prose-en\.json\?v=/.test(await page.evaluate(`performance.getEntriesByType('resource').map(e => e.name).find(n => n.includes('prose-en.json')) ?? ''`) as string), fetchedProse.join(', '));
+		await page.close();
+	}
+
+	// 2. The palette says "still building" until the prose is in, then finds a person by it.
+	{
+		const page = await context.newPage();
+		page.on('pageerror', (e) => problems.push(e.message));
+		await page.route(/prose-en\.json/, async (route) => {
+			await new Promise((res) => setTimeout(res, 3000));
+			await route.continue();
+		});
+		await page.goto(BASE + '/chronicle', { waitUntil: 'load', timeout: 30_000 });
+		await settle(page);
+		await page.keyboard.press('/');
+		await page.waitForSelector('.palette input', { timeout: 5_000 });
+		await page.keyboard.type(word);
+		const building = await page.locator('.palette li.empty').innerText().catch(() => '');
+		ok('the palette says the index is still loading while the prose is on its way', building.trim() === 'Loading the index…', building.trim());
+		await page.waitForFunction(
+			(n) => Array.from(document.querySelectorAll('.palette li .name')).some((e) => (e.textContent ?? '') === n),
+			subject.name_en,
+			{ timeout: 15_000 }
+		).catch(() => {});
+		const names = await page.locator('.palette li .name').allInnerTexts();
+		ok('once the prose has arrived the palette finds a person by a word of their tagline', names.includes(subject.name_en), `${word} → ${names.slice(0, 4).join(', ')}`);
+		await page.keyboard.press('Escape');
+		await page.close();
+	}
+
+	// 3. Offline for the prose: the panel still names the record and says nothing it does not have.
+	{
+		const page = await context.newPage();
+		page.on('pageerror', (e) => problems.push(e.message));
+		await page.route(/prose-en\.json/, (route) => route.abort());
+		await page.goto(BASE + '/chronicle?id=' + encodeURIComponent(subject.id), { waitUntil: 'networkidle', timeout: 30_000 });
+		await settle(page);
+		const heading = await page.locator('h2, h1').allInnerTexts();
+		ok('without the prose the panel still names the record', heading.some((h) => h.includes(subject.name_en)), heading.slice(0, 3).join(' | '));
+		ok('without the prose the panel shows no tagline and no error', (await page.locator('.tagline').count()) === 0 && problems.length === 0, problems.slice(0, 2).join(' | '));
+		await page.close();
+	}
+	ok('record text console clean', problems.length === 0, problems.slice(0, 3).join(' | '));
+	await context.close();
+}
+
 // --- The timeline -----------------------------------------------------------
 /*
  * The dock is the app's primary control and its labels are the easiest thing to

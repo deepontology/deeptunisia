@@ -4,7 +4,7 @@
 	import { app } from '$lib/state.svelte';
 	import { format } from '$lib/i18n';
 	import { t, tf, describeInterval, durationLabel, formatDate, layerLabel, relLabel, confidenceLabel, basisLabel } from '$lib/t.svelte';
-	import { nameOf, entityName } from '$lib/names.svelte';
+	import { english, englishList, nameOf, entityName } from '$lib/names.svelte';
 	import Chip from '$lib/ui/Chip.svelte';
 	import BasisLine from '$lib/ui/BasisLine.svelte';
 	import OriginsChip from '$lib/ui/OriginsChip.svelte';
@@ -249,7 +249,7 @@
 							<p class="attrib" dir="auto">{t('panel.circulates')}: {rel.attributed_to}</p>
 						{/if}
 
-						<p class="r-desc" dir="auto">{rel.description}</p>
+						<p class="r-desc" dir="auto">{english(rel, 'description')}</p>
 						<SourceList ids={rel.sources} compact />
 						{@render relActions(rel)}
 					</li>
@@ -300,8 +300,8 @@
 			{:else if institution?.name_ar}
 				<span class="ar" dir="rtl" lang="ar">{institution.name_ar}</span>
 			{/if}
-			{#if person?.tagline}
-				<p class="tagline"><Prose record={person} field="tagline" /></p>
+			{#if english(person, 'tagline')}
+				<p class="tagline"><Prose record={person!} field="tagline" /></p>
 			{/if}
 		</div>
 		<div class="h-actions">
@@ -407,7 +407,7 @@
 			</div>
 		{/if}
 
-		{#if person?.summary || institution?.summary}
+		{#if english(person, 'summary') || english(institution, 'summary')}
 			<div class="section">
 				<!-- Whichever record is selected; both carry a translatable summary. -->
 				<p class="summary"><Prose record={(person ?? institution)!} field="summary" block /></p>
@@ -517,19 +517,19 @@
 									{/if}
 								</div>
 							{/if}
-							{#each pos.notes as note (note)}
+							{#each englishList(pos, 'notes') as note (note)}
 								<p class="o-note">{note}</p>
 							{/each}
 							{#if pos.datesInferred}
 								<p class="warn-flag">{t('entity.datesEstimated')}</p>
 							{/if}
-							{#if pos.reasoning}
+							{#if english(pos, 'reasoning')}
 								<div class="epi">
 									<span class="eyebrow">{t('panel.reasoning')}</span>
-									<p>{pos.reasoning}</p>
+									<p>{english(pos, 'reasoning')}</p>
 								</div>
 							{/if}
-							{#if pos.falsifiable_by}
+							{#if english(pos, 'falsifiable_by')}
 								<div class="epi fals">
 									<span class="eyebrow">{t('panel.falsifier')}</span>
 									<p><Prose record={pos} field="falsifiable_by" block /></p>
@@ -605,10 +605,10 @@
 			</div>
 		{/if}
 
-		{#if person?.notes?.length}
+		{#if englishList(person, 'notes').length}
 			<div class="section">
 				<h3>{t('panel.notes')}</h3>
-				{#each person.notes as note (note)}
+				{#each englishList(person, 'notes') as note (note)}
 					<p class="o-note">{note}</p>
 				{/each}
 			</div>

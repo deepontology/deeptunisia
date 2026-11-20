@@ -91,7 +91,7 @@ import {
 } from './review-coverage.ts';
 import { auditInterpretationPaths } from '../src/lib/interpretation.ts';
 import { canonicalBytes, computeDatasetHash, CANONICAL_GENERATED } from './canonical.ts';
-import { BUILD_ONLY, CLIENT_COLLECTIONS, FETCHED_FIELDS, SPLIT_PROSE, UNREAD_IN_BROWSER, UNSHOWN_TRANSLATION } from './client-copy.ts';
+import { BUILD_ONLY, CLIENT_COLLECTIONS, ENGLISH_PROSE_COLLECTIONS, FETCHED_FIELDS, SPLIT_PROSE, UNREAD_IN_BROWSER, UNSHOWN_TRANSLATION } from './client-copy.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
@@ -3611,8 +3611,24 @@ export type SourceCite = Omit<Source, 'excerpt'> & {
 	hasExcerpt?: boolean;
 };
 
-/** What the browser loads: the graph with each source cut down to its citation. */
-export type Graph = Omit<Dataset, 'sources'> & { sources: SourceCite[] };
+/** Long English text that is not in the browser's graph: read it through \`prose()\`, which waits for \`prose-en.json\`. */
+export type ProseField = ${[...SPLIT_PROSE].map((k) => `'${k}'`).join(' | ')};
+
+/** What the browser loads: each source cut down to its citation, and the long English text of the five collections left to \`prose-en.json\`. */
+export type GraphPerson = Omit<Person, ProseField>;
+export type GraphInstitution = Omit<Institution, ProseField>;
+export type GraphPosition = Omit<Position, ProseField>;
+export type GraphRelationship = Omit<Relationship, ProseField>;
+export type GraphEvent = Omit<EventRec, ProseField>;
+
+export type Graph = Omit<Dataset, 'sources' | 'people' | 'institutions' | 'positions' | 'relationships' | 'events'> & {
+	sources: SourceCite[];
+	people: GraphPerson[];
+	institutions: GraphInstitution[];
+	positions: GraphPosition[];
+	relationships: GraphRelationship[];
+	events: GraphEvent[];
+};
 
 export const dataset = raw as unknown as Graph;
 export default dataset;
@@ -3990,7 +4006,21 @@ let datasetHashValue = '';
 			return kept;
 		});
 	}
+	// The long English text of people, institutions, positions, relationships and events goes the
+	// same way as the French and Arabic: to `prose-en.json`, merged into the records on first use.
+	const overlayEn: Record<string, Record<string, Record<string, unknown>>> = {};
+	for (const c of ENGLISH_PROSE_COLLECTIONS) {
+		graph[c] = (client[c] as Record<string, unknown>[]).map((rec) => {
+			const kept: Record<string, unknown> = {};
+			for (const [k, v] of Object.entries(rec)) {
+				if (SPLIT_PROSE.has(k)) ((overlayEn[c] ??= {})[rec.id as string] ??= {})[k] = v;
+				else kept[k] = v;
+			}
+			return kept;
+		});
+	}
 	writeFileSync(join(STAGE_OUT, 'graph.json'), JSON.stringify(graph), 'utf8');
+	writeFileSync(join(STAGE_STATIC, 'prose-en.json'), JSON.stringify({ datasetHash: datasetHashValue, ...overlayEn }), 'utf8');
 	writeFileSync(join(STAGE_STATIC, 'sources-prose.json'), JSON.stringify({ datasetHash: datasetHashValue, ...fetched }), 'utf8');
 	// Built in record order, so the bytes are already reproducible.
 	for (const lang of ['fr', 'ar'] as const) {

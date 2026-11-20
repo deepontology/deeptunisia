@@ -43,7 +43,10 @@
 			return;
 		}
 		void import('$lib/search-graph')
-			.then((m) => (rich = m))
+			.then(async (m) => {
+				await m.buildGraphIndex();
+				rich = m;
+			})
 			.catch((err) => (richError = err instanceof Error ? err.message : String(err)));
 	});
 

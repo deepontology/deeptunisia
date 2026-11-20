@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { app } from '$lib/state.svelte';
+	import { english } from '$lib/names.svelte';
 	import { t, basisLabel, relLabel, describeInterval } from '$lib/t.svelte';
 	import SourceList from './SourceList.svelte';
 	import Chip from '$lib/ui/Chip.svelte';
@@ -124,8 +125,8 @@
 		<button class="end" onclick={() => onpick(rel.to)}>{to?.name ?? rel.to}</button>
 	</div>
 
-	{#if rel.description}
-		<p class="desc" dir="auto">{rel.description}</p>
+	{#if english(rel, 'description')}
+		<p class="desc" dir="auto">{english(rel, 'description')}</p>
 	{/if}
 
 	<div class="meta">

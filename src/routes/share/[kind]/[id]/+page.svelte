@@ -4,7 +4,7 @@
 	import { t } from '$lib/t.svelte';
 	import { nameOf } from '$lib/names.svelte';
 
-	let { data } = $props<{ data: { kind: string; id: string } }>();
+	let { data } = $props<{ data: { kind: string; id: string; text: string } }>();
 
 	const kind = $derived(data.kind);
 	const id = $derived(data.id);
@@ -28,15 +28,11 @@
 
 	const desc = $derived.by(() => {
 		if (kind === 'relationship') {
-			const r = relationshipById.get(id);
-			return r?.description?.slice(0, 160) ?? 'A documented relationship in the DeepTunisia graph.';
+			return data.text || 'A documented relationship in the DeepTunisia graph.';
 		}
 		if (kind === 'flow') return 'A measured flow between Tunisia and a counterparty.';
 		if (kind === 'agreement') return 'An agreement in the DeepTunisia world dataset.';
-		const p = personById.get(id);
-		if (p?.summary) return p.summary.slice(0, 160);
-		const inst = institutionById.get(id);
-		if (inst?.summary) return inst.summary.slice(0, 160);
+		if (data.text) return data.text;
 		return 'An entity in the DeepTunisia atlas of power, 1956–2026.';
 	});
 

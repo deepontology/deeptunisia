@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { app } from '$lib/state.svelte';
 	import { t, basisLabel, confidenceLabel, describeInterval, formatDate } from '$lib/t.svelte';
-	import { nameOf } from '$lib/names.svelte';
+	import { english, nameOf } from '$lib/names.svelte';
 	import SourceList from './SourceList.svelte';
 	import OriginsChip from '$lib/ui/OriginsChip.svelte';
 	import BasisLine from '$lib/ui/BasisLine.svelte';
@@ -165,7 +165,7 @@
 	const actors = $derived((event as EventRec | null)?.actors ?? []);
 	const eventInstitutions = $derived((event as EventRec | null)?.institutions ?? []);
 	const summary = $derived(
-		(declaration as Declaration | null)?.summary ?? (event as EventRec | null)?.summary ?? ''
+		(declaration as Declaration | null)?.summary ?? english(event, 'summary')
 	);
 
 	const dated = $derived((contract as Contract | null)?.interval ?? (event as EventRec | null)?.interval ?? null);

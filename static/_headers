@@ -79,6 +79,13 @@
 /sources-prose.json
   Cache-Control: public, max-age=3600
 
+# The long English text of people, institutions, positions, connections and events,
+# which the graph does not carry. Requested as `?v=<datasetHash>` like the file above,
+# and cached for an hour within a build. It is cache, not storage: nothing is kept for
+# a reader who is offline beyond what the browser's own HTTP cache still holds.
+/prose-en.json
+  Cache-Control: public, max-age=3600
+
 # The published exports are meant to be taken and reused — that is the whole
 # claim of /data — so these three carry CORS deliberately. Nothing else does.
 /positions.csv

@@ -8,7 +8,7 @@
 	import { app } from '$lib/state.svelte';
 	import { applyEntityLink } from '$lib/deeplink.svelte';
 	import { t, tf, basisLabel, describeInterval, durationLabel, formatDate } from '$lib/t.svelte';
-	import { eventTitle, nameOf } from '$lib/names.svelte';
+	import { englishList, eventTitle, nameOf } from '$lib/names.svelte';
 	import { dateFormatter } from '$lib/i18n';
 	import Button from '$lib/ui/Button.svelte';
 	import Chip from '$lib/ui/Chip.svelte';
@@ -1899,8 +1899,8 @@
 							<span class="warn-flag">{t('chronicle.datesEstimated')}</span>
 						{/if}
 					</span>
-					{#if tipPos.notes.length}
-						<span class="t-note">{tipPos.notes[0]}</span>
+					{#if englishList(tipPos, 'notes').length}
+						<span class="t-note">{englishList(tipPos, 'notes')[0]}</span>
 					{/if}
 				</div>
 			{/if}
