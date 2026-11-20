@@ -127,6 +127,10 @@ jobs:
         run: npm run test
 
       - name: svelte-check (0 errors, 0 warnings)
+        # `npm run check` starts with `npm run data`, which rewrites stats.json: it
+        # must see the same commit, or the PDF step finds an empty commitSha.
+        env:
+          DT_RELEASE_SHA: ${{ github.sha }}
         run: npm run check
 
       - name: Generate the release paper PDF from the tracked source

@@ -95,8 +95,14 @@ export function releaseGuardProblems(text: string): string[] {
 			problems.push('a job that installs a Playwright browser with --with-deps runs on a moving image (-latest)');
 		}
 	}
-	const gate = steps.find((s) => /npm run test/.test(s.run ?? ''));
-	if (gate && !gate.env?.DT_RELEASE_SHA) problems.push('the test gate step does not carry DT_RELEASE_SHA, so the clean-tree gate would reject the written paper');
+	// Every step that runs the data build (build, test, check all do, directly or by
+	// npm script) must see the release commit, or the last one to run rewrites
+	// stats.json with an empty commitSha and the PDF step refuses to export.
+	for (const s of steps) {
+		if (/^\s*npm run (build|test|check|stats:write)\b/m.test(s.run ?? '') && !s.env?.DT_RELEASE_SHA) {
+			problems.push(`step "${label(s)}" runs the data build without DT_RELEASE_SHA`);
+		}
+	}
 
 	const verify = steps.find((s) => /git tag -v/.test(s.run ?? '') && /Verify tag/i.test(label(s)));
 	if (!verify) problems.push('the tag signature step is missing');
@@ -123,6 +129,7 @@ const mutants: [string, string, RegExp][] = [
 	['a manual run reaches the live deposit call', text.replace('deposit-zenodo.ts --dry-run', 'deposit-zenodo.ts'), /without --dry-run/],
 	['the tag check runs on a branch', text.replace("if: github.ref_type == 'tag'", "if: always()"), /not limited to a tag ref/],
 	['the stats:write step is dropped', text.replace('run: npm run stats:write', 'run: echo skipped'), /no step writes the commit/],
+	['the check step loses the release commit', text.replace(/(name: svelte-check[^\n]*\n(?:\s*#[^\n]*\n)*)\s*env:\n\s*DT_RELEASE_SHA: \$\{\{ github\.sha \}\}\n/, '$1'), /without DT_RELEASE_SHA/],
 	['the runner image moves again', text.replace('runs-on: ubuntu-24.04', 'runs-on: ubuntu-latest'), /moving image/],
 	['the manual trigger is removed', text.replace('workflow_dispatch: {}', ''), /no manual trigger/],
 	['the dry-run list drifts from the real one', text.replace('static/geo.json static/world-topo.json', 'static/geo.json'), /different files/]
