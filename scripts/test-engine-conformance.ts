@@ -18,7 +18,9 @@
  * deployment value that only works elsewhere fails here. It reads the engine
  * from node_modules; a failed install fails here first.
  */
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { parse as parseYaml } from 'yaml';
 import { z } from 'zod';
 import { nonBlank } from 'deepepisteme/kernel';
 import * as localDates from './dates.ts';
@@ -294,6 +296,49 @@ ok('engine: the floor follows the configured parameters', engine.time.floor === 
 		'engine: certain implies possible and nothing is asserted past cutoff across the token grid',
 		violations.length === 0,
 		violations[0] ?? `${starts.length * ends.length} combinations`
+	);
+}
+
+// --- the deployment accepts the real data ----------------------------------
+// The engine's own parse is run over every record in data/ with the dated
+// exception register, the way `deepepisteme check` reads a data directory. A
+// deployment value that is narrower than the schema this repository ships (a
+// source language, a vocabulary entry) makes records the build accepts fail
+// here, so the two cannot drift apart unseen.
+{
+	const dir = join(import.meta.dirname, '..', 'data');
+	const entries = (parseYaml(readFileSync(join(dir, 'source-exceptions.yaml'), 'utf8')) ?? []) as {
+		rule: string;
+		kind: string;
+		id: string;
+		deadline: string;
+		reason: string;
+		implied?: string;
+		authored?: string;
+	}[];
+	const sourceExceptions = new Map<string, { rule: string; expires: string; reason: string }>();
+	const basisOverrides = new Map<string, { reason: string; source: string }>();
+	for (const e of entries) {
+		if (e.rule === 'basis-override' && e.implied && e.authored) {
+			basisOverrides.set(`${e.kind}:${e.id}:${e.implied}>${e.authored}`, { reason: e.reason, source: e.deadline });
+		} else {
+			sourceExceptions.set(`${e.kind}:${e.id}`, { rule: e.rule, expires: e.deadline, reason: e.reason });
+		}
+	}
+	const raw: Record<string, unknown[]> = {};
+	for (const def of engine.kinds.values()) {
+		const path = join(dir, def.file);
+		if (!existsSync(path)) continue;
+		const parsed = parseYaml(readFileSync(path, 'utf8'));
+		raw[def.kind] = Array.isArray(parsed) ? parsed : [];
+	}
+	const { records, findings } = engine.parse(raw, { sourceExceptions, basisOverrides });
+	const total = Object.values(records).reduce((n, list) => n + list.length, 0);
+	const sample = findings.slice(0, 3).map((f) => `${f.rule} ${f.record?.kind} ${f.record?.id}: ${f.message}`);
+	ok(
+		'engine: the deployment parses every record in data/ without a finding',
+		findings.length === 0 && total > 0,
+		findings.length ? `${findings.length} findings; ${sample.join(' | ')}` : `${total} records, 0 findings`
 	);
 }
 
