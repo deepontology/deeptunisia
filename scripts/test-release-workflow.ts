@@ -88,6 +88,13 @@ export function releaseGuardProblems(text: string): string[] {
 		problems.push('the stats:write step does not carry DT_RELEASE_SHA');
 	}
 
+	const jobs = Object.values(doc.jobs ?? {}) as { 'runs-on'?: string; steps?: Step[] }[];
+	for (const j of jobs) {
+		const installsBrowser = (j.steps ?? []).some((s) => /playwright install[^\n]*--with-deps/.test(s.run ?? ''));
+		if (installsBrowser && /latest/.test(String(j['runs-on']))) {
+			problems.push('a job that installs a Playwright browser with --with-deps runs on a moving image (-latest)');
+		}
+	}
 	const gate = steps.find((s) => /npm run test/.test(s.run ?? ''));
 	if (gate && !gate.env?.DT_RELEASE_SHA) problems.push('the test gate step does not carry DT_RELEASE_SHA, so the clean-tree gate would reject the written paper');
 
@@ -116,6 +123,7 @@ const mutants: [string, string, RegExp][] = [
 	['a manual run reaches the live deposit call', text.replace('deposit-zenodo.ts --dry-run', 'deposit-zenodo.ts'), /without --dry-run/],
 	['the tag check runs on a branch', text.replace("if: github.ref_type == 'tag'", "if: always()"), /not limited to a tag ref/],
 	['the stats:write step is dropped', text.replace('run: npm run stats:write', 'run: echo skipped'), /no step writes the commit/],
+	['the runner image moves again', text.replace('runs-on: ubuntu-24.04', 'runs-on: ubuntu-latest'), /moving image/],
 	['the manual trigger is removed', text.replace('workflow_dispatch: {}', ''), /no manual trigger/],
 	['the dry-run list drifts from the real one', text.replace('static/geo.json static/world-topo.json', 'static/geo.json'), /different files/]
 ];

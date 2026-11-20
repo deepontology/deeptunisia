@@ -76,7 +76,11 @@ concurrency:
 
 jobs:
   release:
-    runs-on: ubuntu-latest
+    # Pinned, not ubuntu-latest: the paper PDF step installs Chromium with
+    # Playwright's --with-deps, which refuses an image Playwright does not list
+    # (ubuntu-latest moved to 26.04 and the step failed on the first dry run).
+    # Move the pin when Playwright supports the next image.
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
 
     steps:
