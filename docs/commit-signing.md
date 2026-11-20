@@ -160,6 +160,8 @@ git tag -s v0.2 -m "v0.2 — one-line human changelog" && git push origin v0.2
   6. Summary step links DOI + GitHub Release
 ```
 
+**Dry run.** Running the workflow by hand (`gh workflow run release.yml --ref <branch or tag>`) does the same build, test, check and paper PDF, verifies the tag signature when the ref is a tag, lists the assets a release would carry, and runs the deposit script with `--dry-run`. It never calls Zenodo and never creates a GitHub Release. `scripts/test-release-workflow.ts` fails if a step that publishes is not limited to a tag push.
+
 **Cutting a release** is one command (tag must be annotated + signed):
 
 ```bash
