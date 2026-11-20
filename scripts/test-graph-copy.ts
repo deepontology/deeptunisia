@@ -24,6 +24,7 @@ import {
 	COPY_ADDED,
 	FETCHED_FIELDS,
 	SPLIT_PROSE,
+	UNREAD_IN_BROWSER,
 	UNSHOWN_TRANSLATION
 } from './client-copy.ts';
 
@@ -123,13 +124,14 @@ for (const c of CLIENT_COLLECTIONS) {
 
 	const added = (COPY_ADDED as Record<string, readonly string[]>)[c] ?? [];
 	const moved = (FETCHED_FIELDS as Record<string, readonly string[]>)[c] ?? [];
+	const unread = (UNREAD_IN_BROWSER as Record<string, readonly string[]>)[c] ?? [];
 	let mismatched = 0;
 	let first = '';
 	let overlaid = 0;
 	let fetchedFields = 0;
 	for (let i = 0; i < published.length; i++) {
 		const want: Record<string, unknown> = {};
-		for (const [k, v] of Object.entries(published[i])) if (!declaredOmission(k)) want[k] = v;
+		for (const [k, v] of Object.entries(published[i])) if (!declaredOmission(k) && !unread.includes(k)) want[k] = v;
 
 		const got: Record<string, unknown> = { ...copy[i] };
 		for (const k of added) delete got[k];

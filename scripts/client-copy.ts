@@ -29,7 +29,16 @@ export const BUILD_ONLY = new Set(['erasSpanned', 'seniorYears', 'layerCount', '
  * date, url, archive_url, tier, lang) stays in the copy, so a record's sources
  * are checkable without the file. Every field is still in the published dataset.
  */
-export const FETCHED_FIELDS = { sources: ['excerpt', 'note', 'notes'] } as const;
+export const FETCHED_FIELDS = { sources: ['excerpt'] } as const;
+
+/**
+ * Fields no panel, search or export of the site reads from the graph the browser
+ * loads, so that graph leaves them out and nothing fetches them. A source's `note`
+ * and `notes` are editorial remarks in `data/sources.yaml`. `static/dataset.json`
+ * keeps them, and so does `src/generated/dataset.json`, which the build scripts
+ * read; `static/sources.csv` never carried them.
+ */
+export const UNREAD_IN_BROWSER = { sources: ['note', 'notes'] } as const;
 
 /**
  * Fields the copy adds for the browser. Not in the published dataset; the test
