@@ -322,7 +322,8 @@ export const CLAIM_MATRIX: MatrixRow[] = [
 		claim_text:
 			'A source URL is a fetchable http(s) link and a Wayback archive URL must carry a full capture timestamp, not a year-only or date-only lookup.',
 		status: 'shipped+tested',
-		code_pointer: 'scripts/schema.ts :: isArchiveSnapshot; scripts/schema.ts :: a source URL must be http(s)',
+		code_pointer:
+			'node_modules/deepepisteme/src/kernel/kinds.ts :: isArchiveSnapshot; node_modules/deepepisteme/src/kernel/kinds.ts :: a source URL must be http(s)',
 		test_pointer:
 			'scripts/test-validators.ts :: V29 source: a year-only archive lookup is rejected; scripts/test-validators.ts :: V29 source: a non-http(s) source URL is rejected',
 		notes:

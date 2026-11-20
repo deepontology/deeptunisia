@@ -55,6 +55,7 @@ const DATASET = join(ROOT, 'src', 'generated', 'dataset.json');
 const S = (f: string) => join(HERE, f);
 const ENGINE_TIME = '../node_modules/deepepisteme/src/kernel/time.ts';
 const ENGINE_CANONICAL = '../node_modules/deepepisteme/src/kernel/canonical.ts';
+const ENGINE_KERNEL_KINDS = '../node_modules/deepepisteme/src/kernel/kinds.ts';
 const ENGINE_BASIS = '../node_modules/deepepisteme/src/kernel/basis.ts';
 const ENGINE_REVIEW = '../node_modules/deepepisteme/src/kernel/review.ts';
 const ENGINE_ENVELOPE = '../node_modules/deepepisteme/src/kernel/envelope.ts';
@@ -239,10 +240,16 @@ const MUTATIONS: Mutation[] = [
 		to: ".refine((v) => nonBlank(v, 0), 'evidence needs a locator (page, section or timestamp)'),"
 	},
 	{
-		id: 'm45', file: 'schema.ts', expect: 'test-validators V29 source (http(s) url required)',
+		id: 'm45', file: ENGINE_KERNEL_KINDS, expect: 'test-validators V29 source (http(s) url required)',
 		label: 'source URLs stop being restricted to http(s)',
-		from: ".refine((v) => /^https?:\\/\\//i.test(v), 'a source URL must be http(s) (V29)')",
-		to: ".refine(() => true, 'a source URL must be http(s) (V29)')"
+		from: ".refine((v) => /^https?:\\/\\//i.test(v), {",
+		to: ".refine(() => true, {"
+	},
+	{
+		id: 'm72', file: ENGINE_KERNEL_KINDS, expect: 'test-validators V29 source (year-only/date-only lookup fixtures)',
+		label: 'a source archive lookup passes as a snapshot (V29)',
+		from: 'return /^https?:\\/\\/(www\\.)?web\\.archive\\.org\\/web\\/\\d{14}(?:[a-z_]+)?\\//i.test(url);',
+		to: 'return true;'
 	},
 	// --- build-data.ts: the pipeline ---------------------------------------------
 	{
@@ -567,6 +574,7 @@ const SUITES_FOR: Record<string, string[]> = {
 	[ENGINE_INTERVAL_TRIMS]: ['test-data.ts', 'test-pipeline.ts'],
 	[ENGINE_UNMOORED_INFLUENCE]: ['test-data.ts', 'test-pipeline.ts'],
 	[ENGINE_SUCCESSION]: ['test-data.ts'],
+	[ENGINE_KERNEL_KINDS]: ['test-validators.ts', 'test-data.ts'],
 	[ENGINE_EVENT_RUPTURE]: ['test-data.ts', 'test-pipeline.ts'],
 	[ENGINE_RELATIONSHIP_DUPLICATES]: ['test-data.ts', 'test-pipeline.ts'],
 	'origins.ts': ['test-validators.ts'],
