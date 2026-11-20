@@ -103,6 +103,15 @@ jobs:
           DT_RELEASE_SHA: ${{ github.sha }}
         run: npm run build
 
+      - name: Write the commit and the counts into the documents
+        # The build no longer edits README, AGENTS, DESIGN or the paper, so the
+        # paper's commitSha tag stays empty until this step writes the tag's
+        # commit into it. Without it the test gate below fails on every release
+        # run, and the PDF step would refuse to export.
+        env:
+          DT_RELEASE_SHA: ${{ github.sha }}
+        run: npm run stats:write
+
       - name: Sync SvelteKit aliases (required for $data in tests)
         run: npx svelte-kit sync
 
