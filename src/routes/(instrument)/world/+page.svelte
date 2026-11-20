@@ -366,7 +366,7 @@
 			<ParliamentView />
 		{:else if world.view === 'government'}
 			<GovernmentView />
-		{:else}
+		{:else if world.view === 'ledger'}
 			<WorldLedger />
 		{/if}
 	</div>
