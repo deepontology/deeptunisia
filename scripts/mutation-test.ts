@@ -488,6 +488,7 @@ const SUITES_FOR: Record<string, string[]> = {
 	[ENGINE_BASIS]: ['test-data.ts', 'test-validators.ts'],
 	[ENGINE_REVIEW]: ['test-data.ts', 'test-validators.ts'],
 	[ENGINE_ENVELOPE]: ['test-data.ts', 'test-validators.ts'],
+	[ENGINE_CONTRACT_AWARD]: ['test-data.ts', 'test-pipeline.ts'],
 	'origins.ts': ['test-validators.ts'],
 	'review-coverage.ts': ['test-data.ts', 'test-validators.ts', 'test-emit.ts'],
 	'network-continuity.ts': ['test-network-continuity.ts'],
