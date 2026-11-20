@@ -26,6 +26,9 @@ import { nonBlank } from 'deepepisteme/kernel';
 import * as localDates from './dates.ts';
 import { deployment, engine, parameters } from './engine.ts';
 import * as vocabulary from './vocabulary.ts';
+import * as engineKernel from 'deepepisteme/kernel';
+import * as engineAtlas from 'deepepisteme/atlas';
+import * as engineRoot from 'deepepisteme';
 import * as schemaModule from './schema.ts';
 import { ReviewSchema as DeeptunisiaReviewSchema } from './schema.ts';
 
@@ -414,15 +417,16 @@ ok('engine: the floor follows the configured parameters', engine.time.floor === 
 		placeKinds: vocabulary.PlaceKind.options,
 		regionKinds: vocabulary.RegionKind.options,
 		reviewerLabels: vocabulary.REVIEWER_LABELS,
-		sourceLanguages: vocabulary.SOURCE_LANGUAGES
+		sourceLanguages: vocabulary.SOURCE_LANGUAGES,
+		translatedLocales: vocabulary.TRANSLATED_LOCALES
 	};
 	const dv = deployment as unknown as Record<string, unknown>;
 	const dvVocabulary = dv.vocabulary as Record<string, unknown>;
-	const declared: Record<string, unknown> = { ...dvVocabulary, reviewerLabels: dv.reviewerLabels, sourceLanguages: dv.sourceLanguages };
+	const declared: Record<string, unknown> = { ...dvVocabulary, reviewerLabels: dv.reviewerLabels, sourceLanguages: dv.sourceLanguages, translatedLocales: dv.translatedLocales };
 	ok(
 		'the deployment carries exactly the lists scripts/vocabulary.ts declares',
 		Object.entries(lists).every(([name, list]) => isEqualList([...(declared[name] as string[])], [...list])) &&
-			isEqualList(Object.keys(dvVocabulary as object).sort(), [...Object.keys(lists).filter((n) => n !== 'reviewerLabels' && n !== 'sourceLanguages'), 'edgeDirection'].sort()) &&
+			isEqualList(Object.keys(dvVocabulary as object).sort(), [...Object.keys(lists).filter((n) => n !== 'reviewerLabels' && n !== 'sourceLanguages' && n !== 'translatedLocales'), 'edgeDirection'].sort()) &&
 			isEqualList(
 				Object.keys(dvVocabulary.edgeDirection as object).sort(),
 				[...vocabulary.RelationshipType.options].sort()
@@ -511,6 +515,42 @@ ok('engine: the floor follows the configured parameters', engine.time.floor === 
 		isEqualList(listAfter('src/lib/vocab.ts', 'export const LAYERS'), [...lists.layers]) &&
 			isEqualList(listAfter('src/lib/viz/groups.ts', 'const layerOrder'), [...lists.layers]),
 		'src/lib/vocab.ts, src/lib/viz/groups.ts'
+	);
+
+	// --- no consumer declaration shadows an engine export ---------------------
+	//
+	// The class behind the dead copies: a function or constant that scripts/
+	// declares under a name the engine also exports is either a binding of the
+	// engine's (fine, and named here) or a second implementation of it that tests
+	// keep exercising while parse uses the engine's. Re-exports are the engine's
+	// own binding by construction and are not declarations; the kind schemas
+	// bound through schemaOf are checked above.
+	const engineNames = new Set([...Object.keys(engineKernel), ...Object.keys(engineAtlas), ...Object.keys(engineRoot)]);
+	const bound = new Set([...exportsByKind.values()].flat());
+	const shadows: string[] = [];
+	const walkScripts = (dir: string): string[] =>
+		readdirSync(join(root, dir), { withFileTypes: true }).flatMap((e) =>
+			e.isDirectory() ? walkScripts(join(dir, e.name)) : e.name.endsWith('.ts') && !/^(test-|mutation-)/.test(e.name) ? [join(dir, e.name)] : []
+		);
+	for (const file of walkScripts('scripts')) {
+		const text = readFileSync(join(root, file), 'utf8');
+		for (const m of text.matchAll(/^export (?:async )?(?:function|const|class|let) (\w+)/gm)) {
+			if (engineNames.has(m[1]) && !(file === join('scripts', 'schema.ts') && bound.has(m[1]))) shadows.push(`${file} ${m[1]}`);
+		}
+	}
+	/** Hand-named, each with its reason; an entry that stops shadowing must be removed. */
+	const intended: Record<string, string> = {
+		'scripts/dates.ts': 'parseDateEdge resolveInterval applyOngoingObservation certainlyActive possiblyActive durationYears configureTime', // each delegates to engine.time
+		'scripts/emit.ts': 'applyEdit assertOnlyTargetChanged', // each delegates to engine.splicer
+		'scripts/parameters.ts': 'ParametersSchema DEFAULT_PARAMETERS', // reads data/parameters.yaml; the engine's v0.1 copy is removed in its slice 3
+		'scripts/schema.ts': 'translatable ReviewSchema reviewOverclaims', // translatable serves Region, which names no engine kind; ReviewSchema is built from the deployment's labels and pinned above; reviewOverclaims delegates to engine.envelope
+		'scripts/vocabulary.ts': 'Layer InstitutionType RelationshipType EDGE_DIRECTION INFLUENCE_CHANNELS TRANSLATED_LOCALES' // the deployment's declared lists; the engine's are its generic defaults
+	};
+	const named = Object.entries(intended).flatMap(([file, names]) => names.split(' ').map((n) => `${file} ${n}`));
+	ok(
+		'no consumer declaration shadows an engine export, apart from the bindings named here',
+		isEqualList([...new Set(shadows)].sort(), named.sort()),
+		`${named.length} named; unnamed: ${[...new Set(shadows)].filter((x) => !named.includes(x)).join(', ') || 'none'}; stale: ${named.filter((x) => !shadows.includes(x)).join(', ') || 'none'}`
 	);
 }
 

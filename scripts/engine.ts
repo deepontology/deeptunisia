@@ -27,7 +27,8 @@ import {
 	REVIEWER_LABELS,
 	RegionKind,
 	RelationshipType,
-	SOURCE_LANGUAGES
+	SOURCE_LANGUAGES,
+	TRANSLATED_LOCALES
 } from './vocabulary.ts';
 
 /** Tunisia's parameters, loaded once per process from data/parameters.yaml. */
@@ -43,7 +44,7 @@ export const parameters = loadParameters(
 export const deployment: Deployment = {
 	name: parameters.jurisdiction.name,
 	time: parameters.time,
-	translatedLocales: ['fr', 'ar'],
+	translatedLocales: [...TRANSLATED_LOCALES],
 	/** The languages scripts/schema.ts accepts for a source; the engine's source kind validates against this list. */
 	sourceLanguages: [...SOURCE_LANGUAGES],
 	/** The two texts the claim envelope's messages carry: the register's file and the basis-override rule id. */

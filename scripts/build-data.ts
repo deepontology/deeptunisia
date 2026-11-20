@@ -55,7 +55,7 @@ import {
 	SourceExceptionSchema,
 	reviewOverclaims,
 	verifiedGrounded,
-	configureSchema,
+	configureSchemaExceptions,
 	TRANSLATABLE_FIELDS,
 	TRANSLATED_LOCALES,
 	TRANSLATION_TIERS,
@@ -259,7 +259,7 @@ if (sourceExceptions.length > 0) {
 	);
 }
 
-configureSchema(parameters, {
+configureSchemaExceptions({
 	emptySources: emptySourceKeys,
 	basisOverrides: basisOverrideKeys
 });

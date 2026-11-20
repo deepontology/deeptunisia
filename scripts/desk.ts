@@ -45,10 +45,9 @@ import {
 	EventSchema,
 	REVIEWER_LABEL,
 	SourceExceptionSchema,
-	configureSchema,
+	configureSchemaExceptions,
 	verifiedGrounded
 } from './schema.ts';
-import { DEFAULT_PARAMETERS, loadParameters, type Parameters } from './parameters.ts';
 
 /** The kinds a reviewer can verify. They are the kinds that carry `review:` and `sources:`. */
 export const REVIEWABLE = {
@@ -371,8 +370,8 @@ interface Step {
 const dataPath = (root: string, kind: Kind) => join(root, 'data', REVIEWABLE[kind].file);
 
 /**
- * The schema reads the jurisdiction parameters and the explicit exception register
- * from the data folder, exactly as the build does. Without this, a record listed in
+ * The schema reads the explicit exception register from the data folder, exactly
+ * as the build does. Without this, a record listed in
  * source-exceptions.yaml looks like a rule violation to the tool and a legitimate
  * edit is refused. Re-run per write: the register is data and can change between
  * requests.
@@ -380,12 +379,6 @@ const dataPath = (root: string, kind: Kind) => join(root, 'data', REVIEWABLE[kin
 let configuredRoot: string | null = null;
 export function configureDeskSchema(root: string, force = false): void {
 	if (configuredRoot === root && !force) return;
-	let parameters: Parameters = DEFAULT_PARAMETERS;
-	try {
-		parameters = loadParameters(join(root, 'data', 'parameters.yaml'));
-	} catch {
-		// A copy without the parameter file validates against the shipped Tunisia box.
-	}
 	const emptySources = new Set<string>();
 	const basisOverrides = new Set<string>();
 	const path = join(root, 'data', 'source-exceptions.yaml');
@@ -402,7 +395,7 @@ export function configureDeskSchema(root: string, force = false): void {
 			}
 		}
 	}
-	configureSchema(parameters, { emptySources, basisOverrides });
+	configureSchemaExceptions({ emptySources, basisOverrides });
 	configuredRoot = root;
 }
 

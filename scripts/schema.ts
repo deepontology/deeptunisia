@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { DEFAULT_PARAMETERS, type Parameters } from './parameters';
 import {
 	Basis,
 	Confidence,
@@ -59,6 +58,7 @@ import {
 	REVIEWER_LABELS,
 	RegionKind,
 	RelationshipType,
+	TRANSLATED_LOCALES,
 	type SourceLanguage
 } from './vocabulary.ts';
 
@@ -79,7 +79,7 @@ type AtlasRecord<F extends (...args: never[]) => z.ZodType> = z.infer<ReturnType
 
 /**
  * The schema the engine parses an atlas kind with, closed over the exception
- * sets the build configures (`configureSchema`). The sets are read at every
+ * sets the build configures (`configureSchemaExceptions`). The sets are read at every
  * parse, so a schema built here at load time answers with the sets as they
  * stand when a record is parsed. Entries carry no deadline in this module: the
  * build checks the dated register itself, so every configured entry counts.
@@ -99,7 +99,8 @@ export {
 	PlaceKind,
 	REVIEWER_LABELS,
 	RegionKind,
-	RelationshipType
+	RelationshipType,
+	TRANSLATED_LOCALES
 };
 export type { DirectionKind };
 
@@ -226,8 +227,6 @@ export { isArchiveSnapshot };
  */
 export { EvidenceSchema };
 
-/** The locales a prose field may carry beyond the English original. */
-export const TRANSLATED_LOCALES = ['fr', 'ar'] as const;
 
 /** The provenance value a `_by` sibling carries (kernel: TranslatedBy). */
 export type TranslatedByValue = z.infer<typeof TranslatedBy>;
@@ -365,24 +364,11 @@ export const ReviewSchema = createReviewSchema(REVIEWER_LABELS);
  * rule drift, and a warning that disagrees with the build is worse than none: it
  * teaches the operator to ignore it.
  *
- * The vocabulary and source prefixes come from data/parameters.yaml (configured
- * by the build), not from literals — "the gazette" is a jurisdiction concept.
+ * The rule is the engine's; the vocabulary and source prefixes are the
+ * deployment's, which reads data/parameters.yaml.
  */
-function escapeRegex(s: string): string {
-	return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
-
 export function reviewOverclaims(method: string | undefined, sources: string[]): boolean {
-	const gazette = jurisdictionParams.jurisdiction.gazette;
-	const claimsGazette = new RegExp(
-		`\\b(${gazette.vocabulary.map(escapeRegex).join('|')})\\b`,
-		'i'
-	);
-	const gazetteSource = new RegExp(`^(${gazette.sourcePrefixes.map(escapeRegex).join('|')})`);
-	if (!method || !claimsGazette.test(method)) return false;
-	// "NOT verified against a JORT decree" is an honest disclaimer, not a claim.
-	if (/\bnot\b[^.]{0,40}\b(verified|checked)\b/i.test(method)) return false;
-	return !sources.some((s) => gazetteSource.test(s));
+	return engine.envelope.reviewOverclaims(method, sources);
 }
 
 /**
@@ -670,20 +656,8 @@ export const RegionSchema = z.strictObject({
 // ---------------------------------------------------------------------------
 
 /**
- * The jurisdiction parameters the gazette-overclaim guard reads. The place box
- * and name are the deployment's (scripts/engine.ts), built from the same file.
- */
-let jurisdictionParams = DEFAULT_PARAMETERS;
-
-export function configureSchema(p: Parameters, exceptions: SchemaExceptions = {}): void {
-	jurisdictionParams = p;
-	schemaExceptions = exceptions;
-}
-
-/**
- * Configure only the exception sets, leaving the jurisdiction parameters at
- * their current values. Used by tests and tooling that do not load a
- * jurisdiction parameter file.
+ * Configure the exception sets the schemas read at every parse. The build and
+ * the editorial tool call this before parsing any record.
  */
 export function configureSchemaExceptions(exceptions: SchemaExceptions): void {
 	schemaExceptions = exceptions;

@@ -151,7 +151,7 @@ const MUTATIONS: Mutation[] = [
 		to: 'sources: z.array(slug),',
 		known: 'by design after the required-source rule: the envelope refine rejects an empty sources list for every kind that carries it (company, contract, licence, declaration, education, place), so the field minimum no longer changes acceptance — only the error message.'
 	},
-	// --- schema.ts: review guard (V23) ------------------------------------------
+	// --- engine kernel/review.ts: review guard (V23) ----------------------------
 	{
 		id: 'm08', file: ENGINE_REVIEW, expect: 'test-validators V23 (method enum)',
 		label: 'review method becomes free text',
@@ -172,7 +172,7 @@ const MUTATIONS: Mutation[] = [
 		to: 'return true;'
 	},
 	{
-		id: 'm11', file: 'schema.ts', expect: 'test-validators V23-guard (disclaimer clause)',
+		id: 'm11', file: ENGINE_REVIEW, expect: 'test-validators V23-guard (disclaimer clause)',
 		label: 'reviewOverclaims stops honouring the "not verified" disclaimer',
 		from: 'if (/\\bnot\\b[^.]{0,40}\\b(verified|checked)\\b/i.test(method)) return false;',
 		to: ''
