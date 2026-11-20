@@ -20,7 +20,6 @@ import type {
 	Company,
 	Confidence,
 	Contract,
-	Dataset,
 	Declaration,
 	Education,
 	Era,
@@ -35,7 +34,8 @@ import type {
 	Question,
 	Relationship,
 	Role,
-	Source
+	Graph,
+	SourceCite as Source
 } from '$data/index';
 
 export type {
@@ -60,7 +60,8 @@ export type {
 	Education
 };
 
-export const ds: Dataset = data;
+/** The graph the browser loads. A source in it is its citation; its excerpt is in `source-prose.svelte.ts`. */
+export const ds: Graph = data;
 
 /** The window dates and pure vocabulary live in `vocab.ts`; re-exported here. */
 export {

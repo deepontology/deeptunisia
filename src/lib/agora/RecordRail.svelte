@@ -18,6 +18,7 @@
 	import SourceList from '$lib/components/SourceList.svelte';
 	import { t, basisLabel, confidenceLabel, describeInterval } from '$lib/t.svelte';
 	import { nameOf } from '$lib/names.svelte';
+	import { excerptOf } from '$lib/source-prose.svelte';
 	import {
 		communityTypeOf,
 		institutionById,
@@ -108,8 +109,8 @@
 				</a>
 			{/if}
 		</div>
-		{#if source.excerpt}
-			<p class="excerpt">{source.excerpt}</p>
+		{#if excerptOf(source.id)}
+			<p class="excerpt">{excerptOf(source.id)}</p>
 		{/if}
 		<SourceList ids={[source.id]} compact />
 	</div>

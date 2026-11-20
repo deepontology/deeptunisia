@@ -72,6 +72,13 @@
   Cache-Control: public, max-age=3600
   Access-Control-Allow-Origin: *
 
+# The source excerpts the graph does not carry. The page asks for them as
+# `?v=<datasetHash>`, so a new build never meets an old copy; within a build an hour
+# saves the round trip. A reader who has opened a source keeps the excerpts offline:
+# src/lib/source-prose.svelte.ts falls back to whatever copy the browser still holds.
+/sources-prose.json
+  Cache-Control: public, max-age=3600
+
 # The published exports are meant to be taken and reused — that is the whole
 # claim of /data — so these three carry CORS deliberately. Nothing else does.
 /positions.csv

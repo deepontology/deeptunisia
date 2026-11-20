@@ -26,6 +26,7 @@ const MB = 1024 * 1024;
 const CAPS = {
 	'dataset (published)': 17,
 	'timelines (published)': 3.5,
+	'source excerpts (fetched)': 1,
 	'dataset (generated)': 12,
 	'search index': 1,
 	'static tree': 36
@@ -34,6 +35,7 @@ const CAPS = {
 const PATHS = {
 	'dataset (published)': 'static/dataset.json',
 	'timelines (published)': 'static/timelines.json',
+	'source excerpts (fetched)': 'static/sources-prose.json',
 	'dataset (generated)': 'src/generated/dataset.json',
 	'search index': 'static/search-index.json',
 	'static tree': 'static'
@@ -104,7 +106,7 @@ if (existsSync(join(ROOT, 'static/search-index.json'))) {
 
 const BUILD = join(ROOT, 'build');
 const CLIENT_MANIFEST = join(ROOT, '.svelte-kit/output/client/.vite/manifest.json');
-const DATASET = join(ROOT, 'src/generated/dataset.json');
+const DATASET = join(ROOT, 'src/generated/graph.json');
 
 function head(path: string, length: number): string {
 	const fd = openSync(path, 'r');
@@ -127,7 +129,7 @@ function findGraphChunk(): { path: string; via: string } | null {
 		>;
 		for (const [key, entry] of Object.entries(manifest)) {
 			const label = `${key} ${entry.name ?? ''} ${entry.src ?? ''}`;
-			if (!label.includes('generated/dataset.json')) continue;
+			if (!label.includes('generated/graph.json')) continue;
 			const path = join(BUILD, entry.file);
 			if (existsSync(path)) return { path, via: 'manifest' };
 		}
@@ -176,20 +178,23 @@ const READING_CEILING = 960_000;
 
 /**
  * Instrument pages may load the graph. Each is held to the weight it had when
- * the ceilings were turned on, plus 5%. Bytes preloaded, uncompressed.
+ * the ceilings were turned on, plus 5%, and the baseline is lowered when the weight
+ * goes down so the gain cannot be spent again. Bytes preloaded, uncompressed.
+ * Lowered by about 525,000 bytes each when the sources' excerpts, notes and
+ * flags left the bundled graph (`static/sources-prose.json`, fetched on demand).
  */
 const INSTRUMENT_BASELINE: Record<string, number> = {
-	agora: 11_403_512,
-	atlas: 11_523_050,
-	chronicle: 11_319_263,
-	evidence: 11_269_941,
-	feed: 11_949_980,
-	investigate: 11_285_842,
-	map: 11_249_530,
-	network: 11_343_746,
-	now: 11_517_283,
-	rankings: 11_349_107,
-	world: 11_676_612
+	agora: 10_878_754,
+	atlas: 10_998_266,
+	chronicle: 10_796_816,
+	evidence: 10_745_158,
+	feed: 11_424_173,
+	investigate: 10_761_057,
+	map: 10_724_746,
+	network: 10_818_963,
+	now: 10_992_499,
+	rankings: 10_824_327,
+	world: 11_151_830
 };
 const INSTRUMENT_GROWTH = 1.05;
 
