@@ -40,7 +40,7 @@ const ENTRIES = [
 	'src/routes/(read)/data/+page.svelte'
 ];
 
-const FORBIDDEN = ['src/generated/dataset.json', 'src/generated/index.ts'];
+const FORBIDDEN = ['src/generated/dataset.json', 'src/generated/graph.json', 'src/generated/index.ts'];
 
 let checks = 0;
 let failures = 0;
