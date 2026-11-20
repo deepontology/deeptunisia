@@ -76,7 +76,11 @@ concurrency:
 
 jobs:
   release:
-    runs-on: ubuntu-latest
+    # Pinned, not ubuntu-latest: the paper PDF step installs Chromium with
+    # Playwright's --with-deps, which refuses an image Playwright does not list
+    # (ubuntu-latest moved to 26.04 and the step failed on the first dry run).
+    # Move the pin when Playwright supports the next image.
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
 
     steps:
@@ -103,13 +107,30 @@ jobs:
           DT_RELEASE_SHA: ${{ github.sha }}
         run: npm run build
 
+      - name: Write the commit and the counts into the documents
+        # The build no longer edits README, AGENTS, DESIGN or the paper, so the
+        # paper's commitSha tag stays empty until this step writes the tag's
+        # commit into it. Without it the test gate below fails on every release
+        # run, and the PDF step would refuse to export.
+        env:
+          DT_RELEASE_SHA: ${{ github.sha }}
+        run: npm run stats:write
+
       - name: Sync SvelteKit aliases (required for $data in tests)
         run: npx svelte-kit sync
 
       - name: Run full test gate
+        env:
+          # The clean-tree gate allows the paper's commitSha tag to differ in a
+          # release run, and only that.
+          DT_RELEASE_SHA: ${{ github.sha }}
         run: npm run test
 
       - name: svelte-check (0 errors, 0 warnings)
+        # `npm run check` starts with `npm run data`, which rewrites stats.json: it
+        # must see the same commit, or the PDF step finds an empty commitSha.
+        env:
+          DT_RELEASE_SHA: ${{ github.sha }}
         run: npm run check
 
       - name: Generate the release paper PDF from the tracked source
