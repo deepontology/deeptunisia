@@ -1,15 +1,15 @@
 {
-  "generated": "2026-11-20T00:41:36.414Z",
-  "commit": "449f617",
+  "generated": "2026-11-20T02:15:28.326Z",
+  "commit": "39270c2",
   "withValidators": true,
   "summary": {
-    "counted": 57,
-    "killed": 55,
+    "counted": 62,
+    "killed": 60,
     "latent": 2,
     "knownLatent": 2,
     "drift": 0,
     "invalid": 0,
-    "rate": 96
+    "rate": 97
   },
   "results": [
     {
@@ -263,6 +263,51 @@
       "by": "test-pipeline",
       "outputChanged": false,
       "expect": "test-pipeline (injected ghost edge endpoint)"
+    },
+    {
+      "id": "m58",
+      "label": "award values stop needing an attribution or a primary source (V4/V5)",
+      "file": "build-data.ts",
+      "verdict": "killed",
+      "by": "test-pipeline",
+      "outputChanged": false,
+      "expect": "test-pipeline (injected floating award value)"
+    },
+    {
+      "id": "m59",
+      "label": "a point place no longer needs a parent region (V10)",
+      "file": "build-data.ts",
+      "verdict": "killed",
+      "by": "test-pipeline",
+      "outputChanged": false,
+      "expect": "test-pipeline (injected parentless place)"
+    },
+    {
+      "id": "m60",
+      "label": "a directed edge may run from a person where an institution is required (V14)",
+      "file": "build-data.ts",
+      "verdict": "killed",
+      "by": "test-pipeline",
+      "outputChanged": false,
+      "expect": "test-pipeline (injected reversed prosecution)"
+    },
+    {
+      "id": "m61",
+      "label": "overlapping duplicate relationships are no longer found (V16)",
+      "file": "build-data.ts",
+      "verdict": "killed",
+      "by": "test-pipeline",
+      "outputChanged": false,
+      "expect": "test-pipeline (injected duplicate relationship)"
+    },
+    {
+      "id": "m62",
+      "label": "a rupture event linked to nothing is no longer flagged (V17)",
+      "file": "build-data.ts",
+      "verdict": "killed",
+      "by": "test-pipeline",
+      "outputChanged": false,
+      "expect": "test-pipeline (injected floating rupture)"
     },
     {
       "id": "m31",
