@@ -1,6 +1,6 @@
 {
-  "generated": "2026-11-20T09:47:41.056Z",
-  "commit": "95bbc02",
+  "generated": "2026-11-20T10:38:07.248Z",
+  "commit": "88f598d",
   "withValidators": true,
   "summary": {
     "counted": 69,
@@ -249,7 +249,7 @@
     {
       "id": "m25",
       "label": "unmoored-influence rejection disabled (V9 anchoring)",
-      "file": "build-data.ts",
+      "file": "../node_modules/deepepisteme/src/atlas/rules/unmoored-influence.ts",
       "verdict": "killed",
       "by": "test-pipeline",
       "outputChanged": false,
