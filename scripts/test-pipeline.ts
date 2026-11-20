@@ -471,6 +471,70 @@ try {
   summary: "Synthetic rupture event linked to nothing, injected by the pipeline fixture runner to prove the V17 flag fires."
   sources: [${s}]`);
 
+	// V1: two direct stakes into one company that together exceed 100 percent.
+	appendBlock(TREE_BAD, 'relationships.yaml', `
+- id: own-fixture-over-a
+  from: mabrouk-group
+  to: biat
+  type: ownership
+  start: "2001"
+  end: "2003"
+  equity: { pct: 90, direct: true }
+  description: "Synthetic stake injected by the pipeline fixture runner."
+  confidence: B
+  sources: [\${s}]
+- id: own-fixture-over-b
+  from: aziz-miled
+  to: biat
+  type: ownership
+  start: "2001"
+  end: "2003"
+  equity: { pct: 90, direct: true }
+  description: "Synthetic stake injected by the pipeline fixture runner."
+  confidence: B
+  sources: [\${s}]`);
+
+	// V7: one person on two boards over the same years (a warning).
+	appendBlock(TREE_BAD, 'relationships.yaml', `
+- id: board-fixture-seat-a
+  from: bourguiba
+  to: biat
+  type: board
+  start: "2001"
+  end: "2005"
+  description: "Synthetic board seat injected by the pipeline fixture runner."
+  confidence: B
+  sources: [\${s}]
+- id: board-fixture-seat-b
+  from: bourguiba
+  to: poulina
+  type: board
+  start: "2003"
+  end: "2006"
+  description: "Synthetic board seat injected by the pipeline fixture runner."
+  confidence: B
+  sources: [\${s}]`);
+
+	// V3: two companies carrying one registration number in one registry.
+	appendBlock(TREE_BAD, 'companies.yaml', `
+- id: sonede
+  registration: { registry: registre-de-commerce, number: "B-FIXTURE-1", date: "2020" }
+  confidence: B
+  sources: [\${s}]
+- id: sncft
+  registration: { registry: registre-de-commerce, number: "B-FIXTURE-1", date: "2020" }
+  confidence: B
+  sources: [\${s}]`);
+
+	// V11: an event with no actor, institution, document or recorded dispute (a warning).
+	appendBlock(TREE_BAD, 'events.yaml', `
+- id: fixture-orphan-event
+  date: "2012-02-01"
+  title_en: "Fixture orphan event"
+  category: political
+  summary: "Synthetic event linked to nothing, injected by the pipeline fixture runner to prove the V11 flag fires."
+  sources: [\${s}]`);
+
 	const bad = build(TREE_BAD, OUT_BAD, STATIC_BAD);
 	ok('pipeline fixture: the injected tree fails the build', bad.code !== 0, `exit ${bad.code}`);
 
@@ -497,7 +561,11 @@ try {
 		['relationship rel-fixture-reversed-prosecution: prosecution is directed: "from" must be an institution', 'a reversed prosecution edge fails and names the relationship (V14)'],
 		['duplicate of rel-fixture-duplicate', 'a duplicate relationship with an overlapping interval fails (V16)'],
 		['event fixture-floating-rupture: rupture event is not linked into the causal graph (V17)', 'a floating rupture event is flagged (V17)'],
-		['place place-fixture-no-coordinates: no coordinates', 'a place with no coordinates is flagged (V10)']
+		['place place-fixture-no-coordinates: no coordinates', 'a place with no coordinates is flagged (V10)'],
+		['direct ownership of biat sums to 180%', 'two direct stakes over 100 percent fail and name the entity (V1)'],
+		['relationship board-fixture-seat-b: bourguiba sits on the board of poulina', 'one person on two boards over the same years is flagged (V7)'],
+		['company sncft: registration registre-de-commerce \"B-FIXTURE-1\" is already carried by company sonede', 'a repeated registration number fails and names both companies (V3)'],
+		['event fixture-orphan-event: an event with no actors, institutions, documents or recorded disputes is orphaned', 'an event linked to nothing is flagged (V11)']
 	];
 	for (const [needle, label] of expectations) {
 		ok(`pipeline fixture: ${label}`, bad.output.includes(needle), `expected the build to say "${needle}"`);

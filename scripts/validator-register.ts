@@ -27,8 +27,9 @@ export const VALIDATOR_REGISTER: ValidatorEntry[] = [
 	{
 		id: 'V1',
 		rule: 'ownership shares on all ownership edges sum to 100 percent or less per company and interval window',
-		status: 'specified',
-		gate: 'none'
+		status: 'enforced',
+		gate: 'fail',
+		site: { file: 'node_modules/deepepisteme/src/atlas/rules/ownership-sum.ts', anchor: 'shares must total 100% or less' }
 	},
 	{
 		id: 'V2',
@@ -39,8 +40,9 @@ export const VALIDATOR_REGISTER: ValidatorEntry[] = [
 	{
 		id: 'V3',
 		rule: 'company registration numbers are valid and unique',
-		status: 'specified',
-		gate: 'none'
+		status: 'enforced',
+		gate: 'fail',
+		site: { file: 'node_modules/deepepisteme/src/atlas/rules/company-registration.ts', anchor: 'is already carried by company' }
 	},
 	{
 		id: 'V4',
@@ -65,8 +67,9 @@ export const VALIDATOR_REGISTER: ValidatorEntry[] = [
 	{
 		id: 'V7',
 		rule: 'a person on two overlapping board edges is flagged as a conflict of interest',
-		status: 'specified',
-		gate: 'none'
+		status: 'enforced',
+		gate: 'warn',
+		site: { file: 'node_modules/deepepisteme/src/atlas/rules/board-overlap.ts', anchor: 'a possible conflict of interest' }
 	},
 	{
 		id: 'V8',
@@ -91,9 +94,10 @@ export const VALIDATOR_REGISTER: ValidatorEntry[] = [
 	},
 	{
 		id: 'V11',
-		rule: 'events with no participants, organisations or documents are orphaned',
-		status: 'specified',
-		gate: 'none'
+		rule: 'events with no participants, organisations, documents or recorded disputes are orphaned',
+		status: 'enforced',
+		gate: 'warn',
+		site: { file: 'node_modules/deepepisteme/src/atlas/rules/event-orphan.ts', anchor: 'is orphaned: link it into the map' }
 	},
 	{
 		id: 'V12',
