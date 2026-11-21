@@ -552,6 +552,10 @@ const papers = new Map<string, string>();
 			'the release paper PDF says the archive is the tagged Release and the DOI is pending',
 			text.includes('tagged GitHub Release for V1.0.0 is the archive of this version') && text.includes('A DOI deposit of the release is pending')
 		);
+		ok(
+			'the release paper PDF says which commit the site copy and the Release copy name',
+			text.includes("names the commit that precedes the one that added the file, while the Release copy's block names the tagged commit itself")
+		);
 		const source = readFileSync(join(HERE, '..', 'output', 'deeptunisia-release-paper-v1.0.0.md'), 'utf8');
 		const pdfCommit = text.match(/Built from commit ([0-9a-f]{40})/)?.[1] ?? '';
 		ok('the release paper PDF names the commit it was built from', /^[0-9a-f]{40}$/.test(pdfCommit), pdfCommit || 'no "Built from commit" line');
