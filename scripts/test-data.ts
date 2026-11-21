@@ -1487,10 +1487,13 @@ const KIND_TO_DATASET: Record<string, string> = {
 	);
 	if (chainOnly.length > 0) console.log(`      chain gaps that a coverage reading drops: ${chainOnly.join(', ')}`);
 
-	// The audited dataset: the readings at the hash the owner is deciding on.
-	// Pending the owner's choice of headline; moving any of these is a ledgered
-	// change to the published counts and the hash, never a quiet edit here.
-	const AUDITED_HASH = 'f57388b09f949a6c6e9b57afa117cb0f1323a9b90e4b3257dc9c9dfb30b83400';
+	// The audited dataset: the readings the release paper quotes, pinned at the
+	// hash they were audited at. The published counts are the chain readings; the
+	// pair, incident and coverage-hole readings are quoted beside them under their
+	// own names. Moving any of these is a ledgered change to the published counts
+	// and the hash, never a quiet edit here. When the hash moves for another
+	// reason, this check must be re-pinned in the same change, or it stops running.
+	const AUDITED_HASH = '89e17f830c91591b41e40f673f3f5814e9a9534a72f8fafcadbc1354c9eecde2';
 	if (meta.datasetHash === AUDITED_HASH) {
 		const audited = {
 			chainOverlaps: 49,
@@ -1509,7 +1512,7 @@ const KIND_TO_DATASET: Record<string, string> = {
 			chainGapsAnotherHolderCovers: chainOnly.length
 		};
 		ok(
-			'V24: the audited readings hold at the audited dataset (owner has not chosen a headline)',
+			'V24: the audited readings hold at the audited dataset',
 			JSON.stringify(got) === JSON.stringify(audited),
 			JSON.stringify(got)
 		);

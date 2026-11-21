@@ -32,6 +32,7 @@
         "mutation": "tsx scripts/mutation-test.ts",
         "claim:matrix": "tsx scripts/claim-matrix.ts",
         "paper:pdf": "tsx scripts/build-paper-pdf.ts",
+        "paper:appendix": "tsx scripts/paper-appendix.ts",
         "audit:probes": "npm run data && svelte-kit sync && tsx scripts/audit-probes.mjs",
         "test:match": "tsx scripts/test-match.ts",
         "test:feed": "tsx scripts/test-feed.ts",

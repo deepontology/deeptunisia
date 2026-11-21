@@ -33,7 +33,7 @@ export const STATS_WRITE_FILES = [
 	'README.md',
 	'AGENTS.md',
 	'DESIGN.md',
-	'output/deeptunisia-release-paper-v0.1.2.md',
+	'output/deeptunisia-release-paper-v1.0.0.md',
 	'landing/index.html',
 	'landing/_strings.en.json',
 	'landing/_strings.fr.json',

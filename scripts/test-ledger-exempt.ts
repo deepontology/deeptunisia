@@ -83,7 +83,7 @@ console.log('\n  ── the branch and the changed files decide ──\n');
 				'README.md',
 				'AGENTS.md',
 				'DESIGN.md',
-				'output/deeptunisia-release-paper-v0.1.2.md',
+				'output/deeptunisia-release-paper-v1.0.0.md',
 				'landing/_strings.en.json',
 				'landing/_strings.fr.json',
 				'landing/_strings.ar.json'

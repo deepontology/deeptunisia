@@ -4438,7 +4438,7 @@ if (!FIXTURE_MODE) {
 		{ from: 'README.md', to: 'README.md' },
 		{ from: 'AGENTS.md', to: 'AGENTS.md' },
 		{ from: 'DESIGN.md', to: 'DESIGN.md' },
-		{ from: 'output/deeptunisia-release-paper-v0.1.2.md', to: 'output/deeptunisia-release-paper-v0.1.2.md' },
+		{ from: 'output/deeptunisia-release-paper-v1.0.0.md', to: 'output/deeptunisia-release-paper-v1.0.0.md' },
 		{ from: 'content/llms.template.txt', to: 'static/llms.txt' }
 	];
 	/* README, AGENTS and DESIGN are refreshed by `npm run stats:write`, not here;
