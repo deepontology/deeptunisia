@@ -1510,7 +1510,7 @@ const KIND_TO_DATASET: Record<string, string> = {
 		if (holds) {
 			return {
 				ok: true,
-				detail: datasetHash === pinnedHash ? JSON.stringify(got) : `${JSON.stringify(got)}, still holding at ${datasetHash} (pinned at ${pinnedHash})`
+				detail: datasetHash === pinnedHash ? JSON.stringify(got) : `${JSON.stringify(got)}; unchanged at ${datasetHash}, not re-audited since the original reading at ${pinnedHash}`
 			};
 		}
 		return {
@@ -1535,7 +1535,11 @@ const KIND_TO_DATASET: Record<string, string> = {
 		'V24: a reading that differs from its pin fails and names the pinned and the current hash',
 		!moved.ok && moved.detail.includes('pinned to aaaa') && moved.detail.includes('the dataset is bbbb') && moved.detail.includes('re-pin them in this change or say why')
 	);
-	ok('V24: readings that still hold pass under a different hash and say so', auditedVerdict(audited, audited, 'aaaa', 'bbbb').ok);
+	const unmoved = auditedVerdict(audited, audited, 'aaaa', 'bbbb');
+	ok(
+		'V24: readings that still hold pass under a different hash and say they are unchanged, not re-audited',
+		unmoved.ok && unmoved.detail.includes('unchanged at bbbb') && unmoved.detail.includes('not re-audited since the original reading at aaaa')
+	);
 }
 
 // V24, the derived predecessor and successor. The chain walk publishes them; this recomputes
