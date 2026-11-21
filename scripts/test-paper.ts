@@ -39,6 +39,7 @@ import { fileURLToPath } from 'node:url';
 import { certainlyActive, DASH, BASIS_OPACITY, BASIS_ORDER } from '../src/lib/model.ts';
 import { VALIDATOR_REGISTER } from './validator-register.ts';
 import { loadPublicClaims } from './public-claims.ts';
+import { APPENDIX_BEGIN, extractAppendixA, renderAppendixA } from './paper-appendix.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 
@@ -51,7 +52,8 @@ const HERE = dirname(fileURLToPath(import.meta.url));
  */
 const PAPER_NAMES = [
 	'output/deeptunisia-release-paper-v0.1.1.md',
-	'output/deeptunisia-release-paper-v0.1.2.md'
+	'output/deeptunisia-release-paper-v0.1.2.md',
+	'output/deeptunisia-release-paper-v1.0.0.md'
 ];
 
 /**
@@ -336,6 +338,23 @@ const papers = new Map<string, string>();
 			'the Appendix A Behaviour column matches each rule status',
 			statusDrift.length === 0,
 			statusDrift.length ? statusDrift.slice(0, 4).join('; ') : `${paperRows.size} row(s) checked`
+		);
+	}
+
+	// The table is generated, not typed: the block between the markers must be
+	// exactly what the register renders, so a status or a rule text cannot be
+	// edited in one place and not the other.
+	if (newestText !== undefined) {
+		const inPaper = extractAppendixA(newestText);
+		const generated = renderAppendixA();
+		ok(
+			'Appendix A is the table generated from the validator register',
+			inPaper === generated,
+			inPaper === null
+				? `no ${APPENDIX_BEGIN} block in ${newestName}; run npm run paper:appendix`
+				: inPaper === generated
+					? `${VALIDATOR_REGISTER.length} rows`
+					: 'the paper differs from the register; run npm run paper:appendix'
 		);
 	}
 

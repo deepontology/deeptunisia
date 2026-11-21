@@ -104,7 +104,7 @@ ok(
 );
 
 {
-	const paper = 'output/deeptunisia-release-paper-v0.1.2.md';
+	const paper = 'output/deeptunisia-release-paper-v1.0.0.md';
 	const tagOnly = (_: string) => ['-<!--stat:commitSha--><!--/stat-->', '+<!--stat:commitSha-->abc<!--/stat-->'];
 	const otherToo = (_: string) => [...tagOnly(_), '+an edited sentence'];
 	ok('a release run may carry the paper commitSha tag change', releaseException(paper, 'abc', tagOnly));

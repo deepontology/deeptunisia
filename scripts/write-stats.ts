@@ -27,7 +27,7 @@ if (!existsSync(statsPath)) {
 }
 const stats = JSON.parse(readFileSync(statsPath, 'utf8')) as Record<string, string>;
 
-const DOCS = ['README.md', 'AGENTS.md', 'DESIGN.md', 'output/deeptunisia-release-paper-v0.1.2.md'];
+const DOCS = ['README.md', 'AGENTS.md', 'DESIGN.md', 'output/deeptunisia-release-paper-v1.0.0.md'];
 const STAT_TAG = /<!--stat:([A-Za-z][A-Za-z0-9-]*)-->([\s\S]*?)<!--\/stat-->/g;
 
 console.log('\n  stats:write: the documents the build no longer edits\n');
