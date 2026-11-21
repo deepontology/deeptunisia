@@ -178,6 +178,7 @@ Editorial state is separate from both counts. `status` and `reviewer` come from 
 2. Add the claim, referencing that source id.
 3. Grade it honestly. Single-outlet assessment → `C` + `attributed_to`. Reasoned estimate → `basis: inferred` + `reasoning` + `falsifiable_by`.
 4. Run `npm run data`, then `npm run test`. Fix what they reject.
+5. Leave `verification` out of a new record. `verified` is not typed by hand: it means a person opened the source and confirmed the claim, and from Release 1.0 the build refuses it unless the record carries a review whose `actor` is `human` and whose `method` is `source-check`.
 
 Prefer gazette appointment decrees above everything else: they give exact dates, which is what the whole timeline depends on.
 
