@@ -1487,36 +1487,55 @@ const KIND_TO_DATASET: Record<string, string> = {
 	);
 	if (chainOnly.length > 0) console.log(`      chain gaps that a coverage reading drops: ${chainOnly.join(', ')}`);
 
-	// The audited dataset: the readings the release paper quotes, pinned at the
-	// hash they were audited at. The published counts are the chain readings; the
-	// pair, incident and coverage-hole readings are quoted beside them under their
-	// own names. Moving any of these is a ledgered change to the published counts
-	// and the hash, never a quiet edit here. When the hash moves for another
-	// reason, this check must be re-pinned in the same change, or it stops running.
+	// The audited readings: the numbers the release paper quotes beside the
+	// published counts, pinned to the dataset they were audited at. They are
+	// compared on every run, whatever the hash is. A check that runs only at one
+	// hash disappears the day the data moves, and reads green while the readings
+	// are unverified; so a reading that differs from its pin fails and names both
+	// hashes, and a reading that still holds passes under a later hash and says
+	// so. Moving a reading is a ledgered change to the published counts and the
+	// hash, and the paper's section on what the succession counts count follows it.
 	const AUDITED_HASH = '89e17f830c91591b41e40f673f3f5814e9a9534a72f8fafcadbc1354c9eecde2';
-	if (meta.datasetHash === AUDITED_HASH) {
-		const audited = {
-			chainOverlaps: 49,
-			overlappingPairs: 67,
-			overlapIncidents: 43,
-			chainGaps: 126,
-			coverageHoles: 121,
-			chainGapsAnotherHolderCovers: 5
+	const audited = {
+		chainOverlaps: 49,
+		overlappingPairs: 67,
+		overlapIncidents: 43,
+		chainGaps: 126,
+		coverageHoles: 121,
+		chainGapsAnotherHolderCovers: 5
+	};
+	type Readings = typeof audited;
+	const auditedVerdict = (got: Readings, pinned: Readings, pinnedHash: string, datasetHash: string) => {
+		const holds = JSON.stringify(got) === JSON.stringify(pinned);
+		if (holds) {
+			return {
+				ok: true,
+				detail: datasetHash === pinnedHash ? JSON.stringify(got) : `${JSON.stringify(got)}, still holding at ${datasetHash} (pinned at ${pinnedHash})`
+			};
+		}
+		return {
+			ok: false,
+			detail: `the audited readings are pinned to ${pinnedHash}, the dataset is ${datasetHash}; re-pin them in this change or say why. pinned ${JSON.stringify(pinned)}, got ${JSON.stringify(got)}`
 		};
-		const got = {
-			chainOverlaps: publishedOverlaps.length,
-			overlappingPairs: pairKeys.size,
-			overlapIncidents: incidents,
-			chainGaps: chainGapIds.size,
-			coverageHoles: holeIds.size,
-			chainGapsAnotherHolderCovers: chainOnly.length
-		};
-		ok(
-			'V24: the audited readings hold at the audited dataset',
-			JSON.stringify(got) === JSON.stringify(audited),
-			JSON.stringify(got)
-		);
-	}
+	};
+	const got: Readings = {
+		chainOverlaps: publishedOverlaps.length,
+		overlappingPairs: pairKeys.size,
+		overlapIncidents: incidents,
+		chainGaps: chainGapIds.size,
+		coverageHoles: holeIds.size,
+		chainGapsAnotherHolderCovers: chainOnly.length
+	};
+	const verdict = auditedVerdict(got, audited, AUDITED_HASH, meta.datasetHash);
+	ok('V24: the audited readings are checked against the dataset, whatever its hash', verdict.ok, verdict.detail);
+	// The mechanism, on synthetic readings: a moved reading must fail and name
+	// both hashes; an unmoved one must pass under a different hash.
+	const moved = auditedVerdict({ ...audited, overlappingPairs: 68 }, audited, 'aaaa', 'bbbb');
+	ok(
+		'V24: a reading that differs from its pin fails and names the pinned and the current hash',
+		!moved.ok && moved.detail.includes('pinned to aaaa') && moved.detail.includes('the dataset is bbbb') && moved.detail.includes('re-pin them in this change or say why')
+	);
+	ok('V24: readings that still hold pass under a different hash and say so', auditedVerdict(audited, audited, 'aaaa', 'bbbb').ok);
 }
 
 // V24, the derived predecessor and successor. The chain walk publishes them; this recomputes
