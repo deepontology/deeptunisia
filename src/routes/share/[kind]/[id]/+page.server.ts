@@ -10,16 +10,11 @@ import dataset from '$data/dataset.json';
  */
 export const prerender = true;
 
-type Prose = { id: string; summary?: string; description?: string };
+type Prose = { id: string; description?: string };
 const byId = (rows: unknown): Map<string, Prose> => new Map(((rows ?? []) as Prose[]).map((r) => [r.id, r]));
-const people = byId((dataset as Record<string, unknown>).people);
-const institutions = byId((dataset as Record<string, unknown>).institutions);
 const relationships = byId((dataset as Record<string, unknown>).relationships);
 
 export const load: PageServerLoad = ({ params }) => {
-	const text =
-		params.kind === 'relationship'
-			? relationships.get(params.id)?.description
-			: (people.get(params.id)?.summary || institutions.get(params.id)?.summary);
+	const text = params.kind === 'relationship' ? relationships.get(params.id)?.description : undefined;
 	return { text: (text ?? '').slice(0, 160) };
 };
