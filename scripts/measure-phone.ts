@@ -33,8 +33,10 @@
  * The plan's 5-second line is judged against the tap gate. Bytes are what the
  * browser received over the wire (encoded) before the gate passed.
  *
- * --cpu-profile prints where the page spent its main-thread time before the tap
- * gate passed, by function, for the first profile run.
+ * --cpu-profile prints where the page spent its main-thread time on the first run of the tap
+ * gate and of the text gate, by function: self time and inclusive time, for the whole run, for
+ * the time before the record opened (the URL gained `?id=`) and for the time after it. Run it
+ * against a build made with `npx vite build --minify false` to read function names.
  *
  * Every row says how loaded the machine was while it ran: the 1-minute load average
  * (at the start of the row and at its end), the share of the processors that were busy
@@ -223,13 +225,16 @@ async function runOnce(
 			for (const e of list.getEntries()) if (e.name === 'first-contentful-paint') w.__fcp = e.startTime;
 		}).observe({ type: 'paint', buffered: true });
 	});
+	let profilerStartedAt = 0;
 	if (cpuProfile) {
 		await cdp.send('Profiler.enable');
 		await cdp.send('Profiler.setSamplingInterval', { interval: 1000 });
+		profilerStartedAt = Date.now();
 		await cdp.send('Profiler.start');
 	}
 
 	const start = Date.now();
+	let recordOpenedAt: number | null = null;
 	await page.goto(base + route, { waitUntil: 'commit' });
 	let usable: number | null = null;
 	let wireAtGate = 0;
@@ -243,6 +248,7 @@ async function runOnce(
 				.evaluate(() => (document.querySelector('.tb') as HTMLElement | null)?.click())
 				.catch(() => {});
 			if (/[?&]id=/.test(page.url())) {
+				recordOpenedAt ??= Date.now() - start;
 				const words = gate === 'tap' ? true : await recordText(page);
 				if (words) {
 					usable = Date.now() - start;
@@ -261,26 +267,63 @@ async function runOnce(
 		}
 		await page.waitForTimeout(100);
 	}
-	if (cpuProfile) await printProfile(cdp);
+	if (cpuProfile) await printProfile(cdp, gate, recordOpenedAt === null ? null : recordOpenedAt + (start - profilerStartedAt));
 	const firstPaint = await page.evaluate(() => (window as unknown as { __fcp: number | null }).__fcp ?? 0).catch(() => 0);
 	await context.close();
 	return { gate, firstPaint: Math.round(firstPaint), usable, wireKB: Math.round((usable === null ? wire : wireAtGate) / 1024) };
 }
 
-async function printProfile(cdp: CDPSession): Promise<void> {
+/**
+ * Where the main thread spent its time, by function. `splitAtMs` is the moment the record
+ * opened (the URL gained `?id=`), measured from when the profiler started: the profile is
+ * printed whole, then for the time after that moment, which is the record panel's own render.
+ */
+async function printProfile(cdp: CDPSession, gate: Gate, splitAtMs: number | null): Promise<void> {
 	const { profile } = await cdp.send('Profiler.stop');
 	const byId = new Map(profile.nodes.map((n) => [n.id, n]));
-	const self = new Map<string, number>();
-	profile.samples?.forEach((id, i) => {
-		const n = byId.get(id);
-		if (!n) return;
-		const key = `${n.callFrame.functionName || '(anonymous)'}  ${n.callFrame.url.split('/').pop() ?? ''}:${n.callFrame.lineNumber}`;
-		self.set(key, (self.get(key) ?? 0) + (profile.timeDeltas?.[i] ?? 0));
-	});
-	const total = [...self.values()].reduce((a, b) => a + b, 0);
-	console.log(`\n  main-thread time before the gate passed: ${Math.round(total / 1000)} ms (self time by function)`);
-	for (const [key, us] of [...self.entries()].sort((a, b) => b[1] - a[1]).slice(0, 16)) {
-		console.log(`    ${String(Math.round(us / 1000)).padStart(6)} ms  ${key}`);
+	const parent = new Map<number, number>();
+	for (const n of profile.nodes) for (const c of n.children ?? []) parent.set(c, n.id);
+	const label = (id: number) => {
+		const n = byId.get(id)!;
+		return `${n.callFrame.functionName || '(anonymous)'}  ${n.callFrame.url.split('/').pop() ?? ''}:${n.callFrame.lineNumber}`;
+	};
+	const report = (title: string, from: number, to: number) => {
+		const self = new Map<string, number>();
+		const inclusive = new Map<string, number>();
+		let at = 0;
+		profile.samples?.forEach((id, i) => {
+			const us = profile.timeDeltas?.[i] ?? 0;
+			at += us;
+			if (!byId.get(id) || at / 1000 < from || at / 1000 >= to) return;
+			self.set(label(id), (self.get(label(id)) ?? 0) + us);
+			// Inclusive time: every function on the stack of this sample, once.
+			const seen = new Set<string>();
+			for (let n: number | undefined = id; n !== undefined; n = parent.get(n)) {
+				const key = label(n);
+				if (seen.has(key)) continue;
+				seen.add(key);
+				inclusive.set(key, (inclusive.get(key) ?? 0) + us);
+			}
+		});
+		const idle = self.get('(idle)  :-1') ?? 0;
+		const total = [...self.values()].reduce((a, b) => a + b, 0);
+		console.log(`\n  ${gate} gate, one run, ${title}: ${Math.round(total / 1000)} ms sampled, ${Math.round(idle / 1000)} ms idle (waiting)`);
+		const show = (what: string, m: Map<string, number>) => {
+			console.log(`  ${what}`);
+			for (const [key, us] of [...m.entries()]
+				.filter(([k]) => !k.startsWith('(idle)') && !k.startsWith('(root)'))
+				.sort((a, b) => b[1] - a[1])
+				.slice(0, 22)) {
+				console.log(`    ${String(Math.round(us / 1000)).padStart(6)} ms  ${key}`);
+			}
+		};
+		show('self time by function', self);
+		show('inclusive time by function (a function and everything it called)', inclusive);
+	};
+	report('whole run', 0, Infinity);
+	if (splitAtMs !== null) {
+		report(`before the record opened (first ${Math.round(splitAtMs)} ms)`, 0, splitAtMs);
+		report('after the record opened', splitAtMs, Infinity);
 	}
 }
 
@@ -309,7 +352,7 @@ const browser = await chromium.launch({
 console.log(`\n  ${route} on ${remote ?? 'the local build'} — 390x844 mobile, cache off, median of ${runs}`);
 console.log('  primary gate: tap (the first tenure opens its record); text: that record shows its words; secondary: palette (search opens with results)\n');
 console.log('  profile          gate     first paint   usable     wire before usable   line');
-let profiled = false;
+const profiled = new Set<Gate>();
 let overLine = false;
 let everLoaded = false;
 console.log(`  machine: ${os.cpus().length} processors, 1-minute load average ${load1().toFixed(1)} at the start (quiet is under ${(os.cpus().length * QUIET_LOAD_PER_CPU).toFixed(0)})\n`);
@@ -321,14 +364,14 @@ for (const profile of PROFILES) {
 		const loadBefore = load1();
 		const cpuBefore = cpuTimes();
 		for (let i = 0; i < runs; i++) {
-			const withProfile = cpuProfile && !profiled && gate === 'tap' && i === 0;
+			const withProfile = cpuProfile && !profiled.has(gate) && gate !== 'palette' && i === 0;
 			results.push(await runOnce(browser, base, route, profile, gate, withProfile));
-			if (withProfile) profiled = true;
+			if (withProfile) profiled.add(gate);
 		}
 		const usable = median(results.map((r) => r.usable));
 		const paint = median(results.map((r) => r.firstPaint));
 		const wire = median(results.map((r) => r.wireKB));
-		const sec = (ms: number | null) => (ms === null ? 'never' : `${(ms / 1000).toFixed(1)} s`);
+		const sec = (ms: number | null) => (ms === null ? 'never' : `${(ms / 1000).toFixed(2)} s`);
 		const cpuAfter = cpuTimes();
 		const busy = Math.round((1 - (cpuAfter.idle - cpuBefore.idle) / (cpuAfter.total - cpuBefore.total)) * 100);
 		const loadAfter = load1();
