@@ -233,7 +233,7 @@
 		<div class="kf">
 			{#if company.founded}<div class="kv"><span>{t('record.founded')}</span><b>{company.founded}</b></div>{/if}
 			{#if company.legal_form}<div class="kv"><span>{t('record.legalform')}</span><b>{company.legal_form}</b></div>{/if}
-			{#if company.capital?.tnd}<div class="kv"><span>{t('record.capital')}</span><b>{(company.capital.tnd / 1_000_000).toLocaleString()} M TND</b></div>{/if}
+			{#if company.capital?.amount}<div class="kv"><span>{t('record.capital')}</span><b>{(company.capital.amount / 1_000_000).toLocaleString()} M {company.capital.currency}</b></div>{/if}
 			{#if company.state_owned !== undefined}<div class="kv"><span>{t('record.stateowned')}</span><b>{company.state_owned ? t('record.yes') : t('record.no')}</b></div>{/if}
 		</div>
 	{/if}
