@@ -3,6 +3,76 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:8e2baab2fb0b8937",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Tunis | L’ambassade des Pays-Bas célèbre la tolérance avec le «Black & White Circus»",
+      "link": "https://kapitalis.com/tunisie/2026/11/21/tunis-lambassade-des-pays-bas-celebre-la-tolerance-avec-le-black-white-circus/",
+      "published": "2026-11-21T00:08:36Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:3d4df93473b1cd7e",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "JCC 2026 | La sélection officielle des longs-métrages de fiction dévoilée",
+      "link": "https://kapitalis.com/tunisie/2026/11/20/jcc-2026-la-selection-officielle-des-longs-metrages-de-fiction-devoilee/",
+      "published": "2026-11-20T21:40:49Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:ff4db02e2f16f3b9",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Le CRLDHT dénonce le maintien en détention de l’ex-magistrat Hichem Ben Khaled",
+      "link": "https://kapitalis.com/tunisie/2026/11/20/le-crldht-denonce-le-maintien-en-detention-de-lex-magistrat-hichem-ben-khaled/",
+      "published": "2026-11-20T21:09:30Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:aab1b93f3d41a73b",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Rugby | La Tunisie affronte la Suisse ce samedi lors d’un test-match international",
+      "link": "https://kapitalis.com/tunisie/2026/11/20/rugby-la-tunisie-affronte-la-suisse-ce-samedi-lors-dun-test-match-international/",
+      "published": "2026-11-20T19:17:00Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:african-manager:fe44a7041ba88cc8",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Les nouvelles du marché boursier",
+      "link": "https://africanmanager.com/les-nouvelles-du-marche-boursier-14/",
+      "published": "2026-11-20T17:26:05Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:8a560f9110961291",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Le marché boursier termine la semaine sur une note positive",
+      "link": "https://africanmanager.com/le-marche-boursier-termine-la-semaine-sur-une-note-positive-3/",
+      "published": "2026-11-20T17:24:04Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:41e9c50139fd11f4",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "La BCT dément la mise en place d’une taxe sur l’épargne",
+      "link": "https://africanmanager.com/la-bct-dement-la-mise-en-place-dune-taxe-sur-lepargne/",
+      "published": "2026-11-20T17:22:40Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
       "id": "feed:nawaat:73412dd3a013f057",
       "outlet": "Nawaat",
       "outletId": "nawaat",
@@ -19,6 +89,16 @@
       "title": "Huile d’olive : La Tunisie engrange plus de 1,7 milliard de dollars. L’Arabie saoudite, les USA et le Canada, acheteurs majeurs",
       "link": "https://africanmanager.com/huile-dolive-la-tunisie-engrange-plus-de-17-milliard-de-dollars-larabie-saoudite-les-usa-et-le-canada-acheteurs-majeurs/",
       "published": "2026-11-20T15:36:07Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:b63ba6ea96673e85",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "L’investissement industriel déclaré grimpe de 10%",
+      "link": "https://africanmanager.com/linvestissement-industriel-declare-grimpe-de-10/",
+      "published": "2026-11-20T15:34:00Z",
       "lang": "fr",
       "author": "African Manager"
     },
@@ -11918,86 +11998,6 @@
       "title": "Budget 2027 : 68,9 milliards DT de crédits, en hausse de 8,4 %",
       "link": "https://africanmanager.com/budget-2027-689-milliards-dt-de-credits-en-hausse-de-84/",
       "published": "2026-10-24T07:32:23Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:f5c41d2771e5da92",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Des entreprises françaises en prospection en Tunisie",
-      "link": "https://africanmanager.com/plasturgie-et-composites-une-delegation-dentreprises-francaises-en-mission-economique-en-tunisie/",
-      "published": "2026-10-24T07:28:14Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:1e2b3fb6bcaf3fe4",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "150 MDT à l’ONH pour reprendre l’huile d’olive locale",
-      "link": "https://africanmanager.com/capacite-de-trituration-journaliere-de-2-225-tonnes/",
-      "published": "2026-10-24T07:25:22Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:7196f3b0d6c90146",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Stock de 69 mt de nitrate d’ammonium disponible",
-      "link": "https://africanmanager.com/un-stock-de-69-mille-tonnes-de-nitrate-dammonium-disponible-pour-la-campagne-cerealiere/",
-      "published": "2026-10-24T07:23:45Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:141cfe646dc3c9fe",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "La récolte de dattes attendue en baisse de 12,4 %",
-      "link": "https://africanmanager.com/la-recolte-de-dattes-attendue-en-baisse-de-124/",
-      "published": "2026-10-24T07:22:22Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:89d436b3975c3b6e",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Zaâfrani bat la mobilisation pour la campagne oléicole",
-      "link": "https://africanmanager.com/cette-eau-residuelle-issue-du-pressage-des-olives/",
-      "published": "2026-10-24T07:21:01Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:21c19fc0a86b60f7",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Tataouine : Accord trouvé pour sauver la station de louages",
-      "link": "https://africanmanager.com/tataouine-accord-trouve-pour-sauver-la-station-de-louages/",
-      "published": "2026-10-24T07:17:13Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:6880fc04c8504cb6",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Gafsa : 1,95 million de tonnes d’olives attendues cette saison",
-      "link": "https://africanmanager.com/gafsa-195-million-de-tonnes-dolives-attendues-cette-saison/",
-      "published": "2026-10-24T07:16:57Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:8effbf9928b20b4d",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Les exonérations fiscales ne suffisent pas à stimuler l’investissement",
-      "link": "https://africanmanager.com/les-exonerations-fiscales-ne-suffisent-pas-a-stimuler-linvestissement/",
-      "published": "2026-10-24T06:40:52Z",
       "lang": "fr",
       "author": "African Manager"
     }
