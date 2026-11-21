@@ -1,0 +1,8 @@
+# Redirects for the static site, read by Cloudflare Workers Assets from the root of the
+# uploaded directory (static/ is copied to the build root verbatim). Like _headers, this
+# is answered by the platform without invoking the Worker.
+#
+# A person or an institution is shared as its record page. The preview page that used to
+# stand at /share/entity/<id> is gone; links already handed out answer 301 to the record.
+# Relationship shares keep their preview page and are not listed here.
+/share/entity/* /e/:splat 301
