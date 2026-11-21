@@ -25,9 +25,10 @@ audit: "ticket 0027, ledger.jsonl and VERIFICATION.md"
 checked: 2026-11-17
 summary:
   audited: 215
-  verified: 214
-  two_readers_agree: 188
+  verified: 212
+  two_readers_agree: 186
   resolved: 26
+  derived: 2
   single_read: 1
 years:
   2020:
