@@ -10,16 +10,6 @@
 		"reason": "Basis short code (unsubstantiated), not prose"
 	},
 	{
-		"file": "src/lib/components/EntityPanel.svelte",
-		"text": "M TND",
-		"reason": "Currency unit: millions of Tunisian dinars"
-	},
-	{
-		"file": "src/lib/components/RecordPanel.svelte",
-		"text": "M TND",
-		"reason": "Currency unit: millions of Tunisian dinars"
-	},
-	{
 		"file": "src/lib/components/Rankings.svelte",
 		"text": "sensitivity.json",
 		"reason": "Download file name, must stay byte-identical"

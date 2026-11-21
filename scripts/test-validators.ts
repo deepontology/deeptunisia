@@ -814,9 +814,21 @@ rejectsWith(
 );
 rejectsWith(
 	CompanySchema,
-	co({ capital: { tnd: 100, date: '2020-01-01', extra: 'x' } }),
+	co({ capital: { amount: 100, currency: 'TND', date: '2020-01-01', extra: 'x' } }),
 	'V28: an unknown capital key fails',
 	'Unrecognized key'
+);
+rejectsWith(
+	CompanySchema,
+	co({ capital: { tnd: 100, currency: 'TND', date: '2020-01-01' } }),
+	'V28: the amount under a currency-named key fails',
+	'Unrecognized key'
+);
+rejectsWith(
+	CompanySchema,
+	co({ capital: { amount: 100, date: '2020-01-01' } }),
+	'V19: a capital with no currency fails',
+	'expected string'
 );
 rejectsWith(
 	ContractSchema,

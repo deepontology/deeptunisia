@@ -2765,13 +2765,14 @@ writeFileSync(
 			cin: c.cin ?? '',
 			status: c.status,
 			founded: c.founded ?? '',
-			capital_tnd: c.capital ? String(c.capital.tnd) : '',
+			capital_amount: c.capital ? String(c.capital.amount) : '',
+			capital_currency: c.capital?.currency ?? '',
 			capital_date: c.capital?.date ?? '',
 			state_owned: String(c.state_owned),
 			basis: c.basis,
 			confidence: c.confidence
 		})),
-		['id', 'legal_name_fr', 'legal_name_ar', 'legal_form', 'cin', 'status', 'founded', 'capital_tnd', 'capital_date', 'state_owned', 'basis', 'confidence']
+		['id', 'legal_name_fr', 'legal_name_ar', 'legal_form', 'cin', 'status', 'founded', 'capital_amount', 'capital_currency', 'capital_date', 'state_owned', 'basis', 'confidence']
 	),
 	'utf8'
 );
@@ -3408,7 +3409,7 @@ export interface Company extends ClaimAxes {
 	cin?: string;
 	status: string;
 	founded?: string;
-	capital?: { tnd: number; date: string };
+	capital?: { amount: number; currency: string; date: string };
 	state_owned: boolean;
 	activities: string[];
 	headquarters?: string;
