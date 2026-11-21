@@ -3,6 +3,106 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:kapitalis:6577c791150da893",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "De Tozeur à Djerba | Les défis environnementaux, leviers d’innovation et de développement",
+      "link": "https://kapitalis.com/tunisie/2026/11/21/de-tozeur-a-djerba-les-defis-environnementaux-leviers-dinnovation-et-de-developpement/",
+      "published": "2026-11-21T19:26:49Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:5f2a26bb7bc51395",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Tunisie-France | L’IA et l’investissement au cœur de la 4e édition du Forum de l’Atuge",
+      "link": "https://kapitalis.com/tunisie/2026/11/21/tunisie-france-lia-et-linvestissement-au-coeur-de-la-4e-edition-du-forum-de-latuge/",
+      "published": "2026-11-21T18:35:28Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:afcb30fb99ac7801",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Tunis | Le procès de Moez Haj Mansour fixé au 3 décembre",
+      "link": "https://kapitalis.com/tunisie/2026/11/21/tunis-le-proces-de-moez-haj-mansour-fixe-au-3-decembre/",
+      "published": "2026-11-21T17:51:41Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:55015d68c9546806",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Tunisie-Météo | Les prévisions pour cette nuit",
+      "link": "https://kapitalis.com/tunisie/2026/11/21/tunisie-meteo-les-previsions-pour-cette-nuit-3/",
+      "published": "2026-11-21T17:07:07Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:african-manager:21299d4033a506b3",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "16,5 milliards de dinars de créances douteuses, un record",
+      "link": "https://africanmanager.com/165-milliards-de-dinars-de-creances-douteuses-un-record/",
+      "published": "2026-11-21T13:55:19Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:4284fe59b4346435",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Régions : 2,8 MDT seulement prêtés sur 15",
+      "link": "https://africanmanager.com/regions-28-mdt-seulement-pretes-sur-15/",
+      "published": "2026-11-21T13:47:54Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:9baacca3cca33790",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Coût loi sur les chèques pour les banques : Plus de 763 MDT",
+      "link": "https://africanmanager.com/cout-de-la-loi-sur-les-cheques-pour-les-banques-plus-de-763-mdt/",
+      "published": "2026-11-21T13:47:43Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:ebb7f3a62f410f60",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Feriel Chabrak réinvestie",
+      "link": "https://africanmanager.com/feriel-chabrak-reinvestie/",
+      "published": "2026-11-21T13:41:28Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:2a50536ebde3d7c0",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Huile d’olive, 100 MDT sur quatre ans et une seule banque",
+      "link": "https://africanmanager.com/huile-dolive-100-mdt-sur-quatre-ans-et-une-seule-banque/",
+      "published": "2026-11-21T13:37:14Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:nawaat:9a717dd6ac3db8b2",
+      "outlet": "Nawaat",
+      "outletId": "nawaat",
+      "title": "Crisis and Information Blackout in Tunisia: Who Informs The Public?",
+      "link": "https://nawaat.org/2026/11/21/crisis-and-information-blackout-in-tunisia-who-informs-the-public/",
+      "published": "2026-11-21T13:00:00Z",
+      "lang": "en",
+      "author": "Aida Fitouri"
+    },
+    {
       "id": "feed:kapitalis:f9131966a0cd4833",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -11900,106 +12000,6 @@
       "published": "2026-10-25T11:15:24Z",
       "lang": "fr",
       "author": "webmaster kapitalis"
-    },
-    {
-      "id": "feed:african-manager:8409f33ccd3c8eac",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Euro-Cycles achète l’espagnol Deportica pour 650 mille €",
-      "link": "https://africanmanager.com/euro-cycles-achete-lespagnol-deportica-pour-650-mille-e/",
-      "published": "2026-10-25T11:00:58Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:kapitalis:7bfc5a3deda2cfe4",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Profil | Le destin contrarié de Olfa Hamdi",
-      "link": "https://kapitalis.com/tunisie/2026/10/25/profil-le-destin-contrarie-de-olfa-hamdi/",
-      "published": "2026-10-25T10:50:59Z",
-      "lang": "fr",
-      "author": "webmaster kapitalis"
-    },
-    {
-      "id": "feed:kapitalis:5be6279e9e68fd5e",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Tahnoun ben Zayed, l’homme d’influence des Émirat",
-      "link": "https://kapitalis.com/tunisie/2026/10/25/tahnoun-ben-zayed-lhomme-dinfluence-des-emirat/",
-      "published": "2026-10-25T08:51:01Z",
-      "lang": "fr",
-      "author": "webmaster kapitalis"
-    },
-    {
-      "id": "feed:african-manager:e2a7cdd7a490a339",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Monastir – Enseignement : L’ENIM renouvelle son accréditation européenne « EUR-ACE » pour 4 diplômes d’ingénieur",
-      "link": "https://africanmanager.com/monastir-enseignement-lenim-renouvelle-son-accreditation-europeenne-eur-ace-pour-4-diplomes-dingenieur/",
-      "published": "2026-10-25T08:45:20Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:kapitalis:97aed643ab054f6a",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "The Dot | 5 ans au service de l’innovation tunisienne",
-      "link": "https://kapitalis.com/tunisie/2026/10/25/the-dot-5-ans-au-service-de-linnovation-tunisienne/",
-      "published": "2026-10-25T08:09:39Z",
-      "lang": "fr",
-      "author": "webmaster kapitalis"
-    },
-    {
-      "id": "feed:african-manager:62b1c960eb315590",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "L’OIT honore les talents artistiques et culturels de l’ingénieur tunisien",
-      "link": "https://africanmanager.com/loit-honore-les-talents-artistiques-et-culturels-de-lingenieur-tunisien/",
-      "published": "2026-10-25T07:51:12Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:e905bbf56cc86c65",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Tozeur : Extension du réseau d’éclairage public à Hezoua",
-      "link": "https://africanmanager.com/tozeur-extension-du-reseau-declairage-public-a-hezoua/",
-      "published": "2026-10-25T07:48:17Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:46e75c7696f8b0af",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Gabès : plus de 26 millions DT pour le secteur sportif",
-      "link": "https://africanmanager.com/gabes-plus-de-26-millions-dt-pour-le-secteur-sportif/",
-      "published": "2026-10-25T07:45:14Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:d6ed7322274dcca7",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Tataouine : suivi des projets du ministère de l’Intérieur dans la région",
-      "link": "https://africanmanager.com/tataouine-suivi-des-projets-du-ministere-de-linterieur-dans-la-region/",
-      "published": "2026-10-25T07:43:49Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:5485deef5ebd703e",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Le ministre du Tourisme souligne l’importance de la diversification du produit touristique et la qualification des ressources humaines",
-      "link": "https://africanmanager.com/le-ministre-du-tourisme-souligne-limportance-de-la-diversification-du-produit-touristique-et-la-qualification-des-ressources-humaines/",
-      "published": "2026-10-25T07:40:01Z",
-      "lang": "fr",
-      "author": "African Manager"
     }
   ]
 }
