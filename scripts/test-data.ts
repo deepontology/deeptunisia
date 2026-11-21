@@ -1516,6 +1516,44 @@ const KIND_TO_DATASET: Record<string, string> = {
 	}
 }
 
+// V24, the derived predecessor and successor. The chain walk publishes them; this recomputes
+// them without any walk: for each position, the holder of the position that starts latest
+// among those that start before it (and the earliest among those after it), where "before"
+// orders by latest start and then by the position's place in the dataset. An authored
+// predecessor stands in place of the derived one, and a seated role has no neighbours.
+{
+	const seatedRoles = new Set(ds.roles.filter((r: { seats?: number }) => r.seats !== undefined).map((r: { id: string }) => r.id));
+	const order = new Map<string, number>(ds.positions.map((p: Pos, i: number) => [p.id, i]));
+	const authored = new Map<string, string>();
+	for (const row of (parseYaml(readFileSync(join(HERE, '..', 'data', 'positions.yaml'), 'utf8')) ?? []) as { id: string; predecessor?: string }[]) {
+		if (row.predecessor && String(row.predecessor).trim()) authored.set(row.id, String(row.predecessor).trim());
+	}
+	const before = (a: Pos, b: Pos) =>
+		a.interval.startLatest !== b.interval.startLatest ? a.interval.startLatest < b.interval.startLatest : order.get(a.id)! < order.get(b.id)!;
+	const wrong: string[] = [];
+	for (const p of ds.positions) {
+		const sameRole = ds.positions.filter((q: Pos) => q.role === p.role && q.id !== p.id);
+		let expectedPrev: string | null = null;
+		let expectedNext: string | null = null;
+		if (!seatedRoles.has(p.role)) {
+			const earlier = sameRole.filter((q: Pos) => before(q, p));
+			const later = sameRole.filter((q: Pos) => before(p, q));
+			const prev = earlier.reduce((best: Pos | null, q: Pos) => (best === null || before(best, q) ? q : best), null);
+			const next = later.reduce((best: Pos | null, q: Pos) => (best === null || before(q, best) ? q : best), null);
+			expectedPrev = authored.get(p.id) ?? (prev ? prev.holder : null);
+			expectedNext = next ? next.holder : null;
+		}
+		if ((p.predecessorDerived ?? null) !== expectedPrev || (p.successorDerived ?? null) !== expectedNext) {
+			wrong.push(`${p.id}: ${p.predecessorDerived ?? 'none'}/${p.successorDerived ?? 'none'} expected ${expectedPrev ?? 'none'}/${expectedNext ?? 'none'}`);
+		}
+	}
+	ok(
+		'V24: the derived predecessor and successor of every position match a recomputation that walks no chain',
+		wrong.length === 0,
+		wrong.length ? `${wrong.length} differ, e.g. ${wrong.slice(0, 2).join('; ')}` : `${ds.positions.length} positions`
+	);
+}
+
 // The published terms and payload. A dataset that invites reuse must say under
 // what terms, and a README that understates what ships is the same failure the
 // stats machinery exists to prevent — the build owns the numbers or the numbers
