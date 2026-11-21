@@ -109,7 +109,7 @@ Why go this far? Because rules enforced by people alone wear down. They bend und
 
 ### The boundary, stated plainly {#boundary}
 
-The engine checks that every claim keeps its contract with the evidence. It does not decide whether a claim is true. That judgement stays with people, and it stays visible. In the words of our [paper](/deeptunisia-release-paper-v1.0.pdf), the dataset cannot be *quietly* wrong.
+The engine checks that every claim keeps its contract with the evidence. It does not decide whether a claim is true. That judgement stays with people, and it stays visible. In the words of our [systems paper](/deeptunisia-release-paper-v1.0.pdf), the dataset cannot be *quietly* wrong.
 
 ### Every claim travels with its evidence {#env-title}
 
