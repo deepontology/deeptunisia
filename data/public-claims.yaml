@@ -99,6 +99,9 @@ inventory:
   - path: static/deeptunisia-release-paper-v1.0.pdf
     rule: generated-artifact
     note: Generated PDF bound to the active release identity, not hand-edited.
+  - path: static/deeptunisia-release-paper-v1.0.0.pdf
+    rule: generated-artifact
+    note: Release paper PDF rendered from the tracked source; scripts/test-paper.ts reads its text.
   - path: docs/agora-deployment.md
     rule: authored-prose
     note: Current-state operational documentation; the mode contract.

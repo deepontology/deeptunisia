@@ -30,6 +30,9 @@ jobs:
         with:
           node-version: "22"
           cache: npm
+      # scripts/test-paper.ts reads the text of the committed release paper PDF
+      # and fails when pdftotext is missing.
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils
       - run: npm ci --ignore-scripts
       - run: npm run build
       - run: npx svelte-kit sync

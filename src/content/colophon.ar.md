@@ -18,7 +18,7 @@ translated_by: model-reviewed
 
 ## الورقة: نظرية المعرفة هي المصرّف {#paper}
 
-الفكرة مكتوبة في [ورقة الأنظمة](/deeptunisia-release-paper-v1.0.pdf) المرتبطة من الصفحة الرئيسية — *The Epistemology Is the Compiler*.
+الفكرة مكتوبة في [ورقة الأنظمة](/deeptunisia-release-paper-v1.0.pdf) و[ورقة الإصدار، V1.0.0](/deeptunisia-release-paper-v1.0.0.pdf) المرتبطتين من الصفحة الرئيسية — *The Epistemology Is the Compiler*.
 
 أطروحتها بسيطة: مطالبة المحرّرين بتذكّر سياسة إثبات ليست إنفاذًا. لذلك يقوم هذا المشروع بتصريف السياسة بدلاً من ذلك.
 

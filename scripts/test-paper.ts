@@ -33,6 +33,7 @@
  * The V0.1 file stays untagged and frozen, deliberately outside this gate.
  */
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -517,6 +518,46 @@ const papers = new Map<string, string>();
 			'landing/index.html is in the drift manifest (hash-tied to dataset.json)',
 			Boolean(landedHash && datasetHash),
 			`manifest: landing/index.html ↔ src/generated/dataset.json @ ${datasetHash}`
+		);
+	}
+}
+
+// The release paper the site serves. A committed binary is only as true as the
+// text inside it, so this reads the PDF's own text, not its name: it must name
+// the release, carry the correction that moved the availability section, and
+// carry neither of the sentences that section replaced. pdftotext is required;
+// a check that skips when the tool is missing would be absent when it matters.
+{
+	const pdfPath = join(HERE, '..', 'static', 'deeptunisia-release-paper-v1.0.0.pdf');
+	ok('the site serves the release paper PDF at static/deeptunisia-release-paper-v1.0.0.pdf', existsSync(pdfPath));
+	if (existsSync(pdfPath)) {
+		const run = spawnSync('pdftotext', ['-q', pdfPath, '-'], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
+		ok(
+			'pdftotext reads the release paper PDF (install poppler-utils where it is missing)',
+			run.status === 0 && typeof run.stdout === 'string' && run.stdout.length > 1000,
+			run.error ? String(run.error.message) : `exit ${run.status}`
+		);
+		const text = (run.stdout ?? '').replace(/\s+/g, ' ');
+		ok('the release paper PDF names Release V1.0.0', text.includes('Release V1.0.0'));
+		ok('the release paper PDF carries the C21 correction', /C21 — the availability section/.test(text));
+		ok(
+			'the release paper PDF does not promise a deposit "before submission"',
+			!text.includes('will be deposited before submission')
+		);
+		ok(
+			'the release paper PDF does not call the licence decision "in progress"',
+			!text.includes('license decision is in progress') && !text.includes('licence decision is in progress, an open-source')
+		);
+		ok(
+			'the release paper PDF says the archive is the tagged Release and the DOI is pending',
+			text.includes('tagged GitHub Release for V1.0.0 is the archive of this version') && text.includes('A DOI deposit of the release is pending')
+		);
+		const source = readFileSync(join(HERE, '..', 'output', 'deeptunisia-release-paper-v1.0.0.md'), 'utf8');
+		const pdfCommit = text.match(/Built from commit ([0-9a-f]{40})/)?.[1] ?? '';
+		ok('the release paper PDF names the commit it was built from', /^[0-9a-f]{40}$/.test(pdfCommit), pdfCommit || 'no "Built from commit" line');
+		ok(
+			'the paper source describes the site copy and the Release copy',
+			source.includes('/deeptunisia-release-paper-v1.0.0.pdf') && source.includes('the copy bound to that commit')
 		);
 	}
 }
