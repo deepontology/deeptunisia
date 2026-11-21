@@ -96,7 +96,7 @@
         "d3-geo": "3.1.1",
         "d3-scale": "4.0.2",
         "d3-shape": "3.2.0",
-        "deepepisteme": "github:deepontology/deepepisteme#c5cc5b63ff0c292c097f2fccaa13aa3aa2a970f5",
+        "deepepisteme": "github:deepontology/deepepisteme#da6447f34733ea3cda7f79727188f716119152f6",
         "graphology": "0.26.0",
         "graphology-metrics": "2.4.0",
         "minisearch": "7.2.0",
