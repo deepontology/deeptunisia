@@ -109,7 +109,7 @@ Pourquoi aller si loin ? Parce que les règles appliquées par des humains seuls
 
 ### La limite, dite clairement {#boundary}
 
-Le moteur vérifie que chaque affirmation respecte son contrat avec la preuve. Il ne décide pas si une affirmation est vraie. Ce jugement reste humain, et il reste visible. Pour reprendre notre [article](/deeptunisia-release-paper-v1.0.pdf), le jeu de données ne peut pas avoir tort *en silence*.
+Le moteur vérifie que chaque affirmation respecte son contrat avec la preuve. Il ne décide pas si une affirmation est vraie. Ce jugement reste humain, et il reste visible. Pour reprendre notre [article sur les systèmes](/deeptunisia-release-paper-v1.0.pdf), le jeu de données ne peut pas avoir tort *en silence*.
 
 ### Chaque affirmation voyage avec sa preuve {#env-title}
 
