@@ -322,5 +322,34 @@ if (!existsSync(BUILD)) {
 	}
 }
 
+// --- Font preloads ---------------------------------------------------------
+// Every face in static/fonts/fonts.css is `font-display: swap` and asked for on first use, and a
+// face that arrives after the page is built makes the browser lay the whole page out again
+// (about 0.35 s each on the phone profile, twice, on /chronicle). A page preloads the faces its
+// first record panel draws, so they are in before the tap, and only those: each preloaded byte
+// competes with the page's own scripts. Which faces, and why, is argued where the link is.
+const FONT_PRELOADS: Record<string, string[]> = {
+	chronicle: ['ibm-plex-sans-arabic-w400-arabic.woff2', 'newsreader-w400-italic-latin.woff2']
+};
+const FONT_PRELOAD_CEILING = 120_000;
+
+if (existsSync(BUILD)) {
+	console.log('\n  font preloads per page\n');
+	const fontCss = readFileSync(join(ROOT, 'static/fonts/fonts.css'), 'utf8');
+	for (const page of readdirSync(BUILD).filter((name) => name.endsWith('.html')).sort()) {
+		const name = page.replace(/\.html$/, '');
+		const links = [...readFileSync(join(BUILD, page), 'utf8').matchAll(/<link\b[^>]*\brel="preload"[^>]*\bas="font"[^>]*>/g)].map((m) => m[0]);
+		const files = links.map((l) => (l.match(/href="\/fonts\/([^"]+)"/) ?? [])[1] ?? '');
+		const expected = FONT_PRELOADS[name] ?? [];
+		ok(`/${name} preloads ${expected.length ? expected.join(' and ') : 'no font'}`, files.length === expected.length && expected.every((f) => files.includes(f)), files.join(', ') || 'none');
+		if (links.length === 0) continue;
+		ok(`/${name} font preloads are woff2 and carry crossorigin (without it the font is fetched twice)`, links.every((l) => /type="font\/woff2"/.test(l) && /\bcrossorigin\b/.test(l)));
+		ok(`/${name} font preloads are low priority (they must not delay the page's own scripts)`, links.every((l) => /fetchpriority="low"/.test(l)));
+		ok(`/${name} font preloads name files that exist and that fonts.css declares`, files.every((f) => existsSync(join(ROOT, 'static/fonts', f)) && fontCss.includes(`./${f}`)));
+		const size = files.reduce((sum, f) => sum + (existsSync(join(ROOT, 'static/fonts', f)) ? statSync(join(ROOT, 'static/fonts', f)).size : 0), 0);
+		ok(`/${name} font preloads total at most ${FONT_PRELOAD_CEILING.toLocaleString('en-US')} bytes`, size <= FONT_PRELOAD_CEILING, `${size.toLocaleString('en-US')} bytes`);
+	}
+}
+
 console.log(`\n   ${checks - failures.length}/${checks} budget checks passed${failures.length ? `, ${failures.length} FAILED` : ''}\n`);
 if (failures.length) process.exit(1);

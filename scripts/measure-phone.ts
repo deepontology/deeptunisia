@@ -38,6 +38,11 @@
  * the time before the record opened (the URL gained `?id=`) and for the time after it. Run it
  * against a build made with `npx vite build --minify false` to read function names.
  *
+ * After the text row, a `relayouts` row says how many times the browser laid the whole built page
+ * out again before the words were on screen (layouts that dirty over half of the page's layout
+ * objects, after the first, which is the page being built), from traced runs of their own: the
+ * count is the cause, the text gate is its symptom.
+ *
  * Every row says how loaded the machine was while it ran: the 1-minute load average
  * (at the start of the row and at its end), the share of the processors that were busy
  * during it, and `LOADED` when the load average was over a quarter of the processors.
@@ -146,6 +151,8 @@ interface Run {
 	firstPaint: number;
 	usable: number | null;
 	wireKB: number;
+	/** Full-page relayouts before the gate passed; only on a traced run. */
+	relayouts: { count: number; ms: number } | null;
 }
 
 const BUDGET_MS = 120_000;
@@ -193,7 +200,8 @@ async function runOnce(
 	route: string,
 	profile: Profile,
 	gate: Gate,
-	cpuProfile: boolean
+	cpuProfile: boolean,
+	trace = false
 ): Promise<Run> {
 	const context = await browser.newContext({
 		viewport: { width: 390, height: 844 },
@@ -225,6 +233,15 @@ async function runOnce(
 			for (const e of list.getEntries()) if (e.name === 'first-contentful-paint') w.__fcp = e.startTime;
 		}).observe({ type: 'paint', buffered: true });
 	});
+	const traced: { ts: number; dur: number; ph: string; name: string; cat?: string; args?: { beginData?: { dirtyObjects: number; totalObjects: number } } }[] = [];
+	let traceDone: Promise<void> | null = null;
+	if (trace) {
+		cdp.on('Tracing.dataCollected', (e) => {
+			traced.push(...(e.value as typeof traced));
+		});
+		traceDone = new Promise<void>((resolve) => cdp.on('Tracing.tracingComplete', () => resolve()));
+		await cdp.send('Tracing.start', { categories: 'devtools.timeline,blink.user_timing', transferMode: 'ReportEvents' });
+	}
 	let profilerStartedAt = 0;
 	if (cpuProfile) {
 		await cdp.send('Profiler.enable');
@@ -268,9 +285,25 @@ async function runOnce(
 		await page.waitForTimeout(100);
 	}
 	if (cpuProfile) await printProfile(cdp, gate, recordOpenedAt === null ? null : recordOpenedAt + (start - profilerStartedAt));
+	let relayouts: Run['relayouts'] = null;
+	if (trace && traceDone) {
+		await page.evaluate(() => performance.mark('GATE')).catch(() => {});
+		await cdp.send('Tracing.end');
+		await traceDone;
+		const gateAt = traced.find((e) => e.name === 'GATE' && e.cat?.includes('user_timing'))?.ts ?? Infinity;
+		const layouts = traced.filter((e) => e.ph === 'X' && e.name === 'Layout' && e.args?.beginData && e.ts < gateAt);
+		const biggest = Math.max(0, ...layouts.map((e) => e.args!.beginData!.totalObjects));
+		// Layouts of the built page that dirtied over half of it: the first is the page being built,
+		// each one after it is the browser laying the whole page out again.
+		const full = layouts
+			.filter((e) => e.args!.beginData!.totalObjects >= biggest * 0.75 && e.args!.beginData!.dirtyObjects * 2 > e.args!.beginData!.totalObjects)
+			.sort((x, y) => x.ts - y.ts)
+			.slice(1);
+		relayouts = { count: full.length, ms: Math.round(full.reduce((a, e) => a + e.dur, 0) / 1000) };
+	}
 	const firstPaint = await page.evaluate(() => (window as unknown as { __fcp: number | null }).__fcp ?? 0).catch(() => 0);
 	await context.close();
-	return { gate, firstPaint: Math.round(firstPaint), usable, wireKB: Math.round((usable === null ? wire : wireAtGate) / 1024) };
+	return { gate, firstPaint: Math.round(firstPaint), usable, wireKB: Math.round((usable === null ? wire : wireAtGate) / 1024), relayouts };
 }
 
 /**
@@ -385,6 +418,18 @@ for (const profile of PROFILES) {
 				(line === undefined ? '' : `   line ${sec(line)}${over ? '  OVER' : ''}`) +
 				`   load ${loadBefore.toFixed(1)}→${loadAfter.toFixed(1)}, ${busy}% busy${loaded ? '  LOADED' : ''}`
 		);
+		if (gate === 'text') {
+			// The cause behind the text gate's time: how many times the browser laid the whole page
+			// out again before the words were on screen. Traced runs of their own, so tracing does
+			// not touch the figures above.
+			const traced: Run[] = [];
+			for (let i = 0; i < runs; i++) traced.push(await runOnce(browser, base, route, profile, 'text', false, true));
+			const counts = traced.map((r) => r.relayouts?.count ?? null);
+			const spent = traced.map((r) => r.relayouts?.ms ?? null);
+			console.log(
+				`  ${profile.name.padEnd(16)} relayouts: ${median(counts)} full-page relayouts of the built page before the words (runs: ${counts.join(', ')}), ${median(spent)} ms in them`
+			);
+		}
 	}
 }
 console.log('');
