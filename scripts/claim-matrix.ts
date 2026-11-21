@@ -357,6 +357,33 @@ export const CLAIM_MATRIX: MatrixRow[] = [
 	},
 
 	// -----------------------------------------------------------------------
+	// V32: vacancies, and V33: verified means a person checked
+	// -----------------------------------------------------------------------
+	{
+		paper_ref: 'successor Appendix A (V32)',
+		claim_text:
+			'A vacancy is a claim like any other: it needs a source, names a known role that is not a seated term, carries no holder, and may not overlap a titular holder or another vacancy of the same role. A violation fails the build and names the position.',
+		status: 'shipped+tested',
+		code_pointer:
+			'node_modules/deepepisteme/src/atlas/rules/vacancy-overlap.ts :: is a seated term, which has no single holder to be vacant',
+		test_pointer:
+			'scripts/test-validators.ts :: V32: a vacancy with no source fails; scripts/test-validators.ts :: V32: a vacancy cannot carry a holder; scripts/test-pipeline.ts :: a vacancy overlapping a titular holder fails and names the position (V32); scripts/test-pipeline.ts :: a vacancy of an unknown office fails (V32)',
+		notes:
+			'An acting holder does not block a vacancy: the pipeline fixture with only an acting governor builds clean. The rule runs from the engine; the consumer supplies the schema (source, no holder) and the fixtures.'
+	},
+	{
+		paper_ref: 'successor Appendix A (V33)',
+		claim_text:
+			'A record marked verified carries a review whose actor is a human and whose method is a source check; a verified mark with no such review fails the build. No record is verified by default.',
+		status: 'shipped+tested',
+		code_pointer: 'scripts/build-data.ts :: actor human and method source-check',
+		test_pointer:
+			'scripts/test-validators.ts :: V33: verified with no review fails; scripts/test-pipeline.ts :: a verified record with no review fails and names the record (V33); scripts/test-pipeline.ts :: the verified error is the V33 human-review message; scripts/test-desk.ts :: the written record passes V33',
+		notes:
+			'Hand-typed verified values were removed from the data and the exception list is empty, so the rule has no live exception. The desk writes the review that makes a record verified; no agent review can.'
+	},
+
+	// -----------------------------------------------------------------------
 	// Time
 	// -----------------------------------------------------------------------
 	{
@@ -796,6 +823,8 @@ export const REQUIRED_TOPICS: { label: string; pattern: RegExp }[] = [
 	{ label: 'V28 recursive strictness', pattern: /V28/ },
 	{ label: 'V29 claim-level evidence', pattern: /V29/ },
 	{ label: 'V31 cutoff horizon', pattern: /V31/ },
+	{ label: 'V32 vacancies', pattern: /V32/ },
+	{ label: 'V33 verified means a person checked', pattern: /V33/ },
 	{ label: 'temporal predicates', pattern: /certainlyActive/ },
 	{ label: 'citation guarantee / rule 2', pattern: /rule-2|rule 2|citation/i },
 	{ label: 'mutation report provenance', pattern: /mutation-report\.json/ },
