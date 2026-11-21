@@ -328,14 +328,30 @@ if (!existsSync(BUILD)) {
 // (about 0.35 s each on the phone profile, twice, on /chronicle). A page preloads the faces its
 // first record panel draws, so they are in before the tap, and only those: each preloaded byte
 // competes with the page's own scripts. Which faces, and why, is argued where the link is.
-const FONT_PRELOADS: Record<string, string[]> = {
-	chronicle: ['ibm-plex-sans-arabic-w400-arabic.woff2', 'newsreader-w400-italic-latin.woff2']
+// A page that opens the record panel draws the same late faces. Whether it preloads them follows
+// from one fact: whether the page has a tap or text line that the late relayout lands before.
+// `gated` marks the pages `npm run measure:phone` holds to a line. A gated page must preload; an
+// ungated one preloads nothing, because its relayouts fall after the words and the bytes only cost.
+// The per-route measurement behind each ungated entry is in the release handoff notes, post-launch
+// list. The day a page gains a line, the checks below fail until its row says so and names the faces.
+const FONT_ROUTES: Record<string, { gated: boolean; preload: string[] }> = {
+	chronicle: { gated: true, preload: ['ibm-plex-sans-arabic-w400-arabic.woff2', 'newsreader-w400-italic-latin.woff2'] },
+	atlas: { gated: false, preload: [] },
+	network: { gated: false, preload: [] },
+	now: { gated: false, preload: [] },
+	rankings: { gated: false, preload: [] }
 };
+const FONT_PRELOADS: Record<string, string[]> = Object.fromEntries(Object.entries(FONT_ROUTES).map(([name, row]) => [name, row.preload]));
 const FONT_PRELOAD_CEILING = 120_000;
 
 if (existsSync(BUILD)) {
 	console.log('\n  font preloads per page\n');
 	const fontCss = readFileSync(join(ROOT, 'static/fonts/fonts.css'), 'utf8');
+	const measured = (readFileSync(join(ROOT, 'scripts/measure-phone.ts'), 'utf8').match(/arg\('route'\) \?\? '\/([a-z-]+)'/) ?? [])[1];
+	ok(`the page measure:phone holds to a line (/${measured}) is marked gated in FONT_ROUTES`, measured !== undefined && FONT_ROUTES[measured]?.gated === true, 'add the page to FONT_ROUTES and decide its preloads');
+	for (const [name, row] of Object.entries(FONT_ROUTES)) {
+		ok(`/${name} ${row.gated ? 'has a line and preloads its late faces' : 'has no line and preloads nothing'}`, row.gated ? row.preload.length > 0 : row.preload.length === 0);
+	}
 	for (const page of readdirSync(BUILD).filter((name) => name.endsWith('.html')).sort()) {
 		const name = page.replace(/\.html$/, '');
 		const links = [...readFileSync(join(BUILD, page), 'utf8').matchAll(/<link\b[^>]*\brel="preload"[^>]*\bas="font"[^>]*>/g)].map((m) => m[0]);
