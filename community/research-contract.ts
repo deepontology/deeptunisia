@@ -25,6 +25,25 @@ export interface RuntimeText {
 	ar: string | null;
 }
 
+/** Reserved answer key on an allocation item: true when the respondent kept the draft. */
+export const ALLOCATION_KEPT_KEY = 'kept_draft';
+/** The basis-point value of an untouched line: 100% of its draft. */
+const DRAFT_BP = 10000;
+
+export interface RuntimeAllocationCategory {
+	id: string;
+	draftMd: number;
+	locked: boolean;
+}
+
+export interface RuntimeAllocation {
+	envelopeMd: number;
+	tolerance: number;
+	stepBp: number;
+	maxBp: number;
+	categories: RuntimeAllocationCategory[];
+}
+
 export interface RuntimeItem {
 	id: string;
 	module: string;
@@ -45,6 +64,8 @@ export interface RuntimeItem {
 	exclusive?: string[];
 	/** A short explanation shown under the question, per locale. */
 	help?: RuntimeText;
+	/** Only on an `allocation` item. */
+	allocation?: RuntimeAllocation;
 }
 
 export interface ScaleAnchors {
@@ -234,6 +255,13 @@ export interface InstrumentDocument {
 		help_en?: string;
 		help_fr?: string;
 		help_ar?: string;
+		allocation?: {
+			envelope_md: number;
+			tolerance: number;
+			step_bp: number;
+			max_bp: number;
+			categories: Array<{ id: string; draft_md: number; locked: boolean }>;
+		};
 	}>;
 	maxdiff_priority?: MaxDiffBlockDocument | null;
 	gap_block?: GapBlockDocument | null;
@@ -382,6 +410,8 @@ export function computeInstrumentHash(doc: InstrumentDocument): string {
 			// A text answer is capped here, so the limit decides what the
 			// instrument accepts rather than only how it reads.
 			if (item.max_chars !== undefined) projected.max_chars = item.max_chars;
+			// The allocation lines and their draft amounts are part of what is answered.
+			if (item.allocation !== undefined) projected.allocation = item.allocation;
 			// An explanation is shown text: it changes what a respondent reads.
 			if (item.help_en !== undefined || item.help_fr !== undefined || item.help_ar !== undefined) {
 				projected.help = { en: item.help_en ?? null, fr: item.help_fr ?? null, ar: item.help_ar ?? null };
@@ -446,6 +476,15 @@ export function compileInstrument(doc: InstrumentDocument): RuntimeInstrument {
 		if (item.anchors !== undefined) compiled.anchors = structuredClone(item.anchors);
 		if (item.option_labels !== undefined) compiled.optionLabels = structuredClone(item.option_labels);
 		if (item.exclusive !== undefined) compiled.exclusive = [...item.exclusive];
+		if (item.allocation !== undefined) {
+			compiled.allocation = {
+				envelopeMd: item.allocation.envelope_md,
+				tolerance: item.allocation.tolerance,
+				stepBp: item.allocation.step_bp,
+				maxBp: item.allocation.max_bp,
+				categories: item.allocation.categories.map((c) => ({ id: c.id, draftMd: c.draft_md, locked: c.locked }))
+			};
+		}
 		if (item.help_en !== undefined || item.help_fr !== undefined || item.help_ar !== undefined) {
 			compiled.help = text(item.help_en ?? null, item.help_fr ?? null, item.help_ar ?? null);
 		}
@@ -575,6 +614,42 @@ function invalid(code: string, error: string): SubmissionResult {
 	return { ok: false, code, error };
 }
 
+/**
+ * Why a budget allocation is not acceptable, or null when it is. The value is
+ * one basis-point share per line plus `kept_draft`. Movable lines must balance
+ * to the envelope within the tolerance; locked lines must stay at the draft.
+ */
+function allocationProblem(item: RuntimeItem, value: unknown): string | null {
+	const spec = item.allocation;
+	if (!spec) return 'this item declares no allocation lines';
+	if (!isRecord(value)) return 'expected an object of basis points per line';
+	const known = new Set(spec.categories.map((c) => c.id));
+	for (const key of Object.keys(value)) {
+		if (key !== ALLOCATION_KEPT_KEY && !known.has(key)) return `unknown category "${key}"`;
+	}
+	const keptDraft = value[ALLOCATION_KEPT_KEY];
+	if (typeof keptDraft !== 'boolean') return `"${ALLOCATION_KEPT_KEY}" must be true or false`;
+	for (const c of spec.categories) {
+		const share = value[c.id];
+		if (!Number.isInteger(share)) return `category "${c.id}" needs an integer in basis points`;
+		const bp = share as number;
+		if (bp < 0 || bp > spec.maxBp || bp % spec.stepBp !== 0) {
+			return `category "${c.id}" must be a multiple of ${spec.stepBp} from 0 to ${spec.maxBp}`;
+		}
+		if (c.locked && bp !== DRAFT_BP) return `locked category "${c.id}" must stay at the draft`;
+	}
+	if (keptDraft && spec.categories.some((c) => value[c.id] !== DRAFT_BP)) {
+		return `${ALLOCATION_KEPT_KEY} is true but a category differs from the draft`;
+	}
+	const spent = spec.categories
+		.filter((c) => !c.locked)
+		.reduce((sum, c) => sum + (c.draftMd * (value[c.id] as number)) / DRAFT_BP, 0);
+	if (Math.abs(spent - spec.envelopeMd) > spec.tolerance * spec.envelopeMd) {
+		return 'the movable lines do not balance to the envelope';
+	}
+	return null;
+}
+
 /** Why a value is not acceptable for its item, or null when it is. */
 function answerProblem(item: RuntimeItem, value: unknown, response = item.response): string | null {
 	switch (response) {
@@ -611,6 +686,8 @@ function answerProblem(item: RuntimeItem, value: unknown, response = item.respon
 			}
 			return null;
 		}
+		case 'allocation':
+			return allocationProblem(item, value);
 		case 'text_short': {
 			const max = item.maxChars ?? DEFAULT_MAX_CHARS;
 			if (typeof value !== 'string' || value.length > max) {

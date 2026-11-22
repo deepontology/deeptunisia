@@ -1,0 +1,132 @@
+# State revenue of the adopted budgets 2020 to 2026, for the citizen budget study (dt-research-003).
+#
+# STATUS: adopted-lf. Every figure is read from Article premier and Article 2 of each
+# year's finance law, as printed in the Journal Officiel de la République Tunisienne
+# (French translation for information). Each year carries the printed JORT page and a
+# kept full-page PNG crop in sources/rev-<year>-p<page>.png, so the figure can be read
+# on the page it came from. Every figure was read twice: once from the PDF text layer
+# and once on the 150 dpi page image.
+#
+# The two ratios this file exists for, defined here once and repeated in words on the
+# page and on the board:
+#
+#   tax per 100 raised  = tax_md / (tax_md + non_tax_md)
+#     The denominator is what the state raises itself: tax receipts plus non-tax
+#     receipts. Grants (dons) and borrowing are NOT counted, because they are not
+#     raised by the state. This is the denominator of the "91 dinars in every 100
+#     the state raises itself" hook.
+#
+#   spending covered by tax = tax_md / spending_md
+#     The denominator is the payment credits opened by the same law (tableau C), the
+#     same total the board's spending side uses. The rest is covered by non-tax
+#     receipts, grants and borrowing.
+#
+# Identity checks, all to the thousand dinars:
+#   tax_md + non_tax_md + grants_md = revenue_md
+#   revenue_md - spending_md = -deficit_md
+#   spending_md = the same year's total_md in history-lf-2020-2026.yaml
+# Checked by: npx tsx scripts/check-budget-figures.ts
+#
+# Years NOT here, and why:
+#   2018 and 2019: their finance laws use the pre-2020 presentation. Article premier
+#     fixes one total split into Titre I, Titre II and the special treasury funds, with
+#     expenses in Article 3; there is no tax / non-tax / grants split anywhere in the
+#     law text. Titre II also carries loans, so it cannot stand in for non-tax revenue.
+#     Their revenue cannot be put on the same two ratios without inventing a mapping.
+#   2021: the 2021 budget was not voted as a finance law in the same series.
+#
+# Units: millions of dinars (MD), payment credits, nominal (not adjusted for inflation).
+
+study: dt-research-003
+checked: 2026-11-17
+years:
+  2020:
+    document: "Loi n° 2019-78 du 23 décembre 2019, portant loi de finances pour l'année 2020"
+    source: "JORT n° 104, 27 décembre 2019 (French translation), Article premier and Article 2, page 4425"
+    url: "https://lake.jort.tn/journal-officiel/fr/2019/104.pdf"
+    pdf_sha256: "996cc17acb3f88f7fe6087e66c00e44ffd985afe847e73c9e484f3dd079e3967"
+    page: 4425
+    crop: "sources/rev-2020-p4425.png"
+    tableau_a_page: 4443
+    tableau_a_crop: "sources/rev-2020-p4443.png"
+    spending_md: 39191
+    revenue_md: 35859
+    tax_md: 31759
+    non_tax_md: 3800
+    grants_md: 300
+    deficit_md: 3332
+  2022:
+    document: "Décret-loi n° 2021-21 du 28 décembre 2021, portant loi de finances pour l'année 2022"
+    source: "JORT n° 119, 28 décembre 2021 (French translation), Article premier and Article 2, page 3081"
+    url: "https://lake.jort.tn/journal-officiel/fr/2021/119.pdf"
+    pdf_sha256: "40473b3d5dda95a53418510a0714ebaf8d761da958ca8525328b2d19de4bb014"
+    page: 3081
+    crop: "sources/rev-2022-p3081.png"
+    tableau_a_page: 3111
+    tableau_a_crop: "sources/rev-2022-p3111.png"
+    spending_md: 47166
+    revenue_md: 38618
+    tax_md: 35091
+    non_tax_md: 3067
+    grants_md: 460
+    deficit_md: 8548
+  2023:
+    document: "Décret-loi n° 2022-79 du 22 décembre 2022, portant loi de finances pour l'année 2023"
+    source: "JORT n° 141, 23 décembre 2022 (French translation), Article premier and Article 2, page 3556"
+    url: "https://lake.jort.tn/journal-officiel/fr/2022/141.pdf"
+    pdf_sha256: "4557069b106ee78ce4d9eab3f7f716028c2a13e04d9d7bc8bf4d40ab3d3d76a0"
+    page: 3556
+    crop: "sources/rev-2023-p3556.png"
+    tableau_a_page: 3580
+    tableau_a_crop: "sources/rev-2023-p3580.png"
+    spending_md: 53921
+    revenue_md: 46424
+    tax_md: 40536
+    non_tax_md: 5534
+    grants_md: 354
+    deficit_md: 7497
+  2024:
+    document: "Loi n° 2023-13 du 11 décembre 2023, portant loi de finances pour l'année 2024"
+    source: "JORT n° 144, 12 décembre 2023 (French translation), Article premier and Article 2, page 3468"
+    url: "https://lake.jort.tn/journal-officiel/fr/2023/144.pdf"
+    pdf_sha256: "d077f5ba7c1e65bab36efb102578ad49df9c9961497bcbfb8051f42d08f44f9d"
+    page: 3468
+    crop: "sources/rev-2024-p3468.png"
+    tableau_a_page: 3497
+    tableau_a_crop: "sources/rev-2024-p3497.png"
+    spending_md: 59805
+    revenue_md: 49160
+    tax_md: 44050
+    non_tax_md: 4760
+    grants_md: 350
+    deficit_md: 10645
+  2025:
+    document: "Loi n° 2024-48 du 9 décembre 2024, portant loi de finances pour l'année 2025"
+    source: "JORT n° 149, 10 décembre 2024 (French translation), Article premier and Article 2, page 3420"
+    url: "https://lake.jort.tn/journal-officiel/fr/2024/149.pdf"
+    pdf_sha256: "cb210c2719b3cebee24015a765f8ba9011a00c99f8edf60524b931e44261c507"
+    page: 3420
+    crop: "sources/rev-2025-p3420.png"
+    tableau_a_page: 3460
+    tableau_a_crop: "sources/rev-2025-p3460.png"
+    spending_md: 59828
+    revenue_md: 50028
+    tax_md: 45249
+    non_tax_md: 4429
+    grants_md: 350
+    deficit_md: 9800
+  2026:
+    document: "Loi n° 2025-17 du 12 décembre 2025, portant loi de finances pour l'année 2026"
+    source: "JORT n° 148, 12 décembre 2025 (French translation), Article premier and Article 2, page 3343"
+    url: "https://lake.jort.tn/journal-officiel/fr/2025/148.pdf"
+    pdf_sha256: "17a95b487e066f5c5c4bd6e160d331bdccaada5ecb0b72e1ae054c14f3096110"
+    page: 3343
+    crop: "sources/rev-2026-p3343.png"
+    tableau_a_page: 3372
+    tableau_a_crop: "sources/rev-2026-p3372.png"
+    spending_md: 63575
+    revenue_md: 52560
+    tax_md: 47773
+    non_tax_md: 4437
+    grants_md: 350
+    deficit_md: 11015
