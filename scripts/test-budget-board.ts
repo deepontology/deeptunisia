@@ -269,7 +269,7 @@ suite('coin');
 suite('step');
 
 // The prototype route: draft start by default (owner decision D2), ?start=empty and ?rule=step as flags.
-const route = readFileSync(join(ROOT, 'src/routes/research/citizen-budget/prototype/+page.svelte'), 'utf8');
+const route = readFileSync(join(ROOT, 'src/routes/(read)/research/citizen-budget/prototype/+page.svelte'), 'utf8');
 ok('the prototype route defaults to the draft start', /let\s+start\s*=\s*\$state<StartMode>\('draft'\)/.test(route));
 ok('the prototype route reads ?start=empty', /get\('start'\)\s*===\s*'empty'/.test(route));
 ok('the prototype route reads ?rule=step', /get\('rule'\)\s*===\s*'step'/.test(route));
