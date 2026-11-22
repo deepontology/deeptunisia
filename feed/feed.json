@@ -3,6 +3,146 @@
   "cap": 1200,
   "items": [
     {
+      "id": "feed:african-manager:eb62209fd84d4a6b",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "L’UTICA propose des mesures pour soutenir l’investissement, la production et l’export",
+      "link": "https://africanmanager.com/lutica-propose-des-mesures-pour-soutenir-linvestissement-la-production-et-lexport/",
+      "published": "2026-11-22T07:02:00Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:kapitalis:58b97d48cdcd174f",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Comment la Russie achète des Africains pour sa guerre",
+      "link": "https://kapitalis.com/tunisie/2026/11/22/comment-la-russie-achete-des-africains-pour-sa-guerre/",
+      "published": "2026-11-22T07:00:00Z",
+      "lang": "fr",
+      "author": "webmaster kapitalis"
+    },
+    {
+      "id": "feed:african-manager:b235d0f8b6c0752b",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Les peines alternatives excluent les affaires criminelles, affirme la ministre de la Justice",
+      "link": "https://africanmanager.com/les-peines-alternatives-excluent-les-affaires-criminelles-affirme-la-ministre-de-la-justice/",
+      "published": "2026-11-22T06:59:00Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:kapitalis:315e77e0a899db84",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Tunisie | Le CRLDHT dénonce l’«intensification de l’offensive contre l’UGTT»",
+      "link": "https://kapitalis.com/tunisie/2026/11/22/tunisie-le-crldht-denonce-lintensification-de-loffensive-contre-lugtt/",
+      "published": "2026-11-22T06:45:01Z",
+      "lang": "fr",
+      "author": "webmaster kapitalis"
+    },
+    {
+      "id": "feed:kapitalis:500994076f5c85d9",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Le poème du dimanche | ‘‘Raisons d’espérer raisons de vivre’’ de Jean Lescure",
+      "link": "https://kapitalis.com/tunisie/2026/11/22/le-poeme-du-dimanche-raisons-desperer-raisons-de-vivre-de-jean-lescure/",
+      "published": "2026-11-22T06:43:00Z",
+      "lang": "fr",
+      "author": "webmaster kapitalis"
+    },
+    {
+      "id": "feed:kapitalis:2dfb249e70bc1e63",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Adel Boussarsar, une figure du tourisme tunisien tire sa révérence",
+      "link": "https://kapitalis.com/tunisie/2026/11/22/adel-boussarsar-une-figure-du-tourisme-tunisien-tire-sa-reverence/",
+      "published": "2026-11-22T06:12:12Z",
+      "lang": "fr",
+      "author": "webmaster kapitalis"
+    },
+    {
+      "id": "feed:african-manager:56177f7a9ef26284",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Moins de coupures d’électricité l’été prochain si la feuille de route débute dès maintenant",
+      "link": "https://africanmanager.com/moins-de-coupures-delectricite-lete-prochain-si-la-feuille-de-route-debute-des-maintenant/",
+      "published": "2026-11-21T23:56:58Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:d3e39b1072e6c18a",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Le torchon brûle entre le Conseil de paix et Israël",
+      "link": "https://africanmanager.com/le-torchon-brule-entre-le-conseil-de-paix-et-israel/",
+      "published": "2026-11-21T23:54:12Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:f84130526338b11a",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Bennett appelle à un gouvernement d’union sans Netanyahou à sa tête",
+      "link": "https://africanmanager.com/bennett-appelle-a-un-gouvernement-dunion-sans-netanyahou-a-sa-tete/",
+      "published": "2026-11-21T23:51:17Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:164e6f1dd02a02ed",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Eisenkot invite le Likoud de Netanyahu à une « série de discussions marathon »",
+      "link": "https://africanmanager.com/eisenkot-invite-le-likoud-de-netanyahu-a-une-serie-de-discussions-marathon/",
+      "published": "2026-11-21T23:50:55Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:7cac38f1ed1c2e1a",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Trump affirme qu’il continue de chercher un accord « permanent » avec Téhéran",
+      "link": "https://africanmanager.com/trump-affirme-quil-continue-de-chercher-un-accord-permanent-avec-teheran/",
+      "published": "2026-11-21T23:48:00Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:african-manager:3797a1d9a9372fb7",
+      "outlet": "African Manager",
+      "outletId": "african-manager",
+      "title": "Frappes iraniennes de missiles et de drones contre des radars Patriot américains au Bahreïn",
+      "link": "https://africanmanager.com/frappes-iraniennes-de-missiles-et-de-drones-contre-des-radars-patriot-americains-au-bahrein/",
+      "published": "2026-11-21T23:47:15Z",
+      "lang": "fr",
+      "author": "African Manager"
+    },
+    {
+      "id": "feed:kapitalis:53a2bde310caa1d1",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "Le Quintette à vent du Théâtre Bolchoï de Russie se produira en Tunisie",
+      "link": "https://kapitalis.com/tunisie/2026/11/21/le-quintette-a-vent-du-theatre-bolchoi-de-russie-se-produira-en-tunisie/",
+      "published": "2026-11-21T22:51:53Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
+      "id": "feed:kapitalis:cb000e4ca8c04e1e",
+      "outlet": "Kapitalis",
+      "outletId": "kapitalis",
+      "title": "L’OTJM annonce une grève à la Faculté de médecine de Tunis",
+      "link": "https://kapitalis.com/tunisie/2026/11/21/lotjm-annonce-une-greve-etudiante-a-la-faculte-de-medecine-de-tunis/",
+      "published": "2026-11-21T22:21:21Z",
+      "lang": "fr",
+      "author": "Yusra NY"
+    },
+    {
       "id": "feed:kapitalis:6577c791150da893",
       "outlet": "Kapitalis",
       "outletId": "kapitalis",
@@ -11860,146 +12000,6 @@
       "published": "2026-10-25T17:31:49Z",
       "lang": "fr",
       "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:cf056bd40b0c9a7b",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Alkimia, la créance indienne qui ne meurt jamais",
-      "link": "https://africanmanager.com/alkimia-la-creance-indienne-qui-ne-meurt-jamais/",
-      "published": "2026-10-25T13:44:44Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:fd0e08ce962e2af5",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Maher Ketari, le député rebelle",
-      "link": "https://africanmanager.com/maher-ketari-le-depute-rebelle/",
-      "published": "2026-10-25T13:43:15Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:399488872d8504d1",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Le député Boussema tire sur le PLF 2027 à rafales de chiffres",
-      "link": "https://africanmanager.com/le-depute-boussema-tire-sur-le-plf-2027-a-rafales-de-chiffres/",
-      "published": "2026-10-25T13:41:45Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:7d9864b71f31cd93",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Des semences à moitié, une récolte au tiers",
-      "link": "https://africanmanager.com/des-semences-a-moitie-une-recolte-au-tiers/",
-      "published": "2026-10-25T13:27:22Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:0fca7e33b856d598",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "À Paris le capital, à Tunis les créances douteuses",
-      "link": "https://africanmanager.com/a-paris-le-capital-a-tunis-les-creances-douteuses/",
-      "published": "2026-10-25T13:19:54Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:3408965464be5387",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "La Tunisie 89e au niveau mondial dans l’indice de l’état de droit 2026",
-      "link": "https://africanmanager.com/la-tunisie-89e-au-niveau-mondial-dans-lindice-de-letat-de-droit-2026/",
-      "published": "2026-10-25T13:10:00Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:0724a1eece3cf025",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "La dimension sociale, pierre angulaire du projet de budget de l’État pour 2027",
-      "link": "https://africanmanager.com/la-dimension-sociale-pierre-angulaire-du-projet-de-budget-de-letat-pour-2027/",
-      "published": "2026-10-25T12:41:42Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:74c1095cc8520333",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Projet de budget de 2027: la Tunisie pourrait émettre deux emprunts obligataires",
-      "link": "https://africanmanager.com/projet-de-budget-de-2027-la-tunisie-pourrait-emettre-deux-emprunts-obligataires/",
-      "published": "2026-10-25T12:36:03Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:95306afb0b229168",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "La CCI tuniso-française organise, le 5 novembre, la 3 édition des rencontres du Financement",
-      "link": "https://africanmanager.com/la-cci-tuniso-francaise-organise-le-5-novembre-la-3-edition-des-rencontres-du-financement/",
-      "published": "2026-10-25T12:34:40Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:african-manager:9a9ab00be0947feb",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Projet de budget de l’Etat 2027: Orientations des réformes économiques et fiscales programmées",
-      "link": "https://africanmanager.com/projet-de-budget-de-letat-2027-orientations-des-reformes-economiques-et-fiscales-programmees/",
-      "published": "2026-10-25T12:30:03Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:kapitalis:d20d644f423c5df0",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "L’Utica accueille le 3e Salon de l’économie verte",
-      "link": "https://kapitalis.com/tunisie/2026/10/25/lutica-accueille-le-3e-salon-de-leconomie-verte/",
-      "published": "2026-10-25T12:22:14Z",
-      "lang": "fr",
-      "author": "webmaster kapitalis"
-    },
-    {
-      "id": "feed:kapitalis:e4649fdc85222d08",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "TunSea | Les crevettes blanches actuellement en vente en Tunisie sont saines",
-      "link": "https://kapitalis.com/tunisie/2026/10/25/tunsea-les-crevettes-blanches-actuellement-en-vente-en-tunisie-sont-saines/",
-      "published": "2026-10-25T11:43:20Z",
-      "lang": "fr",
-      "author": "webmaster kapitalis"
-    },
-    {
-      "id": "feed:african-manager:a6f628c4d6ff4342",
-      "outlet": "African Manager",
-      "outletId": "african-manager",
-      "title": "Projet de budget de l’Etat: Détails des nouveaux recrutements en 2027",
-      "link": "https://africanmanager.com/projet-de-budget-de-letat-details-des-nouveaux-recrutements-en-2027/",
-      "published": "2026-10-25T11:40:58Z",
-      "lang": "fr",
-      "author": "African Manager"
-    },
-    {
-      "id": "feed:kapitalis:0d16b63169d31970",
-      "outlet": "Kapitalis",
-      "outletId": "kapitalis",
-      "title": "Le périple de la tortue «Lara» entre Chypre et Djerba",
-      "link": "https://kapitalis.com/tunisie/2026/10/25/le-periple-de-la-tortue-lara-entre-chypre-et-djerba/",
-      "published": "2026-10-25T11:15:24Z",
-      "lang": "fr",
-      "author": "webmaster kapitalis"
     }
   ]
 }
