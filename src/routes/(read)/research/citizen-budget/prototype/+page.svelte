@@ -27,7 +27,7 @@
 </script>
 
 <svelte:head>
-	<title>Citizen budget game (prototype) · DeepTunisia</title>
+	<title>Citizen budget board · DeepTunisia</title>
 	<meta name="robots" content="noindex" />
 </svelte:head>
 

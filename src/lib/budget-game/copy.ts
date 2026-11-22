@@ -190,7 +190,7 @@ const en: Copy = {
 		whoBody: 'DeepTunisia. This is a design prototype. The study has not been approved and has not opened.',
 		figures: 'Where the figures come from',
 		figuresBody:
-			'Every 2027 figure on these screens is a draft figure reported by the press from the 2027 draft budget. None is checked against the official document. The real study will give the source and page for each line before it opens. The past years are the budgets as voted, read from the finance laws in the Journal Officiel.',
+			'Every 2027 figure on these screens is a draft figure reported by the press from the 2027 draft budget. None is checked against the official document. When the 2027 finance law is adopted, a new version of the study takes the adopted figures, each with its page. The past years are the budgets as voted, read from the finance laws in the Journal Officiel.',
 		sample: 'What the answers can and cannot say',
 		sampleBody:
 			'They describe the people who take part in an open, self-selected online survey of adults. They do not describe Tunisians as a whole.',
@@ -383,7 +383,7 @@ const fr: Copy = {
 			"DeepTunisia. Il s'agit d'un prototype de conception. L'étude n'a pas été approuvée et n'est pas ouverte.",
 		figures: "D'où viennent les chiffres",
 		figuresBody:
-			"Chaque chiffre 2027 de ces écrans est un chiffre du projet rapporté par la presse pour le budget 2027. Aucun n'est vérifié sur le document officiel. L'étude réelle donnera la source et la page de chaque ligne avant son ouverture. Les années passées sont les budgets votés, lus dans les lois de finances au Journal officiel.",
+			"Chaque chiffre 2027 de ces écrans est un chiffre du projet rapporté par la presse pour le budget 2027. Aucun n'est vérifié sur le document officiel. Quand la loi de finances 2027 sera adoptée, une nouvelle version de l'étude prendra les chiffres adoptés, chacun avec sa page. Les années passées sont les budgets votés, lus dans les lois de finances au Journal officiel.",
 		sample: 'Ce que les réponses peuvent dire et ne peuvent pas dire',
 		sampleBody:
 			"Elles décrivent les personnes qui participent à une enquête en ligne ouverte et auto-sélectionnée auprès d'adultes. Elles ne décrivent pas les Tunisiens dans leur ensemble.",
@@ -585,7 +585,7 @@ const ar: Copy = {
 		whoBody: 'DeepTunisia. هذا نموذج تصميمي. لم تُعتمد الدراسة ولم تُفتح.',
 		figures: 'من أين تأتي الأرقام',
 		figuresBody:
-			'كل رقم لسنة 2027 في هذه الشاشات رقم مؤقّت نقلته الصحافة عن مشروع ميزانية 2027. ولم يُتحقّق من أي منها في الوثيقة الرسمية. وستعطي الدراسة الحقيقية المصدر والصفحة لكل بند قبل فتحها. أمّا السنوات الماضية فهي الميزانيات كما صودق عليها، مأخوذة من قوانين المالية في الرائد الرسمي.',
+			'كل رقم لسنة 2027 في هذه الشاشات رقم مؤقّت نقلته الصحافة عن مشروع ميزانية 2027. ولم يُتحقّق من أي منها في الوثيقة الرسمية. وعند المصادقة على قانون المالية لسنة 2027، تأخذ نسخة جديدة من الدراسة الأرقام المصادق عليها، كلّ رقم مع صفحته. أمّا السنوات الماضية فهي الميزانيات كما صودق عليها، مأخوذة من قوانين المالية في الرائد الرسمي.',
 		sample: 'ما يمكن أن تقوله الإجابات وما لا يمكنها قوله',
 		sampleBody:
 			'تصف الأشخاص الذين يشاركون في استبيان إلكتروني مفتوح وقائم على الانتقاء الذاتي للبالغين. ولا تصف التونسيين في مجموعهم.',

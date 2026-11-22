@@ -47,7 +47,6 @@
 	const LANDING_URL = 'https://deeptunisia.org/research/citizen-budget';
 	const BOARD_URL = '/research/citizen-budget/prototype';
 
-	const sec = $derived(Object.fromEntries(copy.sections.map((s) => [s.id, s])) as Record<LandingSection['id'], LandingSection>);
 	const sections = $derived(copy.sections.map((s) => ({ id: `sec-${s.id}`, num: s.num, label: s.label })));
 	let currentId = $state('sec-question');
 	const current = $derived(sections.find((s) => s.id === currentId) ?? sections[0]);
@@ -164,6 +163,18 @@
 	const pageState = $derived<'design' | 'paused' | 'accepting'>(
 		pageStatus === 'fielding' ? (accepting ? 'accepting' : 'paused') : 'design'
 	);
+	const sec = $derived(
+		Object.fromEntries(
+			copy.sections.map((s) => {
+				if (pageState === 'design') return [s.id, s];
+				const over = s.id === 'take' && pageState === 'paused' ? copy.live.takePaused : copy.live.sections[s.id];
+				return [s.id, over ? { ...s, ...over } : s];
+			})
+		) as Record<LandingSection['id'], LandingSection>
+	);
+	const recordFacts = $derived(pageState === 'design' ? copy.recordFacts : copy.live.recordFacts);
+	const withdrawalBody = $derived(pageState === 'design' ? copy.withdrawal.body : copy.live.withdrawal);
+	const shareText = $derived(pageState === 'design' ? copy.share.text : copy.live.share);
 	const statusLabel = $derived(
 		pageState === 'accepting' ? copy.statusLive : pageState === 'paused' ? copy.statusPaused : copy.status
 	);
@@ -227,7 +238,7 @@
 			<span class="secbar-end">
 				<span class="secbar-status">CB · {statusLabel}</span>
 				<!-- Share the page, never the current location, as on the police index. -->
-				<ShareMenu url={LANDING_URL} title={copy.title} text={copy.share.text} heading={copy.share.heading} label={copy.share.heading} />
+				<ShareMenu url={LANDING_URL} title={copy.title} text={shareText} heading={copy.share.heading} label={copy.share.heading} />
 			</span>
 		</div>
 
@@ -502,7 +513,7 @@
 					<h2>{sec.stored.heading}</h2>
 					{#each sec.stored.body as p, i (i)}<p>{p}</p>{/each}
 					<h3 id="withdrawal">{copy.withdrawal.heading}</h3>
-					<p>{copy.withdrawal.body}</p>
+					<p>{withdrawalBody}</p>
 				</section>
 
 				<!-- 07 -->
@@ -521,7 +532,7 @@
 					<h2>{sec.record.heading}</h2>
 					{#each sec.record.body as p, i (i)}<p>{p}</p>{/each}
 					<dl class="record">
-						{#each copy.recordFacts as fact (fact.label)}
+						{#each recordFacts as fact (fact.label)}
 							<div><dt class="mono">{fact.label}</dt><dd>{fact.value}</dd></div>
 						{/each}
 					</dl>
