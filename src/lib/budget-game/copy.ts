@@ -267,7 +267,7 @@ const en: Copy = {
 		coinLabel: 'Coins: one coin is 100 MD'
 	},
 	items: {
-		title: 'Two short questions',
+		title: 'Three short questions',
 		q1: 'Knowing that the gap is borrowed, should total spending be lower, the same, or higher?',
 		q1Lower: 'Lower',
 		q1Same: 'The same',
@@ -468,7 +468,7 @@ const fr: Copy = {
 	},
 	items: {
 		...en.items,
-		title: 'Deux courtes questions',
+		title: 'Trois courtes questions',
 		q1: 'Sachant que le déficit est emprunté, la dépense totale devrait-elle être plus basse, identique ou plus haute ?',
 		q1Lower: 'Plus basse',
 		q1Same: 'Identique',
@@ -668,7 +668,7 @@ const ar: Copy = {
 	},
 	items: {
 		...en.items,
-		title: 'سؤالان قصيران',
+		title: 'ثلاثة أسئلة قصيرة',
 		q1: 'مع العلم أن الفجوة تُقترض، هل ينبغي أن تكون النفقات الإجمالية أقل أم نفسها أم أعلى؟',
 		q1Lower: 'أقل',
 		q1Same: 'نفسها',
