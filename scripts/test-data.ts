@@ -11,8 +11,8 @@ import { fileURLToPath } from 'node:url';
 import { parse as parseYaml } from 'yaml';
 import { RelationshipType, EDGE_DIRECTION, REQUIRED_SOURCE_KINDS } from '../scripts/schema.ts';
 import { computeDatasetHash } from './canonical.ts';
-import { countOrigins } from './origins.ts';
-import { reviewCoverageCsv, summariseReview, REVIEW_KINDS, type ReviewInput, type ReviewKind } from './review-coverage.ts';
+import { countOrigins, originOf } from './origins.ts';
+import { reviewCoverageCsv, reviewActorOf, summariseReview, REVIEW_KINDS, type ReviewInput, type ReviewKind } from './review-coverage.ts';
 import { parseCsv } from './studies-aggregate.ts';
 import { buildCoverage, coverageCsv } from './coverage.ts';
 import { verifyDebtProvenance, DEBT_MANIFEST_ID, type DebtManifestEntry } from './debt-provenance.ts';
@@ -1329,17 +1329,24 @@ const KIND_TO_DATASET: Record<string, string> = {
 	{
 		const trimsPath = join(HERE, '..', 'static', 'interval-trims.json');
 		const published = existsSync(trimsPath) ? JSON.parse(readFileSync(trimsPath, 'utf8')) : [];
-		const clamped = [
-			...ds.positions
-				.filter((p: Pos) => p.interval.trimmed || p.interval.startClamped)
-				.map((p: Pos) => ({ kind: 'position', id: p.id })),
-			...(ds.relationships as { id?: string; interval: { trimmed?: boolean; startClamped?: boolean } }[])
-				.filter((r) => r.interval.trimmed || r.interval.startClamped)
-				.map((r) => ({ kind: 'relationship', id: r.id })),
-			...(ds.events as { id?: string; interval: { trimmed?: boolean; startClamped?: boolean } }[])
-				.filter((e) => e.interval.trimmed || e.interval.startClamped)
-				.map((e) => ({ kind: 'event', id: e.id }))
+		// Every collection of the graph that carries an interval, read from the
+		// graph itself and not from the build's own list: "every clamp is
+		// published" is the claim, so a kind the report forgot shows up here.
+		const WITH_INTERVALS: [string, string][] = [
+			['eras', 'era'],
+			['institutions', 'institution'],
+			['positions', 'position'],
+			['relationships', 'relationship'],
+			['events', 'event'],
+			['contracts', 'contract'],
+			['vacancies', 'vacancy'],
+			['education', 'education']
 		];
+		const clamped = WITH_INTERVALS.flatMap(([collection, kind]) =>
+			((ds as Record<string, unknown>)[collection] as { id?: string; interval?: { trimmed?: boolean; startClamped?: boolean } }[])
+				.filter((r) => r.interval?.trimmed || r.interval?.startClamped)
+				.map((r) => ({ kind, id: r.id }))
+		);
 		const missing = clamped.filter(
 			(c) => !published.some((p: { kind: string; id: string }) => p.kind === c.kind && p.id === c.id)
 		);
@@ -1347,6 +1354,11 @@ const KIND_TO_DATASET: Record<string, string> = {
 			'V22: every clamped interval of the current graph appears in the published trims report',
 			missing.length === 0,
 			missing.length ? `not published: ${missing.slice(0, 5).map((m) => `${m.kind}:${m.id}`).join('; ')}` : `${published.length} trims published, ${clamped.length} clamped in graph`
+		);
+		ok(
+			'V22: the trims report lists exactly the clamped intervals of the graph, no more and no fewer',
+			published.length === clamped.length,
+			`${published.length} published, ${clamped.length} clamped in the graph`
 		);
 	}
 	ok('V22: p-foreign-drif carries a corrected span or a recorded dispute', (() => {
@@ -1369,12 +1381,36 @@ const KIND_TO_DATASET: Record<string, string> = {
 	ok('V23: every review has a calendar-valid date and an enum method', bad.length === 0, bad.length ? bad.slice(0, 5).join('; ') : `${reviews.length} reviews valid`);
 }
 
-// V24 — succession stats are reproducible from the emitted constants.
+// V24 — succession counts are recomputed by a second method that shares no
+// code with the chain walk that publishes them: every pair of positions in a
+// role for overlaps, and the days a role's earlier holders still cover for
+// gaps. Neither count has one definition, so each is reported under its own
+// name and none is called "the" count here.
+//
+//   Overlaps, three readings of one fact:
+//     chain overlaps     — consecutive holders that certainly sat together
+//                          (what the dataset publishes today);
+//     overlapping pairs  — any two holders of a post that certainly sat together;
+//     overlap incidents  — connected groups of those pairs: one per moment a
+//                          post had more than one holder.
+//   Gaps, two readings:
+//     chain gaps         — the handover from the previous holder in start order
+//                          is longer than the threshold (published today);
+//     coverage holes     — the same, against whoever of all earlier holders
+//                          reached furthest: a gap nobody covers.
+//
+// Which of these is the headline is the owner's decision, not this test's. It
+// holds the readings apart and checks how they relate; the literal values are
+// pinned only at the audited dataset hash, so a changed dataset does not fail
+// on a number nobody chose.
 {
 	const meta = ds.meta as {
+		datasetHash: string;
 		successionGaps: { role: string; after: string; before: string; gapYears: number }[];
+		successionOverlaps: { role: string; a: string; b: string; overlapYears: number }[];
 		successionMeta: { gapYears: number; overlapYears: number; exemption: string };
 	};
+	const YEAR = 365.2425 * 86_400_000;
 	// Seated roles (legislative terms) have no succession chain: the same rule as the build.
 	const seated = new Set(ds.roles.filter((r: { seats?: number }) => r.seats !== undefined).map((r: { id: string }) => r.id));
 	const byRole = new Map<string, Pos[]>();
@@ -1384,21 +1420,163 @@ const KIND_TO_DATASET: Record<string, string> = {
 		list.push(p);
 		byRole.set(p.role, list);
 	}
-	const gaps: { role: string; after: string; before: string }[] = [];
+
+	// Overlaps: every pair, earlier start first, and a union of the pairs for incidents.
+	const pairKeys = new Set<string>();
+	const consecutiveKeys = new Set<string>();
+	const parent = new Map<string, string>();
+	const find = (x: string): string => {
+		let r = x;
+		while (parent.get(r) !== r) r = parent.get(r)!;
+		return r;
+	};
 	for (const [role, list] of byRole) {
 		const sorted = [...list].sort((a, b) => a.interval.startLatest - b.interval.startLatest);
-		for (let i = 1; i < sorted.length; i++) {
-			const prevEnd = sorted[i - 1].interval.endEarliest ?? CUTOFF;
-			const gapYears = (sorted[i].interval.startEarliest - prevEnd) / (365.2425 * 86_400_000);
-			if (gapYears > meta.successionMeta.gapYears) {
-				gaps.push({ role, after: sorted[i - 1].holder, before: sorted[i].holder });
+		for (let i = 0; i < sorted.length; i++) {
+			for (let j = i + 1; j < sorted.length; j++) {
+				const a = sorted[i];
+				const b = sorted[j];
+				const years = ((a.interval.endLatest ?? CUTOFF) - b.interval.startLatest) / YEAR;
+				if (!(years > meta.successionMeta.overlapYears && a.interval.status === 'ended' && b.interval.status !== 'unknown')) continue;
+				const key = `${role}|${a.holder}|${b.holder}|${Math.round(years * 10) / 10}`;
+				pairKeys.add(key);
+				if (j === i + 1) consecutiveKeys.add(key);
+				for (const id of [a.id, b.id]) if (!parent.has(id)) parent.set(id, id);
+				parent.set(find(a.id), find(b.id));
 			}
 		}
 	}
+	const incidents = new Set([...parent.keys()].map(find)).size;
+	const publishedOverlaps = meta.successionOverlaps.map((o) => `${o.role}|${o.a}|${o.b}|${o.overlapYears}`);
+	const published = new Set(publishedOverlaps);
+	const strayOverlaps = publishedOverlaps.filter((k) => !pairKeys.has(k));
+	const missedOverlaps = [...consecutiveKeys].filter((k) => !published.has(k));
+	ok(
+		'V24: chain overlaps are the consecutive overlapping pairs of an independent pairwise comparison',
+		strayOverlaps.length === 0 && missedOverlaps.length === 0,
+		`chain overlaps ${publishedOverlaps.length}, overlapping pairs ${pairKeys.size}, overlap incidents ${incidents}; ` +
+			`published but not a pair ${strayOverlaps.length}, consecutive pair not published ${missedOverlaps.length}`
+	);
+	ok(
+		'V24: every reading of the overlaps is bounded by the pairs (incidents <= overlapping pairs, chain overlaps <= overlapping pairs)',
+		incidents <= pairKeys.size && publishedOverlaps.length <= pairKeys.size,
+		`overlap incidents ${incidents}, chain overlaps ${publishedOverlaps.length}, overlapping pairs ${pairKeys.size}`
+	);
+
+	// Gaps: the chain reading and the coverage reading, position by position.
+	const chainGapIds = new Set<string>();
+	const holeIds = new Set<string>();
+	for (const list of byRole.values()) {
+		const sorted = [...list].sort((a, b) => a.interval.startLatest - b.interval.startLatest);
+		let reach = -Infinity;
+		for (let i = 1; i < sorted.length; i++) {
+			reach = Math.max(reach, sorted[i - 1].interval.endEarliest ?? CUTOFF);
+			const start = sorted[i].interval.startEarliest;
+			if ((start - (sorted[i - 1].interval.endEarliest ?? CUTOFF)) / YEAR > meta.successionMeta.gapYears) chainGapIds.add(sorted[i].id);
+			if ((start - reach) / YEAR > meta.successionMeta.gapYears) holeIds.add(sorted[i].id);
+		}
+	}
+	const chainOnly = [...chainGapIds].filter((id) => !holeIds.has(id));
+	const missedHoles = [...holeIds].filter((id) => !chainGapIds.has(id));
 	ok(
 		'V24: succession gaps reproducible from the emitted constants',
-		gaps.length === meta.successionGaps.length,
-		`emitted ${meta.successionGaps.length}, recomputed ${gaps.length} (threshold ${meta.successionMeta.gapYears}y, ${meta.successionMeta.exemption})`
+		chainGapIds.size === meta.successionGaps.length && missedHoles.length === 0,
+		`chain gaps ${meta.successionGaps.length} (recomputed ${chainGapIds.size}), coverage holes ${holeIds.size}, ` +
+			`chain gaps another holder still covers ${chainOnly.length}, holes the chain misses ${missedHoles.length} ` +
+			`(threshold ${meta.successionMeta.gapYears}y, ${meta.successionMeta.exemption})`
+	);
+	if (chainOnly.length > 0) console.log(`      chain gaps that a coverage reading drops: ${chainOnly.join(', ')}`);
+
+	// The audited readings: the numbers the release paper quotes beside the
+	// published counts, pinned to the dataset they were audited at. They are
+	// compared on every run, whatever the hash is. A check that runs only at one
+	// hash disappears the day the data moves, and reads green while the readings
+	// are unverified; so a reading that differs from its pin fails and names both
+	// hashes, and a reading that still holds passes under a later hash and says
+	// so. Moving a reading is a ledgered change to the published counts and the
+	// hash, and the paper's section on what the succession counts count follows it.
+	const AUDITED_HASH = '89e17f830c91591b41e40f673f3f5814e9a9534a72f8fafcadbc1354c9eecde2';
+	const audited = {
+		chainOverlaps: 49,
+		overlappingPairs: 67,
+		overlapIncidents: 43,
+		chainGaps: 126,
+		coverageHoles: 121,
+		chainGapsAnotherHolderCovers: 5
+	};
+	type Readings = typeof audited;
+	const auditedVerdict = (got: Readings, pinned: Readings, pinnedHash: string, datasetHash: string) => {
+		const holds = JSON.stringify(got) === JSON.stringify(pinned);
+		if (holds) {
+			return {
+				ok: true,
+				detail: datasetHash === pinnedHash ? JSON.stringify(got) : `${JSON.stringify(got)}; unchanged at ${datasetHash}, not re-audited since the original reading at ${pinnedHash}`
+			};
+		}
+		return {
+			ok: false,
+			detail: `the audited readings are pinned to ${pinnedHash}, the dataset is ${datasetHash}; re-pin them in this change or say why. pinned ${JSON.stringify(pinned)}, got ${JSON.stringify(got)}`
+		};
+	};
+	const got: Readings = {
+		chainOverlaps: publishedOverlaps.length,
+		overlappingPairs: pairKeys.size,
+		overlapIncidents: incidents,
+		chainGaps: chainGapIds.size,
+		coverageHoles: holeIds.size,
+		chainGapsAnotherHolderCovers: chainOnly.length
+	};
+	const verdict = auditedVerdict(got, audited, AUDITED_HASH, meta.datasetHash);
+	ok('V24: the audited readings are checked against the dataset, whatever its hash', verdict.ok, verdict.detail);
+	// The mechanism, on synthetic readings: a moved reading must fail and name
+	// both hashes; an unmoved one must pass under a different hash.
+	const moved = auditedVerdict({ ...audited, overlappingPairs: 68 }, audited, 'aaaa', 'bbbb');
+	ok(
+		'V24: a reading that differs from its pin fails and names the pinned and the current hash',
+		!moved.ok && moved.detail.includes('pinned to aaaa') && moved.detail.includes('the dataset is bbbb') && moved.detail.includes('re-pin them in this change or say why')
+	);
+	const unmoved = auditedVerdict(audited, audited, 'aaaa', 'bbbb');
+	ok(
+		'V24: readings that still hold pass under a different hash and say they are unchanged, not re-audited',
+		unmoved.ok && unmoved.detail.includes('unchanged at bbbb') && unmoved.detail.includes('not re-audited since the original reading at aaaa')
+	);
+}
+
+// V24, the derived predecessor and successor. The chain walk publishes them; this recomputes
+// them without any walk: for each position, the holder of the position that starts latest
+// among those that start before it (and the earliest among those after it), where "before"
+// orders by latest start and then by the position's place in the dataset. An authored
+// predecessor stands in place of the derived one, and a seated role has no neighbours.
+{
+	const seatedRoles = new Set(ds.roles.filter((r: { seats?: number }) => r.seats !== undefined).map((r: { id: string }) => r.id));
+	const order = new Map<string, number>(ds.positions.map((p: Pos, i: number) => [p.id, i]));
+	const authored = new Map<string, string>();
+	for (const row of (parseYaml(readFileSync(join(HERE, '..', 'data', 'positions.yaml'), 'utf8')) ?? []) as { id: string; predecessor?: string }[]) {
+		if (row.predecessor && String(row.predecessor).trim()) authored.set(row.id, String(row.predecessor).trim());
+	}
+	const before = (a: Pos, b: Pos) =>
+		a.interval.startLatest !== b.interval.startLatest ? a.interval.startLatest < b.interval.startLatest : order.get(a.id)! < order.get(b.id)!;
+	const wrong: string[] = [];
+	for (const p of ds.positions) {
+		const sameRole = ds.positions.filter((q: Pos) => q.role === p.role && q.id !== p.id);
+		let expectedPrev: string | null = null;
+		let expectedNext: string | null = null;
+		if (!seatedRoles.has(p.role)) {
+			const earlier = sameRole.filter((q: Pos) => before(q, p));
+			const later = sameRole.filter((q: Pos) => before(p, q));
+			const prev = earlier.reduce((best: Pos | null, q: Pos) => (best === null || before(best, q) ? q : best), null);
+			const next = later.reduce((best: Pos | null, q: Pos) => (best === null || before(q, best) ? q : best), null);
+			expectedPrev = authored.get(p.id) ?? (prev ? prev.holder : null);
+			expectedNext = next ? next.holder : null;
+		}
+		if ((p.predecessorDerived ?? null) !== expectedPrev || (p.successorDerived ?? null) !== expectedNext) {
+			wrong.push(`${p.id}: ${p.predecessorDerived ?? 'none'}/${p.successorDerived ?? 'none'} expected ${expectedPrev ?? 'none'}/${expectedNext ?? 'none'}`);
+		}
+	}
+	ok(
+		'V24: the derived predecessor and successor of every position match a recomputation that walks no chain',
+		wrong.length === 0,
+		wrong.length ? `${wrong.length} differ, e.g. ${wrong.slice(0, 2).join('; ')}` : `${ds.positions.length} positions`
 	);
 }
 
@@ -1447,9 +1625,54 @@ const KIND_TO_DATASET: Record<string, string> = {
 	const summary = summariseReview(rows);
 
 	ok(
-		'the headline reviewed/reviewable recomputes from every claim kind',
-		ds.meta.review.reviewed === summary.reviewed && ds.meta.review.reviewable === summary.reviewable,
-		`${ds.meta.review.reviewed}/${ds.meta.review.reviewable}`
+		'the published review counts recompute from every claim kind',
+		ds.meta.review.reviewedHuman === summary.reviewedHuman &&
+			ds.meta.review.reviewedAgent === summary.reviewedAgent &&
+			ds.meta.review.reviewedUnstated === summary.reviewedUnstated &&
+			ds.meta.review.reviewable === summary.reviewable &&
+			ds.meta.review.independent === summary.independent,
+		`${ds.meta.review.reviewedHuman} person, ${ds.meta.review.reviewedAgent} agent, ${ds.meta.review.reviewedUnstated} unstated of ${ds.meta.review.reviewable}`
+	);
+	const reviewedRecords = rows.filter((r) => r.review !== undefined && r.review !== null).length;
+	ok(
+		'every review falls in exactly one actor bucket',
+		ds.meta.review.reviewedHuman + ds.meta.review.reviewedAgent + ds.meta.review.reviewedUnstated ===
+			reviewedRecords,
+		`${ds.meta.review.reviewedHuman} + ${ds.meta.review.reviewedAgent} + ${ds.meta.review.reviewedUnstated} = ${reviewedRecords} reviews`
+	);
+
+	/*
+	 * D2: the published channel that pages and documents read. The old single
+	 * `reviewed` key must be gone, not kept as a sum, so a page cannot print the
+	 * editorial figure and call it human work by accident.
+	 */
+	const stats = JSON.parse(readFileSync(join(HERE, '..', 'src', 'generated', 'stats.json'), 'utf8')) as Record<
+		string,
+		string
+	>;
+	const freshHuman = rows.filter(
+		(r) => r.review !== undefined && r.review !== null && reviewActorOf(r.review) === 'human'
+	).length;
+	const freshAgent = rows.filter(
+		(r) => r.review !== undefined && r.review !== null && reviewActorOf(r.review) === 'agent'
+	).length;
+	const freshUnstated = rows.filter(
+		(r) => r.review !== undefined && r.review !== null && reviewActorOf(r.review) === 'unstated'
+	).length;
+	ok(
+		'stats.json carries the three actor keys and no old reviewed key',
+		stats.reviewedHuman !== undefined &&
+			stats.reviewedAgent !== undefined &&
+			stats.independent !== undefined &&
+			stats.reviewed === undefined,
+		`reviewedHuman=${stats.reviewedHuman} reviewedAgent=${stats.reviewedAgent} independent=${stats.independent} reviewed=${String(stats.reviewed)}`
+	);
+	ok(
+		'each actor key equals a fresh count over the dataset',
+		Number(stats.reviewedHuman) === freshHuman &&
+			Number(stats.reviewedAgent) === freshAgent &&
+			Number(stats.reviewedUnstated) === freshUnstated,
+		`${freshHuman}/${freshAgent}/${freshUnstated}`
 	);
 	const flagHits = Object.values(summary.flags).reduce((s, f) => s + f.total, 0);
 	ok(
@@ -1614,16 +1837,16 @@ console.log('\n  ── three review populations, never summed ──\n');
 {
 	const synthetic: ReviewInput[] = [{ id: 'p-x', kind: 'position' as ReviewKind, basis: 'reported' }];
 	const editorial = summariseReview([{ id: 'p-x', kind: 'position' as ReviewKind, basis: 'reported', review: { by: 'editor' } } as ReviewInput]);
-	ok('an editorial review note raises the examined count', editorial.reviewed === 1);
-	ok('but never raises the independent count', editorial.independentlyChecked === 0, `${editorial.independentlyChecked}`);
+	ok('an editorial review note raises the examined count', editorial.reviewedUnstated === 1);
+	ok('but never raises the independent count', editorial.independent === 0, `${editorial.independent}`);
 
 	const verified = summariseReview(synthetic, [{ claim: 'position:p-x' }]);
-	ok('an independent verification record raises the independent count', verified.independentlyChecked === 1, `${verified.independentlyChecked}`);
+	ok('an independent verification record raises the independent count', verified.independent === 1, `${verified.independent}`);
 	ok('and is counted in its own denominator', verified.verifications === 1, `${verified.verifications}`);
-	ok('the two counts stay separate numbers', verified.reviewed === 0 && verified.independentlyChecked === 1);
+	ok('the two counts stay separate numbers', verified.reviewedUnstated === 0 && verified.independent === 1);
 
 	const orphan = summariseReview(synthetic, [{ claim: 'position:no-such-record' }]);
-	ok('a verification naming no record is reported, not silently dropped', orphan.independentlyChecked === 0 && orphan.unmatchedVerifications.length === 1, orphan.unmatchedVerifications.join(','));
+	ok('a verification naming no record is reported, not silently dropped', orphan.independent === 0 && orphan.unmatchedVerifications.length === 1, orphan.unmatchedVerifications.join(','));
 
 	// The shipped graph.
 	const ds = JSON.parse(readFileSync(join(HERE, '..', 'static', 'dataset.json'), 'utf8')) as Record<string, any>;
@@ -1634,12 +1857,25 @@ console.log('\n  ── three review populations, never summed ──\n');
 	ok('independent verification is a collection of its own in the graph', Array.isArray(ds.verifications));
 	ok('with its own count beside the others', typeof ds.meta.counts.verifications === 'number', `counts.verifications=${ds.meta.counts.verifications}`);
 	ok('the collection carries the same count as its meta', ds.meta.counts.verifications === verifications.length);
-	ok('it is empty today, so the published independent count is zero', verifications.length === 0 && ds.meta.review.reviewed === 52, `verifications=${verifications.length} reviewed=${ds.meta.review.reviewed}`);
-	ok('the editorial queue keeps its own denominator', queue.total > ds.meta.review.reviewed, `${queue.total} queued vs ${ds.meta.review.reviewed} reviewed`);
+	const notesTotal =
+		ds.meta.review.reviewedHuman + ds.meta.review.reviewedAgent + ds.meta.review.reviewedUnstated;
+	// The total moves every time a review is recorded, so the check is the
+	// relation, not a snapshot: the published count is the number of records
+	// that carry a review block, across every collection that has them.
+	const notesInRecords = Object.values(ds).reduce(
+		(n: number, value) =>
+			Array.isArray(value)
+				? n + value.filter((record: any) => record && typeof record === 'object' && record.review).length
+				: n,
+		0
+	);
+	ok('it is empty today, so the published independent count is zero', verifications.length === 0, `verifications=${verifications.length}`);
+	ok('the editorial note total is the number of records carrying a review', notesTotal === notesInRecords, `${notesTotal} published, ${notesInRecords} in the graph`);
+	ok('the editorial queue keeps its own denominator', queue.total > notesTotal, `${queue.total} queued vs ${notesTotal} notes`);
 	ok(
 		'the three populations are three distinct numbers',
-		new Set([ds.meta.review.reviewed, queue.total, verifications.length]).size === 3,
-		`${ds.meta.review.reviewed} / ${queue.total} / ${verifications.length}`
+		new Set([notesTotal, queue.total, verifications.length]).size === 3,
+		`${notesTotal} / ${queue.total} / ${verifications.length}`
 	);
 
 	// The published artifact must say the same thing as the graph.
@@ -1717,6 +1953,65 @@ console.log('\n  ── three review populations, never summed ──\n');
 	ok('each language file names the graph it belongs to', overlay.fr.datasetHash === ds.meta.datasetHash && overlay.ar.datasetHash === ds.meta.datasetHash);
 	ok('every name stays in the bundle in all three languages', (bundle.people as Record<string, unknown>[]).every((p) => 'name_en' in p) && (bundle.people as Record<string, unknown>[]).filter((p) => p.name_ar).length === (ds.people as Record<string, unknown>[]).filter((p) => p.name_ar).length);
 }
+
+// --- D3: what a record rests on -------------------------------------------
+// The table in scripts/origins.ts must cover every encyclopedia spelling in
+// the registry. A publisher that names Wikipedia or Wikidata in Latin or
+// Arabic script and has no row would be counted as its own origin, which would
+// make an encyclopedia-only record look corroborated.
+//
+// The pattern names the encyclopedias, not the bare substring "wiki": three
+// publishers contain it without being one (a WikiLeaks cable, and two JORT
+// sources fetched through an Arabic Wikipedia footnote). They stay their own
+// origins, class other, which is what they are.
+
+const ENCYCLOPEDIA_NAME = /wikip[eé]dia|wikidata|ويكيبيد/i;
+const encyclopediaSpellings = [...new Set(
+	(ds.sources as { publisher: string }[])
+		.map((s) => s.publisher)
+		.filter((p) => ENCYCLOPEDIA_NAME.test(p))
+)];
+const uncovered = encyclopediaSpellings.filter((p) => {
+	const found = originOf(p);
+	return found.class !== 'encyclopedia' || !/^(wikipedia|wikidata)$/.test(found.origin);
+});
+ok(
+	'every encyclopedia publisher spelling has an origin row (D3)',
+	uncovered.length === 0,
+	`${encyclopediaSpellings.length} spellings, ${uncovered.length} uncovered${uncovered.length ? `: ${uncovered.join(', ')}` : ''}`
+);
+ok(
+	'the 27 encyclopedia spellings collapse to two origins (D3)',
+	encyclopediaSpellings.length === 27 &&
+		new Set(encyclopediaSpellings.map((p) => originOf(p).origin)).size === 2,
+	`${encyclopediaSpellings.length} spellings, ${new Set(encyclopediaSpellings.map((p) => originOf(p).origin)).size} origins`
+);
+ok(
+	'a wiki lookalike is class other, not an encyclopedia (D3)',
+	originOf('US Embassy Tunis (Wikileaks cable 09TUNIS171)').class === 'other' &&
+		originOf('Journal Officiel de la République Tunisienne (via ar.wiki footnote)').class === 'other'
+);
+
+const restKinds = [
+	'eras', 'institutions', 'roles', 'people', 'positions', 'relationships', 'events',
+	'questions', 'hypotheses', 'agreements', 'worldClaims', 'companies', 'contracts',
+	'licences', 'vacancies', 'declarations', 'education', 'regions', 'places'
+];
+const restRecords = restKinds.flatMap((k) => (ds[k] as { sources?: string[]; restsOnOrigins?: number; encyclopediaOnly?: boolean }[]) ?? []);
+ok(
+	'every record that cites a source carries restsOnOrigins and encyclopediaOnly (D3)',
+	restRecords.every((r) => !r.sources?.length || (typeof r.restsOnOrigins === 'number' && typeof r.encyclopediaOnly === 'boolean'))
+);
+ok(
+	'no record that cites nothing carries the fields (D3)',
+	restRecords.every((r) => r.sources?.length ? true : r.restsOnOrigins === undefined && r.encyclopediaOnly === undefined)
+);
+ok(
+	'the published encyclopediaOnly total is the count in the graph (D3)',
+	Number(JSON.parse(readFileSync(join(HERE, '..', 'src', 'generated', 'stats.json'), 'utf8')).encyclopediaOnly) ===
+		restRecords.filter((r) => r.encyclopediaOnly === true).length,
+	`${restRecords.filter((r) => r.encyclopediaOnly === true).length} records`
+);
 
 console.log(
 	`\n  ${checks - failures}/${checks} checks passed${failures ? `, ${failures} FAILED` : ''}\n`

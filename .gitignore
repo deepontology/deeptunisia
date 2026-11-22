@@ -1,5 +1,6 @@
 node_modules
 build/
+.build-stamp.json
 .svelte-kit/
 src/generated/
 .DS_Store
@@ -10,6 +11,9 @@ src/generated/
 static/dataset.json
 static/prose-fr.json
 static/prose-ar.json
+static/prose-en.json
+static/sources-prose.json
+static/search-index.json
 static/llms.txt
 # Written by the build only; a fresh clone gets them from `npm run build`.
 static/editorial-queue.json
@@ -54,7 +58,9 @@ moderator-pub.pem
 output/
 docs/
 design-plans/
-/research/
+/research/*
+# The verification desk's records are data and go with the dataset.
+!/research/desk/
 data/contrib/
 tmp
 uncited.txt

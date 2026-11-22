@@ -153,6 +153,46 @@ export function navigableAxis(node: HTMLElement, params: AxisGestureParams) {
 	let pinch = 0;
 
 	/**
+	 * Wheel and pointer events arrive faster than frames. Each application
+	 * re-derives the whole plot, so they are accumulated here and applied at
+	 * most once per animation frame: one domain change per frame.
+	 */
+	let queuedPan = 0;
+	let queuedZoom = 0;
+	let queuedPinch = 1;
+	let queuedAnchor = 0;
+	let frame = 0;
+
+	function flush() {
+		if (frame) cancelAnimationFrame(frame);
+		frame = 0;
+		if (queuedPan) {
+			axis.panByPixels(queuedPan, width());
+			queuedPan = 0;
+		}
+		if (queuedZoom) {
+			axis.zoomAt(Math.exp(queuedZoom * 0.0016), queuedAnchor, width());
+			queuedZoom = 0;
+		}
+		if (queuedPinch !== 1) {
+			axis.zoomAt(queuedPinch, queuedAnchor, width());
+			queuedPinch = 1;
+		}
+	}
+
+	function schedule() {
+		if (!frame) frame = requestAnimationFrame(flush);
+	}
+
+	function dropQueued() {
+		if (frame) cancelAnimationFrame(frame);
+		frame = 0;
+		queuedPan = 0;
+		queuedZoom = 0;
+		queuedPinch = 1;
+	}
+
+	/**
 	 * Pointer capture is taken when a drag begins, never on pointerdown.
 	 *
 	 * With capture active the browser retargets the compatibility `click` event to the
@@ -178,6 +218,7 @@ export function navigableAxis(node: HTMLElement, params: AxisGestureParams) {
 		 */
 		if ((e.target as Element)?.closest?.('[data-no-pan]')) return;
 		axis.stop();
+		dropQueued();
 		pointers.set(e.pointerId, localX(e.clientX));
 
 		if (pointers.size === 1) {
@@ -204,7 +245,11 @@ export function navigableAxis(node: HTMLElement, params: AxisGestureParams) {
 		if (pointers.size >= 2) {
 			const [a, b] = [...pointers.values()];
 			const d = Math.abs(a - b);
-			if (pinch > 4 && d > 4) axis.zoomAt(pinch / d, (a + b) / 2, width());
+			if (pinch > 4 && d > 4) {
+				queuedPinch *= pinch / d;
+				queuedAnchor = (a + b) / 2;
+				schedule();
+			}
 			pinch = d;
 			axis.moving = true;
 			return;
@@ -222,10 +267,14 @@ export function navigableAxis(node: HTMLElement, params: AxisGestureParams) {
 			node.setPointerCapture?.(e.pointerId);
 			captured = true;
 		}
-		axis.panByPixels(dx, width());
+		queuedPan += dx;
+		schedule();
 	}
 
 	function onUp(e: PointerEvent) {
+		// Anything still queued belongs to the gesture ending now, not to the
+		// frame after the flick has started.
+		if (pointers.size === 1) flush();
 		pointers.delete(e.pointerId);
 		if (captured) {
 			node.releasePointerCapture?.(e.pointerId);
@@ -257,13 +306,16 @@ export function navigableAxis(node: HTMLElement, params: AxisGestureParams) {
 		if (e.ctrlKey || e.metaKey) {
 			e.preventDefault();
 			axis.stop();
-			axis.zoomAt(Math.exp(e.deltaY * 0.0016), localX(e.clientX), width());
+			queuedZoom += e.deltaY;
+			queuedAnchor = localX(e.clientX);
+			schedule();
 			return;
 		}
 		// Sideways scroll, or shift with the wheel, pans along the time axis.
 		if (Math.abs(e.deltaX) > Math.abs(e.deltaY) || e.shiftKey) {
 			e.preventDefault();
-			axis.panByPixels(-(e.deltaX || e.deltaY), width());
+			queuedPan -= e.deltaX || e.deltaY;
+			schedule();
 			return;
 		}
 		// Plain vertical scroll is left alone, so the browser scrolls the chart's own
@@ -285,6 +337,7 @@ export function navigableAxis(node: HTMLElement, params: AxisGestureParams) {
 		},
 		destroy() {
 			axis.stop();
+			dropQueued();
 			node.removeEventListener('pointerdown', onDown as EventListener);
 			node.removeEventListener('pointermove', onMove as EventListener);
 			node.removeEventListener('pointerup', onUp as EventListener);

@@ -1,55 +1,50 @@
 /**
  * Canonical graph bytes (build determinism and release checksums).
  *
- * `dataset.json` is the product. Two builds from the same commit and the same
- * data must produce the same graph hash, and under DT_CANONICAL=1 the same
- * bytes, so a release can be verified rather than trusted. The volatile
- * metadata is excluded by construction:
+ * The stable projection and the sha256 over it are owned by the engine
+ * (pinned by commit in package.json) and reached through the one engine
+ * instance in scripts/engine.ts. `dataset.json` is the product: two builds from
+ * the same commit and the same data must produce the same graph hash, and
+ * under DT_CANONICAL=1 the same bytes, so a release can be verified rather
+ * than trusted.
  *
- *   generated   wall clock, informational, replaced with a fixed placeholder
- *   datasetHash the hash of everything else, computed after projection
- *   shippedKB   payload size, depends on the machine's file layout
- *   datasetKB   payload size, same
+ * The one thing the engine cannot know is what a DeepTunisia build emits but
+ * the hash must ignore. Those fields arrive as drop paths:
  *
- * Everything else — records in file order, arrays in emitted order, object keys
- * sorted — is the graph, and the hash covers it. `changelog.json` is a separate
- * export derived from git history, not part of the graph.
+ *   people[].timeline, institutions[].timeline
+ *     derived from the records the hash already covers, and the bundled copy
+ *     omits them, so they are left out of the projection
+ *   meta.shippedKB, meta.datasetKB
+ *     payload sizes, which depend on the machine's file layout
+ *
+ * Everything else, records in file order, arrays in emitted order, object keys
+ * sorted, is the graph, and the engine's hash covers it. `changelog.json` is a
+ * separate export derived from git history, not part of the graph.
  *
  * Normal builds stay human-readable and carry the hash. Canonical builds
  * (DT_CANONICAL=1) write these bytes so a byte comparison is meaningful.
  */
-import { createHash } from 'node:crypto';
+import { CANONICAL_GENERATED } from 'deepepisteme/kernel';
+import { engine } from './engine.ts';
 
-/** Fixed stand-in for `meta.generated` in canonical projections. */
-export const CANONICAL_GENERATED = '1970-01-01T00:00:00.000Z';
+export { CANONICAL_GENERATED };
 
-/** Deep key sort. Arrays keep their emitted order; object keys become stable. */
-function sortKeys(value: unknown): unknown {
-	if (Array.isArray(value)) return value.map(sortKeys);
-	if (value && typeof value === 'object') {
-		const out: Record<string, unknown> = {};
-		for (const key of Object.keys(value as Record<string, unknown>).sort()) {
-			out[key] = sortKeys((value as Record<string, unknown>)[key]);
-		}
-		return out;
-	}
-	return value;
-}
+/** Fields the emitted dataset carries that the stable projection leaves out. */
+const DROP: readonly string[] = [
+	'people[].timeline',
+	'institutions[].timeline',
+	'meta.shippedKB',
+	'meta.datasetKB'
+];
 
 /**
  * The stable projection `datasetHash` is computed over: fixed timestamp, no
- * sizes. `datasetHash` itself is kept if present, so canonical bytes carry
- * their own hash; the hash computation removes it before measuring.
+ * sizes, no derived timelines. `datasetHash` itself is kept if present, so
+ * canonical bytes carry their own hash; the hash computation removes it
+ * before measuring.
  */
 export function canonicalProjection(dataset: unknown): unknown {
-	const copy = structuredClone(dataset) as { meta: Record<string, unknown>; people?: { timeline?: unknown }[]; institutions?: { timeline?: unknown }[] };
-	// Timelines are derived from the records the hash already covers, and the
-	// bundled copy omits them, so they are left out of the projection.
-	for (const e of [...(copy.people ?? []), ...(copy.institutions ?? [])]) delete e.timeline;
-	copy.meta.generated = CANONICAL_GENERATED;
-	delete copy.meta.shippedKB;
-	delete copy.meta.datasetKB;
-	return sortKeys(copy);
+	return engine.canonical.project(dataset, { drop: DROP });
 }
 
 /** Canonical, byte-reproducible JSON for the graph. */
@@ -59,7 +54,5 @@ export function canonicalBytes(dataset: unknown): string {
 
 /** sha256 over the canonical projection without the self-referential hash. */
 export function computeDatasetHash(dataset: unknown): string {
-	const projection = structuredClone(canonicalProjection(dataset)) as { meta: Record<string, unknown> };
-	delete projection.meta.datasetHash;
-	return createHash('sha256').update(JSON.stringify(projection, null, 2) + '\n').digest('hex');
+	return engine.canonical.hash(dataset, { drop: DROP });
 }

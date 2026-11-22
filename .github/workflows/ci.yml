@@ -30,11 +30,78 @@ jobs:
         with:
           node-version: "22"
           cache: npm
+      # scripts/test-paper.ts reads the text of the committed release paper PDF
+      # and fails when pdftotext is missing.
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils
       - run: npm ci --ignore-scripts
       - run: npm run build
       - run: npx svelte-kit sync
       - run: npm run test
       - run: npm run check
+
+  hash-ledger:
+    name: hash ledger
+    # Release code must not move the dataset hash by accident. This job builds
+    # the data at both ends of a pull request into release/1.0 and compares the
+    # two hashes; a difference is allowed only when the last line of
+    # docs/hash-ledger.tsv records exactly that move.
+    if: github.event_name == 'pull_request' && github.event.pull_request.base.ref == 'release/1.0'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+          path: head
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          # The branch, not base.sha: base.sha is the commit the pull request was
+          # opened against and does not move when the base branch does, so a
+          # stacked pull request would be compared with a base that is gone.
+          ref: ${{ github.event.pull_request.base.ref }}
+          fetch-depth: 0
+          path: base
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: "22"
+      - name: data at the base commit
+        working-directory: base
+        run: |
+          npm ci --ignore-scripts
+          npm run data
+      - name: data at the head commit
+        working-directory: head
+        run: |
+          npm ci --ignore-scripts
+          npm run data
+      - name: compare the two hashes
+        working-directory: head
+        env:
+          HEAD_BRANCH: ${{ github.event.pull_request.head.ref }}
+          BASE_REF: ${{ github.event.pull_request.base.ref }}
+        run: |
+          # A sync brings new data from main on purpose; only code is ledgered.
+          # A desk session moves the hash on purpose too, but only when it changes
+          # nothing beyond data/, its own line in research/desk/sessions.tsv, and
+          # the documents `npm run stats:write` rewrites because their counts
+          # moved with it. scripts/ledger-exempt.ts decides both cases, and a
+          # branch it does not exempt falls through to the hash comparison below.
+          #
+          # The two checkouts are separate clones, so the head clone has no local
+          # origin/release/1.0 to compare with. Fetch the base branch from the
+          # base checkout: it is the branch as it is now, not base.sha, for the
+          # reason written on the checkout above.
+          git remote add base-checkout "$GITHUB_WORKSPACE/base" 2>/dev/null \
+            || git remote set-url base-checkout "$GITHUB_WORKSPACE/base"
+          git fetch -q base-checkout "refs/heads/$BASE_REF:refs/remotes/base-checkout/$BASE_REF"
+          git diff --name-only "base-checkout/$BASE_REF...HEAD" > "$RUNNER_TEMP/changed-files.txt"
+          if npx tsx scripts/ledger-exempt.ts --branch "$HEAD_BRANCH" --files-from "$RUNNER_TEMP/changed-files.txt"; then
+            exit 0
+          fi
+          base=$(node -p "require('../base/src/generated/dataset.json').meta.datasetHash")
+          head=$(node -p "require('./src/generated/dataset.json').meta.datasetHash")
+          echo "base $base"
+          echo "head $head"
+          npx tsx scripts/test-hash-ledger.ts --base "$base" --head "$head"
 
   audit-baseline:
     name: review probe baseline

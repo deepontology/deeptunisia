@@ -3,7 +3,8 @@
 	import { format } from '$lib/i18n';
 	import { app } from '$lib/state.svelte';
 	import { BASIS_COLOR, BASIS_OPACITY, DASH, eventById, type EventRec } from '$lib/model';
-	import { eventTitle, formatDate, t, tf } from '$lib/t.svelte';
+	import { t, tf, formatDate } from '$lib/t.svelte';
+	import { eventTitle } from '$lib/names.svelte';
 	import { compact } from '$lib/design/media.svelte';
 	import { sheetDrag, type SheetDragParams } from '$lib/ui/sheet-drag';
 

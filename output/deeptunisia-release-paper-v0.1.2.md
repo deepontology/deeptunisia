@@ -428,7 +428,7 @@ The verification strategy is invariant-based rather than sample-based. `npm run 
 
 The scale is worth stating in numbers, because "the tests exist" is not the claim — "the tests cover the claim" is. At the V0.1.2 gate, the graph test suite (`scripts/test-data.ts`) carries **97 assertions** over the built graph, including the seven audit fixtures, the calendar fuzz pass, the pinned deriveBasis truth table, the interval-trims content-freshness check, and the exception-register assertions; the pure-surface validator suite (`scripts/test-validators.ts`) carries **278 assertions** over the schema and date machinery with synthetic inputs, negative fixtures the validators must reject and positive ones they must produce; the fixture-pipeline suite (`scripts/test-pipeline.ts`) carries **49 assertions** that run the real build against a throwaway copy of the data carrying one injected record per defect class and assert the build fails with each message; and the community-layer suite (`scripts/test-community.ts`) carries **69 assertions** covering the identity, ranking, moderation and isolation invariants — including the assertion that the graph build never reads the community schema and the community server never reads `data/`, read from the actual build and schema files rather than from documentation. The 30 rows of Appendix A (V1–V29, with V30 reserved and unimplemented) break into fail-level, warn-level and specified-only checks as §5.10 describes, and every enforced validator that closes an audit finding has its own regression fixture. These are the numbers the repository reports, and they are reproducible from a clean checkout by running the test suite itself; the suite prints the current counts on every run, and the figures above are this release's reading rather than numbers the build rewrites.
 
-**Operational facts.** The build takes about fifteen seconds and the full test suite under a minute on the reference development machine (measured during this revision: `npm run data` ≈ 15s, `npm run test` ≈ 38s across the **nineteen** suites this release runs; the earlier "3s / 54s across nine suites" figures were taken on an earlier reference machine under an earlier measurement method and are superseded, and the suite count moved with the pipeline, provenance and claim-matrix suites the hardening pass added — the 38s reflects a faster machine absorbing the fixture-pipeline runner's two synthetic builds). On a failed build, **nothing new is published**: the deterministic pipeline emits no dataset when validation fails, so the running site serves the last successfully-built artifact — which is guaranteed by the same gate, because it is by construction a dataset that passed every invariant at the time it was built. This is the fail-closure semantics of §5.10 made operational: a bad build cannot replace a good artifact. The dataset's own statistics at the time of writing, from the build's published metadata: the <!--stat:claimRecords-->5865<!--/stat--> claim-bearing records break down by basis as documented <!--stat:documented-->2238<!--/stat-->, reported <!--stat:reported-->3515<!--/stat-->, inferred <!--stat:inferred-->97<!--/stat-->, unsubstantiated <!--stat:unsubstantiated-->15<!--/stat-->; <!--stat:needsPrimarySource-->438<!--/stat--> records are flagged `needs-primary-source`; <!--stat:successionGaps-->126<!--/stat--> succession gaps and <!--stat:successionOverlaps-->49<!--/stat--> overlaps are derived and published; <!--stat:contradictions-->78<!--/stat--> source contradictions are recorded as disputes; <!--stat:reviewed-->52<!--/stat--> of the <!--stat:claimRecords-->5865<!--/stat--> records carry a substantive human review; and <!--stat:intervalTrims-->259<!--/stat--> interval clamps are published in `interval-trims.json`. Every figure in this paragraph is emitted by the build from the data — none is hand-typed into the paper.
+**Operational facts.** The build takes about fifteen seconds and the full test suite under a minute on the reference development machine (measured during this revision: `npm run data` ≈ 15s, `npm run test` ≈ 38s across the **nineteen** suites this release runs; the earlier "3s / 54s across nine suites" figures were taken on an earlier reference machine under an earlier measurement method and are superseded, and the suite count moved with the pipeline, provenance and claim-matrix suites the hardening pass added — the 38s reflects a faster machine absorbing the fixture-pipeline runner's two synthetic builds). On a failed build, **nothing new is published**: the deterministic pipeline emits no dataset when validation fails, so the running site serves the last successfully-built artifact — which is guaranteed by the same gate, because it is by construction a dataset that passed every invariant at the time it was built. This is the fail-closure semantics of §5.10 made operational: a bad build cannot replace a good artifact. The dataset's own statistics at the time of writing, from the build's published metadata: the <!--stat:claimRecords-->5865<!--/stat--> claim-bearing records break down by basis as documented <!--stat:documented-->2238<!--/stat-->, reported <!--stat:reported-->3515<!--/stat-->, inferred <!--stat:inferred-->97<!--/stat-->, unsubstantiated <!--stat:unsubstantiated-->15<!--/stat-->; <!--stat:needsPrimarySource-->438<!--/stat--> records are flagged `needs-primary-source`; <!--stat:successionGaps-->126<!--/stat--> succession gaps and <!--stat:successionOverlaps-->49<!--/stat--> overlaps are derived and published; <!--stat:contradictions-->78<!--/stat--> source contradictions are recorded as disputes; <!--stat:reviewedHuman-->0<!--/stat--> of the <!--stat:claimRecords-->5865<!--/stat--> records have been checked by a person, <!--stat:reviewedAgent-->0<!--/stat--> by an agent, and <!--stat:reviewedUnstated-->52<!--/stat--> carry a review note that does not say who read it; and <!--stat:intervalTrims-->269<!--/stat--> interval clamps are published in `interval-trims.json`. Every figure in this paragraph is emitted by the build from the data — none is hand-typed into the paper.
 
 **Mutation testing of the enforcement layer — measured, not proposed.** The §10.2 item 3 experiment has been run, and this is its honest result. The kill criterion is stated first, because it determines what the numbers mean: **a mutation is counted as killed if the test suite fails on the mutated build — where "the test suite" is the suite as it stands after the campaign, including the tests the campaign itself added.** This matters because two of the three first-pass kills were not detected by the pre-campaign suite: they were first *observed* to survive, and the campaign then closed the gap by adding a test, converting the survivor into a kill. That is the standard mutation-testing loop — a survivor is a test gap to be closed, not a finding to be ignored — but it would be misleading to report the first-pass "three killed" without saying that the detecting assertions for two of them did not exist when the campaign began. The campaign is runnable end-to-end (`npm run mutation`): one deliberate breakage is applied to a validator, the build and every test layer are run against it, the working tree is restored byte-exact, and the outcome is classified into one of four classes. **Killed** — the build crashes or a test fails. **Silent drift** — every assertion stays green but the emitted graph changed; the campaign's most novel category, defined here once because it recurs: the class of mutation that rewrites published data with nothing objecting, which only a before/after comparison of the emitted graph can see. **Latent** — nothing observable changed, because the weakened guard is invisible on a clean graph. **By-design** — the mutated constant is configurable by contract, so the "breakage" is a reconfiguration, not a validator defect. What follows is the full history across three passes, because the intermediate numbers are the point: the campaign's value is visible in the progression, not in the final figure.
 
@@ -601,7 +601,7 @@ DeepTunisia is an attempt to make a specific promise machine-checkable: that a d
 
 ---
 
-## Appendix — Gate-required stat tags (all 46 keys, build-verified)
+## Appendix — Gate-required stat tags (all 48 keys, build-verified)
 
 This appendix exists to make the `test-paper.ts` gate's requirement visible: every dataset number the corrections release rests on is tagged and build-rewritten. Values are the live graph at build time.
 
@@ -632,19 +632,21 @@ This appendix exists to make the `test-paper.ts` gate's requirement visible: eve
 - needsPrimarySource: <!--stat:needsPrimarySource-->438<!--/stat-->
 - successionGaps: <!--stat:successionGaps-->126<!--/stat-->
 - successionOverlaps: <!--stat:successionOverlaps-->49<!--/stat-->
-- intervalTrims: <!--stat:intervalTrims-->259<!--/stat-->
+- intervalTrims: <!--stat:intervalTrims-->269<!--/stat-->
 - contradictions: <!--stat:contradictions-->78<!--/stat-->
-- reviewed: <!--stat:reviewed-->52<!--/stat-->
+- reviewedHuman: <!--stat:reviewedHuman-->0<!--/stat-->
+- reviewedAgent: <!--stat:reviewedAgent-->0<!--/stat-->
+- reviewedUnstated: <!--stat:reviewedUnstated-->52<!--/stat-->
 - reviewable: <!--stat:reviewable-->8850<!--/stat-->
 - familyEdges: <!--stat:familyEdges-->26<!--/stat-->
 - researchQueue: <!--stat:researchQueue-->23<!--/stat-->
 - kin-kais-saied: <!--stat:kin-kais-saied-->3<!--/stat-->
 - kin-ben-ali: <!--stat:kin-ben-ali-->8<!--/stat-->
-- reviewed-documented: <!--stat:reviewed-documented-->8<!--/stat-->
-- reviewed-reported: <!--stat:reviewed-reported-->24<!--/stat-->
-- reviewed-attributed: <!--stat:reviewed-attributed-->25<!--/stat-->
-- reviewed-inferred: <!--stat:reviewed-inferred-->2<!--/stat-->
-- reviewed-unsubstantiated: <!--stat:reviewed-unsubstantiated-->18<!--/stat-->
+- reviewNotes-documented: <!--stat:reviewNotes-documented-->8<!--/stat-->
+- reviewNotes-reported: <!--stat:reviewNotes-reported-->24<!--/stat-->
+- reviewNotes-attributed: <!--stat:reviewNotes-attributed-->25<!--/stat-->
+- reviewNotes-inferred: <!--stat:reviewNotes-inferred-->2<!--/stat-->
+- reviewNotes-unsubstantiated: <!--stat:reviewNotes-unsubstantiated-->18<!--/stat-->
 - reviewable-documented: <!--stat:reviewable-documented-->2379<!--/stat-->
 - reviewable-reported: <!--stat:reviewable-reported-->6032<!--/stat-->
 - reviewable-attributed: <!--stat:reviewable-attributed-->2911<!--/stat-->
@@ -721,17 +723,17 @@ This appendix exists to make the `test-paper.ts` gate's requirement visible: eve
 
 | ID | Validator | Scope | Behaviour |
 |---|---|---|---|
-| V1 | ownership percentage sum ≤ 100 | all `ownership` edges, per company, per `direct` group, per interval window (sweep-line) | specified, not enforced |
+| V1 | ownership percentage sum ≤ 100 | direct `ownership` and `shareholder` edges carrying `equity.pct`, per owned entity, at every instant at which they are certainly live; look-through (`direct: false`), merged and superseded edges are left out; strict at the interval boundary, so an edge that ends on the day another begins is a handover, not an overlap | **fail** on a sum above 100 |
 | V2 | capital/registration date consistency | company `founded` vs `institution.active`, `capital.date` | specified, not enforced |
-| V3 | CIN/registration validity | `registration.number` | specified, not enforced |
+| V3 | CIN/registration validity | `registration.registry` and `registration.number` | **fail** on a registry the jurisdiction does not list, a blank number, or a number carried by two companies in one registry |
 | V4 | contract award → winner | contracts with award status | **fail** no winner; **warn** announced-but-not-awarded |
 | V5 | contract award value attribution | contracts with an `award` value | **fail** award value with no attribution or a tier-1/2 source |
 | V6 | duplicate company detection | name normalisation (Arabic/French/English), Levenshtein + token similarity | specified, not enforced |
-| V7 | board overlap / conflict of interest | person in two overlapping `board` edges | specified, not enforced |
+| V7 | board overlap / conflict of interest | a person in two `board` edges into different entities that are certainly live together | **warn** |
 | V8 | event ordering + causal cycles | `causes`→`consequences` intervals; Tarjan SCC | **fail** on ordering violation; **fail** on cycle |
 | V9 | unmoored influence | influence-family edges with no documented adjacency | **fail** influence/advisory; **warn** reported-influence |
 | V10 | geographic hierarchy | places parent chain, coordinates, bounding box | **fail** no parent/coords for point classes; **warn** otherwise |
-| V11 | orphaned events | events with no participants/orgs/documents | specified, not enforced |
+| V11 | orphaned events | events with no actors, institutions, documents or recorded disputes | **warn** |
 | V12 | missing citations | every claim-envelope kind; the legacy kinds that predate the envelope are pinned by the exception register (§8.1) | **fail** |
 | V13 | equity validity | `equity.pct ∈ [0,100]`, `beneficial` → attributed | **fail** invalid; **warn** untattributed beneficial |
 | V14 | directionality | directed edge semantics, endpoint kinds | **fail** reversed/incorrect endpoint |

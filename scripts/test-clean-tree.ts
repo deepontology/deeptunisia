@@ -28,6 +28,24 @@ const ROOT = join(HERE, '..');
  */
 const ALLOWED = new Set<string>([]);
 
+/**
+ * The one exception, and only in a release run. The release workflow sets
+ * DT_RELEASE_SHA and writes the tag's commit into the paper's commitSha tag with
+ * `npm run stats:write`, because a commit cannot be committed into its own
+ * source. The paper may then differ from HEAD, but only in lines that carry that
+ * tag. Any other change to it, or any other file, is still an offender.
+ */
+export function releaseException(
+	path: string,
+	releaseSha: string,
+	diffLines: (path: string) => string[]
+): boolean {
+	if (!releaseSha) return false;
+	if (!/^output\/deeptunisia-release-paper-[^/]+\.md$/.test(path)) return false;
+	const changed = diffLines(path);
+	return changed.length > 0 && changed.every((l) => l.includes('<!--stat:commitSha-->'));
+}
+
 let checks = 0;
 let failures = 0;
 
@@ -71,13 +89,30 @@ const dirty = listed
 	.filter(Boolean)
 	.map((line) => ({ line: line.trimEnd(), path: pathOf(line) }));
 
-const offenders = dirty.filter((d) => !ALLOWED.has(d.path));
+const releaseSha = process.env.DT_RELEASE_SHA?.trim() ?? '';
+/** The added and removed lines of one file, without the diff headers. */
+function changedLines(path: string): string[] {
+	const out = git(['diff', '-U0', '--', path]) ?? '';
+	return out.split('\n').filter((l) => /^[+-]/.test(l) && !/^(\+\+\+|---) /.test(l));
+}
+const offenders = dirty.filter((d) => !ALLOWED.has(d.path) && !releaseException(d.path, releaseSha, changedLines));
 
 ok(
 	'the build leaves no tracked file modified, added or removed outside the allowlist',
 	offenders.length === 0,
 	offenders.length ? `${offenders.length} path(s): ${offenders.map((o) => o.path).join(', ')}` : `${dirty.length} allowed path(s)`
 );
+
+{
+	const paper = 'output/deeptunisia-release-paper-v1.0.0.md';
+	const tagOnly = (_: string) => ['-<!--stat:commitSha--><!--/stat-->', '+<!--stat:commitSha-->abc<!--/stat-->'];
+	const otherToo = (_: string) => [...tagOnly(_), '+an edited sentence'];
+	ok('a release run may carry the paper commitSha tag change', releaseException(paper, 'abc', tagOnly));
+	ok('an ordinary run may not', !releaseException(paper, '', tagOnly));
+	ok('a release run may not carry any other change to the paper', !releaseException(paper, 'abc', otherToo));
+	ok('a release run may not carry a change to another file', !releaseException('README.md', 'abc', tagOnly));
+	ok('a release run with no diff lines is not an exception', !releaseException(paper, 'abc', () => []));
+}
 
 if (offenders.length) {
 	console.error('');

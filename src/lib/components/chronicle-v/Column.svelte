@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { type Basis } from '$lib/model';
+	import { LAYER_COLOR, type Basis } from '$lib/model';
 	import { type ChronRow, visiblePositions } from '$lib/chronicle/rows';
 	import type { VScale } from '$lib/chronicle/vscale';
 	import TenureBlock from '$lib/components/chronicle-v/TenureBlock.svelte';
@@ -33,6 +33,13 @@
 	let { row, scale, focus, basisFloor, onselect }: Props = $props();
 
 	const visible = $derived(visiblePositions(row, basisFloor));
+	/*
+	 * The hatch that tints a block's uncertain edges, drawn once for the column.
+	 * Every block of a column is the column's layer colour, so one pattern serves
+	 * them all; a pattern per block was three elements per block for the same
+	 * picture, in a page that holds about two thousand blocks.
+	 */
+	const hatchId = $derived(`cv-fuzz-${row.roleId}`);
 	/* Where each block starts on the scale, so a block knows the room below it. */
 	const tops = $derived(visible.map((p) => scale.y(p.interval.startEarliest)));
 	/* Pixels from `top` to the next block's top in this column; infinite for the last one. */
@@ -49,8 +56,15 @@
 		<div class="cv-col-inst">{row.institutionName}</div>
 	</header>
 	<div class="cv-col-body" style:height="{scale.height}px">
+		<svg class="cv-col-defs" width="0" height="0" aria-hidden="true" focusable="false">
+			<defs>
+				<pattern id={hatchId} width="5" height="5" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+					<line x1="0" y1="0" x2="0" y2="5" style:stroke={LAYER_COLOR[row.layer]} stroke-width="1.6" opacity="0.55" />
+				</pattern>
+			</defs>
+		</svg>
 		{#each visible as pos (pos.id)}
-			<TenureBlock {pos} {scale} layer={row.layer} room={roomBelow(scale.y(pos.interval.startEarliest))} {onselect} />
+			<TenureBlock {pos} {scale} layer={row.layer} room={roomBelow(scale.y(pos.interval.startEarliest))} {hatchId} {onselect} />
 		{/each}
 	</div>
 </div>
@@ -62,6 +76,16 @@
 		min-width: var(--cv-col-min);
 		border-inline-start: var(--rule);
 		transition: opacity var(--dur-fast) var(--ease-out);
+		/*
+		   A phone shows three of a layer's columns and the strip scrolls to the rest.
+		   The browser skips style and layout for a column outside the visible strip
+		   and does that work when it scrolls in. The column keeps its place in the
+		   document and in the accessibility tree, and a focused block inside it is
+		   laid out on focus. The track gives the column both its width and its
+		   height, so skipping its content changes neither.
+		*/
+		content-visibility: auto;
+		contain-intrinsic-size: auto var(--cv-col-min) auto var(--cv-h, 0px);
 	}
 	/*
 	   A linked column runs two accent rails down its full height, so the mark is
@@ -116,6 +140,12 @@
 		position: absolute;
 		inset-inline: 0;
 		top: 0;
+	}
+	.cv-col-defs {
+		position: absolute;
+		width: 0;
+		height: 0;
+		overflow: hidden;
 	}
 	@media (prefers-reduced-motion: reduce) {
 		.cv-col {

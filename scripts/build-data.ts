@@ -54,7 +54,8 @@ import {
 	REQUIRED_SOURCE_KINDS,
 	SourceExceptionSchema,
 	reviewOverclaims,
-	configureSchema,
+	verifiedGrounded,
+	configureSchemaExceptions,
 	TRANSLATABLE_FIELDS,
 	TRANSLATED_LOCALES,
 	TRANSLATION_TIERS,
@@ -74,7 +75,11 @@ import {
 	type ResolvedInterval
 } from './dates.ts';
 import { loadParameters, type Parameters } from './parameters.ts';
-import { countOrigins, type EvidenceLike } from './origins.ts';
+import { engine } from './engine.ts';
+import { countOrigins, restsOn, type EvidenceLike } from './origins.ts';
+import { deskStatsText, newestPrecheck, precheckStats, EMPTY_PRECHECK_STATS } from './desk.ts';
+import { VERIFIED_EXCEPTIONS } from './verified-exceptions.ts';
+import { ARABIC_TITLE_EXCEPTION } from './prose-exceptions.ts';
 import { buildCoverage, coverageCsv, coverageMarkdown } from './coverage.ts';
 import { checkNarrative, type NarrativeClaim } from './consistency.ts';
 import {
@@ -86,6 +91,7 @@ import {
 } from './review-coverage.ts';
 import { auditInterpretationPaths } from '../src/lib/interpretation.ts';
 import { canonicalBytes, computeDatasetHash, CANONICAL_GENERATED } from './canonical.ts';
+import { BUILD_ONLY, CLIENT_COLLECTIONS, ENGLISH_PROSE_COLLECTIONS, FETCHED_FIELDS, SPLIT_PROSE, UNREAD_IN_BROWSER, UNSHOWN_TRANSLATION } from './client-copy.ts';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(HERE, '..');
@@ -255,7 +261,7 @@ if (sourceExceptions.length > 0) {
 	);
 }
 
-configureSchema(parameters, {
+configureSchemaExceptions({
 	emptySources: emptySourceKeys,
 	basisOverrides: basisOverrideKeys
 });
@@ -984,7 +990,7 @@ function settledInterval(
  */
 function basisFields(record: {
 	confidence: 'A' | 'B' | 'C' | 'D';
-	verification: 'verified' | 'needs-primary-source' | 'disputed';
+	verification: 'unflagged' | 'verified' | 'needs-primary-source' | 'disputed';
 	basis?: 'documented' | 'reported' | 'inferred' | 'unsubstantiated';
 }): { basis: 'documented' | 'reported' | 'inferred' | 'unsubstantiated'; basis_derived?: string } {
 	const basis = deriveBasis(record.confidence, record.verification, record.basis);
@@ -999,7 +1005,7 @@ function basisFields(record: {
  */
 function derivedBasisField(record: {
 	confidence: 'A' | 'B' | 'C' | 'D';
-	verification: 'verified' | 'needs-primary-source' | 'disputed';
+	verification: 'unflagged' | 'verified' | 'needs-primary-source' | 'disputed';
 	basis?: 'documented' | 'reported' | 'inferred' | 'unsubstantiated';
 }): Record<string, string> {
 	if (!record.basis) return {};
@@ -1070,57 +1076,6 @@ const SUCCESSION_GAP_YEARS = 1;
 const SUCCESSION_OVERLAP_YEARS = 1;
 const SUCCESSION_EXEMPTION = 'unknown-end and open-ended intervals are excluded from overlap detection';
 
-// Seated roles (legislative terms) have no succession chain. Members sit
-// together rather than replace one another, and from 2011 to 2019 a constituency
-// elected several members from party lists, so even a per-constituency chain
-// would read concurrent colleagues as overlapping holders. A replacement from
-// the list is recorded as its own position with its own dates.
-const byRole = new Map<string, typeof resolvedPositions>();
-for (const pos of resolvedPositions) {
-	if (roleById.get(pos.role)?.seats !== undefined) continue;
-	const list = byRole.get(pos.role) ?? [];
-	list.push(pos);
-	byRole.set(pos.role, list);
-}
-
-const successionGaps: { role: string; after: string; before: string; gapYears: number }[] = [];
-const successionOverlaps: { role: string; a: string; b: string; overlapYears: number }[] = [];
-
-for (const list of byRole.values()) {
-	list.sort((a, b) => a.interval.startLatest - b.interval.startLatest);
-	for (let i = 0; i < list.length; i++) {
-		const cur = list[i];
-		const prev = list[i - 1];
-		const next = list[i + 1];
-		if (prev && !cur.predecessor) cur.predecessorDerived = prev.holder;
-		if (cur.predecessor) cur.predecessorDerived = cur.predecessor;
-		if (next) cur.successorDerived = next.holder;
-
-		if (prev) {
-			const prevEnd = prev.interval.endEarliest ?? DATASET_CUTOFF;
-			const gap = (cur.interval.startEarliest - prevEnd) / (365.2425 * 86_400_000);
-			if (gap > SUCCESSION_GAP_YEARS) {
-				successionGaps.push({
-					role: cur.role,
-					after: prev.holder,
-					before: cur.holder,
-					gapYears: Math.round(gap * 10) / 10
-				});
-			}
-			const prevLatestEnd = prev.interval.endLatest ?? DATASET_CUTOFF;
-			const overlap = (prevLatestEnd - cur.interval.startLatest) / (365.2425 * 86_400_000);
-			if (overlap > SUCCESSION_OVERLAP_YEARS && prev.interval.status === 'ended' && cur.interval.status !== 'unknown') {
-				successionOverlaps.push({
-					role: cur.role,
-					a: prev.holder,
-					b: cur.holder,
-					overlapYears: Math.round(overlap * 10) / 10
-				});
-			}
-		}
-	}
-}
-
 const resolvedRelationships = relationships.map((rel) => {
 	const basis = deriveBasis(rel.confidence, rel.verification, rel.basis);
 	const derivedBasis = deriveBasis(rel.confidence, rel.verification, undefined);
@@ -1142,51 +1097,6 @@ const resolvedRelationships = relationships.map((rel) => {
 		)
 	};
 });
-
-// V9 — unmoored influence (spec §10.3). An influence-family edge must be
-// attached to something: at least one endpoint must hold a position or carry a
-// documented edge of a formal kind (appointment, ownership, board, prosecution,
-// …). An influence edge between two nodes that nothing else connects is a bare
-// assertion — "X influences Y" with no evidenced route — and fails.
-{
-	const INFLUENCE_TYPES = new Set(['influence', 'reported-influence', 'advisory']);
-	const positionsByEntity = new Map<string, number>();
-	for (const p of resolvedPositions) {
-		// "Holds a position" includes institutions that employ one: a party with
-		// a leader recorded, a TV station with a director — that record is the
-		// evidenced route the influence edge must not float without.
-		positionsByEntity.set(p.holder, (positionsByEntity.get(p.holder) ?? 0) + 1);
-		positionsByEntity.set(p.institution, (positionsByEntity.get(p.institution) ?? 0) + 1);
-	}
-
-	const documentedNeighbours = new Map<string, Set<string>>();
-	for (const r of resolvedRelationships) {
-		if (INFLUENCE_TYPES.has(r.type)) continue;
-		if (r.basis !== 'documented') continue;
-		documentedNeighbours.set(r.from, new Set([...(documentedNeighbours.get(r.from) ?? []), r.to]));
-		documentedNeighbours.set(r.to, new Set([...(documentedNeighbours.get(r.to) ?? []), r.from]));
-	}
-
-	for (const r of resolvedRelationships) {
-		if (!INFLUENCE_TYPES.has(r.type)) continue;
-		const attached =
-			(positionsByEntity.get(r.from) ?? 0) > 0 ||
-			(positionsByEntity.get(r.to) ?? 0) > 0 ||
-			(documentedNeighbours.get(r.from)?.size ?? 0) > 0 ||
-			(documentedNeighbours.get(r.to)?.size ?? 0) > 0;
-		if (!attached) {
-			// A documented- or advisory-influence edge must be attached — it asserts
-			// standing, so it fails. A reported-influence edge asserts only that
-			// sources report the chain; it is kept and flagged (rule 6 — the popular
-			// account is exactly what the map must show, anchored or not). Documented
-			// deviation from the V9 row: fail for influence/advisory, warn for
-			// reported-influence.
-			const message = `${r.type} edge ${r.from} → ${r.to} is unmoored — neither endpoint has a position or a documented edge (V9)`;
-			if (r.type === 'reported-influence') warn(`relationship ${r.id}`, message);
-			else fail(`relationship ${r.id}`, message);
-		}
-	}
-}
 
 // ---------------------------------------------------------------------------
 // pathAudit (UI pass W4; the paper's §10.2 item 5, first slice) — warn-only.
@@ -1354,53 +1264,17 @@ const resolvedEvents = events.map((ev) => ({
 	)
 }));
 
-// ---------------------------------------------------------------------------
-// V31 — research-cutoff horizon. What leaked: two sweeps merged 22 of the 135
-// events dated past an un-advanced `time.cutoff`, and every time-based view
-// clips records past `meta.cutoff`, so those events rendered nowhere while all
-// gates stayed green — nothing in this file compared a record's resolved
-// interval to the cutoff. Events were the leak because they carry authored
-// dates; positions and relationships clamp by construction, and the sweep
-// checked both kinds anyway. Scope is record intervals only: a verification or
-// a dispute dated after the cutoff is a fact about the review, not about the
-// world, and stays legal. Equality passes, so an event dated on the cutoff day
-// is a valid record rather than a future one.
-// ---------------------------------------------------------------------------
-{
-	const isoDay = (t: number) => new Date(t).toISOString().slice(0, 10);
-	const cutoffDay = isoDay(DATASET_CUTOFF);
-	const insideHorizon = (kind: string, id: string, interval: ResolvedInterval): void => {
-		if (interval.startEarliest > DATASET_CUTOFF) {
-			fail(
-				`${kind} ${id}`,
-				`interval begins ${isoDay(interval.startEarliest)}, past the research cutoff ${cutoffDay} (V31)`
-			);
-		}
-		// `?? 0`: an open-ended (`ongoing`) interval has no end bound and is
-		// settled at the cutoff by construction, so it is inside by definition.
-		if ((interval.endLatest ?? 0) > DATASET_CUTOFF) {
-			fail(
-				`${kind} ${id}`,
-				`interval ends ${isoDay(interval.endLatest!)}, past the research cutoff ${cutoffDay} (V31)`
-			);
-		}
-	};
-	for (const p of resolvedPositions) insideHorizon('position', p.id, p.interval);
-	for (const r of resolvedRelationships) insideHorizon('relationship', r.id, r.interval);
-	for (const e of resolvedEvents) insideHorizon('event', e.id, e.interval);
-}
+// V31 — research-cutoff horizon — runs from the engine rule below. A start past
+// `time.cutoff` is the leak it catches; an authored end past the cutoff is
+// pulled back by the resolver above (`trimmed`), so there is no end check.
 
-// V16 — duplicate relationships (spec §12): the same (from,to,type,subtype) with
-// overlapping intervals is a duplicate and fails, unless one of the two records
-// carries `merged_into` naming the survivor (spec §13.3 — the merge escape).
-// `merged_into` and `supersedes` refs must also resolve.
+// V16 — duplicate relationships (spec §12) runs from the engine rule below,
+// together with the `merged_into` ref check. The `supersedes` refs on
+// relationships and positions are checked here.
 {
 	const relById = new Map(resolvedRelationships.map((r) => [r.id, r]));
 	const posById = new Map(resolvedPositions.map((p) => [p.id, p]));
 	for (const r of resolvedRelationships) {
-		if (r.merged_into && !relById.has(r.merged_into)) {
-			fail(`relationship ${r.id}`, `merged_into names unknown relationship "${r.merged_into}" (V16)`);
-		}
 		if (r.supersedes && !relById.has(r.supersedes)) {
 			fail(`relationship ${r.id}`, `supersedes names unknown relationship "${r.supersedes}"`);
 		}
@@ -1410,39 +1284,12 @@ const resolvedEvents = events.map((ev) => ({
 			fail(`position ${p.id}`, `supersedes names unknown position "${p.supersedes}"`);
 		}
 	}
-	const groups = new Map<string, typeof resolvedRelationships>();
-	for (const r of resolvedRelationships) {
-		const key = `${r.from}|${r.to}|${r.type}|${r.subtype ?? ''}`;
-		groups.set(key, [...(groups.get(key) ?? []), r]);
-	}
-	for (const [key, group] of groups) {
-		if (group.length < 2) continue;
-		for (let i = 0; i < group.length; i++) {
-			for (let j = i + 1; j < group.length; j++) {
-				const a = group[i];
-				const b = group[j];
-				if (a.merged_into === b.id || b.merged_into === a.id) continue;
-				const aEnd = a.interval.endLatest ?? DATASET_CUTOFF;
-				const bEnd = b.interval.endLatest ?? DATASET_CUTOFF;
-				const overlap = a.interval.startEarliest <= bEnd && b.interval.startEarliest <= aEnd;
-				if (overlap) {
-					fail(
-						`relationship ${a.id}`,
-						`duplicate of ${b.id} (${key}) with an overlapping interval — merge one into the other (merged_into) or record the conflict (V16)`
-					);
-				}
-			}
-		}
-	}
 }
 
 // Editorial queue (spec §13.1): every unreviewed claim record across ALL kinds,
-// V8/V17 — the event causal graph (spec §6).
-//
-// `causes` and `consequences` are event-to-event edges. A cause must precede its
-// consequence (V8, hard), a causal cycle is impossible in reality and fails
-// (V8/Tarjan), and a rupture event that floats — linked to nothing — is a gap
-// the reviewer should see (V17, warn).
+// V8/V17 — the event causal graph (spec §6) runs from the engine rules below:
+// a cause cannot begin after its consequence ends, a causal cycle fails, and a
+// rupture linked to nothing is flagged. The ref checks stay here.
 
 // resolved-events index for the causal graph (the raw-file index at line 177 is
 // for the pre-resolution ref-checks).
@@ -1458,72 +1305,6 @@ for (const ev of resolvedEvents) {
 		if (d.source && !sourceById.has(d.source)) {
 			fail(`event ${ev.id}`, `dispute cites unknown source "${d.source}"`);
 		}
-	}
-}
-
-// V8 — temporal ordering: the cause cannot begin after the consequence is over.
-for (const ev of resolvedEvents) {
-	for (const causeId of ev.causes) {
-		const cause = causalEventById.get(causeId);
-		const consequence = ev;
-		const ends = consequence.interval.endLatest ?? DATASET_CUTOFF;
-		if (cause && cause.interval.startEarliest > ends) {
-			if ((consequence.disputes?.length ?? 0) === 0) {
-				fail(
-					`event ${ev.id}`,
-					`cause "${causeId}" (${cause.date}) begins after its consequence ends — reorder or record a dispute (V8)`
-				);
-			}
-		}
-	}
-}
-
-// V8 — a causal cycle is impossible: Tarjan's SCC over the cause edges.
-{
-	const adj = new Map<string, string[]>();
-	for (const ev of resolvedEvents) adj.set(ev.id, [...ev.causes]);
-	const index = new Map<string, number>();
-	const low = new Map<string, number>();
-	const onStack = new Set<string>();
-	const stack: string[] = [];
-	let counter = 0;
-	const cycles: string[][] = [];
-	const strong = (v: string) => {
-		index.set(v, counter);
-		low.set(v, counter);
-		counter++;
-		stack.push(v);
-		onStack.add(v);
-		for (const w of adj.get(v) ?? []) {
-			if (!causalEventById.has(w)) continue; // unknown ids already failed above
-			if (!index.has(w)) {
-				strong(w);
-				low.set(v, Math.min(low.get(v)!, low.get(w)!));
-			} else if (onStack.has(w)) {
-				low.set(v, Math.min(low.get(v)!, index.get(w)!));
-			}
-		}
-		if (low.get(v) === index.get(v)) {
-			const scc: string[] = [];
-			let w: string;
-			do {
-				w = stack.pop()!;
-				onStack.delete(w);
-				scc.push(w);
-			} while (w !== v);
-			if (scc.length > 1) cycles.push(scc);
-		}
-	};
-	for (const ev of resolvedEvents) if (!index.has(ev.id)) strong(ev.id);
-	for (const cycle of cycles) {
-		fail('event-causal-graph', `causal cycle: ${cycle.join(' → ')} (V8)`);
-	}
-}
-
-// V17 — a rupture that links to nothing is a flagged gap, not a failure.
-for (const ev of resolvedEvents) {
-	if (ev.rupture && ev.causes.length === 0 && ev.consequences.length === 0) {
-		warn(`event ${ev.id}`, `rupture event is not linked into the causal graph (V17)`);
 	}
 }
 
@@ -1563,38 +1344,10 @@ const resolvedVacancies = vacancies.map((v) => ({
 	interval: settledInterval(`vacancy ${v.id}`, v, { start: v.start, end: v.end })
 }));
 
-// V32 — a documented vacancy (decision 0007). It names a known office that has a
-// succession (a seated legislative role has members, not holders), and it may
-// not certainly overlap a titular holder of that office, or another vacancy of
-// it: either would be two records saying opposite things about the same days,
-// which is a dispute to record, not a gap to merge. "Certainly" is the strict
-// reading: the latest start of each falls before the earliest end of the other,
-// so a shared handover day or fuzzy year edges do not count as a contradiction.
-// An acting holder may sit inside the interval; that is what an interim is.
-{
-	const certainlyOverlap = (a: ResolvedInterval, b: ResolvedInterval) =>
-		a.startLatest < (b.endEarliest ?? DATASET_CUTOFF) && b.startLatest < (a.endEarliest ?? DATASET_CUTOFF);
-	for (const v of resolvedVacancies) {
-		const where = `vacancy ${v.id}`;
-		checkSources(where, v.sources);
-		const role = roleById.get(v.role);
-		if (!role) {
-			fail(where, `unknown role "${v.role}" (V32)`);
-			continue;
-		}
-		if (role.seats !== undefined) fail(where, `role "${v.role}" is a seated term, which has no single holder to be vacant (V32)`);
-		for (const p of resolvedPositions) {
-			if (p.role !== v.role || p.acting) continue;
-			if (certainlyOverlap(v.interval, p.interval)) {
-				fail(where, `overlaps titular position ${p.id}: the office cannot be both vacant and held (V32)`);
-			}
-		}
-		for (const w of resolvedVacancies) {
-			if (w.id <= v.id || w.role !== v.role) continue;
-			if (certainlyOverlap(v.interval, w.interval)) fail(where, `overlaps vacancy ${w.id} of the same role (V32)`);
-		}
-	}
-}
+// V32 — a documented vacancy (decision 0007) — runs from the engine rule below:
+// a known, non-seated office, no certain overlap with a titular holder or with
+// another vacancy of it. The source check stays here.
+for (const v of resolvedVacancies) checkSources(`vacancy ${v.id}`, v.sources);
 const resolvedDeclarations = declarations.map((d) => ({
 	...d,
 	...basisFields(d)
@@ -1658,42 +1411,62 @@ const resolvedEducation = education.map((e) => ({
 	writeFileSync(join(STAGE_STATIC, 'editorial-queue.json'), JSON.stringify({ total: queue.length, reviewed: queue.filter((q) => q.reviewed).length, queue }, null, 2), 'utf8');
 }
 
-// V4/V5: a contract value is attributed — there is no "value filled from memory".
-// A contract carrying `award` must either name who reports the figure or draw on
-// a primary source (tier 1/2). The check runs on the derived claim like every
-// other epistemic rule, so a C-grade figure with attribution but no primary
-// source passes only while its attribution is present.
-for (const c of resolvedContracts) {
-	if (!c.award) continue;
-	const primary = c.sources.some((s) => (sourceById.get(s)?.tier ?? 9) <= 2);
-	if (!primary && !c.attributed_to) {
-		fail(
-			`contract ${c.id}`,
-			'award.value must be attributed or backed by a primary source (tier ≤ 2) — numbers never float free (V4/V5)'
-		);
+// Rules that live in the engine run here by id. The records are the ones this
+// build loaded; each finding goes through fail() with its record as the place,
+// so the error text names the record the way the in-file checks do.
+//   V4/V5: a contract value is attributed — there is no "value filled from
+//   memory". A contract carrying `award` names who reports the figure or draws
+//   on a primary source (tier 1/2).
+const engineResolved = engine.resolve({
+	source: sources,
+	contract: contracts,
+	place: places,
+	person: people,
+	institution: institutions,
+	role: roles,
+	relationship: relationships,
+	event: events,
+	company: companies,
+	position: positions,
+	vacancy: vacancies,
+	era: eras,
+	education,
+	licence: licences
+});
+{
+	// V22 is not run here: its findings are the clamp report, published below.
+	for (const f of engine.validate(engineResolved, { only: ['V4', 'V10', 'V16', 'V17', 'V8', 'V3', 'V11', 'V1', 'V7', 'V31', 'V32', 'V9'] })) {
+		if (f.severity === 'error') fail(f.record ? `${f.record.kind} ${f.record.id}` : f.rule, f.message);
+		else warn(f.record ? `${f.record.kind} ${f.record.id}` : f.rule, f.message);
 	}
+}
+
+// The derivation is the engine's (`engine.successions`): the thresholds above
+// are this dataset's published numbers, and seated roles (legislative terms)
+// have no chain, since members sit together rather than replace one another.
+const succession = engine.successions(engineResolved, {
+	gapYears: SUCCESSION_GAP_YEARS,
+	overlapYears: SUCCESSION_OVERLAP_YEARS
+});
+const successionGaps = succession.gaps;
+const successionOverlaps = succession.overlaps;
+for (const pos of resolvedPositions) {
+	const neighbours = succession.neighbours.get(pos.id);
+	if (!neighbours) continue;
+	pos.predecessorDerived = neighbours.predecessor;
+	pos.successorDerived = neighbours.successor;
 }
 
 // V10 — the geographic hierarchy (spec §8). A place's `parent` chain must
 // terminate at a region; point-class places must carry coordinates inside
 // Tunisia's bounding box; coordinates and owner refs must resolve.
+// The half that needs this deployment's regions stays here: the parent must
+// name a region. The rest of V10 (a parent at all, a real owner, coordinates)
+// runs from the engine rule below.
 const regionById = new Map(regions.map((r) => [r.id, r]));
 for (const p of places) {
-	if (!p.parent) {
-		if (p.kind !== 'quarter' && p.kind !== 'town') {
-			fail(`place ${p.id}`, 'every place needs a parent region/governorate (V10)');
-		}
-		continue;
-	}
-	if (!regionById.has(p.parent)) {
+	if (p.parent && !regionById.has(p.parent)) {
 		fail(`place ${p.id}`, `unknown parent region "${p.parent}" (V10)`);
-		continue;
-	}
-	if (p.owner && !entityIds.has(p.owner)) {
-		fail(`place ${p.id}`, `unknown owner "${p.owner}" (must be a graph entity)`);
-	}
-	if (!p.coordinates) {
-		warn(`place ${p.id}`, 'no coordinates — the map cannot place it (V10)');
 	}
 }
 // The hierarchy must be acyclic and rooted: walk every chain to its top.
@@ -1980,6 +1753,78 @@ for (const issue of narrative.errors) fail(issue.where, issue.message);
 for (const issue of narrative.warnings) warn(issue.where, issue.message);
 
 // ---------------------------------------------------------------------------
+// V33: `verified` is a person's check.
+//
+// Every kind that can carry a review is checked here, so no record can reach
+// the graph wearing the word without one. Eras, questions and regions carry the
+// field but no review field: for them `verified` is unimplementable until a
+// review field exists, which is the honest consequence of the rule. The check
+// sits before the error report so a V33 failure is reported in the same pass as
+// every other validation error.
+//
+// The 82 values written before the rule are the only exception, listed with an
+// expiry in scripts/verified-exceptions.ts. The build fails when the date
+// passes, because a dated exception is a research task, not a permission.
+// ---------------------------------------------------------------------------
+{
+	const today = new Date().toISOString().slice(0, 10);
+	if (VERIFIED_EXCEPTIONS.expires < today) {
+		fail(
+			'verified-exceptions.ts',
+			`the "${VERIFIED_EXCEPTIONS.reason}" exception expired on ${VERIFIED_EXCEPTIONS.expires} (V33): the list must be empty before release`
+		);
+	}
+	const excepted = new Set<string>(VERIFIED_EXCEPTIONS.ids);
+	// Arabic role titles: a dated exception to the Arabic prose ceiling on /methodology
+	// (scripts/prose-exceptions.ts). The count is the work; the date is the deadline.
+	{
+		const missing = roles.filter((r) => !r.title_ar).length;
+		const declared = ARABIC_TITLE_EXCEPTION.rolesWithoutTitleAr;
+		if (roles.length !== ARABIC_TITLE_EXCEPTION.rolesTotal || missing !== declared) {
+			fail(
+				'prose-exceptions.ts',
+				`${missing} of ${roles.length} roles have no title_ar, and the Arabic title exception states ${declared} of ${ARABIC_TITLE_EXCEPTION.rolesTotal}: change the numbers in scripts/prose-exceptions.ts in the change that moves them, and lower the Arabic ceiling it states when titles land`
+			);
+		}
+		if (missing > 0 && ARABIC_TITLE_EXCEPTION.expires < today) {
+			fail(
+				'prose-exceptions.ts',
+				`the "${ARABIC_TITLE_EXCEPTION.reason}" exception expired on ${ARABIC_TITLE_EXCEPTION.expires} with ${missing} of ${roles.length} roles still without title_ar: add the titles to data/roles.yaml`
+			);
+		}
+	}
+	const sections: [string, { id?: string; verification?: string; review?: { actor?: string; method?: string } }[]][] = [
+		['institution', resolvedInstitutions],
+		['person', resolvedPeople],
+		['position', resolvedPositions],
+		['relationship', resolvedRelationships],
+		['event', resolvedEvents],
+		['agreement', resolvedAgreements],
+		['world-claim', resolvedWorldClaims],
+		['company', resolvedCompanies],
+		['contract', resolvedContracts],
+		['licence', resolvedLicences],
+		['vacancy', resolvedVacancies],
+		['declaration', resolvedDeclarations],
+		['education', resolvedEducation],
+		['place', places],
+		['era', eras],
+		['question', questions],
+		['region', regions]
+	];
+	for (const [kind, records] of sections) {
+		records.forEach((record, i) => {
+			if (record.id && excepted.has(record.id)) return;
+			if (verifiedGrounded(record)) return;
+			fail(
+				`${kind} ${record.id ?? `at index ${i}`}`,
+				'verification "verified" needs a review with actor human and method source-check (V33); an agent pass or an unrecorded check cannot make a record verified'
+			);
+		});
+	}
+}
+
+// ---------------------------------------------------------------------------
 // Report
 // ---------------------------------------------------------------------------
 
@@ -2097,12 +1942,15 @@ const reviewSections: [
 	['education', resolvedEducation],
 	['place', places]
 ];
+
 const reviewSummary = summariseReview(
 	reviewSections.flatMap(([kind, rows]) => rows.map((r) => ({ ...r, kind }))),
 	verifications
 );
 const {
-	reviewed,
+	reviewedHuman,
+	reviewedAgent,
+	reviewedUnstated,
 	reviewable,
 	flags: reviewFlags,
 	byKind: reviewByKind,
@@ -2405,6 +2253,26 @@ function withOrigins<T extends { evidence?: readonly EvidenceLike[] }>(rows: T[]
 	});
 }
 
+/**
+ * What a record rests on (D3): the number of distinct origins among the
+ * publishers it cites, and whether every cited source is an encyclopedia.
+ *
+ * Distinct from `origins` above, which counts evidence lineage (V29). This is
+ * about the bibliography, so it is emitted under its own name: the two numbers
+ * answer different questions and one must never overwrite the other.
+ */
+function withRestsOn<T extends { sources?: readonly string[] }>(
+	rows: T[]
+): (T & { restsOnOrigins?: number; encyclopediaOnly?: boolean })[] {
+	return rows.map((row) => {
+		const publishers = (row.sources ?? [])
+			.map((id) => sourceById.get(id)?.publisher)
+			.filter((p): p is string => typeof p === 'string');
+		const rest = restsOn(publishers);
+		return rest ? { ...row, ...rest } : row;
+	});
+}
+
 const dataset = {
 	meta: {
 		generated: new Date().toISOString(),
@@ -2460,7 +2328,16 @@ const dataset = {
 			exemption: SUCCESSION_EXEMPTION
 		},
 		contradictions,
-		review: { reviewed, reviewable, flags: reviewFlags, byKind: reviewByKind, byBasis: reviewByBasis },
+		review: {
+			reviewedHuman,
+			reviewedAgent,
+			reviewedUnstated,
+			reviewable,
+			independent: reviewSummary.independent,
+			flags: reviewFlags,
+			byKind: reviewByKind,
+			byBasis: reviewByBasis
+		},
 		translation,
 		coverage: { expectedCategories, principals: principalCoverage },
 		// W4: chains of all-weak influence edges (inferred/unsubstantiated),
@@ -2495,29 +2372,60 @@ const dataset = {
 		)
 	},
 	sources,
-	eras: resolvedEras,
-	institutions: withOrigins(resolvedInstitutions),
-	roles,
-	people: withOrigins(resolvedPeople),
-	positions: withOrigins(resolvedPositions),
-	relationships: withOrigins(resolvedRelationships),
-	events: withOrigins(resolvedEvents),
-	questions,
-	hypotheses,
-	agreements: withOrigins(resolvedAgreements),
-	worldClaims: withOrigins(resolvedWorldClaims),
-	companies: withOrigins(resolvedCompanies),
-	contracts: withOrigins(resolvedContracts),
-	licences: withOrigins(resolvedLicences),
-	vacancies: withOrigins(resolvedVacancies),
-	declarations: withOrigins(resolvedDeclarations),
-	education: withOrigins(resolvedEducation),
-	regions: resolvedRegions,
-	places: withOrigins(places),
+	eras: withRestsOn(resolvedEras),
+	institutions: withRestsOn(withOrigins(resolvedInstitutions)),
+	roles: withRestsOn(roles),
+	people: withRestsOn(withOrigins(resolvedPeople)),
+	positions: withRestsOn(withOrigins(resolvedPositions)),
+	relationships: withRestsOn(withOrigins(resolvedRelationships)),
+	events: withRestsOn(withOrigins(resolvedEvents)),
+	questions: withRestsOn(questions),
+	hypotheses: withRestsOn(hypotheses),
+	agreements: withRestsOn(withOrigins(resolvedAgreements)),
+	worldClaims: withRestsOn(withOrigins(resolvedWorldClaims)),
+	companies: withRestsOn(withOrigins(resolvedCompanies)),
+	contracts: withRestsOn(withOrigins(resolvedContracts)),
+	licences: withRestsOn(withOrigins(resolvedLicences)),
+	vacancies: withRestsOn(withOrigins(resolvedVacancies)),
+	declarations: withRestsOn(withOrigins(resolvedDeclarations)),
+	education: withRestsOn(withOrigins(resolvedEducation)),
+	regions: withRestsOn(resolvedRegions),
+	places: withRestsOn(withOrigins(places)),
 	// Independent verification records. A distinct collection with its own
 	// schema, so the three review populations can never be summed (M2).
 	verifications
 };
+
+/**
+ * Records whose every cited source is an encyclopedia (D3). Counted once over
+ * the assembled graph so the published number is the one a reader can recompute
+ * from dataset.json, and computed before stats so no view can disagree with it.
+ */
+const encyclopediaOnlyTotal = [
+	dataset.eras,
+	dataset.institutions,
+	dataset.roles,
+	dataset.people,
+	dataset.positions,
+	dataset.relationships,
+	dataset.events,
+	dataset.questions,
+	dataset.hypotheses,
+	dataset.agreements,
+	dataset.worldClaims,
+	dataset.companies,
+	dataset.contracts,
+	dataset.licences,
+	dataset.vacancies,
+	dataset.declarations,
+	dataset.education,
+	dataset.regions,
+	dataset.places
+].reduce(
+	(total, rows) =>
+		total + rows.filter((r) => (r as { encyclopediaOnly?: boolean }).encyclopediaOnly === true).length,
+	0
+);
 
 /**
  * Coverage by slice (Phase 10A): institution, era, source family, language and
@@ -2538,18 +2446,19 @@ const coverageRows = buildCoverage({
 
 // V22: trims are never silent. Every envelope clamp is published with the record,
 // its original span and its resolved interval, so a reader can see what the model
-// decided and an editor can fix the span instead of the report growing.
-const intervalTrims = [
-	...resolvedPositions
-		.filter((p) => p.interval.trimmed || p.interval.startClamped)
-		.map((p) => ({ kind: 'position', id: p.id, start: p.start, end: p.end, interval: p.interval })),
-	...resolvedRelationships
-		.filter((r) => r.interval.trimmed || r.interval.startClamped)
-		.map((r) => ({ kind: 'relationship', id: r.id, start: r.start, end: r.end, interval: r.interval })),
-	...resolvedEvents
-		.filter((e) => e.interval.trimmed || e.interval.startClamped)
-		.map((e) => ({ kind: 'event', id: e.id, start: e.date, end: e.date_end ?? e.date, interval: e.interval }))
-];
+// decided and an editor can fix the span instead of the report growing. The
+// engine rule names every clamped interval of every kind the resolver settles;
+// the report is those findings, with the span the record was authored with.
+const intervalTrims = engine.validate(engineResolved, { only: ['V22'] }).map((f) => {
+	const kind = f.record!.kind;
+	const id = f.record!.id;
+	const record = (engineResolved.records[kind] ?? []).find((r) => r.id === id) as
+		| { start?: string; end?: string; date?: string; date_end?: string }
+		| undefined;
+	// An event is dated, not spanned: its span is its date and its end date.
+	const span = kind === 'event' ? { start: record?.date, end: record?.date_end ?? record?.date } : { start: record?.start, end: record?.end };
+	return { kind, id, ...span, interval: engineResolved.intervals.get(`${kind}:${id}`) };
+});
 writeFileSync(join(STAGE_STATIC, 'interval-trims.json'), JSON.stringify(intervalTrims, null, 2), 'utf8');
 if (intervalTrims.length) {
 	warn('interval-trims', `${intervalTrims.length} interval(s) envelope-clamped (V22) — see static/interval-trims.json`);
@@ -2856,13 +2765,14 @@ writeFileSync(
 			cin: c.cin ?? '',
 			status: c.status,
 			founded: c.founded ?? '',
-			capital_tnd: c.capital ? String(c.capital.tnd) : '',
+			capital_amount: c.capital ? String(c.capital.amount) : '',
+			capital_currency: c.capital?.currency ?? '',
 			capital_date: c.capital?.date ?? '',
 			state_owned: String(c.state_owned),
 			basis: c.basis,
 			confidence: c.confidence
 		})),
-		['id', 'legal_name_fr', 'legal_name_ar', 'legal_form', 'cin', 'status', 'founded', 'capital_tnd', 'capital_date', 'state_owned', 'basis', 'confidence']
+		['id', 'legal_name_fr', 'legal_name_ar', 'legal_form', 'cin', 'status', 'founded', 'capital_amount', 'capital_currency', 'capital_date', 'state_owned', 'basis', 'confidence']
 	),
 	'utf8'
 );
@@ -2953,7 +2863,7 @@ writeFileSync(
 // ---------------------------------------------------------------------------
 
 const types = `// GENERATED by scripts/build-data.ts — do not edit.
-import raw from './dataset.json';
+import raw from './graph.json';
 import changelogRaw from './changelog.json';
 
 /** One commit touching data/. See readChangelog() in scripts/build-data.ts. */
@@ -2973,7 +2883,7 @@ export const changelog = changelogRaw as ChangeEntry[];
 
 export type Confidence = 'A' | 'B' | 'C' | 'D';
 export type Basis = 'documented' | 'reported' | 'inferred' | 'unsubstantiated';
-export type Verification = 'verified' | 'needs-primary-source' | 'disputed';
+export type Verification = 'unflagged' | 'verified' | 'needs-primary-source' | 'disputed';
 export type Layer =
 	| 'security'
 	| 'political'
@@ -2989,6 +2899,8 @@ export interface Review {
 	by: string;
 	date: string;
 	method?: string;
+	/** Who performed the check. Only a human source-check makes a record verified (V33). */
+	actor?: 'human' | 'agent';
 }
 
 export interface Dispute {
@@ -3002,10 +2914,22 @@ export interface Dispute {
  * The claim axes every claim-bearing record shares (V26/V29). \`independence\` is
  * the authored origin count and stays the fallback; \`origins\` is derived by the
  * build from evidence lineage and is the stronger statement where it exists.
+ * \`restsOnOrigins\` is a different count, derived from the publishers of the
+ * record's citations (D3); \`encyclopediaOnly\` says whether every citation is an
+ * encyclopedia. Neither overwrites the other.
  */
-export interface ClaimAxes {
+export interface ClaimAxes extends RestsOn {
 	independence?: number;
 	origins?: number;
+}
+
+/**
+ * What a record rests on (D3), derived from the publishers of the sources it
+ * cites. Present on every record that cites at least one source.
+ */
+export interface RestsOn {
+	restsOnOrigins?: number;
+	encyclopediaOnly?: boolean;
 }
 
 export interface Interval {
@@ -3033,7 +2957,7 @@ export interface Source {
 	excerpt?: string;
 }
 
-export interface Era {
+export interface Era extends RestsOn {
 	id: string;
 	label_en: string;
 	label_fr?: string;
@@ -3053,7 +2977,7 @@ export interface Era {
 	interval: Interval;
 }
 
-export interface Institution {
+export interface Institution extends RestsOn {
 	id: string;
 	name_en: string;
 	name_fr?: string;
@@ -3077,7 +3001,7 @@ export interface Institution {
 	timeline: TimelineItem[];
 }
 
-export interface Role {
+export interface Role extends RestsOn {
 	id: string;
 	title_en: string;
 	title_fr?: string;
@@ -3238,7 +3162,7 @@ export interface EventRec extends ClaimAxes {
 	interval: Interval;
 }
 
-export interface Question {
+export interface Question extends RestsOn {
 	id: string;
 	question: string;
 	kind: 'verification' | 'analytical';
@@ -3273,7 +3197,7 @@ export interface HypothesisEvidence {
 	sources: string[];
 }
 
-export interface Hypothesis {
+export interface Hypothesis extends RestsOn {
 	id: string;
 	label: string;
 	statement: string;
@@ -3354,8 +3278,15 @@ export interface DatasetMeta {
 		{ total: number; done: number; tiers: Record<'machine' | 'model-reviewed' | 'machine-reviewed' | 'human', number> }
 	>;
 	review: {
-		reviewed: number;
+		/** Reviewable records whose review names a person. */
+		reviewedHuman: number;
+		/** Reviewable records whose review names an agent. */
+		reviewedAgent: number;
+		/** Reviewable records whose review does not say who read them. */
+		reviewedUnstated: number;
 		reviewable: number;
+		/** Independent verifications that resolved to a claim (data/verifications.yaml). */
+		independent: number;
 		/**
 		 * Coverage per overlapping risk flag, most-damaging first. A record
 		 * carries every flag true of it, so these totals exceed \`reviewable\`.
@@ -3363,12 +3294,18 @@ export interface DatasetMeta {
 		 */
 		flags: Record<
 			'unsubstantiated' | 'attributed' | 'inferred' | 'reported' | 'documented',
-			{ reviewed: number; total: number }
+			{ reviewedHuman: number; reviewedAgent: number; reviewedUnstated: number; total: number }
 		>;
 		/** Denominator per claim kind, including people, institutions and the newer kinds. */
-		byKind: Record<string, { reviewed: number; total: number }>;
+		byKind: Record<
+			string,
+			{ reviewedHuman: number; reviewedAgent: number; reviewedUnstated: number; total: number }
+		>;
 		/** Denominator per derived basis. */
-		byBasis: Record<string, { reviewed: number; total: number }>;
+		byBasis: Record<
+			string,
+			{ reviewedHuman: number; reviewedAgent: number; reviewedUnstated: number; total: number }
+		>;
 	};
 	/** Card completeness: how much each record actually carries. A worklist. */
 	cards: {
@@ -3472,7 +3409,7 @@ export interface Company extends ClaimAxes {
 	cin?: string;
 	status: string;
 	founded?: string;
-	capital?: { tnd: number; date: string };
+	capital?: { amount: number; currency: string; date: string };
 	state_owned: boolean;
 	activities: string[];
 	headquarters?: string;
@@ -3630,7 +3567,7 @@ export interface Dataset {
 	places: PlaceRec[];
 }
 
-export interface RegionRec {
+export interface RegionRec extends RestsOn {
 	id: string;
 	kind: 'region' | 'governorate' | 'delegation' | 'municipality';
 	name_en: string;
@@ -3669,7 +3606,32 @@ export interface PlaceRec extends ClaimAxes {
 	sources: string[];
 }
 
-export const dataset = raw as unknown as Dataset;
+/** A source as the browser's graph carries it: the citation, without the prose that is fetched when a panel shows it. */
+export type SourceCite = Omit<Source, 'excerpt'> & {
+	/** True when the source has an excerpt in \`sources-prose.json\`. */
+	hasExcerpt?: boolean;
+};
+
+/** Long English text that is not in the browser's graph: read it through \`prose()\`, which waits for \`prose-en.json\`. */
+export type ProseField = ${[...SPLIT_PROSE].map((k) => `'${k}'`).join(' | ')};
+
+/** What the browser loads: each source cut down to its citation, and the long English text of the five collections left to \`prose-en.json\`. */
+export type GraphPerson = Omit<Person, ProseField>;
+export type GraphInstitution = Omit<Institution, ProseField>;
+export type GraphPosition = Omit<Position, ProseField>;
+export type GraphRelationship = Omit<Relationship, ProseField>;
+export type GraphEvent = Omit<EventRec, ProseField>;
+
+export type Graph = Omit<Dataset, 'sources' | 'people' | 'institutions' | 'positions' | 'relationships' | 'events'> & {
+	sources: SourceCite[];
+	people: GraphPerson[];
+	institutions: GraphInstitution[];
+	positions: GraphPosition[];
+	relationships: GraphRelationship[];
+	events: GraphEvent[];
+};
+
+export const dataset = raw as unknown as Graph;
 export default dataset;
 `;
 writeFileSync(join(STAGE_OUT, 'index.ts'), types, 'utf8');
@@ -3926,6 +3888,70 @@ let datasetHashValue = '';
 	}
 }
 
+// ---------------------------------------------------------------------------
+// The search file.
+//
+// The palette used to build its index from the whole graph when its module
+// loaded, which put the 10 MB graph behind a keystroke. It now fetches this
+// file, written here from the same records, so search costs one small request
+// and no graph. Only the kinds a reading page can open are indexed: people,
+// institutions and events. A row carries the three name scripts, the aliases,
+// the one-line detail and the words the old index folded into its haystack, so
+// a spelling in any script still finds the record.
+// ---------------------------------------------------------------------------
+{
+	const rows = [
+		...dataset.people.map((p) => ({
+			id: p.id,
+			kind: 'person',
+			name: p.name_en,
+			name_fr: p.name_fr,
+			name_ar: p.name_ar,
+			aliases: p.aliases,
+			detail: p.tagline ?? '',
+			layer: p.layers[0],
+			hay: p.trajectory.join(' ')
+		})),
+		...dataset.institutions.map((i) => ({
+			id: i.id,
+			kind: 'institution',
+			name: i.name_en,
+			name_fr: i.name_fr,
+			name_ar: i.name_ar,
+			detail: i.abbr ?? i.type.replace('-', ' '),
+			layer: i.layer,
+			hay: i.type
+		})),
+		...dataset.events.map((e) => ({
+			id: e.id,
+			kind: 'event',
+			name: e.title_en,
+			name_fr: e.title_fr,
+			name_ar: e.title_ar,
+			detail: '',
+			layer: 'political',
+			date: e.interval.startEarliest,
+			hay: [e.summary, e.category].filter(Boolean).join(' ')
+		}))
+	];
+	// Empty keys are dropped: the file is fetched, and most rows have no
+	// translation in one or two scripts.
+	const records = rows.map((row) => {
+		const out: Record<string, unknown> = {};
+		for (const [key, value] of Object.entries(row)) {
+			if (value === undefined || value === null || value === '') continue;
+			if (Array.isArray(value) && value.length === 0) continue;
+			out[key] = value;
+		}
+		return out;
+	});
+	writeFileSync(
+		join(STAGE_STATIC, 'search-index.json'),
+		JSON.stringify({ datasetHash: datasetHashValue, records }),
+		'utf8'
+	);
+}
+
 // The client's copy of the graph. Everything above (the published
 // static/dataset.json and meta.datasetHash) is the full record; what the
 // bundle carries is trimmed to what a reader's browser shows, because the
@@ -3939,10 +3965,7 @@ let datasetHashValue = '';
 //    career trajectories: displayed in the original only) and build-only
 //    derived counts are left out of the bundle. The published file keeps them.
 {
-	const SPLIT_PROSE = new Set(['summary', 'notes', 'reasoning', 'falsifiable_by', 'tagline', 'description']);
-	const UNSHOWN_TRANSLATION = new Set(['excerpt', 'title_gloss', 'trajectory']);
-	const BUILD_ONLY = new Set(['erasSpanned', 'seniorYears', 'layerCount', 'basis_derived', 'source_relation', 'tier_note']);
-	const COLLECTIONS = ['people', 'institutions', 'positions', 'relationships', 'events', 'sources'] as const;
+	const COLLECTIONS = CLIENT_COLLECTIONS;
 	const client = JSON.parse(readFileSync(join(STAGE_OUT, 'dataset.json'), 'utf8'));
 	const overlay: Record<'fr' | 'ar', Record<string, Record<string, Record<string, unknown>>>> = { fr: {}, ar: {} };
 	for (const c of COLLECTIONS) {
@@ -3964,6 +3987,42 @@ let datasetHashValue = '';
 		}
 	}
 	writeFileSync(join(STAGE_OUT, 'dataset.json'), CANONICAL ? canonicalBytes(client) : JSON.stringify(client), 'utf8');
+	// The browser imports `graph.json`: the copy with the fields that are fetched when a panel shows
+	// them taken out of each source. `dataset.json` above stays whole for every script that reads it.
+	const graph: Record<string, unknown> = { ...client };
+	const fetched: Record<string, Record<string, Record<string, unknown>>> = {};
+	for (const [c, fields] of Object.entries(FETCHED_FIELDS)) {
+		const unread: readonly string[] = (UNREAD_IN_BROWSER as Record<string, readonly string[]>)[c] ?? [];
+		graph[c] = (client[c] as Record<string, unknown>[]).map((rec) => {
+			const kept: Record<string, unknown> = {};
+			const moved: Record<string, unknown> = {};
+			for (const [k, v] of Object.entries(rec)) {
+				if (unread.includes(k)) continue;
+				(fields.includes(k as never) ? moved : kept)[k] = v;
+			}
+			if (Object.keys(moved).length) {
+				(fetched[c] ??= {})[rec.id as string] = moved;
+				if (moved.excerpt !== undefined) kept.hasExcerpt = true;
+			}
+			return kept;
+		});
+	}
+	// The long English text of people, institutions, positions, relationships and events goes the
+	// same way as the French and Arabic: to `prose-en.json`, merged into the records on first use.
+	const overlayEn: Record<string, Record<string, Record<string, unknown>>> = {};
+	for (const c of ENGLISH_PROSE_COLLECTIONS) {
+		graph[c] = (client[c] as Record<string, unknown>[]).map((rec) => {
+			const kept: Record<string, unknown> = {};
+			for (const [k, v] of Object.entries(rec)) {
+				if (SPLIT_PROSE.has(k)) ((overlayEn[c] ??= {})[rec.id as string] ??= {})[k] = v;
+				else kept[k] = v;
+			}
+			return kept;
+		});
+	}
+	writeFileSync(join(STAGE_OUT, 'graph.json'), JSON.stringify(graph), 'utf8');
+	writeFileSync(join(STAGE_STATIC, 'prose-en.json'), JSON.stringify({ datasetHash: datasetHashValue, ...overlayEn }), 'utf8');
+	writeFileSync(join(STAGE_STATIC, 'sources-prose.json'), JSON.stringify({ datasetHash: datasetHashValue, ...fetched }), 'utf8');
 	// Built in record order, so the bytes are already reproducible.
 	for (const lang of ['fr', 'ar'] as const) {
 		writeFileSync(join(STAGE_STATIC, `prose-${lang}.json`), JSON.stringify({ datasetHash: datasetHashValue, ...overlay[lang] }), 'utf8');
@@ -3986,6 +4045,30 @@ const lockHashValue = (() => {
 	} catch {
 		return '';
 	}
+})();
+
+// D5: the verification desk's measured figure. `research/desk/sessions.tsv` is
+// data; no file or no session line means the page says "not measured yet". The
+// keys exist either way so the page reads one shape. The file follows the data
+// folder, so a run over a copied dataset reads that copy's sessions and not the
+// working tree's.
+const deskStats = deskStatsText(
+	(() => {
+		try {
+			return readFileSync(join(dirname(DATA_DIR), 'research', 'desk', 'sessions.tsv'), 'utf8');
+		} catch {
+			return '';
+		}
+	})()
+);
+
+// D4: the latest source pre-check. Like the sessions file it is data beside the
+// data folder, so a run over a copied dataset reads that copy's check. No file
+// means every key is empty, not zero: the page can then say the check has not
+// run, which is a different statement from "nothing answered".
+const precheck = (() => {
+	const newest = newestPrecheck(dirname(DATA_DIR));
+	return newest ? precheckStats(newest.name, newest.text, sources.map((s) => s.id)) : EMPTY_PRECHECK_STATS;
 })();
 
 const stats: Record<string, string> = {
@@ -4029,15 +4112,20 @@ const stats: Record<string, string> = {
 	floor: parameters.time.floor,
 	cutoff: parameters.time.cutoff,
 	needsPrimarySource: String(needsPrimary.length),
+	// D3: records citing at least one source whose every source is an
+	// encyclopedia. The total is a different statement from a basis count.
+	encyclopediaOnly: String(encyclopediaOnlyTotal),
 	successionGaps: String(successionGaps.length),
 	successionOverlaps: String(successionOverlaps.length),
 	contradictions: String(contradictions.length),
-	reviewed: String(reviewed),
+	reviewedHuman: String(reviewedHuman),
+	reviewedAgent: String(reviewedAgent),
+	reviewedUnstated: String(reviewedUnstated),
 	reviewable: String(reviewable),
 	// Independent verification is the study population (data/verifications.yaml),
 	// never the editorial pass. Emitted so README and llms.txt can say zero with a
 	// tag, and so no summary can rename an editorial note as an independent check.
-	independent: String(reviewSummary.independentlyChecked),
+	independent: String(reviewSummary.independent),
 	// Translation coverage, published for the same reason the review numbers are: a
 	// commitment nobody can see the shortfall in does not mean anything. `human` is
 	// the only tier that means a person who reads the language has looked at it.
@@ -4049,6 +4137,10 @@ const stats: Record<string, string> = {
 	// edit, and a README that churns by one kilobyte per commit buries the changes
 	// that matter in noise. The prose keeps a "~" in front of it.
 	graphKB: String(Math.round(Number(size) / 10) * 10),
+	// What /data labels the flagship export with. Kept apart from graphKB (the
+	// bundled graph) and shippedKB (every export together): the card prints the
+	// size of the file it downloads, and no other number means that.
+	datasetKB: String(datasetKB),
 	// What the public exports weigh — see the shippedKB note above. The README says
 	// both numbers so the internal bundle and the shipped payload cannot be
 	// mistaken for each other.
@@ -4068,7 +4160,10 @@ const stats: Record<string, string> = {
 	),
 	...Object.fromEntries(
 		REVIEW_FLAGS.flatMap((k) => [
-			[`reviewed-${k}`, String(reviewFlags[k].reviewed)],
+			[`reviewNotes-${k}`, String(reviewFlags[k].reviewedHuman + reviewFlags[k].reviewedAgent + reviewFlags[k].reviewedUnstated)],
+			[`reviewedHuman-${k}`, String(reviewFlags[k].reviewedHuman)],
+			[`reviewedAgent-${k}`, String(reviewFlags[k].reviewedAgent)],
+			[`reviewedUnstated-${k}`, String(reviewFlags[k].reviewedUnstated)],
 			[`reviewable-${k}`, String(reviewFlags[k].total)]
 		])
 	),
@@ -4085,10 +4180,159 @@ const stats: Record<string, string> = {
 	// time; together they identify a build without trusting the wall clock.
 	datasetHash: datasetHashValue,
 	lockHash: lockHashValue,
-	node: process.version
+	node: process.version,
+	// The desk: sessions recorded, verified claims behind the figure, and the
+	// median minutes per verified claim (empty until there is a session).
+	deskSessions: deskStats.deskSessions,
+	deskClaims: deskStats.deskClaims,
+	deskMinutes: deskStats.deskMinutes,
+	// D4: the source pre-check of the latest run, in the same flat string form.
+	// `alive` counts a redirect, `uncheckable` a refusal or a timeout, and
+	// `withExcerpt` every source that stores an excerpt at all.
+	precheckDate: precheck.date,
+	precheckSources: precheck.sources,
+	precheckAlive: precheck.alive,
+	precheckDead: precheck.dead,
+	precheckUncheckable: precheck.uncheckable,
+	precheckSnapshot: precheck.snapshot,
+	precheckWithExcerpt: precheck.withExcerpt,
+	precheckExcerptFound: precheck.excerptFound,
+	precheckNewer: precheck.newer
 };
 
 writeFileSync(join(STAGE_OUT, 'stats.json'), JSON.stringify(stats, null, 2), 'utf8');
+
+// The research window as its own few bytes. The shell and prose pages need
+// these two numbers; without this file they would import the dataset to read them.
+writeFileSync(
+	join(STAGE_OUT, 'window.json'),
+	JSON.stringify({ cutoff: dataset.meta.cutoff, floor: dataset.meta.floor }),
+	'utf8'
+);
+
+// The structured figures a reading page prints. The flat counts are already in
+// stats.json; these are the tables and tiers that live in meta, cut here so the
+// page reads numbers instead of records. One file per page, holding exactly the
+// values that page shows.
+writeFileSync(
+	join(STAGE_OUT, 'about-figures.json'),
+	JSON.stringify(
+		{
+			coverage: dataset.meta.coverage.principals.map((p) => ({
+				id: p.id,
+				name: p.name,
+				total: p.total,
+				kin: p.kin,
+				missing: p.missing
+			})),
+			reviewFlags: dataset.meta.review.flags,
+			// The split every page prints: a review by a person, a pass by an
+			// agent, and a review note that does not say who read it.
+			review: {
+				reviewedHuman,
+				reviewedAgent,
+				reviewedUnstated,
+				reviewable,
+				independent: reviewSummary.independent
+			},
+			translation: dataset.meta.translation,
+			// The verification desk's measured figure. Empty until a session
+			// line exists, so the page says "not measured yet" rather than zero.
+			desk: {
+				sessions: Number(deskStats.deskSessions) || 0,
+				claims: Number(deskStats.deskClaims) || 0,
+				minutes: deskStats.deskMinutes === '' ? null : Number(deskStats.deskMinutes)
+			}
+		},
+		null,
+		2
+	),
+	'utf8'
+);
+
+// The method page's figures: the four basis counts, the two succession audits,
+// the review denominators and the published weight table. Every role carries the
+// three scripts of its own title and its institution's name, cut here so the
+// table is text and never a record lookup.
+writeFileSync(
+	join(STAGE_OUT, 'methodology-figures.json'),
+	JSON.stringify(
+		{
+			basis: basisCounts,
+			successionGaps: successionGaps.length,
+			successionOverlaps: successionOverlaps.length,
+			contradictions: contradictions.length,
+			review: {
+				reviewedHuman,
+				reviewedAgent,
+				reviewedUnstated,
+				reviewable,
+				independent: reviewSummary.independent
+			},
+			roles: [...roles]
+				.sort((a, b) => b.authority - a.authority)
+				.map((role) => ({
+					id: role.id,
+					authority: role.authority,
+					title: { en: role.title_en, fr: role.title_fr ?? '', ar: role.title_ar ?? '' },
+					institution: {
+						en: institutionById.get(role.institution)?.name_en ?? '',
+						fr: institutionById.get(role.institution)?.name_fr ?? '',
+						ar: institutionById.get(role.institution)?.name_ar ?? ''
+					}
+				}))
+		},
+		null,
+		2
+	),
+	'utf8'
+);
+
+// The open-data page's figures: the two coverage tables, the card histogram and
+// worklist, and the review denominators by kind and by flag. Names carry all
+// three scripts so the tables localise without a record lookup.
+function sliceNames(id: string, fallback: string) {
+	const person = personById.get(id);
+	return person
+		? { en: person.name_en, fr: person.name_fr ?? '', ar: person.name_ar ?? '' }
+		: { en: fallback, fr: '', ar: '' };
+}
+
+writeFileSync(
+	join(STAGE_OUT, 'data-figures.json'),
+	JSON.stringify(
+		{
+			coverage: dataset.meta.coverage.principals.map((p) => ({
+				id: p.id,
+				name: sliceNames(p.id, p.name),
+				total: p.total,
+				kin: p.kin,
+				missing: p.missing
+			})),
+			cards: {
+				sections: dataset.meta.cards.sections,
+				histogram: dataset.meta.cards.histogram,
+				worklist: dataset.meta.cards.worklist.map((w) => ({
+					id: w.id,
+					name: sliceNames(w.id, w.name),
+					filled: w.filled
+				}))
+			},
+			review: {
+				reviewedHuman,
+				reviewedAgent,
+				reviewedUnstated,
+				reviewable,
+				independent: reviewSummary.independent,
+				byKind: dataset.meta.review.byKind,
+				flags: dataset.meta.review.flags
+			}
+		},
+		null,
+		2
+	),
+	'utf8'
+);
 
 // Sitemap for the static site. Generated, never hand-maintained: every route
 // in this list is a real prerendered page (adapter-static, strict mode fails
@@ -4194,7 +4438,7 @@ if (!FIXTURE_MODE) {
 		{ from: 'README.md', to: 'README.md' },
 		{ from: 'AGENTS.md', to: 'AGENTS.md' },
 		{ from: 'DESIGN.md', to: 'DESIGN.md' },
-		{ from: 'output/deeptunisia-release-paper-v0.1.2.md', to: 'output/deeptunisia-release-paper-v0.1.2.md' },
+		{ from: 'output/deeptunisia-release-paper-v1.0.0.md', to: 'output/deeptunisia-release-paper-v1.0.0.md' },
 		{ from: 'content/llms.template.txt', to: 'static/llms.txt' }
 	];
 	/* README, AGENTS and DESIGN are refreshed by `npm run stats:write`, not here;
@@ -4237,9 +4481,9 @@ console.log(`
     basis   documented ${basisCounts.documented}   reported ${basisCounts.reported}   inferred ${basisCounts.inferred}   unsubstantiated ${basisCounts.unsubstantiated}
     flagged for primary-source verification: ${needsPrimary.length}
     succession gaps: ${successionGaps.length}   overlaps: ${successionOverlaps.length}   recorded contradictions: ${contradictions.length}
-    human-reviewed: ${reviewed}/${reviewable}  (flags overlap)
+    checked by a person: ${reviewedHuman}/${reviewable}   passed by an agent: ${reviewedAgent}/${reviewable}   not stated: ${reviewedUnstated}
 ${REVIEW_FLAGS.map(
-	(k) => `      ${k.padEnd(16)} ${String(reviewFlags[k].reviewed).padStart(4)}/${String(reviewFlags[k].total).padEnd(4)}`
+	(k) => `      ${k.padEnd(16)} ${String(reviewFlags[k].reviewedHuman).padStart(4)} person ${String(reviewFlags[k].reviewedAgent).padStart(4)} agent ${String(reviewFlags[k].reviewedUnstated).padStart(4)} unstated / ${String(reviewFlags[k].total).padEnd(4)}`
 ).join('\n')}
 
     translation coverage        fr        ar

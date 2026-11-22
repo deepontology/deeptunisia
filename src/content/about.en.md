@@ -43,11 +43,11 @@ This is not neutrality for its own sake. It is the project's only real protectio
 
 ## How to read these numbers {#review-caveat}
 
-That review figure is deliberately unflattering. The project's stated architecture is that machines propose and humans verify, and at this stage almost nothing has been through a second pair of eyes. Publishing the real number is the only way that promise means anything.
+These review figures are deliberately unflattering. The project's stated architecture is that machines propose and humans verify, and at this stage almost nothing has been through a second pair of eyes. A record is **unflagged** when nobody has checked it and nothing has been flagged on it, which is the default. It is **verified** only when a person opened the source and confirmed that it says what the record says, and only a review that names a person (`actor: human`) and the method `source-check` can make that true. Publishing both numbers, checks by a person and passes by an agent, is the only way the promise means anything.
 
 ## Where that review went {#where-review-went}
 
-A single percentage treats verifying a gazette-dated appointment as interchangeable with verifying an unsubstantiated allegation about a named living person. Those are not the same risk, and averaging them lets the figure look identical whether the effort went somewhere useful or somewhere safe. Broken out by risk flag, most unsubstantiated claims already carry a review note, but every note so far was written by the compilation and research passes, and none records an independent check. The flags overlap, so the rows do not add up to the total, and that overlap is the point: an inferred claim that names its source has to be visible under both.
+A single percentage treats verifying a gazette-dated appointment as interchangeable with verifying an unsubstantiated allegation about a named living person. Those are not the same risk, and averaging them lets the figure look identical whether the effort went somewhere useful or somewhere safe. Broken out by risk flag, most unsubstantiated claims already carry a review note, but a note records that someone read the claim, not that a person opened its source. Most notes today come from the compilation and research passes, none records an independent check by a second person, and the record does not yet say whether the reader was a person or an agent. The flags overlap, so the rows do not add up to the total, and that overlap is the point: an inferred claim that names its source has to be visible under both.
 
 ## How much of this exists in three languages {#languages-honest}
 

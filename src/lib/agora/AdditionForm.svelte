@@ -36,7 +36,8 @@
 	import Segmented from '$lib/ui/Segmented.svelte';
 	import Textarea from '$lib/ui/Textarea.svelte';
 	import RecordPicker, { type PickerOption } from './RecordPicker.svelte';
-	import { t, layerLabel, nameOf } from '$lib/t.svelte';
+	import { t, layerLabel } from '$lib/t.svelte';
+	import { english, nameOf } from '$lib/names.svelte';
 	import { agora } from '$lib/agora.svelte';
 	import { LAYER_COLOR, communityTypeOf, ds, institutionById, type Layer } from '$lib/model';
 	import {
@@ -71,19 +72,22 @@
 	 * the ends of a relationship and the holder of an office; roles are not in the
 	 * search index, so their list is built here from the generated dataset.
 	 */
-	const PEOPLE: PickerOption[] = ds.people.map((p) => ({
-		id: p.id,
-		name: p.name_en,
-		detail: p.tagline ?? '',
-		layer: p.layers?.[0]
-	}));
+	// The tagline arrives with the English prose (`prose-en.json`), so the list re-reads it then.
+	const PEOPLE: PickerOption[] = $derived(
+		ds.people.map((p) => ({
+			id: p.id,
+			name: p.name_en,
+			detail: english(p, 'tagline'),
+			layer: p.layers?.[0]
+		}))
+	);
 	const INSTITUTIONS: PickerOption[] = ds.institutions.map((i) => ({
 		id: i.id,
 		name: i.name_en,
 		detail: i.abbr ?? '',
 		layer: i.layer
 	}));
-	const ENDPOINTS: PickerOption[] = [...PEOPLE, ...INSTITUTIONS];
+	const ENDPOINTS: PickerOption[] = $derived([...PEOPLE, ...INSTITUTIONS]);
 	const ROLES: PickerOption[] = ds.roles.map((r) => ({
 		id: r.id,
 		name: r.title_en,

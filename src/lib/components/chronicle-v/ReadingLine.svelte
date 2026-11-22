@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { app } from '$lib/state.svelte';
-	import { eventTitle, formatDate } from '$lib/t.svelte';
+	import { eventTitle } from '$lib/names.svelte';
+	import { formatDate } from '$lib/t.svelte';
 	import type { EventRec } from '$lib/model';
 	import type { VScale } from '$lib/chronicle/vscale';
 

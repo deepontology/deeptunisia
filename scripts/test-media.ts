@@ -229,8 +229,8 @@ ok(
 // wiring above is: a surface that stops importing the component stops stating
 // the draft state, and no data assertion can see that.
 for (const [file, label] of [
-	[join(ROOT, 'src', 'routes', 'media', '+page.svelte'), 'the media index route'],
-	[join(ROOT, 'src', 'routes', 'media', '[slug]', '+page.svelte'), 'the investigation route'],
+	[join(ROOT, 'src', 'routes', '(read)', 'media', '+page.svelte'), 'the media index route'],
+	[join(ROOT, 'src', 'routes', '(read)', 'media', '[slug]', '+page.svelte'), 'the investigation route'],
 	[join(ROOT, 'src', 'lib', 'components', 'media', 'ArticleLayout.svelte'), 'the article header']
 ] as const) {
 	const src = readFileSync(file, 'utf8');

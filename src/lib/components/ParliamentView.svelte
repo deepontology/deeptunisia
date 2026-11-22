@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { t, tf, nameOf, formatDate } from '$lib/t.svelte';
+	import { t, tf, formatDate } from '$lib/t.svelte';
+	import { nameOf } from '$lib/names.svelte';
 	import { app } from '$lib/state.svelte';
 	import { personById, institutionById, ds, BASIS_ORDER, type Basis } from '$lib/model';
 	import { terms, termAt, affiliation, seatedAt, seatGroups, type Term, type Holding } from '$lib/civic';

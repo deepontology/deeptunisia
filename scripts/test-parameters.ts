@@ -14,8 +14,9 @@
  * rejects, a narrowed vocabulary stops matching "JORT", and the date
  * resolver's window/slack arithmetic tracks the configured values.
  *
- * The suite mutates module-level state (schema.ts's jurisdiction params and
- * dates.ts's exported lets). Every block that reconfigures restores the
+ * The suite mutates module-level state (dates.ts's exported lets); the place box
+ * and the gazette vocabulary are the deployment's, so those blocks build a
+ * second engine instead. Every block that reconfigures restores the
  * shipped defaults, and a final block asserts the restoration itself — a test
  * that leaks its fixture state would poison every assertion after it.
  */
@@ -24,7 +25,9 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { isDeepStrictEqual } from 'node:util';
 import { DEFAULT_PARAMETERS, loadParameters, type Parameters } from './parameters.ts';
-import { configureSchema, Coordinates, reviewOverclaims } from './schema.ts';
+import { createEngine } from 'deepepisteme';
+import { deployment, engine } from './engine.ts';
+import { PlaceSchema, reviewOverclaims } from './schema.ts';
 import {
 	configureTime,
 	parseDateEdge,
@@ -49,11 +52,26 @@ function ok(name: string, condition: boolean, detail = '') {
 	}
 }
 
-/** The rejection message a Zod Coordinates failure produces, for pinning. */
-function coordMessage(input: [number, number]): string {
-	const r = Coordinates.safeParse(input);
+/**
+ * A shipped place record (Port of Radès) with its coordinates replaced. The
+ * coordinates are parsed by the place schema the build parses places with, so
+ * the box under test is the one the pipeline applies, not a copy of it.
+ */
+const PLACE_FIXTURE = {
+	kind: 'port',
+	id: 'place-rades-port',
+	name_en: 'Port of Radès',
+	parent: 'gov-ben-arous',
+	confidence: 'A',
+	basis: 'documented',
+	sources: ['wikidata-q11942395']
+};
+
+/** The rejection message the given place schema produces for a coordinate pair. */
+function coordMessage(schema: { safeParse(v: unknown): { success: boolean; error?: { issues: { message: string }[] } } }, input: [number, number]): string {
+	const r = schema.safeParse({ ...PLACE_FIXTURE, coordinates: input });
 	if (r.success) return '';
-	return r.error.issues[0]?.message ?? '';
+	return r.error?.issues.map((i) => i.message).find((m) => m.startsWith('coordinates must fall')) ?? '';
 }
 
 // ---------------------------------------------------------------------------
@@ -98,50 +116,62 @@ function coordMessage(input: [number, number]): string {
 }
 
 // ---------------------------------------------------------------------------
-// 2. Coordinates under the DEFAULT box (the shipped validator, before any
-//    configureSchema call in this process).
+// 2. Place coordinates under the shipped box: the place schema the build parses
+//    places with rejects what lies outside Tunisia and accepts a shipped point.
 // ---------------------------------------------------------------------------
 {
-	ok('default box rejects [2, 40]', !Coordinates.safeParse([2, 40]).success, '[2, 40] is outside lon 8..12, lat 30..38');
+	ok(
+		'shipped place schema accepts a point inside the box',
+		PlaceSchema.safeParse({ ...PLACE_FIXTURE, coordinates: [10.287201, 36.805401] }).success,
+		'[10.287201, 36.805401] is inside lon 8..12, lat 30..38'
+	);
+	ok('default box rejects [2, 40]', coordMessage(PlaceSchema, [2, 40]) !== '', '[2, 40] is outside lon 8..12, lat 30..38');
 	ok(
 		'default rejection message names Tunisia and the box',
-		coordMessage([2, 40]).includes('Tunisia') && coordMessage([2, 40]).includes('lon 8..12, lat 30..38'),
-		coordMessage([2, 40])
+		coordMessage(PlaceSchema, [2, 40]).includes('Tunisia') && coordMessage(PlaceSchema, [2, 40]).includes('lon 8..12, lat 30..38'),
+		coordMessage(PlaceSchema, [2, 40])
 	);
 }
 
 // ---------------------------------------------------------------------------
-// 3. The validator reads the parameters, not a hardcoded box. A widened
-//    jurisdiction accepts what Tunisia rejects, and its failure message names
-//    the new jurisdiction. Restore afterwards.
+// 3. The box is the deployment's, which reads the parameters, not a hardcoded
+//    box. A second engine whose deployment carries a widened jurisdiction
+//    accepts what Tunisia rejects, and its failure message names the new
+//    jurisdiction. The one engine of the build is not touched.
 // ---------------------------------------------------------------------------
 {
-	const morocco: Parameters = {
-		...DEFAULT_PARAMETERS,
-		jurisdiction: {
-			...DEFAULT_PARAMETERS.jurisdiction,
-			name: 'Morocco',
-			bbox: { lonMin: -20, lonMax: 20, latMin: 20, latMax: 60 }
-		}
-	};
-	configureSchema(morocco);
 	ok(
-		'widened box accepts [2, 40] — the validator reads parameters',
-		Coordinates.safeParse([2, 40]).success,
+		'the deployment box is the parameter file box',
+		isDeepStrictEqual(deployment.bbox, DEFAULT_PARAMETERS.jurisdiction.bbox),
+		JSON.stringify(deployment.bbox)
+	);
+	const morocco = createEngine({
+		...deployment,
+		name: 'Morocco',
+		bbox: { lonMin: -20, lonMax: 20, latMin: 20, latMax: 60 }
+	});
+	const widened = morocco.schemaOf('place');
+	ok(
+		'widened box accepts [2, 40] — the validator reads the deployment',
+		widened.safeParse({ ...PLACE_FIXTURE, coordinates: [2, 40] }).success,
 		'[2, 40] is inside the configured box'
 	);
-	const msg = coordMessage([-30, 80]);
+	const msg = coordMessage(widened, [-30, 80]);
 	ok(
 		'reconfigured rejection message names the new jurisdiction',
 		msg.includes('Morocco') && msg.includes('lon -20..20, lat 20..60'),
 		msg
 	);
-	configureSchema(DEFAULT_PARAMETERS);
+	ok(
+		'the build engine still rejects [2, 40]',
+		engine.schemaOf('place').safeParse({ ...PLACE_FIXTURE, coordinates: [2, 40] }).success === false,
+		'the widened engine is a separate instance'
+	);
 }
 
 // ---------------------------------------------------------------------------
-// 4. The gazette-overclaim guard reads the parameter vocabulary and source
-//    prefixes. Restore afterwards.
+// 4. The gazette-overclaim guard reads the deployment's vocabulary and source
+//    prefixes.
 // ---------------------------------------------------------------------------
 {
 	ok(
@@ -153,22 +183,20 @@ function coordMessage(input: [number, number]): string {
 		reviewOverclaims('checked directly against the JORT decree text', ['jort-2020-123']) === false
 	);
 
-	configureSchema({
-		...DEFAULT_PARAMETERS,
-		jurisdiction: {
-			...DEFAULT_PARAMETERS.jurisdiction,
-			gazette: { ...DEFAULT_PARAMETERS.jurisdiction.gazette, vocabulary: ['bulletin'] }
-		}
+	// The vocabulary is the deployment's: a second engine whose deployment names
+	// another gazette word reads it, and the build engine is not touched.
+	const bulletin = createEngine({
+		...deployment,
+		gazette: { ...deployment.gazette, vocabulary: ['bulletin'] }
 	});
 	ok(
-		'guard: vocabulary comes from parameters — "JORT" no longer claims a gazette',
-		reviewOverclaims('checked directly against the JORT decree text', ['tier3-article']) === false
+		'guard: vocabulary comes from the deployment — "JORT" no longer claims a gazette',
+		bulletin.envelope.reviewOverclaims('checked directly against the JORT decree text', ['tier3-article']) === false
 	);
 	ok(
 		'guard: the configured vocabulary now matches "bulletin"',
-		reviewOverclaims('checked against the bulletin', ['tier3-article']) === true
+		bulletin.envelope.reviewOverclaims('checked against the bulletin', ['tier3-article']) === true
 	);
-	configureSchema(DEFAULT_PARAMETERS);
 }
 
 // ---------------------------------------------------------------------------
@@ -248,7 +276,7 @@ function coordMessage(input: [number, number]): string {
 //    this file leaves behind).
 // ---------------------------------------------------------------------------
 {
-	ok('Coordinates is restored to the default box', !Coordinates.safeParse([2, 40]).success, coordMessage([2, 40]));
+	ok('the place schema still rejects [2, 40]', coordMessage(PlaceSchema, [2, 40]) !== '', coordMessage(PlaceSchema, [2, 40]));
 	ok(
 		'guard is restored to the default vocabulary',
 		reviewOverclaims('checked directly against the JORT decree text', ['tier3-article']) === true &&

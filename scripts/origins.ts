@@ -101,3 +101,82 @@ export function countOrigins(evidence: readonly EvidenceLike[] | undefined): num
 	}
 	return groups.length === 0 ? undefined : groups.length;
 }
+
+/* ---------------------------------------------------------------------------
+ * What a record rests on (D3).
+ *
+ * A record cites sources; each source names a publisher. The number a reader
+ * needs is how many distinct origins those publishers represent, not how many
+ * citations there are. An encyclopedia is its own origin class because a record
+ * whose every source is a Wikipedia page rests on one kind of thing, and saying
+ * so is not the same as calling it reported.
+ *
+ * The table is code, not data: a fork retargets its own publishers here, and the
+ * class list is closed at two for 1.0.
+ * ------------------------------------------------------------------------- */
+
+export type OriginClass = 'encyclopedia' | 'other';
+
+export interface OriginRule {
+	/** Publisher spelling, or the family of spellings it stands for. */
+	pattern: RegExp;
+	/** The origin id two spellings of the same outlet collapse to. */
+	origin: string;
+	class: OriginClass;
+}
+
+/**
+ * Every encyclopedia publisher spelling in this graph, in one row per origin.
+ * The test in scripts/test-validators.ts fails when a publisher that mentions
+ * wiki in Latin or Arabic script has no row here, so a new spelling cannot be
+ * added to data/sources.yaml without a class.
+ *
+ * The 27 spellings counted at release 1.0 are: Wikipedia, Wikipedia (FR),
+ * Wikipedia (French), Wikipedia (français), Wikipedia (en), Wikipedia (EN),
+ * Wikipedia (English), Wikipedia (AR), Wikipedia (ar), French Wikipedia,
+ * English Wikipedia, English Wikipedia (index article), Wikipédia, Wikipédia
+ * (fr), Wikipédia (FR), Wikipédia (français), Wikipédia (ar), Wikipédia
+ * (encyclopédie référencée), fr.wikipedia, Arabic Wikipedia, Arabic Wikipedia
+ * (governorate page), Arabic Wikipedia (municipality list), French Wikipedia
+ * (municipality list), ويكيبيديا (العربية), ويكيبيديا (ar),
+ * ويكيبيديا (Arabic Wikipedia), Wikidata.
+ */
+export const ORIGIN_RULES: readonly OriginRule[] = [
+	{ pattern: /wikidata/i, origin: 'wikidata', class: 'encyclopedia' },
+	{ pattern: /wikip[eé]dia|ويكيبيد/iu, origin: 'wikipedia', class: 'encyclopedia' }
+];
+
+/** The class of every origin id the table declares. */
+export const ORIGIN_CLASS: Record<string, OriginClass> = Object.fromEntries(
+	ORIGIN_RULES.map((rule) => [rule.origin, rule.class])
+);
+
+/**
+ * Resolve one publisher string. An unmapped publisher is its own origin: the
+ * literal string is the identity, because inventing a grouping the table does
+ * not declare would be a guess dressed as a count.
+ */
+export function originOf(publisher: string): { origin: string; class: OriginClass } {
+	for (const rule of ORIGIN_RULES) {
+		if (rule.pattern.test(publisher)) return { origin: rule.origin, class: rule.class };
+	}
+	return { origin: publisher, class: 'other' };
+}
+
+/**
+ * Derive the two fields on a record from the publishers of the sources it cites.
+ * Returns undefined when the record cites nothing, so no absent field is ever
+ * emitted as zero. `encyclopediaOnly` is true only when there is at least one
+ * source and every one of them is an encyclopedia.
+ */
+export function restsOn(publishers: readonly string[]): { restsOnOrigins: number; encyclopediaOnly: boolean } | undefined {
+	if (!publishers.length) return undefined;
+	const origins = new Set<string>();
+	let encyclopediaOnly = true;
+	for (const publisher of publishers) {
+		const found = originOf(publisher);
+		origins.add(found.origin);
+		if (found.class !== 'encyclopedia') encyclopediaOnly = false;
+	}
+	return { restsOnOrigins: origins.size, encyclopediaOnly };
+}

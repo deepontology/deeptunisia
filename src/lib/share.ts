@@ -32,9 +32,11 @@ export function buildShareUrl(params: {
 
 /**
  * Canonical share URL — one form regardless of where the card was opened.
- * Entities, relationships and flows all canonicalise to /network with their
- * respective param. This keeps crawlers on one canonical and avoids
- * history fracturing by view. See deeplink.svelte.ts for consumption.
+ * A person or an institution is shared as its record page, /e/<id>, which is a
+ * document of its own and carries the preview tags. Relationships, flows and
+ * agreements have no record page: they are shared as a small preview page that
+ * sends the reader to /network with their respective param. See
+ * deeplink.svelte.ts for consumption.
  */
 export function canonicalShareUrl(
 	kind: 'entity' | 'relationship' | 'flow' | 'agreement',
@@ -42,10 +44,10 @@ export function canonicalShareUrl(
 ): string {
 	if (typeof window === 'undefined') return '';
 	const origin = location.origin;
-	// Share URLs are the crawler targets with proper OG (see /share/[kind]/[id]).
-	// Humans are redirected from there to /network via meta refresh + JS.
-	const path = kind === 'entity' ? 'entity' : kind === 'relationship' ? 'relationship' : kind;
-	return `${origin}/share/${path}/${encodeURIComponent(id)}`;
+	if (kind === 'entity') return `${origin}/e/${encodeURIComponent(id)}`;
+	// The other kinds are crawler targets with proper OG (see /share/[kind]/[id]).
+	// Humans are redirected from there to /network via meta refresh.
+	return `${origin}/share/${kind}/${encodeURIComponent(id)}`;
 }
 
 export function buildFlowId(kind: string, year: number, iso2: string): string {
