@@ -12,6 +12,7 @@
 	import { clearCoins, dragMoney, flyCoin } from './drag';
 	import SystemRow, { fmtMd, signed } from './SystemRow.svelte';
 	import TrendChart from './TrendChart.svelte';
+	import HowToPlay from './HowToPlay.svelte';
 
 	/**
 	 * The Treasury board, one screen on a desk and on a phone.
@@ -126,6 +127,7 @@
 	});
 	/** The trend chart: the chosen line across every adopted year and the 2027 draft. */
 	let chartOpen = $state(false);
+	let guideOpen = $state(false);
 	let listEl = $state<HTMLElement | undefined>(undefined);
 	let rootEl = $state<HTMLElement | undefined>(undefined);
 
@@ -434,7 +436,10 @@
 	<section class="purse-zone" aria-label={t.purse}>
 		<p class="badge">{t.badge}<span class="rule">{t.rule[rule]}</span></p>
 		<h1 class="title">{t.title}</h1>
-		<a class="study-link" href="/research/citizen-budget">{t.studyPage}</a>
+		<div class="top-links">
+			<a class="study-link" href="/research/citizen-budget">{t.studyPage}</a>
+			<button type="button" class="help-link" onclick={() => (guideOpen = true)} aria-haspopup="dialog">{t.guide.open}</button>
+		</div>
 
 		<div class="purse" class:target={over === 'purse'} class:refused={refusedId === 'purse'} data-drop="purse" data-state={purseState}>
 			<span class="purse-label">{t.purse}</span>
@@ -690,6 +695,10 @@
 		{#if t.interim}<p class="interim">{t.interim}</p>{/if}
 	</section>
 
+	{#if guideOpen}
+		<HowToPlay {t} {rule} onclose={() => (guideOpen = false)} />
+	{/if}
+
 	{#if chartOpen && activeRow}
 		<div class="detail-overlay chart-overlay" role="dialog" aria-modal="true" aria-label={`${c.lines[activeRow.id].name}. ${t.chartHeading}`}>
 			<div class="detail-sheet">
@@ -788,6 +797,23 @@
 		line-height: 1.1;
 		letter-spacing: -0.01em;
 		text-wrap: balance;
+	}
+	.top-links {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: var(--s-1) var(--s-4);
+	}
+	.help-link {
+		padding: 0;
+		border: 0;
+		background: transparent;
+		color: var(--text-primary);
+		font: inherit;
+		font-size: var(--t-sm);
+		text-decoration: underline;
+		text-underline-offset: 3px;
+		cursor: pointer;
 	}
 	.study-link {
 		align-self: start;
@@ -1676,8 +1702,11 @@
 			padding: var(--s-2) var(--s-6) var(--s-3);
 			border-block-end: var(--rule);
 		}
-		.study-link {
+		.top-links {
 			grid-area: study;
+		}
+		.study-link,
+		.help-link {
 			font-size: var(--t-xs);
 		}
 		.purse {

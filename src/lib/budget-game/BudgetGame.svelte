@@ -6,6 +6,7 @@
 	import { linesFrom } from './lines';
 	import { DEFAULT_RULE, heldMd, toAllocation, type Board, type BoardState, type MoveRule, type StartMode } from './board';
 	import BudgetBoard from './BudgetBoard.svelte';
+	import HowToPlay from './HowToPlay.svelte';
 	import { fmtMd, signed } from './SystemRow.svelte';
 	import { boardCopyFor } from './board-copy';
 
@@ -36,6 +37,7 @@
 	const fmt = (n: number) => Math.round(n).toLocaleString('en-US');
 
 	let step = $state<Step>('intro');
+	let guideOpen = $state(false);
 	let adult = $state(false);
 	let readInfo = $state(false);
 	let withdrawal = $state(false);
@@ -176,9 +178,13 @@
 			<p class="note">{c.frame.placeholder}</p>
 			<div class="actions">
 				<button class="quiet" type="button" onclick={() => go('intro')}>{c.frame.back}</button>
+				<button class="quiet" type="button" onclick={() => (guideOpen = true)} aria-haspopup="dialog">{t.guide.open}</button>
 				<button class="cta" type="button" onclick={() => go('board')}>{c.frame.next}</button>
 			</div>
 		</section>
+		{#if guideOpen}
+			<HowToPlay {t} {rule} onclose={() => (guideOpen = false)} />
+		{/if}
 	{/if}
 
 	{#if step === 'board'}
