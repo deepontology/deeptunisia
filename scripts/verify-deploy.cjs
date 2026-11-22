@@ -170,7 +170,7 @@ fs.mkdirSync(OUT, { recursive: true });
   page.on('pageerror', (e) => errors.push('pageerror: ' + e.message));
 
   await page.goto(ORIGIN + '/', { waitUntil: 'networkidle' });
-  ok(await page.locator('a.enter').count() === 5, 'the landing page rendered');
+  ok(await page.locator('a.enter').count() === 6, 'the landing page rendered');
   /*
    * The dial is generated at runtime from the graph arrays the build embeds,
    * so the edge count grows with the data and a hardcoded count goes stale on
@@ -197,7 +197,7 @@ fs.mkdirSync(OUT, { recursive: true });
   ok(await page.locator('.bar').count() > 20, 'Chronicle drew its tenures');
   ok(await page.locator('.card[role="dialog"]').count() === 1, 'the guided tour runs for a new reader');
   await page.screenshot({ path: OUT + 'D-atlas.png' });
-  await page.locator('.card .skip').click();
+  await page.locator('.card button.skip').click();
 
   await page.goto(ORIGIN + '/agora', { waitUntil: 'networkidle' });
   await page.waitForTimeout(800);
