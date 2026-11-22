@@ -12,7 +12,7 @@
 	import { clearCoins, dragMoney, flyCoin } from './drag';
 	import SystemRow, { fmtMd, signed } from './SystemRow.svelte';
 	import TrendChart from './TrendChart.svelte';
-	import HowToPlay from './HowToPlay.svelte';
+	import BoardTour, { boardTourSeen } from './BoardTour.svelte';
 
 	/**
 	 * The Treasury board, one screen on a desk and on a phone.
@@ -127,7 +127,13 @@
 	});
 	/** The trend chart: the chosen line across every adopted year and the 2027 draft. */
 	let chartOpen = $state(false);
-	let guideOpen = $state(false);
+	let tourOpen = $state(false);
+	/* First arrival on the board: walk the controls once. The link replays it. */
+	onMount(() => {
+		if (boardTourSeen()) return;
+		const timer = setTimeout(() => (tourOpen = true), 500);
+		return () => clearTimeout(timer);
+	});
 	let listEl = $state<HTMLElement | undefined>(undefined);
 	let rootEl = $state<HTMLElement | undefined>(undefined);
 
@@ -438,10 +444,10 @@
 		<h1 class="title">{t.title}</h1>
 		<div class="top-links">
 			<a class="study-link" href="/research/citizen-budget">{t.studyPage}</a>
-			<button type="button" class="help-link" onclick={() => (guideOpen = true)} aria-haspopup="dialog">{t.guide.open}</button>
+			<button type="button" class="help-link" onclick={() => (tourOpen = true)} aria-haspopup="dialog">{t.tour.open}</button>
 		</div>
 
-		<div class="purse" class:target={over === 'purse'} class:refused={refusedId === 'purse'} data-drop="purse" data-state={purseState}>
+		<div class="purse" data-tour="purse" class:target={over === 'purse'} class:refused={refusedId === 'purse'} data-drop="purse" data-state={purseState}>
 			<span class="purse-label">{t.purse}</span>
 			<span class="purse-amount num">{fmtMd(Math.max(P, 0))}<small>{t.unit}</small></span>
 			<span class="purse-note">
@@ -450,26 +456,26 @@
 			<span class="meter" aria-hidden="true"><span style:inline-size="{Math.min(100, (Math.max(P, 0) / lines.envelope) * 100)}%"></span></span>
 		</div>
 		<div class="tools">
-			<button type="button" class="tool" onclick={undo} disabled={game.snapshots.length === 0} aria-label={t.undo} title={t.undo}><span aria-hidden="true">↶</span></button>
+			<button type="button" class="tool" data-tour="undo" onclick={undo} disabled={game.snapshots.length === 0} aria-label={t.undo} title={t.undo}><span aria-hidden="true">↶</span></button>
 			<button type="button" class="tool" onclick={() => (view = view === 'bars' ? 'table' : 'bars')} aria-pressed={view === 'table'} aria-label={t.table} title={t.table}><span aria-hidden="true">{view === 'bars' ? '☰' : '▥'}</span></button>
-			<button type="button" class="tool years-tool" onclick={openChart} aria-label={t.chartOpen} title={t.chartOpen} aria-haspopup="dialog">
+			<button type="button" class="tool years-tool" data-tour="years" onclick={openChart} aria-label={t.chartOpen} title={t.chartOpen} aria-haspopup="dialog">
 				<svg viewBox="0 0 20 14" width="20" height="14" aria-hidden="true"><path d="M2 11 L7 8 L12 9 L18 3" /><circle cx="18" cy="3" r="2" /></svg>
 			</button>
 		</div>
 
-		<div class="locked">
+		<div class="locked" data-tour="locked">
 			<span class="locked-swatch" aria-hidden="true"></span>
 			<p><strong>{t.lockedTitle}: <span class="num">{fmtMd(lockedTotal)} {t.unit}</span></strong> {t.lockedBody(fmtMd(debt.draft), fmtMd(reserve.draft))}</p>
 		</div>
 	</section>
 
 	<!-- The systems. -->
-	<section class="systems" aria-label={c.board.systems}>
+	<section class="systems" data-tour="systems" aria-label={c.board.systems}>
 		<div class="legend">
 			<span class="key"><span class="sw year" aria-hidden="true"></span>{comparedYear ? t.legendPast(String(comparedYear.year)) : t.legendPastNone}</span>
 			<span class="key"><span class="sw plan" aria-hidden="true"></span>{t.legendPlan}</span>
 			<span class="key"><span class="sw mine" aria-hidden="true"></span>{t.legendYours}</span>
-			<span class="years" role="group" aria-label={t.pastYears} title={t.historyNote}>
+			<span class="years" data-tour="years" role="group" aria-label={t.pastYears} title={t.historyNote}>
 				<button type="button" class="chart-btn" onclick={openChart} aria-label={t.chartOpen} title={t.chartOpen} aria-haspopup="dialog">
 					<svg viewBox="0 0 20 14" width="18" height="12" aria-hidden="true"><path d="M2 11 L7 8 L12 9 L18 3" /><circle cx="18" cy="3" r="2" /></svg>
 				</button>
@@ -511,6 +517,7 @@
 							<div
 								class="slot"
 								id="sys-{r.id}"
+								data-tour={r.id === 'police' ? 'row' : undefined}
 								role="option"
 								aria-selected={active === r.id}
 								aria-label={t.rowAria(
@@ -581,7 +588,7 @@
 
 	<!-- The chosen system, the last moves and the actions. -->
 	<section class="dock" aria-label={t.change}>
-		<div class="chosen">
+		<div class="chosen" data-tour="dock">
 			{#if activeRow}
 				<p class="chosen-name">{c.lines[activeRow.id].name}</p>
 				<p class="chosen-figs num" class:has-history={pastYears.length > 0}>
@@ -680,23 +687,23 @@
 		</div>
 
 		<div class="actions">
-			<label class="keep-choice">
+			<label class="keep-choice" data-tour="keep">
 				<input type="checkbox" checked={keepChoice} onchange={(e) => toggleKeep(e.currentTarget.checked)} />
 				<span class="keep-tick">{t.keepTick}</span>
 				<span class="keep-hint">{t.keepTickHint}</span>
 				<span class="keep-note">{t.keepTickNote}</span>
 			</label>
-			<button type="button" class="ghost" onclick={undo} disabled={game.snapshots.length === 0}>{t.undo}</button>
+			<button type="button" class="ghost" data-tour="undo" onclick={undo} disabled={game.snapshots.length === 0}>{t.undo}</button>
 			<button type="button" class="ghost" onclick={reset}>{t.reset}</button>
-			<button type="button" class="finish" disabled={!canFinish} onclick={() => onfinish?.(game, board)}>
+			<button type="button" class="finish" data-tour="finish" disabled={!canFinish} onclick={() => onfinish?.(game, board)}>
 				{#if canFinish}{t.finish}{:else}<span class="long">{atDraftNow ? t.finishNeedsChoice : t.finishNeeds(fmtMd(Math.abs(P)))}</span><span class="short">{t.finish}</span>{/if}
 			</button>
 		</div>
 		{#if t.interim}<p class="interim">{t.interim}</p>{/if}
 	</section>
 
-	{#if guideOpen}
-		<HowToPlay {t} {rule} onclose={() => (guideOpen = false)} />
+	{#if tourOpen}
+		<BoardTour {t} {rule} onclose={() => (tourOpen = false)} />
 	{/if}
 
 	{#if chartOpen && activeRow}
